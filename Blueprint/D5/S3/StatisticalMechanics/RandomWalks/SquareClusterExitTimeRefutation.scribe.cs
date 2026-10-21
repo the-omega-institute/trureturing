@@ -33,7 +33,7 @@ internal sealed class SquareClusterExitTimeRefutationDocument : IScribeDocumentD
             Node("exit-probability", "The exit distribution", ExitProbabilityFormula(),
                 "All direction words of length n have the same probability, one divided by four to the power n. "
                     + "Counting the words that first exit at their final position gives the first-exit distribution. "
-                    + "Cardinalities in real quotients are interpreted as real numbers.",
+                    + "The notation (a : ℝ) denotes the canonical cast from natural numbers to real numbers.",
                 "exitProb"),
             Node("expected-exit", "Expected first exit time", ExpectedExitFormula(),
                 "The expectation is the sum of time n multiplied by its first-exit probability. "
@@ -59,7 +59,7 @@ internal sealed class SquareClusterExitTimeRefutationDocument : IScribeDocumentD
             Node("square", "The square of side m", SquareFormula(),
                 "Take the Cartesian product of two copies of range(m), the natural numbers from zero to m minus one, "
                     + "and include both coordinates in the integers. The functions fst and snd select the coordinates "
-                    + "and intCast is the natural inclusion into the integers. For positive m this is the square "
+                    + "and (a : ℤ) denotes the canonical cast from natural numbers to integers. For positive m this is the square "
                     + "with m squared vertices; for m = 0 it is empty.",
                 "square"),
             Node("claim", "The square-maximality conjecture", ClaimFormula(),
@@ -111,6 +111,8 @@ internal sealed class SquareClusterExitTimeRefutationDocument : IScribeDocumentD
 
     private static Formula Naturals() => Seq(Mathbb, Grp(F.Id("N")));
     private static Formula Integers() => Seq(Mathbb, Grp(F.Id("Z")));
+    private static Formula CastReal(Formula value) => Parenthesized(Seq(value, Sp, Colon, Sp, Seq(Mathbb, Grp(F.Id("R")))));
+    private static Formula CastInteger(Formula value) => Parenthesized(Seq(value, Sp, Colon, Sp, Integers()));
     private static Formula Lattice() => new Formula.Power(Integers(), D(2));
     private static Formula Clusters() => Call("Finset", Lattice());
     private static Formula Directions() => Call("Fin", D(4));
@@ -171,14 +173,14 @@ internal sealed class SquareClusterExitTimeRefutationDocument : IScribeDocumentD
         Formula exitingWords = Seq(OpenBrace, w, Sp, Colon, Sp, Words(n), Sp, Mid, Sp, Call("exits", s, p, w), CloseBrace);
         return Disp(All("S", Clusters(), All("p", Lattice(), All("n", Naturals(),
             Equal(Call("exitProb", s, p, n),
-                new Formula.Fraction(Call("card", exitingWords), new Formula.Power(D(4), n)))))));
+                new Formula.Fraction(CastReal(Call("card", exitingWords)), new Formula.Power(D(4), n)))))));
     }
 
     private static Formula ExpectedExitFormula()
     {
         Formula s = F.Id("S"), p = F.Id("p"), n = F.Id("n");
         Formula series = Seq(new Formula.Subscript(Seq(Sum, Apos), Seq(n, Sp, Colon, Sp, Naturals())), Sp,
-            Parenthesized(new Formula.Binary(n, FormulaBinaryOperator.Multiply, Call("exitProb", s, p, n))));
+            Parenthesized(new Formula.Binary(CastReal(n), FormulaBinaryOperator.Multiply, Call("exitProb", s, p, n))));
         return Disp(All("S", Clusters(), All("p", Lattice(), Equal(Call("expectedExit", s, p), series))));
     }
 
@@ -186,7 +188,7 @@ internal sealed class SquareClusterExitTimeRefutationDocument : IScribeDocumentD
     {
         Formula s = F.Id("S"), p = F.Id("p");
         Formula sum = Seq(new Formula.Subscript(Sum, Member(p, s)), Sp, Parenthesized(Call("expectedExit", s, p)));
-        return Disp(All("S", Clusters(), Equal(Call("meanExit", s), new Formula.Fraction(sum, Call("card", s)))));
+        return Disp(All("S", Clusters(), Equal(Call("meanExit", s), new Formula.Fraction(sum, CastReal(Call("card", s))))));
     }
 
     private static Formula AdjacentFormula()
@@ -211,7 +213,7 @@ internal sealed class SquareClusterExitTimeRefutationDocument : IScribeDocumentD
         Formula m = F.Id("m"), p = F.Id("p");
         Formula map = Seq(LambdaLower, Sp, p, Sp, Colon, Sp,
             Parenthesized(Seq(Naturals(), Sp, Times, Sp, Naturals())), Comma, Sp,
-            Pair(Call("intCast", Call("fst", p)), Call("intCast", Call("snd", p))));
+            Pair(CastInteger(Call("fst", p)), CastInteger(Call("snd", p))));
         Formula product = Seq(Call("range", m), Sp, Times, Sp, Call("range", m));
         return Disp(All("m", Naturals(), Equal(Call("square", m), Call("image", Parenthesized(map), Parenthesized(product)))));
     }
