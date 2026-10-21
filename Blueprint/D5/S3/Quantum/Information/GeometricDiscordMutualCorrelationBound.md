@@ -18,21 +18,9 @@ $$\forall (U: \operatorname{Matrix}\left(\operatorname{Fin}\left(2\right), \oper
 
 For unitary U, let P_k = U single(k,k,1) U*, where single(k,k,1) has one in entry (k,k) and zero elsewhere. Thus P_k is the projector onto column k of U, and the displayed sum is Σ_k (P_k ⊗ I) ρ (P_k ⊗ I). It is the nonselective rank-one projective measurement on A. The matrix expression itself is defined for every U and every ρ.
 
-**Definition 1.2 (Squared Hilbert–Schmidt norm).**
+**Definition 1.2 (Normalized geometric discord).**
 
-$$\forall (m: \operatorname{Matrix}\left((\operatorname{Fin}\left(2\right)\times \operatorname{Fin}\left(2\right)), (\operatorname{Fin}\left(2\right)\times \operatorname{Fin}\left(2\right)), \mathbb{C}\right)), (\operatorname{hsNormSq}\left(m\right) = \operatorname{Re}\left(\operatorname{tr}\left(m \cdot m^{*}\right)\right))$$
-
-*Formalization.* `D5/S3/Quantum/Information/GeometricDiscordMutualCorrelationBound.hsNormSq` (`✓ std3`).
-
-*Citation.* Marek Gwóźdź; Lech Jakóbczyk (2014). *Spontaneous emission can locally create quantum discord out of classical correlations*. DOI: [10.1007/s11128-013-0639-0](https://doi.org/10.1007/s11128-013-0639-0). URL: <https://arxiv.org/abs/1306.0130v2>.
-
-*Commentary.*
-
-For every complex two-qubit matrix m, hsNormSq(m) is Re tr(m m*). The trace is real and nonnegative, so this is the squared Hilbert–Schmidt norm used in the source.
-
-**Definition 1.3 (Normalized geometric discord).**
-
-$$\forall (\rho: \operatorname{Matrix}\left((\operatorname{Fin}\left(2\right)\times \operatorname{Fin}\left(2\right)), (\operatorname{Fin}\left(2\right)\times \operatorname{Fin}\left(2\right)), \mathbb{C}\right)), (\operatorname{geometricDiscord}\left(\rho\right) = 2 \cdot \operatorname{inf}\left(\left\{\operatorname{hsNormSq}\left(\rho - \operatorname{measuredState}\left(U, \rho\right)\right) \mid U \in \operatorname{unitaryGroup}\left(\operatorname{Fin}\left(2\right), \mathbb{C}\right)\right\}\right))$$
+$$\forall (\rho: \operatorname{Matrix}\left((\operatorname{Fin}\left(2\right)\times \operatorname{Fin}\left(2\right)), (\operatorname{Fin}\left(2\right)\times \operatorname{Fin}\left(2\right)), \mathbb{C}\right)), (\operatorname{geometricDiscord}\left(\rho\right) = 2 \cdot \operatorname{inf}\left(\left\{\operatorname{Re}\left(\operatorname{tr}\left((\rho - \operatorname{measuredState}\left(U, \rho\right))^{*} \cdot (\rho - \operatorname{measuredState}\left(U, \rho\right))\right)\right) \mid U \in \operatorname{unitaryGroup}\left(\operatorname{Fin}\left(2\right), \mathbb{C}\right)\right\}\right))$$
 
 *Formalization.* `D5/S3/Quantum/Information/GeometricDiscordMutualCorrelationBound.geometricDiscord` (`✓ std3`).
 
@@ -42,7 +30,9 @@ $$\forall (\rho: \operatorname{Matrix}\left((\operatorname{Fin}\left(2\right)\ti
 
 The infimum ranges over all unitary 2 by 2 matrices U, hence all orthonormal measurement bases on A. The factor two is the source's normalization d/(d − 1) for d = 2. For a density matrix this is the normalized one-sided geometric discord D_G; the definition also applies to arbitrary complex two-qubit matrices.
 
-**Definition 1.4 (Covariance between the local algebras).**
+The Hilbert–Schmidt square in this definition is `D5/S3/Quantum/Tomography/RankOneContextCommutator.hilbertSchmidtSquare`, given by Re tr(m* m) for every finite complex square matrix m. Cyclicity of trace gives Re tr(m* m) = Re tr(m m*).
+
+**Definition 1.3 (Covariance between the local algebras).**
 
 $$\forall (\rho: \operatorname{Matrix}\left((\operatorname{Fin}\left(2\right)\times \operatorname{Fin}\left(2\right)), (\operatorname{Fin}\left(2\right)\times \operatorname{Fin}\left(2\right)), \mathbb{C}\right)), (\forall (a: \operatorname{Matrix}\left(\operatorname{Fin}\left(2\right), \operatorname{Fin}\left(2\right), \mathbb{C}\right)), (\forall (b: \operatorname{Matrix}\left(\operatorname{Fin}\left(2\right), \operatorname{Fin}\left(2\right), \mathbb{C}\right)), (\operatorname{localCovariance}\left(\rho, a, b\right) = \operatorname{tr}\left(\rho \cdot (\operatorname{kronecker}\left(a, b\right))\right) - \operatorname{tr}\left(\rho \cdot (\operatorname{kronecker}\left(a, (1: \operatorname{Matrix}\left(\operatorname{Fin}\left(2\right), \operatorname{Fin}\left(2\right), \mathbb{C}\right))\right))\right) \cdot \operatorname{tr}\left(\rho \cdot (\operatorname{kronecker}\left((1: \operatorname{Matrix}\left(\operatorname{Fin}\left(2\right), \operatorname{Fin}\left(2\right), \mathbb{C}\right)), b\right))\right))))$$
 
@@ -54,7 +44,7 @@ $$\forall (\rho: \operatorname{Matrix}\left((\operatorname{Fin}\left(2\right)\ti
 
 The local matrices a and b act as a ⊗ I and I ⊗ b. Their covariance is the expectation of a ⊗ b minus the product of their separate expectations. The displayed expression is complex valued and requires no positivity or normalization assumption on ρ.
 
-**Definition 1.5 (Maximal mutual correlation).**
+**Definition 1.4 (Maximal mutual correlation).**
 
 $$\forall (\rho: \operatorname{Matrix}\left((\operatorname{Fin}\left(2\right)\times \operatorname{Fin}\left(2\right)), (\operatorname{Fin}\left(2\right)\times \operatorname{Fin}\left(2\right)), \mathbb{C}\right)), (\operatorname{maximalMutualCorrelation}\left(\rho\right) = \operatorname{sup}\left(\{ (r: \mathbb{R}) \mid \exists (a: \operatorname{Matrix}\left(\operatorname{Fin}\left(2\right), \operatorname{Fin}\left(2\right), \mathbb{C}\right)), (\exists (b: \operatorname{Matrix}\left(\operatorname{Fin}\left(2\right), \operatorname{Fin}\left(2\right), \mathbb{C}\right)), ((\left\lVert a \right\rVert = 1) \land ((\left\lVert b \right\rVert = 1) \land (r = \left\lVert \operatorname{localCovariance}\left(\rho, a, b\right) \right\rVert)))) \}\right))$$
 
@@ -66,7 +56,7 @@ $$\forall (\rho: \operatorname{Matrix}\left((\operatorname{Fin}\left(2\right)\ti
 
 Take the supremum of the moduli of local covariances over all complex 2 by 2 matrices a and b of operator norm one. These matrices need not be Hermitian. For density matrices this is the source's maximal mutual correlation C_M between the two local algebras.
 
-**Definition 1.6 (Connected Pauli correlations).**
+**Definition 1.5 (Connected Pauli correlations).**
 
 $$\forall (\rho: \operatorname{Matrix}\left((\operatorname{Fin}\left(2\right)\times \operatorname{Fin}\left(2\right)), (\operatorname{Fin}\left(2\right)\times \operatorname{Fin}\left(2\right)), \mathbb{C}\right)), (\forall (i: \operatorname{Fin}\left(3\right)), (\forall (j: \operatorname{Fin}\left(3\right)), (\operatorname{connectedCorrelation}\left(\rho, i, j\right) = \operatorname{corr}\left(\rho, i, j\right) - \operatorname{blochA}\left(\rho, i\right) \cdot \operatorname{blochB}\left(\rho, j\right))))$$
 
@@ -78,7 +68,7 @@ $$\forall (\rho: \operatorname{Matrix}\left((\operatorname{Fin}\left(2\right)\ti
 
 Write x_i = blochA(ρ,i), y_j = blochB(ρ,j), and T_ij = corr(ρ,i,j). These are the real parts of tr(ρ(σ_i ⊗ I)), tr(ρ(I ⊗ σ_j)), and tr(ρ(σ_i ⊗ σ_j)), respectively. The connected correlation matrix has entries Q_ij = T_ij − x_i y_j, as in the source's Pauli description of covariance.
 
-**Definition 1.7 (The two-qubit correlation bound).**
+**Definition 1.6 (The two-qubit correlation bound).**
 
 $$\operatorname{claim} \Leftrightarrow (\forall (\rho: \operatorname{Matrix}\left((\operatorname{Fin}\left(2\right)\times \operatorname{Fin}\left(2\right)), (\operatorname{Fin}\left(2\right)\times \operatorname{Fin}\left(2\right)), \mathbb{C}\right)), ((\operatorname{PosSemidef}\left(\rho\right)) \Rightarrow ((\operatorname{tr}\left(\rho\right) = 1) \Rightarrow (\sqrt{\operatorname{geometricDiscord}\left(\rho\right)} \le \operatorname{maximalMutualCorrelation}\left(\rho\right)))))$$
 
@@ -90,7 +80,7 @@ $$\operatorname{claim} \Leftrightarrow (\forall (\rho: \operatorname{Matrix}\lef
 
 The proposition is the first inequality in Eq. (II.23): √D_G(ρ) ≤ C_M(ρ) for every positive semidefinite two-qubit matrix of trace one. It includes pure and mixed states. The source establishes the Bell-diagonal case and proposes the general mixed-state inequality on numerical evidence.
 
-**Theorem 1.8 (Maximal mutual correlation bounds geometric discord).**
+**Theorem 1.7 (Maximal mutual correlation bounds geometric discord).**
 
 $$\operatorname{claim}$$
 
@@ -119,10 +109,10 @@ Both quantities are nonnegative. The density-matrix estimate |tr(ρX)| ≤ ‖X�
 - Truth anchor: `D5/S3/Quantum/Information/GeometricDiscordMutualCorrelationBound.claim`
 - Truth anchor: `D5/S3/Quantum/Information/GeometricDiscordMutualCorrelationBound.connectedCorrelation`
 - Truth anchor: `D5/S3/Quantum/Information/GeometricDiscordMutualCorrelationBound.geometricDiscord`
-- Truth anchor: `D5/S3/Quantum/Information/GeometricDiscordMutualCorrelationBound.hsNormSq`
 - Truth anchor: `D5/S3/Quantum/Information/GeometricDiscordMutualCorrelationBound.localCovariance`
 - Truth anchor: `D5/S3/Quantum/Information/GeometricDiscordMutualCorrelationBound.maximalMutualCorrelation`
 - Truth anchor: `D5/S3/Quantum/Information/GeometricDiscordMutualCorrelationBound.measuredState`
 - Truth anchor: `D5/S3/Quantum/Information/GeometricDiscordMutualCorrelationBound.result`
+- Truth anchor: `D5/S3/Quantum/Tomography/RankOneContextCommutator.hilbertSchmidtSquare`
 - Dependency: [D5/S3/Quantum/Entanglement/SteeringEllipsoidCHSH](../Entanglement/SteeringEllipsoidCHSH.md)
-- Dependency: [D5/S3/Quantum/GNSMatrix](../GNSMatrix.md)
+- Dependency: [D5/S3/Quantum/Tomography/RankOneContextCommutator](../Tomography/RankOneContextCommutator.md)

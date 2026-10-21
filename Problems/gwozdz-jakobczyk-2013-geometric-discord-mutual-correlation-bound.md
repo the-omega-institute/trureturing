@@ -53,12 +53,12 @@ The proof would not settle the conjecture if the module's quantities differed fr
 
 ## Evidence
 
-The canonical source is `D5/S3/Quantum/Information/GeometricDiscordMutualCorrelationBound.lean` (424 lines).
+The canonical source is `D5/S3/Quantum/Information/GeometricDiscordMutualCorrelationBound.lean` (420 lines).
 - **Proof.** It proves `result : claim`.
 - **Axioms.** It uses only the standard axioms `propext`, `Classical.choice` and `Quot.sound`; no `sorry`, `native_decide`, or new axiom.
 - **Registration.** The §3.9 registration is `Reg/D5/S3/Quantum/Information/GeometricDiscordMutualCorrelationBound.lean`.
 
-Frozen state: `Golden/Frozen/state/D5/S3/Quantum/Information/GeometricDiscordMutualCorrelationBound.lean.json`, statement `sha256:ffbc7593f55d349f4a87b08ba50e99b42053df2cdfa973b41e3e345f36c3052b`.
+Frozen state: `Golden/Frozen/state/D5/S3/Quantum/Information/GeometricDiscordMutualCorrelationBound.lean.json`, statement `sha256:41717f8d19e81c057aa9f53026ccc732eedc92c3728427dbc0f3cec533c3d1e5`.
 
 Declaration statements:
 - `result`: `sha256:e02db0e273c24443c3f5cbea9c3be9b87ea0719662d3f7e7942cbc0652e80846`;
