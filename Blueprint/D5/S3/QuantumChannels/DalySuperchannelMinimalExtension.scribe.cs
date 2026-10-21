@@ -36,13 +36,17 @@ internal sealed class DalySuperchannelMinimalExtensionDocument : IScribeDocument
                 "Remark 4.1, page 11: \"The set of possible superchannel extensions of a QSC is a convex set. In the example given the extensions with minimal e are extreme points. A natural question to ask is whether it is generally true that the extensions which give minimal dimensions e are extreme points.\" The proposition quantifies over four positive dimensions, every QSC Gamma and every minimizing extension S. The comparison includes all extensions G, and extremePoints uses real scalars.", Literature()),
             Entry("refutation", "result", "A non-extreme minimizing extension", Disp(Seq(Neg, Sp, Parenthesized(ClaimBody()))),
                 "For dimensions 2,2,2,2, take the restriction of the map induced by F₀, where Fₛ(X) = X/2 + (I ⊗ TrA X)/8 + Tr(X)I/16 + s Tr((Z ⊗ I)X)(Z ⊗ I)/32 and Z = diag(1,−1). For −1 ≤ s ≤ 1 these maps give extensions with the same restriction. Their fixed off-diagonal coherence block is positive definite. Compressing any extension against a vector in the kernel of its reduced Choi matrix gives a positive semidefinite matrix of trace zero, contradicting that block's strict positivity. Thus every extension has e = 4. The extension at s = 0 is the midpoint of the distinct extensions at s = 1 and s = −1, so it minimizes e and is not extreme. The existence of an extreme minimizer is a separate question.",
-                AssessedProvenance.FromRepo(Source), DescribeRole.Theorem))));
+                AssessedProvenance.FromRepo(Source), DescribeRole.Theorem,
+                new OpenProblemResolutionClaim(
+                    ProblemSlugRef.Create("daly-2022-superchannel-minimal-extension-extremality"),
+                    ResolutionKind.Refuted)))));
 
     private static AssessedProvenance Literature() => AssessedProvenance.FromLiterature(Source);
     private static DocumentBlock Entry(string id, string name, string title, Formula formula,
-        string prose, AssessedProvenance provenance, DescribeRole role = DescribeRole.Definition) =>
+        string prose, AssessedProvenance provenance, DescribeRole role = DescribeRole.Definition,
+        OpenProblemResolutionClaim? resolution = null) =>
         Describe.Lean(DescribeId.Create(id), DeclarationHandle.Create(Prefix + name), H(title),
-            StatementSource.FromAuthor(formula), provenance, Blocks(Paragraph(Text(prose))), role);
+            StatementSource.FromAuthor(formula), provenance, Blocks(Paragraph(Text(prose))), role, resolution);
 
     private static Formula SpanFormula()
     {
