@@ -9,6 +9,7 @@ public sealed class LeanReportScopedTests(InspectorCompilerFixture compiler) : I
     [InlineData("test_selected_utility_discovery_uses_production_reader")]
     [InlineData("test_rejects_empty_targets_and_canonical_destination")]
     [InlineData("test_scoped_bundle_checks_independent_membership_sources_and_materials")]
+    [InlineData("test_scoped_bundle_reuses_registered_source_inventory_across_modules")]
     [InlineData("test_scoped_inputs_exclude_siblings_and_program_bytes")]
     [InlineData("test_scoped_output_cannot_overlap_any_full_bundle_member")]
     [InlineData("test_scoped_output_preserves_full_seed_base")]

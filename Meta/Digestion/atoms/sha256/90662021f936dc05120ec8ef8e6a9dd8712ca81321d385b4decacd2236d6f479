@@ -1,0 +1,15 @@
+**Definition 3.1 (padded path space).** Let $\mathcal H_n$ be the standard
+Borel space of the first $n$ retained supplementary records, with $\dagger$
+absorbing after a stop, and let
+
+$$
+\mathcal H_\infty=\varprojlim_n\mathcal H_n,
+\qquad
+\mathscr H_\infty=\sigma\!\left(\bigcup_{n\ge0}\mathscr H_n\right)
+\tag{3.1}
+$$
+
+be its countable product sigma algebra. The event $T=\infty$ means that no
+finite prefix contains a stop. It is a measurable path event; it is not a
+finite acquired nonreturn flag.
+

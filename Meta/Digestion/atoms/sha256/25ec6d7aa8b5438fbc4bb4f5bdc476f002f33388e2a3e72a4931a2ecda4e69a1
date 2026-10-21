@@ -1,0 +1,64 @@
+**Definition 10.1 (Ambient equation and response extension).** Use the
+literal worlds, clocks, entire child and selected-pair quantifiers of
+Definition 1.1. In the open coordinate domain
+
+$$
+\Omega=\{(r,b,e):0<r<1,\ b>0,\ e\in\mathbb R\}
+$$
+
+put $c=r(1-r)/b$ and retain $j,n,T,U,\Lambda,\kappa$ from (1.7).
+The undivided parent equation is
+
+$$
+H(r,b,e)=e\Lambda+\frac{24}{5}(b-1/8)\kappa=0.
+\tag{10.1}
+$$
+
+Here $H$ is a function, distinct from the history $H_4$. Define the
+four entries of a column $G$ by
+
+$$
+G=\begin{pmatrix}G_0\\G_1\\G_2\\G_3\end{pmatrix}
+=\begin{pmatrix}-24-e\\-e/j\\(27/5-e)/T\\-e/n\end{pmatrix}.
+\tag{10.2}
+$$
+
+For every point of $\Omega$, let $g_{r,b,e}(s)$ be the single polynomial
+of degree at most three given by
+
+$$
+g_{r,b,e}(s)=\sum_{\ell=0}^3G_\ell
+ \prod_{\substack{0\le h\le3\\h\ne\ell}}
+ \frac{s-h}{\ell-h}.
+\tag{10.3}
+$$
+
+The following rows are its evaluations at the original clocks $5,6,7$:
+
+$$
+\begin{pmatrix}G_5\\G_6\\G_7\end{pmatrix}
+=\begin{pmatrix}
+-4&15&-20&10\\
+-10&36&-45&20\\
+-20&70&-84&35
+\end{pmatrix}G.
+\tag{10.4}
+$$
+
+Define an ambient analytic response extension $X=(X_0,X_1,X_2,X_3)$ by
+
+$$
+\begin{aligned}
+X_0&=24+e+(U+n)G_5,\\
+X_1&=24+e+(2U+n)G_6,\\
+X_2&=24+e+(T+2j+4r)G_7,\\
+X_3&=24+e+(3U+2n)G_7.
+\end{aligned}
+\tag{10.5}
+$$
+
+Off $H=0$ these expressions are only a rational extension for
+calculus. They assert no additional worlds. On the parent they are
+exactly $(p,v,a,m)$, with both terminal readings at clock seven on the
+same complete world.
+

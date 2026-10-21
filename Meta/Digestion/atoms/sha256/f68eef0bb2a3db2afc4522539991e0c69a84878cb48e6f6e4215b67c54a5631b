@@ -1,0 +1,37 @@
+**Theorem 3.2 (closed import, rights and restored head).** On either
+admitted load this graph terminates with bootWitness equal to the actual
+first input word, unchanged symbols and seal on74, its original entry
+head restored, and its current read/owner slots preserved. Its parser
+never observes the seal track. It also terminates, with the stated finite
+parse failure where applicable, on any finite unchanged ordinary source
+with these boundaries/rights and this disjoint compiler footprint.
+
+Proof. Let $h$ be the entry head's finite distance from L and $m$ the
+number of ordinary cells between L and R. After $a$ Save iterations the
+head distance is $h-a$ and $d=1^a$. Assignments preserve head74 and its
+source symbols, since they touch only64–68. At $a=h$ Save reads L and
+ScanStart enters the first ordinary position, including R if $m=0$.
+
+After $t$ Scan iterations its head is at ordinary position $t$, or R
+when $t=m$. Its accumulator is the reverse of the first $t$ symbol
+triples. Each symbol branch fixes the three literals before rebuilding
+the bank, so the proof does not assume survival of latch4 across a
+cons. MR74 moves to the next existing cell. The unchanged finite R is
+therefore reached in exactly $m$ such iterations. Reverse yields the
+actual ordinary symbol word in forward order. Home decreases its
+current distance to L. Restore has initially $h$ marks and preserves
+distance $h-|u|$ at its testing entry; hence its $h$ MRs return to the
+original cell, even when that cell was R. Both symbol word and saved
+distance survive unchanged bank fields. All source moves/reads have
+the actual $A$ read right; no writer is run and no encoded reference
+creates authority.
+
+The parser consumes one complete triple per required symbol and
+requires exact end. A partial triple or missing field fails finitely;
+zero length and all eight finite symbol alternatives are covered.
+On the admitted source $m=e+1$ and the word is precisely $w\mathsf F$
+by Lemma 2.4, so all cases and the disjunction succeed with $b=w$.
+The proof of the physical seal is Lemma 2.4, independent of $s$; an
+ordinary seal symbol would be a different symbol and fail the grammar.
+The parser does not pretend the seal track was copied in $s$. ∎
+
