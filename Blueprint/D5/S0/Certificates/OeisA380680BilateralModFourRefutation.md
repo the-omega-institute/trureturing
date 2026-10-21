@@ -34,6 +34,10 @@ $$\neg (\forall n \in \mathbb{N},\; (0 < n) \Rightarrow (\exists z \in \mathbb{Z
 
 *Proof.* Machine-checked in Lean as `D5/S0/Certificates/OeisA380680BilateralModFourRefutation.result` (`✓ std3`). ∎
 
+*Resolves.* `Problems/oeis-a380680-hanna-bilateral-mod-four` (refuted) by `D5/S0/Certificates/OeisA380680BilateralModFourRefutation.result`.
+
+<!-- scribe-open-problem-resolution-v1 {"problem_slug":"oeis-a380680-hanna-bilateral-mod-four","declaration_gid":"D5/S0/Certificates/OeisA380680BilateralModFourRefutation.result","resolution_kind":"refuted"} -->
+
 *Source.* Repository-derived.
 
 *Acknowledgement.* Paul D. Hanna (2025). *OEIS A380680, bilateral rational-quotient square series*. URL: <https://oeis.org/A380680>.
