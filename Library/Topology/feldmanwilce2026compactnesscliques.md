@@ -108,13 +108,14 @@ $\operatorname{Fin}(n+1)$ and has ncard $n+1$. This reindexes the
 nonempty cells of the paper's partition. The owning graph Scribe gives
 the detailed parameter and cardinal calculation. Its complete application
 uses the supplied actual space and graph, including full-product closedness,
-T2/T1 separation and finiteness of every clique. A clique of size N+1 rules
-out any proposed uniform bound N. A transient exact Lean application checks
-the parameter discharge and this final inference through the canonical
-targeted build; no separate named specialization is retained. This is an
-application of the existing generic theorem, and it asserts no sequential
-compactness conclusion. The exact statement/axiom report, canonical Freeze
-and required repository checks remain distinct from source exposition.
+T2/T1 separation and finiteness of every clique. A clique of size $N+1$ rules
+out any proposed uniform bound $N$. A transient exact Lean application passed
+the canonical targeted build and scoped statement/axiom report for the
+parameter discharge and final inference. Its axiom closure contains only
+`Classical.choice`, `Quot.sound` and `propext`. The existing generic module
+completed canonical FirstFreeze, and its owning Scribe retains the complete
+application. Formal statement identity and kernel validation remain distinct
+from the source-fidelity review of the original question.
 
 ## Current primary-source status
 

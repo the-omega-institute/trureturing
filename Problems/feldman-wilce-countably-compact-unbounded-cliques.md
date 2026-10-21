@@ -41,12 +41,13 @@ countable source. The finite-block application has source
 
 The existing generic theorem supplies the actual selector, space and graph.
 Its finite-block parameter discharge, inherited T2/T1 instances and explicit
-negation of a uniform finite bound passed a canonical targeted Lean check.
-The application retains all clauses of the original question; it assumes no
-selector or extra countable compactness supplier. The source-owner scoped
-statement/axiom report, canonical first Freeze, required CI and merge remain
-to be completed. The owning Scribe retains the complete application; no new
-named bind-only D5 theorem or separate Describe is delivered.
+negation of a uniform finite bound passed a canonical targeted Lean build
+and scoped statement/axiom report. The axiom closure contains only
+`Classical.choice`, `Quot.sound` and `propext`. The existing generic module
+completed canonical FirstFreeze. The application retains all clauses of the
+original question and assumes no selector or extra countable compactness
+supplier. The owning Scribe retains the complete parameter correspondence
+and derivation.
 
 ## Route
 
@@ -91,7 +92,7 @@ signatures: the ordinal construction uses
 omega1 and `aleph_one_le_continuum`, and the abundance argument uses Cantor's
 theorem and free ultrafilters.
 
-The construction would make the first horn of the paper's dichotomy hold:
+The construction makes the first horn of the paper's dichotomy hold:
 the bounded clique property differs from countable compactness for T1 spaces.
 The paper's remaining chromatic Questions 2 and 3 remain outside this target.
 The broader arbitrary-map graph endpoint is already in the repository; this
@@ -105,8 +106,9 @@ finite-input certification, checker implementation or numerical reduction.
 ## ASSUMED-UNVERIFIED
 
 The bounded literature check establishes the status of the inspected primary
-sources. Worldwide absence, publication priority and official acceptance are
-unverified. Lean source fidelity has a separate human/model review boundary;
+sources. Worldwide absence, publication priority and acceptance by the
+original authors are unverified. Lean source fidelity has a separate
+human/model review boundary;
 the kernel can certify only the formal statement and proof.
 The application exposition does not claim a new mathematical declaration or
 retroactive preregistration. Formal source fidelity remains separate from
