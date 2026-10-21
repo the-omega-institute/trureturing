@@ -97,6 +97,7 @@ theorem finite_signed_prime_identity (L : ℝ) (hL : 0 < L) (M : ℕ)
     intro x hx
     have hF : zeroExtension (L / 2) (head L S v) x = head L S v x :=
       Set.indicator_of_mem hx _
+    dsimp only
     rw [hF, ← primeAction_existing _ M _ x hx]
     ring
   rw [hphysical]
@@ -204,7 +205,9 @@ theorem logarithmic_cutoff (c : ℕ) (hc : 2 ≤ c) :
         compression (Real.log (c : ℝ) / 2) (-Real.log (c : ℝ)) f = 0) := by
   have hcr : 0 < (c : ℝ) := by exact_mod_cast (lt_of_lt_of_le (by decide : 0 < 2) hc)
   constructor
-  · simp [primeCutoff, Real.exp_log hcr]
+  · unfold primeCutoff
+    rw [show 2 * (Real.log (c : ℝ) / 2) = Real.log (c : ℝ) by ring, Real.exp_log hcr]
+    simp
   · intro f
     exact ⟨compression_zero_right _ _ f (by linarith),
       compression_zero_left _ _ f (by linarith)⟩

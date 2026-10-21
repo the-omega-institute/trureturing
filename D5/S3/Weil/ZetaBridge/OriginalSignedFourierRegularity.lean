@@ -27,11 +27,14 @@ def lineMode (L : ℝ) (n : ℤ) : ℝ → ℂ := zeroExtension (L / 2) (mode L 
 
 private lemma mode_norm_sq (L : ℝ) (hL : 0 < L) (n : ℤ) (x : ℝ) :
     ‖mode L n x‖ ^ 2 = L⁻¹ := by
+  have hn : ‖OriginalEvenCosineComplete.character (L / 2) n x‖ = 1 :=
+    Circle.norm_coe _
   rw [normalization_dictionary L hL]
   simp only [norm_div, norm_mul, norm_zpow, norm_neg, norm_one, one_zpow,
-    one_mul, OriginalEvenCosineComplete.character, Circle.norm_coe,
+    one_mul, hn,
     Complex.norm_real, Real.norm_eq_abs, abs_of_nonneg (Real.sqrt_nonneg L), div_pow,
     one_pow, Real.sq_sqrt hL.le, one_div]
+  rw [← inv_pow, Real.sq_sqrt hL.le]
 
 private lemma mode_memLp (L : ℝ) (hL : 0 < L) (n : ℤ) :
     MemLp (mode L n) 2 (volume.restrict (window (L / 2))) := by
@@ -57,9 +60,12 @@ private lemma line_energy (L : ℝ) (hL : 0 < L) (n : ℤ) :
     by_cases hx : x ∈ window (L / 2)
     · simp [lineMode, zeroExtension, hx, mode_norm_sq L hL]
     · simp [lineMode, zeroExtension, hx]
-  rw [he, integral_indicator measurableSet_Ioc, setIntegral_const]
-  simp only [window, Real.volume_Ioc, sub_neg_eq_add, smul_eq_mul,
-    show L / 2 + L / 2 = L by ring, ENNReal.toReal_ofReal hL.le]
+  rw [he]
+  change (∫ x : ℝ, (window (L / 2)).indicator (fun _ : ℝ => L⁻¹) x) = 1
+  rw [integral_indicator (show MeasurableSet (window (L / 2)) from measurableSet_Ioc),
+    setIntegral_const]
+  simp only [window, Real.volume_real_Ioc, sub_neg_eq_add, smul_eq_mul,
+    show L / 2 + L / 2 = L by ring, max_eq_left hL.le]
   exact mul_inv_cancel₀ hL.ne'
 
 private lemma shift_memLp (L : ℝ) (hL : 0 < L) (n : ℤ) (h : ℝ) :
@@ -92,7 +98,7 @@ theorem boundary_strip_energies (L : ℝ) (hL : 0 < L) (n : ℤ) (h : ℝ)
         simp [lineMode, zeroExtension, hin, hout, mode_norm_sq L hL]
       _ = h / L := by
         rw [setIntegral_const]
-        simp [Real.volume_Ioc, ENNReal.toReal_ofReal hh, smul_eq_mul, div_eq_mul_inv]
+        simp [Real.volume_Ioc, ENNReal.toReal_ofReal hh, smul_eq_mul, div_eq_mul_inv, hh]
   · calc
       _ = ∫ _x in Ioc (L / 2) (L / 2 + h), L⁻¹ := by
         apply setIntegral_congr_fun measurableSet_Ioc
@@ -105,7 +111,7 @@ theorem boundary_strip_energies (L : ℝ) (hL : 0 < L) (n : ℤ) (h : ℝ)
         simp [lineMode, zeroExtension, hin, hout, mode_norm_sq L hL]
       _ = h / L := by
         rw [setIntegral_const]
-        simp [Real.volume_Ioc, ENNReal.toReal_ofReal hh, smul_eq_mul, div_eq_mul_inv]
+        simp [Real.volume_Ioc, ENNReal.toReal_ofReal hh, smul_eq_mul, div_eq_mul_inv, hh]
 
 /-- Both separate boundary strips are retained: their contribution is `2h/L`.
 The remaining term is the exact overlap energy, including n=0, h=0 and h=L. -/
@@ -130,24 +136,30 @@ theorem translation_squared_norm (L : ℝ) (hL : 0 < L) (n : ℤ) (h : ℝ)
     rw [entry, pairing_line]
     rfl
   have hE : ∫ x, ‖G x‖ ^ 2 = 1 := by
-    rw [show (fun x => ‖G x‖ ^ 2) = (fun x => ‖lineMode L n (x - h)‖ ^ 2) by rfl,
-      integral_sub_right_eq_self]
-    exact line_energy L hL n
+    calc
+      _ = ∫ x : ℝ, ‖lineMode L n x‖ ^ 2 :=
+        integral_sub_right_eq_self (fun x : ℝ => ‖lineMode L n x‖ ^ 2) h
+      _ = 1 := line_energy L hL n
+  have hEF : ∫ x, ‖F x‖ ^ 2 = 1 := line_energy L hL n
+  have hr : Integrable (fun x => 2 * (conj (F x) * G x).re) := hip.re.const_mul 2
+  have hsub : Integrable (fun x => ‖F x‖ ^ 2 - 2 * (conj (F x) * G x).re) :=
+    hiF.sub hr
+  have hre : (∫ x, (conj (F x) * G x).re) = (∫ x, conj (F x) * G x).re :=
+    integral_re hip
   have he (x : ℝ) : ‖F x - G x‖ ^ 2 =
       ‖F x‖ ^ 2 - 2 * (conj (F x) * G x).re + ‖G x‖ ^ 2 := by
     simpa [RCLike.inner_apply', mul_comm] using norm_sub_sq (𝕜 := ℂ) (F x) (G x)
   unfold translationSquaredNorm
   change (∫ x, ‖F x - G x‖ ^ 2) = _
   simp_rw [he]
-  rw [integral_add (hiF.sub (hip.re.const_mul 2)) hiG,
-    integral_sub hiF (hip.re.const_mul 2), integral_const_mul,
-    integral_re hip, hcorr, hE, line_energy L hL n]
+  rw [integral_add hsub hiG, integral_sub hiF hr, integral_const_mul,
+    hre, hcorr, hE, hEF]
   have hp := entry_paired L hL n n h hh hcap
   rw [entry_adjoint] at hp
-  have hr := congrArg Complex.re hp
-  simp only [if_pos rfl, Complex.add_re, Complex.conj_re, Complex.ofReal_re] at hr
-  field_simp [hL.ne'] at hr ⊢
-  nlinarith
+  have hr : (entry L n n h).re + (entry L n n h).re =
+      2 * (1 - h / L) * Real.cos (frequency L n * h) := by
+    simpa using congrArg Complex.re hp
+  nlinarith [hr]
 
 /-- The endpoint-jump term is linear in h, even for the zero mode. -/
 theorem translation_squared_norm_le (L : ℝ) (hL : 0 < L) (n : ℤ) (h : ℝ)
@@ -182,7 +194,7 @@ private lemma displacedMode_energy (L : ℝ) (hL : 0 < L) (n : ℤ) (h : ℝ) :
   apply integral_congr_ae
   filter_upwards [((line_memLp L hL n).sub (shift_memLp L hL n h)).coeFn_toLp]
     with x hx
-  rw [hx]
+  exact congrArg (fun z : ℂ => ‖z‖ ^ 2) hx
 
 private lemma displacedMode_bound (L : ℝ) (hL : 0 < L) (n : ℤ) (h : ℝ)
     (hh : 0 ≤ h) (hcap : h ≤ L) :
@@ -222,7 +234,7 @@ theorem finite_head_translation_bound (L : ℝ) (hL : 0 < L) (S : Finset ℤ)
       rw [norm_smul]
       exact mul_le_mul_of_nonneg_left (displacedMode_bound L hL n h hh hcap) (norm_nonneg _)
     _ = _ := by
-      simp only [mul_add, Finset.sum_add_distrib, ← Finset.sum_mul, ← Finset.mul_sum]
+      simp only [mul_add, ← mul_assoc, Finset.sum_add_distrib, ← Finset.sum_mul]
       ring
 
 /-- Cauchy--Schwarz gives the coefficient-l2 version used by the original
@@ -287,22 +299,28 @@ theorem displacedHead_ae (L : ℝ) (hL : 0 < L) (S : Finset ℤ)
       (fun x => zeroExtension (L / 2) (head L S v) x -
         zeroExtension (L / 2) (head L S v) (x - h)) := by
   classical
+  have hm (n : ℤ) : (v n • displacedMode L hL n h : Lp ℂ 2 (volume : Measure ℝ)) =ᵐ[volume]
+      (fun x => v n * (lineMode L n x - lineMode L n (x - h))) := by
+    filter_upwards [Lp.coeFn_smul (v n) (displacedMode L hL n h),
+      ((line_memLp L hL n).sub (shift_memLp L hL n h)).coeFn_toLp] with x hx hy
+    calc
+      _ = v n * (displacedMode L hL n h : ℝ → ℂ) x := hx
+      _ = _ := congrArg (fun z : ℂ => v n * z) hy
+  have hall : ∀ᵐ x ∂volume, ∀ n ∈ S,
+      (v n • displacedMode L hL n h : Lp ℂ 2 (volume : Measure ℝ)) x =
+        v n * (lineMode L n x - lineMode L n (x - h)) :=
+    S.eventually_all.mpr (fun n _ => hm n)
   have hs : (displacedHead L hL S v h : ℝ → ℂ) =ᵐ[volume]
       fun x => ∑ n ∈ S, v n * (lineMode L n x - lineMode L n (x - h)) := by
-    induction S using Finset.induction_on with
-    | empty => simp [displacedHead]
-    | @insert n S hn ih =>
-      have hz := ((line_memLp L hL n).sub (shift_memLp L hL n h)).coeFn_toLp
-      filter_upwards [Lp.coeFn_add (v n • displacedMode L hL n h)
-          (displacedHead L hL S v h),
-        Lp.coeFn_smul (v n) (displacedMode L hL n h), ih, hz] with x hx hy hi hz'
-      simpa [displacedHead, Finset.sum_insert hn, hx, hy, hi,
-        displacedMode, hz', Pi.smul_apply, smul_eq_mul]
+    filter_upwards [Lp.coeFn_fun_finsetSum S (fun n => v n • displacedMode L hL n h),
+      hall] with x hx hy
+    exact hx.trans (Finset.sum_congr rfl (fun n hn => hy n hn))
   apply hs.trans
   exact Eventually.of_forall fun x => by
     have he (y : ℝ) : zeroExtension (L / 2) (head L S v) y =
         ∑ n ∈ S, v n * lineMode L n y := by
       by_cases hy : y ∈ window (L / 2) <;> simp [zeroExtension, head, lineMode, hy]
+    dsimp only
     rw [he x, he (x - h)]
     simp only [mul_sub, Finset.sum_sub_distrib]
 
