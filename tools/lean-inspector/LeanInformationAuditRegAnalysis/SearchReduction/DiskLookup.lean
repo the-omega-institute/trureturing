@@ -5,7 +5,7 @@ application and kernel checking remain the authority for successful queries. -/
 namespace LeanInformationAudit.SearchReduction.DiskLookup
 open Lean Meta
 
-abbrev version : String := "disk-beta-zeta-alpha-v5"
+abbrev version : String := "disk-beta-zeta-alpha-v6"
 abbrev pageSize : Nat := 256
 
 structure Entry where
@@ -65,24 +65,31 @@ private def readJson [FromJson α] (path : System.FilePath) : IO α := do
 
 private def writeJson [ToJson α] (path : System.FilePath) (value : α) : IO UInt64 := do
   let text := (toJson value).compress
-  IO.FS.writeFile path text
+  let unchanged ← try pure ((← IO.FS.readFile path) == text) catch _ => pure false
+  unless unchanged do IO.FS.writeFile path text
   return hash text
 
 /-- Beta/zeta normal form with metadata, binder names and universe spellings
 removed. Hash collisions always pass through definitional equality checking. -/
-partial def canonical : Expr → Expr
-  | .mdata _ e => canonical e
-  | .letE _ _ v b _ => canonical (b.instantiate1 v)
-  | .app f a =>
-    let f := canonical f
-    let a := canonical a
-    if f.isLambda then canonical (f.bindingBody!.instantiate1 a) else mkApp f a
-  | .lam _ t b _ => .lam .anonymous (canonical t) (canonical b) .default
-  | .forallE _ t b _ => .forallE .anonymous (canonical t) (canonical b) .default
-  | .const n ls => .const n (ls.map fun _ => .zero)
-  | .sort _ => .sort .zero
-  | .proj n i e => .proj n i (canonical e)
-  | e => e
+private partial def canonicalCached (e : Expr) : StateM (Std.HashMap Expr Expr) Expr := do
+  if let some found := (← get)[e]? then return found
+  let result ← match e with
+    | .mdata _ e => canonicalCached e
+    | .letE _ _ v b _ => canonicalCached (b.instantiate1 v)
+    | .app f a => do
+      let f ← canonicalCached f
+      let a ← canonicalCached a
+      if f.isLambda then canonicalCached (f.bindingBody!.instantiate1 a) else pure (mkApp f a)
+    | .lam _ t b _ => return .lam .anonymous (← canonicalCached t) (← canonicalCached b) .default
+    | .forallE _ t b _ => return .forallE .anonymous (← canonicalCached t) (← canonicalCached b) .default
+    | .const n ls => pure (.const n (ls.map fun _ => .zero))
+    | .sort _ => pure (.sort .zero)
+    | .proj n i e => return .proj n i (← canonicalCached e)
+    | e => pure e
+  modify (·.insert e result)
+  return result
+
+def canonical (e : Expr) : Expr := (canonicalCached e).run' {}
 
 private def rigid : ConstantInfo → Bool
   | .inductInfo _ | .ctorInfo _ | .axiomInfo _ | .opaqueInfo _ | .thmInfo _ => true
@@ -164,13 +171,48 @@ private def spill (directory : System.FilePath) (localNodes : Nodes) (all : Node
     all := all.insert key {previous with pages}
   return all
 
+private def routeByte (token : String) (depth : Nat) : Nat :=
+  ((hash token >>> (depth * 8).toUInt64).toNat) % 256
+
+/-- Routing directories have bounded fanout, including the membership hash
+population. Wildcard queries enumerate only their necessary routing pages. -/
+private partial def writeRouted (directory : System.FilePath) (file : String)
+    (node : Node) (depth : Nat := 0) : IO UInt64 := do
+  if node.children.size <= 256 then
+    return ← writeJson (directory / s!"{file}.node.json") node
+  if depth >= 8 then throw <| IO.userError "lookup.routing_hash_bucket_overflow"
+  let mut groups : Std.HashMap Nat (Array (String × String × UInt64)) := {}
+  for child in node.children do
+    let bucket := routeByte child.1 depth
+    groups := groups.insert bucket ((groups[bucket]?.getD #[]).push child)
+  let mut children := #[]
+  for (bucket, entries) in groups.toArray.qsort (fun a b => a.1 < b.1) do
+    let next := s!"{file}.r{depth}-{bucket}"
+    let digest ← writeRouted directory next {children := entries} (depth + 1)
+    children := children.push (s!"@route:{depth}:{bucket}", next, digest)
+  writeJson (directory / s!"{file}.node.json") {node with children}
+
+private partial def repack (directory : System.FilePath) (file : String)
+    (expected : UInt64) : StateT (Std.HashMap String UInt64) IO UInt64 := do
+  if let some ready := (← get)[file]? then return ready
+  let text ← IO.FS.readFile (directory / s!"{file}.node.json")
+  unless hash text == expected do throw <| IO.userError "lookup.repack_checksum"
+  let node : Node ← IO.ofExcept <| fromJson? (← IO.ofExcept <| Json.parse text)
+  let mut children := #[]
+  for (token, next, digest) in node.children do
+    let digest ← repack directory next digest
+    children := children.push (token, next, digest)
+  let digest ← writeRouted directory file {node with children}
+  modify (·.insert file digest)
+  return digest
+
 private partial def flush (directory : System.FilePath) (nodes : Nodes) (key : String) : IO UInt64 := do
   let node := nodes[key]?.getD {}
   let mut children := #[]
   for (token, next) in node.children.toArray.qsort (fun a b => a.1 < b.1) do
     let digest ← flush directory nodes next
     children := children.push (token, fileId next, digest)
-  writeJson (directory / s!"{fileId key}.node.json") ({children, pages := node.pages} : Node)
+  writeRouted directory (fileId key) ({children, pages := node.pages} : Node)
 
 private def runGit (args : Array String) : IO String := do
   let result ← IO.Process.output {cmd := "git", args}
@@ -263,6 +305,7 @@ unsafe def produce (directory : System.FilePath) (basis mathlib : String)
   let mut modules : Array Name := #[]
   let mut missing : Array String := #[]
   let mut inputs : UInt64 := hash (version, basis, mathlib, Lean.versionString)
+  let mut compatibleInputs : UInt64 := hash ("disk-beta-zeta-alpha-v5", basis, mathlib, Lean.versionString)
   while !todo.isEmpty do
     let name := todo.back!
     todo := todo.pop
@@ -271,6 +314,7 @@ unsafe def produce (directory : System.FilePath) (basis mathlib : String)
     try
       let (deps, names, reducible, fingerprint) ← summary name
       inputs := mixHash inputs (mixHash (hash name) fingerprint)
+      compatibleInputs := mixHash compatibleInputs (mixHash (hash name) fingerprint)
       for n in names do rigidNames := rigidNames.insert n
       for n in reducible do reducibleNames := reducibleNames.insert n
       todo := todo ++ deps
@@ -285,6 +329,14 @@ unsafe def produce (directory : System.FilePath) (basis mathlib : String)
           old.inputs == inputs && old.complete then
         IO.println (Json.mkObj [("reused", toJson true), ("header", toJson old)]).compress
         return old
+      if old.format == "disk-beta-zeta-alpha-v5" && old.basis == basis && old.mathlib == mathlib &&
+          old.inputs == compatibleInputs && old.complete then
+        let digest ← (repack (directory / old.storage) old.root old.digest).run' {}
+        let header := {old with format := version, inputs, digest}
+        discard <| writeJson (directory / "header.json.tmp") header
+        IO.FS.rename (directory / "header.json.tmp") (directory / "header.json")
+        IO.println (Json.mkObj [("repaged", toJson true), ("header", toJson header)]).compress
+        return header
     catch _ => pure ()
   let storage := s!"{version}-{inputs}"
   let pagesDirectory := directory / storage
@@ -330,6 +382,22 @@ private def readChecked [FromJson α] (path : System.FilePath) (digest : UInt64)
   unless hash text == digest do throw <| IO.userError s!"lookup.index_page_mismatch:{path}"
   IO.ofExcept <| fromJson? (← IO.ofExcept <| Json.parse text)
 
+private partial def routedChildren (index : Index) (node : Node)
+    (wanted : Option (List String)) : IO (Array (String × String × UInt64)) := do
+  let mut children := #[]
+  for child in node.children do
+    let (token, next, digest) := child
+    if token.startsWith "@route:" then
+      let [_, depthText, bucketText] := token.splitOn ":"
+        | throw <| IO.userError "lookup.invalid_routing_page"
+      let some depth := depthText.toNat? | throw <| IO.userError "lookup.invalid_routing_depth"
+      let some bucket := bucketText.toNat? | throw <| IO.userError "lookup.invalid_routing_bucket"
+      if wanted.any (fun keys => !keys.any (fun key => routeByte key depth == bucket)) then continue
+      let page : Node ← readChecked (index.directory / s!"{next}.node.json") digest
+      children := children ++ (← routedChildren index page wanted)
+    else if wanted.all (·.contains token) then children := children.push child
+  return children.qsort (fun a b => a.1 < b.1)
+
 private def arity (token : String) : Nat :=
   if token == "*" then 0 else ((token.splitOn ":")[1]?.bind String.toNat?).getD 0
 
@@ -350,7 +418,9 @@ private partial def collect (index : Index) (file : String) (digest : UInt64)
       result := {result with
         pages := result.pages + 1,
         entries := result.entries ++ entries.filter (fun e => !index.excluded.contains e.module.toName)}
-  for (token, next, nextDigest) in node.children do
+  let wanted := if storedPending > 0 || query.head? == some "*" then none
+    else some (match query with | [] => [] | q :: _ => [q, "*"])
+  for (token, next, nextDigest) in (← routedChildren index node wanted) do
     let remaining? := if storedPending > 0 then
         some (query, storedPending - 1 + arity token)
       else match query with

@@ -71,7 +71,8 @@ run_cmd liftTermElabM do
   Term.synthesizeSyntheticMVarsNoPostponing
   let a ← instantiateMVars a
   let b ← instantiateMVars b
-  unless a.hash == b.hash do throwError "full statement hash is not alpha invariant"
+  unless (DiskLookup.canonical a).hash == (DiskLookup.canonical b).hash do
+    throwError "disk member key is not alpha invariant"
   logInfo "LOOKUP_ALPHA_HASH equal=true"
 
 run_cmd liftTermElabM do
@@ -100,3 +101,10 @@ run_cmd liftTermElabM do
   unless cancelled.cost == .unknown && cancelled.detail == "cancelled" do
     throwError "interrupt escaped branch boundary"
   logInfo s!"LOOKUP_BRANCH_ISOLATION local_timeout_lookup_success=zero local_success=zero lookup_timeout={reprStr unknown.cost} both_timeout={reprStr both.cost} both_exhausted=one interrupt=unknown budget={localBudget}"
+
+run_cmd liftTermElabM do
+  let mut shared := mkConst ``True
+  for _ in [:24] do shared := mkApp2 (mkConst ``And) shared shared
+  unless (DiskLookup.canonical shared).hash == shared.hash do
+    throwError "shared statement normalization changed its shape"
+  logInfo "LOOKUP_SHARED_NORMALIZATION dag_depth=24 equal=true"
