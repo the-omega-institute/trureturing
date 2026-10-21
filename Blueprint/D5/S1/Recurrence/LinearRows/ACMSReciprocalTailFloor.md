@@ -36,6 +36,10 @@ $$\forall s: \mathbb{Z}, \forall t: \mathbb{Z}, (1 \le t) \implies ((t < s) \imp
 
 *Proof.* Machine-checked in Lean as `D5/S1/Recurrence/LinearRows/ACMSReciprocalTailFloor.result` (`✓ std3`). ∎
 
+*Resolves.* `Problems/amdeberhan-chen-moll-sagan-2014-reciprocal-tail-floor-conjecture-4-6` (proved) by `D5/S1/Recurrence/LinearRows/ACMSReciprocalTailFloor.result`.
+
+<!-- scribe-open-problem-resolution-v1 {"problem_slug":"amdeberhan-chen-moll-sagan-2014-reciprocal-tail-floor-conjecture-4-6","declaration_gid":"D5/S1/Recurrence/LinearRows/ACMSReciprocalTailFloor.result","resolution_kind":"proved"} -->
+
 *Source.* Repository-derived.
 
 *Acknowledgement.* Tewodros Amdeberhan, Xi Chen, Victor H. Moll, Bruce E. Sagan (2014). *Generalized Fibonacci polynomials and Fibonomial coefficients*. DOI: [10.1007/s00026-014-0242-9](https://doi.org/10.1007/s00026-014-0242-9). URL: <https://arxiv.org/abs/1306.6511v2>.

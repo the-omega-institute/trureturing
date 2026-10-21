@@ -53,7 +53,11 @@ internal sealed class ACMSReciprocalTailFloorDocument : IScribeDocumentDefinitio
                     + "denominators places each reciprocal between two telescoping differences. "
                     + "Their sums put the reciprocal tail in the interval whose integer floor "
                     + "is the stated difference minus one. The endpoint with difference one "
-                    + "uses positivity and the strict lower tail estimate.")))))));
+                    + "uses positivity and the strict lower tail estimate."))),
+                DescribeRole.Theorem,
+                new OpenProblemResolutionClaim(
+                    ProblemSlugRef.Create("amdeberhan-chen-moll-sagan-2014-reciprocal-tail-floor-conjecture-4-6"),
+                    ResolutionKind.Proved)))));
 
     private static Formula Parenthesized(Formula value) => Seq(Open, value, Close);
     private static Formula Z() => Seq(Mathbb, Grp(F.Id("Z")));
