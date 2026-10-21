@@ -146,9 +146,18 @@ private lemma maximal_iff (n : ℕ) (hn : 2 ≤ n) (S : Finset ℕ)
   constructor
   · rintro ⟨hr, hm⟩
     obtain ⟨d, hd, hdis⟩ := (rational_face_iff n hn S hS hne).mp hr
-    have hsub : S ⊆ certIdx n \ orderClass n d := by
-      intro s hs
-      exact mem_sdiff.mpr ⟨hS hs, fun ho => Finset.disjoint_left.mp hdis hs ho⟩
+    have hc : certIdx n \ orderClass n d ≠ certIdx n := by
+      intro he
+      obtain ⟨j, hj⟩ := class_nonempty n d hn hd
+      have hmem : j ∈ certIdx n \ orderClass n d := by
+        rw [he]
+        exact (mem_filter.mp hj).1
+      exact (mem_sdiff.mp hmem).2 hj
+    have hcontain : face n (certIdx n \ orderClass n d) ⊆ face n S := by
+      intro x hx s hs j hj
+      exact hx s (mem_sdiff.mpr ⟨hS hs, fun ho => Finset.disjoint_left.mp hdis hs ho⟩) j hj
+    have hsub : S ⊆ certIdx n \ orderClass n d :=
+      (face_inclusion_iff n hn _ S sdiff_subset (complement_nonempty n d hn) hc hS).mp hcontain
     refine ⟨d, hd, ?_⟩
     by_contra hneq
     apply hm _ sdiff_subset (Finset.ssubset_iff_subset_ne.mpr ⟨hsub, hneq⟩)
