@@ -70,7 +70,10 @@ internal sealed class MultilayerDeterminantRootNonuniquenessDocument : IScribeDo
                         "This construction uses the source's matrix and degree data. It refutes the "
                             + "uniqueness conjecture; the source's separate proposition identifying the "
                             + "percolation threshold with the smallest zero is a different statement."))),
-                DescribeRole.Theorem))));
+                DescribeRole.Theorem,
+                openProblemResolutionClaim: new OpenProblemResolutionClaim(
+                    ProblemSlugRef.Create("guha-et-al-2016-multilayer-determinant-root-nonuniqueness"),
+                    ResolutionKind.Refuted)))));
 
     private static DocumentBlock Node(string id, string title, Formula formula, string prose,
         string declaration) => Describe.Lean(
