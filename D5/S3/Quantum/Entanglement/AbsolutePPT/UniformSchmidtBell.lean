@@ -1,6 +1,28 @@
+/- GID: D5/S3/Quantum/Entanglement/AbsolutePPT/UniformSchmidtBell
+   generality: G
+   mirror-B: D5/B/S3/Quantum/Entanglement/AbsolutePPT/UniformSchmidtBell
+   mirror-E: none(waiver:symbolic-arbitrary-dimension-construction)
+   anchors: []
+   utility: none
+   digest: Arbitrary-dimension Bell rotations realize every independently labelled Schmidt matrix from literal APPT. -/
+
 /- Uncompiled source candidate: an arbitrary-r Bell rotation as actual block
    matrices, its principal PT compression, and the literal assigned-K bridge.
    No positive-definiteness, simple-spectrum or nonnegative-vector premise. -/
+
+/-
+utility:none, declaration-by-declaration semantic scope (CLAUDE.md §3.3):
+pairMatrix, pairMatrix_unitary, pairUnitary, bellEquiv, bellUnitary:
+  Uniform block-matrix and equivalence constructions for arbitrary r; unitarity is proved symbolically rather than by enumerating a bounded dimension.
+pair_conjugate_diagonal, pack, bell_conjugate, bell_pt_principal:
+  Universal symbolic diagonal and partial-transpose identities for arbitrary real or complex inputs; the coefficient 1/2 normalizes all blocks rather than supplying a certified numerical instance.
+actual_pack, literal_assignment_psd:
+  Identities and APPT implications for every independent pool permutation in arbitrary permitted local dimensions; no checker, supplied numerical threshold or standalone finite certificate is delivered.
+All groups avoid bounded-enumeration, checker, numeric-reduction and
+certified-instance as their primary delivered content. Utility semantics
+remain subject to independent review; the header does not prove acceptance.
+-/
+
 import D5.S3.Quantum.Entanglement.AbsolutePPT.UniformSchmidtSpectrum
 
 set_option autoImplicit false

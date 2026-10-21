@@ -1,7 +1,33 @@
+/- GID: D5/S3/Quantum/Entanglement/AbsolutePPT/UniformSchmidtSpectrum
+   generality: G
+   mirror-B: D5/B/S3/Quantum/Entanglement/AbsolutePPT/UniformSchmidtSpectrum
+   mirror-E: none(waiver:symbolic-arbitrary-dimension-construction)
+   anchors: []
+   utility: none
+   digest: Disjoint spectral pools label arbitrary product corners and preserve their matrix implications. -/
+
 /- Uncompiled source candidate. One actual spectrum, independent pool
    permutations, and a true injective labelling of its product corner.
    Generic Bell unitarity/compression and final moment integration remain
    as specified in LiteralSchmidtBridge.md; no final physical theorem is assumed. -/
+
+/-
+utility:none, declaration-by-declaration semantic scope (CLAUDE.md §3.3):
+a, b, bellSlotsEquiv, pool_card_sum:
+  Parametric pool cardinalities and an equivalence-derived identity for every r; no fixed-size enumeration is delivered.
+topIndex, bottomIndex, bottomStart, topIndex_injective, bottomIndex_injective, bottom_top_separated:
+  Symbolic natural-number embeddings and separation with their original domain proofs, rather than certified values at a selected N.
+assignedTopIndex, assignedBottomIndex, label, label_injective:
+  Arbitrary independent permutations label disjoint actual pools; the universal construction supplies no checker or finite-instance certificate.
+assignedK, assignedK_offDiag, assignedK_diag, sum_assignedTop, sum_assignedBottom, assignedK_charge:
+  Universal symbolic matrix order and sum identities for the same actual spectrum and arbitrary permutations; no numerical reduction or numerical premise is introduced.
+actual_corner_psd:
+  A universal implication from literal APPT using the proved injective labelling and genuine corner unitary; no supplied PSD certificate or weakened physical premise is substituted.
+All groups avoid bounded-enumeration, checker, numeric-reduction and
+certified-instance as their primary delivered content. Utility semantics
+remain subject to independent review; the header does not prove acceptance.
+-/
+
 import D5.S3.Quantum.Entanglement.AbsolutePPT.UniformSchmidtCorner
 import D5.S3.Quantum.Entanglement.AbsolutePPT.UniformSchmidtIncidence
 

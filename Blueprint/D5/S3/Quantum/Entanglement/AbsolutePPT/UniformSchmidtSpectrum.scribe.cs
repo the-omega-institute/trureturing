@@ -6,6 +6,11 @@ internal sealed class UniformSchmidtSpectrumDocument : IScribeDocumentDefinition
     public DocumentDefinition Create() => DocumentDefinition.Create(ScribeNode.Create(
         "The ordered spectrum supplies disjoint top and bottom pools. Independent pool permutations give an injective labelling of one actual product corner. Its charge and diagonal bounds use these same pool values, including zeros and ties.", H("UniformSchmidtSpectrum"), Blocks(
             Paragraph(Text("The ordered spectrum supplies disjoint top and bottom pools. Independent pool permutations give an injective labelling of one actual product corner. Its charge and diagonal bounds use these same pool values, including zeros and ties.")),
+            Paragraph(Text("Utility none: a, b, bellSlotsEquiv, pool_card_sum. Parametric pool cardinalities and an equivalence-derived identity for every r; no fixed-size enumeration is delivered.")),
+            Paragraph(Text("Utility none: topIndex, bottomIndex, bottomStart, topIndex_injective, bottomIndex_injective, bottom_top_separated. Symbolic natural-number embeddings and separation with their original domain proofs, rather than certified values at a selected N.")),
+            Paragraph(Text("Utility none: assignedTopIndex, assignedBottomIndex, label, label_injective. Arbitrary independent permutations label disjoint actual pools; the universal construction supplies no checker or finite-instance certificate.")),
+            Paragraph(Text("Utility none: assignedK, assignedK_offDiag, assignedK_diag, sum_assignedTop, sum_assignedBottom, assignedK_charge. Universal symbolic matrix order and sum identities for the same actual spectrum and arbitrary permutations; no numerical reduction or numerical premise is introduced.")),
+            Paragraph(Text("Utility none: actual_corner_psd. A universal implication from literal APPT using the proved injective labelling and genuine corner unitary; no supplied PSD certificate or weakened physical premise is substituted.")),
             Describe.Lean(DescribeId.Create("uniformschmidtspectrum-a"),
                 DeclarationHandle.Create("D5/S3/Quantum/Entanglement/AbsolutePPT/UniformSchmidtSpectrum.a"),
                 H("a"), StatementSource.WithoutFormula(), AssessedProvenance.FromRepo(),

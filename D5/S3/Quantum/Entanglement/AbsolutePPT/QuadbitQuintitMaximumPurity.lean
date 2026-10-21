@@ -32,6 +32,7 @@ utility:none rationale: The new inference is a symbolic structural
   structural transfer, with baseline-frozen endpoint certificates.
 -/
 
+import D5.S3.Quantum.Entanglement.AbsolutePPT.GenericAPPT
 import D5.S3.Quantum.Entanglement.AbsolutePPT.QutritHildebrandSufficiency
 import D5.S3.Quantum.Entanglement.AbsolutePPT.DimensionTwentySpectralPurityBound
 import D5.S3.Quantum.Entanglement.AbsolutePPT.QuadbitMaximumPurity
@@ -113,11 +114,6 @@ local notation "ce" => cornerEquiv hm hn
 
 private noncomputable def packed (l : Fin 9 → ℝ) (mid : Fin (m*n-9) → ℂ) : Matrix I I ℂ :=
   diagonal (fun i => Sum.elim (pack l) mid ((ce).symm i))
-
-theorem product_partialTranspose {A B C D : Type}
-    (a : C → A) (b : D → B) (M : Matrix (A × B) (A × B) ℂ) :
-    (partialTranspose M).submatrix (Prod.map a b) (Prod.map a b) =
-      partialTranspose (M.submatrix (Prod.map a b) (Prod.map a b)) := rfl
 
 private theorem corner_partialTranspose (M : Matrix I I ℂ) :
     (partialTranspose M).submatrix (fun i => c (i,i)) (fun i => c (i,i)) =

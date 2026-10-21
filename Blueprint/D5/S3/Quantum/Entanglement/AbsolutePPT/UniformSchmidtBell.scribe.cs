@@ -6,6 +6,9 @@ internal sealed class UniformSchmidtBellDocument : IScribeDocumentDefinition
     public DocumentDefinition Create() => DocumentDefinition.Create(ScribeNode.Create(
         "A block Hadamard unitary on every edge pair realizes the independently labelled Bell family. The principal partial-transpose compression is one half of the complexification of the real Schmidt matrix. Literal APPT gives positive semidefiniteness for every independent assignment.", H("UniformSchmidtBell"), Blocks(
             Paragraph(Text("A block Hadamard unitary on every edge pair realizes the independently labelled Bell family. The principal partial-transpose compression is one half of the complexification of the real Schmidt matrix. Literal APPT gives positive semidefiniteness for every independent assignment.")),
+            Paragraph(Text("Utility none: pairMatrix, pairMatrix_unitary, pairUnitary, bellEquiv, bellUnitary. Uniform block-matrix and equivalence constructions for arbitrary r; unitarity is proved symbolically rather than by enumerating a bounded dimension.")),
+            Paragraph(Text("Utility none: pair_conjugate_diagonal, pack, bell_conjugate, bell_pt_principal. Universal symbolic diagonal and partial-transpose identities for arbitrary real or complex inputs; the coefficient 1/2 normalizes all blocks rather than supplying a certified numerical instance.")),
+            Paragraph(Text("Utility none: actual_pack, literal_assignment_psd. Identities and APPT implications for every independent pool permutation in arbitrary permitted local dimensions; no checker, supplied numerical threshold or standalone finite certificate is delivered.")),
             Describe.Lean(DescribeId.Create("uniformschmidtbell-pairmatrix"),
                 DeclarationHandle.Create("D5/S3/Quantum/Entanglement/AbsolutePPT/UniformSchmidtBell.pairMatrix"),
                 H("pairMatrix"), StatementSource.WithoutFormula(), AssessedProvenance.FromRepo(),

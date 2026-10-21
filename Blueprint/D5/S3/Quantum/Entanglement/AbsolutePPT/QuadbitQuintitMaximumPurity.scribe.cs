@@ -143,10 +143,6 @@ internal sealed class QuadbitQuintitMaximumPurityDocument : IScribeDocumentDefin
         return DocumentDefinition.Create(ScribeNode.Create(
             "The maximum purity of a literal four-by-five APPT density matrix is 7/121.",
             H("Four-by-five APPT maximum purity"),Blocks(
-            Describe.Lean(DescribeId.Create("appt-product-partial-transpose"),
-                DeclarationHandle.Create("D5/S3/Quantum/Entanglement/AbsolutePPT/QuadbitQuintitMaximumPurity.product_partialTranspose"),
-                H("Partial transpose on a product submatrix"), StatementSource.WithoutFormula(), AssessedProvenance.FromRepo(),
-                Blocks(Paragraph(Text("For arbitrary types A, B, C and D, maps a:C to A and b:D to B, and a complex matrix M on A times B, taking the product submatrix along Prod.map a b commutes with partial transpose. No finiteness, injectivity, invertibility or positivity is required. The identity holds entry by entry."))), DescribeRole.Theorem),
             Desc("cornerBoundaryValues","Nine extremal spectral coordinates",CornerFormula.BoundaryStatement(),
                 "For every total dimension N at least nine, the selector observes the top three and bottom six ordered coordinates. Its proof argument 9<=N is omitted from this display. At N=20 it is the same observation as SpectralBoundaryTransfer.boundaryValues 11.",DescribeRole.Definition),
             Desc("diagonal_necessary_both","Both pencils for the actual labelled diagonal",CornerFormula.DiagonalNecessaryStatement(),

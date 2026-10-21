@@ -1,8 +1,29 @@
+/- GID: D5/S3/Quantum/Entanglement/AbsolutePPT/UniformSchmidtCorner
+   generality: G
+   mirror-B: D5/B/S3/Quantum/Entanglement/AbsolutePPT/UniformSchmidtCorner
+   mirror-E: none(waiver:symbolic-arbitrary-dimension-construction)
+   anchors: []
+   utility: none
+   digest: Arbitrary product-corner APPT compression and Schmidt partial-transpose identities. -/
+
 /- Uncompiled source candidate at afc3608700b56b2459986135c9852f1d202ae040.
    Apply expose-product-pt.patch at the original owner before compiling.
    This file proves no final centered-variance theorem. See LiteralSchmidtBridge.md. -/
-import D5.S3.Quantum.Entanglement.AbsolutePPT.QuadbitQuintitMaximumPurity
-import D5.S3.Quantum.Matrix.PartialTransposeTrace
+
+/-
+utility:none, declaration-by-declaration semantic scope (CLAUDE.md §3.3):
+corner, corner_injective, Outside, outsideFintype, cornerEquiv, cornerEquiv_inl, cornerEquiv_symm_corner:
+  Symbolic product embeddings, complement types, finiteness and equivalences for all r,m,n; no bounded search or certified input is delivered.
+conjugate_corner, selected_corner_psd:
+  Universal matrix transport and an implication from literal APPT, with the permutation and unitary constructed for arbitrary dimensions; no checker or numerical-premise reduction is delivered.
+schmidt, schmidtPT, schmidt_pt_entry, schmidt_pt_single, schmidt_pt_diagonal, schmidt_pt_symmetric, schmidt_pt_antisymmetric:
+  Symbolic definitions and entry/action identities for every real coefficient vector, including zero and negative coefficients; no evaluated finite instance is the result.
+All groups avoid bounded-enumeration, checker, numeric-reduction and
+certified-instance as their primary delivered content. Utility semantics
+remain subject to independent review; the header does not prove acceptance.
+-/
+
+import D5.S3.Quantum.Entanglement.AbsolutePPT.GenericAPPT
 import Mathlib.Logic.Equiv.Fintype
 
 set_option autoImplicit false

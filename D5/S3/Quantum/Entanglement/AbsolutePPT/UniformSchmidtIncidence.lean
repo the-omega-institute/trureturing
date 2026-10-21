@@ -1,6 +1,32 @@
+/- GID: D5/S3/Quantum/Entanglement/AbsolutePPT/UniformSchmidtIncidence
+   generality: G
+   mirror-B: D5/B/S3/Quantum/Entanglement/AbsolutePPT/UniformSchmidtIncidence
+   mirror-E: none(waiver:symbolic-arbitrary-dimension-construction)
+   anchors: []
+   utility: none
+   digest: Arbitrary-dimension complete-graph incidence identities for the Schmidt matrix. -/
+
 /- Uncompiled source candidate. Actual complete-graph slots and incidence
    moments for the literal consumer in LiteralSchmidtBridge.md.
    This file supplies no replacement APPT predicate or assignment-PSD assumption. -/
+
+/-
+utility:none, declaration-by-declaration semantic scope (CLAUDE.md §3.3):
+Edge, BottomSlot, slotCoord, coordSlot, slotEquiv:
+  Parametric finite types and explicit coordinate equivalences for arbitrary r; no bounded enumeration result is delivered.
+incident, incidentDecidable, edge, edge_symm, incidentNeighbor, neighborIncident, incidentEquiv:
+  Symbolic incidence predicates, decidability and mutually inverse coordinate maps; the decision instance supports definitions and is not a checker theorem answering a separate finite-input problem.
+edge_card_real, bottom_card_real, incident_card, incident_indicator_sum:
+  Closed cardinality identities derived from equivalences for every r, rather than counts certified at selected dimensions.
+topWeight, bottomWeight, top_weight_sum, top_weight_squares, bottom_weight_sum, bottom_weight_squares, top_column_sum, bottom_column_sum:
+  Symbolic weight functions and sum identities over arbitrary graph size; no bounded list, external checker or numerical-premise reduction is the content.
+K, K_isHermitian, K_offDiag, K_diag, incident_sum, neighbor_sum, K_row, K_charge, K_trace, incidence_factors:
+  Universal matrix, sum, order and rational identities in symbolic r,t,b; incidence_factors uses the stated r>=3 domain to justify algebraic denominators, not numerical evidence for an instance.
+All groups avoid bounded-enumeration, checker, numeric-reduction and
+certified-instance as their primary delivered content. Utility semantics
+remain subject to independent review; the header does not prove acceptance.
+-/
+
 import D5.S3.Quantum.Entanglement.AbsolutePPT.UniformSchmidtDefectMoment
 
 set_option autoImplicit false
