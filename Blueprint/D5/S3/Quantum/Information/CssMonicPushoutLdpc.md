@@ -256,6 +256,10 @@ $$\forall A \in \mathbb{N} \to \mathrm{BasedComplex},\; \forall C \in \mathbb{N}
 
 *Proof.* Machine-checked in Lean as `D5/S3/Quantum/Information/CssMonicPushoutLdpc.result` (`✓ std3`). ∎
 
+*Resolves.* `Problems/cowtan-burton-2024-css-monic-pushout-ldpc` (proved) by `D5/S3/Quantum/Information/CssMonicPushoutLdpc.result`.
+
+<!-- scribe-open-problem-resolution-v1 {"problem_slug":"cowtan-burton-2024-css-monic-pushout-ldpc","declaration_gid":"D5/S3/Quantum/Information/CssMonicPushoutLdpc.result","resolution_kind":"proved"} -->
+
 *Source.* Repository-derived.
 
 *Acknowledgement.* Alexander Cowtan; Simon Burton (2024). *CSS code surgery as a universal construction*. DOI: [10.22331/q-2024-05-14-1344](https://doi.org/10.22331/q-2024-05-14-1344). URL: <https://arxiv.org/abs/2301.13738v6>.
