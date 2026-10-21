@@ -785,3 +785,401 @@ $$
 估计”的证明；它证明的是：现有这类全局相对 PNT 误差，经过精确 dilation
 分解后，仍不能支付平方根级 signed Robin 预算。要继续推进，必须改善同一实际
 来源上的相关性估计，而不是再次加强相对误差包络的文字形式。
+
+## 454. 原系数一重数反射的临界带定位
+
+**定义 454.1（共同来源与分区）。** 沿用 [PR1–PR10](../../../Library/Analytic/openai2026quasirh.md#joint-control-of-all-powerful-prime-reflection-choices) 的原卷积、局部反演、Mellin pairing 及实际 inverse Gram $G_P^{-1}$。所有变量取原 Eisenstein 理想参数，$q_A$ 表示 norm；$p$ 是原标记素理想，$Q=q_p\asymp L$，$\mathscr S$ 是固定坏素集合。令 $C=A_1\ne1$ 为其他素因子中原 valuation $1$ 且选择第二分支者的平方自由乘积。其余选中乘积为 $A_2,A_3,A_4,B_0$；它们分别对应原 valuation $2,3,4,\ge6$，互素并避开 $p\mathscr S$。记
+
+$$
+x=q_C,\quad x_j=q_{A_j},\quad z=q_{B_0},\quad
+W=x_2^2x_3^3x_4^4z^6,\qquad H_0=A_2^2A_3.
+$$
+
+原 $h$、full-series numerator 与剩余乘积长度分别为
+
+$$
+\begin{array}{c|c|c|c}
+p\text{ 分支}&h&\text{numerator}&M_p\\ \hline
+\text{第一支}&CA_2^2A_3^3A_4^4B_0^6m&pH_0C^3m&K/W\\
+\text{低第二支 }j=1,2,3,4&p^{j-1}CA_2^2A_3^3A_4^4B_0^6m&p^{4-j}H_0C^3m&K/(Q^{j-1}W)\\
+\text{高第二支}&p^5CA_2^2A_3^3A_4^4B_0^6m&H_0C^3m&K/(Q^5W).
+\end{array}
+\tag{454.1}
+$$
+
+这里 $(m,CA_2A_3A_4)=1$；仅低第二支另有 $p\nmid m$。$m$ 在 $B_0$ 处不受限，第一支与高第二支在 $p$ 处也不受限。原 valuation $5$ 没有第二支。取 $H=p^tH_0$，三种 $t$ 依次为 $1,4-j,0$。在 $x\asymp X$ 上，$m$ 的长度为 $Y=M_p/X$。
+
+每个实际模式保留原 $b(h)$、外部共轭、Gauss 相位、当前 ray 字符、分母、mask 与 section indicator。只在正均方上扩大支撑。固定的共同包络 $\mathcal N$ 控制原 divisor-bound、profiles、Mellin、cusp、full-series mean 与 reciprocal-$L$ 成本，满足 $|b(h)|\ll K^\varepsilon\mathcal N$；不按行、选中乘积或模式重选系数或包络。
+
+给定 $R_i=K^{a_i}>1$，对全部行与原 profiles 使用同一组阈值，把 $C\ne1$ 的实际模式分为
+
+$$
+\begin{aligned}
+\mathrm P={}&\{x_2>R_2\}\cup\{x_2\le R_2,\ x_3>R_3\},\\
+\mathrm S={}&\{x_2\le R_2,\ x_3\le R_3,\ 1<x\le R_1\},\\
+\mathrm O={}&\{x_2\le R_2,\ x_3\le R_3,\ x>R_1,\
+x^2/M_p\notin[R_1^{-4},R_1^4]\},\\
+\mathrm T={}&\{x_2\le R_2,\ x_3\le R_3,\ x>R_1,\
+R_1^{-4}\le x^2/M_p\le R_1^4\}.
+\end{aligned}
+\tag{454.2}
+$$
+
+端点按所写的弱不等号分配；原 annular 常数只改变估计常数。令 $e^{\rm paid}$ 是原 Mellin 下 $\mathrm P,\mathrm S,\mathrm O$ 三族与既有 $C=1$ powerful 族之和，$Q_{\rm paid}=(e^{\rm paid})^*G_P^{-1}e^{\rm paid}$。
+
+**假设 454.2（解析输入）。** 使用 [primitive-mean 源稿 v2](https://rstation.ai/api/v1/papers/riemann_hypothesis_10/versions/2/download) 的 full $D_\nu$ 向量及其 Lemma 2 证明（4.7）—（4.9）、Proposition 3 证明（5.3）—（5.6）；使用 [I1–I16、I14a、H1–H8 与 G7](../../../Library/Analytic/faveri2026fixedorder.md#an-unchanged-numerator-term-in-the-primitive-continuous-adjoint)，以及 PR1–PR10、VF1–VF10、SH1–SH11 的精确有限变换与统一成本合同。$u=1+\eta+it$ 的固定 $\eta>0$ 满足这些输入的 spectral avoidance 条件。已知筛法、局部反演与固定字符位移在下面只作为中间输入；承重结论是它们对同一个原始系数族的联合应用，不对这些输入另立新定理或主张文献原创性。
+
+**定理 454.3（同源补集的共同二次型界）。** 在假设 454.2 下，令
+
+$$
+U\asymp K,\qquad K^{1/2}\le D\le K^{1/2}L^{1/6-\delta},
+\qquad 0<\delta<1/6,\qquad L=K^\ell,
+\qquad 0<\ell<\frac3{530-36\delta}.
+$$
+
+取
+
+$$
+\begin{aligned}
+r&=\frac16-\left(\frac{41}6-2\delta\right)\ell,\\
+c&=\frac{18r-407\ell}{305}
+=\frac{3-(530-36\delta)\ell}{305}>0,\\
+a_1&=2c+3\ell,\qquad a_2=(c+\ell)/2,\qquad
+a_3=2(c+\ell)/9,
+\end{aligned}
+\tag{454.3}
+$$
+
+并选择同一个 spectral 允许的固定
+
+$$
+0<\eta<\min\left\{
+\frac{1/8-\ell}{32},\frac\ell8,
+\frac{c}{2(4+24\ell+22a_1+20a_2+18a_3)}\right\}.
+\tag{454.4}
+$$
+
+则对每个最终 $\varepsilon>0$，内部小幂先作分配后有
+
+$$
+Q_{\rm paid}\ll K^{2-\zeta+\varepsilon}\mathcal N^2,
+\qquad
+\zeta=\min\{(1/8-\ell)/2,\ell/2,c/2\}>0.
+\tag{454.5}
+$$
+
+对有界的共同成本及充分小的 $\varepsilon$，H8 的 $w$ 与 $e^{\rm paid}$ 在同一个实际 inverse Gram 下的总二次型为 $o(K^2)$。这里 $\zeta$ 只属于 correction vector；$w$ 使用 H8 自己的节省，不赋予它同一个数值指数。原 valuation $1$ 反射族中尚未估计的部分准确为 $\mathrm T$，仍允许所有合法 $p$ 分支及其他同时选中乘积。结论不包含整个 projection/complement、其他原长度与高度、原 growing-height allowance、F4 transfer 或 signed Robin restoration 的界。
+
+证明。先保留源筛估计在化为体积界以前的 minimum。对 $M=AB$、$T_0=\sqrt M B$，置
+
+$$
+\mathcal B(A,T)=\min\{\Psi_6(A,T),(A/B)(B+T)\}.
+$$
+
+源稿（4.7）—（4.9）给出的 completed smoothed mean 带外部因子 $1/B$，其界为 subpowers 乘 $\mathcal B(A,T)$。两种选择关于 $T$ 的各列指数至多为 $1$，所以在 $T=k_\eta\sqrt{q_H}T_0(1+|t|)^5$ 时，费用至多为
+
+$$
+(q_HM)^\varepsilon q_H^{1/2}(1+|t|)^6\mathcal B(A,T_0).
+$$
+
+源稿（5.4）将同一个 $(H,A,B)$ 的有限向量均方返回自身。以正数 $\mathcal B(A,T_0)$ 归一化 height supremum，再按（5.5）选择同一个固定 $k_\eta$，即用其（2.5）的先验有限性完成原吸收步骤。有限 ray 向量、完成化卷积及单调缩短都沿用（4.3）的同一估计。结合已有 Proposition 3 的体积界，在本证明中得到
+
+$$
+\frac1B\sum_{\substack{q_a\asymp A,\ q_b\asymp B\\ab\ {\rm sf},\ (ab,H)=1}}
+|D_\nu(Hab^3,u)|^2
+\ll(q_HM)^\varepsilon q_H^{1/2}(1+|t|)^6M f(M,B),
+\tag{454.6}
+$$
+
+其中
+
+$$
+f(M,B)=\min\left\{1,\
+B^{-1}+\frac B{\sqrt M}+B^{-1/2}+M^{-1/4}B^{1/2},\
+B^{-1}+\frac{\sqrt M}B\right\}.
+\tag{454.7}
+$$
+
+这是对同一个正均方的三个上界，没有组合不同的优化系数。内含 fixed-$\eta$ 常数与小幂损失。
+
+先估计 $\mathrm O$。固定实际 powerful 乘积与一个 $p$-sector，把不受平方自由限制的 $m$ 写成
+
+$$
+m=a\Delta^2,\quad a\ {\rm sf},\quad
+e=\gcd(a,\operatorname{rad}(H\Delta)),\quad a=ea_0,
+\quad d=q_\Delta,\quad v=q_e,\quad s=d\sqrt v.
+$$
+
+实际互素条件保证 $a_0C$ 平方自由且 $(a_0C,H\Delta^2e)=1$。在（454.6）中取 multiplier $H\Delta^2e$、$A\asymp Y/(d^2v)$、$B\asymp X$，因而 $M'=M_p/s^2$。PR7 的固定扩大处理非空有界 subunit annuli；空支撑为零。包含 $C^{-1/2}$ scalar 的原系数 $\ell^2$ 范数至多为
+
+$$
+K^\varepsilon\mathcal N\sqrt{Y/(d^2v)}
+\prod_{j=2}^4x_j^{-1/2}.
+$$
+
+Cauchy 与（454.6）给出固定 $(\Delta,e,X)$ 的 pairing 界
+
+$$
+\begin{aligned}
+|\operatorname{pair}_{\Delta,e,X}|
+\ll{}&K^\varepsilon(1+|t|)^J\mathcal N
+M_pq_H^{1/4}\prod_{j=2}^4x_j^{-1/2}\\
+&\times d^{-3/2}v^{-3/4}\sqrt{f(M_p/s^2,X)},
+\end{aligned}
+\tag{454.8}
+$$
+
+暂未乘低-$p$ 的 $Q^{-1/2}$ scalar；第一支与高第二支的 scalar 模至多为 $1$。所有原复相位在 pairing 内保留，到正范数处才取模。
+
+若 $s>R_1$，使用 $f\le1$ 与
+
+$$
+d^{-3/2}v^{-3/4}=s^{-1/3}d^{-7/6}v^{-7/12}.
+$$
+
+$e$ 的除数和仅支付 $(q_Hd)^\theta$，取内部 $\theta<1/12$，则 $\Delta$ 的剩余和收敛，整个尾部给出 $R_1^{-1/3}$。若 $s\le R_1$，在 $\mathrm O$ 下侧有 $X/\sqrt{M_p}<R_1^{-2}$ 及 $X\gg R_1$，故 $X/\sqrt{M'}\ll R_1^{-1}$，（454.7）第二选择的每项至多为常数乘 $R_1^{-1/2}$。在上侧 $X/\sqrt{M_p}>R_1^2$，第三选择至多为常数乘 $R_1^{-1}$。所以小-$s$ 部分一致满足 $\sqrt f\ll R_1^{-1/4}$；其 $d^{-3/2}v^{-3/4}$ 和也收敛至允许的小幂。
+
+代回原参数并汇总 $C$ dyads，得到
+
+$$
+|C_{p,\mathrm O}(t)|\ll(KL)^\varepsilon(1+|t|)^J\mathcal N
+KQ^{1/4}R_1^{-1/4}
+x_2^{-2}x_3^{-13/4}x_4^{-9/2}z^{-6}.
+\tag{454.9}
+$$
+
+三种 $p$-sector 的实际 $Q$ 因子依次为 $Q^{1/4}$、$Q^{3/2-5j/4}\le Q^{1/4}$、$Q^{-5}$。其余 powerful 质量绝对可和。依赖 $p$-sector 的不平衡限制始终留在实际 signed tuple 中，使用（454.8）的统一正范数界，不把此限制充当未被证明的 structured-coefficient multiplier。最后对原标记取正和，原 Mellin 与 G7 给出
+
+$$
+Q_{\mathrm O}\ll(UKL)^\varepsilon\mathcal N^2U^{2\eta}
+K^2L^{3/2}R_1^{-1/2}.
+\tag{454.10}
+$$
+
+再估计 $\mathrm P$，这里需要联合处理标记与 $C$。在（454.6）中只用 $f\le1$，沿上述 $m=a\Delta^2$ 分解，对 $(\Delta,e)$ 费用求和，得到本证明内部的供应式
+
+$$
+\sum_{\substack{q_C\asymp X,\ C\ {\rm sf}\\(C,H)=1}}
+\sum_{\substack{q_m\asymp Y\\(m,C)=1}}
+|D_\nu(HC^3m,u)|^2
+\ll(q_HXY)^\varepsilon q_H^{1/2}X^2Y(1+|t|)^6.
+\tag{454.11}
+$$
+
+固定 $(\Delta,e)$ 的费用为 $q_H^{1/2}X^2Y/(d\sqrt v)$；$e$ 的除数和为小幂，$\Delta$ 的调和和为对数。实际 ray 由固定 $216$ 个分量的最大值处理；只在正均方中扩大原 mask 支撑。
+
+第一 $p$ 支的系数平方质量至多为 $K^\varepsilon\mathcal N^2Y\prod_{j=2}^4x_j^{-1}$。在正 $D$ 平方和中合并 $n=pm$，其表示重数是除数界，实际仍有 $(C,n)=1$。对（454.11）取 multiplier $H_0$、$n$ 长度 $LY$，得到
+
+$$
+\sum_{p\asymp L}|C_{p,X}^{\rm first}(t)|^2
+\ll(KL)^\varepsilon(1+|t|)^J\mathcal N^2K^2L
+x_2^{-4}x_3^{-13/2}x_4^{-9}z^{-12}.
+\tag{454.12}
+$$
+
+低-$p$ 的 $j=1$ 支有 numerator $H_0(pC)^3m$；其系数平方质量多一个 $Q^{-1}$。在正均方中合并平方自由 $b=pC$，长度 $LX$，表示重数仍为除数界。（454.11）的费用为 $q_{H_0}^{1/2}(LX)^2Y$，也给出（454.12）的 $K^2L$。各原字符相位只在这之前的系数范数中估计，不从原 signed pairing 中删除。
+
+对低-$p$ 的 $j=2,3,4$，按自身 $Y/Q^{j-1}$ 长度、$Q^{-1/2}$ scalar 和 multiplier $p^{4-j}H_0$ 使用（454.11），再求标记和。平方 pairing 的标记幂为 $L^{4-5j/2}$，依次为 $L^{-1},L^{-7/2},L^{-6}$。高第二支的长度为 $Y/Q^5$，标记幂为 $L^{-9}$。这些均至多为 $L$。用范数三角不等式汇总同一原系数的 powerful 乘积，其共同质量为 $x_2^{-2}x_3^{-13/4}x_4^{-9/2}z^{-6}$。在 $\mathrm P$ 中该质量的尾和给出 $R_2^{-1}+R_3^{-9/4}$；$C$ dyads 只支付对数。因此
+
+$$
+Q_{\mathrm P}\ll(UKL)^\varepsilon\mathcal N^2U^{2\eta}K^2L
+(R_2^{-2}+R_3^{-9/2}).
+\tag{454.13}
+$$
+
+对小区域 $\mathrm S$，在 PR1–PR6 的同一有限 multi-mark 计算中加入 $A_1=C$，取
+
+$$
+k_1=2,\qquad s_1=3,\qquad b_1=4.
+$$
+
+同类型 CRT 是 $\gamma_2(C)$；与类型 $l$ 的交换指数为 $6(1-l)$、$(2-4)k_l$，故仍为平凡值。PR2 的当前字符改为 $\nu_j=\nu_0\prod_{i<j,\ i\ge1}\epsilon_{A_i,i}$，$r_j=p^tm\prod_{1\le i<j}A_i^{s_i}\prod_{i>j}A_i^i$，原完整标量的乘积范围改为 $j=1,\ldots,4$。包括 $C$ 的混合相位均保留。PR4 的 mark 现在为
+
+$$
+R_0=C^4A_2^3A_3^2A_4,
+\qquad
+\psi(w)=\prod_{j=1}^4\mathbf1_{A_j^{4-j}\mid w}
+\chi_{A_j}(w/A_j^{4-j})^{-(j+1)},
+\tag{454.14}
+$$
+
+低-$p$ 时再加入原 $p^{5-j_p}$ mark。抽到 mark 外的单位因子准确为
+
+$$
+\Xi=\prod_{1\le j<i\le4}\chi_{A_j}(A_i)^{-k_j(i-s_i)},
+$$
+
+低-$p$ 时另乘 $\prod_{j=1}^4\chi_p(A_j)^{-k_p(j-s_j)}$。PR4 中的 $\mathcal K$、$\tau_i$、所有 Ramanujan 中心与零值也按这一完整块集合取值。每个 $k_j+b_j=6$，故 $r=1$ 主项无残留增长字符 $\chi_C(d_0)$；$p^2e_0$ 的 imprimitive sector 仍使用完整 Gauss 和与 I4/H5 的 gcd-Cauchy。
+
+PR3 同时提取 $E_1\mid C$，即
+
+$$
+d=(\prod_{j=1}^4E_j)Fd_0,\qquad
+n=\prod_{j=1}^4(A_j^j/E_j)(B_0^6/F)n_0,
+$$
+
+$$
+D'=D/(\prod_{j=1}^4q_{E_j}q_F),\qquad K'=K/(xW),
+$$
+
+保留全部原 Möbius 符号、互素排除和 section。原有限 $g$ split 与两个 polar tails 同时保留；新增 weighted error 因子为 $x^{11/4+12\eta}$。代回 $K',D'$ 后，它的原变量质量为 $x^{7/3+11\eta}$，故 $x\le R_1$ 的截断和至多为 $R_1^{10/3+11\eta+\varepsilon}$。主项质量为 $x^{-2}$，连原除数权仍可和。没有增长 $\chi_C(d_0)$，所以原固定字符 Möbius 位移与 SH6 的移动删因子界继续适用。所有非空 subunit 支撑仍按自身 sector 扩大。由此
+
+$$
+\begin{aligned}
+|C_{p,\mathrm S}(t)|\ll{}&(KL)^\varepsilon(1+|t|)^J\mathcal N
+\bigl[KD^{-1/8}+K/Q\\
+&+K^{5/12+\eta}DQ^{11/4+12\eta}
+R_1^{10/3+11\eta}R_2^{13/6+10\eta}R_3^{1+9\eta}\bigr].
+\end{aligned}
+\tag{454.15}
+$$
+
+将（454.10）、（454.13）、（454.15）配入同一个原 Mellin 与实际 $G_P^{-1}$。固定有限和的交叉项用范数三角不等式支付。加上既有 $C=1$ 族以后，总 correction 的界含有 PR9 的前四项
+
+$$
+K^2D^{-1/4}L+K^{5/6}D^{4/3}L^{13/6}
++K^{5/6+2\eta}D^2L^{-1/6+2\eta}+K^2/L,
+$$
+
+以及新增的三份费用
+
+$$
+\begin{aligned}
+&K^{5/6+2\eta}D^2L^{13/2+24\eta}
+R_1^{20/3+22\eta}R_2^{13/3+20\eta}R_3^{2+18\eta},\\
+&K^2L(R_2^{-2}+R_3^{-9/2}),\\
+&K^2L^{3/2}R_1^{-1/2},
+\end{aligned}
+\tag{454.16}
+$$
+
+同乘 $(UKL)^\varepsilon\mathcal N^2U^{2\eta}$。这里 $C=1$ 的已证 PR10 可直接调用；等价地，它也可用上述同一多标记计算的小区域及（454.11）在 $C=1$ 的联合标记尾部界处理。三阈值不按行或 profile 分别最优化。
+
+（454.3）给出同一组参数的四个准确裕度
+
+$$
+r-\frac{20}3a_1-\frac{13}3a_2-2a_3
+=2a_2-\ell=\frac92a_3-\ell
+=\frac{a_1}2-\frac{3\ell}2=c.
+\tag{454.17}
+$$
+
+新增小区域的 $\eta$ 损失为 $(4+24\ell+22a_1+20a_2+18a_3)\eta<c/2$；各尾部损失为 $2\eta<c/2$。（454.4）也蕴含原 SH、VF 和 PR10 的限制；既有 powerful 族在本较小区间的节省至少容许（454.5）的 $\zeta$。PR9 前四项保留的裕度分别由同一个 $(1/8-\ell)/2$、$\ell/2$ 及原 SH 约束支付，故得（454.5）。H8 对 $w$ 另给正裕度；实际 Gram 范数的三角不等式于是给出所述 $o(K^2)$。定义 454.1 的四族互斥且穷尽 $C\ne1$ 的原模式，所以剩余部分恰为 $\mathrm T$。证毕。
+
+## 追加锚（本行以下为增补区）
+
+## 455. 临界反射族的共轭公共因子细分
+
+**定义 455.1（共轭公共部分）。** 对定义 454.1 中实际选中的平方自由好理想 $C$，令
+
+$$
+I(C)=\gcd(C,\overline C),\qquad J(C)=C/I(C),\qquad v=q_{I(C)}.
+$$
+
+保留原生成元的 primary 约定和全部相位；$I(C)$ 表示理想。令 $e^{\rm rat}_{>R}$ 为原 Mellin 向量中满足 $C\in\mathrm T$ 且 $v>R\ge1$ 的全部模式之和，并记
+
+$$
+Q^{\rm rat}_{>R}=(e^{\rm rat}_{>R})^*G_P^{-1}e^{\rm rat}_{>R}.
+$$
+
+**定理 455.2（稀疏公共部分在原二次型中的消费）。** 在假设 454.2 及其同一共同成本包络 $\mathcal N$ 下，
+
+$$
+Q^{\rm rat}_{>R}\ll(UKL)^\varepsilon\mathcal N^2U^{2\eta}
+K^2LR^{-1/2}.
+\tag{455.1}
+$$
+
+在定理 454.3 的原参数区间、原 $\eta$ 和原阈值下，取 $R=R_1$，则把 $e^{\rm rat}_{>R_1}$ 加入原 $e^{\rm paid}$ 后仍满足（454.5）的同一个 $\zeta$ 界。H8 的 $w$ 与这个扩大后的 correction vector 的实际总二次型仍为 $o(K^2)$，其中 $w$ 保留自己的节省。原一重数反射族中准确剩下
+
+$$
+\mathrm T_{\rm rat}=\{\text{定义 454.1 的 }\mathrm T\text{ 模式}:q_{\gcd(C,\overline C)}\le R_1\}.
+\tag{455.2}
+$$
+
+在该剩余族中，$J(C)$ 必须含有非单位的未配对分裂素理想部分。此结论只细分同一个原系数族；不包含整个 projection/complement、其他原长度与高度、原 growing-height allowance、F4 transfer 或 signed Robin restoration 的估计。
+
+证明。先使用 Eisenstein 理想的既有分裂分类。避开 $6$ 后，有理素数 $l$ 在该域中或保持为范数 $l^2$ 的惰性素理想 $(l)$，或分裂为两个范数为 $l$ 的共轭素理想。因为 $C$ 作为理想平方自由，$I(C)$ 在惰性素处保留该素理想，在分裂素处恰好保留被同时选中的共轭对。因此唯一地有
+
+$$
+I(C)=(r),\qquad r\in\mathbb N\text{ 平方自由},\quad(r,6)=1,
+\qquad v=r^2,
+$$
+
+$$
+C=IJ,\qquad (I,J)=1,\qquad\gcd(J,\overline J)=1.
+\tag{455.3}
+$$
+
+$J$ 只含分裂素理想，且不同时含同一有理素数上的两个共轭素因子。分解不改变任何原 numerator valuation；不把有理素性与 Eisenstein 素性等同。
+
+固定实际 $I,A_2,A_3,A_4,B_0$，在 $q_J\asymp X$ 上令 $Y=M_p/(vX)$。完整 numerator 是 $HI^3J^3m$，$H$ 与 $M_p$ 仍按（454.1）逐个 $p$-sector 取值。原 scalar 的模至多为 $v^{-1/2}X^{-1/2}\prod_{j=2}^4x_j^{-1/2}$，低-$p$ 支另有 $Q^{-1/2}$。原 $b(h)$、$\gamma_2(IJ)$、混合字符、当前有限 ray、分母、mask、section、共同 profiles 及 $\mathrm T$ 限制始终留在 signed pairing 内；这里只使用平方自由实际支撑上的 $|\gamma_2(IJ)|=1$，不需要重新分解其 CRT 相位。
+
+在已消费的（454.11）中取同一个 multiplier $HI^3$，得到本证明的正均方输入
+
+$$
+\sum_{\substack{q_J\asymp X,\ J\ {\rm sf}\\(J,HI)=1}}
+\sum_{\substack{q_m\asymp Y\\(m,J)=1}}
+|D_\nu(HI^3J^3m,u)|^2
+\ll(q_HvXY)^\varepsilon q_H^{1/2}v^{3/2}X^2Y(1+|t|)^6.
+\tag{455.4}
+$$
+
+这里 $m$ 不限平方自由，其全部平方部分沿用（454.11）的分解。固定 $216$ 个 ray 分量统一处理。只有在正范数中才放松 $\gcd(J,\overline J)=1$、原 $\mathrm T$ band 及其余互素条件；不把这些限制塞入需要独立列系数的 structured estimate。非空有界 subunit annuli 按原固定扩大处理，空支撑为零。
+
+第一 $p$ 支在一个 $J$ dyad 上的原系数平方质量至多为
+
+$$
+K^\varepsilon\mathcal N^2(Y/v)\prod_{j=2}^4x_j^{-1}.
+$$
+
+在正 $D$ 平方和中合并 $n=pm$，保持实际 $(J,n)=1$，其表示重数为除数界。对（455.4）取 multiplier $H_0I^3$、$n$ 长度 $LY$，由 Cauchy 得
+
+$$
+\sum_{p\asymp L}|C_{p,I,X}^{\rm first}(t)|^2
+\ll(KL)^\varepsilon(1+|t|)^A\mathcal N^2
+K^2Lv^{-3/2}x_2^{-4}x_3^{-13/2}x_4^{-9}z^{-12}.
+\tag{455.5}
+$$
+
+其 $v$ 幂准确来自 $(Y/v)v^{3/2}X^2LY=v^{1/2}L(XY)^2$ 与 $XY=K/(vW)$。低-$p$ 的 $j=1$ 支在正均方中合并平方自由 $b=pJ$，长度 $LX$；系数平方质量为 $\mathcal N^2Y/(vL)$，均方费用为 $q_{H_0}^{1/2}v^{3/2}(LX)^2Y$，同样给出（455.5）。$p$ 与 $J$ 在实际支撑上互素，即使 $J$ 含 $\overline p$ 也不损坏理想平方自由条件；$I$ 避开 $p$。
+
+低-$p$ 的 $j=2,3,4$ 使用自身原长度 $Y=K/(Q^{j-1}vWX)$ 和 multiplier $p^{4-j}H_0I^3$。scalar 平方、multiplier、长度平方与标记数的 $L$ 幂合计为
+
+$$
+L\cdot L^{-1}\cdot L^{(4-j)/2}\cdot L^{-2(j-1)}
+=L^{4-5j/2},
+$$
+
+分别为 $L^{-1},L^{-7/2},L^{-6}$。高第二支的长度为 $K/(Q^5vWX)$，其标记幂为 $L^{-9}$。它们均被（455.5）的 $L$ 控制，且全部保留同一个 $v^{-3/2}$。原 valuation $5$ 没有第二支。
+
+先对实际有限 signed 模式形成 pairing，再取上述正范数。对 $J$ dyads 支付对数，并对其他实际选中乘积使用范数三角不等式；其共同质量 $x_2^{-2}x_3^{-13/4}x_4^{-9/2}z^{-6}$ 绝对可和。因此
+
+$$
+\left\|(C_{p,I,\mathrm T}(t))_p\right\|_2
+\ll(KL)^\varepsilon(1+|t|)^A\mathcal N KL^{1/2}v^{-3/4}.
+\tag{455.6}
+$$
+
+实际 $\mathrm T$ 限制只减少先前使用的系数平方质量和正均方支撑，不改变此式的适用性。
+
+最后，公共理想 $I$ 的范数为 $r^2$，故对任意充分小的内部 $\epsilon>0$ 有
+
+$$
+\sum_{\substack{I=(r),\ r\ {\rm sf}\\q_I>R}}q_I^{-3/4+\epsilon}
+\le\sum_{r>\sqrt R}r^{-3/2+2\epsilon}
+\ll R^{-1/4+\epsilon}.
+\tag{455.7}
+$$
+
+在（455.6）中先对原有限 $I$ 求范数和，再仅将这个正 majorant 扩为（455.7），恢复同一个原 Mellin 和 G7 的实际 inverse Gram，得到（455.1）。所有内部小幂在最终 $\varepsilon$ 以前分配；实际 $q_I\ll K$，没有新的独立多项式成本。
+
+取 $R=R_1=K^{a_1}$，原（454.3）给出
+
+$$
+\frac{a_1}2-\ell=c+\ell/2>c.
+$$
+
+原（454.4）保证 $U^{2\eta}$ 的损失 $2\eta<c/2$，因此（455.1）被原 $K^{2-\zeta+\varepsilon}\mathcal N^2$ 吸收。对同一个 $G_P^{-1}$ 使用范数三角不等式，与（454.5）及 H8 合并即得所述总界。剩余族正是（455.2）；若其中 $J=1$，则 $C=I$ 且 $q_C\le R_1$，与 $\mathrm T$ 的 $q_C>R_1$ 矛盾。因此所有仅由惰性素理想和完整共轭对构成的一重数选择均在已控制的并集中；未配对分裂核心的进一步消去仍是额外估计义务。证毕。
+
+## 追加锚（本行以下为增补区）

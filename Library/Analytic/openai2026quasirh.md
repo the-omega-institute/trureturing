@@ -2814,4 +2814,155 @@ $$
 $$
 对有界的原显式共同成本包络，H8 因而控制 $w+e^{4,H}$ 的实际二次型为 $o(K^2)$。没有供应原全部 growing-height allowance 或其他长度上的界。
 
-新族允许每个 $q\ne p$ 在原 valuation $4$ 或至少 $6$ 时任选两支，且包括 $p$ 的全部合法选择。因此完整 primitive continuous 向量的确切剩余部分，包含至少一个其他素因子在原 valuation $1,2,3$ 的第二分支；其余 $p$、四重数和高重数选择可同时存在。这些剩余模式、完整 projection／complement、其他原长度与高度、F4 transfer，以及原固定指数的 signed Robin restoration 仍未支付。该联合估计不证明 RH 或全部 $n>5040$ 的严格 Robin 不等式。
+本节新族允许每个 $q\ne p$ 在原 valuation $4$ 或至少 $6$ 时任选两支，且包括 $p$ 的全部合法选择；相对于本节，完整 primitive continuous 向量的剩余部分包含至少一个其他素因子在原 valuation $1,2,3$ 的第二分支，其余选择可同时存在。[下一节](#joint-control-of-all-powerful-prime-reflection-choices)在明确的更小参数区间联合支付其中全部二重数、三重数选择，保留一重数分支及完整 projection／complement、其他原长度与高度、F4 transfer、signed Robin restoration 的缺口。本节估计不证明 RH 或全部 $n>5040$ 的严格 Robin 不等式。
+
+### Joint control of all powerful-prime reflection choices
+
+本节为 `repo-derived` 的原系数联合应用，沿用 VF1–VF10、SH1–SH11、I1–I16、I14a、H1–H8、G7 及其解析前提。控制的完整分支族允许每个 $q\ne p$ 在原 valuation $2,3,4$ 或至少 $6$ 时任选两支，并允许标记 $p$ 的全部合法选择；valuation $5$ 没有第二支。采用同一对阈值，把实际分支族分成小乘积部分与完整大乘积尾部，再回接原 Mellin 和实际 inverse Gram。局部反演、固定 cusp 理论及 generic 均方界均为既有输入，不主张文献原创性或本仓解析 Lean 认证。
+
+#### 原始多重数、复合标记与共同系数
+
+令 $A_j$、$j=2,3,4$ 是所选原 valuation $j$ 素因子的平方自由乘积，$B$ 是所选原 valuation 至少 $6$ 素因子的平方自由乘积。各集合互素并避开 $pS$。记 $x_j=q_{A_j}$、$z=q_B$，$k_j=j+1$、$s_j=4-j$、$b_j=5-j$。相同 $j$ 的复合反射在原 numerator $A_j^jk$ 上给出
+$$
+\mu(A_j)\nu(A_j)^{k_j}\gamma_{k_j}(A_j)
+ x_j^{j+1/2-k_ju}\chi_{A_j}(k)^{-k_j},\qquad
+A_j^jk\longmapsto A_j^{s_j}k,\quad\nu\longmapsto\nu\epsilon_{A_j,j}.
+\tag{PR1}
+$$
+若 $q$ 在 $r$ 之前，同类型成对因子为 $\chi_q(r)^{-jk_j}\chi_r(q)^{-s_jk_j}R(q,r)^{k_j^2}$，由完整 reciprocity 等于 $\chi_q(r)^{k_j}\chi_r(q)^{k_j}$，恰为 $\gamma_{k_j}(qr)$ 的 CRT 因子。对不同类型 $j,l$ 交换两个指定第二分支，系数比中的字符指数为 $6(j-l)$、reciprocity 符号指数为 $(2j-4)k_l$，均为平凡值。这证明可按 $2,3,4$ 分组；没有预设局部 extraction 交换。高六层步的交叉字符值为 $1$。
+
+$p$ 第一支取 $t=1,\nu_0=\nu$；低重数第二支取 $t=4-j_p,\nu_0=\nu\epsilon_{p,j_p}$；高重数第二支取 $t=0,\nu_0=\nu$。令 $\nu_j=\nu_0\prod_{i<j}\epsilon_{A_i,i}$，$r_j=p^tm\prod_{i<j}A_i^{s_i}\prod_{i>j}A_i^i$，则其他素因子的确切标量为
+$$
+\mathcal L=\mu(B)z^{6-6u}\prod_{j=2}^4
+\left[\mu(A_j)\nu_j(A_j)^{k_j}\gamma_{k_j}(A_j)
+ x_j^{j+1/2-k_ju}\chi_{A_j}(r_j)^{-k_j}\right].
+\tag{PR2}
+$$
+将其乘原 $\mathcal v_u(pA_2A_3A_4Bm)$ 和 $D_{\nu_0\prod_j\epsilon_{A_j,j};S}(p^tA_2^2A_3m,u)$，就是对应 full-series 因子。$p$ 第一支标量为 $1$；低-$p$ 支仍乘 I1 的完整 $-\nu(p)^kQ^{j_p+1/2-ku}\gamma_k(p)\chi_p(\prod_jA_j^jm)^{-k}$、$k=j_p+1$；高-$p$ 支乘 $-Q^{6-6u}$。原 $h$ 依次为 $\prod_jA_j^jB^6m$、$p^{j_p-1}\prod_jA_j^jB^6m$、$p^5\prod_jA_j^jB^6m$；$(m,A_2A_3A_4)=1$，仅低-$p$ 支另有 $p\nmid m$。原 $b(h)$、外部共轭、mask 与 section indicator 全部保留，$\nu$ 始终来自原 $h$。
+
+原卷积有双射分解
+$$
+d=(\prod_jE_j)Fd_0,\quad n=\prod_j(A_j^j/E_j)(B^6/F)n_0,
+\quad E_j\mid A_j,\ F\mid B,
+$$
+$$
+(d_0,A_2A_3A_4B)=1,\quad(n_0,A_2A_3A_4)=1,\quad
+D'=\frac D{(\prod_jq_{E_j})q_F},\quad
+N'=\frac{N(\prod_jq_{E_j})q_F}{(\prod_jx_j^j)z^6},\quad K'=\frac K{(\prod_jx_j^j)z^6}.
+\tag{PR3}
+$$
+各原 Möbius 符号保留，$n_0$ 在 $B$ 处不受限，不添加 $(d_0,n_0)=1$。各 $p$-sector 按自身实际支撑缩长。令 $T=A_2A_3A_4B$，则原分母为 $P_T\sum_{g\mid pm,(g,T)=1}z_u(g)$，$P_T=\prod_{q\mid T}(1-\lambda_q)^{-1}\ll_\eta1$；低-$p$ 支将 $pm$ 换成 $m$ 并保留单独 $p$ 分母。每个局部因子只计一次。原 $h$ 的 mask 运输仍发生在固定模数 $\mathfrak M$ 上；ray 乘积仍在原固定 $216$ 个分量中。
+
+对块 $(P_i,s_i,b_i,k_i)=(A_j,4-j,5-j,j+1)$，低-$p$ 时再加入 $(p,4-j_p,5-j_p,j_p+1)$，略去单位块，取
+$$
+R_0=\prod_iP_i^{b_i},\quad\tau_i=\overline{g_{k_i}(1,P_i)},\quad
+\psi(w)=\prod_i\mathbf1_{P_i^{s_i}\mid w}\chi_{P_i}(w/P_i^{s_i})^{-k_i}.
+$$
+从 PR2 抽出的额外单位因子是 $\prod_{j<i}\chi_{A_j}(A_i)^{-k_j(i-s_i)}$，低-$p$ 时再乘 $\prod_j\chi_p(A_j)^{-k_p(j-s_j)}$；它们与 $m,d_0$ 无关，必须同原 $\nu_j$、Gauss 相位一起保留。CRT 精确给出
+$$
+\widehat\psi(v)=\mathcal K\prod_i\frac{\tau_i}{q_{P_i}^{b_i}}
+\prod_i\chi_{P_i}(v)^{k_i}\mathbf1_{(v,\prod_iP_i)=1},
+\qquad\mathcal K=\prod_i\chi_{P_i}(R_0/P_i^{b_i})^{-k_i}.
+$$
+原平移约化中 $r\mid a$ 的完整有限变换系数是
+$$
+\mathcal K\prod_i\left[\frac{\tau_i}{q_{P_i}^{b_i}}\chi_{P_i}(r)^{-k_i}\right]
+ e(-n\overline{R_0r}/\mathfrak M)c_{R_0}(n)
+ g_{\overline\chi_r}(-n\overline{\mathfrak M}\,\overline{R_0},r).
+\tag{PR4}
+$$
+逆元的角色与 VF6 一致。每个 $k_i+b_i=6$，原 multiplier 消去全部增长字符；保留 $c_{A_2^3},c_{A_3^2},c_{A_4},c_{p^{b_p}}$ 的中心与零值。$|\tau_i|=\sqrt{q_{P_i}}$、$\gamma_{k_i}(P_i)\tau_i=\sqrt{q_{P_i}}$ 包括奇数 Gauss 相位。Cusp 分量只依赖 $R_0r\bmod\mathfrak M$。$p$ 第一支的 $a=p^2e_0$ 仍用 VF6 的完整 imprimitive Gauss 和及 I4／H5 gcd-Cauchy，不能使用平方自由点态界。
+
+#### 小乘积区域的主项与误差
+
+Fourier 长度为 $X=(\prod_jx_j^{s_j})Y$，低-$p$ 时另乘 $Q^{4-j_p}$。含实际 reflected scalar 的 unweighted error 为 $Y^{-\eta}Q^{5-j_p-j_p\eta}\prod_jx_j^{5-j-j\eta}q_a^{1/2+\eta}$；其 convexity 大-$g$ 尾部为 I13 的完整 $Q$ 因子乘
+$$
+\frac{\prod_jx_j^{1/2-j/4-(3+j/2)\eta}Y^{5/4-\eta/2}}{q_aG^{1+6\eta}}.
+$$
+取 $G=Y^{5/6}Q^{-3+j_p/2}\prod_jx_j^{-3+j/2}/q_a$，$G\ge1$ 时按 VF7–VF8 同一有限 $g$ split，得到
+$$
+\operatorname{Err}_{\rm wt}\ll(YQq_a\prod_jx_j)^\varepsilon(1+|t|)^J
+Y^{5/12+\eta}Q^{7/2-3j_p/4+12\eta}\prod_jx_j^{7/2-3j/4+12\eta}.
+\tag{PR5}
+$$
+有限 two-polar tail $\ll Y[Q(\prod_jx_j)q_a]^{-1}G^{-1-6\eta}$ 同时支付；$G<1$ 则直接计数原支与两个 polar terms。非低-$p$ 支删去这些 $Q$ 因子。每块两个极点的 norm powers 为 $x_j^{5-6u},x_j^{j-1-ju}$，模均至多 $x_j^{-1}$。付清有限尾项后，主项才用 $Z_u^Tv_u(a)/q_a$；PR4 的 $r=1$ 无增长 $\chi_{A_j}(d_0)$，故可复用原固定字符 Möbius 位移 $D'^{-1/8}$ 及 SH6 的移动删因子小幂。全部非空、有界 subunit 和 dual scales 仍按原 annular enlargement／lattice gap 处理。
+
+令 $\mathcal N_{\rm pow}$ 是一次固定的原 profile、cusp、Mellin、reciprocal-$L$ 与 generic mean 成本包络。合并所有合法 $p$ 支，PR3 的一份原 sector 被
+$$
+(KL)^\varepsilon(1+|t|)^J\mathcal N_{\rm pow}(z\prod_jx_j)^\theta
+\left[\frac{K'D'^{-1/8}}{\prod_jx_j}+\frac{K'}{Q\prod_jx_j}
++K'^{5/12+\eta}D'Q^{11/4+12\eta}\prod_jx_j^{7/2-3j/4+12\eta}\right]
+$$
+控制。主项质量 $\prod_jx_j^{-j-1}z^{-6}$ 及原除数权 $1/8$ 或 $1$ 对全部集合可和。误差的准确原变量质量为
+$$
+\frac{x_2^{7/6+10\eta}x_3^{9\eta}x_4^{-7/6+8\eta}z^{-5/2-6\eta}}
+{(\prod_jq_{E_j})q_F}.
+$$
+$A_4,B$ 的质量按 VF10 收敛。在共同区域 $x_2\le R_2,x_3\le R_3$，其余截断质量为 $\ll R_2^{13/6+10\eta+\varepsilon}R_3^{1+9\eta+\varepsilon}$。内部 $\theta$ 与除数小幂先于最终 $\varepsilon$ 选取。因此小区域的实际贡献满足
+$$
+|C_{p,\rm small}|\ll(KL)^\varepsilon(1+|t|)^J\mathcal N_{\rm pow}
+\left[KD^{-1/8}+K/Q+K^{5/12+\eta}DQ^{11/4+12\eta}
+R_2^{13/6+10\eta}R_3^{1+9\eta}\right].
+\tag{PR6}
+$$
+已付的 $A_2=A_3=1$ 子族也可直接复用 VF／SH9，并保留 SH10 的完整原费用。
+
+#### 同一实际系数的大乘积尾部
+
+[Primitive-mean 源稿](https://rstation.ai/api/v1/papers/riemann_hypothesis_10/versions/2/download) Proposition 3 是 full $D$ 的均方供应。其 $B=1$ 情形直接消费为
+$$
+\sum_{q_n\asymp Y}|D_\nu(Hn,1+\eta+it)|^2
+\ll(q_HY)^\varepsilon q_H^{1/2}Y(1+|t|)^6.
+\tag{PR7}
+$$
+这里 $n$ 不限平方自由：写 $n=md^2$、$m$ 平方自由，$e=\gcd(m,\operatorname{rad}(Hd))$、$m=em_0$。原 Proposition 3 在 multiplier $Hd^2e$、长度 $Y/(q_d^2q_e)$ 上的费用为 $q_H^{1/2}Y/(q_d\sqrt{q_e})$。$e$ 的除数和为小幂，$d$ 的调和和为对数；实际有界 subunit 支撑按固定扩大处理。这是既有 full-series 均值的应用，没有把 primitive $H_\nu$ 的均值误用于 $D_\nu$。实际 $\nu_{[h]}$ 由固定有限分量最大值处理，只在这个正均方中扩大 mask 支撑。
+
+原支撑 $q_h\asymp K$ 上，$|b(h)|\ll K^\varepsilon\mathcal N_{\rm pow}$。固定选中集合时，$m$ 长度为 $Y=K/(x_2^2x_3^3x_4^4z^6)$，第二 $p$ 支另按原 $Q^{j_p-1}$ 或 $Q^5$ 缩长。原 scalar 模至多 $\prod_jx_j^{-1/2}$，分母一致有界。对同一实际 pairing 使用 PR7，shift 为 $p^tA_2^2A_3$，Cauchy 给出
+$$
+|\operatorname{pair}_{A_2,A_3,A_4,B}|
+\ll(KL)^\varepsilon(1+|t|)^J\mathcal N_{\rm pow}
+KQ^{1/4}x_2^{-2}x_3^{-13/4}x_4^{-9/2}z^{-6}.
+$$
+低-$p$ 的 $Q$ 指数是 $(4-j_p)/4-1/2-(j_p-1)=3/2-5j_p/4\le1/4$，高-$p$ 为 $-5$，故同一界覆盖全部选择。未选原素因子仍在不受平方自由限制的 $m$ 中，未替换原系数或 profile。
+
+小区域的补集先取 $x_2>R_2$，再取 $x_2\le R_2,x_3>R_3$。对有限实际模式求和，只把正 majorant 扩张到无限集合，得到
+$$
+|C_{p,\rm large}|\ll(KL)^\varepsilon(1+|t|)^J\mathcal N_{\rm pow}
+KQ^{1/4}(R_2^{-1}+R_3^{-9/4}).
+\tag{PR8}
+$$
+因为 $\sum_{x_2>R_2}x_2^{-2}\ll R_2^{-1}$、$\sum_{x_3>R_3}x_3^{-13/4}\ll R_3^{-9/4}$，其余质量均收敛。这里覆盖全部大乘积模式，且所有行、原 profiles 共用同一对阈值；没有组合分别最优的系数。
+
+#### 两个阈值共同支付原二次型
+
+记全部指定模式经原 Mellin 后的向量为 $e^{\rm pow}$。保留原 $U^\eta$、实际 $G_P^{-1}$ 和 G7；小／大区域及已付子族的交叉项由固定有限和平方界支付。完整联合二次型满足
+$$
+\begin{aligned}
+Q_{\rm pow}\ll{}&(UKL)^\varepsilon\mathcal N_{\rm pow}^2U^{2\eta}\bigl[
+K^2D^{-1/4}L+K^{5/6}D^{4/3}L^{13/6}
++K^{5/6+2\eta}D^2L^{-1/6+2\eta}+K^2/L\\
+&+K^{5/6+2\eta}D^2L^{13/2+24\eta}R_2^{13/3+20\eta}R_3^{2+18\eta}
++K^2L^{3/2}(R_2^{-2}+R_3^{-9/2})\bigr].
+\end{aligned}
+\tag{PR9}
+$$
+保持原 $U\asymp K$、$K^{1/2}\le D\le K^{1/2}L^{1/6-\delta}$、$0<\delta<1/6$，取 $L=K^\ell$、$0<\ell<2/(129-24\delta)$。设
+$$
+r=\frac16-\left(\frac{41}6-2\delta\right)\ell,\quad
+c=\frac{36r-141\ell}{130}=\frac{3[2-(129-24\delta)\ell]}{130}>0,
+$$
+$$
+v=c+3\ell/2,\qquad a_2=v/2,\quad a_3=2v/9,\quad R_2=K^{a_2},\quad R_3=K^{a_3}.
+$$
+同一原参数上准确有 $r-(13/3)a_2-2a_3=2a_2-3\ell/2=(9/2)a_3-3\ell/2=c$。选择同一个 spectral 允许的固定
+$$
+0<\eta<\min\left\{\frac{1/8-\ell}{32},\frac\ell8,
+\frac{c}{2(4+24\ell+20a_2+18a_3)}\right\}.
+$$
+这蕴含 SH11 的原限制和 $\eta<1/256$，可为 VF10 的可和性分配内部 $\theta$。新小区域的损失为 $(4+24\ell+20a_2+18a_3)\eta<c/2$，两个大区域各损失 $2\eta<c/2$。其他 SH10 裕度不变，于是
+$$
+Q_{\rm pow}\ll K^{2-\zeta_{\rm pow}+\varepsilon}\mathcal N_{\rm pow}^2,
+\qquad\zeta_{\rm pow}=\min\{(1/8-\ell)/2,\ell/2,c/2\}>0.
+\tag{PR10}
+$$
+对有界的原共同成本包络及充分小损失，H8 控制 $w+e^{\rm pow}$ 的实际二次型为 $o(K^2)$。全部所选 powerful 素因子的同时反射都已在此指定族中求和，不限于阈值内。完整 primitive continuous 向量的确切剩余模式，含至少一个其他素因子在原 valuation $1$ 的第二分支；其余所有 $p$、二重数、三重数、四重数及高重数选择仍可同时出现。该一重数剩余族的[原系数临界带定位](../../docs/develop/theory/FIBONACCI_ANALYTIC_FRONTIER_INTERFACES.md#454-原系数一重数反射的临界带定位)在更小参数区间、同一共同成本下联合控制 P、S、O 补集，留下定义 454.1 的临界带 T；其[共轭公共因子细分](../../docs/develop/theory/FIBONACCI_ANALYTIC_FRONTIER_INTERFACES.md#455-临界反射族的共轭公共因子细分)在同一参数下进一步控制公共部分范数大于 $R_1$ 的全部模式，剩余族为定理 455.2 的 $\mathrm T_{\rm rat}$，并必须含非单位未配对分裂核心；完整 projection／complement、其他原长度与高度、原 growing-height allowance、F4 transfer 及原固定指数的 signed Robin restoration 仍未支付。这份条件联合估计不证明 RH 或全部 $n>5040$ 的严格 Robin 不等式。
