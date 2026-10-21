@@ -1,0 +1,19 @@
+fingerprints:
+  raw_sha256: sha256:01012482d51368b3bc57fa6a347c026181ad06ee67bd7bebd33d3030453adef0
+  normalized_sha256: sha256:01012482d51368b3bc57fa6a347c026181ad06ee67bd7bebd33d3030453adef0
+cas_ref: sha256:01012482d51368b3bc57fa6a347c026181ad06ee67bd7bebd33d3030453adef0
+coverage_gids:
+  - gid: D5/S0/Carrier/Ring.a
+    target_statement_id: sha256:9a55d3914a2c2abc9cb7f35a377e5cdff87dc3d9947c4cc7b46586ccffa6bc3b
+  - gid: D5/S0/Carrier/Ring.b
+    target_statement_id: sha256:30a979c47d05fa62c1eda3ed713ed96202a74f7a56426928eb1a73e1d674ebc6
+  - gid: D5/S0/Carrier/Ring.commRing
+    target_statement_id: sha256:922fa941bc6396a42fcdce845352e764f1a7cc59569c43799792de6e9704457a
+  - gid: D5/S0/Carrier/Ring.mk
+    target_statement_id: sha256:84672879540d518b9c60ff31609672517b2f5368d599d416eba79d5e5cea563a
+  - gid: D5/S0/Carrier/Ring.phi
+    target_statement_id: sha256:b49f0b58129e5dd908333752a22134da0a1f6eb45340dced2f476522c4178bd9
+  - gid: D5/S1/Scale/Fibonacci.golden_phi_pow_eq_fib_pair
+    target_statement_id: sha256:d216732e11d7a2e479d9c2c4667ce688b4f5a7eb54e80c6bce46e6858e22e2be
+receipts:
+  unresolved_subitems: []
