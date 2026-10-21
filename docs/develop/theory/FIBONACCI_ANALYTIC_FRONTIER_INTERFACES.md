@@ -1183,3 +1183,199 @@ $$
 原（454.4）保证 $U^{2\eta}$ 的损失 $2\eta<c/2$，因此（455.1）被原 $K^{2-\zeta+\varepsilon}\mathcal N^2$ 吸收。对同一个 $G_P^{-1}$ 使用范数三角不等式，与（454.5）及 H8 合并即得所述总界。剩余族正是（455.2）；若其中 $J=1$，则 $C=I$ 且 $q_C\le R_1$，与 $\mathrm T$ 的 $q_C>R_1$ 矛盾。因此所有仅由惰性素理想和完整共轭对构成的一重数选择均在已控制的并集中；未配对分裂核心的进一步消去仍是额外估计义务。证毕。
 
 ## 追加锚（本行以下为增补区）
+
+## 456. 精确双频支撑对原系数反射预算的改进
+
+**定理 456.1（完整有限 Euler 分裂下的支撑节省）。** 使用假设 454.2 的解析输入、定义 454.1 的实际原系数族以及同一个共同成本包络 $\mathcal N$。以下是这些输入的 `repo-derived` 联合应用；Ramanujan 支撑、格点计数和 Cauchy 不等式只作为证明中的既有工具，不另作原创性断言。
+
+令
+
+$$
+U\asymp K,\quad K^{1/2}\le D\le K^{1/2}L^{1/6-\delta},
+\quad 0<\delta<1/6,\quad L=K^\ell,
+\quad 0<\ell<\frac9{1114-108\delta},
+$$
+
+$$
+\begin{aligned}
+c&=\frac{9-(1114-108\delta)\ell}{655}>0,\\
+a_1&=2c+3\ell,\quad a_2=(c+\ell)/2,
+\quad a_3=2(c+\ell)/9,\quad R_i=K^{a_i}.
+\end{aligned}
+\tag{456.1}
+$$
+
+选同一个满足原 spectral avoidance 的固定
+
+$$
+0<\eta<\min\left\{
+\frac{1/8-\ell}{32},\frac\ell8,
+\frac{c}{2(4+24\ell+22a_1+20a_2+18a_3)}\right\}.
+\tag{456.2}
+$$
+
+用这组共同阈值重新定义（454.2）的 $\mathrm P,\mathrm S,\mathrm O,\mathrm T$，并令 $e^{\rm paid+rat}$ 包含其 $\mathrm P,\mathrm S,\mathrm O$、全部 $C=1$ powerful 选择，以及 $\mathrm T$ 内所有 $q_{\gcd(C,\bar C)}>R_1$ 的实际模式。则
+
+$$
+(e^{\rm paid+rat})^*G_P^{-1}e^{\rm paid+rat}
+\ll K^{2-\zeta+\varepsilon}\mathcal N^2,
+\qquad
+\zeta=\min\{(1/8-\ell)/2,\ell/2,c/2\}>0.
+\tag{456.3}
+$$
+
+这里内部小幂在最终 $\varepsilon>0$ 以前分配。对有界共同成本和充分小的 $\varepsilon$，加入 H8 的 $w$ 后，同一实际 inverse Gram 下的总二次型仍为 $o(K^2)$；$w$ 沿用 H8 自己的节省，不指定为 $\zeta$。尚未控制的原一重数反射族准确为
+
+$$
+\mathrm T_{\rm rat}=
+\{\mathrm T,\ q_{\gcd(C,\bar C)}\le R_1\},
+\tag{456.4}
+$$
+
+其未配对分裂核心非单位。结论不包含该剩余族、整个 projection/complement、其他原长度与高度、原 growing-height allowance、F4 transfer 或 signed Robin restoration。
+
+证明。复用 [PR4 的完整多标记变换](../../../Library/Analytic/openai2026quasirh.md#joint-control-of-all-powerful-prime-reflection-choices) 与 [I4、I10–I13 的固定 cusp 估计和有限 Euler 分裂](../../../Library/Analytic/faveri2026fixedorder.md#an-unchanged-numerator-term-in-the-primitive-continuous-adjoint)。加入（454.14）的 $C=A_1$ 块。对每个非单位块 $P_i$，写其原 valuation 为 $j_i\in\{1,2,3,4\}$，并取
+
+$$
+s_i=4-j_i,\quad b_i=5-j_i,\quad k_i=j_i+1,
+\quad R_0=\prod_iP_i^{b_i},\quad
+\Pi=\prod_iP_i^{s_i},\quad
+V=q_\Pi,\quad B=\prod_iq_{P_i}.
+$$
+
+低-$p$ 支再加入其真实 $j_p$ 块；第一支和高支没有额外 $p$ mark。各块互素，且与外模数 $a$ 及固定观察模数 $\mathfrak M$ 互素。所有原混合字符、Gauss 相位、有限 ray 置换、分母、零 mask 和外部共轭保留在原式中。
+
+记完整有限变换系数为 $\mathcal A_r(n)$，$r\mid a$。PR4 的 $c_{R_0}(n)$ 在 $\Pi\nmid n$ 时为零。由完整 imprimitive Gauss 界和 $|\tau_i|=\sqrt{q_{P_i}}$，有
+
+$$
+|\mathcal A_r(n)|^2
+\le Bq_rq_{\gcd(n,r)}\mathbf1_{\Pi\mid n}.
+\tag{456.5}
+$$
+
+它也适用于第一 $p$ 支外模数 $a=p^2e_0$；此处没有把 imprimitive $r$-Gauss 和换成平方自由点态界。
+
+在 $q_{n/\mathfrak M}\asymp H$ 的真实 Fourier dyad 上，$\Pi d\mid n\ne0$ 的格点数至多为固定常数乘 $H/(Vq_d)$；非空性已经迫使 $Vq_d\ll_{\mathfrak M}H$。因此
+
+$$
+\begin{aligned}
+\sum_{q_{n/\mathfrak M}\asymp H}|\mathcal A_r(n)|^2
+&\le Bq_r\sum_{d\mid r}q_d
+\#\{n:\Pi d\mid n,\ q_{n/\mathfrak M}\asymp H\}\\
+&\ll(q_rH)^\varepsilon Bq_rH/V.
+\end{aligned}
+\tag{456.6}
+$$
+
+这里使用 $q_{\gcd(n,r)}\le\sum_{d\mid\gcd(n,r)}q_d$。固定分母和非空 fractional-lattice gap 包含在常数中；空 dyad 贡献为零。
+
+对同一个完整 marked cusp 系数，I4 只提供总平方和 $\ll(1+|t|)^JH^{1+\eta+\varepsilon}$。与（456.6）作 Cauchy 得
+
+$$
+\sum_{q_{n/\mathfrak M}\asymp H}
+|\mathcal A_r(n)t_{[R_0r]}(n/\mathfrak M)|
+\ll(q_rH)^\varepsilon(1+|t|)^J
+B^{1/2}q_r^{1/2}V^{-1/2}H^{1+\eta/2}.
+\tag{456.7}
+$$
+
+节省来自有限变换系数的平方质量，不假设 $t$ 的平方质量在 $\Pi$ 倍数上按密度分布；也不将 $t(\Pi m)$ 替换为 $t(m)$，或借用 residue theta 的周期性。
+
+原 Fourier 长度是 $X=VY$，$R=R_0r$ 的 dual scale 是 $K_R=q_R^2/X$。把（456.7）放回原 smooth inversion，各 dyad 都得到共同的 $V^{-1/2}$ 因子。低于固定分母所决定的最小非零频率尺度的 dyad 为空；其余情形，包括 $K_R<V$，均逐 dyad 使用（456.7）及原核界求和，得到同一个正 majorant。去掉原 Fourier normalization 并乘实际 reflected scalars，unweighted error 改为
+
+$$
+(Yq_a\prod_iq_{P_i})^\varepsilon(1+|t|)^J
+Y^{-\eta}q_a^{1/2+\eta}
+\prod_iq_{P_i}^{3-j_i/2-j_i\eta}.
+\tag{456.8}
+$$
+
+它是原 unweighted error 乘 $\prod_iq_{P_i}^{-(4-j_i)/2}$；完整 cusp 系数与有限 ray 族没有改变。
+
+继续保留原有限 $\sum_{g\mid m}z_u(g)$。在同一个实际 sector 上于 $G$ 分裂后，小-$g$ 误差为（456.8）乘 $G^{1/2-5\eta}$；large-$g$ 的原 full-$D$ convexity 尾部仍为
+
+$$
+(Yq_a\prod_iq_{P_i})^\varepsilon(1+|t|)^J
+\frac{Y^{5/4-\eta/2}}{q_aG^{1+6\eta}}
+\prod_iq_{P_i}^{1/2-j_i/4-(3+j_i/2)\eta}.
+\tag{456.9}
+$$
+
+两个 finite polar tails 仍有界为 $Y(q_a\prod_iq_{P_i})^{-1}G^{-1-6\eta}$，不提前换成无限主项乘积。现在取
+
+$$
+G=Y^{5/6}q_a^{-1}\prod_iq_{P_i}^{-5/3+j_i/6}.
+\tag{456.10}
+$$
+
+若 $G\ge1$，小-$g$ 与 large-$g$ 的 $Y$ 指数分别为 $5/12-31\eta/6$、$5/12-11\eta/2$；每块的 $\eta$ 系数分别为 $25/3-11j_i/6$、$7-3j_i/2$，均至多为 $13/2$。实际支撑上 $q_a\ll Y$，故 $q_a^{6\eta}$ 可由 $Y^{6\eta}$ 支付，得到完整 weighted error
+
+$$
+\operatorname{Err}_{\rm wt}
+\ll(Yq_a\prod_iq_{P_i})^\varepsilon(1+|t|)^J
+Y^{5/12+\eta}
+\prod_iq_{P_i}^{(26-5j_i)/12+12\eta}.
+\tag{456.11}
+$$
+
+finite polar tail 的无 $\eta$ 上界为 $Y^{1/6}\prod_iq_{P_i}^{2/3-j_i/6}$；与（456.11）的指数差分别是 $1/4$、$(6-j_i)/4>0$，所以同次 split 已支付它。若 $G<1$，$q_a$ 大于（456.10）的分子，直接计数（456.9）在 $G=1$ 的整个原支与两个 polar terms，给出同一个界。有界非空 subunit annuli 沿用原固定扩大，不产生新多项式成本。
+
+四类块的 weighted mark 指数由 $11/4,2,5/4,1/2$ 分别降为
+
+$$
+7/4,\qquad4/3,\qquad11/12,\qquad1/2.
+\tag{456.12}
+$$
+
+代回 PR3 与（454.14）的原 $E_j,F,d_0,n_0$ 分解，保持每个 Möbius 符号与相位。两个主项及原固定字符位移不变。误差的原变量质量现在为
+
+$$
+\frac{x^{4/3+11\eta}x_2^{1/2+10\eta}
+ x_3^{-1/3+9\eta}x_4^{-7/6+8\eta}z^{-5/2-6\eta}}
+{(\prod_jq_{E_j})q_F}.
+$$
+
+$x_4,z$ 的和连原除数损失收敛；$x,x_2,x_3$ 的截断计数与原 divisor sums 给出
+
+$$
+\begin{aligned}
+|C_{p,\rm small}(t)|\ll{}&(KL)^\varepsilon(1+|t|)^J\mathcal N
+\bigl[KD^{-1/8}+K/Q\\
+&+K^{5/12+\eta}DQ^{7/4+12\eta}
+R_1^{7/3+11\eta}R_2^{3/2+10\eta}R_3^{2/3+9\eta}\bigr].
+\end{aligned}
+\tag{456.13}
+$$
+
+这里低-$p$ 的 $j_p=1,2,3,4$ 在按各自长度缩短后，误差的无 $\eta$ 标记幂依次为 $7/4,11/12,1/12,-3/4$。第一支在 numerator 长度 $QK'$、外模数 $pd_0$ 或 $p^2e_0$ 上应用无 $p$-mark 的（456.11），与 VF9 同样的原 sector 计数给出 $D'Q^{5/12+\eta}$；（456.6）已包含完整 imprimitive overlap。高支按 I14a 的全部 $j\ge6$ 恒等式缩为 $K'/Q^5$，没有低-$p$ mark，且原 $Q^{-6\eta}$ 和两个 $e$-sector 计数有利。它们均由（456.13）的 $Q$ 幂控制；valuation $5$ 没有第二支。$C=1$ 时，small 部分取 $x=1$，powerful tails 仍使用（454.11）—（454.13）；无标记分量继续使用 I9。
+
+将（456.13）、不变的（454.10）、（454.13）以及 PR9 的前四项放入同一个原 Mellin 与实际 inverse Gram。新的 small-error 费用是
+
+$$
+(UKL)^\varepsilon\mathcal N^2U^{2\eta}
+K^{5/6+2\eta}D^2L^{9/2+24\eta}
+R_1^{14/3+22\eta}R_2^{3+20\eta}R_3^{4/3+18\eta}.
+\tag{456.14}
+$$
+
+其余三阈值费用仍是 $K^2L(R_2^{-2}+R_3^{-9/2})$ 与 $K^2L^{3/2}R_1^{-1/2}$。这一步复用的是（454.10）—（454.16）的 constituent proofs，不在定理 454.3 的旧 $\ell$ 范围以外直接调用其结论。原复系数只在正范数处取模，所有交叉项由同一范数的三角不等式支付。
+
+（456.1）的四个无 $\eta$ 裕度准确为
+
+$$
+\begin{aligned}
+a_1/2-3\ell/2&=c,&2a_2-\ell&=c,\\
+(9/2)a_3-\ell&=c,&
+\frac16-\left(\frac{29}6-2\delta\right)\ell
+-\frac{14}3a_1-3a_2-\frac43a_3&=c.
+\end{aligned}
+\tag{456.15}
+$$
+
+（456.14）的 $\eta$ 损失至多是 $(4+24\ell+22a_1+20a_2+18a_3)\eta<c/2$。不变项在所用 $\ell<1/9$ 范围内仍有原正裕度，I9 的裕度由（456.2）支付。由此得到 $\mathrm P,\mathrm S,\mathrm O$ 与全部 $C=1$ 的（456.3）。
+
+最后对同一新阈值 $R_1$ 复用（455.1）的证明。其额外费用为 $(UKL)^\varepsilon\mathcal N^2U^{2\eta}K^2LR_1^{-1/2}$，无损失裕度 $a_1/2-\ell=c+\ell/2>c$，仍被同一 $\zeta$ 吸收。于是（456.3）包含全部所述模式，剩余恰为（456.4）；未配对核心非单位的结论沿用定理 455.2 的同一论证。
+
+新共同 $\ell$ 区间严格包含原 $0<\ell<3/(530-36\delta)$：两个端点交叉相乘后的正差为 $1428$。该扩大来自（456.6）—（456.11）的完整误差估计，未假设剩余临界带已经消去。证毕。
+
+## 追加锚（本行以下为增补区）
