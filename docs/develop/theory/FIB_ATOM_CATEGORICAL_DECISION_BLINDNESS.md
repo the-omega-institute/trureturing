@@ -1735,3 +1735,238 @@ In particular, $d<H(\tau)$ gives a positive eventual retained fraction, and ever
 The source correspondences are Proposition 2.1 and (11.2)--(11.3) for the signed Bayes identity, Theorem 10.2 for the on-axis onset context, Theorem 12.2 for the fixed-$q$ off-axis context, and Proposition 7.5 for the same-prior finite-law TV bound. The proof of Theorem 13.2 is direct and does not substitute a varying $q_n$ into the fixed-$q$ theorem. No native recursive-FIB realization, physical-cost claim, unknown-law learning, empirical benefit, formal certification, comparison-law approximation rate, or global originality claim follows.
 
 ## 追加锚（本行以下为增补区）
+
+## 14. Relative crossover along unrestricted normalized offsets
+
+**假设 14.1（全标签高斯族与相对尺度）。** Use the known-law binary singleton experiment of Definition 13.1: $C$ is uniform on the five original labels, and one complete observation $X=(U,V)$ conditional on $C=i$ has law $\mathcal N_2(\mu_i,I_2)$, with means $(-q,0),(-q,0),(0,b),(q,0),(q,0)$ in label order, for $q,b>0$. The target is $C=3$ versus its complement under measurable binary zero--one decision rules. Retain $r_0(q,b)$, $B(q,b)=1/5-r_0(q,b)$, $c(q)=\ln4-q^2/2$, $q_c=\sqrt{2\ln4}$, the standard normal density $\phi$, and $H$ from (13.2)--(13.3). For positive sequences $q_n\to q_c$ and $b_n\to0$, put
+
+$$
+ \tau_n=\frac{c(q_n)}{b_n},\qquad
+ S_n=b_n^{3/2}H(\tau_n)>0.
+\tag{14.1}
+$$
+
+No boundedness, convergence, monotonicity or additional rate restriction is imposed on $\tau_n$.
+
+**定理 14.2（不受限归一化偏移的相对极限）。** Under Assumption 14.1, for every such pair of positive sequences,
+
+$$
+ \frac{B(q_n,b_n)}{S_n}\longrightarrow1.
+\tag{14.2}
+$$
+
+**Proof.** Suppress sequence indices when proving estimates along a path. Write $c=b\tau$ and define, for all real $d$,
+
+$$
+ J_q(d)=\int_{\mathbb R}\phi(u)[e^d-\cosh(qu)]_+\,du,
+ \qquad d_b(v)=b(v-\tau)-\frac{b^2}{2}.
+\tag{14.3}
+$$
+
+For $d\le0$, $e^d\le1\le\cosh(qu)$, so $J_q(d)=0$. Factoring $e^c$ in the exact all-parameter signed Bayes identity (13.6) gives
+
+$$
+ B(q,b)=\frac{e^c}{5}\int_{\mathbb R}\phi(v)J_q(d_b(v))\,dv.
+\tag{14.4}
+$$
+
+Restrict $q$ to a fixed compact neighborhood of $q_c$ contained in $(0,\infty)$, as is legitimate eventually along every path in Assumption 14.1. Uniformly for these $q$, put
+
+$$
+ A_q=\frac{4\sqrt2\,\phi(0)}{3q}.
+$$
+
+There are $\delta_0>0$ and $C<\infty$ such that
+
+$$
+ \left|J_q(d)-A_qd^{3/2}\right|\le C d^{5/2}
+ \qquad(0<d\le\delta_0).
+\tag{14.5}
+$$
+
+Indeed, with $w=qu$, the positive interval has endpoint
+$a(d)=\operatorname{arcosh}(e^d)=\sqrt{2d}(1+O(d))$. On $|w|\le a(d)$,
+
+$$
+ e^d-\cosh w=d-\frac{w^2}{2}+O(d^2),\qquad
+ \phi(w/q)=\phi(0)(1+O(d)),
+$$
+
+with uniform remainders. Integrating the leading parabola gives
+
+$$
+ \frac{\phi(0)}q
+ \int_{-\sqrt{2d}}^{\sqrt{2d}}\left(d-\frac{w^2}{2}\right)dw
+ =A_qd^{3/2}.
+$$
+
+The integrated Taylor errors are $O(d^{5/2})$; replacing $a(d)$ by $\sqrt{2d}$ contributes an error of that order or smaller. Also $A_q$ is bounded above and below by positive constants. In particular, $J_q(d)\le C d^{3/2}$ for sufficiently small positive $d$. For all $d\ge0$, the elementary bounds
+
+$$
+ 0\le J_q(d)\le e^d,\qquad d^{3/2}\le M e^d,
+ \qquad M=\sup_{d\ge0}d^{3/2}e^{-d}<\infty
+\tag{14.6}
+$$
+
+will control the nonlocal part.
+
+Define the positive quantities
+
+$$
+ I(\tau)=\int_\tau^\infty(v-\tau)^{3/2}\phi(v)\,dv,
+ \qquad
+ K_b(\tau)=\int_{\mathbb R}\phi(v)[d_b(v)]_+^{3/2}\,dv.
+\tag{14.7}
+$$
+
+We first prove
+
+$$
+ K_b(\tau)=b^{3/2}I(\tau)(1+o(1))
+\tag{14.8}
+$$
+
+along either $\tau\to+\infty$ or $\tau\to-\infty$, with $b\to0$ and $|b\tau|=|c|\to0$.
+
+For $\tau\to+\infty$, set $x=v-\tau$ and $z=\tau x$. Then exactly
+
+$$
+ \begin{aligned}
+ I(\tau)
+ &=\phi(\tau)\tau^{-5/2}
+   \int_0^\infty z^{3/2}e^{-z}e^{-z^2/(2\tau^2)}\,dz,\\
+ b^{-3/2}K_b(\tau)
+ &=\phi(\tau)\tau^{-5/2}
+   \int_0^\infty(z-b\tau/2)_+^{3/2}e^{-z}e^{-z^2/(2\tau^2)}\,dz.
+ \end{aligned}
+\tag{14.9}
+$$
+
+Since $b\tau\to0$, both last integrals converge to the same strictly positive finite integral $\int_0^\infty z^{3/2}e^{-z}\,dz$, by domination with $z^{3/2}e^{-z}$. This proves the relative comparison (14.8). It also controls the positive tail after rescaling: the part $x>R/\tau$ is uniformly small in the normalized integrals as $R\to\infty$.
+
+For $\tau=-L\to-\infty$, with $V\sim\mathcal N(0,1)$,
+
+$$
+ b^{-3/2}K_b(-L)=\mathbb E[(V+L-b/2)_+^{3/2}],
+ \qquad I(-L)=\mathbb E[(V+L)_+^{3/2}].
+\tag{14.10}
+$$
+
+After division by $L^{3/2}$, both integrands converge pointwise to $1$, since $b/L\to0$. For $L\ge1$ and $b\le1$ they are bounded by a fixed constant times $(1+|V|)^{3/2}$, which is integrable. Gaussian moment domination, controlling both tails of $V$, therefore gives
+
+$$
+ I(-L)\sim L^{3/2},\qquad K_b(-L)\sim(bL)^{3/2},
+\tag{14.11}
+$$
+
+and proves (14.8) on this side as well.
+
+We next justify replacing $J_q$ by (14.5) with an error relative to $K_b(\tau)$. For fixed $\delta>0$, define
+
+$$
+ T_\delta=\int_{\{d_b(v)>\delta\}}\phi(v)e^{d_b(v)}\,dv.
+$$
+
+Let $\overline\Phi(s)=\int_s^\infty\phi(v)\,dv$. Completing the Gaussian square gives the exact formula
+
+$$
+ T_\delta=e^{-b\tau}\overline\Phi\!\left(\tau+\frac\delta b-\frac b2\right).
+\tag{14.12}
+$$
+
+By (14.6), this envelope bounds the nonlocal $J_q$ contribution and, up to the constant $M$, the nonlocal $d_b^{3/2}$ contribution. It suffices to show $T_\delta=o(K_b(\tau))$.
+
+If $\tau\to+\infty$, (14.9) yields, eventually for a fixed $c_0>0$,
+
+$$
+ K_b(\tau)\ge c_0 b^{3/2}\phi(\tau)\tau^{-5/2}.
+\tag{14.13}
+$$
+
+Put $h=\delta/b-b/2$. Eventually $h\ge\delta/(2b)$ and $\tau\ge1$. The Gaussian bound $\overline\Phi(s)\le\phi(s)/s$ for $s>0$, the identity
+$\phi(\tau+h)/\phi(\tau)=\exp(-\tau h-h^2/2)$, and $e^{-b\tau}\le1$ give
+
+$$
+ T_\delta\le C\phi(\tau)
+       \exp\!\left(-\frac{\delta^2}{8b^2}\right).
+$$
+
+Moreover $b\tau\to0$ implies $\tau\le1/b$ eventually. Hence
+
+$$
+ \frac{T_\delta}{K_b(\tau)}
+ \le C b^{-3/2}\tau^{5/2}
+       \exp\!\left(-\frac{\delta^2}{8b^2}\right)
+ \le C b^{-4}\exp\!\left(-\frac{\delta^2}{8b^2}\right)
+ \longrightarrow0.
+\tag{14.14}
+$$
+
+The exponentially small factor $\phi(\tau)$ cancels before the remainder is estimated; the rare-tail denominator is explicitly controlled.
+
+If $\tau=-L\to-\infty$, $bL\to0$ implies eventually
+
+$$
+ \frac\delta b-L-\frac b2\ge\frac\delta{2b},\qquad e^{bL}\le2.
+$$
+
+Equations (14.11)--(14.12) and the same Gaussian bound imply
+
+$$
+ T_\delta\le C\exp\!\left(-\frac{\delta^2}{8b^2}\right),\qquad
+ \frac{T_\delta}{K_b(-L)}
+ \le C b^{-3/2}\exp\!\left(-\frac{\delta^2}{8b^2}\right)
+ \longrightarrow0,
+\tag{14.15}
+$$
+
+where $L\ge1$ was used in the second inequality.
+
+For fixed $0<\delta\le\delta_0$, apply (14.5) on $0<d_b(v)\le\delta$. Its integrated error is at most $C\delta K_b(\tau)$. On $d_b(v)>\delta$, (14.14) or (14.15) bounds both contributions by $o(K_b(\tau))$. The portion $d_b(v)\le0$ is zero. Dividing by $A_qK_b(\tau)$, taking the limit superior, and then sending $\delta\downarrow0$ proves
+
+$$
+ \int_{\mathbb R}\phi(v)J_q(d_b(v))\,dv
+ =A_qK_b(\tau)(1+o(1))
+\tag{14.16}
+$$
+
+with a relative error in both unbounded-offset regimes. Combining (14.4), (14.8) and (14.16), and using $e^c\to1$, $q\to q_c$ and $\phi(0)=1/\sqrt{2\pi}$, gives
+
+$$
+ \begin{aligned}
+ \frac{B(q,b)}{b^{3/2}}
+ &=\frac{e^c}{5}\frac{4\sqrt2\phi(0)}{3q}I(\tau)(1+o(1))\\
+ &=\frac4{15q_c\sqrt\pi}I(\tau)(1+o(1))
+ =H(\tau)(1+o(1)).
+ \end{aligned}
+\tag{14.17}
+$$
+
+The displacement $b^2/2$ is retained throughout: it produces the shift $b/2$ in (14.9)--(14.12). On the positive side its rescaled size is $b\tau/2=c/2\to0$; on the negative side its relative size is $b/(2L)\to0$. The coefficient includes the original singleton prior $1/5$, with both duplicate complement means counted twice in (13.6). The proof integrates the positive signed excess, so it preserves the cancellation in the Bayes identity.
+
+It remains to cover bounded and oscillatory offsets. Gaussian moment domination makes $H$ continuous on every compact interval; its strict positivity gives a positive minimum there. If $\tau_n\to\tau_0\in\mathbb R$, Theorem 13.2 and its global bound (13.12) give $B(q_n,b_n)/b_n^{3/2}\to H(\tau_0)$, while $H(\tau_n)\to H(\tau_0)>0$. Thus (14.2) holds on each such subsequence. A compactness contradiction consequently gives the relative assertion on any bounded offset sequence. Every subsequence of an arbitrary real sequence $\tau_n$ has a further subsequence tending to a finite real number, $+\infty$, or $-\infty$. The preceding arguments give ratio limit $1$ in every case, proving (14.2) for the entire sequence, including paths oscillating between the regimes.
+
+The reused inputs are the full model of Definition 13.1, the exact all-parameter identity (13.6), and Theorem 13.2 only for finite normalized offsets. The fixed-$q$ asymptotic of Section 12 is not used as a varying-$q$ theorem. The local $d^{3/2}$ kernel and the relative Gaussian-tail estimates supply the unrestricted-offset step. Taylor expansion, Gaussian moment domination and Laplace-type tail comparison are classical mechanisms; related standard methods are described in [DLMF §2.3](https://dlmf.nist.gov/2.3), [§2.4](https://dlmf.nist.gov/2.4) and [§7.12](https://dlmf.nist.gov/7.12). Equation (14.2) is a repo-derived application for the specified family, with no global priority assertion. It is a qualitative sequential limit: it supplies neither a numerical finite-$b$ cutoff nor a uniform quantitative remainder rate. $\square$
+
+**推论 14.3（相对尺度下的条件联合 TV 保留）。** Under Assumption 14.1, use the actual parameter-dependent Borel sign readout $Q_{q_n,b_n}$ of (13.16), applied identically for all five original labels. Let $\mathcal J_n$ be its label--output joint law for the stated Gaussian experiment. Supply comparison joint laws $\mathcal J_n'$ on the same $\{1,\ldots,5\}\times\{0,1\}$ alphabet with the same uniform original-label prior, obtained using the same actual readout, and write their optimal binary singleton gains as $B_n'$. Suppose
+
+$$
+ \operatorname{TV}(\mathcal J_n,\mathcal J_n')\le e_n.
+\tag{14.18}
+$$
+
+If $e_n=o(S_n)$, then $B_n'/B(q_n,b_n)\to1$. More generally, if $e_n\le dS_n$ eventually for a fixed $0\le d<1$, then
+
+$$
+ \limsup_{n\to\infty}
+ \left|\frac{B_n'}{B(q_n,b_n)}-1\right|\le d,
+ \qquad
+ \liminf_{n\to\infty}\frac{B_n'}{B(q_n,b_n)}\ge1-d.
+\tag{14.19}
+$$
+
+Every fixed fraction $0<\theta<1-d$ is therefore eventually retained. The limiting lower bound does not assert an eventual pointwise bound of exactly $1-d$.
+
+**Proof.** Reuse (13.17)--(13.18): $B_{Q_{q_n,b_n}}=B(q_n,b_n)>0$ and $|B_n'-B(q_n,b_n)|\le e_n$. Divide by $B(q_n,b_n)$ and apply (14.2). The first error budget gives a vanishing relative discrepancy; the second gives the limsup bound in (14.19), which implies its liminf bound and every strictly smaller eventual fraction. This is the existing same-prior joint-TV algebra applied to the scale $S_n$ for unrestricted offsets. The comparison laws and their error bounds are supplied hypotheses; no approximation-law construction or achieved rate is established. In particular the conclusion concerns the common actual sign readout, not an arbitrary quantizer, and entails no native-FIB realization, training, empirical, physical-cost or formal-certification claim. $\square$
+
+## 追加锚（本行以下为增补区）
