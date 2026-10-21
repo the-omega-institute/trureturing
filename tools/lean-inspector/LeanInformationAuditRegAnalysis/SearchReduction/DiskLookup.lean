@@ -759,17 +759,19 @@ private unsafe def conclusionPathsInEnvironment (env : Environment) (e : Expr) :
   | .error ex => throw <| IO.userError s!"lookup.discrtree_conclusion_failed:{← ex.toMessageData.toString}"
 
 private unsafe def matureModuleEntries (env : Environment) (name : Name)
-    (rigidNames : NameSet) : IO (Array (Array Lean.Meta.DiscrTree.Key × Entry) × Nat) :=
+    (_rigidNames : NameSet) : IO (Array (Array Lean.Meta.DiscrTree.Key × Entry) × Nat) :=
   visitModule name fun parts => do
     let mut entries := #[]
     let mut count := 0
     for part in parts do
       for info in part.constants do
         count := count + 1
+        let some stableInfo := env.find? info.name | continue
+        if stableInfo.type.hasLooseBVars then continue
         let entry : Entry := {
           module := name.toString, name := ownedString info.name.toString,
           parts := nameParts info.name, ordinal := count}
-        let keys ← pathInEnvironment env info.type
+        let keys ← pathInEnvironment env stableInfo.type
         entries := entries.push (keys, entry)
     return (entries, count)
 
@@ -777,7 +779,9 @@ private unsafe def importMatureEnvironment (roots : Array Name) : IO Environment
   enableInitializersExecution
   withImporting do
     let imports := roots.map fun module => {module : Import}
-    importModules imports {} 0 (leakEnv := false) (loadExts := true)
+    let (_, state) ← (importModulesCore imports).run default
+    let env ← finalizeImport state imports {} 0 (leakEnv := false) (loadExts := true)
+    pure env
 
 private unsafe def writeMatureShard (path : System.FilePath)
     (entries : Array PickledEntry) : IO Unit := do

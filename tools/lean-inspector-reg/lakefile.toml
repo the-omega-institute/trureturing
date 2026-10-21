@@ -63,3 +63,4 @@ root = "LeanInformationAuditRegAnalysis.AuricFib.Main"
 name = "searchReductionIndex"
 srcDir = "../lean-inspector"
 root = "LeanInformationAuditRegAnalysis.SearchReduction.DiskLookupMain"
+supportInterpreter = true
