@@ -196,7 +196,21 @@ $$\forall v \in \operatorname{Fin}\left(3\right) \to \mathbb{R},\; \operatorname
 
 The length vlen of a real three-vector equals the norm of that vector in EuclideanSpace, with WithLp.toLp 2 identifying the coordinate function with its Euclidean vector.
 
-**Theorem 1.16 (Tracing an Alice observable).**
+**Theorem 1.16 (Euclidean length is nonnegative).**
+
+$$\forall v \in \operatorname{Fin}\left(3\right) \to \mathbb{R},\; 0 \le \operatorname{D5}.\operatorname{S3}.\operatorname{Quantum}.\operatorname{Entanglement}.\operatorname{SteeringEllipsoidFullyEntangledFraction}.\operatorname{vlen}\left(v\right)$$
+
+*Proof.* Machine-checked in Lean as `D5/S3/Quantum/Entanglement/SteeringEllipsoidFullyEntangledFraction.vlen_nonneg` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Acknowledgement.* Antony Milne; David Jennings; Sania Jevtic; Terry Rudolph (2014). *Quantum correlations of two-qubit states with one maximally mixed marginal*. DOI: [10.1103/PhysRevA.90.024302](https://doi.org/10.1103/PhysRevA.90.024302). URL: <https://arxiv.org/abs/1404.3951v2>.
+
+*Commentary.*
+
+Every real three-vector has nonnegative Euclidean length, since its length is a real square root.
+
+**Theorem 1.17 (Tracing an Alice observable).**
 
 $$\forall rho \in \operatorname{Matrix}\left((\operatorname{Fin}\left(2\right) \times \operatorname{Fin}\left(2\right)), (\operatorname{Fin}\left(2\right) \times \operatorname{Fin}\left(2\right)), \mathbb{C}\right),\; \forall A \in \operatorname{Matrix}\left(\operatorname{Fin}\left(2\right), \operatorname{Fin}\left(2\right), \mathbb{C}\right),\; \operatorname{Matrix}.\operatorname{trace}\left(rho \cdot \operatorname{Matrix}.\operatorname{kronecker}\left(A, 1\right)\right) = \operatorname{Matrix}.\operatorname{trace}\left(\operatorname{D5}.\operatorname{S3}.\operatorname{Quantum}.\operatorname{Information}.\operatorname{PartialTraceMutualInformation}.\operatorname{partialTraceRight}\left(rho\right) \cdot A\right)$$
 
@@ -210,7 +224,7 @@ $$\forall rho \in \operatorname{Matrix}\left((\operatorname{Fin}\left(2\right) \
 
 The trace of rho times A tensor the identity equals the trace of Alice's reduced operator times A. This identity holds for arbitrary complex operators, without positivity or normalization assumptions.
 
-**Theorem 1.17 (Tracing a Bob observable).**
+**Theorem 1.18 (Tracing a Bob observable).**
 
 $$\forall rho \in \operatorname{Matrix}\left((\operatorname{Fin}\left(2\right) \times \operatorname{Fin}\left(2\right)), (\operatorname{Fin}\left(2\right) \times \operatorname{Fin}\left(2\right)), \mathbb{C}\right),\; \forall B \in \operatorname{Matrix}\left(\operatorname{Fin}\left(2\right), \operatorname{Fin}\left(2\right), \mathbb{C}\right),\; \operatorname{Matrix}.\operatorname{trace}\left(rho \cdot \operatorname{Matrix}.\operatorname{kronecker}\left(1, B\right)\right) = \operatorname{Matrix}.\operatorname{trace}\left(\operatorname{D5}.\operatorname{S3}.\operatorname{Quantum}.\operatorname{Information}.\operatorname{PartialTraceMutualInformation}.\operatorname{partialTraceLeft}\left(rho\right) \cdot B\right)$$
 
@@ -224,7 +238,7 @@ $$\forall rho \in \operatorname{Matrix}\left((\operatorname{Fin}\left(2\right) \
 
 The trace of rho times the identity tensor B equals the trace of Bob's reduced operator times B. This identity holds for arbitrary complex operators, without positivity or normalization assumptions.
 
-**Theorem 1.18 (Moving a local filter across the trace).**
+**Theorem 1.19 (Moving a local filter across the trace).**
 
 $$\forall K \in \operatorname{Matrix}\left(\operatorname{Fin}\left(2\right), \operatorname{Fin}\left(2\right), \mathbb{C}\right),\; \forall A \in \operatorname{Matrix}\left(\operatorname{Fin}\left(2\right), \operatorname{Fin}\left(2\right), \mathbb{C}\right),\; \forall rho \in \operatorname{Matrix}\left((\operatorname{Fin}\left(2\right) \times \operatorname{Fin}\left(2\right)), (\operatorname{Fin}\left(2\right) \times \operatorname{Fin}\left(2\right)), \mathbb{C}\right),\; \operatorname{Matrix}.\operatorname{trace}\left(\operatorname{Matrix}.\operatorname{kronecker}\left(1, K\right) \cdot rho \cdot \operatorname{Matrix}.\operatorname{conjTranspose}\left(\operatorname{Matrix}.\operatorname{kronecker}\left(1, K\right)\right) \cdot \operatorname{Matrix}.\operatorname{kronecker}\left(A, 1\right)\right) = \operatorname{Matrix}.\operatorname{trace}\left(rho \cdot \operatorname{Matrix}.\operatorname{kronecker}\left(A, \operatorname{Matrix}.\operatorname{conjTranspose}\left(K\right) \cdot K\right)\right)$$
 
@@ -238,7 +252,7 @@ $$\forall K \in \operatorname{Matrix}\left(\operatorname{Fin}\left(2\right), \op
 
 For arbitrary complex two-by-two matrices K and A and a complex two-qubit operator rho, the trace of the operator filtered by the identity tensor K against A tensor the identity equals the trace of rho against A tensor K adjoint times K. This follows from cyclicity of the trace and multiplication of Kronecker products.
 
-**Theorem 1.19 (The Kronecker product distributes over subtraction).**
+**Theorem 1.20 (The Kronecker product distributes over subtraction).**
 
 $$\forall A \in \operatorname{Matrix}\left(\operatorname{Fin}\left(2\right), \operatorname{Fin}\left(2\right), \mathbb{C}\right),\; \forall X \in \operatorname{Matrix}\left(\operatorname{Fin}\left(2\right), \operatorname{Fin}\left(2\right), \mathbb{C}\right),\; \forall Y \in \operatorname{Matrix}\left(\operatorname{Fin}\left(2\right), \operatorname{Fin}\left(2\right), \mathbb{C}\right),\; \operatorname{Matrix}.\operatorname{kronecker}\left(A, X - Y\right) = \operatorname{Matrix}.\operatorname{kronecker}\left(A, X\right) - \operatorname{Matrix}.\operatorname{kronecker}\left(A, Y\right)$$
 
@@ -252,7 +266,7 @@ $$\forall A \in \operatorname{Matrix}\left(\operatorname{Fin}\left(2\right), \op
 
 For arbitrary complex two-by-two matrices A, X and Y, A tensor (X minus Y) equals A tensor X minus A tensor Y.
 
-**Theorem 1.20 (Length on the third coordinate axis).**
+**Theorem 1.21 (Length on the third coordinate axis).**
 
 $$\forall s \in \mathbb{R},\; \operatorname{D5}.\operatorname{S3}.\operatorname{Quantum}.\operatorname{Entanglement}.\operatorname{SteeringEllipsoidFullyEntangledFraction}.\operatorname{vlen}\left([0, 0, s]\right) = \left|s\right|$$
 
@@ -266,7 +280,7 @@ $$\forall s \in \mathbb{R},\; \operatorname{D5}.\operatorname{S3}.\operatorname{
 
 For every real s, the Euclidean length of (0, 0, s) is the absolute value of s.
 
-**Theorem 1.21 (Agreement of Hermitian Bloch coordinates).**
+**Theorem 1.22 (Agreement of Hermitian Bloch coordinates).**
 
 $$\forall Z \in \operatorname{Matrix}\left(\operatorname{Fin}\left(2\right), \operatorname{Fin}\left(2\right), \mathbb{C}\right),\; (\operatorname{Matrix}.\operatorname{IsHermitian}\left(Z\right)) \Rightarrow (\operatorname{WithLp}.\operatorname{toLp}\left(2, \operatorname{D5}.\operatorname{S3}.\operatorname{Quantum}.\operatorname{Entanglement}.\operatorname{SteeringEllipsoidFullyEntangledFraction}.\operatorname{blochVec}\left(Z\right)\right): \operatorname{EuclideanSpace}\left(\mathbb{R}, \operatorname{Fin}\left(3\right)\right)) = \operatorname{D5}.\operatorname{S3}.\operatorname{Quantum}.\operatorname{Information}.\operatorname{ActualPureQubitCostInfimum}.\operatorname{bloch}\left(Z\right)$$
 
@@ -280,7 +294,7 @@ $$\forall Z \in \operatorname{Matrix}\left(\operatorname{Fin}\left(2\right), \op
 
 For every Hermitian complex two-by-two matrix Z, the coordinates blochVec Z, regarded as a Euclidean vector, equal the Bloch vector bloch Z of ActualPureQubitCostInfimum.
 
-**Theorem 1.22 (A canonical state and a reverse Bob filter).**
+**Theorem 1.23 (A canonical state and a reverse Bob filter).**
 
 $$\forall rho \in \operatorname{Matrix}\left((\operatorname{Fin}\left(2\right) \times \operatorname{Fin}\left(2\right)), (\operatorname{Fin}\left(2\right) \times \operatorname{Fin}\left(2\right)), \mathbb{C}\right),\; (\operatorname{Matrix}.\operatorname{PosSemidef}\left(rho\right)) \Rightarrow \left((\operatorname{Matrix}.\operatorname{trace}\left(rho\right) = 1) \Rightarrow \left((\operatorname{D5}.\operatorname{S3}.\operatorname{Quantum}.\operatorname{Entanglement}.\operatorname{SteeringEllipsoidFullyEntangledFraction}.\operatorname{vlen}\left(\operatorname{D5}.\operatorname{S3}.\operatorname{Quantum}.\operatorname{Entanglement}.\operatorname{SteeringEllipsoidFullyEntangledFraction}.\operatorname{blochB}\left(rho\right)\right) < 1) \Rightarrow \left(\exists sigma \in \operatorname{Matrix}\left((\operatorname{Fin}\left(2\right) \times \operatorname{Fin}\left(2\right)), (\operatorname{Fin}\left(2\right) \times \operatorname{Fin}\left(2\right)), \mathbb{C}\right),\; \exists F \in \operatorname{Matrix}\left(\operatorname{Fin}\left(2\right), \operatorname{Fin}\left(2\right), \mathbb{C}\right),\; (\operatorname{Matrix}.\operatorname{PosSemidef}\left(sigma\right)) \land ((\operatorname{D5}.\operatorname{S3}.\operatorname{Quantum}.\operatorname{Information}.\operatorname{PartialTraceMutualInformation}.\operatorname{partialTraceLeft}\left(sigma\right) = (\frac{1}{2}) \cdot (1)) \land ((\operatorname{D5}.\operatorname{S3}.\operatorname{Quantum}.\operatorname{Entanglement}.\operatorname{SteeringEllipsoidFullyEntangledFraction}.\operatorname{blochA}\left(sigma\right) = \operatorname{D5}.\operatorname{S3}.\operatorname{Quantum}.\operatorname{Entanglement}.\operatorname{SteeringEllipsoidFullyEntangledFraction}.\operatorname{centre}\left(rho\right)) \land ((rho = \operatorname{Matrix}.\operatorname{kronecker}\left(1, F\right) \cdot sigma \cdot \operatorname{Matrix}.\operatorname{conjTranspose}\left(\operatorname{Matrix}.\operatorname{kronecker}\left(1, F\right)\right)) \land ((F \cdot \operatorname{Matrix}.\operatorname{conjTranspose}\left(F\right) = (2) \cdot (\operatorname{D5}.\operatorname{S3}.\operatorname{Quantum}.\operatorname{Information}.\operatorname{PartialTraceMutualInformation}.\operatorname{partialTraceLeft}\left(rho\right))) \land (\operatorname{Complex}.\operatorname{normSq}\left(\operatorname{Matrix}.\operatorname{det}\left(F\right)\right) = 1 - \operatorname{D5}.\operatorname{S3}.\operatorname{Quantum}.\operatorname{Entanglement}.\operatorname{SteeringEllipsoidFullyEntangledFraction}.\operatorname{vlen}\left(\operatorname{D5}.\operatorname{S3}.\operatorname{Quantum}.\operatorname{Entanglement}.\operatorname{SteeringEllipsoidFullyEntangledFraction}.\operatorname{blochB}\left(rho\right)\right)^{2})))))\right)\right)\right)$$
 
@@ -294,7 +308,7 @@ $$\forall rho \in \operatorname{Matrix}\left((\operatorname{Fin}\left(2\right) \
 
 Let rho be positive semidefinite with trace one and Bob Bloch length strictly less than one. There are a positive semidefinite two-qubit operator sigma with Bob marginal half the identity and Alice Bloch vector equal to centre rho, and a complex two-by-two filter F which reconstructs rho from sigma. The filter satisfies F F adjoint = 2 rho_B, and the squared complex norm of its determinant is 1 minus the squared Bob Bloch length.
 
-**Theorem 1.23 (Normalization from the Bob marginal).**
+**Theorem 1.24 (Normalization from the Bob marginal).**
 
 $$\forall sigma \in \operatorname{Matrix}\left((\operatorname{Fin}\left(2\right) \times \operatorname{Fin}\left(2\right)), (\operatorname{Fin}\left(2\right) \times \operatorname{Fin}\left(2\right)), \mathbb{C}\right),\; (\operatorname{D5}.\operatorname{S3}.\operatorname{Quantum}.\operatorname{Information}.\operatorname{PartialTraceMutualInformation}.\operatorname{partialTraceLeft}\left(sigma\right) = (\frac{1}{2}) \cdot (1)) \Rightarrow \operatorname{Matrix}.\operatorname{trace}\left(sigma\right) = 1$$
 
@@ -308,7 +322,7 @@ $$\forall sigma \in \operatorname{Matrix}\left((\operatorname{Fin}\left(2\right)
 
 Every complex two-qubit operator whose Bob marginal is half the identity has trace one. Positivity is not required for this trace identity.
 
-**Theorem 1.24 (States with a maximally mixed Bob marginal).**
+**Theorem 1.25 (States with a maximally mixed Bob marginal).**
 
 $$\forall sigma \in \operatorname{Matrix}\left((\operatorname{Fin}\left(2\right) \times \operatorname{Fin}\left(2\right)), (\operatorname{Fin}\left(2\right) \times \operatorname{Fin}\left(2\right)), \mathbb{C}\right),\; (\operatorname{PosSemidef}\left(sigma\right)) \Rightarrow \left((\operatorname{partialTraceLeft}\left(sigma\right) = \frac{1}{2} \cdot 1) \Rightarrow \left(\forall phi \in (\operatorname{Fin}\left(2\right) \times \operatorname{Fin}\left(2\right)) \to \mathbb{C},\; \operatorname{re}\left(\operatorname{dotProduct}\left(\operatorname{star}\left(phi\right), \operatorname{mulVec}\left(sigma, phi\right)\right)\right) \le (1 - \frac{\operatorname{vlen}\left(\operatorname{blochA}\left(sigma\right)\right)}{2}) \cdot \operatorname{re}\left(\operatorname{dotProduct}\left(\operatorname{star}\left(phi\right), phi\right)\right)\right)\right)$$
 
@@ -322,7 +336,7 @@ $$\forall sigma \in \operatorname{Matrix}\left((\operatorname{Fin}\left(2\right)
 
 Let sigma be positive semidefinite with Bob marginal sigma_B = 1/2 (so its trace is 1), let a be the Bloch vector of its Alice marginal sigma_A, and let phi be a vector with t = <phi| sigma |phi> > 0. Put w = sigma phi. The Cauchy-Schwarz inequality for the positive form of sigma gives sigma >= w w^H / t and t^2 <= |phi|^2 |w|^2. For a two-by-two Hermitian X let rad X be the length of its Bloch vector, the difference of its eigenvalues; it is a seminorm, rad(sigma_A) = |a|, and rad Z <= tr Z for positive semidefinite Z because det Z >= 0. Taking Bob's marginal of sigma - w w^H / t gives 1/2 - tr_A(w w^H)/t >= 0, hence rad(tr_A w w^H)/t <= 1 - |w|^2/t. The two marginals of the rank-one operator w w^H have the same trace |w|^2 and the same determinant |det W|^2, W the coefficient matrix of w, so they have the same rad. Taking Alice's marginal, sigma_A = tr_B(w w^H)/t + Z with Z >= 0 and tr Z = 1 - |w|^2/t, so |a| <= rad(tr_B w w^H)/t + tr Z <= 2 - 2|w|^2/t <= 2 - 2t/|phi|^2. This is the bound; for t = 0 it follows from |a| <= 1.
 
-**Theorem 1.25 (The operator inequality).**
+**Theorem 1.26 (The operator inequality).**
 
 $$\forall rho \in \operatorname{Matrix}\left((\operatorname{Fin}\left(2\right) \times \operatorname{Fin}\left(2\right)), (\operatorname{Fin}\left(2\right) \times \operatorname{Fin}\left(2\right)), \mathbb{C}\right),\; (\operatorname{PosSemidef}\left(rho\right)) \Rightarrow \left((\operatorname{trace}\left(rho\right) = 1) \Rightarrow \left(\forall x \in (\operatorname{Fin}\left(2\right) \times \operatorname{Fin}\left(2\right)) \to \mathbb{C},\; \operatorname{re}\left(\operatorname{dotProduct}\left(\operatorname{star}\left(x\right), \operatorname{mulVec}\left(rho, x\right)\right)\right) \le (2 - \operatorname{vlen}\left(\operatorname{centre}\left(rho\right)\right)) \cdot \operatorname{re}\left(\operatorname{dotProduct}\left(\operatorname{star}\left(x\right), \operatorname{mulVec}\left(\operatorname{kronecker}\left(1, \operatorname{partialTraceLeft}\left(rho\right)\right), x\right)\right)\right)\right)\right)$$
 
@@ -336,7 +350,7 @@ $$\forall rho \in \operatorname{Matrix}\left((\operatorname{Fin}\left(2\right) \
 
 Let rho be a two-qubit density matrix with Bob marginal rho_B = [[p, q], [conj q, r]] and Bloch vector b, so that 1 - |b|^2 = 4d with d = pr - |q|^2 = det rho_B. If |b| < 1 then d > 0 and p > 0; with u = sqrt d the filters H = [[u, 0], [-conj q, p]] and G = [[p, 0], [conj q, u]] satisfy H rho_B H^H = p d 1, G H = p u 1, G G^H = p rho_B and H^H H = p (1 - rho_B). The filtered operator sigma = (1 tensor H) rho (1 tensor H)^H / (2 p d) is positive semidefinite with Bob marginal 1/2, and since 2(1 - rho_B) = 1 - b . sigma its Alice Bloch vector is (a - T b)/(1 - |b|^2) = c. Moreover rho = (2/p)(1 tensor G) sigma (1 tensor G)^H, so for y = (1 tensor G)^H x the bound for sigma gives Re <x| rho |x> = (2/p) Re <y| sigma |y> <= (2/p)(1 - |c|/2) p <x| 1 tensor rho_B |x>. If |b| = 1 then c = a and |a| <= 1, and it suffices to show Re <x| rho |x> <= <x| 1 tensor rho_B |x>: with t = <x| rho |x> > 0 and w = rho x, the Cauchy-Schwarz bound rho >= w w^H / t gives rho_B >= tr_A(w w^H)/t, and rad(rho_B) = tr rho_B = 1 forces rad = tr for tr_A(w w^H), so det W = 0. Then A = W conj(X)^T is a rank-one two-by-two matrix with tr A = <x|w> = t, and |tr A|^2 <= sum |A_ik|^2 = tr(tr_A(w w^H) tr_A(x x^H)) <= t tr(rho_B tr_A(x x^H)) = t <x| 1 tensor rho_B |x>.
 
-**Theorem 1.26 (Proof of the conjecture).**
+**Theorem 1.27 (Proof of the conjecture).**
 
 $$(\forall rho \in \operatorname{Matrix}\left((\operatorname{Fin}\left(2\right) \times \operatorname{Fin}\left(2\right)), (\operatorname{Fin}\left(2\right) \times \operatorname{Fin}\left(2\right)), \mathbb{C}\right),\; (\operatorname{PosSemidef}\left(rho\right)) \Rightarrow \left((\operatorname{trace}\left(rho\right) = 1) \Rightarrow \operatorname{fef}\left(rho\right) \le 1 - \frac{\operatorname{vlen}\left(\operatorname{centre}\left(rho\right)\right)}{2}\right)) \land (\forall t \in \mathbb{R},\; (0 \le t) \Rightarrow \left((t \le 1) \Rightarrow \left(\exists rho \in \operatorname{Matrix}\left((\operatorname{Fin}\left(2\right) \times \operatorname{Fin}\left(2\right)), (\operatorname{Fin}\left(2\right) \times \operatorname{Fin}\left(2\right)), \mathbb{C}\right),\; (\operatorname{PosSemidef}\left(rho\right)) \land ((\operatorname{trace}\left(rho\right) = 1) \land ((\operatorname{vlen}\left(\operatorname{centre}\left(rho\right)\right) = t) \land (\operatorname{fef}\left(rho\right) = 1 - \frac{t}{2})))\right)\right))$$
 
@@ -382,6 +396,7 @@ For a maximally entangled e the reduced state tr_A(e e^H) is 1/2, so <e| 1 tenso
 - Truth anchor: `D5/S3/Quantum/Entanglement/SteeringEllipsoidFullyEntangledFraction.vlen`
 - Truth anchor: `D5/S3/Quantum/Entanglement/SteeringEllipsoidFullyEntangledFraction.vlen_e3`
 - Truth anchor: `D5/S3/Quantum/Entanglement/SteeringEllipsoidFullyEntangledFraction.vlen_eq_norm`
+- Truth anchor: `D5/S3/Quantum/Entanglement/SteeringEllipsoidFullyEntangledFraction.vlen_nonneg`
 - Dependency: [D5/S3/Quantum/Divergence/ConditionalHockeyStickOrthogonalReduction](../Divergence/ConditionalHockeyStickOrthogonalReduction.md)
 - Dependency: [D5/S3/Quantum/FiniteDimensional](../FiniteDimensional.md)
 - Dependency: [D5/S3/Quantum/Information/ActualPureQubitGeometry](../Information/ActualPureQubitGeometry.md)
