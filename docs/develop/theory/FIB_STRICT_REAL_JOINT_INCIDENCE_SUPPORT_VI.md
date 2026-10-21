@@ -4174,3 +4174,352 @@ the local coordinate choices use the inverse-function theorem as in
 Theorem 16.1. Neither generic algebra nor compactness asserts the
 existence of an original world at an extraneous root, closedness of a
 distinct-pair locus, or a global independent-pair exclusion.
+
+## 25. An evaluated wider mirror tube with its orientation
+
+**Definition 25.1 (Ordered source tube).** Keep the original complete
+worlds, clocks, left products and readings of Definitions 1.1 and 16.3.
+Use exactly the polynomials $\mathscr H,C_*$ of (11.16) and the ordered
+comparator $F$ of (11.18). Put
+
+$$
+\begin{gathered}
+\delta=\frac1{30000},\qquad
+R=\left[\frac{267}{1000},\frac{277}{1000}\right],\qquad
+S_\delta=\left[\frac{25439}{30000},\frac{25741}{30000}\right],\qquad
+B_\delta=\left[\frac{3749}{30000},\frac{3751}{30000}\right],\\
+\mathcal Q_\delta=R\times S_\delta\times B_\delta\times B_\delta,\\
+\mathcal T_\delta=
+\{(r,s,b_1,b_2)\in\mathcal Q_\delta:
+                 |s+r-9/8|\le\delta\},\\
+\sigma(r,s,b_1,b_2)=(s,r,b_2,b_1),\qquad
+\mathcal T_\delta^{\leftarrow}=\sigma(\mathcal T_\delta).
+\end{gathered}
+\tag{25.1}
+$$
+
+Here $S_\delta$ is an interval, whereas $S(t,b)$ remains the polynomial
+quotient in (11.15). The endpoint relations are exactly
+
+$$
+\begin{gathered}
+S_\delta=[9/8-\max R-\delta,\ 9/8-\min R+\delta],\qquad
+B_\delta=[1/8-\delta,\ 1/8+\delta],\\
+0<\frac{267}{1000}<\frac{277}{1000}
+ <\frac{25439}{30000}<\frac{25741}{30000}<1,
+\qquad \frac{3749}{30000}>0.
+\end{gathered}
+\tag{25.2}
+$$
+
+In particular the two geometries in $\mathcal T_\delta$ are strict and
+distinct, with the smaller first coordinate first. By (11.18),
+
+$$
+F(\sigma(r,s,b_1,b_2))=-F(r,s,b_1,b_2).
+\tag{25.3}
+$$
+
+**Proposition 25.2 (Exact derivative bounds on the wider rectangle).**
+Throughout $\mathcal Q_\delta$ the following rational enclosures hold:
+
+$$
+\begin{aligned}
+F_{b_1}\in\Bigl[
+&-\frac{655346426024230825352955946843279708755588477533}
+          {59049000000000000000000000000000000000000000000},\quad
+\frac{2722651745727237768638758054652324011115453492963}
+     {147622500000000000000000000000000000000000000000}
+\Bigr],\\
+F_{b_2}\in\Bigl[
+&-\frac{2834683548016043464587089731137857480186655331723}
+          {118098000000000000000000000000000000000000000000},\quad
+\frac{34240406673171902205027387583689815662384851539411}
+     {1771470000000000000000000000000000000000000000000}
+\Bigr],\\
+F_s\in\Bigl[
+&-\frac{27515321167732286508215687039296933798357437873997}
+          {442867500000000000000000000000000000000000000000},\quad
+\frac{102197276829604053372654180158288609861502644489933}
+     {1771470000000000000000000000000000000000000000000}
+\Bigr].
+\end{aligned}
+\tag{25.4}
+$$
+
+Consequently
+
+$$
+|F_{b_1}|<19,\qquad |F_{b_2}|<25,\qquad |F_s|<63.
+\tag{25.5}
+$$
+
+*Proof.* The coefficient data used are the fixed sextics (11.16).
+Explicitly, writing $\mathscr H(r,b)=\sum_{j=0}^6h_j(r)b^j$ and
+$C_*(r,b)=\sum_{j=0}^6c_j(r)b^j$, those same coefficients are
+
+| $j$ | $h_j(r)$ | $c_j(r)$ |
+| --- | --- | --- |
+| $0$ | $-32r^3(1-r)^3$ | $-960r^6+2880r^5-2880r^4+960r^3$ |
+| $1$ | $-64r^3(1-r)^2$ | $1920r^5-1610r^4-2540r^3+2230r^2$ |
+| $2$ | $2r(1-r)(44r^2-55r+15)$ | $7015r^4-16924r^3+13011r^2-3102r$ |
+| $3$ | $r(147r^2-232r+105)$ | $-8795r^3+13798r^2-6351r$ |
+| $4$ | $47r^2-39r+30$ | $-5140r^2+5260r-3102$ |
+| $5$ | $95-73r$ | $5815r-7529$ |
+| $6$ | $14$ | $-1055$ |
+
+For completeness the exact enclosure rule for this coefficient data is
+as follows. For rational intervals $I=[a,b]$ and $J=[c,d]$, use
+
+$$
+\begin{aligned}
+I+J&=[a+c,b+d],&-I&=[-b,-a],\\
+IJ&=[\min(ac,ad,bc,bd),\max(ac,ad,bc,bd)].
+\end{aligned}
+\tag{25.6}
+$$
+
+Expand each polynomial $P(r,b)=\sum_{i,j=0}^6a_{ij}r^ib^j$ in
+ordinary powers, with zero padding. Its $b$ derivative has coefficients
+$(j+1)a_{i,j+1}$ and its $r$ derivative has coefficients
+$(i+1)a_{i+1,j}$; coefficients outside the range are zero.
+For intervals $A,B$, define the descending Horner evaluation by
+
+$$
+\begin{aligned}
+I_{i,7}&=[0,0],&
+I_{i,j}&=I_{i,j+1}B+[a_{ij},a_{ij}]
+                    &&(j=6,5,\ldots,0),\\
+O_7&=[0,0],&
+O_i&=O_{i+1}A+I_{i,0}
+                    &&(i=6,5,\ldots,0),\\
+\mathcal I_{A,B}(P)&=O_0.
+\end{aligned}
+\tag{25.7}
+$$
+
+Thus all coefficients, the evaluation order and the interval operations
+are fixed. Let $H_1,C_1,H_{1b},C_{1b}$ be the enclosures of
+$\mathscr H,C_*,\partial_b\mathscr H,\partial_b C_*$ under
+$\mathcal I_{R,B_\delta}$, respectively. Let
+$H_2,C_2,H_{2b},C_{2b},H_{2s},C_{2s}$ be the enclosures of
+$\mathscr H,C_*,\partial_b\mathscr H,\partial_b C_*,
+\partial_r\mathscr H,\partial_r C_*$ under
+$\mathcal I_{S_\delta,B_\delta}$, respectively. The product rule gives
+
+$$
+\begin{aligned}
+F_{b_1}&\in C_2H_{1b}-C_{1b}H_2,\\
+F_{b_2}&\in C_{2b}H_1-C_1H_{2b},\\
+F_s&\in C_{2s}H_1-C_1H_{2s}.
+\end{aligned}
+\tag{25.8}
+$$
+
+Rational evaluation of (25.6)--(25.8) gives exactly the three intervals
+in (25.4). Their absolute endpoint maxima are, respectively,
+
+$$
+\begin{gathered}
+\frac{2722651745727237768638758054652324011115453492963}
+     {147622500000000000000000000000000000000000000000}<19,\\
+\frac{2834683548016043464587089731137857480186655331723}
+     {118098000000000000000000000000000000000000000000}<25,\\
+\frac{27515321167732286508215687039296933798357437873997}
+     {442867500000000000000000000000000000000000000000}<63.
+\end{gathered}
+\tag{25.9}
+$$
+
+Each comparison is multiplication by positive integers. This proves
+(25.5) on the entire rectangle, not only on its tube. $\square$
+
+**Theorem 25.3 (Orientation-sensitive nonvanishing on the wider tube).**
+One has
+
+$$
+\begin{aligned}
+F(r,s,b_1,b_2)&>\frac{5251}{210000}>\frac1{40}
+                 &&\text{on }\mathcal T_\delta,\\
+F(r,s,b_1,b_2)&<-\frac{5251}{210000}<-\frac1{40}
+                 &&\text{on }\mathcal T_\delta^{\leftarrow}.
+\end{aligned}
+\tag{25.10}
+$$
+
+*Proof.* Use the central polynomial already given in (11.23),
+$F_0(r)=F(r,9/8-r,1/8,1/8)$. Its degree-nine Bernstein coefficients
+on $R$, in the convention (11.24), have the minimum (11.25).
+Hence the existing central certificate gives
+
+$$
+F_0(r)\ge
+\frac{14656469065762145135535204561}
+     {512000000000000000000000000000}
+>\frac1{35}\qquad(r\in R).
+\tag{25.11}
+$$
+
+For a point $q=(r,s,b_1,b_2)\in\mathcal T_\delta$, keep $r$ fixed,
+put $s_0=9/8-r$ and $b_0=1/8$, and consider the whole segment
+
+$$
+\gamma(\theta)=
+(r,s_0+\theta(s-s_0),b_0+\theta(b_1-b_0),
+                         b_0+\theta(b_2-b_0)),\qquad 0\le\theta\le1.
+\tag{25.12}
+$$
+
+By (25.2), $s_0\in[9/8-\max R,9/8-\min R]\subset S_\delta$
+and $b_0\in B_\delta$. Both ends of every varying coordinate belong
+to its closed interval, so convexity of those intervals gives
+$\gamma([0,1])\subset\mathcal Q_\delta$. More precisely,
+$|s(\theta)+r-9/8|=\theta|s-s_0|\le\delta$, so the segment even
+stays in $\mathcal T_\delta$. All three displacements have absolute
+value at most $\delta$.
+
+Apply the ordinary one-variable mean-value theorem to the polynomial
+$F\circ\gamma$ on $[0,1]$; its derivative is
+
+$$
+(s-s_0)F_s(\gamma(\theta))+
+(b_1-b_0)F_{b_1}(\gamma(\theta))+
+(b_2-b_0)F_{b_2}(\gamma(\theta)).
+\tag{25.13}
+$$
+
+Proposition 25.2 applies along the entire segment. Thus
+$|F(q)-F_0(r)|<107\delta$, including the zero-displacement case,
+and
+
+$$
+F(q)>\frac1{35}-\frac{19+25+63}{30000}
+=\frac{5251}{210000}
+=\frac1{40}+\frac1{210000}.
+\tag{25.14}
+$$
+
+For $q'\in\mathcal T_\delta^{\leftarrow}$, write
+$q'=\sigma(q)$ with $q\in\mathcal T_\delta$ and use (25.3).
+This proves the negative bound in (25.10). The Bernstein convex-hull
+argument and the mean-value theorem are the classical mechanisms
+already used in (11.24)--(11.27); the evaluated derivative intervals
+here are for the larger rectangle (25.1). $\square$
+
+## 26. The wider tube as an original-world equal-$M$ exclusion
+
+**Theorem 26.1 (Actual off-twenty-four companions).** Let
+$W_1,W_2\in C(p,v)$ be original complete worlds of Definition 1.1,
+with $p\ne24$, and write their source geometries as $(r,b_1)$ and
+$(s,b_2)$. If
+
+$$
+(r,s,b_1,b_2)\in
+\mathcal T_\delta\cup\mathcal T_\delta^{\leftarrow},
+\tag{26.1}
+$$
+
+then $m(W_1)\ne m(W_2)$. No regularity or nonzero gain-sample
+hypothesis is imposed.
+
+*Proof.* At either world put $e=d-24$, $t=r/b$ in its own source
+coordinates and retain $j=b+r(1-r)/b$, $n=j+r$, $T=1+b$, $U=1+2b$.
+Strictness gives
+
+$$
+b>0,\quad r(1-r)/b>0,\quad j>0,\quad n>0,\quad T>0,\quad U>0,
+\qquad K=(5b+2)jn>0.
+\tag{26.2}
+$$
+
+Use the original undivided response identities (11.19), together with
+the polynomial identities (11.17). They read exactly
+
+$$
+\begin{aligned}
+K(p-24)&=eS(t,b)=\frac{e\mathscr H(r,b)}{b^3},\\
+K(5m-32v+1128)&=eC(t,b)=\frac{eC_*(r,b)}{b^3},\\
+\mathscr H(r,b)&=b^3S(r/b,b).
+\end{aligned}
+\tag{26.3}
+$$
+
+These are identities on the zero-safe full parent $H(r,b,e)=0$ of
+Definition 2.1. Their ambient verification is (11.20), using the
+original interpolation samples (2.2) and the fixed clock-five,
+clock-six and clock-seven rows in Lemma 2.2. It divides by none of
+$\Lambda,e,8b-1$ or the sampled gain values. The quotients $S,C$
+mean polynomial division, so (26.3) also applies at $b=1/8$ and to
+singular-source worlds.
+
+Since $K>0$ and $p-24\ne0$, the first identity gives $eS(t,b)\ne0$.
+It follows that $e\ne0$, $S(t,b)\ne0$ and
+$\mathscr H(r,b)=b^3S(t,b)\ne0$ at each of the two actual worlds.
+Only now divide the second response equation by the first. This is
+precisely the ratio used in (11.21):
+
+$$
+\frac{5m-32v+1128}{p-24}
+=\frac{C(t,b)}{S(t,b)}
+=\frac{C_*(r,b)}{\mathscr H(r,b)}.
+\tag{26.4}
+$$
+
+Let $m_i=m(W_i)$ and abbreviate
+$H_1=\mathscr H(r,b_1)$, $H_2=\mathscr H(s,b_2)$ only for this
+pointwise calculation. Both are nonzero by the preceding argument.
+The two actual worlds have the same $p,v$, so subtracting (26.4) yields
+
+$$
+\begin{aligned}
+m_2-m_1
+&=\frac{p-24}{5}
+  \left(\frac{C_*(s,b_2)}{H_2}-\frac{C_*(r,b_1)}{H_1}\right)\\
+&=\frac{(p-24)F(r,s,b_1,b_2)}{5H_1H_2}\ne0.
+\end{aligned}
+\tag{26.5}
+$$
+
+The last inequality follows from Theorem 25.3, in either orientation.
+It uses nonvanishing, with no assertion about the sign of $H_1H_2$.
+The complete-world reconstruction retains every real drift, every
+nonzero entire real gain of degree at most three, degree drops,
+repeated roots and zero samples. The unequal original readings already
+exclude an identically zero gain. No additional sample or coefficient
+has been divided out. $\square$
+
+**Corollary 26.2 (Restriction on the independent-pair relation).**
+Every configuration $\mathscr I(p,v;w_0,w_1,w_2,w_3)$ of (16.6)
+satisfies
+
+$$
+\bigl(r(w_2),r(w_3),b(w_2),b(w_3)\bigr)
+\notin\mathcal T_\delta\cup\mathcal T_\delta^{\leftarrow}.
+\tag{26.6}
+$$
+
+*Proof.* The relation supplies $p\ne24$ and an actual equal-$m$ pair
+$w_2,w_3$ in the same entire strict child $C(p,v)$. Theorem 26.1
+excludes exactly (26.1) for that selected pair. The independently
+selected equal-$a$ pair $w_0,w_1$ is unrestricted by this argument;
+all original cross-pair overlaps remain permitted.
+
+The exclusion is conditional on the selected $M$ source pair lying in
+the stated union. It asserts neither absence of all $M$ pairs in a
+whole child nor absence of original joint configurations outside that
+union. It gives no quantitative inverse bound from $p$ to sources.
+At $p=24$ the nonzero-denominator inference in (26.3) is unavailable:
+the actual K-mirror pair of Proposition 11.7 lies in this wider tube
+and has equal $m$, consistently with the nonzero comparator there.
+
+The original global sentence $\mathsf I$ of Definition 16.3 still
+quantifies over every real off-$24$ target and every entire strict
+child, requiring one within-pair-distinct equal-$J$ pair and one
+independent within-pair-distinct equal-$M$ pair in that same child.
+Neither $\mathsf I$ nor $\neg\mathsf I$ follows from the regional
+restriction (26.6). The source-specific contribution is the evaluated
+width $1/30000$, its oriented strict margin and its actual-world
+consumer; the polynomial and response interfaces are those of
+(11.16)--(11.23). $\square$
+
+## 追加锚（本行以下为增补区）
