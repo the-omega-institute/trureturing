@@ -2,6 +2,8 @@ fingerprints:
   raw_sha256: sha256:9dcaaab8f936a1e712e70bceefaa7385d07b7b8c2d3481715316dd3d74417966
   normalized_sha256: sha256:9dcaaab8f936a1e712e70bceefaa7385d07b7b8c2d3481715316dd3d74417966
 cas_ref: sha256:9dcaaab8f936a1e712e70bceefaa7385d07b7b8c2d3481715316dd3d74417966
-coverage_gids: []
+coverage_gids:
+  - gid: D5/S3/Fourier/TorusOrbitClosure.result
+    target_statement_id: sha256:caf0494154aac8e0e431192bd01a4b6b70a6325fb74ca65873470e5c2843bcb7
 receipts:
   unresolved_subitems: []
