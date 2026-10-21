@@ -9,6 +9,7 @@
 /- Prepared source only; no Lean invocation or acceptance claim.
 The data are untrusted until the explicit kernel goals in the generated
 consumer modules pass. No native subtree size is a theorem premise. -/
+import D5.S3.Quantum.Entanglement.EJM.PreparedEJMCompleteFrontierDataTypes
 import D5.S3.Quantum.Entanglement.EJM.PreparedEJMAdaptiveResponseBridge
 
 set_option autoImplicit false
@@ -22,33 +23,6 @@ open EJMCacheState (Cache step lower)
 open EJMPartialBoundData (scale)
 open EJMCertificateData (F1 F2)
 open EJMInflationScore (score)
-
-/-- All seven original binary fields are retained, including reserved zero. -/
-structure CutRow where
-  depth : Nat
-  kind : Nat
-  reserved : Nat
-  index : Nat
-  code : Nat
-  subtreeContexts : Nat
-  domain : Nat
-deriving DecidableEq
-
-/-- Balanced lookup is by full prefix depth and code; index is checked after
-lookup. The tree shape and ordering are not trusted as mathematical evidence. -/
-inductive CutTable where
-  | empty
-  | leaf (cut : CutRow)
-  | branch (pivotDepth pivotCode : Nat) (left right : CutTable)
-
-def CutTable.lookup : CutTable → Nat → Nat → Option CutRow
-  | .empty, _, _ => none
-  | .leaf cut, depth, code =>
-      if cut.depth = depth ∧ cut.code = code then some cut else none
-  | .branch pivotDepth pivotCode left right, depth, code =>
-      if depth < pivotDepth ∨ (depth = pivotDepth ∧ code < pivotCode) then
-        left.lookup depth code
-      else right.lookup depth code
 
 /-- Count the literal original nodes, with all four edges and their occurrence
 multiplicity. It is independent of score/cache acceptance, so shared shape may
