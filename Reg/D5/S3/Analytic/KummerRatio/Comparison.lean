@@ -12,25 +12,6 @@ open LeanInformationAudit Set
 namespace Reg.D5.S3.Analytic.KummerRatio.Comparison
 noncomputable section
 
-private lemma kummer_family (hc : 0 < c) :
-    SolutionFamily c (fun s x => kummer s c x)
-      (fun s x => s / c * kummer (s + 1) (c + 1) x)
-      (fun s x => s / c * ((s + 1) / (c + 1) * kummer (s + 2) (c + 2) x)) := by
-  refine ⟨?_, ?_, ?_, ?_, ?_, ?_⟩
-  · intro s hs x hx
-    exact lt_of_lt_of_le zero_lt_one (one_le_kummer hs.le hc hx)
-  · intro s _
-    exact (continuous_kummer s hc).continuousOn
-  · intro s _
-    exact (continuous_const.mul (continuous_kummer (s + 1) (by linarith : 0 < c + 1))).continuousOn
-  · intro s _ x _
-    exact hasDerivAt_kummer s hc x
-  · intro s _ x _
-    simpa only [add_assoc, one_add_one_eq_two] using
-      (hasDerivAt_kummer (s + 1) (by linarith : 0 < c + 1) x).const_mul (s / c)
-  · intro s _ x _
-    exact kummer_ode s hc x
-
 namespace Generic
 
 abbrev signature : Signature :=
@@ -55,7 +36,7 @@ def arena : Arena where
 private theorem rejected_law : ¬ arena.Law rejected := by
   intro h
   have hm := h (a := 1) (b := 2) (δ := 1)
-    (kummer_family (by norm_num : (0 : ℝ) < 1))
+    (_root_.D5.S3.Analytic.KummerRatio.Comparison.kummer_family (by norm_num : (0 : ℝ) < 1))
     (by norm_num) (by norm_num) (by norm_num) (by norm_num)
   have hh := hm (show (1 : ℝ) ∈ Ioi 0 by norm_num)
     (show (2 : ℝ) ∈ Ioi 0 by norm_num) (by norm_num : (1 : ℝ) < 2)

@@ -120,6 +120,7 @@ the integral representation is `BetaIntegral.kummer_eq_betaIntegral`.
 The accepted axiom closure of the result is contained in
 `{propext, Classical.choice, Quot.sound}`.
 
+The proof route was derived with the assistance of the ChatGPT Pro model.
 Mehrez–Sitnik, arXiv:1410.6120, *Analysis* 36 (2016), settles the related
 lower-parameter ratio
 ${}_1F_1(a;b-c;x){}_1F_1(a;b+c;x)/{}_1F_1(a;b;x)^2$.

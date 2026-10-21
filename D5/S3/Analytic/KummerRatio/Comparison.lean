@@ -191,7 +191,7 @@ theorem solution_ratio_strictAntiOn (H : SolutionFamily c y dy ddy) (hc : 0 < c)
     exact mul_neg_of_pos_of_neg (div_pos (mul_pos hyBD hyA) (mul_pos hyAD hyB))
       (sub_neg.mpr (w_lt H hc ha hab hδ hx))
 
-private lemma kummer_family (hc : 0 < c) :
+lemma kummer_family (hc : 0 < c) :
     SolutionFamily c (fun s x => kummer s c x)
       (fun s x => s / c * kummer (s + 1) (c + 1) x)
       (fun s x => s / c * ((s + 1) / (c + 1) * kummer (s + 2) (c + 2) x)) := by
