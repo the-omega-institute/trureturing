@@ -28,4 +28,4 @@ Formal differentiation gives (1-4t^2)H'(t)=4ntH(t)-t sum_i(4-a_i^2)H(t)g_(a_i)(t
 
 - Truth anchor: `D5/S3/Combinatorics/Graph/RegularCHS/CycleBound.chs_cycle_le_bseq`
 - Dependency: [D5/S3/Combinatorics/Graph/PathCHS/PathCHSNormClosedForm](../PathCHS/PathCHSNormClosedForm.md)
-- Dependency: [D5/S3/Combinatorics/Graph/RegularCHS/Interface](Interface.md)
+- Dependency: [D5/S3/Combinatorics/Graph/RegularCHS/Newton](Newton.md)
