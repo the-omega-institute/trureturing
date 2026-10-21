@@ -191,12 +191,14 @@ lemma choi_It_formula (d : ℕ) (t : ℝ) :
 lemma choi_competitor_psd {d : ℕ} {J : Fin d → MatrixMap (Fin d) (Fin d) ℂ}
     (x : Fin d) (hJ : (J x).IsCompletelyPositive) :
     (MatrixMap.choi_matrix (J x)).PosSemidef := by
-  sorry
+  exact (MatrixMap.choi_PSD_iff_CP_map (J x)).mp hJ
 
 lemma choi_sum (d : ℕ) (t : ℝ) (J : Fin d → MatrixMap (Fin d) (Fin d) ℂ)
     (hJ : ∑ x, J x = It t) :
     ∑ x, MatrixMap.choi_matrix (J x) = MatrixMap.choi_matrix (It t) := by
-  sorry
+  rw [← hJ]
+  ext ⟨j₁, i₁⟩ ⟨j₂, i₂⟩
+  simp [MatrixMap.choi_matrix]
 
 lemma trace_condition_entry {d : ℕ} {U : Matrix.unitaryGroup (Fin d) ℂ}
     {s : ℝ} {J : Fin d → MatrixMap (Fin d) (Fin d) ℂ}
@@ -204,7 +206,9 @@ lemma trace_condition_entry {d : ℕ} {U : Matrix.unitaryGroup (Fin d) ℂ}
     (htrace : ∀ x ρ, Matrix.trace (J x ρ) = Matrix.trace (ρ * Qs U s x)) :
     ∑ j : Fin d, MatrixMap.choi_matrix (J x) (j, i₁) (j, i₂) =
       Qs U s x i₂ i₁ := by
-  sorry
+  have h := htrace x (Matrix.single i₁ i₂ 1)
+  simpa [MatrixMap.choi_matrix, Matrix.trace, Matrix.mul_apply, Matrix.single,
+    Finset.sum_ite_irrel, Finset.sum_ite_eq'] using h
 
 lemma choi_gram_rows {d : ℕ} {C : Matrix (Fin d × Fin d) (Fin d × Fin d) ℂ}
     (hC : C.PosSemidef) :
