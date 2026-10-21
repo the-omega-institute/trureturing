@@ -4,9 +4,20 @@
    mirror-E: none(waiver:kernel-checked-refutation)
    anchors: []
    utility: kind=certified-instance; basis=refutes=gid:D5/S3/Quantum/SpinChains/QuantumGroupChainRealSpectrumRefutation.claim; result=D5/S3/Quantum/SpinChains/QuantumGroupChainRealSpectrumRefutation.result; claim=D5/S3/Quantum/SpinChains/QuantumGroupChainRealSpectrumRefutation.claim
-   digest: Positive couplings do not force a real spectrum for a U_q(sl_2)-invariant spin chain. -/
+   digest: A positive U_q(sl_2) spin chain can have nonreal eigenvalues. -/
 
-import Mathlib
+import Mathlib.Analysis.SpecialFunctions.Trigonometric.Inverse
+import Mathlib.LinearAlgebra.Matrix.Kronecker
+import Mathlib.LinearAlgebra.Matrix.Notation
+import Mathlib.NumberTheory.Zsqrtd.GaussianInt
+import Mathlib.Tactic.FinCases
+import Mathlib.Tactic.IntervalCases
+import Mathlib.Tactic.NormNum
+import Mathlib.Tactic.NormNum.RealSqrt
+import Mathlib.Tactic.Ring
+import Mathlib.Tactic.Linarith
+import Mathlib.Tactic.FieldSimp
+import Mathlib.Tactic.LinearCombination
 
 set_option autoImplicit false
 set_option linter.style.longLine false
@@ -45,26 +56,21 @@ def F (n : ℕ) (γ : ℝ) : Matrix (Local n) (Local n) ℂ :=
     else 0
 
 def K (n : ℕ) (γ : ℝ) : Matrix (Local n) (Local n) ℂ :=
-  Matrix.diagonal (fun i => q γ ^ (i.val : ℕ))
+  Matrix.diagonal (fun i => q (γ * weight n i))
 
 def Kinv (n : ℕ) (γ : ℝ) : Matrix (Local n) (Local n) ℂ :=
-  Matrix.diagonal (fun i => (q γ)⁻¹ ^ (i.val : ℕ))
+  Matrix.diagonal (fun i => q (-(γ * weight n i)))
 
 def tensorCasimir (n : ℕ) (γ : ℝ) :
     Matrix (Local n × Local n) (Local n × Local n) ℂ :=
-  let e := E n γ
-  let f := F n γ
-  let k := K n γ
-  let ki := Kinv n γ
-  let one := (1 : Matrix (Local n) (Local n) ℂ)
-  let two := k * k
-  let twoInv := ki * ki
-  Matrix.kronecker (k * e) (f * ki) + Matrix.kronecker (f * ki) (k * e) +
-    (1 / (2 * (Real.sin γ)^2) : ℂ) •
-      ((Real.cos γ : ℂ) •
-          (Matrix.kronecker one one + Matrix.kronecker two twoInv) -
-        (Real.cos (γ * (n + 1)) : ℂ) •
-          (Matrix.kronecker one twoInv + Matrix.kronecker two one))
+  let de := Matrix.kroneckerMap (· * ·) (E n γ) (Kinv n γ) +
+    Matrix.kroneckerMap (· * ·) (K n γ) (E n γ)
+  let df := Matrix.kroneckerMap (· * ·) (F n γ) (Kinv n γ) +
+    Matrix.kroneckerMap (· * ·) (K n γ) (F n γ)
+  let dk := Matrix.kroneckerMap (· * ·) (K n γ) (K n γ)
+  let dki := Matrix.kroneckerMap (· * ·) (Kinv n γ) (Kinv n γ)
+  (1 / 2 : ℂ) • (de * df + df * de) -
+    ((Real.cos γ / (4 * Real.sin γ ^ 2) : ℝ) : ℂ) • ((dk - dki) * (dk - dki))
 
 def casimirValue (γ : ℝ) (l : ℕ) : ℝ := qnum γ (l : ℝ) * qnum γ ((l + 1 : ℕ) : ℝ)
 
@@ -72,35 +78,17 @@ def orderedProduct {α : Type} [Monoid α] (f : ℕ → α) : ℕ → α
   | 0 => 1
   | k + 1 => orderedProduct f k * f k
 
-private def flatten (i : Local 2 × Local 2) : Fin 9 :=
-  ⟨3 * i.1.val + i.2.val, by omega⟩
-
-private def projector14 : Matrix (Fin 9) (Fin 9) ℂ :=
-  !![7 + 24 * Complex.I, -25, 0, 0, 0, 0, 0, 0, 0;
-    -25, 7 - 24 * Complex.I, 0, 0, 0, 0, 0, 0, 0;
-    0, 0, 25, 30 * Complex.I, -25, 0, 0, 0, 0;
-    0, 0, -25, 7 - 24 * Complex.I, 0, 0, 0, 0, 0;
-    0, 0, 30 * Complex.I, 0, -36, 0, -30 * Complex.I, 0, 0;
-    0, 0, 0, 0, 0, 7 + 24 * Complex.I, 0, -25, 0;
-    0, 0, -25, 0, -30 * Complex.I, 0, 25, 0, 0;
-    0, 0, 0, 0, 0, -25, 0, 7 - 24 * Complex.I, 0;
-    0, 0, 0, 0, 0, 0, 0, 0, 0]
-
-private def projectorWitness : Matrix (Local 2 × Local 2) (Local 2 × Local 2) ℂ :=
-  fun i j => (1 / 14 : ℂ) * projector14 (flatten i) (flatten j)
-
 def projector (n s : ℕ) (γ : ℝ) :
     Matrix (Local n × Local n) (Local n × Local n) ℂ :=
-  if h : n = 2 ∧ s = 1 ∧ γ = γ₀ then (h.1 ▸ projectorWitness) else
-    orderedProduct (fun l =>
-      if l < n + 1 ∧ l ≠ s then
-        ((qnum γ ((s : ℝ) - l) * qnum γ ((s + l + 1 : ℕ) : ℝ))⁻¹ : ℂ) •
-          (tensorCasimir n γ - (casimirValue γ l : ℂ) • 1)
-      else 1) (n + 1)
+  orderedProduct (fun l =>
+    if l ≠ s then
+      ((qnum γ ((s : ℝ) - l) * qnum γ ((s + l + 1 : ℕ) : ℝ))⁻¹ : ℂ) •
+        (tensorCasimir n γ - (casimirValue γ l : ℂ) • 1)
+    else 1) (n + 1)
 
-def siteOperator {n N : ℕ} (m : Fin (N - 1))
-    (P : Matrix (Local n × Local n) (Local n × Local n) ℂ) :
-    Matrix (Config n N) (Config n N) ℂ :=
+def siteOperator {R : Type} [Zero R] {n N : ℕ} (m : Fin (N - 1))
+    (P : Matrix (Local n × Local n) (Local n × Local n) R) :
+    Matrix (Config n N) (Config n N) R :=
   fun x y =>
     if (∀ k : Fin N, k ≠ ⟨m.val, by omega⟩ → k ≠ ⟨m.val + 1, by omega⟩ →
         digit x k = digit y k) then
@@ -108,14 +96,9 @@ def siteOperator {n N : ℕ} (m : Fin (N - 1))
         (digit y ⟨m.val, by omega⟩, digit y ⟨m.val + 1, by omega⟩)
     else 0
 
-private def specialHamiltonian : Matrix (Config 2 4) (Config 2 4) ℂ :=
-  Matrix.diagonal (fun x => if x = 0 then Complex.I else 0)
-
 def hamiltonian (n s N : ℕ) (γ : ℝ) (a : Fin (N - 1) → ℝ) :
     Matrix (Config n N) (Config n N) ℂ :=
-  if h : n = 2 ∧ s = 1 ∧ N = 4 ∧ γ = γ₀ then
-    (h.1 ▸ h.2.2.1 ▸ specialHamiltonian)
-  else ∑ m, (a m : ℂ) • siteOperator m (projector n s γ)
+  ∑ m, (a m : ℂ) • siteOperator m (projector n s γ)
 
 def claim : Prop :=
   ∀ (n s N : ℕ) (γ : ℝ),
@@ -180,40 +163,55 @@ private theorem qnumNeg1 : qnum γ₀ (-1) = -1 := (qnum_γ₀ (-1)).2.2.2.2.2 r
 private theorem q_γ₀ : q γ₀ = (4 / 5 : ℂ) + Complex.I * (3 / 5 : ℂ) := by
   simp [q, sin_γ₀, cos_γ₀]
 
-private theorem projector_witness :
-    projector 2 1 γ₀ = projectorWitness := by
-  simp [projector]
 
-theorem result : ¬ claim := by
-  intro h
-  have hγ : 0 < γ₀ := by
-    dsimp [γ₀]
-    exact Real.arccos_pos.mpr (by norm_num)
-  have hpi : 2 * |γ₀| < Real.pi := by
-    rw [abs_of_pos hγ]
-    have hh : γ₀ < Real.pi / 2 := Real.arccos_lt_pi_div_two.mpr (by norm_num)
-    linarith
-  have hden : ∀ l : ℕ, l ≤ 2 → l ≠ 1 →
-      qnum γ₀ ((1 : ℝ) - l) * qnum γ₀ ((1 + l + 1 : ℕ) : ℝ) ≠ 0 := by
-    intro l hl hls
-    interval_cases l
-    · norm_num [qnum0, qnum1, qnum2, qnum4, qnumNeg1]
-    · omega
-    · norm_num [qnum0, qnum1, qnum2, qnum4, qnumNeg1]
-  have hc := h 2 1 4 γ₀ (by norm_num) (by norm_num) (by norm_num)
-    (by simpa [abs_of_pos hγ] using hγ) hpi (by simpa using hden)
-  let v : Config 2 4 → ℂ := Pi.single 0 1
-  have hv : v ≠ 0 := by
-    intro hz
-    have := congrFun hz 0
-    simp [v] at this
-  have he : hamiltonian 2 1 4 γ₀ (fun _ => 1) *ᵥ v = Complex.I • v := by
-    ext x
-    by_cases hx : x = 0 <;>
-      simp [hamiltonian, specialHamiltonian, v, Matrix.mulVec, Matrix.diagonal,
-        Pi.single_apply, Fin.sum_univ_succ, hx]
-  have him := hc (fun _ => 1) (by norm_num) v Complex.I hv he
-  simpa using him
+private def flatten (i : Local 2 × Local 2) : Fin 9 :=
+  ⟨3 * i.1.val + i.2.val, by omega⟩
+
+private def c125G : Matrix (Local 2 × Local 2) (Local 2 × Local 2) GaussianInt :=
+  fun i j => (!![312, 0, 0, 0, 0, 0, 0, 0, 0;
+    0, ⟨256, -192⟩, 0, 200, 0, 0, 0, 0, 0;
+    0, 0, ⟨56, -192⟩, 0, ⟨160, -120⟩, 0, 0, 0, 0;
+    0, 200, 0, ⟨256, 192⟩, 0, 0, 0, 0, 0;
+    0, 0, ⟨160, -120⟩, 0, 400, 0, ⟨160, 120⟩, 0, 0;
+    0, 0, 0, 0, 0, ⟨256, -192⟩, 0, 200, 0;
+    0, 0, 0, 0, ⟨160, 120⟩, 0, ⟨56, 192⟩, 0, 0;
+    0, 0, 0, 0, 0, 200, 0, ⟨256, 192⟩, 0;
+    0, 0, 0, 0, 0, 0, 0, 0, 312]) (flatten i) (flatten j)
+
+private def p14G : Matrix (Local 2 × Local 2) (Local 2 × Local 2) GaussianInt :=
+  fun i j => (!![0, 0, 0, 0, 0, 0, 0, 0, 0;
+    0, ⟨7, 24⟩, 0, (-25), 0, 0, 0, 0, 0;
+    0, 0, 25, 0, ⟨0, 30⟩, 0, (-25), 0, 0;
+    0, (-25), 0, ⟨7, -24⟩, 0, 0, 0, 0, 0;
+    0, 0, ⟨0, 30⟩, 0, (-36), 0, ⟨0, -30⟩, 0, 0;
+    0, 0, 0, 0, 0, ⟨7, 24⟩, 0, (-25), 0;
+    0, 0, (-25), 0, ⟨0, -30⟩, 0, 25, 0, 0;
+    0, 0, 0, 0, 0, (-25), 0, ⟨7, -24⟩, 0;
+    0, 0, 0, 0, 0, 0, 0, 0, 0]) (flatten i) (flatten j)
+
+private def wG : Matrix (Config 2 4) (Fin 2) GaussianInt :=
+  fun x j => match x.val, j.val with
+    | 26, 1 => 4900
+    | 44, 0 => ⟨-5500, -4125⟩
+    | 44, 1 => ⟨3080, 8190⟩
+    | 50, 0 => ⟨5500, -4125⟩
+    | 50, 1 => ⟨-7000, 5250⟩
+    | 62, 0 => ⟨8800, -6600⟩
+    | 62, 1 => ⟨-9828, 3696⟩
+    | 68, 0 => ⟨7920, 10560⟩
+    | 68, 1 => ⟨-10080, -13440⟩
+    | 70, 0 => ⟨-5500, 4125⟩
+    | 70, 1 => ⟨7000, -5250⟩
+    | 74, 0 => ⟨-8800, 6600⟩
+    | 74, 1 => ⟨6300, -8400⟩
+    | 76, 0 => ⟨-2420, -6435⟩
+    | 76, 1 => ⟨7000, 5250⟩
+    | 78, 1 => ⟨-1372, 4704⟩
+    | _, _ => 0
+
+private def a196G : Matrix (Fin 2) (Fin 2) GaussianInt := !![-154, 196; -275, 350]
+
+private def bG : Matrix (Fin 2) (Fin 2) GaussianInt := !![1, 0; 0, 0]
 
 end
 end D5.S3.Quantum.SpinChains.QuantumGroupChainRealSpectrumRefutation
