@@ -7,7 +7,6 @@
    digest: No single polynomial inequality characterizes all bipartite separable states. -/
 
 import D5.S3.Quantum.Entanglement.AbsolutePPT.QuadbitMaximumPurity
-import Mathlib.Algebra.MvPolynomial.Polynomial
 import Mathlib.Topology.Algebra.MvPolynomial
 
 /-! An affine family of qubit–qutrit states excludes a single polynomial separability criterion. -/
