@@ -1,4 +1,4 @@
-# Recursive relational observation: finite unknown-ray encoded checkpoints
+# Recursive relational observation: finite encoded checkpoints for a coupled unknown-ray family
 
 > Append-only reference input for `generic-v1`. This volume records an
 > ordinary mathematical result about the finite checkpoint interface declared
@@ -35,8 +35,8 @@ $$
 The transpose below is ordinary Alice partial transpose in this fixed
 occupation tensor. The enlarged independent-ray orbit is a declared
 mathematical preparation family; it is not passive or native reachability and
-does not provide a source label, an external phase reference, a second
-specimen, or a correlated programme.
+does not provide a source label, an external phase reference, preparations
+beyond the declared two copies, or a correlated programme.
 
 Fix
 
@@ -56,7 +56,9 @@ $$
 
 and let $\Omega_{x,\eta}$ be the normalized $64$-dimensional two-copy
 resource of VII §§201–203 for these vectors. No $x$ or $\eta$ label is
-delivered to the controller.
+delivered to the controller. This is a coupled subfamily of the independently
+assignable rays in VII Definition 201.1, not the whole independent-ray family
+or a claimed realization by the native principal-root metrics.
 
 **Definition 1.1 (finite encoded checkpoint bank).** A finite bank is a list
 
@@ -82,7 +84,7 @@ probability, and flagged successor are
 
 $$
 \Phi_r(\Omega)=\sum_{j:r(j)=r}\tau_j(\Omega),\qquad
-p_r=\operatorname{Tr}\Phi_r(\Omega),qquad
+p_r=\operatorname{Tr}\Phi_r(\Omega),\qquad
 \widehat\Omega=\bigoplus_{r\in\mathcal R}\Phi_r(\Omega).
 \tag{1.2}
 $$
@@ -98,7 +100,7 @@ $\mathcal R=\mathcal R_{\rm succ}\sqcup\mathcal R_{\rm fail}\sqcup
 $$
 p_{\rm succ}=\sum_{r\in\mathcal R_{\rm succ}}p_r,\qquad
 p_{\rm fail}=\sum_{r\in\mathcal R_{\rm fail}}p_r,\qquad
-p_{\rm res}=\sum_{r\in\mathcal R_{\rm res}}p_r,qquad
+p_{\rm res}=\sum_{r\in\mathcal R_{\rm res}}p_r,\qquad
 p_{\rm succ}+p_{\rm fail}+p_{\rm res}=1.
 \tag{1.3}
 $$
@@ -156,7 +158,7 @@ $$
 where, in the two-copy Bob one-particle sector,
 
 $$
-L(\eta)=\eta\otimes|0\rangle,qquad
+L(\eta)=\eta\otimes|0\rangle,\qquad
 R(\eta)=|0\rangle\otimes\eta.
 \tag{2.4}
 $$
@@ -289,7 +291,16 @@ $\square$
 **Definition 4.1 (declared finite instrument).** A declared finite instrument
 is a bounded finite-outcome local adaptive tree with source-independent finite
 dimensional product ancillas, finite local Kraus menus, and complete actual
-records. Every complete leaf includes the records written before stopping,
+records. Every local Kraus menu, adaptive policy, coin law, ancillary and
+controller initialization, and selector is fixed across the whole
+$(x,\eta)$ family. Choices use only actually acquired finite record prefixes
+and the source-independent initialized control; a coin value is a selector
+input only when actually generated and made available in that record.
+All randomization is included in the finite tree. Hidden Kraus indices,
+unacquired $x,\eta$ labels, source-correlated programmes, and
+parameter-dependent reference inputs are unavailable. Outcome probabilities
+may depend on the source through the declared quantum instrument.
+Every complete leaf includes the records written before stopping,
 its unnormalized two-qubit successor, and its success/failure or residue
 label. All unused quantum systems are either discarded or declared outside
 the checkpoint; no discarded system is callable by a later consumer.
@@ -346,16 +357,18 @@ $\operatorname{Tr}[(A^*A)\otimes(B^*B)]
 =\operatorname{Tr}(A^*A)\operatorname{Tr}(B^*B)$. Finally, ordinary partial
 transpose sends every later product Kraus congruence of a PPT operator to a
 positive congruence. More explicitly, if $D_\gamma$ is the unnormalized
-successor after the actual prefix $\gamma$ and $y$ is the next recorded
-outcome, then
+successor on the complete current quantum carriers after the actual prefix
+$\gamma$ and $y$ is the next recorded outcome, then
 
 $$
-D_{\gamma y}=K_{\gamma,y}D_\gamma K_{\gamma,y}^*,qquad
+D_{\gamma y}=\sum_k K_{\gamma,y,k}D_\gamma K_{\gamma,y,k}^*,\qquad
 \operatorname{Tr}D_{\gamma y}=\Pr(\gamma y),
 \tag{4.2}
 $$
 
-and the record stored at that node is the actual prefix $(\gamma,y)$.
+where the $K_{\gamma,y,k}$ are the product Kraus components of that node,
+including declared local discards. The summed index $k$ is not an observed
+input; the record stored at that node is the actual prefix $(\gamma,y)$.
 Terminal $D_\gamma$'s are exactly the successors summed in (1.2), including
 failures and residues. Induction over this same-run recursion proves the
 claim. $\square$
@@ -369,13 +382,46 @@ frontier, complete success/failure probabilities for that different task, and
 the finite single-product ceiling. QSSR2, in
 [Joint Relations and Clocks, Continuation](RECURSIVE_RELATIONAL_OBSERVATION_JOINT_RELATIONS_CLOCKS_CONTINUATION.md),
 §§2–5, supplies a known-setting installed transfer and branchwise continued
-use; it does not infer an unknown setting from the source. The standard
+use; it does not infer an unknown setting from the source.
+
+The native comparison uses VII §§226–230 at immutable revision
+`4c566797ebaed644c5a319c7daa1ae2ce2647058`, blob
+`b00e9fc43f806f9e3caf2102d6e8b0658019e918`, content SHA256
+`9c33f109a9b5ed743ba05b12be3bd5e9a7e14bde14582cfc7aa92656f0f51886`.
+Definition 226.1 fixes the native principal-root cut without an extra
+rotation; Proposition 227.1 reduces its coordinates to scalar equations.
+Theorems 228.1 and 229.1 give its unique extrema and exact interior and
+closed images. Theorem 230.1 and Corollary 230.2 characterize native
+membership in the scalar postfilter image and attainment of the scalar
+thermal threshold. These resolve the native scalar-realization boundary of
+§225 for that cut. The final paragraph of §230 explicitly retains the
+source-informed basis and control assumptions and leaves unknown-$q$
+extraction unresolved. Neither the scalar inverse nor native membership
+identifies or acquires the coupled pairs $(v_{x,\eta},w_\eta)$ used here.
+No identification of this family with the native $q$ family is made.
+Consequently §§226–230 neither change the premises of Lemma 2.1 and
+Theorem 3.1 nor supply their uniform finite-bank conclusion.
+
+The remaining supplier correspondence uses immutable revision
+`57235d816537668f092de005a3f9dd370566798a`; each source retains its own
+declared domain and initialization.
+
+| Reused source | Exact correspondence and limit |
+| --- | --- |
+| [NCR](RECURSIVE_RELATIONAL_OBSERVATION_NATIVE_CLOCKED_RECOVERY_AND_ORDER.md), Definitions 5.1–5.2 and Theorems 5.3, 6.3 | Acquired seed, actual receipt clock and deterministic installed continuation give four exact kernels on its fixed-controller tree domain. They supply neither this quantum preparation nor an unknown-$\eta$ selector. |
+| [PVC](RECURSIVE_RELATIONAL_OBSERVATION_NATIVE_PAID_VIEW_CONVERSION.md), Assumption 1.2, Definition 1.3 and §§6–10 | The fixed-$H$ acquired entrance and additional installed converter support paid view conversion, publication and return. No correspondence installing those services on $\Omega_{x,\eta}$ is assumed or proved here. |
+| [PR57](RECURSIVE_RELATIONAL_OBSERVATION_TRANSPORT_MEMORY_COMPLETION.md), §57.1, Definitions PR57.D1, D5 and Theorem PR57.T2 | Constructed tapes, paid source supply and whole-action guards realize its original ordered-tree menu. Finite control and finite realized runs do not imply Definition 4.1's globally finite Kraus bank. |
+| [PG](RECURSIVE_RELATIONAL_OBSERVATION_PROCESS_GEOMETRY.md), Definitions 19.1, 19.6 and Theorems 19.7–19.8; [Callable Storage Atlas](RECURSIVE_RELATIONAL_OBSERVATION_NATIVE_CALLABLE_STORAGE_ATLAS.md), §§1–2 | Complete responses and successors, actual reachable records, selectors, ownership and installed historical calls retain their own contracts. These conditions neither make the present continuous source family a finite carrier nor install an unknown-ray extraction service. |
+| [FiniteKrausInstrumentBornMarginal](../../../D5/S3/Quantum/Measurement/FiniteKrausInstrumentBornMarginal.lean), `finite_kraus_instrument_born_marginal`, and its [owning Scribe](../../../Blueprint/D5/S3/Quantum/Measurement/FiniteKrausInstrumentBornMarginal.scribe.cs) | The same-carrier finite normalized Kraus theorem equates branch trace with its Born weight. Its Scribe explains actual-prefix recursion, complete finite leaf masses and the discarded-environment boundary. These support the conventions in (1.2) and §4; the rectangular product-map argument and moving-kernel obstruction are proved here as ordinary mathematics, without transferring Lean certification. |
+
+The standard
 ingredients here—positive partial-transpose congruence, finite direct sums,
 continuity of finite matrices, and the finite-dimensional kernel argument—are
 reused mechanisms.
 
-The new inference is the exact moving-kernel statement of Theorem 3.1: a
-finite source-independent product bank can be defeated by one unknown ray and
+The `repo-derived` inference beyond these suppliers is the moving-kernel
+statement of Theorem 3.1 on the declared coupled subfamily: a finite
+source-independent product bank can be defeated by one unknown ray and
 a nonempty interval of $x$ arbitrarily close to the VII PPT boundary, even
 though the same sources have a positive-probability source-specific NPT
 filter. This is a separation between pointwise lawful extraction and a
