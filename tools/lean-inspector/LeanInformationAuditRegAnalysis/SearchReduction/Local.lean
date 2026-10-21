@@ -416,9 +416,10 @@ def localRebuild (target : Expr) (types : List Expr := [])
     original.restore
     set original.meta
     modifyThe Core.State fun s => {s with cache := original.core.cache}
+    if ex.isMaxHeartbeat then return {cost := .unknown, detail := "heartbeat"}
+    if ex.isInterrupt then return {cost := .unknown, detail := "cancelled"}
     let detail ← ex.toMessageData.toString
-    return {cost := .unknown, detail := if ex.isMaxHeartbeat then "heartbeat"
-      else if ex.isInterrupt then "cancelled" else s!"execution:{detail}"}
+    return {cost := .unknown, detail := s!"execution:{detail}"}
 
 private def vertex (graph : ProofGraph) (id : Nat) : GraphVertex :=
   (graph.vertices.find? (·.id == id)).getD default
