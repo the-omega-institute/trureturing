@@ -65,7 +65,7 @@ private def intervalJson (i : Interval) : Json := Json.mkObj [
   ("lower", boundJson i.lower), ("upper", boundJson i.upper)]
 
 private def graphJson (r : GraphReading) : Json := Json.mkObj [
-  ("lookup_backend", toJson "disk pages; missing coverage/pages/candidate imports remain unknown"),
+  ("lookup_backend", toJson "disk pages; on-demand module certification; unfinished candidates remain unknown"),
   ("lookup_enabled", toJson r.lookupEnabled),
   ("lookup_basis_complete", toJson r.lookupBasisComplete),
   ("sharing_configuration", toJson sharingConfiguration),

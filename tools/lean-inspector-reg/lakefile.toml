@@ -41,7 +41,7 @@ globs = ["LeanInformationAuditRegAnalysis.+"]
 [[lean_lib]]
 name = "LeanInformationAuditLookupDisk"
 srcDir = "../lean-inspector"
-roots = ["LeanInformationAuditRegAnalysis.SearchReduction.DiskLookup"]
+roots = ["LeanInformationAuditRegAnalysis.SearchReduction.DiskLookup", "LeanInformationAuditRegAnalysis.SearchReduction.Lookup"]
 precompileModules = true
 
 [[lean_exe]]

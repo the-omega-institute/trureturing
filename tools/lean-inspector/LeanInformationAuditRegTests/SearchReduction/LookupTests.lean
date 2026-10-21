@@ -1,4 +1,4 @@
-import LeanInformationAuditRegAnalysis.SearchReduction.Local
+import LeanInformationAuditRegAnalysis.SearchReduction.Isolation
 import LeanInformationAuditRegTests.SearchReduction.LookupBaseline
 
 /-! Recall, nonrecursive closure and incomplete-basis regression checks. -/
@@ -140,3 +140,26 @@ run_cmd do
     throwError "missing packed record became a certified negative"
   IO.FS.writeFile (directory / "records.json") records.compress
   logInfo "LOOKUP_PACKED_RECORD selected=true checksum=true missing=true"
+
+run_cmd do
+  enableInitializersExecution
+  let base ← importModules #[{module := `Lean}] {} 0 (loadExts := true)
+  liftTermElabM do
+    let source ← getEnv
+    let index ← DiskLookup.openIndex
+      "build/lean-inspector/lookup-index/lookup-fixture" "lookup-fixture"
+      "56a005855ea17e0b0958f73ec801ae140b0a1679"
+    let table ← onDemandLookup {environment := base, disk? := some index}
+    let positive ← Term.elabType (← `(∀ second first : Nat,
+      Mark first → Combined first second))
+    let negative ← Term.elabType (← `(First → Last))
+    Term.synthesizeSyntheticMVarsNoPostponing
+    for (type, expected) in #[(← instantiateMVars positive, EdgeCost.zero),
+        (← instantiateMVars negative, EdgeCost.one)] do
+      withEnv base do
+        let type ← copyStatement source .anonymous type
+        for _ in [:2] do
+          let result ← localRebuild type [] (some table)
+          unless result.cost == expected do
+            throwError "cold candidate certification: {result.detail}"
+          logInfo s!"LOOKUP_COLD cost={reprStr result.cost} {result.detail}"

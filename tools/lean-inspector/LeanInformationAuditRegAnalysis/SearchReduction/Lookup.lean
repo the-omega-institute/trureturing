@@ -5,6 +5,11 @@ the baseline environment or constructs an environment-wide tree. -/
 namespace LeanInformationAudit.SearchReduction
 open Lean Meta
 
+def lookupPhase (label : String) : IO Unit := do
+  if let some path ← IO.getEnv "SEARCH_REDUCTION_PROFILE" then
+    IO.FS.withFile path .append fun handle => do
+      handle.putStrLn s!"{← IO.monoMsNow} {label}"
+
 abbrev lookupVersion : String := "R_lookup/one-B/disk-beta-zeta-alpha-v7-independent"
 
 /-- The table is captured before delivery vocabulary or S is installed. A
@@ -14,12 +19,17 @@ structure LookupTable where
   complete : Bool := true
   enabled : Bool := true
   disk? : Option DiskLookup.Index := none
+  load? : Option (DiskLookup.Entry → Option Name → MetaM (Array Expr × Array String)) := none
+  close? : Option (IO Unit) := none
+  finish? : Option (Environment → Expr → MetaM Expr) := none
 
 structure LookupTrace where
   visited : Nat := 0
   attempted : Nat := 0
   pages : Nat := 0
   missing : Array Name := #[]
+  failures : Array String := #[]
+  unloaded : Nat := 0
   source? : Option Name := none
   complete : Bool := false
   deriving Inhabited
@@ -27,6 +37,19 @@ structure LookupTrace where
 private def eligible : ConstantInfo → Bool
   | .thmInfo _ | .defnInfo _ | .opaqueInfo _ => true
   | _ => false
+
+private def candidateValue (table : LookupTable) (entry : DiskLookup.Entry) (head : Option Name) :
+    MetaM (Array Expr × Option String × Bool) := do
+  if let some info := (table.environment.setExporting false).find? entry.leanName then
+    if !eligible info || info.isUnsafe then return (#[], none, false)
+    return (#[← mkConstWithFreshMVarLevels entry.leanName], none, false)
+  let some load := table.load? | return (#[], some "candidate-not-loaded", true)
+  try
+    let (values, failures) ← load entry head
+    return (values, if failures.isEmpty then none else some s!"{failures}", true)
+  catch ex =>
+    if ex.isMaxHeartbeat || ex.isInterrupt || ex.isRuntime then throw ex
+    return (#[], some s!"candidate-certification:{← ex.toMessageData.toString}", true)
 
 private def tableIndex (table : LookupTable) : IO (Option DiskLookup.Index) := do
   if table.disk?.isSome then return table.disk?
@@ -52,16 +75,22 @@ def lookupExact (table : LookupTable) (goal : MVarId) : MetaM LookupTrace := goa
   for entry in candidates.entries do
     checkSystem "lookup.membership"
     let name := entry.leanName
-    let some info := (table.environment.setExporting false).find? name
-      | trace := {trace with complete := false, missing := trace.missing.push name}; continue
-    trace := {trace with visited := trace.visited + 1}
-    if !eligible info || info.isUnsafe then continue
     let saved ← saveState
-    let value ← mkConstWithFreshMVarLevels name
-    if ← withReducible <| isDefEq (← inferType value) type then
-      goal.assign value
-      return {trace with source? := some name, attempted := trace.attempted + 1}
+    let (values, failure?, unloaded) ← candidateValue table entry none
+    trace := {trace with unloaded := trace.unloaded + (if unloaded then 1 else 0)}
+    if let some failure := failure? then
+      trace := {trace with
+        complete := false
+        missing := trace.missing.push name
+        failures := trace.failures.push s!"{name}:{failure}"}
+    trace := {trace with visited := trace.visited + 1}
+    for value in values do
+      if ← withReducible <| isDefEq (← inferType value) type then
+        goal.assign value
+        return {trace with source? := some name, attempted := trace.attempted + 1}
     saved.restore
+    set saved.meta
+    modifyThe Core.State fun state => {state with cache := saved.core.cache}
   return trace
 
 /-- A wildcard denotes a head which reduction or instantiation may change.
@@ -101,9 +130,42 @@ private partial def possibleView (env : Environment) (head : Option Name)
       | some a, some b => a == b
       | _, _ => true
 
+/-- A detached module has no extension state. All definition and recursor
+heads therefore stay wildcard; only intrinsically rigid unequal heads reject. -/
+partial def unloadedPossibleView (env : Environment) (head : Option Name) (type : Expr) : Bool :=
+  match type.consumeMData with
+  | .forallE _ _ body _ => unloadedPossibleView env head body
+  | .letE _ _ value body _ => unloadedPossibleView env head (body.instantiate1 value)
+  | body =>
+    if body.isAppOfArity ``And 2 || body.isAppOfArity ``Iff 2 then
+      unloadedPossibleView env head (body.getArg! 0) ||
+        unloadedPossibleView env head (body.getArg! 1) || head == body.getAppFn.constName?
+    else if body.isAppOfArity ``Subtype 2 then true
+    else if body.isAppOfArity ``Eq 3 && body.getArg! 0 == mkSort .zero then true
+    else match body.getAppFn.constName?, head with
+      | some name, some target =>
+        match (env.setExporting false).find? name with
+        | some (.inductInfo _) | some (.ctorInfo _) | some (.axiomInfo _) |
+            some (.opaqueInfo _) | some (.thmInfo _) => name == target
+        | _ => true
+      | _, _ => true
+
+partial def unloadedDirectView (env : Environment) (head : Option Name) (type : Expr) : Bool :=
+  match type.consumeMData with
+  | .forallE _ _ body _ => unloadedDirectView env head body
+  | .letE _ _ value body _ => unloadedDirectView env head (body.instantiate1 value)
+  | body =>
+    match body.getAppFn.constName?, head with
+    | some name, some target =>
+      match (env.setExporting false).find? name with
+      | some (.inductInfo _) | some (.ctorInfo _) | some (.axiomInfo _) |
+          some (.opaqueInfo _) | some (.thmInfo _) => name == target
+      | _ => true
+    | _, _ => true
+
 /-- Projection is performed inside the source telescope. Its data parameters
 are subsequently determined by application unification, never enumeration. -/
-private partial def views (value : Expr) (fuel : Nat := 32) : MetaM (Array Expr) := do
+partial def views (value : Expr) (fuel : Nat := 32) : MetaM (Array Expr) := do
   if fuel == 0 then throwError "lookup.view_depth_incomplete"
   forallTelescopeReducing (← inferType value) fun xs body => do
     let applied := mkAppN value xs
@@ -133,35 +195,49 @@ closed kernel certificate check. An exception aborts enumeration. -/
 def lookupLeaf (table : LookupTable) (goal : MVarId)
     (unify close : MVarId → MetaM Bool) : MetaM LookupTrace := goal.withContext do
   if !table.enabled then return {complete := true}
+  let detailed := (← IO.getEnv "SEARCH_REDUCTION_PROFILE_DETAIL").isSome
   let head := rigidHead (← getEnv) (← goal.getType)
   let some index ← tableIndex table | return {}
   let candidates ← DiskLookup.query index (DiskLookup.candidateKeys (← getEnv) (← goal.getType))
-  let trace ← candidates.entries.foldlM (init := ({complete := candidates.complete && table.complete, pages := candidates.pages} : LookupTrace)) fun trace entry => do
+  let trace ← candidates.entries.foldlM (init := ({complete := candidates.complete && table.complete, pages := candidates.pages} : LookupTrace)) fun (trace : LookupTrace) entry => do
     if trace.source?.isSome then return trace
     checkSystem "lookup.page_candidate"
     let name := entry.leanName
-    let some info := (table.environment.setExporting false).find? name
-      | return {trace with complete := false, missing := trace.missing.push name}
-    let trace := {trace with visited := trace.visited + 1}
-    if !eligible info || info.isUnsafe then return trace
-    unless possibleView table.environment head info.type do return trace
+    if let some info := (table.environment.setExporting false).find? name then
+      if !eligible info || info.isUnsafe || !possibleView table.environment head info.type then
+        return {trace with visited := trace.visited + 1}
     let initial ← get
     let cache := (← getThe Core.State).cache
-    let suitable ← withEnv table.environment do
-      if ← isProp info.type then return true
-      forallTelescopeReducing info.type fun _ body => do
-        return (← withReducible <| whnf body).isAppOfArity ``Subtype 2
-    unless suitable do
-      set initial
-      modifyThe Core.State fun s => {s with cache}
-      return trace
     let original ← saveState
-    let value ← mkConstWithFreshMVarLevels name
-    let alternatives ← views value
+    let (values, failure?, unloaded) ← candidateValue table entry head
+    let trace := {trace with unloaded := trace.unloaded + (if unloaded then 1 else 0)}
+    let trace := if let some failure := failure? then
+        {trace with
+          complete := false
+          missing := trace.missing.push name
+          failures := trace.failures.push s!"{name}:{failure}"}
+      else trace
+    if values.isEmpty then
+      original.restore
+      set initial
+      modifyThe Core.State fun state => {state with cache}
+      return trace
+    let trace := {trace with visited := trace.visited + 1}
+    let alternatives : Array Expr ← if unloaded then pure values else (do
+      let value := values[0]!
+      let type ← inferType value
+      unless possibleView (← getEnv) head type do return #[]
+      let suitable : Bool ← (do
+        if ← isProp type then return true
+        forallTelescopeReducing type fun _ body => do
+          return (← withReducible <| whnf body).isAppOfArity ``Subtype 2 : MetaM Bool)
+      if suitable then views value else pure #[] : MetaM (Array Expr))
     let mut attempted := trace.attempted
     for view in alternatives do
       let saved ← saveState
       attempted := attempted + 1
+      if detailed then
+        lookupPhase s!"lookup/candidate-start name={name} visited={trace.visited} attempted={attempted}"
       try
         let obligations ← withReducible <| goal.apply view {approx := false}
         let propositions ← obligations.filterM fun g => g.withContext do isProp (← g.getType)
@@ -178,6 +254,7 @@ def lookupLeaf (table : LookupTable) (goal : MVarId)
           unless proof.hasMVar do return {trace with attempted, source? := some name}
       catch ex =>
         if ex.isMaxHeartbeat || ex.isInterrupt || ex.isRuntime then throw ex
+      if detailed then lookupPhase s!"lookup/candidate-end name={name} attempted={attempted}"
       saved.restore
     original.restore
     set initial

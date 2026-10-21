@@ -343,6 +343,8 @@ private partial def solveLookupGoal (table : LookupTable) (goal : MVarId)
         attempted := trace.attempted + leaf.attempted
         pages := trace.pages + leaf.pages
         missing := trace.missing ++ leaf.missing
+        failures := trace.failures ++ leaf.failures
+        unloaded := trace.unloaded + leaf.unloaded
         source? := trace.source?.or leaf.source?
         complete := trace.complete && leaf.complete}
       unless ← next.isAssigned do solved := false
@@ -389,9 +391,13 @@ def boundedRebuildBranch (action : MetaM LocalResult) : MetaM LocalResult := do
 /-- A success in either route wins. Negative evidence requires both routes to
 finish normally; timeout in one route never becomes a one-price edge. -/
 def independentRebuild (localRoute lookup : MetaM LocalResult) : MetaM LocalResult := do
+  let started ← IO.monoMsNow
   let old ← boundedRebuildBranch localRoute
+  lookupPhase s!"rebuild/local ms={(← IO.monoMsNow) - started} cost={reprStr old.cost}"
   if old.cost == .zero then return old
+  let lookupStart ← IO.monoMsNow
   let found ← boundedRebuildBranch lookup
+  lookupPhase s!"rebuild/lookup ms={(← IO.monoMsNow) - lookupStart} cost={reprStr found.cost} detail={found.detail}"
   if found.cost == .zero then return found
   return {found with
     cost := if old.cost == .one && found.cost == .one then .one else .unknown
@@ -400,7 +406,12 @@ def independentRebuild (localRoute lookup : MetaM LocalResult) : MetaM LocalResu
 /-- Only statement types enter R. The successful lambda retains precisely its
 used premise binders, so zero edges carry their actual premises. -/
 private def rebuildRoute (target : Expr) (types : List Expr)
-    (lookup? : Option LookupTable) : MetaM LocalResult :=
+    (lookup? : Option LookupTable) : MetaM LocalResult := do
+  let originalEnv ← getEnv
+  let finish (proof : Expr) : MetaM Expr := do
+    if let some exportProof := lookup?.bind (·.finish?) then
+      exportProof originalEnv proof
+    else pure proof
   withFacts types fun facts => do
     let root ← mkFreshExprMVar target
     let mut goal := root.mvarId!
@@ -413,8 +424,8 @@ private def rebuildRoute (target : Expr) (types : List Expr)
         let exactRoot ← mkFreshExprMVar target
         let exactTrace ← lookupExact table exactRoot.mvarId!
         if exactTrace.source?.isSome then
-          let proof ← instantiateMVars exactRoot
-          checkLocalProof target proof
+          let proof ← finish (← instantiateMVars exactRoot)
+          withEnv originalEnv <| checkLocalProof target proof
           return {
             cost := .zero, proof? := some proof, lookup := exactTrace,
             detail := s!"kernel-checked-lookup:{exactTrace.source?}"}
@@ -428,17 +439,17 @@ private def rebuildRoute (target : Expr) (types : List Expr)
         cost := if trace.complete then .one else .unknown, lookup := trace
         detail := if trace.complete then
           if lookup?.isSome then
-            s!"normal-exhaustion/lookup-complete:pages={trace.pages},visited={trace.visited},attempted={trace.attempted}"
+            s!"normal-exhaustion/lookup-complete:pages={trace.pages},visited={trace.visited},attempted={trace.attempted},unloaded_checked={trace.unloaded}"
           else "normal-exhaustion/local-only"
-          else s!"lookup-incomplete-basis:pages={trace.pages},missing={trace.missing.take 8},missing_count={trace.missing.size}"}
+          else s!"lookup-incomplete-basis:pages={trace.pages},missing={trace.missing.take 8},missing_count={trace.missing.size},reasons={trace.failures.take 8}"}
     let proof ← instantiateMVars root
     unless !proof.hasMVar do return {detail := "unclosed-reconstruction"}
     let used := facts.toList.zipIdx.filterMap fun (fact, i) =>
       if proof.containsFVar fact.fvarId! then some i else none
     let selected := used.toArray.map (facts[·]!)
-    let certificate ← mkLambdaFVars selected proof
+    let certificate ← finish (← mkLambdaFVars selected proof)
     let certificateType ← mkForallFVars selected target
-    checkLocalProof certificateType certificate
+    withEnv originalEnv <| checkLocalProof certificateType certificate
     return {
       cost := .zero, proof? := some certificate, used, lookup := trace,
       detail := if let some name := trace.source? then s!"kernel-checked-lookup:{name}"
@@ -449,7 +460,10 @@ def localRebuild (target : Expr) (types : List Expr := [])
   let localRoute := rebuildRoute target types none
   if let some table := lookup? then
     if table.enabled then
-      return ← independentRebuild localRoute (rebuildRoute target types (some table))
+      try
+        return ← independentRebuild localRoute (rebuildRoute target types (some table))
+      finally
+        if let some close := table.close? then close
   boundedRebuildBranch localRoute
 
 private def vertex (graph : ProofGraph) (id : Nat) : GraphVertex :=
@@ -590,6 +604,7 @@ def assembleZero (graph : ProofGraph) (paired := false) : MetaM (Option Expr) :=
 /-- Two root probes, target-part reverse probes and declaration-level k=2.
 The d_given ablation supplies all premise types; it does not affect verdicts. -/
 def evaluateGraph (raw : ProofGraph) (lookup? : Option LookupTable := none) : MetaM GraphReading := do
+  lookupPhase "graph/target-part-start"
   if raw.vertices.isEmpty then return {graph := raw}
   let mut raw := raw
   let enabled := (← IO.getEnv "SEARCH_REDUCTION_LOOKUP") != some "0"
@@ -618,6 +633,7 @@ def evaluateGraph (raw : ProofGraph) (lookup? : Option LookupTable := none) : Me
     vertices := vertices ++ [v]
   raw := {raw with vertices}
   let graph ← annotateGraph {raw with edges := raw.edges ++ k2Frontier raw}
+  lookupPhase "graph/pricing-start"
   let graph ← priceGraph graph false false lookup?
   let graph ← priceGraph graph true false lookup?
   let graph ← priceGraph graph false true lookup?
@@ -626,8 +642,10 @@ def evaluateGraph (raw : ProofGraph) (lookup? : Option LookupTable := none) : Me
   let graph := {graph with edges := graph.edges.filter (fun e =>
     e.window == 1 || edgeActive e || edgeActive e true ||
       edgeActive e false true || edgeActive e true true)}
+  lookupPhase "graph/roots-start"
   let baseProbe ← rootProbe graph false lookup?
   let pairedProbe ← rootProbe graph true lookup?
+  lookupPhase "graph/dp-start"
   let mut graph := graph
   for paired in [false, true] do
     let probe := if paired then pairedProbe else baseProbe
@@ -650,7 +668,7 @@ def evaluateGraph (raw : ProofGraph) (lookup? : Option LookupTable := none) : Me
   let selectedSeeds := optimalSeeds pairedGraph costUpper pairSeeds
   let witnessEdges := graph.edges.zipIdx.filterMap fun (edge, i) =>
     if isWitnessEdge graph selectedSeeds edge then some i else none
-  return {
+  let reading := {
     graph, baseline := graphInterval baselineGraph baseSeeds,
     paired := graphInterval pairedGraph pairSeeds,
     baselineK1 := graphInterval (armGraph k1 false false) baseSeeds,
@@ -664,6 +682,8 @@ def evaluateGraph (raw : ProofGraph) (lookup? : Option LookupTable := none) : Me
     proofHardSeeds := selectedSeeds.filter (fun id =>
       proofHardEligible graph selectedSeeds id (depth baselineGraph costLower baseSeeds id)),
     pairedUsesSeed := selectedSeeds.any (selectedStructureSeed graph selectedSeeds),
-    lookupEnabled := table.enabled, lookupBasisComplete := table.complete}
+    lookupEnabled := table.enabled, lookupBasisComplete := table.complete : GraphReading}
+  lookupPhase "graph/dp-end"
+  return reading
 
 end LeanInformationAudit.SearchReduction

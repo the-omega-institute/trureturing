@@ -273,14 +273,171 @@ private def intervalRun (graph : ProofGraph) (interval : Interval) : Run :=
       finite interval.lower && finite interval.upper then .exhausted
   else .incomplete .undecided
 
+private def ownedLookupName : Name → Name
+  | .anonymous => .anonymous
+  | .str p s => .str (ownedLookupName p) (String.ofList s.toList)
+  | .num p n => .num (ownedLookupName p) (toString n).toNat!
+
+private def ownedLookupLevel : Level → Level
+  | .zero => .zero
+  | .succ l => .succ (ownedLookupLevel l)
+  | .max a b => .max (ownedLookupLevel a) (ownedLookupLevel b)
+  | .imax a b => .imax (ownedLookupLevel a) (ownedLookupLevel b)
+  | .param n => .param (ownedLookupName n)
+  | .mvar n => .mvar ⟨ownedLookupName n.name⟩
+
+/-- The result must own every byte before its temporary module regions close. -/
+private partial def ownedLookupExpr (e : Expr) : StateM (Std.HashMap Expr Expr) Expr := do
+  if let some found := (← get)[e]? then return found
+  let result : Expr ← match e with
+    | .bvar i => pure (.bvar i)
+    | .fvar n => pure (.fvar ⟨ownedLookupName n.name⟩)
+    | .mvar n => pure (.mvar ⟨ownedLookupName n.name⟩)
+    | .sort l => pure (.sort (ownedLookupLevel l))
+    | .const n ls => pure (.const (ownedLookupName n) (ls.map ownedLookupLevel))
+    | .app f a => return .app (← ownedLookupExpr f) (← ownedLookupExpr a)
+    | .lam n t b bi => do
+      return .lam (ownedLookupName n) (← ownedLookupExpr t) (← ownedLookupExpr b) bi
+    | .forallE n t b bi => do
+      return .forallE (ownedLookupName n) (← ownedLookupExpr t) (← ownedLookupExpr b) bi
+    | .letE n t v b nd => do
+      let t ← ownedLookupExpr t
+      let v ← ownedLookupExpr v
+      let b ← ownedLookupExpr b
+      return .letE (ownedLookupName n) t v b nd
+    | .lit (.natVal n) => pure (.lit (.natVal (toString n).toNat!))
+    | .lit (.strVal s) => pure (.lit (.strVal (String.ofList s.toList)))
+    | .mdata _ b => ownedLookupExpr b
+    | .proj n i b => return .proj (ownedLookupName n) i (← ownedLookupExpr b)
+  modify (·.insert e result)
+  return result
+
+private partial def inlineLookupSupport (base : Environment) (proof : Expr)
+    (seen : NameSet := {}) : MetaM Expr :=
+  Core.transform proof (pre := fun e => do
+    if let .const name levels := e then
+      unless (base.setExporting false).contains name do
+        if seen.contains name then throwError "lookup.recursive-support:{name}"
+        let info ← getConstInfo name
+        if info.isUnsafe then throwError "lookup.unsafe_support:{name}"
+        let some body := info.value? (allowOpaque := true)
+          | throwError "lookup.support_requires_import:{name}"
+        let body ← inlineLookupSupport base
+          (body.instantiateLevelParams info.levelParams levels) (seen.insert name)
+        return .done body
+    return .continue)
+
+@[noinline] private def copyLookupCandidate (source : Environment)
+    (entry : DiskLookup.Entry) (head : Option Name) :
+    MetaM (Array Expr × List Name × Array String) := do
+  let some info := (source.setExporting false).find? entry.leanName
+    | throwError "lookup.module_candidate_missing"
+  let empty := (#[], [], #[])
+  if info.isUnsafe then return empty
+  unless unloadedPossibleView source head info.type do return empty
+  match info with
+  | .thmInfo _ | .defnInfo _ | .opaqueInfo _ => pure ()
+  | _ => return empty
+  let suitable ← withEnv source do
+    if ← isProp info.type then return true
+    forallTelescopeReducing info.type fun _ body => do
+      return (← whnf body).isAppOfArity ``Subtype 2
+  unless suitable do return empty
+  let value := mkConst entry.leanName (info.levelParams.map Level.param)
+  let alternatives ← withEnv source <| views value
+  let mut proofs := #[]
+  let mut failures := #[]
+  for view in alternatives do
+    let type ← withEnv source <| inferType view
+    unless unloadedDirectView source head type do continue
+    try
+      let expanded ← Core.transform view (pre := fun e => do
+        if let .const name levels := e then
+          if name == entry.leanName then
+            if let some body := info.value? (allowOpaque := true) then
+              return .done (body.instantiateLevelParams info.levelParams levels)
+        return .continue)
+      let expanded ← withEnv source <| Meta.transform expanded (post := fun e => do
+        let projection := e.getAppFn.constName?.any (#[``And.left, ``And.right,
+          ``Iff.mp, ``Iff.mpr, ``Subtype.property, ``Eq.mp, ``Eq.mpr, ``Eq.symm].contains ·)
+        if projection || e.isProj || e.getAppFn.isLambda then
+          return .done (← withTransparency .all <| whnf e)
+        return .done e)
+      let proof ← copyCertificateExpression {source} expanded
+      checkSystem "lookup.imported_candidate"
+      proofs := proofs.push ((ownedLookupExpr proof).run' {})
+    catch ex =>
+      if ex.isMaxHeartbeat || ex.isInterrupt || ex.isRuntime then throw ex
+      failures := failures.push (← ex.toMessageData.toString)
+  return (proofs, info.levelParams.map ownedLookupName, failures)
+
+/-- Temporary vocabulary belongs to the candidate branch. Only a successful
+certificate is inlined and checked against the original query environment.
+At most one imported module is retained until branch state is restored. -/
+unsafe def onDemandLookup (table : LookupTable)
+    (sharedImports? : Option ImportState := none) : IO LookupTable := do
+  let cache ← IO.mkRef (none : Option (String × Environment))
+  let verified ← IO.mkRef false
+  let retained := if sharedImports?.isSome then table.environment.header.regions.map (·.filePath)
+    else #[]
+  let close : IO Unit := do
+    let previous ← cache.get
+    cache.set none
+    if let some (_, env) := previous then
+      for region in env.header.regions.reverse do
+        unless retained.contains region.filePath do region.free
+  let acquire (module : Name) (options : Options) : IO Environment := withImporting do
+    lookupPhase s!"candidate/import-start module={module}"
+    let imports : Array Import := #[{module}]
+    let (_, state) ← (importModulesCore imports).run (sharedImports?.getD default)
+    let env ← finalizeImport state imports options 0 (leakEnv := false) (loadExts := false)
+    lookupPhase s!"candidate/import-end module={module}"
+    return env
+  let finish (base : Environment) (proof : Expr) : MetaM Expr := do
+    let proof ← inlineLookupSupport base proof
+    return ((ownedLookupExpr proof).run' {})
+  return {table with
+    close? := some close
+    finish? := some finish
+    load? := some fun entry head => do
+      let started ← IO.monoMsNow
+      let context ← readThe Core.Context
+      if entry.module.startsWith "D5." && !(← verified.get) then
+        let some disk := table.disk? | throwError "lookup.candidate_without_snapshot"
+        let check ← IO.Process.output {
+          cmd := "git"
+          args := #["diff", "--quiet", disk.header.basis, "--", "D5"]}
+        unless check.exitCode == 0 do throwError "lookup.candidate_snapshot_changed"
+        verified.set true
+      let ready ← cache.get
+      let source ← if let some (name, source) := ready then
+          if name == entry.module then pure source else do
+            close
+            let source ← acquire entry.module.toName context.options
+            cache.set (some (entry.module, source))
+            pure source
+        else do
+          let source ← acquire entry.module.toName context.options
+          cache.set (some (entry.module, source))
+          pure source
+      let result ← copyLookupCandidate source entry head
+      if (← IO.getEnv "SEARCH_REDUCTION_PROFILE").isSome then
+        IO.eprintln s!"LOOKUP_COST candidate_import_copy_ms={(← IO.monoMsNow) - started} module={entry.module}"
+      checkSystem "lookup.candidate_import"
+      let (proofs, params, failures) := result
+      let levels ← params.mapM fun _ => mkFreshLevelMVar
+      return (proofs.map (·.instantiateLevelParams params levels), failures)}
+
 private unsafe def runCore (source base : Environment) (request : Request)
-    (lookupComplete : Bool) (disk? : Option DiskLookup.Index := none) : IO Observation := do
+    (lookupComplete : Bool) (disk? : Option DiskLookup.Index := none)
+    (sharedImports? : Option ImportState := none) : IO Observation := do
   let unknown (reason : String) (failure := Failure.isolation) : Observation := {
     target := request.target, base := .incomplete failure,
     paired := .incomplete failure, verdict := .insufficient, reason}
   try
     unless source.contains request.target do return unknown "search.missing_target" .missing
     if let .error reason ← checkBaseline request base then return unknown reason
+    profilePhase "query/prepare-start"
     let prepared ← prepare source base request false
     let .ok (clean, target, _) := prepared
       | let (failure, reason) := match prepared with
@@ -290,8 +447,10 @@ private unsafe def runCore (source base : Environment) (request : Request)
     let presentationIndex : FactIndex := {
       environment? := some clean
       enumerationSize := clean.constants.fold (fun count _ _ => count + 1) 0}
+    profilePhase "query/presentation-start"
     let (presentation, presentationEvidence?, presentationDetail) ←
       baselinePresentation clean target.levelParams target.type (some presentationIndex)
+    profilePhase "query/structure-start"
     let mut pairedEnv := clean
     let mut structureChecked := false
     let mut structureReason := ""
@@ -303,6 +462,7 @@ private unsafe def runCore (source base : Environment) (request : Request)
         structureReason := reason
         structureFailure := some failure
     let work : CoreM Observation := MetaM.run' do
+      profilePhase "query/extraction-start"
       let added := if structureChecked then request.additions else #[]
       let graph ← withEnv source <| extractGraph base request.target added
       let vertices ← graph.vertices.mapM fun v => do
@@ -310,8 +470,11 @@ private unsafe def runCore (source base : Environment) (request : Request)
       let graph := {graph with vertices}
       let graphEnv ← getEnv
       let enabled := (← IO.getEnv "SEARCH_REDUCTION_LOOKUP") != some "0"
-      let reading ← withEnv graphEnv <| evaluateGraph graph (some {
-        environment := base, complete := lookupComplete, enabled, disk?})
+      profilePhase "query/evaluation-start"
+      let table ← onDemandLookup {
+        environment := base, complete := lookupComplete, enabled, disk?} sharedImports?
+      let reading ← withEnv graphEnv <| evaluateGraph graph (some table)
+      profilePhase "query/assembly-start"
       let baselineProof? ← if upperIsZero reading.baseline then
         withEnv graphEnv <| assembleZero reading.graph else pure none
       let pairedProof? ← if upperIsZero reading.paired then
@@ -366,9 +529,12 @@ unsafe def run (source : Environment) (request : Request)
     enableInitializersExecution
     let imports : Array Import := #[{module := `Mathlib}] ++
       request.baseline.map (fun n => {module := n})
-    let base ← withImporting do
+    profilePhase "query/base-import-start"
+    let (base, baseImports) ← withImporting do
       let (_, state) ← (importModulesCore imports).run sharedImports
-      finalizeImport state imports options 0 (leakEnv := false) (loadExts := true)
+      let base ← finalizeImport state imports options 0 (leakEnv := false) (loadExts := true)
+      pure (base, state)
+    profilePhase "query/base-import-end"
     let mut delivery := #[]
     for n in #[request.target] ++ request.additions do
       if let some index := source.getModuleIdxFor? n then
@@ -379,7 +545,7 @@ unsafe def run (source : Environment) (request : Request)
     let disk? ← try
       pure (some (← DiskLookup.openIndex directory request.baselineCommit mathlibRevision catalog.excluded))
       catch _ => pure none
-    let result ← runCore source base request disk?.isSome disk?
+    let result ← runCore source base request disk?.isSome disk? (some baseImports)
     let used := request.additions.filter fun name =>
       result.graph?.any fun reading => reading.selectedSeeds.any fun id =>
         reading.graph.vertices.any fun vertex => vertex.id == id &&
