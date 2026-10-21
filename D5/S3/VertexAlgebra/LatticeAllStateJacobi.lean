@@ -95,7 +95,7 @@ theorem borcherds (D : LatticeData) (a b c : Carrier D) (p q r : ℤ) : Function
     have residueProduct (parameter mode : ℤ) (vector : Carrier D) : (((residueField D parameter a b).operator) [[mode]]) vector = (∑ᶠ offset : ℕ, jacobiRightFirstTerm D 0 mode parameter a b
       vector offset) - (∑ᶠ offset : ℕ, jacobiRightSecondTerm D 0 mode parameter a b vector offset) := by
       rw [(residueField D parameter a b).coefficient]
-      dsimp only [residueCoefficient, residueLeft, residueRight, jacobiRightFirstTerm, jacobiRightSecondTerm, mu]; simp only [zero_add]
+      dsimp only [residueCoefficient, residueLeft, residueRight, StateFieldResidueReconstruction.fieldResidueLeft, StateFieldResidueReconstruction.fieldResidueRight, jacobiRightFirstTerm, jacobiRightSecondTerm, mu]; simp only [zero_add]
       rw [smul_finsum' (StateFieldResidueReconstruction.epsilon parameter) ((residueField D parameter a b).right_finite mode vector)]; simp_rw [smul_comm (StateFieldResidueReconstruction.epsilon parameter)]
       rw [add_comm parameter mode]
     have residueZero (parameter : ℤ) (high : (cutoff : ℤ) ≤ parameter) : (residueField D parameter a b).operator = 0 := by
@@ -130,7 +130,7 @@ theorem borcherds (D : LatticeData) (a b c : Carrier D) (p q r : ℤ) : Function
         simp [jacobiLeftTerm, integerBinomial, Ring.choose_zero_pos ℤ (Nat.pos_of_ne_zero different)]
     have right : mu D (mu D a r b) q c = (∑ᶠ offset : ℕ, jacobiRightFirstTerm D 0 q r a b c offset) - (∑ᶠ offset : ℕ, jacobiRightSecondTerm D 0 q r a b c offset) := by
       change ((Y D (mu D a r b)) [[q]]) c = _; rw [residue_closure, (residueField D r a b).coefficient]
-      dsimp only [residueCoefficient, residueLeft, residueRight, jacobiRightFirstTerm, jacobiRightSecondTerm, mu]; simp only [zero_add]
+      dsimp only [residueCoefficient, residueLeft, residueRight, StateFieldResidueReconstruction.fieldResidueLeft, StateFieldResidueReconstruction.fieldResidueRight, jacobiRightFirstTerm, jacobiRightSecondTerm, mu]; simp only [zero_add]
       rw [smul_finsum' (StateFieldResidueReconstruction.epsilon r) ((residueField D r a b).right_finite q c)]; simp_rw [smul_comm (StateFieldResidueReconstruction.epsilon r)]; rw [add_comm r q]
     rw [left, right]; abel
   have recurrence (p q r : ℤ) : discrepancy (p + 1) q r = discrepancy p (q + 1) r + discrepancy p q (r + 1) := by
