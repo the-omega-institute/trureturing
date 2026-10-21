@@ -56,7 +56,22 @@ def claim : Prop :=
 private lemma scalar_identities (d : ℕ) (hd : 2 ≤ d) :
     ‖z d‖ ^ 2 = (d : ℝ) / (2 * ((d : ℝ) - 1)) ∧
     ((z d) ^ 2).re = -1 / (2 * ((d : ℝ) - 1)) := by
-  sorry
+  have hdR : (2 : ℝ) ≤ d := by exact_mod_cast hd
+  have hd1 : 0 < (d : ℝ) - 1 := by linarith
+  have hden : (d : ℝ) - 1 ≠ 0 := ne_of_gt hd1
+  have hs := Real.sq_sqrt (show 0 ≤ ((d : ℝ) + 1) / ((d : ℝ) - 1) by positivity)
+  have hs' := (eq_div_iff hden).mp hs
+  have hr : (z d).re = 1 / 2 := by
+    norm_num [z, Complex.div_re, Complex.mul_re]
+  have hi : (z d).im = Real.sqrt (((d : ℝ) + 1) / ((d : ℝ) - 1)) / 2 := by
+    norm_num [z, Complex.div_im, Complex.mul_im]
+  constructor
+  · rw [Complex.sq_norm, Complex.normSq_apply, hr, hi]
+    field_simp
+    nlinarith [hs']
+  · rw [pow_two, Complex.mul_re, hr, hi]
+    field_simp
+    nlinarith [hs']
 
 private lemma basis_orthogonality (d : ℕ) (hd : 2 ≤ d) (m n : Fin d) :
     (∑ p, conj (φ d m p) * φ d n p) = if m = n then 1 else 0 := by
