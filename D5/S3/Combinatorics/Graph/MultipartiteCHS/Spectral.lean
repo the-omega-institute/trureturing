@@ -7,6 +7,7 @@
    digest: Multipartite adjacency determinants and complete homogeneous spectral recurrence. -/
 
 import D5.S3.Combinatorics.Graph.MultipartiteCHS.Defs
+import D5.S3.Combinatorics.Graph.MultipartiteCHS.Recurrence
 import D5.S3.Combinatorics.Graph.PathCHS.PathCHSNormClosedForm
 import Mathlib.LinearAlgebra.Matrix.Charpoly.Coeff
 
@@ -15,6 +16,7 @@ import Mathlib.LinearAlgebra.Matrix.Charpoly.Coeff
 open scoped BigOperators
 open Finset Polynomial Matrix
 open D5.S3.Combinatorics.Graph.MultipartiteCHS.Defs
+open D5.S3.Combinatorics.Graph.MultipartiteCHS.Recurrence
 
 namespace D5.S3.Combinatorics.Graph.MultipartiteCHS.Spectral
 
@@ -227,5 +229,11 @@ private theorem chs_eq_sequence {r : ℕ} (a : Fin r → ℕ) (H : ℕ → ℝ)
       apply Finset.sum_congr rfl
       intro j hj
       rw [ih (d - j) (by have h := Finset.mem_Icc.mp hj; omega)]
+
+/-- The complete homogeneous spectral coefficients are exactly the part-size recurrence. -/
+theorem chs_eq_recH {r : ℕ} (a : Fin r → ℕ) (d : ℕ) : chs a d = recH a d := by
+  apply chs_eq_sequence a (recH a) (recH_zero a) ?_ d
+  intro k hk
+  simpa only [esymmParts, Nat.cast_sum, Nat.cast_prod] using recH_eq a hk
 
 end D5.S3.Combinatorics.Graph.MultipartiteCHS.Spectral
