@@ -1,0 +1,48 @@
+**Corollary 114.2 (Actual finite intervals of positive width).** With
+$q_n=2^{1-n}$,
+
+$$
+\begin{aligned}
+F(q_n)\le\mu_n\le\frac23
+ &&(n\ge2\text{ even}),\\
+F(q_n)\le\mu_n\le\frac23-\frac{q_n}{6}
+ &&(n\ge3\text{ odd}).
+\end{aligned}
+\tag{114.3}
+$$
+
+In particular,
+
+$$
+\boxed{\displaystyle
+\mu_2\in\left[\frac{1+\sqrt{33}}{12},\frac23\right],\qquad
+\mu_3\in\left[\frac{3+\sqrt{137}}{24},\frac58\right].}
+\tag{114.4}
+$$
+
+The widths of these two intervals are respectively
+
+$$
+\frac{7-\sqrt{33}}{12}>0,\qquad
+\frac{12-\sqrt{137}}{24}>0.
+\tag{114.5}
+$$
+
+*Proof.* Apply (114.1) through the unchanged transport (105.3), and
+use the replacer and positive-branch upper bounds of §107. Here
+$0<q_n\le1/2$, so $F(q_n)>L(q_n)\ge5/9>1/2$.
+Substitution gives (114.4). More generally the widths in (114.3) are
+
+$$
+\frac{3+q-\sqrt{(1-q)^2+8}}6
+\quad\text{and}\quad
+\frac{3-\sqrt{(1-q)^2+8}}6,
+\qquad 0<q\le\frac12.
+\tag{114.6}
+$$
+
+The first is positive because
+$(3+q)^2-[(1-q)^2+8]=8q>0$; the second is positive because
+$9-[(1-q)^2+8]=q(2-q)>0$. In particular $33<49$ and $137<144$
+give the signs in (114.5). $\square$
+

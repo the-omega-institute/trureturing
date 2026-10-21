@@ -1,0 +1,30 @@
+**Definition 119.2 (Rational isolating box).** Every terminating decimal
+in the following table is an exact rational number. They give the
+centre $\bar\theta$ in the variable order (119.1).
+
+| Coordinate | Exact rational centre |
+| --- | --- |
+| $a$ | $0.937622401511151627969041446134$ |
+| $b$ | $0.337737953327691343771408026078$ |
+| $c$ | $0.443127649705020756905449237135$ |
+| $\eta$ | $0.562734991697309686859337984905$ |
+| $L$ | $0.606446991399069890053817252242$ |
+| $p_e$ | $0.388582338267081579168412985646$ |
+| $p_i$ | $0.284461108116364144368507390598$ |
+| $x_i$ | $0.388490198578206978698502224224$ |
+| $\alpha$ | $0.414839545542267246309701403648$ |
+| $\beta$ | $0.811692993910961133702563979045$ |
+| $\tau$ | $0.067973872064879450850865285313$ |
+
+Let
+
+$$
+r=10^{-20},\qquad
+\mathcal B=\{\theta\in\mathbb R^{11}:\|\theta-\bar\theta\|_\infty\le r\}.
+\tag{119.7}
+$$
+
+The parameters used below are the coordinates of the unique zero
+$\theta_*$ of (119.4) in $\mathcal B$. Existence and uniqueness are
+part of the following lemma.
+

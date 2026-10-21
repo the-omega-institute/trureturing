@@ -1,0 +1,74 @@
+**Lemma 112.2 (Averaging arbitrary decoders over phases).** For every
+CPTP $\mathcal R$, its normalized Haar average over diagonal unitaries
+
+$$
+\overline{\mathcal R}
+ =\int\operatorname{Ad}_{T^\dagger}\circ\mathcal R
+                          \circ\operatorname{Ad}_T\,dT
+\tag{112.3}
+$$
+
+is CPTP and diagonal covariant, and satisfies
+
+$$
+h_s(\overline{\mathcal R})\le h_s(\mathcal R),\qquad
+e_s(\overline{\mathcal R})\le e_s(\mathcal R).
+\tag{112.4}
+$$
+
+Every diagonal-covariant decoder has the representation
+
+$$
+\overline{\mathcal R}(E_{jj})=\sum_i c_{ij}E_{ii},\qquad
+\overline{\mathcal R}(E_{ij})=\xi_{ij}E_{ij}\quad(i\ne j),
+\qquad
+B_{ii}=c_{ii},\quad B_{ij}=\xi_{ij}\quad(i\ne j),
+\tag{112.5}
+$$
+
+where $C=(c_{ij})$ is entrywise nonnegative and column stochastic and
+$B\succeq0$. In particular,
+
+$$
+|\xi_{01}|^2\le c_{00}c_{11},\qquad 0\le c_{jj}\le1.
+\tag{112.6}
+$$
+
+*Proof.* Equation (95.12) gives covariance of $\Phi_s$ under every
+diagonal unitary $T$. For every density input $\rho$,
+
+$$
+\overline{\mathcal R}\Phi_s(\rho)-\rho
+ =\int T^\dagger\bigl[\mathcal R\Phi_s(T\rho T^\dagger)
+                                      -T\rho T^\dagger\bigr]T\,dT.
+\tag{112.7}
+$$
+
+Convexity and unitary invariance of the trace norm give (112.4), because
+both the full density set and $\mathcal O$ are invariant under these
+conjugations. Averaging preserves complete positivity and trace
+preservation. Invariance of Haar measure gives covariance of the average.
+This proves the inequalities for a decoder that was arbitrary before
+averaging.
+
+The diagonal matrices are the fixed subspace of diagonal conjugation,
+and each off-diagonal matrix unit spans a distinct character space.
+Covariance therefore gives (112.5). In the output-first convention,
+its Choi matrix is
+
+$$
+J(\overline{\mathcal R})
+ =\sum_{i\ne j}c_{ij}|ij\rangle\langle ij|
+   +\sum_{i,j}B_{ij}|ii\rangle\langle jj|.
+\tag{112.8}
+$$
+
+Its orthogonal blocks show that complete positivity is equivalent to
+$c_{ij}\ge0$ and $B\succeq0$, while trace preservation is equivalent to
+the column sums of $C$ being one. These are precisely the CDUC
+population and coherence parameters of [Singh–Nechita, Definition 6.3,
+(37), Lemmas 6.11 and 6.13, and Proposition 4.1][SN]: their population
+matrix $A$ is $C$, their coherence matrix is $B$, and their covariance
+is $\mathcal R(TXT^\dagger)=T\mathcal R(X)T^\dagger$.
+The $01$ principal minor gives (112.6). $\square$
+

@@ -1,0 +1,38 @@
+**Lemma 129.1 (Coefficient and derivative data).** The complete
+population expansion of (128.1) is
+
+$$
+128N=\sum_{i+j\le3}h_{ij}(r,L)p^ix^j,
+\tag{129.1}
+$$
+
+with all its nonzero coefficients given by this table.
+
+| $(i,j)$ | $h_{ij}(r,L)$ |
+| --- | --- |
+| $(0,0)$ | $128L^3-18Lr^4$ |
+| $(0,1)$ | $-24Lr^4+96Lr^2-128L$ |
+| $(0,2)$ | $-8Lr^4+64Lr^2$ |
+| $(1,0)$ | $36Lr^4-128L-48r^2$ |
+| $(1,1)$ | $24Lr^4-104Lr^2+64Lr+128L+3r^4-24r^3+64r^2+64r-128$ |
+| $(1,2)$ | $2r^4-16r^3+56r^2$ |
+| $(2,0)$ | $-18Lr^4+128L+96r^2$ |
+| $(2,1)$ | $-3r^4+24r^3-64r^2-64r+128$ |
+| $(3,0)$ | $-48r^2$ |
+
+Thus, in addition to $128\mathcal F_0=\sum h_{ij}p^ix^j$,
+the other three polynomials are specified without any omitted terms by
+
+$$
+\begin{aligned}
+128\mathcal F_1&=\sum_{i\ge1,j}i h_{ij}p^{i-1}x^j,\\
+128\mathcal F_2&=\sum_{i\ge0,j\ge1}j h_{ij}p^ix^{j-1},\\
+128\mathcal F_3&=\sum_{i,j}(\partial_rh_{ij})p^ix^j.
+\end{aligned}
+\tag{129.2}
+$$
+
+The coefficient indices in each sum range only over the table.
+Expanding (128.1) gives the table directly, and ordinary polynomial
+differentiation gives (129.2).
+

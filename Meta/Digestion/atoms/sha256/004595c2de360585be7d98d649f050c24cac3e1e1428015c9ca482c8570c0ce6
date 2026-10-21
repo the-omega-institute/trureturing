@@ -1,0 +1,72 @@
+**Proposition 137.2 (Reduced parameters after the prescribed operations).**
+For any optimal $\mathcal R$, perform the diagonal-unitary twirl of
+[TR, Lemma 112.2],
+
+$$
+\overline{\mathcal R}
+=\int\operatorname{Ad}_{U^\dagger}\circ\mathcal R
+                              \circ\operatorname{Ad}_U\,dU.
+\tag{137.2}
+$$
+
+Then remove its $02$ and $12$ coherence multipliers by the pinching
+described below; denote the resulting map by $\mathcal R^\flat$.
+Its population matrix and retained $01$ multiplier are necessarily
+
+$$
+C_*=
+\begin{pmatrix}
+1&0&0\\
+0&r_*^2&0\\
+0&1-r_*^2&1
+\end{pmatrix},\qquad \xi_*=r_*,
+\tag{137.3}
+$$
+
+where $\mathcal R^\flat(E_{jj})=\sum_i(C_*)_{ij}E_{ii}$ and
+$\mathcal R^\flat(E_{01})=\xi_*E_{01}$.
+The composite $\mathcal R^\flat\Phi$ equals $\mathcal R_*\Phi$.
+These are the six independent column-stochastic population coordinates
+and the single retained multiplier of the reduced parametrization.
+
+*Proof.* The cited twirl preserves CPTP and cannot increase $e$;
+therefore it preserves optimality here. Its Choi action averages
+conjugation by $U^\dagger\otimes U^{\mathsf T}$, equivalently by
+$U\otimes\overline U$ after inversion of the integration variable.
+On the support in (137.1) the directions
+$v=|00\rangle+r|11\rangle$ and $|22\rangle$ have the trivial character,
+whereas $|21\rangle$ has the nontrivial character $u_2\overline{u_1}$.
+Thus the twirl removes cross terms involving $|21\rangle$ and either
+of the other directions. It can retain a cross term between $v$ and
+$|22\rangle$; discarding it without explanation would assert more
+than the support result.
+
+Pinch the remaining Choi matrix between the three orthogonal lines
+$\mathbb Cv$, $\mathbb C|21\rangle$ and $\mathbb C|22\rangle$.
+This preserves positivity. The cross term $|v\rangle\langle22|$
+and its adjoint have zero output partial trace. Moreover their only
+map entries are the $02$ and $12$ multipliers and their adjoints.
+Since (127.4) deletes both corresponding coherences, pinching changes
+neither the trace-preserving constraint nor the composite after $\Phi$.
+This defines the asserted removal and gives
+
+$$
+J_{\mathcal R^\flat}
+=\alpha vv^\dagger+\delta|21\rangle\langle21|
+                         +\eta|22\rangle\langle22|,
+\qquad \alpha,\delta,\eta\ge0.
+\tag{137.4}
+$$
+
+The trace-preserving equations are
+$\alpha=1$, $\alpha r^2+\delta=1$, and $\eta=1$.
+They give uniquely $\alpha=1$, $\delta=1-r^2$ and $\eta=1$.
+Reading the matrix units gives (137.3) and (130.1), hence the equality
+of the two composites. $\square$
+
+Theorem 137.1 is necessary for every optimal decoder.
+Proposition 137.2 is uniqueness after exactly its stated twirl and
+invisible-multiplier removal. Neither statement asserts that the full
+untwirled map is unique, that support alone suffices for optimality,
+or that all remaining decoder freedom has been parameterized.
+

@@ -1,0 +1,5 @@
+source_id = "fib-atom-biased-boundary-spectral-counting"
+path = "docs/develop/theory/FIB_ATOM_BIASED_BOUNDARY_SPECTRAL_COUNTING.md"
+atomizer = "generic-v1"
+genre_registry_check = "no-registry"
+unregistered_genres = []
