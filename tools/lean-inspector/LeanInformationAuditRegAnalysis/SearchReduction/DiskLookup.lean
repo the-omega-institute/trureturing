@@ -163,8 +163,14 @@ private partial def viewPaths (type : Expr) (fuel : Nat := 32) : MetaM (Array (A
     paths := paths ++ (← viewPaths ((body.getArg! 1).beta #[witness]) (fuel - 1))
   return paths
 
-private unsafe def pathsInEnvironment (env : Environment) (type : Expr) : IO (Array (Array DiscrTree.Key)) := do
-  let work : CoreM (Array (Array DiscrTree.Key)) := MetaM.run' <| viewPaths type
+private unsafe def pathsInEnvironment (env : Environment) (type : Expr)
+    (label : String) : IO (Array (Array DiscrTree.Key)) := do
+  let work : CoreM (Array (Array DiscrTree.Key)) := MetaM.run' do
+    try viewPaths type
+    catch ex =>
+      if ex.isInterrupt || ex.isRuntime then throw ex
+      IO.eprintln s!"lookup.path_fallback declaration={label} reason={← ex.toMessageData.toString}"
+      return #[← DiscrTree.mkPath (← mkFreshExprMVar (mkSort .zero))]
   let context : Core.Context := {
     fileName := "<lookup-index>", fileMap := default,
     options := (({} : Options).set `maxHeartbeats 0).set `maxRecDepth 1000,
@@ -201,7 +207,7 @@ unsafe def produceShard (storage : System.FilePath) (planPath resultPath : Syste
           let entry : Entry := {
             module, name := ownedString info.name.toString,
             parts := nameParts info.name, ordinal := count}
-          let paths ← pathsInEnvironment env stable.type
+          let paths ← pathsInEnvironment env stable.type s!"{module}:{info.name}"
           let mut seen : Std.HashSet (Array DiscrTree.Key) := {}
           for keys in paths do
             if seen.contains keys then continue
@@ -245,6 +251,7 @@ private unsafe def runShard (storage : System.FilePath) (modules : Array String)
   let output ← IO.Process.output {
     cmd := app.toString,
     args := #["--shard", storage.toString, plan.toString, result.toString]}
+  unless output.stderr.isEmpty do IO.eprint output.stderr
   if output.exitCode == 0 then
     IO.eprintln s!"lookup.import_shard={label} modules={modules.size} status=complete"
     return ← readJson result
