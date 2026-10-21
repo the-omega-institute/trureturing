@@ -1,5 +1,7 @@
 import D5.S1.Dynamics.Shadowing.HeadWeightedLipschitz
 
+/-! Complete telescope checks for the head-weight Lipschitz criterion. -/
+
 namespace Reg.D5.S1.Dynamics.Shadowing.HeadWeightedLipschitz
 
 /- The full original telescopes are preserved. The arbitrary head-weight
@@ -14,10 +16,10 @@ abbrev diagonal_traces_of_adjacent_ratio_scope := type_of%
 theorem diagonal_traces_of_adjacent_ratio_actual : diagonal_traces_of_adjacent_ratio_scope :=
   @_root_.D5.S1.Dynamics.Shadowing.HeadWeights.diagonal_traces_of_adjacent_ratio
 
-abbrev metric_hasLipschitzShadowing_iff_adjacent_ratio_scope := type_of%
-  (@_root_.D5.S1.Dynamics.Shadowing.HeadWeights.UniformBounds.metric_hasLipschitzShadowing_iff_adjacent_ratio)
-theorem metric_hasLipschitzShadowing_iff_adjacent_ratio_actual :
-    metric_hasLipschitzShadowing_iff_adjacent_ratio_scope :=
-  @_root_.D5.S1.Dynamics.Shadowing.HeadWeights.UniformBounds.metric_hasLipschitzShadowing_iff_adjacent_ratio
+abbrev rawMetric_hasLipschitzShadowing_iff_adjacent_ratio_scope := type_of%
+  (@_root_.D5.S1.Dynamics.Shadowing.HeadWeights.rawMetric_hasLipschitzShadowing_iff_adjacent_ratio)
+theorem rawMetric_hasLipschitzShadowing_iff_adjacent_ratio_actual :
+    rawMetric_hasLipschitzShadowing_iff_adjacent_ratio_scope :=
+  @_root_.D5.S1.Dynamics.Shadowing.HeadWeights.rawMetric_hasLipschitzShadowing_iff_adjacent_ratio
 
 end Reg.D5.S1.Dynamics.Shadowing.HeadWeightedLipschitz

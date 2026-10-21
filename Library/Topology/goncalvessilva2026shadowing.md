@@ -53,17 +53,28 @@ printed/PDF p.6. The supplied primary PDF has SHA-256
 
 ## Quantitative boundary supplied by the repository
 
-`HeadWeightedLipschitz` resumes the October 14 ordinary classification for the
-full head-weighted shift family. The target is the exact equivalence between
-Lipschitz shadowing and a single C>0 satisfying
-`weight(s,n) <= C * weight(t,n-1)` for all heads s,t and n>=1. Sufficiency uses
-the infinite diagonal-mismatch telescope; necessity combines a uniform finite
-depth cutoff with the existing single-defect infinite pseudo-orbits. This is
-repository-derived, not attributed to the source and not another count of the
-already proved unrestricted metric counterexample. The separately scoped
-locally compact problem and arbitrary compatible-metric classification are
-outside this statement. Canonical Lean acceptance is required before calling
-the new classification formally checked.
+`HeadWeightedLipschitz` gives the exact equivalence between Lipschitz shadowing
+for the raw head-weight metric and a single C>0 satisfying
+`weight(s,n) <= C * weight(t,n-1)` for all heads s,t and n>=1. The weights are
+positive, nonincreasing in depth and normalized to one at depth zero. No
+uniform lower bound, common vanishing upper envelope, continuity assumption
+or product uniformity is added to the raw tracing predicate.
+
+Sufficiency uses the infinite diagonal-mismatch telescope. For necessity,
+proposed positive controls L,c give C=max(2L,max(2/c,1)). A violating ratio
+has C*weight(t,n-1)<1, so its doubled edge error is already below c. The
+existing single-defect infinite pseudo-orbit then excludes every full tracer
+at the proposed Lipschitz radius. This replaces the earlier finite-depth
+cutoff argument and removes its UniformBounds hypothesis.
+
+When UniformBounds are available, the product-uniform metric has exactly
+the same distance, so the theorem supplies the original product-compatible
+classification as an exact application. The constant weight family is also
+covered: it gives the discrete metric and has no uniformly vanishing upper
+envelope. This is repository-derived, not attributed to the source and not
+another count of the already proved unrestricted metric counterexample.
+The separately scoped locally compact problem and arbitrary compatible-metric
+classification remain outside this statement.
 
 The unversioned primary arXiv page was read back on 2026-10-21: submission
 history still lists only v1 (3 March 2026), and its abstract still describes
