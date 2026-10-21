@@ -56,13 +56,17 @@ internal sealed class EllisThanatipanondaCutFamilyADocument : IScribeDocumentDef
                 + "parts, four parts with an equal pair, or a leading part followed by "
                 + "2c equal parts. The minimum excluded value is therefore the proposed "
                 + "one. Proposition 8 of Dailly–Duchêne–Larsson–Paris already gives "
-                + "C = {1, 3, 2c}; this proof allows every extra cut in Family A."))));
+                + "C = {1, 3, 2c}; this proof allows every extra cut in Family A.",
+                new OpenProblemResolutionClaim(
+                    ProblemSlugRef.Create("ellis-thanatipanonda-2022-cut-family-a-conjecture-1"),
+                    ResolutionKind.Proved)))));
 
     private static DocumentBlock Node(string id, string title, string name, Formula formula,
-        DescribeRole role, AssessedProvenance provenance, string prose) =>
+        DescribeRole role, AssessedProvenance provenance, string prose,
+        OpenProblemResolutionClaim? resolution = null) =>
         Describe.Lean(DescribeId.Create(id), DeclarationHandle.Create(Prefix + name),
             H(title), StatementSource.FromAuthor(Disp(formula)), provenance,
-            Blocks(Paragraph(Text(prose))), role);
+            Blocks(Paragraph(Text(prose))), role, resolution);
 
     private static Formula GFormula()
     {

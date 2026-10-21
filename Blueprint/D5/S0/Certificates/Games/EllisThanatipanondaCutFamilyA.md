@@ -34,6 +34,10 @@ $$\forall X \in \operatorname{Set}\left(Nat\right),\; \forall Y \in \operatornam
 
 *Proof.* Machine-checked in Lean as `D5/S0/Certificates/Games/EllisThanatipanondaCutFamilyA.result` (`✓ std3`). ∎
 
+*Resolves.* `Problems/ellis-thanatipanonda-2022-cut-family-a-conjecture-1` (proved) by `D5/S0/Certificates/Games/EllisThanatipanondaCutFamilyA.result`.
+
+<!-- scribe-open-problem-resolution-v1 {"problem_slug":"ellis-thanatipanonda-2022-cut-family-a-conjecture-1","declaration_gid":"D5/S0/Certificates/Games/EllisThanatipanondaCutFamilyA.result","resolution_kind":"proved"} -->
+
 *Source.* Repository-derived.
 
 *Acknowledgement.* Paul Ellis; Thotsaporn Aek Thanatipanonda (2022). *The Arithmetic-Periodicity of cut for C = {1, 2c}*. DOI: [10.1016/j.dam.2022.08.027](https://doi.org/10.1016/j.dam.2022.08.027). URL: <https://arxiv.org/abs/2203.02457v1>.
