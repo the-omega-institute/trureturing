@@ -58,6 +58,10 @@ $$\neg (\forall (V : Type), [\operatorname{Fintype}\left(V\right)] [\operatornam
 
 *Proof.* Machine-checked in Lean as `D5/S3/Combinatorics/Graph/CliquePolynomial/TeimooriFaalFlatCliqueRoots.result` (`✓ std3`). ∎
 
+*Resolves.* `Problems/teimoori-faal-2021-flat-graph-clique-roots-conjecture-1` (refuted) by `D5/S3/Combinatorics/Graph/CliquePolynomial/TeimooriFaalFlatCliqueRoots.result`.
+
+<!-- scribe-open-problem-resolution-v1 {"problem_slug":"teimoori-faal-2021-flat-graph-clique-roots-conjecture-1","declaration_gid":"D5/S3/Combinatorics/Graph/CliquePolynomial/TeimooriFaalFlatCliqueRoots.result","resolution_kind":"refuted"} -->
+
 *Source.* Repository-derived.
 
 *Acknowledgement.* H. Teimoori Faal (2021). *On Clique Roots of Flat Graphs*. DOI: [10.48550/arXiv.2112.09721](https://doi.org/10.48550/arXiv.2112.09721). URL: <https://arxiv.org/abs/2112.09721v1>.

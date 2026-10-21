@@ -30,7 +30,10 @@ internal sealed class TeimooriFaalFlatCliqueRootsDocument : IScribeDocumentDefin
                 H("A twelve-vertex refutation"), StatementSource.FromAuthor(Disp(new Formula.Not(Parenthesized(ClaimBody())))),
                 AssessedProvenance.FromRepo(Source),
                 Blocks(Paragraph(Text("Take the four complete blocks {0,1,4,5}, {1,2,6,7}, {2,3,8,9}, and {3,0,10,11}, with no other edges. A Hamiltonian cycle remains a spanning path after deleting any vertex. Finite clique enumeration verifies K₅-freeness, flatness and the absence of isolated triangles, and gives the clique counts 1,12,24,16,4, followed by zeros. Hence the clique polynomial is p = 1+12X+24X²+16X³+4X⁴ = 4(1+X)⁴−4X−3. Its derivative is 16(1+X)³−4, with at most one real root and no repeated real roots. The root-count inequality for a polynomial and its derivative precludes splitting of p over ℝ. Splitting over ℂ then supplies a nonreal complex zero, contradicting the first conjunct of the conjecture."))),
-                DescribeRole.Theorem)), []));
+                DescribeRole.Theorem,
+                new OpenProblemResolutionClaim(
+                    ProblemSlugRef.Create("teimoori-faal-2021-flat-graph-clique-roots-conjecture-1"),
+                    ResolutionKind.Refuted))), []));
 
     private static DocumentBlock Node(string id, string title, string name, Formula formula,
         string prose, AssessedProvenance provenance) => Describe.Lean(
