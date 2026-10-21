@@ -309,7 +309,7 @@ private unsafe def partitionImports (modules : Array Name)
     let mut placed := false
     for i in [:groups.size] do
       let (assigned, current) := groups[i]!
-      if assigned.size < 512 && compatible current sig then
+      if compatible current sig then
         let combined := sig.toArray.foldl (fun map (n, m) => map.insert n m) current
         groups := groups.set! i (assigned.push module, combined)
         placed := true
