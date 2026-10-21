@@ -540,9 +540,16 @@ private def packedPage (bytes : ByteArray) : Except String PackedPage := do
 private structure ReadCache where
   records : Std.HashMap String PackedPage := {}
   bytes : Nat := 0
+  heartbeatLimit? : Option Nat := none
+
+private def checkReadBudget (cache : IO.Ref ReadCache) : IO Unit := do
+  if let some limit := (← cache.get).heartbeatLimit? then
+    if (← IO.getNumHeartbeats) > limit then
+      throw <| IO.userError "lookup.heartbeat"
 
 private def readChecked [FromJson α] (cache : IO.Ref ReadCache)
     (path : System.FilePath) (digest : UInt64) : IO α := do
+  checkReadBudget cache
   let parts := path.toString.splitOn "#"
   let (file, slot?) := if parts.length > 1 then
       match parts.getLast!.toNat? with
@@ -560,9 +567,10 @@ private def readChecked [FromJson α] (cache : IO.Ref ReadCache)
           -- Packed records share a physical page. Decode that page once,
           -- retaining at most 16 MiB of page payload within this query.
           cache.modify fun old =>
-            let old := if old.bytes + physical.size > 16777216 then {} else old
+            let old := if old.bytes + physical.size > 16777216 then
+                {heartbeatLimit? := old.heartbeatLimit?} else old
             {records := old.records.insert file.toString records,
-             bytes := old.bytes + physical.size}
+             bytes := old.bytes + physical.size, heartbeatLimit? := old.heartbeatLimit?}
           pure records
       let some (start, stop) := records.spans[slot]? | throw <| IO.userError "lookup.packed_record_missing"
       let some encoded := String.fromUTF8? (records.bytes.extract start stop)
@@ -632,23 +640,35 @@ private partial def collect (cache : IO.Ref ReadCache) (index : Index) (file : S
 
 /-- Missing or corrupt nodes/pages are incomplete, never certified negatives.
 Only matching branches and necessary wildcard branches are read. -/
-def query (index : Index) (keys : List String) : IO Candidates := do
+def query (index : Index) (keys : List String)
+    (heartbeatLimit? : Option Nat := none) : IO Candidates := do
   let started ← IO.monoMsNow
   let heartbeats ← IO.getNumHeartbeats
   try
-    let cache ← IO.mkRef ({} : ReadCache)
+    let cache ← IO.mkRef ({heartbeatLimit?} : ReadCache)
     let result ← collect cache index index.header.root index.header.digest keys
+    checkReadBudget cache
     let mut seen : NameSet := {}
     let mut entries := #[]
     -- Refining the key filters the old depth-one enumeration; it must not
     -- prioritize candidates by their newly visible nested shape.
-    let ordered := result.entries.qsort fun a b =>
-      if a.route != b.route then a.route < b.route
-      else if a.module != b.module then Name.quickLt a.module.toName b.module.toName
-      else a.ordinal < b.ordinal
-    for entry in ordered do
+    let mut modules : Std.HashMap String Name := {}
+    for entry in result.entries do
+      unless modules.contains entry.module do
+        modules := modules.insert entry.module entry.module.toName
+    let names := modules.toArray.qsort fun a b => Name.quickLt a.2 b.2
+    let mut ranks : Std.HashMap String Nat := {}
+    for i in [:names.size] do ranks := ranks.insert names[i]!.1 i
+    let ordered := (result.entries.map fun entry => (ranks[entry.module]!, entry)).qsort fun a b =>
+      if a.2.route != b.2.route then a.2.route < b.2.route
+      else if a.1 != b.1 then a.1 < b.1
+      else a.2.ordinal < b.2.ordinal
+    checkReadBudget cache
+    for (_, entry) in ordered do
+      checkReadBudget cache
       let name := entry.leanName
       unless seen.contains name do entries := entries.push entry; seen := seen.insert name
+    checkReadBudget cache
     if (← IO.getEnv "SEARCH_REDUCTION_PROFILE").isSome then
       IO.eprintln s!"LOOKUP_COST index_ms={(← IO.monoMsNow) - started} heartbeats={(← IO.getNumHeartbeats) - heartbeats} pages={result.pages} candidates={entries.size}"
     return {result with entries, complete := result.complete && index.header.complete}

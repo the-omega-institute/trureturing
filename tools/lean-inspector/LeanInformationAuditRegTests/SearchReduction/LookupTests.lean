@@ -183,6 +183,9 @@ run_cmd do
   let found ← DiskLookup.query index []
   unless found.complete && found.entries.map (·.name) == #["packedFixture"] do
     throwError "packed page did not return its checked logical record"
+  let limited ← DiskLookup.query index [] (some 0)
+  unless !limited.complete && limited.entries.isEmpty do
+    throwError "exhausted disk traversal became certified NoHit"
   let packedRoot ← DiskLookup.query {index with header := {header with root := "records.json#1"}} []
   unless packedRoot.complete && packedRoot.entries.map (·.name) == #["packedFixture"] do
     throwError "packed routing node did not return its checked payload"

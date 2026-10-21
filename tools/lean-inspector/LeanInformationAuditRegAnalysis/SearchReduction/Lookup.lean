@@ -70,7 +70,11 @@ def lookupExact (table : LookupTable) (goal : MVarId) : MetaM LookupTrace := goa
   if !table.enabled then return {complete := true}
   let some index ← tableIndex table | return {}
   let type ← goal.getType
-  let candidates ← DiskLookup.query index (DiskLookup.memberKeys type)
+  let context ← readThe Core.Context
+  let limit := if context.maxHeartbeats == 0 then none
+    else some (context.initHeartbeats + context.maxHeartbeats)
+  let candidates ← DiskLookup.query index (DiskLookup.memberKeys type) limit
+  checkSystem "lookup.membership-index"
   let mut trace : LookupTrace := {complete := candidates.complete && table.complete, pages := candidates.pages}
   for entry in candidates.entries do
     checkSystem "lookup.membership"
@@ -198,7 +202,12 @@ def lookupLeaf (table : LookupTable) (goal : MVarId)
   let detailed := (← IO.getEnv "SEARCH_REDUCTION_PROFILE_DETAIL").isSome
   let head := rigidHead (← getEnv) (← goal.getType)
   let some index ← tableIndex table | return {}
-  let candidates ← DiskLookup.query index (DiskLookup.candidateKeys (← getEnv) (← goal.getType))
+  let context ← readThe Core.Context
+  let limit := if context.maxHeartbeats == 0 then none
+    else some (context.initHeartbeats + context.maxHeartbeats)
+  let candidates ← DiskLookup.query index
+    (DiskLookup.candidateKeys (← getEnv) (← goal.getType)) limit
+  checkSystem "lookup.candidate-index"
   let trace ← candidates.entries.foldlM (init := ({complete := candidates.complete && table.complete, pages := candidates.pages} : LookupTrace)) fun (trace : LookupTrace) entry => do
     if trace.source?.isSome then return trace
     checkSystem "lookup.page_candidate"
