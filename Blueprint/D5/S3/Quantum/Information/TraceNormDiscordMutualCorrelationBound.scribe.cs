@@ -102,7 +102,10 @@ internal sealed class TraceNormDiscordMutualCorrelationBoundDocument : IScribeDo
                             + "C_M(ρ) ≥ |b|. The infimum defining discord is at most this "
                             + "measurement's disturbance, so D₁(ρ) ≤ ‖δ‖₁ "
                             + "= max(|a|, |b|) ≤ C_M(ρ)."))),
-                DescribeRole.Theorem)
+                DescribeRole.Theorem,
+                openProblemResolutionClaim: new OpenProblemResolutionClaim(
+                    ProblemSlugRef.Create("gwozdz-jakobczyk-2013-geometric-discord-mutual-correlation-bound"),
+                    ResolutionKind.Proved))
         )));
 
     private static Formula Named(string name) => Seq(Operatorname, Grp(F.Id(name)));
