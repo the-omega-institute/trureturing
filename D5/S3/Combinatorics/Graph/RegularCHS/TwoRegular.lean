@@ -628,4 +628,3 @@ theorem chs_cycle_le_twoRegular {n : ℕ} (hn : 3 ≤ n)
       (fun v => le_of_eq (component_twoRegular G hG c v))) p hp
 
 end D5.S3.Combinatorics.Graph.RegularCHS.TwoRegular
-
