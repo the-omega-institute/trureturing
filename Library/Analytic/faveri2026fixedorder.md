@@ -5,7 +5,7 @@ year: 2026
 title: Optimal large sieve for fixed order characters
 doi: null
 url: https://arxiv.org/abs/2610.04045v1
-claim: Theorem 1.1 supplies a source-conditional mixed moment for the original common-character sextic detector; specified pure-power pieces, a Gauss-row correction, a balanced-sector prime-labelled residue quadratic, one complete continuous primitive-inversion summand and the labelled second-choice/all-other-first reflection for every numerator valuation are controlled on stated sectors; the original-convolution projection onto all good sixth-power-free labels through a small cutoff has a bound improving what follows from full row energy on a balanced fixed-cost sector, while the full projection and complement at the stronger K-squared target and signed restoration remain open.
+claim: Theorem 1.1 supplies a source-conditional mixed moment for the original common-character sextic detector; specified pure-power pieces, a Gauss-row correction, a balanced-sector prime-labelled residue quadratic, one complete continuous primitive-inversion summand and the labelled second-choice/all-other-first reflection for every numerator valuation are controlled on stated sectors; the original-convolution projection onto all good sixth-power-free labels through a small cutoff has a bound improving what follows from full row energy on a balanced fixed-cost sector; the actual squarefree-row Gram admits labels up to a fixed power below the square-root row scale and gives a sub-K-squared projection/residue comparison on specified original short-core packets under bounded or polylog costs, while the full projection and complement at the stronger K-squared target and signed restoration remain open.
 strata_touched: []
 license: citation-only
 triage: anchor
@@ -2541,6 +2541,28 @@ $$
 $$
 
 The aggregate primitive-residue quadratic and the full orthogonal complement still require coefficient-sensitive upper bounds with the same weights. Positivity supplies no such upper bound. F6 pays a different isolated pure-power contraction and does not automatically pay either term here. This application controls an actual shared-row correction with its Gram hypothesis supplied; it does not bound the full F4 majorant, prove J, restore the signed Robin inequality, or prove RH.
+
+#### A larger label range on original short-core packets
+
+The [operator-tail application, theory461](../../docs/develop/theory/FIBONACCI_ANALYTIC_FRONTIER_INTERFACES.md#461-算子尾部与短核心的更细标记切面) combines the same source's Theorem 1.1 and Lemmas 3.1 and 6.1 with the original G1–G3 Gram. It replaces G4's perturbation by
+
+$$
+\|G-D_L\|\ll(UL)^\varepsilon U^{-1/2}L,
+\qquad L\le U^{1/2-\kappa},\quad 0<\kappa<1/2,
+$$
+
+for sufficiently large $U$, with the same actual zeros and all distinct good sixth-power-free ideal labels. Full finite-character Poisson handles short square divisors; the existing unrestricted-row large sieve controls the remaining operator tail. This supplies the actual inverse Gram in that larger range.
+
+For $1/3<\ell<1/2$, $0<\nu<1-3\ell/2$ and $L=U^\ell$, the same G9–G10 comparison on original F4 packets of length $K_c\le U^{1-3\ell/2-\nu}$ gives the weighted projection/residue difference
+
+$$
+\sum_{K_c\le U^{1-3\ell/2-\nu}}
+w_{c,a,\vartheta}|Q_{P_L}(b_{j;c,a,\vartheta})
+-Q_{\rho,L}(b_{j;c,a,\vartheta})|
+\ll(UK)^\varepsilon\mathcal N^2\mathcal P^2UKU^{-\nu/2}.
+$$
+
+Here the original F4 weights, masks and coefficient vectors remain, and $\mathcal N$ includes the finite-order Poisson profile costs and complete comparison-cost products. At $U\asymp K$, bounded or polylog $\mathcal N^2\mathcal P^2$ and $\varepsilon<\nu/4$ make this difference $o(K^2)$. These are source-conditional paper consequences, recorded as `repo-derived` without an external priority or local Lean-certification claim. They do not separately bound the residue quadratic, long-core packets, full complement or signed Robin restoration, or extend the original growing-height allowance.
 
 ### A prime-labelled residue cut for the original unsplit convolution
 

@@ -2115,3 +2115,158 @@ $$
 仍需对同一完整补空间给出更强上界；（459.3）对它的 $K^{\kappa_{\mathrm{joint}}+\varepsilon}$ 预算没有因本条而降低。其他原长度、高度、growing-height allowance、F4 的不同列二次型及 signed Robin restoration 也不由（460.3）推出。
 
 ## 追加锚（本行以下为增补区）
+
+## 461. 算子尾部与短核心的更细标记切面
+
+**定理 461.1（全部小标记的平方自由行 Gram）。** 使用 [G1–G7 的同一行空间、标记、零值、固定有限 ray 约定及对角矩阵](../../../Library/Analytic/faveri2026fixedorder.md#the-actual-gram-including-all-original-zeros)。标记恰好为所有 good sixth-power-free 理想 $q_R\le L$，不把同一理想的单位代表重复计入。假设 de Faveri [Theorem 1.1、Lemma 3.1、Lemma 6.1](https://arxiv.org/abs/2610.04045v1) 的解析输入成立。固定 $0<\kappa<1/2$。对任意 $\varepsilon>0$，在
+
+$$
+1\le L\le U^{1/2-\kappa}
+$$
+
+及充分大 $U$ 上，同一个实际 $G=V^*V$ 满足
+
+$$
+\|G-D_L\|
+\ll_{\kappa,\varepsilon,\Omega,S}(UL)^\varepsilon U^{-1/2}L.
+\tag{461.1}
+$$
+
+进而
+
+$$
+G>0,\qquad \|G\|+\|G^{-1}\|
+\ll_{\kappa,\varepsilon,\Omega,S}(UL)^\varepsilon.
+\tag{461.2}
+$$
+
+这里 $\Omega$ 是固定非零、非负、光滑 annular 行权；常数只使用其有限阶 seminorms 及 $C_\Omega^{-1}$。本条是所引大筛、完整字符 Poisson 与同一个实际 Gram 的联合应用，标为 `repo-derived`；不把通用 Poisson、理想计数或既有 G1–G7 另立为新结果。
+
+证明。令 $q_a=Na$。原 Gauss 因子在 $G$ 中抵消。对任意标记系数向量 $c$，逐项展开平方自由行，得到精确有限式
+
+$$
+\langle Gc,c\rangle
+=\frac1U\sum_a\mu(a)\sum_b
+\Omega(q_a^2q_b/U)
+\left|\sum_{R\in\mathcal R_L}c_R\overline{\chi_{a^2b}(R)}\right|^2.
+\tag{461.3}
+$$
+
+$a,b$ 仍为 good 理想；$q_a\ll\sqrt U$。乘法性包括零值，故内层标记系数恰为 $c_R\overline{\chi_{a^2}(R)}$，其平方范数不超过 $\|c\|_2^2$。不增加 $(a,b)=1$ 或 $(a,R)=1$；原来为零的项继续为零。
+
+先复用完整有限 Hecke 字符的光滑 Poisson 估计。设 $\xi$ 非主、primitive conductor 为 $\mathfrak f$，完整零延拓模数为 $\mathfrak q$，无限型平凡。对任意固定 $B>0$，de Faveri Lemma 3.1 及其变换的快速衰减给出
+
+$$
+\left|\sum_b\xi(b)\Omega(q_b/Y)\right|
+\ll_{B,\epsilon_1,\Omega,S}
+q_{\mathfrak f}^{1/2}q_{\mathfrak q}^{\epsilon_1}
+\left(\frac{q_{\mathfrak q}}Y\right)^B.
+\tag{461.4}
+$$
+
+这里只在 $Y/q_{\mathfrak q}$ 有固定正幂裕度时使用。具体地，primitive Poisson 的外因子为 $Y/\sqrt{q_{\mathfrak f}}$，dual scale 为 $q_{\mathfrak f}/Y$；取变换衰减阶数 $B+1>1$ 并用收敛的理想和，得到 $q_{\mathfrak f}^{1/2}(q_{\mathfrak f}/Y)^B$。对额外 zero-only primes 作有限 Möbius 展开，$b=dm$ 将尺度改为 $Y/q_d$，且 $q_{\mathfrak f}q_d\le q_{\mathfrak q}$；除数损失由 $q_{\mathfrak q}^{\epsilon_1}$ 支付。所有固定有限 primary/ray 分量均按 G6 的原约定处理。Lemma 3.1 对其允许的 profile 线性适配到 $\Omega$；不引入新的移动 ray 导子。
+
+选小的固定 $\delta>0$，令
+
+$$
+A=U^{1/2-\delta}/L,\qquad 0<\delta<\kappa/2.
+\tag{461.5}
+$$
+
+先在（461.3）中只取 $q_a\le A$。若 $R\ne T$，G6 已核对该比值是非主有限 Hecke 字符，并且其 primitive conductor 与保留 zero-only primes 的完整模数都为 $O_S(L^2)$。此时 $Y=U/q_a^2\ge L^2U^{2\delta}$。由（461.4），取足够大的固定 $B$，短 $a$ 段的全部非对角项在算子范数中为 $O(U^{-10})$：标记对用 $\|c\|_1^2\ll L\|c\|_2^2$，再支付 $O(A)$ 个 $a$。$B$ 只依赖固定损失和参数范围。
+
+对角项直接复用 G5 的 principal 陈述。其截断主项为
+
+$$
+ d_R^{(A)}=
+ \operatorname{Res}_{s=1}\zeta_F(s)
+ \frac{\varphi_F(\mathfrak q_R)}{q_{\mathfrak q_R}}
+ \left(\int_0^\infty\Omega(y)\,dy\right)
+ \sum_{\substack{q_a\le A\\(a,SR)=1}}\frac{\mu(a)}{q_a^2},
+\tag{461.6}
+$$
+
+其中 $\mathfrak q_R$ 的素支撑为 $SR$，使用 G3 相同的完整零掩码。Euler 乘积给出完整主项 $d_R$，且 $|d_R^{(A)}-d_R|\ll A^{-1}$ 一致成立。G5 的对角误差求和为 $O((UL)^{\epsilon_1}U^{-1/2})$。这一段保留全部对角密度，不由大筛上界推断下界。
+
+现在估计 $q_a>A$ 的完整算子尾部。直接在正平方范数中使用 de Faveri Lemma 6.1 与 Theorem 1.1：对任意 good 标记向量 $u$ 及真实行尺度 $T$，
+
+$$
+\sum_b\Omega(q_b/T)
+\left|\sum_{R\in\mathcal R_L}u_R\overline{\chi_b(R)}\right|^2
+\ll(TL)^{\epsilon_1}\|u\|_2^2
+\left(T+T^{1/6}L+T^{5/6}L^{1/3}+T^{1/3}L^{5/6}\right).
+\tag{461.7}
+$$
+
+这里 $b$ 不限平方自由或 sixth-power-free。整体共轭及系数共轭将这一范数送到原筛族。Lemma 6.1 提供的量为 $\max_{1\le r\ll T^{1/6}}r\mathscr F_6(T/r^6,L)$，逐项取最大值正好给出（461.7）。分解 $b=b_0v^6$ 时 $\chi_{v^6}(R)$ 只是原系数中的 zero-only mask；每个 $v$ 的系数平方范数不增加。有限 reciprocity 分区沿用原筛族。非空有界 subunit 行尺度用固定 annular 扩大，不造成新的幂损失。
+
+尾部的 $\mu(a)$ 可以取绝对值，因为此处只求同一个 Hermitian 尾算子的范数上界。对（461.7）代入 $T=U/q_a^2$，利用固定域理想计数，得到
+
+$$
+\begin{aligned}
+\|G_{>A}\|\ll(UL)^{\epsilon_2}
+\bigl(&A^{-1}+U^{-1/2}L\\
+ &+U^{-1/6}L^{1/3}A^{-2/3}
+ +U^{-1/2}L^{5/6}\bigr).
+\end{aligned}
+\tag{461.8}
+$$
+
+例如四项分别来自 $U\sum_{q_a>A}q_a^{-2}$、$U^{1/6}L\sum_{q_a\ll\sqrt U}q_a^{-1/3}$、$U^{5/6}L^{1/3}\sum_{q_a>A}q_a^{-5/3}$ 及 $U^{1/3}L^{5/6}\sum_{q_a\ll\sqrt U}q_a^{-2/3}$，最后共同除以 $U$。此处以整体正平方和控制尾部，不对每个标记对再作绝对行和。
+
+将（461.5）代入，右边由 $(UL)^{\epsilon_2}U^{-1/2+\delta}L$ 控制。先选 $\delta$ 与全部内部损失以适配最终 $\varepsilon$，再选（461.4）的有限衰减阶数，短段、对角尾及（461.8）共同给出（461.1）。最后使用 G3 既有的 $d_R\gg_{\epsilon_3}L^{-\epsilon_3}$，在 $L\le U^{1/2-\kappa}$ 的固定裕度内分配内部小幂，使扰动严格小于最小对角的一半，即得（461.2）。证毕。
+
+**推论 461.2（原始短核心包的较大标记投影）。** 沿用定理 461.1、原 F4 包 $b_{j;c,a,\vartheta}$、G8–G11 的同一原算子与 [primitive-mean v2，Corollary 5、§§7–8](https://rstation.ai/api/v1/papers/riemann_hypothesis_10/versions/2/download) 的解析输入。固定
+
+$$
+\frac13<\ell<\frac12,\qquad
+0<\nu<1-\frac32\ell,\qquad
+L=U^\ell,\qquad \alpha=1-\frac32\ell-\nu>0.
+\tag{461.9}
+$$
+
+令 $P_L=VG^{-1}V^*$ 为同一个实际投影，$W_{U,X,L}$ 是原 adjoint 的完整 primitive residue 矩阵。对全部 $1\ll X\le U^\alpha$，有
+
+$$
+\|A_{U,X}^*P_LA_{U,X}
+ -W_{U,X,L}G^{-1}W_{U,X,L}^*\|
+\ll U^{1-\nu/2+\varepsilon}\mathcal N^2.
+\tag{461.10}
+$$
+
+共同包络 $\mathcal N\ge1$ 一次包含原 profiles、固定有限 ray、实际 Mellin/Sobolev 及解析输入费用，不按核心或标记重选。它包含（461.4）为当前 $\kappa,\varepsilon$ 所需有限阶行权 seminorms 及 $C_\Omega^{-1}$；不据此扩张原有增长高度范围。具体地，若 $C_A,C_E,C_G,C_{G^{-1}}$ 分别为 G8、G9、（461.2）两项剥去所示小幂后的常数，取 $\mathcal N^2\ge C_A+C_E+C_{G^{-1}}(2\sqrt{C_AC_GC_E}+C_E)$；这些乘积也在同一包络内。原 F4 的正权 $w_{c,a,\vartheta}=q_c^{1/2+\eta}\tau(\operatorname{rad}c)$ 与完整实际系数均保留。仅对满足 $K_c=K/q_c\le U^\alpha$ 的实际包求和，得到
+
+$$
+\begin{aligned}
+&\sum_{K_c\le U^\alpha}w_{c,a,\vartheta}
+ \left|Q_{P_L}(b_{j;c,a,\vartheta})
+       -Q_{\rho,L}(b_{j;c,a,\vartheta})\right|\\
+&\hspace{15mm}\ll(UK)^\varepsilon\mathcal N^2
+  UK\,U^{-\nu/2}\mathcal P^2.
+\end{aligned}
+\tag{461.11}
+$$
+
+和式包含原 $a\mid\operatorname{rad}c$ 与全部有限 $\vartheta$。在 $U\asymp K$、$\mathcal N^2\mathcal P^2$ 有界或至多 polylog 增长及 $0<\varepsilon<\nu/4$ 下，（461.11）除以 $K^2$ 为 $O(K^{2\varepsilon-\nu/2}\mathcal N^2\mathcal P^2)=o(1)$。其中 $L>U^{1/3}$ 的整个标记范围由（461.2）提供。本结论只估计这些短包中的投影与 residue 二次型之差；它没有分别给出 residue 二次型、长包或完整正交补的上界，也没有推出 signed Robin restoration。
+
+证明。取固定 $\kappa<1/2-\ell$，应用（461.2）于原实际全部标记 Gram。Corollary 5 对所有 good $R$、$U,X\ge1$ 一致成立，不带 $L\le U^{1/3}$ 的前提。其误差列在同一标记集上给出
+
+$$
+\|E\|_{\rm HS}^2\ll(UXL)^\varepsilon\mathcal N^2XL^{3/2}
+\ll U^{1-\nu+\varepsilon}\mathcal N^2.
+\tag{461.12}
+$$
+
+因为 $\alpha<1/2$，原 G8 直接给出 $\|A_{U,X}\|^2\ll U^{1+\varepsilon}\mathcal N^2$。G10 的有限矩阵比较保留实际 $T=A^*V=W+E$、全部交叉标记及同一个 $G^{-1}$；其两项分别为 $U^{1-\nu/2+\varepsilon}\mathcal N^2$ 和 $U^{1-\nu+\varepsilon}\mathcal N^2$，给出（461.10）。
+
+对每个原包乘 $\|b_{j;c,a,\vartheta}\|_2^2$。原零掩码 $(x,c)=1$ 与全部相位仍在这个实际向量中。复用 G11 的已付系数质量
+
+$$
+\sum_{c,a,\vartheta}w_{c,a,\vartheta}
+ \|b_{j;c,a,\vartheta}\|_2^2
+\ll K^{1+\varepsilon}\mathcal P^2.
+$$
+
+只在此正和内限制到短包，得到（461.11）。原 F4 的 $\eta$ 及全部内部除数损失依同一最终 $\varepsilon$ 分配，共同累计高度没有重新分配。证毕。
+
+## 追加锚（本行以下为增补区）
