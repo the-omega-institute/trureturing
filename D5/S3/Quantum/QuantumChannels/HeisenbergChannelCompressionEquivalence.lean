@@ -49,7 +49,12 @@ private theorem compression_channel {d n : ℕ} (V : Matrix (Fin d) (Fin n) ℂ)
     (hV : Vᴴ * V = 1) :
     (compressionMap V).IsCompletelyPositive ∧ compressionMap V 1 = 1 ∧
       ∀ A, compressionMap V A = Vᴴ * A * V := by
-  sorry
+  have hA (A : Matrix (Fin d) (Fin d) ℂ) : compressionMap V A = Vᴴ * A * V := by
+    simp only [compressionMap, MatrixMap.of_kraus, LinearMap.sum_apply,
+      LinearMap.coe_mk, AddHom.coe_mk, Matrix.conjTranspose_conjTranspose,
+      Fintype.sum_unique]
+  refine ⟨MatrixMap.of_kraus_isCompletelyPositive (fun _ : Unit => Vᴴ), ?_, hA⟩
+  rw [hA, Matrix.mul_one, hV]
 
 private theorem heisenberg_kraus {d n : ℕ}
     (Φ : MatrixMap (Fin d) (Fin n) ℂ) (hCP : Φ.IsCompletelyPositive) (hu : Φ 1 = 1) :
