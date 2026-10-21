@@ -305,7 +305,7 @@ unsafe def produce (directory : System.FilePath) (basis mathlib : String)
       indexed := indexed + count
       coverage := coverage.push <| Json.mkObj [("module", toJson name.toString),
         ("declarations", toJson count), ("indexed", toJson count)]
-      if coverage.size % 1000 == 0 then IO.eprintln s!"lookup.index_written={coverage.size}"
+      if coverage.size % 100 == 0 then IO.eprintln s!"lookup.index_written={coverage.size},module={name},nodes={allNodes.size},declarations={declarations}"
     catch ex => missing := missing.push s!"{name}: {ex}"
   let digest ← flush pagesDirectory allNodes "root"
   let header : Header := {
