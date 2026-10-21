@@ -18,6 +18,9 @@ run_cmd liftTermElabM do
     throwError "Exists elimination failed: {result.detail}"
   logInfo "local-calibration Exists elimination: kernel-checked zero"
 
+-- Each localRebuild retains its own fixed budget. The aggregate fixture
+-- command must not share one budget across unrelated queries.
+set_option maxHeartbeats 0 in
 run_cmd do
   enableInitializersExecution
   let base ← importModules #[{module := `Mathlib}] {} 0 (leakEnv := true) (loadExts := true)

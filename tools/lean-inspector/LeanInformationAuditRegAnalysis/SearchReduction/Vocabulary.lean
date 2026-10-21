@@ -33,6 +33,8 @@ structure TransportContext where
   visiting : NameSet := {}
   bound : NameSet := {}
   budgetStart : Nat := 0
+  /-- Query copies keep the enclosing frozen allocation, without declaration units. -/
+  enclosingBudget : Bool := false
   searchHeartbeats? : Option (IO.Ref Nat) := none
   budgetExcludedStart : Nat := 0
   regenerated? : Option (IO.Ref NameSet) := none
@@ -57,6 +59,7 @@ def projectionShape (info : ConstantInfo) : Option (Name × Nat) := do
   return (owner, index)
 
 private def checkReconstructionBudget (ctx : TransportContext) : MetaM Unit := do
+  if ctx.enclosingBudget then checkSystem "lookup.vocabulary_copy"
   if let some used := ctx.searchHeartbeats? then
     let work := (← IO.getNumHeartbeats) - ctx.budgetStart - ((← used.get) - ctx.budgetExcludedStart)
     if work > reconstructionBudget * 1000 then
@@ -147,6 +150,11 @@ def vocabularyBudgetPreflight (source : Environment) (roots : Array Name) : Meta
 mutual
   partial def transportVocabulary (ctx : TransportContext) (n : Name) : MetaM Unit := do
     if ctx.bound.contains n || (← getEnv).contains n then return
+    if ctx.enclosingBudget then
+      checkReconstructionBudget ctx
+      withLCtx {} {} <| transportVocabularyCore ctx n
+      checkReconstructionBudget ctx
+      return
     if ctx.searchHeartbeats?.isNone then vocabularyBudgetPreflight ctx.source #[n]
     let spent ← match ctx.searchHeartbeats? with
       | some spent => pure spent

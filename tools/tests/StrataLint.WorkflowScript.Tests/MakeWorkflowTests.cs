@@ -93,6 +93,9 @@ public sealed partial class MakeWorkflowTests
         "search-reduction-replay-faults",
         "search-reduction-replay-real-negative",
         "search-reduction-replay-vocabulary",
+        "search-reduction-index",
+        "search-reduction-index-run",
+        "search-reduction-index-fixtures",
     ];
 
     private static readonly string[] ToolsTargets =

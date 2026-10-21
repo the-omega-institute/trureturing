@@ -48,8 +48,8 @@ private def runJson : Run → Json
   | .incomplete failure => Json.mkObj [("incomplete", toJson (reprStr failure))]
 
 private def verdictName : Verdict → String
-  | .bindOnly => "bind-only[G,R_loc,k,B_used]"
-  | .nonBindOnly => "non-bind-only[G,R_loc,k,B_used]"
+  | .bindOnly => "bind-only[G,R_lookup,k,B_used]"
+  | .nonBindOnly => "non-bind-only[G,R_lookup,k,B_used]"
   | .insufficient => "insufficient-evidence"
 
 private def attemptJson (a : Attempt) : Json := Json.mkObj [
@@ -65,6 +65,9 @@ private def intervalJson (i : Interval) : Json := Json.mkObj [
   ("lower", boundJson i.lower), ("upper", boundJson i.upper)]
 
 private def graphJson (r : GraphReading) : Json := Json.mkObj [
+  ("lookup_backend", toJson "disk pages; on-demand module certification; unfinished candidates remain unknown"),
+  ("lookup_enabled", toJson r.lookupEnabled),
+  ("lookup_basis_complete", toJson r.lookupBasisComplete),
   ("sharing_configuration", toJson sharingConfiguration),
   ("k", toJson r.k), ("vertices", toJson r.graph.vertices.length),
   ("edges", toJson r.graph.edges.length),
@@ -75,13 +78,17 @@ private def graphJson (r : GraphReading) : Json := Json.mkObj [
   ("declarations", toJson (r.graph.vertices.map fun v => Json.mkObj [
     ("id", toJson v.id), ("constant", toJson (v.origin.constName?.map Name.toString)),
     ("seed", toJson v.seed), ("structure_seed", toJson v.structureSeed),
-    ("target_part", toJson v.targetPart), ("opaque", toJson v.opaqueDecl)])),
+    ("target_part", toJson v.targetPart), ("opaque", toJson v.opaqueDecl),
+    ("independent_lookup", runJson v.independentLookup),
+    ("independent_lookup_detail", toJson v.independentLookupDetail)])),
   ("presentation_complete", toJson r.presentationComplete),
   ("baseline_interval", intervalJson r.baseline),
   ("paired_interval", intervalJson r.paired),
   ("baseline_k1", intervalJson r.baselineK1), ("paired_k1", intervalJson r.pairedK1),
   ("baseline_visible", intervalJson r.baselineVisible), ("paired_visible", intervalJson r.pairedVisible),
   ("baseline_probe", runJson r.baselineProbe.outcome), ("paired_probe", runJson r.pairedProbe.outcome),
+  ("baseline_probe_detail", toJson r.baselineProbe.detail),
+  ("paired_probe_detail", toJson r.pairedProbe.detail),
   ("baseline_zero_checked", toJson r.baselineProof?.isSome),
   ("paired_zero_checked", toJson r.pairedProof?.isSome),
   ("selected_seeds", toJson r.selectedSeeds),
@@ -121,14 +128,16 @@ private def graphJson (r : GraphReading) : Json := Json.mkObj [
 
 /-- A human-readable projection. No code reads it back for classification. -/
 def computationalJson (r : Observation) (baselineCommit : String := "") : Json := Json.mkObj [
-  ("reference", toJson "R_loc-decl"), ("configuration", toJson r.configuration),
+  ("reference", toJson "R_lookup"),
+  ("configuration", toJson (if r.graph?.any (fun g => !g.lookupEnabled) then
+    "R_loc-decl/analytic-cut-k2/200000;lookup-ablation" else r.configuration)),
   ("scope", toJson r.scope), ("B_load_count", toJson r.loadedModules.size),
   ("B0_count", toJson r.catalogCount), ("B_load_subset_B0", toJson r.catalogVerified),
   ("B_load", toJson (r.loadedModules.map Name.toString)),
   ("B0_excluded", toJson (r.catalogExcluded.map Name.toString)),
   ("paired_structure_use", toJson (r.pairedStructureUse.map Name.toString)), ("baseline_commit", toJson baselineCommit),
   ("mathlib", toJson mathlibRevision), ("maxHeartbeats", toJson localBudget),
-  ("target", toJson r.target.toString), ("verdict", toJson (if r.verdict == .nonBindOnly then s!"non-bind-only[G,R_loc,k; {r.scope}]" else verdictName r.verdict)),
+  ("target", toJson r.target.toString), ("verdict", toJson (if r.verdict == .nonBindOnly then s!"non-bind-only[G,R_lookup,k; {r.scope}]" else verdictName r.verdict)),
   ("baseline", runJson r.base), ("paired", runJson r.paired),
   ("presentation", runJson r.presentation),
   ("presentation_source", toJson (r.presentationEvidence?.map (·.source.toString))),
@@ -474,7 +483,7 @@ syntax (name := searchReductionCatalogCmd) "#search_reduction_catalog " str : co
 
 syntax (name := searchReductionConfigCmd) "#search_reduction_config" : command
 @[command_elab searchReductionConfigCmd] unsafe def elabSearchReductionConfig : CommandElab := fun _ => do
-  logInfo (Json.mkObj [("version", toJson "R_loc-decl"), ("maxHeartbeats", toJson localBudget),
+  logInfo (Json.mkObj [("version", toJson "R_lookup"), ("maxHeartbeats", toJson localBudget),
     ("transport", toJson transportVersion), ("reconstructionMaxHeartbeats", toJson reconstructionBudget),
     ("reconstructionBudgetSemantics", toJson "independent_units"),
     ("pinnedDeriving", toJson (pinnedDerivingClasses.map Name.toString)),

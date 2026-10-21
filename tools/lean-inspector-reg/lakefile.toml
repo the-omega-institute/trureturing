@@ -38,6 +38,12 @@ srcDir = "../lean-inspector"
 roots = ["LeanInformationAuditRegAnalysis"]
 globs = ["LeanInformationAuditRegAnalysis.+"]
 
+[[lean_lib]]
+name = "LeanInformationAuditLookupDisk"
+srcDir = "../lean-inspector"
+roots = ["LeanInformationAuditRegAnalysis.SearchReduction.DiskLookup", "LeanInformationAuditRegAnalysis.SearchReduction.Lookup"]
+precompileModules = true
+
 [[lean_exe]]
 name = "compiledJudgeTests"
 srcDir = "../lean-inspector"
@@ -52,3 +58,8 @@ root = "LeanInformationAuditFibTests.AuricFib.SourceContracts"
 name = "auricFibAnalysis"
 srcDir = "../lean-inspector"
 root = "LeanInformationAuditRegAnalysis.AuricFib.Main"
+
+[[lean_exe]]
+name = "searchReductionIndex"
+srcDir = "../lean-inspector"
+root = "LeanInformationAuditRegAnalysis.SearchReduction.DiskLookupMain"

@@ -4,8 +4,9 @@ ROOT="$(cd "$(dirname "${BASH_SOURCE[0]}")/../.." && pwd -P)"
 # Lake schedules library modules concurrently. Search-reduction fixtures execute
 # isolated compiler probes and are the high-memory part of this library, so
 # compile those modules one at a time before the ordinary aggregate build.
+make -C "$ROOT" search-reduction-index-fixtures
 search_reduction_modules=(
-  GraphCandidates GraphModel GraphCalibration Baseline Model FiniteModel PresentationBaseline Candidates PresentationCandidates
+  GraphCandidates GraphModel LookupModel LookupBaseline LookupTests GraphCalibration Baseline Model FiniteModel PresentationBaseline Candidates PresentationCandidates
   FaultPaths SingleSourceModel PresentationCoverage RawOriginsTests SingleSourceTests
   Calibration Faults RealNegative
   VocabularyCandidates VocabularyModel VocabularyTransport VocabularyTests InformationTests
