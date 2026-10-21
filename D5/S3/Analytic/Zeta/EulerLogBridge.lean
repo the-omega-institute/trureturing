@@ -186,7 +186,7 @@ private lemma pmfReal_map_apply (P : PMF ℕ) (f : ℕ → ℕ) (k : ℕ) :
     · exact P.apply_ne_top n
     · exact ENNReal.zero_ne_top
 
-private lemma expected_factorization_eq (s : ℝ) (hs : 1 < s) (p : Nat.Primes) :
+lemma expected_factorization_eq (s : ℝ) (hs : 1 < s) (p : Nat.Primes) :
     ∑' n : ℕ, pmfReal (zetaDist s hs) n * (n.factorization p.1 : ℝ) =
       (p.1 : ℝ) ^ (-s) / (1 - (p.1 : ℝ) ^ (-s)) := by
   let q : ℝ := (p.1 : ℝ) ^ (-s)

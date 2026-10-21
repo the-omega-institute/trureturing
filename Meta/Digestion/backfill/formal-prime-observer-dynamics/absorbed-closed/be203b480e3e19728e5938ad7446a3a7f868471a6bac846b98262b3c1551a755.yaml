@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:be203b480e3e19728e5938ad7446a3a7f868471a6bac846b98262b3c1551a755
+  normalized_sha256: sha256:be203b480e3e19728e5938ad7446a3a7f868471a6bac846b98262b3c1551a755
+cas_ref: sha256:be203b480e3e19728e5938ad7446a3a7f868471a6bac846b98262b3c1551a755
+coverage_gids:
+  - gid: D5/S3/Factorization/Galois/GeneralPowerCharacterLayer.power_character_joint_kernel_eq_power_subgroup
+    target_statement_id: sha256:a44c069339fb942aeedd8004d17cea829b5f604b3117cfda0c19d67d75fa4f92
+  - gid: D5/S3/PrimeForms/Splitting/QuadraticCharacterProfileRedundancy.quadratic_characters_are_three_ring_products_and_fiber_redundant
+    target_statement_id: sha256:1a6395b3531815c70e290d0132d0beba01abaecf955f4fabd8fda64733eb5ba9
+receipts:
+  unresolved_subitems: []
