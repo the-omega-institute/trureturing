@@ -49,11 +49,6 @@ theorem recH_eq {r} (a : Fin r → ℕ) {d : ℕ} (hd : 1 ≤ d) :
       simp only [Finset.mem_filter, Finset.mem_range, Finset.mem_Icc]
       omega
 
-theorem esymmParts_nonneg {r : ℕ} (a : Fin r → ℕ) (j : ℕ) :
-    0 ≤ (esymmParts a j : ℝ) := by
-  unfold esymmParts
-  positivity
-
 theorem recH_nonneg {r : ℕ} (a : Fin r → ℕ) : ∀ d, 0 ≤ recH a d := by
   intro d
   induction d using Nat.strong_induction_on with
@@ -65,11 +60,11 @@ theorem recH_nonneg {r : ℕ} (a : Fin r → ℕ) : ∀ d, 0 ≤ recH a d := by
         intro j hj
         have hjlo : 2 ≤ j := (Finset.mem_Icc.mp hj).1
         have hrec : 0 ≤ recH a (d - j) := ih (d - j) (by omega)
-        have he : 0 ≤ (esymmParts a j : ℝ) := esymmParts_nonneg a j
+        have he : 0 ≤ (esymmParts a j : ℝ) := Nat.cast_nonneg _
         have hc : 0 ≤ (j : ℝ) - 1 := by
           have hj' : (1 : ℝ) ≤ (j : ℝ) := by exact_mod_cast (show 1 ≤ j by omega)
           linarith
-        positivity
+        exact mul_nonneg (mul_nonneg hc he) hrec
 
 theorem esymmParts_two_pos {r : ℕ} (hr : 2 ≤ r) (a : Fin r → ℕ)
     (ha : ∀ i, 0 < a i) : 0 < (esymmParts a 2 : ℝ) := by
@@ -99,31 +94,31 @@ theorem recH_two_mul_pos {r m : ℕ} (hr : 2 ≤ r) (a : Fin r → ℕ)
         · intro j hj
           have hjlo : 2 ≤ j := (Finset.mem_Icc.mp hj).1
           have hrec : 0 ≤ recH a (2 - j) := recH_nonneg a _
-          have he : 0 ≤ (esymmParts a j : ℝ) := esymmParts_nonneg a j
+          have he : 0 ≤ (esymmParts a j : ℝ) := Nat.cast_nonneg _
           have hc : 0 ≤ (j : ℝ) - 1 := by
             have hj' : (1 : ℝ) ≤ (j : ℝ) := by exact_mod_cast (show 1 ≤ j by omega)
             linarith
-          positivity
+          exact mul_nonneg (mul_nonneg hc he) hrec
         · exact ⟨2, by simp, by
             have he := esymmParts_two_pos hr a ha
             norm_num [recH_zero] at he ⊢
-            positivity⟩
+            exact he⟩
       · rw [recH_eq a (by omega)]
         apply Finset.sum_pos'
         · intro j hj
           have hjlo : 2 ≤ j := (Finset.mem_Icc.mp hj).1
           have hrec : 0 ≤ recH a ((2 * m) - j) := recH_nonneg a _
-          have he : 0 ≤ (esymmParts a j : ℝ) := esymmParts_nonneg a j
+          have he : 0 ≤ (esymmParts a j : ℝ) := Nat.cast_nonneg _
           have hc : 0 ≤ (j : ℝ) - 1 := by
             have hj' : (1 : ℝ) ≤ (j : ℝ) := by exact_mod_cast (show 1 ≤ j by omega)
             linarith
-          positivity
+          exact mul_nonneg (mul_nonneg hc he) hrec
         · refine ⟨2, by simp only [Finset.mem_Icc]; omega, ?_⟩
           have hm' : 1 ≤ m - 1 := by omega
           have hpos : 0 < recH a (2 * (m - 1)) := ih (m - 1) (by omega) hm'
           have he := esymmParts_two_pos hr a ha
           have heq : (2 * m) - 2 = 2 * (m - 1) := by omega
           rw [heq]
-          positivity
+          exact mul_pos (mul_pos (by norm_num) he) hpos
 
 end D5.S3.Combinatorics.Graph.MultipartiteCHS.Recurrence

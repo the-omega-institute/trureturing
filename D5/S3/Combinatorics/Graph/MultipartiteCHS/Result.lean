@@ -41,12 +41,7 @@ theorem result : claim := by
   have rpow_inj : ∀ {x y : ℝ}, 0 ≤ x → 0 ≤ y →
       x ^ ((1 : ℝ) / (2 * m : ℝ)) = y ^ ((1 : ℝ) / (2 * m : ℝ)) → x = y := by
     intro x y hx hy hxy
-    have hd : (2 * m : ℝ) ≠ 0 := by positivity
-    have hmul : (1 : ℝ) / (2 * m : ℝ) * (2 * m : ℝ) = 1 := by
-      field_simp
-    have hpow := congrArg (fun z : ℝ => z ^ (2 * m : ℝ)) hxy
-    rw [← Real.rpow_mul hx, ← Real.rpow_mul hy, hmul] at hpow
-    simpa only [Real.rpow_one] using hpow
+    exact (Real.rpow_left_inj hx hy (ne_of_gt hexp)).mp hxy
   constructor
   · constructor
     · dsimp [chsNorm]

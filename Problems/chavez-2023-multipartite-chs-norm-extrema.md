@@ -49,7 +49,7 @@ where $e_j(a)$ is the elementary symmetric function of the part sizes. The recip
 
 $$H_0=1,\qquad H_d=\sum_{j=2}^{d}(j-1)e_j(a)H_{d-j}.$$
 
-Every coefficient is a polynomial with nonnegative coefficients in the elementary symmetric functions with index at least two. The elementary symmetric functions are Schur-concave in the part sizes. A two-part transfer preserves the sum and changes the product of the selected parts, so balancing strictly increases the coefficients and unbalancing strictly decreases them. The strict quadratic contribution and positivity of the even coefficients give strictness at every positive even degree. The real power with positive exponent preserves the inequalities and their equality cases.
+Every coefficient is a polynomial with nonnegative coefficients in the elementary symmetric functions with index at least two. The elementary symmetric functions are Schur-concave in the part sizes. A two-part transfer preserves the sum and changes the product of the selected parts, so balancing weakly increases every coefficient and strictly increases every positive even-degree coefficient; unbalancing gives the reverse inequalities. The strict quadratic contribution and positivity of the even coefficients give strictness at every positive even degree. The real power with positive exponent preserves the inequalities and their equality cases.
 
 The proof route was derived with the assistance of the ChatGPT Pro model.
 
