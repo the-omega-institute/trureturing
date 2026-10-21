@@ -125,23 +125,23 @@ private theorem pProjector_eq_vec (q : ℂ) (hq : q * star q = 1) :
 
 private theorem pPlus_state : Pplus.PosSemidef ∧ Matrix.trace Pplus = 1 := by
   rw [show Pplus = pProjector qPlus by rfl, pProjector_eq_vec qPlus (by
-    apply Complex.ext <;> norm_num [qPlus] <;> ring)]
+    apply Complex.ext <;> norm_num [qPlus])]
   constructor
   · exact (Matrix.posSemidef_vecMulVec_self_star (pKet qPlus)).smul (by norm_num : (0 : ℝ) ≤ 1 / 2)
   · rw [Matrix.trace_smul, Matrix.trace_vecMulVec]
     simp only [dotProduct, Fintype.sum_prod_type, Fin.sum_univ_two]
     norm_num [pKet, qPlus, Complex.normSq, Complex.mul_re, Complex.mul_im, Complex.ext_iff,
-      Complex.I_mul_I] <;> ring
+      Complex.I_mul_I]
 
 private theorem pMinus_state : Pminus.PosSemidef ∧ Matrix.trace Pminus = 1 := by
   rw [show Pminus = pProjector qMinus by rfl, pProjector_eq_vec qMinus (by
-    apply Complex.ext <;> norm_num [qMinus] <;> ring)]
+    apply Complex.ext <;> norm_num [qMinus])]
   constructor
   · exact (Matrix.posSemidef_vecMulVec_self_star (pKet qMinus)).smul (by norm_num : (0 : ℝ) ≤ 1 / 2)
   · rw [Matrix.trace_smul, Matrix.trace_vecMulVec]
     simp only [dotProduct, Fintype.sum_prod_type, Fin.sum_univ_two]
     norm_num [pKet, qMinus, Complex.normSq, Complex.mul_re, Complex.mul_im, Complex.ext_iff,
-      Complex.I_mul_I] <;> ring
+      Complex.I_mul_I]
 
 private noncomputable def witnessP : Fin 4 → ℝ := ![16 / 25, 9 / 25, 0, 0]
 
@@ -188,8 +188,9 @@ set_option maxHeartbeats 1000000 in
 private theorem rotated_witness (μ : Fin 2) :
     rotated μ (![(1 / 2 : ℝ), 1 / 2]) (fun j : Fin 2 => if j = 0 then Pplus else Pminus)
       (fun j : Fin 2 => if j = 0 then U1 else U2) = χ := by
-  change (1 / 2 : ℂ) • (onSite μ U1mat * Pplus * (onSite μ U1mat)ᴴ) +
-    (1 / 2 : ℂ) • (onSite μ U2mat * Pminus * (onSite μ U2mat)ᴴ) = χ
+  simp only [rotated, Fin.sum_univ_two]
+  change ((1 / 2 : ℝ) : ℂ) • (onSite μ U1mat * Pplus * (onSite μ U1mat)ᴴ) +
+    ((1 / 2 : ℝ) : ℂ) • (onSite μ U2mat * Pminus * (onSite μ U2mat)ᴴ) = χ
   ext ⟨a, b⟩ ⟨c, d⟩
   fin_cases μ <;> fin_cases a <;> fin_cases b <;> fin_cases c <;> fin_cases d <;>
     norm_num [χ, onSite, Pplus, Pminus, pProjector, qPlus, qMinus,
@@ -258,7 +259,10 @@ private theorem ed_witness_le_zero : ED (bellDiagonal witnessP) ≤ 0 := by
     · simpa [ρs] using pMinus_state
   have hmix : ∑ j, (p j : ℂ) • ρs j = bellDiagonal witnessP := by
     rw [bellDiagonal_witness]
-    norm_num [p, ρs, Fin.sum_univ_two]
+    ext ⟨a, b⟩ ⟨c, d⟩
+    fin_cases a <;> fin_cases b <;> fin_cases c <;> fin_cases d <;>
+      norm_num [p, ρs, Fin.sum_univ_two, Pplus, Pminus, pProjector, qPlus, qMinus,
+        Complex.ext_iff, map_ofNat]
   have hinner (μ : Fin 2) : sInf {y : ℝ | ∃ U,
       y = siteQCD μ (rotated μ p ρs U)} ≤ 0 := by
     apply sInf_le_of_mem_nonpos (le_refl 0)
