@@ -15,13 +15,39 @@ run_cmd do
   unless first != second && first.length > 3 do
     throwError "candidate keys lost nested application structure"
   let bound := DiskLookup.path (fun _ => true)
-    (.lam `renamed (mkConst ``Nat) nested .default)
+    (.lam `renamed (mkConst ``Nat) (mkApp2 (mkConst ``And) parameter parameter) .default)
   unless bound.head? == some "l:1" && bound.contains "*" do
     throwError "candidate keys lost binder position or parameter wildcard"
   let eta := .lam `x (mkConst ``Nat) (mkApp (mkBVar 1) (mkBVar 0)) .default
   unless DiskLookup.path (fun _ => true) eta == DiskLookup.path (fun _ => true) parameter do
     throwError "candidate key is not eta invariant"
   logInfo s!"LOOKUP_KEY_SHAPE nested=true binders=true parameters=true eta=true depth={DiskLookup.keyDepth}"
+
+run_cmd do
+  let directory : System.FilePath := "build/lean-inspector/lookup-index/ordered-key-fixture"
+  IO.FS.createDirAll directory
+  let leaf := fun (label : String) (ordinal : Nat) => do
+    let entry : DiskLookup.Entry := {module := "fixture", name := s!"candidate{ordinal}",
+      parts := #[(s!"candidate{ordinal}", 0)], ordinal, route := "c:1:Target"}
+    let payload := (toJson #[entry]).compress
+    IO.FS.writeFile (directory / s!"{label}.entries.json") payload
+    let node : DiskLookup.Node := {pages := #[{
+      file := s!"{label}.entries.json", digest := hash payload, count := 1}]}
+    let text := (toJson node).compress
+    IO.FS.writeFile (directory / s!"{label}.node.json") text
+    pure (hash text)
+  let a ← leaf "a" 2
+  let z ← leaf "z" 1
+  let node : DiskLookup.Node := {children := #[("c:0:A", "a", a), ("c:0:Z", "z", z)]}
+  let text := (toJson node).compress
+  IO.FS.writeFile (directory / "root.node.json") text
+  let header : DiskLookup.Header := {basis := "order-fixture", mathlib := "fixture", inputs := 0,
+    storage := "", root := "root", digest := hash text, complete := true, modules := 1,
+    declarations := 2, indexed := 2, missing := #[]}
+  let result ← DiskLookup.query {directory, header} ["*"]
+  unless result.complete && result.entries.map (·.name) == #["candidate1", "candidate2"] do
+    throwError "nested key traversal changed the frozen candidate order"
+  logInfo "LOOKUP_CANDIDATE_ORDER nested_traversal_reversed=true legacy_order_preserved=true"
 
 run_cmd do
   enableInitializersExecution
