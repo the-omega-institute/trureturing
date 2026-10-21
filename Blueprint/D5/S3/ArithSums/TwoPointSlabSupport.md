@@ -78,19 +78,7 @@ $$\begin{aligned}\forall S \in \operatorname{Set}\left(\alpha\right), \forall c 
 
 In any pseudometric space, compactness and nonemptiness give a closest point of S to each endpoint. Choose the endpoint with the smaller infimum. The result is attained by an actual pair and bounds the distance of every actual pair from below. These properties identify the set-to-set minimum; a merely supplied nonnegative lower bound would not have this meaning.
 
-**Theorem 1.7 (Support from one included corner).**
-
-$$\begin{aligned}\forall T \in \mathbb{R}, \forall M_{0} \in \mathbb{R}, \forall M_{1} \in \mathbb{R}, \forall c \in (\operatorname{Fin}\left(3\right) \to \mathbb{R}), \forall d \in (\operatorname{Fin}\left(3\right) \to \mathbb{R}), \forall x \in (\operatorname{Fin}\left(3\right) \to \mathbb{R}), \\(\forall i \in \operatorname{Fin}\left(3\right), T \le c_{i}) \land (\forall i \in \operatorname{Fin}\left(3\right), T \le d_{i}) \land (\operatorname{IsCorner}\left(c, d, x\right)) \land (\sum_{i} (x_{i}) \in [M_{0}, M_{1}]) \implies\\\operatorname{let} m = \frac{\sum_{i} (x_{i})}{3}; \\\operatorname{let} I = [\frac{M_{0}}{3}, \frac{M_{1}}{3}]; \\\operatorname{let} \delta_{i} = \operatorname{pairDistance}\left(I, c_{i}, d_{i}\right); \\\operatorname{let} V_{0} = \sum_{i} (\delta_{i}^{2}); \\\operatorname{let} \rho = \sqrt{\frac{V_{0}}{6}}; \\(m \in I) \land (\forall i \in \operatorname{Fin}\left(3\right), 0 \le x_{i} - T) \land (V_{0} \le \sum_{i} ((x_{i} - m)^{2}) = \sum_{i} ((x_{i} - T)^{2}) - 3 \cdot (m - T)^{2} \le 6 \cdot (m - T)^{2}) \land (0 \le \rho \le m - T \le \frac{M_{1}}{3} - T)\end{aligned}$$
-
-*Proof.* Machine-checked in Lean as `D5/S3/ArithSums/TwoPointSlabSupport.corner_estimate` (`✓ std3`). ∎
-
-*Source.* Repository-derived.
-
-*Commentary.*
-
-The three coordinate endpoint pairs are arbitrary real pairs above T. One actual corner with included budget suffices. No logarithmic widths, strict slab order or cutoff is required. The mean, squared distances and radius obey the displayed bounds, including zero variance.
-
-**Theorem 1.8 (The complete three-coordinate support theorem).**
+**Theorem 1.7 (The complete three-coordinate support theorem).**
 
 $$\begin{aligned}\forall T \in \mathbb{R}, \forall M_{0} \in \mathbb{R}, \forall M_{1} \in \mathbb{R}, \forall \operatorname{xi} \in (\operatorname{Fin}\left(3\right) \to \mathbb{R}), \\\operatorname{let} a = \log 2, h = (\log 2,\log 3,\log 7); \\\operatorname{let} c_{i} = T + \operatorname{xi}_{i}, d_{i} = c_{i} + h_{i}, A = 3 \cdot T + \sum_{i} (\operatorname{xi}_{i}); \\\operatorname{let} I = [\frac{M_{0}}{3}, \frac{M_{1}}{3}], \mu = \frac{M_{1}}{3}, \delta_{i} = \operatorname{pairDistance}\left(I, c_{i}, d_{i}\right); \\\operatorname{let} V_{0} = \sum_{i} (\delta_{i}^{2}), \rho = \sqrt{\frac{V_{0}}{6}}, L = \mu - \rho, H = \mu + 2 \cdot \rho; \\\operatorname{let} o = ((e:(\operatorname{Fin}\left(3\right) \to \{0, 1\})) \mapsto \sum_{i} (e_{i} \cdot h_{i})); \\(a \le T) \land (\forall i \in \operatorname{Fin}\left(3\right), 0 \le \operatorname{xi}_{i}) \land (\exists i \in \operatorname{Fin}\left(3\right), \operatorname{xi}_{i} = 0) \land (\operatorname{WideSlab}\left(c, d, M_{0}, M_{1}\right)) \implies\\{}[(\forall x \in (\operatorname{Fin}\left(3\right) \to \mathbb{R}), (\operatorname{IsCorner}\left(c, d, x\right)) \iff (\exists e \in (\operatorname{Fin}\left(3\right) \to \{0, 1\}), x = (i \mapsto c_{i} + e_{i} \cdot h_{i})))\\\land (\forall e \in (\operatorname{Fin}\left(3\right) \to \{0, 1\}), \sum_{i} (c_{i} + e_{i} \cdot h_{i}) = A + o\left(e\right))\\\land (\forall i \in \operatorname{Fin}\left(3\right), (0 \le \delta_{i}) \land (\exists y \in I, \exists z \in \{c_{i}, d_{i}\}, \delta_{i} = \operatorname{dist}\left(y, z\right)) \land (\forall y \in I, \forall z \in \{c_{i}, d_{i}\}, \delta_{i} \le \operatorname{dist}\left(y, z\right)))\\\land (\forall x \in (\operatorname{Fin}\left(3\right) \to \mathbb{R}), ((\operatorname{IsCorner}\left(c, d, x\right)) \land (\sum_{i} (x_{i}) \in [M_{0}, M_{1}])) \implies (\operatorname{let} m = \frac{\sum_{i} (x_{i})}{3}; (m \in I) \land (\forall i \in \operatorname{Fin}\left(3\right), 0 \le x_{i} - T) \land (V_{0} \le \sum_{i} ((x_{i} - m)^{2}) = \sum_{i} ((x_{i} - T)^{2}) - 3 \cdot (m - T)^{2} \le 6 \cdot (m - T)^{2}) \land (0 \le \rho \le m - T \le \mu - T)))\\\land H \ge L \ge T > 0\\\land \operatorname{IsLeast}\left(\operatorname{range}\left(o\right), 0\right) \land \operatorname{IsLeast}\left(\{r \mid (r \in \operatorname{range}\left(o\right)) \land (0 < r)\}, a\right)\\\land ((\operatorname{xi} = 0) \implies (\operatorname{let} u = M_{0} - 3 \cdot T; \operatorname{let} v = M_{1} - 3 \cdot T; (a \le v) \land (u < v) \land ((u \le 0) \implies ((\forall i \in \operatorname{Fin}\left(3\right), \delta_{i} = 0) \land (\rho = 0) \land (L = T + \frac{v}{3}) \land (T < L))) \land ((0 < u) \implies ((\forall i \in \operatorname{Fin}\left(3\right), \delta_{i} \le \frac{u}{3}) \land (\rho \le \frac{u}{3 \cdot \sqrt{2}}) \land (L \ge T + \frac{v - \frac{u}{\sqrt{2}}}{3} > T))) \land (0 < L - T \le H - T)))]\end{aligned}$$
 
@@ -114,7 +102,6 @@ Negative lower budgets, arbitrary upper slack, corners at either closed endpoint
 
 - Truth anchor: `D5/S3/ArithSums/TwoPointSlabSupport.IsCorner`
 - Truth anchor: `D5/S3/ArithSums/TwoPointSlabSupport.WideSlab`
-- Truth anchor: `D5/S3/ArithSums/TwoPointSlabSupport.corner_estimate`
 - Truth anchor: `D5/S3/ArithSums/TwoPointSlabSupport.logWidths`
 - Truth anchor: `D5/S3/ArithSums/TwoPointSlabSupport.log_widths_bounds`
 - Truth anchor: `D5/S3/ArithSums/TwoPointSlabSupport.pairDistance`

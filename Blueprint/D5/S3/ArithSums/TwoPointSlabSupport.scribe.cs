@@ -62,12 +62,6 @@ internal sealed class TwoPointSlabSupportDocument : IScribeDocumentDefinition
                 + "result is attained by an actual pair and bounds the distance of every actual "
                 + "pair from below. These properties identify the set-to-set minimum; a merely "
                 + "supplied nonnegative lower bound would not have this meaning."),
-            Entry("corner_estimate", "corner-estimate", "Support from one included corner",
-                CornerEstimateStatement(),
-                "The three coordinate endpoint pairs are arbitrary real pairs above T. "
-                + "One actual corner with included budget suffices. No logarithmic widths, "
-                + "strict slab order or cutoff is required. The mean, squared distances and "
-                + "radius obey the displayed bounds, including zero variance."),
             Entry("wide_slab_support_237", "complete-support", "The complete three-coordinate support theorem",
                 SupportStatement(),
                 "In the displayed statement, all unqualified coordinate sums and coordinate "
@@ -99,25 +93,6 @@ internal sealed class TwoPointSlabSupportDocument : IScribeDocumentDefinition
                 + "integer exponent, coordinate-width comparison c_i>=h_i, cutoff, small-shape "
                 + "or physical premise is imposed. The result supplies positive arguments for "
                 + "later arithmetic analytic estimates; it makes no quantum or RH assertion.")))));
-
-    private static Formula CornerEstimateStatement() => Lines(
-        Seq(All(T, Reals), All(M0, Reals), All(M1, Reals), All(C, Vectors),
-            All(Dd, Vectors), All(X, Vectors)),
-        Seq(Ands(Seq(All(I, Fin3), T, Sp, Le, Sp, Sub(C, I)),
-            Seq(All(I, Fin3), T, Sp, Le, Sp, Sub(Dd, I)), Corner(X),
-            Member(Budget(X), Interval(M0, M1))), Sp, Implies),
-        Let(Equal(M, Div(Budget(X), D(3)))),
-        Let(Equal(IntervalI, Interval(Div(M0, D(3)), Div(M1, D(3))))),
-        Let(Equal(Sub(DeltaLower, I), Pair(IntervalI, Sub(C, I), Sub(Dd, I)))),
-        Let(Equal(V0, SumOf(Square(Sub(DeltaLower, I))))),
-        Let(Equal(Rho, Root(Div(V0, D(6))))),
-        Ands(Member(M, IntervalI), Seq(All(I, Fin3),
-            Nonnegative(SubtractOf(Sub(X, I), T))),
-            Seq(V0, Sp, Le, Sp, SumOf(Square(Paren(SubtractOf(Sub(X, I), M)))),
-                Sp, Eq, Sp, CenteredExpansion, Sp, Le, Sp,
-                TimesOf(D(6), Square(Paren(SubtractOf(M, T))))),
-            Seq(D(0), Sp, Le, Sp, Rho, Sp, Le, Sp, SubtractOf(M, T),
-                Sp, Le, Sp, SubtractOf(Div(M1, D(3)), T))));
 
     private static Formula SupportStatement()
     {
