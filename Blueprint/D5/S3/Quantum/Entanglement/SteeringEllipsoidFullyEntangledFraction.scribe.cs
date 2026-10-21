@@ -62,6 +62,9 @@ internal sealed class SteeringEllipsoidFullyEntangledFractionDocument : IScribeD
             Node("vlen-eq-norm", "Euclidean length as a norm", VlenEqNormFormula(),
                 "The length vlen of a real three-vector equals the norm of that vector in EuclideanSpace, with WithLp.toLp 2 identifying the coordinate function with its Euclidean vector.",
                 "vlen_eq_norm", DescribeRole.Theorem, AssessedProvenance.FromRepo(Source)),
+            Node("vlen-nonneg", "Euclidean length is nonnegative", VlenNonnegFormula(),
+                "Every real three-vector has nonnegative Euclidean length, since its length is a real square root.",
+                "vlen_nonneg", DescribeRole.Theorem, AssessedProvenance.FromRepo(Source)),
             Node("trace-mul-kron-one", "Tracing an Alice observable", TraceMulKronOneFormula(),
                 "The trace of rho times A tensor the identity equals the trace of Alice's reduced operator times A. This identity holds for arbitrary complex operators, without positivity or normalization assumptions.",
                 "trace_mul_kron_one", DescribeRole.Theorem, AssessedProvenance.FromRepo(Source)),
@@ -172,6 +175,8 @@ internal sealed class SteeringEllipsoidFullyEntangledFractionDocument : IScribeD
     private static Formula QTr(Formula matrix) => QCall("Matrix", "trace", matrix);
     private static Formula QKron(Formula left, Formula right) => QCall("Matrix", "kronecker", left, right);
     private static Formula QLength(Formula vector) => QCall(Owner, "vlen", vector);
+    private static Formula VlenNonnegFormula() => Disp(All("v", Arrow(Fin(3), Real()),
+        AtMost(D(0), QLength(F.Id("v")))));
     private static Formula BobMarginal(Formula matrix) => QCall(PartialTrace, "partialTraceLeft", matrix);
 
     private static Formula BlochVecFormula()

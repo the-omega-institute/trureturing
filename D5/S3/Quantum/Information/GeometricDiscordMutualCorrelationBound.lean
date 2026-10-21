@@ -17,7 +17,7 @@ noncomputable section
 open Matrix
 open scoped Kronecker ComplexOrder Matrix.Norms.L2Operator
 open D5.S3.Quantum.Entanglement.SteeringEllipsoidFullyEntangledFraction
-  (pauli pauli_zero pauli_one pauli_two blochA blochB corr vlen trace_mul_kron_one)
+  (pauli pauli_zero pauli_one pauli_two blochA blochB corr vlen vlen_nonneg trace_mul_kron_one)
 open D5.S3.QuantumChannels.PauliThreeWeightBayesianInverseUniqueness (sigma spin)
 open D5.S3.Quantum.Entanglement.SteeringEllipsoidCHSH
   (sigma_succ normalized_unit vlen_sq trace_pauli_kronecker_eq_corr)
@@ -264,9 +264,7 @@ private lemma row_bound (ρ : TwoQubit) (hρ : ρ.PosSemidef) (ht : trace ρ = 1
       field_simp [hh]
     simp only [single_dotProduct, one_mul] at h
     change |r ⬝ᵥ ((vlen r)⁻¹ • r)| ≤ maximalMutualCorrelation ρ at h
-    have hv : 0 ≤ vlen r := by
-      unfold vlen
-      exact Real.sqrt_nonneg _
+    have hv : 0 ≤ vlen r := vlen_nonneg r
     rw [hn, abs_of_nonneg hv] at h
     simpa [r] using h
 
@@ -389,10 +387,10 @@ private lemma discord_sq_bound (ρ : TwoQubit) (hρ : ρ.PosSemidef) (ht : trace
   have hC := correlation_nonneg ρ hρ ht
   have hr0 : vlen (connectedCorrelation (rotateState U ρ) 0) ^ 2 ≤
       maximalMutualCorrelation ρ ^ 2 :=
-    (sq_le_sq₀ (Real.sqrt_nonneg _) hC).mpr (row_bound ρ hρ ht U 0)
+    (sq_le_sq₀ (vlen_nonneg _) hC).mpr (row_bound ρ hρ ht U 0)
   have hr1 : vlen (connectedCorrelation (rotateState U ρ) 1) ^ 2 ≤
       maximalMutualCorrelation ρ ^ 2 :=
-    (sq_le_sq₀ (Real.sqrt_nonneg _) hC).mpr (row_bound ρ hρ ht U 1)
+    (sq_le_sq₀ (vlen_nonneg _) hC).mpr (row_bound ρ hρ ht U 1)
   linarith
 
 
