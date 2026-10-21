@@ -11,6 +11,7 @@ import Mathlib.Data.Finset.Lattice.Fold
 import Mathlib.Data.Fintype.BigOperators
 import Mathlib.Data.Fintype.Pi
 import Mathlib.Basic.Real.Basic
+import Mathlib.Basic.Sign.Basic
 import Mathlib.LinearAlgebra.Matrix.Notation
 import Mathlib.Tactic.FinCases
 import Mathlib.Tactic.Linarith
@@ -79,10 +80,128 @@ def claim : Prop :=
   ∀ k : ℕ, 3 ≤ k → ∃ c : ℝ, c < k ∧
     ∀ n m (M : Matrix (Fin n) (Fin m) ℝ), Lk k M ≤ c * L M
 
+private lemma sign_correlation (k : ℕ) (hk : 0 < k) (i : Fin k) :
+    (∑ ε : Fin k → Fin 2,
+      (SignType.sign (∑ j, signValue (ε j)) : ℝ) * signValue (ε i)) =
+      (∑ ε : Fin k → Fin 2, |∑ j, signValue (ε j)|) / k := by
+  classical
+  let S (ε : Fin k → Fin 2) : ℝ := ∑ j, signValue (ε j)
+  let σ (ε : Fin k → Fin 2) : SignType := SignType.sign (S ε)
+  let T (j : Fin k) : ℝ := ∑ ε : Fin k → Fin 2, (σ ε : ℝ) * signValue (ε j)
+  have hsymm (j l : Fin k) : T j = T l := by
+    let e : (Fin k → Fin 2) ≃ (Fin k → Fin 2) :=
+      { toFun := fun ε t => ε (Equiv.swap j l t)
+        invFun := fun ε t => ε (Equiv.swap j l t)
+        left_inv := by intro ε; funext t; simp only [Equiv.swap_apply_self]
+        right_inv := by intro ε; funext t; simp only [Equiv.swap_apply_self] }
+    have hS (ε : Fin k → Fin 2) : S (e ε) = S ε :=
+      Equiv.sum_comp (Equiv.swap j l) (fun t => signValue (ε t))
+    calc
+      T j = ∑ ε : Fin k → Fin 2, (σ (e ε) : ℝ) * signValue (e ε j) :=
+        (e.sum_comp (fun ε => (σ ε : ℝ) * signValue (ε j))).symm
+      _ = T l := by
+        apply Finset.sum_congr rfl
+        intro ε _
+        have hσ : σ (e ε) = σ ε := congrArg SignType.sign (hS ε)
+        rw [hσ]
+        change (σ ε : ℝ) * signValue (ε (Equiv.swap j l j)) = _
+        rw [Equiv.swap_apply_left]
+  have htotal : (k : ℝ) * T i = ∑ ε : Fin k → Fin 2, |S ε| := by
+    calc
+      (k : ℝ) * T i = ∑ j : Fin k, T j := by
+        calc
+          (k : ℝ) * T i = ∑ _ : Fin k, T i := by simp
+          _ = ∑ j : Fin k, T j := Finset.sum_congr rfl (fun j _ => hsymm i j)
+      _ = ∑ ε : Fin k → Fin 2, (σ ε : ℝ) * S ε := by
+        dsimp only [T, S]
+        rw [Finset.sum_comm]
+        simp only [Finset.mul_sum]
+      _ = ∑ ε : Fin k → Fin 2, |S ε| := by
+        apply Finset.sum_congr rfl
+        intro ε _
+        exact sign_mul_self (S ε)
+  change T i = (∑ ε : Fin k → Fin 2, |S ε|) / k
+  exact (eq_div_iff (by exact_mod_cast hk.ne' : (k : ℝ) ≠ 0)).mpr
+    ((mul_comm (T i) k).trans htotal)
+
+private lemma averaged_abs_nonneg (k : ℕ) (hk : 0 < k) (x : Fin k → ℝ)
+    (hx : ∀ i, 0 ≤ x i) :
+    (a k / k) * (∑ i, |x i|) ≤
+      ((2 : ℝ) ^ k)⁻¹ * ∑ ε : Fin k → Fin 2, |∑ i, signValue (ε i) * x i| := by
+  classical
+  let σ (ε : Fin k → Fin 2) : SignType := SignType.sign (∑ i, signValue (ε i))
+  have hpoint (ε : Fin k → Fin 2) :
+      (σ ε : ℝ) * (∑ i, signValue (ε i) * x i) ≤ |∑ i, signValue (ε i) * x i| := by
+    calc
+      _ ≤ |(σ ε : ℝ) * (∑ i, signValue (ε i) * x i)| := le_abs_self _
+      _ ≤ _ := by
+        rw [abs_mul]
+        have hσ : |(σ ε : ℝ)| ≤ 1 := by cases σ ε <;> norm_num [SignType.cast]
+        exact mul_le_of_le_one_left (abs_nonneg _) hσ
+  have hsum := Finset.sum_le_sum (s := Finset.univ) (fun ε _ => hpoint ε)
+  have hexpand :
+      (∑ ε : Fin k → Fin 2, (σ ε : ℝ) * ∑ i, signValue (ε i) * x i) =
+        ((∑ ε : Fin k → Fin 2, |∑ i, signValue (ε i)|) / k) * ∑ i, |x i| := by
+    calc
+      _ = ∑ ε : Fin k → Fin 2, ∑ i : Fin k, (σ ε : ℝ) *
+          (signValue (ε i) * x i) := by simp only [Finset.mul_sum]
+      _ = ∑ i : Fin k, ∑ ε : Fin k → Fin 2, (σ ε : ℝ) *
+          (signValue (ε i) * x i) := Finset.sum_comm
+      _ = ∑ i : Fin k, x i *
+          (∑ ε : Fin k → Fin 2, (σ ε : ℝ) * signValue (ε i)) := by
+        apply Finset.sum_congr rfl
+        intro i _
+        rw [Finset.mul_sum]
+        apply Finset.sum_congr rfl
+        intro ε _
+        ring
+      _ = ∑ i : Fin k, x i *
+          ((∑ ε : Fin k → Fin 2, |∑ j, signValue (ε j)|) / k) := by
+        apply Finset.sum_congr rfl
+        intro i _
+        rw [show (∑ ε : Fin k → Fin 2, (σ ε : ℝ) * signValue (ε i)) =
+          (∑ ε : Fin k → Fin 2, |∑ j, signValue (ε j)|) / k from
+            sign_correlation k hk i]
+      _ = _ := by
+        rw [← Finset.sum_mul, mul_comm]
+        congr 1
+        exact Finset.sum_congr rfl (fun i _ => (abs_of_nonneg (hx i)).symm)
+  rw [hexpand] at hsum
+  have h := mul_le_mul_of_nonneg_left hsum
+    (inv_nonneg.mpr (pow_nonneg (by norm_num : (0 : ℝ) ≤ 2) k))
+  unfold a
+  convert h using 1 <;> ring
+
 private lemma averaged_abs_lower (k : ℕ) (hk : 0 < k) (x : Fin k → ℝ) :
     (a k / k) * (∑ i, |x i|) ≤
       ((2 : ℝ) ^ k)⁻¹ * ∑ ε : Fin k → Fin 2, |∑ i, signValue (ε i) * x i| := by
-  sorry
+  classical
+  let e : (Fin k → Fin 2) ≃ (Fin k → Fin 2) :=
+    Equiv.piCongrRight (fun i =>
+      if x i < 0 then Equiv.swap (0 : Fin 2) 1 else Equiv.refl (Fin 2))
+  have hflip (s : Fin 2) : signValue (Equiv.swap (0 : Fin 2) 1 s) = -signValue s := by
+    fin_cases s <;> norm_num [signValue]
+  have hcoord (ε : Fin k → Fin 2) (i : Fin k) :
+      signValue (e ε i) * x i = signValue (ε i) * |x i| := by
+    change signValue ((if x i < 0 then Equiv.swap (0 : Fin 2) 1 else
+      Equiv.refl (Fin 2)) (ε i)) * x i = _
+    by_cases hi : x i < 0
+    · rw [ite_eq_left hi, hflip, abs_of_neg hi]
+      ring
+    · rw [ite_eq_right hi, Equiv.refl_apply, abs_of_nonneg (le_of_not_gt hi)]
+  have hsum : (∑ ε : Fin k → Fin 2, |∑ i, signValue (ε i) * x i|) =
+      ∑ ε : Fin k → Fin 2, |∑ i, signValue (ε i) * (|x i|)| := by
+    calc
+      _ = ∑ ε : Fin k → Fin 2, |∑ i, signValue (e ε i) * x i| :=
+        (e.sum_comp (fun ε => |∑ i, signValue (ε i) * x i|)).symm
+      _ = _ := by
+        apply Finset.sum_congr rfl
+        intro ε _
+        congr 1
+        exact Finset.sum_congr rfl (fun i _ => hcoord ε i)
+  rw [hsum]
+  have h := averaged_abs_nonneg k hk (fun i => |x i|) (fun i => abs_nonneg (x i))
+  simpa only [abs_abs] using h
 
 private lemma a_succ_ge (k : ℕ) : a k ≤ a (k + 1) := by
   classical
