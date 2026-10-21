@@ -2013,3 +2013,808 @@ uniform negative-base entire-child exclusion and exact seed exhaustion,
 with the finite coefficient and interval relations stated above.
 
 ## 追加锚（本行以下为增补区）
+## 21. The original augmented-J map and its regular critical equations
+
+Retain the entire parent $\mathcal H$ and complete worlds of Definition 1.1,
+with one nonzero real gain of degree at most three, one real drift per world,
+and the original clocks $0,\ldots,7$. Define
+
+$$
+\Psi_J:\mathcal H\longrightarrow\mathbb R^3,\qquad
+\Psi_J(W)=(p(W),v(W),a(W)).
+\tag{21.1}
+$$
+
+Its differential is taken on the full two-dimensional analytic parent.
+The singular-source rank assertion used below is [SIII], Theorem 13.1,
+for this same map, rather than for a fixed-source or fixed-drift slice.
+Write [SVI](FIB_STRICT_REAL_JOINT_INCIDENCE_SUPPORT_VI.md) for the
+regular-critical support volume.
+
+In the regular chart put
+
+$$
+t=r/b,\quad r=tb,\quad j=t+b(1-t^2),\quad n=j+tb,\quad
+T=1+b,\quad U=1+2b.
+\tag{21.2}
+$$
+
+The strict source conditions are precisely $t>0$, $b>0$, $tb<1$.
+In this section $D,C_0,\ldots,C_3,B_5,B_6,B_7,N_p,N_v,N_a$ mean exactly
+the integer circuit (2.5) after (21.2). In particular its terminal-$J$
+numerator is $N_a=-C_0+(T+2j+4tb)B_7$.
+The original left products in O, Definition 1.3, have traces
+
+$$
+(1,j,T,n,U,U+n,2U+n),\qquad
+\operatorname{tr}(JQ_6P)=T+2j+4tb,\quad
+\operatorname{tr}(MQ_6P)=3U+2n.
+\tag{21.3}
+$$
+
+Thus the $a$ in (21.1) is exactly the original clock-seven alternative.
+For clarity, the regular whole-world correspondence (2.7) uses
+
+$$
+d=-\frac{C_0}{D},\qquad
+ g(s)=\sum_{k=0}^3\frac{C_k}{D}
+       \prod_{\substack{0\le l\le3\\l\ne k}}\frac{s-l}{k-l},
+\qquad (p,v,a)=\frac{(N_p,N_v,N_a)}{D}.
+\tag{21.4}
+$$
+
+This is the unique actual parent world over a strict source with $D\ne0$.
+Indeed, besides the tautological clock-zero equality, direct substitution
+in (2.5) gives the polynomial identities
+
+$$
+\begin{aligned}
+-C_0+jC_1&=24D,&-C_0+TC_2&=(147/5)D,\\
+-C_0+nC_3&=24D,&
+-C_0+U(-C_0+4C_1-6C_2+4C_3)&=18D.
+\end{aligned}
+\tag{21.5}
+$$
+
+The interpolation rows (2.3) give $g(5)=B_5/D$, $g(6)=B_6/D$,
+$g(7)=B_7/D$, proving every remaining response in (21.4) with the
+same entire gain and drift. Conversely the first four clocks determine
+this interpolant, and (2.1), (2.6) determine the drift when $D\ne0$.
+The first two readings $0,24$ force $g\ne0$. This is the inherited
+full-parent converse of O, Theorem 2.1, in the circuit normalization
+of Section 2.
+
+**Definition 21.1 (Fixed ordered regular minors).** For $f\in\{p,v,a\}$
+write $N_f$ for the corresponding numerator and set
+
+$$
+L_{f,t}=D\partial_tN_f-N_f\partial_tD,\qquad
+L_{f,b}=D\partial_bN_f-N_f\partial_bD,
+\qquad
+M_{fh}=L_{f,t}L_{h,b}-L_{f,b}L_{h,t}.
+\tag{21.6}
+$$
+
+The ordered pairs are $(p,v),(p,a),(v,a)$, in that order. Define
+$E_0,E_1,E_2$ by the exact polynomial divisions
+
+$$
+E_{fh}(r,b)=\frac{b^7}{45}
+       \left(\frac{M_{fh}}D\right)(r/b,b),\qquad
+(E_0,E_1,E_2)=(E_{pv},E_{pa},E_{va}).
+\tag{21.7}
+$$
+
+These formulas specify their coefficients without choosing primitive
+associates or changing signs. Coefficient addition is ordinary addition,
+and multiplication of bivariate arrays is
+
+$$
+[PQ]_{uv}=\sum_{i=0}^u\sum_{j=0}^v
+ [P]_{ij}[Q]_{u-i,v-j};\qquad
+[\partial_tP]_{uv}=(u+1)[P]_{u+1,v}.
+\tag{21.8}
+$$
+
+Use the analogous rule for $\partial_b$. Under $t=r/b$ each monomial
+$t^ub^v$ becomes $r^ub^{v-u}$. Divisions by a nonzero polynomial mean
+its unique exact quotient in the indicated polynomial ring; the
+zero-remainder identities in Lemma 21.2 make (21.7) unambiguous.
+
+**Lemma 21.2 (Integral equations for the regular critical locus).** Each
+$M_{fh}/D$ is a polynomial in $\mathbb Z[t,b]$. Each $E_i$ is in
+$\mathbb Z[r,b]$, has content one, exactly $134$ nonzero monomials, and
+
+$$
+(\deg_rE_i,\deg_bE_i,\deg E_i)=(15,17,17).
+\tag{21.9}
+$$
+
+The exact identities and the original-coordinate Jacobian minors are
+
+$$
+M_{fh}(t,b)=\frac{45D(t,b)}{b^7}E_{fh}(tb,b),\qquad
+\det\frac{\partial(f,h)}{\partial(r,b)}
+ =\frac{45E_{fh}(r,b)}{b^8D(r/b,b)^3}.
+\tag{21.10}
+$$
+
+Consequently, at every strict regular world,
+
+$$
+\operatorname{rank}d\Psi_J<2
+\quad\Longleftrightarrow\quad E_0(r,b)=E_1(r,b)=E_2(r,b)=0.
+\tag{21.11}
+$$
+
+Proof. Expand (21.6) using (2.5), (21.2), (21.8). Division of each
+$M_{fh}$ by $D$ has zero remainder and integer quotient. Substituting
+$t=r/b$ and multiplying by $b^7/45$ leaves integer coefficients;
+collecting them gives (21.9) and content one. These are finite coefficient
+identities specified by the displayed circuit, not values at selected
+sources. The quotient rule gives $\partial_t f=L_{f,t}/D^2$ and
+$\partial_b f=L_{f,b}/D^2$, hence the first minor in $(t,b)$ is
+$M_{fh}/D^4$. The coordinate change has determinant
+$\det\partial(t,b)/\partial(r,b)=1/b$, giving (21.10).
+Strict $b>0$ and regular $D\ne0$ make its denominator nonzero.
+A three-by-two matrix has rank less than two exactly when all three
+ordered two-by-two minors vanish, proving (21.11). ∎
+
+**Definition 21.3 (Fixed elimination determinants).** For $k=1,2$ form
+the $30$-by-$30$ coefficient matrix with rows
+
+$$
+r^{14}E_0,r^{13}E_0,\ldots,E_0,\quad
+r^{14}E_k,r^{13}E_k,\ldots,E_k
+\tag{21.12}
+$$
+
+and columns $r^{29},r^{28},\ldots,1$. Its determinant is $R_k(b)$.
+For the ordered pair $(E_0,E_1)$ form the $28$-by-$29$ matrix with rows
+
+$$
+r^{13}E_0,r^{12}E_0,\ldots,E_0,\quad
+r^{13}E_1,r^{12}E_1,\ldots,E_1
+\tag{21.13}
+$$
+
+and columns $r^{28},r^{27},\ldots,1$. Let $a_0$ be the determinant
+retaining, in order, the first $27$ columns $r^{28},\ldots,r^2$
+and the $r$ column. Let $c_0$ retain those same first $27$ columns
+and the constant column. Thus the ordered linear subresultant is
+$a_0r+c_0$. Every matrix retains its stated size under specialization.
+
+For a nonzero rational polynomial let $\operatorname{pp}_+$ be its
+primitive integer associate with positive leading coefficient. Equivalently,
+clear rational denominators, divide by the positive gcd of the integer
+coefficients, and choose the sign making the leading coefficient positive.
+Put
+
+$$
+G_J=\operatorname{pp}_+(\gcd(R_1,R_2)),\qquad
+h_J=\operatorname{pp}_+(\gcd(a_0,c_0)),\qquad
+ a_J=a_0/h_J,\quad c_J=c_0/h_J.
+\tag{21.14}
+$$
+
+All subsequent gcds, unless $\operatorname{pp}_+$ is explicit, are monic
+gcds in $\mathbb Q[b]$. In particular no sign of $a_0$ or $c_0$ is
+changed separately.
+
+## 22. The degree-eighty-three factor and all specialization guards
+
+Define $F_J(b)=\sum_{j=0}^{83}f_jb^j$ by the following complete
+coefficient array. Every entry is an unscaled integer; the order is
+descending degree.
+
+| $j$ | $f_j$ |
+| --- | --- |
+| 83 | $100311603656333885113230108998811141160760582652247501247152795415972941811959466888217636753139735040000$ |
+| 82 | $-1613622319206475406327345863441035572434460644345245052018162940522609584246899967379519466519980191161600$ |
+| 81 | $-28594507757015602648150864574440729131734851457344834717502492059592015911002930045861567010640224854800960$ |
+| 80 | $5192990237444481741589646603531958667280170086925583721482978683611041527960137141857169410162608894775892$ |
+| 79 | $2549073882483502728197770886793719485939630455361443469682752286310300909027329823669225028525918863461773768$ |
+| 78 | $22261549170455576613613598063016672267438337569379772922226720370683849565099777221060899352611498124319470603$ |
+| 77 | $64981622358629771139500175092606033443036125789910740358160140760792789171075861570484642691580741378960016324$ |
+| 76 | $-435236810641485774643757669835233065518257611166299231111822349113300809205836127574362090144751045092920360825$ |
+| 75 | $-6911907641267553105179851209041805192677999369893321689095321684541310413430578958801488675685572112087510714556$ |
+| 74 | $-51783758415279758492377408263035849709864382048208481801446270210585158459932057471929398881051702675638260085960$ |
+| 73 | $-283303217606992334706120157759298208637526792612103005197216591801189714470274880478799979712913509950318149594596$ |
+| 72 | $-1261543706897124351441340936695656141112203317584570532439930610242317949793156394881823979941213983468122566280752$ |
+| 71 | $-4805121946352300569281965069709476473436460177130276912534233119510190818676254825395596261782015879397238322802394$ |
+| 70 | $-16117315641593603019838108723563043420284750953269879669430610140511307676197594363451804849445752722372580219455402$ |
+| 69 | $-48530677815938975004813643473362640173057434245010842207181979579168622014128329879855509866871374860842602910065590$ |
+| 68 | $-132947894814386460209492260769412621940034651561178761923867785088590131388750728109693149966046352034014862503195265$ |
+| 67 | $-334483005010260265611048354094183766550126920790307096746107423200318690681115795559899514195137578456415809028939066$ |
+| 66 | $-777946666396523562032230996420477428137921511999723843580201693298730428231680599751183870928096439476894641529891875$ |
+| 65 | $-1680269623911176735941818969609973294690541027054970861686333328983716616401831097794349485992229988844235996080618678$ |
+| 64 | $-3380623331660614056501860121335257533369168145977444871329983967456516529287413691541188575688751119082851305503144540$ |
+| 63 | $-6348494068417555960144454934962259510219256194984249690005538978038166427510445941236332583160717230828722254213952466$ |
+| 62 | $-11140292909994726929845389830252730203751231625040201282920423606239133187684116687281170199979167549417915552886169169$ |
+| 61 | $-18274616768308239858878353872813455419340308021077585405445414235547709966240832547024280890424312247023854246454180120$ |
+| 60 | $-28016263895362144461642402569798772638719189128861541715835570232174235017021810468194400654957643899511272224262820716$ |
+| 59 | $-40106582506834424824646462048119386512286770620694718851595516234412771416553794156395446573846879780737743489834113806$ |
+| 58 | $-53541991380457213797351013418515042503059140089459085452060785517763898497955582642369200345267520927493409551536541233$ |
+| 57 | $-66544450816598404665446211713834240845737632331174356685950765690845568875219861970554606207029506988070854839633287526$ |
+| 56 | $-76832643642140759149462210337490074860515385911767040543068913376237240207878323543777897154557825422084538949025585208$ |
+| 55 | $-82167981719986561118308085778709140661871218577969085129968751122322213356237962182511968425752807774066287857249684156$ |
+| 54 | $-80976046039583601452622820431514675202657965325619880791065481445074949395197569786723885881815870894879384567926159614$ |
+| 53 | $-72764364150906352326224919232666032071947596389626882617447426979487052372538743706933381101196319458530975654948770314$ |
+| 52 | $-58170072358583939580389358247381160652803739321599223806352468833507207287949421325242216141511335484042784706334194380$ |
+| 51 | $-38717284183837494436088672556802928034943841139466933698908639465738704259905540794399449374162888720422385240518510716$ |
+| 50 | $-16533465780603627738799128893543938194392285364090791103882012524026395955499099538111721686480637277259954687531277434$ |
+| 49 | $5809776285297166318697130970383041661849467217786350755765635893545096952113471388333715173200161029358602421169954924$ |
+| 48 | $25437426890960608970255251033608995931101067944193018195868144277415047598462440947140005545275319182549957553550698150$ |
+| 47 | $39564243115105326114122434697235291715458255061115394312890276511352335972912788089415980628138566719092754824757412656$ |
+| 46 | $46236262604344444636723968447739226516090912644805999838028694523593544090282604761143092669876334234623506181273337604$ |
+| 45 | $45113438311194119377936161859775293740115447322488867925077217741385867465411132606538478249122688471595653214974340936$ |
+| 44 | $37753360691255472931115656159739775803170710550520796280482316077672980524955746592586482804702807618847189938198713924$ |
+| 43 | $27080535696676954464785423258789171641615244178966685742102407800870410548805138081493785478681941864192596183997077456$ |
+| 42 | $16262583426044981899233568503248027676463195156892056362727332809907266806845589415819132579715494254878639113734738464$ |
+| 41 | $7610161219506404022483194964945469987734090853928945026918364359484697776620054573586128091305519328859292642004650912$ |
+| 40 | $2051771502071278133901601570980421631812491974151630086517753584185710437017438647427576556776791578654014940744892328$ |
+| 39 | $-692191823412564970196469061577062316535193227979022026729329015751733049755594769676007644364910278233892344024932384$ |
+| 38 | $-1526031522038313716422636628945300713469460789576769795846365474120413293470912077326756658989620425035146764534275424$ |
+| 37 | $-1397497360713853980538694519124054495586519335315347047269470984599823659605934084930802283736144128244148874568660416$ |
+| 36 | $-971952517854067033523352334582633324115459156123959110246910025149659950674976506817572521141079996281645332817339952$ |
+| 35 | $-579740450116061802198275257476018501387295241808907870517785076646395655057750255514690538939494499479390173024628224$ |
+| 34 | $-315998229032578159619176770065924787086069708754484109344917677675076759842188790980635934260889620923528880250666112$ |
+| 33 | $-165452647992296147980925956646437898651479475770498201858093057107062283290204361957972157853658348105470639582878336$ |
+| 32 | $-86186640678081191462942283254257225602818634289531563270846051269401804529626693596477906970668012093495223362461184$ |
+| 31 | $-44960236475213389827598190508504863167990788475917244367915456098223451514901358524809992561425862848288084409602816$ |
+| 30 | $-22951328827583682487608719022601021456387642717627324728160771409431685029526954349434008146781363384169797304869376$ |
+| 29 | $-11055013348624279001095220668920167174393196210211352121357831365379517631676790425739337547170779272265239538246144$ |
+| 28 | $-4852068489216624963520305573628531417192963327259818236617931203655061983725170776332121562879219142240566828743424$ |
+| 27 | $-1881763736597275858624059014340828344585112202569919219495944596695590113542529444225402716555444460152999119434752$ |
+| 26 | $-623620876794705071888247355857195283211255195434938512139748165231913259021156936916163301021382697740793173510144$ |
+| 25 | $-167316262461911514816945480669711259854144171696953664278326877138325614082719824529593141447229135967785907007488$ |
+| 24 | $-31677753550047246133793447107462566024016094405543839125390129757031685622742581316798210257736425354553641734144$ |
+| 23 | $-1654056972086950682419832122850164759216190211300339127924658908632196960816977154886096386313357468258218180608$ |
+| 22 | $1632852839002767593130725724831484447756380467607237821751524895189310731057494934105868074670679008557923860480$ |
+| 21 | $784272296746633912768123124197069942651507126488673866715360497399006590225342473465001446288274708273644830720$ |
+| 20 | $186752235219138715592436550979101463291916585718444376419746949084791217153171130380970182262311565927959887872$ |
+| 19 | $11647807747916358780579248243925507395938912297283568188696502701049754380103000535314957226707384256401244160$ |
+| 18 | $-11257639213579259087062776740363113795002547380915357051774086842820530159168663097832016524566432086334898176$ |
+| 17 | $-6170067337757776719943357343874668329395387241897352310982579284485245223788566617090586936558993303798808576$ |
+| 16 | $-1966934879127151329076639332629031143646761499003656526331238162637873128479957332981756159909918020800086016$ |
+| 15 | $-461662532177977054709363505445974553360237630935008542305330783914965398263892223055984867135151623160987648$ |
+| 14 | $-83452318120448139452865787622686118805463526800169315849601709325922233479003609849608181400985759689736192$ |
+| 13 | $-11355238814817636934651418799296104601750380039341922489546621816656917336724715483238212474181957764251648$ |
+| 12 | $-1012334650665159639859725747220133780956241177494365623819411259280170332155155522811327490389400449187840$ |
+| 11 | $-12413169742769952522120872727825237563894632815255310927298440648415531164385243699445109822026017669120$ |
+| 10 | $15029967151178264511197661487704750518654635091937144497879348981786302228130093249778136241656368726016$ |
+| 9 | $3253643726102923225372643765456862744801862249888238878665301578344943260155441740371267733361497473024$ |
+| 8 | $419864922179100265814502854659659679511417393526063388525205052410544420419278521820162318012740796416$ |
+| 7 | $37986300763617560699941773004230173922361614558363060424081745942713969767328868459847005393345576960$ |
+| 6 | $2389928171039685273724774961591547086139821992637767468122492013072364371683806692372998493569024000$ |
+| 5 | $89037878371506646133882358276854824074030563300842931304515795659641719515147827602139943796736000$ |
+| 4 | $57241143986202859176954729575067962089561381769224927364265948314981546391129727301037588480000$ |
+| 3 | $-216308085393290249765685000166269473388181743843097128393133901495267311145271575231594496000000$ |
+| 2 | $-13328067254921548503520654741704119715981615194224547637185726750122861988812831693209600000000$ |
+| 1 | $-388154939850182134613933519339299407448942781937139709753095588220740568404994293760000000000$ |
+| 0 | $-4776971495279247690991338308952519740985137913069141824440033951108179148406784000000000000$ |
+
+**Lemma 22.1 (Exact determinant, gcd and lift relations).** The fixed
+polynomials of Definition 21.3 satisfy
+
+$$
+\begin{aligned}
+G_J&=b^{108}(5b+2)^{16}(8b-1)^{16}(b^2+8b+4)F_J,\\
+h_J&=b^{89}(5b+2)^{13}(8b-1)^{19}(b^2+8b+4),\\
+\deg R_1&=\deg R_2=285,\qquad \deg G_J=225,\\
+(\deg a_0,\deg c_0,\deg h_J,\deg a_J,\deg c_J)
+  &=(252,253,123,129,130).
+\end{aligned}
+\tag{22.1}
+$$
+
+In particular $F_J$ is primitive of degree $83$ and has positive leading
+coefficient. The exact quotients $R_k/G_J$ have degree $60$, and
+
+$$
+\gcd(R_1/G_J,R_2/G_J)=1.
+\tag{22.2}
+$$
+
+For $i=0,1,2$ write $\ell_i(b)=[r^{15}]E_i(r,b)$ and define
+
+$$
+\begin{gathered}
+J_*(r,b)=b^2+r-r^2,\qquad N_*(r,b)=J_*(r,b)+br,\\
+\overline D(r,b)=b^2D(r/b,b)
+ =5\bigl((b^2+8b+4)J_*N_*-2TU b(J_*+N_*)\bigr),\\
+\overline N_p(r,b)=b^3N_p(r/b,b),\\
+H_i(b)=\sum_{u=0}^{15}[r^u]E_i(r,b)(-c_J)^u a_J^{15-u},\\
+H_D(b)=\sum_{u=0}^4[r^u]\overline D(r,b)(-c_J)^u a_J^{4-u}.
+\end{gathered}
+\tag{22.3}
+$$
+
+Both barred expressions are integer polynomials, with $r$ degrees four
+and six respectively. All necessary specialization relations are
+
+$$
+\begin{array}{c|c}
+V&\gcd(F_J,V)\\ \hline
+h_J&1\\
+a_J&1\\
+F'_J&1\\
+b(5b+2)(8b-1)(b^2+8b+4)&1\\
+\ell_0&1\\
+\ell_1&1\\
+\ell_2&1\\
+H_D&1
+\end{array}
+\qquad
+\operatorname{rem}_{F_J}H_0=
+\operatorname{rem}_{F_J}H_1=
+\operatorname{rem}_{F_J}H_2=0.
+\tag{22.4}
+$$
+
+Here the $H_i$ are local lift polynomials, distinct from the late-node
+samples $H_i$ of (15.1).
+
+Proof. All equalities in (22.1)–(22.4) are finite coefficient relations.
+Here are explicit coefficient operations determining them. Expand (2.5)
+by (21.8), take the derivatives (21.6), and use the exact divisions
+(21.7). For a square coefficient matrix $B$, expand
+
+$$
+\det B=\sum_{\pi\in\mathfrak S_N}\operatorname{sgn}(\pi)
+                 \prod_{u=1}^N B_{u,\pi(u)}.
+\tag{22.5}
+$$
+
+Apply this formula to (21.12) and the two ordered minors of (21.13).
+For rational polynomials $V\ne0$, obtain $\operatorname{rem}_V U$ by
+repeatedly subtracting
+
+$$
+\frac{\operatorname{lc}U}{\operatorname{lc}V}
+       b^{\deg U-\deg V}V
+\tag{22.6}
+$$
+
+from a current nonzero $U$ whenever $\deg U\ge\deg V$.
+A gcd is the last nonzero member of the successive pairs
+$(U,V)\mapsto(V,\operatorname{rem}_V U)$, normalized as stated in
+Definition 21.3. These operations on $R_1,R_2$ give the first product
+in (22.1), with the displayed $84$ coefficients as its remaining
+primitive factor. They give the second product from $a_0,c_0$.
+Exact division by those products leaves the degrees in (22.1), (22.2).
+Applying the same remainder recurrence to the eight pairs in (22.4)
+leaves a nonzero constant in each case; monic normalization is $1$.
+Expansion of the three sums $H_i$ leaves zero remainder upon division
+by $F_J$. Thus the quotient, remainder and terminal-degree relations
+are specified entirely over $\mathbb Q$, without a choice of an algebraic
+root or a suppressed determinant normalization.
+
+The finite degree bounds can also be read directly from (21.9).
+For the coefficient of $r^j$ in $r^kE_i$, the $b$ degree is at most
+$17+k-j$. Hence a determinant term in (21.12) has degree at most
+
+$$
+30\cdot17+2\sum_{k=0}^{14}k-\sum_{j=0}^{29}j=285.
+\tag{22.7}
+$$
+
+For (21.13) the two bounds are
+$28\cdot17+2\sum_{k=0}^{13}k-(\sum_{j=2}^{28}j+1)=252$
+and $253$ when the last column is constant. The nonzero top coefficients
+in their expansions give equality in these bounds. The formulas for
+$J_*,N_*$ give the expression for $\overline D$; expanding $\overline N_p$
+by the same circuit gives the asserted integer polynomial and degree.
+Finally the coefficient gcd of the displayed array is one, its first
+entry is positive, and its last entry is nonzero. This proves the
+normalization, simplicity and nonzero-constant assertions used below. ∎
+
+**Lemma 22.2 (Unique guarded algebraic lift).** For every complex root
+$\beta$ of $F_J$, the three polynomials $E_i(r,\beta)$ have exactly
+one common root,
+
+$$
+\rho=-c_J(\beta)/a_J(\beta),\qquad
+\overline D(\rho,\beta)\ne0.
+\tag{22.8}
+$$
+
+In particular this lift is real for real $\beta$.
+
+Proof. The gcd relations (22.4) imply that $a_J(\beta)$,
+$h_J(\beta)$ and every $\ell_i(\beta)$ are nonzero. Thus the three
+initial $r$ degrees remain $15$. Equation (22.1) makes
+$R_1(\beta)=0$, and the fixed linear subresultant has nonzero
+$r$ coefficient $a_0(\beta)=h_J(\beta)a_J(\beta)$.
+The classical subresultant gcd criterion, with these preserved initial
+degrees, makes the gcd of $E_0(r,\beta),E_1(r,\beta)$ have degree
+exactly one and root $-c_0(\beta)/a_0(\beta)=\rho$.
+This is precisely the criterion used in SVI, Lemma 12.3, applied here
+to the polynomials of (21.7). It concerns the fixed ordered minors,
+not a matrix resized after specialization.
+
+The three zero remainders in (22.4), together with $a_J(\beta)\ne0$,
+give $E_i(\rho,\beta)=0$ for all $i$. They identify a common root of
+all three, rather than merely separate roots supplied by two resultants.
+Uniqueness follows already from the degree-one gcd of the first pair.
+The last gcd in (22.4) gives $H_D(\beta)\ne0$, whence
+$\overline D(\rho,\beta)=H_D(\beta)/a_J(\beta)^4\ne0$.
+Real coefficients give the final assertion. ∎
+
+## 23. All positive roots and their strict-world filtering
+
+Use $\operatorname{pp}(P)=P/\operatorname{cont}(P)$ for a nonzero
+integer polynomial, where its content is positive. This operation
+preserves its sign, including the sign of its leading coefficient.
+For $\deg P=m\ge n=\deg Q$, define the integer pseudo-remainder by
+
+$$
+\operatorname{prem}(P,Q)
+ =\operatorname{lc}(Q)^{m-n+1}\operatorname{rem}_Q P.
+\tag{23.1}
+$$
+
+For the displayed $F_J$ define the signed primitive Sturm chain
+
+$$
+\begin{gathered}
+S_0=F_J,\qquad S_1=\operatorname{pp}(F'_J),\\
+\delta_i=\deg S_{i-1}-\deg S_i+1,\qquad
+S_{i+1}=\operatorname{pp}\left(
+ -\operatorname{prem}(S_{i-1},S_i)
+       \operatorname{sign}(\operatorname{lc}S_i)^{\delta_i}\right).
+\end{gathered}
+\tag{23.2}
+$$
+
+Stop at the last nonzero constant. The sign multiplier makes each
+successor a positive multiple of the negative ordinary rational
+remainder, so this is a Sturm chain. For a real argument $z$ let
+$V(z)$ be the number of variations in the ordered signs of
+$S_0(z),S_1(z),\ldots$, with zeros deleted. At $+\infty$ use the
+signs of their leading coefficients.
+
+**Lemma 23.1 (Complete positive-root signs).** The degrees of (23.2)
+are $83,82,\ldots,0$. The following are its full ordered sign words,
+with each character representing one sign. All finite-argument signs
+in the table are nonzero. In the row labels put
+
+$$
+(q_1,q_2,q_3,q_4,q_5)
+ =(4632607,12856673,64878432,90481370,2515351400),\qquad
+L_i=q_i/10^8,\quad U_i=(q_i+1)/10^8.
+\tag{23.3}
+$$
+
+| Argument | Sign word of $S_0,\ldots,S_{83}$ | $V$ |
+| --- | --- | --- |
+| $0$ | `--+-++++---++-+---+----+-+---+---+++--++--++---++--+++---++-+++++--++------+++++--++` | 35 |
+| $+\infty$ | `+++++-++---+++---++--++-++----++++-+--+++---++----+-----+++-+++++--+-------+++++--++` | 30 |
+| $L_1$ | `-+--++----++--+---+---+--+---+---+++--+--++--++++--++----++-+++++--+-------+++++--++` | 35 |
+| $U_1$ | `++--++----++--+---+---+--+---+---+++--+--++--++++--++----++-+++++--+-------+++++--++` | 34 |
+| $L_2$ | `+-++--++++--++-+++-+++-++-+++-+++---++-+++-++----+++----+++-+++++--+-------+++++--++` | 34 |
+| $U_2$ | `--++--++++--++-+++-+++-++-+++-+++---++-+++-++----+++----+++-+++++--+-------+++++--++` | 33 |
+| $L_3$ | `-++-++----++--+---++---+-+----+++--+--++++--+-----+-----+++-+++++--+-------+++++--++` | 33 |
+| $U_3$ | `+++-++----++--+---++---+-+----+++--+--++++--+-----+-----+++-+++++--+-------+++++--++` | 32 |
+| $L_4$ | `+--+--++++--++-+++--+++--+----+++--+--++++--+-----+-----+++-+++++--+-------+++++--++` | 32 |
+| $U_4$ | `---+--++++--++-+++--+++--+----+++--+--++++--+-----+-----+++-+++++--+-------+++++--++` | 31 |
+| $L_5$ | `-++++-++---+++---++--++-++----++++-+--+++---++----+-----+++-+++++--+-------+++++--++` | 31 |
+| $U_5$ | `+++++-++---+++---++--++-++----++++-+--+++---++----+-----+++-+++++--+-------+++++--++` | 30 |
+
+There are exactly five positive roots of $F_J$, all simple, with exactly
+one root $\beta_i$ in each open interval $(L_i,U_i)$.
+
+Proof. Recurrence (23.2), starting with the complete integer array in
+Section 22, gives one nonzero polynomial of each degree down to zero.
+All its coefficients are determined by (23.1), polynomial division
+(22.6), and division by positive integer content. Evaluate each
+polynomial by descending Horner at the displayed rational arguments;
+the resulting signs are exactly the words in the table. Thus its
+entries and variation counts are finite rational sign relations.
+The chain has $84$ entries; in particular it has no zero polynomial
+before the final constant. The gcd relation with $F'_J$ in (22.4)
+also excludes a repeated root.
+
+Sturm's theorem gives $V(0)-V(+\infty)=35-30=5$ positive roots.
+The five disjoint intervals have the respective variation drops
+$(35,34),(34,33),(33,32),(32,31),(31,30)$, so each contains one.
+Their total is five and exhausts the positive roots. ∎
+
+The following finite rational interval definitions specify the lifts,
+including the denominator guards and strict comparisons. They use exact
+rational endpoints, without a rounding grid. For intervals $A=[l,u]$,
+$B=[v,w]$, use endpoint addition and negation, and
+
+$$
+\begin{aligned}
+AB&=[\min(lv,lw,uv,uw),\max(lv,lw,uv,uw)],\\
+A/B&=[\min(l/v,l/w,u/v,u/w),\max(l/v,l/w,u/v,u/w)]
+               \quad(0\notin B).
+\end{aligned}
+\tag{23.4}
+$$
+
+For a univariate polynomial $P=\sum_{j=0}^m p_jb^j$, define its interval
+Horner value on $I$ from $Z_m=[p_m,p_m]$ by
+$Z_j=Z_{j+1}I+[p_j,p_j]$, descending to $j=0$.
+For $P(r,b)=\sum_{u=0}^m P_u(b)r^u$, first form the Horner value
+of each $P_u$ on $I$, then use those intervals as the coefficients
+of descending Horner in the interval for $r$. Denote these fixed
+finite expressions by $\mathfrak H(P;I)$ and $\mathfrak H(P;R,I)$,
+respectively. Induction using (23.4) proves containment of the exact
+polynomial values for every argument in the intervals.
+
+Starting with $I_i^{(0)}=[L_i,U_i]$, define exactly $400$ dyadic
+refinements. If $I_i^{(j)}=[l,u]$ and $z=(l+u)/2$, set
+
+$$
+I_i^{(j+1)}=
+\begin{cases}
+[l,z],&F_J(l)F_J(z)<0,\\
+[z,u],&F_J(z)F_J(u)<0.
+\end{cases}
+\quad(0\le j<400).
+\tag{23.5}
+$$
+
+The finite guards for this rule are $F_J(z)\ne0$ at every one of its
+$2000$ midpoints and opposite nonzero endpoint signs at every step.
+Let $I_i=I_i^{(400)}$ and form
+
+$$
+\begin{gathered}
+A_i=\mathfrak H(a_J;I_i),\qquad C_i=\mathfrak H(c_J;I_i),\qquad
+\mathcal R_i=-C_i/A_i,\\
+\mathcal D_i=\mathfrak H(\overline D;\mathcal R_i,I_i),\qquad
+\mathcal N_i=\mathfrak H(\overline N_p;\mathcal R_i,I_i),\qquad
+\mathcal P_i=\mathcal N_i/(I_i\mathcal D_i).
+\end{gathered}
+\tag{23.6}
+$$
+
+The factor $I_i$ in the last denominator is essential:
+$p=\overline N_p/(b\overline D)$ in the original model.
+
+**Lemma 23.2 (All guarded lift bounds).** Every refinement (23.5) is
+well defined, retains its unique root, and has final width
+$1/(10^8 2^{400})$. In (23.6), $0\notin A_i$, $0\notin\mathcal D_i$
+and $0\notin I_i$ for all five labels. The following are strict
+rational enclosures. An entry $(u,v)/10^k$ means that the entire
+corresponding interval is contained in the indicated open interval.
+
+| $i$ | $q_i$ | $\mathcal R_i$ | Sign of every element of $\mathcal D_i$ | $\mathcal P_i$ |
+| --- | --- | --- | --- | --- |
+| 1 | 4632607 | $(4749917,4749918)/10^8$ | $+$ | $(-533512131,-533512130)/10^6$ |
+| 2 | 12856673 | $(89953167,89953168)/10^8$ | $-$ | $(-10890382,-10890381)/10^6$ |
+| 3 | 64878432 | $(121975351,121975352)/10^8$ | $-$ | unrestricted |
+| 4 | 90481370 | $(-39521073,-39521072)/10^8$ | $-$ | unrestricted |
+| 5 | 2515351400 | $(-2094185026,-2094185025)/10^8$ | $-$ | unrestricted |
+
+Here unrestricted means only that no numerical bound for
+$\mathcal P_i$ is asserted in that table entry.
+
+Proof. Evaluate $F_J$ by rational Horner at the midpoints defined in
+(23.5). At each of the $400$ refinements for each label its value is
+nonzero; exactly one of the two displayed products is negative.
+These are finite rational inequalities determined by the Section 22
+coefficient array and (23.3), (23.5). The unique root is in the selected
+half by the intermediate-value theorem and Lemma 23.1. The width is
+halved each time.
+
+For completeness the rational comparisons defining the second table
+can be expressed without approximate algebraic arguments. If the
+$r$ entry is $(u_i,v_i)/10^8$, the exact endpoint relations are
+
+$$
+\begin{gathered}
+0\notin A_i,\qquad
+u_i/10^8<\inf\mathcal R_i\le\sup\mathcal R_i<v_i/10^8,\\
+\inf\mathcal D_1>0,\qquad
+\sup\mathcal D_i<0\quad(2\le i\le5),\\
+-533512131/10^6<\inf\mathcal P_1
+ \le\sup\mathcal P_1<-533512130/10^6,\\
+-10890382/10^6<\inf\mathcal P_2
+ \le\sup\mathcal P_2<-10890381/10^6.
+\end{gathered}
+\tag{23.7}
+$$
+
+Substitution of (22.3), (21.14) in the finite descending Horner
+recurrences, with products and quotients as in (23.4), gives these
+relations by rational endpoint arithmetic. In particular the quotient
+by $A_i$ is guarded before forming $\mathcal R_i$, and the displayed
+$\mathcal D_i$ signs guard the last quotients; all $I_i$ are positive.
+These formulas determine every rational endpoint even though their
+large numerators and denominators need not be expanded. The
+containment induction for (23.4) consequently places the exact
+$\rho_i=-c_J(\beta_i)/a_J(\beta_i)$, $\overline D(\rho_i,\beta_i)$
+and the lifted response
+$\overline N_p(\rho_i,\beta_i)/(\beta_i\overline D(\rho_i,\beta_i))$
+in the displayed enclosures. ∎
+
+For $i=1,2$ define the complete triples
+
+$$
+\begin{gathered}
+\rho_i=-c_J(\beta_i)/a_J(\beta_i),\qquad \tau_i=\rho_i/\beta_i,\\
+P_i^J=\begin{pmatrix}
+\rho_i&\beta_i\\
+\rho_i(1-\rho_i)/\beta_i&1-\rho_i
+\end{pmatrix},\qquad
+ d_i^J=-C_0(\tau_i,\beta_i)/D(\tau_i,\beta_i),\\
+g_i^J(s)=\sum_{k=0}^3
+ \frac{C_k(\tau_i,\beta_i)}{D(\tau_i,\beta_i)}
+ \prod_{\substack{0\le l\le3\\l\ne k}}\frac{s-l}{k-l},\qquad
+\mathcal W_i^J=(P_i^J,g_i^J,d_i^J).
+\end{gathered}
+\tag{23.8}
+$$
+
+These definitions specify each entire real gain and its own real drift,
+rather than only projected coordinates or selected samples. The two
+$\rho_i$ intervals lie in $(0,1)$ and the $\beta_i$ intervals are
+positive. Their $D$ signs are respectively $+$ and $-$, because
+$D(\tau_i,\beta_i)=\overline D(\rho_i,\beta_i)/\beta_i^2$.
+Equations (21.4)–(21.5) therefore make both triples actual strict
+regular complete worlds. Their gains are nonzero by their unequal
+clock-zero and clock-one readings. The two disjoint source boxes give
+distinct complete worlds. For the remaining three roots, Lemma 23.2
+gives respectively $\rho_3>1$, $\rho_4<0$, $\rho_5<0$; each violates
+the original strict source condition.
+
+## 24. Complete augmented-J critical classification and the nonnegative-p consequence
+
+The positive exceptional factor $8b-1$ must be treated before the
+regular classification. Put
+
+$$
+S_*(r)=438272r^4-931328r^3+540800r^2-50728r-853.
+\tag{24.1}
+$$
+
+The exact specialization relations, with the gcd monic in $\mathbb Q[r]$,
+are
+
+$$
+\begin{gathered}
+\gcd\bigl(E_0(r,1/8),E_1(r,1/8),E_2(r,1/8)\bigr)
+       =\frac{S_*(r)^2}{438272^2},\\
+D(8r,1/8)=\frac{15}{4096}S_*(r),\qquad
+N_p(8r,1/8)-24D(8r,1/8)=0.
+\end{gathered}
+\tag{24.2}
+$$
+
+They follow by substituting $b=1/8$ in the coefficient definitions
+(21.6)–(21.8), (2.5) and applying rational polynomial division (22.6)
+with variable $r$. In particular every simultaneous minor zero on
+$b=1/8$ has $D=0$. This exceptional branch supplies no regular critical
+world. Its regular worlds have $p=24$.
+
+**Theorem 24.1 (Entire strict augmented-J critical locus).** For every
+actual strict complete world $W\in\mathcal H$,
+
+$$
+\operatorname{rank}d\Psi_J(W)<2
+\quad\Longleftrightarrow\quad
+ W\in\{\mathcal W_1^J,\mathcal W_2^J\}.
+\tag{24.3}
+$$
+
+Both worlds are regular and have negative $p$; more precisely
+
+$$
+\begin{aligned}
+-533512131/10^6&<p(\mathcal W_1^J)<-533512130/10^6,\\
+-10890382/10^6&<p(\mathcal W_2^J)<-10890381/10^6.
+\end{aligned}
+\tag{24.4}
+$$
+
+Proof. Suppose first that $D(W)\ne0$ and the rank is less than two.
+Lemma 21.2 makes its source a common zero of $E_0,E_1,E_2$.
+Each fixed matrix (21.12), specialized at this source, annihilates
+
+$$
+(r^{29},r^{28},\ldots,r,1)^{\mathsf T}.
+\tag{24.5}
+$$
+
+The column is nonzero, and the row evaluations are the corresponding
+shifted $E_0,E_k$, all zero. Thus $R_1(b)=R_2(b)=0$, including any
+specialized leading-degree drop. The univariate gcd identity (22.1)
+then forces one of its displayed factors to vanish. For $b>0$ the
+factors $b$, $5b+2$ and $b^2+8b+4$ are positive. The sole remaining
+positive exceptional branch $b=1/8$ has already been excluded for
+regular worlds by (24.2). Hence $F_J(b)=0$.
+
+Lemma 23.1 gives exactly the five possibilities $b=\beta_i$.
+All specialization guards in (22.4) hold at every such root, so
+Lemma 22.2 forces $r=\rho_i$. Three violate $0<r<1$ by Lemma 23.2.
+The two surviving strict sources have $D\ne0$ and their unique
+whole-world lifts are exactly (23.8), by the original correspondence
+(21.4). This proves necessity on the regular parent.
+
+Conversely Lemma 22.2 makes all three $E_i$ vanish at each surviving
+source. Its $D\ne0$, strictness and actual complete-world lift were
+proved after (23.8). Lemma 21.2 therefore gives rank less than two
+at both $\mathcal W_i^J$. Lemma 23.2 gives (24.4).
+
+Finally $D=0$ is equivalent to $\Lambda=0$ at a strict source by
+(2.6). At every such actual world [SIII], Theorem 13.1, gives rank
+two for the same $\Psi_J$ on the full analytic parent. This includes
+both entire singular lines and every real drift; it is not obtained
+by continuing the regular quotient through its zero denominator.
+It rules out any further singular critical world and completes
+(24.3). ∎
+
+**Corollary 24.2 (Full-parent rank at every nonnegative fifth response).**
+For every actual strict world $W\in\mathcal H$ with $p(W)\ge0$,
+
+$$
+\operatorname{rank}d(p,v,a)_W=2.
+\tag{24.6}
+$$
+
+This includes every complete world, selected or unused, in every
+entire child $C(p,v)$ with $p\ge0$.
+
+Proof. The two worlds in (24.3) have strictly negative $p$ by
+(24.4), so neither can be $W$. The differential has two-dimensional
+domain and therefore rank at most two. The theorem excludes rank
+less than two, proving (24.6). ∎
+
+In particular, let $W_1$ be the exact first $M$-critical world of
+SVI, Definition 13.1 and Theorem 13.3, and put
+$y_1=(p(W_1),v(W_1))$. Its exact algebraic source has
+
+$$
+\begin{gathered}
+0.0084901253<r(W_1)<0.0084901254,\qquad
+0.0084574469<b(W_1)<0.0084574470,\qquad D(W_1)\ne0,\\
+690.595905<p(W_1)<690.595906
+\end{gathered}
+\tag{24.7}
+$$
+
+by SVI, Lemma 13.2. These finite decimals denote exact rational
+endpoints; $W_1$ and $y_1$ retain their algebraic definitions there.
+Every $W\in C(y_1)$ has the same positive $p(W_1)$, so (24.6) applies
+to every such world. In particular there is no different regular
+rank-drop companion of the kind in SVI, Theorem 19.3(b), at this
+base. This includes every unused or singular companion in that entire
+child.
+
+The regular proof divides only by $b>0$, $D\ne0$, fixed nonzero
+interpolation-node differences, and the guarded algebraic units in
+(22.4), (23.6). It divides by no drift, $d-24$, gain sample, leading
+gain coefficient, gain-root difference or auxiliary response. Zero
+drift, lower gain degrees, sampled zeros, repeated roots, arbitrary
+gain signs and all unused strata therefore remain in its domain.
+The singular part is covered separately on the full parent by SIII.
+
+Rank two yields a locally injective two-coordinate submap near each
+world, by the inverse-function theorem. It does not identify worlds
+in different such neighborhoods. In particular (24.6) alone does not
+decide whether a child contains distinct worlds with equal $a$.
+The independently selected $J$ and $M$ pairs in (1.2) still use the
+same entire child, may share endpoints, and may have different common
+terminal values. The global existence-or-exclusion question (1.2)
+remains unresolved.
+
+The model correspondence in (21.3)–(21.5) is O, Definitions 1.1–1.3
+and Theorem 2.1, with O's sixth-$M$ response identified with $v$.
+The regular circuit and whole-gain reconstruction are (2.5)–(2.7);
+the full singular supplier is SIII, Theorem 13.1. Fixed-node
+interpolation is the classical distinct-node formula cited in
+Section 11, Berrut–Trefethen, §2. The fixed Sylvester construction
+and subresultant gcd criterion are classical; see Basu, Pollack and
+Roy, *Algorithms in Real Algebraic Geometry*, second edition,
+Chapter 8, [DOI 10.1007/3-540-33099-2](https://doi.org/10.1007/3-540-33099-2),
+and the same criterion in SVI, Lemma 12.3. Sturm's real-root theorem
+and sign variation are used with the full chain (23.2); see the
+same book, Chapters 2 and 8. The source-specific factor (22.1),
+its guarded lifts and the five-root filtering give the complete
+original-model critical locus (24.3).
+
+## 追加锚（本行以下为增补区）
