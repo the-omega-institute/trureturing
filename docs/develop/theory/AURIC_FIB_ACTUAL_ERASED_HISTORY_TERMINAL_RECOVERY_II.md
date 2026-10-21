@@ -2915,3 +2915,571 @@ not solve the minimax problem constrained to unital decoders. The
 recovery objective remains (141.1).
 
 ## 追加锚（本行以下为增补区）
+
+## 153. The complete second-horizon complex decoder fiber
+
+Here $\Phi=\Phi_{-1/2}$ and the objective is exactly [TR, Definition
+118.1]: one common complex CPTP decoder, fixed before the unknown
+qutrit density, with the identity target and half trace norm. The
+input ranges over all complex pure and mixed densities. The map has
+only the terminal qutrit as input. In matrix coordinates,
+
+$$
+\Phi(X)=\begin{pmatrix}
+x_{00}&-x_{01}/2&0\\
+-x_{10}/2&(x_{11}+3x_{22})/4&0\\
+0&0&(3x_{11}+x_{22})/4
+\end{pmatrix},\qquad
+e(\mathcal R)=\max_{\rho\in\mathsf D_3}
+\tfrac12\|\mathcal R\Phi(\rho)-\rho\|_1.
+\tag{153.1}
+$$
+
+All parameters in this appendix are the coordinates of the unique
+eleven-variable root of [TR, (119.4), (119.7), Lemma 120.1]. In
+particular they are distinct from the positive-parameter root of
+§§128–152. Put $k=\eta/a$. The reused root relations and strict
+domains give
+
+$$
+ab=\eta^2,\qquad \eta=ka,\qquad b=k^2a,\qquad
+0<a,b,c<1,\quad k>0,\quad L>0.
+\tag{153.2}
+$$
+
+Theorem 118.2 of [TR] supplies $\min e=L$; its displayed decoder
+$\mathcal R_*$ and composite $\mathcal C_*=\mathcal R_*\Phi$ are
+[TR, (121.2), (121.5)]. Its all-density upper bound and unrestricted
+lower bound are [TR, Proposition 122.2, Theorem 125.1]. These value
+and root results are used without another isolation or upper-bound
+argument.
+
+Use output-first coordinates $|ij\rangle=|i\rangle_{\rm out}
+\otimes|j\rangle_{\rm in}$, $E_{ij}=|i\rangle\langle j|$, and
+
+$$
+J_{\mathcal R}=\sum_{i,j}\mathcal R(E_{ij})\otimes E_{ij},\qquad
+\operatorname{Tr}[T\mathcal R(X)]
+=\operatorname{Tr}[(T\otimes X^{\mathsf T})J_{\mathcal R}].
+\tag{153.3}
+$$
+
+Thus CPTP means $J\succeq0$ and
+$\operatorname{Tr}_{\rm out}J=I$. The transpose in (153.3) is the
+ordinary transpose, including for complex $X$.
+
+**Theorem 153.1 (Every complex optimizer).** Let
+
+$$
+B=\big[\,|00\rangle-k|11\rangle,\ |20\rangle,\ |21\rangle,
+\ |12\rangle,\ |22\rangle\,\big],
+\tag{153.4}
+$$
+
+and, for $z=(z_1,z_2,z_3,z_4)\in\mathbb C^4$, set
+
+$$
+H(z)=\begin{pmatrix}
+a&0&0&z_1&z_2\\
+0&1-a&0&z_3&0\\
+0&0&1-b&z_4&kz_1\\
+\overline z_1&\overline z_3&\overline z_4&c&0\\
+\overline z_2&0&k\overline z_1&0&1-c
+\end{pmatrix}.
+\tag{153.5}
+$$
+
+A complex CPTP map $\mathcal R$ is optimal if and only if there is a
+unique $z\in\mathbb C^4$ such that
+
+$$
+J_{\mathcal R}=BH(z)B^\dagger,\qquad H(z)\succeq0.
+\tag{153.6}
+$$
+
+The condition is joint and includes every singular boundary tuple.
+Every optimizer has $\mathcal R\Phi=\mathcal C_*$ as linear maps on
+all of $M_3(\mathbb C)$. The optimizer family has real affine
+dimension eight. Its smallest containing CPTP face is the exposed
+support face of dimension sixteen described in §160; the optimizer
+family itself is not a CPTP face. The proof follows in §§154–160.
+
+## 154. Individual equality in the public contact certificate
+
+The public contacts are [TR, (123.1)–(123.5)]. They give rank-one
+projectors $T_m=f_mf_m^\dagger$, unit vectors $f_m$, pure densities
+$P_m$, and strictly positive weights $w_m$ summing to one. The index
+$m=(r,j,\ell)$ includes both contacts $r=e,i$ and their nine phase
+pairs; repeated edge pairs represent the same three physical inputs.
+With $\omega=e^{2\pi i/3}$ these phases are
+$U_{j\ell}=\operatorname{diag}(1,\omega^j,\omega^\ell)$.
+Equations (124.2), (124.9), (124.14) and (125.6) of [TR] supply
+
+$$
+\begin{aligned}
+W&=\sum_mw_mT_m\otimes\Phi(P_m)^{\mathsf T},\qquad
+S=I\otimes Y-W\succeq0,\\
+b_{\rm test}-\operatorname{Tr}Y&=L,\qquad
+b_{\rm test}=\sum_mw_m\operatorname{Tr}(T_mP_m),\\
+S&=\tau\bigl(b|00\rangle\langle00|
++\eta|00\rangle\langle11|+\eta|11\rangle\langle00|
++a|11\rangle\langle11|\bigr)\\
+&\quad+s_{10}|10\rangle\langle10|
++s_{01}|01\rangle\langle01|+s_{02}|02\rangle\langle02|,
+\end{aligned}
+\tag{154.1}
+$$
+
+where $\tau,s_{10},s_{01},s_{02}>0$. The precise slack bounds are
+[TR, (124.13)]. All unlisted entries of $S$ vanish.
+
+**Lemma 154.1 (Saturation before averaging).** For any complex CPTP
+optimizer, $SJ_{\mathcal R}=0$ and
+
+$$
+[\mathcal R\Phi(P_m)-\mathcal C_*(P_m)]f_m=0
+\quad\text{for every indexed contact }m.
+\tag{154.2}
+$$
+
+*Proof.* Fix the arbitrary optimizer and put
+$A_m=P_m-\mathcal R\Phi(P_m)$,
+$d_m=\operatorname{Tr}(T_mA_m)$. Each $A_m$ is Hermitian trace zero,
+so
+
+$$
+d_m\le\tfrac12\|A_m\|_1\le L,\qquad
+\sum_mw_md_m=b_{\rm test}-\operatorname{Tr}(WJ_{\mathcal R})
+=L+\operatorname{Tr}(SJ_{\mathcal R})\ge L.
+\tag{154.3}
+$$
+
+Strict positivity of every weight forces every $d_m=L$ and
+$\operatorname{Tr}(SJ_{\mathcal R})=0$. For two PSD matrices this
+trace equality implies their product is zero: the PSD matrix
+$S^{1/2}JS^{1/2}$ has zero trace, whence
+$J^{1/2}S^{1/2}=0$ and $SJ=0$.
+Also $\lambda_{\max}(A_m)\le\|A_m\|_1/2\le L$. Therefore
+$LI-A_m\succeq0$ and its zero quadratic form on $f_m$ implies
+$A_mf_m=Lf_m$. The public decoder $\mathcal R_*$ saturates the same
+effects by [TR, (123.3)] and their phase conjugates. Subtraction
+proves (154.2). This argument has imposed no symmetry or reality
+condition on $\mathcal R$. $\square$
+
+## 155. All supported TP matrices and their observable action
+
+The block in (154.1) has rank one because $ab=\eta^2$; its other
+three positive scalar entries give $\operatorname{rank}S=4$.
+The five independent columns (153.4) span $\ker S$, and
+
+$$
+B^\dagger B=\operatorname{diag}(1+k^2,1,1,1,1).
+\tag{155.1}
+$$
+
+Thus a PSD matrix with $SJ=0$ is uniquely $J=BHB^\dagger$ with
+$H\succeq0$. Indeed $B^+=(B^\dagger B)^{-1}B^\dagger$ gives
+$H=B^+J(B^+)^\dagger$, and reconstructs $J$ on its supported
+range. Conversely congruence by $B$ preserves positivity, and its
+injectivity gives $\operatorname{rank}J=\operatorname{rank}H$ even
+when $H$ is singular.
+
+For a general Hermitian $H$, use zero-based indices $0,\ldots,4$.
+The output partial trace is
+
+$$
+\operatorname{Tr}_{\rm out}(BHB^\dagger)=\begin{pmatrix}
+H_{00}+H_{11}&H_{12}&H_{14}\\
+H_{21}&k^2H_{00}+H_{22}&H_{24}-kH_{03}\\
+H_{41}&H_{42}-kH_{30}&H_{33}+H_{44}
+\end{pmatrix}.
+\tag{155.2}
+$$
+
+In particular TP requires $H_{24}=kH_{03}$, without a conjugate
+on $H_{03}$. Hermiticity supplies the conjugate equation.
+All supported TP matrices therefore have exactly the form
+
+$$
+H=\begin{pmatrix}
+t&U&V&z_1&z_2\\
+\overline U&1-t&0&z_3&0\\
+\overline V&0&1-k^2t&z_4&kz_1\\
+\overline z_1&\overline z_3&\overline z_4&d&Q\\
+\overline z_2&0&k\overline z_1&\overline Q&1-d
+\end{pmatrix},
+\tag{155.3}
+$$
+
+where $t,d$ are real and all other displayed variables are complex;
+positivity is still required. Put
+$q_1=(x_{11}+3x_{22})/4$, $q_2=(3x_{11}+x_{22})/4$.
+Extracting the Choi entries in (153.3) gives the following composite
+for every complex matrix $X$, with no Hermiticity restriction on $X$:
+
+$$
+\mathcal R\Phi(X)=\begin{pmatrix}
+tx_{00}&ktx_{01}/2&Ux_{00}-Vx_{01}/2\\
+ktx_{10}/2&k^2tq_1+dq_2&-kVq_1+Qq_2+kUx_{10}/2\\
+\overline Ux_{00}-\overline Vx_{10}/2&
+-k\overline Vq_1+\overline Qq_2+k\overline Ux_{01}/2&
+(1-t)x_{00}+(1-k^2t)q_1+(1-d)q_2
+\end{pmatrix}.
+\tag{155.4}
+$$
+
+The four complex completion coordinates do not occur in this map.
+
+## 156. Exact phase isolation for every optimizer
+
+The public contact populations are $(p_e,0,1-p_e)$ and
+$(p_i,x_i,1-p_i-x_i)$; all their occupied populations are positive.
+At either phase-zero contact set
+$B_r=LI+\mathcal C_*(P_r)-P_r$ as in [TR, (121.6), (123.1)].
+The public contact lemma gives $B_r\succeq0$ of rank two, with
+$T_r=\operatorname{adj}(B_r)/\operatorname{Tr}\operatorname{adj}(B_r)$.
+At the edge the $11$ entry is $L+h_1>0$, whereas the singular $02$
+block has nonzero offdiagonal $-\sqrt{p_e(1-p_e)}$. Its unit kernel
+vector is consequently $f_e=(f_{e0},0,f_{e2})^{\mathsf T}$ with both
+displayed coordinates nonzero.
+
+At the interior let $p=p_i$, $x=x_i$, $y=1-p_i-x_i$,
+$\kappa=1-\eta/2>0$, and $d_j=(B_i)_{jj}\ge0$. The public
+adjugate entries [TR, (123.2)] give
+
+$$
+\begin{aligned}
+(\operatorname{adj}B_i)_{01}&=\sqrt{px}(y+\kappa d_2)>0,\\
+(\operatorname{adj}B_i)_{02}&=\sqrt{py}(d_1+\kappa x)>0,\\
+(\operatorname{adj}B_i)_{12}&=\sqrt{xy}(d_0+\kappa p)>0.
+\end{aligned}
+\tag{156.1}
+$$
+
+Since this adjugate is positive rank one, every coordinate of its
+unit range vector $f_i$ is nonzero. These facts concern the fixed
+effects, not a reality assumption on the unknown decoder.
+
+For $U_{0\ell}=\operatorname{diag}(1,1,\omega^\ell)$, the channel
+erases the varied coherences, so $\Phi(U_{0\ell}P_rU_{0\ell}^\dagger)
+=\Phi(P_r)$. Thus the difference
+$D_r=\mathcal R\Phi(P_r)-\mathcal C_*(P_r)$ is common to these
+three phase contacts. Lemma 154.1 annihilates each $U_{0\ell}f_r$.
+The exact finite character sums are
+
+$$
+\frac13\sum_{\ell=0}^2U_{0\ell}f_r=(f_{r0},f_{r1},0)^{\mathsf T},
+\qquad
+\frac13\sum_{\ell=0}^2\omega^{-\ell}U_{0\ell}f_r=f_{r2}e_2.
+\tag{156.2}
+$$
+
+At the edge these show that $D_e$ annihilates $e_0,e_2$. It is
+Hermitian trace zero; only its $11$ entry could remain, and its trace
+makes that zero too. Hence $D_e=0$. Successive entries of (155.4)
+give
+
+$$
+\begin{aligned}
+p_e(t-a)&=0,&p_eU&=0,\\
+\frac{1-p_e}{4}[3k^2(t-a)+d-c]&=0,&
+\frac{1-p_e}{4}(Q-3kV)&=0.
+\end{aligned}
+\tag{156.3}
+$$
+
+Therefore $t=a$, $U=0$, $d=c$, $Q=3kV$.
+At the interior keep the $01$ phase zero and vary only $\ell$.
+After these edge equalities, the common difference is exactly
+
+$$
+D_i=\begin{pmatrix}
+0&0&-V\sqrt{p_ix_i}/2\\
+0&0&2kx_iV\\
+-\overline V\sqrt{p_ix_i}/2&2kx_i\overline V&0
+\end{pmatrix}.
+\tag{156.4}
+$$
+
+The second sum in (156.2), with $f_{i2}\ne0$, gives $D_ie_2=0$.
+Since $p_i,x_i>0$, (156.4) forces $V=0$, hence $Q=0$. This proves
+for every complex optimizer the eight real conditions
+$t=a,d=c,U=V=Q=0$, without averaging that decoder. Substitution
+in (155.4) proves on all of $M_3(\mathbb C)$ that
+
+$$
+\mathcal R\Phi(X)=\mathcal C_*(X)=\begin{pmatrix}
+ax_{00}&\eta x_{01}/2&0\\
+\eta x_{10}/2&bq_1+cq_2&0\\
+0&0&(1-a)x_{00}+(1-b)q_1+(1-c)q_2
+\end{pmatrix}.
+\tag{156.5}
+$$
+
+## 157. The joint PSD domain, converse and singular boundaries
+
+The preceding equalities turn (155.3) into exactly (153.5), proving
+necessity in Theorem 153.1. Conversely, every $H(z)\succeq0$ gives
+a PSD $BH(z)B^\dagger$ with partial trace $I$ by (155.2). Formula
+(155.4) gives (156.5). The reused all-density value theorem then
+gives $e(\mathcal R)=L$. The left inverse of $B$ makes $H$, and
+hence the four coordinates $z$, unique. This proves both directions
+of (153.6), including singular matrices.
+
+An explicit scalar version keeps all PSD boundary points. Partition
+$H=\begin{pmatrix}D&F\\F^\dagger&E\end{pmatrix}$ with
+
+$$
+D=\operatorname{diag}(a,1-a,1-b)>0,\quad
+F=\begin{pmatrix}z_1&z_2\\z_3&0\\z_4&kz_1\end{pmatrix},\quad
+E=\operatorname{diag}(c,1-c).
+\tag{157.1}
+$$
+
+The invertible matrix
+$T=\begin{pmatrix}I_3&-D^{-1}F\\0&I_2\end{pmatrix}$ satisfies
+$T^\dagger HT=\operatorname{diag}(D,K)$, where
+
+$$
+\begin{aligned}
+K&=\begin{pmatrix}A&C_0\\\overline C_0&B_0\end{pmatrix},\\
+A&=c-\frac{|z_1|^2}{a}-\frac{|z_3|^2}{1-a}
+       -\frac{|z_4|^2}{1-b},\\
+B_0&=1-c-\frac{|z_2|^2}{a}-\frac{k^2|z_1|^2}{1-b},\\
+C_0&=-\frac{\overline z_1z_2}{a}
+       -\frac{k\overline z_4z_1}{1-b}.
+\end{aligned}
+\tag{157.2}
+$$
+
+Consequently the exact joint domain is
+
+$$
+\boxed{A\ge0,\qquad B_0\ge0,\qquad AB_0\ge|C_0|^2.}
+\tag{157.3}
+$$
+
+Only the fixed positive entries of $D$ have been inverted. No
+division by $A$, $B_0$, or a potentially zero determinant is involved.
+Thus (157.3) includes $A=0$, $B_0=0$ and $\det K=0$ with their
+necessary joint restrictions. Separate coordinate bounds cannot
+replace it.
+
+## 158. Erased action, common recovery and affine dimensions
+
+The population transformation on $E_{11},E_{22}$ has determinant
+$-1/2$, and the $01,10$ multipliers are nonzero. Therefore
+
+$$
+\begin{aligned}
+\operatorname{im}\Phi
+&=\operatorname{span}_{\mathbb C}\{E_{00},E_{11},E_{22},E_{01},E_{10}\},\\
+\ker\Phi
+&=\operatorname{span}_{\mathbb C}\{E_{02},E_{20},E_{12},E_{21}\}.
+\end{aligned}
+\tag{158.1}
+$$
+
+Every optimizer has the following fixed action:
+
+$$
+\begin{aligned}
+\mathcal R(E_{00})&=aE_{00}+(1-a)E_{22},\\
+\mathcal R(E_{11})&=bE_{11}+(1-b)E_{22},\\
+\mathcal R(E_{22})&=cE_{11}+(1-c)E_{22},\\
+\mathcal R(E_{01})&=-\eta E_{01},\qquad
+\mathcal R(E_{10})=-\eta E_{10}.
+\end{aligned}
+\tag{158.2}
+$$
+
+Its entire remaining action, extracted from (153.5), is
+
+$$
+\begin{aligned}
+\mathcal R(E_{02})&=z_1E_{01}+z_2E_{02}+z_3E_{21},\\
+\mathcal R(E_{12})&=-kz_1E_{11}-kz_2E_{12}+z_4E_{21}+kz_1E_{22},\\
+\mathcal R(E_{20})&=\mathcal R(E_{02})^\dagger,\qquad
+\mathcal R(E_{21})=\mathcal R(E_{12})^\dagger.
+\end{aligned}
+\tag{158.3}
+$$
+
+The freedom is exactly on the erased units and remains subject to
+(157.3). In particular
+
+$$
+\operatorname{Opt}_{-1/2}
+=\{\mathcal R\ {\rm CPTP}:\mathcal R\Phi=\mathcal C_*\}.
+\tag{158.4}
+$$
+
+The forward inclusion was proved in §156. The reverse inclusion
+uses the common all-density error $L$, so the equality here is on
+the whole matrix algebra, not just on the contacts.
+
+Hermitian $5\times5$ matrices have real dimension 25. The equations
+(155.2) have rank nine: three independent real diagonal conditions
+and three independent complex offdiagonal conditions. The supported
+TP affine hull therefore has dimension sixteen. Its point
+$H_*=\operatorname{diag}(a,1-a,1-b,c,1-c)$ is positive definite,
+so positivity leaves a relative open neighborhood there.
+The observable parameters $t,d,U,V,Q$ in (155.4) comprise eight
+real coordinates. They can all be recovered from that linear map:
+its values on $E_{00}$ identify $t,U$, its $02$ entry on $E_{01}$
+identifies $V$, and its $11,12$ entries on $E_{22}$ then identify
+$d,Q$. The observable map thus has real rank eight, with precisely
+the four complex $z$ directions as kernel. In the optimizer section
+the dependence on $z$ is injective, and $H_*>0$ permits an open
+neighborhood of $z=0$ in $\mathbb C^4$. Its real affine dimension
+is therefore exactly eight. Also $\operatorname{rank}J
+=\operatorname{rank}H\le5$ and $\operatorname{rank}J_*=5$.
+
+## 159. Closed slices, covariance and nonunitality
+
+If only $z_1$ is nonzero, permutation separates the blocks $(0,3)$,
+$(2,4)$ and the positive scalar $1-a$. Their determinants give
+
+$$
+|z_1|^2\le\min\{ac,(1-b)(1-c)/k^2\}.
+\tag{159.1}
+$$
+
+If only $z_2$ is nonzero, the only nonscalar block is $(0,4)$, so
+the exact closed slice is
+
+$$
+|z_2|^2\le a(1-c).
+\tag{159.2}
+$$
+
+The circle in (159.2) has a singular $2\times2$ block and gives
+legal rank-four completions, illustrating the included PSD boundary.
+For explicit nonzero examples the public box [TR, (119.7)] implies
+
+$$
+\frac9{10}<a<\frac{19}{20},\quad 0<b<\frac25,\quad
+\frac25<c<\frac12,\quad 0<k^2=b/a<\frac49.
+\tag{159.3}
+$$
+
+The tuple $(z_1,z_2,z_3,z_4)=(1/100,0,0,0)$ has strict determinant
+margins
+
+$$
+ac-10^{-4}>\frac9{25}-\frac1{10000}>0,\qquad
+(1-b)(1-c)-k^2 10^{-4}>\frac3{10}-\frac1{22500}>0.
+\tag{159.4}
+$$
+
+It therefore has $H>0$. So does $(0,1/100,0,0)$, since
+$a(1-c)-10^{-4}>9/20-1/10000>0$.
+
+Covariance here means
+$\mathcal R\operatorname{Ad}_U=\operatorname{Ad}_U\mathcal R$
+for every diagonal unitary $U$ and every input matrix. The six
+offdiagonal matrix units have distinct torus characters
+$u_i\overline u_j$, whereas diagonals have character zero.
+In (158.3), $E_{02}\mapsto E_{01}$ forces $z_1=0$,
+$E_{02}\mapsto E_{21}$ forces $z_3=0$, and
+$E_{12}\mapsto E_{21}$ forces $z_4=0$. Conversely, if these
+coordinates vanish, every offdiagonal unit maps into its own
+character space and every diagonal unit remains diagonal.
+Thus the entire covariant optimizer family is exactly
+
+$$
+z_1=z_3=z_4=0,\qquad |z_2|^2\le a(1-c).
+\tag{159.5}
+$$
+
+The $z_1=1/100$ example is noncovariant; the $z_2=1/100$ example
+is covariant. The complex disk (159.5) is a proper subfamily of the
+eight-dimensional family, not the positive-parameter disk of §139.
+
+Finally $\Phi(I)=I$. Formula (156.5) therefore gives for every
+optimizer
+
+$$
+\mathcal R(I)=\operatorname{diag}(a,b+c,3-a-b-c)\ne I,
+\tag{159.6}
+$$
+
+because $a<1$. All these second-horizon optimizers are nonunital.
+
+## 160. The exposed support face and the nonface optimizer family
+
+On the CPTP set $\operatorname{Tr}(SJ)\ge0$, so
+
+$$
+F_S=\{J\succeq0:\operatorname{Tr}_{\rm out}J=I,
+\ \operatorname{Tr}(SJ)=0\}
+\tag{160.1}
+$$
+
+is an exposed face. The zero trace condition is equivalent to $SJ=0$,
+so §155 describes its whole supported TP section. The dimension
+calculation and $H_*>0$ in §158 give $\dim_{\mathbb R}F_S=16$.
+It is the smallest CPTP face containing $J_*$, and hence containing
+the optimizer set. Indeed, for any $J\in F_S$, sufficiently small
+$0<\lambda<1$ makes $J_*-\lambda J\succeq0$: in supported
+coordinates this is $H_*-\lambda H\succeq0$. Then
+
+$$
+J_*=\lambda J+(1-\lambda)
+\frac{J_*-\lambda J}{1-\lambda}
+\tag{160.2}
+$$
+
+is a convex decomposition into CPTP elements of $F_S$. Every CPTP
+face containing $J_*$ must contain $J$. Since all optimizers lie in
+$F_S$ and include $J_*$, this proves the assertion.
+
+The optimizer family is convex by (153.5)–(153.6), but is not a
+CPTP face. For $\epsilon=1/100$ define
+
+$$
+H_\pm=\operatorname{diag}
+(a\pm\epsilon,\ 1-a\mp\epsilon,\ 1-b\mp k^2\epsilon,\ c,\ 1-c).
+\tag{160.3}
+$$
+
+The weakest corresponding entries are positive by (159.3):
+$a-\epsilon>89/100$, $1-a-\epsilon>1/25$,
+$1-b-k^2\epsilon>134/225$, $c>2/5$, $1-c>1/2$.
+Thus $J_\pm=BH_\pm B^\dagger$ are CPTP, supported, and have
+midpoint $J_*$. Their recovered $00$ entries are
+$(a\pm\epsilon)x_{00}$, different from (156.5), so neither is
+optimal. Their optimal midpoint disproves the face property.
+
+## 161. Source correspondence and scope of the second-horizon fiber
+
+The exact root, value, contact effects and positive slack are the
+public results [TR, §§118–125]. The passage from these premises to
+the full optimizer fiber is the supported TP calculation and the
+individual equality argument of §§154–160. The Choi criterion is
+the one attributed to [Choi][CHOI] in §145; TP is imposed separately
+by (155.2). The supporting-functional interpretation uses the same
+finite-dimensional setting of [Coutts, Girard and Watrous, Theorem
+3][CGW] already explained in [TR, §126]. The argument here proves
+the required equality and face facts directly. These references
+support the general methods, not a literature assertion of this
+particular classification; priority is unclaimed.
+
+The result concerns the original $n=2$, $s=-1/2$ all-density
+half-trace-distance problem. Original terminal decoders are obtained
+by $D=\mathcal R\circ\operatorname{Ad}_{U_0^\dagger}$ from [TR,
+(118.3)], preserving the identity target. It does not identify this
+value or fiber with the $n=3$, $q=1/4$ disk, its positive continuation,
+the zero-parameter optimizer set, or another horizon. The paired
+experiment-comparison convention in [TR, §126] uses full trace
+tolerance $2L$; it does not add a reference, history or environment
+to (153.1). No stabilized or diamond metric is substituted.
+The complete joint domain and its singular boundaries have been
+specified, without an extreme-point or full rank-stratum
+classification or a minimal supporting-witness assertion. All
+dependencies of the ordinary proof are the displayed mathematics
+and the cited public source premises; no runtime computation is a
+mathematical dependency. No physical or formal-kernel conclusion is
+asserted.
+
+## 追加锚（本行以下为增补区）
