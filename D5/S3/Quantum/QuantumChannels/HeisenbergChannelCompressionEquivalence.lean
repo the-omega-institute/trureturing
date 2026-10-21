@@ -137,7 +137,24 @@ private theorem sum_compressed_parents {n : ℕ} {X R : Type} [Fintype X] [Finty
     (hC : (∑ r, (C r)ᴴ * C r) = 1)
     (hN : ∀ r, FamilyJointlyMeasurable (N r)) :
     FamilyJointlyMeasurable (fun x b => ∑ r, (C r)ᴴ * N r x b * C r) := by
-  sorry
+  classical
+  choose G hG hm using hN
+  refine ⟨fun a => ∑ r, (C r)ᴴ * G r a * C r, ⟨?_, ?_⟩, ?_⟩
+  · intro a
+    exact Matrix.posSemidef_sum _ (fun r _ =>
+      ((hG r).1 a).conjTranspose_mul_mul_same (C r))
+  · rw [Finset.sum_comm]
+    calc
+      _ = ∑ r, (C r)ᴴ * C r := by
+        apply Finset.sum_congr rfl
+        intro r _
+        rw [← Matrix.sum_mul, ← Matrix.mul_sum, (hG r).2, Matrix.mul_one]
+      _ = 1 := hC
+  · intro x b
+    rw [Finset.sum_comm]
+    apply Finset.sum_congr rfl
+    intro r _
+    rw [← Matrix.sum_mul, ← Matrix.mul_sum, hm r x b]
 
 private theorem channels_of_compressions {d n : ℕ} (hnd : n ≤ d)
     {X : Type} [Fintype X] {Ω : X → Type} [∀ x, Fintype (Ω x)]
