@@ -1,6 +1,6 @@
 ---
 slug: kaygorodov-martin-gonzalez-viruel-2026-evolution-algebra-derivations-conjecture-5
-bibkey: kaygorodov2026evolutionsurvey
+bibkey: kaygorodov2026evolution
 doi: 10.48550/arXiv.2610.22248
 url: https://arxiv.org/abs/2610.22248v1
 triage: theorem
