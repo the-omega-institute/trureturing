@@ -8,8 +8,6 @@
 
 import Mathlib.Algebra.BigOperators.Field
 import Mathlib.Analysis.SpecificLimits.Normed
-import Mathlib.Tactic.Linarith
-import Mathlib.Tactic.Ring
 
 /-! First exit times for the simple random walk on finite subsets of the square lattice. -/
 
