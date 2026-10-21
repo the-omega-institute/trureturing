@@ -23,12 +23,16 @@ internal sealed class AlbrightKemenyEdgeDerivativeRefutationDocument : IScribeDo
             Node("claim", "Conjecture 3.5: minimality", "claim", Eqn(Call("claim"), Parenthesized(ClaimBody())),
                 "Conjecture 3.5, page 19, states verbatim: “For a given n, the derivative of Kemeny’s constant on simple graphs of order n is smallest on the path on n vertices with respect to the non-edge connecting the ends of the path. The value of this derivative is O(n³).” The proposition expresses the first sentence for connected graphs on Fin n with n ≥ 2 and a ≠ b. Both derivatives must exist at zero. The path endpoints are the elements of Fin n with values 0 and n − 1; the inequality n ≥ 2 supplies their bounds. The second sentence concerns growth of the path value and is outside this proposition.", AssessedProvenance.FromLiterature(Source)),
             Node("result", "A strict counterexample at order 23", "result", new Formula.Not(Parenthesized(ClaimBody())),
-                "Take cliques on {0,…,7} and {8,…,15}, joined by the path 0,16,17,18,19,20,21,22,8. This is a connected simple graph on Fin 23. The missing chord {0,8} has Kemeny derivative −7683669/4096 at zero, while the missing chord {0,22} of pathGraph 23 has derivative −77763/44. The difference is −4891047/45056 < 0. Grounded Green matrices give exact inverse certificates; spectral diagonalization identifies their weighted trace with the sum over nonzero characteristic roots. A rational rank-one update holds on a neighborhood of zero and yields both derivatives. Thus the universal minimality statement fails. No infinite family or asymptotic minimum is asserted.", AssessedProvenance.FromRepo(Source), DescribeRole.Theorem))));
+                "Take cliques on {0,…,7} and {8,…,15}, joined by the path 0,16,17,18,19,20,21,22,8. This is a connected simple graph on Fin 23. The missing chord {0,8} has Kemeny derivative −7683669/4096 at zero, while the missing chord {0,22} of pathGraph 23 has derivative −77763/44. The difference is −4891047/45056 < 0. Grounded Green matrices give exact inverse certificates; spectral diagonalization identifies their weighted trace with the sum over nonzero characteristic roots. A rational rank-one update holds on a neighborhood of zero and yields both derivatives. Thus the universal minimality statement fails. No infinite family or asymptotic minimum is asserted.", AssessedProvenance.FromRepo(Source), DescribeRole.Theorem,
+                new OpenProblemResolutionClaim(
+                    ProblemSlugRef.Create("albright-et-al-2023-kemeny-edge-derivative-conjecture-3-5"),
+                    ResolutionKind.Refuted)))));
 
     private static DocumentBlock Node(string id, string title, string name, Formula formula,
-        string prose, AssessedProvenance provenance, DescribeRole role = DescribeRole.Definition) =>
+        string prose, AssessedProvenance provenance, DescribeRole role = DescribeRole.Definition,
+        OpenProblemResolutionClaim? resolution = null) =>
         Describe.Lean(DescribeId.Create("ak-" + id), DeclarationHandle.Create(Prefix + name), H(title),
-            StatementSource.FromAuthor(Disp(formula)), provenance, Blocks(Paragraph(Text(prose))), role);
+            StatementSource.FromAuthor(Disp(formula)), provenance, Blocks(Paragraph(Text(prose))), role, resolution);
 
     private static Formula V(string name) => StrataLint.Scribe.FormulaDsl.Id(name);
     private static Formula Nat() => new Formula.NamedConstant(FormulaIdentifier.Create("Nat"));

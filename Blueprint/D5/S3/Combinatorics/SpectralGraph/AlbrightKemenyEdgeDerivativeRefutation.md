@@ -60,6 +60,10 @@ $$\neg (\forall n \in \mathrm{Nat},\; (2 \le n) \Rightarrow (\forall G \in \oper
 
 *Proof.* Machine-checked in Lean as `D5/S3/Combinatorics/SpectralGraph/AlbrightKemenyEdgeDerivativeRefutation.result` (`✓ std3`). ∎
 
+*Resolves.* `Problems/albright-et-al-2023-kemeny-edge-derivative-conjecture-3-5` (refuted) by `D5/S3/Combinatorics/SpectralGraph/AlbrightKemenyEdgeDerivativeRefutation.result`.
+
+<!-- scribe-open-problem-resolution-v1 {"problem_slug":"albright-et-al-2023-kemeny-edge-derivative-conjecture-3-5","declaration_gid":"D5/S3/Combinatorics/SpectralGraph/AlbrightKemenyEdgeDerivativeRefutation.result","resolution_kind":"refuted"} -->
+
 *Source.* Repository-derived.
 
 *Acknowledgement.* C. Albright; K. P. Hadaway; A. H. Pomerance; J. Jeffries; K. J. Lorenzen; A. K. Nix (2023). *On the Edge Derivative of the Normalized Laplacian with Applications to Kemeny's Constant*. DOI: [10.48550/arXiv.2211.01495](https://doi.org/10.48550/arXiv.2211.01495). URL: <https://arxiv.org/abs/2211.01495v2>.
