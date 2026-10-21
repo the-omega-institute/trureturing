@@ -913,3 +913,612 @@ $L_3$, root $L_7$, or eight-versus-nine conclusion follows from this
 bounded-region reduction.
 
 ## 追加锚（本行以下为增补区）
+
+## 10. The finite-drift full-parent response circuit
+
+**Definition 10.1 (Ambient equation and response extension).** Use the
+literal worlds, clocks, entire child and selected-pair quantifiers of
+Definition 1.1. In the open coordinate domain
+
+$$
+\Omega=\{(r,b,e):0<r<1,\ b>0,\ e\in\mathbb R\}
+$$
+
+put $c=r(1-r)/b$ and retain $j,n,T,U,\Lambda,\kappa$ from (1.7).
+The undivided parent equation is
+
+$$
+H(r,b,e)=e\Lambda+\frac{24}{5}(b-1/8)\kappa=0.
+\tag{10.1}
+$$
+
+Here $H$ is a function, distinct from the history $H_4$. Define the
+four entries of a column $G$ by
+
+$$
+G=\begin{pmatrix}G_0\\G_1\\G_2\\G_3\end{pmatrix}
+=\begin{pmatrix}-24-e\\-e/j\\(27/5-e)/T\\-e/n\end{pmatrix}.
+\tag{10.2}
+$$
+
+For every point of $\Omega$, let $g_{r,b,e}(s)$ be the single polynomial
+of degree at most three given by
+
+$$
+g_{r,b,e}(s)=\sum_{\ell=0}^3G_\ell
+ \prod_{\substack{0\le h\le3\\h\ne\ell}}
+ \frac{s-h}{\ell-h}.
+\tag{10.3}
+$$
+
+The following rows are its evaluations at the original clocks $5,6,7$:
+
+$$
+\begin{pmatrix}G_5\\G_6\\G_7\end{pmatrix}
+=\begin{pmatrix}
+-4&15&-20&10\\
+-10&36&-45&20\\
+-20&70&-84&35
+\end{pmatrix}G.
+\tag{10.4}
+$$
+
+Define an ambient analytic response extension $X=(X_0,X_1,X_2,X_3)$ by
+
+$$
+\begin{aligned}
+X_0&=24+e+(U+n)G_5,\\
+X_1&=24+e+(2U+n)G_6,\\
+X_2&=24+e+(T+2j+4r)G_7,\\
+X_3&=24+e+(3U+2n)G_7.
+\end{aligned}
+\tag{10.5}
+$$
+
+Off $H=0$ these expressions are only a rational extension for
+calculus. They assert no additional worlds. On the parent they are
+exactly $(p,v,a,m)$, with both terminal readings at clock seven on the
+same complete world.
+
+**Lemma 10.2 (Exact full-parent correspondence).** The zero set
+$\{H=0\}\subset\Omega$ is in analytic one-to-one correspondence with
+the entire strict parent $\mathcal H$ by
+
+$$
+(r,b,e)\longmapsto
+\left(\begin{pmatrix}r&b\\r(1-r)/b&1-r\end{pmatrix},
+ g_{r,b,e},24+e\right).
+\tag{10.6}
+$$
+
+This correspondence uses the coefficients of the whole polynomial,
+including zero leading coefficients, and (10.5) gives all four later
+responses without changing the original observations.
+
+Proof. This is the converse of Definition 1.2, equivalently O,
+Theorem 2.1, in the present notation. Its original-row verification can
+also be read directly from (10.2). At clocks $0,1,2,3$, the traces
+$(1,j,T,n)$ give $0,24,147/5,24$. Interpolation gives
+
+$$
+g_{r,b,e}(4)=-G_0+4G_1-6G_2+4G_3,
+\qquad
+g_{r,b,e}(4)-\frac{18-(24+e)}U=H.
+\tag{10.7}
+$$
+
+For the constant term of the second identity one uses
+
+$$
+24-\frac{162}{5T}+\frac6U
+=\frac{24}{5}(b-1/8)\kappa.
+$$
+
+Consequently the original fourth-clock response is $18$ precisely on
+$H=0$. The other responses follow from (1.10) and (10.4). If the
+constructed gain were identically zero, the original readings at clocks
+zero and one would both be $d$, contradicting $0\ne24$. Thus its
+nonzeroness follows from the original data and imposes no sample or
+leading-coefficient condition. Conversely every complete parent world
+fixes $(r,b,e)$ and all four entries (10.2), which uniquely determine
+its entire gain by (10.3).
+
+All rational denominators $b,j,n,T,U$ are positive on $\Omega$.
+Interpolation uses only the nonzero differences of the fixed nodes
+$0,1,2,3$. Hence (10.6), with four padded gain coefficients, is
+analytic; its inverse reads $r,b$ from $P$ and $e=d-24$. This also
+identifies the local parent topology and its tangent spaces with those
+of $H=0$. No division by $e$, $d$, $\Lambda$, a gain sample, a gain
+coefficient or a root difference is involved. ∎
+
+## 11. Both strict singular lines and their full tangent planes
+
+**Proposition 11.1 (Exhaustive strict singular-source classification).**
+Define
+
+$$
+\begin{aligned}
+S(r)&=438272r^4-931328r^3+540800r^2-50728r-853,\\
+A_s(r)&=64r^2-64r-1,\qquad
+B_s(r)=64r^2-72r-1.
+\end{aligned}
+\tag{11.1}
+$$
+
+Exactly two roots of $S$ lie in $(0,1)$; both are simple. Denote them
+by $r_-,r_+$, with
+
+$$
+\frac18<r_-<\frac3{20},\qquad
+\frac9{10}<r_+<\frac{11}{12}.
+\tag{11.2}
+$$
+
+The complete strict parent worlds with $\Lambda=0$ are precisely the
+two lines (10.6) with
+
+$$
+(r,b,e)=(r_-,1/8,e)\quad\hbox{or}\quad(r_+,1/8,e),
+\qquad e\in\mathbb R.
+\tag{11.3}
+$$
+
+In particular every real drift $d=24+e$ is retained on each line.
+
+Proof. Since $\kappa=2(2+5b)/(TU)>0$, equations $H=0$ and
+$\Lambda=0$ force $b=1/8$. At this width
+
+$$
+\begin{gathered}
+T=9/8,\quad U=5/4,\quad \kappa=56/15,\\
+j=-A_s/8,\quad n=-B_s/8,\qquad
+\Lambda(r,1/8)=\frac{S(r)}{15A_s(r)B_s(r)}.
+\end{gathered}
+\tag{11.4}
+$$
+
+For $0<r<1$, $A_s=-1-64r(1-r)<0$ and $B_s=A_s-8r<0$.
+Thus all these denominators are nonzero, and the singular source
+condition is exactly $S(r)=0$. This is the same quartic as O,
+Theorem 4.2; the following explicit Sturm certificate also supplies
+simplicity and the intervals needed here.
+
+Start with $S_0=S$, $S_1=S'$. For each subsequent term take the
+negative rational polynomial remainder, multiply by the positive least
+common multiple of its coefficient denominators, and divide by its
+positive integer coefficient gcd. The resulting chain is
+
+$$
+\begin{aligned}
+S_0&=S,\\
+S_1&=1753088r^3-2793984r^2+1081600r-50728,\\
+S_2&=1610816r^2-1689664r+121445,\\
+S_3&=64839740164r-26327821511,\\
+S_4&=1.
+\end{aligned}
+\tag{11.5}
+$$
+
+Every normalization after taking a negative remainder has positive
+scale, so this is a sign-preserving Sturm chain. Its endpoint signs,
+with $V$ the number of sign changes after omitting zero entries, are
+
+| $r$ | $S_0$ | $S_1$ | $S_2$ | $S_3$ | $S_4$ | $V(r)$ |
+| --- | --- | --- | --- | --- | --- | --- |
+| $0$ | $-$ | $-$ | $+$ | $-$ | $+$ | $3$ |
+| $1/8$ | $-$ | $+$ | $-$ | $-$ | $+$ | $3$ |
+| $3/20$ | $+$ | $+$ | $-$ | $-$ | $+$ | $2$ |
+| $9/10$ | $+$ | $-$ | $-$ | $+$ | $+$ | $2$ |
+| $11/12$ | $-$ | $-$ | $-$ | $+$ | $+$ | $1$ |
+| $1$ | $-$ | $-$ | $+$ | $+$ | $+$ | $1$ |
+
+The terminal constant gives $\gcd(S,S')=1$. Sturm's theorem counts
+exactly one root in each interval (11.2) and two in the whole strict
+interval. Conversely, at either root with $b=1/8$, both terms of $H$
+vanish for every real $e$. Lemma 10.2 supplies exactly one legal whole
+gain for each such triple, proving (11.3) without a regular-chart
+restriction. ∎
+
+**Lemma 11.2 (A tangent basis for every drift).** At every point of
+(11.3), the full parent is a smooth analytic surface and its tangent
+plane has the basis
+
+$$
+\partial_e,\qquad
+V=H_b\partial_r-H_r\partial_b.
+\tag{11.6}
+$$
+
+All partial derivatives here and below are taken in the independent
+ambient coordinates $(r,b,e)$, with $c=r(1-r)/b$ already substituted.
+
+Proof. At such a point $H_e=\Lambda=0$, so both vectors annihilate
+$dH$. Along $b=1/8$ the other two derivatives are
+
+$$
+H_r=e\Lambda_r,\qquad H_b=e\Lambda_b+448/25.
+\tag{11.7}
+$$
+
+At a root of $S$, (11.4) gives
+
+$$
+\Lambda_r=\frac{S'}{15A_sB_s}\ne0.
+\tag{11.8}
+$$
+
+If $e\ne0$, then $H_r\ne0$; if $e=0$, then $H_b=448/25\ne0$.
+Thus $dH\ne0$ in every case. The analytic implicit-function theorem
+makes $H=0$ a two-dimensional surface near the point. The vector $V$
+is nonzero and has no $e$ component, so it is independent of
+$\partial_e$ and these two vectors span the tangent plane.
+
+Here $e=0$ means $d=24$. Zero drift is instead $d=0$, namely
+$e=-24$, and belongs to the $e\ne0$ case. Both are included. The
+basis is for the full surface, rather than only the one-dimensional
+fixed-source line: it retains its transverse source direction. ∎
+
+## 12. Exact finite certificates for the augmented tangent minors
+
+**Definition 12.1 (Three polynomial minor circuits).** Differentiate
+(10.1)–(10.5) in $\Omega$ before substituting $b=1/8$. For
+$0\le i\le3$ define rational functions of $(r,e)$ by
+
+$$
+\alpha_i=\left.\partial_eX_i\right|_{b=1/8},\qquad
+\nu_i=\left.(H_b\partial_rX_i-H_r\partial_bX_i)\right|_{b=1/8}.
+\tag{12.1}
+$$
+
+The minors using the first response row are
+
+$$
+M_i=\alpha_0\nu_i-\alpha_i\nu_0\quad (i=1,2,3).
+\tag{12.2}
+$$
+
+These are defined for every $r$ with $A_sB_s\ne0$ and every $e$;
+no reduction modulo $S$ is made in their definition. Define
+
+$$
+\begin{aligned}
+F_1(r,e)&=\frac{6075}{128}B_s^3A_s^4M_1,\\
+F_2(r,e)&=\frac{91125}{64}B_s^4A_s^4M_2,\\
+F_3(r,e)&=\frac{91125}{256}B_s^3A_s^4M_3.
+\end{aligned}
+\tag{12.3}
+$$
+
+Equations (10.1)–(10.5), (11.1) and (12.1)–(12.3) are exact
+coefficient circuits for these polynomials. The stated rational scalar
+factors are part of their definition: no primitive-part operation,
+coefficient rescaling or removal of a factor is implicit.
+
+For clarity, the derivative rules needed to expand the circuits are
+
+$$
+\begin{gathered}
+j_r=(1-2r)/b,\quad j_b=1-r(1-r)/b^2,\quad
+n_r=1+j_r,\quad n_b=j_b,\\
+T_r=U_r=0,\quad T_b=1,\quad U_b=2,\\
+\Lambda_r=4j_r/j^2+4n_r/n^2,\\
+\Lambda_b=-6/T^2-2/U^2+4j_b/j^2+4n_b/n^2,\quad
+\kappa_b=-6/T^2+4/U^2,\\
+H_r=e\Lambda_r,\qquad
+H_b=e\Lambda_b+\frac{24}{5}\bigl(\kappa+(b-1/8)\kappa_b\bigr),\\
+\partial_eG=(-1,-1/j,-1/T,-1/n)^{\mathsf T},\\
+\partial_rG=(0,e j_r/j^2,0,e n_r/n^2)^{\mathsf T},\\
+\partial_bG=(0,e j_b/j^2,-(27/5-e)/T^2,e n_b/n^2)^{\mathsf T}.
+\end{gathered}
+\tag{12.4}
+$$
+
+The rows (10.4) apply to these derivative columns as well. Differentiating
+(10.5) by the product rule then specifies every entry of (12.1).
+In particular substituting $b=1/8$ before taking $\partial_b$ would
+not define the same circuits.
+
+**Lemma 12.2 (Integral polynomial and degree certificate).** All three
+$F_i$ belong to $\mathbb Z[r,e]$. Their exact degrees and numbers of
+nonzero monomials are
+
+| Polynomial | $\deg_e$ | $\deg_r$ | Number of monomials in $(e,r)$ |
+| --- | --- | --- | --- |
+| $F_1$ | $2$ | $17$ | $52$ |
+| $F_2$ | $2$ | $19$ | $59$ |
+| $F_3$ | $2$ | $17$ | $52$ |
+
+For every strict $r$, the nonzero factors in (12.3) preserve the
+vanishing or nonvanishing of each corresponding $M_i$.
+
+Proof. Substitute the derivative rules (12.4) into (12.1), using
+$j=-A_s/8$, $n=-B_s/8$, $T=9/8$, $U=5/4$. Collecting the
+products in (12.2) gives the exact rational identities
+
+$$
+M_1=\frac{128F_1}{6075B_s^3A_s^4},\qquad
+M_2=\frac{64F_2}{91125B_s^4A_s^4},\qquad
+M_3=\frac{256F_3}{91125B_s^3A_s^4},
+\tag{12.5}
+$$
+
+whose numerators, on expanding the defining circuits, have integer
+coefficients and the degrees and support counts in the table. This is
+an identity in $\mathbb Q(r,e)$ without using $S=0$. It can be
+reproduced by polynomial multiplication and collection from (12.4);
+thus (12.3) also specifies every coefficient without an external list.
+The $e$ degree is at most two already because $X$ is affine in $e$,
+$H_r,H_b$ are affine in $e$, and $\alpha_i$ is independent of $e$.
+The table records the exact, nonvanishing top degrees after collection.
+Finally $A_sB_s\ne0$ in the strict interval by Proposition 11.1,
+and all scalar denominators in (12.3) are nonzero integers. ∎
+
+**Definition 12.3 (Fixed quadratic Sylvester determinants).** Write
+
+$$
+F_i=f_{i,2}(r)e^2+f_{i,1}(r)e+f_{i,0}(r),
+\qquad f_{i,k}=[e^k]F_i.
+$$
+
+For any two coefficient triples $f=(f_2,f_1,f_0)$ and
+$g=(g_2,g_1,g_0)$ put
+
+$$
+\mathcal R(f,g)=\det\begin{pmatrix}
+f_2&f_1&f_0&0\\
+0&f_2&f_1&f_0\\
+g_2&g_1&g_0&0\\
+0&g_2&g_1&g_0
+\end{pmatrix}.
+\tag{12.6}
+$$
+
+Define the fixed integer polynomials
+
+$$
+R_J(r)=\mathcal R(f_1,f_2),\qquad
+R_M(r)=\mathcal R(f_1,f_3).
+\tag{12.7}
+$$
+
+Here $f_i$ denotes the whole coefficient triple of $F_i$, not its
+linear coefficient. These are the degree-$(2,2)$ Sylvester resultants
+in $e$ with rows $eF_1,F_1,eF_i,F_i$ and descending columns
+$e^3,e^2,e,1$. The size is kept fixed at every value of $r$,
+including values where one or both quadratic leading coefficients
+vanish. No specialized degree or gain-degree hypothesis is imposed.
+
+**Lemma 12.4 (Two modular coprimality certificates).** The fixed
+resultants have
+
+$$
+\begin{array}{c|cc}
+&\deg_r&\operatorname{lc}\pmod{101}\\ \hline
+R_J&68&13\\
+R_M&62&46.
+\end{array}
+\tag{12.8}
+$$
+
+Neither has a common complex root with $S$.
+
+Proof. All finite-field expressions in this proof lie in
+$\mathbb F_{101}[r]$. Reduction of $S$ is
+
+$$
+s=33r^4-7r^3+46r^2-26r-45.
+\tag{12.9}
+$$
+
+Expand the coefficient circuits (12.3), form the two determinants
+(12.6), and collect powers of $r$. This gives (12.8). Alternatively
+the modular remainders can be obtained by reducing every entry of
+(12.6) in $\mathbb F_{101}[r]/(s)$ before taking its determinant.
+The resulting exact polynomial remainders are
+
+$$
+\begin{aligned}
+\rho_J&=\operatorname{rem}(\overline{R_J},s)
+       =-31r^3-r^2-39r+12,\\
+\rho_M&=\operatorname{rem}(\overline{R_M},s)
+       =-21r^3-48r^2-37r-17.
+\end{aligned}
+\tag{12.10}
+$$
+
+The bar means coefficient reduction modulo $101$; remainder always
+means the unique remainder of degree less than four on division by
+$s$, whose leading coefficient $33$ is invertible. The following
+fully specified polynomials certify coprimality:
+
+$$
+\begin{aligned}
+u_J&=43r^2-46r-3,&
+w_J&=36r^3-24r^2+33r-28,\\
+u_M&=29r^2-45r-18,&
+w_M&=-41r^3+47r^2-9r+6.
+\end{aligned}
+\tag{12.11}
+$$
+
+Direct coefficient multiplication gives identities in the polynomial
+ring, rather than only in its quotient,
+
+$$
+u_Js+w_J\rho_J=1,\qquad u_Ms+w_M\rho_M=1.
+\tag{12.12}
+$$
+
+For an additional fixed-determinant check, the ordinary degree-$(4,3)$
+Sylvester determinants are
+
+$$
+\operatorname{Res}_r(s,\rho_J)=61,\qquad
+\operatorname{Res}_r(s,\rho_M)=84
+\quad\hbox{in }\mathbb F_{101}.
+\tag{12.13}
+$$
+
+These determinant conventions have the shifted rows of the first
+polynomial first, those of the second next, and descending powers in
+the columns, as in (12.6). Thus every coefficient and determinant in
+(12.8)–(12.13) is fixed by the public circuits and finite arithmetic.
+
+To pass to characteristic zero, the degrees of $S,R_J,R_M$ are
+preserved modulo $101$: their leading residues are respectively
+$33,13,46$. Polynomial remainder and the resultant product formula
+therefore give the reductions of the fixed integer outer determinants
+
+$$
+\begin{aligned}
+\operatorname{Res}_r(S,R_J)&\equiv33^{68-3}\,61\equiv27\pmod{101},\\
+\operatorname{Res}_r(S,R_M)&\equiv33^{62-3}\,84\equiv49\pmod{101}.
+\end{aligned}
+\tag{12.14}
+$$
+
+Indeed for a degree-four first polynomial with leading coefficient
+$33$, the resultant with a second polynomial of degree $N$ is
+$33^{N-3}$ times the resultant with its degree-three remainder. This
+follows directly from the product over the four roots, with multiplicity.
+Both residues
+are nonzero. Hence the corresponding integer Sylvester determinants
+are nonzero, and the classical resultant criterion excludes a common
+complex root of $S$ with either $R_J$ or $R_M$. The lifting argument
+uses fixed integer determinants with preserved degrees; a modular
+identity with an unguarded degree drop is not being used. ∎
+
+## 13. All-drift immersion and the singular critical-diagonal exclusion
+
+**Theorem 13.1 (Full-parent immersion on both entire singular lines).**
+At every strict parent world with $\Lambda=0$, for every real
+$e=d-24$, both maps
+
+$$
+\Psi_J=(p,v,a),\qquad \Psi_M=(p,v,m)
+\tag{13.1}
+$$
+
+have differential rank two on the full analytic parent and are locally
+injective there. This assertion includes both sources (11.2),
+$e=0$ ($d=24$), zero drift $d=0$ ($e=-24$), all lower gain degrees,
+and every sampled or repeated gain root allowed by Definition 1.1.
+There is no restriction on the signs of drift or gain.
+
+Proof. Proposition 11.1 places the world on exactly one of (11.3),
+and Lemma 11.2 supplies the full-parent tangent basis
+$(\partial_e,V)$. In this basis the differential of $X_i$ is the
+row $(\alpha_i,\nu_i)$. For $J$, its two minors involving the first
+row are $M_1,M_2$; for $M$, they are $M_1,M_3$.
+
+Suppose both $J$ minors vanished at $(r_*,e_*)$. By (12.3) this
+would give $F_1(r_*,e_*)=F_2(r_*,e_*)=0$. A common finite root in
+$e$ forces the fixed determinant $R_J(r_*)$ to vanish, even if a
+quadratic leading coefficient vanishes at $r_*$. Explicitly the
+specialized matrix (12.6) annihilates the nonzero column
+
+$$
+(e_*^3,e_*^2,e_*,1)^{\mathsf T}.
+\tag{13.2}
+$$
+
+Its rows evaluate to $e_*F_1,F_1,e_*F_2,F_2$, all zero. Thus its
+determinant is zero without division by a leading coefficient. But
+$S(r_*)=0$, contradicting Lemma 12.4. At least one of $M_1,M_2$
+is consequently nonzero. The same argument with $F_1,F_3,R_M$ proves
+that at least one of $M_1,M_3$ is nonzero. Each three-coordinate map
+therefore has rank two.
+
+Choose a local two-dimensional analytic chart of $H=0$ furnished by
+Lemma 11.2. One of the two-coordinate submaps $(p,v)$ or $(p,a)$
+for $J$, and one of $(p,v)$ or $(p,m)$ for $M$, has invertible
+derivative in that chart. The real analytic inverse-function theorem
+makes the chosen submap injective on an open neighbourhood of the
+world. Its full three-coordinate map is injective on that same
+neighbourhood. Through Lemma 10.2 this is uniqueness of the source,
+fixed drift and entire polynomial gain of actual worlds, rather than
+uniqueness of selected gain samples or of a fixed-source restriction.
+
+The determinant argument uses a finite common $e_*$ and never divides
+by $e_*$ or $e_*+24$. The only source denominators cleared in the
+minor circuits are the strict positive original denominators, or their
+nonzero $A_s,B_s$ forms. No gain factor, sample, leading coefficient,
+degree equality or root separation was removed. Thus the proof covers
+every real drift and every original gain stratum stated above. ∎
+
+**Corollary 13.2 (Coalescing selected strict pairs have regular sources).**
+Let $E\in\{J,M\}$. Suppose distinct actual selected endpoints obey
+
+$$
+\begin{gathered}
+W_n,W'_n\in C(p_n,v_n),\quad W_n\ne W'_n,\quad
+\tau_E(W_n)=\tau_E(W'_n),\qquad p_n\ne24,\\
+(p_n,v_n)\longrightarrow(p_*,v_*),\quad p_*\ne24,\qquad
+W_n\longrightarrow W,\quad W'_n\longrightarrow W,
+\end{gathered}
+\tag{13.3}
+$$
+
+where $W$ is a strict complete world and $\tau_J=a,\tau_M=m$.
+Then $\Lambda(W)\ne0$. Consequently case 2 of SII, Theorem 16.1,
+can occur only at a regular source, for either selected pair of the
+original joint relation (1.6).
+
+Proof. Continuity of the original readings and terminal response gives
+$W\in C(p_*,v_*)$. If $\Lambda(W)=0$, Theorem 13.1 supplies a
+neighbourhood in the full parent on which $\Psi_E$ is injective.
+Both convergent endpoints eventually lie in this one neighbourhood.
+They have equal $p_n,v_n,\tau_E$, so they have equal $\Psi_E$;
+injectivity makes them equal as complete worlds, contradicting their
+within-pair distinctness. This proves the assertion. In a joint
+sequence the argument applies to either selected pair at its own
+coalescence limit, independently of whether the pairs overlap or have
+equal common terminal values. SII, Theorem 16.1, supplies precisely
+these strict coalescing limits in its second alternative. ∎
+
+**Proposition 13.3 (Exact scope of the remaining joint obligation).**
+The singular critical-diagonal alternative in Definition 9.2 is
+excluded by Corollary 13.2. The original problem remains the strict
+same-entire-child witness-or-exclusion alternative of Proposition 9.1,
+with all quantifiers of (1.6).
+
+Proof. Theorem 13.1 is local at each finite singular-source world.
+It rules out distinct equal-augmented-response endpoints converging to
+that same world. The local neighbourhood may depend on the source and
+the drift. The theorem gives no comparison between disjoint full-parent
+neighbourhoods, between the two singular lines, or between a singular
+world and a distant regular world. Distinct distant incidences not
+already ruled out by the owning public results, and singular companions
+unused by the selected pairs, are retained.
+
+For regular sources $\Lambda\ne0$, the augmented critical loci and
+their possible actual selected-pair limits remain to be analyzed.
+Finite-boundary/interior limits remain subject only to their owning
+public exclusions, and this argument adds no finite-face exclusion or
+uniform interior margin. In particular it adds no separate positive
+floor for a source entry. Cases 1 and 3 of SII, Theorem 16.1, are not
+removed. Nothing here constructs an actual joint witness or excludes
+all such witnesses over the ambient set $K$ of (8.3).
+
+The precise all-drift statement concerns both complete lines (11.3)
+and both terminal maps. It extends beyond the strict $p=24$ scope of
+SII, Theorem 27.2, while leaving the bounded-region reduction of
+Sections 7–9 in force. All responses still use the original clocks,
+one fixed drift and one entire gain per world; the selected $J$ and
+$M$ pairs still belong to the same entire child and have only their
+original within-pair distinctness requirements. No physical realization,
+Lean/kernel verification, ancestor conjunction, fifth-$M$ $L_2$,
+$H_4$ $L_3$, root $L_7$, or eight-versus-nine conclusion follows. ∎
+
+The polynomial and minor certificates above are model-specific
+calculations. Fixed-node interpolation, the sign-preserving Sturm
+criterion, Sylvester's resultant criterion, the polynomial Bézout
+criterion and the analytic implicit/inverse function theorems are
+classical tools. The interpolation attribution in Definition 1.2 and
+the implicit/inverse-function reference in Theorem 6.1 apply here on
+the explicit nonzero-denominator domains and two-dimensional charts
+just proved. These ordinary mathematical results carry no claim of
+literature-wide novelty or of formal-kernel verification. The unchanged
+strict-real same-child joint problem remains open.
+
+## 追加锚（本行以下为增补区）
