@@ -72,12 +72,8 @@ private lemma weight_square {b : ℝ} (hb : 0 < b) :
     intro x hx
     have hx0 : 0 ≤ 1-x^2 := by nlinarith [hx.1, hx.2]
     have he : (1-x^2)^b = (1-x^2)^(b-1)*(1-x^2) := by
-      by_cases hz : 1-x^2 = 0
-      · rw [hz, Real.zero_rpow (ne_of_gt hb)]
-        ring
-      · calc
-          _ = (1-x^2)^((b-1)+1) := by congr 1; ring
-          _ = _ := by rw [Real.rpow_add (lt_of_le_of_ne hx0 (Ne.symm hz)), Real.rpow_one]
+      simpa [sub_add_cancel] using
+        (Real.rpow_add_one' hx0 (by linarith : (b - 1) + 1 ≠ 0))
     rw [he]
     ring
   rw [intervalIntegral.integral_congr (by
