@@ -249,10 +249,62 @@ private lemma overlap_transport (d : ℕ) [NeZero d]
     rw [U.symm_apply_apply, hz] at h
     exact h
 
+private def contraction (d : ℕ) (n : Fin d) (b c : Fin d → ℂ) :
+    EuclideanSpace ℂ (Fin d) := WithLp.toLp 2 fun i =>
+  conj (z d) * conj (b n) * conj (c i) + z d * conj (c n) * conj (b i)
+
+private lemma contraction_overlap (d : ℕ) (n : Fin d) (a b c : Fin d → ℂ) :
+    overlap a b c (φ d n) = inner ℂ (WithLp.toLp 2 a) (contraction d n b c) /
+      (Real.sqrt ((d : ℝ) + 1) : ℂ) := by
+  classical
+  have he : (∑ j, (EuclideanSpace.single n (1 : ℂ)) j • φ d j) = φ d n := by
+    simp [PiLp.single_apply, ite_smul]
+  rw [← he, coefficient_overlap]
+  unfold overlapForm
+  change (_ * inner ℂ (WithLp.toLp 2 b) (EuclideanSpace.single n 1) * _ +
+    _ * inner ℂ (WithLp.toLp 2 c) (EuclideanSpace.single n 1) * _) / _ = _
+  rw [EuclideanSpace.inner_single_right, EuclideanSpace.inner_single_right]
+  simp only [PiLp.toLp_apply, one_mul, PiLp.inner_apply, RCLike.inner_apply',
+    contraction, Finset.sum_add_distrib, Finset.mul_sum, mul_add]
+  congr 1
+  congr 1 <;> apply Finset.sum_congr rfl <;> intro i hi <;> ring
+
+private def conjugateTail (d : ℕ) (n : Fin d) (b : Fin d → ℂ) :
+    EuclideanSpace ℂ (Fin d) := WithLp.toLp 2 fun i => if i = n then 0 else conj (b i)
+
+private lemma tail_norm_split (d : ℕ) (n : Fin d) (b : Fin d → ℂ) :
+    ‖WithLp.toLp 2 b‖ ^ 2 = ‖b n‖ ^ 2 + ‖conjugateTail d n b‖ ^ 2 := by
+  classical
+  rw [EuclideanSpace.norm_sq_eq, EuclideanSpace.norm_sq_eq]
+  simp only [conjugateTail, PiLp.toLp_apply]
+  rw [← Finset.add_sum_erase Finset.univ (fun i => ‖b i‖ ^ 2) (Finset.mem_univ n)]
+  congr 1
+  rw [← Finset.sum_erase_add Finset.univ
+    (fun i => ‖if i = n then (0 : ℂ) else conj (b i)‖ ^ 2) (Finset.mem_univ n)]
+  simp only [ite_true, norm_zero, ne_eq, OfNat.ofNat_ne_zero, not_false_eq_true,
+    zero_pow, add_zero]
+  apply Finset.sum_congr rfl
+  intro i hi
+  rw [if_neg (Finset.mem_erase.mp hi).1, Complex.norm_conj]
+
+private lemma contraction_bound (d : ℕ) (hd : 2 ≤ d) (n : Fin d)
+    (b c : Fin d → ℂ) (hb : UnitVector b) (hc : UnitVector c) :
+    ‖contraction d n b c‖ ^ 2 ≤ sharpValue d * ((d : ℝ) + 1) := by
+  sorry
+
 private lemma sharp_upper (d : ℕ) [NeZero d] (hd : 2 ≤ d)
     (a b c : Fin d → ℂ) (ha : UnitVector a) (hb : UnitVector b) (hc : UnitVector c) :
     ‖overlap a b c (φ d 0)‖ ^ 2 ≤ sharpValue d := by
-  sorry
+  have hs : 0 < Real.sqrt ((d : ℝ) + 1) := Real.sqrt_pos.2 (by positivity)
+  have hn := norm_inner_le_norm (𝕜 := ℂ) (WithLp.toLp 2 a) (contraction d 0 b c)
+  change ‖WithLp.toLp 2 a‖ = 1 at ha
+  rw [ha, one_mul] at hn
+  have hn2 := (sq_le_sq₀ (norm_nonneg _) (norm_nonneg _)).2 hn
+  have hbound := contraction_bound d hd 0 b c hb hc
+  rw [contraction_overlap, norm_div, Complex.norm_real, Real.norm_eq_abs,
+    abs_of_pos hs, div_pow]
+  rw [Real.sq_sqrt (by positivity)]
+  exact (div_le_iff₀ (by positivity)).2 (hn2.trans hbound)
 
 private lemma sharp_attainment (d : ℕ) [NeZero d] (hd : 2 ≤ d) :
     sharpValue d ∈ overlapSet (φ d 0) := by
