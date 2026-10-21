@@ -2593,4 +2593,225 @@ Q_H\ll K^{2-\zeta_H+\varepsilon}\mathcal N_H^2,
 $$
 对有界的原显式包络及充分小 $\varepsilon$，H8 与 SH11 共同控制 $w+e^H$ 的实际二次型为 $o(K^2)$。这里只支付已指定的完整高重数分支族。
 
-完整 primitive continuous 向量仍准确分成 $e^H+e^{\rm low}$；后者包含至少一个 $q\ne p$ 在原 valuation $1,\ldots,4$ 的第二分支，其余 $p$ 或高重数选择仍可同时存在。该低重数族及其跨素数 coherent 耦合尚未支付。完整 projection／complement、其他原长度与高度、原 growing-height 包络、F4 transfer，以及原固定 $\eta_{\rm R}$ 的 signed Robin restoration 也仍未支付。SH11 不供应区间外统一界，不证明 RH 或全部 $n>5040$ 的严格 Robin 不等式。FIB 五模式、四相与收缩区间仍作为来源和运输语言复用，不替代这些未证估计。
+完整 primitive continuous 向量仍准确分成 $e^H+e^{\rm low}$；后者包含至少一个 $q\ne p$ 在原 valuation $1,\ldots,4$ 的第二分支，其余 $p$ 或高重数选择仍可同时存在。下一节进一步控制原 valuation $4$ 的同时选择；原 valuation $1,2,3$ 的剩余模式及其跨素数 coherent 耦合仍未支付。完整 projection／complement、其他原长度与高度、原 growing-height 包络、F4 transfer，以及原固定 $\eta_{\rm R}$ 的 signed Robin restoration 也仍未支付。SH11 不供应区间外统一界，不证明 RH 或全部 $n>5040$ 的严格 Robin 不等式。FIB 五模式、四相与收缩区间仍作为来源和运输语言复用，不替代这些未证估计。
+
+### Coherent valuation-four and high branches
+
+本节为 `repo-derived` 的更大原系数联合应用，沿用 SH1–SH11、I1–I16、I14a、H1–H8、G7 及其解析前提。新增消费包括任意多个原 valuation $4$ 的其他素因子同时取第二分支，允许它们与全部高重数分支混合，并保留标记 $p$ 的两种合法选择。所用原始局部反演、有限 $216$ 个 ray 字符、固定 cusp 理论及通用均值均为既有输入；不主张文献原创性或本仓完整解析 Lean 认证。
+
+#### 原重数四的复合相位
+
+令 $A$ 为所选原 valuation $4$ 素因子的平方自由乘积，$B$ 为所选原 valuation 至少 $6$ 素因子的平方自由乘积，要求 $(A,BpS)=1$、$(B,pS)=1$。记 $x=q_A$、$z=q_B$，以及
+$$
+\epsilon_A(c)=\prod_{q\mid A}R(q,c)^5,
+\qquad \chi_A=\prod_{q\mid A}\chi_q,
+\qquad \gamma_5(A)=x^{-1/2}g_5(1,A).
+$$
+对原 numerator $A^4k$、$(k,A)=1$，按原消去顺序取这些第二分支，其确切标量为
+$$
+\mu(A)\nu(A)^5\gamma_5(A)x^{9/2-5u}\chi_A(k)^{-5},
+\qquad \nu\longmapsto\nu\epsilon_A.
+\tag{VF1}
+$$
+这不是假设各局部操作交换。若 $q$ 在 $r$ 之前，原 $r^4$ 与后续 ray 改变给出成对因子
+$$
+\chi_q(r)^{-20}R(q,r)^{25}
+=\chi_q(r)^4R(q,r)
+=\chi_q(r)^5\chi_r(q)^5.
+$$
+最后一式由完整 sextic reciprocity 给出，恰好是 $g_5(1,qr)$ 的 CRT 乘积因子。沿原顺序归纳即得 VF1；所有 ray 乘积仍在原固定有限字符族中。$B^6$ 上的字符值为 $1$，故高分支另给原始因子 $\mu(B)z^{6-6u}$，不产生遗漏的交叉字符。
+
+$p$ 取第一支时，写 $h=A^4B^6m$、$(m,A)=1$。一对 $(A,B)$ 的确切贡献为
+$$
+\mu(AB)\sum_{(m,A)=1}b(A^4B^6m)\overline{
+\nu(A)^5\gamma_5(A)x^{9/2-5u}z^{6-6u}
+\mathcal v_u(pABm)\chi_A(pm)^{-5}
+D_{\nu\epsilon_A;S}(pm,u)}.
+\tag{VF2}
+$$
+这里 $\nu=\nu_{[A^4B^6m]}$，按原 section indicator 分开；$m$ 在 $B$、$p$ 处不受限。
+
+$p$ 取低重数第二支时，$1\le j\le4$，令 $k=j+1$、$s=4-j$、$b_j=5-j$，写 $h=p^{j-1}A^4B^6m$、$(m,pA)=1$。原 $p$ 标量为
+$$
+-\nu(p)^kQ^{j+1/2-ku}\gamma_k(p)
+\chi_p(A)^{-4k}\chi_p(m)^{-k}.
+$$
+将其乘以
+$$
+\mu(AB)(\nu\epsilon_{p,j})(A)^5\gamma_5(A)
+ x^{9/2-5u}z^{6-6u}\chi_A(p^sm)^{-5},
+$$
+再乘原分母 $\mathcal v_u(pABm)$ 与
+$D_{\nu\epsilon_{p,j}\epsilon_A;S}(p^sm,u)$，按原外部共轭与系数求和，就是完整该支。所有 CRT 单位因子、minus sign 和 ray 运输都保留。
+
+$p$ 取高重数第二支时，写 $h=p^5A^4B^6m$、$(m,A)=1$，$m$ 在 $p$ 处不受限。使用 VF2 的 $A,B$ 标量，将 $\chi_A(pm)^{-5}D(pm,u)$ 换成 $\chi_A(m)^{-5}D(m,u)$，并乘 $-Q^{6-6u}$；原分母仍为 $\mathcal v_u(pABm)$，原 section 为 $\nu_{[p^5A^4B^6m]}$。这一次包含全部原 $v_p(ph)\ge6$，不约化 raw valuation；$j=5$ 仍无第二支。
+
+#### 共同原卷积与删因子
+
+原变量准确分解为
+$$
+d=EFd_0,\qquad n=(A^4/E)(B^6/F)n_0,
+\qquad E\mid A,\ F\mid B,
+$$
+$$
+(d_0,AB)=1,\quad(n_0,A)=1,\qquad
+D'=\frac D{q_Eq_F},\quad N'=\frac{Nq_Eq_F}{x^4z^6},\quad
+K'=D'N'=\frac K{x^4z^6}.
+\tag{VF3}
+$$
+$E=\gcd(d,A)$、$F=\gcd(d,B)$ 唯一，原符号是 $\mu(E)\mu(F)\mu(d_0)$。$n_0$ 在 $B$ 处不受限；没有额外的 $(d_0,n_0)=1$。再按 I14、I14a 提取各 $p$-sector 的原 $e=0,1$ 因子，保留自身实际长度。空支撑为零，非空 sector 按固定 annular enlargement 处理，不能对全部 $A,B$ 假设 $N'/Q^5\ge1$。
+
+因 $(m,A)=1$，包括 $B\mid m$ 或 $p\mid m$ 的情形都有
+$$
+\mathcal v_u(pABm)=P_{AB}(u)
+\sum_{\substack{g\mid pm\\(g,AB)=1}}z_u(g),
+\qquad P_{AB}=\prod_{q\mid AB}(1-\lambda_q)^{-1}\ll_\eta1.
+\tag{VF4}
+$$
+低-$p$ 支将 $pm$ 换成 $m$，并保留原单独的 $p$ 分母。每个局部因子只计一次。原 H2 mask 经 $A^4B^6$ 和相应 $p$ 幂运输，仍只有固定观察模数 $\mathfrak M$ 上的有限函数族。下面的增长字符是显式 Fourier mark，不是新加的自守坏素排除。
+
+#### 复合标记的有限变换
+
+定义零延拓 $\psi_A(w)=\chi_A(w)^{-5}$，以及
+$$
+\tau_A=\sum_{v\bmod A}\chi_A(v)^{-5}e(-v/A)
+=\overline{g_5(1,A)},\qquad
+\widehat\psi_A(v)=\frac{\tau_A}{x}\chi_A(v)^5\mathbf1_{(v,A)=1}.
+$$
+该字符在每个 $A$ 素因子处本原，故 $|\tau_A|=\sqrt x$、$\gamma_5(A)\tau_A=\sqrt x$，包括完整奇数 Gauss 相位。
+
+对低-$p$ 支，模 $R_0=p^{b_j}A$ 取
+$$
+\psi_{p,A,j}(w)=\mathbf1_{p^s\mid w}
+\chi_p(w/p^s)^{-k}\chi_A(w)^{-5}.
+$$
+CRT 给出确切的归一化 Fourier 系数
+$$
+\widehat\psi_{p,A,j}(v)=
+\frac{\tau_{p,j}\tau_A}{Q^{b_j}x}
+\chi_p(A)^{-k}\chi_A(p)^{-5b_j}
+\chi_p(v)^k\chi_A(v)^5\mathbf1_{(v,pA)=1}.
+\tag{VF5}
+$$
+对 $(a,pAS)=1$ 的平方自由 $a$，照 I10–I11 平均原固定过滤形式 $f(v/R_0+c/a,y)$。写 $c/a=h/r$、$r\mid a$、$R=R_0r$，原 multiplier $\chi_R(d)^{-1}$ 同时消去两个增长字符，因为 $k+b_j=6$、$5+1=6$。完整有限变换系数为
+$$
+\begin{aligned}
+\mathcal A_{p,A,j,r}(n)={}&
+\frac{\tau_{p,j}\tau_A}{Q^{b_j}x}
+\chi_p(A)^{-k}\chi_A(p)^{-5b_j}
+\chi_p(r)^{-k}\chi_A(r)^{-5}
+ e(-n\overline R/\mathfrak M)\\
+&\times c_{p^{b_j}}(n)c_A(n)
+ g_{\overline\chi_r}
+ (-n\overline{\mathfrak M}\,\overline{p^{b_j}A},r).
+\end{aligned}
+\tag{VF6}
+$$
+各逆元的模数与 I10 相同：$\overline R$ 模 $\mathfrak M$，$\overline{\mathfrak M}$ 模 $R$，$\overline{p^{b_j}A}$ 模 $r$。$r=1$ 的 Gauss 和为 $1$。保留
+$$
+c_A(n)=\prod_{q\mid A}(q_q\mathbf1_{q\mid n}-1)
+$$
+的全部中心与零值。仅有 $A$ 标记时删去 VF5–VF6 的 $p$ 因子并取 $R_0=A$。Cusp 分量为原 $f_{[R]}$，只依赖 $R\bmod\mathfrak M$；没有增长 level 的常数。
+
+对仅有 $A$ 标记的 $p$ 第一支，外模数可以是 $pd_0$ 或 $p^2e_0$。后者不是平方自由，须保留完整 imprimitive $r$-Gauss 和。I4 和 H5 的 gcd 和给出
+$$
+\sum_{q_{n/\mathfrak M}\asymp H}
+|t_{[R]}(n/\mathfrak M)g_r(\cdots)|
+\ll(Hq_r)^\varepsilon(1+|t|)^C
+q_r^{1/2}H^{1+\eta/2}.
+$$
+这替代了错误的点态平方自由 Gauss 界；有限矩阵变换仍适用于避开 $A$ 的 sixth-power-free $a$。$|c_A(n)|\le x$ 足够，不另作不相容的最优标记选择。
+
+#### 两个极点与原 Möbius 主项
+
+仅有 $A$ 标记时，乘回原 reflected scalar 后，两个完整 cusp multipliers 是
+$$
+\nu(A)^5\frac{\prod_{q\mid A}(1-q_q^{-1})}{\prod_{q\mid A}(1-\lambda_q)}
+ x^{5-6u},\qquad
+\nu(A)^5\frac{\prod_{q\mid A}(1-q_q^{-1})}{\prod_{q\mid A}(1-\lambda_q)}
+ x^{3-4u},
+$$
+连同各自的原固定 cusp 分量。其模均为 $\ll_\eta x^{-1}$。联合 $p,A$ 标记同时保留 I11 的两个 $p$ cusp factors 与 VF1、VF5、VF6 的全部额外单位相位；不丢 outgoing constant。
+
+在剩余 numerator 长度 $Y$、$(a,A)=1$ 上，VF6、I4 和上述 imprimitive Cauchy 估计给出含实际 $A$ scalar 的 unweighted error
+$$
+\ll(Yxq_a)^\varepsilon(1+|t|)^C
+Y^{-\eta}x^{1-4\eta}q_a^{1/2+\eta}.
+$$
+有限 $g$ 和的 large-$g$ convexity tail 为
+$$
+\ll(Yxq_a)^\varepsilon(1+|t|)^C
+\frac{x^{-1/2-5\eta}Y^{5/4-\eta/2}}{q_aG^{1+6\eta}}.
+$$
+取 $G=Y^{5/6}x^{-1}/q_a$，若 $G\ge1$，两项依次为
+$$
+Y^{5/12-31\eta/6}x^{1/2+\eta}q_a^{6\eta},
+\qquad Y^{5/12-11\eta/2}x^{1/2+\eta}q_a^{6\eta}.
+$$
+实际非空支撑有 $q_a\ll Y$；$G<1$ 时直接计数原总支与两个 polar terms。故整个 weighted error 满足
+$$
+\operatorname{Err}_{A,\rm wt}
+\ll(Yxq_a)^\varepsilon(1+|t|)^C
+Y^{5/12+\eta}x^{1/2+12\eta}.
+\tag{VF7}
+$$
+遗漏的有限 two-polar tail 为 $\ll Y(xq_a)^{-1}G^{-1-6\eta}$，由同一次 split 支付。两个主泛函仍是 $Y$、$Y^{2-u}$。因此才可用 I6 的 $Z_u^{AB}v_u(a)/q_a$ 表示主项；不能无偿把有限整个表达式替换为无限 Euler 乘积。
+
+$r=1$ 的主项没有残留 $\chi_A(d_0)$：增长字符已经在 VF6 的 multiplier 中消去，$A$、$p$ 及原 mask 只选择原固定有限 cusp 和 ray 分量。因此仅有 $A$ 标记的 $p$ 第一支及高-$p$ 支仍可使用原固定字符 Möbius 位移 $D'^{-1/8}$。移动 $AB$ 的局部修正直接复用 SH6，只损失 $(xz)^\theta$；没有新的增长导子无零前提。
+
+联合低-$p$ 与 $A$ 时，原 Fourier 长度为 $X=Q^sY$，模数为 $p^{b_j}Ar$。同一计算的 unweighted error 为 $Y^{-\eta}Q^{5-j-j\eta}x^{1-4\eta}q_a^{1/2+\eta}$，large-$g$ tail 则为 I13 的完整 $Q$ 因子乘 $x^{-1/2-5\eta}$。取
+$$
+G=Y^{5/6}Q^{-3+j/2}x^{-1}/q_a
+$$
+或在 $G<1$ 时直接计数，保留有限 two-polar tails，得到
+$$
+\operatorname{Err}_{p,A,j,\rm wt}
+\ll(YQxq_a)^\varepsilon(1+|t|)^C
+Y^{5/12+\eta}Q^{7/2-3j/4+12\eta}x^{1/2+12\eta}.
+\tag{VF8}
+$$
+所有实际小于单位的长度与 dual scales 按原 fractional-lattice gap 和固定 annular enlargement 处理。两个标记的因子在同一个变换中相乘，未分别优化。
+
+#### 全部四重数与高重数选择的共同消费
+
+令 $\mathcal N_4$ 为一次固定的原 profile、Mellin、cusp、reciprocal-$L$ 包络。它不随 $(A,B,p)$ 重选。仅有 $A$ 标记的 $p$ 第一支在 $K',D'$ 上由 VF7 和原 Möbius 主项界给出
+$$
+\ll(KL)^\varepsilon(1+|t|)^C(xz)^\theta\mathcal N_4
+\left(K'D'^{-1/8}/x
++K'^{5/12+\eta}D'Q^{5/12+\eta}x^{1/2+12\eta}\right),
+$$
+包括 $p\mid d$ 的原 imprimitive overlap。联合低-$p$ 支用 VF8，高-$p$ 支按 I14a 的实际缩长；全部 $p$ 选择合并被
+$$
+\ll(KL)^\varepsilon(1+|t|)^C(xz)^\theta\mathcal N_4
+\left(K'D'^{-1/8}/x+K'/(Qx)
++K'^{5/12+\eta}D'Q^{11/4+12\eta}x^{1/2+12\eta}\right)
+\tag{VF9}
+$$
+控制。有利的高-$B$ 因子 $z^{-6\eta}$ 可舍去。写 $y=q_E$、$v=q_F$，准确代回 VF3 后，三份数值质量为
+$$
+KD^{-1/8}x^{-5}z^{-6}(yv)^{1/8},\qquad
+(K/Q)x^{-5}z^{-6},
+$$
+$$
+K^{5/12+\eta}DQ^{11/4+12\eta}
+ x^{-7/6+8\eta}z^{-5/2-6\eta}(yv)^{-1}.
+$$
+对全部互素平方自由 $A,B$、$E\mid A,F\mid B$，最后一份质量由
+$$
+\prod_{q\notin S}
+\left[1+q_q^{-7/6+8\eta+\theta}(1+q_q^{-1})
++q_q^{-5/2-6\eta+\theta}(1+q_q^{-1})\right]<\infty
+\tag{VF10}
+$$
+控制，只需 $8\eta+\theta<1/6$。原 SH11 已强制 $\eta<1/256$，固定 $0<\theta<1/16$ 即足够。前两份的 $x^{-5}z^{-6}$ 与除数权 $q^{1/8}$ 也可和。所有 branch-count、divisor 和有限局部小幂先在内部 $\theta$ 中分配，再选最终 $\varepsilon$。
+
+先对原同一组系数的有限实际模式作 coherent 求和，再扩张正 majorant；不增加实际模式，不假设分别最优的向量可共同实现。将所有 $A\ne1$ 用 VF9–VF10 汇总，再加已付的 $A=1$ 族 SH9，所得完整新族仍满足 SH9 的 pointwise 右端，只将共同包络换为 $\mathcal N_4$。
+
+记原 Mellin pairing 后的向量为 $e^{4,H}$。仍使用实际 $G_P^{-1}$，故 SH10 的完整五项二次型界同样成立。在 SH11 原较小平衡区间、原 spectrally permissible 固定 $\eta$ 及充分小损失下，
+$$
+(e^{4,H})^*G_P^{-1}e^{4,H}
+\ll K^{2-\zeta_H+\varepsilon}\mathcal N_4^2.
+$$
+对有界的原显式共同成本包络，H8 因而控制 $w+e^{4,H}$ 的实际二次型为 $o(K^2)$。没有供应原全部 growing-height allowance 或其他长度上的界。
+
+新族允许每个 $q\ne p$ 在原 valuation $4$ 或至少 $6$ 时任选两支，且包括 $p$ 的全部合法选择。因此完整 primitive continuous 向量的确切剩余部分，包含至少一个其他素因子在原 valuation $1,2,3$ 的第二分支；其余 $p$、四重数和高重数选择可同时存在。这些剩余模式、完整 projection／complement、其他原长度与高度、F4 transfer，以及原固定指数的 signed Robin restoration 仍未支付。该联合估计不证明 RH 或全部 $n>5040$ 的严格 Robin 不等式。
