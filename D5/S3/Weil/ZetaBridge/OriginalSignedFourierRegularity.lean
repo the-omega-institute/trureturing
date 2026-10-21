@@ -34,7 +34,7 @@ private lemma mode_norm_sq (L : ℝ) (hL : 0 < L) (n : ℤ) (x : ℝ) :
     one_mul, hn,
     Complex.norm_real, Real.norm_eq_abs, abs_of_nonneg (Real.sqrt_nonneg L), div_pow,
     one_pow, Real.sq_sqrt hL.le, one_div]
-  rw [← inv_pow, Real.sq_sqrt hL.le]
+  rw [inv_pow, Real.sq_sqrt hL.le]
 
 private lemma mode_memLp (L : ℝ) (hL : 0 < L) (n : ℤ) :
     MemLp (mode L n) 2 (volume.restrict (window (L / 2))) := by
@@ -156,9 +156,10 @@ theorem translation_squared_norm (L : ℝ) (hL : 0 < L) (n : ℤ) (h : ℝ)
     hre, hcorr, hE, hEF]
   have hp := entry_paired L hL n n h hh hcap
   rw [entry_adjoint] at hp
-  have hr : (entry L n n h).re + (entry L n n h).re =
-      2 * (1 - h / L) * Real.cos (frequency L n * h) := by
-    simpa using congrArg Complex.re hp
+  rw [ite_eq_left (show n = n from rfl)] at hp
+  have hr := congrArg Complex.re hp
+  simp only [Complex.add_re, Complex.conj_re, Complex.ofReal_re] at hr
+  field_simp [hL.ne'] at hr ⊢
   nlinarith [hr]
 
 /-- The endpoint-jump term is linear in h, even for the zero mode. -/
