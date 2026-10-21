@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:641e9e78e7977e06386c1024602471451230289f5efd8bfa8139f5fb49f3c7b9
+  normalized_sha256: sha256:641e9e78e7977e06386c1024602471451230289f5efd8bfa8139f5fb49f3c7b9
+cas_ref: sha256:641e9e78e7977e06386c1024602471451230289f5efd8bfa8139f5fb49f3c7b9
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 'Bibliographic reading record: records retrieval, metadata, reading windows and cited topics, without asserting the cited mathematical propositions.'
+    previous_atom_id: 6b24dcb636a6c13db072f121d990d1b728d965271b112598b6e94cad157ef472
+    next_atom_id: 1858a7606d591f0b5d00fd77e8e0d91e99aca294dd41d99a2dc2dfd112238c69
