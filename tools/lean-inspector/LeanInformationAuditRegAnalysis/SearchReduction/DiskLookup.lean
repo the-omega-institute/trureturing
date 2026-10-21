@@ -518,7 +518,7 @@ unsafe def produce (directory : System.FilePath) (basis mathlib : String)
 def openIndex (directory : System.FilePath) (basis mathlib : String)
     (excluded : Array Name := #[]) : IO Index := do
   let header : Header ← readJson (directory / "header.json")
-  unless header.format == version && header.basis == basis && header.mathlib == mathlib do
+  unless (header.format == version || header.format == legacyVersion) && header.basis == basis && header.mathlib == mathlib do
     throw <| IO.userError "lookup.index_snapshot_mismatch"
   let storage := directory / header.storage
   let mature := header.format == version

@@ -323,7 +323,7 @@ structure LocalResult where
   sharedData? : Option Bool := none
   lookup : LookupTrace := {}
 
-private unsafe partial def solveLookupGoal (table : LookupTable) (goal : MVarId)
+private unsafe def solveLookupGoal (table : LookupTable) (goal : MVarId)
     (facts : Array Expr) (tryLocal := true) : MetaM LookupTrace := goal.withContext do
   if tryLocal && (← solveLocalGoal goal facts) then return {complete := true}
   let type ← withReducible <| whnf (← goal.getType)
