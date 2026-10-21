@@ -267,7 +267,7 @@ internal sealed class ReportSupervisorFixture : IDisposable
             release="$PWD/double-fork-release.fifo"
             mkfifo "$release"
             perl -MPOSIX -e '
-              my ($path, $release) = @ARGV;
+              my ($path, $release, $ready_path) = @ARGV;
               my $first = fork();
               die "first fork failed" unless defined $first;
               if ($first == 0) {
@@ -278,6 +278,12 @@ internal sealed class ReportSupervisorFixture : IDisposable
                   $^F = 9;
                   open STDOUT, ">", "/dev/null" or die $!;
                   open STDERR, ">", "/dev/null" or die $!;
+                  if ($ready_path ne "") {
+                    open my $ready, ">", "$ready_path.tmp" or die $!;
+                    print {$ready} "$$\n";
+                    close $ready or die $!;
+                    rename "$ready_path.tmp", $ready_path or die $!;
+                  }
                   open my $hold, "<", $release or die $!;
                   <$hold>;
                   exit 0;
@@ -288,7 +294,7 @@ internal sealed class ReportSupervisorFixture : IDisposable
                 exit 0;
               }
               waitpid($first, 0);
-            ' "$1" "$release"
+            ' "$1" "$release" "${2:-}"
             """);
     }
 

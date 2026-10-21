@@ -210,8 +210,10 @@ public sealed class ReportSupervisorClockFailureTests
             printf '%s\n' "$current" > "$PWD/persistent-clock.count"
             if (( current >= 5 )); then
               if (( current == 5 )); then
-                while [[ ! -s "$PWD/scratch.txt" ]]; do :; done
+                while [[ ! -s "$PWD/scratch.txt" || ! -s "$PWD/orphan-ready" ]]; do :; done
                 read -r orphan < "$PWD/scratch.txt"
+                read -r ready < "$PWD/orphan-ready"
+                [[ "$ready" == "$orphan" ]]
                 while [[ "$(ps -o ppid= -p "$orphan" | tr -d ' ')" != 1 ]]; do :; done
                 ps -o pid=,ppid=,pgid= -p "$orphan" > "$PWD/orphan-topology"
                 lsof -a -p "$orphan" -d 1,2,9 > "$PWD/orphan-fds"
@@ -230,7 +232,7 @@ public sealed class ReportSupervisorClockFailureTests
             #!/usr/bin/env bash
             set -euo pipefail
             printf '%s\n' "$$" > "$PWD/clock-worker.pid"
-            "__DOUBLE_FORK__" "$1"
+            "__DOUBLE_FORK__" "$1" "$PWD/orphan-ready"
             mkfifo "$PWD/worker-hold.fifo"
             IFS= read -r _ < "$PWD/worker-hold.fifo"
             """.Replace("__DOUBLE_FORK__", fixture.DoubleForkWorker, StringComparison.Ordinal));
@@ -250,6 +252,7 @@ public sealed class ReportSupervisorClockFailureTests
             Assert.Equal("1", topology[1]);
             Assert.NotEqual(File.ReadAllText(Path.Combine(fixture.Root, "clock-worker.pid")).Trim(), topology[2]);
             Assert.Equal(File.ReadAllText(fixture.ScratchRecord).Trim(), topology[0]);
+            Assert.Equal(File.ReadAllText(Path.Combine(fixture.Root, "orphan-ready")).Trim(), topology[0]);
             Assert.Empty(File.ReadAllText(Path.Combine(fixture.Root, "candidates-before-fault")));
             var marker = File.ReadAllText(Path.Combine(fixture.Root, "orphan-marker")).Trim();
             var fds = File.ReadAllLines(Path.Combine(fixture.Root, "orphan-fds"))
