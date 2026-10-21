@@ -99,6 +99,15 @@ Apply `CLAUDE.md` 11, "library before proof." Search pinned mathlib and the repo
 
 Check the bind path first: the cheapest faithful discharge is an existing frozen theorem, and dozens of residues have been discharged with zero new Lean. If a frozen declaration already covers the residue leg verbatim (not narrower — watch the grader traps below), the correct deliverable is a bind recommendation naming that declaration and the evidence, not a new module. Ledger surgery itself is dispatcher-owned; your report carries the finding.
 
+**Pure digestion needs no verification work** (`CLAUDE.md` §1.2). A delivery that adds or first-freezes no D5 declaration is a pure digestion task. It covers with existing frozen declarations, settles nonpropositional or upstream-only atoms, decomposes, or makes a §4.3 private-only exposure with canonical repin and registration. For such a task:
+- run the canonical writers (`make cover` / `cover-batch`, `make settle` / `make -C tools settle-batch`, `make decompose`);
+- open the PR with `AUTO_MERGE=0`, and merge once the writers exited 0 and the required checks are green;
+- do not write per-sentence probes, evidence archives or live-closure readings, and do not dispatch a review triplet, evidence seat or repair seat;
+- report the ledger moves and unsettled atoms truthfully;
+- note ledger deviations under §1.2 and correct them later with the writers.
+
+Steps 4–7 and the review triplet below apply only to deliveries that add or freeze D5 declarations.
+
 If the result exists upstream, import and apply it. Do not reprove it: a reproof of an existing declaration creates a second source of truth.
 
 Search for the statement shape, not the module name. A landed lane died reproving a frozen theorem in strictly weaker form (it added a derivable `Odd d` hypothesis) even though it had been told to read that exact module: reading a module and greping for the identity are different acts, and only the second one protects you. Grep `D5/` for the hypothesis pattern and the conclusion pattern of your target, for example:
@@ -231,7 +240,8 @@ fidelity and the per-declaration judgement form against the unfrozen tree; it pa
 finding it lists is resolved in the tree that goes through the doors. In the two-stage pipeline of
 `CLAUDE.md` §3.6 (探针 → Stage A → 镜像核对 → Stage B → 三席评审) it is the mirror-check and
 judgement-form seat between Stage A and the Stage-B doors. The sshx review triplet (tests / quality /
-architecture) follows the doors in that order and must pass before merge. If a review needs an early
+architecture) follows the doors in that order and must pass before merge; a pure digestion delivery
+(Step 3) has no review triplet. If a review needs an early
 draft, first complete the publication boundary below and use Step 8 to publish the draft with freeze
 and cover still pending; return here after that review.
 
