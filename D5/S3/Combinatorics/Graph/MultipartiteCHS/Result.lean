@@ -2,7 +2,7 @@
    generality: G
    mirror-B: D5/B/S3/Combinatorics/Graph/MultipartiteCHS/Result
    mirror-E: none(waiver:evidence-not-specified-by-formal-manifest)
-   anchors: [mathlib/module/Mathlib.Analysis.SpecialFunctions.Pow.Real]
+   anchors: []
    utility: none
    digest: The complete multipartite CHS norm has strict fixed-part-count extrema. -/
 
