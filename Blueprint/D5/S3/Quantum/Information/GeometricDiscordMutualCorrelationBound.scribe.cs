@@ -130,7 +130,7 @@ internal sealed class GeometricDiscordMutualCorrelationBoundDocument : IScribeDo
         Formula u = F.Id("U"), c = F.Id("c"), d = F.Id("d");
         Formula vector = Seq(Index(3), To, Sp, Reals());
         Formula rotated = Call("rotateState", u, Rho);
-        Formula value = Call("dot", c, Call("mulVec", Call("connectedCorrelation", rotated), d));
+        Formula value = Call("dotProduct", c, Call("mulVec", Call("connectedCorrelation", rotated), d));
         Formula absolute = Seq(Lvert, Sp, value, Rvert);
         return All(Rho, TwoQubit(), ImpliesTo(Call("PosSemidef", Rho),
             ImpliesTo(Equal(Call("trace", Rho), D(1)),
