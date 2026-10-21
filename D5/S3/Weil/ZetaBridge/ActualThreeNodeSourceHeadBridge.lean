@@ -31,6 +31,8 @@ namespace D5.S3.Weil.ZetaBridge.ActualThreeNodeSourceHeadBridge
 set_option autoImplicit false
 set_option relaxedAutoImplicit false
 
+attribute [local instance 2000] InnerProductSpace.toInner
+
 /-- Literal cropping of BOTH signed exterior columns. -/
 private lemma actual_tail_crop (c N J : ℕ) (S : Finset ℤ) (v : ℤ → ℂ) (j : ℕ) :
     pairedColumnTerm c (N + J) S v j = pairedColumnTerm c N S v (j + J) := by

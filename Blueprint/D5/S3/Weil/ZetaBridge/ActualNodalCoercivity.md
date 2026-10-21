@@ -56,19 +56,7 @@ The column is precisely the sum over n in S of the complex cast of the real quot
 
 Attribution: this is the classical common-denominator form of unnormalised Lagrange interpolation, applied to the repository's actual arithmetic divided difference. It makes no novelty claim.
 
-**Theorem 1.5 (Reconstruction at a retained node).**
-
-Lean statement: `D5/S3/Weil/ZetaBridge/ActualNodalCoercivity.numerator_eval_node`
-
-*Proof.* Machine-checked in Lean as `D5/S3/Weil/ZetaBridge/ActualNodalCoercivity.numerator_eval_node` (`✓ std3`). ∎
-
-*Source.* Repository-derived.
-
-*Commentary.*
-
-For every finite integer set S, complex coefficient function v, and n in S, Q(S,v).eval(n : Complex) equals v(n) times the evaluation at n of the nodal polynomial on S.erase(n). All other terms vanish at that retained node; the erased product is nonzero because the integer nodes are distinct. This reconstructs the original retained coefficient and places no condition on the arithmetic symbol.
-
-**Theorem 1.6 (An explicit coefficient bound uniform in the vector and the scale).**
+**Theorem 1.5 (An explicit coefficient bound uniform in the vector and the scale).**
 
 Lean statement: `D5/S3/Weil/ZetaBridge/ActualNodalCoercivity.uniform_coefficient_reconstruction`
 
@@ -90,6 +78,5 @@ Attribution: standard integer-node Lagrange reconstruction and finite Cauchy-Sch
 - Truth anchor: `D5/S3/Weil/ZetaBridge/ActualNodalCoercivity.P`
 - Truth anchor: `D5/S3/Weil/ZetaBridge/ActualNodalCoercivity.Q`
 - Truth anchor: `D5/S3/Weil/ZetaBridge/ActualNodalCoercivity.actual_nodal_polynomial_model`
-- Truth anchor: `D5/S3/Weil/ZetaBridge/ActualNodalCoercivity.numerator_eval_node`
 - Truth anchor: `D5/S3/Weil/ZetaBridge/ActualNodalCoercivity.uniform_coefficient_reconstruction`
 - Dependency: [D5/S3/Weil/ZetaBridge/WeilArithmeticCouplingJet](WeilArithmeticCouplingJet.md)
