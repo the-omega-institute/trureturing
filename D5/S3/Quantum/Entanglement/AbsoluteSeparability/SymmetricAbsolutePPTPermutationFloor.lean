@@ -27,7 +27,6 @@ proof_shape: cross_partialTranspose_gram: content; consumer: SymmetricAbsolutePP
 proof_shape: cross_partialTranspose_psd: content; consumer: SymmetricAbsolutePPTPermutationFloor.symmetrizer_partialTranspose_floor; escape_witness: SymmetricAbsolutePPTPermutationFloor.cross_partialTranspose_gram; Direct frozen dependencies: none.
 proof_shape: Average.expect_formula: bind-only; consumer: SymmetricAbsolutePPTPermutationFloor.Average.avg_idempotent, SymmetricAbsolutePPTPermutationFloor.Average.avg_hermitian, SymmetricAbsolutePPTPermutationFloor.Average.subgroup_avg_left, SymmetricAbsolutePPTPermutationFloor.Average.avg_section, SymmetricAbsolutePPTPermutationFloor.Q_mul_P, SymmetricAbsolutePPTPermutationFloor.P_hermitian, SymmetricAbsolutePPTPermutationFloor.P_idempotent, SymmetricAbsolutePPTPermutationFloor.Local.avg_transpose, SymmetricAbsolutePPTPermutationFloor.Local.localP_tensor, SymmetricAbsolutePPTPermutationFloor.P_mulVec_of_symmetric; escape_witness: none; Direct frozen dependencies: none.
 proof_shape: Average.avg_left: bind-only; consumer: SymmetricAbsolutePPTPermutationFloor.Average.subgroup_avg_left, SymmetricAbsolutePPTPermutationFloor.Q_mul_P; escape_witness: none; Direct frozen dependencies: none.
-proof_shape: Average.avg_right: bind-only; consumer: SymmetricAbsolutePPTPermutationFloor.Average.avg_idempotent; escape_witness: none; Direct frozen dependencies: none.
 proof_shape: Average.avg_idempotent: bind-only; consumer: SymmetricAbsolutePPTPermutationFloor.P_idempotent, SymmetricAbsolutePPTPermutationFloor.PiS_idempotent; escape_witness: none; Direct frozen dependencies: none.
 proof_shape: Average.avg_hermitian: bind-only; consumer: SymmetricAbsolutePPTPermutationFloor.P_hermitian, SymmetricAbsolutePPTPermutationFloor.Local.avg_transpose, SymmetricAbsolutePPTPermutationFloor.PiS_hermitian; escape_witness: none; Direct frozen dependencies: none.
 proof_shape: Average.subgroup_avg_left: bind-only; consumer: SymmetricAbsolutePPTPermutationFloor.PiS_mul_P; escape_witness: none; Direct frozen dependencies: none.
@@ -231,9 +230,6 @@ private lemma expect_formula (R : G → Matrix I I ℂ) :
 private lemma avg_left (R : G →* Matrix I I ℂ) (g : G) : R g * Finset.expect Finset.univ R = Finset.expect Finset.univ R := by
   rw [Finset.mul_expect]
   exact Fintype.expect_equiv (Equiv.mulLeft g) _ _ (fun h => (R.map_mul g h).symm)
-private lemma avg_right (R : G →* Matrix I I ℂ) (g : G) : Finset.expect Finset.univ R * R g = Finset.expect Finset.univ R := by
-  rw [Finset.expect_mul]
-  exact Fintype.expect_equiv (Equiv.mulRight g) _ _ (fun h => (R.map_mul h g).symm)
 private lemma avg_idempotent (R : G →* Matrix I I ℂ) : Finset.expect Finset.univ R * Finset.expect Finset.univ R = Finset.expect Finset.univ R := by
   classical
   let E : Matrix I I ℂ ≃ₐ[ℂ] Module.End ℂ (I → ℂ) := Matrix.toLinAlgEquiv'
