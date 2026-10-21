@@ -1,0 +1,46 @@
+**Theorem 21.1 (Exactly six remaining projected roots).** For every
+$(p,v)\in\mathcal P\times\mathcal V$, $R_{18}(r,p,v)$ has exactly
+six distinct roots in $0<r<1$, one in each interval $I_1,\ldots,I_6$
+below and no others. Each is simple as a root in $r$.
+
+Proof. The certificate uses a centered parameter expansion; it keeps
+all mixed terms. Let
+
+$$
+\begin{gathered}
+p_c=(p_L+p_U)/2,\quad v_c=(v_L+v_U)/2,\quad
+h_p=\frac1{200000000},\quad h_v=\frac{37007}{2000000000000},\\
+R_{18}(r,p_c+x,v_c+y)=\sum_{i,j}A_{ij}(r)x^iy^j.
+\end{gathered}
+\tag{21.1}
+$$
+
+The endpoints here are those of (18.1), (19.1). On a closed interval
+$[a,b]$, first write
+$A_{ij}(a+(b-a)t)=\sum_{\ell=0}^{18}a_{ij\ell}t^\ell$,
+padding with zeros, and define its common-degree Bernstein coefficients
+
+$$
+\beta_{ijk}=\sum_{\ell=0}^k
+ a_{ij\ell}\frac{\binom{k}{\ell}}{\binom{18}{\ell}},\qquad
+ e_k=\sum_{i+j>0}|\beta_{ijk}|h_p^ih_v^j.
+\tag{21.2}
+$$
+
+Thus the $k$th Bernstein coefficient of $R_{18}$ for every parameter
+pair is enclosed by $[\beta_{00k}-e_k,\beta_{00k}+e_k]$.
+Using the integer coefficient table in Section 24 gives the following
+sign words, in order $k=0,\ldots,18$. Every one of the $171$
+coefficient intervals excludes zero.
+
+| Closed $r$ interval | Bernstein coefficient signs | Variation |
+| --- | --- | --- |
+| $[0,1/4]$ | `-------------------` | $0$ |
+| $[1/4,5/16]$ | `---------++++++++++` | $1$ |
+| $[5/16,3/8]$ | `++++++++++++-------` | $1$ |
+| $[3/8,1/2]$ | `-------------------` | $0$ |
+| $[1/2,3/4]$ | `-------------------` | $0$ |
+| $[3/4,13/16]$ | `--------------+++++` | $1$ |
+| $[13/16,27/32]$ | `+++++--------------` | $1$ |
+| $[27/32,7/8]$ | `---------------++++` | $1$ |
+| $[7/8,1]$ | `++++---------------` | $1$ |

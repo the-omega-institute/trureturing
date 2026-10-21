@@ -1,0 +1,51 @@
+## 17. Suppliers, inherited constructions and the remaining common parent
+
+The full-fiber and full-parent component consequences in Sections 12–16
+are ordinary model-specific repository-derived mathematics. Fixed-node
+interpolation, the intermediate and implicit function theorems,
+Sylvester elimination and Sturm root counting are reused tools. No
+priority or exhaustive novelty assertion accompanies these consequences.
+Their exact supplier correspondence is as follows.
+
+| Supplier | Hypotheses and use here |
+| --- | --- |
+| This volume, Definitions 1.1–1.3 and Theorem 2.1 | Entire nonzero degree-at-most-three gain, one fixed drift, strict rank-one source, original clocks, actual left products, complete-world guards and the full parent reconstruction. Lemma 16.2 uses that reconstruction with $\beta=1/8$ in complete-coefficient topology. |
+| [Terminal-zero-plane volume](FIB_TERMINAL_ZERO_PLANE_INVERSE_AND_J_PAIR_CHAMBER.md), Theorems 9.2–9.3 and (9.5)–(9.19) | Its $F=M$, $A=z=24,C=147/5,Y=18$, $V_M=U+n$ and $a_4=U\Lambda,a_{5,M}=A_5$ are precisely Lemma 12.2. Its full strict-source no-common-zero theorem includes $\Lambda=0$ and unbounded offdiagonals; a chamber inverse is not substituted for it. |
+| [Entire-response volume](FIB_C35_ENTIRE_JM_RESPONSE_INJECTIVITY.md), Theorems 15.2–15.4 | Its width $\beta=1/8$ gives $\mathcal K$ and the exact joint inverse (14.4). Its exact-$h$ exclusion alone is not the whole-fiber exclusion (15.5). |
+| This volume, Theorems 4.1–4.2, 5.1, 8.1, 9.1 and Definition 10.1 | Singular fixed-width worlds, the three-world and direction necessities, the two actual different-fifth-response children, the mirror pair and the same-child terminal-slot conditions retain their literal histories. |
+| Berrut–Trefethen, *[Barycentric Lagrange Interpolation](https://doi.org/10.1137/S0036144502417715)*, §2, (2.1)–(2.2) | Existence and uniqueness at fixed distinct nodes. Here the nodes are $0,1,2,3$ for the parent and $0,1,3,5$ for $p=24$; the actual interpolation rows are displayed. This supplies no model collision by itself. |
+| Jiří Lebl, *[Basic Analysis II](https://www.jirka.org/ra/realanal2.pdf)*, Theorem 8.5.6 | The ordinary implicit function theorem on an open Euclidean domain for a continuously differentiable map with invertible dependent-variable Jacobian. The derivatives used are $H_b>0$, $\partial_bR_0=448/25$, and the explicit three-by-three determinant (16.20); each application includes local uniqueness of all nearby zeros. |
+| Cox–Little–O'Shea, *[Ideals, Varieties, and Algorithms](https://doi.org/10.1007/978-3-319-16721-3)*, Chapter 3 | The Sylvester resultant and its necessary common-finite-root implication. Equations (14.9)–(14.10) fix the actual polynomials, row order, signs and exact coefficient generation. A projected resultant zero is never treated as sufficient for a legal world. |
+| Basu–Pollack–Roy, *[Algorithms in Real Algebraic Geometry](https://doi.org/10.1007/3-540-33099-2)*, univariate real-root methods | Sturm's root-counting theorem. The signed recurrence, normalization, all endpoint signs, individual isolations and rational arithmetic needed here are given in Section 14. The generic method does not itself classify this complete-world fiber. |
+
+The inherited exact-$h$ fifth-J $L_2$ still uses
+$r=1/2,5/8,3/4$, $b=1/8$, $g=h$, $d=24$, fifth-J response $24$ and
+one acquired sixth response $54$ for J and $57$ for M. Its actual
+terminal pairs and original clocks are unchanged. Theorem 8.1 remains
+an actual all-external sixth-J $L_1$ at its own fifth-M response
+$2744214237/10^8<p_J<2744214238/10^8$. Theorem 9.1 remains an actual
+sixth-M $L_1$ at $p=24$. Theorem 15.4 excludes every sixth-J $L_1$ at
+that latter fifth response, so these two children do not combine to
+supply the missing M arm. In particular the earlier possibility in
+Definition 10.2 of another sixth-J child at $p=24$ is excluded by
+(15.5); its common-parent problem remains otherwise unresolved.
+The exact offslice support of Theorem 6.1 also retains its original
+scope and responses $357018/2575$ and $464403/2575$ at sixth traces
+$7/2$ and $19/4$; excluding that chosen support does not exclude its
+whole fifth fiber.
+
+The component theorem only rules out changing $p$ by continuous legal
+continuation of the same ordered mirror pair. It leaves every other
+MM component and every replacement or discontinuous pair legal. The
+new necessary condition below is $p\ne24$ for the still unresolved
+common-parent M arm; it is not a general-$p$ impossibility theorem,
+a recovery result, a stability result or a complexity bound.
+
+Earlier ancestors, alternative histories and actions, same-parent
+$L_3$, the original guarded root $L_7$, full cubic unrestricted
+deterministic adaptive eight-read recovery or impossibility, comparison
+with nine total readings and full-original-domain nine-read sufficiency
+remain open. Nothing here transfers a quadratic-source conclusion to
+cubic worlds. In particular no restriction of continuity, measurability,
+computability or finite description is imposed on actual strategies.
+
