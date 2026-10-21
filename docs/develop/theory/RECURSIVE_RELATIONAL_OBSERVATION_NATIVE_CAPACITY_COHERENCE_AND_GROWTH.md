@@ -3988,3 +3988,94 @@ For SAT prefixes the rank $m-|u|$ decreases on every extension. Selecting that e
 Fix a local dimension $d_0$ and a finite inverse-closed instruction set $\mathcal G\subset SU(d_0)$ generating a dense subgroup, independently of input size and trajectory length. For $L\ge1$ effectively supplied targets $U_i\in SU(d_0)$ at declared sites, with effective numerical access sufficient for operator-norm accuracy $\epsilon/L$, the compilation and telescoping estimate in [Dawson–Nielsen's note](../../../Library/Computability/dawsonnielsen2006solovaykitaev.md) give compiled word length $O_{d_0,\mathcal G}(L\log^c(L/\epsilon))$ and total error at most $\epsilon$, for $0<\epsilon<1/2$. The exponent and constants are those of the fixed compiler; no uniformity in a growing whole-register dimension is asserted. This word-length bound uses the declared site-access model. Acquiring target descriptions, selecting sites, wiring or routing, obtaining precision, numerical arithmetic, compilation and installation are charged in any native total-work claim, along with preparation and final readout. None is made a free primitive by this estimate. This transfers a supplied trajectory bound; it supplies neither $L\le\operatorname{poly}(n)$ nor a constant probability of the correct task answer. The verifier experiment and uniform bounded-error definition in [Watrous's circuit note](../../../Library/Computability/watrous2011quantumcircuits.md) separate those obligations: a polynomial quantum SAT solver gives $\mathrm{NP}\subseteq\mathrm{BQP}$, whereas a deterministic polynomial classical solver gives $\mathrm P=\mathrm{NP}$. These distinctions use endogenous operation counts. This section contains reference-input derivations, without a claim of kernel certification or a solved SAT growth construction.
 
 ## 追加锚（本行以下为增补区）
+
+## 22. Native product pulses and the acquisition of global variational parameters
+
+**Definition 22.1 (a succinct clause task on the native zero-separated code).**
+Let $\varphi$ be a 3CNF formula with $n\ge1$ variables and $M\ge1$ clauses, supplied as a list of literals in binary.
+Remove repeated literals within a clause and discard tautological clauses. An empty clause is an immediate unsatisfiable input;
+if no clauses remain, the input is immediately satisfiable. For the remaining family, let $M\ge1$ count the retained clauses.
+The bounds below also apply to clauses of size one or two.
+Use the length-$2n-1$ legal FIB code
+
+$$
+|z_1\,0\,z_2\,0\,\cdots\,0\,z_n\rangle.
+$$
+
+Under [Static Compatibility Fiber Assumption 55.2](AURIC_OMEGA_STATIC_COMPATIBILITY_FIBER_THEORY.md),
+start in the zero word, leave all even sites at zero, and independently apply the odd-site pulses
+$R_{2i-1}(\theta_i)=\exp(-i\theta_iP^0_{2i-2}X_{2i-1}P^0_{2i})$, with boundary projectors omitted.
+Every pulse prefix preserves this code. In logical coordinates the resulting state is
+
+$$
+|\psi(\theta)\rangle=\bigotimes_{i=1}^n
+(\cos\theta_i|0\rangle-i\sin\theta_i|1\rangle).
+$$
+
+For each clause $C$, let $\Pi_{C,\mathrm{false}}$ project onto its unique falsifying assignment on its distinct variables,
+and act as identity on other logical sites. Supply the observable succinctly as a sum, not as a full matrix:
+
+$$
+H_\varphi=\sum_C\Pi_{C,\mathrm{false}},\qquad
+E_\varphi(\theta)=\langle\psi(\theta)|H_\varphi|\psi(\theta)\rangle.
+$$
+
+This is a declared cost readout on the encoded space, not an assertion that its Hamiltonian evolution is already a free native operation.
+
+**Theorem 22.2 (global optimization already contains SAT on the product subfamily).**
+In Definition 22.1's ideal pulse model,
+
+$$
+\min_{\theta\in\mathbb R^n}E_\varphi(\theta)
+=\min_{z\in\{0,1\}^n}C_\varphi(z),
+$$
+
+where $C_\varphi(z)$ is the number of violated clauses. Thus the optimum is zero exactly for satisfiable formulas;
+otherwise it is an integer at least one. No entanglement or joint-phase gate is needed for this family.
+
+Proof. The neighboring even sites remain zero at each prefix, so the supplied constrained flip restricts to the logical $X_i$.
+Different logical sites commute and produce the displayed product state. Its probabilities are independent Bernoulli variables with
+$q_i=\sin^2\theta_i$. Since the observable is diagonal,
+
+$$
+E_\varphi(\theta)=\sum_zp_\theta(z)C_\varphi(z)\ge\min_zC_\varphi(z).
+$$
+
+Every Boolean corner is achieved: choose $\theta_i=0$ for $z_i=0$ and $\theta_i=\pi/2$ for $z_i=1$.
+The resulting basis vector has only an irrelevant overall phase. This attains the lower bound. QED.
+
+Mathematical attribution. [Bittel and Kliesch](../../../Library/Computability/bittel2021training.md) already establish NP-hardness of variational optimization,
+including efficiently classically simulable families. The new correspondence here identifies the independently addressable native FIB pulses,
+code-preserving prefixes, succinct clause observable and exact unnormalized promise gap.
+It is an application of standard optimization hardness, not a new general VQA hardness claim.
+
+**Proposition 22.3 (finite arithmetic and the value-oracle contract).**
+Put $q_i=\sin^2\theta_i$. If $q_i$ are supplied as binary rationals, the objective and its $q$-gradient are computable exactly in time polynomial
+in the formula length and total rational encoding length. More generally, an approximation to the global optimum with guaranteed additive error
+at most a fixed $\delta<1/2$, output as a finite binary rational by one deterministic polynomial-time classical algorithm for every input formula,
+would imply $\mathrm P=\mathrm{NP}$.
+
+Proof. For a positive literal $z_i$, its falsifying probability is $1-q_i$; for a negative literal it is $q_i$.
+A clause contributes the product of at most three such factors. Summing $M$ terms evaluates the energy;
+differentiating these products evaluates the gradient without division, including $q_i=0,1$.
+Each product and the sum use polynomially many rational operations with polynomial bit length.
+The cube $[0,1]^n$ is covered by $q_i=\sin^2\theta_i$, so it has the same optimum as Theorem 22.2.
+An optimum estimate is below $1/2$ on satisfiable inputs and above $1/2$ on unsatisfiable inputs.
+This decides SAT, yielding the complexity conclusion. QED.
+
+If an algorithm returns angle parameters instead of a value, their finite representation and energy evaluation accuracy must meet the same separation contract;
+arbitrary real angles are not free input data. In angle coordinates the analytic chain rule gives
+$\partial_{\theta_i}E=\sin(2\theta_i)\partial_{q_i}E$; numerical evaluation has its own precision cost.
+Replacing $H_\varphi$ by $H_\varphi/M$ changes the promise gap to $1/M$ and the sufficient approximation tolerance to less than $1/(2M)$.
+The ideal exact corner pulses establish the variational equality; a physical finite-precision preparation needs an additional error bound.
+
+**Definition 22.4 (the remaining endogenous acquisition obligation).**
+For this family, a proposed observer must obtain the parameters, relevant summaries and verifiable final output from its actual retained state.
+The cost-supported progress contract is Definition 21.4: acquisition, sampling, memory updates, compilation and delivery are included in the completed costs $c_j$.
+Its telescoping bound supplies polynomial total work only after a uniform controller, a nonnegative polynomially bounded potential,
+and the charged descent inequality are supplied on every reachable nonterminal state.
+Theorem 22.2 supplies none of those global-progress objects, and local gate universality does not supply them.
+A bounded-error polynomial quantum SAT procedure has the different consequence $\mathrm{NP}\subseteq\mathrm{BQP}$;
+the deterministic classical value algorithm in Proposition 22.3 is the one that gives $\mathrm P=\mathrm{NP}$.
+
+## 追加锚（本行以下为增补区）
