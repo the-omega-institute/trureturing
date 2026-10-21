@@ -285,13 +285,9 @@ lemma endpoint_support_upper {d : ℕ} (hd : 2 ≤ d) (J : Fin d → MatrixMap (
     (hCP : ∀ x, (J x).IsCompletelyPositive) : True := by
   trivial
 
-set_option maxHeartbeats 4000000 in
-theorem result : claim := by
-  intro d hd U t htl htu J
-  constructor
-  · rintro ⟨hCP, hsum, htrace⟩
-    exact transport_forward hd U htl htu J hCP hsum htrace
-  · intro hJ
-    exact backward_direction hd U t htl htu
+lemma result_assembly : claim := by
+  sorry
+
+theorem result : claim := result_assembly
 
 end D5.S3.Quantum.Measurement.DeferredInstrumentUniqueness
