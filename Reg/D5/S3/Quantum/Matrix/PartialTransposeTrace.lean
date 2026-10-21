@@ -46,7 +46,8 @@ private theorem actual_dependence : ObservationalDependence signature actual := 
   refine ⟨⟨Fin 1,Fin 1⟩, 0, (fun _ _ => 1), ?_⟩
   intro heq
   have he := congrFun (congrFun heq (0,0)) (0,0)
-  norm_num [actual, realize, partialTranspose] at he
+  norm_num [actual, realize, partialTranspose,
+    _root_.D5.S3.Quantum.Entanglement.AbsolutePPT.Bipartite.partialTranspose] at he
 /-- The one-role/no-anchor argument at the actual higher-universe signature. -/
 private theorem actual_sensitivity : Sensitivity arena actual := by
   constructor

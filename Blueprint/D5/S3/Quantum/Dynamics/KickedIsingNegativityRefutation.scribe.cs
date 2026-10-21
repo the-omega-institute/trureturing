@@ -13,6 +13,7 @@ internal sealed class KickedIsingNegativityRefutationDocument : IScribeDocumentD
         "Pathak's generic-state negativity identity fails on a four-site kicked Ising chain.",
         H("A generic-state counterexample in the kicked Ising chain"),
         Blocks(
+            Paragraph(Text("For arbitrary local index types, partialTranspose sends the entry at ((a,b),(c,d)) to the input entry at ((a,d),(c,b)). It is definitionally equal to Bipartite.partialTranspose on the same complex matrix domain.")),
             Node("hIsing", "Ising Hamiltonian", IsingFormula(),
                 "Equation (1), p. 1, defines H_I = J ∑ᵢ σᶻᵢσᶻᵢ₊₁ + ∑ᵢ hᵢσᶻᵢ. The source states: \"We specifically consider J = π/4, b = −π/4 for our analysis.\" Sites use Fin L, with finRotate L as the periodic successor; ↑ and ↓ are 0 and 1. The frozen localOp embeds a qubit matrix at its site, and qubitZ is the Pauli Z matrix. Real coefficients enter ℂ through ofReal; smul is scalar multiplication."),
             Node("hKick", "Kick Hamiltonian", KickFormula(),
