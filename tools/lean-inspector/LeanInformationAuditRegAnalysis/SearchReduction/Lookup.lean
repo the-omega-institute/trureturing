@@ -195,17 +195,26 @@ closed kernel certificate check. An exception aborts enumeration. -/
 def lookupLeaf (table : LookupTable) (goal : MVarId)
     (unify close : MVarId → MetaM Bool) : MetaM LookupTrace := goal.withContext do
   if !table.enabled then return {complete := true}
+  let started ← IO.getNumHeartbeats
   let detailed := (← IO.getEnv "SEARCH_REDUCTION_PROFILE_DETAIL").isSome
   let head := rigidHead (← getEnv) (← goal.getType)
   let some index ← tableIndex table | return {}
   let candidates ← DiskLookup.query index (DiskLookup.candidateKeys (← getEnv) (← goal.getType))
-  let trace ← candidates.entries.foldlM (init := ({complete := candidates.complete && table.complete, pages := candidates.pages} : LookupTrace)) fun (trace : LookupTrace) entry => do
+  -- Rigid rejection is pure and preserves the recalled order. Avoid entering
+  -- Meta/Core and checking the system separately for every rejected record.
+  let environment := table.environment.setExporting false
+  let matching := candidates.entries.filter fun entry =>
+    match environment.find? entry.leanName with
+    | some info => eligible info && !info.isUnsafe && possibleView environment head info.type
+    | none => true
+  lookupPhase s!"lookup/rigid-filter recalled={candidates.entries.size} retained={matching.size} heartbeats={(← IO.getNumHeartbeats) - started}"
+  checkSystem "lookup.rigid_filter"
+  let trace ← matching.foldlM (init := ({
+      complete := candidates.complete && table.complete, pages := candidates.pages,
+      visited := candidates.entries.size - matching.size} : LookupTrace)) fun (trace : LookupTrace) entry => do
     if trace.source?.isSome then return trace
     checkSystem "lookup.page_candidate"
     let name := entry.leanName
-    if let some info := (table.environment.setExporting false).find? name then
-      if !eligible info || info.isUnsafe || !possibleView table.environment head info.type then
-        return {trace with visited := trace.visited + 1}
     let initial ← get
     let cache := (← getThe Core.State).cache
     let original ← saveState
@@ -260,6 +269,7 @@ def lookupLeaf (table : LookupTable) (goal : MVarId)
     set initial
     modifyThe Core.State fun s => {s with cache}
     return {trace with attempted}
+  checkSystem "lookup.certification_finished"
   return {trace with complete := trace.source?.isNone && trace.complete}
 
 end LeanInformationAudit.SearchReduction
