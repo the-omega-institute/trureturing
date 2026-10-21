@@ -522,7 +522,7 @@ private theorem extendCopy_denote (C : CopyTerm 1) (g : Generator nativeSignatur
           (if _ : (1 : Fin 2) = 1 then x else _))
       rfl
 
-private theorem word_to_copy_denote (w : List (Generator nativeSignature)) (X : B) :
+theorem word_to_copy_denote (w : List (Generator nativeSignature)) (X : B) :
     evalDiagonal (wordToCopy w) X = contextDenote nativeSignature w X := by
   let step := fun (s : Option B) (g : Generator nativeSignature) => strictStep nativeSignature g s
   have run_fold (w : List (Generator nativeSignature)) (s : Option B) :
