@@ -179,3 +179,52 @@ Auxiliary variables can enlarge total variable count while reorganizing unfinish
 [COOK]: cook2006pversusnp.md
 
 ## 追加锚（本行以下为增补区）
+
+## 5. CNF crossing-clause satisfaction masks
+
+**Definition 5.1 (Clause frontier, with an explicit order).** Let a CNF formula and an order $x_1,\ldots,x_m$ of all its listed variables have total explicit encoding length $N$. Variable names are finite strings renumbered by occurrence, not integers whose magnitudes supply unlisted variables. For $P_i=\{x_1,\ldots,x_i\}$ and $U_i=\{x_{i+1},\ldots,x_m\}$, put
+
+$$
+C_i=\{D:\operatorname{var}(D)\cap P_i\ne\varnothing,
+\ \operatorname{var}(D)\cap U_i\ne\varnothing\},
+\qquad k=\max_{0\le i\le m}|C_i|.
+\tag{15}
+$$
+
+Clause occurrences have distinct indices even if their texts coincide. The parameter counts crossing clauses, whereas (2) counts retained variable values. Neither is defined here as induced width. The construction below is an elementary clause-specific application of ordered dynamic programming and residual sharing; it is not a new theorem attributed to Dechter's induced-width analysis or to Bryant's reduced-graph theorem.
+
+**Proposition 5.2 (A sufficient clause record).** At layer $i$, use failure $\bot$ if a completed clause is false; otherwise record the subset $S\subseteq C_i$ already satisfied by a processed literal. Prefixes with the same record have the same residual Boolean function. There are at most $2^{|C_i|}+1$ records, and each next-bit record is computable in $\operatorname{poly}(N)$ bit operations.
+
+Proof. A completed true clause imposes no further condition, a future-only clause is fixed by the supplied formula and layer, and a crossing clause is either already true or still requires its fixed unprocessed literals. Thus the residual for a normal record is exactly
+
+$$
+\bigwedge_{\operatorname{var}(D)\subseteq U_i}D
+\ \land\!
+\bigwedge_{D\in C_i\setminus S}(D|_{U_i}),
+\tag{16}
+$$
+
+with empty clauses handled by the failure test. This proves sufficiency without computing a minimal semantic quotient.
+
+To append $x_{i+1}=b$, scan the clauses. A previously crossing clause has prior satisfaction bit $\mathbf1[D\in S]$. A clause whose first variable is $x_{i+1}$ has prior bit zero. OR that bit with the truth values of its literals on $x_{i+1}$. If the clause now completes with bit zero, enter failure. Otherwise retain the updated bit exactly for clauses crossing the new cut. Completed clauses were already checked; clauses still wholly future need no bit. Failure propagates. The clause indices, scopes, literals and masks have polynomial length, so scans and updates have polynomial bit cost.
+
+At initialization, any empty clause causes failure. Repeated literals are evaluated by OR and tautological clauses become satisfied when a complementary pair's variable is processed. Unused listed variables have a valid transition that changes no clause bit. At the final cut all clauses are complete, so a normal empty mask accepts and failure rejects. The empty conjunction accepts; the zero-variable case is settled at initialization. $\square$
+
+**Proposition 5.3 (Decision and witness cost on a bit model).** A fixed deterministic multitape algorithm decides satisfiability and, on YES inputs, outputs a witness within
+
+$$
+O\bigl((m+1)2^k\operatorname{poly}(N)\bigr)
+\tag{17}
+$$
+
+bit operations. In particular, a supplied order with $k=O(\log(N+2))$ gives polynomial time. Producing an order not supplied with the input requires its own charged algorithm.
+
+Proof. Generate reachable masks layer by layer from the actual initialization. Each mask produces two candidate successor records by Proposition 5.2. Sort the candidates by their exact bit-string masks and retain one parent index and input bit per distinct successor. Every retained record is reached by a real prefix; conversely induction shows every prefix reaches a retained record. Terminal acceptance therefore decides satisfiability, and the parent indices reconstruct an accepting assignment.
+
+Each layer has at most $2^k+1$ records. A candidate, its parent index and its mask use $\operatorname{poly}(N)$ bits, since $k\le N$ and $m\le N$. Deterministic merge sorting of $O(2^k+1)$ such records on a fixed finite number of sequential tapes takes $O((2^k+1)\log(2^k+2)\operatorname{poly}(N))$ bit operations. Its logarithmic factor is polynomial in $N$. No random-access table lookup or semantic equivalence oracle is assumed. Assign parent indices in the sorted previous layer; for witness reconstruction, scan the stored layer lists to find the indicated parents. Even scanning the entire stored table for each of the at most $m$ output bits adds only a polynomial factor in $N$ to its $O((m+1)2^k\operatorname{poly}(N))$ size. Formula scans, sorting, addresses, output and initialization are all included in (17). $\square$
+
+**Proposition 5.4 (Clause records can be smaller than full variable records).** For the single clause $x_1\lor\cdots\lor x_m$, $m\ge2$, the order shown has $k=1$ in (15), but maximum variable frontier size $m-1$ in (2).
+
+Proof. At each nontrivial cut the only clause crosses, so $|C_i|=1$. Every already processed variable shares this unfinished clause with a future variable, so $B_i=P_i$ until the final cut. Clause satisfaction needs only one bit, whereas retaining all previous values stores $i$ bits. Thus the two sufficient representations have different widths. The observation does not establish a lower bound for arbitrary succinct completion programs; Proposition 4 already separates explicit residual counts from a selector's runtime. $\square$
+
+## 追加锚（本行以下为增补区）
