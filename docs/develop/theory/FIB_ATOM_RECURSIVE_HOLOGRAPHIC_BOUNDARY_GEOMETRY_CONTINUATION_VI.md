@@ -2098,3 +2098,335 @@ questions separate. The arguments here are mathematical prose and carry
 no Lean kernel-verification assertion.
 
 ## 130.99 追加锚（本行以下为增补区）
+
+## 131. Native orthogonal birth coordinates
+
+The next statements use one actual accepted step from §§127--130. Write
+$n=|V_e|$, $k=|B_e|$, and suppress the epoch subscript. Thus $P$ is the
+actual parent selector, $T=[\,I_n;P\,]$, $W=[\,I_n\ 0;P\ I_k\,]$, and
+
+$$
+L_+=\begin{pmatrix}L+P^{\mathsf T}P&-P^{\mathsf T}\\-P&I_k\end{pmatrix},\qquad
+W^{\mathsf T}L_+W=\operatorname{diag}(L,I_k).
+$$
+
+The coherent metric in residual coordinates is the matrix already supplied by
+(127.3), namely
+
+$$
+{\mathscr G}:=W^{\mathsf T}G_+W
+ =\begin{pmatrix}G&gq^{\mathsf T}\\qg^{\mathsf T}&K^{-1}+hqq^{\mathsf T}\end{pmatrix},\qquad
+g=G\mathbf 1_n,\quad h=\mathbf 1_n^{\mathsf T}G\mathbf 1_n,\quad K=K^{\mathsf T}\succ0.
+$$
+
+Let $S=G^{1/2}$ and $S_+=G_+^{1/2}$ denote the symmetric positive square
+roots. The normalized one-particle operators are
+
+$$
+H=S^{-1}LS^{-1},\qquad H_+=S_+^{-1}L_+S_+^{-1}.
+$$
+
+These are finite real symmetric matrices; complex Hilbert spaces below mean the
+complexifications of the displayed real spaces.
+
+**Definition 131.1 (residual birth chart).** Put
+
+$$
+B_0=\begin{pmatrix}-\mathbf 1_nq^{\mathsf T}\\ I_k\end{pmatrix},\qquad
+B=WB_0,\qquad
+V=S_+TS^{-1},\qquad
+Z=S_+BK^{1/2},\qquad U=[\,V\ Z\,].
+$$
+
+For $k=0$, these formulas are read with the unique empty matrices and $U=V$.
+The columns of $B$ are the actual-coordinate birth directions, while $B_0$
+is their residual-coordinate representative.
+
+**Proposition 131.2 (explicit orthogonal complement).** For every real $q$ and
+every symmetric positive-definite $K$ allowed by (127.3),
+
+$$
+V^{\mathsf T}V=I_n,\qquad V^{\mathsf T}Z=0,\qquad Z^{\mathsf T}Z=I_k,\qquad
+U^{\mathsf T}U=I_{n+k}.
+$$
+
+Consequently $U$ is unitary after complexification.
+
+**Proof.** Let $E=[\,I_n;0\,]$, so that $T=WE$. Direct multiplication with
+the displayed $\mathscr G$ gives
+
+$$
+E^{\mathsf T}\mathscr G B_0=0,\qquad B_0^{\mathsf T}\mathscr G B_0=K^{-1}.
+$$
+
+Indeed, the upper block in the first identity is
+$-G\mathbf1_nq^{\mathsf T}+gq^{\mathsf T}=0$, and the Schur-complement
+part of the second identity is exactly $K^{-1}$. Since
+$T^{\mathsf T}G_+T=G$, $T^{\mathsf T}G_+B=0$, and
+$B^{\mathsf T}G_+B=K^{-1}$. Therefore
+
+$$
+\begin{aligned}
+V^{\mathsf T}V&=S^{-1}T^{\mathsf T}G_+TS^{-1}=I_n,\\
+V^{\mathsf T}Z&=0,\qquad
+Z^{\mathsf T}Z=K^{1/2}K^{-1}K^{1/2}=I_k.
+\end{aligned}
+$$
+
+There are $n+k$ orthonormal columns in an $(n+k)$-dimensional space, so $U$
+is orthogonal over the reals and unitary after complexification. $\square$
+
+**Proposition 131.3 (native spectral normal form).** The matrices in
+Definition 131.1 satisfy
+
+$$
+H_+V=VH,\qquad H_+Z=ZK,\qquad
+U^{\mathsf T}H_+U=H\mathbin{\oplus}K.
+$$
+
+**Proof.** Corollary 127.3 gives the residual generator
+
+$$
+\widetilde A_+=\begin{pmatrix}A&-\mathbf1_na^{\mathsf T}\\0&K\end{pmatrix},\qquad
+A=G^{-1}L,\quad a=Kq,
+$$
+
+and the source hypotheses give $A_+T=TA$. Since $A\mathbf1_n=0$ and
+$K=K^{\mathsf T}$,
+
+$$
+\begin{aligned}
+\widetilde A_+B_0
+&=\begin{pmatrix}A&-\mathbf1_na^{\mathsf T}\\0&K\end{pmatrix}
+  \begin{pmatrix}-\mathbf1_nq^{\mathsf T}\\ I_k\end{pmatrix}\\
+&=\begin{pmatrix}-\mathbf1_nq^{\mathsf T}K\\ K\end{pmatrix}
+=B_0K.
+\end{aligned}
+$$
+
+Conjugating by $W$ yields $A_+B=BK$. Using
+$L_+=G_+A_+$ and $L=GA$, the two generator identities become
+
+$$
+\begin{aligned}
+H_+V&=S_+^{-1}L_+TS^{-1}=S_+TAS^{-1}=VH,\\
+H_+Z&=S_+^{-1}L_+BK^{1/2}=S_+BK^{3/2}=ZK.
+\end{aligned}
+$$
+
+The three block entries of $U^{\mathsf T}H_+U$ are therefore $H$, $0$, and
+$K$, which proves the direct-sum identity. $\square$
+
+Thus every bounded Borel functional calculus expression has the same
+intertwining. In particular, for $s\ge0$ and $\tau\in\mathbb R$,
+
+$$
+e^{-sH_+}V=Ve^{-sH},qquad e^{-sH_+}Z=Ze^{-sK},qquad
+e^{-i\tau H_+}V=Ve^{-i\tau H},qquad e^{-i\tau H_+}Z=Ze^{-i\tau K}.
+$$
+
+These are finite matrix identities with the semigroup or unitary parameter
+separate from the accepted epoch index.
+
+The vector
+
+$$
+c=S\mathbf1_n/\sqrt h
+$$
+
+is the normalized old constant mode. Because $T\mathbf1_n=\mathbf1_{n+k}$ and
+$T^{\mathsf T}G_+T=G$,
+
+$$
+c_+=S_+\mathbf1_{n+k}/\sqrt h=Vc,\qquad Hc=0,\qquad H_+c_+=0.
+$$
+
+Connectedness in §§127--130 gives $\ker L=\mathbb R\mathbf1_n$ and the same
+one-dimensional kernel for $L_+$. Since $K\succ0$, the direct-sum form shows
+that no new zero mode is present. The parameter $q$ changes the actual birth
+embedding through
+
+$$
+B=WB_0=\begin{pmatrix}-\mathbf1_nq^{\mathsf T}\\
+I_k-\mathbf1_kq^{\mathsf T}\end{pmatrix};
+$$
+
+it is a shear through the old constant direction. The spectral block $K$ and
+the direct-sum spectrum are unchanged, but no gauge or observable equivalence
+is asserted for the different coordinate embeddings.
+
+For $k=0$, $B,Z,K$ are absent and the construction is the identity. For the
+$n=1$ beta singleton, $L=0$ and the same calculation accepts every real $q$
+and every SPD $K$. The first alpha-singleton step is an empty birth and hence
+uses the $k=0$ identity; its later nonempty step is covered by the singleton
+calculation. The same statements apply to every finite stopped or capped
+accepted prefix, including a final empty-birth step.
+
+## 132. Finite-mode Fock correspondence
+
+Let $\mathfrak h_o=\mathbb C^n$, $\mathfrak h_b=\mathbb C^k$, and
+$\mathfrak h_+=\mathbb C^{n+k}$. For $\sigma\in\{+,-\}$ write
+
+$$
+\mathcal F_\sigma(\mathfrak h)=\bigoplus_{r=0}^{\infty}
+\mathfrak h_\sigma^{(r)},\qquad
+\mathfrak h_+^{(r)}=\operatorname{Sym}^r\mathfrak h,\quad
+\mathfrak h_-^{(r)}=\bigwedge^r\mathfrak h,
+$$
+
+with vacuum $\Omega$ in the $r=0$ sector. This is the full standard finite-mode
+Fock space: the one-particle mode space is finite, but the bosonic particle
+sectors are not truncated.
+
+The finite-dimensional unitary $U:\mathfrak h_o\oplus\mathfrak h_b\to
+\mathfrak h_+$ induces $\Gamma_\sigma(U)$. Let
+
+$$
+E_\sigma:\mathcal F_\sigma(\mathfrak h_o\oplus\mathfrak h_b)
+\longrightarrow
+\mathcal F_\sigma(\mathfrak h_o)\otimes\mathcal F_\sigma(\mathfrak h_b)
+$$
+
+be the canonical exponential law with the old modes ordered before the birth
+modes, and set
+
+$$
+Q_\sigma=\Gamma_\sigma(U)E_\sigma^{-1}.
+$$
+
+Then $Q_\sigma$ is unitary and, for every old Fock vector $\psi$,
+
+$$
+\Gamma_\sigma(V)\psi=Q_\sigma(\psi\otimes\Omega_b).
+$$
+
+For the exterior case the old-first ordering fixes all fermionic signs. The
+second-quantized operators below are even, so no additional sign convention
+enters their tensor-product intertwining.
+
+**Proposition 132.1 (second-quantized native lift).** On the algebraic
+finite-particle core $\mathcal D_{\mathrm{fin}}$,
+
+$$
+Q_\sigma^*d\Gamma_\sigma(H_+)Q_\sigma
+=d\Gamma_\sigma(H)\otimes I+I\otimes d\Gamma_\sigma(K).
+$$
+
+The equality extends to the self-adjoint closures on their natural domains.
+
+**Proof.** On the $r$-particle sector,
+
+$$
+d\Gamma_r(X)=\sum_{j=1}^r
+I\otimes\cdots\otimes X^{(j)}\otimes\cdots\otimes I.
+$$
+
+The one-particle equality $U^{\mathsf T}H_+U=H\oplus K$ transports each slot
+of this sum. The exponential law separates the old and birth slots, giving the
+two commuting summands on $\mathcal D_{\mathrm{fin}}$. The core is invariant
+under all finite-mode second quantizations, and closure gives the stated
+self-adjoint identity. $\square$
+
+For bosons, if $\psi=(\psi_r)_{r\ge0}$, the self-adjoint domain is
+
+$$
+\mathcal D(d\Gamma_+(H))
+=\left\{\psi:\sum_{r\ge0}\|d\Gamma_r(H)\psi_r\|^2<\infty\right\},
+$$
+
+and analogously for $H_+$ and $K$. Finite-particle vectors form a core. Under
+$Q_+$ the domain of the tensor sum is the intersection domain of its two
+commuting self-adjoint summands, with the same weighted sector condition. For
+fermions, $\dim\mathcal F_-(\mathbb C^m)=2^m$; hence all finite-mode
+$d\Gamma_-(X)$ are bounded and the whole exterior Fock space is their domain.
+These are finite-prefix statements and do not take an infinite-native-epoch
+limit.
+
+The generic Fock maps and vacuum facts used here are the existing
+D5/S3/Quantum/PassiveFockModel.lean declarations; the finite occupation
+identities are the existing
+D5/S3/Quantum/FockSpace/FiniteOccupationPartitionFunctions.lean route.
+The direct-sum exponential law and $d\Gamma$ slot sum are treated in Jan
+Dereziński, *Mathematical Introduction to Quantum Field Theory*, §§5.2--5.4,
+5.7 and Theorem 5.3 (§5.9),
+[PDF](https://users.fuw.edu.pl/~derezins/qft-lectures.pdf). The domain and core
+terminology is consistent with Dereziński, *Mathematical Topics in Many Body
+Quantum Physics*, §§1.1--1.5,
+[PDF](https://users.fuw.edu.pl/~derezins/manybody.pdf). Those references supply
+the generic Fock constructions; the native matrices and the $U$ above are the
+source-dependent content of this continuation.
+
+## 133. Finite-prefix thermal boundary
+
+Fix a scalar parameter $\beta>0$. The following is a finite matrix trace
+statement; $\beta$ is not identified with a physical temperature, and the
+eigenvalues of $H$ are not declared physical energies.
+
+Let $\mathfrak h_o^\circ=c^\perp$ and
+$\mathfrak h_+^\circ=c_+^\perp$. Symmetry and Proposition 131.3 give
+$V\mathfrak h_o^\circ=\mathfrak h_+^\circ$ and
+
+$$
+H_+|_{\mathfrak h_+^\circ}
+\simeq H|_{\mathfrak h_o^\circ}\oplus K.
+$$
+
+Both restricted one-particle operators are positive definite. The unrestricted
+bosonic full-Fock trace for $H$ diverges, because arbitrary occupation of the
+constant mode contributes the same factor $1$ in every particle sector. Thus
+there is no legitimate infinity-over-infinity ratio between old and new traces.
+
+After the compatible constant-kernel removal above, the finite birth factors
+are
+
+$$
+Z_{+,\mathrm{birth}}(\beta;K)
+=\det(I_k-e^{-\beta K})^{-1},\qquad
+Z_{-,\mathrm{birth}}(\beta;K)
+=\det(I_k+e^{-\beta K}).
+$$
+
+The restricted bosonic trace factorizes as
+
+$$
+\operatorname{Tr}\!\left(e^{-\beta d\Gamma_+(H_+|_{\mathfrak h_+^\circ})}\right)
+=\operatorname{Tr}\!\left(e^{-\beta d\Gamma_+(H|_{\mathfrak h_o^\circ})}\right)
+\det(I_k-e^{-\beta K})^{-1},
+$$
+
+and the corresponding fermionic identity uses $\det(I_k+e^{-\beta K})$.
+The formula is spectral, so no diagonal choice for $K$ is required. In the
+unrestricted fermionic finite-mode space the old zero mode causes no
+divergence; retaining or removing it is a separately stated boundary choice.
+
+If instead the total particle number is fixed to $r$, the correct statement is
+a finite convolution. With $Z_{\sigma,j}(X)$ denoting the $j$-particle trace,
+
+$$
+Z_{\sigma,r}(H\oplus K)=\sum_{a+b=r}Z_{\sigma,a}(H)Z_{\sigma,b}(K),
+$$
+
+with the terms outside the available fermionic dimensions interpreted as zero.
+This fixed-number identity does not become an unrestricted product ratio. The
+spectral normal form is valid for all real $q$ and SPD $K$ permitted by §127;
+the Markov positivity restrictions in Proposition 128.2 are an independent
+source-specific condition and are not inferred from this thermal calculation.
+
+## 134. Boundary ledger for the native lift
+
+The construction is defined for every finite accepted prefix in the source
+quantifier of Definition 127.1. Empty births have $k=0$ and preserve the old
+one-particle and Fock factors by the identity. The alpha singleton has its
+initial empty step before its first nonempty birth; the beta singleton has the
+nonempty $n=1$ step directly, with arbitrary $q$ and SPD $K$. A stopped or
+capped history requires no later epoch. The bosonic domain above retains all
+particle sectors, while the phrase “finite mode” refers only to the dimension
+of the one-particle space.
+
+No assertion here concerns an infinite-epoch or quantum-field limit, locality,
+physical propagation, a physical Hamiltonian, charge, priority, resource
+equivalence, or an observable/gauge identification of different $q$. The
+mathematical claims are the native finite-dimensional unitary normal form, its
+standard full-Fock lift, and the stated finite trace boundaries.
+
+## 134.99 追加锚（本行以下为增补区）
