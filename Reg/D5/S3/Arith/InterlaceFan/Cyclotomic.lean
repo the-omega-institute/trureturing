@@ -26,22 +26,55 @@ private lemma cosineRejected : ¬ cosineArena.Law valueOne := by
   have he := h 2 0 (fun _ => 0)
   norm_num [valueOne, realize, evalCos] at he
 
-def indexValues : Realization valueSignature :=
-  realize valueSignature (fun _ _ j => j) (fun e => nomatch e)
+abbrev propagationSignature : Signature where
+  Params := Σ n : ℕ, Fin (n / 2) → ℝ
+  State _ := ℕ
+  Role := Bool
+  finiteRole := inferInstance
+  nonemptyRole := inferInstance
+  Output _ _ := ℝ
+  Anchor := Empty
+  finiteAnchor := inferInstance
+
+def propagationActual : Realization propagationSignature :=
+  realize propagationSignature (fun _ p j => I p.1 j p.2) (fun e => nomatch e)
+
+def propagationBadLeft : Realization propagationSignature :=
+  realize propagationSignature (fun r p j => if r then I p.1 j p.2 else 0)
+    (fun e => nomatch e)
+
+def propagationBadRight : Realization propagationSignature :=
+  realize propagationSignature (fun r p j => if r then 0 else I p.1 j p.2)
+    (fun e => nomatch e)
 
 abbrev propagationArena : Arena where
-  signature := valueSignature
+  signature := propagationSignature
   Law R := ∀ (n d : ℕ), 0 < n → d ∣ n →
     ∀ (x : Fin (n / 2) → ℝ), IsRationalPt x → ∀ (c : ℚ) (s t : ℕ),
     s ∈ orderClass n d → t ∈ orderClass n d →
-    R.readout () ⟨n, x⟩ s = (c : ℝ) → R.readout () ⟨n, x⟩ t = (c : ℝ)
+    R.readout false ⟨n, x⟩ s = (c : ℝ) → R.readout true ⟨n, x⟩ t = (c : ℝ)
 
-private lemma propagationRejected : ¬ propagationArena.Law indexValues := by
+private lemma propagationBadLeftRejected : ¬ propagationArena.Law propagationBadLeft := by
   intro h
-  have he := h 5 5 (by omega) (dvd_refl _) (fun _ => 0)
-    (fun k => ⟨0, by norm_num⟩) 1 1 2
-    (by norm_num [orderClass, certIdx]) (by norm_num [orderClass, certIdx]) rfl
-  norm_num [indexValues, realize] at he
+  have he := h 2 1 (by omega) (one_dvd _) (fun _ => 1)
+    (fun k => ⟨1, by norm_num⟩) 0 0 0
+    (by norm_num [orderClass, certIdx]) (by norm_num [orderClass, certIdx])
+    (by norm_num [propagationBadLeft, realize])
+  norm_num [propagationBadLeft, realize, I, Fin.sum_univ_succ] at he
+
+private lemma propagationBadRightRejected : ¬ propagationArena.Law propagationBadRight := by
+  intro h
+  have he := h 2 1 (by omega) (one_dvd _) (fun _ => 1)
+    (fun k => ⟨1, by norm_num⟩) (-1) 0 0
+    (by norm_num [orderClass, certIdx]) (by norm_num [orderClass, certIdx])
+    (by norm_num [propagationBadRight, realize, I, Fin.sum_univ_succ])
+  norm_num [propagationBadRight, realize] at he
+
+private lemma propagationDependence :
+    ObservationalDependence propagationSignature propagationActual := by
+  intro i
+  refine ⟨⟨2, fun _ => 1⟩, 0, 1, ?_⟩
+  norm_num [propagationActual, realize, I, Fin.sum_univ_succ]
 
 abbrev witnessArena : Arena where
   signature := valueSignature
@@ -128,9 +161,9 @@ def cosineAudit : LeanInformationAudit.Contract.Registration.{_, _, _, 0, 0, 0, 
     coordinates := #[0, 2]
     readouts := #[{
       path := #["body", "body", "body", "fn", "arg"]
-      stateBinder := 1
+      stateBinder := 0
       functionOperand := false
-      stateOperand := none
+      stateOperand := some #["fn", "arg"]
       booleanPredicate := false }] }
   continuation := .unknown
   familyRecord := none
@@ -174,30 +207,38 @@ def polynomialAudit : LeanInformationAudit.Contract.Registration.{_, _, _, 0, 0,
     coordinates := #[0, 2]
     readouts := #[{
       path := #["body", "body", "body", "fn", "arg"]
-      stateBinder := 1
+      stateBinder := 0
       functionOperand := false
-      stateOperand := none
+      stateOperand := some #["fn", "arg", "arg"]
       booleanPredicate := false }] }
   continuation := .unknown
   familyRecord := none
   options := #[]
 
 def propagationSource : Registration propagationArena (type_of% @rational_const_on_orderClass) where
-  actual := valueActual
+  actual := propagationActual
   bridge := Iff.rfl
-  variation := ⟨rational_const_on_orderClass, indexValues, propagationRejected⟩
+  variation := ⟨rational_const_on_orderClass, propagationBadRight, propagationBadRightRejected⟩
   sensitivity := by
     constructor
     · intro i
-      refine ⟨indexValues, ?_, rfl, propagationRejected⟩
-      intro j hj
-      exact (hj (Subsingleton.elim _ _)).elim
+      cases i
+      · refine ⟨propagationBadLeft, ?_, rfl, propagationBadLeftRejected⟩
+        intro j hj
+        cases j
+        · exact (hj rfl).elim
+        · rfl
+      · refine ⟨propagationBadRight, ?_, rfl, propagationBadRightRejected⟩
+        intro j hj
+        cases j
+        · rfl
+        · exact (hj rfl).elim
     · intro e
       exact nomatch e
-  dependence := dependence
+  dependence := propagationDependence
 
 def propagationAudit : LeanInformationAudit.Contract.Registration.{_, _, _, 0, 0, 0, _, _, _, _, _, 0}
-    (@rational_const_on_orderClass) (Realization valueSignature) Unit Unit where
+    (@rational_const_on_orderClass) (Realization propagationSignature) Unit Unit where
   unitName := `Reg.D5.S3.Arith.InterlaceFan.Cyclotomic.propagationUnit
   realizationName := `Reg.D5.S3.Arith.InterlaceFan.Cyclotomic.propagationSource
   realizationSource := none
@@ -209,7 +250,7 @@ def propagationAudit : LeanInformationAudit.Contract.Registration.{_, _, _, 0, 0
   realization := .source propagationArena ⟨propagationSource⟩
   correspondence := { stage := .evidence, objectStage := .evidence }
   bundleNonempty := .absent
-  readout := some (realize valueSignature (fun _ p j => I p.1 j p.2) (fun e => nomatch e))
+  readout := some (realize propagationSignature (fun _ p j => I p.1 j p.2) (fun e => nomatch e))
   variation := .absent
   sensitivity := .absent
   partialSensitivity := none
