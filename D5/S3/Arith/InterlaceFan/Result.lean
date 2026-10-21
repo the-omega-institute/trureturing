@@ -86,7 +86,6 @@ private lemma zero_of_meets (n : ℕ) (hn : 2 ≤ n) (S : Finset ℕ)
   apply rational_const_on_orderClass n _ (by omega) (Nat.mem_divisors.mp hd).1 x hx q s j hsd hjd
   rw [face_value n hS hf hs, ← face_value n hS hf hs0, hq]
 
-
 private lemma face_inclusion_iff (n : ℕ) (hn : 2 ≤ n) (S T : Finset ℕ)
     (hS : S ⊆ certIdx n) (hSne : S.Nonempty) (hSp : S ≠ certIdx n)
     (hT : T ⊆ certIdx n) : face n S ⊆ face n T ↔ T ⊆ S := by
@@ -154,10 +153,10 @@ private lemma maximal_iff (n : ℕ) (hn : 2 ≤ n) (S : Finset ℕ)
     by_contra hneq
     apply hm _ sdiff_subset (Finset.ssubset_iff_subset_ne.mpr ⟨hsub, hneq⟩)
     exact (rational_face_iff n hn _ sdiff_subset (complement_nonempty n d hn)).mpr
-      ⟨d, hd, (Finset.disjoint_left.mpr (fun j hj hjd => (mem_sdiff.mp hj).2 hjd))⟩
+      ⟨d, hd, Finset.sdiff_disjoint⟩
   · rintro ⟨d, hd, rfl⟩
     refine ⟨(rational_face_iff n hn _ sdiff_subset hne).mpr
-      ⟨d, hd, (Finset.disjoint_left.mpr (fun j hj hjd => (mem_sdiff.mp hj).2 hjd))⟩, ?_⟩
+      ⟨d, hd, Finset.sdiff_disjoint⟩, ?_⟩
     intro T hT hST hrT
     obtain ⟨e, he, hdis⟩ := (rational_face_iff n hn T hT (hne.mono hST.subset)).mp hrT
     obtain ⟨j, hj⟩ := class_nonempty n e hn he
@@ -172,5 +171,72 @@ private lemma maximal_iff (n : ℕ) (hn : 2 ≤ n) (S : Finset ℕ)
       exact mem_sdiff.mpr ⟨hT ht, fun ho => Finset.disjoint_left.mp hdis ht ho⟩
     exact (not_le_of_gt hST) hTS
 
+private lemma maximum_rational (n d : ℕ) (hn : 2 ≤ n)
+    (x : Fin (n / 2) → ℝ) (hf : x ∈ face n (certIdx n \ orderClass n d))
+    (hx : IsRationalPt x) : ∃ q : ℚ, interlaceNumber n x = q := by
+  obtain ⟨q, hq⟩ := zero_value_rational n x hx
+  by_cases hd : d = 1
+  · subst d
+    have he (j : ℕ) (hj : j ∈ (certIdx n).erase 0) :
+        I n j x = interlaceNumber n x := by
+      apply face_value n sdiff_subset hf
+      exact mem_sdiff.mpr ⟨mem_of_mem_erase hj, by
+        rw [class_one n hn]; simpa using (ne_of_mem_erase hj)⟩
+    let w : ℕ → ℚ := fun j => if j = 0 ∨ n = 2 * j then 1 else 2
+    let W : ℚ := ∑ j ∈ (certIdx n).erase 0, w j
+    have hW : 0 < W := by
+      apply Finset.sum_pos
+      · intro j hj
+        dsimp [w]
+        split_ifs <;> norm_num
+      · refine ⟨1, mem_erase.mpr ⟨by omega, ?_⟩⟩
+        simp [certIdx]; omega
+    have hw (j : ℕ) : certWeight n j = (w j : ℝ) := by
+      dsimp [certWeight, w]
+      split_ifs <;> norm_num
+    have hm := I_weighted_sum n hn x
+    rw [← Finset.sum_erase_add _ _ (by simp [certIdx] : 0 ∈ certIdx n)] at hm
+    have hs : (∑ j ∈ (certIdx n).erase 0, certWeight n j * I n j x) =
+        (W : ℝ) * interlaceNumber n x := by
+      simp only [W, Rat.cast_sum, Finset.sum_mul]
+      apply sum_congr rfl
+      intro j hj
+      rw [he j hj, hw j]
+    rw [hs, hq] at hm
+    simp only [certWeight, true_or, ite_true, one_mul] at hm
+    refine ⟨-q / W, ?_⟩
+    push_cast
+    apply (eq_div_iff (by exact_mod_cast hW.ne' : (W : ℝ) ≠ 0)).mpr
+    linarith
+  · refine ⟨q, ?_⟩
+    rw [← face_value n sdiff_subset hf (s := 0), hq]
+    exact mem_sdiff.mpr ⟨by simp [certIdx], by
+      simp [orderClass, Nat.div_self (by omega : 0 < n), Ne.symm hd]⟩
+
+private lemma minimal_face_values (n d : ℕ) (hn : 2 ≤ n) (hd : d ∈ n.divisors)
+    (x : Fin (n / 2) → ℝ) (hf : x ∈ face n (certIdx n \ orderClass n d))
+    (h0 : x ≠ 0) (hx : IsRationalPt x) :
+    (∀ j ∈ orderClass n d, I n j x < interlaceNumber n x) ∧
+      ∃ q : ℚ, interlaceNumber n x = q := by
+  obtain ⟨q, hq⟩ := maximum_rational n d hn x hf hx
+  refine ⟨?_, q, hq⟩
+  intro j hj
+  have hle : I n j x ≤ interlaceNumber n x :=
+    Finset.le_sup' (fun j => I n j x) (mem_filter.mp hj).1
+  apply lt_of_le_of_ne hle
+  intro heq
+  apply h0
+  apply eq_zero_of_I_const n hn x q
+  intro t ht
+  by_cases htd : t ∈ orderClass n d
+  · exact rational_const_on_orderClass n d (by omega) (Nat.mem_divisors.mp hd).1
+      x hx q j t hj htd (heq.trans hq)
+  · exact (face_value n sdiff_subset hf (mem_sdiff.mpr ⟨ht, htd⟩)).trans hq
+
+/-- The rational-face criterion, maximal certificate sets, and rational interlace values. -/
+theorem result : claim := by
+  intro n hn
+  exact ⟨rational_face_iff n hn, maximal_iff n hn, fun d hd x hf h0 hx =>
+    minimal_face_values n d hn hd x hf h0 hx⟩
 
 end D5.S3.Arith.InterlaceFan.Result
