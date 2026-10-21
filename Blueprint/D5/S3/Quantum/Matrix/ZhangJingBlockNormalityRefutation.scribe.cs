@@ -50,7 +50,10 @@ internal sealed class ZhangJingBlockNormalityRefutationDocument : IScribeDocumen
     private static DocumentBlock Entry(string id, string name, string title, Formula formula,
         string prose, AssessedProvenance provenance, DescribeRole role = DescribeRole.Definition) =>
         Describe.Lean(DescribeId.Create(id), DeclarationHandle.Create(Prefix + name), H(title),
-            StatementSource.FromAuthor(formula), provenance, Blocks(Paragraph(Text(prose))), role);
+            StatementSource.FromAuthor(formula), provenance, Blocks(Paragraph(Text(prose))), role,
+            name == "result" ? new OpenProblemResolutionClaim(
+                ProblemSlugRef.Create("zhang-jing-2025-block-normality-question-2-14"),
+                ResolutionKind.Refuted) : null);
 
     private static Formula BlockFormula()
     {

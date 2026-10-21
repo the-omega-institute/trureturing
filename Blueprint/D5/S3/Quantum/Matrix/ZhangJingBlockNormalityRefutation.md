@@ -34,6 +34,10 @@ $$\neg (\forall (f: \mathbb{R}\to\mathbb{R}), \forall (g: \mathbb{R}\to\mathbb{R
 
 *Proof.* Machine-checked in Lean as `D5/S3/Quantum/Matrix/ZhangJingBlockNormalityRefutation.result` (`✓ std3`). ∎
 
+*Resolves.* `Problems/zhang-jing-2025-block-normality-question-2-14` (refuted) by `D5/S3/Quantum/Matrix/ZhangJingBlockNormalityRefutation.result`.
+
+<!-- scribe-open-problem-resolution-v1 {"problem_slug":"zhang-jing-2025-block-normality-question-2-14","declaration_gid":"D5/S3/Quantum/Matrix/ZhangJingBlockNormalityRefutation.result","resolution_kind":"refuted"} -->
+
 *Source.* Repository-derived.
 
 *Acknowledgement.* Feng Zhang; Hefang Jing (2025). *More inequalities for positive semidefinite matrices*. DOI: [10.13001/ela.2025.9201](https://doi.org/10.13001/ela.2025.9201). URL: <https://doi.org/10.13001/ela.2025.9201>.
