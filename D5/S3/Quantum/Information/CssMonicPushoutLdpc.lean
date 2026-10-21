@@ -12,6 +12,8 @@ proof_shape: pushoutD2_representative_independent: content
 proof_shape: pushoutD1_representative_independent: content
 proof_shape: pushout_differentials_square_zero: content
 proof_shape: quotient_out_injective: bind-only; consumers: pushoutD2_row_bound, pushoutD1_row_bound
+proof_shape: mapDomain_glue: bind-only; consumers: pushoutD2_representative_independent, pushoutD1_representative_independent
+proof_shape: sumD1_sumD2_zero: bind-only; consumers: pushout_differentials_square_zero
 escape_witness: result: quotient_block_row_bound (row-support injection on the live proof path)
 escape_witness: pushoutD2_representative_independent: pushoutD2_representative_independent
 escape_witness: pushoutD1_representative_independent: pushoutD1_representative_independent
@@ -189,15 +191,6 @@ private lemma fiber_sum_eq_mapDomain {ι κ ρ : Type*}
   rw [Finsupp.mapDomain_fintype]
   simp [Finsupp.single_apply, Finset.sum_filter]
 
-private lemma basisMatrix_mulVec_finsupp {m n : ℕ} [Fintype (Fin m)] [Fintype (Fin n)]
-    (f : Fin m → Fin n) (v : Fin m →₀ (ZMod 2)) :
-    Finsupp.equivFunOnFinite.symm ((basisMatrix f).mulVec (v : Fin m → ZMod 2)) =
-      Finsupp.mapDomain f v := by
-  classical
-  ext j
-  rw [Finsupp.mapDomain_fintype]
-  simp [Matrix.mulVec, dotProduct, basisMatrix, Finsupp.single_apply, Finset.sum_filter]
-
 private lemma d2_column_mapDomain {A C : BasedComplex} (φ : BPChainMap A C)
     (a : Fin (A.dim 2)) :
     Finsupp.equivFunOnFinite.symm (C.d2.col (φ.f 2 a)) =
@@ -216,8 +209,7 @@ private lemma mapDomain_glue {α β τ ρ : Type*} [Fintype α] [Fintype β] [Fi
     Finsupp.mapDomain p (Finsupp.mapDomain f v) =
       Finsupp.mapDomain q (Finsupp.mapDomain g v) := by
   rw [← Finsupp.mapDomain_comp, ← Finsupp.mapDomain_comp]
-  ext X
-  simp [Function.comp_def, h]
+  exact Finsupp.mapDomain_congr (fun x _ => h x)
 
 private lemma d1_column_mapDomain {A C : BasedComplex} (φ : BPChainMap A C)
     (a : Fin (A.dim 1)) :
@@ -274,8 +266,7 @@ private lemma quotient_column_card_le {ι κ ρ σ : Type*}
     simp only [Finset.mem_univ, true_and, Finsupp.mem_support_iff]
     rw [hw_apply]
     simp [Finsupp.single_apply, Finset.sum_filter]
-  have hsupport : w.support ⊆ v.support.image p := by
-    simpa [w] using (Finsupp.mapDomain_support (f := p) (s := v))
+  have hsupport : w.support ⊆ v.support.image p := Finsupp.mapDomain_support
   have hv : v.support = Finset.univ.filter fun x => M x (s Y) ≠ 0 := by
     ext x
     simp [v, Finsupp.mem_support_iff]
@@ -635,20 +626,7 @@ theorem pushoutD1_representative_independent {A C D : BasedComplex}
       exact (congrArg (fun v => v X) hblock).symm
 
 private lemma sumD1_sumD2_zero (C D : BasedComplex) : sumD1 C D * sumD2 C D = 0 := by
-  ext i j
-  cases i with
-  | inl i =>
-    cases j with
-    | inl j =>
-      have h := congrFun (congrFun C.comp i) j
-      simpa [Matrix.mul_apply, sumD1, sumD2] using h
-    | inr j => simp [sumD1, sumD2, Matrix.mul_apply]
-  | inr i =>
-    cases j with
-    | inl j => simp [sumD1, sumD2, Matrix.mul_apply]
-    | inr j =>
-      have h := congrFun (congrFun D.comp i) j
-      simpa [Matrix.mul_apply, sumD1, sumD2] using h
+  simp [sumD1, sumD2, Matrix.fromBlocks_multiply, C.comp, D.comp]
 
 /-- The two quotient differentials form a chain complex: their matrix composite is zero. -/
 theorem pushout_differentials_square_zero {A C D : BasedComplex}
