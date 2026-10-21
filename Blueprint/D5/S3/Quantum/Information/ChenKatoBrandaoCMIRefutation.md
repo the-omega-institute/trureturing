@@ -100,6 +100,10 @@ $$\neg claim$$
 
 *Proof.* Machine-checked in Lean as `D5/S3/Quantum/Information/ChenKatoBrandaoCMIRefutation.result` (`✓ std3`). ∎
 
+*Resolves.* `Problems/chen-kato-brandao-2020-completely-contractive-cmi` (refuted) by `D5/S3/Quantum/Information/ChenKatoBrandaoCMIRefutation.result`.
+
+<!-- scribe-open-problem-resolution-v1 {"problem_slug":"chen-kato-brandao-2020-completely-contractive-cmi","declaration_gid":"D5/S3/Quantum/Information/ChenKatoBrandaoCMIRefutation.result","resolution_kind":"refuted"} -->
+
 *Source.* Repository-derived.
 
 *Acknowledgement.* Chi-Fang Chen, Kohtaro Kato and Fernando G. S. L. Brandão (2020). *Matrix Product Density Operators: when do they have a local parent Hamiltonian?*. URL: <https://arxiv.org/abs/2010.14682v3>.

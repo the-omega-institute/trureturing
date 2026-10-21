@@ -53,7 +53,10 @@ internal sealed class ChenKatoBrandaoCMIRefutationDocument : IScribeDocumentDefi
                 DescribeRole.Theorem),
             Node("result", "A four-dimensional channel refutes the conjecture", Disp(new Formula.Not(F.Id("claim"))),
                 "For 0 < p < 1, take Kraus matrices K_(j,false) = sqrt(1-p) Matrix.single(j,j,1) and K_(j,true) = sqrt(p) Matrix.single(j+1,j,1), with cyclic Fin(n) addition. Their adjoint products include nonzero multiples of every diagonal matrix unit, forcing a commuting matrix to be diagonal. The adjacent cross-products force consecutive diagonal entries to agree; induction makes the whole matrix scalar. Specialize to n = 4 and p = 1/2. With dA = 2 and dB = 1, the input diagonal has weight 1/2 at ((0,0),0) and ((1,0),2), and zero elsewhere. The output has weight 1/4 at ((0,0),0), ((0,0),1), ((1,0),2) and ((1,0),3). The two conditional mutual informations are exactly log(2) > 0. Substitution into the asserted inequality gives log(2) <= eta log(2), contradicting eta < 1. The bit survives because the two selected inputs have disjoint output supports, although all globally correctable observables are scalar.",
-                DescribeRole.Theorem, AssessedProvenance.FromRepo(Source))),
+                DescribeRole.Theorem, AssessedProvenance.FromRepo(Source),
+                new OpenProblemResolutionClaim(
+                    ProblemSlugRef.Create("chen-kato-brandao-2020-completely-contractive-cmi"),
+                    ResolutionKind.Refuted))),
         []));
 
     private static DocumentBlock Node(string name, string title, Formula formula, string prose,
