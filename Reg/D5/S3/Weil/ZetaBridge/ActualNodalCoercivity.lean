@@ -281,3 +281,76 @@ end Reg.D5.S3.Weil.ZetaBridge.ActualNodalCoercivity
 
 
 
+
+namespace Reg.D5.S3.Weil.ZetaBridge.ActualNodalCoercivity.RetainedNode
+open _root_.D5.S3.ConceptDynamics.InformationEscape.DependentFamily
+open _root_.D5.S3.Weil.ZetaBridge.ActualNodalCoercivity
+open LeanInformationAudit Polynomial
+
+def arena : Arena where
+  signature := NodalModel.signature
+  Law r := ∀ (S : Finset ℤ) (v : ℤ → ℂ) (n : ℤ) (hn : n ∈ S),
+    r.readout () n (Q S v) = v n *
+      (Lagrange.nodal (S.erase n) (fun j : ℤ => (j : ℂ))).eval (n : ℂ)
+
+private theorem actual_law : arena.Law NodalModel.actual :=
+  @_root_.D5.S3.Weil.ZetaBridge.ActualNodalCoercivity.numerator_eval_node
+
+private theorem rejected_law : ¬ arena.Law NodalModel.rejected := by
+  intro h
+  have hbad : (1 : ℂ) = 0 := by
+    simpa [NodalModel.rejected, realize] using h {0} (fun _ => 0) 0 (by simp)
+  exact one_ne_zero hbad
+
+def family : Registration arena
+    (type_of% (@_root_.D5.S3.Weil.ZetaBridge.ActualNodalCoercivity.numerator_eval_node)) where
+  actual := NodalModel.actual
+  bridge := Iff.rfl
+  variation := ⟨actual_law, NodalModel.rejected, rejected_law⟩
+  sensitivity := by
+    constructor
+    · intro i
+      refine ⟨NodalModel.rejected, ?_, rfl, rejected_law⟩
+      intro j hj
+      cases i
+      cases j
+      exact (hj rfl).elim
+    · intro e
+      exact nomatch e
+  dependence := NodalModel.actual_dependence
+
+noncomputable def registration : Contract.Registration.{_, _, _, 0, 0, 0, 0, 0, 0, 0, 0, 0}
+    (@_root_.D5.S3.Weil.ZetaBridge.ActualNodalCoercivity.numerator_eval_node)
+    (type_of% NodalModel.actual) Type Unit := {
+  unitName := `Reg.D5.S3.Weil.ZetaBridge.ActualNodalCoercivity.RetainedNode.unit
+  realizationName := `Reg.D5.S3.Weil.ZetaBridge.ActualNodalCoercivity.RetainedNode.family
+  realizationSource := none
+  generated := false
+  arena := .source ⟨arena⟩
+  objectArena := .source ⟨arena⟩
+  catalog := Lean.Name.anonymous
+  localNames := false
+  realization := .source arena ⟨family⟩
+  correspondence := { stage := .evidence, objectStage := .evidence }
+  bundleNonempty := .absent
+  readout := some (realize NodalModel.signature (fun _ n p => p.eval (n : ℂ))
+    (fun e => nomatch e))
+  variation := .absent
+  sensitivity := .absent
+  partialSensitivity := none
+  escapeFrom := none
+  sourceSelection := some {
+    owner := `D5.S3.Weil.ZetaBridge.ActualNodalCoercivity
+    definition := none
+    coordinates := #[2]
+    readouts := #[{
+      path := #["body", "body", "body", "body", "fn", "arg", "fn"]
+      stateBinder := 0
+      functionOperand := true
+      stateOperand := none
+      booleanPredicate := false }] }
+  continuation := .unknown
+  familyRecord := none
+  options := #[] }
+
+end Reg.D5.S3.Weil.ZetaBridge.ActualNodalCoercivity.RetainedNode

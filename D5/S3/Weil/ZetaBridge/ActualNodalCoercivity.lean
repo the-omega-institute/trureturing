@@ -117,7 +117,7 @@ theorem actual_nodal_polynomial_model (c : ℕ) (S : Finset ℤ) (hS : S.Nonempt
       ← Finset.sum_sub_distrib]
     exact Finset.sum_congr rfl (fun n hn => clear_actual_summand c S v m hm n hn)
 
-private theorem numerator_eval_node (S : Finset ℤ) (v : ℤ → ℂ)
+theorem numerator_eval_node (S : Finset ℤ) (v : ℤ → ℂ)
     (n : ℤ) (hn : n ∈ S) :
     (Q S v).eval (n : ℂ) = v n *
       (Lagrange.nodal (S.erase n) (fun j : ℤ => (j : ℂ))).eval (n : ℂ) := by
