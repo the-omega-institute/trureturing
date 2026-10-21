@@ -419,7 +419,7 @@ namespace D5.S3.Quantum.QuantumChannels.QubitWassersteinCouplings
 noncomputable section
 
 
-private theorem ptrace2_left (U : Matrix (Fin 2) (Fin 2) ℂ) (P : Matrix (Fin 2 × Fin 2) (Fin 2 × Fin 2) ℂ) :
+theorem ptrace2_left (U : Matrix (Fin 2) (Fin 2) ℂ) (P : Matrix (Fin 2 × Fin 2) (Fin 2 × Fin 2) ℂ) :
     D5.S3.Quantum.Information.PartialTraceMutualInformation.partialTraceRight ((U ⊗ₖ (1 : Matrix (Fin 2) (Fin 2) ℂ)) * P * ((U ⊗ₖ (1 : Matrix (Fin 2) (Fin 2) ℂ))).conjTranspose) = U * D5.S3.Quantum.Information.PartialTraceMutualInformation.partialTraceRight P * U.conjTranspose := by
   ext i j
   simp [D5.S3.Quantum.Information.PartialTraceMutualInformation.partialTraceRight, Matrix.mul_apply, Fintype.sum_prod_type, Fin.sum_univ_two,
