@@ -25,14 +25,18 @@ internal sealed class LinDTIMajorizationRefutationDocument : IScribeDocumentDefi
                 DescribeRole.Definition, AssessedProvenance.FromLiterature(Source)),
             Node("result", "Refutation in dimension three", Disp(new Formula.Not(Parenthesized(ClaimBody()))),
                 "Use A = diagonal(3,1,1/2) and B = [[1/2,1/4,3/4],[1/4,3/4,0],[3/4,0,5/2]], and p = 4. Rational triangular factorizations prove that B and L − (7/5)I are positive semidefinite, where L = A² + |BA|⁴. The vector (0,−1,19/64) has negative quadratic form for R − (7/5)I, where R = A² + |AB|⁴. Thus every eigenvalue of L is at least 7/5 and an eigenvalue of R is below 7/5. Majorization of the descending three-entry lists would combine its two-entry prefix inequality and equality of the totals to give the opposite ordering of the smallest entries. This contradicts those bounds. No determinant inequality is asserted or refuted here.",
-                DescribeRole.Theorem, AssessedProvenance.FromRepo(Source))),
+                DescribeRole.Theorem, AssessedProvenance.FromRepo(Source),
+                new OpenProblemResolutionClaim(
+                    ProblemSlugRef.Create("lin-2017-majorization-conjecture-4-3"),
+                    ResolutionKind.Refuted))),
         []));
 
     private static DocumentBlock Node(string name, string title, Formula formula, string prose,
-        DescribeRole role, AssessedProvenance provenance) => Describe.Lean(
+        DescribeRole role, AssessedProvenance provenance,
+        OpenProblemResolutionClaim? resolution = null) => Describe.Lean(
             DescribeId.Create("linmaj-" + name.ToLowerInvariant()),
             DeclarationHandle.Create(Prefix + name), H(title), StatementSource.FromAuthor(formula),
-            provenance, Blocks(Paragraph(Text(prose))), role);
+            provenance, Blocks(Paragraph(Text(prose))), role, resolution);
 
     private static Formula Parenthesized(Formula value) => Seq(Open, value, Close);
     private static Formula Apply(Formula value, params Formula[] args) => new Formula.Apply(value, [.. args]);

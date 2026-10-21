@@ -46,6 +46,10 @@ $$\neg (\forall n : \mathbb{N}, \forall A : \operatorname{Matrix}\left(\operator
 
 *Proof.* Machine-checked in Lean as `D5/S3/Quantum/Matrix/LinDTIMajorizationRefutation.result` (`✓ std3`). ∎
 
+*Resolves.* `Problems/lin-2017-majorization-conjecture-4-3` (refuted) by `D5/S3/Quantum/Matrix/LinDTIMajorizationRefutation.result`.
+
+<!-- scribe-open-problem-resolution-v1 {"problem_slug":"lin-2017-majorization-conjecture-4-3","declaration_gid":"D5/S3/Quantum/Matrix/LinDTIMajorizationRefutation.result","resolution_kind":"refuted"} -->
+
 *Source.* Repository-derived.
 
 *Acknowledgement.* Minghua Lin (2017). *On a determinantal inequality arising from diffusion tensor imaging*. DOI: [10.1142/S0219199716500449](https://doi.org/10.1142/S0219199716500449). URL: <https://arxiv.org/abs/1604.04141v1>.
