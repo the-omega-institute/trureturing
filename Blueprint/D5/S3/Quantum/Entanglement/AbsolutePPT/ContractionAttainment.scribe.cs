@@ -4,7 +4,6 @@ using F = StrataLint.Scribe.FormulaDsl;
 
 namespace StrataLint.Scribe.Blueprint.D5.S3.Quantum.Entanglement.AbsolutePPT;
 
-// Candidate Scribe source. This DSL and its rendering remain uncompiled and unvalidated.
 internal sealed class ContractionAttainmentDocument : IScribeDocumentDefinition
 {
     private static Formula I(string s) => F.Id(s);
@@ -76,8 +75,8 @@ internal sealed class ContractionAttainmentDocument : IScribeDocumentDefinition
         "A positive contraction decomposition in arbitrary finite local dimensions supplies a literal five-row APPT attainer.",
         H("Dimension-general APPT contraction attainment"), Blocks(
         Paragraph(Text("A positive contraction yields an APPT operator in arbitrary finite local dimensions. In five rows, a rank-2n coordinate projection gives a normalized state of purity 5/(24n). This is a lower-bound construction; a maximum-purity upper bound is not asserted.")),
-        Paragraph(Text("Attribution boundary: the existing ContractionBlocks.separableCone_scalar_add_of_opNorm_le_one theorem gives a stronger separable-cone scalar-shift result for Hermitian Euclidean contractions, and the existing QuadbitMaximumPurity.separableCone_partialTranspose_posSemidef theorem turns that separability into partial-transpose positivity. The Ahiable--Kothakonda--Winter Eq. (31) result and the published Corollary 6.4/Eq. (44) lower-bound and attaining constructions are prior mathematics. This source records the ordered-pair identity and its five-row application without a maximum, uniqueness, or novelty claim; this recovery remains source-only until later validation.")),
-        Paragraph(Text("Generic dependency boundary: Bipartite.partialTranspose and Bipartite.APPT now supply the shared definitions used by this proof and its owner audit. The partial-transpose entry is exactly M((a,d),(c,b)); APPT still quantifies over every global unitary. The original KickedIsingNegativityRefutation.partialTranspose and QutritPerturbationAttainment.APPT names transparently delegate to these same definitions. Their historical frozen source pins require real report/deposit migration; definitional equality does not claim unchanged source bytes or current acceptance.")),
+        Paragraph(Text("The existing ContractionBlocks.separableCone_scalar_add_of_opNorm_le_one theorem gives a stronger separable-cone scalar-shift result for Hermitian Euclidean contractions, and QuadbitMaximumPurity.separableCone_partialTranspose_posSemidef turns that separability into partial-transpose positivity. Ahiable--Kothakonda--Winter, The geometry of absolute separability and other convex matrix properties from spectrum, arXiv:2608.03390v2 (https://arxiv.org/abs/2608.03390v2), supplies the published Eq. (31) APPT condition and Corollary 6.4/Eq. (44) lower bounds and attaining constructions. The ordered-pair derivation below gives the five-row application; it asserts no maximum, uniqueness, or novelty.")),
+        Paragraph(Text("Bipartite.partialTranspose has entry M((a,d),(c,b)), and Bipartite.APPT quantifies over every global unitary. KickedIsingNegativityRefutation.partialTranspose and QutritPerturbationAttainment.APPT are definitionally equal to these respective operations, with the same local index types and matrix domains.")),
         Desc("blockUnit", "Elementary local operator", Pair(Eq(E,
             Call("Matrix.kronecker", Call("Matrix.single", I("a"), I("b"), Cast(Z(1), C)),
                 Cast(Z(1), Call("Matrix", I("B"), I("B"), C))))),
@@ -92,7 +91,7 @@ internal sealed class ContractionAttainmentDocument : IScribeDocumentDefinition
             Call("firstTranspose", I("X")), Call("Matrix.transpose", Call("partialTranspose", I("X"))))),
             "The project's partialTranspose transposes the second subsystem. Full transpose converts it to first-subsystem transpose, with entry X((k,j),(i,l))."),
         Desc("krausSum", "Positive ordered-pair sum", KrausDefinition(),
-            "Each ordered pair has weight one half. Combining the two orientations gives one unordered off-diagonal pair. The diagonal contributes 2 E_aa X E_aa, exactly as in the caller's formula."),
+            "Each ordered pair has weight one half. Combining the two orientations gives one unordered off-diagonal pair. The diagonal contributes 2 E_aa X E_aa, as in the stated ordered-pair sum."),
         Desc("kraus_identity", "Dimension-general Kraus identity", XAll(Eq(
             Call("krausSum", I("X")), Add(Smul(Coeff,Z(1)), Smul(Z(2), Call("firstTranspose", I("X")))))),
             "No Hermitian assumption is used. Expanding a pair leaves the two transpose sandwiches and its constant antisymmetric Gram term. Summing matrix units yields (card A minus one) I plus twice firstTranspose X. All subtractions in the coefficient are complex subtraction, not truncated natural subtraction.", DescribeRole.Theorem),
@@ -110,5 +109,5 @@ internal sealed class ContractionAttainmentDocument : IScribeDocumentDefinition
             Smul(Call("Complex.ofReal", Frac(Z(1),Mul(Z(24),Cast(I("n"),R)))), Numerator))),
             "For n positive the denominator 24n is the numerator's trace: 4 times 5n plus 2 times 2n."),
         Desc("five_row_attainment", "Literal five-row attaining family", FiveStatement(),
-            "The numerator square is 16 I plus 20 P and has trace 120n. Normalization gives purity 5/(24n). The theorem applies to every positive n, hence to the original n at least five and to its n at least nineteen branch. It proves attainment only. The generic normalized_ray and normalized_basis_diagonal results already cover the other rank-one family and are reused, not duplicated. The published Ahiable--Kothakonda--Winter Corollary 6.4/Eq. (44) already supplies the corresponding lower bound and attainers, so this family is not a new maximum or unique construction. Upper bounds, the physical five-row necessity bridge and classification remain outside this phase.", DescribeRole.Theorem))));
+            "The numerator square is 16 I plus 20 P and has trace 120n. Normalization gives purity 5/(24n). The theorem applies to every positive n, hence to the original n at least five and to its n at least nineteen branch. It proves attainment only. The generic normalized_ray and normalized_basis_diagonal results already cover the other rank-one family and are reused, not duplicated. The published Ahiable--Kothakonda--Winter Corollary 6.4/Eq. (44) already supplies the corresponding lower bound and attainers, so this family is not a new maximum or unique construction. Upper bounds, the physical five-row necessity bridge and classification are not conclusions of this attaining construction.", DescribeRole.Theorem))));
 }
