@@ -6,7 +6,7 @@
    utility: none
    digest: Even adjacency coefficients of cycles are bounded by the comparison sequence. -/
 
-import D5.S3.Combinatorics.Graph.RegularCHS.Interface
+import D5.S3.Combinatorics.Graph.RegularCHS.Newton
 import Mathlib.LinearAlgebra.Matrix.Gershgorin
 import Mathlib.LinearAlgebra.Eigenspace.Matrix
 import D5.S3.Combinatorics.Graph.PathCHS.PathCHSNormClosedForm
@@ -18,6 +18,11 @@ open Classical Finset PowerSeries
 open scoped BigOperators
 open D5.S3.Combinatorics.Graph.RegularCHS.Defs
 open D5.S3.Combinatorics.Graph.RegularCHS.Interface
+open private D5.S3.Combinatorics.Graph.RegularCHS.Newton.geometric from
+  D5.S3.Combinatorics.Graph.RegularCHS.Newton
+open private D5.S3.Combinatorics.Graph.RegularCHS.Newton.hsymm_series_eq_geometric from
+  D5.S3.Combinatorics.Graph.RegularCHS.Newton
+
 namespace D5.S3.Combinatorics.Graph.RegularCHS.CycleBound
 
 private def geom (a : ℝ) : PowerSeries ℝ := mk fun k => a ^ k
@@ -175,19 +180,11 @@ private lemma prod_geom_step {ι : Type*} (s : Finset ι) (a : ι → ℝ)
 
 private lemma chs_eq_coeff_prod {n : ℕ} (G : SimpleGraph (Fin n)) (d : ℕ) :
     chs G d = coeff d (∏ i, geom ((adjMatrix_isHermitian G).eigenvalues i)) := by
-  let a := (adjMatrix_isHermitian G).eigenvalues
-  let H : PowerSeries ℝ := mk fun k => MvPolynomial.eval a (MvPolynomial.hsymm (Fin n) ℝ k)
-  let P : PowerSeries ℝ := ∏ i, (1 - C (a i) * X)
-  have hH : H * P = 1 :=
-    D5.S3.Combinatorics.Graph.PathCHS.PathCHSNormClosedForm.hsymm_series_product a
-  have hg : (∏ i, geom (a i)) * P = 1 := by
-    dsimp [P]
-    rw [← Finset.prod_mul_distrib]
-    simp only [geom_linear, Finset.prod_const_one]
-  have he : H = ∏ i, geom (a i) :=
-    inv_unique (by simpa only [mul_comm] using hH)
-      (by simpa only [mul_comm] using hg)
-  simpa only [H, coeff_mk, chs, a] using congrArg (coeff d) he
+  simpa only [chs, geom,
+    D5.S3.Combinatorics.Graph.RegularCHS.Newton.geometric, coeff_mk] using
+    congrArg (coeff d)
+      (D5.S3.Combinatorics.Graph.RegularCHS.Newton.hsymm_series_eq_geometric
+        (adjMatrix_isHermitian G).eigenvalues)
 
 private lemma eigenvalues_sum_zero {n : ℕ} (G : SimpleGraph (Fin n)) :
     ∑ i, (adjMatrix_isHermitian G).eigenvalues i = 0 := by

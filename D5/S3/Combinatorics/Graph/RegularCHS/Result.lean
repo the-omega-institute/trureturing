@@ -23,6 +23,9 @@ open D5.S3.Combinatorics.Graph.RegularCHS.CycleBound
 open D5.S3.Combinatorics.Graph.RegularCHS.Cubic
 open D5.S3.Combinatorics.Graph.RegularCHS.TwoRegular
 
+open private D5.S3.Combinatorics.Graph.RegularCHS.Cubic.cycle_regular from
+  D5.S3.Combinatorics.Graph.RegularCHS.Cubic
+
 namespace D5.S3.Combinatorics.Graph.RegularCHS.Result
 
 private theorem two_le_regular {n r : ℕ} (hn : 3 ≤ n) (G : SimpleGraph (Fin n))
@@ -63,10 +66,9 @@ theorem result : claim := by
   intro n m hn hm
   have : NeZero n := ⟨by omega⟩
   have hcycle : (SimpleGraph.cycleGraph n).IsRegularOfDegree 2 := by
-    obtain ⟨q, rfl⟩ := Nat.exists_eq_add_of_le' hn
     intro v
     simpa only [← SimpleGraph.ncard_neighborSet] using
-      (SimpleGraph.cycleGraph_degree_three_le (n := q) (v := v))
+      (D5.S3.Combinatorics.Graph.RegularCHS.Cubic.cycle_regular hn v)
   have hcconn : (SimpleGraph.cycleGraph n).Connected :=
     ⟨SimpleGraph.preconnected_cycleGraph⟩
   refine ⟨⟨hcconn, ⟨2, hcycle⟩, SimpleGraph.connected_top,

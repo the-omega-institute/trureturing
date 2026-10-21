@@ -22,7 +22,7 @@ namespace D5.S3.Combinatorics.Graph.RegularCHS.Newton
 /-- All comparison coefficients are nonnegative. -/
 theorem bseq_nonneg (n r m : ℕ) : 0 ≤ bseq n r m := by
   induction m with
-  | zero => simp
+  | zero => exact (bseq_zero n r).symm ▸ (zero_le_one : (0 : ℝ) ≤ 1)
   | succ m ih =>
     rw [bseq]
     have h : (0 : ℝ) ≤ (n : ℝ) + 2 * (m + 1) - 2 := by
