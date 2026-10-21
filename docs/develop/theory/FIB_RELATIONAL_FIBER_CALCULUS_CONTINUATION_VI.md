@@ -4705,3 +4705,273 @@ the unrelated open boundaries of §95 remain outside these deductions.
 [F96TERM]: https://github.com/the-omega-institute/trureturing/blob/94514292022da7e8c018c6bc99ccbfd8aa04b6bb/docs/develop/theory/AURIC_FIB_ACTUAL_ERASED_HISTORY_TERMINAL_RECOVERY.md "Terminal recovery, §§118–126; exact second-horizon value and fixed supporting certificate"
 
 ## 追加锚（本行以下为增补区）
+
+## 101. The biased boundary as an acquisition input class
+
+**Definition 101.1 (retained source and loss).** Let [Biased Boundary][BA101]
+mean the fixed source in Definition 1.1 and Theorem 2.1 there. Adopt its
+named [IV][IV101] Definitions 92.1–92.2, 98.1 and Theorems 98.2, 99.1,
+111.2–111.4 as paper premises. Thus $\Omega=\{L,R\}^{\mathbb N}$,
+$\varphi=(1+\sqrt5)/2$, $a=\varphi^{-1}$, $b=\varphi^{-2}$, and
+$m(p)=M([p])=\varphi^{-\#_L(p)-2\#_R(p)}$, with $m(\varnothing)=1$.
+Keep the original free-root unit-edge extension energy $\mathcal E$,
+its form domain $\mathcal D$, and its operator $H$ on real $L^2(\Omega,M)$.
+Put $\mathscr G_0=\mathbf1^\perp$, $\Pi F=F-\int F\,dM$, and, for finite $E\ge0$,
+
+$$
+\mathcal B_E=\{F\in\mathcal D\cap\mathscr G_0:\mathcal E(F)\le E\},
+\qquad \operatorname{loss}(F,\widehat F)=\|F-\widehat F\|_{L^2(M)} .
+\tag{101.1}
+$$
+
+The same unknown $F$ is the input throughout a run. Centering is part of
+the input promise; an unbounded unknown constant is not included.
+
+**Definition 101.2 (supplies used for acquisition).** Write $(e_j)_{j\ge1}$
+for a real orthonormal eigenbasis of $\mathscr G_0$ with positive
+eigenvalues $\lambda_j$ in increasing order, counting multiplicity.
+The retained form spectral representation and biased counting result give
+
+$$
+\mathcal E(F)=\sum_{j\ge1}\lambda_j|\langle F,e_j\rangle|^2,\qquad
+\frac jB\le\lambda_j\le\frac j b,\quad
+\lambda_1\ge\varphi^{-1},\qquad B=\frac{2\varphi}{b}.
+\tag{101.2}
+$$
+
+For $0<t<1$, use the source's first mass crossing
+$A_t=\{p\ne\varnothing:m(p)\le t<m(p^-)\}$ and $k_t=|A_t|$.
+Its cylinders partition $\Omega$; $bt<m(p)\le t$ and
+$1/t\le k_t<1/(bt)$. The orthogonal cylinder-mean projection $Q_t$
+fixes constants and commutes with $\Pi$. Its inherited suffix estimate,
+applied to the least-energy increments of a centered $F$, is
+
+$$
+(Q_tF)|_{[p]}=\mu_p(F):=\frac1{m(p)}\int_{[p]}F\,dM,\qquad
+\|F-Q_tF\|_2^2\le\varphi t\,\mathcal E(F).
+\tag{101.3}
+$$
+
+These are Biased Boundary (1.2)–(1.3), (2.1), (2.4)–(2.8), for its
+actual biased law and operator. Its $s$ remains comparison time; read counts
+are not $s$, a metric heat-kernel scale, or physical duration.
+
+## 102. The ideal linear-information benchmark consumed by acquisition
+
+**Proposition 102.1 (biased energy-ball radius).** For an integer $d\ge0$,
+allow a deterministic procedure at most $d$ exact scalar replies
+$\ell_i(F)$, where each $\ell_i$ is a continuous real linear functional
+on $\mathscr G_0$ selected using the preceding replies. Selection need
+not be continuous. Allow an arbitrary nonlinear final reconstruction.
+Let $r_d(E)$ be the infimum of the worst-case $L^2$ error of such procedures.
+Then
+
+$$
+r_d(E)=\sqrt{\frac E{\lambda_{d+1}}},\qquad
+\sqrt{\frac{bE}{d+1}}\le r_d(E)\le\sqrt{\frac{BE}{d+1}} .
+\tag{102.1}
+$$
+
+For $E>0$ and $\varepsilon>0$, the least ideal read count for error at most
+$\varepsilon$ is $d_*(E,\varepsilon)=\#\{j:\lambda_j<E/\varepsilon^2\}$.
+The inequality is strict at spectral thresholds, including multiple
+eigenvalues. For $E=0$ the input is $0$ and no reads are needed.
+For $E>0$, exact zero error is impossible with a finite number of these reads.
+
+*Proof.* Reading the first $d$ coefficients and returning their spectral
+projection gives squared error at most $E/\lambda_{d+1}$ by (101.2).
+For the lower bound, run any proposed procedure on $0$ and retain its
+chosen functionals on that transcript; pad early termination by zero
+functionals. Their restrictions to
+$U=\operatorname{span}(e_1,\ldots,e_{d+1})$ have a common nonzero kernel.
+Choose a unit vector $u$ in it and put
+$v=\sqrt{E/\lambda_{d+1}}\,u$. Equation (101.2) gives
+$\mathcal E(v)\le E$. Inductively $v,-v$ and $0$ yield the same replies,
+the same choices and the same stopping decision. If their common output
+is $g$, the triangle inequality gives
+$2\|v\|_2\le\|v-g\|_2+\|-v-g\|_2$.
+Thus some input has error at least $\|v\|_2$, even for nonlinear $g$.
+This also covers $d=0$; for $E=0$ use the zero reconstruction.
+The eigenvalue bounds give (102.1), and
+$r_d(E)\le\varepsilon$ is equivalent to
+$\lambda_{d+1}\ge E/\varepsilon^2$, proving the count. $\square$
+
+The Hilbert ellipsoid width method and adaptive zero-transcript argument
+are classical. Allan Pinkus, [*n-Widths in Hilbert Spaces*, in *n-Widths in
+Approximation Theory*, pp. 63–137][PW101], supplies Hilbert-width background;
+no external numbered adaptive-information theorem is invoked here.
+These general methods are not claimed new. Exact real replies, eigenfunction
+availability and unrestricted real postprocessing in this benchmark are
+ideal supplies, not finite FIB records or a native acquisition protocol.
+
+## 103. A conditional finite-output service on one preserved source
+
+**Assumption 103.1 (cylinder-mean service).** Public parameters are rationals
+$E\ge0$ and $\varepsilon>0$. When $E>0$ and $\varepsilon^2<\varphi E$, set
+
+$$
+t=\frac{\varepsilon^2}{2\varphi E},\quad
+h=\min\{j\in\mathbb N_0:2^{-j}\le\varepsilon/2\},\quad q=2^{-h},\quad
+R=\sqrt{\frac{\varphi E}{bt}},\quad K=\lceil R/q\rceil+1 .
+\tag{103.1}
+$$
+
+Here $0<t<1/2$. The extra service admits finite request sequences
+at addresses $p\in A_t$.
+On the single supplied input $F\in\mathcal B_E$, a request terminates
+and delivers only a finite word representing an integer in
+
+$$
+\Gamma_p(F)=\{n\in\mathbb Z:|n|\le K,\ |qn-\mu_p(F)|\le q\}.
+\tag{103.2}
+$$
+
+The service preserves $F$ and the availability of subsequent admitted
+requests. Preservation, legality and finite delivery are producer obligations,
+not consequences of the spectral theorem. There is no source copy, reset,
+archive, full-input oracle, or access to an exact mean before quantization.
+All accessible input-dependent data are the integer words; latency and
+other hidden state supply no observations. The response/error model
+permits every choice in (103.2) after every admitted finite request history;
+the guarantee must hold for all these choices, even when they depend on
+preceding replies. All its means concern this same unchanged $F$;
+responses from different inputs or histories may not be spliced together.
+
+**Theorem 103.2 (finite-precision acquisition and matching read order).**
+Under Assumption 103.1, every $F\in\mathcal B_E$ has a finite symbolic
+approximation with error at most $\varepsilon$, uniformly over all allowed
+replies. If $E=0$ or $\varepsilon^2\ge\varphi E$, return $0$ with no reads.
+Otherwise enumerate $A_t$ in lexicographic order with $L<R$, request each
+mean once, and from the received integers form
+
+$$
+Y=\sum_{p\in A_t}qn_p\mathbf1_{[p]},\qquad
+\widehat F=\Pi Y
+ =\sum_{p\in A_t}\left(qn_p-\sum_{u\in A_t}m(u)qn_u\right)\mathbf1_{[p]} .
+\tag{103.3}
+$$
+
+This uses exactly $k_t$ scalar reads, and, writing $r=E/\varepsilon^2$,
+
+$$
+k_t<Br,\qquad
+\|F-\widehat F\|_2^2\le\varphi t E+q^2\le\frac34\varepsilon^2 .
+\tag{103.4}
+$$
+
+Every deterministic adaptive protocol with only this service as source
+access, succeeding for all its replies with at most $d$ reads, must satisfy
+$d+1\ge br$.
+Consequently, in the fine regime $r\ge2/b$, the least worst-case scalar
+read count for this service lies between $br/2$ and $Br$.
+This order statement concerns scalar reads, not communication bits.
+
+*Proof.* By (101.2), $\|F\|_2^2\le\varphi E$, proving both zero-read
+branches. In the remaining branch, Cauchy–Schwarz and $m(p)>bt$ give
+$|\mu_p(F)|\le\sqrt{\varphi E/m(p)}<R$. Nearest-integer rounding of
+$\mu_p(F)/q$, with a fixed rule at ties, has error at most $q/2$
+after multiplication by $q$ and lies in $[-K,K]$. Thus every
+$\Gamma_p(F)$ is nonempty and has a fixed finite alphabet.
+The projection $Q_tF$ is centered. Since $\Pi$ is a contraction and
+the cylinder masses sum to one, every allowed tuple satisfies
+
+$$
+\|\widehat F-Q_tF\|_2^2
+ \le\|Y-Q_tF\|_2^2
+ =\sum_{p\in A_t}m(p)|qn_p-\mu_p(F)|^2\le q^2 .
+\tag{103.5}
+$$
+
+The residual $F-Q_tF$ is orthogonal to the entire cylinder space,
+which contains $\widehat F-Q_tF$. Pythagoras and (101.3) prove
+(103.4); the read bound is $k_t<1/(bt)=Br$. The cylinder step
+function $\widehat F$ belongs to $\mathcal D\cap\mathscr G_0$ by
+the finite-increment extensions of Biased Boundary (2.10) and the free root.
+
+For the lower read bound, fix the admissible nearest-rounding response rule just used.
+A hypothetical robust $d$-read protocol can be simulated by $d$ ideal
+continuous linear mean queries, rounding their outcomes by this public rule
+and applying the same updates and final reconstruction. Each mean is
+continuous on $L^2$, with norm at most $m(p)^{-1/2}$. Proposition 102.1
+therefore forces $\varepsilon\ge\sqrt{bE/(d+1)}$.
+Worst-case response quantification is essential: the proof uses an allowed
+mean-only rounding rule, not favorable error choices encoding extra source
+information. For $r\ge2/b$, $br-1\ge br/2$; combine this with the constructed
+protocol. No probabilistic error, noise independence or repeated-source
+averaging is assumed. $\square$
+
+## 104. Finite FIB descriptions and the remaining realization obligation
+
+**Proposition 104.1 (finite reply and reconstruction record).** The public
+rationals and replies of Theorem 103.2 admit a finite binary description
+and a finite forbidden-$11$ FIB data word in the static convention of
+§§76 and 83. No arbitrary real coefficient is stored.
+
+*Proof.* Write $E=u/v$, $\varepsilon=x/y$ with nonnegative integer $u$
+and positive integers $v,x,y$. Fix a source-independent description
+program and format tag of total binary length $B_0$.
+For $n\ge0$, encode an integer by $1^{L(n)}0$ followed by the
+$L(n)$ binary digits of $n+1$, where $L(n)$ is their length.
+The unary part specifies the number of following digits, so four such
+fields parse the rational header, of length
+$H_{\rm hdr}=\sum_{n\in(u,v,x,y)}(2L(n)+1)$.
+
+All branch comparisons, $m(p)$ and $t$ lie in the ordered algebraic field
+$\mathbb Q(\sqrt5)$ and are decidable by exact integer arithmetic.
+A traversal stops each branch at its first $m(p)\le t$, including equality.
+It terminates by depth $D=\min\{j\ge1:a^j\le t\}$, since
+$m(p)\le a^{|p|}$. Thus the header determines the finite ordered address
+list, without storing an unknown input or an address oracle.
+The request-address length is $\sum_{p\in A_t}|p|\le k_tD$ symbols
+from $\{L,R\}$, separately from the reconstruction record.
+The integers $h,K$ and the required square-root ceiling are computable
+by integer comparisons of the algebraic quantities in (103.1).
+Put $w=\lceil\log_2(2K+1)\rceil$. Store each $n_p+K$ in exactly $w$
+binary digits; values above $2K$ are invalid. For the nonzero-read branch,
+the complete description length is
+
+$$
+L_{\rm bin}=B_0+H_{\rm hdr}+k_tw,\qquad
+L_{\rm FIB}=2L_{\rm bin},
+\tag{104.1}
+$$
+
+using the fixed injective spacer representation $b_i\mapsto0b_i$.
+Adjacent pairs cannot produce $11$, and deleting each leading spacer
+recovers the binary description. The same representation gives each
+service reply a finite word of $2w$ symbols. No optimal Fibonacci coding
+or new counting theorem is needed. In a zero-read branch there is only
+the program/tag and header; the approximation is $0$.
+
+From a nonzero-read record the decoder regenerates $A_t$ and evaluates
+(103.3). All its coefficients are in $\mathbb Q(\sqrt5)$, so this is an
+exact finite description of an $L^2$ step function, not storage of its
+unknown real cylinder means. No eigenfunction computation is required.
+For each fixed header the schedule, traversal stack of depth at most $D$,
+read index and finite-alphabet reply storage have finite ranges. This
+gives a finite symbolic controller description for that header; it is
+not a uniform bound on controller states as the header varies. $\square$
+
+**Definition 104.2 (scope of the bridge).** The deduction pairs the biased
+energy-class obstruction with a finite-output, same-source consumer of the
+inherited suffix estimate. Projection, ellipsoid arguments and finite-word
+coding are established methods. Header, program, addresses, reply bits and
+scalar reads are separate resources; (104.1) is a sufficient record size,
+not a universal bit or minimum-controller bound. Nonlinear source queries
+and input-dependent side information are outside the lower bound.
+
+Assumption 103.1 is an additional semantic contract. Native realization
+still requires legal cylinder access, the precision guarantee, same-source
+preservation, finite-word delivery, permissions, storage and control;
+their native action counts, physical costs and elapsed time remain unsupplied.
+The spectral premises also allow a comparison observer contract with no
+source-dependent replies and radius $r_0(E)$, whereas the stipulated service
+has Theorem 103.2. These are observer contracts on the same input class,
+not exhibited native worlds. No physical dimension or native readout
+follows from the spectral exponent.
+
+[BA101]: https://github.com/the-omega-institute/trureturing/blob/753b783b0352dc4275abb69fd1f84bc1bc764737/docs/develop/theory/FIB_ATOM_BIASED_BOUNDARY_SPECTRAL_COUNTING.md "Biased Boundary, Definition 1.1 and Theorem 2.1"
+[IV101]: https://github.com/the-omega-institute/trureturing/blob/753b783b0352dc4275abb69fd1f84bc1bc764737/docs/develop/theory/FIB_ATOM_RECURSIVE_HOLOGRAPHIC_BOUNDARY_GEOMETRY_CONTINUATION_IV.md "Boundary Geometry IV, retained named paper premises"
+[PW101]: https://doi.org/10.1007/978-3-642-69894-1_4 "Allan Pinkus, n-Widths in Hilbert Spaces"
+
+## 追加锚（本行以下为增补区）
