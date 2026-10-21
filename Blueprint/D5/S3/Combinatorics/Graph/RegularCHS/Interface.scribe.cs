@@ -16,7 +16,7 @@ internal sealed class InterfaceDocument : IScribeDocumentDefinition
                 DeclarationHandle.Create("D5/S3/Combinatorics/Graph/RegularCHS/Interface.bseq"),
                 H("The even comparison coefficients"), StatementSource.WithoutFormula(),
                 AssessedProvenance.FromRepo(LibraryNoteRef.Create("D5/L/GraphInvariants/chavez2023extremalpolynomialnorms")),
-                Blocks(Paragraph(Text("For natural parameters n and r, bseq starts at one and its coefficient m plus one is r times n plus 2 times m plus one minus 2, times coefficient m, divided by 2 times m plus one. All arithmetic in this recurrence after coercion is real arithmetic."))), DescribeRole.Definition),
+                Blocks(Paragraph(Text("For natural n and r, write b(m) for bseq n r m. Then b(0)=1 and b(m+1)=r*(n+2*(m+1)-2)*b(m)/(2*(m+1)) for every natural m. The numerator and denominator are evaluated in the real numbers."))), DescribeRole.Definition),
             Describe.Lean(DescribeId.Create("regular-chs-interface-2"),
                 DeclarationHandle.Create("D5/S3/Combinatorics/Graph/RegularCHS/Interface.bseq_zero"),
                 H("The initial comparison coefficient"), StatementSource.WithoutFormula(),
@@ -26,10 +26,10 @@ internal sealed class InterfaceDocument : IScribeDocumentDefinition
                 DeclarationHandle.Create("D5/S3/Combinatorics/Graph/RegularCHS/Interface.bseq_succ"),
                 H("The successor recurrence"), StatementSource.WithoutFormula(),
                 AssessedProvenance.FromRepo(LibraryNoteRef.Create("D5/L/GraphInvariants/chavez2023extremalpolynomialnorms")),
-                Blocks(Paragraph(Text("For all natural n, r and m, 2 times m plus one times bseq n r at m plus one equals r times n plus 2 times m plus one minus 2 times bseq n r m. Parentheses around m plus one are retained in each factor."))), DescribeRole.Theorem),
+                Blocks(Paragraph(Text("For all natural n, r and m, write b(k) for bseq n r k. The identity is 2*(m+1)*b(m+1)=r*(n+2*(m+1)-2)*b(m), with all scalar arithmetic in the real numbers."))), DescribeRole.Theorem),
             Describe.Lean(DescribeId.Create("regular-chs-interface-4"),
                 DeclarationHandle.Create("D5/S3/Combinatorics/Graph/RegularCHS/Interface.bseq_recurrence"),
                 H("The positive-index recurrence"), StatementSource.WithoutFormula(),
                 AssessedProvenance.FromRepo(LibraryNoteRef.Create("D5/L/GraphInvariants/chavez2023extremalpolynomialnorms")),
-                Blocks(Paragraph(Text("For all natural n, r and m with m at least one, 2m times bseq n r m equals r times n plus 2m minus 2 times bseq n r at m minus one. The factor n plus 2m minus 2 is evaluated in the real numbers."))), DescribeRole.Theorem))));
+                Blocks(Paragraph(Text("For natural n, r and m with m at least one, write b(k) for bseq n r k. The identity is 2*m*b(m)=r*(n+2*m-2)*b(m-1). The scalar factors use real arithmetic and the coefficient index m-1 uses natural subtraction."))), DescribeRole.Theorem))));
 }
