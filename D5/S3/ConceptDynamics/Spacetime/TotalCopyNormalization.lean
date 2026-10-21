@@ -37,7 +37,7 @@ def sourceAttributeEquiv : Attributes 3 ≃ SourceTimedAttribute where
     rcases a with ⟨p, ⟨s, hs⟩, r, t⟩
     rcases hs with rfl | rfl <;> rfl
 
-private def filterBalanced (P : (c : Context 3) → c.Event → Prop) (x : B) : B :=
+def filterBalanced (P : (c : Context 3) → c.Event → Prop) (x : B) : B :=
   ⟨⟨x.val.1, ⟨x.val.2.val.filter (P x.val.1),
     (Finset.filter_subset _ _).trans x.val.2.property⟩⟩, x.property⟩
 
@@ -109,7 +109,7 @@ private theorem unary_success {n : Nat} (f : Unary) (a : CopyTerm n) (X Y : B)
   change (evalDiagonal a X).map (unary f) = some Y at h
   exact Option.map_eq_some_iff.mp h
 
-private theorem subtree_success {n m : Nat} (f : Binary) (a : CopyTerm n) (b : CopyTerm m)
+theorem subtree_success {n m : Nat} (f : Binary) (a : CopyTerm n) (b : CopyTerm m)
     (X Y : B) (h : evalDiagonal (.binary f a b) X = some Y) :
     ∃ x y, evalDiagonal a X = some x ∧ evalDiagonal b X = some y ∧ binary f x y = some Y := by
   change (evalDiagonal a X).bind (fun x => (evalDiagonal b X).bind (binary f x)) = some Y at h
@@ -522,7 +522,7 @@ private theorem extendCopy_denote (C : CopyTerm 1) (g : Generator nativeSignatur
           (if _ : (1 : Fin 2) = 1 then x else _))
       rfl
 
-private theorem word_to_copy_denote (w : List (Generator nativeSignature)) (X : B) :
+theorem word_to_copy_denote (w : List (Generator nativeSignature)) (X : B) :
     evalDiagonal (wordToCopy w) X = contextDenote nativeSignature w X := by
   let step := fun (s : Option B) (g : Generator nativeSignature) => strictStep nativeSignature g s
   have run_fold (w : List (Generator nativeSignature)) (s : Option B) :
