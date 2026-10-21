@@ -206,7 +206,9 @@ search-reduction-run:
 	case "$$(uname -s)" in Darwin) lookup_ext=dylib ;; *) lookup_ext=so ;; esac; \
 	lookup_lib=".lake/build/lean-inspector/reg/lib/libregInspector_LeanInformationAuditLookupDisk.$$lookup_ext"; \
 	test -f "$$lookup_lib" || { echo 'Build SearchReduction.Commands before replaying requests' >&2; exit 2; }; \
-	lake -d tools/lean-inspector-reg env lean --load-dynlib="$$lookup_lib" -j1 "$$SEARCH_REDUCTION_REQUESTS"
+	lookup_pickle_lib=".lake/packages/batteries/.lake/build/lib/libbatteries_Batteries.$$lookup_ext"; \
+	test -f "$$lookup_pickle_lib" || { echo 'Build the Batteries native dependency before replaying requests' >&2; exit 2; }; \
+	lake -d tools/lean-inspector-reg env lean --load-dynlib="$$lookup_pickle_lib" --load-dynlib="$$lookup_lib" -j1 "$$SEARCH_REDUCTION_REQUESTS"
 search-reduction search-reduction-run: export SEARCH_REDUCTION_REQUESTS := $(value REQUESTS)
 
 search-reduction-test: search-reduction-index-fixtures
