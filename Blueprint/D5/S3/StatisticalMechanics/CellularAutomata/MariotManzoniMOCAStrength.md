@@ -94,6 +94,10 @@ $$\forall b \in \mathbb{N},\; \forall k \in \mathbb{N},\; \forall f \in (\operat
 
 *Proof.* Machine-checked in Lean as `D5/S3/StatisticalMechanics/CellularAutomata/MariotManzoniMOCAStrength.result` (`✓ std3`). ∎
 
+*Resolves.* `Problems/mariot-manzoni-2022-moca-orthogonal-array-strength-three` (proved) by `D5/S3/StatisticalMechanics/CellularAutomata/MariotManzoniMOCAStrength.result`.
+
+<!-- scribe-open-problem-resolution-v1 {"problem_slug":"mariot-manzoni-2022-moca-orthogonal-array-strength-three","declaration_gid":"D5/S3/StatisticalMechanics/CellularAutomata/MariotManzoniMOCAStrength.result","resolution_kind":"proved"} -->
+
 *Source.* Repository-derived.
 
 *Acknowledgement.* Luca Mariot and Luca Manzoni (2022). *Building Correlation Immune Functions from Sets of Mutually Orthogonal Cellular Automata*. DOI: [10.48550/arXiv.2207.08280](https://doi.org/10.48550/arXiv.2207.08280). URL: <https://arxiv.org/abs/2207.08280v1>.

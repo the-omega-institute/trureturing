@@ -37,14 +37,17 @@ internal sealed class MariotManzoniMOCAStrengthDocument : IScribeDocumentDefinit
                 DescribeRole.Definition, AssessedProvenance.FromLiterature(Source)),
             Node("result", "Every MOCA array has strength three", Disp(ClaimBody()),
                 "Flip one input bit. A single column changes under its left endpoint flip. For three columns ordered by starting position, use the first left endpoint when the first two starts differ, the last right endpoint when only the last start differs, and the common left endpoint when all starts coincide. These flips reverse the triple XOR, even when columns repeat, without requiring orthogonality. For two distinct columns with different starts, the earlier left endpoint suffices. At equal starts, orthogonality makes the pair of complete output vectors a bijection, so summation can be reindexed and one output bit flipped. The seven nonconstant integer character sums of a three-column array therefore vanish. Expanding the three-bit indicator gives eight times each fiber cardinality equal to the number of rows, which yields the asserted natural quotient. The theorem asserts strength three; sharpness and the corresponding Boolean-function statement are outside its conclusion.",
-                DescribeRole.Theorem, AssessedProvenance.FromRepo(Source))),
+                DescribeRole.Theorem, AssessedProvenance.FromRepo(Source),
+                new OpenProblemResolutionClaim(
+                    ProblemSlugRef.Create("mariot-manzoni-2022-moca-orthogonal-array-strength-three"),
+                    ResolutionKind.Proved))),
         []));
 
     private static DocumentBlock Node(string name, string title, Formula formula, string prose,
-        DescribeRole role, AssessedProvenance provenance) => Describe.Lean(
+        DescribeRole role, AssessedProvenance provenance, OpenProblemResolutionClaim? resolution = null) => Describe.Lean(
             DescribeId.Create("moca-" + name.ToLowerInvariant()), DeclarationHandle.Create(Prefix + name),
             H(title), StatementSource.FromAuthor(formula), provenance,
-            Blocks(Paragraph(Text(prose))), role);
+            Blocks(Paragraph(Text(prose))), role, resolution);
 
     private static Formula Named(string name) => Seq(Operatorname, Grp(F.Id(name)));
     private static Formula Qualified(string owner, string name) => Seq(Named(owner), Dot, Named(name));
