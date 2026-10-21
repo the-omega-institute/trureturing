@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:ebefb985f9e22c08ccc40ba1bd483b67e9d34f2687224b5758b479d97e151ff6
+  normalized_sha256: sha256:ebefb985f9e22c08ccc40ba1bd483b67e9d34f2687224b5758b479d97e151ff6
+cas_ref: sha256:ebefb985f9e22c08ccc40ba1bd483b67e9d34f2687224b5758b479d97e151ff6
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 'nonpropositional: 坐标见证束只存索引的单源实现纪律。'
+    previous_atom_id: 5803b6f3586fa6fbed4e71bedaa76fbda7d9a4537e1f9cc23c7aac7d398f6914
+    next_atom_id: 81024f9b15f7203a34b2a8f96ccd99ce3902d7af871731c70f13bbe45a3e3e0b
