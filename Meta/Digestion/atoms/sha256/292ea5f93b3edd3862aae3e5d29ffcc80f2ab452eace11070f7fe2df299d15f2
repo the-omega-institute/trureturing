@@ -1,0 +1,2 @@
+**定义 14.1（同源子树共享）。** 沿用定义 1.1 的自由有序树及完整替换。$\operatorname{Sub}(t)$ 是 $t$ 中各节点及其全部后代构成的有序带标号子树集合；叶标签、左右端口及括号均参与相等判断。$D(t)$ 只合并完全相同的这种子树，根仍代表 $t$，不保留不从根可达的轨道项。经典的 minimal-DAG 原理是“一个不同的 fringe subtree 对应一个节点”，见 Seelbach Benkner–Wagner, *Distinct Fringe Subtrees in Random Trees*, [§1，期刊页 3687](https://doi.org/10.1007/s00453-022-01013-y)。这里使用该表示原理，不使用其随机树渐近定理；以下计数针对本卷指定的 $T_n$。
+

@@ -1,0 +1,25 @@
+**定义 5.1（低—高—中的占位坐标）。** 对 $`I\in\mathcal{\text{𝒮}}`$，置
+
+```math
+x(I)=\mathbf{\text{𝟏}}_{\{1\in I\}},\qquad
+y(I)=\mathbf{\text{𝟏}}_{\{3\in I\}},\qquad
+z(I)=\mathbf{\text{𝟏}}_{\{2\in I\}}.
+```
+
+因此 $`x,z,y`$ 是低到高的印刷位串，而占位向量使用 $`(x,y,z)`$ 次序，满足
+
+```math
+x,y,z\in\{0,1\},\qquad xz=yz=0.
+```
+
+五个向量为
+
+```math
+\begin{aligned}
+v_{\varnothing}&=(0,0,0),&v_1&=(1,0,0),&v_2&=(0,0,1),\\
+v_3&=(0,1,0),&v_{13}&=(1,1,0).
+\end{aligned}
+```
+
+四棱锥顶点是 $`\mathsf{\text{𝖥}}[2]`$，即旧标签 $`[3]`$；第三位置 $`\mathsf{\text{𝖥}}[3]`$ 在底面上。
+
