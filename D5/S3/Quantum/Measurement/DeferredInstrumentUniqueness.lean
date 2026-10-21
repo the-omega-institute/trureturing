@@ -214,7 +214,8 @@ lemma choi_gram_rows {d : ℕ} {C : Matrix (Fin d × Fin d) (Fin d × Fin d) ℂ
     (hC : C.PosSemidef) :
     ∃ (B : (Fin d × Fin d) → (Fin d × Fin d) → ℂ),
       C = B.conjTranspose * B := by
-  sorry
+  apply CStarAlgebra.nonneg_iff_eq_star_mul_self.mp
+  exact Matrix.nonneg_iff_posSemidef.mpr hC
 
 lemma certificate_identity {d : ℕ} (t : ℝ) (J : Fin d → MatrixMap (Fin d) (Fin d) ℂ)
     (hCP : ∀ x, (J x).IsCompletelyPositive)
