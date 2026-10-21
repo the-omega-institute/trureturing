@@ -163,3 +163,13 @@ run_cmd do
           unless result.cost == expected do
             throwError "cold candidate certification: {result.detail}"
           logInfo s!"LOOKUP_COLD cost={reprStr result.cost} {result.detail}"
+
+run_cmd liftTermElabM do
+  let source ← getEnv
+  let result ← boundedRebuildBranch do
+    IO.addHeartbeats (localBudget * 1000 + 1)
+    discard <| copyCertificateExpression {source, enclosingBudget := true} (mkConst ``True.intro)
+    return {cost := .one}
+  unless result.cost == .unknown && result.detail == "heartbeat" do
+    throwError "candidate vocabulary copy escaped the enclosing allocation"
+  logInfo "LOOKUP_COPY_BUDGET enclosing=true timeout=unknown"

@@ -363,7 +363,7 @@ private partial def inlineLookupSupport (base : Environment) (proof : Expr)
         if projection || e.isProj || e.getAppFn.isLambda then
           return .done (← withTransparency .all <| whnf e)
         return .done e)
-      let proof ← copyCertificateExpression {source} expanded
+      let proof ← copyCertificateExpression {source, enclosingBudget := true} expanded
       checkSystem "lookup.imported_candidate"
       proofs := proofs.push ((ownedLookupExpr proof).run' {})
     catch ex =>
