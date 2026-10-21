@@ -1,0 +1,24 @@
+**Definition 3.1 (Rational arithmetic conventions).** Every terminating decimal
+in this volume denotes its exact rational value. For a real rational $y$ put
+
+$$
+\operatorname{Round}_N(y)=10^{-N}\left\lfloor10^Ny+\frac12\right\rfloor.
+\tag{3.1}
+$$
+
+Apply this separately to real and imaginary parts and entrywise to matrices.
+The interval operations used below are closed rational operations, with each
+elementary lower endpoint rounded down and each upper endpoint rounded up to
+a multiple of $10^{-160}$. Products take the extrema of the four endpoint
+products. Inversion of $[l,u]$ uses $[1/u,1/l]$ only when $0\notin[l,u]$.
+Derivatives and Hessians use the product and quotient rules with these same
+operations. Powers are formed successively in increasing exponent order;
+expanded multivariate polynomials are summed in ascending lexicographic
+monomial order, and univariate polynomials use descending Horner evaluation.
+For $(r,b)$ the exponent pair order is $(\deg_r,\deg_b)$; for the carrier
+coefficients it is $(\deg_p,\deg_v)$ after collecting powers of $x$.
+
+The vector norm is $\|z\|_\infty=\max_i|z_i|$ and the matrix norm is the
+maximum absolute row sum. A complex rectangle uses the maximum of its two
+real component norms.
+

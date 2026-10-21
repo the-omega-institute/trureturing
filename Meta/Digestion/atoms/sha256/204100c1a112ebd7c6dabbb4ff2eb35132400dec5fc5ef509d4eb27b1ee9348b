@@ -1,0 +1,10 @@
+**Theorem 13.8 (T2: full-parent boundary local injectivity).** For
+every $B\in\partial_f\mathcal H$ and $E\in\{J,M\}$ there is a
+neighbourhood $U_B$ in complete source/gain/drift coordinates such that
+$\Psi_E$ is injective on $U_B\cap\mathcal H$.
+
+Proof. Proposition 13.3 treats the four open faces, Proposition 13.6
+treats $L$, and Proposition 13.7 treats $R$. These exhaust
+Definition 12.1. The face and corner proofs do not restrict $p$,
+so the statement includes their $p=24$ labels. ∎
+

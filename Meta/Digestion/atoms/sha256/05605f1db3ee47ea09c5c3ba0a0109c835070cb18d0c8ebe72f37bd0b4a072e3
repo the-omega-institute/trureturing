@@ -1,0 +1,23 @@
+**Definition 18.1 (Coefficient and determinant conventions).** A descending
+list $(a_d,\ldots,a_0)$ specifies $\sum_{i=0}^d a_i t^i$.
+For a nonzero rational polynomial $h$, $\operatorname{pp}(h)$ clears
+denominators, removes positive integer content, and chooses positive
+leading coefficient. The resultant of degrees $d,e$ uses rows
+$t^{e-1}h,\ldots,h,t^{d-1}k,\ldots,k$, with descending coefficient
+columns. For $F,G$ of $x$ degrees $6,13$, respectively, define $S_j$
+for $j=1,2$ as follows. Use rows
+
+$$
+x^{5-j}G,\ldots,G,\quad x^{12-j}F,\ldots,F,
+\qquad n_j=19-2j.
+$$
+
+For $0\le i\le j$, take the $n_j$ by $n_j$ coefficient matrix whose
+first $n_j-1$ columns are $x^{18-j},\ldots,x^{j+1}$ and whose last
+column is $x^i$. Its determinant is $s_{j,i}$; put
+$S_j=\sum_{i=0}^j s_{j,i}x^i$. A common finite root annihilates $S_j$.
+The determinant subresultant criterion says that preserved degrees,
+zero resultant and nonzero linear $S_1$ give a degree-one gcd, whose
+root is the unique common finite root. This follows also by ordinary
+polynomial row elimination on the displayed coefficient matrices.
+
