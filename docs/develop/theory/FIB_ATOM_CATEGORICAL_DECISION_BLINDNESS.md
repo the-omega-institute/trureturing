@@ -1156,3 +1156,118 @@ Taking $v\to\rho$ proves (10.11), including both endpoints; at $\rho=1/2$ it equ
 This retention statement assumes the stated inward threshold bound. A two-symbol output alphabet by itself establishes neither finite physical threshold precision nor a cheap implementation, and the law-dependent choice of $u$ supplies no guarantee for an arbitrary fixed quantizer. The conditional source substitution remains exactly Theorem 9.5, using [the Gaussian record volume, Theorem 5.1 and Proposition 14.2](FIB_SHARED_GAUSSIAN_RECORD_LAWS.md): no preparation realizing these symmetric means is asserted, and Gaussianity of the original law supplies no Gaussianity for a projected-input law. The Gaussian experiment, existence of a finite readout and physical precision of that readout are separate claims. These known-law conclusions establish no native atom encoding, adaptive-word result, empirical or out-of-distribution performance, or training gain. $\square$
 
 ## 追加锚（本行以下为增补区）
+## 11. Off-axis Gaussian escape is exponentially faint
+
+**假设 11.1（uniform five-original-label Gaussian experiment）。** Let the five original labels have prior $1/5$, covariance $I_2$, and means
+
+$$
+\mu_1=\mu_2=(-q,0),\qquad \mu_3=(0,b),\qquad
+\mu_4=\mu_5=(q,0),
+$$
+
+where $q$ is fixed with $0<q<\sqrt{2\ln4}$ and $b>0$. Write $r_0(q,b)$ for the infimum binary zero--one risk for deciding whether the label is the singleton $3$ from one complete observation, and put
+
+$$
+B(q,b)=\frac15-r_0(q,b),qquad
+c(q)=\ln4-\frac{q^2}{2}>0.
+$$
+
+This is a continuous two-dimensional observation law; no preparation, quantizer, training, or physical-realization assertion is part of the assumption.
+
+**定理 11.2（exact pointwise logarithmic gain）。** Under Assumption 11.1,
+
+$$
+\boxed{\displaystyle
+\lim_{b\downarrow0} b^2\ln B(q,b)
+=-\frac12\left(\ln4-\frac{q^2}{2}\right)^2.}
+\tag{11.1}
+$$
+
+The conclusion is pointwise in the fixed $q$ and supplies neither a prefactor nor a statement at the critical value $q=\sqrt{2\ln4}$.
+
+Proof. Let $x=(u,v)$ and let $\phi$ be the standard normal density. The singleton density and the two duplicated endpoint densities are
+
+$$
+ f_0(u,v)=\phi(u)\phi(v-b),qquad
+ f_\pm(u,v)=\phi(u\mp q)\phi(v).
+$$
+
+The signed Bayes gain is the positive part of the singleton prior density minus the aggregate competing prior density, hence the binary Bayes identity used in Proposition 2.1 gives
+
+$$
+ B(q,b)=\frac15\int_{\mathbb R^2}
+ \bigl(f_0-2f_- -2f_+\bigr)_+\,du\,dv.
+\tag{11.2}
+$$
+
+Factoring the common density gives the signed integrand
+
+$$
+ D_b(u,v):=f_0-2f_- -2f_+
+ =\phi(u)\phi(v)
+ \left[e^{bv-b^2/2}-4e^{-q^2/2}\cosh(qu)\right].
+\tag{11.3}
+$$
+
+Set $A(u)=4e^{-q^2/2}\cosh(qu)$. Since $A(u)\ge A(0)=e^{c(q)}$, the positive region of $D_b$ is contained in
+
+$$
+ v>\frac{\ln A(u)+b^2/2}{b}
+ \quad\Longrightarrow\quad
+ v>\frac{c(q)}b+\frac b2.
+\tag{11.4}
+$$
+
+As $D_b\le f_0$ pointwise, (11.2), (11.4), and the standard Gaussian-tail logarithmic asymptotic
+$\lim_{x\to\infty}x^{-2}\ln\overline\Phi(x)=-1/2$ imply
+
+$$
+\limsup_{b\downarrow0} b^2\ln B(q,b)
+\le -\frac{c(q)^2}{2}.
+\tag{11.5}
+$$
+
+For the reverse inequality, fix $\varepsilon>0$. By continuity of $\ln\cosh(qu)$ at $u=0$, choose $\delta>0$ such that
+$\ln A(u)\le c(q)+\varepsilon/2$ whenever $|u|\le\delta$. For all sufficiently small $b$, on the slab
+
+$$
+R_b=\left\{|u|\le\delta,\quad v\ge\frac{c(q)+\varepsilon}{b}\right\}
+$$
+
+we have $e^{bv-b^2/2}\ge e^{c(q)+\varepsilon-b^2/2}$ and therefore, for a constant $\kappa_\varepsilon>0$ independent of $b$,
+
+$$
+D_b(u,v)\ge \kappa_\varepsilon\,f_0(u,v)qquad ((u,v)\in R_b).
+\tag{11.6}
+$$
+
+This signed lower bound is essential: the probability of the positive region alone would not lower-bound the positive-part integral. Integrating (11.6) in (11.2) yields
+
+$$
+ B(q,b)\ge \frac{\kappa_\varepsilon}{5}
+ \Pr\{|U|\le\delta\}\,
+ \overline\Phi\!\left(\frac{c(q)+\varepsilon}{b}-b\right),
+\tag{11.7}
+$$
+
+where $U\sim\mathcal N(0,1)$. Consequently,
+
+$$
+\liminf_{b\downarrow0} b^2\ln B(q,b)
+\ge -\frac{(c(q)+\varepsilon)^2}{2}.
+\tag{11.8}
+$$
+
+Letting $\varepsilon\downarrow0$ and combining (11.5) with (11.8) proves (11.1). $\square$
+
+**推论 11.3（approximate blindness and the finite-law TV bridge）。** For every fixed $q$ in the range of Theorem 11.2,
+
+$$
+ B(q,b)=\exp\!\left[-\frac{c(q)^2}{2b^2}+o(b^{-2})\right],
+\qquad b\downarrow0,
+\tag{11.9}
+$$
+
+so the singleton binary risk remains within this exponentially small gain of its blind value $1/5$. This quantifies the approach to the $b=0$ plateau without asserting a derivative, a prefactor, or a uniform estimate in $q$.
+
+If a finite common Borel quantizer is subsequently supplied for the same-prior experiment, its singleton gain $B_Q=1/5-r_0(Q)$ satisfies $0\le B_Q\le B(q,b)$ by conditioning. For two finite joint laws on that common alphabet, Proposition 7.5 gives $|B_Q-B'_Q|\le\operatorname{TV}(J,J')$; under the original/projected-input hypotheses of Proposition 7.7 this becomes $|B_Q-B'_{Q}|\le e_N$. Thus a TV approximation smaller than the displayed gain scale can preserve its numerical order, while a larger approximation error can mask it. These are the existing same-prior soft-risk certificates applied to this gain; they do not transfer (11.1) to a projected law, imply a hard-support impossibility, or provide a native preparation attainer. $\square$
