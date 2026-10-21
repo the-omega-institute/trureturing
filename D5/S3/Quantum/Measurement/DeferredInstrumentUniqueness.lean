@@ -219,7 +219,13 @@ lemma trace_condition_entry {d : ℕ} {U : Matrix.unitaryGroup (Fin d) ℂ}
     (htrace : ∀ x ρ, Matrix.trace (J x ρ) = Matrix.trace (ρ * Qs U s x)) :
     ∑ j : Fin d, MatrixMap.choi_matrix (J x) (j, i₁) (j, i₂) =
       Qs U s x i₂ i₁ := by
-  sorry
+  calc
+    ∑ j : Fin d, MatrixMap.choi_matrix (J x) (j, i₁) (j, i₂) =
+        Matrix.trace (J x (Matrix.single i₁ i₂ 1)) := by
+      simp [MatrixMap.choi_matrix, Matrix.trace]
+    _ = Matrix.trace (Matrix.single i₁ i₂ 1 * Qs U s x) := htrace x _
+    _ = Qs U s x i₂ i₁ := by
+      simp [Matrix.trace, Matrix.mul_apply, Matrix.single]
 
 lemma choi_gram_rows {d : ℕ} {C : Matrix (Fin d × Fin d) (Fin d × Fin d) ℂ}
     (hC : C.PosSemidef) :
