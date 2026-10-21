@@ -6,40 +6,33 @@
    utility: kind=certified-instance; basis=refutes=gid:D5/S3/Quantum/Contextuality/SteeringTemporalCompatibilityRefutation.claim; result=D5/S3/Quantum/Contextuality/SteeringTemporalCompatibilityRefutation.result; claim=D5/S3/Quantum/Contextuality/SteeringTemporalCompatibilityRefutation.claim
    digest: A two-qubit state is spatially steerable and temporally compatible. -/
 
+import D5.S3.Quantum.Foundation.FiniteDiamondDistance
 import D5.S3.Quantum.Foundation.FiniteKrausChannel
 import D5.S3.Quantum.Information.PartialTraceMutualInformation
 import D5.S3.Quantum.Measurement.StabilizerPovmMaximalEntanglementRefutation
 import D5.S3.Quantum.Entanglement.ConicalDesignConcurrenceComparability
+import D5.S3.Quantum.Entanglement.StructuredNegativityCoincidenceRefutation
 import D5.S3.Weil.ZetaLinear.RankTrace
+import Mathlib.Algebra.Star.StarProjection
 
 /-! Spatial EPR steering and CPTP temporal compatibility for two-qubit operators. -/
 
 set_option autoImplicit false
 set_option relaxedAutoImplicit false
+set_option linter.style.longLine false
 
 noncomputable section
 
 open Matrix
 open scoped BigOperators Kronecker ComplexOrder
 open D5.S3.Quantum.Foundation.FiniteStateChannel
+open D5.S3.Quantum.Foundation.FiniteDiamondDistance (referenceAction)
 open D5.S3.Quantum.Foundation.FiniteKrausChannel
 open D5.S3.Quantum.Information.PartialTraceMutualInformation
 open D5.S3.Quantum.Information.StabilizerPairLocalUnitaryInequivalence
 open D5.S3.Quantum.Measurement.StabilizerPovmMaximalEntanglementRefutation
 
 namespace D5.S3.Quantum.Contextuality.SteeringTemporalCompatibilityRefutation
-
-/-- A positive, trace-one operator on two qubits. -/
-def TwoQubitDensity (R : Matrix (Fin 2 × Fin 2) (Fin 2 × Fin 2) ℂ) : Prop :=
-  R.PosSemidef ∧ R.trace = 1
-
-/-- Apply a qubit channel to the second tensor factor. -/
-def applySecond (E : QuantumChannel (Fin 2) (Fin 2))
-    (R : Matrix (Fin 2 × Fin 2) (Fin 2 × Fin 2) ℂ) :
-    Matrix (Fin 2 × Fin 2) (Fin 2 × Fin 2) ℂ :=
-  fun p q => CStarMatrix.ofMatrix.symm
-    (E.toCompletelyPositiveMap (CStarMatrix.ofMatrix
-      (fun b d => R (p.1, b) (q.1, d)))) p.2 q.2
 
 /-- Equation (3): the anticommutator of the first marginal with the swap. -/
 def temporalKernel (R : Matrix (Fin 2 × Fin 2) (Fin 2 × Fin 2) ℂ) :
@@ -50,7 +43,8 @@ def temporalKernel (R : Matrix (Fin 2 × Fin 2) (Fin 2 × Fin 2) ℂ) :
 
 /-- Compatibility with a CPTP temporal mechanism from the first qubit to the second. -/
 def TemporalForward (R : Matrix (Fin 2 × Fin 2) (Fin 2 × Fin 2) ℂ) : Prop :=
-  ∃ E : QuantumChannel (Fin 2) (Fin 2), R = applySecond E (temporalKernel R)
+  ∃ E : QuantumChannel (Fin 2) (Fin 2),
+    R = CStarMatrix.ofMatrix.symm (referenceAction E (CStarMatrix.ofMatrix (temporalKernel R)))
 
 /-- Compatibility in the reverse direction, interchanging the tensor factors. -/
 def TemporalReverse (R : Matrix (Fin 2 × Fin 2) (Fin 2 × Fin 2) ℂ) : Prop :=
@@ -62,7 +56,7 @@ def Atemporal (R : Matrix (Fin 2 × Fin 2) (Fin 2 × Fin 2) ℂ) : Prop :=
 
 /-- A finite family of two-outcome projective measurements. -/
 def BinaryProjective {n : ℕ} (P : Fin n → Bool → Matrix (Fin 2) (Fin 2) ℂ) : Prop :=
-  (∀ x b, (P x b).IsHermitian ∧ P x b * P x b = P x b) ∧
+  (∀ x b, IsStarProjection (P x b)) ∧
     ∀ x, P x false + P x true = 1
 
 /-- The unnormalized conditional state on the first qubit after measuring the second. -/
@@ -89,7 +83,8 @@ def SteerableAB (R : Matrix (Fin 2 × Fin 2) (Fin 2 × Fin 2) ℂ) : Prop :=
 /-- The steering implication in the discussion of Song et al., arXiv:2306.09336v2. -/
 def claim : Prop :=
   ∀ R : Matrix (Fin 2 × Fin 2) (Fin 2 × Fin 2) ℂ,
-    TwoQubitDensity R → (SteerableBA R ∨ SteerableAB R) → Atemporal R
+    D5.S3.Quantum.Entanglement.StructuredNegativityCoincidenceRefutation.IsDensity (d := 2) R →
+      (SteerableBA R ∨ SteerableAB R) → Atemporal R
 
 private def stateR : Matrix (Fin 2 × Fin 2) (Fin 2 × Fin 2) ℂ :=
   fun p q => (!![!![5391, 0; 0, 3609], !![0, 1782; 1188, 0];
@@ -149,7 +144,9 @@ private theorem witness_domination (s t : Bool) :
   rw [heq]
   exact (posSemidef_vecMulVec_self_star q).smul (by norm_num : (0 : ℝ) ≤ 1 / 101)
 
-private theorem state_density : TwoQubitDensity stateR := by
+private theorem state_density :
+    D5.S3.Quantum.Entanglement.StructuredNegativityCoincidenceRefutation.IsDensity
+      (d := 2) stateR := by
   let v : Fin 2 × Fin 2 → ℂ := fun p => if p = (0, 0) then 3 else
     if p = (1, 1) then 1 else 0
   let w : Fin 2 × Fin 2 → ℂ := fun p => if p = (0, 1) then 3 else
@@ -258,14 +255,15 @@ private theorem measurements_projective : BinaryProjective measurements := by
   constructor
   · intro x b
     constructor
+    · change measurements x b * measurements x b = measurements x b
+      fin_cases x <;> cases b <;>
+        simp [measurements, Matrix.mul_add, Matrix.add_mul,
+          smul_smul, letter_mul, letterPhase, letterProduct,
+          pauliMatrix.eq_1] <;> module
     · change (measurements x b).conjTranspose = measurements x b
       simp only [measurements, Matrix.conjTranspose_smul, Matrix.conjTranspose_add,
         Matrix.conjTranspose_one, pauli_hermitian]
       cases b <;> norm_num
-    · fin_cases x <;> cases b <;>
-        simp [measurements, Matrix.mul_add, Matrix.add_mul,
-          smul_smul, letter_mul, letterPhase, letterProduct,
-          pauliMatrix.eq_1] <;> module
   · intro x
     ext i j
     simp [measurements, Matrix.add_apply, Matrix.smul_apply]
