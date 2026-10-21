@@ -359,13 +359,20 @@ lemma transport_forward {d : ℕ} (hd : 2 ≤ d) (U : Matrix.unitaryGroup (Fin d
     ∀ x, J x = Itilde U t x := by
   sorry
 
+lemma Itilde_cp {d : ℕ} (hd : 2 ≤ d) (U : Matrix.unitaryGroup (Fin d) ℂ)
+    {t : ℝ} (htl : -1 / ((d : ℝ) ^ 2 - 1) ≤ t) (htu : t ≤ 1) :
+    ∀ x, (Itilde U t x).IsCompletelyPositive := by
+  sorry
+
 lemma backward_direction {d : ℕ} (hd : 2 ≤ d) (U : Matrix.unitaryGroup (Fin d) ℂ)
     (t : ℝ) (htl : -1 / ((d : ℝ) ^ 2 - 1) ≤ t) (htu : t ≤ 1) :
     (∀ x, (Itilde U t x).IsCompletelyPositive) ∧
       (∑ x, Itilde U t x = It t) ∧
       (∀ x ρ, Matrix.trace (Itilde U t x ρ) =
         Matrix.trace (ρ * Qs U (sMax d t) x)) := by
-  sorry
+  refine ⟨Itilde_cp hd U htl htu, Itilde_sum hd U htl htu, ?_⟩
+  intro x ρ
+  exact Itilde_trace hd U htl htu x ρ
 
 lemma endpoint_support_lower {d : ℕ} (hd : 2 ≤ d) (J : Fin d → MatrixMap (Fin d) (Fin d) ℂ)
     (hCP : ∀ x, (J x).IsCompletelyPositive) : True := by
