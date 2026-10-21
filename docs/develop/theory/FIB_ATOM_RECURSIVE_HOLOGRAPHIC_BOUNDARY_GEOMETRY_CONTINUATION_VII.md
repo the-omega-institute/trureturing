@@ -4241,7 +4241,7 @@ In particular $A_t=N(W_{\lambda_t})$ and $0<w_t<1$.
 For the ideal known-$q$ operation menu of §214, define
 
 $$
-\mathcal V_t(s)=\sup_{q\in D}\ 
+\mathcal V_t(s)=\sup_{q\in D}\;
 \sup_{\substack{\text{allowed one-copy instruments}\\
 \Pr(\mathrm{success}\mid\mathrm{prepared})=s}}
 N(\sigma_{\mathrm{success}})
