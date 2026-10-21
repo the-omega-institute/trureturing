@@ -218,3 +218,9 @@ search-reduction-replay-real-negative:
 search-reduction-replay-vocabulary:
 	@$(MAKE) search-reduction-run REQUESTS=tools/lean-inspector/LeanInformationAuditRegTests/SearchReduction/VocabularyTransport.lean && $(MAKE) search-reduction-run REQUESTS=tools/lean-inspector/LeanInformationAuditRegTests/SearchReduction/VocabularyTests.lean
 
+
+.PHONY: search-reduction-index search-reduction-index-run
+search-reduction-index:
+	@$(MAKE) lean LEAN_TARGETS="regInspector/searchReductionIndex" && $(MAKE) search-reduction-index-run
+search-reduction-index-run:
+	@lake -d tools/lean-inspector-reg env ../../.lake/build/lean-inspector/reg/bin/searchReductionIndex "$(INDEX_BASIS)" "$(INDEX_DIR)" $(INDEX_MODULES)

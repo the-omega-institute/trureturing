@@ -104,9 +104,10 @@ private partial def conclusions (e : Expr) (fuel : Nat := 32) : Array Expr :=
     result ++ conclusions (e.getArg! 0) (fuel - 1) ++ conclusions (e.getArg! 1) (fuel - 1)
   else if e.isAppOfArity ``Iff 2 then
     result ++ conclusions (e.getArg! 0) (fuel - 1) ++ conclusions (e.getArg! 1) (fuel - 1)
-  else if e.isAppOfArity ``Eq 3 || e.isAppOfArity ``Subtype 2 then
-    -- Directional equality and subtype-property views can change the head.
-    result.push (mkBVar 0)
+  else if e.isAppOfArity ``Eq 3 then
+    let result := result.push (mkAppN (e.getAppFn) #[e.getArg! 0, e.getArg! 2, e.getArg! 1])
+    if e.getArg! 0 == mkSort .zero then result.push (mkBVar 0) else result
+  else if e.isAppOfArity ``Subtype 2 then result.push (mkBVar 0)
   else result
 
 private structure BuildNode where
@@ -169,6 +170,7 @@ unsafe def produce (directory : System.FilePath) (basis mathlib : String)
   let mut todo := roots
   let mut seen : NameSet := {}
   let mut rigidNames : NameSet := {}
+  let mut reducibleNames : NameSet := {}
   let mut modules : Array Name := #[]
   let mut missing : Array String := #[]
   -- This first pass retains only names and rigid-symbol metadata.
@@ -182,9 +184,20 @@ unsafe def produce (directory : System.FilePath) (basis mathlib : String)
       for (part, _) in parts do
         for info in part.constants do
           if rigid info then rigidNames := rigidNames.insert info.name
+          if let .defnInfo value := info then
+            let mut body := value.value
+            while body.isLambda do body := body.bindingBody!
+            unless body.isProj || value.hints.isAbbrev do
+              rigidNames := rigidNames.insert info.name
+        for (extension, entries) in part.entries do
+          if extension == `reducibilityCore then
+            for entry in entries do
+              let (n, status) : Name × ReducibilityStatus := unsafeCast entry
+              if status == .reducible then reducibleNames := reducibleNames.insert n
         for dependency in part.imports do todo := todo.push dependency.module
       modules := modules.push name
     catch ex => missing := missing.push s!"{name}: {ex}"
+  for n in reducibleNames do rigidNames := rigidNames.erase n
   let mut nodes : Nodes := {}
   let mut coverage : Array Json := #[]
   let mut declarations := 0
@@ -294,6 +307,11 @@ def query (index : Index) (keys : List String) : IO Candidates := do
 def memberKeys (type : Expr) : List String := ["member", toString (canonical type).hash]
 
 def candidateKeys (env : Environment) (type : Expr) : List String :=
-  "candidate" :: path (fun n => (env.find? n).any rigid) type
+  "candidate" :: path (fun n => (env.find? n).any (fun info =>
+    if rigid info then true else
+    match info with
+    | .defnInfo _ => getReducibilityStatusCore env n != .reducible &&
+        (env.getProjectionFnInfo? n).isNone
+    | _ => false)) type
 
 end LeanInformationAudit.SearchReduction.DiskLookup
