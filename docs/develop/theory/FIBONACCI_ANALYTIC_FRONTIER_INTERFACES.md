@@ -3979,3 +3979,304 @@ $$
 对大平方自由物理行 $a=f\asymp U$、$g=1$，即使 $D=\sqrt U$，本节的稳定行预算仍有主项 $U^{19/12}>U$。因此（473.11）没有支付完整六阶余域。其余原长度／高度、全物理行估计及逐整数 signed Robin restoration 仍需独立处理；没有由此得到 RH 或全部 $n>5040$ 的严格 Robin 不等式，也没有解析 Lean 认证。
 
 ## 追加锚（本行以下为增补区）
+
+## 474. 标准 Xi 导数滤波的完整 gamma 振幅运输
+
+**定义 474.1（完成函数的归一化滤波平均）。** 取标准完成函数 $\Xi(t)=\xi(1/2+it)$ 及 Hardy 实函数 $Z(t)$，并令
+
+$$
+A(t)=\frac12\left(t^2+\frac14\right)\pi^{-1/4}
+ \left|\Gamma\left(\frac14+\frac{it}{2}\right)\right|>0,
+\qquad \Xi(t)=-A(t)Z(t),\quad t\in\mathbb R.
+\tag{474.1}
+$$
+
+对标准普通导数 $\mathsf D=d/dt$，沿用经典广义 Laguerre 形式
+
+$$
+\mathcal L_p[f](t)=\sum_{j=0}^{2p}
+ \frac{(-1)^{j+p}}{j!(2p-j)!}f^{(j)}(t)f^{(2p-j)}(t).
+\tag{474.2}
+$$
+
+固定非负非零 $w\in C_c^\infty((0,1))$，记 $L=\log T$、$w_{X,H}(t)=w((t-X)/H)$。对实多项式 $P$ 定义
+
+$$
+\begin{aligned}
+J_Z(P)&=\int_{\mathbb R}w_{X,H}(t)
+ \mathcal L_p[Z](t)[P(\mathsf D/L)Z(t)]^2\,dt,\\
+J_\Xi(P)&=\int_{\mathbb R}w_{X,H}(t)A(t)^{-4}
+ \mathcal L_p[\Xi](t)[P(\mathsf D/L)\Xi(t)]^2\,dt.
+\end{aligned}
+\tag{474.3}
+$$
+
+这里 $\mathcal L_p$ 与 $P(\mathsf D/L)$ 均使用 $\Xi$ 的普通导数；没有以 $\mathsf D-A'/A$ 取代它们。因子 $A(t)^{-4}$ 是指定平均的一部分，不能省略。
+
+**定理 474.2（全部系数方向上的完成振幅消费）。** 以下以 bramble_trace 的 [*Signs and uniform filtered positivity in fourth moments of Hardy's function*，v3，Theorems 9–10 及（29）—（50）](https://rstation.ai/api/v1/papers/riemann_hypothesis_36/versions/3/download)的解析估计为前提，直接复用其中的四移位矩、正核强制性和完整算术余项界。固定 $0<\delta<1/13$、$0<\varepsilon<1/4$ 及上述 $w$。令
+
+$$
+X\in[T,2T],\qquad T^{12/13+\delta}\le H\le T,
+\qquad Q(x)=P\left(x-\frac{\pi}{4L}\right).
+\tag{474.4}
+$$
+
+在下列任一范围内，对每个非零实多项式 $P$，当 $T$ 足够大时一致有
+
+$$
+J_\Xi(P)=(1+o(1))J_Z(Q)>0:
+\quad
+\begin{cases}
+p\ge1\text{ 固定},& \deg P\le L^{1/4-\varepsilon},\\
+p\ge1,&p+\deg P\le(1/4-\varepsilon)\log\log T.
+\end{cases}
+\tag{474.5}
+$$
+
+第一种范围的阈值允许依赖 $p$；第二种范围的阈值不按 $p$ 重选。两种范围均一致于 $X,H$ 及所有非零系数方向，允许系数随 $T$ 改变。该结果是 `repo-derived` 的标准完成函数应用；所引 Hardy 正性、经典 Laguerre 判据及 Stirling 估计本身均为已有输入。
+
+证明。对 $t$ 位于原窗口支撑及 $|z-t|\le1$，将 $A$ 局部全纯延拓为
+
+$$
+A(z)=\frac12\left(z^2+\frac14\right)\pi^{-1/4}
+ \left\{\Gamma\left(\frac14+\frac{iz}{2}\right)
+        \Gamma\left(\frac14-\frac{iz}{2}\right)\right\}^{1/2},
+\tag{474.6}
+$$
+
+取在实轴上为正的平方根分支。对充分大 $T$，这份局部支撑中没有 gamma 极点或多项式零点，故分支存在并满足（474.1）的解析延拓。经典解析 Stirling 给出 $A'/A=-\pi/4+O(T^{-1})$，并因而在固定 $|b|\le2$ 上一致有
+
+$$
+\frac{A(t+b/L)}{A(t)}
+=e^{-\pi b/(4L)}\left\{1+O\left((TL)^{-1}\right)\right\}.
+\tag{474.7}
+$$
+
+先在完整四移位乘积内使用此式。定义
+
+$$
+\begin{aligned}
+F_Z(\mathbf b)&=\int w_{X,H}(t)\prod_{j=1}^4 Z(t+b_j/L)\,dt,\\
+F_\Xi(\mathbf b)&=\int w_{X,H}(t)A(t)^{-4}
+                      \prod_{j=1}^4\Xi(t+b_j/L)\,dt.
+\end{aligned}
+\tag{474.8}
+$$
+
+分母始终是未移位的 $A(t)^4$；对 $b_j$ 求导不会作用到分母，所以它保留了标准 $\Xi$ 导数。不能把该分母改成四个移位振幅而将结论变成形式恒等式。
+
+复用原四移位矩的共轭匹配情形及 Hölder：在该固定微观复移位域内，$\int w_{X,H}|Z(t+b/L)|^4\ll_w HL^4+E$，其中
+
+$$
+E\ll_{w,\sigma}T^{3/4+\sigma}(T/H)^{9/4},
+\qquad 0<\sigma<13\delta/4.
+$$
+
+该域与原文的固定移位域仅差坐标乘以 $i$，不扩张其半径。因此（474.7）给出全纯差额
+
+$$
+\begin{aligned}
+F_\Xi(\mathbf b)
+&=e^{\beta\sum_j b_j}F_Z(\mathbf b)+R_\Gamma(\mathbf b),
+&\beta&=-\frac{\pi}{4L},\\
+\sup_{|b_j|\le2}|R_\Gamma(\mathbf b)|
+&\ll_w\frac{HL^4+E}{TL}.
+\end{aligned}
+\tag{474.9}
+$$
+
+这里不把快速增长的 $A^{-4}$ 当作原矩定理允许的缓变行权；约去振幅之后才对原 $Z$ 乘积使用四矩。
+
+写 $P(x)=\sum_{r=0}^d c_rx^r$。使用普通导数的四槽泛函
+
+$$
+\mathscr D_{p,P}=
+\frac{(-1)^p}{(2p)!}(\partial_{b_1}-\partial_{b_2})^{2p}
+ P(\partial_{b_3})P(\partial_{b_4})\big|_{\mathbf b=0}.
+\tag{474.10}
+$$
+
+它作用在（474.8）上分别得到 $L^{-2p}J_Z(P)$ 与 $L^{-2p}J_\Xi(P)$。第一对槽的差导数消去共同指数，第三、四槽则准确地将 $P$ 替成 $Q=P(\cdot+\beta)$。故
+
+$$
+J_\Xi(P)-J_Z(Q)=L^{2p}\mathscr D_{p,P}R_\Gamma.
+\tag{474.11}
+$$
+
+在单位圆上作 Cauchy 估计，第一对槽的两个阶乘与（474.2）的分母抵消，留下 $2p+1$ 项；两份滤波各至多支付 $d!$。于是
+
+$$
+|J_\Xi(P)-J_Z(Q)|
+\ll_w L^{2p}(2p+1)(d!)^2\|c\|_1^2\frac{HL^4+E}{TL}.
+\tag{474.12}
+$$
+
+还须与同一系数方向的正主项比较，不能仅使用一个不定量的正性结论。复用所引论文（30）—（34）的核下界，记
+
+$$
+C=2+\sqrt5,\qquad
+\kappa_p=\frac{6(1/2-1/\pi)}{\pi^2 4^p(2p)!}.
+$$
+
+对 $Q(x)=\sum q_rx^r$，其（45）、（47）在固定阶数范围及（49）—（50）在联合范围中，连同原算术位移
+
+$$
+\rho=\frac{\log(t/(2\pi))+2\kappa}{L}=1+O(L^{-1}),
+\qquad \kappa=2\gamma-\frac{\zeta'(2)}{\zeta(2)},
+$$
+
+给出同一实际平均的下界
+
+$$
+J_Z(Q)\ge c_w HL^{2p+4}
+\frac{\kappa_p e^{-C_1(p+d+1)/L}}
+ {(d+2)^6 C^{2d}}\,\|q\|_1^2,
+\tag{474.13}
+$$
+
+其中 $c_w>0$、$C_1$ 与系数方向无关。这里分别使用对应范围的原统一误差，未把固定 $p$ 常数用于增长 $p$。平移多项式及其逆平移给出
+$\|c\|_1\le e^{|\beta|d}\|q\|_1$，所以（474.12）相对（474.13）至多为
+
+$$
+\frac{C_w(2p+1)(d!)^2(d+2)^6 C^{2d}}
+ {\kappa_p TL}\,
+ e^{C_2(p+d+1)/L}\left(1+\frac E{HL^4}\right).
+\tag{474.14}
+$$
+
+窗口下界和 $\sigma<13\delta/4$ 使 $E/(HL^4)=o(1)$。其余分子的对数为 $O((p+d+1)\log(p+d+2))=o(\log T)$，在（474.5）的两种范围均成立。因此（474.14）一致趋于零，结合（474.13）即得结论。证毕。
+
+式（474.5）控制的是带指定正振幅权的长窗口平均。它没有给出无 $A^{-4}$ 权的平均、个别高度的 Laguerre 符号，或允许滤波器在任意指定高度集中之定理。尤其不能在固定 $t$ 上令 $p$ 无限制增长：阈值及原窗口条件仍须同时满足。经典 Laguerre–Pólya／RH 判据所需的逐点、全阶条件没有由此获得；全整数 Robin 恢复也未建立。这里没有独立验证所引外部论文的完整证明，没有本仓解析 Lean 认证或文献优先权结论。
+
+## 追加锚（本行以下为增补区）
+
+## 475. 标准 Xi 线性导数观察器的分辨率下界
+
+**定义 475.1（实际观察器的归一化质量）。** 沿用第 474 节的 $A,\Xi,Z,L=\log T$、固定非负非零 $w\in C_c^\infty((0,1))$ 及 $w_{X,H}(t)=w((t-X)/H)$。对非零实多项式 $P(x)=\sum_{r=0}^dc_rx^r$，定义
+
+$$
+Y_P(t)=A(t)^{-1}P(\mathsf D/L)\Xi(t),\qquad
+N_P=\int_{\mathbb R}w_{X,H}(t)Y_P(t)^2\,dt.
+\tag{475.1}
+$$
+
+在 $N_P>0$ 时，对可测集 $E\subset\mathbb R$ 记
+
+$$
+\mu_P(E)=N_P^{-1}\int_Ew_{X,H}(t)Y_P(t)^2\,dt.
+\tag{475.2}
+$$
+
+它是第 474 节平均中实际出现的观察器质量：令 $F_p(t)=A(t)^{-2}\mathcal L_p[\Xi](t)$，则 $J_\Xi(P)=N_P\int F_p\,d\mu_P$。导数仍是 $\Xi$ 的普通导数，未用协变导数替换。
+
+**定理 475.2（全部系数方向上的非集中界）。** 以第 474 节所引 bramble_trace v3 的定量四移位矩、正核强制性及完整余项估计为前提。固定 $0<\varepsilon_0<1/4$、$0<\delta<1/13$ 及上述 $w$。对每个 $\eta>0$，充分大 $T$ 上，一致于
+
+$$
+T\le X\le2T,\qquad T^{12/13+\delta}\le H\le T,
+\qquad 0\le d\le L^{1/4-\varepsilon_0}
+\tag{475.3}
+$$
+
+及所有非零实系数方向，均有 $N_P>0$，并对每个有限 Lebesgue 测度的可测集 $E$ 成立
+
+$$
+\boxed{
+\mu_P(E)\ll_{\eta,\varepsilon_0,\delta,w}
+\frac{|E|\,T^{13/21+\eta}}{HL^4}.
+}
+\tag{475.4}
+$$
+
+系数可随 $T,X,H$ 改变。常数不依赖 $P$ 或 $E$。相同结论也适用于将 $Y_P^2$ 换成任意非零有限正组合 $\sum_j a_jY_{P_j}^2$ 后的归一化质量，其中 $a_j\ge0$，每份 $P_j$ 满足同一次数限制；组合的项数与系数亦可改变。
+
+证明。使用已有的 [Bourgain，*Decoupling, exponential sums and the Riemann zeta function*，arXiv:1408.5794v2，Theorem 5 及 §4](https://arxiv.org/abs/1408.5794v2) 的临界线估计 $|\zeta(1/2+it)|\ll_\nu t^{13/84+\nu}$。这份估计不是本节的新内容。标准函数方程、条带 Phragmén–Lindelöf 及 Hardy 相位的解析 Stirling，将它用于固定微观邻域后给出：对每个 $\nu>0$，
+
+$$
+\sup_{\substack{t\in[T,3T]\\|b|\le1}}
+ |Z(t+b/L)|\ll_\nu T^{\theta+\nu},
+\qquad \theta=13/84.
+\tag{475.5}
+$$
+
+这里 $Z$ 取第 474 节所用的局部全纯延拓。条带插值在临界线右侧不增加幂次；左侧由函数方程至多增加 $T^{O(1/L)}=O(1)$，Hardy 相位在该微观圆盘上的模也有统一常数界。故没有将实轴估计未经接口直接用作复移位估计。
+
+先控制同一实际观察器的分母。记 $Q(x)=P(x-\pi/(4L))$ 及 $C=2+\sqrt5$。所引来源 Theorem 9 允许 $p=0$；其（30）—（34）、（45）、（47）连同实际伸缩 $\rho=(\log(t/(2\pi))+2\kappa)/L=1+O(L^{-1})$，$\kappa=2\gamma-\zeta'(2)/\zeta(2)$，给出
+
+$$
+\int w_{X,H}Z^2[Q(\mathsf D/L)Z]^2
+\ge c_w\frac{HL^4e^{-C_1(d+1)/L}}
+ {(d+2)^6C^{2d}}\|q\|_1^2.
+\tag{475.6}
+$$
+
+复用（474.9）的完整四移位振幅恒等式，只在第三、四槽施加 $P(\partial_{b_3})P(\partial_{b_4})$。第一、二槽不求导；其实际左边恰为
+
+$$
+M_P=\int w_{X,H}A^{-4}\Xi^2[P(\mathsf D/L)\Xi]^2
+   =\int w_{X,H}Z^2Y_P^2.
+\tag{475.7}
+$$
+
+对应误差至多
+
+$$
+\left|M_P-\int w_{X,H}Z^2[Q(\mathsf D/L)Z]^2\right|
+\ll_w(d!)^2\|c\|_1^2\frac{HL^4+E_T}{TL},
+\quad
+E_T\ll_{w,\sigma}T^{3/4+\sigma}(T/H)^{9/4},
+\quad 0<\sigma<13\delta/4.
+\tag{475.8}
+$$
+
+这复用的是（474.9）的四槽估计及其 Cauchy 计算，未把只陈述于 $p\ge1$ 的（474.5）应用到范围之外。逆多项式平移给出 $\|q\|_1\ge e^{-\pi d/(4L)}\|c\|_1$。因此（475.8）相对（475.6）为 $o(1)$，一致于全部系数方向：其阶乘与系数损失的对数是 $O(d\log(d+2))=o(L)$，而余项有既定幂次节省。于是
+
+$$
+M_P\ge c_0\frac{HL^4e^{-C_2(d+1)/L}}
+ {(d+2)^6C^{2d}}\|c\|_1^2>0.
+\tag{475.9}
+$$
+
+由（475.5），$M_P\le\sup_{[T,3T]}|Z|^2N_P\ll_\nu T^{2\theta+2\nu}N_P$；这既证明 $N_P>0$，又支付了分母的统一下界。另一方面，在同一微观圆盘上，（474.7）给出 $|A(t+b/L)/A(t)|\ll1$。Cauchy 因而给出
+
+$$
+\sup_{t\in\operatorname{supp}w_{X,H}}|Y_P(t)|
+\ll_\nu d!\|c\|_1T^{\theta+\nu}.
+\tag{475.10}
+$$
+
+分子至多为 $\|w\|_\infty|E|$ 乘此上界的平方。与（475.9）及分母下界相除，得到
+
+$$
+\mu_P(E)\ll_{\nu,w}
+\frac{|E|T^{4\theta+4\nu}}{HL^4}
+ (d!)^2(d+2)^6C^{2d}e^{C_2(d+1)/L}.
+\tag{475.11}
+$$
+
+最后一串因子在（475.3）中为 $T^{o(1)}$，且 $4\theta=13/21$。先取 $\nu=\eta/8$，再将该损失界为 $T^{\eta/2}$，即得（475.4）。有限正组合归一化后是各 $\mu_{P_j}$ 的凸组合，其权重正比于 $a_jN_{P_j}$，故同一个统一界仍成立。证毕。
+
+**推论 475.3（原高度坐标上的实际分辨率限制）。** 在定理 475.2 的前提与范围内，若区间 $I$ 满足 $\mu_P(I)\ge c>0$，则
+
+$$
+|I|\gg_{c,\eta,\varepsilon_0,\delta,w}
+ HL^4T^{-13/21-\eta}
+ \ge L^4T^{83/273+\delta-\eta}.
+\tag{475.12}
+$$
+
+特别地，对所有长度至多 $1/L$ 的区间及全部允许观察器，一致有
+
+$$
+\mu_P(I)\ll_{\eta,\varepsilon_0,\delta,w}
+\frac{T^{-83/273-\delta+\eta}}{L^5}=o(1),
+\qquad 0<\eta<83/273+\delta.
+\tag{475.13}
+$$
+
+同样适用于定理中的有限正组合。
+
+证明。重排（475.4），并用 $12/13-13/21=83/273$，即得两式。证毕。
+
+该结果是 `repo-derived` 的指定观察器分辨率应用；Bourgain 的次凸界、经典 Cauchy 估计、源论文的正核与四矩及第 474 节的振幅运输均直接复用，不主张新的次凸估计、一般不确定性原理或文献优先权。它将“尚无集中定理”细化成了当前固定窗形和次数预算下的定量障碍：任意单个允许线性滤波器及其有限正组合，都不能将归一化观察质量集中到原高度坐标上的微观区间。该界没有排除改变窗长、次数预算或观察器类别后的集中，也没有断言所有平均正性论证都必须通过近似点质量恢复逐点符号。它仍以所引来源的解析估计为前提；逐点全阶 Laguerre 条件与逐整数 Robin 恢复尚未由此得到。
+
+## 追加锚（本行以下为增补区）

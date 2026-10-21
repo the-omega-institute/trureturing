@@ -1,0 +1,17 @@
+**Lemma 130.1 (Decoder on the whole qutrit).** For every $0\le r\le1$
+let $\mathcal R_r$ have the Kraus operators (128.4) with $r_*$ replaced
+by $r$. Then
+
+$$
+\mathcal R_r(X)=
+\begin{pmatrix}
+X_{00}&rX_{01}&0\\
+rX_{10}&r^2X_{11}&0\\
+0&0&(1-r^2)X_{11}+X_{22}
+\end{pmatrix}.
+\tag{130.1}
+$$
+
+It is CPTP, since the three adjoint products sum to
+$\operatorname{diag}(1,r^2,0)+(1-r^2)E_{11}+E_{22}=I_3$.
+The square root in its Kraus list is real by $0\le r\le1$.
