@@ -23,6 +23,7 @@ import Mathlib.LinearAlgebra.Matrix.NonsingularInverse
 import Mathlib.LinearAlgebra.Matrix.Charpoly.Coeff
 import Mathlib.Analysis.SpecialFunctions.Trigonometric.Chebyshev.Basic
 import Mathlib.Tactic
+import D5.S3.Combinatorics.SpectralGraph.CyclicTridiagonalTransferTrace
 import D5.S3.Combinatorics.Graph.Walks.AndersonDefectSeed
 import D5.S0.Observation.MatrixTracePowerSum
 import Mathlib.RingTheory.AdjoinRoot
@@ -42,14 +43,12 @@ open D5.S3.Combinatorics.Graph.Walks.AndersonDefectSeed
 
 namespace D5.S3.Combinatorics.Graph.Walks.AndersonDefectFamily
 
+open D5.S3.Combinatorics.SpectralGraph.CyclicTridiagonalTransferTrace
+
 /-- The actual graph Hamiltonian, with the ordinary cycle graph Laplacian. -/
 def hamiltonian {K : Type*} [CommRing K] (r m : ℕ) (t : K) :
     Matrix (Fin (r * m)) (Fin (r * m)) K :=
   (SimpleGraph.cycleGraph (r * m)).lapMatrix K + t • Matrix.diagonal (signWord r m)
-
-/-- One step of the scalar Schrodinger recurrence. -/
-def transfer {K : Type*} [Ring K] (d : K) : Matrix (Fin 2) (Fin 2) K :=
-  !![d, -1; 1, 0]
 
 /-- The periodic block is minus followed by r-1 plus signs. -/
 def block {K : Type*} [Ring K] (r : ℕ) (a b : K) : Matrix (Fin 2) (Fin 2) K :=
@@ -105,10 +104,6 @@ private lemma map_hamiltonian {R S : Type*} [CommRing R] [CommRing S]
   · by_cases ha : (SimpleGraph.cycleGraph (r * m)).Adj i j <;>
       simp [hamiltonian, Matrix.map_apply, SimpleGraph.lapMatrix, SimpleGraph.degMatrix,
         SimpleGraph.adjMatrix_apply, Matrix.diagonal, hij, ha]
-
-private lemma transfer_det {K : Type*} [CommRing K] (d : K) :
-    (transfer d).det = 1 := by
-  simp [transfer, Matrix.det_fin_two]
 
 private lemma sl2_power {K : Type*} [CommRing K]
     (B : Matrix (Fin 2) (Fin 2) K) (hdet : B.det = 1) (n : ℕ) :
@@ -201,26 +196,6 @@ private lemma sl2_torsion_of_cos {K : Type*} [Field K] [Algebra ℝ K]
       (2 * Real.cos θ)) • 1 = 1
   rw [hfirst, hsecond]
   simp
-
-private def evolution {K : Type*} [Ring K] (d : ℕ → K) :
-    ℕ → Matrix (Fin 2) (Fin 2) K
-  | 0 => 1
-  | n + 1 => transfer (d n) * evolution d n
-
-private lemma evolution_add {K : Type*} [Ring K] (d : ℕ → K) (n k : ℕ) :
-    evolution d (n + k) = evolution (fun i => d (n + i)) k * evolution d n := by
-  induction k with
-  | zero => simp [evolution]
-  | succ k ih =>
-    change transfer (d (n + k)) * evolution d (n + k) =
-      (transfer (d (n + k)) * evolution (fun i => d (n + i)) k) * evolution d n
-    rw [ih, mul_assoc]
-
-private lemma evolution_det {K : Type*} [CommRing K] (d : ℕ → K) (n : ℕ) :
-    (evolution d n).det = 1 := by
-  induction n with
-  | zero => simp [evolution]
-  | succ n ih => simp [evolution, Matrix.det_mul, transfer_det, ih]
 
 private lemma periodic_evolution {K : Type*} [Ring K] (r m : ℕ) (hr : 0 < r)
     (a b : K) :

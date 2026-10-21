@@ -28,7 +28,19 @@ Lean statement: `D5/S3/Quantum/Subentropy/PinchingGap.signUnitary`
 
 The diagonal matrix U_s multiplies every coordinate (x,b) by the sign assigned to x. Both U_s*U_s and U_sU_s* equal the identity.
 
-**Definition 1.3 (Exact block pinching).**
+**Theorem 1.3 (Unitary sign action).**
+
+$$\forall X \in \operatorname{Type},\; [\operatorname{Fintype}\left(X\right)] [\operatorname{DecidableEq}\left(X\right)] \forall B \in \operatorname{Type},\; [\operatorname{Fintype}\left(B\right)] [\operatorname{DecidableEq}\left(B\right)] \forall s \in (X \to \operatorname{Bool}),\; ((\operatorname{Matrix.conjTranspose}\left((\operatorname{signUnitary}\left(s\right): \operatorname{Matrix}\left((X \times B), (X \times B), \mathbb{C}\right))\right)) * ((\operatorname{signUnitary}\left(s\right): \operatorname{Matrix}\left((X \times B), (X \times B), \mathbb{C}\right))) = (1: \operatorname{Matrix}\left((X \times B), (X \times B), \mathbb{C}\right))) \land (((\operatorname{signUnitary}\left(s\right): \operatorname{Matrix}\left((X \times B), (X \times B), \mathbb{C}\right))) * (\operatorname{Matrix.conjTranspose}\left((\operatorname{signUnitary}\left(s\right): \operatorname{Matrix}\left((X \times B), (X \times B), \mathbb{C}\right))\right)) = (1: \operatorname{Matrix}\left((X \times B), (X \times B), \mathbb{C}\right)))$$
+
+*Proof.* Machine-checked in Lean as `D5/S3/Quantum/Subentropy/PinchingGap.sign_unitary` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+For every finite coordinate type X and finite within-block type B with decidable equality, and every sign assignment s : X → Bool, the matrix signUnitary s satisfies signUnitary sᴴ · signUnitary s = 1 and signUnitary s · signUnitary sᴴ = 1.
+
+**Definition 1.4 (Exact block pinching).**
 
 Lean statement: `D5/S3/Quantum/Subentropy/PinchingGap.signTwirl`
 
@@ -42,7 +54,19 @@ Assign a sign ±1 independently to each classical block x. The diagonal matrix U
 
 For entries in the same block the product of the signs is one. For entries in distinct blocks, flipping the sign of the first block pairs summands with their negatives. This finite involution argument covers empty coordinate spaces as well.
 
-**Definition 1.4 (The pointwise entropy defect).**
+**Theorem 1.5 (The sign twirl equals block pinching).**
+
+$$\forall X \in \operatorname{Type},\; [\operatorname{Fintype}\left(X\right)] [\operatorname{DecidableEq}\left(X\right)] \forall B \in \operatorname{Type},\; [\operatorname{Fintype}\left(B\right)] [\operatorname{DecidableEq}\left(B\right)] \forall A \in \operatorname{Matrix}\left((X \times B), (X \times B), \mathbb{C}\right),\; \operatorname{signTwirl}\left(A\right) = \operatorname{D5.S3.Quantum.Subentropy.ClassicalQuantumGram.blockPinch}\left(A\right)$$
+
+*Proof.* Machine-checked in Lean as `D5/S3/Quantum/Subentropy/PinchingGap.signTwirl_eq_blockPinch` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+For every finite coordinate type X and finite within-block type B with decidable equality, and every complex matrix A : Matrix (X×B) (X×B) ℂ, signTwirl A = blockPinch A. Thus the uniform conjugation average over all independent block signs retains exactly the entries whose block indices agree.
+
+**Definition 1.6 (The pointwise entropy defect).**
 
 Lean statement: `D5/S3/Quantum/Subentropy/PinchingGap.signOrbitEntropyGap`
 
@@ -56,7 +80,7 @@ Let q(A,z)=Re⟨z,Az⟩/2. Matrix linearity and the sign-twirl identity give q(b
 
 The common Gaussian representation identifies the integral of this defect with Q(blockPinch(A))−Q(A) on positive trace-one matrices: every sign conjugate has the same subentropy and the same fixed Gaussian baseline. Joint convexity of the scalar Jensen gap therefore proves convexity of the actual subentropy pinching gap.
 
-**Theorem 1.5 (Concavity of matrix subentropy).**
+**Theorem 1.7 (Concavity of matrix subentropy).**
 
 Lean statement: `D5/S3/Quantum/Subentropy/PinchingGap.matrix_subentropy_concave`
 
@@ -68,7 +92,7 @@ Lean statement: `D5/S3/Quantum/Subentropy/PinchingGap.matrix_subentropy_concave`
 
 On any finite nonempty matrix coordinate space, matrixSubentropy is concave on positive semidefinite trace-one matrices. The quadratic Gaussian readout is matrix-linear and nonnegative. Pointwise concavity of η, integrability from the Gaussian representation, and cancellation of the common dimension baseline give the inequality.
 
-**Theorem 1.6 (Convexity and nonnegativity of the subentropy gap).**
+**Theorem 1.8 (Convexity and nonnegativity of the subentropy gap).**
 
 Lean statement: `D5/S3/Quantum/Subentropy/PinchingGap.actual_pinching_gap_laws`
 
@@ -87,7 +111,11 @@ For finite nonempty coordinate spaces, the map A↦Q(blockPinch(A))−Q(A) is co
 - Truth anchor: `D5/S3/Quantum/Subentropy/PinchingGap.matrix_subentropy_concave`
 - Truth anchor: `D5/S3/Quantum/Subentropy/PinchingGap.signOrbitEntropyGap`
 - Truth anchor: `D5/S3/Quantum/Subentropy/PinchingGap.signTwirl`
+- Truth anchor: `D5/S3/Quantum/Subentropy/PinchingGap.signTwirl_eq_blockPinch`
 - Truth anchor: `D5/S3/Quantum/Subentropy/PinchingGap.signUnitary`
+- Truth anchor: `D5/S3/Quantum/Subentropy/PinchingGap.sign_unitary`
+- Dependency: [D5/S3/Quantum/Subentropy/Basic](Basic.md)
 - Dependency: [D5/S3/Quantum/Subentropy/ClassicalQuantumGram](ClassicalQuantumGram.md)
 - Dependency: [D5/S3/Quantum/Subentropy/EntropyJensenGap](EntropyJensenGap.md)
 - Dependency: [D5/S3/Quantum/Subentropy/GaussianMatrix](GaussianMatrix.md)
+- Dependency: [D5/S3/Quantum/Subentropy/GaussianQuadratic](GaussianQuadratic.md)

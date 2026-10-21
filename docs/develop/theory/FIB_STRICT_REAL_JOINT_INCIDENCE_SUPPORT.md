@@ -4287,3 +4287,662 @@ coordinates remain mathematical descriptions, with only Definition
 1.1's original actions and acquired reads available.
 
 ## 追加锚（本行以下为增补区）
+
+## 19. The entire positive upper face and its zero-safe companion equations
+
+**Definition 19.1 (Upper-face data and the complete-world domain).**
+Retain exactly Definition 1.1's $H_4$, acquired word $J,M,J,M,M,M$,
+original clocks $0,\ldots,7$, and whole-world child $C(p,v)$.
+Thus an actual world has $0<r<1$, $b>0$, $c=r(1-r)/b$,
+one fixed real drift and one nonzero whole real polynomial of degree at most three.
+For a finite parameter $t>0$ put
+
+$$
+\begin{aligned}
+P_R(t)&=\begin{pmatrix}1&0\\t&0\end{pmatrix},\qquad q(t)=5(2t^2-1),\\
+P(t)&=-6(8t^3-24t^2-2t+15),\\
+V(t)&=3(45t^3+215t^2-33t-133),\\
+M(t)&=3(384t^3+1039t^2-232t-610),\\
+p_R(t)&=P(t)/q(t),\qquad v_R(t)=V(t)/q(t),\qquad m_R(t)=M(t)/q(t).
+\end{aligned}
+$$
+
+The domain of this face is $t>0$, $q(t)\ne0$, $p_R(t)\ne24$.
+The auxiliary label $R(t)$ consists of $P_R(t)$, drift
+$d_R=24+e_R$, $e_R=3t(t+1)/q$, and the unique degree-at-most-three polynomial $g_R$ with
+samples at clocks $0,1,2,3$ equal to
+
+$$
+(-d_R,-3(t+1)/q,27/5-e_R,-3t/q).
+$$
+
+It has $j=t,n=t+1,T=U=1$. The original parent identities give
+its clock-four read $18$, acquired reads $p_R,v_R$ and both
+clock-seven alternatives $a_R=m_R$. These are the upper-face
+identities of Theorem 15.4 with its $u$ replaced by $t$.
+The label violates $b>0,r<1$ and is never an actual world.
+The parameter called $t$ in Section 15 will be denoted $\varepsilon$
+when that section is applied below.
+
+**Lemma 19.2 (Zero-safe equations with the faithful strict filter).**
+For arbitrary real $p\ne24,v$, define the following integer-polynomial
+circuit in $x,d$, using $D=x(x+1)(x+2)$:
+
+$$
+\begin{aligned}
+z_3&=(24-d)(x+1)(x+2),&z_4&=(18-d)D,\\
+z_5&=(p-d)x(x+2),&z_6&=(v-d)x(x+1),\\
+a_0&=20z_3-45z_4+36z_5-10z_6,\\
+a_1&=10z_3-20z_4+15z_5-4z_6,\\
+a_2&=4z_3-6z_4+4z_5-z_6,\\
+a_7&=-z_3+4z_4-6z_5+4z_6,\\
+z&=xa_1-D(24-d),\qquad b_s=(294-10d)D-5a_2,\\
+A_s&=4z^2-2za_1+(2x-1)a_1^2,\\
+B_s&=-2za_1+2(1-x)a_1^2,\\
+Q(u,w)&=A_su^2+B_suw-a_1^2w^2,\\
+f&=5dDa_2+a_0b_s,\qquad K=Q(-a_0,dD),\\
+K_{\rm safe}&=25K+Q(5a_2,b_s).
+\end{aligned}
+$$
+
+Let $H$ be Definition 1.1's whole interpolant at $3,4,5,6$,
+so $H_i=a_i/D$ for $i=0,1,2,7$. The exact actual-world filter is
+
+$$
+\begin{gathered}
+x>0,\quad d\ne24,\quad H_1\ne0,\quad
+B_0=b_s/(5D),\quad C_0=d^2+B_0^2>0,\\
+U=(-dH_0+B_0H_2)/C_0>1,\quad b=(U-1)/2,\\
+j=U(24-d)/H_1,\quad r=xU-j,\quad 0<r<1.
+\end{gathered}
+$$
+
+Pairs satisfying this filter and $f=K_{\rm safe}=0$ correspond
+bijectively to the entire $C(p,v)$, by $g=H/U$ and
+$c=r(1-r)/b$. The terminal responses are exactly
+
+$$
+f_{MM}=d+(2x+3)a_7/D,\qquad
+f_{MJ}=d+(1+b+2j+4r)a_7/(DU).
+$$
+
+**Proof.** This is F, Lemma 30.2's faithful reconstruction with its
+source equations expressed without dividing by $d$. Here are the
+identities establishing that expression. One has
+$f=5D^2(dH_2+H_0B_0)$; hence $f=0$ makes
+$(-H_0,H_2)$ parallel to $(d,B_0)$. The displayed projection onto
+this nonzero vector gives $dU=-H_0,B_0U=H_2$.
+For $r=Uz/a_1$, $b=(U-1)/2$, $n=xU$, direct expansion gives
+
+$$
+4a_1^2\{r^2-(1+b)r+b(n-b)\}=Q(U,1).
+$$
+
+On the two clock equations, $-a_0=dDU$, $5a_2=b_sU$, so
+
+$$
+K_{\rm safe}=(25d^2D^2+b_s^2)Q(U,1)=25D^2C_0Q(U,1).
+$$
+
+This positive prefactor makes $K_{\rm safe}=0$ precisely the source
+identity $j=b+r(1-r)/b$. Equivalently the universal polynomial identity is
+
+$$
+d^2D^2K_{\rm safe}-(25d^2D^2+b_s^2)K
+=f\{A_s(5dDa_2-a_0b_s)+B_sdDb_s\}.
+$$
+
+For every actual off-$24$ world, O, Theorems 2.1–2.2, give
+$d\ne24$; clock one gives $H_1=U(24-d)/j\ne0$.
+The clock-zero and clock-two equations imply $C_0>0$: if
+$d=B_0=0$, then $H_2=0$ and $B_0=294/5$, a contradiction.
+Conversely the strict filter and these identities give every hypothesis
+of F, Lemma 30.2. They reproduce reads $0,24,147/5,24,18,p,v$
+at the original clocks. The gain $H/U$ is nonzero since the first two
+reads differ. No extra observation or alternative clock is used. ∎
+
+**Definition 19.3 (Terminal equation and exact deflation).**
+In the circuit of Lemma 19.2 substitute $p=P/q,v=V/q$ and put
+
+$$
+\begin{aligned}
+\ell(x)&=-8x^4-29x^3-18x^2+15x+6,\qquad L=q\ell,\\
+a_{70}&=-24q(x+1)(x+2)+72qD-6P x(x+2)+4V x(x+1),\\
+d_n&=MD-(2x+3)a_{70}.
+\end{aligned}
+$$
+
+The exact terminal identity is
+
+$$
+qD(f_{MM}-m_R)=q\ell d-d_n.
+$$
+
+For polynomial definitions before any division, set
+
+$$
+\begin{aligned}
+Z_3&=(24L-d_n)(x+1)(x+2),& Z_4&=(18L-d_n)D,\\
+Z_5&=(P\ell-d_n)x(x+2),& Z_6&=(V\ell-d_n)x(x+1).
+\end{aligned}
+$$
+
+Let $\widehat a_0,\widehat a_1,\widehat a_2$ be the same
+interpolation rows applied to $Z_3,Z_4,Z_5,Z_6$, and define
+
+$$
+\begin{aligned}
+\widehat z&=x\widehat a_1-D(24L-d_n),\qquad
+\widehat b=(294L-10d_n)D-5\widehat a_2,\\
+\widehat A&=4\widehat z^2-2\widehat z\widehat a_1+(2x-1)\widehat a_1^2,\\
+\widehat B&=-2\widehat z\widehat a_1+2(1-x)\widehat a_1^2,\\
+K_n&=\widehat A\widehat a_0^2-\widehat B\widehat a_0d_nD
+                   -\widehat a_1^2d_n^2D^2,\\
+S_n&=25K_n+25\widehat A\widehat a_2^2
+                 +5\widehat B\widehat a_2\widehat b-\widehat a_1^2\widehat b^2,\\
+F&=\frac{5d_nD\widehat a_2+\widehat a_0\widehat b}
+              {-90D^2(x-t-1)},\qquad
+G=\frac{S_n}{8100D^4(x-t-1)}.
+\end{aligned}
+$$
+
+Both divisions have zero polynomial remainder. Thus $F,G\in\mathbb Q[x,t]$,
+with respective $(x,t)$ degrees $(6,5),(13,11)$. Where
+$Dq\ell(x)(x-t-1)\ne0$, they equal
+$L^2f/[-90D^2(x-t-1)]$ and
+$L^4K_{\rm safe}/[8100D^4(x-t-1)]$ after $d=d_n/L$.
+All polynomial coefficient lists below are descending.
+
+## 20. Exact elimination, root isolation and whole-world certificates
+
+**Definition 20.1 (Fixed determinants and their factors).**
+Use the Sylvester resultant with all thirteen shifted $F$ rows first
+and all six shifted $G$ rows second, in descending $x$ columns.
+The exact identity is
+
+$$
+\operatorname{Res}_x(F,G)=73728Q_4^3Q_8^8Q_{14}Q_{41}.
+$$
+
+The four integer polynomials are specified by their coefficient vectors:
+
+$$
+Q_{4}=\operatorname{Poly}\!\left(\begin{array}{r}
+8\\
+61\\
+153\\
+140\\
+34
+\end{array};t\right),
+$$
+
+$$
+Q_{8}=\operatorname{Poly}\!\left(\begin{array}{r}
+1561361616\\
+231958944\\
+-2842500375\\
+-362249516\\
+1844174539\\
+177019730\\
+-502203306\\
+-25992192\\
+48882144
+\end{array};t\right),
+$$
+
+$$
+Q_{14}=\operatorname{Poly}\!\left(\begin{array}{r}
+4861042409741225600\\
+853661508579508080\\
+360906528929827488609\\
+1893915190241249502328\\
+3475990002826463370002\\
+-1522429867882128112980\\
+-3994467691870854279518\\
+-2320223061891858594822\\
+-2191129168652854788578\\
+3677634956006115296480\\
+5122121655631221212727\\
+-1546385573733691119226\\
+-2476903167635917930412\\
+196978440517220655770\\
+379830702257821052429
+\end{array};t\right),
+$$
+
+$$
+Q_{41}=\operatorname{Poly}\!\left(\begin{array}{r}
+9338192526818309116165180319039354387673682646408230008677376\\
+121107232034692061629572989414219406817545556909920058156154400\\
+610476481442293282271612009107925657084551808893643731118381184\\
+1246155155461650349456365425632609268417894217758762926741994220\\
+-678261000942540645832708027371808209272969081712868834318492845\\
+-7818528489616045623861296241761250725286572631382560816489927362\\
+-9188668241617315856169684087332487155109890495759762539207610957\\
+17879025830434762681361965029311532070684974545932462291506724568\\
+50821184373713573553591621096007681753140573786874273321595919699\\
+-2175453442166718450352532934233815405536561023199252065637767708\\
+-136654162728692922428292108242442541762832748530383674902288460989\\
+-113399094433566246803967841029575795291507227486205855690620771636\\
+191400794829021563393110542169702162017849865875170284251336968585\\
+352479175476558811068209135554755728384883897200746826529058886178\\
+-61502421658069294180486692866386867026107711146823004614685574105\\
+-544399801514181155456099575541247588514624089734642943076732953010\\
+-252526821973174379775459290995085187352628897467490901210287569554\\
+467280835547385799915258727799792969649186994807177538819929357742\\
+495119812500228291659004059340195162414169318434778928759079150458\\
+-168280689773805843891766840348079564103981472647618736857470046972\\
+-462587957027716914934132103066086325657505632122903590250891535739\\
+-83856638183086265191828778038016538711690831981317499273883544138\\
+249257328954839759794331892432910041834035230221099872935034739221\\
+143616460617564393845551133046003005659189390589263363717796210568\\
+-66798128550219591962305606684707465821302428067800130611499330609\\
+-86825254120757297489882134155185305321669547568327919908560246036\\
+-5057960014946524288512430079542046254800233712733758999030893917\\
+28607390695927918659943356312223466935475203586891180356638931040\\
+11384494753481529924838175325470057426057110405019955091690890351\\
+-4389876229697738101383085285657401446758245576314828348940980534\\
+-4367722463582171049421200537622483211642399556574100947925688359\\
+-317751633309032222794022955579591796289305530528240747513015982\\
+824960691234756190919717180642480296426448766299883967140297160\\
+282466410660343820048169989099028139854983878836118716339955730\\
+-63380008725239725344668151975474278752738880854774156804367048\\
+-53707292850989781707269848174704044648129109872032001911375884\\
+-3799640842158070362788518006354220899308307061332157681297768\\
+4386894881309407658564947581266979108868327564064719019133328\\
+1044582318127294154460918621934247865948212665069474827447840\\
+-84415467622754488617193922860223708745163659559483778027920\\
+-54313119898571623404343392182229840702385343371435054071744\\
+-5152716543747028236490116489562863360153514938565267112352
+\end{array};t\right),
+$$
+
+where $\operatorname{Poly}((c_m,\ldots,c_0);t)=\sum_{i=0}^m c_it^i$.
+For $j=1,2$, use rows $x^{5-j}G,\ldots,G$ followed by
+$x^{12-j}F,\ldots,F$. Put $n_j=19-2j$. For $0\le i\le j$,
+let $c_{j,i}$ be the determinant of the $n_j$ square coefficient matrix
+whose first $n_j-1$ columns are the descending powers
+$x^{18-j},\ldots,x^{j+1}$ and whose last column is the coefficient
+of $x^i$. Define $S_j=\sum_{i=0}^jc_{j,i}x^i$.
+Determinant expansion expresses each $S_j$ as a polynomial combination
+of $F,G$; therefore every finite common root annihilates it, even
+under specialization. Write $S_1=\alpha x+\beta$, let
+$c=\gcd_{\rm monic}(\alpha,\beta)$ in $\mathbb Q[t]$, and put
+$A=\alpha/c$, $B=\beta/c$. The degrees of $\alpha,\beta,c,A,B$
+are $115,115,24,91,91$. Reduce the coefficients of $S_2$ modulo
+$Q_8$ and write the result $h_2x^2+h_1x+h_0$.
+These $h_i$ have degree at most seven in $t$ and satisfy
+
+$$
+h_1^2-4h_2h_0\equiv0,\qquad
+\sum_{i=0}^4[x^i]\ell\,(-h_1)^i(2h_2)^{4-i}\equiv0\pmod{Q_8}.
+$$
+
+For unit certificates, $\operatorname{pp}$ clears denominators
+positively, divides positive integer content and chooses positive
+leading coefficient. In the following table the residue is
+$\operatorname{Res}_t(\operatorname{pp}(Q_k),\operatorname{pp}(T))$
+modulo $101$; all indicated degrees survive reduction.
+
+| $Q_k$ | $T$ | $\deg T$ | Residue |
+| --- | --- | ---: | ---: |
+| $Q_{41}$ | $[x^6]F$ | 5 | 12 |
+| $Q_{41}$ | $[x^{13}]G$ | 10 | 90 |
+| $Q_{41}$ | $\alpha$ | 115 | 75 |
+| $Q_{41}$ | $A$ | 91 | 71 |
+| $Q_8$ | $[x^6]F$ | 5 | 42 |
+| $Q_8$ | $[x^{13}]G$ | 10 | 68 |
+| $Q_8$ | $h_2$ | 7 | 34 |
+
+Without primitive normalization,
+$\operatorname{Res}_t(Q_8,q)\equiv6$ and
+$\operatorname{Res}_t(Q_{41},q)\equiv76\pmod{101}$.
+For the fixed minor convention, the ascending coefficient vectors
+of $S_1,S_2$ at $t=0,1,2$ modulo $101$ are respectively
+$(3,93),(72,82,81)$; $(13,33),(64,31,86)$;
+$(96,89),(67,8,73)$. The general polynomial-combination identity,
+rather than these finite evaluations, supplies specialization validity.
+
+**Lemma 20.2 (All positive terminal poles and self labels are excluded).**
+An actual companion $W\in C(p_R(t),v_R(t))$ with
+$f_{MM}(W)=m_R(t)$ has $\ell(x)\ne0$ and $x\ne t+1$.
+
+**Proof.** The exact terminal numerator has the identity
+
+$$
+\begin{aligned}
+-d_n&=(t-x+1)N_2+\ell(-243x^2+483x-120),\\
+N_2={}&t^2(504x^3+1260x^2+1044x)\\
+ &+t(1944x^4+7071x^3+4485x^2-3522x-1440)\\
+ &+1944x^5+5127x^4-2826x^3-8403x^2+1854x+1440.
+\end{aligned}
+$$
+
+The descending nonzero coefficients of $\ell$ have one sign change,
+and $\ell(0)=6$, $\ell(1)=-34$. Its only positive root is in $(0,1)$.
+If $\ell(x)=0$, then $t-x+1>0$, so the terminal equation forces $N_2=0$.
+Here is a certificate excluding a finite drift even on that pole.
+Form $f_q=q^2f(x,d,P/q,V/q)$ and
+$K_q=q^4K_{\rm safe}(x,d,P/q,V/q)$ from Lemma 19.2.
+Reduce each $d$ coefficient modulo $\ell$ in $x$, and write
+$f_q=a d^2+b d+c$, $K_q=\sum_{i=0}^4g_i d^i$ in this quotient.
+Define there
+
+$$
+\begin{aligned}
+\mu&=g_4(-b^3+2abc)+g_3a(b^2-ac)-g_2a^2b+g_1a^3,\\
+\nu&=g_4(-b^2c+ac^2)+g_3abc-g_2a^2c+g_0a^3,\\
+\overline Z&=\operatorname{rem}_x(a\nu^2-b\mu\nu+c\mu^2,\ell),\\
+R_0&=\operatorname{rem}_x(\operatorname{Res}_t(N_2,\overline Z),\ell).
+\end{aligned}
+$$
+
+The universal identity $f_q\mid a^3K_q-\mu d-\nu$ shows that
+any finite common drift root annihilates $\mu d+\nu$.
+If $\mu\ne0$, substitution into the quadratic forces its displayed
+norm to vanish; if $\mu=0$, then $\nu=0$ and the same follows.
+This includes $a=0$, where that norm vanishes identically, and every
+quartic degree drop. No leading coefficient is inverted.
+The exact degrees of $\overline Z$ in $(x,t)$ are $(3,52)$,
+also modulo $101$; every rational denominator is prime to $101$.
+The fixed $(2,52)$ resultant in $t$ has $x$ degree $266$, and
+
+$$
+R_0\equiv93x^3+45x^2+78x+57,\qquad
+\operatorname{Res}_x(\ell,R_0)\equiv85\pmod{101}.
+$$
+
+Thus the exact rational last resultant is nonzero. A common zero of
+$\ell,N_2,\overline Z$ would make it zero: the fixed Sylvester
+implication remains valid when a degree drops after specialization.
+This contradiction excludes the pole for every finite drift.
+
+If $x=t+1$, then $\ell(x)=-Q_4(t)\ne0$, since all coefficients
+of $Q_4$ are positive. The terminal equation forces $d=d_R$.
+The four-node interpolation then forces $H=g_R$ as whole polynomials,
+with $H_0=-d_R$, $H_2=147/5-d_R$ and $B_0=H_2$.
+Consequently $C_0=d_R^2+(147/5-d_R)^2>0$ and reconstruction gives
+$U=1$, contrary to $b>0$. Both exclusions precede deflation. ∎
+
+**Lemma 20.3 (Projected factors and their strict-world filter).**
+Every actual companion in Lemma 20.2 has $Q_{41}(t)=0$,
+$x=-B(t)/A(t)$ and $d=d_n/(q\ell)$.
+The seven positive roots and their complete reconstruction enclosures
+are the following exact certificate.
+
+For a polynomial $Q$, define its signed primitive Sturm chain by
+$S_0=Q$, $S_1=Q'$, and $S_{i+1}=-\operatorname{rem}(S_{i-1},S_i)$,
+removing only positive rational content, clearing denominators positively,
+and never changing signs. Ignore zero entries in variation counts.
+The chain for $Q_{14}$ has length $15$ and endpoint signs
+
+$$
+\operatorname{sgn}S(-\infty)=(+,-,-,+,-,-,+,+,-,-,-,+,-,-,-).
+$$
+
+$$
+\operatorname{sgn}S(+\infty)=(+,+,-,-,-,+,+,-,-,+,-,-,-,+,-).
+$$
+
+Both variation counts are $7$, so $Q_{14}$ has no real root.
+The $Q_{41}$ chain has length $42$ and signs
+
+$$
+\operatorname{sgn}S(0)=(-,-,+,+,+,-,-,+,+,-,+,-,+,+,-,-,+,-,-,-,+,+,-,+,+,-,-,-,-,+,-,-,-,-,-,+,+,+,-,-,-,+).
+$$
+
+$$
+\operatorname{sgn}S(+\infty)=(+,+,+,+,-,-,-,+,-,-,-,+,+,-,-,-,+,+,+,+,+,-,-,-,-,-,-,+,+,+,-,+,+,-,-,-,-,-,-,-,-,+).
+$$
+
+The corresponding variation counts are $19,12$. In increasing order,
+put $I_i=[N_i,N_i+1]/10^{100}$ with the following integers.
+At each pair of endpoints $Q_{41}$ has opposite signs, and its
+Sturm variations are as listed.
+
+| $i$ | $N_i$ | Endpoint variations |
+| --- | --- | --- |
+| 1 | $3673966186886689544040020206438582231194471327213018740994213129258016135658119798769337922171432690$ | $19,18$ |
+| 2 | $4667791316805720920280933301326418468439245500987976078967815296049367378845772432102165034205472403$ | $18,17$ |
+| 3 | $5084261946711772408304108316073955415819997257278725792617513128825180432635635172816447522415646929$ | $17,16$ |
+| 4 | $7338861392973206190514597797787405360605022948262456145999677879059264177620068178150471279504301701$ | $16,15$ |
+| 5 | $8116670700777931359322069118350456305907943614178444264119653433583577228588933504877652918707121232$ | $15,14$ |
+| 6 | $10042876138781682369648017176544131204498789307264827912616897353309825581605044853782487143352466845$ | $14,13$ |
+| 7 | $10913496542724139053571273607590070503000268518569768199403379478359711342973362737574469633124326981$ | $13,12$ |
+
+Thus there is exactly one root in each $I_i$ and these exhaust $t>0$.
+For the following tables, an integer $L$ denotes the closed interval
+$[L,L+1]/10^9$. Evaluate $A,B$ by descending Horner, then
+$x=-B/A$, $d=d_n/(q\ell)$, the original $H_i$, and
+$B_0,C_0,U,b,j,r$ in the order of Lemma 19.2.
+Use closed rational interval operations, rounding the lower endpoint
+down and the upper endpoint up to $10^{-200}\mathbb Z$ after every
+operation. Multiplication takes all four products; inversion is used
+only on intervals excluding zero. This specifies the bounds without
+any floating-point root or external coefficient input.
+
+| $i$ | $x$ | $d$ | $U$ | $b$ | $r$ |
+| --- | ---: | ---: | ---: | ---: | ---: |
+| 1 | 338489158 | 21406461234 | 3405333835 | 1202666917 | 2229636045 |
+| 2 | -309985314 | 26621211526 | 8026665269 | 3513332634 | -2859752536 |
+| 3 | 623157789 | -198048445 | 150719751054 | 74859875527 | 34512640628 |
+| 4 | 1539198218 | 38551253871 | 347992599 | -326003701 | -291065059 |
+| 5 | 1049934643 | 40685794788 | 910945999 | -44527001 | -44567956 |
+| 6 | 1043947812 | 35957756394 | 1616299761 | 308149880 | 707169547 |
+| 7 | 7166535872 | 20238169380 | 212687601 | -393656200 | 1223444850 |
+
+| $i$ | $H_1$ | $C_0$ | $p$ | $v$ | $\ell$ |
+| --- | ---: | ---: | ---: | ---: | ---: |
+| 1 | -8200679812 | 471406423018 | 18775550619 | 93588137718 | 7785281121 |
+| 2 | -56618274204 | 709067970433 | 20525254967 | 103129759518 | 410532725 |
+| 3 | 61389525159 | 191453766 | 21939195859 | 109671973400 | 133475012 |
+| 4 | -6125270892 | 1670550465826 | -58589929475 | -183743203690 | -164208958184 |
+| 5 | -15184647279 | 1794851004023 | -6964141245 | 11184642444 | -41379995596 |
+| 6 | -19718473123 | 1318090421957 | 3670683933 | 56796298407 | -40453407084 |
+| 7 | 2659991303 | 637894393184 | 4661635574 | 63188293639 | -32587104028686 |
+
+For row six the additional lower numerators for $a=f_{MJ},m=f_{MM},H_0,H_2,H_7$
+are respectively
+$269030580044,350315789609,-58118513076,-8102511993,61785472110$,
+with the same interval convention. All reconstruction inverses exclude
+zero on the listed intervals. In particular $d-24,p-24,H_1,C_0,\ell$
+are separated from zero; $q$ is a unit on $Q_{41}=0$ as above.
+For row six $x\ne t+1$, since $1<t<2$ and $1<x<11/10$.
+
+**Proof.** Lemma 20.2 and $D>0$ permit exactly the divisions of
+Definition 19.3. Thus $F=G=0$ and the fixed resultant vanishes.
+The positive-coefficient $Q_4$ and the Sturm certificate for $Q_{14}$
+leave only $Q_8$ and $Q_{41}$. On $Q_8=0$, the $h_2$ unit and
+$S_2=0$ imply $x=-h_1/(2h_2)$ by the zero-discriminant identity.
+Its other remainder identity forces $\ell(x)=0$, already excluded.
+This eliminates the entire $Q_8$ factor, including multiple roots.
+On $Q_{41}=0$, the $\alpha$ unit and $S_1=0$ force
+$x=-\beta/\alpha=-B/A$; the terminal equation then fixes $d$.
+The Sturm intervals exhaust all positive parameters, with no finite
+upper cutoff. The tables are rational interval consequences of the
+defined determinants and circuit. Rows one and three have $r>1$;
+row two has $x<0$; rows four, five and seven have $U<1$.
+Only row six can pass the complete strict filter.
+
+These are necessary conditions on actual worlds. No projected root
+has yet been declared a world. Fixed determinants and the universal
+pole norm cover all leading-degree drops. The argument imposes no
+$\Lambda\ne0$, $F_0\ne0$, nonzero drift, exact cubic degree,
+nonzero $H_0,H_7$ or nonsampled-root assumption. ∎
+
+## 21. Exhaustive mixed-M classification and the actual same-base J consumer
+
+**Theorem 21.1 (M1: the entire positive-face classification).**
+Let $t_*$ be the sixth positive root of the explicitly defined $Q_{41}$,
+namely its unique root in $I_6$. In particular
+
+$$
+\frac{1004287613878}{10^{12}}<t_*<\frac{1004287613879}{10^{12}}.
+$$
+
+Put $x_*=-B(t_*)/A(t_*)$, $d_*=d_n(x_*,t_*)/[q(t_*)\ell(x_*)]$,
+$p_*=p_R(t_*)$, $v_*=v_R(t_*)$. Reconstruct $U_*,b_*,j_*,r_*,H_*$
+by Lemma 19.2 and set
+
+$$
+W_*=(P(r_*,b_*),H_*/U_*,d_*).
+$$
+
+For every finite $t>0$ with $q(t)\ne0$, $p_R(t)\ne24$, and every
+strict complete $W\in C(p_R(t),v_R(t))$,
+
+$$
+f_{MM}(W)=m_R(t)\quad\Longleftrightarrow\quad t=t_*\ \hbox{and}\ W=W_*.
+$$
+
+This is a classification on the entire open upper face, including
+arbitrarily large finite positive parameters. The boundary label itself
+remains inadmissible.
+
+**Proof.** Lemma 20.3 proves necessity and uniqueness of $(t,x,d)$;
+F, Lemma 30.2, then forces uniqueness of the entire world.
+For existence use exactly Theorems 15.2 and 15.4 at $\varepsilon=0$.
+Their $u_0$ is in the displayed $10^{-12}$ interval, their $B(0)$ is
+strict with $r\in(707,708)/1000$, $b\in(308,309)/1000$, and their
+common acquired base has $3<p<4$, $56<v<57$. Their boundary
+$A(u_0,0)$ is exactly $R(u_0)$, with its one whole gain and fixed
+drift, and $f_{MM}(B(0))=m_R(u_0)$. Thus all present hypotheses
+hold: $u_0>0$, $q(u_0)\ne0$, $p_R(u_0)\ne24$.
+Necessity forces $u_0=t_*$ and then $B(0)=W_*$, proving sufficiency.
+In particular the tables describe an actual world, not just a retained
+algebraic branch. The whole gain is determined, explicitly,
+
+$$
+H_*(s)=\sum_{i=3}^6h_i\prod_{\substack{3\le k\le6\\k\ne i}}
+\frac{s-k}{i-k},\quad
+(h_3,h_4,h_5,h_6)=
+\left(\frac{24-d_*}{x_*},18-d_*,\frac{p_*-d_*}{x_*+1},
+\frac{v_*-d_*}{x_*+2}\right).
+$$
+
+There is also a direct guarded algebraic existence argument.
+At $t_*$ the leading $F,G$ coefficients are nonzero, and the resultant
+vanishes, so there is a finite common complex root.
+The nonzero linear subresultant forces it to be the real $x_*$.
+Row six supplies every strict reconstruction guard and $x_*\ne t_*+1$.
+Reversing the exact quotient identities gives $f=K_{\rm safe}=0$,
+and Lemma 19.2 constructs the same actual world. Thus neither
+existence argument uses resultant vanishing alone. ∎
+
+**Corollary 21.2 (M2: actual shared-base joint boundary exclusion).**
+There is no tuple $(t,W,J_0,J_1)$ with the guards of Theorem 21.1,
+$W\in C(p_R(t),v_R(t))$, $f_{MM}(W)=m_R(t)$, and
+
+$$
+J_0,J_1\in C(p_R(t),v_R(t)),\qquad
+J_0\ne J_1,\qquad f_{MJ}(J_0)=f_{MJ}(J_1).
+$$
+
+The $J$ pair may share or not share the actual $M$ companion, and
+its terminal common value is unrestricted.
+
+**Proof.** Theorem 21.1 forces $t=t_*$, $W=W_*=B(0)$ and
+$(p_R,v_R)=(p_*,v_*)=q(0)$ in Section 15's notation.
+Theorem 15.4 states that the entire actual child at that base consists
+exactly of $B(0),Q(0)$, whose $J$ values lie respectively in
+$(268,271),(221,223)$. Hence the alleged actual distinct $J$ pair
+cannot exist anywhere in that child.
+
+For the uniform consumer needed for limits, the centre $(p_c,v_c)$
+is exactly that of Definition 15.1, with denominator $10^{95}$ and
+numerators
+
+$$
+\begin{gathered}
+367068393378998395246026571982456711245305890922162694264197866224863529619880873392282957453850\\
+5679629840728084907886878607821919633308547340517015332315858757685186396688860630206243979276432.
+\end{gathered}
+$$
+
+On the full sixth isolating interval, exact rational bounds are
+
+$$
+-36837<10^{100}(p_R-p_c)<-36772,\qquad
+32621<10^{100}(v_R-v_c)<33162.
+$$
+
+These follow without dependency overestimation: $P'q-Pq'$ and
+$V'q-Vq'$ are strictly positive there, so both rational responses
+are increasing. Exact evaluation at the two endpoints gives,
+in order, the respective enclosing pairs
+$(-36813,-36812),(-36797,-36796)$ for $10^{100}(p_R-p_c)$,
+and $(32846,32847),(32937,32938)$ for $10^{100}(v_R-v_c)$.
+Thus $|p_*-p_c|,|v_*-v_c|<10^{-90}<10^{-65}$.
+The survivor base lies strictly inside $\mathcal B_0$.
+Theorem 15.3 and Corollary 15.5 give
+$\mathcal B_0\cap D_J=\varnothing$, using injectivity on each
+entire actual child, including unused or exceptional worlds. ∎
+
+**Corollary 21.3 (M3: the guarded finite off-$24$ end consequence).**
+Consider a sequence of original joint configurations with acquired
+bases $(p_n,v_n)$, $p_n\ne24$, tending to a finite $(p,v)$ with
+$p\ne24$. Suppose one selected $M$ endpoint converges entrywise in
+its source matrix, including its lower off-diagonal, to $P_R(t)$
+for finite $t>0$, $q(t)\ne0$, and coefficientwise in its whole gain.
+Suppose the other selected $M$ endpoint converges entrywise in its
+source and coefficientwise in its whole gain to a strict complete world.
+Then no such sequence exists. No convergence of the selected $J$
+endpoints is required.
+
+**Proof.** Clock zero gives $d_n=-g_n(0)$, so gain convergence gives
+drift convergence for each selected endpoint. Matrix products, traces
+and polynomial evaluation at the finitely many original clocks are
+continuous. The acquired-base and terminal-$M$ equalities therefore
+pass to the two limits. At the boundary limit the parent compatibility,
+with $q(t)\ne0$, forces exactly $g_R,d_R$ of Definition 19.1.
+Consequently $(p,v)=(p_R(t),v_R(t))$, with $p_R(t)\ne24$, and the
+other limit is an actual strict companion with terminal value $m_R(t)$.
+Theorem 21.1 forces $t=t_*$, that companion $W_*$, and limit base
+$(p_*,v_*)$. This base is in the interior of $\mathcal B_0$ by
+Corollary 21.2. Every sufficiently late base then lies in this rectangle,
+where no entire actual child has a distinct $J$ pair. This contradicts
+the joint configurations. No compactness, existence of subsequential
+limits, properness, connectedness or closedness of $D_J$ is used. ∎
+
+**Assumption 21.4 (Correspondence, attribution and residual scope).**
+The mathematical premises and their exact roles are as follows.
+
+| Owning result or method | Instantiation and consequence |
+| --- | --- |
+| O, Definitions 1.1–1.3 and Theorems 2.1–2.2 | The same $H_4$, original clocks, strict sources, one whole nonzero degree-at-most-three gain and fixed drift; off-$24$ implies $d\ne24$. |
+| F, Lemma 30.2; Definition 1.1; Lemma 19.2 | Faithful entire-world reconstruction at $p=P/q\ne24,v=V/q$, with $x>0,d\ne24,H_1\ne0,C_0>0,U>1,0<r<1$ and no regular-source assumption. |
+| F, Section 31; the fixed minors of Definition 20.1 | Sylvester and subresultant necessary identities under specialization; leading units on $Q_8,Q_{41}$ are supplied explicitly. |
+| Theorems 15.2, 15.4 | At $\varepsilon=0$, $A(u_0,0)=R(u_0)$ and $B(0)$ is an actual strict companion; exhaustion identifies $u_0=t_*$ and $B(0)=W_*$. |
+| Definition 15.1, Theorems 15.3–15.4, Corollary 15.5 | The same entire child at $q(0)$ has exactly two worlds with separated $J$ values, and the same open base neighbourhood excludes every actual $J$ pair. |
+| Classical interpolation, fixed Sylvester/subresultant determinants and signed Sturm theory | Distinct-node interpolation, polynomial-combination identities, coprimality and exhaustive real-root counting; compare F, Sections 30–31 and the resultant reference in Assumption 6.1. |
+
+The exact source-specific deductions are the all-positive-parameter
+elimination, pole and self-label exclusions, removal of $Q_8$, seven-root
+exhaustion, complete strict-world filtering, and their actual same-base
+$J$ consumer. The local mixed-$M$ example, strict lift and uniform
+whole-child $J$ separation are precisely the owning Section 15 results.
+The determinant and Sturm methods are classical; no broader literature
+novelty claim is part of these deductions.
+
+No inverse of $d,\Lambda,F_0,H_0,H_7$, a leading gain coefficient,
+a discriminant or an unguarded sampled gain value is taken.
+The inverse of $H_1$ has the exact off-$24$ and interval unit guards;
+$D>0$, $q\ne0$, $\ell\ne0$, the excluded self factor, the $h_2$
+and $\alpha,A$ units, $C_0>0$, $U>1$ and $b>0$ justify every
+remaining reconstruction division. Singular sources, zero drift,
+lower degrees, nonsingular $F_0=0$ and repeated or sampled roots
+are included in the necessary interface before the exhaustive filter.
+
+The original all-real strict joint relation of Definitions 1.2 and 18.3
+remains unresolved. Other finite faces and corners, both-boundary losses,
+interior critical diagonal limits, unbounded bases or sources,
+excluded-pole approaches, and limits with $p_n\ne24$ but $p=24$
+are outside Corollary 21.3. Convergence only of $r,b$ does not specify
+$c\to t$ or whole-gain convergence. No global positive lower bound
+on $b$, global properness or global joint exclusion follows.
+The same-$p$ sixth-$J$ child, other fifth-$J$/common-parent conditions
+and all eight-slot/ancestor obligations of O, Theorem 17.1, remain
+separate; no fifth-$M$ $L_2$, $H_4$ $L_3$, root $L_7$ or
+eight-versus-nine conclusion is supplied.
+
+## 追加锚（本行以下为增补区）

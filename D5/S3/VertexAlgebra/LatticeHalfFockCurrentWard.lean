@@ -34,22 +34,14 @@ namespace D5.S3.VertexAlgebra.LatticeHalfFockCorrectedField
 private theorem prod_shift (a : ℂ) (order : ℕ) :
     a * ∏ offset ∈ Finset.range order, (a - 1 - (offset : ℂ)) =
       ∏ offset ∈ Finset.range (order + 1), (a - (offset : ℂ)) := by
-  induction order with
-  | zero => simp
-  | succ order induction =>
-    rw [Finset.prod_range_succ, Finset.prod_range_succ]
-    calc
-      a * ((∏ x ∈ Finset.range order, (a - 1 - (x : ℂ))) *
-          (a - 1 - (order : ℂ))) =
-          (a * ∏ x ∈ Finset.range order, (a - 1 - (x : ℂ))) *
-            (a - 1 - (order : ℂ)) := by ring
-      _ = (∏ x ∈ Finset.range (order + 1), (a - (x : ℂ))) *
-            (a - 1 - (order : ℂ)) := by rw [induction]
-      _ = (∏ x ∈ Finset.range (order + 1), (a - (x : ℂ))) *
-            (a - ((order + 1 : ℕ) : ℂ)) := by
-              have horder : ((order + 1 : ℕ) : ℂ) = (order : ℂ) + 1 := by norm_num
-              rw [horder]
-              ring
+  rw [Finset.prod_range_succ']
+  simp only [Nat.cast_add, Nat.cast_one, Nat.cast_zero, sub_zero]
+  rw [mul_comm]
+  congr 1
+  apply Finset.prod_congr rfl
+  intro x hx
+  ring
+
 
 private theorem jetScalar_contraction (q : ℤ) (order : ℕ) :
     LatticeHalfFock.frequency q * jetScalar order (-q - 1) =
@@ -140,30 +132,11 @@ private theorem singleton_term_commutator
             (jetCurrent D hu j m
               (LatticeHalfFock.tensorCurrent D (ActualGround D hu) i q x)) := by
   by_cases hm : m < 0
-  · simp only [flatTerm, flatCoefficient, if_pos hm, Module.End.mul_apply]
-    rw [show e + 2 * m + 2 * (j.2 : ℤ) + 3 =
-        e + 2 * m + 2 * j.2 + 3 by rfl]
-    calc
-      _ = ((LatticeHalfFock.tensorCurrent D (ActualGround D hu) i q)
-            ((jetCurrent D hu j m)
-              (F.coeff (e + 2*m + 2*(j.2 : ℤ) + 3) x)) -
-          (jetCurrent D hu j m)
-            ((LatticeHalfFock.tensorCurrent D (ActualGround D hu) i q)
-              (F.coeff (e + 2*m + 2*(j.2 : ℤ) + 3) x))) +
-          (jetCurrent D hu j m)
-            ((LatticeHalfFock.tensorCurrent D (ActualGround D hu) i q)
-              (F.coeff (e + 2*m + 2*(j.2 : ℤ) + 3) x) -
-            F.coeff (e + 2*m + 2*(j.2 : ℤ) + 3)
-              (LatticeHalfFock.tensorCurrent D (ActualGround D hu) i q x)) := by
-            rw [map_sub]
-            abel
-      _ = _ := by
-        have hc := jetCurrent_commutator_apply D hu i j.1 q m j.2
-          (F.coeff (e + 2*m + 2*(j.2 : ℤ) + 3) x)
-        simp only [LinearMap.sub_apply, Module.End.mul_apply]
-        rw [hc]
-        abel
+  · simp only [flatTerm, flatCoefficient, if_pos hm, Module.End.mul_apply,
+      LinearMap.sub_apply, map_sub]
+    abel
   · simp only [flatTerm, flatCoefficient, if_neg hm, Module.End.mul_apply]
+
 
 private theorem finsum_finset_exchange
     {ι V : Type*} [AddCommMonoid V]
@@ -172,22 +145,9 @@ private theorem finsum_finset_exchange
     (hg : ∀ a ∈ S, Function.HasFiniteSupport (fun m => g m a))
     (heq : ∀ m, f m = ∑ a ∈ S, g m a) :
     (∑ᶠ m : ℤ, f m) = ∑ a ∈ S, ∑ᶠ m : ℤ, g m a := by
-  classical
-  let T : Set ℤ := Function.support f ∪ ⋃ a ∈ S, Function.support (fun m => g m a)
-  have finite : T.Finite := hf.union (S.finite_toSet.biUnion hg)
-  have hfT : Function.support f ⊆ finite.toFinset := by
-    rw [Set.Finite.coe_toFinset]
-    exact Set.subset_union_left
-  have hgT (a : ι) (ha : a ∈ S) : Function.support (fun m => g m a) ⊆ finite.toFinset := by
-    rw [Set.Finite.coe_toFinset]
-    intro m hm
-    exact Or.inr (by simp only [Set.mem_iUnion]; exact ⟨a, ha, hm⟩)
-  rw [finsum_eq_sum_of_support_subset _ hfT]
-  simp_rw [heq]
-  rw [Finset.sum_comm]
-  apply Finset.sum_congr rfl
-  intro a ha
-  exact (finsum_eq_sum_of_support_subset _ (hgT a ha)).symm
+  rw [finsum_congr heq]
+  exact finsum_sum_comm S g hg
+
 
 private theorem finsum_finset_exchange_nat
     {ι V : Type*} [AddCommMonoid V]
@@ -196,33 +156,16 @@ private theorem finsum_finset_exchange_nat
     (hg : ∀ a ∈ S, Function.HasFiniteSupport (fun n => g n a))
     (heq : ∀ n, f n = ∑ a ∈ S, g n a) :
     (∑ᶠ n : ℕ, f n) = ∑ a ∈ S, ∑ᶠ n : ℕ, g n a := by
-  classical
-  let T : Set ℕ := Function.support f ∪ ⋃ a ∈ S, Function.support (fun n => g n a)
-  have finite : T.Finite := hf.union (S.finite_toSet.biUnion hg)
-  have hfT : Function.support f ⊆ finite.toFinset := by
-    rw [Set.Finite.coe_toFinset]
-    exact Set.subset_union_left
-  have hgT (a : ι) (ha : a ∈ S) :
-      Function.support (fun n => g n a) ⊆ finite.toFinset := by
-    rw [Set.Finite.coe_toFinset]
-    intro n hn
-    exact Or.inr (by simp only [Set.mem_iUnion]; exact ⟨a, ha, hn⟩)
-  rw [finsum_eq_sum_of_support_subset _ hfT]
-  simp_rw [heq]
-  rw [Finset.sum_comm]
-  apply Finset.sum_congr rfl
-  intro a ha
-  exact (finsum_eq_sum_of_support_subset _ (hgT a ha)).symm
+  rw [finsum_congr heq]
+  exact finsum_sum_comm S g hg
+
 
 private theorem singleton_coefficient_local (D : LatticeData) (hu : IsUnit D.G.det)
     (F : NativeField D hu) (j : Index D) (e : ℤ) (v : ActualTensor D hu) :
     (singletonLinear D hu j F).coeff e v =
       ∑ᶠ m : ℤ, flatTerm D hu F [j] e v (m, ()) := by
-  change (wordField D hu F [j]).coeff e v = _
-  rw [wordField_coefficient, finsum_curry _ (flatTerm_finite D hu F [j] e v)]
-  apply finsum_congr
-  intro m
-  exact finsum_unique _
+  exact singletonLinear_coefficient D hu F j e v
+
 
 private theorem singleton_current_ward_of_sum
     (D : LatticeData) (hu : IsUnit D.G.det)
@@ -339,14 +282,8 @@ private theorem singleton_current_ward_of_sum
   have finiteTerm : Function.HasFiniteSupport term := by
     have tupleFinite {G : ModeTuple D [j] → ActualTensor D hu}
         (hG : Function.HasFiniteSupport G) :
-        Function.HasFiniteSupport (fun m : ℤ => G (m, ())) := by
-      change (Function.support (fun m : ℤ => G (m, ()))).Finite
-      have hinj : Function.Injective (fun m : ℤ => (m, ())) := by
-        intro a b h
-        exact congrArg Prod.fst h
-      rw [show Function.support (fun m : ℤ => G (m, ())) =
-          (fun m : ℤ => (m, ())) ⁻¹' Function.support G by rfl]
-      exact hG.preimage hinj.injOn
+        Function.HasFiniteSupport (fun m : ℤ => G (m, ())) :=
+      hG.comp_of_injective (fun _ _ h => congrArg Prod.fst h)
     have hleft : Function.HasFiniteSupport (fun m : ℤ =>
         LatticeHalfFock.tensorCurrent D (ActualGround D hu) i q
           (flatTerm D hu F [j] e x (m, ()))) :=
@@ -374,32 +311,17 @@ private theorem singleton_current_ward_of_sum
       exact Set.mem_singleton_iff.mpr (by omega)
     exact hm (by simp [contraction, hneq])
   have finiteMain : Function.HasFiniteSupport main := by
-    apply (finiteTerm.union finiteContraction).subset
-    intro m hm
-    change main m ≠ 0 at hm
-    by_contra hnot
-    have hterm : term m = 0 := by
-      by_contra hterm
-      exact hnot (Set.mem_union_left _ hterm)
-    have hcontraction : contraction m = 0 := by
-      by_contra hcontraction
-      exact hnot (Set.mem_union_right _ hcontraction)
-    apply hm
-    have hsum := term_eq m
-    rw [hterm, hcontraction, add_zero] at hsum
-    exact hsum.symm
+    have hmain : main = term - contraction := by
+      funext m
+      exact eq_sub_iff_add_eq.mpr (term_eq m).symm
+    rw [hmain]
+    exact finiteTerm.sub finiteContraction
   have finiteSummand (n : ℕ) (hn : n ∈ S) :
       Function.HasFiniteSupport (fun m => summand m n) := by
     have tupleFinite {G : ModeTuple D [j] → ActualTensor D hu}
         (hG : Function.HasFiniteSupport G) :
-        Function.HasFiniteSupport (fun m : ℤ => G (m, ())) := by
-      change (Function.support (fun m : ℤ => G (m, ()))).Finite
-      have hinj : Function.Injective (fun m : ℤ => (m, ())) := by
-        intro a b h
-        exact congrArg Prod.fst h
-      rw [show Function.support (fun m : ℤ => G (m, ())) =
-          (fun m : ℤ => (m, ())) ⁻¹' Function.support G by rfl]
-      exact hG.preimage hinj.injOn
+        Function.HasFiniteSupport (fun m : ℤ => G (m, ())) :=
+      hG.comp_of_injective (fun _ _ h => congrArg Prod.fst h)
     have hscaled : Function.HasFiniteSupport (fun m : ℤ =>
         coefficient n • flatTerm D hu (fields n) [j] (e + shift n) x (m, ())) :=
       (tupleFinite (flatTerm_finite D hu (fields n) [j] (e + shift n) x)).fun_comp
@@ -432,14 +354,8 @@ private theorem singleton_current_ward_of_sum
       (by
         have tupleFinite {G : ModeTuple D [j] → ActualTensor D hu}
             (hG : Function.HasFiniteSupport G) :
-            Function.HasFiniteSupport (fun m : ℤ => G (m, ())) := by
-          change (Function.support (fun m : ℤ => G (m, ()))).Finite
-          have hinj : Function.Injective (fun m : ℤ => (m, ())) := by
-            intro a b h
-            exact congrArg Prod.fst h
-          rw [show Function.support (fun m : ℤ => G (m, ())) =
-              (fun m : ℤ => (m, ())) ⁻¹' Function.support G by rfl]
-          exact hG.preimage hinj.injOn
+            Function.HasFiniteSupport (fun m : ℤ => G (m, ())) :=
+          hG.comp_of_injective (fun _ _ h => congrArg Prod.fst h)
         exact tupleFinite (flatTerm_finite D hu (fields n) [j] (e + shift n) x))]
     exact congrArg (fun y => coefficient n • y)
       (singleton_coefficient_local D hu (fields n) j (e + shift n) x).symm
@@ -463,14 +379,8 @@ private theorem singleton_current_ward_of_sum
   rw [singleton_coefficient_local, singleton_coefficient_local]
   have tupleFinite {G : ModeTuple D [j] → ActualTensor D hu}
       (hG : Function.HasFiniteSupport G) :
-      Function.HasFiniteSupport (fun m : ℤ => G (m, ())) := by
-    change (Function.support (fun m : ℤ => G (m, ()))).Finite
-    have hinj : Function.Injective (fun m : ℤ => (m, ())) := by
-      intro a b h
-      exact congrArg Prod.fst h
-    rw [show Function.support (fun m : ℤ => G (m, ())) =
-        (fun m : ℤ => (m, ())) ⁻¹' Function.support G by rfl]
-    exact hG.preimage hinj.injOn
+      Function.HasFiniteSupport (fun m : ℤ => G (m, ())) :=
+    hG.comp_of_injective (fun _ _ h => congrArg Prod.fst h)
   have finiteLeft := tupleFinite (flatTerm_finite D hu F [j] e x)
   have finiteRight := tupleFinite (flatTerm_finite D hu F [j] e
     (LatticeHalfFock.tensorCurrent D (ActualGround D hu) i q x))
@@ -617,42 +527,14 @@ private theorem polynomial_current_ward
           simp [hp]
         simp [polynomialWardTerm, hmode]
   | add first second firstProof secondProof =>
-      have hleft :
-          LatticeHalfFock.tensorCurrent D (ActualGround D hu) i q
-              ((polynomialField D hu charge (first + second)).coeff e x) -
-            (polynomialField D hu charge (first + second)).coeff e
-              (LatticeHalfFock.tensorCurrent D (ActualGround D hu) i q x) =
-          (LatticeHalfFock.tensorCurrent D (ActualGround D hu) i q
-              ((polynomialField D hu charge first).coeff e x) -
-            (polynomialField D hu charge first).coeff e
-              (LatticeHalfFock.tensorCurrent D (ActualGround D hu) i q x)) +
-          (LatticeHalfFock.tensorCurrent D (ActualGround D hu) i q
-              ((polynomialField D hu charge second).coeff e x) -
-            (polynomialField D hu charge second).coeff e
-              (LatticeHalfFock.tensorCurrent D (ActualGround D hu) i q x)) := by
-        simp only [map_add, Pi.add_apply, LinearMap.add_apply]
-        abel
-      rw [hleft, firstProof, secondProof]
-      rw [← finsum_add_distrib
-        (polynomialWardTerm_finite D hu i charge first q e x)
-        (polynomialWardTerm_finite D hu i charge second q e x)]
+      simp only [map_add, Pi.add_apply, LinearMap.add_apply]
+      rw [add_sub_add_comm, firstProof, secondProof,
+        ← finsum_add_distrib
+          (polynomialWardTerm_finite D hu i charge first q e x)
+          (polynomialWardTerm_finite D hu i charge second q e x)]
       apply finsum_congr
       intro n
-      have hmode_add : neutralPolynomialMode D i charge (n : ℤ) (first + second) =
-          neutralPolynomialMode D i charge (n : ℤ) first +
-            neutralPolynomialMode D i charge (n : ℤ) second := by
-        simp [neutralPolynomialMode, map_add]
-      rw [show polynomialWardTerm D hu i charge (first + second) q e x n =
-          Ring.choose (LatticeHalfFock.frequency q) n •
-            ((polynomialField D hu charge
-                (neutralPolynomialMode D i charge (n : ℤ) first)).coeff
-                  (e - (2*q + 1) + 2*(n : ℤ)) x +
-             (polynomialField D hu charge
-                (neutralPolynomialMode D i charge (n : ℤ) second)).coeff
-                  (e - (2*q + 1) + 2*(n : ℤ)) x) by
-            simp [polynomialWardTerm, hmode_add, map_add, smul_add]]
-      simp only [polynomialWardTerm]
-      rw [← smul_add]
+      simp [polynomialWardTerm, neutralPolynomialMode, map_add, smul_add]
   | mul_X polynomial index previous =>
       let R : ℕ := max (polynomialFrequencyBound D polynomial) (index.2 + 1)
       let S : Finset ℕ := Finset.range (R + 1)
@@ -800,41 +682,10 @@ private theorem polynomial_current_ward
         simp only [S, Finset.mem_range]
         dsimp [R]
         omega
-      have hcontract :
-          (∑ n ∈ S, if n = index.2 + 1 then
-              ((index.2 + 1 : ℂ) * Ring.choose (LatticeHalfFock.frequency q)
-                  (index.2 + 1) * (D.G i index.1 : ℂ)) •
-                (polynomialField D hu charge polynomial).coeff
-                  (e - (2*q + 1) + 2*(index.2 : ℤ) + 2) x
-            else 0) =
-            ((index.2 + 1 : ℂ) * Ring.choose (LatticeHalfFock.frequency q)
-                (index.2 + 1) * (D.G i index.1 : ℂ)) •
-              (polynomialField D hu charge polynomial).coeff
-                (e - (2*q + 1) + 2*(index.2 : ℤ) + 2) x := by
-        rw [Finset.sum_ite_eq' S (index.2 + 1)]
-        simp [hmem]
       symm
-      calc
-        (∑ n ∈ S, polynomialWardTerm D hu i charge (X index * polynomial) q e x n) =
-            ∑ n ∈ S,
-              (coefficient n • (singletonLinear D hu index (fields n)).coeff
-                  (e + shift n) x +
-                (if n = index.2 + 1 then
-                  ((index.2 + 1 : ℂ) * Ring.choose (LatticeHalfFock.frequency q)
-                      (index.2 + 1) * (D.G i index.1 : ℂ)) •
-                    (polynomialField D hu charge polynomial).coeff
-                      (e - (2*q + 1) + 2*(index.2 : ℤ) + 2) x
-                 else 0)) := by
-            apply Finset.sum_congr rfl
-            intro n hn
-            exact hterm n
-        _ = (∑ n ∈ S, coefficient n •
-              (singletonLinear D hu index (fields n)).coeff (e + shift n) x) +
-            ((index.2 + 1 : ℂ) * Ring.choose (LatticeHalfFock.frequency q)
-                (index.2 + 1) * (D.G i index.1 : ℂ)) •
-              (polynomialField D hu charge polynomial).coeff
-                (e - (2*q + 1) + 2*(index.2 : ℤ) + 2) x := by
-            rw [Finset.sum_add_distrib, hcontract]
+      simp_rw [hterm]
+      rw [Finset.sum_add_distrib, Finset.sum_ite_eq', if_pos hmem]
+
 
 private theorem Corr_partial_apply (D : LatticeData) (charge : Charge D)
     (index : Index D) (polynomial : Oscillator D) (shift : ℕ) :
@@ -959,49 +810,22 @@ private theorem correctedPolynomial_current_ward
     intro s hs
     simpa [g] using hshift s
   rw [hsum]
-  have hterm_finite (s : ℕ) (hs : s ∈ S) :
+  have hterm_finite (s : ℕ) :
       Function.HasFiniteSupport (fun n => g n s) := by
-    apply (Finset.range
-      (polynomialFrequencyBound D (Corr D charge polynomial s) + 1)).finite_toSet.subset
-    intro n hn
-    by_contra outside
-    have hnnot : ¬ n < polynomialFrequencyBound D (Corr D charge polynomial s) + 1 := by
-      intro hnlt
-      apply outside
-      exact Finset.mem_coe.mpr (Finset.mem_range.mpr hnlt)
-    have hbound :
-        (polynomialFrequencyBound D (Corr D charge polynomial s) : ℤ) < (n : ℤ) := by
-      omega
-    have hmode := neutralPolynomialMode_vanish D i charge
-      (Corr D charge polynomial s) (n : ℤ) hbound
-    apply hn
-    simp [g, hmode]
+    have heq : (fun n => g n s) =
+        polynomialWardTerm D hu i charge (Corr D charge polynomial s)
+          q (e + 2*(s : ℤ)) x := by
+      funext n
+      dsimp only [g, polynomialWardTerm]
+      rw [shiftField_coefficient_public,
+        show e - (2*q + 1) + 2*(n : ℤ) + 2*(s : ℤ) =
+          (e + 2*(s : ℤ)) - (2*q + 1) + 2*(n : ℤ) by ring]
+    rw [heq]
+    exact polynomialWardTerm_finite D hu i charge (Corr D charge polynomial s)
+      q (e + 2*(s : ℤ)) x
   let f : ℕ → ActualTensor D hu := fun n => ∑ s ∈ S, g n s
-  have hfinite_f : Function.HasFiniteSupport f := by
-    apply (Finset.range (polynomialFrequencyBound D polynomial + 1)).finite_toSet.subset
-    intro n hn
-    by_contra outside
-    have hnnot : ¬ n < polynomialFrequencyBound D polynomial + 1 := by
-      intro hnlt
-      apply outside
-      exact Finset.mem_coe.mpr (Finset.mem_range.mpr hnlt)
-    have hbound : (polynomialFrequencyBound D polynomial : ℤ) < (n : ℤ) := by
-      omega
-    have hmode := neutralPolynomialMode_vanish D i charge polynomial (n : ℤ) hbound
-    have hcorr :
-        Corr D charge (neutralPolynomialMode D i charge (n : ℤ) polynomial) = 0 := by
-      rw [hmode, map_zero]
-    have hmode_corr (s : ℕ) :
-        neutralPolynomialMode D i charge (n : ℤ)
-            (Corr D charge polynomial s) = 0 := by
-      have heq := Corr_neutralPolynomialMode_nat D charge i polynomial n s
-      rw [hmode] at heq
-      simpa using heq
-    apply hn
-    dsimp [f, g]
-    apply Finset.sum_eq_zero
-    intro s hs
-    simp [hmode_corr s]
+  have hfinite_f : Function.HasFiniteSupport f :=
+    Function.HasFiniteSupport.sum hterm_finite S
   have hcoeff_neutral (n : ℕ) (r : ℤ) (v : ActualTensor D hu) :
       (HVertexOperator.coeff
           (∑ s ∈ (Corr D charge
@@ -1067,7 +891,7 @@ private theorem correctedPolynomial_current_ward
     exact hsum_neutral n
   rw [hright]
   have hexchange := finsum_finset_exchange_nat S f g hfinite_f
-    (fun s hs => hterm_finite s hs) (fun n => rfl)
+    (fun s _ => hterm_finite s) (fun n => rfl)
   rw [← hexchange]
 
 private theorem correctedField_neutralMode_sum
@@ -1116,17 +940,7 @@ theorem correctedField_current_ward
       (correctedPolynomial D hu β
         (neutralPolynomialMode D i β (n : ℤ) (b β))).coeff
           (e - (2*q + 1) + 2*(n : ℤ)) x
-  have hsum :
-      (∑ β ∈ b.support, (
-        LatticeHalfFock.tensorCurrent D (ActualGround D hu) i q
-            ((correctedPolynomial D hu β (b β)).coeff e x) -
-          (correctedPolynomial D hu β (b β)).coeff e
-            (LatticeHalfFock.tensorCurrent D (ActualGround D hu) i q x))) =
-        ∑ β ∈ b.support, ∑ᶠ n : ℕ, g n β := by
-    apply Finset.sum_congr rfl
-    intro β hβ
-    simpa [g] using correctedPolynomial_current_ward D hu i β (b β) q e x
-  rw [hsum]
+  simp_rw [correctedPolynomial_current_ward]
   have hterm_finite (β : Charge D) (hβ : β ∈ b.support) :
       Function.HasFiniteSupport (fun n => g n β) := by
     apply (Finset.range (polynomialFrequencyBound D (b β) + 1)).finite_toSet.subset

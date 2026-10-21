@@ -154,7 +154,21 @@ $$\forall (n : \mathbb{N}) , \forall (d : \mathbb{N}) , \forall (A : Matrix (Fin
 
 Every rectangular complex matrix admits a Penrose inverse: both absorption identities hold and both products are Hermitian. The construction transports the finite-dimensional Moore–Penrose inverse through Matrix.toEuclideanLin.
 
-**Theorem 1.12 (Projection of positive summands).**
+**Theorem 1.12 (Kernels of positive summands).**
+
+$$\forall (n : \mathbb{N}) , \forall (F : Fin n \to Matrix (Fin n) (Fin n) \mathbb{C}) , (\forall (j : Fin n) , (F\left(j\right)).\operatorname{PosSemidef}) \to (\forall (x : Fin n \to \mathbb{C}) , ((\sum i : Fin n , F\left(i\right)) \times_{v} x = 0) \to (\forall (i : Fin n) , F\left(i\right) \times_{v} x = 0))$$
+
+*Proof.* Machine-checked in Lean as `D5/S3/Quantum/Measurement/AntidistinguishabilityGram.psd_summand_kills_kernel` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Acknowledgement.* Nathaniel Johnston, Vincent Russo, Jamie Sikora (2025). *Tight bounds for antidistinguishability and circulant sets of pure quantum states*. DOI: [10.22331/q-2025-02-04-1622](https://doi.org/10.22331/q-2025-02-04-1622). URL: <https://arxiv.org/abs/2311.17047v2>.
+
+*Commentary.*
+
+If a vector belongs to the kernel of a finite sum of positive semidefinite matrices, it belongs to the kernel of every summand.
+
+**Theorem 1.13 (Projection of positive summands).**
 
 $$\forall (n : \mathbb{N}) , \forall (F : Fin n \to Matrix (Fin n) (Fin n) \mathbb{C}) , (\forall (i : Fin n) , (F\left(i\right)).\operatorname{PosSemidef}) \to (\forall (Q : Matrix (Fin n) (Fin n) \mathbb{C}) , ((Q).\operatorname{IsHermitian}) \to (((\sum i : Fin n , F\left(i\right)) \cdot Q = \sum i : Fin n , F\left(i\right)) \to (\forall (i : Fin n) , Q \cdot F\left(i\right) \cdot Q = F\left(i\right))))$$
 
@@ -168,7 +182,7 @@ $$\forall (n : \mathbb{N}) , \forall (F : Fin n \to Matrix (Fin n) (Fin n) \math
 
 A Hermitian matrix that fixes the sum of positive semidefinite matrices fixes each summand on both sides.
 
-**Theorem 1.13 (stateGram diag).**
+**Theorem 1.14 (stateGram diag).**
 
 $$\forall (n : \mathbb{N}) , \forall (d : \mathbb{N}) , \forall (\psi : Fin n \to EuclideanSpace \mathbb{C} (Fin d)) , (\forall (i : Fin n) , \Vert \psi\left(i\right) \Vert = 1) \to (\forall (i : Fin n) , (Matrix . gram \mathbb{C} \psi)\left(i, i\right) = 1)$$
 
@@ -182,7 +196,7 @@ $$\forall (n : \mathbb{N}) , \forall (d : \mathbb{N}) , \forall (\psi : Fin n \t
 
 The formula states the complete estimate or implication. Matrix entries, finite index sets, and proof parameters retain their Lean meanings. Proof fields of finite-index constructors are omitted.
 
-**Theorem 1.14 (incoherent gram antidistinguishable).**
+**Theorem 1.15 (incoherent gram antidistinguishable).**
 
 $$\forall (n : \mathbb{N}) , \forall (d : \mathbb{N}) , (1 \leq n) \to (\forall (\psi : Fin n \to EuclideanSpace \mathbb{C} (Fin d)) , (IsIncoherent\left((Matrix . gram \mathbb{C} \psi)\right)) \to (IsAntidistinguishable\left(\psi\right)))$$
 
@@ -209,6 +223,7 @@ A Gram certificate yields positive measurement effects through a finite Penrose 
 - Truth anchor: `D5/S3/Quantum/Measurement/AntidistinguishabilityGram.matrix_penrose_exists`
 - Truth anchor: `D5/S3/Quantum/Measurement/AntidistinguishabilityGram.orderedSpectrum_antitone`
 - Truth anchor: `D5/S3/Quantum/Measurement/AntidistinguishabilityGram.orderedSpectrum_nonneg`
+- Truth anchor: `D5/S3/Quantum/Measurement/AntidistinguishabilityGram.psd_summand_kills_kernel`
 - Truth anchor: `D5/S3/Quantum/Measurement/AntidistinguishabilityGram.psd_summand_projection`
 - Truth anchor: `D5/S3/Quantum/Measurement/AntidistinguishabilityGram.stateGram_diag`
 - Truth anchor: `D5/S3/Quantum/Measurement/AntidistinguishabilityGram.sum_orderedSpectrum`

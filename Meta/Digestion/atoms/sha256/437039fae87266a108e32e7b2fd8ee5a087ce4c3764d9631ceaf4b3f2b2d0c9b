@@ -1,0 +1,16 @@
+**Definition 88.5 (source-to-geometry bridge).** A bridge for a source
+family consists of a carrier \((X,d,\mu)\), a source-state map
+\(\chi:D\to X\), and an explicit response map satisfying all of the following
+where they are needed:
+
+* source actions and same-register forward updates map to declared local
+  transports on \(X\);
+* prefix depth is related to a declared observation scale \(r(h)\), with
+  both directions of the implication needed by the target task;
+* escaping source coordinates are proper in the relevant sector, for example
+  \(v_i\to\infty\Rightarrow d(o,\chi(u_{\mathbf v}))\to\infty\);
+* the carrier has a measure and local operator whose volume, heat, or Green
+  estimates are proved at that scale;
+* the acquired clock, boundary, and interaction readouts are the same
+  objects used in the claimed propagation or energy statement.
+
