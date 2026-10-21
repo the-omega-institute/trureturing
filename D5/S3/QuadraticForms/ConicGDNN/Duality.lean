@@ -6,7 +6,7 @@
    utility: none
    digest: Sum of squares products and cone preservation from dual trace positivity. -/
 
-import D5.S3.QuadraticForms.ConicGDNN.Defs
+import D5.S3.QuadraticForms.ConicGDNN.Lorentz
 import Mathlib.LinearAlgebra.Matrix.Trace
 import Mathlib.Tactic
 
@@ -109,5 +109,72 @@ private lemma sos_product {ι : Type*} (L M : List (MvPolynomial ι ℝ))
     simp only [List.map_cons, List.sum_cons, add_mul]
     exact sos4_add (linear_mul_sos l (hL l (by simp)) M hM)
       (ih (fun l hl => hL l (by simp [hl])))
+
+private lemma quartic_add {p r : ℕ} {k : Fin r → ℕ}
+    (A B : Matrix (Idx p r k) (Idx p r k) ℝ) :
+    quartic (A + B) = quartic A + quartic B := by
+  simp [quartic, add_mul, Finset.sum_add_distrib]
+
+private lemma quartic_smul {p r : ℕ} {k : Fin r → ℕ}
+    (c : ℝ) (A : Matrix (Idx p r k) (Idx p r k) ℝ) :
+    quartic (c • A) = C c * quartic A := by
+  simp only [quartic, Matrix.smul_apply, smul_eq_mul, map_mul,
+    mul_assoc, ← Finset.mul_sum]
+
+private lemma quartic_sym {p r : ℕ} {k : Fin r → ℕ}
+    (u v : Idx p r k → ℝ) :
+    quartic ((1 / 2 : ℝ) • (vecMulVec u v + vecMulVec v u)) =
+      (∑ a, C (u a) * jsq a) * (∑ a, C (v a) * jsq a) := by
+  rw [quartic_smul, quartic_add, quartic_vecMulVec, quartic_vecMulVec]
+  have hc : (C (1 / 2 : ℝ) : MvPolynomial (Idx p r k) ℝ) + C (1 / 2 : ℝ) = 1 := by
+    rw [← map_add]
+    norm_num
+  calc
+    _ = (C (1 / 2 : ℝ) + C (1 / 2 : ℝ)) *
+        ((∑ a, C (u a) * jsq a) * (∑ a, C (v a) * jsq a)) := by ring
+    _ = _ := by rw [hc, one_mul]
+
+/-- Two cone vectors give a symmetric matrix in the zeroth approximation. -/
+theorem sym_mem_knn0 {p r : ℕ} {k : Fin r → ℕ}
+    (u v : Idx p r k → ℝ) (hu : u ∈ cone p r k) (hv : v ∈ cone p r k) :
+    (1 / 2 : ℝ) • (vecMulVec u v + vecMulVec v u) ∈ knn0 p r k := by
+  constructor
+  · change (((1 / 2 : ℝ) • (vecMulVec u v + vecMulVec v u))ᵀ) = _
+    simp only [transpose_smul, transpose_add, transpose_vecMulVec]
+    rw [add_comm]
+  · rw [quartic_sym]
+    obtain ⟨L, hL, heL⟩ := Lorentz.pullback_eq_sum_sq u hu
+    obtain ⟨M, hM, heM⟩ := Lorentz.pullback_eq_sum_sq v hv
+    rw [heL, heM]
+    exact sos_product L M hL hM
+
+private lemma trace_sym {p r : ℕ} {k : Fin r → ℕ}
+    (Xm : Matrix (Idx p r k) (Idx p r k) ℝ) (hXm : Xm.IsSymm)
+    (u v : Idx p r k → ℝ) :
+    (Xm * ((1 / 2 : ℝ) • (vecMulVec u v + vecMulVec v u))).trace =
+      u ⬝ᵥ (Xm *ᵥ v) := by
+  rw [Matrix.mul_smul, Matrix.mul_add, trace_smul, trace_add,
+    mul_vecMulVec, mul_vecMulVec, trace_vecMulVec, trace_vecMulVec]
+  have he : (Xm *ᵥ u) ⬝ᵥ v = u ⬝ᵥ (Xm *ᵥ v) := by
+    calc
+      _ = v ⬝ᵥ (Xm *ᵥ u) := dotProduct_comm _ _
+      _ = v ⬝ᵥ (Xmᵀ *ᵥ u) := by rw [hXm]
+      _ = _ := dotProduct_transpose_mulVec Xm v u
+  rw [he, dotProduct_comm (Xm *ᵥ v) u]
+  simp only [smul_eq_mul]
+  ring
+
+/-- The dual approximation preserves the entire product cone. -/
+theorem mulVec_mem_cone {p r : ℕ} {k : Fin r → ℕ}
+    {Xm : Matrix (Idx p r k) (Idx p r k) ℝ} (hXm : Xm ∈ dnnNN p r k)
+    {v : Idx p r k → ℝ} (hv : v ∈ cone p r k) :
+    Xm *ᵥ v ∈ cone p r k := by
+  rw [← Lorentz.dualCone_cone p r k]
+  intro u hu
+  have hu' : u ∈ cone p r k := hu
+  have h := hXm.2 _ (sym_mem_knn0 u v hu' hv)
+  rw [trace_sym Xm hXm.1 u v] at h
+  rw [dotProduct_comm]
+  exact h
 
 end D5.S3.QuadraticForms.ConicGDNN.Duality
