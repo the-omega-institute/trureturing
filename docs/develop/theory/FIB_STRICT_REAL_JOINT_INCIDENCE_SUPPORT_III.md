@@ -1522,3 +1522,487 @@ literature-wide novelty or of formal-kernel verification. The unchanged
 strict-real same-child joint problem remains open.
 
 ## 追加锚（本行以下为增补区）
+
+## 14. The actual strict singular locus and terminal-$M$ injectivity
+
+**Definition 14.1 (Actual singular locus).**  In the coordinates of
+Definition 10.1, let
+
+$$
+\mathcal S=\{W\in\mathcal H:0<r(W)<1,\ b(W)>0,\ H(r(W),b(W),e(W))=0,
+\ \Lambda(r(W),b(W))=0\}.
+\tag{14.1}
+$$
+
+Here $H=0$ means the parent-consistency equation (10.1), and only the
+actual strict worlds in the full parent are included.  Thus $H$ in
+(14.1) is neither the history $H_4$ nor a sextic or a scaled gain
+polynomial.  Write
+
+$$
+\Psi_M(W)=(p(W),v(W),m(W)).
+\tag{14.2}
+$$
+
+Proposition 11.1 identifies the set in (14.1) with the two complete
+strict source lines $r=r_-$ and $r=r_+$, $b=1/8$, with arbitrary real
+$e$.  No boundary label is included in $\mathcal S$.
+
+**Lemma 14.2 (Response formulas on the two actual singular lines).**
+Put
+
+$$
+D(n)=716n^2+31n-900,
+$$
+
+and, for $n>0$, put
+
+$$
+\begin{aligned}
+A(n)&=-\frac{D(n)}{144n},\\
+B(n)&=-\frac{142n^2+185n-400}{10n},\\
+C(n)&=-\frac{1448n^2+1011n-3150}{24n}.
+\end{aligned}
+\tag{14.3}
+$$
+
+On a singular line, $U=5/4$, and interpolation of the one whole gain
+at the original nodes gives
+
+$$
+\begin{aligned}
+g(5)&=e\left(\frac5n-\frac{179}{36}\right),\\
+g(6)&=24+e\left(\frac{16}{n}-\frac{71}{5}\right),\\
+g(7)&=\frac{384}{5}+e\left(\frac{35}{n}-\frac{181}{6}\right).
+\end{aligned}
+\tag{14.4}
+$$
+
+Consequently the three original responses are
+
+$$
+\begin{aligned}
+p&=24+eA(n),\\
+v&=84+24n+eB(n),\\
+m&=312+\frac{768}{5}n+eC(n).
+\end{aligned}
+\tag{14.5}
+$$
+
+Proof. On $\mathcal S$, Proposition 11.1 gives $b=1/8$, hence
+$T=9/8$, $U=5/4$, $j=1/8+8r-8r^2$, and
+$n=1/8+9r-8r^2$.  Equation (10.7) gives
+$g(4)=(-6-e)/U$; applying the fixed-node interpolation formula to the
+four values at $0,1,2,3$ gives (14.4).  Substitution into (1.10)
+gives (14.5).  No gain coefficient, gain sample, drift, or source
+factor is divided out. ∎
+
+**Theorem 14.3 (Global injectivity of terminal $M$ on actual singular
+sources).**  The map $\Psi_M$ is injective on $\mathcal S$, including
+both singular lines, every real $e$ (in particular $e=0$ and
+$e=-24$), lower gain degrees, and repeated or sampled gain roots.
+
+Proof.  The exact evaluations
+
+$$
+\begin{aligned}
+S(13/100)&=-89481543/390625,&
+S(7/50)&=100610367/390625,\\
+S(9/10)&=94967/625,&
+S(91/100)&=-178093443/390625
+\end{aligned}
+$$
+
+refine the two unique strict roots of Proposition 11.1 to
+
+$$
+\frac{13}{100}<r_-<\frac7{50},
+\qquad
+\frac9{10}<r_+<\frac{91}{100}.
+\tag{14.6a}
+$$
+
+The monotonicity of $n(r)=1/8+9r-8r^2$ on these intervals then gives
+
+$$
+\frac{23}{20}<n_-<\frac54,
+\qquad
+\frac53<n_+<\frac74.
+\tag{14.6}
+$$
+
+The polynomial $D$ is increasing for $n>0$, and
+
+$$
+D(23/20)=\frac{2064}{25}>0.
+\tag{14.7}
+$$
+
+Thus $A(n_\pm)\ne0$.  If two points lie on the same singular line
+and have equal $p$, (14.5) first gives equal $e$; Proposition 11.1 and
+the zero-safe correspondence (10.6) then give the same complete world.
+
+It remains to separate the two lines.  Define
+
+$$
+K(n)=\frac{C(n)-(32/5)B(n)}{A(n)}
+ =-\frac{6(18328n^2+45765n-74850)}{25D(n)}.
+\tag{14.8}
+$$
+
+Equation (14.5) gives the identity
+
+$$
+m-\frac{32}{5}v+\frac{1128}{5}=(p-24)K(n).
+\tag{14.9}
+$$
+
+For independent variables $n,z$, direct subtraction gives
+
+$$
+K(n)-K(z)=
+\frac{12(n-z)E(n,z)}{25D(n)D(z)},
+\tag{14.10}
+$$
+
+where
+
+$$
+E(n,z)=16099786nz-18548700(n+z)+19434075.
+\tag{14.11}
+$$
+
+The four corner values of this bilinear polynomial on
+$[23/20,5/4]\times[5/3,7/4]$ are
+
+$$
+-\frac{11721041}{6},\quad
+-\frac{78253427}{40},\quad
+-\frac{6750475}{6},\quad
+-\frac{7949945}{8}.
+\tag{14.12}
+$$
+
+The bilinear interpolation formula on a rectangle is a convex
+combination of its four corner values, so $E<0$ throughout that
+rectangle.  Equations (14.6), (14.7), and (14.10) imply
+$K(n_- )\ne K(n_+)$.
+
+Suppose points on the two lines had equal $(p,v,m)$.  Comparing (14.9)
+and using the unequal $K$ values forces $p=24$.  Equation (14.5) and
+$A(n_\pm)\ne0$ then force both $e$ values to be zero.  The second
+equation in (14.5) becomes $v=84+24n$, which differs on the two
+disjoint intervals in (14.6), a contradiction.  This explicitly
+handles the $p=24$ case even though selected children in Definition
+1.1 use $p\ne24$.  Hence $\Psi_M$ is injective on all of $\mathcal S$.
+∎
+
+**Corollary 14.4 (Effect on a selected $M$ pair).**  If
+$p\ne24$ and $W\ne W'$ are actual members of $C(p,v)$ with
+$m(W)=m(W')$, at most one of $W,W'$ belongs to $\mathcal S$.
+
+This removes the singular--singular endpoint possibility for the
+selected $M$ pair.  It does not remove a singular--regular pair, a
+regular--regular pair, or an unused singular companion in the same
+child.  It leaves the selected $J$ pair, its shared $(p,v)$, and the
+within-pair distinctness requirements exactly as in (1.6); no joint
+witness or joint exclusion follows from this corollary.
+
+## 15. A C1 boundary point and its strict interior continuation
+
+**Definition 15.1 (Auxiliary C1 face).**  For $t>0$, use the boundary
+source label $(r,b,c)=(1,t,0)$ only as an analytic extension.  It is not
+an actual strict world.  Set
+
+$$
+q(t)=t^3-4t-2,\qquad D_1(t)=5(t+1)q(t).
+\tag{15.1}
+$$
+
+On the C1 face the parent equation and its drift solution are
+
+$$
+\Lambda_1(t)=\frac{2q(t)}{t(t+1)(2t+1)},\qquad
+e_1(t)=-\frac{3t(8t-1)(5t+2)}{5q(t)}.
+\tag{15.2}
+$$
+
+For $q(t)\ne0$ define the boundary response extension by
+
+$$
+\begin{aligned}
+p_1(t)-24&=-\frac{6(8t-1)(7t^3+11t^2+19t+10)}{D_1(t)},\\
+v_1(t)-24&=-\frac{3(415t^4+921t^3+2326t^2+1466t+186)}{D_1(t)},\\
+m_1(t)-24&=-\frac{3(1128t^4+3523t^3+9818t^2+6862t+1140)}{D_1(t)}.
+\end{aligned}
+\tag{15.3}
+$$
+
+These are the original-clock responses obtained from (10.2)--(10.5)
+at the C1 boundary label.  They are used below only on a box where
+$q$ and $\Lambda_1$ are separated from zero.
+
+**Definition 15.2 (Exact four-variable equation).**  In the order
+$x=(t,b,r,e)$, let
+
+$$
+F(t,b,r,e)=
+\begin{pmatrix}
+H(r,b,e)\\
+X_0(r,b,e)-p_1(t)\\
+X_1(r,b,e)-v_1(t)\\
+X_3(r,b,e)-m_1(t)
+\end{pmatrix},
+\tag{15.4}
+$$
+
+where $H$ and $X_i$ are the parent-consistency and response functions
+of (10.1) and (10.5).  The following centre consists of exact
+terminating rationals:
+
+Writing $H_B=H(r,b,e)$, $p_B=X_0(r,b,e)$,
+$v_B=X_1(r,b,e)$, and $m_B=X_3(r,b,e)$, this is exactly
+
+$$
+F=(H_B,p_B-p_1(t),v_B-v_1(t),m_B-m_1(t))^{\mathsf T}.
+\tag{15.4a}
+$$
+
+$$
+x_0=\begin{pmatrix}
+8987958556003912/10^{16}\\
+8707641022982145/10^{16}\\
+9275770846479353/10^{16}\\
+4981230390477398/10^{15}
+\end{pmatrix},
+\qquad
+Q=x_0+[-10^{-8},10^{-8}]^4.
+\tag{15.5}
+$$
+
+Let
+
+$$
+R=10^{-6}
+\begin{pmatrix}
+-19276441&4040634&-1158716&124302\\
+-32067794&7561101&-2554574&335613\\
+-34766236&9531752&-3733207&557972\\
+5399875&-17649922&12206129&-2425481
+\end{pmatrix}.
+\tag{15.6}
+$$
+
+**Lemma 15.3 (Reproducible rational contraction certificate).**  On
+$Q$, exact rational interval arithmetic gives
+
+$$
+\|RF(x_0)\|_\infty<10^{-12},
+\tag{15.7}
+$$
+
+and, entry by entry,
+
+$$
+\left|I-RDF(x)\right|\le10^{-6}
+\begin{pmatrix}
+258&1146&998&72\\
+426&1854&1650&118\\
+505&2270&2065&148\\
+1550&6244&5691&402
+\end{pmatrix}
+\quad(x\in Q).
+\tag{15.8}
+$$
+
+The certificate is specified without a floating-point convention as
+follows.  For rational intervals $I=[a,b]$ and $J=[c,d]$, use
+
+$$
+I+J=[a+c,b+d],\quad I-J=[a-d,b-c],
+$$
+
+and let $IJ$ be the interval with endpoints the minimum and maximum of
+$ac,ad,bc,bd$.  If $0\notin I$, let $I^{-1}$ be the interval hull of
+$\{1/u:u\in I\}$ and put $I/J=I J^{-1}$.  Propagate a value and its
+four derivatives as a pair $(I,I')$ by
+
+$$
+\begin{aligned}
+(I,I')+(J,J')&=(I+J,I'+J'),\\
+(I,I')(J,J')&=(IJ,I'J+IJ'),\\
+\bigl(I^{-1},-(I')/I^2\bigr)&=\operatorname{D}(1/f)
+\quad\text{when }(I,I')=\operatorname{D}(f).
+\end{aligned}
+\tag{15.9}
+$$
+
+Constants have zero derivative vectors and the four coordinate
+functions have the corresponding standard basis vectors.  Horner
+evaluation of the displayed polynomials, followed by (15.9), evaluates
+both $F$ and $DF$ using outward rational endpoints.  Partition each
+coordinate interval of $Q$ into four equal rational intervals.  This
+is the explicit $4^4=256$-subbox grid; on each subbox all sixteen
+entries of $I-RDF$ are evaluated by (15.9), and their componentwise
+maxima give (15.8).  Thus the table is reproduced from (15.1)--(15.6)
+by finite rational operations.  Direct fraction comparison after
+clearing positive denominators gives the four inequalities in (15.7).
+
+The largest row sum in (15.8) is
+
+$$
+\frac{13887}{10^6}<\frac1{50}.
+\tag{15.10}
+$$
+
+Proof.  The preceding recurrence is ordinary interval automatic
+differentiation, so every denominator used in a reciprocal is checked
+to avoid zero on its subbox.  The grid is finite and rational, and the
+convex-hull operation taking the maximum of the 256 bounds preserves
+the displayed componentwise inequalities. ∎
+
+**Proposition 15.4 (An exact boundary-to-interior mixed-$M$ solution).**
+There is an exact $x_*\in Q$ with $F(x_*)=0$, and it has the following
+strict sign and response bounds.  Every endpoint in the display is a
+terminating rational; decimal notation is only a shorter rendering.
+
+$$
+\begin{array}{c|c}
+\text{quantity}&\text{certified interval}\ \hline
+t&[0.8987958456003912,\ 0.8987958656003912]\\
+q(t)&[-4.869105644371515,-4.869105515901476]\\
+\Lambda_1(t)&[-2.039649458741292,-2.039649308892886]\\
+e_1(t)&[4.452361155628864,4.452361555816960]\\
+b&[0.8707640922982145,0.8707641122982145]\\
+r&[0.9275770746479353,0.9275770946479353]\\
+r(1-r)/b&[0.07714813430547741,0.07714815904577490]\\
+\Lambda(r,b)&[-1.780571070584005,-1.780570758182900]\\
+e&[4.981230380477398,4.981230400477398]\\
+p&[56.979126254089785,56.97915185049104]\\
+v&[304.4973220331739,304.4974196326005]\\
+m&[1226.7304798320263,1226.7307912592719]
+\end{array}
+\tag{15.11}
+$$
+
+In particular all source entries $r,b,c$, and the derived positive
+quantities $j,n,T,U$ are strictly positive at $x_*$.  The two displayed
+$\Lambda$ intervals are contained respectively in $(-2.040,-2.039)$
+and $(-1.781,-1.780)$; $p>56$ and $e>0$.
+
+Proof.  Define $T(x)=x-RF(x)$.  From (15.7)--(15.10), for $x\in Q$,
+
+$$
+\|T(x)-x_0\|_\infty
+\le10^{-12}+\frac{13887}{10^6}10^{-8}<10^{-8},
+\tag{15.12}
+$$
+
+and $T$ has Lipschitz constant at most $13887/10^6<1$.  Banach's
+fixed-point theorem gives a unique $x_*\in Q$ with $T(x_*)=x_*$.  It
+follows that $RF(x_*)=0$.  Since $\|I-RDF(x_*)\|_\infty<1$, the product
+$RDF(x_*)$ is invertible by the Neumann series; hence both $R$ and
+$DF(x_*)$ are invertible, and therefore $F(x_*)=0$.  The remaining
+intervals in (15.11) are the same rational interval evaluations used
+in (15.7)--(15.8).  The centre $x_0$ is only a rational test point; it
+is not asserted to solve $F=0$. ∎
+
+**Theorem 15.5 (Strict interior continuation and failure of an
+$M$-only source margin).**  For every $\eta>0$ there are two distinct
+actual strict worlds $W_A,W_B$ with the same $(p,v)$, the same terminal
+$m$, and $p\ne24$, such that
+
+$$
+0<1-r(W_A)<\eta.
+\tag{15.13}
+$$
+
+Proof.  For a first source with $(r,b)=(s,t)$ define
+
+$$
+c_A(s,t)=\frac{s(1-s)}t,
+\qquad
+\Lambda_A(s,t)=1+\frac6{1+t}+\frac1{1+2t}
+ -\frac4{t+c_A(s,t)}-\frac4{t+c_A(s,t)+s},
+$$
+
+and
+
+$$
+E(s,t)=-\frac{(24/5)(t-1/8)\,2(2+5t)/((1+t)(1+2t))}
+              {\Lambda_A(s,t)}.
+\tag{15.14}
+$$
+
+This is defined in a neighbourhood of $(1,t_*)$ by (15.11), where
+$t_*$ is the first coordinate of $x_*$.  Let $X_i^A(s,t)$ be the
+original responses (10.5) evaluated at $(r,b,e)=(s,t,E(s,t))$, and set
+
+$$
+\mathcal F(s,t,b,r,e)=
+\begin{pmatrix}
+H(r,b,e)\\
+X_0(r,b,e)-X_0^A(s,t)\\
+X_1(r,b,e)-X_1^A(s,t)\\
+X_3(r,b,e)-X_3^A(s,t)
+\end{pmatrix}.
+\tag{15.15}
+$$
+
+At $s=1$, the first source is the C1 boundary extension, so
+$\mathcal F(1,x_*)=F(x_*)=0$.  Differentiating the exact rational
+formulas (15.3) shows that the derivative of $\mathcal F$ in
+$(t,b,r,e)$ at $(1,x_*)$ is $DF(x_*)$, which is invertible by
+Proposition 15.4.  The analytic implicit function theorem therefore
+gives functions $t(s),b(s),r(s),e(s)$ for $s$ near $1$ satisfying
+$\mathcal F=0$.
+
+Shrink the interval so that $0.98<s<1$, $0.92<r(s)<0.94$, both $b$
+coordinates are positive, both $\Lambda$ values are nonzero, both
+$e$ values are positive, and the common $p(s)$ is larger than $56$.
+The first source has
+
+$$
+P_A(s)=\begin{pmatrix}s&t(s)\\s(1-s)/t(s)&1-s\end{pmatrix},
+$$
+
+and the second has
+
+$$
+P_B(s)=\begin{pmatrix}r(s)&b(s)\\r(s)(1-r(s))/b(s)&1-r(s)\end{pmatrix}.
+$$
+
+Both satisfy the undivided parent equation, so Lemma 10.2 reconstructs
+one entire degree-at-most-three gain and one fixed drift for each.  The
+positive $e$ values imply $g(0)=-24-e<0$, so neither gain is the zero
+polynomial.  The equations in (15.15) give
+
+$$
+W_A(s),W_B(s)\in C(p(s),v(s)),\qquad m(W_A(s))=m(W_B(s)).
+\tag{15.16}
+$$
+
+They use the original clocks and readings; $s$ is a parameter selecting
+different worlds, not a new clock, reset, reclocking, or added port.
+The worlds are distinct because their $r$ coordinates lie in the
+disjoint intervals $(0.98,1)$ and $(0.92,0.94)$.  Given $\eta>0$, choose
+$s$ also with $s>1-\eta$; then (15.13) follows. ∎
+
+**Corollary 15.6 (Scope of the margin failure).**  No positive lower
+bound for $1-r$ can follow from the $M$-pair hypotheses alone, even
+with the original strict source guards and $p\ne24$.  The conclusion
+does not assert that an additional selected $J$ pair exists on the
+family (15.16), nor does it remove the shared $(p,v)$ and entire-child
+requirements of (1.6).  Singular--regular possibilities, unused
+singular companions, and the original joint $J/M$ question remain
+separate obligations.
+
+The contraction argument uses the classical Banach fixed-point theorem;
+the continuation uses the analytic implicit function theorem, in the
+same ordinary sense as the implicit/inverse-function use in Theorem
+6.1.  The displayed source formulas, rational interval recurrence,
+256-cell grid, and 16-entry matrix bound are the complete arithmetic
+data for the two component conclusions.  They establish neither the
+original joint witness nor a global joint exclusion.
+
+## 追加锚（本行以下为增补区）
