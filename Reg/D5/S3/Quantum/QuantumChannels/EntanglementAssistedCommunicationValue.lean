@@ -169,10 +169,10 @@ def registration :
       owner := `D5.S3.Quantum.QuantumChannels.EntanglementAssistedCommunicationValue
       name := `D5.S3.Quantum.QuantumChannels.EntanglementAssistedCommunicationValue.claim
       path := #[] }
-    coordinates := #[]
+    coordinates := #[0, 1]
     readouts := #[{
       path := #["body", "body", "body", "body", "body", "body", "arg", "arg"]
-      stateBinder := 0
+      stateBinder := 4
       functionOperand := false
       stateOperand := none
       booleanPredicate := false }] }
