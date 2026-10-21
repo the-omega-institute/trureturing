@@ -60,7 +60,15 @@ private theorem heisenberg_kraus {d n : ℕ}
     (Φ : MatrixMap (Fin d) (Fin n) ℂ) (hCP : Φ.IsCompletelyPositive) (hu : Φ 1 = 1) :
     ∃ K : (Fin n × Fin d) → Matrix (Fin d) (Fin n) ℂ,
       (∑ r, (K r)ᴴ * K r) = 1 ∧ ∀ A, Φ A = ∑ r, (K r)ᴴ * A * K r := by
-  sorry
+  obtain ⟨L, hL⟩ := MatrixMap.IsCompletelyPositive.exists_kraus Φ hCP
+  refine ⟨fun r => (L r)ᴴ, ?_, ?_⟩
+  · rw [hL] at hu
+    simpa only [MatrixMap.of_kraus, LinearMap.sum_apply, LinearMap.coe_mk,
+      AddHom.coe_mk, Matrix.mul_one, Matrix.conjTranspose_conjTranspose] using hu
+  · intro A
+    rw [hL]
+    simp only [MatrixMap.of_kraus, LinearMap.sum_apply, LinearMap.coe_mk,
+      AddHom.coe_mk, Matrix.conjTranspose_conjTranspose]
 
 private theorem isometric_factorization {d n : ℕ} (hnd : n ≤ d)
     (K : Matrix (Fin d) (Fin n) ℂ) :
