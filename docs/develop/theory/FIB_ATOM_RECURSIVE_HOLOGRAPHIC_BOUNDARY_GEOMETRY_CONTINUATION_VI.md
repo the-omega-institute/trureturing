@@ -2099,7 +2099,161 @@ no Lean kernel-verification assertion.
 
 ## 130.99 追加锚（本行以下为增补区）
 
-## 131. Native orthogonal birth coordinates
+## 131. Occurrence support and a physical realization interface
+
+For an accepted epoch $e$, write
+
+$$
+A_e:=\{(x,y)\in V_e\times V_e:x\ne y\ \text{and}\ Q_e(x,y)>0\}.
+\tag{131.1}
+$$
+
+Thus $A_e$ is the positive off-diagonal support of the generator. A
+physical realization interface at epoch $e$ consists of a set $X_e$, a
+nonnegative distance function $\rho_e$ on $X_e$, and a map
+$\iota_e:V_e\to X_e$:
+
+$$
+(V_e,d_e,Q_e)\longmapsto (X_e,\rho_e,\iota_e).
+\tag{131.2}
+$$
+
+The statement below uses the following explicit interpretation. Positive
+entries of $Q_e$ are being read as direct physical transitions, and a
+**direct-generator locality radius** $0\le\ell<\infty$ means
+
+$$
+(x,y)\in A_e\quad\Longrightarrow\quad
+\rho_e(\iota_e(x),\iota_e(y))\le \ell.
+\tag{131.3}
+$$
+
+This is a realization assumption, not a consequence of the occurrence
+algebra. If $Q_e$ is an effective generator obtained after eliminating
+microscopic variables, (131.3) concerns the effective transitions only;
+the theorem below then says nothing about microscopic locality.
+
+## 132. The minimal bounded-preimage bridge
+
+**Theorem 132.1 (bounded-preimage obstruction to direct physical locality).**
+Fix one uncapped full-source compatible conservative Markov family from
+Theorem 129.3. Suppose a realization interface (131.2) and one finite
+radius $0\le\ell<\infty$ satisfy direct-generator locality (131.3) for
+every accepted epoch $e$. Assume in addition the minimal bounded-preimage
+condition at that radius: there is one finite $R\ge0$, independent of $e$,
+such that
+
+$$
+(x,y)\in A_e\ \text{and}\
+\rho_e(\iota_e(x),\iota_e(y))\le\ell
+\quad\Longrightarrow\quad d_e(x,y)\le R
+\tag{132.1}
+$$
+
+for every accepted epoch $e$. Then
+
+$$
+\operatorname{jr}(Q_e)\le R\qquad\text{for every }e,
+\tag{132.2}
+$$
+
+which contradicts the uncapped universal conclusion
+$\sup_e\operatorname{jr}(Q_e)=+\infty$ in Theorem 129.3.
+
+**Proof.** Take any $(x,y)\in A_e$. By (131.3) its physical distance is at
+most $\ell$, so (132.1) gives $d_e(x,y)\le R$. The occurrence jump range is
+the supremum of these $d_e(x,y)$ over $A_e$, hence (132.2). Theorem 129.3
+rules out this uniform finite bound for the fixed uncapped family. The
+contradiction uses no claim about a physical dimension or about a
+microscopic realization. $\square$
+
+The bounded-preimage clause is the smallest comparison condition used here:
+it controls only active pairs inside the declared physical locality radius.
+It does not require a correspondence for inactive pairs, a global
+quasi-isometry, or an upper control on $\rho_e$.
+
+## 133. A transparent sufficient lower-control hypothesis
+
+A convenient sufficient hypothesis for (132.1) is the affine lower control
+
+$$
+\rho_e(\iota_e(x),\iota_e(y))\ge a\,d_e(x,y)-b
+\tag{133.1}
+$$
+
+with fixed finite $b\ge0$ and fixed $a>0$, for all epochs and all pairs to which
+the interface is applied. For an active pair, (131.3) and (133.1) imply
+
+$$
+ a\,d_e(x,y)-b\le\ell,
+ \qquad	ext{hence}qquad
+ d_e(x,y)\le R:=\frac{\ell+b}{a}.
+\tag{133.2}
+$$
+
+After replacing $R$ by its ceiling when needed, Theorem 132.1 applies. The
+affine estimate is only a transparent sufficient special case. It is not
+necessary, it is not asserted to be a full quasi-isometry, and no upper
+control of $\rho_e$ by $d_e$ is used. More generally, a uniform
+nondecreasing lower control
+
+$$
+\rho_e(\iota_e(x),\iota_e(y))\ge\Phi(d_e(x,y)),
+\qquad \Phi(t)\longrightarrow+\infty,
+\tag{133.3}
+$$
+
+would give the same conclusion whenever one fixes $\ell$ and chooses a
+finite $R$ with $\Phi(t)>\ell$ for $t>R$. This alternative remains
+conditional on the stated uniform control and does not add a physical
+interpretation to $\Phi$.
+
+## 134. Prefixes, drifting constants, and logical boundaries
+
+The uncapped quantifier in Theorem 132.1 is essential. Every finite stopped
+or capped prefix has finitely many finite state spaces and therefore a finite
+maximum occurrence range. It may satisfy prefix-dependent locality and
+comparison constants without contradiction. For affine controls that vary
+by layer or epoch, with $\ell_e\ge0$, $b_e\ge0$, and $a_e>0$, the relevant
+bound is explicitly
+
+$$
+R_e=\frac{\ell_e+b_e}{a_e},
+\qquad \ell_e\ge0,\quad b_e\ge0,\quad a_e>0.
+\tag{134.1}
+$$
+
+A bounded supremum of this ratio over all accepted epochs still contradicts
+Theorem 129.3. If the ratio is unbounded, this argument has no contradiction
+left; it removes this proof of incompatibility and leaves compatibility open.
+
+Upper compression alone cannot transfer occurrence range. For the two-point
+abstract family $V_N=\{0,1\}$, set
+
+$$
+ d_N(0,1)=N,\qquad \rho_N(\iota_N(0),\iota_N(1))=1,
+ \qquad
+ Q_N=\begin{pmatrix}-1&1\\[2pt]1&-1\end{pmatrix}.
+\tag{134.2}
+$$
+
+The positive support is local at physical radius $1$ for every $N$, while
+its occurrence jump is $N$. Thus an upper-only compression or locality
+statement cannot imply (132.1). This two-point family is only a logical
+boundary example; it is not a §129-compatible FIB family and is not offered
+as a counterexample to Theorem 129.3.
+
+The conclusion is a conditional realization obstruction. The target sets
+$X_e$ may have any dimension and may vary with $e$. No Euclidean dimension,
+physical clock, continuum operator, finite propagation statement for
+$\exp(tQ_e)$, global (all-epoch) irreducibility, native-edge support, or physical
+three-dimensional conclusion follows. The next test is therefore concrete:
+for the proposed realization, verify whether direct positive generator
+support really has a uniform finite-radius bounded preimage (or a stated
+sufficient lower control). If that bridge fails, Theorem 129.3 alone does
+not decide physical locality.
+
+## 135. Native orthogonal birth coordinates
 
 The next statements use one actual accepted step from §§127--130. Write
 $n=|V_e|$, $k=|B_e|$, and suppress the epoch subscript. Thus $P$ is the
@@ -2129,7 +2283,7 @@ $$
 These are finite real symmetric matrices; complex Hilbert spaces below mean the
 complexifications of the displayed real spaces.
 
-**Definition 131.1 (residual birth chart).** Put
+**Definition 135.1 (residual birth chart).** Put
 
 $$
 B_0=\begin{pmatrix}-\mathbf 1_nq^{\mathsf T}\\ I_k\end{pmatrix},\qquad
@@ -2142,7 +2296,7 @@ For $k=0$, these formulas are read with the unique empty matrices and $U=V$.
 The columns of $B$ are the actual-coordinate birth directions, while $B_0$
 is their residual-coordinate representative.
 
-**Proposition 131.2 (explicit orthogonal complement).** For every real $q$ and
+**Proposition 135.2 (explicit orthogonal complement).** For every real $q$ and
 every symmetric positive-definite $K$ allowed by (127.3),
 
 $$
@@ -2176,8 +2330,8 @@ $$
 There are $n+k$ orthonormal columns in an $(n+k)$-dimensional space, so $U$
 is orthogonal over the reals and unitary after complexification. $\square$
 
-**Proposition 131.3 (native spectral normal form).** The matrices in
-Definition 131.1 satisfy
+**Proposition 135.3 (native spectral normal form).** The matrices in
+Definition 135.1 satisfy
 
 $$
 H_+V=VH,\qquad H_+Z=ZK,\qquad
@@ -2221,8 +2375,8 @@ Thus every bounded Borel functional calculus expression has the same
 intertwining. In particular, for $s\ge0$ and $\tau\in\mathbb R$,
 
 $$
-e^{-sH_+}V=Ve^{-sH},qquad e^{-sH_+}Z=Ze^{-sK},qquad
-e^{-i\tau H_+}V=Ve^{-i\tau H},qquad e^{-i\tau H_+}Z=Ze^{-i\tau K}.
+e^{-sH_+}V=Ve^{-sH},\qquad e^{-sH_+}Z=Ze^{-sK},\qquad
+e^{-i\tau H_+}V=Ve^{-i\tau H},\qquad e^{-i\tau H_+}Z=Ze^{-i\tau K}.
 $$
 
 These are finite matrix identities with the semigroup or unitary parameter
@@ -2262,7 +2416,7 @@ uses the $k=0$ identity; its later nonempty step is covered by the singleton
 calculation. The same statements apply to every finite stopped or capped
 accepted prefix, including a final empty-birth step.
 
-## 132. Finite-mode Fock correspondence
+## 136. Finite-mode Fock correspondence
 
 Let $\mathfrak h_o=\mathbb C^n$, $\mathfrak h_b=\mathbb C^k$, and
 $\mathfrak h_+=\mathbb C^{n+k}$. For $\sigma\in\{+,-\}$ write
@@ -2304,7 +2458,7 @@ For the exterior case the old-first ordering fixes all fermionic signs. The
 second-quantized operators below are even, so no additional sign convention
 enters their tensor-product intertwining.
 
-**Proposition 132.1 (second-quantized native lift).** On the algebraic
+**Proposition 136.1 (second-quantized native lift).** On the algebraic
 finite-particle core $\mathcal D_{\mathrm{fin}}$,
 
 $$
@@ -2356,22 +2510,51 @@ Quantum Physics*, §§1.1--1.5,
 the generic Fock constructions; the native matrices and the $U$ above are the
 source-dependent content of this continuation.
 
-## 133. Finite-prefix thermal boundary
+## 137. Finite-prefix thermal boundary
 
 Fix a scalar parameter $\beta>0$. The following is a finite matrix trace
 statement; $\beta$ is not identified with a physical temperature, and the
 eigenvalues of $H$ are not declared physical energies.
 
 Let $\mathfrak h_o^\circ=c^\perp$ and
-$\mathfrak h_+^\circ=c_+^\perp$. Symmetry and Proposition 131.3 give
-$V\mathfrak h_o^\circ=\mathfrak h_+^\circ$ and
+$\mathfrak h_+^\circ=c_+^\perp$. Since $c_+=Vc$, $V^*V=I$ and
+$Z^*V=0$, Proposition 135.2 gives the orthogonal decomposition
 
 $$
-H_+|_{\mathfrak h_+^\circ}
-\simeq H|_{\mathfrak h_o^\circ}\oplus K.
+\mathfrak h_+^\circ
+=V(\mathfrak h_o^\circ)\mathbin{\oplus^\perp}\operatorname{Ran}Z.
 $$
 
-Both restricted one-particle operators are positive definite. The unrestricted
+The summands have dimensions $n-1$ and $k$, respectively.
+Indeed, the unique representation $x=Vv+Zb$ supplied by $U$ satisfies
+$\langle c_+,x\rangle=\langle c,v\rangle$, so $x\perp c_+$ exactly when
+$v\perp c$. In particular the restricted map
+
+$$
+U^\circ:\mathfrak h_o^\circ\oplus\mathfrak h_b
+\longrightarrow\mathfrak h_+^\circ,\qquad
+U^\circ(v,b)=Vv+Zb
+$$
+
+is unitary. Symmetry makes the constant-orthogonal spaces invariant, and
+Proposition 135.3 restricts to
+
+$$
+(U^\circ)^*\bigl(H_+|_{\mathfrak h_+^\circ}\bigr)U^\circ
+=H|_{\mathfrak h_o^\circ}\oplus K.
+$$
+
+The positive semidefinite native forms, their connected constant kernels and
+$K\succ0$ make both restricted one-particle operators positive definite on
+their possibly zero-dimensional
+spaces. For $n=1$, $\mathfrak h_o^\circ=\{0\}$ and
+$\mathfrak h_+^\circ=\operatorname{Ran}Z$, so the restricted operator is
+unitarily equivalent to $K$. In particular the $n=k=1$ matrix case has one
+positive birth mode; this algebraic case does not add an allowed native birth
+cardinality to Definition 127.1. For $k=0$, $\operatorname{Ran}Z=\{0\}$ and
+$U^\circ=V|_{\mathfrak h_o^\circ}$. The Fock space of a zero-dimensional
+mode space consists only of its vacuum and has trace $1$; empty birth
+determinants are $1$. The unrestricted
 bosonic full-Fock trace for $H$ diverges, because arbitrary occupation of the
 constant mode contributes the same factor $1$ in every particle sector. Thus
 there is no legitimate infinity-over-infinity ratio between old and new traces.
@@ -2412,7 +2595,7 @@ spectral normal form is valid for all real $q$ and SPD $K$ permitted by §127;
 the Markov positivity restrictions in Proposition 128.2 are an independent
 source-specific condition and are not inferred from this thermal calculation.
 
-## 134. Boundary ledger for the native lift
+## 138. Boundary ledger for the native lift
 
 The construction is defined for every finite accepted prefix in the source
 quantifier of Definition 127.1. Empty births have $k=0$ and preserve the old
@@ -2429,4 +2612,4 @@ equivalence, or an observable/gauge identification of different $q$. The
 mathematical claims are the native finite-dimensional unitary normal form, its
 standard full-Fock lift, and the stated finite trace boundaries.
 
-## 134.99 追加锚（本行以下为增补区）
+## 138.99 追加锚（本行以下为增补区）

@@ -2006,3 +2006,1511 @@ data for the two component conclusions.  They establish neither the
 original joint witness nor a global joint exclusion.
 
 ## 追加锚（本行以下为增补区）
+
+## 16. An actual strict $J$-pair arc
+
+**Definition 16.1 (The strict parent and its rational response circuit).**
+A world has one rank-one source
+
+$$
+P(r,b)=\begin{pmatrix}r&b\\r(1-r)/b&1-r\end{pmatrix},
+\qquad 0<r<1,\quad b>0,
+$$
+
+one fixed real drift $d$, and one entire nonzero real polynomial gain of
+degree at most three.  Its original history is
+
+$$
+H_4=(0,J,24,M,147/5,J,24,M,18),
+$$
+
+with clocks $0,\ldots,7$ and acquired actions $J,M,J,M,M,M$.  Put
+
+$$
+\tau=r/b,\quad r=\tau b,\quad c=\tau(1-r),\quad
+j=\tau+b(1-\tau^2),\quad n=j+r,\quad T=1+b,\quad U=1+2b.
+$$
+
+On the regular strict domain $\tau>0$, $b>0$, $\tau b<1$, $\Lambda\ne0$,
+define
+
+$$
+\begin{aligned}
+D&=5\bigl((b^2+8b+4)jn-2TU(j+n)\bigr),\\
+A&=(8b-1)(2+5b),\\
+C_0&=-24D+3Ajn,\\
+C_1&=3An,\\
+C_2&=3(49b+34)jn-54U(j+n),\\
+C_3&=3Aj.
+\end{aligned}
+\tag{16.1}
+$$
+
+Then
+
+$$
+D=\frac52 TUjn\Lambda,
+\qquad
+\Lambda=1+\frac6T+\frac1U-\frac4j-\frac4n.
+\tag{16.2}
+$$
+
+Let
+
+$$
+L_i(s)=\prod_{0\le h\le3,\ h\ne i}\frac{s-h}{i-h},\qquad
+ g(s)=\frac1D\sum_{i=0}^3 C_iL_i(s),\qquad d=-\frac{C_0}{D}.
+\tag{16.3}
+$$
+
+The late gain values are
+
+$$
+\begin{pmatrix}B_5\\B_6\\B_7\end{pmatrix}
+=\begin{pmatrix}-4&15&-20&10\\-10&36&-45&20\\-20&70&-84&35\end{pmatrix}
+\begin{pmatrix}C_0\\C_1\\C_2\\C_3\end{pmatrix},
+\tag{16.4}
+$$
+
+and the four actual response numerators are
+
+$$
+\begin{aligned}
+N_p&=-C_0+(U+n)B_5,\quad
+N_v=-C_0+(2U+n)B_6,\\
+N_a&=-C_0+(T+2j+4r)B_7,\quad
+N_m=-C_0+(3U+2n)B_7.
+\end{aligned}
+\tag{16.5}
+$$
+
+Thus $(p,v,a,m)=(N_p,N_v,N_a,N_m)/D$.  The first four gain values
+in (16.3) give the original readings, and the fifth original reading is
+$18$ exactly when the undivided parent equation of Definition 10.1 holds.  The two different original readings $0,24$ make the gain
+nonzero.  No sign condition, nonzero sample, exact degree, simple-root
+condition or drift condition is used.
+
+**Definition 16.2 (The parameterized $J$-pair equations).**  For
+$z=(\tau_H,b_H,\tau_L,b_L)$ let $p_H,v_H,a_H$ and
+$p_L,v_L,a_L$ be the functions in (16.5), evaluated at the two
+sources.  Define
+
+$$
+F(z,p)=
+\begin{pmatrix}p_H-p\\p_L-p\\v_H-v_L\\a_H-a_L\end{pmatrix}.
+\tag{16.6}
+$$
+
+For $10\le p\le34$, the following three polynomial centre maps are used.
+Write $u=(2p-lo-hi)/(hi-lo)$ on each interval $[lo,hi]$ and evaluate
+all displayed arrays by descending Horner evaluation; every coefficient
+is divided by $10^{20}$.
+
+$$
+\begin{array}{c|c|l}
+[lo,hi]&\text{coordinate}&\text{descending coefficients in }u\\ \hline
+[10,20]&\tau_H&(140424816523,63061888678,4869392145790,9422220254092,16367777302301,630276181828344,-2569859053832832,5603034108518697,-37041257351967357,-1505934735965867648,12490031250788984569,228568262342139650098)\\
+[10,20]&b_H&(74601904618,587008912224,1675974648672,11723020586798,59397097070359,150386442997205,1754747499208129,2385677598092312,28728120803558095,177713875178985043,-572693824085625149,31463174914130987601)\\
+[10,20]&\tau_L&(-286517520774,-1458798946604,-4484619212987,-39378923335258,-95032360161001,-610511414047453,-3787735814587272,5327878585599447,-134291913516490829,725907457857128599,3554914500654767298,210788533712955551542)\\
+[10,20]&b_L&(-21554952211,-167568989307,-719043316224,-5332188024970,-17244126711789,-76110792776341,-367687512419822,1518778661443952,1190131346284344,224217790257326402,4016662099446683744,4532053336144848092)\\
+[20,30]&\tau_H&(-12315808697634,-35358573460527,-65168929859263,-187577008857516,-460805694809113,-653982348334417,239197229306581,5736610426433156,23437354454875396,58144898242609116,64422234909843396,-1593191583430201524,6146598888033105531,247283358291040373320)\\
+[20,30]&b_H&(31099287400162,69087439877398,40389836240710,77075541049766,328726471334712,891748266951060,2645670584884721,8525243725658645,26871684563657704,79326856115586399,219589170335308014,662362580311566447,775133715320458502,31374675219118351686)\\
+[20,30]&\tau_L&(-64760914995336,-141100470063114,-72520370219354,-145269729373691,-728244036456201,-2245702071706101,-7245822024720854,-23692327394115831,-73163432013250704,-197029754390717363,-528694944588356620,-584207156211347097,4492542348396760978,219625886685223990790)\\
+[20,30]&b_L&(-1723603413335,-1880359411512,11905805971444,49433821136737,124147171707093,215207360044166,34937022519674,-1562471228161450,-7777580962203138,-22939857428839428,-39711075675135058,193301006165304340,4916488201945917316,13475282226511291486)\\
+[30,34]&\tau_H&(-21186663398999,-37057132404672,40914447971722,70812107865864,-102330353651627,-180455567571802,-54805934140941,-105864219093171,-394844458459518,-736655406452101,-1304441637475744,-2492151173517882,-4891924901081503,-10042303762139665,-21030669569619674,-35167113554906297,-3648330232535577,-44722576554474052,1258092097632112164,253307428524817270116)\\
+[30,34]&b_H&(29347534034381,51408606320622,-56384971999957,-97659234722679,142366377572888,251662178340788,80218110788675,156111574767403,567921626910113,1068911804392284,1928435193097555,3783054087737079,7627327934817957,15666933368157246,33309862423430195,77919118377939274,220731512868169448,756584067725632219,2373045543506880306,34932590811935921854)\\
+[30,34]&\tau_L&(-55541680313275,-97404534628203,106298090982829,184220076471718,-270290783930968,-478620521827863,-157686308174145,-308182157741107,-1102948577953311,-2087793427689654,-3803786492746523,-7536086716159247,-15362660199585885,-32003595231890594,-70148176855102684,-175690543223014516,-538164996818189229,-1728970444713086177,-2173832085911805516,221845194568232864125)\\
+[30,34]&b_L&(450135834043,791432409571,-853929166848,-1481671306073,2207327774598,3924165644115,1387884608488,2738482983299,9556425419917,18621330504658,34279898879426,63331218908555,127163137096159,401052794968752,1494889997020038,2689161815711592,-12134528603054534,-66100473199783546,1928352859377411297,20494322221751046893).
+\end{array}
+\tag{16.7}
+$$
+
+The coefficients in the three blocks are rational centres; they are not
+asserted to be exact points of the zero set.
+
+**Lemma 16.3 (A complete interval continuation).**  Put
+$h=10^{-40}$ and $\rho=1/100000$.  In every block of (16.7), for
+$k=0,\ldots,1023$, let
+
+$$
+I_k=[-1+2k/1024,-1+2(k+1)/1024],\quad
+u_k=-1+(2k+1)/1024,\quad w=1/1024.
+$$
+
+Write $p(u)=(lo+hi)/2+(hi-lo)u/2$ and
+$z_c=\widehat z(u_k)$, where $z_c$ is an exact rational vector.  Let
+$Z=\widehat z(I_k)+[-2\rho,2\rho]^4$.  Interval evaluation encloses
+these exact rational quantities; rounding a centre does not redefine it.
+For a rational endpoint $x$, set
+
+$$
+\operatorname{rd}_-(x)=h\lfloor x/h\rfloor,\qquad
+\operatorname{rd}_+(x)=h\lceil x/h\rceil.
+$$
+
+An interval $[a,b]$ is enclosed by
+$[\operatorname{rd}_-(a),\operatorname{rd}_+(b)]$.  For addition,
+subtraction and multiplication, first use the exact endpoint formulas
+
+$$
+\begin{aligned}
+[a,b]+[c,d]&=[a+c,b+d],\\
+[a,b]-[c,d]&=[a-d,b-c],\\
+[a,b][c,d]&=[\min(ac,ad,bc,bd),\max(ac,ad,bc,bd)],
+\end{aligned}
+$$
+
+and then round outwards.  If $0\notin[a,b]$, its reciprocal is the
+outward enclosure of $[1/b,1/a]$.  Division means multiplication by
+that rounded reciprocal.  Each rational input is enclosed
+before its first use.  Matrix products and sums use increasing indices;
+each scalar product is rounded before the next addition.
+
+Expand $D,N_p,N_v,N_a,N_m$ from (16.1)–(16.5) as exact integer
+polynomials.  Their coefficient arrays are given below.  An array has
+rows indexed by $i=0,\ldots,6$ and columns by $j=0,\ldots,4$, both
+in increasing order, and represents $\sum_{i,j}a_{ij}\tau^ib^j$.
+All zero entries are retained.
+
+$$
+D : \begin{pmatrix}
+0&-20&-40&0&5\\
+-20&-30&30&30&5\\
+20&80&65&-35&-10\\
+0&-40&-100&-50&-5\\
+0&0&20&40&5\\
+0&0&0&0&0\\
+0&0&0&0&0
+\end{pmatrix}.
+$$
+
+$$
+N_p : \begin{pmatrix}
+0&-390&-1395&-2238&-216\\
+-390&-1125&-1917&1437&1872\\
+480&1500&4224&4869&-1368\\
+-96&-384&-270&-5511&-3648\\
+0&288&-1440&-2376&2232\\
+0&0&-288&2112&1536\\
+0&0&0&96&-768
+\end{pmatrix}.
+$$
+
+$$
+N_v : \begin{pmatrix}
+0&-1032&-7458&-13293&-1125\\
+-1032&-7320&-11472&9750&10650\\
+750&6891&26640&25266&-9750\\
+270&1695&-5574&-33168&-17880\\
+0&-810&-8295&-5595&13050\\
+0&0&810&8505&5310\\
+0&0&0&-270&-2655
+\end{pmatrix}.
+$$
+
+$$
+N_a : \begin{pmatrix}
+0&-1638&-10467&-18558&-1224\\
+-1638&-12069&-28845&-7779&13344\\
+-678&-1923&25848&64293&3432\\
+2304&20652&44520&-22815&-51696\\
+0&-6912&-51654&-78111&5376\\
+0&0&6912&44064&37152\\
+0&0&0&-2304&-12384
+\end{pmatrix}.
+$$
+
+$$
+N_m : \begin{pmatrix}
+0&-3954&-28335&-49569&-3264\\
+-3954&-29001&-46548&33873&39120\\
+1626&23157&101658&100284&-35472\\
+2304&13740&-11076&-125037&-71088\\
+0&-6912&-44742&-32895&48720\\
+0&0&6912&41760&24768\\
+0&0&0&-2304&-12384
+\end{pmatrix}.
+$$
+
+Evaluation starts at zero and uses descending Horner in $b$ inside
+descending Horner in $\tau$, including every padded zero entry.
+Differentiate the monomials before evaluating; pad every derivative
+array to the same $(6,4)$ bidegree.  Centre maps and their first two
+$u$ derivatives use descending Horner starting at zero, with their
+exact differentiated coefficients divided by $10^{20}$.
+For any numerator $N$ and denominator $D$, use
+
+$$
+\begin{aligned}
+R&=N/D,\\
+R_i&=N_i/D-ND_i/D^2,\\
+R_{ij}&=N_{ij}/D-(N_iD_j+N_jD_i+ND_{ij})/D^2
+                 +2ND_iD_j/D^3.
+\end{aligned}
+\tag{16.8}
+$$
+
+Here $i,j$ range over $\tau,b$.  Compute $V=D^{-1}$ once, then
+$V_2=VV$ and $V_3=V_2V$.  The evaluation order in (16.8) is
+$NV$, $N_iV-(ND_i)V_2$, and
+
+$$
+\bigl(N_{ij}V-((N_iD_j+N_jD_i)+ND_{ij})V_2\bigr)
+       +(((2N)D_i)D_j)V_3.
+$$
+
+Every indicated product and addition is a separate outward operation.
+Evaluate the Hessian entries in the order $\tau\tau,\tau b,bb$ and
+copy the $\tau b$ enclosure into the $b\tau$ entry by symmetry.
+The formulas also apply to linear combinations of responses after their
+numerator coefficients are combined.  For row $i$ of $\mathcal C$, form
+coefficient by coefficient, starting from zero and adding in the stated
+order,
+
+$$
+\begin{aligned}
+N_{iH}&=\mathcal C_{i0}N_p+\mathcal C_{i2}N_v+\mathcal C_{i3}N_a,\\
+N_{iL}&=\mathcal C_{i1}N_p+(-\mathcal C_{i2})N_v+(-\mathcal C_{i3})N_a.
+\end{aligned}
+$$
+
+Differentiate these interval coefficient arrays by the exact monomial
+integer factors and apply (16.8) on the respective source tube.  This
+gives the two $2\times2$ diagonal blocks of $\mathcal H_i$.  Entries
+mixing the two sources are exactly zero.  The Hessian is therefore
+formed from combined numerators, rather than separately enclosed
+response Hessians.
+
+Let $J_c=D_zF(z_c,p(u_k))$.  Apply interval Gauss–Jordan elimination
+to $[J_c\mid I_4]$, enclosing all singleton rational inputs.  At column
+$i$ scan rows $i,\ldots,3$ and choose the first whose pivot interval
+excludes zero,
+swap it into row $i$, and save that pivot interval.  Multiply all eight
+entries of row $i$, in increasing column order, by its one computed
+reciprocal.  For each other row $r$ in increasing order, save its
+column-$i$ entry $a_{ri}$, then replace all eight entries by
+$a_{rj}-a_{ri}a_{ij}$ in increasing $j$ order.  No entry is reset to an
+exact zero or one after these operations.  Denote the resulting right
+block, an interval enclosure of the exact inverse $C=J_c^{-1}$, by
+$\mathcal C$.  The absolute pivot bound refers to the saved interval
+before row normalization.  All four pivots in every cell exclude zero.
+Set
+
+$$
+\begin{aligned}
+\mathcal E&=I-\mathcal C J_c,\\
+\mathcal H_{ijl}&\supset (C D_z^2F)_{ijl}(Z),\qquad
+\delta_l=\sup_{z\in Z}|z_l-z_{c,l}|,\\
+B_{ij}&=\sum_l\sup|\mathcal H_{ijl}|\,\delta_l,\\
+q&=\max_i\sum_j(\sup|\mathcal E_{ij}|+B_{ij}).
+\end{aligned}
+\tag{16.9}
+$$
+
+Every product defining $B$ is rounded upwards separately.  Thus
+$CD_zF(Z)$ is enclosed entrywise by its centre enclosure plus
+$[-B_{ij},B_{ij}]$.  Define $\beta=(1,1,0,0)^{\mathsf T}$ and
+$f(u)=CF(\widehat z(u),p(u))$, keeping $C$ constant in a cell.  Then
+
+$$
+\begin{aligned}
+f'&=CD_zF\widehat z'-C\beta(hi-lo)/2,\\
+f''&=CD_z^2F[\widehat z',\widehat z']+CD_zF\widehat z'',\\
+\eta&=\max_i\left(\sup|f_i(u_k)|+w\sup|f_i'(u_k)|
+                         +\frac{w^2}{2}\sup_{I_k}|f_i''|\right).
+\end{aligned}
+\tag{16.10}
+$$
+
+For completeness, all indices in the finite arithmetic prescription
+start at zero.  Form $\mathcal J_c$ by the quotient gradients in
+(16.8) on the enclosed exact centre, then $A_c=\mathcal C\mathcal J_c$
+and $\mathcal E=I-A_c$.  Thus the symbol $J_c$ in an interval product
+means this enclosure of the exact centre Jacobian.  Evaluate
+$\delta_l=\sup|Z_l-[z_{c,l}]|$ with the enclosed exact centre, and use
+upward scalar products and increasing-index sums for $B$ and $q$.
+Here $[z_c]$ encloses $z_c$; it does not change that exact rational
+centre.
+
+Evaluate $p_H,p_L,v_H,v_L,a_H,a_L$ separately, form
+$F(z_c,p(u_k))$, then multiply that vector by $\mathcal C$.  Evaluate $p(u_k)$ as
+$(lo+hi)/2+((hi-lo)/2)u_k$.  Compute $f'(u_k)$ as
+$A_c[\widehat z'(u_k)]-(\mathcal C_{i0}+\mathcal C_{i1})(hi-lo)/2$
+in row $i$.  For $f''$, use the interval vector whose row $i$ is
+
+$$
+\sum_{j=0}^3\sum_{l=0}^3
+   (\mathcal H_{ijl}[\widehat z'_j(I_k)])[\widehat z'_l(I_k)]
++\sum_{j=0}^3(A_{c,ij}+[-B_{ij},B_{ij}])[\widehat z''_j(I_k)].
+$$
+
+Each sum starts at zero; the double sum uses increasing $j$, then
+increasing $l$, including its zero entries.  Add the two sums before
+taking the absolute supremum.  In (16.10), form $w^2/2$ by the
+outward operations $(ww)/[2,2]$, multiply absolute suprema upwards,
+then add the three terms from left to right and maximize over rows.
+For source hulls evaluate $r=\tau b$, $j=\tau+b(1-\tau\tau)$,
+$n=j+r$, $T=1+b$, $U=1+2b$, and
+$\Lambda=((1+6/T)+1/U)-4/j-4/n$ in that order on $Z$.
+Every denominator used in (16.8) excludes zero on $Z$.
+The following tables give rational bounds over each complete block of
+1024 cells; all columns are upper bounds except those explicitly marked
+as lower bounds.  The Hessian column bounds the largest absolute
+component of $\mathcal H$, rather than its row sum.
+
+| Parameter interval | $q$ | $\eta$ | Lower bound for $\rho-\eta-q\rho$ using the two uniform upper bounds |
+| --- | --- | --- | --- |
+| $[10,20]$ | $2/5$ | $19/10^7$ | $41/10^7$ |
+| $[20,30]$ | $17/100$ | $41/10^8$ | $789/10^8$ |
+| $[30,34]$ | $3/100$ | $2/10^7$ | $95/10^7$ |
+
+| Parameter interval | Minimum cell margin, lower bound | Absolute pivot, lower bound | $|D|$ on both tubes, lower bound |
+| --- | --- | --- | --- |
+| $[10,20]$ | $41/10^7$ | $3/4$ | $2$ |
+| $[20,30]$ | $789/10^8$ | $1/10^4$ | $4$ |
+| $[30,34]$ | $95/10^7$ | $3/20$ | $11$ |
+
+| Parameter interval | Hessian component | $\|\mathcal E\|_\infty$ | $\|B\|_\infty$ |
+| --- | --- | --- | --- |
+| $[10,20]$ | $8300$ | $1/10^{20}$ | $2/5$ |
+| $[20,30]$ | $3800$ | $1/10^{20}$ | $17/100$ |
+| $[30,34]$ | $500$ | $1/10^{20}$ | $3/100$ |
+
+| Parameter interval | $\max_i\sup|f_i(u_k)|$ | $\max_i\sup|f_i'(u_k)|$ | $\max_i\sup|f_i''(I_k)|$ |
+| --- | --- | --- | --- |
+| $[10,20]$ | $3/10^{13}$ | $4/10^{11}$ | $197/50$ |
+| $[20,30]$ | $7/10^{11}$ | $12/10^9$ | $17/20$ |
+| $[30,34]$ | $2/10^{12}$ | $6/10^{10}$ | $41/100$ |
+
+In particular the complete 3072-cell cover satisfies
+
+$$
+\begin{array}{c|c|c|c}
+[10,20]&q<2/5&\eta<19/10^7&\rho-\eta-q\rho>41/10^7\\
+[20,30]&q<17/100&\eta<41/10^8&\rho-\eta-q\rho>789/10^8\\
+[30,34]&q<3/100&\eta<2/10^7&\rho-\eta-q\rho>95/10^7.
+\end{array}
+\tag{16.11}
+$$
+
+There are four nonzero pivots, two strict-source tubes and eight
+two-variable Hessian blocks per cell.  Their unions have the
+following rational source hulls; every table endpoint is divided by
+$10^6$.
+
+| Source quantity | Lower endpoint numerator | Upper endpoint numerator |
+| --- | --- | --- |
+| $r_H$ | $690674$ | $977760$ |
+| $b_H$ | $310884$ | $384274$ |
+| $\Lambda_H$ | $-5995235$ | $-294406$ |
+| $r_L$ | $15353$ | $485283$ |
+| $b_L$ | $7377$ | $223515$ |
+| $\Lambda_L$ | $1421047$ | $4066100$ |
+
+Thus throughout all radius-$2\rho$ tubes
+
+$$
+\begin{gathered}
+69/100<r_H<98/100,\quad31/100<b_H<39/100,\\
+15/1000<r_L<49/100,\quad7/1000<b_L<23/100,\\
+-6<\Lambda_H<-29/100,\qquad 7/5<\Lambda_L<41/10.
+\end{gathered}
+\tag{16.12}
+$$
+
+The coordinate distances between the centre maps at the two seams,
+in the order $(\tau_H,b_H,\tau_L,b_L)$, are
+
+$$
+\begin{aligned}
+p=20:\quad&10^{-20}(431075459,1151569031,2419160976,66604473),\\
+p=30:\quad&10^{-20}(1317470467,2902458603,6085312313,77463103).
+\end{aligned}
+\tag{16.13}
+$$
+
+Their infinity norms are less than $3/10^{11}$ and $7/10^{11}$,
+respectively.  The seed identification uses the entire source box of O,
+Theorem 18.2, not just its midpoint.  Put
+
+$$
+\begin{gathered}
+\mathcal P=[2744214237/10^8,2744214238/10^8],\\
+m_O=10^{-18}(798291691626185419,319422724668808667,
+352720293321024633,159165804512783260),\\
+\mathcal B_O=m_O+[-10^{-9},10^{-9}]^4,\\
+\Psi(r_A,b_A,r_B,b_B)=(r_A/b_A,b_A,r_B/b_B,b_B).
+\end{gathered}
+$$
+
+Positive denominator interval division on this whole box gives
+
+$$
+\sup_{p\in\mathcal P,\ x\in\mathcal B_O}
+\|\Psi(x)-\widehat z_{[20,30]}((p-25)/5)\|_\infty
+\le\frac{40562666853139892256554027043419}
+ {2000000000000000000000000000000000000000}
+<\frac{203}{10^{10}}<\rho.
+\tag{16.14}
+$$
+
+*Proof.* The interval formulas (16.8)–(16.10), with the coefficient
+lists (16.7), give the tabulated rational inequalities over all cells.
+No information about an unknown zero enters these inclusions.  For each
+$p=p(u)$, Taylor's theorem gives $\|CF(\widehat z(u),p)\|_\infty\le\eta$.
+The convex ball of radius $2\rho$ about $\widehat z(u)$ is contained in
+$Z$.  Equation (16.9) bounds the derivative of $z\mapsto z-CF(z,p)$
+there by $q<1$.  On the closed ball of radius $\rho$ about
+$\widehat z(u)$ the map has displacement at most $\eta+q\rho<\rho$.
+The Banach fixed-point theorem gives a unique interior zero in that
+ball.  Since $C$ is invertible, a fixed point is exactly a zero of $F$.
+The same derivative bound gives uniqueness of a zero in the larger
+radius-$2\rho$ ball, and the Neumann series for $CD_zF$ gives an
+invertible Jacobian there.
+
+The rational circuit is analytic on each strict tube, so the analytic
+implicit function theorem gives a local analytic zero function.  The
+continuous centre map and the larger uniqueness balls identify these
+functions across adjacent cells.  At each parameter seam, the distances
+(16.13) put each radius-$\rho$ root inside the other centre's
+radius-$2\rho$ ball; uniqueness identifies the two roots and their
+analytic germs.  Consequently there is one analytic map
+
+$$
+z_J:[10,34]\longrightarrow
+\{(\tau_H,b_H,\tau_L,b_L):\tau_i,b_i>0,\ \tau_ib_i<1\},
+\tag{16.15}
+$$
+
+where analyticity on the closed interval means analyticity in a
+neighbourhood of every point, including each endpoint.  Its uniqueness
+is asserted only in the certified pointwise balls.  At every
+$p\in\mathcal P$, O, Theorem 18.2 gives the actual $A,B$ $J$ pair in
+$\mathcal B_O$; (16.14) puts it in the middle block's uniqueness ball.
+It is therefore this same arc.  Finally (16.12) gives disjoint source
+$r$ intervals and nonzero $\Lambda$ values throughout. ∎
+
+**Theorem 16.4 (Actual $J$-pair continuation).** For every
+$10\le p\le34$, the two worlds represented by
+$z_J(p)=(\tau_H,b_H,\tau_L,b_L)$ are distinct complete strict worlds in
+one entire $C(p,v_J(p))$, where
+
+$$
+ v_J(p)=v_H(z_J(p))=v_L(z_J(p)),
+\qquad a_H(z_J(p))=a_L(z_J(p)).
+\tag{16.16}
+$$
+
+The omission of $p=24$ is only the original target restriction.  No
+statement about other $J$ arcs or about the full strict real domain is
+contained in this theorem.
+
+*Proof.* Lemma 16.3 supplies the two strict zeros for every parameter in
+the closed arc and identifies them across both seams.  Lemma 10.2 lifts
+each zero to one complete parent world, and (16.12) separates the two
+source matrices.  The four equations in (16.6) are exactly the equal
+$p$, equal $v$, and equal clock-seven $J$ terminal response conditions. ∎
+
+## 17. A fixed-ratio quartic and its zero-safe four-world bound
+
+**Definition 17.1 (The fixed-ratio polynomial).** For $\tau>0$ and real
+$p$, put $r=\tau b$ and define
+
+$$
+\mathsf S_p(r,b)=5b(p-24)N_4+6(8b-1)H(r,b),
+$$
+
+where $N_4,H$ are exactly the two polynomials of O, Definition 12.1,
+(12.1)–(12.2); this polynomial $H(r,b)$ differs from the three-variable
+ambient parent equation $H(r,b,e)$ of Definition 10.1. Direct substitution gives
+$\mathsf S_p(\tau b,b)=b^3Q_p(\tau,b)$, where, in descending powers of
+$b$, the five coefficients of $Q_p$ are
+
+$$
+\begin{aligned}
+q_4={}&10p\tau^4-10p\tau^3-20p\tau^2+10p\tau+10p\\
+ &+1536\tau^6-3072\tau^5-4464\tau^4+7296\tau^3+2736\tau^2-3744\tau+432,\\
+q_3={}&80p\tau^4-100p\tau^3-70p\tau^2+60p\tau-192\tau^6-4224\tau^5+4752\tau^4\\
+ &+11022\tau^3-9738\tau^2-2874\tau+4476,\\
+q_2={}&40p\tau^4-200p\tau^3+130p\tau^2+60p\tau-80p+576\tau^5+2880\tau^4\\
+ &+540\tau^3-8448\tau^2+3834\tau+2790,\\
+q_1={}&-80p\tau^3+160p\tau^2-60p\tau-40p-576\tau^4+768\tau^3\\
+ &-3000\tau^2+2250\tau+780,\\
+q_0={}&40p\tau^2-40p\tau+192\tau^3-960\tau^2+780\tau.
+\end{aligned}
+\tag{17.1}
+$$
+
+On strict sources let
+
+$$
+\begin{gathered}
+\kappa=\frac6T-\frac2U=\frac{2(2+5b)}{TU},\\
+A_5=1+(U+n)\left(4-\frac{15}{j}+\frac{20}{T}-\frac{10}{n}\right),\\
+K_5=\frac{96(b-1/8)(U+n)}T,\qquad X=bj,\quad N=bn.
+\end{gathered}
+\tag{17.2}
+$$
+
+The regular-circuit identity, as a polynomial identity also at $D=0$, is
+
+$$
+Q_p(\tau,b)=2(pD-N_p).
+$$
+
+The exact identity relating the quartic to the two parent/fifth equations is
+
+$$
+\Lambda(p-24-K_5)+\frac{24}{5}(b-1/8)\kappa A_5
+=\frac{\mathsf S_p(r,b)}{5bTUXN}.
+\tag{17.3}
+$$
+
+**Lemma 17.2 (Degree-preserving noncollapse).**  The polynomial
+$Q_p(\tau,b)$ is nonzero for every real $p$ and every $\tau>0$.
+
+*Proof.* At $\tau=1$, $q_0=12$. For $\tau\ne1$, the equation $q_0=0$
+forces
+
+$$
+ p=\frac{-48\tau^2+240\tau-195}{10(\tau-1)}.
+$$
+
+After this substitution, the next two coefficients become
+
+$$
+q_1=-\frac{6\tau V(\tau)}{\tau-1},\qquad
+q_2=\frac{3U_6(\tau)}{\tau-1},
+$$
+
+where
+
+$$
+\begin{aligned}
+V(\tau)&=32\tau^4+224\tau^3-320\tau^2-147\tau+210,\\
+U_6(\tau)&=128\tau^6+1408\tau^5-2848\tau^4-752\tau^3+3857\tau^2-1378\tau-410.
+\end{aligned}
+$$
+
+The exact Bezout identity
+
+$$
+(-50\tau^3+47\tau^2+14\tau-48)U_6
++(-2\tau^5+6\tau^4+30\tau^3+45\tau^2+36\tau+2)V
+=1+101R(\tau),
+$$
+
+has
+
+$$
+R=(-64,-640,2112,-754,-3320,3633,341,-2180,670,199)
+$$
+
+as its descending coefficient list.  For the exact integer certificate,
+form the Sylvester matrix with four shifted coefficient rows of $U_6$
+followed by six shifted coefficient rows of $V$, in descending powers.
+The degree-preserving
+$10\times10$ Sylvester determinant of degrees $6$ and $4$ is
+
+$$
+25954241625991256473600,
+$$
+
+and its independent reduction modulo $101$ is $5$, with leading
+coefficients $27$ and $32$ modulo $101$.  Thus $V$ and $U_6$ have no
+common complex root, so $q_0,q_1,q_2$ cannot vanish simultaneously. ∎
+
+**Theorem 17.3 (Zero-safe lift and the fixed-$\tau$ bound).**  Let
+$\tau>0$, $p\in\mathbb R$, and $0<b<1/\tau$.  A strict complete world
+with this fixed ratio exists exactly when $Q_p(\tau,b)=0$, and then it is
+unique at $(\tau,b)$.  Explicitly, with $\Lambda,A_5,\kappa,K_5$ from
+(17.2), put
+
+$$
+ e=\frac{-\frac{24}{5}(b-1/8)\kappa\Lambda+A_5(p-24-K_5)}
+          {\Lambda^2+A_5^2},\qquad d=24+e,
+\tag{17.4}
+$$
+
+and interpolate the gain from
+
+$$
+\left(-24-e,-\frac e j,\frac{27/5-e}{T},-\frac e n\right).
+\tag{17.5}
+$$
+
+The denominator in (17.4) is positive on every strict source by O,
+Lemma 12.2.  If $q=-(24/5)(b-1/8)\kappa$ and
+$z=p-24-K_5$, the two equations are $e\Lambda=q$ and $eA_5=z$;
+(17.3) is their compatibility equation.  The residuals of (17.4) in
+these two equations are respectively
+
+$$
+\frac{A_5(\Lambda z-A_5q)}{\Lambda^2+A_5^2},\qquad
+-\frac{\Lambda(\Lambda z-A_5q)}{\Lambda^2+A_5^2},
+$$
+
+so both directions hold, including $\Lambda=0$.  Since $b^3>0$ and
+$Q_p(\tau,b)$ is nonzero, there are at most four legal roots $b$ for
+fixed $(p,\tau)$.  Each root gives one complete world by (17.4)–(17.5),
+and every strict world occurs in this way.  Therefore
+
+$$
+\#\{W:\tau(W)=\tau,\ p(W)=p\}\le4.
+\tag{17.6}
+$$
+
+This is a fixed-ratio bound; it is not a bound on an entire child
+$C(p,v)$, and it retains singular sources, zero drift, sampled gain
+zeros, repeated gain roots, lower-degree gains, and all leading-coefficient
+drops.
+
+*Proof.* Equation (17.3) is the compatibility condition for the two
+linear equations in $e$.  The positive denominator in (17.4) gives the
+unique solution in both directions, including the case $\Lambda=0$.
+Lemma 17.2 makes the quartic nonzero, so it has at most four real roots
+in $b$; the strict inequality $b>0$ makes the factor $b^3$ harmless.
+The interpolation in (17.5) and O, Theorem 2.1 give one and only one
+whole gain and drift for each root, while every strict world satisfies
+(17.3). ∎
+
+## 18. Faithful independent-$M$ crossing interface
+
+**Definition 18.1 (Regular five-variable interface on the $J$ arc).**
+For $10\le p\le34$, $p\ne24$, let $z_J(p)$ and $v_J(p)$ be
+(16.15)–(16.16).  A regular independent-$M$ crossing is a solution of
+
+$$
+\begin{gathered}
+10\le p\le34,\quad p\ne24,\quad \tau_i>0,\quad b_i>0,
+\quad \tau_i b_i<1,\quad D_i\ne0,\\
+(\tau_2-\tau_3)^2+(b_2-b_3)^2>0,\\
+p_2-p=0,\quad p_3-p=0,\\
+v_2-v_J(p)=0,\quad v_3-v_J(p)=0,\quad m_2-m_3=0.
+\end{gathered}
+\tag{18.1}
+$$
+
+The variables are $(p,\tau_2,b_2,\tau_3,b_3)$ and each response is the
+complete-world response (16.5).  The Jacobian, in this order, is
+
+$$
+\begin{pmatrix}
+-1&p_{\tau}(2)&p_b(2)&0&0\\
+-1&0&0&p_{\tau}(3)&p_b(3)\\
+-v_J'&v_{\tau}(2)&v_b(2)&0&0\\
+-v_J'&0&0&v_{\tau}(3)&v_b(3)\\
+0&m_{\tau}(2)&m_b(2)&-m_{\tau}(3)&-m_b(3)
+\end{pmatrix},
+\tag{18.2}
+$$
+
+where
+
+$$
+ z_J'(p)=(D_zF(z_J(p),p))^{-1}(1,1,0,0)^{\mathsf T},\qquad
+ v_J'=(v_{\tau}(H),v_b(H),0,0)z_J'.
+\tag{18.3}
+$$
+
+Whenever an actual distinct $J$ pair is present in the same entire
+off-$24$ child, S, Corollary 18.2 excludes a singular selected-$M$
+endpoint.  Theorem 16.4 supplies exactly that actual $J$-pair hypothesis.
+Consequently (18.1) is equivalent to the existence of any actual
+independent $M$ pair in this entire child, with no regularity assumption
+on unused companions.  The two pairs
+may overlap or be disjoint, and their common terminal values are
+independent.
+
+**Definition 18.2 (Zero-safe seven-variable parent fallback).**  The
+undivided parent interface uses
+
+$$
+(p,r_2,b_2,e_2,r_3,b_3,e_3),
+$$
+
+with $10\le p\le34$, $p\ne24$, $0<r_i<1$, $b_i>0$, and
+
+$$
+ e_i\Lambda_i+\frac{24}{5}(b_i-1/8)\kappa_i=0.
+\tag{18.4}
+$$
+
+For each triple $(r,b,e)$ let
+
+$$
+G=(-24-e,-e/j,(27/5-e)/T,-e/n)^{\mathsf T},
+$$
+
+and define
+
+$$
+X_0=24+e+(U+n)G_5,\quad
+X_1=24+e+(2U+n)G_6,\quad
+X_3=24+e+(3U+2n)G_7,
+\tag{18.5}
+$$
+
+where $(G_5,G_6,G_7)^{\mathsf T}$ is the matrix in (16.4) applied to
+$G$, and $e_2,e_3$ range over all real numbers.  The five matching
+equations are
+
+$$
+X_0(2)-p=0,\quad X_0(3)-p=0,\quad
+X_1(2)-v_J(p)=0,\quad X_1(3)-v_J(p)=0,\quad X_3(2)-X_3(3)=0.
+\tag{18.6}
+$$
+
+The distinctness guard is
+
+$$
+(r_2-r_3)^2+(b_2-b_3)^2+(e_2-e_3)^2>0.
+\tag{18.7}
+$$
+
+**Theorem 18.3 (Faithfulness of the two interfaces).**  For each point of the actual
+$J$ arc with $p\ne24$, the regular system (18.1) is equivalent to the
+existence of an independent distinct equal-$M$ pair in the entire child.
+The undivided system (18.4)–(18.7) represents the same relation directly
+without eliminating $\Lambda=0$; it also gives the parent response
+interface for arbitrary strict endpoints.  The undivided reconstruction uses
+only the positive denominators $b,j,n,T,U$; it divides by neither
+$\Lambda$, $e$, a drift, a gain sample, a gain coefficient nor a root
+difference.  Thus the union of the regular system and the parent fallback
+is equivalent to the original independent-$M$ pair relation on this
+actual $J$ arc.  It asserts neither existence nor absence of a solution,
+and it does not replace the full strict real target by the arc.
+
+*Proof.*  Theorem 16.4 supplies the actual distinct $J$ pair and its
+common $(p,v_J(p))$.  S, Corollary 18.2 then removes only the singular
+selected-$M$ alternative, so every selected $M$ pair is regular and is represented by
+(18.1).  O, Theorem 2.1 and Lemma 10.2 above identify each zero of
+(18.4) with one complete world and (18.5) with its actual responses,
+including all singular and zero-drift cases.  In the regular system,
+$D_i\ne0$ is equivalent to $\Lambda_i\ne0$ by (16.2).  The map
+$(\tau,b)\mapsto(r,b)=(\tau b,b)$ is injective, and O, Theorem 12.3
+makes a complete world unique at fixed source and $p$; hence the
+source-distinctness inequality loses no distinct selected endpoints.  The guards in (18.1) and
+(18.7) are precisely within-pair distinctness and the original strict
+source conditions.  The cross-pair labels and terminal common values
+are unconstrained, which is the original fibre-product semantics. ∎
+
+## 19. Mathematical dependencies and the full joint relation
+
+**Definition 19.1 (The full independent-pair relation).**  On the whole
+strict real domain of Definition 1.1, the joint relation is
+
+$$
+\begin{gathered}
+\exists p,v\in\mathbb R,\quad p\ne24,\quad
+W_{J0},W_{J1},W_{M0},W_{M1}\in C(p,v),\\
+W_{J0}\ne W_{J1},\quad a(W_{J0})=a(W_{J1}),\\
+W_{M0}\ne W_{M1},\quad m(W_{M0})=m(W_{M1}).
+\end{gathered}
+\tag{19.1}
+$$
+
+Here $C(p,v)$ is the entire acquired child.  The two pairs may overlap
+or differ, their terminal common values are independent, and all unused
+companions are retained.  There is no imposed sign of the gain, no
+regularity restriction on every world, and no source or pair-distance
+floor in (19.1).  Equation (18.1), equivalently (18.4)–(18.7), is exactly
+the restriction of (19.1) to $v=v_J(p)$, $10\le p\le34$, $p\ne24$,
+with the actual $J$ pair furnished by Theorem 16.4.  Neither existence
+nor universal exclusion of (18.1) follows from that theorem or from the
+fixed-$(p,\tau)$ bound (17.6).  Universal exclusion on this arc alone
+would still leave every other possible $J$ base in (19.1).
+
+**Proposition 19.2 (Suppliers and scope of the component conclusions).**
+The parent reconstruction, original clocks, whole gain and fixed drift
+are O, Definitions 1.1–1.3 and Theorem 2.1; its zero-safe source equation
+and unique whole-world lift are O, Definition 12.1, Lemma 12.2 and
+Theorem 12.3.  The seed identified by (16.14) is the $A,B$ pair of O,
+Theorem 18.2 and box (18.7), over its whole interval (18.1).  Entire-child
+and independent-pair semantics are F, Sections 30–33, in particular
+Theorem 32.1 and Definition 33.1.  The selected-$M$ singular exclusion
+used in Theorem 18.3 is S, Theorem 18.1 and Corollary 18.2.  Definition
+10.1 and Lemma 10.2 above supply the ambient undivided response
+extension.  The actual $M$-pair family of SII, Proposition 4.1 and
+Theorem 9.3 has its own hypotheses; it is not an $M$ pair on the arc
+(16.15) merely because both are pair families.
+
+*Proof.* The parameter and response correspondence is (16.1)–(16.6);
+its traces are the original products of O, Definition 1.3.  The
+compatibility identity (17.3) is O, (12.8), with $r=\tau b$.
+The whole-box conversion (16.14) and uniqueness in Lemma 16.3 identify
+the inherited seed.  The selected-$M$ exclusion uses the actual $J$
+pair of Theorem 16.4 and precisely the quantifiers of S, Corollary 18.2,
+without removing any unused companion.  Thus the component extensions
+are the continuation from O's seed interval to $[10,34]$ and the
+all-real-$p$, fixed-positive-$\tau$ quartic noncollapse and bound;
+(18.1) gives their independent-$M$ consumer.  Cubic interpolation,
+Banach contraction, the analytic implicit function theorem and the
+Sylvester resultant are the classical mathematical inputs used in the
+displayed proofs.  The full joint relation (19.1) is outside their
+conclusions. ∎
+
+## 追加锚（本行以下为增补区）
+
+## 20. Whole-world coordinates and the reused bounded-output interface
+
+**Definition 20.1 (Ambient parent and parameter correspondence).**
+Let $\mathcal H$ be the complete strict parent of Definition 1.1,
+including $p=24$. Its coordinates are $b>0$, $0<r<1$ and
+$e=d-24$, subject to the parent equation below. Each world has one
+fixed real drift and one nonzero entire real polynomial gain of degree
+at most three. Set
+
+$$
+\begin{gathered}
+c=\frac{r(1-r)}b,\quad j=b+c,\quad n=j+r,\quad T=1+b,\quad U=1+2b,\\
+\Lambda=1+\frac6T+\frac1U-\frac4j-\frac4n,\qquad
+q=-\frac{6(8b-1)(5b+2)}{5TU},\qquad e\Lambda=q.
+\end{gathered}
+\tag{20.1}
+$$
+
+The symbol $q$ here is the parent right-hand side $\eta$ in (1.7),
+not the contraction bound in Lemma 16.3. Write $h_i=g(i)$ for
+$i=0,1,2,3$. The whole gain is the fixed-node interpolant of
+
+$$
+(h_0,h_1,h_2,h_3)
+=\left(-24-e,-\frac e j,\frac{27/5-e}{T},-\frac e n\right).
+\tag{20.2}
+$$
+
+Apply the three rows of (16.4) to this sample vector to obtain
+$G_5=g(5),G_6=g(6),G_7=g(7)$. Thus
+
+$$
+\begin{aligned}
+p&=24+e+(U+n)G_5,&v&=24+e+(2U+n)G_6,\\
+a&=24+e+(T+2j+4r)G_7,&m&=24+e+(3U+2n)G_7.
+\end{aligned}
+\tag{20.3}
+$$
+
+The identity $Tg(2)-g(0)=147/5$ excludes a zero limiting gain whenever
+these samples have an interior source limit. The topology on complete
+worlds uses $(r,b,c,d)$ and the four padded coefficients of $g$.
+Padding retains every degree drop. The continuous reconstruction (20.2)
+identifies this topology with the parent topology in $(b,r,e)$.
+
+For the zero-safe fixed-$p$ lift define
+
+$$
+\begin{gathered}
+A_5=1+(U+n)\left(4-\frac{15}j+\frac{20}T-\frac{10}n\right),\qquad
+K_5=\frac{96(b-1/8)(U+n)}T,\\
+p-24-K_5=eA_5,\qquad
+ e=\frac{q\Lambda+A_5(p-24-K_5)}{\Lambda^2+A_5^2}.
+\end{gathered}
+\tag{20.4}
+$$
+
+O, Lemma 12.2 proves $\Lambda^2+A_5^2>0$ on every strict source;
+O, Theorem 12.3 supplies this unique lift, including $\Lambda=0$.
+Here O's $\epsilon$ is $e$, and the regular circuit coordinate in
+Section 16 is $t=\tau=r/b$. Its $D,N_p,N_v,N_a,N_m$ give precisely
+(20.3). No drift, gain sample, leading coefficient or root difference
+is divided out.
+
+The following supplier map fixes the scopes used below. These are
+existing source results, rather than additional boundary classifications.
+
+| Owner | Interface and correspondence |
+| --- | --- |
+| O, Definitions 1.1–1.3 and Theorem 2.1 | Original clocks $0,\ldots,7$, left products, full parent (20.1), one whole gain (20.2), fixed drift and responses (20.3). |
+| O, Lemma 12.2 and Theorem 12.3 | The strictly positive denominator in (20.4), and the unique fixed-$p$ whole-world lift on all strict source strata. |
+| F, Definitions 30.1 and 33.1 | The entire actual child and independently selected within-pair-distinct $J,M$ pairs; no restriction on cross-pair overlap or equality of their terminal common values. |
+| S, Definition 7.1 | Uniform $b\to\infty$ response limit $(-216/5,-225,-1224/5,-3264/5)$. Its local variables $(t,w)=(1/b,r/b)$ differ from the $t=r/b$ used in Section 22 below. |
+| S, Theorem 12.1 | Bounded $b,p$ bound $c,d$, all padded gain coefficients and $v,a,m$, including $p=24$ and every singular or lower-degree case. |
+| S, Definition 12.2, Theorem 12.3 and Proposition 12.4; SII, Definition 12.1, Lemma 12.2 and Lemma 14.2 | Four finite boundary fractions, both corners, pole exclusions and finite exhaustion including the ambient line $p=24$. |
+| Lemma 16.3 and Theorem 16.4 | The analytic actual $J$ arc on $[10,34]$, its exact centres (16.7), radius-$\rho$ enclosure and positive $\Lambda_L$ guard on the larger tubes. |
+| SII, Theorem 29.1 | One positive off-$24$ exclusion width for actual $M$ pairs, uniform in every real $v$. |
+| Theorem 13.1 and Corollary 13.2; S, Corollary 18.2 | Singular coalescence exclusion and, in the presence of the actual $J$ pair, regularity of distinct selected $M$ endpoints. Unused singular companions are retained. |
+
+**Lemma 20.2 (Bounded-$p$ extraction before a finite output limit).**
+Every sequence $W_i\in\mathcal H$ with $10\le p(W_i)\le34$ has
+bounded $b,c,d$, all four padded gain coefficients and all four late
+responses. If a subsequential source limit is nonstrict, its finite
+response limit is one of the four face fractions or their two corner
+extensions in SII, Definition 12.1 and Lemma 12.2. This statement
+retains a limiting $p=24$ and assumes no bound on $v$.
+
+*Proof.* If $b$ is unbounded, take a subsequence with $b\to\infty$.
+The uniform limit in S, Definition 7.1 gives $p\to-216/5$, contradicting
+$p\ge10$. Uniformity is essential: with $(s,w)=(1/b,r/b)$ one has
+$0<w<s$, and the rational response extension is analytic near $(0,0)$
+with all scaled denominators nonzero there. Thus the same limit applies
+even while $r$ varies through its whole strict interval.
+
+Consequently some finite $L$ bounds $b$ along the sequence. Apply S,
+Theorem 12.1 with that $L$ and $P=34$. It bounds $c,d$, all gain
+coefficients and $v,a,m$ before taking any finite $(p,v)$ limit. In
+particular an attempted $|v|\to\infty$ subsequence is impossible.
+The coercivity theorem uses the undivided parent: if bounded $b$ were
+accompanied by $j\to\infty$, then $b\to0$, $\Lambda\to8$,
+$e\to3/10$, $G_5\to-24/5$ and $p\to-\infty$. Interior drift escape
+is excluded by (20.4); the finite faces and corners are covered by that
+theorem's pole and sample bounds. It makes no regular-source assumption.
+
+The resulting bounded complete tuple has a convergent subsequence.
+If its source is nonstrict, SII, Lemma 14.2 applies and gives exactly
+the four nonpole faces or the two corners, with their finite full-world
+response limits. Its statement includes $p\to24$, unlike an assertion
+restricted to the relative off-$24$ target. The pole exclusions and
+corner extensions are the existing ones in S, Theorem 12.1 and
+Definition 12.2. Hence no unbounded-$v$ branch has been omitted before
+boundary extraction. ∎
+
+## 21. An explicit affine barrier on the finite source boundary
+
+**Definition 21.1 (Barrier and inherited face polynomials).** Put
+
+$$
+\ell(p)=\frac{37p+421}{10},\qquad
+f_0(x)=x^3-8x-4,\qquad f_1(x)=x^3-4x-2.
+\tag{21.1}
+$$
+
+For the existing faces use the names $R_0=C_0$, $R_1=C_1$,
+$E_0=B_0$, $E_1=B_1$ of SII, Definition 12.1. The parameter $x>0$
+is the surviving offdiagonal: $(r,b,c)$ tends respectively to
+$(0,x,0),(1,x,0),(0,0,x),(1,0,x)$. The following are the $p,v$
+fractions of SII, Lemma 12.2, rewritten as $p=P/\delta$, $v=V/\delta$.
+Arrays in this section are in descending powers of $x$.
+
+| Face | $\delta(x)$ | Coefficients of $P$ | Coefficients of $V$ |
+| --- | --- | --- | --- |
+| $R_0$ | $5f_0$ | $(-216,-2238,-1395,-390)$ | $(-1125,-13293,-7458,-1032)$ |
+| $R_1$ | $5(1+x)f_1$ | $(-216,-366,-1326,-1086,-180)$ | $(-1125,-2643,-7458,-5118,-798)$ |
+| $E_0$ | $10(x-1)$ | $(-48,240,-195)$ | $(135,375,-516)$ |
+| $E_1$ | $5(2x^2-1)$ | $(-48,144,12,-90)$ | $(135,645,-99,-399)$ |
+
+Remove the zeros of each denominator. Extend to $x=0$ using the existing
+corner values $(39/2,258/5)$ for $R_0,E_0$, and $(18,399/5)$ for
+$R_1,E_1$. These are boundary outputs, not additional strict worlds.
+The existing whole-world lifts, poles and both full corner vectors
+remain those of S, Definition 12.2 and Theorem 12.3. Define the new
+barrier numerator on each row by
+
+$$
+N=10V-37P-421\delta,\qquad
+v-\ell(p)=\frac{N}{10\delta}.
+\tag{21.2}
+$$
+
+Exact coefficient subtraction gives
+
+$$
+\begin{array}{c|l}
+R_0&(-5363,-50124,-6125,12530)\\
+R_1&(-5363,-14993,-17098,1632,2890)\\
+E_0&(3126,-9340,6265)\\
+E_1&(3126,-3088,-1434,1445).
+\end{array}
+\tag{21.3}
+$$
+
+**Theorem 21.2 (Strict finite-boundary output barrier).** Every finite
+source-boundary output with $10\le p\le34$ satisfies
+
+$$
+v<\ell(p)-\frac1{25}.
+\tag{21.4}
+$$
+
+This includes boundary outputs with $p=24$ and both corner extensions.
+The boundary exhaustion and actual face lifts are reused; the assertion
+here is the explicit inequality for their original fixed $(p,v)$ projection.
+
+*Proof.* Use (21.2) on each existing face, with no cleared pole retained.
+For $R_0$, $P<0$ on $x\ge0$, so $p\ge10$ forces $f_0<0$.
+Multiplying $p\le34$ by this negative denominator gives
+
+$$
+Q_0(x)=386x^3+2238x^2+35x-290\le0.
+$$
+
+Since $Q_0'=1158x^2+4476x+35>0$ on $x\ge0$ and
+$Q_0(7/20)=51819/4000>0$, one has $x<7/20$.
+The first $N$ in (21.3) is strictly decreasing there, since
+$N'=-16089x^2-100248x-6125<0$. Moreover
+
+$$
+N(7/20)=\frac{32128971}{8000}>4000,\qquad
+50|f_0|=50(4+8x-x^3)<340<350.
+$$
+
+Thus $\ell-v=N/(50|f_0|)>4000/350>1/25$.
+
+For $R_1$ the negative coefficients of $P$ likewise force $f_1<0$.
+The condition $p\le34$ implies
+
+$$
+Q_1(x)=386x^4+536x^3+646x^2+66x-160\le0.
+$$
+
+Its derivative is positive for $x\ge0$, while
+$Q_1(77/200)=185385713/800000000>0$. Hence $x<77/200$.
+Here $N''=-64356x^2-89958x-34196<0$. Concavity bounds $N$ below
+by the smaller endpoint value on $[0,77/200]$, and
+
+$$
+\begin{gathered}
+N(0)=2890,\qquad
+N(77/200)=\frac{16864707317}{1600000000}>10,\\
+50(1+x)|f_1|<50\frac{277}{200}\frac{177}{50}
+=\frac{49029}{200}<250.
+\end{gathered}
+$$
+
+Therefore $\ell-v=N/(50(1+x)|f_1|)>10/250=1/25$.
+
+For $E_0$ with $0\le x<1$, $N'=6252x-9340<0$ and $N(1)=51$.
+Consequently $\ell-v=N/(100(1-x))>51/100$. If $x>1$, the condition
+$p\ge10$ gives
+
+$$
+R(x)=48x^2-140x+95\le0.
+$$
+
+Since $R(2)=7$ and $R'>0$ for $x\ge2$, necessarily $x<2$.
+The exact coefficient identity
+
+$$
+8N=521R+625-1780x
+$$
+
+gives $N<-1155/8$. Thus $\ell-v=-N/(100(x-1))>1155/800>1/25$.
+
+For $E_1$, first suppose $x>1/\sqrt2$. Define
+
+$$
+R_*(x)=12x^3-11x^2-3x+10,\qquad
+p-10=-\frac{4R_*}{5(2x^2-1)}.
+$$
+
+On $0\le x\le1$,
+$R_*=10-8x+x(12x^2-11x+5)\ge2$: the quadratic is positive,
+with discriminant $-119$. On $x\ge1$,
+$R_*=(x-1)(12x^2+x-2)+8\ge8$. Hence this positive-denominator
+branch has $p<10$ and contributes no point.
+
+On the remaining branch $0\le x<1/\sqrt2$, the inequality $p\le34$
+gives
+
+$$
+R_{34}(x)=12x^3+49x^2-3x-20\le0.
+$$
+
+Its derivative is positive for $x\ge5/8$, and
+$R_{34}(5/8)=25/128>0$, so $x<5/8$.
+The derivative $N'=9378x^2-6176x-1434$ is convex. Its endpoint
+values on $[0,5/8]$ are $-1434$ and $-52183/32$, both negative;
+therefore $N'<0$ throughout that interval. Finally
+
+$$
+N(5/8)=\frac{27055}{256}>100,\qquad
+50(1-2x^2)\le50,
+$$
+
+and $\ell-v=N/(50(1-2x^2))>2>1/25$.
+These estimates also hold at the allowed $x=0$ extensions. The infinity
+response has $p=-216/5$ and lies outside the parameter window.
+Lemma 20.2 and the cited finite exhaustion supply all other possible
+source-boundary outputs, without an off-$24$ exception. ∎
+
+## 22. A scalar certificate above the barrier on the actual J arc
+
+**Definition 22.1 (Scalar polynomial and public coefficient data).**
+Use $t=\tau=r/b$ and the circuit (16.1)–(16.5), without changing
+any of its parameters. Thus
+
+$$
+\begin{gathered}
+r=tb,\quad j=t+b(1-t^2),\quad n=j+r,\quad T=1+b,\quad U=1+2b,\\
+D=5((b^2+8b+4)jn-2TU(j+n)),\quad A=(8b-1)(2+5b),\\
+C_0=-24D+3Ajn,\quad C_1=3An,\\
+C_2=3(49b+34)jn-54U(j+n),\quad C_3=3Aj,\\
+B_6=-10C_0+36C_1-45C_2+20C_3,\qquad
+N_v=-C_0+(2U+n)B_6.
+\end{gathered}
+\tag{22.1}
+$$
+
+Define
+
+$$
+\mathcal R(t,b,p)=10N_v-(37p+426)D=P_0(t,b)+pP_1(t,b),\qquad
+P_0=10N_v-426D,\quad P_1=-37D.
+\tag{22.2}
+$$
+
+The following integer matrices specify $P_0,P_1$ as
+$\sum_{i=0}^6\sum_{j=0}^4 A_{ij}t^ib^j$; both indices increase
+from zero. They follow by exact expansion of (22.1), or directly from
+the $D,N_v$ arrays of Lemma 16.3:
+
+$$
+P_0:\begin{pmatrix}
+0&-1800&-57540&-132930&-13380\\
+-1800&-60420&-127500&84720&104370\\
+-1020&34830&238710&267570&-93240\\
+2700&33990&-13140&-310380&-176670\\
+0&-8100&-91470&-72990&128370\\
+0&0&8100&85050&53100\\
+0&0&0&-2700&-26550
+\end{pmatrix},\qquad
+P_1:\begin{pmatrix}
+0&740&1480&0&-185\\
+740&1110&-1110&-1110&-185\\
+-740&-2960&-2405&1295&370\\
+0&1480&3700&1850&185\\
+0&0&-740&-1480&-185\\
+0&0&0&0&0\\
+0&0&0&0&0
+\end{pmatrix}.
+\tag{22.3}
+$$
+
+Their exact bidegrees are $(6,4)$ and $(4,4)$. No centre coefficients
+are changed: only the $\tau_L,b_L$ rows of (16.7), with denominator
+$10^{20}$, enter this scalar certificate. Put $\rho=1/100000$.
+
+**Lemma 22.2 (A reproducible 3072-cell scalar lower bound).** On the
+radius-$\rho$ enclosures of the actual $L$ endpoint in Lemma 16.3,
+$\mathcal R>0$ for every $10\le p\le34$. The following interval
+recipe gives a complete finite certificate.
+
+For each $(lo,hi)=(10,20),(20,30),(30,34)$ use exactly the 1024
+closed cells
+
+$$
+\begin{gathered}
+I_k=[-1+2k/1024,-1+2(k+1)/1024],\quad
+u_k=-1+(2k+1)/1024,\quad 0\le k\le1023,\\
+p(u)=\frac{lo+hi}2+\frac{hi-lo}2u,\qquad
+p_c=p(u_k),\qquad P_k=p(I_k).
+\end{gathered}
+\tag{22.4}
+$$
+
+All interval endpoints are on the grid $h=10^{-30}$. For any rational
+$x$ define $\operatorname{rd}_-(x)=h\lfloor x/h\rfloor$ and
+$\operatorname{rd}_+(x)=h\lceil x/h\rceil$. Enclose every rational
+input by these two endpoints. Addition and subtraction use exact
+interval endpoints; they remain on the grid. For multiplication use
+the minimum and maximum of the four endpoint products and round the
+minimum down, the maximum up. Every multiplication is rounded before
+the next addition. All zero coefficients are retained. No floating
+point operation or division of intervals is used in this certificate.
+
+Let $\widehat t,\widehat b$ be the two exact $L$ centre polynomials
+from (16.7) for this block. Evaluate each by descending Horner from
+zero, with the preceding operations. Write
+
+$$
+\begin{gathered}
+C_t=\operatorname{Horner}(\widehat t,[u_k,u_k]),\qquad
+C_b=\operatorname{Horner}(\widehat b,[u_k,u_k]),\\
+X_t=\operatorname{Horner}(\widehat t,I_k)+[-\rho,\rho],\qquad
+X_b=\operatorname{Horner}(\widehat b,I_k)+[-\rho,\rho].
+\end{gathered}
+\tag{22.5}
+$$
+
+The exact centre is $(\widehat t(u_k),\widehat b(u_k),p_c)$, not a
+rounded midpoint of $C_t,C_b$. The intervals in (22.5) enclose it and
+the whole actual $L$ endpoint over the cell, respectively.
+
+Here is the polynomial evaluation order, including derivatives. For
+any pair of integer coefficient matrices $(A^0,A^1)$ and parameter
+interval $P$, form each coefficient interval as
+$[A^0_{ij},A^0_{ij}]+P[A^1_{ij},A^1_{ij}]$, multiplying first and
+then adding. Pad each matrix to $i=0,\ldots,6$, $j=0,\ldots,4$,
+including after exact differentiation. In each row run Horner from
+zero in $b$, visiting $j=4,3,2,1,0$. Run the outer Horner from zero
+in $t$, visiting $i=6,5,4,3,2,1,0$. Thus $p$ is combined once into
+the coefficients before either spatial Horner loop. Derivatives use
+$\partial_t(t^ib^j)=it^{i-1}b^j$ and
+$\partial_b(t^ib^j)=jt^ib^{j-1}$ before padding.
+
+Evaluate $\mathcal R_c$ with matrices $(P_0,P_1)$, parameter
+$[p_c,p_c]$ and spatial intervals $(C_t,C_b)$. Evaluate
+$\mathcal R_t,\mathcal R_b$ with matrices
+$(\partial_tP_0,\partial_tP_1)$ and
+$(\partial_bP_0,\partial_bP_1)$, parameter $P_k$ and spatial
+intervals $(X_t,X_b)$. Evaluate $\mathcal R_p=P_1$ by the same
+padded rule with matrices $(P_1,0)$. Denote these three derivative
+intervals by $H_t,H_b,H_p$.
+
+For an interval $H=[a,b]$ put $|H|_{\max}=\max(|a|,|b|)$. Define
+nonnegative grid numbers
+
+$$
+\begin{aligned}
+\delta_t&=\max(\sup C_t-\inf X_t,\ \sup X_t-\inf C_t),\\
+\delta_b&=\max(\sup C_b-\inf X_b,\ \sup X_b-\inf C_b),\\
+\delta_p&=\max(p_c-\inf P_k,\ \sup P_k-p_c),\\
+E_i&=\operatorname{rd}_+(|H_i|_{\max}\delta_i)
+\quad (i=t,b,p),\\
+L_k&=\inf\mathcal R_c-E_t-E_b-E_p.
+\end{aligned}
+\tag{22.6}
+$$
+
+The three error products are rounded up separately. The final
+subtractions are exact grid subtractions in the displayed order.
+The centre enclosures contribute to both $\inf\mathcal R_c$ and the
+spatial displacement bounds; replacing them by rounded point centres
+is not this recipe.
+
+The exact results, with a common denominator $10^{30}$, are:
+
+| $[lo,hi]$ | Completed cells | Nonpositive lower bounds | Numerator of $\min_k L_k$ | Minimizing $k$ |
+| --- | --- | --- | --- | --- |
+| $[10,20]$ | $1024$ | $0$ | $173903350897027038369423464062764$ | $1023$ |
+| $[20,30]$ | $1024$ | $0$ | $52901519073726829319802022686438$ | $1023$ |
+| $[30,34]$ | $1024$ | $0$ | $18553152424991317187833579224406$ | $1023$ |
+
+All 3072 cells are included; there is no uncompleted cell.
+
+*Proof.* Integer coefficient expansion gives (22.3). The interval rules
+enclose exact rational arithmetic at every operation. Descending Horner
+therefore encloses the exact centres and the polynomial images on each
+box. For a point of $X_t\times X_b\times P_k$, the line segment from
+the exact centre stays in this convex box. The integral mean-value
+formula gives
+
+$$
+\mathcal R(t,b,p)\ge
+\mathcal R(\widehat t(u_k),\widehat b(u_k),p_c)
+-\sum_{i=t,b,p}\sup|\mathcal R_i|\delta_i\ge L_k.
+\tag{22.7}
+$$
+
+Formula (22.6) bounds the displacement even when the centre enclosure
+has nonzero width. Executing the finite endpoint operations (22.4)–(22.6)
+with (16.7) and (22.3) gives the displayed positive integers. The cells
+cover all three closed parameter intervals, including both seams.
+Lemma 16.3 puts the actual $L$ endpoint in the corresponding box.
+Hence $\mathcal R>0$ at every actual endpoint. This is the classical
+interval mean-value bound applied to a scalar polynomial; the existence,
+gluing and pointwise-ball uniqueness of the $J$ arc are reused from
+Lemma 16.3, not inferred anew from this scalar test. ∎
+
+**Theorem 22.3 (Strict output margin on the actual J arc).** The arc of
+Theorem 16.4 satisfies, for every $p\in[10,34]$,
+
+$$
+v_J(p)>\ell(p)+\frac12.
+\tag{22.8}
+$$
+
+*Proof.* Use the actual $L$ endpoint, so $v_J=N_v/D$. The strict
+source guards give $T,U,j,n>0$. Lemma 16.3 gives
+$\Lambda_L\ge1421047/10^6>0$ on its radius-$2\rho$ tubes, which
+contain the actual radius-$\rho$ endpoint enclosures. By (16.2),
+$D=(5/2)TUjn\Lambda_L>0$ at this endpoint. Lemma 22.2 and (22.2)
+then imply
+
+$$
+v_J-\ell(p)-\frac12=\frac{\mathcal R(t_L,b_L,p)}{10D(t_L,b_L)}>0.
+$$
+
+Thus positivity of the denominator is an existing guard on this actual
+endpoint, with its source and parameter hypotheses satisfied. It is
+not a regularity condition imposed on every world in its child. ∎
+
+## 23. Compactness of every complete companion above the arc
+
+**Definition 23.1 (Closed output region and whole arc region).** In the
+ambient parent $\mathcal H$, with $p=24$ retained, define
+
+$$
+\begin{aligned}
+K_+&=\{W\in\mathcal H:10\le p(W)\le34,
+\ v(W)\ge\ell(p(W))-1/25\},\\
+K_J&=\{W\in\mathcal H:10\le p(W)\le34,
+\ v(W)=v_J(p(W))\}.
+\end{aligned}
+\tag{23.1}
+$$
+
+At each $p\ne24$ the latter fibre is the entire actual
+$C(p,v_J(p))$ of F, Definition 30.1. At $p=24$ it means the same
+complete-world equations in $\mathcal H$, without importing an
+off-$24$ restriction into this ambient definition. All companions,
+including unused or singular ones, are included.
+
+**Theorem 23.2 (Compactness in the original complete-world space).**
+Both $K_+$ and $K_J$ are compact in $(b,r,e)$ and in the full
+source/drift/padded-gain coordinates. No positivity of gains, full
+gain degree, nonzero drift, all-world regularity or positive
+within-pair separation is a hypothesis.
+
+*Proof.* Take any sequence in $K_+$. Lemma 20.2 first bounds $b$,
+then invokes bounded-$b,p$ coercivity to bound $c,d$, all gain
+coefficients and $v,a,m$. In particular $v$ is bounded before a finite
+boundary output is extracted. Pass to a convergent full tuple, and
+write its output limit as $(p_*,v_*)$. The closed output inequalities
+give
+
+$$
+10\le p_*\le34,\qquad v_*\ge\ell(p_*)-1/25.
+\tag{23.2}
+$$
+
+An unbounded-$b$ subsequence has already been excluded by the uniform
+infinity value $p=-216/5$. If the limiting source were nonstrict,
+Lemma 20.2 and SII, Lemma 14.2 would identify its finite output with a
+nonpole face or corner. Theorem 21.2 would give
+$v_*<\ell(p_*)-1/25$, contradicting (23.2), including when $p_*=24$.
+Thus the limiting source is strict.
+
+The parent equation and original clock equations pass to this interior
+limit by continuity. Equation (20.2) implies
+$Tg(2)-g(0)=147/5$, which excludes an identically zero limiting gain.
+The limit is therefore a complete world in $\mathcal H$, and (23.2)
+puts it in $K_+$. This proves sequential compactness in the finite
+source/drift/gain coordinates, hence compactness by the classical
+finite-dimensional compactness criterion. The coordinate projection
+to $(b,r,e)$ and reconstruction (20.2) give compactness there as well.
+The zero-safe formula (20.4) also explicitly bounds drift on any of
+the resulting compact interior source sets with bounded $p$.
+
+By Theorem 22.3, $K_J\subset K_+$; the difference between the arc
+threshold and the boundary threshold is
+$1/2+1/25=27/50$. The analytic function $v_J$ is continuous on
+$[10,34]$, so $W\mapsto v(W)-v_J(p(W))$ is continuous on $K_+$.
+Its zero set is exactly $K_J$. Hence $K_J$ is a closed subset of a
+compact set and is compact. This uses the entire fibre, not a bound
+for only the selected $H,L$ worlds. ∎
+
+**Corollary 23.3 (The precise role of the retained twenty-four fibre).**
+Put $K_J^\times=K_J\cap\{p\ne24\}$. In the full complete-world
+coordinate topology,
+
+$$
+\overline{K_J^\times}\subseteq K_J,
+\tag{23.3}
+$$
+
+and the closure on the left is compact. For every closed parameter
+interval $I\subset[10,34]$ with $24\notin I$, the entire region
+$K_J(I)=K_J\cap p^{-1}(I)$ is compact. There are qualitative uniform
+positive interior margins for $r,1-r,b,c$ on $K_J$, and finite bounds
+for drift and all gain coefficients.
+
+*Proof.* The compact set $K_J$ is closed in the finite-dimensional
+ambient coordinate space, so it contains the closure in (23.3).
+That closure and $K_J(I)$ are closed subsets of $K_J$. Each source
+entry in the stated list is continuous and strictly positive on
+$K_J$, so its minimum is positive; the remaining coordinate bounds
+follow from compactness. These are qualitative extrema, without a
+numerical value supplied by the proof. No assertion is made that
+$K_J^\times$ itself is compact or that (23.3) is equality. Equality
+would require approximability of every unused $p=24$ companion by
+off-$24$ companions, which these arguments do not establish. ∎
+
+## 24. Selected M limits and the remaining incidence obligation
+
+**Proposition 24.1 (Reused exclusions and the classical regular secant
+condition).** Suppose $p_i\in[10,34]\setminus\{24\}$ and
+$W_i\ne W'_i\in C(p_i,v_J(p_i))$ are actual selected equal-$M$
+endpoints. They have simultaneous subsequential limits in $K_J$.
+Every such limiting parameter $p_*$ is off $24$. If the limiting
+endpoints are distinct, both are regular and form an actual equal-$M$
+pair in the child of the actual $J$ pair. If the limiting endpoints
+coincide, their common source is regular, and the augmented regular
+map $f_M=(N_p/D,N_v/D,N_m/D)$ has rank less than two there.
+
+*Proof.* Theorem 23.2 gives simultaneous complete-world limits and
+continuity gives equal terminal $M$ responses. SII, Theorem 29.1 gives
+one $\epsilon>0$, uniform for all real $v$, excluding every actual
+$M$ pair with $0<|p-24|<\epsilon$. Thus $|p_i-24|\ge\epsilon$ and
+$p_*\ne24$. This already published exclusion covers singular sources
+and all gain strata, and does not depend on this compactness proof.
+
+If the limits are distinct, they are an actual $M$ pair, while
+Theorem 16.4 supplies an actual distinct $J$ pair at the same limiting
+base. S, Corollary 18.2 then excludes a singular selected $M$
+endpoint. If the limits coincide, Theorem 13.1 and Corollary 13.2
+exclude singular coalescence: local injectivity on the full parent at
+such a singular world would contradict the distinctness of the nearby
+matching endpoints. These are existing exclusions for selected pairs;
+they remove no unused singular companion from $K_J$.
+
+For completeness, at a regular coalescence write $x=(t,b)$ with
+$t=r/b$ and $D(x_*)\ne0$. The regular reconstruction is analytic
+in a neighbourhood of $x_*$. The nearby distinct complete endpoints
+have distinct coordinates $x_i,y_i$ and $f_M(x_i)=f_M(y_i)$.
+Take a subsequence of
+$w_i=(x_i-y_i)/\|x_i-y_i\|$ converging to a unit vector $w$.
+On a small convex neighbourhood the ordinary integral difference
+formula gives
+
+$$
+0=\int_0^1 Df_M(y_i+s(x_i-y_i))w_i\,ds
+\longrightarrow Df_M(x_*)w.
+\tag{24.1}
+$$
+
+The derivative therefore has a nonzero kernel. This standard calculus
+argument is a necessary condition only. In polynomial form, for
+$f\in\{p,v,m\}$ define
+
+$$
+B_{f,t}=D\partial_tN_f-N_f\partial_tD,\qquad
+B_{f,b}=D\partial_bN_f-N_f\partial_bD.
+\tag{24.2}
+$$
+
+Use the original circuit
+$N_m=-C_0+(3U+2n)B_7$,
+$B_7=-20C_0+70C_1-84C_2+35C_3$.
+All three polynomials
+
+$$
+\begin{gathered}
+B_{p,t}B_{v,b}-B_{p,b}B_{v,t},\qquad
+B_{p,t}B_{m,b}-B_{p,b}B_{m,t},\\
+B_{v,t}B_{m,b}-B_{v,b}B_{m,t}
+\end{gathered}
+\tag{24.3}
+$$
+
+must vanish at a regular coalescence, because the corresponding
+Jacobian minors have common denominator $D^4$. Nothing here proves
+that this rank-drop set is empty or excludes an actual incidence. ∎
+
+**Definition 24.2 (Applicability and unresolved alternative).** The
+explicit boundary inequality (21.4), scalar arc inequality (22.8) and
+their all-companion application (23.1)–(23.3) concern this original
+fixed projection and the actual arc of Theorem 16.4. Finite-dimensional
+compactness, closed-subset compactness, interval mean-value bounds and
+the secant argument are classical methods. The boundary fractions,
+pole exclusions, corner vectors, uniform infinity limit, zero-safe lift
+and source-coercivity machinery are the cited source-owner results.
+This application does not supply a numerical source box, a numerical
+interior distance, or a completed finite search certificate.
+
+The remaining arc question is still an actual independently chosen
+within-pair-distinct equal-$M$ pair at some $p\ne24$ on this $J$ arc,
+or a complete exclusion of all such pairs. The published uniform
+$p=24$ gap and singular-coalescence exclusion are already available;
+the unresolved cases include regular critical-diagonal limits,
+separated regular incidences and nontransverse incidences. There is no
+imposed positive pair-separation floor. Cross-pair overlap is free,
+and the two terminal common values remain independent. Compactness
+retains all companions and does not give a new whole-child cardinality
+bound. Every other $J$ branch and base in (19.1) remains outside this
+arc application. Neither an actual joint witness nor an arcwise or
+global absence theorem, original-goal completion, literature-wide
+originality, formal-kernel certification or physical realization is a
+conclusion of these results.
+
+## 追加锚（本行以下为增补区）
