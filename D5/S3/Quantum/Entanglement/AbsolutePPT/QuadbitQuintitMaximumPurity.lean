@@ -114,7 +114,7 @@ local notation "ce" => cornerEquiv hm hn
 private noncomputable def packed (l : Fin 9 → ℝ) (mid : Fin (m*n-9) → ℂ) : Matrix I I ℂ :=
   diagonal (fun i => Sum.elim (pack l) mid ((ce).symm i))
 
-private theorem product_partialTranspose {A B C D : Type}
+theorem product_partialTranspose {A B C D : Type}
     (a : C → A) (b : D → B) (M : Matrix (A × B) (A × B) ℂ) :
     (partialTranspose M).submatrix (Prod.map a b) (Prod.map a b) =
       partialTranspose (M.submatrix (Prod.map a b) (Prod.map a b)) := rfl
