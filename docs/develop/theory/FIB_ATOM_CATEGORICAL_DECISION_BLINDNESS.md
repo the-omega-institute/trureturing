@@ -1168,7 +1168,7 @@ $$
 where $q$ is fixed with $0<q<\sqrt{2\ln4}$ and $b>0$. Write $r_0(q,b)$ for the infimum binary zero--one risk for deciding whether the label is the singleton $3$ from one complete observation, and put
 
 $$
-B(q,b)=\frac15-r_0(q,b),qquad
+B(q,b)=\frac15-r_0(q,b),\qquad
 c(q)=\ln4-\frac{q^2}{2}>0.
 $$
 
@@ -1188,7 +1188,7 @@ The conclusion is pointwise in the fixed $q$ and supplies neither a prefactor no
 Proof. Let $x=(u,v)$ and let $\phi$ be the standard normal density. The singleton density and the two duplicated endpoint densities are
 
 $$
- f_0(u,v)=\phi(u)\phi(v-b),qquad
+ f_0(u,v)=\phi(u)\phi(v-b),\qquad
  f_\pm(u,v)=\phi(u\mp q)\phi(v).
 $$
 
@@ -1237,7 +1237,7 @@ $$
 we have $e^{bv-b^2/2}\ge e^{c(q)+\varepsilon-b^2/2}$ and therefore, for a constant $\kappa_\varepsilon>0$ independent of $b$,
 
 $$
-D_b(u,v)\ge \kappa_\varepsilon\,f_0(u,v)qquad ((u,v)\in R_b).
+D_b(u,v)\ge \kappa_\varepsilon\,f_0(u,v)\qquad ((u,v)\in R_b).
 \tag{11.6}
 $$
 
@@ -1270,4 +1270,6 @@ $$
 
 so the singleton binary risk remains within this exponentially small gain of its blind value $1/5$. This quantifies the approach to the $b=0$ plateau without asserting a derivative, a prefactor, or a uniform estimate in $q$.
 
-If a finite common Borel quantizer is subsequently supplied for the same-prior experiment, its singleton gain $B_Q=1/5-r_0(Q)$ satisfies $0\le B_Q\le B(q,b)$ by conditioning. For two finite joint laws on that common alphabet, Proposition 7.5 gives $|B_Q-B'_Q|\le\operatorname{TV}(J,J')$; under the original/projected-input hypotheses of Proposition 7.7 this becomes $|B_Q-B'_{Q}|\le e_N$. Thus a TV approximation smaller than the displayed gain scale can preserve its numerical order, while a larger approximation error can mask it. These are the existing same-prior soft-risk certificates applied to this gain; they do not transfer (11.1) to a projected law, imply a hard-support impossibility, or provide a native preparation attainer. $\square$
+If a finite common Borel quantizer is subsequently supplied for the same-prior experiment, its singleton gain $B_Q=1/5-r_0(Q)$ satisfies $0\le B_Q\le B(q,b)$ by conditioning. For two finite joint laws on that common alphabet, Proposition 7.5 gives $|B_Q-B'_Q|\le\operatorname{TV}(J,J')$; under the original/projected-input hypotheses of Proposition 7.7 this becomes $|B_Q-B'_{Q}|\le e_N$. Relative retention from these additive certificates requires a positive $B_Q$ and an error bound small relative to $B_Q$. An explicitly supplied lower bound making $B_Q$ comparable to $B(q,b)$, together with an error bound small relative to $B(q,b)$, also suffices. A constant quantizer has $B_Q=0$, so $\operatorname{TV}(J,J')=o(B(q,b))$ alone gives no relative-retention guarantee for an arbitrary quantizer. These are the existing same-prior soft-risk certificates applied to this gain; they do not transfer (11.1) to a projected law, imply a hard-support impossibility, or provide a native preparation attainer. $\square$
+
+## 追加锚（本行以下为增补区）
