@@ -30,7 +30,19 @@ Let c be positive. For every positive parameter s, let y(s,x) be positive for x 
 
 Put h(s,x)=y'(s,x)/y(s,x). The Riccati equation and the weight x^c exp(-x)y(u,x)y(v,x) show that h(v,x)>h(u,x) whenever 0<u<v and x>0. The weight vanishes continuously at zero. A second weighted identity shows that h(b+delta,x)-h(b,x) is strictly less than h(a+delta,x)-h(a,x). The difference of these two finite increments is the logarithmic derivative of the positive quotient.
 
-**Theorem 1.3 (Strict decrease of the Kummer ratio).**
+**Theorem 1.3 (The Kummer solution family).**
+
+Lean statement: `D5/S3/Analytic/KummerRatio/Comparison.kummer_family`
+
+*Proof.* Machine-checked in Lean as `D5/S3/Analytic/KummerRatio/Comparison.kummer_family` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+For positive c, the functions M(s;c;x), (s/c)M(s+1;c+1;x) and (s/c)((s+1)/(c+1))M(s+2;c+2;x) form a positive regular solution family. Positivity on the closed positive ray, continuity, the derivative identities and the differential equation follow from the defining series.
+
+**Theorem 1.4 (Strict decrease of the Kummer ratio).**
 
 Lean statement: `D5/S3/Analytic/KummerRatio/Comparison.ratio_strictAntiOn`
 
@@ -45,6 +57,7 @@ For c>0, delta>0 and 0<a<b, the quotient M(b+delta;c;x)M(a;c;x)/(M(a+delta;c;x)M
 ## References
 
 - Truth anchor: `D5/S3/Analytic/KummerRatio/Comparison.SolutionFamily`
+- Truth anchor: `D5/S3/Analytic/KummerRatio/Comparison.kummer_family`
 - Truth anchor: `D5/S3/Analytic/KummerRatio/Comparison.ratio_strictAntiOn`
 - Truth anchor: `D5/S3/Analytic/KummerRatio/Comparison.solution_ratio_strictAntiOn`
 - Dependency: [D5/S3/Analytic/KummerRatio/Series](Series.md)

@@ -2,6 +2,7 @@ import LeanInformationAuditInterface.Contract.Registration
 import D5.S3.Analytic.KummerRatio.Comparison
 import D5.S3.Analytic.KummerRatio.Series
 import Reg.Support.SingleDependentReadout
+import Reg.D5.S3.Analytic.KummerRatio.Transform
 
 open _root_.D5.S3.Analytic.KummerRatio.Comparison
 open _root_.D5.S3.Analytic.KummerRatio.Defs
@@ -11,6 +12,67 @@ open LeanInformationAudit Set
 
 namespace Reg.D5.S3.Analytic.KummerRatio.Comparison
 noncomputable section
+
+namespace Solution
+
+abbrev signature := _root_.Reg.D5.S3.Analytic.KummerRatio.Transform.signature
+abbrev actual := _root_.Reg.D5.S3.Analytic.KummerRatio.Transform.actual
+abbrev rejected := _root_.Reg.D5.S3.Analytic.KummerRatio.Transform.rejected
+
+def arena : Arena where
+  signature := signature
+  Law R := ∀ {c : ℝ}, 0 < c →
+    SolutionFamily c (fun s x => R.readout () ⟨c, s⟩ x)
+      (fun s x => s / c * kummer (s + 1) (c + 1) x)
+      (fun s x => s / c * ((s + 1) / (c + 1) * kummer (s + 2) (c + 2) x))
+
+private theorem rejected_law : ¬ arena.Law rejected := by
+  intro h
+  have hp := (h (c := 1) zero_lt_one).pos 1 zero_lt_one 0 le_rfl
+  exact (lt_irrefl (0 : ℝ)) hp
+
+def family : Registration arena (type_of% @kummer_family) where
+  actual := actual
+  bridge := Iff.rfl
+  variation := ⟨@kummer_family, rejected, rejected_law⟩
+  sensitivity := _root_.Reg.Support.SingleDependentReadout.sensitivity
+    arena.Law actual rejected rejected_law
+  dependence := _root_.Reg.D5.S3.Analytic.KummerRatio.Transform.family.dependence
+
+def audit : Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0}
+    (@kummer_family) (Realization signature) Unit Unit where
+  unitName := `Reg.D5.S3.Analytic.KummerRatio.Comparison.Solution.unit
+  realizationName := `Reg.D5.S3.Analytic.KummerRatio.Comparison.Solution.family
+  realizationSource := none
+  generated := false
+  arena := .source ⟨arena⟩
+  objectArena := .source ⟨arena⟩
+  catalog := Lean.Name.anonymous
+  localNames := false
+  realization := .source arena ⟨family⟩
+  correspondence := { stage := .evidence, objectStage := .evidence }
+  bundleNonempty := .absent
+  readout := some (realize signature (fun _ p x => kummer p.2 p.1 x) (fun e => nomatch e))
+  variation := .absent
+  sensitivity := .absent
+  partialSensitivity := none
+  escapeFrom := none
+  sourceSelection := some {
+    owner := `D5.S3.Analytic.KummerRatio.Comparison
+    definition := none
+    coordinates := #[0, 2]
+    readouts := #[{
+      path := #["body", "body", "fn", "fn", "arg", "body", "body"]
+      stateBinder := 3
+      functionOperand := false
+      stateOperand := none
+      booleanPredicate := false }] }
+  continuation := .unknown
+  familyRecord := none
+  options := #[]
+
+
+end Solution
 
 namespace Generic
 
