@@ -287,6 +287,17 @@ private lemma tail_norm_split (d : ℕ) (n : Fin d) (b : Fin d → ℂ) :
   intro i hi
   rw [if_neg (Finset.mem_erase.mp hi).1]
 
+private lemma contraction_at_index (d : ℕ) (n : Fin d) (b c : Fin d → ℂ) :
+    (contraction d n b c) n = conj (b n) * conj (c n) := by
+  have hzsum : conj (z d) + z d = 1 := by
+    rw [add_comm, Complex.add_conj]
+    norm_num [z, Complex.div_re, Complex.mul_re]
+  change conj (z d) * conj (b n) * conj (c n) +
+      z d * conj (c n) * conj (b n) = _
+  calc
+    _ = (conj (z d) + z d) * conj (b n) * conj (c n) := by ring
+    _ = _ := by rw [hzsum, one_mul]
+
 private lemma contraction_bound (d : ℕ) (hd : 2 ≤ d) (n : Fin d)
     (b c : Fin d → ℂ) (hb : UnitVector b) (hc : UnitVector c) :
     ‖contraction d n b c‖ ^ 2 ≤ sharpValue d * ((d : ℝ) + 1) := by
@@ -308,15 +319,7 @@ private lemma contraction_bound (d : ℕ) (hd : 2 ≤ d) (n : Fin d)
     rw [conjugate_norm, hc, Complex.norm_conj] at h
     change 1 ^ 2 = v ^ 2 + t ^ 2 at h
     linarith
-  have hzsum : conj (z d) + z d = 1 := by
-    rw [add_comm, Complex.add_conj]
-    norm_num [z, Complex.div_re, Complex.mul_re]
-  have hzero : (contraction d n b c) n = conj (b n) * conj (c n) := by
-    change conj (z d) * conj (b n) * conj (c n) +
-      z d * conj (c n) * conj (b n) = _
-    calc
-      _ = (conj (z d) + z d) * conj (b n) * conj (c n) := by ring
-      _ = _ := by rw [hzsum, one_mul]
+  have hzero := contraction_at_index d n b c
   have htail : coordinateTail d n (fun i => (contraction d n b c) i) = X := by
     ext i
     by_cases hi : i = n
@@ -383,9 +386,141 @@ private lemma sharp_upper (d : ℕ) [NeZero d] (hd : 2 ≤ d)
   rw [Real.sq_sqrt (by positivity)]
   exact (div_le_iff₀ (by positivity)).2 (hn2.trans hbound)
 
+private lemma contraction_attains (d : ℕ) (hd : 2 ≤ d) (n : Fin d)
+    (b c : Fin d → ℂ) (hb : UnitVector b) (hc : UnitVector c)
+    (henergy : ‖contraction d n b c‖ ^ 2 = sharpValue d * ((d : ℝ) + 1)) :
+    sharpValue d ∈ overlapSet (φ d n) := by
+  let χ := contraction d n b c
+  have hdR : (2 : ℝ) ≤ d := by exact_mod_cast hd
+  have hd1 : 0 < (d : ℝ) - 1 := by linarith
+  have hd2 : 0 < (d : ℝ) ^ 2 - 1 := by nlinarith
+  have hdp : 0 < (d : ℝ) + 1 := by positivity
+  change ‖χ‖ ^ 2 = sharpValue d * ((d : ℝ) + 1) at henergy
+  have hχne : χ ≠ 0 := by
+    intro h
+    rw [h, norm_zero, zero_pow (by decide)] at henergy
+    have : 0 < sharpValue d * ((d : ℝ) + 1) := by unfold sharpValue; positivity
+    linarith
+  let A := (‖χ‖⁻¹ : ℂ) • χ
+  have hA : UnitVector (fun i => A i) := by
+    change ‖(‖χ‖⁻¹ : ℂ) • χ‖ = 1
+    exact norm_smul_inv_norm (𝕜 := ℂ) hχne
+  refine ⟨fun i => A i, fun i => b i, fun i => c i, hA, hb, hc, ?_⟩
+  symm
+  rw [contraction_overlap]
+  change ‖inner ℂ A χ / (Real.sqrt ((d : ℝ) + 1) : ℂ)‖ ^ 2 = _
+  have hinner : inner ℂ A χ = (‖χ‖ : ℂ) := by
+    change inner ℂ ((‖χ‖⁻¹ : ℂ) • χ) χ = (‖χ‖ : ℂ)
+    rw [inner_smul_left, inner_self_eq_norm_sq_to_K, map_inv₀, Complex.conj_ofReal, pow_two]
+    exact inv_mul_cancel_left₀
+      (Complex.ofReal_ne_zero.mpr (norm_ne_zero_iff.2 hχne)) _
+  rw [hinner, norm_div, Complex.norm_real, Complex.norm_real, Real.norm_eq_abs,
+    Real.norm_eq_abs, abs_of_nonneg (norm_nonneg χ), abs_of_nonneg (Real.sqrt_nonneg _),
+    div_pow, Real.sq_sqrt hdp.le, henergy]
+  exact mul_div_cancel_right₀ _ (ne_of_gt hdp)
+
+set_option maxHeartbeats 1000000 in
 private lemma sharp_attainment (d : ℕ) [NeZero d] (hd : 2 ≤ d) :
     sharpValue d ∈ overlapSet (φ d 0) := by
-  sorry
+  classical
+  let j : Fin d := ⟨1, by omega⟩
+  have hj : j ≠ 0 := by
+    intro h
+    have := congrArg Fin.val h
+    simp [j] at this
+  have hj' : (0 : Fin d) ≠ j := Ne.symm hj
+  let e₀ := EuclideanSpace.single (0 : Fin d) (1 : ℂ)
+  let e₁ := EuclideanSpace.single j (1 : ℂ)
+  have hnorm (v w : ℂ) : ‖v • e₀ + w • e₁‖ ^ 2 = ‖v‖ ^ 2 + ‖w‖ ^ 2 := by
+    rw [norm_add_sq (𝕜 := ℂ)]
+    have hinner : inner ℂ (v • e₀) (w • e₁) = 0 := by
+      simp [e₀, e₁, inner_smul_left, inner_smul_right,
+        EuclideanSpace.inner_single_left, PiLp.single_apply, hj]
+    rw [hinner]
+    simp [norm_smul, e₀, e₁]
+  have hdR : (2 : ℝ) ≤ d := by exact_mod_cast hd
+  have hd1 : 0 < (d : ℝ) - 1 := by linarith
+  have hd2 : 0 < (d : ℝ) ^ 2 - 1 := by nlinarith
+  have hdp : 0 < (d : ℝ) + 1 := by positivity
+  let r := Real.sqrt ((d : ℝ) / ((d : ℝ) + 1))
+  let t := Real.sqrt (1 / ((d : ℝ) + 1))
+  have hr : 0 ≤ r := Real.sqrt_nonneg _
+  have ht : 0 ≤ t := Real.sqrt_nonneg _
+  have hr2 : r ^ 2 = (d : ℝ) / ((d : ℝ) + 1) := Real.sq_sqrt (by positivity)
+  have ht2 : t ^ 2 = 1 / ((d : ℝ) + 1) := Real.sq_sqrt (by positivity)
+  have hz : z d ≠ 0 := by
+    intro h
+    have hq := (scalar_identities d hd).1
+    rw [h, norm_zero, zero_pow (by decide)] at hq
+    have : 0 < (d : ℝ) / (2 * ((d : ℝ) - 1)) := by positivity
+    linarith
+  let ρ := conj (z d) / z d
+  have hρ : ‖ρ‖ = 1 := by
+    dsimp [ρ]
+    rw [norm_div, Complex.norm_conj, div_self (norm_ne_zero_iff.2 hz)]
+  have hphase : conj (z d) * conj ρ = z d := by
+    dsimp [ρ]
+    rw [map_div₀, starRingEnd_self_apply]
+    exact mul_div_cancel₀ _ ((map_ne_zero (starRingEnd ℂ)).2 hz)
+  let b := (r : ℂ) • e₀ + (t : ℂ) • e₁
+  let c := (r : ℂ) • e₀ + (ρ * (t : ℂ)) • e₁
+  have hunit (σ : ℂ) (hσ : ‖σ‖ = 1) :
+      UnitVector (fun i => ((r : ℂ) • e₀ + (σ * (t : ℂ)) • e₁) i) := by
+    change ‖(r : ℂ) • e₀ + (σ * (t : ℂ)) • e₁‖ = 1
+    have he : ‖(r : ℂ) • e₀ + (σ * (t : ℂ)) • e₁‖ ^ 2 = 1 := by
+      rw [hnorm]
+      simp only [norm_mul, hσ, one_mul, Complex.norm_real, Real.norm_eq_abs,
+        abs_of_nonneg hr, abs_of_nonneg ht, hr2, ht2]
+      field_simp
+    nlinarith [norm_nonneg ((r : ℂ) • e₀ + (σ * (t : ℂ)) • e₁)]
+  have hb : UnitVector (fun i => b i) := by
+    simpa only [one_mul] using hunit 1 norm_one
+  have hc : UnitVector (fun i => c i) := hunit ρ hρ
+  have hb0 : b 0 = (r : ℂ) := by simp [b, e₀, e₁, PiLp.single_apply, hj']
+  have hc0 : c 0 = (r : ℂ) := by simp [c, e₀, e₁, PiLp.single_apply, hj']
+  have hb1 : b j = (t : ℂ) := by simp [b, e₀, e₁, PiLp.single_apply, hj]
+  have hc1 : c j = ρ * (t : ℂ) := by simp [c, e₀, e₁, PiLp.single_apply, hj]
+  let χ := contraction d 0 (fun i => b i) (fun i => c i)
+  have hχ : χ = ((r ^ 2 : ℝ) : ℂ) • e₀ +
+      (2 * z d * ((r * t : ℝ) : ℂ)) • e₁ := by
+    ext i
+    by_cases hi0 : i = 0
+    · subst i
+      change (contraction d 0 (fun i => b i) (fun i => c i)) 0 = _
+      rw [contraction_at_index, hb0, hc0]
+      simp [e₀, e₁, PiLp.single_apply, hj', pow_two]
+    · by_cases hi1 : i = j
+      · subst i
+        change conj (z d) * conj (b 0) * conj (c j) +
+          z d * conj (c 0) * conj (b j) = _
+        rw [hb0, hc0, hb1, hc1]
+        simp only [map_mul, Complex.conj_ofReal]
+        calc
+          _ = (conj (z d) * conj ρ + z d) * ((r * t : ℝ) : ℂ) := by push_cast; ring
+          _ = _ := by
+            rw [hphase]
+            change (z d + z d) * ((r * t : ℝ) : ℂ) =
+              ((r ^ 2 : ℝ) : ℂ) * e₀ j + (2 * z d * ((r * t : ℝ) : ℂ)) * e₁ j
+            have he0 : e₀ j = 0 := by simp [e₀, PiLp.single_apply, hj]
+            have he1 : e₁ j = 1 := by simp [e₁, PiLp.single_apply]
+            rw [he0, he1]
+            ring
+      · simp [χ, contraction, b, c, e₀, e₁, PiLp.single_apply, hi0, hi1]
+  have henergy : ‖χ‖ ^ 2 = sharpValue d * ((d : ℝ) + 1) := by
+    calc
+      _ = (r ^ 2) ^ 2 + 4 * ‖z d‖ ^ 2 * r ^ 2 * t ^ 2 := by
+        rw [hχ, hnorm]
+        simp only [norm_mul, Complex.norm_ofNat, Complex.norm_real, Real.norm_eq_abs,
+          abs_of_nonneg (sq_nonneg r), abs_of_nonneg (mul_nonneg hr ht),
+          abs_of_nonneg hr, abs_of_nonneg ht]
+        ring
+      _ = _ := by
+        rw [(scalar_identities d hd).1, hr2, ht2]
+        unfold sharpValue
+        field_simp [ne_of_gt hd1, ne_of_gt hd2, ne_of_gt hdp]
+        <;> ring
+  exact contraction_attains d hd 0 (fun i => b i) (fun i => c i) hb hc henergy
+
 
 private lemma basis_supremum (d : ℕ) [NeZero d] (hd : 2 ≤ d) :
     sSup (overlapSet (φ d 0)) = sharpValue d := by
