@@ -38,6 +38,12 @@ srcDir = "../lean-inspector"
 roots = ["LeanInformationAuditRegAnalysis"]
 globs = ["LeanInformationAuditRegAnalysis.+"]
 
+[[lean_lib]]
+name = "LeanInformationAuditLookupDisk"
+srcDir = "../lean-inspector"
+roots = ["LeanInformationAuditRegAnalysis.SearchReduction.DiskLookup"]
+precompileModules = true
+
 [[lean_exe]]
 name = "compiledJudgeTests"
 srcDir = "../lean-inspector"

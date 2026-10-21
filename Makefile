@@ -199,7 +199,11 @@ search-reduction:
 
 # Replay only after the runner and request imports have been built.
 search-reduction-run:
-	@test -f "$$SEARCH_REDUCTION_REQUESTS" || { echo 'REQUESTS must name a Lean declaration list' >&2; exit 2; }; lake -d tools/lean-inspector-reg env lean -j1 "$$SEARCH_REDUCTION_REQUESTS"
+	@test -f "$$SEARCH_REDUCTION_REQUESTS" || { echo 'REQUESTS must name a Lean declaration list' >&2; exit 2; }; \
+	case "$$(uname -s)" in Darwin) lookup_ext=dylib ;; *) lookup_ext=so ;; esac; \
+	lookup_lib=".lake/build/lean-inspector/reg/lib/libregInspector_LeanInformationAuditLookupDisk.$$lookup_ext"; \
+	test -f "$$lookup_lib" || { echo 'Build SearchReduction.Commands before replaying requests' >&2; exit 2; }; \
+	lake -d tools/lean-inspector-reg env lean --load-dynlib="$$lookup_lib" -j1 "$$SEARCH_REDUCTION_REQUESTS"
 search-reduction search-reduction-run: export SEARCH_REDUCTION_REQUESTS := $(value REQUESTS)
 
 search-reduction-test: search-reduction-index-fixtures

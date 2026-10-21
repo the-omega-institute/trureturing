@@ -521,20 +521,62 @@ def openIndex (directory : System.FilePath) (basis mathlib : String)
     throw <| IO.userError "lookup.index_snapshot_mismatch"
   return {directory := directory / header.storage, header, excluded}
 
-private def readChecked [FromJson α] (path : System.FilePath) (digest : UInt64) : IO α := do
+private structure PackedPage where
+  bytes : ByteArray
+  spans : Array (Nat × Nat)
+
+private partial def packedSpans (bytes : ByteArray) (i start : Nat)
+    (quoted escaped : Bool) (spans : Array (Nat × Nat)) : Option (Array (Nat × Nat)) :=
+  if i >= bytes.size then if quoted then none else some spans
+  else
+    let byte := bytes[i]!
+    if quoted then
+      if escaped then packedSpans bytes (i + 1) start true false spans
+      else if byte == 92 then packedSpans bytes (i + 1) start true true spans
+      else if byte == 34 then packedSpans bytes (i + 1) start false false (spans.push (start, i + 1))
+      else packedSpans bytes (i + 1) start true false spans
+    else if byte == 34 then packedSpans bytes (i + 1) i true false spans
+    else if byte == 91 || byte == 93 || byte == 44 || byte == 32 ||
+        byte == 10 || byte == 13 || byte == 9 then
+      packedSpans bytes (i + 1) start false false spans
+    else none
+
+private def packedPage (bytes : ByteArray) : Except String PackedPage := do
+  let some spans := packedSpans bytes 0 0 false false #[]
+    | throw "lookup.invalid_packed_page"
+  return {bytes, spans}
+
+private structure ReadCache where
+  records : Std.HashMap String PackedPage := {}
+  bytes : Nat := 0
+
+private def readChecked [FromJson α] (cache : IO.Ref ReadCache)
+    (path : System.FilePath) (digest : UInt64) : IO α := do
   let parts := path.toString.splitOn "#"
   let (file, slot?) := if parts.length > 1 then
       match parts.getLast!.toNat? with
       | some slot => (System.FilePath.mk (String.intercalate "#" parts.dropLast), some slot)
       | none => (path, none)
     else (path, none)
-  let physical ← IO.FS.readFile file
   let text ← match slot? with
-    | none => pure physical
+    | none => IO.FS.readFile file
     | some slot => do
-      let records : Array String ← IO.ofExcept <| fromJson? (← IO.ofExcept <| Json.parse physical)
-      let some text := records[slot]? | throw <| IO.userError "lookup.packed_record_missing"
-      pure text
+      let records ← match (← cache.get).records[file.toString]? with
+        | some records => pure records
+        | none => do
+          let physical ← IO.FS.readBinFile file
+          let records ← IO.ofExcept (packedPage physical)
+          -- Packed records share a physical page. Decode that page once,
+          -- retaining at most 16 MiB of page payload within this query.
+          cache.modify fun old =>
+            let old := if old.bytes + physical.size > 16777216 then {} else old
+            {records := old.records.insert file.toString records,
+             bytes := old.bytes + physical.size}
+          pure records
+      let some (start, stop) := records.spans[slot]? | throw <| IO.userError "lookup.packed_record_missing"
+      let some encoded := String.fromUTF8? (records.bytes.extract start stop)
+        | throw <| IO.userError "lookup.invalid_packed_utf8"
+      IO.ofExcept <| fromJson? (← IO.ofExcept <| Json.parse encoded)
   unless hash text == digest do throw <| IO.userError s!"lookup.index_page_mismatch:{path}"
   IO.ofExcept <| fromJson? (← IO.ofExcept <| Json.parse text)
 
@@ -543,7 +585,7 @@ private def nodePath (directory : System.FilePath) (file : String) : System.File
     directory / file
   else directory / s!"{file}.node.json"
 
-private partial def routedChildren (index : Index) (node : Node)
+private partial def routedChildren (cache : IO.Ref ReadCache) (index : Index) (node : Node)
     (wanted : Option (List String)) : IO (Array (String × String × UInt64)) := do
   let mut children := #[]
   for child in node.children do
@@ -554,8 +596,8 @@ private partial def routedChildren (index : Index) (node : Node)
       let some depth := depthText.toNat? | throw <| IO.userError "lookup.invalid_routing_depth"
       let some bucket := bucketText.toNat? | throw <| IO.userError "lookup.invalid_routing_bucket"
       if wanted.any (fun keys => !keys.any (fun key => routeByte key depth == bucket)) then continue
-      let page : Node ← readChecked (nodePath index.directory next) digest
-      children := children ++ (← routedChildren index page wanted)
+      let page : Node ← readChecked cache (nodePath index.directory next) digest
+      children := children ++ (← routedChildren cache index page wanted)
     else if wanted.all (·.contains token) then children := children.push child
   return children.qsort (fun a b => a.1 < b.1)
 
@@ -568,20 +610,20 @@ private partial def skip (keys : List String) (pending : Nat) : List String :=
   | [] => []
   | key :: rest => skip rest (pending - 1 + arity key)
 
-private partial def collect (index : Index) (file : String) (digest : UInt64)
+private partial def collect (cache : IO.Ref ReadCache) (index : Index) (file : String) (digest : UInt64)
     (query : List String) (storedPending : Nat := 0) : IO Candidates := do
-  let node : Node ← readChecked (nodePath index.directory file) digest
+  let node : Node ← readChecked cache (nodePath index.directory file) digest
   let mut result : Candidates := {complete := true}
   if query.isEmpty && storedPending == 0 then
     for page in node.pages do
-      let entries : Array Entry ← readChecked (index.directory / page.file) page.digest
+      let entries : Array Entry ← readChecked cache (index.directory / page.file) page.digest
       unless entries.size == page.count do throw <| IO.userError "lookup.index_page_count"
       result := {result with
         pages := result.pages + 1,
         entries := result.entries ++ entries.filter (fun e => !index.excluded.contains e.module.toName)}
   let wanted := if storedPending > 0 || query.head? == some "*" then none
     else some (match query with | [] => [] | q :: _ => [q, "*"])
-  for (token, next, nextDigest) in (← routedChildren index node wanted) do
+  for (token, next, nextDigest) in (← routedChildren cache index node wanted) do
     let remaining? := if storedPending > 0 then
         some (query, storedPending - 1 + arity token)
       else match query with
@@ -591,7 +633,7 @@ private partial def collect (index : Index) (file : String) (digest : UInt64)
           else if q == "*" then some (qs, arity token)
           else if q == token then some (qs, 0) else none
     if let some (remaining, pending) := remaining? then
-      let found ← collect index next nextDigest remaining pending
+      let found ← collect cache index next nextDigest remaining pending
       result := {result with
         entries := result.entries ++ found.entries,
         complete := result.complete && found.complete, pages := result.pages + found.pages}
@@ -600,13 +642,18 @@ private partial def collect (index : Index) (file : String) (digest : UInt64)
 /-- Missing or corrupt nodes/pages are incomplete, never certified negatives.
 Only matching branches and necessary wildcard branches are read. -/
 def query (index : Index) (keys : List String) : IO Candidates := do
+  let started ← IO.monoMsNow
+  let heartbeats ← IO.getNumHeartbeats
   try
-    let result ← collect index index.header.root index.header.digest keys
+    let cache ← IO.mkRef ({} : ReadCache)
+    let result ← collect cache index index.header.root index.header.digest keys
     let mut seen : NameSet := {}
     let mut entries := #[]
     for entry in result.entries do
       let name := entry.leanName
       unless seen.contains name do entries := entries.push entry; seen := seen.insert name
+    if (← IO.getEnv "SEARCH_REDUCTION_PROFILE").isSome then
+      IO.eprintln s!"LOOKUP_COST index_ms={(← IO.monoMsNow) - started} heartbeats={(← IO.getNumHeartbeats) - heartbeats} pages={result.pages} candidates={entries.size}"
     return {result with entries, complete := result.complete && index.header.complete}
   catch _ => return {}
 
