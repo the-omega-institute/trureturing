@@ -24,6 +24,10 @@ $$\operatorname{let} \operatorname{deletionPosterior} := (\operatorname{fun} \{m
 
 *Proof.* Machine-checked in Lean as `D5/S3/Entropy/SinghviMaxInputEntropy.result` (`✓ std3`). ∎
 
+*Resolves.* `Problems/singhvi-sabary-barlev-yaakobi-2024-deletion-channel-max-input-entropy` (proved) by `D5/S3/Entropy/SinghviMaxInputEntropy.result`.
+
+<!-- scribe-open-problem-resolution-v1 {"problem_slug":"singhvi-sabary-barlev-yaakobi-2024-deletion-channel-max-input-entropy","declaration_gid":"D5/S3/Entropy/SinghviMaxInputEntropy.result","resolution_kind":"proved"} -->
+
 *Source.* Repository-derived.
 
 *Acknowledgement.* S. Singhvi; O. Sabary; D. Bar-Lev; E. Yaakobi (2025). *Conditional Entropies of k-Deletion/Insertion Channels*. DOI: [10.1109/TIT.2025.3581849](https://doi.org/10.1109/TIT.2025.3581849). URL: <https://arxiv.org/abs/2407.10026v2>.

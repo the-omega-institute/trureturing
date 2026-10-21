@@ -14,13 +14,17 @@ internal sealed class SinghviMaxInputEntropyDocument : IScribeDocumentDefinition
         H("SinghviMaxInputEntropy"),
         Blocks(
             Node("claim", Disp(Seq(Named("claim"), Sp, Iff, Sp, Parenthesized(ClaimBody()))), "Section VII-A, PDF p. 16: “Maximal Input Entropy for k = 2. While we provide a complete characterization of the sequences that minimize input entropy, the precise identification of the sequences that maximize input entropy for the 2-deletion and 2-insertion channels is still unresolved. Determining these sequences and the associated maximal entropy values remains an important open direction.” Binary words are functions Fin m to Bool, with false equal to 0. The seven clauses give both maximizing families, both maximal entropies, and the three insertion cases of received length two, three, and four. Received insertion length is m + 2 and input length is m. All logarithms are in bits.", DescribeRole.Definition, AssessedProvenance.FromRepo(Source)),
-            Node("result", Disp(ClaimBody()), "Alternating words and their complements are exactly the deletion maximizers at every positive received length and the insertion maximizers from received length five onward. At length three all nonconstant words maximize, and at length four precisely 0110 and 1001 maximize. Exact joint supersequence counts give the deletion run expression; strict run estimates and Jensen inequalities give its unique minimizers. Grouping deletion masks and finite small cases give the insertion comparison.", DescribeRole.Theorem, AssessedProvenance.FromRepo(Source)))));
+            Node("result", Disp(ClaimBody()), "Alternating words and their complements are exactly the deletion maximizers at every positive received length and the insertion maximizers from received length five onward. At length three all nonconstant words maximize, and at length four precisely 0110 and 1001 maximize. Exact joint supersequence counts give the deletion run expression; strict run estimates and Jensen inequalities give its unique minimizers. Grouping deletion masks and finite small cases give the insertion comparison.", DescribeRole.Theorem, AssessedProvenance.FromRepo(Source),
+                new OpenProblemResolutionClaim(
+                    ProblemSlugRef.Create("singhvi-sabary-barlev-yaakobi-2024-deletion-channel-max-input-entropy"),
+                    ResolutionKind.Proved)))));
 
     private static DocumentBlock Node(string name, Formula formula, string prose,
-        DescribeRole role, AssessedProvenance provenance) => Describe.Lean(
+        DescribeRole role, AssessedProvenance provenance,
+        OpenProblemResolutionClaim? openProblemResolutionClaim = null) => Describe.Lean(
             DescribeId.Create("singhvimaxinputentropy-" + name.Replace("_", "-").ToLowerInvariant()),
             DeclarationHandle.Create(Prefix + name), H(name), StatementSource.FromAuthor(formula),
-            provenance, Blocks(Paragraph(Text(prose))), role);
+            provenance, Blocks(Paragraph(Text(prose))), role, openProblemResolutionClaim);
 
     private static Formula Named(string name) => Seq(Operatorname, Grp(F.Id(name)));
     private static Formula Parenthesized(Formula value) => Seq(Open, value, Close);
