@@ -195,7 +195,7 @@ private lemma correlation_nonneg (ρ : TwoQubit) (hρ : ρ.PosSemidef) (ht : tra
     0 ≤ maximalMutualCorrelation ρ :=
   (norm_nonneg _).trans (witness_le ρ hρ ht 1 1 (norm_one) (norm_one))
 
-private def rotateState (U : Qubit) (ρ : TwoQubit) : TwoQubit :=
+def rotateState (U : Qubit) (ρ : TwoQubit) : TwoQubit :=
   unitaryEvolution (U ⊗ₖ (1 : Qubit))ᴴ ρ
 
 private lemma rotation_covariance (ρ : TwoQubit) (U : Matrix.unitaryGroup (Fin 2) ℂ)
@@ -224,7 +224,7 @@ private lemma rotation_covariance (ρ : TwoQubit) (U : Matrix.unitaryGroup (Fin 
   simp only [Matrix.mul_one, hU]
 
 
-private lemma rotated_spin_witness (ρ : TwoQubit) (hρ : ρ.PosSemidef) (ht : trace ρ = 1)
+lemma rotated_spin_witness (ρ : TwoQubit) (hρ : ρ.PosSemidef) (ht : trace ρ = 1)
     (U : Matrix.unitaryGroup (Fin 2) ℂ) (c d : Fin 3 → ℝ)
     (hc : vlen c = 1) (hd : vlen d = 1) :
     |c ⬝ᵥ (connectedCorrelation (rotateState U ρ) *ᵥ d)| ≤
@@ -353,7 +353,7 @@ private lemma disturbance_rotation (ρ : TwoQubit) (U : Matrix.unitaryGroup (Fin
       _ = _ := by rw [hv, Matrix.mul_one]
   rw [hp, trace_mul_cycle, hv, Matrix.one_mul]
 
-private lemma marginal_basis (ρ : TwoQubit) (hρ : ρ.PosSemidef) :
+lemma marginal_basis (ρ : TwoQubit) (hρ : ρ.PosSemidef) :
     ∃ U : Matrix.unitaryGroup (Fin 2) ℂ,
       blochA (rotateState U ρ) 0 = 0 ∧ blochA (rotateState U ρ) 1 = 0 := by
   let h := (partialTraceRight_posSemidef hρ).isHermitian

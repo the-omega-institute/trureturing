@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:664aac3b4ddc195ed8460a4ca922f34cab46b930565b5b0ed4d27038f41acc76
+  normalized_sha256: sha256:664aac3b4ddc195ed8460a4ca922f34cab46b930565b5b0ed4d27038f41acc76
+cas_ref: sha256:664aac3b4ddc195ed8460a4ca922f34cab46b930565b5b0ed4d27038f41acc76
+coverage_gids:
+  - gid: D5/S3/ConceptDynamics/Faithfulness/FiniteFaithfulSubfamilyExtraction.finite_faithful_subfamily_extraction
+    target_statement_id: sha256:9e8f97ad1f43cc9c40ff2d9f4bb17a3feed343789ae183b2726795a3447397b1
+  - gid: D5/S3/Observer/Refinement/DependentFinitePrimeTimeTomography.dependent_finite_prime_time_tomography
+    target_statement_id: sha256:7b5d8e1c64010965eb6cb67eef736697949452a4075ec0505722195db05a3e83
+receipts:
+  unresolved_subitems: []

@@ -883,3 +883,276 @@ The first inequality is the TV triangle inequality in both directions. The secon
 Proposition 7.7 proves full support for both laws from the positive original Gaussian densities and the positive Gaussian-pointer convolution (7.14) for projected inputs. The strict overlap/leakage statements now follow from (8.4); $g>0$ follows because $d$ is finite. This use of the projected law requires no Gaussianity of that law. The limit $\rho_N\to0$ holds at fixed original apparatus noise $\sigma>0$ and with the same complete fixed-word measurement; it approximates only the initial inputs. It does not remove that observation noise or identify a finite equality construction with a preparation in this family. All statements concern unconditional externally fixed-word laws and their common quantized images. $\square$
 
 ## 追加锚（本行以下为增补区）
+
+## 9. Equal-covariance Gaussian plateaux and the exact copy threshold
+
+**假设 9.1（均匀原标签与独立重复记录）。** Let $C$ be uniform on the five original labels $\{a,b,c,d,e\}$. For a positive integer $n$, conditional on $C=i$, observe
+
+$$
+ X_1,\ldots,X_n\ \overset{\mathrm{iid}}\sim\mathcal N_p(\mu_i,\Sigma),
+ \qquad p\ge1,\quad \mu_i\in\mathbb R^p,\quad \Sigma=\Sigma^T>0.
+\tag{9.1}
+$$
+
+The covariance is common to all labels and copies. Coincident means retain their separate labels and individual priors $1/5$; the affine hull of the means may have any dimension. Each repetition is an additional independent observation conditional on the same label. No legal-edge support condition (1.3) is imposed.
+
+**定义 9.2（原始平台、均值簇与有限读出）。** Put $\bar X=n^{-1}\sum_{k=1}^nX_k$. Let $v_i^{(n)}$ be the posterior given the whole tuple, and define
+
+$$
+ r_i^{(n)}=\mathbb E\min\{v_i^{(n)},1-v_i^{(n)}\},\qquad
+ \epsilon_n=\mathbb E(1-\max_i v_i^{(n)}).
+\tag{9.2}
+$$
+
+The full raw indicator plateau means $r_i^{(n)}=1/5$ for all five labels. These are unweighted binary $0$–$1$ Bayes errors under the stated deployment prior, not balanced-resampling errors or an assertion about every scoring rule. A mean cluster consists of the labels with exactly the same mean; its multiplicity is their number. For any finite Borel quantizer $Q=\kappa_n(X_1,\ldots,X_n)$ common to the five labels, use $r_i(Q)$ and $\epsilon(Q)$ as in Definition 1.1. The quantizer may depend on the specified experiment and on $n$. Write
+
+$$
+ \langle x,y\rangle_{\Sigma^{-1}}=x^T\Sigma^{-1}y,\qquad
+ h_e(\theta)=-\theta\ln\theta-(1-\theta)\ln(1-\theta),
+ \quad 0<\theta<1.
+\tag{9.3}
+$$
+
+Here $h_e$ uses natural logarithms, unlike $h$ in Definition 1.1.
+
+**定理 9.3（五标签的穷尽平台分类与首个逃逸整数）。** Under Assumption 9.1 the full raw plateau holds for every positive integer $n$ precisely in either of the following permanent cases: there is one mean cluster, or there are exactly two distinct mean clusters of multiplicities $2$ and $3$. The only other configuration that can have a raw plateau is three distinct clusters with multiplicities $2,1,2$, whose singleton mean lies strictly between the two double-cluster means. Denote these means by
+
+$$
+ \mu_0=(1-\theta)\mu_-+\theta\mu_+,\qquad
+ 0<\theta<1,\qquad
+ \Delta^2=\|\mu_+-\mu_-\|_{\Sigma^{-1}}^2>0.
+\tag{9.4}
+$$
+
+In this configuration the exact criterion and first escaping copy number are
+
+$$
+ \boxed{\quad r_i^{(n)}=1/5\ \text{for all }i
+ \iff n\le n_{\rm crit},\qquad
+ n_{\rm crit}=\frac{2[\ln2+h_e(\theta)]}
+ {\theta(1-\theta)\Delta^2},\qquad
+ n_{\rm esc}=\lfloor n_{\rm crit}\rfloor+1.\quad}
+\tag{9.5}
+$$
+
+Only the singleton indicator can improve in this case. Equality in (9.5) belongs to the plateau: if $n_{\rm crit}$ is an integer, escape starts at the next integer; if $n_{\rm crit}<1$, escape starts at $1$. Every configuration outside the permanent cases and (9.4) has an exposed singleton mean whose indicator strictly improves for every $n\ge1$. Endpoint coincidences $\theta=0,1$ merge the singleton with an endpoint and give the permanent $3+2$ case; if the endpoints coincide, all three means coincide. These degeneracies use the cluster classification, not division by zero in (9.5).
+
+Within this experiment, the raw plateau is equivalent to the plateau of every finite common Borel quantizer. When the raw plateau fails, some two-bin common Borel quantizer retains a strict indicator improvement. This is an application of the mature binary Bayes/conditioning identities used in Proposition 2.1, not an additional generic comparison theorem. A constant quantizer always has the full plateau, including when the raw experiment escapes; no threshold is asserted for an arbitrary fixed quantizer.
+
+Proof. The classical common-covariance Gaussian discriminants, as in Hastie–Tibshirani–Friedman, [*The Elements of Statistical Learning*, corrected twelfth printing, §4.3, equation (4.10), printed p.109](https://hastie.su.domains/ElemStatLearn/download.html), give here
+
+$$
+ \begin{aligned}
+ \ell_i(x)&=n\langle\mu_i,x\rangle_{\Sigma^{-1}}
+       -\tfrac n2\|\mu_i\|_{\Sigma^{-1}}^2,\\
+ v_i^{(n)}(x)&=\frac{e^{\ell_i(x)}}{\sum_j e^{\ell_j(x)}},
+ \qquad x=\bar X.
+ \end{aligned}
+\tag{9.6}
+$$
+
+Indeed expanding the product density cancels every term independent of the label, leaving (9.6); thus the full tuple has the same posterior as its mean. The equal priors cancel per original label, not per mean cluster. The identity (2.3) becomes
+
+$$
+ \frac15-r_i^{(n)}=\mathbb E(2v_i^{(n)}(\bar X)-1)_+.
+\tag{9.7}
+$$
+
+All posteriors in (9.6) are continuous and the law of $\bar X$ has an everywhere positive density. Therefore the raw plateau is equivalent to $v_i^{(n)}(x)\le1/2$ for every $i,x$. A label in a cluster of multiplicity $m\ge2$ satisfies $v_i^{(n)}(x)\le1/m\le1/2$ for all $x,n$. If every cluster has multiplicity at least two, five labels allow exactly the two permanent cases stated above.
+
+For a singleton mean that is a vertex of the convex hull of the distinct means, strictly separate that vertex from the convex hull of the others. Equivalently, for the whitened means $b_j=\Sigma^{-1/2}\mu_j$, there is a vector $u$ with $u^Tb_i>u^Tb_j$ for all other clusters. Along $\Sigma^{-1/2}x=tu$ as $t\to\infty$, (9.6) makes its posterior tend to one for each fixed $n>0$. It consequently exceeds $1/2$ on an open set of positive probability, giving strict improvement by (9.7). If there are at least two distinct means and no singleton vertex, at least two vertices must each have multiplicity at least two. They use at least four labels. Thus either they exhaust the clusters in the $2+3$ case, or the only remaining label is a singleton strictly inside their segment, giving exactly (9.4). This proves exhaustiveness, including lower-dimensional affine hulls.
+
+For (9.4) set $d=\mu_+-\mu_-$, $R=n\Delta^2$, and $T=n\langle d,x-\mu_0\rangle_{\Sigma^{-1}}$. Since $d\ne0$, $T$ ranges over all real numbers. After dividing the endpoint likelihoods by the singleton likelihood, its posterior is $v_0^{(n)}=1/(1+F_n(T))$, where
+
+$$
+ \begin{aligned}
+ F_n(T)&=2e^{-\theta T-\theta^2R/2}
+        +2e^{(1-\theta)T-(1-\theta)^2R/2},\\
+ T_*&=\ln\frac{\theta}{1-\theta}+\frac{1-2\theta}{2}R,\\
+ \min_{T\in\mathbb R}F_n(T)
+ &=F_n(T_*)
+ =2\exp\!\left(h_e(\theta)-\tfrac12\theta(1-\theta)n\Delta^2\right).
+ \end{aligned}
+\tag{9.8}
+$$
+
+To verify the minimum, differentiate: $F_n''>0$, $F_n\to\infty$ at both ends, and $F_n'=0$ says that the second exponential divided by the first is $\theta/(1-\theta)$. Substitution gives (9.8). This is the two-coordinate log-sum-exp/entropy conjugacy of Boyd–Vandenberghe, [*Convex Optimization*, Example 3.25, printed p.93](https://web.stanford.edu/~boyd/cvxbook/bv_cvxbook.pdf), used as an intermediate tool. The condition $F_n\ge1$ everywhere is exactly (9.5). At equality the singleton reaches $1/2$ only on the hyperplane $T=T_*$, which has probability zero. Above the threshold it exceeds $1/2$ on a nonempty open slab, so the improvement is strict. Since $n_{\rm crit}$ is positive and finite, the integer and permanent-case assertions follow.
+
+For the finite-readout assertions, the posterior given $Q$ is $\mathbb E[v_i^{(n)}\mid Q]$. Hence a raw plateau remains a plateau under every such quantizer. Conversely, if label $i$ improves, use the two bins of its Bayes decision,
+$Q_i=\mathbf1_{\{v_i^{(n)}(\bar X)>1/2\}}$. On each bin the optimal binary action is constant, so $r_i(Q_i)=r_i^{(n)}<1/5$. A constant readout has posterior $1/5$ at every label. The quantifiers concern all finite quantizers or an experiment-dependent witness, not preservation of escape by an unspecified fixed readout. $\square$
+
+**定理 9.4（对称分类风险与共同有限见证）。** In dimension one take $\Sigma=s^2$, $s>0$, and means $(-a,0,a)$ with multiplicities $(2,1,2)$, $a>0$. Put $q=\sqrt n\,a/s$. Then
+
+$$
+ \boxed{\epsilon_n=\frac{6-4\Phi(q/2)}5<\frac45,\qquad
+ \text{full raw plateau}\iff\frac{q^2}{2}\le\ln4.}
+\tag{9.9}
+$$
+
+The finite common readout reporting which of the three intervals
+
+$$
+ \bar X<-a/2,\qquad -a/2\le\bar X\le a/2,\qquad \bar X>a/2
+\tag{9.10}
+$$
+
+contains the sample mean has exactly the same categorical Bayes error as the raw tuple. Throughout the plateau range in (9.9), it also has $r_i(Q)=1/5$ for every original label. Thus one finite joint law exhibits categorical improvement and the full unweighted indicator plateau simultaneously. This is an observation-law witness, not an asserted preparation tuple in the source model.
+
+Proof. Equal original-label priors make a categorical Bayes rule choose the largest individual likelihood, rather than the cluster likelihood multiplied by its multiplicity. The three maximizing mean regions are (9.10); within either double cluster choose one fixed representative label. The conditional probabilities of its correct region at means $-a,0,a$ are respectively $\Phi(q/2)$, $2\Phi(q/2)-1$, $\Phi(q/2)$. Only one label per cluster is guessed, so the total correct probability is $(4\Phi(q/2)-1)/5$, proving the error formula. The same rule is a function of the finite readout (9.10), so its categorical risk equals the raw optimum; quantization cannot improve that optimum. Since $q>0$, $\Phi(q/2)>1/2$, giving the displayed strict categorical improvement. Substituting $\theta=1/2$ and $\Delta^2=4a^2/s^2$ in (9.5) gives $q^2/2\le\ln4$, including equality. The finite plateau then follows from Theorem 9.3. All finite $q$ give positive categorical error, and the error tends to $2/5$ as $q\to\infty$ because the duplicate labels remain indistinguishable. The existence of this common three-bin witness supplies no escape threshold for an arbitrary fixed quantizer. $\square$
+
+**定理 9.5（原始固定词高斯源的条件代入）。** Supply five original preparations $W_i\in K_J$ exactly as in Assumptions 7.6 and 8.4, with uniform original labels, one externally fixed word $w=E_1\cdots E_t$, $0\le t\le7$, and fixed apparatus noise $\sigma>0$. For their complete original record laws set
+
+$$
+ p=t+1,\qquad \mu_i=L_wm_{W_i}=L_w\mu(W_i),\qquad
+ \Sigma=\tfrac12L_wL_w^T+\sigma^2I_{t+1}.
+\tag{9.11}
+$$
+
+For $n=1$, Theorem 9.3 applies to precisely this original observation. For $n>1$, it applies if each copy is produced by an independent preparation conditional on the same label, using that same word and apparatus. The experiment consumes $n$ independently prepared copies in total, each with its full record; the later copies are additional resources, not extra reads extracted from the first preparation. With the supplied means, its classification and threshold hold for the raw records, imply a plateau for every finite common quantization when the raw plateau holds, and guarantee an escaping two-bin quantization when it fails. The symmetric conclusion of Theorem 9.4 applies only if the supplied observation laws have its specified symmetric parameters; no such preparation attainer is asserted.
+
+Proof. [The Gaussian record volume, Theorem 5.1 and Proposition 14.2](FIB_SHARED_GAUSSIAN_RECORD_LAWS.md) give exactly $\nu_w(W_i)=\mathcal N_{t+1}(L_wm_{W_i},\Sigma)$, with $\Sigma\succeq\sigma^2I>0$ independent of $i$. Conditional independence of the separately prepared repetitions gives (9.1); correlations among the clock reads within one full record remain in $\Sigma$. The equal label prior is explicitly supplied, so (9.11) verifies every hypothesis of the preceding classification, with no prior on all of $K_J$ required.
+
+The normalized projected-input laws of the source's §14 need not be Gaussian. Their TV approximation to the original laws does not supply this exact Gaussian plateau threshold or transfer a plateau equality between the two families. For each finite $n$, the original conditional product densities are everywhere positive; hence no zero-error categorical decision follows from escape, consistently with the finite-copy equivalence argument in the source's §33. This conditional substitution assumes the specified preparations and fixed protocol; it establishes no native atom encoding, preparation realization or cost, adaptive-word conclusion, unequal-prior or unequal-covariance extension, training gain, empirical truth or useful uniform positive error margin. The Gaussian discriminants, entropy conjugacy, Bayes partitions and exposed-vertex argument are mature intermediate tools. The five-label multiplicity classification, exact copy boundary and witness above are repo-derived application exposition, without a global-priority claim. $\square$
+
+## 追加锚（本行以下为增补区）
+
+## 10. Exact singleton gain, acquisition targets and inward-threshold retention
+
+**假设 10.1（对称实验与已知律风险）。** Retain exactly the experiment of Theorem 9.4: five original labels with priors $1/5$, scalar means $(-a,0,a)$ of multiplicities $(2,1,2)$, common variance $s^2$, and $a,s>0$. Denote the singleton label by $0$. For a positive integer $n$, given one fixed label, the observations come from conditionally independent preparations as in (9.1), and
+
+$$
+ Y=\frac{\sqrt n\,\bar X}{s},\qquad
+ q=\frac{\sqrt n\,a}{s},\qquad
+ q_c=\sqrt{2\ln4},\qquad
+ e=\frac{q^2}{2}-\ln4,\qquad
+ B(q)=\frac15-r_0(q).
+\tag{10.1}
+$$
+
+Here $r_0(q)$ is the singleton's binary $0$–$1$ Bayes risk for the full observation under its known law. Conditional on the three means, $Y$ has laws $\mathcal N(-q,1)$, $\mathcal N(0,1)$ and $\mathcal N(q,1)$, respectively. The same three laws define a continuous interpolation for real $q>0$; actual copy counts remain positive integers. Let $\phi$ and $\Phi$ be the standard normal density and distribution function.
+
+The Bayes and conditioning identities of Proposition 2.1 and §9 are reused below. As mature statistical context, Audibert–Tsybakov, [*Fast learning rates for plug-in classifiers*, equation (1.1) and margin assumption (1.7)](https://arxiv.org/pdf/0708.2321), study classifier estimation regret and the posterior margin for a fixed experiment. Here the classifier is already Bayes optimal and $q$ changes the experiment; the local exponent below is not a training rate or a neural-learning exponent. The following is repo-derived application exposition of these mature tools, without a claim of literature novelty or global priority.
+
+**定理 10.2（精确增益及其起始系数）。** For $0<q\le q_c$, $B(q)=0$. For $q>q_c$, set
+
+$$
+ z=z(q)=\frac{\operatorname{arcosh}(\exp(e))}{q}.
+$$
+
+Then
+
+$$
+ \boxed{B(q)=\frac{2\Phi(z)-1
+ -4\bigl(\Phi(z-q)+\Phi(z+q)-1\bigr)}5.}
+\tag{10.2}
+$$
+
+The function is continuous at $q_c$, strictly increasing on $(q_c,\infty)$, satisfies $0<B(q)<1/5$ at every finite $q>q_c$, and tends to $1/5$ as $q\to\infty$. Along the continuous interpolation, as $e\downarrow0$ through positive values,
+
+$$
+ \boxed{B(q)\sim C e^{3/2},\qquad
+ C=\frac4{15q_c\sqrt\pi}.}
+\tag{10.3}
+$$
+
+Proof. Equal priors per original label and (9.6) give the singleton posterior $v_0(y)=(1+4e^{-q^2/2}\cosh(qy))^{-1}$. Multiplying the positive-part identity (9.7) by the mixture density gives
+
+$$
+ \begin{aligned}
+ D_q(y)&=\phi(y)-2\phi(y-q)-2\phi(y+q)
+       =\phi(y)\bigl[1-e^{-e}\cosh(qy)\bigr],\\
+ B(q)&=\frac15\int_{\mathbb R}(D_q(y))_+\,dy.
+ \end{aligned}
+\tag{10.4}
+$$
+
+Thus $D_q\le0$ everywhere when $e\le0$; at $e=0$ its sole zero is $y=0$. For $e>0$ its positive set is exactly $(-z,z)$. Integrating the three Gaussian densities on this interval proves (10.2), including the factor four from the two labels at each endpoint.
+
+On $(q_c,\infty)$ the endpoints are smooth and $D_q(\pm z)=0$, so differentiating that finite-interval integral has no endpoint term and yields
+
+$$
+ B'(q)=\frac45\bigl[\phi(z-q)-\phi(z+q)\bigr]>0.
+\tag{10.5}
+$$
+
+Indeed $(z+q)^2-(z-q)^2=4zq>0$. Positivity follows also from the positive integrand near zero, and
+$B(q)\le[2\Phi(z)-1]/5<1/5$ for finite $z$. As $q\downarrow q_c$, $z\to0$ and (10.2) tends to zero. As $q\to\infty$, $\operatorname{arcosh}(\exp(e))=e+\ln2+o(1)$, hence $z=q/2-(\ln2)/q+o(q^{-1})$. Consequently $z\to\infty$, $z-q\to-\infty$ and $z+q\to\infty$, giving the stated limit in (10.2).
+
+For the onset, put $t=qz=\operatorname{arcosh}(\exp(e))$. Taylor expansion of $\cosh t=\exp(e)$ at zero gives $t^2=2e+O(e^2)$, while $q=q_c+O(e)$ and $z\sim\sqrt{2e}/q_c$. Uniformly for $-1\le x\le1$,
+
+$$
+ \begin{aligned}
+ 1-e^{-e}\cosh(tx)&=e(1-x^2)+O(e^2),\\
+ \phi(zx)&=\phi(0)(1+O(e)),\\
+ B(q)&=\frac{ze\phi(0)}5
+       \left[\int_{-1}^1(1-x^2)\,dx+O(e)\right]
+       \sim\frac{4\sqrt2\phi(0)}{15q_c}e^{3/2}.
+ \end{aligned}
+\tag{10.6}
+$$
+
+Since $\phi(0)=(2\pi)^{-1/2}$, the coefficient is exactly (10.3). This is a local asymptotic, and does not supply a useful uniform positive gain as the threshold is approached. $\square$
+
+**推论 10.3（给定正增益的最少独立取得次数）。** For each $0<\delta<1/5$, there is exactly one $q_\delta>q_c$ with $B(q_\delta)=\delta$. Under Assumption 10.1 the least permitted number of copies achieving $B(\sqrt n\,a/s)\ge\delta$ is
+
+$$
+ \boxed{n_\delta=\left\lceil (s/a)^2q_\delta^2\right\rceil.}
+\tag{10.7}
+$$
+
+Equality at the continuous target achieves the target; no extra copy is required when $(s/a)^2q_\delta^2$ is an integer. Before integer rounding, the excess precision satisfies
+
+$$
+ e_\delta=\frac{q_\delta^2}{2}-\ln4
+ \sim\left(\frac\delta C\right)^{2/3}
+ \quad(\delta\downarrow0).
+\tag{10.8}
+$$
+
+For $\delta=0$ the least allowed count is $1$; $\delta=1/5$ is unattainable at finite $n$. The count in (10.7) concerns independent acquisitions conditional on one label, and omits preparation, control and threshold-computation costs. It is neither a training-set size nor the number of repeated reads of one preparation.
+
+Proof. Continuity, strict increase and the endpoint limits in Theorem 10.2 prove existence and uniqueness. For positive integer $n$, monotonicity gives $B(\sqrt n\,a/s)\ge\delta$ exactly when $n\ge(s/a)^2q_\delta^2$, proving the ceiling and its equality case. As $\delta\downarrow0$, $q_\delta\downarrow q_c$; substituting into (10.3) and inverting gives (10.8). The endpoint targets follow from $B\ge0$ and its strict finite-$q$ upper bound. Continuous interpolation and (10.8) introduce no fractional preparations and no asymptotic assertion about a ceiling's rounding error. $\square$
+
+**定理 10.4（向内阈值误差下的量化增益保留）。** Fix $q>q_c$ and let the same binary Borel readout for all five labels be $Q_u=\mathbf1_{\{|Y|<u\}}$, where $0\le u\le z(q)$. Its singleton Bayes gain is exactly
+
+$$
+ \begin{aligned}
+ G(q,u)&:=\frac15-r_0(Q_u)\\
+ &=\frac{2\Phi(u)-1
+ -4\bigl(\Phi(u-q)+\Phi(u+q)-1\bigr)}5,
+ \qquad G(q,z)=B(q).
+ \end{aligned}
+\tag{10.9}
+$$
+
+If an inward placement error is explicitly assumed to satisfy $0\le z-u\le h<z$, then
+
+$$
+ G(q,u)\ge G(q,z-h).
+\tag{10.10}
+$$
+
+In particular, for $0<\theta<1$, the known-law inequality $G(q,z-h)\ge\theta B(q)$ is sufficient to retain at least a fraction $\theta$ of the raw singleton gain for every placement obeying that error bound. Along $e\downarrow0$, if $u/z\to\rho\in[0,1]$, then
+
+$$
+ \boxed{\frac{G(q,u)}{B(q)}\longrightarrow
+ \frac{3\rho-\rho^3}{2}.}
+\tag{10.11}
+$$
+
+Thus placing $u=z/2$ retains asymptotically $11/16$ of the gain.
+
+Proof. The signed difference of the joint masses for singleton versus nonsingleton on $A_u=(-u,u)$ is $\frac15\int_{A_u}D_q(y)\,dy\ge0$, since $A_u\subseteq(-z,z)$. Its difference on the complement is $-3/5-\frac15\int_{A_u}D_q<0$, because $\frac15\int_{\mathbb R}D_q=-3/5$. Hence the binary Bayes action based on $Q_u$ guesses singleton on its central bin and nonsingleton on its complement. At $u=0$ the central bin is null and only the latter action matters. Subtracting this risk from $1/5$ gives $G(q,u)=\frac15\int_{-u}^uD_q$, proving (10.9) for the quantized Bayes optimum, rather than merely for a proposed decision rule. Boundary points have zero probability.
+
+On $0\le u\le z$, the integrand is nonnegative, so $G$ is nondecreasing in $u$ and (10.10) follows. For the ratio write $v=u/z$. The uniform expansion (10.6), now integrated on $[-v,v]$, gives uniformly for $0\le v\le1$,
+
+$$
+ \frac{G(q,u)}{B(q)}
+ =\frac{2v-2v^3/3+O(e)}{4/3+O(e)}.
+$$
+
+Taking $v\to\rho$ proves (10.11), including both endpoints; at $\rho=1/2$ it equals $11/16$.
+
+This retention statement assumes the stated inward threshold bound. A two-symbol output alphabet by itself establishes neither finite physical threshold precision nor a cheap implementation, and the law-dependent choice of $u$ supplies no guarantee for an arbitrary fixed quantizer. The conditional source substitution remains exactly Theorem 9.5, using [the Gaussian record volume, Theorem 5.1 and Proposition 14.2](FIB_SHARED_GAUSSIAN_RECORD_LAWS.md): no preparation realizing these symmetric means is asserted, and Gaussianity of the original law supplies no Gaussianity for a projected-input law. The Gaussian experiment, existence of a finite readout and physical precision of that readout are separate claims. These known-law conclusions establish no native atom encoding, adaptive-word result, empirical or out-of-distribution performance, or training gain. $\square$
+
+## 追加锚（本行以下为增补区）
