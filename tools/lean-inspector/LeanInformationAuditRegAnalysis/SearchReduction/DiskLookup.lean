@@ -7,7 +7,7 @@ Only candidate certificates carry semantic authority. -/
 namespace LeanInformationAudit.SearchReduction.DiskLookup
 open Lean Meta
 
-abbrev version : String := "R_lookup/discrtree-pickle-v3"
+abbrev version : String := "R_lookup/discrtree-pickle-v4"
 
 structure Entry where
   module : String
@@ -190,8 +190,11 @@ unsafe def produceShard (storage : System.FilePath) (planPath resultPath : Syste
       let mut roots := roots
       let mut count := 0
       let mut indexed := 0
+      let mut known : NameSet := {}
       for part in parts do
         for info in part.constants do
+          if known.contains info.name then continue
+          known := known.insert info.name
           count := count + 1
           let some stable := (env.setExporting false).find? info.name
             | throw <| IO.userError s!"lookup.declaration_not_loaded:{info.name}"
@@ -369,7 +372,7 @@ unsafe def produceMature (directory : System.FilePath) (basis mathlib : String)
         IO.println (toJson old).compress
         return old
   catch _ => pure ()
-  let storage := directory / s!"discrtree-pickle-v3-{inputs}"
+  let storage := directory / s!"discrtree-pickle-v4-{inputs}"
   IO.FS.createDirAll storage
   let mut all : ShardResult := {missing}
   let ordinary := selected.filter fun n => !n.toString.startsWith "D5."
