@@ -5,7 +5,7 @@ the baseline environment or constructs an environment-wide tree. -/
 namespace LeanInformationAudit.SearchReduction
 open Lean Meta
 
-abbrev lookupVersion : String := "R_lookup/one-B/disk-beta-zeta-alpha-v5-independent"
+abbrev lookupVersion : String := "R_lookup/one-B/disk-beta-zeta-alpha-v6-independent"
 
 /-- The table is captured before delivery vocabulary or S is installed. A
 partial basis may supply a hit, but never a completed negative query. -/
