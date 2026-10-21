@@ -96,6 +96,15 @@ def a (d : ℕ) (t : ℝ) : ℝ := a2 d t * d
 /-- The distinguished diagonal coefficient. -/
 def k (d : ℕ) (t : ℝ) : ℝ := a d t + b t
 
+lemma sum_Q {d : ℕ} (U : Matrix.unitaryGroup (Fin d) ℂ) :
+    ∑ x, Q U x = 1 := by
+  ext i j
+  simp [Q, Matrix.sum_apply, Matrix.mul_apply, Matrix.single]
+  rw [← Finset.sum_mul]
+  rw [← Matrix.mul_apply]
+  rw [Matrix.mem_unitaryGroup_iff'.mp U.2]
+  simp
+
 /-- The quadratic certificate used in the standard-basis argument. -/
 def qCertificate (d : ℕ) (aa bb cc : ℝ) (x : Fin d)
     (w : Matrix (Fin d) (Fin d) ℂ) : ℝ :=
