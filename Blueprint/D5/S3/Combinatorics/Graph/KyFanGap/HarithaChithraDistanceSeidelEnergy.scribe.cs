@@ -24,13 +24,15 @@ internal sealed class HarithaChithraDistanceSeidelEnergyDocument : IScribeDocume
                 DescribeRole.Definition, AssessedProvenance.FromLiterature(Source)),
             Node("result", "Strict increase for every edge", "result", ClaimBody(),
                 "The distance Seidel matrix of the complete bipartite graph has energy 6(a+b−2). Its sign is a symmetric involution which reflects the two part-indicator directions. Deleting an edge changes only the two corresponding off-diagonal entries, each by −4. This preserves the supporting trace functional. Equality in the trace bound for the sum of absolute eigenvalues would force commutation with the involution, whereas a commutator entry is 8/a at another vertex of the first part. Since a ≥ 2, that entry is nonzero and the energy inequality is strict. The proof treats every a,b ≥ 2, including the cases a = 2 and a = 3 of Propositions 5.2–5.3. It makes no universal assertion about the alternative diagonal-one matrix.",
-                DescribeRole.Theorem, AssessedProvenance.FromRepo(Source)))));
+                DescribeRole.Theorem, AssessedProvenance.FromRepo(Source),
+                new OpenProblemResolutionClaim(ProblemSlugRef.Create("haritha-chithra-2022-distance-seidel-energy-problem-5-1"), ResolutionKind.Proved)))));
 
     private static DocumentBlock Node(string id, string title, string name, Formula formula,
-        string prose, DescribeRole role, AssessedProvenance provenance) => Describe.Lean(
+        string prose, DescribeRole role, AssessedProvenance provenance,
+        OpenProblemResolutionClaim? resolution = null) => Describe.Lean(
             DescribeId.Create("hc-distance-seidel-" + id), DeclarationHandle.Create(Prefix + name),
             H(title), StatementSource.FromAuthor(Disp(formula)), provenance,
-            Blocks(Paragraph(Text(prose))), role);
+            Blocks(Paragraph(Text(prose))), role, resolution);
 
     private static Formula Qualified(string name)
     {

@@ -46,6 +46,10 @@ $$\forall (a : \mathbb{N}), \forall (b : \mathbb{N}), (2 \le a) \Rightarrow ((2 
 
 *Proof.* Machine-checked in Lean as `D5/S3/Combinatorics/Graph/KyFanGap/HarithaChithraDistanceSeidelEnergy.result` (`✓ std3`). ∎
 
+*Resolves.* `Problems/haritha-chithra-2022-distance-seidel-energy-problem-5-1` (proved) by `D5/S3/Combinatorics/Graph/KyFanGap/HarithaChithraDistanceSeidelEnergy.result`.
+
+<!-- scribe-open-problem-resolution-v1 {"problem_slug":"haritha-chithra-2022-distance-seidel-energy-problem-5-1","declaration_gid":"D5/S3/Combinatorics/Graph/KyFanGap/HarithaChithraDistanceSeidelEnergy.result","resolution_kind":"proved"} -->
+
 *Source.* Repository-derived.
 
 *Acknowledgement.* T. Haritha and A. V. Chithra (2022). *Distance Seidel matrix of a connected graph*. DOI: [10.1080/09728600.2025.2479147](https://doi.org/10.1080/09728600.2025.2479147). URL: <https://arxiv.org/abs/2210.05940v2>.
