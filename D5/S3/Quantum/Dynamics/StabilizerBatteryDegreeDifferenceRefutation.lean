@@ -7,17 +7,26 @@
    digest: Equal degree gaps give different stored work for fourteen-qubit stabilizer batteries. -/
 
 import D5.S3.Quantum.Measurement.StabilizerPovmMaximalEntanglementRefutation
+import D5.S3.Quantum.Information.BinaryStabilizerGraphNormalForm
+
+/-! Circulant graph stabilizers define the initial battery state and the charging unitary.
+The fourteen-site pairs with degree gap four give different work at quarter-period time. -/
 
 set_option autoImplicit false
 set_option relaxedAutoImplicit false
+set_option backward.isDefEq.respectTransparency false
+set_option linter.style.longLine false
 
 namespace D5.S3.Quantum.Dynamics.StabilizerBatteryDegreeDifferenceRefutation
 
 noncomputable section
 open Matrix
-open scoped BigOperators Matrix.Norms.L2Operator
+open scoped BigOperators ComplexOrder Matrix.Norms.L2Operator
 open D5.S3.Quantum.Information.StabilizerPairLocalUnitaryInequivalence
 open D5.S3.Quantum.Measurement.StabilizerPovmMaximalEntanglementRefutation
+open D5.S3.VertexAlgebra.LatticeTwistedGroundRealization
+open D5.S3.VertexAlgebra.LatticeTwistedGroundRealization.SignQuotient
+open D5.S3.Quantum.Information.BinaryStabilizerGraphNormalForm (complex_sign_val tensor_smul tensor_weyl)
 
 /-- The undirected circulant graph with neighbours at distances one through `K / 2`. -/
 def adjacent (N K : ℕ) (i j : Fin N) : Prop :=
@@ -62,7 +71,7 @@ def claim : Prop :=
         IsGroundState (hamiltonian N Lb) h →
         ∀ t : ℝ, 0 ≤ t → work N Kb Kc g t = work N Lb Lc h t
 
-private def graphExponent (N K : ℕ) (b : Fin N → Fin 2) : ℕ :=
+private def graphExponent (N K : ℕ) (b : Fin N → ZMod 2) : ℕ :=
   (∑ i, (b i).val) +
     ∑ i, ∑ j ∈ Finset.univ.filter (fun j => i < j ∧ adjacent N K i j),
       (b i).val * (b j).val
@@ -71,13 +80,13 @@ private def graphExponent (N K : ℕ) (b : Fin N → Fin 2) : ℕ :=
 def graphVec (N K : ℕ) : State N :=
   fun b => ((Real.sqrt (2 ^ N : ℝ))⁻¹ : ℂ) * (-1 : ℂ) ^ graphExponent N K b
 
-private def xMask {N : ℕ} (w : Fin N → Pauli) : Fin N → Fin 2 :=
+private def xMask {N : ℕ} (w : Fin N → Pauli) : Fin N → ZMod 2 :=
   fun i => match w i with | .X | .Y => 1 | _ => 0
 
-private def zMask {N : ℕ} (w : Fin N → Pauli) : Fin N → Fin 2 :=
+private def zMask {N : ℕ} (w : Fin N → Pauli) : Fin N → ZMod 2 :=
   fun i => match w i with | .Z | .Y => 1 | _ => 0
 
-private def residualMask (N K : ℕ) (w : Fin N → Pauli) : Fin N → Fin 2 :=
+private def residualMask (N K : ℕ) (w : Fin N → Pauli) : Fin N → ZMod 2 :=
   fun j => zMask w j + ∑ i, if adjacent N K i j then xMask w i else 0
 
 private def wordPhase (N K : ℕ) (w : Fin N → Pauli) : GaussianInt :=
@@ -132,7 +141,7 @@ private lemma generator_sign (N Kb Kc : ℕ) (i j : Fin N) :
       split_ifs <;> decide
   · rw [← Finset.mul_prod_erase Finset.univ _ (Finset.mem_univ i),
       ← Finset.mul_prod_erase (Finset.univ.erase i) _
-        (Finset.mem_erase.mpr ⟨hij.symm, Finset.mem_univ j⟩)]
+        (Finset.mem_erase.mpr ⟨Ne.symm hij, Finset.mem_univ j⟩)]
     have hrest : (∏ k ∈ (Finset.univ.erase i).erase j,
         sgn (gen N Kb i k) (gen N Kc j k)) = 1 := by
       apply Finset.prod_eq_one
@@ -142,14 +151,19 @@ private lemma generator_sign (N Kb Kc : ℕ) (i j : Fin N) :
       simp only [gen, if_neg hki, if_neg hkj]
       split_ifs <;> decide
     rw [hrest, mul_one]
-    simp only [gen, if_pos rfl, if_neg hij, if_neg hij.symm]
+    simp only [gen, if_pos rfl, if_neg hij, if_neg (Ne.symm hij)]
     split_ifs <;> decide
 
 private lemma generators_commute (N K : ℕ) (i j : Fin N) :
     Commute (wordOp (gen N K i)) (wordOp (gen N K j)) := by
   have hs : (∏ k, sgn (gen N K i k) (gen N K j k)) = 1 := by
-    rw [generator_sign, ← adjacent_comm N K i j]
-    split_ifs <;> norm_num
+    rw [generator_sign]
+    by_cases ha : adjacent N K i j
+    · have hb := (adjacent_comm N K i j).mp ha
+      simp only [if_pos ha, if_pos hb]
+      norm_num
+    · have hb : ¬ adjacent N K j i := fun h => ha ((adjacent_comm N K i j).mpr h)
+      simp only [if_neg ha, if_neg hb, one_mul]
   unfold Commute SemiconjBy
   rw [word_comm_sign]
   have hc := congrArg (fun z : ℤ => (z : ℂ)) hs
@@ -169,13 +183,190 @@ private lemma cross_commutation (N Kb Kc : ℕ) (i j : Fin N) :
   by_cases ha : adjacent N Kb i j <;> by_cases hb : adjacent N Kc j i <;>
     simp [hm, generator_sign, ha, hb]
 
+private def graphMatrix (N K : ℕ) : Matrix (Fin N) (Fin N) (ZMod 2) :=
+  fun i j => if adjacent N K i j then 1 else 0
+
+private lemma graph_binary (N K : ℕ) (b : Fin N → ZMod 2) :
+    (graphExponent N K b : ZMod 2) = (∑ i, b i) + normalExponent (graphMatrix N K) b := by
+  simp only [graphExponent, Nat.cast_add, Nat.cast_sum, Nat.cast_mul,
+    ZMod.natCast_zmod_val, normalExponent, graphMatrix, Finset.sum_filter]
+  congr 1
+  apply Finset.sum_congr rfl
+  intro i _
+  apply Finset.sum_congr rfl
+  intro j _
+  split_ifs <;> simp_all
+
+private lemma graph_polarization (N K : ℕ) (b x : Fin N → ZMod 2) :
+    (graphExponent N K (b + x) : ZMod 2) + (graphExponent N K b : ZMod 2) =
+      (graphExponent N K x : ZMod 2) +
+        ∑ j, (∑ i, if adjacent N K i j then x i else 0) * b j := by
+  have hs : (graphMatrix N K).IsSymm := by
+    apply Matrix.IsSymm.ext
+    intro i j
+    simp only [graphMatrix]
+    congr 1
+    exact propext (adjacent_comm N K j i)
+  have hd (i : Fin N) : graphMatrix N K i i = 0 := by simp [graphMatrix, adjacent]
+  have hq := normal_exponent_add (graphMatrix N K) b x
+  have hp := symmetric_pairing_split (graphMatrix N K) hs b x
+  simp only [hd, zero_mul, Finset.sum_const_zero, zero_add] at hp
+  rw [← hp] at hq
+  have hb : Matrix.toBilin' (graphMatrix N K) b x =
+      ∑ j, (∑ i, if adjacent N K i j then x i else 0) * b j := by
+    rw [Matrix.toBilin'_apply]
+    apply Finset.sum_congr rfl
+    intro j _
+    rw [Finset.sum_mul]
+    apply Finset.sum_congr rfl
+    intro i _
+    rw [hs.apply i j]
+    by_cases ha : adjacent N K i j <;> simp [graphMatrix, ha, mul_comm]
+  rw [hb] at hq
+  simp only [graph_binary, Pi.add_apply, Finset.sum_add_distrib]
+  linear_combination (norm := (ring_nf; simp [show (2 : ZMod 2) = 0 by decide])) hq
+
+private lemma sign_nat (m : ℕ) : (-1 : ℂ) ^ m = complexSign (m : ZMod 2) := by
+  rw [complex_sign_val, ZMod.val_natCast, neg_one_pow_eq_pow_mod_two]
+
+private lemma word_action {N : ℕ} (w : Fin N → Pauli) (ψ : State N)
+    (b : Fin N → ZMod 2) :
+    (wordOp w *ᵥ ψ) b =
+      Complex.I ^ (Finset.univ.filter (fun i => w i = .Y)).card *
+        complexSign (∑ i, (zMask w i : ZMod 2) * (b + xMask w) i) * ψ (b + xMask w) := by
+  have hm (i : Fin N) : pauliMatrix (w i) =
+      (if w i = .Y then Complex.I else 1) •
+        (Matrix.of fun r c : Fin 2 =>
+          if id (α := ZMod 2) c = id (α := ZMod 2) r + xMask w i then
+            complexSign (zMask w i * id (α := ZMod 2) c) else 0) := by
+    have hzero : id (α := ZMod 2) (0 : Fin 2) = 0 := rfl
+    have hone : id (α := ZMod 2) (1 : Fin 2) = 1 := rfl
+    cases hi : w i <;> ext r c <;> fin_cases r <;> fin_cases c <;>
+      norm_num [xMask, zMask, hi, pauliMatrix, complexSign, Matrix.of_apply,
+        Matrix.smul_apply, smul_eq_mul, hzero, hone,
+        D5.S3.Quantum.FiniteDimensional.qubitX, D5.S3.Quantum.FiniteDimensional.qubitZ]
+  have hw := congrFun (tensor_weyl (xMask w, zMask w) ψ) b
+  change (tensorOp (fun i => Matrix.of fun r c : Fin 2 =>
+      if id (α := ZMod 2) c = id (α := ZMod 2) r + xMask w i then
+        complexSign (zMask w i * id (α := ZMod 2) c) else 0) *ᵥ ψ) b =
+    complexSign (∑ i, zMask w i * (b i + xMask w i)) * ψ (b + xMask w) at hw
+  have he : (fun i => pauliMatrix (w i)) = fun i =>
+      (if w i = .Y then Complex.I else 1) •
+        (Matrix.of fun r c : Fin 2 =>
+          if id (α := ZMod 2) c = id (α := ZMod 2) r + xMask w i then
+            complexSign (zMask w i * id (α := ZMod 2) c) else 0) := funext hm
+  rw [wordOp, he, tensor_smul, smul_mulVec]
+  change (∏ i, if w i = .Y then Complex.I else 1) * _ = _
+  rw [← Finset.prod_filter, Finset.prod_const, hw]
+  rfl
+
+private lemma graph_word_action (N K : ℕ) (w : Fin N → Pauli) (b : Fin N → ZMod 2) :
+    (wordOp w *ᵥ graphVec N K) b =
+      (wordPhase N K w : ℂ) *
+        complexSign (∑ j, (residualMask N K w j : ZMod 2) * b j) * graphVec N K b := by
+  rw [word_action]
+  have hphase : (wordPhase N K w : ℂ) =
+      Complex.I ^ (Finset.univ.filter (fun i => w i = .Y)).card *
+        complexSign ((graphExponent N K (xMask w) : ZMod 2) +
+          ∑ i, (xMask w i : ZMod 2) * zMask w i) := by
+    simp only [wordPhase, map_mul, map_pow, map_neg, map_one, sign_nat,
+      Nat.cast_add, Nat.cast_sum, Nat.cast_mul, ZMod.natCast_zmod_val]
+    norm_num [GaussianInt.toComplex_def]
+  have hp := graph_polarization N K b (xMask w)
+  have hexp : (∑ i, (zMask w i : ZMod 2) * (b + xMask w) i) +
+        (graphExponent N K (b + xMask w) : ZMod 2) =
+      ((graphExponent N K (xMask w) : ZMod 2) +
+        ∑ i, (xMask w i : ZMod 2) * zMask w i) +
+        (∑ j, (residualMask N K w j : ZMod 2) * b j) +
+        (graphExponent N K b : ZMod 2) := by
+    simp only [residualMask, Pi.add_apply, mul_add, add_mul, Finset.sum_add_distrib]
+    simp only [mul_comm] at hp ⊢
+    linear_combination (norm := (ring_nf; simp [show (2 : ZMod 2) = 0 by decide])) hp
+  rw [hphase]
+  simp only [graphVec, sign_nat]
+  rw [show Complex.I ^ (Finset.univ.filter (fun i => w i = .Y)).card *
+        complexSign (∑ i, (zMask w i : ZMod 2) * (b + xMask w) i) *
+        (((Real.sqrt (2 ^ N : ℝ))⁻¹ : ℂ) *
+          complexSign (graphExponent N K (b + xMask w))) =
+      Complex.I ^ (Finset.univ.filter (fun i => w i = .Y)).card *
+        ((Real.sqrt (2 ^ N : ℝ))⁻¹ : ℂ) *
+          (complexSign (∑ i, (zMask w i : ZMod 2) * (b + xMask w) i) *
+            complexSign (graphExponent N K (b + xMask w))) by ring]
+  rw [← complexSign_add, hexp, complexSign_add, complexSign_add]
+  ring
+
 private lemma graph_generator_eigen (N K : ℕ) (i : Fin N) :
     wordOp (gen N K i) *ᵥ graphVec N K = -graphVec N K := by
-  sorry
+  have hx : xMask (gen N K i) = Pi.single i 1 := by
+    funext j
+    by_cases hji : j = i
+    · subst j
+      simp [xMask, gen]
+    · simp only [xMask, gen, if_neg hji, Pi.single_eq_of_ne hji]
+      split_ifs <;> rfl
+  have hz (j : Fin N) : zMask (gen N K i) j =
+      if adjacent N K i j then 1 else 0 := by
+    by_cases hji : j = i
+    · subst j
+      simp [zMask, gen, adjacent]
+    · simp only [zMask, gen, if_neg hji]
+      split_ifs <;> rfl
+  have hr : residualMask N K (gen N K i) = 0 := by
+    funext j
+    have hs : (∑ a, if adjacent N K a j then (Pi.single i (1 : ZMod 2)) a else 0) =
+        if adjacent N K i j then 1 else 0 := by
+      rw [Finset.sum_eq_single i]
+      · simp
+      · intro a _ hai
+        simp [Pi.single_eq_of_ne hai]
+      · simp
+    rw [residualMask, hx, hz, hs]
+    change ((if adjacent N K i j then 1 else 0 : ZMod 2) +
+      if adjacent N K i j then 1 else 0) = 0
+    split_ifs <;> decide
+  have he : graphExponent N K (Pi.single i 1) = 1 := by
+    have hq : (∑ a, ∑ b ∈ Finset.univ.filter (fun b => a < b ∧ adjacent N K a b),
+        (show ZMod 2 from (Pi.single i (1 : ZMod 2) : Fin N → ZMod 2) a).val *
+          (show ZMod 2 from (Pi.single i (1 : ZMod 2) : Fin N → ZMod 2) b).val) = 0 := by
+      apply Finset.sum_eq_zero
+      intro a _
+      apply Finset.sum_eq_zero
+      intro b hb
+      have hab := (Finset.mem_filter.mp hb).2.1
+      by_cases hai : a = i
+      · subst a
+        simp [Pi.single_eq_of_ne (ne_of_gt hab)]
+      · simp [Pi.single_eq_of_ne hai]
+    rw [graphExponent, hq, add_zero, Finset.sum_eq_single i]
+    · simp
+    · intro j _ hji
+      simp [Pi.single_eq_of_ne hji]
+    · simp
+  have hy : Finset.univ.filter (fun j => gen N K i j = .Y) = ∅ := by
+    apply Finset.filter_eq_empty_iff.mpr
+    intro j _
+    simp only [gen]
+    split_ifs <;> decide
+  have hp : wordPhase N K (gen N K i) = -1 := by
+    have hsum : (∑ j, (xMask (gen N K i) j).val * (zMask (gen N K i) j).val) = 0 := by
+      rw [hx, Finset.sum_eq_single i]
+      · simp [hz, adjacent]
+      · intro j _ hji
+        simp [Pi.single_eq_of_ne hji]
+      · simp
+    unfold wordPhase
+    rw [hy, Finset.card_empty, pow_zero, hsum, hx, he]
+    norm_num
+  funext b
+  have ha := graph_word_action N K (gen N K i) b
+  rw [hp, hr] at ha
+  exact ha.trans (by simp only [map_neg, map_one, Pi.zero_apply, zero_mul,
+    Finset.sum_const_zero, D5.S3.VertexAlgebra.LatticeTwistedGroundRealization.sign_zero,
+    mul_one, neg_one_mul, Pi.neg_apply])
 
 private lemma graph_normalized (N K : ℕ) : (∑ b, ‖graphVec N K b‖ ^ 2) = 1 := by
   have hpos : 0 < (2 : ℝ) ^ N := by positivity
-  simp only [graphVec, norm_mul, norm_pow, norm_neg, norm_one, one_pow, mul_one,
+  simp only [graphVec, norm_mul, norm_pow, norm_neg, norm_one, one_pow, mul_one, norm_inv,
     Complex.norm_real, Real.norm_eq_abs, abs_inv,
     abs_of_nonneg (Real.sqrt_nonneg _), Finset.sum_const, Finset.card_univ,
     Fintype.card_fun, Fintype.card_fin, nsmul_eq_mul, Nat.cast_pow, Nat.cast_ofNat]
@@ -197,13 +388,13 @@ private lemma graph_ground (N K : ℕ) :
     IsGroundState (hamiltonian N K) (graphVec N K) := by
   have hnorm (v : State N) : (star v ⬝ᵥ v).re = ∑ b, ‖v b‖ ^ 2 := by
     simp only [dotProduct, Complex.re_sum, Pi.star_apply, Complex.star_def,
-      Complex.conj_mul', Complex.ofReal_re]
+      Complex.conj_mul', ← Complex.ofReal_pow, Complex.ofReal_re]
   refine ⟨graph_normalized N K, ?_⟩
   intro v hv
   have hg : (star (graphVec N K) ⬝ᵥ (hamiltonian N K *ᵥ graphVec N K)).re =
       -(N : ℝ) := by
-    simp only [hamiltonian, sum_mulVec, dotProduct_sum, graph_generator_eigen,
-      dotProduct_neg, Complex.re_sum, Complex.neg_re, hnorm, graph_normalized,
+    rw [hamiltonian, sum_mulVec, dotProduct_sum, Complex.re_sum]
+    simp only [graph_generator_eigen, dotProduct_neg, Complex.neg_re, hnorm, graph_normalized,
       Finset.sum_const, Finset.card_univ, Fintype.card_fin, nsmul_eq_mul, mul_neg,
       mul_one]
   have hb (i : Fin N) : (-1 : ℝ) ≤
@@ -247,10 +438,10 @@ private lemma exp_involution {N : ℕ} (S : Operator N) (hSS : S * S = 1) (t : �
     module
   rw [himage] at hexp
   rw [hexp]
-  change ((NormedSpace.exp (-(Complex.I * (t : ℂ)), Complex.I * (t : ℂ))).1 +
-      (NormedSpace.exp (-(Complex.I * (t : ℂ)), Complex.I * (t : ℂ))).2) / 2 • 1 +
-    ((NormedSpace.exp (-(Complex.I * (t : ℂ)), Complex.I * (t : ℂ))).1 -
-      (NormedSpace.exp (-(Complex.I * (t : ℂ)), Complex.I * (t : ℂ))).2) / 2 • S = _
+  change (((NormedSpace.exp (-(Complex.I * (t : ℂ)), Complex.I * (t : ℂ))).1 +
+      (NormedSpace.exp (-(Complex.I * (t : ℂ)), Complex.I * (t : ℂ))).2) / 2) • 1 +
+    (((NormedSpace.exp (-(Complex.I * (t : ℂ)), Complex.I * (t : ℂ))).1 -
+      (NormedSpace.exp (-(Complex.I * (t : ℂ)), Complex.I * (t : ℂ))).2) / 2) • S = _
   rw [Prod.fst_exp, Prod.snd_exp, ← Complex.exp_eq_exp_ℂ]
   have hp : Complex.exp (Complex.I * (t : ℂ)) =
       (Real.cos t : ℂ) + Complex.I * (Real.sin t : ℂ) := by
@@ -270,6 +461,7 @@ private lemma evolution_product (N K : ℕ) (t : ℝ) :
       (List.ofFn (fun j : Fin N =>
         (Real.cos t : ℂ) • (1 : Operator N) -
           (Complex.I * (Real.sin t : ℂ)) • wordOp (gen N K j))).prod := by
+  let : NormedAlgebra ℚ (Operator N) := NormedAlgebra.restrictScalars ℚ ℂ _
   have hprod (l : List (Fin N)) :
       NormedSpace.exp (-(Complex.I * (t : ℂ)) • (l.map (fun j => wordOp (gen N K j))).sum) =
         (l.map (fun j => (Real.cos t : ℂ) • (1 : Operator N) -
@@ -285,7 +477,7 @@ private lemma evolution_product (N K : ℕ) (t : ℝ) :
         exact generators_commute N K a j
       rw [List.map_cons, List.sum_cons, smul_add,
         NormedSpace.exp_add_of_commute (hc.smul_left _ |>.smul_right _),
-        exp_involution _ (wordUnit (gen N K a)).val_inv t, ih]
+        exp_involution (wordOp (gen N K a)) (wordUnit (gen N K a)).val_inv t, ih]
       rfl
   have h := hprod (List.ofFn (fun j : Fin N => j))
   simp only [List.map_ofFn, List.sum_ofFn] at h
@@ -300,14 +492,16 @@ private lemma quarter_conjugate_commuting {N : ℕ} (S B : Operator N)
     (quarterFactor S)ᴴ * B * quarterFactor S = B := by
   have hthree : S * B * S = B := by rw [hSB, Matrix.mul_assoc, hSS, Matrix.mul_one]
   have hcore : (1 + Complex.I • S) * B * (1 - Complex.I • S) = (2 : ℂ) • B := by
-    simp only [add_mul, sub_mul, mul_sub, mul_add, mul_smul, smul_mul, smul_smul,
-      one_mul, mul_one, Complex.I_mul_I, hthree, hSB]
+    simp only [add_mul, sub_mul, mul_sub, mul_add, Matrix.mul_smul, Matrix.smul_mul,
+      smul_add, smul_sub, smul_smul, one_mul, mul_one]
+    simp only [← Matrix.mul_assoc, hthree, hSB, smul_neg, Complex.I_mul_I]
+    simp only [neg_mul, Matrix.mul_assoc, hSS, Matrix.mul_one, smul_neg]
     module
   have hc : (((Real.sqrt 2)⁻¹ : ℂ) * ((Real.sqrt 2)⁻¹ : ℂ)) = 1 / 2 := by
-    rw [← pow_two, ← Complex.ofReal_pow, inv_pow, Real.sq_sqrt (by norm_num)]
+    rw [← pow_two, inv_pow, ← Complex.ofReal_pow, Real.sq_sqrt (by norm_num)]
     norm_num
   rw [quarterFactor_adjoint S hS, quarterFactor]
-  simp only [smul_mul, mul_smul, smul_smul]
+  simp only [Matrix.smul_mul, Matrix.mul_smul, smul_smul]
   rw [hcore, smul_smul, hc]
   norm_num
 
@@ -318,15 +512,17 @@ private lemma quarter_conjugate_anticommuting {N : ℕ} (S B : Operator N)
     rw [hSB, neg_mul, Matrix.mul_assoc, hSS, Matrix.mul_one]
   have hcore : (1 + Complex.I • S) * B * (1 - Complex.I • S) =
       (-2 * Complex.I) • (B * S) := by
-    simp only [add_mul, sub_mul, mul_sub, mul_add, mul_smul, smul_mul, smul_smul,
-      one_mul, mul_one, Complex.I_mul_I, hthree, hSB]
+    simp only [add_mul, sub_mul, mul_sub, mul_add, Matrix.mul_smul, Matrix.smul_mul,
+      smul_add, smul_sub, smul_smul, one_mul, mul_one]
+    simp only [← Matrix.mul_assoc, hthree, hSB, smul_neg, Complex.I_mul_I]
+    simp only [neg_mul, Matrix.mul_assoc, hSS, Matrix.mul_one, smul_neg]
     module
   have hc : (((Real.sqrt 2)⁻¹ : ℂ) * ((Real.sqrt 2)⁻¹ : ℂ)) = 1 / 2 := by
-    rw [← pow_two, ← Complex.ofReal_pow, inv_pow, Real.sq_sqrt (by norm_num)]
+    rw [← pow_two, inv_pow, ← Complex.ofReal_pow, Real.sq_sqrt (by norm_num)]
     norm_num
   rw [quarterFactor_adjoint S hS, quarterFactor]
-  simp only [smul_mul, mul_smul, smul_smul]
-  rw [hcore, smul_smul, hc, Matrix.mul_smul]
+  simp only [Matrix.smul_mul, Matrix.mul_smul, smul_smul]
+  rw [hcore, smul_smul, hc]
   congr 1
   ring
 
@@ -336,7 +532,73 @@ private lemma quarter_conjugation (N Kb Kc : ℕ) (i : Fin N) :
     Uᴴ * wordOp (gen N Kb i) * U =
       wordOp (gen N Kb i) *
         ((antiIndices N Kb Kc i).map (fun j => -Complex.I • wordOp (gen N Kc j))).prod := by
-  sorry
+  have hf (j : Fin N) :
+      (Real.cos (Real.pi / 4) : ℂ) • (1 : Operator N) -
+        (Complex.I * (Real.sin (Real.pi / 4) : ℂ)) • wordOp (gen N Kc j) =
+      quarterFactor (wordOp (gen N Kc j)) := by
+    have hs : Real.sqrt 2 / 2 = (Real.sqrt 2)⁻¹ := by
+      field_simp
+      nlinarith [Real.sq_sqrt (show (0 : ℝ) ≤ 2 by norm_num)]
+    rw [Real.cos_pi_div_four, Real.sin_pi_div_four, hs]
+    simp only [quarterFactor, smul_sub, smul_smul, smul_eq_mul, mul_comm, Complex.ofReal_inv]
+  dsimp only
+  rw [evolution_product]
+  simp_rw [hf]
+  have hlist (l : List (Fin N)) :
+      (l.map (fun j => quarterFactor (wordOp (gen N Kc j)))).prodᴴ *
+        wordOp (gen N Kb i) *
+        (l.map (fun j => quarterFactor (wordOp (gen N Kc j)))).prod =
+      wordOp (gen N Kb i) *
+        ((l.filter (fun j => j ∈ antiIndices N Kb Kc i)).map
+          (fun j => -Complex.I • wordOp (gen N Kc j))).prod := by
+    induction l with
+    | nil => simp
+    | cons a l ih =>
+      let T := (l.map (fun j => quarterFactor (wordOp (gen N Kc j)))).prod
+      let C := -Complex.I • wordOp (gen N Kc a)
+      have hCT : Commute C T := by
+        apply Commute.list_prod_right
+        intro F hF
+        obtain ⟨j, _, rfl⟩ := List.mem_map.mp hF
+        exact ((Commute.one_right C).sub_right
+          ((generators_commute N Kc a j).smul_left _ |>.smul_right _)).smul_right _
+      have hCP : Commute C
+          ((l.filter (fun j => j ∈ antiIndices N Kb Kc i)).map
+            (fun j => -Complex.I • wordOp (gen N Kc j))).prod := by
+        apply Commute.list_prod_right
+        intro F hF
+        obtain ⟨j, _, rfl⟩ := List.mem_map.mp hF
+        exact (generators_commute N Kc a j).smul_left _ |>.smul_right _
+      simp only [List.map_cons, List.prod_cons, conjTranspose_mul]
+      change Tᴴ * (quarterFactor (wordOp (gen N Kc a)))ᴴ *
+        wordOp (gen N Kb i) * (quarterFactor (wordOp (gen N Kc a)) * T) = _
+      rw [Matrix.mul_assoc Tᴴ, ← Matrix.mul_assoc _ _ T,
+        Matrix.mul_assoc Tᴴ _ (quarterFactor (wordOp (gen N Kc a)))]
+      have hcross := cross_commutation N Kb Kc i a
+      by_cases ha : a ∈ antiIndices N Kb Kc i
+      · rw [if_pos ha, neg_one_smul] at hcross
+        have hanti : wordOp (gen N Kc a) * wordOp (gen N Kb i) =
+            -(wordOp (gen N Kb i) * wordOp (gen N Kc a)) := by
+          rw [hcross, neg_neg]
+        rw [quarter_conjugate_anticommuting _ _ (word_hermitian _)
+          (wordUnit (gen N Kc a)).val_inv hanti]
+        change Tᴴ * (wordOp (gen N Kb i) * C) * T = _
+        rw [Matrix.mul_assoc Tᴴ, Matrix.mul_assoc _ C T, hCT.eq,
+          ← Matrix.mul_assoc, ← Matrix.mul_assoc, ih]
+        simp only [List.filter_cons, decide_eq_true ha, ite_true, List.map_cons, List.prod_cons]
+        rw [Matrix.mul_assoc, hCP.eq, ← Matrix.mul_assoc]
+      · rw [if_neg ha, one_smul] at hcross
+        rw [quarter_conjugate_commuting _ _ (word_hermitian _)
+          (wordUnit (gen N Kc a)).val_inv hcross.symm, ih]
+        simp only [List.filter_cons, decide_eq_false ha, Bool.false_eq_true, ite_false]
+  have he : (List.ofFn (fun j : Fin N => j)).filter
+      (fun j => j ∈ antiIndices N Kb Kc i) = antiIndices N Kb Kc i := by
+    unfold antiIndices
+    apply List.filter_congr
+    intro j _
+    simp [List.mem_filter, List.mem_ofFn]
+  have h := hlist (List.ofFn (fun j : Fin N => j))
+  simpa only [List.map_ofFn, Function.comp_def, he] using h
 
 private lemma phaseCode_cast (p q : Pauli) :
     (phaseCode p q : ℂ) = letterPhase p q := by
@@ -349,8 +611,6 @@ private lemma wordFold_operator {N : ℕ} (ws : List (Fin N → Pauli)) :
   | cons w ws ih =>
     simp only [List.map_cons, List.prod_cons, wordFold, ih, Matrix.mul_smul, word_mul,
       smul_smul, map_mul, map_prod, phaseCode_cast]
-    congr 1
-    ring
 
 private lemma qData_operator (N Kb Kc : ℕ) (i : Fin N) :
     wordOp (gen N Kb i) *
@@ -374,6 +634,7 @@ private lemma qData_operator (N Kb Kc : ℕ) (i : Fin N) :
   have hc : GaussianInt.toComplex (⟨0, -1⟩ : GaussianInt) = -Complex.I := by
     norm_num [GaussianInt.toComplex_def]
   rw [hc]
+  rfl
 
 private lemma work_quarter (N Kb Kc : ℕ) :
     work N Kb Kc (graphVec N Kb) (Real.pi / 4) =
@@ -396,7 +657,8 @@ private lemma work_quarter (N Kb Kc : ℕ) :
   have hnorm : (star g ⬝ᵥ g).re = 1 := by
     rw [← graph_normalized N Kb]
     simp only [dotProduct, Complex.re_sum, Pi.star_apply, Complex.star_def,
-      Complex.conj_mul', Complex.ofReal_re]
+      Complex.conj_mul', ← Complex.ofReal_pow, Complex.ofReal_re]
+    rfl
   change (trace ((U * ρ * Uᴴ - ρ) * ∑ i, wordOp (gen N Kb i))).re = _
   rw [Matrix.mul_sum, trace_sum, Complex.re_sum]
   apply Finset.sum_congr rfl
@@ -408,55 +670,77 @@ private lemma work_quarter (N Kb Kc : ℕ) :
       qData_operator]
   rw [hq, smul_mulVec, dotProduct_smul, graph_generator_eigen,
     dotProduct_neg, Complex.neg_re, hnorm]
+  change _ - -1 = 1 + _
+  simp only [smul_eq_mul]
   ring
 
-private lemma character_vanishes (N : ℕ) (a : Fin N → Fin 2) (ha : a ≠ 0) :
-    (∑ b : Fin N → Fin 2,
+private lemma character_vanishes (N : ℕ) (a : Fin N → ZMod 2) (ha : a ≠ 0) :
+    (∑ b : Fin N → ZMod 2,
       (-1 : ℂ) ^ (∑ j, (a j).val * (b j).val)) = 0 := by
   classical
   obtain ⟨k, hk⟩ : ∃ k, a k ≠ 0 := by
     by_contra h
-    push_neg at h
+    push Not at h
     exact ha (funext h)
   have hk1 : a k = 1 := Fin.eq_one_of_ne_zero _ hk
-  let f : (Fin N → Fin 2) → ℂ := fun b =>
+  let f : (Fin N → ZMod 2) → ℂ := fun b =>
     (-1 : ℂ) ^ (∑ j, (a j).val * (b j).val)
-  let e := Equiv.addRight (Pi.single k (1 : Fin 2) : Fin N → Fin 2)
-  have hsum (b : Fin N → Fin 2) : (∑ j, (a j).val * (b j).val) =
+  let e := Equiv.addRight (Pi.single k (1 : ZMod 2) : Fin N → ZMod 2)
+  have hsum (b : Fin N → ZMod 2) : (∑ j, (a j).val * (b j).val) =
       (b k).val + ∑ j ∈ Finset.univ.erase k, (a j).val * (b j).val := by
     rw [← Finset.add_sum_erase _ _ (Finset.mem_univ k), hk1]
-    simp only [Fin.val_one, one_mul]
-  have hsign (b : Fin N → Fin 2) : f (e b) = -f b := by
+    simp only [ZMod.val_one, one_mul]
+  have hsign (b : Fin N → ZMod 2) : f (e b) = -f b := by
     have hrest : (∑ j ∈ Finset.univ.erase k, (a j).val * ((e b) j).val) =
         ∑ j ∈ Finset.univ.erase k, (a j).val * (b j).val := by
       apply Finset.sum_congr rfl
       intro j hj
       have hjk := (Finset.mem_erase.mp hj).1
-      simp only [e, Equiv.addRight_apply, Pi.add_apply, Pi.single_eq_of_ne hjk,
+      simp only [e, Equiv.coe_addRight, Pi.add_apply, Pi.single_eq_of_ne hjk,
         add_zero]
     dsimp only [f]
     rw [hsum, hsum, hrest, pow_add, pow_add]
     have hstep : (-1 : ℂ) ^ ((e b) k).val = -((-1 : ℂ) ^ (b k).val) := by
-      change (-1 : ℂ) ^ (b k + 1).val = _
+      simp only [e, Equiv.coe_addRight, Pi.add_apply, Pi.single_eq_same]
       by_cases hb : b k = 0
       · rw [hb]
-        norm_num
+        norm_num [ZMod.val_one]
       · rw [Fin.eq_one_of_ne_zero _ hb]
-        norm_num
+        norm_num [show (1 + 1 : ZMod 2) = 0 by decide, ZMod.val_one]
     rw [hstep, neg_mul]
-  have hperm : (∑ b, f (e b)) = ∑ b, f b := e.sum_comp f
+  have hperm : (∑ b, f (e b)) = ∑ b, f b := Equiv.sum_comp e f
   have hneg : (∑ b, f (e b)) = -(∑ b, f b) := by
     simp_rw [hsign]
-    exact Finset.sum_neg_distrib
+    exact Finset.sum_neg_distrib _
   change (∑ b, f b) = 0
   linear_combination (1 / 2 : ℂ) * (hperm.symm.trans hneg)
 
 private lemma graph_word_character (N K : ℕ) (w : Fin N → Pauli) :
     star (graphVec N K) ⬝ᵥ (wordOp w *ᵥ graphVec N K) =
       (wordPhase N K w : ℂ) * ((2 : ℂ) ^ N)⁻¹ *
-        ∑ b : Fin N → Fin 2,
+        ∑ b : Fin N → ZMod 2,
           (-1 : ℂ) ^ (∑ j, (residualMask N K w j).val * (b j).val) := by
-  sorry
+  have hnorm (b : Fin N → ZMod 2) :
+      star (graphVec N K b) * graphVec N K b = ((2 : ℂ) ^ N)⁻¹ := by
+    rw [Complex.star_def, Complex.conj_mul']
+    simp only [graphVec, norm_mul, norm_pow, norm_neg, norm_one, one_pow, mul_one,
+      norm_inv, Complex.norm_real, Real.norm_eq_abs, abs_of_nonneg (Real.sqrt_nonneg _)]
+    rw [← Complex.ofReal_pow, inv_pow, Real.sq_sqrt (by positivity)]
+    push_cast
+    rfl
+  change (∑ b : Fin N → ZMod 2,
+      star (graphVec N K b) * (wordOp w *ᵥ graphVec N K) b) = _
+  simp_rw [graph_word_action]
+  rw [Finset.mul_sum]
+  apply Finset.sum_congr rfl
+  intro b _
+  rw [sign_nat]
+  simp only [Nat.cast_sum, Nat.cast_mul, ZMod.natCast_zmod_val]
+  calc
+    _ = (wordPhase N K w : ℂ) *
+        (star (graphVec N K b) * graphVec N K b) *
+        complexSign (∑ j, (residualMask N K w j : ZMod 2) * b j) := by ring
+    _ = _ := by rw [hnorm]
 
 set_option maxRecDepth 4096 in
 set_option maxHeartbeats 1600000 in
@@ -479,7 +763,7 @@ private lemma pairA_expectation (i : Fin 14) :
     ((qData 14 4 8 i).1 : ℂ) *
       (star (graphVec 14 4) ⬝ᵥ (wordOp (qData 14 4 8 i).2 *ᵥ graphVec 14 4)) = -1 := by
   rw [graph_word_character, (pairA_finite i).2.1]
-  simp only [Pi.zero_apply, Fin.val_zero, zero_mul, Finset.sum_const_zero, pow_zero,
+  simp only [Pi.zero_apply, ZMod.val_zero, zero_mul, Finset.sum_const_zero, pow_zero,
     Finset.sum_const, Finset.card_univ, Fintype.card_fun, Fintype.card_fin, nsmul_eq_mul,
     mul_one]
   have hphase := congrArg (fun z : GaussianInt => (z : ℂ)) (pairA_finite i).2.2
@@ -507,7 +791,8 @@ private lemma pairB_work : work 14 2 6 (graphVec 14 2) (Real.pi / 4) = 14 := by
 theorem result : ¬ claim := by
   intro hc
   have h := hc 14 (by decide) (by decide) 4 8 2 6
-    (by decide) (by decide) (by decide) (by decide)
+    (by unfold admissible; decide) (by unfold admissible; decide)
+    (by unfold admissible; decide) (by unfold admissible; decide)
     (by decide) (by decide) (by decide) (graphVec 14 4) (graphVec 14 2)
     (graph_ground 14 4) (graph_ground 14 2) (Real.pi / 4) (by positivity)
   rw [pairA_work, pairB_work] at h

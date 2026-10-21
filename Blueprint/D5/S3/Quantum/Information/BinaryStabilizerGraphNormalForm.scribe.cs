@@ -29,6 +29,9 @@ internal sealed class BinaryStabilizerGraphNormalFormDocument : IScribeDocumentD
             Entry("tensor-scalar", "tensor_smul", "Scalars in tensor products", TensorScalar(),
                 "Scaling each single-qubit factor scales the tensor product by the product of those scalars.",
                 DescribeRole.Lemma, AssessedProvenance.FromRepo()),
+            Entry("tensor-weyl", "tensor_weyl", "The tensor action of binary Weyl factors", TensorWeyl(),
+                "The matrix wmat(a,b) translates the binary coordinate by a and multiplies it by the sign of b times the input coordinate. Its tensor product acts as weyl(v,f)(t) = complexSign(sum_i v.snd(i) (t(i) + v.fst(i))) f(t + v.fst).",
+                DescribeRole.Lemma, AssessedProvenance.FromRepo()),
             Entry("gate", "gate", "Binary choices of Hadamard and phase gates", GateDefinition(),
                 "The binary phase choice multiplies the optional Hadamard gate on the left. Zero phase selects the identity and nonzero phase selects the diagonal matrix with entries 1 and i.",
                 DescribeRole.Definition, AssessedProvenance.FromRepo()),
@@ -73,6 +76,18 @@ internal sealed class BinaryStabilizerGraphNormalFormDocument : IScribeDocumentD
             All(V("A"), Arrow(Fin(V("N")), Matrix(Fin(D(2)), Complex)),
                 Equal(TensorOperator(factors),
                     Qualified("SMul", "smul", coefficient, TensorOperator(V("A")))))));
+    }
+
+    private static Formula TensorWeyl()
+    {
+        Formula bitVector = Arrow(Fin(V("N")), Binary);
+        Formula pair = Parenthesized(Seq(bitVector, Sp, Times, Sp, bitVector));
+        Formula factors = Seq(LambdaLower, Sp, Typed(V("i"), Fin(V("N"))), Sp, Mapsto, Sp,
+            Call("wmat", Apply(Property(V("v"), "fst"), V("i")),
+                Apply(Property(V("v"), "snd"), V("i"))));
+        return All(V("N"), Nat, All(V("v"), pair, All(V("f"), Arrow(bitVector, Complex),
+            Equal(Qualified("Matrix", "mulVec", TensorOperator(factors), V("f")),
+                Call("weyl", V("v"), V("f"))))));
     }
 
     private static Formula GateDefinition() => All(V("h"), V("Bool"), All(V("d"), Binary,
