@@ -2,7 +2,7 @@
    generality: G
    mirror-B: D5/B/S3/Arith/InterlaceFan/Cyclotomic
    mirror-E: none(waiver:evidence-not-specified-by-formal-manifest)
-   anchors: [mathlib/module/Mathlib.Analysis.SpecialFunctions.Trigonometric.Complex, mathlib/module/Mathlib.NumberTheory.Cyclotomic.Basic]
+   anchors: [mathlib/module/Mathlib.Analysis.SpecialFunctions.Trigonometric.Complex, mathlib/module/Mathlib.NumberTheory.Cyclotomic.Basic, mathlib/module/Mathlib.RingTheory.Polynomial.Cyclotomic.Roots, mathlib/module/Mathlib.Tactic]
    utility: none
    digest: Cosine evaluation, order-class propagation, and Ramanujan witnesses for the interlace fan. -/
 
@@ -10,10 +10,12 @@ import D5.S3.Arith.InterlaceFan.Defs
 import D5.S3.Analytic.Certified.FiniteRamanujanDivisorIdentity
 import Mathlib.Analysis.SpecialFunctions.Trigonometric.Complex
 import Mathlib.NumberTheory.Cyclotomic.Basic
+import Mathlib.RingTheory.Polynomial.Cyclotomic.Roots
+import Mathlib.Tactic
 
 noncomputable section
 
-open Finset
+open Finset Polynomial
 open scoped BigOperators Nat Real
 
 namespace D5.S3.Arith.InterlaceFan.Cyclotomic
@@ -42,43 +44,54 @@ theorem I_eq_eval (n j : ℕ) (x : Fin (n / 2) → ℝ) :
   intro k hk
   ring
 
-/- A rational polynomial evaluation which is invariant on an order class
-   gives the corresponding equality of interlace functionals.  The
-   `hconj` premise is the cyclotomic conjugacy step: for a rational
-   polynomial it is supplied by the minimal-polynomial argument. -/
-theorem const_on_orderClass (n d : ℕ) (x : Fin (n / 2) → ℝ) (c : ℝ)
-    (s : ℕ) (hs : s ∈ orderClass n d) (hcs : I n s x = c)
-    (hconj : ∀ s t, s ∈ orderClass n d → t ∈ orderClass n d →
-      evalCos n s x = evalCos n t x) :
-    ∀ t ∈ orderClass n d, I n t x = c := by
-  intro t ht
-  have hsI := hcs
-  have heval := hconj s t hs ht
-  rw [I_eq_eval] at hsI ⊢
-  calc
-    -(1 / 2 : ℝ) * evalCos n t x = -(1 / 2 : ℝ) * evalCos n s x := by rw [heval]
-    _ = c := hsI
 
-/- Rational target values for the Fourier inversion witness.  The target is
-   the value prescribed by the Ramanujan order-class indicator. -/
-def witnessValue (n d j : ℕ) : ℚ :=
-  (-(1 : ℚ) / 2) *
-    ((n : ℚ) * (if j ∈ orderClass n d then 1 else 0) - Nat.totient d)
+/-- The reciprocal polynomial in the pinned sigma coordinates. -/
+def sigmaPoly {R : Type*} [CommRing R] (n : ℕ) (x : Fin (n / 2) → R) : R[X] :=
+  ∑ k : Fin (n / 2), Polynomial.C (x k) *
+    (Polynomial.X ^ ((k : ℕ) + 1) + Polynomial.X ^ (n - ((k : ℕ) + 1)))
 
-/- The divisor-indicator identity is the Ramanujan-sum witness used below.
-   It is paired with rational target values for the Fourier inversion step. -/
-theorem witness (d n : ℕ) (_hd : 0 < d) :
-    ((if d ∣ n then (1 : ℂ) else 0) =
-      (d : ℂ)⁻¹ * ∑ q ∈ d.divisors, ramanujanSum q n) ∧
-      ∃ y : Fin (n / 2 + 1) → ℚ,
-        ∀ j, y j = witnessValue n d (j : ℕ) := by
-  constructor
-  · exact divisorIndicator_eq_normalized_sum_ramanujanSum d n _hd
-  · exact ⟨fun j => witnessValue n d (j : ℕ), by intro j; rfl⟩
+/-- The standard primitive root of unity. -/
+def zeta (n : ℕ) : ℂ := Complex.exp (2 * Real.pi * Complex.I / n)
 
-theorem witness_values (n d : ℕ) (hd : 0 < d) :
-    ∃ y : Fin (n / 2 + 1) → ℚ,
-      ∀ j, y j = witnessValue n d j := by
-  exact (witness d n hd).2
+private lemma zeta_pow (n j m : ℕ) :
+    (zeta n ^ j) ^ m = Complex.exp
+      ((2 * Real.pi * j * m / n : ℝ) * Complex.I) := by
+  simp only [zeta, ← Complex.exp_nat_mul]
+  congr 1
+  push_cast
+  ring
+
+private lemma reciprocal_pair (n j m : ℕ) (hn : 0 < n) (hm : m ≤ n) :
+    (zeta n ^ j) ^ m + (zeta n ^ j) ^ (n - m) =
+      (2 * Real.cos (2 * Real.pi * j * m / n) : ℝ) := by
+  have hz := Complex.isPrimitiveRoot_exp n hn.ne'
+  have hz0 : zeta n ^ j ≠ 0 := pow_ne_zero _ (Complex.exp_ne_zero _)
+  have hzn : (zeta n ^ j) ^ n = 1 := by
+    rw [← pow_mul, mul_comm j n, pow_mul]
+    simpa [zeta] using congrArg (fun z : ℂ => z ^ j) hz.pow_eq_one
+  rw [pow_sub₀ _ hz0 hm, hzn, one_mul, zeta_pow, ← Complex.exp_neg]
+  have hc := Complex.two_cos ((2 * Real.pi * j * m / n : ℝ) : ℂ)
+  push_cast at hc ⊢
+  rw [show -((2 * (Real.pi : ℂ) * j * m / n) * Complex.I) =
+    -(2 * (Real.pi : ℂ) * j * m / n) * Complex.I by ring]
+  simpa using hc.symm
+
+/-- Evaluation of the reciprocal polynomial is the real cosine sum. -/
+theorem I_eq_eval_poly (n j : ℕ) (x : Fin (n / 2) → ℝ) :
+    ((sigmaPoly n x).map Complex.ofRealHom).eval (zeta n ^ j) =
+      (evalCos n j x : ℂ) := by
+  classical
+  simp only [sigmaPoly, Polynomial.map_sum, Polynomial.eval_finsetSum,
+    Polynomial.map_mul, Polynomial.map_add, Polynomial.map_pow, Polynomial.map_X,
+    Polynomial.map_C, Polynomial.eval_mul, Polynomial.eval_add,
+    Polynomial.eval_pow, Polynomial.eval_X, Polynomial.eval_C, evalCos,
+    Complex.ofReal_sum, Complex.ofReal_mul]
+  apply Finset.sum_congr rfl
+  intro k hk
+  have hklt := k.isLt
+  rw [reciprocal_pair n j ((k : ℕ) + 1) (by omega) (by omega)]
+  simp only [Complex.ofRealHom_eq_coe]
+  push_cast
+  ring
 
 end D5.S3.Arith.InterlaceFan.Cyclotomic
