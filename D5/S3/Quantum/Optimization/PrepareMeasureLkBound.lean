@@ -6,21 +6,16 @@
    utility: none
    digest: The prepare-and-measure bound is uniformly strict for every k at least three. -/
 
-import Mathlib.Algebra.Order.BigOperators.Group.Finset
-import Mathlib.Data.Finset.Lattice.Fold
-import Mathlib.Data.Fintype.BigOperators
-import Mathlib.Data.Fintype.Pi
 import Mathlib.Basic.Real.Basic
 import Mathlib.Basic.Sign.Basic
 import Mathlib.LinearAlgebra.Matrix.Notation
-import Mathlib.Tactic.FinCases
 import Mathlib.Tactic.Linarith
-import Mathlib.Tactic.NormNum
-import Mathlib.Tactic.Positivity
-import Mathlib.Tactic.Ring
 
+/-! The averaged sign functional gives a strict prepare-and-measure bound.
 
-/-! The averaged sign functional gives a strict prepare-and-measure bound. -/
+A function `f : Fin n → Fin k` uniquely encodes a matrix with standard basis rows by
+`W i j = if f i = j then 1 else 0`; its transpose product has entries `fiberSum f M j q`.
+-/
 
 noncomputable section
 open scoped BigOperators Matrix
@@ -52,10 +47,6 @@ def L {n m : ℕ} (M : Matrix (Fin n) (Fin m) ℝ) : ℝ :=
 def a (k : ℕ) : ℝ :=
   ((2 : ℝ) ^ k)⁻¹ * ∑ ε : Fin k → Fin 2, |∑ i, signValue (ε i)|
 
-private lemma a_nonneg (k : ℕ) : 0 ≤ a k := by
-  unfold a
-  positivity
-
 private def signs3Equiv : (Fin 3 → Fin 2) ≃ Fin 2 × (Fin 2 × Fin 2) where
   toFun := fun f => (f 0, (f 1, f 2))
   invFun := fun x => ![x.1, x.2.1, x.2.2]
@@ -72,7 +63,7 @@ private lemma a_three : a 3 = (3 / 2 : ℝ) := by
   rw [Fintype.sum_equiv signs3Equiv
     (fun ε => |∑ i, signValue (ε i)|)
     (fun x => |signValue x.1 + signValue x.2.1 + signValue x.2.2|)
-    (by intro ε; simp [signs3Equiv, Fin.sum_univ_succ] <;> ring_nf)]
+    (by intro ε; simp [signs3Equiv, Fin.sum_univ_succ]; ring_nf)]
   simp_rw [Fintype.sum_prod_type]
   norm_num [signValue]
 
@@ -170,7 +161,7 @@ private lemma averaged_abs_nonneg (k : ℕ) (hk : 0 < k) (x : Fin k → ℝ)
   have h := mul_le_mul_of_nonneg_left hsum
     (inv_nonneg.mpr (pow_nonneg (by norm_num : (0 : ℝ) ≤ 2) k))
   unfold a
-  convert h using 1 <;> ring
+  convert h using 1; ring
 
 private lemma averaged_abs_lower (k : ℕ) (hk : 0 < k) (x : Fin k → ℝ) :
     (a k / k) * (∑ i, |x i|) ≤
@@ -300,7 +291,7 @@ theorem result : claim := by
   intro k hk
   have hk0 : 0 < k := by omega
   have ha : (3 / 2 : ℝ) ≤ a k := a_lower_three_halves k hk
-  have hak : 1 < a k := by linarith [a_nonneg k]
+  have hak : 1 < a k := lt_of_lt_of_le (by norm_num) ha
   let c : ℝ := (k : ℝ) / a k
   refine ⟨c, ?_, ?_⟩
   · dsimp [c]
