@@ -5,7 +5,7 @@ the baseline environment or constructs an environment-wide tree. -/
 namespace LeanInformationAudit.SearchReduction
 open Lean Meta
 
-abbrev lookupVersion : String := "R_lookup/one-B/disk-beta-zeta-alpha-v4-independent"
+abbrev lookupVersion : String := "R_lookup/one-B/disk-beta-zeta-alpha-v5-independent"
 
 /-- The table is captured before delivery vocabulary or S is installed. A
 partial basis may supply a hit, but never a completed negative query. -/
@@ -18,6 +18,8 @@ structure LookupTable where
 structure LookupTrace where
   visited : Nat := 0
   attempted : Nat := 0
+  pages : Nat := 0
+  missing : Array Name := #[]
   source? : Option Name := none
   complete : Bool := false
   deriving Inhabited
@@ -46,12 +48,12 @@ def lookupExact (table : LookupTable) (goal : MVarId) : MetaM LookupTrace := goa
   let some index ← tableIndex table | return {}
   let type ← goal.getType
   let candidates ← DiskLookup.query index (DiskLookup.memberKeys type)
-  let mut trace : LookupTrace := {complete := candidates.complete && table.complete}
+  let mut trace : LookupTrace := {complete := candidates.complete && table.complete, pages := candidates.pages}
   for entry in candidates.entries do
     checkSystem "lookup.membership"
     let name := entry.leanName
     let some info := (table.environment.setExporting false).find? name
-      | trace := {trace with complete := false}; continue
+      | trace := {trace with complete := false, missing := trace.missing.push name}; continue
     trace := {trace with visited := trace.visited + 1}
     if !eligible info || info.isUnsafe then continue
     let saved ← saveState
@@ -134,12 +136,12 @@ def lookupLeaf (table : LookupTable) (goal : MVarId)
   let head := rigidHead (← getEnv) (← goal.getType)
   let some index ← tableIndex table | return {}
   let candidates ← DiskLookup.query index (DiskLookup.candidateKeys (← getEnv) (← goal.getType))
-  let trace ← candidates.entries.foldlM (init := ({complete := candidates.complete && table.complete} : LookupTrace)) fun trace entry => do
+  let trace ← candidates.entries.foldlM (init := ({complete := candidates.complete && table.complete, pages := candidates.pages} : LookupTrace)) fun trace entry => do
     if trace.source?.isSome then return trace
     checkSystem "lookup.page_candidate"
     let name := entry.leanName
     let some info := (table.environment.setExporting false).find? name
-      | return {trace with complete := false}
+      | return {trace with complete := false, missing := trace.missing.push name}
     let trace := {trace with visited := trace.visited + 1}
     if !eligible info || info.isUnsafe then return trace
     unless possibleView table.environment head info.type do return trace

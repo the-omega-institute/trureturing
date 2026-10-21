@@ -341,6 +341,8 @@ private partial def solveLookupGoal (table : LookupTable) (goal : MVarId)
       trace := {
         visited := trace.visited + leaf.visited
         attempted := trace.attempted + leaf.attempted
+        pages := trace.pages + leaf.pages
+        missing := trace.missing ++ leaf.missing
         source? := trace.source?.or leaf.source?
         complete := trace.complete && leaf.complete}
       unless ← next.isAssigned do solved := false
@@ -426,9 +428,9 @@ private def rebuildRoute (target : Expr) (types : List Expr)
         cost := if trace.complete then .one else .unknown, lookup := trace
         detail := if trace.complete then
           if lookup?.isSome then
-            s!"normal-exhaustion/lookup-complete:visited={trace.visited},attempted={trace.attempted}"
+            s!"normal-exhaustion/lookup-complete:pages={trace.pages},visited={trace.visited},attempted={trace.attempted}"
           else "normal-exhaustion/local-only"
-          else "lookup-incomplete-basis"}
+          else s!"lookup-incomplete-basis:pages={trace.pages},missing={trace.missing.take 8},missing_count={trace.missing.size}"}
     let proof ← instantiateMVars root
     unless !proof.hasMVar do return {detail := "unclosed-reconstruction"}
     let used := facts.toList.zipIdx.filterMap fun (fact, i) =>

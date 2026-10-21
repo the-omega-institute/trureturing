@@ -5,7 +5,7 @@ application and kernel checking remain the authority for successful queries. -/
 namespace LeanInformationAudit.SearchReduction.DiskLookup
 open Lean Meta
 
-abbrev version : String := "disk-beta-zeta-alpha-v4"
+abbrev version : String := "disk-beta-zeta-alpha-v5"
 abbrev pageSize : Nat := 256
 
 structure Entry where
@@ -91,7 +91,7 @@ private def rigid : ConstantInfo → Bool
 /-- A prefix discrimination path. Definition heads, projections, binders and
 parameters are wildcards; this deliberately over-recalls reductions and
 instantiations. Rigid constants retain application arity and nested structure. -/
-partial def path (isRigid : Name → Bool) (e : Expr) (fuel : Nat := 8) : List String :=
+partial def path (isRigid : Name → Bool) (e : Expr) (fuel : Nat := 1) : List String :=
   if fuel == 0 then ["*"] else
   let e := canonical e
   match e.getAppFn with
@@ -255,6 +255,7 @@ unsafe def produce (directory : System.FilePath) (basis mathlib : String)
     discard <| runGit #["diff", "--quiet", basis, "--", "D5"]
     let actual ← runGit #["-C", ".lake/packages/mathlib", "rev-parse", "HEAD"]
     unless actual == mathlib do throw <| IO.userError "lookup.mathlib_snapshot_mismatch"
+  let basisModules := roots.foldl (fun set n => set.insert n) ({} : NameSet)
   let mut todo := roots
   let mut seen : NameSet := {}
   let mut rigidNames : NameSet := {}
@@ -293,6 +294,8 @@ unsafe def produce (directory : System.FilePath) (basis mathlib : String)
   let mut declarations := 0
   let mut indexed := 0
   for name in modules.qsort Name.quickLt do
+    -- Imported vocabulary outside frozen D5 is not a direct basis fact.
+    if name.toString.startsWith "D5." && !basisModules.contains name then continue
     try
       let (entries, count) ← moduleEntries name rigidNames
       let mut nodes : Nodes := {}
