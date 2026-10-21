@@ -1,0 +1,9 @@
+fingerprints:
+  raw_sha256: sha256:26006f68221bfcc99145d76a6f4440ed186518b50aa5c93f29f675a39ab730e7
+  normalized_sha256: sha256:26006f68221bfcc99145d76a6f4440ed186518b50aa5c93f29f675a39ab730e7
+cas_ref: sha256:26006f68221bfcc99145d76a6f4440ed186518b50aa5c93f29f675a39ab730e7
+coverage_gids:
+  - gid: D5/S3/Arith/Primes/GoldenPrimePowerMatrixPeriod.golden_matrix_prime_power_period
+    target_statement_id: sha256:5e54334557ce19ac0bd62886410ba11499bd0dbc638f3fcb566ee0ee8363275f
+receipts:
+  unresolved_subitems: []

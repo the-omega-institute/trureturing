@@ -1,0 +1,9 @@
+fingerprints:
+  raw_sha256: sha256:01012482d51368b3bc57fa6a347c026181ad06ee67bd7bebd33d3030453adef0
+  normalized_sha256: sha256:01012482d51368b3bc57fa6a347c026181ad06ee67bd7bebd33d3030453adef0
+cas_ref: sha256:01012482d51368b3bc57fa6a347c026181ad06ee67bd7bebd33d3030453adef0
+coverage_gids:
+  - gid: D5/S3/Arith/PisanoMatrixBridge.pisanoPeriod_eq_matrix_order
+    target_statement_id: sha256:c6d02a5fc143b64043a2f69d6c1b880c8d4e469f9b5cc5b3ab6f4022d9dd3cbb
+receipts:
+  unresolved_subitems: []
