@@ -6,7 +6,18 @@
    utility: none
    digest: The prepare-and-measure bound is uniformly strict for every k at least three. -/
 
-import Mathlib
+import Mathlib.Algebra.Order.BigOperators.Group.Finset
+import Mathlib.Data.Finset.Lattice.Fold
+import Mathlib.Data.Fintype.BigOperators
+import Mathlib.Data.Fintype.Pi
+import Mathlib.Basic.Real.Basic
+import Mathlib.LinearAlgebra.Matrix.Notation
+import Mathlib.Tactic.FinCases
+import Mathlib.Tactic.Linarith
+import Mathlib.Tactic.NormNum
+import Mathlib.Tactic.Positivity
+import Mathlib.Tactic.Ring
+
 
 /-! The averaged sign functional gives a strict prepare-and-measure bound. -/
 
@@ -15,9 +26,7 @@ open scoped BigOperators Matrix
 
 namespace D5.S3.Quantum.Optimization.PrepareMeasureLkBound
 
-abbrev Sign := Fin 2
-
-def signValue (s : Sign) : ℝ := if s = 0 then -1 else 1
+def signValue (s : Fin 2) : ℝ := if s = 0 then -1 else 1
 
 def manhattan {α β : Type*} [Fintype α] [Fintype β] (A : Matrix α β ℝ) : ℝ :=
   ∑ i, ∑ j, |A i j|
@@ -35,18 +44,18 @@ def Lk (k : ℕ) {n m : ℕ} (M : Matrix (Fin n) (Fin m) ℝ) : ℝ :=
   if hk : 0 < k then fiberMax hk M else 0
 
 def L {n m : ℕ} (M : Matrix (Fin n) (Fin m) ℝ) : ℝ :=
-  letI : Nonempty (Fin n → Sign) := ⟨fun _ => 0⟩
-  (Finset.univ : Finset (Fin n → Sign)).sup'
+  letI : Nonempty (Fin n → Fin 2) := ⟨fun _ => 0⟩
+  (Finset.univ : Finset (Fin n → Fin 2)).sup'
     Finset.univ_nonempty (fun v => ∑ j, |∑ i, signValue (v i) * M i j|)
 
 def a (k : ℕ) : ℝ :=
-  ((2 : ℝ) ^ k)⁻¹ * ∑ ε : Fin k → Sign, |∑ i, signValue (ε i)|
+  ((2 : ℝ) ^ k)⁻¹ * ∑ ε : Fin k → Fin 2, |∑ i, signValue (ε i)|
 
 private lemma a_nonneg (k : ℕ) : 0 ≤ a k := by
   unfold a
   positivity
 
-private def signs3Equiv : (Fin 3 → Sign) ≃ Sign × (Sign × Sign) where
+private def signs3Equiv : (Fin 3 → Fin 2) ≃ Fin 2 × (Fin 2 × Fin 2) where
   toFun := fun f => (f 0, (f 1, f 2))
   invFun := fun x => ![x.1, x.2.1, x.2.2]
   left_inv := by
@@ -72,11 +81,37 @@ def claim : Prop :=
 
 private lemma averaged_abs_lower (k : ℕ) (hk : 0 < k) (x : Fin k → ℝ) :
     (a k / k) * (∑ i, |x i|) ≤
-      ((2 : ℝ) ^ k)⁻¹ * ∑ ε : Fin k → Sign, |∑ i, signValue (ε i) * x i| := by
+      ((2 : ℝ) ^ k)⁻¹ * ∑ ε : Fin k → Fin 2, |∑ i, signValue (ε i) * x i| := by
   sorry
 
 private lemma a_succ_ge (k : ℕ) : a k ≤ a (k + 1) := by
-  sorry
+  classical
+  have hsplit : (∑ ε : Fin (k + 1) → Fin 2, |∑ i, signValue (ε i)|) =
+      ∑ ε : Fin k → Fin 2,
+        (|(-1 : ℝ) + ∑ i, signValue (ε i)| + |1 + ∑ i, signValue (ε i)|) := by
+    rw [← (Fin.consEquiv (fun _ : Fin (k + 1) => Fin 2)).sum_comp]
+    rw [Fintype.sum_prod_type, Fin.sum_univ_two]
+    simp only [Fin.consEquiv_apply, Fin.sum_univ_succ, Fin.cons_zero, Fin.cons_succ,
+      signValue, ↓reduceIte, Fin.isValue]
+    rw [← Finset.sum_add_distrib]
+    norm_num only [Fin.reduceEq, ↓reduceIte]
+  have hsum : 2 * (∑ ε : Fin k → Fin 2, |∑ i, signValue (ε i)|) ≤
+      ∑ ε : Fin k → Fin 2,
+        (|(-1 : ℝ) + ∑ i, signValue (ε i)| + |1 + ∑ i, signValue (ε i)|) := by
+    rw [Finset.mul_sum]
+    apply Finset.sum_le_sum
+    intro ε _
+    have h := abs_add_le (-1 + ∑ i, signValue (ε i)) (1 + ∑ i, signValue (ε i))
+    have heq : (-1 + ∑ i, signValue (ε i)) + (1 + ∑ i, signValue (ε i)) =
+        2 * ∑ i, signValue (ε i) := by ring
+    rw [heq, abs_mul, abs_of_pos (by norm_num : (0 : ℝ) < 2)] at h
+    exact h
+  unfold a
+  rw [hsplit, pow_succ]
+  have hp : (0 : ℝ) < 2 ^ k := pow_pos (by norm_num) _
+  have hi : (2 ^ k * 2 : ℝ)⁻¹ = (2 ^ k)⁻¹ / 2 := by rw [mul_inv_rev]; ring
+  rw [hi]
+  nlinarith [mul_le_mul_of_nonneg_left hsum (inv_nonneg.mpr hp.le)]
 
 private lemma a_lower_three_halves (k : ℕ) (hk : 3 ≤ k) :
     (3 / 2 : ℝ) ≤ a k := by
