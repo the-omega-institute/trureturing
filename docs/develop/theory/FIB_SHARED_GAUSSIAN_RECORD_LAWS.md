@@ -2117,3 +2117,960 @@ remains. The proofs in this appendix are ordinary analytic proofs,
 without a kernel-verification claim.
 
 ## 追加锚（本行以下为增补区）
+
+## 24. Selected-pair preparation noise in the original Gaussian apparatus
+
+The relation studied here connects preparation, internal separability and observation in one
+specified apparatus. Independent momentum noise on two initial system modes leaves every
+original position-record law unchanged. The same noise has a computable effect on the actual
+record-averaged JM pair, and supplementary momentum pointers can recover information that the
+original records discard. Each conclusion below is a conditional consequence of the declared
+preparation and measurement model, with ordinary analytic proofs.
+
+**Definition 24.1 (Worlds, carrier and fixed acquisition menu).** Retain all complete worlds
+$W=(P,g,d)\in\mathcal W$ of Definition 1.1:
+
+$$
+P=\begin{pmatrix}u&b\\c&1-u\end{pmatrix},\quad
+0<u<1,\quad b,c>0,\quad bc=u(1-u),\qquad
+g(t)=\sum_{k=0}^3a_kt^k\ne0,\quad d\in\mathbb R.
+\tag{24.1}
+$$
+
+The letter $u$ here avoids confusing the world coordinate $P_{11}$ with the probe variance $r$.
+Every world has finite coordinates; the polynomial coefficients and drift have no global bound.
+Lower degrees, sampled zeros and zero drift are included. On $\mathcal H=L^2(\mathbb R^{17})$,
+write $q_j$ and $\pi_j=-i\partial_j$ for
+canonical system quadratures, with $[q_j,\pi_k]=i\delta_{jk}$. The original product coherent
+input is
+
+$$
+\begin{gathered}
+\mu(W)=(d,\operatorname{vec}(a_0P),\ldots,
+                    \operatorname{vec}(a_3P)),\qquad
+\operatorname{vec}X=(X_{11},X_{21},X_{12},X_{22})^T,\\
+\psi_W(x)=\pi^{-17/4}e^{-\|x-\mu(W)\|^2/2},\qquad
+\rho_W=|\psi_W\rangle\langle\psi_W|.
+\end{gathered}
+\tag{24.2}
+$$
+
+The controls and probes are exactly those of §§3–4. In particular,
+$A_E=\operatorname{diag}(1,I_2\otimes E,\ldots,I_2\otimes E)$, $E\in\{J,M\}$, and
+$U_A\psi(x)=|\det A|^{-1/2}\psi(A^{-1}x)$, so $U_A^\dagger qU_A=Aq$ and
+$U_A^\dagger\pi U_A=A^{-T}\pi$. The laboratory read row is
+$\ell_i^T=(1,t_0^T,i t_0^T,i^2t_0^T,i^3t_0^T)$, $t_0=(1,0,0,1)^T$, and each read uses
+$e^{-i(\ell_i^Tq)\otimes\pi_i^{\rm pr}}$ with the real Gaussian probe $k_\sigma$ of Assumption
+4.1. Its position variance is $\sigma^2$ and its momentum variance is
+
+$$
+r=\frac1{4\sigma^2}>0,\qquad 0<\sigma<\infty.
+\tag{24.3}
+$$
+
+There is no additional position-changing free evolution. For each externally fixed word
+$w=E_1\cdots E_t$, $0\le t\le7$, execute and retain every read $0,\ldots,t$. Set
+$T_i=A_{E_i}\cdots A_{E_1}$, $T_0=I$, and stack $L_i=\ell_i^TT_i$ into $L_w$. Different words
+denote different runs.
+
+**Definition 24.2 (Two independent initial momentum kicks).** Select the original modes
+$A=14=X_{3,11}$ and $B=15=X_{3,21}$, with initial quadratures $Q_A,Q_B,P_A,P_B$. For finite
+$\boldsymbol\eta=(\eta_A,\eta_B)\in[0,\infty)^2$, supply
+
+$$
+\begin{gathered}
+U_\xi=e^{-i(\xi_AQ_A+\xi_BQ_B)}\otimes I_{\rm rest},\qquad
+\gamma_{\boldsymbol\eta}
+=\mathcal N(0,\eta_A)\otimes\mathcal N(0,\eta_B),\\
+\mathcal M_{\boldsymbol\eta}(R)
+=\int U_\xi R U_\xi^\dagger\,\gamma_{\boldsymbol\eta}(d\xi),
+\qquad \widetilde\rho_{W;\boldsymbol\eta}
+=\mathcal M_{\boldsymbol\eta}(\rho_W).
+\end{gathered}
+\tag{24.4}
+$$
+
+A zero variance means a point mass. The two kicks are independent of each other, the system and
+every original probe, and are chosen before any record is obtained. The other fifteen system
+modes remain in their original pure coherent states. Any positive noise replaces the original
+pure preparation by a mixed one; this is an enlarged preparation menu.
+
+Strong continuity of $U_\xi$ gives trace-norm continuity of its conjugation orbit on trace
+class, first for finite-rank operators and then by approximation. The probability integral
+(24.4) is therefore a normal positive trace-class state of trace one. Explicitly,
+
+$$
+\begin{aligned}
+\widetilde\rho_{W;\boldsymbol\eta}(x,y)
+&=\psi_W(x)\overline{\psi_W(y)}
+e^{-[\eta_A(x_{14}-y_{14})^2+\eta_B(x_{15}-y_{15})^2]/2},\\
+\mathbb E q&=\mu(W),\quad \mathbb E\pi=0,\quad
+V_{qq}=I_{17}/2,\quad V_{q\pi}=0,\\
+V_{\pi\pi}&=I_{17}/2+
+\eta_A e_{14}e_{14}^T+\eta_B e_{15}e_{15}^T.
+\end{aligned}
+\tag{24.5}
+$$
+
+This is still a product of seventeen single-mode Gaussian states. The sign is
+$U_\xi^\dagger P_jU_\xi=P_j-\xi_j$. Centering removes that sign from the added variances. All
+moments used below are finite: phase-modulated coherent Gaussians and the probe Gaussians lie on
+the joint Schwartz core, and the finite linear canonical operations give quadratic forms
+integrable against finite-variance kick distributions.
+
+The diagonal restriction $\eta_A=\eta_B=\eta$ matches the selected pair covariance from the
+seventeen-mode isotropic preparation of §17, because the pair closes under the controls and its
+momenta contain no initial rest momenta. These are different full seventeen-mode states when
+$\eta>0$. Here only two modes receive noise; the energy comparisons below always use this same
+two-mode family.
+
+## 25. Exact instrument intertwining and invariant original laws
+
+**Proposition 25.1 (A bounded identity before averaging).** For every fixed allowed word, every
+record vector $z$ and every real $\xi$,
+
+$$
+\begin{gathered}
+\mathsf K_w(z)=U_{T_t}f_{w,z}(q),\qquad
+f_{w,z}(q)=\prod_{i=0}^t k_\sigma(z_i-L_iq),\\
+\mathsf K_w(z)U_\xi
+=(U_{T_t}U_\xi U_{T_t}^\dagger)\mathsf K_w(z).
+\end{gathered}
+\tag{25.1}
+$$
+
+*Proof.* The factorization is Theorem 5.1, independent of input state. Every factor is bounded
+and is a function of the same commuting initial positions. Consequently $f_{w,z}(q)$ commutes
+with $U_\xi$. Move $U_\xi$ across that product and insert $U_{T_t}^\dagger U_{T_t}=I$. This
+proves an equality of bounded operators, without a covariance or Gaussianity argument. $\square$
+
+Embed $\xi$ in the initial seventeen-component position space. The output unitary in (25.1) is
+$D_w(\xi)=e^{-i(T_t^{-T}\xi)\cdot q}$, since $U_{T_t}qU_{T_t}^\dagger=T_t^{-1}q$. For the
+chronological JM control its selected position matrix and output phase amplitudes are
+
+$$
+\begin{gathered}
+S=MJ=\begin{pmatrix}1&0\\1&1\end{pmatrix},\qquad
+S^{-T}=\begin{pmatrix}1&-1\\0&1\end{pmatrix},\\
+D_{JM}(\xi)=e^{-i(\xi_A-\xi_B)q_A}\otimes e^{-i\xi_Bq_B}
+                    \otimes I_{\rm rest},\\
+\operatorname{Cov}\begin{pmatrix}\xi_A-\xi_B\\\xi_B\end{pmatrix}
+=\begin{pmatrix}\eta_A+\eta_B&-\eta_B\\-\eta_B&\eta_B\end{pmatrix}.
+\end{gathered}
+\tag{25.2}
+$$
+
+Each output unitary is a product of local momentum displacements. Their classical amplitudes are
+correlated; the averaged output channel need not be a tensor product of independent noise
+channels. The momentum expectation shifts by $-S^{-T}\xi$, consistent with the sign in (24.5).
+
+**Proposition 25.2 (Events and the actual selected marginal).** Let $\mathcal I_w(B)$ be the
+original normal instrument for a Borel full-record event $B$. Define
+$\mathcal C_{\boldsymbol\eta,w}$ by averaging conjugation with $D_w(\xi)$ against
+$\gamma_{\boldsymbol\eta}$. Then for every trace-class $R$,
+
+$$
+\mathcal I_w(B)(\mathcal M_{\boldsymbol\eta}(R))
+=\mathcal C_{\boldsymbol\eta,w}(\mathcal I_w(B)(R)).
+\tag{25.3}
+$$
+
+For JM, let $\mathcal C_{\boldsymbol\eta}$ denote the corresponding two-mode channel from
+(25.2). The actual event output obeys
+
+$$
+\operatorname{Tr}_{\rm rest}\mathcal I_{JM}(B)
+       (\mathcal M_{\boldsymbol\eta}(R))
+=\mathcal C_{\boldsymbol\eta}
+       (\operatorname{Tr}_{\rm rest}\mathcal I_{JM}(B)(R)).
+\tag{25.4}
+$$
+
+*Proof.* Conjugate the pointwise identity (25.1), and integrate it in the normal trace pairings
+defining the instrument. For positive trace-class inputs, the total event trace is bounded by
+the input trace. Positivity and Tonelli justify the kick/outcome interchange; extend by
+linearity to trace class. The kick-channel integral itself exists in trace norm. No
+operator-norm integral of Kraus operators over all outcomes is being assumed. Finally (25.2)
+acts trivially on the rest, so partial trace gives (25.4). $\square$
+
+Since $\mathcal C_{\boldsymbol\eta,w}$ preserves trace, event probabilities in (25.3) agree
+exactly. If their common probability $p_B$ is positive, division by $p_B$ gives the same channel
+relation between normalized event-conditioned states. This is a relation between states, not
+equality of their internal states. No claim about individual point-outcome posteriors is
+required here.
+
+**Corollary 25.3 (All original complete record measures).** With
+$\mathscr W_7=\bigcup_{t=0}^7\{J,M\}^t$, one has
+
+$$
+\begin{gathered}
+\forall W\in\mathcal W,\quad \forall\boldsymbol\eta\in[0,\infty)^2,
+\quad \forall\sigma\in(0,\infty),\quad \forall w\in\mathscr W_7,\\
+\forall B\in\mathcal B(\mathbb R^{|w|+1}),\qquad
+\operatorname{tr}(\widetilde\rho_{W;\boldsymbol\eta}\mathsf E_w(B))
+=\operatorname{tr}(\rho_W\mathsf E_w(B)),\\
+\nu_{w,\boldsymbol\eta}(W)
+=\mathcal N_{|w|+1}\left(L_w\mu(W),
+                   \frac12L_wL_w^T+\sigma^2I_{|w|+1}\right).
+\end{gathered}
+\tag{25.5}
+$$
+
+Equivalently $\mathsf E_w(B)=g_{w,B}(q)$ with $0\le g_{w,B}\le1$, and it commutes with every
+initial kick. This independently explains the event equality through bounded functional
+calculus. The last law is Theorem 5.1 after that equality of measures. It retains read zero and
+every intervening read, with no change of $W$ or apparatus.
+
+**Proposition 25.4 (Increasing noise and the regularity boundary).** For coordinatewise
+$\boldsymbol\delta\ge0$,
+
+$$
+\mathcal C_{\boldsymbol\eta+\boldsymbol\delta}
+=\mathcal C_{\boldsymbol\delta}\circ\mathcal C_{\boldsymbol\eta}.
+\tag{25.6}
+$$
+
+Gaussian convolution and the commuting displacement unitaries prove this identity. The channel
+preserves ordinary separability: its integrands preserve product states, finite mixtures
+preserve the convex hull, and trace-norm approximation of the integral preserves its closure,
+which defines separable states in this setting.
+
+For a local-unitary-invariant entanglement functional $\mathcal E$ on normal bipartite states
+and a density operator $R$, the inequality
+$\mathcal E(\mathcal C_{\boldsymbol\delta}(R)) \le\mathcal E(R)$ additionally requires Jensen's
+inequality for this probability integral. A sufficient condition is convexity together with
+trace-norm lower semicontinuity: approximate the orbit integral by finite mixtures, apply
+convexity and invariance, and pass to the limit by lower semicontinuity. Bare finite-mixture
+convexity alone does not justify that passage in infinite dimension. The
+separability-preservation statement needs no choice of functional. This mathematical
+representation supplies no implemented LOCC or superselection-rule availability assumption.
+
+## 26. The actual JM marginal, common probes and physical covariance
+
+**Definition 26.1 (The state whose entanglement is classified).** Use the original sequence
+$\mathrm{read}_0,J,\mathrm{read}_1,M, \mathrm{read}_2$ and define
+
+$$
+\begin{aligned}
+\widetilde\rho_{AB;\boldsymbol\eta}^{W,\sigma}
+&=\operatorname{Tr}_{\rm rest}
+(\mathcal D_2\circ\mathcal U_M\circ\mathcal D_1
+ \circ\mathcal U_J\circ\mathcal D_0)
+           (\widetilde\rho_{W;\boldsymbol\eta})\\
+&=\mathcal C_{\boldsymbol\eta}(\rho_{AB}^{W,\sigma}).
+\end{aligned}
+\tag{26.1}
+$$
+
+This averages all three retained records and traces the other fifteen system modes. It is the
+marginal before any supplementary measurement. Neither a conditional branch nor the full
+seventeen-mode state is being classified. The second equality follows from (25.4).
+
+The common original probe must also be preserved in direct reduction. Writing
+$F_i=f_i^{AB}+f_i^{\rm rest}$, its nonselective channel is
+
+$$
+\mathcal D_i(R)=\int
+(e^{-i\zeta f_i^{AB}}\otimes e^{-i\zeta f_i^{\rm rest}})
+R(e^{-i\zeta f_i^{AB}}\otimes e^{-i\zeta f_i^{\rm rest}})^\dagger
+\,\mathcal N(0,r)(d\zeta).
+\tag{26.2}
+$$
+
+The same $\zeta$ acts on pair and rest. Unitary invariance of partial trace on the rest gives
+$\operatorname{Tr}_{\rm rest}\mathcal D_i(R) =\int e^{-i\zeta f_i^{AB}}(\operatorname{Tr}_{\rm rest}R) e^{i\zeta f_i^{AB}}\,\mathcal N(0,r)(d\zeta)$
+even for correlated inputs. Together with pair-factorization of the controls, this justifies
+successive reduction without independent pair/rest kicks. The laboratory pair rows are
+$(0,0),(1,0),(8,0)$; read zero has identity reduced pair channel while remaining in the full
+record.
+
+**Proposition 26.2 (Chronological Gaussian covariance).** Put $s_A=1/2+\eta_A$,
+$s_B=1/2+\eta_B$. With the same independent original probe momenta $\zeta_1,\zeta_2$ of variance
+$r$,
+
+$$
+q_A=Q_A,\quad q_B=Q_A+Q_B,\qquad
+p_A=P_A-P_B+\zeta_1-8\zeta_2,\quad p_B=P_B-\zeta_1.
+\tag{26.3}
+$$
+
+The initial momenta here have variances $s_A,s_B$ under (24.4). Thus the normal Gaussian state
+(26.1), in grouped order $(q_A,q_B,p_A,p_B)$, has mean $(a_3P_{11},a_3(P_{11}+P_{21}),0,0)$ and
+covariance
+
+$$
+V=\mathsf Q\oplus\mathsf P,\qquad
+\mathsf Q=\begin{pmatrix}1/2&1/2\\1/2&1\end{pmatrix},\qquad
+\mathsf P=\begin{pmatrix}
+1+\eta_A+\eta_B+65r&-1/2-\eta_B-r\\
+-1/2-\eta_B-r&1/2+\eta_B+r
+\end{pmatrix}.
+\tag{26.4}
+$$
+
+*Proof.* After $J$ the pair is $(Q_B,Q_A;P_B,P_A)$; read one subtracts $\zeta_1$ from the first
+momentum. Applying $M^{-T}=\begin{pmatrix}-1&1\\1&0\end{pmatrix}$ then gives
+$(P_A-P_B+\zeta_1,P_B-\zeta_1)$. Read two subtracts $8\zeta_2$ from the first component. This
+proves (26.3), including the shared $\zeta_1$ and its negative covariance contribution. Initial
+product-state moments give (26.4); all centered symmetrized position–momentum terms vanish. The
+Gaussian input, linear canonical controls, Gaussian shears, kick averages and partial traces
+establish Gaussianity of the normal state, not just a proposed covariance. The finite-moment
+argument after (24.5) applies throughout. $\square$
+
+With $\Omega=\begin{pmatrix}0&I_2\\-I_2&0\end{pmatrix}$, the physical uncertainty condition is
+$V+i\Omega/2\ge0$. Since $\mathsf Q>0$ and
+$\mathsf Q^{-1}/4=\begin{pmatrix}1&-1/2\\-1/2&1/2\end{pmatrix}$, its Schur complement is
+
+$$
+H=\mathsf P-\frac14\mathsf Q^{-1}
+=\begin{pmatrix}\eta_A+\eta_B+65r&-\eta_B-r\\
+-\eta_B-r&\eta_B+r\end{pmatrix},\qquad
+\det H=(\eta_A+64r)(\eta_B+r)>0.
+\tag{26.5}
+$$
+
+Both diagonal entries are positive, so $H>0$ and $V+i\Omega/2>0$ on the entire stipulated
+domain. Changing $W$ changes only removable local position displacement. In particular $a_3=0$
+removes neither oscillators nor their fluctuations.
+
+## 27. Exact separability, its equality certificate and record fibres
+
+**Proposition 27.1 (The source-specific two-mode boundary).** Define
+
+$$
+F_r(\eta_A,\eta_B)=(\eta_A+64r-2)(\eta_B+r)-1.
+\tag{27.1}
+$$
+
+For every allowed $W,r,\boldsymbol\eta$, the state (26.1) is separable exactly when $F_r\ge0$,
+including equality, and is NPT-entangled exactly when $F_r<0$.
+
+*Proof.* Partial transpose on B reverses $p_B$, replacing $\mathsf P$ by $R\mathsf PR$,
+$R=\operatorname{diag}(1,-1)$. The corresponding uncertainty Schur complement is
+
+$$
+H_\Gamma=\begin{pmatrix}
+\eta_A+\eta_B+65r&\eta_B+r+1\\
+\eta_B+r+1&\eta_B+r
+\end{pmatrix},\qquad
+\det H_\Gamma=F_r(\eta_A,\eta_B).
+\tag{27.2}
+$$
+
+Its lower diagonal entry is strictly positive. Its positive semidefiniteness is therefore
+equivalent to its nonnegative determinant, with the remaining diagonal condition supplied by the
+Schur test. This is not a determinant-only test for arbitrary matrices.
+
+Simon, [quant-ph/9909044v1](https://arxiv.org/pdf/quant-ph/9909044v1), Eq. (19) and the theorem
+immediately following it, applies because this is a physical normal Gaussian state with one mode
+on each side, $[q,p]=i$ and half-anticommutator covariance. In his interleaved mode order, its
+blocks are
+
+$$
+A=\operatorname{diag}(1/2,s_A+s_B+65r),\quad
+B=\operatorname{diag}(1,s_B+r),\quad
+C=\operatorname{diag}(1/2,-s_B-r).
+\tag{27.3}
+$$
+
+Writing $J_2=\begin{pmatrix}0&1\\-1&0\end{pmatrix}$, one has $\det C=-(s_B+r)/2<0$ and
+$\operatorname{tr}(AJ_2CJ_2BJ_2C^TJ_2) =(s_B+r)(s_A+3s_B+67r)/4$. Hence the exact Eq. (19)
+margin is
+
+$$
+\det A\det B+(1/4-|\det C|)^2
+-\operatorname{tr}(AJ_2CJ_2BJ_2C^TJ_2)
+-\frac{\det A+\det B}{4}=\frac14F_r.
+\tag{27.4}
+$$
+
+The cited two-mode Gaussian sufficiency theorem includes equality. Its necessity and (27.2)
+identify the negative side as NPT. No multipartite or arbitrary $2\times4$ PPT sufficiency is
+used. $\square$
+
+**Proposition 27.2 (An explicit product-Gaussian mixture at equality).** Put $x=\eta_A+64r-2$,
+$y=\eta_B+r$. On the separable region, $y>0$, $x>0$ and $xy\ge1$. Define positive local position
+variances
+
+$$
+a=\frac{y}{2(3y+1)},\qquad b=\frac{y+1}{2(2y+1)},\qquad
+V_{\rm loc}=\operatorname{diag}\left(a,b,\frac1{4a},\frac1{4b}\right).
+\tag{27.5}
+$$
+
+This is the covariance of a product of pure single-mode squeezed Gaussians. The position
+residual is
+
+$$
+\mathsf Q-\operatorname{diag}(a,b)
+=\frac12\begin{pmatrix}(2y+1)/(3y+1)&1\\
+1&(3y+1)/(2y+1)\end{pmatrix}\ge0.
+\tag{27.6}
+$$
+
+It has positive diagonal and determinant zero. Also
+$\mathsf P=\begin{pmatrix}x+y+3&-y-1/2\\-y-1/2&y+1/2\end{pmatrix}$, and its momentum residual is
+
+$$
+\mathsf P-\operatorname{diag}(1/(4a),1/(4b))
+=\frac{2y+1}{2}\begin{pmatrix}(y+1)/y&-1\\-1&y/(y+1)\end{pmatrix}
++\operatorname{diag}(x-1/y,0)\ge0.
+\tag{27.7}
+$$
+
+The first matrix again has positive diagonal and determinant zero; the second is positive
+semidefinite precisely in the required range. Consequently $N=V-V_{\rm loc}\ge0$. Gaussian
+averaging of local phase-space displacements of the product state with covariance $V_{\rm loc}$,
+using classical covariance $N$ and the mean in Proposition 26.2, gives characteristic function
+with exactly that mean and covariance $V$. It equals the actual Gaussian pair state. This is a
+separable product-state mixture even when $xy=1$; the classical displacement measure may then be
+singular. All local variances and classical second moments are finite. Thus equality requires
+neither a strict inequality nor an infinite squeeze.
+
+**Corollary 27.3 (Upper closure and the exact blindness range).** On $F_r\ge0$, both $x,y$ are
+positive, and for $h,k\ge0$,
+
+$$
+F_r(\eta_A+h,\eta_B+k)-F_r(\eta_A,\eta_B)=hy+kx+hk\ge0.
+\tag{27.8}
+$$
+
+Thus the separable set is coordinatewise upward closed, in agreement with (25.6). The numerical
+function $F_r$ is not an entanglement monotone: at $\eta_A=0,r=1/64$, it is $-(\eta_B+1/64)-1$,
+which decreases with additional local noise inside the entangled region.
+
+Let $r_0=(1+\sqrt{65})/64$. Zero noise has $F_r(0,0)=64r^2-2r-1<0$ exactly for $0<r<r_0$. For
+every such fixed $r$ and fixed $W$, the pair $(3,1)$ instead has $F_r(3,1)=r(64r+65)>0$. By
+(25.5), their entire original record-law families coincide. For $r\ge r_0$, zero noise is
+separable and upper closure makes every member of this specified family separable. Therefore its
+fixed-$W$ original-record fibre contains both statuses precisely for $0<r<r_0$.
+
+At $\sigma=2$, hence $r=1/16$, the sharper rational example is
+
+$$
+F_{1/16}(0,0)=-7/8,\qquad F_{1/16}(0,7/16)=0.
+\tag{27.9}
+$$
+
+Use the same $W$ and apparatus in both preparations, for instance
+$P=\frac12\begin{pmatrix}1&1\\1&1\end{pmatrix}$, $g=1$, $d=0$. The first actual pair is
+entangled and the second separable, with identical original complete laws for every allowed
+word. The example does not classify conditional outputs or full-system separability.
+
+## 28. Sharp added initial energy at a fixed probe width
+
+**Definition 28.1 (The minimized expectation).** Use the original unit-frequency system
+oscillator $H_{\rm osc}=\frac12\sum_{j=1}^{17}(q_j^2+\pi_j^2)$. The added initial selected-pair
+expectation is exactly
+
+$$
+\begin{aligned}
+\Delta E(\boldsymbol\eta)
+&=\operatorname{tr}(\widetilde\rho_{W;\boldsymbol\eta}H_{\rm osc})
+  -\operatorname{tr}(\rho_WH_{\rm osc})
+=\frac{\eta_A+\eta_B}{2},\\
+\operatorname{tr}(\widetilde\rho_{W;\boldsymbol\eta}H_{\rm osc})
+&=\frac{17}{2}+\frac{\|\mu(W)\|^2}{2}+\Delta E.
+\end{aligned}
+\tag{28.1}
+$$
+
+This follows from the finite second moments (24.5). Only two initial momentum variances change,
+and all means remain fixed. Total initial energy is unbounded over $W$: holding $P,g$ fixed
+while $|d|$ grows makes $\|\mu(W)\|$ unbounded. The difference $\Delta E$ is finite and
+independent of $W$, and does not include probes, output energy, preparation complexity or a
+general physical resource cost.
+
+**Proposition 28.2 (Attained unique pointwise minimizers).** For each fixed $r>0$, minimize
+(28.1) subject to nonnegative noises and separability of (26.1). The minimum and its unique
+optimizer are
+
+$$
+\begin{array}{c|c|c}
+\text{range}&(\eta_A^*,\eta_B^*)&E_{\min}(r)\\ \hline
+0<r\le3/64&(3-64r,\,1-r)&(4-65r)/2\\
+3/64\le r<r_0&(0,\,(64r-2)^{-1}-r)&((64r-2)^{-1}-r)/2\\
+r\ge r_0&(0,0)&0
+\end{array}
+\tag{28.2}
+$$
+
+The overlap at $3/64$ denotes agreeing formulas, not two optimizers.
+
+*Proof.* The substitutions used in Proposition 27.2 give the exact constrained problem
+
+$$
+x>0,\quad y>0,\quad xy\ge1,\quad
+x\ge64r-2,\quad y\ge r,\qquad
+\Delta E=\frac{x+y+2-65r}{2}.
+\tag{28.3}
+$$
+
+The positive $x$ condition follows from separability and $y>0$; the last two bounds are
+precisely $\eta_A,\eta_B\ge0$. Thus no unconstrained stationary point can be accepted without
+these bounds.
+
+For $0<r\le3/64$, the point $x=y=1$ satisfies both bounds, since $64r-2\le1$ and $r<1$. Every
+feasible point obeys $x+y\ge2\sqrt{xy}\ge2$. Equality requires $x=y=1$, proving attainment,
+global minimality and uniqueness. The original noises are $(3-64r,1-r)$ and are nonnegative.
+
+For $3/64\le r<r_0$, put $a_0=64r-2\ge1$. The inequality $r<r_0$ is equivalent here to $a_0r<1$.
+For each $x\ge a_0$, the least feasible $y$ is $\max\{r,1/x\}$. On $a_0\le x\le1/r$, the
+minimized sum is $x+1/x$, strictly increasing away from $x=1$ on this interval. For $x\ge1/r$,
+it is $x+r$, strictly increasing. Hence the unique optimizer is $x=a_0$, $y=1/a_0>r$; it obeys
+all constraints and gives the middle row of (28.2), including its positive denominator.
+
+For $r\ge r_0$, zero noise is feasible by (27.1). The nonnegative objective has value zero only
+at $(0,0)$, so its minimizer is unique. These three arguments exhaust the domain. $\square$
+
+The endpoint values and the rational example are
+
+$$
+\begin{gathered}
+r=3/64:\quad (\eta_A^*,\eta_B^*)=(0,61/64),\quad
+E_{\min}=61/128,\\
+r\uparrow r_0:\quad (\eta_A^*,\eta_B^*)\longrightarrow(0,0),
+\quad E_{\min}\longrightarrow0,\quad F_{r_0}(0,0)=0,\\
+\sigma=2:\quad (\eta_A^*,\eta_B^*)=(0,7/16),\qquad
+E_{\min}=7/32.
+\end{gathered}
+\tag{28.4}
+$$
+
+Every positive-cost optimizer is a separable equality state $F_r=0$, covered by the explicit
+mixture certificate (27.5)–(27.7).
+
+**Proposition 28.3 (The same-pair isotropic restriction).** If $\eta_A=\eta_B=\eta$ is imposed,
+then
+
+$$
+\begin{gathered}
+F_r(\eta,\eta)=\eta^2+(65r-2)\eta+64r^2-2r-1,\\
+\eta_c(r)=\max\left\{0,
+\frac{2-65r+\sqrt{(63r-2)^2+4}}2\right\},\qquad
+\Delta E_{\rm iso,min}=\eta_c(r).
+\end{gathered}
+\tag{28.5}
+$$
+
+Indeed the lower quadratic root is strictly negative: the square root in (28.5) is at least two,
+so the lower root is at most $-65r/2<0$. The upper root or the domain endpoint zero therefore
+gives the exact threshold; $\eta\ge\eta_c$ is separable. For $r<r_0$ its positive threshold is
+an equality state; at $r=r_0$ zero is an equality state; for $r>r_0$ the clipped zero is merely
+the domain edge, with $F_r>0$ everywhere on the diagonal family.
+
+The larger feasible family gives $E_{\min}(r)\le\eta_c(r)$. At $\sigma=2$ its strict comparison
+is $7/32<(\sqrt{1985}-33)/32=\eta_c(1/16)$. Both sides are added initial expectation minima with
+exactly the same two noised modes. The seventeen-mode isotropic increase $17\eta/2$ from (17.7)
+is a different quantity and is not used here.
+
+## 29. One fixed allocation for all finite probe widths
+
+**Proposition 29.1 (Exact uniform feasible set).** For one fixed finite pair
+$\eta_A,\eta_B\ge0$, the quantifiers are
+
+$$
+\left[\forall\sigma\in(0,\infty)\ \forall W\in\mathcal W,
+\quad\widetilde\rho_{AB;\boldsymbol\eta}^{W,\sigma}
+\text{ is separable}\right]
+\iff \eta_B(\eta_A-2)\ge1.
+\tag{29.1}
+$$
+
+*Proof.* Expanding the exact determinant yields
+
+$$
+F_r=64r^2+r(\eta_A+64\eta_B-2)+\eta_B(\eta_A-2)-1.
+\tag{29.2}
+$$
+
+If it is nonnegative for every $r>0$, continuity as $r\downarrow0$ forces its constant term to
+be nonnegative. Conversely that condition forces $\eta_A>2$, $\eta_B>0$, and therefore a
+positive linear coefficient. Equation (29.2) is then strictly positive for every allowed $r>0$,
+even when its constant term is zero.
+
+For an explicit finite-width failure when the constant term is negative, put
+$d_0=1-\eta_B(\eta_A-2)>0$, $b_0=\eta_A+64\eta_B-2$ and choose
+$r_* =\min\{1/2,d_0/[2(|b_0|+64)]\}>0$. Since $r_*\le1$, (29.2) gives $F_{r_*}\le-d_0/2<0$. The
+width $\sigma_*=1/(2\sqrt{r_*})$ is finite, and the same width gives an entangled pair for every
+original $W$. $\square$
+
+**Corollary 29.2 (Sharp uniform initial expectation).** The uniform minimum is attained uniquely
+at
+
+$$
+(\eta_A,\eta_B)=(3,1),\qquad
+\Delta E_{\rm unif,min}=2,\qquad F_r(3,1)=r(64r+65)>0.
+\tag{29.3}
+$$
+
+To prove uniqueness, set $v=\eta_A-2>0$. Uniform feasibility gives
+$\eta_A+\eta_B\ge2+v+1/v\ge4$. Equality requires $v=1$ and $\eta_B=1/v$, so $(3,1)$ is the only
+optimizer. With the additional same-selected-pair isotropic constraint, uniform feasibility
+becomes $\eta(\eta-2)\ge1$. Its minimum is $\eta=1+\sqrt2$, hence $\Delta E=1+\sqrt2>2$, with
+the other fifteen modes still unchanged in both comparisons.
+
+Separately, the pointwise formulas prove
+
+$$
+\sup_{r>0}E_{\min}(r)=2,
+\qquad E_{\min}(r)<2\quad\text{for every }r>0.
+\tag{29.4}
+$$
+
+The first branch tends to two as $r\downarrow0$ and is strictly below it; the middle branch has
+derivative $[-64/(64r-2)^2-1]/2<0$ and starts at $61/128$; the last is zero. Thus the supremum
+is attained at no allowed width. Equality of this supremum with the uniform minimum follows from
+the two explicit proofs, without interchanging an infimum and a universal quantifier. The single
+uniform optimizer is pointwise suboptimal at every $r>0$. The limit $r\downarrow0$ is an
+algebraic limit, not an allowed infinite-variance probe. These expectation minima make no
+device, physical availability, SSR, preparation-complexity or advantage claim.
+
+## 30. A supplementary scalar pointer and its complete joint law
+
+**Definition 30.1 (The enlarged measurement menu and target time).** After all three original JM
+reads, supply a fresh independent real Gaussian pointer of position variance $\tau^2>0$,
+momentum variance $1/(4\tau^2)$, and zero means. For a known real pair $c=(c_A,c_B)\ne0$, apply
+and read
+
+$$
+m_c=c_Ap_A+c_Bp_B,\qquad
+U_c=e^{-im_c\otimes\Pi_c},\qquad\text{pointer }Q_c.
+\tag{30.1}
+$$
+
+The target remains the entanglement of (26.1) before this added coupling. The coupling is a new
+measurement assumption, beyond the original outward acquisition menu. Its pointer is
+$U_c^\dagger Q_cU_c=Q_c+m_c$; it preserves the system momenta and changes positions by
+$U_c^\dagger q_jU_c=q_j+c_j\Pi_c$. It therefore need not preserve the state after the added
+measurement.
+
+**Proposition 30.2 (The common chronological record law).** Write $L=L_{JM}$,
+$\Sigma_Z=LL^T/2+\sigma^2I_3$, and define
+
+$$
+\begin{aligned}
+\alpha&=c_A^2,\qquad \beta=(c_A-c_B)^2,\qquad
+\ell_c(\boldsymbol\eta)=\alpha\eta_A+\beta\eta_B,\\
+v_0(c;r,\tau)&=(1+65r)c_A^2
+-2(1/2+r)c_Ac_B+(1/2+r)c_B^2+\tau^2.
+\end{aligned}
+\tag{30.2}
+$$
+
+The entire original three-record vector $Z$ and added pointer $Y_c$ have the product law, as a
+measure on $\mathbb R^3\times\mathbb R$,
+
+$$
+\mathcal L(Z,Y_c)=
+\mathcal N_3(L\mu(W),\Sigma_Z)
+\otimes\mathcal N_1(0,v_0(c;r,\tau)+\ell_c(\boldsymbol\eta)).
+\tag{30.3}
+$$
+
+*Proof.* This joint assertion requires the full dilation, since a reduced pair covariance alone
+contains no old-record correlations. Let $u_i,\zeta_i$ be the original three probe position and
+momentum operators, $[u_i,\zeta_j]=i\delta_{ij}$. The Kraus factorization in (25.1) is obtained
+from the same deferred-pointer dilation
+
+$$
+\mathcal V=(U_{T_2}\otimes I)
+\exp\left[-i\sum_{i=0}^2(L_iq)\zeta_i\right],\qquad
+\langle z|\mathcal V|k_\sigma^{\otimes3}\rangle
+=\mathsf K_{JM}(z).
+\tag{30.4}
+$$
+
+It reproduces the whole sequential instrument, including every retained pointer and any
+subsequently appended measurement. Equivalently it follows by moving each actual coupling
+through the preceding control; the resulting initial-position shears commute.
+
+Let $H$ have rows $e_{14}^T-e_{15}^T$ and $e_{15}^T$. Pullback to the common initial
+system/probe space gives
+
+$$
+Z=u+Lq,\qquad p_{AB}^{\rm out}=H\pi-HL^T\zeta,\qquad
+-HL^T=\begin{pmatrix}0&1&-8\\0&-1&0\end{pmatrix}.
+\tag{30.5}
+$$
+
+Use the noised input state (24.4) for $\pi$. If instead one writes the original coherent momenta
+explicitly, add the classical shift $-S^{-T}\xi$ to the second formula. Both representations
+give the same law and retain the original common probes.
+
+The crucial commutation is
+
+$$
+[Z_i,(p_{AB}^{\rm out})_j]
+=i(LH^T)_{ij}-i(LH^T)_{ij}=0.
+\tag{30.6}
+$$
+
+The first term is from $Lq$ and $H\pi$; the second is from the old probe position $u_i$ and its
+momentum contribution. Concretely the pair parts of the old pointers are $u_0$, $u_1+Q_B$ and
+$u_2+8Q_A$; their system commutators cancel those probe terms. Their remaining position terms
+commute with the pair momenta. Thus the added coupling leaves every old retained pointer
+unchanged. These are commuting output observables, not an assignment of joint outcomes to
+incompatible initial $q$ and $\pi$.
+
+The input centered symmetrized $q$–$\pi$ and $u$–$\zeta$ blocks are zero, and distinct initial
+subsystems and preparation kicks are independent. Hence (30.5) also gives
+$\operatorname{Cov}(Z,p_{AB}^{\rm out})=0$. The fresh pointer contributes independent position
+noise of variance $\tau^2$, so $Y_c=Q_c+c^Tp_{AB}^{\rm out}$ has variance
+$c^T\mathsf Pc+\tau^2=v_0+\ell_c$. All these commuting linear output observables have a joint
+Gaussian law in the common Gaussian input. The zero cross block therefore establishes full
+independence and (30.3), rather than only a marginal variance identity. $\square$
+
+For example its complete characteristic function is
+$\exp(ih^TL\mu-\tfrac12h^T\Sigma_Zh) \exp[-t^2(v_0+\ell_c)/2]$ at
+$(h,t)\in\mathbb R^3\times\mathbb R$. Thus every augmented-record Borel probability is fixed by
+(30.3). All preparation-noise dependence of this scalar protocol is exactly the single number
+$\ell_c$, even when the common $W$ is unknown: $W$ changes only the old-record mean, and all
+momentum means are zero.
+
+## 31. When one scalar identifies the target and when it cannot
+
+**Proposition 31.1 (Known diagonal family).** If the preparation is known in advance to obey
+$\eta_A=\eta_B=\eta$, one Bob readout $c=(0,1)$ identifies the parameter from its population
+law:
+
+$$
+\eta=\operatorname{Var}(Y_B)-(1/2+r+\tau^2).
+\tag{31.1}
+$$
+
+Equation (28.5) then identifies separability exactly. For $0<r<r_0$, zero added readouts cannot
+identify this target because the original laws are constant in $\eta$ while this family contains
+both statuses. One scalar is consequently necessary and sufficient there within this declared
+measurement class. For $r\ge r_0$, every member is separable; no added observation is needed for
+the constant entanglement answer, although Bob's readout still identifies $\eta$.
+
+**Proposition 31.2 (Every one fixed scalar fails on the two-parameter family at $\sigma=2$).**
+For each nonzero real $c$, there are two strictly positive noise pairs, using the same $W$ and
+apparatus, with identical full old-plus-$Y_c$ laws and opposite entanglement statuses.
+
+*Proof.* At $r=1/16$ the boundary is the curved locus
+
+$$
+F(a,b)=(a+2)(b+1/16)-1=0,\qquad
+a=\frac{7/8-2b}{b+1/16},\quad0<b<7/16.
+\tag{31.2}
+$$
+
+Here $a,b$ denote noise values, not the program coefficients in (24.1). Put $\alpha=c_A^2$,
+$\beta=(c_A-c_B)^2$ as in (30.2); both are nonnegative and $\alpha+\beta>0$. Choose the interior
+boundary point
+
+$$
+(a_0,b_0)=\begin{cases}(6,1/16),&\beta\ne64\alpha,\\
+(2,3/16),&\beta=64\alpha.\end{cases}\qquad
+d_c=\beta(b_0+1/16)-\alpha(a_0+2)\ne0.
+\tag{31.3}
+$$
+
+In the first case $d_c=\beta/8-8\alpha\ne0$. In the second, $\alpha>0$ and $d_c=12\alpha$. The
+direction $(\beta,-\alpha)$ preserves the only noise-dependent scalar in (30.3). Choose $t>0$
+small enough that $t\beta<a_0$, $t\alpha<b_0$ and $t\alpha\beta<|d_c|$, and set
+
+$$
+(a_\pm,b_\pm)=(a_0\pm t\beta,b_0\mp t\alpha),\qquad
+F(a_\pm,b_\pm)=\pm t d_c-t^2\alpha\beta.
+\tag{31.4}
+$$
+
+Both pairs are admissible and strictly positive, and these two values have opposite signs. This
+also covers $\alpha=0$ or $\beta=0$. Their values of $\alpha a+\beta b$ coincide, so (30.3)
+proves equality of the complete augmented laws, not just their variances. Every original
+fixed-word law also coincides by (25.5). Proposition 27.1 classifies their actual pre-read pair
+states with opposite answers. This proves the quantified target-specific failure for every fixed
+$c\ne0$, rather than relying on general tomography incompleteness. $\square$
+
+Two elementary exact pairs from the same family make the obstruction concrete. In each row pair
+keep any one allowed $W$ fixed:
+
+| Added scalar | Noise pair $(\eta_A,\eta_B)$ | $F_{1/16}$ | Added-pointer variance |
+| --- | --- | --- | --- |
+| Bob, $c=(0,1)$ | $(0,0)$ | $-7/8$ | $9/16+\tau^2$ |
+| Bob, $c=(0,1)$ | $(15,0)$ | $1/16$ | $9/16+\tau^2$ |
+| Alice, $c=(1,0)$ | $(1,0)$ | $-13/16$ | $97/16+\tau^2$ |
+| Alice, $c=(1,0)$ | $(0,1)$ | $9/8$ | $97/16+\tau^2$ |
+
+The common old law and independence in (30.3) make each displayed pair a full augmented-law
+equality. Supplying all original population laws, or the common $W$ itself, does not remove this
+ambiguity.
+
+## 32. Two scalar readouts, joint correlations and the counting rule
+
+**Proposition 32.1 (Coordinate scalar readouts suffice).** With known $r$ and positive known
+pointer widths, the two population variances for $c_A^{\rm read}=(1,0)$ and
+$c_B^{\rm read}=(0,1)$ recover
+
+$$
+\begin{aligned}
+\eta_B&=\operatorname{Var}(Y_B)-\tau_B^2-1/2-r,\\
+\eta_A&=\operatorname{Var}(Y_A)-\tau_A^2-1-65r-\eta_B.
+\end{aligned}
+\tag{32.1}
+$$
+
+Substitution in $F_r$ determines the declared target for every $r>0$. The scalar laws may be
+collected on independent freshly prepared copies, with one reconfigurable pointer. They can also
+be obtained jointly on a common copy after JM: $p_A,p_B$ commute, so the two independent-probe
+couplings commute and preserve both momenta. The actual common joint law is
+
+$$
+\mathcal L(Z,Y_A,Y_B)=\mathcal N_3(L\mu,\Sigma_Z)
+\otimes\mathcal N_2\left(0,
+\mathsf P+\operatorname{diag}(\tau_A^2,\tau_B^2)\right),\qquad
+\operatorname{Cov}(Y_A,Y_B)=-1/2-\eta_B-r.
+\tag{32.2}
+$$
+
+The two outcomes are correlated even though their input probes are independent. Their
+original-system contribution is the same actual pair state; independence of probe noises does
+not decorrelate it. The proof of (30.3), applied simultaneously to both commuting momenta,
+establishes the joint old-record independence in (32.2).
+
+More generally, for two rows $c_1,c_2$ of a real matrix $C$, supply two mutually independent
+fresh Gaussian pointers of widths $\tau_1,\tau_2>0$. The couplings $e^{-i(c_j^Tp)\otimes\Pi_j}$
+commute, and the complete law is
+
+$$
+\mathcal L(Z,Y_1,Y_2)=\mathcal N_3(L\mu,\Sigma_Z)
+\otimes\mathcal N_2(0,C\mathsf PC^T+D_\tau),\qquad
+D_\tau=\operatorname{diag}(\tau_1^2,\tau_2^2).
+\tag{32.3}
+$$
+
+In this independent-new-probe convention, the off-diagonal pointer noise contribution is zero.
+The actual output cross covariance is $c_1^T\mathsf Pc_2$, not zero in general and not an
+additional $\tau_1\tau_2$ term. This formula specifies a common realization of the joint
+outputs, rather than combining unrelated marginal laws.
+
+**Proposition 32.2 (Variance rank is sufficient, not necessary with joint data).** For
+separately collected scalar laws, rank two of the coefficient rows
+$\bigl(c_{jA}^2,(c_{jA}-c_{jB})^2\bigr)$ suffices to recover both noise parameters after
+subtracting the known $v_0$ values. Joint correlations can supply information absent from those
+two rows. For example, use $c_1=(1,0)$ and $c_2=(1,2)$. Both variance rows are $(1,1)$, but
+(32.3) gives
+
+$$
+\begin{aligned}
+\operatorname{Var}(Y_j)-\tau_j^2&=1+65r+\eta_A+\eta_B
+\quad(j=1,2),\\
+\operatorname{Cov}(Y_1,Y_2)&=\eta_A-\eta_B+63r.
+\end{aligned}
+\tag{32.4}
+$$
+
+The first line recovers the sum, and the second, after subtracting $63r$, recovers the
+difference. Hence these jointly measured scalars also identify both parameters despite rank one
+of their variance rows.
+
+At $\sigma=2$, Propositions 31.2 and 32.1 prove a minimum of two scalar linear momentum
+observables/readouts for the unrestricted family and this target. Two commuting outputs fit one
+joint configuration; one physical pointer port can instead be reconfigured on independent
+copies. No minimum number of configurations or hardware ports follows. The lower bound concerns
+one fixed scalar linear observable of (30.1), and does not address arbitrary POVMs, nonlinear
+readouts or adaptive strategies.
+
+## 33. Population sufficiency and the finite-copy zero-error limit
+
+**Proposition 33.1 (Equivalent finite-sample laws).** For positive finite $\sigma,\tau_j$, each
+of the specified scalar or joint augmented laws has a positive-definite covariance and an
+everywhere positive Lebesgue density on its observation space. Indeed,
+$\Sigma_Z\succeq\sigma^2I_3>0$ and $C\mathsf PC^T+D_\tau\succeq D_\tau>0$ in (32.3).
+Consequently any two admissible preparations give mutually absolutely continuous laws for these
+measurements, and their independent $N$-fold repetitions remain equivalent for every finite $N$.
+The same argument applies to independently collected fixed-setting scalar samples, with their
+corresponding product observation space.
+
+Fix two parameters whose pre-read JM states have different entanglement statuses, including a
+possible separable equality state. A zero-error classifier would need a decision event $D$
+satisfying
+
+$$
+\mathbb P_{\boldsymbol\eta_E}^{\,N}(D)=1,\qquad
+\mathbb P_{\boldsymbol\eta_S}^{\,N}(D)=0.
+\tag{33.1}
+$$
+
+Equivalence makes that impossible. Even a rule designed for that known pair has positive error
+for at least one member; a classifier valid on the whole family cannot do better. Including
+every old record and the complete two-output vector leaves this argument unchanged. It concerns
+independent repetitions of the specified measurement protocols, with $W$ fixed, and supplies no
+impossibility claim for every quantum measurement or all adaptive strategies. No
+sample-complexity rate is inferred.
+
+The informational conclusions can be expressed as target sufficiency on the declared preparation
+family. Let the target be the indicator $\mathbf1_{\{F_r<0\}}$ of entanglement of (26.1). An
+observation is sufficient for this target exactly when its population-law fibres do not cross
+that indicator. In the entangling-width range the original record observation has a fibre
+containing both answers. One added Bob scalar removes this ambiguity on the known diagonal
+subfamily. At $\sigma=2$, every one fixed scalar still has a crossing fibre on the full
+quadrant, while two coordinate scalars, or the jointly correlated pair (32.4), identify both
+parameters and hence the target. This identifies a specific missing relation rather than
+demanding unrestricted state tomography.
+
+These are statements about exact population laws. They coexist with the finite-copy limit
+(33.1): distinct everywhere-positive densities can determine different population variances
+while sharing all null sets for any finite observation vector. No prior over the continuous
+noise parameters or over $W$ has been supplied. Finite-law multi-task risk or posterior-support
+results therefore do not automatically transfer here; their own prior, support and observation
+hypotheses would need a separate verified correspondence. No such transfer or unrelated
+finite-law bound is used.
+
+## 34. Primary interfaces and the scope of the combined relation
+
+The underlying apparatus is the one specified in §§1–11, at the [immutable source
+revision](https://github.com/the-omega-institute/trureturing/blob/e6292015298ba29e2fce1208e9eb543698c5e92e/docs/develop/theory/FIB_SHARED_GAUSSIAN_RECORD_LAWS.md).
+Theorem 5.1 supplies the actual all-read Kraus factorization and full fixed-word law. Definition
+8.1 and Proposition 8.2 fix the selected modes, record averaging and common-probe reduction;
+Propositions 9.1–9.2 supply the chronological quadratures and their normal Gaussian moment
+interface. The isotropic preparation of §§17–23 is a comparison for the selected covariance
+only, as explained after (24.5); its full preparation and energy are distinct.
+
+The reused primary mathematical conditions are the following.
+
+1. Arvind, Dutta, Mukunda and Simon, *The real symplectic groups in
+   quantum mechanics and optics*,
+   [quant-ph/9509002v3](https://arxiv.org/pdf/quant-ph/9509002v3),
+   Eq. (2.8), PDF p. 6; Eq. (4.7), p. 13; Eq. (6.6a), p. 23.
+   Their canonical orientation, $GL$ cotangent embedding
+   $\operatorname{diag}(A,A^{-T})$ and exact half-density pullback
+   are used with the concrete real invertible FIB matrices.
+2. R. Simon, *Peres-Horodecki Separability Criterion for Continuous
+   Variable Systems*,
+   [quant-ph/9909044v1](https://arxiv.org/pdf/quant-ph/9909044v1),
+   Eqs. (3), (6)–(7), PDF p. 2; Eq. (16), p. 3; Eq. (19) and
+   the following theorem, p. 4. The commutator is $[q,p]=i$,
+   covariance is the half anticommutator, and uncertainty is
+   $V+i\Omega/2\ge0$. Partial transpose reverses $p_B$. Gaussianity,
+   physicality and one mode on each side are the conditions used in
+   (27.2)–(27.4), including separability at equality.
+3. M. Ozawa, *Universally valid reformulation of the Heisenberg
+   uncertainty principle on noise and disturbance in measurement*,
+   [quant-ph/0210044v2](https://arxiv.org/pdf/quant-ph/0210044v2),
+   §VI, Eqs. (36)–(38), PDF p. 4. Its scalar coupling
+   $e^{-iQ\otimes P_0}$ gives pointer $Q+Q_0$ and conjugate
+   momentum $P-P_0$. The substitutions $Q=\ell_i^Tq$ and $Q=m_c$
+   fix the signs here. The full chronological independence in
+   (30.3) is derived from the actual dilation, not from those scalar
+   source equations alone.
+
+The coefficients $65=1+8^2$, $64=8^2$ and $63=65-2$ arise from the specified JM control and
+actual probe rows. They are source-specific coefficients, not universal constants. The combined
+result is the explicit connection of invariant record effects, correlated product displacement
+noise, a two-mode reciprocal separability constraint, sharp initial-expectation allocation and
+target-dependent supplementary observation. It asserts no new generic separability theorem,
+literature priority or kernel verification.
+
+All statements retain finite $W$, finite nonnegative noises and positive finite pointer widths.
+The added preparation and momentum measurement menus are model assumptions, not established
+physical procedures, SSR permissions or resource advantages. The state classification is
+pointwise in $W$ and record-averaged before the extra read; arbitrary world mixtures,
+conditional branches and the full seventeen-mode separability problem remain outside it. The
+original fixed-word horizon remains seven, and the positive-noise literal-history obstruction of
+§7 persists.
+
+## 追加锚（共轭动量与各向异性噪声增补区）

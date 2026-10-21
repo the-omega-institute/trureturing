@@ -1618,3 +1618,891 @@ The qualitative counterpart is the existing compactness inference: Theorems 7.3 
 The source collar, polynomial mirror tube and branch asymptotics are model-specific repository-derived calculations. Their methods are fixed-node interpolation, exact rational interval inclusion, finite covering, the Bernstein convex-hull identity (11.24), and the analytic implicit-function theorem. The source correspondence is O, Sections 2, 12 and 16; F, Sections 30–33; S, Corollary 18.2; SII, Sections 25–29; SIII, Lemma 14.2 and Sections 16 and 20–23; SIV, Sections 8–9; SV, Section 3; and the preceding VI results. No claim of literature priority attaches to these calculations. The original independent-pair objective remains unresolved: these results provide neither an actual off-$24$ $M$ witness over the arc, nor arcwise or global absence, nor a completed whole-domain target. The two selected terminal pairs may still overlap or be disjoint, and their terminal values need not coincide.
 
 ## 追加锚（本行以下为增补区）
+
+## 12. Exact common-root lifts of the critical cover
+
+**Definition 12.1 (The second linear subresultant).** Let $F\in\mathbb Z[b]$
+be the univariate polynomial of Lemma 4.2, with the coefficient list
+given there. Retain $E_0,E_1,E_2,R_1,R_2,a_0,c_0,h,a,c$ exactly as in
+Definitions 3.1 and 4.1. In particular $a_0=ha$ and $c_0=hc$.
+For the ordered pair $(E_0,E_2)$ form the $28$ rows
+
+$$
+r^{13}E_0,\ldots,E_0,\quad r^{13}E_2,\ldots,E_2
+\tag{12.1}
+$$
+
+in columns $r^{28},r^{27},\ldots,1$. Let $a_2$ be the determinant
+retaining columns $r^{28},\ldots,r^2,r$, and $c_2$ the determinant
+retaining columns $r^{28},\ldots,r^2,1$. Thus
+
+$$
+L_2(r,b)=a_2(b)r+c_2(b).
+\tag{12.2}
+$$
+
+The row order and column order are part of the definition. Neither
+the initial leading coefficients nor a factor of $a_2,c_2$ is removed.
+Write $\ell_k=\operatorname{lc}_rE_k$ for $k=0,1,2$.
+All remainders and gcds below are in $\mathbb Q[b]$; a gcd is normalized
+to be monic. For $V\ne0$, $\operatorname{rem}_V U$ denotes the unique
+polynomial of degree less than $\deg V$ for which
+$U-QV=\operatorname{rem}_V U$ for some $Q\in\mathbb Q[b]$.
+
+**Lemma 12.2 (Finite specialization certificates).** The polynomials
+of Definition 12.1 satisfy
+
+$$
+\begin{array}{c|c}
+U&\operatorname{rem}_F U\\ \hline
+R_1&0\\
+R_2&0\\
+ac_2-ca_2&0
+\end{array}
+\qquad
+\begin{array}{c|c}
+U&\gcd(F,U)\\ \hline
+h&1\\
+a_0&1\\
+a&1\\
+a_2&1\\
+\ell_0&1\\
+\ell_1&1\\
+\ell_2&1
+\end{array}.
+\tag{12.3}
+$$
+
+Consequently every complex root $\beta$ of $F$ preserves the initial
+$r$ degrees $15$ of all three $E_k$. Both linear subresultants in
+(4.2) and (12.2) are nonzero at $b=\beta$.
+
+*Proof.* The first two remainder identities and the gcds with $h,a,a_0$
+follow already from (4.3), using $a_0=ha$. Here are finite coefficient
+operations specifying the remaining identities, including their
+normalization. Expand the integer circuit (2.3), form (3.1), and use
+the exact divisions (3.2) to obtain $E_0,E_1,E_2$. Extract their
+$r^{15}$ coefficients to obtain $\ell_0,\ell_1,\ell_2$. Form the two
+determinants of (12.1) and the determinants of Definition 4.1.
+For each remainder in (12.3), polynomial division consists of repeatedly
+replacing a nonzero current polynomial $U$ of degree at least $67$ by
+
+$$
+U-\frac{\operatorname{lc}U}{\operatorname{lc}F}
+       b^{\deg U-67}F.
+\tag{12.4}
+$$
+
+For a gcd entry use the successive pairs
+$(U,V)\mapsto(V,\operatorname{rem}_V U)$, starting with $(F,U)$,
+and normalize the last nonzero constant or polynomial to be monic.
+These exact operations give the following coefficient equalities and
+terminal degrees:
+
+$$
+\begin{gathered}
+\operatorname{rem}_F(ac_2)=\operatorname{rem}_F(ca_2),\\
+\deg\gcd(F,a_2)=0,\qquad
+(\deg\gcd(F,\ell_0),\deg\gcd(F,\ell_1),
+ \deg\gcd(F,\ell_2))=(0,0,0).
+\end{gathered}
+\tag{12.5}
+$$
+
+Thus (12.3) is a finite collection of rational coefficient identities
+whose inputs are (2.3), (3.2), the fixed determinants and the existing
+coefficient list of $F$. No choice of a root or a tolerance enters
+these operations. Determinants may equivalently be expanded by
+$\det A=\sum_\sigma\operatorname{sgn}(\sigma)
+\prod_j A_{j,\sigma(j)}$; thus the operations determine every
+coefficient without an additional polynomial array.
+
+If $F(\beta)=0$, a Bézout identity for each gcd in (12.3) gives
+$h(\beta),a_0(\beta),a(\beta),a_2(\beta),\ell_k(\beta)\ne0$.
+In particular no initial $r$ degree drops, and the coefficients of
+$r$ in both specialized linear subresultants are nonzero. ∎
+
+**Lemma 12.3 (Sufficiency of the algebraic lift).** For every complex
+root $\beta$ of $F$, the specialized polynomials
+$E_0(r,\beta),E_1(r,\beta),E_2(r,\beta)$ have the unique common root
+
+$$
+\rho=-\frac{c(\beta)}{a(\beta)}.
+\tag{12.6}
+$$
+
+Each of the pairs $(E_0,E_1)$ and $(E_0,E_2)$ has specialized gcd
+of degree exactly one. In particular the lift (12.6) is real whenever
+$\beta$ is real.
+
+*Proof.* Use the classical subresultant gcd criterion over
+$\mathbb C$: for two polynomials whose initial degrees are preserved,
+vanishing of the resultant and nonvanishing of the degree-one
+subresultant imply that the gcd has degree exactly one, and that
+subresultant is a nonzero scalar multiple of the gcd. The criterion
+uses the fixed determinantal subresultants of Definitions 4.1 and
+12.1; a common nonzero normalization scalar does not change its root.
+A reference for this algebraic criterion is Basu, Pollack and Roy,
+*Algorithms in Real Algebraic Geometry*, second edition, Chapter 8,
+[DOI 10.1007/3-540-33099-2](https://doi.org/10.1007/3-540-33099-2).
+
+Lemma 12.2 supplies every specialization hypothesis. For $(E_0,E_1)$
+the linear gcd has root $-c_0(\beta)/a_0(\beta)$; cancellation of
+$h(\beta)\ne0$ gives (12.6). For $(E_0,E_2)$ its root is
+$-c_2(\beta)/a_2(\beta)$. The third remainder identity of (12.3)
+and $a(\beta)a_2(\beta)\ne0$ make these two roots equal. Hence the
+same $\rho$ is a zero of all three $E_k$, and uniqueness follows
+from either linear gcd. This also explains why two vanishing
+resultants alone would not have supplied sufficiency: their common
+roots with $E_0$ would still have to be identified. All coefficients
+in (12.6) are real at a real $\beta$, with nonzero denominator. ∎
+
+## 13. The four actual critical worlds on the entire off-twenty-four parent
+
+**Definition 13.1 (Four algebraic complete worlds).** For
+
+$$
+(q_1,q_2,q_3,q_4)=(845744,4228383,12758053,88676283)
+\tag{13.1}
+$$
+
+let $b_i$ be the unique root of $F$ in
+$I_i=(q_i/10^8,(q_i+1)/10^8)$, as isolated in Lemma 5.2. Set
+
+$$
+r_i=-c(b_i)/a(b_i),\qquad t_i=r_i/b_i.
+\tag{13.2}
+$$
+
+Using the polynomials $C_0,\ldots,C_3,D$ of Lemma 2.2 at $(t_i,b_i)$,
+define
+
+$$
+\begin{aligned}
+P_i&=\begin{pmatrix}t_ib_i&b_i\\t_i(1-t_ib_i)&1-t_ib_i\end{pmatrix},
+&d_i&=-C_0(t_i,b_i)/D(t_i,b_i),\\
+g_i(s)&=\frac1{D(t_i,b_i)}\sum_{k=0}^3 C_k(t_i,b_i)
+               \prod_{\substack{0\le l\le3\\l\ne k}}\frac{s-l}{k-l},
+&W_i&=(P_i,g_i,d_i).
+\end{aligned}
+\tag{13.3}
+$$
+
+Write $p_i=p(W_i)$, $v_i=v(W_i)$, $m_i=m(W_i)$, $a_i=a(W_i)$.
+These are definitions by polynomial equations, rational functions and
+isolating intervals, rather than by approximate coordinates.
+
+**Lemma 13.2 (Strict lift and response certificates).** The four
+worlds of Definition 13.1 are well defined and belong to $\mathcal H$.
+The following are strict rational enclosures; each finite decimal
+denotes the displayed exact rational number.
+
+| $i$ | $r_i$ | $b_i$ | $\operatorname{sign}D(t_i,b_i)$ |
+| --- | --- | --- | --- |
+| $1$ | $(0.0084901253,0.0084901254)$ | $(0.0084574469,0.0084574470)$ | $-$ |
+| $2$ | $(0.5195359430,0.5195359431)$ | $(0.0422838313,0.0422838314)$ | $+$ |
+| $3$ | $(0.9005088162,0.9005088163)$ | $(0.1275805397,0.1275805398)$ | $-$ |
+| $4$ | $(0.9648629529,0.9648629530)$ | $(0.8867628398,0.8867628399)$ | $-$ |
+
+| $i$ | $p_i$ | $v_i$ | $d_i$ |
+| --- | --- | --- | --- |
+| $1$ | $(690.595905,690.595906)$ | $(1416.434664,1416.434665)$ | $(-659.603336,-659.603335)$ |
+| $2$ | $(1.830485,1.830486)$ | $(175.912050,175.912051)$ | $(24.243210,24.243211)$ |
+| $3$ | $(7.283036,7.283037)$ | $(61.494372,61.494373)$ | $(27.263115,27.263116)$ |
+| $4$ | $(57.070846,57.070847)$ | $(305.047970,305.047971)$ | $(28.731355,28.731356)$ |
+
+| $i$ | $m_i$ | $a_i$ |
+| --- | --- | --- |
+| $1$ | $(3014.237990,3014.237991)$ | $(1548.191707,1548.191708)$ |
+| $2$ | $(1077.618894,1077.618895)$ | $(1001.314438,1001.314439)$ |
+| $3$ | $(351.057514,351.057515)$ | $(313.557782,313.557783)$ |
+| $4$ | $(1228.882278,1228.882279)$ | $(782.150437,782.150438)$ |
+
+*Proof.* The intervals and the signs of $D$ follow by the rational
+interval definitions in Definition 14.1 below; that definition and
+the derivative formulas there also specify a finite certificate for
+these tables. For these first tables only the polynomials
+$a,c,D,N_0,N_1,N_2,C_0$ and
+
+$$
+N_a=-C_0+(T+2j+4tb)B_7
+\tag{13.4}
+$$
+
+are needed. The trace at the alternative seventh action $J$ is
+$T+2j+4tb$, so $a=N_a/D$.
+
+In particular $b_i>0$, $0<r_i<1$ and $D(t_i,b_i)\ne0$.
+Thus $t_i>0$, $t_ib_i<1$, and (13.3) gives a strict rank-one,
+trace-one matrix. The determinant is
+$t_ib_i(1-t_ib_i)-b_it_i(1-t_ib_i)=0$, and the trace is one.
+Lemma 2.2 and the full-parent converse of O, Theorem 2.1, identify
+the interpolated gain and drift with an actual original world.
+For clarity, their original-clock identities are
+
+$$
+\begin{aligned}
+(Z_0,Z_1,Z_2,Z_3,Z_4,Z_5,Z_6)
+  &=(1,j,T,n,U,U+n,2U+n),\\
+d_i+Z_k g_i(k)&=(0,24,147/5,24,18)_k\quad(0\le k\le4),\\
+d_i+Z_5g_i(5)&=p_i,\qquad d_i+Z_6g_i(6)=v_i,\\
+d_i+(3U+2n)g_i(7)&=m_i,\qquad
+d_i+(T+2j+4r_i)g_i(7)=a_i.
+\end{aligned}
+\tag{13.5}
+$$
+
+The fourth-clock row is included: substituting the four samples in
+(2.5) gives $H=0$, since (2.4) solves the regular parent equation.
+The fixed-node interpolant is one polynomial of degree at most three;
+if it were identically zero, the original readings $0$ and $24$
+would both equal $d_i$, a contradiction. All original source
+denominators $b,j,n,T,U$ are positive. The only chart denominator
+$D$ is separately certified nonzero, and every $p_i\ne24$. ∎
+
+**Theorem 13.3 (Exhaustive actual off-twenty-four critical classification).**
+For every complete strict world $W\in\mathcal H$ with $p(W)\ne24$,
+
+$$
+\operatorname{rank}D\Psi_M(W)<2
+\quad\Longleftrightarrow\quad
+W\in\{W_1,W_2,W_3,W_4\}.
+\tag{13.6}
+$$
+
+At each of the four worlds the rank is exactly one.
+
+*Proof.* First suppose $\Lambda(W)=0$. III, Theorem 13.1, already
+gives rank two on the full analytic parent at every point of both
+entire strict singular lines, for all real $e=d-24$. Thus no singular
+world is a critical world in (13.6). This uses that existing stronger
+all-drift result without a restriction to a regular chart.
+
+For a regular world, Lemma 3.2 gives criticality exactly when all three
+$E_k$ vanish. Lemma 4.3, which also covers leading-coefficient drops,
+leaves $b=1/8$ or $F(b)=0$ with the unique lift $r=-c(b)/a(b)$.
+At $b=1/8$, Lemma 6.1 gives $e=0$, $p=24$ on the regular parent,
+so the off-$24$ hypothesis excludes this branch. The factors
+
+$$
+b,\quad 2b+1,\quad 5b+2,\quad
+5b^2+2b+1,\quad b^2+8b+4
+\tag{13.7}
+$$
+
+removed in passing from the resultant gcd to $F$ have no positive
+zero. The remaining factor $8b-1$ has just been treated. The removed
+subresultant factor $h$ has no zero at a root of $F$ by (12.3).
+These are all removed factors of the necessary cover (4.3).
+
+Lemma 5.2 exhausts the positive roots of $F$: there are six, one in
+each of its six displayed intervals. The two with
+$q=5311219,6737603$ have $r<0$ under the same uniquely guarded lift
+and hence are outside the strict source domain. The other four are
+exactly (13.1). Lemma 13.2 makes all four strict and regular.
+Lemma 12.3 now supplies the converse missing from a necessary
+resultant cover: all three $E_k$ really vanish at each of these
+four lifts. Lemma 3.2 therefore makes each $W_i$ critical.
+The $p_b\ne0$ certificates of Lemma 14.2 give rank at least one,
+and the vanishing minors give rank at most one.
+
+The parent/world identification of Definition 2.1 and O, Theorem 2.1,
+means that a regular source fixes the whole gain and the drift;
+no additional critical complete world can lie over one of these
+four sources. No division by $d$, $e$, a gain sample, a leading
+gain coefficient or a gain-root difference has occurred. Thus zero
+drift, every lower degree and all sample-zero strata are retained
+in the quantified domain of (13.6). ∎
+
+## 14. Source two-jets and the four Whitney cross-caps
+
+**Definition 14.1 (Exact jet and interval certificates).** In the
+independent source coordinates $(t,b)$ put
+
+$$
+f=(N_0,N_1,N_2)/D=(p,v,m),\qquad a=N_a/D,
+\tag{14.1}
+$$
+
+where $N_a$ is (13.4). For any of these four numerator polynomials
+$N$ and $x,y\in\{t,b\}$ define the integer polynomials
+
+$$
+\begin{aligned}
+\mathcal D_xN&=DN_x-ND_x,\\
+\mathcal H_{xy}N
+ &=D^2N_{xy}-D(N_xD_y+N_yD_x+ND_{xy})+2ND_xD_y.
+\end{aligned}
+\tag{14.2}
+$$
+
+The first and second derivatives of $N/D$ are respectively
+$\mathcal D_xN/D^2$ and $\mathcal H_{xy}N/D^3$.
+At a point with $p_b\ne0$ set
+
+$$
+\begin{gathered}
+s=p_t/p_b,\qquad K=\partial_t-s\partial_b,\\
+H_{KK}=f_{tt}-2sf_{tb}+s^2f_{bb},\qquad
+H_{Kb}=f_{tb}-sf_{bb},\\
+\Delta=\det(f_b,H_{KK},H_{Kb}),\qquad
+a_K=a_t-sa_b,\\
+\chi=(H_{KK})_v-\frac{v_b}{p_b}(H_{KK})_p.
+\end{gathered}
+\tag{14.3}
+$$
+
+The Hessians in (14.3) evaluate fixed vectors at the chosen point.
+They do not differentiate the coefficient $s$ as a vector field.
+
+Here is the rational interval convention for the finite tables.
+For $X=[x_-,x_+]$ define
+
+$$
+\mathcal R(X)=2^{-512}
+ [\lfloor2^{512}x_-\rfloor,\lceil2^{512}x_+\rceil].
+\tag{14.4}
+$$
+
+Addition and multiplication mean their usual interval hull followed
+by $\mathcal R$; multiplication takes the minimum and maximum of
+the four endpoint products. Negation reverses endpoints and changes
+their signs, and subtraction is addition of a negated interval.
+For an interval $Y$ excluding zero, $X/Y$ means rounded multiplication
+of $X$ by the exact reciprocal interval $[1/y_+,1/y_-]$.
+An integer is initially its exact singleton interval. Powers mean
+repeated multiplication starting from $[1,1]$.
+
+For a univariate coefficient list use descending Horner, starting
+from $[0,0]$. For a polynomial in $t,b$, expand in monomials and pad
+all coefficients to its full rectangular bidegree; evaluate descending
+$b$ Horner inside descending $t$ Horner. In particular no zero
+coefficient between the top degree and degree zero is omitted.
+
+Let $I_i^*$ be the closed interval obtained from $\overline I_i$
+by $256$ midpoint bisections retaining the half with opposite
+nonzero endpoint signs of $F$. An exact specification of each
+midpoint sign is the sign of
+$v^{67}F(u/v)$ at its rational midpoint $u/v$, with $v>0$;
+this is an integer. Every midpoint is nonzero under $F$, and
+$|I_i^*|=1/(10^8 2^{256})$. Define the interval lifts
+
+$$
+R_i=-c(I_i^*)/a(I_i^*),\qquad
+T_i=R_i/I_i^*.
+\tag{14.5}
+$$
+
+The signs of $a(I_i^*)$ are $-,+,+,-$ in the four rows, so
+these divisions are legal, as also follows from Lemma 5.2.
+Evaluate $D,N_0,N_1,N_2,N_a,-C_0$ on $T_i\times I_i^*$.
+Divide the last five by the interval for $D$ to enclose
+$p,v,m,a,d$, respectively. Evaluate (14.2) on the same rectangle
+and divide by the indicated interval powers of $D$ to enclose
+all derivatives. Evaluate $s,H_{KK},H_{Kb},a_K,\chi$ in the
+order (14.3), after excluding zero from the $p_b$ interval.
+For columns $u,v,w$ the determinant convention is
+
+$$
+\det(u,v,w)=
+u_1(v_2w_3-v_3w_2)-v_1(u_2w_3-u_3w_2)
++w_1(u_2v_3-u_3v_2).
+\tag{14.6}
+$$
+
+All interval statements below refer to these finite rational
+expressions. Their inputs are the existing integer circuit, the
+fixed determinants and the single existing coefficient list of $F$.
+
+**Lemma 14.2 (Nonzero source-jet certificates).** The preceding
+interval expressions are defined in all four rows. They give the
+tables of Lemma 13.2 and the following strict inclusions:
+
+| $i$ | $p_b$ | $\Delta$ | $a_K$ | $\chi$ |
+| --- | --- | --- | --- | --- |
+| $1$ | $(-830779,-830778)$ | $(-3418000000000000,-3417000000000000)$ | $(176,177)$ | $(47481,47482)$ |
+| $2$ | $(702,703)$ | $(16.52,16.54)$ | $(5,6)$ | $(-0.951,-0.950)$ |
+| $3$ | $(405954,405955)$ | $(1543600000,1543700000)$ | $(4,5)$ | $(0.140,0.141)$ |
+| $4$ | $(35,36)$ | $(168543,168544)$ | $(173,174)$ | $(-37.564,-37.563)$ |
+
+In particular $p_b\Delta a_K\chi\ne0$ and $a_K>0$ at every $W_i$.
+
+*Proof.* The rational operations of Definition 14.1 give the stated
+inclusions by substitution into (14.2) and (14.3). More precise
+intermediate enclosing intervals for the three jet quantities that
+certify rank, cross-cap recognition and $J$ separation are
+
+$$
+\begin{array}{c|c|c|c}
+i&p_b&\Delta&a_K\\ \hline
+1&(-830778.852988,-830778.852987)
+ &(-3417716279736341.173526,-3417716279736341.173525)
+ &(176.491607,176.491608)\\
+2&(702.496383,702.496384)
+ &(16.528488,16.528489)&(5.534633,5.534634)\\
+3&(405954.500756,405954.500757)
+ &(1543628106.368296,1543628106.368297)&(4.299489,4.299490)\\
+4&(35.324086,35.324087)
+ &(168543.426152,168543.426153)&(173.429994,173.429995).
+\end{array}
+\tag{14.7}
+$$
+
+The corresponding $\chi$ intervals are
+
+$$
+\begin{aligned}
+&(47481.395648,47481.395649),\quad
+(-0.950574,-0.950573),\\
+&(0.140892,0.140893),\quad
+(-37.563042,-37.563041).
+\end{aligned}
+\tag{14.8}
+$$
+
+These are finite rational inequalities: for example the $i=2$
+determinant enclosure in (14.7) means that the lower and upper
+endpoints of the interval expression (14.6), with (14.2)–(14.5)
+substituted, are strictly between $16528488/10^6$ and
+$16528489/10^6$. The other entries have the same meaning. Thus
+the tables specify both the algebraic objects and explicit rational
+comparison bounds without an external source of coefficients.
+
+Horner enclosure follows inductively from interval addition and
+multiplication. Each application of $\mathcal R$ enlarges the exact
+interval, so it preserves inclusion. The intervals for $D$ have the
+nonzero signs of Lemma 13.2, and the $p_b$ intervals in (14.7)
+exclude zero before their reciprocals are used. Hence every quotient
+in these expressions is valid on its entire evaluation rectangle.
+The derivative identity (14.2) follows by differentiating $N/D$
+twice; it therefore bounds the actual two-jet, rather than an
+unrelated cleared expression. Finally the sign-preserving bisections
+keep $b_i$ in $I_i^*$ and (14.5) keeps $r_i,t_i$ in $R_i,T_i$.
+The inclusions thus apply at the exact algebraic worlds. ∎
+
+**Theorem 14.3 (Whitney cross-caps at all four actual worlds).** At
+each $W_i$, the map $\Psi_M$ on the full parent has a Whitney
+cross-cap singularity. Equivalently, its smooth map germ is equivalent
+under local diffeomorphisms of source and target to
+
+$$
+(u,w)\longmapsto(u,uw,w^2).
+\tag{14.9}
+$$
+
+*Proof.* Work in the full two-dimensional regular parent chart
+$(t,b)$, justified at $W_i$ by Lemma 13.2. All three minors vanish
+by Lemma 12.3. Since $p_b\ne0$, the first and second columns of
+$df$ obey $f_t=(p_t/p_b)f_b$, so $df(K)=0$ and $df$ has rank one.
+Use the affine source coordinates given near the chosen point by
+
+$$
+t=t_i+w,\qquad b=b_i+u-s_iw,
+\qquad s_i=p_t(W_i)/p_b(W_i).
+\tag{14.10}
+$$
+
+Their Jacobian is invertible. At the origin their derivatives are
+
+$$
+f_w=0,\qquad f_u=f_b,\qquad
+f_{uw}=H_{Kb},\qquad f_{ww}=H_{KK}.
+\tag{14.11}
+$$
+
+Lemma 14.2 gives
+$\det(f_u,f_{uw},f_{ww})=-\Delta\ne0$.
+This is precisely the classical Whitney recognition criterion:
+$f_w=0$ and linear independence of $f_u,f_{uw},f_{ww}$ imply a
+cross-cap germ. We use that criterion as stated in
+Hasegawa–Honda–Naokawa–Umehara–Yamada, *Intrinsic Invariants of Cross
+Caps*, [arXiv:1207.3853v2](https://arxiv.org/html/1207.3853v2),
+Introduction immediately after equation (1), with its attribution to
+Whitney, *The Singularities of a Smooth n-Manifold in (2n−1)-Space*,
+Annals of Mathematics **45**, 247–293,
+[DOI 10.2307/1969266](https://doi.org/10.2307/1969266).
+It applies to the displayed source jets without a genericity
+hypothesis. The source-specific assertions are the actual common
+roots and the nonzero certificates (14.7); the recognition criterion
+itself is the cited classical result. ∎
+
+## 15. Real analytic original-world collision germs
+
+**Theorem 15.1 (Actual strict $M$ double-point germs).** For each
+$i\in\{1,2,3,4\}$ there are real analytic complete-world maps
+$W_i^+(h),W_i^-(h)$ for $|h|<\varepsilon_i$, with
+$W_i^+(0)=W_i^-(0)=W_i$, such that for $0<|h|<\varepsilon_i$,
+
+$$
+\begin{gathered}
+W_i^+(h),W_i^-(h)\in\mathcal H,\qquad
+W_i^+(h)\ne W_i^-(h),\\
+\Psi_M(W_i^+(h))=\Psi_M(W_i^-(h)),\qquad
+p(W_i^\pm(h))\ne24.
+\end{gathered}
+\tag{15.1}
+$$
+
+The two maps exchange under $h\mapsto-h$. In particular every
+$W_i$ is an actual strict off-$24$ interior diagonal limit of
+$M$ pairs, and $\Psi_M$ is not locally injective there.
+
+*Proof.* Since $p_b(W_i)\ne0$, the real analytic inverse-function
+theorem makes
+
+$$
+x=p(t,b)-p_i,\qquad y=t-t_i
+\tag{15.2}
+$$
+
+local source coordinates. Write their analytic inverse as
+$t=t_i+y$, $b=\beta_i(x,y)$, and write
+
+$$
+f=(p_i+x,V(x,y),\mathcal M(x,y)).
+\tag{15.3}
+$$
+
+At the origin $V_y=\mathcal M_y=0$ because the $y$ direction is
+$K$. To identify the needed Jacobian exactly, put $s=p_t/p_b$ at
+the origin and differentiate (15.2):
+
+$$
+\begin{gathered}
+\beta_x=1/p_b,\qquad \beta_y=-s,\\
+\beta_{yy}=-(H_{KK})_p/p_b,
+\qquad
+\beta_{xy}=-(p_{tb}-sp_{bb})/p_b^2.
+\end{gathered}
+\tag{15.4}
+$$
+
+It follows that the vectors $f_{yy}$ and $f_{xy}$ in these new
+coordinates are respectively
+
+$$
+H_{KK}-\frac{(H_{KK})_p}{p_b}f_b,
+\qquad
+\frac1{p_b}H_{Kb}-\frac{(H_{Kb})_p}{p_b^2}f_b.
+\tag{15.5}
+$$
+
+Also $f_x=f_b/p_b$. Taking determinants of these three columns
+in the order $(f_x,f_{xy},f_{yy})$ gives
+
+$$
+\det\begin{pmatrix}V_{xy}&V_{yy}\\
+                    \mathcal M_{xy}&\mathcal M_{yy}\end{pmatrix}
+=-\frac{\Delta}{p_b^2}\ne0.
+\tag{15.6}
+$$
+
+In particular $V_{yy}=\chi\ne0$ by (14.8): the acquired projection
+$(p,v)$ has nonzero second derivative in its null direction at
+each of these worlds.
+
+For an analytic scalar function $Z(x,y)$ equal to $V$ or
+$\mathcal M$, consider
+
+$$
+\frac{Z(x,z+h)-Z(x,z-h)}{2h}.
+\tag{15.7}
+$$
+
+Its value at $h=0$ is $Z_y(x,z)$. Its analytic extension is even
+in $h$ and is an analytic function of $(x,z,q)$, where $q=h^2$.
+Indeed write the convergent power series
+$Z(x,y)=\sum_{j,k\ge0}c_{jk}x^jy^k$ on a smaller polydisc.
+For each monomial its divided difference is the polynomial
+
+$$
+\frac{(z+h)^k-(z-h)^k}{2h}
+=\sum_{\nu=0}^{\lfloor(k-1)/2\rfloor}
+  \binom{k}{2\nu+1}z^{k-2\nu-1}q^\nu
+\quad(k\ge1),
+\tag{15.8}
+$$
+
+and it is zero for $k=0$. Absolute convergence on a smaller
+polydisc justifies summation and differentiation: choose
+$|z|+\sqrt{|q|}$ smaller than the original $y$ radius, and use
+the absolutely convergent differentiated series of $Z$ to dominate
+the binomial sums. Thus (15.8) defines a real analytic function
+$\mathcal D_Z(x,z,q)$ also for small negative real $q$.
+
+At $(x,z,q)=(0,0,0)$,
+$\mathcal D_V=\mathcal D_{\mathcal M}=0$ and their Jacobian in
+$(x,z)$ is the invertible matrix in (15.6). The real analytic
+implicit-function theorem supplies analytic functions $x_i(q),\zeta_i(q)$,
+with $x_i(0)=\zeta_i(0)=0$, satisfying
+
+$$
+\mathcal D_V(x_i(q),\zeta_i(q),q)
+=\mathcal D_{\mathcal M}(x_i(q),\zeta_i(q),q)=0.
+\tag{15.9}
+$$
+
+These applications use only the classical inverse and implicit
+function theorems on analytic maps with the displayed invertible
+Jacobians; the construction of the divided differences is explicit.
+Define two source points by
+
+$$
+\begin{aligned}
+t_i^\pm(h)&=t_i+\zeta_i(h^2)\pm h,\\
+b_i^\pm(h)&=\beta_i(x_i(h^2),\zeta_i(h^2)\pm h).
+\end{aligned}
+\tag{15.10}
+$$
+
+They have the same $p=p_i+x_i(h^2)$. For $h\ne0$, equations
+(15.7)–(15.9) give exactly equal $v$ and $m$, and their $t$
+coordinates differ by $2h$. Hence they are distinct sources.
+They converge to $(t_i,b_i)$ and exchange when $h$ changes sign.
+Their source derivatives at zero are $\pm(1,-s_i)=\pm K_i$,
+so both analytic branches are nonconstant.
+
+At both points lift to a complete world by (13.3), evaluated at
+$(t_i^\pm(h),b_i^\pm(h))$ in place of $(t_i,b_i)$. The source
+inequalities $t>0$, $b>0$, $tb<1$, the nonvanishing of $D$, and
+$p\ne24$ all persist after reducing $\varepsilon_i$. This lift
+is real analytic, including all four padded coefficients of its
+one whole gain. Lemma 2.2 and O, Theorem 2.1, give every original
+clock equation (13.5) for each lifted point. The unequal original
+readings again exclude the zero gain. Each world retains its own
+single fixed real drift and degree-at-most-three real polynomial
+at clocks $0$ through $7$. The two worlds need not have the same
+drift or polynomial, as permitted by Definition 1.1.
+
+Their distinct sources imply distinct complete worlds. Both complete
+worlds converge to $W_i$, so every full-parent neighbourhood of
+$W_i$ contains a distinct actual equal-$\Psi_M$ pair. This proves
+(15.1) directly in the original real model, independently of whether
+the diffeomorphisms in the Whitney normal form are analytic. ∎
+
+## 16. Local $J$ separation and the exact remaining incidence quantifiers
+
+**Theorem 16.1 (Local $J$ separation at the four critical worlds).**
+For each $i$ there is an open full-parent neighbourhood
+$\mathcal U_i$ of $W_i$ on which $(p,a)$ is one-to-one. Consequently
+
+$$
+\begin{gathered}
+W,W'\in\mathcal U_i,\quad p(W)=p(W'),\quad W\ne W'
+\quad\Longrightarrow\quad a(W)\ne a(W').
+\end{gathered}
+\tag{16.1}
+$$
+
+For sufficiently small $h\ne0$, the two worlds of Theorem 15.1
+therefore have unequal $a$, despite their equal $p,v,m$.
+More precisely,
+$a(W_i^+(h))-a(W_i^-(h))=2a_K(W_i)h+O(h^3)$.
+
+*Proof.* In $(t,b)$ coordinates,
+
+$$
+\det\frac{\partial(p,a)}{\partial(t,b)}
+=p_ta_b-p_ba_t=-p_ba_K\ne0
+\tag{16.2}
+$$
+
+by Lemma 14.2. The analytic inverse-function theorem gives
+$\mathcal U_i$; the complete-world identification preserves this
+local assertion. Both collision-germ endpoints eventually belong to
+the same $\mathcal U_i$, so (16.1) applies to them.
+The quantifiers in (16.1) require both endpoints in this one
+neighbourhood, and impose no condition on worlds elsewhere in the
+entire $C(p,v)$. The displayed asymptotic follows by applying the
+same symmetric divided difference (15.7) to the analytic function
+$a$ in coordinates (15.2): its value at $(0,0,0)$ is $a_K(W_i)$,
+while $x_i(h^2),\zeta_i(h^2),h^2$ are all $O(h^2)$. ∎
+
+**Theorem 16.2 (Strict interior $M$ diagonal limits).** Suppose
+$W_n,W'_n\in\mathcal H$ are complete worlds satisfying
+
+$$
+\begin{gathered}
+W_n\ne W'_n,\qquad
+\Psi_M(W_n)=\Psi_M(W'_n),\qquad p(W_n)\ne24,\\
+W_n\longrightarrow W,\qquad W'_n\longrightarrow W,
+\qquad W\in\mathcal H,\qquad p(W)\ne24.
+\end{gathered}
+\tag{16.3}
+$$
+
+Then $W$ is one of $W_1,W_2,W_3,W_4$. Conversely every one of
+these four worlds occurs as such a limit. The same necessary
+conclusion applies when the $M$ pair is selected from a sequence
+of original joint configurations, without any assumption on the
+limits of their independently selected $J$ endpoints.
+
+*Proof.* If $D\Psi_M(W)$ had rank two, a two-coordinate output
+submap would have invertible differential on a full-parent chart
+at $W$. The inverse-function theorem would make $\Psi_M$
+injective on a neighbourhood of $W$. Both endpoints in (16.3)
+would eventually lie there, contradicting their distinctness and
+equal augmented output. Thus $W$ is critical, and Theorem 13.3
+identifies it. This argument uses the smooth full-parent surface,
+including at singular worlds, as supplied by III, Lemma 11.2 and
+Theorem 13.1. The converse is Theorem 15.1. The selected-pair
+assertion follows because its $M$ endpoints satisfy the same
+hypotheses, regardless of any cross-pair overlap.
+
+The convergence and the strict off-$24$ limit are hypotheses of
+this statement. No compactness, source collar, nonzero gain sample
+or additional control of $J$ endpoints is used. In particular the
+conclusion classifies common interior limits of the $M$ endpoints;
+it places no restriction on a pair with two distinct limits. ∎
+
+**Definition 16.3 (A polynomial whole-world relation).** For
+$w=(r,b,c,d,k_0,k_1,k_2,k_3)\in\mathbb R^8$ put
+$g_w(s)=\sum_{l=0}^3k_ls^l$ and
+
+$$
+\begin{aligned}
+(Z_0,\ldots,Z_6)&=
+(1,b+c,1+b,b+c+r,1+2b,1+2b+b+c+r,2(1+2b)+b+c+r),\\
+\mathfrak a(w)&=d+g_w(7)(1+b+2(b+c)+4r),\\
+\mathfrak m(w)&=d+g_w(7)(3(1+2b)+2(b+c+r)).
+\end{aligned}
+\tag{16.4}
+$$
+
+Let $\mathscr W(p,v;w)$ be the conjunction
+
+$$
+\begin{gathered}
+0<r<1,\qquad b>0,\qquad c>0,\qquad bc=r(1-r),
+\qquad\sum_{l=0}^3 k_l^2>0,\\
+d+g_w(l)Z_l=(0,24,147/5,24,18,p,v)_l
+\quad(0\le l\le6).
+\end{gathered}
+\tag{16.5}
+$$
+
+Define the original independent-pair relation by
+
+$$
+\begin{aligned}
+\mathscr I(p,v;w_0,w_1,w_2,w_3)\quad\Longleftrightarrow\quad
+& p\ne24\ \land\ \bigwedge_{l=0}^3\mathscr W(p,v;w_l)\\
+&\land\ \mathfrak a(w_0)=\mathfrak a(w_1)
+          \ \land\ \|w_0-w_1\|^2>0\\
+&\land\ \mathfrak m(w_2)=\mathfrak m(w_3)
+          \ \land\ \|w_2-w_3\|^2>0.
+\end{aligned}
+\tag{16.6}
+$$
+
+The norm is the Euclidean norm in the full eight-coordinate tuple.
+There are no inequalities between cross-pair labels and no equality
+between the two common terminal values.
+
+For the exact constants of Definition 13.1 let $\mathsf J_i$ denote
+the sentence
+
+$$
+\exists w_0,w_1:\quad
+\mathscr W(p_i,v_i;w_0)\land\mathscr W(p_i,v_i;w_1)
+\land\mathfrak a(w_0)=\mathfrak a(w_1)
+\land\|w_0-w_1\|^2>0.
+\tag{16.7}
+$$
+
+Put $z(w)=(r,b,d)$ and $z_i=(r_i,b_i,d_i)$. Let $\mathsf Q_i$
+denote
+
+$$
+\begin{aligned}
+\forall\epsilon>0\ \exists p,v,w_0,w_1,w_2,w_3:\quad
+&\mathscr I(p,v;w_0,w_1,w_2,w_3)\\
+&\land\ \|z(w_2)-z_i\|^2+\|z(w_3)-z_i\|^2<\epsilon^2.
+\end{aligned}
+\tag{16.8}
+$$
+
+Finally write $\mathsf I$ for the original global sentence
+$\exists p,v,w_0,w_1,w_2,w_3:\mathscr I(p,v;w_0,w_1,w_2,w_3)$.
+
+**Theorem 16.4 (Faithful incidence and diagonal-accumulation tests).**
+The sentence $\mathsf I$ is equivalent to the original assertion
+$D_J\cap D_M\ne\varnothing$ with the entire-child quantifiers
+of Definition 9.1. For each $i$, $\mathsf J_i$ is equivalent to
+$(p_i,v_i)\in D_J$, and $\mathsf Q_i$ is equivalent to existence
+of a sequence of original joint configurations whose two selected
+$M$ endpoints both converge as complete worlds to $W_i$.
+These are finite real-algebraic sentences with algebraic constants.
+
+In a configuration of (16.6), the two selected $J$ worlds cannot
+both belong to the same $\mathcal U_i$ of Theorem 16.1, even if
+both selected $M$ worlds do belong to it. The scope of the existing
+regional $J$ exclusion in [SV](FIB_STRICT_REAL_JOINT_INCIDENCE_SUPPORT_V.md),
+Theorem 1.1, does not include the fourth base $(p_4,v_4)$.
+
+*Proof.* The source inequalities and equation $bc=r(1-r)$ in
+(16.5) give exactly a strict trace-one rank-one source, with
+$c=r(1-r)/b$. The four coefficients specify one entire real
+polynomial of degree at most three and their sum-of-squares guard
+excludes only the identically zero gain. That guard also follows
+from the unequal original readings, so it removes no original
+world. The seven equations are exactly the original left-action
+clock equations, including the fourth reading and both acquired
+readings. Formula (16.4) supplies the two alternative clock-seven
+responses. This identifies $\mathscr W$ bijectively with the
+entire $C(p,v)$, including singular sources, zero drift, degree
+drops and gain samples that vanish. A positive squared difference
+means distinct complete worlds. Thus (16.6) and (16.7) have exactly
+the asserted independent-pair and base-pair quantifiers.
+
+If $\mathsf Q_i$ holds, choose its witnesses with
+$\epsilon=1/n$. Both selected $M$ triples $(r,b,d)$ converge to
+$z_i$. Since $b_i>0$, the entries $c=r(1-r)/b$ converge too.
+Set $e=d-24$ and use the whole-gain samples (2.2): their positive
+source denominators are bounded away from zero near this strict
+limit, and each sample is a continuous function of $(r,b,d)$.
+Fixed-node interpolation then gives convergence of all four padded
+gain coefficients. Hence both selected complete worlds converge
+to $W_i$. Their common $p,v$ converge to $p_i,v_i$ by continuity,
+and all worlds in the sequence retain the strict original guards.
+
+Conversely, for a sequence of such joint configurations with
+both selected $M$ worlds converging to $W_i$, the sum in (16.8)
+tends to zero; for every $\epsilon>0$ some member supplies its
+witnesses. This proves the exact equivalence. Theorem 16.2
+classifies the possible strict off-$24$ common limits in this
+equivalence. It does not supply the independent $J$ pair in any
+of the constructed $M$ germs.
+
+All expressions in (16.4)–(16.8) are polynomial equalities and
+inequalities with rational coefficients apart from the specified
+real algebraic constants. Those constants are themselves defined
+by $F$, the isolating intervals and (13.2)–(13.4). Denominators
+there are certified nonzero; their defining rational equations
+may therefore be expressed by multiplication without selecting
+additional components. Classical quantifier elimination over real
+closed fields applies, including to the quantified $\epsilon$
+in (16.8); the general method is that of Basu–Pollack–Roy cited
+in Lemma 12.3. For the fixed-base tests, F, Theorem 32.1, also
+bounds each entire off-$24$ child by $24$ worlds, so direct
+unordered comparison has at most $\binom{24}{2}=276$ pairs.
+
+The local assertion follows directly from (16.1), since the $J$
+pair shares both $p$ and $a$. It leaves at least one $J$ endpoint
+outside that patch and permits every original cross-pair overlap.
+Finally $v_4>305.047970>305$ by Lemma 13.2, whereas SV,
+Theorem 1.1, excludes $J$ pairs only for
+$(p,v)\in[56,58]\times[304,305]$. Thus its rectangle cannot be
+enlarged to this fourth critical base by that theorem.
+
+Theorem 16.2 assumes a common strict interior limit of the $M$
+endpoints. It gives no reduction of configurations whose $M$
+endpoints remain separated, or whose common limit is a boundary
+world or has $p=24$. Moreover $\neg\mathsf J_i$ alone asserts
+absence only at one exact base: it supplies no neighbourhood
+absence for independently selected $J$ pairs whose endpoints can
+approach their own boundary or diagonal. Conversely
+$\mathsf J_i$ by itself supplies no intersection of its base
+pair with the neighbouring $M$ double-point branch. The global
+sentence $\mathsf I$ therefore retains all bases, all independent
+$J$ roles and all separated $M$ pairs in (16.6). ∎
