@@ -2,11 +2,12 @@
    generality: G
    mirror-B: D5/B/S3/Analytic/KummerRatio/Transform
    mirror-E: none(waiver:evidence-not-specified-by-formal-manifest)
-   anchors: [mathlib/module/Mathlib.Data.Nat.Choose.Sum, mathlib/module/Mathlib.Analysis.Normed.Ring.InfiniteSum, mathlib/module/Mathlib.Analysis.SpecialFunctions.Exponential]
+   anchors: [mathlib/module/Mathlib.RingTheory.Binomial, mathlib/module/Mathlib.Data.Nat.Choose.Sum, mathlib/module/Mathlib.Analysis.Normed.Ring.InfiniteSum, mathlib/module/Mathlib.Analysis.SpecialFunctions.Exponential]
    utility: none
    digest: Kummer reflection by finite Pochhammer identities and the entire series Cauchy product. -/
 
 import D5.S3.Analytic.KummerRatio.Series
+import Mathlib.RingTheory.Binomial
 import Mathlib.Data.Nat.Choose.Sum
 import Mathlib.Analysis.Normed.Ring.InfiniteSum
 import Mathlib.Analysis.SpecialFunctions.Exponential
@@ -16,43 +17,44 @@ open D5.S3.Analytic.KummerRatio.Defs D5.S3.Analytic.KummerRatio.Series
 
 namespace D5.S3.Analytic.KummerRatio.Transform
 
-private lemma poch_shift (s : ℝ) (n : ℕ) :
-    (ascPochhammer ℝ (n + 1)).eval s = s * (ascPochhammer ℝ n).eval (s + 1) := by
-  rw [ascPochhammer_succ_left]
-  simp
-
 private lemma binomial_pochhammer (n : ℕ) (s c : ℝ) (hc : 0 < c) :
     (∑ k ∈ range (n + 1), (n.choose k : ℝ) *
       ((-1 : ℝ)^k * ((ascPochhammer ℝ k).eval s / (ascPochhammer ℝ k).eval c))) =
     (ascPochhammer ℝ n).eval (c - s) / (ascPochhammer ℝ n).eval c := by
-  induction n generalizing s c with
-  | zero => simp
-  | succ n ih =>
-    rw [sum_choose_succ_mul (fun k _ => (-1 : ℝ)^k *
-      ((ascPochhammer ℝ k).eval s / (ascPochhammer ℝ k).eval c)) n]
-    have hshift (k : ℕ) :
-        (-1 : ℝ) ^ (k + 1) *
-          ((ascPochhammer ℝ (k + 1)).eval s / (ascPochhammer ℝ (k + 1)).eval c) =
-        -(s / c) * ((-1 : ℝ) ^ k *
-          ((ascPochhammer ℝ k).eval (s + 1) / (ascPochhammer ℝ k).eval (c + 1))) := by
-      rw [poch_shift, poch_shift, pow_succ]
-      ring
-    simp_rw [hshift]
-    simp_rw [show ∀ k : ℕ, (n.choose k : ℝ) * (-(s / c) *
-      ((-1 : ℝ) ^ k * ((ascPochhammer ℝ k).eval (s + 1) /
-      (ascPochhammer ℝ k).eval (c + 1)))) = -(s / c) *
-      ((n.choose k : ℝ) * ((-1 : ℝ) ^ k * ((ascPochhammer ℝ k).eval (s + 1) /
-      (ascPochhammer ℝ k).eval (c + 1)))) by intro k; ring]
-    rw [← mul_sum, ih (s + 1) (c + 1) (by linarith), ih s c hc]
-    rw [show c + 1 - (s + 1) = c - s by ring]
-    rw [ascPochhammer_succ_eval, poch_shift]
-    have hn : (ascPochhammer ℝ n).eval c ≠ 0 := (ascPochhammer_pos n c hc).ne'
-    have hn' : (ascPochhammer ℝ n).eval (c + 1) ≠ 0 :=
-      (ascPochhammer_pos n (c + 1) (by linarith)).ne'
-    have hrel : c * (ascPochhammer ℝ n).eval (c + 1) =
-        (ascPochhammer ℝ n).eval c * (c + n) := (poch_shift c n).symm.trans (ascPochhammer_succ_eval n c)
-    field_simp
-    linear_combination (ascPochhammer ℝ n).eval (c - s) * hrel
+  have hcast (x : ℝ) (m : ℕ) :
+      (descPochhammer ℤ m).smeval x = (descPochhammer ℝ m).eval x := by
+    rw [Polynomial.descPochhammer_smeval_eq_ascPochhammer,
+      Polynomial.ascPochhammer_smeval_eq_eval, descPochhammer_eval_eq_ascPochhammer]
+  have hv := Ring.descPochhammer_smeval_add (r := -s) (s := c + (n : ℝ) - 1)
+    n (Commute.all _ _)
+  simp only [hcast, Finset.Nat.sum_antidiagonal_eq_sum_range_succ_mk] at hv
+  rw [descPochhammer_eval_eq_ascPochhammer] at hv
+  have harg : -s + (c + (n : ℝ) - 1) - (n : ℝ) + 1 = c - s := by ring
+  rw [harg] at hv
+  have hn : (ascPochhammer ℝ n).eval c ≠ 0 := (ascPochhammer_pos n c hc).ne'
+  rw [hv, sum_div]
+  apply sum_congr rfl
+  intro k hk
+  have hkn : k ≤ n := by simpa using hk
+  have hk0 : (ascPochhammer ℝ k).eval c ≠ 0 := (ascPochhammer_pos k c hc).ne'
+  have hneg : (descPochhammer ℝ k).eval (-s) =
+      (-1 : ℝ)^k * (ascPochhammer ℝ k).eval s := by
+    have h := ascPochhammer_eval_neg_eq_descPochhammer ℝ (-s) k
+    simp only [neg_neg] at h
+    rw [h]
+    simp [← mul_assoc, ← mul_pow]
+  have hshift : (descPochhammer ℝ (n-k)).eval (c + (n : ℝ) - 1) =
+      (ascPochhammer ℝ (n-k)).eval (c + k) := by
+    rw [descPochhammer_eval_eq_ascPochhammer, Nat.cast_sub hkn]
+    congr 1
+    ring
+  have hmul : (ascPochhammer ℝ k).eval c *
+      (ascPochhammer ℝ (n-k)).eval (c + k) = (ascPochhammer ℝ n).eval c := by
+    have h := congrArg (Polynomial.eval c) (ascPochhammer_mul ℝ k (n-k))
+    simpa [Polynomial.eval_mul, Polynomial.eval_comp, Nat.add_sub_of_le hkn] using h
+  rw [hneg, hshift]
+  field_simp
+  linear_combination -(n.choose k : ℝ) * (ascPochhammer ℝ k).eval s * hmul
 
 private lemma cauchy_coefficient (s c x : ℝ) (hc : 0 < c) (n : ℕ) :
     (∑ k ∈ range (n + 1),
