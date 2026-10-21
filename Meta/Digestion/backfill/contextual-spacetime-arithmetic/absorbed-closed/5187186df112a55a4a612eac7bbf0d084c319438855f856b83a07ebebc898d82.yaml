@@ -2,7 +2,11 @@ fingerprints:
   raw_sha256: sha256:5187186df112a55a4a612eac7bbf0d084c319438855f856b83a07ebebc898d82
   normalized_sha256: sha256:5187186df112a55a4a612eac7bbf0d084c319438855f856b83a07ebebc898d82
 cas_ref: sha256:5187186df112a55a4a612eac7bbf0d084c319438855f856b83a07ebebc898d82
-coverage_gids: []
+coverage_gids:
+  - gid: D5/S3/ConceptDynamics/Spacetime/ComplementCharge.balanced_complement_mem_oppositeFiber
+    target_statement_id: sha256:bd2958dcfa30e7d744ee0426b2e5bce841c9b61d699707cba2e0c5b5f854911f
+  - gid: D5/S3/ConceptDynamics/Spacetime/ComplementFibers.empty_full_fiber_members_distinct
+    target_statement_id: sha256:f20ff03af79cb30d449863205fe28ea58227290253eb24fe1f24934fa86dbf3c
 receipts:
   unresolved_subitems: []
   chain_atoms:

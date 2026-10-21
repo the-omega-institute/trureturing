@@ -11,6 +11,8 @@ coverage_gids:
     target_statement_id: sha256:0317eecfaee3d90e91417539d454d8b3952e72ce7609a0490a3fc76bd1605f29
   - gid: D5/S3/ConceptDynamics/Spacetime/GeneratedProduct.selected_double_sum
     target_statement_id: sha256:e4ff568b31afca6e4426e8ef86ebf3644ea0e394586c96882912be5435c11c9e
+  - gid: D5/S3/ConceptDynamics/Spacetime/ProductNodes.mem_selectedParents
+    target_statement_id: sha256:087c9a65265b546a91768ef0e9aafa70b4096f74e01e9c5b957538b8a413b5cf
 receipts:
   unresolved_subitems: []
   chain_atoms:

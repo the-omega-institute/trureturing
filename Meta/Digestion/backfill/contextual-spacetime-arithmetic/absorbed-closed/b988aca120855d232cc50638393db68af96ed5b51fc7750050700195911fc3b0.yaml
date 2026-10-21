@@ -5,6 +5,12 @@ cas_ref: sha256:b988aca120855d232cc50638393db68af96ed5b51fc7750050700195911fc3b0
 coverage_gids:
   - gid: D5/S3/ConceptDynamics/Spacetime/GeneratedProduct.archive_card
     target_statement_id: sha256:82e0f0b6e27d98774dd9a6788cad29c628ef69b183945f0c94169c2324f2c988
+  - gid: D5/S3/ConceptDynamics/Spacetime/GeneratedProduct.current_card
+    target_statement_id: sha256:b9387f3697b140afb867bd71a976449d4096ec02f7e7a48ea397a9b9fa1d2b51
+  - gid: D5/S3/ConceptDynamics/Spacetime/GeneratedProduct.q_product
+    target_statement_id: sha256:0317eecfaee3d90e91417539d454d8b3952e72ce7609a0490a3fc76bd1605f29
+  - gid: D5/S3/ConceptDynamics/Spacetime/HistoricalEquivalence.eventEquiv
+    target_statement_id: sha256:efb96da41eefa012b4067c47bdb561dfffb180cff0819d27533ea0766b246824
   - gid: D5/S3/ConceptDynamics/Spacetime/IntegerRepresentatives.representative_archive_card
     target_statement_id: sha256:32b7f281ab1a7afa96a88cd664e50b122c04c14622837e126361e7e638b4949b
   - gid: D5/S3/ConceptDynamics/Spacetime/IntegerRepresentatives.representative_current_card

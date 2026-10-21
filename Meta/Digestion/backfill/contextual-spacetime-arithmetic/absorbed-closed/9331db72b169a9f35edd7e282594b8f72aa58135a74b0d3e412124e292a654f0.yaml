@@ -3,9 +3,15 @@ fingerprints:
   normalized_sha256: sha256:9331db72b169a9f35edd7e282594b8f72aa58135a74b0d3e412124e292a654f0
 cas_ref: sha256:9331db72b169a9f35edd7e282594b8f72aa58135a74b0d3e412124e292a654f0
 coverage_gids:
+  - gid: D5/S3/ConceptDynamics/Spacetime/ComplementCharge.complement_readout
+    target_statement_id: sha256:6dc64f0380934faa4137f26820605386c668b4aa60978826f0af4d0c2864d7d4
   - gid: D5/S3/ConceptDynamics/Spacetime/GeneratedProduct.archive_card
     target_statement_id: sha256:82e0f0b6e27d98774dd9a6788cad29c628ef69b183945f0c94169c2324f2c988
+  - gid: D5/S3/ConceptDynamics/Spacetime/HistoricalEquivalence.eventEquiv
+    target_statement_id: sha256:efb96da41eefa012b4067c47bdb561dfffb180cff0819d27533ea0766b246824
   - gid: D5/S3/ConceptDynamics/Spacetime/ParallelComposition.archive_card
     target_statement_id: sha256:071b4e0f9c4bb6d0cc13c520a413e72184fe5705652c86eb5ca7e725ed85d43f
+  - gid: D5/S3/ConceptDynamics/Spacetime/ParallelComposition.q_parallel
+    target_statement_id: sha256:536465b5917c7edd0d83871959b5e7bad2904d9b04b0d315dd6aa420aad0f68a
 receipts:
   unresolved_subitems: []
