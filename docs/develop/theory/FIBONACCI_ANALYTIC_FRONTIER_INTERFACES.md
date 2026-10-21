@@ -2400,3 +2400,152 @@ $$
 （462.9）控制的是 F4 之前、保持全部原列相位的真实尾部及其与余向量的交叉项。它不提供 F4 中逐核心加权正和的同样节省，也不改变（461.11）各项的含义。$b_{\rm rem}$ 的完整估计、其他原长度和高度以及 signed Robin restoration 仍未支付；它不是完整 Robin 不等式或 RH 的证明。
 
 ## 追加锚（本行以下为增补区）
+
+## 463. 三重以上重复部分与剩余原列
+
+原列的乘法分解与 Minkowski 方法已有文献先例：[Blomer–Goldmakher–Louvel, *L-functions with n-th order twists*, §5, Corollary 1.6 的证明，（5.3）—（5.5）](https://arxiv.org/pdf/1112.1650v1)对原内变量使用 squarefree／squarefull 分解。本节复用这种范数方法与既有六次幂自由筛，保留完整三满部分截断和全部六次幂碰撞，再消费到原向量的完整交叉项；不将通常的满数计数或这些筛与范数方法认作本项目发明。
+
+**定理 463.1（大三满部分的原列能量）。** 沿用定理 462.1 的原卷积、行算子、解析输入、固定有限表示及组合成本 $\mathcal P$。定义
+
+$$
+\mathfrak c_3(h)=\prod_{v_{\mathfrak p}(h)\ge3}
+ \mathfrak p^{v_{\mathfrak p}(h)},\qquad
+b_{3,\ge Y}(h)=b(h)\mathbf1_{q_{\mathfrak c_3(h)}\ge Y},
+\qquad 1\le Y\le K.
+\tag{463.1}
+$$
+
+$\mathfrak c_3(h)$ 收集原重数至少为三的完整素因子幂，允许重数四、五及更高的部分；它是三满理想，不限于整立方。则
+
+$$
+\|Ab_{3,\ge Y}\|_2^2
+\ll_\varepsilon (UK)^\varepsilon\mathcal P^2
+ \Psi_6(U,K)K Y^{-2/3}.
+\tag{463.2}
+$$
+
+同一上界允许再乘一个与行无关、绝对值至多为一的列乘子。所有原字符零值及相位保持，组合成本仍按定理 462.1 的乘积合同承担。
+
+**证明。** 直接复用既有六次幂移除 $h=ar^6$，其中 $a$ 为 sixth-power-free，允许 $a,r$ 相交。固定 $r$，仍提取
+
+$$
+e=\prod_{\mathfrak p\mid r}\mathfrak p^{v_{\mathfrak p}(a)},
+\quad e\mid\operatorname{rad}(r)^5,
+\quad a=ea_0,\quad(a_0,r)=1.
+\tag{463.3}
+$$
+
+这时有精确恒等式
+
+$$
+\mathfrak c_3(ar^6)=r^6e\,\mathfrak c_3(a_0).
+\tag{463.4}
+$$
+
+特别地，$e$ 在 $a$ 中重数一、二的素因子，在 $h$ 中也已属于三满部分。
+
+所需计数只用通常的正 Euler 乘积与 Rankin 界。对 $0<\eta<1/6$，三满理想的级数
+
+$$
+\sum_{c\ {\rm three\ full}}q_c^{-1/3-\eta}
+=\prod_{\mathfrak p\notin S}
+ \left(1+\frac{q_{\mathfrak p}^{-1-3\eta}}
+ {1-q_{\mathfrak p}^{-1/3-\eta}}\right)<\infty
+\tag{463.5}
+$$
+
+绝对收敛。将 $a_0$ 分成其三满部分 $c$ 与剩余部分，只在正计数中扩大剩余理想及互素条件，得到对 $M,Z>0$ 的统一界
+
+$$
+\#\{a_0:q_{a_0}\le M,\ q_{\mathfrak c_3(a_0)}\ge Z\}
+\ll_\eta M Z^{-2/3+\eta}.
+\tag{463.6}
+$$
+
+这里 $Z<1$ 时同样成立：在 $q_c\ge Z$ 上使用
+$q_c^{-1}\le Z^{-2/3+\eta}q_c^{-1/3-\eta}$，再复用固定域理想计数。空的短范围保留为零。
+
+固定 $r,e$ 后，原 annulus 给出 $M\ll K/(q_r^6q_e)$，（463.4）给出 $Z=Y/(q_r^6q_e)$。故固定 $r$ 的实际列支撑数至多为
+
+$$
+\begin{aligned}
+&\sum_{e\mid\operatorname{rad}(r)^5}
+ \frac{K}{q_r^6q_e}
+ \left(\frac{Y}{q_r^6q_e}\right)^{-2/3+\eta}\\
+&\qquad\ll_{\eta,\delta}
+ K Y^{-2/3+\eta}q_r^{-2-6\eta+\delta}.
+\end{aligned}
+\tag{463.7}
+$$
+
+最后一步用除数界处理全部 $e$，不遗漏 $a,r$ 的相交素因子。原卷积及所需有限阶 profile 导数的除数型包络于是给出
+
+$$
+\sum_a|b_{3,\ge Y}(ar^6)|^2
+\ll_{\eta,\delta,\delta'}
+ \mathcal P_b^2K^{1+2\delta'}
+ Y^{-2/3+\eta}q_r^{-2-6\eta+\delta}.
+\tag{463.8}
+$$
+
+保留（462.6）的精确行零值，固定 $r$ 后应用同一个六次幂自由筛，再在原行 Hilbert 空间使用 Minkowski。其求和因子为
+
+$$
+\sum_r q_r^{-1-3\eta+\delta/2}<\infty
+\qquad(0<\delta<6\eta).
+\tag{463.9}
+$$
+
+因此不需要把六次幂碰撞当作互不相干的列。先相对于最终 $\varepsilon$ 选择 $\eta,\delta'$ 及筛损失，再取 $0<\delta<6\eta$；由 $Y\le K$ 吸收 $Y^\eta$，得（463.2）。额外的有界列乘子不增加支撑计数或系数包络；同一证明适用。负 orientation、有限物理表示及 smooth/Sobolev 恢复沿用定理 462.1 的同一费用和累计高度合同。证毕。
+
+**定理 463.2（合并尾部及完整交叉项）。** 再采用定理 459.1 的全部输入及定理 462.2 的平衡、固定或 polylog 成本合同。定义
+
+$$
+\begin{aligned}
+b_{\rm tail}^{+}(h)
+ &=b(h)\mathbf1_{\{q_{\mathfrak x(h)}\le\sqrt K\}
+                 \,\cup\,\{q_{\mathfrak c_3(h)}\ge K^{1/3}\}},\\
+b_{\rm rem}^{+}&=b-b_{\rm tail}^{+},\qquad
+\zeta_3=\frac{30\sqrt6-73}{72}>0.
+\end{aligned}
+\tag{463.10}
+$$
+
+一次选择 $\mathcal H$ 同时控制原完整卷积及两条尾部估计的组合成本。对同一行空间中的任意正交投影 $\Pi$，有
+
+$$
+\begin{aligned}
+\|Ab_{\rm tail}^{+}\|_2^2
+ &\ll_\varepsilon\mathcal H^2K^{35/18+\varepsilon},\\
+\left|\|\Pi Ab\|_2^2
+       -\|\Pi Ab_{\rm rem}^{+}\|_2^2\right|
+ &\ll_\varepsilon\mathcal H^2K^{2-\zeta_3+\varepsilon}.
+\end{aligned}
+\tag{463.11}
+$$
+
+**证明。** 平衡点的 $\Psi_6(U,K)\ll K^{7/6}$ 与 $Y=K^{1/3}$ 给出
+$7/6+1-2/9=35/18$。将合并尾部写成（462.8）的旧尾部，加上
+$b_{3,\ge K^{1/3}}\mathbf1_{q_{\mathfrak x(h)}>\sqrt K}$；两项在列支撑上不重叠。在行空间中使用三角不等式及两条实际尾部界，得第一式。这里没有从两个范数上界相减推断子向量的范数。
+
+对第二式复用（462.10）。定理 459.1 只用于完整原 $b$，不用于已加列截断的余向量。交叉项幂次为
+
+$$
+\frac12\left(\frac{49-10\sqrt6}{12}+\frac{35}{18}\right)
+=\frac{217-30\sqrt6}{72}=2-\zeta_3.
+\tag{463.12}
+$$
+
+它大于尾部平方项的幂次，且 $30\sqrt6>73$。投影收缩性使估计对全部上述 $\Pi$ 一致。证毕。
+
+当 $\mathcal H=K^{o(1)}$ 时，（463.11）把完整能量及同一投影、补空间的 $O_\varepsilon(K^{2+\varepsilon})$ 目标转移到同一个 $b_{\rm rem}^{+}$；更强的 $o(K^2)$ 目标也同样转移。新余向量的每个非零列同时满足
+
+$$
+q_{\mathfrak x(h)}>\sqrt K,\qquad
+q_{\mathfrak c_3(h)}<K^{1/3}.
+\tag{463.13}
+$$
+
+这是对 F4 之前真实原列及其完整干涉的附加源限制；三满部分较大的列不必满足旧的一重部分小截断。所有充分大规模的平方自由列仍保留。这里复用六次幂自由筛、通常的满数计数与 Hilbert 范数估计，所得为 `repo-derived` 的原系数应用，不声明新筛或文献优先权。完整余向量、F4 加权正和、其他原长度及高度、原固定指数的 signed Robin restoration 仍未支付；本条不证明 Robin 不等式或 RH。
+
+## 追加锚（本行以下为增补区）
