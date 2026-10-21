@@ -85,7 +85,7 @@ The module is admitted under the open-problem-resolution basis of CLAUDE.md §3.
 - the φ-extension is [[52, 1, 5]] (X-distance 8, Z-distance 5).
 
 **Argued, not formalized.**
-- *Mechanism.* The identity extension repeats each logical X operator four times and leaves the Z side untouched, so its distance is limited by the X side. A weight-spreading map φ trades: it raises the X-distance (here 4 → 8) at the cost of the Z-distance (13 → 5), and the balance improves the minimum. A permutation preserves weights on both sides, which is why the source's Proposition 3 finds no gain from permutations.
+- *Mechanism.* In the identity extension a logical X operator is (x, x, x, x), four copies of a 13-bit block x of odd weight, so its weight is 4 wt x and the X-distance is 4; the Z-distance is 13, so the distance is limited by the X side. A weight-spreading map φ trades: it raises the X-distance (here 4 → 8) at the cost of the Z-distance (13 → 5), and the balance improves the minimum. A permutation preserves weights on both sides, which is why the source's Proposition 3 finds no gain from permutations.
 - *Scope.* The construction answers the existence question. It does not show that a non-identity map beats the identity for codes that are already good, nor does it classify the admissible maps. Doubled inputs make the parity condition automatic; whether non-doubled admissible maps give further gains remains open.
 
 ## ASSUMED-UNVERIFIED
