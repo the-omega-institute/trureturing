@@ -36,7 +36,7 @@ $$\forall n \in \operatorname{NaturalNumbers}\left(\right),\; \forall mu \in \op
 
 *Formalization.* `D5/S3/QuadraticForms/EvolutionAlgebras/EvolutionAutomorphismControl.kernelAssignmentEquiv` (`✓ std3`).
 
-*Source.* Repository-derived.
+*Citation.* Ivan Kaygorodov; Cándido Martín González; Antonio Viruel (2026). *Evolution algebras: a survey of results and a list of open problems*. DOI: [10.48550/arXiv.2610.22248](https://doi.org/10.48550/arXiv.2610.22248). URL: <https://arxiv.org/abs/2610.22248v1>.
 
 *Commentary.*
 
@@ -60,7 +60,7 @@ $$\forall n \in \operatorname{NaturalNumbers}\left(\right),\; \forall mu \in \op
 
 *Proof.* Machine-checked in Lean as `D5/S3/QuadraticForms/EvolutionAlgebras/EvolutionAutomorphismControl.automorphism_finite` (`✓ std3`). ∎
 
-*Source.* Repository-derived.
+*Citation.* Ivan Kaygorodov; Cándido Martín González; Antonio Viruel (2026). *Evolution algebras: a survey of results and a list of open problems*. DOI: [10.48550/arXiv.2610.22248](https://doi.org/10.48550/arXiv.2610.22248). URL: <https://arxiv.org/abs/2610.22248v1>.
 
 *Commentary.*
 
