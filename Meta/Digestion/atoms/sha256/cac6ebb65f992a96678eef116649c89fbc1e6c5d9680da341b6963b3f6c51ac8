@@ -1,0 +1,24 @@
+**Theorem 18.3 (The final-J coordinate cannot be omitted).** There are different legal complete worlds satisfying the strict parent conditions (18.1), with the same entire gain, the same fifth-J history and the same acquired sixth-J response.
+
+Proof. Set
+
+$$
+b=\frac14,\quad d=24,\quad
+g(s)=\frac65(s-1)(s-4)(s-5),\qquad
+P_0=\begin{pmatrix}1/3&1/4\\8/9&2/3\end{pmatrix},\quad
+P_1=\begin{pmatrix}11/12&1/4\\11/36&1/12\end{pmatrix}.
+\tag{18.14}
+$$
+
+Both sources are strictly positive, trace one and determinant zero. Along the literal word $JMJMJJJ$ their response rows are
+
+$$
+\begin{aligned}
+W_0:&\quad(0,24,33,466/15,24,24,42,102),\\
+W_1:&\quad(0,24,33,466/15,24,24,42,636/5).
+\end{aligned}
+\tag{18.15}
+$$
+
+Direct evaluation of this one $g$ and the actual traces gives each entry; in particular the legal sampled zero $g(4)=0$ is retained. Here $A=24$, $C=33>Y=24>0$, $z=466/15\ne A$, $F_1=-162$, and $Y/C=8/11$. The direction and $u_J=42$ coincide, while the final-J responses differ. Thus this pair does not contradict Theorem 18.1, and it disproves dropping its final-J coordinate. ∎
+

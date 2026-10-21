@@ -1,0 +1,20 @@
+**Lemma 6.1 (Finite source intersection).** Fix real $p\in\mathcal P$
+and real $v$.  The affine complex common zero set of
+$\mathsf A(r,b,p)$ and $\mathsf B(r,b,v)$ has no positive-dimensional
+component.
+
+**Proof.** By Theorem 5.2 and the exact factorization of the resultant,
+$\operatorname{Res}_b(\mathsf A,\mathsf B)$ is not the zero polynomial
+in $r$.  Hence $\mathsf A,\mathsf B$ have no common factor of
+positive $b$-degree in $\mathbb C[r,b]$.  A common factor depending
+only on $r$ would divide every coefficient of $\mathsf A$, in
+particular its $b^7$-coefficient $5p+216$.  Since
+$p>24$, this coefficient is a nonzero scalar, so no nonconstant
+$r$-factor is possible.  Thus the two polynomials have no common
+curve component. ∎
+
+The proof remains valid at $v=-225$: the $b^7$-coefficient of
+$\mathsf B$ may drop there, but no leading coefficient is divided out.
+The fixed Sylvester determinant and its common-finite-root implication
+are valid under this specialization.
+

@@ -1,0 +1,137 @@
+**Theorem 25.2 (Strict drift/separator barrier on the entire p24 fibre).**
+Every world $W\in\mathcal F(H_4,M,24)\setminus\mathcal K$ satisfies
+
+$$
+(d-24)\left(k+\frac{1128}{5}\right)<0.
+\tag{25.3}
+$$
+
+Proof. Use the exhaustive whole-world union in O, Theorem 13.2,
+including its set-theoretic treatment of intersections. Outside
+$\mathcal K$ it gives $H(r,b)=0$ and
+
+$$
+\begin{gathered}
+g=h+\epsilon v,\qquad
+\epsilon E_2=-\frac{24}{5}\Delta,\qquad E_2=1+Tv(2),\\
+v(2)=\frac15-\frac3{4j}-\frac1{2n}+\frac1{20V},\\
+v(6)=1-\frac9{4j}+\frac5{2n}-\frac9{4V},\qquad
+v(7)=\frac{16}{5}-\frac7j+\frac7n-\frac{21}{5V}.
+\end{gathered}
+\tag{25.4}
+$$
+
+The sextic $H$ is precisely the polynomial in Section 2 above,
+or equivalently O (12.2). Define
+
+$$
+\mathcal B=32E_2-\frac{27}{5}
+ +(3U+2n)v(7)-\frac{32}{5}(2U+n)v(6).
+\tag{25.5}
+$$
+
+Substituting the same entire gain in both responses gives the identity
+
+$$
+ k+\frac{1128}{5}
+ =\epsilon\mathcal B
+ -32\left(\epsilon E_2+\frac{24}{5}\Delta\right)
+ =\epsilon\mathcal B.
+\tag{25.6}
+$$
+
+Clearing the positive source denominators yields
+
+$$
+\mathcal B=\frac{\Pi(r,b)}{5b^3jnV},
+\tag{25.7}
+$$
+
+where
+
+$$
+\begin{aligned}
+\Pi(r,b)={}&-73b^6+26(17r-25)b^5
+ -4(88r^2-55r+54)b^4\\
+&-r(868r^2-1427r+717)b^3\\
+&-2r(1-r)(279r^2-334r+108)b^2\\
+&+2r^2(1-r)^2(172r+7)b+171r^3(1-r)^3.
+\end{aligned}
+\tag{25.8}
+$$
+
+The following exact polynomial comparison proves the sign on the
+whole strict graph, rather than on a restricted source rectangle.
+Put
+
+$$
+q=r(1-r)(1+2r/3),\qquad B_i(r)=r^i(1-r)^{12-i}.
+$$
+
+The polynomial identities are
+
+$$
+\begin{aligned}
+-729H(r,q)&=r^3(1-r)^3\sum_{i=0}^{12}h_iB_i(r),\\
+-729\Pi(r,q)&=r^3(1-r)^3\sum_{i=0}^{12}a_iB_i(r),
+\end{aligned}
+\tag{25.9}
+$$
+
+with coefficient vectors, in increasing $i$,
+
+$$
+\begin{aligned}
+(h_i)={}&(1458,16767,91125,352755,1199691,3480003,7585857,\\
+&\qquad11454855,11415867,7094914,2479206,390402,17388),\\
+(a_i)={}&(22599,416745,3333960,15317586,44859501,87549363,\\
+&\qquad115352262,101744139,58815129,22240780,6205974,\\
+&\qquad1513755,188271).
+\end{aligned}
+\tag{25.10}
+$$
+
+For completeness these finite identities mean direct expansion in
+$\mathbb Q[r]$: substitute the displayed $q$ into (25.8) and the
+Section 2 polynomial $H$, and compare powers of $r$ with the two
+sums in (25.9). Thus their specifications involve only the stated
+polynomials and integer arithmetic. Every listed coefficient is
+strictly positive. Hence $H(r,q)<0$ and $\Pi(r,q)<0$ for $0<r<1$.
+
+O (13.7) proves that $H(r,b)/b^2$ is strictly increasing in $b>0$
+and has its unique zero at $B_H(r)$. Consequently $B_H(r)>q$.
+The coefficients of $b^6,b^5,b^4,b^3,b^2$ in $\Pi$ are strictly
+negative. For the three quadratics in these coefficients the
+respective discriminants are
+
+$$
+-15983,\qquad-453095,\qquad-8972,
+$$
+
+and their leading coefficients are positive. The coefficient of
+$b^5$ is negative because $17r-25<0$. The constant coefficient
+of $\Pi$ is positive. It follows by differentiating $\Pi/b$ that
+
+$$
+\partial_b(\Pi(r,b)/b)<0\qquad(b>0).
+\tag{25.11}
+$$
+
+Indeed each of its positive-degree terms has a negative
+coefficient, its constant term has derivative zero, and the
+positive coefficient of $b^{-1}$ has a negative derivative.
+Therefore
+
+$$
+\frac{\Pi(r,B_H(r))}{B_H(r)}
+ <\frac{\Pi(r,q)}q<0.
+$$
+
+All denominator factors in (25.7) are positive, so
+$\mathcal B<0$ on this whole graph. Finally O, Theorem 2.2,
+gives $\epsilon\ne0$ outside $\mathcal K$. Multiplying (25.6)
+by $\epsilon$ proves (25.3), since $\epsilon^2\mathcal B<0$.
+This proof uses the complete union of O, Theorem 13.2, including
+singular sources and every allowed polynomial degree or root
+multiplicity; it never divides by a gain sample or the drift. ∎
+

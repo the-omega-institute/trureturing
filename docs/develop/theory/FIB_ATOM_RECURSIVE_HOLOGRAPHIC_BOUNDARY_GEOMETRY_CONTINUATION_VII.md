@@ -4210,16 +4210,387 @@ assertion is included.
 
 ## 230.99 追加锚（本行以下为增补区）
 
-## 231. Measure-free packing and the resolution budget
 
-### 231.1 A metric-doubling replacement for the volume hypothesis
+## 231. Prepared-state optimization over the actual native sources
+
+**Definition 231.1 (fixed-temperature, fixed-conditional-success objective).**
+Retain the native domain $D$, positive principal root, normalized cut and
+$p(q)$ of (226.1), with $p(D)=(m,M)$ from Theorem 229.1. Fix
+$0<t\le1$ and $0<s\le1$. For scalar $0<p<1$ write
+
+$$
+\begin{gathered}
+b_t=1-t,\qquad U_t(p)=b_t^2p(1-p),\qquad h_t(p)=t+b_tp,\\
+Z_t(p)=2t+U_t(p),\qquad E_t(p)=Z_t(p)+2th_t(p),\\
+\lambda_t(p)=\frac{U_t(p)}{Z_t(p)},\qquad
+w_t(p)=\frac{Z_t(p)}{E_t(p)},\\
+A_t(p)=\frac{(U_t(p)-t)_+}{2Z_t(p)},\qquad
+B_t(p)=A_t(p)w_t(p)=\frac{(U_t(p)-t)_+}{2E_t(p)},\\
+F_{t,s}(p)=A_t(p)\min\{1,w_t(p)/s\}
+=\min\{A_t(p),B_t(p)/s\}.
+\end{gathered}
+\tag{231.1}
+$$
+
+The denominators $Z_t,E_t$ are positive scalar functions; neither denotes
+the native domain $D$ or the root-reduction quantity $H$ of §227.
+These are precisely the scalar identities of §§216,220, with $U_t$
+replacing their interaction scalar, not the native coordinate $u$.
+In particular $A_t=N(W_{\lambda_t})$ and $0<w_t<1$.
+
+For the ideal known-$q$ operation menu of §214, define
+
+$$
+\mathcal V_t(s)=\sup_{q\in D}\;
+\sup_{\substack{\text{allowed one-copy instruments}\\
+\Pr(\mathrm{success}\mid\mathrm{prepared})=s}}
+N(\sigma_{\mathrm{success}})
+=\sup_{q\in D}F_{t,s}(p(q)).
+\tag{231.2}
+$$
+
+The inner equality is Theorem 214.1, with its finite common-output attainer
+in §219. Choosing $q$ here is a source-informed choice of which state to
+prepare and subsequently process. The input to the optimized processing is
+one already prepared $\rho_{w_t(p(q)),\lambda_t(p(q))}$, not an unknown
+state to which one common source-independent decoder must apply.
+
+**Theorem 231.2 (exact native maximum and every maximizing source).** Put
+
+$$
+t_c=3-2\sqrt2,\qquad K_t=1+6t+t^2,\qquad
+\delta_t=1-6t+t^2.
+\tag{231.3}
+$$
+
+For $0<t<t_c$, define
+
+$$
+\begin{gathered}
+p_c(t)=\frac{\sqrt{15+14t}-3-2t}{2(1-t)},\qquad
+\frac25<p_c(t)<\frac12,\\
+s_0(t)=w_t(1/2)=\frac{K_t}{1+10t+5t^2},\qquad
+s_1(t)=w_t(p_c(t)),\qquad 0<s_0(t)<s_1(t)<1.
+\end{gathered}
+\tag{231.4}
+$$
+
+There is a unique maximizing scalar $p_*(t,s)$ on all $p\in(0,1)$:
+
+$$
+\begin{array}{c|c|c}
+\text{success interval}&p_*(t,s)&\mathcal V_t(s)\\ \hline
+0<s\le s_0&1/2&\delta_t/(2K_t)\\
+s_0<s<s_1&p_s&A_t(p_s)\\
+s_1\le s\le1&p_c&B_t(p_c)/s
+\end{array}
+\tag{231.5}
+$$
+
+Here $p_s$ is the unique solution of $w_t(p_s)=s$ in $(p_c,1/2)$.
+An exact inverse, used only on this middle interval, is
+
+$$
+c_{t,s}=1+t-\frac{2st}{1-s},\qquad
+h_s=\frac{c_{t,s}+\sqrt{c_{t,s}^2+4t}}2,\qquad
+p_s=\frac{h_s-t}{1-t}.
+\tag{231.6}
+$$
+
+The radical selects the sole positive root of
+$h_s^2-c_{t,s}h_s-t=0$; the other root is negative. The stated success
+interval ensures $h_s\in(h_t(p_c),h_t(1/2))$, so this is the admissible
+scalar branch. There is no inversion at $s=1$.
+At $s=s_0$ the unique scalar maximizer is $1/2$; at $s=s_1$ it is $p_c$.
+The middle formula extends continuously to these endpoints with the same
+points and values. Neither equality produces another scalar maximizer.
+
+All three scalar optimizers are actual native interior values, and
+
+$$
+\operatorname*{Argmax}_{q\in D}F_{t,s}(p(q))
+=\{q\in D:p(q)=p_*(t,s)\}.
+\tag{231.7}
+$$
+
+Thus the supremum in (231.2) is a maximum. Its maximizing sources form the
+entire inverse fibre; uniqueness of $p_*$ does not assert uniqueness of $q$.
+The same scalar maximum is obtained if $(m,M)$ is replaced by $(0,1)$.
+
+For $t_c\le t\le1$, the maximum is zero and every $p\in(0,1)$,
+hence every $q\in D$, is a maximizer. At $t=t_c$, $U_t(p)=t$ only
+at $p=1/2$, where $\lambda_t=1/3$ and negativity is still zero.
+At $t=1$ one has $U_t=\lambda_t=A_t=B_t=0$ and $w_t=1/2$ for every
+source. These cases do not have the positive-branch uniqueness property.
+
+For $0<t<t_c$, the exact positivity interval is
+
+$$
+p_-(t)=\frac{1-\sqrt{1-4t/(1-t)^2}}2,\qquad
+p_+(t)=1-p_-(t),\qquad
+F_{t,s}(p)>0\ \Longleftrightarrow\ p_-<p<p_+.
+\tag{231.8}
+$$
+
+At both endpoints and outside this interval $F_{t,s}=0$ for every $s>0$.
+Moreover $p_-<p_c<1/2<p_+$. For the native family intersect this
+positivity interval with $(m,M)$; it always contains the maximizer.
+
+## 232. All-domain calculus proof and native interior attainment
+
+**Proof of Theorem 231.2.** First $U_t(p)\le(1-t)^2/4$, with equality
+only at $p=1/2$ when $t<1$. Positive negativity is possible exactly when
+$(1-t)^2>4t$, equivalently $0<t<t_c$ in the specified temperature domain.
+This proves the entire zero regime, including the critical equality and
+$t=1$, without dividing by $1-t$ or $U_t-t$. Solving the strict quadratic
+inequality $U_t>t$ gives (231.8); its boundary denominators remain positive.
+
+Now suppose $0<t<t_c$. On the positive interval, differentiation gives
+
+$$
+\begin{aligned}
+A_t'(p)&=\frac{3t b_t^2(1-2p)}{2Z_t(p)^2},\\
+w_t'(p)&=-\frac{2tb_t(t+h_t(p)^2)}{E_t(p)^2}<0,\\
+B_t'(p)&=\frac{tb_t Q_t(p)}{2E_t(p)^2},\\
+Q_t(p)&=b_t(3+2t)(1-2p)-2b_t^2p^2+2t,\\
+Q_t'(p)&=-2b_t(3+2t)-4b_t^2p<0\qquad(0\le p\le1).
+\end{aligned}
+\tag{232.1}
+$$
+
+The derivative of $w_t$ holds on the whole scalar interval and is the
+$p$ form of (216.8). Exact sign evaluations are
+
+$$
+Q_t(2/5)=\frac{7+61t-18t^2}{25}>0,\qquad
+Q_t(1/2)=-\frac{\delta_t}{2}<0.
+\tag{232.2}
+$$
+
+The first numerator is positive for $0<t<1$, since $61t-18t^2>43t$.
+Strict decrease gives precisely one root between $2/5$ and $1/2$; solving
+its quadratic gives $p_c$ in (231.4). At the lower positivity endpoint,
+using $U_t(p_-)=t$ gives
+
+$$
+Q_t(p_-)=b_t(1-2p_-)(3+2h_t(p_-))>0.
+\tag{232.3}
+$$
+
+Consequently $p_-<p_c<1/2<p_+$. The truncated functions vanish outside
+$(p_-,p_+)$, while inside it $A_t$ strictly increases up to $1/2$ and
+strictly decreases thereafter, and $B_t$ strictly increases up to $p_c$
+and strictly decreases thereafter. Thus their unique positive global
+maxima on all of $(0,1)$ occur at $1/2$ and $p_c$, respectively.
+Strict decrease of $w_t$ gives $s_0<s_1$; positivity and $w_t<1$ give
+the other bounds in (231.4).
+
+If $s\le s_0$, then $F_{t,s}\le A_t\le A_t(1/2)$, with equality
+at $1/2$ because $w_t(1/2)\ge s$. Strict scalar uniqueness follows
+from that of $A_t$. Direct substitution gives $A_t(1/2)=\delta_t/(2K_t)$.
+If $s\ge s_1$, then $F_{t,s}\le B_t/s\le B_t(p_c)/s$, with equality
+at $p_c$ because $w_t(p_c)\le s$. Strict uniqueness follows from that
+of $B_t$. These arguments include both threshold equalities.
+
+If $s_0<s<s_1$, continuity and strict decrease of $w_t$ give one
+$p_s\in(p_c,1/2)$ with
+$A_t(p_s)=B_t(p_s)/s>0$. For every $p<p_s$, either the truncated
+$A_t(p)$ is zero or its strict increase below $1/2$ gives
+$F_{t,s}(p)\le A_t(p)<A_t(p_s)$. For every $p>p_s$, either $B_t(p)=0$
+or its strict decrease above $p_c$ gives
+$F_{t,s}(p)\le B_t(p)/s<B_t(p_s)/s$. This proves global strict
+optimality even outside $[p_c,1/2]$. Rewriting $Z_t=sE_t$ with
+$U_t=(h-t)(1-h)$ gives
+
+$$
+(1-s)\left[-h^2+
+\left(1+t-\frac{2st}{1-s}\right)h+t\right]=0.
+\tag{232.4}
+$$
+
+Since $s<1$ and the two quadratic roots have product $-t<0$, the positive
+root is exactly (231.6); the monotone crossing fixes its admissible domain.
+Continuity of this inverse gives the asserted boundary matches.
+
+It remains to restrict this scalar proof to actual sources. The established
+bound (228.12) gives
+
+$$
+m<(56/153)^2<2/5<p_c<1/2<(76/97)^2<M.
+\tag{232.5}
+$$
+
+Therefore every $y=p_*(t,s)$ lies in $(m,M)$. Use the interior inverse
+of §229: choose any integer $n\ge2$ satisfying (229.3) for this $y$,
+put $\varepsilon=1/n$, and take the unique $\xi\in(0,1)$ solving
+
+$$
+p\big((1-\varepsilon)\xi,(1-\varepsilon)(1-\xi)\big)=y.
+\tag{232.6}
+$$
+
+Then $q=((1-\varepsilon)\xi,(1-\varepsilon)(1-\xi))$ has both
+coordinates positive and sum $1-\varepsilon<1$. This is an actual native
+interior source with the fixed principal square root, not a free scalar or
+a boundary substitute. Theorem 229.1 supplies existence and uniqueness on
+each chosen segment; its image and inverse proof need not be repeated.
+The scalar upper bound and this attaining source prove equality of scalar
+and native optimal values, and scalar uniqueness proves precisely (231.7).
+In fact all sufficiently large integers $n$ satisfy (229.3); their distinct
+coordinate sums exhibit multiple sources in each optimal fibre. In the zero
+regime any interior source attains zero, as already proved. This completes
+the proof.
+
+## 233. The same-source attaining instrument and its preparation law
+
+**Proposition 233.1 (simultaneous source, success and common output).** For
+any maximizing native $q$ above, evaluate $p,\lambda,w,A_t$ at that same
+$q$. Apply the finite instrument (219.1)–(219.3) with
+
+$$
+\alpha=\min\{1,s/w\},\qquad
+\gamma=\frac{(s-w)_+}{1-w},\qquad x=\min\{1,w/s\}.
+\tag{233.1}
+$$
+
+Its active-success, active-failure, spectator-success and spectator-failure
+probabilities, conditional on preparation, are respectively
+
+$$
+\min\{w,s\},\qquad (w-s)_+,\qquad
+(s-w)_+,\qquad 1-w-(s-w)_+.
+\tag{233.2}
+$$
+
+They sum to one, with total success $w\alpha+(1-w)\gamma=s$.
+On active success the encoded active state is kept; on spectator success
+the communicated local reset prepares $|01\rangle$. After erasing every
+record except success the one common normalized output is simultaneously
+
+$$
+\sigma_s=xW_\lambda+(1-x)|01\rangle\langle01|,\qquad
+N(\sigma_s)=xA_t(p)=F_{t,s}(p)=\mathcal V_t(s).
+\tag{233.3}
+$$
+
+Proof. These are the joint law and actual output of §219 at the selected
+source. Its partial-transpose spectrum (219.6), rather than a general
+assumption of affine negativity, gives (233.3). All its local maps preserve
+each party's number separately, and its neutral-memory construction and
+finite rejected complement apply unchanged. In the low-success regime
+$\gamma=0$ and the active branch is thinned. In the strict middle regime
+$w=s$, $\alpha=1$, $\gamma=0$, $x=1$. In the high-success regime
+$\alpha=1$ and spectator padding supplies any $s-w\ge0$. The same
+construction attains zero throughout the zero regime.
+
+**Definition 233.2 (unconditional accounting).** The source convention is
+the full two-preparation filter of (215.9)–(215.12), not the effective
+spectator-discarding preparation. From (220.5), at the same chosen source,
+
+$$
+P_a=\frac{Z_t(p)}{2(1+t)^4},\qquad
+P_{\mathrm{sp}}=\frac{th_t(p)}{(1+t)^4},\qquad
+P_{\mathrm{full}}=\frac{E_t(p)}{2(1+t)^4},\qquad
+R=P_{\mathrm{full}}s.
+\tag{233.4}
+$$
+
+The complete unconditional law is preparation rejection with probability
+$1-P_{\mathrm{full}}$, followed by the four events (233.2) multiplied by
+$P_{\mathrm{full}}$. In particular the two successful contributions are
+$P_a\alpha$ and $P_{\mathrm{sp}}\gamma$, with sum $R$; each spectator
+reset pair has probability $P_{\mathrm{sp}}\gamma/4$. Thus state,
+preparation probability and prescribed conditional success are realized
+jointly by one source and one instrument. No independent extrema of
+$\lambda$ and $w$, or of $A_t$ and $B_t$, have been combined.
+
+At fixed $s$, maximizing $sF_{t,s}$ is equivalent to maximizing $F_{t,s}$;
+for $s\ge s_1$ the optimum $s\mathcal V_t(s)=B_t(p_c)$ is constant.
+The unconditional success-weighted quantity is instead
+$R\mathcal V_t(s)=P_{\mathrm{full}}s\mathcal V_t(s)$ at an attaining
+source. Both $P_{\mathrm{full}}$ and $R$ vary with source choice; (231.5)
+does not optimize this latter quantity or impose fixed overall success $R$.
+
+**Example 233.3 (three exact branches at one temperature).** At $t=1/14$,
+
+$$
+p_c=6/13,\qquad s_0=281/341,\qquad s_1=5/6,\qquad
+\mathcal V_t(s)=
+\begin{cases}
+113/562,&0<s\le281/341,\\
+A_t(p_s),&281/341<s<5/6,\\
+1/(6s),&5/6\le s\le1.
+\end{cases}
+\tag{233.5}
+$$
+
+For a strict middle point, $s=1123/1355$ gives $p_s=25/52$ and
+$\mathcal V_t(s)=451/2246$. Indeed $w_t(25/52)=1123/1355$ and
+$A_t(25/52)=451/2246$, with $281/341<1123/1355<5/6$.
+At the upper threshold the value is $1/5$; at $s=1$ it is $1/6$.
+Every displayed optimizer has an interior inverse (232.6), and (233.1)–(233.4)
+provide its simultaneous preparation and success law.
+
+## 234. Source and operation boundaries of the optimization
+
+This is a source-specific derived application of the exact frontier in
+§§214,217–219, the scalar relations in §216 and the native image/inverse
+in §§226–230. Its additional proof is one-variable calculus on that fixed
+source family. The mature supplier and literature scopes remain those of
+§224; no new general filtering principle or literature-priority conclusion
+is attached to this optimization.
+
+The ideal preparation assumptions remain the full finite fermionic Gibbs
+states, with the zero mode and all number sectors retained, no chemical
+potential or preliminary sector conditioning, and two independent instances
+of the same known $q,t$ with compatible labelled modes, CAR ordering and
+coupling phase. The original common coherent number filter counts all of
+Bob's modes. The positive principal square root and normalized coordinate
+cut remain fixed, with no additional postrotation of that cut. The subsequent
+known-$q$ Bob-local alignment is the allowed operation of §215, not a choice
+of a different cut. The normalized axes are not identified with raw spatial
+subsystems by this argument.
+
+The optimized stage uses one copy of the prepared state, finite adaptive
+LOCC preserving each party's local total number, separable auxiliaries,
+neutral memories, communication and exact biased coins. It requires one
+common encoded output and erasure of every record except success. The
+multi-leaf instrument remains essential when $s>w$: §222 gives the literal
+single-product success-map ceiling $w$ in this native family. Discarding
+records does not turn its several Kraus leaves into one product Kraus.
+
+The success parameter $s$ is conditional on preparation. This result is not
+an optimization of the original unfiltered resource, a fixed-overall-$R$
+source optimization, an unknown-$q$ extraction protocol, an additional-copy
+or collective rate result, or a noisy-control or finite-gate synthesis
+result. Exact coins, neutral-memory discard and preparation availability
+remain ideal assumptions; their physical availability and costs are not
+established. There is no physical-realization, resource-advantage or kernel
+certificate claim.
+
+The endpoint $t=0$ is excluded: it would mean infinite inverse temperature.
+The formal scalar extension at $t=0$ has $A_t=1/2$, $w_t=1$ and
+$F_{t,s}=1/2$ for every interior $p$ and $0<s\le1$, so positive-$t$
+uniqueness must not be extended to it. Nor does that uniqueness survive the
+zero regime $t\ge t_c$. The fixed-overall-success original-source question
+would require keeping $P_{\mathrm{full}}(t,p)s=R$ while varying $q$;
+it is not settled here. These finite conditional results advance only this
+application; the broader ongoing AURIC FIB ATOM quantum-theory objective
+remains open.
+
+
+## 234.99 追加锚（本行以下为增补区）
+
+## 235. Measure-free packing and the resolution budget
+
+### 239.1 A metric-doubling replacement for the volume hypothesis
 
 The Ahlfors measure in §160 is one sufficient way to turn a resolved
 occurrence set into a packing bound. The measure is not essential to that
 counting step. The following version uses only a uniform metric covering
 property and therefore has a different scope.
 
-**Definition 231.1 (uniform metric-doubling occurrence bridge).** Retain the
+**Definition 235.1 (uniform metric-doubling occurrence bridge).** Retain the
 occurrence sets $V_n$, their counts and heights from (160.1). Let
 $\iota_n:V_n\hookrightarrow X$ map every task-distinct occurrence into one
 metric space $(X,\rho)$. Assume that, for fixed $\delta>0$ and fixed
@@ -4229,7 +4600,7 @@ $$
 \rho(\iota_n(x),\iota_n(y))\ge\delta\quad(x\ne y),
 \qquad
 \rho(o,\iota_n(x))\le A(n-1)+B.
-\tag{231.1}
+\tag{235.1}
 $$
 
 Assume also that every closed ball at every center and radius used below is
@@ -4239,21 +4610,21 @@ finite $K$ at every level. Put
 $$
 R_n=A(n-1)+B,
 \qquad q=\log_2K.
-\tag{231.2}
+\tag{235.2}
 $$
 
 No measure, Green kernel, generator, or spatial dimension is part of this
 definition.
 
-**Theorem 231.2 (metric-doubling packing obstruction).** Under Definition
-231.1,
+**Theorem 235.2 (metric-doubling packing obstruction).** Under Definition
+235.1,
 
 $$
 \boxed{
 N_n\le
 K^{\left\lceil\log_2\left(1+\frac{2R_n}{\delta}\right)\right\rceil}.
 }
-\tag{231.3}
+\tag{235.3}
 $$
 
 Proof. Let
@@ -4272,28 +4643,28 @@ $$
 
 each final ball has diameter strictly smaller than $\delta$ and contains at
 most one point of the $\delta$-separated set $\iota_n(V_n)$. All occurrences
-lie in the original ball by (231.1), so (231.3) follows. $\square$
+lie in the original ball by (235.1), so (235.3) follows. $\square$
 
-If $\delta$ is fixed, (231.3) is polynomial in $n$:
+If $\delta$ is fixed, (235.3) is polynomial in $n$:
 
 $$
 K^{\lceil\log_2(1+2R_n/\delta)\rceil}
 =O(n^q).
-\tag{231.4}
+\tag{235.4}
 $$
 
 But $N_n=2F_{n+1}-1$ has
 
 $$
 \log N_n=n\log\varphi+O(1).
-\tag{231.5}
+\tag{235.5}
 $$
 
 Consequently no one metric-doubling carrier with fixed $K,A,B,\delta$ can
 resolve every prefix. This is a measure-free obstruction; it does not say
 that the source has metric dimension $q$, and it does not select $q=3$.
 
-### 231.2 Necessary resolution budget
+### 239.2 Necessary resolution budget
 
 The same estimate gives a quantitative condition when the resolution is
 allowed to vary. Since
@@ -4313,7 +4684,7 @@ $$
 =
 \frac{4R_n}{N_n^{1/q}-2}.
 }
-\tag{231.6}
+\tag{235.6}
 $$
 
 The second form uses $K^{1/q}=2$. Thus, for fixed $K,A,B$, the required
@@ -4321,7 +4692,7 @@ resolution is at most
 
 $$
 \delta_n=O\!\left(n\,\varphi^{-n/q}\right).
-\tag{231.7}
+\tag{235.7}
 $$
 
 This is a necessary budget, not an embedding construction and not a
@@ -4329,7 +4700,7 @@ sufficient stability condition. Passing from a finite prefix to an infinite
 carrier therefore requires a declared scale law; a fixed positive spatial
 resolution is incompatible with the stated uniform bridge.
 
-**Proposition 231.3 (finite exact certificate).** For
+**Proposition 235.3 (finite exact certificate).** For
 
 $$
 K=8,\qquad A=B=\delta=1,\qquad n=26,
@@ -4342,18 +4713,18 @@ $$
 =\lceil\log_2 53\rceil=6.
 $$
 
-The cover capacity is therefore $8^6=262144$, so (231.3) fails:
+The cover capacity is therefore $8^6=262144$, so (235.3) fails:
 
 $$
 \boxed{392835>262144.}
-\tag{231.8}
+\tag{235.8}
 $$
 
 This rejects these constants at this prefix. It is not by itself an
 all-prefix theorem, and it does not identify $K=8$ with a three-dimensional
 covering number.
 
-### 231.3 Why an upper measure bound alone is insufficient
+### 239.3 Why an upper measure bound alone is insufficient
 
 Replacing the doubling condition by an upper estimate on ball masses loses
 the packing conclusion unless a uniform lower mass or a direct covering
@@ -4365,7 +4736,7 @@ $$
 \mu(v)=Z^{-1}4^{-h},
 \qquad
 Z=\sum_v4^{-\operatorname{depth}(v)}.
-\tag{231.9}
+\tag{235.9}
 $$
 
 Since there are at most $2^h$ vertices at depth $h$, $1\le Z\le2$.
@@ -4375,7 +4746,7 @@ any $t\ge1/3$,
 
 $$
 \mu(B(z,t))\le1\le 3^d t^d.
-\tag{231.10}
+\tag{235.10}
 $$
 
 Thus the required upper $t^d$ estimate at the macroscopic radii can hold
@@ -4386,29 +4757,29 @@ metric-doubling packing control.
 
 This countermodel does not assert an upper estimate at arbitrarily small
 radii; it isolates exactly the missing hypothesis. Therefore §160's
-measure-theoretic proof may be replaced by Theorem 231.2 only after a
+measure-theoretic proof may be replaced by Theorem 235.2 only after a
 metric-doubling or direct packing property has been established. Neither
 route supplies the still-missing occurrence-to-physical-carrier metric,
 transport, clock, observation, or dimension-sensitive invariant.
 
-## 231.99 追加锚（本行以下为增补区）
+## 239.99 追加锚（本行以下为增补区）
 
-## 232. Exponential resolution threshold
+## 236. Exponential resolution threshold
 
-The necessary budget in (231.6) can be stated as a phase boundary. This
+The necessary budget in (235.6) can be stated as a phase boundary. This
 separates a change of resolution law from a claim about the dimension of the
 carrier.
 
-**Theorem 232.1 (subcritical resolution is impossible).** Suppose the
+**Theorem 236.1 (subcritical resolution is impossible).** Suppose the
 metric-doubling cover constant $K$, the root-radius constants $A,B$, and the
-source separation constants are as in Definition 231.1, except that the
+source separation constants are as in Definition 235.1, except that the
 separation may vary with $n$ and is denoted by $delta_n$. Let
 
 $$
 q=\log_2K,qquad
 \delta_n\ge c,n^{-s}e^{-\kappa n}
 \quad(n\ge n_0),
-\tag{232.1}
+\tag{236.1}
 $$
 
 for fixed $c>0$, $s\ge0$, and $\kappa\ge0$. If every prefix is
@@ -4418,48 +4789,48 @@ $$
 \boxed{
 \kappa\ge\frac{\log\varphi}{q}.
 }
-\tag{232.2}
+\tag{236.2}
 $$
 
 In particular, a fixed or polynomially shrinking resolution cannot support
 all Fibonacci prefixes for any finite $K$.
 
-Proof. From (231.3) and $\lceil x\rceil<x+1$,
+Proof. From (235.3) and $\lceil x\rceil<x+1$,
 
 $$
 N_n
 <K\left(1+\frac{2R_n}{\delta_n}\right)^q.
-\tag{232.3}
+\tag{236.3}
 $$
 
-Since $R_n=A(n-1)+B=O(n)$, (232.1) gives a constant $C>0$ such that
+Since $R_n=A(n-1)+B=O(n)$, (236.1) gives a constant $C>0$ such that
 
 $$
 1+\frac{2R_n}{\delta_n}
 \le C n^{s+1}e^{\kappa n}
-\tag{232.4}
+\tag{236.4}
 $$
 
 for all sufficiently large $n$. Hence
 
 $$
 N_n\le C' n^{q(s+1)}e^{q\kappa n}.
-\tag{232.5}
+\tag{236.5}
 $$
 
 On the other hand, the Binet formula used in (160.8) gives
 
 $$
 N_n\ge c'\varphi^n
-\tag{232.6}
+\tag{236.6}
 $$
 
 for some $c'>0$ and all large $n$. If $q\kappa<\log\varphi$, the ratio of
-(232.6) to (232.5) tends to infinity, a contradiction. Therefore (232.2)
+(236.6) to (236.5) tends to infinity, a contradiction. Therefore (236.2)
 is necessary. The case $\kappa=0$ includes every lower bound of polynomial
 order. $\square$
 
-**Corollary 232.2 (the critical polynomial window).** At the threshold
+**Corollary 236.2 (the critical polynomial window).** At the threshold
 
 $$
 \kappa_*:=\frac{\log\varphi}{q},
@@ -4469,7 +4840,7 @@ the packing estimate requires
 
 $$
 \delta_n=O\!\left(n e^{-\kappa_* n}\right).
-\tag{232.7}
+\tag{236.7}
 $$
 
 Thus a law bounded below by $c n^{1+\epsilon}e^{-\kappa_*n}$ for any
@@ -4480,7 +4851,7 @@ For the stipulated $K=8$, one has $q=3$ and therefore
 
 $$
 \kappa_*=rac{\log\varphi}{3}.
-\tag{232.8}
+\tag{236.8}
 $$
 
 This number is a resolution exponent of the declared occurrence bridge. It
@@ -4488,13 +4859,13 @@ is not a spatial dimension, a heat-kernel exponent, or a Fock/observation
 rank. A physical three-dimensional conclusion still needs an independent
 realization law and an observable correspondence.
 
-## 232.99 追加锚（本行以下为增补区）
+## 240.99 追加锚（本行以下为增补区）
 
-## 233. 仿射运输与全局标架
+## 237. 仿射运输与全局标架
 
 前面的局部三维条件只给出每个接口的方向空间。要判断这些接口是否能拼成一个全局载体，还必须指定沿合法边传播状态的规则。
 
-### 233.1 仿射边运输
+### 241.1 仿射边运输
 
 设 $G=(V,E)$ 是连通的有向关系图。每条有向边 $e:x\to y$ 携带一个仿射运输
 
@@ -4502,21 +4873,21 @@ $$
 T_e(z)=A_ez+b_e,
 \qquad A_e\in\mathrm{GL}(d,\mathbb R),
 \quad b_e\in\mathbb R^d.
-\tag{233.1}
+\tag{237.1}
 $$
 
 反向边的运输声明为逆映射：
 
 $$
 T_{\bar e}=T_e^{-1}.
-\tag{233.2}
+\tag{237.2}
 $$
 
 若 $p=e_k\cdots e_1$ 是一条路径，规定
 
 $$
 T_p=T_{e_k}\circ\cdots\circ T_{e_1}.
-\tag{233.3}
+\tag{237.3}
 $$
 
 对闭路 $\gamma$，$T_\gamma$ 是该闭路的仿射 holonomy。这里有两个容易混淆的条件。
@@ -4526,19 +4897,19 @@ $$
 $$
 T_\gamma(z_0)=z_0
 \qquad\text{for every closed }\gamma.
-\tag{233.4}
+\tag{237.4}
 $$
 
 **完整标架无歧义**要求
 
 $$
 \boxed{T_\gamma=\mathrm{id}\quad\text{for every closed }\gamma.}
-\tag{233.5}
+\tag{237.5}
 $$
 
 前者可以让一个特殊点路径无关，后者才让所有局部向量和仿射原点都能无歧义地运输。
 
-### 定理 233.1　平凡仿射 holonomy 的等价刻画
+### 定理 237.1　平凡仿射 holonomy 的等价刻画
 
 以下两项等价：
 
@@ -4547,19 +4918,19 @@ $$
 
 $$
 g_y=T_e\circ g_x.
-\tag{233.6}
+\tag{237.6}
 $$
 
 **证明。** 假设第一项成立。选定根 $o$ 和任意仿射双射 $g_o$。对每个 $x$，取一条从 $o$ 到 $x$ 的路径 $p_x$，定义
 
 $$
 g_x=T_{p_x}\circ g_o.
-\tag{233.7}
+\tag{237.7}
 $$
 
-若更换路径，两个路径的拼接给出一条闭路；平凡 holonomy 使结果不变。因此对边 $e:x\to y$，路径 $p_xe$ 可以作为 $y$ 的路径，得到 (233.6)。
+若更换路径，两个路径的拼接给出一条闭路；平凡 holonomy 使结果不变。因此对边 $e:x\to y$，路径 $p_xe$ 可以作为 $y$ 的路径，得到 (237.6)。
 
-反过来，沿任意闭路反复使用 (233.6)，得到
+反过来，沿任意闭路反复使用 (237.6)，得到
 
 $$
 T_\gamma\circ g_o=g_o.
@@ -4567,9 +4938,9 @@ $$
 
 由于 $g_o$ 是满射，故 $T_\gamma=\mathrm{id}$。\quad$\square$
 
-因此，“每个接口都有同一套三维坐标”不能只由局部 Gram 矩阵正性推出。还需要边运输满足 (233.5)，或者明确把 holonomy 作为边界状态保留下来。
+因此，“每个接口都有同一套三维坐标”不能只由局部 Gram 矩阵正性推出。还需要边运输满足 (237.5)，或者明确把 holonomy 作为边界状态保留下来。
 
-## 234. 非平凡 holonomy 是一种任务相对的信息逃逸
+## 238. 非平凡 holonomy 是一种任务相对的信息逃逸
 
 设历史 $h$ 记录一个端点、一个初始局部状态和一条合法运输路径。若观察只保留端点与当前粗粒度读出，而不保留路径的标架类，则两个历史可能满足
 
@@ -4581,26 +4952,26 @@ $$
 
 $$
 F(h)=T_p(z_0).
-\tag{234.1}
+\tag{238.1}
 $$
 
 若 $h'$ 在同一端点使用 $p\gamma$，则
 
 $$
 F(h')=T_p\bigl(T_\gamma(z_0)\bigr).
-\tag{234.2}
+\tag{238.2}
 $$
 
 只要 $T_\gamma(z_0)\ne z_0$，就有
 
 $$
 \boxed{q(h)=q(h'),\quad F(h)\ne F(h').}
-\tag{234.3}
+\tag{238.3}
 $$
 
 这正是目标相对的逃逸对。它不是说所有 holonomy 都必须被观察者辨认：若目标只看 holonomy 的某个不变量，非平凡运输仍可能对该目标无害。正确条件是，声明的目标和合法操作必须在所选观察纤维上保持不变。
 
-### 定义 234.1　提升边界
+### 定义 238.1　提升边界
 
 在端点 $x$ 处，令 $\mathcal P_x$ 为从根到 $x$ 的合法路径集合，并按右乘闭路 holonomy 的作用取等价类。任务需要的提升边界可以写成
 
@@ -4609,7 +4980,7 @@ $$
 =
 \bigl(\text{局部状态}\bigr)\times
 \bigl(\mathcal P_x/\ker \mathsf H_x\bigr),
-\tag{234.4}
+\tag{238.4}
 $$
 
 其中 $\mathsf H_x$ 是路径类在声明任务上的响应表示，$\ker\mathsf H_x$ 包含所有对该任务没有影响的回路差异。
@@ -4621,16 +4992,16 @@ $$
 \mathsf H_x\text{ 对所有回路平凡}:&\widetilde B_x\text{ 可退化为普通局部边界};\\[1mm]
 \mathsf H_x\text{ 非平凡}:&\text{必须保留路径/标架的任务相关部分，或接受目标逃逸}.
 \end{array}
-\tag{234.5}
+\tag{238.5}
 $$
 
 因此，高维内部通过边界返回的方式不只有记忆核。非平凡 holonomy 还会以路径类、共同标架或回路响应的形式进入边界；把它们静默压成一个局部向量，会破坏需要路径相容性的拼接任务。
 
-## 235. 欧氏载体的 packing 证书与解析阈值
+## 239. 欧氏载体的 packing 证书与解析阈值
 
 前面的 metric-doubling 估计使用抽象覆盖常数。若候选载体确实是欧氏 $d$ 维空间，还可以直接使用体积比得到更强的检查。
 
-### 定理 235.1　欧氏分离集的 packing 上界
+### 定理 239.1　欧氏分离集的 packing 上界
 
 若 $S_n\subseteq\mathbb R^d$ 满足
 
@@ -4648,12 +5019,12 @@ $$
 \le
 \left(1+\frac{2R_n}{\delta_n}\right)^d.
 }
-\tag{235.1}
+\tag{239.1}
 $$
 
-**证明。** 以每个 $x\in S_n$ 为中心取半径 $\delta_n/2$ 的闭球。它们的内部两两不交，并且都包含在半径 $R_n+\delta_n/2$ 的球中。比较 $d$ 维 Lebesgue 体积，消去单位球体积后得到 (235.1)。\quad$\square$
+**证明。** 以每个 $x\in S_n$ 为中心取半径 $\delta_n/2$ 的闭球。它们的内部两两不交，并且都包含在半径 $R_n+\delta_n/2$ 的球中。比较 $d$ 维 Lebesgue 体积，消去单位球体积后得到 (239.1)。\quad$\square$
 
-### 定理 235.2　Fibonacci 解析分辨率阈值
+### 定理 239.2　Fibonacci 解析分辨率阈值
 
 假设第 $n$ 个前缀有 $N_n=2F_{n+1}-1$ 个需区分的 occurrence，并且
 
@@ -4667,10 +5038,10 @@ $$
 
 $$
 \boxed{d\kappa\ge\log\varphi.}
-\tag{235.2}
+\tag{239.2}
 $$
 
-**证明。** 由 (235.1)，$N_n$ 至多为一个常数乘以
+**证明。** 由 (239.1)，$N_n$ 至多为一个常数乘以
 
 $$
 n^{d(s+1)}e^{d\kappa n}.
@@ -4685,12 +5056,12 @@ $$
 \kappa\ge\frac{\log\varphi}{3}
 \approx0.1604039416865345.
 }
-\tag{235.3}
+\tag{239.3}
 $$
 
 这个数是 occurrence-to-carrier 分辨率指数。它不是空间维数、热核指数、Fock 模式数或观察秩；只有在另行证明这些量之间的对应后，才可以讨论物理解释。
 
-### 命题 235.3　有限反例证书
+### 命题 239.3　有限反例证书
 
 取三维、$n=26$、$R_{26}=26$、$\delta_{26}=1$。则
 
@@ -4708,16 +5079,16 @@ $$
 
 $$
 \boxed{53^3=148877<392835=N_{26}.}
-\tag{235.4}
+\tag{239.4}
 $$
 
 这排除在这些具体半径、分离度和 occurrence 计数下的三维欧氏实现。它不排除改变分离率、允许更大半径、使用非欧氏载体或不要求所有 occurrence 同时可区分的模型，也不单独证明三维物理空间不存在。
 
-## 236. 从局部三框架到真正三维载体的桥接条件
+## 240. 从局部三框架到真正三维载体的桥接条件
 
 现在可以把“局部三维”与“整体三维”之间的缺口写成一组同时成立的条件。
 
-### 定义 236.1　任务相对的三维载体证书
+### 定义 240.1　任务相对的三维载体证书
 
 对每个有限前缀，要求存在：
 
@@ -4727,17 +5098,17 @@ $$
 4. occurrence 到载体的映射在声明分辨率下是注入的，并满足 $R_n,\delta_n$ 的统一尺度界；
 5. 时钟、读出和合法拼接规则都由同一观察边界恢复。
 
-### 命题 236.2　条件性桥接结论
+### 命题 240.2　条件性桥接结论
 
-若 Definition 236.1 的五项均成立，则每个有限前缀都具有一个任务相对的三维运输实现；若再有统一的全层级嵌入、统一的运输和观察极限，以及近似态的紧致性，则可把有限层结论传到极限载体。
+若 Definition 240.1 的五项均成立，则每个有限前缀都具有一个任务相对的三维运输实现；若再有统一的全层级嵌入、统一的运输和观察极限，以及近似态的紧致性，则可把有限层结论传到极限载体。
 
 若第五项或第三项失败，则已有三维局部状态只能称为三维接口：它不再保证整体路径、操作合法性和未来响应可由该接口无损恢复。若第四项失败，packing 阈值也不能用于该模型，因为尚未建立 occurrence 与欧氏点之间的注入对应。
 
 这不是一个从 FIB 语法单独推出的宇宙三维定理。它是一个可逐项反驳的桥接判据：局部三框架、无横向泄漏、任务相对平凡 holonomy、注入与分辨率证书、以及极限紧致性，缺一项都不能把“每个接口三维”升级为“实际载体三维”。
 
-本卷新增结果仍属于理论推导，尚未作为 Lean kernel 证明交付。它们的下一步验证对象已经具体化为：对项目原生合法运输构造 $T_e$；计算生成回路的 holonomy；检查任务观察是否切开 (234.3) 的逃逸对；最后用 (235.1) 和 (235.4) 检验候选 occurrence-to-carrier 桥。
+本卷新增结果仍属于理论推导，尚未作为 Lean kernel 证明交付。它们的下一步验证对象已经具体化为：对项目原生合法运输构造 $T_e$；计算生成回路的 holonomy；检查任务观察是否切开 (238.3) 的逃逸对；最后用 (239.1) 和 (239.4) 检验候选 occurrence-to-carrier 桥。
 
-## 237. 辛预测完成对“三个观测坐标”的限制
+## 241. 辛预测完成对“三个观测坐标”的限制
 
 DEV 的《统一预测几何》把观察边界与动力学放在同一个线性模型中。取
 
@@ -4755,12 +5126,12 @@ W_0=\operatorname{im}C^{\mathsf T},
 W_{k+1}=W_k+A^{\mathsf T}W_k,
 \qquad
 W=\bigcup_kW_k.
-\tag{237.1}
+\tag{241.1}
 $$
 
 取满行秩矩阵 $O$ 使其行空间为 $W$，则 $Oz$ 是全部连续未来读出的最小线性预测边界。
 
-### 定理 237.1　精确非退化辛预测边界具有偶数秩
+### 定理 241.1　精确非退化辛预测边界具有偶数秩
 
 在上述正定 Hamiltonian 模型中，$W$ 上的限制配对
 
@@ -4772,14 +5143,14 @@ $$
 
 $$
 \boxed{\operatorname{rank}O=\dim W\text{ 为偶数}.}
-\tag{237.2}
+\tag{241.2}
 $$
 
 若还存在矩阵 $K$ 使
 
 $$
 OA=KO,
-\tag{237.3}
+\tag{241.3}
 $$
 
 则约化边界满足
@@ -4802,9 +5173,9 @@ u^{\mathsf T}JA^{\mathsf T}u
 (Ju)^{\mathsf T}S(Ju)>0,
 $$
 
-与辛正交矛盾。因此限制配对非退化。非退化反对称矩阵的阶数为偶数，故 (237.2) 成立；其余等式由 $OA=KO$、$AS^{-1}=J$ 直接整理得到。\quad$\square$
+与辛正交矛盾。因此限制配对非退化。非退化反对称矩阵的阶数为偶数，故 (241.2) 成立；其余等式由 $OA=KO$、$AS^{-1}=J$ 直接整理得到。\quad$\square$
 
-### 推论 237.2　秩三的精确边界必须离开至少一个条件
+### 推论 241.2　秩三的精确边界必须离开至少一个条件
 
 若 $C$ 有三个独立读出，而这些读出本身已经形成全部精确自治预测边界，即
 
@@ -4812,7 +5183,7 @@ $$
 \operatorname{rank}O=3,
 $$
 
-则不可能同时满足正定 Hamiltonian 假设、精确闭合 (237.3) 和非退化辛约化。
+则不可能同时满足正定 Hamiltonian 假设、精确闭合 (241.3) 和非退化辛约化。
 
 所以一个“三分量边界”必须被解释为以下至少一种情况：
 
@@ -4823,11 +5194,11 @@ $$
 
 这条排除只针对精确线性辛预测边界，不能推广为“任何三维流形都不可能存在”。相位圆就是一维自治非线性读出，但它没有非退化二形式。
 
-## 238. 三维配置接口与六维正则完成
+## 242. 三维配置接口与六维正则完成
 
 “三维接口”与“完整预测状态”的最小容量，取决于三个读出是否被解释为配置坐标。
 
-### 定义 238.1　配置型三框架
+### 定义 242.1　配置型三框架
 
 称三个独立读出为配置型三框架，是指存在坐标
 
@@ -4840,16 +5211,16 @@ $$
 $$
 \omega|_L=0,
 \qquad \dim L=3.
-\tag{238.1}
+\tag{242.1}
 $$
 
-### 定理 238.2　配置型三框架的正则完成至少六维
+### 定理 242.2　配置型三框架的正则完成至少六维
 
 若 $L$ 是一个三维 Lagrange 子空间，则任何包含其三个独立共轭变量的非退化辛空间都至少是
 
 $$
 \boxed{L\oplus L^*\cong\mathbb R^3_q\oplus\mathbb R^3_p,\qquad \dim=6.}
-\tag{238.2}
+\tag{242.2}
 $$
 
 在标准正则坐标中，辛形式为
@@ -4860,7 +5231,7 @@ $$
 
 **证明。** 对一个 $2n$ 维辛空间，Lagrange 子空间的维数为 $n$。由 $\dim L=3$ 得 $n=3$，所以总维数为 $2n=6$。选择 $L$ 的一组基并取其辛对偶基，得到 $q,p$ 的 Darboux 坐标。\quad$\square$
 
-这里的“至少”是针对正则共轭完成的，不是说任意携带三个实数的编码都需要六个数。若只要求三个任意观测量的精确 Hamiltonian 预测闭合，定理 237.1 只给出偶数秩下界：秩三被排除，最低可能是四。只有当三个量确实是三维配置坐标并要求其共轭方向也可运输时，六维结论才适用。
+这里的“至少”是针对正则共轭完成的，不是说任意携带三个实数的编码都需要六个数。若只要求三个任意观测量的精确 Hamiltonian 预测闭合，定理 241.1 只给出偶数秩下界：秩三被排除，最低可能是四。只有当三个量确实是三维配置坐标并要求其共轭方向也可运输时，六维结论才适用。
 
 ### 一个可直接计算的 FIB 兼容样例
 
@@ -4874,7 +5245,7 @@ A=
 \end{pmatrix},
 \qquad
 C=\begin{pmatrix}I_3&0\end{pmatrix}.
-\tag{238.3}
+\tag{242.3}
 $$
 
 则
@@ -4889,12 +5260,12 @@ $$
 
 $$
 \ddot q+\Omega^2q=0.
-\tag{238.4}
+\tag{242.4}
 $$
 
 六维一阶状态与三维二阶历史是同一信息的两种表示。这里增加的是共轭记忆，不是第四根空间轴。
 
-## 239. 相空间 holonomy 会从隐藏共轭变量返回
+## 243. 相空间 holonomy 会从隐藏共轭变量返回
 
 前面的仿射运输只记录位置型 $T_e$。若接口承载 Hamiltonian 预测，还必须考虑其辛提升
 
@@ -4902,30 +5273,30 @@ $$
 \boxed{
 \widetilde T_e(q,p)=\bigl(A_eq+b_e,\,A_e^{-\mathsf T}p\bigr).
 }
-\tag{239.0}
+\tag{243.0}
 $$
 
-这是仿射位置运输的余切提升；直接代入 $dq'\wedge dp'=dq\wedge dp$ 可验证它保持标准辛形式。若模型另有磁势或生成函数项，必须把该项作为额外声明的边运输，不能由 (239.0) 自动推定。闭路给出相空间 holonomy $\widetilde H_\gamma$。
+这是仿射位置运输的余切提升；直接代入 $dq'\wedge dp'=dq\wedge dp$ 可验证它保持标准辛形式。若模型另有磁势或生成函数项，必须把该项作为额外声明的边运输，不能由 (243.0) 自动推定。闭路给出相空间 holonomy $\widetilde H_\gamma$。
 
-### 命题 239.1　位置平凡不等于预测平凡
+### 命题 243.1　位置平凡不等于预测平凡
 
 设 $C$ 只读出位置，且某闭路满足
 
 $$
 C\widetilde H_\gamma=C,
-\tag{239.1}
+\tag{243.1}
 $$
 
 但对某个有限未来词 $w$ 有
 
 $$
 C A_w\widetilde H_\gamma\ne C A_w.
-\tag{239.2}
+\tag{243.2}
 $$
 
 则存在两个当前读出相同的历史，它们在未来响应上不同；因此位置边界产生任务相对的信息逃逸。
 
-**证明。** 取两个相差该闭路 holonomy 的状态 $z$ 与 $\widetilde H_\gamma z$。由 (239.1)，当前读出相同；由 (239.2)，对某个未来词的响应不同。这正是同一观察纤维中的逃逸对。\quad$\square$
+**证明。** 取两个相差该闭路 holonomy 的状态 $z$ 与 $\widetilde H_\gamma z$。由 (243.1)，当前读出相同；由 (243.2)，对某个未来词的响应不同。这正是同一观察纤维中的逃逸对。\quad$\square$
 
 因此，真正需要检验的不是仅有
 
@@ -4937,32 +5308,32 @@ $$
 
 $$
 \boxed{O\widetilde H_\gamma=O.}
-\tag{239.3}
+\tag{243.3}
 $$
 
-若 (239.3) 不成立，隐藏动量、相位或共轭记忆就必须进入提升边界。它们可以以显式状态、历史核或路径类存储；直接把它们重置为零会改变拼接后的未来。
+若 (243.3) 不成立，隐藏动量、相位或共轭记忆就必须进入提升边界。它们可以以显式状态、历史核或路径类存储；直接把它们重置为零会改变拼接后的未来。
 
-## 240. 更新后的“三维载体”判据
+## 244. 更新后的“三维载体”判据
 
-将 §§233–239 合并，可以得到一个比“局部有三个方向”更严格的条件表。
+将 §§237–243 合并，可以得到一个比“局部有三个方向”更严格的条件表。
 
-### 定义 240.1　配置—预测双尺度证书
+### 定义 244.1　配置—预测双尺度证书
 
 候选 FIB 实现要声称“实际载体是三维”，至少需要同时给出：
 
 1. 三维配置型局部框架及其 occurrence-to-carrier 注入；
 2. 无横向运输泄漏，使局部框架形成三维可积切面；
 3. 位置运输的任务相对 holonomy 平凡；
-4. 辛或其他动力学提升的预测 holonomy 满足 (239.3)，或边界显式保留其任务相关轨道；
-5. 分辨率满足 §§231–235 的 packing 预算；
+4. 辛或其他动力学提升的预测 holonomy 满足 (243.3)，或边界显式保留其任务相关轨道；
+5. 分辨率满足 §§235–239 的 packing 预算；
 6. 三维配置的共轭变量、历史记忆或合法性档案满足动态预测充分性；
 7. 有统一细化嵌入和近极小态紧致性，使有限层结论能传到极限。
 
-### 命题 240.2　局部三维与完整预测维数的分离
+### 命题 244.2　局部三维与完整预测维数的分离
 
 若上述证书成立，则“三维”可以有一个严格的任务相对含义：它是配置载体的局部切维数。完整一阶预测边界则不必是三维；在正则 Hamiltonian 情形，包含三个配置坐标的最小自然完成是六维，而一般任意观测的精确辛预测秩必须是偶数。
 
-若只证明局部 Gram 正性、三个关系分量或一个三维投影，而没有 (239.3)、注入和尺度证书，则最多得到三维接口，不能得到无损的实际三维载体。
+若只证明局部 Gram 正性、三个关系分量或一个三维投影，而没有 (243.3)、注入和尺度证书，则最多得到三维接口，不能得到无损的实际三维载体。
 
 这把“为什么三维”拆成两个互不混淆的问题：
 
@@ -4974,4 +5345,32 @@ $$
 }
 $$
 
-本节仍是条件性理论推导，未作为 Lean kernel 证明交付。下一项可计算工作是：从项目原生运输提取位置与辛提升 $T_e,\widetilde T_e$；计算生成闭路的两个 holonomy；构造 $O$ 并检查其秩与 (239.3)；再将结果与 occurrence packing 和边界记忆核逐项合并。
+本节仍是条件性理论推导，未作为 Lean kernel 证明交付。下一项可计算工作是：从项目原生运输提取位置与辛提升 $T_e,\widetilde T_e$；计算生成闭路的两个 holonomy；构造 $O$ 并检查其秩与 (243.3)；再将结果与 occurrence packing 和边界记忆核逐项合并。
+
+## 244.99 追加锚（本行以下为增补区）
+
+## 245. 目标索引、独立见证对与共同来源边界
+本节把 [strict-real 支持卷 V](FIB_STRICT_REAL_JOINT_INCIDENCE_SUPPORT_V.md) 定理 1.1–1.2 接到 §§238、240、244 的目标相对边界；通用逃逸与纤维下降沿用[关系观察卷定义 2.1](RECURSIVE_RELATIONAL_OBSERVATION.md)，不另立通用定理。以下是这些来源合同的 `repo-derived` 应用，不主张文献原创性。
+
+### 定义 245.1　完整 child 与目标相对逃逸
+对声明区域 $U\subseteq\{(p,v):p\ne24\}$，令 $C_\beta=C(p,v)$ 为支持卷 V §1 的全部合法完整世界 $W=(P(r,b),g,d)$，保留原始 parent、整条非零且次数至多三的 gain、drift、全部 companion、低次和零样本分支及严格守卫 $0<r<1,b>0$；令 $X_U=\bigsqcup_{\beta\in U}C_\beta$，$\pi(W)=\beta$。既有目标逃逸在此完整 child 上的应用为 $E_U(O;T)=\{(\beta,W,W'): \beta\in U,\ W,W'\in C_\beta,\ O(W)=O(W'),\ T(W)\ne T(W')\}$，完整来源目标为 $T_{\rm src}(W)=W$。对同一观察与确定性目标元组，$E_U(O;(T_1,T_2))=E_U(O;T_1)\cup E_U(O;T_2)$，因为元组不同恰是至少一分量不同；因此各分量均无逃逸时元组也无逃逸。这只是集合论恢复，不给出高效解码、有限精度稳定性或物理可取得性。
+
+### 定义 245.2　独立见证对与同对联合签名
+以支持卷 V §1 的实际终端响应 $a(W),m(W)$ 定义 $R_J(\beta)=\{(W,W')\in C_\beta^2:W\ne W',\ a(W)=a(W')\}$、$R_M(\beta)=\{(W,W')\in C_\beta^2:W\ne W',\ m(W)=m(W')\}$，并令 $D_J(U)=\{\beta\in U:R_J(\beta)\ne\varnothing\}$、$D_M(U)=\{\beta\in U:R_M(\beta)\ne\varnothing\}$。同对集合 $D_{JM}^{\rm same}(U)=\{\beta\in U:R_J(\beta)\cap R_M(\beta)\ne\varnothing\}$ 只满足 $D_{JM}^{\rm same}(U)\subseteq D_J(U)\cap D_M(U)$；后者允许同一完整 child 中的两组独立见证对，允许交叉重合且不要求两对的公共终端值相同。反向包含一般不成立：三个抽象世界的 $(a,m)$ 分别为 $(0,0),(0,1),(1,0)$ 时，两种响应各有碰撞而联合签名单射；这是量词反例，不是 strict-real 世界构造。令 $O_q=\pi$、$O_J=(\pi,a)$、$O_M=(\pi,m)$、$O_{JM}=(\pi,a,m)$，则 $D_{JM}^{\rm same}(U)$ 正是 $E_U(O_{JM};T_{\rm src})$ 的基点投影。数学联合签名来自同一世界；其物理取得还须另给允许同时读取、复制或重置的协议。
+
+### 命题 245.3　严格 equal-M 见证与 whole-child J 注入性的翻译
+令 $K=[56,58]\times[304,305]$。支持卷 V 定理 1.1 对每个 $\beta\in K$ 的整个 $C_\beta$ 给出 $R_J(\beta)=\varnothing$，故 $E_K(O_J;T_{\rm src})=\varnothing$，且任意完整世界上的确定性目标 $T$ 都满足 $E_K(O_J;T)=\varnothing$；这不只是所选 witness 子集的注入性。定理 1.2 又给出 $\beta_*\in K$ 及 $W_A\ne W_B\in C_{\beta_*}$，满足 $m(W_A)=m(W_B)$；前述整个 child 的 J 注入性强制 $a(W_A)\ne a(W_B)$。于是 $(\beta_*,W_A,W_B)\in E_K(O_M;a)\cap E_K(O_M;T_{\rm src})\cap E_K(O_M;(a,m))$，且 $E_K(O_q;a)\ne\varnothing$，但同一对不属于 $E_K(O_M;m)$。证明只将两条来源结论代入定义；得到的是 $\beta_*\in D_M(K)\setminus D_J(K)$ 和指定观察、目标、区域下的逃逸，不结算全局 $D_J\cap D_M$。
+
+### 命题 245.4　区域边界充分性与原生来源拉回条件
+对 $\Gamma:X_U\to B$ 及包含预测响应和合法性目标的声明目标族 $\mathscr T$，要求 $E_U(\Gamma;T)=\varnothing$ 对所有 $T\in\mathscr T$ 成立，只保证逐 child 的充分性；若要覆盖整个区域，还须保留基点，例如存在 $b:B\to U$ 使 $\pi=b\circ\Gamma$，或改用边界 $(\pi,\Gamma)$。在此前提下，同边界的两世界必在同一 child，再由逃逸为空得到各目标相同，故目标在边界实际像上下降。向 FIB 原生来源传递时，另须声明原生来源集合 $S_{\rm native,U}$、其基点投影 $\beta_{\rm native}:S_{\rm native,U}\to U$、原生边界 $\gamma:S_{\rm native,U}\to B$ 及目标 $T_{\rm native}$，并给出保基点映射 $L:S_{\rm native,U}\to X_U$，满足
+$$
+\pi\circ L=\beta_{\rm native},\qquad
+\gamma=\Gamma\circ L,\qquad
+T_{\rm native}=T\circ L.
+$$
+还须使合法更新及其定义域的交换图成立；完整来源目标要求 $L$ 在声明来源等价类上单射。正向充分性由复合拉回，但逃逸见证向原生来源传递还要求两个见证世界均在 $L$ 的像中且可同时合法提升；单有映射不够。上述对应、更新与提升条件仍为 open；同名、同维或相同终端数值不能代替它们。
+
+### 有限检验与范围
+对 $D_J\cap D_M$ 保留四个世界变量和两组独立见证对，对 $D_{JM}^{\rm same}$ 使用同一对的联合等式；所有世界都须满足完整 child 的原始严格守卫。一个精确见证足以证明相应非空；空性需覆盖全部 child 的区间、Bernstein 或实代数证书，有限抽样不足。候选 $\Gamma$ 的反例是同边界而目标不同的合法世界对；运输与 holonomy 还须在同一来源和合法历史上保持上述交换图，未保留的预测轨道不能重置为零。局部关系维度、预测边界维度、完整来源恢复和物理载体维度继续分立，§§235–244 的注入、packing、holonomy 与极限条件仍须分别满足。全局 $D_J\cap D_M$、物理三维载体实现及本节的 Lean 形式化均保持 open；此应用不提供无条件维数结论，也不把不同 source contract 的解析前沿接口视为物理实现。
+
+## 245.99 追加锚（本行以下为增补区）
