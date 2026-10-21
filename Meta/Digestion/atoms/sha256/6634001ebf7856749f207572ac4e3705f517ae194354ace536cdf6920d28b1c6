@@ -1,0 +1,10 @@
+## 90. Actual source quotients and two incompatible source scales
+
+This appendix compares complete finite sources in the acquired fiber of
+[ARH, Proposition 23.2](RECURSIVE_RELATIONAL_OBSERVATION_ACQUIRED_RELATION_HISTORY.md).
+Its serial metric uses the full event list of
+[NativeFullSourceProducer](../../../Blueprint/D5/S3/Arith/FibonacciAtomic/Observer/NativeFullSourceProducer.md),
+including local actions. The source, the canonical cut row and a numerical
+observation are different objects. All conclusions below are ordinary
+mathematics; no new Lean validation or physical realization is asserted.
+

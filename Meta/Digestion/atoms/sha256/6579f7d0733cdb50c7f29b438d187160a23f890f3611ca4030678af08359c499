@@ -1,0 +1,61 @@
+**Proposition 87.3 (joint punctured profiles and the endpoint threshold).** For every prescribed $h>0$ there are real normalized $f_j\in C_c^\infty(\mathbb R^3\times\mathbb R)$ supported in $r>\delta_j>0$, with
+
+$$
+\frac{A_j}{C_j}=h^2,\qquad
+\frac{J_j}{4\pi\sqrt{A_jC_j}}\longrightarrow\frac18,
+\quad A_j=A[f_j]>0,\ C_j=C[f_j]>0,\ J_j=J[f_j].
+\tag{87.13}
+$$
+
+For each fixed such profile define an actual normalized punctured state by
+
+$$
+\Psi_{\varepsilon,j}(\xi,s)=\varepsilon^{-2}f_j(\xi/\varepsilon,s/\varepsilon),
+\qquad
+\psi_{\varepsilon,j}(\xi,w)=\Psi_{\varepsilon,j}(\xi,w-xy/2).
+\tag{87.14}
+$$
+
+For every fixed finite $\sigma>0$ these states satisfy jointly
+
+$$
+\begin{aligned}
+D_\sigma[\psi_{\varepsilon,j}]&=\varepsilon^{-\sigma}C_{\sigma,j},
+ &C_{\sigma,j}&=\||D_t|^{\sigma/2}f_j\|_2^2>0,\
+T[\psi_{\varepsilon,j}]&=\varepsilon^{-2}A_j+O_j(\varepsilon^{-1})+O_j(1),\
+\varepsilon^2V[\psi_{\varepsilon,j}]&\longrightarrow J_j/(4\pi).
+\end{aligned}
+\tag{87.15}
+$$
+
+In particular $C_\star=1/8$, and the sharp critical coupling for the added $\sigma=2$ law is
+
+$$
+g_c=16\sqrt{a\eta}.
+\tag{87.16}
+$$
+
+For $0<g\le g_c$ the law is nonnegative on $\mathcal E_2$; for $g>g_c$ it is unbounded below already on normalized $\mathcal D_0$.
+
+Proof. For the trace ingredient, cut $\Phi$ off radially on $e^{-j}<\rho<1$, with transition regions of fixed multiplicative width. Equation (87.7) bounds the cutoff remainder by a constant independent of $j$, while its trace has $J=4\pi j+O(1)$. Hence $J/(A+C)\to\pi/4$. The optimized version of (87.5) and $2\sqrt{AC}\le A+C$ give $J/\sqrt{AC}\to\pi/2$. Smooth $H^1$ approximation removes the interface kink, and a horizontal cylindrical cutoff removes $r=0$ with arbitrarily small $H^1$ cost for each fixed smooth profile. The weighted trace converges by (87.5). Normalize in $L^2$ and centrally rescale by $k^{-1/2}f(\xi,t/k)$ to obtain exactly $A/C=h^2$. This rescaling leaves $J/\sqrt{AC}$ unchanged. These operations construct actual smooth profiles; they do not assert the existence of a trace extremizer.
+
+The actual horizontal derivatives of (87.14), after change of variables $(\xi,s)=(\varepsilon v,\varepsilon u)$, are
+
+$$
+\varepsilon^{-1}\partial_{v_x}f_j-v_y\partial_uf_j/2,quad
+\varepsilon^{-1}\partial_{v_y}f_j+v_x\partial_uf_j/2,quad
+\varepsilon^{-1}\partial_{v_z}f_j.
+\tag{87.17}
+$$
+
+Their squared norms give the second line of (87.15), with finite profile-dependent constants. Central Fourier scaling proves the first line. For the potential instead change variables $(\xi,s)=(\varepsilon v,\varepsilon^2t)$ and use the actual Carnot homogeneity:
+
+$$
+\varepsilon^2V[\psi_{\varepsilon,j}]
+ =\int\mathcal G(v,t)|f_j(v,\varepsilon t)|^2dvdt
+ \longrightarrow\frac1{4\pi}\int\frac{|f_j(v,0)|^2}{|v|}dv.
+\tag{87.18}
+$$
+
+The dominating function is $\mathcal G(v,t)\sup_u|f_j(v,u)|^2$. It is integrable by the actual marginal and the compact horizontal support away from zero. This is dominated convergence for the same field, including all central frequencies and the full central tail. First fix $j$; only then take $\varepsilon\downarrow0$. Equations (87.13)--(87.18) give the sharp ratio. Choosing $h=\sqrt{\eta/a}$ makes $aA_j=\eta C_j$. If $g>g_c$, choose $j$ so that $aA_j+\eta C_j-gJ_j/(4\pi)<0$ and then concentrate. The leading energy is this negative coefficient times $\varepsilon^{-2}$. Nonnegativity at and below $g_c$ follows from (87.3) and $aT+\eta D_2\ge2\sqrt{a\eta TD_2}$. $\square$
+

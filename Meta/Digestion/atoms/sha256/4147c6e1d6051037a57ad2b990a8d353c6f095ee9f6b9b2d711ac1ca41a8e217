@@ -1,0 +1,47 @@
+## 268. FIB 网络上的外加中子输运、裂变分枝与核临界涨落统计
+
+设第 (j) 层 FIB 递归给出有限组合骨架
+
+$$
+\mathcal G_j=(V_j,E_j,\partial V_j,\mathsf P_j),
+$$
+
+其中 (V_j) 是原子或端口状态，(E_j) 是允许的邻接，(\partial V_j) 是边界，(\mathsf P_j) 记录接缝和跨层端口。FIB 递归决定哪些路径、拼接和层级投影存在，却不指定嵌入距离、时间、能量、方向或反应概率。为此把能量分箱、方向和材料标签并入外加类型集
+
+$$
+\mathsf X_j=V_j\times\mathcal E_j\times\Omega_j\times\mathcal M_j.
+$$
+
+由截面、材料密度、能损、散射角核、边界泄漏和源谱构造下一次裂变前的输运核 (P_j(x,y))。它是次随机核；离开 (\mathsf X_j) 的概率记作 (p_j^{\mathrm{esc}}(x))。在类型 (x) 的反应处，令 (\boldsymbol\eta_x=(\eta_x(y))_y) 为裂变产生的各类型中子数向量，概率母函数为
+
+$$
+\Phi_{j,x}(z)
+=\mathbb E\!\left[
+\prod_{y\in\mathsf X_j}
+\left(p_j^{\mathrm{esc}}(y)+\sum_{z\in\mathsf X_j}P_j(y,z)z_z\right)^{\eta_x(y)}
+\right].
+$$
+
+于是 (\Phi_{j,x}) 是“裂变产生—输运到下一反应—边界泄漏”的合成母函数。其均值矩阵（按列向量约定）为
+
+$$
+M_j(x,z)=\sum_{y\in\mathsf X_j}
+\mathbb E[\eta_x(y)]P_j(y,z).
+$$
+
+只要 FIB 路径不允许从 (x) 到 (z)，对应项必为零；允许路径上的数值则完全由截面、反应核、能谱、边界和输运时间决定。给定初始中子类型 (x)，第 (n) 代裂变后代向量的母函数满足
+
+$$
+G_{0,x}(z)=z_x,
+\qquad
+G_{n+1,x}(z)=\Phi_{j,x}\bigl(G_n(z)\bigr).
+$$
+
+因此均值递推为
+
+$$
+\mathbb E_x Z_{n+1}=M_j\mathbb E_x Z_n,
+\qquad
+\mathbb E_x Z_n=M_j^n e_x.
+$$
+

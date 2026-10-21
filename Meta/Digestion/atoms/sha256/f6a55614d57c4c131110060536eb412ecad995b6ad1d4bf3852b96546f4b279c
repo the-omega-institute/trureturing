@@ -1,0 +1,5 @@
+加入一个新 phase coordinate 后：
+
+- 若它在已有 semantic closure 中，partition 不变，escape rate 不变；
+- 若它分裂至少一个旧 class，则：
+

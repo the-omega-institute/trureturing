@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:6be40640dd00335636494d4df7a26a4495d63068975a9a7b121610cbf9bf5b3e
+  normalized_sha256: sha256:6be40640dd00335636494d4df7a26a4495d63068975a9a7b121610cbf9bf5b3e
+cas_ref: sha256:6be40640dd00335636494d4df7a26a4495d63068975a9a7b121610cbf9bf5b3e
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 固定状态类型、满射接口及有效像约定。不另主张独立数学命题。
+    previous_atom_id: 6708f27b36f70c6661208c9b9814d910c635fc56e7217bca3017ffd4225e49a7
+    next_atom_id: c27ca32872fdccce796a2b0faec284c1ada1633d034e36f1cf4378bb3c1d82ab

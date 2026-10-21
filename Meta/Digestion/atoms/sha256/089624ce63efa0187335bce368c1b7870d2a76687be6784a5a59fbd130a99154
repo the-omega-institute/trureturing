@@ -1,0 +1,37 @@
+**引理 13.6（全地址原始回复孪生）。** 对每个 $q\in\{L,R\}^{*}$，存在真实来源 $X_q\in W_4$ 满足
+
+$$
+\neg\operatorname{Pos}(X_q),\qquad r_{X_q}(q)=r_{T_4}(q).
+$$
+
+**证明。** 取以下三棵同叶词负例：
+
+$$
+\begin{aligned}
+U&=\langle\langle\beta,\langle\alpha,\beta\rangle\rangle,
+                  \langle\beta,\alpha\rangle\rangle,\\
+V&=\langle\langle\langle\langle\beta,\alpha\rangle,\beta\rangle,\beta\rangle,
+                  \alpha\rangle,\\
+Z&=\langle\langle\langle\beta,\alpha\rangle,\langle\beta,\beta\rangle\rangle,
+                  \alpha\rangle.
+\end{aligned}
+$$
+
+它们全部具有叶词 $\beta\alpha\beta\beta\alpha$。$U$ 含有左孩子为单叶 $\alpha$ 的配对节点，由 §2 的一次像障碍得 $U\notin\rho[\mathbb T]$。$V,Z$ 的根都是左孩子为分支、右孩子为 $\alpha$ 的配对。这也不属于一次像：替换所新生的右 $\alpha$ 只能来自 $\beta\mapsto\langle\beta,\alpha\rangle$，其左孩子必为单叶 $\beta$；原有配对的右孩子则是整棵子树的 $\rho$ 像，不可能成为单叶 $\alpha$。三者均非一次像，因而均非第三次像。
+
+$T_4$ 与 $U$ 只在左侧三叶括号不同。它们的完整原始回复差异支持恰为
+
+$$
+S=\{LL,LR,LLL,LLR,LRL,LRR\}.
+$$
+
+这是 §7 的六地址支持在 $p=L$ 的已有实例，不是重新发现独立支持下界。六处取值及可用孪生如下：
+
+| 地址 $q$ | $r_{T_4}(q)$ | $r_U(q)$ | 可用负例 | 该负例的 $q$ 回复 |
+|---|---|---|---|---|
+| $LL$ | $\mathrm{br}$ | $\beta$ | $V$ | $\mathrm{br}$ |
+| $LR$ | $\beta$ | $\mathrm{br}$ | $V$ | $\beta$ |
+| $LLL$ | $\beta$ | $\mathrm{abs}$ | $Z$ | $\beta$ |
+| $LLR$ | $\alpha$ | $\mathrm{abs}$ | $Z$ | $\alpha$ |
+| $LRL$ | $\mathrm{abs}$ | $\alpha$ | $V$ | $\mathrm{abs}$ |
+| $LRR$ | $\mathrm{abs}$ | $\beta$ | $V$ | $\mathrm{abs}$ |

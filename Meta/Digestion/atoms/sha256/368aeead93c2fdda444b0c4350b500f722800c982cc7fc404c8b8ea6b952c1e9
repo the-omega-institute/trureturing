@@ -1,0 +1,87 @@
+**定理 54.1（有限链速度族的探针秩判据）。** 固定一个有限 FIB 切链的单位速度矩阵 \(B=I-K\)、Green 矩阵 \(G=B^{-1}\)，令 \(\tau\) 为到达吸收端 \(L\) 的停时，并令
+\[
+q_i=G(0,i),\qquad Q=\operatorname{diag}(q_0,\ldots,q_{L-1}).
+\]
+允许局部速度权重属于有限维族
+\[
+v(\eta)=v^0+\Phi\eta,\qquad \Phi\in\mathbb R^{L\times d},
+\]
+并限制参数在使行缩放后的核仍为随机核的开邻域内。行缩放给出
+\[
+B^{(v)}=V(\eta)^{-1}B,\qquad G^{(v)}=G V(\eta).
+\]
+令
+\[
+V_{\mathrm{occ}}
+=\bigl(\mathsf L_\tau(0),\ldots,\mathsf L_\tau(L-1)\bigr)^{\mathsf T}
+\]
+为暂态占用向量。若 \(m\) 个有符号线性占用探针写成 \(Y=F V_{\mathrm{occ}}\)，则
+\[
+\mathbb E_\eta Y=FQv^0+J\eta,\qquad J=FQ\Phi.
+\]
+因此该参数族由这些均值局部可识别，当且仅当
+\[
+\operatorname{rank}J=d.
+\]
+必有 \(m\ge d\)。若 \(\operatorname{rank}\Phi=d\) 且允许任意有符号探针，令 \(A=Q\Phi\) 并取
+\[
+F=(A^{\mathsf T}A)^{-1}A^{\mathsf T},
+\]
+则 \(FA=I_d\)，所以 \(d\) 个探针足够。若探针必须非负、局部支持或来自不同副本，则最少数和可识别方向仍由实际的 \(FQ\Phi\) 秩决定，不能沿用有符号结论。
+
+在单位速度共同历史下，已有占用协方差给出
+\[
+C_{ik}=q_{\max(i,k)}^2-\mathbf1_{\{i=k\}}q_i,
+\]
+所以探针协方差为
+\[
+\Sigma=F C F^{\mathsf T}.
+\]
+若另有独立读出噪声协方差 \(\Gamma\succ0\)，则
+\[
+\mathcal I=J^{\mathsf T}(\Sigma+\Gamma)^{-1}J
+\]
+是协方差归一化的信息矩阵；只有在额外声明高斯读出误差时，才可称为 Fisher 信息。由于 \(\Sigma+\Gamma\) 正定，\(\mathcal I\succ0\) 当且仅当 \(\operatorname{rank}J=d\)。
+
+**连续 Robin 扩展。** 在 \([0,1]\) 上取 \(-D\partial^2\)，右端 Dirichlet \(y(1)=0\)，左端 Robin \(y'(0)=\beta y(0)\)、\(\beta\ge0\)。其 Green 核为
+\[
+G_\beta(u,v)=\frac{(1+\beta\min(u,v))(1-\max(u,v))}{D(1+\beta)}.
+\]
+若速度密度为 \(w_\eta=w^0+\sum_{a=1}^d\eta_a\phi_a\)，并假定 \(w^0,\phi_a\in C([0,1])\)，从边界起点 \(0\) 的一阶探针均值为
+\[
+\mu_{\beta,\eta}(f)
+=\int_0^1 f(v)\frac{1-v}{D(1+\beta)}w_\eta(v)\,dv.
+\]
+在给定参数点，定义灵敏度函数
+\[
+\psi_0(v)=-\frac{(1-v)w_\eta(v)}{D(1+\beta)^2},\qquad
+\psi_a(v)=\frac{(1-v)\phi_a(v)}{D(1+\beta)}
+\quad(1\le a\le d).
+\]
+对 \(m\) 个连续探针 \(f_r\)，参数 \(\beta,\eta\) 的均值 Jacobian 为
+\[
+J_{ra}=\int_0^1 f_r(v)\psi_a(v)\,dv.
+\]
+所以局部可识别当且仅当 \(\operatorname{rank}J=d+1\)。若 \(\psi_0,\ldots,\psi_d\) 在线性空间中独立，则至少需要且足够 \(d+1\) 个探针。取 \(a,b=0,\ldots,d\) 的 Gram 矩阵
+\[
+H_{ab}=\int_0^1\psi_a(v)\psi_b(v)\,dv
+\]
+并取 \(m=d+1\)、\(r=0,\ldots,d\) 的探针
+\[
+f_r=\sum_{b=0}^{d}(H^{-1})_{rb}\psi_b,
+\]
+即可得到 \(J=I_{d+1}\)。
+
+若速度族允许全局缩放 \(w\mapsto cw\)，同时令
+\[
+\beta'=c(1+\beta)-1
+\]
+且 \(c\) 取在保持 \(\beta'\ge0\) 的邻域内，则
+\[
+\frac{1-v}{D(1+\beta')}cw(v)
+=\frac{1-v}{D(1+\beta)}w(v).
+\]
+因此任意数量的边界起点一阶占用探针都不能同时区分 Robin 参数和全局速度尺度。施加 \(\int w=1\) 等归一化并排除全局缩放方向后，才可使用上述 \(d+1\) 维秩判据。
+
+这些结论只针对固定源、阻抗、时钟、有限维速度族、共同随机历史和一阶均值读出；完整路径律可能携带额外信息。它们不声称任意速度函数、任意 Robin 模型或任何物理装置都可由有限探针识别；若使用非负探针、不同副本或改变边界，必须重新计算可用秩与协方差。
+

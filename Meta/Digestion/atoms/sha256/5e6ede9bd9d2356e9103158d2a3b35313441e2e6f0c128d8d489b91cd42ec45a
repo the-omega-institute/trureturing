@@ -1,0 +1,51 @@
+**Theorem 58.2 (exact finite-$n$ ambiguity and full interior support).**
+For each finite $n\ge1$ and every $\kappa\in\mathcal K$ the posterior
+law of $K_\tau$ is equivalent to $\pi$, and in particular has support
+$\overline I$ and gives positive mass to every nonempty open
+subinterval of $I$. Hence $R_{n,\kappa}>0$.
+
+Proof. Given the entire height path, let
+
+$$
+V_j=\int_{t_{j-1}}^{t_j}a_\kappa(K_s)ds,
+\qquad a_-\Delta\le V_j\le a_+\Delta.
+\tag{58.2}
+$$
+
+The real increments are independent centered normals with variances
+$V_j$, by independence of $W^2$ and height. For circle increments
+$z_j\in[-\pi,\pi)$ their exact conditional density, relative to
+ordinary angular Lebesgue measure, is
+
+$$
+L_z(K)=\prod_{j=1}^n\sum_{m\in\mathbb Z}
+ \frac{\exp[-(z_j+2\pi m)^2/(2V_j)]}{\sqrt{2\pi V_j}}.
+\tag{58.3}
+$$
+
+The map from the original circle samples with fixed initial value to
+these circle increments is bijective. For fixed $n$, each factor is
+continuous and strictly positive on the compact product of its circle
+and $[a_-\Delta,a_+\Delta]$. Thus there are constants
+$0<c_n<C_n<\infty$ bounding $L_z(K)$ uniformly in $z$, height paths
+and $\kappa$. Stationarity gives $K_\tau\sim\pi$. Disintegrate the
+height path given its endpoint and apply Bayes' formula:
+
+$$
+\pi_z(dk)=\pi(dk)
+ \frac{\mathbf E[L_z(K)\mid K_\tau=k]}{\mathbf E L_z(K)}.
+\tag{58.4}
+$$
+
+Choosing the conditional height-path kernel once gives a version for
+all $z$; its density is bounded above and below by positive constants
+for $\pi$-almost every $k$. The resulting posterior is nondegenerate
+and has the asserted full support. Its variance is positive for every
+such data value, so its expected variance is positive. In fact its
+density relative to $\pi$ is at least $c_n/C_n$. For any real $b$,
+$\int(k-b)^2\pi_z(dk)\ge(c_n/C_n)\int(k-b)^2\pi(dk)$;
+minimizing over $b$ gives the uniform finite-$n$ bound
+$R_{n,\kappa}\ge(c_n/C_n)\operatorname{Var}_\pi(K)>0$.
+This bound depends on $n$ and is distinct from the sharp order
+proved in Theorem 59.1. $\square$
+

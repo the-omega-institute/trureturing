@@ -1,0 +1,163 @@
+### 定理428.2（全局上半连续性、边界簇与不连续轨迹）
+
+在同一约定下，$F$ 在 $D^2$ 上全局上半连续。对每一个 $z_0\in\partial(D^2)$，定义
+
+$$
+\operatorname{Cl}_{\mathcal U}(F,z_0)
+=\left\{\lim_{j\to\infty}F(z_j):z_j\in\mathcal U,\ z_j\to z_0\right\}
+$$
+
+为沿内点序列的聚点集合，则
+
+$$
+\boxed{\operatorname{Cl}_{\mathcal U}(F,z_0)=[0,F(z_0)].}
+$$
+
+$F$ 的不连续点恰为
+
+$$
+\boxed{
+(X\times\operatorname{int}D)\ \cup\ (\operatorname{int}D\times X)\ \cup\ \{(x,\pi(x)):x\in X\}.
+}
+$$
+
+#### 证明
+
+任取根在 $(a,b)$ 的有限奖励效果树，保留全部失败叶和提前终止叶。第421节的完整效果树恒等式给出
+
+$$
+\sum_j w_j\rho(a_j)\otimes\rho(b_j)
+=\rho(a)\otimes\rho(b),
+\qquad \sum_jw_j=1,
+$$
+
+其中 $w_j$ 是终端累计效果迹权重。把所有平坦成功叶 $(x,\pi(x))$ 的总权重记为 $\lambda_x$。保留失败项后，正性给出完整的张量不等式
+
+$$
+\sum_{x\in X}\lambda_x\rho(x)\otimes\rho(\pi(x))
+\preceq \rho(a)\otimes\rho(b).
+$$
+
+对任一有限树，其 $V_0$ 奖励为 $h\sum_x\lambda_x$。取部分迹得到两个边际不等式
+
+$$
+\sum_x\lambda_x\rho(x)\preceq\rho(a),\qquad
+\sum_x\lambda_x\rho(\pi(x))\preceq\rho(b).
+$$
+
+这些关系对每一棵有限树成立，因而可在取上确界时逐一使用，而不需要最优协议取得。
+
+若 $n\in\mathbb S^2\setminus X$，令
+
+$$
+c(n)=\min_{x\in X}(1-n\cdot x)>0.
+$$
+
+对第一边际不等式取 $Q_n=I-n\cdot\sigma$，得到
+
+$$
+\sum_x\lambda_x(1-n\cdot x)\le1-n\cdot a.
+$$
+
+所以对每一棵树
+
+$$
+h\sum_x\lambda_x
+\le h\min\left\{1,\frac{1-n\cdot a}{c(n)}\right\},
+$$
+
+从而
+
+$$
+F(a,b)\le h\min\left\{1,\frac{1-n\cdot a}{c(n)}\right\}.
+$$
+
+若 $n\in X$，令
+
+$$
+c_*(n)=\min_{x\in X,\,x\ne n}(1-n\cdot x)>0.
+$$
+
+同一边际不等式给出
+
+$$
+\sum_{x\ne n}\lambda_x\le\frac{1-n\cdot a}{c_*(n)}.
+$$
+
+另一边际不等式中保留 $x=n$ 的正项，得到
+
+$$
+\lambda_n\rho(\pi(n))\preceq\rho(b),\qquad
+\lambda_n\le\ell(b;\pi(n)),
+$$
+
+其中第426节的分段公式定义 $\ell$，包括纯重合时的值 $1$ 和纯不同时的值 $0$。于是
+
+$$
+F(a,b)\le h\min\left\{1,
+\ell(b;\pi(n))+\frac{1-n\cdot a}{c_*(n)}\right\}.
+$$
+
+交换两坐标还得到相应的两条边界估计。第426节的精确纯面值为
+
+$$
+F(n,b)=
+\begin{cases}
+0,&n\notin X,\\
+h\ell(b;\pi(n)),&n\in X,
+\end{cases}
+$$
+
+以及交换后的公式。由于 $\ell$ 的分段表达在闭球上上半连续，上述逐树估计直接说明 $F$ 在含纯坐标的每一点联合上半连续；在 $\mathcal U$ 内则由定理428.1连续。这里没有把单调上升的上半连续函数列的极限错误地判为上半连续。
+
+现证边界聚点。令 $z_0\in\partial(D^2)$，并写 $F_0=F(z_0)$。若 $F_0=0$，上半连续性和 $F\ge0$ 说明每一条趋于 $z_0$ 的内点序列的极限都只能是零；例如径向内缩序列给出聚点 $0$。若 $F_0>0$，先取高值序列。令
+
+$$
+H_j=(1-1/j)z_0,
+$$
+
+即逐坐标径向内缩。由分别凹性、非负性以及两次从原点的凹性应用，
+
+$$
+F(H_j)\ge(1-1/j)^2F(z_0).
+$$
+
+上半连续性给出 $\limsup_jF(H_j)\le F_0$，故 $F(H_j)\to F_0$。
+
+再取低值序列。若 $z_0$ 的一个纯坐标为 $n$，取单位向量 $n_j\to n$，其中 $n_j\notin X$，并令 $c_j=c(n_j)>0$。选取
+
+$$
+0<\varepsilon_j\le\min\{1/j,c_j/j^2\}.
+$$
+
+把该坐标换为 $(1-\varepsilon_j)n_j$，把另一坐标按 $1-1/j$ 径向内缩（若它本来已经是内点也可作同样的内缩）。所得 $L_j\in\mathcal U$ 趋于 $z_0$，而非平坦纯方向的估计给出
+
+$$
+F(L_j)\le h\frac{1-n_j\cdot((1-\varepsilon_j)n_j)}{c_j}
+=h\frac{\varepsilon_j}{c_j}\le\frac h{j^2}.
+$$
+
+因此 $F(L_j)\to0$。
+
+固定 $t\in(0,F_0)$。对足够大的 $j$，有 $F(L_j)<t<F(H_j)$。因为 $\mathcal U$ 是凸集，连接 $L_j$ 与 $H_j$ 的线段完全位于 $\mathcal U$，而定理428.1给出其上的连续性。介值定理为每个 $j$ 选取线段上一点 $Z_j(t)$，使
+
+$$
+F(Z_j(t))=t.
+$$
+
+两端都趋于 $z_0$，故 $Z_j(t)\to z_0$。低值序列和高值序列分别实现聚点 $0$ 与 $F_0$，而上半连续性和非负性排除区间外的聚点。这证明
+
+$$
+\operatorname{Cl}_{\mathcal U}(F,z_0)=[0,F(z_0)].
+$$
+
+最后，由第426节的零集，边界上 $F$ 为正的点恰为
+
+$$
+X\times\operatorname{int}D,\qquad
+\operatorname{int}D\times X,\qquad
+\{(x,\pi(x)):x\in X\}.
+$$
+
+在这些点，刚才构造的低值内点序列趋于零，故 $F$ 不连续。其余边界点（包括所有不匹配的纯—纯点）满足 $F(z_0)=0$，上半连续性和非负性则给出 $F(z)\to0$，所以是连续点；内点连续性已经由定理428.1得到。证毕。
+

@@ -1,0 +1,10 @@
+由 floor 定义：
+
+\[
+q_N(x)
+\le
+\varphi^N x
+<
+q_N(x)+1.
+\]
+

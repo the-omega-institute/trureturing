@@ -1,0 +1,53 @@
+**Theorem 44.1 (an exact composite formula on the whole off-diagonal domain).**
+For every $L=2\pi/|\kappa|$, define
+
+$$
+\begin{aligned}
+H^L_{\kappa,m}(w,x)&=\int_1^\infty e^{-mt}\Gamma^L_{\kappa,t}(w,x)dt,\\
+C^L_{\kappa,m}(k,k';w,x)
+&=\int_0^1 e^{-mt}F^L_\kappa(t;k,k';w,x)dt\\
+&\quad+\int_1^\infty e^{-mt}
+  [F^L_\kappa(t;k,k';w,x)-p\Gamma^L_{\kappa,t}(w,x)]dt.
+\end{aligned}
+\tag{44.1}
+$$
+
+At every distinct full point, including $w=x=0$ with $k\ne k'$, the
+second quantity is finite for all $m\ge0$ and continuous at $m=0$.
+For $m>0$ the following is an exact equality:
+
+$$
+\mathcal G^L_{\kappa,m}=C^L_{\kappa,m}+pH^L_{\kappa,m}.
+\tag{44.2}
+$$
+
+In particular (44.2), rather than an evaluation at an effective phase pole,
+is the native formula in the height-only and source-collapse layers.
+The short-time term in $C^L$ is strictly positive; it is not discarded.
+For nonzero phase points the alternative finite correction
+$C^L_{\kappa,m}-p\int_0^1e^{-mt}\Gamma^L_{\kappa,t}dt$
+may be added to $pE^L_{\kappa,m}$.
+
+Proof. Periodize (41.2). The time-large error has absolute bound
+$Cp[t^{-5/2}+L^{-1}t^{-2}]$, integrable independently of $m\ge0$.
+The small-time native bound is a convergent sum of
+$Cp t^{-6}e^{-c(|r_j|^2+|k-k'|^2)/t}$.
+It is integrable precisely on the stated off-diagonal domain, locally
+uniformly on its compact subsets. This proves existence and continuity
+by dominated convergence. Splitting the native integral at one and adding
+and subtracting its effective large-time kernel proves (44.2).
+The cutoff at one is fixed in the original clock and defines the finite
+part's normalization; it is not a new physical resolution or clock.
+Other positive splitting times give the same equality with correspondingly
+changed summands.
+
+This correction cannot uniformly be replaced by zero at fixed native
+endpoints. Fix $k\ne k'$, $m>0$ and a nonzero small phase vector tending
+to zero. The native Green stays finite, whereas the central effective
+Yukawa image diverges. Thus their difference is nonzero and unbounded
+on this family. This proves failure of a uniform effective absolute
+approximation in the actual model, even at fixed $\kappa$.
+If heights also coalesce, the original native point singularity remains;
+(44.1) retains it rather than changing its local homogeneous dimension.
+$\square$
+

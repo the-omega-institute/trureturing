@@ -1,0 +1,41 @@
+## 66. 有界占用泛函的 Poisson 方程、停止鞅与非渐近浓缩
+
+令 \(Q\) 是有限杀死链的暂态子核，假定 \(\sup_i\sum_jQ(i,j)\le q<1\)，令 \(\tau\) 为吸收时间，\(f:S\to\mathbb R\) 有界，并定义
+
+\[
+A_\tau=\sum_{t=0}^{\tau-1}f(X_t),
+\qquad
+h=(I-Q)^{-1}f=\sum_{n\ge0}Q^nf.
+\]
+
+于是 \(h(i)=\mathbb E_iA_\tau\)，且 \(\|h\|_\infty\le\|f\|_\infty/(1-q)\)。令 \(h(\dagger)=0\)，对 \(N\ge1\) 定义
+
+\[
+M_N=\sum_{t<\tau\wedge N}
+\bigl(h(X_{t+1})-h(X_t)+f(X_t)\bigr).
+\]
+
+由 \((I-Q)h=f\)，\((M_N)\) 是停止鞅，且每个增量绝对值不超过
+
+\[
+b=2\|h\|_\infty+\|f\|_\infty.
+\]
+
+若其条件方差和为 \(V_N\)，则 Freedman 不等式给出
+
+\[
+\Pr(M_N\ge x,\;V_N\le v)
+\le\exp\!\left(-\frac{x^2}{2(v+bx/3)}\right),
+\]
+
+对下尾同样成立；只用 \(|\Delta M_t|\le b\) 和 \(V_N\le Nb^2\) 即得 Azuma 型界。又因为 \(\Pr(\tau>N)\le q^N\)，有
+
+\[
+\mathbb E|A_\tau-A_{\tau\wedge N}|
+\le\frac{\|f\|_\infty q^N}{1-q}.
+\]
+
+因此先对 \(A_{\tau\wedge N}\) 使用 Freedman 或 Azuma，再以概率至多 \(q^N\) 的尾事件和上式的截断偏差拼接，可得到随机首达时间的非渐近浓缩：给定 \(x>0\) 和偏差预算，取 \(N\) 使 \(q^N\) 小于该预算，剩余概率按上式的指数项衰减。精确常数随所选的中心化方式和条件方差上界而变，但其结构必含几何首达尾与鞅浓缩两项。
+
+这个结论把三件事分开：Poisson 方程给出均值，停止鞅给出有限时域波动，几何尾把确定时域界延伸到随机吸收时刻。若 \(q=1\)、状态空间无限、\(f\) 无界或杀死尾部重尾，不能直接保留上述几何拼接；需另给 Lyapunov、截断或重尾估计。\(Q,f\) 和吸收机制均为外加声明，FIB 递归不自动产生“热噪声”或普适浓缩常数。
+

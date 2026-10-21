@@ -1,0 +1,45 @@
+### theorem 4.1: 定理 3：transfer determinant 由 $\Delta$ 完全控制
+
+$$
+\boxed{
+\det T(\kappa)=
+-Z\Delta.
+}
+$$
+
+#### 证明
+
+直接展开：
+
+$$
+\begin{aligned}
+\det T
+&=
+p_0(0\cdot0-p_{13}p_2)
++
+p_3(p_1p_2-0)\\
+&=
+-p_0p_{13}p_2+p_1p_3p_2\\
+&=
+-p_2(p_0p_{13}-p_1p_3).
+\end{aligned}
+$$
+
+由于：
+
+$$
+p_2=Z,
+\qquad
+p_0p_{13}-p_1p_3=\Delta,
+$$
+
+所以：
+
+$$
+\det T=-Z\Delta.
+$$
+
+证毕。
+
+---
+

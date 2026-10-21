@@ -1,0 +1,40 @@
+**定理 1151.1（一个充分的联合准确区间）。** 在第 1150 节的联合尺度中，若进一步有 $\alpha>\log2$，则充分大的 $N$ 上
+
+$$
+G_N(\varepsilon_N)=U_N(\varepsilon_N),
+$$
+
+且来源熵最优者恰为公平通道加等权奇偶点来源。
+
+**证明。** 对任意最优者，第 1150 节给
+
+$$
+\vartheta=\frac{\delta-\varepsilon}{\delta}
+=O(4^{-N}+N\varepsilon).
+$$
+
+同时 $A\le N\delta/(1-\delta)\to0$，所以第 1144–1145 节的统一估计适用。取 $\tau=C(N+1)\vartheta/2\to0$，第 1143 节给
+
+$$
+G(R)\ge D_N-C_1 M_N(N+1)^2\vartheta^2
+$$
+
+其中 $C_1$ 是绝对常数。与第 1146 节相同的来源分组于是得到
+
+$$
+G_N(\varepsilon)\ge U_N(\varepsilon)
++d\left[\log\frac{1-\delta}{\delta}+D_N
+-C_1M_N(N+1)^2\vartheta\right].
+$$
+
+前两项之和与 $(\alpha+\log2)N$ 同阶。最后一项由
+
+$$
+M_N(N+1)^2\vartheta
+=O(N^22^{-N}+N^32^N\varepsilon)\longrightarrow0
+$$
+
+控制：$\alpha>\log2$ 保证 $2^N\varepsilon$ 指数衰减。因此方括号最终严格为正，若 $d>0$ 则与明确上界矛盾，故 $d=0$。统一权重缺口引理再给主通道公平，余量为均匀奇偶面；第 1147 节的支撑与合并论证确定全部最优者。证毕。
+
+$\alpha>\log2$ 是本证明的充分条件。本节没有证明它必要，更没有宣称 $\alpha=\log2$ 是真实相变点，或在较小 $\alpha$ 时明确生成器一定失去最优性。
+

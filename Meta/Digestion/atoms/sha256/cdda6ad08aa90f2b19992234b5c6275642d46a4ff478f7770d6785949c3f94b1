@@ -1,0 +1,29 @@
+## 5. 跨所有阈值的显式形式模量
+
+在 0<m<=a,b<=A，pole 核对 a 的导数绝对值 <=2(cosh A+A sinh A)。Schur 检验乘上窗口长度 2，给出 ||P_a-P_b||<=4(cosh A+A sinh A)|a-b|。由 (SC4) 对实际 symmetric prime quadratic form 逐项积分，得到
+
+\[
+\boxed{|\widetilde q_a(f)-\widetilde q_b(f)|\le\varepsilon_J(a,b)\mathcal H(f),\quad f\in V,}
+\tag{SC7}
+\]
+
+\[
+\begin{aligned}
+\varepsilon_J(a,b)={}&6|\log(a/b)|+4(\cosh A+A\sinh A)|a-b|\\
+&+2\sum_{n=2}^{P}w_n\left[2J\log n\,|a^{-1}-b^{-1}|+
+\frac2{1+H_J/2}\right].
+\end{aligned}
+\tag{SC8}
+\]
+
+固定 J 后令 b->a 控制低频；先取 J 足够大控制高频，证明形式范数连续。在原 c=3 点，n=3 本来仅有零测端点，向右扩大后它也自动包含在同一个式子中。
+
+为使模量完全显式，取 J=2^k、|a-b|<=4^-k。逐个 dyadic harmonic block 的质量至少为 1/2，故 H_(2^k)>=1+k/2。利用 |log(a/b)|<=|a-b|/m 和 |a^-1-b^-1|<=|a-b|/m^2，得
+
+\[
+\boxed{\varepsilon\le C_0 4^{-k}+C_1 2^{-k}+C_2/(k+6),}
+\tag{SC9}
+\]
+
+其中 C0>=6/m+4(cosh A+A sinh A)，C1>=4 sum w_n log(n)/m^2，C2>=16 sum w_n。对于 k>=4，2^k>=k^2 还给出短有理预算 C0/k^4+C1/k^2+C2/(k+6)。此极限对每个正紧参数区间成立，常数不被视为在 a->infinity 时统一。
+

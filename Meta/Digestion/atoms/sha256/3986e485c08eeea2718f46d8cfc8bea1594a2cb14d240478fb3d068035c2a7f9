@@ -1,0 +1,53 @@
+**Theorem 113.5 (injective source representation and exact kernel).** The map
+$\mathcal J:u\mapsto(\nu_u,W(u))$ is injective, with the actual substitution
+represented on its attained image by $(\nu,w)\mapsto(\nu,\varphi w)$.
+For all original finite sources $u,v$,
+
+$$
+\nu_u=\nu_v
+\iff \exists n,m\ge0:\rho^n u=\rho^m v.
+\tag{113.9}
+$$
+
+More precisely, on equal-measure sources $W(v)/W(u)=\varphi^k$ for a
+unique $k\in\mathbb Z$. If $k\ge0$ then $v=\rho^k u$; if $k<0$ then
+$u=\rho^{-k}v$. Thus each boundary fiber is a single chain of actual
+forward iterates, starting at a unique source with no predecessor.
+
+Proof. A finite source has $W=1$ exactly for alpha, $W=\varphi$ exactly
+for beta, and $W\ge2$ exactly for a branch. For a branch
+$u=\langle x,y\rangle$, the measure and scale give
+
+$$
+W(x)=W(u)\nu_u([L]),\quad W(y)=W(u)\nu_u([R]),\quad
+\nu_x([p])=\frac{\nu_u([Lp])}{\nu_u([L])},\quad
+\nu_y([p])=\frac{\nu_u([Rp])}{\nu_u([R])}.
+\tag{113.10}
+$$
+
+Both child masses are positive. Induction on the original finite tree
+therefore proves that equal pairs have equal root constructor, equal
+child pairs and equal children. This uses only measure values and scale,
+not the leaf partition of a density description. It also gives a finite
+reconstruction on the attained image: at an original reached $p$ the
+subtree scale is $W(u)\nu_u([p])$, and reconstruction stops at scales
+$1$ or $\varphi$. It makes no claim about arbitrary unattained pairs.
+
+Suppose now that $\nu_u=\nu_v$. Choose a cylinder $[z]$ deeper than both
+original trees. On it each density in (113.7) is a single constant,
+say $\varphi^A/W(u)$ and $\varphi^B/W(v)$, with integer $A,B$.
+Equal measures and $M([z])>0$ force those constants to agree, so
+$W(v)/W(u)=\varphi^{B-A}$. Put $k=B-A$. For $k\ge0$, (113.8) gives
+$\mathcal J(\rho^k u)=\mathcal J(v)$; injectivity gives $\rho^k u=v$.
+For $k<0$ reverse the roles. Conversely, equality of any two actual
+forward iterates implies equal measures by (113.8). This proves (113.9)
+without an abstract substitution recognizability premise.
+The same injective representation and scale action show that $\rho$ is
+injective; predecessor steps, when they exist, divide $W$ by $\varphi$.
+Since every finite source has $W\ge1$, their number is finite, and the
+least predecessor is unique. Its forward chain is the whole fiber.
+In particular $\alpha,\beta,T_2,T_3,\ldots$ all have measure $M$,
+while their scales are $1,\varphi,\varphi^2,\varphi^3,\ldots$.
+The measure erases source-step phase; its unreduced syntax cannot restore
+that phase. The acquired original scale can. $\square$
+

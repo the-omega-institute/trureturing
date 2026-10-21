@@ -1,0 +1,38 @@
+### 78.2 共同奇块的有符号系数
+
+对给定 $S\in\Lambda^{p-2}$，定义
+
+$$
+A=Sb5,\qquad D_-=Sa3,\qquad D_+=Sb0.
+\tag{78.13}
+$$
+
+三块均长 $p$，$b,5$ 是两个依次接上的标签。由于 $p-2$ 为奇数，写 $f_S(x)=\sigma-\rho x$，其中 $\rho=g^{p-2}>0$，$\sigma$ 只是这个给定词的平移系数。直接复用(66.4)、(66.5)，置
+
+$$
+\begin{aligned}
+q&=g^p,&\gamma&=\Delta_b-\Delta_a,&c_*&=\Delta_b-gu,\\
+\alpha&=\sigma-\rho c_*,&z&=\frac{\alpha}{1+q},&
+L&=\rho(\gamma-g),&M&=\rho gu.
+\end{aligned}
+$$
+
+在相对坐标 $x=z+r$ 中，同一组系数给出
+
+$$
+\Phi_A(r)=-qr,\qquad \Phi_-(r)=L-qr,\qquad
+\Phi_+(r)=-M-qr,
+\qquad f_C(z+r)=z+\Phi_C(r).
+\tag{78.14}
+$$
+
+对于块串 $X$，$\Phi_X$ 按同一前接顺序复合。四对的 $\gamma$ 依次为 $t,u,t,u$。由原恒等式 $t-g=u$、$u-g-gu=g^2$ 得
+
+$$
+0<M<L\le\frac{M}{g},\qquad
+L-M=\begin{cases}\rho(g^2+g),&\gamma=t,\\\rho g^2,&\gamma=u.\end{cases}
+\tag{78.15}
+$$
+
+这些系数身份不要求把 $A$ 作为实际可调用的独立路径；实际合法性始终由所选 $U,W$ 承担。特别是在二元补充中，$z$ 只是一种代数坐标中心。
+

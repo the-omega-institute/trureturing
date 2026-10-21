@@ -334,7 +334,7 @@ private theorem pairDerivation_singleton (D : LatticeData) (charge : Charge D)
   simp [singletonPolynomial, Derivation.leibniz, smul_eq_mul,
     pairDerivation, mkDerivation_X, MvPolynomial.derivation_C]
 
-private theorem pairDerivation_variable (D : LatticeData) (index other : Index D) :
+theorem pairDerivation_variable (D : LatticeData) (index other : Index D) :
     pairDerivation D index (X (some other)) = pairPolynomial D index other := by
   simp [pairDerivation, mkDerivation_X]
 
@@ -620,3 +620,74 @@ end D5.S3.VertexAlgebra.LatticeHalfFockFiniteCorrection
 
 #print axioms D5.S3.VertexAlgebra.LatticeHalfFockFiniteCorrection.half_successor
 #print axioms D5.S3.VertexAlgebra.LatticeHalfFockFiniteCorrection.pairScalar_reflection
+
+namespace D5.S3.VertexAlgebra.LatticeHalfFockFiniteCorrection
+
+open scoped BigOperators
+
+private theorem finiteCurrentConvolutionCrossCertificate (r : ℂ) (m n : ℕ) :
+    ((m : ℂ) + (n : ℂ)) *
+      (∑ j ∈ Finset.range (n + 1),
+        Ring.choose r (m + j) * Ring.choose (-r) (n - j)) =
+      (m : ℂ) * Ring.choose r m * Ring.choose (-r - 1) n := by
+  have step (a : ℂ) (q : ℕ) :
+      (q + 1 : ℂ) * Ring.choose a (q + 1) =
+        (a - (q : ℂ)) * Ring.choose a q := by
+    have h := Ring.choose_smul_choose a (by omega : q ≤ q + 1)
+    simpa [Nat.choose_succ_self_right, nsmul_eq_mul, mul_comm] using h
+  let T : ℕ → ℂ := fun j => Ring.choose r (m + j) * Ring.choose (-r) (n - j)
+  let F : ℕ → ℂ := fun j =>
+    ((m + j : ℕ) : ℂ) * Ring.choose r (m + j) * Ring.choose (-r - 1) (n - j)
+  have interior (j : ℕ) (hj : j < n) :
+      ((m : ℂ) + (n : ℂ)) * T j = F j - F (j + 1) := by
+    have split : n - j = (n - (j + 1)) + 1 := by omega
+    have next : m + (j + 1) = (m + j) + 1 := by omega
+    have total : (m : ℂ) + (n : ℂ) =
+        ((m + j : ℕ) : ℂ) + ((n - (j + 1) : ℕ) : ℂ) + 1 := by
+      exact_mod_cast (by omega : m + n = (m + j) + (n - (j + 1)) + 1)
+    have ha := step r (m + j)
+    have hb := step (-r - 1) (n - (j + 1))
+    have hp := Ring.choose_succ_succ (-r - 1) (n - (j + 1))
+    rw [show -r - 1 + 1 = -r by ring] at hp
+    dsimp only [T, F]
+    rw [next, split, total, hp]
+    push_cast
+    push_cast at ha hb
+    linear_combination
+      Ring.choose r (m + j) * hb + Ring.choose (-r - 1) (n - (j + 1)) * ha
+  have terminal : ((m : ℂ) + (n : ℂ)) * T n = F n := by
+    simp [T, F, Nat.cast_add]
+  change ((m : ℂ) + (n : ℂ)) * (∑ j ∈ Finset.range (n + 1), T j) = _
+  calc
+    _ = (∑ j ∈ Finset.range n, ((m : ℂ) + (n : ℂ)) * T j) +
+        ((m : ℂ) + (n : ℂ)) * T n := by
+      rw [Finset.sum_range_succ, mul_add, Finset.mul_sum]
+    _ = (∑ j ∈ Finset.range n, (F j - F (j + 1))) + F n := by
+      rw [terminal]
+      congr 1
+      apply Finset.sum_congr rfl
+      intro j hj
+      exact interior j (Finset.mem_range.mp hj)
+    _ = F 0 := by rw [Finset.sum_range_sub']; ring
+    _ = (m : ℂ) * Ring.choose r m * Ring.choose (-r - 1) n := by simp [F]
+
+/- proof_shape: halfBinomial_positive_convolution: content
+   admission_basis: escape-witness
+   escape_witness: The finite certificate telescopes before division; positivity
+   excludes the false divided origin. Consumed by the actual finite triangle. -/
+/-- Half-binomial convolution at every positive source weight, including n = 0. -/
+theorem halfBinomial_positive_convolution (m n : ℕ) (hm : 0 < m) :
+    (∑ j ∈ Finset.range (n + 1),
+      halfBinomial (m + j) * Ring.choose (1 / 2 : ℂ) (n - j)) =
+      (m : ℂ) * halfBinomial m * halfBinomial n / ((m : ℂ) + (n : ℂ)) := by
+  have cross := finiteCurrentConvolutionCrossCertificate (-1 / 2 : ℂ) m n
+  have total : (m : ℂ) + (n : ℂ) ≠ 0 := by
+    exact_mod_cast (by omega : m + n ≠ 0)
+  rw [show -(-1 / 2 : ℂ) - 1 = -1 / 2 by ring,
+    show -(-1 / 2 : ℂ) = 1 / 2 by ring] at cross
+  simp only [← halfBinomial_choose] at cross
+  apply (eq_div_iff total).2
+  rw [mul_comm]
+  exact cross
+
+end D5.S3.VertexAlgebra.LatticeHalfFockFiniteCorrection

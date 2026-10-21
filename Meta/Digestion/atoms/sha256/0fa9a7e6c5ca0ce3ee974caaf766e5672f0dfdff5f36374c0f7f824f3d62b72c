@@ -1,0 +1,40 @@
+**定义 44.3（同一实际后缀与整数势）。** 固定非空有限两两非冲突的 $F\subseteq\mathcal I_3(n)$，并固定第 29 章的一棵实际有限严格路由 $r$。每个非单点节点按一个真正请求地址的四值响应分裂，非空孩子都是当前队列的真子集，单点终止路由。对这棵路由上实际可达的共同前缀 $H$，只在非空队列上使用
+
+$$
+\begin{aligned}
+S_H&=\{P\in F:\forall(u,y)\in H,\ \operatorname{out}_P(u)=y\},\\
+\Psi(H)&=\bigcup_{(v,T)\in\mathcal B_H}v\Lambda_\beta(T),\\
+W_\beta&\in\mathbb N_0,\qquad
+W_\beta\ge\max_{P\in F}|\Lambda_\beta(P)|,\\
+R(H)&=W_\beta-|\Psi(H)|.
+\end{aligned}
+\tag{44.11}
+$$
+
+$\mathcal B_H,\Psi(H)$ 完全采用定义 31.3、40.1：只将已经实际报告的叶按式（31.6）变成强制块，重复地址按集合并处理。分支、不存在及进一步推论都不增加块或缓存条目。$S_H$ 匹配全部四类报告，而不是仅匹配叶报告。$W_\beta$ 对原族一次选定，随后所有孩子、后缀都继承同一个数。
+
+记 $r_H$ 为原路由 $r$ 在前缀 $H$ 上已经选定的后缀。这里直接采用 ActualStrictHistoryCapacity 的 `reached_prefix`及其蓝图定理 1.1的实际含义：队列恰为全部报告相容者，后续记录与 $H$ 拼接，活孩子恰为原节点代表地址的非空真实响应纤维。$r_H$ 不是在 $S_H$ 上重新优化选出的路由。
+
+对 $R\in\mathbb N_0$，定义
+
+$$
+\begin{aligned}
+U_0(R)&=1,\\
+U_1(R)&=\max\{1,R-2\},\\
+U_2(R)&=
+\begin{cases}
+1,&0\le R\le3,\\
+2,&R=4,\\
+\left\lfloor\dfrac{R^2-2R-1}{2}\right\rfloor,&R\ge5,
+\end{cases}\\
+U_3(R)&=
+\begin{cases}
+1,&0\le R\le3,\\
+2,&R=4,\\
+\dfrac{R^3-7R}{6},&R\ge5\text{ 为奇数},\\
+\dfrac{R^3-10R}{6},&R\ge6\text{ 为偶数}.
+\end{cases}
+\end{aligned}
+\tag{44.12}
+$$
+

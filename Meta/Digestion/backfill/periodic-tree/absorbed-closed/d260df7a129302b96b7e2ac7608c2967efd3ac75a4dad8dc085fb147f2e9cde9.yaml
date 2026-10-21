@@ -1,0 +1,17 @@
+fingerprints:
+  raw_sha256: sha256:d260df7a129302b96b7e2ac7608c2967efd3ac75a4dad8dc085fb147f2e9cde9
+  normalized_sha256: sha256:d260df7a129302b96b7e2ac7608c2967efd3ac75a4dad8dc085fb147f2e9cde9
+cas_ref: sha256:d260df7a129302b96b7e2ac7608c2967efd3ac75a4dad8dc085fb147f2e9cde9
+coverage_gids:
+  - gid: D5/S3/Arith/FibonacciRank.fibonacci_entry_point
+    target_statement_id: sha256:cb723385a81b5685d65e8dea810894ef7ad83d2ee8a1855a9b34e573a090e19d
+  - gid: D5/S3/Arith/FibonacciRank.fibonacci_rank_dvd_prime_bound
+    target_statement_id: sha256:3b3f6fd70742a99dee370aea0221e64bc1c3c84e8c242d8707542778f181893c
+  - gid: D5/S3/Arith/Powerful/PowerfulNumber.Powerful
+    target_statement_id: sha256:dba64bfdd5f80d27757ec49e7428404fa5ebcf2dda9d2cad084599c4afb7ecd4
+  - gid: D5/S3/Arith/Primes/FibonacciPrimeToIndexValuation.fibonacci_original_rank_valuation
+    target_statement_id: sha256:1d3a385b1bb4bb2a559be05f8c32be1471d0aa93ce3a93039b932be7b44f21b7
+  - gid: D5/S3/Arith/Primes/FiniteFibonacciRankClosure.rankWitness
+    target_statement_id: sha256:4e4e3597204dcb06fc1c432c90004bf31ac483a26b16ef78a6f0f8f74c4bc08e
+receipts:
+  unresolved_subitems: []

@@ -1,0 +1,98 @@
+**定理 91.4（首个上方交点的固定参数刚性）。** 对一个固定 $p/d$，
+精确使用第 83 章的如下规则：
+
+$$
+\begin{aligned}
+m_Q&=\lceil d h_{Q,s}(t_{Q,s})\rceil,\qquad
+\omega_Q=m_Q-dh_{Q,s}(t_{Q,s}),\\
+h_{Q,s}(x_*)&=m_Q/d,\qquad x_*\ge t_{Q,s},\\
+pj+m_Q&\equiv0\pmod d,\qquad |j-x_*|\le d/2,\qquad
+k=(pj+m_Q)/d.
+\end{aligned}
+\tag{91.11}
+$$
+
+取该剩余类中距 $x_*$ 最近的整数 $j$，再取 $-\ell_Q(j)/\ln2$ 的最近整数 $L$；
+并列时包含全部选择。记所得单元之并为 $\mathcal B_{n,s}$。
+则
+
+$$
+\limsup_n\mathcal B_{n,s}\subseteq\{\beta_s\}.
+\tag{91.12}
+$$
+
+若 $\beta_s$ 沿某子序列属于这些单元，则沿该子序列
+
+$$
+\begin{aligned}
+j-t_{Q,s}&=-\frac{3\ln Q}{QI'(u_s)}+O_{K,d}(Q^{-1})<0,\\
+0\le\omega_Q&\le C_Kd^3/Q^2,\\
+\frac{\bar c_{Q,j}^{\mathcal E}(\beta_s)}
+     {\bar c_{Q,k}^{\mathcal E}(\beta_s)}&\longrightarrow1
+\quad(\mathcal E=pair,path).
+\end{aligned}
+\tag{91.13}
+$$
+
+任何由此规则产生的联合正极限均为 $(\theta,\theta)$，
+其中 $2^{-1/2}\le\theta\le2^{1/2}$。
+
+证明。(83.3) 在固定 $d$ 时趋零，且单元宽度也趋零，给 (91.12)。
+设固定参数发生命中。原实际均值比较 (83.8) 和最近规模整数规则使正根均值有统一正上下界。
+令
+
+$$
+\rho_Q(\beta)=\left\{\frac{\phi Q^3}{\beta\ln2}\right\},\qquad
+C_Q(x;\beta)=(1-\rho_Q(\beta))\ln2-d_{0,Q}\eta+A_Q(x).
+\tag{91.14}
+$$
+
+原 Stirling 公式与实际行桥给
+
+$$
+\ln\bar c_{Q,j}^{\mathcal E}(\beta)
+=Q^3[c(\beta)-I(j/N)]-3\ln Q+C_Q(j/N;\beta)+o(1).
+\tag{91.15}
+$$
+
+在 $\beta_s$ 的简单正根先得到 $j-Nu_s=O(\ln Q/Q)$，再展开得
+$j-Nu_s=-3\ln Q/[QI'(u_s)]+O(Q^{-1})$。
+二次项在对数均值中仅为 $O((\ln Q)^2/Q^3)$；结合 (91.9) 得首式。
+由于 $x_*\ge t_{Q,s}$ 而 $j<t_{Q,s}$，最近剩余类取整给
+
+$$
+0\le x_*-t_{Q,s}\le d/2+j-t_{Q,s}<d/2.
+\tag{91.16}
+$$
+
+积分 $h''\le C_K/Q^2$，得到 $\omega_Q\le C_Kd^3/Q^2$。
+同一曲率界又给
+
+$$
+|G_Q(j)-k|\le C_K\left(\frac{d^2}{Q^2}
+                    +\frac{(\ln Q)^2}{Q^4}\right).
+\tag{91.17}
+$$
+
+乘以 $|\ell_Q'|\le C_KQ$，固定 $d$ 下的对数系数差趋零。
+(83.8) 把它转为两种实际均值之比趋一，最近规模整数给所述极限范围。证毕。
+
+此规则还有可逐层核对的精确判据。令 $J_Q$ 是 $Nu_s$ 的最近整数，
+并列采用任一固定约定；充分大 $Q$ 下，$\beta_s\in\mathcal B_{n,s}$ 当且仅当
+
+$$
+\begin{gathered}
+L_0(\beta_s)\in\operatorname{Nint}(-\ell_Q(J_Q)/\ln2),\qquad
+pJ_Q+m_Q\equiv0\pmod d,\\
+J_Q+d/2\ge t_{Q,s},\qquad
+0\le\omega_Q\le
+ d[h_{Q,s}(J_Q+d/2)-h_{Q,s}(t_{Q,s})].
+\end{gathered}
+\tag{91.18}
+$$
+
+第一项给有界正根代理均值，因而 (91.13) 对该整数成立，最终最近根整数唯一，
+且 $J_Q-d/2<t_{Q,s}$。严格递增的右支上，最后两项恰好等价于
+$x_*\le J_Q+d/2$；中间同余给合法剩余类与原整数 $k$。
+这些正是取整规则，故两个方向均成立。判据的无穷次可满足性尚未证明。
+

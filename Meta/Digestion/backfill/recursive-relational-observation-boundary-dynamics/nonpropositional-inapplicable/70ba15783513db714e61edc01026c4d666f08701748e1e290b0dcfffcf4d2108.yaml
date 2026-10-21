@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:70ba15783513db714e61edc01026c4d666f08701748e1e290b0dcfffcf4d2108
+  normalized_sha256: sha256:70ba15783513db714e61edc01026c4d666f08701748e1e290b0dcfffcf4d2108
+cas_ref: sha256:70ba15783513db714e61edc01026c4d666f08701748e1e290b0dcfffcf4d2108
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 'Upstream-only reuse; zero new Lean and no freeze/deposit. Pinned mathlib revision 56a005855ea17e0b0958f73ec801ae140b0a1679. Fully qualified upstream suppliers: Fin.sum_univ_two, congrFun, Subtype.ext. No existing frozen project GID was identified for the complete no-affine-retraction claim. The full subtype of two binary probability simplices and the causal first-marginal equality are used. An arbitrary convex-mixture-preserving retraction preserves midpoints. Two explicit causal midpoints of three probability vertices and positivity force the noncausal vertex to be fixed, contradicting causal output; finite substitutions and linear arithmetic close the complete quantified contradiction. This closes only the standalone theorem child, not the independent affine-dimension/proof atom.'
+    previous_atom_id: eff29a39fda74fbcbfc231190237eec9b8cdb6a3723e72e085994126847bde86
+    next_atom_id: 1d4b4441d90dac0ba2fcb890554867e3cc17a3c2126fe0ea192c7d82eb0f9e5d

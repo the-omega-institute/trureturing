@@ -1,0 +1,31 @@
+**Corollary 117.3 (A second restriction on the intersection strip).**
+At active length $L\ge4$, cap feasibility in either original
+restricted class implies
+
+$$
+D_3(a,\varepsilon)
+ \le3\varepsilon+\frac{L-3}{L-2}(1-a_2).
+\tag{117.9}
+$$
+
+In particular any separator as in (116.1) must satisfy
+
+$$
+\begin{gathered}
+a_1<1,\qquad L\ge5,\\
+3\varepsilon<D_3(a,\varepsilon)
+ \le3\varepsilon+
+ \min\left\{1-a_1,\frac{L-3}{L-2}(1-a_2)\right\}.
+\end{gathered}
+\tag{117.10}
+$$
+
+All prefix inequalities (117.4), including those with $m\ne L$,
+remain necessary. None of these necessary inequalities alone is
+asserted to be sufficient.
+
+**Proof.** At $m=L$, divide (117.4) by $L-2$ and use
+$D_3=\sum_{n=3}^L a_n-(L-2)\varepsilon$. This gives (117.9).
+Combine it with Theorem 113.2 and Corollary 116.1 to obtain
+(117.10). $\square$
+

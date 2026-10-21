@@ -1,0 +1,62 @@
+## 183. FIB 递归路径上的外加确定性混沌、Lyapunov 指数与 Kolmogorov 熵
+
+FIB 给出状态之间的允许转移和符号路径。设路径为
+$$
+s_0\xrightarrow{e_0}s_1\xrightarrow{e_1}s_2\longrightarrow\cdots.
+$$
+这只规定合法次序；连续状态空间、度量、映射、初始测度和噪声均需外加。可在每个边转移上配置
+$$
+F_e:M\to M,\qquad x_{n+1}=F_{e_n}(x_n),
+\tag{183.1}
+$$
+再以移位 \(S\) 构造符号—连续纤维系统
+$$
+T(\omega,x)=
+\bigl(S\omega,F_{e_0(\omega)}(x)\bigr).
+$$
+不变概率测度及其路径边缘测度不是 FIB 自动给出的。
+
+若 \(F_e\) 为 \(C^1\)，沿固定符号路径的切向传播为
+$$
+A_n=DF_{e_n}(x_n),\qquad
+P_n=A_{n-1}\cdots A_0,
+$$
+$$
+\delta x_n=P_n\delta x_0+o(\|\delta x_0\|).
+\tag{183.2}
+$$
+一般不能把各步最大特征值相乘代替 \(P_n\)，因为扩张方向会转动且矩阵通常不交换。有限时间 Lyapunov 指数为
+$$
+\lambda_i^{(n)}
+=\frac1n\log\sigma_i(P_n),
+$$
+渐近指数的存在需要平稳性、可测性和可积性，例如
+$$
+\int\log^+\|DF_e\|\,d\mu<\infty.
+\tag{183.3}
+$$
+正的最大指数表示某些切向方向的渐近扩张，不表示所有扰动都扩张，也不等于物理单位时间指数，除非物理时钟已明确。
+
+Kolmogorov–Sinai 测度熵对有限分割 \(\mathcal P\) 定义为
+$$
+h_\mu(T,\mathcal P)
+=\lim_{n\to\infty}\frac1n
+H_\mu\!\left(\bigvee_{k=0}^{n-1}T^{-k}\mathcal P\right),
+\qquad
+h_\mu(T)=\sup_{\mathcal P}h_\mu(T,\mathcal P).
+\tag{183.4}
+$$
+允许路径数的增长、路径概率的熵和连续纤维的 KS 熵是不同量。同一合法路径空间可支持集中于周期轨道的零熵测度，也可支持正熵测度。FIB 递归长度的指数增长不能直接当作每次转移的熵率。
+
+在满足相应光滑、可积和绝对连续条件时，Ruelle 不等式给出
+$$
+h_\mu(T)
+\le
+h_{\rm base}
++\int\sum_{\lambda_i>0}m_i\lambda_i\,d\mu.
+\tag{183.5}
+$$
+等式需要 Pesin 型额外条件；正 Lyapunov 指数本身不能自动证明熵等于正指数之和。若存在噪声、分支边界或非遍历分量，需分别处理路径选择和纤维指数。
+
+本节结论是：FIB 提供符号转移与递归路径；确定性混沌、Lyapunov 指数、测度熵及其关系由外加连续映射、度量、不变测度和时间尺度决定。
+

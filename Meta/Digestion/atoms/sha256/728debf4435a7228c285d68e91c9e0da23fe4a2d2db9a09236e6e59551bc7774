@@ -1,0 +1,43 @@
+## 119. FIB 有限逼近图上的外加复跃迁、拓扑能带与边缘输运
+
+取第 \(L\) 层有限 FIB 逼近图 \(G_L=(V_L,E_L)\)，在其上另加参数环面
+\[
+\Theta=\mathbb T^2,\qquad \theta=(k,\phi),
+\]
+其中 \(k\) 是周期扭转角，\(\phi\) 是外加相位或 phason。若 FIB 只给出离散替换，连续 \(\phi\) 插值仍需单独指定。定义自伴复跃迁 Hamiltonian
+\[
+H_L(k,\phi)
+=\sum_xv_x(\phi)|x\rangle\langle x|
++\sum_{(x,y)\in E_L}
+\left[t_{xy}e^{\,\mathrm i(A_{xy}(\phi)+\nu_{xy}k)}
+|x\rangle\langle y|+\mathrm{h.c.}\right].
+\tag{119.1}
+\]
+顶点规范只改变边相位表示；回路磁通是规范不变量。树图上的相位在适当条件下可全部消去，存在回路也只是产生非平凡拓扑的必要结构，不是充分条件。
+
+选定带群 \(I\)，若统一能隙
+\[
+g_{L,I}
+=\inf_{(k,\phi)\in\Theta}
+\min_{\substack{a\in I\\b\notin I}}
+|E_{L,a}(k,\phi)-E_{L,b}(k,\phi)|>0,
+\tag{119.2}
+\]
+则谱投影 \(P_{L,I}(k,\phi)\) 在参数环面上连续。其投影 Berry 曲率与 Chern 数为
+\[
+\mathcal F^{(L)}_{k\phi}
+=\mathrm i\,\operatorname{Tr}
+\bigl(P_{L,I}[\partial_kP_{L,I},\partial_\phi P_{L,I}]\bigr),
+\qquad
+C_{L,I}=\frac1{2\pi}\int_{\Theta}\mathcal F^{(L)}_{k\phi}\,\mathrm dk\,\mathrm d\phi.
+\tag{119.3}
+\]
+在光滑投影、固定环面取向和能隙不闭合的连续变形下，\(C_{L,I}\in\mathbb Z\) 且保持不变；带内简并时只有整个投影的总 Chern 数可识别。
+
+若 \(\phi\) 绝热绕行一周且带群保持占据，外加绝热泵浦合同给出
+\[
+Q_L/e=C_{L,I}.
+\tag{119.4}
+\]
+开边界还需另定义端点势与切口删除。共同体能隙、局部边界和热力学极限成立时，边缘谱流可与 \(C_{L,I}\) 相等；有限层左右边缘杂化或局域 Tamm 态会使单个边缘峰不具有拓扑判别力。实际电导仍依赖引线、占据、散射和退相干。FIB 只提供图和层间关系，复跃迁、参数环面、能隙、边界和输运端口均为外加。
+

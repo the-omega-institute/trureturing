@@ -1,0 +1,33 @@
+**Proposition 26.1 (the positive and negative capacity quantifiers).**
+For every supplied numeral $h\ge1$, [NCE, Definitions 13.1–13.3 and
+Theorem 13.4][ABT-NCE] gives fixed finite automata and exact Presburger
+supports $E_h^+,E_h^-$ for the two existing original Rho labels on its
+shared-epoch source class. This permits the automaton, formula syntax and
+construction cost to depend on $h$. There is nevertheless no one fixed
+finite formula of Definition 25.2 with $h$ free that represents those
+labels throughout the attained family (ABT.89).
+
+Proof. At a fixed numeral the language $L_h$ of trees with at most $h$
+leaves is recognized by truncated addition in $h+1$ states. It is a
+permitted fixed regular membership in NCE Theorem 10.2. Its exact
+source-class and original-admission application is NCE Theorems 13.2
+and 13.4, which retain one source, one epoch tuple and the actual guard.
+On the pure-beta orbit, each such fixed $h$ also bounds the attained
+$e$ by $F_{e+2}\le h$, so there is no conflicting assertion of an
+unbounded nonperiodic fixed-$h$ epoch set. A uniform formula with free
+$h$ would instead contradict Corollary 25.3. Quantifier order and the
+fixed automata, rather than the word regular, separate the claims.
+$\square$
+
+An effective procedure which takes numeral $h$ and builds a larger
+$L_h$ automaton is fully consistent with this obstruction. A finite
+algorithm computing Fibonacci thresholds in a stronger arithmetic
+language is likewise not excluded. The result is a fixed-language
+expressivity boundary, not an undecidability result or a physical
+resource lower bound. SFP's all-source representation with arbitrary
+finite residual shapes and shape-dependent arithmetic dimensions is
+outside the excluded fixed scalar projection class. A growing literal
+record, fully expanded ground source supplied as actual material, or a
+proved richer growth-sensitive relation also needs its own exact
+correspondence; none is excluded merely by (ABT.91).
+

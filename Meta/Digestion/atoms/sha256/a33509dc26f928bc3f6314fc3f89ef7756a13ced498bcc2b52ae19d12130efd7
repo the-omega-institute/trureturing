@@ -1,0 +1,20 @@
+**Definition 90.6 (full-source address scale).** For distinct $u,v$ in
+$\mathcal F_h$, put
+
+$$
+\delta_A(u,v)=\min\{|p|:r_u(p)\ne r_v(p)\}=h+2,
+\qquad
+ d^A_h(u,v)=s_h>0,\qquad d^A_h(u,u)=0.
+\tag{90.9}
+$$
+
+Here $s_h$ is any independently chosen positive scale. In particular it
+may be $a_h2^{-(h+2)}$ with any $a_h>0$. To verify the stated minimum,
+$X$ first varies at $LLp$, of full address length $h+2$. Above that depth
+all of $X$ has its fixed branch shape. Its other occurrence is inside
+$\rho X$ at prefix $RLL$, whose first varying replies occur at depth
+$h+3$: a changed $X$ leaf becomes $\beta$ versus a branch under $\rho$.
+All other source subtrees are fixed at this $h$. Thus original prefixes
+through depth $h+1$ coincide and the minimum is exactly $h+2$.
+The resulting equilateral $d^A_h$ is an ultrametric on this actual family.
+

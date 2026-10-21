@@ -1,0 +1,14 @@
+fingerprints:
+  raw_sha256: sha256:4ac37c83b6f74513051333bb9c3c0ebc752e745545debd49cb86e6f33235a1f2
+  normalized_sha256: sha256:4ac37c83b6f74513051333bb9c3c0ebc752e745545debd49cb86e6f33235a1f2
+cas_ref: sha256:4ac37c83b6f74513051333bb9c3c0ebc752e745545debd49cb86e6f33235a1f2
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 全部命题子句由 lake-manifest.json 钉版 Mathlib 56a005855ea17e0b0958f73ec801ae140b0a1679 的既有声明经实例化、投影及规范化闭合；仓内无可用冻结 GID。所用上游全限定声明：TensorProduct.map_injective_of_flat_flat, TensorProduct.piScalarRight, TensorProduct.piScalarRight_symm_single, Fintype.linearCombination_apply_single, LinearMap.finrank_range_of_inj, Module.finrank_pi_fintype, Submodule.finrank_quotient_add_finrank, LinearMap.finrank_range_add_finrank_ker, Submodule.comapSubtypeEquivOfLe, Submodule.finrank_le, Submodule.smul_mem_iff。包括陈述全部子句，以及 dim B=6、dim(S/B)≤1、实际商映射精确核及余维≤1；张量坐标单射性由上游供应，核比较为坐标与有限和规范化。 非作者编译探针 flight 6ad4ff7ae1b609a473a53dae：定向 make lean exit 0，标准公理闭包；未新增或冻结 Lean 声明。
+    previous_atom_id: 3c3867ba0e2cafb911613a1e90540abcf9f25faeafebcc2bb203d636f051983a
+    next_atom_id: b7da46cb3b0a070ea755623d6a177c965d9b4a5de833e305754cd359619967dd
+  chain_atoms:
+    - fc745138aa6e78dfe9608f5cca5cb8ff4eae6e28230ab984c2cfe1f81b0eac8e
+    - 8046d6536e33041575a53adb1dd8962fc327f0791c476eea8f960ce63a407388

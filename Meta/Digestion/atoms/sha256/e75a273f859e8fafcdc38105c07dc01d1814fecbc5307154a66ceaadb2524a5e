@@ -1,0 +1,89 @@
+**定理 38.2（嵌套收缩的实际同组成来源与全部非冲突对）。** 对每个整数 $k\ge1$，定义 38.1 的全部来源有唯一完整三步前像，具体为
+
+$$
+\begin{aligned}
+Q_0&=\langle h_k,b\rangle,\\
+Q_j^X&=\langle g_{k,j},\alpha\rangle\quad(1\le j\le k),\\
+Q_i^Y&=\langle h_i,\langle h_{k-i},\alpha\rangle\rangle
+                              \quad(0\le i<k).
+\end{aligned}
+\tag{38.5}
+$$
+
+它们满足
+
+$$
+\begin{gathered}
+\rho^3(Q_0)=P_0,\qquad \rho^3(Q_j^X)=X_j,\qquad
+\rho^3(Q_i^Y)=Y_i,\\
+c(Q_0)=c(Q_j^X)=c(Q_i^Y)=\binom{k+1}{2},\qquad
+c(P_0)=c(X_j)=c(Y_i)=\binom{k+5}{2k+8},\\
+F_k\subseteq\mathcal I_3(n_k),\qquad |F_k|=2k+1,\\
+\forall P,Q\in F_k,\quad\operatorname{NC}(P,Q),\qquad
+K(F_k)=K_\circ(F_k).
+\end{gathered}
+\tag{38.6}
+$$
+
+所有涉及 $i,j$ 的等式均取式（38.5）的完整指标范围；最后一个等式逐一确定每个 $S\subseteq F_k$ 的共同个体最优取得性。
+
+**证明。** [母卷定义 3.1](FIBONACCI_ATOMIC_RELATION_GENERATION.md#3-fibonacci-替换与组成动力学)的替换保留每个二叉括号及左右次序。由式（38.1）、（38.2）按 $r$ 归纳，得到 $\rho^3(h_r)=H_r$、$\rho^3(\langle h_r,\alpha\rangle)=N_r$。同态规则在式（38.3）的整个右梳上下文逐孔给 $\rho^3(g_{k,j})=G_{k,j}$，再在根配对即得式（38.5）的三类完整像等式。[规范编译卷命题 4.3](FIBONACCI_CANONICAL_WINDOW_COMPILER_GEOMETRY.md#4-tree-action-seed-recurrence-and-composition-dynamics)的既有树替换单射性复合三次，供应每个完整前像的唯一性。该命题的原子 $A,B$ 在此对应 $\alpha,\beta$，不是本章的完整块名字。
+
+[母卷定义 3.3](FIBONACCI_ATOMIC_RELATION_GENERATION.md#3-fibonacci-替换与组成动力学)的组成加法给 $c(h_r)=(r,1)^{\mathsf T}$。$g_{k,j}$ 的 $k-1$ 个普通 $\alpha$ 槽、一个 $b$ 槽和末端 $\beta$ 给 $c(g_{k,j})=(k,2)^{\mathsf T}$。于是三类前像的组成分别为
+
+$$
+\begin{aligned}
+c(Q_0)&=\binom{k}{1}+\binom11,\\
+c(Q_j^X)&=\binom{k}{2}+\binom10,\\
+c(Q_i^Y)&=\binom{i}{1}+\binom{k-i}{1}+\binom10,
+\end{aligned}
+\qquad\text{均为 }\binom{k+1}{2}.
+\tag{38.7}
+$$
+
+直接应用母卷定理 3.4 的实际组成作用，
+
+$$
+c(\rho^3(Q))=
+\begin{pmatrix}1&2\\2&3\end{pmatrix}\binom{k+1}{2}
+=\binom{k+5}{2k+8},\qquad n(\rho^3(Q))=3k+13
+\quad(Q\in\{Q_0,Q_j^X,Q_i^Y\}).
+\tag{38.8}
+$$
+
+此外 $n(H_r)=3r+5$、$n(N_r)=3r+8$、$n(G_{k,j})=3k+10$。$Y_i$ 的左孩子 $H_i$ 具有两两不同的叶数，且严格小于 $P_0$ 的左孩子 $H_k$；每个 $X_j$ 的左孩子又严格大于 $H_k$，所以这三类来源互不相同。不同 $j$ 的 $G_{k,j}$ 在同一个右梳的第 $j$ 孔分别出现 $B$ 与 $A$，两块字面不同，故这些左孩子也不同。这给 $|F_k|=2k+1$，不是由组成相等推断来源相等。
+
+现在穷尽所有活动子树的比较。相同树当然非冲突；两个根为分支的树是否非冲突，按定义 30.1 分解为对应左右孩子的两项条件。以下只在这项直接分解中使用[引理 30.2 的式（30.3）](#30-实际三步像的分歧前沿七叶分离与有限容量)。它给 $\operatorname{NC}(A,B)$，并对每个 $r\ge0$ 给
+
+$$
+\operatorname{NC}(C,\langle A,H_r\rangle),
+\qquad H_r\ne A.
+\tag{38.9}
+$$
+
+其中 $H_r\ne A$ 已由 $n(H_r)=3r+5\ge5>3$ 确定。任意 $H_r,H_s$，若 $r<s$，逐层去掉相同的 $r$ 个左 $A$，剩余比较为 $C$ 与 $H_{s-r}=\langle A,H_{s-r-1}\rangle$，由式（38.9）非冲突。$s<r$ 对称，$s=r$ 相同。因此全部 $H_r$ 两两非冲突。
+
+$G_{k,j},G_{k,\ell}$ 在共同右梳各孔中只比较相同块或 $A,B$，末端均为 $C$，故全部非冲突；$H_k$ 与每个 $G_{k,j}$ 同样只在第 $j$ 孔比较 $A,B$。这是指定块的直接子树比较，不调用引理 26.2 对其特定填块表的信息叶结论。
+
+还须比较 $H_i$ 与 $G_{k,j}$，其中 $0\le i<k$。若 $j\le i$，前 $i$ 层的左孩子除第 $j$ 层为 $A,B$ 外均为相同的 $A$，这些比较全非冲突；在该前缀末端，比较 $C$ 与尚有 $k-i\ge1$ 个普通 $A$ 的 $H_{k-i}$，式（38.9）给非冲突。若 $j>i$，先去掉共同的 $i$ 个左 $A$。$G_{k,j}$ 的剩余后缀有 $k-i\ge1$ 层，写成 $\langle D,Z\rangle$。它的左孩子 $D$ 在 $j=i+1$ 时为 $B=\langle C,A\rangle$，在 $j>i+1$ 时为 $A$；右孩子 $Z$ 是以 $C$ 结束的普通或含一个 $B$ 的正后缀，故 $Z\in\mathcal I_3$ 且 $n(Z)\ge5$，特别地 $Z\ne A$。当 $D=A$，式（30.3）的第二行直接适用；当 $D=B$，其左孩子 $C\ne A$，同一行的复合左孩子条件适用。两种情况下均得 $\operatorname{NC}(C,\langle D,Z\rangle)$，于是 $H_i,G_{k,j}$ 非冲突。$i=0$ 取空共同前缀；$j=k$ 的末层右孩子就是 $C$，也满足该条件。两种指标关系覆盖全部活动比较。
+
+补偿子树的所有可能值恰为 $A,N_0,N_1,\ldots,N_k$。$N_r=\langle H_r,A\rangle$ 与 $N_s$ 的左孩子已非冲突，右孩子相同，所以全部 $N_r,N_s$ 非冲突；式（30.3）的第一行及 $H_r\ne A$ 又给 $\operatorname{NC}(A,N_r)$。这里 $N_0=B$ 包含基准补偿，$N_{k-i}$ 包含每个收缩补偿，没有只将补偿块与基准块成对比较。
+
+完整来源的不同无序对恰由下表五类穷尽：
+
+$$
+\begin{array}{c|c|c}
+\text{来源对}&\text{左孩子对}&\text{右孩子对}\\ \hline
+(P_0,X_j)&(H_k,G_{k,j})&(N_0,A)\\
+(P_0,Y_i)&(H_k,H_i)&(N_0,N_{k-i})\\
+(X_j,X_\ell),\ j\ne\ell&(G_{k,j},G_{k,\ell})&(A,A)\\
+(X_j,Y_i)&(G_{k,j},H_i)&(A,N_{k-i})\\
+(Y_i,Y_\ell),\ i\ne\ell&(H_i,H_\ell)&(N_{k-i},N_{k-\ell})
+\end{array}
+\tag{38.10}
+$$
+
+左右两列均已证明非冲突，根的叶地址分解因此给全部 $F_k$ 的非冲突关系。对任意 $S\subseteq F_k$，若 $|S|\ge2$，取两个不同成员 $P,Q$；非冲突使 $\Delta(\{P,Q\})=\varnothing$。[定理 25.2](#25-有限正来源族的遗传共享叶分离与四元共同费用)的遗传信息叶条件在这个二元素子集处失败，故 $S\notin K(F_k)$。空集和单元素子集的遗传条件为空约束，由同一定理及既有单原型完整叶测试取得。因此 $K(F_k)=K_\circ(F_k)$，证明了全部子集而非仅两两最优性。
+
+在边界 $k=1$，$H_1=\langle A,C\rangle=T$、$G_{1,1}=\langle B,C\rangle=W_1$、$N_1=\langle T,A\rangle=K_T$，故 $F_1=\{\langle T,B\rangle,\langle W_1,A\rangle,\langle C,K_T\rangle\}$。这正是[式（36.3）](#36-任意规模的二重条件退出共同补偿与一次超额增长)的十六叶三来源族，只有局部名称不同；式（38.2）—（38.10）同时覆盖这个边界和全部更大的 $k$。证毕。
+

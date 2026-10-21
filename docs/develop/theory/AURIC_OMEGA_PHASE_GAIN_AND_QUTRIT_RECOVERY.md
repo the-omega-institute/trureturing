@@ -721,3 +721,422 @@ The source-specific compositions here are the weighted full-fiber metric (P.24),
 A known-channel decoder may depend on its known complex direction but acts on all unknown inputs and references. A common decoder in (P.36) or (P.38) is chosen once for the whole specified set. Neither construction supplies the channel parameter by calibration or observation: all native candidate states in (P.46) coincide across the fiber. Identifying an external source with this fiber, acquiring its inputs, transporting histories, and providing native encoder or decoder apparatus require additional hypotheses. The phase-call bounds remain exactly those of Assumption 1.2; passive coordinate changes, arbitrary recoveries and reference systems add no free native operation.
 
 ## 追加锚（本行以下为增补区）
+
+## 11. A phase circle inside the fixed extension fiber
+
+**Definition 11.1 (a feasible phase orbit).** Retain Definition 7.1, its fixed passive frames and the unhalved diamond norm. Put $p_0=a=1-\beta$, $p_1=\beta$, where $0<\beta\leq1/2$. For a fixed unit vector $d=(d_0,d_1)\in\mathbb C^2$ choose
+
+$$
+0\leq r\leq R_\beta(d):=
+\left(\frac{|d_0|^2}{a}+\frac{|d_1|^2}{\beta}\right)^{-1/2}.
+\tag{P.47}
+$$
+
+Define $c_j(\varphi)=r e^{i\varphi}d_j/\sqrt{p_j}$ and $N_\varphi=N_{c(\varphi)}$. Thus $w(\varphi)=r e^{i\varphi}d$ in (P.23). The radius is a cross-block coherence-transfer strength; it is not an input population. All recoveries below may access the whole five-dimensional output, and must act on every unknown qutrit input and untouched finite reference.
+
+**Theorem 11.2 (chord distance and the known-phase recovery).** For this orbit,
+
+$$
+\|N_\varphi-N_\psi\|_\diamond
+=2r\left|\sin\frac{\varphi-\psi}{2}\right|,
+\qquad \delta(N_\varphi)=1-r.
+\tag{P.48}
+$$
+
+For $r>0$ the circle modulo $2\pi$ is injectively parametrized by its channels. A target output unitary generating it is
+
+$$
+S_\varphi=I_5+(e^{-i\varphi}-1)|e_4\rangle\langle e_4|,
+\qquad N_\varphi=\operatorname{Ad}_{S_\varphi}\circ N_0.
+\tag{P.49}
+$$
+
+Proof. The squared norm of $c(\varphi)$ is $r^2\sum_j|d_j|^2/p_j$, so (P.47) puts every member in the same fiber. Theorems 7.2 and 8.2 give (P.48), using $|e^{i\varphi}-e^{i\psi}|=2|\sin((\varphi-\psi)/2)|$. The zero set of that distance proves injectivity for $r>0$; for $r=0$ every channel is the same. Conjugation by $S_\varphi$ fixes the diagonal blocks of (P.25) and multiplies each $V_jXH^\dagger$ term by $e^{i\varphi}$, proving (P.49). Here $H$ is the embedding in Definition 7.1, not a Hamiltonian.
+
+The same passive-frame correspondence as Theorem 10.2 transports these statements to physical channels. Equation (P.49) specifies a target unitary, without adding a continuously tunable native phase to Assumption 1.2. Under the separate addressable-block assumptions of [Static Compatibility–Fiber Theory, Assumption 30.2 and Theorem 31.1](AURIC_OMEGA_STATIC_COMPATIBILITY_FIBER_THEORY.md#31-固定非实相位下的有限多块射影通用性), it admits arbitrary projective finite-word approximation. That result gives no exact synthesis for an arbitrary angle and no uniform call or physical-time cost. The same restrictions apply to uses of this orbit as a clock. $\square$
+
+## 12. Exact common recovery on an uncertain phase arc
+
+**Definition 12.1 (one decoder for the whole arc).** For $0\leq\alpha\leq\pi$, set
+
+$$
+\Delta_{\rm arc}(r,\alpha)
+=\inf_{R\ {\rm CPTP}}\sup_{|\varphi|\leq\alpha}
+\|RN_\varphi-\mathrm{id}_3\|_\diamond.
+\tag{P.50}
+$$
+
+The decoder is chosen before the unknown phase, input and reference. There is no accessible phase label in this experiment.
+
+**Theorem 12.2 (the exact arc formula).** For every radius in (P.47),
+
+$$
+\Delta_{\rm arc}(r,\alpha)=
+\begin{cases}
+1,&r=0\text{ or }\cos\alpha\leq0,\\
+\sqrt{1+r^2-2r\cos\alpha},&0<r\leq\cos\alpha,\\
+\sin\alpha,&0<\cos\alpha<r.
+\end{cases}
+\tag{P.51}
+$$
+
+The optimum is attained by the one decoder $R_t$ of Theorem 8.1 with
+
+$$
+t=q_*\overline d,\qquad
+q_*=
+\begin{cases}
+0,&r=0\text{ or }\cos\alpha\leq0,\\
+\min\{1,\cos\alpha/r\},&r>0,\ \cos\alpha>0.
+\end{cases}
+\tag{P.52}
+$$
+
+Proof. Apply Theorem 9.2 to precisely this set of channel parameters. The complex bilinear pairing $z=d\cdot t$ traverses the entire closed unit disk: Cauchy–Schwarz gives $|z|\leq1$, and $t=z\overline d$ realizes every such $z$. The objective becomes
+
+$$
+F(z)=\max_{|\varphi|\leq\alpha}|1-rze^{i\varphi}|,
+\qquad \min_{|z|\leq1}F(z).
+\tag{P.53}
+$$
+
+This is a convex function and $F(\overline z)=F(z)$, by the symmetry of the phase interval. Therefore $F(\operatorname{Re}z)\leq F(z)$. If $r>0$ and a real $z=q$ is negative, its value at $\varphi=0$ exceeds one, whereas $F(0)=1$. A minimizer may thus be chosen in $q\in[0,1]$. On that interval the least cosine on the arc is $\cos\alpha$, and
+
+$$
+F(q)^2=1+r^2q^2-2rq\cos\alpha.
+\tag{P.54}
+$$
+
+Minimizing this quadratic gives (P.52) and (P.51), including the shared boundary $r=\cos\alpha$. At $r=0$ the objective is identically one. Theorem 8.1 supplies the stated common decoder on the whole physical output. $\square$
+
+**Definition 12.3 (phase uncertainty and clock calibration).** At $\alpha=0$, (P.51) is the known-channel value $1-r$. An arc of angular length at least $\pi$ has value one. These are recovery errors, not occupation-loss probabilities. If a separately specified clock law is $\varphi=\omega t$ and $|\Delta t|\leq\varepsilon$, its error interval gives $\alpha=|\omega|\varepsilon$ when this is at most $\pi$; a larger interval covers the full circle. This substitution requires the frequency, time scale and bounded-error guarantee as premises. It cannot calibrate them from native phase-candidate outputs, which are identical along the orbit by Theorem 10.2.
+
+## 13. Recorded and discarded phase on the same orbit
+
+**Definition 13.1 (an input-independent phase record).** Let $\{p_\ell\}_{\ell=1}^s$ be a finite probability distribution, independent of the unknown input. Its mechanism chooses a phase $\varphi_\ell$ and supplies an accessible orthonormal classical label $|\ell\rangle$. Define
+
+$$
+\mathcal N_{\rm flag}(X)=\sum_{\ell=1}^s
+p_\ell|\ell\rangle\langle\ell|\otimes N_{\varphi_\ell}(X),
+\qquad \overline N=\sum_{\ell=1}^s p_\ell N_{\varphi_\ell}.
+\tag{P.55}
+$$
+
+The first channel supplies the record; the second discards it. Neither definition supposes that an unknown phase can be learned for free from $N_\varphi$.
+
+**Theorem 13.2 (the exact recovery cost of discarding the record).** With the same whole-output recovery convention,
+
+$$
+\begin{aligned}
+\delta(\mathcal N_{\rm flag})&=1-r,\\
+\delta(\overline N)&=1-r|\mu|,\qquad
+\mu=\sum_\ell p_\ell e^{i\varphi_\ell}.
+\end{aligned}
+\tag{P.56}
+$$
+
+Thus the increase is $r(1-|\mu|)$, even though every individual phase channel has the same recovery error and the same native candidate outputs.
+
+Proof. For the upper bound with records, measure the supplied label and use $R_{t_\ell}$ with $t_\ell=e^{-i\varphi_\ell}\overline d$. Each resulting channel is the same $\Psi_r$ of Theorem 8.1, so the error is $1-r$.
+
+For a lower bound let $\mathcal R$ be an arbitrary recovery of the flagged channel. Its restriction $R_\ell(X)=\mathcal R(|\ell\rangle\langle\ell|\otimes X)$ is a CPTP map for each label. Theorem 8.1 assigns it one vector $t_\ell$ of norm at most one. Testing the same unit-trace-norm matrix $E_{02}$ and its $(0,2)$ output entry gives
+
+$$
+\|\mathcal R\mathcal N_{\rm flag}-\mathrm{id}_3\|_\diamond
+\geq|1-h|,\qquad
+h=\sum_\ell p_\ell r e^{i\varphi_\ell}d\cdot t_\ell,
+\qquad |h|\leq r.
+\tag{P.57}
+$$
+
+Hence the error is at least $1-r$. No cancellation between branch errors is assumed. For the channel without records, linearity of (P.25) identifies its parameter as $\overline w=r\mu d$, still in the fiber because $|\mu|\leq1$. Theorem 8.2 gives its error in (P.56). $\square$
+
+**Definition 13.3 (a specified diffusion model and its distinct population law).** For an unrecorded real Gaussian phase $\varphi_t$ of mean $\omega t$ and variance $2Dt$, with $D\geq0$ and $t\geq0$, the same finite-dimensional channel integral has $\mu_t=e^{i\omega t-Dt}$. Consequently its error is $1-re^{-Dt}$ by (P.56). The Gaussian characteristic-function identity is a standard probability input; the resulting error is an application to this fiber, not a derivation of $D$ from native gates. For number-phase evolution on a number basis, the corresponding average obeys
+
+$$
+\rho_{mn}(t)=e^{-i\omega(m-n)t-D(m-n)^2t}\rho_{mn}(0).
+\tag{P.58}
+$$
+
+In particular every $\rho_{nn}$ is unchanged. This phase averaging is dephasing. A transfer of joint occupation into recorded output events requires an additional instrument, such as the one in [Collective Oscillators and Record Capacity, §4](AURIC_COLLECTIVE_OSCILLATORS_AND_RECORD_CAPACITY.md#4-联合占据转移与记录时间的资源差异).
+
+The source-specific results (P.48), (P.51) and (P.56) are repo-derived applications of the existing exact fiber metric and recovery theorems. General gluing and coherent-control antecedents retain the attribution of Definition 10.3. The circle does not reconstruct an unknown channel, supply a native decoder, or identify phase uncertainty with a loss of population.
+
+## 追加锚（本行以下为增补区）
+
+## 14. Partial phase records and their exact finite alphabet budget
+
+**Definition 14.1 (accessible input-independent record).** Use the fixed orbit of Definition 11.1, with $w_\varphi=re^{i\varphi}d$, $\|d\|_2=1$, and the same feasible radius $r$. Write $N(w)$ for the channel with weighted coherence vector $w$ in (P.25). Let $\Phi$ be a random phase and $Y$ a finite or countable classical record. Their joint law is independent of the unknown logical input. Set
+
+$$
+p_y=\Pr(Y=y),\qquad m_y=\mathbb E[e^{i\Phi}\mid Y=y],\qquad
+c(Y)=\sum_y p_y|m_y|.
+\tag{P.59}
+$$
+
+Zero-probability labels may be omitted. The supplied record and quantum output form the channel
+
+$$
+\mathcal N_Y(X)=\sum_y p_y|y\rangle\langle y|\otimes N(rm_yd)(X).
+\tag{P.60}
+$$
+
+For countably many labels the sum converges in trace norm. The recovery can read this actual label and access the entire five-dimensional output, as in Theorems 8.1–8.2. There is no additional phase reference correlated with $\Phi$. Since $|m_y|\leq1$, every conditional vector remains in the original feasible fiber. Recording, encoding and accessing $Y$ are supplied resources, not consequences of the channel's definition.
+
+**Theorem 14.2 (partial-record recovery and finite alphabet capacity).** Under Definition 14.1,
+
+$$
+\delta(\mathcal N_Y)=1-rc(Y),\qquad
+1-c(Y)=\frac12\inf_{|\widehat u(Y)|=1}
+\mathbb E|e^{i\Phi}-\widehat u(Y)|^2.
+\tag{P.61}
+$$
+
+If $\Phi$ is uniform on the circle and $Y$ has at most $K\geq1$ values, even allowing arbitrary randomized encoders, then
+
+$$
+\begin{aligned}
+\max_Y c(Y)&=\frac K\pi\sin\frac\pi K,\\
+\min_Y\delta(\mathcal N_Y)&=1-r\frac K\pi\sin\frac\pi K.
+\end{aligned}
+\tag{P.62}
+$$
+
+An equal-arc label attains both optima. For a fixed-width $b$-bit record, $K=2^b$, and fixed $r$,
+
+$$
+\delta_b-(1-r)=\frac{r\pi^2}{6}4^{-b}+O(16^{-b})
+\quad(b\to\infty).
+\tag{P.63}
+$$
+
+Proof. On branch $y$, Theorem 8.1 supplies a decoder with
+$t_y=e^{-i\arg m_y}\overline d$ when $m_y\ne0$; any feasible vector works when $m_y=0$. Its composition is $\Psi_{r|m_y|}$. Measuring the label and applying these decoders gives $\Psi_{rc(Y)}$, with error $1-rc(Y)$.
+
+Conversely, an arbitrary recovery restricts on each label to a CPTP map, with one budget vector $t_y$ satisfying $\|t_y\|_2\leq1$. The same $E_{02}$ test used in (P.57) gives
+
+$$
+\|\mathcal R\mathcal N_Y-\mathrm{id}_3\|_\diamond\geq|1-h|,
+\qquad h=r\sum_y p_ym_yd\cdot t_y,
+\qquad |h|\leq rc(Y).
+\tag{P.64}
+$$
+
+This proves the first formula. Expanding the squared chordal loss gives
+$2-2\operatorname{Re}\mathbb E[e^{i\Phi}\overline{\widehat u(Y)}]$.
+Conditioning on $Y$ makes its minimum $2-2\sum_yp_y|m_y|$, attained by aligning each estimate with $m_y$. This proves the risk identity.
+
+For (P.62), the circular quantization value is a literature input: Pandey and Roychowdhury, [*Constrained Quantization for Probability Distributions*, arXiv:2305.11110v9, Theorem 4.3 and Propositions 4.1–4.2](https://arxiv.org/html/2305.11110v9), give distortion $a^2+1-2aK\sin(\pi/K)/\pi$ for reconstruction on the radius-$a$ circle. Set $a=1$ and use (P.61). The following fixed-mass argument also verifies the scope for arbitrary randomized labels directly; neither the sine constant nor equal-arc quantization is a new result here. Describe every randomized encoder by measurable functions $0\leq q_y(\varphi)\leq1$, with $\sum_{y=1}^Kq_y(\varphi)=1$ almost everywhere. Define
+
+$$
+p_y=\frac1{2\pi}\int_0^{2\pi}q_y(\varphi)\,d\varphi,
+\qquad v_y=\frac1{2\pi}\int_0^{2\pi}e^{i\varphi}q_y(\varphi)\,d\varphi.
+\tag{P.65}
+$$
+
+Then $c(Y)=\sum_y|v_y|$. The next rearrangement is the classical fixed-mass maximization of a linear integral, often called the bathtub principle; see Lieb and Loss, [*Analysis*](https://doi.org/10.1090/gsm/014). It is an intermediate circular quantization argument, not a new general rearrangement theorem. Choose $\theta_y=\arg v_y$ (arbitrary for $v_y=0$), and let $A_y$ be the centered circular arc of length $2\pi p_y$. With $b_y=\cos(\pi p_y)$,
+
+$$
+(q_y-\mathbf1_{A_y})(\cos(\varphi-\theta_y)-b_y)\leq0
+\quad\hbox{almost everywhere}.
+$$
+
+Inside the arc the two factors have opposite signs; outside the arc they also do. Their mass difference integrates to zero. Thus
+
+$$
+|v_y|\leq\frac1{2\pi}\int_{A_y}\cos(\varphi-\theta_y)\,d\varphi
+=\frac{\sin(\pi p_y)}\pi.
+\tag{P.66}
+$$
+
+The formula includes $p_y=0,1$. Concavity of sine on $[0,\pi]$, $\sum_yp_y=1$, and Jensen's inequality give $\sum_y|v_y|\leq K\sin(\pi/K)/\pi$. Disjoint equal arcs realize equality, with deterministic labels. Taylor expansion of this value gives (P.63). $\square$
+
+**Definition 14.3 (objective and attribution).** The source-specific content of Theorem 14.2 is the exact conversion of posterior circular estimation risk and the cited finite alphabet capacity into whole-output recovery error in the AURIC fiber; it is repo-derived from Theorem 8.1. The squared-chord estimation identity, the quantization optimum and circular fixed-mass argument are attributed intermediates. The diamond norm is taken after averaging the unknown phase conditional on the supplied record. It is not the worst-case unknown-phase objective of Theorem 12.2. The equal-arc optimum allows any measurable encoder; an implementation with restricted native gates must separately realize that encoder and count all accessible side information, including timestamps and real-valued operands.
+
+## 15. Increasing accessible records and the phase-recovery limit
+
+**Definition 15.1 (a fixed target and nested actual records).** Fix one random unit complex number $X=e^{i\Phi}$ throughout the experiment. Let $\mathcal F_n$ be the sigma-algebra generated by the observer's actual accessible finite or countable record at stage $n$, with $\mathcal F_n\subseteq\mathcal F_{n+1}$. Put
+
+$$
+Z_n=\mathbb E[X\mid\mathcal F_n],\qquad
+c_n=\mathbb E|Z_n|,\qquad
+\mathcal F_\infty=\sigma\left(\bigcup_n\mathcal F_n\right),
+\qquad \delta_n=1-rc_n.
+\tag{P.67}
+$$
+
+By Theorem 14.2, $\delta_n$ is the optimal error for the effective channel supplied with that stage's record. This definition does not replace the fixed target by a newly diffusing phase at every stage.
+
+**Theorem 15.2 (recoverable phase in the accessible limit).** Under Definition 15.1,
+
+$$
+\begin{aligned}
+c_n&\uparrow\mathbb E|\mathbb E[X\mid\mathcal F_\infty]|,\\
+\delta_n&\downarrow1-r\mathbb E|\mathbb E[X\mid\mathcal F_\infty]|,\\
+\lim_nc_n=1&\quad\Longleftrightarrow\quad
+X\text{ is }\mathcal F_\infty\text{-measurable up to null sets}.
+\end{aligned}
+\tag{P.68}
+$$
+
+For $r>0$, the last condition is equivalent to $\delta_n\to1-r$; for $r=0$ all recovery errors are one regardless of the record.
+
+Proof. Use the standard upward convergence theorem for conditional expectations as an intermediate, with the following $L^2$ argument fixing its hypotheses. The tower property and conditional Jensen inequality give
+
+$$
+|Z_n|\leq\mathbb E[|Z_{n+1}|\mid\mathcal F_n],
+\qquad c_n\leq c_{n+1}.
+$$
+
+Conditional expectation is an orthogonal projection in $L^2$. For $j>i$,
+$\|Z_j-Z_i\|_2^2=\|Z_j\|_2^2-\|Z_i\|_2^2$, while $\|Z_n\|_2\leq1$.
+Hence $Z_n$ has an $L^2$ limit $Z$. A subsequence converges almost surely, making $Z$ measurable in $\mathcal F_\infty$. For any event in any $\mathcal F_i$, the defining conditional-integral identity passes to the limit. The union of the increasing sigma-algebras is an algebra generating $\mathcal F_\infty$; the monotone-class argument extends that identity to every event in $\mathcal F_\infty$. Therefore $Z=\mathbb E[X\mid\mathcal F_\infty]$.
+
+The inequality $||Z_n|-|Z||\leq|Z_n-Z|$ gives convergence of the expected moduli. If its limit is one, $|Z|\leq1$ implies $|Z|=1$ almost surely. Orthogonal projection then gives
+
+$$
+\mathbb E|X-Z|^2=1-\mathbb E|Z|^2=0.
+$$
+
+Thus $X=Z$ almost surely. The converse follows by conditional expectation and the convergence already proved. Substituting (P.67) proves all recovery statements. No recovery operation with a physically installed infinite register is required for these finite-stage limits. $\square$
+
+**Proposition 15.3 (record refinement need not improve each realized posterior).** There is a refinement of the accessible record for which half the posterior phase magnitudes decrease while $c_n$ does not change. Consequently neither record length nor an individual realized posterior magnitude is a strictly increasing recovery value.
+
+Proof. Take $X\in\{1,-1\}$ with probabilities $3/4,1/4$, initially no record. Define the joint law
+
+$$
+\Pr(X=1,Y=0)=\tfrac14,\quad
+\Pr(X=-1,Y=0)=\tfrac14,\quad
+\Pr(X=1,Y=1)=\tfrac12.
+$$
+
+The initial modulus is $1/2$. Both labels have probability $1/2$, and their conditional means are respectively $0,1$. Thus one branch decreases to zero, but the expected modulus remains $1/2$, and the recovery error remains $1-r/2$. Adding any independent record also leaves $c_n$ unchanged. $\square$
+
+## 追加锚（本行以下为增补区）
+
+## 16. Readable phase length and recovery on the same AURIC orbit
+
+**Definition 16.1 (the fixed recovered probe).** Use precisely the feasible orbit of Definition 11.1, including $0<\beta\leq1/2$ and its ellipsoidal radius bound. Prepare the logical probe $|+_{02}\rangle=(|0\rangle+|2\rangle)/\sqrt2$ and use the single phase-independent recovery $R_{\overline d}$ of Theorem 8.1. On the ordered support $(|0\rangle,|2\rangle)$ its output is
+
+$$
+\rho_{r,\varphi}
+=R_{\overline d}N(w_\varphi)(|+_{02}\rangle\langle+_{02}|)
+=\frac12\begin{pmatrix}1&re^{i\varphi}\\re^{-i\varphi}&1\end{pmatrix}.
+\tag{P.69}
+$$
+
+For a differentiable state curve and a POVM $(E_y)$ define $p_y=\operatorname{tr}(\rho E_y)$ and $F_E=\sum_{y:p_y>0}(\partial_\varphi p_y)^2/p_y$. The local quantum Fisher information is the supremum over POVMs at the parameter value in question. This is the statistical distinguishability of this specified probe output, not an optimization over the original five-dimensional channel, inputs or ancillas. Arbitrary POVMs and the supplied probe/recovery are mathematical access assumptions; Assumption 1.2 does not install them as native operations.
+
+**Theorem 16.2 (AURIC probe sensitivity and the distinct recovery deficit).** For the same orbit and output (P.69),
+
+$$
+F_Q(\rho_{r,\varphi})=r^2,\qquad
+d\ell^2=\tfrac14F_Q\,d\varphi^2,\qquad
+d\ell=\tfrac r2|d\varphi|,\qquad
+\delta(N(w_\varphi))=1-r.
+\tag{P.70}
+$$
+
+The statistical line element is invariant under differentiable reparameterization. At $r=0$ the recovery deficit is one while every phase outcome distribution from this probe is constant. Thus recovery deficit does not supply a strictly advancing phase clock.
+
+Proof. Theorem 8.1 gives $R_{\overline d}N(w_\varphi)=\Psi_{re^{i\varphi}}$, proving (P.69); Theorem 8.2 gives the last equality of (P.70). For the remaining step use the symmetric logarithmic derivative characterization of quantum Fisher information as an attributed intermediate: S. L. Braunstein and C. M. Caves, [*Statistical distance and the geometry of quantum states*, DOI:10.1103/PhysRevLett.72.3439](https://doi.org/10.1103/PhysRevLett.72.3439). In the usual Pauli convention put
+
+$$
+\rho=\tfrac12(I+r\cos\varphi\,\sigma_x-r\sin\varphi\,\sigma_y),\qquad
+L=r(-\sin\varphi\,\sigma_x-\cos\varphi\,\sigma_y).
+$$
+
+The Pauli anticommutation identities give $\partial_\varphi\rho=(\rho L+L\rho)/2$ and $L^2=r^2I$. For completeness, Hilbert--Schmidt Cauchy--Schwarz applied to $E_y^{1/2}\rho^{1/2}$ and $E_y^{1/2}L\rho^{1/2}$ gives
+
+$$
+(\partial_\varphi p_y)^2
+\leq p_y\operatorname{tr}(\rho L E_y L),\qquad
+F_E\leq\operatorname{tr}(\rho L^2)=r^2.
+$$
+
+The two spectral projections of $L$ attain equality when $r>0$: both probabilities are $1/2$ at the calibrated phase and their derivatives are $\pm r/2$. When $r=0$ the state is $I/2$ and the supremum is zero. This is also the standard equatorial-qubit specialization of W. Zhong et al., [*Fisher information under decoherence in Bloch representation*, Eq. (11), DOI:10.1103/PhysRevA.87.022337](https://arxiv.org/abs/1212.0917); the qubit Fisher formula is not a new general result here.
+
+If $\varphi=f(s)$, the chain rule gives $F_s=(f'(s))^2F_\varphi$, so $F_s ds^2/4=F_\varphi d\varphi^2/4$. The line element therefore needs no external parameter name. It still needs an actual clock correspondence to define a rate or a unit of physical time. Finally $\rho_{0,\varphi}=I/2$ proves the stated obstruction. $\square$
+
+**Definition 16.3 (phase, winding and calibration).** The map $z(\varphi)=e^{i\varphi}$ satisfies $\partial_\varphi z=iz$, while an internal clock correspondence $\varphi=f(\tau)$ gives $\partial_\tau z=if'(\tau)z$ and $d\ell/d\tau=r|f'(\tau)|/2$ when the length derivative is taken along increasing $\tau$. Neither the Euler identity nor (P.70) determines $f$. A circle value identifies $\varphi$ only modulo $2\pi$; an unwrapped coordinate additionally requires a retained winding label and a chosen reference. The curve $(\cos\varphi,\sin\varphi,a\varphi)$ is such an augmented coordinate representation, not a deduction of an extra spatial dimension. No native calibration, winding register or physical time unit is supplied by these identities. The optimal local measurement in Theorem 16.2 can depend on the calibrated phase; a globally implementable estimation protocol requires its own readout and record contract.
+
+## 17. One persistent record model for recovery loss and phase sensitivity
+
+**Definition 17.1 (branch records on the physical output blocks).** On the five-dimensional output set
+
+$$
+\Pi=V_0V_0^\dagger+V_1V_1^\dagger,\qquad
+\Omega=HH^\dagger=|e_4\rangle\langle e_4|,\qquad \Pi+\Omega=I_5.
+$$
+
+At position $j$ supply a fresh record carrier with unit vectors $|e_{P,j}\rangle,|e_{Q,j}\rangle$. They are independent tensor factors, initially independent of the input. Record the fixed block distinction using the isometry
+
+$$
+F_jx=\Pi x\otimes|e_{P,j}\rangle+\Omega x\otimes|e_{Q,j}\rangle.
+$$
+
+During record construction, previously written factors are retained and are not recoupled, overwritten or reversed. The terminal recovery's access to them is specified separately. Put
+
+$$
+g_j=\langle e_{Q,j}|e_{P,j}\rangle,\quad c_j=|g_j|,\quad
+G_n=\prod_{j=1}^n g_j,\quad C_n=|G_n|,\quad G_0=C_0=1.
+\tag{P.71}
+$$
+
+Writing $F^{(n)}x=\Pi x\otimes E_P^{(n)}+\Omega x\otimes E_Q^{(n)}$ with $E_b^{(n)}=\bigotimes_{j=1}^n e_{b,j}$ describes one and the same finite joint realization. Erasing records means taking their partial trace; full quantum access means retaining the whole isometric output. These are different allowed-operation contracts, and neither is identified with the classical unknown-phase flags in Definition 14.1.
+
+**Theorem 17.2 (same-record recovery and readable-length law).** For Definition 17.1 applied after $N(w_\varphi)$, erasing the records gives exactly $N(G_nw_\varphi)$. Its optimal whole-five-output recovery error and the Fisher information of the fixed probe/recovery of Definition 16.1 obey
+
+$$
+\delta_n^{\rm erase}=1-rC_n,\qquad
+F_{Q,n}^{\rm probe}=r^2C_n^2,\qquad
+d\ell_n=\tfrac{rC_n}{2}|d\varphi|.
+\tag{P.72}
+$$
+
+For $c_j>0$ define $\Theta_n=-\log C_n$. Then
+
+$$
+\Theta_n=\sum_{j=1}^n-\log c_j,\qquad
+C_n\longrightarrow0\ \Longleftrightarrow\
+\sum_{j=1}^\infty-\log c_j=+\infty.
+\tag{P.73}
+$$
+
+In contrast, full quantum access to the records permits error $1-r$, and no smaller error. The joint recovered probe, before its records are discarded, has Fisher information $r^2$ for every finite $n$, including $C_n=0$. Hence a decrease in (P.72) is a restriction of access in this model, rather than destruction of the joint phase dependence.
+
+Proof. The orthogonality $\Pi\Omega=0$ makes $F^{(n)}$ an isometry, regardless of record overlap. The partial trace fixes diagonal blocks and multiplies $\Pi X\Omega$ by $\langle E_Q^{(n)}|E_P^{(n)}\rangle=G_n$. Equation (P.25) then gives $N(G_nw_\varphi)$. This vector is feasible since $|G_n|\leq1$. Theorem 8.2 gives its recovery error; (P.69) gives the probe off-diagonal entry $rG_ne^{i\varphi}/2$. A fixed phase shift $\arg G_n$ leaves Fisher information unchanged, so Theorem 16.2 proves (P.72), also at $G_n=0$.
+
+Full quantum access permits a CPTP left inverse of $\operatorname{Ad}_{F^{(n)}}$. Explicitly, with $F=F^{(n)}$, choose any fixed density matrix $\eta$ on the five-dimensional output and use
+
+$$
+\mathcal L(X)=F^\dagger XF+
+\operatorname{tr}[(I-FF^\dagger)X]\eta.
+$$
+
+Thus $\mathcal L\operatorname{Ad}_F=\mathrm{id}$ and the original recovery is achievable. Conversely any recovery of $\operatorname{Ad}_F N(w_\varphi)$ composes with $\operatorname{Ad}_F$ to give a recovery of $N(w_\varphi)$, so its error cannot be smaller than $1-r$.
+
+Apply $R_{\overline d}$ to the five-dimensional part of the joint probe. The result is
+
+$$
+\begin{aligned}
+\widetilde\rho_{n,\varphi}
+&=\tfrac12\bigl(|u_n\rangle\langle u_n|+|v_n\rangle\langle v_n|
++re^{i\varphi}|u_n\rangle\langle v_n|
++re^{-i\varphi}|v_n\rangle\langle u_n|\bigr),\\
+u_n&=|0\rangle E_P^{(n)},\qquad v_n=|2\rangle E_Q^{(n)}.
+\end{aligned}
+\tag{P.74}
+$$
+
+The vectors $u_n,v_n$ are orthonormal even if the record vectors overlap. Equation (P.74) is a parameter-independent isometric embedding of (P.69). Every POVM on its image pulls back to a qubit POVM, and every qubit POVM extends to the joint space, so its Fisher supremum is exactly $r^2$. This assertion concerns the recovered joint probe; it does not assert a value for the optimal Fisher information of the original five-output channel.
+
+The tensor-product inner product proves (P.71), and taking negative logarithms proves (P.73). If a factor vanishes, all later $C_n$ vanish and the extended strength is $+\infty$ from that stage onward; this denotes perfect binary record distinction, not infinite elapsed time. $\square$
+
+**Proposition 17.3 (strict differences with finite cumulative loss).** The same feasible orbit admits a fresh-record sequence with $c_j<1$ at every stage and $C_n\to e^{-1}>0$. For $r>0$, its erased-record recovery error tends to $1-re^{-1}$ and its fixed-probe Fisher information tends to $r^2e^{-2}>0$. Thus a new nonzero record distinction at every stage does not force unlimited strength or complete phase loss.
+
+Proof. Take a two-dimensional carrier at every position, $e_{P,j}=|0\rangle$ and $e_{Q,j}=c_j|0\rangle+\sqrt{1-c_j^2}|1\rangle$, with $c_j=e^{-2^{-j}}$. Then $\Theta_n=\sum_{j=1}^n2^{-j}=1-2^{-n}$, and Theorem 17.2 gives the limits. Conversely a uniform bound $-\log c_j\geq\eta>0$ implies $\Theta_n\geq n\eta$. These are respectively summable and nonsummable strengths, not assertions about physical rates. $\square$
+
+**Definition 17.4 (record scope and mathematical attribution).** Tensor-product dephasing and quantum Fisher information under decoherence are standard intermediates, as in Zhong et al. cited in Theorem 16.2. The constant-overlap record model is already [the history-record volume, Definition 119.1 and Theorem 119.2](AURIC_FIB_HISTORY_RECORDS_TIME_ARROW.md#119-持续追加可区分记录的强度与熵). The present application uses the actual AURIC output projectors and the same record isometry to obtain the joint recovery, erased recovery and fixed-probe length formulas (P.72)--(P.74); it makes no priority claim for the product/logarithm criterion or isometric reversibility. $\Theta_n$ measures one binary distinction. Its divergence neither counts indefinitely many perfectly readable histories nor implies that Shannon information about a fixed binary label is unbounded. Fresh tensor storage, preservation and native synthesis are additional premises. Classical readout of only part of the records need not implement the full-quantum left inverse used above.
+
+## 追加锚（本行以下为增补区）

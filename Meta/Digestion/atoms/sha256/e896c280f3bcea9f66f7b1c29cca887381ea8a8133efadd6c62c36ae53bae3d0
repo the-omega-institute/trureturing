@@ -1,0 +1,29 @@
+### 12.3 有限确定更新的联合细化
+
+上面的核条件在确定性有限模型中有一个直接的稳定算法。令 $F_a:Z\to Z$
+为每个动作的总更新，令 $\ell_a:Z\to L_a$ 把合法性、事件、记录、时钟和失败原因
+合并为一个可见标签。四种当前表示的联合读出为
+
+$$
+J(z)=\bigl(r_{\mathrm{space}}(z),r_{\mathrm{time}}(z),
+r_{\mathrm{boundary}}(z),r_{\mathrm{memory}}(z)\bigr).
+$$
+
+定义递减关系链
+
+$$
+R_0=\ker J,
+\qquad
+R_{n+1}=\{(z,u)\in R_n:\forall a\in\mathcal A,
+\ell_a(z)=\ell_a(u)\ \land\ (F_a z,F_a u)\in R_n\}.
+\tag{TM.1209}
+$$
+
+令 $\Phi(z)$ 收集初始 $J$ 值及每个有限动作词的全部标签和到达点的 $J$ 值。
+则
+
+$$
+R_\infty:=\bigcap_{n\ge0}R_n=\ker\Phi.
+\tag{TM.1210}
+$$
+

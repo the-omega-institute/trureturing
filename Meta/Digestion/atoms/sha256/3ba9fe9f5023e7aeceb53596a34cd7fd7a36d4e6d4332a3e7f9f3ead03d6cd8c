@@ -1,0 +1,48 @@
+**定义 295.1（有限证据核与历史后验）。** 设 $K$ 是有限候选类集，$\mathcal A$ 是有限干预集。对每个 $a\in\mathcal A$，给定有限结果字母表 $Y_a$ 和证据核
+
+$$
+L_a:Y_a\times K\longrightarrow[0,1],
+\qquad
+\sum_{y\in Y_a}L_a(y\mid k)=1.
+$$
+
+先验 $p$ 满足 $p(k)\ge0$ 且 $\sum_{k\in K}p(k)=1$。一条有限记录词写成
+
+$$
+ h=((a_1,y_1),\ldots,(a_m,y_m)).
+$$
+
+定义其类条件似然、证据和后验为
+
+$$
+\Lambda_h(k)=\prod_{i=1}^{m}L_{a_i}(y_i\mid k),
+\qquad
+Z_h=\sum_{k\in K}p(k)\Lambda_h(k),
+$$
+
+$$
+\boxed{
+ p_h(k)=\frac{p(k)\Lambda_h(k)}{Z_h}
+ }
+\tag{295.1}
+$$
+
+其中只对 $Z_h>0$ 的可实现历史定义后验。给定后验 $p_h$，下一干预 $a$ 的预测结果分布为
+
+$$
+\boxed{
+ q_{p_h}^{a}(y)=\sum_{k\in K}p_h(k)L_a(y\mid k).
+}
+\tag{295.2}
+$$
+
+若 $q_{p_h}^{a}(y)>0$，取得结果 $y$ 后的后验为
+
+$$
+\boxed{
+ p_h^{a,y}(k)=
+ \frac{p_h(k)L_a(y\mid k)}{q_{p_h}^{a}(y)}.
+}
+\tag{295.3}
+$$
+

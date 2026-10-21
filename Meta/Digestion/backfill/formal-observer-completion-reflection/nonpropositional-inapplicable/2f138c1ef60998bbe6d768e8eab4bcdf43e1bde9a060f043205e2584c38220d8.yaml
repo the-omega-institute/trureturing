@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:2f138c1ef60998bbe6d768e8eab4bcdf43e1bde9a060f043205e2584c38220d8
+  normalized_sha256: sha256:2f138c1ef60998bbe6d768e8eab4bcdf43e1bde9a060f043205e2584c38220d8
+cas_ref: sha256:2f138c1ef60998bbe6d768e8eab4bcdf43e1bde9a060f043205e2584c38220d8
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 量子通道、对偶和初始 operator system 的设定。不另主张独立数学命题。
+    previous_atom_id: 6ddbb193455d28fa75434d8750b6124cd0d7d74e194dc678304478c04589fe56
+    next_atom_id: b4dc21b6cfafd074f65cbba7deeda2ceb75f5b52c0c9352016d728e763a34493

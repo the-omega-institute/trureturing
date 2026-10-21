@@ -31,6 +31,15 @@ internal sealed class SteeringEllipsoidCHSHDocument : IScribeDocumentDefinition
             Node("claim", "Conjecture 1", ClaimFormula(),
                 "Section V, Conjecture 1: Let rho be a general two-qubit state with its steering ellipsoid centred at c. The CHSH nonlocality is tightly bounded as beta(rho) <= max[2 sqrt(2(1 - c)), 2]. Here c is the Euclidean length of D5.S3.Quantum.Entanglement.SteeringEllipsoidFullyEntangledFraction.centre. The first clause gives the inequality for every positive semidefinite matrix of trace one. The second expresses tightness as a supremum: for each t in [0, 1] and each epsilon > 0 there is a positive semidefinite trace-one matrix with centre length exactly t and CHSH value strictly greater than bound(t) - epsilon.",
                 "claim", DescribeRole.Definition, AssessedProvenance.FromLiterature(Source)),
+            Node("sigma-succ", "Agreement of Pauli indexing", SigmaSuccFormula(),
+                "For every index i in Fin 3, the Pauli operator sigma at the successor index in Fin 4 equals pauli i.",
+                "sigma_succ", DescribeRole.Theorem, AssessedProvenance.FromRepo(Source)),
+            Node("vlen-sq", "Squared Euclidean length", VlenSqFormula(),
+                "For every real three-vector, the square of its Euclidean length equals its dot product with itself.",
+                "vlen_sq", DescribeRole.Theorem, AssessedProvenance.FromRepo(Source)),
+            Node("normalized-unit", "Unit normalization", NormalizedUnitFormula(),
+                "Every nonzero real three-vector becomes unit length after division by its Euclidean length, and rescaling the normalized vector recovers the original vector.",
+                "normalized_unit", DescribeRole.Theorem, AssessedProvenance.FromRepo(Source)),
             Node("trace-pauli-kronecker-eq-corr", "Pauli expectations equal the correlations", TracePauliKroneckerEqCorrFormula(),
                 "For every Hermitian complex two-qubit operator rho and every pair of Pauli indices i and j in Fin 3, the trace of rho times the corresponding Kronecker product equals its real correlation entry embedded in the complex numbers. Hermiticity makes this trace real.",
                 "trace_pauli_kronecker_eq_corr", DescribeRole.Theorem, AssessedProvenance.FromRepo(Source)),
@@ -128,6 +137,36 @@ internal sealed class SteeringEllipsoidCHSHDocument : IScribeDocumentDefinition
     private static Formula Spin(Formula vector) => QCall(SpinOwner, "spin", vector);
     private static Formula Bell(Formula a, Formula aPrime, Formula b, Formula bPrime) =>
         Call("bell", a, aPrime, b, bPrime);
+    private static Formula SigmaSuccFormula()
+    {
+        Formula i = F.Id("i");
+        return All("i", Fin(3), EqTo(
+            QCall(SpinOwner, "sigma", QCall("Fin", "succ", i)),
+            QCall(Companion, "pauli", i)));
+    }
+
+    private static Formula VlenSqFormula()
+    {
+        Formula u = F.Id("u");
+        return All("u", Direction(), EqTo(
+            new Formula.Power(Parenthesized(Vlen(u)), D(2)),
+            Call("dotProduct", u, u)));
+    }
+
+    private static Formula NormalizedUnitFormula()
+    {
+        Formula u = F.Id("u");
+        Formula normalized = Seq(Parenthesized(Call("inv", Vlen(u))), Sp, Cdot, Sp,
+            Parenthesized(u));
+        Formula recovered = Seq(Parenthesized(Vlen(u)), Sp, Cdot, Sp,
+            Parenthesized(normalized));
+        return All("u", Direction(), Implies(
+            Rel(u, FormulaRelationOperator.NotEqual, D(0)),
+            And(
+                EqTo(Vlen(normalized), D(1)),
+                EqTo(recovered, u))));
+    }
+
     private static Formula TracePauliKroneckerEqCorrFormula()
     {
         Formula rho = F.Id("rho"), i = F.Id("i"), j = F.Id("j");

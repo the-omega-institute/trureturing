@@ -1,0 +1,31 @@
+**Definition 19.4 (Effective inputs and separate resource coordinates).** The statistical theorems allow arbitrary fixed real $q,P,S$ satisfying their hypotheses. They do not treat an arbitrary known real as a finite input string. An explicit sufficient effectivity contract is rational $q\in(0,1)$, rational coefficients of $P,S$, and rational $\alpha\in(0,1/2)$, each supplied as binary integers with positive denominators. All computations below use these descriptions of the two promised models; no probability is read from the realized source.
+
+Under this contract, $H$ is computed by its polynomial finite difference and zero constant, and (19.8) gives $Z_n,Z_H$, means and waiting-time means by rational arithmetic. The finite sums for $u_J,v_J$ are rational. Hence whenever their difference is nonzero, $N,W$ and the integer count threshold in (19.17) can be computed exactly. For the center one can always use $J=1$; for an endpoint implementation, (19.18) is also an exact rational computation and its signal can be checked before selection. If it is zero, use $J=1$. The positive asymptotic (19.23) proves that this fallback is unnecessary sufficiently near one. No cost-free evaluation of $\log q$ is needed for this counting implementation.
+
+The general likelihood rule has an effective version too. Compute rational upper enclosures for
+
+$$
+ A\le\sum_{k=1}^M\sqrt{p_kh_k}+\sqrt{U_{M+1}V_{M+1}}.
+\tag{19.25}
+$$
+
+Cauchy–Schwarz bounds the omitted tail. Rational interval bisection encloses each square root. Increasing $M$ and reducing the total enclosure width to zero eventually produces a rational $\overline A<1$, because $A<1$ and both tails tend to zero. Choose $N$ by rational comparisons until $\overline A^N\le\alpha/2$, then use the rational mean deadline in (17.17). This is a terminating preprocessing procedure at each rational input. A sharper deadline from (17.15) can instead use any rational $z\in(1,1/q)$; its powers, normalizers and bound are rational. The refinement count, rational operand lengths, all preprocessing storage and operations, and the integer descriptions of the selected parameters are paid separately; no uniform efficient preprocessing bound over this family is asserted.
+
+In the likelihood rule, a completed gap contributes the exact rational factor
+
+$$
+ \frac{p_k}{h_k}=c\frac{k^n}{H(k)}.
+\tag{19.26}
+$$
+
+The common $q^k$ cancels. Let $B$ bound the bit lengths of the precomputed normalizer and a common-denominator coefficient description of $H$, including the model description. For gaps $k\le W$, Horner evaluation and integer powers give factor numerator and denominator lengths $O(B+n\log(W+1))$. Write $L=O(B+n\log(W+1))$ for such a bound. Multiplying the $N$ factors without fraction reduction uses $O(NL)$ accumulator bits, in addition to the model and $O(\log(W+2)+\log(N+2))$ counter bits. Schoolbook multiplication of an $O(jL)$-bit accumulated product by an $O(L)$-bit factor costs $O(jL^2)$; Horner evaluation and powers cost $O(nL^2)$ per gap. Thus a conservative post-preprocessing bound is
+
+$$
+ O\bigl(W\log(W+2)+N(n+N)L^2\bigr)
+\tag{19.27}
+$$
+
+bit operations, with arithmetic workspace charged. This bound is only an implementation upper bound. It is not a constant-memory real accumulator. The counting rule avoids this growing product online by charging its threshold computation in advance, and still attains both center endpoint orders.
+
+The complete generating instruments for the center and for the exact ninth-degree law have complex memory dimension $D=6$ by Sections 11 and 15. That producer dimension, the observer's control and arithmetic workspace, parameter preprocessing, read count, optional raw-record storage, and termination protocol are different coordinates. Theorems 19.1–19.3 compare the observed laws of these actual instruments; they do not identify any of these observer resources with $D$ or prove an unconditional minimum generator dimension.
+

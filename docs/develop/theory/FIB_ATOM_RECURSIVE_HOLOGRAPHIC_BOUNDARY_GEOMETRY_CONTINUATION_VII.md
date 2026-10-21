@@ -1,0 +1,1720 @@
+# FIB atomic boundary geometry VII: pointwise number-orbit separability
+
+**Convention 177.0 (Predecessor and numbering).** This volume continues
+[Continuation VI, §§169–176](https://github.com/the-omega-institute/trureturing/blob/c420a44f812a4a41fafcb10a2a48995255fbd503/docs/develop/theory/FIB_ATOM_RECURSIVE_HOLOGRAPHIC_BOUNDARY_GEOMETRY_CONTINUATION_VI.md).
+References numbered 139–176 refer to that volume; numbers 177–185 refer
+to this volume. The sector orbit, tensor cut and PPT criterion of VI
+§§169–170 are the prerequisites for the common-factor construction below.
+
+## 177. AURIC FIB ATOM boundary geometry: finite number orbits and pointwise separability
+
+The finite Gibbs construction of §§139–146 fixes a three-mode model with
+one-particle Hamiltonian $H=I_3-|V\rangle\langle V|$, where $\|V\|=1$.
+Its spectrum is $(0,1,1)$. Retaining the zero mode and all fermionic
+occupations gives the sector weights
+
+$$
+N=0:(1),\qquad N=1:(1,t,t),\qquad
+N=2:(t,t,t^2),\qquad N=3:(t^2),
+\tag{177.1}
+$$
+
+where $t=e^{-\beta}\in(0,1]$, $s=1-t$, and $Z=2(1+t)^2$.
+There is no chemical potential or sector conditioning.
+
+Fix the A-first creation order $(\ell,r,R)$ and the ordinary tensor
+identification
+
+$$
+|n_A,n_r,n_R\rangle
+=(a_\ell^\dagger)^{n_A}(a_r^\dagger)^{n_r}
+ (a_R^\dagger)^{n_R}|\Omega\rangle
+=|n_A\rangle\otimes|n_r,n_R\rangle_B.
+$$
+
+Alice holds the single mode $\ell$; Bob holds $(r,R)$, with basis
+
+$$
+b_0=|00\rangle,\qquad b_1=|01\rangle\;(R),\qquad
+b_2=|10\rangle\;(r),\qquad b_{12}=|11\rangle\;(r\wedge R).
+$$
+
+Thus the product order is
+$(0b_0,0b_1,0b_2,0b_{12},1b_0,1b_1,1b_2,1b_{12})$.
+Use sector orders $(\ell,R,r)$ for $N=1$ and
+$(r\wedge R,\ell\wedge R,\ell\wedge r)$ for $N=2$.
+Every transpose below is the ordinary transpose of Alice's matrix indices
+in this fixed tensor identification.
+
+**Notation 177.1 (Independent sector-orbit family of VI (169.2)).** Let
+$v=(\alpha,u)$ and $w=(\gamma,h)$ be independent unit vectors in
+$\mathbb C\oplus\mathbb C^2$. In the stated sector orders define
+
+$$
+R(v,w)=1\oplus(tI_3+s vv^*)\oplus(tI_3-ts ww^*)\oplus t^2,
+\qquad \rho(v,w)=\frac{R(v,w)}Z.
+\tag{177.2}
+$$
+
+By Continuation VI §169, (177.2) is the complete orbit with spectra
+(177.1) under independent global $U(3)$ actions in the $N=1$ and $N=2$
+sectors. This number-preserving orbit enlarges passive one-particle
+operations. Its actions are not assumed to be local at $A|B$ or physically
+available. The native model supplies the spectra and cut; independence of
+the two rays remains the enlarged mathematical premise of VI (169.2).
+
+The eigenvalues of $R$ are $1,1,t,t,t,t,t^2,t^2$. Hence $R\succ0$ and
+$\operatorname{tr}R=Z$ throughout the stated range. Define
+
+$$
+x=|\alpha|^2,\qquad y=|\gamma|^2,\qquad z=|u^*h|^2,
+\qquad \|u\|^2=1-x,\quad \|h\|^2=1-y.
+\tag{177.3}
+$$
+
+Here $x,y,z$ are scalar data of the specified rays. Their use in a
+separability test does not assert that they classify entire states under
+local unitaries.
+
+## 178. Matrix notation and the published Schur criterion
+
+Put
+
+$$
+\begin{aligned}
+D&=tI_2+suu^*,& E&=tI_2-tshh^*,\\
+f&=s\bar\alpha u,& g&=-ts\bar\gamma h,\\
+c&=t+sx,& b&=t(1-sy).
+\end{aligned}
+\tag{178.1}
+$$
+
+The vectors $f,g$ are columns. In the declared product order, the entire
+matrix is
+
+$$
+R=\begin{pmatrix}
+1&0&0&0&0&0&0&0\\
+0&D_{11}&D_{12}&0&f_1&0&0&0\\
+0&D_{21}&D_{22}&0&f_2&0&0&0\\
+0&0&0&b&0&\bar g_1&\bar g_2&0\\
+0&\bar f_1&\bar f_2&0&c&0&0&0\\
+0&0&0&g_1&0&E_{11}&E_{12}&0\\
+0&0&0&g_2&0&E_{21}&E_{22}&0\\
+0&0&0&0&0&0&0&t^2
+\end{pmatrix}.
+\tag{178.2}
+$$
+
+Equivalently, in Alice blocks $`R=\begin{pmatrix}A_0&C\\C^*&A_1\end{pmatrix}`$,
+with Bob block sizes $(1,2,1)$,
+
+$$
+A_0=\operatorname{diag}(1,D,b),\qquad
+A_1=\operatorname{diag}(c,E,t^2),\qquad
+C=\begin{pmatrix}0&0&0\\f&0&0\\0&g^*&0\end{pmatrix}.
+\tag{178.3}
+$$
+
+In particular the original number-sector blocks are
+$`\begin{pmatrix}c&f^*\\f&D\end{pmatrix}`$ and
+$`\begin{pmatrix}b&g^*\\g&E\end{pmatrix}`$.
+The conjugations in (178.2) are retained for arbitrary complex rays.
+
+**Notation 178.1 (Schur data from Continuation VI §170).** The common-factor
+construction uses the exact PPT criterion (170.1)–(170.5) of VI. In the
+notation (178.1), its scalar quantities are
+
+$$
+\begin{aligned}
+q_0&=f^*E^{-1}f
+=\frac{s^2x}{t}\left((1-x)+\frac{sz}{t+sy}\right),\\
+q_3&=\frac{g^*D^{-1}g}{t^2}
+=\frac{s^2y}{t}\left((1-y)-\frac{sz}{t+s(1-x)}\right).
+\end{aligned}
+\tag{178.4}
+$$
+
+Thus $\rho^{T_A}\succeq0$ if and only if $q_0\le1$ and $q_3\le1$,
+including equality. The same published block reduction has singleton
+entries $c$ on $|1b_0\rangle$ and $b$ on $|0b_{12}\rangle$, and blocks
+
+$$
+M_0=\begin{pmatrix}1&f^*\\f&E\end{pmatrix}
+\quad\text{on }(0b_0,1b_1,1b_2),\qquad
+M_3=\begin{pmatrix}t^2&g^*\\g&D\end{pmatrix}
+\quad\text{on }(1b_{12},0b_1,0b_2).
+\tag{178.5}
+$$
+
+The published bounds $D\succeq tI_2$ and $E\succeq t^2I_2$ ensure
+invertibility. For the endpoint calculations in the common-factor identity,
+the rank-one inverse formulas are
+
+$$
+\begin{aligned}
+D^{-1}&=\frac1t\left(I_2-
+ \frac{s}{t+s(1-x)}uu^*\right),\\
+E^{-1}&=\frac1t\left(I_2+
+ \frac{s}{t+sy}hh^*\right).
+\end{aligned}
+\tag{178.6}
+$$
+
+Here $1-s\|h\|^2=t+sy$ and $t+s\|u\|^2=t+s(1-x)$ are
+strictly positive. The Schur residuals $1-q_0$ and $t^2(1-q_3)$
+from VI §170 enter the new product identity (180.1); the inverses in
+(178.6) also give its original-state endpoint residuals (180.5).
+
+## 179. One common factorization and eight product vectors
+
+Let $\iota(a)=a_1b_1+a_2b_2$ embed $\mathbb C^2$ into Bob's
+one-particle plane. Spectrally decompose the positive matrix
+
+$$
+D^{-1/2}ED^{-1/2}=U\Lambda U^*,\qquad
+\Lambda=\operatorname{diag}(\lambda_1,\lambda_2),\qquad
+\lambda_j>0,
+$$
+
+and set
+
+$$
+X=D^{1/2}U,\qquad x_j=Xe_j,\qquad
+\eta=X^{-1}f,\qquad \zeta=X^{-1}g.
+\tag{179.1}
+$$
+
+The columns $x_j$ are vectors, distinct from the scalar $x$ in (177.3).
+One and the same invertible $X$ gives
+
+$$
+\begin{aligned}
+D&=XX^*=\sum_{j=1}^2x_jx_j^*,&
+E&=X\Lambda X^*=\sum_{j=1}^2\lambda_jx_jx_j^*,\\
+f&=X\eta=\sum_{j=1}^2x_j\eta_j,&
+g&=X\zeta=\sum_{j=1}^2x_j\zeta_j.
+\end{aligned}
+\tag{179.2}
+$$
+
+This common congruence is an algebraic factorization used in the proof.
+It is not a transformation applied to the state or an assertion of
+independent local symmetries in the particle sectors.
+
+Define nonzero unnormalized product vectors
+
+$$
+\Psi_j=(|0\rangle+\sqrt{\lambda_j}|1\rangle)\otimes
+\left(\frac{\bar\eta_j}{\sqrt{\lambda_j}}b_0
+ +\iota(x_j)+\frac{\bar\zeta_j}{\sqrt{\lambda_j}}b_{12}\right).
+\tag{179.3}
+$$
+
+For $k=0,1,2,3$ put
+
+$$
+A_k=\operatorname{diag}(1,i^k),\qquad
+B_k=\operatorname{diag}(1,i^k,i^k,i^{2k}),\qquad L_k=A_k\otimes B_k,
+$$
+
+and use the finite product-phase average
+
+$$
+\mathcal T_4(Y)=\frac14\sum_{k=0}^3L_kYL_k^*.
+\tag{179.4}
+$$
+
+This is the product-phase average of VI (173.3): for total numbers
+$n,m\in\{0,1,2,3\}$,
+$\frac14\sum_{k=0}^3i^{k(n-m)}=\delta_{nm}$.
+It therefore deletes exactly the unequal-total-number coherences.
+Each $L_k\Psi_j$ remains an ordinary product vector.
+There are eight such vectors, without a real-phase restriction on
+$\alpha,u,\gamma,h$.
+
+## 180. The exact product-projector identity
+
+Write $P_{ab}=|a\rangle\langle a|\otimes|b\rangle\langle b|$
+for the normalized occupation-basis endpoint projectors.
+
+**Theorem 180.1 (Common-factor product identity).** For every member of
+(177.2), whether PPT or NPT, the following identity holds:
+
+$$
+\boxed{\begin{aligned}
+R={}&\sum_{j=1}^2\mathcal T_4(|\Psi_j\rangle\langle\Psi_j|)
+ +(1-q_0)P_{0b_0}\\
+ &+\frac{t}{t+s(1-x)}P_{1b_0}
+ +\frac{t^2}{t+sy}P_{0b_{12}}
+ +t^2(1-q_3)P_{1b_{12}}.
+\end{aligned}}
+\tag{180.1}
+$$
+
+Proof. In the fixed sector orders the components of $\Psi_j$ are
+
+$$
+\begin{array}{c|c}
+N&\text{component}\\ \hline
+0&\bar\eta_j/\sqrt{\lambda_j}\\
+1&(\bar\eta_j,x_j)^{\mathsf T}\\
+2&(\bar\zeta_j/\sqrt{\lambda_j},\sqrt{\lambda_j}x_j)^{\mathsf T}\\
+3&\bar\zeta_j
+\end{array}
+\tag{180.2}
+$$
+
+The phase average retains their four projectors and no cross-sector
+terms. Within $N=1$ the lower-left column is $x_j\eta_j$ and the
+upper-right row is $`\bar\eta_jx_j^*`$. Within $N=2$ these are
+$x_j\zeta_j$ and $`\bar\zeta_jx_j^*`$: the two square-root factors
+cancel. Summing over $j$ therefore gives exactly $`f,f^*,g,g^*`$.
+In particular the minus sign and conjugations defining $g$ in (178.1)
+are reconstructed, rather than removed by a change of phase convention.
+
+Let $S=\sum_j\mathcal T_4(|\Psi_j\rangle\langle\Psi_j|)$.
+The middle blocks are $D$ and $E$ by (179.2). All four endpoint sums are
+
+$$
+\begin{aligned}
+\sum_j\frac{|\eta_j|^2}{\lambda_j}
+ &=f^*X^{-*}\Lambda^{-1}X^{-1}f=f^*E^{-1}f=q_0,\\
+\sum_j|\eta_j|^2
+ &=f^*X^{-*}X^{-1}f=f^*D^{-1}f,\\
+\sum_j\frac{|\zeta_j|^2}{\lambda_j}
+ &=g^*X^{-*}\Lambda^{-1}X^{-1}g=g^*E^{-1}g,\\
+\sum_j|\zeta_j|^2
+ &=g^*X^{-*}X^{-1}g=g^*D^{-1}g=t^2q_3.
+\end{aligned}
+\tag{180.3}
+$$
+
+Here $`X^{-*}=(X^{-1})^*`$. Consequently the complete sector blocks of $S$
+are
+
+$$
+S_{N=0}=q_0,\qquad
+S_{N=1}=\begin{pmatrix}f^*D^{-1}f&f^*\\f&D\end{pmatrix},
+$$
+
+$$
+S_{N=2}=\begin{pmatrix}g^*E^{-1}g&g^*\\g&E\end{pmatrix},\qquad
+S_{N=3}=t^2q_3.
+\tag{180.4}
+$$
+
+These equations account for every off-diagonal entry and for both
+one-particle-plane diagonal blocks of (178.2). Only the four endpoint
+diagonals can differ. Besides $1-q_0$ and $t^2(1-q_3)$, the differences
+are the original-state Schur residuals
+
+$$
+\begin{aligned}
+c-f^*D^{-1}f
+ &=t+sx-\frac{s^2x(1-x)}{t+s(1-x)}
+ =\frac{t}{t+s(1-x)},\\
+b-g^*E^{-1}g
+ &=t(1-sy)-\frac{ts^2y(1-y)}{t+sy}
+ =\frac{t^2}{t+sy}.
+\end{aligned}
+\tag{180.5}
+$$
+
+For the first simplification, multiplying by $t+s(1-x)$ leaves
+$t^2+ts=t$. For the second, multiplying by $t+sy$ leaves
+$t[(1-sy)(t+sy)-s^2y(1-y)]=t^2$.
+This establishes all remaining entries and proves (180.1).
+
+## 181. The exact pointwise separable region
+
+**Theorem 181.1 (Pointwise classification at the fixed finite cut).**
+For every $0<t\le1$ and every pair of independent complex unit vectors
+$v,w$ in (177.2),
+
+$$
+\boxed{\rho(v,w)\text{ is ordinary }A|B\text{ tensor-separable}
+\ \Longleftrightarrow\ \rho(v,w)^{T_A}\succeq0
+\ \Longleftrightarrow\ q_0\le1\ \text{and}\ q_3\le1.}
+\tag{181.1}
+$$
+
+Whenever these conditions hold, at most twelve normalized pure product
+projectors suffice for a convex decomposition of $\rho$.
+
+Proof. Under the two inequalities, every residual coefficient in (180.1)
+is nonnegative; the middle two coefficients are strictly positive for
+$t>0$. Its other terms are the eight positive product projectors
+$\frac14|L_k\Psi_j\rangle\langle L_k\Psi_j|$.
+Dividing by $Z$ proves ordinary separability.
+
+Explicitly, write $a_{jk}=A_k(|0\rangle+\sqrt{\lambda_j}|1\rangle)$
+and let $b_{jk}$ be $B_k$ applied to the Bob factor in (179.3).
+Normalize both factors separately. The corresponding convex weight is
+
+$$
+p_{jk}=\frac{(1+\lambda_j)}{4Z}
+\left(\frac{|\eta_j|^2}{\lambda_j}+\|x_j\|^2
+ +\frac{|\zeta_j|^2}{\lambda_j}\right).
+\tag{181.2}
+$$
+
+The other four weights are the residuals in (180.1) divided by $Z$.
+All weights sum to one by taking the trace of that identity.
+Zero-weight endpoints may be omitted, giving at most twelve terms.
+No minimal-length assertion is needed.
+
+Conversely a pure product projector has partial transpose
+$|\bar a\rangle\langle\bar a|\otimes|b\rangle\langle b|\succeq0$.
+Convex sums preserve positivity. Thus separability implies PPT, and
+the Schur criterion of VI §170, recalled in (178.4)–(178.5), supplies
+the scalar equivalence.
+
+**Proposition 181.2 (Realizable scalar region).** At fixed $t$, the exact
+region of scalar data realized by separable members is
+
+$$
+\left\{(x,y,z):\ 0\le x,y\le1,\quad
+0\le z\le(1-x)(1-y),\quad q_0(t,x,y,z)\le1,\quad
+q_3(t,x,y,z)\le1\right\}.
+\tag{181.3}
+$$
+
+Proof. The unit-vector conditions and Cauchy–Schwarz give the first three
+bounds. Every triple satisfying them is realized. For $x<1$, choose
+
+$$
+\alpha=\sqrt x,\quad \gamma=\sqrt y,\quad
+u=\begin{pmatrix}\sqrt{1-x}\\0\end{pmatrix},\quad
+h=\begin{pmatrix}\sqrt{z/(1-x)}\\
+\sqrt{1-y-z/(1-x)}\end{pmatrix}.
+\tag{181.4}
+$$
+
+The square roots are nonnegative, the two full vectors have unit norm,
+and $`|u^*h|^2=z`$. For $x=1$, necessarily $z=0$; use $u=0$ and
+$h=(\sqrt{1-y},0)^{\mathsf T}$. Theorem 181.1 then proves necessity and
+sufficiency of the remaining two bounds for every realization, including
+complex ones with those data.
+
+For interior $0<t<1$ and $0<x,y<1$, define
+
+$$
+\begin{aligned}
+L_3&=\frac{t+s(1-x)}s
+ \left((1-y)-\frac{t}{s^2y}\right),\\
+U_0&=\frac{t+sy}s
+ \left(\frac{t}{s^2x}-(1-x)\right).
+\end{aligned}
+$$
+
+Equivalently, the exact allowed overlaps at those fixed $t,x,y$ form
+
+$$
+\max\{0,L_3\}\le z\le
+\min\{(1-x)(1-y),U_0\},
+\tag{181.5}
+$$
+
+with an empty region when the lower endpoint exceeds the upper endpoint.
+This follows by solving $q_3\le1$ and $q_0\le1$ for $z$.
+At fixed interior $t,x,y$, increasing overlap increases $q_0$ and
+decreases $q_3$; both constraints must concern the same pair $u,h$.
+The endpoint cases use (181.3) directly, without division by $x$, $y$ or $s$.
+
+The uniform statement of §§171–172 has a different quantifier:
+all independent-ray members are PPT and separable exactly when $t\ge1/3$.
+Equation (181.1) instead decides each member, including $0<t<1/3$.
+It is a theorem for (177.2), not a PPT-sufficiency theorem for arbitrary
+$2\times4$ states.
+
+## 182. Equality, vanishing couplings and finite-temperature endpoints
+
+**Proposition 182.1 (No excluded finite-parameter degeneracies).**
+The identity and classification include repeated $\lambda_j$, vanishing
+$u,h,\alpha,\gamma$, all $x,y$ endpoints, $q_0=1$, $q_3=1$, and $t=1$.
+
+Proof. Since $D,E\succ0$, the only spectral denominators in (179.3) are
+positive $\sqrt{\lambda_j}$. An arbitrary orthonormal eigenbasis of
+$D^{-1/2}ED^{-1/2}$ works, even when the eigenvalues coincide; no
+eigenvalue difference is divided out. Invertibility of $X$ also makes
+its columns nonzero, so both product factors are nonzero.
+All other denominators are positive $t$, $t+s(1-x)$ or $t+sy$.
+Vanishing couplings therefore require no limiting convention.
+
+At $q_0=1$ or $q_3=1$ the associated endpoint coefficient is simply zero.
+For example $(1,-E^{-1}f)^{\mathsf T}$ is a nullvector of $M_0$ when
+$q_0=1$, and $(1,-D^{-1}g)^{\mathsf T}$ is a nullvector of $M_3$ when
+$q_3=1$. The underlying $R$ remains positive definite for $t>0$.
+Equality of a PPT constraint is not loss of rank of $\rho$.
+
+At $t=1$, $s=0$, $D=E=I_2$, $f=g=0$, and $q_0=q_3=0$.
+Take $U=I_2$, so $\lambda_j=1$ and $x_j=e_j$.
+Then $\Psi_j=(|0\rangle+|1\rangle)\otimes b_j$, and its phase average
+is $P_{0b_j}+P_{1b_j}$. The four residuals in (180.1) are all one.
+Thus (180.1) is $R=I_8$, and $\rho=I_8/8$, independently of the rays.
+The inverse arguments assume $t>0$ throughout; $t=0$ is outside the
+parameter range of these statements.
+
+## 183. Exact failures of the earlier sufficient residual certificate
+
+The separate-coherence product construction in §173 leaves the two
+operators on Bob's one-particle plane
+
+$$
+K_0=tI_2+\frac{st}{t+sx}uu^*-s^2y\,hh^*,\qquad
+K_1=tI_2-s^2x\,uu^*-\frac{ts}{1-sy}hh^*.
+\tag{183.1}
+$$
+
+Their joint positivity is sufficient for the decomposition in that
+construction to be a separable one. It is not a necessary condition for
+the state itself to be separable. The following examples prove this
+failure with exact entries.
+
+**Proposition 183.1 (A strictly PPT nonpassive member at $t=1/4$).**
+Choose
+
+$$
+t=\frac14,\qquad v=\frac{(1,1,0)}{\sqrt2},\qquad
+w=\left(\frac1{\sqrt2},\frac{\sqrt6}{4},\frac{\sqrt2}{4}\right).
+\tag{183.2}
+$$
+
+Then $\rho$ is PPT and separable, while $K_1\not\succeq0$.
+
+Proof. Both vectors have norm one, and
+$x=y=1/2$, $z=3/16$. The actual blocks and columns are
+
+$$
+D=\begin{pmatrix}5/8&0\\0&1/4\end{pmatrix},\qquad
+E=\frac1{128}\begin{pmatrix}23&-3\sqrt3\\-3\sqrt3&29\end{pmatrix},
+$$
+
+$$
+f=\begin{pmatrix}3/8\\0\end{pmatrix},\qquad
+ g=-\frac3{64}\begin{pmatrix}\sqrt3\\1\end{pmatrix},\qquad
+ c=\frac58,\quad b=\frac5{32}.
+\tag{183.3}
+$$
+
+In particular
+$E^{-1}=\frac15\begin{pmatrix}29&3\sqrt3\\3\sqrt3&23\end{pmatrix}$.
+Thus
+
+$$
+q_0=\frac9{64}\frac{29}5=\frac{261}{320}<1,\qquad
+q_3=16\left(\frac{27}{4096}\frac85
+ +\frac9{4096}\,4\right)=\frac{99}{320}<1.
+\tag{183.4}
+$$
+
+Both Schur blocks are positive definite. In endpoint order
+$(0b_0,1b_0,0b_{12},1b_{12})$, the residuals of (180.1) are
+
+$$
+\frac{59}{320},\qquad\frac25,\qquad\frac1{10},\qquad
+\frac{221}{5120}.
+\tag{183.5}
+$$
+
+All are positive, so Theorem 181.1 gives separability.
+On the other hand (183.1) gives
+
+$$
+(K_1)_{11}=\frac14-\frac9{64}-\frac9{80}=-\frac1{320},\qquad
+K_1=\begin{pmatrix}-1/320&-3\sqrt3/80\\-3\sqrt3/80&17/80\end{pmatrix}.
+\tag{183.6}
+$$
+
+A negative diagonal entry precludes positive semidefiniteness.
+For $0<t<1$, the passive exterior-power subset obeys
+$w\sim Jv$, where
+$J(\alpha,u_1,u_2)=(\bar\alpha,-\bar u_2,\bar u_1)$.
+It consequently has $y=x$ and $z=0$. Here $z>0$, proving that the
+example is nonpassive. It also has $t<1/3$.
+
+**Proposition 183.2 (A second exact obstruction with unequal endpoint weights).**
+Choose
+
+$$
+t=\frac1{10},\qquad
+v=\frac{(1,\sqrt{19},0)}{\sqrt{20}},\qquad
+w=\frac{(\sqrt5,2,1)}{\sqrt{10}}.
+\tag{183.7}
+$$
+
+Then the same failure of necessity holds, with
+
+$$
+x=\frac1{20},\quad y=\frac12,\quad z=\frac{19}{50},\qquad
+q_0=\frac{140049}{220000}<1,\quad
+q_3=\frac{21951}{38200}<1.
+\tag{183.8}
+$$
+
+Proof. The squared coordinates of each full vector sum to one, and
+$z=(19/20)(4/10)=19/50$. Substitution in (178.4) gives (183.8).
+The four residuals in (180.1), in the same order as (183.5), are
+
+$$
+\frac{79951}{220000},\qquad\frac{20}{191},\qquad
+\frac1{55},\qquad\frac{16249}{3820000}.
+\tag{183.9}
+$$
+
+They are all positive. In contrast, (183.1) yields the directly
+reproducible diagonal entry
+
+$$
+(K_1)_{11}=\frac1{10}-\frac{1539}{40000}-\frac{18}{275}
+=-\frac{1729}{440000}<0.
+\tag{183.10}
+$$
+
+This is again a nonpassive member below $t=1/3$: $z>0$ and $x\ne y$.
+Indeed $0<19/50<19/40=(1-x)(1-y)$, so its two middle vectors are
+neither orthogonal nor collinear. Theorem 181.1 establishes separability.
+
+Both propositions are counterexamples to necessity of $K_0,K_1\succeq0$.
+They are separable states, not examples of PPT entanglement. The common
+factorization in (179.2) lets one product direction carry both actual
+couplings; a failure of the separate-coherence allocation does not
+obstruct that identity.
+
+## 184. Explicit witnesses when a PPT inequality fails
+
+**Proposition 184.1 (Normalized Schur witnesses).** If $q_0>1$ or $q_3>1$,
+an explicit decomposable entanglement witness detects the corresponding
+state at the same fixed cut.
+
+Proof. Define vectors in the original product coordinates by
+
+$$
+\chi_0=|0b_0\rangle-|1\rangle\otimes\iota(E^{-1}f),\qquad
+\chi_3=|1b_{12}\rangle-|0\rangle\otimes\iota(D^{-1}g).
+\tag{184.1}
+$$
+
+In the blocks (178.5) these are $(1,-E^{-1}f)^{\mathsf T}$ and
+$(1,-D^{-1}g)^{\mathsf T}$, respectively. Hermiticity gives
+
+$$
+\begin{aligned}
+\chi_0^*R^{T_A}\chi_0
+ &=1-2f^*E^{-1}f+f^*E^{-1}EE^{-1}f=1-q_0,\\
+\chi_3^*R^{T_A}\chi_3
+ &=t^2-2g^*D^{-1}g+g^*D^{-1}DD^{-1}g=t^2(1-q_3).
+\end{aligned}
+\tag{184.2}
+$$
+
+Let
+
+$$
+n_0=\|\chi_0\|^2=1+f^*E^{-2}f,\qquad
+n_3=\|\chi_3\|^2=1+g^*D^{-2}g,
+$$
+
+and set $\widehat\chi_i=\chi_i/\sqrt{n_i}$,
+$W_i=(|\widehat\chi_i\rangle\langle\widehat\chi_i|)^{T_A}$.
+These are Hermitian trace-one operators of the decomposable form
+$Q^{T_A}$ with $Q\succeq0$. For every normalized product vector $a\otimes d$,
+
+$$
+\langle a\otimes d|W_i|a\otimes d\rangle
+=|\langle\widehat\chi_i|\bar a\otimes d\rangle|^2\ge0.
+$$
+
+They therefore have nonnegative expectation on every separable state.
+Self-adjointness of partial transpose for the trace pairing gives
+
+$$
+\operatorname{Tr}(W_0\rho)=\frac{1-q_0}{Zn_0},\qquad
+\operatorname{Tr}(W_3\rho)=\frac{t^2(1-q_3)}{Zn_3}.
+\tag{184.3}
+$$
+
+The relevant expectation is strictly negative when its inequality fails.
+This proves entanglement on the complementary side of (181.1).
+These vectors need not be eigenvectors of $R^{T_A}$; no optimal
+negativity or optimal-witness assertion is implied.
+
+## 185. Sources and mathematical scope
+
+The native finite source is
+[FIB ATOM Recursive Holographic Boundary Geometry, Continuation VI,
+§§139–156](https://github.com/the-omega-institute/trureturing/blob/c420a44f812a4a41fafcb10a2a48995255fbd503/docs/develop/theory/FIB_ATOM_RECURSIVE_HOLOGRAPHIC_BOUNDARY_GEOMETRY_CONTINUATION_VI.md).
+Equations (140.1), (141.1)–(141.3), and (142.1)–(142.2) supply,
+respectively, the native rank-one one-particle Hamiltonian, the full finite
+Gibbs spectrum and normalization, and the A-first occupation convention.
+They do not specify arbitrary independent actions in the two
+three-dimensional sectors.
+
+The published prerequisite
+[Continuation VI, §§169–176](https://github.com/the-omega-institute/trureturing/blob/c420a44f812a4a41fafcb10a2a48995255fbd503/docs/develop/theory/FIB_ATOM_RECURSIVE_HOLOGRAPHIC_BOUNDARY_GEOMETRY_CONTINUATION_VI.md)
+supplies the complete number-preserving independent-ray orbit (169.2),
+the exact PPT criterion (170.1)–(170.5), the uniform threshold (172.5),
+the sufficient residual operators (173.4)–(173.6), and the passive Hodge
+relation (174.1)–(174.3). Equations (177.2) and (178.4)–(178.5) retain
+the family and Schur data as prerequisites of the common-factor argument.
+The uniform threshold is used only to distinguish the all-members
+quantifier from the individual-state classification; its proof is not
+needed for (180.1) or (181.1). The complete orbit enlarges passive
+one-particle operations and supplies no native physical control.
+
+The common-factor product identity, the resulting pointwise region,
+the exact failures of necessity in §183, and the Schur witnesses in §184
+are source-specific algebraic deductions from this finite family.
+Spectral decomposition, Schur complementation and positivity of product
+projectors are established finite-dimensional tools. Their use does not
+attach a literature-priority claim to these deductions or import a
+stronger separability theorem for general $2\times4$ states.
+
+Every conclusion concerns ordinary separability on the fixed
+$\mathbb C^2_A\otimes\mathbb C^4_B$ occupation tensor with $0<t\le1$.
+The product constituents in (179.3) can superpose local particle numbers.
+Their convex representation supplies no number-SSR-legal preparation,
+access or extraction protocol. The factorization of $D,E$ is proof
+bookkeeping, and the independent global sector orbit is not identified
+with native physical control. The native $G_q$ image is not identified
+with that entire orbit. Changes of tensor convention, additional copies,
+fermionic composition laws, infinite inverse temperature and larger
+models require their own hypotheses and arguments.
+
+## 185.99 追加锚（本行以下为增补区）
+
+## 186. Native-filter covariance and discord: source and normalized cut
+
+**Definition 186.1 (Native prerequisites and normalized coordinates).**
+Use the stopped history and metric family of Continuation VI,
+§§139–140 [N]. The source is the stopped singleton substitution
+$\beta_{\mathrm{src}}\mapsto\langle\beta_{\mathrm{src}},\alpha\rangle$,
+with its two actual children, at the first accepted epoch. The source symbol
+$\beta_{\mathrm{src}}$ is distinct from inverse temperature. In actual-coordinate
+order $(r,\ell,R)$, retain the native data
+
+$$
+T=\begin{pmatrix}1\\1\\1\end{pmatrix},\quad
+W=\begin{pmatrix}1&0&0\\1&1&0\\1&0&1\end{pmatrix},\quad
+L_\star=\begin{pmatrix}2&-1&-1\\-1&1&0\\-1&0&1\end{pmatrix}.
+$$
+
+The old scalar norm and child residual metric are $G_0=[1]$ and $K=I_2$.
+For $q=(u,v)^{\mathsf T}$ put $\pi_q=(1-u-v,u,v)^{\mathsf T}$ and
+
+$$
+G_q=L_\star+\pi_q\pi_q^{\mathsf T},\qquad
+W^{\mathsf T}G_qW=
+\begin{pmatrix}1&q^{\mathsf T}\\q&I_2+qq^{\mathsf T}\end{pmatrix}.
+$$
+
+Equations VI (139.2)–(139.3) give
+
+$$
+G_qT=\pi_q,\qquad T^{\mathsf T}G_qT=1,\qquad
+Q_q=T\pi_q^{\mathsf T}-I_3,\qquad G_qQ_q=-L_\star.
+$$
+
+Thus the occurrence form, inherited norm and accepted history remain fixed
+while the metric varies. The native instances are
+
+$$
+q_a=(1/6,1/6)^{\mathsf T},\quad \pi_a=(2/3,1/6,1/6)^{\mathsf T},\qquad
+q_b=(1/3,1/3)^{\mathsf T},\quad \pi_b=T/3,
+$$
+
+$$
+G_a=\frac1{36}\begin{pmatrix}88&-32&-32\\-32&37&1\\-32&1&37\end{pmatrix},
+\qquad
+G_b=\frac1{9}\begin{pmatrix}19&-8&-8\\-8&10&1\\-8&1&10\end{pmatrix}.
+$$
+
+Every off-diagonal rate $(Q_q)_{ij}=(\pi_q)_j$ is positive for these two
+instances. Their finite generators are conservative and irreducible; this
+is a statement about the stopped history, not about subsequent epochs.
+
+Use the positive principal square root of VI (140.1), $S_q=G_q^{1/2}$, normalize by
+$z_{\mathrm{coord}}=S_qx$, and complexify to standard $\mathbb C^3$.
+The vectors $V_q=S_qT$ have norm one. Because $S_q^{-1}\pi_q=S_qT$,
+
+$$
+H_q=S_q^{-1}L_\star S_q^{-1}=I_3-V_qV_q^*,\qquad
+\operatorname{spec}H_q=\{0,1,1\}.
+$$
+
+The principal root fixes the coordinate model; an arbitrary metric factor
+followed by an unspecified unitary would not fix the cut. Equations VI (140.2)–(140.4) fix the principal-root vectors and cut:
+
+$$
+V_a=\frac{(10,7,7)^{\mathsf T}}{\sqrt{198}},\qquad V_b=\frac T{\sqrt3},\qquad
+\mathfrak h_A=\mathbb C e_\ell,\quad
+\mathfrak h_B=\operatorname{span}_{\mathbb C}\{e_r,e_R\},
+$$
+
+$$
+p_q=|(V_q)_\ell|^2,\qquad p_a=\frac{49}{198},\qquad p_b=\frac13.
+$$
+
+This is the source-defined common cut of the normalized principal-root axes.
+It does not identify raw weighted occurrence spans with orthogonal or physical
+subsystems. The family parameter $p\in[0,1]$ used below extends the algebraic
+formulas beyond these native instances. No assertion identifies that entire
+interval with the image of admissible native $q$.
+
+## 187. Full Gibbs preparation and the active/spectator correspondence
+
+**Definition 187.1 (Full Gibbs state and aligned representation).**
+Let $\beta\ge0$ be finite and $t=e^{-\beta}\in(0,1]$.
+Retain the full preparation of VI §§141–142, not a sector-conditioned
+replacement. Keep all eight states of $\mathcal F_-(\mathbb C^3)$, including the zero
+mode, vacuum and every number sector. There is no chemical potential or
+preconditioning. The preparation is
+
+$$
+\rho_{q,\beta}=\frac{e^{-\beta d\Gamma_-(H_q)}}{Z_\beta},\qquad
+Z_\beta=\sum_{m_0,m_1,m_2\in\{0,1\}}t^{m_1+m_2}=2(1+t)^2.
+$$
+
+The zero-mode occupation is $1/2$, and each unit-energy mode has occupation
+$t/(1+t)$. The common spectral quantities therefore include
+
+$$
+\langle\widehat H\rangle=\frac{2t}{1+t},\qquad
+\langle\widehat N\rangle=\frac12+\frac{2t}{1+t},\qquad
+\Pr(111)=\frac{t^2}{2(1+t)^2}.
+$$
+
+These equalities do not determine coordinate correlations or local occupations.
+In covariance convention $C_{ij}=\operatorname{Tr}(\rho a_j^\dagger a_i)$,
+
+$$
+C_{q,\beta}=\frac{t}{1+t}I_3+
+ \left(\frac12-\frac{t}{1+t}\right)V_qV_q^*.
+$$
+
+In the A-first CAR order $(A,r,R)$, a Bob number-preserving rotation is
+generated by even bilinears. For example $a_i=Z_A\otimes b_i$ for a Bob
+annihilator, so $a_i^\dagger a_j=I_A\otimes b_i^\dagger b_j$ for Bob
+indices. Its lift is an ordinary Bob-local unitary; an odd annihilator
+itself does not have that ordinary locality property.
+
+Write the old Bob coordinate column as
+
+$$
+V_{B,q}=\begin{pmatrix}(V_q)_r\\(V_q)_R\end{pmatrix},
+\qquad \nu_q=\|V_{B,q}\|=\sqrt{1-p_q}.
+$$
+
+For the two native instances,
+
+$$
+V_{B,a}=\frac{(10,7)^{\mathsf T}}{\sqrt{198}},\quad
+\nu_a=\sqrt{\frac{149}{198}},\qquad
+V_{B,b}=\frac{(1,1)^{\mathsf T}}{\sqrt3},\quad
+\nu_b=\sqrt{\frac23}.
+$$
+
+The displayed matrices are **basis matrices**: their first and second
+columns are the aligned active and spectator basis vectors in the old
+$(r,R)$ basis,
+
+$$
+U_{B,a}=\frac1{\sqrt{149}}\begin{pmatrix}10&-7\\7&10\end{pmatrix},\qquad
+U_{B,b}=\frac1{\sqrt2}\begin{pmatrix}1&-1\\1&1\end{pmatrix}.
+$$
+
+Thus the coordinate action is $x_B\mapsto U_{B,q}^*x_B$, not
+$x_B\mapsto U_{B,q}x_B$. In particular,
+
+$$
+U_{B,q}^*V_{B,q}=\begin{pmatrix}\nu_q\\0\end{pmatrix}.
+$$
+
+To include Alice while retaining the original coordinate order $(r,\ell,R)$,
+let the columns of
+
+$$
+J_q=
+\begin{pmatrix}
+0&(U_{B,q})_{11}&(U_{B,q})_{12}\\
+1&0&0\\
+0&(U_{B,q})_{21}&(U_{B,q})_{22}
+\end{pmatrix}
+$$
+
+be the aligned ordered basis $(A,b,s)$. Then, with $p_q=|(V_q)_\ell|^2$,
+
+$$
+J_q^*V_q=(\sqrt{p_q},\sqrt{1-p_q},0)^{\mathsf T},\qquad
+J_q^*H_qJ_q
+=I_3-(J_q^*V_q)(J_q^*V_q)^*
+=H_{\mathrm{eff}}(p_q)\oplus[1],
+$$
+
+where
+
+$$
+H_{\mathrm{eff}}=I_2-v_pv_p^*,\qquad
+v_p=(\sqrt p,\sqrt{1-p})^{\mathsf T},\qquad
+e^{-\beta H_{\mathrm{eff}}}=tI_2+(1-t)v_pv_p^*.
+$$
+
+The complex conjugation in these formulas is part of the convention: for a
+possibly complex basis matrix the transformed one-particle operator is
+$U_B^*H_BU_B$ and the transformed vector is $U_B^*V_B$; the two displayed
+native matrices happen to be real, so $U_B^*=U_B^{\mathsf T}$.
+
+The corresponding Fock operation is the even, number-preserving Bob-local
+lift
+
+$$
+\mathbb U_{B,q}=\Gamma_-(I_{\mathfrak h_A}\oplus U_{B,q})
+\quad\text{in A-first order }(A,r,R).
+$$
+
+Equivalently, if $b^\dagger$ and $s^\dagger$ denote creation in the two
+columns of $U_{B,q}$, then
+$\mathbb U_{B,q}r^\dagger\mathbb U_{B,q}^\dagger=b^\dagger$ and
+$\mathbb U_{B,q}R^\dagger\mathbb U_{B,q}^\dagger=s^\dagger$.
+The aligned-coordinate representative is therefore
+
+$$
+\rho^{\mathrm{al}}_{q,\beta}
+=\mathbb U_{B,q}^\dagger\rho_{q,\beta}\mathbb U_{B,q}
+=\frac{e^{-\beta d\Gamma_-(H_{\mathrm{eff}}(p_q)\oplus[1])}}{Z_\beta}.
+$$
+
+After the fixed coordinate reordering to creation order $(A,b,s)$, this is
+the exact Bob-local factorization
+$\rho^{\mathrm{al}}\simeq\sigma_\beta(p)\otimes\tau_\beta$ used below.
+The reordering is only a CAR coordinate convention; its occupation-ket signs
+are the passive signs displayed later and do not implement an unsigned swap or
+a nonlocal replacement of the cut.
+
+In the notation of VI (142.6) and (148.1)–(148.3), with $D=2(1+t)$,
+
+$$
+\sigma=\begin{pmatrix}a&0&0&0\\0&b&z&0\\0&\overline z&c&0\\0&0&0&d\end{pmatrix},\quad
+\tau=\operatorname{diag}(r_0,r_1),\qquad
+r_0=\frac1{1+t},\quad r_1=\frac t{1+t},
+$$
+
+$$
+a=\frac1D,\quad b=\frac{1-(1-t)p}{D},\quad
+c=\frac{t+(1-t)p}{D},\quad d=\frac tD,\quad
+z=\frac{(1-t)\sqrt{p(1-p)}}D.
+$$
+
+The effective occupation order is $(|00\rangle,|01\rangle,|10\rangle,|11\rangle)$;
+$z$ is real and nonnegative in this convention. The entries follow from the
+vacuum weight $1$, double-occupation weight $t$, and displayed one-particle
+exponential, with effective partition function $2(1+t)$.
+
+For compact formulas set
+
+$$
+g=(1-t)^2p(1-p),\quad v=t+(1-t)p,\quad
+A=ad=\frac{t}{4(1+t)^2},\quad
+\mu=|z|^2=\frac{g}{4(1+t)^2},\quad
+E=ac=\frac{v}{4(1+t)^2}.
+$$
+
+Here $A$ denotes the scalar $ad$; the party is Alice. Direct multiplication gives
+$bc=A+\mu$, so $S=ad+bc=2A+\mu$. This identity is specific to the stated
+Gibbs family, not to an arbitrary mixed X state.
+
+## 188. Compatible preparations and coherent local-number filtering
+
+**Assumption 188.1 (Compatible preparations and operation menu, VI §147).**
+Use two independently prepared instances of the same specified $q,\beta$,
+with compatible labelled CAR modes and coupling phase. This is neither cloning
+nor a product of different native models. The untwirled even CAR product is
+formed before imposing one common total-number SSR per party:
+
+$$
+\mathcal G_N(X)=\int_0^{2\pi}\!\int_0^{2\pi}
+ e^{i\theta N_A^{\mathrm{tot}}}e^{i\phi N_B^{\mathrm{tot}}}
+ X e^{-i\phi N_B^{\mathrm{tot}}}e^{-i\theta N_A^{\mathrm{tot}}}
+ \frac{d\theta\,d\phi}{(2\pi)^2}.
+$$
+
+Independent, unrecorded local phase randomization of the two preparations
+would remove their useful relative coherence and specifies a different input.
+Allowed mathematical resources include joint handling of a party's modes,
+number-preserving rotations and phases, coherent projections onto degenerate
+local-number spaces, local discard, classical communication and heralding.
+The instrument $X\mapsto FXF$ preserves selected rail coherence. Resolving
+every individual occupation first and forgetting the outcome does not.
+Availability of these preparations and instruments is an additional
+physical premise, separate from the finite matrix assumptions.
+
+**Definition 188.2 (Effective and full coherent filters).** Procedure E
+aligns Bob's modes, discards each spectator and projects onto
+$N_A^{\mathrm{tot}}=N_b^{\mathrm{tot}}=1$. Procedure F instead acts on the
+full native normalized modes with the common projector
+
+$$
+F=\Pi_{n_{A_1}+n_{A_2}=1}
+ \Pi_{n_{r_1}+n_{R_1}+n_{r_2}+n_{R_2}=1}.
+$$
+
+It counts all four Bob modes and is $q$ independent. Bob's number-preserving
+alignments commute with it. Alice's selected space has dimension two; Bob's
+full selected space has dimension four. Local matrices inside these spaces
+have number-preserving extensions, and Hermitian rail witnesses are legal
+within this resource menu. The analyzer for the active direction can depend
+on $q$; a common unknown-$q$ active decoder is not supplied.
+
+Both success projectors select fixed total number on each party. The phase
+conjugations in $\mathcal G_N$ are therefore scalar on their selected
+spaces, so $F\mathcal G_N(X)F=FXF$, and likewise for E's projector.
+The common SSR does not remove the selected middle coherence.
+
+All these filters and rotations also preserve local parity, but a full
+total-parity twirl is a different state map from $\mathcal G_N$. The
+conditional outcomes considered here do not identify those two total states.
+
+## 189. Actual success blocks in the fixed CAR convention
+
+**Notation 189.1 (Success blocks of VI §§149–151).**
+Use the following supplier blocks with their literal CAR signs.
+Regrouping the effective creation order $(A_1,b_1,A_2,b_2)$ into party
+order $(A_1,A_2,b_1,b_2)$ multiplies an occupation ket by
+$(-1)^{n_{b_1}n_{A_2}}$. For the full order
+$(A_1,b_1,s_1,A_2,b_2,s_2)$ the sign is
+$(-1)^{(n_{b_1}+n_{s_1})n_{A_2}}$. These are passive coordinate signs,
+not physical nonlocal unitaries or unsigned swaps.
+
+In the dual-rail product basis
+$(|A_1b_1\rangle,|A_1b_2\rangle,|A_2b_1\rangle,|A_2b_2\rangle)$,
+procedure E has the unnormalized success block of VI (149.4)–(149.6)
+
+$$
+C_-=
+\begin{pmatrix}A&0&0&0\\0&bc&-\mu&0\\0&-\mu&bc&0\\0&0&0&A\end{pmatrix}
+=A I_4+2\mu|\psi^-\rangle\langle\psi^-|,
+\qquad
+|\psi^-\rangle=\frac{|A_1b_2\rangle-|A_2b_1\rangle}{\sqrt2}.
+$$
+
+The outer populations are $ad$, from double occupation of one preparation
+and vacuum of the other. Each middle population is $bc$. Their coherence
+is $z\overline z$ before regrouping; the ket with $b_1,A_2$ occupied
+has the negative CAR sign, yielding $-\mu$ as displayed.
+The legal Alice-local phase $e^{i\pi n_{A_2}}$ reverses this sign and
+preserves all quantities evaluated here.
+
+In the aligned full proof basis define
+$B_{\mathrm{act}}=\operatorname{span}\{|b_1\rangle,|b_2\rangle\}$ and
+$B_{\mathrm{sp}}=\operatorname{span}\{|s_1\rangle,|s_2\rangle\}$.
+Both spectators are empty on the active block. If one spectator is occupied,
+the selected Bob number excludes every active Bob particle. Each of the four
+remaining configurations $(A_i,s_j)$ has population $ac\,r_0r_1$.
+The diagonal spectator input permits neither coherence between these flags
+nor coherence linking them to the active block. Thus the full supplier block VI (151.3) is
+
+$$
+\Omega_F=r_0^2 C_-\ \oplus_B\ E r_0r_1 I_{A\otimes B_{\mathrm{sp}}}.
+$$
+
+This is a direct sum on Bob, not an additional postselection. It displays
+every selected population. With
+
+$$
+Q_E=2t+g,\qquad Q_F=2t+g+2tv,
+$$
+
+the raw success probabilities VI (150.1), (151.4) become
+
+$$
+P_E=\operatorname{Tr}C_-=2S=\frac{Q_E}{2(1+t)^2},\qquad
+P_F=\operatorname{Tr}\Omega_F=r_0^2P_E+4E r_0r_1
+ =\frac{Q_F}{2(1+t)^4}.
+$$
+
+They lie strictly between zero and one: the finite-temperature input is
+positive definite, and both the success and failure subspaces are nonempty.
+No preliminary standard-form filter is performed or hidden in either value.
+
+## 190. Conditional states, active weight and finite ranks
+
+**Definition 190.1 (Conditional parameters and states).**
+Normalize the success blocks and define
+
+$$
+\lambda=\frac{\mu}{S}=\frac{g}{Q_E},\qquad
+w=\frac{r_0^2P_E}{P_F}=\frac{S}{S+2tE}=\frac{Q_E}{Q_F},\qquad
+\eta=w\lambda=\frac{g}{Q_F}.
+$$
+
+Since $t>0$ and $v>0$, one has $0<w<1$ and
+$0\le\eta\le\lambda<1$; $\eta<\lambda$ when $g>0$.
+The states are
+
+$$
+\rho_E=W_\lambda=\frac{1-\lambda}{4}I_4+
+ \lambda|\psi^-\rangle\langle\psi^-|,\qquad
+\rho_F=wW_\lambda\ \oplus_B\ (1-w)\frac{I_{A\otimes B_{\mathrm{sp}}}}4.
+$$
+
+**Theorem 190.2 (Conditional marginals and finite ranks).**
+The effective and full states have ranks four and eight, respectively.
+Alice's marginal is $I_2/2$ in both cases. Bob's is $I_2/2$ for E, and
+
+$$
+(\rho_F)_B=\frac w2 I_{B_{\mathrm{act}}}\oplus_B
+ \frac{1-w}{2}I_{B_{\mathrm{sp}}}
+$$
+
+for F. The flag alone is independent of Alice: each flag sector has Alice
+marginal $I_2/2$. Nevertheless, it affects Bob's population information,
+the success probability and the dilution of active correlations. The effective
+state depends on $p$ through $p(1-p)$; $w$ also depends on $v=t+(1-t)p$.
+
+Proof. Taking the partial traces of the two blocks gives the displayed
+marginals and flag independence. The spectrum of $C_-$ is $A$ three times and $A+2\mu$ once. Since $A>0$
+and $E r_0r_1>0$, the normalized effective and full states have ranks
+four and eight, respectively, throughout this finite domain. Rank three
+below refers only to the connected Pauli correlation tensor when $g>0$.
+
+## 191. Diagnostic conventions and the two-qubit supplier boundary
+
+**Definition 191.1 (Covariance, normalized Hilbert–Schmidt discord and negativity).**
+For a normalized state on $\mathbb C^2\otimes\mathbb C^d$, define
+
+$$
+\operatorname{Cov}_\rho(X,Y)=\operatorname{Tr}\rho(X\otimes Y)
+ -\operatorname{Tr}\rho(X\otimes I)\operatorname{Tr}\rho(I\otimes Y),
+$$
+
+$$
+C_M(\rho)=\sup_{\substack{X\in M_2(\mathbb C),\,Y\in M_d(\mathbb C)\\
+ \|X\|_{\mathrm{op}}=\|Y\|_{\mathrm{op}}=1}}
+ |\operatorname{Cov}_\rho(X,Y)|,
+\qquad
+D_G^A(\rho)=2\inf_{\{P_+,P_-\}}
+ \|\rho-\mathcal M_P(\rho)\|_{\mathrm{HS}}^2,
+$$
+
+$$
+\mathcal M_P(\rho)=\sum_{\epsilon=\pm}
+ (P_\epsilon\otimes I)\rho(P_\epsilon\otimes I),\qquad
+\mathcal N(\rho)=\frac{\|\rho^{T_A}\|_1-1}{2}.
+$$
+
+The covariance domain includes non-Hermitian complex matrices. The discord
+infimum includes every rank-one projective basis on Alice; the factor two
+is the measured-qubit normalization. Write $C_j,D_j,\mathcal N_j$ for
+these quantities on $\rho_j$, $j=E,F$, and $(x)_+=\max\{x,0\}$.
+
+**Convention 191.2 (Normalization and supplier domains).**
+Gwóźdź--Jakóbczyk [G], Eqs. (II.1), (II.9) and (II.15), supply these
+discord and covariance conventions, but their negativity is
+$\mathcal N_{\mathrm{paper}}=\|\rho^{T_A}\|_1-1=2\mathcal N$.
+Their Eq. (II.23) establishes the first correlation--discord inequality
+for Bell-diagonal states; its extension to arbitrary mixed two-qubit states
+is presented there as a numerical expectation. It is not a general proof
+supplied by that paper.
+
+The two-qubit result [R] states
+$\sqrt{D_G^A(\rho)}\le C_M(\rho)$ for positive semidefinite trace-one
+two-qubit matrices, with the same full complex optimization domain. Its scope
+is two qubits. The calculations below give matching upper bounds and
+attainers for E and directly for this particular $2\times4$ family F.
+The latter is not an instantiation of a two-qubit definition with Bob's
+dimension changed, nor a generic $2\times4$ theorem.
+
+The distinct trace-norm functional in [T] is
+
+$$
+D_1^A(\rho)=\inf_P\|\rho-\mathcal M_P(\rho)\|_1,
+$$
+
+with the unhalved trace norm. Its comparison $D_1^A\le C_M$ uses
+the same all-complex covariance domain on two qubits. It is a different
+functional from $D_G^A$ and supplies no $2\times4$ comparison for F.
+
+## 192. Complete complex-operator covariance optimization
+
+**Theorem 192.1 (Complete complex-operator covariance).**
+For the states of Definition 190.1, $C_E=\lambda$ and
+$C_F=\eta=w\lambda$, including $g=0$.
+
+Proof. Let $\sigma_1,\sigma_2,\sigma_3$ be the Pauli matrices and embed them on
+Bob's active sector as $S_j=\sigma_j\oplus0_{B_{\mathrm{sp}}}$. The singlet
+identity gives
+
+$$
+\rho_F-(\rho_F)_A\otimes(\rho_F)_B
+ =-\frac\eta4\sum_{j=1}^3\sigma_j\otimes S_j.
+$$
+
+For E replace $(\eta,S_j)$ by $(\lambda,\sigma_j)$. This also shows that
+the connected $3\times3$ tensor in the displayed active coordinates is
+$-\eta I_3$ for F, and $-\lambda I_3$ for E.
+
+Take arbitrary complex $X\in M_2$ and $Y\in M_4$ of operator norm one.
+Compress $Y$ to $B_{\mathrm{act}}$, obtaining a contraction $B$ even if
+$Y$ mixes the flag sectors. Write
+
+$$
+X=\alpha_0I+\sum_j\alpha_j\sigma_j,\qquad
+B=\gamma_0I+\sum_j\gamma_j\sigma_j.
+$$
+
+All coefficients may be complex. Pauli orthogonality and $X^\dagger X\le I$,
+$B^\dagger B\le I$ imply
+
+$$
+|\alpha_0|^2+\sum_j|\alpha_j|^2=\frac12\operatorname{Tr}(X^*X)\le1,
+\qquad
+|\gamma_0|^2+\sum_j|\gamma_j|^2=\frac12\operatorname{Tr}(B^*B)\le1.
+$$
+
+The connected operator pairs only with this compression. Scalar and spectator
+terms cancel against the product of local expectations, while off-diagonal
+flag blocks have zero trace pairing. Therefore
+
+$$
+\begin{aligned}
+|\operatorname{Cov}_{\rho_F}(X,Y)|
+ &=\eta\left|\sum_j\alpha_j\gamma_j\right|\\
+ &\le\eta\left(\sum_j|\alpha_j|^2\right)^{1/2}
+              \left(\sum_j|\gamma_j|^2\right)^{1/2}\le\eta.
+\end{aligned}
+$$
+
+The pairing is bilinear, not Hermitian; the absolute-value inequality follows
+from complex Cauchy--Schwarz applied after conjugating one vector. The
+norm-one matrices $X=\sigma_3$ and $Y=\sigma_3\oplus0$ give covariance
+$-\eta$, so the bound is attained. Omitting spectators gives the same
+argument for E with $X=Y=\sigma_3$. Thus
+
+$$
+\boxed{C_E=\lambda,\qquad C_F=\eta=w\lambda.}
+$$
+
+Neither non-Hermitian matrices nor flag mixing can increase these values.
+
+## 193. All covariance maximizers and every Alice projective basis
+
+**Theorem 193.1 (All covariance maximizers).** When $g>0$, the
+maximizing pairs are precisely the phased matching Pauli directions
+displayed below, with an arbitrary spectator contraction for F.
+When $g=0$, every admissible norm-one pair maximizes covariance.
+
+Proof. Suppose $g>0$. Equality in the preceding chain forces the two traceless
+coefficient norms to be one, $\alpha_0=\gamma_0=0$, and both
+Hilbert--Schmidt contraction bounds to be equalities. Each singular value
+of $X$ and $B$ is at most one, and the sum of their squared singular values
+is two. Hence both matrices are traceless unitaries. A traceless $2\times2$
+unitary has opposite eigenvalues, so its spectral decomposition has form
+$e^{i\alpha}\mathbf n\cdot\sigma$ for a real unit vector $\mathbf n$.
+Equality in the bilinear Cauchy--Schwarz bound aligns the two real directions;
+a sign can be absorbed in the phases.
+
+Consequently all E maximizers, and only those, are
+
+$$
+X=e^{i\alpha}\mathbf n\cdot\sigma,\qquad
+Y=e^{i\gamma}\mathbf n\cdot\sigma,\qquad \mathbf n\in S^2.
+$$
+
+For F, write $Y=\begin{pmatrix}B&K\\L&Z\end{pmatrix}$ in flag order.
+Since $B$ is unitary, $Y^\dagger Y\le I$ gives $L=0$ and $YY^\dagger\le I$ gives
+$K=0$. Thus its complete maximizing form is
+
+$$
+X=e^{i\alpha}\mathbf n\cdot\sigma,\qquad
+Y=e^{i\gamma}\mathbf n\cdot\sigma\ \oplus Y_{\mathrm{sp}},\qquad
+\|Y_{\mathrm{sp}}\|_{\mathrm{op}}\le1.
+$$
+
+The displayed active block already makes $\|Y\|_{\mathrm{op}}=1$.
+When $g=0$, the connected operator vanishes and every permitted norm-one
+pair attains the zero supremum.
+
+**Theorem 193.2 (Every-basis disturbance and saturation).**
+For all the finite parameters of Definition 187.1,
+$D_E=\lambda^2$ and $D_F=\eta^2=w^2\lambda^2$. Every Alice
+rank-one projective basis attains the respective infimum.
+
+Proof. Every rank-one Alice projective basis is represented by an axis
+$\mathbf n\in S^2$:
+
+$$
+P_\pm=\frac{I\pm\mathbf n\cdot\sigma}{2},\qquad
+\mathcal M_{\mathbf n}(\sigma_j)=n_j(\mathbf n\cdot\sigma).
+$$
+
+Basis-vector phases and permutations do not change this channel. Alice's
+maximally mixed marginal makes the product-marginal term invariant. For F,
+
+$$
+\Delta_{\mathbf n}=\rho_F-\mathcal M_{\mathbf n}(\rho_F)
+ =-\frac\eta4\sum_j
+  (\sigma_j-n_j\mathbf n\cdot\sigma)\otimes S_j.
+$$
+
+Since $\operatorname{Tr}(\sigma_i\sigma_j)=\operatorname{Tr}(S_iS_j)
+=2\delta_{ij}$, one obtains
+
+$$
+\begin{aligned}
+\|\Delta_{\mathbf n}\|_{\mathrm{HS}}^2
+ &=\frac{\eta^2}{4}\|I_3-\mathbf n\mathbf n^{\mathsf T}\|_F^2\\
+ &=\frac{\eta^2}{4}(3-2+1)=\frac{\eta^2}{2}.
+\end{aligned}
+$$
+
+It is independent of the entire projective basis. The normalization two
+therefore gives $D_F=\eta^2$. Replacing $(\eta,S_j)$ by
+$(\lambda,\sigma_j)$ gives $D_E=\lambda^2$. Every Alice projective
+basis attains each infimum, including the $g=0$ cases. In particular,
+
+$$
+\boxed{D_E=\lambda^2,\quad D_F=w^2\lambda^2,\quad
+ C_j-\sqrt{D_j}=C_j^2-D_j=0\quad(j=E,F).}
+$$
+
+## 194. Partial transpose and the flag dilution of negativity
+
+**Theorem 194.1 (Flag dilution of negativity).** For the actual
+conditional outputs,
+
+$$
+\mathcal N_E=\frac{(3\lambda-1)_+}{4},\qquad
+\mathcal N_F=\frac{(3\eta-w)_+}{4}=w\mathcal N_E.
+$$
+
+Proof. Use the active spectrum VI (150.2) and the local direct sum
+VI (151.3)–(151.5). Partial transpose moves the effective middle coherence to the outer corner.
+Before normalization its eigenvalues are $bc,bc,A+\mu,A-\mu$.
+Equivalently,
+
+$$
+\operatorname{spec}(\rho_E^{T_A})=
+ \left\{\frac{1+\lambda}{4}\ \text{three times},\quad
+        \frac{1-3\lambda}{4}\right\}.
+$$
+
+The local direct sum commutes with partial transpose on Alice, so
+
+$$
+\operatorname{spec}(\rho_F^{T_A})=
+ \left\{\frac{w+\eta}{4}\ \text{three times},\quad
+        \frac{w-3\eta}{4},\quad
+        \frac{1-w}{4}\ \text{four times}\right\}.
+$$
+
+The unnormalized full spectrum is correspondingly $r_0^2bc$ twice,
+$r_0^2(A+\mu)$, $r_0^2(A-\mu)$, and $E r_0r_1$ four times.
+There is at most one negative eigenvalue, yielding
+
+$$
+\begin{aligned}
+\mathcal N_E&=\frac{(\mu-A)_+}{P_E}
+ =\frac{(g-t)_+}{2Q_E}=\frac{(3\lambda-1)_+}{4},\\
+\mathcal N_F&=\frac{r_0^2(\mu-A)_+}{P_F}
+ =\frac{(g-t)_+}{2Q_F}=\frac{(3\eta-w)_+}{4}
+ =w\mathcal N_E.
+\end{aligned}
+$$
+
+Separability below threshold can be seen constructively. Put
+$P_{j,s}=(I+s\sigma_j)/2$ for $s=\pm1$. Direct expansion gives
+
+$$
+W_{1/3}=\frac16\sum_{j=1}^3\sum_{s=\pm1}P_{j,s}\otimes P_{j,-s}.
+$$
+
+For $0\le\lambda\le1/3$,
+$W_\lambda=3\lambda W_{1/3}+(1-3\lambda)I_4/4$ is thus separable.
+Embedding its Bob factors in $B_{\mathrm{act}}$ and adding the product
+spectator block proves full-state separability. For $\lambda>1/3$, the
+displayed effective and full partial transposes both have a negative eigenvalue
+because $w>0$. This agrees with the two-qubit PPT theorem [P] on the active
+block and requires no PPT-sufficiency assertion in dimension $2\times4$.
+
+## 195. The actual full-flag threshold and finite-temperature cases
+
+**Theorem 195.1 (Flag-dependent correlation threshold and finite cases).**
+For the actual conditional outputs,
+
+$$
+\begin{aligned}
+\rho_F\text{ entangled}
+ &\Longleftrightarrow w-3\eta<0
+ \Longleftrightarrow C_F>\frac w3
+ \Longleftrightarrow D_F>\frac{w^2}{9},\\
+\rho_E\text{ entangled}
+ &\Longleftrightarrow C_E>\frac13
+ \Longleftrightarrow D_E>\frac19.
+\end{aligned}
+$$
+
+Proof. Theorem 194.1 gives the full-state corner eigenvalue; its
+constructive block decomposition establishes separability on the
+other side. In microscopic parameters both conditions reduce to
+
+$$
+\boxed{\mu>ad\ \Longleftrightarrow\ g>t
+ \ \Longleftrightarrow\ 4p(1-p)\sinh^2(\beta/2)>1.}
+$$
+
+The last equivalence uses $(1-t)^2/t=4\sinh^2(\beta/2)$ with $t>0$.
+For $0<p<1$ this is exactly
+
+$$
+\beta>\beta_c(p)=2\operatorname{arsinh}\frac1{2\sqrt{p(1-p)}},\qquad
+\beta_{c,a}=2\operatorname{arsinh}\frac{99}{\sqrt{7301}},\quad
+\beta_{c,b}=2\operatorname{arsinh}\frac3{2\sqrt2}.
+$$
+
+Since $p_a(1-p_a)<p_b(1-p_b)$, $\beta_{c,b}<\beta_{c,a}$.
+For either procedure, both native outputs are separable for
+$0\le\beta\le\beta_{c,b}$; only $q_b$ is entangled for
+$\beta_{c,b}<\beta\le\beta_{c,a}$; both are entangled for finite
+$\beta>\beta_{c,a}$. Equality is separable at each model's boundary.
+The native generators are unaffected by the quantum postselection.
+
+The remaining finite cases are explicit. One has $g=0$ exactly when
+$\beta=0$ or $p\in\{0,1\}$. Both outputs are then product states and
+$C=D=\mathcal N=0$. At $\beta=0$,
+
+$$
+\rho_E=I_4/4,\quad \rho_F=I_8/8,\quad P_E=1/4,\quad P_F=1/8.
+$$
+
+At $p=0$ one has $w=1/(1+t)$; at $p=1$ one has $w=1/2$.
+Bob's marginal need not be maximally mixed, although the full state remains
+product. At the nonzero boundary $g=t$, negativity vanishes but
+$C_E=1/3$, $C_F=w/3$ and both discords are positive. Throughout
+$0<g\le t$ the states are separable with strictly positive covariance
+and discord. Thus neither positive discord nor saturation of
+$C_M=\sqrt{D_G^A}$ identifies entanglement.
+
+The unchanged constants $C_F>1/3$ and $D_F>1/9$ are sufficient because
+$w<1$, but are not necessary. The native example below violates their
+necessity. With the paper's doubled negativity convention, the exact gap is
+
+$$
+\boxed{\sqrt{D_j}-2\mathcal N_j=\frac{\min(g,t)}{Q_j},\qquad j=E,F.}
+$$
+
+Indeed, for $g\le t$ the left side is $g/Q_j$, while for $g>t$ it is
+$g/Q_j-(g-t)/Q_j=t/Q_j$. At finite $t>0$ this gap vanishes exactly when
+$g=0$. No $t=0$ state, limiting attainer or zero-temperature claim is used.
+
+## 196. Alice dephasing, surviving covariance and the fixed-source input pair
+
+**Theorem 196.1 (Output dephasing).** Dephasing Alice along any
+$\mathbf n\in S^2$ preserves $C_E=\lambda$ and $C_F=\eta$,
+while both resulting states have zero Alice discord and negativity.
+
+Proof. After Alice dephases along any $\mathbf n\in S^2$, the full connected
+operator is
+
+$$
+\mathcal M_{\mathbf n}(\rho_F)-(\rho_F)_A\otimes(\rho_F)_B
+ =-\frac\eta4(\mathbf n\cdot\sigma)\otimes(\mathbf n\cdot S).
+$$
+
+For arbitrary complex norm-one local matrices its covariance is
+$-\eta(\alpha\cdot\mathbf n)(\gamma\cdot\mathbf n)$, whose modulus
+is at most $\eta$ by the same coefficient bounds. Choosing
+$X=\mathbf n\cdot\sigma$ and $Y=\mathbf n\cdot S$ attains it.
+The effective argument uses $\lambda$ and Bob's Pauli matrices instead.
+Hence
+
+$$
+C_M(\mathcal M_{\mathbf n}(\rho_E))=\lambda,\qquad
+C_M(\mathcal M_{\mathbf n}(\rho_F))=\eta.
+$$
+
+Both dephased states have zero Alice discord, since repeating the same
+projective measurement leaves them unchanged. More explicitly, their active
+part is diagonal in Alice's $\mathbf n$ basis and Bob's matching active
+$\mathbf n$ basis, with conditional probabilities
+
+$$
+\Pr(\epsilon,\delta\mid\mathrm{act})=
+ \frac{1-\lambda\epsilon\delta}{4},\qquad \epsilon,\delta\in\{\pm1\}.
+$$
+
+In F these probabilities have weight $w$; each spectator outcome pair has
+probability $(1-w)/4$ in any spectator rail basis. These are product-basis
+diagonal, classical--classical states, so their negativity is zero as well.
+The total covariance in the displayed matching basis is $-\eta$ for F.
+The flag remains independent of Alice. Maximal covariance can therefore
+survive the removal of discord and entanglement in this precise family.
+
+**Convention 196.2 (Fixed-source input comparison, VI §154).**
+For the input comparison in [N, §154], the original
+single-copy state $\rho$ and its Alice occupation dephasing
+$\overline\rho=\mathcal D_A(\rho)$ agree on all single-copy local
+SSR product-observable statistics. On one Alice mode, allowed local-number
+observables are diagonal, so removing Alice's occupation off-diagonal blocks
+does not change their product expectations. In the aligned coordinates,
+
+$$
+\overline\rho=|0\rangle\langle0|\otimes\operatorname{diag}(a,b)\otimes\tau
+ +|1\rangle\langle1|\otimes\operatorname{diag}(c,d)\otimes\tau.
+$$
+
+Both Bob blocks are positive and commute with Bob number; normalizing each
+nonzero block gives an explicit separable mixture. The original and dephased
+preparations have effective factors $\sigma$ and $\operatorname{diag}(a,b,c,d)$.
+Applying F to two compatible
+preparations of either input gives the same success probability and diagonal
+populations. The latter input has no active middle coherence.
+
+On the chosen source's selected space the Hermitian witness
+
+$$
+\mathsf W=|A_1b_2\rangle\langle A_2b_1|
+ +|A_2b_1\rangle\langle A_1b_2|
+ =\frac{X_A\otimes X_b+Y_A\otimes Y_b}{2}
+$$
+
+uses rail Pauli operators $X,Y$, with Bob's operators zero on spectators,
+and preserves local total number. Its conditional
+expectations are $-2r_0^2\mu/P_F=-\eta$ and $0$, respectively, in the
+literal CAR convention. Their difference for $\mu>0$ does not require
+entanglement. This comparison uses one fixed $q,\beta$ and joint local
+access; it does not identify $\overline\rho$ with the other native model
+or claim that the original single-copy observation rule was already a
+tensor-compatible process equivalence.
+
+## 197. Raw joint laws, flag conditioning and postdephasing axes
+
+**Theorem 197.1 (Raw joint laws and postdephasing axes).**
+For Alice and active-Bob rail axes $\mathbf a,\mathbf m\in S^2$,
+the actual raw laws are
+
+$$
+\Pr(E\text{ succeeds},\epsilon,\delta)
+ =\frac{P_E}{4}(1-\lambda\epsilon\delta\,\mathbf a\cdot\mathbf m),
+$$
+
+$$
+\begin{aligned}
+\Pr(F\text{ succeeds},\mathrm{act},\epsilon,\delta)
+ &=\frac{r_0^2P_E}{4}(1-\lambda\epsilon\delta\,\mathbf a\cdot\mathbf m),\\
+\Pr(F\text{ succeeds},\mathrm{sp},\epsilon,\delta)&=E r_0r_1.
+\end{aligned}
+$$
+
+Proof. Trace against $(I+\epsilon\mathbf a\cdot\sigma)/2$ and
+$(I+\delta\mathbf m\cdot\sigma)/2$. Zero local Bloch vectors
+and the singlet tensor give the active formulas. The spectator formula holds in every rank-one spectator rail basis. Summing
+its four terms yields $4E r_0r_1$; summing the active terms yields
+$r_0^2P_E$. Their sum is $P_F$. All terms are nonnegative because
+$\lambda<1$, and failure probabilities are $1-P_E$ and $1-P_F$.
+Conditioned on successful F, the flag weights are $w,1-w$; conditioning
+further on the active flag gives $W_\lambda$. The probability of that
+joint success event is $r_0^2P_E$, not $P_E$.
+
+If Alice first dephases the selected output along $\mathbf n$, then measures
+along a subsequent axis $\mathbf a$, replace $\mathbf a\cdot\mathbf m$
+in these active laws by $(\mathbf a\cdot\mathbf n)(\mathbf n\cdot\mathbf m)$.
+This follows by applying $\mathcal M_{\mathbf n}$ to the Alice Pauli
+factor. Setting $\mathbf a=\mathbf n$ recovers the corresponding law
+with Alice measured in her dephasing basis. An arbitrary other Alice axis
+does not retain the undephased law. These aligned-source formulas supply
+no common unknown-$q$ analyzer.
+
+## 198. Success weighting and the quadratic subnormalization distinction
+
+**Theorem 198.1 (Success weighting and subnormalized disturbance).**
+The probability-weighted conditional quantities are
+
+| Quantity | Procedure E | Procedure F |
+| --- | --- | --- |
+| $P C_M=P\sqrt{D_G^A}$ | $2\mu$ | $2r_0^2\mu$ |
+| $P D_G^A$ | $4\mu^2/P_E=2\mu^2/S$ | $4r_0^4\mu^2/P_F$ |
+| $P\mathcal N$ | $(\mu-A)_+$ | $r_0^2(\mu-A)_+$ |
+
+Proof. These follow by inserting $\lambda=2\mu/P_E$ and
+$\eta=2r_0^2\mu/P_F$ into the conditional formulas. They are finite
+weighted state diagnostics. In particular, $C_M$ here is defined on
+normalized states: substituting $X=P\rho$ into a trace-minus-product
+expression scales its first term by $P$ and its expectation-product term
+by $P^2$. Thus $P C_M$ is not assigned a raw-covariance interpretation.
+
+The quadratic measurement disturbance has a different homogeneous law.
+Linearity of every dephasing map gives, for a subnormalized $X=P\rho$,
+
+$$
+\mathfrak D(X):=2\inf_{\mathcal B}\|X-\mathcal M_{\mathcal B}(X)\|_{\mathrm{HS}}^2
+ =P^2D_G^A(\rho).
+$$
+
+Here $\mathcal B$ ranges over Alice's rank-one projective bases and $P$
+is the success probability. Consequently
+
+$$
+\mathfrak D(C_-)=4\mu^2,\qquad
+\mathfrak D(\Omega_F)=4r_0^4\mu^2.
+$$
+
+The quantities $P D_G^A$ and $P^2D_G^A$ must be kept distinct. Conditioning
+on the active flag also changes the state and its joint success probability;
+it cannot justify attaching E's raw probability to F's active output.
+
+## 199. Exact native covariance and discord at inverse temperature log 7
+
+**Proposition 199.1 (Exact native comparison).** At $\beta=\log7$, one has
+$t=1/7$, $(r_0,r_1)=(7/8,1/8)$ and $A=7/256$. The common spectral
+quantities from VI (141.6) are $Z=128/49$, $\langle\widehat H\rangle=1/4$,
+$\langle\widehat N\rangle=3/4$ and $\Pr(111)=1/128$.
+The two source parameters give the exact effective entries
+
+$$
+\begin{aligned}
+q_a:\quad &(a,b,c,d,z)=
+ \left(\frac7{16},\frac{91}{264},\frac{41}{264},\frac1{16},
+       \frac{7\sqrt{149}}{528}\right),\\
+q_b:\quad &(a,b,c,d,z)=
+ \left(\frac7{16},\frac5{16},\frac3{16},\frac1{16},\frac{\sqrt2}{8}\right).
+\end{aligned}
+$$
+
+Their auxiliary values are
+
+| Parameter | $q_a$, $p=49/198$ | $q_b$, $p=1/3$ |
+| --- | --- | --- |
+| $\mu$ | $7301/278784$ | $1/32$ |
+| $E=ac$ | $287/4224$ | $21/256$ |
+| $S$ | $22547/278784$ | $11/128$ |
+| $\mu-A$ | $-161/139392$ | $1/256$ |
+| $\mu/A$ | $1043/1089$ | $8/7$ |
+| $w$ | $22547/27959$ | $11/14$ |
+
+Proof. Insert the entries of Definition 187.1 and the native values
+$p_a=49/198$, $p_b=1/3$ into the parameter definitions.
+Substitution into Theorems 192.1–195.1 gives every conditional diagnostic:
+
+| Native instance and procedure | Raw $P$ | $C_M=\sqrt{D_G^A}$ | $D_G^A$ | $\mathcal N$ | Minimum PT eigenvalue |
+| --- | --- | --- | --- | --- | --- |
+| $q_a$, E | $22547/139392$ | $1043/3221$ | $1087849/10374841$ | $0$ | $23/3221$ |
+| $q_a$, F | $1369991/8921088$ | $7301/27959$ | $53304601/781705681$ | $0$ | $161/27959$ |
+| $q_b$, E | $11/64$ | $4/11$ | $16/121$ | $1/44$ | $-1/44$ |
+| $q_b$, F | $343/2048$ | $2/7$ | $4/49$ | $1/56$ | $-1/56$ |
+
+For $q_a$, $\mu/A=1043/1089<1$: both outputs are separable with positive
+covariance and discord. For $q_b$, $\mu/A=8/7>1$: both are entangled.
+The full $q_b$ output nevertheless has
+
+$$
+C_F=\frac27<\frac13,\qquad D_F=\frac4{49}<\frac19,\qquad
+\mathcal N_F=\frac1{56}>0.
+$$
+
+Its actual threshold is $w/3=11/42<2/7=12/42$, and
+
+$$
+\frac{3C_F-w}{4}=\frac{3(2/7)-11/14}{4}=\frac1{56}.
+$$
+
+This exact native example shows that the effective constants fail as
+necessary full-state conditions. The unnormalized full PT spectrum
+is $735/16384$ three times, $-49/16384$ once and $147/16384$ four times;
+its trace is $343/2048$.
+
+The exact weighted diagnostics and subnormalized disturbances are
+
+| Native instance and procedure | $P C_M$ | $P D_G^A$ | $P\mathcal N$ | $P^2D_G^A$ |
+| --- | --- | --- | --- | --- |
+| $q_a$, E | $7301/139392$ | $7614943/448981632$ | $0$ | $53304601/19430129664$ |
+| $q_a$, F | $357749/8921088$ | $2611925449/249424699392$ | $0$ | $127984347001/79585811103744$ |
+| $q_b$, E | $1/16$ | $1/44$ | $1/256$ | $1/256$ |
+| $q_b$, F | $49/1024$ | $7/512$ | $49/16384$ | $2401/1048576$ |
+
+For the effective total-number twirl of VI (150.5), all sectors other than $(1,1)$
+have a one-dimensional local factor, so its total negativity is
+$(\mu-A)_+$, equal to $1/256$ for $q_b$. This is specifically the
+effective total-number value, not the full parity-twirled total or a
+six-mode unfiltered total.
+
+Equal spectral quantities do not make the native models indistinguishable:
+their allowed single-copy Alice occupations are $115/528$ and $1/4$.
+The indistinguishability used in the fixed-source dephasing comparison
+concerns $\rho$ and $\mathcal D_A(\rho)$ at one $q$, rather than the
+pair $q_a,q_b$.
+
+## 200. Mathematical suppliers and applicability
+
+**Convention 200.1 (Prerequisites and mature projection method).**
+The native geometry, Gibbs correspondence, CAR signs, common success block,
+SSR menu and original negativity threshold are reused from [N]. The mature
+mixed-state two-copy projection mechanism is due to Schuch--Verstraete--Cirac
+[M]. Their Eq. (18) parameters correspond to
+
+$$
+w_{\mathrm{svc}}=\sqrt{ad/bc},\qquad
+v_{\mathrm{svc}}=|z|/\sqrt{bc}.
+$$
+
+Their projected standard-form matrix has diagonal
+$(w_{\mathrm{svc}}^2,1,1,w_{\mathrm{svc}}^2)$ and middle coherence
+$v_{\mathrm{svc}}^2$. Up to the declared legal Alice phase, it is
+proportional to $C_-/(bc)$. Squaring preserves
+$v_{\mathrm{svc}}>w_{\mathrm{svc}}\Longleftrightarrow\mu>ad$.
+Their $w_{\mathrm{svc}}$ is not the conditional flag weight $w$ in this
+appendix, and no standard-form filtering success factor is part of $P_E,P_F$.
+
+The two-qubit supplier [R] and the direct block calculation of the full
+$2\times4$ family have distinct domains. The spontaneous-emission
+dynamics of [G] is not a premise of this finite native model.
+
+**Assumption 200.2 (Applicability).** The principal-root normalization and common cut are specified model data.
+The compatible preparations, coherent joint local handling, filter
+instruments and aligned analyzers are the specified mathematical resources.
+Their physical availability is an additional premise. A common unknown-$q$ decoder remains unsupplied. The conclusions apply to these actual $2\times2$ and block-diagonal
+$2\times4$ conditional states with finite $\beta\ge0$. They are
+finite state diagnostics, with no extension here to a generic
+$2\times4$ discord bound, general PPT sufficiency, deterministic
+extraction, asymptotic rates, arbitrary copy counts or a physical clock.
+
+**Convention 200.3 (Mathematical references and domains).**
+
+- **[N] Native finite quantum application.**
+  [FIB ATOM recursive holographic boundary geometry, continuation VI, §§139--156](https://github.com/the-omega-institute/trureturing/blob/7b9f7a9101eb8492eba6454a034434d3b53fc79d/docs/develop/theory/FIB_ATOM_RECURSIVE_HOLOGRAPHIC_BOUNDARY_GEOMETRY_CONTINUATION_VI.md).
+  §§139--142 give the source, principal-root cut and full Gibbs factorization;
+  §§147--151 give the two-preparation resource, CAR convention and common
+  filter; §§152--155 give the thresholds and fixed-source comparison.
+- **[G] M. Gwóźdź and L. Jakóbczyk.** *Spontaneous emission can locally
+  create quantum discord out of classical correlations*,
+  [arXiv:1306.0130v2](https://arxiv.org/pdf/1306.0130v2),
+  DOI [10.1007/s11128-013-0639-0](https://doi.org/10.1007/s11128-013-0639-0).
+  Eqs. (II.1), (II.9), (II.15) and (II.23) specify the definitions and
+  Bell-diagonal versus numerically expected mixed-state comparison.
+- **[R] Repository two-qubit correlation--discord result.**
+  [Immutable declaration source](https://github.com/the-omega-institute/trureturing/blob/62da326eca057b3195bef4099cd0c6fcccc37c3c/D5/S3/Quantum/Information/GeometricDiscordMutualCorrelationBound.lean)
+  and [matching mathematical exposition](https://github.com/the-omega-institute/trureturing/blob/62da326eca057b3195bef4099cd0c6fcccc37c3c/Blueprint/D5/S3/Quantum/Information/GeometricDiscordMutualCorrelationBound.md).
+  The stated result concerns all two-qubit density matrices with the
+all-complex local covariance domain and the normalized Hilbert–Schmidt
+discord. The E family is within that domain; the F calculation is the
+direct local-block proof of §§192–194.
+- **[M] N. Schuch, F. Verstraete and J. I. Cirac.** *Quantum entanglement
+  theory in the presence of superselection rules*,
+  [quant-ph/0404079v1](https://arxiv.org/pdf/quant-ph/0404079v1),
+  DOI [10.1103/PhysRevA.70.042310](https://doi.org/10.1103/PhysRevA.70.042310).
+  PDF pp. 9--10, §§IV.D.1--IV.D.2, Eqs. (17)--(18), supply the mature
+  mixed-state standard form and two-copy local one-particle projection.
+- **[P] M. Horodecki, P. Horodecki and R. Horodecki.** *Separability of Mixed
+  States: Necessary and Sufficient Conditions*,
+  [quant-ph/9605038v2](https://arxiv.org/pdf/quant-ph/9605038v2),
+  Theorem 3, PDF p. 8. Its PPT sufficiency applies in $2\times2$ and
+  $2\times3$; full-state separability here follows from the explicit local
+  direct sum and product decomposition.
+
+- **[T] Two-qubit trace-norm comparison.**
+  [Trace-norm discord and maximal mutual correlation](https://github.com/the-omega-institute/trureturing/blob/b02b98342945a1a724a227db4fa38e376640e573/Blueprint/D5/S3/Quantum/Information/TraceNormDiscordMutualCorrelationBound.md),
+  Definitions 1.1–1.2 and Theorem 1.3, states $D_1^A\le C_M$
+  on two qubits with the unhalved trace norm and all-complex covariance
+  domain. It concerns the trace-norm functional of Convention 191.2.
+
+## 200.99 追加锚（本行以下为增补区）

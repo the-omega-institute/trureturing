@@ -1,0 +1,7 @@
+每个 $0\le j<k$ 供应三个整数 $p_j,d_j,e_j$，满足下列全部有限表条件：
+
+1. $0\le p_j<H$。令 $F_j=\{t\in C_j:m_j(t)\le p_j\}$、$S_j=C_j\setminus F_j$。要求 $S_j\ne\varnothing$，且 $F_j$ 在 $m_j$ 上单射。
+2. $0\le d_j\le e_j\le2d_j$，且对全部 $t\in S_j$ 有 $m_j(t)+d_j\le H$。零对只表示省略动作，不是空上下文。
+3. 令 $R_j=\{t\in S_j:n_j(t)+e_j>H\}$，要求 $R_j$ 在 $m_j$ 上单射。
+4. 令 $C_{j+1}=\{t\in S_j:n_j(t)+e_j\le H\}$，要求其非空，并逐行保留同一初始目标 $\tau(t)$。置
+

@@ -1,0 +1,6 @@
+文中使用三种标签：
+
+- `[formalized-here]`：由同一 PR 的 Lean 真源机器证明。
+- `[repo-derived]`：由现有 `dev` 真源支持。
+- `[research-target]`：由已闭合事实导出的下一条定义或定理目标，尚未冒充内核结论。
+

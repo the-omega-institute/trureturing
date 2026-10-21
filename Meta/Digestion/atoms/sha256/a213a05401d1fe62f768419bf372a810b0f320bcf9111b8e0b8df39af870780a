@@ -1,0 +1,16 @@
+**定理 75.8（同一原未知检查点的精确付费最小值）。** 在75.1–75.3的固定合同下，
+
+$$
+\boxed{\ V_2=\min_{\pi\in\Pi_2}\max_{q\in Q}c_\pi(q)=7\ }。
+$$
+
+完整量词是
+
+$$
+\exists\pi_*\in\Pi_2\ \forall q\in Q\quad c_{\pi_*}(q)\le7,
+\qquad
+\forall\pi\in\Pi_2\ \exists q\in Q\quad c_\pi(q)\ge7。
+$$
+
+**证明。** 命题75.41给出一个对五十类全部有限正确的策略，上界七且有达到路径；定理75.7适用于 $\Pi_2\subseteq\Pi_{\mathrm{fin}}$，给出匹配下界。达到者已经显示下确界是最小值。$\square$
+

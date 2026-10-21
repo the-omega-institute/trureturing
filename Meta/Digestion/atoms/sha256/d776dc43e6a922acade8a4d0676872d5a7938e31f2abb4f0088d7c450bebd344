@@ -1,0 +1,55 @@
+### An actual radial set that no positive-edge marginal can supply
+
+Define the radial-invariant measurable set
+
+$$
+\begin{aligned}
+Z_0={}&\{(x,y):0<|x|<1,\ 3<|y|<4\}\\
+ &\quad\cup\{(x,y):0<|y|<1,\ 3<|x|<4\},\\
+Z={}&Z_0\setminus\bigcup_{n\ge2}
+ \left(\{\big||x|-|y|\big|=\log n\}
+       \cup\{|x|+|y|=\log n\}\right).
+\end{aligned}
+\tag{MK3}
+$$
+
+Swapping endpoints or changing either endpoint's sign preserves $Z$.
+On $Z_0$, every oriented separation is greater than two. Since
+$\psi_\Gamma$ decreases and $\psi_\Gamma(2)<1$, whereas
+$2\cosh(x/2)\cosh(y/2)\ge2$, the positive Gamma density in (S1)
+vanishes there and the negative density is strictly positive.
+The removed countable union of lines has planar Lebesgue measure zero.
+The positive smooth original $\Phi$ consequently gives
+$K_-(Z)>0$.
+
+Every prime-power graph has separation $\log n$ for an integer
+$n\ge2$. Such a separation is either the radial sum or the radial
+difference removed in (MK3). Thus all original prime graphs give $Z$
+zero mass as well. This proves
+
+$$
+K_+(Z)=0<K_-(Z).
+\tag{MK4}
+$$
+
+Both sign orientations are included in this argument. Mutual singularity
+of $K_+$ and $K_-$ on oriented edges alone would not establish (MK4)
+on a radial-invariant set.
+
+Apply the second marginal condition in (MK1) to $E=Z$. Positivity
+and $0<w_-<\infty$ imply $\kappa_a(Z)=0$ for $K_-$-almost every
+$a$. For almost every $a\in Z$, however, reconstruction and (MK2)
+give $m(a)>0$, and the radial separation statement confines the row
+to the same fiber, wholly contained in $Z$. This forces $m(a)=0$,
+contradicting $K_-(Z)>0$.
+
+Hence an exact full-core raw-edge reconstruction cannot have a phased
+measure kernel satisfying (MK1), including a kernel with deterministic
+point-mass rows. The conclusion is limited to that absolute marginal
+certificate. It excludes neither an abstract contraction nor a better
+actual norm than the absolute estimate, products greater than one,
+controlled approximate reconstruction, distribution kernels, or a
+transfer only between the projected increments in (S7). Those
+increments annihilate the critical family, so (MK2) gives no
+nonzero equality vector for them. The all-input half-bound, joint
+projected comparison, RH and Robin remain unresolved.

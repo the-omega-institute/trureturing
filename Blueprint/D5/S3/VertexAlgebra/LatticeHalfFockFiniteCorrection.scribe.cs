@@ -43,6 +43,22 @@ internal sealed class LatticeHalfFockFiniteCorrectionDocument : IScribeDocumentD
         Blocks(
             Paragraph(Text("LatticeData consists of an arbitrary finite rank and a symmetric integral Gram matrix with even diagonal. Rank zero, degeneracy and indefinite forms are allowed. The source weight of (i,k) is k+1; the native half-Fock weight is 2k+1. The extra polynomial variable records physical negative shifts. Singleton weights are binomial(-1/2,m) times the charge pairing; pair weights are mn binomial(-1/2,m) binomial(-1/2,n)/(m+n) times the Gram pairing. No inverse Gram matrix, positivity, rank condition or occupation cutoff occurs.")),
             Describe.Lean(
+                DescribeId.Create("half-fock-positive-source-convolution"),
+                DeclarationHandle.Create(Prefix + "halfBinomial_positive_convolution"),
+                H("Positive source weight half convolution"),
+                StatementSource.WithoutFormula(),
+                AssessedProvenance.FromRepo(Background),
+                Blocks(Paragraph(Text("For all natural m,n with m>0, sum over 0<=s<=n of halfBinomial(m+s) choose(1/2,n-s) equals m halfBinomial(m) halfBinomial(n)/(m+n), over Complex. The certificate uses the arbitrary-complex binomial recurrence, telescopes only the interior 0<=s<n, and treats s=n separately. Division uses m+n nonzero from m>0, and includes n=0. The divided extension at m=n=0 is false: its left side is 1 and its right side is 0. The actual finite-current insertion triangle consumes this theorem at m=sourceWeight(D,index)=index.2+1; no standalone general cross-form API is asserted."))),
+                DescribeRole.Theorem),
+            Describe.Lean(
+                DescribeId.Create("latticehalffockfinitecorrection-pairderivation-variable"),
+                DeclarationHandle.Create(Prefix + "pairDerivation_variable"),
+                H("The original pair derivation on an ordinary variable"),
+                StatementSource.WithoutFormula(),
+                AssessedProvenance.FromRepo(Background),
+                Blocks(Paragraph(Text("The original generator lemma is public for direct reuse by correctionConnection_pair_commutator in CorrectionTranslation. Its statement and proof are retained; this is consumed support, not additional mathematical content."))),
+                DescribeRole.Theorem),
+            Describe.Lean(
                 DescribeId.Create("half-fock-correction-half-successor"),
                 DeclarationHandle.Create(Prefix + "half_successor"),
                 H("The original half-binomial successor coefficient"),

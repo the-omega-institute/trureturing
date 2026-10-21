@@ -1,0 +1,143 @@
+**数学引文 24.2（原生条件回复所用的关系收缩计算）。** 取合法位置集 $T\in\Gamma_n$，使用 §23.2 的已有对偶数组
+
+$$
+D_T=\sum_{I\subseteq T}(-1)^{|T|-|I|}\delta_I,
+\qquad D_\varnothing=\delta_\varnothing.
+$$
+
+以下有限包含反演和条件概率计算作为命题 24.3 的原生条件回复推导的中间步骤。在定义 24.1 的精确记录下，该方向收缩为
+
+$$
+\mathcal R_{O,J}D_T=
+\begin{cases}
+(-1)^{|T\cap O|-|J|}D_{T\setminus O},&J\subseteq T\cap O,\\
+0,&J\not\subseteq T\cap O.
+\end{cases}
+\tag{24.2}
+$$
+
+若 $T\setminus O\ne\varnothing$，并且 $p$、$p_\varepsilon=p+\varepsilon D_T$ 都是 $\Gamma_n$ 上合法概率律，则两律的该记录质量相同。对其共同正质量 $a>0$，
+
+$$
+p_\varepsilon(\cdot\mid E_{O,J})-p(\cdot\mid E_{O,J})
+=\frac{\varepsilon}{a}\mathcal R_{O,J}D_T.
+\tag{24.3}
+$$
+
+条件化把仍参与该关系的未读位置保留为 $T\setminus O$；与 $T$ 不相容的记录则完全消去此方向。这里不承诺沿任意边界律的任意 $\varepsilon$ 都合法。
+
+证明。若 $J\not\subseteq T\cap O$，$D_T$ 支撑中的 $I\subseteq T$ 无法给出该记录。否则每个贡献项唯一写作 $I=J\cup K$，其中 $K\subseteq T\setminus O$。全部这些集合都是合法 $T$ 的子集，故
+
+$$
+\begin{aligned}
+\mathcal R_{O,J}D_T
+&=\sum_{K\subseteq T\setminus O}
+(-1)^{|T|-|J|-|K|}\delta_K\\
+&=(-1)^{|T\cap O|-|J|}
+\sum_{K\subseteq T\setminus O}
+(-1)^{|T\setminus O|-|K|}\delta_K.
+\end{aligned}
+$$
+
+这消费 §23.2 的同一 Boolean 区间反演，给式 (24.2)。非空 $T\setminus O$ 的交替总质量为零，因此 $p_\varepsilon(E_{O,J})=a$，有限条件概率的归一化给式 (24.3)。$T=\varnothing$ 时 $D_\varnothing$ 的质量为一，不是非零归一化扰动方向。
+
+为保留归一化的条件边界，令 $v=\mathcal R_{O,J}D_T$、$b=\sum_Kv_K$。一般情况下，只要两份来源合法、$a>0$ 且 $a+\varepsilon b>0$，同一计算给
+
+$$
+\begin{aligned}
+p_\varepsilon(\cdot\mid E_{O,J})-p(\cdot\mid E_{O,J})
+&=\frac{a\,p(\cdot\mid E_{O,J})+\varepsilon v}{a+\varepsilon b}
+-p(\cdot\mid E_{O,J})\\
+&=\frac{\varepsilon}{a+\varepsilon b}
+\bigl(v-b\,p(\cdot\mid E_{O,J})\bigr).
+\end{aligned}
+\tag{24.4}
+$$
+
+式 (24.3) 正是 $b=0$ 的情形。当 $T\subseteq O$ 且记录相容时，$v=(-1)^{|T|-|J|}\delta_\varnothing$，$b=(-1)^{|T|-|J|}$：关系差已进入记录质量，不能再使用共同分母，也不能推出归一化的未读律一定不变。例如 $n=3$，取五个合法模式各质量 $1/5$ 的 $p$，$T=O=\{1\}$、$J=\{1\}$、$0<\varepsilon<1/5$。此时 $a=2/5$、$v=\delta_\varnothing$，而原未读律是 $(\delta_\varnothing+\delta_{\{3\}})/2$。式 (24.4) 的差为
+
+$$
+\frac{\varepsilon}{2/5+\varepsilon}\,
+\frac{\delta_\varnothing-\delta_{\{3\}}}{2}\ne0.
+$$
+
+因此仅 $D_T$ 的剩余支撑为空，并不表示完整来源的剩余部分在条件化后不变。
+
+现在把公式回接五态。约定 23.1 的
+
+$$
+\Sigma=(O,L,T,R,J)
+=(F[\mathrm{null}],F[1],F[2],F[3],F[1,3])
+$$
+
+对应标签 $\varnothing,[2],[3],[5],[2,5]$；低、中、高占位依次为 $x,z,y$，$xz=yz=0$。原有完整重构在该顺序下仍是
+
+$$
+p_\kappa=(1-X-Y-Z+\kappa,\ X-\kappa,\ Z,\ Y-\kappa,\ \kappa),
+\quad
+\max(0,X+Y+Z-1)\le\kappa\le\min(X,Y),
+\tag{24.5}
+$$
+
+其中 $X=\mathbb E x$、$Z=\mathbb E z$、$Y=\mathbb E y$，$\kappa=\mathbb E xy$。式 (24.5) 的拥有者是本卷 §23.1 及 [HiddenRelations C-28.5.2][H49]。$D_{\{1,3\}}=(1,-1,0,-1,1)$ 在实际读取端点或中点时给
+
+$$
+\begin{array}{c|c}
+\text{精确记录}&\mathcal R D_{\{1,3\}}\\ \hline
+x=1&D_{\{3\}}\\
+x=0&-D_{\{3\}}\\
+z=0&D_{\{1,3\}}\\
+z=1&0
+\end{array}
+\tag{24.6}
+$$
+
+例如 $x=1$ 保留 $\delta_{\{1,3\}}-\delta_{\{1\}}$，删除已读位置 1 后正好成为 $D_{\{3\}}$；$x=0$ 保留相反方向。$z=1$ 与此方向的全部支撑不相容。由 [观察更新卷 §2.2][U24] 的同源后验式，
+
+$$
+\Pr(y=1\mid x=1)=\frac\kappa X\quad(X>0),\qquad
+\Pr(y=1\mid x=0)=\frac{Y-\kappa}{1-X}\quad(X<1).
+\tag{24.7}
+$$
+
+忘记记录结果后，塔式求和恢复 $X(\kappa/X)+(1-X)((Y-\kappa)/(1-X))=Y$，只对正质量支求和；$X=0$ 或 1 时仅保留实际存在的一支。因而保留分支所见的端点关系与无条件均值是不同目标。
+
+同一记录的合法剩余载体还需保持原图。记 $N(J)$ 为 $J$ 在原路径中的邻点集合，置
+
+$$
+V=[n]\setminus(O\cup N(J)).
+$$
+
+兼容来源与原图诱导子图上的独立集一一对应：$I\longleftrightarrow J\cup K$，其中 $K\subseteq V$ 且在原图中不含相邻位置。必要性来自已读零位不能占据及 $J$ 的邻点不能占据；反向由 $J$ 合法、$K$ 合法且无跨 $J,K$ 的边得到。沿用 [HiddenRelations C-28.10.2][H49] 的删点分量计数，若分量长度为 $\ell_1,\ldots,\ell_c$，则
+
+$$
+|E_{O,J}|=\prod_{j=1}^c F_{\ell_j+2},\qquad
+\sum_{I\in E_{O,J}}u^{|I\setminus O|}
+=\prod_{j=1}^c H_{\ell_j}(u),
+\tag{24.8}
+$$
+
+其中 $H_0(u)=1$、$H_1(u)=1+u$，$H_\ell(u)=H_{\ell-1}(u)+uH_{\ell-2}(u)$，$\ell\ge2$。最后一式按每个分量首位不选或选分解；$H_\ell(1)=F_{\ell+2}$。空图的两个乘积都是一。式 (24.8) 的次数只数未读的 $K$；若数完整 $I$，还须乘 $u^{|J|}$。删除位置后不得把余下位置重新连续编号来添加本不存在的邻接边。
+
+这些是载体的乘积，不是概率的乘积。五态的 $z=0$ 记录留下互不相邻的两个端点，但对 $Z<1$，
+
+$$
+\Pr(x=y=1\mid z=0)=\frac\kappa{1-Z},\quad
+\Pr(x=1\mid z=0)=\frac X{1-Z},\quad
+\Pr(y=1\mid z=0)=\frac Y{1-Z}.
+$$
+
+条件独立另需 $\kappa(1-Z)=XY$；原图分解不强迫这个等式。
+
+最后，若两份来源的记录 $h$ 有共同边缘 $a_h$，且记录与剩余部分 $(h,K)$ 可以重构原来源，则按同一有限载体上的总变差定义，
+
+$$
+\operatorname{TV}(p,q)
+=\frac12\sum_{h,K}a_h
+\left|p(K\mid h)-q(K\mid h)\right|
+=\sum_{h:a_h>0}a_h\operatorname{TV}\bigl(p(\cdot\mid h),q(\cdot\mid h)\bigr).
+\tag{24.9}
+$$
+
+第一步使用重构的一一对应，第二步只提取共同非负权；零质量支不参与。此为式 (24.3) 的条件边界计算，并非没有共同记录边缘时的公式。罕见记录的 $1/a_h$ 后验放大仍须乘实际事件概率；只比较某个后验而丢掉分支权会改变任务。进一步只保留 $K$ 时，不同支的有符号差可以相消，三角不等式只保证遗忘后的总变差不增。式 (24.6) 的 $x=1$ 与 $x=0$ 两方向正是这种相消。证毕。
+

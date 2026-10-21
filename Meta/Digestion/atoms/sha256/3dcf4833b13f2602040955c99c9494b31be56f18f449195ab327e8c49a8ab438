@@ -1,0 +1,31 @@
+### 定义 370.1（信息感知全息边界）
+
+固定有限参数来源类、动态事件仪器和自适应策略。定义
+
+$$
+\boxed{
+\eta_{\mathrm{info}}
+=
+\left(
+\Theta,
+\{p_n(x\mid a,h,\theta)\},
+\mathsf{Clock},
+\mathsf{Policy},
+\{I_n\},
+I_{T_N},
+\mathsf{Risk},
+\mathsf{CR},
+\mathsf{Event},
+\mathsf{Stop}
+\right).
+}
+$$
+
+各字段保存：
+
+1. 共同参数来源类与动态概率模型；
+2. 钟标签、动作历史和自适应策略；
+3. 每一步条件 Fisher 增量及其总和；
+4. 目标损失、信息目标、估计器类别与 Cramér–Rao 合同；
+5. 事件记录、后继边界、重复资源和停止规则。
+

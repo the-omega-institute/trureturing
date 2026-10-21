@@ -1,0 +1,68 @@
+**Theorem 8.2 (the native parity and full-vector width comparison).**
+For every family of Definition 8.1 there is a complete-word realization
+of its prescribed parity chronology with exactly
+
+$$
+|W|=4h-1,\qquad
+\ell_h=
+\begin{cases}
+2,&h=1,\\
+2\lceil\log_2h\rceil+3,&h\ge2.
+\end{cases}
+\tag{SLHC.13}
+$$
+
+Every installed word is reached on some promised source. On each source
+the realization preserves every prescribed instruction, raw reply and
+actual device successor. It makes exactly $h$ Reads, $h-1$ genuine
+Updates and $2h-1$ response bit changes, with its first fixed-target
+Halt immediately after primitive $2h-1$. It inserts no other primitive
+or intermediate write phase. All typed response rows, including
+unsupported replies, are legal.
+
+For the parity target alone, every deterministic policy that terminates
+correctly on every promised source needs at least $h$ actual Reads on
+each source. This lower bound permits arbitrary deterministic finite
+internal work and memory, arbitrary finite literal depths, adaptive
+Updates and stopping, and recurrence of control states at different
+source epochs. For a complete-word comparator, additionally require that
+its entire counted word select one fixed materialized literal at every
+query row and one fixed target at every halt row. Then its installed set
+contains at least $h$ distinct query words and two distinct halt words;
+consequently
+
+$$
+|W|\ge h+2,\qquad F_{\ell+2}\ge h+2,\qquad
+\ell\ge\log_\varphi(h+2)-1,
+\quad \varphi=(1+\sqrt5)/2.
+\tag{SLHC.14}
+$$
+
+Thus the least attainable complete mutable width has order
+$\Theta(\log(h+1))$, both for the prescribed chronology and for the
+larger class of correct complete-word parity controllers that may choose
+their own Reads and Updates. Theorem 2.1's full-vector target still has
+order $\Theta(h)$ on the identical source family. These statements do
+not assert a minimum installed-state count, an optimal width constant,
+efficient synthesis, or a bound on total storage or physical time.
+
+The displayed parity table has $2h-1$ Read rows, $2h-2$ Update rows and
+two Halt rows, hence $4h-1$ instruction rows and $10h-6$ typed response
+rows. Its per-run address sum and peak remain $A_h,P_h$ of (SLHC.4).
+Inlining its literals stores $2A_h-m$ address letters; its two fixed
+halt payloads store two target bits in total. The remaining separate
+resource bills are specified below as part of the same construction.
+
+Proof. First justify the task's history compression; only afterwards
+encode the resulting control table injectively.
+
+At the $i$th Read there have been $t=i-1$ Updates. SLH §32.2 and
+Calculation 3.1 give the actual subtree $T_{t+x_i}$ at $q_i$. If
+$t=2k+e$, all $k$ right descents are reached: before descent $j+1$,
+$0\le j<k$, the index is $t+x_i-2j\ge2+e+x_i$. The endpoint is
+$T_{e+x_i}$. Thus use precisely the following supported decoder:
+
+| $(i-1)\bmod2$ | Raw reply for $b=0$ | Raw reply for $b=1$ |
+| --- | --- | --- |
+| $0$ | $\alpha$ | $\beta$ |
+| $1$ | $\beta$ | $\mathsf{branch}$ |

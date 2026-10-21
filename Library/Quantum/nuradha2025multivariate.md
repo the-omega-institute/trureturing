@@ -5,9 +5,10 @@ year: 2025
 title: Multivariate Fidelities
 doi: 10.1088/1751-8121/adc645
 url: https://arxiv.org/abs/2404.16101v3
-claim: Multivariate SDP fidelity maximizes jointly positive block coherences, is bounded by average pairwise root fidelity, and motivates the explicit operational question in Section 6 item 2.
+claim: Multivariate SDP fidelity maximizes jointly positive block coherences and is bounded by average pairwise root fidelity; Remark 5.45 asks for a strict measured-versus-Uhlmann gap, and Section 6 item 2 asks for operational interpretations.
 strata_touched:
   - D5/S3/Quantum/Dynamics/HamiltonianEffectCompletionGenerator
+  - D5/S3/Quantum/Information/NMLWMeasuredFidelitySeparation
 license: citation-only
 triage: anchor
 ---
@@ -25,3 +26,25 @@ Section 6 item 2 asks for information-theoretic operational interpretations of m
 The positive block in (5.27) directly parametrizes one population-preserving, conditional-state-calibrated recovery channel. The normalized mean of real coherences is its SDP objective. Allowing an independently measured phase for each pair gives a modulus objective, which is generally different. Both quantities are bounded by pairwise root fidelities.
 
 The new paper derivation refines this comparison with a projective-cycle obstruction and, for three orthogonal thermal qubit states, a matching fourth-order high-temperature gap. The basic SDP-to-channel correspondence is standard and is not presented as the sole research contribution. The external operational question is used as a precise research anchor; this note does not register its full resolution, assert that no later interpretation exists, or establish global priority.
+
+## Verified locator
+
+DOI: 10.1088/1751-8121/adc645
+
+Source: https://arxiv.org/abs/2404.16101v3
+
+## Source statements
+
+Proposition 3.1, page 9: “F(ρ, σ) := ‖√ρ √σ‖₁”.
+
+Equation (5.13), page 18: “F_U(ρ_1, …, ρ_r) := (2/(r(r−1))) Σ_{i<j} F(ρ_i, ρ_j).”
+
+Definition 5.40, page 32: “F_M(ρ_1, …, ρ_r) := (2/(r(r−1))) inf_{(Λ_x)_x} Σ_{i<j} F(Λ(ρ_i), Λ(ρ_j)), where Λ(ρ_i) := Σ_x Tr[Λ_x ρ_i]|x⟩⟨x| is the measurement channel induced by applying the POVM (Λ_x)_x on the state ρ_i.”
+
+Remark 5.45, page 34: “Furthermore, it is interesting to determine whether there exists a tuple of states for which F_M(ρ_1, …, ρ_r) > F_U(ρ_1, …, ρ_r)—we leave this as an open question.”
+
+## Scope
+
+The affirmative answer uses three qubit density matrices: I/2, diag(3/4, 1/4), and the matrix with diagonal entries 1/2 and off-diagonal entries 1/4. The measured infimum ranges over the dependent sum of all finite POVMs, including every outcome size. The analytic estimate gives F_U < 24/25 ≤ F_M; it does not compute the exact measured fidelity or classify equality for arbitrary tuples.
+
+The literature screen in issue #19068 found no later answer within the works it examined. Completeness of the citation census is ASSUMED-UNVERIFIED.

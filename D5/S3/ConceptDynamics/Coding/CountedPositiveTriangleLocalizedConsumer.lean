@@ -94,6 +94,22 @@ theorem dyadicReduction (e : ℕ) :
   intro z
   exact IsLocalization.Away.lift_eq (2 : ℤ) (by simpa using htwo) z
 
+theorem centralizer_product {M : Type*} [Monoid M] (A : M)
+    (B : M → M → ZMod 3)
+    (htriangle : ∀ R V W, B R (V*W) + B V (W*R) = B (R*V) W)
+    (U V : Mˣ) (hU : Commute (U : M) A) :
+    B ((U*V : Mˣ) : M) (↑((U*V)⁻¹)*A) =
+      B (U : M) (↑U⁻¹*A) + B (V : M) (↑V⁻¹*A) := by
+  have hconj : (↑U⁻¹ : M) * (A * (U : M)) = A := by
+    rw [← hU.eq, ← mul_assoc, Units.inv_mul, one_mul]
+  have hleft : (V : M) * ((↑V⁻¹ : M) * ↑U⁻¹ * A) = (↑U⁻¹ : M) * A := by
+    rw [← mul_assoc, ← mul_assoc, Units.mul_inv, one_mul]
+  have hright : ((↑V⁻¹ : M) * ↑U⁻¹ * A) * (U : M) = (↑V⁻¹ : M) * A := by
+    simpa only [mul_assoc] using congrArg (fun x : M => (↑V⁻¹ : M) * x) hconj
+  change B ((U : M)*(V : M)) ((↑V⁻¹ : M)*↑U⁻¹*A) = _
+  rw [← htriangle, hleft, hright]
+
+
 end SourceOnlyLocalizedCocycle
 
 namespace D5.S3.ConceptDynamics.Coding.CountedOrderTypeGyration
@@ -120,6 +136,20 @@ private theorem integerGyrationValue_nat {n m d : ℕ} [NeZero d]
   rw [integerGyrationValue,he]
   classical
   simp only [signedGyrationLift, orderTypeGyrationLift, Ring.choose_natCast, Nat.cast_prod]
+
+/-- The signed integer lift on natural matrices gives the original forward
+orbit-offset residue, including zero entries and empty dimensions. -/
+theorem integerGyrationValue_nat_mod_three {n m d : ℕ} [NeZero d]
+    (hd : 3 ∣ d) (R : CountMat n m) (S : CountMat m n) :
+    (integerGyrationValue d (R.map (Nat.castRingHom ℤ))
+      (S.map (Nat.castRingHom ℤ)) : ZMod 3) =
+      ZMod.castHom hd (ZMod 3) (relativeForwardGyration (d := d) R S) := by
+  have h : relativeForwardGyration (d := d) R S =
+      (orderTypeGyrationLift (d := d)
+        (Sum.elim (fun ij => R ij.1 ij.2) (fun ji => S ji.1 ji.2)) : ZMod d) :=
+    relativeForwardGyration_eq_order_types
+      (Sum.elim (fun ij => R ij.1 ij.2) (fun ji => S ji.1 ji.2))
+  rw [integerGyrationValue_nat, h, map_intCast]
 
 /-- Concrete integer lifts of the actual orbit triangle. No polynomial triangle
     or signed-domain cocycle is postulated. -/

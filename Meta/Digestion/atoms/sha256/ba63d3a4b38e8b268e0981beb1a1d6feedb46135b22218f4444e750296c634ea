@@ -1,0 +1,28 @@
+**Theorem 18.4 (Matching necessary and sufficient deterministic record orders).** For every fixed admissible nonzero residual pair and fixed $\alpha\in(0,1/2)$,
+
+$$
+W^*_\alpha(q)=\Theta_{n,H,\alpha}(q^{1-j_*})\quad(q\downarrow0),
+\tag{18.19}
+$$
+
+and, as $s=-\log q\downarrow0$,
+
+$$
+W^*_\alpha(q)=
+\begin{cases}
+\Theta_{n,H,\alpha}(s^{-(2d+1)}),&2d<n+1,\\
+\Theta_{n,H,\alpha}(s^{-(n+2)}/\log(1/s)),&2d=n+1,\\
+\Theta_{n,H,\alpha}(s^{-(n+2)}),&2d>n+1.
+\end{cases}
+\tag{18.20}
+$$
+
+The same orders hold if independent randomization is allowed in the decision. These are fixed-pair optimal orders for deterministic record lengths, not sharp minimax constants or optimal expected stopping times.
+
+Proof. Since $b_\alpha>0$ and $C_0\to0$, (17.11) gives $W\ge b_\alpha/(2I_0)$ in a sufficiently small neighborhood of either endpoint. This holds for every permitted rule, including randomized ones. Theorems 18.2–18.3 give the lower orders.
+
+For the upper orders use (17.17). Since $A\to1$ and $-\log A\sim1-A$, its $N$ is $O_\alpha((1-A)^{-1})$. At zero, both $\mu_i$ and $\mathbb E_i\tau$ remain bounded, hence its $W=O_\alpha((1-A)^{-1})$. At one, (18.7) gives $W=O_\alpha(s^{-1}(1-A)^{-1})$. Inserting the positive affinity asymptotics proves exactly the orders in (18.19)–(18.20), with a deterministic rule. In particular the proof uses an attainable deadline guarantee in addition to the information-rate converse.
+
+For each fixed $W$, the two window laws converge to the same limit at both endpoints. At zero, their gap laws tend to $K=1$, their means tend to two, and their cylinder formulas tend to the half-half mixture of the two alternating phases. At one, the probability of any one in the window is at most $W/\mu_i\to0$, so both tend to the all-zero word. The alphabet of length-$W$ words is finite, hence these statements are convergence in total variation. The sum of two testing errors is at least $1-d_{\rm TV}(\mathsf P_0^W,\mathsf P_1^W)$, by summing the smaller of the two masses, and therefore tends to one. No finite record budget works uniformly over all $q\in(0,1)$ for any fixed $\alpha<1/2$, even when the rule knows $q$. $\square$
+
+

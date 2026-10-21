@@ -1,0 +1,4 @@
+**命题 44.7（数值任务的准确商）。** 定义44.1中，取所有固定上下文后的完整 $\eta$ 读为任务，包含空上下文，则任务等价恰为 $\ker\eta$。共同初始化的确定数值适应协议也不能分开初始 $\eta$ 相等的来源。这不是原树恢复，也不是 Process43 的完整原后继响应任务。
+
+证明。$\eta$ 相等经 (PG.4404) 给所有上下文相同回复；反之空上下文立即给 $\eta$ 相等。对适应协议，相同过去记录给相同下一读口／准备常量／动作，耦合递推保持当前 $\eta$ 相等，逐事件得相同记录、停止及输出。原树 $\langle\langle\alpha,\alpha\rangle,\beta\rangle$ 与 $\langle\beta,\langle\alpha,\alpha\rangle\rangle$ 均有 $\eta=((2,1),0)$，却在左孩子地址回复 branch 与 beta；宽地址口可分离它们。Process43.1 的任务还保留合法性、失败、原后继联合状态、档案和 writer 字段；其共同视图核的任务充分性只有包含关系，核相等另需无冗余。这里直接证明的核等号只针对本命题的数值任务。[StrictOneHoleContexts](../../../D5/S3/ConceptDynamics/Observation/StrictOneHoleContexts.lean) 的总化／部分上下文理论可用于核组织，但不替代这项实际来源检查，亦不执行所有反事实词。证毕。
+

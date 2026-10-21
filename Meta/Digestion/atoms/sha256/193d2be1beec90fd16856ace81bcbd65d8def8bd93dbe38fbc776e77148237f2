@@ -1,0 +1,22 @@
+**Definition 89.3 (scale and operator tests for a proposed source bridge).**
+For a declared source-to-carrier map, specify the legal forward relation,
+the carrier metric and measure, the propagation $P$, its energy operator
+$L$ and normalization, the propagation clock, and both root and exterior
+boundaries before taking any scale limit. Two distinct calibration tests
+for a quadratic propagation claim are a radius-independent Poincaré bound
+of the form (89.10), on the claimed centres and scale range, and a
+radius-independent mean-exit bound
+
+$$
+\mathbb E_x\tau_{B_d(x,R)}\le C_{\mathrm{exit}}R^2.
+\tag{89.21}
+$$
+
+The exit time in (89.21) is measured in that declared propagation clock.
+If the proposed claim includes a nonnegative unscreened root response,
+its Green test concerns (89.5) for that same operator, measure and
+boundary. These tests specify particular mathematical obligations; their
+sufficiency for a three-dimensional Green estimate is not assumed.
+They are distinct from the acquisition of any metric or energy readout
+and from the native or physical implementation of the propagation.
+

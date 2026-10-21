@@ -1,0 +1,78 @@
+### theorem 3.1: 定理 2：独立截面是唯一的最大熵截面
+
+设：
+
+$$
+r>0.
+$$
+
+在固定 $(X,Y,Z)$ 的所有端点联合分布中，唯一满足：
+
+$$
+\Delta=0
+$$
+
+的分布为：
+
+$$
+\boxed{
+\kappa_0=\frac{XY}{r}.
+}
+$$
+
+它同时是条件熵最大的分布。
+
+#### 证明
+
+归一化底面联合表：
+
+$$
+\widetilde Q=\frac{Q}{r}.
+$$
+
+它的行边缘和列边缘固定。设其行边缘为 $u$，列边缘为 $v$。信息论恒等式为：
+
+$$
+D_{\mathrm{KL}}(\widetilde Q\Vert u\otimes v)=
+H(u)+H(v)-H(\widetilde Q).
+$$
+
+因为 KL 散度非负：
+
+$$
+H(\widetilde Q)
+\le
+H(u)+H(v).
+$$
+
+等号当且仅当：
+
+$$
+\widetilde Q=u\otimes v.
+$$
+
+这就是条件独立分布。
+
+其共同占用概率为：
+
+$$
+\frac{\kappa}{r}=
+\frac{X}{r}\frac{Y}{r}.
+$$
+
+因此：
+
+$$
+\kappa=\frac{XY}{r}.
+$$
+
+同时：
+
+$$
+\Delta=r\kappa-XY=0.
+$$
+
+证毕。
+
+---
+

@@ -1,0 +1,65 @@
+**引理 433.2（任意维根面的代数几何与有限半范数）。** 在定义433.1的条件下，对每个 $i\in I$，$F_i$ 是 $C_i$ 中包含 $a_i$ 的最小面，并有线段恒等式
+
+$$
+F_i=\{a_i\}\ \cup\!
+\bigcup_{\substack{u,v\in C_i,\ u\ne v\\a_i\in(u,v)}}[u,v],
+$$
+
+其中 $[u,v]=\{\theta u+(1-\theta)v:0\le\theta\le1\}$，$(u,v)$ 使用 $0<\theta<1$。$B_i$ 凸、对称且吸收 $L_i$：对每个 $v\in L_i$，存在 $R>0$ 使 $v\in RB_i$。其 Minkowski 泛函为有限半范数，并满足
+
+$$
+\{v\in L_i:p_i(v)<1\}\subseteq B_i
+\subseteq\{v\in L_i:p_i(v)\le1\},
+$$
+
+$$
+\ker p_i=\{v\in L_i:p_i(v)=0\}
+=\{v\in L_i:\mathbb Rv\subseteq B_i\}.
+$$
+
+特别地，对每个 $v\in L_i$，存在 $\delta>0$ 使 $a_i+tv\in F_i$ 对所有 $|t|\le\delta$ 成立。这里不断言 $B_i$ 是闭单位球，也不要求核为零。
+
+**证明。** 固定一个坐标并省略下标，把 $a$ 平移到零，记 $D=C-a$。由定义中的 $x\in C$，有
+
+$$
+F=a+M,\qquad
+M=\{v\in D:\exists\varepsilon>0,\ -\varepsilon v\in D\}.
+$$
+
+两种见证的换算为 $\varepsilon=\lambda/(1-\lambda)$。$0\in M$。若 $v,w\in M$，把两个正见证减小到共同的 $\varepsilon>0$；因 $0\in D$ 且 $D$ 凸，减小后仍为见证。对每个 $0\le\theta\le1$，$\theta v+(1-\theta)w$ 及其负 $\varepsilon$ 倍都在 $D$ 内，故 $M$ 凸，$F$ 也凸。
+
+若 $x\in F$ 且 $x=\theta u+(1-\theta)v$，其中 $u,v\in C$、$0<\theta<1$，选 $a=\lambda x+(1-\lambda)y$ 为见证。于是
+
+$$
+a=\lambda\theta u+(1-\lambda\theta)
+\frac{\lambda(1-\theta)v+(1-\lambda)y}{1-\lambda\theta}.
+$$
+
+分母正，最后的商是 $C$ 中的凸组合，且 $0<\lambda\theta<1$，所以 $u\in F$；交换 $u,v$ 得 $v\in F$。因此 $F$ 是面。任何包含 $a$ 的面，由每个见证等式的面性质都必须包含相应的 $x$，故包含 $F$，证明最小性。
+
+见证等式的两个端点均在 $F$ 中。若 $x\ne a$，其见证两端不同且开线段含 $a$，所以 $x$ 属于所列并集。反过来，开线段含 $a$ 的两个端点都属于最小面，整条闭线段由凸性属于该面。加上 $a$ 本身即得线段恒等式。
+
+$B=(F-a)\cap(a-F)$ 凸、对称且含零，因此平衡，即 $|t|\le1$ 蕴含 $tB\subseteq B$。对 $v=x-a\in F-a$，见证的另一端点也在 $F$，故存在 $\kappa>0$ 使 $-\kappa v\in F-a$。取 $\delta=\min(1,\kappa)>0$，沿两段的凸性给出 $\pm\delta v\in F-a$，于是 $\delta v\in B$。
+
+任给 $w\in L$，写成有限和 $w=\sum_{j=1}^m\alpha_jv_j$，其中 $v_j\in F-a$。各取 $\delta_j>0$ 使 $b_j=\delta_jv_j\in B$。若
+
+$$
+R=\sum_{j=1}^m\frac{|\alpha_j|}{\delta_j}>0,
+\qquad
+\frac wR=\sum_{\alpha_j\ne0}
+\frac{|\alpha_j|/\delta_j}{R}\operatorname{sgn}(\alpha_j)b_j,
+$$
+
+右侧是 $B$ 中点的凸组合，故 $w\in RB$。若 $R=0$ 或和为空，则 $w=0\in B$。由平衡性，$w\in RB$ 还蕴含 $tw\in B\subset F-a$ 对所有 $|t|\le1/R$ 成立；零向量可任取正半径。这证明吸收性及所述双侧线段性质。
+
+对每个 $v\in L$，集合 $A_v=\{t>0:v\in tB\}$ 非空且向上封闭，所以 $0\le p(v)<\infty$，而 $r>p(v)$ 蕴含 $v\in rB$：下确界定义先给出 $t\in A_v$、$t<r$，再用平衡性。$p(0)=0$；缩放及对称性给出 $p(\alpha v)=|\alpha|p(v)$ 对所有实数 $\alpha$ 成立。若 $r>p(v)$、$t>p(w)$，则
+
+$$
+\frac{v+w}{r+t}
+=\frac r{r+t}\frac vr+\frac t{r+t}\frac wt\in B,
+$$
+
+故 $p(v+w)\le r+t$。分别令 $r\downarrow p(v)$、$t\downarrow p(w)$，即得次可加性。
+
+若 $p(v)<1$，取 $p(v)<r<1$，则 $v\in rB\subseteq B$；若 $v\in B$，则 $p(v)\le1$。若 $p(v)=0$，齐次性及严格包含式使每个实倍数 $tv$ 都在 $B$ 中；反之若整条直线在 $B$ 内，则对每个 $t>0$ 有 $v/t\in B$，故 $p(v)\le t$，从而 $p(v)=0$。半范数性质使核为线性子空间。单点面给出 $L=\{0\}$ 及其上的零半范数。所有推导均未使用拓扑或闭性。$\square$
+

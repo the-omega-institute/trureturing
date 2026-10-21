@@ -1,3 +1,4 @@
+// UNCOMPILED source-only Scribe changes; no emission or C# validation has run.
 using static StrataLint.Scribe.DefinitionDsl;
 using static StrataLint.Scribe.FormulaDsl;
 using F = StrataLint.Scribe.FormulaDsl;
@@ -40,7 +41,7 @@ internal sealed class ScalarEnvelopesDocument : IScribeDocumentDefinition
             Describe.Lean(DescribeId.Create("appt-quadbit-spectrumcompression"),
                 DeclarationHandle.Create("D5/S3/Quantum/Entanglement/AbsolutePPT/QuadbitUniform/ScalarEnvelopes.positions_strict"),
                 H("Ordered boundary and middle positions"), StatementSource.WithoutFormula(), AssessedProvenance.FromRepo(),
-                Blocks(Paragraph(Text("For every natural N at least 67 and middle position j from 6 through N-10, " +
+                Blocks(Paragraph(Text("For every natural N at least 56 and middle position j from 6 through N-10, " +
                     "the sixteen natural step positions 1,2,3,4,5,j,N-9 through N are strictly increasing. " +
                     "These positions and A are shared by the arbitrary-defect cone estimate and " +
                     "the spectrum compression proof. The latter remains with the scalar endpoint and " +
@@ -48,8 +49,8 @@ internal sealed class ScalarEnvelopesDocument : IScribeDocumentDefinition
             Describe.Lean(DescribeId.Create("appt-quadbit-scalarenvelopes"),
                 DeclarationHandle.Create("D5/S3/Quantum/Entanglement/AbsolutePPT/QuadbitUniform/ScalarEnvelopes.bulk_integer_maximum"),
                 H("Natural integer bulk maximum"), StatementSource.WithoutFormula(), AssessedProvenance.FromRepo(),
-                Blocks(Paragraph(Text("For every natural N at least 67 and natural j, the bulk ratio (9N+16j)/(3N+2j)^2 is at " +
-                    "most its value at natural t=(3N+4)/8. The boundary and middle rational envelopes are bounded by a common envelope, which " +
+                Blocks(Paragraph(Text("For every natural N at least 56 and natural j, the bulk ratio (9N+16j)/(3N+2j)^2 is at " +
+                    "most its value at natural t=(3N+4)/8. For real N>=56 the first middle envelope 25/(24(N-1)) is at most the common envelope. The boundary and second middle comparisons retain N>=67. The common envelope " +
                     "is below the integer bulk value after the exact rounding inequalities. Natural division " +
                     "takes place before coercion to the reals."))), DescribeRole.Theorem),
             Paragraph(Text("These statements concern real scalar spectra and exact rational comparisons. Connecting " +

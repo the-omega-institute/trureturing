@@ -1,0 +1,31 @@
+**Proposition 21.4 (Noncommuting limits, endpoint exclusion and the varying-family counterexample).** For each fixed $\varepsilon>0$ and $W\ge4$,
+
+$$
+\sup_{0<q<1}d_{\rm TV}\!\left(\nu_{\gamma_{\varepsilon,q}}^{(W)},
+\nu_{\gamma_{0,q}}^{(W)}\right)=1,
+\tag{21.17}
+$$
+
+and the supremum is not attained at positive $q$. Four symbols are minimal for this supremum-one conclusion: as $q\downarrow0$ the three-window distance tends to $h/(h+1)<1$, because both endpoint laws give positive mass to $010$; as $q\uparrow1$ both three-window laws tend to $\delta_{000}$. For fixed positive $q$ the two laws are continuous in $\varepsilon$ at zero.
+
+Coefficientwise convergence of a varying perturbation is insufficient without a uniform envelope. Specifically, with
+
+$$
+ d_0(t)=t^2(t-1)^2,\qquad d_{1,\varepsilon}(t)=1+\varepsilon^{-3/4}t^2,\qquad q=\frac{\sqrt\varepsilon}{2},
+$$
+
+one has $h=3$, $A=4$, $a=1$, $R=1$, but $\gamma_{\varepsilon,q}\to\delta_2$ rather than $(\delta_1+\delta_3)/2$.
+
+Proof. Since $d_\varepsilon(0)>0$, the perturbed endpoint as $q\downarrow0$ is the deterministic gap-one law; the boundary endpoint is the deterministic gap-$h$ law. Their four-symbol supports are disjoint, proving (21.17) by the limit. At every positive $q$, both laws assign positive mass to $0^W$, so their distance is strictly below one. The fixed-$q$ continuity is immediate from the positive normalizers. For $W=3$, the endpoint supports share $010$ with boundary mass $1/(h+1)$, giving distance $h/(h+1)$; the $q\uparrow1$ limit follows from the diverging interval mean. Extending continuously to the two endpoints and using positivity in the interior gives a maximum below one for each fixed pair.
+
+For the varying family, the first three raw weights satisfy
+
+$$
+qP_\varepsilon(1)=\Theta(\varepsilon^{3/2}),\quad
+q^2P_\varepsilon(2)=\tfrac14\varepsilon^{5/4}+O(\varepsilon^2),\quad
+q^3P_\varepsilon(3)=\Theta(\varepsilon^{3/2}).
+$$
+For $k\ge3$, polynomial summation gives
+$P_\varepsilon(k)\le C(k+1)^5+C\varepsilon^{1/4}(k+1)^3+C\varepsilon(k+1)$, so
+$\sum_{k\ge3}q^kP_\varepsilon(k)=O(\varepsilon^{3/2})$. The $k=2$ term therefore dominates the normalizer, proving convergence to $\delta_2$. $\square$
+

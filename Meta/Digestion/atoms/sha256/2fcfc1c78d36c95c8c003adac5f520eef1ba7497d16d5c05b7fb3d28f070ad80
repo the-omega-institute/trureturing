@@ -1,0 +1,45 @@
+### 22.2 同一测试的明确增长预算
+
+对 $\mathcal R\ge\mathcal R_0\ge1$，支撑和既有 $L^2$ 上界给出
+
+$$
+D(f_{\mathcal R})\le\frac{\mathcal R}{2}M_*,\qquad
+\|xf_{\mathcal R}\|_2\le\frac{\mathcal R}{2}\sqrt{M_*},\qquad
+\|f_{\mathcal R}''\|_2\le\mathcal R^{-2}E_\phi.
+$$
+
+把这些参数代入候签定理 21.1，得到
+
+$$
+N_S(f_{\mathcal R})\le
+C_{\phi,\Gamma}+2M_*\mathcal R+4M_*\mathfrak d_S.
+$$
+
+这个式子适用于任意有限 $\mathcal P$；不把随素数集增长的 $\mathfrak d_S$ 藏进固定常数。对于第 22.1 节限定的素数集，令 $d_0=1-2^{-1/2}>0$。原量的 Euler 定义给出
+
+$$
+\log\chi_S
+=2\sum_{p\in\mathcal P}\log\frac{1+p^{-1/2}}{1-p^{-1/2}}
+\ge4\sum_{p\in\mathcal P}p^{-1/2},
+$$
+
+$$
+\mathfrak d_S
+=\sum_{p\in\mathcal P}\frac{\log p\,p^{-1/2}}{1-p^{-1/2}}
+\le\frac{\mathcal R}{d_0}\sum_{p\in\mathcal P}p^{-1/2}
+\le\frac{\mathcal R\log\chi_S}{4d_0}.
+$$
+
+因此可取非负单侧预算
+
+$$
+\boxed{
+U_{S,\mathcal R}
+=C_{\phi,\Gamma}+M_*\mathcal R
+\left(2+\frac{\log\chi_S}{d_0}\right),\qquad
+N_S(f_{\mathcal R})\le U_{S,\mathcal R}.
+}
+$$
+
+沿增长的支撑完整素数集，预算为 $O(\mathcal R(1+\log\chi_S))$；没有证明它是素数集一致的 $O(\mathcal R)$，也没有证明它能被正迹覆盖。
+

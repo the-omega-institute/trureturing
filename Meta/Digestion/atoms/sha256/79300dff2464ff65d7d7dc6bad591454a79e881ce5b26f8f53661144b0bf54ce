@@ -1,0 +1,81 @@
+**Theorem 11.2 (Equal mean speed measure and limiting first passage mean, unequal passage law).** The extended chains are stochastic, have exactly the same source words, resistances and aggregate quantity trajectories as the unit-weight chains, and satisfy
+$$
+\frac1{L_j}\sum_{i=0}^{L_j-1}v_{j,i}=1,
+\qquad \mu_j^{(\kappa)}\Longrightarrow\mu^{(\kappa)}.
+$$
+Their scaled passage times from $0$ converge in distribution to a law with
+$$
+\lim_j\mathbb E_0(\epsilon_j\tau_j^{(\kappa)})=\frac1{2D},
+\qquad
+\lim_j\mathbb E_0[(\epsilon_j\tau_j^{(\kappa)})^2]
+=\frac{5+\kappa^2}{12D^2}.
+$$
+Thus the limiting first moment agrees with Theorem 10.3, but the second moment and the limiting passage law differ whenever $\kappa>0$. The equality of first passage means asserted here is a limit equality; finite-cell passage means need not coincide. The ordered source, global mean speed-measure weight and common clock do not determine the passage law in this enlarged class.
+
+**Proof.** Every $v_{j,i}\ge1-\kappa$, so the sum of the two possible crossing probabilities is at most $2\theta/((1-\kappa)\min(r_\alpha,r_\beta))\le1$. The boundary has only one incident crossing. All right crossings have positive probability and each finite chain has a geometric absorption tail. The sum of the weights is $L_j(1-\kappa)+\kappa L_j=L_j$. The uniform lattice measure converges to $du$, and $b_j/L_j\to1/2$, proving convergence of the speed measures. No source tree or quantity readout is changed.
+
+If $B_j^{(\kappa)}$ is the new transient $I-K$, row scaling gives
+$$
+B_j^{(\kappa)}=(V_j^{\mathrm{spd}})^{-1}B_j,
+\qquad (B_j^{(\kappa)})^{-1}=G_jV_j^{\mathrm{spd}}.
+$$
+Its rescaled Green action on an embedded vector is therefore
+$$
+(\mathcal T_j^{(\kappa)} f)(u)
+=\int\mathcal K_j(u,v)f(v)\,d\mu_j^{(\kappa)}(v).
+$$
+For continuous $f$ this converges uniformly to
+$$
+(\mathcal T_\kappa f)(u)
+=\frac1D\int (1-\max(u,v))f(v)\,d\mu^{(\kappa)}(v).
+$$
+Indeed, Theorem 10.2 bounds the kernel error uniformly and the measures have total mass one. For the limiting kernel, convergence of the lattice integral is a Riemann-sum statement uniform in $u$, since $(1-\max(u,v))f(v)$ is uniformly continuous on the square; the single atomic term converges uniformly as well. Moreover, $\|\mathcal T_j^{(\kappa)}\|$ is uniformly bounded. Induction in the discrete moment recurrence of Theorem 10.3 consequently gives, for every fixed $p$,
+$$
+\mathbb E_i[(\epsilon_j\tau_j^{(\kappa)})^p]
+\longrightarrow p!\,(\mathcal T_\kappa^p\mathbf1)(x)
+\quad\text{when }i/L_j\to x,
+$$
+with convergence uniform over the cuts. In this induction the limiting moment functions are continuous; the uniform operator bound controls the error from the preceding finite-cell moment, and the displayed Riemann-sum convergence applies to that fixed continuous limit. This requires no operator norm convergence of atomic measures to Lebesgue measure.
+
+For completeness, the same compactness argument as in Theorem 10.3 gives convergence of the passage transforms. The exact equation is $h_j+\gamma_j(s)\mathcal T_j^{(\kappa)}h_j=1$. Replacing $\mathcal K_j$ by $\mathcal K$ gives continuous approximants with a common Lipschitz bound, because $0\le h_j\le1$ and the speed measures have mass one. Every uniform subsequential limit solves
+$$
+h+s\mathcal T_\kappa h=1.
+$$
+This equation has at most one solution. To see this, a difference $g$ of solutions is continuous, is twice differentiable away from $1/2$, and satisfies
+$$
+g''=\frac{s(1-\kappa)}Dg,\qquad
+g'(0)=0,\qquad g(1)=0,\qquad
+g'(1/2+)-g'(1/2-)=\frac{s\kappa}Dg(1/2).
+$$
+Integration by parts on the two intervals gives
+$$
+\int_0^1|g'|^2\,du+
+\frac sD\left((1-\kappa)\int_0^1g^2\,du+\kappa g(1/2)^2\right)=0,
+$$
+so $g=0$, also at $s=0$ using $g(1)=0$. The uniform moment bounds give tightness and uniform integrability. Uniqueness of the limiting Laplace transforms then gives a limiting passage law with the computed moments.
+
+Put $H(u,v)=1-\max(u,v)$ and $p_\kappa=1-\kappa$. The limiting first moment function is
+$$
+(\mathcal T_\kappa\mathbf1)(u)
+=\frac1D\left[p_\kappa\frac{1-u^2}{2}
++\kappa H(u,1/2)\right].
+$$
+At $u=0$, $H(0,1/2)=1/2$, so this is $1/(2D)$. The second moment at $0$ is $2\mathcal T_\kappa^2\mathbf1(0)$. Expanding the two integrations over the continuous and atomic parts gives
+$$
+D^2(\mathcal T_\kappa^2\mathbf1)(0)
+=p_\kappa^2\frac5{24}
++p_\kappa\kappa\left(\frac{11}{48}+\frac3{16}\right)
++\frac{\kappa^2}{4}
+=\frac{5+\kappa^2}{24}.
+$$
+Here the four coefficients are, respectively,
+$$
+\int_0^1(1-u)\frac{1-u^2}{2}\,du=\frac5{24},\qquad
+\int_0^1(1-u)H(u,1/2)\,du=\frac{11}{48},
+$$
+$$
+H(0,1/2)\frac{1-(1/2)^2}{2}=\frac3{16},\qquad
+H(0,1/2)H(1/2,1/2)=\frac14.
+$$
+Multiplying by two proves the second-moment formula. Its excess over the unit-weight second moment is $\kappa^2/(12D^2)>0$. The limiting law is therefore different, despite identical aggregate source trajectories, normalized total speed mass and limiting first passage mean. This supplies the missing local speed-measure distinction within the actual Fibonacci carrier; it does not alter the fixed-unit-speed conclusion of Theorem 10.3. The speed-measure distinction is part of the classical one-dimensional framework in Stone's [*Limit theorems for random walks, birth and death processes, and diffusion processes*](https://doi.org/10.1215/ijm/1255645101); the explicit common-source construction and its two moments are calculated here. $\square$
+

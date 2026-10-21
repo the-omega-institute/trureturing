@@ -1,0 +1,10 @@
+## 定理 9A.1（当前 fiber 的互斥分解）
+
+$$
+K_q
+=
+K_{A(q,s)}
+\ \dot\cup\ 
+R_{\mathrm{strat}}(q,s).
+$$
+

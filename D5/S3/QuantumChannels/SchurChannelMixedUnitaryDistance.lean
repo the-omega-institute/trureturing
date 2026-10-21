@@ -33,11 +33,11 @@
    F21 = D5/S3/Quantum/Foundation/FiniteTraceDistance.traceDistance sha256:a951383b42658bc45458c21e07d0f1306eb2d0af3f5709cef4338a96b4a21c20
    F22 = D5/S3/Quantum/Foundation/FiniteTraceDistance.traceDistance._proof_1 sha256:786a0c12941226388043cfbd6d2fe1a86d4e3cf8b6be93df8b354b845e23f6e7
    F23 = D5/S3/Quantum/Foundation/FiniteTraceDistance.traceDistance_le_one sha256:e39763e0eaa049a1552c3521e69a0c41d255ca2c7d54cf73a839fdb6299cc4b5
-   F24 = D5/S3/Quantum/Foundation/FiniteTraceDistance.traceNorm sha256:ec2ace26dd8d3b1f1b18defca9f881e75ab25f3e1a67abd2b14cdc72e2702569
+   F24 = D5/S3/Quantum/Foundation/FiniteTraceDistance.traceNorm sha256:12ad034b5758446e6d628c75121b3ad5f0c80bb305937e8c9ff87e82076bc059
    F25 = D5/S3/Quantum/Foundation/FiniteTraceDistance.traceNorm_add_le sha256:3db8d0cc1aa28c78624e69d989ca938ee9442b2409e1ba0ba39d593ce49d5512
    F26 = D5/S3/Quantum/Foundation/FiniteTraceDistance.traceNorm_neg sha256:d7a81ef774c91a733d963a18aa1a998fd412bb6e352db4f96b70ec875b1b00ec
    F27 = D5/S3/Quantum/Foundation/FiniteTraceDistance.traceNorm_nonneg sha256:7412f30d565d9b30ebbf77bf0f5b93d44fe0082f8be41fd64fea60f00cdf2dfa
-   F28 = D5/S3/Quantum/Foundation/FiniteTraceDistance.traceNorm_of_posSemidef sha256:f9f5b54d2f389f80229204551ad9217b56fb75ef8f081925f568f00cccca0db8
+   F28 = D5/S3/Quantum/Foundation/FiniteTraceDistance.traceNorm_of_posSemidef sha256:4f19dad9c3563d9aba3fa6f97f41f0e49ed46af1457c14f015225ae27d019565
    F29 = D5/S3/Quantum/Foundation/FiniteTraceDistance.trace_norm_jordan_mass sha256:fdb8cb601f51df385251551cad923f9150a7104b67ce271fcb777ba680d61c61
    F30 = D5/S3/Quantum/Information/CoherentCopyCorrelationTax.copyIsometry sha256:74036a7d76b7248cd30b1a7f483171066e7830aa9fc46cf9b4051dcc3dcf4311
    F31 = D5/S3/Quantum/Information/CoherentCopyCorrelationTax.copyIsometry_star_mul sha256:7e6d99bafb4aa9c1f2514f08645fe36c5478cacb28121f5cf5334ea15f5b5d1a
@@ -70,7 +70,8 @@
    assembly_from_replacement: proof_shape: bind-only; escape_witness: none; deps: F6,F7,F9,F10,F11,F12,F17,F19,F20,F21,F23,F27; consumers: result.
    referenceChannel: proof_shape: bind-only; escape_witness: none; deps: F5,F8,F12,F16,F17,F18; consumers: Theta_pointwise_contract,leftChannel.
    trace_contract_rectangular: proof_shape: content; escape_witness: trace_contract_rectangular; reason: Jordan decomposition proves trace contraction for arbitrary finite input and output types; deps: F11,F12,F15,F17,F18,F21,F22,F24,F25,F26,F28,F29,F35; consumers: Theta_pointwise_contract.
-   reindex_traceNorm: proof_shape: bind-only; escape_witness: none; deps: F4,F24; consumers: reference_reindex_error,traceDistance_reindex.
+   reindex_traceNorm: proof_shape: bind-only; escape_witness: none; deps: F4,F24; consumers: reference_reindex_error,traceDistance_reindex,
+   D5.S3.Quantum.QuantumChannels.LogNegativityCapacityResourceDependence.Norm.traceNorm_submatrix_equiv.
    reference_reindex_error: proof_shape: bind-only; escape_witness: none; deps: F4,F7,F9,F11,F12,F24,F34; consumers: reference_error_le_diamond.
    reference_error_le_diamond: proof_shape: bind-only; escape_witness: none; deps: F1,F4,F7,F9,F11,F12,F21,F23,F24,F27,F34; consumers: Theta_pointwise_contract.
    reindexChannel: proof_shape: bind-only; escape_witness: none; deps: F16; consumers: leftChannel.
@@ -102,6 +103,7 @@
    result: proof_shape: content; escape_witness: trace_contract_rectangular; reason: rectangular contraction and disk_midpoint_phases compare the two infima; deps: F1,F2,F3,F4,F5,F6,F7,F8,F9,F10,F11,F12,F13,F14,F15,F16,F17,F18,F19,F20,F21,F22,F23,F24,F25,F26,F27,F28,F29,F30,F31,F32,F33,F34,F35; consumers: settling result.
    FiniteKrausRepresentation is unfrozen; amplification uses referenceLinear and Mathlib.
    Escape audit unfinished: https://github.com/the-omega-institute/trureturing/issues/16913
+   Escape audit unfinished for reindex_traceNorm: https://github.com/the-omega-institute/trureturing/issues/17573
    Publicized owner audit target: D5/S3/Quantum/Information/InputInformationBalance.arGrouping sha256:af64f53b6ae6b26a40dbfe8f5c7fdb38e50d44a78cf4e585a83d4f4de7d94ed1;
    its dependent equivalence-valued family registration has no compiled reconstruction,
    lawful readout, source selection, variation, sensitivity or observational-dependence evidence.
@@ -355,7 +357,7 @@ private theorem assembly_from_replacement
     obtain ⟨Ψ', hΨ', hdist⟩ := replacement d Φ hΦ Ψ hΨ
     exact (csInf_le (distance_image_bdd_below Φ _) ⟨Ψ', hΨ', rfl⟩).trans hdist
 
-private def referenceChannel {r a b : Type}
+def referenceChannel {r a b : Type}
     [Fintype r] [DecidableEq r] [Fintype a] [DecidableEq a]
     [Fintype b] [DecidableEq b] (T : QuantumChannel a b) :
     QuantumChannel (r × a) (r × b) := by
@@ -381,7 +383,7 @@ private def referenceChannel {r a b : Type}
     exact Finset.sum_congr rfl (fun i _ =>
       T.trace_preserving (CStarMatrix.ofMatrix fun x y => X (i,x) (i,y)))
 
-private theorem trace_contract_rectangular {a b : Type} [Fintype a] [DecidableEq a]
+theorem trace_contract_rectangular {a b : Type} [Fintype a] [DecidableEq a]
     [Fintype b] [DecidableEq b] (T : QuantumChannel a b)
     (ρ σ : DensityState a) :
     traceDistance (T.mapState ρ) (T.mapState σ) ≤ traceDistance ρ σ := by
@@ -429,7 +431,7 @@ private theorem trace_contract_rectangular {a b : Type} [Fintype a] [DecidableEq
   rw [hdiff]
   exact div_le_div_of_nonneg_right hbound (by norm_num)
 
-private theorem reindex_traceNorm {a b : Type} [Fintype a] [DecidableEq a]
+theorem reindex_traceNorm {a b : Type} [Fintype a] [DecidableEq a]
     [Fintype b] [DecidableEq b] (e : a ≃ b) (X : Matrix a a ℂ) :
     traceNorm ((Matrix.reindexAlgEquiv ℂ ℂ e) X) = traceNorm X := by
   let V : Matrix b a ℂ := (1 : Matrix a a ℂ).submatrix e.symm (Equiv.refl a)
@@ -486,7 +488,7 @@ private def reindexChannel {a b : Type} [Fintype a] [DecidableEq a]
     change (∑ i : b, X (e.symm i) (e.symm i)) = ∑ i : a, X i i
     exact e.symm.sum_comp (fun i : a => X i i)
 
-private def leftChannel {a b r : Type} [Fintype a] [DecidableEq a]
+def leftChannel {a b r : Type} [Fintype a] [DecidableEq a]
     [Fintype b] [DecidableEq b] [Fintype r] [DecidableEq r]
     (T : QuantumChannel a b) : QuantumChannel (a × r) (b × r) :=
   (reindexChannel (Equiv.prodComm r b)).comp

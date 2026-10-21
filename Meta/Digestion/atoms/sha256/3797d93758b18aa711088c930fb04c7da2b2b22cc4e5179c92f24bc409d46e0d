@@ -1,0 +1,17 @@
+# 第一千二百八十五部　“道—概念—对偶—证书”的依赖表
+
+|  层 | 左端对象                 | 中间变换                  | 右端对偶                       | 被保存的不变量           |
+| -: | -------------------- | --------------------- | -------------------------- | ----------------- |
+|  0 | 无序端点 \(\{t_-,t_+\}\) | 极化／排序                 | 过去 \(t_-\)、未来 \(t_+\)      | 中点与宽度             |
+|  1 | 边界区间                 | 半圆提升                  | bulk 点 \((\delta,\gamma)\) | \(\gamma,\delta\) |
+|  2 | bulk 点               | shifted 双层            | \(p_\omega^+,p_\omega^-\)  | 中点与层距             |
+|  3 | 正负 shifted 像         | Hardy 极化              | numerator／denominator      | 极点方向              |
+|  4 | 上半平面极点               | Blaschke 修复           | 下半平面镜像                     | 边界模长 \(1\)        |
+|  5 | Blaschke factor      | 时间反演                  | inverse Blaschke           | phase winding     |
+|  6 | bulk defect          | phase derivative      | Poisson pulse              | 整数通量              |
+|  7 | Poisson pulses       | 纵向积分                  | attenuation \(\mathcal A\) | 深度测度              |
+|  8 | attenuation          | 二阶分布导数                | 横向除子 \(\mu_\perp\)         | 重数与深度             |
+|  9 | transverse measure   | Mellin／cosh transform | moments／damping            | 全部横向信息            |
+| 10 | generalized Schur    | kernel construction   | Pontryagin space           | 负平方数              |
+| 11 | negative kernel      | finite Gram chart     | 负特征值证书                     | inertia           |
+| 12 | finite effect        | Weil compiler         | prime–Archimedean 负方向      | 符号                |

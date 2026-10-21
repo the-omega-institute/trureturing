@@ -1,0 +1,54 @@
+**Proposition 89.4 (the diagnosed calibration defect and its scope).**
+On the complete finite orbit of Definition 89.1, the shortest adjacent
+comparison-chain length and the number of forward native updates from
+$s_m$ to $s_n$, for $m\le n$, both equal
+
+$$
+\ell(x_m,x_n)=n-m=d(x_m,x_n)^3.
+\tag{89.22}
+$$
+
+The ratio of this length to $d$ is unbounded. Properness, forward metric
+escape, isometric unit transport, reversible unit conductances and the
+two-sided cubic capacity (89.7) therefore do not imply either calibration
+test of Definition 89.3 or finiteness of its unscreened root response.
+The defect occurs without forgetting any source state in a quotient.
+The conditional assertions in the base §9 and in §§81, 82 and 88 retain
+their original hypotheses.
+
+**Proof.** An adjacent chain must change its index by one at every
+nonholding step, so the monotone chain attains the shortest length
+$|n-m|$. Each native $\rho$ advances the index by exactly one, and
+distinctness in (89.13) prevents any shorter forward word from reaching
+$T_n$. This proves (89.22), and for $m=0$ the ratio is $n^{2/3}$.
+Although the two distances agree on every unit edge, their long-range
+scales differ. The path's energy and unit-clock exit scale are quadratic
+in $\ell$ and hence sixth order in this supplied $d$. Equations
+(89.18), (89.11) and (89.12) prove the three failures directly; naming a
+missing condition does not prove its repair.
+
+The base §9 uses smooth three-dimensional comparison surfaces, an induced
+Euclidean metric and a calibration form. None is supplied by (89.2).
+Section 81's whole-rho occurrence tree and its separate §52 common
+spine carrier are different from the present carrier of complete
+successive source states; no factor map or replacement of their
+operators is asserted. Section 82 assumes a stratified transport group
+and its horizontal field, not (89.3). The carrier and analytic hypotheses
+of Theorem 88.6 include an operator order and Green estimates on that
+same carrier. The present choice proves that cubic packing and proper
+source escape do not discharge those additional hypotheses; it does not
+refute their conditional consequence or turn source rank into physical
+radius.
+
+The source identity in (89.1) is exact, but a native bridge to the
+comparison operator would additionally have to realize its reverse
+transitions and its clock under the actual permission contract. Neither
+the metric nor the counting measure grants that realization. A physical
+interpretation would further need a map from complete source states to
+spatial positions, with its joint field, measure, acquisition, boundary
+and clock correspondences. A different metric, rate law, measure,
+screening or boundary would be a different datum requiring its own
+analysis. The counterexample excludes the stated inference within this
+comparison class; it proves neither impossibility of a native bridge nor
+a physical dimension assignment. $\square$
+

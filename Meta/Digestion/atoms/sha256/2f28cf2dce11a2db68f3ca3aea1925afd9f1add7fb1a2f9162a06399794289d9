@@ -1,0 +1,92 @@
+**Lemma 132.2 (Exact compact coverage).** $P$ is precisely the convex
+hull of these nine vertices. The following is the complete classification
+of the 56 three-facet systems. An infeasible row gives its exact solution,
+a violated facet and its positive violation. A singular row has zero
+determinant; a feasible row names its vertex.
+
+| Facets | Type | Solution or vertex | Violated facet | Positive gap |
+| --- | --- | --- | --- | --- |
+| (0,1,2) | infeasible | (32/21,32/21,32/21) | 5 | 29/21 |
+| (0,1,3) | infeasible | (5/6,5/6,5/6) | 2 | 29/2 |
+| (0,1,4) | infeasible | (14/11,14/11,14/11) | 2 | 58/11 |
+| (0,1,5) | feasible | R4 | — | — |
+| (0,1,6) | infeasible | (5/6,5/6,5/6) | 2 | 29/2 |
+| (0,1,7) | feasible | R8 | — | — |
+| (0,2,3) | infeasible | (29/21,29/21,20/21) | 4 | 29/21 |
+| (0,2,4) | feasible | R1 | — | — |
+| (0,2,5) | feasible | R2 | — | — |
+| (0,2,6) | singular | — | — | — |
+| (0,2,7) | singular | — | — | — |
+| (0,3,4) | feasible | R3 | — | — |
+| (0,3,5) | infeasible | (18/17,18/17,15/17) | 2 | 145/17 |
+| (0,3,6) | infeasible | (5/6,5/6,5/6) | 2 | 29/2 |
+| (0,3,7) | feasible | R6 | — | — |
+| (0,4,5) | infeasible | (4/3,4/3,11/9) | 2 | 29/9 |
+| (0,4,6) | infeasible | (1,1,3/2) | 1 | 1/2 |
+| (0,4,7) | infeasible | (2,2,2/3) | 3 | 29/3 |
+| (0,5,6) | infeasible | (3/4,3/4,1/2) | 2 | 29/2 |
+| (0,5,7) | infeasible | (5/2,5/2,8/3) | 1 | 1/6 |
+| (0,6,7) | singular | — | — | — |
+| (1,2,3) | infeasible | (26/21,17/21,17/21) | 4 | 116/21 |
+| (1,2,4) | feasible | R0 | — | — |
+| (1,2,5) | feasible | R0 | — | — |
+| (1,2,6) | feasible | R0 | — | — |
+| (1,2,7) | singular | — | — | — |
+| (1,3,4) | infeasible | (-2,1,1) | 0 | 3 |
+| (1,3,5) | infeasible | (12/11,9/11,9/11) | 2 | 58/11 |
+| (1,3,6) | infeasible | (5/6,5/6,5/6) | 2 | 29/2 |
+| (1,3,7) | infeasible | (16/9,7/9,7/9) | 4 | 58/9 |
+| (1,4,5) | feasible | R0 | — | — |
+| (1,4,6) | feasible | R0 | — | — |
+| (1,4,7) | infeasible | (2,4/3,4/3) | 6 | 29/3 |
+| (1,5,6) | feasible | R0 | — | — |
+| (1,5,7) | infeasible | (8/3,3,3) | 0 | 1/3 |
+| (1,6,7) | feasible | R7 | — | — |
+| (2,3,4) | infeasible | (10/7,11/7,1) | 0 | 1/7 |
+| (2,3,5) | infeasible | (8/7,3/7,5/7) | 1 | 2/7 |
+| (2,3,6) | infeasible | (4/3,25/21,19/21) | 4 | 58/21 |
+| (2,3,7) | singular | — | — | — |
+| (2,4,5) | feasible | R0 | — | — |
+| (2,4,6) | feasible | R0 | — | — |
+| (2,4,7) | singular | — | — | — |
+| (2,5,6) | feasible | R0 | — | — |
+| (2,5,7) | singular | — | — | — |
+| (2,6,7) | singular | — | — | — |
+| (3,4,5) | infeasible | (1,3/2,1) | 0 | 1/2 |
+| (3,4,6) | feasible | R5 | — | — |
+| (3,4,7) | feasible | R5 | — | — |
+| (3,5,6) | infeasible | (16/15,1,13/15) | 2 | 116/15 |
+| (3,5,7) | infeasible | (4/3,-1,1/3) | 1 | 4/3 |
+| (3,6,7) | feasible | R5 | — | — |
+| (4,5,6) | feasible | R0 | — | — |
+| (4,5,7) | infeasible | (2,1,5/3) | 1 | 2/3 |
+| (4,6,7) | feasible | R5 | — | — |
+| (5,6,7) | infeasible | (7/3,2,7/3) | 1 | 1/3 |
+
+**Proof.** Put $x=t-u\ge0$, $y=u-v\ge0$ and
+$m=5t-u-v=3v+4y+5x$. Facets 2 and 7 give
+$32/7\le m\le22/3$. Facet 3 is $18v-5y+x\ge15$;
+substitution gives $29(x+y)\le6m-15\le29$. Thus $x,y$ are
+bounded between zero and one and $v=(m-4y-5x)/3$ is bounded.
+Hence $P$ is closed and bounded. The arithmetic centroid
+
+$$
+C=(10417/5670,9907/5670,4127/2835)=\frac19\sum_{j=0}^8R_j
+\tag{132.1}
+$$
+
+satisfies every inequality strictly, proving nonempty interior.
+The literal systems above give eight singular, 27 infeasible and 21
+feasible bases with exactly the nine displayed solutions.
+If active normals fail to span $\mathbb R^3$, a nonzero annihilating
+displacement preserves their equalities and, for a sufficiently small
+movement in both directions, every inactive inequality. The point is
+not extreme. Thus every vertex has an independent active triple and
+appears in the table; conversely every listed vertex has such a triple.
+For any other point in its minimal face, a nonzero tangent displacement
+extends by compactness to a chord with endpoints on proper subfaces.
+The point is a convex mixture of those endpoints. Induction on face
+dimension terminates at vertices and proves the whole convex-hull
+identity, rather than inferring continuum coverage from an endpoint scan.
+$\square$
+

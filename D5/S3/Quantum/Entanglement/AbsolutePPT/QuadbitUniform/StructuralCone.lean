@@ -5,6 +5,7 @@
    anchors: []
    utility: none
    digest: Arbitrary ordered defects and constructive bulk subtraction for the full three-row cone. -/
+import D5.S3.Quantum.Entanglement.AbsolutePPT.QuadbitUniform.DefectScalarBounds
 import D5.S3.Quantum.Entanglement.AbsolutePPT.HalfspaceConeTransfer
 import D5.S3.Quantum.Entanglement.AbsolutePPT.QuadbitUniform.ScalarEnvelopes
 import Mathlib.Analysis.Convex.Jensen
@@ -49,7 +50,7 @@ theorem quadratic_interval_le_fun (f : ℝ → ℝ) (a b c l r x M : ℝ)
   exact (hcv.le_max_of_mem_Icc (Set.mem_univ _) (Set.mem_univ _) ⟨hl, hr⟩).trans
     (max_le hleft hright)
 
-private theorem quadratic_interval_nonneg (f : ℝ → ℝ) (a b c l r x : ℝ)
+theorem quadratic_interval_nonneg (f : ℝ → ℝ) (a b c l r x : ℝ)
     (hf : ∀ y, f y = a*y^2+b*y+c) (ha : a ≤ 0)
     (hl : l ≤ x) (hr : x ≤ r) (hleft : 0 ≤ f l) (hright : 0 ≤ f r) :
     0 ≤ f x := by
@@ -121,54 +122,14 @@ theorem ordered_block_energy {ι κ : Type*} [Fintype ι] [Fintype κ]
     _ ≤ (k*m+Z)^2 := sub_le_self _ hexcess
     _ = _ := by rw [hsum]
 
-private theorem affine_defect_transport (theta N j w c E : ℝ)
-    (ht : 0 ≤ theta) (hw : 0 ≤ w) (hj : 6 ≤ j)
-    (ha0 : 0 ≤ 2*theta*(N+3+2*w)-(2+w))
-    (ha1 : 2*theta*(N+3+2*w)-(2+w) ≤ 1/4)
-    (hF0 : 0 ≤ theta*(N+3+2*w)^2-(N+11+3*w+w^2))
-    (hE0 : E ≤ 5-4*w-w^2)
-    (hE1 : E ≤ 5-4*w-w^2+(c-(3-4*w))/4) :
-    (2+w)*(N+w*j+c)-(1+w)*N+E ≤ theta*(N+w*j+c)^2 := by
-  let L := N+3+2*w
-  let e := w*(j-6)
-  let a := 2*theta*L-(2+w)
-  have he : 0 ≤ e := mul_nonneg hw (by linarith)
-  have ha : 0 ≤ a := ha0
-  have ha' : 0 ≤ 1/4-a := sub_nonneg.mpr ha1
-  have hF : 0 ≤ theta*L^2-(2+w)*L+(1+w)*N-(5-4*w-w^2) := by
-    dsimp [L]
-    nlinarith only [hF0]
-  by_cases hc : 3-4*w ≤ c
-  · let d := c-(3-4*w)
-    have hd : 0 ≤ d := sub_nonneg.mpr hc
-    have hpos : 0 ≤ theta*(e+d)^2+a*(e+d) :=
-      add_nonneg (mul_nonneg ht (sq_nonneg _))
-        (mul_nonneg ha (add_nonneg he hd))
-    have hid : theta*(N+w*j+c)^2-
-        ((2+w)*(N+w*j+c)-(1+w)*N+(5-4*w-w^2)) =
-        (theta*L^2-(2+w)*L+(1+w)*N-(5-4*w-w^2))+
-        theta*(e+d)^2+a*(e+d) := by dsimp [L,e,d,a]; ring
-    linarith
-  · let d := (3-4*w)-c
-    have hd : 0 ≤ d := by dsimp [d]; linarith
-    have hpos : 0 ≤ theta*(e-d)^2+a*e+(1/4-a)*d :=
-      add_nonneg (add_nonneg (mul_nonneg ht (sq_nonneg _)) (mul_nonneg ha he))
-        (mul_nonneg ha' hd)
-    have hid : theta*(N+w*j+c)^2-
-        ((2+w)*(N+w*j+c)-(1+w)*N+(5-4*w-w^2-d/4)) =
-        (theta*L^2-(2+w)*L+(1+w)*N-(5-4*w-w^2))+
-        theta*(e-d)^2+a*e+(1/4-a)*d := by dsimp [L,e,d,a]; ring
-    have hE : E ≤ 5-4*w-w^2-d/4 := by dsimp [d]; linarith [hE1]
-    linarith
-
-private def H (h : Fin 5 → ℝ) : ℝ := ∑ i, h i
-private def D (d : Fin 9 → ℝ) : ℝ := ∑ i, d i
-private def H2 (h : Fin 5 → ℝ) : ℝ := ∑ i, (h i)^2
-private def D2 (d : Fin 9 → ℝ) : ℝ := ∑ i, (d i)^2
-private def H3 (h : Fin 5 → ℝ) : ℝ := h 0+h 1+h 2
-private def D6 (d : Fin 9 → ℝ) : ℝ := d 3+d 4+d 5+d 6+d 7+d 8
-private def D3 (d : Fin 9 → ℝ) : ℝ := d 6+d 7+d 8
-private def E (w : ℝ) (h : Fin 5 → ℝ) (d : Fin 9 → ℝ) : ℝ :=
+def H (h : Fin 5 → ℝ) : ℝ := ∑ i, h i
+def D (d : Fin 9 → ℝ) : ℝ := ∑ i, d i
+def H2 (h : Fin 5 → ℝ) : ℝ := ∑ i, (h i)^2
+def D2 (d : Fin 9 → ℝ) : ℝ := ∑ i, (d i)^2
+def H3 (h : Fin 5 → ℝ) : ℝ := h 0+h 1+h 2
+def D6 (d : Fin 9 → ℝ) : ℝ := d 3+d 4+d 5+d 6+d 7+d 8
+def D3 (d : Fin 9 → ℝ) : ℝ := d 6+d 7+d 8
+def E (w : ℝ) (h : Fin 5 → ℝ) (d : Fin 9 → ℝ) : ℝ :=
   w*(H h+D d)+H2 h+D2 d
 private def P (w : ℝ) : ℝ := 5-4*w-w^2
 private def energyUpper (w z b r : ℝ) : ℝ := w*(4-6*w)+z^2+b^2+r^2
@@ -176,7 +137,7 @@ private def transferUpper (w z b r : ℝ) : ℝ :=
   4*w*(4-6*w)+4*z^2-z+4*b^2-b+4*r^2+3*r
 
 -- This record holds only actual order and row budgets, never a good-cone premise.
-private structure DefectData (u v : ℝ) (h : Fin 5 → ℝ) (d : Fin 9 → ℝ) : Prop where
+structure DefectData (u v : ℝ) (h : Fin 5 → ℝ) (d : Fin 9 → ℝ) : Prop where
   hn : ∀ i, 0 ≤ h i
   ho : Antitone h
   dn : ∀ i, 0 ≤ d i
@@ -186,11 +147,11 @@ private structure DefectData (u v : ℝ) (h : Fin 5 → ℝ) (d : Fin 9 → ℝ)
   row1 : H h+D d ≤ 4*u-6*v
   row2 : h 0+D3 d ≤ 2*u-v
 
-private theorem defect_totals_nonneg {u v : ℝ} {h : Fin 5 → ℝ} {d : Fin 9 → ℝ}
+theorem defect_totals_nonneg {u v : ℝ} {h : Fin 5 → ℝ} {d : Fin 9 → ℝ}
     (hd : DefectData u v h d) : 0 ≤ H h ∧ 0 ≤ D d :=
   ⟨sum_nonneg (fun i _ => hd.hn i), sum_nonneg (fun i _ => hd.dn i)⟩
 
-private theorem defect_subtotals {u v : ℝ} {h : Fin 5 → ℝ} {d : Fin 9 → ℝ}
+theorem defect_subtotals {u v : ℝ} {h : Fin 5 → ℝ} {d : Fin 9 → ℝ}
     (hd : DefectData u v h d) :
     h 0+h 1+h 2 ≤ H h ∧ D3 d ≤ D6 d ∧
       H3 h+D6 d ≤ H h+D d ∧ h 0+D3 d ≤ H h+D d ∧ d 8 ≤ H h+D d := by
@@ -246,7 +207,7 @@ private theorem ordered_defect_energy {u v : ℝ} {h : Fin 5 → ℝ} {d : Fin 9
       hd.do_ (show (4 : Fin 9) ≤ 7 by decide),
       hd.do_ (show (5 : Fin 9) ≤ 8 by decide)]
 
-private theorem small_head_energy {w : ℝ} {h : Fin 5 → ℝ} {d : Fin 9 → ℝ}
+theorem small_head_energy {w : ℝ} {h : Fin 5 → ℝ} {d : Fin 9 → ℝ}
     (hd : DefectData 1 w h d) (hw : 0 ≤ w) (hz : h 0 ≤ 1) :
     E w h d ≤ 4-2*w-6*w^2 := by
   have hh2 : H2 h ≤ H h := by
@@ -407,9 +368,9 @@ private theorem large_head_estimates {w : ℝ} {h : Fin 5 → ℝ} {d : Fin 9 �
   · exact hT.trans (large_head_transfer_parameters w (h 0) (h 1+h 2) (D3 d)
       hw hw1 hz hz1 hb hr hr1 hb1)
 
-private theorem total_energy_estimate {w : ℝ} {h : Fin 5 → ℝ} {d : Fin 9 → ℝ}
-    (hd : DefectData 1 w h d) (hw : 0 ≤ w) :
-    E w h d ≤ (4-6*w)*(4-5*w) := by
+theorem total_energy_estimate {u w : ℝ} {h : Fin 5 → ℝ} {d : Fin 9 → ℝ}
+    (hd : DefectData u w h d) (hw : 0 ≤ w) :
+    E w h d ≤ (4*u-6*w)*(4*u-5*w) := by
   obtain ⟨hH, hD⟩ := defect_totals_nonneg hd
   have hh2 : H2 h ≤ (H h)^2 :=
     Finset.sum_sq_le_sq_sum_of_nonneg (s := univ) (f := h) (fun i _ => hd.hn i)
@@ -417,8 +378,8 @@ private theorem total_energy_estimate {w : ℝ} {h : Fin 5 → ℝ} {d : Fin 9 �
     Finset.sum_sq_le_sq_sum_of_nonneg (s := univ) (f := d) (fun i _ => hd.dn i)
   have hcross := mul_nonneg hH hD
   have hb := hd.row1
-  have hgap := mul_nonneg (show 0 ≤ (4-6*w)-(H h+D d) by linarith)
-    (show 0 ≤ (4-6*w)+(H h+D d)+w by linarith)
+  have hgap := mul_nonneg (show 0 ≤ (4*u-6*w)-(H h+D d) by linarith)
+    (show 0 ≤ (4*u-6*w)+(H h+D d)+w by linarith)
   dsimp [E]
   nlinarith
 
@@ -455,7 +416,7 @@ private theorem scalar_bounds (N : ℝ) (hN : 67 ≤ N) : ScalarBounds N := by
     apply (div_le_div_iff₀ hL (sq_pos_of_pos hB)).2
     nlinarith
   have hbd := boundary_envelope_le_common N hN
-  have he1 := middle_envelope₁_le_common N hN
+  have he1 := middle_envelope₁_le_common N (by linarith)
   have he2 := middle_envelope₂_le_common N hN
   have hz : 1/(N-4) ≤ commonEnvelope N := by
     apply le_trans _ hbd
@@ -485,7 +446,7 @@ private def disc (theta N : ℝ) (U : ℝ → ℝ) (w : ℝ) : ℝ :=
   4*theta*((1+w)*N-U w)-(2+w)^2
 
 -- Completing squares is consumed immediately by all three interval branches.
-private theorem square_completion (theta h K S : ℝ) (ht : 0 < theta)
+theorem square_completion (theta h K S : ℝ) (ht : 0 < theta)
     (hdisc : h^2 ≤ 4*theta*K) : h*S-K ≤ theta*S^2 := by
   have hid : 4*theta*(theta*S^2-(h*S-K)) =
       (2*theta*S-h)^2+4*theta*K-h^2 := by ring
@@ -634,14 +595,14 @@ private theorem normalized_defect_bound (N j w : ℝ) (hN : 67 ≤ N) (hj : 6 �
         linarith
 
 -- Actual coordinates; the nine tail entries represent d_1,...,d_9.
-private def low (x : Fin 16 → ℝ) : ℝ := x 6+x 7+x 8+x 9+x 10+x 11+x 12+x 13+x 14+x 15
-private def head (x : Fin 16 → ℝ) : Fin 5 → ℝ :=
+def low (x : Fin 16 → ℝ) : ℝ := x 6+x 7+x 8+x 9+x 10+x 11+x 12+x 13+x 14+x 15
+def head (x : Fin 16 → ℝ) : Fin 5 → ℝ :=
   ![x 0+x 1+x 2+x 3+x 4,
     x 1+x 2+x 3+x 4,
     x 2+x 3+x 4,
     x 3+x 4,
     x 4]
-private def tail (x : Fin 16 → ℝ) : Fin 9 → ℝ :=
+def tail (x : Fin 16 → ℝ) : Fin 9 → ℝ :=
   ![x 6,
     x 6+x 7,
     x 6+x 7+x 8,
@@ -652,7 +613,7 @@ private def tail (x : Fin 16 → ℝ) : Fin 9 → ℝ :=
     x 6+x 7+x 8+x 9+x 10+x 11+x 12+x 13,
     x 6+x 7+x 8+x 9+x 10+x 11+x 12+x 13+x 14]
 
-private theorem actual_row_identities (x : Fin 16 → ℝ) :
+theorem actual_row_identities (x : Fin 16 → ℝ) :
     (A *ᵥ x) 0 = 3*low x-3*x 5-H3 (head x)-D6 (tail x) ∧
     (A *ᵥ x) 1 = 4*low x-6*x 5-H (head x)-D (tail x) ∧
     (A *ᵥ x) 2 = 2*low x-x 5-head x 0-D3 (tail x) := by
@@ -663,7 +624,7 @@ private theorem actual_row_identities (x : Fin 16 → ℝ) :
   · ring
   constructor <;> ring
 
-private theorem actual_defects (x : Fin 16 → ℝ)
+theorem actual_defects (x : Fin 16 → ℝ)
     (hx : ∀ q, 0 ≤ x q) (hAx : ∀ r, 0 ≤ (A *ᵥ x) r) :
     DefectData (low x) (x 5) (head x) (tail x) := by
   obtain ⟨hr0, hr1, hr2⟩ := actual_row_identities x
@@ -695,20 +656,34 @@ private theorem actual_defects (x : Fin 16 → ℝ)
   exact ⟨hn, ho, dn, do_, du,
     by linarith [hAx 0], by linarith [hAx 1], by linarith [hAx 2]⟩
 
-private theorem last_defect_identity (x : Fin 16 → ℝ) : tail x 8 = low x-x 15 := by
+theorem last_defect_identity (x : Fin 16 → ℝ) : tail x 8 = low x-x 15 := by
   simp only [tail, low, Matrix.cons_val_succ, Matrix.cons_val, Nat.reduceAdd, Fin.isValue, Matrix.cons_val_zero, Matrix.cons_val_zero', Matrix.cons_val_succ', Fin.reduceFinMk, Fin.reduceSucc,
     Matrix.cons_val_fin_one]
   ring
 
-private theorem low_nonneg (x : Fin 16 → ℝ) (hx : ∀ q, 0 ≤ x q) : 0 ≤ low x := by
+theorem low_nonneg (x : Fin 16 → ℝ) (hx : ∀ q, 0 ≤ x q) : 0 ≤ low x := by
   dsimp [low]
   linarith [hx 6, hx 7, hx 8, hx 9, hx 10, hx 11, hx 12, hx 13, hx 14, hx 15]
 
-private theorem low_smul (a : ℝ) (x : Fin 16 → ℝ) : low (a • x) = a*low x := by
+theorem low_smul (a : ℝ) (x : Fin 16 → ℝ) : low (a • x) = a*low x := by
   simp only [low, Pi.smul_apply, smul_eq_mul]
   ring
 
-private theorem slot_bounds (N j : ℕ) (hN : 67 ≤ N) (hj : 6 ≤ j) (hj' : j ≤ N-10) :
+private theorem boundary_positions_literal (N j : ℕ) (hN : 16 ≤ N) :
+    positions N j = ![1,2,3,4,5,j,N-9,N-8,N-7,N-6,N-5,N-4,N-3,N-2,N-1,N] := by
+  funext q
+  fin_cases q <;> simp [positions] <;> omega
+
+private theorem boundary_positions_strict (N j : ℕ) (hN : 16 ≤ N)
+    (hj : 6 ≤ j) (hj' : j ≤ N-10) : StrictMono (positions N j) := by
+  intro q r hqr
+  have hq := q.isLt
+  have hr := r.isLt
+  have hqr' : q.val < r.val := hqr
+  dsimp [positions]
+  split_ifs <;> omega
+
+private theorem slot_bounds (N j : ℕ) (hN : 16 ≤ N) (hj : 6 ≤ j) (hj' : j ≤ N-10) :
     ∀ q, positions N j q ≤ N := by
   intro q
   have hq := q.isLt
@@ -716,12 +691,12 @@ private theorem slot_bounds (N j : ℕ) (hN : 67 ≤ N) (hj : 6 ≤ j) (hj' : j 
   split_ifs <;> omega
 
 -- Identities for every real x, including infeasible and negative vectors.
-private theorem actual_mass (N j : ℕ) (hN : 67 ≤ N) (hj : 6 ≤ j) (hj' : j ≤ N-10)
+theorem boundary_mass (N j : ℕ) (hN : 16 ≤ N) (hj : 6 ≤ j) (hj' : j ≤ N-10)
     (x : Fin 16 → ℝ) :
     (∑ k : Fin N, synth (positions N j) x k) =
       low x*(N : ℝ)+x 5*(j : ℝ)+H (head x)-D (tail x) := by
   rw [mass_synth (positions N j) (slot_bounds N j hN hj hj')]
-  rw [positions_literal N j hN]
+  rw [boundary_positions_literal N j (by omega)]
   norm_num [Matrix.cons_val, Fin.sum_univ_succ, Fin.reduceFinMk, Fin.reduceSucc, Finset.univ_eq_empty, Finset.sum_empty, add_zero, low, head, tail, H, D]
   try simp (disch := omega) only [Nat.cast_sub]
   norm_num
@@ -729,7 +704,7 @@ private theorem actual_mass (N j : ℕ) (hN : 67 ≤ N) (hj : 6 ≤ j) (hj' : j 
 
 set_option maxHeartbeats 2000000 in
 set_option maxRecDepth 8192 in
-private theorem actual_square (N j : ℕ) (hN : 67 ≤ N) (hj : 6 ≤ j) (hj' : j ≤ N-10)
+theorem boundary_square (N j : ℕ) (hN : 16 ≤ N) (hj : 6 ≤ j) (hj' : j ≤ N-10)
     (x : Fin 16 → ℝ) :
     (∑ k : Fin N, (synth (positions N j) x k)^2) =
       (2*low x+x 5)*(low x*(N : ℝ)+x 5*(j : ℝ)+H (head x)-D (tail x))-
@@ -738,16 +713,29 @@ private theorem actual_square (N j : ℕ) (hN : 67 ≤ N) (hj : 6 ≤ j) (hj' : 
   have hmin (q r : Fin 16) :
       min (positions N j q) (positions N j r) = positions N j (min q r) := by
     rcases le_total q r with hqr | hrq
-    · rw [min_eq_left hqr, min_eq_left ((positions_strict N j hN hj hj').monotone hqr)]
-    · rw [min_eq_right hrq, min_eq_right ((positions_strict N j hN hj hj').monotone hrq)]
+    · rw [min_eq_left hqr, min_eq_left ((boundary_positions_strict N j (by omega) hj hj').monotone hqr)]
+    · rw [min_eq_right hrq, min_eq_right ((boundary_positions_strict N j (by omega) hj hj').monotone hrq)]
   simp_rw [hmin]
-  rw [positions_literal N j hN]
+  rw [boundary_positions_literal N j (by omega)]
   norm_num [Matrix.cons_val, Fin.sum_univ_succ, Fin.reduceFinMk, Fin.reduceSucc, Finset.univ_eq_empty, Finset.sum_empty, add_zero, low, head, tail, H, D, H2, D2, E]
   try simp (disch := omega) only [Nat.cast_sub]
   norm_num
   ring
 
-private theorem synth_nonneg (N j : ℕ) (x : Fin 16 → ℝ) (hx : ∀ q, 0 ≤ x q) :
+theorem actual_mass (N j : ℕ) (hN : 56 ≤ N) (hj : 6 ≤ j) (hj' : j ≤ N-10)
+    (x : Fin 16 → ℝ) :
+    (∑ k : Fin N, synth (positions N j) x k) =
+      low x*(N : ℝ)+x 5*(j : ℝ)+H (head x)-D (tail x) := by
+  exact boundary_mass N j (by omega) hj hj' x
+
+theorem actual_square (N j : ℕ) (hN : 56 ≤ N) (hj : 6 ≤ j) (hj' : j ≤ N-10)
+    (x : Fin 16 → ℝ) :
+    (∑ k : Fin N, (synth (positions N j) x k)^2) =
+      (2*low x+x 5)*(low x*(N : ℝ)+x 5*(j : ℝ)+H (head x)-D (tail x))-
+        low x*(low x+x 5)*(N : ℝ)+E (x 5) (head x) (tail x) := by
+  exact boundary_square N j (by omega) hj hj' x
+
+theorem synth_nonneg (N j : ℕ) (x : Fin 16 → ℝ) (hx : ∀ q, 0 ≤ x q) :
     ∀ k : Fin N, 0 ≤ synth (positions N j) x k := by
   intro k
   change 0 ≤ (∑ q, x q • step N (positions N j q)) k
@@ -758,7 +746,7 @@ private theorem synth_nonneg (N j : ℕ) (x : Fin 16 → ℝ) (hx : ∀ q, 0 ≤
   unfold step
   split_ifs <;> norm_num
 
-private theorem zero_low (x : Fin 16 → ℝ) (hx : ∀ q, 0 ≤ x q)
+theorem zero_low (x : Fin 16 → ℝ) (hx : ∀ q, 0 ≤ x q)
     (hAx : ∀ r, 0 ≤ (A *ᵥ x) r) (hu : low x = 0) : x = 0 := by
   obtain ⟨_, hr, _⟩ := actual_row_identities x
   have hrow := hAx 1
@@ -784,11 +772,11 @@ private theorem normalized_cone_good (N j : ℕ) (hN : 67 ≤ N) (hj : 6 ≤ j) 
     simpa only [hu] using actual_defects x hx hAx
   have hb := normalized_defect_bound (N : ℝ) (j : ℝ) (x 5)
     (by exact_mod_cast hN) (by exact_mod_cast hj) (hx 5) hv (head x) (tail x) hd
-  have hmass := actual_mass N j hN hj hj' x
-  have hsq := actual_square N j hN hj hj' x
+  have hmass := actual_mass N j (by omega) hj hj' x
+  have hsq := actual_square N j (by omega) hj hj' x
   simp only [hu, one_mul, mul_one] at hmass hsq
   have hcommon : commonEnvelope (N : ℝ) ≤ target N := by
-    simpa only [target, bulkValue, bulkIndex] using common_le_integer_bulk N hN
+    simpa only [target, bulkValue, bulkIndex] using common_le_integer_bulk N (by omega)
   have hmono := mul_le_mul_of_nonneg_right hcommon
     (sq_nonneg ((N : ℝ)+x 5*(j : ℝ)+H (head x)-D (tail x)))
   apply spectralGood_of_square _ _ (Real.sqrt_nonneg _)
@@ -831,14 +819,14 @@ private theorem small_jump_good (N j : ℕ) (hN : 67 ≤ N) (hj : 6 ≤ j) (hj' 
     rw [← hrec, map_smul]
     exact spectralGood_smul _ _ _ hu0 hg
 
-private def bulk : Fin 16 → ℝ := ![0,0,0,0,0,2,0,0,0,0,0,0,0,0,0,3]
+def bulk : Fin 16 → ℝ := ![0,0,0,0,0,2,0,0,0,0,0,0,0,0,0,3]
 
 private theorem bulk_rows : A *ᵥ bulk = ![3,0,4] := by
   ext r
   fin_cases r <;> norm_num [A, bulk, Matrix.mulVec, dotProduct, Fin.sum_univ_succ, Fin.reduceFinMk, Fin.reduceSucc, Finset.univ_eq_empty, Finset.sum_empty, add_zero]
 
 set_option maxRecDepth 8192 in
-private theorem bulk_good (N j : ℕ) (hN : 67 ≤ N) (hj : 6 ≤ j) (hj' : j ≤ N-10) :
+theorem bulk_good (N j : ℕ) (hN : 56 ≤ N) (hj : 6 ≤ j) (hj' : j ≤ N-10) :
     spectralGood (Real.sqrt (target N)) (synth (d := N) (positions N j) bulk) := by
   have hm : (∑ k : Fin N, synth (positions N j) bulk k) = 3*(N : ℝ)+2*(j : ℝ) := by
     rw [actual_mass N j hN hj hj']
@@ -849,7 +837,7 @@ private theorem bulk_good (N j : ℕ) (hN : 67 ≤ N) (hj : 6 ≤ j) (hj' : j �
     simp only [bulk, low, head, tail, H, D, H2, D2, E, Fin.sum_univ_succ, Fin.reduceFinMk, Fin.reduceSucc, Nat.reduceAdd, Fin.isValue, Matrix.cons_val, Finset.univ_eq_empty, Finset.sum_empty, add_zero]
     norm_num <;> ring
   have hden : 0 < 3*(N : ℝ)+2*(j : ℝ) := by
-    have hn : (67 : ℝ) ≤ N := by exact_mod_cast hN
+    have hn : (56 : ℝ) ≤ N := by exact_mod_cast hN
     have hj0 : (0 : ℝ) ≤ j := Nat.cast_nonneg j
     linarith
   have hmax : (9*(N : ℝ)+16*(j : ℝ))/(3*(N : ℝ)+2*(j : ℝ))^2 ≤ target N := by
@@ -896,7 +884,7 @@ private theorem alpha_attained (x : Fin 16 → ℝ) :
     · exact Or.inr (Or.inr (Or.inl (hr.trans h0)))
     · exact Or.inr (Or.inr (Or.inr (hr.trans h2)))
 
-private theorem subtraction_rows (a : ℝ) (x : Fin 16 → ℝ) :
+theorem subtraction_rows (a : ℝ) (x : Fin 16 → ℝ) :
     (A *ᵥ (x-a • bulk)) 0 = (A *ᵥ x) 0-3*a ∧
     (A *ᵥ (x-a • bulk)) 1 = (A *ᵥ x) 1 ∧
     (A *ᵥ (x-a • bulk)) 2 = (A *ᵥ x) 2-4*a := by
@@ -978,7 +966,7 @@ theorem structural_fixed_good (N j : ℕ) (hN : 67 ≤ N) (hj : 6 ≤ j) (hj' : 
   obtain ⟨hy, hAy, hface⟩ := residual_feasible x hx hAx
   have hsmall := four_faces_small (x-alpha x • bulk) hy hAy hface
   have hres := small_jump_good N j hN hj hj' (x-alpha x • bulk) hy hAy hsmall
-  have hbulk := bulk_good N j hN hj hj'
+  have hbulk := bulk_good N j (by omega) hj hj'
   have ha : 0 ≤ alpha x := (alpha_bounds x hx hAx).1
   have hrec : x = (x-alpha x • bulk)+alpha x • bulk := by
     exact (sub_add_cancel x (alpha x • bulk)).symm

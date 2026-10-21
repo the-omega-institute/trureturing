@@ -1,0 +1,75 @@
+## 184. FIB 链与图上的外加离散非线性 Schrödinger、孤子与调制不稳定
+
+FIB 只提供耦合图。选无向对称权 \(w_{nm}\)、图 Laplacian
+$$
+(L\psi)_n=\sum_{m\sim n}w_{nm}(\psi_n-\psi_m),
+$$
+以及实势 \(V_n\) 和非线性系数 \(g_n\)，可定义外加 DNLS
+$$
+i\frac{d\psi_n}{dt}
+=(L\psi)_n+V_n\psi_n+g_n|\psi_n|^2\psi_n.
+\tag{184.1}
+$$
+在静态参数和无外部通量边界下，
+$$
+N=\sum_n|\psi_n|^2,\qquad
+H=\sum_{\{n,m\}}w_{nm}|\psi_n-\psi_m|^2
++\sum_nV_n|\psi_n|^2+\frac12\sum_ng_n|\psi_n|^4
+\tag{184.2}
+$$
+分别守恒。若采用邻接算子、非厄米权或开放边界，这些守恒律会改变。
+
+对均匀周期链的平面波
+$$
+\psi_n=\sqrt\rho\,e^{i(qn-\omega t)},
+$$
+有
+$$
+\omega=V_0+4C\sin^2\frac q2+g\rho.
+$$
+扰动波数 \(Q\) 的线性频率满足
+$$
+\Omega_\pm(Q)
+=2C\sin q\sin Q
+\pm\sqrt{\varepsilon_q(Q)[\varepsilon_q(Q)+2g\rho]},
+$$
+$$
+\varepsilon_q(Q)=4C\cos q\sin^2\frac Q2.
+\tag{184.3}
+$$
+若存在
+$$
+\varepsilon_q(Q)[\varepsilon_q(Q)+2g\rho]<0,
+\tag{184.4}
+$$
+则该模态指数增长，增长率为根号内负值的平方根。有限 FIB 环只能取离散 \(Q\)，必须逐模态检查；非周期图不能直接使用平面波公式。
+
+一般图上若 \(L\mathbf1=0\)、\(V_n=V_0\)、\(g_n=g\)，常数背景
+$$
+\psi_n(t)=\sqrt\rho\,e^{-i(V_0+g\rho)t}
+$$
+存在。沿 \(L\) 的谱值 \(\lambda\ge0\) 线性化得到
+$$
+\Omega^2=\lambda(\lambda+2g\rho).
+\tag{184.5}
+$$
+聚焦情形 \(g<0\) 的不稳定条件为
+$$
+0<\lambda<2|g|\rho.
+\tag{184.6}
+$$
+因此有限图的最小正谱值和最大谱值共同决定不稳定窗口。
+
+驻波
+$$
+\psi_n(t)=e^{-i\mu t}\phi_n
+$$
+满足
+$$
+\mu\phi_n=(L\phi)_n+V_n\phi_n+g_n|\phi_n|^2\phi_n.
+\tag{184.7}
+$$
+局域孤子需要 \(\phi\in\ell^2\)，并需有线性局域模态分岔、反连续极限延拓或其他存在性条件。FIB 图的层级结构可能产生局域谱态，但不自动保证点谱、指数局域或孤子稳定性；稳定性还需线性化谱和非线性约束。
+
+本节结论是：FIB 提供非线性波的耦合骨架；守恒量、调制不稳定、离散孤子和局域模态由线性算子、非线性、边界和谱条件决定。
+

@@ -35,6 +35,13 @@ internal sealed class TwirlingPhaseRetrievabilityCounterexampleDocument : IScrib
         "Three characters of C3 with multiplicity two contradict the proposed twirling phase index formula.",
         H("Overlapping pairs refute the twirling phase index formula"),
         Blocks(
+            Node("scale-norm-sq", "The squared two-coordinate scale", "scale_normSq",
+                Disp(Eqn(App(Q("Complex", "normSq"),
+                    new Formula.Power(Seq(Sqrt, Grp(D(2))), new Formula.Negate(D(1)))),
+                    new Formula.Fraction(D(1), D(2)))),
+                "The reciprocal of the positive real square root of two is regarded as a complex scalar. "
+                    + "Its squared complex modulus is one half.",
+                DescribeRole.Theorem, AssessedProvenance.FromRepo()),
             Paragraph(Text("All vector and matrix coordinates are complex. Fin indices start at zero. "
                 + "Matrix.vecMulVec(x, star(x)) is the rank-one state of x. Anonymous brackets "
                 + "display Lean typeclass assumptions; val displays a unitary matrix's coercion. "

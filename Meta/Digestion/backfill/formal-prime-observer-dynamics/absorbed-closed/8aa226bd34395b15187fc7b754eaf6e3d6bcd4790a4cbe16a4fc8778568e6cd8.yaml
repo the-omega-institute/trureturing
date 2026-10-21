@@ -1,0 +1,9 @@
+fingerprints:
+  raw_sha256: sha256:8aa226bd34395b15187fc7b754eaf6e3d6bcd4790a4cbe16a4fc8778568e6cd8
+  normalized_sha256: sha256:8aa226bd34395b15187fc7b754eaf6e3d6bcd4790a4cbe16a4fc8778568e6cd8
+cas_ref: sha256:8aa226bd34395b15187fc7b754eaf6e3d6bcd4790a4cbe16a4fc8778568e6cd8
+coverage_gids:
+  - gid: D5/S3/Arith/Congruence/HorizontalJointKernel.horizontal_joint_kernel
+    target_statement_id: sha256:4ec617e7d365ed2e47a3e2544cc33899b1d60784c1f5b4f666a6fb0b497859ca
+receipts:
+  unresolved_subitems: []

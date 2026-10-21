@@ -1,0 +1,20 @@
+## 二　无条件无限对数凹性不是 RH
+
+[Liu--Mao, arXiv:2610.04972v1](../../../Library/Zeros/liu2026xilogconcavity.md)
+对
+
+$$
+F(x)=\xi\!\left(\tfrac12+\sqrt{x}\right)=\sum_{n\ge0}\lambda_nx^n
+$$
+
+其 Theorem 1.1 声称标准对数凹性算子 $L$（约定 $\lambda_{-1}=0$）满足
+
+$$
+(L^m\lambda)_n>0\qquad(m,n\ge0).
+$$
+
+作者给出的结论不以 RH 为前提；本节仅引用其陈述，未独立审查证明。
+文中的 $\lambda_n$ 是中心 Taylor 系数，不是 Li 系数。所述结果没有提供到
+Laguerre--Pólya 性、零点全在临界线、Li 系数全正或 Robin 逐整数估计的推导。
+该来源与五窗 FIB 定义没有给出 $N_g$ 到 $\lambda_n$ 的系数保持映射；连接两者仍需证明对象与量词的对应。
+

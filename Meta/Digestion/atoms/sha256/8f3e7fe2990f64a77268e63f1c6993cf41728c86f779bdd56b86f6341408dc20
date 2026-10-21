@@ -1,0 +1,10 @@
+当前与黄金素数记忆、色散和 RH 路线直接相关的已冻结节点包括：
+
+- `D5/S3/Observer/AgencyHolonomy/PrimeSwapCurvature`
+- `D5/S3/Observer/AgencyHolonomy/StableResidualSwapCurvatureBound`
+- `D5/S3/Observer/AgencyHolonomy/FiniteHolonomyEnergy`
+- `D5/S3/Observer/AgencyHolonomy/PrimeFrequencyPhaseFlow`
+- `D5/S3/Observer/AgencyHolonomy/PhaseTwistedStableSwapCurvature`
+- `D5/S3/Weil/HolonomyBridge/OffLineOrbitParityDecomposition`
+- `D5/S3/Analytic/Boundary/InteriorCurvatureCriterion`
+

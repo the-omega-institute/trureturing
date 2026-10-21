@@ -1,0 +1,8 @@
+**定义 17.3（跨切面的有限潜在记忆）。** 固定 $\mu_b>0$，允许保留标签 $Z_b$，使 $A\perp C\mid(B,Z_b)$。全部在切面之后仍与进入模式有关并能影响退出的私有变量，包括持续共享随机种子，均计入标签。相应条件表满足
+
+$$
+P(a,c\mid b)=\sum_{z=1}^{m_b}\lambda_z^{(b)}\nu_z^{(b)}(a)\xi_z^{(b)}(c).
+$$
+
+使用[《Math Myth Match》命题 753.2、754.1、755.2](MATH_MYTH_MATCH.md)的成熟非负秩刻画，最小正权重标签数为 $\operatorname{rank}_+(P(\cdot,\cdot\mid b))$。经典来源为 Shashanka–Raj–Smaragdis，*Probabilistic Latent Variable Models as Nonnegative Factorizations*，§3.1 式 (2)–(3)，[DOI:10.1155/2008/947438](https://doi.org/10.1155/2008/947438)。从已取得的 $a,b$ 出发，可按该模型的后验采样保留标签，再按 $\xi_z^{(b)}$ 生成后续；这不把潜标签解释成可由单次样本确定解码的真值。
+

@@ -1,0 +1,45 @@
+### 16.1 同一测试的正性范围
+
+本节以任意紧支撑光滑 additive 测试 $v$ 的完整双极点显式公式为前提；不调用只覆盖偶测试的 Lean 实现。沿用[完整 Weil 形式的归一化](../../../Library/Weil/frankliebseiringer2006hardy.md)，设
+
+$$
+\begin{aligned}
+E_t(v)&=\int_{\mathbb R}|v(x)-v(x-t)|^2dx,\\
+A_\pm(v)&=\int_{\mathbb R}e^{\pm x/2}v(x)dx,\\
+P_{\rm full}(v)&=2\operatorname{Re}\bigl(A_+(v)\overline{A_-(v)}\bigr),\\
+k_\Gamma(t)&=\frac{e^{-t/2}}{1-e^{-2t}},\qquad
+c_\Gamma=\operatorname{Re}\operatorname{digamma}(1/4)-\log\pi,\\
+w_n&=\frac{\Lambda(n)}{\sqrt n},\qquad
+c_L=2\sum_{2\le n\le e^{2L}}w_n-c_\Gamma.
+\end{aligned}
+$$
+
+所需合同是对 $\operatorname{supp}v\subset[-L,L]$ 使用同一素数幂与质量归一化的等式
+
+$$
+Q_{\rm full}(v)=P_{\rm full}(v)
++\int_0^\infty k_\Gamma(t)E_t(v)dt
++\sum_{2\le n\le e^{2L}}w_nE_{\log n}(v)
+-c_L\|v\|_2^2.
+$$
+
+当前 $f_\epsilon$ 的 $A_\pm(f_\epsilon)=0$ 精确成立：四脉冲使用同一个 $\int e^{\pm\epsilon u/2}\beta(u)du$，中心项由 $c=\sinh(a/2)/\sinh(b/2)$ 抵消。这里没有把缩放脉冲矩替换成 $\beta_0$，也没有把一般双极点项改为偶测试专用的 $2|A_+|^2$。
+
+在这份完整合同下，固定四脉冲测试具有候选下界
+
+$$
+Q_{\rm full}(f_\epsilon)\ge
+M\left[c_\Gamma+2^{-1/20}\log\frac{\ell}{20\epsilon}
+-\frac{\sqrt2\,c\ell}{1+c^2}\right].
+$$
+
+其来源是平移区间 $2\epsilon\le t\le\ell/10$ 上的脉冲不相交，使 translation-square 等于 $2M$，并保留正 Gamma-energy 的这一段。一般复杂测试的能量桥需要独立核对；不能无条件调用只覆盖偶 additive 测试的实现。这个正性下界与本章 actual projection 仍都缺 Lean 接回。
+
+在所列合同、下界与候签定理 15.2 均成立时，对全部充分小的 $\epsilon>0$，同一测试上将有
+
+$$
+0<D_2(f_\epsilon)<\sigma_2(g_\epsilon).
+$$
+
+这只排除较强条件 $D_2\le0$；实际完整 Weil 门槛 $D_2\le\sigma_2$ 仍成立于该测试。单个测试或单个 place set 的结论不完成全部支撑上的 RH 判据。
+

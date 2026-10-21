@@ -1,0 +1,47 @@
+**定理 1150.1（联合尺度的精细余量）。** 令 $N\to\infty$，$\sigma_N=\log(1/\varepsilon_N)$，且 $\sigma_N/N\to\alpha\in(0,\infty)$。则
+
+$$
+0\le U_N(\varepsilon_N)-G_N(\varepsilon_N)
+=O\left(N\varepsilon_N4^{-N}+N^2\varepsilon_N^2\right).
+$$
+
+每个来源熵最优者的唯一主权重 $1-\delta_N$ 还满足
+
+$$
+0\le\delta_N-\varepsilon_N
+=O\left(\varepsilon_N4^{-N}+N\varepsilon_N^2\right).
+$$
+
+特别地，$G_N(\varepsilon_N)=h_2(\varepsilon_N)+(N-1)\varepsilon_N\log2+o(\varepsilon_N)$。
+
+**证明。** 沿用第 1129–1130 节的分解，简记 $\varepsilon=\varepsilon_N$、$\delta=\delta_N$、$M=\delta/(1-\delta)$、$\eta=O(N^2\delta)$。已知 $\varepsilon\le\delta=O(\varepsilon)$。完整矩为
+
+$$
+\delta t=\varepsilon-p,
+\qquad p=(1-\delta)\prod_i m_i,
+\qquad |p|\le M^N.
+$$
+
+$M=O(\varepsilon)$ 保证 $M^N=o(\varepsilon)$，所以充分大时 $t>0$。第 1149 节适用。一般乘积来源熵包络给 $C(R)\ge H(R)-N\log2+L_Nt$，故来源分组得
+
+$$
+G_N(\varepsilon)\ge h_2(\delta)+\varepsilon L_N-\delta\log2
+-\frac{\delta-\varepsilon}{N-2}
+-\left(L_N+\frac1{N-2}\right)p-2\delta\eta.
+$$
+
+记 $d=\delta-\varepsilon$、$\gamma_N=N\log2-L_N>0$，整理为
+
+$$
+\begin{aligned}
+G_N(\varepsilon)\ge U_N(\varepsilon)
+&+h_2(\delta)-h_2(\varepsilon)
+-d\left(\log2+\frac1{N-2}\right)\\
+&-\varepsilon\gamma_N-O(NM^N)-O(N^2\varepsilon^2).
+\end{aligned}
+$$
+
+由于 $\delta\in[\varepsilon,C\varepsilon]$，区间上的二元熵导数至少为 $\sigma_N-O(1)$。于是前一行额外代价至少为 $d(\sigma_N-O(1))$，最终为非负且与 $Nd$ 同阶。第 1125 节给 $\gamma_N=O(N4^{-N})$；指数尺度还给 $NM^N=o(\varepsilon^2)$。与 $G_N\le U_N$ 合并，先得到缺口上界，再除以 $\sigma_N\asymp N$ 得到 $d$ 的上界。两项误差除以 $\varepsilon$ 均趋于零。证毕。
+
+本节常数允许依赖 $\sigma_N/N$ 的固定正上下界。它没有将这些估计外推到固定正关联的高维极限，也没有把固定维数的准确弱区间直接当作统一区间。
+

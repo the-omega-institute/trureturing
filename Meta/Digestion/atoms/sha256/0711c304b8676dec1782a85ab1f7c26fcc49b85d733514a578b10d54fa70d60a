@@ -1,0 +1,34 @@
+## 静态轴
+
+三位窗口的静态 law 为
+
+\[
+p=
+(p_{\mathrm{null}},p_1,p_2,p_3,p_{13}).
+\]
+
+原始占用均值
+
+\[
+P=(X,Y,Z)
+\]
+
+遗漏
+
+\[
+\kappa=p_{13}=E[xy].
+\]
+
+如果未来响应的四角对比
+
+\[
+J_{\mathscr L}
+=
+\mathscr L_{1,3}
+-\mathscr L_1
+-\mathscr L_3
++\mathscr L_{\mathrm{null}}
+\]
+
+非零，那么未来律还必须区分不同 \(\kappa\)。
+

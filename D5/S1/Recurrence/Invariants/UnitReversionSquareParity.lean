@@ -6,6 +6,15 @@
    utility: none
    digest: A contracting integer series and a lacunary mod-two fixed point prove A373312. -/
 
+/- Escape audit unfinished: https://github.com/the-omega-institute/trureturing/issues/19022
+Published suppliers: https://github.com/the-omega-institute/trureturing/issues/19089. -/
+
+/- Escape audit unfinished for these published suppliers: https://github.com/the-omega-institute/trureturing/issues/19133
+proof_shape: agree_iff: bind-only; consumer: D5.S1.Recurrence.Invariants.HannaSquareCompositionModFour.result (via its live helper chain).
+proof_shape: subst_inner_agree: bind-only; consumer: D5.S1.Recurrence.Invariants.HannaSquareCompositionModFour.result (via its live helper chain).
+proof_shape: subst_constant: bind-only; consumer: D5.S1.Recurrence.Invariants.HannaSquareCompositionModFour.result (via its live helper chain).
+-/
+
 import Mathlib.RingTheory.PowerSeries.Expand
 import Mathlib.RingTheory.PowerSeries.Inverse
 import Mathlib.FieldTheory.Finite.Basic
@@ -16,23 +25,23 @@ namespace D5.S1.Recurrence.Invariants.UnitReversionSquareParity
 
 variable {R : Type*} [CommRing R]
 
-private def Agree (d : ℕ) (f g : PowerSeries R) : Prop :=
+def Agree (d : ℕ) (f g : PowerSeries R) : Prop :=
   ∀ n < d, coeff n f = coeff n g
 
-private theorem agree_iff (d : ℕ) (f g : PowerSeries R) :
+theorem agree_iff (d : ℕ) (f g : PowerSeries R) :
     Agree d f g ↔ (X : PowerSeries R) ^ d ∣ f - g := by
   simp [Agree, X_pow_dvd_iff, map_sub, sub_eq_zero]
 
-private theorem agree_mono {d e : ℕ} {f g : PowerSeries R}
+theorem agree_mono {d e : ℕ} {f g : PowerSeries R}
     (h : Agree d f g) (he : e ≤ d) : Agree e f g :=
   fun n hn => h n (lt_of_lt_of_le hn he)
 
-private theorem agree_pow {d : ℕ} {f g : PowerSeries R}
+theorem agree_pow {d : ℕ} {f g : PowerSeries R}
     (h : Agree d f g) (k : ℕ) : Agree d (f ^ k) (g ^ k) :=
   (agree_iff _ _ _).mpr ((agree_iff _ _ _).mp h |>.trans
     (sub_dvd_pow_sub_pow f g k))
 
-private theorem agree_mul {d : ℕ} {f g u v : PowerSeries R}
+theorem agree_mul {d : ℕ} {f g u v : PowerSeries R}
     (h : Agree d f g) (h' : Agree d u v) : Agree d (f * u) (g * v) := by
   apply (agree_iff _ _ _).mpr
   have h1 := dvd_mul_of_dvd_left ((agree_iff _ _ _).mp h) u
@@ -40,7 +49,7 @@ private theorem agree_mul {d : ℕ} {f g u v : PowerSeries R}
   convert dvd_add h1 h2 using 1
   ring
 
-private theorem agree_X {d : ℕ} {f g : PowerSeries R}
+theorem agree_X {d : ℕ} {f g : PowerSeries R}
     (h : Agree d f g) : Agree (d + 1) (X * f) (X * g) := by
   intro n hn
   cases n with
@@ -51,7 +60,7 @@ private theorem pow_low {u : PowerSeries R} (hu : constantCoeff u = 0)
     {n k : ℕ} (h : n < k) : coeff n (u ^ k) = 0 :=
   X_pow_dvd_iff.mp (pow_dvd_pow_of_dvd (X_dvd_iff.mpr hu) k) n h
 
-private theorem subst_inner_agree {d : ℕ} {u v : PowerSeries R}
+theorem subst_inner_agree {d : ℕ} {u v : PowerSeries R}
     (h : Agree d u v) (f : PowerSeries R)
     (hu : constantCoeff u = 0) (hv : constantCoeff v = 0) :
     Agree d (f.subst u) (f.subst v) := by
@@ -59,7 +68,7 @@ private theorem subst_inner_agree {d : ℕ} {u v : PowerSeries R}
   rw [coeff_subst' (.of_constantCoeff_zero hu), coeff_subst' (.of_constantCoeff_zero hv)]
   exact finsum_congr fun k => by rw [agree_pow h k n hn]
 
-private theorem subst_outer_agree {d : ℕ} {f g u : PowerSeries R}
+theorem subst_outer_agree {d : ℕ} {f g u : PowerSeries R}
     (h : Agree d f g) (hu : X ^ 2 ∣ u) :
     Agree (2 * d) (f.subst u) (g.subst u) := by
   have hz : constantCoeff u = 0 := X_dvd_iff.mp ((dvd_pow_self X (by omega)).trans hu)
@@ -116,7 +125,7 @@ private theorem argument_agree {d : ℕ} {b c : PowerSeries R}
 private noncomputable def step (b : PowerSeries R) : PowerSeries R :=
   reciprocal b ^ 2 * b.subst (argument b)
 
-private theorem subst_constant (f u : PowerSeries R) (hu : constantCoeff u = 0) :
+theorem subst_constant (f u : PowerSeries R) (hu : constantCoeff u = 0) :
     constantCoeff (f.subst u) = constantCoeff f := by
   rw [← coeff_zero_eq_constantCoeff, coeff_subst' (.of_constantCoeff_zero hu)]
   rw [finsum_eq_single _ 0]
@@ -365,9 +374,5 @@ theorem hanna_conjecture (n : ℕ) (_hn : 1 ≤ n) :
   change (a n : ZMod 2) = 1 ↔ ∃ k : ℕ, 1 ≤ k ∧ n = 2 ^ k - 1 at h
   exact ZMod.intCast_eq_one_iff_odd.symm.trans h
 
-#print axioms generating_equation
-#print axioms generating_unique
-#print axioms mod_two_fixed
-#print axioms hanna_conjecture
 
 end D5.S1.Recurrence.Invariants.UnitReversionSquareParity

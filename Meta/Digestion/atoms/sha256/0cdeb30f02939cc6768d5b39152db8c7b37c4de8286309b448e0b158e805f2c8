@@ -1,0 +1,69 @@
+## 153. FIB 路径测度上的外加多重分形与热力学形式
+
+FIB 代换只给出合法词、递归层级和路径拼接关系。要讨论多重分形，必须另加路径空间上的概率测度、尺度度量以及把符号路径嵌入物理空间的映射。令
+$$
+\sigma(a)=ab,\qquad \sigma(b)=a,
+$$
+并令 \(X_F\) 为其移位闭包。长度为 \(n\) 的合法因子集合记为 \(L_n\)，则
+$$
+|L_n|=p(n)=n+1,
+\qquad
+h_{\mathrm{top}}(X_F)=\lim_{n\to\infty}n^{-1}\log p(n)=0.
+\tag{153.1}
+$$
+代换矩阵的 Perron 根 \(\varphi\) 描述代换层级的长度增长，不能直接当作拓扑熵、测度熵或物理维数。
+
+在 \(X_F\) 上给定柱集
+$$
+[u]=\{x\in X_F:x_1\cdots x_n=u\}
+$$
+及概率测度 \(\mu\)，必须满足
+$$
+\mu([u])\ge0,\qquad
+\mu([u])=\sum_{ua\in L_{n+1}}\mu([ua]),\qquad
+\mu(X_F)=1.
+\tag{153.2}
+$$
+测度可以来自移位不变测度、Markov 转移概率或外加势函数；这些选择不是 FIB 递归本身决定的。若符号度量取
+$$
+d_\rho(x,y)=\rho^{N(x,y)},\qquad 0<\rho<1,
+$$
+其中 \(N(x,y)\) 是首个不同位置，则柱集尺度为 \(\varepsilon_n=\rho^n\)，局部维数和质量指数可写为
+$$
+\alpha(x)=\lim_{n\to\infty}\frac{\log\mu([x_1\cdots x_n])}{\log\varepsilon_n},
+\qquad
+\tau(q)=\lim_{n\to\infty}\frac{\log\sum_{u\in L_n}\mu([u])^q}{\log\varepsilon_n}.
+\tag{153.3}
+$$
+若极限不存在，应使用上、下局部维数。Rényi 维数在 \(q\ne1\) 时为 \(D_q=\tau(q)/(q-1)\)，而信息维数需按熵率极限另行定义。
+
+若测度是势函数 \(\psi\) 的 Gibbs 测度，且几何收缩率为 \(r_e\)，记 \(\chi(e)=-\log r_e\)。在可加性、有限平均几何势和有界畸变条件下，压力函数满足
+$$
+P\bigl(q\psi+\tau(q)\chi\bigr)=0.
+\tag{153.4}
+$$
+当 \(\psi\) 已归一化为 \(P(\psi)=0\) 且 \(\chi\) 为常数时，才可化为 \(\tau(q)=-P(q\psi)/\chi\)。因此控制维数的是概率势与几何尺度势的比值，而不是 \(\varphi\) 单独决定的增长率。
+
+令
+$$
+E_\alpha=\{x:\alpha(x)=\alpha\},\qquad f(\alpha)=\dim_H E_\alpha.
+$$
+在 Gibbs 性、准 Bernoulli 性、可微压力和适当畸变控制下，才有
+$$
+\alpha=\tau'(q),\qquad f(\alpha)=q\alpha-\tau(q)
+$$
+的 Legendre 形式。无这些条件时，Legendre 变换首先只给出上界；压力不可导时得到的往往是谱的凹包，不能自动等同于真实谱。
+
+标准符号度量下，\(p(n)=n+1\) 只有次指数增长，所以对任意 \(s>0\)，
+$$
+\sum_{u\in L_n}\operatorname{diam}([u])^s
+\le(n+1)\rho^{ns}\longrightarrow0,
+$$
+从而 \(\dim_H X_F=0\)。这只是符号度量下的结论。若把路径嵌入带有瓦片长度、局部补丁尺度或非均匀收缩率的物理集合，柱集直径改变，维数必须根据该映射重新计算；在满足精确维数条件时可出现类似
+$$
+\dim_H\mu=\frac{h_\mu}{\int\chi\,d\mu}
+$$
+的熵率与平均收缩率比值。
+
+本节结论是：FIB 提供路径和因子复杂度的组合框架；多重分形谱、压力相变和非零物理维数由外加测度、几何尺度、编码正则性及相应极限共同决定。
+

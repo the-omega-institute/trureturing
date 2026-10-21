@@ -1,0 +1,11 @@
+\[
+|\operatorname{Orb}(\rho)|
+=
+\begin{cases}
+4,&\delta\neq0,\ \gamma\neq0,\\
+2,&\delta=0,\ \gamma\neq0,\\
+2,&\delta\neq0,\ \gamma=0,\\
+1,&\delta=\gamma=0.
+\end{cases}
+\]
+

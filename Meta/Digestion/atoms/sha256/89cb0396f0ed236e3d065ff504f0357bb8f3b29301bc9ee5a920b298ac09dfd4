@@ -1,0 +1,37 @@
+**引理 1402.1（预算比较向量的尾幂和）。** 令
+
+$$
+E_N=\min\{\eta_N/\gamma_\kappa,1-c_N\},
+\quad A_N=c_N+E_N,
+\quad n_N=\left\lfloor\frac{1-A_N}{c_N}\right\rfloor,
+\quad r_N=1-A_N-n_Nc_N.
+$$
+
+对 $\alpha>1$、$\beta=\alpha-1$，预算可行来源满足
+
+$$
+H_\alpha(Z)\ge
+-\frac1\beta\log\left(A_N^\alpha+n_Nc_N^\alpha+r_N^\alpha\right),
+$$
+
+且
+
+$$
+(1-A_N-c_N)_+c_N^\beta
+\le n_Nc_N^\alpha+r_N^\alpha
+\le(1-A_N)c_N^\beta.
+$$
+
+无穷阶则满足 $H_\infty(Z)\ge-\log A_N$。
+
+**证明。** 第 1324 节给 $\sum_z(w_z-c_N)_+\le E_N$，因此权重被第 1325 节的向量 $(A_N,c_N,\ldots,c_N,r_N)$ 主序支配。第 1303 节的全阶熵方向给第一式及无穷阶界。对尾部，使用 $0\le r_N<c_N$ 及 $n_Nc_N=1-A_N-r_N$，有
+
+$$
+n_Nc_N^\alpha\ge(1-A_N-c_N)c_N^\beta,
+\qquad r_N^\alpha\le r_Nc_N^\beta.
+$$
+
+结合尾幂和非负，得到带正部的下界；相加得到上界。证毕。
+
+比较向量的尾部总质量趋于一，而每个小权重尺度为 $e^{-D_N}$；其首权重尺度由 $c_N+\eta_N/\gamma_\kappa$ 控制。下面的不同相区来自两项幂和谁占主导，尚未把比较向量当作真实乘积来源。
+

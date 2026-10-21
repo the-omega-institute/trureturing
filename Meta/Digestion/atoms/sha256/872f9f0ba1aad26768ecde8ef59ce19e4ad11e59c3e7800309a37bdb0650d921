@@ -1,0 +1,14 @@
+**定义 17.13（同格的倾斜方块及交片）。**
+对定义 17.8 的参数，令
+
+$$
+\mathcal Q=\{s v_1+t v_2:0\le s<1, 0\le t<1\},
+\qquad
+P_\lambda=\mathcal D\cap(\mathcal Q+\lambda)
+\quad(\lambda\in\Lambda).
+$$
+
+这里 $\mathcal Q$ 是欧氏边长 $\sqrt N$、面积 $N$ 的半开方块，
+不是条件概率矩阵 $Q_{\rm cond}$，也不是黄金二次型。
+在本节中切割的材料是 $\mathcal D$；它是代表铺法的两方块区域。
+

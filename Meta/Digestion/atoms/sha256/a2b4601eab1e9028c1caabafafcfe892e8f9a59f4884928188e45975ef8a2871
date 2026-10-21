@@ -1,0 +1,36 @@
+**定理 100.2（连续 FIB 近似下的 LAN 条件形式）。** 设 \(j_n\) 为一列 FIB 上下文及其外加观测实验，真实参数为 \(\theta_0\)。令 \(r_n\to\infty\) 为有效信息尺度，并假定对每个固定 \(h\in\mathbb R^d\)，局部参数 \(\theta_n=\theta_0+h/r_n\) 仍在参数域内。若在 \(P_{\theta_0}^{\mathsf E_{j_n}}\) 概率下
+\[
+\Delta_n:=r_n^{-1}S_{j_n,T_n}(\theta_0)\Longrightarrow N(0,\mathcal I),
+\qquad
+r_n^{-2}\mathcal I_{j_n,T_n}(\theta_0)\longrightarrow\mathcal I,
+\tag{100.4}
+\]
+且三阶余项满足局部均匀的 \(o_{P_{\theta_0}}(1)\)，则
+\[
+\log\frac{dP^{\mathsf E_{j_n}}_{\theta_0+h/r_n}}
+{dP^{\mathsf E_{j_n}}_{\theta_0}}
+=h^{\mathsf T}\Delta_n-\frac12h^{\mathsf T}\mathcal I h
++o_{P_{\theta_0}}(1).
+\tag{100.5}
+\]
+这就是以 \(r_n^{-1}\) 为局部尺度的 LAN。若条件得分是鞅差，(100.4) 可由条件方差的稳定极限和 Lindeberg 条件验证；若观测是平稳混合序列，则 \(\mathcal I\) 还含有跨时协方差的长程和。FIB 层数趋于无穷并不自动给出 (100.4)：必须另加读出噪声、重复数、混合率和设计矩阵的极限。
+
+在确定性标签加高斯独立噪声的特例
+\[
+Y_{n,k}=m_\theta(c_{n,k},a_{n,k})+\sigma_n\varepsilon_{n,k},
+\qquad
+\varepsilon_{n,k}\stackrel{\rm iid}{\sim}N(0,I),
+\]
+若 \(g_{n,k}=\nabla_\theta m_{\theta_0}(c_{n,k},a_{n,k})\) 且
+\[
+\frac1n\sum_{k<n}g_{n,k}g_{n,k}^{\mathsf T}\longrightarrow G,
+\qquad G\succeq0,
+\]
+则
+\[
+\mathcal I_n(\theta_0)
+=\sigma_n^{-2}\sum_{k<n}g_{n,k}g_{n,k}^{\mathsf T}.
+\tag{100.6}
+\]
+当 \(G\) 满秩时，有效局部尺度为 \(r_n=\sqrt n/\sigma_n\)；若 \(G\) 奇异，只能在 \(\operatorname{ran}G\) 上作 LAN，\(\ker G\) 中的方向在该近似下不可见。故重复数、噪声缩放和 FIB 上下文的经验 Gram 矩阵共同决定连续参数极限，递归本身不决定 \(\sqrt n\) 还是其他速率。
+

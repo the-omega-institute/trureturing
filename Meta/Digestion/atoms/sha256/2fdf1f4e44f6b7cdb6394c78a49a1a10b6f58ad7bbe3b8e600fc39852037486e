@@ -1,0 +1,102 @@
+**定理 341.1（全部最优编码的行方向与主轴倾斜）。** 固定 $0<a\le1$，令 $\eta=a/\sqrt3$，并取定义339.1中解码纠缠破坏任务 $\widehat C_a^{\rm D}$ 在预算 $R=\eta q$ 下的任意实际最优因子对。写编码为 $x\mapsto c+Ax$，取其最大右奇异单位向量 $w$，最大奇异值为 $\alpha$，并令
+
+$$
+v=Aw/\alpha,
+\qquad x_q=A^{\mathsf T}e_y/q.
+\tag{341.1}
+$$
+
+当 $q>0$ 足够小时，最大奇异值简单，故这些轴除整体符号外唯一。定义有限集合
+
+$$
+\mathcal K=
+\left\{
+\left(uu^{\mathsf T},\frac\epsilon{\sqrt3}\right):
+u_j^2=\frac13,
+\quad \epsilon\in\{\pm1\}^3,
+\quad (u^{\mathsf T}\epsilon)^2=\frac13
+\right\}.
+\tag{341.2}
+$$
+
+则对全部实际最优编码一致有
+
+$$
+\operatorname{dist}\bigl((ww^{\mathsf T},x_q),\mathcal K\bigr)\longrightarrow0,
+\qquad
+\frac{|c_y|}{R}\longrightarrow0,
+\qquad
+\frac{r(\mathcal E)}{R}\longrightarrow1,
+\qquad
+\frac{|v_y|}{q}\longrightarrow\frac13.
+\tag{341.3}
+$$
+
+其中距离使用任一固定矩阵、向量乘积范数。每个平衡投影对应六个允许的行极限。最后一式说明：对全部充分小的正预算，实际最优编码的最大左奇异轴都不能完全位于输出实平面。
+
+证明。第340节给出全部最优编码的统一谱展开
+
+$$
+\alpha\to1,
+\qquad
+\beta/q,\gamma/q\to c_*:=\sqrt8/3,
+\tag{341.4}
+$$
+
+以及最大右奇异投影趋近平衡投影的统一定位。特别地，最大奇异值最终简单，且 $A$ 可逆。预算给出
+
+$$
+\|x_q\|_\infty
+\le\frac1{\sqrt3}-\frac{|c_y|}{aq}
+\le\frac1{\sqrt3}.
+\tag{341.5}
+$$
+
+任取最优序列并取子列，使 $ww^{\mathsf T}\to uu^{\mathsf T}$、$x_q\to x$，其中 $u$ 平衡。令 $w_2,w_3$ 为其余两个右奇异方向。由 $A^{\mathsf T}e_y=qx_q$ 及 $\|e_y\|=1$，
+
+$$
+1=q^2\left[
+\frac{|w^{\mathsf T}x_q|^2}{\alpha^2}
++\frac{|w_2^{\mathsf T}x_q|^2}{\beta^2}
++\frac{|w_3^{\mathsf T}x_q|^2}{\gamma^2}
+\right].
+\tag{341.6}
+$$
+
+式（341.4）使右端的极限等于 $\|Q_ux\|^2/c_*^2$，其中 $Q_u=I-uu^{\mathsf T}$。这里不需要分别选择收敛的两个横向奇异轴，因为两项系数趋于同一个数。因此
+
+$$
+\|Q_ux\|^2=\frac89,
+\qquad \|x\|_\infty\le\frac1{\sqrt3}.
+\tag{341.7}
+$$
+
+现在确定这个立方体上的全部取等点。对顶点 $\epsilon/\sqrt3$，平方投影范数为
+
+$$
+1-\frac{(u^{\mathsf T}\epsilon)^2}{3},
+$$
+
+只能取 $0$ 或 $8/9$，后者恰对应式（341.2）的六个符号向量。任意立方体内的点都是顶点的凸组合，凸性给出上界 $8/9$。若取等，具有正权重的顶点都必须达到最大值，并且它们经 $Q_u$ 投影后的向量相同；这是平方范数的严格凸性。
+
+两个不同的最大顶点不可能有相同投影。否则它们之差平行于 $u$；由于 $u$ 的三个分量绝对值相等且非零，两个符号向量必须在全部坐标上相反，并都平行于 $u$。但这种顶点的投影范数为零，与最大性矛盾。所以式（341.7）的全部取等点恰为那六个顶点。这证明距离结论；若它对全体最优者不一致，违反它的最优序列仍会给出上述取等子列，矛盾。
+
+这些顶点均满足 $\|x\|_\infty=1/\sqrt3$。结合式（341.5），得到 $|c_y|/(aq)\to0$，以及
+
+$$
+\frac{r(\mathcal E)}{\eta q}
+=\sqrt3\left(\frac{|c_y|}{aq}+\|x_q\|_\infty\right)
+\longrightarrow1.
+\tag{341.8}
+$$
+
+最后由式（341.1），
+
+$$
+\frac{v_y}{q}
+=\frac{w^{\mathsf T}x_q}{\alpha}.
+\tag{341.9}
+$$
+
+每个允许的极限都满足 $|u^{\mathsf T}\epsilon/\sqrt3|=1/3$，所以取绝对值便得到最后一式。全部步骤都有相同的子列一致性，证毕。
+

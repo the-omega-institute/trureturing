@@ -1,0 +1,17 @@
+**定义 107.1（逐输出的最小熵）。** 保持第 103、105 章原幅度、
+固定 $\beta\in(1/2,1)$、全部合法规模与取整，使用原完整计数后验
+$\mathsf P_x$ 及同一输出 $Y=T+\sigma_MG$ 后的 $\mathsf P_x^y$。
+对有限计数律定义 $H_\infty(P)=-\ln\max_nP(n)$，单位为 nats。
+这是一份指定输出下的分布的熵，不是对输出平均最佳猜测概率后取负对数。
+仍记
+
+$$
+E(n)=\sum_j[(n_j-\mu_j)/B]^2,\quad
+T(n)=\delta^{-1/2}[E(n)-V],\quad
+v_* =\max_jv_j,\quad\rho_0=\rho(0),\quad
+c_\infty=\frac{\gamma}{2\rho_0}=\sqrt{\frac\pi{2\kappa}}.
+\tag{107.1}
+$$
+
+全部 $\mu_j,V,v_j,\rho,\gamma,\kappa$ 保持 (103.2)、(103.5) 的精确定义。
+

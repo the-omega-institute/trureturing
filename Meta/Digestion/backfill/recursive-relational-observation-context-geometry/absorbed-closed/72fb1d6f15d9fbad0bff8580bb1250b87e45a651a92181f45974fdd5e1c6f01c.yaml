@@ -1,0 +1,18 @@
+fingerprints:
+  raw_sha256: sha256:72fb1d6f15d9fbad0bff8580bb1250b87e45a651a92181f45974fdd5e1c6f01c
+  normalized_sha256: sha256:72fb1d6f15d9fbad0bff8580bb1250b87e45a651a92181f45974fdd5e1c6f01c
+cas_ref: sha256:72fb1d6f15d9fbad0bff8580bb1250b87e45a651a92181f45974fdd5e1c6f01c
+coverage_gids:
+  - gid: D5/S3/Divergence/GibbsEquality.kl_divergence_eq_zero_iff
+    target_statement_id: sha256:ba7b06e0c5a31dbea17cee8512ca943141dc34ee2e63f82c1f5662d8dbee3d59
+  - gid: D5/S3/Divergence/GrandmotherTheorem.kl_divergence_nonneg
+    target_statement_id: sha256:2811f2905b53f8e74c7c7d666dc0dbc01e24ea1c0f503af4120dd64befc22259
+  - gid: D5/S3/Entropy/Submodularity/ConditionalMutualInformation.conditional_mutual_information_eq_entropy_defect
+    target_statement_id: sha256:f49a777c4725ed85c0ff757cbace9f26cc066a61708c0faea402233bf7b0f6d0
+  - gid: D5/S3/Entropy/Submodularity/ConditionalMutualInformation.conditional_mutual_information_nonneg
+    target_statement_id: sha256:f76780509f5a59f682d9c37122003f97d5c5cb676c5ba76ce6d5c233b116f1ea
+receipts:
+  unresolved_subitems: []
+  chain_atoms:
+    - a329e6bbae40591d7d29efebea4a0dbcbcc7202b0fc5b8fee571bca02216bc81
+    - 14278a4b5a9687fadf54e153869d06e595fdeb5c2ddf5cfb475eeb72cbe103b9

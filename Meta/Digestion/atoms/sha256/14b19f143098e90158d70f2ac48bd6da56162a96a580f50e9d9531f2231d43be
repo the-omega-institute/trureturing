@@ -1,0 +1,11 @@
+**推论 905.2（一阶相同仍容许二阶分化）。** 固定第 903 节的 $\rho$ 与任意方向 $w$，令 $C_0=3+2\rho-\rho^2$。当 $\delta\downarrow0$，
+
+$$
+\frac{s_w}{\delta}\longrightarrow\frac{12}{C_0},
+\qquad
+\frac{(s_w-T)/8}{\delta^2}
+\longrightarrow\frac{18\theta}{C_0^3}.
+$$
+
+所以整个方向单纯形共享一阶斜率，准确最优集合却只有三个顶点。证明直接来自根式及上一条准确差式；它没有把这份构造族宣称为全部二态表示或全部近最优律。
+

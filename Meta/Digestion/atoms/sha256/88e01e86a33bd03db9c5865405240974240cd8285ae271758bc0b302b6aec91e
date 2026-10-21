@@ -1,0 +1,6 @@
+或某个有限 Hankel matrix 失去正性，却尚未定位离线零点，则仍需要：
+
+* 从负 Jet 恢复有效横向尺度；
+* 控制 normal entire function 的余项；
+* 或构造 rational witness 的全零点取样逼近。
+

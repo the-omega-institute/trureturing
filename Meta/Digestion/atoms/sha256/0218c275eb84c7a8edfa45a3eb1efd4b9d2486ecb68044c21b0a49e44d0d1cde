@@ -1,0 +1,22 @@
+# 第一千一百三十一部　离线零点的完整几何身份
+
+现在可以给出一张最终词典。
+
+| 图表              | 离线零点的表现                                                       |        |                |
+| --------------- | ------------------------------------------------------------- | ------ | -------------- |
+| \(s\)-平面        | \(\rho=\frac12+\delta+i\gamma,\ \delta\neq0\)                 |        |                |
+| 反射商             | \(\lambda(\rho)\notin\mathbb R\)                              |        |                |
+| 自伴谱             | 非实 quotient eigenvalue                                        |        |                |
+| Mellin 时间       | \(e^{\delta t}e^{i\gamma t}\)                                 |        |                |
+| 函数方程对偶          | \(\delta\leftrightarrow-\delta\)                              |        |                |
+| Idele geometry  | norm 方向的非酉 quasi-character                                    |        |                |
+| Golden transfer | \(\operatorname{diag}(\varphi^{2\delta},\varphi^{-2\delta})\) |        |                |
+| \(SL_2\) 分类     | hyperbolic conjugacy class                                    |        |                |
+| Solenoid        | compact character descent obstruction                         |        |                |
+| Boundary–bulk   | 宽度 (                                                          | \delta | ) 的 Poisson 影像 |
+| Berry 悬挂        | bulk Chern monopole                                           |        |                |
+| Pick／Herglotz   | 正实性失效                                                         |        |                |
+| Cayley／Schur    | contractivity 越界                                              |        |                |
+| Toeplitz／CMV    | 有限正半定矩阵失败                                                     |        |                |
+| Weil            | 有限支撑负能量                                                       |        |                |
+| Prime-log       | \(\cosh(\delta\log n)\cos(\gamma\log n)\)                     |        |                |

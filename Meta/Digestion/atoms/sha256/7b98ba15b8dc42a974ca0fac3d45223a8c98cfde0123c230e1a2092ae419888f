@@ -1,0 +1,30 @@
+**定义 30.1（黄金尺度带上的同测试平均）。** 令
+
+$$
+b=\varphi^3=2+\sqrt5,\qquad M=\int_{\mathbb R}\phi(x)\,dx>0,
+$$
+
+$$
+w(u)=\frac{\phi\bigl((u-(1+b)/2)/(b-1)\bigr)}{(b-1)M}.
+$$
+
+这个权重的支撑为 $[1,b]$，在内部严格为正，且 $\int_1^bw(u)\,du=1$。沿用 $q(R)=R^{-3}\mathcal W(R)$，定义
+
+$$
+\bar q(R)=\int_1^b w(u)q(uR)\,du,\qquad
+\bar{\mathcal W}(R)=R^3\bar q(R)
+=\int_1^bw(u)u^{-3}\mathcal W(uR)\,du.
+$$
+
+这里是同一来源族的正混合，不断言它等于某个单独 $f_R$ 的 Weil 值。因 $u^{-3}>0$，若每个被混合的完整形式非负，则平均非负；反向不能从平均非负推出每个尺度都非负。
+
+设 $K=\phi*\phi$，则
+
+$$
+\bar K(v)=\int_1^b\frac{w(u)}uK(v/u)\,du,
+\qquad
+\widehat{\bar K}(z)=\int_1^bw(u)\Phi(uz)^2\,du.
+$$
+
+$\bar K$ 为实偶光滑函数，支撑恰为 $[-b,b]$，且在 $(-b,b)$ 严格为正。该身份仍保留多项式因子 $p(z)=z^2(1+4z^2)^2$；复零点处依旧是解析平方。选择 $b=\varphi^3$ 只规定了尺度带宽，没有建立 FIB 来源递归与实际素数伸缩的交织。
+

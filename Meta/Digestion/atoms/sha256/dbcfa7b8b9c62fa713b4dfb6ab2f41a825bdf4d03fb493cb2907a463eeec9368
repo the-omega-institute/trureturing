@@ -1,0 +1,71 @@
+## 213. FIB 图族上的外加随机介质、均匀化与 quenched/annealed 极限
+
+固定一族由 FIB 关系给出的有限图 \(G_j=(V_j,E_j)\)，另行指定尺度 \(h_j\to0\)、顶点体积、边长和嵌入。边导通率 \(a_{j,e}(\omega)\)、质量密度、孔隙率和反应率组成外加随机环境 \(\omega\)。FIB 只给组合和邻接关系；尺度、度量、概率律、系综、边界、极限顺序和观测协议都不由递归关系确定。
+
+令 \(B_j\) 为定向关联矩阵，边梯度和通量为
+
+$$
+(\nabla_j u)_e=\frac{u_{h(e)}-u_{t(e)}}{\ell_{j,e}},
+\qquad
+J_{j,e}^{\omega}=-a_{j,e}(\omega)(\nabla_j u)_e .
+\tag{213.1}
+$$
+
+离散扩散方程可写成
+
+$$
+m_{j,v}(\omega)\dot u_{j,v}
++h_j^{-2}(B_j^{\mathsf T}A_j(\omega)B_j u_j)_v=f_{j,v}.
+\tag{213.2}
+$$
+
+统一椭圆性
+
+$$
+0<a_-\le a_{j,e}(\omega)\le a_+<\infty
+\tag{213.3}
+$$
+
+以及平稳遍历、共同嵌入和边界收敛等条件成立时，外加随机校正子可定义有效张量
+
+$$
+\xi^{\mathsf T}A^{\rm hom}\xi
+=\inf_{\chi\ {\rm stationary}}
+\mathbb E_\omega\!\left[
+\sum_e a_e(\omega)
+\bigl(\xi\cdot\zeta_e+\nabla\chi_e(\omega)\bigr)^2
+\right].
+\tag{213.4}
+$$
+
+于是固定环境的解在适当扩散时间缩放下可能趋向
+
+$$
+\partial_tu=\nabla\!\cdot(A^{\rm hom}\nabla u)+f,
+\tag{213.5}
+$$
+
+但 \(A^{\rm hom}\) 通常不是边系数的算术平均；各向异性嵌入、相关无序和边界层会使它非对角或方向依赖。若开放边另带压力和渗透权重，则外加宏观极限可写为
+
+$$
+q^{\rm hom}=-K^{\rm hom}\nabla p,
+\qquad
+\nabla\!\cdot q^{\rm hom}=s .
+\tag{213.6}
+$$
+
+低于外加渗流阈值时可能没有宏观连通簇，\(K^{\rm hom}=0\)；阈值与张量由开放边概率、权重、几何和边界共同决定。
+
+Quenched 方案先固定 \(\omega\) 再取 \(j\to\infty\)，annealed 方案先取有限尺度平均再取极限。一般有
+
+$$
+\mathbb E_\omega[(L_j^\omega)^{-1}]
+\ne
+(\mathbb E_\omega[L_j^\omega])^{-1},
+\tag{213.7}
+$$
+
+因此平均响应、典型样本和极端阻塞概率可以不同。长程相关、非遍历系综、重尾系数或开放簇临界会破坏通常的 \(h_j^{-2}\) 标度，产生陷阱亚扩散、时间分数阶极限或非高斯涨落。只测总流量和平均梯度通常只能识别 \(A^{\rm hom}\) 的少数投影，不能恢复边系数分布、相关长度和校正子。
+
+因此，FIB 递归只提供可承载随机导通、扩散和渗透的组合骨架；有效张量、均匀化极限、quenched/annealed 是否相同以及异常输运，都是外加概率律、尺度、嵌入、边界和观测条件下的结论。
+

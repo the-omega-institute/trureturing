@@ -88,7 +88,7 @@ private theorem split_mass {n : ℕ} {A Y : Fin (n + 1) → Type*}
   · exact congrFun (tail_actions f z y) j
 
 /-- The upper and lower tables have strategy-independent masses attained by the original table. -/
-private theorem common_causal_envelopes (T : ℕ) (A Y : Fin T → Type*)
+theorem common_causal_envelopes (T : ℕ) (A Y : Fin T → Type*)
     [∀ t, Finite (A t)] [∀ t, Nonempty (A t)]
     [∀ t, Fintype (Y t)] [∀ t, Nonempty (Y t)]
     (P : (∀ t, Y t) → (∀ t, A t) → ℝ) (hP : ∀ y a, 0 ≤ P y a) :

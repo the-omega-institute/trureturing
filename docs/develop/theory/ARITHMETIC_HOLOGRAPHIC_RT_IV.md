@@ -4065,3 +4065,792 @@ In particular the same global correlation quotient restricts to (116.4) on every
 The strict inequality in (116.16) is used to obtain (116.8). At equality $F=1/4$ the strict determinant and contraction contradictions need not hold. The conclusions provide neither a uniform positive lower bound on the imaginary part as the error approaches $1/4$ nor an exclusion of all genuinely complex configurations. The principal identity (116.4) is not asserted for arbitrary physical channel pairs, and reality of the first Gram alone is not a hypothesis of this result. The calibrated local-minimum consumer does not assert rank preservation for an arbitrary given leaking optimizer. The remaining complex rank classes and the unrestricted global quarter optimum remain open.
 
 ## 追加锚（本行以下为增补区）
+
+## 117. Coherent spectral concentration and the exact quarter boundary
+
+### 117.1. Original channels and a tagged pure target
+
+Retain the four prescribed two-coordinate fibres of $`\mathbb C^8`$, the target $`\mathcal F`$ and the fixed correlated encodings. Explicitly, with $`f(i)`$ the fibre of coordinate $`i`$,
+
+$$
+ \mathcal F(|i\rangle\langle j|)
+   =T_{ij}|f(i)\rangle\langle f(j)|,\qquad
+ T_{ff}=I_2,\qquad T_{fg}=\tfrac12J_2\quad(f\ne g).
+ \tag{117.1}
+$$
+
+For arbitrary original CPTP maps $`A,B:\mathcal L(\mathbb C^8)\to\mathcal L(\mathbb C^4)`$, let $`V_{\rm in}|i\rangle=|i,i\rangle`$ and $`V_{\rm out}|f\rangle=|f,f\rangle`$, with encoding channels $`\mathcal J_{\rm in},\mathcal J_{\rm out}`$. Define
+
+$$
+ \delta=\|(A\otimes B)\circ\mathcal J_{\rm in}
+                  -\mathcal J_{\rm out}\circ\mathcal F\|_\diamond.
+ \tag{117.2}
+$$
+
+The diamond norm is unhalved and permits arbitrary references. For Stinespring isometries, let $`a_i,b_i`$ be the actual correct-output environment records, and use forward Grams $`G_{ij}=\langle a_i,a_j\rangle`$, $`H_{ij}=\langle b_i,b_j\rangle`$, with inner products conjugate-linear in the first argument. Thus
+
+$$
+ G,H\ge0,\qquad G_{ff},H_{ff}\le I_2,\qquad K=G\odot H.
+ \tag{117.3}
+$$
+
+These are actual correct-output Grams, without a calibrated replacement. Their ranks need not equal the channels' Kraus ranks when leakage is present. For a PSD matrix $`X`$ of size at least two, let $`\lambda_1(X)\ge\lambda_2(X)\ge\cdots`$ be its ordered eigenvalues and put $`\kappa_2(X)=\lambda_1(X)+\lambda_2(X)`$.
+
+**Theorem 117.1 (coherent spectral lower bounds).** Let $`S`$ be the union of any nonempty collection of $`m`$ complete original fibres. For either ordering of the two parties,
+
+$$
+ \begin{aligned}
+ \delta&\ge 2-\frac{\boldsymbol1^*K_S\boldsymbol1}{m^2},\\
+ \delta&\ge 2-\frac{\lambda_1(G_S)\operatorname{Tr}H_S}{m^2}
+          \ge 2-\frac{2\lambda_1(G_S)}m,\\
+ \delta&\ge 2-\frac{\kappa_2(G_S)}m.
+ \end{aligned}
+ \tag{117.4}
+$$
+
+Consequently, $`\delta<1/4`$ implies $`\kappa_2(G_S),\kappa_2(H_S)>7m/4`$ and $`\lambda_1(G_S),\lambda_1(H_S)>7m/8`$. In particular,
+
+$$
+ \delta\ge 2-\tfrac14\min\{\kappa_2(G),\kappa_2(H)\},
+ \qquad
+ \delta<\tfrac14\ \Longrightarrow\
+ \kappa_2(G),\kappa_2(H)>7.
+ \tag{117.5}
+$$
+
+**Proof.** In the sums below, $`f\in S`$ means that the whole fibre $`f`$ belongs to $`S`$. Use the normalized logical/reference input and target vector
+
+$$
+ \begin{aligned}
+ |\Psi_S\rangle
+   &=\frac1{\sqrt m}\sum_{f\in S}|f\rangle_R\otimes|f,+\rangle,
+ &|f,+\rangle&=\frac{|f,0\rangle+|f,1\rangle}{\sqrt2},\\
+ |\Omega_S\rangle
+   &=\frac1{\sqrt m}\sum_{f\in S}|f\rangle_R\otimes|f,f\rangle.
+ \end{aligned}
+ \tag{117.6}
+$$
+
+Since $`\mathcal F(|f,+\rangle\langle g,+|)=|f\rangle\langle g|`$ for equal and unequal fibres, the target output is the pure state $`|\Omega_S\rangle\langle\Omega_S|`$. Let $`\sigma_S`$ be the full physical product output. It is positive of trace one. The reference tags force the entries contributing to its overlap with $`\Omega_S`$ to be the actual correct-output entries of the corresponding input fibres. The compression $`C`$ onto the span of $`|f\rangle_R\otimes|f,f\rangle`$ therefore satisfies
+
+$$
+ C_{fg}=\frac1{2m}\sum_{i,j=0}^1\overline{K_{fi,gj}},
+ \qquad
+ \langle\Omega_S|\sigma_S|\Omega_S\rangle
+     =\frac{\boldsymbol1^*K_S\boldsymbol1}{2m^2}.
+ \tag{117.7}
+$$
+
+The sum is real because $`K_S`$ is Hermitian. The conjugation in the first formula follows from the forward-Gram convention and disappears only in this scalar sum. The full-output observable $`2|\Omega_S\rangle\langle\Omega_S|-I`$ is a Hermitian contraction. Hence trace-norm duality gives
+
+$$
+ \delta\ge
+ \||\Omega_S\rangle\langle\Omega_S|-\sigma_S\|_1
+ \ge 2\bigl(1-\langle\Omega_S|\sigma_S|\Omega_S\rangle\bigr).
+ \tag{117.8}
+$$
+
+This proves the first line of (117.4), including the entire output leakage. An untagged input cannot replace (117.6) in this argument: wrong-output records from different input fibres could then enter the overlap.
+
+Each correct-output record block is a contraction. Its environment-frame operator is at most the identity. Summing the $`m`$ blocks, and using equality of the nonzero Gram and frame spectra, proves
+
+$$
+ 0\le G_S,H_S\le mI,\qquad
+ \operatorname{Tr}G_S,\operatorname{Tr}H_S\le2m.
+ \tag{117.9}
+$$
+
+The PSD Schur-product order $`(\lambda_1(G_S)I-G_S)\odot H_S\ge0`$ implies $`\boldsymbol1^*K_S\boldsymbol1\le\lambda_1(G_S)\operatorname{Tr}H_S`$, proving the second line of (117.4).
+
+For the stronger top-two bound, diagonalize $`G_S`$, with eigenvalues $`\lambda_i`$, and let $`h_i`$ be the diagonal entries of $`\overline{H_S}`$ in that eigenbasis. Equation (117.9) gives $`0\le h_i\le m`$ and $`\sum_i h_i\le2m`$. Thus
+
+$$
+ \begin{aligned}
+ \boldsymbol1^*K_S\boldsymbol1
+  &=\operatorname{Tr}(G_S\overline{H_S})
+    =\sum_i\lambda_i h_i\\
+  &\le\lambda_1h_1+\lambda_2\sum_{i\ge2}h_i
+   \le2m\lambda_2+(\lambda_1-\lambda_2)h_1
+   \le m(\lambda_1+\lambda_2).
+ \end{aligned}
+ \tag{117.10}
+$$
+
+The trace identity uses Hermiticity: $`\operatorname{Tr}(G_S\overline{H_S})=\sum_{i,j}(G_S)_{ij}(H_S)_{ij}`$. These inequalities include zero eigenvalues and all multiplicities. Substitution in (117.8), and exchange of $`G,H`$, proves the theorem. Trace-norm duality and PSD spectral order are standard; the channel-norm conventions are as in [Watrous, Chapters 1--3](https://cs.uwaterloo.ca/~watrous/TQI/). The different transversal input in [RT II §83](ARITHMETIC_HOLOGRAPHIC_RT_II.md#83-transversal-frame-certificates-and-bilateral-stability-at-quarter-error) uses the same full-output witness principle but does not have this pure coherent target. $`\square`$
+
+For a calibrated party, the two-fibre matrix is $`\bigl[\begin{smallmatrix}I_2&G_{fg}\\G_{gf}&I_2\end{smallmatrix}\bigr]`$, whose top-two eigenvalue sum is $`2+\|G_{fg}\|_1`$ by singular-value decomposition. Thus subquarter error requires $`\|G_{fg}\|_1>3/2`$ for every pair of fibres on each calibrated side.
+
+### 117.2. Exact rigidity at the spectral quarter boundary
+
+**Theorem 117.2 (spectral boundary classification).** Suppose the original product satisfies $`\delta=1/4`$. Then the following conditions are equivalent:
+
+1. At least one party has minimal Kraus rank two.
+2. At least one actual correct-output Gram has top-two eigenvalue sum seven.
+3. At least one actual correct-output Gram has largest eigenvalue $`7/2`$.
+
+These pairs are exactly the classified marker family of [RT II §82](ARITHMETIC_HOLOGRAPHIC_RT_II.md#82-quarter-error-rigidity-minimal-kraus-product-and-the-complete-rank-two-party-family), including its permitted disphenoids. Both channels are calibrated, and their ranks are $`(4,2)`$ or $`(2,4)`$.
+
+**Proof.** Suppose $`\kappa_2(G)=7`$. Equality holds throughout the relevant bounds (117.8)--(117.10), so $`\operatorname{Tr}(G\bar H)=28`$. Also
+
+$$
+ \lambda_1(G)\le4,\qquad
+ \lambda_2(G)\ge3,\qquad
+ \lambda_3(G)\le1.
+ \tag{117.11}
+$$
+
+The top-two eigenspace is uniquely defined. In the eigenbasis used in (117.10), the exact deficit identity is
+
+$$
+ \begin{split}
+ 4(\lambda_1+\lambda_2)-\sum_i\lambda_i h_i
+  ={}&\lambda_2\left(8-\sum_i h_i\right)
+       +(\lambda_1-\lambda_2)(4-h_1)\\
+    &+\sum_{i\ge3}(\lambda_2-\lambda_i)h_i.
+ \end{split}
+ \tag{117.12}
+$$
+
+All terms are nonnegative, and the left side is zero. Equation (117.11) makes $`\lambda_2>0`$ and every $`\lambda_2-\lambda_i>0`$ for $`i\ge3`$. Hence $`\operatorname{Tr}H=8`$ and all $`h_i=0`$ for $`i\ge3`$. Since $`h_1,h_2\le4`$, both equal four. Positivity of $`\bar H`$ eliminates the rows outside the top-two space, and positivity of $`4I-\bar H`$ eliminates off-diagonal entries in the two remaining rows. If $`\Pi`$ denotes the top-two spectral projection of $`G`$, this proves
+
+$$
+ \bar H=4\Pi.
+ \tag{117.13}
+$$
+
+The positive defects $`I_2-H_{ff}`$ have total trace zero, so every $`H_{ff}=I_2`$. Each original basis input has correct-output record of norm one; all its wrong-output Stinespring components vanish. Thus the actual $`B`$ is calibrated. Only now may its minimal Kraus rank be identified with $`\operatorname{rank}H=2`$. The original-channel theorem of RT II §82 applies without a rank or leakage assumption on $`A`$, and proves its calibration, rank four and the complete family. Exchanging the parties covers the other case of condition 2.
+
+After the environment isometries and simultaneous within-fibre bit swaps of that classification, the family has
+
+$$
+ a_{fi}=\overline{b_{fi}}\otimes m_i,\qquad
+ m_i=\sqrt{\tfrac78}\,e_0+(-1)^i\sqrt{\tfrac18}\,e_1.
+ \tag{117.14}
+$$
+
+Each pair $`(b_{f0},b_{f1})`$ is an orthonormal qubit basis. Its four Bloch axes are balanced and have the Gram of
+
+$$
+ \begin{gathered}
+ (x,y,z),\ (x,-y,-z),\ (-x,y,-z),\ (-x,-y,z),\\
+ x^2+y^2+z^2=1,\quad x^2,y^2,z^2\ge\tfrac27.
+ \end{gathered}
+ \tag{117.15}
+$$
+
+The full arbitrary-reference norm of this family is exactly $`1/4`$ by RT II §82.11. Balance implies $`\sum_f|b_{fi}\rangle\langle b_{fi}|=2I_2`$ for each $`i`$. The environment-frame operators are consequently
+
+$$
+ \sum_{f,i}|b_{fi}\rangle\langle b_{fi}|=4I_2,\qquad
+ \sum_{f,i}|a_{fi}\rangle\langle a_{fi}|
+     =I_2\otimes\operatorname{diag}(\tfrac72,\tfrac12).
+ \tag{117.16}
+$$
+
+Their nonzero eigenvalues are the nonzero Gram eigenvalues. Thus every classified pair has, in one party ordering,
+
+$$
+ \operatorname{spec}G=(\tfrac72,\tfrac72,\tfrac12,\tfrac12,0,0,0,0),
+ \qquad
+ \operatorname{spec}H=(4,4,0,0,0,0,0,0).
+ \tag{117.17}
+$$
+
+This proves that condition 1 implies both 2 and 3, and proves sharpness at quarter error. Finally condition 3 implies $`\kappa_2\le7`$, whereas (117.5) at $`\delta=1/4`$ gives $`\kappa_2\ge7`$. Hence condition 3 implies 2. $`\square`$
+
+### 117.3. Dominant two-dimensional record spaces
+
+**Proposition 117.3 (full-record concentration and a calibrated polar chart).** If $`\delta<1/4`$, each party's actual correct-output record-frame operator has a unique top-two environment subspace $`E`$. For the first party, write its correct-output record blocks as $`A_f`$, and let $`\Pi_E`$ project onto $`E`$. Then
+
+$$
+ \lambda_2(G)>3,\qquad \lambda_3(G)<1,\qquad
+ d_A:=\sum_f\bigl(2-\operatorname{Tr}(A_f^*\Pi_E A_f)\bigr)
+       =8-\kappa_2(G)\le4\delta<1,
+ \tag{117.18}
+$$
+
+and
+
+$$
+ A_f^*\Pi_E A_f\ge(1-d_A)I_2>0
+ \quad\hbox{for every original fibre }f.
+ \tag{117.19}
+$$
+
+Here $`d_A`$ is the total squared norm of all original wrong-output records together with that of correct-output records perpendicular to $`E`$. The same statements hold for $`B`$.
+
+If the party is calibrated, in environment coordinates $`E\oplus E^\perp`$ its exact record blocks can be written
+
+$$
+ \begin{aligned}
+ A_f&=\begin{bmatrix}C_f\\R_f\end{bmatrix},&
+ C_f&=U_f\sqrt{I_2-R_f^*R_f},\qquad U_f\in U(2),\\
+ \sum_f\|R_f\|_F^2&=d_A<1,&
+ \sum_f C_fR_f^*&=0.
+ \end{aligned}
+ \tag{117.20}
+$$
+
+This representation retains the full extra environment and the same original channel.
+
+**Proof.** Theorem 117.1 gives $`\kappa_2(G)\ge8-4\delta>7`$. Together with $`\lambda_1(G)\le4`$ and $`\operatorname{Tr}G\le8`$, this gives the first two inequalities in (117.18), and hence a strict top-two frame gap. Tracing that frame operator on $`E`$ proves the formula for $`d_A`$. The full Stinespring isometry has total squared norm eight on the eight input basis states. Splitting this sum into the three indicated record parts proves the physical interpretation of $`d_A`$.
+
+Each defect $`I_2-A_f^*\Pi_E A_f`$ is PSD and has trace at most $`d_A`$. Its largest eigenvalue is at most its trace, proving (117.19). Under calibration, $`C_f^*C_f+R_f^*R_f=I_2`$, and (117.19) makes $`C_f`$ invertible. Its right polar decomposition gives $`U_f`$. The last equation of (117.20) expresses the fact that the spectral subspace $`E`$ reduces the environment-frame operator. No projection followed by renormalization of the physical channel has been performed. $`\square`$
+
+### 117.4. A uniform but nonnumerical separation
+
+**Theorem 117.4 (uniform spectral separation).** There exists $`\varepsilon>0`$, depending only on the fixed target and the fixed finite channel spaces, such that every original product with $`\delta<1/4`$ satisfies
+
+$$
+ \kappa_2(G),\kappa_2(H)\ge7+\varepsilon,\qquad
+ \lambda_1(G),\lambda_1(H)\ge\tfrac72+\tfrac\varepsilon2.
+ \tag{117.21}
+$$
+
+Thus the dominant-plane projections of Proposition 117.3 have uniform bounds $`d_A,d_B\le1-\varepsilon`$ and $`A_f^*\Pi_EA_f\ge\varepsilon I_2`$, and similarly for $`B`$. No value of $`\varepsilon`$ is specified; the assertion is vacuous if no subquarter product exists.
+
+**Proof.** The original CPTP space is compact in its Choi representation: $`J\ge0`$, $`\operatorname{Tr}_{\rm out}J=I_8`$, and $`\operatorname{Tr}J=8`$. The product of the two fixed channel spaces is compact. With $`J_A=\sum_{i,j}|i\rangle\langle j|\otimes A(|i\rangle\langle j|)`$ and the fixed isometry $`Q|i\rangle=|i\rangle\otimes|f(i)\rangle`$,
+
+$$
+ G(A)=\overline{Q^*J_AQ}.
+ \tag{117.22}
+$$
+
+This proves representation-independent continuity of the actual Gram, including at Kraus-rank changes. Ordered eigenvalues and their top-two sum are continuous. The original error is also continuous, since
+
+$$
+ |\delta(A,B)-\delta(A',B')|
+    \le\|A-A'\|_\diamond+\|B-B'\|_\diamond.
+ \tag{117.23}
+$$
+
+This follows from the tensor-product triangle inequality and the diamond norm one of channels and encoding channels.
+
+If the first pair of inequalities in (117.21) failed, choose subquarter pairs with the smaller top-two sum tending to seven. Compactness gives a convergent subsequence. At its limit, one actual Gram has top-two sum seven, and continuity gives $`\delta\le1/4`$. Theorem 117.1 forces $`\delta\ge1/4`$, so equality holds. Theorem 117.2 identifies the limit as an actual section-82 marker center.
+
+[RT III §89](ARITHMETIC_HOLOGRAPHIC_RT_III.md#89-an-unrestricted-local-quarter-minimum-from-analytic-descent-at-the-scalar-cone) provides a neighborhood of every such center in the full original channel space on which $`\delta\ge1/4`$. Its statement includes arbitrary ranks and leakage, exchanged parties and all boundary disphenoids. Its original-channel topology is justified there by continuous canonical Choi-square-root lifts, not by a fixed-rank or calibrated restriction. The convergent subsequence eventually lies in that neighborhood, contradicting its strict subquarter errors. This proves the first pair in (117.21). The largest-eigenvalue bounds follow from $`\kappa_2\le2\lambda_1`$, and the remaining bounds follow from Proposition 117.3. $`\square`$
+
+The limit proof does not assume that the strict subquarter set is closed. The quantitative inequalities, the exact quarter-boundary classification and the nonconstructive positive separation have distinct content. None removes all possible genuinely complex or lower-rank competitors. The unrestricted global quarter-optimum problem remains open.
+
+## 追加锚（本行以下为增补区）
+
+## 118. Feasible-chord polarization and full-rank opposite stresses
+
+### 118.1. Original domain and common-stress hypotheses
+
+Keep the original local channels $\mathbb C^8\to\mathbb C^4$, their four prescribed two-coordinate fibres, the fixed correlated encoding, an arbitrary reference, and the unhalved diamond error. On the full calibrated domain this error is
+
+$$
+\begin{aligned}
+\mathcal E&=\{K=K^*\succeq0:K_{ff}=I_2\},\\
+F(G,H)&=\max_{(\rho,W)\in\mathcal C}
+                 2\operatorname{Tr}[(T-G\odot H)W],\\
+\mathcal C&=\{(\rho,W):\rho\succeq0,\ \rho\text{ is fibre-block diagonal},
+                  \ \operatorname{Tr}\rho=1,\ 0\preceq W\preceq\rho\},\\
+T_{ff}&=I_2,\qquad T_{fg}=\tfrac12J_2\quad(f\ne g).
+\end{aligned}
+\tag{118.1}
+$$
+
+Throughout the exclusion arguments, assume that $(G,H)$ is a local minimum on the entire $\mathcal E^2$, including nearby competitors of different ranks, and that
+
+$$
+\operatorname{rank}G=7,\qquad
+\ker G=\mathbb C a,\qquad a_i\ne0\ (1\le i\le8),
+\qquad 0<F(G,H)<\tfrac12.
+\tag{118.2}
+$$
+
+The original common-stress and quotient results of [RT III §§95 and 98](ARITHMETIC_HOLOGRAPHIC_RT_III.md#98-curved-common-stress-tests-and-finite-principal-quotients) give
+
+$$
+\begin{aligned}
+P&=\alpha\operatorname{diag}(a)R\operatorname{diag}(\bar a)\succeq0,
+       &\alpha&>0,\\
+R&\succeq0,\qquad R_{ii}=1,
+       &G&=H\odot\bar R,\qquad PH=0.
+\end{aligned}
+\tag{118.3}
+$$
+
+All cross-fibre entries of $H$ and $P$ are nonzero. Fix $a$ and one normalization $(\alpha,P)$ in (118.3). Every canonical common normer has first stress $`\alpha_Waa^*`$ and second stress $(\alpha_W/\alpha)P$, with $\alpha_W>0$. The canonical subset is the complete set of normers whose original first-order drift is nonnegative against every feasible pair. These statements concern the original full-domain minimum, rather than an independently chosen witness for each block.
+
+For a positive semidefinite $K$, let $N_K$ be the orthogonal projection onto $\ker K$ and $K^+$ its Moore–Penrose inverse. Set
+
+$$
+\begin{aligned}
+\mathcal T_H&=\{D=D^*:D_{ff}=0,\ N_HDN_H=0\},\\
+E(D)&=-\bar R\odot D,\\
+m(D)&=-\sum_{\substack{i,j\\f(i)\ne f(j)}}
+                  \frac{\overline{P_{ij}}}{H_{ij}}D_{ij}^{\,2},\\
+Q(D)&=m(D)+\alpha a^*E(D)G^+E(D)a
+                      +\operatorname{Tr}(PDH^+D).
+\end{aligned}
+\tag{118.4}
+$$
+
+The sum is ordered and uses complex squares. It is real for Hermitian $D$. The formula for $m$ is also defined on zero-fibre Hermitian matrices outside $\mathcal T_H$. The full curved criterion gives $Q(D)\ge0$ for every $D\in\mathcal T_H$, with the same fixed $P$.
+
+### 118.2. Exact curved paths and a feasible chord
+
+**Lemma 118.1 (full-domain chord polarization).** Under (118.1)–(118.4), let $`D_0=D_0^*`$ have zero original fibre blocks, $D_0P=0$, and $m(D_0)=0$. Suppose $H+sD_0\in\mathcal E$ for all sufficiently small $s\ge0$. Then the real polarization $B_m(D_0,D)$ of $m$ vanishes for every $D\in\mathcal T_H$. Equivalently, the Hermitian matrix
+
+$$
+A(D_0)_{ij}=
+\frac{P_{ij}\overline{(D_0)_{ij}}}{\overline{H_{ij}}}
+\quad(f(i)\ne f(j)),\qquad A(D_0)_{ff}=0
+\tag{118.5}
+$$
+
+annihilates the whole $\mathcal T_H$ for the real trace pairing.
+
+**Proof.** Put $E_0=-\bar R\odot D_0$. The original stress identity gives, coordinate by coordinate,
+
+$$
+(E_0a)_i=-\frac{(D_0P)_{ii}}{\alpha\bar a_i}=0.
+\tag{118.6}
+$$
+
+Therefore $G+sE_0$ is feasible for both signs near zero: it preserves the entire kernel $\mathbb C a$, and its positive restriction to the orthogonal complement remains positive. Choose fixed $c_G,c_H>0$ large enough that
+
+$$
+G_1=G+E_0/c_G\in\mathcal E,
+\qquad H_1=H+D_0/c_H\in\mathcal E.
+\tag{118.7}
+$$
+
+Fix any $D\in\mathcal T_H$. Corollary 98.3 gives $N_GE(D)N_G=0$ and complete first-order product cancellation. The exact curved realization of Lemma 98.1 supplies smooth two-sided feasible paths
+
+$$
+\begin{aligned}
+g_D(t)&=G+tE(D)+t^2C_G+O(t^3),\\
+h_D(t)&=H+tD+t^2C_H+O(t^3),
+\end{aligned}
+\qquad (C_G)_{ff}=(C_H)_{ff}=0,
+\tag{118.8}
+$$
+
+whose second coefficients satisfy
+
+$$
+\alpha\operatorname{Tr}(aa^*C_G)
+ =\alpha a^*E(D)G^+E(D)a,
+\qquad
+\operatorname{Tr}(PC_H)=\operatorname{Tr}(PDH^+D).
+\tag{118.9}
+$$
+
+These paths retain the original fibre constraints and may move the kernels. Explicitly, for $`K=V^*V`$ and a tangent $D_K$, the construction is
+
+$$
+\begin{aligned}
+X&=VK^+D_K\bigl((I-N_K)/2+N_K\bigr),\\
+V_f(t)&=(V_f+tX_f)(I_2+t^2X_f^*X_f)^{-1/2},\\
+C_K&=X^*X-\tfrac12(MK+KM),
+\qquad M=\operatorname{blockdiag}_f(X_f^*X_f).
+\end{aligned}
+\tag{118.10}
+$$
+
+The fibre columns are orthonormal for both signs of $t$. For every complementary stress $ZK=0$, the $M$ terms disappear under the trace and $\operatorname{Tr}(ZC_K)=\operatorname{Tr}(ZD_KK^+D_K)$, proving (118.9).
+
+Fix any real $\varepsilon$. For sufficiently small positive $s$ form the exact convex mixtures
+
+$$
+\begin{aligned}
+G_s&=(1-c_Gs)g_D\!\left(\frac{\varepsilon s}{1-c_Gs}\right)+c_GsG_1,\\
+H_s&=(1-c_Hs)h_D\!\left(\frac{\varepsilon s}{1-c_Hs}\right)+c_HsH_1.
+\end{aligned}
+\tag{118.11}
+$$
+
+Both matrices are feasible. Negative $\varepsilon$ is allowed because (118.8) is two-sided; the weights remain nonnegative for small positive $s$. The constants $c_G,c_H$ need not be equal. Expansion gives
+
+$$
+\begin{aligned}
+G_s&=G+s(E_0+\varepsilon E(D))+\varepsilon^2s^2C_G+O(s^3),\\
+H_s&=H+s(D_0+\varepsilon D)+\varepsilon^2s^2C_H+O(s^3).
+\end{aligned}
+\tag{118.12}
+$$
+
+Indeed the weight cancels the denominator in every linear term, while the quadratic coefficient is $\varepsilon^2s^2/(1-c_Ks)=\varepsilon^2s^2+O(s^3)$. With $L=T-G\odot H$, full original first-order cancellation therefore yields
+
+$$
+\begin{aligned}
+T-G_s\odot H_s&=L+s^2K_\varepsilon+O(s^3),\\
+K_\varepsilon&=\bar R\odot(D_0+\varepsilon D)\odot(D_0+\varepsilon D)
+ -\varepsilon^2(C_G\odot H+G\odot C_H).
+\end{aligned}
+\tag{118.13}
+$$
+
+For completeness, common-witness selection applies at this fixed $D,\varepsilon$. Let $\mathcal A$ be the full compact convex set of normers at $L$ and let $\mathcal A_0$ be its complete canonical common subset. For any $M>0$, mix the feasible paths (118.11) with arbitrary $G',H'\in\mathcal E$ at weight $Ms^2$. The compact maximum derivative formula and local minimality imply
+
+$$
+\begin{aligned}
+\max_{(\rho,W)\in\mathcal A}
+ \{2\operatorname{Tr}(K_\varepsilon W)+Mb(W;G',H')\}&\ge0,\\
+b(W;G',H')&=-2\operatorname{Tr}
+ [((G'-G)\odot H+G\odot(H'-H))W].
+\end{aligned}
+\tag{118.14}
+$$
+
+For each fixed $M$, finite affine separation gives one normer satisfying all inequalities inside this maximum simultaneously. Otherwise compactness gives a finite inconsistent family, and nonnegative separating weights produce an averaged feasible drift contradicting (118.14). The zero drift gives $2\operatorname{Tr}(K_\varepsilon W)\ge0$. A convergent subsequence as $M\to\infty$ lies in the complete $\mathcal A_0$ and retains this inequality.
+
+The common stress trace identities, (118.9), and the positive factor $\alpha_W/\alpha$ turn the last inequality into
+
+$$
+m(D_0+\varepsilon D)+\varepsilon^2
+ \bigl[\alpha a^*E(D)G^+E(D)a+\operatorname{Tr}(PDH^+D)\bigr]\ge0.
+\tag{118.15}
+$$
+
+Witness selection was made only for the fixed $D,\varepsilon$; proportionality of all common stresses gives the same scalar form. Since $m(D_0)=0$, (118.15) is
+
+$$
+2\varepsilon B_m(D_0,D)+\varepsilon^2Q(D)\ge0
+\qquad(\varepsilon\in\mathbb R).
+\tag{118.16}
+$$
+
+Both signs of arbitrarily small $\varepsilon$ force $B_m(D_0,D)=0$. Reversing trace indices gives $B_m(D_0,D)=-\operatorname{Tr}(A(D_0)D)$, proving the lemma. Each fixed $\varepsilon$ uses its own sufficiently small positive $s$; no uniform interval over unbounded $\varepsilon$ is required. ∎
+
+### 118.3. Rank-raising half stars
+
+**Theorem 118.2 (deficient stress excludes two full halves).** Under (118.1)–(118.4), suppose $\operatorname{rank}H=4$ and $\operatorname{rank}P\le3$. No partition $A,B$ into two unions of two original fibres can have both $H_{AA}\succ0$ and $H_{BB}\succ0$.
+
+**Proof.** Factor $`H=B_\circ^*B_\circ`$ with $B_\circ$ a full-row-rank $4\times8$ matrix, and $`P=V^*V`$ with $V$ having at most three rows. Complementarity gives $`VB_\circ^*=0`$. The square restrictions $B_A,B_B$ are invertible. Choose nonzero $m_B\in\ker V_B$ and put
+
+$$
+\begin{aligned}
+m_A&=0,\qquad n_B=0,\qquad
+n_A=-B_A^*(B_B^*)^{-1}m_B,\\
+w&=n-m=B_\circ^*\eta,\qquad
+\eta=-(B_B^*)^{-1}m_B.
+\end{aligned}
+\tag{118.17}
+$$
+
+Then $Pn=Pm=0$, because $V_An_A=V_Bm_B=0$. Both vectors are nonzero. With $N=N_H$, one has $Nn=Nm=u\ne0$: otherwise $m\in\operatorname{range}H$ supported on $B$ would force $`B_A^*\eta'=0`$ for its representing vector $\eta'$, and hence $m=0$.
+
+For real $y$ define
+
+$$
+\begin{aligned}
+D_y&=(1+iy)nm^*+(1-iy)mn^*,\\
+v_y&=\tfrac12(n+m+iy(n-m)),\\
+D_y&=2v_yv_y^*-\tfrac12(1+y^2)ww^*.
+\end{aligned}
+\tag{118.18}
+$$
+
+Since $w\in\operatorname{range}H$, the last identity proves $H+sD_y\succeq0$ for sufficiently small $s\ge0$. For example it suffices that $`s(1+y^2)w^*H^+w/2\le1`$. The fibre blocks remain $I_2$, and $D_yP=0$. The paired direction $-\bar R\odot D_y$ annihilates $a$ by (118.6), so its $G$ line is feasible for both signs near zero. The entire original first-order coefficient cancels.
+
+The fixed-direction common-normer selection used in (118.14), applied to these two affine paths with positive $s$, gives $m(D_y)\ge0$ for every real $y$. Here
+
+$$
+\begin{aligned}
+m(D_y)&=-2\operatorname{Re}((1+iy)^2c),\\
+c&=\sum_{i\in A,j\in B}
+       \frac{\overline{P_{ij}}}{H_{ij}}n_i^2\bar m_j^{\,2}.
+\end{aligned}
+\tag{118.19}
+$$
+
+The constant and quadratic coefficients have opposite signs, so $\operatorname{Re}c=0$; the remaining linear coefficient then gives $\operatorname{Im}c=0$. Consequently
+
+$$
+D_0=nm^*+mn^*,\qquad D_i=i(nm^*-mn^*),
+\qquad m(D_0)=m(D_i)=0.
+\tag{118.20}
+$$
+
+Lemma 118.1 shows that $A(D_0)$ annihilates all of $\mathcal T_H$. Also $D_i\in\mathcal T_H$, since $Nn=Nm$. Its two curvature costs vanish because $D_iP=0$ and $E(D_i)a=0$. Thus $Q(D_i)=0$, and nonnegativity of $Q$ on the entire $\mathcal T_H$ makes $D_i$ a radical vector there. The cost polarizations vanish as well, so $A(D_i)$ annihilates the same whole space.
+
+The normal space of $\mathcal T_H$ is the sum of the original fibre-block-diagonal matrices and the matrices supported on $\ker H$. If $`\operatorname{range}U^*=\ker H`$, this gives
+
+$$
+A(D_0)=\Lambda_0+U^*Y_0U,
+\qquad A(D_i)=\Lambda_i+U^*Y_iU,
+\tag{118.21}
+$$
+
+with Hermitian $\Lambda_0,\Lambda_i$ fibre-block diagonal and Hermitian $Y_0,Y_i$. This is the finite-dimensional orthogonal-complement identity for an intersection of two real linear spaces. Half the first identity plus $i/2$ times the second produces a matrix $Z$ supported only on $A\times B$:
+
+$$
+\begin{aligned}
+Z_{ij}&=\frac{P_{ij}\bar n_i m_j}{\overline{H_{ij}}}
+       \quad(i\in A,j\in B),\\
+Z&=\Lambda+U^*YU,
+\qquad HZ=H\Lambda,\qquad ZH=\Lambda H.
+\end{aligned}
+\tag{118.22}
+$$
+
+The combined multipliers need not be Hermitian. For each original fibre $f\subset A$, the $f$ columns of $Z$ vanish, so $(HZ)_{ff}=0$ and $H_{ff}=I_2$ force $\Lambda_{ff}=0$. For $g\subset B$, the $g$ rows vanish, and $(ZH)_{gg}=0$ similarly gives $\Lambda_{gg}=0$. Hence $\Lambda=0$ and $HZ=ZH=0$.
+
+Every column of $Z$ belongs to $\ker H$ and is supported on $A$. Since $H_{AA}\succ0$, each column is zero. This contradicts (118.22): some $n_i,m_j$ are nonzero, and every cross-fibre coefficient $P_{ij}/H_{ij}$ is nonzero. ∎
+
+### 118.4. Subquarter strict complementarity
+
+**Corollary 118.3 (full opposite stress at rank four).** Under (118.1)–(118.4), if $\operatorname{rank}H=4$ and $F(G,H)<1/4$, then
+
+$$
+\operatorname{rank}P=\operatorname{rank}R=4,
+\qquad \operatorname{range}P=\ker H,
+\qquad P|_{\ker H}\succ0.
+\tag{118.23}
+$$
+
+**Proof.** Complementarity gives $\operatorname{rank}P\le4$. Suppose it is at most three. Theorem 114.3 forbids a complementary pair of two-fibre principal Grams from having exactly one positive-definite member. Theorem 118.2 forbids two positive-definite members. Therefore all six two-fibre principal Grams are singular, contrary to the subquarter exclusion in §115. Thus $\operatorname{rank}P=4$. The nonsingular diagonal congruence in (118.3) gives $\operatorname{rank}R=4$. A rank-four positive semidefinite matrix with range contained in the four-dimensional $\ker H$ has exactly that range and is positive definite there. ∎
+
+The corollary is a necessary restriction on the remaining full-support rank-$(7,4)$ calibrated local minima. It does not exclude the full-rank-stress class, the lower opposite ranks, or the global representative classes retained in Corollary 113.5. The unrestricted quarter optimum remains open. The original-channel reduction does not assert that an arbitrary leaking local minimum preserves these ranks or hypotheses under calibration.
+
+## 追加锚（本行以下为增补区）
+
+## 119. Coherent-input bounds for diffuse and isotropic quotient stresses
+
+### 119.1. Actual channels and the full quotient hypothesis
+
+Keep the original channels $`A,B:\mathcal L(\mathbb C^8)\to\mathcal L(\mathbb C^4)`$, the four prescribed two-coordinate fibres, the fixed correlated encodings, and the unhalved arbitrary-reference diamond error $`\delta`$ of [RT III §91.1](ARITHMETIC_HOLOGRAPHIC_RT_III.md#911-original-channels-forward-grams-and-the-adaptive-theorem). Let $`G,H`$ be their actual correct-output forward Grams, with inner products conjugate-linear in the first argument. Thus $`G_{ff},H_{ff}\preceq I_2`$, and the encoded product coefficients use the transpose of $`K=G\odot H`$. Put
+
+$$
+L=T-K,\qquad T_{ff}=I_2,\qquad T_{fg}=\tfrac12J_2\quad(f\ne g).
+\tag{119.1}
+$$
+
+The hypotheses in this section are the full eight-coordinate identities
+
+$$
+\begin{aligned}
+R&\succeq0,\qquad R_{ii}=1,\qquad a_i\ne0,\qquad\alpha>0,\\
+G&=H\odot\bar R,\qquad
+P=\alpha\operatorname{diag}(a)R\operatorname{diag}(\bar a)\succeq0,
+\qquad PH=0.
+\end{aligned}
+\tag{119.2}
+$$
+
+They are imposed on the actual correct-output Grams; no quotient is inferred for arbitrary leaking channel pairs. Write
+
+$$
+\lambda=\|P\|_{\mathrm{op}}>0,\qquad
+p_i=P_{ii}>0,\qquad r=\frac{\operatorname{Tr}P}{\lambda},
+\qquad m=\frac{\max_i p_i}{\lambda}.
+\tag{119.3}
+$$
+
+### 119.2. One original coherent-reference witness
+
+**Lemma 119.1 (weighted tagged input).** Under (119.1)–(119.2), a reciprocal diagonal unitary change makes $`a`$ positive while preserving the entire original encoded product channel. In that gauge, set
+
+$$
+\begin{aligned}
+b_i&=\sqrt{p_i},& t&=\sum_i b_i^2=\operatorname{Tr}P,&
+\beta_f&=\|b_f\|_2,\\
+S&=\sum_f\beta_f,& c&=S^2,&
+A_0&=\sum_i b_i,\qquad s_f=\sum_{i\in f}b_i.
+\end{aligned}
+\tag{119.4}
+$$
+
+Then, with all original leakage retained,
+
+$$
+\delta\ge\frac{2}{c}\left[
+ t+\frac{A_0^2-\sum_f s_f^2}{2}
+       -\operatorname{Tr}\bigl((H\odot H)P\bigr)\right].
+\tag{119.5}
+$$
+
+**Proof.** Choose $`E_{ii}=\bar a_i/|a_i|`$. Multiply the entire $`i`$-th Stinespring column of $`A`$ by $`\bar E_{ii}`$ and that of $`B`$ by $`E_{ii}`$. Both maps remain isometries, and their input phases cancel in the correlated encoding on every matrix unit, including every wrong-output component. The forward Grams and quotient data transform as
+
+$$
+G'=EGE^*,\quad H'=E^*HE,\quad a'=Ea,\quad
+R'=E^{*2}RE^2,\quad P'=E^*PE.
+\tag{119.6}
+$$
+
+Thus (119.2) persists, $`a'`$ is positive, and both the full error and every entry of $`K`$ are unchanged. Suppress primes. In particular
+
+$$
+R_{ij}=\frac{P_{ij}}{b_i b_j},\qquad
+b^*Kb=\operatorname{Tr}\bigl((H\odot H)P\bigr),\qquad
+b^*Tb=t+\frac{A_0^2-\sum_f s_f^2}{2}.
+\tag{119.7}
+$$
+
+The trace in the middle is $`\sum_{i,j}H_{ij}^2P_{ji}`$; it uses a complex square, not a squared modulus.
+
+A block-density realization of the witness is
+
+$$
+W=\frac{bb^*}{c},\qquad
+\rho=\bigoplus_f\frac{b_f b_f^*}{S\beta_f},\qquad
+\operatorname{Tr}\rho=1,\qquad0\preceq W\preceq\rho.
+\tag{119.8}
+$$
+
+Indeed, weighted Cauchy–Schwarz gives $`|b^*x|^2\le S\sum_f|b_f^*x_f|^2/\beta_f=cx^*\rho x`$. To check the original normalization directly, use the unit input with four orthogonal reference tags
+
+$$
+|\psi\rangle=\sum_f\sum_{i\in f}
+       \frac{b_i}{\sqrt{S\beta_f}}|i\rangle\otimes|f\rangle_R.
+\tag{119.9}
+$$
+
+Compress the target-minus-product output to the span of $`|f,f\rangle\otimes|f\rangle_R`$. The target output is entirely in this space. The compressed error $`C`$ and a unit vector $`v`$ in it satisfy
+
+$$
+C_{fg}=\frac{\sum_{i\in f,j\in g}b_i b_j L_{ji}}
+                    {S\sqrt{\beta_f\beta_g}},\qquad
+v_f=\sqrt{\frac{\beta_f}{S}},\qquad
+v^*Cv=\frac{b^*L^{\mathsf T}b}{c}=\frac{b^*Lb}{c}.
+\tag{119.10}
+$$
+
+The transpose is required by the forward-Gram convention; the last equality holds because $`b`$ is real and $`L`$ is Hermitian. The complementary product output is positive. Pinching therefore bounds the full trace norm below by $`\|C\|_1+\operatorname{Tr}C=2\operatorname{Tr}C_+\ge2v^*Cv`$. Equations (119.7) and (119.10) prove (119.5). ∎
+
+### 119.3. Calibrated spectral bounds and diagonal concentration
+
+**Theorem 119.2 (diffuse-stress obstruction).** Suppose (119.2) holds and the actual channels are calibrated, so $`G_{ff}=H_{ff}=I_2`$. Their original error $`F(G,H)=\delta`$ obeys
+
+$$
+0<m\le\tfrac34,\qquad
+F(G,H)\ge\max\left\{0,\frac{r}{4m}-\frac4r\right\}
+       \ge\max\left\{0,\frac r3-\frac4r\right\}.
+\tag{119.11}
+$$
+
+For $`15/4\le r\le4`$, the stronger bound is
+
+$$
+F(G,H)\ge
+\frac{\left(5\sqrt3/2+\sqrt{r-15/4}\right)^2-16}{4r}.
+\tag{119.12}
+$$
+
+Consequently
+
+$$
+F(G,H)<\tfrac14\quad\Longrightarrow\quad
+r<\frac{1129}{300}.
+\tag{119.13}
+$$
+
+If $`P`$ is a positive scalar multiple of a rank-four orthogonal projection, then
+
+$$
+F(G,H)\ge\frac{6+5\sqrt3}{32}>\frac13>\frac14.
+\tag{119.14}
+$$
+
+**Proof.** Factor $`H=B^*B`$. Its four original column blocks $`B_f`$ are isometries. Thus $`BB^*=\sum_fB_fB_f^*\preceq4I`$, and $`H\preceq4I`$. If $`N`$ projects onto $`\ker H`$, positivity and $`PH=0`$ give
+
+$$
+H\preceq4(I-N),\qquad
+N_{ii}\le\tfrac34,\qquad P\preceq\lambda N,
+\qquad p_i\le\tfrac34\lambda.
+\tag{119.15}
+$$
+
+The Schur product theorem gives $`H\odot H\succeq0`$, with trace eight. Hence
+
+$$
+\operatorname{Tr}\bigl((H\odot H)P\bigr)\le8\lambda,
+\qquad\sum_f s_f^2\le2t,\qquad
+A_0\ge\frac{t}{\sqrt{\lambda m}},\qquad c\le4t.
+\tag{119.16}
+$$
+
+The target term in (119.7) is at least $`A_0^2/2`$. When $`t^2/(\lambda m)-16\lambda\ge0`$, Lemma 119.1 and (119.16) allow division by the upper bound $`c\le4t`$, giving the first lower bound in (119.11). When that numerator is negative, use $`F\ge0`$ instead. The cap $`m\le3/4`$ proves the second bound.
+
+For the refinement, put $`x_i=p_i/\lambda`$. These eight numbers lie in $`[0,3/4]`$ and sum to $`r`$. On the compact capped simplex a minimum of $`\sum_i\sqrt{x_i}`$ exists. If two coordinates are interior, move them at fixed sum to an endpoint of their feasible segment. Concavity makes at least one endpoint no larger. Repetition leaves at most one fractional coordinate. For $`15/4\le r\le4`$, the resulting multiset is five copies of $`3/4`$, one copy of $`r-15/4`$, and two zeros. Therefore
+
+$$
+\frac{A_0}{\sqrt\lambda}\ge
+       \frac{5\sqrt3}{2}+\sqrt{r-\frac{15}{4}}.
+\tag{119.17}
+$$
+
+The square of this lower bound exceeds sixteen throughout the interval: at its left endpoint the difference is $`11/4`$. Thus the denominator substitution is again legitimate, proving (119.12). Its numerator minus $`r`$ is
+
+$$
+\left(\frac{5\sqrt3}{2}+\sqrt{r-\frac{15}{4}}\right)^2-16-r
+       =-1+5\sqrt3\sqrt{r-\frac{15}{4}}.
+\tag{119.18}
+$$
+
+This is nonnegative exactly for $`r\ge15/4+1/75=1129/300`$. For $`r>4`$, (119.11) already gives $`F>1/3`$, while $`r<15/4`$ satisfies (119.13). Finally a scalar rank-four projection has $`r=4`$, and (119.12) becomes (119.14). ∎
+
+### 119.4. A uniform gap retaining arbitrary leakage
+
+**Theorem 119.3 (isotropic stress with actual leakage).** Suppose the original channels satisfy (119.2) and
+
+$$
+P=\lambda N_0,\qquad\lambda>0,\qquad
+N_0=N_0^*=N_0^2,\qquad\operatorname{rank}N_0=4.
+\tag{119.19}
+$$
+
+Then $`\delta>2/5`$. It is enough that $`\operatorname{ran}N_0\subseteq\ker H`$; equality with the entire opposite kernel is not required.
+
+**Proof.** Use the physical gauge of Lemma 119.1. Suppose $`\delta\le2/5`$. For the original basis input $`|i\rangle`$, the correct output has probability $`G_{ii}H_{ii}=H_{ii}^2`$, since $`R_{ii}=1`$. Measuring whether the output is the target basis vector gives
+
+$$
+\delta\ge2(1-H_{ii}^2),\qquad
+H_{ii}\ge\sqrt{\frac45}>\frac89.
+\tag{119.20}
+$$
+
+The actual correct-output blocks $`B_f`$ are contractions, so $`BB^*\preceq4I`$ still holds. With $`N`$ the projection onto $`\ker H`$, (119.19) and $`PH=0`$ imply $`N_0\preceq N`$. Consequently
+
+$$
+H\preceq4(I-N),\qquad
+x_i:=\frac{P_{ii}}{\lambda}\le N_{ii}
+       \le1-\frac{H_{ii}}4<\frac79,
+\qquad\sum_i x_i=4.
+\tag{119.21}
+$$
+
+The same finite concavity argument, now on the cap-$`7/9`$ simplex of sum four, leaves five copies of $`7/9`$, one of $`1/9`$, and two zeros. Thus
+
+$$
+\frac{A_0}{\sqrt\lambda}\ge\frac{5\sqrt7+1}{3},
+\qquad A_0^2\ge\lambda\frac{176+10\sqrt7}{9}.
+\tag{119.22}
+$$
+
+The original target identity still gives $`2b^*Tb\ge A_0^2`$. Also $`H\odot H\succeq0`$, $`\operatorname{Tr}(H\odot H)=\sum_iH_{ii}^2\le8`$, and $`c\le4\operatorname{Tr}P=16\lambda`$. Since $`A_0^2-16\lambda>0`$, the leakage-safe Lemma 119.1 yields
+
+$$
+\delta\ge\frac{A_0^2-16\lambda}{16\lambda}
+       \ge\frac{16+5\sqrt7}{72}>\frac25.
+\tag{119.23}
+$$
+
+The last strict inequality is equivalent to $`25\sqrt7>64`$, whose squared form is $`4375>4096`$. This contradicts the assumption and proves the theorem. ∎
+
+### 119.5. The full-support local-minimum consumer
+
+**Corollary 119.4.** Let $`(G,H)`$ be a local minimum on the full calibrated domain $`\mathcal E^2`$ of (118.1), with $`\operatorname{rank}G=7`$, a full-support kernel vector, and $`0<F(G,H)<1/4`$. Every common stress supplied by the quotient theorem satisfies
+
+$$
+\frac{\operatorname{Tr}P}{\|P\|_{\mathrm{op}}}
+              <\frac{1129}{300}.
+\tag{119.24}
+$$
+
+For the remaining rank-$`(7,4)`$ class, its four positive stress eigenvalues in Corollary 118.3 cannot be equal.
+
+**Proof.** [RT III Lemma 95.2](ARITHMETIC_HOLOGRAPHIC_RT_III.md#952-one-rank-seven-side-gives-a-supported-psd-quotient) gives the full identity (119.2), because the first kernel has full support. Apply Theorem 119.2. Section 118 gives rank four and full opposite-kernel range in the stated subquarter rank-$`(7,4)`$ case, and (119.14) excludes equal positive eigenvalues. ∎
+
+This conclusion concerns the actual common stress, rather than a freely chosen stress with the same support. Nonisotropic rank-four stresses satisfying (119.24), opposite rank three, and the global representative class with both ranks at most six remain outside these exclusions. Theorem 119.3 imposes its quotient on the full actual leaking Grams; it does not transfer calibrated local-minimum conditions to arbitrary leaking optimizers. The unrestricted global quarter optimum remains open.
+
+## 追加锚（本行以下为增补区）
+
+The full actual-quotient effective-rank extension, including its quantitative leakage bound, is proved in [RT V §120](ARITHMETIC_HOLOGRAPHIC_RT_V.md#120-effective-rank-bounds-for-full-actual-quotient-stresses).
+
+## 追加锚（本行以下为增补区）

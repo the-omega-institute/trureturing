@@ -1,0 +1,24 @@
+### 定义 381.1（过滤细化与因果耦合族）
+
+设同一源路径空间上有两组过滤 \(\mathcal F=(\mathcal F_n)\) 与 \(\mathcal F'=(\mathcal F'_n)\)。称 \(\mathcal F'\) **细化** \(\mathcal F\)，若
+
+$$
+\mathcal F_n\subseteq\mathcal F'_n
+\quad\text{对所有 }n.
+$$
+
+目标过滤固定为 \(\mathcal G\)。记
+
+$$
+\Gamma_{\mathcal F\to\mathcal G}(P,Q)
+$$
+
+为满足
+
+$$
+Y_{\le n}\perp\mathcal F_{N-1}
+\mid\mathcal F_n
+$$
+
+的耦合集合；在有限路径的自然过滤下，它退化为定义 379.2。
+

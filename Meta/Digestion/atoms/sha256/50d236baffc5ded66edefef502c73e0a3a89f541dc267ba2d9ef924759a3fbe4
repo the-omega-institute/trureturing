@@ -1,0 +1,100 @@
+**Theorem 110.2 (the copied beta charge on every actual descendant).**
+For every $k\ge0$, use the literal ancestry map from $T_k$ to $T_{k+1}$
+and define on the entire successor
+
+$$
+\psi_k=J_k\chi_k-\theta\mathbf1,\qquad
+q_k=\sum_{V_{T_k}}\chi_k=c-2c(-c)^k.
+\tag{110.4}
+$$
+
+There is a real field $H_k$ on $T_{k+1}$, zero at its root, such that
+
+$$
+\psi_k=L_{k+1}H_k+3c q_k\delta_r,\qquad
+\|H_k\|\le K(k+1)\sqrt{N_{k+1}},
+\tag{110.5}
+$$
+
+with one constant $K$ independent of $k$. More precisely, every edge
+increment of $H_k$ is its actual below-edge total $\psi_k$ charge.
+At an old address whose old descendant is $T_j$, this total is $3c q_j$;
+at either newly born leaf it is $\kappa$. These are counting totals,
+including the descendant root and every internal and terminal occurrence.
+
+For $n\ge2$ let $Z_n$ be zero at the successor root and have the old
+constants $\alpha_n,\beta_n$ on its actual entire successor root subtrees
+$T_n,T_{n-1}$, respectively. Then there are fields $\widetilde H_n$ and
+$R_n^{\mathrm{new}}$ on the successor with
+
+$$
+\begin{aligned}
+J_n(z_n\chi_n)&=\theta Z_n+L_{n+1}\widetilde H_n+R_n^{\mathrm{new}},\\
+R_n^{\mathrm{new}}
+ &=3c\bigl(\alpha_nq_{n-1}\delta_L+\beta_nq_{n-2}\delta_R\bigr),\\
+\|\widetilde H_n\|&=O(n\sqrt{N_{n+1}}),\qquad
+\|R_n^{\mathrm{new}}\|=O(1).
+\end{aligned}
+\tag{110.6}
+$$
+
+Here $\delta_L,\delta_R$ in (110.6) are node point masses at the two
+actual successor subtree roots. Both root seams contribute zero to
+the corrector energy flux.
+
+Proof. The exact fibre multiplicity is
+$m_k=1+2\mathbf1_{\mathcal B_k}=\varphi+\chi_k$.
+Thus $N_{k+1}=\varphi N_k+q_k$. The two possible values $2-c,-c$ of
+$\chi_k$ satisfy the pointwise identity
+
+$$
+m_k\chi_k=\kappa+(3-c)\chi_k.
+\tag{110.7}
+$$
+
+For an old descendant $T_j$, literal substitution gives the complete
+successor descendant $T_{j+1}$. Summing (110.7) on its old vertices
+counts every new occurrence once through its own beta-parent fibre.
+Its total copied charge is $\kappa N_j+(3-c)q_j$. Consequently its
+$\psi_k$ charge is
+
+$$
+\kappa N_j+(3-c)q_j-\theta N_{j+1}
+ =\bigl(3-c-\theta\bigr)q_j=3c q_j,
+\tag{110.8}
+$$
+
+because $c\varphi=1$ and $c^2=1-c$. Both new children of an old beta
+parent copy $2-c$, irrespective of their different beta and alpha labels.
+Their successor $\psi_k$ charge is therefore
+$2-c-\theta=\kappa$. No nonexistent descendant is assigned a charge.
+
+This also checks the early sources without a branch approximation.
+At $k=0$ the old alpha singleton becomes a beta singleton and
+$\psi_0=-c-\theta=3c q_0$, with $q_0=-c$ and $H_0=0$.
+At $k=1$ the old beta singleton becomes the three-node ordered source
+$\langle\beta,\alpha\rangle$. Each of its three copied values is $2-c$,
+each residual charge is $\kappa$, and the total is
+$3\kappa=3c q_1$, with $q_1=2-c$. Give each of its two edges increment
+$\kappa$; this gives (110.5) at the root and both new leaves.
+
+For every larger successor, prescribe its root value to be zero and
+its edge increment to be the total residual charge below that edge.
+At a nonroot vertex the parent-edge increment minus the sum of the
+child-edge increments is its own charge; at the root the missing
+parent increment subtracts the entire charge $3c q_k$. This proves
+(110.5) with the closed, rather than grounded, Laplacian. By (108.10),
+$|q_j|\le2$, so every edge increment has modulus at most
+$\max(6c,\kappa)$. Successor height is at most $k+1$, proving the norm
+bound in (110.5).
+
+For (110.6), place $\alpha_nH_{n-1}$ in the successor left subtree and
+$\beta_nH_{n-2}$ in its right subtree, and put zero at the global root.
+The three seam endpoint values of this corrector are all zero.
+The internal subtree Laplacians therefore agree with the restrictions
+of the global Laplacian, including at both subtree roots, and its
+global root Laplacian value is zero. Apply (110.5) separately to these
+two complete blocks. This proves (110.6), also for the old beta and
+alpha singleton subtrees when $n=2$. Boundedness of the contrast
+constants and of $q_k$ gives the displayed norms. $\square$
+

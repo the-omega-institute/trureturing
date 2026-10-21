@@ -1,0 +1,71 @@
+**定理103.1（末轮之前的实际跨度下界）。** 置
+
+$$
+L=\mathbb Cp+G_2+G_3+G_4+G_5.
+$$
+
+则
+
+$$
+\boxed{\dim L\ge5.}
+\tag{103.1}
+$$
+
+这里 $p$ 为真实首轮零位单位接收向量，$G_i$ 为真实第 $i$ 轮的二维零位接收平面。结论仍使用完整六终端合同，但下界中的空间不包含 $G_6$。
+
+**证明。** 反设 $\dim L\le4$，记 $W=L$。第97节命题97.3排除 $G_2+G_3+G_4+G_5$ 的维数至多三，所以
+
+$$
+G_2+G_3+G_4+G_5=W,\qquad \dim W=4,\qquad p\in W.
+\tag{103.2}
+$$
+
+先给第98节各局部禁阻所需的共同接口。至少有两条不同的已见后继环境，否则违反第71节。从中选 $B,C$，对应二维接收平面为 $Q_B,Q_C$，便有
+
+$$
+V_1W=(Q_B\otimes B)\dotplus(Q_C\otimes C).
+\tag{103.3}
+$$
+
+它在 $B,C$ 上的完整接收纤维分别为 $Q_B,Q_C$，在第三条射线上为 $Q_B\cap Q_C$。每个实际后继像均二维，故填满对应完整纤维。于是
+
+$$
+[\eta_{i+1}]=[\eta_{j+1}]\Longrightarrow G_i=G_j
+\quad(2\le i,j\le5),
+$$
+
+$$
+[\eta_2]=[\eta_{j+1}]\Longrightarrow p\in G_j.
+\tag{103.4}
+$$
+
+第二式使用 $p\in W$ 与真实 $V_1p=v\otimes\eta_2$。若四个已见后继中至少出现三条射线，（103.3）给共同二维 $Q_0$，满足
+
+$$
+V_1W=Q_0\otimes F,\qquad Q_3=Q_4=Q_5=Q_6=Q_0.
+$$
+
+每个 $G_i\otimes\eta_i\subset\operatorname{ran}V_0$，$2\le i\le5$，均与 $Q_0\otimes F$ 跨位正交。由（103.2），得到 $Q_0\perp W$。此外，$p\in W$ 给 $v\in Q_0$，实际来源列因而满足
+
+$$
+H_2,\ldots,H_5\subset W\oplus Q_0,\qquad
+P_WH_2=G_2,
+$$
+
+$$
+P_WH_n=G_n,\qquad H_n\cap W=0
+\quad(3\le n\le5).
+\tag{103.5}
+$$
+
+特别地，$H_5$ 的包含关系来自同轮 $G_5,Q_5$，没有使用 $G_6\subset W$。
+
+第74节与第69节引理69.1仍给第98.2节列出的全部二十六个两射线、三射线候选词。第98.2节的直接矛盾和第98.3节的前缀禁阻只使用（103.4）、实际早期 $p,u,v,w$、$H_n\cap G_n=0$ 及严格来源主角差值。具体覆盖如下：
+
+| 局部禁阻 | 排除的完整词组 |
+|---|---|
+| 相同后继给相同平面，再用早期 $w$ 或严格主角差值 | AAAAB, ABBBA, ABBBC, AABAB, ABABA, ABCBC, AABBB, ABAAA, ABCCC |
+| 相同零位像识别 $H_1=H_4$ 或 $H_1=H_3$，再用（103.4）的 $p$ | AABAA, ABAAB, ABBAB, ABABB |
+| 四个后继共线 | ABBBB |
+| 三后继的（103.5）与 $p\in W\cap H_1$ | ABABC, ABCAB |
+| $p\in H_1=H_2$ 且 $p\in G_2$，故 $p\parallel w$；真实第三轮列违反 $H_2\cap H_3=0$ | AAABA, AAABB, AAABC |

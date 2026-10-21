@@ -99,6 +99,14 @@ internal sealed class WeilEvenFourierObservationTailDocument : IScribeDocumentDe
                             + "new family. No unbounded-scale ground approximation "
                             + "or RH conclusion is claimed. Lean and Scribe compilation "
                             + "were not run in this session."))),
+                    DescribeRole.Theorem),
+                Describe.Lean(
+                    DescribeId.Create("inverse-fourth-partial-le"),
+                    DeclarationHandle.Create(Owner + "inverse_fourth_partial_le"),
+                    H("The consumed exact inverse-fourth partial tail"),
+                    StatementSource.FromAuthor(Disp(Seq(Call("Positive", N), Rightarrow, Call("LessEqual", Call("InverseFourthPartial", N, F.Id("k")), Call("sub", Call("div", D(1), Call("mul", D(3), Call("cube", N))), Call("div", D(1), Call("mul", D(3), Call("cube", Call("add", N, F.Id("k")))))))))),
+                    AssessedProvenance.FromRepo(),
+                    Blocks(Paragraph(Text("SOURCE_ONLY_UNCOMPILED. For every natural N>0 and every natural k, including k=0, sum_{j<k} 1/(N+j+1)^4<=1/(3*N^3)-1/(3*(N+k)^3). This minimally exposes the already present private fourth_partial proof, leaving all original definitions and proof bodies intact. It is reuse, not a novelty claim. Its live consumer is ActualColumnRemainder.paired_first_jet_remainder_tail and thereby the full paired actual column. All compiler, axiom, Reg source reconstruction/enrollment, Scribe and CI checks remain pending."))),
                     DescribeRole.Theorem))));
     }
 }

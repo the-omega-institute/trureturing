@@ -1,0 +1,40 @@
+**定理 435.2（同筛窗口的联合负主项）。** 对（CW.1）–（CW.3）的同一源和同一过滤器，有
+
+\[
+\boxed{\displaystyle
+L\sum_{n\in\mathcal W_z(x)}M_z(n)J_x^{\eta_z}(n)
+\longrightarrow
+c_0\left[\frac1\lambda-\frac1\Lambda
+-\log\left(\frac\Lambda\lambda\right)\right]<0.}
+\tag{CW.6}
+\]
+
+这包括 \(\lambda=1\) 的完整整数窗口；其严格负性是全窗口的结论，并未断言该边界范围的每个前缀都负。
+
+证明。令 \(t_n=n/x\)，及
+
+\[
+U_{z,n}=\frac LxM_z(n),\qquad V_{z,n}=n^2J_x^{\eta_z}(n).
+\]
+
+（CW.4）给两者在窗口内共同有界，并且
+\(U_{z,n}V_{z,n}=c_0(1-t_n)+o(1)\) 共同成立。精确相乘得到
+
+\[
+L M_z(n)J_x^{\eta_z}(n)
+=\frac1x\frac{U_{z,n}V_{z,n}}{t_n^2}
+=\frac{c_0}{x}\frac{1-t_n}{t_n^2}+o(x^{-1})
+\]
+
+共同于全部窗口行。窗口有 \(O_{\lambda,\Lambda}(x)\) 个整数，故这些共同误差之和为 \(o(1)\)。保留两端取整的普通 Riemann 和给
+
+\[
+\frac1x\sum_{n\in\mathcal W_z(x)}\frac{1-t_n}{t_n^2}
+\longrightarrow\int_\lambda^\Lambda\frac{1-t}{t^2}dt
+=\frac1\lambda-\frac1\Lambda-\log(\Lambda/\lambda).
+\]
+
+在 \(1\le\lambda<\Lambda\) 下，该被积函数非正，且于正长度子区间严格负；因此完整极限严格负。
+
+这个主项的尺度是 \(1/\log z\)。只需经典 PNT 和该筛内的精确单位—素数结构，未使用 Alladi 的 compact-\(\tau\) 统一误差，也未把 fixed-\(\tau>1\) 渐近延伸到 \(\tau\downarrow1\)。
+

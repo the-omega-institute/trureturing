@@ -9,6 +9,9 @@
 import Mathlib.RingTheory.PowerSeries.Inverse
 
 /-!
+Escape audit unfinished: https://github.com/the-omega-institute/trureturing/issues/19167
+(Agree, agree_inv, agree_shift, map_inverse, inverse_one).
+
 The finite tail with `d` levels begins at numerator `(2*j+1)^2` and
 ends in `A`; thus the terminal index is `j+d`. The outer numerator is `X`.
 At depth `d`, the defining equation is an equality through degree `d+1`,
@@ -26,14 +29,14 @@ open PowerSeries
 namespace D5.S1.Recurrence.Residue.ContinuedFractionOddSquare
 variable {R : Type*} [CommRing R]
 
-private def Agree (n : ℕ) (f g : PowerSeries R) : Prop :=
+def Agree (n : ℕ) (f g : PowerSeries R) : Prop :=
   ∀ k < n, coeff k f = coeff k g
 
 private theorem agree_iff (n : ℕ) (f g : PowerSeries R) :
     Agree n f g ↔ (X : PowerSeries R) ^ n ∣ f - g := by
   simp [Agree, X_pow_dvd_iff, map_sub, sub_eq_zero]
 
-private theorem agree_inv {n : ℕ} {f g : PowerSeries R}
+theorem agree_inv {n : ℕ} {f g : PowerSeries R}
     (hf : constantCoeff f = 1) (hg : constantCoeff g = 1) (h : Agree n f g) :
     Agree n (invOfUnit f 1) (invOfUnit g 1) := by
   have hfi := invOfUnit_mul f 1 hf
@@ -49,7 +52,7 @@ private theorem agree_inv {n : ℕ} {f g : PowerSeries R}
   exact dvd_mul_of_dvd_left (dvd_mul_of_dvd_right
     (by rw [← neg_sub f g]; exact dvd_neg.mpr ((agree_iff _ _ _).mp h)) _) _
 
-private theorem agree_shift {n : ℕ} {f g : PowerSeries R} (h : Agree n f g) (c : R) :
+theorem agree_shift {n : ℕ} {f g : PowerSeries R} (h : Agree n f g) (c : R) :
     Agree (n + 1) (C c * X * f) (C c * X * g) := by
   apply (agree_iff _ _ _).mpr
   obtain ⟨q, hq⟩ := (agree_iff _ _ _).mp h
@@ -228,7 +231,7 @@ theorem generating_unique (A : PowerSeries ℤ) (hA : constantCoeff A = 1)
   simp only [step, coeff_mk, rhs, map_add]
   linear_combination -hn
 
-private theorem map_inverse {S : Type*} [CommRing S] (hom : R →+* S)
+theorem map_inverse {S : Type*} [CommRing S] (hom : R →+* S)
     (A : PowerSeries R) (hA : constantCoeff A = 1) :
     (invOfUnit A 1).map hom = invOfUnit (A.map hom) 1 := by
   have hz : constantCoeff (A.map hom) = 1 := by
@@ -265,7 +268,7 @@ private theorem odd_square (j : ℕ) : (((2*j+1 : ℕ) : ZMod 8)^2) = 1 := by
   have hz : (8 : ZMod 8) = 0 := ZMod.natCast_self 8
   linear_combination 4 * hcast + (q : ZMod 8) * hz
 
-private theorem inverse_one : invOfUnit (1 : PowerSeries R) 1 = 1 := by
+theorem inverse_one : invOfUnit (1 : PowerSeries R) 1 = 1 := by
   simpa only [one_mul] using mul_invOfUnit (1 : PowerSeries R) 1 (by simp)
 
 private theorem reduced_tail (j d : ℕ) :
@@ -319,13 +322,5 @@ theorem hanna_conjecture (n : ℕ) (hn : 1 < n) : (8 : ℤ) ∣ a n := by
   rw [hzero] at hc
   have ha : (a n : ZMod 8) = 0 := by simpa [coeff_map, generatingSeries, hom] using hc
   exact (ZMod.intCast_zmod_eq_zero_iff_dvd (a n) 8).mp ha
-
-#print axioms finiteTail
-#print axioms stabilization
-#print axioms a
-#print axioms generatingSeries
-#print axioms generating_equation
-#print axioms generating_unique
-#print axioms hanna_conjecture
 
 end D5.S1.Recurrence.Residue.ContinuedFractionOddSquare

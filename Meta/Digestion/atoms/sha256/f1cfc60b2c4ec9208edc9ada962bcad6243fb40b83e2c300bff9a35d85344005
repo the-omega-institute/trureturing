@@ -1,0 +1,7 @@
+若 \(\mu_\lambda\) 在单位圆上分散于多个角区间，则：
+
+* Toeplitz matrices 条件数改善；
+* Schur 参数远离 \(\pm1\)；
+* finite CMV truncations 稳定；
+* 不同相位产生相关抵消。
+

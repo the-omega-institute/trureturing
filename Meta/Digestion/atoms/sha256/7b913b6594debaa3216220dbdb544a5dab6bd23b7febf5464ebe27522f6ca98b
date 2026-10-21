@@ -1,0 +1,12 @@
+#### 3.6.7 不可行理想目标：到最优共同来源的统一误差界
+
+即使理想局部律没有共同实现，仍可另行研究“距离它最近的合法共同来源”。继续固定上述 $A,E,B_e,\pi_e,M$ 和两份范数，允许目标 $r=(r_e)_{e\in E}\in\prod_e\Delta_{B_e}$ 不属于 $M(\Delta_A)$。定义
+$$
+\delta_r(q)=\max_{e\in E}\operatorname{TV}(M_eq,r_e),\qquad
+\alpha_r=\min_{q\in\Delta_A}\delta_r(q),\qquad
+\operatorname{Opt}_r=\{p\in\Delta_A:\delta_r(p)=\alpha_r\}.
+\tag{TM.78}
+$$
+
+有限维总变差与有限最大值都是连续函数，$\Delta_A$ 非空紧，故 $\alpha_r$ 达到，$\operatorname{Opt}_r$ 为非空紧集。所有 $r_e$ 都是概率律，因而 $0\le\alpha_r\le1$。又因 $M(\Delta_A)$ 紧，$\alpha_r=0$ 当且仅当 $r\in M(\Delta_A)$；不可行目标具有严格正的最小剩余量。
+

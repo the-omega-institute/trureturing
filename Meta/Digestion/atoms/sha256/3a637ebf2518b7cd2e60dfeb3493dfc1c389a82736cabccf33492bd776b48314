@@ -1,0 +1,13 @@
+以下等价：
+
+1. $M(C,T)=0$；
+2. $\ker(C)$ 对 $T$ 不变；
+3. 存在唯一线性映射
+   $$
+   \bar T_C:\operatorname{ran}(C)\to\operatorname{ran}(C)
+   $$
+   使
+   $$
+   C_{\mathrm{eff}}T=\bar T_C C_{\mathrm{eff}}.
+   $$
+

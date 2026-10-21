@@ -1,0 +1,8 @@
+对 sticky mode：
+
+1. 提取其近单位模谱分量；
+2. 将相应 finite Blaschke/inner factor 从 transfer function 中分离；
+3. 把该模式压缩为一个有限维 conservative block；
+4. 对剩余 transfer function 重新构造 colligation；
+5. 重复直到残余达到 uniform observability。
+

@@ -80,7 +80,7 @@ private theorem inverse_cube_partial_bound {M : ℕ} (hM : 0 < M) (K : ℕ) :
   have hp : 0 ≤ 1 / (2 * ((M : ℝ) + (K : ℝ)) ^ 2) := by positivity
   linarith
 
-private theorem coefficient_bound {n m sn sm B : ℝ}
+theorem coefficient_bound {n m sn sm B : ℝ}
     (hn : 0 ≤ n) (hm : n < m) (hsn : |sn| ≤ B) (hsm : |sm| ≤ B) :
     |(n * sn - m * sm) / (m ^ 2 - n ^ 2)| ≤ B / (m - n) := by
   have hm0 : 0 < m := lt_of_le_of_lt hn hm

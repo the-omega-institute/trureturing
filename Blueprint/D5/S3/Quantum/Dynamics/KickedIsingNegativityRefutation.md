@@ -4,6 +4,8 @@
 
 Pathak's generic-state negativity identity fails on a four-site kicked Ising chain.
 
+For arbitrary local index types, partialTranspose sends the entry at ((a,b),(c,d)) to the input entry at ((a,d),(c,b)). It is definitionally equal to Bipartite.partialTranspose on the same complex matrix domain.
+
 **Definition 1.1 (Ising Hamiltonian).**
 
 $$\forall L \in \mathbb{N},\; \forall h \in \operatorname{Fin}\left(L\right) \to \mathbb{R},\; \operatorname{hIsing}\left(h\right) = \operatorname{smul}\left(\operatorname{ofReal}\left(\frac{\pi}{4}\right), \sum_{i:\operatorname{Fin}\left(L\right)}((\operatorname{localOp}\left(i, qubitZ\right)) \cdot (\operatorname{localOp}\left(\operatorname{finRotate}\left(L\right)\left(i\right), qubitZ\right)))\right) + \sum_{i:\operatorname{Fin}\left(L\right)}(\operatorname{smul}\left(\operatorname{ofReal}\left(h\left(i\right)\right), \operatorname{localOp}\left(i, qubitZ\right)\right))$$
@@ -282,6 +284,7 @@ Take L = 4, A = {0}, B = {1}, C = {2,3}, t = 1, hᵢ = 1 and φᵢ = 0. The init
 - Truth anchor: `D5/S3/Quantum/Dynamics/KickedIsingNegativityRefutation.trace_conjugate_right`
 - Truth anchor: `D5/S3/Quantum/Dynamics/KickedIsingNegativityRefutation.trace_local_left`
 - Truth anchor: `D5/S3/Quantum/Dynamics/KickedIsingNegativityRefutation.trace_local_right`
+- Dependency: [D5/S3/Quantum/Entanglement/AbsolutePPT/Bipartite](../Entanglement/AbsolutePPT/Bipartite.md)
 - Dependency: [D5/S3/Quantum/Entanglement/FourQubitResidualSumMonotoneRefutation](../Entanglement/FourQubitResidualSumMonotoneRefutation.md)
 - Dependency: [D5/S3/Quantum/Entanglement/StructuredNegativityCoincidenceRefutation](../Entanglement/StructuredNegativityCoincidenceRefutation.md)
 - Dependency: [D5/S3/Quantum/Foundation/FiniteTraceDistance](../Foundation/FiniteTraceDistance.md)

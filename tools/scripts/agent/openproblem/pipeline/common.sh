@@ -10,16 +10,17 @@ op_file() { [ -f "$1" ] && [ -r "$1" ] || op_fail 11 INPUT_MISSING "$1"; }
 op_init() {
   op_need python3 git
   python3 -c 'import sys; sys.exit(0 if sys.version_info >= (3, 9) else 1)' || op_fail 12 TOOL_VERSION 'Python 3.9 or newer required'
-  OP_STATE=${OP_STATE:-${XDG_STATE_HOME:-${HOME:?HOME or OP_STATE required}/.local/state}/trureturing-op}
+  OP_STATE=$(python3 "$OP_PIPELINE_DIR/../briefgen/common.py" state-dir) || op_fail 16 IO_ERROR OP_STATE
+  export OP_STATE
+  OP_REFRESH_LOCK=$(python3 "$OP_PIPELINE_DIR/../briefgen/common.py" main-lean-lock) || op_fail 16 IO_ERROR OP_REFRESH_LOCK
   SSHX_HOME=${SSHX_HOME:-${HOME:?HOME or SSHX_HOME required}/.sshx}
   OP_NAME_PREFIX=${OP_NAME_PREFIX:-}
-  OP_STATE=$(python3 -c 'import os,sys;print(os.path.abspath(sys.argv[1]))' "$OP_STATE")
   SSHX_HOME=$(python3 -c 'import os,sys;print(os.path.abspath(sys.argv[1]))' "$SSHX_HOME")
   [ -z "$OP_NAME_PREFIX" ] || op_name "$OP_NAME_PREFIX"
   OP_POLL_SECONDS=${OP_POLL_SECONDS:-30}
   OP_LOCK_ROUNDS=${OP_LOCK_ROUNDS:-120}
   op_uint OP_POLL_SECONDS "$OP_POLL_SECONDS"; op_uint OP_LOCK_ROUNDS "$OP_LOCK_ROUNDS"
-  export OP_STATE SSHX_HOME OP_NAME_PREFIX
+  export OP_STATE OP_REFRESH_LOCK SSHX_HOME OP_NAME_PREFIX
 }
 op_scratch() {
   [ -n "${OP_SCRATCH:-}" ] || op_fail 11 INPUT_MISSING OP_SCRATCH
@@ -47,8 +48,9 @@ op_latest_result() { op_data result "$1"; }
 op_selftest() { bash "$OP_PIPELINE_DIR/selftest.sh" "$1"; }
 op_data() {
   # Preserve stdin separately: Python source occupies the heredoc descriptor.
-  python3 -c 'import sys; exec(sys.argv.pop(1))' "$(cat <<'PY'
+  python3 -c 'import sys; sys.path.insert(0, sys.argv.pop(1)); exec(sys.argv.pop(1))' "$OP_PIPELINE_DIR/../briefgen" "$(cat <<'PY'
 import datetime, json, os, pathlib, re, shlex, sys, time
+from common import main_warm_stamp
 args = sys.argv[1:]
 action = args.pop(0)
 def die(message):
@@ -95,7 +97,7 @@ def result_path(flight):
         die('invalid flight id')
     candidates = []
     for p in (pathlib.Path(os.environ['SSHX_HOME']) / flight).glob('attempt-*/result.json'):
-        m = re.fullmatch('attempt-(\d+)', p.parent.name)
+        m = re.fullmatch(r'attempt-(\d+)', p.parent.name)
         if m and p.is_file():
             candidates.append((int(m[1]), str(p)))
     return max(candidates, default=(0, 'NO_RESULT'))[1]
@@ -231,7 +233,7 @@ try:
             print(name[len(prefix):] if prefix and name.startswith(prefix) else name)
     elif action == 'stale':
         main, tree, lag = map(str, args)
-        stamp = pathlib.Path(main) / '.lake/build/.main-built-at'
+        stamp = main_warm_stamp(main)
         if not stamp.is_file():
             print('skip main-not-stamped'); sys.exit(0)
         sha, mtime = stamp.read_text().split()

@@ -1,0 +1,39 @@
+**定义 401.1（固定 Gaussian 记录模型与三项任务）。** 取 §§359–361、398 的有限实系数上链空间与正定内积，记 $\mathcal H^1=\ker d_1\cap\ker d_0^{\mathsf T}$，其中转置相对于这些内积。固定线性接口 $\Pi:\mathcal H^1\to\mathbb R^p$，不要求单射；在数据空间 $E=C^2\oplus\mathbb R^p\cong\mathbb R^m$ 固定正交坐标，令
+
+$$
+Ag=(d_1g,\Pi P_{\mathcal H}g),\qquad
+y=Ag+\Sigma^{1/2}\xi,\qquad
+z=\Sigma^{-1/2}y=Bg+\xi,\qquad B=\Sigma^{-1/2}A.
+$$
+
+这里 $g$ 遍历整个 $C^1$，实际来源是其中固定但未知的一点；$\Sigma\succ0$ 已知，平方根取对称正定平方根。$y$ 是实际记录，允许在 $\operatorname{im}A$ 外。固定线性映射 $C:C^1\to\mathbb R^q$，未来块是一个已声明、可联合读取的经典随机向量
+
+$$
+Y_f=Cg+\zeta\in\mathbb R^q,\qquad
+\begin{pmatrix}\xi\\\zeta\end{pmatrix}
+\sim\mathcal N\!\left(0,
+\begin{pmatrix}I_m&K^{\mathsf T}\\K&\Gamma\end{pmatrix}\right),\qquad
+\begin{pmatrix}I_m&K^{\mathsf T}\\K&\Gamma\end{pmatrix}\succeq0.
+$$
+
+所有空间、内积、接口、协方差及联合 Gaussian 假设均在读数之前固定；只有协方差相同而联合律非 Gaussian 的模型不在此假设内。未来块不表示非对易量子反事实的共同测量。若 $g$ 按顶点规范类解释，另要求 $Cd_0=0$；否则固定来源代表，$C$ 是对该代表声明的接口。
+
+置
+
+$$
+S=\operatorname{im}B,\quad P=P_S,\quad R=I-P,\quad
+M=\operatorname{im}((KR)^{\mathsf T}),\quad
+N=S^\perp\cap\ker K,
+\qquad r=\dim S,\ k=\dim M,\ \ell=\dim N.
+$$
+
+$M,N$ 是白化数据空间中的子空间，不是来源空间的 harmonic/coexact 分量。记 $P_M,P_N$ 为相应正交投影。令 $p_g(z)=(2\pi)^{-m/2}\exp(-\|z-Bg\|^2/2)$，$\lambda_g(z)=p_g(z)/p_0(z)$，$Q(z)=\|Rz\|^2$，并指定对每个 $g$、每个 $z$ 的核
+
+$$
+\mathcal F_g(z,\cdot)
+=\mathcal N\!\left(Cg+K(z-Bg),\Psi\right),\qquad
+\Psi=\Gamma-KK^{\mathsf T}.
+$$
+
+对半正定 $\Psi$，此记号指 $Cg+K(z-Bg)+\Psi^{1/2}U$ 的分布，$U\sim\mathcal N(0,I_q)$；允许 $\Psi$ 奇异甚至为零。三项任务是保留全部 $g$ 的 $\lambda_g$、保留同一来源索引下的整族 $\mathcal F_g$、保留实际数值 $Q$。不把这份条件核族认作已知实际 $g$，也不把旧原始读数、完整 Bianchi 残差、上同调坐标或操作权限列入这三项任务。读取安排自适应、估计协方差或扩大任务族，均须另给决定数据与假设。
+

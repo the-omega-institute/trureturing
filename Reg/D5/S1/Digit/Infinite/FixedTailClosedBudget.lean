@@ -339,3 +339,141 @@ noncomputable def audit : Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0}
   continuation := .unknown, familyRecord := none,
   options := #[] }
 end Reg.D5.S1.Digit.Infinite.FixedTailClosedBudget.cost_endpoint_bound
+
+
+namespace Reg.D5.S1.Digit.Infinite.FixedTailClosedBudget.hull_invariant
+abbrev signature : Signature where
+  Params := Σ _ : Fin 2 → ℝ, Σ _ : ℝ, Fin 2
+  State _ := ℝ
+  Role := Unit
+  finiteRole := inferInstance
+  nonemptyRole := inferInstance
+  Output _ _ := ℝ
+  Anchor := Empty
+  finiteAnchor := inferInstance
+
+def actual : Realization signature :=
+  realize signature (fun _ p x => p.1 (p.2.2) + p.2.1*x) (fun e => nomatch e)
+def rejected : Realization signature :=
+  realize signature (fun _ _ _ => 1) (fun e => nomatch e)
+def sourceStatement : Prop := ∀ (A : Fin 2 → ℝ) (a : ℝ) (_ha : |a| < 1) (i : Fin 2),
+  Set.MapsTo (fun x => A i + a*x) (Set.Icc (hullLower A a) (hullUpper A a))
+    (Set.Icc (hullLower A a) (hullUpper A a))
+abbrev arena : Arena where
+  signature := signature
+  Law R := ∀ (A : Fin 2 → ℝ) (a : ℝ) (_ha : |a| < 1) (i : Fin 2),
+    Set.MapsTo (R.readout () ⟨A,a,i⟩) (Set.Icc (hullLower A a) (hullUpper A a))
+      (Set.Icc (hullLower A a) (hullUpper A a))
+private theorem rejected_law : ¬ arena.Law rejected := by
+  intro h
+  have hh := h (fun _ => 0) 0 (by norm_num) 0 (show (0:ℝ) ∈ Set.Icc
+    (hullLower (fun _ => 0) 0) (hullUpper (fun _ => 0) 0) by norm_num [hullLower,hullUpper])
+  norm_num [rejected,realize,hullLower,hullUpper] at hh
+def registration : Registration arena sourceStatement where
+  actual := actual
+  bridge := Iff.rfl
+  variation := ⟨@_root_.D5.S1.Digit.Infinite.FixedTailClosedBudget.hull_invariant,
+    rejected,rejected_law⟩
+  sensitivity := ⟨fun i => ⟨rejected, fun j hj => (hj (Subsingleton.elim j i)).elim,
+    rfl, rejected_law⟩,fun e => nomatch e⟩
+  dependence := by
+    intro i
+    refine ⟨⟨(fun _ => 0),(1/2:ℝ),(0:Fin 2)⟩,(0:ℝ),(1:ℝ),?_⟩
+    norm_num [actual,realize]
+noncomputable def audit : Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0}
+    (@_root_.D5.S1.Digit.Infinite.FixedTailClosedBudget.hull_invariant)
+    (type_of% (realize.{0,0,0,0,0} signature
+      (fun _ p x => p.1 (p.2.2) + p.2.1*x) (fun e => nomatch e))) Unit Unit := {
+  unitName := `D5.S1.Digit.Infinite.FixedTailClosedBudget.hull_invariant.__information_unit,
+  realizationName := `Reg.D5.S1.Digit.Infinite.FixedTailClosedBudget.hull_invariant.registration,
+  realizationSource := none, generated := false,
+  arena := .source ⟨arena⟩, objectArena := .source ⟨arena⟩,
+  catalog := Lean.Name.anonymous, localNames := false,
+  realization := .source arena ⟨registration⟩,
+  correspondence := {stage := .evidence, objectStage := .evidence},
+  bundleNonempty := .absent,
+  readout := some (realize.{0,0,0,0,0} signature
+    (fun _ p x => p.1 (p.2.2) + p.2.1*x) (fun e => nomatch e)),
+  variation := .absent, sensitivity := .absent, partialSensitivity := none, escapeFrom := none,
+  sourceSelection := some {
+    owner := `D5.S1.Digit.Infinite.FixedTailClosedBudget, definition := none, coordinates := #[0,1,3],
+    readouts := #[{
+      path := #["body", "body", "body", "body", "fn", "fn", "arg"],
+      stateBinder := 0, functionOperand := true, stateOperand := none, booleanPredicate := false }] },
+  continuation := .unknown, familyRecord := none, options := #[]}
+#print axioms registration
+#print axioms audit
+end Reg.D5.S1.Digit.Infinite.FixedTailClosedBudget.hull_invariant
+
+
+namespace Reg.D5.S1.Digit.Infinite.FixedTailClosedBudget.hull_minimal
+abbrev signature : Signature where
+  Params := Fin 2 → ℝ
+  State _ := ℝ
+  Role := Unit
+  finiteRole := inferInstance
+  nonemptyRole := inferInstance
+  Output _ _ := Set ℝ
+  Anchor := Empty
+  finiteAnchor := inferInstance
+
+def actual : Realization signature :=
+  realize signature (fun _ A a => Set.Icc (hullLower A a) (hullUpper A a)) (fun e => nomatch e)
+def rejected : Realization signature :=
+  realize signature (fun _ _ _ => {1}) (fun e => nomatch e)
+def sourceStatement : Prop := ∀ (A : Fin 2 → ℝ) (a : ℝ) (_ha : |a| < 1)
+    (l u : ℝ) (_hlu : l ≤ u)
+    (_hJ : ∀ i : Fin 2, Set.MapsTo (fun x => A i + a*x) (Set.Icc l u) (Set.Icc l u)),
+  Set.Icc (hullLower A a) (hullUpper A a) ⊆ Set.Icc l u
+abbrev arena : Arena where
+  signature := signature
+  Law R := ∀ (A : Fin 2 → ℝ) (a : ℝ) (_ha : |a| < 1) (l u : ℝ) (_hlu : l ≤ u)
+    (_hJ : ∀ i : Fin 2, Set.MapsTo (fun x => A i + a*x) (Set.Icc l u) (Set.Icc l u)),
+    R.readout () A a ⊆ Set.Icc l u
+private theorem rejected_law : ¬ arena.Law rejected := by
+  intro h
+  have hh := h (fun _ => 0) 0 (by norm_num) 0 0 le_rfl
+    (by intro i x hx; norm_num [Set.mem_Icc])
+  have hmem := hh (show (1:ℝ) ∈ ({1}:Set ℝ) by rfl)
+  norm_num at hmem
+def registration : Registration arena sourceStatement where
+  actual := actual
+  bridge := Iff.rfl
+  variation := ⟨@_root_.D5.S1.Digit.Infinite.FixedTailClosedBudget.hull_minimal,
+    rejected,rejected_law⟩
+  sensitivity := ⟨fun i => ⟨rejected,fun j hj => (hj (Subsingleton.elim j i)).elim,
+    rfl,rejected_law⟩,fun e => nomatch e⟩
+  dependence := by
+    intro i
+    refine ⟨(fun _ => (1:ℝ)),(0:ℝ),(1/2:ℝ),?_⟩
+    change Set.Icc (hullLower (fun _ => 1) 0) (hullUpper (fun _ => 1) 0) ≠
+      Set.Icc (hullLower (fun _ => 1) (1/2)) (hullUpper (fun _ => 1) (1/2))
+    intro he
+    have hmem : (1:ℝ) ∈ Set.Icc (hullLower (fun _ => 1) 0) (hullUpper (fun _ => 1) 0) := by
+      norm_num [hullLower,hullUpper]
+    rw [he] at hmem
+    norm_num [hullLower,hullUpper] at hmem
+noncomputable def audit : Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0}
+    (@_root_.D5.S1.Digit.Infinite.FixedTailClosedBudget.hull_minimal)
+    (type_of% (realize.{0,0,0,0,0} signature
+      (fun _ A a => Set.Icc (hullLower A a) (hullUpper A a)) (fun e => nomatch e))) Unit Unit := {
+  unitName := `D5.S1.Digit.Infinite.FixedTailClosedBudget.hull_minimal.__information_unit,
+  realizationName := `Reg.D5.S1.Digit.Infinite.FixedTailClosedBudget.hull_minimal.registration,
+  realizationSource := none, generated := false,
+  arena := .source ⟨arena⟩, objectArena := .source ⟨arena⟩,
+  catalog := Lean.Name.anonymous, localNames := false,
+  realization := .source arena ⟨registration⟩,
+  correspondence := {stage := .evidence, objectStage := .evidence},
+  bundleNonempty := .absent,
+  readout := some (realize.{0,0,0,0,0} signature
+    (fun _ A a => Set.Icc (hullLower A a) (hullUpper A a)) (fun e => nomatch e)),
+  variation := .absent, sensitivity := .absent, partialSensitivity := none, escapeFrom := none,
+  sourceSelection := some {
+    owner := `D5.S1.Digit.Infinite.FixedTailClosedBudget, definition := none, coordinates := #[0],
+    readouts := #[{
+      path := #["body", "body", "body", "body", "body", "body", "body", "fn", "arg"],
+      stateBinder := 1, functionOperand := false, stateOperand := none, booleanPredicate := false }] },
+  continuation := .unknown, familyRecord := none, options := #[]}
+#print axioms registration
+#print axioms audit
+end Reg.D5.S1.Digit.Infinite.FixedTailClosedBudget.hull_minimal

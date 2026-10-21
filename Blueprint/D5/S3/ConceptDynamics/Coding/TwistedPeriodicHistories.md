@@ -4,7 +4,19 @@
 
 Every positive twisted period is an actual legal bilateral history reconstructed from one finite numbered word and its ordered group seam.
 
-**Definition 1.1 (Restriction and signed extension are inverse).**
+**Theorem 1.1 (The return law at every signed block address).**
+
+$$\forall H \in Type,\; [\operatorname{Group}\left(H\right)]\forall n \in Nat, C \in \operatorname{GroupMat}\left(H, n, n\right), h \in H, j \in Nat, x \in \operatorname{TwistedPeriod}\left(C, h, j\right), q \in Int, t \in Int,\; \operatorname{historyAt}\left(x, \operatorname{add}\left(t, \operatorname{mul}\left(q, j\right)\right)\right) = \operatorname{pair}\left(\operatorname{baseEdge}\left(\operatorname{historyAt}\left(x, t\right)\right), \operatorname{mul}\left(h^{q}, \operatorname{groupCoordinate}\left(\operatorname{historyAt}\left(x, t\right)\right)\right)\right)$$
+
+*Proof.* Machine-checked in Lean as `D5/S3/ConceptDynamics/Coding/TwistedPeriodicHistories.signed_recovery` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+For any actual twisted history and any integers q and t, the edge at t+q*j has the same original numbered base edge as at t, and its group coordinate is h^q times the coordinate at t. No positivity or finiteness premise is needed. The commuting translation and left-group permutations turn the given one-block equation into its signed powers. This same return law supplies the actual primitive-lift chart and its noncommutative seam relation.
+
+**Definition 1.2 (Restriction and signed extension are inverse).**
 
 $$\forall H \in Type, group \in \operatorname{Group}\left(H\right), finiteH \in \operatorname{Fintype}\left(H\right), n \in Nat, C \in \operatorname{GroupMat}\left(H, n, n\right), h \in H, j \in Nat, hj \in \operatorname{NatPositive}\left(j\right),\; \operatorname{Equiv}\left(\operatorname{TwistedPeriod}\left(C, h, j\right), \operatorname{SeamWords}\left(C, h, hj\right)\right)$$
 
@@ -20,7 +32,7 @@ Restriction reads the actual length-j window at zero and its initial coordinate 
 
 For every integer address t=assemble j(q,r), extension uses the exact numbered edge (w.edge r, h^q*(z*prefixLabel w r)). Internal legality is supplied by liftWord. At each seam, the original lift_source and lift_target endpoint equations and z*totalLabel(w)=h*z join adjacent blocks. Euclidean blockAddress and both assemble inverse identities cover all negative as well as positive positions. The twist is proved on every integer coordinate. Signed recovery of an arbitrary twisted history uses the commuting translation and left-group permutations, Function.IsFixedPt.perm_zpow and Commute.mul_zpow. Thus restriction followed by extension recovers every coordinate, and extension followed by restriction recovers the same dependent finite word data. No generic signed-action induction or duplicated finite-word coordinate proof is added.
 
-**Definition 1.2 (Actual finite enumeration).**
+**Definition 1.3 (Actual finite enumeration).**
 
 $$\forall H \in Type, group \in \operatorname{Group}\left(H\right), finiteH \in \operatorname{Fintype}\left(H\right), n \in Nat, C \in \operatorname{GroupMat}\left(H, n, n\right), h \in H, j \in Nat, hj \in \operatorname{NatPositive}\left(j\right),\; \operatorname{Fintype}\left(\operatorname{TwistedPeriod}\left(C, h, j\right)\right)$$
 
@@ -32,7 +44,7 @@ $$\forall H \in Type, group \in \operatorname{Group}\left(H\right), finiteH \in 
 
 The positive-length argument is supplied explicitly. Fintype.ofEquiv transports the finite dependent sigma enumeration through twistedPeriodEquiv inverse. Consequently the actual twisted-history subtype is Finite. No global finiteness instance for unrestricted History is assumed.
 
-**Theorem 1.3 (Exact diagonal conjugacy sum).**
+**Theorem 1.4 (Exact diagonal conjugacy sum).**
 
 $$\forall H \in Type, group \in \operatorname{Group}\left(H\right), finiteH \in \operatorname{Fintype}\left(H\right), n \in Nat, C \in \operatorname{GroupMat}\left(H, n, n\right), h \in H, j \in Nat, hj \in \operatorname{NatPositive}\left(j\right),\; \operatorname{FintypeCard}\left(\operatorname{TwistedPeriod}\left(C, h, j\right)\right) = \operatorname{sumFin}\left(n, i, \operatorname{sumGroup}\left(H, z, \operatorname{coeff}\left(\operatorname{entry}\left(\operatorname{matrixPower}\left(C, j\right), i, i\right), \operatorname{product}\left(\operatorname{product}\left(\operatorname{inverse}\left(z\right), h\right), z\right)\right)\right)\right)$$
 
@@ -46,6 +58,7 @@ FintypeCard uses the constructed twistedPeriodFintype. sumFin and sumGroup sum o
 
 ## References
 
+- Truth anchor: `D5/S3/ConceptDynamics/Coding/TwistedPeriodicHistories.signed_recovery`
 - Truth anchor: `D5/S3/ConceptDynamics/Coding/TwistedPeriodicHistories.twistedPeriodEquiv`
 - Truth anchor: `D5/S3/ConceptDynamics/Coding/TwistedPeriodicHistories.twistedPeriodFintype`
 - Truth anchor: `D5/S3/ConceptDynamics/Coding/TwistedPeriodicHistories.twistedPeriod_card`

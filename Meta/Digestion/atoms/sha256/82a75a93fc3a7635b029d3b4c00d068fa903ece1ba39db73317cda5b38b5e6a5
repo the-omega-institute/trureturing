@@ -1,0 +1,47 @@
+**定理 23.1（实际 Fibonacci 比率恢复有限阶联合组成矩）。** 固定任意 $L\ge0$ 及 $\Omega_L$ 上任意概率律，在同一个零初始化读者读完来源词后，记其实际组成为 $C=(U,V)^{\mathsf T}$。对整数 $h\ge0$，在这份词后追加 $h$ 个实际空窗，记数量为 $Q_h$；$h=0$ 表示当前终值。则
+
+$$
+Q_h=qS^hC=\alpha_hU+\beta_hV,\qquad
+\alpha_h=F_{3h+3},\quad\beta_h=F_{3h+4},\qquad
+Q_{h+2}=4Q_{h+1}+Q_h.
+$$
+
+对任意整数 $r\ge0$，两份理想统计资料
+
+$$
+\mathcal A_r=\{\mathbb E Q_h^m:h\ge0,\ 0\le m\le r\},\qquad
+\mathcal B_r=\{\mathbb E U^aV^b:a,b\ge0,\ a+b\le r\}
+$$
+
+互相确定。仅 $0\le h\le r$ 的空窗数量矩已经足够；更精确地，每一齐次次数 $m$ 只需 $0\le h\le m$ 的 $m$ 次矩。因此至多需要 $\binom{r+2}{2}$ 个独立标量统计量，其中包括质量一；在受限历史支撑上秩可更低。全部未来均值只消费 $\mathbb E U,\mathbb E V$。增加空窗长度不会使这些至多 $r$ 次的统计取得更高次的独立组成矩。
+
+证明。合法词的组成和实际递推沿用本卷定义 8.1、式 (13.9) 及 [HiddenRelations C-28.1.4][H49]。实际空窗位移零、守卫总合法，故追加 $h$ 次正好给 $S^hC$，首次追加即使原末接缝为一也将其置零。数量恒等式用 $S=M^3$，$M=\left(\begin{smallmatrix}0&1\\1&1\end{smallmatrix}\right)$；$qM^t=(F_{t+3},F_{t+4})$ 从 $t=0$ 的 $(2,3)$ 和 Fibonacci 递推得到。因此 $qS^h$ 给所列系数。直接相乘 $S^2=4S+I$ 给数量递推，与 [关系延拓几何定理 7.3][N49] 的两读数更新是同一实际作用。
+
+二项式展开给每个次数 $m$ 的正向式
+
+$$
+\mathbb E Q_h^m
+=\sum_{j=0}^m\binom mj\alpha_h^{m-j}\beta_h^j\,
+\mathbb E U^{m-j}V^j.
+$$
+
+反向只用上述实际系数，未增加任意方向的测量。令 $t_h=\beta_h/\alpha_h$，$\alpha_h>0$。对 $k>h\ge0$，把两行共同右因子 $S^h$ 提出，得到
+
+$$
+\begin{aligned}
+\alpha_h\beta_k-\beta_h\alpha_k
+&=\det\begin{pmatrix}qS^h\\qS^k\end{pmatrix}\\
+&=(-1)^h\det\begin{pmatrix}q\\qS^{k-h}\end{pmatrix}\\
+&=(-1)^h\bigl(2F_{3(k-h)+4}-3F_{3(k-h)+3}\bigr)\\
+&=(-1)^hF_{3(k-h)}\ne0.
+\end{aligned}
+$$
+
+这里 $\det S=-1$，而 $2F_{n+4}-3F_{n+3}=F_n$ 由两次递推展开得到。故实际 Fibonacci 比率节点两两不同；不要求按 $h$ 单调排列。
+
+将各行除以 $\alpha_h^m$，令 $e_j=\binom mj\mathbb E U^{m-j}V^j$，则已知量是多项式 $\sum_{j=0}^m e_jt^j$ 在 $t_0,\ldots,t_m$ 的值。经典 Vandermonde 可逆性给唯一 $e_j$，再除以非零的 $\binom mj$ 得全部 $m$ 次联合矩。其矩阵就是 [有限 Vandermonde 原声明][V49] 中 `vandermonde_det_ne_zero_of_injective` 的评价矩阵；原 `finiteMomentReadout` 用节点振幅行向量乘此矩阵，本处用系数列向量被它左乘。非零行列式同时给这两个转置方向的可逆性，不把原声明的“矩索引”误认成这里的“空窗索引”。$m=0$ 是单元矩阵，仅恢复质量；$L=0$ 时 $U=V=0$，正次数资料全零，亦满足结论。
+
+逐次取 $m=0,\ldots,r$，所需个数为 $\sum_{m=0}^r(m+1)=\binom{r+2}{2}$。每个 $Q_h$ 是同一 $U,V$ 的线性函数，故所有至多 $r$ 次资料都属于这个有限矩空间，且这个反演已给其全部；不能靠更多 $h$ 突破次数上界。
+
+在 $n=3L$ 的位置表示中，$U,V$ 都是所选位置指示函数的固定线性组合，来自同一组成位移的 Horner 展开。因此 $Q_h^m$ 多线性化后只含 $|T'|\le m$ 的合法共同事件。§23.2 的目标判据说明：它们可由相应位置阶数报告计算，但组成矩的恢复不等于所有同阶位置矩逐一恢复。完整窗口边缘的 $1+4L$ 秩也不能被一次数量均值替换；一个平方矩只给跨关系的某个加权组合。证毕。
+

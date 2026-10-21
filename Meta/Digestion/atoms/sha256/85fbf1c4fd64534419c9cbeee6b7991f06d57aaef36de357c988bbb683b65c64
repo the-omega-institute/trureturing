@@ -1,0 +1,20 @@
+**例 18.4（$E=2$）。** 这是定理允许的最小偶纪元。此时
+$A_2=\langle\beta,\alpha\rangle$，$H_2=8$。从同一 $P$ 完成
+Reserve(8)、Raise(8)、Rho，再分别作 Right(beta) 或
+Right($\langle\alpha,\alpha\rangle$)，最后各作 Rho。所得
+
+$$
+\begin{aligned}
+t_0&=\langle\langle\langle\beta,\alpha\rangle,\beta\rangle,
+                      \langle\beta,\alpha\rangle\rangle,\\
+t_1&=\langle\langle\langle\beta,\alpha\rangle,\beta\rangle,
+                      \langle\beta,\beta\rangle\rangle
+\end{aligned}
+\tag{ABT.62}
+$$
+
+都是五叶、epoch 二；下一 Rho 候选分别为八叶和九叶。
+两种实际 Right payload 分别为 `10` 和 `01111`，其完整帧分别为
+`100`、$U(2)$、`10` 的连接和 `100`、$U(5)$、`01111` 的连接。
+它们是不同的已取得并保留的材料；本例没有共同 acquired-information 前提。
+

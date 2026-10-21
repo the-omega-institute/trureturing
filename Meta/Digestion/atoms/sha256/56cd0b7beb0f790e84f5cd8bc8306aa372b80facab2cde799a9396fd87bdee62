@@ -1,0 +1,2 @@
+**来源 1580.2（项目中的读出与恢复）。** 比较依托前批已使用的 `D5/S3/Entropy/Observation/DeterministicReadoutEntropyDecomposition.lean`、`D5/S3/Entropy/Forgetting/DeterministicEntropyEquality.lean` 及 `D5/S3/Entropy/ConditionalEntropyEquality.lean` 所区分的同联合律、确定读出和恢复关系。当前数学推导属于纯理论文本，源码阅读不等于当前 kernel 或 axiom 闭包核验；没有把新增散文误记为已冻结声明。
+

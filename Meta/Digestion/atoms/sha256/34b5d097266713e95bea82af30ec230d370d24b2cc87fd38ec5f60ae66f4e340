@@ -1,0 +1,167 @@
+**定理 21.1（每个窗口同时至多 $2/n$ 的修补）。** 对任意
+$p\in\mathscr L_n$，存在同一份 $n$ 位合法来源，其边缘
+$\widetilde p\in\mathscr C_n$ 满足
+
+$$
+\operatorname{TV}(p_i,\widetilde p_i)\le\frac2n
+\qquad\text{对每个 }i\in\mathbb Z_n.
+\tag{21.1}
+$$
+
+证明。使用 (18.2)–(18.3) 的同一归一化，写
+$p=\sum_\gamma\lambda_\gamma p^\gamma$，
+$p^\gamma=\mathbf1_\gamma/m_\gamma$，
+$\lambda_\gamma=m_\gamma\alpha_\gamma$，
+$m_\gamma\in\{1,2,3\}$，$\sum_\gamma\lambda_\gamma=1$。
+先在一个成分上构造，最后按这些权重混合。
+
+固定简单圈 $\gamma$，记 $m=m_\gamma$。
+从第零层的某次出现开始读其合法字 $u$，长度 $mn$，并按 $mn$ 周期延为
+整数下标序列。位置 $a$ 的基础层标签是 $a\bmod n$。
+第 $i$ 层的 $m$ 次出现对应 $i+rn$，$r\in\mathbb Z_m$，所以其窗口律为
+
+$$
+p_i^\gamma(\sigma)=\frac1m\sum_{r=0}^{m-1}
+\mathbf1\{(u_{i+rn},u_{i+1+rn},u_{i+2+rn})=\sigma\}.
+\tag{21.2}
+$$
+
+这不是对全部 $mn$ 个位置作任意旋转平均：抽样相位必须留在同一基础层。
+为修补，独立均匀选 $j\in\mathbb Z_n$ 和 $r\in\mathbb Z_m$。
+先取连续 $n$ 位并保留原层号，定义
+
+$$
+V^{j,r}_{j+t\bmod n}=u_{j+rn+t\bmod mn}\quad(0\le t<n),
+\qquad V^{j,r}_j:=0.
+\tag{21.3}
+$$
+
+最后的赋值覆盖切口位。$j$ 可取任一整数代表元；换成 $j+an$ 只把均匀相位
+$r$ 平移为 $r+a\bmod m$，故条件分布不变。
+除跨切口的边外，截取段相邻位来自原字，相邻乘积为零。
+切口位变零后，$j-1$ 与 $j$、$j$ 与 $j+1$ 的相邻乘积也为零，包括从截取
+末位接回首位的一条边。因此每个 $V^{j,r}$ 都属于 $B_n^{\mathrm{cyc}}$。
+它们的均匀混合定义一个来源 $P^\gamma$，记其边缘为 $\widetilde p_i^\gamma$。
+
+固定窗口标签 $i$，令 $R_i^j$ 表示在切口 $j$ 下仅对相位 $r$ 平均的三位律。
+对原成分记
+
+$$
+x=q_i^\gamma=\frac1m\sum_ru_{i+rn},\qquad
+y=q_{i+2}^\gamma=\frac1m\sum_ru_{i+2+rn}.
+\tag{21.4}
+$$
+
+下面精确区分全部切口。
+
+若 $j\notin\{i,i+1,i+2\}$，令 $t\in\{0,\ldots,n-1\}$ 满足
+$j+t\equiv i\pmod n$。此时 $1\le t\le n-3$，三个位置在截取段内连续且
+没有任何一个被置零。存在整数 $a$ 使 $j+t=i+an$，故三位为
+
+$$
+(u_{i+(r+a)n},u_{i+1+(r+a)n},u_{i+2+(r+a)n}).
+$$
+
+$r\mapsto r+a\bmod m$ 是层出现次数的双射；因相位均匀，
+$R_i^j=p_i^\gamma$。这是律相同，不要求同一个未重编号相位的三位逐样本相同。
+
+若 $j=i$，由 (21.3) 直接得到
+
+$$
+(V_i,V_{i+1},V_{i+2})=(0,u_{i+1+rn},u_{i+2+rn}).
+\tag{21.5}
+$$
+
+所以 $R_i^i$ 是原窗口律只把左端抹零的推前。
+这个映射只将 $100\mapsto000$、$101\mapsto001$，其余模式不变。
+离开两个左端为一的模式的质量恰是 $x$，并全部进入互不相交的左端为零的
+模式；总 $\ell^1$ 变化为 $2x$，所以
+$\operatorname{TV}(p_i^\gamma,R_i^i)=x$。
+
+若 $j=i+2$，允许把 $j$ 提升为这个整数代表元，窗口前两位在截取段末尾。
+代入 $t=n-2,n-1,0$ 给
+
+$$
+(V_i,V_{i+1},V_{i+2})
+=(u_{i+(r+1)n},u_{i+1+(r+1)n},0).
+\tag{21.6}
+$$
+
+$r\mapsto r+1\bmod m$ 保持均匀相位，故这正是原窗口律只把右端抹零的
+推前。它只将 $001\mapsto000$、$101\mapsto100$，离开与进入的模式集合
+不相交，移动总质量 $y$，所以
+$\operatorname{TV}(p_i^\gamma,R_i^{i+2})=y$。
+相位平移解释了跨切口的右端情形，不能在固定 $r$ 下直接把它写成原窗口。
+
+若 $j=i+1$，代入 $t=n-1,0,1$ 给
+
+$$
+(V_i,V_{i+1},V_{i+2})
+=(u_{i+(r+1)n},0,u_{i+2+rn}).
+\tag{21.7}
+$$
+
+记其律为 $c_i=R_i^{i+1}$。中位总为零，左、右端边缘分别仍为 $x,y$，
+因为对左端的 $r+1$ 仍遍历全部相位，而右端本来如此。
+但两个端点来自不同相位，(21.7) 的联合配对可以不同于 (21.2)，
+所以不把 $c_i$ 当作原窗口简单抹去中位的律。
+
+对任意边缘为 $x,y$ 的两个指示变量，容斥给同时为一的概率至少为
+$x+y-1$，并且概率非负。因此原窗口和中位切口窗口都满足
+
+$$
+p_i^\gamma(101)\ge a,\qquad c_i(101)\ge a,\qquad
+a=\max(0,x+y-1).
+\tag{21.8}
+$$
+
+在原窗口中，两端同时为一时 no11 支持迫使中位为零；
+在 $c_i$ 中中位按构造已为零。这说明容斥下界确是同一个 $101$ 原子的
+共有质量，而非只在不同事件上得到相同数值。
+对两个概率向量 $b,d$，恒等式
+
+$$
+\operatorname{TV}(b,d)=1-\sum_{\sigma\in\Sigma}\min(b(\sigma),d(\sigma))
+$$
+
+由 $|b-d|=b+d-2\min(b,d)$ 求和即得。
+所以 $\operatorname{TV}(p_i^\gamma,c_i)\le1-a$。
+
+对 $j$ 的均匀混合给
+
+$$
+\widetilde p_i^\gamma
+=\frac{n-3}{n}p_i^\gamma+\frac1n(R_i^i+c_i+R_i^{i+2}).
+\tag{21.9}
+$$
+
+三角不等式或 TV 的凸性于是给
+
+$$
+\begin{aligned}
+\operatorname{TV}(p_i^\gamma,\widetilde p_i^\gamma)
+&\le\frac{x+y+1-\max(0,x+y-1)}n\\
+&\le\frac2n.
+\end{aligned}
+\tag{21.10}
+$$
+
+最后一步分为 $x+y\le1$ 时分子 $x+y+1\le2$，以及 $x+y\ge1$ 时分子
+恰为二。全部 $i$ 用的是同一来源 $P^\gamma$，没有逐窗分别选择来源。
+
+最终取 $P=\sum_\gamma\lambda_\gamma P^\gamma$，仍是原 $n$ 位合法字上的
+概率律，边缘为 $\widetilde p_i=\sum_\gamma\lambda_\gamma\widetilde p_i^\gamma$。
+使用同一归一化权重和 TV 凸性，
+
+$$
+\operatorname{TV}(p_i,\widetilde p_i)
+\le\sum_\gamma\lambda_\gamma
+\operatorname{TV}(p_i^\gamma,\widetilde p_i^\gamma)
+\le\frac2n\sum_\gamma\lambda_\gamma=\frac2n.
+$$
+
+这完成同时逐窗的结论。$101$ 的共有质量把三个受影响切口的粗界 $3/n$
+改进为 $2/n$；没有隐藏地假定中位切口保留联合律。
+(21.3) 是概率来源空间上的数学操作，把切口位置零不自动给原生执行者
+提供免费 reset、控制权限或物理实现。证毕。
+

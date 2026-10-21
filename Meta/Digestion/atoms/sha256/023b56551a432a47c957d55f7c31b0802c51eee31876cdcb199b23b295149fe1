@@ -1,0 +1,95 @@
+## 208. FIB 网络上的外加多组分趋化、反应—扩散斑图与聚集临界性
+
+固定 FIB 关系给出的有限图 \(G_j=(V_j,E_j)\)，令 \(B_j\) 为关联矩阵、\(L_j=B_j^{\mathsf T}W_jB_j\) 为另行赋权的图拉普拉斯。顶点上放置 \(m\) 个种群密度 \(u=(u_1,\ldots,u_m)\) 和 \(q\) 个趋化或抑制信号 \(c=(c_1,\ldots,c_q)\)。FIB 只提供顶点、边和组合路径；体积、嵌入距离、扩散张量、趋化系数、反应网络、化学降解、边界、噪声和观测通道均外加。
+
+对种群 \(a\)，外加守恒边通量和反应项可写成
+
+$$
+J_a=-D_aB_ju_a+\bar u_a\sum_{\ell=1}^q\chi_{a\ell}B_jc_\ell,
+\qquad
+\dot u_a=B_j^{\mathsf T}J_a+R_a(u,c),
+\tag{208.1}
+$$
+
+信号方程为
+
+$$
+\tau_\ell\dot c_\ell
+=-D^c_\ell L_jc_\ell-\alpha_\ell c_\ell
++\sum_{a=1}^m\beta_{\ell a}u_a+S_\ell.
+\tag{208.2}
+$$
+
+\(\chi_{a\ell}\) 的符号分别表示吸引或排斥，\(R_a\) 可包含出生、死亡、竞争、饱和和化学反应。质量守恒只有在相应反应项和边界通量为零时成立，不能从 FIB 图结构自动推出。若 \(\tau_\ell\to0\) 且
+\(K_\ell=(D^c_\ell L_j+\alpha_\ell I)^{-1}\) 存在，则
+\(c_\ell=K_\ell(\sum_a\beta_{\ell a}u_a+S_\ell)\)，趋化作用成为图上的非局部交叉扩散。\(\alpha_\ell=0\) 时还需零模相容条件，\(\alpha_\ell>0\) 则给出外加屏蔽长度。
+
+设 \((u_*,c_*)\) 是均匀稳态，令 \(L_j\varphi_{\ell,j}=\lambda_{\ell,j}\varphi_{\ell,j}\)。线性化的图模态满足
+
+$$
+\partial_tz_\ell=\mathsf A_j(\lambda_{\ell,j})z_\ell,
+\qquad
+\mathsf A_j(\lambda)=
+\begin{pmatrix}
+R_u-\lambda D_u & \lambda X\\
+B_c & R_c-\lambda D_c
+\end{pmatrix},
+\tag{208.3}
+$$
+
+并定义
+
+$$
+s_j(\lambda)=\max\operatorname{Re}\operatorname{spec}\mathsf A_j(\lambda).
+\tag{208.4}
+$$
+
+若 \(s_j(0)<0\) 而某个正特征值使 \(s_j(\lambda_{\ell,j})>0\)，均匀稳态对均匀扰动稳定而对空间扰动失稳，得到外加反应—扩散—趋化的 Turing 型斑图。最先增长的模态由
+
+$$
+\lambda_{\rm sel,j}\in\arg\max_{\lambda_{\ell,j}}s_j(\lambda_{\ell,j})
+\tag{208.5}
+$$
+
+选择，其形状仍取决于边界、缺陷和特征向量。图谱只有在给定长度标度和嵌入后才可与连续波数对应；改变边权或边界会移动失稳带。
+
+二维、单种群、无反应且信号快速无屏蔽时，外加连续极限可写
+
+$$
+\partial_tu=D\Delta u-\chi\nabla\!\cdot(u\nabla c),
+\qquad
+-D_c\Delta c=\beta u.
+\tag{208.6}
+$$
+
+在全平面 Newton 核归一化和适当正则性下，经典临界质量为
+
+$$
+M_c=\frac{8\pi D D_c}{\chi\beta}.
+\tag{208.7}
+$$
+
+这个 \(8\pi\) 只属于所列模型；屏蔽、有界域、化学反应、多个物种、非局部核和时间依赖信号都会改变或消除该分界。有限 FIB 图在固定质量和有限顶点数下没有连续 PDE 意义的有限时间无穷大，只能出现向少数顶点集中的高峰。图列体积、边权和归一化若随网格尺度改变，离散峰值是否逼近连续爆聚必须另行证明。
+
+随机通量、信号和反应可写为
+
+$$
+\mathrm du=\mathcal F_u(u,c)\,\mathrm dt
++\Sigma_u(u,c)\,\mathrm dW_u,
+\qquad
+\tau\,\mathrm dc=\mathcal F_c(u,c)\,\mathrm dt
++\Sigma_c(u,c)\,\mathrm dW_c .
+\tag{208.8}
+$$
+
+噪声能在确定性稳定区触发斑图成核，也能在超临界区打散聚集。若读出为
+
+$$
+y(t)=Q_u u(t)+Q_c c(t)+\eta(t),
+\tag{208.9}
+$$
+
+则被 \(Q_u\) 湮灭的模态不可见，只测总质量也无法区分均匀态、条纹态和多个团簇。有限时间轨迹通常只识别 \(\chi\beta/D_c\)、屏蔽长度和反应时间等组合，不能分别恢复全部参数。
+
+因此，FIB 递归只提供关系、图谱和路径骨架；趋化参数、化学信号、反应网络、几何尺度、边界、噪声和测量均须外加。聚集阈值、Turing—趋化斑图、模式选择、离散峰值、连续爆聚与随机切换，都是指定外加模型后的条件结论，不是 FIB ATOM 递归单独确定的普适趋化统计。
+

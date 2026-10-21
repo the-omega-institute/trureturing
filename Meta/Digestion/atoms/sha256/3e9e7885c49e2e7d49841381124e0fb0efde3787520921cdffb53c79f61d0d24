@@ -1,0 +1,77 @@
+**命题 72.2（FIB 代数增长与粒子数的双尺度误差）。** 假设存在极限状态空间 \(E_\infty\)、嵌入 \(\iota_j:E_j\to E_\infty\)、极限核 \(Q_\infty\)，并且
+\[
+\sup_{x,\mu}
+d_{\mathrm{TV}}\!\left(
+(\iota_j)_\#Q_j(x,\mu),
+Q_\infty(\iota_jx,(\iota_j)_\#\mu)
+\right)
+\le\eta_j\longrightarrow0.
+\]
+若 Lipschitz 常数和初态误差在 \(j\) 上统一，令 \(\mu_t^\infty\) 由极限流递推，则
+\[
+\max_{t\le T}
+\mathbb E d\!\left(
+(\iota_j)_\#\mu_t^{N,j},\mu_t^\infty
+\right)
+\le
+C_T\bigl(N^{-1/2}+\eta_j+e_{0,j}\bigr).
+\]
+只有在 \(N\to\infty\)、\(j\to\infty\) 且各误差同时消失时，才可交换粒子数极限和 FIB 代数增长极限。没有统一逼近、矩界或 Lipschitz 常数时，只能逐 \(j\) 处理。
+
+若另给位置嵌入 \(x_j:E_j\to[0,1]\)、步长 \(\epsilon_j,\delta_j\)，对光滑测试函数定义外加离散生成器
+\[
+(\mathcal L_{j,\mu}\varphi)(x,c)
+=\delta_j^{-1}\sum_yQ_j((x,c),\mu)(y)
+[\varphi(x_j(y),c(y))-\varphi(x,c)].
+\]
+假设在紧集上一致有
+\[
+\mathcal L_{j,\mu}\varphi
+\longrightarrow
+b_c(x,\mu)\partial_x\varphi
++\tfrac12a_c(x,\mu)\partial_{xx}\varphi
++\sum_{d\in\mathcal C}
+R_{cd}(x,\mu)[\varphi(x,d)-\varphi(x,c)],
+\]
+并有初态紧性、二阶跳跃矩界和唯一弱解。若 \(N,j\to\infty\) 时离散误差与 \(N^{-1/2}\) 同时趋零，则经验测度的极限满足
+\[
+\partial_t\rho_c
+=-\partial_x(b_c\rho_c)
++\tfrac12\partial_{xx}(a_c\rho_c)
++\sum_dR_{dc}(x,\rho)\rho_d
+\]
+的弱形式。对每个光滑 \(\varphi\)，
+\[
+\langle\varphi,\rho_t\rangle
+=\langle\varphi,\rho_0\rangle
++\int_0^t
+\langle\mathcal A_{\rho_s}\varphi,\rho_s\rangle\,ds.
+\]
+反射或吸收边界必须写进 \(Q_j\) 和弱问题；不能从词序递归推出。证明的鞅为
+\[
+M_t^{N,j}(\varphi)
+=\langle\varphi,\mu_t^{N,j}\rangle
+-\langle\varphi,\mu_0^{N,j}\rangle
+-\sum_{s<t}\delta_j
+\langle\mathcal L_{j,\mu_s^{N,j}}\varphi,
+\mu_s^{N,j}\rangle,
+\]
+其固定宏观时间上的条件二次变差为 \(O(N^{-1})\)。若 PDE 不唯一，只能声称紧性和“任一子列极限均为弱解”。
+
+两型 \(\mathcal C=\{\alpha,\beta\}\) 的反应—扩散特例为
+\[
+\partial_t\rho_\alpha
+=D_\alpha\partial_{xx}\rho_\alpha
+-\partial_x(b_\alpha\rho_\alpha)
+-r_{\alpha\beta}(x,\rho)\rho_\alpha
++r_{\beta\alpha}(x,\rho)\rho_\beta,
+\]
+\[
+\partial_t\rho_\beta
+=D_\beta\partial_{xx}\rho_\beta
+-\partial_x(b_\beta\rho_\beta)
++r_{\alpha\beta}(x,\rho)\rho_\alpha
+-r_{\beta\alpha}(x,\rho)\rho_\beta.
+\]
+扩散系数、漂移、反应率和质量边界均由外加核确定；FIB 的 \(\alpha,\beta\) 出现频率不指定它们。
+

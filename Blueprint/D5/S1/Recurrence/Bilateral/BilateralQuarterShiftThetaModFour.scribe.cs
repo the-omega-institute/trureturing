@@ -39,6 +39,10 @@ internal sealed class BilateralQuarterShiftThetaModFourDocument : IScribeDocumen
                 Ref(ThetaModule + ".coeff_thetaSeries"),
                 Text(". Its constant coefficient is one, and each positive square "
                     + "coefficient is two; all other coefficients are zero.")),
+            Node("squareSupport", "The positive-square support series", PublishedSquareFormula(),
+                "The constant coefficient is zero, each positive square has coefficient one, and all other coefficients are zero.", DescribeRole.Definition),
+            Node("square_approximation", "Finite square approximation", PublishedApproximationFormula(),
+                "Below degree N+1 the support series equals the sum of the first N+1 positive-square monomials."),
             Node("bilateralTerm", "The reindexed bilateral terms", TermFormula(),
                 "Positive index m+1 and negative index -m-2 use nonnegative exponents "
                 + "and an inverse whose constant coefficient is one.", DescribeRole.Definition),
@@ -219,4 +223,31 @@ internal sealed class BilateralQuarterShiftThetaModFourDocument : IScribeDocumen
                 Biconditional(Equal(remainder, D(2)), square),
                 Biconditional(Equal(remainder, D(0)), Seq(Neg, Sp, Parenthesized(square))))))));
     }
+    private static Formula PublishedRingBinders() => Seq(Bound("R", Named("Type")),
+        OpenBracket, Call("CommRing", F.Id("R")), CloseBracket, Sp);
+    private static Formula PublishedSupport() => Parenthesized(Seq(Named("squareSupport"), Colon, Sp,
+        Call("PowerSeries", F.Id("R"))));
+    private static Formula PublishedSquareFormula()
+    {
+        Formula n = F.Id("n");
+        return Disp(Seq(PublishedRingBinders(), Equal(PublishedSupport(), Call("mk",
+            Parenthesized(Seq(n, Colon, Sp, Naturals(), Sp, Mapsto, Sp,
+                Operatorname, Grp(F.Id("if")), Sp, Equal(n, D(0)), Sp,
+                Operatorname, Grp(F.Id("then")), Sp, D(0), Sp,
+                Operatorname, Grp(F.Id("else")), Sp,
+                Operatorname, Grp(F.Id("if")), Sp, Call("IsSquare", n), Sp,
+                Operatorname, Grp(F.Id("then")), Sp, D(1), Sp,
+                Operatorname, Grp(F.Id("else")), Sp, D(0)))))));
+    }
+    private static Formula PublishedApproximationFormula()
+    {
+        Formula n = F.Id("n"), m = F.Id("m"), upper = F.Id("N");
+        var sum = Seq(new Formula.Subscript(Sum, Seq(m, Sp, InMacro, Sp,
+            new Formula.Apply(Seq(Named("Finset"), Dot, Named("range")), [Add(upper, D(1))]))),
+            Sp, new Formula.Power(X(), new Formula.Power(Parenthesized(Add(m, D(1))), D(2))));
+        return Disp(Seq(PublishedRingBinders(), Bound("N", Naturals()), Bound("n", Naturals()),
+            Implication(Seq(n, Sp, Lt, Sp, Add(upper, D(1))),
+                Equal(Call("coeff", n, PublishedSupport()), Call("coeff", n, Parenthesized(sum))))));
+    }
+
 }

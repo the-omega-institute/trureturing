@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:e6832487837f0bbac7fbe65d8b6c9ad24ee5ca090f9feeb9eb232fd954076f54
+  normalized_sha256: sha256:e6832487837f0bbac7fbe65d8b6c9ad24ee5ca090f9feeb9eb232fd954076f54
+cas_ref: sha256:e6832487837f0bbac7fbe65d8b6c9ad24ee5ca090f9feeb9eb232fd954076f54
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 'Nonpropositional fragment: Pure definition and parameter domain; no estimate or reconstruction theorem in this atom.'
+    previous_atom_id: 65aa27dbfe5bf088ceeffaaf987ee1086873e79b4ba4a12bf8c9bd1a084d5dbf
+    next_atom_id: d1441353c289e91008c342715430522cd05cfaf3e1dc8282e3909552789c6e10

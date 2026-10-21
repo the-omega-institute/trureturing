@@ -1,0 +1,15 @@
+**定义 308.3（带成本的自适应覆盖目标）。** 更一般地，允许由输入 $n$ 生成有限查询族 $\mathcal T(n)$，其中每项记录首一模多项式与平移参数。所需的两个条件分别是
+
+$$
+\begin{aligned}
+n\text{ 为合数}&\Longrightarrow
+\exists(P,a)\in\mathcal T(n),\quad
+\operatorname{rem}_P(\Delta_{n,a})\ne0,\\
+\operatorname{Cost}_{\mathrm{generate}}(n)+
+\operatorname{Cost}_{\mathrm{all\ queries}}(n)&\le\operatorname{poly}(L(n)).
+\end{aligned}
+$$
+
+生成成本包括选择模多项式与参数所依赖的计算；查询成本包括系数位长、指数更新、约化与读取。第 305 节排除仅在固定有限库中换序或换平移来完成第一个条件，第 306 节给出本族的有限终止与指数级基准，第 307 节给出第二个条件的明确计费。由固定族扩展到输入相关族仍需证明覆盖；仅有可逆编码、镜像关系或商环拼接不足以履行该条件。
+
+## 追加锚（本行以下为增补区）

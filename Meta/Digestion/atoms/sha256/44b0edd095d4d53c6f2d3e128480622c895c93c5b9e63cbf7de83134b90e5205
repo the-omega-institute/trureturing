@@ -1,0 +1,12 @@
+**定义 39.3（首层块准入）。** 令 $G(l,c,t,z)$ 是引理 39.2 的子层闭包结果。定义
+
+$$
+\mathcal A(l,c)\ \Longleftrightarrow\
+\exists t\in[\max(0,2c-H),c]\cap\mathbb Z:
+\left[\max_{l<m\le c}R_0(m)\le t\right]
+\ \land\ \bigwedge_{A_z\ne\varnothing}G(l,c,t,z).
+\tag{TM.3907}
+$$
+
+空接受侧不增加义务。该存在量词的同一个 $t$ 决定整个初始块、同一个实际宏、所有真实接受纤维和它们的表；只有真实读出 $z$ 后才允许采用该纤维自己的子层计划。另定义 $\mathcal F(l,c)$ 为该块每个初始 $m$ 行至多一个目标。式（TM.3907）是联合关系，不是对不同实现分别优化再取交。
+

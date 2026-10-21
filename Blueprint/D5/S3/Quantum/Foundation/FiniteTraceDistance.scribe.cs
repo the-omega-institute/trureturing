@@ -38,9 +38,21 @@ internal sealed class FiniteTraceDistanceDocument : IScribeDocumentDefinition
                     "DensityState and QuantumChannel are the canonical FiniteStateChannel carriers. "
                     + "raw denotes CStarMatrix.ofMatrix.symm, applied to the value of a state when "
                     + "its argument is a density state; toCstar denotes the forward equivalence. "
-                    + "All coordinate types are finite with decidable equality, including empty types. "
+                    + "FiniteType denotes a finite coordinate type with decidable equality, including the empty type. "
+                    + "Explicit Type binders carry only the displayed instances. "
                     + "RCLike is the existing Mathlib scalar interface. Adjoint means conjugate "
                     + "transpose and the square root uses the positive-semidefinite matrix order.")),
+                Item("inner_A_mulVec_eq", "The Gram matrix computes transformed inner products", All(
+                    [Bound("n", F.Id("Type"))], Seq(
+                        Seq(OpenBracket, Call("Fintype", n), CloseBracket),
+                        All([Bound("A", csquare),
+                            Bound("v", new Formula.TypeArrow(n, complex)),
+                            Bound("w", new Formula.TypeArrow(n, complex))],
+                            Eqn(Call("inner", complex,
+                                    QCall("WithLp", "toLp", Num(2), QCall("Matrix", "mulVec", a, F.Id("v"))),
+                                    QCall("WithLp", "toLp", Num(2), QCall("Matrix", "mulVec", a, F.Id("w")))),
+                                Call("dotProduct", Call("star", F.Id("v")),
+                                    QCall("Matrix", "mulVec", Mul(Adjoint(a), a), F.Id("w")))))))),
                 Item("exists_svd_sqrt_eigenvalues", "Singular value decomposition", All(
                     [Bound("n", F.Id("Type"))], Seq(
                         Seq(OpenBracket, Call("Fintype", n), CloseBracket),
@@ -103,6 +115,15 @@ internal sealed class FiniteTraceDistanceDocument : IScribeDocumentDefinition
                 Item("traceDistance_triangle", "Density distance triangle inequality", States(
                     Le(D(rho, tau), Add(D(rho, sigma), D(sigma, tau))), true)),
                 Item("traceDistance_le_one", "All density distances are at most one", States(Le(D(rho, sigma), Num(1)))),
+                Item("traceNorm_sub_orthogonal", "Orthogonal positive difference", All(
+                    [Bound("n", F.Id("Type"))], Seq(
+                        OpenBracket, Call("Fintype", n), CloseBracket, Sp,
+                        OpenBracket, Call("DecidableEq", n), CloseBracket, Sp,
+                        All([Bound("A", csquare), Bound("B", csquare)],
+                            Implies(Call("PosSemidef", a), Implies(Call("PosSemidef", b),
+                                Implies(Eqn(Mul(a, b), Num(0)),
+                                    Eqn(TN(Sub(a, b)), Add(Call("re", Call("trace", a)),
+                                        Call("re", Call("trace", b))))))))))),
                 Item("trace_norm_jordan_mass", "Hermitian Jordan mass", All(
                     [Bound("n", F.Id("FiniteType")), Bound("A", csquare)],
                     Implies(QCall("Matrix", "IsHermitian", a), Eqn(TN(a),
@@ -180,6 +201,8 @@ internal sealed class FiniteTraceDistanceDocument : IScribeDocumentDefinition
     };
     private static string Explanation(string name) => name switch
     {
+        "inner_A_mulVec_eq" => "For any finite coordinate type and complex square matrix A, the inner product of A v and A w is the quadratic pairing of v and w through the Gram matrix A* A. The vectors are equipped with the Euclidean inner product by WithLp.toLp 2. No invertibility, normalization or decidable equality is required.",
+        "traceNorm_sub_orthogonal" => "For positive semidefinite complex matrices A and B with A B zero, A plus B is the positive square root of the Gram matrix of A minus B. The trace norm is therefore the sum of their real traces.",
         "exists_svd_sqrt_eigenvalues" => "For every finite complex square matrix, two unitary factors give a diagonal singular-value decomposition. The diagonal entries are the real square roots of the eigenvalues of its Gram matrix. The let-bound hH is the canonical Hermitian proof for that Gram matrix; ofReal denotes the real-to-complex embedding. The retained proof is Alex Meiburg's Physlib SVD.",
         "traceNorm" => "This is the real part of the trace of the positive square root of the Gram matrix.",
         "traceNorm_neg" => "Negation leaves the Gram matrix unchanged.",

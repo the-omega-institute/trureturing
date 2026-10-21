@@ -1,0 +1,94 @@
+**Theorem 127.1 (Original realization and exact error).** For every
+original sequence and cap satisfying (121.1)--(121.3), the law
+constructed in Theorem 126.1 has original $\mathcal O_2$ and
+$\mathcal N_2$ realizations with the same common seed and the
+same original-tape law at every source. They use zero advice,
+hand off finitely at every source and seed, and have uniform
+selected-law error exactly $\varepsilon$. Every actual tail
+source has error exactly $\varepsilon$.
+
+**Proof.** Let one $U$ be uniform on $[0,1)$, independent of
+the source. Its law is the same for all $x\in X$. Partition
+this interval into the twelve endpoint weights from (126.1)--(126.3),
+omitting zero intervals. Within the chosen positive endpoint
+interval rescale the local value to $[0,1)$, and partition it
+according to that endpoint's pair weights. Rescale within the
+chosen positive pair interval once more to a value $v\in[0,1)$.
+For each of its three stopped cells, predeclare a partition of
+this same $v$ interval with label probabilities
+$T_{ij}^{\tau}/w_{ij}$ from that endpoint table. These three
+partitions define all three deterministic cell labels from $U$
+before any answers. No independent terminal seeds are needed,
+and no label choice is made separately for each source.
+
+Use half-open intervals in a fixed order so that every boundary
+has a specified branch and label. If the seed carrier is instead
+$[0,1]$, assign the last null endpoint any valid pair and terminal
+table explicitly. All branches then have finite case selection.
+The probabilities and partitions are mathematically defined for
+arbitrary real parameters; no effective arithmetic or algorithm
+for computing arbitrary real interval boundaries is asserted.
+
+The $O$ realization actually queries the chosen original prime
+indices $i<j\le5$, stopping after a zero at $i$, a zero at $j$,
+or positive exhaustion. It outputs the original measurable mark
+$\theta_r$ prescribed by that stopped cell. Only acquired static
+answers and the one seed are used. The $N$ realization with the
+same $U$ actually acquires both replies, reconstructs the same
+stopped cell and emits the identical mark. After a zero at $i$
+its second reply is ignored, but this second request is still
+made and counted. This is the completion of Proposition 90.2,
+not a reduction of the count by ignoring a reply. Thus $O$ makes
+one or two actual requests and $N$ makes exactly two, on distinct
+original addresses. Both hand off after finite operations for
+every seed and actual source. In particular they meet the weaker
+sourcewise almost-sure handoff contract. The finite endpoint
+selection is internal seed randomness, not advice about the source.
+
+The original-to-finite necessity and finite-to-original realization
+are the two directions of Theorem 110.2. In the realization used
+here the finite index $i$ means exactly the actual static answer
+$q_i(x)=\mathbf1_{p_i\mid N(x)}$ on the original labeled source;
+label $r$ means the original tape $\theta_r$. A source with
+$n(x)\le5$ has one of the 31 low words with that first zero,
+including arbitrary additional zeros. Its selected target is
+exactly the target checked at that word. Hence its error is at
+most $\varepsilon$, and no later-zero restriction is imposed.
+
+For $n(x)>5$ its low word is $11111$. The emitted law is
+supported on $\theta_0,\ldots,\theta_5$, while its actual
+selected target retains the distinct original mark
+$\theta_{n(x)}$ with its prescribed positive amplitude. The
+exact tail identity (110.9), with
+$p_{11111}(0)=1-\varepsilon$, gives
+
+$$
+\operatorname{TV}(\widehat\lambda_{O,x},\lambda_x^a)
+ =\operatorname{TV}(\widehat\lambda_{N,x},\lambda_x^a)
+ =\max\{\varepsilon,a_{n(x)}\}=\varepsilon.
+\tag{127.1}
+$$
+
+Monotonicity and $a_6\le\varepsilon$ give the last equality,
+including $a_6=\varepsilon$. No tail amplitude is replaced,
+truncated or set to zero. Boundaries, Theorem 35.2 supplies actual
+sources with first absence six by the finite pattern $111110$.
+Therefore (127.1) attains the supremum over actual sources;
+an infinite all-positive source is neither needed nor available.
+Together with the low-word bounds this proves uniform error exactly
+$\varepsilon$.
+
+The output-law statements concern only the separately selected
+marked targets (110.3). The original consumer and original
+nonatomic targets remain fixed on the full carrier. An emitted
+atomic law has TV distance one from each unchanged nonatomic
+original target, and the consumer returns unknown on these $B_1$
+marks, as supplied by Acquisition Resources, Theorem 82.1.
+Consequently the chosen marked-law acquisition claim is a literal
+source/carrier/resource correspondence, with no new performance
+claim for that consumer or those original targets. Bounded addresses
+and finite mark support describe the constructed witnesses;
+necessity still quantifies over the arbitrary-address, full-carrier
+competitors transported by 110.2. No source distribution or
+transition-time bound has been introduced. $\square$
+

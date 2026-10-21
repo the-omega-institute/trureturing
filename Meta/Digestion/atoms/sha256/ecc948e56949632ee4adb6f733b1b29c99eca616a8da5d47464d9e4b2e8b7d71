@@ -1,0 +1,34 @@
+## 22. Complete four-state arena and exact kernel diamond
+
+The first explicit intrinsic calculation uses the entire length-three factor object. The four words are
+
+```text
+SLS, SLL, LSL, LLS.
+```
+
+They occur at starts 4, 1, 0 and 2. The frozen factor-complexity theorem proves there are exactly four length-three factors; thus their word-preserving finite presentation is complete. No sampling cutoff defines the arena.
+
+The actual readouts are:
+
+| Word | (r,z) | P | m |
+|---|---|---:|---:|
+| SLS | (1,2) | 1 | 0 |
+| SLL | (2,1) | 0 | -2 |
+| LSL | (2,1) | 1 | 0 |
+| LLS | (2,1) | 2 | 2 |
+
+There are twelve ordered distinct pairs. In the explicitly named two-coordinate analysis view, the residual counts are
+
+```text
+no readout       12
+count only        6
+center only       2
+count and center  0.
+```
+
+The exclusive capture counts are two for count and six for center, with exact rates 1/6 and 1/2. The kernels are incomparable: SLL and LLS agree in count but differ in center; SLS and LSL agree in center but differ in count.
+
+The generated kernel closure is the four-node diamond consisting of universal agreement, count agreement, center agreement and identity. Either coordinate can be added first. The two ordered capture decompositions are 6+6 and 10+2; both terminate with all twelve distinct pairs separated. The flat unique counts 2 and 6 sum to eight because four pairs are captured by both individual observers. Overlap is not itself a redundancy verdict.
+
+A second analysis view explicitly retains the full matrix as a third peer. Joint residual remains zero, but all three exclusive capture counts become zero. This is the candidate `full_presentation_faithful_but_not_irredundant` theorem.
+

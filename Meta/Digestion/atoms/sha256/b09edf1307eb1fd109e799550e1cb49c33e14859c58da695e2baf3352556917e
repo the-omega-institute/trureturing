@@ -1,0 +1,26 @@
+**推论 46.2。** 保持命题 46.1 的归一化 `H`。令 `L` 为分块循环行置换，并置 `H_0=LH`。若归一化向量 `v` 共同无偏于实际列基 `(I,H_0)`，设：
+
+```math
+w=H_0^*v,\qquad \binom{x}{y}=\sqrt6\,w.
+```
+
+则 `x,y` 都是单位相位向量，且：
+
+```math
+H\binom{x}{y}=\sqrt6\,L^*v
+```
+
+也逐项有模一。因此，只要 `w` 的两个 channel Fourier transforms 均有满支撑，第 33 节的输出侧行列式就满足 `Delta(w)!=0`。特别地，这适用于第 35 节使用的行置换 indices `(2,0,1,4,5,3)`。
+
+继续假设 `w` 的两个 channel Fourier transforms 均有满支撑。若另一实际共同无偏向量 `v'` 与 `v` **逐模正交**，则令 `w'=H_0^*v'` 后，第 33 节的 conditional partner theorem 给出：`w'` 是 mode-local，或 `w'~R^m Theta w`。返回原坐标，即：
+
+```math
+v'\text{ 是 mode-local},\qquad\text{或}\qquad
+v'\sim H_0R^m\Theta H_0^*v
+\quad(m\in\mathbb Z_3).
+```
+
+**证明。** 共同无偏的定义保证 `v` 与 `H_0*v` 的每个分量均有模 `1/sqrt(6)`，上述缩放恒等式直接给出命题 46.1 的两个实际平坦条件。缩放使 `Delta` 乘以非零因子，故非零性不变。`L` 为分块循环置换，而 `H` 为两 circulant block 矩阵，所以 `H_0` 保持每个二维 mode 子空间，并在其上酉作用；故它保持逐模正交和 mode-local 性质。对 `w,w'` 应用第 33 节，再以 `H_0` 传回即可。证毕。
+
+此推论不把输入侧 `Delta(v)` 与输出侧 `Delta(H_0*v)` 视为同一个量，也不将全局正交替换为逐模正交。命题 46.1 留下的退化情形，是至少一个 channel 为单一 Fourier mode；它未断言另一个 channel 也为单一 mode。这一排除结论本身尚不给出实际 completion 的 affinity 下界。
+

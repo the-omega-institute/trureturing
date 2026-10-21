@@ -1,0 +1,86 @@
+## 166. FIB 路径上的外加随机输运、主方程与 Boltzmann—流体极限
+
+设 FIB 原子序列的递归更新为
+$$
+a_{n+1}=\mathsf R(a_n,a_{n-1}),
+$$
+并令单粒子状态为 \(z=(n,\xi)\)，其中 \(\xi=(v,\alpha)\) 包含速度和内部类型。递归可以作为状态的一部分，但它本身不规定概率守恒、质量、动量或能量守恒。
+
+连续时间微观跳转核 \(K_{nm}^{\varepsilon}(\xi,d\eta)\) 满足有限逃逸率
+$$
+\Lambda_n^\varepsilon(\xi)
+=\sum_{m\ne n}\int K_{nm}^{\varepsilon}(\xi,d\eta)<\infty.
+$$
+单粒子分布的主方程可写为
+$$
+\partial_t p_n(t,\xi)
+=
+\sum_m\int p_m(t,\eta)K_{mn}^{\varepsilon}(\eta,d\xi)
+-\Lambda_n^\varepsilon(\xi)p_n(t,\xi)
++\mathcal C_n[p](\xi)+S_n-R_n.
+\tag{166.1}
+$$
+其中 \(\mathcal C_n\) 是碰撞项，\(S_n,R_n\) 是外部注入和移除。最近邻核、长程核、边界反射与吸收均需单独指定。
+
+对二体碰撞的 Boltzmann—Grad 标度
+$$
+N\sigma^{d-1}\to\lambda,
+$$
+若初始传播混沌、碰撞率有限且三体同时碰撞可忽略，则单粒子极限可具有
+$$
+(\partial_t+v\cdot\nabla_x)f
+=\mathcal L_{\rm ext}^*f+Q(f,f)+S.
+\tag{166.2}
+$$
+若外部跳转依赖多粒子联合状态，上述闭合不再自动成立，必须保留 BBGKY 层级。
+
+碰撞不变量 \(\phi_\alpha(v)\) 满足
+$$
+\phi_\alpha(v)+\phi_\beta(v_*)
+=\phi_\gamma(v')+\phi_\delta(v_*')
+$$
+在所有允许反应上成立时，碰撞项满足
+$$
+\sum_\alpha\int\phi_\alpha(v)Q_\alpha(f,f)(v)\,dv=0.
+\tag{166.3}
+$$
+质量、动量和能量只有在外部跳转核也保持相应量或显式记录外力通量时才是全系统守恒量；FIB 标签不是自动守恒量。
+
+对任意观测量 \(\phi_n(\xi)\)，外部跳转贡献为
+$$
+\mathcal I_\phi^{\rm ext}
+=
+\sum_{n,m}\iint
+f_n(\xi)K_{nm}^{\varepsilon}(\xi,d\eta)
+[\phi_m(\eta)-\phi_n(\xi)].
+\tag{166.4}
+$$
+因此矩方程还包含边界通量、碰撞矩、源汇和外部输运矩。若存在平衡测度 \(\pi\) 并满足详细平衡，则相对熵具有耗散形式
+$$
+\frac{d}{dt}H(f\mid\pi)
+=-D_{\rm jump}-D_{\rm coll}
++\mathcal W_{\rm source}
++\mathcal W_{\rm boundary},
+\tag{166.5}
+$$
+其中两项耗散非负；没有详细平衡时，驱动输运会贡献熵流，不能直接宣称熵单调下降。
+
+设碰撞时间、外部跳转时间和宏观输运时间分别为 \(\tau_c,\tau_j,\tau_s\)，可用
+$$
+\mathrm{Kn}=\frac{\tau_c}{\tau_s},
+\qquad
+\mathrm{Da}_j=\frac{\tau_s}{\tau_j}
+$$
+描述尺度分离。典型缩放为
+$$
+\partial_t f^\varepsilon+v\cdot\nabla_x f^\varepsilon
+=
+\varepsilon^{-1}Q(f^\varepsilon,f^\varepsilon)
++\varepsilon^{-\gamma}\mathcal L_{\rm ext}^{*,\varepsilon}f^\varepsilon
++S^\varepsilon.
+\tag{166.6}
+$$
+不同 \(\gamma\) 产生不同极限：快速碰撞可先导向局部平衡，外部跳转与碰撞同阶时会改变局部平衡，长程重尾核则可能产生分数阶输运。要得到扩散、漂移—扩散或 Euler/Navier–Stokes 型方程，还需紧性、矩界、边界层和初始层的证明。
+
+本节结论是：FIB 提供微观可达路径与内部标签；主方程、碰撞守恒、熵耗散以及 Boltzmann—流体极限由跳转核、碰撞律、尺度分离、边界和源汇决定。
+

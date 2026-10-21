@@ -869,7 +869,7 @@ structure Lawful (Q : CompletedRule U) (μ : Measure (SourcePoint × U)) : Prop 
   next_available : ∀ r, CompletionAvailable μ Prod.snd (fun p => Q.next p r)
   wait_available : ∀ r, CompletionAvailable μ Prod.snd (fun p => Q.wait p r)
 
-private theorem fromRaw_lawful (R : RawRule U) (hR : R.Lawful)
+theorem fromRaw_lawful (R : RawRule U) (hR : R.Lawful)
     (μ : Measure (SourcePoint × U)) : (fromRaw R).Lawful μ := by
   constructor
   · intro r E hE

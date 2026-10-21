@@ -1,0 +1,34 @@
+**Proposition 44.4 (hidden separation with coincident visible point).**
+Let $w=0$, $x=\alpha L$, $\alpha$ in a compact subset of $(0,1)$,
+and $b_0=L\sqrt{m/S_\kappa}>0$. Then
+
+$$
+\begin{aligned}
+E^L_{\kappa,m}(0,\alpha L)
+ &=\frac1{4\pi L\sqrt{\det N_\kappa}}
+   \sum_{j\in\mathbb Z}\frac{e^{-b_0|j+\alpha|}}{|j+\alpha|},\\
+\sum_{j\in\mathbb Z}\frac{e^{-b_0|j+\alpha|}}{|j+\alpha|}
+ &=-2\log b_0+\mathcal P(\alpha)+o(1),\qquad b_0\downarrow0,\\
+\mathcal P(\alpha)&=\frac1\alpha+
+ \sum_{j\ge1}\left(\frac1{j+\alpha}+\frac1{j-\alpha}-\frac2j\right).
+\end{aligned}
+\tag{44.8}
+$$
+
+The last series converges absolutely and uniformly on these compact sets.
+For $L\to\infty$, the actual native value is $p$ times the first line
+plus $O(pL^{-3})$, uniformly for all $m>0$. For fixed $L$, the finite
+native correction in (44.1) must instead be retained; it does not vanish
+merely because $m\downarrow0$.
+
+Proof. At $w=0$, $d_\kappa(0,x)=|x|/\sqrt{S_\kappa}$;
+(43.2) therefore gives the first line. Subtract
+$2\sum_{j\ge1}e^{-b_0j}/j=-2\log(1-e^{-b_0})$.
+The difference tends to $\mathcal P(\alpha)$: its zero-mass paired
+terms are $O(j^{-3})$, and the derivatives of the exponential terms add
+bounds $C b_0 e^{-c b_0j}/j$ and $C b_0^2e^{-c b_0j}$, whose sums tend
+to zero. This justifies the limit uniformly in $\alpha$, not a termwise
+sum of divergent integrated modes. Finally (43.6) has error
+$CpL^{-3}\sum|j+\alpha|^{-3}$. This proves the native assertion and
+explains its fixed-parameter limitation. $\square$
+

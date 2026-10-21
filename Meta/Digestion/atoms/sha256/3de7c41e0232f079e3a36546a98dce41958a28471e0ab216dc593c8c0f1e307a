@@ -1,0 +1,50 @@
+**定义 18.1（物理支撑、矩阵坐标与既有量的混态延伸）。** 沿用定义 15.2 的
+$\mathcal H_3=\mathbb C^2_1\otimes\mathbb C^2_2\otimes\mathbb C^2_3$，
+位置次序仍为低—中—高 $(x,z,y)$。令
+
+$$
+(e_0,e_1,e_2,e_3,e_4)
+=(|000\rangle,|100\rangle,|010\rangle,|001\rangle,|101\rangle),
+\qquad V=\mathcal K_3.
+$$
+
+取任意复混合密度态 $\rho$，满足 $\rho\ge0$、$\operatorname{tr}\rho=1$、
+$\rho=\Pi_V\rho\Pi_V$，写 $R_{ij}=\langle e_i|\rho|e_j\rangle$。
+它在完整八维计算基中的其余行列全零。本章矩阵索引 $4$ 对应定义 15.2 的
+概率下标 $13$，不是第四个 qubit。相同态的占位读数和对角逆式为
+
+$$
+\begin{aligned}
+X&=R_{11}+R_{44},& Z&=R_{22},&Y&=R_{33}+R_{44},&\kappa&=R_{44},\\
+(R_{00},R_{11},R_{22},R_{33},R_{44})
+&=(1-X-Y-Z+\kappa,\ X-\kappa,\ Z,\ Y-\kappa,\ \kappa).
+\end{aligned}
+$$
+
+这里占位式只消费定义 15.2、数学引文 15.3 的同一对角算子，不对混态赋予纯振幅。
+令 $\rho_S=\operatorname{Tr}_{S^c}\rho$，每对保留因子均按其物理次序使用
+$00,01,10,11$ 基。复用 [CorrelatedCoherence 的固定基定义][FC-D]：
+
+$$
+C(T)=\operatorname{l1Coherence}(T)=\sum_{u\ne v}|T_{uv}|,
+\qquad
+M(\rho)=C(\rho)+\sum_{i=1}^3C(\rho_i)
+-C(\rho_{12})-C(\rho_{13})-C(\rho_{23}).
+$$
+
+这是对混态明确给出的七项表达式。纯态时令
+$\psi=\sum_{j=0}^4a_je_j$，其中 $(a_0,a_1,a_2,a_3,a_4)=(a,b,c,d,e)$。
+物理位 $1,2,3$ 分别对应既有定义中 $\operatorname{Fin}(3)$ 的 $0,1,2$；
+位串 $n_1n_2n_3$ 对应函数 $u(0)=n_1,u(1)=n_2,u(2)=n_3$。
+故五模式在普通二进制全基中的索引是 $(0,4,2,1,5)$。
+对每个保留集 $S$，该定义的纯约化条目正是
+
+$$
+(\rho_S)_{uv}=\sum_w\psi(u,w)\overline{\psi(v,w)},
+$$
+
+其中 $(u,w)$ 按上述同一物理位置拼回，求和只遍历被丢弃位。
+于是 $M(|\psi\rangle\langle\psi|)$ 恰等于既有 `monogamyGap`，
+不是换基后的新量；其 [Blueprint 定义 1.1–1.2][FC-B] 使用相同参数。
+$C$ 依赖计算基；本章的 $M$ 不定义纠缠、能量或曲率。
+

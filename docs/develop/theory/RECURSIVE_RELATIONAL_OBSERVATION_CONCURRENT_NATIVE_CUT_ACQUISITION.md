@@ -2298,3 +2298,684 @@ Lemma 18.1 and the cited CNA progress proof, rather than by enumeration.
 [NCRP]: ../../../D5/S3/Arith/FibonacciAtomic/Observer/NativeClassRootPadding.lean
 
 ## 追加锚（本行以下为增补区）
+
+## 22. Sharp stamped-window origin acquisition
+
+**Assumption 22.1 (additional atomic services and actual entrance).** Keep
+exactly the free ordered source algebra, substitution and four literal
+replies of Definition 1.1, on all nonempty finite original trees
+$u\in\mathcal T$. Every finite $L/R$ word, including $\varepsilon$, is a
+legal operand. Install an arbitrary unknown $u$ at one fixed root with
+counter $e=0$. Before acquisition starts, execute exactly two genuine
+same-register commits. The only writer action thereafter, also used for
+these two commits, is
+
+$$
+\mathsf{WriterStep}:(U,e)\longmapsto(\rho U,e+1),
+\qquad\text{acknowledgement }\star.
+\tag{CNA.39}
+$$
+
+Its control is fixed and always enabled. The acknowledgement contains no
+source information; its occurrence is not an observer input. There is no
+source-dependent writer control or other writer record. The two added
+observer ports are total atomic operations
+
+$$
+\mathsf{Poll}(U,e)=e,\qquad
+\mathsf{ReadStamped}(q;U,e)=(e,r_U(q)).
+\tag{CNA.40}
+$$
+
+Both leave the source and counter unchanged. A read stamp is the counter
+at that very read, and every commit changes source and counter together.
+There is no independently advancing or reported counter. The source
+service state is precisely $(U,e)$ and its fixed root/grant/control.
+
+The observer starts with empty evidence and one fixed deterministic
+program. Common code, root and grant convey no original label, shape,
+size, hidden seed or age advice beyond this entrance. The writer alone
+can commit; the observer is read-only. No other source observation or
+action is allowed: in particular no lock, helping, snapshot, old-version
+handle, reset, reroot, swap or rollback. These are additional services,
+not the unmetered interface of Definition 1.3, which explicitly excludes
+an epoch field. They do not discharge any unavailable-access obligation
+in that original interface.
+
+**Assumption 22.2 (fresh-Poll windows and progress).** Fix $B\in\mathbb N$.
+Before each stamped read there is a fresh Poll since the previous stamped
+read, or since acquisition entry for the first one. If $n$ is the latest
+such Poll value and $k$ the read stamp, legal schedules satisfy
+
+$$
+0\le k-n\le B.
+\tag{CNA.41}
+$$
+
+This interval includes all intervening local computation, literal
+construction, transmission and navigation; constructing a long operand
+does not pause its accounting. Multiple Polls are allowed. Outside the
+interval from the latest Poll to its read, arbitrary finite writer bursts
+are allowed. There is no bound on total interference, on gaps between
+tests, or on future writer commits.
+
+Histories are discrete interleavings with finite events and a finite
+source in every finite prefix. Every pending finite observer step executes
+after finitely many intervening events, without a uniform delay bound.
+Scheduler decisions and wall time are not observer inputs. There is no
+requirement that a writer commit occur in every such interval. The window
+promise is a scheduling premise; the observer is not claimed to enforce
+it through the two ports.
+
+**Definition 22.3 (observer class and complete retained cuts).** A competing
+observer can use arbitrary adaptive finite literals, repeated Polls,
+unbounded finite memory and finite source-free computations. Its next
+action depends only on its common program and its actual accumulated
+port replies and local records. It has no clock, scheduler input or
+source-dependent initialization. Correct origin acquisition means finite
+termination with exactly the installed labelled $u$, for every
+$u\in\mathcal T$ and every progressing legal schedule, followed by paid
+retention of that value.
+
+For the constructed instrument, acquisition control contains its actual
+stack, partial acquired trees, addresses, counters received from the ports
+and every still accessible temporary. A Busy command similarly contains
+its complete actual request, program position, local descriptions, pending
+query and received Poll/stamp/reply fields. The finite-record model allows
+paid conversion and clearing of these fields. A settled Ready cut has
+exactly the accessible tuple
+
+$$
+x(u,e)=
+(\rho^e u,e,\mathsf{writerEnabled},\mathsf{Ready},v=u,
+ \mathsf{fixedRoot},\mathsf{fixedGrant}),
+\qquad e\ge2,
+\tag{CNA.42}
+$$
+
+with fixed callable program/backing and empty transients. No accessible
+journal, old output, allocator distinction, running read count or observer
+counter copy remains. The service counter is still present and callable
+through Poll. A mathematical history witnessing reachability is not an
+extra field of this tuple. Clearing is an explicit abstract access and
+finite-record contract, not physical erasure or an implementation of an
+append-only NativeSerialMachine log. The original held root and grant
+remain the callable ones throughout.
+
+**Definition 22.4 (supplier coordinates and exact scope).** Let $N(u)$ count
+all original constructors and $a(u)$ the original alpha leaves. Put
+$A_h=\rho^h\alpha$, so $\rho^h\beta=A_{h+1}$. Reuse the atomic
+recurrence $A_0=\alpha$, $A_1=\beta$ and
+$A_{h+2}=\langle A_{h+1},A_h\rangle$ from SLH6.2. Use the existing
+right clock and its readout law:
+
+$$
+\begin{aligned}
+\kappa(\alpha)&=0,&\kappa(\beta)&=1,&
+\kappa(\langle z,w\rangle)&=2+\kappa(w),\\
+\kappa(\rho^h w)&=h+\kappa(w),&&&\\
+r_w(R^s)&=
+\begin{cases}
+\mathsf{absent},&\kappa(w)<2s,\\
+\alpha,&\kappa(w)=2s,\\
+\beta,&\kappa(w)=2s+1,\\
+\mathsf{branch},&\kappa(w)\ge2s+2.
+\end{cases}
+\end{aligned}
+\tag{CNA.43}
+$$
+
+These are [DOR] *rightClock*, *right_clock_iterate* and
+*right_clock_readout*, including its private *clock_step*, with their
+[owning Scribe](../../../Blueprint/D5/S3/Arith/FibonacciAtomic/Observer/DelayedOriginalReadout.scribe.cs).
+The boolean conventions are true/false for alpha/beta, and false/true
+for left/right. [NDP] *original_present_transport* and its
+[owning Scribe](../../../Blueprint/D5/S3/Arith/FibonacciAtomic/Observer/NativeDepthPatterns.scribe.cs)
+give $(\rho^h u)|_p=\rho^h(u|_p)$ only when $p$ was originally
+present. A newly born current address cannot supply that premise.
+
+The stack organization is [NFSP] *sourceControl* and
+*native_source_producer*, with private *traverse*, *production_reads* and
+*stationary*, and its
+[owning Scribe](../../../Blueprint/D5/S3/Arith/FibonacciAtomic/Observer/NativeFullSourceProducer.scribe.cs).
+Their theorem traverses a stationary register at epoch zero and retains
+its specified trace. Only its acquired-data stack organization is reused
+here, not an application of its stationarity assertion to a moving source
+or its trace model to the clearing contract of Definition 22.3.
+
+The actual-image parser is [NPR] *delta*, with private *sigma_not_alpha*
+and *delta_sigma*, and its
+[owning Scribe](../../../Blueprint/D5/S3/Arith/FibonacciAtomic/Observer/NativePredecessorRowRecovery.scribe.cs).
+On marker-free labelled trees it parses beta to alpha, the ordered
+beta/alpha pair to beta, and otherwise recursively parses both children;
+a bare alpha fails. Its inverse law is used only on actual substitution
+images. Two-step uncoloured shape parsing is the existing
+[ABT, Theorem 12.1](RECURSIVE_RELATIONAL_OBSERVATION_ATOMIC_BOUNDARY_TRICHOTOMY.md),
+with $C(w)=\operatorname{sh}(\rho^2w)$ and inverse $D$ on its actual
+grammar. No clock, shape or image membership oracle is being added.
+
+For these repository suppliers the reference bodies are at
+`ead132fb284340a8b3a70b957a974196f85fecc3`. The guarded all-address
+$A_h$ phase formula is already [SLH, proof of Theorem 6.2][SLH]; its
+guarded leaf-sector antecedent is [TM, Proposition 24.1][TM]. The
+source syntax is [GFT] *Source* and *substitution*, and [ACQ] *Address*,
+*Reply*, *readout*. Ordinary free syntax is also the pinned mathlib
+[FreeMagma constructors and lift](https://github.com/leanprover-community/mathlib4/blob/56a005855ea17e0b0958f73ec801ae140b0a1679/Mathlib/Algebra/Free.lean).
+These are mathematical citations, not new Lean applications or claims
+that their remaining import closures have been verified here.
+
+**Definition 22.5 (two moving tests at an original position).** For an
+address $p$ whose original presence has already been established, test
+$\mathsf A$ makes one Poll, obtaining $n$, constructs the following
+literal in full, and makes one genuine stamped read at it:
+
+$$
+q_{\mathsf A}(p,n)=
+\begin{cases}
+pLR^m,&n=2m,\\
+pR^{m+1},&n=2m+1.
+\end{cases}
+\qquad
+g(0)=\mathsf{absent},\quad g(1)=\alpha,\quad g(2)=\beta.
+\tag{CNA.44}
+$$
+
+Given its actual reply $(k,r)$, compute $j=k-n$. Declare the old
+constructor alpha exactly when $r=g(j)$. If that test fails, make a
+new Poll and one new genuine stamped read for test $\mathsf B$:
+
+$$
+q_{\mathsf B}(p,n)=
+\begin{cases}
+pR^{m+1},&n=2m,\\
+pRLR^m,&n=2m+1.
+\end{cases}
+\tag{CNA.45}
+$$
+
+In this test declare beta exactly when its own $r=g(k-n)$; otherwise
+declare branch. Each test uses its own latest Poll and stamp. The second
+test relies on the first test's exclusion of alpha, not on the old Poll
+value remaining current. Here and below $R^m$ denotes $m$ actual letters,
+not a compressed source operand.
+
+Start a depth-first visit at $p=\varepsilon$ with empty stack. An alpha
+or beta classification delivers that labelled leaf. A branch
+classification visits $pL$, saves $pR$, and combines the two delivered
+ordered subtrees. Only a classified original branch creates pending
+child visits. This uses no source subtree, fuel, size or height as a
+runtime selector. Retain the completed tree and clear all transients
+before entering Ready.
+
+**Theorem 22.6 (finite moving acquisition at allowance at most two).** For
+every $B\in\{0,1,2\}$, Definition 22.5 acquires exactly $u$ on every
+finite original $u$ and every progressing legal schedule of Assumptions
+22.1–22.2. It makes exactly
+
+$$
+K(u)=2N(u)-a(u)
+\tag{CNA.46}
+$$
+
+Polls and exactly $K(u)$ genuine stamped reads. There is no bound on total
+writer interference in this assertion. Its attained settled Ready domain,
+including later Ready writer steps, is exactly
+$\mathcal D=\{x(u,e):u\in\mathcal T,\ e\ge2\}$.
+
+**Proof.** First fix one visited original position $p$ and its original
+subtree $w$. Original-present transport gives the actual read subtree
+$\rho^k w$ at every stamp $k$. The two genuine bootstrap commits ensure
+$n\ge2$, hence also $k\ge2$. Write $j=k-n\in\{0,1,2\}$.
+For a right-tail threshold $t=2s$, a subtree of clock $t+j-1$ has
+reply $g(j)$ at $R^s$, by (CNA.43). A subtree of clock at least
+$t+j$ cannot have that reply: for $j=0$ it is present, for $j=1$ it
+is beta or branch, and for $j=2$ it is branch. Thus a one-clock gap
+separates all three possible lags. We check the needed gaps in every
+parity case, including arbitrary branch competitors.
+
+If test $\mathsf A$ polls $n=2m$, its initial $L$ is legal in every
+candidate image, since $k\ge2$. For $w=\alpha$, the left subtree of
+$A_k$ is $A_{k-1}$, of clock $k-1$. The remaining $R^m$ has
+threshold $t=n$, giving $k-1=t+j-1$. For $w=\beta$, that left
+subtree is $A_k$, of clock $k$. For $w=\langle z,w'\rangle$ it
+is $\rho^k z$, of clock $k+\kappa(z)\ge k$. These latter two
+possibilities have the required larger clock, so equality with $g(j)$
+holds exactly for alpha.
+
+If test $\mathsf A$ polls $n=2m+1$, it uses a pure right tail with
+$t=2m+2=n+1$. The alpha clock is $k=t+j-1$. The beta clock is
+$k+1$, and an original branch has clock
+$k+2+\kappa(w')\ge k+2$. Again exactly alpha gives $g(j)$.
+
+Now the original constructor is known not to be alpha. For test
+$\mathsf B$ at $n=2m$, use $t=n+2$. Beta has clock
+$k+1=t+j-1$, whereas each branch has clock at least $k+2$.
+For test $\mathsf B$ at $n=2m+1$, one has $n\ge3$ and $k\ge3$.
+At $RL$ in the beta image $A_{k+1}$, the successive subtrees are
+$A_{k-1}$ and $A_{k-2}$. The remaining $R^m$ has threshold
+$t=n-1$, and $k-2=t+j-1$. In the image of an original branch
+$\langle z,w'\rangle$, the first $R$ reaches $\rho^k w'$, and
+the next $L$ reaches its left child. If $w'=\alpha$ this child has
+clock $k-1$; if $w'=\beta$ it has clock $k$; if $w'$ is itself
+a branch it has clock at least $k$. All are at least one above the
+beta candidate's $k-2$. Both leading edges exist in these cases.
+Consequently both parities of test $\mathsf B$ separate beta from
+every remaining branch. The calculations use only the same actual
+read stamp for the one read concerned.
+
+Induct now on the original finite tree. The root is originally present.
+The proved tests classify its original constructor correctly. A leaf
+creates no child visits, even if the current image below it has grown.
+A branch creates precisely its two genuinely original-present children,
+to which the induction applies. Combining their acquired descriptions
+therefore gives exactly the original ordered subtree. This establishes
+both the presence invariant and full recovery without presupposing an
+original shape or ever transporting an originally absent address.
+
+Every original node receives test $\mathsf A$ once; precisely the
+$N(u)-a(u)$ non-alpha nodes receive test $\mathsf B$ once. Each test
+makes one actual Poll and one actual stamped read, even if a literal
+coincides with a previous literal. No cache substitutes for an event.
+This proves (CNA.46), including absent replies used as successful test
+values. There are no failed acquisition attempts on the legal domain.
+
+Every Poll value is finite. Its selected literal, binary arithmetic,
+classification and stack operation therefore require finite local work.
+Progress completes each such calculation and call after finite delay.
+The original finite tree has finitely many visits, so induction through
+these visits and cleanup gives a finite completion. No argument waits
+for a final writer update or assumes finite interference over an infinite
+continuation. The finite prefix ending at completion has finitely many
+commits, but their number has no uniform bound over legal schedules.
+
+All source transitions were commits on the one original register, hence
+$U=\rho^e u$ throughout. Recovery and cleanup leave exactly (CNA.42).
+Conversely, for any chosen $u$ acquire with the writer unscheduled after
+bootstrap at $e=2$. All windows then have lag zero. After Ready execute
+$e-2$ further writer commits. This is a finite legal prefix attaining
+every specified $x(u,e)$; finite writer pauses violate no observer
+progress condition. No other settled Ready tuple is produced by this
+instrument or by its commands below. $\square$
+
+**Theorem 22.7 (impossibility from allowance three).** For every integer
+$B\ge3$, no observer in Definition 22.3 correctly acquires the original
+and terminates for every source and every progressing legal schedule.
+The obstruction allows arbitrary adaptive finite literals, repeated
+Polls and unbounded finite observer memory.
+
+**Proof.** Use the two actual originals $\alpha$ and $\beta$, each
+installed at counter zero and each subjected to the two required commits.
+At any common counter $k$ their registers are $A_k$ and $A_{k+1}$.
+They need not have equal registers; it is their entire observable
+execution that will be coupled.
+
+For any finite literal $q$ set $f_q(h)=r_{A_h}(q)$ and
+$w(q)=\#L(q)+2\#R(q)$. The existing guarded phase formula in SLH6.2
+has the following consequences. At $q=\varepsilon$, $f_q(h)$ is
+alpha, beta, then branch at $h=0,1,\ge2$. A nonempty word ending in
+$R$ has replies absent for $h<w(q)$, alpha at $w(q)$, beta at
+$w(q)+1$, and branch afterwards. A word ending in $L$ is absent
+for $h\le w(q)$, beta at $w(q)+1$, and branch afterwards. The
+guard matters: the final $L$ cannot descend from index one, so there
+is no residual-zero alpha case there. These supplied formulas cover
+every literal, including arbitrarily deep and repeated ones.
+
+It follows that the distinguishing set
+$\{h:f_q(h)\ne f_q(h+1)\}$ is contained in
+$\{w(q)-1,w(q),w(q)+1\}$ for an $R$-ending word, in
+$\{w(q),w(q)+1\}$ for an $L$-ending word, and in $\{0,1\}$
+at the root. In particular it has at most three elements, all
+consecutive. This is a consequence of the credited phase law, not a
+new phase theorem or a bounded-address approximation.
+
+Maintain equal observer records and equal true counters in the two
+runs. Execute each observer local step and Poll identically, with no
+writer commits while it constructs its next finite literal. Extra
+Polls therefore give identical replies. When the next stamped read is
+pending with actual selected literal $q$, let $n$ be its latest Poll.
+Among the four integers $n,n+1,n+2,n+3$, choose a $k$ outside that
+distinguishing set. Execute $k-n$ writer commits in each run, then
+perform the read. The two actual returned pairs are identical:
+
+$$
+(k,f_q(k))=(k,f_q(k+1)).
+\tag{CNA.47}
+$$
+
+The commits are real, the stamp is truthful, and the latest-Poll lag
+is at most three. They are legal for every $B\ge3$. They occur only
+after the literal is selected; no bound on that selection or its
+memory was assumed. Determinism and the equal replies give equal
+subsequent records and choices. Induction couples every event of the
+complete observable execution, rather than only a prechosen menu.
+
+If a run returns after finitely many events, both runs return the same
+candidate, which cannot be both original leaves. A return before any
+read has the same defect. If it keeps taking local steps or Polls, or
+performs infinitely many reads without returning, the construction
+still executes every pending observer step after a finite delay:
+there are at most three inserted commits at each read. Every finite
+prefix contains a finite source. Such a progressing nonterminating
+run contradicts universal termination. An observer that cannot finish
+its own next required finite computation already fails that
+requirement. Thus no observer in the declared class succeeds.
+Neither a finite memory bound nor an infinite source, hidden reply
+oracle or source-dependent common initialization was used. $\square$
+
+**Definition 22.8 (independent Ready expressions).** On the actual
+domain $\mathcal D$ of Theorem 22.6 define
+
+$$
+\begin{aligned}
+S(x(u,e))&=\operatorname{Pos}(\rho^e u),\\
+\operatorname{Bd}(x(u,e))&=\operatorname{LeafPos}(\rho^e u),\\
+\operatorname{Tm}(x(u,e))&=e,\\
+M(x(u,e))&=(u;\mathsf{fixedProgram},\mathsf{fixedRoot},
+                    \mathsf{fixedGrant}).
+\end{aligned}
+\tag{CNA.48}
+$$
+
+$S$ is the current finite uncoloured root-relative support with ordered
+incidence. $\operatorname{Bd}$ is the terminal antichain where further
+source descent ends. Neither includes leaf colours, a response table,
+age or observer record. $\operatorname{Tm}$ counts actual same-register
+commits from the installed origin, including bootstrap. It is neither
+full observer chronology, CPU time nor physical duration. $M$ is the
+actually acquired and retained labelled original, with its constant
+callable backing; it retains no counter or history. These meanings are
+defined independently of the inverses below. A supplied finite description
+of geometry is not an additional acquisition port or an independently
+granted callable object.
+
+**Theorem 22.9 (application: exactly the stated sufficient pairs).** On
+$\mathcal D$, $S$ and $\operatorname{Bd}$ effectively determine each
+other. Each of
+
+$$
+(M,\operatorname{Tm}),\quad(S,\operatorname{Tm}),\quad
+(\operatorname{Bd},\operatorname{Tm}),\quad(S,M),\quad
+(\operatorname{Bd},M)
+\tag{CNA.49}
+$$
+
+effectively determines the entire canonical Ready tuple and all four
+expressions. All recovery routes agree on attained inputs. None of the
+four individual expressions determines that tuple; the remaining pair
+$(S,\operatorname{Bd})$ is insufficient too. These are applications of
+the supplied shape, clock and image inverses to the new acquired domain.
+
+**Proof.** In any finite full tree, the maximal support words are exactly
+the leaves and the prefix closure of the leaves is exactly the support.
+Thus the first two descriptions determine the same ordered shape.
+Since $e\ge2$, the current labelled source has the form
+$U=\rho^2(\rho^{e-2}u)$. ABT12.1 therefore applies to its full
+shape, giving
+
+$$
+D(\operatorname{sh}U)=\rho^{e-2}u,
+\qquad
+U=\rho^2D(\operatorname{sh}U).
+\tag{CNA.50}
+$$
+
+The latter formula recovers the current labelled $U$ from either
+geometric description without inferring an epoch. It uses the supplied
+actual grammar, not an inverse on every arbitrary uncoloured tree.
+
+From $(u,e)$ compute $U=\rho^e u$. From $(S,e)$ or
+$(\operatorname{Bd},e)$ first use (CNA.50), then apply the
+marker-free restriction of NPR's partial parser $e$ times. At each
+step the actual origin equation supplies image membership; the result
+is precisely $u$. From $(S,u)$ or $(\operatorname{Bd},u)$ use
+(CNA.50) and compute
+
+$$
+e=\kappa(U)-\kappa(u).
+\tag{CNA.51}
+$$
+
+The clock shift in (CNA.43) proves that this nonnegative difference is
+exactly the actual commit count. In particular no maximal intrinsic age
+has been substituted for actual age. These are finite word/tree
+algorithms on attained descriptions. Together with fixed backing and
+empty transients they reconstruct every field of (CNA.42).
+
+Every route returns that same $u,e,U$ by the displayed identities.
+Re-encoding gives the supplied attained pair and every other expression;
+compositions therefore agree, including routes through support and
+boundary. This proves agreement on one common actual realization, not
+merely consistency of independently chosen marginals.
+
+For insufficiency, $x(\alpha,3)$ and $x(\beta,2)$ have the same
+current labelled source $A_3$, hence the same $S$ and boundary, but
+different retained originals and commit counts. The states
+$x(\alpha,2)$ and $x(\alpha,3)$ share $M$ and differ in count
+and source. The states $x(\alpha,2)$ and $x(\beta,2)$ share
+$\operatorname{Tm}$ and differ in original and source. All are
+actually attained by Theorem 22.6. The first collision also refutes
+sufficiency of $(S,\operatorname{Bd})$. $\square$
+
+**Definition 22.10 (callable public commands and admission).** The acquired
+instrument admits one complete finite request at Ready, retaining its
+actual frame while Busy. The only commands are
+$\mathsf{Historical}(m,p)$, $\mathsf{Observe}(V)$ and
+$\mathsf{Raw}(p)$, with $m\in\mathbb N$, finite literal $p$,
+and $V$ one of Tree, Support, LeafBoundary. Every complete frame outside
+this grammar, including an invalid $V$, non-natural $m$ or nonliteral
+$p$, has the executed result $\mathsf{BadRequest}$. Parsing is finite
+and paid. Further public admission during Busy, including acquisition,
+is illegal and unexecuted, with no completed error edge. A partial frame
+is not a complete admitted request. Requests are public data; an
+independently stateful internal client is not silently included in the
+target tuple.
+
+Historical makes one Poll $n$. If $m\le n$, it computes the finite
+description $\rho^m u$ and emits
+$\mathsf{Success}(m,r_{\rho^m u}(p))$. Otherwise it emits
+$\mathsf{EpochNotReached}(m,n)$, even if later commits reach $m$
+before emission. Observe makes one Poll $n$, computes $\rho^n u$,
+and emits $\mathsf{Success}(n,V(\rho^n u))$. These values refer to
+the held root: Observe uses its actual Poll cut, while Historical uses
+the requested epoch $m$ whose having been reached is decided at Poll.
+Neither claims to describe the later output or Ready cut. Computing a
+past value does not create a past raw read.
+
+Raw makes one Poll $n$ and one actual $\mathsf{ReadStamped}(p)$,
+and emits $\mathsf{RawReply}(k,r_{\rho^k u}(p))$ from that event.
+It never replaces that event by a derived value. BadRequest makes no
+source-port call. Every command pays for output, communication and
+clearing, then returns to the canonical Ready state with the same
+retained $u$. The writer stays enabled at every phase. The ideal ports
+are total; crashes, false stamps, revocation, allocation exhaustion,
+window violations and incomplete transport are outside this contract,
+not omitted legal error branches.
+
+**Theorem 22.11 (application: actual use and complete transition agreement).**
+For $B\le2$, every admitted command of Definition 22.10 terminates
+on every progressing legal schedule and gives exactly its declared
+complete result. If the starting state is $x(u,e)$, its entire settled
+successor, including the unchanged root/grant/backing and cleared
+transients, is as follows. For Historical or Observe, if $a$ commits
+precede Poll and $b$ follow it before settling, then
+
+$$
+n=e+a,\qquad x_{\rm next}=x(u,e+a+b).
+\tag{CNA.52}
+$$
+
+For Raw, let $a$ precede Poll, $j$ lie between Poll and read, and $b$
+follow the read before settling. Then
+
+$$
+n=e+a,\quad k=n+j,\quad 0\le j\le B,\qquad
+x_{\rm next}=x(u,e+a+j+b).
+\tag{CNA.53}
+$$
+
+For BadRequest with $c$ interleaved commits the successor is
+$x(u,e+c)$. A Ready writer step has output $\star$ and successor
+$x(u,e+1)$. Each sufficient-pair representation in (CNA.49) preserves
+all this enabledness, results, executed errors, nonadmission and complete
+successors. Starting from its recovered Ready tuple, it also reproduces
+the complete Busy fragment under equal future inputs and interleavings.
+
+**Proof.** Theorem 22.6 supplies the actual retained $u$, not a selected
+compatible witness. Source continuity and (CNA.39) make the register at
+each actual counter $h$ equal to $\rho^h u$. Thus finite expansion and
+literal evaluation give the exact Historical value when $m\le n$;
+monotonicity of the actual counter makes this an already reached epoch.
+The other branch is precisely the stated executed error. The same
+invariant proves Observe at its actual Poll cut. The Raw output is
+the actual stamped event itself, with (CNA.41) applying also during
+all operand handling. Absence is a completed ordinary value in all
+three commands, never a nonadmission or an error by itself.
+
+Each admitted request and each polled integer is finite. The retained
+tree is finite. The required parsing, expansion, evaluation, output and
+clearing therefore involve finitely many finite observer steps.
+Progress completes them, even with arbitrarily many commits outside
+a Raw window. The ports change no source state; counting all writer
+commits gives (CNA.52)–(CNA.53) and the BadRequest formula. Clearing
+removes every listed transient, so these are full successors, not
+only projected values. BadRequest is an executed branch with output;
+Busy nonadmission executes nothing and cannot be counted as that
+branch or as a rejected raw read.
+
+Decode a sufficient pair by Theorem 22.9. It gives the identical source,
+counter, writer control, retained tree, Ready control, backing and held
+root/grant. Couple the same next public input and the same interleaving
+of observer and writer steps. Equal Ready control has equal admission;
+equal Busy control has equal nonadmission and selects the same next
+local or port action. Local computations on equal descriptions agree.
+Writer events give equal source/counter successors and $\star$.
+Polls return equal true counters; stamped reads at equal selected
+literals give equal stamps and full replies. Induction over events
+gives equality of every Busy field, every output/error and the entire
+settled successor. Legality of every window is preserved too. Projecting
+this successor through (CNA.48) proves every claimed update square.
+Another induction covers every finite request sequence, including
+clients choosing their next request from equal previous outputs.
+
+This is the usual complete-state transition argument applied to an
+actually acquired tuple. The corresponding methods already occur in
+[SLH, Theorems 62.2–62.3][SLH] and
+[Atomic Generation Acquisition, §45](RECURSIVE_RELATIONAL_OBSERVATION_ATOMIC_GENERATION_ACQUISITION.md).
+Their authenticated versions, same-source and lawful-continuation
+premises are retained, not inferred from a symbolic map. No individual
+Busy expression is inverted by the argument. $\square$
+
+**Theorem 22.12 (resource scope of the displayed instrument).** Its exact
+acquisition port bill is (CNA.46), separately from the two genuine
+bootstrap commits and every subsequent writer commit. If test $i$ uses
+original address $p_i$ and Poll value $n_i$, its actual submitted word
+has length at most
+
+$$
+|q_i|\le |p_i|+\left\lceil n_i/2\right\rceil+1.
+\tag{CNA.54}
+$$
+
+Ready retains exactly the $N(u)$ original tree constructors as its
+source-dependent tree payload, together with fixed program/root/grant
+and control. This gives no uniform bound on retention, peak transient
+storage, operand length or runtime. Historical and Observe use exactly
+one Poll and zero stamped reads; Raw uses exactly one of each;
+BadRequest uses neither. None of these exact bills is a minimax or
+total-resource assertion.
+
+**Proof.** The four suffix lengths in (CNA.44)–(CNA.45) are, for
+$n=2m$, $m+1,m+1$, and for $n=2m+1$, $m+1,m+2$.
+Adding the actual original prefix proves (CNA.54). Summing these
+lengths charges $\sum_i|q_i|$ submitted letters; their construction,
+retention, transmission and each source-navigation operation remain
+paid operations. Neither a written exponent nor atomic read granularity
+makes these physical costs constant. An arbitrarily long finite writer
+burst before Poll can make $n_i$ and the chosen literal arbitrarily
+large even for a fixed original leaf.
+
+The exact number of tests was proved in Theorem 22.6. If $w$ commits
+occur after bootstrap before acquisition settles, the actual number
+of source rewrites so far is $2+w$, not $K(u)$ or the final clock
+minus a presumed intrinsic origin. Each commit pays its source rewrite,
+material growth and counter increment. Source storage $U$ and true
+counter storage $e$ are separate from the retained observer original.
+At each finite cut all are finite; no uniform capacity is supplied.
+
+The Ready payload is the actually reconstructed ordered $u$, with no
+hidden trace or counter copy. Its $N(u)$ constructors have their actual
+encoding, label, pointer and length costs; a constructor count is not
+a claim that variable-width addresses fit a free machine word. Since
+$N(u)$ ranges without bound, these Ready payloads alone preclude a
+source-independent bound for this instrument. During acquisition the
+stack, pending old addresses, partial trees, constructed literal,
+Poll/stamp values and lag, arithmetic and output/cleanup workspace are
+additional actual storage. All local computation and parsing is paid,
+including calculations of $m$, $j$, counter differences and finite
+expansions. Poll and stamp bit lengths grow with their actual integers.
+Theorems 22.6 and 22.11 give pointwise finite completion, not uniform
+time or peak-space bounds.
+
+The command port bills follow their specified genuine events, including
+the one Poll on EpochNotReached and none on BadRequest. Initialization,
+two bootstrap rewrites, program/backing installation, root binding,
+granting and authentication, I/O, output length, retained copies and
+all clearing remain separate cost coordinates. A geometry conversion
+computes a description; it does not allocate physical old geometry,
+grant rights or perform an unobserved raw event. The proof compares
+no alternative acquisition algorithms' bills, memory layouts,
+physical durations, hardware roles, authentication mechanisms or
+total Pareto vectors. The only sharp optimum asserted is the
+interference feasibility threshold of Theorems 22.6–22.7. $\square$
+
+**Definition 22.13 (applicability and remaining recovery obligations).**
+The new source-specific content is the moving parity discriminator and
+its matching all-address alpha/beta coupling at allowance three.
+Stationary whole-source traversal, original-present transport, the
+guarded atomic phases, image parsing, two-step shape recovery and
+complete-state continuation are suppliers. In particular [SLH,
+§§25–28, 55, 57.4, 59–62][SLH] already provide substantial acquired
+refresh, delayed certificate, acquire/update/use and attained finite
+partition continuation results. Their stationary service phases and
+certified same-source epochs are not a fresh-Poll window theorem.
+
+[Native Clocked Recovery, §5](RECURSIVE_RELATIONAL_OBSERVATION_NATIVE_CLOCKED_RECOVERY_AND_ORDER.md)
+already reconstructs its closed-flight cuts from acquired seed and
+receipt/prefix coordinates. Those coordinates are not present in $S$
+or $M$ of (CNA.48). [Native Paid View Conversion, §§1, 10](RECURSIVE_RELATIONAL_OBSERVATION_NATIVE_PAID_VIEW_CONVERSION.md)
+already installs paid conversions under its acquired fixed-$H$,
+unused-lane, incidence-storage and ownership premises. Its internal
+supplier pin remains `82c9eb9c1462af91333b7038a93488c8b9b8bdc7`;
+that apparatus and unexpanded dependencies are not an implementation
+of (CNA.40). Existing original-presence, stationarity, clock, parser
+and access hypotheses are preserved separately in every invocation.
+
+Atomic-event specification and progress have the classical antecedents
+of Herlihy–Wing and Afek et al. cited in 21.2; deterministic
+indistinguishability has the cited Fischer–Lynch–Paterson antecedent.
+No snapshot or consensus theorem is transferred as a tree-port
+implementation. The source-specific threshold is a repository-derived
+ordinary proof relative to the inspected suppliers, with no worldwide
+priority or new kernel-certification assertion.
+
+Concrete truthful atomic stamping and source-counter coupling, enforcement
+of the window promise, physical source supply, retained-memory clearing,
+continuous root/grant authentication and all backend/Busy cost
+correspondences remain additional realization obligations. No map here
+identifies this instrument with an unchanged fixed-$G_{\rm gc}$,
+original-$Q$ or parked-consumer apparatus. Its original unavailable-access
+and initialization obligations keep their original scope.
+
+Even the whole canonical Ready tuple does not recover full past
+chronology: after acquisition at $e=2$, executing and clearing one
+BadRequest with no writer commit returns to the identical tuple, but
+adds a real admission, error output and local execution to its history.
+All four views thus also coincide for these different histories.
+Individual all-four equivalence, individual Busy inverses, all-cut
+acquisition/view recovery, arbitrary enlarged action menus, randomized
+observers, physical spacetime and total-resource optimality remain
+outside the proved statement. The sufficient-pair Ready application
+advances the common-process recovery problem without completing the
+broader four-expression objective.
+
+## 追加锚（本行以下为增补区）

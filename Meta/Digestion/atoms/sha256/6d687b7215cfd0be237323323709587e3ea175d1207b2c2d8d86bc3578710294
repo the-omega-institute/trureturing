@@ -1,0 +1,108 @@
+**Corollary 12.3 (exact resources of the narrower installations).**
+For the encodings of Theorem 12.2, every per-source resource coordinate
+of Theorem 9.2 and §9.5 is retained, with the new word lengths in
+(SLHC.39) used for word storage. Specifically, set
+$A_s=(K+1)A_S+hK(K+1)/2$. Through the first halt on $(x,t)$,
+
+| Quantity | Active encoding | Static encoding |
+| --- | --- | --- |
+| Installed words | $8h+8$ | $8M+2$ |
+| Actual Reads | $3h+2k+c$ | $3M+c$ |
+| Actual Updates | $2k$ | $0$ |
+| Internal instructions and internal writes | $0$ | $0$ |
+| Response bit changes | $3h+4k+c$ | $3M+c$ |
+| Submitted address-length sum | $A_S+hK+k(d_1+K)$ | $A_s$ |
+| Maximum submitted literal length | $D+K$ | $D+K$ |
+| Typed successor entries | $32h+12$ | $32M$ |
+| Full word-key bits | $(8h+8)\ell_a$ | $(8M+2)\ell_s$ |
+| Full successor-word bits | $(32h+12)\ell_a$ | $32M\ell_s$ |
+| Fully inlined data-literal letters | $2(A_S+hK)$ | $2A_s$ |
+| Installed fixed halt-payload bits | $2$ | $2$ |
+
+The source peaks are exactly $L_x(\tau)$ and $L_x(t)$ leaves, where
+$\tau=t+2k$ and $L_x(v)=\sum_iF_{v+x_i+1}$. The worst peaks
+over the full promised family are
+
+$$
+\begin{aligned}
+\max_{x,\,0\le t\le T}L_x(\tau)
+ &=\begin{cases}
+h,&T=0,\\
+F_{2K+2}+(h-1)F_{2K+3},&T\ge1,
+\end{cases}\\
+\max_{x,\,0\le t\le T}L_x(t)&=hF_{T+2}.
+\end{aligned}
+\tag{SLHC.50}
+$$
+
+The literal node count is twice the corresponding leaf count minus
+one. All setup and execution services remain separately charged as in
+(SLHC.35).
+
+Proof. Theorem 12.2 transports each actual primitive and each fixed
+literal without adding or deleting a step. Its nonhold rows change
+exactly one bit, as did the old table; its two pilot holds still have
+zero changes and are unsupported on the promised family. Therefore
+§9.5's counts of $h+k$ active data Reads, $k$ polling-return root
+Reads and $2h+c$ routing root Reads transfer exactly. So do the
+$2k$ genuine Updates and the $3M+c$ static Reads. First halt is
+after $3h+4k+c$ active primitives or $3M+c$ static primitives.
+The address counts use $d_i=|q_i|$ and their actual sum and maximum,
+without replacing the supplied skeleton by a balanced one.
+
+The row bijection gives the same $8h+2$ active Read rows, four
+Update rows and two halt rows, and the same $8M$ static Read rows
+and two halt rows. Four successors per Read and one per Update give
+the stated typed-entry counts. Full keys and full successor words
+now each have the lengths (SLHC.39); multiplying by these unchanged
+row counts gives the displayed word-storage bills, before tags,
+framing or indexes. The data literals still occur twice each, while
+the empty root literals still require their representation, lookup
+and execution despite having zero letters. An explicitly shared
+immutable dictionary instead has $A_S+hK$ active or $A_s$ static
+address letters, plus separately paid references and framing. The
+two fixed halt payloads occupy two bits, of which a run outputs one.
+
+Equality of actual source histories gives the same peaks and extremizers
+as §9.5, proving (SLHC.50) without replacing them by the coarse bound
+$hF_{2K+3}$. In the active case the maxima of Reads, Updates, response
+changes and address sum are still respectively
+$4h+2K$, $2K$, $4h+4K$ and $A_S+hK+K(d_1+K)$, jointly
+attained at $t=0,x=1^h$. For $T\ge1$ the largest source peak
+instead occurs at $t=1,x=(0,1,\ldots,1)$; the former entry has
+peak $hF_{2K+2}$ and is not a joint maximizer of the source coordinate.
+The static Read and write maxima remain $3M+h$. Its source maximum
+occurs at $t=T,x=1^h$; it also attains these operation maxima when
+$T$ is even, whereas for odd $T$ the source and operation maxima
+are not jointly attained, exactly as in §9.5.
+
+The service decomposition (SLHC.35) still charges promise establishment,
+source preparation, compilation, installation, initialization, every
+lookup, literal delivery, native execution, response write and final
+output separately. The chosen $z_i$ are compiled constants; their
+existence supplies neither free compilation nor free lookup. Numerical
+tariffs for these services are not identified between implementations
+merely because the primitive histories agree. All retained $S,T$ data,
+dictionary indexes and fixed output representations retain their
+installation bills. A service needing a persistent cursor, decoded
+stage, accumulator or response buffer outside the counted word would
+require a different complete-state accounting. The source leaf and
+node counts describe literal occurrences, not a physical storage tariff.
+
+The constructive quantifiers remain
+$\forall S\ \forall T<\infty\ \exists C_{S,T}\ \forall x\ \forall t\le T$
+in the even-$h$ domain. The collision obstruction for odd $h,T\ge1$
+in §9.3 and the absence of one finite installation for unbounded lag
+in §9.7 retain their original scopes. Although $\ell_a$ is independent
+of $T$, its installed literals contain $R^K$ and therefore depend on
+the finite promise. The estimates (SLHC.40) determine the leading
+coefficients and additive intervals; they do not determine the exact
+integer minimum widths, minimum installed-state counts or optimal
+joint resource costs. The conditional ordinary mathematical result
+does not establish physical service availability, a total-cost or
+Pareto optimum, kernel certification or worldwide originality.
+$\square$
+
+[KLAVZAR-PATH]: https://www.fmf.uni-lj.si/~klavzar/preprints/FibonacciCubesRevised.pdf
+[KLAVZAR-PATH-DOI]: https://doi.org/10.1007/s10878-011-9433-z
+

@@ -1,0 +1,27 @@
+**定义 393.1（实际系数的三种乘法层）。** 保留 §§385、392 的实际参数
+
+$$
+q=\varphi^{-2},\qquad a=\log(1/q)>0,\qquad
+\beta_d=\log(1-(-q)^d),\qquad e=\mu*\beta,
+\qquad c_k^e=\sum_{n\ge1}\frac{e_n}{n^2}(1-n^{-2})^k.
+\tag{393.1}
+$$
+
+对 $n\ge2$，令 $\mathcal P$ 为平方满指标集：每个素因子的指数至少为二；令 $\mathcal S$ 为平方自由指标集；令 $\mathcal X$ 为两者之外的混合指标集。它们构成 $\{2,3,\ldots\}$ 的不交分割。定义
+
+$$
+C_{\mathcal A}(k)=\sum_{n\in\mathcal A}
+\frac{e_n}{n^2}(1-n^{-2})^k
+\quad(\mathcal A=\mathcal P,\mathcal S,\mathcal X).
+\tag{393.2}
+$$
+
+这些级数由 §392 的 $|e_n|\le B=\sum_d|\beta_d|<\infty$ 绝对支配。$k\ge1$ 时单位指标严格为零，因此
+
+$$
+c_k^e=C_{\mathcal P}(k)+C_{\mathcal S}(k)+C_{\mathcal X}(k).
+\tag{393.3}
+$$
+
+$k=0$ 时须另加实际 $e_1=\log(1+q)$，不能代入原子偏差 $E_1=-\log\varphi$。$n>1$ 时 $e_n=E_n$ 是 §385 的既有关系。本节直接复用 §382 的奇核公式与平方满逐点包络，不重证原子符号、平方满表示或 RH 判据。
+

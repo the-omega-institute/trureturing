@@ -1,0 +1,9 @@
+fingerprints:
+  raw_sha256: sha256:2d2f97108cf3e941e5a1dda29635dd310e33408f3985d8b6d026f68d44ce7a87
+  normalized_sha256: sha256:2d2f97108cf3e941e5a1dda29635dd310e33408f3985d8b6d026f68d44ce7a87
+cas_ref: sha256:2d2f97108cf3e941e5a1dda29635dd310e33408f3985d8b6d026f68d44ce7a87
+coverage_gids:
+  - gid: D5/S3/AnalyticClosure/FamilySums/TermBoundDoesNotBoundFamilySum.term_bound_does_not_bound_family_sum
+    target_statement_id: sha256:b6b39ab498345577e6d112ae37dc294c34452253c872cd8c4a0324393331accb
+receipts:
+  unresolved_subitems: []

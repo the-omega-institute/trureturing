@@ -1,0 +1,89 @@
+**Theorem 125.1 (Complete finite endpoint certificate).** Each law
+of Definition 124.2 satisfies the cap at every one of the 32
+words, with the amplitudes and cap of its own auxiliary profile.
+Its all-positive base mass is exactly $1-\varepsilon_V$.
+
+**Proof.** For first-zero class $n$ define the three separate minima
+
+$$
+\begin{aligned}
+B_{V,n}&=\min_{b=1^{n-1}0s}p_b^V(0),\\
+C_{V,n}&=\min_{b=1^{n-1}0s}p_b^V(n),\\
+P_{V,n}&=\min_{b=1^{n-1}0s}[p_b^V(0)+p_b^V(n)],
+\qquad s\in\{0,1\}^{5-n}.
+\end{aligned}
+\tag{125.1}
+$$
+
+The suffixes have sizes $16,8,4,2,1$ for $n=1,2,3,4,5$.
+Evaluating the integer sum (124.1) over each entire class gives
+the following triples $(B_{V,n},C_{V,n},P_{V,n})$:
+
+| Profile | $n=1$ | $n=2$ | $n=3$ | $n=4$ | $n=5$ |
+| --- | --- | --- | --- | --- | --- |
+| V0 | (0,1,1) | (0,1,1) | (1,0,1) | (1,0,1) | (1,0,1) |
+| Vx | (0,3/4,3/4) | (0,3/4,3/4) | (1/4,3/4,1) | (3/4,0,3/4) | (3/4,0,3/4) |
+| Vy | (0,3/5,3/5) | (0,3/5,3/5) | (0,3/5,3/5) | (2/5,3/5,1) | (3/5,0,3/5) |
+| Vz | (0,1/2,1/2) | (0,1/2,1/2) | (0,1/2,1/2) | (1/4,1/2,3/4) | (1/4,1/2,3/4) |
+| VA0 | (9/31,12/31,21/31) | (9/31,12/31,21/31) | (9/31,12/31,21/31) | (12/31,12/31,24/31) | (18/31,12/31,30/31) |
+| VA1 | (6/31,15/31,21/31) | (9/31,12/31,21/31) | (9/31,12/31,21/31) | (12/31,12/31,24/31) | (18/31,12/31,30/31) |
+| VB0 | (9/28,3/7,3/4) | (9/28,3/7,3/4) | (9/28,3/7,3/4) | (3/7,3/7,6/7) | (9/14,3/28,3/4) |
+| VB1 | (3/14,15/28,3/4) | (9/28,3/7,3/4) | (9/28,3/7,3/4) | (3/7,3/7,6/7) | (9/14,3/28,3/4) |
+| VC0 | (9/29,12/29,21/29) | (9/29,12/29,21/29) | (9/29,12/29,21/29) | (12/29,9/29,21/29) | (18/29,9/29,27/29) |
+| VC1 | (6/29,15/29,21/29) | (9/29,12/29,21/29) | (9/29,12/29,21/29) | (12/29,9/29,21/29) | (18/29,9/29,27/29) |
+| VD0 | (1/3,4/9,7/9) | (1/3,4/9,7/9) | (1/3,4/9,7/9) | (4/9,1/3,7/9) | (2/3,1/9,7/9) |
+| VD1 | (2/9,5/9,7/9) | (1/3,4/9,7/9) | (1/3,4/9,7/9) | (4/9,1/3,7/9) | (2/3,1/9,7/9) |
+
+For example, at $V_{D0}$ and a word whose first zero is four,
+the leading bits are $111$. The first-zero column of pair
+$(4,5)$ contributes $e_0/9$. Pairs $(1,4),(2,4),(3,4)$
+contribute $3e_4/9$ through their $10$ columns; pairs
+$(1,2),(1,3),(2,3)$ contribute $(3e_0+2e_3)/9$ through
+$11$. Thus both suffix choices have base mass $4/9$,
+correct-label mass $1/3$ and pair mass $7/9$, as displayed.
+The other entries are obtained from exactly the same explicit
+sum for every suffix, including all multiple-zero words.
+
+Every triple meets the three respective thresholds
+
+$$
+B_{V,n}\ge1-a_n^V-\varepsilon_V,\qquad
+C_{V,n}\ge a_n^V-\varepsilon_V,\qquad
+P_{V,n}\ge1-\varepsilon_V.
+\tag{125.2}
+$$
+
+These are all $3\cdot31=93$ zero-word TV rows (110.6).
+The third minimum is evaluated for the union event itself,
+independently of the two singleton minima. It is never discarded
+on the assumption that the first two bounds suffice. At $11111$
+only the $11$ columns contribute. Their base sum, divided by
+$d_V$, is respectively
+
+$$
+1,\quad 3/4,\quad 3/5,\quad 1/2,\quad
+21/31,\quad21/31,\quad3/4,\quad3/4,\quad
+21/29,\quad21/29,\quad7/9,\quad7/9
+\tag{125.3}
+$$
+
+in the profile order of Definition 124.1. These are exactly
+$1-\varepsilon_V$, giving the 94th row. The finite identity
+behind (110.6) is also explicit: for a probability vector $p$
+and target $(1-a)e_0+ae_n$, the possible positive deficits lie
+only at labels $0,n$, so
+
+$$
+\operatorname{TV}(p,(1-a)e_0+ae_n)
+ =\max\{0,1-a-p(0),a-p(n),1-p(0)-p(n)\}.
+\tag{125.4}
+$$
+
+Hence all 94 rows are precisely sufficient as well as necessary.
+Definitions 124.1--124.2 and (124.1), (125.1) give rational finite
+proof data for every endpoint law: 384 word laws and 1,128
+separate cap rows across the twelve profiles. Their finite
+validity is used only at these endpoints; continuous coverage
+comes from Section 123 and the affine argument below.
+$\square$
+

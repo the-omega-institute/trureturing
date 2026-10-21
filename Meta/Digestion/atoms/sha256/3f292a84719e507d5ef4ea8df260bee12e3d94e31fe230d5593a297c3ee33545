@@ -1,0 +1,9 @@
+参考：
+
+- Connes, Consani, Moscovici, *Zeta Spectral Triples*, arXiv:2511.22755v1, Sections 3, 4, 7, 8. https://arxiv.org/html/2511.22755v1
+- Connes, *The Riemann Hypothesis: Past, Present and a Letter Through Time*, arXiv:2602.04022v1, Sections 6.4-6.6. https://arxiv.org/html/2602.04022v1
+- NIST DLMF 5.7.6, same Gamma partial-fraction normalization. https://dlmf.nist.gov/5.7
+- Mathlib pinned `db584cd6d46c92f209a44c0f1c829460d327499d`, ImproperIntegrals and IntegralEqImproper; the existing polynomial-times-exponential decay is reused.
+- AlyciaBHZ #6029 actual `WeilArithmeticResidualPrecision.lean` at `3037f47c69bf1f4065870413cc354c8995139258`; #5882 and #5895 current PR descriptions; loning research #6044 actual `GribinskiDegreeTwo.lean` at `ca166f8b2ae3ef27e210622303e8e94ce4ab98c3`.
+
+

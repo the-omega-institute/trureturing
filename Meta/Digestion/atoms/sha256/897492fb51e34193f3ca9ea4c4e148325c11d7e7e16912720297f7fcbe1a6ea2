@@ -1,0 +1,64 @@
+**定理 21.3（不等阻抗的固定低频本征对）。** 对每个先固定的整数 $m\ge0$，在充分大且 $L_j>m$ 时，
+
+$$
+\rho_{j,m}:=\frac{\epsilon_j}{1-\lambda_{j,m}}
+\longrightarrow
+\rho_m:=\frac{4}{D\pi^2(2m+1)^2}.
+$$
+
+上述分片常数嵌入的本征函数满足
+
+$$
+f_{j,m}(u)\longrightarrow
+\psi_m(u):=\sqrt2\cos\!\left(\frac{(2m+1)\pi u}{2}\right)
+$$
+
+于 $[0,1]$ 的一致范数，因而也于 $L^2([0,1])$。此外，令同长度实际平均阻抗链的本征值为
+
+$$
+\widehat\lambda_{j,m}
+=1-2\widehat p_j+
+2\widehat p_j\cos\!\left(\frac{(2m+1)\pi}{2L_j+1}\right),
+\qquad
+\widehat p_j=\frac{\theta}{\widehat r_j},
+$$
+
+则对这些固定 $m$ 的本征值有定量比较
+
+$$
+\left|
+\frac{\epsilon_j}{1-\lambda_{j,m}}
+-\frac{\epsilon_j}{1-\widehat\lambda_{j,m}}
+\right|
+\le\frac{2\epsilon_jL_j}{\theta}\Delta_r,
+\qquad
+\rho_{j,m}=\rho_m+O_m(L_j^{-1}).
+$$
+
+**证明。** 在 $L^2([0,1])$ 上令 $\mathcal T_j$ 为 $\mathcal K_j$ 的积分算子，$\mathsf C$ 为 $C$ 的积分算子。两者正自伴；$\mathcal T_j$ 在分片常数子空间上恰为 $\epsilon_jG_j$，在其正交补上为零。因此它的非零本征值是按递减次序排列的 $\rho_{j,m}$。定理 21.2 的一致核误差给出
+
+$$
+\|\mathcal T_j-\mathsf C\|_{2\to2}
+\le\|\mathcal K_j-C\|_\infty=O(L_j^{-1}).
+$$
+
+对 $y=\mathsf C f$，第 10.2 节的边值关系为
+
+$$
+-Dy''=f,\qquad y'(0)=0,\qquad y(1)=0.
+$$
+
+所以 $\mathsf C$ 的非零本征对正是 $(\rho_m,\psi_m)$：诺伊曼—狄利克雷条件给出半整数频率，每个本征值严格正且单重。正紧自伴算子的极小极大原理与算子范数收敛于是给出每个固定 $m$ 的本征值收敛；孤立单重本征值的谱投影收敛给出相应本征函数在 $L^2$ 中的收敛，先允许选择符号。
+
+为把 $L^2$ 收敛提升到一致收敛，使用本征方程
+
+$$
+f_{j,m}=\rho_{j,m}^{-1}\mathcal T_j f_{j,m},
+\qquad
+\psi_m=\rho_m^{-1}\mathsf C\psi_m.
+$$
+
+一致核误差使 $\mathcal T_j-\mathsf C$ 从 $L^2$ 到有界函数的一致范数趋零，而连续有界核 $C$ 使 $\mathsf C$ 从 $L^2$ 到 $C([0,1])$ 连续。由于固定 $m$ 的 $\rho_m>0$，本征方程给出一致收敛。暂态三对角矩阵的相邻非对角元非零，所以本征向量在 $0$ 的值不能为零；$f_{j,m}(0)>0$ 与 $\psi_m(0)=\sqrt2$ 最终选择同一符号。
+
+对实际平均阻抗核应用定理 21.2 的第二种比较，所得算子范数差不超过 $2\epsilon_jL_j\Delta_r/\theta$。再次使用极小极大原理，得到显示的同长度本征值比较界。该常阻抗链满足定义 20.1 的概率条件，因为 $\widehat r_j\ge\min(r_\alpha,r_\beta)$。第 20.2 节保留半格点分母的谱式，结合 $\widehat r_j=\overline r+O(L_j^{-1})$ 与 $\epsilon_jL_j^2=\delta/\varphi^4+O(L_j^{-2})$，给出固定 $m$ 的 $O_m(L_j^{-1})$ 估计。$\square$
+

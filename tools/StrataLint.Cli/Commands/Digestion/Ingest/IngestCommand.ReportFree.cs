@@ -88,7 +88,50 @@ internal static partial class IngestCommand
                     document,
                     plan),
                 plan.CasObjects);
-            return WriteReportFreeResult(
+            RequireAppendOnlyWriteSet(currentRaw, document, plan.Document,
+                LedgerUpdates(currentRaw, finalRaw, document, plan.Document), plan.CasObjects, plan.AddedAtomIds, sourceIds);
+            RequireNewCasIntegrity(document, plan.Document, plan.CasObjects, plan.AddedAtomIds);
+            var contextUnavailable = new List<string>();
+            var contextIndexes = ImmutableArray.CreateBuilder<DigestionContextPointerIndex>();
+            var contextCas = ImmutableArray.CreateBuilder<DigestionCasObject>();
+            foreach (var sourceId in sourceIds ?? plan.Document.RequireDigestionSources()
+                         .Select(static source => source.SourceId).ToImmutableHashSet(StringComparer.Ordinal))
+            {
+                if (plan.Fallbacks.Any(fallback => fallback.SourceId == sourceId)) continue;
+                var contextInput = DigestionQuerySelection.ReadChains(repository, DigestionQuerySelection.Load(finalRaw));
+                contextInput = DigestionQuerySelection.Load(DigestionQuerySelection.Merge(contextInput.Raw,
+                    repository.ReadCurrent(contextInput.Document.RequireDigestionEntries().Select(DigestionQuerySelection.CasPath).ToArray())));
+                var corrupt = contextInput.Document.RequireDigestionEntries().FirstOrDefault(entry =>
+                    contextInput.Snapshot.TryGetFile(DigestionCasStore.RootPath + entry.AtomId, out var blob)
+                    && DigestionCasStore.Capture(blob.RawBytes.AsSpan()).Reference != "sha256:" + entry.AtomId);
+                if (corrupt is not null)
+                {
+                    contextUnavailable.Add($"INGEST_CONTEXT_UNAVAILABLE source_id={sourceId} reason=CAS_MISMATCH atom_id={corrupt.AtomId}\n");
+                    continue;
+                }
+                var built = DigestionContextIndexBuilder.Build(contextInput.Snapshot, contextInput.Document, sourceId);
+                currentRaw = DigestionQuerySelection.Merge(currentRaw, RawRepositorySnapshot.Create(contextInput.Raw.Entries
+                    .Where(entry => IsContextIndexPath(entry.Path))));
+                var saved = repository.ReadCurrent(built.Index.Entries.Select(entry => DigestionQuerySelection.Literal(
+                    DigestionContextPointerIndex.RelativePath(sourceId, entry.AtomId))).ToArray());
+                currentRaw = DigestionQuerySelection.Merge(currentRaw, saved);
+                finalRaw = DigestionQuerySelection.Merge(finalRaw, saved);
+                var index = built.Index;
+                contextIndexes.Add(index);
+                contextCas.AddRange(built.CasObjects);
+            }
+            plan = plan with
+            {
+                ContextIndexes = contextIndexes.ToImmutable(),
+                ContextCasObjects = contextCas
+                    .GroupBy(static item => item.Reference, StringComparer.Ordinal)
+                    .Select(static group => group.First())
+                    .OrderBy(static item => item.RelativePath, StringComparer.Ordinal)
+                    .ToImmutableArray(),
+            };
+            finalRaw = AddCasObjects(finalRaw, plan.ContextCasObjects);
+            finalRaw = AddContextIndexes(finalRaw, plan.ContextIndexes);
+            var result = WriteReportFreeResult(
                 repositoryRoot,
                 currentRaw,
                 document,
@@ -96,11 +139,20 @@ internal static partial class IngestCommand
                 plan,
                 sourceIds,
                 dependencies);
+            return result with { Output = result.Output + string.Concat(contextUnavailable) };
         }
         catch (Exception exception) when (exception is not OutOfMemoryException)
         {
             return new CommandResult(false, string.Empty, $"INGEST_INVALID {exception.Message}\n");
         }
+    }
+
+    private static RawRepositorySnapshot AddContextIndexes(
+        RawRepositorySnapshot snapshot,
+        IEnumerable<DigestionContextPointerIndex> indexes)
+    {
+        foreach (var index in indexes) snapshot = DigestionContextPointerStore.Add(snapshot, DigestionContextPointerStore.PreserveSavedGraph(snapshot, index));
+        return snapshot;
     }
 
     private static CommandResult WriteReportFreeResult(
@@ -112,7 +164,7 @@ internal static partial class IngestCommand
         ImmutableHashSet<string>? sourceIds,
         ReportFreeIngestDependencies dependencies)
     {
-        var ledgerUpdates = LedgerAdditions(currentRaw, finalRaw, plan);
+        var ledgerUpdates = LedgerUpdates(currentRaw, finalRaw, currentDocument, plan.Document);
         RequireAppendOnlyWriteSet(
             currentRaw,
             currentDocument,
@@ -131,10 +183,16 @@ internal static partial class IngestCommand
             .ToImmutableArray();
         dependencies.BeforeCommit?.Invoke();
         RequireUnclaimedAtomIds(repositoryRoot, plan.AddedAtomIds);
-        var createdCasPaths = WriteCasObjects(repositoryRoot, plan.CasObjects);
+        var allCasObjects = plan.CasObjects.Concat(plan.ContextCasObjects)
+            .GroupBy(static item => item.Reference, StringComparer.Ordinal)
+            .Select(static group => group.First())
+            .OrderBy(static item => item.RelativePath, StringComparer.Ordinal)
+            .ToImmutableArray();
+        var createdCasPaths = WriteCasObjects(repositoryRoot, allCasObjects);
         try
         {
-            ApplyLedgerAdditionsAtomically(repositoryRoot, ledgerUpdates, dependencies.CommitLedgerFile);
+            ApplyLedgerUpdatesAtomically(repositoryRoot, currentRaw, ledgerUpdates, dependencies.CommitLedgerFile,
+                () => RequireReportFreeInputs(repositoryRoot, currentRaw, ledgerUpdates));
         }
         catch (Exception exception) when (exception is not OutOfMemoryException)
         {

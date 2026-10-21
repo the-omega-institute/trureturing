@@ -1,0 +1,23 @@
+### 定理 379.3（有限因果运输的存在与普通运输下界）
+
+定义
+
+$$
+W^{\to}_c(P,Q)
+=
+\min_{\pi\in\Gamma_{\to}(P,Q)}
+\mathbb E_\pi[c(X,Y)],
+$$
+
+其中 \(\Gamma_{\to}(P,Q)\) 是从 \(X\) 到 \(Y\) 的因果耦合集合。则：
+
+$$
+\boxed{
+\Gamma_{\to}(P,Q)\ne\varnothing,
+\qquad
+W^{\to}_c(P,Q)\ge W_c(P,Q).
+}
+$$
+
+最小值在有限维中取得。若某个普通最优耦合本身因果，则两者相等。
+

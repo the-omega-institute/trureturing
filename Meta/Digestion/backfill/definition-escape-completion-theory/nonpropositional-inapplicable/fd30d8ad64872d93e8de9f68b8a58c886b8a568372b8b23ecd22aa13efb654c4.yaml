@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:fd30d8ad64872d93e8de9f68b8a58c886b8a568372b8b23ecd22aa13efb654c4
+  normalized_sha256: sha256:fd30d8ad64872d93e8de9f68b8a58c886b8a568372b8b23ecd22aa13efb654c4
+cas_ref: sha256:fd30d8ad64872d93e8de9f68b8a58c886b8a568372b8b23ecd22aa13efb654c4
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 系统数据 Gamma 的语法角色说明。
+    previous_atom_id: f609c9ff0faac122bdb8f8e507c4270cf161dc6ea5af995177529307d979f4eb
+    next_atom_id: 7703570e49b4004f4832034f392b0faec353266b42f0b74809095ee7fcbd2434

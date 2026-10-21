@@ -1,0 +1,16 @@
+### 定理 353.6（平坦修正的全局下界）
+
+若 \(\widetilde g\) 在 \(c\) 上的运输为单位元，则
+
+$$
+\boxed{
+\eta\ge\frac{d(T_g(c),1)}{r}.
+}
+$$
+
+更一般地，若 \(d(T_g(c),\widetilde T(c))\) 已知，则
+
+$$
+ d(T_g(c),\widetilde T(c))\le r\eta.
+$$
+

@@ -12,6 +12,22 @@ internal sealed class SingularValueOrderDocument : IScribeDocumentDefinition
         H("Gram order and decreasing singular values"),
         Blocks(
             Describe.Lean(
+                DescribeId.Create("eigenvalues-zero-mono"),
+                DeclarationHandle.Create(Module + ".eigenvalues_zero_mono"),
+                H("Hermitian eigenvalue order"),
+                StatementSource.WithoutFormula(),
+                AssessedProvenance.FromLiterature(Background),
+                Blocks(Paragraph(Text("For every dimension, Hermitian complex matrices H,K with K−H positive semidefinite satisfy λᵢ(H)≤λᵢ(K) at every decreasing eigenvalue index. The spectral subspace comparison includes repeated eigenvalues."))),
+                DescribeRole.Theorem),
+            Describe.Lean(
+                DescribeId.Create("eigenvalues-zero-smul"),
+                DeclarationHandle.Create(Module + ".eigenvalues_zero_smul"),
+                H("Nonnegative eigenvalue scaling"),
+                StatementSource.WithoutFormula(),
+                AssessedProvenance.FromLiterature(Background),
+                Blocks(Paragraph(Text("For every dimension, Hermitian complex matrix H and nonnegative real q, the decreasing eigenvalues satisfy λᵢ(qH)=qλᵢ(H) at every index. The formula includes q=0."))),
+                DescribeRole.Theorem),
+            Describe.Lean(
                 DescribeId.Create("zhangli-singularvalueorder-singularvaluessorted-eq-sqrt-eigenvalues-zero"),
                 DeclarationHandle.Create(Module + ".singularValuesSorted_eq_sqrt_eigenvalues_zero"),
                 H("Singular values from Gram eigenvalues"),

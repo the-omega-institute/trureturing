@@ -1,0 +1,6 @@
+# 2026-09-07：原点归一化的真模态对应，以及 5040 因数数据的精确算子字典
+
+本节有两个不同层次的交付。第一，实际重放完整算术对偶证书后，消去未知射影归一化，认证真实 ground 与真实 prolate 的原点归一化 Fourier 比较。第二，把 5040 研究中实际使用的有限因数载体提升为同一有限窗口上的算术作用，明确证明其对应条件和遗漏项。没有把 Robin 标量不等式当作 Weil 正性或谱间隔。
+
+新 Lean 为 `WeilDivisorWindowCorrespondence.lean`，配套同名 Scribe，位于既有 `D5/S3/Weil/ZetaBridge` 路径。其六个公开声明使用原 `Nat.divisors`、`windowMellinSum` 和 `primeForward`。新程序为 `certify_prime3_origin_normalized.py`，另有 `test_divisor_window_correspondence.py` 及其实际结果。Lean elaboration、Scribe emission、传递公理审查均未执行；下面的算子 Euler 积与锐窗口边界是纸面证明，未混称为新 Lean 的结论。
+

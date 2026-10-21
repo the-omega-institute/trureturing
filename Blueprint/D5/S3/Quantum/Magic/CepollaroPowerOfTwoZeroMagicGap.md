@@ -4,7 +4,19 @@
 
 For every qudit dimension divisible by four, and so for every power of two at least four, some three-dimensional subspace has zero average stabilizer entropy gap.
 
-**Definition 1.1 (The displacement phase).**
+**Theorem 1.1 (Entries of an unphased Weyl displacement).**
+
+$$\forall d: \mathbb{N}, d\neq0 \Rightarrow \forall a: \mathbb{Z}/d\mathbb{Z}, \forall b: \mathbb{Z}/d\mathbb{Z}, \forall x: \mathbb{Z}/d\mathbb{Z}, \forall y: \mathbb{Z}/d\mathbb{Z}, \operatorname{displacement}\left(d, a, b, x, y\right) = \operatorname{ite}\left(\operatorname{val}\left(x\right) = \operatorname{mod}\left(\operatorname{val}\left(y\right) + \operatorname{val}\left(a\right), d\right), \operatorname{windowRoot}\left(d\right)^{\operatorname{val}\left(b\right) \times \operatorname{val}\left(y\right)}, 0\right)$$
+
+*Proof.* Machine-checked in Lean as `D5/S3/Quantum/Magic/CepollaroPowerOfTwoZeroMagicGap.displacement_entry` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+For every nonzero natural dimension d and a, b, x, y in ZMod d, the unphased word X to val(a) times Z to val(b) has one nonzero entry per column. The column y is shifted by a and its phase is windowRoot(d) to val(b) times val(y). Here displacement denotes WeylDisplacement.displacement, before the tau phase of paperDisplacement.
+
+**Definition 1.2 (The displacement phase).**
 
 $$\operatorname{tau}\left(d\right) = -\operatorname{exp}\left(\frac{\pi i}{d}\right)$$
 
@@ -16,7 +28,7 @@ $$\operatorname{tau}\left(d\right) = -\operatorname{exp}\left(\frac{\pi i}{d}\ri
 
 The phase τ = −e^{iπ/d} of the displacement operators, as in §II.A of arXiv:2512.23013v1.
 
-**Definition 1.2 (The displacement operators).**
+**Definition 1.3 (The displacement operators).**
 
 $$\forall a: \mathbb{Z}/d\mathbb{Z} \times \mathbb{Z}/d\mathbb{Z}, \operatorname{paperDisplacement}\left(d, a\right) = \operatorname{tau}\left(d\right)^{a_{1} \times a_{2}} \cdot \operatorname{displacement}\left(d, a_{1}, a_{2}\right)$$
 
@@ -28,7 +40,7 @@ $$\forall a: \mathbb{Z}/d\mathbb{Z} \times \mathbb{Z}/d\mathbb{Z}, \operatorname
 
 D_a = τ^{a₁a₂} X^{a₁} Z^{a₂} for a = (a₁, a₂) in (ℤ/dℤ)². The word X^{a₁} Z^{a₂} is the frozen Weyl displacement of D5/S3/Quantum/Algebra/WeylDisplacement, built from the shift X|k⟩ = |k + 1⟩ and the clock Z|k⟩ = ω^k|k⟩, ω = e^{2πi/d}, of D5/S3/Observer/WindowRegister; the phase does not affect any quantity below because each operator occurs together with its adjoint.
 
-**Definition 1.3 (The fourth tensor power).**
+**Definition 1.4 (The fourth tensor power).**
 
 $$\operatorname{power4}\left(V\right) = \operatorname{productMap}\left(i \mapsto V\right)$$
 
@@ -40,7 +52,7 @@ $$\operatorname{power4}\left(V\right) = \operatorname{productMap}\left(i \mapsto
 
 V^{⊗4} for a rectangular matrix V, written with the frozen fourfold product productMap of D5/S3/Quantum/Recovery/PurifiedLocalPath, whose entry at (x, y) is the product over the four factors of the entries at (x_i, y_i).
 
-**Definition 1.4 (The alternating fourfold product).**
+**Definition 1.5 (The alternating fourfold product).**
 
 $$\operatorname{alt}\left(A\right) = \operatorname{productMap}\left(A, (A)^{*}, A, (A)^{*}\right)$$
 
@@ -52,7 +64,7 @@ $$\operatorname{alt}\left(A\right) = \operatorname{productMap}\left(A, (A)^{*}, 
 
 A ⊗ A† ⊗ A ⊗ A†, the summand of Q.
 
-**Definition 1.5 (The permutation operators).**
+**Definition 1.6 (The permutation operators).**
 
 $$\operatorname{T}\left(H, \sigma\right)(x, y) = \operatorname{ite}\left(x = y \circ \sigma^{-1}, 1, 0\right)$$
 
@@ -64,7 +76,7 @@ $$\operatorname{T}\left(H, \sigma\right)(x, y) = \operatorname{ite}\left(x = y \
 
 T_σ permutes the four tensor factors of a fourfold tensor power over a finite index type H (it is the permutation matrix of the induced permutation of index tuples); the paper writes T_σ = Σ |σ(i,j,k,l)⟩⟨ijkl|.
 
-**Definition 1.6 (The stabilizer entropy operator).**
+**Definition 1.7 (The stabilizer entropy operator).**
 
 $$\operatorname{Q}\left(d\right) = d^{-2} \cdot \sum_{a} \operatorname{alt}\left(\operatorname{paperDisplacement}\left(d, a\right)\right)$$
 
@@ -76,7 +88,7 @@ $$\operatorname{Q}\left(d\right) = d^{-2} \cdot \sum_{a} \operatorname{alt}\left
 
 Q = d^{-2} Σ_a (D_a ⊗ D_a†)^{⊗2}, so that the linear stabilizer entropy of a pure state is M(ψ) = 1 − d tr(Q ψ^{⊗4}).
 
-**Definition 1.7 (The Haar fourth moment in closed form).**
+**Definition 1.8 (The Haar fourth moment in closed form).**
 
 $$\operatorname{A4}\left(H\right) = \operatorname{binom}\left(\Vert H \Vert + 3, 4\right)^{-1} \cdot \frac{1}{24} \cdot \sum_{\sigma \in S4} \operatorname{T}\left(H, \sigma\right)$$
 
@@ -88,7 +100,7 @@ $$\operatorname{A4}\left(H\right) = \operatorname{binom}\left(\Vert H \Vert + 3,
 
 A₄ is the paper's closed form of the Haar average E_U[(UψU†)^{⊗4}], the normalized projector onto the symmetric subspace of four tensor factors. The module takes this closed form as the definition; the Schur–Weyl identity with the Haar integral is quoted from the paper and not formalized.
 
-**Definition 1.8 (The average extrinsic term).**
+**Definition 1.9 (The average extrinsic term).**
 
 $$\operatorname{score}\left(V\right) = dB \times \operatorname{tr}\left(\operatorname{Q}\left(dB\right) \operatorname{power4}\left(V\right) \operatorname{A4}\left(\operatorname{Fin}\left(3\right)\right) (\operatorname{power4}\left(V\right))^{*}\right)$$
 
@@ -100,7 +112,7 @@ $$\operatorname{score}\left(V\right) = dB \times \operatorname{tr}\left(\operato
 
 For an isometry V from ℂ³ into ℂ^{d_B}, the term d_B tr(Q_B E^{⊗4}(A₄)) of the gap, with E(ρ) = VρV†.
 
-**Definition 1.9 (The average stabilizer entropy gap).**
+**Definition 1.10 (The average stabilizer entropy gap).**
 
 $$\operatorname{aseGap}\left(V\right) = 3 \times \operatorname{tr}\left(\operatorname{Q}\left(3\right) \operatorname{A4}\left(\mathbb{Z}/3\mathbb{Z}\right)\right) - \operatorname{score}\left(V\right)$$
 
@@ -112,7 +124,7 @@ $$\operatorname{aseGap}\left(V\right) = 3 \times \operatorname{tr}\left(\operato
 
 ΔM(E) = d_S tr(Q_S A₄) − d_B tr(Q_B E^{⊗4}(A₄)) for d_S = 3, as in §III of the paper.
 
-**Definition 1.10 (The power-of-two observation).**
+**Definition 1.11 (The power-of-two observation).**
 
 $$claim \Leftrightarrow (\forall m: \mathbb{N}, 2 \leq m \Rightarrow \exists V: \operatorname{Matrix}\left(\mathbb{Z}/2^{m}\mathbb{Z}, \operatorname{Fin}\left(3\right), \mathbb{C}\right), (V)^{*} \times V = 1 \land \operatorname{aseGap}\left(V\right) = 0)$$
 
@@ -124,7 +136,7 @@ $$claim \Leftrightarrow (\forall m: \mathbb{N}, 2 \leq m \Rightarrow \exists V: 
 
 The observation of §V.A of arXiv:2512.23013v1, "when d_B is a power of 2, a zero ASE subspace of dimension three is always achievable": for every m ≥ 2 some isometry from ℂ³ into ℂ^{2^m} has zero gap (ℂ² has no three-dimensional subspace).
 
-**Theorem 1.11 (Every power of two at least four has a zero-gap three-dimensional subspace).**
+**Theorem 1.12 (Every power of two at least four has a zero-gap three-dimensional subspace).**
 
 $$claim$$
 
@@ -148,6 +160,7 @@ The proof gives more: write d_B = 4r and take the subspace spanned by |r⟩, |3r
 - Truth anchor: `D5/S3/Quantum/Magic/CepollaroPowerOfTwoZeroMagicGap.alt`
 - Truth anchor: `D5/S3/Quantum/Magic/CepollaroPowerOfTwoZeroMagicGap.aseGap`
 - Truth anchor: `D5/S3/Quantum/Magic/CepollaroPowerOfTwoZeroMagicGap.claim`
+- Truth anchor: `D5/S3/Quantum/Magic/CepollaroPowerOfTwoZeroMagicGap.displacement_entry`
 - Truth anchor: `D5/S3/Quantum/Magic/CepollaroPowerOfTwoZeroMagicGap.paperDisplacement`
 - Truth anchor: `D5/S3/Quantum/Magic/CepollaroPowerOfTwoZeroMagicGap.power4`
 - Truth anchor: `D5/S3/Quantum/Magic/CepollaroPowerOfTwoZeroMagicGap.result`

@@ -1,0 +1,27 @@
+**命题 12.10（整数树截面与原生奇reset的时序限制）。**
+
+奇reset的原有结果采用《RECURSIVE_RELATIONAL_OBSERVATION_RESET_PARITY_DIMENSION_ACTION》定义1与定理10–13，不新增同义结论。参数对应为 $M_q=(\mathbb Z[C_2])^q$、原右行转移 $T_q$、原前向colimit $G_q$、真正时间 $\Theta_q$、$D_q=I+\Theta_q$、字符 $\Lambda_q$ 与原核生成元 $c_q$。定理11通过 $F_q(\operatorname{of}_n(v))=P_q^nv$ 保留全部整数坐标并把真正时间输运为 $T_q$；补集乘 $[\tau]$ 是另一作用。正奇数 $q$ 的定理12给 $\ker D_q=\mathbb Zc_q$、$\operatorname{im}D_q=\ker\Lambda_q$、$\Lambda_q(c_q)=q+1$、普通余核 $\mathbb Z$ 和合并商 $\mathbb Z/(q+1)$，同时给全部可解纤维。原始stage的非负锥输运为 $\bigcup_{n\ge0}P_q^n(M_q^+)$，不自动是坐标非负锥；例如 $P_2(0,[1])=([1],-[1])$。这些是该原有有序域的应用边界。
+
+Let $D_T$ be the reduced incidence on the nine chosen tree edges. Its integer inverse exists. Embed $D_T^{-1}$ in the full edge space to obtain an integer right inverse $R$, so $DR=I$. For every integer signed chain,
+$$
+w=R(Dw)+(I-RD)w,
+\qquad D(I-RD)w=0.
+$$
+This is an integral direct splitting, generally nonorthogonal. It is not a nonnegative native update. For a concrete illustration, the integral zero-margin rectangle $Z_{LL}=E_{LL}-E_{LO}-E_{OL}+E_{OO}$ has both signs, and it is precisely the hidden term $(I-RD)E_{LL}$ for the chosen tree. The tree term is also signed. Neither algebraic term automatically defines a separately realizable source.
+
+For native odd reset, $s_{\mathbb Q}(n)=nc_q/(q+1)$ is a rational section of $\Lambda_q$ and intertwines genuine time with negation. If an integer-linear section had these properties, then $(I+\Theta_q)s(1)=0$, hence $s(1)=kc_q$, and its section equation would force $(q+1)k=1$, impossible. Surjectivity still supplies a nonequivariant integer-linear section $n\mapsto ne$ for $\Lambda_q(e)=1$.
+
+Additivity matters: at $q=1$, the set section $n\mapsto(\max(n,0),\max(-n,0))$ is nonnegative and equivariant under coordinate swap. The theorem excludes the specified integer-linear, time-equivariant section; it does not exclude set sections or a positively lawful acquisition process supplied under another explicit contract. Integrality, orthogonality, positivity and dynamical equivariance are four distinct requirements.
+
+Fibonacci接口的参数对应。局部钟卷定理15.4的单位介入活动为 $A=B^3$、$B=\begin{pmatrix}1&1\\1&0\end{pmatrix}$，于是 $A^n=\begin{pmatrix}F_{3n+1}&F_{3n}\\F_{3n}&F_{3n-1}\end{pmatrix}$、$\det A^n=(-1)^n$，并给比值间隔 $1/(F_{3n}F_{3n+1})$。该所有者的八窗口应用同时保留同一有序合法历史、实际共享接缝、开放端或单端任务、单位介入活动、允许外端权重与正归一化质量。共享位置计重一次；相关历史须实际满足相应乘积合同。八窗口不是八记录，也不从整数可逆性取得正逆操作或恢复来源历史。单独通道 $`(-U)\rho(-U)^*=U\rho U^*`$ 的相等不建立模四／四十五与量子相位的映射；受控比较还需另供相干控制与参考。
+
+For a legal integral event increment $\delta w=e_s$, the single-window residue obeys $r'\equiv r+d_s\pmod4$, where $d_s$ is the $s$-coordinate of $d=(1,-1,0,-1,1)$; a removal uses the opposite sign and must preserve nonnegativity. General integer increments give $r'\equiv r+d^{\mathsf T}\delta w$. The two-window quotient class obeys $[Dw']=[Dw]+[D\delta w]$ in $\mathbb Z^9/L\mathbb Z^9$. These are additive count bookkeeping identities, not native dynamical update laws. The residue is already determined by the complete boundary; after a compression, its recoverability must be proved on fibers of that compression before it is called retained information.
+
+
+
+算术来源对应。《AURIC_FIB_ATOM_PYRAMID_FOUNDATIONAL_FORMULAS_AND_RELATIONS》§18.6的对象是同一普通整数 $n>5040$，其余项接口为 $\log(e^\gamma\log\log n/(\sigma(n)/n))=I_\psi(\log n)+R(\log n)+d_n$、$d_n\ge0$，含有符号无限尾。`RoughPrimeSuffixBellman` 的 `rough_prime_suffix_complete` 则保留截点以上连续素数、正反单调指数、整数乘积预算和有限最大 $\sigma(n)/n$；它没有给上述二次距离估计。要将上述二十二记录投影的距离方法用于Robin目标，尚须实际指数编码、同目标比较、度量、可行格距离与解析余项上界；有限模数没有替代这些义务。
+
+在非空嵌套实／整数域、同一目标且两侧有限最小值均取得时，间隙定义为 $\min_{\mathcal I}F-\min_{\mathcal R}F\ge0$。固定总数计数多面体紧，整数纤维非空时有限；空纤维、无界目标及未取得下确界另需定义。正整数间隙不量化所有实概率律；正总源的线性分裂也不保证各项非负或可分别执行。
+
+数学引文。R. Bacher、P. de la Harpe、T. Nagnibeda，*The lattice of integral flows and the lattice of integral cuts on a finite graph*，Bull. Soc. Math. France125(2)，167–198，DOI [10.24033/bsmf.2303](https://doi.org/10.24033/bsmf.2303)，提供流格、割格与有限图整数商的经典背景；这里仅采用其书目归属，所需饱和性、树计数、Smith因子与分母证明均在具体接缝应用内给出。
+

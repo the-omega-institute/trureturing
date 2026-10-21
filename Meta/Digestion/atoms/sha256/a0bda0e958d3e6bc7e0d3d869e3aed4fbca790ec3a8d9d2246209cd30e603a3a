@@ -1,0 +1,201 @@
+**Theorem 113.3 (Synthesis from the residual increments).** For every
+sequence (110.2) and every $0<\varepsilon\le1$,
+
+$$
+D_3(a,\varepsilon)\le3\varepsilon
+\quad\Longrightarrow\quad
+\mathcal F_N(a,\varepsilon)\cap\mathscr C_L\ne\varnothing.
+\tag{113.6}
+$$
+
+There is an explicit original $\mathcal O_2$ acquisition at this
+closed cap, using one common seed and handing an original mark off
+after finitely many operations at every source and every seed. If
+$L\ge3$, its TV error is exactly $\varepsilon$ at every source
+with first absence at most $L$. At every actual tail source its
+error is $\max\{D_3(a,\varepsilon)/3,a_{n(x)}\}$. The finite
+kernel of this rule satisfies $c\ge H$ by Theorem 109.1.
+
+**Proof.** When $L\le2$, preselect the active prefix and query it
+in increasing order until its first zero or exhaustion. At a zero
+$n\le L$, emit $\theta_n$ with probability $a_n$ and otherwise
+$\theta_0$; emit $\theta_0$ on positive exhaustion. These terminal
+choices are fixed from the same seed before replies. Every active
+target is realized exactly, and every actual tail has error
+$a_{n(x)}\le\varepsilon$. For $L=0$ the rule immediately emits
+$\theta_0$. Theorems 109.1 and 110.2 give (113.6) in these cases.
+
+Let $L\ge3$, abbreviate $D=D_3(a,\varepsilon)$, and set
+$s=D/3$. Use the subset rule $P_{m,2}$ of Acquisition Resources,
+Theorem 87.1, for $3\le m\le L$. Its execution does not depend
+on the target amplitudes: choose uniformly a three-subset of the
+ordered labels $1<\cdots<m<\ast$, with $\ast$ meaning
+$\theta_0$; query its first two numerical labels increasingly until
+a zero, emit that zero's mark, and otherwise emit the third label
+without querying it. Denote its kernel, extended to $B_L$, by
+$p^{(m)}$.
+
+The supplied inclusion identity (87.5) gives, for every word whose
+first zero is $n\le m$,
+
+$$
+p^{(m)}_b(n)=\frac3{m+1}.
+\tag{113.7}
+$$
+
+It holds with every multiple-zero suffix: if the subset contains
+$n$, all selected coordinates before $n$ are positive, whether
+$n$ is queried or is its unqueried last label; if it does not
+contain $n$, no output can equal $n$. The same subset rule also has
+the following base formula. Put $k_m(b)=\sum_{i=1}^m b_i$. Base
+emission requires a subset containing $\ast$ whose two numerical
+coordinates both answer one. Consequently
+
+$$
+p^{(m)}_b(0)=
+\frac{\binom{k_m(b)}2}{\binom{m+1}3},\qquad
+\binom{k}2=0\quad(0\le k<2).
+\tag{113.8}
+$$
+
+In particular this is $3/(m+1)$ whenever the first $m$ bits are
+positive, including when the actual first absence is greater than
+$m$. No all-positive infinite source is required.
+
+Define the common schedule-family weights
+
+$$
+w_m=\frac{m+1}{3}(d_m-d_{m+1})\quad(3\le m\le L),\qquad
+W=\sum_{m=3}^Lw_m,\qquad R=1-W,\qquad d_{L+1}=0.
+\tag{113.9}
+$$
+
+They are nonnegative by monotonicity. Telescoping gives both a
+probability budget and a wrong-output budget:
+
+$$
+\begin{aligned}
+W&=\frac{4d_3+\sum_{i=4}^Ld_i}{3}=d_3+s,\\
+\sum_{m=3}^Lw_m\frac{m-2}{m+1}
+ &=\frac13\sum_{m=3}^L(m-2)(d_m-d_{m+1})=s.
+\end{aligned}
+\tag{113.10}
+$$
+
+Since $s\le\varepsilon$ and $d_3=a_3-\varepsilon$,
+
+$$
+W=a_3-\varepsilon+s\le a_3\le1,\qquad
+R\ge1-a_3\ge a_n-a_3\ge0\quad(n=1,2).
+\tag{113.11}
+$$
+
+With mass $w_m$ use $P_{m,2}$. With the remaining mass $R$, use
+the preselected increasing schedule $(1,2)$, stopping at its first
+zero. If $R>0$, on its zero cell $n=1$ or $2$ emit $\theta_n$
+with probability
+
+$$
+\alpha_n=\frac{a_n-a_3}{R},\qquad 0\le\alpha_n\le1,
+\tag{113.12}
+$$
+
+and otherwise emit $\theta_0$. On positive exhaustion emit
+$\theta_0$. If $R=0$, omit this branch. In that case (113.11)
+forces $a_3=1$ and $s=\varepsilon$, so $a_1=a_2=a_3=1$
+and both numerators in (113.12) vanish; no division is needed.
+There is no separate error cap on a branch.
+
+Let $p$ be the resulting mixed law. Fix any $b\ne1^L$ and put
+$n=n_L(b)$. When $n\ge3$, every branch $m<n$ outputs a label
+at most $m$ or zero, and the prefix branch emits zero. Thus
+
+$$
+p_b(n)=\sum_{m=n}^L\frac{3w_m}{m+1}=d_n=a_n-\varepsilon.
+\tag{113.13}
+$$
+
+When $n=1$ or $2$, all subset branches contribute in (113.7),
+and the prefix branch contributes $R\alpha_n=a_n-a_3$.
+If it is omitted this contribution and its numerator are both zero.
+Hence in these cases as well
+
+$$
+p_b(n)=d_3+a_n-a_3=a_n-\varepsilon.
+\tag{113.14}
+$$
+
+For all $n\le L$, let
+$\delta_b=1-p_b(0)-p_b(n)$ be the mass outside the target pair.
+The prefix branch adds none. If $n\le m$, (113.7) bounds the
+outside-pair mass of $P_{m,2}$ by $(m-2)/(m+1)$. If $n>m$,
+its positive prefix and (113.8) give exactly that outside-pair mass,
+since it cannot emit $n$. Applying the common weights in (113.10)
+therefore yields
+
+$$
+0\le\delta_b\le s\le\varepsilon.
+\tag{113.15}
+$$
+
+Equations (113.13)--(113.15) verify all three TV rows simultaneously
+for this one kernel:
+
+$$
+\begin{aligned}
+p_b(n)&=a_n-\varepsilon,\\
+p_b(0)&=1-a_n+\varepsilon-\delta_b\ge1-a_n,\\
+p_b(0)+p_b(n)&=1-\delta_b\ge1-\varepsilon.
+\end{aligned}
+\tag{113.16}
+$$
+
+These hold on every word, with every additional zero pattern.
+Relative to $(1-a_n)e_0+a_ne_n$, the mass at $n$ has deficit
+$\varepsilon$, while the base excess is
+$\varepsilon-\delta_b$ and the outside-pair mass is $\delta_b$.
+Thus the TV distance is exactly $\varepsilon$.
+
+At $1^L$, every subset branch has base probability $3/(m+1)$
+and the prefix branch emits base. Therefore
+
+$$
+p_{1^L}(0)=R+\sum_{m=3}^L\frac{3w_m}{m+1}
+          =R+d_3=1-s.
+\tag{113.17}
+$$
+
+All outputs are in $\{\theta_0,\ldots,\theta_L\}$, so at every
+actual source with $n(x)>L$, the exact tail identity (110.9) gives
+$\max\{s,a_{n(x)}\}\le\varepsilon$. This retains all original
+tail amplitudes, including $a_{L+1}=\varepsilon$, and all later
+zero patterns.
+
+For the common-seed realization, partition $U\in[0,1)$ into
+half-open intervals of masses $R,w_3,\ldots,w_L$, omitting zero
+masses. Refine the $w_m$ interval into equal intervals for its
+three-subsets. On a positive $R$ interval, its rescaled local seed
+$V$ fixes both prefix-cell choices before acquisition: cell $n$
+emits its mark exactly when $V<\alpha_n$. The two thresholds use
+the same $V$ and require no independence; each has its stipulated
+conditional marginal. Thus the entire increasing schedule and all
+its terminal outputs are fixed from one source-independent seed,
+not from knowledge of the actual first absence. Seed endpoints
+are assigned by the half-open convention. Every record and output
+event is measurable.
+
+Execute the chosen schedule by making its actual prime requests
+on the same original source, stopping at its first queried zero
+or exhaustion. Every branch makes at most two actual requests and
+hands its selected original tape off finitely for every seed and
+source. The finite kernel is in $\mathscr O_L$, so Theorem 109.1
+places it in $\mathscr C_L\subseteq\mathscr N_L$. Theorem 110.2
+provides the original closed-cap conclusion without changing the
+carrier, consumer, source or amplitudes. Proposition 90.2 supplies
+an $\mathcal N_2$ realization by completing the chosen schedule
+and ignoring the reply after its reconstructed stop; any such
+extra acquired reply is counted. Non-strict inequalities in
+(113.11) and (113.15) include $D=3\varepsilon$, $R=0$, zero
+residual increments, plateaus and every zero schedule weight.
+$\square$
+

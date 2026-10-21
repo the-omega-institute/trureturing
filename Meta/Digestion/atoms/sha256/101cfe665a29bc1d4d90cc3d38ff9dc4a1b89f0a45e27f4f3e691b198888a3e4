@@ -1,0 +1,37 @@
+**命题 35.8（同一目标缺口的相位读法）。** 给任意实五模式函数 $f=(f_0,f_1,f_2,f_3,f_{13})$，令
+
+$$
+H_f([\psi])=\sum_sp_sf_s,\qquad
+J_f=f_0-f_1-f_3+f_{13}.
+$$
+
+在本章坐标和 Hamilton 符号下，
+
+$$
+H_f=f_0+(f_1-f_0)X+(f_3-f_0)Y+(f_2-f_0)Z+J_f\kappa,
+$$
+
+$$
+\dot\chi=J_f,\qquad \dot\kappa=0.
+$$
+
+因此在任一正宽度均值纤维上，三个可见均值能决定 $\mathbb E_p f$，当且仅当 $J_f=0$，也当且仅当此 Hamilton 流不转动隐藏角。
+
+证明。五函数展开和四角可识别条件已由[《基础公式》数学引文 2.2、§七](AURIC_FIB_ATOM_PYRAMID_FOUNDATIONAL_FORMULAS_AND_RELATIONS.md)及[《金字塔关联与原生接续》§23.1–23.2](AURIC_FIB_ATOM_PYRAMID_CORRELATION_AND_NATIVE_CONTINUATION.md)供应。其目标系数 $c_{xy}$ 对应 $J_f$，联合矩 $\mu_{13}$ 对应 $\kappa$，其低、中、高均值分别对应 $X,Z,Y$。应用此展开给 $H_f$ 的首式。
+
+由 §35.4 的 $\omega$，任意 Hamilton 函数的隐藏方程为 $\dot\chi=\partial_\kappa H$、$\dot\kappa=-\partial_\chi H$；对 $H_f$ 即得所述两式。可见均值固定且宽度正时，取内部两点 $\kappa\ne\kappa'$，期望差为 $J_f(\kappa-\kappa')$，故非零 $J_f$ 连任意均值后处理都不能消去此缺口。零宽度纤维上不存在此两点必要性，不能将正宽度结论无条件延伸过去。证毕。
+
+具体消费原生单窗数量 $f=(0,2,3,5,7)$，有 $J_f=0$，故
+
+$$
+H_f=2X+3Z+5Y,\qquad \dot\chi=0.
+$$
+
+同一数量的平方为 $f^2=(0,4,9,25,49)$，其 $J_{f^2}=49-4-25=20$，所以
+
+$$
+H_{f^2}=4X+9Z+25Y+20\kappa,\qquad \dot\chi=20.
+$$
+
+原有平方矩表达式仍归关联卷 §23.1；本节新增的连接是其隐藏系数恰为共轭角的 Hamilton 速度。这里的流参数无量纲，没有从原生数量取得物理能量或时钟。
+

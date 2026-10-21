@@ -1,0 +1,10 @@
+**定义 15.1（位置依赖的测试菜单）。** 给每个窗口实函数
+$f_i:\Sigma\to\mathbb R$，定义确定字分数和局部数据的线性分数
+
+$$
+F_f(u)=\sum_{i\in\mathbb Z_n}f_i(u_i,u_{i+1},u_{i+2}),\qquad
+\langle f,p\rangle=\sum_{i\in\mathbb Z_n}\sum_{\sigma\in\Sigma}
+f_i(\sigma)p_i(\sigma).
+\tag{15.1}
+$$
+

@@ -1,0 +1,15 @@
+**定义 14.1（非原子极限的局部速度扩展）。** 此节在定义5.1之外允许局部速度权重。固定 $r_\alpha=r_\beta=1$、$\theta=1/8$，保留逐字源 $W_j$、左右边界、$\delta>0$ 及 $\epsilon_j=\delta/N_j^2$。对 $L=L_j$ 和 $0\le i<L$ 定义
+
+$$
+z_i=\frac{i+1/2}{L},\qquad
+a_{L,i}=6z_i^2-6z_i+1+\frac1{2L^2},\qquad
+\eta=\frac9{16},\qquad v_{j,i}=1+\eta a_{L,i}.
+$$
+
+从切点 $i$ 跨越任一邻边的概率改为 $\theta/v_{j,i}$，其余概率持留；$L$ 吸收。令 $V_j=\operatorname{diag}(v_{j,i})$。单位模型的 $B_j,G_j$ 满足扩展模型关系
+
+$$
+B_j^{(v)}=V_j^{-1}B_j,\qquad
+G_j^{(v)}=G_jV_j.
+$$
+

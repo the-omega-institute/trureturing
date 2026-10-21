@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:867b8143bc0c9d69f2e4974bb16f8d57d12c847d5e413e033039e6c819006f52
+  normalized_sha256: sha256:867b8143bc0c9d69f2e4974bb16f8d57d12c847d5e413e033039e6c819006f52
+cas_ref: sha256:867b8143bc0c9d69f2e4974bb16f8d57d12c847d5e413e033039e6c819006f52
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 目录逃逸的术语定义，即不属于列出的定义目录；没有断言给定 d 实际逃逸。
+    previous_atom_id: dadfd4300d05d10f54da4da482920ad2d4f75ed68d3bb8c6943fe443aa8e77fd
+    next_atom_id: 8b686acb5a07eddc1e26b0ddead716207d2b5cfada3beb23b7756968bd068f3a

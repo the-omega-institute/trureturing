@@ -1,0 +1,30 @@
+**定理 56.1（可逆转移核的谱测度与协方差生成函数）。** 若 \(Q\) 对
+\[
+\langle f,g\rangle_\pi=\sum_i\pi_i f(i)g(i)
+\]
+自伴且链不可约，取正交归一特征系
+\[
+\phi_0\equiv1,\qquad Q\phi_a=\lambda_a\phi_a,\qquad \lambda_0=1.
+\]
+对中心化观测 \(\pi g=0\)，定义
+\[
+\mu_g=\sum_{a\ge1}|\langle g,\phi_a\rangle_\pi|^2\delta_{\lambda_a}.
+\]
+则
+\[
+C_g(n):=\operatorname{Cov}_\pi(g(X_0),g(X_n))
+=\langle g,Q^ng\rangle_\pi
+=\int_{[-1,1]}\lambda^n\,d\mu_g(\lambda),
+\]
+并且 \(C_g(0)=\mu_g([-1,1])\)。在 \(|z|<1\) 时，
+\[
+R_g(z):=\sum_{n\ge0}z^nC_g(n)
+=\int\frac{d\mu_g(\lambda)}{1-z\lambda}.
+\]
+若 \(\operatorname{supp}\mu_g\subset[-1+\gamma,1-\gamma]\)，则
+\[
+C_g(0)+2\sum_{n\ge1}C_g(n)
+=\int\frac{1+\lambda}{1-\lambda}\,d\mu_g(\lambda).
+\]
+若链周期导致 \(-1\) 谱质量，上式须改作 Abel 极限或不宣称收敛。谱测度是外加核作用于 FIB 状态标签后的统计对象，不是递归内生谱。
+

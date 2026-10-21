@@ -39,5 +39,7 @@ The construction proves the stated family and factor inclusions. It makes no ass
 - Truth anchor: `D5/S3/Combinatorics/Graph/Walks/AndersonDefectFamily.defect_family`
 - Dependency: [D5/S0/Observation/MatrixTracePowerSum](../../../../S0/Observation/MatrixTracePowerSum.md)
 - Dependency: [D5/S3/Combinatorics/Graph/AndersonSymmetryConverseRefutation](../AndersonSymmetryConverseRefutation.md)
+- Dependency: [D5/S3/Combinatorics/Graph/PathCHS/PathCHSNormClosedForm](../PathCHS/PathCHSNormClosedForm.md)
 - Dependency: [D5/S3/Combinatorics/Graph/Walks/AndersonDefectSeed](AndersonDefectSeed.md)
 - Dependency: [D5/S3/Combinatorics/Graph/Walks/CycleDiagonalUnitPropagation](CycleDiagonalUnitPropagation.md)
+- Dependency: [D5/S3/Combinatorics/SpectralGraph/CyclicTridiagonalTransferTrace](../../SpectralGraph/CyclicTridiagonalTransferTrace.md)

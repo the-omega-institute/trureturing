@@ -12,6 +12,14 @@ internal sealed class StructuralConeDocument : IScribeDocumentDefinition
             Paragraph(Text("These statements concern real scalar spectra and ordered step synthesis. Connecting " +
                     "the boundary inequalities to a physical APPT model, constructing an attaining state, and " +
                     "determining a purity supremum require additional results.")),
+            Describe.Lean(DescribeId.Create("appt-boundary-mass"),
+                DeclarationHandle.Create("D5/S3/Quantum/Entanglement/AbsolutePPT/QuadbitUniform/StructuralCone.boundary_mass"),
+                H("Mass identity for disjoint boundary blocks"), StatementSource.WithoutFormula(), AssessedProvenance.FromRepo(),
+                Blocks(Paragraph(Text("For every natural N>=16, 6<=j<=N-10 and arbitrary real x:Fin 16 to Real, sum_k synth(positions N j,x)_k equals low(x)N+x5*j+H(head x)-D(tail x). This identity does not require feasibility or nonnegativity. It follows from mass_synth and finite-coordinate normalization. The actual_mass theorem applies it for N>=56; normalized_endpoint52_good, half_jump_endpoint52_good and bulk_endpoint52_good use it to express endpoint mass in boundary coordinates."))), DescribeRole.Theorem),
+            Describe.Lean(DescribeId.Create("appt-boundary-square"),
+                DeclarationHandle.Create("D5/S3/Quantum/Entanglement/AbsolutePPT/QuadbitUniform/StructuralCone.boundary_square"),
+                H("Square identity for disjoint boundary blocks"), StatementSource.WithoutFormula(), AssessedProvenance.FromRepo(),
+                Blocks(Paragraph(Text("For the same N,j and arbitrary x, write S=low(x)N+x5*j+H-D. Then sum_k synth(positions N j,x)_k^2=(2 low(x)+x5)S-low(x)(low(x)+x5)N+E(x5,head x,tail x). It includes negative and infeasible x. The derivation uses square_synth, strict ordering of all sixteen slot positions and polynomial normalization. The actual_square theorem applies it for N>=56; normalized_endpoint52_good, half_jump_endpoint52_good and bulk_endpoint52_good use it to express endpoint energy in boundary coordinates."))), DescribeRole.Theorem),
             Describe.Lean(DescribeId.Create("appt-quadbit-structural-cone"),
                 DeclarationHandle.Create("D5/S3/Quantum/Entanglement/AbsolutePPT/QuadbitUniform/StructuralCone.structural_fixed_good"),
                 H("Unconditional fixed-cone estimate"), StatementSource.WithoutFormula(), AssessedProvenance.FromRepo(),
@@ -284,7 +292,7 @@ A separate estimate, valid for all nonnegative defects, is
 )),
             Paragraph(Text(
 """
-The second inequality uses H+D≤4-6w and w≥0.
+The second inequality uses H+D≤4-6w and w≥0. The reused homogeneous form total_energy_estimate retains arbitrary real u,w and DefectData u w h d with w>=0: E=w(H+D)+H2+D2<=(4u-6w)(4u-5w). It follows from H,D>=0, H2<=H^2, D2<=D^2 and H+D<=4u-6w. No PSD hypothesis is required. This homogeneous form is also used at a half-jump residual in ContinuousSpectrumAssembly; the N>=67 three-row theorem here is unchanged.
 """
 ))
             )),
@@ -616,7 +624,7 @@ the homogeneous bound is exactly sum l_i²≤T_N.
 )),
             Paragraph(Text(
 """
-The analytic argument uses ordered nonnegative block energies, Mathlib convex and concave interval endpoint principles, the existing scalar envelope comparisons and exact integer optimizer, and the shared Euclidean norm-to-mass closure lemmas. The structural derivation was written independently before the external rectangular theorem was inspected; no external code is transplanted. The exact external theorem APPTReview.appt_rectangular_maximum_formula in mxym/math at immutable commit 479acd5d6269faf94433ad6b694c5b7979027c69, formalizations/appt-high-dimensional-review/APPTReview/RectangularMaximum.lean:78 (https://github.com/mxym/math/blob/479acd5d6269faf94433ad6b694c5b7979027c69/formalizations/appt-high-dimensional-review/APPTReview/RectangularMaximum.lean#L78), states the rounded plateau physical maximum for m at least 3 and n at least m^3-m-2, hence for four rows n at least 58. Its single four-row cut differs from the jointly imposed rank-two, rank-three and rank-four inequalities used here. The full leading asymptotic does not give the exact finite target. This scalar theorem alone establishes neither the arbitrary complex 4 by n physical maximum for n at least 17 nor an attaining state. Any prospective additional physical range is 17 through 57, subject to the complete physical application, attainment and further literature checks; global uniqueness is not established.
+The analytic argument uses ordered nonnegative block energies, Mathlib convex and concave interval endpoint principles, the scalar envelope comparisons and exact integer optimizer, and the Euclidean norm-to-mass closure lemmas. The external theorem APPTReview.appt_rectangular_maximum_formula in mxym/math at immutable commit 479acd5d6269faf94433ad6b694c5b7979027c69, formalizations/appt-high-dimensional-review/APPTReview/RectangularMaximum.lean:78 (https://github.com/mxym/math/blob/479acd5d6269faf94433ad6b694c5b7979027c69/formalizations/appt-high-dimensional-review/APPTReview/RectangularMaximum.lean#L78), states the rounded plateau physical maximum for m at least 3 and n at least m^3-m-2, hence for four rows n at least 58. Its single four-row cut differs from the jointly imposed rank-two, rank-three and rank-four inequalities used here. The leading asymptotic does not give the exact finite target. At N=4n, the N>=67 three-row scalar estimate applies for n>=17. The n>=14 route uses actual_k1_l4_purity_bound in ContinuousSpectrumAssembly at N=4n>=56, with the actual APPT diagonal, its literal K1 and rank-four necessary row. A physical maximum also requires an attaining density, supplied by the coordinate-projector construction described in QuadbitQuintitMaximumPurity. The inner-polytope formulas, attainers and transition are published by Ahiable–Kothakonda–Winter. Neither scalar theorem alone constructs a physical density or proves an attained supremum. The dimension range 14 through 57 lies below the cited external theorem's four-row threshold; this comparison alone establishes no literature priority or global uniqueness.
 """
 ))
             ))

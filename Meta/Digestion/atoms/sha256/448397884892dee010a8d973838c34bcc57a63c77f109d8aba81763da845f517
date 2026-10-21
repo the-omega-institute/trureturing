@@ -1,0 +1,13 @@
+**定理31.4**是图路径的联合实际来源提升。另一个地址**第31.4节**中的定义31.5和定理31.6要求接受对象为有限仿射图的全部无限路径，没有另外侧条件或选择的路径子集；先剪除无无限延续节点，剩余初始集非空才有非空初始像，并由全路径分解取得极值。这里 $K_0$只含指定 $U,W$拼接，$H_v$不是完整 $G_B$的全路径极值。辅助固定点 $w$及内部交叠点不借31.6取得实际来源身份。两个31.4语境不互换。
+
+本章新增纸面关系是同一前缀的负系数与异末块 $1+q^2K$的严格交叠，以及原合同中的完整身份后果。仿射运输、有限几何级数、规范区间内部不交与有向闭游走gcd是复用的成熟数学工具。所供65—79及三种更新卷提供原范围与接口证据；外部文献中的算法和状态识别结果不承担80.3.1证明，没有外部优先权、数学程序、数值实验或Lean／kernel核验结论。
+
+原问题未因此全局结算。不具有共同 $S$的任意 $T$、本章参数域外仍未由相应旧结论覆盖的描述、其他实际rival与更大SCC均须分别处理。$\mathscr C_{80}$的非空性、一个正共同供应者、一般实预算的有限 $B$存在性以及三种最近接口到原全图的保真映射都未证明。短闭游走只阻断指定gcd与指定互异性，不排除它处于其他gcd或规模的SCC；没有初始可达、任意端点规则下噪声取得、物理历时或空间结论。
+
+任一正实现仍须在同一个 $\beta,B,G_B,R,T,a,b,p,h$ 中共同供应实际共享来源、两侧实际guard、合法根域、全部整个原片和原共同闭色、固定端点归属及所有原边；逐位置证明(63.11)，给出 $h+2$ 个不同完整配对顶点，对整个片检查所有完整内部边的(63.13)，并以完整图全部后继对每个 $n\ge0$证明(63.15)。第60章全部适用联合限制和各先修局部预算继续承担。所有强制端点未命中、点／宽度必要界通过、rival单独存在、独立点可达或两返回存在均不足以供应这些义务；未被旧结论命中也不等于正实例。
+
+[80源FIB]: https://github.com/the-omega-institute/trureturing/blob/f7540e4f96d59b70ce109163991e486b071db8fa/docs/develop/theory/FIB_SOURCE_COMPLETION_DYNAMICS.md
+[80源观察]: https://github.com/the-omega-institute/trureturing/blob/9d5287b50f008dedf0b5f5736826312e8fc534f2/docs/develop/theory/OBSERVER_RELATIVE_SPACETIME_CAUSAL_COMPATIBILITY_RECOVERY.md
+[80源运输]: https://github.com/the-omega-institute/trureturing/blob/9d5287b50f008dedf0b5f5736826312e8fc534f2/docs/develop/theory/RECURSIVE_RELATIONAL_OBSERVATION_TRANSPORT_MEMORY_COMPLETION.md
+[80源K联合]: https://github.com/the-omega-institute/trureturing/blob/ebbb86d022af9978820f9decefb4f0831d3ed41f/docs/develop/theory/KBONACCI_JOINT_RESPONSE_AND_SEAM_COST.md
+

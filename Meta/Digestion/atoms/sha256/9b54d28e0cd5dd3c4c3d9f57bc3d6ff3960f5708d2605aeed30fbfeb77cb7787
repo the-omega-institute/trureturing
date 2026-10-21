@@ -1,0 +1,20 @@
+### 定义 387.3（指定前缀核的政策成本）
+
+在定理 385.4 的一阶段例子中，\(\mathcal K^{\mathrm{id}}\) 与 \(\mathcal K^{\mathrm{flip}}\) 是任务字段 `PrefixKernels` 指定的 singleton 核族。记其受限值为
+
+$$
+W_{\mathcal K}(P,Q,c)
+=
+\inf_{\kappa\in\mathcal K}\mathbb E[c(X_0,Y_0)].
+$$
+
+于是
+
+$$
+W_{\{\mathcal K^{\mathrm{id}}\}}=0,
+\qquad
+W_{\{\mathcal K^{\mathrm{flip}}\}}=1.
+$$
+
+两任务保持相同的 \(P,Q,\mathcal F,\mathcal G,c,\Gamma_{\mathrm{causal}},\mathsf{Event},\mathsf{Budget},\mathsf{Stop}\)，只改变 `PrefixKernels` 字段；这里的 0 与 1 是指定政策核的受限成本，不是 §379.3 对全部因果耦合取下确界的 unrestricted \(W^{\to}_c(P,Q)\)。
+

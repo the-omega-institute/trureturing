@@ -1,0 +1,29 @@
+### 13.2 一个时刻的观察给出的质量上界
+
+**定理。** 对任意 $r\geq0$、$t\geq0$，有
+
+\[
+M_\mu(r)e^{-rt}\leq C_\mu(t).
+\tag{13.2}
+\]
+
+**证明。** 在 $E\leq r$ 上，$e^{-tE}\geq e^{-tr}$。对该区间积分，再利用区间外积分非负，得到式 (13.2)。Lean 中复用 Mathlib 已有的 `mul_meas_ge_le_integral_of_nonneg`，先证明相应集合包含关系，再应用测度单调性；没有把式 (13.2) 作为假设输入。[13-B]
+
+**定理。** 如果在某个 $t\geq0$ 有
+
+\[
+C_\mu(t)\leq Ke^{-\Delta t}+\varepsilon,
+\]
+
+则
+
+\[
+\boxed{M_\mu(r)\leq
+Ke^{-(\Delta-r)t}+\varepsilon e^{rt}.}
+\tag{13.3}
+\]
+
+**证明。** 将式 (13.2) 与观察上界串联，乘以正数 $e^{rt}$。两个指数相加后即得式 (13.3)。对应公开定理为 `PositiveLaplaceGap.low_energy_mass_le`。
+
+式 (13.3) 是单时刻结论，也适用于只给定一组采样时刻的情形。在有限窗口内只能在实际拥有上界的时刻间优化。若测得 $\widehat C$ 且 $|\widehat C-C_\mu|\leq\delta$，同时拟合上包络为 $\widehat C\leq Ke^{-\Delta t}+\eta$，这里应使用 $\varepsilon=\delta+\eta$，不能漏掉任一误差。
+

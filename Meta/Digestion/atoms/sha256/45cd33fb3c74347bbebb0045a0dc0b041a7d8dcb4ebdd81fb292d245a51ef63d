@@ -1,0 +1,47 @@
+**Theorem 15.4 (Two finite coefficient certificates for the scalar envelope).** For the residual coefficients in (15.1), define
+
+$$
+\epsilon_{\rm sum}=n\sum_{j=0}^{n-2}\frac{|E_j|}{j+1},\qquad
+\epsilon_{\rm bin}=n\max_{0\le j\le n-2}
+\frac{|E_j|}{\binom{n-1}{j}},\qquad
+\epsilon=\min\{\epsilon_{\rm sum},\epsilon_{\rm bin}\}.
+\tag{15.15}
+$$
+
+Then, for every integer $k\ge1$,
+
+$$
+\left|\frac{H(k)}{k^n}-1\right|\le\frac{\epsilon}{k}.
+\tag{15.16}
+$$
+
+In particular $\epsilon<1$ certifies (15.9) with $\ell=1-\epsilon$, $u=1+\epsilon$. If every $E_j\ge0$, it instead certifies $\ell=1$, $u=1+\epsilon$, without requiring $\epsilon<1$. These certificates require only finitely many exact coefficient operations; rational $P,S$ give rational certificates.
+
+Proof. For nonnegative integers $t$, the monomial $t^0$ means one, including at zero. Since $x^j$ is nondecreasing on $[0,\infty)$,
+
+$$
+\sum_{t=0}^{k-1}t^j\le\int_0^k x^j\,dx
+=\frac{k^{j+1}}{j+1}.
+\tag{15.17}
+$$
+
+Consequently $n|\sum_{t<k}e(t)|/k^n$ is at most
+$n\sum_j|E_j|k^{j+1-n}/(j+1)\le\epsilon_{\rm sum}/k$, because $j\le n-2$ and $k\ge1$. For the other bound put $b=\max_j|E_j|/\binom{n-1}{j}$. The binomial theorem gives, for every integer $t\ge0$,
+
+$$
+|e(t)|\le b\sum_{j=0}^{n-2}\binom{n-1}{j}t^j
+=b\big((t+1)^{n-1}-t^{n-1}\big).
+\tag{15.18}
+$$
+
+Summing telescopes to $bk^{n-1}$, and multiplication by $n/k^n$ gives $\epsilon_{\rm bin}/k$. Taking the better bound proves (15.16). Nonnegative coefficients give $e(t)\ge0$ at the integers used in (15.1), yielding the single-sided envelope. In the symmetric case the per-draw constant also satisfies the convenient estimate
+
+$$
+c_{1-\epsilon,1+\epsilon}
+=\frac{\epsilon}{1+\sqrt{1-\epsilon^2}}\le\epsilon
+\quad(0\le\epsilon<1).
+\tag{15.19}
+$$
+
+The theorem certifies a scalar law and then uses Theorems 15.2–15.3 to obtain actual stationary-output estimates. It is not an estimate for raw matrices substituted for a probability bound. $\square$
+
