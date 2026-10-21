@@ -2993,3 +2993,7 @@ Gauss-sum equidistribution rate than the totally sextic subfamily. See the
 [sextic mixed-family card](bergryanyoung2023sextictwists.md). Thus a
 quadratic--cubic factorization of (J) needs cross-sector estimates rather
 than an independence assumption.
+
+For the same actual primitive adjoint, the [complete balanced-sector consumer](../../docs/develop/theory/FIBONACCI_ANALYTIC_FRONTIER_INTERFACES.md#457-保留谱幂次与平方部分权重的完整素标记预算) retains the two distinct I11 polar scalars together with the abscissa gain and weighted squareparts. Under the stated analytical inputs it bounds the entire specified continuous vector, including the former critical reflection family, while preserving the original coefficients and inverse Gram pairing; the orthogonal complement, other sectors and signed Robin transfer remain open.
+
+The [whole original-coefficient moment consumer](../../docs/develop/theory/FIBONACCI_ANALYTIC_FRONTIER_INTERFACES.md#458-möbius-自卷积与无槽四矩的完整原系数预算) combines the cube-free Möbius self-convolution with the owned zero-slot plain fourth moment (also restated in [Xu–Sang v2, Theorem 2.2](https://arxiv.org/html/2610.17675v2)). Under the explicit common product-cost contract it bounds the entire original row energy and every actual orthogonal complement by C^2 K sqrt(U Psi6(U,D^2)), up to epsilon losses; its balanced exponent25/12 still exceeds2, so the required complementary saving remains open.
