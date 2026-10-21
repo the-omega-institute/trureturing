@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:9c2607cd50903f3c007ba9e37cc26bf07f87a0641e34f686c629d90c09e14485
+  normalized_sha256: sha256:9c2607cd50903f3c007ba9e37cc26bf07f87a0641e34f686c629d90c09e14485
+cas_ref: sha256:9c2607cd50903f3c007ba9e37cc26bf07f87a0641e34f686c629d90c09e14485
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 'Pinned Mathlib db584cd6d46c92f209a44c0f1c829460d327499d and existing upstream declarations close the formulas by direct instantiation and normalization. Lagrange interpolation uniqueness/evaluation supplies the unique polynomial from node values; field_simp and ring derive (14.3)-(14.5), while the surrounding source assumptions supply the singular-line equations. D5 search scope: all D5/**/*.lean including private declarations, searched for interpolation, response-formula and singular-line shapes; no usable frozen GID supplies this exact statement, so upstream-only bind-only settlement, zero new Lean declarations.'
+    previous_atom_id: 44464664ab2c27e0e55048a612a8d05eeee01fc9662645c430d9cfbf0b3cead0
+    next_atom_id: 603595e1bdbcd2ee96c4f501ecb128b762e88f52f6726062b1fd348bdf53d35e

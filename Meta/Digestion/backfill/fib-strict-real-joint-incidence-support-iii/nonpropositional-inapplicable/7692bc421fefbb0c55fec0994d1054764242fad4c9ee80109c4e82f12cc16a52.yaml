@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:7692bc421fefbb0c55fec0994d1054764242fad4c9ee80109c4e82f12cc16a52
+  normalized_sha256: sha256:7692bc421fefbb0c55fec0994d1054764242fad4c9ee80109c4e82f12cc16a52
+cas_ref: sha256:7692bc421fefbb0c55fec0994d1054764242fad4c9ee80109c4e82f12cc16a52
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: "Pinned Mathlib db584cd6d46c92f209a44c0f1c829460d327499d closes the finite real-polynomial and analytic subclaims by instantiation: Polynomial.roots_countP_pos_le_signVariations supplies Descartes' bound, IVT and IFT supply the graph existence and analyticity, and the supplied Lemmas 3.2-3.4 provide signs and derivatives. Finite endpoint factorizations and inequalities normalize with field_simp, ring and norm_num; the remaining order steps are nlinarith. D5 search scope: all D5/**/*.lean including private declarations, searched for Descartes, finite normalized source boundary, analytic graph and endpoint factorization shapes; no usable frozen GID supplies this exact theorem, so upstream-only bind-only settlement, zero new Lean declarations."
+    previous_atom_id: b722e4d9c677df84730239c37002f1b6f9bd9797ae722757c0a6773d2cb22a57
+    next_atom_id: 1a0ab0d9bba50be20cb58f08a78ff32323f20df6a0a8b4af028df84191cd9a8f
