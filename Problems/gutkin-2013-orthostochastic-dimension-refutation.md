@@ -93,7 +93,7 @@ The module is admitted under the open-problem-resolution basis of CLAUDE.md §3.
   - The heuristic preceding the conjecture fails: d_min(F, n) grows at least linearly in n.
   - With column orthogonality alone, the lift V_rc = √P_rc e_c shows that every bistochastic matrix is F^n-bistochastic (the construction in the source's Proposition 1.3). For that reading, n − 1 ≤ d_min(F, n) ≤ n.
   - With both equations read literally, V_rc = √P_rc (e_r ⊗ e_c) ∈ F^{n²} satisfies both, so d_min(F, n) ≤ n². The exact value is open.
-- *Interior matrices.* For n ≥ 5 the strictly positive matrices (199/200)(A₅ ⊕ I_{n−5}) + J_n/(200n), with A₅ a 5 × 5 star, also have no lift in ℝ³. The Gram matrix of their row-0 vectors is diagonally dominant (search seat; checked by the orchestrator, not formalized). So the failure is not confined to the boundary of the Birkhoff polytope.
+- *Interior matrices.* For n ≥ 5 the strictly positive matrices (199/200)(A₅ ⊕ I_{n−5}) + J_n/(200n), with A₅ a 5 × 5 star, also have no lift in ℝ³. In a lift, the Gram matrix of the row-0 vectors in columns 1–4 has diagonal entries a = 199/800 + c and off-diagonal entries of modulus at most 2√(bc) + (n − 3)c, where c = 1/(200n) and b = 597/800 + c, by column orthogonality and Cauchy–Schwarz. It is therefore diagonally dominant and has rank 4 (the search seat's argument; the orchestrator checked a − 3(2√(bc) + (n − 3)c) > 0 for 5 ≤ n ≤ 2000 and the bistochasticity numerically; not formalized). So the failure is not confined to the boundary of the Birkhoff polytope.
 
 ## ASSUMED-UNVERIFIED
 
