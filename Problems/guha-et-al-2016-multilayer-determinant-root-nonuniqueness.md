@@ -84,3 +84,7 @@ The module is admitted under the open-problem-resolution basis of CLAUDE.md §3.
 **Argued, not formalized.**
 - *Scope of the failure.* In every computed case with C ≤ 20 the zero is unique; the failure appears once C, the ratio of the second factorial moment to the mean degree, is large. So uniqueness holds only in a moderate-C range, not as a structural property of A(q). The exact threshold as a function of M is not determined here.
 - *Effect on the paper.* The source's characterization of q_c(M) as the smallest zero of det A(q) in [0, 1] is proved there and is unaffected. Only the shortcut "the unique zero" fails: for dense degree distributions, a root-finder must select the smallest zero.
+
+## ASSUMED-UNVERIFIED
+
+The bounded literature check does not establish exhaustive worldwide novelty or priority; the seven citing works were read by the search seat, not by the orchestrator. The statements in "Computed, not formalized" and "Argued, not formalized" are not formalized.
