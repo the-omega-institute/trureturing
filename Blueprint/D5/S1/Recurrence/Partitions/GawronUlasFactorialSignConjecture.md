@@ -60,6 +60,10 @@ $$\neg (\forall m \in \mathrm{Nat},\; (2 \le m) \Rightarrow ((\forall k \in \mat
 
 *Proof.* Machine-checked in Lean as `D5/S1/Recurrence/Partitions/GawronUlasFactorialSignConjecture.result` (`✓ std3`). ∎
 
+*Resolves.* `Problems/gawron-ulas-2022-factorial-sign-conjecture-4-4` (refuted) by `D5/S1/Recurrence/Partitions/GawronUlasFactorialSignConjecture.result`.
+
+<!-- scribe-open-problem-resolution-v1 {"problem_slug":"gawron-ulas-2022-factorial-sign-conjecture-4-4","declaration_gid":"D5/S1/Recurrence/Partitions/GawronUlasFactorialSignConjecture.result","resolution_kind":"refuted"} -->
+
 *Source.* Repository-derived.
 
 *Acknowledgement.* Filip Gawron and Maciej Ulas (2022). *Signs behaviour of sums of weighted numbers of partitions*. DOI: [10.1007/s11139-022-00602-3](https://doi.org/10.1007/s11139-022-00602-3). URL: <https://arxiv.org/abs/2202.05221v1>.
