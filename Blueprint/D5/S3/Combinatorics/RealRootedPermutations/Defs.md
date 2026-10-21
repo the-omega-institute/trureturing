@@ -24,6 +24,8 @@ Lean statement: `D5/S3/Combinatorics/RealRootedPermutations/Defs.IsUnimodal`
 
 *Source.* Repository-derived.
 
+*Acknowledgement.* T. Ball, D. Galvin, C. Hyry, and K. Weingartner (2022). *Independent set and matching permutations*. DOI: [10.1002/jgt.22724](https://doi.org/10.1002/jgt.22724). URL: <https://doi.org/10.1002/jgt.22724>.
+
 *Commentary.*
 
 The inverse positions increase through the value at the final position and decrease after that value.
@@ -36,6 +38,8 @@ Lean statement: `D5/S3/Combinatorics/RealRootedPermutations/Defs.Arises`
 
 *Source.* Repository-derived.
 
+*Acknowledgement.* T. Ball, D. Galvin, C. Hyry, and K. Weingartner (2022). *Independent set and matching permutations*. DOI: [10.1002/jgt.22724](https://doi.org/10.1002/jgt.22724). URL: <https://doi.org/10.1002/jgt.22724>.
+
 *Commentary.*
 
 Arises records a positive parameter family whose nonconstant coefficients are weakly increasing in the order specified by the permutation.
@@ -47,6 +51,8 @@ Lean statement: `D5/S3/Combinatorics/RealRootedPermutations/Defs.claim`
 *Formalization.* `D5/S3/Combinatorics/RealRootedPermutations/Defs.claim` (`✓ std3`).
 
 *Source.* Repository-derived.
+
+*Acknowledgement.* T. Ball, D. Galvin, C. Hyry, and K. Weingartner (2022). *Independent set and matching permutations*. DOI: [10.1002/jgt.22724](https://doi.org/10.1002/jgt.22724). URL: <https://doi.org/10.1002/jgt.22724>.
 
 *Commentary.*
 
