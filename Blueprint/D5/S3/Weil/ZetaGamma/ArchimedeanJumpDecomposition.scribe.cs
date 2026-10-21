@@ -47,6 +47,30 @@ internal sealed class ArchimedeanJumpDecompositionDocument : IScribeDocumentDefi
                             + "public conjunct records positivity of the independently constructed "
                             + "continuous jump energy."))),
                 DescribeRole.Theorem),
+            Describe.Lean(
+                DescribeId.Create("archimedeanjumpdensity-nonneg"),
+                DeclarationHandle.Create("D5/S3/Weil/ZetaGamma/ArchimedeanJumpDecomposition.archimedeanJumpDensity_nonneg"),
+                H("Nonnegative actual density"),
+                StatementSource.WithoutFormula(),
+                AssessedProvenance.FromRepo(),
+                Blocks(Paragraph(Text("The actual density exp(-x/2)/(1-exp(-2*x)) is nonnegative for positive x."))),
+                DescribeRole.Theorem),
+            Describe.Lean(
+                DescribeId.Create("levy-integral-eq-digamma"),
+                DeclarationHandle.Create("D5/S3/Weil/ZetaGamma/ArchimedeanJumpDecomposition.levy_integral_eq_digamma"),
+                H("Levy integral and digamma"),
+                StatementSource.WithoutFormula(),
+                AssessedProvenance.FromRepo(),
+                Blocks(Paragraph(Text("For every real z, the integral over positive x of 2*rho(x)*(1-cos(z*x)) equals Re digamma(1/4+i*z/2)-Re digamma(1/4). This identity determines the spectral multiplier of the periodic and whole-line translation energies."))),
+                DescribeRole.Theorem),
+            Describe.Lean(
+                DescribeId.Create("levy-integrableon"),
+                DeclarationHandle.Create("D5/S3/Weil/ZetaGamma/ArchimedeanJumpDecomposition.levy_integrableOn"),
+                H("Integrable Levy kernel"),
+                StatementSource.WithoutFormula(),
+                AssessedProvenance.FromRepo(),
+                Blocks(Paragraph(Text("For every real z, 2*rho(x)*(1-cos(z*x)) is integrable on the positive half-line. The statement includes z=0 and uses the actual density."))),
+                DescribeRole.Theorem),
             Paragraph(Text(
                 "The same density has an exact interval L2 application. Let a>0, d=2*a, "
                     + "I=(-a,a], and u be complex-valued with MemLp(u,2,dx restricted to I). "

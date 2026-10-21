@@ -784,4 +784,28 @@ theorem archimedean_jump_decomposition
         ring
   · exact jump_energy_nonnegative f
 
+
+
+/-- The actual Gamma density is nonnegative at positive scales. -/
+theorem archimedeanJumpDensity_nonneg {x : ℝ} (hx : 0 < x) :
+    0 ≤ archimedeanJumpDensity x :=
+  jump_density_nonnegative hx
+
+/-- The owner's proved Levy integral evaluates the actual digamma increment. -/
+theorem levy_integral_eq_digamma (t : ℝ) :
+    (∫ x : ℝ in Ioi 0,
+      2 * archimedeanJumpDensity x * (1 - Real.cos (t * x))) =
+      (Complex.digamma
+        ((1 / 4 : ℂ) + Complex.I * ((t / 2 : ℝ) : ℂ))).re -
+        (Complex.digamma (1 / 4)).re :=
+  levy_integral_eq_digamma_increment t
+
+/-- The owner's Levy kernel is integrable for every real frequency. -/
+theorem levy_integrableOn (t : ℝ) :
+    IntegrableOn
+      (fun x : ℝ =>
+        2 * archimedeanJumpDensity x * (1 - Real.cos (t * x)))
+      (Ioi 0) :=
+  levy_kernel_integrableOn t
+
 end D5.S3.Weil.ZetaGamma.ArchimedeanJumpDecomposition

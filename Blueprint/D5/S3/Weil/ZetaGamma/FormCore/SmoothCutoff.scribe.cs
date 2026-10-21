@@ -1,0 +1,131 @@
+using static StrataLint.Scribe.DefinitionDsl;
+
+namespace StrataLint.Scribe.Blueprint.D5.S3.Weil.ZetaGamma.FormCore;
+
+internal sealed class SmoothCutoffDocument : IScribeDocumentDefinition
+{
+    public DocumentDefinition Create() => DocumentDefinition.Create(ScribeNode.Create(
+        "Eta(a,epsilon,x)=smoothTransition((x+a)/epsilon-1)*smoothTransition((a-x)/epsilon-1); the error mask is 1-eta inside Ioo(-a,a) and zero outside. The global derivative bound of the actual smooth transition supplies the commutator envelope. Its radial and full-line Gamma integrals are bounded by a fixed constant plus twice the actual exterior potential, and tend to zero for each interior y as positive epsilon tends to zero. All mask supplier hypotheses are discharged.",
+        H("Actual Gamma form core: SmoothCutoff"),
+        Blocks(
+            Describe.Lean(
+                DescribeId.Create("gamma-form-core-smoothcutoff-actualcutoffeta"),
+                DeclarationHandle.Create("D5/S3/Weil/ZetaGamma/FormCore/SmoothCutoff.actualCutoffEta"),
+                H("actualCutoffEta"),
+                StatementSource.WithoutFormula(),
+                AssessedProvenance.FromRepo(),
+                Blocks(Paragraph(Text("Eta(a,epsilon,x)=smoothTransition((x+a)/epsilon-1)*smoothTransition((a-x)/epsilon-1); the error mask is 1-eta inside Ioo(-a,a) and zero outside. The global derivative bound of the actual smooth transition supplies the commutator envelope. Its radial and full-line Gamma integrals are bounded by a fixed constant plus twice the actual exterior potential, and tend to zero for each interior y as positive epsilon tends to zero. All mask supplier hypotheses are discharged."))),
+                DescribeRole.Definition),
+            Describe.Lean(
+                DescribeId.Create("gamma-form-core-smoothcutoff-actualcutoffmask"),
+                DeclarationHandle.Create("D5/S3/Weil/ZetaGamma/FormCore/SmoothCutoff.actualCutoffMask"),
+                H("actualCutoffMask"),
+                StatementSource.WithoutFormula(),
+                AssessedProvenance.FromRepo(),
+                Blocks(Paragraph(Text("Eta(a,epsilon,x)=smoothTransition((x+a)/epsilon-1)*smoothTransition((a-x)/epsilon-1); the error mask is 1-eta inside Ioo(-a,a) and zero outside. The global derivative bound of the actual smooth transition supplies the commutator envelope. Its radial and full-line Gamma integrals are bounded by a fixed constant plus twice the actual exterior potential, and tend to zero for each interior y as positive epsilon tends to zero. All mask supplier hypotheses are discharged."))),
+                DescribeRole.Definition),
+            Describe.Lean(
+                DescribeId.Create("gamma-form-core-smoothcutoff-actualcutoffeta-contdiff"),
+                DeclarationHandle.Create("D5/S3/Weil/ZetaGamma/FormCore/SmoothCutoff.actualCutoffEta_contDiff"),
+                H("actualCutoffEta contDiff"),
+                StatementSource.WithoutFormula(),
+                AssessedProvenance.FromRepo(),
+                Blocks(Paragraph(Text("Eta(a,epsilon,x)=smoothTransition((x+a)/epsilon-1)*smoothTransition((a-x)/epsilon-1); the error mask is 1-eta inside Ioo(-a,a) and zero outside. The global derivative bound of the actual smooth transition supplies the commutator envelope. Its radial and full-line Gamma integrals are bounded by a fixed constant plus twice the actual exterior potential, and tend to zero for each interior y as positive epsilon tends to zero. All mask supplier hypotheses are discharged."))),
+                DescribeRole.Theorem),
+            Describe.Lean(
+                DescribeId.Create("gamma-form-core-smoothcutoff-actualcutoffeta-range"),
+                DeclarationHandle.Create("D5/S3/Weil/ZetaGamma/FormCore/SmoothCutoff.actualCutoffEta_range"),
+                H("actualCutoffEta range"),
+                StatementSource.WithoutFormula(),
+                AssessedProvenance.FromRepo(),
+                Blocks(Paragraph(Text("Eta(a,epsilon,x)=smoothTransition((x+a)/epsilon-1)*smoothTransition((a-x)/epsilon-1); the error mask is 1-eta inside Ioo(-a,a) and zero outside. The global derivative bound of the actual smooth transition supplies the commutator envelope. Its radial and full-line Gamma integrals are bounded by a fixed constant plus twice the actual exterior potential, and tend to zero for each interior y as positive epsilon tends to zero. All mask supplier hypotheses are discharged."))),
+                DescribeRole.Theorem),
+            Describe.Lean(
+                DescribeId.Create("gamma-form-core-smoothcutoff-actualcutoffmask-measurable"),
+                DeclarationHandle.Create("D5/S3/Weil/ZetaGamma/FormCore/SmoothCutoff.actualCutoffMask_measurable"),
+                H("actualCutoffMask measurable"),
+                StatementSource.WithoutFormula(),
+                AssessedProvenance.FromRepo(),
+                Blocks(Paragraph(Text("Eta(a,epsilon,x)=smoothTransition((x+a)/epsilon-1)*smoothTransition((a-x)/epsilon-1); the error mask is 1-eta inside Ioo(-a,a) and zero outside. The global derivative bound of the actual smooth transition supplies the commutator envelope. Its radial and full-line Gamma integrals are bounded by a fixed constant plus twice the actual exterior potential, and tend to zero for each interior y as positive epsilon tends to zero. All mask supplier hypotheses are discharged."))),
+                DescribeRole.Theorem),
+            Describe.Lean(
+                DescribeId.Create("gamma-form-core-smoothcutoff-actualcutoffmask-range"),
+                DeclarationHandle.Create("D5/S3/Weil/ZetaGamma/FormCore/SmoothCutoff.actualCutoffMask_range"),
+                H("actualCutoffMask range"),
+                StatementSource.WithoutFormula(),
+                AssessedProvenance.FromRepo(),
+                Blocks(Paragraph(Text("Eta(a,epsilon,x)=smoothTransition((x+a)/epsilon-1)*smoothTransition((a-x)/epsilon-1); the error mask is 1-eta inside Ioo(-a,a) and zero outside. The global derivative bound of the actual smooth transition supplies the commutator envelope. Its radial and full-line Gamma integrals are bounded by a fixed constant plus twice the actual exterior potential, and tend to zero for each interior y as positive epsilon tends to zero. All mask supplier hypotheses are discharged."))),
+                DescribeRole.Theorem),
+            Describe.Lean(
+                DescribeId.Create("gamma-form-core-smoothcutoff-actualcutoffmask-eventually-zero"),
+                DeclarationHandle.Create("D5/S3/Weil/ZetaGamma/FormCore/SmoothCutoff.actualCutoffMask_eventually_zero"),
+                H("actualCutoffMask eventually zero"),
+                StatementSource.WithoutFormula(),
+                AssessedProvenance.FromRepo(),
+                Blocks(Paragraph(Text("Eta(a,epsilon,x)=smoothTransition((x+a)/epsilon-1)*smoothTransition((a-x)/epsilon-1); the error mask is 1-eta inside Ioo(-a,a) and zero outside. The global derivative bound of the actual smooth transition supplies the commutator envelope. Its radial and full-line Gamma integrals are bounded by a fixed constant plus twice the actual exterior potential, and tend to zero for each interior y as positive epsilon tends to zero. All mask supplier hypotheses are discharged."))),
+                DescribeRole.Theorem),
+            Describe.Lean(
+                DescribeId.Create("gamma-form-core-smoothcutoff-actualcutoffmask-tendsto-zero"),
+                DeclarationHandle.Create("D5/S3/Weil/ZetaGamma/FormCore/SmoothCutoff.actualCutoffMask_tendsto_zero"),
+                H("actualCutoffMask tendsto zero"),
+                StatementSource.WithoutFormula(),
+                AssessedProvenance.FromRepo(),
+                Blocks(Paragraph(Text("Eta(a,epsilon,x)=smoothTransition((x+a)/epsilon-1)*smoothTransition((a-x)/epsilon-1); the error mask is 1-eta inside Ioo(-a,a) and zero outside. The global derivative bound of the actual smooth transition supplies the commutator envelope. Its radial and full-line Gamma integrals are bounded by a fixed constant plus twice the actual exterior potential, and tend to zero for each interior y as positive epsilon tends to zero. All mask supplier hypotheses are discharged."))),
+                DescribeRole.Theorem),
+            Describe.Lean(
+                DescribeId.Create("gamma-form-core-smoothcutoff-cutoffradialgap"),
+                DeclarationHandle.Create("D5/S3/Weil/ZetaGamma/FormCore/SmoothCutoff.cutoffRadialGap"),
+                H("cutoffRadialGap"),
+                StatementSource.WithoutFormula(),
+                AssessedProvenance.FromRepo(),
+                Blocks(Paragraph(Text("Eta(a,epsilon,x)=smoothTransition((x+a)/epsilon-1)*smoothTransition((a-x)/epsilon-1); the error mask is 1-eta inside Ioo(-a,a) and zero outside. The global derivative bound of the actual smooth transition supplies the commutator envelope. Its radial and full-line Gamma integrals are bounded by a fixed constant plus twice the actual exterior potential, and tend to zero for each interior y as positive epsilon tends to zero. All mask supplier hypotheses are discharged."))),
+                DescribeRole.Definition),
+            Describe.Lean(
+                DescribeId.Create("gamma-form-core-smoothcutoff-cutofffullgap"),
+                DeclarationHandle.Create("D5/S3/Weil/ZetaGamma/FormCore/SmoothCutoff.cutoffFullGap"),
+                H("cutoffFullGap"),
+                StatementSource.WithoutFormula(),
+                AssessedProvenance.FromRepo(),
+                Blocks(Paragraph(Text("Eta(a,epsilon,x)=smoothTransition((x+a)/epsilon-1)*smoothTransition((a-x)/epsilon-1); the error mask is 1-eta inside Ioo(-a,a) and zero outside. The global derivative bound of the actual smooth transition supplies the commutator envelope. Its radial and full-line Gamma integrals are bounded by a fixed constant plus twice the actual exterior potential, and tend to zero for each interior y as positive epsilon tends to zero. All mask supplier hypotheses are discharged."))),
+                DescribeRole.Definition),
+            Describe.Lean(
+                DescribeId.Create("gamma-form-core-smoothcutoff-actualexteriorpotential"),
+                DeclarationHandle.Create("D5/S3/Weil/ZetaGamma/FormCore/SmoothCutoff.actualExteriorPotential"),
+                H("actualExteriorPotential"),
+                StatementSource.WithoutFormula(),
+                AssessedProvenance.FromRepo(),
+                Blocks(Paragraph(Text("Eta(a,epsilon,x)=smoothTransition((x+a)/epsilon-1)*smoothTransition((a-x)/epsilon-1); the error mask is 1-eta inside Ioo(-a,a) and zero outside. The global derivative bound of the actual smooth transition supplies the commutator envelope. Its radial and full-line Gamma integrals are bounded by a fixed constant plus twice the actual exterior potential, and tend to zero for each interior y as positive epsilon tends to zero. All mask supplier hypotheses are discharged."))),
+                DescribeRole.Definition),
+            Describe.Lean(
+                DescribeId.Create("gamma-form-core-smoothcutoff-actualdensity-tail-integrable-for-cutoff"),
+                DeclarationHandle.Create("D5/S3/Weil/ZetaGamma/FormCore/SmoothCutoff.actualDensity_tail_integrable_for_cutoff"),
+                H("actualDensity tail integrable for cutoff"),
+                StatementSource.WithoutFormula(),
+                AssessedProvenance.FromRepo(),
+                Blocks(Paragraph(Text("Eta(a,epsilon,x)=smoothTransition((x+a)/epsilon-1)*smoothTransition((a-x)/epsilon-1); the error mask is 1-eta inside Ioo(-a,a) and zero outside. The global derivative bound of the actual smooth transition supplies the commutator envelope. Its radial and full-line Gamma integrals are bounded by a fixed constant plus twice the actual exterior potential, and tend to zero for each interior y as positive epsilon tends to zero. All mask supplier hypotheses are discharged."))),
+                DescribeRole.Theorem),
+            Describe.Lean(
+                DescribeId.Create("gamma-form-core-smoothcutoff-cutoffradialgap-nonneg"),
+                DeclarationHandle.Create("D5/S3/Weil/ZetaGamma/FormCore/SmoothCutoff.cutoffRadialGap_nonneg"),
+                H("cutoffRadialGap nonneg"),
+                StatementSource.WithoutFormula(),
+                AssessedProvenance.FromRepo(),
+                Blocks(Paragraph(Text("Eta(a,epsilon,x)=smoothTransition((x+a)/epsilon-1)*smoothTransition((a-x)/epsilon-1); the error mask is 1-eta inside Ioo(-a,a) and zero outside. The global derivative bound of the actual smooth transition supplies the commutator envelope. Its radial and full-line Gamma integrals are bounded by a fixed constant plus twice the actual exterior potential, and tend to zero for each interior y as positive epsilon tends to zero. All mask supplier hypotheses are discharged."))),
+                DescribeRole.Theorem),
+            Describe.Lean(
+                DescribeId.Create("gamma-form-core-smoothcutoff-actualdensity-tail-nonneg"),
+                DeclarationHandle.Create("D5/S3/Weil/ZetaGamma/FormCore/SmoothCutoff.actualDensity_tail_nonneg"),
+                H("actualDensity tail nonneg"),
+                StatementSource.WithoutFormula(),
+                AssessedProvenance.FromRepo(),
+                Blocks(Paragraph(Text("Eta(a,epsilon,x)=smoothTransition((x+a)/epsilon-1)*smoothTransition((a-x)/epsilon-1); the error mask is 1-eta inside Ioo(-a,a) and zero outside. The global derivative bound of the actual smooth transition supplies the commutator envelope. Its radial and full-line Gamma integrals are bounded by a fixed constant plus twice the actual exterior potential, and tend to zero for each interior y as positive epsilon tends to zero. All mask supplier hypotheses are discharged."))),
+                DescribeRole.Theorem),
+            Describe.Lean(
+                DescribeId.Create("gamma-form-core-smoothcutoff-actual-smooth-cutoff-commutator"),
+                DeclarationHandle.Create("D5/S3/Weil/ZetaGamma/FormCore/SmoothCutoff.actual_smooth_cutoff_commutator"),
+                H("actual smooth cutoff commutator"),
+                StatementSource.WithoutFormula(),
+                AssessedProvenance.FromRepo(),
+                Blocks(Paragraph(Text("Eta(a,epsilon,x)=smoothTransition((x+a)/epsilon-1)*smoothTransition((a-x)/epsilon-1); the error mask is 1-eta inside Ioo(-a,a) and zero outside. The global derivative bound of the actual smooth transition supplies the commutator envelope. Its radial and full-line Gamma integrals are bounded by a fixed constant plus twice the actual exterior potential, and tend to zero for each interior y as positive epsilon tends to zero. All mask supplier hypotheses are discharged."))),
+                DescribeRole.Theorem))));
+}
