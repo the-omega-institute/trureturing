@@ -1,0 +1,29 @@
+**定义 31.1（条带类与既有例外对）。** 沿用定义 1.1–1.3 的完整世界、左乘、原时钟、实际兼容集及失败递归。本节允许任意实数 $z,Y,p$，不沿用先前章节的 $z$ 窗口。置
+
+$$
+\rho=\frac{1008}{11},\qquad H_{5J}=(H_4,J,p),\qquad
+\mathcal S(H_{5J})=\{W\in\mathcal F(H_{5J}):g_W(7)=0,\ 0\le d_W\le\rho\}.
+\tag{31.1}
+$$
+
+类内的漂移和整个增益均可随世界变化。记 $E(d)$ 为[《FIB JMJ 互补碰撞支臂与增益分离》定理 4.1](FIB_JMJ_COMPLEMENTARY_COLLISION_ARMS_AND_GAIN_SEPARATION.md) 中以 $\kappa=d/105$ 参数化的既有无序对：
+
+$$
+\begin{gathered}
+b_d=6-\frac{336}{d},\quad c_d=\frac{4536-61d}{16d},\quad
+r_\pm=\frac{1\pm\sqrt{1-4b_dc_d}}2,\\
+g_d(x)=\frac d{105}(x-3)(x-5)(x-7),\quad
+P_\pm=\begin{pmatrix}r_\pm&b_d\\c_d&1-r_\pm\end{pmatrix},\quad
+E(d)=\{(P_-,g_d,d),(P_+,g_d,d)\},\\
+0<d\le\rho,\qquad b_d,c_d>0,\qquad 0<b_dc_d<\frac14.
+\end{gathered}
+\tag{31.2}
+$$
+
+这里保留严格源过滤；$b_dc_d=1/4$ 只给一个世界，$b_d=0$ 或 $c_d=0$ 不属原域。此对属于 $\mathcal F(H_{5J})$ 的历史条件是
+
+$$
+z=p=d,\qquad Y=\frac{48d-672}{35}.
+\tag{31.3}
+$$
+

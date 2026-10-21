@@ -1,0 +1,49 @@
+**定义 7.2（两个正源图与整个三次实现条件）。** 对第五 $J$ 图取 $x>2,\eta>0$，令
+
+$$
+D_J=x+\eta-2,\quad
+P_J(x,\eta)=D_J^{-1}\begin{pmatrix}\eta&1\\(x-2)\eta&x-2\end{pmatrix}.
+\tag{7.5}
+$$
+
+对第五 $M$ 图取 $2/3<x<1,\eta>0$，令
+
+$$
+D_M=(1-x)\eta+3x-2,\quad
+P_M(x,\eta)=D_M^{-1}\begin{pmatrix}(1-x)\eta&1-x\\(3x-2)\eta&3x-2\end{pmatrix}.
+\tag{7.6}
+$$
+
+分别有 $Q_EP_E=e_E\left(\begin{smallmatrix}x\eta&x\\\eta&1\end{smallmatrix}\right)$，$e_E=1/D_E$。由 $Q_E^{-1}$ 乘回可见，两图恰覆盖全部正秩一迹一来源，并非来源限制。共享来源在两图的坐标为 $(x,\eta)$ 与 $(x/(x+1),\eta)$。
+
+给某核响应 $t_E,t_E+k_E$，须令 $d=t_E-k_E(x+\eta)$、$g_6=k_E/e_E$。用同一来源的 $\ell=1+b,V=1+2b$，定义整个多项式
+
+$$
+G(\tau)=-dL_0(\tau)+\frac{48-d}{\ell}L_2(\tau)
+ +\frac{Y-d}{V}L_4(\tau)+\frac{k_E}{e_E}L_6(\tau),
+\tag{7.7}
+$$
+
+其中
+
+$$
+\begin{aligned}
+L_0&=-(\tau-2)(\tau-4)(\tau-6)/48,&
+L_2&=\tau(\tau-4)(\tau-6)/16,\\
+L_4&=-\tau(\tau-2)(\tau-6)/16,&
+L_6&=\tau(\tau-2)(\tau-4)/48.
+\end{aligned}
+$$
+
+剩下的原祖先及第五读恰是
+
+$$
+G(1)j=24-d,\qquad G(3)T=z-d,\qquad
+G(5)\operatorname{tr}(Q_EP)=p_E-d.
+\tag{7.8}
+$$
+
+不除以这些可能为零的奇节点样本。对共享 $A$ 使用式 (7.2) 和 $J$ 图的 $G$，并另要求第五 $M$ 等式；对 $B$ 用 $J$ 图和同一 $t,\kappa,p_J$，对 $C$ 用 $M$ 图和同一 $u,\mu,p_M$。要求三完整世界不同，并保留定理 6.3、7.1 的严格条件。
+
+四个所选第六子集的可选 $Z$ 伴随世界分别有漂移 $t,t+\kappa,u,u+\mu$。对每个漂移解式 (2.2)，按式 (2.3) 或零样本支 (2.4) 重建，保留严格正性、秩一、全部祖先及所属第五响应；每个通过者使用同一个式 (2.1) 增益。相同漂移本身不识别不同第五历史中的世界；只有 $P,g,d$ 全部相同才合并。
+
