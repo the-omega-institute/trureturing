@@ -37,6 +37,10 @@ namespace D5.S3.Observer.Linear.DerivativeLayerGramianPositivity
 open ContinuousLinearMap MeasureTheory
 open scoped InnerProductSpace RealInnerProductSpace InnerProduct
 
+-- Finite-dimensional inner-product spaces are complete before the local operator maps are formed.
+local instance {V : Type*} [NormedAddCommGroup V] [InnerProductSpace ℝ V]
+    [FiniteDimensional ℝ V] : CompleteSpace V := FiniteDimensional.complete ℝ V
+
 /-- The actual finite derivative filtration gives a strictly positive
 factorially weighted polynomial Gramian on its observable complement. -/
 theorem derivative_layer_gramian_pos
@@ -57,8 +61,10 @@ theorem derivative_layer_gramian_pos
     let G : U →L[ℝ] U := ∫ s in (0 : ℝ)..1, (F s).adjoint.comp (F s)
     ∀ x : U, x ≠ 0 → 0 < ⟪x, G x⟫_ℝ := by
   classical
+  letI : NormedSpace ℝ V := InnerProductSpace.toNormedSpace
+  letI : NormedSpace ℝ W := InnerProductSpace.toNormedSpace
   intro n N U E A F G x hx
-  letI : CompleteSpace V := FiniteDimensional.complete ℝ V
+  letI : NormedSpace ℝ U := inferInstance
   have hF : Continuous F := by
     dsimp [F]
     fun_prop
