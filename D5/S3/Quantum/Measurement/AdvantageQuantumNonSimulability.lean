@@ -44,7 +44,7 @@ def IsAdvantageQuantum {dA dB : ℕ} (E : BipartiteMatrix dA dB) (hE : IsDovm E)
 def InMeasurementDomain {dA dB : ℕ} (E ρ : BipartiteMatrix dA dB) : Prop :=
   ρ.PosSemidef ∧ trace ρ = 1 ∧ ∀ i, 0 ≤ (trace (ρ * binaryEffect E i)).re
 
-def copyState {ι : Type*} [Fintype ι] (n : ℕ) (ρ : Matrix ι ι ℂ) :
+def copyState {ι : Type*} (n : ℕ) (ρ : Matrix ι ι ℂ) :
     Matrix (Fin n → ι) (Fin n → ι) ℂ :=
   fun x y => ∏ k : Fin n, ρ (x k) (y k)
 
@@ -88,7 +88,7 @@ private theorem eigenstate_data {ι : Type*} [Fintype ι] [DecidableEq ι]
       trace_vecMulVec, smul_dotProduct, dotProduct_comm, hv]
     simp only [Complex.smul_re, smul_eq_mul, Complex.one_re, mul_one]
 
-private theorem copyState_posDef {ι : Type*} [Fintype ι]
+private theorem copy_state_pos_def {ι : Type*} [Fintype ι]
     {ρ : Matrix ι ι ℂ} (hρ : ρ.PosDef) (n : ℕ) : (copyState n ρ).PosDef := by
   classical
   induction n with
@@ -238,7 +238,7 @@ theorem result : claim := by
     domain_of_selected_probability E ρ hρ.posSemidef htρ i (by rw [hz]) (by rw [hz]; norm_num)
   have hdσ : InMeasurementDomain E σ :=
     domain_of_selected_probability E σ hσ htσ i hp.le hp1.le
-  have hn : N i = 0 := faithful_zero_effect (copyState_posDef hρ n) (hN.1 i)
+  have hn : N i = 0 := faithful_zero_effect (copy_state_pos_def hρ n) (hN.1 i)
     ((hs ρ hdρ i).trans hz)
   have he := hs σ hdσ i
   rw [hn, mul_zero, trace_zero, Complex.zero_re] at he
