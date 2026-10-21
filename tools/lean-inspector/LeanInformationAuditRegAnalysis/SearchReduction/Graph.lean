@@ -78,6 +78,8 @@ structure GraphVertex where
   origin : Expr := .sort .zero
   opaqueDecl : Bool := false
   targetPart : Bool := false
+  independentLookup : Run := .incomplete .undecided
+  independentLookupDetail : String := "not-queried"
   deriving Inhabited
 
 structure GraphEdge where
@@ -147,6 +149,8 @@ structure GraphReading where
   isolated : Bool := false
   structureChecked : Bool := false
   structureClean : Bool := false
+  lookupEnabled : Bool := true
+  lookupBasisComplete : Bool := true
   deriving Inhabited
 
 def boundLe : Bound → Bound → Prop
@@ -359,6 +363,16 @@ def selectedStructureSeed (graph : ProofGraph) (selected : List Nat) (id : Nat) 
   selected.contains id && (graph.vertices.find? (·.id == id)).any (fun v =>
     v.structureSeed && !v.seed && !v.targetPart)
 
+/-- A hard-proof witness needs both positive graph depth and a completed
+independent lookup. A zero-depth or lookup-provable helper is not such a witness. -/
+def proofHardEligible (graph : ProofGraph) (selected : List Nat) (id : Nat)
+    (baselineDepth : Bound) : Bool :=
+  selectedStructureSeed graph selected id &&
+    (graph.vertices.find? (·.id == id)).any (fun v => v.independentLookup == .exhausted) &&
+    match baselineDepth with
+    | .finite n => n ≥ 1
+    | .top => false
+
 def usesStructureSeed (reading : GraphReading) : Bool :=
   reading.selectedSeeds.any (selectedStructureSeed reading.graph reading.selectedSeeds)
 
@@ -378,6 +392,7 @@ def classifyGraph (reading : GraphReading) : Verdict :=
       reading.graph.edges.all (fun e => e.window != 1 ||
         (e.cost != .unknown && e.pairedCost != .unknown)) && reading.presentationComplete && reading.isolated && reading.structureChecked &&
       reading.structureClean && finite reading.baseline.lower &&
+      reading.baselineProbe.outcome == .exhausted &&
       finite reading.baseline.upper && finite reading.paired.lower &&
       finite reading.paired.upper && strictDrop reading.baseline reading.paired &&
       usesStructureSeed reading then .nonBindOnly

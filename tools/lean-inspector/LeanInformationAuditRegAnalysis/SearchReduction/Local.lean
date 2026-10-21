@@ -1,4 +1,5 @@
 import LeanInformationAuditRegAnalysis.SearchReduction.Graph
+import LeanInformationAuditRegAnalysis.SearchReduction.Lookup
 import LeanInformationAudit.CompiledAxioms
 import Mathlib.Tactic.Ring
 import Mathlib.Tactic.Linarith
@@ -10,7 +11,7 @@ namespace LeanInformationAudit.SearchReduction
 open Lean Meta Elab Tactic
 
 abbrev localBudget : Nat := 200000
-abbrev localConfiguration : String := "R_loc-decl/analytic-cut-k2/200000"
+abbrev localConfiguration : String := lookupVersion ++ "/analytic-cut-k2/200000"
 abbrev sharingConfiguration : String := "statement-exists-and-support"
 
 private def standardClosure (xs : Array Name) : Bool :=
@@ -320,6 +321,34 @@ structure LocalResult where
   detail : String := ""
   used : List Nat := []
   sharedData? : Option Bool := none
+  lookup : LookupTrace := {}
+
+private partial def solveLookupGoal (table : LookupTable) (goal : MVarId)
+    (facts : Array Expr) (tryLocal := true) : MetaM LookupTrace := goal.withContext do
+  if tryLocal && (← solveLocalGoal goal facts) then return {complete := true}
+  let type ← withReducible <| whnf (← goal.getType)
+  if type.isForall then
+    let (fvar, next) ← goal.intro1
+    return ← solveLookupGoal table next (facts.push (mkFVar fvar))
+  if type.isAppOfArity ``And 2 || type.isAppOfArity ``Iff 2 then
+    let saved ← saveState
+    let ctor := if type.isAppOfArity ``And 2 then ``And.intro else ``Iff.intro
+    let goals ← goal.apply (← mkConstWithFreshMVarLevels ctor)
+    let mut trace : LookupTrace := {complete := true}
+    let mut solved := true
+    for next in goals do
+      let leaf ← solveLookupGoal table next facts
+      trace := {
+        visited := trace.visited + leaf.visited
+        attempted := trace.attempted + leaf.attempted
+        source? := trace.source?.or leaf.source?
+        complete := trace.complete && leaf.complete}
+      unless ← next.isAssigned do solved := false
+    if solved then return trace
+    saved.restore
+  let projected ← eliminateLocal facts
+  lookupLeaf table goal (fun next => exactLocal next projected)
+    (fun next => solveLocalGoal next facts)
 
 private def withFacts {α : Type} (types : List Expr)
     (action : Array Expr → MetaM α) : MetaM α := do
@@ -331,7 +360,8 @@ private def withFacts {α : Type} (types : List Expr)
 
 /-- Only statement types enter R. The successful lambda retains precisely its
 used premise binders, so zero edges carry their actual premises. -/
-def localRebuild (target : Expr) (types : List Expr := []) : MetaM LocalResult := do
+def localRebuild (target : Expr) (types : List Expr := [])
+    (lookup? : Option LookupTable := none) : MetaM LocalResult := do
   let original ← saveState
   let started ← IO.getNumHeartbeats
   try
@@ -345,8 +375,27 @@ def localRebuild (target : Expr) (types : List Expr := []) : MetaM LocalResult :
           let (fvar, next) ← goal.intro1
           available := available.push (mkFVar fvar)
           goal := next
+        let mut trace : LookupTrace := {complete := true}
         unless ← goal.withContext (solveLocalGoal goal available) do
-          return {cost := .one, detail := "normal-exhaustion"}
+          if let some table := lookup? then
+            let exactRoot ← mkFreshExprMVar target
+            let exactTrace ← lookupExact table exactRoot.mvarId!
+            if exactTrace.source?.isSome then
+              let proof ← instantiateMVars exactRoot
+              checkLocalProof target proof
+              return {
+                cost := .zero, proof? := some proof, lookup := exactTrace,
+                detail := s!"kernel-checked-lookup:{exactTrace.source?}"}
+            trace ← goal.withContext (solveLookupGoal table goal available false)
+          unless ← goal.isAssigned do
+            return {
+              cost := if trace.complete then .one else .unknown
+              lookup := trace
+              detail := if trace.complete then
+                if lookup?.any (·.enabled) then
+                  s!"normal-exhaustion/lookup-complete:visited={trace.visited},attempted={trace.attempted}"
+                else "normal-exhaustion/local-only"
+                else "lookup-incomplete-basis"}
         let proof ← instantiateMVars root
         unless !proof.hasMVar do return {cost := .unknown, detail := "unclosed-reconstruction"}
         let used := facts.toList.zipIdx.filterMap fun (fact, i) =>
@@ -355,11 +404,18 @@ def localRebuild (target : Expr) (types : List Expr := []) : MetaM LocalResult :
         let certificate ← mkLambdaFVars selected proof
         let certificateType ← mkForallFVars selected target
         checkLocalProof certificateType certificate
-        return {cost := .zero, proof? := some certificate, used, detail := "kernel-checked-statement"}
+        return {
+          cost := .zero, proof? := some certificate, used, lookup := trace,
+          detail := if let some name := trace.source? then s!"kernel-checked-lookup:{name}"
+            else "kernel-checked-statement"}
     original.restore
+    set original.meta
+    modifyThe Core.State fun s => {s with cache := original.core.cache}
     return result
   catch ex =>
     original.restore
+    set original.meta
+    modifyThe Core.State fun s => {s with cache := original.core.cache}
     let detail ← ex.toMessageData.toString
     return {cost := .unknown, detail := if ex.isMaxHeartbeat then "heartbeat"
       else if ex.isInterrupt then "cancelled" else s!"execution:{detail}"}
@@ -427,14 +483,16 @@ private def annotateGraph (graph : ProofGraph) : MetaM ProofGraph := do
   return {graph with edges}
 
 /-- Same price function in each arm; only the seed flag changes. -/
-def priceGraph (graph : ProofGraph) (paired := false) (allGiven := false) : MetaM ProofGraph := do
+def priceGraph (graph : ProofGraph) (paired := false) (allGiven := false)
+    (lookup? : Option LookupTable := none) : MetaM ProofGraph := do
   let mut edges := []
   let seeds := (graph.vertices.filter (fun v =>
     v.seed || (paired && v.structureSeed && !v.targetPart))).map (·.id)
   for edge in graph.edges do
     let available := if allGiven then edge.premises else statementPremises edge seeds
     let analytic := edge.analytic
-    let result ← localRebuild (vertex graph edge.conclusion).type (available.map (vertex graph · |>.type))
+    let result ← localRebuild (vertex graph edge.conclusion).type
+      (available.map (vertex graph · |>.type)) lookup?
     let result := if edge.window != 1 && result.cost != .zero then
       {result with cost := .unknown} else result
     let used := result.used.map (available[·]!)
@@ -460,9 +518,10 @@ private def armGraph (graph : ProofGraph) (paired allGiven : Bool) : ProofGraph 
         (if paired then edge.pairedGivenUsedPremises else edge.givenUsedPremises)
        else if paired then edge.pairedUsedPremises else edge.usedPremises) else edge.premises}}
 
-def rootProbe (graph : ProofGraph) (paired := false) : MetaM ProbeResult := do
+def rootProbe (graph : ProofGraph) (paired := false)
+    (lookup? : Option LookupTable := none) : MetaM ProbeResult := do
   let seeds := armSeeds graph paired
-  let result ← localRebuild (vertex graph graph.root).type (seeds.map (vertex graph · |>.type))
+  let result ← localRebuild (vertex graph graph.root).type (seeds.map (vertex graph · |>.type)) lookup?
   let outcome := match result.cost with
     | .zero => Run.found | .one => .exhausted | .unknown => .incomplete .undecided
   return {
@@ -498,9 +557,12 @@ def assembleZero (graph : ProofGraph) (paired := false) : MetaM (Option Expr) :=
 
 /-- Two root probes, target-part reverse probes and declaration-level k=2.
 The d_given ablation supplies all premise types; it does not affect verdicts. -/
-def evaluateGraph (raw : ProofGraph) : MetaM GraphReading := do
+def evaluateGraph (raw : ProofGraph) (lookup? : Option LookupTable := none) : MetaM GraphReading := do
   if raw.vertices.isEmpty then return {graph := raw}
   let mut raw := raw
+  let enabled := (← IO.getEnv "SEARCH_REDUCTION_LOOKUP") != some "0"
+  let table := lookup?.getD {environment := ← getEnv, enabled}
+  let lookup? := some table
   let mut targetPartComplete := true
   let rootType := (vertex raw raw.root).type
   let baseIds := armSeeds raw false
@@ -509,8 +571,13 @@ def evaluateGraph (raw : ProofGraph) : MetaM GraphReading := do
   for v in raw.vertices do
     let mut v := v
     if v.structureSeed then
-      let reverse ← localRebuild v.type (rootType :: baseTypes)
-      let independent ← localRebuild v.type baseTypes
+      let reverse ← localRebuild v.type (rootType :: baseTypes) lookup?
+      let independent ← localRebuild v.type baseTypes lookup?
+      let independentRun := match independent.cost with
+        | .zero => Run.found | .one => .exhausted | .unknown => .incomplete .undecided
+      v := {v with
+        independentLookup := independentRun,
+        independentLookupDetail := independent.detail}
       if reverse.cost == .unknown || independent.cost == .unknown then targetPartComplete := false
       let part ← analyticPremise v.type rootType
       let inverse ← analyticPremise rootType v.type
@@ -519,16 +586,16 @@ def evaluateGraph (raw : ProofGraph) : MetaM GraphReading := do
     vertices := vertices ++ [v]
   raw := {raw with vertices}
   let graph ← annotateGraph {raw with edges := raw.edges ++ k2Frontier raw}
-  let graph ← priceGraph graph
-  let graph ← priceGraph graph true
-  let graph ← priceGraph graph false true
-  let graph ← priceGraph graph true true
+  let graph ← priceGraph graph false false lookup?
+  let graph ← priceGraph graph true false lookup?
+  let graph ← priceGraph graph false true lookup?
+  let graph ← priceGraph graph true true lookup?
   -- Failed optional probes do not become priced shortcuts in either arm.
   let graph := {graph with edges := graph.edges.filter (fun e =>
     e.window == 1 || edgeActive e || edgeActive e true ||
       edgeActive e false true || edgeActive e true true)}
-  let baseProbe ← rootProbe graph
-  let pairedProbe ← rootProbe graph true
+  let baseProbe ← rootProbe graph false lookup?
+  let pairedProbe ← rootProbe graph true lookup?
   let mut graph := graph
   for paired in [false, true] do
     let probe := if paired then pairedProbe else baseProbe
@@ -563,10 +630,8 @@ def evaluateGraph (raw : ProofGraph) : MetaM GraphReading := do
     selectedSeedDepths := selectedSeeds.map (fun id =>
       (id, intervalDP baselineGraph baseSeeds id)),
     proofHardSeeds := selectedSeeds.filter (fun id =>
-      selectedStructureSeed graph selectedSeeds id &&
-        match depth baselineGraph costLower baseSeeds id with
-        | .finite n => n ≥ 1
-        | .top => false),
-    pairedUsesSeed := selectedSeeds.any (selectedStructureSeed graph selectedSeeds)}
+      proofHardEligible graph selectedSeeds id (depth baselineGraph costLower baseSeeds id)),
+    pairedUsesSeed := selectedSeeds.any (selectedStructureSeed graph selectedSeeds),
+    lookupEnabled := table.enabled, lookupBasisComplete := table.complete}
 
 end LeanInformationAudit.SearchReduction

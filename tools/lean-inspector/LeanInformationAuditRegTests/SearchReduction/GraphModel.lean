@@ -778,7 +778,8 @@ def nondegenerateReading (direct : EdgeCost) : GraphReading := Id.run do
     graph, baseline := graphInterval graph [0],
     paired := graphInterval (modelPaired graph) [0, 1], selectedSeeds := [1],
     pairedUsesSeed := true, presentationComplete := true, isolated := true,
-    structureChecked := true, structureClean := true, witnessEdges := [2]}
+    structureChecked := true, structureClean := true, witnessEdges := [2],
+    baselineProbe := {outcome := .exhausted}}
 
 /-- Both graph verdicts occur on readings whose distances are computed from
 their actual hypergraphs, rather than supplied numerical intervals. -/

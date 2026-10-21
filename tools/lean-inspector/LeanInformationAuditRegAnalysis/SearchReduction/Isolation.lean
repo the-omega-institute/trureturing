@@ -273,7 +273,8 @@ private def intervalRun (graph : ProofGraph) (interval : Interval) : Run :=
       finite interval.lower && finite interval.upper then .exhausted
   else .incomplete .undecided
 
-private unsafe def runCore (source base : Environment) (request : Request) : IO Observation := do
+private unsafe def runCore (source base : Environment) (request : Request)
+    (lookupComplete : Bool) : IO Observation := do
   let unknown (reason : String) (failure := Failure.isolation) : Observation := {
     target := request.target, base := .incomplete failure,
     paired := .incomplete failure, verdict := .insufficient, reason}
@@ -308,7 +309,9 @@ private unsafe def runCore (source base : Environment) (request : Request) : IO 
         return {v with type := ← copyStatement source (v.origin.constName?.getD .anonymous) v.type}
       let graph := {graph with vertices}
       let graphEnv ← getEnv
-      let reading ← withEnv graphEnv <| evaluateGraph graph
+      let enabled := (← IO.getEnv "SEARCH_REDUCTION_LOOKUP") != some "0"
+      let reading ← withEnv graphEnv <| evaluateGraph graph (some {
+        environment := base, complete := lookupComplete, enabled})
       let baselineProof? ← if upperIsZero reading.baseline then
         withEnv graphEnv <| assembleZero reading.graph else pure none
       let pairedProof? ← if upperIsZero reading.paired then
@@ -371,7 +374,7 @@ unsafe def run (source : Environment) (request : Request)
       if let some index := source.getModuleIdxFor? n then
         delivery := delivery.push source.header.moduleNames[index.toNat]!
     let catalog ← baselineCatalog request.baselineCommit delivery base
-    let result ← runCore source base request
+    let result ← runCore source base request (catalog.scope != "B_load")
     let used := request.additions.filter fun name =>
       result.graph?.any fun reading => reading.selectedSeeds.any fun id =>
         reading.graph.vertices.any fun vertex => vertex.id == id &&
