@@ -4080,3 +4080,690 @@ family, follows from this construction.
 [SLHC14-LIFT]: FIB_RELATIONAL_FIBER_CALCULUS_CONTINUATION_IV.md#51-redundant-complete-words-with-the-original-call-trace
 
 ## 追加锚（本行以下为增补区）
+
+## 15. Exact stationary zero-delay right-ray acquisition price
+
+### 15.1. One unknown source and the acquisition coordinate
+
+This section evaluates one instance of SLH's acquisition problem: the
+entire future of one pure right address, acquired at epoch zero. Its new
+content is the uniform closed-form all-address necessity argument in
+§15.3. Ordered search, finite future codes, transport, continued use and
+actual-image view conversion retain their existing suppliers. The
+supporting operational application below fixes their precise scope.
+
+**Definition 15.1 (source, installation and truthful port).** Fix a public
+integer $d\ge0$. The unknown input is any $u\in\mathcal T$, with no size,
+shape or orbit promise, where
+
+$$
+\mathcal T::=\alpha\mid\beta\mid\langle\mathcal T,\mathcal T\rangle,
+\qquad
+\rho\alpha=\beta,\quad \rho\beta=\langle\beta,\alpha\rangle,
+\quad \rho\langle x,y\rangle=\langle\rho x,\rho y\rangle.
+$$
+
+These are ordered full binary trees: each branch has both children.
+Addresses are arbitrary finite words in $L,R$, starting at the same root.
+The actual call $\mathsf{Read}(p)$ returns $r_y(p)$ in
+$\{\alpha,\beta,\mathsf{branch},\mathsf{absent}\}$ on the current register
+$y$. At the empty address it reports the root constructor. A nonempty
+address below a leaf is absent; at a branch its first letter selects the
+corresponding child. Every finite address is legal, without first reading
+its prefixes. There is no query-depth restriction.
+
+Before Start, an environment actually installs $u$ in one opaque bound
+register. The observer has the same fixed root reference, public $d$,
+program, readable program backing and literal/update rights on every
+input. Its evidence and workspace start empty apart from source-independent
+initialization. Source preparation, binding assurance, program installation
+and rights are separately paid setup. They are supplied services, not an
+authentication mechanism derived here. The observer cannot inspect a
+source description, pointer layout, source size, seed, age, old cache,
+private installer residue, service timing or any source-specific advice.
+Only truthful actual Read replies supply source information during
+acquisition. Computation and acquired working storage may be unrestricted,
+but every allowed source must lead to finite termination.
+
+The register remains $u$ throughout acquisition. There is no external
+request ingress in that phase; only the controller's selected Reads and
+local steps are enabled. Subsequent use retains the same register, root,
+program and rights. No concurrent writer, replacement, re-rooting, hidden
+update or revocation is admitted. Reads and updates complete synchronously
+with their declared effects. This is a mathematical service contract;
+source-busy implementation interiors are not added to its settled-cut
+claims.
+
+**Definition 15.2 (complete future and raw-call price).** The task is to
+acquire an actually retained finite residual from which a common effective
+procedure computes every term of
+
+$$
+F_d(u)=\bigl(r_{\rho^n u}(R^d)\bigr)_{n\ge0}
+\tag{SLHC.15.1}
+$$
+
+without any later source observation. A residual is not supplied as an
+input. All accessible source-dependent fields at handoff count as part
+of it. Local finite computation may interpret the residual, but cannot
+receive new source information. Let $n_A(u)$ count all actual acquisition
+Read calls of a correct deterministic source-total procedure $A$, and set
+
+$$
+m_0(d)=\inf_A\sup_{u\in\mathcal T}n_A(u).
+\tag{SLHC.15.2}
+$$
+
+Every call costs one, including a root call, an absent call and a repeated
+call. An unbounded worst case has cost $+\infty$. Address letters,
+navigation, local work, working and retained storage, setup, transmission,
+cleanup and actual substitutions have separate costs. The infimum
+optimizes only this raw-call coordinate.
+
+**Theorem 15.3 (exact stationary right-ray price).** For every $d\ge0$,
+
+$$
+\boxed{\quad
+m_0(d)=\min\{k\in\mathbb N:d+2\le2^k\}
+      =\lceil\log_2(d+2)\rceil.
+\quad}
+\tag{SLHC.15.3}
+$$
+
+The lower bound permits arbitrary adaptive finite-address queries and
+unrestricted acquired storage. One common deterministic controller attains
+the bound on every finite tree, using only $R$-prefix queries of length
+at most $d$, with no repeated address. It acquires the capped code
+$a_d(u)$ defined below and retains it for the callable realization of
+§15.5. In particular $d=0$ costs one actual root Read.
+
+### 15.2. The supplied task code and its exact correspondence
+
+**Supplier application 15.4 (right clock, future and boundary).** Put
+
+$$
+\kappa(\alpha)=0,\qquad \kappa(\beta)=1,\qquad
+\kappa(\langle x,y\rangle)=2+\kappa(y),\qquad
+C=2d+2,\qquad a_d(y)=\min(\kappa(y),C).
+\tag{SLHC.15.4}
+$$
+
+SLH §2 and `DelayedOriginalReadout.right_clock_iterate` and
+`right_clock_readout` supply, for all finite $y$ and $n,s\ge0$,
+
+$$
+\kappa(\rho^n y)=\kappa(y)+n,
+\qquad
+r_y(R^s)=
+\begin{cases}
+\mathsf{absent},&\kappa(y)<2s,\\
+\alpha,&\kappa(y)=2s,\\
+\beta,&\kappa(y)=2s+1,\\
+\mathsf{branch},&\kappa(y)\ge2s+2.
+\end{cases}
+\tag{SLHC.15.5}
+$$
+
+Their one-step calculation is also immediate from the displayed source
+rules: the leaf clocks become $1,2$, and a pair has clock
+$2+\kappa(\rho y)=2+\kappa(y)+1$. The ray table follows by descending its
+right child. These existing identities, not an assumed clock-to-geometry
+correspondence, give the source-blind decoder
+
+$$
+E_d(a,n)=
+\begin{cases}
+\mathsf{absent},&a+n<2d,\\
+\alpha,&a+n=2d,\\
+\beta,&a+n=2d+1,\\
+\mathsf{branch},&a+n\ge2d+2.
+\end{cases}
+\qquad F_d(y)(n)=E_d(a_d(y),n).
+\tag{SLHC.15.6}
+$$
+
+Saturation is valid: if $a=C$, both sides are branch at every future
+count. If $0\le a<a'\le C$, take $n=2d+1-a\ge0$. Then $E_d(a,n)=\beta$
+and $E_d(a',n)=\mathsf{branch}$. Thus distinct attained codes have
+distinct complete futures. A real update transports the current code by
+
+$$
+a_d(\rho y)=\min(a_d(y)+1,C).
+\tag{SLHC.15.7}
+$$
+
+This is the single-ray instance of SLH §§35–39, with empty prior history,
+$N=0$ and $Q=(R^d)$. For $d>0$, codes $a<2d$ correspond to
+$\mathsf D_{2d-a}$, while $a=2d,2d+1,C$ correspond to
+$\mathsf A,\mathsf B,\mathsf C$. For $d=0$ only the last three occur.
+`FiniteMenu.Kernel.original_menu_kernel`, with menu `[rights d]` and
+common iterate $n$, already classifies this same future equivalence; the
+numbering here is not a new generic kernel.
+
+Equivalently, $a_d(u)$ determines and is determined by the initial prefix
+$V_{d+1}(u)=(r_u(R^j))_{0\le j\le d}$. If the first ray leaf has depth
+$j\le d$ and colour bit $b$ ($\alpha$ means $0$, $\beta$ means $1$), the
+code is $2j+b$. Otherwise $R^d$ is a branch and the code is $C$. This
+prefix equivalence connects the task to SLH §13.2 with $M=0$ and finite
+history-task list $((0,R^j))_{j=0}^d$: generic exact-price computability
+and attainment were already supplied. What remains to prove here is the
+closed value (SLHC.15.3), uniformly in $d$, against every address.
+
+Present-only reading is a different task: one Read at $R^d$ supplies its
+present literal. For $d\ge1$, both $\alpha$ and $\beta$ presently report
+absent there, but their full futures differ by (SLHC.15.6). At $d=0$ the
+present root constructor already determines its full future, and the
+exact acquisition price remains one.
+
+### 15.3. All-address necessity on actual finite sources
+
+**Lemma 15.5 (comb families and query refinement).** Define actual finite
+contexts and families by
+
+$$
+\begin{aligned}
+&K_0(z)=z,\qquad K_{j+1}(z)=\langle\alpha,K_j(z)\rangle,
+\qquad \gamma=\langle\alpha,\alpha\rangle,\\
+&H_m=\{K_j(\alpha),K_j(\beta):0\le j<m\}\quad(m\ge0),\\
+&G_t=\{K_j(\alpha),K_j(\beta):0\le j\le t\}
+       \cup\{K_t(\gamma)\}\quad(t\ge0).
+\end{aligned}
+\tag{SLHC.15.8}
+$$
+
+$H_0$ is empty. On $H_m$, every nonconstant arbitrary-address query is
+a function of a ray query $R^p$ with $p<m$. On $G_t$ the same holds with
+$p\le t$. Moreover, embedding either family in a fixed $K_\ell[-]$
+cannot make identification easier than identification of its hole content
+with the same call budget.
+
+Proof. Every address is either $R^p$ or uniquely $R^pLw$. Every actual
+left child of these combs, including the extra terminal pair, is the leaf
+$\alpha$. For $w\ne\varepsilon$ the reply is always absent. For
+$w=\varepsilon$ it is $\alpha$ exactly when the reply at $R^p$ is branch,
+and is absent otherwise. This supplies an explicit four-symbol
+postprocessing, valid on the entire family simultaneously.
+
+On $H_m$, all ray queries with $p\ge m$ are constant absent. On $G_t$,
+$R^{t+1}$ returns $\alpha$ only on $K_t(\gamma)$ and absent on all other
+members. It is the postprocessing that maps the branch reply at $R^t$
+to $\alpha$ and all other replies to absent. All deeper ray queries are
+constant absent. Together these cases exhaust every finite address,
+including arbitrarily deep off-ray addresses; they are not a claim about
+off-ray information on arbitrary unrestricted trees.
+
+For a fixed prefix $K_\ell[-]$, a query at a strict ray ancestor of its
+hole has constant reply branch. A query entering one of the fixed left
+leaves has constant reply $\alpha$ or absent. A query that reaches the
+hole is exactly a suffix query on its unknown content. Thus a simulator
+can run any embedded-family procedure using locally supplied constant
+replies and at most one actual suffix Read for each original call. It
+returns the identified hole member from the identified complete tree.
+The hole and every complete tree here are genuine finite sources, not
+independently chosen answer coordinates.
+
+Finally, replacing a query $q$ by a refining ray query $R^p$ preserves any
+identification procedure on the family: feed the deterministic
+postprocessed reply to its old continuation and ignore the extra
+information. Each refined child is contained in an old reply child, so
+correctness and the remaining read bound hold on every refined child.
+A constant query can instead be supplied locally. These substitutions
+are permitted for a restricted-family lower bound; they do not provide
+free source observations to the original all-tree procedure. $\square$
+
+**Lemma 15.6 (simultaneous paired capacities).** For each $k\ge0$:
+identification of every member of $H_m$ within $k$ raw calls implies
+$m+1\le2^k$; identification of every member of $G_t$ within $k$ raw calls
+implies $t+2\le2^k$. Identification means a different terminal residual
+for each member, or a source-free decoder that distinguishes them.
+
+Proof. A deterministic procedure restricted to one finite family unfolds
+into a finite reply tree. Each member's run is finite by source-totality,
+so the union of these finitely many finite paths is finite. At a common
+reply prefix the local state, computation and next address are the same:
+only replies can introduce a source-dependent branch. Unrestricted
+acquired memory does not change this fact. This justifies the decision
+tree even when local computation has no uniform bound on all trees.
+
+We induct simultaneously on $k$. At $k=0$, $H_0$ satisfies
+$0+1=1\le2^0$; any nonempty $H_m$ contains both $\alpha$ and $\beta$.
+Every $G_t$ contains at least three members. No zero-read source-blind
+procedure identifies either nontrivial family. Thus both implications,
+including the empty-family boundary, hold.
+
+Let $k\ge1$. For a nontrivial family discard any initial constant
+queries. An informative query must eventually occur, since a common
+terminal output cannot identify distinct members. Refine that first
+informative query by Lemma 15.5 to a canonical ray pivot. After this one
+query each child has a correct identification continuation with at most
+$k-1$ calls. Prior constant queries could only have consumed additional
+budget, so dropping them cannot invalidate this upper bound.
+
+On $H_m$, a pivot $0\le p<m$ has absent child $H_p$, singleton leaf
+children $\{K_p(\alpha)\},\{K_p(\beta)\}$, and branch child
+$K_{p+1}[H_{m-p-1}]$. The fixed-context simulation and induction give
+
+$$
+p+1\le2^{k-1},\qquad m-p\le2^{k-1}.
+\tag{SLHC.15.9}
+$$
+
+An empty $H$ child satisfies the same inequality $1\le2^{k-1}$ without
+a run. Adding the inequalities proves $m+1\le2^k$.
+
+On $G_t$, for $p<t$ the absent child is $H_p$, the two leaf children are
+singletons, and the branch child is $K_{p+1}[G_{t-p-1}]$. Therefore
+
+$$
+p+1\le2^{k-1},\qquad t-p+1\le2^{k-1},
+\tag{SLHC.15.10}
+$$
+
+and adding gives $t+2\le2^k$. At the remaining pivot $p=t$, the absent
+child is $H_t$ and the other three children are singletons: its alpha
+leaf, beta leaf and terminal branch. Induction gives
+$t+1\le2^{k-1}$, whence
+
+$$
+t+2\le2^{k-1}+1\le2^k.
+\tag{SLHC.15.11}
+$$
+
+This includes $t=0$ and empty absent child. Lemma 15.5 has already
+handled every noncanonical query. Each inductive restriction is a family
+of complete actual sources; its embedding is simulated before applying
+the residual-family hypothesis. No abstract interval is assumed to have
+literal access equivalent to a different source family. $\square$
+
+Proof of Theorem 15.3, lower bound. On $G_d$ the clocks are
+$0,1,\ldots,2d+2$, since $\kappa(K_j(\lambda_b))=2j+b$ and
+$\kappa(K_d(\gamma))=2d+2=C$. Thus all $2d+3$ members have different
+$a_d$ and, by (SLHC.15.6), different required futures. Any globally
+correct acquisition procedure identifies this actual finite family from
+its retained residual. Lemma 15.6 forces $d+2\le2^k$ for any finite
+uniform bound $k$. A procedure with infinite worst-case cost cannot
+improve the asserted finite price. This proves necessity with repetitions,
+root calls, absent calls, arbitrary depth and arbitrary adaptivity all
+included. The pair structure strengthens the generic four-reply leaf
+count; merely counting $2d+3$ answers would not prove this value.
+
+### 15.4. A source-blind attaining controller
+
+**Construction 15.7 (verified zero-delay ordered search).** Let
+$h=\min\{k:d+2\le2^k\}$. Two modes use only integers and earlier replies.
+In $G(\ell,t,k)$, the node at $R^\ell$ exists, $\ell+t=d$, and the task
+is its ray endpoint through depth $d$, with any branch at $d$ collapsed
+to code $C$. Maintain $t+2\le2^k$. In $H(\ell,m,k)$ the first ray leaf
+is promised to have depth in $[\ell,\ell+m-1]$, and maintain
+$m+1\le2^k$ and $\ell+m-1\le d$. Strict ancestors before $\ell$ are
+branches in either mode. An empty $H$ promise is never reached on a
+truthful input. Start at $G(0,d,h)$; root existence uses only nonemptiness.
+
+In a nonempty $H$ mode, $k\ge1$. Put $p=\lfloor(m-1)/2\rfloor$ and
+actually query $R^{\ell+p}$. A leaf of colour bit $b$ gives the answer
+$2(\ell+p)+b$. An absent reply enters $H(\ell,p,k-1)$; a branch enters
+$H(\ell+p+1,m-p-1,k-1)$. Their capacities obey
+
+$$
+p+1\le2^{k-1},\qquad m-p\le2^{k-1},
+\tag{SLHC.15.12}
+$$
+
+because $m+1\le2^k$ and $p$ is the lower midpoint. A reply leading to
+an empty leaf interval contradicts the current promise and therefore
+cannot occur. This does not replace any legal absent-address Read by an
+error.
+
+In $G(\ell,t,k)$, again $k\ge1$. Put
+
+$$
+p=\min(t,2^{k-1}-1)
+\tag{SLHC.15.13}
+$$
+
+and query $R^{\ell+p}$. A leaf gives $2(\ell+p)+b$. An absent reply
+enters $H(\ell,p,k-1)$; its invariant follows from
+$p+1\le2^{k-1}$. A branch at $p=t$ returns $C$. A branch at $p<t$
+enters $G(\ell+p+1,t-p-1,k-1)$. In this last case
+$p=2^{k-1}-1$, and
+
+$$
+(t-p-1)+2=(t+2)-(p+1)\le2^{k-1}.
+\tag{SLHC.15.14}
+$$
+
+A branch ensures that the next right child really exists. An absent
+reply means that the first leaf is strictly before the queried pivot;
+a branch means it is strictly after it, unless the cap has been reached.
+These implications follow directly from full-tree ray geometry on every
+allowed input, without constraints on its left subtrees.
+
+Every nonterminal step decreases $k$ and preserves the appropriate
+promise. Neither a nonempty $H$ mode nor a $G$ mode can satisfy its
+capacity invariant at $k=0$. Consequently every input terminates in at
+most $h$ calls with the correct endpoint and $a_d(u)$. Each continuation
+interval excludes its pivot; all later queries lie in that interval.
+Thus no address repeats, and every queried depth is at most $d$. At
+$d=0$ the start has $h=1,p=0$ and its one root Read distinguishes
+$\alpha,\beta,\mathsf{branch}$. All choices depend only on public $d$
+and actually received replies. This proves attainment and completes
+Theorem 15.3. $\square$
+
+The construction reuses the ordered-search method of SLH §6.3, with
+prefix-length parameter $A=d+1$ and zero observation delay. That section
+occurs within the $M\ge4$ contract of SLH Definition 6.1. Its stated
+positive-delay theorem cannot be specialized to $M=0$: the odd-threshold
+addresses can have negative exponents. Equations (SLHC.15.12)–(SLHC.15.14)
+verify the zero-delay controller directly using only even ray thresholds;
+no unavailable odd-threshold service is imported.
+
+### 15.5. Actual acquired memory and callable continued use
+
+**Operational application 15.8 (same-register requests).** Implement the
+search by tail transitions. Its acquisition workspace contains mode,
+$\ell$, remaining interval/cap parameter, $k$, pivot, one four-valued
+reply, finite program control and an address buffer of length at most
+$d$. All search indices are bounded by $d+2$, and $k\le h$; no stack,
+cache or event archive is needed. A final answer field ranges through
+$0,\ldots,C$, rather than through only $d+2$ values. Local arithmetic,
+address construction and response handling are finite paid work.
+
+On success actually write $a=a_d(u)$ into the retained predictor field,
+clean up and release the search fields and buffer, and emit the constant
+acknowledgement Ready. The settled observer is exactly
+$\mathsf{Ready}(a)$ with the fixed backing, $d$, reference and rights.
+No old output, hidden archive, source version counter or source-dependent
+workspace remains accessible. Cleanup is part of this realization and
+has its own bill; a different implementation retaining such fields must
+include them in its memory observation. A fixed finite description of
+this controller does not by itself prove a storage bound; the displayed
+bounded field ranges do.
+
+At Ready admit the four request tokens in the following complete table.
+Here $y$ is the same actual source register and $a^+=\min(a+1,C)$.
+
+| Request at $\mathsf{Ready}(a)$ | Completed output | Full source/controller successor |
+| --- | --- | --- |
+| Value | $E_d(a,0)$, typed as a derived value | $(y,\mathsf{Ready}(a))$ |
+| Advance | Advanced | $(\rho y,\mathsf{Ready}(a^+))$ |
+| Halt | Halted | $(y,\mathsf{Halted}(a))$ |
+| Invalid | Error(BadRequest) | $(y,\mathsf{Ready}(a))$ |
+
+Invalid is a declared input token representing a complete bad request,
+not an unbounded malformed frame parser. There are no other admitted
+requests. At $\mathsf{Halted}(a)$ every request is disabled: it has no
+executed event, completed rejection or successor. Acquisition admits no
+external token. Under the truthful synchronous contract there are no
+other runtime errors. Nonadmission is not an Error event. No transition
+restarts Halt or replaces the source by a representative tree.
+
+Advance executes and pays for one real synchronous $\rho$ before its
+acknowledgement and code update. Value performs no source observation.
+Induction on every finite admitted request sequence, using
+(SLHC.15.7), maintains
+
+$$
+y=\rho^n u,\qquad a=a_d(y),
+\tag{SLHC.15.15}
+$$
+
+where $n$ is the actual number of completed Advances, a proof coordinate
+rather than a retained unbounded counter. Value therefore returns the
+current target correctly, even after any finite number of real updates.
+The same induction applies to a coupled adaptive external client starting
+in the same state and choosing from these outputs. That client's own
+state and journal are outside this observer; including them internally
+would enlarge the memory target. This is a concrete application of
+SLH §§38 and 44's supplied continuation methods, not a new generic use
+or replay theorem. A computed Value is not a raw Read or a newly
+manufactured historical event.
+
+### 15.6. Independent readouts, recovery domain and dynamics
+
+**Definition 15.9 (four observations on the same actual process).** Fix
+the common installation, backing and root. Let $D_0$ be all actual first
+Ready cuts of Construction 15.7, before any external request. Let $D$
+contain the settled Ready/Halted cuts after acquisition and a finite
+admitted request sequence. Both domains range over all initial finite
+$u$. Acquisition, cleanup and update interiors are outside these domains.
+An observation compares readout values; it does not reconstruct hidden
+off-ray parts of the joint source/controller configuration.
+
+Define each view before providing recovery maps:
+
+- $S$ is the actual oriented tagged current ray path from the root to
+  depth $d$, stopping at its first leaf if earlier, together with the
+  settled Ready/Halted phase. It records actual parent/right incidence
+  and constructor tags on this restricted spatial path, not sibling
+  subtrees or an event history.
+- $B$ is the terminal boundary of that exploration: the first leaf
+  $R^j$ and its colour for $j\le d$, or the capped branch $R^d$ when no
+  leaf occurs through $d$, together with phase. It is a geometric
+  stopping boundary for the ray exploration, not the whole tree's leaf
+  frontier.
+- $T$ is the chronologically indexed word of actual completed
+  acquisition Read(address,reply) events, the constant Ready-return
+  event, and the subsequent actually serviced request/output events
+  through the cut. One completed event is one unit of this declared
+  macro-event clock. Local CPU steps, service duration and source setup
+  are not events of this clock and retain separate costs. This labelled
+  chronological readout is a function of the actual execution prefix,
+  not a retained archive secretly appended to memory.
+- $M$ is all accessible settled observer memory: phase and retained
+  $a$, together with the fixed public program, $d$, root reference and
+  rights backing specified in §15.5. It exposes the installed predictor
+  and actual callable binding. It does not expose the opaque source
+  except through the declared operations.
+
+**Proposition 15.10 (recovery and its exact limits).** On $D$, $S,B,M$
+mutually determine one another; $T$ determines each of them. On $D_0$
+all four determine one another, and all routes between their actual
+images agree. On $D$, the three current-view conversions and the fold
+from $T$ commute with each admitted request, its entire output/error
+and its successor readout. Reverse recovery of $T$ on all $D$ is false.
+
+Proof. Taking the last position of $S$ gives $B$. Restoring branch
+ancestors before the endpoint gives $S$ from $B$. A leaf endpoint
+$(R^j,\lambda_b)$ gives $a=2j+b$, and a capped branch gives $a=C$.
+Conversely every $a<C$ uniquely gives $j=\lfloor a/2\rfloor$ and
+$b=a\bmod2$, while $a=C$ gives the cap. Preserve phase and attach the
+common backing to obtain exactly $M$. These inverses concern the actual
+ray and installed memory values, not an arbitrarily completed whole
+source or newly issued rights.
+
+On $D_0$, the code determines every possible acquisition query reply:
+for any $0\le j\le d$, the clock table at $2j,2j+1$ is unchanged by
+capping at $C=2d+2$. Run the fixed controller on these determined replies.
+By induction on its selected calls it produces exactly the actual next
+address, reply and transition, then the same constant Ready return.
+This is a finite computation of the chronological word's value; the
+actual word has already occurred in this specified acquisition. Conversely
+fold its actual replies through that controller to obtain its returned
+$a$. Thus $T$ and $a$ determine one another on $D_0$. Together with the
+explicit endpoint inverses, every route returns the same actual value.
+This specializes the prefix-boundary and trace-faithfulness methods of
+SLH §§41 and 43. Pure $R$ has no left-edge first-leaf collision.
+
+On $D$, fold the acquisition prefix to its first code and then fold the
+serviced events through the table in §15.5. This gives exactly the
+current phase and $a$, hence $M,S,B$. For dynamics, an alpha endpoint
+becomes beta at the same position. A beta endpoint at depth $j<d$
+becomes an alpha endpoint at $j+1$; at depth $d$ it becomes the cap.
+A cap remains a cap. These actual geometric changes give exactly
+$a\mapsto\min(a+1,C)$. Value and Invalid preserve the three current
+views; Halt changes their phase. Outputs and admission are the displayed
+functions of phase and $a$. Appending the actual event to $T$ and folding
+therefore agrees with updating its recovered current views. Induction
+gives compatibility for every finite legal request word.
+
+At Ready, equal codes are exactly equivalence for this continuation
+interface. Distinct $a<a'$ are separated by the common word of
+$2d+1-a$ Advances followed by Value, which gives beta versus branch.
+Ready and Halted differ in admission. All Halted cuts, however, have
+the same empty continuation behavior, even when their retained codes
+and geometric views differ. The specified retained distinctions at Halt
+are sufficient and redundant, not the minimal continuation kernel.
+
+Finally append one Value to any actual Ready run. It preserves
+$y,S,B,M$ and adds one real serviced event to $T$. Therefore those
+current views cannot recover chronological $T$ throughout $D$.
+$D_0$ is not closed under requests; its four-way equivalence is a
+restriction to actual first-Ready cuts. $\square$
+
+A scalar duration does not replace the labelled $T$: at $d=0$ the
+sources $\alpha,\beta,\gamma$ each take one Read and one Ready return,
+but give three different spatial endpoints, boundaries and codes. Nor
+is task recovery full-source recovery. For every $d$, the sources
+$\langle\alpha,\alpha\rangle$ and $\langle\beta,\alpha\rangle$ have
+clock $2$, identical current capped rays, futures and acquisition traces,
+but different replies at $L$. An arbitrary later address interface
+would need additional acquisition and retention.
+
+### 15.7. Separate resources and the certified delayed comparison
+
+Let $q=n_A(u)\le h$ for Construction 15.7. Its submitted address letters
+sum to at most $dq\le dh$, and its four-symbol replies have a fixed
+encoding of at most $2q$ bits. The bounded search fields use
+$O(\log(d+2))$ bits besides the length-$d$ address buffer and the fixed
+backing; a direct implementation suffices. These are abstract storage
+and transmission bounds, not an assertion that locating a deep address
+costs one physical step. A retained predictor field can use
+$\lceil\log_2(2d+3)\rceil$ bits, plus phase and the separately priced
+backing, reference and rights. The $2d+3$ required first-Ready source
+distinctions and their conditional code width are applications of SLH
+§§8.2 and 39.2, not a new complete-memory optimum. Halt retains $a$
+and is not minimal for its empty task.
+
+One run's complete bill has the following distinct terms:
+
+$$
+\begin{aligned}
+\mathfrak C={}&C_{\rm source/setup/binding}+C_{\rm program/rights/install}
+ +C_{\rm init}+C_{\rm acquisition\ local/workspace}\\
+&+\sum_{i=1}^{q}\bigl(C_{\rm address\ generation/transmission}(p_i)
+ +C_{\rm navigation}(p_i,y)+C_{\rm raw\ Read}(p_i,y)
+ +C_{\rm response}(i)\bigr)\\
+&+C_{\rm retain/cleanup}
+ +\sum_{\text{serviced requests }e}C_{\rm local/input/output}(e)
+ +\sum_{\text{actual Advances }e}C_{\rho}(y_e)
+ +C_{\rm continuing\ retention}.
+\end{aligned}
+\tag{SLHC.15.16}
+$$
+
+Only the number of raw Read summands in the acquisition sum is minimized
+by Theorem 15.3. Value has decoding/output work and zero new source
+observations. Every Advance pays the actual source rewrite, its material
+and local predictor update. Halt and Invalid pay their processing and
+output. Retaining or materializing an event archive adds its own storage,
+access and serialization bill; the mathematical $T$ readout does not
+supply one. The initial source has unrestricted off-ray size and can grow
+without bound under continued substitution, even when the predictor
+saturates. No bound on total apparatus memory or physical resource use
+follows from its bounded predictor field.
+
+**Corollary 15.11 (one-read difference under a different paid epoch).**
+For the same original task $F_d(u)$, SLH Theorem 6.2 at its actual
+certified delayed epoch $M\ge4$, with prefix length $A=d+1$, gives the
+already supplied price
+
+$$
+Q_{d+1}(M)=\left\lceil\log_2\frac{2d+5}{3}\right\rceil.
+\tag{SLHC.15.17}
+$$
+
+For $d=2^r-1$ and $r\ge2$, this is $r$, whereas $m_0(d)=r+1$.
+
+Proof. Its original target $V_{d+1}(u)$ is equivalent to $a_d(u)$ and
+$F_d(u)$ by §15.2. For these $d$,
+
+$$
+2^{r-1}<\frac{2^{r+1}+3}{3}\le2^r,
+\qquad
+2^r<d+2=2^r+1\le2^{r+1}.
+$$
+
+The two ceilings give the claim. $\square$
+
+The delayed reads occur on the same original source's actual
+$\rho^M u$, stationary during those reads, with certified $M$ and the
+supplier's own full all-address contract. Reaching that epoch requires
+$M$ real updates and their source growth and certification costs. Its
+attaining addresses have the separate length bound
+$d+1+\lfloor M/2\rfloor$. This corollary supplies no new delayed
+capability, free waiting, total-work advantage or resource dominance.
+It is a consequence of the new stationary evaluation and the existing
+delayed theorem, with the original task held fixed.
+
+### 15.8. Source ownership, attribution and remaining boundaries
+
+The appropriate owner is this SLH continuation: the source, literal
+interface and exact-price question are those of SLH, while this section
+has no complete-word, one-bit-write or parity installation promise.
+The following parameter correspondences limit what is reused.
+
+| Source supplier | Correspondence and limit |
+| --- | --- |
+| SLH §§1–2, 6.3 | All finite trees, total four-valued address port, right-clock table and mature ordered search. The zero-delay specialization is verified in §15.4, without applying the $M\ge4$ theorem at zero. |
+| SLH §§10–13, especially 13.2; §§69.1–69.4 | Effective finite-game exact price and attainment already exist. Here $M=0$, $F=((0,R^j))_{j=0}^d$. Section 69's more general complete acquired partition fibre is credited, not assumed to be present at this empty-evidence entrance. |
+| SLH §§35–44 | $H=\varnothing,N=0,Q=(R^d)$; later current-code transport uses actual Advances. Finite future code, boundary, exact retained distinction, canonical prefix trace and paid use are supporting applications. The new theorem evaluates the pure-right case left between the bounds of §§37.2 and 40.3. |
+| `ActualTreeReadoutAcquisition` and its owning Scribe | Source `.of true/.of false/.mul` means alpha/beta/pair; address `false/true` means left/right. Its `Policy/Strategy` has common empty history and pointwise finite correctness, but its original output is third-image membership and `paid` counts distinct addresses. Neither output nor metric is renamed into ours. |
+| `DelayedOriginalReadout` and its owning Scribe | `rightClock` is $\kappa$, `rights d` is $R^d$; `right_clock_iterate` takes $N=n$, and `right_clock_readout` takes $s=d$. Its private `clock_step` supplies the one-step calculation. `original_decoder_service` recovers one historical literal with its supplied epoch, not the entire future or this minimum. |
+| `FiniteMenu/Kernel` and its owning Scribe | `original_menu_kernel` takes menu `[rights d]` and common count $n$. Its `Same`, branch bounds and private `kernel_aux` prove future equivalence, without acquiring the unknown code or pricing its reads. |
+| `FiniteMenu/NativeStationaryIntervalResources` and its owning Scribe | Its `Identifies/native_interval_capacity` recover numeric age $n$ from one orbit $T(n)=\rho^n\alpha$, with public $L\le n\le U$. Its private literal table, leaf-cell bounds and capacity induction use that orbit's geometry. That family is not the arbitrary original comb family (SLHC.15.8). Setting $n=\kappa(u)$ preserves the ray clock but not the whole literal-query geometry, so its $3\cdot2^k-2$ positive and zero-origin capacities cannot replace Lemma 15.6. |
+| NCR §§1–2, 5; PVC §1; AA selected-Ready §27 and acquired-use §45; Atlas §6.3; PG and PR57 | Paid actual acquisition, callable backing, individual-view kernels, route agreement and continuation are existing substantive structures. NCR retains its closed program and actual clocks; PVC retains fixed-$H$ acquired entrance, authorized installation, unused-lane and serialization premises. AA retains its actual selected source/control. Their physical and historical services are not acquired here. Atlas requires each view's kernel and operations separately; §15.6 checks them on the declared domains. No new generic view, replay, tape backend or grant mechanism is claimed. |
+
+The complete SLH original used for these correspondences is its source
+at `ead132fb284340a8b3a70b957a974196f85fecc3`. The four named D5 modules
+and owning Scribes above are read at
+`718f48862606f2a12a01bf0349a23ee2521010b0`; an identical cached blob's
+directory name does not change that revision binding. NCR, AA and Atlas
+use their supplied `ead132fb` originals; PVC uses its separately bound
+`718f4886` body and preserves its own historical dependency revision
+`82c9eb9c1462af91333b7038a93488c8b9b8bdc7`. These references identify
+source content, not a claim of a new compilation or transitive audit.
+
+For primary classical context, Nowak, *The Geometry of Generalized Binary
+Search*, [arXiv:0910.4397v5](https://arxiv.org/abs/0910.4397v5), studies
+binary hypothesis splitting and conditions for logarithmic complexity.
+Chrobak, Golin, Munro and Young, *A Simple Algorithm for Optimal Search
+Trees with Two-Way Comparisons*,
+[arXiv:2103.01084v3](https://arxiv.org/abs/2103.01084v3), studies optimal
+two-way comparison trees including unsuccessful searches. Their primary
+titles and abstracts support this bounded contextual attribution, not an
+application of their structural theorems to our four-valued literal
+geometry. SLH §9.2 supplies the classical deterministic decision-tree
+and ordered-search references. Recursive splitting, query refinement,
+static reply simulation and finite distinction counting are mature
+methods, `literature-attested` at that level. The source-specific joint
+$H/G$ capacity proof and its uniform evaluation (SLHC.15.3) are
+`repo-derived`. This attribution asserts no worldwide priority,
+exhaustive literature search or new general ordered-search theorem.
+
+The result is ordinary mathematical exposition. Its source work uses the
+formal-thinking-and-answer and theory-volume-template guidance with
+external CLI mathematical authorship. It claims neither new Lean
+certification, an independent review verdict, publication nor completion
+of the sustained programme.
+
+All model conditions remain substantive. This is a separately installed
+fixed-$d$ task observer with truthful stationary acquisition and retained
+use of held ports. It does not solve present-only reading by calling it
+the complete future, recover the entire unknown source, accept arbitrary
+later target addresses, or identify an unknown age on an atomic orbit.
+Randomized or error-tolerant prices, concurrent or moving acquisition,
+unknown bindings, revoked rights, busy-cut inversion, physical duration,
+hardware implementation, total resource optima and unrestricted
+observer/client histories require separate results.
+
+The first-Ready correspondence does not recover exact old chronology
+at all later cuts, lost caches, old controls or an uncharged archive.
+The original fixed-$G_{gc}$/original-$Q$, parked-consumer,
+unchanged-initialization, unavailable-access and unidentified-$R2$
+obligations retain their original scope and remain unresolved by this
+unit. No bridge to those apparatuses or universal alpha/beta reduction
+has been proved. The full search for a parsimonious common relation
+structure expressing space, time, boundary and memory remains open;
+this exact deterministic raw-call price is one bounded contribution.
+
+## 追加锚（本行以下为增补区）
