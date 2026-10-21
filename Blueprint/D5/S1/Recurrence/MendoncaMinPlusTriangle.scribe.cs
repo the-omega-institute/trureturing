@@ -63,13 +63,17 @@ internal sealed class MendoncaMinPlusTriangleDocument : IScribeDocumentDefinitio
                 + "decreasing integer inputs of finite support length at least two. "
                 + "The row at depth three starts the induction. The source's support and "
                 + "recurrence retain their meanings; the strict conclusion strengthens weak decrease.",
-                AssessedProvenance.FromRepo(Source), DescribeRole.Theorem))));
+                AssessedProvenance.FromRepo(Source), DescribeRole.Theorem,
+                new OpenProblemResolutionClaim(
+                    ProblemSlugRef.Create("mendonca-oeis-a400584-strict-monotonicity"),
+                    ResolutionKind.Proved)))));
 
     private static DocumentBlock Node(string name, string title, Formula formula,
-        string prose, AssessedProvenance provenance, DescribeRole role) => Describe.Lean(
+        string prose, AssessedProvenance provenance, DescribeRole role,
+        OpenProblemResolutionClaim? resolution = null) => Describe.Lean(
             DescribeId.Create("mendonca-min-plus-" + name.ToLowerInvariant()), DeclarationHandle.Create(Prefix + name),
             H(title), StatementSource.FromAuthor(formula), provenance,
-            Blocks(Paragraph(Text(prose))), role);
+            Blocks(Paragraph(Text(prose))), role, resolution);
 
     private static Formula OpFormula() => Disp(new Formula.Aligned([
         Typed(F.Id("Op"), F.Id("Type")),

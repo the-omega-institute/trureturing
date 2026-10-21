@@ -70,6 +70,10 @@ $$\forall n \in \mathrm{Nat}, k \in \mathrm{Nat},\; (3 \le n) \Rightarrow ((1 \l
 
 *Proof.* Machine-checked in Lean as `D5/S1/Recurrence/MendoncaMinPlusTriangle.result` (`✓ std3`). ∎
 
+*Resolves.* `Problems/mendonca-oeis-a400584-strict-monotonicity` (proved) by `D5/S1/Recurrence/MendoncaMinPlusTriangle.result`.
+
+<!-- scribe-open-problem-resolution-v1 {"problem_slug":"mendonca-oeis-a400584-strict-monotonicity","declaration_gid":"D5/S1/Recurrence/MendoncaMinPlusTriangle.result","resolution_kind":"proved"} -->
+
 *Source.* Repository-derived.
 
 *Acknowledgement.* J. R. G. Mendonça (2026). *OEIS A400584 and The min-plus configuration triangle: Technical note supporting OEIS A400584*. URL: <https://oeis.org/A400584>.
