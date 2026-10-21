@@ -1,0 +1,9 @@
+fingerprints:
+  raw_sha256: sha256:f56d9ad933bf3f8c3e1606f7e5c38018ba47ea31a110277bf2033390c51f06f1
+  normalized_sha256: sha256:f56d9ad933bf3f8c3e1606f7e5c38018ba47ea31a110277bf2033390c51f06f1
+cas_ref: sha256:f56d9ad933bf3f8c3e1606f7e5c38018ba47ea31a110277bf2033390c51f06f1
+coverage_gids:
+  - gid: D5/S3/ArithSums/TwoPointSlabSupport.pair_distance_spec
+    target_statement_id: sha256:b1bb2656403a31a2ecf70018b9daffc4863b9a17477d18df6d044c3625f2c74e
+receipts:
+  unresolved_subitems: []
