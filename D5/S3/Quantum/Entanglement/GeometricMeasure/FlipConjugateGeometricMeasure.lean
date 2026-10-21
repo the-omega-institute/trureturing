@@ -269,28 +269,105 @@ private lemma contraction_overlap (d : ℕ) (n : Fin d) (a b c : Fin d → ℂ) 
   congr 1
   congr 1 <;> apply Finset.sum_congr rfl <;> intro i hi <;> ring
 
-private def conjugateTail (d : ℕ) (n : Fin d) (b : Fin d → ℂ) :
-    EuclideanSpace ℂ (Fin d) := WithLp.toLp 2 fun i => if i = n then 0 else conj (b i)
+private def coordinateTail (d : ℕ) (n : Fin d) (b : Fin d → ℂ) :
+    EuclideanSpace ℂ (Fin d) := WithLp.toLp 2 fun i => if i = n then 0 else b i
 
 private lemma tail_norm_split (d : ℕ) (n : Fin d) (b : Fin d → ℂ) :
-    ‖WithLp.toLp 2 b‖ ^ 2 = ‖b n‖ ^ 2 + ‖conjugateTail d n b‖ ^ 2 := by
+    ‖WithLp.toLp 2 b‖ ^ 2 = ‖b n‖ ^ 2 + ‖coordinateTail d n b‖ ^ 2 := by
   classical
   rw [EuclideanSpace.norm_sq_eq, EuclideanSpace.norm_sq_eq]
-  simp only [conjugateTail, PiLp.toLp_apply]
+  simp only [coordinateTail, PiLp.toLp_apply]
   rw [← Finset.add_sum_erase Finset.univ (fun i => ‖b i‖ ^ 2) (Finset.mem_univ n)]
   congr 1
   rw [← Finset.sum_erase_add Finset.univ
-    (fun i => ‖if i = n then (0 : ℂ) else conj (b i)‖ ^ 2) (Finset.mem_univ n)]
+    (fun i => ‖if i = n then (0 : ℂ) else b i‖ ^ 2) (Finset.mem_univ n)]
   simp only [ite_true, norm_zero, ne_eq, OfNat.ofNat_ne_zero, not_false_eq_true,
     zero_pow, add_zero]
   apply Finset.sum_congr rfl
   intro i hi
-  rw [if_neg (Finset.mem_erase.mp hi).1, Complex.norm_conj]
+  rw [if_neg (Finset.mem_erase.mp hi).1]
 
 private lemma contraction_bound (d : ℕ) (hd : 2 ≤ d) (n : Fin d)
     (b c : Fin d → ℂ) (hb : UnitVector b) (hc : UnitVector c) :
     ‖contraction d n b c‖ ^ 2 ≤ sharpValue d * ((d : ℝ) + 1) := by
-  sorry
+  classical
+  let B := coordinateTail d n (fun i => conj (b i))
+  let C := coordinateTail d n (fun i => conj (c i))
+  let X := (conj (z d) * conj (b n)) • C + (z d * conj (c n)) • B
+  let u := ‖b n‖
+  let v := ‖c n‖
+  let s := ‖B‖
+  let t := ‖C‖
+  have hB : s ^ 2 = 1 - u ^ 2 := by
+    have h := tail_norm_split d n (fun i => conj (b i))
+    rw [conjugate_norm, hb, Complex.norm_conj] at h
+    change 1 ^ 2 = u ^ 2 + s ^ 2 at h
+    linarith
+  have hC : t ^ 2 = 1 - v ^ 2 := by
+    have h := tail_norm_split d n (fun i => conj (c i))
+    rw [conjugate_norm, hc, Complex.norm_conj] at h
+    change 1 ^ 2 = v ^ 2 + t ^ 2 at h
+    linarith
+  have hzsum : conj (z d) + z d = 1 := by
+    rw [add_comm, Complex.add_conj]
+    norm_num [z, Complex.div_re, Complex.mul_re]
+  have hzero : (contraction d n b c) n = conj (b n) * conj (c n) := by
+    change conj (z d) * conj (b n) * conj (c n) +
+      z d * conj (c n) * conj (b n) = _
+    calc
+      _ = (conj (z d) + z d) * conj (b n) * conj (c n) := by ring
+      _ = _ := by rw [hzsum, one_mul]
+  have htail : coordinateTail d n (fun i => (contraction d n b c) i) = X := by
+    ext i
+    by_cases hi : i = n
+    · simp [coordinateTail, X, B, C, hi]
+    · simp [coordinateTail, contraction, X, B, C, hi]
+  have hsplit : ‖contraction d n b c‖ ^ 2 = u ^ 2 * v ^ 2 + ‖X‖ ^ 2 := by
+    have h := tail_norm_split d n (fun i => (contraction d n b c) i)
+    change ‖contraction d n b c‖ ^ 2 = _ at h
+    rw [hzero, norm_mul, Complex.norm_conj, Complex.norm_conj, mul_pow, htail] at h
+    exact h
+  have hX : ‖X‖ ≤ ‖z d‖ * (u * t + v * s) := by
+    calc
+      ‖X‖ ≤ ‖(conj (z d) * conj (b n)) • C‖ +
+        ‖(z d * conj (c n)) • B‖ := norm_add_le _ _
+      _ = ‖z d‖ * (u * t + v * s) := by
+        simp only [norm_smul, norm_mul, Complex.norm_conj]
+        change ‖z d‖ * u * t + ‖z d‖ * v * s = _
+        ring
+  have hX2 : ‖X‖ ^ 2 ≤ ‖z d‖ ^ 2 * (u * t + v * s) ^ 2 := by
+    simpa only [mul_pow] using (sq_le_sq₀ (norm_nonneg X) (by positivity)).2 hX
+  have hAM : (u * t + v * s) ^ 2 ≤
+      2 * (u ^ 2 + v ^ 2) - (u ^ 2 + v ^ 2) ^ 2 := by
+    calc
+      _ ≤ (u * t + v * s) ^ 2 + (u * s - v * t) ^ 2 :=
+        le_add_of_nonneg_right (sq_nonneg _)
+      _ = (u ^ 2 + v ^ 2) * (s ^ 2 + t ^ 2) := by ring
+      _ = _ := by rw [hB, hC]; ring
+  have hest := hX2.trans (mul_le_mul_of_nonneg_left hAM (sq_nonneg ‖z d‖))
+  have hdR : (2 : ℝ) ≤ d := by exact_mod_cast hd
+  have hd1 : 0 < (d : ℝ) - 1 := by linarith
+  have hd2 : 0 < (d : ℝ) ^ 2 - 1 := by nlinarith
+  rw [(scalar_identities d hd).1] at hest
+  have hest' := (le_div_iff₀ (show 0 < 2 * ((d : ℝ) - 1) by positivity)).mp
+    (show ‖X‖ ^ 2 ≤ ((d : ℝ) *
+      (2 * (u ^ 2 + v ^ 2) - (u ^ 2 + v ^ 2) ^ 2)) /
+        (2 * ((d : ℝ) - 1)) by convert hest using 1 <;> ring)
+  have hpoly : ((d : ℝ) ^ 2 - 1) * ‖contraction d n b c‖ ^ 2 ≤ (d : ℝ) ^ 2 := by
+    rw [hsplit]
+    have hnonneg : 0 ≤ ((d : ℝ) ^ 2 - 1) * (u ^ 2 - v ^ 2) ^ 2 :=
+      mul_nonneg hd2.le (sq_nonneg _)
+    have hmul := mul_le_mul_of_nonneg_left hest' (show 0 ≤ (d : ℝ) + 1 by positivity)
+    nlinarith [sq_nonneg (((d : ℝ) + 1) * (u ^ 2 + v ^ 2) - 2 * (d : ℝ))]
+  have hpoly' : ‖contraction d n b c‖ ^ 2 ≤ (d : ℝ) ^ 2 / ((d : ℝ) ^ 2 - 1) :=
+    (le_div_iff₀ hd2).2 (by simpa only [mul_comm] using hpoly)
+  have heq : sharpValue d * ((d : ℝ) + 1) =
+      (d : ℝ) ^ 2 / ((d : ℝ) ^ 2 - 1) := by
+    unfold sharpValue
+    field_simp [ne_of_gt hd2, show (d : ℝ) + 1 ≠ 0 by positivity]
+  rw [heq]
+  exact hpoly'
+
 
 private lemma sharp_upper (d : ℕ) [NeZero d] (hd : 2 ≤ d)
     (a b c : Fin d → ℂ) (ha : UnitVector a) (hb : UnitVector b) (hc : UnitVector c) :
