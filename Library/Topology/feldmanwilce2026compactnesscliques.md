@@ -10,6 +10,7 @@ strata_touched:
   - D5/S3/Topology/StoneCech/SectionGoodFreshClusters
   - D5/S3/Topology/StoneCech/SectionDenseSelector
   - D5/S3/Topology/StoneCech/SectionClosedGraph
+  - D5/S3/Topology/StoneCech/FeldmanWilceQuestion1
 license: citation-only
 triage: anchor
 ---
@@ -106,10 +107,25 @@ $A=\sum_{n:\mathbb N}\operatorname{Fin}(n+1)$, $B=\mathbb N$, and
 $q(n,i)=n$. Its fibre over $n$ is the injective image of
 $\operatorname{Fin}(n+1)$ and has ncard $n+1$. This reindexes the
 nonempty cells of the paper's partition. The owning graph Scribe gives
-the detailed parameter and cardinal calculation. The exact compiled
-original application remains pending. No retained application wrapper,
-original-question resolution or sequential compactness assertion follows
-from this source exposition.
+the detailed parameter and cardinal calculation. The application module
+`FeldmanWilceQuestion1` supplies this parameter instance and defines the
+complete original witness predicate, including full-product closedness,
+T2/T1 separation, finiteness of every clique and explicit failure of any
+uniform finite bound. The source exposition does not replace compilation,
+source-fidelity review or the required repository checks, and it asserts no
+sequential compactness conclusion.
+
+## Current primary-source status
+
+The current arXiv record lists only v1 and its abstract still calls this
+existence problem the main open problem. The authors' formal repository,
+`DavidVFeldman/compactness-clique-size`, main commit
+`1f4da701cfb6d7588a90f005fa83698e3a1b081b`, marks `MainQuestion` open in its
+README. Its `RequestProject/Witness.lean` proves
+`mainQuestion_of_exists_countablyCompact_dense_subset_goodSet` only from
+the supplied free, section-good, section-dense and countably compact Y.
+This is a check of the two primary surfaces, not a worldwide priority or
+literature-exclusion claim.
 
 ## Classical methods and attribution limits
 
