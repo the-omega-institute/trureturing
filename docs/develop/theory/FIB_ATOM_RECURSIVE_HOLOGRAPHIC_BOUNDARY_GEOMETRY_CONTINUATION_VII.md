@@ -1718,3 +1718,799 @@ direct local-block proof of §§192–194.
   domain. It concerns the trace-norm functional of Convention 191.2.
 
 ## 200.99 追加锚（本行以下为增补区）
+
+## 201. Fixed model, cut, and assertion
+
+**Definition 201.1 (The fixed independent-ray family).** Use the family,
+one-copy occupation convention and sector bases of (177.2) and
+(178.1)–(178.3). Fix $0<t\leq 1$, $s=1-t$, and
+
+$$
+ Z=2(1+t)^2.
+$$
+
+Let $v=(\alpha,u)$ and $w=(\gamma,h)$ be unit vectors in
+$\mathbb C^3=\mathbb C\oplus\mathbb C^2$. Write
+
+$$
+ x=|\alpha|^2,\qquad y=|\gamma|^2,\qquad z=|u^*h|^2.
+$$
+
+The one-copy number blocks, in the supplied bases
+$(\ell,R,r)$ for $N=1$ and $(r\wedge R,\ell\wedge R,\ell\wedge r)$ for
+$N=2$, are
+
+$$
+ R=1\oplus(tI_3+s vv^*)\oplus(tI_3-ts ww^*)\oplus t^2,
+ \qquad \rho=R/Z.
+$$
+
+The arbitrary global-number-preserving orbit is a premise of this manuscript. It is
+separate from passive one-particle $\Gamma(U_3)$, native reachability, and local
+SSR operations.
+
+**Assumption 201.2 (Compatible preparations and local operations).**
+The resource consists of two disjoint, independently prepared instances
+of this same untwirled $\rho(t,v,w)$, with compatible labelled modes,
+creation order and coupling-phase conventions, as in VI §147. One common local-number twirl is applied across
+the two copies. Bob has all four modes, and local filters may be arbitrary
+coherent contractions inside a fixed total local-number space. Independent
+pre-twirling of the two inputs is a different resource. No cloning, external
+reference, or additional physical access is included.
+
+The original creation order is
+
+$$
+ (\ell _1,r_1,R_1,\ell _2,r_2,R_2),
+$$
+
+and the fixed ordinary tensor cut is
+
+$$
+ (\ell _1,\ell _2)\mid(r_1,R_1,r_2,R_2).
+$$
+
+Partial transpose below is the ordinary transpose on this Alice tensor factor
+once the CAR coordinate convention has been fixed; it is not fermionic
+partial time reversal. An encoded $2\times2$ branch has a two-dimensional
+Alice rail space and a two-dimensional Bob space, each at fixed local
+total number. For a normalized output $\sigma$, write
+
+$$
+ \mathcal N(\sigma)=\frac{\|\sigma^{T_A}\|_1-1}{2},
+ \qquad [r]_+=\max\{r,0\}.
+$$
+
+**Theorem 201.3 (Finite two-copy extraction equivalence).** Under
+Definition 201.1 and Assumption 201.2, the normalized common-twirled
+resource $\Omega$ defined in (203.2) satisfies
+
+$$
+ \boxed{
+ \Omega\text{ has an allowed positive-probability encoded NPT branch}
+ \iff q_0>1\ \text{or}\ q_3>1.
+ }
+$$
+
+This is exactly the ordinary one-copy NPT region of Theorem 181.1,
+which also identifies ordinary one-copy PPT with separability for
+this exact family. The complete common-twirled
+state is PPT exactly when $q_0\leq1$ and $q_3\leq1$. The sector
+$(N_A,N_B)=(1,2)$ has criterion $q_0q_3>1$, and therefore supplies no
+additional activation region.
+
+Proof. The signed charge reduction in §§203–206 and the local-filter
+congruence in §207 give necessity. The explicit positive-probability
+outer branches in §208 give sufficiency; §210 combines them.
+
+## 202. One-copy coordinates and the two Schur parameters
+
+**Notation 202.1 (Reused one-copy matrix data).** Retain (178.1)–(178.6)
+and the criterion of VI §170, with $d=t^2$. Put
+$H=\operatorname{span}\{R,r\}\cong\mathbb C^2$,
+in the ordered basis $(R,r)$, and write
+
+$$
+ |0\rangle=|b_0\rangle,\qquad |2\rangle=|b_{12}\rangle=|r\wedge R\rangle.
+$$
+
+In the Bob order $(|0\rangle,H,|2\rangle)$, define
+
+$$
+\begin{aligned}
+ D&=tI_2+suu^*,& E&=tI_2-ts\,hh^*,\\
+ f&=s\overline{\alpha}\,u,& g&=-ts\overline{\gamma}\,h,\\
+ c&=t+sx,& b&=t(1-sy),& d&=t^2.
+\end{aligned}
+$$
+
+The Alice blocks of $R$ are
+
+$$
+ A_0=1\oplus D\oplus b,\qquad A_1=c\oplus E\oplus d,\qquad
+ C=|f\rangle\langle0|+|2\rangle\langle g|,
+$$
+
+so that
+
+$$
+ R=\begin{pmatrix}A_0&C\\ C^*&A_1\end{pmatrix}.
+ \tag{202.1}
+$$
+
+The number-block spectra are
+
+$$
+ \operatorname{spec}(R)=\{1,1,t,t,t,t,t^2,t^2\},\qquad
+ \operatorname{tr}R=Z.
+ \tag{202.2}
+$$
+
+Thus $R>0$ for $t>0$, while $D\geq tI_2$ and $E\geq t^2I_2$.
+The original positive blocks give the strict Schur inequalities
+
+$$
+ cD-ff^*>0,\qquad bE-gg^*>0. \tag{202.3}
+$$
+
+Define
+
+$$
+ q_0=f^*E^{-1}f,\qquad q_3={g^*D^{-1}g\over d}. \tag{202.4}
+$$
+
+The inverse rank-one formulas are
+
+$$
+ E^{-1}={1\over t}\left(I_2+{s\,hh^*\over t+sy}\right),\qquad
+ D^{-1}={1\over t}\left(I_2-{s\,uu^*\over t+s(1-x)}\right),
+$$
+
+so
+
+$$
+ q_0={s^2x\over t}\left((1-x)+{sz\over t+sy}\right),\qquad
+ q_3={s^2y\over t}\left((1-y)-{sz\over t+s(1-x)}\right). \tag{202.5}
+$$
+
+The published ordinary one-copy partial-transpose reduction
+(178.4)–(178.5), equivalently VI (170.1)–(170.5), has positive singleton
+blocks $c,b$, and nontrivial blocks
+
+$$
+ \begin{pmatrix}1&f^*\\f&E\end{pmatrix},\qquad
+ \begin{pmatrix}d&g^*\\g&D\end{pmatrix}.
+$$
+
+Its Schur criterion is
+
+$$
+ \rho^{T_A}\geq0\iff q_0\leq1\text{ and }q_3\leq1. \tag{202.6}
+$$
+
+## 203. Literal CAR regrouping and the common twirl
+
+**Proposition 203.1 (Signed 64-dimensional resource law).** For
+occupations $a_i=n_{\ell_i}$ and $k_i=n_{r_i}+n_{R_i}$, moving
+$\ell _2$ left across the occupied first-copy Bob modes gives exactly
+
+$$
+ J|a_1,j;a_2,k\rangle=(-1)^{k_1a_2}|a_1,a_2;j,k\rangle,\qquad
+ \boxed{(-1)^{(n_{r_1}+n_{R_1})n_{\ell_2}}}. \tag{203.1}
+$$
+
+Proof. Moving $\ell_2$ to the stated Alice position crosses each
+occupied first-copy Bob mode once. CAR anticommutation contributes
+one minus sign per crossing. There is no further permutation within
+either Bob copy. $J$ is a signed
+permutation of the 64 occupation kets; it is not asserted to factor across the
+Alice--Bob cut.
+
+Let $\Pi_{a,k}$ project onto total Alice number $a$ and total Bob number
+$k$. The actual normalized resource is
+
+$$
+ \Omega={1\over Z^2}
+ \sum_{a=0}^2\sum_{k=0}^4
+ \Pi_{a,k}J(R\otimes R)J^*\Pi_{a,k}. \tag{203.2}
+$$
+
+This is one common twirl. The opposing one-copy coherences are retained in
+(203.2), subject to the CAR signs in (203.1).
+
+For the $N_A=1$ rails write $p=|10\rangle$, $q=|01\rangle$, and
+
+$$
+ P=1\oplus(-I_H)\oplus1.
+$$
+
+Before restriction to a Bob charge, the $N_A=1$ block is
+
+$$
+ S=\begin{pmatrix}
+ A_1\otimes A_0&(C^*P)\otimes C\\
+ (PC)\otimes C^*&A_0\otimes A_1
+ \end{pmatrix},\qquad C^*P=-|0\rangle\langle f|+|g\rangle\langle2|. \tag{203.3}
+$$
+
+On $\mathcal H_k=\bigoplus_{i+j=k}\mathcal B_i\otimes\mathcal B_j$,
+where $\mathcal B_0=\mathbb C|0\rangle$, $\mathcal B_1=H$,
+$\mathcal B_2=\mathbb C|2\rangle$, the off-diagonal restrictions are
+
+$$
+\begin{array}{c|c}
+ k&S\text{-off-diagonal map}\\ \hline
+0&0\\
+1&-|0,f\rangle\langle f,0|\\
+2&-|0,2\rangle\langle f,g|+|g,f\rangle\langle2,0|\\
+3&|g,2\rangle\langle2,g|\\
+4&0.
+\end{array} \tag{203.4}
+$$
+
+Here $|a,b\rangle$ means $a\otimes b$, and all phases are those of the
+same source vectors $f,g$.
+
+The $N_A=0$ and $N_A=2$ blocks are, respectively,
+
+$$
+ M_{0,k}=(A_0\otimes A_0)|_{\mathcal H_k},\qquad
+ M_{2,k}=(A_1\otimes A_1)|_{\mathcal H_k}. \tag{203.5}
+$$
+
+Each has a one-dimensional Alice factor.
+
+## 204. All fifteen charge probabilities
+
+**Proposition 204.1 (All charge probabilities).** Let
+
+$$
+ \delta=\operatorname{tr}D=2t+s(1-x),\qquad
+ \varepsilon=\operatorname{tr}E=2t-ts(1-y).
+$$
+
+The following entries are the unnormalized numerators; every physical probability
+is the displayed entry divided by $Z^2$:
+
+$$
+\begin{array}{c|ccccc}
+N_A\backslash N_B & 0 & 1 & 2 & 3 & 4 \\ \hline
+0 & 1 & 2\delta & \delta^2+2b & 2b\delta & b^2 \\
+1 & 2c & 2(\varepsilon+c\delta) & 2(d+\delta\varepsilon+bc) & 2(d\delta+b\varepsilon) & 2bd \\
+2 & c^2 & 2c\varepsilon & \varepsilon^2+2cd & 2d\varepsilon & d^2
+\end{array} \tag{204.1}
+$$
+
+They include every spectator direction and all four Bob modes.
+
+Proof. Taking traces of the blocks in (203.3)–(203.5) gives the table.
+The off-diagonal maps have zero trace in the Alice rails. The row
+polynomials are
+
+$$
+ (1+\delta r+br^2)^2,\quad
+ 2(1+\delta r+br^2)(c+\varepsilon r+dr^2),\quad
+ (c+\varepsilon r+dr^2)^2.
+$$
+
+At $r=1$, their sum is
+$(1+\delta+b+c+\varepsilon+d)^2/Z^2=1$, proving normalization.
+
+## 205. Explicit source matrices by Bob charge
+
+**Proposition 205.1 (Source matrices in every Bob charge).**
+The generic formula (203.3) can be written without suppressed spectator
+entries. For $N_B=0$ and $N_B=4$, in the two Alice rails, it is
+
+$$
+ S_0=cI_2,\qquad S_4=bdI_2. \tag{205.1}
+$$
+
+For $N_B=1$, use the Bob basis
+
+$$
+ L(\xi)=\xi\otimes|0\rangle,\qquad R(\xi)=|0\rangle\otimes\xi,\qquad \xi\in H.
+$$
+
+Then
+
+$$
+ S_1=
+ \begin{pmatrix}
+ E\oplus cD&-|R(f)\rangle\langle L(f)|\\
+ -|L(f)\rangle\langle R(f)|&cD\oplus E
+ \end{pmatrix}. \tag{205.2}
+$$
+
+For $N_B=2$, use $U=|2,0\rangle$, $V=H\otimes H$,
+$W=|0,2\rangle$. Then
+
+$$
+ S_2=
+ \begin{pmatrix}
+ d\oplus(E\otimes D)\oplus bc&K_2\\
+ K_2^*&bc\oplus(D\otimes E)\oplus d
+ \end{pmatrix},\quad
+ K_2=|g\otimes f\rangle\langle U|-|W\rangle\langle f\otimes g|. \tag{205.3}
+$$
+
+For $N_B=3$, use $L(\xi)=|2\rangle\otimes\xi$ and
+$R(\xi)=\xi\otimes|2\rangle$. Then
+
+$$
+ S_3=
+ \begin{pmatrix}
+ dD\oplus bE&|R(g)\rangle\langle L(g)|\\
+ |L(g)\rangle\langle R(g)|&bE\oplus dD
+ \end{pmatrix}. \tag{205.4}
+$$
+
+All five sector matrices are unnormalized $R\otimes R$ blocks; division by $Z^2$
+gives their physical contributions. Equations (205.1)--(205.4) display every
+spectator direction and every phase needed below.
+
+Proof. Restrict $A_1\otimes A_0$ and $A_0\otimes A_1$
+to the displayed Bob direct sums and use the corresponding row of
+(203.4) for the off-diagonal map. This gives every displayed entry.
+
+## 206. Partial-transpose normal forms in every Bob sector
+
+**Proposition 206.1 (Complete partial-transpose normal forms).**
+Ordinary Alice partial transposition of the actual matrices (203.3)--(203.5)
+gives the following complete normal forms.
+
+Proof. Transpose the two Alice rail indices, retaining all Bob indices. The dimensions of the Bob charge
+spaces $k=0,1,2,3,4$ are $1,4,6,4,1$.
+
+For $k=0$,
+
+$$
+ M_{1,0}^{T_A}=cI_2, \tag{206.1}
+$$
+
+and for $k=4$,
+
+$$
+ M_{1,4}^{T_A}=bdI_2. \tag{206.2}
+$$
+
+Both are positive.
+
+For $k=1$, a unitary permutation and a $2\times2$ rail rotation give
+
+$$
+ M_{1,1}^{T_A}\simeq cD\oplus cD\oplus(E-ff^*)\oplus(E+ff^*). \tag{206.3}
+$$
+
+Since $E>0$, this is positive exactly when $q_0\leq1$.
+
+For $k=2$, put
+
+$$
+ H_-=
+ \begin{pmatrix}E\otimes D&-f\otimes g\\-(f\otimes g)^*&d\end{pmatrix},\qquad
+ H_+=
+ \begin{pmatrix}D\otimes E&g\otimes f\\(g\otimes f)^*&d\end{pmatrix}. \tag{206.4}
+$$
+
+Then
+
+$$
+ M_{1,2}^{T_A}\simeq bc\oplus bc\oplus H_-\oplus H_+. \tag{206.5}
+$$
+
+The two $5\times5$ Schur complements are controlled by
+
+$$
+ (f\otimes g)^*(E^{-1}\otimes D^{-1})(f\otimes g)
+ =d\,q_0q_3, \tag{206.6}
+$$
+
+and the analogous equality for $g\otimes f$. Hence (206.5) is positive
+exactly when $q_0q_3\leq1$.
+
+For $k=3$,
+
+$$
+ M_{1,3}^{T_A}\simeq bE\oplus bE\oplus(dD-gg^*)\oplus(dD+gg^*), \tag{206.7}
+$$
+
+Alice transposition leaves $p\otimes R(H)$ and $q\otimes L(H)$
+uncoupled, each with the strictly positive block $bE$. It couples
+$p\otimes L(H)$ to $q\otimes R(H)$ by $gg^*$; symmetric and
+antisymmetric combinations of these components give $dD+gg^*$ and
+$dD-gg^*$, respectively. Since $dD>0$, the latter is positive
+semidefinite exactly when $g^*(dD)^{-1}g=q_3\leq1$. Thus (206.7)
+is positive exactly when $q_3\leq1$. Equations (206.1)--(206.7),
+together with the one-dimensional-Alice blocks (203.5), classify all 15
+charge blocks. Therefore
+
+$$
+ \boxed{\Omega^{T_A}\geq0\iff q_0\leq1\text{ and }q_3\leq1.} \tag{206.8}
+$$
+
+No PPT inference through an assumed local ordinary regrouping is used.
+
+## 207. Necessity for every allowed local filter
+
+**Proof of necessity in Theorem 201.3.** If the right side of
+(206.8) holds and $K_A\otimes K_B$ is any product
+Kraus operator, then
+
+$$
+ \bigl[(K_A\otimes K_B)\Omega(K_A\otimes K_B)^*\bigr]^{T_A}
+ =(\overline K_A\otimes K_B)\Omega^{T_A}
+ (K_A^{\mathsf T}\otimes K_B^*)\geq0. \tag{207.1}
+$$
+
+An adaptive branch is still a product Kraus operator, and coarse-graining is
+a positive sum of such congruences. A positive-probability normalization preserves
+positivity. Charge-preserving filters are a subset. Thus $q_0\leq1,q_3\leq1$
+forbids encoded NPT under the entire declared local operation class.
+
+## 208. Inverse-direction filters and exact outer branches
+
+**Proof of sufficiency in Theorem 201.3: the outer branches.**
+Assume $q_0>1$. Define the normalized inverse direction
+
+$$
+ k_0={E^{-1}f\over\|E^{-1}f\|},\qquad
+ L(\xi)=\xi\otimes|0\rangle,\qquad R(\xi)=|0\rangle\otimes\xi.
+$$
+
+Bob applies the orthogonal rank-two projector within $N_B=1$ onto
+$\operatorname{span}\{L(k_0),R(k_0)\}$, and Alice projects onto
+$\operatorname{span}\{p,q\}$. Set
+
+$$
+ a_0=k_0^*Ek_0,\qquad B_0=c\,k_0^*Dk_0,\qquad m_0=|k_0^*f|^2.
+$$
+
+Then $m_0/a_0=q_0$, $B_0>m_0$ by (202.3), and the actual subnormalized
+encoded state in the order $(pL,pR,qL,qR)$ is
+
+$$
+ X_0={1\over Z^2}
+ \begin{pmatrix}
+ a_0&0&0&0\\0&B_0&-m_0&0\\0&-m_0&B_0&0\\0&0&0&a_0
+ \end{pmatrix}. \tag{208.1}
+$$
+
+Its probability and partial-transpose spectrum are
+
+$$
+ P_0={2(a_0+B_0)\over Z^2}>0,\qquad
+ \operatorname{spec}(X_0^{T_A})={1\over Z^2}\{B_0,B_0,a_0+m_0,a_0-m_0\}. \tag{208.2}
+$$
+
+Thus $q_0>1$ gives NPT, with
+
+$$
+ \lambda_{\min}\bigl((X_0/P_0)^{T_A}\bigr)
+ ={a_0-m_0\over2(a_0+B_0)}<0,\quad
+ \mathcal N(X_0/P_0)={(m_0-a_0)_+\over2(a_0+B_0)},\quad
+ P_0\mathcal N={(m_0-a_0)_+\over Z^2}. \tag{208.3}
+$$
+
+The central $2\times2$ source block has eigenvalues $B_0\pm m_0$,
+so the original filtered state is positive. The minus sign in (208.1) is
+exactly the CAR sign and can be changed by an Alice rail phase.
+
+Assume $q_3>1$. Define
+
+$$
+ k_3={D^{-1}g\over\|D^{-1}g\|},\qquad
+ L(\xi)=|2\rangle\otimes\xi,\qquad R(\xi)=\xi\otimes|2\rangle,
+$$
+
+with the orthogonal rank-two Bob projector onto $\operatorname{span}\{L(k_3),R(k_3)\}$ in $N_B=3$.
+Set
+
+$$
+ a_3=d\,k_3^*Dk_3,\qquad B_3=b\,k_3^*Ek_3,\qquad m_3=|k_3^*g|^2.
+$$
+
+Then $m_3/a_3=q_3$, $B_3>m_3$, and
+
+$$
+ X_3={1\over Z^2}
+ \begin{pmatrix}
+ a_3&0&0&0\\0&B_3&m_3&0\\0&m_3&B_3&0\\0&0&0&a_3
+ \end{pmatrix}. \tag{208.4}
+$$
+
+Consequently
+
+$$
+ P_3={2(a_3+B_3)\over Z^2}>0,\qquad
+ \operatorname{spec}(X_3^{T_A})={1\over Z^2}\{B_3,B_3,a_3+m_3,a_3-m_3\},\tag{208.5}
+$$
+
+and
+
+$$
+ \lambda_{\min}={(a_3-m_3)\over2(a_3+B_3)},\quad
+ \mathcal N(X_3/P_3)={(m_3-a_3)_+\over2(a_3+B_3)},\quad
+ P_3\mathcal N={(m_3-a_3)_+\over Z^2}. \tag{208.6}
+$$
+
+The plus sign in (208.4) is the corresponding literal CAR sign.
+
+## 209. The middle sector and the product threshold
+
+**Proposition 209.1 (Middle-sector extraction).** Under
+$q_0q_3>1$, the middle branch below has positive probability and
+is NPT.
+
+Proof. Use the same $k_0,k_3$. In $N_B=2$, let
+
+$$
+ U=|2\rangle\otimes|0\rangle,\qquad \chi=k_3\otimes k_0,
+$$
+
+and project Bob onto $\operatorname{span}\{U,\chi\}$. Choose phases so that
+
+$$
+ \mu=(k_3^*g)(k_0^*f)>0.
+$$
+
+Put
+
+$$
+ A=(k_3^*Ek_3)(k_0^*Dk_0),\qquad
+ B=(k_3^*Dk_3)(k_0^*Ek_0).
+$$
+
+In the order $(pU,p\chi,qU,q\chi)$, the actual subnormalized output is
+
+$$
+ X_2={1\over Z^2}
+ \begin{pmatrix}
+ d&0&0&0\\0&A&\mu&0\\0&\mu&bc&0\\0&0&0&B
+ \end{pmatrix}. \tag{209.1}
+$$
+
+Positivity follows from (202.3):
+$\mu^2\leq (b\,k_3^*Ek_3)(c\,k_0^*Dk_0)=bcA$.
+Moreover,
+
+$$
+ {\mu^2\over dB}=q_0q_3. \tag{209.2}
+$$
+
+Partial transposition has spectrum
+
+$$
+ {1\over Z^2}\left\{A,bc,
+ {d+B+\sqrt{(d-B)^2+4\mu^2}\over2},
+ {d+B-\sqrt{(d-B)^2+4\mu^2}\over2}\right\}. \tag{209.3}
+$$
+
+With $H_2=d+A+bc+B$,
+
+$$
+ P_2={H_2\over Z^2},\qquad
+ \lambda_{\min}={(d+B)-\sqrt{(d-B)^2+4\mu^2}\over2H_2},\tag{209.4}
+$$
+
+$$
+ \mathcal N(X_2/P_2)={\left[\sqrt{(d-B)^2+4\mu^2}-d-B\right]_+\over2H_2},\quad
+ P_2\mathcal N={\left[\sqrt{(d-B)^2+4\mu^2}-d-B\right]_+\over2Z^2}. \tag{209.5}
+$$
+
+The last eigenvalue is negative exactly when $\mu^2>dB$, namely
+$q_0q_3>1$. Thus the middle sector is a valid additional witness inside
+the already known union, not an activation mechanism beyond it.
+
+## 210. Exact equivalence and a single compatible instrument
+
+**Proof of Theorem 201.3 and its compatible flagged instrument.**
+Equations (208.1)--(208.6) prove sufficiency whenever $q_0>1$ or $q_3>1$.
+Equations (206.8) and (207.1) prove necessity for every allowed filter.
+Therefore
+
+$$
+ \boxed{
+ \Omega\text{ is PPT}\iff(q_0\leq1\ \land\ q_3\leq1),\qquad
+ \Omega\text{ admits encoded NPT}\iff(q_0>1\ \lor\ q_3>1).
+ }\tag{210.1}
+$$
+
+The three displayed Bob projectors occupy mutually exclusive total-number
+sectors. For a fixed $t,v,w$, one instrument may measure $N_B$ and retain
+flags $j\in\{0,2,3\}$ for the selected branches. Alice first
+projects coherently onto $N_A=1$. Within that Alice outcome, Bob
+uses the mutually orthogonal projectors from §§208–209 for a chosen
+subset $J$ of defined branches and their orthogonal complement
+as a failure outcome. Together with Alice’s failure outcome these
+operators define one number-preserving instrument. Its accepted probability is
+
+$$
+ P_{\mathrm{acc}}=\sum_{j\in J}P_j,
+$$
+
+and its flag-retaining success-weighted negativity is
+
+$$
+ \sum_{j\in J}P_j\mathcal N_j.
+$$
+
+Only branches using the same source parameters are added. Full 64-dimensional
+negativity, one selected conditional negativity, and this flagged sum are
+separate quantities; no equality between them is asserted. No global
+optimality or maximal-rate statement is made.
+
+## 211. One-copy obstruction, minimum declared copy number, and preparation
+
+**Corollary 211.1 (One-copy obstruction and the minimum in the declared menu).**
+In the region $q_0>1$ or $q_3>1$, the minimum number of
+compatible preparations for the declared encoded-NPT extraction is
+exactly two.
+
+Proof. For one copy, the local-number twirl is
+
+$$
+ {1\over Z}\bigl(|0\rangle\langle0|\otimes A_0
+ +|1\rangle\langle1|\otimes A_1\bigr). \tag{211.1}
+$$
+
+Each Alice fixed-number sector is one-dimensional. A number-preserving local
+instrument cannot turn the positive product sum (211.1) into an encoded
+entangled subsystem. Thus ordinary NPT of the untwirled one-copy matrix does
+not constitute one-copy SSR-accessible entanglement.
+
+If $q_0>1$ or $q_3>1$, one copy is impossible and §§208--209 give a
+positive-probability two-copy branch, so the minimum copy number in this menu is
+exactly two. If $q_0,q_3\leq1$, neither one nor two copies yields encoded NPT.
+No claim about three or more copies is made.
+
+The common untwirled preparation is essential. If each input is independently
+number-twirled first, its $C$ block is removed before tensoring. Every term
+in (203.4) then vanishes, and a later common twirl of the product remains a
+positive sum of Alice--Bob product blocks. The compatible-preparation and
+common-phase assumptions are resource premises, not conclusions about physical
+availability.
+
+## 212. Finite endpoints and exact parameter cases
+
+**Proposition 212.1 (Finite endpoint and vanishing-coupling cases).**
+The sector laws and extraction criteria include all finite endpoints
+and all vanishing couplings of Definition 201.1.
+
+Proof. At $t=1$, $s=0$, $f=g=0$, $R=I_8$, and
+$\Omega=I_{64}/64$. The table (204.1) reduces to the binomial charge
+multiplicities; no NPT branch exists. The endpoint $t=0$ is excluded.
+
+If $f=0$ or $g=0$, the corresponding $q$ is zero and its inverse filter
+is simply unused. Formula (202.5) is regular at $x,y\in\{0,1\}$: an
+endpoint component forces the associated coupling to vanish. Repeated,
+collinear, orthogonal, or otherwise nonaligned unit $v,w$ require no change;
+no division by $\|u\|$, $\|h\|$, or $z$ occurs. Strict activation itself
+ensures the inverse direction being used is nonzero.
+
+At $q_0=1$, $q_3=1$, or $q_0q_3=1$, the corresponding partial-transpose
+block has a zero eigenvalue and is PPT, not NPT. If one outer parameter is
+strictly greater than one, the other equality does not suppress that branch.
+
+**Proposition 212.2 (Shared-source threshold equality).** An exact
+shared-source equality point is
+
+$$
+ t=3-2\sqrt2,\qquad v={(1,1,0)\over\sqrt2},\qquad w={(1,0,1)\over\sqrt2}.
+$$
+
+Proof. Here $z=0$, $x=y=1/2$, and $(1-t)^2=4t$, hence
+$q_0=q_3=1$ and $q_0q_3=1$. The relevant partial-transpose eigenvalues
+are zero, so this point is PPT at all three threshold equalities.
+
+**Proposition 212.3 (A rational $q_0$-only branch).** Take
+
+$$
+ t={1\over4},\qquad v={(1,1,0)\over\sqrt2},\qquad w=(0,1,0).
+$$
+
+Proof. Substitution in (202.5) and (208.1)–(208.3) gives
+$q_0=9/4,q_3=0$, and $k_0=(1,0)$ gives
+
+$$
+ (a_0,B_0,m_0)=\left({1\over16},{25\over64},{9\over64}\right),\quad
+ Z={25\over8},\quad P_0={58\over625},\quad
+ \lambda_{\min}=-{5\over58},\quad P_0\mathcal N={1\over125}.
+$$
+
+**Proposition 212.4 (A rational $q_3$-only branch).** Take
+
+$$
+ t={1\over10},\qquad v=(0,1,0),\qquad
+ w={(1,0,1)\over\sqrt2}.
+$$
+
+Proof. Substitution in (202.5) and (208.4)–(208.6) gives
+$q_0=0,q_3=81/40$, and $k_3=(0,1)$ gives
+
+$$
+ (a_3,B_3,m_3)=\left({40\over40000},{121\over40000},{81\over40000}\right),\quad
+ Z={121\over50},\quad P_3={161\over117128},\quad
+ \lambda_{\min}=-{41\over322},\quad P_3\mathcal N={41\over234256}.
+$$
+
+**Proposition 212.5 (One complex source with three strict branches).**
+A fully complex, nonaligned joint point is
+
+$$
+ t={1\over10},\qquad v={(1,2,2)\over3},\qquad
+ w={(2,1,2i)\over3}.
+$$
+
+Proof. Here $x=1/9,y=4/9,z=20/81$, and direct substitution gives
+
+$$
+ q_0={6\over5},\qquad q_3={10\over9},\qquad q_0q_3={4\over3}.
+$$
+
+Thus both outer branches and the middle criterion are strict for one shared
+complex source. The derivation, rather than this example, supplies the
+classification.
+
+## 213. Mathematical suppliers and finite two-copy scope
+
+**Convention 213.1 (Source correspondence and supporting methods).**
+The source and cut are those of [Continuation VI, §§139–156 and
+169–176](https://github.com/the-omega-institute/trureturing/blob/d90bd2fb685cbc899f24a36bf253ad4e6d3b1886/docs/develop/theory/FIB_ATOM_RECURSIVE_HOLOGRAPHIC_BOUNDARY_GEOMETRY_CONTINUATION_VI.md).
+VI (140.1) and (141.1)–(141.3) supply the native finite Gibbs spectrum
+and normalization. VI (142.1)–(142.2), §147 and (149.2) supply the
+compatible CAR convention, common-number resource and four-mode Bob cut.
+VI (169.2) and §170 supply the enlarged independent-ray orbit and
+one-copy Schur criterion. Equations (177.2), (178.1)–(178.6) and
+Theorem 181.1 are the corresponding one-copy prerequisites in this volume.
+The pointwise ordinary PPT–separability classification is reused for
+this exact family; the necessity argument in §§203–207 uses the explicit
+signed two-copy law rather than treating CAR regrouping as an ordinary
+local tensor permutation.
+
+The fixed-local-number sector interpretation is the mature method of
+H. M. Wiseman and J. A. Vaccaro, *The entanglement of indistinguishable
+particles shared between two parties*, Phys. Rev. Lett. **91**, 097902,
+[quant-ph/0210002v2](https://arxiv.org/pdf/quant-ph/0210002v2),
+Eqs. (12)–(14), as cited in VI §156 [W]. Its pure-state formula is not
+used as a mixed-state Gibbs formula. The mixed-state number-SSR filtering
+standard form and two-copy local fixed-number projection are those of
+N. Schuch, F. Verstraete and J. I. Cirac, *Quantum entanglement theory in
+the presence of superselection rules*, Phys. Rev. A **70**, 042310,
+[quant-ph/0404079v1](https://arxiv.org/pdf/quant-ph/0404079v1),
+§IV.D.1–2, mapped to the native family in VI (148.4) and §§149–151.
+Group twirling and multiple-copy reference-frame methods are treated by
+S. D. Bartlett, T. Rudolph and R. W. Spekkens, *Reference frames,
+superselection rules, and quantum information*, Rev. Mod. Phys. **79**,
+555, [quant-ph/0610030v3](https://arxiv.org/pdf/quant-ph/0610030v3),
+§III.C.2 and §III.C.4, as cited in VI §156 [R].
+
+The ordinary partial-transpose method is applied only after fixing the
+actual CAR coordinates and charge matrices; the encoded outputs are
+explicit $2\times2$ matrices. Their PPT–separability criterion is the
+$2\times2$ case of M. Horodecki, P. Horodecki and R. Horodecki,
+*Separability of Mixed States: Necessary and Sufficient Conditions*,
+[quant-ph/9605038v2](https://arxiv.org/pdf/quant-ph/9605038v2), Theorem 3,
+as cited in VI §156 [P]. The signed full-orbit sector decomposition,
+all fifteen probabilities, inverse-selected outer flags and middle
+$q_0q_3$ branch in §§203–209 are repo-derived application synthesis
+using these mature methods. No literature-priority assertion is attached
+to those identities.
+
+**Assumption 213.2 (Applicability of the finite extraction statement).**
+Every assertion concerns Definition 201.1 with $0<t\le1$, two compatible
+independent untwirled preparations, the stated creation convention,
+one common local-number twirl and the fixed-charge coherent filters of
+Assumption 201.2. The enlarged global sector orbit is a premise distinct
+from passive $\Gamma(U(3))$, native reachability and the local operation
+class. The physical availability of the preparations and filters is a
+separate premise. Independent pre-twirling specifies a different resource.
+No cloning or external phase reference is inferred. Theorem 181.1
+classifies ordinary one-copy separability; Theorem 201.3 and Corollary
+211.1 concern the finite two-copy encoded-NPT task. They supply no
+all-copy theorem, asymptotic rate, global filter optimum, physical
+implementation or resource advantage. Full-state negativity, selected
+conditional negativity and the flagged success-weighted sum in §210
+remain distinct quantities.
+
+## 213.99 追加锚（本行以下为增补区）
