@@ -15,12 +15,10 @@ url: https://arxiv.org/abs/2204.12119
 The cited article, arXiv:2204.12119v4, Section 5.1, Conjecture 5.1, asks for
 the inclusion of the NN-type generalized doubly nonnegative cone in the
 BD-type cone for products of a nonnegative orthant and second-order cones.
-The same inclusion is Conjecture 4.24 of Nishijima's 2024 thesis.
-
-The supplied statement is: “for K a direct product of a nonnegative orthant
-and second-order cones, the NN-type generalized doubly nonnegative cone is
-contained in the BD-type one.” This is the supplied statement, rather than
-an independently verified verbatim transcription of the article.
+The statement reads verbatim: “If K is a direct product of a nonnegative
+orthant and second-order cones, DNN^NN(K) ⊆ DNN^BD(K) holds.” The article
+notes that the case of a single second-order cone follows from its
+Proposition 4.12 and that the general inclusion relationship is unknown.
 
 ### Formal reading
 
@@ -107,8 +105,9 @@ The principal dependencies are `Lorentz.dualCone_cone`,
 `Duality.mulVec_mem_cone`. The accepted axiom closure of the result is
 contained in `{propext, Classical.choice, Quot.sound}`.
 
-The source identification and bounded literature screen are supplied
-information: the listed later articles 2402.12964, 2502.04006, 2510.27160,
+The source statement and definitions were read in arXiv:2204.12119v4
+(Section 2, Theorem 3.5, Definitions 3.6 and 3.7, Conjecture 5.1). In the
+bounded literature screen, the later articles 2402.12964, 2502.04006, 2510.27160,
 2602.23725 and 2608.27062 contain no reported settlement in that screen.
 This is not an exhaustive citation-index or priority certification.
 
@@ -123,12 +122,12 @@ theorem is in Result. No validated Result registration is asserted.
   for every cone vector, beyond extreme ray generators of $K^*$, by
   `Duality.mulVec_mem_cone`. No positive spatial-dimension hypothesis is
   needed for this stronger conclusion.
-- **Proved (argument in this delivery).** The mechanism uses only that the
+- **Derived (not formalized).** The mechanism uses only that the
   Jordan square is a homogeneous quadratic map into a self-dual closed
   cone, by the nonnegative-quadratic SOS argument in Route. The abstract
   generalization is a mathematical derivation; the Lean theorem concerns
   the pinned orthant and Lorentz products.
-- **Open (not formalized here).** The same inclusion for products with
+- **Derived (not formalized).** The same inclusion for products with
   positive semidefinite cone factors, as in the article's Section 4.2,
   admits the same argument: the matrix-square map is homogeneous
   quadratic and takes values in the self-dual positive semidefinite
@@ -139,9 +138,7 @@ theorem is in Result. No validated Result registration is asserted.
 
 ## ASSUMED-UNVERIFIED
 
-The bibliographic identifiers, conjecture numbering and statement wording
-are supplied source information; an independent verbatim source-text check
-is not available. Literature completeness, priority and exhaustive coverage
+Literature completeness, priority and exhaustive coverage
 of subsequent papers are unverified. The abstract generalization and the
 positive semidefinite factor extension have no general Lean theorem in
 this development. The Result registration remains unfinished as specified

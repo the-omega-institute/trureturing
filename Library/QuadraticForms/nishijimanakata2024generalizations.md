@@ -22,8 +22,7 @@ Source: https://arxiv.org/abs/2204.12119
 
 Pinned version: https://arxiv.org/abs/2204.12119v4, Section 5.1, Conjecture 5.1.
 Journal publication: *Journal of the Operations Research Society of Japan*
-67(3) (2024), 84–109. The same inclusion is identified as Conjecture 4.24
-of Nishijima's 2024 thesis.
+67(3) (2024), 84–109.
 
 The source definitions used here are the zeroth homogeneous sum of squares
 approximation in Theorem 3.5 with relaxation order zero, its dual in
@@ -45,6 +44,5 @@ semidefinite matrices sending every extreme ray generator of $K^*$ into $K$.
 `D5/S3/QuadraticForms/ConicGDNN/Duality.mulVec_mem_cone` gives the stronger
 preservation of every cone vector, including zero spatial dimensions.
 
-The bibliographic locators and statement identification are supplied source
-information. Independent inspection of the source text and exhaustive
-literature completeness are ASSUMED-UNVERIFIED.
+The statement and definitions were read in arXiv:2204.12119v4. Exhaustive
+literature completeness is ASSUMED-UNVERIFIED.
