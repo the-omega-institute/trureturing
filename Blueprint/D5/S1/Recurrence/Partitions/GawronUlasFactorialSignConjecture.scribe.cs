@@ -60,13 +60,17 @@ internal sealed class GawronUlasFactorialSignConjectureDocument : IScribeDocumen
                 + "Taking r=s+3 gives S(U 3,2,12s+38)<0 for every natural s. These arguments "
                 + "are even and exceed any proposed threshold, contradicting the second "
                 + "assertion. The first assertion and the signs for other k are not decided here.",
-                "result", DescribeRole.Theorem, AssessedProvenance.FromRepo(Source)))));
+                "result", DescribeRole.Theorem, AssessedProvenance.FromRepo(Source),
+                new OpenProblemResolutionClaim(
+                    ProblemSlugRef.Create("gawron-ulas-2022-factorial-sign-conjecture-4-4"),
+                    ResolutionKind.Refuted)))));
 
     private static DocumentBlock Node(string id, string title, Formula formula,
-        string prose, string declaration, DescribeRole role, AssessedProvenance provenance) =>
+        string prose, string declaration, DescribeRole role, AssessedProvenance provenance,
+        OpenProblemResolutionClaim? resolution = null) =>
         Describe.Lean(DescribeId.Create(id), DeclarationHandle.Create(Prefix + declaration),
             H(title), StatementSource.FromAuthor(formula), provenance,
-            Blocks(Paragraph(Text(prose))), role);
+            Blocks(Paragraph(Text(prose))), role, resolution);
 
     private static Formula CFormula()
     {
