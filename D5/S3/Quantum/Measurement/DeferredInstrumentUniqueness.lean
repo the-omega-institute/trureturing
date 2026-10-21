@@ -63,10 +63,6 @@ def claim : Prop :=
         (∑ x, J x = It t) ∧
         (∀ x ρ, Matrix.trace (J x ρ) = Matrix.trace (ρ * Qs U (sMax d t) x))) ↔
       (∀ x, J x = Itilde U t x)
-end D5.S3.Quantum.Measurement.DeferredInstrumentUniqueness
-namespace D5.S3.Quantum.Measurement.DeferredInstrumentUniqueness
-open D5.S3.Quantum.Foundation.FiniteKrausChannel
-open D5.S3.Quantum.Foundation.FiniteKrausChannel.PhyslibLeaf
 /-- The auxiliary square-root coordinate appearing in the Choi certificate. -/
 def c (d : ℕ) (t : ℝ) : ℝ := Real.sqrt (t * ((d : ℝ) ^ 2 - 1) + 1)
 /-- The coefficient of the distinguished diagonal vector. -/
@@ -104,7 +100,6 @@ lemma c_sq {d : ℕ} (hd : 2 ≤ d) {t : ℝ}
   have hd' : 0 < (d : ℝ) ^ 2 - 1 := by
     have : (2 : ℝ) ≤ d := by exact_mod_cast hd
     nlinarith
-  have hden : 0 < (d : ℝ) ^ 2 - 1 := hd'
   have hm := mul_le_mul_of_nonneg_right ht (le_of_lt hd')
   have hm' : -1 ≤ t * ((d : ℝ) ^ 2 - 1) := by
     convert hm using 1 <;> field_simp
@@ -844,7 +839,6 @@ lemma upper_endpoint_standard {d : ℕ} (hd : 2 ≤ d) (J : Fin d → MatrixMap 
   simp [Matrix.smul_apply, Matrix.vecMulVec_apply, Pi.star_apply, choiVector,
     ha, b, Complex.real_smul, Matrix.diagonal_apply, ite_and]
   <;> split_ifs <;> simp_all
-
 lemma standard_basis_forward {d : ℕ} (hd : 2 ≤ d) {t : ℝ}
     (htl : -1 / ((d : ℝ) ^ 2 - 1) ≤ t) (htu : t ≤ 1)
     (J : Fin d → MatrixMap (Fin d) (Fin d) ℂ)
@@ -861,17 +855,14 @@ lemma standard_basis_forward {d : ℕ} (hd : 2 ≤ d) {t : ℝ}
     exact upper_endpoint_standard hd J hCP hsum htrace
   exact elimination_standard hd htl
     (lt_of_le_of_ne htu hu) J hCP hsum htrace
-
 def transformMap {d : ℕ} (W : Matrix (Fin d) (Fin d) ℂ)
     (Φ : MatrixMap (Fin d) (Fin d) ℂ) : MatrixMap (Fin d) (Fin d) ℂ where
   toFun ρ := W * Φ (W.conjTranspose * ρ * W) * W.conjTranspose
   map_add' ρ σ := by simp only [Matrix.mul_add, Matrix.add_mul, map_add]
   map_smul' z ρ := by simp only [Matrix.mul_smul, Matrix.smul_mul, map_smul, RingHom.id_apply]
-
 lemma transformMap_apply {d : ℕ} (W : Matrix (Fin d) (Fin d) ℂ)
     (Φ : MatrixMap (Fin d) (Fin d) ℂ) (ρ : Matrix (Fin d) (Fin d) ℂ) :
     transformMap W Φ ρ = W * Φ (W.conjTranspose * ρ * W) * W.conjTranspose := rfl
-
 lemma transformMap_cp {d : ℕ} (W : Matrix (Fin d) (Fin d) ℂ)
     (Φ : MatrixMap (Fin d) (Fin d) ℂ) (hΦ : Φ.IsCompletelyPositive) :
     (transformMap W Φ).IsCompletelyPositive := by
@@ -886,7 +877,6 @@ lemma transformMap_cp {d : ℕ} (W : Matrix (Fin d) (Fin d) ℂ)
     simp only [Matrix.conjTranspose_mul, Matrix.conjTranspose_conjTranspose,
       Matrix.mul_assoc]
   rw [hmap]; exact MatrixMap.of_kraus_isCompletelyPositive _
-
 lemma Itilde_transform {d : ℕ} (U : Matrix.unitaryGroup (Fin d) ℂ)
     (t : ℝ) (x : Fin d) :
     transformMap (U : Matrix (Fin d) (Fin d) ℂ)
@@ -931,7 +921,6 @@ lemma Itilde_transform {d : ℕ} (U : Matrix.unitaryGroup (Fin d) ℂ)
   simp only [Matrix.mul_smul, Matrix.smul_mul, Matrix.mul_add, Matrix.add_mul,
     Matrix.mul_one]
   rw [hWV, hYP, hPY, hY, htr]
-
 lemma transport_forward {d : ℕ} (hd : 2 ≤ d) (U : Matrix.unitaryGroup (Fin d) ℂ)
     {t : ℝ} (htl : -1 / ((d : ℝ) ^ 2 - 1) ≤ t) (htu : t ≤ 1)
     (J : Fin d → MatrixMap (Fin d) (Fin d) ℂ)
@@ -939,13 +928,58 @@ lemma transport_forward {d : ℕ} (hd : 2 ≤ d) (U : Matrix.unitaryGroup (Fin d
     (hsum : ∑ x, J x = It t)
     (htrace : ∀ x ρ, Matrix.trace (J x ρ) = Matrix.trace (ρ * Qs U (sMax d t) x)) :
     ∀ x, J x = Itilde U t x := by
-  sorry
-
+  let W : Matrix (Fin d) (Fin d) ℂ := U
+  let V := W.conjTranspose
+  have hWV : W * V = 1 := Matrix.mem_unitaryGroup_iff.mp U.2
+  have hVW : V * W = 1 := Matrix.mem_unitaryGroup_iff'.mp U.2
+  have hc (ρ : Matrix (Fin d) (Fin d) ℂ) : V * (W * ρ * V) * W = ρ := by
+    calc _ = (V * W) * ρ * (V * W) := by simp only [Matrix.mul_assoc]
+         _ = ρ := by rw [hVW]; simp
+  have hc' (ρ : Matrix (Fin d) (Fin d) ℂ) : W * (V * ρ * W) * V = ρ := by
+    calc _ = (W * V) * ρ * (W * V) := by simp only [Matrix.mul_assoc]
+         _ = ρ := by rw [hWV]; simp
+  have ht (ρ : Matrix (Fin d) (Fin d) ℂ) : Matrix.trace (W * ρ * V) = Matrix.trace ρ := by
+    rw [Matrix.trace_mul_cycle, hVW, Matrix.one_mul]
+  have ht' (ρ : Matrix (Fin d) (Fin d) ℂ) : Matrix.trace (V * ρ * W) = Matrix.trace ρ := by
+    rw [Matrix.trace_mul_cycle, hWV, Matrix.one_mul]
+  let J' := fun x => transformMap V (J x)
+  have hCP' (x : Fin d) : (J' x).IsCompletelyPositive := transformMap_cp V (J x) (hCP x)
+  have hsum' : ∑ x, J' x = It t := by
+    apply LinearMap.ext; intro ρ
+    simp only [LinearMap.sum_apply, J', V, transformMap_apply,
+      Matrix.conjTranspose_conjTranspose]
+    change (∑ x, V * J x (W * ρ * V) * W) = It t ρ
+    rw [← Matrix.sum_mul, ← Matrix.mul_sum, ← LinearMap.sum_apply, hsum,
+      It_apply, It_apply]
+    simp only [Matrix.mul_add, Matrix.add_mul, Matrix.mul_smul, Matrix.smul_mul]
+    rw [hc, ht, Matrix.mul_one, hVW]
+  have hQs (s : ℝ) (x : Fin d) :
+      Qs U s x = W * Qs (1 : Matrix.unitaryGroup (Fin d) ℂ) s x * V := by
+    simp only [Qs, Q, OneMemClass.coe_one, Matrix.one_mul, Matrix.conjTranspose_one,
+      Matrix.mul_one, Matrix.mul_add, Matrix.mul_smul, Matrix.smul_mul, Matrix.add_mul]
+    change (s : ℂ) • (W * Matrix.single x x 1 * V) + _ =
+      (s : ℂ) • (W * Matrix.single x x 1 * V) + _
+    rw [hWV]
+  have htrace' (x : Fin d) (ρ : Matrix (Fin d) (Fin d) ℂ) :
+      Matrix.trace (J' x ρ) = Matrix.trace (ρ * Qs 1 (sMax d t) x) := by
+    simp only [J', V, transformMap_apply, Matrix.conjTranspose_conjTranspose]
+    change Matrix.trace (V * J x (W * ρ * V) * W) = _; rw [ht', htrace, hQs]
+    have hp (σ : Matrix (Fin d) (Fin d) ℂ) :
+        (W * ρ * V) * (W * σ * V) = W * (ρ * σ) * V := by
+      calc _ = W * ρ * (V * W) * σ * V := by simp only [Matrix.mul_assoc]
+           _ = _ := by rw [hVW]; simp only [Matrix.mul_one, Matrix.mul_assoc]
+    rw [hp, ht]
+  have hstd := standard_basis_forward hd htl htu J' hCP' hsum' htrace'
+  intro x
+  have hinv : transformMap W (J' x) = J x := by
+    apply LinearMap.ext; intro ρ
+    simp only [J', V, transformMap_apply, Matrix.conjTranspose_conjTranspose]
+    change W * (V * J x (W * (V * ρ * W) * V) * W) * V = J x ρ; rw [hc', hc']
+  rw [← hinv, hstd x]; exact Itilde_transform U t x
 lemma Itilde_cp {d : ℕ} (hd : 2 ≤ d) (U : Matrix.unitaryGroup (Fin d) ℂ)
     {t : ℝ} (htl : -1 / ((d : ℝ) ^ 2 - 1) ≤ t) (htu : t ≤ 1) :
     ∀ x, (Itilde U t x).IsCompletelyPositive := by
   intro x; rw [← Itilde_transform U t x]; exact transformMap_cp _ _ (Itilde_standard_cp t x)
-
 lemma backward_direction {d : ℕ} (hd : 2 ≤ d) (U : Matrix.unitaryGroup (Fin d) ℂ)
     (t : ℝ) (htl : -1 / ((d : ℝ) ^ 2 - 1) ≤ t) (htu : t ≤ 1) :
     (∀ x, (Itilde U t x).IsCompletelyPositive) ∧
@@ -954,7 +988,6 @@ lemma backward_direction {d : ℕ} (hd : 2 ≤ d) (U : Matrix.unitaryGroup (Fin 
         Matrix.trace (ρ * Qs U (sMax d t) x)) := by
   refine ⟨Itilde_cp hd U htl htu, Itilde_sum hd U htl htu, ?_⟩
   intro x ρ; exact Itilde_trace hd U htl htu x ρ
-
 theorem result : claim := by
   intro d hd U t htl htu J
   constructor
