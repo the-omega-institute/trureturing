@@ -82,7 +82,7 @@ internal sealed class EvolutionAutomorphismControlDocument : IScribeDocumentDefi
                 "UnitSquaring is z mapped to z squared on the nonzero complex units. The kernel consists exactly of diagonal automorphisms "
                 + "with t(j)=t(i)^2 on every support arrow. The forward map uses the actual kernel; the inverse constructs an invertible diagonal "
                 + "linear map and proves multiplication preservation from these equations on basis pairs. Thus every assignment is realized, "
-                + "without assuming that arbitrary graph automorphisms lift.",DescribeRole.Definition),
+                + "without assuming that arbitrary graph automorphisms lift.",DescribeRole.Definition,literature:true),
             Desc("diagonal_kernel_card","The exact diagonal cycle cardinality",
                 Context(SF.Eq(SF.Card(SF.Call("ker",SF.Call("rho",Mu,B))),SF.Call("cycleWeight",Beta))),
                 "The entire diagonal kernel is equivalent to the support-arrow assignments, which descend bijectively to the least quotient. "
@@ -92,7 +92,7 @@ internal sealed class EvolutionAutomorphismControlDocument : IScribeDocumentDefi
                 Context(SF.Call("Finite",Aut)),
                 "Perfectness gives positive in- and outdegree. Diagonal assignments descend exactly through the least admissible support quotient. "
                 + "Its successor beta is a finite permutation; a common return time puts every coordinate in a finite roots-of-unity group. "
-                + "The permutation kernel and image are finite, hence so is the original algebra group. Natural cardinality is used only after this step."),
+                + "The permutation kernel and image are finite, hence so is the original algebra group. Natural cardinality is used only after this step.",literature:true),
             Desc("automorphism_quotient_bound","The joint algebraic quotient bound",
                 Context(SF.Le(SF.Card(Aut),SF.Mul(SF.Mul(SF.Call("cycleWeight",Beta),
                     SF.Card(SF.Call("centralizer",Beta))),SF.Call("BlockFactorialProduct",R)))),
