@@ -18,7 +18,7 @@ For a complete $r$-partite graph with positive part sizes $a_1,\ldots,a_r$ and t
 
 $$\|G\|_{2m}=h_{2m}(\lambda_1,\ldots,\lambda_n)^{1/(2m)},$$
 
-where the $\lambda_i$ are the adjacency eigenvalues. This dossier settles the complete multipartite branch only. The regular and unicyclic branches remain open.
+where the $\lambda_i$ are the adjacency eigenvalues. This dossier settles the complete multipartite branch only, for each fixed number of parts. The regular and unicyclic branches remain open.
 
 ### Statement echo
 
@@ -69,7 +69,7 @@ The literature checks recorded for this problem covered the arXiv API for “CHS
 - **PROVED (formalized).** The determinant identity is $\det(I-tA)=1-\sum_{j\ge2}(j-1)e_jt^j$; its reciprocal coefficient recurrence, strict coefficient comparison, and two-part transfer monotonicity are proved.
 - **COMPUTED.** Exact rational arithmetic from adjacency-power traces tested every $2\le r\le n\le9$ and $m\le4$, giving 348 comparisons with the stated extremal classification.
 - **OPEN.** The regular and unicyclic branches of Problem 3 remain open.
-- **OPEN.** Exact closed forms of the extremal values beyond the recurrence remain open.
+- **OPEN.** Exact closed forms of the extremal values beyond the recurrence are not supplied here.
 
 ### What the settlement shows
 
