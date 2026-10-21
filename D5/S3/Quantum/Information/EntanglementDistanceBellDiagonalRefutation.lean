@@ -25,7 +25,8 @@ open D5.S3.Quantum.Information.StabilizerPairLocalUnitaryInequivalence
 /-- A one-site operator on the two-qubit product basis. -/
 def onSite (μ : Fin 2) (U : Matrix (Fin 2) (Fin 2) ℂ) :
     Matrix (Fin 2 × Fin 2) (Fin 2 × Fin 2) ℂ :=
-  if μ = 0 then Matrix.kroneckerMap (· * ·) U 1 else Matrix.kroneckerMap (· * ·) 1 U
+  if μ = 0 then Matrix.of (fun i j => if i.2 = j.2 then U i.1 j.1 else 0)
+  else Matrix.of (fun i j => if i.1 = j.1 then U i.2 j.2 else 0)
 
 /-- The Pauli observable on one of the two sites. -/
 noncomputable def sitePauli (μ : Fin 2) (i : Fin 3) : Matrix (Fin 2 × Fin 2) (Fin 2 × Fin 2) ℂ :=
@@ -115,7 +116,8 @@ private theorem pProjector_eq_vec (q : ℂ) (hq : q * star q = 1) :
     pProjector q = (1 / 2 : ℂ) • Matrix.vecMulVec (pKet q) (star (pKet q)) := by
   ext i j
   fin_cases i <;> fin_cases j <;>
-    simp [pProjector, pKet, Matrix.vecMulVec, Pi.star_apply, hq] <;> ring
+    simp [pProjector, pKet, Matrix.vecMulVec, Pi.star_apply] <;>
+      first | exact hq | ring
 
 private theorem pPlus_state : Pplus.PosSemidef ∧ Matrix.trace Pplus = 1 := by
   rw [show Pplus = pProjector qPlus by rfl, pProjector_eq_vec qPlus (by
@@ -124,7 +126,8 @@ private theorem pPlus_state : Pplus.PosSemidef ∧ Matrix.trace Pplus = 1 := by
   · exact (Matrix.posSemidef_vecMulVec_self_star (pKet qPlus)).smul (by norm_num)
   · rw [Matrix.trace_smul, Matrix.trace_vecMulVec]
     simp only [dotProduct, Fintype.sum_prod_type, Fin.sum_univ_two]
-    norm_num [pKet, qPlus, Complex.normSq, Complex.mul_re, Complex.mul_im]
+    norm_num [pKet, qPlus, Complex.normSq, Complex.mul_re, Complex.mul_im, Complex.ext_iff,
+      Complex.I_mul_I] <;> ring
 
 private theorem pMinus_state : Pminus.PosSemidef ∧ Matrix.trace Pminus = 1 := by
   rw [show Pminus = pProjector qMinus by rfl, pProjector_eq_vec qMinus (by
@@ -133,7 +136,8 @@ private theorem pMinus_state : Pminus.PosSemidef ∧ Matrix.trace Pminus = 1 := 
   · exact (Matrix.posSemidef_vecMulVec_self_star (pKet qMinus)).smul (by norm_num)
   · rw [Matrix.trace_smul, Matrix.trace_vecMulVec]
     simp only [dotProduct, Fintype.sum_prod_type, Fin.sum_univ_two]
-    norm_num [pKet, qMinus, Complex.normSq, Complex.mul_re, Complex.mul_im]
+    norm_num [pKet, qMinus, Complex.normSq, Complex.mul_re, Complex.mul_im, Complex.ext_iff,
+      Complex.I_mul_I] <;> ring
 
 private def witnessP : Fin 4 → ℝ := ![16 / 25, 9 / 25, 0, 0]
 
@@ -157,8 +161,8 @@ private noncomputable def U1 : Matrix.specialUnitaryGroup (Fin 2) ℂ := by
   · rw [Matrix.mem_unitaryGroup_iff]
     ext i j
     fin_cases i <;> fin_cases j <;>
-      norm_num [U1mat, Matrix.mul_apply, Matrix.diagonal, Complex.ext_iff]
-  · norm_num [U1mat, Matrix.det_fin_two, Matrix.diagonal, Complex.ext_iff]
+      norm_num [U1mat, Matrix.mul_apply, Matrix.diagonal, Complex.ext_iff, starRingEnd_apply]
+  · norm_num [U1mat, Matrix.det_fin_two, Matrix.diagonal, Complex.ext_iff, starRingEnd_apply]
 
 private noncomputable def U2 : Matrix.specialUnitaryGroup (Fin 2) ℂ := by
   refine ⟨U2mat, ?_⟩
@@ -167,8 +171,8 @@ private noncomputable def U2 : Matrix.specialUnitaryGroup (Fin 2) ℂ := by
   · rw [Matrix.mem_unitaryGroup_iff]
     ext i j
     fin_cases i <;> fin_cases j <;>
-      norm_num [U2mat, Matrix.mul_apply, Matrix.diagonal, Complex.ext_iff]
-  · norm_num [U2mat, Matrix.det_fin_two, Matrix.diagonal, Complex.ext_iff]
+      norm_num [U2mat, Matrix.mul_apply, Matrix.diagonal, Complex.ext_iff, starRingEnd_apply]
+  · norm_num [U2mat, Matrix.det_fin_two, Matrix.diagonal, Complex.ext_iff, starRingEnd_apply]
 
 private noncomputable def χ : Matrix (Fin 2 × Fin 2) (Fin 2 × Fin 2) ℂ :=
   Matrix.diagonal (fun ij => if ij = (0, 0) ∨ ij = (1, 1) then (1 / 2 : ℂ) else 0)
@@ -184,17 +188,21 @@ private theorem rotated_witness (μ : Fin 2) :
     <;> norm_num [Fin.sum_univ_succ] <;> ring
 
 private theorem chi_trace_square : Complex.re (Matrix.trace (χ * χ)) = 1 / 2 := by
-  norm_num [χ, Matrix.diagonal, Matrix.trace, Matrix.mul_apply, Fin.sum_univ_succ]
+  have hχ : χ * χ = χ := by
+    ext i j
+    fin_cases i <;> fin_cases j <;>
+      norm_num [χ, Matrix.diagonal, Matrix.mul_apply, Fin.sum_univ_succ]
+  rw [hχ]
+  norm_num [χ, Matrix.diagonal, Matrix.trace, Fin.sum_univ_succ]
 
 private theorem chi_variational (μ : Fin 2) (n : Fin 3 → ℝ) :
     Complex.re (Matrix.trace (χ * (∑ i, (n i : ℂ) • sitePauli μ i) * χ *
       (∑ i, (n i : ℂ) • sitePauli μ i))) = (n 2) ^ 2 / 2 := by
   fin_cases μ <;>
     norm_num [χ, sitePauli, onSite, pauliMatrix, qubitX, qubitZ,
-      Matrix.kroneckerMap_apply, Matrix.mul_apply, Matrix.diagonal, Matrix.trace,
-      Fin.sum_univ_succ]
+      Matrix.mul_apply, Matrix.diagonal, Matrix.trace, Fin.sum_univ_succ]
 
-private theorem chi_qcd (μ : Fin 2) : siteQCD μ χ = 0 := by
+private theorem chi_qcd_nonpos (μ : Fin 2) : siteQCD μ χ ≤ 0 := by
   have hmem : (1 / 2 : ℝ) ∈ {x : ℝ | ∃ n : Fin 3 → ℝ,
       (∑ i, n i ^ 2 = 1) ∧
         x = Complex.re (Matrix.trace (χ * (∑ i, (n i : ℂ) • sitePauli μ i) * χ *
@@ -210,7 +218,10 @@ private theorem chi_qcd (μ : Fin 2) : siteQCD μ χ = 0 := by
     intro x hx
     rcases hx with ⟨n, hn, rfl⟩
     rw [chi_variational]
-    nlinarith [hn]
+    have h2 : (n 2) ^ 2 ≤ 1 := by
+      have := Finset.single_le_sum (fun i _ => sq_nonneg (n i)) (Finset.mem_univ (2 : Fin 3))
+      simpa [Fin.sum_univ_succ] using this.trans hn
+    nlinarith
   have hs : sSup {x : ℝ | ∃ n : Fin 3 → ℝ,
       (∑ i, n i ^ 2 = 1) ∧
         x = Complex.re (Matrix.trace (χ * (∑ i, (n i : ℂ) • sitePauli μ i) * χ *
@@ -240,13 +251,13 @@ private theorem ed_witness_le_zero : ED (bellDiagonal witnessP) ≤ 0 := by
     · simpa [ρs] using pPlus_state
     · simpa [ρs] using pMinus_state
   have hmix : ∑ j, (p j : ℂ) • ρs j = bellDiagonal witnessP := by
-    change (∑ j, (p j : ℂ) • ρs j) = (1 / 2 : ℂ) • Pplus + (1 / 2 : ℂ) • Pminus
+    rw [bellDiagonal_witness]
     simp [p, ρs]
   have hinner (μ : Fin 2) : sInf {y : ℝ | ∃ U,
       y = siteQCD μ (rotated μ p ρs U)} ≤ 0 := by
-    apply sInf_le_of_mem_nonpos (le_refl 0)
-    refine ⟨U, ?_⟩
-    rw [rotated_witness, chi_qcd]
+    apply sInf_le_of_mem_nonpos (chi_qcd_nonpos μ)
+    refine ⟨siteQCD μ χ, ?_⟩
+    rw [rotated_witness]
   have hmember : (∑ μ : Fin 2, sInf {y : ℝ | ∃ U,
       y = siteQCD μ (rotated μ p ρs U)}) ∈ {x : ℝ | ∃ (k : ℕ) (p : Fin k → ℝ)
       (ρs : Fin k → Matrix (Fin 2 × Fin 2) (Fin 2 × Fin 2) ℂ)
@@ -274,9 +285,10 @@ theorem result : ¬ claim := by
     (by norm_num [witnessP, Fin.sum_univ_succ])
   have hed := ed_witness_le_zero
   rw [hc] at hed
+  change 2 * (max 0 (2 * Finset.univ.sup' Finset.univ_nonempty witnessP - 1)) ^ 2 ≤ 0 at hed
   have hsupp : Finset.univ.sup' Finset.univ_nonempty witnessP = 16 / 25 := by
     apply le_antisymm
-    · apply Finset.sup'_le
+    · apply Finset.sup'_le Finset.univ_nonempty witnessP
       intro i hi
       fin_cases i <;> norm_num [witnessP]
     · apply Finset.le_sup'_of_le (s := Finset.univ) (f := witnessP)
