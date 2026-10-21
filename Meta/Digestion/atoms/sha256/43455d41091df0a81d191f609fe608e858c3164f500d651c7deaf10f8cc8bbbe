@@ -1,0 +1,17 @@
+**Corollary 117.2 (Actual terminal decoder limits).** If $n_j\to\infty$
+and $D_j$ is any minimizer in (105.1) at horizon $n_j$, every
+accumulation point $D_*$ satisfies the same conditions (117.2) with
+$D_*$ in place of $\mathcal R_*$.
+
+*Proof.* The transport (105.3) gives
+$\mathcal R_j=D_j\circ\operatorname{Ad}_{U_0}$, which minimizes
+$e_{s_{n_j}}$, and $s_{n_j}\to0$. Composition with this fixed unitary
+channel is a homeomorphism of the CPTP set, with inverse
+$D=\mathcal R\circ\operatorname{Ad}_{U_0^\dagger}$. Moreover
+$U_0|0\rangle=|0\rangle$, so
+$\mathcal R_j(I)=D_j(I)$ and
+$\mathcal R_j(E_{00})=D_j(E_{00})$, also at every limit. Apply
+Theorem 117.1. The limiting channel is $\mathcal N_\infty=\Phi_0$;
+the empty-horizon identity $\mathcal N_0$ remains a different channel.
+$\square$
+

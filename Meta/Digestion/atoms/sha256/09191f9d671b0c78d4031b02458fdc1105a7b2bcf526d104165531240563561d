@@ -1,0 +1,27 @@
+**Proposition 116.2 (Cancelling lower coherences are allowed).** The
+conditions in (115.1) do not require $\mathcal R(E_{11})$ and
+$\mathcal R(E_{22})$ to be individually diagonal.
+
+*Proof.* Let $\mathcal R=\operatorname{Ad}_V$, where
+
+$$
+V=1\oplus\frac1{\sqrt2}\begin{pmatrix}1&1\\1&-1\end{pmatrix}.
+\tag{116.3}
+$$
+
+This unitary channel is unital and fixes $E_{00}$, so it belongs to
+$\mathcal Z_0$ with $v=1$. Nevertheless
+
+$$
+\begin{aligned}
+\mathcal R(E_{11})&=\tfrac12(E_{11}+E_{22}+E_{12}+E_{21}),\\
+\mathcal R(E_{22})&=\tfrac12(E_{11}+E_{22}-E_{12}-E_{21}).
+\end{aligned}
+\tag{116.4}
+$$
+
+The coherences cancel in their sum. In general (115.1) specifies only
+that sum, $\mathcal R(E_{11})+\mathcal R(E_{22})=I-\sigma_v$,
+in addition to $\mathcal R(E_{00})=\sigma_v$ and the CPTP conditions.
+$\square$
+

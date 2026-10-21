@@ -1,0 +1,25 @@
+### 98.3. The unrestricted-decoder square certificate
+
+Substitution of $p_2/p_1=h$ gives
+
+$$
+ap_2^2-bp_1^2=0,\qquad
+ap_1^2-bp_2^2=-\frac ta p_1^2.
+\tag{98.11}
+$$
+
+Together with $p_0/p_1=r/a$, (95.3) therefore has quadratic term
+$-(t/a)p_1^2u^2$ and linear term $2(t/a)p_1^2ru$, with no dependence
+on $v$. At $(u,v)=(r,z)$ its value is
+$p^{\mathsf T}Mp=\eta$. Consequently
+
+$$
+\boxed{L_s(p;u,v)-\eta
+=-\frac ta p_1^2(u-r)^2\le0\qquad(u,v\in[0,1]).}
+\tag{98.12}
+$$
+
+This proves the lower bound for every CPTP decoder and, with the row
+identities and the CP-order bound, establishes the later-even value in
+(94.2) without a remaining optimization.
+

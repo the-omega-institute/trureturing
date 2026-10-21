@@ -1,0 +1,98 @@
+## 97. Proof of Theorem 94.2: the exceptional horizon two
+
+Here $s=-1/2$, $t=1/2$, $a=1/4$ and $b=3/4$. Define
+
+$$
+g(r)=(2-r)(1-r^2)^2-4r.
+$$
+
+For $0\le r\le1$,
+
+$$
+g'(r)=-(1-r^2)^2-4r(2-r)(1-r^2)-4<0,
+\qquad
+g(3/10)=\frac{20777}{100000}>0,\quad
+g(1/3)=-\frac4{243}<0.
+\tag{97.1}
+$$
+
+Continuity and strict decrease prove existence and uniqueness of the
+root $r_*$ in (94.3), and in fact uniqueness on $[0,1]$. Expanding
+$g(r)=0$ gives the stated quintic. In what follows let $r=r_*$,
+$z=0$, $H=H(r)$, and $\sigma=-1$. Then
+
+$$
+M=\begin{pmatrix}
+1&r/2&0\\
+r/2&(3+r^2)/4&0\\
+0&0&3(1-r^2)/4
+\end{pmatrix},\qquad
+p=\frac1H
+\begin{pmatrix}3+r^2-2r\\4-2r\\4/(1-r^2)\end{pmatrix},\qquad
+\eta=\frac3H.
+\tag{97.2}
+$$
+
+Since $0<r<1$, the three numerators are positive and sum to $H$.
+All Kraus coefficients are legitimate. Direct multiplication gives
+
+$$
+\begin{aligned}
+H(Mp)_0&=(3+r^2-2r)+(r/2)(4-2r)=3,\\
+H(Mp)_1&=(r/2)(3+r^2-2r)+\frac{3+r^2}{4}(4-2r)=3,\\
+H(Mp)_2&=\frac{3(1-r^2)}4\,\frac4{1-r^2}=3.
+\end{aligned}
+\tag{97.3}
+$$
+
+In particular $Mp=\eta\mathbf1$ and $0<\eta<1$, since
+$\eta=p_0+(r/2)p_1<p_0+p_1<1$.
+
+To prove the lower certificate on the whole square, put
+
+$$
+A=\tfrac14p_1^2-\tfrac34p_2^2,\qquad
+B=\tfrac14p_2^2-\tfrac34p_1^2.
+\tag{97.4}
+$$
+
+The interval $0<r<1/3$ implies
+
+$$
+1<\frac{p_2}{p_1}
+=\frac1{(1-r^2)(1-r/2)}
+<\frac{27}{20}<\sqrt3.
+\tag{97.5}
+$$
+
+Indeed the denominator is less than one and greater than
+$(8/9)(5/6)=20/27$, and $(27/20)^2<3$. Therefore both $A<0$ and
+$B<0$. The root equation supplies the exact stationary identity
+
+$$
+H^2\left(Ar+\tfrac12p_0p_1\right)
+=3(2-r)-\frac{12r}{(1-r^2)^2}=0.
+\tag{97.6}
+$$
+
+The polynomial terms in its left side before cancellation are
+$r[(4-2r)^2/4-12/(1-r^2)^2]
++(3+r^2-2r)(4-2r)/2$, which reduce to the middle expression.
+By (95.11) and (97.3), $L_s(p;r,0)=\eta$. Completing the square in
+(95.3) using (97.6) now gives the exact identity
+
+$$
+L_s(p;u,v)-\eta=A(u-r)^2+Bv\le0
+\qquad(u,v\in[0,1]).
+\tag{97.7}
+$$
+
+This is the bound against all decoders, including those not in (94.1).
+Together with (97.3) and (95.9)–(95.10), it proves
+
+$$
+\boxed{\delta_2
+=1-\frac3{7+r_*^2-4r_*+4/(1-r_*^2)}}.
+\tag{97.8}
+$$
+
