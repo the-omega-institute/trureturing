@@ -162,13 +162,13 @@ private lemma coeff_lower_shift (s : ℝ) {c : ℝ} (hc : 0 < c) (n : ℕ) :
   have hrepl : (ascPochhammer ℝ n).eval (c + 2) =
       ((c + 1 + n) * (ascPochhammer ℝ n).eval (c + 1)) / (c + 1) := by
     apply (eq_div_iff hc1).mpr
-    convert hrel1 using 1 <;> ring
+    simpa only [show c + 1 + 1 = c + 2 by ring, mul_comm] using hrel1
   simp only [kummerCoeff, ascPochhammer_succ_left, Polynomial.eval_mul,
     Polynomial.eval_comp, Polynomial.eval_X, Polynomial.eval_add, Polynomial.eval_one,
     Nat.factorial_succ, Nat.cast_mul, Nat.cast_add, Nat.cast_one]
   rw [show c + 1 + 1 = c + 2 by ring, hrepl]
   field_simp
-  <;> ring
+  ring
 
 /-- A contiguous relation shifting the lower parameter. -/
 theorem kummer_contiguous (s : ℝ) {c : ℝ} (hc : 0 < c) (x : ℝ) :
@@ -187,5 +187,58 @@ theorem kummer_contiguous (s : ℝ) {c : ℝ} (hc : 0 < c) (x : ℝ) :
   rw [he, hsum1.tsum_add hsum2, tsum_mul_left]
   dsimp only [kummer]
   ring
+
+private lemma coeff_ode (s : ℝ) {c : ℝ} (hc : 0 < c) (n : ℕ) :
+    s / c * ((s + 1) / (c + 1) * kummerCoeff (s + 2) (c + 2) n) +
+      c * (s / c * kummerCoeff (s + 1) (c + 1) (n + 1)) -
+      s / c * kummerCoeff (s + 1) (c + 1) n - s * kummerCoeff s c (n + 1) = 0 := by
+  have hd := coeff_deriv (s + 1) (by linarith : 0 < c + 1) n
+  have hd0 := coeff_deriv s hc n
+  have hr := coeff_succ (s + 1) (by linarith : 0 < c + 1) n
+  have hn : (n : ℝ) + 1 ≠ 0 := by positivity
+  have hcn : c + 1 + (n : ℝ) ≠ 0 := by positivity
+  have hs2 : s + 1 + 1 = s + 2 := by ring
+  have hc2 : c + 1 + 1 = c + 2 := by ring
+  rw [hs2, hc2] at hd
+  rw [← hd, hr]
+  have hk : kummerCoeff s c (n + 1) =
+      (s / c * kummerCoeff (s + 1) (c + 1) n) / (n + 1) := by
+    exact (eq_div_iff hn).mpr (by nlinarith [hd0])
+  rw [hk]
+  field_simp
+  ring
+
+/-- Kummer's differential equation with both derivatives written as shifted series. -/
+theorem kummer_ode (s : ℝ) {c : ℝ} (hc : 0 < c) (x : ℝ) :
+    x * (s / c * ((s + 1) / (c + 1) * kummer (s + 2) (c + 2) x)) +
+      (c - x) * (s / c * kummer (s + 1) (c + 1) x) - s * kummer s c x = 0 := by
+  have htail (t d : ℝ) (hd : 0 < d) :
+      HasSum (fun n : ℕ => kummerCoeff t d (n + 1) * x ^ (n + 1)) (kummer t d x - 1) := by
+    have h := ((summable_nat_add_iff 1).mpr (summable_kummer t d x hd)).hasSum
+    convert h using 1
+    rw [kummer_tail t hd x]
+    ring
+  have h2 := (summable_kummer (s + 2) (c + 2) x (by linarith)).hasSum
+  have h1 := (summable_kummer (s + 1) (c + 1) x (by linarith)).hasSum
+  have h1t := htail (s + 1) (c + 1) (by linarith)
+  have h0t := htail s c hc
+  have H := (((h2.mul_left ((s + 1) / (c + 1))).mul_left (s / c)).mul_left x).add
+    ((h1t.mul_left (s / c)).mul_left c)
+  have H := (H.sub ((h1.mul_left (s / c)).mul_left x)).sub (h0t.mul_left s)
+  have Hz : HasSum (fun _ : ℕ => (0 : ℝ))
+      (x * (s / c * ((s + 1) / (c + 1) * kummer (s + 2) (c + 2) x)) +
+        c * (s / c * (kummer (s + 1) (c + 1) x - 1)) -
+        x * (s / c * kummer (s + 1) (c + 1) x) - s * (kummer s c x - 1)) := by
+    convert H using 1
+    · ext n
+      have he := congrArg (fun z : ℝ => z * x ^ (n + 1)) (coeff_ode s hc n)
+      rw [pow_succ] at he
+      simp only [pow_succ]
+      convert he.symm using 1 <;> ring
+    · rfl
+  have he := Hz.unique hasSum_zero
+  have hc0 := hc.ne'
+  field_simp at he ⊢
+  linear_combination he
 
 end D5.S3.Analytic.KummerRatio.Series
