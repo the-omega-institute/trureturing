@@ -193,7 +193,7 @@ private lemma vlen_add_le (u v : Fin 3 → ℝ) : vlen (u + v) ≤ vlen u + vlen
 private lemma vlen_smul (c : ℝ) (v : Fin 3 → ℝ) : vlen (c • v) = |c| * vlen v := by
   rw [vlen_eq_norm, vlen_eq_norm, WithLp.toLp_smul, norm_smul, Real.norm_eq_abs]
 
-private lemma vlen_nonneg (v : Fin 3 → ℝ) : 0 ≤ vlen v := Real.sqrt_nonneg _
+lemma vlen_nonneg (v : Fin 3 → ℝ) : 0 ≤ vlen v := Real.sqrt_nonneg _
 
 private lemma blochVec_add (X Y : Matrix (Fin 2) (Fin 2) ℂ) :
     blochVec (X + Y) = blochVec X + blochVec Y := by
