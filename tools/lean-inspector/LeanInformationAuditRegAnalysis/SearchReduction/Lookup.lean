@@ -73,7 +73,9 @@ private unsafe def lookupExactPass (fallback : Bool) (table : LookupTable) (goal
   let context ← readThe Core.Context
   let limit := if context.maxHeartbeats == 0 then none
     else some (context.initHeartbeats + context.maxHeartbeats)
+  let indexStart ← IO.monoMsNow
   let candidates ← DiskLookup.queryMature index type limit fallback
+  lookupPhase s!"lookup/index ms={(← IO.monoMsNow) - indexStart} fallback={fallback}"
   checkSystem "lookup.membership-index"
   let mut trace : LookupTrace := {complete := candidates.complete && table.complete, pages := candidates.pages}
   for entry in candidates.entries do
@@ -215,7 +217,9 @@ private unsafe def lookupLeafPass (fallback : Bool) (table : LookupTable) (goal 
   let context ← readThe Core.Context
   let limit := if context.maxHeartbeats == 0 then none
     else some (context.initHeartbeats + context.maxHeartbeats)
+  let indexStart ← IO.monoMsNow
   let candidates ← DiskLookup.queryMature index (← goal.getType) limit fallback
+  lookupPhase s!"lookup/index ms={(← IO.monoMsNow) - indexStart} fallback={fallback}"
   checkSystem "lookup.candidate-index"
   let trace ← candidates.entries.foldlM (init := ({complete := candidates.complete && table.complete, pages := candidates.pages} : LookupTrace)) fun (trace : LookupTrace) entry => do
     if trace.source?.isSome then return trace

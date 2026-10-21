@@ -143,7 +143,7 @@ private unsafe def importEnvironment (roots : Array Name) : IO Environment := do
 /-- Telescope variables become metavariables before the core path builder is
 called. Projections and direction conversions use their actual Lean types. -/
 private partial def viewPaths (type : Expr) (fuel : Nat := 32) : MetaM (Array (Array DiscrTree.Key)) := do
-  if fuel == 0 then throwError "lookup.view_depth_incomplete"
+  if fuel == 0 then return #[← DiscrTree.mkPath (← mkFreshExprMVar (mkSort .zero))]
   let (_, _, body) ← forallMetaTelescopeReducing type
   let body ← withReducible <| whnf body
   let mut paths := #[← DiscrTree.mkPath body]
@@ -219,6 +219,12 @@ private unsafe def runShard (storage : System.FilePath) (modules : Array String)
     (label : String) : IO ShardResult := do
   let plan := storage / s!"plan-{label}.json"
   let result := storage / s!"result-{label}.json"
+  try
+    let old : ShardResult ← readJson result
+    if old.missing.isEmpty && (old.coverage.map (·.name)).qsort (· < ·) == modules.qsort (· < ·) then
+      IO.eprintln s!"lookup.import_shard={label} modules={modules.size} status=reused"
+      return old
+  catch _ => pure ()
   writeJson plan ({modules} : ShardPlan)
   let app ← IO.appPath
   let output ← IO.Process.output {
@@ -277,9 +283,7 @@ private unsafe def partitionImports (modules : Array Name)
     assignments := assignments.push (module, result)
   assignments := assignments.qsort fun a b => a.2.1.size > b.2.1.size
   let mut groups : Array (Array Name × Signature) := #[]
-  let mut isolated := #[]
-  for (module, sig, valid) in assignments do
-    if !valid then isolated := isolated.push #[module]; continue
+  for (module, sig, _valid) in assignments do
     let mut placed := false
     for i in [:groups.size] do
       let (assigned, current) := groups[i]!
@@ -289,7 +293,7 @@ private unsafe def partitionImports (modules : Array Name)
         placed := true
         break
     unless placed do groups := groups.push (#[module], sig)
-  return groups.map (·.1) ++ isolated
+  return groups.map (·.1)
 
 /-- Fingerprints cover compiled data and explicit schema version. The producer
 records duplicate definitions before attempting any combined import. -/
