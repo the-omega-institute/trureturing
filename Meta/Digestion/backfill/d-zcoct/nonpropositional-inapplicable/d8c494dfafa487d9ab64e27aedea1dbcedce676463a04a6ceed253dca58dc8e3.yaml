@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:d8c494dfafa487d9ab64e27aedea1dbcedce676463a04a6ceed253dca58dc8e3
+  normalized_sha256: sha256:d8c494dfafa487d9ab64e27aedea1dbcedce676463a04a6ceed253dca58dc8e3
+cas_ref: sha256:d8c494dfafa487d9ab64e27aedea1dbcedce676463a04a6ceed253dca58dc8e3
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 待识别桥的最后一个枚举项及严格识别任务说明，不声称该识别成立。
+    previous_atom_id: f8132c59bf21f4499cd1c52fb2f9a61ea9c575b1e85a36f314cf05bdd171d5c6
+    next_atom_id: 338b8d80c26ce38c216f62288e4648b96633280163c3bc4336153b49c48638b3
