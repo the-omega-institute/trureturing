@@ -1,0 +1,9 @@
+fingerprints:
+  raw_sha256: sha256:0e4a8d2aca532def261d988116f2e63c902e65c5d42c07394fcc8307e8c012db
+  normalized_sha256: sha256:0e4a8d2aca532def261d988116f2e63c902e65c5d42c07394fcc8307e8c012db
+cas_ref: sha256:0e4a8d2aca532def261d988116f2e63c902e65c5d42c07394fcc8307e8c012db
+coverage_gids:
+  - gid: D5/S3/Factorization/Dedekind/GaloisScalarHeight.scalar_mul_height_galois
+    target_statement_id: sha256:ed4a4b4277de3d7c99d8a7d7c90670df611e49abc40b538b03dde9ee592d4042
+receipts:
+  unresolved_subitems: []

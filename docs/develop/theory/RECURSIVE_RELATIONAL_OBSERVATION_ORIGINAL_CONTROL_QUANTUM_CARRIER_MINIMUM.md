@@ -1539,3 +1539,661 @@ Physical realization, calibration acquisition, approximate delayed
 programming and a fully acquired closed observer remain unresolved.
 
 ## 追加锚（本行以下为增补区）
+
+## 11. Four-actual-state stability and approximate delayed joint retention
+
+**Definition 11.1 (the same source and a stated accuracy extension).** Fix
+exactly the calibrated double-wall source of Definition 9.1. Thus
+$Z=r=1/2$, $c=1/4$, $k=1/8$, all $\theta_i=0$, and the normalized
+live specimen is
+
+$$
+\psi_{\beta,m}=\frac{e_2}{\sqrt2}
+ +\frac{e^{-i\beta}}2\bigl(U_++(-1)^mU_-\bigr),
+\qquad \rho_{\beta,m}=|\psi_{\beta,m}\rangle\langle\psi_{\beta,m}|,
+\qquad (\beta,m)\in\mathbb R\times\mathbb Z.
+\tag{QC.57}
+$$
+
+The underlying real history still has the full signed winding $m$;
+equality of specimen densities does not identify those histories. The
+mode order, negative phase convention, fixed positive preparation and
+original regularity alternatives are those of §§1–4. In particular the
+four actual inputs at $(\beta,m)=(0,0),(\pi,0),(\pi/2,1),(3\pi/2,1)$
+are precisely Proposition 4.3's five-unit histories, with common height
+waveform, rectangle heights $0,8\pi,0,8\pi$, support margin $1/16$
+and canonical live probability $1/3$. Their height speed is at most
+$1/16$, phase speed at most $8\pi$ and phase variation at most $18\pi$.
+These source facts and the full labelled instrument are reused. Earlier
+failures keep their actual first time, one of the five mode names and
+absorbing successor $f$; no retry or extra specimen is introduced.
+
+For a fixed integer $N\geq2$, command $j\in\{1,\ldots,N\}$ is
+actually received before encoding. Every $j$ may accompany every unknown
+$\beta,m$. After the retention cut, a bit $b\in\{0,1\}$ is supplied.
+The requested one-unit tail is exactly (QC.49), with
+$C_j=j/(N+1)$ and
+$U_j=\operatorname{diag}(e^{-iC_j/4},e^{iC_j/4},1)$ on
+$(U_+,U_-,e_2)$. Its relative phase is $bC_jt$; its actual phase is
+$\chi_{\rm old}+bC_jt$. Both wait and execute are domain-legal and
+permitted at the known height, have margin $1/8$, zero height speed,
+phase speed and variation at most one, and zero canonical hazard. The
+unknown old real phase lift is not read. Command reception, retention,
+late choice and the one-unit endpoint occur in that order.
+
+Retain Definition 9.2's arbitrary joint, unassisted factorization:
+
+$$
+\mathcal E_j:M_3\longrightarrow\mathcal B,
+\qquad \mathcal D_b:\mathcal B\longrightarrow M_3,
+\qquad
+\mathcal B=\bigoplus_{\alpha=1}^n M_{d_\alpha},
+\qquad D=\sum_{\alpha=1}^n d_\alpha<\infty.
+$$
+
+All maps are deterministic CPTP. The two decoders are common to every
+$j,\beta,m$. No product data/programme form or protected-subsystem
+normal form is assumed. Encoder block branches are CP and need not be
+TP. The received command may affect the whole encoder. Every system
+usable across retention must factor through $\mathcal B$, including any
+retained command information, controller or policy state, persistent
+randomness, source-bearing timing, receiver share or returned environment.
+There is no extra history-correlated helper or accessible archive at the
+encoder input, surviving command dial, bypass or assisting reference.
+Input-independent local ancillas are absorbed into the channels. A genuine
+spectator reference is untouched and unavailable to these channels.
+Counting an assisting archive does not by itself prove this unassisted
+input factorization.
+
+The sole replacement of (QC.50) is the uniform endpoint requirement
+
+$$
+\sup_{\substack{1\leq j\leq N,\ b\in\{0,1\}\\
+                 \beta\in\mathbb R,\ m\in\mathbb Z}}
+\frac12\left\|
+ \mathcal D_b\mathcal E_j(\rho_{\beta,m})
+ -U_j^b\rho_{\beta,m}(U_j^b)^\dagger
+\right\|_1\leq\epsilon,
+\qquad 0\leq\epsilon\leq1.
+\tag{QC.58}
+$$
+
+Here $\|X\|_1=\operatorname{tr}\sqrt{X^\dagger X}$, and the comparison
+is on the normalized live qutrit at the declared endpoint. Every encoding
+outcome is included. There is no abort, postselection, additional allowed
+failure or command-report output. This is a specified approximation of the
+same delayed task, not an identification of all possible error criteria.
+
+**Theorem 11.2 (actual-source dimension necessity and reference estimate).**
+Under Definition 11.1 put
+
+$$
+\begin{aligned}
+\kappa&=\frac{2-\sqrt2}{8},&
+ r_\epsilon&=\sqrt{\epsilon/\kappa},&
+ t_\epsilon&=2r_\epsilon+r_\epsilon^2,\\
+s_N&=\sqrt{1-\left(\frac{1+2\cos(1/(4(N+1)))}3\right)^2},&
+ \delta_\epsilon&=\min\{1,r_\epsilon+r_\epsilon^2/3\}.
+\end{aligned}
+\tag{QC.59}
+$$
+
+Then $s_N>0$ and every such code satisfies
+
+$$
+D\ \geq\
+\frac{9N}{(\sqrt3+t_\epsilon)^2
+ +(N-1)t_\epsilon^2(1+2/s_N)^2}.
+\tag{QC.60}
+$$
+
+Moreover, for every fixed $j,b$, every finite-dimensional untouched
+reference $R$ and every density matrix $\xi$ on $\mathbb C^3\otimes R$,
+
+$$
+\frac12\left\|
+ ((\mathcal D_b\mathcal E_j)\otimes\operatorname{id}_R)(\xi)
+ -(\operatorname{Ad}_{U_j^b}\otimes\operatorname{id}_R)(\xi)
+\right\|_1\leq\delta_\epsilon.
+\tag{QC.61}
+$$
+
+Both conclusions already follow if (QC.58) is imposed just on the four
+actual inputs named in Definition 11.1. Equation (QC.61) is a derived
+all-input reference estimate, not an extra source-preparation or
+all-input-accuracy assumption. The dimension bound is necessary and is
+not claimed optimal, sufficient, or a sharp capacity for prescribed block
+sizes. It counts $\sum_\alpha d_\alpha$, not the matrix-space dimension
+$\sum_\alpha d_\alpha^2$.
+
+Proof. We use the mature Kraus/Stinespring representation, Hilbert–Schmidt
+Cauchy–Schwarz and positive-matrix rank bound. The source-specific
+calculation connecting them to the delayed task is given in full.
+
+First use the orthonormal proof coordinates
+
+$$
+z=e_2,\qquad x=(U_++U_-)/\sqrt2,\qquad
+ y=-i(U_+-U_-)/\sqrt2.
+$$
+
+The four actual vectors, in their stated order, are
+$(z+x)/\sqrt2,(z-x)/\sqrt2,(z+y)/\sqrt2,(z-y)/\sqrt2$.
+This basis change is an algebraic device; it grants no additional
+physical preparations or controls. For any complex operator $Q$ on the
+qutrit, write $q_{uv}=\langle u,Qv\rangle$, using inner products conjugate
+linear in their first argument, and define
+
+$$
+v(Q)=\frac14\sum_{\phi\in\{(z+x)/\sqrt2,(z-x)/\sqrt2,
+                           (z+y)/\sqrt2,(z-y)/\sqrt2\}}
+ \bigl(\|Q\phi\|^2-|\langle\phi,Q\phi\rangle|^2\bigr).
+$$
+
+Expanding the two plus/minus pairs cancels their odd terms and gives
+
+$$
+\begin{aligned}
+v(Q)={}&\frac{|q_{xx}-q_{zz}|^2+|q_{yy}-q_{zz}|^2}{8}
+       +\frac{|q_{xy}|^2+|q_{yx}|^2}{4}\\
+ &+\frac{3|q_{xz}|^2+|q_{zx}|^2
+                 -2\operatorname{Re}(\overline{q_{xz}}q_{zx})}{8}\\
+ &+\frac{3|q_{yz}|^2+|q_{zy}|^2
+                 -2\operatorname{Re}(\overline{q_{yz}}q_{zy})}{8}.
+\end{aligned}
+\tag{QC.62}
+$$
+
+For example the two $z,x$ probes contribute, before the overall factor
+$1/2$ for this pair,
+$(\|Qz\|^2+\|Qx\|^2)/2
+-(|q_{zz}+q_{xx}|^2+|q_{zx}+q_{xz}|^2)/4$.
+Adding the analogous $z,y$ contribution proves (QC.62), including its
+complex cross terms. Adding a scalar identity changes none of these
+residual variances. On trace-zero diagonal matrices the quadratic form
+in (QC.62), relative to squared Frobenius norm, has eigenvalues $1/8$
+and $3/8$: orthogonal diagonal directions are $(1,-1,0)$ and
+$(1,1,-2)$ in the order $(x,y,z)$. The $xy,yx$ entries have coefficient
+$1/4$. Each remaining two-entry form has matrix
+
+$$
+\frac18\begin{pmatrix}3&-1\\-1&1\end{pmatrix},
+\qquad\text{eigenvalues }\frac{2-\sqrt2}{8},\frac{2+\sqrt2}{8}.
+$$
+
+These subspaces are orthogonal also over the complex scalars. Thus, with
+$\|Q\|_F^2=\operatorname{tr}(Q^\dagger Q)$,
+
+$$
+v(Q)\geq\kappa\left\|Q-\frac{\operatorname{tr}Q}{3}I_3\right\|_F^2
+\qquad\text{for every complex }Q.
+\tag{QC.63}
+$$
+
+Four projectors are not being treated as a linearly informationally
+complete operator family. Positivity and the quadratic estimate are the
+additional mechanism.
+
+Fix $j,b$ and correct its target unitary on the output, obtaining the
+CPTP map
+$\mathcal T_{bj}=\operatorname{Ad}_{(U_j^b)^\dagger}
+\mathcal D_b\mathcal E_j$.
+For any of the four actual $\phi$, the two-outcome measurement with effect
+$|\phi\rangle\langle\phi|$ and (QC.58) imply
+
+$$
+0\leq1-\langle\phi,\mathcal T_{bj}
+ (|\phi\rangle\langle\phi|)\phi\rangle\leq\epsilon.
+$$
+
+Take any finite Kraus family $Q_s=a_sI_3+R_s$ of $\mathcal T_{bj}$,
+where $a_s=\operatorname{tr}(Q_s)/3$ and $\operatorname{tr}R_s=0$.
+Trace preservation gives $\sum_s\|Q_s\phi\|^2=1$. Averaging the
+preceding survival defects therefore gives $\sum_s v(Q_s)\leq\epsilon$.
+By (QC.63) and then by the trace of the TP identity,
+
+$$
+S_{bj}:=\sum_s\|R_s\|_F^2\leq r_\epsilon^2,
+\qquad
+\sum_s|a_s|^2=1-S_{bj}/3\leq1.
+\tag{QC.64}
+$$
+
+The latter equality follows from
+$3=\sum_s\|Q_s\|_F^2=3\sum_s|a_s|^2+S_{bj}$;
+the trace-zero cross terms vanish. In particular it applies to the
+composite Kraus families coming from the actual common decoders.
+
+Represent $\mathcal B$ as block-diagonal matrices on
+$\mathcal H_B=\bigoplus_\alpha\mathbb C^{d_\alpha}$ of dimension $D$.
+Extend each decoder to $M_D$ by first pinching onto these blocks. This
+is a mathematical CPTP extension and supplies no accessible interblock
+coherence. Choose branch-supported encoder Kraus operators
+$E_{ja}:\mathbb C^3\to\mathcal H_B$ with
+$\sum_aE_{ja}^\dagger E_{ja}=I_3$.
+The index $a$ includes the encoder block and its Kraus index. Let $A_k$
+and $B_k$ be Kraus families for the extended $\mathcal D_0$ and
+$\mathcal D_1$ respectively; each family satisfies its own TP identity
+on $\mathcal H_B$. The two index sets need not have the same size.
+By (QC.64) write
+
+$$
+A_kE_{ja}=a_{jka}I_3+R_{jka},\qquad
+B_kE_{ja}=U_j(b_{jka}I_3+S_{jka}),
+\tag{QC.65}
+$$
+
+where for every $j$ separately
+
+$$
+\sum_{k,a}|a_{jka}|^2\leq1,\quad
+\sum_{k,a}\|R_{jka}\|_F^2\leq r_\epsilon^2,
+\qquad
+\sum_{k,a}|b_{jka}|^2\leq1,\quad
+\sum_{k,a}\|S_{jka}\|_F^2\leq r_\epsilon^2.
+\tag{QC.66}
+$$
+
+Each sum uses its own decoder's Kraus indices. No individual encoder
+block has been assumed trace preserving.
+
+For any $j,l$, consider the single cross-command array
+$G_{jl,ac}=E_{ja}^\dagger E_{lc}$ and put $W_{jl}=U_j^\dagger U_l$.
+Applying the two decoder TP identities to the same product gives
+
+$$
+\begin{aligned}
+G_{jl,ac}&=\lambda_{ac}I_3+X_{ac}
+         =\nu_{ac}W_{jl}+Y_{ac},\\
+\lambda_{ac}&=\sum_k\overline{a_{jka}}a_{lkc},\qquad
+\nu_{ac}=\sum_k\overline{b_{jka}}b_{lkc},\\
+X_{ac}&=\sum_k\bigl(\overline{a_{jka}}R_{lkc}
+                  +a_{lkc}R_{jka}^\dagger
+                  +R_{jka}^\dagger R_{lkc}\bigr),\\
+Y_{ac}&=\sum_k\bigl(\overline{b_{jka}}W_{jl}S_{lkc}
+                  +b_{lkc}S_{jka}^\dagger W_{jl}
+                  +S_{jka}^\dagger W_{jl}S_{lkc}\bigr).
+\end{aligned}
+\tag{QC.67}
+$$
+
+Suppressing $j,l$ on $\lambda,\nu,X,Y$ does not change these common
+indices. Give an operator-valued array the Hilbert norm
+$\|X\|_{\rm arr}^2=\sum_{a,c}\|X_{ac}\|_F^2$.
+For the first linear term, Cauchy–Schwarz, followed by summation, yields
+
+$$
+\begin{aligned}
+\sum_{a,c}\left\|\sum_k\overline{a_{jka}}R_{lkc}\right\|_F^2
+&\leq\sum_{a,c}
+  \left(\sum_k|a_{jka}|^2\right)
+  \left(\sum_k\|R_{lkc}\|_F^2\right)\\
+&=\left(\sum_{k,a}|a_{jka}|^2\right)
+  \left(\sum_{k,c}\|R_{lkc}\|_F^2\right)
+\leq r_\epsilon^2.
+\end{aligned}
+$$
+
+The other linear term has the same bound with $j,l$ exchanged.
+For the quadratic term, stack the $R_{jka}$ into a rectangular matrix
+$\mathsf R_j$ whose row index is $(k,\text{output coordinate})$ and
+column index is $(a,\text{input coordinate})$. Then
+$\|\mathsf R_j\|_F^2=\sum_{k,a}\|R_{jka}\|_F^2$, and the $(a,c)$
+block of $\mathsf R_j^\dagger\mathsf R_l$ is precisely
+$\sum_kR_{jka}^\dagger R_{lkc}$. Hence its array norm is at most
+$\|\mathsf R_j\|_F\|\mathsf R_l\|_F\leq r_\epsilon^2$.
+For $Y$ the same stack has the intervening unitary
+$I\otimes W_{jl}$, so its Frobenius estimates are unchanged. The
+triangle inequality now proves
+
+$$
+\|X\|_{\rm arr}\leq t_\epsilon,\qquad
+\|Y\|_{\rm arr}\leq t_\epsilon.
+\tag{QC.68}
+$$
+
+This step uses arbitrary joint encoders and two fixed decoders. It does
+not replace the encoder by a data tensor programme or by an exact
+protected subsystem.
+
+For $j\ne l$, the complex Hilbert–Schmidt lines generated by $I_3$ and
+$W_{jl}$ have sine
+
+$$
+s_{jl}=\sqrt{1-|\operatorname{tr}W_{jl}/3|^2},\qquad
+\operatorname{tr}W_{jl}=1+2\cos((C_j-C_l)/4).
+$$
+
+Since $1/(N+1)\leq|C_j-C_l|<1$, the trace is positive and decreases
+with the absolute difference on this interval. Consequently
+$s_{jl}\geq s_N>0$. Project (QC.67) orthogonally off the line of
+$W_{jl}$, separately at each $(a,c)$. Both $I_3,W_{jl}$ have Frobenius
+norm $\sqrt3$, so
+
+$$
+\sqrt3\,s_{jl}\|\lambda\|_F
+ \leq\|Y-X\|_{\rm arr}\leq2t_\epsilon,
+\qquad
+\|G_{jl}\|_{\rm arr}
+ \leq t_\epsilon(1+2/s_N)\quad(j\ne l).
+\tag{QC.69}
+$$
+
+Here $\|\lambda\|_F^2=\sum_{a,c}|\lambda_{ac}|^2$.
+For $j=l$, $\lambda$ is a positive Gram matrix with trace
+$\sum_{k,a}|a_{jka}|^2\leq1$. Its eigenvalues are nonnegative, so
+$\|\lambda\|_F\leq\operatorname{tr}\lambda\leq1$. Therefore
+
+$$
+\|G_{jj}\|_{\rm arr}\leq\sqrt3+t_\epsilon.
+\tag{QC.70}
+$$
+
+At positive error these are overlap estimates, not orthogonality claims.
+
+To count retained dimension, define the mathematical test densities
+$\sigma_j=\mathcal E_j(I_3/3)$ and $H=\sum_j\sigma_j$ on
+$\mathcal H_B$. This evaluates already defined linear channels; it
+neither prepares a new physical source input nor uses copies of the old
+specimen. Each $\sigma_j$ has trace one, and cyclicity of trace gives
+
+$$
+\operatorname{tr}(\sigma_j\sigma_l)
+ =\frac19\sum_{a,c}\|E_{ja}^\dagger E_{lc}\|_F^2
+ =\frac19\|G_{jl}\|_{\rm arr}^2.
+\tag{QC.71}
+$$
+
+The positive matrix $H$ has trace $N$ and rank at most $D$.
+Cauchy–Schwarz on its positive eigenvalues gives
+$N^2\leq D\operatorname{tr}H^2$.
+Equations (QC.69)–(QC.71) give the opposite estimate
+
+$$
+\operatorname{tr}H^2\leq
+\frac{N(\sqrt3+t_\epsilon)^2
+ +N(N-1)t_\epsilon^2(1+2/s_N)^2}{9}.
+$$
+
+Rearrangement proves (QC.60). The classical direct-sum label has already
+been included in $\mathcal H_B$; no separate free classical memory was
+used in this rank argument.
+
+It remains to prove (QC.61). For the corrected channel $\mathcal T_{bj}$,
+use the Kraus decomposition in (QC.64) and its Stinespring isometry
+
+$$
+Vv=\sum_s Q_sv\otimes|s\rangle
+   =v\otimes a+\mathsf Rv,
+\qquad a=\sum_sa_s|s\rangle,
+\qquad \mathsf Rv=\sum_sR_sv\otimes|s\rangle.
+$$
+
+For unit $v$, $\|\mathsf Rv\|^2\leq\sum_s\|R_s\|_F^2=S_{bj}$,
+so $\|\mathsf R\|_{\rm op}\leq r_\epsilon$.
+Write $\alpha=\|a\|$; (QC.64) gives
+$\alpha^2=1-S_{bj}/3$. If $\alpha>0$, the isometry
+$V_0v=v\otimes(a/\alpha)$ dilates the identity channel, and
+
+$$
+\|V-V_0\|_{\rm op}
+ \leq r_\epsilon+(1-\alpha)
+ =r_\epsilon+\frac{S_{bj}}{3(1+\alpha)}
+ \leq r_\epsilon+r_\epsilon^2/3.
+\tag{QC.72}
+$$
+
+For unit vectors $u,v$, the half trace distance of their pure densities
+is $\sqrt{1-|\langle u,v\rangle|^2}\leq\|u-v\|$.
+Tensor (QC.72) with the identity on a reference, apply it to a purification
+of $\xi$, and trace out the dilation environment and the purifying
+register. Trace-norm contraction proves the bound in (QC.61) for the
+corrected target; undoing the output unitary proves its stated form.
+If $\alpha=0$, then $S_{bj}=3\leq r_\epsilon^2$, and the capped bound
+one is already trivial. In every other case where the right side of
+(QC.72) exceeds one, use the universal half-trace bound one. This proves
+$\delta_\epsilon$ in all cases and completes the theorem. $\square$
+
+**Corollary 11.3 (a positive finite-catalogue threshold).** Define
+
+$$
+\begin{aligned}
+A_N&=1+2/s_N,\qquad B_N=1+(N-1)A_N^2,\\
+T_N&=\frac{\sqrt{3+3B_N/(3N-1)}-\sqrt3}{B_N},\\
+\epsilon_N&=\kappa\bigl(\sqrt{1+T_N}-1\bigr)^2>0.
+\end{aligned}
+\tag{QC.73}
+$$
+
+If $0\leq\epsilon<\epsilon_N$, every code in Definition 11.1 has
+$D\geq3N$. This is a sufficient small-error condition for that necessary
+integer dimension, not an optimal error threshold or an approximate
+capacity theorem.
+
+Proof. The denominator in (QC.60) is
+$3+2\sqrt3\,t_\epsilon+B_Nt_\epsilon^2$.
+Its equality to $9N/(3N-1)$ has the unique positive root $T_N$.
+Also $t_\epsilon=2r_\epsilon+r_\epsilon^2$ is strictly increasing in
+$r_\epsilon\geq0$, and its inverse at $T_N$ is
+$\sqrt{1+T_N}-1$. Thus $\epsilon<\epsilon_N$ makes the lower bound
+in (QC.60) strictly greater than $3N-1$. Since $D$ is an integer,
+$D\geq3N$. The threshold depends on $N$ and its command separation;
+no fixed-positive-error continuum exclusion follows. $\square$
+
+**Corollary 11.4 (conditional complete finite continuation).** At the
+one-unit endpoint, suppose the compared actual full input ports have
+joint states $\Omega,\Omega^\star$ with
+$\frac12\|\Omega-\Omega^\star\|_1\leq\delta_\epsilon$.
+They include the specimen, live/stopped status, actual reference and
+archive, source/preparation/epoch identity, height, clock and units,
+calibration, permissions, pending controller and every acquired selection
+and update input. Any quantum parts and correlations are included in this
+joint premise. Suppose a common supplied finite lawful continuation
+$\mathcal F$ acts on these very ports, with complete recorded outputs
+and all successors. Then
+
+$$
+\frac12\|\mathcal F(\Omega)-\mathcal F(\Omega^\star)\|_1
+ \leq\delta_\epsilon.
+\tag{QC.74}
+$$
+
+In particular Theorem 11.2 supplies the joint premise whenever the only
+changed component is its specimen channel and the actual endpoint inputs
+have the form
+
+$$
+\begin{aligned}
+\Omega&=\sum_{j,b,h}p_{jbh}|j,b,h\rangle\langle j,b,h|
+ \otimes((\mathcal D_b\mathcal E_j)\otimes\operatorname{id}_R)
+             (\xi_{jbh}),\\
+\Omega^\star&=\sum_{j,b,h}p_{jbh}|j,b,h\rangle\langle j,b,h|
+ \otimes(\operatorname{Ad}_{U_j^b}\otimes\operatorname{id}_R)
+             (\xi_{jbh}).
+\end{aligned}
+\tag{QC.75}
+$$
+
+Here $p_{jbh}$ is the same actual joint law in both expressions,
+$\xi_{jbh}$ are the same conditional specimen/reference states, $R$ is
+finite-dimensional, and $h$ contains the jointly matching remaining
+classical port fields. Sums may be replaced by integrals of conditional
+states. The displayed $j$ is allowed as a mathematical index for taking
+mixtures. A policy can read it only if that record is actually delivered;
+if it is unavailable, the physical port omits it and the common continuation
+cannot use it. The same rule applies to every field in $h$. A coherent
+superposition of classical command values is not a premise or a conclusion.
+
+The allowed $\mathcal F$ may compose any finite number of the common
+canonical original-control instruments at matching heights and actual
+chronological joins, with the supplied waveform, calibrated Kraus
+actuation, clocks, blank ancillas, recording and permissions of Definition
+1.3. Feedback uses only genuinely available records and the same supplied
+selection/update kernel. Its output contains every terminal quantum
+successor and retained quantum/classical register, every old record,
+no-new-failure or executed-failure status, all five failure names,
+the exact first failure time, the absorbing successor $f$, and every
+visible unexecuted rejection. Old failed histories receive only the
+supplied stopped continuation. Original tails retain finite or zero
+duration, both regularities, matched height and translated real phase;
+there is no past-lift query or unauthorized inverse action.
+
+Proof. Equation (QC.61) bounds each conditional block in (QC.75).
+Convexity, or integration of its uniform bound, gives the stated joint
+premise without replacing any conditional reference state or distribution.
+The same estimate holds after forgetting an analysis-only tag by partial
+trace. If additional quantum/archive fields are used outside this form,
+the full joint premise must instead be established on that actual port;
+a marginal specimen estimate is insufficient.
+
+A common complete instrument, with its classical outcomes retained, is a
+trace-preserving channel into its joint output state space. Trace distance
+contracts under that channel. For classical state-valued measures this is
+the corresponding norm on the full recorded measure, and the same
+contraction follows from its positive, trace-preserving action. A finite
+feedback protocol is a composition of these complete maps and common
+selection/update maps. Domain and permission checks use the matched
+available fields, so their executed and unexecuted branches are the same
+specified service. The source composition supplier gives the literal
+unchanged prefix and translated real tail at each join. This is exactly
+the full-port scope of Instrument Boundaries Theorem 14.1, now using
+contraction of an established joint error in place of exact joint equality.
+It proves (QC.74) without conditioning on future survival or deleting
+failure outputs. $\square$
+
+Only one approximation is propagated in this corollary; subsequent
+channels are common. Repeated approximate re-encoding, different
+calibrations or unmatched legal domains require separate error estimates.
+Conditioning on a rare future success can increase normalized error and
+is not covered by (QC.74). To compare before source preparation, its
+already-stopped branches, weights, first times, modes and joint archives
+must also match. Their unchanged contribution and the common live weight
+then obey convexity; they cannot be silently discarded. The required
+live storage dimension $D$ is not discounted by the preparation survival
+probability $1/3$.
+
+**Proposition 11.5 (exact comparison and positive-error overlap).** At
+$\epsilon=0$, (QC.58) is exactly (QC.50) and (QC.60) gives only
+$D\geq3N$. The stronger existing exact capacity
+$N\leq\sum_\alpha\lfloor d_\alpha/3\rfloor$, its orthogonal occupied
+ranges and nondisturbing command read remain Theorem 9.3. In particular
+for $N=2$ the profile $(4,2)$ has $D=6$ but exact capacity one; (QC.60)
+does not assert its feasibility. The exact slot construction and its
+conditional continuation in Proposition 9.6 remain valid and are not
+new approximate optima.
+
+At positive error, overlapping command encodings are possible within the
+same factorization. Fix any supplied $C_*\in(0,1)$, put
+$U_* =\operatorname{diag}(e^{-iC_*/4},e^{iC_*/4},1)$, and choose
+$\mathcal E_j=\operatorname{id}_{M_3}$,
+$\mathcal D_0=\operatorname{id}_{M_3}$,
+$\mathcal D_1=\operatorname{Ad}_{U_*}$ for every $j$. The wait error
+is zero and the execute error on every actual $\beta,m$ is exactly
+
+$$
+\sqrt{1-\cos^4((C_j-C_*)/8)}.
+\tag{QC.76}
+$$
+
+Thus positive error does not force exact command orthogonality or a
+perfect command-report channel. If execute is irrevocably selected before
+encoding, storing $U_j\rho U_j^\dagger$ in one qutrit solves that
+different task and does not preserve the later wait option.
+
+Proof. The zero-error comparison follows by substitution and the credited
+Theorem 9.3, including its sum-of-floors sufficiency. For the positive-error
+example the two candidate output vectors have overlap
+
+$$
+\langle\psi_{\beta,m},U_*^\dagger U_j\psi_{\beta,m}\rangle
+ =\frac12+\frac14e^{-i(C_j-C_*)/4}
+          +\frac14e^{i(C_j-C_*)/4}
+ =\cos^2((C_j-C_*)/8).
+$$
+
+Their pure-state half trace distance gives (QC.76), independent of
+$\beta,m$. All encoders have the same qutrit image, so their received
+commands cannot be read from this retained image. The early-execute
+example follows by taking its two indicated channels and has no late
+choice. These examples check the error and chronology boundaries; they
+assert no optimal code. $\square$
+
+**Convention 11.6 (suppliers, retained resources and open bridges).** The
+source contract in §§1–10 is used at
+`df50bc9681f5039996ce20e7cd6954931a054a3f`. Its older literal supplier
+pins remain unchanged: §1 uses
+`17ef08588473220560adc4a7fb0775a5f7f238a1`, and §§7–10 use
+`773d4d43b91abd515be1059283d79dd6572fc174`. In particular
+[FiniteRectangleTransport and its signed phase weights](https://github.com/the-omega-institute/trureturing/blob/773d4d43b91abd515be1059283d79dd6572fc174/D5/S3/Quantum/Fibers/FiniteRectangleTransport.lean),
+[its all-signed-sector Scribe application](https://github.com/the-omega-institute/trureturing/blob/773d4d43b91abd515be1059283d79dd6572fc174/Blueprint/D5/S3/Quantum/Fibers/FiniteRectangleTransport.scribe.cs),
+[OriginalControlComposition](https://github.com/the-omega-institute/trureturing/blob/773d4d43b91abd515be1059283d79dd6572fc174/D5/S3/Quantum/Fibers/OriginalControlComposition.lean)
+and [its Scribe](https://github.com/the-omega-institute/trureturing/blob/773d4d43b91abd515be1059283d79dd6572fc174/Blueprint/D5/S3/Quantum/Fibers/OriginalControlComposition.scribe.cs)
+supply the actual positive source paths and real chronological joins.
+The used declarations include `ValidBase`, `probability`, `phaseWeight`,
+`weight_compatible`, `finite_rectangles_realize`, `OriginalControl`,
+`FiniteC1Control` and `concatenate_original`. Their geometric conclusions
+do not install a coherent coding map, waveform generator or actuator.
+
+The following subtraction specifies the mathematical contribution and its
+limits. Repository references in this table use the inquiry revision above,
+except for the explicitly named fixed appendix sample.
+
+| Credited supplier | Used result and limit of transfer |
+| --- | --- |
+| This volume §§2–4 and 9 | Fixed active qutrit, all five failure CP measures, four actual reachable histories, exact rigidity, arbitrary-joint-encoder cross products, sum-of-floors capacity, exact command read and conditional exact slot attainment. The added result is the positive-error bridge (QC.62)–(QC.71) from those actual inputs through two common decoders to (QC.60), together with the derived estimate (QC.61). |
+| [KrausLeftInverseNecessity](https://github.com/the-omega-institute/trureturing/blob/df50bc9681f5039996ce20e7cd6954931a054a3f/D5/S3/Quantum/Recovery/KrausLeftInverseNecessity.lean), `identity_kraus_scalar`, `left_inverse_error_products`; [SparseProbeCoercivity](https://github.com/the-omega-institute/trureturing/blob/df50bc9681f5039996ce20e7cd6954931a054a3f/D5/S3/Quantum/QuantumChannels/SparseProbeCoercivity.lean), `sparse_probe_coercivity` | Exact scalar Kraus products and quantitative scalar-defect control are existing mathematics. The latter uses coordinate probes and a full-support probe; these are not the four actual source states here. The particular quadratic expansion and the two-decoder array calculation are still needed. Reading these sources supplies no new kernel certificate for this section. |
+| [Instrument Boundaries](RECURSIVE_RELATIONAL_OBSERVATION_ORIGINAL_CONTROL_INSTRUMENT_BOUNDARIES.md), Theorem 14.1; [Record Acquisition](RECURSIVE_RELATIONAL_OBSERVATION_ORIGINAL_CONTROL_RECORD_ACQUISITION.md), §17; [Parity Record Transport](RECURSIVE_RELATIONAL_OBSERVATION_ORIGINAL_CONTROL_PARITY_RECORD_TRANSPORT.md), §23; [Causal Programming](RECURSIVE_RELATIONAL_OBSERVATION_ORIGINAL_CONTROL_CAUSAL_PROGRAMMING.md), §12 | Complete matching joint ports, legal original joins, actual archives and paid source/helper/programme interfaces retain their own contracts. Contraction in Corollary 11.4 is a mature intermediate, not an acquired port or a new continuation principle. |
+| [Approximate Coherence Price](RECURSIVE_RELATIONAL_OBSERVATION_APPROXIMATE_COHERENCE_PRICE.md), §§1–3; [Robust Actual Quantum Recovery](AURIC_FIB_ROBUST_ACTUAL_QUANTUM_RECOVERY.md), §§1–4 and 11.2 | The former uses COMPLETE stopped classical-history updates and their defect $\Delta_4$. The latter uses a faithful mixed family and a specified actual-instrument root-fidelity defect. Neither defect is provided by (QC.58); the pure probes here do not satisfy a faithful-anchor premise. A faithful average does not prove the missing defect inequalities or the delayed-memory correspondence. |
+| [Phase Gain and Qutrit Recovery](https://github.com/the-omega-institute/trureturing/blob/718f48862606f2a12a01bf0349a23ee2521010b0/docs/develop/theory/AURIC_OMEGA_PHASE_GAIN_AND_QUTRIT_RECOVERY.md), §§11–14, at the fixed sample `718f48862606f2a12a01bf0349a23ee2521010b0` | Fixed channel-extension phase orbit, common uncertain-arc decoder and supplied input-independent classical phase records have their own recovery and quantization laws. Such records are not free inputs to this arbitrary-joint-encoder task. This is a comparison with that immutable sample, not a statement about current dev. |
+
+Primary literature supplies the following mature mechanisms. These are
+intermediates and comparisons, rather than separately claimed new results.
+
+| Primary source | Precise credited scope |
+| --- | --- |
+| K. Mayer and E. Knill, [*Quantum process fidelity bounds from sets of input states*, 1805.04491v1](https://arxiv.org/html/1805.04491v1), Theorems 1–2 | Connected spanning pure probes certify a unitary, with quantitative certification bounds. The four-state calculation alone is specialized certification, not a new general principle. The added delayed-retention calculation must still connect that certificate to arbitrary joint encoders and two common decoders. |
+| M. A. Nielsen and I. L. Chuang, [*Programmable quantum gate arrays*, quant-ph/9703032v1](https://arxiv.org/html/quant-ph/9703032v1), Eqs. (6)–(10) | Exact deterministic distinct unitary programmes have orthogonal programme vectors under its product data/programme input. That product premise is not imposed on $\mathcal E_j$ here. |
+| M. Hillery, M. Ziman and V. Bužek, [*Approximate programmable quantum processors*, quant-ph/0510161v1](https://arxiv.org/html/quant-ph/0510161v1), §IV, Eqs. (27)–(43), and §V, Eqs. (46)–(53) | Scalar Kraus residuals, their trace normalization, Cauchy–Schwarz, approximate programme overlap/packing and supplied-command binning are mature. Its product-programme cross identity and process-fidelity criterion do not directly give (QC.67) for arbitrary joint encoders under (QC.58). No new-tool or binning-optimum credit is taken here. |
+| C. Bény and O. Oreshkov, [*General conditions for approximate quantum error correction and near-optimal recovery channels*, 0907.5391v4](https://arxiv.org/html/0907.5391v4), Theorem 1 and Corollary 2 | Complementary-channel duality and approximate correction concern a specified code/channel and worst-case entanglement fidelity. They supply neither actual QC acquisition nor the two-decoder dimension correspondence by themselves. |
+| Y. Yang, R. Renner and G. Chiribella, [*Optimal universal programming of unitary gates*, 2007.10363v3](https://arxiv.org/html/2007.10363v3); M. Sedlák et al., [*Storage and retrieval of two unknown unitary channels*, 2410.23376v2](https://arxiv.org/html/2410.23376v2), §II and Proposition 1 | The former studies universal $\mathrm{SU}(d)$ programming and learning/recycling with its supplied gate access; a lower bound for all unitaries does not automatically apply to this smaller task. The latter uses actual unknown-unitary calls followed by fresh data tensor the stored programme. Neither access model is receipt of $j$ with an old unknown QC specimen and a later bit. |
+| [*Intermediate memory costs of quantum channel synthesis with a protected subsystem*, 2610.20536v1](https://arxiv.org/html/2610.20536v1), Eq. (1) and Eqs. (42)–(45) | Its approximate synthesis retains exact subsystem protection and the exact prescribed graph of the first stage. Those hypotheses cannot be inferred from approximate wait recovery. Allowing closure of its programme family does not remove them. |
+
+Stinespring dilation, trace-distance contraction, finite-dimensional
+spectral decomposition and the density-rank/packing estimate are
+`literature-attested`. The source-specific synthesis in Theorem 11.2 is
+`repo-derived` ordinary mathematics. The source comparisons establish no
+worldwide novelty or exhaustive literature absence, and this section makes
+no new Lean/kernel-verification claim.
+
+The retained algebra has an independent operational meaning: it is the
+entire allowed information cut for a pending late choice. $D$ is its
+conditional live Hilbert dimension, not an expected memory obtained by
+multiplying by $1/3$. Source preparation and survival, command reception,
+phase-gate accuracy and synthesis, waveform description, clock and exact
+event precision, calibration, permissions, output records and growing
+archives remain distinct resources. If any of these carries usable
+variable information across retention it must be counted, and its input
+factorization must also be checked. No sharp approximate block profile,
+optimal constants, optimal rate or total physical cost is established.
+The distinct assisted total-guard bound $3M$ in Theorem 7.5 is not
+multiplied by the present $3N$ comparison.
+
+The theorem links one independently specified memory cut to the actual
+preparation/receipt/late-choice order and its lawful boundary. Its mode
+labels and active qutrit remain quantum port coordinates, not a recovered
+spatial body or interior. It recovers neither an arbitrary past clock nor
+an unknown source history. In particular it supplies no approximate
+command read, source/epoch authentication, height sensor, phase-lift or
+winding measurement, waveform or whole-law acquisition, helper-overlap
+calibration, coherent-port acquisition, callable record-dependent action
+outside the stated services, or physical installation of those services.
+Corollary 11.4 assumes the actual matching full port and does not construct
+it. Independently meaningful space, time, boundary and memory views,
+mutual recovery with route agreement and compatible dynamics, an acquired
+closed observer, unbounded continued accuracy, native stationary
+$\alpha/\beta$ memory-rate/cofinality and the independent fixed-Hamiltonian
+quantum minimax retain their original unresolved obligations. This
+finite-catalogue necessity result leaves all earlier exact scopes and
+those full objectives intact.
+
+## 追加锚（本行以下为增补区）

@@ -16,12 +16,14 @@ Direct frozen dependencies: CycleDiagonalUnitPropagation.cycle_diagonal_units_fu
   AndersonSymmetryConverseRefutation.bad; MatrixTracePowerSum.pow_add_two.
 -/
 
+import D5.S3.Combinatorics.Graph.PathCHS.PathCHSNormClosedForm
 import Mathlib.Combinatorics.SimpleGraph.CycleGraph
 import Mathlib.Combinatorics.SimpleGraph.LapMatrix
 import Mathlib.LinearAlgebra.Matrix.NonsingularInverse
 import Mathlib.LinearAlgebra.Matrix.Charpoly.Coeff
 import Mathlib.Analysis.SpecialFunctions.Trigonometric.Chebyshev.Basic
 import Mathlib.Tactic
+import D5.S3.Combinatorics.SpectralGraph.CyclicTridiagonalTransferTrace
 import D5.S3.Combinatorics.Graph.Walks.AndersonDefectSeed
 import D5.S0.Observation.MatrixTracePowerSum
 import Mathlib.RingTheory.AdjoinRoot
@@ -41,14 +43,12 @@ open D5.S3.Combinatorics.Graph.Walks.AndersonDefectSeed
 
 namespace D5.S3.Combinatorics.Graph.Walks.AndersonDefectFamily
 
+open D5.S3.Combinatorics.SpectralGraph.CyclicTridiagonalTransferTrace
+
 /-- The actual graph Hamiltonian, with the ordinary cycle graph Laplacian. -/
 def hamiltonian {K : Type*} [CommRing K] (r m : ℕ) (t : K) :
     Matrix (Fin (r * m)) (Fin (r * m)) K :=
   (SimpleGraph.cycleGraph (r * m)).lapMatrix K + t • Matrix.diagonal (signWord r m)
-
-/-- One step of the scalar Schrodinger recurrence. -/
-def transfer {K : Type*} [Ring K] (d : K) : Matrix (Fin 2) (Fin 2) K :=
-  !![d, -1; 1, 0]
 
 /-- The periodic block is minus followed by r-1 plus signs. -/
 def block {K : Type*} [Ring K] (r : ℕ) (a b : K) : Matrix (Fin 2) (Fin 2) K :=
@@ -105,10 +105,6 @@ private lemma map_hamiltonian {R S : Type*} [CommRing R] [CommRing S]
       simp [hamiltonian, Matrix.map_apply, SimpleGraph.lapMatrix, SimpleGraph.degMatrix,
         SimpleGraph.adjMatrix_apply, Matrix.diagonal, hij, ha]
 
-private lemma transfer_det {K : Type*} [CommRing K] (d : K) :
-    (transfer d).det = 1 := by
-  simp [transfer, Matrix.det_fin_two]
-
 private lemma sl2_power {K : Type*} [CommRing K]
     (B : Matrix (Fin 2) (Fin 2) K) (hdet : B.det = 1) (n : ℕ) :
     B ^ n = (Polynomial.Chebyshev.S K ((n : ℤ) - 1)).eval B.trace • B -
@@ -129,13 +125,6 @@ private lemma sl2_power {K : Type*} [CommRing K]
     rw [h0, h1, h2, h3, chebStep, show s (n : ℤ) = B.trace * s ((n : ℤ) - 1) - s ((n : ℤ) - 2) from by
       simpa [sub_sub] using chebStep ((n : ℤ) - 1)]
     module
-
-private lemma chebS_degree {K : Type*} [Field K] [CharZero K] (n : ℕ) :
-    (Polynomial.Chebyshev.S K (n : ℤ)).natDegree = n := by
-  letI : Invertible (2 : K) := invertibleOfNonzero (by norm_num)
-  rw [Polynomial.Chebyshev.S_eq_U_comp_half_mul_X, Polynomial.natDegree_comp]
-  simp [Polynomial.Chebyshev.natDegree_U_natCast,
-    invOf_eq_inv, show (2 : K) ≠ 0 by norm_num]
 
 private lemma block_trace {K : Type*} [CommRing K] (r : ℕ) (hr : 3 ≤ r) (a b : K) :
     (block r a b).trace =
@@ -207,26 +196,6 @@ private lemma sl2_torsion_of_cos {K : Type*} [Field K] [Algebra ℝ K]
       (2 * Real.cos θ)) • 1 = 1
   rw [hfirst, hsecond]
   simp
-
-private def evolution {K : Type*} [Ring K] (d : ℕ → K) :
-    ℕ → Matrix (Fin 2) (Fin 2) K
-  | 0 => 1
-  | n + 1 => transfer (d n) * evolution d n
-
-private lemma evolution_add {K : Type*} [Ring K] (d : ℕ → K) (n k : ℕ) :
-    evolution d (n + k) = evolution (fun i => d (n + i)) k * evolution d n := by
-  induction k with
-  | zero => simp [evolution]
-  | succ k ih =>
-    change transfer (d (n + k)) * evolution d (n + k) =
-      (transfer (d (n + k)) * evolution (fun i => d (n + i)) k) * evolution d n
-    rw [ih, mul_assoc]
-
-private lemma evolution_det {K : Type*} [CommRing K] (d : ℕ → K) (n : ℕ) :
-    (evolution d n).det = 1 := by
-  induction n with
-  | zero => simp [evolution]
-  | succ n ih => simp [evolution, Matrix.det_mul, transfer_det, ih]
 
 private lemma periodic_evolution {K : Type*} [Ring K] (r m : ℕ) (hr : 0 < r)
     (a b : K) :
@@ -638,8 +607,8 @@ private lemma discriminant_attains (r : ℕ) (hr : 3 ≤ r) (t c : ℂ) :
   let s₁ := Polynomial.Chebyshev.S ℂ ((r - 1 : ℕ) : ℤ)
   let s₂ := Polynomial.Chebyshev.S ℂ ((r - 2 : ℕ) : ℤ)
   let P := s₁ * (Polynomial.X - Polynomial.C (2 * t)) - Polynomial.C 2 * s₂ - Polynomial.C c
-  have h1 : s₁.natDegree = r - 1 := chebS_degree _
-  have h2 : s₂.natDegree = r - 2 := chebS_degree _
+  have h1 : s₁.natDegree = r - 1 := D5.S3.Combinatorics.Graph.PathCHS.PathCHSNormClosedForm.chebS_degree _
+  have h2 : s₂.natDegree = r - 2 := D5.S3.Combinatorics.Graph.PathCHS.PathCHSNormClosedForm.chebS_degree _
   have h₁ : s₁ ≠ 0 := Polynomial.ne_zero_of_natDegree_gt (show 0 < s₁.natDegree by omega)
   have hbig : (s₁ * (Polynomial.X - Polynomial.C (2 * t))).natDegree = r := by
     rw [Polynomial.natDegree_mul h₁ (Polynomial.X_sub_C_ne_zero _),
@@ -762,13 +731,13 @@ private lemma rational_discriminant_degree (r : ℕ) (hr : 3 ≤ r) (t : RatFunc
     have he : (r : ℤ) - 1 = ((r - 1 : ℕ) : ℤ) := by omega
     dsimp [s₁]
     rw [he]
-    exact chebS_degree _
+    exact D5.S3.Combinatorics.Graph.PathCHS.PathCHSNormClosedForm.chebS_degree _
   have hs2 : (s₂.comp a).natDegree = r - 2 := by
     rw [Polynomial.natDegree_comp,ha,mul_one]
     have he : (r : ℤ) - 2 = ((r - 2 : ℕ) : ℤ) := by omega
     dsimp [s₂]
     rw [he]
-    exact chebS_degree _
+    exact D5.S3.Combinatorics.Graph.PathCHS.PathCHSNormClosedForm.chebS_degree _
   have heq : discriminant r t = s₁.comp a * b - Polynomial.C 2 * s₂.comp a := by
     apply Polynomial.funext
     intro x

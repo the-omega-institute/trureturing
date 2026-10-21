@@ -1637,3 +1637,3361 @@ certification. No claim is made for the separate input-dependent Born-weight
 instrument.
 
 ## 追加锚（本行以下为增补区）
+
+## 63. An actual three-step partition with two ambiguous records
+
+**Definition 63.1 (Fixed partition and joint terminal error).** Use the
+actual instrument of Recovery Definition 2.1, its encoded qutrit input and
+its chronological convention from Recovery Theorem 2.2. At horizon three
+fix the terminal partition
+
+$$
+\mathcal P=\{\{001,111\},\{000,101\},\{010\},\{011\},\{100\},\{110\}\}.
+\tag{63.1}
+$$
+
+Every word has mass $1/8$, independently of the input and its untouched
+reference. Write $m_1=m_2=1/4$ for the two pair masses; their conditional
+weights are $1/2,1/2$. Each of the four singleton masses is $1/8$.
+For a cell $j$ let $\mathcal N_j$ be its conditional mixture of
+$\operatorname{Ad}_{Q_h}$. Define
+
+$$
+\varepsilon_{\mathcal P}
+=\min_{(D_j)}\left\|\sum_{j\in\mathcal P}m_jD_j\mathcal N_j
+                         -\operatorname{id}_{M_3}\right\|_\diamond,
+\qquad D_j:M_3\to M_3\ \text{CPTP}.
+\tag{63.2}
+$$
+
+This is the unhalved, all-finite-reference diamond error of one averaged
+channel. Each decoder knows the record but not the hidden member of a
+pair. The minimization includes arbitrary decoders on singleton records.
+It fixes the partition and makes no optimization over controllers or
+partitions. The finite-dimensional sets of channel Choi matrices are
+compact, so the minimum is attained.
+
+**Proposition 63.2 (Actual relative matrices and separate optima).** Put
+$P=|\xi\rangle\langle\xi|$, where
+$\xi=(1,1,1)^{\mathsf T}/\sqrt3$, and $T=\xi^\perp$. In the source basis
+$f_1=(1,-1,0)^{\mathsf T}/\sqrt2$,
+$f_2=(1,1,-2)^{\mathsf T}/\sqrt6$, the pair relatives are
+
+$$
+\begin{aligned}
+R_1&=Q_{001}^\dagger Q_{111}=(V_0^2)^\dagger V_1^2=1\oplus L_1,\\
+L_1&=\begin{pmatrix}
+-1/2&-\sqrt3/4-3i/4\\
+\sqrt3/4-3i/4&-1/2
+\end{pmatrix},\\
+R_2&=Q_{000}^\dagger Q_{101}=1\oplus L_2,\\
+L_2&=\begin{pmatrix}
+5/8&-5\sqrt3/16+9i/16\\
+5\sqrt3/16+9i/16&5/8
+\end{pmatrix}.
+\end{aligned}
+\tag{63.3}
+$$
+
+Their spectra are respectively
+$\{1,e^{2\pi i/3},e^{-2\pi i/3}\}$ and
+$\{1,5/8+i\sqrt{39}/8,5/8-i\sqrt{39}/8\}$.
+The optimal conditional binary errors are $\delta_1=1$ and
+$\delta_2=3/8$. The sum of mass-weighted separate optima, including
+the zero singleton optima, is therefore $11/32$.
+
+**Proof.** The actual qutrit letters, without any replacement by abstract
+unitaries, are
+
+$$
+V_0=\frac12\begin{pmatrix}\sqrt3&i&0\\0&0&\sqrt3+i\\i&\sqrt3&0\end{pmatrix},
+\qquad
+V_1=\frac12\begin{pmatrix}i&\sqrt3&0\\0&0&\sqrt3+i\\\sqrt3&i&0\end{pmatrix}.
+\tag{63.4}
+$$
+
+They are the $V_0,V_1$ of Recovery §2. They are unitary and both send
+$\xi$ to $\lambda\xi$, with $\lambda=(\sqrt3+i)/2$; consequently
+$Q_h\xi=i\xi$ for every history in (63.1). In particular both relatives
+fix $\xi$. Chronology is essential:
+
+$$
+Q_{001}=V_1V_0^2,\quad Q_{111}=V_1^3,\quad
+Q_{000}=V_0^3,\quad Q_{101}=V_1V_0V_1.
+\tag{63.5}
+$$
+
+Canceling the common leftmost $V_1$ in the first pair gives the
+first equality in (63.3), exactly the relative for the chronological
+pair $00,11$ in §61. For an explicit two-dimensional calculation put
+
+$$
+A=\frac14\begin{pmatrix}\sqrt3-i&3+i\sqrt3\\
+3-i\sqrt3&-\sqrt3-i\end{pmatrix},\qquad
+J=\begin{pmatrix}-1&0\\0&1\end{pmatrix}.
+\tag{63.6}
+$$
+
+Recovery (2.1) gives $V_0|_T=A$, $V_1|_T=AJ$. Multiplication of these
+displayed matrices gives
+$L_1=(A^2)^\dagger(AJ)^2$ and
+$L_2=(A^3)^\dagger(AJ)A(AJ)$, with entries (63.3).
+Both determinants are one and their traces are $-1$ and $5/4$.
+Thus their full characteristic polynomials are
+$(x-1)(x^2+x+1)$ and $(x-1)(x^2-5x/4+1)$, which give the stated
+spectra. The spectral polygons have distances zero and $5/8$ from
+the origin. The published binary formula, Theorem 59.2, gives
+$\delta_1=1$ and $\delta_2=1-5/8=3/8$. Singleton unitaries are
+invertible, so their optima are zero. Hence the separate sum is
+$(1/4)(1+3/8)=11/32$. $\square$
+
+## 64. A terminal decoder and an exact common-input upper certificate
+
+**Theorem 64.1 (Strict upper bound for the actual partition).** There
+are system-only terminal CPTP decoders for (63.1) such that
+
+$$
+\varepsilon_{\mathcal P}
+\le\frac{47-8\sqrt{13}}{54}<\frac{11}{32}.
+\tag{64.1}
+$$
+
+The decoders on both ambiguous cells attain their respective conditional
+optima. Nevertheless their averaged error is strictly below the sum of
+those optima. The left inequality is an upper bound, not an equality
+claim for $\varepsilon_{\mathcal P}$.
+
+**Proof.** On the first pair choose the record-dependent mixture
+
+$$
+D_1=\tfrac12\bigl(\operatorname{Ad}_{Q_{001}^\dagger}
+                         +\operatorname{Ad}_{Q_{111}^\dagger}\bigr).
+$$
+
+It does not depend on which hidden history occurred. Its corrected
+conditional channel is
+
+$$
+F_1=D_1\mathcal N_1
+=\tfrac12\operatorname{id}+\tfrac14\operatorname{Ad}_{R_1}
+                              +\tfrac14\operatorname{Ad}_{R_1^\dagger}.
+\tag{64.2}
+$$
+
+In an $R_1$ eigenbasis ordered as $(\xi,e_+,e_-)$ this is a Schur
+multiplier: its diagonal coefficients are one, and every off-diagonal
+coefficient is $1/2+(1/2)\cos(2\pi/3)=1/4$.
+
+For the second pair put $k=\sqrt{13}/4$ and define
+
+$$
+S=P+\frac{2}{\sqrt{13}}(I+R_2)(I-P),\qquad
+D_2=\operatorname{Ad}_{S^\dagger Q_{000}^\dagger}.
+\tag{64.3}
+$$
+
+The polynomial $L_2^2-(5/4)L_2+I_T=0$ implies
+$(I_T+L_2)^2=(13/4)L_2$ and
+$(I_T+L_2)^\dagger(I_T+L_2)=(13/4)I_T$.
+Together with $S\xi=\xi$ these identities prove $S^2=R_2$ and
+$S^\dagger S=I$. Thus $D_2$ is CPTP. Its two corrected branches
+are $S^\dagger$ and $S^\dagger R_2=S$, giving
+
+$$
+F_2=D_2\mathcal N_2
+=\tfrac12\bigl(\operatorname{Ad}_{S^\dagger}+\operatorname{Ad}_S\bigr),
+\qquad
+C_2=\begin{pmatrix}1&k&k\\k&1&5/8\\k&5/8&1\end{pmatrix}.
+\tag{64.4}
+$$
+
+Here $C_2$ is its Schur matrix in an $R_2$ eigenbasis
+$(\xi,u_+,u_-)$. Indeed, if $\cos\theta=5/8$, the eigenvalues
+of $S$ on $T$ are $e^{\pm i\theta/2}$ and
+$\cos(\theta/2)=\sqrt{13}/4$. Use the exact inverse on every
+singleton. The total averaged channel is then
+
+$$
+E_* =\tfrac12\operatorname{id}+\tfrac14F_1+\tfrac14F_2.
+\tag{64.5}
+$$
+
+We bound its error on a common input, allowing an arbitrary finite
+untouched reference. The following elementary positive-semidefinite
+certificate will be applied inside this proof. For $a,b>0$ set
+
+$$
+K=\begin{pmatrix}0&a&a\\a&0&b\\a&b&0\end{pmatrix},\qquad
+Y=\begin{pmatrix}4a^2/b&a&a\\a&b&0\\a&0&b\end{pmatrix}.
+\tag{64.6}
+$$
+
+Writing $v=(2a/\sqrt b,\sqrt b,\sqrt b)^{\mathsf T}$, direct
+multiplication gives
+
+$$
+\begin{aligned}
+Y+K&=vv^\dagger\succeq0,\\
+Y-K&=(4a^2/b)|0\rangle\langle0|
+       +b(|+\rangle-|-\rangle)(\langle+|-\langle-|)\succeq0.
+\end{aligned}
+\tag{64.7}
+$$
+
+The labels $0,+,-$ here denote the three coordinate vectors. For
+$L=\operatorname{diag}(\sqrt{p_0},\sqrt{p_+},\sqrt{p_-})$,
+the triangle inequality applied to
+$LKL=[L(Y+K)L-L(Y-K)L]/2$ gives
+
+$$
+\|LKL\|_1\le\operatorname{Tr}(LYL)
+=\frac{4a^2}{b}p_0+b(p_++p_-).
+\tag{64.8}
+$$
+
+To apply this to a pure input $|\Psi\rangle$, expand it in the
+relevant system eigenbasis as
+$|\Psi\rangle=\sum_r|e_r\rangle\otimes|v_r\rangle$, with
+$p_r=\|v_r\|^2$ and $\sum_rp_r=1$. The nonzero vectors
+$|e_r\rangle\otimes|v_r\rangle/\sqrt{p_r}$ are orthonormal,
+regardless of overlaps between the reference vectors. A Schur error
+with zero diagonal and off-diagonal coefficients $-a,-a,-b$ therefore
+has output unitarily equivalent on its support to $-LKL$, with only
+additional zero singular values. This also covers vanishing $p_r$.
+For both $F_1$ and $F_2$ the first eigenvector is the same $\xi$, so
+
+$$
+p_0=w=\operatorname{Tr}(P\rho_S),\qquad 0\le w\le1,
+\tag{64.9}
+$$
+
+is the same number on the same input. Their two bases on $T$ need
+not agree.
+
+Let $e_j(\Psi)=\|((F_j-\operatorname{id})\otimes\operatorname{id})
+(|\Psi\rangle\langle\Psi|)\|_1$. For $F_1$ use $a=b=3/4$
+in (64.8). Also (64.2), the triangle inequality and diamond norm one
+for CPTP maps give $\|F_1-\operatorname{id}\|_\diamond\le1$.
+Consequently
+
+$$
+e_1(\Psi)\le\min\{1,\tfrac34+\tfrac94w\}.
+\tag{64.10}
+$$
+
+For $F_2$ use $a=1-k$, $b=3/8$ and put
+
+$$
+t=\frac{4a^2}{b}=\frac{58-16\sqrt{13}}3,
+\qquad
+\kappa=b-t=\frac{128\sqrt{13}-455}{24}.
+\tag{64.11}
+$$
+
+Since $0<k<1$ and $b=2a(1+k)>2a$, one has $0<t<b$ and
+$0<\kappa<b$. Thus
+
+$$
+e_2(\Psi)\le tw+b(1-w)=b-\kappa w.
+\tag{64.12}
+$$
+
+In particular $\|F_2-\operatorname{id}\|_\diamond\le3/8$.
+Theorem 59.2 and Proposition 63.2 supply the opposite inequalities
+for $F_1,F_2$, so both displayed decoders attain their conditional
+optima.
+
+Using (64.5) on this same input gives
+
+$$
+\|((E_*-\operatorname{id})\otimes\operatorname{id})
+(|\Psi\rangle\langle\Psi|)\|_1
+\le\frac14\left[\min\{1,\tfrac34+\tfrac94w\}+b-\kappa w\right].
+\tag{64.13}
+$$
+
+The bracket increases with slope $9/4-\kappa>0$ up to $w=1/9$
+and decreases with slope $-\kappa<0$ thereafter. Its maximum is
+$1+b-\kappa/9$. Convexity covers mixed states. The pure-input
+stabilization of the diamond norm for Hermiticity-preserving maps
+[Watrous, Theorems 3.46 and 3.51](https://cs.uwaterloo.ca/~watrous/TQI/TQI.3.pdf)
+then covers every finite reference; Schmidt rank at most three suffices.
+Hence
+
+$$
+\|E_*-\operatorname{id}\|_\diamond
+\le\tfrac14(1+b-\kappa/9)=\frac{47-8\sqrt{13}}{54}.
+$$
+
+Finally
+$11/32-(47-8\sqrt{13})/54=(128\sqrt{13}-455)/864>0$:
+both terms in the numerator comparison are positive, and
+$128^2\cdot13-455^2=5967>0$. This proves (64.1). $\square$
+
+## 65. One common projector lower bound with unrestricted singletons
+
+**Theorem 65.1 (Unrestricted lower bound and resulting bracket).** For
+all terminal CPTP decoder families in Definition 63.1,
+
+$$
+\frac{37-4\sqrt{13}}{72}
+\le\varepsilon_{\mathcal P}
+\le\frac{47-8\sqrt{13}}{54}<\frac{11}{32}.
+\tag{65.1}
+$$
+
+Neither endpoint is asserted to be the exact joint optimum.
+
+**Proof.** Fix a normalized pure input $|\Psi\rangle$ and define
+
+$$
+\beta_j=\max_{D_j\ {\rm CPTP}}
+\langle\Psi|(D_j\mathcal N_j\otimes\operatorname{id})
+(|\Psi\rangle\langle\Psi|)|\Psi\rangle.
+\tag{65.2}
+$$
+
+The two-outcome measurement onto $|\Psi\rangle$ and its complement
+gives, for every decoder family, the lower bound
+$2\sum_jm_j(1-\beta_j)$ on its averaged channel error. This is the
+same elementary common-input argument used in Theorem 60.2, now
+applied to every record with one fixed input. For a singleton,
+the inverse unitary attains $\beta_j=1$, while any other decoder
+still has overlap at most one. Thus this bound does not restrict
+singleton decoders to inverses.
+
+Use the normalized maximally entangled qutrit state
+$|\Omega_3\rangle=3^{-1/2}\sum_{r=0}^2|r\rangle|r\rangle$
+in both pairs. After absorbing $\operatorname{Ad}_{Q_{001}}$ into
+the arbitrary first decoder, its Kraus operators $L_\alpha$ obey
+$\sum_\alpha L_\alpha^\dagger L_\alpha=I_3$, and
+
+$$
+\beta_1=\frac1{18}\max_{\{L_\alpha\}}
+\sum_\alpha\left(|\operatorname{Tr}L_\alpha|^2
+                    +|\operatorname{Tr}(L_\alpha R_1)|^2\right).
+\tag{65.3}
+$$
+
+The factor $1/18$ is the product of the conditional branch weight
+$1/2$ and the Bell overlap factor $1/3^2$.
+Since $\operatorname{Tr}R_1=0$, the matrices
+$I_3/\sqrt3,R_1^\dagger/\sqrt3$ are Hilbert–Schmidt orthonormal.
+Bessel's inequality bounds the numerator in (65.3) by
+$3\sum_\alpha\operatorname{Tr}(L_\alpha^\dagger L_\alpha)=9$.
+The single Kraus operator $I_3$ attains nine. Therefore $\beta_1=1/2$.
+
+The correction $D_2$ in (64.3) is unitary, so every arbitrary decoder
+after $\mathcal N_2$ is uniquely a further CPTP decoder after $F_2$.
+Write its Kraus operators again as $L_\alpha$, now in the $R_2$
+eigenbasis, and put
+
+$$
+G_{rs}=\sum_\alpha(L_\alpha)_{rr}\overline{(L_\alpha)_{ss}}.
+\tag{65.4}
+$$
+
+Trace preservation bounds each diagonal-entry vector by
+$\sum_\alpha|(L_\alpha)_{rr}|^2\le1$, even if other entries
+of those Kraus operators are nonzero. Cauchy–Schwarz gives
+$|G_{rs}|\le1$. Bell overlap is invariant under a change of system
+basis together with the conjugate change of reference basis. Using
+the Schur matrix $C_2$ in (64.4), the overlap is
+
+$$
+\frac19\sum_{r,s}(C_2)_{rs}G_{rs}
+\le\frac19\sum_{r,s}(C_2)_{rs}
+=\frac{17+4\sqrt{13}}{36}.
+\tag{65.5}
+$$
+
+For the inequality take the real part and use that all entries of
+$C_2$ are real and nonnegative. The identity further decoder has
+$G_{rs}=1$ for every $r,s$ and attains the bound. This determines
+$\beta_2=(17+4\sqrt{13})/36$ over all CPTP decoders, not only
+unitary or diagonal decoders.
+
+The same Bell projector therefore gives
+
+$$
+\begin{aligned}
+\varepsilon_{\mathcal P}
+&\ge2\left[\tfrac14(1-\tfrac12)
+     +\tfrac14\left(1-\frac{17+4\sqrt{13}}{36}\right)\right]\\
+&=\frac{37-4\sqrt{13}}{72}.
+\end{aligned}
+\tag{65.6}
+$$
+
+The singleton terms vanish by $\beta_j=1$, without any assumption
+on the chosen singleton maps. Theorem 64.1 supplies the upper bound.
+$\square$
+
+## 66. Common testers and the precise condition for additive optima
+
+**Definition 66.1 (Choi convention and record deficits).** Let $d$ be
+finite and let $\{\mathcal N_j:M_d\to M_d\}$ be a finite family of
+conditional CPTP channels with input-independent masses $m_j\ge0$,
+$\sum_jm_j=1$. Singleton unitary records are included. Use the
+unnormalized, output-tensor-input Choi convention
+
+$$
+|I_d\rangle=\sum_{r=1}^d|r\rangle|r\rangle,\qquad
+J(\Phi)=(\Phi\otimes\operatorname{id})(|I_d\rangle\langle I_d|).
+\tag{66.1}
+$$
+
+In particular $\operatorname{Tr}_{\rm out}J(\Phi)=I_d$ for CPTP
+$\Phi$, and $\operatorname{Tr}J(\Phi)=d$. This convention is
+the Choi representation in [Watrous, Chapter 2](https://cs.uwaterloo.ca/~watrous/TQI/TQI.2.pdf).
+Define the compact convex tester set and continuous record deficits
+
+$$
+\begin{aligned}
+\mathfrak T_d&=\{(\rho,W):\rho\succeq0,\ \operatorname{Tr}\rho=1,
+                         \ 0\preceq W\preceq I_{\rm out}\otimes\rho\},\\
+\ell_j(W)&=\operatorname{Tr}(WJ(\operatorname{id}))
+       -\max_{D_j\ {\rm CPTP}}\operatorname{Tr}(WJ(D_j\mathcal N_j)),\\
+\delta_j&=\min_{D_j\ {\rm CPTP}}
+                  \|D_j\mathcal N_j-\operatorname{id}\|_\diamond.
+\end{aligned}
+\tag{66.2}
+$$
+
+The variable $\rho$ is a reference density matrix in the fixed
+conjugate-coordinate convention: the corresponding canonical pure input
+is $(I\otimes\sqrt\rho)|I_d\rangle$, whose reference marginal is
+$\rho$ and system marginal is $\rho^{\mathsf T}$.
+
+**Theorem 66.2 (Record minimax formula and additive-optimum criterion).**
+For arbitrary terminal CPTP maps on every record,
+
+$$
+\min_{(D_j)}\left\|\sum_jm_jD_j\mathcal N_j-\operatorname{id}\right\|_\diamond
+=2\max_{(\rho,W)\in\mathfrak T_d}\sum_jm_j\ell_j(W).
+\tag{66.3}
+$$
+
+It equals $\sum_jm_j\delta_j$ if and only if there is a single
+$(\rho,W)\in\mathfrak T_d$ such that
+
+$$
+\ell_j(W)=\delta_j/2\qquad\text{for every }j\text{ with }m_j>0.
+\tag{66.4}
+$$
+
+Every positive-mass singleton belongs to this condition, with
+$\delta_j=0$. For the actual partition (63.1), no such common
+maximizing tester exists.
+
+**Proof.** For a channel $E$ put
+
+$$
+A_\rho=(I\otimes\sqrt\rho)J(\operatorname{id}-E)
+                       (I\otimes\sqrt\rho).
+\tag{66.5}
+$$
+
+This is Hermitian with trace zero, because both channels have the
+same output partial trace of their Choi matrices. Pure-input diamond
+stabilization, as cited in Theorem 64.1, identifies
+$\|\operatorname{id}-E\|_\diamond$ with
+$\max_\rho\|A_\rho\|_1$. In detail, any pure system-reference
+input with Schmidt rank at most $d$ is, up to a reference isometry,
+$(I\otimes\sqrt\rho)|I_d\rangle$; reference isometries preserve
+the output trace norm. The Hermiticity-preserving norm theorem
+allows positive pure inputs, and convexity covers their mixtures.
+Thus the reduction does not discard entangled inputs or reference
+dimensions greater than $d$.
+
+The Jordan decomposition of a trace-zero Hermitian matrix gives
+$\|A_\rho\|_1=2\max_{0\preceq T_0\preceq I}
+\operatorname{Tr}(T_0A_\rho)$. Substitute
+$W=(I\otimes\sqrt\rho)T_0(I\otimes\sqrt\rho)$ to obtain
+
+$$
+\|\operatorname{id}-E\|_\diamond
+=2\max_{(\rho,W)\in\mathfrak T_d}
+              \operatorname{Tr}(WJ(\operatorname{id}-E)).
+\tag{66.6}
+$$
+
+For singular $\rho$, every $W\preceq I\otimes\rho$ is supported
+on the support of $I\otimes\rho$; its inverse square root on
+that support recovers an admissible $T_0$, extended by zero on the
+kernel. Hence (66.6) includes boundary density matrices.
+
+The product of decoder Choi sets and $\mathfrak T_d$ are
+finite-dimensional compact convex sets. The payoff
+$\operatorname{Tr}(WJ(\operatorname{id}-\sum_jm_jD_j\mathcal N_j))$
+is continuous and affine in each variable. The convex minimax theorem
+of Sion, *On general minimax theorems*, Pacific J. Math. 8 (1958),
+171–176, [Theorem 3.4](https://msp.org/pjm/1958/8-1/pjm-v8-n1-p14-s.pdf),
+therefore exchanges the minimum over the decoder tuple with the maximum
+over the tester.
+At fixed $W$, maximizing the recovered payoff separates over the
+records. Since $\sum_jm_j=1$, the resulting expression is (66.3).
+This is an application of finite-dimensional convex minimax to the
+fixed-record recovery problem, with no independence assumption on
+the maximizing inputs for different records.
+
+Applying (66.3) to one record gives
+$\delta_j=2\max_{\mathfrak T_d}\ell_j(W)$. The decoder sets
+are compact and the payoffs continuous, so each $\ell_j$ is
+continuous and all these tester maxima are attained. At a maximizer
+of the weighted sum the deficits
+$\delta_j/2-\ell_j(W)$ are nonnegative. Their mass-weighted sum
+is zero exactly when each positive-mass deficit is zero. This proves
+both directions of (66.4). For a singleton the inverse is an
+available decoder, so $\ell_j(W)\le0$ for every tester, while
+its maximum is zero. Thus singleton conditions cannot simply be
+removed from the equivalence. In (63.1) the separate sum is $11/32$,
+strictly above Theorem 64.1's upper bound; (66.4) is therefore
+impossible for that partition.
+
+For clarity, the projector test of §65 has a dimension factor in this
+Choi convention. With $P_{\Omega_d}=|\Omega_d\rangle\langle\Omega_d|$,
+$|\Omega_d\rangle=|I_d\rangle/\sqrt d$, choose
+$\rho=I_d/d$ and $T_0=P_{\Omega_d}$. The corresponding tester is
+
+$$
+W=P_{\Omega_d}/d,\qquad
+\operatorname{Tr}(WJ(\operatorname{id}))=1,\qquad
+\operatorname{Tr}(WJ(\Phi))
+=\langle\Omega_d|(\Phi\otimes\operatorname{id})(P_{\Omega_d})
+                         |\Omega_d\rangle.
+\tag{66.7}
+$$
+
+Indeed $(\Phi\otimes\operatorname{id})(P_{\Omega_d})=J(\Phi)/d$.
+Thus §65 uses $W=P_{\Omega_3}/3$, not $P_{\Omega_3}$, and
+$\ell_j=1-\beta_j$. A normalized Choi convention would instead
+put a compensating factor $d$ in the objective of (66.6). No such
+change of convention is made here. $\square$
+
+## 67. A sufficient class with a common two-dimensional witness
+
+**Theorem 67.1 (Shared plane and nonnegative cosines).** Consider a
+fixed finite qutrit record law with input-independent masses. Suppose
+each ambiguous record consists of two unitary histories $a_j,b_j$
+with fixed conditional probabilities $p_j,1-p_j$, and
+
+$$
+Q_{a_j}^\dagger Q_{b_j}=1_{\mathbb C\xi}\oplus R_{j,T},\qquad
+\operatorname{spec}(R_{j,T})=\{e^{i\theta_j},e^{-i\theta_j}\},
+\qquad 0\le\theta_j\le\pi/2,
+\tag{67.1}
+$$
+
+for the same line $\mathbb C\xi$ and the same plane $T=\xi^\perp$.
+Arbitrary unitary singleton records and $p_j\in[0,1]$ are allowed.
+Then the optimum over all terminal CPTP decoders is
+
+$$
+\varepsilon_{\mathcal P}
+=\sum_jm_j\delta_j,\qquad
+\delta_j=1-\sqrt{1-4p_j(1-p_j)\sin^2\theta_j}
+\tag{67.2}
+$$
+
+on ambiguous records, with $\delta_j=0$ on singletons. The statement
+is conditional on (67.1); it does not assert that specified angles
+occur as actual words.
+
+**Proof.** Fix an orthonormal basis $t_1,t_2$ of $T$ and the single
+normalized Bell vector
+$|\Omega_T\rangle=2^{-1/2}\sum_{r=1}^2|t_r\rangle|\overline{t_r}\rangle$,
+whose system marginal is $P_T/2$. The conjugate reference plane may
+be embedded in a qutrit reference. This vector is unchanged by
+replacing $t_1,t_2$ with any other basis of $T$ and simultaneously
+using its conjugate basis on the reference.
+
+In the eigenbasis of $R_{j,T}$, absorb the known first branch into
+the decoder. On $T$ the binary channel is a Schur multiplier with
+diagonal one and off-diagonal
+
+$$
+z_j=p_j+(1-p_j)e^{2i\theta_j},\qquad
+\gamma_j=|z_j|=\sqrt{1-4p_j(1-p_j)\sin^2\theta_j}.
+\tag{67.3}
+$$
+
+A diagonal unitary phase correction makes this coefficient
+$\gamma_j\ge0$; extend it unitarily by identity on $\mathbb C\xi$.
+If $z_j=0$, any phase is suitable. Every further CPTP decoder has
+diagonal-entry Gram coefficients satisfying $|G_{rs}|\le1$ for
+the two input columns on $T$, by precisely the column-norm and
+Cauchy–Schwarz inequalities in (65.4). These inequalities still
+hold when it sends states outside $T$. Consequently its overlap
+with the same $|\Omega_T\rangle$ is at most
+
+$$
+\beta_j\le\tfrac14(1+1+2\gamma_j)
+=\tfrac12(1+\gamma_j).
+\tag{67.4}
+$$
+
+The identity further decoder attains this overlap. The phase correction
+is invertible, so this optimizes over all original decoders as well.
+For $0\le\theta_j\le\pi/2$ the convex hull of
+$\{1,e^{i\theta_j},e^{-i\theta_j}\}$ has distance
+$\cos\theta_j$ from zero: all its points have real part at least
+that value and the midpoint of the conjugate endpoints attains it.
+Theorem 59.2 therefore gives $\delta_j=1-\gamma_j$ on the entire
+qutrit, including its spectator coherences.
+
+Apply the common-projector bound in the proof of Theorem 65.1:
+its contribution from record $j$ is
+$2m_j(1-\beta_j)=m_j\delta_j$. Singletons have $\beta_j=1$
+on this same input and hence contribute zero even with arbitrary
+chosen singleton decoders. This proves the additive lower bound.
+Choosing independently optimal conditional decoders and using the
+triangle inequality gives the matching upper bound. In the Choi
+notation of §66 this common projector corresponds to
+$\rho=\overline{P_T}/2$ and
+$W=|\Omega_T\rangle\langle\Omega_T|/2$, the support-dimension-two
+counterpart of (66.7).
+
+For the first actual pair in (63.1), $\cos\theta_1=-1/2$.
+It violates (67.1), so (67.2) does not apply to that partition.
+In particular the Bell-on-$T$ argument does not justify extrapolating
+the sufficient class to negative cosines. $\square$
+
+## 68. Encoded full-space transfer and source scope
+
+**Proposition 68.1 (Identical encoded-input optimum on the full space).**
+The bounds (65.1), the criterion (66.4) as applied to the encoded
+problem, and the sufficient equality (67.2) hold with arbitrary terminal
+$M_5\to M_5$ CPTP decoders in Recovery's full space $H=\mathbb C^5$,
+when the input is an embedded qutrit and the target is the embedded
+identity channel $\iota$. This assertion does not concern identity
+recovery on arbitrary unencoded $H$ inputs.
+
+**Proof.** Use the same embedding $B$ and $\iota(X)=BXB^\dagger$
+as Recovery Definition 2.1. Its CPTP retraction is
+
+$$
+C(X)=B^\dagger XB+
+ \operatorname{Tr}((I_5-BB^\dagger)X)|0\rangle\langle0|,
+\qquad C\iota=\operatorname{id}_{M_3}.
+\tag{68.1}
+$$
+
+Kraus operators are $B^\dagger$ together with
+$|0\rangle\langle r|$ for an orthonormal basis of $R^\perp$.
+The full conditional channel on encoded inputs is
+$\iota\mathcal N_j$. For any full decoder family $\widetilde D_j$,
+the maps $C\widetilde D_j\iota$ are qutrit CPTP decoders. Reference-inclusive
+trace-norm contractivity under $C$ gives
+
+$$
+\left\|\sum_jm_jC\widetilde D_j\iota\mathcal N_j
+                         -\operatorname{id}_{M_3}\right\|_\diamond
+\le\left\|\sum_jm_j\widetilde D_j\iota\mathcal N_j-\iota\right\|_\diamond.
+\tag{68.2}
+$$
+
+Conversely every qutrit decoder $D_j$ extends to the full CPTP map
+$\iota D_jC$. On encoded inputs its averaged error channel is
+$\iota(\sum_jm_jD_j\mathcal N_j-\operatorname{id}_{M_3})$.
+The isometry $B$ preserves trace norm, also after tensoring with
+an untouched reference. Hence the two optimization values coincide.
+This proves the stated transfer without asserting fairness or identity
+recovery on unencoded inputs. $\square$
+
+**Source attribution and scope.** Recovery §2 supplies the actual
+letters, fixed line, fair word masses and chronology used in (63.1)–(63.6).
+Recovery §43 supplies the specified $SU(2)$ midpoint comparison and
+the distinction between a terminal partition and a causal peak-width
+claim. Its midpoint construction is not substituted for a CPTP optimum
+in the negative-cosine cell. Theorem 59.2 supplies the exact local
+binary optima; Theorem 60.2 supplies the one-record common-projector
+argument and encoded retraction; §61 identifies the actual pair angles;
+§62 retains the literature and model boundaries of those antecedents.
+The additional results here are the actual fixed-partition bracket,
+its common-input positive-semidefinite certificate, and the application
+of convex minimax and a shared-plane projector to joint record recovery.
+The Choi representation, diamond stabilization and convex minimax steps
+use the standard suppliers cited in §§64 and 66; their application here
+is not a literature-priority claim.
+
+The inequalities (65.1) do not determine the exact joint optimum or
+establish tightness of either endpoint. The common-tester equivalence
+does not classify all actual partitions, and the conditional class
+(67.1) does not imply angle reachability or universal actual-word
+additivity. These are fixed-law terminal-channel results with arbitrary
+CPTP decoders and untouched references. They imply no optimization
+over causal controllers, shared seeds, global memory width or physical
+registers, and no assertion for the input-dependent Born-weight
+instrument. They are ordinary mathematical derivations, without a
+Lean or kernel certification claim.
+
+## 追加锚（本行以下为增补区）
+
+## 69. Exact terminal recovery for the actual six-record partition
+
+The setting is the actual fair qutrit instrument of §§63–68, with the
+letters $V_0,V_1$ in (63.4). Composition of maps is from right to left,
+and $\operatorname{Ad}_A(X)=AXA^\dagger$ even when $A$ is not unitary.
+For $h=h_1h_2h_3$ the chronological word is
+$Q_h=V_{h_3}V_{h_2}V_{h_1}$. The terminal partition is fixed to be
+
+$$
+\mathcal P=\{\{001,111\},\{000,101\},\{010\},\{011\},\{100\},\{110\}\}.
+\tag{69.1}
+$$
+
+As in Definition 63.1, each history has input-independent mass $1/8$,
+including for inputs entangled with an untouched reference. Thus each
+pair has mass $1/4$ and conditional weights $1/2,1/2$; the singleton
+masses are $1/8$. A decoder is an arbitrary system-only terminal CPTP
+map $M_3\to M_3$ selected by the observed cell. It cannot distinguish
+the two histories inside a pair and has no access to the reference.
+The final record is averaged out in the error channel; it is not an
+extra output flag available to the norm test.
+
+**Theorem 69.1 (Exact fixed-partition optimum).** Under these permissions,
+the minimum in (63.2), with the unhalved diamond norm, is
+
+$$
+\boxed{\displaystyle
+\varepsilon_{\mathcal P}
+=\frac{161-32\sqrt{13}}{4(65-8\sqrt{13})}
+=\frac{793-88\sqrt{13}}{1508}.}
+\tag{69.2}
+$$
+
+The upper bound holds after tensoring with every finite untouched
+reference. A single input with a three-dimensional reference gives
+the matching lower bound for every family of terminal CPTP decoders,
+including arbitrary singleton decoders. This theorem concerns (69.1),
+not a minimization over all record partitions or online controllers.
+
+The proof consists of the exact reduction below, the feasible decoder
+and reference-stable upper bound in §§70–72, and the arbitrary-decoder
+lower bound in §§73–76.
+
+**Proposition 69.2 (Unrestricted record reduction).** Put
+
+$$
+R_1=Q_{001}^\dagger Q_{111},\qquad
+R_2=Q_{000}^\dagger Q_{101},\qquad
+\mathcal N_j=\tfrac12(\operatorname{id}+\operatorname{Ad}_{R_j}).
+\tag{69.3}
+$$
+
+Here $\mathcal N_j$ denotes the relative conditional channel, with its
+known first word removed. Then (63.2) is exactly
+
+$$
+\varepsilon_{\mathcal P}
+=\min_{D_0,D_1,D_2\ {\rm CPTP}}
+\left\|\tfrac12D_0+\tfrac14D_1\mathcal N_1
+                     +\tfrac14D_2\mathcal N_2
+                     -\operatorname{id}\right\|_\diamond.
+\tag{69.4}
+$$
+
+**Proof.** Write $E_j$ for a decoder on the original pair $\{a,b\}$,
+where $(a,b)=(001,111)$ or $(000,101)$. Since $Q_b=Q_aR_j$, its
+conditional channel before decoding is
+
+$$
+\tfrac12(\operatorname{Ad}_{Q_a}+\operatorname{Ad}_{Q_b})
+=\operatorname{Ad}_{Q_a}\mathcal N_j.
+\tag{69.5}
+$$
+
+The transformation $D_j=E_j\operatorname{Ad}_{Q_a}$ is a bijection on
+CPTP maps, with inverse $E_j=D_j\operatorname{Ad}_{Q_a^\dagger}$.
+It absorbs only a known system unitary, without providing the hidden
+history to the decoder. The chronology gives, in particular,
+
+$$
+Q_{001}=V_1V_0^2,\quad Q_{111}=V_1^3,\quad
+Q_{000}=V_0^3,\quad Q_{101}=V_1V_0V_1,
+\qquad R_1=(V_0^2)^\dagger V_1^2.
+\tag{69.6}
+$$
+
+For a singleton $h\in\{010,011,100,110\}$, set
+$C_h=E_h\operatorname{Ad}_{Q_h}$. Again $E_h\mapsto C_h$ is a
+bijection on CPTP maps, independently for each singleton. Their sum is
+
+$$
+\tfrac18\sum_h C_h=\tfrac12D_0,\qquad
+D_0=\tfrac14\sum_h C_h.
+\tag{69.7}
+$$
+
+Every such $D_0$ is CPTP by convexity. Conversely, every CPTP $D_0$
+is realized by choosing $C_h=D_0$ for all four histories, equivalently
+$E_h=D_0\operatorname{Ad}_{Q_h^\dagger}$. Thus aggregation has exactly
+the full CPTP range, not a relaxation or restriction. These are
+identities of channels and remain so on every reference extension.
+In particular no assumption that optimal singleton decoders are
+inverses has entered (69.4). $\square$
+
+## 70. Signed roots, common spectator and exact balancing constants
+
+Use the real orthonormal basis $(\xi,f_1,f_2)$ of Proposition 63.2,
+where $\xi=(1,1,1)^{\mathsf T}/\sqrt3$,
+$f_1=(1,-1,0)^{\mathsf T}/\sqrt2$ and
+$f_2=(1,1,-2)^{\mathsf T}/\sqrt6$. Put
+$P=|\xi\rangle\langle\xi|$ and $Q=I-P$, so $Q$ has rank two.
+The symbol $Q$ without a history subscript is this projection, not a
+word unitary. The exact relative matrices from (63.3) are
+
+$$
+\begin{aligned}
+R_1&=1\oplus
+\begin{pmatrix}
+-1/2&-\sqrt3/4-3i/4\\
+\sqrt3/4-3i/4&-1/2
+\end{pmatrix},\\
+R_2&=1\oplus
+\begin{pmatrix}
+5/8&-5\sqrt3/16+9i/16\\
+5\sqrt3/16+9i/16&5/8
+\end{pmatrix}.
+\end{aligned}
+\tag{70.1}
+$$
+
+These are the relatives of the actual chronological words, not freely
+chosen binary noises. Define Hermitian axes with the following signs:
+
+$$
+\begin{aligned}
+Z_1&=\frac{2(R_1-P+Q/2)}{i\sqrt3}
+=0\oplus\begin{pmatrix}
+0&(-\sqrt3+i)/2\\(-\sqrt3-i)/2&0
+\end{pmatrix},\\
+Z_2&=\frac{8(R_2-P-5Q/8)}{i\sqrt{39}}
+=0\oplus\begin{pmatrix}
+0&(9+5i\sqrt3)/(2\sqrt{39})\\
+(9-5i\sqrt3)/(2\sqrt{39})&0
+\end{pmatrix}.
+\end{aligned}
+\tag{70.2}
+$$
+
+Each off-diagonal entry has modulus one: its squared modulus is
+$(3+1)/4=1$ for $Z_1$, and $(81+75)/(4\cdot39)=1$ for $Z_2$.
+Consequently, by multiplying these two-by-two matrices,
+
+$$
+Z_j^\dagger=Z_j,\quad Z_j^2=Q,\quad
+PZ_j=Z_jP=0,\quad \operatorname{Tr}Z_j=0.
+\tag{70.3}
+$$
+
+In particular the eigenvalues on $Q\mathbb C^3$ are $+1,-1$.
+
+**Lemma 70.1 (The chosen square roots).** With $s=\sqrt{13}$ and
+$k=s/4$, define
+
+$$
+H_1=P+\tfrac12Q+\tfrac{i\sqrt3}{2}Z_1,\qquad
+H_2=P+kQ+\tfrac{i\sqrt3}{4}Z_2.
+\tag{70.4}
+$$
+
+Both are unitary, and $H_j^2=R_j$ with exactly the signs in (70.1).
+
+**Proof.** If $H=P+tQ+ibZ$ with real $t,b$, (70.3) gives
+
+$$
+H^\dagger H=P+(t^2+b^2)Q,\qquad
+H^2=P+(t^2-b^2)Q+2itbZ.
+\tag{70.5}
+$$
+
+For $(t,b)=(1/2,\sqrt3/2)$, these expressions are $I$ and
+$P-Q/2+i\sqrt3Z_1/2=R_1$. For
+$(t,b)=(s/4,\sqrt3/4)$, they are $I$ and
+$P+5Q/8+i\sqrt{39}Z_2/8=R_2$. This checks both unitarity and
+the square-root signs, including the spectator eigenvalue $+1$.
+$\square$
+
+**Lemma 70.2 (Domains and balance).** Define
+
+$$
+\begin{aligned}
+x&=\frac{25-4s}{40-4s},&
+w&=\frac{x}{1+x}=\frac{25-4s}{65-8s},&
+q&=1-w=\frac1{1+x},\\
+a&=\frac{8-2x-s}{16},&
+u&=\frac{1+2x^2}{16},&
+v&=\frac3{64},&
+c&=\frac{a}{1+x}.
+\end{aligned}
+\tag{70.6}
+$$
+
+Then $0<x<1$, $0<w<1/2$, $q>0$, $x=w/q$, $0<c<1$ and
+$u,v>0$. Moreover,
+
+$$
+a=c(1+x),\qquad u+v=a(1-x)=c(1-x^2).
+\tag{70.7}
+$$
+
+**Proof.** Since $3<s<4$, both $25-4s$ and $40-4s$ are
+positive; their difference is $15$. This proves $0<x<1$ and the
+claims about $w,q$. Also $8-2x-s>8-2-4=2$, while $a<1/2$.
+Thus $0<c<1/2<1$, and $u,v$ are strictly positive. The defining
+equation $(40-4s)x=25-4s$ gives
+
+$$
+\begin{aligned}
+64\bigl[a(1-x)-(u+v)\bigr]
+&=4(8-2x-s)(1-x)-(7+8x^2)\\
+&=25-4s-(40-4s)x=0.
+\end{aligned}
+\tag{70.8}
+$$
+
+The other equalities follow from $c=a/(1+x)$. All square roots
+of $1-x^2$, $u/c$ and $v/c$ used below are therefore real and
+positive. $\square$
+
+## 71. Explicit original-record decoders and centered expansions
+
+**Proposition 71.1 (Feasible decoders).** Define the CPTP map
+
+$$
+\mathcal G_x
+=\operatorname{Ad}_{P+xQ}+(1-x^2)\operatorname{Ad}_{Z_1}.
+\tag{71.1}
+$$
+
+In the reduced problem (69.4) choose
+
+$$
+D_0=\operatorname{id},\qquad
+D_1=\mathcal G_x\operatorname{Ad}_{H_1^\dagger},\qquad
+D_2=\operatorname{Ad}_{H_2^\dagger}.
+\tag{71.2}
+$$
+
+Thus the original record decoders are
+
+$$
+\begin{aligned}
+E_{\{001,111\}}&=\mathcal G_x
+             \operatorname{Ad}_{H_1^\dagger Q_{001}^\dagger},\\
+E_{\{000,101\}}&=\operatorname{Ad}_{H_2^\dagger Q_{000}^\dagger},\\
+E_{\{h\}}&=\operatorname{Ad}_{Q_h^\dagger}
+             \quad(h=010,011,100,110).
+\end{aligned}
+\tag{71.3}
+$$
+
+**Proof.** The Kraus operators of $\mathcal G_x$ are $P+xQ$ and
+$\sqrt{1-x^2}Z_1$. Equations (70.3) and (70.6) give
+
+$$
+(P+xQ)^\dagger(P+xQ)+(1-x^2)Z_1^\dagger Z_1
+=P+x^2Q+(1-x^2)Q=I.
+\tag{71.4}
+$$
+
+Hence $\mathcal G_x$ is CP and trace preserving. Lemma 70.1 makes
+all remaining factors unitary channels. Proposition 69.2 gives (71.3)
+from (71.2). The singleton inverses here are an explicit feasible
+choice made after the unrestricted reduction, not an assumption on
+all candidate optimizers. $\square$
+
+**Proposition 71.2 (Full centered-channel expansions).** Put
+$\mathcal N_j^c=\operatorname{Ad}_{H_j^\dagger}\mathcal N_j$ and
+$F_j=D_j\mathcal N_j$ for the choices (71.2). Then
+
+$$
+\begin{aligned}
+\mathcal N_1^c
+&=\operatorname{Ad}_{P+Q/2}+\tfrac34\operatorname{Ad}_{Z_1},\\
+\mathcal N_2^c
+&=\operatorname{Ad}_{P+kQ}+\tfrac3{16}\operatorname{Ad}_{Z_2},\\
+F_1
+&=\operatorname{Ad}_{P+(x/2)Q}
+ +\tfrac34(1-x^2)\operatorname{Ad}_Q
+ +\tfrac{1+2x^2}{4}\operatorname{Ad}_{Z_1},\\
+F_2
+&=\operatorname{Ad}_{P+kQ}+\tfrac3{16}\operatorname{Ad}_{Z_2}.
+\end{aligned}
+\tag{71.5}
+$$
+
+These are identities on all of $M_3$, including spectator-plane
+coherences.
+
+**Proof.** Since $H_j^\dagger R_j=H_j$,
+
+$$
+\mathcal N_j^c
+=\tfrac12(\operatorname{Ad}_{H_j^\dagger}
+                         +\operatorname{Ad}_{H_j}).
+\tag{71.6}
+$$
+
+For $H_j=A_j+ib_jZ_j$ with $A_j=P+t_jQ$ Hermitian, expansion
+on an arbitrary matrix $X$ gives
+
+$$
+\begin{aligned}
+H_jXH_j^\dagger
+ &=A_jXA_j+b_j^2Z_jXZ_j+ib_j(Z_jXA_j-A_jXZ_j),\\
+H_j^\dagger XH_j
+ &=A_jXA_j+b_j^2Z_jXZ_j-ib_j(Z_jXA_j-A_jXZ_j).
+\end{aligned}
+\tag{71.7}
+$$
+
+The imaginary cross terms cancel in their average. Substituting
+$(t_1,b_1)=(1/2,\sqrt3/2)$ and
+$(t_2,b_2)=(k,\sqrt3/4)$ proves the first two lines of (71.5).
+For the first further decoder, the four products of its Kraus
+factors with these centered factors use the identities
+
+$$
+(P+xQ)(P+Q/2)=P+(x/2)Q,\quad
+(P+xQ)Z_1=xZ_1,\quad
+Z_1(P+Q/2)=Z_1/2,\quad Z_1^2=Q.
+\tag{71.8}
+$$
+
+Consequently $\mathcal G_x\mathcal N_1^c$ is
+
+$$
+\operatorname{Ad}_{P+(x/2)Q}
++\left[\tfrac34x^2+\tfrac14(1-x^2)\right]\operatorname{Ad}_{Z_1}
++\tfrac34(1-x^2)\operatorname{Ad}_Q.
+\tag{71.9}
+$$
+
+The bracket is $(1+2x^2)/4$, proving the third line. The second
+further decoder is the identity after centering, proving the last
+line. $\square$
+
+## 72. A CPTP residual and an attained reference-stable upper bound
+
+**Theorem 72.1 (Exact residual decomposition).** The averaged recovered
+channel for (71.3) is
+
+$$
+F=\tfrac12\operatorname{id}+\tfrac14F_1+\tfrac14F_2
+=(1-c)\operatorname{id}+c\mathcal E,
+\qquad
+\mathcal E=\operatorname{Ad}_{P-xQ}
+       +\frac{u}{c}\operatorname{Ad}_{Z_1}
+       +\frac{v}{c}\operatorname{Ad}_{Z_2}.
+\tag{72.1}
+$$
+
+The residual $\mathcal E$ is CPTP, and
+$\|F-\operatorname{id}\|_\diamond=2c$, with the all-finite-reference,
+unhalved convention.
+
+**Proof.** To verify the channel identity on every matrix block, let
+$\mathcal K(X)=PXQ+QXP$. For real $t$,
+
+$$
+\operatorname{Ad}_{P+tQ}
+=\operatorname{Ad}_P+t\mathcal K+t^2\operatorname{Ad}_Q,
+\qquad
+\operatorname{id}=\operatorname{Ad}_P+\mathcal K+\operatorname{Ad}_Q.
+\tag{72.2}
+$$
+
+Inserting (71.5) gives
+
+$$
+\begin{aligned}
+F={}&\operatorname{Ad}_P
+ +\left(\tfrac12+\tfrac{x}{8}+\tfrac{k}{4}\right)\mathcal K\\
+ &+\left(\tfrac12+\tfrac{x^2}{16}
+                   +\tfrac3{16}(1-x^2)+\tfrac{k^2}{4}\right)
+                                      \operatorname{Ad}_Q
+ +u\operatorname{Ad}_{Z_1}+v\operatorname{Ad}_{Z_2}\\
+={}&\operatorname{Ad}_P+(1-a)\mathcal K
+ +(1-u-v)\operatorname{Ad}_Q
+ +u\operatorname{Ad}_{Z_1}+v\operatorname{Ad}_{Z_2}.
+\end{aligned}
+\tag{72.3}
+$$
+
+Here $k=s/4$, $k^2=13/16$, and the definitions (70.6) give both
+coefficient equalities. On the other hand, (72.2) gives
+
+$$
+(1-c)\operatorname{id}+c\operatorname{Ad}_{P-xQ}
+=\operatorname{Ad}_P+[1-c(1+x)]\mathcal K
+                       +[1-c(1-x^2)]\operatorname{Ad}_Q.
+\tag{72.4}
+$$
+
+The balance (70.7) identifies (72.3) with (72.1).
+The displayed residual has Kraus operators
+
+$$
+L_0=P-xQ,\qquad L_1=\sqrt{u/c}\,Z_1,\qquad
+L_2=\sqrt{v/c}\,Z_2.
+\tag{72.5}
+$$
+
+The two scalar Kraus weights are positive and
+
+$$
+\sum_{r=0}^2L_r^\dagger L_r
+=P+\left[x^2+\frac{u+v}{c}\right]Q=I,
+\tag{72.6}
+$$
+
+so $\mathcal E$ is CPTP. Since $0<c<1$, (72.1) is a convex
+combination of channels, with an exact, trace-preserving residual.
+
+For completeness, a CPTP map tensored with any finite identity has
+induced trace norm at most one. Indeed its Kraus isometry preserves
+trace norm, and its partial trace contracts trace norm: by duality,
+$|\operatorname{Tr}(Y^\dagger\operatorname{Tr}_{\rm env}X)|
+=|\operatorname{Tr}((Y^\dagger\otimes I)X)|\le\|Y\|_\infty\|X\|_1$.
+This applies also to non-Hermitian $X$. Thus, for every finite
+reference $\mathsf R$ and every $X\in M_3\otimes M_{\mathsf R}$,
+
+$$
+\|((F-\operatorname{id})\otimes\operatorname{id}_{\mathsf R})(X)\|_1
+=c\|((\mathcal E-\operatorname{id})\otimes
+                         \operatorname{id}_{\mathsf R})(X)\|_1
+\le2c\|X\|_1.
+\tag{72.7}
+$$
+
+This proves the required upper bound directly for all finite
+references, without restricting to unentangled inputs.
+
+To attain it, use the density matrix and its canonical purification
+in the fixed real basis $(\xi,f_1,f_2)$:
+
+$$
+\rho_*=wP+\tfrac q2Q=\frac{xP+Q/2}{1+x},\qquad
+|\psi_*\rangle=|\sqrt{\rho_*}\rangle\!\rangle
+=\sqrt w\,|\xi\rangle|\overline\xi\rangle
+ +\sqrt{q/2}\sum_{r=1}^2|f_r\rangle|\overline{f_r}\rangle.
+\tag{72.8}
+$$
+
+Column vectorization is specified fully in §73. The norm of
+$|\psi_*\rangle$ is one since $\operatorname{Tr}\rho_*=w+q=1$.
+For any matrix $L$,
+$\langle\psi_*|(L\otimes I)|\psi_*\rangle=\operatorname{Tr}(\rho_*L)$.
+Every residual Kraus operator in (72.5) has zero weighted trace:
+
+$$
+\begin{aligned}
+\operatorname{Tr}(\rho_*L_0)&=w-xq=0,\\
+\operatorname{Tr}(\rho_*Z_j)
+ &=w\operatorname{Tr}(PZ_j)+\tfrac q2\operatorname{Tr}(QZ_j)=0
+ \qquad(j=1,2).
+\end{aligned}
+\tag{72.9}
+$$
+
+The first equality uses $x=w/q$; the second uses (70.3). Hence all
+vectors $(L_r\otimes I)|\psi_*\rangle$ are orthogonal to
+$|\psi_*\rangle$. The state
+$\sigma_*=(\mathcal E\otimes\operatorname{id})
+(|\psi_*\rangle\langle\psi_*|)$ has trace one by (72.6) and is
+supported in that orthogonal complement. Therefore
+$\|\sigma_*-|\psi_*\rangle\langle\psi_*|\|_1=2$ by its
+orthogonal positive and negative blocks. Equation (72.1) now attains
+$2c$ on this same input. $\square$
+
+## 73. One canonical input and the full Choi overlap operator
+
+All lower bounds below use precisely $\rho_*$ and $|\psi_*\rangle$
+from (72.8). The two axes will be diagonalized separately only to
+compute matrices for this one input.
+
+**Definition 73.1 (Output-first convention).** In the fixed basis let
+
+$$
+|A\rangle\!\rangle=\sum_{a,i}A_{ai}|a\rangle_{\rm out}|i\rangle_{\rm in},
+\qquad
+J(D)=\sum_\alpha|K_\alpha\rangle\!\rangle
+                         \langle\!\langle K_\alpha|,
+\tag{73.1}
+$$
+
+where $K_\alpha$ are Kraus operators of $D$. This is the unnormalized
+Choi convention of (66.1): $J(D)\succeq0$ and
+$\operatorname{Tr}_{\rm out}J(D)=I$ for every CPTP $D$.
+In particular $J(\operatorname{id})=|I\rangle\!\rangle
+\langle\!\langle I|$. Vectorization satisfies
+$(A\otimes B)|X\rangle\!\rangle=|AXB^{\mathsf T}\rangle\!\rangle$,
+where transpose and entrywise conjugation always refer to this
+coordinate convention. Write
+
+$$
+T_*=|\psi_*\rangle\langle\psi_*|,\qquad
+W=|\rho_*\rangle\!\rangle\langle\!\langle\rho_*|
+=(I\otimes\sqrt{\rho_*})T_*(I\otimes\sqrt{\rho_*}).
+\tag{73.2}
+$$
+
+Here $\rho_*$ is real diagonal in the chosen basis; the same real
+matrix represents the system marginal and the conjugate reference
+marginal. Thus $0\preceq W\preceq I\otimes\rho_*$ and
+$\operatorname{Tr}(WJ(\operatorname{id}))=|\operatorname{Tr}\rho_*|^2=1$.
+For any channel $\Phi$ the same conventions give
+
+$$
+\langle\psi_*|(\Phi\otimes\operatorname{id})(T_*)|\psi_*\rangle
+=\sum_\alpha|\operatorname{Tr}(\rho_*K_\alpha)|^2
+=\operatorname{Tr}(WJ(\Phi)).
+\tag{73.3}
+$$
+
+No factor of three is suppressed: both $|I\rangle\!\rangle$ and
+$J$ are unnormalized, while $|\psi_*\rangle$ is normalized.
+
+For arbitrary recovery of $\mathcal N_j$, centering remains a
+bijection. Indeed $\mathcal N_j=\operatorname{Ad}_{H_j}\mathcal N_j^c$,
+so $D\mathcal N_j=(D\operatorname{Ad}_{H_j})\mathcal N_j^c$, and
+$D\mapsto D\operatorname{Ad}_{H_j}$ ranges over all CPTP maps.
+Let the centered noise Kraus operators be
+$L_{j,-}=H_j^\dagger/\sqrt2$ and $L_{j,+}=H_j/\sqrt2$.
+These symbols are distinct from the residual Kraus operators in
+(72.5).
+
+**Lemma 73.2 (Exact overlap and arbitrary-decoder bound).** Define
+
+$$
+\begin{aligned}
+A_j
+&=\sum_{t\in\{-,+\}}
+ |\rho_*L_{j,t}^\dagger\rangle\!\rangle
+ \langle\!\langle\rho_*L_{j,t}^\dagger|\\
+&=\sum_{t\in\{-,+\}}
+ (I\otimes\overline{L_{j,t}})W(I\otimes L_{j,t}^{\mathsf T}).
+\end{aligned}
+\tag{73.4}
+$$
+
+For every CPTP centered decoder $D$ its recovered overlap is
+$\operatorname{Tr}(A_jJ(D))$. If a Hermitian $Y_j$ on the input
+factor satisfies $I_{\rm out}\otimes Y_j\succeq A_j$, this overlap
+is at most $\operatorname{Tr}Y_j$.
+
+**Proof.** With arbitrary Kraus operators $K_\alpha$ for $D$, (73.3)
+applied to $D\mathcal N_j^c$ gives
+
+$$
+\begin{aligned}
+\langle\psi_*|((D\mathcal N_j^c)\otimes\operatorname{id})(T_*)
+                  |\psi_*\rangle
+&=\sum_{\alpha,t}|\operatorname{Tr}(\rho_*K_\alpha L_{j,t})|^2\\
+&=\sum_{\alpha,t}
+ |\langle\!\langle\rho_*L_{j,t}^\dagger|K_\alpha\rangle\!\rangle|^2
+=\operatorname{Tr}(A_jJ(D)).
+\end{aligned}
+\tag{73.5}
+$$
+
+The middle equality is the cyclic trace identity
+$\operatorname{Tr}(L_{j,t}\rho_*K_\alpha)
+=\operatorname{Tr}(\rho_*K_\alpha L_{j,t})$.
+Vectorization gives
+$|\rho_*L_{j,t}^\dagger\rangle\!\rangle
+=(I\otimes\overline{L_{j,t}})|\rho_*\rangle\!\rangle$;
+its adjoint has $I\otimes L_{j,t}^{\mathsf T}$ on the right.
+This verifies the conjugation and transpose order in (73.4).
+Finally positivity and the Choi partial-trace constraint imply
+
+$$
+\operatorname{Tr}(A_jJ(D))
+\le\operatorname{Tr}((I\otimes Y_j)J(D))
+=\operatorname{Tr}(Y_j\operatorname{Tr}_{\rm out}J(D))
+=\operatorname{Tr}Y_j.
+\tag{73.6}
+$$
+
+No diagonal, unitary or unital restriction on $D$ is used. $\square$
+
+**Lemma 73.3 (Axis coordinates and full-space extension).** For each
+$j$ choose eigenvectors $e_{j,+},e_{j,-}$ of $Z_j$ in $Q\mathbb C^3$,
+with eigenvalues $+1,-1$. In the system basis
+$(\xi,e_{j,+},e_{j,-})$ and its conjugate reference basis, both
+computations use the populations
+
+$$
+p=(w,q/2,q/2)^{\mathsf T}.
+\tag{73.7}
+$$
+
+The Schur matrices of $\mathcal N_j^c$ are
+
+$$
+C_1=\begin{pmatrix}1&1/2&1/2\\1/2&1&-1/2\\1/2&-1/2&1\end{pmatrix},
+\qquad
+C_2=\begin{pmatrix}1&k&k\\k&1&5/8\\k&5/8&1\end{pmatrix}.
+\tag{73.8}
+$$
+
+The operator $A_j$ is supported on
+$\mathcal S_j=\operatorname{span}\{|00\rangle,|++\rangle,|--\rangle\}$
+in these coordinates, where its matrix is
+
+$$
+M_j=\operatorname{diag}(p)C_j\operatorname{diag}(p).
+\tag{73.9}
+$$
+
+For a diagonal $Y_j=\operatorname{diag}(y_0,y_+,y_-)$ in these
+input coordinates, $I\otimes Y_j-A_j\succeq0$ on the full
+nine-dimensional Choi space follows whenever $y_i\ge0$ and
+$\operatorname{diag}(y)-M_j\succeq0$.
+
+**Proof.** The eigenvalues of $H_1$ are
+$1,1/2+i\sqrt3/2,1/2-i\sqrt3/2$ and those of $H_2$ are
+$1,k+i\sqrt3/4,k-i\sqrt3/4$. By (71.6), the Schur entry for
+indices $r,l$ is the real part of the $H_j$ eigenvalue at $r$
+times the conjugate of its eigenvalue at $l$. The spectator-plane entries
+are $1/2$ or $k$; the plane off-diagonal entries are respectively
+$1/4-3/4=-1/2$ and $k^2-3/16=5/8$. This proves (73.8).
+
+If $l_{t,r}$ are the diagonal entries of $L_{j,t}$, (73.4) has
+matrix entries on $\mathcal S_j$
+
+$$
+(A_j)_{rr,ll}
+=p_rp_l\sum_t\overline{l_{t,r}}l_{t,l}
+=p_rp_l(C_j)_{lr}.
+\tag{73.10}
+$$
+
+Thus the generally relevant Schur matrix here is $C_j^{\mathsf T}$.
+It equals $C_j$ because the centered matrices (73.8) are real
+symmetric. Each vector in (73.4) is diagonal, so there is no
+support on $\mathcal S_j^\perp$. On $\mathcal S_j$ the slack is
+$\operatorname{diag}(y)-M_j$, and on each basis vector $|a i\rangle$
+with $a\ne i$ it is multiplication by $y_i$. There are no cross
+blocks. This proves the full-space positivity assertion.
+
+Equivalently, in the original fixed coordinates let $B_j$ be the
+isometry whose columns are $|\Pi_{j,r}\rangle\!\rangle$, where
+$\Pi_{j,r}$ are the three eigenprojections, and put
+$\Pi_j=B_jB_j^\dagger$. For the witnesses below $y_+=y_-$,
+so $Y_j=y_0P+y_+Q$ is unchanged by either axis basis choice.
+The full slack has the explicit extension
+
+$$
+I\otimes Y_j-A_j
+=B_j\bigl(\operatorname{diag}(y)-M_j\bigr)B_j^\dagger
+ +(I-\Pi_j)(I\otimes Y_j)(I-\Pi_j).
+\tag{73.11}
+$$
+
+The vectors $|\Pi_{j,r}\rangle\!\rangle$ are orthonormal because
+the rank-one projections are Hilbert–Schmidt orthonormal.
+Moreover $I\otimes Y_j$ preserves $\mathcal S_j$ and its
+orthogonal complement, so (73.11) has no missing cross term.
+It is a sum of positive operators under the stated conditions.
+
+Finally, $\rho_*$ is scalar on $Q\mathbb C^3$. Any unitary $U$
+fixing $\xi$ and changing the basis of that plane commutes with
+$\rho_*$, and
+
+$$
+(U\otimes\overline U)|\sqrt{\rho_*}\rangle\!\rangle
+=|U\sqrt{\rho_*}U^\dagger\rangle\!\rangle
+=|\sqrt{\rho_*}\rangle\!\rangle.
+\tag{73.12}
+$$
+
+The same holds for $|\rho_*\rangle\!\rangle$. Thus $T_*,W$ and
+the physical input remain the same in the two computations.
+No simultaneous diagonalization of $Z_1,Z_2$ is asserted or
+needed. $\square$
+
+## 74. The first arbitrary-CPTP overlap certificate
+
+**Proposition 74.1 (Rank-one slack).** The largest recovered overlap
+on $T_*$ for the first pair, over all CPTP decoders, is
+
+$$
+\beta_1=\tfrac32w^2+\tfrac34q^2.
+\tag{74.1}
+$$
+
+**Proof.** In the first axis coordinates put
+
+$$
+Y_1=\operatorname{diag}(3w^2/2,3q^2/8,3q^2/8),\qquad
+z=(-2w/q,1,1)^{\mathsf T}.
+\tag{74.2}
+$$
+
+All diagonal entries of $Y_1$ are positive. From (73.8)–(73.9),
+
+$$
+M_1=\begin{pmatrix}
+w^2&wq/4&wq/4\\
+wq/4&q^2/4&-q^2/8\\
+wq/4&-q^2/8&q^2/4
+\end{pmatrix},\qquad
+Y_1-M_1=\tfrac{q^2}{8}zz^{\mathsf T}\succeq0.
+\tag{74.3}
+$$
+
+Here $Y_1$ also represents the restriction of $I\otimes Y_1$
+to $\mathcal S_1$ in its diagonal basis. Lemma 73.3 extends (74.3) to
+$I\otimes Y_1-A_1\succeq0$ on all nine dimensions. Lemma 73.2
+therefore bounds every recovered overlap by
+$\operatorname{Tr}Y_1=3w^2/2+3q^2/4$.
+
+This includes arbitrary off-diagonal Kraus entries. Explicitly, for
+any decoder Kraus operator $K$,
+$\langle\!\langle K|I\otimes Y_1|K\rangle\!\rangle
+=\sum_i(Y_1)_{ii}\sum_a|K_{ai}|^2$;
+trace preservation fixes the sum over all Kraus operators to
+$\operatorname{Tr}Y_1$. The diagonal-subspace calculation did not
+drop the $a\ne i$ terms: they belong to the positive complementary
+block in (73.11).
+
+The centered decoder $\mathcal G_x$ attains the bound. Its two
+diagonal Kraus vectors in this basis are
+
+$$
+g_0=(1,x,x)^{\mathsf T},\qquad
+g_1=(0,\sqrt{1-x^2},-\sqrt{1-x^2})^{\mathsf T}.
+\tag{74.4}
+$$
+
+Since $x=w/q$, $z^{\mathsf T}g_0=-2w/q+2x=0$ and
+$z^{\mathsf T}g_1=0$. They lie in the kernel of the full slack:
+they have no complementary-space components, and (74.3) annihilates
+their diagonal components. Thus
+$\operatorname{Tr}((I\otimes Y_1-A_1)J(\mathcal G_x))=0$.
+Together with (71.4), (73.6) gives equality and proves (74.1).
+The centering bijection proves the assertion for the original first
+pair, not only its centered representation. $\square$
+
+## 75. The second arbitrary-CPTP overlap certificate
+
+**Proposition 75.1 (Positive weighted Laplacian slack).** The largest
+recovered overlap on the same $T_*$ for the second pair is
+
+$$
+\beta_2=(w+kq)^2.
+\tag{75.1}
+$$
+
+**Proof.** In the second axis basis define a diagonal $Y_2$ by
+
+$$
+(Y_2)_{ii}=p_i\sum_l(C_2)_{il}p_l.
+\tag{75.2}
+$$
+
+Every entry is positive because all $p_i$ and all entries of $C_2$
+are positive. More explicitly,
+
+$$
+Y_2=\operatorname{diag}\left(
+ w(w+kq),\ \tfrac{kwq}{2}+\tfrac{13q^2}{32},
+                 \tfrac{kwq}{2}+\tfrac{13q^2}{32}\right).
+\tag{75.3}
+$$
+
+Let $e_0,e_+,e_-$ be the coordinate vectors in the diagonal
+subspace. Subtracting $M_2$ from the diagonal restriction gives
+
+$$
+Y_2-M_2
+=\sum_{i<l}p_ip_l(C_2)_{il}
+                 (e_i-e_l)(e_i-e_l)^{\mathsf T}\succeq0.
+\tag{75.4}
+$$
+
+Indeed its off-diagonal entry is $-p_ip_l(C_2)_{il}$, and its
+$i$th diagonal entry is $\sum_{l\ne i}p_ip_l(C_2)_{il}$, exactly
+as in the displayed sum. The three edge weights are
+$kwq/2,kwq/2,5q^2/32$, all strictly positive. Each summand in
+(75.4) is positive, proving the claim without a numerical eigenvalue
+calculation. Lemma 73.3 supplies the nonnegative complementary
+block on the full Choi space. Therefore (73.6) bounds the overlap
+of every CPTP centered decoder, including every choice of its
+off-diagonal Kraus entries, by $\operatorname{Tr}Y_2$.
+
+For the identity centered decoder the diagonal Kraus vector is
+$(1,1,1)^{\mathsf T}$. Each summand of (75.4) kills it, and it has
+no complementary component, so this decoder attains the bound.
+Finally $k^2=13/16$ gives
+
+$$
+\operatorname{Tr}Y_2=w^2+2kwq+\tfrac{13}{16}q^2=(w+kq)^2.
+\tag{75.5}
+$$
+
+The centering bijection again transfers this maximum to all original
+second-pair decoders. $\square$
+
+## 76. Common-projector lower bound and exact scalar equality
+
+**Theorem 76.1 (All-CPTP lower bound on one actual input).** Every
+triple in (69.4) obeys
+
+$$
+\left\|\tfrac12D_0+\tfrac14D_1\mathcal N_1
+                      +\tfrac14D_2\mathcal N_2
+                      -\operatorname{id}\right\|_\diamond
+\ge1-\frac{\beta_1+\beta_2}{2}=2c.
+\tag{76.1}
+$$
+
+**Proof.** Let $F_D$ denote the averaged channel for an arbitrary
+triple. The singleton aggregate produces a density matrix on input
+$T_*$, so its overlap $\alpha_0$ with $T_*$ lies in $[0,1]$.
+There is no restriction on $D_0$. By Propositions 74.1 and 75.1,
+the two paired overlaps are at most $\beta_1,\beta_2$ respectively.
+Thus the full output overlap $\alpha$ satisfies
+
+$$
+\alpha=\operatorname{Tr}(T_*(F_D\otimes\operatorname{id})(T_*))
+\le\tfrac12+\tfrac14\beta_1+\tfrac14\beta_2.
+\tag{76.2}
+$$
+
+Measure the same projector $T_*$ and its complement on this output
+and on the ideal output $T_*$. The probability vectors are
+$(\alpha,1-\alpha)$ and $(1,0)$, with unhalved distance
+$2(1-\alpha)$. Equivalently the Hermitian observable $2T_*-I$
+has operator norm one and evaluates the ideal-minus-recovered
+state difference to $2(1-\alpha)$, giving directly
+
+$$
+\begin{aligned}
+\|F_D-\operatorname{id}\|_\diamond
+&\ge\|(F_D\otimes\operatorname{id})(T_*)-T_*\|_1\\
+&\ge2(1-\alpha)
+\ge1-\tfrac12(\beta_1+\beta_2).
+\end{aligned}
+\tag{76.3}
+$$
+
+The norm test may jointly measure system and untouched reference;
+only the decoders are system-only. This uses one fixed input and
+one fixed measurement for all records and all decoders. The
+saturation parts of §§74–75 identify the overlap maxima, but their
+upper bounds alone already suffice for (76.3).
+
+It remains to check the exact scalar equality. From (74.1) and
+(75.5), with $q=1-w$ and $k=s/4$,
+
+$$
+\begin{aligned}
+\beta_1+\beta_2
+&=\tfrac52w^2+\tfrac s2wq+\tfrac{25}{16}q^2\\
+&=\frac{25+(8s-50)w+(65-8s)w^2}{16}.
+\end{aligned}
+\tag{76.4}
+$$
+
+Write $d=65-8s>0$ and $b=25-4s$, so $w=b/d$ and
+$8s-50=-2b$. Since $s^2=13$,
+$25d-b^2=792$, whence
+
+$$
+\beta_1+\beta_2=\frac{25d-b^2}{16d}=\frac{99}{2d},\qquad
+1-\frac{\beta_1+\beta_2}{2}=1-\frac{99}{4d}
+=\frac{161-32s}{4d}.
+\tag{76.5}
+$$
+
+For the primal coefficient in (70.6), using
+$1+x=d/(40-4s)$ gives independently
+
+$$
+\begin{aligned}
+2c
+&=\frac{8-2x-s}{8(1+x)}\\
+&=\frac{(8-s)(40-4s)-2(25-4s)}{8d}
+=\frac{322-64s}{8d}
+=\frac{161-32s}{4d}.
+\end{aligned}
+\tag{76.6}
+$$
+
+Thus (76.3) equals the upper bound of Theorem 72.1. Finally,
+rationalization gives
+
+$$
+\frac{161-32s}{4(65-8s)}
+=\frac{7137-792s}{13572}
+=\frac{793-88s}{1508}.
+\tag{76.7}
+$$
+
+The unrestricted reduction (69.4) now proves Theorem 69.1 with an
+explicit minimizing decoder family. All of the original singleton
+choices remain covered by the lower bound. $\square$
+
+## 77. Strict endpoint comparisons and the common-input mechanism
+
+**Corollary 77.1 (Old bounds, strict endpoints and nonadditivity).**
+The bracket (65.1) remains valid, and its two endpoints are strictly
+separated from the exact value:
+
+$$
+\frac{37-4\sqrt{13}}{72}
+<\varepsilon_{\mathcal P}
+<\frac{47-8\sqrt{13}}{54}
+<\frac{11}{32}.
+\tag{77.1}
+$$
+
+In particular, the exact joint terminal optimum is strictly smaller
+than the sum of mass-weighted separate binary optima.
+
+**Proof.** Substitution of (69.2) yields
+
+$$
+\begin{aligned}
+\varepsilon_{\mathcal P}-\frac{37-4s}{72}
+ &=\frac{325-76s}{27144},\\
+\frac{47-8s}{54}-\varepsilon_{\mathcal P}
+ &=\frac{14027-3656s}{40716}.
+\end{aligned}
+\tag{77.2}
+$$
+
+Since $s<15/4$, the numerators exceed respectively
+$325-76(15/4)=40$ and $14027-3656(15/4)=317$; both are positive.
+The last inequality in (77.1) is also exact:
+
+$$
+\frac{11}{32}-\frac{47-8s}{54}
+=\frac{128s-455}{864}>0,
+\qquad 128^2\cdot13-455^2=5967>0.
+\tag{77.3}
+$$
+
+Proposition 63.2 identifies the separate optima as $1,3/8$ for
+the two pairs and zero for each singleton, so their weighted sum
+is $(1/4)(1+3/8)=11/32$. This proves strict nonadditivity for
+the actual partition, while preserving both previously valid
+inequalities. $\square$
+
+The matching certificates explain the mechanism. The scalar plane
+marginal $\rho_*|_{Q\mathbb C^3}=(q/2)I_2$ makes both signed,
+traceless axis operators $Z_1,Z_2$ have zero weighted trace on one
+and the same purification. Choosing $w=x/(1+x)$ also annihilates
+the diagonal residual $P-xQ$. The adjustment $\mathcal G_x$ of
+the first centered decoder supplies precisely the balance
+$u+v=c(1-x^2)$ needed for that residual to be a channel. Hence
+the two recovered pair channels combine into a single channel
+whose residual output is orthogonal to the target on $T_*$.
+The lower witnesses show that arbitrary other CPTP decoders cannot
+improve the corresponding common-input overlap bound.
+
+This is a joint statement about the averaged channel, rather than
+an addition of two independently optimized norm errors. It does
+not require that the inputs maximizing the separate binary errors
+coincide. The shared-plane, nonnegative-cosine sufficient class of
+Theorem 67.1 remains a separate conditional statement; the first
+relative here has cosine $-1/2$ and is outside that class. The
+present calculation uses the exact matrices (70.1), their specified
+angles and the signed identities (70.3)–(70.5). It asserts no
+classification or universality for other angles, axes, actual-word
+partitions or reachable controller histories.
+
+## 78. Applicability, supplier scope and the continuing memory problem
+
+**Encoded-input transfer.** The exact value also applies to the
+encoded-input full-space problem of Proposition 68.1, with arbitrary
+terminal $M_5\to M_5$ CPTP decoders and target $\iota$. Indeed
+$C\iota=\operatorname{id}$ in (68.1). Every full-space decoder
+induces the qutrit CPTP decoder $C\widetilde D_j\iota$, giving
+one inequality by reference-inclusive contractivity. Every qutrit
+decoder extends as $\iota D_jC$, giving the reverse inequality
+because $\iota$ preserves trace norm, also on untouched references.
+Thus the entire optimization values coincide, and Theorem 69.1
+transfers. This says nothing about identity recovery on arbitrary
+unencoded $\mathbb C^5$ inputs.
+
+**Corollary 78.1 (A legal peak-six online application).** For the actual
+fair horizon-three instrument and the original averaged encoded-input
+recovery convention,
+
+$$
+\varepsilon_{\rm op}(6,3)
+\le\varepsilon_{\mathcal P}
+=\frac{793-88\sqrt{13}}{1508}.
+\tag{78.1}
+$$
+
+**Application of Recovery Theorem 43.2.** Here $n=3$, $N=2^3=8$ and
+the width $W=6$ satisfies $W\ge N/2=4$. Thus the online peak-six and
+offline terminal-six feasible averaged full-$H$ channel sets coincide
+by [Recovery, Theorem 43.2](AURIC_FIB_APPROXIMATE_ONLINE_RECOVERY_MEMORY.md#43-near-full-matching-and-simultaneous-legal-pair-merges).
+Apply it to the partition (69.1) and decoders (71.3), extended to
+full-$H$ decoders by the encoded-input transfer above.
+
+Concretely, let $f(h)$ be the cell of (69.1) containing $h$. Retain
+the exact acquired prefix through time two, with layer counts $1,2,4$.
+At time three, from prefix $h_1h_2$ and the acquired label $h_3$,
+transition directly to $f(h_1h_2h_3)$ in the six-cell terminal alphabet.
+The resulting layer counts are $1,2,4,6$; no eight-state layer is
+created. These deterministic updates and a constant independent
+shared seed are permitted by Recovery Definition 2.3. The complete
+persistent state is the prefix or terminal cell; the known horizon
+and static decoder tables use that definition's separate resource
+convention. The averaged full-$H$ channel is exactly the transferred
+channel already constructed above, with target $\iota$ and the same
+unhalved diamond error for every finite untouched reference.
+Theorem 69.1 therefore gives (78.1). $\square$
+
+**Mathematical and literature status.** The explicit composite
+primal/dual certificate of §§69–77 is a repo-derived ordinary
+finite-dimensional mathematical proof. The actual letters,
+chronology, input-independent law and relative matrices are supplied
+by §§63–68 and their stated Recovery references. The separate
+binary errors are supplied by Theorem 59.2 and Proposition 63.2.
+The proof above supplies the new joint optimum through the explicit
+Kraus, trace and positive-semidefinite calculations; it does not
+require a numerical SDP optimum or a new external recovery theorem.
+Corollary 78.1 separately applies the existing Recovery Theorem 43.2
+to that certificate; the new joint-certificate content is in §§69–77.
+
+The primary references already scoped in the owning volume retain
+those scopes. Watrous, *The Theory of Quantum Information*, Chapter 2,
+as cited in §66, supplies the standard Choi representation and
+partial-trace convention. Its Theorems 3.46 and 3.51, cited in
+§§62 and 64, supply the usual pure-input diamond stabilization.
+Here (72.7) gives the upper bound directly for every finite
+reference, and the lower bound uses the explicit three-dimensional
+reference (72.8). Sion's Theorem 3.4, cited in §66, supplies that
+section's convex minimax exchange; no minimax exchange is needed
+for the explicit lower witnesses (73.4)–(75.4). The averaged-fidelity
+and near-optimal-recovery works discussed in §62 are not suppliers
+of the exact diamond value (69.2). No additional bibliographic
+claim or original-priority claim is made. These are not Lean/kernel
+certification or physical certification statements.
+
+**Continuing objective and limits.** The exact result fixes the
+horizon, the fair input-independent history law, the partition and
+the permission of one arbitrary system-only CPTP decoder per terminal
+record. It gives no optimization over record partitions, causal
+controllers, shared seeds, input-dependent Born-weight instruments,
+or physical implementations. Corollary 78.1 gives an attainable
+online error bound, without asserting a global minimum over
+partitions, stochastic controllers or shared seeds. Beyond this
+concrete application, the full finite $(n,\varepsilon)$ joint
+recovery/memory law, including general online compatibility and
+optimal peak memory requirements, remains open. The critical-energy
+estimate remains open as well; no energy estimate follows from
+the terminal channel identity or from these Choi witnesses.
+
+A terminal alphabet alone does not generally determine the required
+intermediate width; Corollary 78.1 supplies the legal peak-six
+realization for (69.1). This establishes no saving in fixed-length
+bits: both six and eight possible outcomes require three bits,
+since $\lceil\log_2 6\rceil=\lceil\log_2 8\rceil=3$.
+The remaining general causal, resource and physical questions are
+part of the AURIC FIB quantum recovery/memory objective. Theorem 69.1
+settles exactly the finite terminal-channel optimization stated
+there, with all decoder and reference permissions retained, and
+Corollary 78.1 supplies its concrete online application.
+
+## 追加锚（本行以下为增补区）
+
+## 79. The actual Fibonacci word and its two-dimensional block
+
+The following application uses $k$ for Fibonacci recursion depth. The
+symbol $n$ continues to denote the random-history horizon in the recovery
+problem elsewhere in this volume; it is not replaced by $k$ here. Let
+$F_0=0$, $F_1=1$, and
+
+$$
+F_{j+2}=F_{j+1}+F_j.
+$$
+
+Define the binary words
+
+$$
+w_0=0,\qquad w_1=1,\qquad w_{k+2}=w_{k+1}w_k,
+\tag{79.1}
+$$
+
+where juxtaposition is left-to-right concatenation. Put
+
+$$
+N_k=|w_k|=F_{k+1},\qquad
+Z_0=1,\quad Z_1=0,\quad Z_{k+2}=Z_{k+1}+Z_k.
+\tag{79.2}
+$$
+
+Thus $Z_k$ is the number of zero letters in $w_k$ and, for $k\geq1$,
+$Z_k=F_{k-1}$; the number of one letters is $F_k$. The chronological
+word convention is
+
+$$
+Q_{uv}=Q_vQ_u,\qquad Q_{h_1\cdots h_m}=V_{h_m}\cdots V_{h_1}.
+\tag{79.3}
+$$
+
+The two actual qutrit letters are
+
+$$
+V_0=\frac12
+\begin{pmatrix}
+\sqrt3&i&0\\
+0&0&\sqrt3+i\\
+i&\sqrt3&0
+\end{pmatrix},\qquad
+V_1=\frac12
+\begin{pmatrix}
+ i&\sqrt3&0\\
+0&0&\sqrt3+i\\
+\sqrt3&i&0
+\end{pmatrix}.
+\tag{79.4}
+$$
+
+Set $r=\sqrt3$ and use the real orthonormal basis
+
+$$
+\xi=\frac1{\sqrt3}(1,1,1)^{\mathsf T},\qquad
+f_1=\frac1{\sqrt2}(1,-1,0)^{\mathsf T},\qquad
+f_2=\frac1{\sqrt6}(1,1,-2)^{\mathsf T},
+$$
+
+with change-of-basis matrix $\mathbf P=[\xi\ f_1\ f_2]$. Direct multiplication gives
+
+$$
+\mathbf P^\dagger V_0\mathbf P=\lambda\oplus A,\qquad
+\mathbf P^\dagger V_1\mathbf P=\lambda\oplus AJ,
+\tag{79.5}
+$$
+
+where
+
+$$
+\lambda=\frac{r+i}{2}=e^{i\pi/6},\qquad
+A=\frac14
+\begin{pmatrix}
+r-i&3+ir\\
+3-ir&-r-i
+\end{pmatrix},\qquad
+J=\begin{pmatrix}-1&0\\0&1\end{pmatrix}.
+\tag{79.6}
+$$
+
+The spectator line $\mathbb C\xi$ is therefore common to both letters. Define
+
+$$
+ a=iA=\frac14
+\begin{pmatrix}
+1+ir&-r+3i\\
+r+3i&1-ir
+\end{pmatrix},\qquad
+ b=AJ=\frac14
+\begin{pmatrix}
+-r+i&3+ir\\
+-3+ir&-r-i
+\end{pmatrix},
+\tag{79.7}
+$$
+
+and
+
+$$
+S_0=a,\qquad S_1=b,\qquad S_{k+2}=S_kS_{k+1}.
+\tag{79.8}
+$$
+
+The matrices $A$ and $J$ are unitary with determinant $-1$. Hence
+$a=iA$ and $b=AJ$ lie in $SU(2)$, and every $S_k$ lies in $SU(2)$.
+
+**Theorem 79.1 (Exact phase-separated application).** For every $k\geq0$,
+
+$$
+\boxed{
+\mathbf P^\dagger Q_{w_k}\mathbf P
+=\operatorname{diag}\!\left(\lambda^{N_k},\ i^{-Z_k}S_k\right)
+=\lambda^{N_k}\oplus i^{-Z_k}S_k.}
+\tag{79.9}
+$$
+
+The scalar $\lambda^{N_k}$ belongs only to the one-dimensional spectator
+summand. The active $2\times2$ summand is exactly $i^{-Z_k}S_k$.
+
+**Proof.** At a zero letter the active block in (79.5) is
+$A=i^{-1}a$, while at a one letter it is $b$. The chronological rule
+(79.3) and the word recurrence (79.1) give
+
+$$
+Q_{w_{k+2}}=Q_{w_k}Q_{w_{k+1}}.
+$$
+
+The spectator acquires one factor $\lambda$ per letter, hence
+$\lambda^{N_k}$. The active product acquires one factor $i^{-1}$ per
+zero and the ordered product of the corresponding $a,b$ factors is
+$S_k$; (79.8) is exactly the resulting reversed concatenation. The
+initial cases are $w_0=0$ and $w_1=1$, for which the active blocks are
+$i^{-1}S_0=A$ and $S_1=AJ$. This proves (79.9) by induction. \qed
+
+## 80. Chronological trees and exact phase reconstruction
+
+The same recurrence has a tree interpretation. Let
+
+$$
+\mathcal T_0=\alpha,\qquad \mathcal T_1=\beta,\qquad
+\mathcal T_{k+2}=\langle\mathcal T_{k+1},\mathcal T_k\rangle.
+\tag{80.1}
+$$
+
+Flatten leaves by
+
+$$
+\operatorname{flat}(\alpha)=0,\quad
+\operatorname{flat}(\beta)=1,\quad
+\operatorname{flat}(\langle X,Y\rangle)=
+\operatorname{flat}(X)\operatorname{flat}(Y).
+\tag{80.2}
+$$
+
+Then $\operatorname{flat}(\mathcal T_k)=w_k$. Define the interpretation
+
+$$
+E(\alpha)=V_0,\qquad E(\beta)=V_1,\qquad
+\mu(X,Y)=YX.
+\tag{80.3}
+$$
+
+Equation (79.3) gives
+
+$$
+E(\mathcal T_{k+2})
+=\mu(E(\mathcal T_{k+1}),E(\mathcal T_k))
+=E(\mathcal T_k)E(\mathcal T_{k+1})
+=Q_{w_{k+2}}.
+\tag{80.4}
+$$
+
+The selection-calculus supplier for this tree gives $k+1$ distinct rooted
+fringe subtrees for $k\geq2$ and an evaluation schedule using
+$\max\{k-1,0\}$ calls to $\mu$ when the two leaf values are shared. This
+is a count of composition operations in the known deterministic tree. It
+is not an assertion about the bit length of an explicitly emitted matrix,
+a native gate sequence, or a controller that receives an unknown history.
+
+The phases in (79.9) need no large exponentiation. Compute
+$N_k\bmod 12$ and $Z_k\bmod4$ using (79.2). Since $\lambda^{12}=1$ and
+$i^4=1$, the two exact phase factors are then selected from fixed tables of
+roots of unity. This takes $O(k)$ constant-size modular additions. A
+floating evaluation of the full matrices in (79.4), as specified below,
+retains the same phases without separately forming large powers.
+
+## 81. Actual half-traces and the all-depth odd-numerator law
+
+Put
+
+$$
+x_k=\frac12\operatorname{tr}(S_k).
+\tag{81.1}
+$$
+
+The actual seeds in (79.7) give
+
+$$
+\operatorname{tr}(a)=\frac12,\qquad
+\operatorname{tr}(b)=-\frac r2,\qquad
+\operatorname{tr}(ab)=-\frac r4,
+$$
+
+and therefore
+
+$$
+(x_0,x_1,x_2)=\left(\frac14,-\frac r4,-\frac r8\right).
+\tag{81.2}
+$$
+
+For example, direct multiplication gives $ab=iJ+b/2$, which yields the
+third trace in (81.2). The standard $SL_2$ trace-map identity for the
+chronological update, applied to consecutive triples, is
+
+$$
+x_{k+2}=2x_{k+1}x_k-x_{k-1}\qquad(k\geq1).
+\tag{81.3}
+$$
+
+The reversal in (79.3) does not change the trace coordinates because
+$\operatorname{tr}(VU)=\operatorname{tr}(UV)$ and
+$\operatorname{tr}(VUU)=\operatorname{tr}(U^2V)$. Thus the usual trace-map
+supplier applies to the actual matrices here. Its invariant, with the
+half-trace normalization used in (81.1), is
+
+$$
+I=x_{k-1}^2+x_k^2+x_{k+1}^2-2x_{k-1}x_kx_{k+1}-1.
+\tag{81.4}
+$$
+
+Using (81.2), the square sum is $19/64$ and twice the product is $3/64$,
+so $I=-3/4$ for every consecutive triple. The corresponding full-trace
+Fricke identity gives
+
+$$
+\operatorname{tr}(aba^{-1}b^{-1})=4I+2=-1.
+\tag{81.5}
+$$
+
+The factor $4$ and the additive $2$ in (81.5) are part of the conversion
+from half-traces; they are not absorbed into the definition of $I$.
+
+**Theorem 81.1 (Odd numerators at every depth).** Define
+
+$$
+\pi_k=F_k\bmod2\in\{0,1\},\qquad d_k=N_k+1=F_{k+1}+1.
+$$
+
+Then for every $k\geq0$ there is an odd integer $c_k$ such that
+
+$$
+\boxed{
+ x_k=\frac{c_k r^{\pi_k}}{2^{d_k}}.}
+\tag{81.6}
+$$
+
+The initial data are
+
+$$
+(d_0,d_1,d_2)=(2,2,3),\qquad
+(\pi_0,\pi_1,\pi_2)=(0,1,1),\qquad
+(c_0,c_1,c_2)=(1,-1,-1).
+\tag{81.7}
+$$
+
+The first seven numerators are
+
+$$
+1,-1,-1,-1,17,47,3421.
+\tag{81.8}
+$$
+
+**Proof.** The base cases are (81.2), which gives (81.7). Fibonacci parity
+has period three, equivalently
+$\pi_{k+2}=\pi_k+\pi_{k+1}\pmod2$ and
+$\pi_{k-1}=\pi_{k+2}$ for $k\geq1$. Therefore
+
+$$
+ r^{\pi_k+\pi_{k+1}}
+=3^{\pi_k\pi_{k+1}}r^{\pi_{k+2}},
+\tag{81.9}
+$$
+
+where the prefactor is either $1$ or $3$ and is always odd. The length
+recurrence gives
+
+$$
+ d_{k+2}=d_k+d_{k+1}-1,\qquad
+ d_{k+2}-d_{k-1}=N_{k+2}-N_{k-1}=2N_k.
+\tag{81.10}
+$$
+
+Substitute (81.6) for indices $k-1,k,k+1$ into (81.3), use (81.9), and
+put both terms over $2^{d_{k+2}}$. The resulting numerator is
+
+$$
+ c_{k+2}=3^{\pi_k\pi_{k+1}}c_kc_{k+1}
+          -2^{2N_k}c_{k-1}.
+\tag{81.11}
+$$
+
+The first summand in (81.11) is odd. Since $N_k\geq1$ for $k\geq1$, the
+second summand is divisible by $4$. Hence $c_{k+2}$ is odd. Strong
+induction from the three bases proves (81.6) at every depth. In particular
+there is no cancellation of a power of two, and the numerator cannot be
+zero. \qed
+
+## 82. Explicit exact encodings and what their lower bounds mean
+
+The nonzero rational coefficient of $x_k$ in the fixed basis
+$\{1,r\}$ is $c_k/2^{N_k+1}$, with the factor $r^{\pi_k}$ recorded
+separately. Because $c_k$ is odd, this fraction is reduced. Its positive
+binary denominator has $N_k+2$ bits. Since $S_k\in SU(2)$,
+$|x_k|\leq1$, so $|c_k|\leq2^{N_k+1}$ and the numerator has
+$O(N_k+1)$ bits. Consequently an explicitly written reduced numerator and
+denominator for this trace coefficient require $\Theta(N_k+1)$ bits. Since
+$N_k=F_{k+1}$ grows exponentially in $k$, this is exponential in the
+recursion depth.
+
+There is a separate full-matrix statement. Every entry of $Q_{w_k}$ lies
+in $2^{-N_k}\mathbb Z[r,i]$, hence in the coefficient basis
+$\{1,r,i,ir\}$ its rational coordinates have denominators dividing
+$2^{N_k}$. For $N_k\geq2$, take the trace in the adapted basis:
+
+$$
+\operatorname{tr}(Q_{w_k})
+=\lambda^{N_k}+i^{-Z_k}\frac{c_kr^{\pi_k}}{2^{N_k}}.
+\tag{82.1}
+$$
+
+The selected coordinate of the second term has odd numerator over
+$2^{N_k}$. In the same coordinate the spectator term contributes an
+integer multiple of $2^{N_k-1}$ to that numerator, so reduction cannot
+remove the final factor of two. Thus one diagonal entry of the physical
+matrix already has a coordinate with denominator exactly $2^{N_k}$,
+because the trace is a sum of the three diagonal entries. Writing the full
+$3\times3$ matrix coefficient by coefficient in
+$\{1,r,i,ir\}$ therefore has an explicit output requirement
+$\Omega(N_k)$ bits.
+
+The preceding two claims have different scopes: the exact trace coefficient
+has a $\Theta(N_k)$ explicit representation, while the full matrix has an
+$\Omega(N_k)$ explicit-output lower bound. Neither is a lower bound for an
+exponent-coded denominator, an unevaluated recurrence, an arithmetic circuit,
+or a short program containing the fixed seeds. Neither is a lower bound on
+working memory, on an unknown-history memory, on native gate execution, or
+on gate count. In particular, a shared tree value and an emitted matrix are
+different representations of the same known deterministic word.
+
+## 83. A fixed-precision full-matrix algorithm
+
+Fix $0<\varepsilon\leq1$ and let
+
+$$
+t=\left\lceil\log_2(1/\varepsilon)\right\rceil,\qquad
+p=2k+t+7,\qquad q=2^{-p},\qquad \eta=4q.
+\tag{83.1}
+$$
+
+The input parameter is the recursion depth $k$, not its binary length. The
+algorithm below returns all eighteen real coordinates of a complex
+$3\times3$ matrix. Every grid rounding below uses nearest integer quotient;
+exact half-way ties are rounded toward zero, so the procedure is deterministic.
+
+First compute an integer square root
+
+$$
+R=\left\lfloor2^{p+4}\sqrt3\right\rfloor,\qquad
+\widehat r=R/2^{p+4}.
+\tag{83.2}
+$$
+
+An integer-square-root routine gives
+$|\widehat r-r|<2^{-(p+4)}=q/16$. Substitute $\widehat r$ for $r$ in
+both matrices (79.4), and round every real and imaginary coordinate to the
+nearest multiple of $q$. Call the results $\widehat V_0$ and
+$\widehat V_1$. The root substitution changes the operator by less than
+$q/32$, since the difference is a scalar multiple of a fixed permutation
+pattern. Rounding eighteen real coordinates, each by at most $q/2$,
+changes the Frobenius norm by at most $3q/\sqrt2<3q$. Hence
+
+$$
+\|\widehat V_j-V_j\|\leq\eta\qquad(j=0,1).
+\tag{83.3}
+$$
+
+Set $\widehat Q_0=\widehat V_0$ and
+$\widehat Q_1=\widehat V_1$. For $j=0,\ldots,k-2$, multiply the two
+stored dyadic matrices exactly in the order dictated by chronology and
+round every resulting coordinate once to the $q$-grid:
+
+$$
+\widehat Q_{j+2}=\operatorname{Round}_q(\widehat Q_j\widehat Q_{j+1}).
+\tag{83.4}
+$$
+
+The exact products in (83.4) use only dyadic integer arithmetic; the two
+preceding matrices and constant-size temporaries are sufficient. The
+single rounding in each multiplication has operator error below $3q$ and
+therefore below $\eta$.
+
+**Theorem 83.1 (Uniform accumulated-error bound).** Let
+
+$$
+e_j=\|\widehat Q_j-Q_{w_j}\|.
+$$
+
+Then for every $j\leq k$,
+
+$$
+ e_j\leq\eta4^j\leq2^{-t-5}\leq\varepsilon/32.
+\tag{83.5}
+$$
+
+**Proof.** Each exact $Q_{w_j}$ is unitary. Submultiplicativity and (83.4)
+give
+
+$$
+ e_{j+2}
+\leq e_j+e_{j+1}+e_je_{j+1}+\eta.
+\tag{83.6}
+$$
+
+The two seed bounds (83.3) start the induction. The proposed bound at any
+index $j\leq k$ is at most
+$\eta4^k=2^{-t-5}\leq1$, so whenever the preceding bounds have been
+established, (83.6) also gives
+
+$$
+ e_{j+2}\leq2(e_j+e_{j+1})+\eta
+\leq11\eta4^j
+\leq\eta4^{j+2}.
+\tag{83.7}
+$$
+
+This proves (83.5) by induction, and the same envelope justifies the
+assumption $e_j,e_{j+1}\leq1$ at every step. \qed
+
+Finally round each real coordinate of $\widehat Q_k$ to a grid with
+$t+4$ fractional bits. The output rounding contributes at most
+$3\,2^{-(t+4)}\leq3\varepsilon/16$ in operator norm. Combining this with
+(83.5) gives
+
+$$
+\|Q_{w_k}-Q_{\rm out}\|
+\leq\frac{\varepsilon}{32}+\frac{3\varepsilon}{16}
+=\frac{7\varepsilon}{32}<\varepsilon.
+\tag{83.8}
+$$
+
+The output is a numerical matrix approximation and need not be exactly
+unitary. The exact phase labels from (79.2) may be emitted alongside it
+using the constant-size residues $N_k\bmod12$ and $Z_k\bmod4$.
+
+## 84. Bit costs, source mapping and scoped literature
+
+Let $p$ be as in (83.1). Schoolbook multiplication of the constant number
+of dyadic scalars in each fixed-dimensional matrix product costs
+$O(p^2)$ bit operations. A bisection implementation of the integer square
+root in (83.2) costs $O(p^3)$ bit operations, which is sufficient for the
+stated bound. The complete algorithm therefore has the valid polynomial
+bit-time bound
+
+$$
+O\bigl((k+1)p^2+p^3\bigr),\qquad p=O(k+t+1).
+\tag{84.1}
+$$
+
+It is polynomial in $k+t$, and no polynomial bound in
+$\log(k+1)+t$ is asserted. Two preceding matrices, fixed-dimensional
+temporaries and counters use
+
+$$
+O\bigl(p+\log(k+1)\bigr)
+\tag{84.2}
+$$
+
+working bits. The eighteen final real dyadic coordinates have
+$O(t+1)$ bits in total, up to constant-size phase labels, so the explicit
+numeric output cost is $O(t+1)$. These are arithmetic and representation
+costs for known matrices. They do not give a native gate count, a circuit
+synthesis theorem, a physical execution cost, or a memory lower bound for
+recovering an unknown random history.
+
+The source correspondence is as follows. The actual matrices, fair
+history law and chronological qutrit convention are the objects in §§63–68
+of this volume. The fixed partition and legal online application are in
+§§69–78. The tree recurrence, distinct-fringe count and pure interpretation
+call count are supplied by [AURIC FIB atom selection calculus, theorem
+14.2](AURIC_FIB_ATOM_SELECTION_CALCULUS.md).
+The $SL(2)$ trace map and Fricke polynomial are supplied by [CFMP geometric
+realization and observation dynamics, §138](CFMP_GEOMETRIC_REALIZATION_OBSERVATION_DYNAMICS.md),
+and the chronological Fibonacci half-trace recurrence is supplied by
+[FIB atom statistical laws, §159](FIB_ATOM_STATISTICAL_LAWS.md).
+Those generic identities are used here only to connect the actual seeds to
+(81.3)–(81.5); the odd valuation and finite-precision bounds are the
+source-specific results above. The D5 recurrence files
+[`D5/S1/Recurrence/TraceMap.lean`](../../../D5/S1/Recurrence/TraceMap.lean) and
+[`D5/S1/Recurrence/CassiniFricke.lean`](../../../D5/S1/Recurrence/CassiniFricke.lean)
+are related library carriers, but they do not by themselves state this
+qutrit application.
+
+The scoped primary literature is:
+
+- M. Baake, U. Grimm and D. Joseph, [*Trace maps, invariants, and some of their applications*](https://arxiv.org/abs/math-ph/9904025), especially the substitution trace map, Fricke invariant and chronological Fibonacci $SU(2)$ recursion. It does not supply the matrices (79.4), the odd numerator law, or (83.8).
+- W. M. Goldman, [*Trace Coordinates on Fricke spaces of some simple hyperbolic surfaces*](https://arxiv.org/abs/0901.1404), equation (2.2.8), for the full-trace commutator polynomial. It supplies no spectator phase, qutrit seed arithmetic or recovery statement.
+- C. M. Dawson and M. A. Nielsen, [*The Solovay–Kitaev algorithm*](https://arxiv.org/abs/quant-ph/0505030), for the distinction between a finite instruction description and an explicitly emitted sequence. Its arithmetic discussion is not used as a finite-precision proof here, and no native gate set is assumed.
+- D. W. Berry, G. Ahokas, R. Cleve and B. C. Sanders, [*Efficient quantum algorithms for simulating sparse Hamiltonians*](https://arxiv.org/abs/quant-ph/0508139), for a model-dependent linear oracle-query boundary. That growing-dimensional oracle model is not this fixed known qutrit recurrence.
+- Y. Atia and D. Aharonov, [*Fast-forwarding of Hamiltonians and Exponentially Precise Measurements*](https://arxiv.org/abs/1610.09619), for the dependence of fast-forwarding claims on access and computational models. No fast-forwarding conclusion is transferred here.
+
+These references are scoped suppliers, not an exhaustive literature or
+priority survey. The mathematical result remains an ordinary statement
+about a fixed, known deterministic word and its exact or approximate matrix
+representation. It does not solve the original unrestricted random-history
+recovery or memory problem, and it yields no critical-energy conclusion.
+
+## 85. Boundary of the application
+
+The deterministic words $w_k$ are known programs generated by (79.1). The
+algorithm above receives $k$ and the fixed matrices (79.4); it does not infer
+an unknown source history, copy an unknown quantum state, or replace a
+sequence of permitted physical gates at unit cost. The exact-output bounds
+in §82 concern only the declared coefficient-by-coefficient binary
+encoding. The polynomial bound in §84 concerns a classical fixed-precision
+arithmetic procedure and is polynomial in $k+t$, with $k$ itself as the
+depth parameter.
+
+A theorem about arbitrary random histories would additionally require a
+source-to-observation relation, the permitted recovery operations, an
+injectivity or exact-fiber statement, and a separately defined error and
+resource model. None follows from (79.9), (81.6), or (83.8). The finite
+$(n,\varepsilon)$ joint recovery and memory law, including general online
+compatibility and optimal peak memory, remains open. The critical-energy
+goal remains open as well.
+
+## 追加锚（本行以下为增补区）
+
+## 86. Task readout on the actual ambiguous records
+
+**Definition 86.1 (A prescribed binary task).** Retain the qutrit source,
+actual chronological words and terminal partition of Definition 63.1.
+For a prescribed nontrivial projection $E$ on the input qutrit and one
+conditional record channel $\mathcal N_j$, define
+
+$$
+\eta_j(E)=\min_{D\ \mathrm{CPTP}}\sup_{\rho\in\mathsf D(\mathbb C^3)}
+\left|\operatorname{tr}(E D\mathcal N_j(\rho))
+                   -\operatorname{tr}(E\rho)\right|.
+\tag{86.1}
+$$
+
+The record is known to the decoder. This loss asks only for the probability
+of one binary task on each input; it is not a channel diamond distance.
+The effect $E$ is prescribed before the unknown input arrives. The
+Heisenberg observable-correction interface is Bény–Kempf–Kribs,
+Definition 8, equation (7), as recorded in
+[the observable-correction note](../../../Library/Quantum/benykempfkribs2007observables.md#task-readout-statistical-sufficiency-and-physical-correction).
+
+Let $R_j=Q_{a_j}^\dagger Q_{b_j}$ be the two actual relatives in
+(63.3), and choose orthonormal eigenvectors $u_j,v_j$ for the two
+nontrivial eigenvalues of $R_j$. Put
+
+$$
+E_j=|+_j\rangle\langle+_j|,
+\qquad |\pm_j\rangle=(u_j\pm v_j)/\sqrt2,
+\qquad P=|\xi\rangle\langle\xi|.
+\tag{86.2}
+$$
+
+**Theorem 86.2 (Exact actual-record task errors and a history-free task).**
+For the conditional pair records $\{001,111\}$ and $\{000,101\}$,
+respectively,
+
+$$
+\eta_1(E_1)=\frac14,
+\qquad \eta_2(E_2)=\frac3{16},
+\qquad \eta_j(P)=0\quad\text{for every record }j.
+\tag{86.3}
+$$
+
+The $P$ task remains exact after erasing the entire terminal history,
+and indeed for every finite chronological horizon and every
+input-independent distribution of its actual words. In contrast,
+the two conditional full-state diamond recovery errors are $1$ and
+$3/8$ by Proposition 63.2. The first two numbers in (86.3) concern
+different prescribed tasks $E_1,E_2$; they are not additive contributions
+to a common-task optimum.
+
+**Proof.** The standard Heisenberg calculation identifies (86.1) with
+
+$$
+\min_{0\preceq F\preceq I}
+\|\mathcal N_j^\dagger(F)-E\|_{\mathrm{op}}.
+\tag{86.4}
+$$
+
+Every decoder supplies the effect $F=D^\dagger(E)$. Conversely, a given
+effect $F$ is realized by measuring $F$ and preparing a state in the range
+or kernel of $E$ according to the outcome. Supremizing the absolute
+expectation of a Hermitian difference over density matrices gives its
+operator norm. This step uses the general task interface from the cited
+note; the actual-word computation follows.
+
+The known first unitary of a pair can be removed at the output, reducing
+its conditional channel to
+$\mathcal M=(\operatorname{id}+\operatorname{Ad}_{R_j})/2$.
+For eigenvalues $z_u,z_v$ on $u_j,v_j$, its Heisenberg action multiplies
+the $(u_j,v_j)$ matrix entry of an effect by
+$\mu=(1+\overline z_u z_v)/2$.
+Choose a rank-one effect $F$ in this plane with diagonal entries $1/2$
+and off-diagonal entry $\overline\mu/(2|\mu|)$, and zero on its
+orthogonal complement. If $\mu=0$, any phase is admissible. The pulled
+effect differs from $E_j$ only by an off-diagonal entry of modulus
+$(1-|\mu|)/2$. Hence (86.4) is at most that number. The known first
+unitary merely conjugates this output effect and changes neither bound.
+
+For the matching lower bound, the two actual input states
+$\rho_\pm=|\pm_j\rangle\langle\pm_j|$ have ideal task probabilities
+one and zero. Their channel-output difference has eigenvalues
+$|\mu|,-|\mu|,0$, so its trace norm is $2|\mu|$. Any output effect
+can separate their probabilities by at most $|\mu|$. If both task
+errors were at most $\eta$, this separation would be at least
+$1-2\eta$, proving $\eta\ge(1-|\mu|)/2$.
+
+For $R_1$, (63.3) gives $z_u=e^{2\pi i/3}$ and
+$z_v=e^{-2\pi i/3}$, so $|\mu|=1/2$. For $R_2$, write its two
+eigenvalues as $e^{\pm i\alpha}$ with $\cos\alpha=5/8$;
+then $|\mu|=|\cos\alpha|=5/8$. This proves the first two values.
+The selected rank-one effects can also be obtained by a unitary
+change of the fixed rank-one measurement, so the upper bounds do not
+require a nonunitary decoder.
+
+Finally (63.4) gives $V_0\xi=V_1\xi=\lambda\xi$ with
+$|\lambda|=1$. Thus every length-$n$ actual word satisfies
+$Q_h\xi=\lambda^n\xi$ and $Q_h^\dagger P Q_h=P$.
+Every conditional mixture, and every input-independent mixture after
+erasing its record, consequently has Heisenberg image $P$. The identity
+decoder gives zero task error. This argument holds at every finite
+horizon. $\square$
+
+**Definition 86.3 (Simultaneity and resource boundary).** The task effects
+and allowed terminal operations in Definition 86.1 are supplied as part
+of the finite task contract. Theorem 86.2 is a repository-derived
+application of observable correction and binary-state distinguishability
+to the actual matrices (63.3); it supplies no general synthesis cost
+for eigenvector measurements or online controller. Retaining the
+probability of $P$ needs no history label, whereas preserving arbitrary
+input coherences is the stronger task of §§59–78. For several prescribed
+effects, one common decoder must realize them simultaneously; minimizing
+each expression (86.1) separately does not establish that requirement.
+
+## 追加锚（本行以下为增补区）
+
+## 87. Exact Choi spectra of the actual erased-history qutrit
+
+**Definition 87.1 (Actual channel and normalized tensor convention).**
+Use the actual chronological qutrit letters of §63, with the all-angle
+extension of [Environment record memory, Definitions 26.1 and 27.1][ENV87].
+In the original three coordinates and then the ordered real orthonormal
+basis $(\xi,e,f)$, the matrices are
+
+$$
+\begin{gathered}
+U_0=\begin{pmatrix}1&0&0\\0&0&1\\0&1&0\end{pmatrix},\quad
+W=\begin{pmatrix}0&1&0\\1&0&0\\0&0&1\end{pmatrix},\quad U_1=U_0W,\\
+V_0(\theta)=U_0e^{i\theta W},\qquad V_1(\theta)=V_0(\theta)W,\\
+\xi=(1,1,1)^{\mathsf T}/\sqrt3,\quad
+e=(1,1,-2)^{\mathsf T}/\sqrt6,\quad f=(1,-1,0)^{\mathsf T}/\sqrt2,\\
+W\big|_{(\xi,e,f)}=\operatorname{diag}(1,1,-1),\qquad
+U_0\big|_{(\xi,e,f)}=
+1\oplus\begin{pmatrix}-1/2&\sqrt3/2\\\sqrt3/2&1/2\end{pmatrix}.
+\end{gathered}
+\tag{87.1}
+$$
+
+The angle $\theta=\pi/6$ gives exactly (63.4). For the actual fair,
+independent history law, put
+
+$$
+\begin{gathered}
+\Delta_W(X)=\tfrac12(X+WXW),\qquad
+F=\operatorname{Ad}_{U_0}\circ\Delta_W
+ =\tfrac12(\operatorname{Ad}_{U_0}+\operatorname{Ad}_{U_1}),\\
+\mathcal N_n=F^n,\qquad
+|\Omega_3\rangle=\frac{|00\rangle+|11\rangle+|22\rangle}{\sqrt3},\qquad
+\omega_n=(F^n\otimes\operatorname{id})(|\Omega_3\rangle\langle\Omega_3|).
+\end{gathered}
+\tag{87.2}
+$$
+
+Here $|0\rangle=\xi$, $|1\rangle=e$, $|2\rangle=f$; the first
+tensor factor is output and the second is the reference/input copy.
+Thus $\omega_n=J(F^n)/3$ in Definition 73.1's convention. Write
+$E_{ab}=|a\rangle\langle b|$ in this basis. Reference partial transpose
+means $(|a,i\rangle\langle b,j|)^\Gamma=|a,j\rangle\langle b,i|$.
+For finite $n\ge1$, set
+
+$$
+s=(-1/2)^{n-1},\qquad \tau=|s|=2^{1-n},\qquad
+\alpha=(1+s)/2,\qquad\beta=(1-s)/2.
+\tag{87.3}
+$$
+
+The equality with the actual chronological channel is the one in
+[Environment record memory, (27.3)][ENV87]: $\Delta_W(X)$ commutes
+with $W$, so $e^{i\theta W}\Delta_W(X)e^{-i\theta W}=\Delta_W(X)$.
+Consequently the average of the two actual unitary conjugations is
+$F$, at every angle. Conditional fairness gives each length-$n$ word
+$V_{h_n}\cdots V_{h_1}$ weight $2^{-n}$, and summing these words gives
+$F^n$. In particular these formulas do not replace the actual channel
+by a record-conditioned channel from §86.
+
+The identification with the previously studied qutrit restriction is
+explicit: the isometry $B$ sending the original qutrit coordinate basis
+to $(u,v,z)$ of [Five-window quantum memory, (18.4)][QM87] intertwines
+$U_0,U_1$ with those restricted matrices. It sends $\xi$ to
+$(u+v+z)/\sqrt3$. The witness in that volume's Theorem 20.2 is entirely
+inside this invariant three-dimensional space. Its all-finite NPT
+consequence, the restricted polynomial (19.4), and the EB limit (19.7)
+therefore already apply here, as [Environment record memory, §27.8][ENV87]
+states. The following calculation determines the full normalized Choi
+data rather than claiming those structural conclusions again.
+
+**Theorem 87.2 (Actual Choi matrix and both spectra).** At $n=0$,
+$\omega_0=|\Omega_3\rangle\langle\Omega_3|$, with spectrum
+$\{1,0^{\times8}\}$. For every finite $n\ge1$, put
+$\widetilde\omega_n=(U_0^\dagger\otimes I)\omega_n(U_0\otimes I)$.
+Then
+
+$$
+\begin{aligned}
+3\widetilde\omega_n={}&|00\rangle\langle00|
+ +\alpha(|11\rangle\langle11|+|22\rangle\langle22|)\\
+&+\beta(|12\rangle\langle12|+|21\rangle\langle21|)
+ +s(|00\rangle\langle11|+|11\rangle\langle00|),\\
+3\widetilde\omega_n^\Gamma={}&|00\rangle\langle00|
+ +\alpha(|11\rangle\langle11|+|22\rangle\langle22|)\\
+&+\beta(|12\rangle\langle12|+|21\rangle\langle21|)
+ +s(|01\rangle\langle10|+|10\rangle\langle01|).
+\end{aligned}
+\tag{87.4}
+$$
+
+Their spectra, with algebraic multiplicity, are
+
+$$
+\begin{aligned}
+\operatorname{spec}(\omega_n)
+ &=\left\{
+ \frac{1+\alpha+\sqrt{(1-\alpha)^2+4s^2}}6,
+ \frac{1+\alpha-\sqrt{(1-\alpha)^2+4s^2}}6,
+ \frac\alpha3,\left(\frac\beta3\right)^{\times2},0^{\times4}
+ \right\},\\
+\operatorname{spec}(\omega_n^\Gamma)
+ &=\left\{\frac13,\left(\frac\alpha3\right)^{\times2},
+ \left(\frac\beta3\right)^{\times2},\frac s3,-\frac s3,0^{\times2}
+ \right\},\\
+\operatorname{spec}(\omega_0^\Gamma)
+ &=\left\{(1/3)^{\times6},(-1/3)^{\times3}\right\}.
+\end{aligned}
+\tag{87.5}
+$$
+
+Repeated displayed values are combined; at $n=1$ the partial-transpose
+zero eigenspace has dimension four. At the limit $s=0$ the spectrum of
+both $\omega_\infty$ and $\omega_\infty^\Gamma$ is
+$\{1/3,(1/6)^{\times4},0^{\times4}\}$.
+
+Proof. For clarity, the actual iteration (Environment (27.7)) can be
+read directly from (87.1). Write $\mathscr P=\Delta_W$,
+$\mathscr O=\operatorname{Ad}_{U_0}$, and
+$A=(\mathscr P\mathscr O\mathscr P)|_{\operatorname{ran}\mathscr P}$.
+The range consists of the complex matrices
+$K=\left(\begin{smallmatrix}x&z&0\\w&y&0\\0&0&d\end{smallmatrix}\right)$;
+the entries $w,z$ are independent here. Matrix multiplication gives
+
+$$
+A(K)=\begin{pmatrix}
+x&-z/2&0\\-w/2&(y+3d)/4&0\\0&0&(3y+d)/4
+\end{pmatrix},\qquad
+F^n=\mathscr O A^{n-1}\mathscr P\quad(n\ge1).
+\tag{87.6}
+$$
+
+The second identity follows by inserting $\mathscr P^2=\mathscr P$
+between successive factors of $(\mathscr O\mathscr P)^n$; at $n=1$
+$A^0$ is the identity on its range. The two population eigenvectors
+$(1,1),(1,-1)$ have multipliers $1,-1/2$, respectively. Therefore,
+for every complex matrix $X=(x_{ab})$,
+
+$$
+\operatorname{Ad}_{U_0^\dagger}F^n(X)=\Psi_s(X)
+ =\begin{pmatrix}
+x_{00}&s x_{01}&0\\
+s x_{10}&\alpha x_{11}+\beta x_{22}&0\\
+0&0&\beta x_{11}+\alpha x_{22}
+\end{pmatrix}.
+\tag{87.7}
+$$
+
+The normalized Choi expansion, in the output-first convention of
+Choi's completely positive map representation, is
+$3\widetilde\omega_n=\sum_{a,b}\Psi_s(E_{ab})\otimes E_{ab}$.
+For example $E_{11}$ contributes
+$\alpha|11\rangle\langle11|+\beta|21\rangle\langle21|$,
+$E_{22}$ contributes
+$\beta|12\rangle\langle12|+\alpha|22\rangle\langle22|$,
+and $E_{01}$ contributes $s|00\rangle\langle11|$.
+These and their displayed companions give the first line of (87.4);
+transposing only the second factor gives its second line. The trace is
+$(1+2\alpha+2\beta)/3=1$. Both marginals are $I_3/3$, also following
+from trace preservation and unitality of $F^n$.
+
+For the ordinary spectrum, the only nondiagonal block is
+$\frac13\left(\begin{smallmatrix}1&s\\s&\alpha\end{smallmatrix}\right)$
+on $(|00\rangle,|11\rangle)$. Its quadratic equation gives the first
+two eigenvalues in (87.5); $|22\rangle,|12\rangle,|21\rangle$ give the
+next three and the four unused basis vectors give zero. Positivity is
+also visible without an appeal to the channel construction:
+$\alpha-s^2=(1-s)(1+2s)/2\ge0$ for the actual range
+$-1/2\le s\le1$, and $\alpha,\beta\ge0$.
+
+For reference partial transpose, the five diagonal coordinates in
+(87.4) have eigenvalues $1/3,\alpha/3,\alpha/3,\beta/3,\beta/3$.
+The orthogonal pair $(|01\rangle,|10\rangle)$ has block
+$\frac13\left(\begin{smallmatrix}0&s\\s&0\end{smallmatrix}\right)$,
+with eigenvectors $(|01\rangle\pm|10\rangle)/\sqrt2$ and eigenvalues
+$\pm s/3$. The remaining $|02\rangle,|20\rangle$ give two zeros.
+The output conjugation commutes with reference transposition and
+preserves this spectrum. At $n=0$,
+$\omega_0^\Gamma=\mathsf S/3$, where the swap $\mathsf S$ has
+eigenvalues $+1$ on the six-dimensional symmetric subspace and $-1$
+on the three-dimensional antisymmetric subspace. Finally (87.7)
+converges entry by entry at $s=0$, giving the asserted limit spectrum.
+These are full spectra, including the signed value of $s$ at even
+horizons. $\square$
+
+**Corollary 87.3 (Exact negativity and logarithmic negativity).** With
+the negativity convention of Vidal–Werner, namely
+$N(\rho)=(\|\rho^\Gamma\|_1-1)/2$ and
+$LN(\rho)=\log_2\|\rho^\Gamma\|_1$, one has
+
+$$
+\begin{array}{c|c|c|c}
+\text{horizon}&\|\omega_n^\Gamma\|_1&N(\omega_n)&LN(\omega_n)\\\hline
+0&3&1&\log_2 3\\
+1\le n<\infty&1+2\tau/3&\tau/3=2^{1-n}/3&
+ \log_2(1+2^{2-n}/3)\\
+\infty&1&0&0
+\end{array}
+\tag{87.8}
+$$
+
+Proof. The five nonnegative diagonal eigenvalues of
+$\widetilde\omega_n^\Gamma$ sum to one. The signed block contributes
+$2|s|/3$ to the trace norm and has exactly one negative eigenvalue
+$-\tau/3$ at every positive finite horizon. At $n=0$ all nine
+absolute eigenvalues equal $1/3$. Substitution into the two definitions
+proves every entry, and the limiting spectrum gives the last row.
+The all-finite NPT fact is reused from the qutrit restriction specified
+in Definition 87.1; the exact nine-dimensional spectrum and its
+negativity value are the quantities computed here. $\square$
+
+## 88. Exact Schmidt numbers of the actual Choi states
+
+**Theorem 88.1 (A finite rank-two ensemble at every positive horizon).**
+For the states of (87.2), the Schmidt numbers are exactly
+
+$$
+\operatorname{SN}(\omega_0)=3,\qquad
+\operatorname{SN}(\omega_n)=2\ (1\le n<\infty),\qquad
+\operatorname{SN}(\omega_\infty)=1.
+\tag{88.1}
+$$
+
+Here Schmidt number is the least maximum pure-state Schmidt rank in
+a convex decomposition, as in Terhal–Horodecki and
+[Tavakoli–Morelli, §II.1, (2)][TM89]. An explicit finite ensemble for
+every positive horizon is obtained by putting
+
+$$
+\begin{gathered}
+\Pi_+=E_{00}+E_{11},\quad \Pi_-=E_{22},\quad
+A_+=U_0\Pi_+,\quad A_-=U_0\Pi_-,\\
+K_{\varepsilon}=A_{\varepsilon_n}\cdots A_{\varepsilon_1}
+ \quad(\varepsilon\in\{+,-\}^n),\qquad
+t_{\varepsilon}=\operatorname{Tr}(K_{\varepsilon}^\dagger
+                                      K_{\varepsilon}),\\
+p_{\varepsilon}=t_{\varepsilon}/3,\qquad
+|\psi_{\varepsilon}\rangle=
+ |K_{\varepsilon}\rangle\!\rangle/\sqrt{t_{\varepsilon}}
+ \quad(t_{\varepsilon}>0),\\
+\omega_n=\sum_{\varepsilon:t_{\varepsilon}>0}
+ p_{\varepsilon}|\psi_{\varepsilon}\rangle
+                         \langle\psi_{\varepsilon}|.
+\end{gathered}
+\tag{88.2}
+$$
+
+The products use the explicit matrices (87.1), and each vector in this
+ensemble has Schmidt rank at most two. The separable limiting ensemble is
+
+$$
+\omega_\infty=\tfrac13 E_{00}\otimes E_{00}^{\mathsf T}
+ +\tfrac16\sum_{a,b\in\{1,2\}}E_{aa}\otimes E_{bb}^{\mathsf T}.
+\tag{88.3}
+$$
+
+Proof. The spectral projectors of $W$ give
+$\Delta_W(X)=\Pi_+X\Pi_++\Pi_-X\Pi_-$, so $A_+,A_-$ are Kraus
+matrices for exactly $F$, with
+$A_+^\dagger A_++A_-^\dagger A_-=I_3$.
+Induction under channel composition gives the Kraus products in
+(88.2) and $\sum_{\varepsilon}K_{\varepsilon}^\dagger
+K_{\varepsilon}=I_3$. Hence $\sum p_{\varepsilon}=1$ and zero
+products may be discarded. The standard Choi–Kraus vectorization
+identity, with the normalization fixed in Definition 73.1, gives
+$\omega_n=\frac13\sum_{\varepsilon}|K_{\varepsilon}\rangle\!\rangle
+\langle\!\langle K_{\varepsilon}|$, proving the ensemble equality.
+Every product has rank at most the rank of its rightmost factor;
+$\operatorname{rank}A_+=2$ and $\operatorname{rank}A_-=1$.
+
+To check explicitly the Schmidt-rank correspondence, write a singular
+value decomposition $K=\sum_{j=1}^{r}\sigma_j|u_j\rangle\langle v_j|$.
+Then $|K\rangle\!\rangle=\sum_{j=1}^{r}\sigma_j
+|u_j\rangle|\overline v_j\rangle$ is a Schmidt decomposition,
+because both listed families are orthonormal. Thus every nonzero
+component of (88.2) has rank at most two. This proves
+$\operatorname{SN}(\omega_n)\le2$ without presuming that its
+unitary-word ensemble has low rank. The signs $\varepsilon$ are
+mathematical ensemble labels, not history data supplied to a decoder.
+
+For the lower bound, reference partial transpose sends a product
+density $R\otimes S$ to $R\otimes S^{\mathsf T}\succeq0$ and
+preserves positivity of their convex mixtures. This is the necessary
+PPT condition of Peres. The eigenvalue $-\tau/3$ in (87.5), or its
+explicit $|01\rangle,|10\rangle$ block, therefore excludes Schmidt
+number one for every finite positive horizon. Together with (88.2)
+it proves the middle equality in (88.1).
+
+At $n=0$, the coefficient matrix of $|\Omega_3\rangle$ is
+$I_3/\sqrt3$, of rank three. Any pure-state ensemble of a rank-one
+density has all its nonzero components in that same one-dimensional
+support: its expectation on each orthogonal vector is a sum of
+nonnegative squared overlaps and is zero. Thus such an ensemble
+cannot lower its Schmidt rank, proving the first equality.
+
+At the limit, (87.7) and invariance of the two sectors under $U_0$
+give precisely the previously known measure-and-prepare restriction
+
+$$
+L(X)=P\operatorname{Tr}(PX)
+       +\frac{P_T}{2}\operatorname{Tr}(P_TX),\qquad
+P=E_{00},\quad P_T=I_3-P.
+\tag{88.4}
+$$
+
+For comparison with [Five-window (19.7)][QM87], compress its effect
+$E$ to $R$ to get $P$, and identify its $M$ with $P_T/2$ via $B$.
+The normalized output-first Choi state of (88.4) is
+$\frac13 P\otimes P^{\mathsf T}+\frac16P_T\otimes P_T^{\mathsf T}$,
+which expands to (88.3). Its five pure product terms have weights
+$1/3,1/6,1/6,1/6,1/6$, summing to one. This proves Schmidt number
+one and supplies the explicit separable ensemble; the EB property
+of this limit itself is already in the cited source. $\square$
+
+## 89. Exact SIC and complete-MUB detection of the actual Choi resource
+
+**Definition 89.1 (Independent local families and literal normalization).**
+On each qutrit choose independently nine unit SIC vectors $s_i^A,s_j^B$,
+with squared overlap $1/4$ for distinct vectors within either family.
+Their effects are exactly $E_i^A=|s_i^A\rangle\langle s_i^A|/3$,
+$E_j^B=|s_j^B\rangle\langle s_j^B|/3$. Independently choose four
+orthonormal bases on each side, mutually unbiased within that side,
+with projectors $G_{\ell a}^A,G_{kb}^B$ and cross-basis squared overlaps
+$1/3$. In the notation of [Tavakoli–Morelli, (6)–(8), (18)][TM89], set
+
+$$
+\begin{aligned}
+(\mathbf P_n)_{ij}
+ &=\operatorname{Tr}(\omega_n(E_i^A\otimes E_j^B)),\\
+(\mathbf Q_n)_{\ell a,kb}
+ &=\operatorname{Tr}(\omega_n(G_{\ell a}^A\otimes G_{kb}^B)).
+\end{aligned}
+\tag{89.1}
+$$
+
+Thus $\mathbf P_n$ is $9\times9$ and $\mathbf Q_n$ is $12\times12$.
+There is no factor $1/4$, $1/3$, or basis-sampling probability attached
+to a MUB projector in $\mathbf Q_n$. Each fixed basis pair gives a
+normalized outcome table, while the sum of all entries of
+$\mathbf Q_n$ is $16$. Throughout this chapter the norm of such a
+matrix is its rectangular trace norm, the sum of its singular values,
+rather than the sum of absolute entries. No unitary equivalence between
+the two SIC families or between the two MUB families is assumed.
+
+**Theorem 89.2 (All-family exact correlation norms).** For every choice
+of the four local families in Definition 89.1,
+
+$$
+\begin{array}{c|c|c}
+\text{horizon}&\|\mathbf P_n\|_1&\|\mathbf Q_n\|_1\\\hline
+0&1/3&4\\
+1\le n<\infty&(5+3\tau)/36&5/3+\tau\\
+\infty&5/36&5/3
+\end{array}
+\qquad \|\mathbf Q_n\|_1=12\|\mathbf P_n\|_1.
+\tag{89.2}
+$$
+
+Proof. The general tools here are the SIC and complete-MUB frame
+reconstructions underlying Tavakoli–Morelli's criteria and the
+repository's SIC–MUB correlation trace-norm equality. The parameter
+correspondence is $d_A=d_B=3$, their state $\rho_{AB}=\omega_n$,
+their SIC effects $E_i=\Pi_i/3$, and their complete-MUB effects the
+literal $G_{\ell a}$. The dimension factor in their notation is
+$K=\sqrt{3(3+1)}\sqrt{3(3+1)}=12$. The following frame calculation
+includes the normalization and the actual-channel singular values.
+
+First fix either local SIC family and write $\Pi_i=3E_i$. Its
+Hilbert–Schmidt Gram matrix is
+$\frac34 I_9+\frac14\mathbf1\mathbf1^{\mathsf T}$, since
+$\operatorname{Tr}(\Pi_i\Pi_j)$ is one on the diagonal and $1/4$
+elsewhere. Its eigenvalues are $3$ in the $\mathbf1$ direction and
+$3/4$ in its orthogonal complement. Thus the nine $\Pi_i$ form a
+basis of Hermitian matrices, and their complex span is $M_3$.
+Moreover $\operatorname{Tr}(\Pi_j\sum_i\Pi_i)=1+8/4=3$
+for each $j$. Comparing with $3I_3$ against this basis proves
+$\sum_i\Pi_i=3I_3$. On $X=\Pi_j$ it follows that
+
+$$
+\sum_i\operatorname{Tr}(E_iX)E_i
+ =\frac19\left(\Pi_j+\frac{3I_3-\Pi_j}{4}\right)
+ =\frac{X+\operatorname{Tr}(X)I_3}{12}.
+\tag{89.3}
+$$
+
+Linearity extends the last identity to every complex $X$. In particular
+the frame operator has eigenvalue $1/3$ on $I_3/\sqrt3$ and $1/12$
+on the eight-dimensional traceless subspace.
+
+For either local complete MUB family, the traceless diagonal subspace
+of each basis is spanned by $G_{\ell a}-I_3/3$ and has dimension two.
+For different bases these subspaces are orthogonal, because
+$\operatorname{Tr}((G_{\ell a}-I_3/3)(G_{kb}-I_3/3))=1/3-1/3=0$.
+The four subspaces therefore exhaust all eight traceless dimensions.
+If $X$ is in the subspace of basis $\ell$, its diagonal expansion in
+that basis is $\sum_a\operatorname{Tr}(G_{\ell a}X)G_{\ell a}=X$;
+all terms from other bases vanish by the same orthogonality and
+$\operatorname{Tr}X=0$. On $I_3$ the corresponding sum is $4I_3$.
+Consequently the complete-MUB reconstruction is
+
+$$
+\sum_{\ell,a}\operatorname{Tr}(G_{\ell a}X)G_{\ell a}
+       =X+\operatorname{Tr}(X)I_3\qquad(X\in M_3).
+\tag{89.4}
+$$
+
+Choose a fixed Hilbert–Schmidt orthonormal Hermitian basis
+$\gamma_0=I_3/\sqrt3,\gamma_1,\ldots,\gamma_8$, the last eight
+traceless, and let $C_{\mu\nu}=\operatorname{Tr}
+(\omega_n(\gamma_\mu\otimes\gamma_\nu))$. These coefficients are
+real. For a local frame let its analysis matrix have entries
+$R_{i\mu}=\operatorname{Tr}(E_i\gamma_\mu)$ in the SIC case and
+$R_{\ell a,\mu}=\operatorname{Tr}(G_{\ell a}\gamma_\mu)$ in the
+MUB case. Equations (89.3)–(89.4) give, respectively,
+
+$$
+R_S^{\mathsf T}R_S=D^2,\qquad
+R_M^{\mathsf T}R_M=12D^2,\qquad
+D=\operatorname{diag}(1/\sqrt3,1/\sqrt{12},\ldots,1/\sqrt{12}).
+\tag{89.5}
+$$
+
+Thus $R_S=O_SD$ for a real orthogonal $9\times9$ matrix $O_S$,
+whereas $R_M=\sqrt{12}\,V_MD$ with
+$V_M^{\mathsf T}V_M=I_9$. Expanding $\omega_n$ in the product
+operator basis gives
+
+$$
+\mathbf P_n=O_A DCD O_B^{\mathsf T},\qquad
+\mathbf Q_n=12V_A DCD V_B^{\mathsf T}.
+\tag{89.6}
+$$
+
+Multiplication by either displayed isometry preserves all nonzero
+singular values: apply a singular value decomposition of $DCD$ and
+observe that the isometries send its orthonormal left and right
+singular vectors to orthonormal vectors. Extra rows add only zero
+singular values. This proves the factor $12$ and shows why the
+families may be unrelated. It remains to compute $DCD$ for this state.
+
+The output-first Choi identity
+$\langle\Omega_3|X\otimes Y|\Omega_3\rangle
+=\operatorname{Tr}(XY^{\mathsf T})/3$ gives explicitly
+
+$$
+C_{\mu\nu}=\tfrac13\operatorname{Tr}
+   ((F^n)^\dagger(\gamma_\mu)\gamma_\nu^{\mathsf T}).
+\tag{89.7}
+$$
+
+Trace preservation and unitality give $C_{00}=1/3$ and
+$C_{0\nu}=C_{\mu0}=0$ for $\mu,\nu>0$. Transposition is a real
+orthogonal transformation of the traceless Hermitian space:
+$\operatorname{Tr}(X^{\mathsf T}Y^{\mathsf T})=\operatorname{Tr}(XY)$.
+Writing $\mathfrak t$ for that space and $M_n$ for the matrix of
+$F^n|_{\mathfrak t}$, the traceless block of (89.7) is $M_nT/3$,
+where $T$ is that orthogonal transposition matrix. Hence
+
+$$
+\|C_{\mathfrak t}\|_*=\tfrac13\|F^n|_{\mathfrak t}\|_*,\qquad
+\|DCD\|_1=\frac19+\frac1{36}\|F^n|_{\mathfrak t}\|_*.
+\tag{89.8}
+$$
+
+Here $\|\cdot\|_*$ denotes the nuclear norm of a linear map between
+Hilbert–Schmidt spaces; it is again a sum of singular values. The
+identity contribution is $(1/\sqrt3)(1/3)(1/\sqrt3)=1/9$, and the
+traceless contribution is $\|C_{\mathfrak t}\|_*/12$, explaining
+both constants in (89.8). Complexifying $\mathfrak t$ gives the
+traceless complex matrices with the same singular values.
+
+Finally evaluate the actual map using (87.6). The projection
+$\mathscr P$ is orthogonal for the Hilbert–Schmidt inner product,
+and $\mathscr O$ is unitary for it. An orthonormal basis of
+$\operatorname{ran}\mathscr P$ on Hermitian matrices is
+
+$$
+\begin{gathered}
+I_3/\sqrt3,\quad H=(2E_{00}-E_{11}-E_{22})/\sqrt6,\quad
+Z=(E_{11}-E_{22})/\sqrt2,\\
+X_{01}=(E_{01}+E_{10})/\sqrt2,\qquad
+Y_{01}=(-iE_{01}+iE_{10})/\sqrt2.
+\end{gathered}
+\tag{89.9}
+$$
+
+The first two are fixed by $A$, and (87.6) multiplies the last three
+by $-1/2$. The four-dimensional kernel of $\mathscr P$ consists of
+the real and imaginary Hermitian coherences for $02$ and $12$.
+After removing $I_3/\sqrt3$, equation (87.6) therefore has singular
+values $1,\tau,\tau,\tau,0,0,0,0$ for every finite $n\ge1$:
+the images of (89.9) are still orthogonal after applying $\mathscr O$.
+At $n=0$ all eight traceless singular values are one; at the limit
+only the one in the $H$ direction survives. Thus
+
+$$
+\|F^0|_{\mathfrak t}\|_*=8,\qquad
+\|F^n|_{\mathfrak t}\|_*=1+3\tau\ (1\le n<\infty),\qquad
+\|L|_{\mathfrak t}\|_*=1.
+\tag{89.10}
+$$
+
+Substituting into (89.8), then using (89.6), proves every entry
+of (89.2), including $n=0$ and the limit. No choice of local families
+can change these norms under Definition 89.1's hypotheses. $\square$
+
+**Corollary 89.3 (Exact SIC/MUB thresholds and the detection gap).**
+The SIC and complete-MUB Schmidt-number criteria detect entanglement
+of $\omega_n$ exactly at $n=0,1,2$. They certify Schmidt number
+greater than two exactly at $n=0$. For every finite $n\ge3$ they
+fail to detect the entangled Schmidt-number-two state.
+
+Proof. [Tavakoli–Morelli, Results 1 and 2][TM89] state, for Schmidt
+number at most $r$, respectively
+
+$$
+\|\mathbf P\|_1\le(1+r)/12,\qquad
+\|\mathbf Q\|_1\le1+r.
+\tag{89.11}
+$$
+
+These are necessary inequalities, so detection requires strict
+violation. The dimension and projector normalization match (89.1),
+and (89.2) makes the two violations equivalent. At positive finite
+horizons the entanglement threshold $r=1$ is crossed if and only if
+$5/3+\tau>2$, or $\tau>1/3$. Since $\tau=2^{1-n}$, precisely
+$n=1,2$ satisfy it. The threshold $r=2$ would require
+$\tau>4/3$, which no positive horizon satisfies. At $n=0$ the value
+$4$ exceeds both $2$ and $3$; at the limit $5/3$ exceeds neither.
+The complete values and classifications are
+
+| Horizon | $\|\mathbf P_n\|_1$ | $\|\mathbf Q_n\|_1$ | Exact SN | Detected entanglement | Detected SN $>2$ |
+| --- | --- | --- | --- | --- | --- |
+| $0$ | $1/3$ | $4$ | $3$ | yes | yes |
+| $1$ | $2/9$ | $8/3$ | $2$ | yes | no |
+| $2$ | $13/72$ | $13/6$ | $2$ | yes | no |
+| finite $n\ge3$ | $(5+3\tau)/36$ | $5/3+\tau\le23/12$ | $2$ | no | no |
+| $\infty$ | $5/36$ | $5/3$ | $1$ | no | no |
+
+At $n=3$, $\|\mathbf P_3\|_1=23/144<1/6$ and
+$\|\mathbf Q_3\|_1=23/12<2$, whereas $N(\omega_3)=1/12>0$.
+The positive finite negativity thereafter follows from (87.8).
+Thus failure to violate (89.11) is failure of these criteria,
+not a separability conclusion. Conversely, the limit is separable
+by the explicit ensemble (88.3), not merely by non-detection.
+The correlation trace norms here are detection statistics; no general
+entanglement-monotone property is needed or asserted. $\square$
+
+## 90. Source correspondence and the remaining recovery problems
+
+The inputs to §§87–89 are the actual matrices and chronology in §63
+and [Environment record memory, §§26–27][ENV87]. The restricted
+polynomial, invariant sectors, finite NPT consequence and EB limit
+are supplied by [Five-window quantum memory, §§18–20][QM87] under
+the explicit isometry in Definition 87.1. The additional actual-model
+calculations are the normalized Choi formula and spectra, exact
+negativities, finite rank-two ensembles and exact Schmidt numbers,
+and the arbitrary-family SIC/MUB norms and detection thresholds.
+The Choi–Kraus representation is M.-D. Choi, *Completely positive
+linear maps on complex matrices*, Linear Algebra Appl. 10 (1975),
+285–290, DOI: [10.1016/0024-3795(75)90075-0](https://doi.org/10.1016/0024-3795(75)90075-0).
+The PPT necessity used in Theorem 88.1 is A. Peres, Phys. Rev. Lett.
+77 (1996), 1413, DOI: [10.1103/PhysRevLett.77.1413](https://doi.org/10.1103/PhysRevLett.77.1413).
+Schmidt number is B. M. Terhal and P. Horodecki, Phys. Rev. A 61
+(2000), 040301(R), DOI: [10.1103/PhysRevA.61.040301](https://doi.org/10.1103/PhysRevA.61.040301).
+The negativity convention is G. Vidal and R. F. Werner, Phys. Rev. A
+65 (2002), 032314, DOI: [10.1103/PhysRevA.65.032314](https://doi.org/10.1103/PhysRevA.65.032314).
+The SIC/MUB definitions and Schmidt-number inequalities are
+A. Tavakoli and S. Morelli, *Enhanced Schmidt number criteria based
+on correlation trace norms*, [arXiv:2402.09972v2][TM89], Results 1–2,
+Phys. Rev. A 110 (2024), 062417. The general frame equality is reused;
+(89.3)–(89.10) give its complete specialization and parameter
+correspondence to this actual channel. These are ordinary mathematical
+derivations, with no literature-priority, physical-realization or
+formal-kernel certification claim.
+
+The Choi reference is an analytical witness only. The recovery problem
+still allows one input-independent terminal qutrit CPTP decoder chosen
+for its task and horizon, on all input density matrices, without history
+or reference access, a smaller input code, intermediate correction or
+postselection. None of (87.8), (88.1), or (89.2) supplies its all-task
+optimum. The full all-$v$, all-finite-$n$ sharp-task value remains
+unresolved: for $n\ge2$ the remaining domains include $r=0,pq>0$
+and the interior $p,q,r>0$ outside Environment (27.24), with the
+populations defined in Environment (27.1). The boundary optima of
+Environment §§27.3–27.4 retain their stated scope. Separate task
+decoders do not solve common recovery. The separate amplitude-ensemble question is
+not decided here. Critical-spin estimates, causal recovery and the
+unbounded-horizon memory/recovery targets also remain unresolved.
+
+[ENV87]: AURIC_FIB_ENVIRONMENT_RECORD_MEMORY.md
+[QM87]: AURIC_FIB_FIVE_WINDOW_QUANTUM_MEMORY.md
+[TM89]: https://arxiv.org/abs/2402.09972v2
+
+## 追加锚（本行以下为增补区）
+
+## 91. Common-local-frame PSD amplitudes of the actual Choi states
+
+The isolated amplitude-ensemble question left open in §90 is answered
+by Theorem 91.2: among finite horizons, precisely $n=0,1$ qualify.
+All other recovery permissions and unresolved targets of that section
+retain their scope. Throughout, the channel, ordered basis $(\xi,e,f)$,
+output-first convention and reference partial transpose are those of §87.
+
+**Definition 91.1 (One common local frame and normalized PSD amplitudes).**
+For $C\in M_3(\mathbb C)$ put
+$|C\rangle\!\rangle=\sum_{a,b=0}^2C_{ab}|a,b\rangle$.
+A density $\rho$ has a finite normalized PSD-Hermitian amplitude ensemble
+in a common local frame if there exist $m\ge1$, $L,R\in U(3)$ and
+
+$$
+\begin{gathered}
+p_k\ge0,\quad \sum_{k=1}^m p_k=1,\qquad
+C_k=C_k^\dagger\succeq0,\quad
+\operatorname{Tr}(C_kC_k^\dagger)=1,\\
+(L\otimes R)\rho(L\otimes R)^\dagger
+ =\sum_{k=1}^m p_k|C_k\rangle\!\rangle\langle\!\langle C_k|.
+\end{gathered}
+\tag{91.1}
+$$
+
+The same arbitrary pair $(L,R)$ serves every ensemble term. When
+$\rho=\omega_n$, that pair and the ensemble may depend on $n$.
+Singular complex Hermitian amplitudes and zero weights are permitted;
+commutation between different $C_k$ is not assumed.
+
+**Theorem 91.2 (Exact finite-horizon applicability).**
+For every finite integer $n\ge0$, $\omega_n$ satisfies (91.1) if and
+only if $n=0$ or $n=1$. Explicit qualifying ensembles are
+
+$$
+\begin{array}{c|c|c|c}
+n&(L,R)&(p_k)&(C_k)\\\hline
+0&(I,I)&1&I_3/\sqrt3\\
+1&(U_0^\dagger,I)&2/3,\ 1/3&
+ \operatorname{diag}(1,1,0)/\sqrt2,\ \operatorname{diag}(0,0,1).
+\end{array}
+\tag{91.2}
+$$
+
+Every finite $n\ge2$, of either parity, is excluded for all common
+local unitary pairs and all finite normalized PSD-amplitude ensembles.
+
+Proof. First record the identities needed for arbitrary complex
+amplitudes, rather than only real symmetric matrices. With the swap
+$\mathsf S|a,b\rangle=|b,a\rangle$, direct comparison of entries gives
+
+$$
+\begin{aligned}
+(L\otimes R)|C\rangle\!\rangle
+ &=|LCR^{\mathsf T}\rangle\!\rangle,\\
+\bigl(|C\rangle\!\rangle\langle\!\langle C|\bigr)^\Gamma
+ &=(C\otimes C^\dagger)\mathsf S.
+\end{aligned}
+\tag{91.3}
+$$
+
+Indeed the first vector has coefficient
+$\sum_{i,j}L_{ai}C_{ij}R_{bj}$, and both sides of the second identity
+have $((a,b),(c,d))$ entry $C_{ad}\overline{C_{cb}}$.
+For a qualifying $\sigma=(L\otimes R)\rho(L\otimes R)^\dagger$,
+Hermiticity of the amplitudes therefore yields
+
+$$
+\sigma^\Gamma=Q\mathsf S,\qquad
+Q=\sum_k p_k(C_k\otimes C_k)\succeq0,\qquad
+Q\mathsf S=\mathsf S Q.
+\tag{91.4}
+$$
+
+Tensor positivity follows by writing $C_k=H_kH_k^\dagger$; its tensor
+square is $(H_k\otimes H_k)(H_k\otimes H_k)^\dagger$.
+Each $C_k\otimes C_k$ commutes with swap, independently of the other
+amplitudes. Let $H_+(X)$ denote the span of eigenvectors of a Hermitian
+$X$ with strictly positive eigenvalues. For
+$P_-=(I-\mathsf S)/2$, (91.4) implies that the antisymmetric
+subspace reduces $\sigma^\Gamma$ and its restriction is $-Q$.
+If $\sigma^\Gamma v=\lambda v$ with $\lambda>0$, then
+
+$$
+\lambda\|P_-v\|^2
+ =-\langle P_-v,Q P_-v\rangle\le0.
+\tag{91.5}
+$$
+
+Thus $P_-v=0$, and
+$H_+(\sigma^\Gamma)\subseteq\operatorname{Sym}^2(\mathbb C^3)$.
+Only strictly positive spectral subspaces are asserted here;
+zero eigenvectors need not be symmetric.
+
+The symmetric subspace contains no plane $a\otimes B$ with $a\ne0$
+and $\dim B\ge2$. In fact $a\otimes b=b\otimes a$ implies
+$b=\ell(b)a$ after applying $\ell\otimes I$, for any linear functional
+$\ell$ with $\ell(a)=1$. Consequently every $b\in B$ would belong to
+the same one-dimensional span of $a$, a contradiction.
+
+This obstruction survives arbitrary local frames. Reference
+transposition gives, for any density $\rho$,
+
+$$
+\bigl((L\otimes R)\rho(L\otimes R)^\dagger\bigr)^\Gamma
+ =(L\otimes\overline R)\rho^\Gamma
+                  (L\otimes\overline R)^\dagger.
+\tag{91.6}
+$$
+
+For example its $((a,b),(c,d))$ entry on either side is
+$\sum_{i,j,k,l}L_{ai}\overline{R_{bj}}\rho_{(i,l),(k,j)}
+ \overline{L_{ck}}R_{dl}$.
+Hence $H_+$ transforms by $L\otimes\overline R$, which sends
+$a\otimes B$ to $La\otimes\overline R B$ and preserves $\dim B$.
+Existence of such a product plane therefore excludes every common
+frame, not merely a particular decomposition.
+
+Apply this to $\widetilde\omega_n$ of (87.4). For $n\ge2$,
+$-1/2\le s\le1/4$, so both $\alpha$ and $\beta$ are strictly positive.
+The vectors $|11\rangle,|12\rangle$ are PT eigenvectors with
+eigenvalues $\alpha/3,\beta/3$, respectively. Their span is
+
+$$
+|1\rangle\otimes\operatorname{span}\{|1\rangle,|2\rangle\}
+ \ \subseteq H_+(\widetilde\omega_n^\Gamma).
+\tag{91.7}
+$$
+
+Equation (91.6) transports this plane to the physical output frame
+and to every further local frame. It contradicts the necessary
+symmetric-subspace condition in any qualifying frame. This covers
+both signs of $s$ and also the ordinary Choi rank degeneration at $n=2$.
+
+For $n=0$, the first amplitude in (91.2) vectorizes to $|\Omega_3\rangle$.
+For $n=1$, the two amplitudes in (91.2) are PSD with squared
+Hilbert–Schmidt norm one, their weights sum to one, and their mixture is
+
+$$
+\frac{(|00\rangle+|11\rangle)(\langle00|+\langle11|)}3
+ +\frac{|22\rangle\langle22|}3=\widetilde\omega_1.
+\tag{91.8}
+$$
+
+This is exactly (87.4) at $s=1$. Removing $U_0$ is an allowed local
+unitary, using the single pair shown in (91.2). These constructions
+and the all-frame obstruction prove the equivalence. $\square$
+
+The Choi–Kraus correspondence also identifies precisely the channel
+premise: (91.1) for $\omega_n$ is equivalent to a finite PSD-Hermitian
+Kraus family for
+$\operatorname{Ad}_L\circ F^n\circ\operatorname{Ad}_{R^{\mathsf T}}$.
+Indeed (91.3) and the normalized Choi expansion give
+$K_k=\sqrt{3p_k}\,C_k$. Conversely, discard zero PSD Kraus matrices
+and set $p_k=\operatorname{Tr}(K_k^2)/3$ and
+$C_k=K_k/\sqrt{\operatorname{Tr}(K_k^2)}$.
+Trace preservation gives $\sum_kK_k^2=I_3$, hence $\sum_kp_k=1$.
+The input-side unitary here specifies a mathematical class equivalence;
+it supplies no additional decoder access.
+
+**Proposition 91.3 (Entry equality without ensemble membership).**
+In the fixed product basis define the entry expression
+
+$$
+N_a(\rho)=\frac12\sum_{\substack{a,b=0\\a\ne b}}^2
+ \left|\rho_{(a,a),(b,b)}-\rho_{(a,b),(b,a)}\right|,
+ \qquad LN_a(\rho)=\log_2(1+2N_a(\rho)).
+\tag{91.9}
+$$
+
+For every finite $n\ge1$,
+
+$$
+N_a(\widetilde\omega_n)=|s|/3=N(\omega_n),\qquad
+N_a(\omega_n)=|s|/6.
+\tag{91.10}
+$$
+
+Proof. For a Hermitian density, the two ordered differences for $(a,b)$
+and $(b,a)$ are complex conjugates, so (91.9) sums their absolute
+values once per unordered pair. In (87.4), the three differences for
+$(0,1),(0,2),(1,2)$ are respectively $s/3,0,0$.
+In the physical output frame,
+$\omega_n=(U_0\otimes I)\widetilde\omega_n(U_0^\dagger\otimes I)$.
+Since $U_0|0\rangle=|0\rangle$ and
+$U_0|1\rangle=-|1\rangle/2+\sqrt3|2\rangle/2$, the corresponding
+three differences are $-s/6,0,0$. This proves both values; equality
+with the exact negativity uses (87.8). $\square$
+
+In particular $LN_a(\widetilde\omega_n)=LN(\omega_n)$ also holds at
+every excluded $n\ge2$. This equality does not certify (91.1).
+Exact negativity is invariant under local unitaries, whereas (91.9)
+depends on the chosen product basis.
+
+The expressions (91.9) are Alsing–Birrittella,
+[*Numerical evidence for a bipartite pure state entanglement witness
+from approximate analytical diagonalization*, arXiv:2404.13725v1](https://arxiv.org/abs/2404.13725v1),
+§IV, (17b)–(17c). Their §IV, (22) reports numerical evidence for
+ensembles of normalized PSD-Hermitian amplitudes and upper equality
+for real amplitudes. The universal PSD-amplitude sandwich is a distinct
+[repository mathematical input](../../../Blueprint/D5/S3/Quantum/Information/AlsingBirrittellaLogNegativitySandwich.md).
+The additional result here is its applicability and exclusion for the
+actual Choi family; the PT/swap argument inside Theorem 91.2 is a
+tool in this application, without a generic theorem priority claim.
+
+For completeness, write its pure-amplitude logarithmic expression as
+
+$$
+\ell_a(C)=\log_2\left(1+2\sum_{a<b}
+ |C_{aa}C_{bb}-C_{ab}C_{ba}|\right).
+\tag{91.11}
+$$
+
+The comparison in each qualifying ensemble frame is
+$\sum_kp_k\ell_a(C_k)\le LN(\sigma)\le LN_a(\sigma)$.
+At $n=0$ all three quantities equal $\log_2 3$.
+At $n=1$ the two real amplitudes have $\ell_a$ values $1,0$, so the
+comparison is $2/3\le\log_2(5/3)=LN_a(\widetilde\omega_1)$.
+The real-amplitude upper equality is used in these displayed frames.
+At every finite $n\ge2$ the ensemble premise fails in all common
+frames; the numerical equality in (91.10) gives no further instance
+of that theorem. These are ordinary mathematical deductions, with
+no current formal-kernel, physical-realization or literature-priority
+certification.
+
+The detection gap in Corollary 89.3 concerns its scalar trace-norm
+criteria. The full SIC and complete-MUB correlation tables are
+informationally complete: (89.5) gives each local analysis matrix
+column rank nine, so left inverses in (89.6) recover the complete
+coefficient matrix $C$, and hence the state. The scalar criterion gap
+therefore leaves the informational completeness of the full tables intact.
+
+All input densities remain in the recovery problem, with one
+input-independent terminal qutrit CPTP decoder chosen for the task
+and horizon, without history or reference access, a smaller input code,
+intermediate correction or postselection. The fixed output rotation
+can be absorbed into that decoder; the Choi reference remains only
+an analytical witness. The all-task optima, including $r=0,pq>0$
+and the interior outside Environment (27.24), common-decoder recovery,
+critical-spin and critical-norm estimates, causal recovery and uniform
+unbounded-memory targets remain unresolved. The separate $r=0$
+root-rule candidate is not adopted here.
+
+## 追加锚（本行以下为增补区）
+
+## 92. Separable partners in the scalar observation fibers of the actual Choi sequence
+
+Use the actual fair independent chronological channel, ordered basis and normalized output-first
+Choi states of Definition 87.1. Retain exactly Definition 89.1's arbitrary independent local SIC
+effects $\Pi_i/3$ and complete-MUB literal projectors, with no basis-sampling factor. Write
+$\mathbf P(\rho),\mathbf Q(\rho)$ for those tables; $\|\cdot\|_*$ is their nuclear norm.
+
+**Definition 92.1 (Explicit product-state partners).** Put $P_j=|j\rangle\langle j|$ in
+$(|0\rangle,|1\rangle,|2\rangle)=(\xi,e,f)$. For finite $n\ge3$ let $\tau=2^{1-n}$;
+at $n=\infty$ let $\tau=0$. Define
+
+$$
+\begin{gathered}
+D_{\rm cc}=\frac13\sum_{j=0}^2P_j\otimes P_j,\qquad
+p_n=\frac{1+3\tau}{2},\qquad
+\sigma_n=(1-p_n)\frac{I_9}{9}+p_nD_{\rm cc}
+       =\sum_{i,j=0}^2w_{ij}P_i\otimes P_j,\\
+w_{ij}=\frac{1-p_n}{9}+\frac{p_n}{3}\delta_{ij}.
+\end{gathered}
+\tag{92.1}
+$$
+
+**Theorem 92.2 (Exact separable-partner horizons and all-family scalar equality).**
+Among $n\in\{0,1,2,\ldots\}\cup\{\infty\}$, a separable state with the same two
+marginals and SIC/MUB scalar norms as $\omega_n$, simultaneously for every independent
+local choice in Definition 89.1, exists exactly for $n\ge3$ and $n=\infty$.
+The states (92.1) supply such partners, with both marginals $I_3/3$ and
+
+$$
+\|\mathbf P(\sigma_n)\|_*=\|\mathbf P(\omega_n)\|_*=\frac{5+3\tau}{36},
+\qquad
+\|\mathbf Q(\sigma_n)\|_*=\|\mathbf Q(\omega_n)\|_*=\frac53+\tau.
+\tag{92.2}
+$$
+
+At every finite $n\ge3$, $\omega_n$ is NPT whereas $\sigma_n$ is separable.
+At infinity both are separable. Thus opposite entanglement classes occur exactly at the
+finite partner horizons. The partner is the normalized Choi state of the EB channel
+
+$$
+\Psi_n(X)=\Psi^{\rm EB}_{p_n}(X),\qquad
+\Psi^{\rm EB}_{p}(X)=\sum_{j=0}^2\langle j|X|j\rangle
+       \left(pP_j+(1-p)\frac{I_3}{3}\right).
+\tag{92.3}
+$$
+
+Proof. Here $1/2\le p_n\le7/8$, so every $w_{ij}$ is nonnegative,
+$\sum_{i,j}w_{ij}=1$, and each row and column sums to $1/3$.
+This proves separability and both marginal identities directly.
+
+For a state with these marginals, its orthonormal Hermitian coefficient matrix in §89
+is $C=\operatorname{diag}(1/3,T)$. Applying the already established frame identities
+(89.5)–(89.6), without a new frame assumption, gives
+
+$$
+\|\mathbf P(\rho)\|_*=\frac19+\frac{\|T\|_*}{12},\qquad
+\|\mathbf Q(\rho)\|_*=\frac43+\|T\|_*.
+\tag{92.4}
+$$
+
+The coefficient block of $D_{\rm cc}$ is one third of the orthogonal projection onto
+the two-dimensional diagonal traceless plane: for traceless Hermitian $A,B$ its
+bilinear form is $\frac13\sum_j A_{jj}B_{jj}$. The maximally mixed state's block
+is zero. Consequently $\|T(\sigma_n)\|_*=2p_n/3=1/3+\tau$, which with
+(89.8)–(89.10) proves (92.2) for all the independent frames at once.
+For $n=0,1,2$, (89.2) instead gives $\|\mathbf Q(\omega_n)\|_*>2$,
+forbidden to every separable state by (89.11) with $r=1$. This proves the exact
+horizon set. Corollary 87.3 gives the finite NPT distinction, and (88.3) supplies
+the separable actual limit. Finally, (92.3) measures a basis and prepares densities;
+its normalized Choi expansion is exactly (92.1), proving the EB assertion. $\square$
+
+Rotating or repeating complete local families and applying any nonlinear function only to
+their scalar norms and the two marginals preserves the equality. Such observations cannot
+determine separability on this state domain. Even the actual-model identity
+$N(\omega_n)=(\|\mathbf Q(\omega_n)\|_*-5/3)/3$ for $n\ge1$ is not a universal
+witness: it assigns $\tau/3>0$ to the separable finite partners. The model promise is essential.
+The full tables retain their informational completeness by (89.5)–(89.6), as explained in §91;
+no equality of tables is asserted. Their operational distinction for the same fixed
+$P_0=P_\xi$ task is proved in Environment record memory,
+[§28, “Same scalar observations and different exact invariant-task optima”][ENV92].
+
+The frame facts and separable bounds are those cited in §89, especially Tavakoli–Morelli,
+Results 1–2. A close prior for the projector correlation is Wyderka–Ketterer,
+*Probing the geometry of correlation matrices with randomized measurements*,
+PRX Quantum 4, 020325 (2023), [DOI:10.1103/PRXQuantum.4.020325](https://doi.org/10.1103/PRXQuantum.4.020325),
+§V, Theorem 5 and Appendix F, at $d=3,m=1$: their generators satisfy
+$\operatorname{Tr}(\lambda_i\lambda_j)=d\delta_{ij}$, so their correlation matrix
+is divided by $d=3$ for the orthonormal convention here. The generic construction and
+frame tools are intermediates; this is an ordinary deduction for the actual sequence,
+without an exhaustive literature or priority claim. Further supplier scope is given in Environment §28.
+
+[ENV92]: AURIC_FIB_ENVIRONMENT_RECORD_MEMORY.md#28-same-scalar-observations-and-different-exact-invariant-task-optima
+
+## 追加锚（本行以下为增补区）

@@ -1,0 +1,44 @@
+**定义 93.1（归一化面积顶点与统一度量桥）。** 令
+
+$$
+P_n=\operatorname{positions}(T_n),\qquad
+K_n=|P_n|,\qquad
+C_n=\binom{F_{n+1}}2,
+$$
+
+并对每个 $A\subseteq P_n$ 定义
+
+$$
+a_{n,A}
+=
+C_n^{-1}\,
+\operatorname{areaVector}\bigl((T_n).\operatorname{length},
+\operatorname{variant}(T_n,A)\bigr).
+\tag{93.1}
+$$
+
+令
+
+$$
+\mathcal A_n^\ast:=\{A\mid A\subseteq P_n\}
+$$
+
+把每个子集 $A$ 作为对应归一化面积点的标签。一个固定三维的统一双 Lipschitz 桥，是一族映射
+
+$$
+\Phi_n:\mathcal A_n^\ast\longrightarrow\mathbb R^3
+$$
+
+以及与 $n$ 无关的常数 $0<c\le C<\infty$，满足所有 $A,B\subseteq P_n$
+
+$$
+c\|a_{n,A}-a_{n,B}\|
+\le
+\|\Phi_n(A)-\Phi_n(B)\|
+\le
+C\|a_{n,A}-a_{n,B}\|.
+\tag{93.2}
+$$
+
+这里下界承担来源差异的保真，上界承担不把同一归一化尺度任意放大的约束；若允许每层任意重标度，式 (93.2) 的跨层内容就不成立。
+

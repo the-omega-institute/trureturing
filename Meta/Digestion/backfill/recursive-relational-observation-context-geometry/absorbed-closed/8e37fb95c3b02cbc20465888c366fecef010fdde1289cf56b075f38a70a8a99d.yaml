@@ -1,0 +1,19 @@
+fingerprints:
+  raw_sha256: sha256:8e37fb95c3b02cbc20465888c366fecef010fdde1289cf56b075f38a70a8a99d
+  normalized_sha256: sha256:8e37fb95c3b02cbc20465888c366fecef010fdde1289cf56b075f38a70a8a99d
+cas_ref: sha256:8e37fb95c3b02cbc20465888c366fecef010fdde1289cf56b075f38a70a8a99d
+coverage_gids:
+  - gid: D5/S3/Quantum/Foundation/FiniteDiamondDistance.pureState
+    target_statement_id: sha256:3237a5a6ccf8258da0e2f20363a3121f14afd969522657655a219fa198eef027
+  - gid: D5/S3/Quantum/Foundation/FiniteKrausChannel.finite_kraus_quantum_channel
+    target_statement_id: sha256:0ede64813b26e6161a0898eec4e0ff5c4fffc9727c0094b5bcfbc6a77c6ef9a0
+  - gid: D5/S3/Quantum/Foundation/FiniteTraceDistance.traceDistance_symm
+    target_statement_id: sha256:37f643301bff9cc278091610e4429102318a6ae601d6a720ccf135650252061c
+  - gid: D5/S3/Quantum/Foundation/FiniteTraceDistance.traceDistance_triangle
+    target_statement_id: sha256:3e39bbc546c4f2f84227266629b13852790c1a317807dc15bbc188b953fee079
+  - gid: D5/S3/Quantum/Foundation/FiniteTraceDistance.traceNorm_sub_orthogonal
+    target_statement_id: sha256:18ef8b509c815c9fd03d5b75c4824f802e62d699aba3c330248b42fefe8fbc00
+  - gid: D5/S3/Quantum/Information/PartialTraceMutualInformation.density_posSemidef
+    target_statement_id: sha256:b799be7b0c6e16bb8e03b4bcf99946d7abbc95ac0078be4a08391bec19c88bdc
+receipts:
+  unresolved_subitems: []

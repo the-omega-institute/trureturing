@@ -672,6 +672,12 @@ private theorem polynomialField_monomial (D : LatticeData) (hu : IsUnit D.G.det)
   (MvPolynomial.basisMonomials (Index D) ℂ).constr_basis ℂ
     (fun a => chargedWordField D hu q (occurrences D a)) a
 
+theorem polynomialField_monomial_public (D : LatticeData) (hu : IsUnit D.G.det)
+    (q : Charge D) (a : Index D →₀ ℕ) :
+    polynomialField D hu q (MvPolynomial.monomial a 1) =
+      wordField D hu (chargedField D hu q) (occurrences D a) :=
+  polynomialField_monomial D hu q a
+
 /-- Multiplication of the source by one oscillator is actual singleton insertion.
 The occurrence list is used only up to permutation, with multiplicities retained. -/
 theorem polynomialField_X_mul (D : LatticeData) (hu : IsUnit D.G.det)
@@ -700,4 +706,24 @@ theorem polynomialField_X_mul (D : LatticeData) (hu : IsUnit D.G.det)
   exact LinearMap.congr_fun maps p
 
 end
+end D5.S3.VertexAlgebra.LatticeHalfFockFockNormalField
+
+
+namespace D5.S3.VertexAlgebra.LatticeHalfFockFockNormalField
+open LatticeGeneratingFieldLocality LatticeHalfFockChargedTensorCoefficients
+open scoped BigOperators
+
+/-- Pointwise signed-mode formula for the canonical singleton operation. -/
+theorem singletonLinear_coefficient (D : LatticeData) (hu : IsUnit D.G.det)
+    (F : NativeField D hu) (i : Index D) (e : ℤ) (v : ActualTensor D hu) :
+    (singletonLinear D hu i F).coeff e v =
+      ∑ᶠ m : ℤ, flatTerm D hu F [i] e v (m, ()) :=
+  singleton_coefficient D hu F i e v
+
+/-- Canonical cons decomposition through singleton insertion. -/
+theorem wordField_cons_singleton (D : LatticeData) (hu : IsUnit D.G.det)
+    (F : NativeField D hu) (i : Index D) (w : List (Index D)) :
+    wordField D hu F (i :: w) = singletonLinear D hu i (wordField D hu F w) :=
+  wordField_cons D hu F i w
+
 end D5.S3.VertexAlgebra.LatticeHalfFockFockNormalField

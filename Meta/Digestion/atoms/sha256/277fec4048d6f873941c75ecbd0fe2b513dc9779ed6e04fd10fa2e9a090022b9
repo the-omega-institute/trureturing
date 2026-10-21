@@ -1,0 +1,59 @@
+**Proposition 78.4 (self-adjoint operators, complete forms and uniform lower bound).** Both operators(78.9) are self-adjoint on the exact domains
+
+$$
+\begin{aligned}
+\operatorname{Dom}\mathsf M_\varepsilon
+ &=\operatorname{Dom}(B_\varepsilon\otimes I)
+       \cap\operatorname{Dom}(I\otimes\mathsf n),\\
+\operatorname{Dom}\mathsf M_D
+ &=\operatorname{Dom}(A\otimes I)
+       \cap\operatorname{Dom}(I\otimes\mathsf n).
+\end{aligned}
+\tag{78.13}
+$$
+
+Their form domains are the corresponding complete Hilbert-valued particle form domains intersected with $\operatorname{Dom}N$. They retain every original target trace and every installed spatial essential trace. Their unitary groups preserve their own form and operator domains. If $c=\Omega\lambda$ and
+
+$$
+L_0=M_0+\frac c2+\frac{4k_f^2}{c},
+\tag{78.14}
+$$
+
+both operators are bounded below by $-L_0$, uniformly in $\varepsilon$ and in the auxiliary space.
+
+**Proof.** Write $H_0=B_\varepsilon\otimes I+I\otimes\Omega h$, or $A\otimes I+I\otimes\Omega h$ on the target. Its two nonnegative summands strongly commute. Their joint spectral calculus gives self-adjointness with the intersection operator domain and the intersection form domain. The inequalities $\lambda\mathsf n\le h\le6\mathsf n$ identify the field operator domain with $\operatorname{Dom}\mathsf n$. For $u$ in the operator domain,
+
+$$
+\|Nu\|^2\le c^{-1}\langle u,H_0u\rangle+\|u\|^2
+       \le c^{-1}\|u\|\|H_0u\|+\|u\|^2.
+\tag{78.15}
+$$
+
+Together with(78.11) and the scalar Young inequality, this makes $V$ infinitesimally $H_0$-bounded. It is symmetric on $\operatorname{Dom}N$: the fibre coefficients are bounded real functions and every $q_p$ is symmetric there. Kato–Rellich, in the precise version cited in78.13, therefore gives(78.13).
+
+On the free form domain the same estimate gives an infinitesimal relative form bound. More explicitly,
+
+$$
+|\langle u,Vu\rangle|
+\le M_0\|u\|^2+2\sqrt2 k_f\|u\|\|Nu\|
+\le \frac c2\|Nu\|^2+
+            \left(M_0+\frac{4k_f^2}{c}\right)\|u\|^2
+\le \frac12\langle u,H_0u\rangle+L_0\|u\|^2 .
+\tag{78.16}
+$$
+
+Replacing $c/2$ by any positive sufficiently small coefficient gives arbitrary relative form bound. The closed-form perturbation theorem gives a closed semibounded form on exactly the stated domain, with an equivalent shifted form norm. Its represented operator is the operator sum already obtained: testing a free operator-domain vector gives the sum, and the free operator domain is a form core, by its spectral truncations. This also proves the lower bound(78.14).
+
+For avoidance of any hidden multidimensional regularity premise, the kinetic operator domains used here have the exact weak meaning
+
+$$
+\operatorname{Dom}B_\varepsilon
+ =\{u\in\mathcal Q_\varepsilon^{\rm a}:
+       \exists w\in\mathcal P_\varepsilon^{\rm a},\
+       q_\varepsilon^{\rm a}(u,v)=\langle w,v\rangle
+       \text{ for every }v\in\mathcal Q_\varepsilon^{\rm a}\},
+\tag{78.17}
+$$
+
+with output $w$, and the identical representation definition for $A$ using64.5's full form and measure. Density makes $w$ unique. Finite-height penalty is included in $q_\varepsilon^{\rm a}$. Vector-valued versions mean the closed tensor forms. No global $H^2$ assertion, corner trace, invariant domain for a count multiplier or operator-domain property of $L_\varepsilon^{\rm p}$ is added. For a semibounded self-adjoint operator the spectral calculus makes its unitary group commute with its shifted square root and with the operator itself, proving the stated invariance. $\square$
+

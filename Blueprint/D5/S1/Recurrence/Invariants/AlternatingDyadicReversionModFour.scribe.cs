@@ -27,6 +27,11 @@ internal sealed class AlternatingDyadicReversionModFourDocument : IScribeDocumen
                 + "inv(R) is Mathlib's substInvOfIsUnit applied to the proved unit linear "
                 + "coefficient of R. The operator div is natural-number division on the index, "
                 + "and mod is the natural-number remainder.")),
+            Node("four_zero", "Characteristic four in the power-series ring",
+                Disp(Equal(Parenthesized(Seq(D(4), Colon, Sp,
+                    Call("PowerSeries", Call("ZMod", D(4))))), D(0))),
+                "The constant series four vanishes over ZMod(4), by applying the "
+                + "constant-series ring homomorphism to four equals zero in the coefficient ring."),
             Node("inverseSeries", "The alternating dyadic inverse", InverseFormula(),
                 "The recursion sets r(0)=0 and r(1)=1. At every other even index it "
                 + "negates the coefficient at half the index; at every other odd index "

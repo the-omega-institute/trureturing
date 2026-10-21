@@ -1,0 +1,31 @@
+**Proposition 82.4 (Folland kernel and its actual three-dimensional marginal).** For (82.5), Folland, *Subelliptic estimates and function spaces on nilpotent Lie groups*, Arkiv för Matematik 13 (1975), 161–207, [doi:10.1007/BF02386204](https://doi.org/10.1007/BF02386204), Theorem 2.1 and Example 2.10 give the homogeneous fundamental kernel for $Q>2$; Theorem 3.1 and (3.2) give smooth nonnegative mass-one symmetric heat densities $h_t$ and their scaling; Corollaries 3.4–3.6 give smoothness off the identity and decay; Proposition 3.17 at $\alpha=2$ and the paragraph following Proposition 3.18 identify
+$$
+\Gamma(p)=\int_0^\infty h_t(p)\,dt
+\tag{82.8}
+$$
+with that fundamental kernel. Theorem 3.1 supplies nonnegativity, not a silent claim of strict pointwise positivity. Symmetry and the semigroup law give
+$$
+ h_1(e)=\int_G h_{1/2}(q)^2d\mu(q)>0,
+$$
+so continuity gives a positive neighbourhood of $e$ for $h_1$. By (3.2), for every fixed $p$, sufficiently large $t$ satisfy $h_t(p)=t^{-Q/2}h_1(\delta_{1/\sqrt t}p)>0$. Thus (82.8) is finite and strictly positive for $p\ne e$.
+
+The heat factor also gives the actual marginal. For every compactly supported continuous $f(\xi)$, the diffusion started at $e$ satisfies
+$$
+\int_{\mathbb R^3}f(\xi)\left(\int_{\mathbb R}h_t(\xi,w)\,dw\right)d\xi
+ =\int_{\mathbb R^3}f(\xi)(4\pi t)^{-3/2}e^{-|\xi|^2/(4t)}d\xi.
+$$
+The decay in Corollaries 3.5–3.6 makes the fibre integral continuous and upgrades this almost-everywhere identity to
+$$
+\int_{\mathbb R}h_t(\xi,w)\,dw
+ =(4\pi t)^{-3/2}e^{-|\xi|^2/(4t)}.
+\tag{82.9}
+$$
+Tonelli and (82.8) then give, for $\xi\ne0$,
+$$
+\int_{\mathbb R}\Gamma(\xi,w)\,dw
+ =\int_0^\infty(4\pi t)^{-3/2}e^{-|\xi|^2/(4t)}dt
+ =\frac1{4\pi|\xi|}.
+\tag{82.10}
+$$
+This is the marginal for the $e^{t\Delta_3}$ clock, not $e^{t\Delta_3/2}$, and it is neither scalar-field descent nor equality of potential multipliers. The right side diverges at $\xi=0$.
+
