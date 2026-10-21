@@ -134,6 +134,24 @@ lemma bc_sq {d : ℕ} (hd : 2 ≤ d) {t : ℝ}
   rw [mul_pow, b_sq htu, c_sq hd htl]
   ring
 
+lemma sMax_eq {d : ℕ} (hd : 2 ≤ d) {t : ℝ}
+    (htl : -1 / ((d : ℝ) ^ 2 - 1) ≤ t) (htu : t ≤ 1) :
+    sMax d t = b t ^ 2 + 2 * a2 d t * b t / d := by
+  sorry
+
+lemma one_sub_sMax_eq_a2_sq {d : ℕ} (hd : 2 ≤ d) {t : ℝ}
+    (htl : -1 / ((d : ℝ) ^ 2 - 1) ≤ t) (htu : t ≤ 1) :
+    1 - sMax d t = (a2 d t) ^ 2 := by
+  sorry
+
+lemma k_pos {d : ℕ} (hd : 2 ≤ d) {t : ℝ}
+    (htl : -1 / ((d : ℝ) ^ 2 - 1) < t) (htu : t < 1) : 0 < k d t := by
+  sorry
+
+lemma c_pos {d : ℕ} (hd : 2 ≤ d) {t : ℝ}
+    (ht : -1 / ((d : ℝ) ^ 2 - 1) < t) : 0 < c d t := by
+  sorry
+
 lemma a2_channel_coeff {d : ℕ} (hd : 2 ≤ d) {t : ℝ}
     (htl : -1 / ((d : ℝ) ^ 2 - 1) ≤ t) (htu : t ≤ 1) :
     2 * a2 d t * b t + (d : ℝ) * (a2 d t) ^ 2 = t := by
