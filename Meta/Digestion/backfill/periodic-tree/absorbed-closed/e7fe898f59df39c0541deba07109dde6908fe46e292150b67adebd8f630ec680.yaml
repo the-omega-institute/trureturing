@@ -1,0 +1,41 @@
+fingerprints:
+  raw_sha256: sha256:e7fe898f59df39c0541deba07109dde6908fe46e292150b67adebd8f630ec680
+  normalized_sha256: sha256:e7fe898f59df39c0541deba07109dde6908fe46e292150b67adebd8f630ec680
+cas_ref: sha256:e7fe898f59df39c0541deba07109dde6908fe46e292150b67adebd8f630ec680
+coverage_gids:
+  - gid: D5/S0/Certificates/BoxCover/RationalIntervalExpression.bounds
+    target_statement_id: sha256:80b990090589e41d7b17dd2c077f625c7948ccee7ea79be2582db82bd0911139
+  - gid: D5/S0/Certificates/BoxCover/RationalIntervalExpression.check
+    target_statement_id: sha256:c8ae7c793983ac85ff158ba276ee97b9df81d50768609863072c6b2d348ddbc1
+  - gid: D5/S0/Certificates/BoxCover/RationalIntervalExpression.checked_expression_encloses
+    target_statement_id: sha256:55fd549ad21c17edd29bfbda30075f70836c1b8c2023a9cc913348680e05632f
+  - gid: D5/S0/Certificates/BoxCover/RationalIntervalExpression.const
+    target_statement_id: sha256:883830ed15e01b32856f92ae231290e494d5fd04397feef656ceb5c5a7c99beb
+  - gid: D5/S0/Certificates/BoxCover/RationalIntervalExpression.mul
+    target_statement_id: sha256:b961a54e1cd3f732396a35f036a1063ecddf913e56610486ab178f76030fbd77
+  - gid: D5/S0/Certificates/BoxCover/RationalIntervalExpression.value
+    target_statement_id: sha256:563dbc7e0fc0596db696c2b1a71aa49ec288d39d8cf201638560baef6cca7f55
+  - gid: D5/S3/Arith/FibonacciAtomic/GraftAffineClosure.atomicBlock
+    target_statement_id: sha256:a71189ce89190d43a5c3431ba093d059257f258ef75c9d54cb732534fd8d91c9
+  - gid: D5/S3/Arith/FibonacciAtomic/GraftAffineClosure.blockMatrix
+    target_statement_id: sha256:7344da66c4033074dc95c92fcf5dc9977fc3769e93378c0cec4d4242ffb0a32e
+  - gid: D5/S3/Arith/FibonacciAtomic/GraftAffineClosure.matrixM
+    target_statement_id: sha256:c765fee63929f7ba00c8b244942c6e26af9b0c9e598c6f2b08a16aa6e77585d8
+  - gid: D5/S3/Arith/FibonacciAtomic/GraftAffineClosure.result
+    target_statement_id: sha256:211e4ff73740f8149478aa6c6772bce1f698874719b56d689c5724d2efa055a6
+  - gid: D5/S3/Arith/FibonacciAtomic/GraftAffineClosure.step
+    target_statement_id: sha256:abd1497f7c6dd19d79eb07033d7697ada8db81677041e77acfe8c3b896948d5d
+  - gid: D5/S3/Arith/GoelPisanoRatioRefutation.pisanoPeriod
+    target_statement_id: sha256:d2c01e66db693e4bfd0f5212b8f798cf3de963f407c0e556f99f0f3c2f8b24be
+  - gid: D5/S3/Arith/PisanoMatrixBridge.pisanoPeriod_eq_matrix_order
+    target_statement_id: sha256:c6d02a5fc143b64043a2f69d6c1b880c8d4e469f9b5cc5b3ab6f4022d9dd3cbb
+receipts:
+  unresolved_subitems: []
+  chain_atoms:
+    - dc8453ffd6e04654122a02f391356968e6165f0ea82c0a1e8e468386a72b5a4b
+    - 7cecd5ba2763f1d1ec8ab088bc4d97a136d76e11905c70bf4b88b53a9f30aa2c
+    - 6125fa842d7445f6592b3b3523eb0d60ef50df700c9e3d51b20da3ae09049754
+    - d202d127ed8976494d3a2d48b7d5ef0661c5e04a7e4e3ffca84caa08b60391a8
+    - 404fe5ab80434ff86503d2b0cabca4df57225a1d2eefc68014d86de5d6063cce
+    - 9048e25c298723651fe7e2fedb203c89ed6f0892acb588f2a61ec7623cf1ea98
+    - 644ebc0c53c74042d8854815e737c21d8166da9bc5fc4a63763ac9391f906007

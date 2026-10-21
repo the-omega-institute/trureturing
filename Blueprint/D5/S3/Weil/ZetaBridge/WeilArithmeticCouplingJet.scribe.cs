@@ -135,12 +135,12 @@ internal sealed class WeilArithmeticCouplingJetDocument : IScribeDocumentDefinit
                         + "to Xi is proved."))),
                     DescribeRole.Theorem),
                 Paragraph(Text(
-                    "SOURCE_ONLY_UNCOMPILED append: the following six author descriptions "
-                    + "belong to WeilArithmeticCouplingJet, exactly as in the pinned owner append. "
+                    "SOURCE_ONLY_UNCOMPILED candidate: the smooth-weight descriptions below "
+                    + "belong to WeilArithmeticCouplingJet and retain the actual native operands. "
                     + "They use the existing pole and convergent Gamma series, with "
-                    + "w(c,m)=(P(c,m)+G(c,m))/m^2=-H(c,m)/m^2 and A=H-S. "
-                    + "These source statements and their Scribe emission/Reg registration "
-                    + "still await caller-owned compilation and required checks.")),
+                    + "w(c,m)=(P(c,m)+G(c,m))/m^2=H(c,m)/m^2 and A=-H-S. "
+                    + "Fresh source bindings, Scribe emission and faithful Reg registration "
+                    + "remain caller-owned obligations for the changed source hash.")),
                 Describe.Lean(
                     DescribeId.Create("smooth-envelope"),
                     DeclarationHandle.Create(Owner + "smoothEnvelope"),
@@ -159,7 +159,7 @@ internal sealed class WeilArithmeticCouplingJetDocument : IScribeDocumentDefinit
                     H("The actual nonnegative smooth weight"),
                     StatementSource.FromAuthor(Disp(Seq(Call("w", c, m), Eq, Call("div", Seq(Call("P", c, m), Plus, Call("G", c, m)), Call("square", m))))),
                     AssessedProvenance.FromRepo(),
-                    Blocks(Paragraph(Text("P is exactly poleSine(L,frequency(c,m)); G is exactly tsum_j gammaSineTerm(L,frequency(c,m),j) from the native owner. Thus w=-H/m^2 and A=H-S, with the original signs and no new Gamma object. This definition is not a claim that Gamma itself is monotone."))),
+                    Blocks(Paragraph(Text("P is exactly poleSine(L,frequency(c,m)); G is exactly tsum_j gammaSineTerm(L,frequency(c,m),j) from the native owner. Thus H=P+G=m^2*w and A=-H-S, with H the positive smooth mass and no new Gamma object. This definition is not a claim that Gamma itself is monotone."))),
                     DescribeRole.Definition),
                 Describe.Lean(
                     DescribeId.Create("smooth-weight-nonneg"),
@@ -192,7 +192,7 @@ internal sealed class WeilArithmeticCouplingJetDocument : IScribeDocumentDefinit
                     "SOURCE_ONLY_UNCOMPILED finite-block addition. Here H(c,m)=m^2*smoothWeight(c,m) "
                     + "is the POSITIVE smooth mass and the actual symbol is A=-H-S, where S is "
                     + "the existing finite-prime sine sum. This fixes the sign convention for "
-                    + "these descriptions relative to older negative-H comments.")),
+                    + "all smooth-weight descriptions using the same positive-H convention.")),
                 Describe.Lean(
                     DescribeId.Create("smooth-floor"),
                     DeclarationHandle.Create(Owner + "smoothFloor"),
@@ -238,7 +238,7 @@ internal sealed class WeilArithmeticCouplingJetDocument : IScribeDocumentDefinit
                             + "Summable.sum_le_tsum, using gamma_positive_summable and "
                             + "gamma_positive_nonneg, passes to the genuine owner Gamma sum. "
                             + "The pole is nonnegative by cosh(L/2)>=1 and w>=1; cancellation "
-                            + "of the positive mode square follows the existing smooth_mass_bounds pattern.")),
+                            + "of the positive mode square uses the shared owner smooth_mass_eq identity.")),
                         Paragraph(Text(
                             "The source-level new content is a lower bound obtained by a block "
                             + "whose length depends on the actual frequency; it is not a binding "
@@ -278,7 +278,8 @@ internal sealed class WeilArithmeticCouplingJetDocument : IScribeDocumentDefinit
                         Paragraph(Text(
                             "Write L=log(c)>0, a=2*pi/L>0, w=a*m, "
                             + "C=exp(-L/2)/(1-exp(-2*L)), and U=2*(cosh(L/2)-1)/a. "
-                            + "The proof chooses K=U+(1+C)/a before introducing m. "
+                            + "The existential proof takes K=explicitSmoothK(c)=U+(1+C)/a "
+                            + "and reuses explicitSmoothK_spec before introducing m. "
                             + "The half-shifted Cauchy majorant has sum at least "
                             + "pi/4-1/(4*w), by left-endpoint integral comparison, the "
                             + "exact finite arctan substitution and its pi/2 endpoint limit. "
@@ -293,6 +294,55 @@ internal sealed class WeilArithmeticCouplingJetDocument : IScribeDocumentDefinit
                             + "The estimate holds for every positive natural m, including m=1. "
                             + "It gives no constant uniform in c and by itself establishes "
                             + "neither a coefficient-uniform tail bound nor RH."))),
+                    DescribeRole.Theorem),
+                Describe.Lean(
+                    DescribeId.Create("explicit-smooth-k"),
+                    DeclarationHandle.Create(Owner + "explicitSmoothK"),
+                    H("An explicit constant for the complete smooth mass"),
+                    StatementSource.FromAuthor(Disp(Seq(Call("K", c), Eq,
+                        Call("div", Seq(D(2), Sp, Call("coshMinusOne", Call("HalfLog", c)),
+                            Plus, D(1), Plus, Call("GammaCorrection", c)), Call("a", c))))),
+                    AssessedProvenance.FromRepo(),
+                    Blocks(Paragraph(Text(
+                        "For L=log(c), a=2*pi/L and C=exp(-L/2)/(1-exp(-2*L)), "
+                        + "K(c)=(2*(cosh(L/2)-1)+1+C)/a. GammaCorrection denotes exactly C, "
+                        + "and cosh-minus-one(x) denotes cosh(x)-1. This formula fixes K "
+                        + "from c alone, with the entire exponential correction and pole term."))),
+                    DescribeRole.Definition),
+                Describe.Lean(
+                    DescribeId.Create("explicit-smooth-k-spec"),
+                    DeclarationHandle.Create(Owner + "explicitSmoothK_spec"),
+                    H("The specified constant controls every positive mode"),
+                    StatementSource.FromAuthor(Disp(Seq(Call("AtLeastTwo", c), Rightarrow,
+                        Call("Positive", Call("K", c)), Land, Forall, Sp, m,
+                        InMacro, Mathbb, Grp(F.Id("N")), Comma, Sp,
+                        Call("Positive", m), Rightarrow,
+                        Lvert, Sp, m, Caret, Grp(D(2)), Cdot, Call("smoothWeight", c, m),
+                        Minus, Frac, Grp(Pi), Grp(D(4)), Rvert, Leq,
+                        Frac, Grp(Call("K", c)), Grp(m)))),
+                    AssessedProvenance.FromRepo(),
+                    Blocks(Paragraph(Text(
+                        "For every natural c>=2, K(c)>0 and the absolute error is at most "
+                        + "K(c)/m for every positive natural m. The complete pole plus the "
+                        + "convergent Gamma series remain in smoothWeight. The upper mass "
+                        + "bound and the lower Gamma estimate use the same explicit constant. "
+                        + "This specification also proves smooth_weight_actual_asymptotic. "
+                        + "There is no lower frequency threshold; c=2 and m=1 are included."))),
+                    DescribeRole.Theorem),
+                Describe.Lean(
+                    DescribeId.Create("explicit-smooth-k-le"),
+                    DeclarationHandle.Create(Owner + "explicitSmoothK_le"),
+                    H("A cutoff bound for the same explicit constant"),
+                    StatementSource.FromAuthor(Disp(Seq(Call("AtLeastThree", c), Rightarrow,
+                        Call("K", c), Leq, Call("sqrt", c), Sp, Call("logLength", c)))),
+                    AssessedProvenance.FromRepo(),
+                    Blocks(Paragraph(Text(
+                        "For every natural c>=3, K(c)<=sqrt(c)*log(c). Put s=sqrt(c). "
+                        + "Then exp(-L/2)=1/s, exp(-2*L)=1/c^2 and "
+                        + "2*(cosh(L/2)-1)+1=s+1/s-1<=s. The correction "
+                        + "(1/s)/(1-1/c^2) is at most s, so the numerator is at most 2*s. "
+                        + "Division by 2*pi/L and pi>=1 give the stated bound. This uses "
+                        + "the same K as the all-positive-mode estimate above."))),
                     DescribeRole.Theorem),
                 Describe.Lean(
                     DescribeId.Create("arithmetic-symbol-smooth-split"),

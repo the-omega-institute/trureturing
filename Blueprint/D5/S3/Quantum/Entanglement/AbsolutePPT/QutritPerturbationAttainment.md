@@ -4,6 +4,8 @@
 
 Explicit rank-one and projector perturbations attain the two candidate qutrit APPT purities.
 
+APPT is definitionally equal to Bipartite.APPT over the same finite local types and their Fintype and DecidableEq instances. Both predicates require partial-transpose positivity after every global unitary, including on empty systems.
+
 **Definition 1.1 (Literal absolute PPT predicate).**
 
 $$\forall (A:Type), \forall (B:Type), [Fintype\left(A\right)] [Fintype\left(B\right)] [DecidableEq\left(A\right)] [DecidableEq\left(B\right)] \forall (M:Matrix\left((A\times B), (A\times B), \mathbb{C}\right)), APPT\left(M\right)\iff \forall (U:unitaryGroup\left((A\times B), \mathbb{C}\right)), Matrix.PosSemidef\left(KickedIsingNegativityRefutation.partialTranspose\left(val\left(U\right)\cdot M\cdot Matrix.conjTranspose\left(val\left(U\right)\right)\right)\right)$$
@@ -111,3 +113,4 @@ For positive n, a Hermitian idempotent of rank n produces a density matrix of pu
 - Truth anchor: `D5/S3/Quantum/Entanglement/AbsolutePPT/QutritPerturbationAttainment.rhoPure`
 - Truth anchor: `D5/S3/Quantum/Entanglement/AbsolutePPT/QutritPerturbationAttainment.unitary_vector_norm`
 - Dependency: [D5/S3/Quantum/Dynamics/KickedIsingNegativityRefutation](../../Dynamics/KickedIsingNegativityRefutation.md)
+- Dependency: [D5/S3/Quantum/Entanglement/AbsolutePPT/Bipartite](Bipartite.md)

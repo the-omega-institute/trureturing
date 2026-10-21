@@ -1,0 +1,13 @@
+**Definition 88.1 (recognized source-overlap datum).** Let \(I\) be a complete
+acquired input and let \(B\) be a finite set of distinct attained complete
+target rows. Let \(J_B(h)\) be the joint finite-prefix predicate for the same
+source contract at depth \(h\). Call \((I,B)\) terminal-recognized when every
+source-cover chart tuple either has a finite constructor clash or passes the
+terminal comparison test of the DEV synthesis.
+
+For a nonclash tuple and one scalar-divergence face \(K\), write
+\(\mathcal C_K\) for its exact joint cofinal support sentence. The sentence
+holds only after all finite scalar anchors and forced finite residuals have
+been fixed; its lower bounds are then imposed simultaneously on every
+divergent original scalar.
+

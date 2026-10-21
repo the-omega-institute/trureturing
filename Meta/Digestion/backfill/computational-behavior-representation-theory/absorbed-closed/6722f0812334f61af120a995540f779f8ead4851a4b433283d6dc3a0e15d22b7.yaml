@@ -1,0 +1,9 @@
+fingerprints:
+  raw_sha256: sha256:6722f0812334f61af120a995540f779f8ead4851a4b433283d6dc3a0e15d22b7
+  normalized_sha256: sha256:6722f0812334f61af120a995540f779f8ead4851a4b433283d6dc3a0e15d22b7
+cas_ref: sha256:6722f0812334f61af120a995540f779f8ead4851a4b433283d6dc3a0e15d22b7
+coverage_gids:
+  - gid: D5/S3/ConceptDynamics/ObservationTopology/CircleGraphCharts.circle_chord_norm_sq
+    target_statement_id: sha256:f4752196d9afff6fae2adb917b581eb6c877ec1765cbf52d3f89c548d8ea5449
+receipts:
+  unresolved_subitems: []
