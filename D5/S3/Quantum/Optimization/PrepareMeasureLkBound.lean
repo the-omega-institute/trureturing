@@ -29,7 +29,7 @@ def fiberSum {n m k : ℕ} (f : Fin n → Fin k) (M : Matrix (Fin n) (Fin m) ℝ
 private def fiberMax {n m k : ℕ} (hk : 0 < k) (M : Matrix (Fin n) (Fin m) ℝ) : ℝ :=
   letI : Nonempty (Fin n → Fin k) := ⟨fun _ => ⟨0, hk⟩⟩
   (Finset.univ : Finset (Fin n → Fin k)).sup'
-    Finset.univ_nonempty (fun f => ∑ j, ∑ q, |fiberSum f M j q|)
+    Finset.univ_nonempty (fun f => manhattan (fun j q => fiberSum f M j q))
 
 def Lk (k : ℕ) {n m : ℕ} (M : Matrix (Fin n) (Fin m) ℝ) : ℝ :=
   if hk : 0 < k then fiberMax hk M else 0
