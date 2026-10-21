@@ -42,13 +42,6 @@ internal sealed class ActualNodalCoercivityDocument : IScribeDocumentDefinition
                     Paragraph(Text("Attribution: this is the classical common-denominator form of unnormalised Lagrange interpolation, applied to the repository's actual arithmetic divided difference. It makes no novelty claim."))),
                 DescribeRole.Theorem),
             Describe.Lean(
-                DescribeId.Create("actual-nodal-numerator-eval-node"),
-                DeclarationHandle.Create(Owner + "numerator_eval_node"),
-                H("Reconstruction at a retained node"),
-                StatementSource.WithoutFormula(), AssessedProvenance.FromRepo(),
-                Blocks(Paragraph(Text("For every finite integer set S, complex coefficient function v, and n in S, Q(S,v).eval(n : Complex) equals v(n) times the evaluation at n of the nodal polynomial on S.erase(n). All other terms vanish at that retained node; the erased product is nonzero because the integer nodes are distinct. This reconstructs the original retained coefficient and places no condition on the arithmetic symbol."))),
-                DescribeRole.Theorem),
-            Describe.Lean(
                 DescribeId.Create("actual-nodal-uniform-coefficient-reconstruction"),
                 DeclarationHandle.Create(Owner + "uniform_coefficient_reconstruction"),
                 H("An explicit coefficient bound uniform in the vector and the scale"),
