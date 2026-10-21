@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:b7e54b10ec7013ff9bd987e53a089c86cf09068984766b4242f66ba2a2e0a563
+  normalized_sha256: sha256:b7e54b10ec7013ff9bd987e53a089c86cf09068984766b4242f66ba2a2e0a563
+cas_ref: sha256:b7e54b10ec7013ff9bd987e53a089c86cf09068984766b4242f66ba2a2e0a563
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 有限定义族标题、参数前提和下一公式引导语。
+    previous_atom_id: defcc12a22cbb52680f7cea251783d612985155e96d4685b3abf8d3a1315940e
+    next_atom_id: 008c1f49ebae005943acb5501c33c14a91b8de082d0b36e59408deda7cb6fc2a
