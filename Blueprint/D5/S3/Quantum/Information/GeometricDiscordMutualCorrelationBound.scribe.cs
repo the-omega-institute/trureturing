@@ -59,6 +59,14 @@ internal sealed class GeometricDiscordMutualCorrelationBoundDocument : IScribeDo
                     + "of trace one. It includes pure and mixed states. The source "
                     + "establishes the Bell-diagonal case and proposes the general "
                     + "mixed-state inequality on numerical evidence."),
+            Node("rotateState", "Local change of basis", RotateStateFormula(),
+                "Conjugation by U* on the first qubit expresses the state in the basis U."),
+            PublishedTheorem("rotated_spin_witness", "Rotated spin correlations", RotatedSpinFormula(),
+                "Unit spin observables in any local basis provide admissible covariance values, "
+                    + "so the absolute connected correlation is bounded by maximal mutual correlation."),
+            PublishedTheorem("marginal_basis", "A basis for the first marginal", MarginalBasisFormula(),
+                "The spectral basis of the first marginal makes its first two Bloch coordinates zero. "
+                    + "The construction includes a marginal proportional to the identity."),
             Describe.Lean(
                 DescribeId.Create("geometric-discord-mutual-correlation-result"),
                 DeclarationHandle.Create(Prefix + "result"),
@@ -102,6 +110,45 @@ internal sealed class GeometricDiscordMutualCorrelationBoundDocument : IScribeDo
             DeclarationHandle.Create(Prefix + declaration), H(title),
             StatementSource.FromAuthor(Disp(formula)), AssessedProvenance.FromLiterature(Source),
             Blocks(Paragraph(Text(prose))), DescribeRole.Definition);
+
+    private static DocumentBlock PublishedTheorem(string declaration, string title,
+        Formula formula, string prose) => Describe.Lean(
+            DescribeId.Create("geometric-discord-mutual-correlation-" + declaration.Replace("_", "-")),
+            DeclarationHandle.Create(Prefix + declaration), H(title),
+            StatementSource.FromAuthor(Disp(formula)), AssessedProvenance.FromRepo(Source),
+            Blocks(Paragraph(Text(prose))), DescribeRole.Theorem);
+
+    private static Formula RotateStateFormula()
+    {
+        Formula u = F.Id("U"), v = Tensor(u, Identity());
+        return All(u, Qubit(), All(Rho, TwoQubit(), Equal(Call("rotateState", u, Rho),
+            Mul(Mul(Adjoint(v), Rho), v))));
+    }
+
+    private static Formula RotatedSpinFormula()
+    {
+        Formula u = F.Id("U"), c = F.Id("c"), d = F.Id("d");
+        Formula vector = Seq(Index(3), To, Sp, Reals());
+        Formula rotated = Call("rotateState", u, Rho);
+        Formula value = Call("dot", c, Call("mulVec", Call("connectedCorrelation", rotated), d));
+        Formula absolute = Seq(Lvert, Sp, value, Rvert);
+        return All(Rho, TwoQubit(), ImpliesTo(Call("PosSemidef", Rho),
+            ImpliesTo(Equal(Call("trace", Rho), D(1)),
+                All(u, Call("unitaryGroup", Index(2), Complexes()),
+                    All(c, vector, All(d, vector,
+                        ImpliesTo(Equal(Call("vlen", c), D(1)),
+                            ImpliesTo(Equal(Call("vlen", d), D(1)),
+                                LE(absolute, Call("maximalMutualCorrelation", Rho))))))))));
+    }
+
+    private static Formula MarginalBasisFormula()
+    {
+        Formula u = F.Id("U"), rotated = Call("rotateState", u, Rho);
+        return All(Rho, TwoQubit(), ImpliesTo(Call("PosSemidef", Rho),
+            Some(u, Call("unitaryGroup", Index(2), Complexes()),
+                And(Equal(Call("blochA", rotated, D(0)), D(0)),
+                    Equal(Call("blochA", rotated, D(1)), D(0))))));
+    }
 
     private static Formula Named(string name) => Seq(Operatorname, Grp(F.Id(name)));
     private static Formula Call(string name, params Formula[] arguments) =>

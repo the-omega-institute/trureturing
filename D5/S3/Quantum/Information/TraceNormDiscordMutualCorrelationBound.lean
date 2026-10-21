@@ -84,9 +84,11 @@ private lemma commuting_square_root {n : Type*} [Fintype n] [DecidableEq n]
         calc
           _ = A * (B * A) * B := by simp only [Matrix.mul_assoc]
           _ = _ := by rw [← hAB]; simp only [Matrix.mul_assoc]
-      _ = _ := by rw [hAA, hBB]; simp only [smul_mul_assoc, mul_smul_comm,
-        Matrix.one_mul, smul_smul]
-                  congr 1 <;> ring
+      _ = _ := by
+        rw [hAA, hBB]
+        simp only [smul_mul_assoc, mul_smul_comm, Matrix.one_mul, smul_smul]
+        congr 1
+        ring
   dsimp only [H]
   simp only [Matrix.add_mul, Matrix.mul_add, smul_mul_assoc, mul_smul_comm,
     Matrix.one_mul, Matrix.mul_one, smul_smul, hABAB, hAA, hBB, ← hAB]
@@ -122,7 +124,8 @@ private lemma plane_diagonalization (Q : Matrix (Fin 3) (Fin 3) ℝ) :
     Fin.sum_univ_two] at h01
   simp [G, dotProduct, Fin.sum_univ_three] at h01
   simp only [planeRow, planeVector, Matrix.vecMul, dotProduct, Fin.sum_univ_three,
-    Matrix.cons_val_zero, Matrix.cons_val_one, Matrix.cons_val_two, Matrix.head_cons, Matrix.tail_cons, zero_mul, add_zero]
+    Matrix.cons_val_zero, Matrix.cons_val_one, Matrix.cons_val_two, Matrix.head_cons,
+    Matrix.tail_cons, zero_mul, add_zero]
   linear_combination h01
 
 private lemma plane_frame (O : Matrix.unitaryGroup (Fin 2) ℝ) :
@@ -142,7 +145,8 @@ private lemma plane_frame (O : Matrix.unitaryGroup (Fin 2) ℝ) :
   have hh := he 0 1
   simp only [Matrix.one_apply_ne (by decide : (0 : Fin 2) ≠ 1)] at hh
   simpa only [planeVector, dotProduct, Fin.sum_univ_three, Matrix.cons_val_zero,
-    Matrix.cons_val_one, Matrix.cons_val_two, Matrix.head_cons, Matrix.tail_cons, zero_mul, add_zero] using hh
+    Matrix.cons_val_one, Matrix.cons_val_two, Matrix.head_cons, Matrix.tail_cons, zero_mul,
+    add_zero] using hh
 
 private lemma spin_hermitian (c : Fin 3 → ℝ) : (spin c).IsHermitian := by
   change (spin c)ᴴ = spin c
@@ -249,7 +253,10 @@ private lemma disturbance_tensor (R : TwoQubit) (hR : R.IsHermitian)
     Matrix.one_apply, Matrix.trace, Matrix.diag, Matrix.mul_apply,
     Fintype.sum_prod_type, Fin.sum_univ_two, Fin.sum_univ_three,
     Complex.mul_re, Complex.mul_im]
-  all_goals linarith [hre (0, 0) (1, 0), hre (0, 1) (1, 1), hre (0, 0) (1, 1), hre (0, 1) (1, 0), him (0, 0) (1, 0), him (0, 1) (1, 1), him (0, 0) (1, 1), him (0, 1) (1, 0)]
+  all_goals linarith [hre (0, 0) (1, 0), hre (0, 1) (1, 1),
+                      hre (0, 0) (1, 1), hre (0, 1) (1, 0),
+                      him (0, 0) (1, 0), him (0, 1) (1, 1),
+                      him (0, 0) (1, 1), him (0, 1) (1, 0)]
 
 set_option maxHeartbeats 800000 in
 -- Expanding the sixteen tensor entries requires more simplifier reductions.
