@@ -21,13 +21,10 @@ open D5.S3.Quantum.Entanglement.EnergyRestrictedUnitaryEncodingRefutation (IsPOV
 
 namespace D5.S3.Quantum.Measurement.AdvantageQuantumNonSimulability
 
-abbrev BipartiteMatrix (dA dB : ℕ) :=
-  Matrix (Fin dA × Fin dB) (Fin dA × Fin dB) ℂ
+def binaryEffect {dA dB : ℕ} (E : Matrix (Fin dA × Fin dB) (Fin dA × Fin dB) ℂ) (i : Fin 2) :
+    Matrix (Fin dA × Fin dB) (Fin dA × Fin dB) ℂ := ![E, 1 - E] i
 
-def binaryEffect {dA dB : ℕ} (E : BipartiteMatrix dA dB) (i : Fin 2) :
-    BipartiteMatrix dA dB := ![E, 1 - E] i
-
-def IsDovm {dA dB : ℕ} (E : BipartiteMatrix dA dB) : Prop :=
+def IsDovm {dA dB : ℕ} (E : Matrix (Fin dA × Fin dB) (Fin dA × Fin dB) ℂ) : Prop :=
   ∀ i, (binaryEffect E i).IsHermitian ∧ blockPositive (binaryEffect E i)
 
 def aqLeastEigenvalue {ι : Type*} [Fintype ι] [DecidableEq ι]
@@ -36,28 +33,28 @@ def aqLeastEigenvalue {ι : Type*} [Fintype ι] [DecidableEq ι]
 def aqGreatestEigenvalue {ι : Type*} [Fintype ι] [DecidableEq ι]
     {A : Matrix ι ι ℂ} (hA : A.IsHermitian) : ℝ := sSup (Set.range hA.eigenvalues)
 
-def IsAdvantageQuantum {dA dB : ℕ} (E : BipartiteMatrix dA dB) (hE : IsDovm E) : Prop :=
+def IsAdvantageQuantum {dA dB : ℕ} (E : Matrix (Fin dA × Fin dB) (Fin dA × Fin dB) ℂ) (hE : IsDovm E) : Prop :=
   ∃ i, aqLeastEigenvalue (hE i).1 < 0 ∧
     1 + aqLeastEigenvalue (hE i).1 < aqGreatestEigenvalue (hE i).1 ∧
     aqGreatestEigenvalue (hE i).1 < 1
 
-def InMeasurementDomain {dA dB : ℕ} (E ρ : BipartiteMatrix dA dB) : Prop :=
+def InMeasurementDomain {dA dB : ℕ} (E ρ : Matrix (Fin dA × Fin dB) (Fin dA × Fin dB) ℂ) : Prop :=
   ρ.PosSemidef ∧ trace ρ = 1 ∧ ∀ i, 0 ≤ (trace (ρ * binaryEffect E i)).re
 
 def copyState {ι : Type*} (n : ℕ) (ρ : Matrix ι ι ℂ) :
     Matrix (Fin n → ι) (Fin n → ι) ℂ :=
   fun x y => ∏ k : Fin n, ρ (x k) (y k)
 
-def QuantumSimulable {dA dB : ℕ} (E : BipartiteMatrix dA dB) (n : ℕ) : Prop :=
+def QuantumSimulable {dA dB : ℕ} (E : Matrix (Fin dA × Fin dB) (Fin dA × Fin dB) ℂ) (n : ℕ) : Prop :=
   ∃ N : Fin 2 → Matrix (Fin n → Fin dA × Fin dB) (Fin n → Fin dA × Fin dB) ℂ,
     IsPOVM N ∧ ∀ ρ, InMeasurementDomain E ρ →
       ∀ i, (trace (copyState n ρ * N i)).re = (trace (ρ * binaryEffect E i)).re
 
 def claim : Prop :=
-  ∀ dA dB : ℕ, 1 ≤ dA → 1 ≤ dB → ∀ E : BipartiteMatrix dA dB,
+  ∀ dA dB : ℕ, 1 ≤ dA → 1 ≤ dB → ∀ E : Matrix (Fin dA × Fin dB) (Fin dA × Fin dB) ℂ,
     ∀ hE : IsDovm E, IsAdvantageQuantum E hE → ∀ n : ℕ, ¬ QuantumSimulable E n
 
-private theorem block_trace_nonnegative {dA dB : ℕ} {A : BipartiteMatrix dA dB}
+private theorem block_trace_nonnegative {dA dB : ℕ} {A : Matrix (Fin dA × Fin dB) (Fin dA × Fin dB) ℂ}
     (hA : blockPositive A) : 0 ≤ (trace A).re := by
   classical
   rw [trace, Complex.re_sum]
@@ -134,7 +131,7 @@ private theorem faithful_zero_effect {ι : Type*} [Fintype ι]
   rw [e.apply_symm_apply, e.apply_symm_apply] at hij
   exact hij
 
-private theorem domain_of_selected_probability {dA dB : ℕ} (E ρ : BipartiteMatrix dA dB)
+private theorem domain_of_selected_probability {dA dB : ℕ} (E ρ : Matrix (Fin dA × Fin dB) (Fin dA × Fin dB) ℂ)
     (hρ : ρ.PosSemidef) (ht : trace ρ = 1) (i : Fin 2)
     (hlo : 0 ≤ (trace (ρ * binaryEffect E i)).re)
     (hhi : (trace (ρ * binaryEffect E i)).re ≤ 1) : InMeasurementDomain E ρ := by
@@ -153,10 +150,10 @@ private theorem domain_of_selected_probability {dA dB : ℕ} (E ρ : BipartiteMa
   · exact hlo
 
 private theorem boundary_states {dA dB : ℕ} [Nonempty (Fin dA)] [Nonempty (Fin dB)]
-    {A : BipartiteMatrix dA dB} (hA : A.IsHermitian) (hb : blockPositive A)
+    {A : Matrix (Fin dA × Fin dB) (Fin dA × Fin dB) ℂ} (hA : A.IsHermitian) (hb : blockPositive A)
     (hlo : aqLeastEigenvalue hA < 0) (hhi : aqGreatestEigenvalue hA < 1) :
-    (∃ ρ : BipartiteMatrix dA dB, ρ.PosDef ∧ trace ρ = 1 ∧ (trace (ρ * A)).re = 0) ∧
-    (∃ σ : BipartiteMatrix dA dB, σ.PosSemidef ∧ trace σ = 1 ∧
+    (∃ ρ : Matrix (Fin dA × Fin dB) (Fin dA × Fin dB) ℂ, ρ.PosDef ∧ trace ρ = 1 ∧ (trace (ρ * A)).re = 0) ∧
+    (∃ σ : Matrix (Fin dA × Fin dB) (Fin dA × Fin dB) ℂ, σ.PosSemidef ∧ trace σ = 1 ∧
       0 < (trace (σ * A)).re ∧ (trace (σ * A)).re < 1) := by
   classical
   obtain ⟨l, hl⟩ : ∃ l, hA.eigenvalues l = aqLeastEigenvalue hA :=
@@ -199,7 +196,7 @@ private theorem boundary_states {dA dB : ℕ} [Nonempty (Fin dA)] [Nonempty (Fin
   let p := -hA.eigenvalues l / (a - hA.eigenvalues l)
   have hp : 0 < p := div_pos (neg_pos.mpr hl0) hden
   have hp1 : p ≤ 1 := (div_le_one hden).mpr (by linarith)
-  let ρ : BipartiteMatrix dA dB := (p / d : ℝ) • 1 + (1 - p : ℝ) • P
+  let ρ : Matrix (Fin dA × Fin dB) (Fin dA × Fin dB) ℂ := (p / d : ℝ) • 1 + (1 - p : ℝ) • P
   have hρ : ρ.PosDef := (PosDef.one.smul (div_pos hp hd)).add_posSemidef
     (hP.smul (sub_nonneg.mpr hp1))
   refine ⟨ρ, hρ, ?_, ?_⟩
