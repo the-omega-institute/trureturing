@@ -4,11 +4,12 @@
    mirror-E: none(waiver:evidence-not-specified-by-formal-manifest)
    anchors: []
    utility: none
-   digest: Actual oscillator parity on every finite half-Fock grade and its inserted trace.
+   digest: Actual oscillator parity, convergent inserted traces and paired T and T-squared laws.
 -/
 
 import D5.S3.VertexAlgebra.LatticeHalfFockGradedTrace
 import D5.S3.VertexAlgebra.LatticeInvolution
+import D5.S3.VertexAlgebra.LatticeHalfFockCharacter
 
 set_option autoImplicit false
 set_option maxRecDepth 4096
@@ -30,6 +31,8 @@ open D5.S3.VertexAlgebra.LatticeHalfFockGradedTrace
 open D5.S3.VertexAlgebra.LatticeInvolution
 open D5.S3.VertexAlgebra.LatticeAllStateField
 open MvPolynomial
+open Complex LatticeHalfFockCharacter
+open D5.S3.Combinatorics.Partitions.EtaOddOccupation
 
 /-! The oscillator involution is tensored with the genuine ground identity. -/
 
@@ -154,4 +157,115 @@ theorem actualParityTraceTerm_eq_bRank (D : LatticeData) (hu : IsUnit D.G.det)
   rw [actualParityTraceTerm_eq, actual_grade_insert_trace_bRank]
   ring
 
+/-- A literal finite trace on the original actual grade, with its oscillator weight. -/
+def actualParityTraceTerm (D : LatticeData) (hu : IsUnit D.G.det)
+    (A : Module.End ℂ (ActualGround D hu)) (q : ℂ) (N : ℕ) : ℂ :=
+  LinearMap.trace ℂ (actualGrade D hu N)
+    (actualParityGroundInsertRestrict D hu N A) * q ^ N
+
+/-- The same vacuum normalization as the ordinary inserted character. -/
+def actualParityInsertedCharacter (D : LatticeData) (hu : IsUnit D.G.det)
+    (A : Module.End ℂ (ActualGround D hu)) (τ : ℂ) : ℂ :=
+  exp (2 * Real.pi * I * τ * D.rank / 48) *
+    ∑' N : ℕ, actualParityTraceTerm D hu A (exp (Real.pi * I * τ)) N
+
+private theorem parity_term_eq_neg (D : LatticeData) (hu : IsUnit D.G.det)
+    (A : Module.End ℂ (ActualGround D hu)) (q : ℂ) (N : ℕ) :
+    actualParityTraceTerm D hu A q N = actualTraceTerm D hu A (-q) N := by
+  rw [actualParityTraceTerm, actualParityTraceTerm_eq, actualTraceTerm, neg_pow]
+  ring
+
+/-- Coefficient identity, absolute convergence and the sum of genuine parity traces. -/
+theorem actual_parity_trace_series (D : LatticeData) (hu : IsUnit D.G.det)
+    (A : Module.End ℂ (ActualGround D hu)) (q : ℂ) (hq : ‖q‖ < 1) :
+    (∀ N, actualParityTraceTerm D hu A q N = actualTraceTerm D hu A (-q) N) ∧
+    Summable (fun N : ℕ => ‖actualParityTraceTerm D hu A q N‖) ∧
+    HasSum (actualParityTraceTerm D hu A q)
+      (LinearMap.trace ℂ (ActualGround D hu) A * oddCoefficientSeries D.rank (-q)) := by
+  have hs := actual_trace_series D hu A (-q) (by simpa only [norm_neg] using hq)
+  refine ⟨parity_term_eq_neg D hu A q, ?_, ?_⟩
+  · simpa only [parity_term_eq_neg] using hs.2.1
+  · exact hs.2.2.congr_fun (parity_term_eq_neg D hu A q)
+
+/-- The normalized parity character is an absolutely convergent sum of finite traces. -/
+theorem actual_parity_character_series (D : LatticeData) (hu : IsUnit D.G.det)
+    (A : Module.End ℂ (ActualGround D hu)) (τ : ℂ) (hτ : 0 < τ.im) :
+    Summable (fun N : ℕ => ‖exp (2 * Real.pi * I * τ * D.rank / 48) *
+      actualParityTraceTerm D hu A (exp (Real.pi * I * τ)) N‖) ∧
+    HasSum (fun N : ℕ => exp (2 * Real.pi * I * τ * D.rank / 48) *
+      actualParityTraceTerm D hu A (exp (Real.pi * I * τ)) N)
+      (actualParityInsertedCharacter D hu A τ) := by
+  have hq : ‖exp (Real.pi * I * τ)‖ < 1 := by
+    rw [norm_exp, Real.exp_lt_one_iff]
+    simpa using neg_neg_of_pos (mul_pos Real.pi_pos hτ)
+  have hs := actual_parity_trace_series D hu A (exp (Real.pi * I * τ)) hq
+  refine ⟨?_, ?_⟩
+  · simpa only [norm_mul] using hs.2.1.mul_left
+      ‖exp (2 * Real.pi * I * τ * D.rank / 48)‖
+  · simpa only [actualParityInsertedCharacter, tsum_mul_left] using
+      (hs.2.2.summable.mul_left (exp (2 * Real.pi * I * τ * D.rank / 48))).hasSum
+
+private theorem oscillator_parameter_T (τ : ℂ) :
+    exp (Real.pi * I * (τ + 1)) = -exp (Real.pi * I * τ) := by
+  rw [mul_add, mul_one, exp_add, exp_pi_mul_I]
+  ring
+
+private theorem vacuum_normalization_T (r : ℕ) (τ : ℂ) :
+    exp (2 * Real.pi * I * (τ + 1) * r / 48) =
+      exp (2 * Real.pi * I * r / 48) * exp (2 * Real.pi * I * τ * r / 48) := by
+  rw [← exp_add]
+  congr 1
+  ring
+
+/-- Forward T interchanges the two genuine trace characters with the rank/48 phase. -/
+theorem actual_paired_T (D : LatticeData) (hu : IsUnit D.G.det)
+    (A : Module.End ℂ (ActualGround D hu)) (τ : ℂ) (hτ : 0 < τ.im) :
+    actualInsertedCharacter D hu A (τ + 1) =
+      exp (2 * Real.pi * I * D.rank / 48) * actualParityInsertedCharacter D hu A τ ∧
+    actualParityInsertedCharacter D hu A (τ + 1) =
+      exp (2 * Real.pi * I * D.rank / 48) * actualInsertedCharacter D hu A τ := by
+  have hs := actual_parity_character_series D hu A τ hτ
+  constructor
+  · have hsum := hs.2.mul_left (exp (2 * Real.pi * I * D.rank / 48))
+    rw [actualInsertedCharacter, ← tsum_mul_left]
+    apply HasSum.tsum_eq
+    apply hsum.congr_fun
+    intro N
+    rw [vacuum_normalization_T, oscillator_parameter_T, parity_term_eq_neg]
+    ring
+  · rw [actualParityInsertedCharacter, actualInsertedCharacter,
+      vacuum_normalization_T, oscillator_parameter_T]
+    have hterm : (fun N : ℕ => actualParityTraceTerm D hu A
+        (-exp (Real.pi * I * τ)) N) = actualTraceTerm D hu A (exp (Real.pi * I * τ)) := by
+      funext N
+      rw [parity_term_eq_neg, neg_neg]
+    rw [hterm]
+    ring
+
+/-- Applying the forward pair twice gives the rank/24 phase for each character. -/
+theorem actual_paired_T_sq (D : LatticeData) (hu : IsUnit D.G.det)
+    (A : Module.End ℂ (ActualGround D hu)) (τ : ℂ) (hτ : 0 < τ.im) :
+    actualInsertedCharacter D hu A (τ + 2) =
+      exp (2 * Real.pi * I * D.rank / 24) * actualInsertedCharacter D hu A τ ∧
+    actualParityInsertedCharacter D hu A (τ + 2) =
+      exp (2 * Real.pi * I * D.rank / 24) * actualParityInsertedCharacter D hu A τ := by
+  have hτ' : 0 < (τ + 1).im := by simpa using hτ
+  have hfirst := actual_paired_T D hu A τ hτ
+  have hsecond := actual_paired_T D hu A (τ + 1) hτ'
+  have hphase : exp (2 * Real.pi * I * D.rank / 48) *
+      exp (2 * Real.pi * I * D.rank / 48) =
+      exp (2 * Real.pi * I * D.rank / 24) := by
+    rw [← exp_add]
+    congr 1
+    ring
+  have hshift : τ + 2 = (τ + 1) + 1 := by ring
+  constructor
+  · rw [hshift, hsecond.1, hfirst.2, ← mul_assoc, hphase]
+  · rw [hshift, hsecond.2, hfirst.1, ← mul_assoc, hphase]
+
 end D5.S3.VertexAlgebra.LatticeHalfFockParityT
+
+#print axioms D5.S3.VertexAlgebra.LatticeHalfFockParityT.actual_parity_trace_series
+#print axioms D5.S3.VertexAlgebra.LatticeHalfFockParityT.actual_parity_character_series
+#print axioms D5.S3.VertexAlgebra.LatticeHalfFockParityT.actual_paired_T
+#print axioms D5.S3.VertexAlgebra.LatticeHalfFockParityT.actual_paired_T_sq
