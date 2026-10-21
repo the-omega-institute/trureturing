@@ -96,8 +96,6 @@ def physicalEnergy (x : E n) : ℝ := (∑ i, (x i) ^ 2) / 2
 def physicalFreeEnergy (β : ℝ) (μ : Measure (E n)) : ℝ := (∫ x, physicalEnergy x ∂μ) - β⁻¹ * differentialEntropy μ
 
 def mutualInformation (M : Matrix p n ℝ) (β τ : ℝ) : ℝ≥0∞ := InformationTheory.klDiv (jointLaw M β τ) ((jointLaw M β τ).fst.prod (jointLaw M β τ).snd)
-
-
 /- Existing local suppliers moved once; law telescope unchanged. -/
 theorem translate_gaussian {d : Type} [Fintype d] [DecidableEq d] (m c : E d) (S : Matrix d d ℝ) : (multivariateGaussian m S).map (fun x => c + x) =
       multivariateGaussian (c + m) S := by
@@ -136,8 +134,6 @@ instance posteriorKernel_markov (M : Matrix p n ℝ) (β τ : ℝ) :
     IsMarkovKernel (posteriorKernel M β τ) := by
   unfold posteriorKernel
   infer_instance
-
-
 theorem action_apply {d a : Type} [Fintype d] [DecidableEq d] [Fintype a] [DecidableEq a] (M : Matrix a d ℝ) (x : E d) : action M x = toLp 2 (M.mulVec (ofLp x)) := rfl
 theorem action_adjoint {d a : Type} [Fintype d] [DecidableEq d] [Fintype a] [DecidableEq a] (M : Matrix a d ℝ) :
     (action M).adjoint = action M.transpose := by
@@ -969,7 +965,6 @@ theorem gaussian_observation_law_complete {n p : Type} [Fintype n] [DecidableEq 
       β⁻¹ * (mutualInformation M β τ).toReal
     rw [(hFree M β τ hβ hτ).2, hMICov]
     ring
-
 theorem gaussian_observation_law {n p : Type} [Fintype n] [DecidableEq n] [Fintype p] [DecidableEq p]
     (M : Matrix p n ℝ) (β σ : ℝ) (hβ : 0 < β) (hσ : 0 < σ ^ 2) :
   let τ := (σ ^ 2)⁻¹
