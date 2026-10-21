@@ -7,8 +7,6 @@
    digest: The geometric measure of the flip-conjugate symmetric subspaces. -/
 
 import Mathlib.Analysis.InnerProductSpace.PiL2
-import Mathlib.LinearAlgebra.Finsupp.LinearCombination
-import Mathlib.Tactic
 
 /-! The sharp product overlap of the flip-conjugate symmetric subspaces. -/
 
