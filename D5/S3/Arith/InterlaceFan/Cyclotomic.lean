@@ -94,4 +94,50 @@ theorem I_eq_eval_poly (n j : ℕ) (x : Fin (n / 2) → ℝ) :
   push_cast
   ring
 
+private lemma primitive_orderClass (n d j : ℕ) (hn : 0 < n)
+    (hj : j ∈ orderClass n d) : IsPrimitiveRoot (zeta n ^ j) d := by
+  have hd := (Finset.mem_filter.mp hj).2
+  rw [← hd]
+  exact (Complex.isPrimitiveRoot_exp n hn.ne').pow_div_gcd j
+    (Nat.ne_of_gt (Nat.gcd_pos_of_pos_left j hn))
+
+/-- Rational values propagate across every primitive-root order class. -/
+theorem rational_const_on_orderClass (n d : ℕ) (hn : 0 < n) (hd : d ∣ n)
+    (x : Fin (n / 2) → ℝ) (hx : IsRationalPt x) (c : ℚ)
+    (s t : ℕ) (hs : s ∈ orderClass n d) (ht : t ∈ orderClass n d)
+    (hcs : I n s x = (c : ℝ)) : I n t x = (c : ℝ) := by
+  classical
+  choose q hq using hx
+  have hpmap : (sigmaPoly n q).map (algebraMap ℚ ℂ) =
+      (sigmaPoly n x).map Complex.ofRealHom := by
+    simp only [sigmaPoly, Polynomial.map_sum, Polynomial.map_mul, Polynomial.map_add,
+      Polynomial.map_pow, Polynomial.map_X, Polynomial.map_C]
+    apply Finset.sum_congr rfl
+    intro k hk
+    rw [hq k]
+    simp
+  have he (j : ℕ) : aeval (zeta n ^ j) (sigmaPoly n q) =
+      (evalCos n j x : ℂ) := by
+    rw [Polynomial.aeval_def, ← Polynomial.eval_map, hpmap]
+    exact I_eq_eval_poly n j x
+  have hEs : evalCos n s x = -2 * (c : ℝ) := by
+    have := I_eq_eval n s x
+    linarith
+  have hdpos : 0 < d := Nat.pos_of_dvd_of_pos hd hn
+  have hdiv : cyclotomic d ℚ ∣ sigmaPoly n q - Polynomial.C (-2 * c) := by
+    rw [cyclotomic_eq_minpoly_rat (primitive_orderClass n d s hn hs) hdpos]
+    apply minpoly.dvd ℚ (zeta n ^ s)
+    simp [he, hEs]
+  have hroot : aeval (zeta n ^ t) (cyclotomic d ℚ) = 0 := by
+    rw [Polynomial.aeval_def, ← Polynomial.eval_map, Polynomial.map_cyclotomic]
+    exact (primitive_orderClass n d t hn ht).isRoot_cyclotomic hdpos
+  have hz := Polynomial.aeval_eq_zero_of_dvd_aeval_eq_zero hdiv hroot
+  rw [map_sub, he] at hz
+  have hEt : evalCos n t x = -2 * (c : ℝ) := by
+    have hreal := congrArg Complex.re hz
+    have hr : evalCos n t x + 2 * (c : ℝ) = 0 := by simpa using hreal
+    linarith
+  rw [I_eq_eval, hEt]
+  ring
+
 end D5.S3.Arith.InterlaceFan.Cyclotomic
