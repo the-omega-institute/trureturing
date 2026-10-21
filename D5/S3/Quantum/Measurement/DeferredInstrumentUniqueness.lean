@@ -228,14 +228,40 @@ lemma certificate_identity {d : ℕ} (t : ℝ) (J : Fin d → MatrixMap (Fin d) 
 lemma qCertificate_nonneg {d : ℕ} {aa bb cc : ℝ} (x : Fin d)
     (hbb : 0 < bb) (hcc : 0 < cc) (ha : aa * (d : ℝ) < cc)
     (w : Matrix (Fin d) (Fin d) ℂ) : 0 ≤ qCertificate d aa bb cc x w := by
-  sorry
+  unfold qCertificate
+  positivity
 
 lemma qCertificate_eq_zero {d : ℕ} {aa bb cc : ℝ} (x : Fin d)
     (hbb : 0 < bb) (hcc : 0 < cc) (ha : aa * (d : ℝ) < cc)
     (w : Matrix (Fin d) (Fin d) ℂ)
     (hzero : qCertificate d aa bb cc x w = 0) :
     (∀ k' j, k' ≠ x → j ≠ k' → w j k' = 0) := by
-  sorry
+  intro k' j hk hj
+  have hdiag : 0 ≤ ((aa + bb) / bb) *
+      ((∑ i : Fin d, Complex.normSq (w i i)) -
+        (aa / cc) * Complex.normSq (∑ i : Fin d, w i i)) -
+      Complex.normSq (w x x) := by
+    positivity
+  have hterm : 0 ≤ Complex.normSq (w j k') := Complex.normSq_nonneg _
+  have hsum : 0 ≤ ∑ k'' : Fin d, ∑ j' : Fin d,
+      if k'' ≠ x ∧ j' ≠ k'' then Complex.normSq (w j' k'') else 0 := by
+    positivity
+  have hrest : 0 ≤ ∑ k'' : Fin d, ∑ j' : Fin d,
+      if k'' ≠ x ∧ j' ≠ k'' then Complex.normSq (w j' k'') else 0 := hsum
+  have hz : (∑ k'' : Fin d, ∑ j' : Fin d,
+      if k'' ≠ x ∧ j' ≠ k'' then Complex.normSq (w j' k'') else 0) = 0 := by
+    unfold qCertificate at hzero
+    nlinarith
+  have hmem : (k', j) ∈ (Finset.univ : Finset (Fin d × Fin d)) := Finset.mem_univ _
+  have hsingle : Complex.normSq (w j k') ≤
+      ∑ k'' : Fin d, ∑ j' : Fin d,
+        if k'' ≠ x ∧ j' ≠ k'' then Complex.normSq (w j' k'') else 0 := by
+    apply Finset.single_le_sum
+    · intro i hi
+      positivity
+    · simp [hk, hj]
+  have : Complex.normSq (w j k') = 0 := by nlinarith
+  exact Complex.normSq_eq_zero.mp this
 
 lemma support_rows {d : ℕ} (t : ℝ) (J : Fin d → MatrixMap (Fin d) (Fin d) ℂ)
     (hCP : ∀ x, (J x).IsCompletelyPositive)
