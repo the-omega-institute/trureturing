@@ -1166,3 +1166,1005 @@ volume, without a priority or physical-realization claim.
 [JC]: https://arxiv.org/pdf/1512.07016v2 "Anna Jenčová, Comparison of quantum channels and statistical experiments, Section 4, Theorem 4"
 
 ## 追加锚（本行以下为增补区）
+
+## 139. The complete complex optimal-decoder disk
+
+Throughout this section put $r=r_*$, $L=L_*$ and
+$(p,x,y)=(p_*,x_*,y_*)$, with the root specified in Definition 128.1
+and isolated by Lemma 129.2. The value and necessary support used here
+are Theorems 128.2 and 137.1. The competitors remain all complex CPTP
+maps on $M_3$, with the common-decoder, all-density, identity-target
+quantifiers of Definition 127.2. In particular no reality, covariance,
+unitality or prescribed-family condition is imposed on a competitor.
+
+**Theorem 139.1 (All optimizers, including the PSD circle).** Set
+
+$$
+\eta=1-r^2>0,\qquad
+B_r=\big[\,|00\rangle+r|11\rangle,\ |21\rangle,\ |22\rangle\,\big].
+\tag{139.1}
+$$
+
+A complex CPTP map $\mathcal R$ has $e(\mathcal R)=L$ if and only if
+there is a unique $z\in\mathbb C$, $|z|\le1$, such that
+
+$$
+J_{\mathcal R}=B_r
+\begin{pmatrix}
+1&0&z\\
+0&\eta&0\\
+\overline z&0&1
+\end{pmatrix}B_r^\dagger.
+\tag{139.2}
+$$
+
+In the output-first convention (134.2), this is exactly the map
+
+$$
+\boxed{
+\mathcal R_z(X)=
+\begin{pmatrix}
+X_{00}&rX_{01}&zX_{02}\\
+rX_{10}&r^2X_{11}&rzX_{12}\\
+\overline zX_{20}&r\overline zX_{21}&\eta X_{11}+X_{22}
+\end{pmatrix}}
+\qquad(X\in M_3).
+\tag{139.3}
+$$
+
+A Kraus list valid on the entire closed disk is
+
+$$
+K_0=\operatorname{diag}(1,r,\overline z),\qquad
+K_1=\sqrt\eta\,|2\rangle\langle1|,\qquad
+K_2=\sqrt{1-|z|^2}\,|2\rangle\langle2|.
+\tag{139.4}
+$$
+
+Here $\mathcal R_0=\mathcal R_*$ of (128.4). The conjugate in $K_0$
+is essential: $K_0E_{02}K_0^\dagger=zE_{02}$, in agreement with
+(139.3) and with $J_{\mathcal R,00,22}=z$ in (139.2).
+
+*Proof.* First determine the entire supported CPTP family, without
+performing a twirl. By Theorem 137.1 an optimal Choi matrix has range
+in $\operatorname{ran}B_r$. The three columns of $B_r$ are independent,
+so it has a unique representation $J=B_rHB_r^\dagger$ with $H$
+Hermitian. A left inverse of $B_r$ shows that $J\succeq0$ is
+equivalent to $H\succeq0$. For general Hermitian $H=(H_{ab})_{a,b=0}^2$,
+the output partial trace is
+
+$$
+\operatorname{Tr}_{\rm out}(B_rHB_r^\dagger)
+=H_{00}E_{00}+(r^2H_{00}+H_{11})E_{11}+H_{22}E_{22}
+ +H_{12}E_{12}+\overline{H_{12}}E_{21}.
+\tag{139.5}
+$$
+
+For example the two terms joining the first column to $|21\rangle$
+have distinct output indices and vanish under this partial trace;
+$|21\rangle\langle22|$ has equal output indices and contributes
+$E_{12}$. Thus trace preservation imposes exactly
+
+$$
+H=H(h,z):=
+\begin{pmatrix}
+1&h&z\\
+\overline h&\eta&0\\
+\overline z&0&1
+\end{pmatrix},\qquad h,z\in\mathbb C.
+\tag{139.6}
+$$
+
+Since $\operatorname{diag}(\eta,1)$ is positive definite, its Schur
+complement gives the closed condition
+
+$$
+H(h,z)\succeq0
+\quad\Longleftrightarrow\quad
+\frac{|h|^2}{\eta}+|z|^2\le1.
+\tag{139.7}
+$$
+
+This equivalence includes every singular boundary matrix. Reading
+matrix units with the same output-first convention gives
+
+$$
+\begin{aligned}
+\mathcal R_{h,z}(X)-\mathcal R_{0,z}(X)
+={}&hX_{01}E_{02}+rhX_{11}E_{12}\\
+ &+\overline hX_{10}E_{20}+r\overline hX_{11}E_{21}.
+\end{aligned}
+\tag{139.8}
+$$
+
+It remains to exclude $h\ne0$ by individual physical inputs. Use
+$P,T,U_{j\ell},P_{j\ell},T_{j\ell}$ from §§133–134, and write
+$q=1/4$. Define
+
+$$
+\Gamma=q\sqrt{px}\,T_{02}+rv_1T_{12}
+=\frac{\sqrt{xy}}{\tau}
+ \{qp(L-d+kx)+rv_1(L+kp)\}>0.
+\tag{139.9}
+$$
+
+All the factors needed for this strict sign are positive by the
+rational bounds of §129. The extra terms of
+$\mathcal R_{h,z}\Phi(P_{j\ell})$ relative to
+$\mathcal R_{0,z}\Phi(P_{j\ell})$ have entries
+
+$$
+\Delta_{02}=qh\sqrt{px}\,\zeta^{-j},\qquad
+\Delta_{12}=rhv_1,
+\tag{139.10}
+$$
+
+and their Hermitian conjugates. Also
+$(T_{j\ell})_{20}=\zeta^\ell T_{02}$ and
+$(T_{j\ell})_{21}=\zeta^{\ell-j}T_{12}$. Since $\Phi$ deletes the
+$02$ and $12$ coherences, $\mathcal R_{0,z}\Phi=\mathcal R_*\Phi$.
+The identity $AT=LT$ from Lemma 133.1 and diagonal covariance of this
+composite therefore give the exact score
+
+$$
+\operatorname{Tr}\{T_{j\ell}
+ [P_{j\ell}-\mathcal R_{h,z}\Phi(P_{j\ell})]\}
+=L-2\Gamma\operatorname{Re}(h\zeta^{\ell-j}).
+\tag{139.11}
+$$
+
+For an optimal decoder every such score is at most $L$, by the
+trace-distance variational formula for the individual input.
+Taking $\ell-j=0,1,2$ modulo three gives
+
+$$
+\operatorname{Re}h\ge0,\qquad
+\operatorname{Re}(h\zeta)\ge0,\qquad
+\operatorname{Re}(h\zeta^2)\ge0.
+\tag{139.12}
+$$
+
+Their sum is zero because $1+\zeta+\zeta^2=0$. Each is therefore zero.
+Writing $h=a+ib$, the first gives $a=0$ and the second then gives
+$-\sqrt3 b/2=0$. Hence $h=0$. Condition (139.7) now becomes precisely
+$|z|\le1$, proving necessity on the whole PSD boundary as well as
+in its interior.
+
+Conversely, for any $|z|\le1$ the Kraus operators (139.4) have adjoint
+products summing to
+
+$$
+\operatorname{diag}(1,r^2,|z|^2)+\eta E_{11}
+ +(1-|z|^2)E_{22}=I_3.
+\tag{139.13}
+$$
+
+They give (139.3) directly, hence a CPTP map with Choi matrix (139.2).
+The erased coherences again give
+$\mathcal R_z\Phi=\mathcal R_*\Phi$, so Theorem 128.2 proves its
+optimality. Finally $\mathcal R_z(E_{02})=zE_{02}$ proves uniqueness
+of the disk coordinate. $\square$
+
+The reduction from (139.7) to (139.2) uses the individual phase scores,
+not their average. Their average cancels the $h$ term and would leave
+all of (139.7). Similarly a twirl can remove $h$ from a noncovariant
+map without proving that the untwirled map was optimal. Theorem 139.1
+therefore supplies the classification not asserted by Proposition 137.2.
+
+## 140. The common composite, the support face and original coordinates
+
+**Corollary 140.1 (One recovered channel).** For every optimal decoder,
+the composite on every complex matrix is the same map
+
+$$
+\begin{aligned}
+v_{1,q}(X)&=\frac{(1+q)X_{11}+(1-q)X_{22}}2,\\
+\mathcal C_q(X)&=
+\begin{pmatrix}
+X_{00}&qrX_{01}&0\\
+qrX_{10}&r^2v_{1,q}(X)&0\\
+0&0&X_{11}+X_{22}-r^2v_{1,q}(X)
+\end{pmatrix},\qquad q=1/4.
+\end{aligned}
+\tag{140.1}
+$$
+
+Consequently the complete optimal set is the full CPTP fiber
+
+$$
+\operatorname{Opt}_{1/4}
+=\{\mathcal R\ {\rm CPTP}:\mathcal R\Phi_{1/4}=\mathcal C_{1/4}\}
+=\{\mathcal R_z:|z|\le1\}.
+\tag{140.2}
+$$
+
+*Proof.* Compose (139.3) with (127.3). The image of $\Phi_q$ has zero
+$02$ and $12$ entries and the displayed populations, so the result is
+(140.1), independently of $z$. Theorem 139.1 gives the second equality.
+Any CPTP map with this same composite has the same all-density error,
+which is $L_*$; this proves the first equality in both directions.
+$\square$
+
+The term fiber here means equality of linear maps on the entire
+channel image. For $q\ne0$ the population transformation on
+$\operatorname{span}\{E_{11},E_{22}\}$ has determinant $q$, and the
+$01$ and $10$ multipliers are $q$. Thus
+
+$$
+\operatorname{span}_{\mathbb C}\Phi_q(\mathsf D_3)
+=\operatorname{span}_{\mathbb C}
+ \{E_{00},E_{11},E_{22},E_{01},E_{10}\}.
+\tag{140.3}
+$$
+
+Here densities span $M_3$ over $\mathbb C$, so the density image and
+matrix image have the same complex span. Distinct $z$'s change only
+invisible coherences, with the linked actions
+$E_{02}\mapsto zE_{02}$ and $E_{12}\mapsto rzE_{12}$ and their
+conjugates. They are distinct legal extensions of one restriction.
+
+**Corollary 140.2 (Dimension, ranks and symmetry).** The optimal set is
+an affine closed disk of real dimension two. Every interior point has
+Choi rank three; every point on $|z|=1$ has Choi rank two. There is no
+rank-one optimal decoder. All of them commute with conjugation by
+every diagonal unitary, and all are nonunital.
+
+*Proof.* The dependence of (139.2) on $(\operatorname{Re}z,
+\operatorname{Im}z)$ is real affine and injective. Its coefficient
+matrix has eigenvalues
+
+$$
+\eta,\qquad 1+|z|,\qquad1-|z|.
+\tag{140.4}
+$$
+
+Congruence by the injective $B_r$ preserves rank, which proves all
+rank statements, including the circle. Equation (140.4) describes the
+coefficient matrix; it is not asserted to be the spectrum of the
+unnormalized Choi matrix itself. For
+$U=\operatorname{diag}(u_0,u_1,u_2)$, $|u_i|=1$, each off-diagonal
+entry in (139.3) has the same phase $u_i\overline{u_j}$ as its input
+entry, and its output populations depend only on input populations.
+Thus, even for nonreal $z$,
+
+$$
+\mathcal R_z\operatorname{Ad}_U
+=\operatorname{Ad}_U\mathcal R_z,\qquad
+\mathcal R_z(I_3)=\operatorname{diag}(1,r^2,2-r^2)\ne I_3.
+\tag{140.5}
+$$
+
+The last inequality uses $0<r<1$. $\square$
+
+**Proposition 140.3 (The larger exposed face and the nonface disk).**
+The exposed CPTP face selected by the slack $S$ in Lemma 135.1 is
+exactly
+
+$$
+\mathcal E_r=\left\{B_rH(h,z)B_r^\dagger:
+ h,z\in\mathbb C,\quad |h|^2/\eta+|z|^2\le1\right\}.
+\tag{140.6}
+$$
+
+It has real affine dimension four. The optimal disk is a proper
+subset of this face and is not itself a face of the CPTP set.
+
+*Proof.* On the CPTP set $\operatorname{Tr}(SJ)\ge0$, and it is zero
+at $J_{\mathcal R_*}$. Hence its zero set is an exposed face. For PSD
+matrices, equality is equivalent to $\operatorname{ran}J\subseteq
+\ker S=\operatorname{ran}B_r$, as proved in Theorem 137.1. Equations
+(139.5)–(139.7) give precisely (140.6). Its two complex coordinates
+are independent and its inequality has strict interior at $(0,0)$,
+so its affine dimension is four.
+
+Choose any real $t$ with $0<t<\sqrt\eta$. The two matrices
+$B_rH(t,0)B_r^\dagger$ and $B_rH(-t,0)B_r^\dagger$ are CPTP by
+(139.7). Each is nonoptimal: among the three numbers
+$\operatorname{Re}(\pm t\zeta^m)$ at least one is negative, and
+(139.11) then gives an individual score strictly exceeding $L$.
+Their midpoint is $B_rH(0,0)B_r^\dagger=J_{\mathcal R_*}$, which
+is optimal. This violates the defining segment property of a face
+for the optimal disk. $\square$
+
+**Corollary 140.4 (The specified original decoder coordinates).** With
+the actual $U_0$ of (127.2), or equivalently [TR, (93.2)], all optimal
+decoders for $\mathcal N_3$ are exactly
+
+$$
+D_z=\mathcal R_z\circ\operatorname{Ad}_{U_0^\dagger},\qquad
+|z|\le1,\qquad D_z\mathcal N_3=\mathcal C_{1/4}.
+\tag{140.7}
+$$
+
+Their Choi ranks and nonunitality are unchanged. Their transported
+covariance identity, for every diagonal unitary $U$, is
+
+$$
+D_z\operatorname{Ad}_{U_0UU_0^\dagger}
+=\operatorname{Ad}_U D_z.
+\tag{140.8}
+$$
+
+*Proof.* Apply the bijection (127.6), which is [TR, (93.10)] with the
+unchanged original identity target. Precomposition by a unitary
+channel gives an invertible unitary congruence of Choi matrices and
+preserves Choi rank. It also sends $I_3$ to $I_3$, so
+$D_z(I_3)=\mathcal R_z(I_3)$. Equation (140.8) follows from (140.5)
+by substitution. These are coordinate identities for the explicitly
+specified model; they do not assert a physical realization. $\square$
+
+## 141. An analytic branch of exact contact certificates
+
+We now let $q$ vary near $q_0=1/4$. The channel is exactly $\Phi_q$
+in (127.3), and the objective is [TR, (105.2)]:
+
+$$
+e_q(\mathcal R)=\max_{\rho\in\mathsf D_3}
+ \frac12\|\rho-\mathcal R\Phi_q(\rho)\|_1,\qquad
+\mu(q)=\min_{\mathcal R\ {\rm complex\ CPTP}}e_q(\mathcal R).
+\tag{141.1}
+$$
+
+Every quantifier of Definition 127.2 is retained. On $0<q<1$,
+$\Phi_q$ is CPTP by [TR, Lemma 105.2]. Explicitly a Kraus list is
+
+$$
+\operatorname{diag}(1,q,0),\quad
+\sqrt{(1-q)(1+2q)/2}\,E_{11},\quad
+\sqrt{(1-q)/2}\,E_{21},\quad
+\sqrt{(1-q)/2}\,E_{12},\quad
+\sqrt{(1+q)/2}\,E_{22}.
+\tag{141.2}
+$$
+
+The adjoint products sum to $I_3$; the identity
+$(1+q)/2-q^2=(1-q)(1+2q)/2$ verifies the $11$ population. This
+channel family is defined on an interval, whereas actual horizons
+in (127.3) still use the discrete parameters $s_n$.
+
+**Definition 141.1 (The parameter-dependent polynomial system).**
+Substitute $y=1-p-x$ first and put
+
+$$
+\begin{aligned}
+v_1&=\frac{(1+q)x+(1-q)y}{2},&
+v_2&=x+y-v_1,\\
+k&=1-qr,& d&=x-r^2v_1,\\
+N(q;r,L,p,x)
+&=L^3-L(d^2+k^2px+py+xy)
+ -p\{d(k^2x-y)+2kxy\},\\
+F(q;r,L,p,x)&=(N,N_p,N_x,N_r)^{\mathsf T}.
+\end{aligned}
+\tag{141.3}
+$$
+
+All derivatives include the displayed substitution for $y$. Thus $F$
+is a specified polynomial map, and at $q=q_0$ it is precisely
+$\mathcal F$ of (128.1). The order of its four unknowns is
+$u=(r,L,p,x)$. Its Jacobian with respect to those unknowns is
+
+$$
+D_uF=
+\begin{pmatrix}
+N_r&N_L&N_p&N_x\\
+N_{pr}&N_{pL}&N_{pp}&N_{px}\\
+N_{xr}&N_{xL}&N_{xp}&N_{xx}\\
+N_{rr}&N_{rL}&N_{rp}&N_{rx}
+\end{pmatrix}.
+\tag{141.4}
+$$
+
+**Lemma 141.2 (Nonsingularity at the specified root).** The Jacobian
+$D_uF(q_0;u_*)$ is nonsingular. The following rational outer enclosure
+holds on the entire box $\mathcal B$ of (128.2):
+
+$$
+\begin{aligned}
+1.6294931870268401569269244
+&\ \le\det D_uF(q_0;u)\\
+&\ \le1.6294931870268401607302784
+\qquad(u\in\mathcal B).
+\end{aligned}
+\tag{141.5}
+$$
+
+*Proof.* Nonsingularity already follows directly from the finite
+root-isolation data, without relying on a rounded determinant. Let
+$M=D\mathcal F(c)^{-1}$ be the rational matrix (129.5)–(129.7).
+The Hessian bound and (129.8) give
+
+$$
+\sup_{u\in\mathcal B}\|I-MD_uF(q_0;u)\|_\infty
+ <\frac{3499}{8}\,10^{-20}<1.
+\tag{141.6}
+$$
+
+The Neumann series makes $MD_uF(q_0;u)$ invertible at every such $u$,
+so $D_uF(q_0;u_*)$ is invertible. The determinant enclosure (141.5)
+uses only the same finite rational specification: obtain the entries
+in (141.4) by differentiating the nine coefficients (129.1)–(129.2),
+and evaluate the determinant by
+
+$$
+\det D_uF=\sum_{\pi\in S_4}\operatorname{sgn}(\pi)
+              \prod_{i=0}^3(D_uF)_{i,\pi(i)}.
+\tag{141.7}
+$$
+
+Interval evaluation on $[c_j-10^{-20},c_j+10^{-20}]$, with the
+operations of Convention 129.3, gives the stated rational outer
+bounds. All their finite decimal endpoints are rational numbers;
+they are enclosures on the box, not evaluations at an approximate
+zero. In particular the nonsingularity needed below is at the
+isolated root itself. $\square$
+
+**Theorem 141.3 (Local analytic persistence).** There are an open
+interval $I\subset(0,1)$ containing $q_0=1/4$ and real-analytic
+functions
+
+$$
+q\longmapsto(r(q),L(q),p(q),x(q)),\qquad y(q)=1-p(q)-x(q),
+\tag{141.8}
+$$
+
+whose values at $q_0$ are $(r_*,L_*,p_*,x_*)$, such that
+$F(q;r(q),L(q),p(q),x(q))=0$. The interval can be chosen so that,
+for every $q\in I$, the unrestricted value is $\mu(q)=L(q)$ and
+all optimal decoders are exactly (139.3)–(139.4), with $r=r(q)$
+and $|z|\le1$. Every such decoder has the same composite (140.1),
+with these continued $q,r(q)$. The support ellipsoid, optimal disk,
+ranks, covariance, nonunitality and nonface conclusions all persist.
+
+The interval is existential; no numerical radius is specified.
+The analytic branch is locally unique as a zero of the four-variable
+system near $u_*$. The decoders themselves form a disk and are not
+unique. The proof of the value and classification is completed in
+§§142–143, after the following strictness lemma.
+
+**Lemma 141.4 (All strict conditions can be retained together).**
+Along the branch define
+
+$$
+\begin{aligned}
+a_0&=L^2-d^2-xy,& a_1&=L(L+d)-py,\\
+a_2&=L(L-d)-k^2px,& \tau&=a_0+a_1+a_2=N_L,\\
+\beta&=k(L+d)+y,& \omega&=qpx\beta,\\
+w&=\omega/\tau,& g&=p(a_0-a_2)+r\omega.
+\end{aligned}
+\tag{141.9}
+$$
+
+One common smaller open interval around $q_0$ retains
+
+$$
+\begin{gathered}
+0<q,r<1,\qquad p,x,y>0,\qquad L,\tau,a_0,a_1,a_2>0,\\
+\beta,\ L-d+kx,\ L+kp,\ a_2-a_0,\ a_2-a_1,\ g>0.
+\end{gathered}
+\tag{141.10}
+$$
+
+It also retains $\eta=1-r^2>0$, $v_1,v_2,k,w>0$, and all the
+strict scalar slacks displayed in §143.
+
+*Proof.* Analytic IFT applied to the polynomial $F$ and Lemma 141.2
+first gives (141.8) on an open interval about $q_0$. The rational
+centre and box of Definition 128.1 and Lemma 129.2 give the first
+line of basic parameter signs. At $q_0$, (141.9) specializes exactly
+to (129.9), with $\omega=\omega_0$. Thus every remaining sign in
+(141.10) is supplied by the whole-box bounds in §129. The following
+additional outer intervals specify the small margin and useful
+positive factors more precisely, again at $q=q_0$ and for every
+$u\in\mathcal B$:
+
+| Expression | Rational lower endpoint | Rational upper endpoint |
+| --- | --- | --- |
+| $g$ | $0.00011128205452303927215155916$ | $0.00011128205452303931320279159$ |
+| $g/\tau$ | $0.00013053824554842534240889235$ | $0.00013053824554842539059288603$ |
+| $\eta$ | $0.15071210256946835223440677$ | $0.15071210256946835227126951$ |
+| $k$ | $0.76960795675759931317030883$ | $0.76960795675759931317530884$ |
+| $w$ | $0.023137200311339624401525323$ | $0.023137200311339624412468074$ |
+| $\Gamma/\sqrt{xy}$, with $\Gamma$ as in (139.9) | $0.38187019888773971797618789$ | $0.38187019888773971812051055$ |
+| $pr^2(v_1-q^2x)$ | $0.082831250381897860842067617$ | $0.082831250381897860858603919$ |
+| $(1-r^2)v_1+v_2$ | $0.40709797066733872287663940$ | $0.40709797066733872298039953$ |
+| $w(r+1/r)$ | $0.046428843542101801214667873$ | $0.046428843542101801237634023$ |
+
+For reproducibility, these intervals use (141.3), then (141.9) in
+displayed order and the rational interval operations of Convention
+129.3. In particular
+
+$$
+\frac{\Gamma}{\sqrt{xy}}
+=\frac{qp(L-d+kx)+rv_1(L+kp)}{\tau}
+\tag{141.11}
+$$
+
+has no square roots in its interval calculation. Positivity of
+$\tau$ and $r$ is established before their reciprocals are taken.
+The positive lower bound for $g$, despite its smaller size, is
+explicitly part of the hypothesis retained here.
+
+Every expression in the finite list (141.10) is continuous along
+the analytic branch and strictly positive at $q_0$. Intersecting
+finitely many neighborhoods retains all these signs on one open
+interval in $(0,1)$. On it, $v_1,v_2>0$ by their positive population
+coefficients, $k=1-qr>0$, $\eta>0$ and $w=qpx\beta/\tau>0$.
+The five scalar slack signs follow from (141.10) and their exact
+formulas (143.6). No zero eigenvalue of a singular matrix is inferred
+to remain zero by this continuity argument. Its preservation will
+instead follow from the identities in §143. $\square$
+
+## 142. Uniform closed-boundary control and the global cubic upper bound
+
+**Lemma 142.1 (A gap on the entire boundary).** After a further shrink
+of $I$, the decoder $\mathcal R_0(q)$ given by (139.4) with $z=0$
+and $r=r(q)$ has pure-input error strictly below $L(q)$ on the whole
+closed population boundary, uniformly in that boundary.
+
+*Proof.* Let
+
+$$
+\Delta=\{(s,t):s,t\ge0,\ s+t\le1\},\qquad
+P(s,t)=a(s,t)a(s,t)^{\mathsf T},\quad
+a(s,t)=(\sqrt s,\sqrt t,\sqrt{1-s-t})^{\mathsf T},
+\tag{142.1}
+$$
+
+and write
+
+$$
+f(q;s,t)=\frac12\|P(s,t)-\mathcal R_0(q)\Phi_q(P(s,t))\|_1.
+\tag{142.2}
+$$
+
+This is jointly continuous, including the edges and vertices. The
+square roots of zero populations are continuous, and both channels
+and the matrix trace norm are continuous. Lemma 131.1 and (130.5)
+give $f(q_0;s,t)\le3/5$ for every $(s,t)\in\partial\Delta$.
+Set
+
+$$
+\Delta_0=L_*-3/5>0,\qquad \epsilon_0=\Delta_0/4.
+\tag{142.3}
+$$
+
+The set $\partial\Delta$ is compact. Joint continuity near
+$\{q_0\}\times\partial\Delta$ therefore supplies one neighborhood
+of $q_0$ on which $f(q;s,t)\le3/5+\epsilon_0$ for every boundary
+point. For example, restrict $q$ initially to a closed interval
+inside the branch domain and use uniform continuity on its product
+with $\partial\Delta$. Continuity of $L(q)$ allows a common shrink
+so that
+
+$$
+\max_{(s,t)\in\partial\Delta}f(q;s,t)
+ \le3/5+\epsilon_0,\qquad L(q)\ge L_*-\epsilon_0.
+\tag{142.4}
+$$
+
+The gap is at least $\Delta_0-2\epsilon_0=\Delta_0/2>0$.
+This treats the entire closed boundary, not a finite set of boundary
+tests. The interval is further intersected with the one from Lemma
+141.4. $\square$
+
+**Proposition 142.2 (Global upper certificate on the interval).**
+For every $q\in I$,
+
+$$
+e_q(\mathcal R_0(q))=L(q),\qquad\mu(q)\le L(q).
+\tag{142.5}
+$$
+
+*Proof.* Fix $q$, and hold its $r(q),L(q)$ fixed. For arbitrary
+nonnegative populations $(s,t,1-s-t)$, composing the explicit maps
+gives (130.3)–(130.4) with $r/4$ replaced by $qr$, and with $v_1,k,d$
+from (141.3). Thus
+
+$$
+\begin{aligned}
+Q_q(s,t)&=\mathcal R_0(q)\Phi_q(P(s,t)),\\
+A_q(s,t)&=P(s,t)-Q_q(s,t),\\
+\det(L(q)I_3-A_q(s,t))&=N(q;r(q),L(q),s,t).
+\end{aligned}
+\tag{142.6}
+$$
+
+The determinant identity follows by the same three-by-three
+expansion as Lemma 130.2, now with $k=1-qr$ and
+$d=t-r^2\{(1+q)t+(1-q)(1-s-t)\}/2$. No specialization of $q$
+is used in that expansion. The polynomial in $(s,t)$ has degree
+at most three: $d$ is affine in the populations, the terms multiplying
+$L$ have degree at most two, and the remaining terms have degree at
+most three.
+
+The matrix $Q_q(s,t)$ is a density for every point of $\Delta$,
+because both maps are CPTP. Hence the pure-target criterion (130.5)
+applies, including at all vertices:
+
+$$
+\frac12\|A_q(s,t)\|_1=\lambda_{\max}(A_q(s,t)),\qquad
+N(q;r,L,s,t)\ge0
+\ \Longleftrightarrow\ \lambda_{\max}(A_q(s,t))\le L.
+\tag{142.7}
+$$
+
+Here $L=L(q)>0$. To see directly why the determinant sign is
+sufficient, $P-Q$ is nonpositive on the two-dimensional orthogonal
+complement of the pure input vector and has trace zero. Its other
+two eigenvalues are nonpositive, so the other two factors of
+$\det(LI-A)$ are strictly positive. This is a pure-target argument,
+not a sign criterion for arbitrary Hermitian matrices.
+
+Lemma 142.1 now gives strict positivity of $N$ on the entire
+boundary of $\Delta$. At its interior point $(p(q),x(q))$ the branch
+equations give $N=N_p=N_x=0$. Apply the already proved cubic chord
+Lemma 132.1: on every line through that point the polynomial is
+$t^2(\alpha+\beta t)$, whose affine factor is positive at the two
+boundary endpoints and hence on the whole segment. Consequently
+
+$$
+N(q;r(q),L(q),s,t)\ge0,\qquad
+N=0\ \Longleftrightarrow\ (s,t)=(p(q),x(q)).
+\tag{142.8}
+$$
+
+The distance is therefore at most $L(q)$ for all nonnegative-amplitude
+pure inputs and equals it at the contact. The maps $\Phi_q$ and
+$\mathcal R_0(q)$ commute with all diagonal unitary conjugations,
+as their displayed actions show. Every complex pure state is a
+diagonal phase conjugate of such a nonnegative-amplitude state,
+including those with zero populations. Unitary invariance of the
+trace norm proves the same bound for every complex pure input.
+For a mixed density $\rho=\sum_i t_iP_i$, convexity gives
+
+$$
+\frac12\|\rho-\mathcal R_0(q)\Phi_q(\rho)\|_1
+\le\sum_i t_i\frac12\|P_i-\mathcal R_0(q)\Phi_q(P_i)\|_1
+\le L(q).
+\tag{142.9}
+$$
+
+This uses a single decoder for every term. The contact attains
+$L(q)$, proving (142.5). $\square$
+
+## 143. Exact slack identities and the unrestricted local lower bound
+
+Fix $q\in I$ and evaluate all contact quantities at (141.8). Let
+$P=aa^{\mathsf T}$ for $a=(\sqrt p,\sqrt x,\sqrt y)^{\mathsf T}$,
+and let $A=P-\mathcal R_0(q)\Phi_q(P)$. The nine phases
+$U_{j\ell}$ remain exactly those of (134.1).
+
+**Lemma 143.1 (Physical effects and exact kernel preservation).** Put
+
+$$
+T=\frac{\operatorname{adj}(LI_3-A)}{\tau},\qquad t_i=T_{ii}.
+\tag{143.1}
+$$
+
+Then $T$ is a rank-one orthogonal projector, $AT=LT$, and
+
+$$
+\begin{aligned}
+T_{ii}&=a_i/\tau,\\
+T_{01}&=\sqrt{px}\,\beta/\tau,\\
+T_{02}&=\sqrt{py}(L-d+kx)/\tau,\\
+T_{12}&=\sqrt{xy}(L+kp)/\tau.
+\end{aligned}
+\tag{143.2}
+$$
+
+All these entries are strictly positive. With $v_0=p$, define
+
+$$
+\begin{aligned}
+W_q&=\frac19\sum_{j,\ell=0}^2
+ (U_{j\ell}TU_{j\ell}^\dagger)
+ \otimes\Phi_q(U_{j\ell}PU_{j\ell}^\dagger)^{\mathsf T}\\
+&=\sum_{i,j=0}^2 t_i v_j|ij\rangle\langle ij|
+ +w\{|00\rangle\langle11|+|11\rangle\langle00|\},\\
+Y_q&=\operatorname{diag}(pt_0+rw,\ v_1t_2,\ v_2t_2),\qquad
+S_q=I_{\rm out}\otimes Y_q-W_q.
+\end{aligned}
+\tag{143.3}
+$$
+
+The slack is PSD and its kernel is exactly
+
+$$
+\ker S_q=\operatorname{span}\{
+ |00\rangle+r(q)|11\rangle,\ |21\rangle,\ |22\rangle\}.
+\tag{143.4}
+$$
+
+*Proof.* By Proposition 142.2 and the pure-target criterion,
+$LI_3-A\succeq0$ at the contact. Its determinant is $N=0$ and its
+adjugate has positive trace $\tau=N_L>0$. Therefore it has rank two
+and its adjugate is PSD of rank one. Normalizing by its trace proves
+the projector assertion. Direct cofactor expansion is the displayed
+matrix (133.1), with the general $q$ auxiliaries (141.3). This proves
+(143.2); (141.10) gives every strict sign and every denominator.
+The adjugate identity gives $AT=LT$.
+
+The charge calculation (134.4) is unchanged by $q$: only the retained
+$01$ coherence is multiplied by $q$. Its coefficient in the averaged
+functional is now $q\sqrt{px}T_{01}=qpx\beta/\tau=w$. Thus (143.3)
+specifies all 81 entries of $W_q$, including all its zero entries.
+The transpose is the ordinary matrix transpose, as in (134.2), even
+when the input/effect pair is complex. The nine projectors and effects
+are physical and distinct, since $p,x,y>0$, by the same argument as
+Definition 134.1.
+
+Differentiate the determinant (141.3) with $d_r=-2rv_1$ and $k_r=-q$.
+The resulting exact identity, before imposing any root equation, is
+
+$$
+N_r=2rv_1(a_1-a_2)+2\omega.
+\tag{143.5}
+$$
+
+Consequently at $N_r=0$ the $00,11$ block of $S_q$ and its seven
+remaining scalar blocks are exactly
+
+$$
+S_q[00,11]=
+\begin{pmatrix}rw&-w\\-w&w/r\end{pmatrix}
+=\frac wr\begin{pmatrix}r\\-1\end{pmatrix}
+              \begin{pmatrix}r&-1\end{pmatrix},
+\tag{143.6}
+$$
+
+| Coordinate | Scalar block of $S_q$ |
+| --- | --- |
+| $01$ | $v_1(a_2-a_0)/\tau$ |
+| $02$ | $v_2(a_2-a_0)/\tau$ |
+| $10$ | $\{g+p(a_2-a_1)\}/\tau$ |
+| $12$ | $v_2(a_2-a_1)/\tau$ |
+| $20$ | $g/\tau$ |
+| $21$ | $0$ |
+| $22$ | $0$ |
+
+For clarity about exact zeros, let $S_{\rm cert}$ denote this block
+matrix even off the root, using (141.9) wherever $r\tau\ne0$.
+Subtraction from the actual $I\otimes Y_q-W_q$ gives the identity
+
+$$
+(I\otimes Y_q-W_q)-S_{\rm cert}
+=-\frac{N_r}{2r\tau}|11\rangle\langle11|,\qquad
+S_{\rm cert}B_r=0.
+\tag{143.7}
+$$
+
+Indeed its only possible discrepant entry is
+$v_1(a_2-a_1)/\tau-w/r=-N_r/(2r\tau)$ at $11,11$.
+The other entries follow by subtracting the diagonal terms in
+(143.3). Both identities in (143.7) are exact for every $q$ with
+the displayed definitions; the first remainder vanishes on the
+branch because $N_r=0$ there.
+
+The five nonzero scalar blocks are strictly positive by Lemma 141.4.
+The coupled block has one positive eigenvalue $w(r+1/r)$ and one
+zero eigenvalue, with kernel vector $(1,r)^{\mathsf T}$. Its other
+two zero blocks are exactly the $21$ and $22$ directions. This proves
+PSD and exactly (143.4). In particular the kernel identities hold
+at every $q\in I$; continuity of a singular PSD matrix alone would
+not prove them. $\square$
+
+**Proposition 143.2 (Exact lower value and complete continued fiber).**
+For every complex CPTP map $\mathcal R:M_3\to M_3$ and $q\in I$,
+
+$$
+e_q(\mathcal R)\ge L(q)+\operatorname{Tr}(S_qJ_{\mathcal R})
+\ge L(q).
+\tag{143.8}
+$$
+
+Equality in the minimax problem holds exactly for
+$\mathcal R=\mathcal R_z(q)$, $|z|\le1$, as specified by (139.3)
+with $r=r(q)$. In particular
+
+$$
+\begin{aligned}
+\mu(q)&=L(q),\\
+\operatorname{Opt}_q
+&=\{\mathcal R_z(q):z\in\mathbb C,\ |z|\le1\}\\
+&=\{\mathcal R\ {\rm CPTP}:\mathcal R\Phi_q=\mathcal C_q\}.
+\end{aligned}
+\tag{143.9}
+$$
+
+*Proof.* The matching lower value is an identity of the certificate,
+not an additional numerical assertion. Define
+$b_{\rm test}=\operatorname{Tr}(TP)$. Taking the trace of
+$(LI-A)\operatorname{adj}(LI-A)=NI_3$ gives, off the root,
+$\tau\{\operatorname{Tr}(TA)-L\}=-3N$. Also the explicit composite
+has diagonal $(p,r^2v_1,v_1+v_2-r^2v_1)$ and $01$ entry
+$qr\sqrt{px}$. Therefore, with $Q=\mathcal R_0(q)\Phi_q(P)$,
+
+$$
+\begin{aligned}
+\operatorname{Tr}(TQ)-\operatorname{Tr}Y_q
+ &=r^2v_1(t_1-t_2)+rw=\frac{rN_r}{2\tau},\\
+\tau\{b_{\rm test}-\operatorname{Tr}Y_q-L\}
+ &=-3N+\frac r2N_r.
+\end{aligned}
+\tag{143.10}
+$$
+
+In the first line $2qr\sqrt{px}T_{01}=2rw$ is the off-diagonal
+contribution and $rw$ is subtracted as part of $\operatorname{Tr}Y_q$;
+then (143.5) gives the equality. Thus $N=N_r=0$ implies
+$b_{\rm test}-\operatorname{Tr}Y_q=L$ exactly.
+
+For arbitrary complex CPTP $\mathcal R$, the variational formula
+for each Hermitian trace-zero input error, followed by averaging
+over the nine physical pairs, gives
+
+$$
+\begin{aligned}
+e_q(\mathcal R)
+&\ge\frac19\sum_{j,\ell}
+ \operatorname{Tr}\{T_{j\ell}
+ [P_{j\ell}-\mathcal R\Phi_q(P_{j\ell})]\}\\
+&=b_{\rm test}-\operatorname{Tr}(W_qJ_{\mathcal R})\\
+&=L+\operatorname{Tr}(S_qJ_{\mathcal R})\ge L.
+\end{aligned}
+\tag{143.11}
+$$
+
+The Choi pairing uses (134.2) and $\operatorname{Tr}_{\rm out}
+J_{\mathcal R}=I_3$; the last inequality uses $S_q,J_{\mathcal R}
+\succeq0$. No entry of $J_{\mathcal R}$ has been assumed real or
+phase invariant. Proposition 142.2 gives the opposite minimax
+inequality, proving $\mu(q)=L(q)$.
+
+If $\mathcal R$ is optimal, (143.11) forces
+$\operatorname{Tr}(S_qJ_{\mathcal R})=0$ and hence
+$S_qJ_{\mathcal R}=0$, by the PSD Gram-factor argument of Theorem
+137.1. Lemma 143.1 gives its exact support. The supported TP and PSD
+calculations (139.5)–(139.7), which depend only on $r\in(0,1)$,
+then give the full family $H(h,z)$ with
+$|h|^2/(1-r^2)+|z|^2\le1$. At the continued contact, (143.2) gives
+
+$$
+\Gamma(q)=q\sqrt{px}\,T_{02}+rv_1T_{12}>0.
+\tag{143.12}
+$$
+
+The individual score calculation (139.8)–(139.11), with $q$ in place
+of $1/4$, reads exactly
+
+$$
+\operatorname{Tr}\{T_{j\ell}
+ [P_{j\ell}-\mathcal R_{h,z}\Phi_q(P_{j\ell})]\}
+=L(q)-2\Gamma(q)\operatorname{Re}(h\zeta^{\ell-j}).
+\tag{143.13}
+$$
+
+Every score is at most $L(q)$ for an optimum. The same three
+nonnegative real parts summing to zero force $h=0$, including for
+all singular supported matrices. Conversely, every $|z|\le1$ gives
+a CPTP map by (139.4) and has the common composite $\mathcal C_q$
+by direct composition. Its error is $L(q)$ by Proposition 142.2.
+Any CPTP map with that composite has the same error and is therefore
+one of these maps. This proves every equality in (143.9) and the
+complete boundary classification. $\square$
+
+This completes Theorem 141.3. Corollaries 140.1–140.2 and Proposition
+140.3 apply at each $q\in I$, since their proofs use exactly this
+disk, the supported ellipsoid and $0<r(q)<1$. For the specified
+unitary $U_0$, define the mathematical family
+$\mathcal N_q=\operatorname{Ad}_{U_0}\Phi_q$. Its optimal decoders are
+$D_z(q)=\mathcal R_z(q)\operatorname{Ad}_{U_0^\dagger}$ and have
+$D_z(q)\mathcal N_q=\mathcal C_q$, with the transported covariance
+(140.8). At $q=q_0$ this is the actual third-horizon identity of
+(127.3). Varying $q$ on $I$ does not assert an identification with
+additional actual horizons.
+
+## 144. Input equality throughout the continued disk
+
+**Corollary 144.1 (All maximizing densities for every optimal decoder).**
+For $q\in I$, $|z|\le1$ and $\rho\in\mathsf D_3$,
+
+$$
+\frac12\|\rho-\mathcal R_z(q)\Phi_q(\rho)\|_1=L(q)
+\quad\Longleftrightarrow\quad
+\rho=|\psi_{\alpha,\beta}(q)\rangle
+       \langle\psi_{\alpha,\beta}(q)|
+\quad\text{for some }\alpha,\beta\in\mathbb R,
+\tag{144.1}
+$$
+
+where
+
+$$
+|\psi_{\alpha,\beta}(q)\rangle
+=\sqrt{p(q)}|0\rangle+e^{i\alpha}\sqrt{x(q)}|1\rangle
+                    +e^{i\beta}\sqrt{y(q)}|2\rangle.
+\tag{144.2}
+$$
+
+Thus no density of rank at least two maximizes, and every pure edge
+or vertex has strict error below $L(q)$.
+
+*Proof.* The composites are identical by (143.9), so it suffices to
+consider $\mathcal R_0(q)$. For pure inputs, (142.7)–(142.8) and
+diagonal covariance give exactly the populations and phases in
+(144.2). At a contact the recovered density $Q=\mathcal C_q(P)$ is
+positive definite. Its $01$ block has first diagonal entry $p>0$ and
+
+$$
+\begin{aligned}
+\det Q[0,1]&=pr^2(v_1-q^2x)>0,\\
+v_1-q^2x&=\frac{(1-q)(1+2q)}2x+\frac{1-q}{2}y>0,\\
+Q_{22}&=(1-r^2)v_1+v_2>0.
+\end{aligned}
+\tag{144.3}
+$$
+
+Therefore $A=P-Q$ is strictly negative on the two-dimensional
+orthogonal complement of the input vector. Since it also has the
+positive eigenvalue $L$, it has one positive and two strictly negative
+eigenvalues. Its maximizing effect is uniquely its positive spectral
+projector $T$. This conclusion is invariant under all the diagonal
+phases. The entries in (143.2) show that a spanning vector of $T$
+has all three coordinates nonzero.
+
+If a density $\rho=\sum_i t_iP_i$, $t_i>0$, attained $L$, an effect
+$E$ attaining its variational trace-distance maximum would satisfy
+
+$$
+L=\sum_i t_i\operatorname{Tr}\{E[P_i-\mathcal C_q(P_i)]\}
+\le\sum_i t_i\frac12\|P_i-\mathcal C_q(P_i)\|_1\le L.
+\tag{144.4}
+$$
+
+Every $P_i$ must be a pure contact and must have the same unique
+maximizing effect $E$. If two phase-conjugated contact effects agree,
+their relative diagonal unitary is scalar on a vector with all three
+coordinates nonzero. Its three phases must coincide, so the two
+underlying contact input projectors agree as well. All $P_i$ are
+therefore identical, and $\rho$ is pure. This proves both directions
+of (144.1), extending the equality argument of Theorem 136.1 to the
+entire optimizer disk and its local branch. $\square$
+
+## 145. Method correspondence and limits of the continuation
+
+The mathematical ingredients above have the following scopes.
+
+| Source or method | Correspondence and boundary of use |
+| --- | --- |
+| [Choi, Completely positive linear maps on complex matrices][CHOI] | The finite-dimensional Choi theorem identifies complete positivity with positivity of the full Choi matrix. Trace preservation is imposed separately by the output partial trace. The supported congruence, Schur complement and Kraus lists in §139 use this theorem, with the tensor ordering fixed by (134.2). |
+| [Jenčová, Generalized channels: channels for convex subsets of the state space, §4, Theorem 3, (10)–(11)][JGEN] | Equality of CP maps on a state subset is an affine Choi restriction described by its annihilator, with the transpose in the trace pairing. Here the subset is $\Phi_q(\mathsf D_3)$ and its span is (140.3). The generalized normalization of that paper is not substituted for the full TP equations (139.5)–(139.6). |
+| [Coutts, Girard and Watrous, Theorem 3][CGW] | Convex channel optimality uses a supporting subgradient and complementary PSD slack. The full-domain convex extension and relative-interior hypothesis are as in (138.1)–(138.2), with $\Phi_q$ in place of $\Phi$. The active nine-contact average supplies $-W_q$; (143.7) and (143.10) supply exact complementarity and matching value. The direct proof (143.11) establishes the lower bound without assuming dual attainment or exchanging minimax quantifiers. |
+| [Krantz and Parks, A Primer of Real Analytic Functions, §2.3][RAIFT] | Analytic IFT applies to a real-analytic finite-dimensional equation with invertible derivative in the unknown variables. Here it applies only to $F(q;u)=0$ at $(q_0,u_*)$, using Lemma 141.2. It gives a local analytic certificate branch; feasibility, the all-input upper bound and optimizer completeness require the separate arguments of §§141–143. |
+| [Bellon, Henrion, Kungurtsev and Mareček, §2.3, Lemma 2.22 and Theorem 2.23][BH] | Their smooth SDP solution-branch result uses their surjective-constraint setting, continuously differentiable data, primal/dual strict feasibility and a unique strictly complementary optimal pair. The uniqueness hypothesis fails for the optimizer disk here, so that result is not invoked to justify Theorem 141.3. |
+| The experiment comparisons in §138, [MAT, Theorem 5] and [JC, Theorem 4(iii)] | The common map is still tested on all densities. Their full trace-norm tolerance is $2L(q)$, or equivalently their half-norm parameter is $L(q)$. Decision-space comparison criteria do not give the decoder an input reference, history or environment, and do not replace (141.1) by a stabilized norm. |
+
+The particular disk classification follows from the full supported TP
+family and the individual phase constraints, not from these general
+references alone. Its persistence combines analytic IFT, strict scalar
+inequalities, compactness of the entire closed boundary, the cubic
+chord Lemma 132.1, and exact kernel identities. The base premises are
+the public root of Lemma 129.2, the value of Theorem 128.2, the boundary
+bound of Lemma 131.1 and the support of Theorem 137.1; the formulas
+and rational data used to continue them are displayed in this volume.
+No private computation or runtime file is a mathematical dependency
+of the argument.
+
+The conclusion is existence on some open $I\subset(0,1)$ containing
+$1/4$. It supplies no explicit radius, no continuation to every
+positive parameter, no assertion at $q\to0$, and no value at another
+actual horizon. It gives no sign-based comparison with a different
+horizon's optimizer fiber, no parameter-slope or further algebraic
+classification, and no additional physical identification. The unitary
+transport uses only the already specified $U_0$ and leaves the original
+identity target unchanged. The citations attest the stated methods
+and correspondences within their indicated hypotheses; no exhaustive
+literature or priority claim is made.
+
+[CHOI]: https://doi.org/10.1016/0024-3795(75)90075-0 "Man-Duen Choi, Completely positive linear maps on complex matrices, Linear Algebra and its Applications 10, 285–290"
+[JGEN]: https://arxiv.org/pdf/1105.1899v2 "Anna Jenčová, Generalized channels: channels for convex subsets of the state space, Section 4, Theorem 3"
+[RAIFT]: https://doi.org/10.1007/978-0-8176-8134-0 "Steven G. Krantz and Harold R. Parks, A Primer of Real Analytic Functions, Section 2.3"
+[BH]: https://arxiv.org/pdf/2104.05445v3 "Bellon, Henrion, Kungurtsev and Mareček, Parametric semidefinite programming, Section 2.3"
+
+## 追加锚（本行以下为增补区）
