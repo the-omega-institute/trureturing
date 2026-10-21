@@ -188,10 +188,66 @@ private lemma coefficient_overlap (d : ℕ) (α a b c : Fin d → ℂ) :
     mul_comm, mul_left_comm, mul_assoc]
   rw [Finset.sum_comm]
 
-private lemma overlap_transport (d : ℕ) [NeZero d] (hd : 2 ≤ d)
+private lemma overlap_transport (d : ℕ) [NeZero d]
     (α : Fin d → ℂ) (hα : UnitVector α) :
     overlapSet (∑ n, α n • φ d n) = overlapSet (φ d 0) := by
-  sorry
+  classical
+  have hsub (U : EuclideanSpace ℂ (Fin d) ≃ₗᵢ[ℂ] EuclideanSpace ℂ (Fin d))
+      (γ : Fin d → ℂ) : overlapSet (∑ n, γ n • φ d n) ⊆
+        overlapSet (∑ n, (U (WithLp.toLp 2 γ)) n • φ d n) := by
+    rintro t ⟨a, b, c, ha, hb, hc, rfl⟩
+    refine ⟨fun i => conj ((U (WithLp.toLp 2 (fun j => conj (a j)))) i),
+      fun i => (U (WithLp.toLp 2 b)) i, fun i => (U (WithLp.toLp 2 c)) i,
+      ?_, ?_, ?_, ?_⟩
+    · change ‖WithLp.toLp 2 (fun i => conj ((U (WithLp.toLp 2
+        (fun j => conj (a j)))) i))‖ = 1
+      rw [conjugate_norm]
+      change ‖U (WithLp.toLp 2 (fun j => conj (a j)))‖ = 1
+      rw [U.norm_map, conjugate_norm]
+      exact ha
+    · change ‖U (WithLp.toLp 2 b)‖ = 1
+      rw [U.norm_map]
+      exact hb
+    · change ‖U (WithLp.toLp 2 c)‖ = 1
+      rw [U.norm_map]
+      exact hc
+    · rw [coefficient_overlap, coefficient_overlap]
+      have hA : WithLp.toLp 2 (fun i => conj (conj
+          ((U (WithLp.toLp 2 (fun j => conj (a j)))) i))) =
+          U (WithLp.toLp 2 (fun j => conj (a j))) := by
+        ext i
+        exact starRingEnd_self_apply _
+      rw [hA]
+      change ‖overlapForm d (WithLp.toLp 2 γ)
+          (WithLp.toLp 2 (fun j => conj (a j))) (WithLp.toLp 2 b) (WithLp.toLp 2 c)‖ ^ 2 =
+        ‖overlapForm d (U (WithLp.toLp 2 γ))
+          (U (WithLp.toLp 2 (fun j => conj (a j))))
+          (U (WithLp.toLp 2 b)) (U (WithLp.toLp 2 c))‖ ^ 2
+      simp only [overlapForm, U.inner_map_map]
+  have ho : Orthonormal ℂ (({0} : Set (Fin d)).domRestrict
+      (fun _ : Fin d => WithLp.toLp 2 α)) := by
+    letI : Subsingleton ({0} : Set (Fin d)) := Set.subsingleton_singleton.coe_sort
+    rw [orthonormal_subsingleton_iff]
+    intro i
+    exact hα
+  obtain ⟨basis, hbasis⟩ := Orthonormal.exists_orthonormalBasis_extension_of_card_eq
+    (ι := Fin d) (v := fun _ : Fin d => WithLp.toLp 2 α) (s := {0}) (by simp) ho
+  let U := basis.repr
+  have hU : U (WithLp.toLp 2 α) = EuclideanSpace.single 0 (1 : ℂ) := by
+    change basis.repr (WithLp.toLp 2 α) = _
+    rw [← hbasis 0 (by simp)]
+    exact basis.repr_self 0
+  have hz : (∑ n, (U (WithLp.toLp 2 α)) n • φ d n) = φ d 0 := by
+    rw [hU]
+    simp [PiLp.single_apply, ite_smul]
+  apply Set.Subset.antisymm
+  · rw [← hz]
+    exact hsub U α
+  · have h := hsub U.symm (fun n => (U (WithLp.toLp 2 α)) n)
+    change overlapSet (∑ n, (U (WithLp.toLp 2 α)) n • φ d n) ⊆
+      overlapSet (∑ n, (U.symm (U (WithLp.toLp 2 α))) n • φ d n) at h
+    rw [U.symm_apply_apply, hz] at h
+    exact h
 
 private lemma sharp_upper (d : ℕ) [NeZero d] (hd : 2 ≤ d)
     (a b c : Fin d → ℂ) (ha : UnitVector a) (hb : UnitVector b) (hc : UnitVector c) :
@@ -214,7 +270,7 @@ private lemma subspace_measure (d : ℕ) (hd : 2 ≤ d) (ψ : State d)
   letI : NeZero d := ⟨by omega⟩
   obtain ⟨α, hα, rfl⟩ := coefficient_normalization d hd ψ hψ hmem
   unfold G
-  rw [overlap_transport d hd α hα, basis_supremum d hd]
+  rw [overlap_transport d α hα, basis_supremum d hd]
 
 theorem result : claim := by
   intro d hd ψ hψ hmem
