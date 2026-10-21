@@ -57,7 +57,12 @@ internal sealed class HeisenbergChannelCompressionEquivalenceDocument : IScribeD
             StatementSource.FromAuthor(formula), provenance,
             Blocks(Paragraph(Text(prose))), role, resolution);
 
-    private static Formula V(string name) => F.Id(name);
+    private static Formula V(string name) => name switch
+    {
+        "Ω" => Omega,
+        "Φ" => Phi,
+        _ => F.Id(name)
+    };
     private static Formula Nat() => Seq(Mathbb, Grp(V("N")));
     private static Formula Complex() => Seq(Mathbb, Grp(V("C")));
     private static Formula Fin(Formula d) => Call("Fin", d);
@@ -81,7 +86,9 @@ internal sealed class HeisenbergChannelCompressionEquivalenceDocument : IScribeD
     private static Formula ParentIndex(Formula index, Formula outcomes) =>
         DepArrow("x", index, At(outcomes, V("x")));
     private static Formula All(string name, Formula type, Formula body) =>
-        new Formula.Bind(FormulaQuantifier.ForAll, FormulaIdentifier.Create(name), type, body);
+        name is "Ω" or "Φ"
+            ? Seq(Forall, Sp, V(name), Sp, InMacro, Sp, type, Comma, SemiSpace, Sp, body)
+            : new Formula.Bind(FormulaQuantifier.ForAll, FormulaIdentifier.Create(name), type, body);
     private static Formula Ex(string name, Formula type, Formula body) =>
         new Formula.Bind(FormulaQuantifier.Exists, FormulaIdentifier.Create(name), type, body);
     private static Formula Instance(Formula value) =>
@@ -113,7 +120,7 @@ internal sealed class HeisenbergChannelCompressionEquivalenceDocument : IScribeD
     {
         var d = V("d");
         var index = V("X");
-        var outcomes = V("Omega");
+        var outcomes = V("Ω");
         var x = V("x");
         var b = V("b");
         var a = V("a");
@@ -130,7 +137,7 @@ internal sealed class HeisenbergChannelCompressionEquivalenceDocument : IScribeD
         return Disp(All("d", Nat(),
             All("X", V("Type"),
                 Seq(Instance(Call("Fintype", index)),
-                    All("Omega", Arrow(index, V("Type")),
+                    All("Ω", Arrow(index, V("Type")),
                         Seq(Instance(FamilyFintype(index, outcomes)),
                             All("M", family,
                                 Iff(Call("FamilyJointlyMeasurable", m), body))))))));
@@ -141,12 +148,12 @@ internal sealed class HeisenbergChannelCompressionEquivalenceDocument : IScribeD
         var d = V("d");
         var n = V("n");
         var index = V("X");
-        var outcomes = V("Omega");
+        var outcomes = V("Ω");
         var x = V("x");
         var b = V("b");
         var m = V("M");
         var v = V("V");
-        var phi = V("Phi");
+        var phi = V("Φ");
         var family = Family(d, index, outcomes);
         var compressed = Lambda("x", index,
             Lambda("b", At(outcomes, x), Mul(Mul(Adj(v), At(At(m, x), b)), v)));
@@ -155,7 +162,7 @@ internal sealed class HeisenbergChannelCompressionEquivalenceDocument : IScribeD
         var compressionSide = All("V", Matrix(d, n),
             Implies(Equal(Mul(Adj(v), v), One()),
                 Call("FamilyJointlyMeasurable", compressed)));
-        var channelSide = All("Phi", MatrixMap(d, n),
+        var channelSide = All("Φ", MatrixMap(d, n),
             Implies(Call("IsCompletelyPositive", phi),
                 Implies(Equal(At(phi, One()), One()),
                     Call("FamilyJointlyMeasurable", channelImage))));
@@ -163,7 +170,7 @@ internal sealed class HeisenbergChannelCompressionEquivalenceDocument : IScribeD
             Implies(And(LessOrEqual(One(), n), LessOrEqual(n, d)),
                 All("X", V("Type"),
                     Seq(Instance(Call("Fintype", index)),
-                        All("Omega", Arrow(index, V("Type")),
+                        All("Ω", Arrow(index, V("Type")),
                             Seq(Instance(FamilyFintype(index, outcomes)),
                                 All("M", family,
                                     Implies(All("x", index, Call("IsPOVM", At(m, x))),
