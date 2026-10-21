@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:2a363c4e0589238ace89f7a81c754eea26470c82a6e4ec024ca0aa358801994f
+  normalized_sha256: sha256:2a363c4e0589238ace89f7a81c754eea26470c82a6e4ec024ca0aa358801994f
+cas_ref: sha256:2a363c4e0589238ace89f7a81c754eea26470c82a6e4ec024ca0aa358801994f
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: Scope notice pointing to the separately stated endpoint results and listing further definitions and proofs needed for narrower operation classes; no mathematical consequence or new endpoint statement is asserted.
+    previous_atom_id: 0ed739f7338d11e0bb3842c14446f2e61e8fda8fefc02f1f28c908a5bc1b0a8b
+    next_atom_id: 0a4c6d38469a62ac4ff4f69c68c441ad3af0b7b994628b87cfee76bfda3322ee
