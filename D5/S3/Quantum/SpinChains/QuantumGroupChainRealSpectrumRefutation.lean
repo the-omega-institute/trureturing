@@ -9,7 +9,6 @@
 import Mathlib.Analysis.SpecialFunctions.Trigonometric.Inverse
 import Mathlib.LinearAlgebra.Matrix.Kronecker
 import Mathlib.NumberTheory.Zsqrtd.GaussianInt
-import Mathlib.Tactic.FinCases
 import Mathlib.Tactic.IntervalCases
 import Mathlib.Tactic.NormNum
 import Mathlib.Tactic.NormNum.RealSqrt
