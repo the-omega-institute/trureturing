@@ -16,7 +16,7 @@ import Mathlib.Tactic
 noncomputable section
 
 open Finset Polynomial
-open scoped BigOperators Nat Real
+open scoped BigOperators Nat Real Classical
 
 namespace D5.S3.Arith.InterlaceFan.Cyclotomic
 
@@ -139,5 +139,105 @@ theorem rational_const_on_orderClass (n d : ℕ) (hn : 0 < n) (hd : d ∣ n)
     linarith
   rw [I_eq_eval, hEt]
   ring
+
+private lemma ramanujan_integer (d k : ℕ) (hd : 0 < d) :
+    ∃ a : ℤ, ramanujanSum d k = (a : ℂ) := by
+  induction d using Nat.strong_induction_on with
+  | h d ih =>
+    classical
+    let S := d.divisors.erase d
+    have he (e : ℕ) (he : e ∈ S) : ∃ a : ℤ, ramanujanSum e k = (a : ℂ) := by
+      have heD := Finset.mem_of_mem_erase he
+      have hene := Finset.ne_of_mem_erase he
+      have hed := (Nat.mem_divisors.mp heD).1
+      exact ih e (lt_of_le_of_ne (Nat.le_of_dvd hd hed) hene)
+        (Nat.pos_of_dvd_of_pos hed hd)
+    let a (e : ℕ) : ℤ := if h : e ∈ S then (he e h).choose else 0
+    have ha : (∑ e ∈ S, ramanujanSum e k) = ((∑ e ∈ S, a e : ℤ) : ℂ) := by
+      push_cast
+      apply sum_congr rfl
+      intro e heS
+      exact (he e heS).choose_spec.trans (by simp [a, heS])
+    have hsum : (∑ e ∈ S, ramanujanSum e k) + ramanujanSum d k =
+        if d ∣ k then (d : ℂ) else 0 := by
+      rw [show S = d.divisors.erase d from rfl,
+        Finset.sum_erase_add _ _ (Nat.mem_divisors.mpr ⟨dvd_refl d, hd.ne'⟩)]
+      exact sum_ramanujanSum_divisors d k hd
+    refine ⟨(if d ∣ k then (d : ℤ) else 0) - ∑ e ∈ S, a e, ?_⟩
+    push_cast
+    rw [ha] at hsum
+    push_cast at hsum
+    split_ifs at hsum ⊢ <;> linear_combination hsum
+
+private lemma ramanujan_pow_sum (d k : ℕ) :
+    ramanujanSum d k = ∑ a ∈ (range d).filter (fun a => a.Coprime d),
+      (zeta d ^ a) ^ k := by
+  apply sum_congr rfl
+  intro a ha
+  simp only [zeta, ← Complex.exp_nat_mul]
+  congr 1
+  push_cast
+  ring
+
+private lemma geometric_period (n : ℕ) (z : ℂ) (hz : z ^ n = 1) :
+    ∑ k ∈ range n, z ^ k = if z = 1 then (n : ℂ) else 0 := by
+  classical
+  by_cases h : z = 1
+  · simp [h]
+  · rw [if_neg h, geom_sum_eq h, hz, sub_self, zero_div]
+
+private lemma ramanujan_fourier (n d : ℕ) (hn : 0 < n) (hd : d ∣ n)
+    (z : ℂ) (hz : z ^ n = 1) :
+    ∑ k ∈ range n, ramanujanSum d k * z ^ k =
+      if IsPrimitiveRoot z d then (n : ℂ) else 0 := by
+  classical
+  have hdpos := Nat.pos_of_dvd_of_pos hd hn
+  have hz0 : z ≠ 0 := by
+    intro h
+    simpa [h, hn.ne'] using hz
+  let A := (range d).filter (fun a => a.Coprime d)
+  have hp (a : ℕ) (ha : a ∈ A) : IsPrimitiveRoot (zeta d ^ a) d := by
+    exact (Complex.isPrimitiveRoot_exp d hdpos.ne').pow_of_coprime a
+      (mem_filter.mp ha).2
+  have hs : (∑ k ∈ range n, ramanujanSum d k * z ^ k) =
+      ∑ a ∈ A, if zeta d ^ a * z = 1 then (n : ℂ) else 0 := by
+    simp_rw [ramanujan_pow_sum, Finset.sum_mul]
+    rw [sum_comm]
+    apply sum_congr rfl
+    intro a ha
+    simp_rw [← mul_pow]
+    apply geometric_period
+    have hpn : (zeta d ^ a) ^ n = 1 := by
+      obtain ⟨r, rfl⟩ := hd
+      rw [pow_mul, (hp a ha).pow_eq_one, one_pow]
+    rw [mul_pow, hpn, hz, one_mul]
+  rw [hs]
+  by_cases hprim : IsPrimitiveRoot z d
+  · rw [if_pos hprim]
+    obtain ⟨a, had, hac, hphase⟩ :=
+      (Complex.isPrimitiveRoot_iff z⁻¹ d hdpos.ne').mp hprim.inv
+    have hphase' : zeta d ^ a = z⁻¹ := by
+      rw [zeta, ← Complex.exp_nat_mul]
+      convert hphase using 1 <;> congr 1 <;> ring
+    have haA : a ∈ A := mem_filter.mpr ⟨mem_range.mpr had, hac⟩
+    rw [sum_eq_single a]
+    · rw [hphase', inv_mul_cancel₀ hz0, if_pos rfl]
+    · intro b hb hba
+      rw [if_neg]
+      intro hbz
+      have hba' : zeta d ^ b = zeta d ^ a := by
+        rw [hphase']
+        exact (mul_eq_one_iff_eq_inv₀ hz0).mp hbz
+      exact hba ((Complex.isPrimitiveRoot_exp d hdpos.ne').pow_inj
+        (mem_range.mp (mem_filter.mp hb).1) had hba')
+    · exact fun h => (h haA).elim
+  · rw [if_neg hprim]
+    apply sum_eq_zero
+    intro a ha
+    rw [if_neg]
+    intro h
+    have heq : zeta d ^ a = z⁻¹ := (mul_eq_one_iff_eq_inv₀ hz0).mp h
+    exact hprim (IsPrimitiveRoot.inv_iff.mp (heq ▸ hp a ha))
+
 
 end D5.S3.Arith.InterlaceFan.Cyclotomic
