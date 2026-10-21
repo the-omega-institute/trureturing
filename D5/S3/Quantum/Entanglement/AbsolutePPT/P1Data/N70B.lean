@@ -1,3 +1,11 @@
+/- GID: D5/S3/Quantum/Entanglement/AbsolutePPT/P1Data/N70B
+   generality: I
+   mirror-B: D5/B/S3/Quantum/Entanglement/AbsolutePPT/P1Data/N70B
+   mirror-E: none(waiver:scalar-inequalities-and-exact-kernel-certificates-without-experimental-claims)
+   anchors: []
+   utility: kind=numeric-reduction; basis=consumer=D5/S3/Quantum/Entanglement/AbsolutePPT/FiveRowP1.scalar_bound; premises=D5/S3/Quantum/Entanglement/AbsolutePPT/P1Data/N70B.accepted
+   digest: Exact numerical premises for the original full continuous P1 scalar reduction. -/
+
 import D5.S3.Quantum.Entanglement.AbsolutePPT.FiveRowP1Checker
 set_option autoImplicit false
 set_option Elab.async false

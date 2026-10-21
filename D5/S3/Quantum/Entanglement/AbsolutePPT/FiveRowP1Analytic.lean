@@ -1,3 +1,11 @@
+/- GID: D5/S3/Quantum/Entanglement/AbsolutePPT/FiveRowP1Analytic
+   generality: I
+   mirror-B: D5/B/S3/Quantum/Entanglement/AbsolutePPT/FiveRowP1Analytic
+   mirror-E: none(waiver:scalar-inequalities-and-exact-kernel-certificates-without-experimental-claims)
+   anchors: []
+   utility: none
+   digest: Uniform real-variable scalar inequality in the analytic region including the equality neighbourhood. -/
+
 import D5.S3.Quantum.Entanglement.AbsolutePPT.FiveRowP1Algebra
 set_option autoImplicit false
 namespace D5.S3.Quantum.Entanglement.AbsolutePPT.FiveRowP1Analytic

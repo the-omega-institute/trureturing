@@ -1,3 +1,11 @@
+/- GID: D5/S3/Quantum/Entanglement/AbsolutePPT/FiveRowP1
+   generality: I
+   mirror-B: D5/B/S3/Quantum/Entanglement/AbsolutePPT/FiveRowP1
+   mirror-E: none(waiver:scalar-inequalities-and-exact-kernel-certificates-without-experimental-claims)
+   anchors: []
+   utility: kind=checker; basis=terminal=gid:D5/S3/Quantum/Entanglement/AbsolutePPT/FiveRowP1.scalar_bound; instance=D5/S3/Quantum/Entanglement/AbsolutePPT/P1Data/N25A.accepted
+   digest: Full P1 scalar bound for every real j in the closed interval for N25 through N90, with both tail branches. -/
+
 import D5.S3.Quantum.Entanglement.AbsolutePPT.P1Data.N25A
 import D5.S3.Quantum.Entanglement.AbsolutePPT.P1Data.N25B
 import D5.S3.Quantum.Entanglement.AbsolutePPT.P1Data.N30A

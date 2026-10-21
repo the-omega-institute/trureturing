@@ -1,3 +1,11 @@
+/- GID: D5/S0/Certificates/BoxCover/QuadraticCorner
+   generality: G
+   mirror-B: D5/B/S0/Certificates/BoxCover/QuadraticCorner
+   mirror-E: none(waiver:scalar-inequalities-and-exact-kernel-certificates-without-experimental-claims)
+   anchors: []
+   utility: kind=checker; basis=consumer=D5/S3/Quantum/Entanglement/AbsolutePPT/FiveRowP1Checker.checked_scalar_bound; instance=D5/S3/Quantum/Entanglement/AbsolutePPT/P1Data/N25A.accepted
+   digest: Rational recursive quadratic enclosure sound at every real point of a closed box in arbitrary dimension. -/
+
 import Mathlib.Data.Rat.Cast.Order
 import Mathlib.Data.Real.Basic
 import Mathlib.Data.Fin.Tuple.Basic

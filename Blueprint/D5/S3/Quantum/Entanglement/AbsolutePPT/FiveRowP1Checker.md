@@ -16,7 +16,7 @@ Lean statement: `D5/S3/Quantum/Entanglement/AbsolutePPT/FiveRowP1Checker.check`
 
 Each accepted forest retains both closed halves at every split. Infeasibility uses strict upper bounds, whereas target bounds are nonstrict. Endpoint derivative signs and the quadratic vertex cover the continuous real interval of j; the generic local-step cover theorem assembles the leaves.
 
-**Theorem 1.2 (Existing finite cover theorem consumes exact local checks).**
+**Theorem 1.2 (Finite rational covers imply the scalar bound).**
 
 Lean statement: `D5/S3/Quantum/Entanglement/AbsolutePPT/FiveRowP1Checker.checked_scalar_bound`
 

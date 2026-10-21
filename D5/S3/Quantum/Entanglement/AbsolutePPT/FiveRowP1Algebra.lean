@@ -1,3 +1,11 @@
+/- GID: D5/S3/Quantum/Entanglement/AbsolutePPT/FiveRowP1Algebra
+   generality: I
+   mirror-B: D5/B/S3/Quantum/Entanglement/AbsolutePPT/FiveRowP1Algebra
+   mirror-E: none(waiver:scalar-inequalities-and-exact-kernel-certificates-without-experimental-claims)
+   anchors: []
+   utility: none
+   digest: Symbolic four-variable scalar identities, original necessary hypotheses and continuous endpoint or vertex comparisons. -/
+
 import D5.S0.Certificates.BoxCover.QuadraticCorner
 set_option autoImplicit false
 namespace D5.S3.Quantum.Entanglement.AbsolutePPT.FiveRowP1Algebra

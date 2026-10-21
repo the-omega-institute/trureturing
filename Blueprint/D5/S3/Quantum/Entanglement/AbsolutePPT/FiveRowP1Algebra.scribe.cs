@@ -12,7 +12,7 @@ internal sealed class FiveRowP1AlgebraDocument : IScribeDocumentDefinition
             Describe.Lean(
                 DescribeId.Create("fiverowp1algebra-hyp"),
                 DeclarationHandle.Create("D5/S3/Quantum/Entanglement/AbsolutePPT/FiveRowP1Algebra.Hyp"),
-                H("Unchanged manuscript scalar necessary inequalities"), StatementSource.WithoutFormula(), AssessedProvenance.FromRepo(),
+                H("Scalar necessary inequalities"), StatementSource.WithoutFormula(), AssessedProvenance.FromRepo(),
                 Blocks(Paragraph(Text("Fifteen rational coefficients encode the quadratic expressions in r, H, D and q. The scalar hypotheses include all budget, cap and tail inequalities. Exact evaluation identities connect the endpoint and vertex polynomials to the energy gap for every real j."))), DescribeRole.Definition),
             Describe.Lean(
                 DescribeId.Create("fiverowp1algebra-necessary-sound"),

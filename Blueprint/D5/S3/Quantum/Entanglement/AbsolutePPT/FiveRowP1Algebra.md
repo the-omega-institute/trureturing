@@ -4,7 +4,7 @@
 
 Polynomial coordinates for the five-row scalar inequalities.
 
-**Definition 1.1 (Unchanged manuscript scalar necessary inequalities).**
+**Definition 1.1 (Scalar necessary inequalities).**
 
 Lean statement: `D5/S3/Quantum/Entanglement/AbsolutePPT/FiveRowP1Algebra.Hyp`
 

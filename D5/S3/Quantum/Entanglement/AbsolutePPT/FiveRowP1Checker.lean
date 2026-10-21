@@ -1,3 +1,11 @@
+/- GID: D5/S3/Quantum/Entanglement/AbsolutePPT/FiveRowP1Checker
+   generality: I
+   mirror-B: D5/B/S3/Quantum/Entanglement/AbsolutePPT/FiveRowP1Checker
+   mirror-E: none(waiver:scalar-inequalities-and-exact-kernel-certificates-without-experimental-claims)
+   anchors: []
+   utility: kind=checker; basis=consumer=D5/S3/Quantum/Entanglement/AbsolutePPT/FiveRowP1.scalar_bound; instance=D5/S3/Quantum/Entanglement/AbsolutePPT/P1Data/N25A.accepted
+   digest: Rational forest checker and real-domain soundness using complete closed split halves and original scalar hypotheses. -/
+
 import D5.S3.Quantum.Entanglement.AbsolutePPT.FiveRowP1Analytic
 import D5.S3.Quantum.Entanglement.AbsolutePPT.FiveRowP1Caps
 import D5.S0.Certificates.BoxCover.FiniteSublevelCover
