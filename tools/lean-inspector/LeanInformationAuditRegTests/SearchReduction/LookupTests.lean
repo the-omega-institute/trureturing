@@ -127,3 +127,25 @@ run_cmd liftTermElabM do
   unless result.cost == .unknown && result.detail == "heartbeat" do
     throwError "candidate vocabulary copy escaped the enclosing allocation"
   logInfo "LOOKUP_COPY_BUDGET enclosing=true timeout=unknown"
+
+run_cmd liftTermElabM do
+  let directory : System.FilePath := "build/lean-inspector/lookup-index/colliding-owner-fixture"
+  IO.FS.createDirAll directory
+  let type := mkConst ``True
+  let keys ← DiscrTree.mkPath type
+  let entry : DiskLookup.Entry := {
+    module := "FirstOwner", name := "sameConstant", parts := #[("sameConstant", 0)]}
+  let other := {entry with module := "SecondOwner"}
+  let tree : DiscrTree DiskLookup.Entry := ({} : DiscrTree DiskLookup.Entry)
+    |>.insertKeyValue keys entry |>.insertKeyValue keys other
+  pickle (directory / "owners.pickle") ({tree} : DiskLookup.PickledShard)
+  let header : DiskLookup.Header := {
+    basis := "owners", mathlib := "fixture", inputs := 0, storage := "", root := "",
+    digest := 0, complete := true, modules := 2, declarations := 2, indexed := 2, missing := #[]}
+  let index : DiskLookup.Index := {
+    directory, header, manifest := #[(hash (keys[0]!), #["owners.pickle"])]}
+  let found ← DiskLookup.queryMature index type
+  unless found.complete && found.entries.size == 2 &&
+      found.entries[0]!.module != found.entries[1]!.module do
+    throwError "distinct compiled owners were collapsed by constant name"
+  logInfo "LOOKUP_COLLIDING_OWNERS retained=true"

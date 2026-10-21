@@ -7,7 +7,7 @@ Only candidate certificates carry semantic authority. -/
 namespace LeanInformationAudit.SearchReduction.DiskLookup
 open Lean Meta
 
-abbrev version : String := "R_lookup/discrtree-pickle-v2"
+abbrev version : String := "R_lookup/discrtree-pickle-v3"
 
 structure Entry where
   module : String
@@ -181,9 +181,13 @@ unsafe def produceShard (storage : System.FilePath) (planPath resultPath : Syste
   let plan : ShardPlan ← readJson planPath
   let env ← importEnvironment (plan.modules.map String.toName)
   let mut result : ShardResult := {}
+  let mut payload : PickledShard := {}
+  let mut roots : Std.HashSet UInt64 := {}
+  let mut batchModules : Array String := #[]
   for module in plan.modules do
-    let (routes, summary) ← visitModule module.toName fun parts => do
-      let mut groups : Std.HashMap UInt64 PickledShard := {}
+    let (nextPayload, nextRoots, summary) ← visitModule module.toName fun parts => do
+      let mut payload := payload
+      let mut roots := roots
       let mut count := 0
       let mut indexed := 0
       for part in parts do
@@ -201,18 +205,26 @@ unsafe def produceShard (storage : System.FilePath) (planPath resultPath : Syste
             seen := seen.insert keys
             let fallback := dropped keys
             let bucket := if fallback then rootKey .star else rootKey (keys[0]?.getD .star)
-            let shard := groups[bucket]?.getD {}
-            let shard := if fallback then {shard with fallback := shard.fallback.push entry}
-              else {shard with tree := shard.tree.insertKeyValue keys entry}
-            groups := groups.insert bucket shard
+            roots := roots.insert bucket
+            payload := if fallback then {payload with fallback := payload.fallback.push entry}
+              else {payload with tree := payload.tree.insertKeyValue keys entry}
           indexed := indexed + 1
-      let mut routes := #[]
-      for (bucket, payload) in groups.toArray do
-        let file := s!"shard-{bucket}-{hash module}.pickle"
-        pickle (storage / file) payload (key := .str `lookup file)
-        routes := routes.push (bucket, #[file])
-      return (routes, ({name := module, declarations := count, indexed} : ModuleSummary))
-    result := {result with routes := result.routes ++ routes, coverage := result.coverage.push summary}
+      return (payload, roots, ({name := module, declarations := count, indexed} : ModuleSummary))
+    payload := nextPayload
+    roots := nextRoots
+    result := {result with coverage := result.coverage.push summary}
+    batchModules := batchModules.push module
+    if batchModules.size == 128 || result.coverage.size == plan.modules.size then
+      let file := s!"batch-{hash batchModules}.pickle"
+      pickle (storage / file) payload (key := .str `lookup file)
+      let routes := roots.toArray.map fun bucket => (bucket, #[file])
+      result := {result with routes := result.routes ++ routes}
+      payload := {}
+      roots := {}
+      batchModules := #[]
+    if result.coverage.size % 256 == 0 then
+      IO.FS.writeFile (resultPath.addExtension "progress") s!"{result.coverage.size}/{plan.modules.size}"
+
   writeJson resultPath result
 
 private unsafe def runShard (storage : System.FilePath) (modules : Array String)
@@ -357,7 +369,7 @@ unsafe def produceMature (directory : System.FilePath) (basis mathlib : String)
         IO.println (toJson old).compress
         return old
   catch _ => pure ()
-  let storage := directory / s!"discrtree-pickle-v2-{inputs}"
+  let storage := directory / s!"discrtree-pickle-v3-{inputs}"
   IO.FS.createDirAll storage
   let mut all : ShardResult := {missing}
   let ordinary := selected.filter fun n => !n.toString.startsWith "D5."
@@ -410,7 +422,7 @@ unsafe def queryMature (index : Index) (type : Expr)
   let mut entries : Array Entry := #[]
   let mut complete := index.header.complete
   let mut pages := 0
-  let mut seen : NameSet := {}
+  let mut seen : Std.HashSet (String × Name) := {}
   let files := index.manifest.find? (fun item => item.1 == bucket) |>.map (·.2) |>.getD #[]
   for file in files do
     if let some limit := heartbeatLimit? then
@@ -421,8 +433,8 @@ unsafe def queryMature (index : Index) (type : Expr)
         return hits.map copyEntry
       pages := pages + 1
       for entry in hits do
-        unless seen.contains entry.leanName || index.excluded.any (fun n => n == entry.module.toName) do
-          seen := seen.insert entry.leanName
+        unless seen.contains (entry.module, entry.leanName) || index.excluded.any (fun n => n == entry.module.toName) do
+          seen := seen.insert (entry.module, entry.leanName)
           entries := entries.push entry
     catch ex =>
       if ex.isMaxHeartbeat || ex.isInterrupt || ex.isRuntime then throw ex

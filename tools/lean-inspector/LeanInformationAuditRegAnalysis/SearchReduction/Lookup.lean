@@ -10,7 +10,7 @@ def lookupPhase (label : String) : IO Unit := do
     IO.FS.withFile path .append fun handle => do
       handle.putStrLn s!"{← IO.monoMsNow} {label}"
 
-abbrev lookupVersion : String := "R_lookup/one-B/discrtree-pickle-v2-independent"
+abbrev lookupVersion : String := "R_lookup/one-B/discrtree-pickle-v3-independent"
 
 /-- The table is captured before delivery vocabulary or S is installed. A
 partial basis may supply a hit, but never a completed negative query. -/
@@ -38,15 +38,25 @@ private def eligible : ConstantInfo → Bool
   | .thmInfo _ | .defnInfo _ | .opaqueInfo _ => true
   | _ => false
 
+private def candidateOwnerMatches (table : LookupTable) (entry : DiskLookup.Entry) : Bool :=
+  match table.environment.getModuleIdxFor? entry.leanName with
+  | some idx => table.environment.header.moduleNames[idx.toNat]?.any (fun n => n.toString == entry.module)
+  | none => false
+
 private def candidateValue (table : LookupTable) (entry : DiskLookup.Entry) (head : Option Name) :
     MetaM (Array Expr × Option String × Bool) := do
-  if let some info := (table.environment.setExporting false).find? entry.leanName then
+  if let some info := (table.environment.setExporting false).find? entry.leanName |>.filter (fun _ => candidateOwnerMatches table entry) then
     if !eligible info || info.isUnsafe then return (#[], none, false)
     return (#[← mkConstWithFreshMVarLevels entry.leanName], none, false)
   let some load := table.load? | return (#[], some "candidate-not-loaded", true)
   try
     let (values, failures) ← load entry head
-    return (values, if failures.isEmpty then none else some s!"{failures}", true)
+    let collision := (table.environment.setExporting false).contains entry.leanName &&
+      !candidateOwnerMatches table entry
+    let failure := if !failures.isEmpty then some s!"{failures}"
+      else if collision then some s!"candidate-name-owned-by-another-module:{entry.module}:{entry.name}"
+      else none
+    return (values, failure, true)
   catch ex =>
     if ex.isMaxHeartbeat || ex.isInterrupt || ex.isRuntime then throw ex
     return (#[], some s!"candidate-certification:{← ex.toMessageData.toString}", true)
@@ -225,7 +235,7 @@ private unsafe def lookupLeafPass (fallback : Bool) (table : LookupTable) (goal 
     if trace.source?.isSome then return trace
     checkSystem "lookup.page_candidate"
     let name := entry.leanName
-    if let some info := (table.environment.setExporting false).find? name then
+    if let some info := (table.environment.setExporting false).find? name |>.filter (fun _ => candidateOwnerMatches table entry) then
       if !eligible info || info.isUnsafe || !possibleView table.environment head info.type then
         return {trace with visited := trace.visited + 1}
     let initial ← get
