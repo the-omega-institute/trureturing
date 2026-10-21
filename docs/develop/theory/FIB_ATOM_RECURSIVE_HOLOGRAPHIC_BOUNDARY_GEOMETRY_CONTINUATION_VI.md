@@ -3157,3 +3157,1307 @@ displayed calculations specify.
   (145.1)--(145.2) carries the SSR conclusion used here.
 
 ## 146.99 追加锚（本行以下为增补区）
+## 147. Two preparations and the local SSR resource boundary
+
+Consider the full eight-dimensional fermionic Gibbs state of §§139--146,
+with finite inverse temperature $\beta\ge0$, on the normalized cut
+$A=\mathbb C e_\ell$, $B=\operatorname{span}\{e_r,e_R\}$.
+The native choices are $q_a=(1/6,1/6)$ and $q_b=(1/3,1/3)$.
+Each choice specifies its own state $\rho_{q,\beta}$; a two-preparation
+resource below always uses the same $q$ and $\beta$ in both preparations.
+No product between different native models is substituted for that resource.
+
+The one-particle and full Fock definitions remain
+
+$$
+G_q=L_\star+\pi_q\pi_q^{\mathsf T},\quad S_q=G_q^{1/2},\quad
+V_q=S_q\mathbf1_3,\quad H_q=I_3-V_qV_q^*,\quad
+\rho_{q,\beta}=\frac{e^{-\beta d\Gamma_-(H_q)}}{2(1+e^{-\beta})^2}.
+\tag{147.1}
+$$
+
+The principal root and the normalized coordinate cut are part of the
+specified finite quantum model. The cut is not identified with orthogonal
+raw weighted occurrence spans or with established physical subsystems.
+The Fock space includes the zero mode, the vacuum, and every particle-number
+sector. There is no chemical potential or preliminary sector conditioning.
+
+Take two disjoint, independently prepared instances of this specified state.
+Their density operator is the even CAR product, written initially in
+copy-first creation order. The preparations have compatible labelled modes
+and the same coupling-phase convention. This is a preparation assumption,
+not a cloning operation or an encoder for an unknown carrier.
+The required joint local handling and coherent measurements are mathematical
+resources; their physical availability is ASSUMED-UNVERIFIED.
+The input is the untwirled product of the specified states, followed by
+one common local SSR across the preparations. Neither input factor is
+first replaced by its separate single-copy local twirl.
+
+Let $N_A^{\mathrm{tot}}$ and $N_B^{\mathrm{tot}}$ count all modes held by
+each party across both preparations. The local total-number twirl is
+
+$$
+\mathcal G_N(X)=\int_0^{2\pi}\!\int_0^{2\pi}
+U_{\theta,\phi}XU_{\theta,\phi}^*\,
+\frac{d\theta\,d\phi}{(2\pi)^2},\qquad
+U_{\theta,\phi}=e^{i\theta N_A^{\mathrm{tot}}}
+ e^{i\phi N_B^{\mathrm{tot}}}.
+\tag{147.2}
+$$
+
+There is one local SSR per party on its total charge, rather than a
+separate superselection charge for each preparation. A common unknown local
+phase offset is absorbed by (147.2). Independent unrecorded local phase
+randomization of the two preparations is a different resource: it removes
+the coherence before the preparations are combined. That loss is not repaired
+by the filtering protocol below.
+
+The allowed operations comprise joint number-preserving handling of a
+party's own modes, coherent projectors onto degenerate local total-number
+spaces, local phase operations, local discard when specified, classical
+communication and heralding. For a success projector $F$, the success map is
+$X\mapsto FXF$. Measuring the individual occupations and then forgetting the
+outcomes instead dephases the selected rails; it is a different instrument.
+
+These operations and the second preparation enlarge the single-specimen,
+no-postselection experiment. Section 145 still gives its single-copy limit:
+$\overline\rho=\mathcal D_A(\rho)$ is separable and has the same allowed
+single-copy local product-observable statistics as $\rho$.
+This appendix evaluates the enlarged, explicitly declared resource model.
+It does not supply an SSR operational advantage within the original menu.
+
+## 148. The source-dependent mixed state and its mature supplier
+
+Use the B-local alignment of §142 as a proof basis. Denote its active mode
+by $b$ and its spectator by $s$; the letter $s$ here replaces the spectator
+mode label $d$ of §142, while $d$ below denotes a matrix entry.
+For each preparation the aligned state, in creation order $(A,b,s)$, is
+$\sigma_\beta(p)\otimes\tau_\beta$, where
+
+$$
+t=e^{-\beta}>0,\quad D=2(1+t),\quad p=|(V_q)_\ell|^2,\qquad
+\sigma=\begin{pmatrix}
+a&0&0&0\\0&b&z&0\\0&\overline z&c&0\\0&0&0&d
+\end{pmatrix},\qquad \tau=\operatorname{diag}(r_0,r_1).
+\tag{148.1}
+$$
+
+The order for $\sigma$ is $(|00\rangle,|01\rangle,|10\rangle,|11\rangle)$.
+The coefficients inherited from (142.6) are
+
+$$
+a=\frac1D,\quad b=\frac{1-(1-t)p}{D},\quad
+c=\frac{t+(1-t)p}{D},\quad d=\frac tD,\quad
+z=\frac{(1-t)\sqrt{p(1-p)}}D,\quad
+r_0=\frac1{1+t},\quad r_1=\frac t{1+t}.
+\tag{148.2}
+$$
+
+Here $a+b+c+d=1$ and $z$ is real in the chosen source convention.
+Write $\mu=|z|^2$ throughout; it is not an AURIC joint-occupancy $\kappa$.
+The useful source-specific identities are
+
+$$
+ad=\frac{t}{4(1+t)^2},\qquad
+\mu=\frac{(1-t)^2p(1-p)}{4(1+t)^2},\qquad bc=ad+\mu.
+\tag{148.3}
+$$
+
+Schuch--Verstraete--Cirac [M], PDF p. 9, §IV.D.1, Eqs. (17)--(18),
+supply the mature mixed-state number-SSR setting and local-filter standard
+form. Their parameters map as
+
+$$
+(w_{00},w_{01},w_{10},w_{11},\gamma)=(a,b,c,d,z),\qquad
+w=\sqrt{\frac{ad}{bc}},\qquad v=\frac{|z|}{\sqrt{bc}}.
+\tag{148.4}
+$$
+
+For finite $\beta$ all diagonal entries and $bc$ are positive.
+Their §IV.D.2, PDF p. 10, projects two copies onto the local one-particle
+spaces, squares the coherence parameter and retains the original
+entanglement threshold: $v^2>w^2$ is exactly $\mu>ad$.
+The mixed-state two-copy mechanism and threshold preservation are established
+results. The calculations below apply that method to the specified native
+parameters, including CAR ordering and the full B spectator.
+
+The actual probabilities are computed directly from (148.1).
+No preliminary standard-form filter from [M] is performed, and no omitted
+success factor from such a filter is absorbed into these probabilities.
+The pure-state fixed-number formula of Wiseman--Vaccaro [W] is resource
+context; it is not used as a mixed grand-canonical Gibbs formula.
+
+## 149. CAR regrouping and the effective dual-rail block
+
+First consider the effective active states $\sigma$ after an allowed
+B alignment and discard of each B-local spectator. This is a useful
+source-dependent protocol, distinct from the full common filter of §151.
+Use copy-first creation order $(A_1,b_1,A_2,b_2)$.
+Passing to party order $(A_1,A_2,b_1,b_2)$ multiplies an occupation ket by
+
+$$
+(-1)^{n_{b_1}n_{A_2}}.
+\tag{149.1}
+$$
+
+This sign is passive CAR-coordinate bookkeeping. It is not a physical
+cross-party unitary, and the regrouping is not an unsigned tensor swap.
+For the full aligned order $(A_1,b_1,s_1,A_2,b_2,s_2)$, the corresponding
+party order $(A_1,A_2,b_1,s_1,b_2,s_2)$ has sign
+
+$$
+(-1)^{(n_{b_1}+n_{s_1})n_{A_2}}.
+\tag{149.2}
+$$
+
+Project the effective system coherently onto $N_A^{\mathrm{tot}}=1$ and
+$N_b^{\mathrm{tot}}=1$. Use the ordinary dual-rail product basis
+
+$$
+(|A_1b_1\rangle,|A_1b_2\rangle,
+ |A_2b_1\rangle,|A_2b_2\rangle),
+\tag{149.3}
+$$
+
+where each ket denotes the indicated Alice rail and Bob rail occupied,
+with all other active occupations zero, in party-first creation order.
+The unnormalized success block in this literal convention is
+
+$$
+C_-=
+\begin{pmatrix}
+ad&0&0&0\\
+0&bc&-\mu&0\\
+0&-\mu&bc&0\\
+0&0&0&ad
+\end{pmatrix}.
+\tag{149.4}
+$$
+
+The diagonal $ad$ comes from an occupied pair in one preparation and
+vacuum in the other. Each middle diagonal is $bc$. Before CAR regrouping,
+the product coherence between the middle kets is $z\overline z=\mu$.
+The ket with $b_1,A_2$ occupied has the minus sign in (149.1), while the
+ket with $A_1,b_2$ occupied has plus sign. This gives the displayed $-\mu$.
+
+An explicitly allowed Alice-local phase can change that convention:
+
+$$
+U_A=e^{i\pi n_{A_2}},\qquad
+C_+=(U_A\otimes I_B)C_-(U_A^*\otimes I_B)
+=\begin{pmatrix}
+ad&0&0&0\\0&bc&\mu&0\\0&\mu&bc&0\\0&0&0&ad
+\end{pmatrix}.
+\tag{149.5}
+$$
+
+It commutes with local number and parity and is independent of $q$.
+Either matrix has the same success probability and partial-transpose
+spectrum. No such phase is implicit in the literal matrix (149.4).
+In particular, (148.3) also gives
+
+$$
+C_-=ad\,I_4+2\mu|\psi^-\rangle\langle\psi^-|,\qquad
+|\psi^-\rangle=(|A_1b_2\rangle-|A_2b_1\rangle)/\sqrt2.
+\tag{149.6}
+$$
+
+The standard-form projection matrix of [M] is proportional to
+$C_+/(bc)$, with diagonal $(w^2,1,1,w^2)$ and middle coherence $v^2$.
+The local phase in (149.5) explains this correspondence without discarding
+the fermionic sign.
+
+## 150. Effective success probability, PPT criterion and number twirl
+
+The direct effective success probability is
+
+$$
+P_{\mathrm{eff}}=\operatorname{Tr}C_-=2(ad+bc)=4ad+2\mu
+=\frac{2t+(1-t)^2p(1-p)}{2(1+t)^2}>0.
+\tag{150.1}
+$$
+
+Partial transpose on the actual Alice dual-rail factor moves the middle
+coherence to a corner. Its unnormalized spectrum is
+
+$$
+\operatorname{spec}C_-^{T_A}
+=\{bc,bc,ad+\mu,ad-\mu\}.
+\tag{150.2}
+$$
+
+The selected factors each have dimension two. The two-qubit PPT theorem
+[P] therefore gives the exact criterion
+
+$$
+C_-/P_{\mathrm{eff}}\text{ is entangled}
+\quad\Longleftrightarrow\quad \mu>ad.
+\tag{150.3}
+$$
+
+At equality the state is PPT and separable. Positivity of the other
+three eigenvalues follows directly from (148.3).
+Define ordinary negativity for a normalized fixed occupation-tensor state by
+$\mathcal N(X)=(\|X^{T_A}\|_1-1)/2$ and $(x)_+=\max\{0,x\}$.
+Then
+
+$$
+\mathcal N(C_-/P_{\mathrm{eff}})
+=\frac{(\mu-ad)_+}{P_{\mathrm{eff}}}.
+\tag{150.4}
+$$
+
+For the entire effective two-copy state, local total-number twirling is
+a direct sum over $(N_A^{\mathrm{tot}},N_b^{\mathrm{tot}})$.
+Each local two-mode space has number-sector dimensions $(1,2,1)$.
+Every sector other than $(1,1)$ has a one-dimensional local factor and
+is separable. Partial transpose preserves the resulting local direct sums,
+so the success-weighted negative eigenvalue is also the total negativity:
+
+$$
+\mathcal N\bigl(\mathcal G_N(\sigma^{\otimes2})\bigr)
+=(\mu-ad)_+.
+\tag{150.5}
+$$
+
+Here $\sigma^{\otimes2}$ abbreviates the specified even copy product with
+the CAR identification of §149. Equation (150.5) concerns the effective
+four-mode total-number twirl. It is neither a total-parity formula nor a
+formula for an unfiltered six-mode full state.
+A success-weighted negativity is a finite state quantity, not a
+distillation yield, asymptotic rate or deterministic success assertion.
+
+## 151. The full common filter in native normalized coordinates
+
+Define the actual common filter before any source-dependent alignment:
+
+$$
+F=\Pi_{n_{A_1}+n_{A_2}=1}\,
+  \Pi_{n_{r_1}+n_{R_1}+n_{r_2}+n_{R_2}=1}.
+\tag{151.1}
+$$
+
+The factors act on different parties and commute. The second factor counts
+all four Bob modes, not only a selected active direction.
+Thus $F$ is the same operator for $q_a$ and $q_b$ on the common normalized
+axes. A number-preserving rotation of either pair $(r_i,R_i)$ commutes
+with Bob's total number and hence with $F$. No $q$-dependent operation is
+needed to apply this filter.
+
+Let $\Omega_F$ denote its unnormalized output on the full two-preparation
+resource, in party coordinates. Alice's selected space has dimension two;
+Bob's selected one-particle space has dimension four.
+In the aligned proof basis, Bob has the orthogonal local decomposition
+
+$$
+\mathcal H_B^{(1)}=B_{\mathrm{act}}\oplus B_{\mathrm{sp}},\qquad
+B_{\mathrm{act}}=\operatorname{span}\{|b_1\rangle,|b_2\rangle\},\quad
+B_{\mathrm{sp}}=\operatorname{span}\{|s_1\rangle,|s_2\rangle\}.
+\tag{151.2}
+$$
+
+Using (149.2), the exact output in this proof basis is the B-local direct sum
+
+$$
+\Omega_F\simeq_{B\text{-local}}
+ r_0^2 C_-
+ \ \oplus_B\
+ ac\,r_0r_1\bigl(I_A^{(2)}\otimes I_{B_{\mathrm{sp}}}^{(2)}\bigr).
+\tag{151.3}
+$$
+
+The active block has both spectators empty and therefore weight $r_0^2$.
+If a spectator is occupied, Bob's selected total number excludes both
+active Bob occupations. The four surviving spectator configurations have
+weights
+
+| Alice rail | Bob spectator flag | Weight |
+| --- | --- | --- |
+| $A_1$ | $s_1$ | $ac\,r_0r_1$ |
+| $A_1$ | $s_2$ | $ac\,r_0r_1$ |
+| $A_2$ | $s_1$ | $ac\,r_0r_1$ |
+| $A_2$ | $s_2$ | $ac\,r_0r_1$ |
+
+Each configuration has one active Alice-only occupation of weight $c$
+and one active vacuum of weight $a$. The diagonal spectator state has no
+coherence between spectator flags. An active coherence would introduce
+an active Bob particle, violating this selected sector, so there is also
+no coherence connecting a spectator flag to the active block.
+Two occupied spectators are excluded outright.
+
+Consequently the full success probability, including every selected mode, is
+
+$$
+\begin{aligned}
+P_{\mathrm{full}}
+&=2\bigl[(bc+ad)r_0^2+2ac\,r_0r_1\bigr]\\
+&=\frac{t+\tfrac12(1-t)^2p(1-p)+t[t+(1-t)p]}{(1+t)^4}>0.
+\end{aligned}
+\tag{151.4}
+$$
+
+The unnormalized partial-transpose spectrum consists of
+$r_0^2bc$ twice, $r_0^2(ad+\mu)$, $r_0^2(ad-\mu)$,
+and $ac\,r_0r_1$ four times. In the entangled regime the unique negative
+eigenvalue of the normalized output is
+
+$$
+\lambda_-\bigl((\Omega_F/P_{\mathrm{full}})^{T_A}\bigr)
+=\frac{r_0^2(ad-\mu)}{P_{\mathrm{full}}},\qquad
+P_{\mathrm{full}}\mathcal N(\Omega_F/P_{\mathrm{full}})
+=r_0^2(\mu-ad)_+.
+\tag{151.5}
+$$
+
+For $\mu\le ad$, the active $2\times2$ block is separable by [P];
+each spectator flag is a product block. Their positive sum is separable.
+For $\mu>ad$, (151.5) is NPT. Thus the full output is entangled exactly
+when $\mu>ad$. This uses the actual direct sum (151.3), never PPT
+sufficiency for arbitrary $2\times4$ states.
+The aligned subspaces in (151.2) depend on $q$. A common raw filter has
+been specified; a common $q$-independent active-state extraction has not.
+
+## 152. Finite temperature and the two irreducible native models
+
+Substituting (148.3) into the shared activation condition gives
+
+$$
+\mu>ad
+\quad\Longleftrightarrow\quad
+(1-t)^2p(1-p)>t
+\quad\Longleftrightarrow\quad
+4\sinh^2(\beta/2)p(1-p)>1.
+\tag{152.1}
+$$
+
+For $0<p<1$ the critical inverse temperature is exactly that of §144:
+
+$$
+\beta_c(p)=2\operatorname{arsinh}\frac1{2\sqrt{p(1-p)}},\qquad
+\beta_{c,a}=2\operatorname{arsinh}\frac{99}{\sqrt{7301}},\quad
+\beta_{c,b}=2\operatorname{arsinh}\frac3{2\sqrt2}.
+\tag{152.2}
+$$
+
+Here $p_a=49/198$, $p_b=1/3$, and $\beta_{c,b}<\beta_{c,a}$.
+Either filtered output is entangled precisely for $\beta>\beta_c(p)$;
+equality is separable. The full finite-temperature classification is
+
+| Inverse temperature | Common-filter output for $q_a$ | Common-filter output for $q_b$ |
+| --- | --- | --- |
+| $0\le\beta\le\beta_{c,b}$ | separable | separable |
+| $\beta_{c,b}<\beta\le\beta_{c,a}$ | separable | NPT |
+| $\beta>\beta_{c,a}$, finite | NPT | NPT |
+
+At $\beta=\log7$ for $q_b$, the exact entries are
+
+$$
+(a,b,c,d,z)=\left(\frac7{16},\frac5{16},\frac3{16},\frac1{16},
+\frac{\sqrt2}{8}\right),\quad
+ad=\frac7{256},\quad \mu=\frac8{256},\quad bc=\frac{15}{256},\quad
+(r_0,r_1)=\left(\frac78,\frac18\right).
+\tag{152.3}
+$$
+
+The effective and full procedures therefore give distinct exact probabilities:
+
+| Procedure at $q_b,\beta=\log7$ | Success probability | Conditional PT minimum | Success-weighted negativity |
+| --- | --- | --- | --- |
+| Effective filter after alignment and spectator discard | $11/64$ | $-1/44$ | $1/256$ |
+| Full common filter (151.1) | $343/2048$ | $-1/56$ | $49/16384$ |
+
+For example the full unnormalized PT spectrum is $735/16384$ three times,
+$-49/16384$ once, and $147/16384$ four times. Its trace is $343/2048$.
+The number-twirled effective total negativity is $1/256$.
+For $q_a$ at the same temperature,
+
+$$
+\mu_a-a_ad_a=-\frac{161}{139392}<0,\qquad
+36p_a(1-p_a)=\frac{7301}{1089}<7<8=36p_b(1-p_b),
+\tag{152.4}
+$$
+
+where $a_a,d_a$ denote the entries for model $a$. Its common-filter output
+is separable. This does not assert nonactivation at all temperatures.
+At $\beta=0$, $\rho=I_8/8$, $z=0$, $P_{\mathrm{eff}}=1/4$ and
+$P_{\mathrm{full}}=1/8$. At $p=0$ or $1$, $z=0$ at every finite
+$\beta$ and neither procedure activates entanglement.
+No zero-temperature limit is required for these statements.
+
+Both native row generators remain $Q_q=\mathbf1_3\pi_q^{\mathsf T}-I_3$,
+with $\pi_a=(2/3,1/6,1/6)$ and $\pi_b=(1/3,1/3,1/3)$.
+Every off-diagonal rate is strictly positive, independently of $\beta$.
+Postselecting a quantum state changes neither native generator nor its
+irreducibility. The native comparison concerns the stopped singleton step,
+not a claim of irreducibility at subsequent epochs.
+
+## 153. Parity-legal filtering and the different parity-twirled total
+
+The filter (151.1), the effective number filter, the B rotations and the
+Alice rail phase all commute with local parity. They are therefore also
+allowed under a local total-parity SSR. Each selected local number-one
+space has fixed odd parity, so the same conditional states, probabilities
+and thresholds apply to this heralded protocol.
+
+The complete effective parity twirl is nevertheless different from the
+number twirl. Put $P_A=(-1)^{N_A^{\mathrm{tot}}}$ and
+$P_B=(-1)^{N_b^{\mathrm{tot}}}$ on the effective system and define
+
+$$
+\mathcal G_P(X)=\frac14\sum_{j,k=0}^1P_A^jP_B^kX P_B^kP_A^j.
+\tag{153.1}
+$$
+
+The odd--odd block is $C_-$. There is also an even--even block on
+Alice and Bob bases $(|00\rangle,|11\rangle)$, respectively, with form
+
+$$
+E=\begin{pmatrix}
+a^2&0&0&0\\
+0&b^2&\eta&0\\
+0&\overline\eta&c^2&0\\
+0&0&0&d^2
+\end{pmatrix},\qquad |\eta|=\mu.
+\tag{153.2}
+$$
+
+In the unphased party-first convention $\eta=z^2$; a declared local rail
+phase can change its sign. The remaining two parity blocks are diagonal.
+The corner of $E^{T_A}$ has diagonal $(a^2,d^2)$ and off-diagonal
+magnitude $\mu$. It is NPT precisely when $\mu^2>a^2d^2$, equivalently
+$\mu>ad$. If $\mu\le ad$, both actual $2\times2$ blocks are PPT and
+separable, as are the diagonal blocks. Thus the effective parity-twirled
+state has the same threshold, with an additional contributing block above it.
+
+In particular its total ordinary negativity is
+
+$$
+\mathcal N\bigl(\mathcal G_P(\sigma^{\otimes2})\bigr)
+=(\mu-ad)_+
++\frac12\left(\sqrt{(a^2-d^2)^2+4\mu^2}-(a^2+d^2)\right)_+.
+\tag{153.3}
+$$
+
+At $q_b,\beta=\log7$, this is $(\sqrt{10}-3)/32$, rather than
+$1/256$. Formula (150.5) is specifically the effective total-number value.
+For each fixed diagonal B spectator occupation pattern, its contribution
+to B parity is a fixed sign, which leaves parity conjugation unchanged.
+The additional sign in (149.2) gives at most an Alice-local phase on that
+flag. Thus the spectator flags do not change the parity activation
+threshold for the full copies. They do enter the probability and the
+success-weighted negativity of the full number-filter outcome as in §151.
+None of these total-state quantities is a rate.
+
+## 154. A fixed-source relation distinguished by joint local access
+
+For a fixed $q,\beta$, compare $\rho$ with
+$\overline\rho=\mathcal D_A(\rho)$ from §145, not with the other native
+model. In the aligned proof basis their effective factors are $\sigma$
+and $\overline\sigma=\operatorname{diag}(a,b,c,d)$, and they have the
+same B spectator. Their single-copy SSR product-observable statistics agree:
+
+$$
+\operatorname{Tr}[\rho(X_A\otimes Y_B)]
+=\operatorname{Tr}[\overline\rho(X_A\otimes Y_B)]
+\tag{154.1}
+$$
+
+for the allowed single-copy local observables. Applying the full common
+filter to $\overline\rho\otimes\overline\rho$ retains precisely the same
+diagonal weights and success probability as for $\rho\otimes\rho$.
+Its active block, however, is $r_0^2\operatorname{diag}(ad,bc,bc,ad)$;
+there is no surviving middle coherence. The spectator blocks are unchanged.
+
+In the selected sector define the Hermitian observable
+
+$$
+W=|A_1b_2\rangle\langle A_2b_1|
+ +|A_2b_1\rangle\langle A_1b_2|,
+\tag{154.2}
+$$
+
+extended by zero on Bob's spectator flags. For this fixed source it can be
+measured through local dual-rail correlations:
+$W=(X_A\otimes X_b+Y_A\otimes Y_b)/2$ on the active space.
+Here $X$ and $Y$ are the rail Pauli operators inside a number-one space;
+Bob's versions vanish on the spectator flags. These observables preserve
+local total number and require joint local access to the preparations.
+
+In the literal CAR convention (149.4), the two normalized conditional
+expectations are exactly
+
+$$
+\langle W\rangle_{\rho\text{ product},F}
+=-\frac{2r_0^2\mu}{P_{\mathrm{full}}},\qquad
+\langle W\rangle_{\overline\rho\text{ product},F}=0.
+\tag{154.3}
+$$
+
+For $\mu>0$ they differ; entanglement is not needed merely to distinguish
+them. An explicit application of (149.5) reverses the first sign.
+The observable is fixed for the chosen aligned source; this is not an
+assertion of a common raw $q$-independent extractor or analyzer.
+
+This finite pair shows why the stated single-copy operational equivalence
+cannot simply be composed when the operation menu is enlarged to joint
+local access. It does not assert that a tensor-compatible quotient of
+whole processes was already defined by the single-copy observation rule.
+Nor is $\overline\rho$ identified with $\rho_{q_a,\beta}$: at $\log7$,
+the allowed Alice occupations $115/528$ and $1/4$ already distinguish the
+two native models, as (145.3) records.
+
+## 155. Native correspondence and scope of the application
+
+The source and model interfaces used here are explicit:
+
+| Object or operation | Correspondence and condition |
+| --- | --- |
+| Native accepted history | The singleton source of §139, with two actual children and unchanged $L_\star$, from Definition 127.1 and Proposition 128.3 |
+| Metric variation | Proposition 127.2 specialized to $G_0=[1]$, $K=I_2$, residual vector $q$; (139.2) gives $G_q=L_\star+\pi_q\pi_q^{\mathsf T}$ |
+| Native generator | Corollary 127.3 gives (139.3), with the interior probabilities in (139.4) |
+| Quantum coordinate space | The explicitly added principal-root normalization, complexification and common normalized cut of §140 |
+| Full Gibbs preparation | All eight fermionic occupations of §141, finite $\beta$, zero mode retained |
+| Effective state | The even B-local alignment and spectator factorization (142.3)--(142.6), reused in (148.1)--(148.2) |
+| Two-preparation input | Two independent instances of that same specified full state, with compatible CAR and coupling phase |
+| Joint local SSR | One total number or parity per party across both preparations, with coherent degenerate filtering |
+| Common success event | Equation (151.1) on the native normalized modes, counting all of Bob's modes |
+| Proof block coordinates | Source-dependent B alignments commuting with that common success projector |
+
+The native definitions at [N] and the Fock extension at [F] are reference
+inputs to this finite application. Sections 139--146 supply the intervening
+Gibbs correspondence. The additional relation evaluated here is the
+specified two-preparation local projection, not a new generic activation
+principle. The original accepted history, inherited norm, edge form and
+comparison clock remain those of §139. Only the native metric parameter
+and hence the quantum state vary in the native comparison.
+
+The ordinary tensor partial transpose is used after the CAR convention has
+been fixed. Its sufficiency for separability is invoked only on actual
+$2\times2$ blocks; the full output uses the proved B-local direct sum.
+The negativity values are finite diagnostics of those states. No Bell
+advantage, physical implementation, deterministic extraction or asymptotic
+distillation rate follows from them. The normalized coordinate model does
+not establish a physical clock, raw-site tensor split, or the realization
+and uniform comparison hypotheses of §§131--134.
+
+The established mixed-state method is reused from [M], with [P] supplying
+the two-qubit separability criterion. The source-specific content consists
+of the native substitution, explicit CAR phase, spectator-inclusive common
+filter and exact finite probabilities. No generic-theorem novelty or
+literature-priority claim is attached to that application. It is ordinary
+mathematical exposition without a Lean kernel certificate.
+The availability of the preparation and instrument remains an explicit
+physical premise, separate from the conditional finite matrix conclusions.
+
+## 156. Primary references and exact reuse scopes
+
+- **[M] Mixed-state number-SSR projection.** N. Schuch, F. Verstraete and
+  J. I. Cirac, *Quantum entanglement theory in the presence of superselection
+  rules*, [quant-ph/0404079v1](https://arxiv.org/pdf/quant-ph/0404079v1),
+  Phys. Rev. A **70**, 042310;
+  DOI [10.1103/PhysRevA.70.042310](https://doi.org/10.1103/PhysRevA.70.042310).
+  PDF p. 9, §IV.D.1, Eqs. (17)--(18): mixed X state and standard form.
+  PDF p. 10, §IV.D.2: two-copy local one-particle projection, squared
+  coherence and preservation of the original threshold. The mapping is
+  (148.4); the direct unfiltered-input probabilities are (150.1), (151.4).
+- **[P] Two-qubit PPT sufficiency.** M. Horodecki, P. Horodecki and
+  R. Horodecki, *Separability of Mixed States: Necessary and Sufficient
+  Conditions*, [quant-ph/9605038v2](https://arxiv.org/pdf/quant-ph/9605038v2),
+  Theorem 3, PDF p. 8. Its $2\times2$ case applies to the active and
+  even--even blocks. No general $2\times4$ sufficiency is imported.
+- **[W] Fixed-number pure-state resource context.** H. M. Wiseman and
+  J. A. Vaccaro, *The entanglement of indistinguishable particles shared
+  between two parties*,
+  [quant-ph/0210002v2](https://arxiv.org/pdf/quant-ph/0210002v2),
+  Phys. Rev. Lett. **91**, 097902;
+  DOI [10.1103/PhysRevLett.91.097902](https://doi.org/10.1103/PhysRevLett.91.097902).
+  PDF pp. 2--3, Eqs. (12)--(14), concern fixed-local-number projection
+  and pure-state entanglement. They do not supply a mixed Gibbs formula.
+- **[R] Two-copy SSR review context.** S. D. Bartlett, T. Rudolph and
+  R. W. Spekkens, *Reference frames, superselection rules, and quantum
+  information*, [quant-ph/0610030v3](https://arxiv.org/pdf/quant-ph/0610030v3),
+  Rev. Mod. Phys. **79**, 555;
+  DOI [10.1103/RevModPhys.79.555](https://doi.org/10.1103/RevModPhys.79.555).
+  PDF §III.C.2, Eq. (3.32), and §III.C.4 give mature two-copy and
+  superselection context. The optical context is not transferred as a
+  physical realization of these native fermionic modes.
+- **[N] Native metric and history source.** This volume, §§127--130,
+  at [28e2ace3ee3cb91ebd90e1c7da0bec381b109e52](https://github.com/the-omega-institute/trureturing/blob/28e2ace3ee3cb91ebd90e1c7da0bec381b109e52/docs/develop/theory/FIB_ATOM_RECURSIVE_HOLOGRAPHIC_BOUNDARY_GEOMETRY_CONTINUATION_VI.md).
+  The source correspondence is specialized in §§139--140 and §155.
+- **[F] Fermionic extension and ordering source.** This volume, §§135--138,
+  at [485055803a4de7e47866c28fb75de1443e3eae89](https://github.com/the-omega-institute/trureturing/blob/485055803a4de7e47866c28fb75de1443e3eae89/docs/develop/theory/FIB_ATOM_RECURSIVE_HOLOGRAPHIC_BOUNDARY_GEOMETRY_CONTINUATION_VI.md),
+  supplies the finite Fock/exterior and second-quantization interface.
+  Sections 141--142 fix its full Gibbs state and even B-local factorization;
+  §§149--151 specify the two-preparation CAR coordinates and common filter.
+
+## 156.99 追加锚（本行以下为增补区）
+
+## 157. Full-spectrum comparison at the fixed CAR cut
+
+This appendix fixes the finite model specified in §§139--146 and
+asks what follows from its complete spectrum before any further restriction
+on the allowed unitary.  The one-particle space is
+$\mathfrak h=\mathbb C^3$, with the normalized $A$-first CAR
+identification
+
+$$
+ \mathcal F_-(\mathfrak h)
+ =\mathbb C^2_A\otimes\mathbb C^4_B,
+ \qquad
+ A=\mathbb C e_\ell,\quad
+ B=\operatorname{span}_{\mathbb C}\{e_r,e_R\}.
+\tag{157.1}
+$$
+
+Here $B$ is the two-dimensional one-particle mode space, while
+$\mathbb C^4_B$ denotes its four-dimensional fermionic Fock factor
+$\mathcal F_-(B)$.
+
+The tensor product here is the ordinary occupation tensor product induced
+by the declared creation order.  It is the fixed cut for every partial
+transpose below.
+
+For a unit vector $V\in\mathbb C^3$, put
+
+$$
+ H_V=I_3-VV^*,\qquad \|V\|_2=1,\qquad
+ \rho_V(\beta)
+ =\frac{\exp[-\beta\,d\Gamma_-(H_V)]}{Z_\beta},
+ \qquad t=e^{-\beta},\quad \beta\ge0 .
+\tag{157.2}
+$$
+
+The eigenvalues of $H_V$ are $0,1,1$, independently of the placement
+of $V$ relative to the fixed $A|B$ cut.  We retain the zero mode and
+all particle-number sectors.  Thus this is the same eight-dimensional
+full Gibbs state as in §141, with $V$ as the varying
+one-particle eigenvector.
+
+The two questions that must be separated are:
+
+* what the spectrum forces for every global $W\in U(8)$, and
+* what a specified state $\rho_V(\beta)$, or a restricted orbit of it,
+does at the fixed cut (157.1).
+
+The first question is spectral.  The second also depends on eigenvector
+placement and on the unitary class that is admitted.
+
+## 158. The full $2,4,2$ Gibbs spectrum
+
+In the eigenmode occupation basis, write the zero-energy mode as $0$
+and the two unit-energy modes as $1,2$.  The four particle-number
+sectors have the following unnormalized Gibbs weights:
+
+| Sector | Energies | Weights |
+| --- | --- | --- |
+| $j=0$ | $0$ | $1$ |
+| $j=1$ | $0,1,1$ | $1,t,t$ |
+| $j=2$ | $1,1,2$ | $t,t,t^2$ |
+| $j=3$ | $2$ | $t^2$ |
+
+Thus
+
+$$
+Z_\beta=1+(1+2t)+(2t+t^2)+t^2=2(1+t)^2.
+\tag{158.1}
+$$
+
+For $0\le t\le1$ the sorted spectrum, with multiplicities retained, is
+
+$$
+\boxed{\operatorname{spec}\rho_V(\beta)
+=\frac1Z(1,1,t,t,t,t,t^2,t^2).}
+\tag{158.2}
+$$
+
+The ordering is nonincreasing; at $t=1$ all eight values coincide.  In
+particular,
+
+$$
+\lambda_1=\lambda_2=\frac1Z,\qquad
+\lambda_3=\cdots=\lambda_6=\frac tZ,\qquad
+\lambda_7=\lambda_8=\frac{t^2}Z.
+\tag{158.3}
+$$
+
+The repeated values in (158.3), rather than a nondegenerate perturbation,
+are part of the input to the spectral criterion.
+
+## 159. The exact global-unitary quantifiers
+
+For a density operator on the fixed $2\times4$ cut, define
+
+$$
+\begin{aligned}
+\operatorname{APPT}_{2:4}(\rho)
+&\Longleftrightarrow
+\forall W\in U(8),\quad (W\rho W^*)^{T_A}\succeq0,\\
+\operatorname{AS}_{2:4}(\rho)
+&\Longleftrightarrow
+\forall W\in U(8),\quad W\rho W^*\text{ is separable across }A|B.
+\end{aligned}
+\tag{159.1}
+$$
+
+The $U(8)$ in (159.1) is the full global unitary group.  It is not the
+local group $U(2)\otimes U(4)$ and is not restricted to commute with
+total particle number.
+
+Johnston's qubit--qudit spectral theorem, Theorem 1, gives for $2\times n$
+states the equivalence of absolute separability, absolute PPT, and
+
+$$
+\operatorname{AS}_{2:n}(\rho)
+\Longleftrightarrow
+\operatorname{APPT}_{2:n}(\rho)
+\Longleftrightarrow
+\lambda_1\le
+\lambda_{2n-1}+2\sqrt{\lambda_{2n-2}\lambda_{2n}}.
+\tag{159.2}
+$$
+
+Hildebrand's Corollary 2 supplies the absolute-PPT side of (159.2).
+For the present $n=4$, the needed entries of (158.3) are
+
+$$
+\lambda_1=\frac1Z,\qquad
+\lambda_6=\frac tZ,\qquad
+\lambda_7=\lambda_8=\frac{t^2}Z.
+\tag{159.3}
+$$
+
+Substitution into (159.2) yields
+
+$$
+\operatorname{AS}_{2:4}(\rho_V(\beta))
+\Longleftrightarrow
+\operatorname{APPT}_{2:4}(\rho_V(\beta))
+\Longleftrightarrow
+1\le t^2+2t^{3/2}.
+\tag{159.4}
+$$
+
+This is a statement about the complete $U(8)$ orbit of the spectrum.
+It is not a claim that an arbitrary individual $2\times4$ PPT state is
+separable.  The only PPT-to-separability use here is the absolute
+qubit--qudit equivalence in Johnston's theorem; later $2\times2$ uses are
+separately identified.
+
+## 160. The full-unitary boundary and equality
+
+Let
+
+$$
+F(t)=t^2+2t^{3/2},\qquad 0<t\le1.
+\tag{160.1}
+$$
+
+Then
+
+$$
+F'(t)=2t+3\sqrt t>0,\qquad
+F(1/2)=\frac14+\frac1{\sqrt2}<1,\qquad
+F(9/16)=\frac{297}{256}>1.
+\tag{160.2}
+$$
+
+There is a unique $t_*\in(1/2,9/16)$ satisfying
+
+$$
+t_*^2+2t_*^{3/2}=1.
+\tag{160.3}
+$$
+
+If $x_*=\sqrt{t_*}$, this is $x_*^4+2x_*^3-1=0$.  Define
+
+$$
+\beta_*=-\log t_*,
+\qquad
+\log(16/9)<\beta_*<\log2.
+\tag{160.4}
+$$
+
+Because $t=e^{-\beta}$ decreases with $\beta$,
+
+$$
+\boxed{
+0\le\beta\le\beta_*
+\Longleftrightarrow
+\operatorname{AS}_{2:4}(\rho_V(\beta))
+\Longleftrightarrow
+\operatorname{APPT}_{2:4}(\rho_V(\beta)).
+}
+\tag{160.5}
+$$
+
+At $\beta=\beta_*$ every global-unitary placement is PPT and separable.
+For $\beta>\beta_*$ the spectrum is outside the absolute-separability
+region; the consequence used below is existence of an NPT placement, not
+NPT of the specified native member.
+
+## 161. An explicit full-unitary NPT placement
+
+Choose an orthonormal basis $b_0,b_1,b_2,b_3$ of the four-dimensional
+fermionic Fock factor $\mathcal F_-(B)\cong\mathbb C^4_B$.  On
+$\mathcal S=\mathbb C^2\otimes\operatorname{span}\{b_0,b_1\}$ use the
+ordered product basis
+
+$$
+|0b_0\rangle,\ |0b_1\rangle,\ |1b_0\rangle,\ |1b_1\rangle.
+\tag{161.1}
+$$
+
+Define
+
+$$
+R_t=\frac1Z
+\begin{pmatrix}
+t&0&0&0\\
+0&(1+t^2)/2&(1-t^2)/2&0\\
+0&(1-t^2)/2&(1+t^2)/2&0\\
+0&0&0&t^2
+\end{pmatrix},
+\tag{161.2}
+$$
+
+and on the orthogonal product complement, in the ordered basis
+$|0b_2\rangle,|0b_3\rangle,|1b_2\rangle,|1b_3\rangle$, put
+
+$$
+D_t=\frac1Z\operatorname{diag}(1,t,t,t),\qquad
+\rho_*(t)=R_t\oplus D_t.
+\tag{161.3}
+$$
+
+The middle block in (161.2) has eigenvectors
+
+$$
+\frac{|0b_1\rangle+|1b_0\rangle}{\sqrt2},\qquad
+\frac{|0b_1\rangle-|1b_0\rangle}{\sqrt2}
+$$
+
+with eigenvalues $1/Z$ and $t^2/Z$.  The other two eigenvalues of
+$R_t$ are $t/Z$ and $t^2/Z$, so
+
+$$
+\operatorname{spec}\rho_*(t)
+=\frac1Z(1,1,t,t,t,t,t^2,t^2).
+\tag{161.4}
+$$
+
+If $\rho_V(\beta)=\sum_{i=1}^8\lambda_i|\phi_i\rangle\langle\phi_i|$ is
+any orthonormal eigenbasis realization of (158.2), choose an orthonormal
+eigenbasis $w_i$ of (161.3) carrying the same eigenvalues, including the
+degenerate eigenspaces.  Then
+
+$$
+W=\sum_{i=1}^8|w_i\rangle\langle\phi_i|
+\tag{161.5}
+$$
+
+is a global unitary with $W\rho_V(\beta)W^*=\rho_*(t)$.  Thus (161.3) is
+an actual point of the full $U(8)$ orbit, retaining all multiplicities.
+
+Partial transpose on $A$ moves the middle coherence to the corner
+spanned by $|0b_0\rangle,|1b_1\rangle$.  That principal block is
+
+$$
+C_t=\frac1Z
+\begin{pmatrix}
+t&(1-t^2)/2\\
+(1-t^2)/2&t^2
+\end{pmatrix},
+\qquad
+\det C_t=\frac{t^3-(1-t^2)^2/4}{Z^2}.
+\tag{161.6}
+$$
+
+For $0<t\le1$,
+
+$$
+\det C_t<0
+\Longleftrightarrow
+1-t^2>2t^{3/2}
+\Longleftrightarrow
+F(t)<1.
+\tag{161.7}
+$$
+
+A negative principal determinant makes the full partial transpose
+nonpositive.  Hence this explicit placement is NPT for every
+$\beta>\beta_*$.
+
+At $t=1/2$, so $\beta=\log2$ and $Z=9/2$, the density matrix is
+
+$$
+\boxed{
+\rho_*(1/2)=\frac1{36}
+\left[
+\begin{pmatrix}
+4&0&0&0\\
+0&5&3&0\\
+0&3&5&0\\
+0&0&0&2
+\end{pmatrix}
+\oplus
+\operatorname{diag}(8,4,4,4)
+\right].
+}
+\tag{161.8}
+$$
+
+Its spectrum is $(8,8,4,4,4,4,2,2)/36$.  The corresponding partial
+transpose corner is
+
+$$
+\frac1{36}\begin{pmatrix}4&3\\3&2\end{pmatrix},
+\qquad
+\det=-\frac1{1296},
+\qquad
+\lambda_{\min}(\rho_*(1/2)^{T_A})
+=\frac{3-\sqrt{10}}{36}.
+\tag{161.9}
+$$
+
+This is a matrix-level proof of NPT at the fixed cut.
+
+The witness uses the full global unitary class.  If $b_0$ is chosen as the
+vacuum vector of $\mathcal F_-(B)$, then $|0b_0\rangle$ is the total
+vacuum and has weight $t/Z$ in (161.2), while the original Gibbs vacuum
+has weight $1/Z$.  For
+$t<1$, the one-dimensional vacuum sector cannot change weight under any
+unitary commuting with total number.  Therefore this witness is not
+number-preserving.  No physical implementation or SSR legality is
+asserted for (161.5).
+
+## 162. The passive $\Gamma(U(3))$ orbit
+
+For $U\in U(3)$, let
+
+$$
+\Gamma(U)=\bigoplus_{j=0}^3\wedge^jU
+\tag{162.1}
+$$
+
+be its fermionic exterior-power lift.  Since $H_{UV}=UH_VU^*$, the
+second-quantized covariance gives
+
+$$
+\Gamma(U)\rho_V(\beta)\Gamma(U)^*=\rho_{UV}(\beta).
+\tag{162.2}
+$$
+
+The group $U(3)$ acts transitively on the unit sphere of $\mathbb C^3$.
+Consequently the mathematical passive orbit is exactly
+
+$$
+\mathcal P_\beta(V)
+=\{\rho_W(\beta):W\in\mathbb C^3,\ \|W\|_2=1\}.
+\tag{162.3}
+$$
+
+This is an orbit equality for the specified Hamiltonian family.  It does
+not say that every $W$ is in the image of a native construction $q\mapsto
+V(q)$.
+
+Let $p=|W_\ell|^2$.  For $p>0$ choose the representative
+$\widetilde W=(\overline{W_\ell}/|W_\ell|)W$; for $p=0$ put
+$\widetilde W=W$.  Then $\widetilde W_\ell=\sqrt p$ and
+$\widetilde W\widetilde W^*=WW^*$, so $H_{\widetilde W}=H_W$ and
+$\rho_{\widetilde W}(\beta)=\rho_W(\beta)$.  This is a choice of phase
+representative, not a physical local operation.
+
+Choose $U_B\in U(2)$ sending the $B$ component $\widetilde W_B$ to
+$\sqrt{1-p}\,e_b$.  At $p=0$ this aligns a unit vector in $B$; at $p=1$
+we already have $\widetilde W=e_\ell$, so any $U_B$ suffices.  With
+$L=1_A\oplus U_B$ and $v_p=\sqrt p\,e_\ell+\sqrt{1-p}\,e_b$,
+
+$$
+L\widetilde W=v_p,\qquad LWW^*L^*=v_pv_p^*.
+$$
+
+By (162.2) and §142, the even, number-preserving lift
+$\Gamma(L)=I_A\otimes\Gamma(U_B)$ is local for the declared occupation
+tensor product and conjugates $\rho_W(\beta)$ to $\rho_{v_p}(\beta)$.
+The orthogonal $B$-mode is a spectator, so the factorization from §142 is
+
+$$
+\rho_W(\beta)\simeq_{\rm local}\sigma_\beta(p)\otimes\tau_\beta,
+\qquad
+\tau_\beta=\frac{\operatorname{diag}(1,t)}{1+t},
+\tag{162.4}
+$$
+
+with
+
+$$
+\sigma_\beta(p)=\frac1{2(1+t)}
+\begin{pmatrix}
+1&0&0&0\\
+0&1-(1-t)p&(1-t)\sqrt{p(1-p)}&0\\
+0&(1-t)\sqrt{p(1-p)}&t+(1-t)p&0\\
+0&0&0&t
+\end{pmatrix}.
+\tag{162.5}
+$$
+
+The partial transpose of (162.5) has a $2\times2$ corner whose
+determinant has the sign of
+
+$$
+t-(1-t)^2p(1-p).
+\tag{162.6}
+$$
+
+The PPT criterion is sufficient here because (162.5) is a two-qubit state
+and the spectator in (162.4) is a local product factor.  Thus
+
+$$
+\boxed{
+\rho_W(\beta)\text{ is NPT}
+\Longleftrightarrow
+(1-t)^2p(1-p)>t
+\Longleftrightarrow
+4\sinh^2(\beta/2)p(1-p)>1.
+}
+\tag{162.7}
+$$
+
+Equality in (162.7) is PPT and separable.  No arbitrary $2\times4$ PPT
+sufficiency is used.
+
+## 163. The passive boundary and its separation from the full boundary
+
+Since $\max_{0\le p\le1}p(1-p)=1/4$, the entire passive orbit is
+separable exactly when
+
+$$
+\frac{(1-t)^2}{4}\le t
+\Longleftrightarrow
+\sinh^2(\beta/2)\le1.
+\tag{163.1}
+$$
+
+Define
+
+$$
+\boxed{\beta_{\rm pass}=2\operatorname{arsinh}1
+=\log(3+2\sqrt2).}
+\tag{163.2}
+$$
+
+The endpoint statements are
+
+$$
+\begin{array}{c|c}
+\text{range} & \text{passive orbit}\\ \hline
+0\le\beta\le\beta_{\rm pass}
+& \text{every }\rho_W(\beta)\text{ is separable (and PPT)}\\
+\beta>\beta_{\rm pass}
+& p=1/2\text{ gives an NPT member, while }p=0,1
+\text{ remain separable.}
+\end{array}
+\tag{163.3}
+$$
+
+At $\beta=\beta_{\rm pass}$ the $p=1/2$ state is exactly on the PPT and
+separable boundary.  Above it the passive orbit is still not all
+entangled because its endpoint placements are product factors.
+
+The exact boundaries obey
+
+$$
+\boxed{\beta_*<\log2<\beta_{\rm pass}.}
+\tag{163.4}
+$$
+
+Thus at $\beta=\log2$ the explicit matrix (161.8) is NPT, whereas every
+passive placement is separable because
+
+$$
+(1-t)^2p(1-p)\le\frac1{16}<\frac12=t.
+\tag{163.5}
+$$
+
+This separates the quantified full-unitary and passive conclusions.
+
+## 164. Native eigenvector placement: the $q_a,q_b$ pair
+
+For the two native metrics fixed in §139, the normalized zero-mode vectors
+and common cut give
+
+$$
+p_a=\frac{49}{198},\qquad p_b=\frac13,
+\qquad
+p_a(1-p_a)=\frac{7301}{198^2},\qquad
+p_b(1-p_b)=\frac29.
+\tag{164.1}
+$$
+
+The native Hamiltonians $H_{V_a}$ and $H_{V_b}$ have the same
+one-particle spectrum $\{0,1,1\}$, so their full Gibbs states have the
+same spectrum (158.2) at every $\beta$.  Their eigenvectors occupy the
+fixed $A|B$ cut differently.
+
+For $0<p<1$, (162.7) gives
+
+$$
+\beta_c(p)=2\operatorname{arsinh}
+\frac1{2\sqrt{p(1-p)}}.
+\tag{164.2}
+$$
+
+Hence
+
+$$
+\beta_{c,a}=2\operatorname{arsinh}\frac{99}{\sqrt{7301}},
+\qquad
+\beta_{c,b}=2\operatorname{arsinh}\frac3{2\sqrt2},
+\tag{164.3}
+$$
+
+with exact ordering
+
+$$
+\beta_{\rm pass}<\beta_{c,b}<\log7<\beta_{c,a}.
+\tag{164.4}
+$$
+
+Indeed $\sinh(\log7/2)=3/\sqrt7$, and
+
+$$
+1<\frac3{2\sqrt2}<\frac3{\sqrt7}
+<\frac{99}{\sqrt{7301}},
+\qquad
+9\cdot7301<7\cdot9801.
+\tag{164.5}
+$$
+
+At the common inverse temperature $\beta=\log7$,
+
+$$
+4\sinh^2(\beta/2)p_a(1-p_a)=\frac{7301}{7623}<1,
+\qquad
+4\sinh^2(\beta/2)p_b(1-p_b)=\frac87>1.
+\tag{164.6}
+$$
+
+Therefore
+
+$$
+\boxed{
+\rho_{q_a}(\log7)\text{ is separable},\qquad
+\rho_{q_b}(\log7)\text{ is NPT}.
+}
+\tag{164.7}
+$$
+
+Both $Q_{q_a}$ and $Q_{q_b}$ are the irreducible native generators from
+(139.3)--(139.6): their off-diagonal rates are strictly positive.
+Equation (164.7) is an eigenvector-placement comparison between two
+specified native members, not a claim about physical subsystems or all
+native parameters.
+
+The full spectrum determines the universal $U(8)$ boundary (160.5) and,
+beyond it, guarantees an NPT placement.  It does not determine whether a
+particular native $\rho_{V(q)}$ is separable.  That answer uses $V(q)$'s
+placement relative to $A|B$, together with the permitted orbit.
+
+## 165. Operation classes and the exact scope of each conclusion
+
+| Operation class | Additional structure | Conclusion supplied here |
+| --- | --- | --- |
+| All global $U(8)$ | Arbitrary eight-dimensional conjugation; sectors and particle number may mix. | Johnston--Hildebrand give the exact $\beta_*$ boundary for all-orbit separability/PPT; (161.3) gives an explicit NPT placement above it. |
+| Global number-preserving | $[U,N]=0$; each particle-number sector is preserved. | The specific witness (161.8) is excluded for $t<1$; no sharp intermediate-orbit classification is supplied here. |
+| Passive $\Gamma(U(3))$ | One single-particle $U$ acts by all exterior powers. | The orbit is (162.3), with exact all-separable boundary $\beta_{\rm pass}$ and criterion (162.7). |
+| Native $G_q$ | $V=V(q)$ must arise from the allowed native parameter construction. | (164.7) holds for the supplied $q_a,q_b$; no equality of the native image with the full unit sphere is asserted. |
+| Local SSR--LOCC | Local charge restrictions, instruments, communication and resource availability. | These orbit calculations supply no finite protocol, accessible entanglement, or operational advantage. |
+
+The passive global orbit is a mathematical orbit of states and is not a
+local SSR--LOCC operation class.  An NPT member of a global or passive
+orbit is not by itself a physically available protocol.  The one-copy SSR
+twirl in §145 and the two-copy resource construction in §§147--156 have
+their own stated operation menus; neither is silently replaced by this
+table.
+
+This appendix supplies no classification of the intermediate global
+number-preserving orbit.  That question is independent of both endpoint
+calculations and cannot be filled by interpolating between $\beta_*$ and
+$\beta_{\rm pass}$.
+
+## 166. The scalar-bound boundary and theorem applicability
+
+The five-row scalar bound stated in PR19694 is a conditional statement
+in its own parameter range, $5\le n\le18$, with total Hilbert dimension
+$N=5n$, hence $25\le N\le90$, and its own $j$-range and scalar
+hypotheses.  The literal Fock space in (157.1) has total dimension
+$2\cdot4=8$, which lies outside that total-dimension range.  It is useful
+here only as a quantifier check: a scalar bound cannot be read as the
+literal $2\times4$ criterion without a dimension map, a
+multiplicity-preserving spectral assignment, and a proof that all mapped
+hypotheses imply the target partial-transpose statement.  No such bridge
+is used in (159.4).
+
+The direct suppliers for the literal fixed-cut conclusion are therefore
+the qubit--qudit results in §159, together with the source-dependent
+two-mode factorization in §162.  The latter invokes the ordinary
+two-qubit PPT criterion only after the B-local spectator factor has been
+exhibited.  It does not promote a PPT test for arbitrary $2\times4$
+states to separability.
+
+The conclusions in this appendix are conditional on the specified finite
+model (157.1)--(157.2), the supplied native $q_a,q_b$ data, and the stated
+ordinary tensor cut.  They establish the displayed matrix and orbit
+consequences only.  They do not establish a physical realization, native
+reachability of all intermediate vectors, or a complete
+global-number-preserving classification.
+
+## 167. Primary suppliers and exact reuse scopes
+
+- **[J] Qubit--qudit absolute separability.** Nathaniel Johnston,
+  *Separability from Spectrum for Qubit--Qudit States*, Physical Review A
+  **88**, 062330 (2013), DOI
+  [10.1103/PhysRevA.88.062330](https://doi.org/10.1103/PhysRevA.88.062330),
+  arXiv:1309.2006v1, Theorem 1, PDF p. 1.  It supplies the equivalence
+  between all-global-unitary separability, all-global-unitary PPT, and
+  the ordered $2\times n$ spectral inequality.
+
+- **[H] Positive partial transpose from spectra.** Roland Hildebrand,
+  *Positive partial transpose from spectra*, Physical Review A **76**,
+  052325 (2007), DOI
+  [10.1103/PhysRevA.76.052325](https://doi.org/10.1103/PhysRevA.76.052325),
+  arXiv:quant-ph/0502170v1, §4, Corollary 2, PDF p. 5.  It supplies the
+  absolute-PPT spectral condition used in the same fixed $2\times4$
+  global-unitary quantifier.
+
+- **[P] Two-qubit PPT sufficiency.** M. Horodecki, P. Horodecki and
+  R. Horodecki, *Separability of Mixed States: Necessary and Sufficient
+  Conditions*, Theorem 3, PDF p. 8,
+  [quant-ph/9605038v2](https://arxiv.org/pdf/quant-ph/9605038v2),
+  Physics Letters A **223**, 1--8 (1996), DOI
+  [10.1016/S0375-9601(96)00706-2](https://doi.org/10.1016/S0375-9601(96)00706-2).
+  It is used only for the actual $2\times2$ factor in (162.6), after
+  the local spectator factorization.
+
+- **[F] Finite Fock and passive covariance.** The finite fermionic
+  Fock/exterior-power and second-quantization ingredients are the
+  supplied source used in §§141--142.  Equations (162.1)--(162.3) apply
+  that existing structure to the full $H_V=I_3-VV^*$ family.
+
+The source-dependent content here is the spectrum substitution, the
+fixed-cut placement (161.1)--(161.8), the passive-orbit threshold, and the
+native $q_a,q_b$ comparison.  The cited results are reused within their
+stated quantifiers and dimensions.  No independent literature-priority
+claim is attached to this application.
+
+## 168. Scope of the endpoint conclusions
+
+The full-spectrum statement is exhausted by (160.5) and the explicit
+placement (161.2); the passive-family statement is exhausted by
+(162.4)--(163.3); and the supplied native comparison is (164.7).  Any
+claim about a narrower native image, the intermediate global
+number-preserving orbit, or an SSR--LOCC protocol requires additional
+definitions and proof beyond this appendix.
+
+## 168.99 追加锚（本行以下为增补区）
+
