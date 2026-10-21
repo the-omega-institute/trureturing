@@ -5,6 +5,10 @@ cas_ref: sha256:5ba0ef3ddd029cfc3a65e86dabc7d2588fa84f0c980aecd82b526172908d6aea
 coverage_gids: []
 receipts:
   unresolved_subitems: []
+  nonpropositional:
+    justification: heading-only section title; contains no mathematical assertion
+    previous_atom_id: 108f84ef6f9d7e2f6926d68048236e1e22938acfac865fb13e67304cf1fc638f
+    next_atom_id: 4aecaa3e39890ee434fc09d7a6e648e414c7333d80e9ae94eb849f7d9f64d467
   chain_atoms:
     - 3a33f608ef07e3dc8d7e7a339bc939eed204d1c036ca3792fe24e1e74463f0ae
     - 93ca504e3059996775c59bc5d3c688beb53af70894922c205cecb6b24572f089
