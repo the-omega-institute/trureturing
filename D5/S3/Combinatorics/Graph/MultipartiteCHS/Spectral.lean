@@ -212,4 +212,20 @@ private theorem chs_recurrence {r : ℕ} (a : Fin r → ℕ) {d : ℕ} (hd : 1 �
   rw [hs, Finset.sum_insert hn, hz, hf] at hc
   linarith
 
+private theorem chs_eq_sequence {r : ℕ} (a : Fin r → ℕ) (H : ℕ → ℝ)
+    (hzero : H 0 = 1)
+    (hstep : ∀ d : ℕ, 1 ≤ d → H d = ∑ j ∈ Icc 2 d, ((j : ℝ) - 1) *
+      (∑ s ∈ (univ : Finset (Fin r)).powersetCard j, ∏ i ∈ s, (a i : ℝ)) * H (d - j))
+    (d : ℕ) : chs a d = H d := by
+  classical
+  induction d using Nat.strong_induction_on with
+  | h d ih =>
+    by_cases hd : d = 0
+    · subst d
+      simpa [chs, MvPolynomial.hsymm_zero] using hzero.symm
+    · rw [chs_recurrence a (by omega), hstep d (by omega)]
+      apply Finset.sum_congr rfl
+      intro j hj
+      rw [ih (d - j) (by have h := Finset.mem_Icc.mp hj; omega)]
+
 end D5.S3.Combinatorics.Graph.MultipartiteCHS.Spectral
