@@ -672,7 +672,10 @@ def query (index : Index) (keys : List String)
     if (← IO.getEnv "SEARCH_REDUCTION_PROFILE").isSome then
       IO.eprintln s!"LOOKUP_COST index_ms={(← IO.monoMsNow) - started} heartbeats={(← IO.getNumHeartbeats) - heartbeats} pages={result.pages} candidates={entries.size}"
     return {result with entries, complete := result.complete && index.header.complete}
-  catch _ => return {}
+  catch ex =>
+    if (← IO.getEnv "SEARCH_REDUCTION_PROFILE").isSome then
+      IO.eprintln s!"LOOKUP_COST index_ms={(← IO.monoMsNow) - started} heartbeats={(← IO.getNumHeartbeats) - heartbeats} pages=unknown candidates=unknown status=incomplete reason={ex}"
+    return {}
 
 def memberKeys (type : Expr) : List String := ["member", toString (canonical type).hash]
 
