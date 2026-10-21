@@ -107,7 +107,26 @@ private lemma basis_orthogonality (d : ℕ) (hd : 2 ≤ d) (m n : Fin d) :
 private lemma coefficient_normalization (d : ℕ) (hd : 2 ≤ d) (ψ : State d)
     (hψ : UnitVector ψ) (hmem : ψ ∈ H_I d) :
     ∃ α : Fin d → ℂ, UnitVector α ∧ ψ = ∑ n, α n • φ d n := by
-  sorry
+  classical
+  obtain ⟨α, hα⟩ := (Submodule.mem_span_range_iff_exists_fun ℂ).mp hmem
+  refine ⟨α, ?_, hα.symm⟩
+  have ho : Orthonormal ℂ (fun n : Fin d => WithLp.toLp 2 (φ d n)) := by
+    rw [orthonormal_iff_ite]
+    intro m n
+    simpa only [PiLp.inner_apply, RCLike.inner_apply', PiLp.toLp_apply] using
+      basis_orthogonality d hd m n
+  have he : WithLp.toLp 2 ψ = ∑ n, α n • WithLp.toLp 2 (φ d n) := by
+    rw [← hα, WithLp.toLp_sum]
+    exact Finset.sum_congr rfl fun n _ => WithLp.toLp_smul _ _ _
+  have hi : inner ℂ (WithLp.toLp 2 ψ) (WithLp.toLp 2 ψ) =
+      inner ℂ (WithLp.toLp 2 α) (WithLp.toLp 2 α) := by
+    rw [he, ho.inner_sum α α Finset.univ]
+    simp only [PiLp.inner_apply, RCLike.inner_apply', PiLp.toLp_apply]
+  have hn : ‖WithLp.toLp 2 ψ‖ ^ 2 = ‖WithLp.toLp 2 α‖ ^ 2 := by
+    rw [@norm_sq_eq_re_inner ℂ, @norm_sq_eq_re_inner ℂ, hi]
+  change ‖WithLp.toLp 2 α‖ = 1
+  change ‖WithLp.toLp 2 ψ‖ = 1 at hψ
+  nlinarith [norm_nonneg (WithLp.toLp 2 α)]
 
 private lemma overlap_transport (d : ℕ) [NeZero d] (hd : 2 ≤ d)
     (α : Fin d → ℂ) (hα : UnitVector α) :
