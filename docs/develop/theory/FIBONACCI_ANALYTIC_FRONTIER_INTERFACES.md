@@ -1584,3 +1584,150 @@ $$
 outgoing polar 的裕度为 $(1+2\eta)\ell>\ell$。（457.9）第二项的裕度至少为 $c+\ell/2-\eta>c-\ell^2/2>c/2$，对角项的裕度大于 $c$。其余费用保留上述固定正裕度。将全部内部小幂分配在这些同源裕度以内，原 Mellin 高度由同一 $\mathcal N$ 支付，得到（457.2）。在同一实际 inverse Gram 范数中与 H8 的 $w$ 使用三角不等式，即得（457.3）。证毕。
 
 ## 追加锚（本行以下为增补区）
+
+## 458. Möbius 自卷积与无槽四矩的完整原系数预算
+
+**定理 458.1（同一原卷积的完整行能量）。** 沿用 [H1 的固定物理表示及原零掩码](../../../Library/Analytic/faveri2026fixedorder.md#a-prime-labelled-residue-cut-for-the-original-unsplit-convolution)，工作于 F4 之前。以下是 `repo-derived` 的联合应用，解析前提为 de Faveri [Theorem 1.1](https://arxiv.org/abs/2610.04045v1)、原稿 `lem:plain` 的无槽情形及其既有 smooth-calculus/Sobolev 合同。[Xu–Sang v2，Theorem 2.2（2.5）及（6.3）](https://arxiv.org/html/2610.17675v2)也明确陈述所用无槽 plain 四矩；该文只允许粗素数卷积的 Proposition 7.2 不用作原 Möbius/plain 系数的供应。通用筛法、Cauchy 和除数估计仅是本条证明的既有工具，不分别列作新结果。本条没有本仓解析 Lean 认证或文献优先权断言。
+
+固定原 Eisenstein 理想变量、坏素集合 $S$、有限 ray 数据、annular profiles 及其有限多项式高度合同。令 $q_a=Na$，$K=DN$，各长度在原解析输入允许的固定幂范围内。取原非负行权 $\Omega$，保留 $q_z\asymp U$ 的 good sixth-power-free 行，令
+
+$$
+\begin{aligned}
+b(h)&=\omega(h)\sum_{dn=h}\mu(d)V(q_d/D)W(q_n/N),\\
+(Ab)(z)&=\sqrt{\Omega(q_z/U)}\sum_h b(h)\chi_h(z),
+\qquad Q(b)=\|Ab\|_2^2,\\
+\Psi_6(U,X)&=U+X+U^{5/6}X^{1/3}+U^{1/3}X^{5/6}.
+\end{aligned}
+\tag{458.1}
+$$
+
+$h$ 不限平方自由或 sixth-power-free，不附加 $(d,n)=1$。$\omega$ 包含 H1 的全部固定相位、section 与有限过滤，$\chi$ 保持其原非单位零值。负 orientation 整体共轭，不在非单位处取倒数。固定有限 Fourier 分解以及必要的有限行分区，均按 H1 的固定 ray 合同执行。
+
+每个 Fourier 分量及所需 profile 导数的 Möbius、plain 四矩成本，分别写成第四根因子 $C_{M,\xi}$、$C_{S,\xi}$；把 $\Omega$ 的固定有界权纳入这些因子。一次选择共同乘积包络
+
+$$
+\mathcal C\ge
+\max\left\{1,\sum_\xi|c_\xi|C_{M,\xi}C_{S,\xi}\right\},
+\tag{458.2}
+$$
+
+并支付原有限分区、smooth seminorm 与 Mellin/Sobolev 费用。这里的 $\mathcal C$ 控制两种第四根成本的乘积；不能把两个独立四矩成本各自改名为 $\mathcal C$，再漏掉乘积。它不按行、标签或范数重新选择，原 growing-height allowance 也不重新分配。
+
+对任意最终 $\varepsilon>0$，先分配内部除数及 dyadic 小幂，有
+
+$$
+Q(b)\ll_\varepsilon
+(UK)^\varepsilon\mathcal C^2 K
+\sqrt{U\Psi_6(U,D^2)}.
+\tag{458.3}
+$$
+
+因此对同一个行 Hilbert 空间中的任意实际正交投影 $P$，特别是定理 457.1 的实际素标记投影，
+
+$$
+\|(I-P)Ab\|_2^2
+\le Q(b)
+\ll_\varepsilon(UK)^\varepsilon\mathcal C^2 K
+\sqrt{U\Psi_6(U,D^2)}.
+\tag{458.4}
+$$
+
+这是完整原能量的上界，再由投影收缩控制补空间；没有从小投影推断完整范数小。既有的 $K\Psi_6(U,K)$ 原卷积界仍可与（458.3）取最小值，不作为新增结果重述。
+
+证明。在每个固定有限分量上，精确写 $\omega(h)=\sum_\xi c_\xi\xi(h)$，包括原固定非单位处的零。对该分量令
+
+$$
+\begin{aligned}
+\psi_z(a)&=\xi(a)\chi_a(z),\\
+M_\xi(z)&=D^{-1/2}\sum_d\mu(d)V(q_d/D)\psi_z(d),\\
+S_\xi(z)&=N^{-1/2}\sum_n W(q_n/N)\psi_z(n).
+\end{aligned}
+\tag{458.5}
+$$
+
+乘法性包含 collision zeros，故 $Ab_\xi=\sqrt\Omega K^{1/2}M_\xi S_\xi$。两因子在同一实际行上，使用同一字符、共同固定 mask 与原 profiles；没有独立优化两个系数向量。原 fixed-ray 族的 conductor 支持于固定 $S$ 数据；good 非单位 sixth-power-free 行至少有一个 $S$ 外素因子的 valuation 在 $1,\ldots,5$，所以 inducing character 非主。原有限例外按既有分解另计，不能删去 principal 极点；annular 大 $U$ 的当前 good 行不含单位。
+
+展开 $M_\xi(z)^2$，而不是 $|M_\xi(z)|^2$：
+
+$$
+\begin{aligned}
+M_\xi(z)^2&=\sum_a g_\xi(a)\chi_a(z),\\
+g_\xi(a)&=D^{-1}\xi(a)
+\sum_{d_1d_2=a}\mu(d_1)\mu(d_2)
+ V(q_{d_1}/D)V(q_{d_2}/D).
+\end{aligned}
+\tag{458.6}
+$$
+
+每个非零 $\mu(d_i)$ 强迫 $d_i$ 平方自由，故 $v_p(a)\le2$，即 $a$ cube-free，从而 sixth-power-free；允许 $d_1,d_2$ 共享素因子。$q_a\asymp D^2$，除数界及理想计数给出
+
+$$
+\sum_a|g_\xi(a)|^2\ll_\varepsilon C_{M,\xi}^4D^\varepsilon.
+$$
+
+因此直接在真实的 cube-free 列支撑上使用 Theorem 1.1，经既有有限 ray-family 修正，得到
+
+$$
+\sum_z\Omega(q_z/U)|M_\xi(z)|^4
+\ll_\varepsilon(UD)^\varepsilon C_{M,\xi}^4\Psi_6(U,D^2).
+\tag{458.7}
+$$
+
+这里不需要不限列的第六次幂提取；添加 $U(D^2)^{1/6}$ 费用会丢掉实际 $\mu*\mu$ 支撑。原 $h=dn$ 仍不限重数，受限的是证明内平方多项式的新列 $a=d_1d_2$。
+
+在相同非主 inducing 行上，无槽 plain product 估计取两个相同的 $N$，给出
+
+$$
+\sum_z\Omega(q_z/U)|S_\xi(z)|^4
+\ll_\varepsilon(UK)^\varepsilon C_{S,\xi}^4U.
+\tag{458.8}
+$$
+
+固定有限 ray twist 不增加 growing radical 费用；共同原零掩码仍在两个 plain 因子中。该输入不以新的无零区为前提，也不将 prime-only 结论迁移到任意卷积。
+
+对同一批行使用带 $\Omega$ 的 Cauchy，得到
+
+$$
+\|Ab_\xi\|_2^2
+\le K
+\left(\sum_z\Omega|M_\xi|^4\right)^{1/2}
+\left(\sum_z\Omega|S_\xi|^4\right)^{1/2}.
+\tag{458.9}
+$$
+
+代入（458.7）—（458.8），再在同一个行范数中对原有限 Fourier 分量作三角不等式，使用（458.2），即得（458.3）。只在正范数处放大，全部原符号、相位、重叠素因子和零值已经由（458.5）精确保留。
+
+上述筛应用先固定 row-independent profiles。原允许的有限维 smooth 参数选择，沿既有 Sobolev 论证对有限 profile 导数作同一估计；乘积导数产生有限个（458.6）型系数，仍有相同 cube-free 支撑与除数范数。实际行向量及其统一范数据此控制，所有高度费用留在同一次 $\mathcal C$ 中。与定理 457.1 合用时，必须取同一个实际原向量及共同 profile/height 合同，不能把分别取得的参数选择合并成一个实现。最后正交投影收缩给出（458.4）。证毕。
+
+当 $D\le U^{1/4}$，四个筛项均为 $O(U)$，所以完整原能量及其实际补空间满足
+
+$$
+Q(b),\ \|(I-P)Ab\|_2^2
+\ll_\varepsilon(UK)^\varepsilon\mathcal C^2 UK.
+\tag{458.10}
+$$
+
+在 $U\asymp K$ 写 $D=K^d$、$N=K^{1-d}$，$0\le d\le1$，则（458.3）的幂次为
+
+$$
+J(d)=
+\begin{cases}
+2,&0\le d\le1/4,\\
+23/12+d/3,&1/4\le d\le1/2,\\
+5/3+5d/6,&1/2\le d\le1.
+\end{cases}
+\tag{458.11}
+$$
+
+特别地，$D=N=\sqrt K$ 时完整原矩及补空间为 $O(\mathcal C^2K^{25/12+\varepsilon})$，较既有通用原卷积公式的 $K^{13/6+\varepsilon}$ 改进 $1/12$。在定理 457.1 的同一扇区 $\sqrt K\le D\le\sqrt K L^{1/6-\delta}$、$L=K^\ell$，得到
+
+$$
+Q(b),\ \|(I-P)Ab\|_2^2
+\ll_\varepsilon\mathcal C^2
+K^{25/12+(5/36-5\delta/6)\ell+\varepsilon}.
+\tag{458.12}
+$$
+
+把 $\mathcal C$ 一次扩大到也控制定理 457.1 的共同包络，在同一实际向量、该定理的有界共同成本及充分小 $\varepsilon$ 合同下，其投影是 $o(K^2)$，但（458.12）仍比 $K^2$ 高 $1/12+(5/36-5\delta/6)\ell$。该差额是本上界的预算缺口，不是实际补空间的下界；（458.10）在 $U\asymp K$ 也只有 $K^{2+\varepsilon}$，没有严格节省。其他原长度、高度、growing-height allowance、F4 的不同列二次型及 signed Robin restoration 仍需对应估计。本条不证明 RH 或全部 $n>5040$ 的严格 Robin 不等式。
+
+## 追加锚（本行以下为增补区）
