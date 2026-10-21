@@ -4,7 +4,23 @@
 
 The completed-zeta Archimedean term is its mass contribution plus a nonnegative continuous translation energy.
 
-**Theorem 1.1 (Actual jump density as a positive rate series).**
+**Theorem 1.1 (Retain the zero term and bound the complete tail).**
+
+Lean statement: `D5/S3/Weil/ZetaGamma/ArchimedeanJumpDecomposition.digamma_increment_le_six_of_abs_le_two`
+
+*Proof.* Machine-checked in Lean as `D5/S3/Weil/ZetaGamma/ArchimedeanJumpDecomposition.digamma_increment_le_six_of_abs_le_two` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+For every real t with |t|<=2, Re digamma(1/4+i*t/2)-Re digamma(1/4)<=6. The proof uses the summable digamma-increment series in ArchimedeanJumpDecomposition.
+
+Put y=t/2 and b_n=n+1/4. The existing increment equals y^2/(b_n*(b_n^2+y^2)) and is nonnegative. Since y^2<=1, its n=0 term is <=64/17. For n>=0 the term indexed n+1 is <= 2/((n+1)*(n+2))=2/(n+1)-2/(n+2). Finite range sums telescope to at most 2, and the nonnegative real tsum bound controls the entire tail. The existing summable series splits into its zero term and tail, giving <=98/17<6. This proof uses no compact supremum and no finite sampling of digamma values. The estimate is used by FormCore.LogGraph.actual_gamma_scalar_bounds, which supplies the exact all-frequency constants C1 and C2.
+
+The result is a uniform estimate on the full closed frequency interval, including both endpoints and zero.
+
+**Theorem 1.2 (Actual jump density as a positive rate series).**
 
 Lean statement: `D5/S3/Weil/ZetaGamma/ArchimedeanJumpDecomposition.jump_density_eq_tsum`
 
@@ -16,7 +32,7 @@ Lean statement: `D5/S3/Weil/ZetaGamma/ArchimedeanJumpDecomposition.jump_density_
 
 For every real x>0, archimedeanJumpDensity(x) equals the sum over natural n of exp(-((2*n)+1/2)*x). The geometric ratio exp(-2*x) lies in [0,1). This is the original density-series proof used by the Levy decomposition; the extended periodic comparison consumes the same declaration directly.
 
-**Theorem 1.2 (Archimedean jump decomposition).**
+**Theorem 1.3 (Archimedean jump decomposition).**
 
 $$\forall f\in \mathcal{W}, hArch: \operatorname{ArchimedeanConvergent}(\operatorname{convolutionSquare}\left(f\right)) \Rightarrow \operatorname{archimedeanTerm}\left(\operatorname{convolutionSquare}\left(f\right), hArch\right) = \operatorname{archimedeanConstant} \cdot \operatorname{l2Mass}\left(f\right) + \operatorname{archimedeanJumpEnergy}\left(f\right) \land 0 \le \operatorname{archimedeanJumpEnergy}\left(f\right)$$
 
@@ -32,7 +48,7 @@ The jump density is exp(-x/2)/(1-exp(-2x)) on positive scales, and the jump ener
 
 The first public conjunct is the exact complex identity. The second public conjunct records positivity of the independently constructed continuous jump energy.
 
-**Theorem 1.3 (Nonnegative actual density).**
+**Theorem 1.4 (Nonnegative actual density).**
 
 Lean statement: `D5/S3/Weil/ZetaGamma/ArchimedeanJumpDecomposition.archimedeanJumpDensity_nonneg`
 
@@ -44,7 +60,7 @@ Lean statement: `D5/S3/Weil/ZetaGamma/ArchimedeanJumpDecomposition.archimedeanJu
 
 The actual density exp(-x/2)/(1-exp(-2*x)) is nonnegative for positive x.
 
-**Theorem 1.4 (Levy integral and digamma).**
+**Theorem 1.5 (Levy integral and digamma).**
 
 Lean statement: `D5/S3/Weil/ZetaGamma/ArchimedeanJumpDecomposition.levy_integral_eq_digamma`
 
@@ -56,7 +72,7 @@ Lean statement: `D5/S3/Weil/ZetaGamma/ArchimedeanJumpDecomposition.levy_integral
 
 For every real z, the integral over positive x of 2*rho(x)*(1-cos(z*x)) equals Re digamma(1/4+i*z/2)-Re digamma(1/4). This identity determines the spectral multiplier of the periodic and whole-line translation energies.
 
-**Theorem 1.5 (Integrable Levy kernel).**
+**Theorem 1.6 (Integrable Levy kernel).**
 
 Lean statement: `D5/S3/Weil/ZetaGamma/ArchimedeanJumpDecomposition.levy_integrableOn`
 
@@ -86,12 +102,13 @@ For each fixed displacement s, L2 Parseval gives the squared mass of the periodi
 
 Combining this extended identity with the full boundary-domain equivalence yields the exact coefficient domain: F0 is integrable on (0,infinity) if and only if sum_{n in Z} ofReal(w(omega_n))*ofReal(|c_n|^2) is finite. The original premises remain a>0 and interval MemLp 2. On this common domain the finite identity E0=Ep+B_0 continues to hold.
 
-These interval and Fourier conclusions apply the existing Gamma density and Levy proof together with the interval transport, Parseval and integration results. A closed form realization, a smooth compactly supported form core, identification with the full raw real-line Fourier multiplier on this domain, and positivity of the full signed Weil form require further arguments. The displayed public theorem above retains its smooth even test carrier and exact ArchimedeanConvergent premise.
+These interval and Fourier conclusions apply the existing Gamma density and Levy proof together with the interval transport, Parseval and integration results. FormCore.SmoothCore supplies the smooth compactly supported core for arbitrary complex original-Ioc profiles of finite actual energy. FormCore.LogGraph identifies the actual whole-line jump energy with its PLUS Fourier multiplier on L1 intersect L2 and gives the logarithmic graph-domain equivalence on the original Ioc carrier. A closed quadratic-form realization and positivity of the full signed Weil form require further arguments. The displayed public theorem above retains its smooth even test carrier and exact ArchimedeanConvergent premise.
 
 ## References
 
 - Truth anchor: `D5/S3/Weil/ZetaGamma/ArchimedeanJumpDecomposition.archimedeanJumpDensity_nonneg`
 - Truth anchor: `D5/S3/Weil/ZetaGamma/ArchimedeanJumpDecomposition.archimedean_jump_decomposition`
+- Truth anchor: `D5/S3/Weil/ZetaGamma/ArchimedeanJumpDecomposition.digamma_increment_le_six_of_abs_le_two`
 - Truth anchor: `D5/S3/Weil/ZetaGamma/ArchimedeanJumpDecomposition.jump_density_eq_tsum`
 - Truth anchor: `D5/S3/Weil/ZetaGamma/ArchimedeanJumpDecomposition.levy_integrableOn`
 - Truth anchor: `D5/S3/Weil/ZetaGamma/ArchimedeanJumpDecomposition.levy_integral_eq_digamma`

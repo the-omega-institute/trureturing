@@ -12,6 +12,30 @@ internal sealed class ArchimedeanJumpDecompositionDocument : IScribeDocumentDefi
         H("Archimedean Jump Decomposition"),
         Blocks(
             Describe.Lean(
+                DescribeId.Create("actual-digamma-increment-small-frequency-six"),
+                DeclarationHandle.Create("D5/S3/Weil/ZetaGamma/ArchimedeanJumpDecomposition.digamma_increment_le_six_of_abs_le_two"),
+                H("Retain the zero term and bound the complete tail"),
+                StatementSource.WithoutFormula(),
+                AssessedProvenance.FromRepo(),
+                Blocks(
+                    Paragraph(Text(
+                        "For every real t with |t|<=2, "
+                        + "Re digamma(1/4+i*t/2)-Re digamma(1/4)<=6. The proof uses the summable digamma-increment series in ArchimedeanJumpDecomposition.")),
+                    Paragraph(Text(
+                        "Put y=t/2 and b_n=n+1/4. The existing increment equals "
+                        + "y^2/(b_n*(b_n^2+y^2)) and is nonnegative. Since y^2<=1, its n=0 "
+                        + "term is <=64/17. For n>=0 the term indexed n+1 is <= "
+                        + "2/((n+1)*(n+2))=2/(n+1)-2/(n+2). Finite range sums telescope "
+                        + "to at most 2, and the nonnegative real tsum bound controls the entire "
+                        + "tail. The existing summable series splits into its zero term and tail, "
+                        + "giving <=98/17<6. This proof uses no compact supremum and no finite "
+                        + "sampling of digamma values. The estimate is used by "
+                        + "FormCore.LogGraph.actual_gamma_scalar_bounds, which supplies the "
+                        + "exact all-frequency constants C1 and C2.")),
+                    Paragraph(Text(
+                        "The result is a uniform estimate on the full closed frequency interval, including both endpoints and zero."))),
+                DescribeRole.Theorem),
+            Describe.Lean(
                 DescribeId.Create("archimedean-jump-density-geometric-series"),
                 DeclarationHandle.Create(
                     "D5/S3/Weil/ZetaGamma/ArchimedeanJumpDecomposition.jump_density_eq_tsum"),
@@ -160,10 +184,13 @@ internal sealed class ArchimedeanJumpDecompositionDocument : IScribeDocumentDefi
             Paragraph(Text(
                 "These interval and Fourier conclusions apply the existing "
                     + "Gamma density and Levy proof together with the interval "
-                    + "transport, Parseval and integration results. A closed form "
-                    + "realization, a smooth compactly supported form core, "
-                    + "identification with the full raw real-line Fourier "
-                    + "multiplier on this domain, and positivity of the full "
+                    + "transport, Parseval and integration results. FormCore.SmoothCore "
+                    + "supplies the smooth compactly supported core for arbitrary "
+                    + "complex original-Ioc profiles of finite actual energy. "
+                    + "FormCore.LogGraph identifies the actual whole-line jump energy "
+                    + "with its PLUS Fourier multiplier on L1 intersect L2 and gives "
+                    + "the logarithmic graph-domain equivalence on the original Ioc carrier. "
+                    + "A closed quadratic-form realization and positivity of the full "
                     + "signed Weil form require further arguments. The displayed "
                     + "public theorem above retains its smooth even test carrier "
                     + "and exact ArchimedeanConvergent premise.")))));

@@ -808,4 +808,89 @@ theorem levy_integrableOn (t : ℝ) :
       (Ioi 0) :=
   levy_kernel_integrableOn t
 
+/-- An explicit compact-frequency estimate for the actual digamma increment.
+The zero series term is at most `64/17`; the entire remaining tail is at most
+`2` by a telescoping majorant. No compact supremum is used. -/
+theorem digamma_increment_le_six_of_abs_le_two {t : ℝ} (ht : |t| ≤ 2) :
+    (Complex.digamma
+      ((1 / 4 : ℂ) + Complex.I * ((t / 2 : ℝ) : ℂ))).re -
+      (Complex.digamma (1 / 4)).re ≤ 6 := by
+  have hy0 : 0 ≤ (t / 2) ^ 2 := sq_nonneg _
+  have hy1 : (t / 2) ^ 2 ≤ 1 := by
+    have hsq : |t| ^ 2 ≤ (2 : ℝ) ^ 2 :=
+      (sq_le_sq₀ (abs_nonneg t) (by norm_num)).mpr ht
+    rw [sq_abs] at hsq
+    nlinarith
+  have hterm (n : ℕ) : digammaIncrement t n =
+      (t / 2) ^ 2 / (((n : ℝ) + 1 / 4) *
+        (((n : ℝ) + 1 / 4) ^ 2 + (t / 2) ^ 2)) := by
+    have hc : 0 < (n : ℝ) + 1 / 4 := by positivity
+    have hd : 0 < ((n : ℝ) + 1 / 4) ^ 2 + (t / 2) ^ 2 := by positivity
+    unfold digammaIncrement
+    field_simp [hc.ne', hd.ne']
+    <;> ring
+  have hnn (n : ℕ) : 0 ≤ digammaIncrement t n := by
+    rw [hterm]
+    positivity
+  have hzero : digammaIncrement t 0 ≤ (64 / 17 : ℝ) := by
+    rw [hterm]
+    norm_num only [Nat.cast_zero, zero_add]
+    apply (div_le_iff₀ (by positivity)).mpr
+    nlinarith
+  have htail_term (n : ℕ) : digammaIncrement t (n + 1) ≤
+      2 / ((n : ℝ) + 1) - 2 / ((n : ℝ) + 2) := by
+    let c : ℝ := (n : ℝ) + 1
+    let b : ℝ := (n : ℝ) + 1 + 1 / 4
+    have hc : 1 ≤ c := by
+      dsimp [c]
+      linarith [Nat.cast_nonneg (α := ℝ) n]
+    have hc0 : 0 < c := by linarith
+    have hb0 : 0 < b := by dsimp [b]; positivity
+    have hcb : c ≤ b := by dsimp [b, c]; linarith
+    have hbden : 0 < b * (b ^ 2 + (t / 2) ^ 2) := by positivity
+    have hden : b * b ^ 2 ≤ b * (b ^ 2 + (t / 2) ^ 2) := by
+      nlinarith
+    have hcden : c * c ^ 2 ≤ b * b ^ 2 := by gcongr
+    have hcquad : c + 1 ≤ 2 * c ^ 2 := by nlinarith [sq_nonneg (c - 1)]
+    have hcprod : c * (c + 1) ≤ 2 * (c * c ^ 2) := by
+      nlinarith [mul_le_mul_of_nonneg_left hcquad hc0.le]
+    have hbound : digammaIncrement t (n + 1) ≤ 2 / (c * (c + 1)) := by
+      rw [hterm]
+      simp only [Nat.cast_add, Nat.cast_one]
+      change (t / 2) ^ 2 / (b * (b ^ 2 + (t / 2) ^ 2)) ≤ _
+      calc
+        _ ≤ 1 / (b * (b ^ 2 + (t / 2) ^ 2)) :=
+          div_le_div_of_nonneg_right hy1 hbden.le
+        _ ≤ 1 / (b * b ^ 2) :=
+          one_div_le_one_div_of_le (by positivity) hden
+        _ ≤ 1 / (c * c ^ 2) :=
+          one_div_le_one_div_of_le (by positivity) hcden
+        _ ≤ 2 / (c * (c + 1)) := by
+          apply (div_le_div_iff₀ (by positivity) (by positivity)).mpr
+          simpa only [one_mul] using hcprod
+    calc
+      _ ≤ 2 / (c * (c + 1)) := hbound
+      _ = 2 / ((n : ℝ) + 1) - 2 / ((n : ℝ) + 2) := by
+        have heq : 2 / (c * (c + 1)) = 2 / c - 2 / (c + 1) := by
+          field_simp [hc0.ne', show c + 1 ≠ 0 by positivity]
+          <;> ring
+        simpa only [c, add_assoc, one_add_one_eq_two] using heq
+  have htail : (∑' n : ℕ, digammaIncrement t (n + 1)) ≤ 2 := by
+    refine Real.tsum_le_of_sum_range_le (fun n => hnn (n + 1)) fun N => ?_
+    calc
+      _ ≤ ∑ n ∈ Finset.range N,
+          (2 / ((n : ℝ) + 1) - 2 / ((n : ℝ) + 2)) :=
+        Finset.sum_le_sum fun n _ => htail_term n
+      _ = 2 - 2 / ((N : ℝ) + 1) := by
+        have htel := Finset.sum_range_sub' (f := fun n : ℕ =>
+          2 / ((n : ℝ) + 1)) N
+        simpa only [Nat.cast_add, Nat.cast_one, Nat.cast_zero, zero_add,
+          add_assoc, one_add_one_eq_two, div_one] using htel
+      _ ≤ 2 := by
+        linarith [show 0 ≤ (2 : ℝ) / ((N : ℝ) + 1) by positivity]
+  rw [digamma_increment_sum,
+    ← (summable_digamma_increment t).sum_add_tsum_nat_add 1]
+  simp only [Finset.sum_range_one]
+  linarith
+
 end D5.S3.Weil.ZetaGamma.ArchimedeanJumpDecomposition
