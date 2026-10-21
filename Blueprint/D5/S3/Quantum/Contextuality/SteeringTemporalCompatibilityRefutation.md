@@ -130,7 +130,7 @@ $$
 
 **Theorem 1.11 (A steerable state with a temporal channel).**
 
-$$\neg claim$$
+$$\neg \left(\forall R \in \operatorname{Matrix}\left(\operatorname{Prod}\left(\operatorname{Fin}\left(2\right), \operatorname{Fin}\left(2\right)\right), \operatorname{Prod}\left(\operatorname{Fin}\left(2\right), \operatorname{Fin}\left(2\right)\right), \mathbb{C}\right),\; ((\operatorname{IsDensity}\left(R\right)) \Rightarrow (((\operatorname{SteerableBA}\left(R\right)) \lor (\operatorname{SteerableAB}\left(R\right))) \Rightarrow (\operatorname{Atemporal}\left(R\right))))\right)$$
 
 *Proof.* Machine-checked in Lean as `D5/S3/Quantum/Contextuality/SteeringTemporalCompatibilityRefutation.result` (`✓ std3`). ∎
 
