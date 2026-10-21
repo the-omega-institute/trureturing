@@ -592,3 +592,261 @@ Proof. The mean assertion is Theorem 5.1 and the fibre assertions are Theorems 6
 This distinction uses the task-relative convention of [Second Order Relation Completion, Definition 0.1](AURIC_FIB_SECOND_ORDER_RELATION_COMPLETION.md). In the different native problem of [Joint Transfer–Coherence Interface Geometry, Definition 1.4](FIB_NATIVE_JOINT_TRANSFER_COHERENCE_INTERFACE_GEOMETRY.md), a single history-independent channel acts on one already reached specimen with fixed common metadata; that premise does not supply the world-dependent initial program here. Likewise [Native Nonlinear Readout Capacity, Definition 2.1](FIB_NATIVE_NONLINEAR_READOUT_CAPACITY_AND_MINIMAL_DIMENSION.md) requires an encoder intertwining its own native actions and one deterministic output map. The stochastic output and explicitly different preparation family here supply no correspondence satisfying that contract. These are distinctions of mathematical hypotheses and outputs. The repo-derived content is the concrete conditional FIB program, instrument and indexed-law correspondence proved above, using the cited mature representation and Gaussian tools; no priority, physical identification or nonclassical resource conclusion is entailed. $\square$
 
 ## 追加锚（本行以下为增补区）
+
+## 8. The affine predictive-carrier obstruction
+
+The preceding sections construct a seventeen-coordinate program for the full
+world domain. They deliberately do not claim that seventeen is a minimum.
+This section supplies a minimum for a more specific and testable task: one
+common state must support affine readouts of every fixed word through the
+fifth action. The word horizon and the affine readout contract are part of
+the statement. They are not consequences of the source recursion.
+
+**Definition 8.1 (the complete finite-horizon mean map).** For
+$0\le H\le7$, let
+
+$$
+\mathcal A_H=\{w\in\{J,M\}^{\le H}\}
+$$
+
+be the set of chronological words of length at most $H$. Let $L_w$ be the
+stacked row matrix from Theorem 3.2, so that
+
+$$
+y_w(W)=L_wm_W,
+\qquad
+m_W=(d,\operatorname{vec}(a_0P),\ldots,\operatorname{vec}(a_3P)).
+$$
+
+Define the stacked linear response map and its rank by
+
+$$
+\mathcal L_Hm=(L_wm)_{w\in\mathcal A_H},
+\qquad
+r_H=\operatorname{rank}\mathcal L_H.
+$$
+
+The stacking is over complete acquired records, including clock zero for
+each word. A word-dependent covariance is allowed below, provided it is
+independent of $W$ as in Theorem 5.1. The rank statement concerns the
+means; the Gaussian-law statement below additionally fixes those
+$W$-independent covariances.
+
+**Proposition 8.2 (exact finite-horizon response ranks).** With the matrices
+$J,M$ and the rows of Theorem 3.2,
+
+$$
+\boxed{(r_0,r_1,r_2,r_3,r_4,r_5,r_6,r_7)
+       =(1,3,7,12,16,17,17,17).}
+$$
+
+In particular, the complete response rank has already saturated at $H=5$.
+
+**Proof.** Every row has seventeen entries, so $r_H\le17$. Direct integer
+row reduction gives the following pivot certificates. For each word $w$,
+write $R_w$ for the row of $L_w$ at its terminal clock $|w|$ (with
+$R_\varepsilon$ the clock-zero row). The table lists these terminal word
+rows and a nonzero minor on the displayed pivot columns; exact elimination
+of the complete stacked matrices leaves no further pivot among the
+remaining rows. Columns are numbered $0,\ldots,16$ in the order
+$(d,\operatorname{vec}X_0,\ldots,\operatorname{vec}X_3)$.
+
+| $H$ | independent terminal rows $R_w$ | pivot columns | minor |
+|---:|---|---|---:|
+| $0$ | $\varepsilon$ | $0$ | $1$ |
+| $1$ | $\varepsilon,J,M$ | $0,1,4$ | $-1$ |
+| $2$ | $\varepsilon,J,M,JJ,JM,MJ,MM$ | $0,1,2,3,4,5,8$ | $2$ |
+| $3$ | $\varepsilon,J,M,JJ,JM,MJ,MM,JJJ,JJM,JMJ,JMM,MMJ$ | $0,1,2,3,4,5,6,7,8,9,10,12$ | $24$ |
+| $4$ | $\varepsilon,J,M,JJ,JM,MJ,MM,JJJ,JJM,JMJ,JMM,MMJ,JJJJ,JJJM,JJMJ,JJMM$ | $0,1,2,3,4,5,6,7,8,9,10,11,12,13,14,16$ | $13824$ |
+| $5$ | the $H=4$ rows and $JJJMM$ | $0,1,\ldots,16$ | $-82944$ |
+
+For example, the last determinant is obtained by inserting
+$Q_w=E_{|w|}\cdots E_1$ into
+
+$$
+L_w=(1,\operatorname{vec}(Q_w^T)^T,
+|w|\operatorname{vec}(Q_w^T)^T,
+|w|^2\operatorname{vec}(Q_w^T)^T,
+|w|^3\operatorname{vec}(Q_w^T)^T).
+$$
+
+The $H=5$ rows therefore span all of $\mathbb R^{17}$, while the exact
+elimination at the shorter horizons gives the preceding ranks. Since the
+sets of rows are nested, $r_H=17$ for $H=6,7$. $\square$
+
+**Lemma 8.3 (the full world mean family has full affine span).** Let
+
+$$
+\mathcal M=\{m_W:W\in\mathcal W\}\subseteq\mathbb R^{17}.
+$$
+
+Then
+
+$$
+\boxed{\operatorname{aff}(\mathcal M)=\mathbb R^{17}.}
+$$
+
+**Proof.** In the column-vector convention of Definition 2.1, choose the
+four legal matrices whose $(r,b,c)$ values are
+
+$$
+\left(\tfrac14,\tfrac18,\tfrac32\right),\quad
+\left(\tfrac14,\tfrac16,\tfrac98\right),\quad
+\left(\tfrac14,\tfrac14,\tfrac34\right),\quad
+\left(\tfrac13,\tfrac18,\tfrac{16}{9}\right).
+$$
+
+Their vectors $(P_{11},P_{21},P_{12},P_{22})$ have determinant
+$1/768\ne0$. For each coefficient block $k$, use worlds with
+$g(t)=t^k$, $d=0$, and these four choices of $P$. Their pairwise
+differences first span the three-dimensional trace-zero subspace of the
+$k$th block, because every chosen $P$ has trace one. The additional
+difference between $g(t)=2t^k$ and $g(t)=t^k$ supplies one absolute vector
+$(2-1)P$, so together they span the full four-dimensional block without
+assuming an unavailable zero polynomial. Finally, changing $d$ while
+holding $P$ and $g$ fixed supplies the first coordinate. Thus the direction
+space of the affine hull contains all seventeen coordinate directions.
+$\square$
+
+**Theorem 8.4 (sharp affine predictive-carrier lower bound).** Suppose a
+common state map
+
+$$
+z:\mathcal W\longrightarrow\mathbb R^k
+$$
+
+is supplied, with no linearity or measurability assumption on $z$. Suppose
+that for every $w\in\mathcal A_5$ there are fixed $A_w$ and $c_w$ such that
+
+$$
+y_w(W)=c_w+A_wz(W)
+\qquad\text{for every }W\in\mathcal W.
+$$
+
+Then
+
+$$
+\boxed{k\ge17.}
+$$
+
+The bound is attained by $z(W)=m_W$, $A_w=L_w$ and $c_w=0$. For the final
+law statement, assume that each candidate readout uses the same
+$W$-independent covariance $\Sigma_w$ as Theorem 5.1 for that fixed word
+$w$ (the covariance may depend on $w$). Under this shared-covariance
+Gaussian contract, seventeen is also the minimum dimension of a common
+state whose fixed affine readouts preserve all complete record laws
+through horizon five.
+
+**Proof.** Stack the means over $\mathcal A_5$ and write
+
+$$
+Y(W)=\mathcal L_5m_W=C+Az(W).
+$$
+
+By Lemma 8.3 and Proposition 8.2,
+
+$$
+\dim\operatorname{aff}\{Y(W):W\in\mathcal W\}
+ =\operatorname{rank}\mathcal L_5=17.
+$$
+
+The right-hand representation is contained in the affine image of
+$\mathbb R^k$, whose dimension is at most $\operatorname{rank}A\le k$.
+Thus $k\ge17$. The stated choice $z=m_W$ is exactly the program already
+used in Theorem 5.1, so it attains the bound. Finally, two Gaussian laws
+with the same positive covariance are equal exactly when their means are
+equal; hence preserving all the displayed means is equivalent to preserving
+the complete law family under the stated $\Sigma_w$ contract. $\square$
+
+**Corollary 8.5 (the three-coordinate trap through horizon five).** The
+rank three at horizon $H=1$ is a finite-prefix response rank. At $H=2$ it
+is already seven, and at $H=5$ it is seventeen. Therefore no common
+three-coordinate affine readout state can preserve the full fixed-word
+Gaussian record family through horizon five in this model. The additional
+coordinates are predictive carrier directions for the drift and four
+coefficient matrices; they are not additional
+physical spatial axes.
+
+The theorem does not rule out a nonlinear readout, a shorter word family, a
+finite promised subset of worlds, or a different task. It also does not
+identify the seventeen coordinates with physical modes or a spatial
+dimension. In the terminology of [the recursive holographic boundary
+geometry, Theorem 17.2](FIB_ATOM_RECURSIVE_HOLOGRAPHIC_BOUNDARY_GEOMETRY.md),
+this is a state/readout capacity under the displayed contract, not a
+Hilbert-mode count, an $SO(3)$ vector-block count, or a physical spatial
+dimension. A three-dimensional physical domain could carry seventeen
+internal coefficient fields, while a different carrier contract could use
+another number of coordinates.
+
+## 9. Quantitative terminal information escape
+
+The equality criterion in Theorem 6.2 can be sharpened for the continuous
+terminal kernel of Theorem 7.2. This gives a pairwise statistical
+divergence on a response fibre, and the normalized mean separation is a
+pseudometric after quotienting equal terminal means, while retaining the
+fact that the exact child history is a null event.
+
+**Proposition 9.1 (terminal Gaussian separation).** Fix
+$E\in\{J,M\}$ and $W,W'\in C(p,v)$. Let
+
+$$
+\Delta_E=f_{ME}(W)-f_{ME}(W')
+$$
+
+and let $s_E^2$ be the Schur-complement variance in Theorem 7.2 for this
+fixed $E$ and acquisition design. It is positive and independent of $W$
+(it need not be the same for $J$ and $M$),
+
+$$
+s_E^2=C_{77}^E-C_{7A}^E(C_A)^{-1}C_{A7}^E>0.
+$$
+
+For the continuous conditional version at the numeric history
+$h(p,v)$, the two one-dimensional terminal kernels satisfy
+
+$$
+\boxed{
+D_{\mathrm{KL}}\!\left(\mathsf K_W^E(h,\cdot)\middle\|\mathsf K_{W'}^E(h,\cdot)\right)
+=\frac{\Delta_E^2}{2s_E^2},
+}
+$$
+
+and their Bhattacharyya affinity and squared Hellinger distance are
+
+$$
+\boxed{
+\operatorname{Aff}
+ =\exp\!\left(-\frac{\Delta_E^2}{8s_E^2}\right),
+\qquad
+H^2=1-\operatorname{Aff}.
+}
+$$
+
+Thus the normalized terminal separation
+
+$$
+\delta_E=\frac{|\Delta_E|}{s_E}
+$$
+
+vanishes exactly when the terminal laws agree, and quantifies pairwise
+terminal-law separation inside the child fibre. Without a prior on worlds,
+this KL divergence is not mutual information.
+
+**Proof.** Proposition 7.2 gives the selected continuous conditional
+version at $h(p,v)$ as a one-dimensional Gaussian with common variance
+$s_E^2$ and means $f_{ME}(W)$ and $f_{ME}(W')$. Completing the square in the
+two Gaussian densities gives the displayed relative-entropy and affinity
+identities; $H^2=1-\operatorname{Aff}$ is the stated Hellinger convention.
+The evaluation remains a kernel identity at a null history, exactly as in
+Theorem 7.2; it is not a claim that the instrument acquires that exact
+history with positive probability. $\square$
+
+If a boundary summary is required to determine both terminal laws and exact
+preservation is required, then every pair in a child fibre with $\delta_J>0$
+or $\delta_M>0$ must remain distinguishable by the summary. Under an
+approximate contract, the summary may merge pairs only after a declared
+loss or divergence tolerance is supplied, and the bound must be stated in
+that tolerance. The existing source theory supplies no
+occurrence-to-$\delta_E$ locality assignment, so this quantitative Gaussian
+distance cannot by itself be promoted to a physical locality or
+spatial-dimension statement.
