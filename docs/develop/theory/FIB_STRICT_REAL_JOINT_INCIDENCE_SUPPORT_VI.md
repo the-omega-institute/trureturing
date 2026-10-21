@@ -2833,7 +2833,7 @@ the exact base child \(C(p_i,v_i)\):
 \begin{array}{ll}
 (a)&\text{there are two distinct worlds with equal }(p_i,a);\\
 (b)&\text{there is a different strict regular world }W\ne W_i\text{ with }\\
-&\qquad D(p,v,a)(W)<2.
+&\qquad \operatorname{rank}\bigl(d(p,v,a)_W\bigr)<2.
 \end{array}
 \tag{19.2}
 \]
@@ -2846,14 +2846,18 @@ continuity of \((p,a)\) gives (a).  If the limits coincide at a world \(W\),
 the distinct approximating endpoints give a failure of local injectivity of
 \((p,v,a)\).  The singular-world exclusion of [SIII], Theorem 13.1, removes
 the \(\Lambda=0\) possibility.  At a regular world, the inverse-function
-criterion shows that rank two would make \((p,v,a)\) locally injective;
-hence rank is less than two.  The local \((p,a)\)-injectivity at \(W_i\)
+criterion shows that \(\operatorname{rank}\bigl(d(p,v,a)_W\bigr)=2\) would make
+\((p,v,a)\) locally injective; hence
+\(\operatorname{rank}\bigl(d(p,v,a)_W\bigr)<2\).  The local \((p,a)\)-injectivity at \(W_i\)
 from Theorem 16.1 excludes \(W=W_i\).  This leaves exactly (b).
 The argument takes both endpoints from the same subsequence and permits all
 cross-pair overlaps.  \(\square\)
 
-Theorems 17.2--19.3 do not decide \(J_i\) or \(Q_i\) for
-\(i\in\{1,2,3\}\), or the original independent \(J/M\) intersection.
+Within Sections 17--20, the first two local questions
+\(\mathsf J_i,\mathsf Q_i\) for \(i\in\{1,2\}\), and the original independent
+\(J/M\) intersection remain unresolved.  For the third local case,
+Theorems 19.2--19.3 give only the stated necessary conditions; the exact
+third-target inventory and local exclusion are supplied later in Section 23.
 Compactness supplies bounded complete-world families, not finite cardinality;
 the separate at-most-24 result [F], Theorem 32.1, remains a distinct
 hypothesis and gives no inventory over a continuum of target values.
@@ -2862,9 +2866,9 @@ For the fourth critical world, [SV], Theorems 9.2 and 12.2, prove
 \(\neg J_4\) and \(\neg Q_4\).  Terminal \(J\) is injective on each entire
 child over \(K_+=[56,58]\times[304,306]\), and no original joint
 configuration has a selected \(M\) source in the fourth neighborhood of
-[SV], (12.3).  The first-three \(J_i,Q_i\) questions, the remaining regular
-critical worlds in (19.2), and separated selected \(M\)-pairs outside the
-known exclusions remain unresolved.  The global sentence \(\mathsf I\) of
+[SV], (12.3).  The \(J_i,Q_i\) questions for \(i\in\{1,2\}\), the remaining regular
+critical worlds outside the Section 23 third-target analysis, and separated
+selected \(M\)-pairs outside the known exclusions remain unresolved.  The global sentence \(\mathsf I\) of
 Definition 16.3 retains its entire strict-world domain and its original
 independent-pair quantifiers; the fourth-region exclusion does not resolve it.
 
