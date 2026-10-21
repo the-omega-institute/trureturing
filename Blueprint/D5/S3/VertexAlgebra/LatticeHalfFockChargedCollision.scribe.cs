@@ -73,6 +73,21 @@ internal sealed class LatticeHalfFockChargedCollisionDocument : IScribeDocumentD
                     + "the largest d(0)+d(1) in the support of pairTranslation(p); tensor induction "
                     + "extends this bound to arbitrary inputs. Endomorphism support is not assumed finite."))),
                 DescribeRole.Definition),
+            Describe.Lean(
+                DescribeId.Create("charged-collision-all-natural-orders"),
+                DeclarationHandle.Create("D5/S3/VertexAlgebra/LatticeHalfFockChargedCollision.charged_allN_draft"),
+                H("Corrected source coefficients at every Taylor order"),
+                StatementSource.WithoutFormula(), AssessedProvenance.FromRepo(),
+                Blocks(Paragraph(Text("For every D:LatticeData, hu:IsUnit D.G.det, sigma,tau:Charge D, "
+                    + "N:Nat, e:Int and x:ActualTensor D hu, the coefficient at e of correctedField "
+                    + "D hu (Finsupp.single (sigma+tau) (creationCoeff D sigma N)), evaluated on x, "
+                    + "equals collisionCoefficient D hu sigma tau N e x. The source belongs to "
+                    + "Carrier D. This public comparison permits downstream coefficient calculations "
+                    + "at arbitrary Taylor order and signed exponent, including transformed tensor "
+                    + "inputs. Zero charges and every determinant-unit lattice remain in scope. "
+                    + "It compares a corrected source with its finite Taylor coefficient; it does "
+                    + "not identify the product of two physical target fields with a residue."))),
+                DescribeRole.Theorem),
             Paragraph(Text("The coefficient comparison uses two independently derived recurrences. "
                 + "Let C_N(e)x=collisionCoefficient D hu sigma tau N e x, let J_tau be the "
                 + "tau-weighted sum of singletonLinear current insertions and let "
@@ -106,9 +121,28 @@ internal sealed class LatticeHalfFockChargedCollisionDocument : IScribeDocumentD
                 + "groundAction(sigma+tau). Consequently the same complete coefficient is "
                 + "c_sigma*c_tau*2^(-2*B) times the tensor map with collisionOscillator and "
                 + "groundAction(sigma)*groundAction(tau), for every actual tensor input.")),
+            Describe.Lean(
+                DescribeId.Create("charged-collision-normalized-source-product"),
+                DeclarationHandle.Create("D5/S3/VertexAlgebra/LatticeHalfFockChargedCollision.charged_normalized_source_product_allN"),
+                H("The normalized ordinary source-iterate coefficient"),
+                StatementSource.WithoutFormula(), AssessedProvenance.FromRepo(),
+                Blocks(Paragraph(Text("For every D:LatticeData, hu:IsUnit D.G.det, sigma,tau:Charge D, "
+                    + "r,e:Int and x:ActualTensor D hu, take mode r of LatticeAllStateField.Y D "
+                    + "(Finsupp.single sigma 1) on Finsupp.single tau 1 in Carrier D. The coefficient "
+                    + "at e of its correctedField, evaluated on x, is zero if k=-r-1-bilinear D "
+                    + "sigma tau is negative. Otherwise it is (chargeScalar D sigma * chargeScalar "
+                    + "D tau * (2:Complex)^(-2*bilinear D sigma tau)) smul TensorProduct.map "
+                    + "(collisionOscillator D sigma tau k.toNat e) (groundAction D hu sigma * "
+                    + "groundAction D hu tau) x. This public endpoint exposes the exact charge "
+                    + "normalization and ordered ground product for downstream source-iterate "
+                    + "coefficient calculations. The source pair is the two specified ground "
+                    + "sources; the target tensor input is arbitrary. No charge or signed mode "
+                    + "is excluded. This is a corrected source-iterate coefficient comparison, "
+                    + "not yet a physical two-field residue identity."))), DescribeRole.Theorem),
             Paragraph(Text("The proof uses the repository's actual annihilation, finite correction, "
                 + "negative-current insertion, physical translation and charged product kernel "
-                + "constructions. This is an algebraic half-Fock coefficient comparison. "
+                + "constructions. These are corrected source-iterate coefficient comparisons, "
+                + "not yet a physical two-field residue identity. "
                 + "The complete charged residue law, an independently unweighted outer tail, "
                 + "finite inversion and arbitrary-source Borcherds reconstruction remain further "
                 + "obligations. The full Moonshine, VOA, CFT, anomaly, fusion, string and AdS/CFT "

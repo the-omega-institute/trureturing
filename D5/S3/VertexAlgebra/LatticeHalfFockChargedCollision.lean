@@ -2227,7 +2227,7 @@ private theorem collision_base (D : LatticeData) (hu : IsUnit D.G.det)
 /- Full all-N induction. Every coefficient and every actual input is
    quantified INSIDE the induction property. This transports singletonLinear
    as a whole-field operation, including its transformed inputs. -/
-private theorem charged_allN_draft (D : LatticeData) (hu : IsUnit D.G.det)
+theorem charged_allN_draft (D : LatticeData) (hu : IsUnit D.G.det)
     (sigma tau : Charge D) (N : ℕ) :
     ∀ (e : ℤ) (x : ActualTensor D hu),
       (correctedField D hu
@@ -2315,7 +2315,7 @@ private theorem charged_source_product_allN_draft
 
 /- The ordinary two-charge normalization and the actual ground product are
    retained explicitly in this coefficient formula on every tensor input. -/
-private theorem charged_normalized_source_product_allN
+theorem charged_normalized_source_product_allN
     (D : LatticeData) (hu : IsUnit D.G.det) (sigma tau : Charge D)
     (r e : ℤ) (x : ActualTensor D hu) :
     (correctedField D hu
