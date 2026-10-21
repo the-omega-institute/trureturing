@@ -64,26 +64,24 @@ def claim : Prop :=
         (∀ x ρ, Matrix.trace (J x ρ) = Matrix.trace (ρ * Qs U (sMax d t) x))) ↔
       (∀ x, J x = Itilde U t x)
 /-- The auxiliary square-root coordinate appearing in the Choi certificate. -/
-def c (d : ℕ) (t : ℝ) : ℝ := Real.sqrt (t * ((d : ℝ) ^ 2 - 1) + 1)
-/-- The coefficient of the distinguished diagonal vector. -/
-def a (d : ℕ) (t : ℝ) : ℝ := a2 d t
+private def c (d : ℕ) (t : ℝ) : ℝ := Real.sqrt (t * ((d : ℝ) ^ 2 - 1) + 1)
 /-- The distinguished diagonal coefficient. -/
-def k (d : ℕ) (t : ℝ) : ℝ := a d t + b t
-lemma It_apply {d : ℕ} (t : ℝ) (ρ : Matrix (Fin d) (Fin d) ℂ) :
+private def k (d : ℕ) (t : ℝ) : ℝ := a2 d t + b t
+private lemma It_apply {d : ℕ} (t : ℝ) (ρ : Matrix (Fin d) (Fin d) ℂ) :
     It t ρ = (t : ℂ) • ρ +
       (((((1 - t) / (d : ℝ)) : ℝ) : ℂ) * Matrix.trace ρ) • 1 := rfl
-lemma Itilde_apply {d : ℕ} (U : Matrix.unitaryGroup (Fin d) ℂ) (t : ℝ)
+private lemma Itilde_apply {d : ℕ} (U : Matrix.unitaryGroup (Fin d) ℂ) (t : ℝ)
     (x : Fin d) (ρ : Matrix (Fin d) (Fin d) ℂ) :
     Itilde U t x ρ = (1 / (d : ℂ)) •
       (((((b t) ^ 2 : ℝ) : ℂ) * Matrix.trace (ρ * Q U x)) • 1 +
         (((a2 d t * b t : ℝ) : ℂ) • (ρ * Q U x + Q U x * ρ)) +
         (((a2 d t) ^ 2 : ℝ) : ℂ) • ρ) := rfl
-lemma sum_Q {d : ℕ} (U : Matrix.unitaryGroup (Fin d) ℂ) :
+private lemma sum_Q {d : ℕ} (U : Matrix.unitaryGroup (Fin d) ℂ) :
     ∑ x, Q U x = 1 := by
   unfold Q; rw [← Matrix.sum_mul, ← Matrix.mul_sum, Matrix.sum_single_one, Matrix.mul_one]
   exact Matrix.mem_unitaryGroup_iff.mp U.2
 /-- The quadratic certificate used in the standard-basis argument. -/
-def qCertificate (d : ℕ) (aa bb cc : ℝ) (x : Fin d)
+private def qCertificate (d : ℕ) (aa bb cc : ℝ) (x : Fin d)
     (w : Matrix (Fin d) (Fin d) ℂ) : ℝ :=
   (∑ k' : Fin d, ∑ j : Fin d,
       if k' ≠ x ∧ j ≠ k' then Complex.normSq (w j k') else 0) +
@@ -91,9 +89,9 @@ def qCertificate (d : ℕ) (aa bb cc : ℝ) (x : Fin d)
       ((∑ i : Fin d, Complex.normSq (w i i)) -
         (aa / cc) * Complex.normSq (∑ i : Fin d, w i i)) -
     Complex.normSq (w x x)
-lemma b_sq {t : ℝ} (ht : t ≤ 1) : (b t) ^ 2 = 1 - t := by
+private lemma b_sq {t : ℝ} (ht : t ≤ 1) : (b t) ^ 2 = 1 - t := by
   rw [b, Real.sq_sqrt]; linarith
-lemma c_sq {d : ℕ} (hd : 2 ≤ d) {t : ℝ}
+private lemma c_sq {d : ℕ} (hd : 2 ≤ d) {t : ℝ}
     (ht : -1 / ((d : ℝ) ^ 2 - 1) ≤ t) :
     (c d t) ^ 2 = t * ((d : ℝ) ^ 2 - 1) + 1 := by
   rw [c, Real.sq_sqrt]
@@ -104,12 +102,12 @@ lemma c_sq {d : ℕ} (hd : 2 ≤ d) {t : ℝ}
   have hm' : -1 ≤ t * ((d : ℝ) ^ 2 - 1) := by
     convert hm using 1 <;> field_simp
   nlinarith
-lemma bc_sq {d : ℕ} (hd : 2 ≤ d) {t : ℝ}
+private lemma bc_sq {d : ℕ} (hd : 2 ≤ d) {t : ℝ}
     (htl : -1 / ((d : ℝ) ^ 2 - 1) ≤ t) (htu : t ≤ 1) :
     (b t * c d t) ^ 2 = (1 - (d : ℝ) ^ 2) * t ^ 2 +
       ((d : ℝ) ^ 2 - 2) * t + 1 := by
   rw [mul_pow, b_sq htu, c_sq hd htl]; ring
-lemma a2_channel_coeff {d : ℕ} (hd : 2 ≤ d) {t : ℝ}
+private lemma a2_channel_coeff {d : ℕ} (hd : 2 ≤ d) {t : ℝ}
     (htl : -1 / ((d : ℝ) ^ 2 - 1) ≤ t) (htu : t ≤ 1) :
     2 * a2 d t * b t / d + (a2 d t) ^ 2 = t := by
   have hd0 : (d : ℝ) ≠ 0 := by exact_mod_cast (show d ≠ 0 by omega)
@@ -117,7 +115,7 @@ lemma a2_channel_coeff {d : ℕ} (hd : 2 ≤ d) {t : ℝ}
   have hc := c_sq hd htl
   dsimp [a2]; change 2 * ((c d t - b t) / d) * b t / d + ((c d t - b t) / d) ^ 2 = t; field_simp
   nlinarith [c_sq hd htl, hb]
-lemma sMax_eq {d : ℕ} (hd : 2 ≤ d) {t : ℝ}
+private lemma sMax_eq {d : ℕ} (hd : 2 ≤ d) {t : ℝ}
     (htl : -1 / ((d : ℝ) ^ 2 - 1) ≤ t) (htu : t ≤ 1) :
     sMax d t = b t ^ 2 + 2 * a2 d t * b t / d := by
   have hd0 : (0 : ℝ) < d := by exact_mod_cast (Nat.zero_lt_of_lt hd)
@@ -130,11 +128,11 @@ lemma sMax_eq {d : ℕ} (hd : 2 ≤ d) {t : ℝ}
   rw [sMax, hroot]
   have hb' : (Real.sqrt (1 - t)) ^ 2 = 1 - t := Real.sq_sqrt (by linarith)
   dsimp [a2, c, b]; rw [hb']; field_simp; nlinarith [hb']
-lemma one_sub_sMax_eq_a2_sq {d : ℕ} (hd : 2 ≤ d) {t : ℝ}
+private lemma one_sub_sMax_eq_a2_sq {d : ℕ} (hd : 2 ≤ d) {t : ℝ}
     (htl : -1 / ((d : ℝ) ^ 2 - 1) ≤ t) (htu : t ≤ 1) :
     1 - sMax d t = (a2 d t) ^ 2 := by
   rw [sMax_eq hd htl htu, b_sq htu]; nlinarith [a2_channel_coeff hd htl htu]
-lemma c_pos {d : ℕ} (hd : 2 ≤ d) {t : ℝ}
+private lemma c_pos {d : ℕ} (hd : 2 ≤ d) {t : ℝ}
     (ht : -1 / ((d : ℝ) ^ 2 - 1) < t) : 0 < c d t := by
   unfold c; apply Real.sqrt_pos.2
   have hd' : 0 < (d : ℝ) ^ 2 - 1 := by
@@ -145,7 +143,7 @@ lemma c_pos {d : ℕ} (hd : 2 ≤ d) {t : ℝ}
       -1 = (-1 / ((d : ℝ) ^ 2 - 1)) * ((d : ℝ) ^ 2 - 1) := by field_simp
       _ < t * ((d : ℝ) ^ 2 - 1) := by gcongr
   nlinarith
-lemma k_pos {d : ℕ} (hd : 2 ≤ d) {t : ℝ}
+private lemma k_pos {d : ℕ} (hd : 2 ≤ d) {t : ℝ}
     (htl : -1 / ((d : ℝ) ^ 2 - 1) ≤ t) (htu : t < 1) : 0 < k d t := by
   have hdR : (2 : ℝ) ≤ d := by exact_mod_cast hd
   have hc : 0 ≤ c d t := by
@@ -156,7 +154,7 @@ lemma k_pos {d : ℕ} (hd : 2 ≤ d) {t : ℝ}
   change 0 < (c d t - b t) / d + b t
   apply (mul_pos_iff_of_pos_right (by linarith : (0 : ℝ) < d)).mp
   rw [add_mul, div_mul_cancel₀ _ (by linarith)]; nlinarith
-lemma Itilde_sum {d : ℕ} (hd : 2 ≤ d) (U : Matrix.unitaryGroup (Fin d) ℂ)
+private lemma Itilde_sum {d : ℕ} (hd : 2 ≤ d) (U : Matrix.unitaryGroup (Fin d) ℂ)
     {t : ℝ} (htl : -1 / ((d : ℝ) ^ 2 - 1) ≤ t) (htu : t ≤ 1) :
     ∑ x, Itilde U t x = It t := by
   have hd0 : (d : ℂ) ≠ 0 := by exact_mod_cast (show d ≠ 0 by omega)
@@ -179,7 +177,7 @@ lemma Itilde_sum {d : ℕ} (hd : 2 ≤ d) (U : Matrix.unitaryGroup (Fin d) ℂ)
     Complex.ofReal_sub, Complex.ofReal_one, Complex.ofReal_natCast]
   field_simp at ha ⊢
   linear_combination ρ i j * ha + Matrix.trace ρ * (1 : Matrix (Fin d) (Fin d) ℂ) i j * hb
-lemma Itilde_trace {d : ℕ} (hd : 2 ≤ d) (U : Matrix.unitaryGroup (Fin d) ℂ)
+private lemma Itilde_trace {d : ℕ} (hd : 2 ≤ d) (U : Matrix.unitaryGroup (Fin d) ℂ)
     {t : ℝ} (htl : -1 / ((d : ℝ) ^ 2 - 1) ≤ t) (htu : t ≤ 1)
     (x : Fin d) (ρ : Matrix (Fin d) (Fin d) ℂ) :
     Matrix.trace (Itilde U t x ρ) =
@@ -197,7 +195,7 @@ lemma Itilde_trace {d : ℕ} (hd : 2 ≤ d) (U : Matrix.unitaryGroup (Fin d) ℂ
     Complex.ofReal_mul, Complex.ofReal_div, Complex.ofReal_sub, Complex.ofReal_one,
     Complex.ofReal_natCast]
   rw [h1, hs]; field_simp; ring
-def choiVector {d : ℕ} (aa bb : ℝ) (x : Fin d) (p : Fin d × Fin d) : ℂ :=
+private def choiVector {d : ℕ} (aa bb : ℝ) (x : Fin d) (p : Fin d × Fin d) : ℂ :=
   (aa : ℂ) * (if p.1 = p.2 then 1 else 0) +
     (bb : ℂ) * (if p = (x, x) then 1 else 0)
 private lemma choi_of_boundary_formula {d : ℕ}
@@ -245,7 +243,7 @@ private lemma choi_of_boundary_formula {d : ℕ}
   all_goals try split_ifs
   all_goals try simp_all
   all_goals ring
-lemma choi_Itilde_standard (d : ℕ) (t : ℝ) (x : Fin d) :
+private lemma choi_Itilde_standard (d : ℕ) (t : ℝ) (x : Fin d) :
     MatrixMap.choi_matrix (Itilde (1 : Matrix.unitaryGroup (Fin d) ℂ) t x) =
       (1 / (d : ℝ)) •
         (Matrix.vecMulVec (choiVector (a2 d t) (b t) x)
@@ -253,7 +251,7 @@ lemma choi_Itilde_standard (d : ℕ) (t : ℝ) (x : Fin d) :
         Matrix.diagonal (fun p : Fin d × Fin d =>
           if p.2 = x ∧ p.1 ≠ x then ((b t : ℂ) ^ 2) else 0)) := by
   exact choi_of_boundary_formula _ _ _ x (Itilde_apply 1 t x)
-lemma choi_It_formula (d : ℕ) (t : ℝ) (j₁ i₁ j₂ i₂ : Fin d) :
+private lemma choi_It_formula (d : ℕ) (t : ℝ) (j₁ i₁ j₂ i₂ : Fin d) :
     MatrixMap.choi_matrix (It (d := d) t) (j₁, i₁) (j₂, i₂) =
       (t : ℂ) * (if i₁ = j₁ ∧ i₂ = j₂ then 1 else 0) +
         (((1 - t) / (d : ℝ) : ℝ) : ℂ) *
@@ -262,7 +260,7 @@ lemma choi_It_formula (d : ℕ) (t : ℝ) (j₁ i₁ j₂ i₂ : Fin d) :
   simp only [Matrix.add_apply, Matrix.smul_apply, smul_eq_mul, Matrix.single_apply,
     Matrix.one_apply]
   by_cases h : i₁ = i₂ <;> simp [h] <;> ring
-lemma Itilde_standard_cp {d : ℕ} (t : ℝ) (x : Fin d) :
+private lemma Itilde_standard_cp {d : ℕ} (t : ℝ) (x : Fin d) :
     (Itilde (1 : Matrix.unitaryGroup (Fin d) ℂ) t x).IsCompletelyPositive := by
   apply (MatrixMap.choi_PSD_iff_CP_map _).mpr; rw [choi_Itilde_standard]
   apply Matrix.PosSemidef.smul
@@ -274,18 +272,18 @@ lemma Itilde_standard_cp {d : ℕ} (t : ℝ) (x : Fin d) :
       exact Complex.zero_le_real.mpr (sq_nonneg (b t))
     · exact le_rfl
   · positivity
-lemma choi_competitor_psd {d : ℕ} {J : Fin d → MatrixMap (Fin d) (Fin d) ℂ}
+private lemma choi_competitor_psd {d : ℕ} {J : Fin d → MatrixMap (Fin d) (Fin d) ℂ}
     (x : Fin d) (hJ : (J x).IsCompletelyPositive) :
     (MatrixMap.choi_matrix (J x)).PosSemidef := by
   exact (MatrixMap.choi_PSD_iff_CP_map (J x)).mp hJ
-lemma choi_sum (d : ℕ) (t : ℝ) (J : Fin d → MatrixMap (Fin d) (Fin d) ℂ)
+private lemma choi_sum (d : ℕ) (t : ℝ) (J : Fin d → MatrixMap (Fin d) (Fin d) ℂ)
     (hJ : ∑ x, J x = It t) :
     ∑ x, MatrixMap.choi_matrix (J x) = MatrixMap.choi_matrix (It t) := by
   have hlin : MatrixMap.choi_matrix (∑ x, J x) =
       ∑ x, MatrixMap.choi_matrix (J x) := by
     ext ⟨j₁, i₁⟩ ⟨j₂, i₂⟩; simp [MatrixMap.choi_matrix, Matrix.sum_apply, LinearMap.sum_apply]
   rw [← hJ, hlin]
-lemma trace_condition_entry {d : ℕ} {U : Matrix.unitaryGroup (Fin d) ℂ}
+private lemma trace_condition_entry {d : ℕ} {U : Matrix.unitaryGroup (Fin d) ℂ}
     {s : ℝ} {J : Fin d → MatrixMap (Fin d) (Fin d) ℂ}
     (x i₁ i₂ : Fin d)
     (htrace : ∀ x ρ, Matrix.trace (J x ρ) = Matrix.trace (ρ * Qs U s x)) :
@@ -298,7 +296,7 @@ lemma trace_condition_entry {d : ℕ} {U : Matrix.unitaryGroup (Fin d) ℂ}
     _ = Matrix.trace (Matrix.single i₁ i₂ 1 * Qs U s x) := htrace x _
     _ = Qs U s x i₂ i₁ := by
       simp only [Matrix.trace_single_mul, one_smul]
-lemma choi_gram_rows {d : ℕ} {C : Matrix (Fin d × Fin d) (Fin d × Fin d) ℂ}
+private lemma choi_gram_rows {d : ℕ} {C : Matrix (Fin d × Fin d) (Fin d × Fin d) ℂ}
     (hC : C.PosSemidef) :
     ∃ (B : Matrix (Fin d × Fin d) (Fin d × Fin d) ℂ),
       C = B.conjTranspose * B := by
@@ -357,7 +355,7 @@ private lemma qCertificate_gram {d : ℕ} (aa bb cc : ℝ) (x : Fin d)
     ← Finset.mul_sum]
   rw [hoff, Finset.sum_comm (f := fun r i => Complex.normSq (star (B r (i, i))))]
   simp_rw [gram_entry_norm]; rw [gram_diagonal_norm]; linarith
-lemma certificate_identity {d : ℕ} (hd : 2 ≤ d) {t : ℝ}
+private lemma certificate_identity {d : ℕ} (hd : 2 ≤ d) {t : ℝ}
     (htl : -1 / ((d : ℝ) ^ 2 - 1) ≤ t) (htu : t < 1)
     (J : Fin d → MatrixMap (Fin d) (Fin d) ℂ)
     (hsum : ∑ x, J x = It t)
@@ -572,7 +570,7 @@ private lemma qCertificate_decomposition {d : ℕ} (aa bb cc : ℝ) (x : Fin d)
   simp only [qCertificate, realDiagonalForm, Complex.normSq_apply, Complex.re_sum,
     Complex.im_sum, Finset.sum_add_distrib, pow_two]
   ring
-lemma qCertificate_nonneg {d : ℕ} {aa bb cc : ℝ} (x : Fin d)
+private lemma qCertificate_nonneg {d : ℕ} {aa bb cc : ℝ} (x : Fin d)
     (hbb : 0 < bb) (hcc : 0 ≤ cc) (hkk : 0 < aa + bb)
     (hc : cc = bb + d * aa) (w : Matrix (Fin d) (Fin d) ℂ)
     (horth : cc = 0 → ∑ i, w i i = 0) :
@@ -591,7 +589,7 @@ lemma qCertificate_nonneg {d : ℕ} {aa bb cc : ℝ} (x : Fin d)
   exact add_nonneg (add_nonneg hoff
     (real_diagonal_nonneg x hbb hcc hkk hc (fun i => (w i i).re) hre).1)
     (real_diagonal_nonneg x hbb hcc hkk hc (fun i => (w i i).im) him).1
-lemma qCertificate_eq_zero {d : ℕ} {aa bb cc : ℝ} (x : Fin d)
+private lemma qCertificate_eq_zero {d : ℕ} {aa bb cc : ℝ} (x : Fin d)
     (hbb : 0 < bb) (hcc : 0 ≤ cc) (hkk : 0 < aa + bb)
     (hc : cc = bb + d * aa) (w : Matrix (Fin d) (Fin d) ℂ)
     (horth : cc = 0 → ∑ i, w i i = 0)
@@ -632,7 +630,7 @@ lemma qCertificate_eq_zero {d : ℕ} {aa bb cc : ℝ} (x : Fin d)
         Complex.ofReal_im, mul_zero, sub_zero] using hr.2 hrz i
     · simpa only [Complex.mul_im, Complex.div_ofReal_im, Complex.ofReal_re,
         Complex.ofReal_im, mul_zero, zero_add] using hi.2 hiz i
-lemma support_rows {d : ℕ} (hd : 2 ≤ d) {t : ℝ}
+private lemma support_rows {d : ℕ} (hd : 2 ≤ d) {t : ℝ}
     (htl : -1 / ((d : ℝ) ^ 2 - 1) ≤ t) (htu : t < 1)
     (J : Fin d → MatrixMap (Fin d) (Fin d) ℂ)
     (hsum : ∑ x, J x = It t)
@@ -673,7 +671,7 @@ lemma support_rows {d : ℕ} (hd : 2 ≤ d) {t : ℝ}
   obtain ⟨hoff, hdiag⟩ := qCertificate_eq_zero x hb hc hk hrel _ (horth x r) hr
   refine ⟨?_, hdiag⟩
   intro k' j hk' hj; exact star_eq_zero.mp (hoff k' j hk' hj)
-lemma elimination_standard {d : ℕ} (hd : 2 ≤ d) {t : ℝ}
+private lemma elimination_standard {d : ℕ} (hd : 2 ≤ d) {t : ℝ}
     (htl : -1 / ((d : ℝ) ^ 2 - 1) ≤ t) (htu : t < 1)
     (J : Fin d → MatrixMap (Fin d) (Fin d) ℂ)
     (hCP : ∀ x, (J x).IsCompletelyPositive)
@@ -762,7 +760,7 @@ lemma elimination_standard {d : ℕ} (hd : 2 ≤ d) {t : ℝ}
       exact (hc.apply _ _).symm.trans
         ((congrArg star (hOff x l k' (i, i) hlk)).trans (ha.apply _ _))
   · exact hOff x j i (l, k') hji
-lemma lower_endpoint_standard {d : ℕ} (hd : 2 ≤ d) (J : Fin d → MatrixMap (Fin d) (Fin d) ℂ)
+private lemma lower_endpoint_standard {d : ℕ} (hd : 2 ≤ d) (J : Fin d → MatrixMap (Fin d) (Fin d) ℂ)
     (hCP : ∀ x, (J x).IsCompletelyPositive)
     (hsum : ∑ x, J x = It (-1 / ((d : ℝ) ^ 2 - 1)))
     (htrace : ∀ x ρ, Matrix.trace (J x ρ) =
@@ -775,7 +773,7 @@ lemma lower_endpoint_standard {d : ℕ} (hd : 2 ≤ d) (J : Fin d → MatrixMap 
   have hden : 0 < (d : ℝ) ^ 2 - 1 := by nlinarith
   have hn : -1 / ((d : ℝ) ^ 2 - 1) < 0 := div_neg_of_neg_of_pos (by norm_num) hden
   linarith
-lemma upper_endpoint_standard {d : ℕ} (hd : 2 ≤ d) (J : Fin d → MatrixMap (Fin d) (Fin d) ℂ)
+private lemma upper_endpoint_standard {d : ℕ} (hd : 2 ≤ d) (J : Fin d → MatrixMap (Fin d) (Fin d) ℂ)
     (hCP : ∀ x, (J x).IsCompletelyPositive)
     (hsum : ∑ x, J x = It 1)
     (htrace : ∀ x ρ, Matrix.trace (J x ρ) =
@@ -839,7 +837,7 @@ lemma upper_endpoint_standard {d : ℕ} (hd : 2 ≤ d) (J : Fin d → MatrixMap 
   simp [Matrix.smul_apply, Matrix.vecMulVec_apply, Pi.star_apply, choiVector,
     ha, b, Complex.real_smul, Matrix.diagonal_apply, ite_and]
   <;> split_ifs <;> simp_all
-lemma standard_basis_forward {d : ℕ} (hd : 2 ≤ d) {t : ℝ}
+private lemma standard_basis_forward {d : ℕ} (hd : 2 ≤ d) {t : ℝ}
     (htl : -1 / ((d : ℝ) ^ 2 - 1) ≤ t) (htu : t ≤ 1)
     (J : Fin d → MatrixMap (Fin d) (Fin d) ℂ)
     (hCP : ∀ x, (J x).IsCompletelyPositive)
@@ -855,15 +853,15 @@ lemma standard_basis_forward {d : ℕ} (hd : 2 ≤ d) {t : ℝ}
     exact upper_endpoint_standard hd J hCP hsum htrace
   exact elimination_standard hd htl
     (lt_of_le_of_ne htu hu) J hCP hsum htrace
-def transformMap {d : ℕ} (W : Matrix (Fin d) (Fin d) ℂ)
+private def transformMap {d : ℕ} (W : Matrix (Fin d) (Fin d) ℂ)
     (Φ : MatrixMap (Fin d) (Fin d) ℂ) : MatrixMap (Fin d) (Fin d) ℂ where
   toFun ρ := W * Φ (W.conjTranspose * ρ * W) * W.conjTranspose
   map_add' ρ σ := by simp only [Matrix.mul_add, Matrix.add_mul, map_add]
   map_smul' z ρ := by simp only [Matrix.mul_smul, Matrix.smul_mul, map_smul, RingHom.id_apply]
-lemma transformMap_apply {d : ℕ} (W : Matrix (Fin d) (Fin d) ℂ)
+private lemma transformMap_apply {d : ℕ} (W : Matrix (Fin d) (Fin d) ℂ)
     (Φ : MatrixMap (Fin d) (Fin d) ℂ) (ρ : Matrix (Fin d) (Fin d) ℂ) :
     transformMap W Φ ρ = W * Φ (W.conjTranspose * ρ * W) * W.conjTranspose := rfl
-lemma transformMap_cp {d : ℕ} (W : Matrix (Fin d) (Fin d) ℂ)
+private lemma transformMap_cp {d : ℕ} (W : Matrix (Fin d) (Fin d) ℂ)
     (Φ : MatrixMap (Fin d) (Fin d) ℂ) (hΦ : Φ.IsCompletelyPositive) :
     (transformMap W Φ).IsCompletelyPositive := by
   obtain ⟨K, rfl⟩ := MatrixMap.IsCompletelyPositive.exists_kraus Φ hΦ
@@ -877,7 +875,7 @@ lemma transformMap_cp {d : ℕ} (W : Matrix (Fin d) (Fin d) ℂ)
     simp only [Matrix.conjTranspose_mul, Matrix.conjTranspose_conjTranspose,
       Matrix.mul_assoc]
   rw [hmap]; exact MatrixMap.of_kraus_isCompletelyPositive _
-lemma Itilde_transform {d : ℕ} (U : Matrix.unitaryGroup (Fin d) ℂ)
+private lemma Itilde_transform {d : ℕ} (U : Matrix.unitaryGroup (Fin d) ℂ)
     (t : ℝ) (x : Fin d) :
     transformMap (U : Matrix (Fin d) (Fin d) ℂ)
       (Itilde (1 : Matrix.unitaryGroup (Fin d) ℂ) t x) = Itilde U t x := by
@@ -921,7 +919,7 @@ lemma Itilde_transform {d : ℕ} (U : Matrix.unitaryGroup (Fin d) ℂ)
   simp only [Matrix.mul_smul, Matrix.smul_mul, Matrix.mul_add, Matrix.add_mul,
     Matrix.mul_one]
   rw [hWV, hYP, hPY, hY, htr]
-lemma transport_forward {d : ℕ} (hd : 2 ≤ d) (U : Matrix.unitaryGroup (Fin d) ℂ)
+private lemma transport_forward {d : ℕ} (hd : 2 ≤ d) (U : Matrix.unitaryGroup (Fin d) ℂ)
     {t : ℝ} (htl : -1 / ((d : ℝ) ^ 2 - 1) ≤ t) (htu : t ≤ 1)
     (J : Fin d → MatrixMap (Fin d) (Fin d) ℂ)
     (hCP : ∀ x, (J x).IsCompletelyPositive)
@@ -976,11 +974,11 @@ lemma transport_forward {d : ℕ} (hd : 2 ≤ d) (U : Matrix.unitaryGroup (Fin d
     simp only [J', V, transformMap_apply, Matrix.conjTranspose_conjTranspose]
     change W * (V * J x (W * (V * ρ * W) * V) * W) * V = J x ρ; rw [hc', hc']
   rw [← hinv, hstd x]; exact Itilde_transform U t x
-lemma Itilde_cp {d : ℕ} (hd : 2 ≤ d) (U : Matrix.unitaryGroup (Fin d) ℂ)
+private lemma Itilde_cp {d : ℕ} (hd : 2 ≤ d) (U : Matrix.unitaryGroup (Fin d) ℂ)
     {t : ℝ} (htl : -1 / ((d : ℝ) ^ 2 - 1) ≤ t) (htu : t ≤ 1) :
     ∀ x, (Itilde U t x).IsCompletelyPositive := by
   intro x; rw [← Itilde_transform U t x]; exact transformMap_cp _ _ (Itilde_standard_cp t x)
-lemma backward_direction {d : ℕ} (hd : 2 ≤ d) (U : Matrix.unitaryGroup (Fin d) ℂ)
+private lemma backward_direction {d : ℕ} (hd : 2 ≤ d) (U : Matrix.unitaryGroup (Fin d) ℂ)
     (t : ℝ) (htl : -1 / ((d : ℝ) ^ 2 - 1) ≤ t) (htu : t ≤ 1) :
     (∀ x, (Itilde U t x).IsCompletelyPositive) ∧
       (∑ x, Itilde U t x = It t) ∧
