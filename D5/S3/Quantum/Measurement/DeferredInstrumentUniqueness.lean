@@ -151,9 +151,12 @@ lemma c_pos {d : ℕ} (hd : 2 ≤ d) {t : ℝ}
       _ < t * ((d : ℝ) ^ 2 - 1) := by gcongr
   nlinarith
 lemma k_pos {d : ℕ} (hd : 2 ≤ d) {t : ℝ}
-    (htl : -1 / ((d : ℝ) ^ 2 - 1) < t) (htu : t < 1) : 0 < k d t := by
+    (htl : -1 / ((d : ℝ) ^ 2 - 1) ≤ t) (htu : t < 1) : 0 < k d t := by
   have hdR : (2 : ℝ) ≤ d := by exact_mod_cast hd
-  have hc := c_pos hd htl
+  have hc : 0 ≤ c d t := by
+    rcases eq_or_lt_of_le htl with h | h
+    · exact Real.sqrt_nonneg _
+    · exact (c_pos hd h).le
   have hb : 0 < b t := Real.sqrt_pos.2 (by linarith)
   change 0 < (c d t - b t) / d + b t
   apply (mul_pos_iff_of_pos_right (by linarith : (0 : ℝ) < d)).mp
@@ -360,15 +363,16 @@ private lemma qCertificate_gram {d : ℕ} (aa bb cc : ℝ) (x : Fin d)
   rw [hoff, Finset.sum_comm (f := fun r i => Complex.normSq (star (B r (i, i))))]
   simp_rw [gram_entry_norm]; rw [gram_diagonal_norm]; linarith
 lemma certificate_identity {d : ℕ} (hd : 2 ≤ d) {t : ℝ}
-    (htl : -1 / ((d : ℝ) ^ 2 - 1) < t) (htu : t < 1)
+    (htl : -1 / ((d : ℝ) ^ 2 - 1) ≤ t) (htu : t < 1)
     (J : Fin d → MatrixMap (Fin d) (Fin d) ℂ)
     (hsum : ∑ x, J x = It t)
     (htrace : ∀ x ρ, Matrix.trace (J x ρ) =
       Matrix.trace (ρ * Qs (1 : Matrix.unitaryGroup (Fin d) ℂ) (sMax d t) x))
     (B : Fin d → Matrix (Fin d × Fin d) (Fin d × Fin d) ℂ)
     (hB : ∀ x, MatrixMap.choi_matrix (J x) = (B x).conjTranspose * B x) :
-    ∑ x, ∑ r, qCertificate d (a2 d t) (b t) (c d t) x
-      (fun j i => star (B x r (j, i))) = 0 := by
+    (∑ x, ∑ r, qCertificate d (a2 d t) (b t) (c d t) x
+      (fun j i => star (B x r (j, i)))) = 0 ∧
+      (∑ x, ∑ r, Complex.normSq (∑ i, star (B x r (i, i)))) = (c d t) ^ 2 := by
   let C := fun x => MatrixMap.choi_matrix (J x)
   have hC (p q : Fin d × Fin d) :
       (∑ x, (C x p q).re) = (MatrixMap.choi_matrix (It t) p q).re := by
@@ -412,7 +416,7 @@ lemma certificate_identity {d : ℕ} (hd : 2 ≤ d) {t : ℝ}
     simp_rw [he, Finset.sum_add_distrib]
     simp only [Finset.sum_ite_eq', Finset.mem_univ, ite_true, Finset.sum_const,
       Finset.card_univ, Fintype.card_fin, nsmul_eq_mul]
-    rw [c_sq hd (le_of_lt htl)]
+    rw [c_sq hd htl]
     field_simp <;> ring
   have hR : (∑ x, ∑ j, (C x (j, x) (j, x)).re) =
       d * sMax d t + 1 - sMax d t := by
@@ -422,34 +426,41 @@ lemma certificate_identity {d : ℕ} (hd : 2 ≤ d) {t : ℝ}
       simpa [C, Complex.re_sum, Qs, Q] using h
     simp_rw [he]; simp only [Finset.sum_const, Finset.card_univ, Fintype.card_fin, nsmul_eq_mul]
     field_simp <;> ring
-  simp_rw [qCertificate_gram, ← hB]
-  change (∑ x, ((∑ i, ∑ j, if j ≠ i then (C x (j, i) (j, i)).re else 0) -
-    (∑ j, (C x (j, x) (j, x)).re) +
-    ((a2 d t + b t) / b t) * ((∑ i, (C x (i, i) (i, i)).re) -
-      (a2 d t / c d t) * (∑ i, ∑ j, C x (i, i) (j, j)).re))) = 0
-  rw [Finset.sum_add_distrib, Finset.sum_sub_distrib, ← Finset.mul_sum,
-    Finset.sum_sub_distrib, ← Finset.mul_sum, hO, hR, hD, hM]
-  have hb0 : b t ≠ 0 := ne_of_gt (Real.sqrt_pos.mpr (by linarith))
-  have hc0 : c d t ≠ 0 := ne_of_gt (c_pos hd htl)
-  have hb := b_sq (le_of_lt htu)
-  have hs := sMax_eq hd (le_of_lt htl) (le_of_lt htu)
-  have h1 := one_sub_sMax_eq_a2_sq hd (le_of_lt htl) (le_of_lt htu)
-  have ha := a2_channel_coeff hd (le_of_lt htl) (le_of_lt htu)
-  have hrel : c d t = b t + d * a2 d t := by
-    change c d t = b t + d * ((c d t - b t) / d)
-    field_simp <;> ring
-  field_simp at ha hs
-  have hds : d * t + 1 - t - a2 d t * c d t = b t * (a2 d t + b t) := by
-    rw [hrel]; nlinarith only [ha, hb]
-  have hrs : d * sMax d t + 1 - sMax d t =
-      ((d : ℝ) - 1) * (b t) ^ 2 + (a2 d t + b t) ^ 2 := by
-    nlinarith only [hs, h1]
-  field_simp; rw [hds, hrs, ← hb]; ring
+  constructor
+  · simp_rw [qCertificate_gram, ← hB]
+    change (∑ x, ((∑ i, ∑ j, if j ≠ i then (C x (j, i) (j, i)).re else 0) -
+      (∑ j, (C x (j, x) (j, x)).re) +
+      ((a2 d t + b t) / b t) * ((∑ i, (C x (i, i) (i, i)).re) -
+        (a2 d t / c d t) * (∑ i, ∑ j, C x (i, i) (j, j)).re))) = 0
+    rw [Finset.sum_add_distrib, Finset.sum_sub_distrib, ← Finset.mul_sum,
+      Finset.sum_sub_distrib, ← Finset.mul_sum, hO, hR, hD, hM]
+    have hb0 : b t ≠ 0 := ne_of_gt (Real.sqrt_pos.mpr (by linarith))
+    have hb := b_sq (le_of_lt htu)
+    have hs := sMax_eq hd htl (le_of_lt htu)
+    have h1 := one_sub_sMax_eq_a2_sq hd htl (le_of_lt htu)
+    have ha := a2_channel_coeff hd htl (le_of_lt htu)
+    have hrel : c d t = b t + d * a2 d t := by
+      change c d t = b t + d * ((c d t - b t) / d)
+      field_simp <;> ring
+    field_simp at ha hs
+    have hds : d * t + 1 - t - a2 d t * c d t = b t * (a2 d t + b t) := by
+      rw [hrel]; nlinarith only [ha, hb]
+    have hrs : d * sMax d t + 1 - sMax d t =
+        ((d : ℝ) - 1) * (b t) ^ 2 + (a2 d t + b t) ^ 2 := by
+      nlinarith only [hs, h1]
+    have hcancel : (a2 d t / c d t) * (c d t) ^ 2 = a2 d t * c d t := by
+      by_cases hc0 : c d t = 0
+      · simp [hc0]
+      · field_simp <;> ring
+    rw [hcancel, hds, hrs, ← hb]; field_simp <;> ring
+  · simp_rw [gram_diagonal_norm, ← hB]
+    exact hM
 private def realDiagonalForm (d : ℕ) (aa bb cc : ℝ) (x : Fin d) (v : Fin d → ℝ) : ℝ :=
   ((aa + bb) / bb) * ((∑ i, v i ^ 2) - (aa / cc) * (∑ i, v i) ^ 2) - v x ^ 2
 private lemma real_diagonal_shift {d : ℕ} {aa bb cc : ℝ} (x : Fin d)
-    (hbb : 0 < bb) (hcc : 0 < cc) (hkk : 0 < aa + bb)
-    (hc : cc = bb + d * aa) (v : Fin d → ℝ) :
+    (hbb : 0 < bb) (hcc : 0 ≤ cc) (hkk : 0 < aa + bb)
+    (hc : cc = bb + d * aa) (v : Fin d → ℝ)
+    (horth : cc = 0 → ∑ i, v i = 0) :
     realDiagonalForm d aa bb cc x v =
       ((aa + bb) / bb) *
         ((∑ i, (v i - (v x / (aa + bb)) * (aa + if i = x then bb else 0)) ^ 2) -
@@ -492,13 +503,23 @@ private lemma real_diagonal_shift {d : ℕ} {aa bb cc : ℝ} (x : Fin d)
     ((aa + bb) / bb) * ((∑ i, z i ^ 2) - (aa / cc) * (∑ i, z i) ^ 2)
   rw [hzsum, hzsq]; dsimp [realDiagonalForm, r]
   have hb0 := ne_of_gt hbb
-  have hc0 := ne_of_gt hcc
   have hk0 := ne_of_gt hkk
-  field_simp <;> ring
+  by_cases hc0 : cc = 0
+  · have hs := horth hc0
+    simp only [hc0, hs, div_zero, mul_zero, zero_mul, zero_add, add_zero, sub_zero]
+    field_simp <;> ring
+  · field_simp <;> ring
 private lemma diagonal_energy {d : ℕ} {aa bb cc : ℝ}
-    (hbb : 0 < bb) (hcc : 0 < cc) (hc : cc = bb + d * aa) (v : Fin d → ℝ) :
+    (hbb : 0 < bb) (hcc : 0 ≤ cc) (hc : cc = bb + d * aa) (v : Fin d → ℝ) :
     0 ≤ (∑ i, v i ^ 2) - (aa / cc) * (∑ i, v i) ^ 2 ∧
       (((∑ i, v i ^ 2) - (aa / cc) * (∑ i, v i) ^ 2) = 0 → ∀ i, v i = 0) := by
+  by_cases hc0 : cc = 0
+  · simp only [hc0, div_zero, zero_mul, sub_zero]
+    refine ⟨Finset.sum_nonneg (fun i _ => sq_nonneg (v i)), ?_⟩
+    intro hz i
+    exact sq_eq_zero_iff.mp ((Finset.sum_eq_zero_iff_of_nonneg
+      (fun i _ => sq_nonneg (v i))).mp hz i (Finset.mem_univ i))
+  have hcc : 0 < cc := lt_of_le_of_ne hcc (Ne.symm hc0)
   let N : ℝ := ∑ i, v i ^ 2
   let S : ℝ := ∑ i, v i
   have hN : 0 ≤ N := Finset.sum_nonneg fun _ _ => sq_nonneg _
@@ -527,15 +548,16 @@ private lemma diagonal_energy {d : ℕ} {aa bb cc : ℝ}
     (Finset.mem_univ i)
   exact sq_eq_zero_iff.mp hi
 private lemma real_diagonal_nonneg {d : ℕ} {aa bb cc : ℝ} (x : Fin d)
-    (hbb : 0 < bb) (hcc : 0 < cc) (hkk : 0 < aa + bb)
-    (hc : cc = bb + d * aa) (v : Fin d → ℝ) :
+    (hbb : 0 < bb) (hcc : 0 ≤ cc) (hkk : 0 < aa + bb)
+    (hc : cc = bb + d * aa) (v : Fin d → ℝ)
+    (horth : cc = 0 → ∑ i, v i = 0) :
     0 ≤ realDiagonalForm d aa bb cc x v ∧
       (realDiagonalForm d aa bb cc x v = 0 →
         ∀ i, v i = (v x / (aa + bb)) * (aa + if i = x then bb else 0)) := by
   let z : Fin d → ℝ := fun i => v i - (v x / (aa + bb)) *
     (aa + if i = x then bb else 0)
   have he := diagonal_energy hbb hcc hc z
-  have hs := real_diagonal_shift x hbb hcc hkk hc v
+  have hs := real_diagonal_shift x hbb hcc hkk hc v horth
   change realDiagonalForm d aa bb cc x v =
     ((aa + bb) / bb) * ((∑ i, z i ^ 2) - (aa / cc) * (∑ i, z i) ^ 2) at hs
   have hp : 0 < (aa + bb) / bb := div_pos hkk hbb
@@ -556,9 +578,14 @@ private lemma qCertificate_decomposition {d : ℕ} (aa bb cc : ℝ) (x : Fin d)
     Complex.im_sum, Finset.sum_add_distrib, pow_two]
   ring
 lemma qCertificate_nonneg {d : ℕ} {aa bb cc : ℝ} (x : Fin d)
-    (hbb : 0 < bb) (hcc : 0 < cc) (hkk : 0 < aa + bb)
-    (hc : cc = bb + d * aa) (w : Matrix (Fin d) (Fin d) ℂ) :
+    (hbb : 0 < bb) (hcc : 0 ≤ cc) (hkk : 0 < aa + bb)
+    (hc : cc = bb + d * aa) (w : Matrix (Fin d) (Fin d) ℂ)
+    (horth : cc = 0 → ∑ i, w i i = 0) :
     0 ≤ qCertificate d aa bb cc x w := by
+  have hre : cc = 0 → ∑ i, (w i i).re = 0 := by
+    intro h; simpa only [Complex.re_sum, Complex.zero_re] using congrArg Complex.re (horth h)
+  have him : cc = 0 → ∑ i, (w i i).im = 0 := by
+    intro h; simpa only [Complex.im_sum, Complex.zero_im] using congrArg Complex.im (horth h)
   have hoff : 0 ≤ ∑ k', ∑ j,
       if k' ≠ x ∧ j ≠ k' then Complex.normSq (w j k') else 0 := by
     apply Finset.sum_nonneg; intro k' hk'; apply Finset.sum_nonneg; intro j hj
@@ -567,15 +594,20 @@ lemma qCertificate_nonneg {d : ℕ} {aa bb cc : ℝ} (x : Fin d)
     · exact le_rfl
   rw [qCertificate_decomposition]
   exact add_nonneg (add_nonneg hoff
-    (real_diagonal_nonneg x hbb hcc hkk hc (fun i => (w i i).re)).1)
-    (real_diagonal_nonneg x hbb hcc hkk hc (fun i => (w i i).im)).1
+    (real_diagonal_nonneg x hbb hcc hkk hc (fun i => (w i i).re) hre).1)
+    (real_diagonal_nonneg x hbb hcc hkk hc (fun i => (w i i).im) him).1
 lemma qCertificate_eq_zero {d : ℕ} {aa bb cc : ℝ} (x : Fin d)
-    (hbb : 0 < bb) (hcc : 0 < cc) (hkk : 0 < aa + bb)
+    (hbb : 0 < bb) (hcc : 0 ≤ cc) (hkk : 0 < aa + bb)
     (hc : cc = bb + d * aa) (w : Matrix (Fin d) (Fin d) ℂ)
+    (horth : cc = 0 → ∑ i, w i i = 0)
     (hzero : qCertificate d aa bb cc x w = 0) :
     (∀ k' j, k' ≠ x → j ≠ k' → w j k' = 0) ∧
       (∀ i, w i i = (w x x / ((aa + bb : ℝ) : ℂ)) *
         ((aa + if i = x then bb else 0 : ℝ) : ℂ)) := by
+  have hre : cc = 0 → ∑ i, (w i i).re = 0 := by
+    intro h; simpa only [Complex.re_sum, Complex.zero_re] using congrArg Complex.re (horth h)
+  have him : cc = 0 → ∑ i, (w i i).im = 0 := by
+    intro h; simpa only [Complex.im_sum, Complex.zero_im] using congrArg Complex.im (horth h)
   have hterm (k' j : Fin d) :
       0 ≤ if k' ≠ x ∧ j ≠ k' then Complex.normSq (w j k') else 0 := by
     split_ifs
@@ -584,8 +616,8 @@ lemma qCertificate_eq_zero {d : ℕ} {aa bb cc : ℝ} (x : Fin d)
   have hoff : 0 ≤ ∑ k', ∑ j,
       if k' ≠ x ∧ j ≠ k' then Complex.normSq (w j k') else 0 :=
     Finset.sum_nonneg fun k' _ => Finset.sum_nonneg fun j _ => hterm k' j
-  have hr := real_diagonal_nonneg x hbb hcc hkk hc (fun i => (w i i).re)
-  have hi := real_diagonal_nonneg x hbb hcc hkk hc (fun i => (w i i).im)
+  have hr := real_diagonal_nonneg x hbb hcc hkk hc (fun i => (w i i).re) hre
+  have hi := real_diagonal_nonneg x hbb hcc hkk hc (fun i => (w i i).im) him
   rw [qCertificate_decomposition] at hzero
   have hrz : realDiagonalForm d aa bb cc x (fun i => (w i i).re) = 0 := by linarith [hr.1, hi.1]
   have hiz : realDiagonalForm d aa bb cc x (fun i => (w i i).im) = 0 := by linarith [hr.1, hi.1]
@@ -606,7 +638,7 @@ lemma qCertificate_eq_zero {d : ℕ} {aa bb cc : ℝ} (x : Fin d)
     · simpa only [Complex.mul_im, Complex.div_ofReal_im, Complex.ofReal_re,
         Complex.ofReal_im, mul_zero, zero_add] using hi.2 hiz i
 lemma support_rows {d : ℕ} (hd : 2 ≤ d) {t : ℝ}
-    (htl : -1 / ((d : ℝ) ^ 2 - 1) < t) (htu : t < 1)
+    (htl : -1 / ((d : ℝ) ^ 2 - 1) ≤ t) (htu : t < 1)
     (J : Fin d → MatrixMap (Fin d) (Fin d) ℂ)
     (hsum : ∑ x, J x = It t)
     (htrace : ∀ x ρ, Matrix.trace (J x ρ) =
@@ -618,27 +650,36 @@ lemma support_rows {d : ℕ} (hd : 2 ≤ d) {t : ℝ}
         (star (B x r (x, x)) / ((a2 d t + b t : ℝ) : ℂ)) *
           ((a2 d t + if i = x then b t else 0 : ℝ) : ℂ)) := by
   have hb : 0 < b t := Real.sqrt_pos.mpr (by linarith)
-  have hc := c_pos hd htl
+  have hc : 0 ≤ c d t := Real.sqrt_nonneg _
   have hk : 0 < a2 d t + b t := k_pos hd htl htu
   have hrel : c d t = b t + d * a2 d t := by
     have hd0 : (d : ℝ) ≠ 0 := by exact_mod_cast (show d ≠ 0 by omega)
     change c d t = b t + d * ((c d t - b t) / d)
     field_simp <;> ring
+  have htotal := certificate_identity hd htl htu J hsum htrace B hB
+  have horth (x : Fin d) (r : Fin d × Fin d) (hc0 : c d t = 0) :
+      (∑ i, star (B x r (i, i))) = 0 := by
+    have hω : (∑ x, ∑ r, Complex.normSq (∑ i, star (B x r (i, i)))) = 0 := by
+      simpa [hc0] using htotal.2
+    have hx := (Finset.sum_eq_zero_iff_of_nonneg (fun x _ =>
+      Finset.sum_nonneg fun r _ => Complex.normSq_nonneg _)).mp hω x (Finset.mem_univ x)
+    have hr := (Finset.sum_eq_zero_iff_of_nonneg (fun r _ =>
+      Complex.normSq_nonneg _)).mp hx r (Finset.mem_univ r)
+    exact Complex.normSq_eq_zero.mp hr
   have hnonneg (x : Fin d) (r : Fin d × Fin d) :
       0 ≤ qCertificate d (a2 d t) (b t) (c d t) x
         (fun j i => star (B x r (j, i))) :=
-    qCertificate_nonneg x hb hc hk hrel _
-  have htotal := certificate_identity hd htl htu J hsum htrace B hB
+    qCertificate_nonneg x hb hc hk hrel _ (horth x r)
   intro x r
   have hx := (Finset.sum_eq_zero_iff_of_nonneg
-    (fun x _ => Finset.sum_nonneg fun r _ => hnonneg x r)).mp htotal x (Finset.mem_univ x)
+    (fun x _ => Finset.sum_nonneg fun r _ => hnonneg x r)).mp htotal.1 x (Finset.mem_univ x)
   have hr := (Finset.sum_eq_zero_iff_of_nonneg
     (fun r _ => hnonneg x r)).mp hx r (Finset.mem_univ r)
-  obtain ⟨hoff, hdiag⟩ := qCertificate_eq_zero x hb hc hk hrel _ hr
+  obtain ⟨hoff, hdiag⟩ := qCertificate_eq_zero x hb hc hk hrel _ (horth x r) hr
   refine ⟨?_, hdiag⟩
   intro k' j hk' hj; exact star_eq_zero.mp (hoff k' j hk' hj)
 lemma elimination_standard {d : ℕ} (hd : 2 ≤ d) {t : ℝ}
-    (htl : -1 / ((d : ℝ) ^ 2 - 1) < t) (htu : t < 1)
+    (htl : -1 / ((d : ℝ) ^ 2 - 1) ≤ t) (htu : t < 1)
     (J : Fin d → MatrixMap (Fin d) (Fin d) ℂ)
     (hCP : ∀ x, (J x).IsCompletelyPositive)
     (hsum : ∑ x, J x = It t)
@@ -665,7 +706,7 @@ lemma elimination_standard {d : ℕ} (hd : 2 ≤ d) {t : ℝ}
     · subst i
       have hc := congrArg (fun M => M (j, x) q) (choi_sum d t J hsum)
       have ha := congrArg (fun M => M (j, x) q)
-        (choi_sum d t (Itilde 1 t) (Itilde_sum hd 1 htl.le htu.le))
+        (choi_sum d t (Itilde 1 t) (Itilde_sum hd 1 htl htu.le))
       simp only [Matrix.sum_apply] at hc ha
       have hcx : (∑ y, C y (j, x) q) = C x (j, x) q := by
         apply Finset.sum_eq_single x
@@ -680,7 +721,7 @@ lemma elimination_standard {d : ℕ} (hd : 2 ≤ d) {t : ℝ}
   have hxx (x : Fin d) : C x (x, x) (x, x) = A x (x, x) (x, x) := by
     have hc := trace_condition_entry x x x htrace
     have ha := trace_condition_entry x x x
-      (fun x ρ => Itilde_trace hd 1 htl.le htu.le x ρ)
+      (fun x ρ => Itilde_trace hd 1 htl htu.le x ρ)
     have hz : (∑ j, (C x (j, x) (j, x) - A x (j, x) (j, x))) = 0 := by
       rw [Finset.sum_sub_distrib]; exact sub_eq_zero.mpr (hc.trans ha.symm)
     have he : (∑ j, (C x (j, x) (j, x) - A x (j, x) (j, x))) =
@@ -734,7 +775,11 @@ lemma lower_endpoint_standard {d : ℕ} (hd : 2 ≤ d) (J : Fin d → MatrixMap 
         (sMax d (-1 / ((d : ℝ) ^ 2 - 1))) x)) :
     ∀ x, J x = Itilde (1 : Matrix.unitaryGroup (Fin d) ℂ)
       (-1 / ((d : ℝ) ^ 2 - 1)) x := by
-  sorry
+  apply elimination_standard hd le_rfl ?_ J hCP hsum htrace
+  have hdR : (2 : ℝ) ≤ d := by exact_mod_cast hd
+  have hden : 0 < (d : ℝ) ^ 2 - 1 := by nlinarith
+  have hn : -1 / ((d : ℝ) ^ 2 - 1) < 0 := div_neg_of_neg_of_pos (by norm_num) hden
+  linarith
 lemma upper_endpoint_standard {d : ℕ} (hd : 2 ≤ d) (J : Fin d → MatrixMap (Fin d) (Fin d) ℂ)
     (hCP : ∀ x, (J x).IsCompletelyPositive)
     (hsum : ∑ x, J x = It 1)
@@ -814,7 +859,7 @@ lemma standard_basis_forward {d : ℕ} (hd : 2 ≤ d) {t : ℝ}
   by_cases hu : t = 1
   · subst t
     exact upper_endpoint_standard hd J hCP hsum htrace
-  exact elimination_standard hd (lt_of_le_of_ne htl (Ne.symm hl))
+  exact elimination_standard hd htl
     (lt_of_le_of_ne htu hu) J hCP hsum htrace
 
 def transformMap {d : ℕ} (W : Matrix (Fin d) (Fin d) ℂ)
