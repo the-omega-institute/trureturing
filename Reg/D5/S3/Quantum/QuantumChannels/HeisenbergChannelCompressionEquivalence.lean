@@ -165,7 +165,7 @@ noncomputable def registration :
     coordinates := #[0, 1, 4, 6, 8]
     readouts := #[{
       path := #["body", "body", "body", "body", "body", "body", "body", "body",
-        "body", "body", "fn", "arg", "body", "body", "fn", "fn", "fn", "fn", "fn", "arg"]
+        "body", "body", "fn", "arg", "body", "body", "arg"]
       stateBinder := 0
       functionOperand := true
       stateOperand := none
