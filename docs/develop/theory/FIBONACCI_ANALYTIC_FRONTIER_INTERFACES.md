@@ -3826,3 +3826,156 @@ $$
 充分大的平方自由物理行仍有 $a=f\asymp U$、$g=1$；在原允许 $D/N\ge1$ 的上述长度上并未获得 $KU$ 体积预算。完整六阶余域、其他未付长度／高度、F4 的新运输及逐整数 signed Robin restoration 仍需独立估计。本节没有证明 RH 或全部 $n>5040$ 的严格 Robin 不等式，也没有解析 Lean 认证。
 
 ## 追加锚（本行以下为增补区）
+
+## 473. 对全部 F4 掩码与投影稳定的物理行切面
+
+**定理 473.1（原 F4 完整正和的稳定行预算）。** 沿用第 472 节的原物理行分解、实际 primitive 导子、完整 normalized Möbius／plain 反射、有限 Fourier／ray 数据、零延拓和同一解析费用合同，以及 [F1–F4](../../../Library/Analytic/faveri2026fixedorder.md#a-weighted-powerful-part-majorant-for-all-original-columns) 的实际原系数分解。原长度满足 $1\le D,N\le U^C$，$K=DN$；$D$ 始终是原 Möbius 长度。令
+
+$$
+\begin{aligned}
+a(v)&=q_{R_1},&g(v)&=q_{R_2R_3R_4R_5},&f(v)&=a(v)g(v),\\
+\mathscr H^{\rm sf}_1(v;D)&=g(v)\Psi_6(a(v),Df(v)),\\
+\mathcal R_T&=\{v:\mathscr H^{\rm sf}_1(v;D)\le T\},
+&1\le T&\le C_0U.
+\end{aligned}
+\tag{473.1}
+$$
+
+这里 $\Psi_6$ 是（472.4）的同一四项筛预算。对每个实际 $c$、$a_{\rm col}\mid\operatorname{rad}c$、$b=c/a_{\rm col}$，记 $D_a=D/q_{a_{\rm col}}$、$N_b=N/q_b$、$X=K/q_c=D_aN_b$。令 $\widetilde T^{\rm sf}_{j;c,a_{\rm col},\kappa;\mathcal R_T}$ 为 F4 的同一个完整包能量，仅将原非负行权乘以 $\mathbf1_{\mathcal R_T}$。特别地，保留 $x$ 平方自由、$(x,c)=1$、原有限类、全部零值和包内交叉项。定义完整正和
+
+$$
+M^{F4}_{\mathcal R_T}
+=Z_s|\mathcal T|
+\sum_{\substack{c\ {\rm powerful}\\q_c\le CK}}
+q_c^s\tau(\operatorname{rad}c)
+\sum_{a_{\rm col}\mid\operatorname{rad}c}\sum_{\kappa\in\mathcal T}
+\widetilde T^{\rm sf}_{j;c,a_{\rm col},\kappa;\mathcal R_T}.
+\tag{473.2}
+$$
+
+对每个最终 $\varepsilon>0$，按 F4 选择 $s=1/2+\eta$ 并分配内部损失。在所引解析合同下，同一共同包络 $\mathcal C\ge1$ 给出
+
+$$
+\begin{aligned}
+\widetilde T^{\rm sf}_{j;c,a_{\rm col},\kappa;\mathcal R_T}
+&\ll_{\varepsilon,C,C_0}\mathcal C^2(UK)^\varepsilon TX,\\
+M^{F4}_{\mathcal R_T}
+&\ll_{\varepsilon,C,C_0}\mathcal C^2(UK)^\varepsilon KT.
+\end{aligned}
+\tag{473.3}
+$$
+
+$\mathcal C$ 一次包含第 472 节的全部解析、完整 Euler、profile、尺度与 Sobolev 成本，以及第 464 节实际有限类恢复所需的费用，不按 $c,a_{\rm col}$、投影除子或物理行重新配置。高度仍固定，或满足原共同费用为次幂的 polylog 合同；没有扩张 growing-height allowance。结论覆盖（473.2）的全部实际包，包括 $c=a_{\rm col}=1$，不要求 $D_a\le U^{1/3}$ 或 $N_b$ 满足第 465 节的短长度条件。
+
+证明。关键是让第 472 节的完整乘积估计对所有实际展开项使用同一物理行集，而不把它直接套到投影系数上。记 $B(D',N';v)$ 为（464.5）的未掩码原乘积。若一个展开项非空，则紧 annular 支撑使 $D',N'$ 均有固定正下界；低于一的长度按第 464 节的固定 annular enlargement 归入一，并运输 profiles。只要 $D'\ll D$，就有
+
+$$
+\max\{1,D'f(v)/N'\}\ll Df(v),\qquad
+\mathscr H_{1;D',N'}(v)\ll\mathscr H^{\rm sf}_1(v;D).
+\tag{473.4}
+$$
+
+使用 $D,f\ge1$ 和 $\Psi_6$ 的逐项单调性即可；enlargement 只改变固定常数及一致有界的有限 seminorms。每个非空项的长度仍在原固定幂范围内。因此（472.2）对同一个 $\mathcal R_T$ 给出原始未归一化范数界
+
+$$
+\|\sqrt{\Omega\mathbf1_{\mathcal R_T}}\,B(D',N')\|_2
+\ll\mathcal C(UK)^\delta\sqrt{TD'N'}.
+\tag{473.5}
+$$
+
+这里将 $T$ 乘固定常数，只是使用（472.2）中另一个固定 $C_0$。原始范数的外因子是 $D'N'$，不是反射后的卷积长度；annular tails、subunit clipping 和实际导子尺度恢复全部复用第 472 节的合同。对行集的进一步零限制可在此正范数内保留或扩大。
+
+下面直接消费（464.9）—（464.12）的精确恒等式。对零掩码 $A,B$ 的每个非空 Euler 展开项，未掩码长度为 $D_0/q_m,N_0/q_e$，故逆长度不超过 $D_0$，乘积长度为 $D_0N_0/(q_mq_e)$。先在同一正行范数内处理 $\psi_v(me)$，再用（473.5）和同一 Euler 乘积质量，得到
+
+$$
+\begin{aligned}
+\|\sqrt{\Omega\mathbf1_{\mathcal R_T}}\,B_{A,B}(D_0,N_0)\|_2
+&\ll\mathcal C(UK)^\delta\sqrt{TD_0N_0}
+\prod_{p\mid A}(1-q_p^{-1/2})^{-1}
+\prod_{p\mid B}(1+q_p^{-1/2})\\
+&\ll_\theta\mathcal C(UK)^\delta(q_Aq_B)^\theta\sqrt{TD_0N_0},
+\qquad D_0\ll D.
+\end{aligned}
+\tag{473.6}
+$$
+
+该步骤没有在绝对 $L$ 值中删除因子，也没有把移动掩码改成固定 conductor 常数。
+
+对实际平方自由 F3 包 $P_c$，（464.12）中的项具有
+
+$$
+D_0=D_a/q_g\le D,\qquad
+N_0=N_bq_g/q_r^2,\qquad
+D_0N_0=X/q_r^2,
+\qquad g\mid r,\quad q_r\ll\sqrt X.
+\tag{473.7}
+$$
+
+由于 $q_g\le q_r$，亦有 $N_0\le N_b\le N$。式（473.4）同时覆盖这些项和其后的全部 Euler 缩短项；不要求保持 $D_0/N_0\le D/N$。在（473.6）中取 $A=cr,B=c$，复用第 464 节的 Minkowski 与除数质量，得到
+
+$$
+\begin{aligned}
+\|\sqrt{\Omega\mathbf1_{\mathcal R_T}}\,P_c\|_2
+&\ll\mathcal C(UK)^\delta q_c^{2\theta}\sqrt{TX}
+\sum_{q_r\ll\sqrt X}\tau(r)q_r^{-1+\theta}\\
+&\ll_\theta\mathcal C(UK)^\delta q_c^{2\theta}X^\theta\sqrt{TX}.
+\end{aligned}
+\tag{473.8}
+$$
+
+有限 Fourier 类在 $h=r^2d'n'$ 下按原规则运输；所需有限次导数的固定阶对数损失纳入同一小幂。包内原有零值未被删去，所有交叉项由 Minkowski 控制，不声称不同展开项正交。选择 $\delta,\theta$ 再平方，便得（473.3）的第一式。
+
+F4 的加权 Cauchy 在取平方范数以前即可使用行权 $\Omega\mathbf1_{\mathcal R_T}$，所以（473.2）仍是同一个原行限制的正 majorant。把（473.3）第一式代入，复用（464.14）及同一有限类数，数值总和为
+
+$$
+TK\sum_{\substack{c\ {\rm powerful}\\q_c\le CK}}
+\tau(c)^2q_c^{-1/2+\eta}
+\ll_{\eta,\delta'}TK^{1+\eta+\delta'}.
+\tag{473.9}
+$$
+
+按一个最终 $\varepsilon$ 分配所有内部损失，得到第二式。这里直接估计整份正和，没有从原未投影能量的上界反推其各个正展开包。证毕。
+
+**命题 473.2（含原长 unit-core 包的严格行扇区）。** 在原允许的平衡长度 $D=N=\sqrt U$、$K=U$ 上，考虑实际物理行扇区
+
+$$
+q_{R_1}\asymp U^{1/11},\qquad q_{R_5}\asymp U^{2/11},
+\qquad R_2=R_3=R_4=1.
+\tag{473.10}
+$$
+
+将（473.2）中的全部包均限制到该行扇区，则在定理 473.1 的解析合同下，其完整正和满足
+
+$$
+M^{F4}_{(473.10)}
+\ll_\varepsilon\mathcal C^2U^{43/22+\varepsilon}.
+\tag{473.11}
+$$
+
+共同费用次幂且最终损失小于 $1/22$ 时，该预算严格小于 $U^2$ 的幂次规模。这里约束的是物理行，未缩短或重选原列见证。
+
+证明。复用固定 ray 类中的素理想定理，在所需允许类取不同 good 素理想 $\ell,r$，使 $q_\ell=P\to\infty$、$q_r\asymp P^2$。选 $t_0$ 在原 $\Omega$ 的正支撑内，并令 $v=\ell r^5$、$U=s_jq_v/t_0\asymp P^{11}$。实际估值为一、五，故 $S$ 外字符阶数恰为六，且原物理行权非零。此时
+
+$$
+a\asymp P,\qquad g\asymp P^2,\qquad f\asymp P^3,
+\qquad Df\asymp P^{17/2}.
+$$
+
+式（473.1）的四项依次为
+
+$$
+P^3,\qquad P^{21/2},\qquad P^{17/3},\qquad P^{113/12}.
+\tag{473.12}
+$$
+
+所以整个（473.10）区域有 $\mathscr H^{\rm sf}_1\ll U^{21/22}$。取 $T=C_1U^{21/22}$ 并使用（473.3），得到（473.11）。对充分大 $U$，该 $T$ 仍在原允许区间内。
+
+这份正和包括 $c=a_{\rm col}=1$、$D_a=N_b=\sqrt U$、$X=U>\sqrt U$ 的原长包。它不满足第 464 节 $D_a\ll U^{1/3}$ 的条件，也不满足第 465 节任意固定 $k\ge3$ 的 $N_b\ll U^{1/(2k)}$ 条件；物理行 $v=\ell r^5$ 亦非纯平方或纯立方行。原允许系数族确有这样的非零 unit-core 包：在运输后的允许有限列类中，用同一固定 ray 类素理想定理选两个不同 good 素理想 $d',n'$，范数在 $\sqrt U$ 的固定小相对区间内，避开 $\ell rS$，并令原非负 annular profiles 在两处为正。对平方自由 $x=d'n'$，逆 annulus 内只有这两个单素因子，二者的 Möbius 值均为 $-1$，故实际 F3 系数非零。该论证只说明允许的原系数包非空，不推出实际行响应非零或检测器必选这些行与 profiles。
+
+作为具体预算比较，同一 unit-core 包若仅使用固定 $R_5$ 后的直接六阶筛，则 $g\Psi_6(a,K)\asymp P^{13}>P^{11}\asymp U$。这份指定直接预算没有支付（473.10）的整份正和，而（473.11）支付了它；该比较不是能量下界，也不排除其他估计。证毕。
+
+第 472 节已经估计过这些行的未投影原乘积；（473.3）增加的是对全部实际掩码、平方自由投影和 F4 正权求和均稳定的接口。反射公式、六阶大筛、Euler 恒等式、投影和 powerful-core 质量均按所引来源复用，本节是 `repo-derived` 的完整正和应用，不主张新筛或文献优先权。
+
+对大平方自由物理行 $a=f\asymp U$、$g=1$，即使 $D=\sqrt U$，本节的稳定行预算仍有主项 $U^{19/12}>U$。因此（473.11）没有支付完整六阶余域。其余原长度／高度、全物理行估计及逐整数 signed Robin restoration 仍需独立处理；没有由此得到 RH 或全部 $n>5040$ 的严格 Robin 不等式，也没有解析 Lean 认证。
+
+## 追加锚（本行以下为增补区）
