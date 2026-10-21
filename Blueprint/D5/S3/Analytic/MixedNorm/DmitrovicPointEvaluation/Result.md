@@ -34,7 +34,7 @@ Lean statement: `D5/S3/Analytic/MixedNorm/DmitrovicPointEvaluation/Result.result
 
 *Commentary.*
 
-The universal constant-one point evaluation claim is false. The general failure theorem at p equal to one, q equal to two, and alpha equal to one produces a holomorphic function of finite mixed norm and an interior point contradicting the claim. This refutes the conjecture on page 705 of Dmitrovic's Norm of composition operator on mixed norm spaces. It does not determine the optimal larger constant in the failing parameter range.
+The universal constant-one point evaluation claim is false. The general failure theorem at p equal to one, q equal to two, and alpha equal to one produces a holomorphic function of finite mixed norm and an interior point contradicting the claim. This refutes the conjecture on p. 705 of the cited article. It does not determine the optimal larger constant in the failing parameter range.
 
 ## References
 

@@ -44,7 +44,7 @@ Lean statement: `D5/S3/Analytic/MixedNorm/DmitrovicPointEvaluation/Defs.claim`
 
 *Commentary.*
 
-Dmitrovic, Norm of composition operator on mixed norm spaces, Operators and Matrices 18 (2024), pages 697-710, doi:10.7153/oam-2024-18-42, conjectures this estimate on page 705. The parameters p and q range over positive extended nonnegative reals and alpha is positive. The function is holomorphic on the open unit disc and has finite mixed norm. The evaluation inequality is multiplied by the positive boundary weight. At p=infinity the reciprocal of p.toReal is zero.
+The cited article defines the mixed norm on p. 697 and conjectures this estimate on p. 705. The parameters p and q range over positive extended nonnegative reals and alpha is positive. The function is holomorphic on the open unit disc and has finite mixed norm. The evaluation inequality is multiplied by the positive boundary weight. At p=infinity the reciprocal of p.toReal is zero.
 
 ## References
 

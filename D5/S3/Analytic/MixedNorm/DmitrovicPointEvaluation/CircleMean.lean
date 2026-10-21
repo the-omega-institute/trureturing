@@ -50,10 +50,9 @@ theorem norm_powerFamily {p a : ℝ} (_hp : 0 < p) (ha : 0 ≤ a) (ha1 : a < 1)
     {w : ℂ} (hw : ‖w‖ < 1) :
     ‖powerFamily p a w‖ = ‖1 + (a : ℂ) * w‖ ^ (2 / p) := by
   have hs := affine_mem_slitPlane ha ha1 hw
-  have hn : 0 < ‖1 + (a : ℂ) * w‖ := norm_pos_iff.mpr (Complex.slitPlane_ne_zero hs)
   have hc : (2 / (p : ℂ)) = ((2 / p : ℝ) : ℂ) := by push_cast; rfl
-  rw [powerFamily, hc, Complex.norm_exp, Complex.re_ofReal_mul, Complex.log_re,
-    Real.rpow_def_of_pos hn, mul_comm]
+  rw [powerFamily, hc, mul_comm,
+    ← Complex.cpow_def_of_ne_zero (Complex.slitPlane_ne_zero hs), Complex.norm_cpow_real]
 
 private lemma powerFamily_bound {p a : ℝ} (hp : 0 < p) (ha : 0 ≤ a) (ha1 : a < 1)
     {w : ℂ} (hw : ‖w‖ < 1) : ‖powerFamily p a w‖ ≤ (1 + a) ^ (2 / p) := by

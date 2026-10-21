@@ -21,7 +21,7 @@ internal sealed class ResultDocument : IScribeDocumentDefinition
                 DeclarationHandle.Create(Prefix + "result"),
                 H("Dmitrovic's conjecture is false"),
                 StatementSource.WithoutFormula(), AssessedProvenance.FromRepo(Source),
-                Blocks(Paragraph(Text("The universal constant-one point evaluation claim is false. The general failure theorem at p equal to one, q equal to two, and alpha equal to one produces a holomorphic function of finite mixed norm and an interior point contradicting the claim. This refutes the conjecture on page 705 of Dmitrovic's Norm of composition operator on mixed norm spaces. It does not determine the optimal larger constant in the failing parameter range."))),
+                Blocks(Paragraph(Text("The universal constant-one point evaluation claim is false. The general failure theorem at p equal to one, q equal to two, and alpha equal to one produces a holomorphic function of finite mixed norm and an interior point contradicting the claim. This refutes the conjecture on p. 705 of the cited article. It does not determine the optimal larger constant in the failing parameter range."))),
                 DescribeRole.Theorem,
                 openProblemResolutionClaim: new OpenProblemResolutionClaim(
                     ProblemSlugRef.Create("dmitrovic-2024-mixed-norm-point-evaluation-refutation"),

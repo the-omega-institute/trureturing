@@ -23,7 +23,7 @@ internal sealed class CircleMeanDocument : IScribeDocumentDefinition
                 DeclarationHandle.Create("D5/S3/Analytic/MixedNorm/DmitrovicPointEvaluation/CircleMean.norm_powerFamily"),
                 H("The exact modulus"), StatementSource.WithoutFormula(),
                 AssessedProvenance.FromRepo(),
-                Blocks(Paragraph(Text("For positive p and 0<=a<1 and any w of norm less than one, the norm is the real power |1+aw| raised to 2/p. The logarithm of the affine modulus is the real part of the complex logarithm."))),
+                Blocks(Paragraph(Text("For positive p and 0<=a<1 and any w of norm less than one, the norm is the real power |1+aw| raised to 2/p. The nonzero affine factor identifies the exponential-logarithm expression with its principal complex power, whose modulus is given by Complex.norm_cpow_real."))),
                 DescribeRole.Theorem),
             Describe.Lean(DescribeId.Create("dm-circlemean-circlemean-powerfamily"),
                 DeclarationHandle.Create("D5/S3/Analytic/MixedNorm/DmitrovicPointEvaluation/CircleMean.circleMean_powerFamily"),
