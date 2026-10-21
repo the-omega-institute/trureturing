@@ -8,67 +8,7 @@ Let D:LatticeData, hu:IsUnit D.G.det and sigma,tau:Charge D. The source is Carri
 
 Write B=bilinear D sigma tau and Q(q)=chargeNorm D q. Put h=w/v^2 and u=v*sqrt(1+h). The scalar Taylor factor is (1+h)^(a/2) times ((sqrt(1+h)+1)/2)^(-2*B). The input polynomial is translated simultaneously in the sigma and tau directions by the actual pairTranslation constructor. Each translated monomial has two natural translation degrees d(0),d(1). For total=e+Q(sigma+tau)+2*N+d(0)+d(1), its creator contribution is zero when total<0, and otherwise is the finite sum over 0<=m<=total of collisionScalar(m-d(0)-Q(sigma),B,N) times halfCreationCoeff(sigma,m) times halfCreationCoeff(tau,total-m). These are formal coefficients; no analytic substitution or convergence claim is used.
 
-**Definition 1.1 (The normalized square-root unit).**
-
-Lean statement: `D5/S3/VertexAlgebra/LatticeHalfFockChargedCollision.collisionUnit`
-
-*Formalization.* `D5/S3/VertexAlgebra/LatticeHalfFockChargedCollision.collisionUnit` (`✓ std3`).
-
-*Source.* Repository-derived.
-
-*Commentary.*
-
-collisionUnit is the unit of PowerSeries Complex whose value is one half times (binomialSeries(1/2)+1). Its constant coefficient is one.
-
-**Definition 1.2 (Every scalar Taylor coefficient).**
-
-Lean statement: `D5/S3/VertexAlgebra/LatticeHalfFockChargedCollision.collisionScalar`
-
-*Formalization.* `D5/S3/VertexAlgebra/LatticeHalfFockChargedCollision.collisionScalar` (`✓ std3`).
-
-*Source.* Repository-derived.
-
-*Commentary.*
-
-For a,B:Int and N:Nat, collisionScalar a B N is coefficient N of binomialSeries(a/2) multiplied by collisionUnit^(-2*B). The signed integer power is taken in the power-series unit group.
-
-**Definition 1.3 (The finite oscillator coefficient).**
-
-Lean statement: `D5/S3/VertexAlgebra/LatticeHalfFockChargedCollision.collisionOscillator`
-
-*Formalization.* `D5/S3/VertexAlgebra/LatticeHalfFockChargedCollision.collisionOscillator` (`✓ std3`).
-
-*Source.* Repository-derived.
-
-*Commentary.*
-
-For D:LatticeData, sigma,tau:Charge D, N:Nat and e:Int, collisionOscillator D sigma tau N e is a Complex-linear endomorphism of Oscillator D. It first applies the actual pairTranslation and then evaluates each translated monomial by the finite creator sum described above. Polynomial coefficients and repeated-variable multiplicities are retained.
-
-**Definition 1.4 (The complete actual tensor coefficient).**
-
-Lean statement: `D5/S3/VertexAlgebra/LatticeHalfFockChargedCollision.collisionCoefficient`
-
-*Formalization.* `D5/S3/VertexAlgebra/LatticeHalfFockChargedCollision.collisionCoefficient` (`✓ std3`).
-
-*Source.* Repository-derived.
-
-*Commentary.*
-
-For D:LatticeData, hu:IsUnit D.G.det, sigma,tau:Charge D, N:Nat and e:Int, collisionCoefficient D hu sigma tau N e is chargeScalar D (sigma+tau) times TensorProduct.map of collisionOscillator D sigma tau N e and the chosen groundAction D hu (sigma+tau). Thus it acts on arbitrary oscillator and ground inputs and extends linearly to every ActualTensor D hu.
-
-**Definition 1.5 (The pointwise lower-truncated collision field).**
-
-Lean statement: `D5/S3/VertexAlgebra/LatticeHalfFockChargedCollision.collisionField`
-
-*Formalization.* `D5/S3/VertexAlgebra/LatticeHalfFockChargedCollision.collisionField` (`✓ std3`).
-
-*Source.* Repository-derived.
-
-*Commentary.*
-
-For D:LatticeData, hu:IsUnit D.G.det, sigma,tau:Charge D and N:Nat, collisionField D hu sigma tau N is the NativeField with signed coefficient collisionCoefficient D hu sigma tau N. Its lower bound depends on the actual input. For p tensor g one bound is -Q(sigma+tau)-2*N minus the largest d(0)+d(1) in the support of pairTranslation(p); tensor induction extends this bound to arbitrary inputs. Endomorphism support is not assumed finite.
-
-**Theorem 1.6 (Corrected source coefficients at every Taylor order).**
+**Theorem 1.1 (Corrected source coefficients at every Taylor order).**
 
 Lean statement: `D5/S3/VertexAlgebra/LatticeHalfFockChargedCollision.charged_allN_draft`
 
@@ -86,7 +26,7 @@ The corrected source sequence satisfies the same recurrence through physical tra
 
 For the ordinary source product, mode r of the sigma ground source on the tau ground source is epsilon D sigma tau times the source with charge sigma+tau and creation degree -r-1-B. Negative degrees vanish. For a nonnegative degree, its corrected coefficient is epsilon D sigma tau times the corresponding collision coefficient. The fixed chargeScalar and chosen ground action remain those of the actual corrected field. The quadratic identity Q(sigma+tau)=Q(sigma)+Q(tau)+2*B proves c_sigma*c_tau*2^(-2*B)=c_(sigma+tau) using signed powers of the nonzero scalar two. The chosen ground product is epsilon(sigma,tau) times groundAction(sigma+tau). Consequently the same complete coefficient is c_sigma*c_tau*2^(-2*B) times the tensor map with collisionOscillator and groundAction(sigma)*groundAction(tau), for every actual tensor input.
 
-**Theorem 1.7 (The normalized ordinary source-iterate coefficient).**
+**Theorem 1.2 (The normalized ordinary source-iterate coefficient).**
 
 Lean statement: `D5/S3/VertexAlgebra/LatticeHalfFockChargedCollision.charged_normalized_source_product_allN`
 
@@ -104,13 +44,4 @@ The proof uses the repository's actual annihilation, finite correction, negative
 
 - Truth anchor: `D5/S3/VertexAlgebra/LatticeHalfFockChargedCollision.charged_allN_draft`
 - Truth anchor: `D5/S3/VertexAlgebra/LatticeHalfFockChargedCollision.charged_normalized_source_product_allN`
-- Truth anchor: `D5/S3/VertexAlgebra/LatticeHalfFockChargedCollision.collisionCoefficient`
-- Truth anchor: `D5/S3/VertexAlgebra/LatticeHalfFockChargedCollision.collisionField`
-- Truth anchor: `D5/S3/VertexAlgebra/LatticeHalfFockChargedCollision.collisionOscillator`
-- Truth anchor: `D5/S3/VertexAlgebra/LatticeHalfFockChargedCollision.collisionScalar`
-- Truth anchor: `D5/S3/VertexAlgebra/LatticeHalfFockChargedCollision.collisionUnit`
-- Dependency: [D5/S3/VertexAlgebra/LatticeActualAnnihilation](LatticeActualAnnihilation.md)
-- Dependency: [D5/S3/VertexAlgebra/LatticeActualOrderedProducts](LatticeActualOrderedProducts.md)
-- Dependency: [D5/S3/VertexAlgebra/LatticeHalfFockGroundProducts](LatticeHalfFockGroundProducts.md)
-- Dependency: [D5/S3/VertexAlgebra/LatticeHalfFockOrderedProducts](LatticeHalfFockOrderedProducts.md)
-- Dependency: [D5/S3/VertexAlgebra/LatticeHalfFockOriginalTranslation](LatticeHalfFockOriginalTranslation.md)
+- Dependency: [D5/S3/VertexAlgebra/LatticeHalfFockChargedCollision/Current](LatticeHalfFockChargedCollision/Current.md)
