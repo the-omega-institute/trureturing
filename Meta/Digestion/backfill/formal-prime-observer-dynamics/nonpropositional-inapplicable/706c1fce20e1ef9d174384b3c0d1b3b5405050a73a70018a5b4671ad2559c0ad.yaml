@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:706c1fce20e1ef9d174384b3c0d1b3b5405050a73a70018a5b4671ad2559c0ad
+  normalized_sha256: sha256:706c1fce20e1ef9d174384b3c0d1b3b5405050a73a70018a5b4671ad2559c0ad
+cas_ref: sha256:706c1fce20e1ef9d174384b3c0d1b3b5405050a73a70018a5b4671ad2559c0ad
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: Introduces iid sample variables as assumptions and announces the following likelihood; this fragment states no likelihood or sufficiency conclusion.
+    previous_atom_id: 8126a0e4cfc64bc5c50eb80f31fbe02b9a81ac45a5c15a208dd9f8ec7b2baba3
+    next_atom_id: 48cd57d7af85ce6e28e8608b053a335a7598a28ea5e0c33bfd9ec70254bfa021
