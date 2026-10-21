@@ -28,7 +28,7 @@ internal sealed class SteeringTemporalCompatibilityRefutationDocument : IScribeD
             Node("Atemporal", "Atemporality", AtemporalFormula(),
                 "Atemporal(R) holds exactly when neither temporal direction admits a quantum channel. "
                     + "Thus both forward and reverse temporal compatibility fail."),
-            Node("BinaryProjective", "Binary projective measurements", BinaryProjectiveFormula(),
+            Node("BinaryProjective", "Binary projective measurement families", BinaryProjectiveFormula(),
                 "BinaryProjective(P) requires every outcome operator to be a star projection and requires "
                     + "the two outcomes at each setting to sum to the identity."),
             Node("assemblage", "The conditional-state assemblage", AssemblageFormula(),
@@ -47,7 +47,9 @@ internal sealed class SteeringTemporalCompatibilityRefutationDocument : IScribeD
             Node("claim", "The steering implication", ClaimFormula(),
                 "The claim says that every density operator which is steerable in either direction is "
                     + "atemporal. This is the implication posed in the discussion of Song et al. "
-                    + "The density predicate is the imported IsDensity predicate on the two-qubit matrix."),
+                    + "Here IsDensity is the two-qubit density predicate: positive semidefiniteness and "
+                    + "trace one. Steering is tested by finite binary projective measurement families.",
+                new DocumentBlock.DisplayFormula(DensityFormula())),
             Describe.Lean(
                 DescribeId.Create("song-steering-result"),
                 DeclarationHandle.Create(Prefix + "result"),
@@ -62,37 +64,52 @@ internal sealed class SteeringTemporalCompatibilityRefutationDocument : IScribeD
                             + "Its first marginal is diag(9/10,1/10). A positive decomposition is "
                             + "R = (99/100)((3/50) vv* + (1/25) ww*) "
                             + "+ (1/100)(diag(9/10,1/10) tensor I/2), where "
-                            + "v has values 3 at 00 and 1 at 11, and w has values 3 at 01 and 1 at 10.")),
+                            + "v = (3,0,0,1) and w = (0,3,1,0) in the ordered basis 00,01,10,11. "
+                            + "Every summand is positive semidefinite, and the first marginal has trace one, "
+                            + "so R is a density matrix.")),
                     Paragraph(Text(
                         "Let E be the Pauli channel with weights "
-                            + "(4183,3787,223,1807)/10000 on I,X,Y,Z. Its Kraus operators are "
+                            + "(4183,3787,223,1807)/10000 on I,X,Y,Z: "
+                            + "E(M) = (4183 M + 3787 XMX + 223 YMY + 1807 ZMZ)/10000. "
+                            + "The weights are positive and sum to one. Its Kraus operators are "
                             + "the corresponding Pauli matrices multiplied by the square roots of these "
                             + "weights, and R = (id tensor E)K for the temporal kernel K of R.")),
                     Paragraph(Text(
-                        "Bob measures X and Z. For the X setting, Alice's conditional states are "
+                        "Bob measures X and Z, with projectors (I + X)/2, (I - X)/2 and "
+                            + "(I + Z)/2, (I - Z)/2; false labels the plus outcome. "
+                            + "For the X setting, Alice's unnormalized conditional states are "
                             + "[[9/20,297/2000],[297/2000,1/20]] and "
                             + "[[9/20,-297/2000],[-297/2000,1/20]]. For the Z setting they are "
                             + "diag(5391/10000,401/10000) and diag(3609/10000,599/10000).")),
                     Paragraph(Text(
                         "Use C = diag(1/9,1), U = [[20/909,33/101],[33/101,-20/101]], and "
-                            + "V = [[-20/909,33/101],[33/101,20/101]]. For every local-hidden-state "
-                            + "model the witness score Q built from U and V is at most 2/5; the positive "
-                            + "matrix C minus each deterministic response witness proves this bound.")),
+                            + "V = [[-20/909,33/101],[33/101,20/101]]. Write D_X and D_Z for the "
+                            + "false-outcome conditional state minus the true-outcome conditional state "
+                            + "at each setting, and set Q = Re tr(U(D_X + D_Z) + V(D_X - D_Z)). "
+                            + "The four matrices C + U, C - U, C + V and C - V are rank-one positive "
+                            + "semidefinite matrices. For every local-hidden-state model with "
+                            + "sigma(X,false) + sigma(X,true) = rho_A = diag(9/10,1/10), each "
+                            + "deterministic response contributes either twice U, minus twice U, twice V "
+                            + "or minus twice V. Positivity therefore bounds its score by twice its "
+                            + "C-weighted hidden-state trace. Summing gives Q <= 2 Re tr(C rho_A) = 2/5.")),
                     Paragraph(Text(
                         "For the displayed assemblage the quantum score is Q = 10197/25250, which is "
                             + "strictly larger than 2/5. Hence R is steerable in the second-to-first direction. "
-                            + "The Pauli channel supplies forward temporal compatibility, so R is not atemporal."))),
+                            + "The Pauli channel supplies forward temporal compatibility, so R is not atemporal. "
+                            + "This answers the steering clause of the source's question; the Bell-nonlocality "
+                            + "clause is not addressed."))),
                 DescribeRole.Theorem)
         )));
 
-    private static DocumentBlock Node(string name, string title, Formula formula, string prose) =>
+    private static DocumentBlock Node(string name, string title, Formula formula, string prose,
+        params DocumentBlock[] details) =>
         Describe.Lean(
             DescribeId.Create("song-steering-" + name.ToLowerInvariant()),
             DeclarationHandle.Create(Prefix + name),
             H(title),
             StatementSource.FromAuthor(Disp(formula)),
             AssessedProvenance.FromLiterature(Source),
-            Blocks(Paragraph(Text(prose))),
+            Blocks([Paragraph(Text(prose)), .. details]),
             DescribeRole.Definition);
 
     private static Formula X(string name) => F.Id(name);
@@ -161,6 +178,13 @@ internal sealed class SteeringTemporalCompatibilityRefutationDocument : IScribeD
         Call("submatrix", matrix, Qualified("Prod", "swap"), Qualified("Prod", "swap"));
     private static Formula Density(Formula matrix) => Call("IsDensity", matrix);
 
+    private static Formula DensityFormula()
+    {
+        Formula r = X("R");
+        return All("R", BipartiteMatrix(), Iff(Density(r),
+            And(Call("PosSemidef", r), Equal(Call("trace", r), One()))));
+    }
+
     private static Formula TemporalKernelFormula()
     {
         Formula r = X("R");
@@ -198,15 +222,11 @@ internal sealed class SteeringTemporalCompatibilityRefutationDocument : IScribeD
 
     private static Formula BinaryProjectiveFormula()
     {
-        Formula n = X("n"), p = X("P"), x = X("x"), b = X("b");
-        Formula operatorAt = App(App(p, x), b);
+        Formula n = X("n"), p = X("P");
         Formula projection = All("x", FinOf(n), All("b", Bool(),
             Call("IsStarProjection", App(App(p, X("x")), X("b")))));
         Formula complement = All("x", FinOf(n),
             Equal(Add(App(App(p, X("x")), X("false")), App(App(p, X("x")), X("true"))), One()));
-        _ = operatorAt;
-        _ = x;
-        _ = b;
         return All("n", Nats(), All("P", MeasurementFamily(n),
             Iff(Call("BinaryProjective", p), And(projection, complement))));
     }
