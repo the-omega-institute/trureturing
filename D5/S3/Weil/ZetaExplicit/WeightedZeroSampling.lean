@@ -1,5 +1,5 @@
 /- GID: D5/S3/Weil/ZetaExplicit/WeightedZeroSampling
-   generality: G
+   generality: I
    mirror-B: D5/B/S3/Weil/ZetaExplicit/WeightedZeroSampling
    mirror-E: none(waiver:original-L2-sampling-domain-open)
    anchors: []
