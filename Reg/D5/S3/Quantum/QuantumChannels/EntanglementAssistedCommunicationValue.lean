@@ -171,7 +171,7 @@ def registration :
       path := #[] }
     coordinates := #[]
     readouts := #[{
-      path := #["body", "body", "body", "body", "arg", "arg"]
+      path := #["body", "body", "body", "body", "body", "body", "arg", "arg"]
       stateBinder := 0
       functionOperand := false
       stateOperand := none
