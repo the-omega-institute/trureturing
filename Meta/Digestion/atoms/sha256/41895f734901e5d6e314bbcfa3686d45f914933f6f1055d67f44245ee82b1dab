@@ -1,0 +1,63 @@
+**Theorem 87.6 (exact original-law budget floor and same-state noncompactness).** For every $a,g>0$ and $B>0$,
+
+$$
+I_{2,B}:=\inf_{\psi\in\mathcal B_{2,B}}q_0[\psi]
+ =-\frac{g^2B}{256a},
+\tag{87.32}
+$$
+
+and this infimum is not attained anywhere in $\mathcal E_2$. There are normalized actual $\psi_j\in\mathcal D_0$ with $D_2[\psi_j]=B$ exactly and
+
+$$
+T[\psi_j]\longrightarrow\frac{g^2B}{256a^2},\qquad
+V[\psi_j]\longrightarrow\frac{gB}{128a},\qquad
+q_0[\psi_j]\longrightarrow I_{2,B}.
+\tag{87.33}
+$$
+
+They can be chosen weakly convergent to zero, with these nonzero kinetic and potential limits carried by a spike whose $L^2$ mass tends to zero. Hence the weighted embedding on $\mathcal E_2$ is not compact, and the fixed-budget negative floor supplies no normalized lowest state.
+
+Proof. By (87.3), every normalized state with $D_2\le B$ satisfies
+
+$$
+q_0[\psi]>aT[\psi]-\frac g8\sqrt{BT[\psi]}
+ \ge-\frac{g^2B}{256a}.
+\tag{87.34}
+$$
+
+This proves the lower bound and whole-domain nonattainment, including states with $D_2<B$.
+
+For the matching upper bound choose the single profiles (87.13) with $h=g/(16a)$, and let $u_{\varepsilon,j}$ be (87.14). Independently choose a normalized fixed $b\in\mathcal D_0$. Expand it by the Carnot dilation $U_L$ and translate only its $z$ coordinate by $L^2$, obtaining $b_L$. If the original $z$ support is in $[-C_b,C_b]$, then
+
+$$
+\operatorname{supp}_zb_L\subset L^2+[-C_bL,C_bL],\quad
+T[b_L]=L^{-2}T[b],\quad d_L:=D_2[b_L]=L^{-4}D_2[b],\quad V[b_L]\longrightarrow0.
+\tag{87.35}
+$$
+
+The last limit uses $|z|\ge L^2/2$ on the support for large $L$ and $\Gamma\le CN^{-3}$, giving $V[b_L]\le C'L^{-6}$. These are actual translations and derivatives, not a replacement of the potential by a translation-invariant field.
+
+For fixed $j$, choose $\varepsilon$ small so $C_j\varepsilon^{-2}>B$, then $L$ large so $d_L<B$ and the two horizontal $z$ supports are disjoint. Define one actual state by
+
+$$
+\theta_{\varepsilon,j,L}=
+ \frac{B-d_L}{C_j\varepsilon^{-2}-d_L}\in(0,1),\qquad
+\psi_{\varepsilon,j,L}=
+ \sqrt{\theta_{\varepsilon,j,L}}u_{\varepsilon,j}
+ +\sqrt{1-\theta_{\varepsilon,j,L}}b_L.
+\tag{87.36}
+$$
+
+Disjoint horizontal supports make the norm, $T$ and $V$ cross terms zero. They also make central derivative cross terms zero: the central operator, even at fractional orders, acts only in $s$ and preserves horizontal support. Thus the state has norm one and $D_2=B$ exactly, lies in $\mathcal D_0$, and its other integrals are the corresponding weighted sums. For fixed $j$, (87.15), with $\varepsilon\downarrow0$ and $L\to\infty$, gives
+
+$$
+\theta\sim\frac{B\varepsilon^2}{C_j}\to0,\qquad
+T[\psi]\to\frac{BA_j}{C_j}=\frac{g^2B}{256a^2},\qquad
+V[\psi]\to\frac{BJ_j}{4\pi C_j}.
+\tag{87.37}
+$$
+
+The last limit tends, as $j\to\infty$, to $gB/(128a)$ by (87.13). A legal diagonal is explicit: select the profile $j$ first, then $\varepsilon_j<1/j$ so its dominated-convergence and derivative errors, after multiplication by $B\varepsilon_j^2/C_j$, are less than $1/j$ and its spike mass is less than $1/j$; only then select $L_j>j$ so the background errors, budget correction and support separation have the same accuracy. Increase $L_j$ if necessary to keep its support outside $|z|\le j$. This proves (87.33) on a single normalized exact-budget sequence, rather than on separate optimizers.
+
+The spike's norm tends to zero while $b_{L_j}$ escapes every compact $z$ set, so $\psi_j\rightharpoonup0$. Equations (87.33) give bounded $\mathcal E_2$ norm and a strictly positive limiting weighted norm. A strongly convergent weighted subsequence would have zero limit on every compact set away from $e$, by weak $L^2$ convergence and the local boundedness of $\Gamma$; exhaustion would make its limit zero everywhere. This contradicts the nonzero limit of $V$. Thus weighted compactness fails at this endpoint. The energy in the vanishing mass spike is not discarded as a small norm perturbation. $\square$
+

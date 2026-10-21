@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:a480ce9f8f275b584b866a696fec49cca5205fb5b6d6b6764887c6db9f0ca0f9
+  normalized_sha256: sha256:a480ce9f8f275b584b866a696fec49cca5205fb5b6d6b6764887c6db9f0ca0f9
+cas_ref: sha256:a480ce9f8f275b584b866a696fec49cca5205fb5b6d6b6764887c6db9f0ca0f9
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 'Proof-status and scope convention only: records paper results and limits numerical checks to the stated instances, without asserting arbitrary-dimensional validity.'
+    previous_atom_id: c7815e10c13e53e8dadefad116637f6a2b4eccf911595d195f50f3446fe0cebd
+    next_atom_id: 2e3e060d927412cebdbb6553185d12011eccaea95eedc7e98844efa140362fa6

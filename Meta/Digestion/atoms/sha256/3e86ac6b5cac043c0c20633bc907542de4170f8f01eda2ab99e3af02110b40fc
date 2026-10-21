@@ -1,0 +1,33 @@
+**Theorem 85.3 (closed same-field restricted form).** On the Hilbert space $\mathcal H_\Lambda$, $q_\Lambda$ is a densely defined closed semibounded Hermitian form with domain exactly $\mathcal F_\Lambda$. For all $\psi$ in this domain,
+$$
+\begin{gathered}
+V[\psi]\le\frac{\Lambda}{4\pi^2}\|\psi\|_2\sqrt{T[\psi]},\\
+q_\Lambda[\psi]\ge-\frac{g^2\Lambda^2}{64\pi^4a}\|\psi\|_2^2.
+\end{gathered}
+\tag{85.8}
+$$
+It has a unique associated self-adjoint representation operator $A_\Lambda$ on $\mathcal H_\Lambda$.
+
+Proof. Reuse the complete global contraction (84.5), including its treatment of zero marginals and its form-domain approximation. Put $f=\sqrt{m_\psi}$, so $\|f\|_2=\|\psi\|_2$ and $\|\nabla f\|_2^2\le T[\psi]$. The actual marginal (82.10), (85.5), and the mature Coulomb estimate (84.10) give
+$$
+V[\psi]\le\frac{\Lambda}{4\pi^2}\int\frac{|f(\xi)|^2}{R}d\xi
+ \le\frac{\Lambda}{4\pi^2}\|\psi\|_2\sqrt{T[\psi]}.
+\tag{85.9}
+$$
+Thus every state in $\mathcal F_\Lambda$ lies in $D(M_{\sqrt\Gamma})$. The sesquilinear potential form is the actual integral $v(\phi,\psi)=\int\Gamma\overline\phi\psi\,d\mu$; Cauchy--Schwarz in this weighted space makes it well defined. For each $\varepsilon>0$,
+$$
+gV[\psi]\le\varepsilon T[\psi]
+ +\frac{g^2\Lambda^2}{64\pi^4\varepsilon}\|\psi\|_2^2.
+\tag{85.10}
+$$
+The free form restricted to the band is closed and dense by Proposition 85.2. Choose $\varepsilon<a$ to make the relative bound strictly less than one. Teschl, *Mathematical Methods in Quantum Mechanics*, version February 12, 2009, [primary text](https://www.mat.univie.ac.at/~gerald/ftp/book-schroe/schroe.pdf), Theorem 6.24 (KLMN), applies on this Hilbert space and this domain. Completing the scalar square $aT-(g\Lambda/(4\pi^2))\|\psi\|_2\sqrt T$ gives the sharper displayed lower bound. Teschl's Theorem 2.13 supplies the representation operator, characterized by
+$$
+\begin{aligned}
+D(A_\Lambda)=\{\psi\in\mathcal F_\Lambda:\ &\text{there is }F\in\mathcal H_\Lambda\text{ such that}\\
+&q_\Lambda(\phi,\psi)=\langle\phi,F\rangle\text{ for all }\phi\in\mathcal F_\Lambda\},\\
+&A_\Lambda\psi=F.
+\end{aligned}
+\tag{85.11}
+$$
+This is the form representation, with no identification of its domain with a free operator domain. The abstract supplier proves no client bound until (85.9)--(85.10) and the dense closed free restriction have been established. $\square$
+

@@ -1,0 +1,35 @@
+**Theorem 87.5 (higher-order added laws and the full weighted compactness condition).** Fix $\sigma>2$ and $a,g,\eta>0$. The added-law form $q_{\sigma,\eta}$ is closed and semibounded on exactly $\mathcal E_\sigma$. Put $p=2/\sigma\in(0,1)$ and $K=g^2/(256a)$. Then
+
+$$
+q_{\sigma,\eta}[\psi]\ge
+ -(1-p)K\left(\frac{pK}{\eta}\right)^{p/(1-p)}\|\psi\|_2^2.
+\tag{87.29}
+$$
+
+The embedding $\mathcal E_\sigma\to L^2(G,\Gamma d\mu)$ is compact. If the normalized infimum $I_{\sigma,\eta}<0$, it is attained by a normalized form state, an eigenvector of the represented operator with eigenvalue $I_{\sigma,\eta}$. Always $I_{\sigma,\eta}\le0$; negativity at every positive coupling, a sharp value of this infimum, and attainment when it is zero are not supplied by this theorem.
+
+Proof. Let $N=\|\psi\|_2^2$ and $S=aT+\eta D_\sigma$. From (87.4), $gV\le C S^{1/2+1/\sigma}N^{1/2-1/\sigma}$ with $C=g/(8\sqrt a\,\eta^{1/\sigma})$. The exponent of $S$ is strictly less than one, so Young's inequality gives $gV\le\epsilon S+C_\epsilon N$ for every $\epsilon>0$. The free intersection form is closed and dense by Definition 87.1. KLMN, as in Theorem 85.3, therefore applies with relative bound zero, on this exact domain. To obtain the displayed finite constant, first complete the scalar square in $\sqrt T$:
+
+$$
+q_{\sigma,\eta}\ge\eta D_\sigma-KD_\sigma^pN^{1-p}.
+\tag{87.30}
+$$
+
+For $N>0$ minimize $\eta d-Kd^p$ over $d=D_\sigma/N\ge0$. Its minimizer is $d=(pK/\eta)^{1/(1-p)}$, giving (87.29); the zero state is immediate. This bound does not assert simultaneous equality in the scalar and spectral interpolation steps.
+
+Full weighted compactness needs the central tail in addition to the finite-band result (85.26). The actual complementary state obeys
+
+$$
+\begin{aligned}
+T[(I-P_\Lambda)\psi]&\le T[\psi],\
+D_2[(I-P_\Lambda)\psi]&\le\Lambda^{2-\sigma}D_\sigma[\psi],\
+V[(I-P_\Lambda)\psi]&\le\frac18\Lambda^{1-\sigma/2}
+ \sqrt{T[\psi]D_\sigma[\psi]}.
+\end{aligned}
+\tag{87.31}
+$$
+
+The first line uses the genuine strong free reduction; the second follows by $|\lambda|^2\le\Lambda^{2-\sigma}|\lambda|^\sigma$ outside the band; the third is the whole-domain endpoint estimate. Thus the weighted norm of the tail tends uniformly to zero on every bounded $\mathcal E_\sigma$ set. For each fixed band its images are bounded in $\mathcal F_\Lambda$, whose actual full-field weighted embedding is compact by (85.26), including both the source puncture and the central/exterior tails. A diagonal band subsequence and (87.31), applied to differences, give weighted Cauchy convergence for the unprojected states. Local $L^2$ identification, or testing on compact boxes away from $e$, identifies the weighted limit with the weak $\mathcal E_\sigma$ limit. This proves the asserted compactness, rather than just compactness of a selected band.
+
+An infimizing normalized sequence has bounded $T+D_\sigma$ by the relative bound with $\epsilon<1$. Pass to a weak form limit $\psi$, use weighted compactness for $V$ and lower semicontinuity for the two nonnegative kinetic terms. If $I=I_{\sigma,\eta}<0$ and $m=\|\psi\|_2^2\le1$, the same mass argument as (85.29) gives $I\ge q_{\sigma,\eta}[\psi]\ge Im\ge I$. Thus $m=1$ and the infimum is attained; form variation and representation give the eigenvector. Outward Carnot dilation has $D_\sigma[U_R\psi]=R^{-2\sigma}D_\sigma[\psi]$ and energy tending to zero, proving $I\le0$. A fixed core trial proves negativity when $g>(aT+\eta D_\sigma)/V$ for that trial, but establishes no all-coupling alternative. $\square$
+
