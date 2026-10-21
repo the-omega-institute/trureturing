@@ -196,20 +196,4 @@ theorem finite_signed_prime_norm_le (L : ℝ) (hL : 0 < L) (M : ℕ)
       simp only [← Finset.sum_mul, ← Finset.mul_sum]
       ring
 
-/-- Exact cutoff correspondence for the literal logarithmic window. At the
-inclusive q=c row compression is zero even if its von Mangoldt weight is not. -/
-theorem logarithmic_cutoff (c : ℕ) (hc : 2 ≤ c) :
-    primeCutoff (Real.log (c : ℝ) / 2) = c ∧
-      (∀ f : ℝ → ℂ,
-        compression (Real.log (c : ℝ) / 2) (Real.log (c : ℝ)) f = 0 ∧
-        compression (Real.log (c : ℝ) / 2) (-Real.log (c : ℝ)) f = 0) := by
-  have hcr : 0 < (c : ℝ) := by exact_mod_cast (lt_of_lt_of_le (by decide : 0 < 2) hc)
-  constructor
-  · unfold primeCutoff
-    rw [show 2 * (Real.log (c : ℝ) / 2) = Real.log (c : ℝ) by ring, Real.exp_log hcr]
-    simp
-  · intro f
-    exact ⟨compression_zero_right _ _ f (by linarith),
-      compression_zero_left _ _ f (by linarith)⟩
-
 end OriginalSignedPrimeFourier

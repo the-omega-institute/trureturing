@@ -22,7 +22,9 @@ internal sealed class OriginalSignedPrimeFourierDocument : IScribeDocumentDefini
                 Describe.Lean(DescribeId.Create("finite-signed-prime-identity"),
                     DeclarationHandle.Create(Owner + "finite_signed_prime_identity"), H("finite signed prime identity"),
                     StatementSource.WithoutFormula(), AssessedProvenance.FromRepo(),
-                    Blocks(Paragraph(Text("The exact original primeSymmetric action on the literal zero-extended complex head equals the full double coefficient sum. The actual floor(exp(L)) cutoff is reused, all diagonal and conjugated mixed terms remain, and no matrix identity is an input."))), DescribeRole.Theorem),
+                    Blocks(
+                        Paragraph(Text("The exact original primeSymmetric action on the literal zero-extended complex head equals the full double coefficient sum. The actual floor(exp(L)) cutoff is reused, all diagonal and conjugated mixed terms remain, and no matrix identity is an input.")),
+                        Paragraph(Text("For an integer c>=2 and L=log(c), the original PhysicalCompressedCosineMatrix.primeCutoff at half-window L/2 equals c: unfold primeCutoff, use Real.exp_log for positive c, and take the natural floor of c. Thus c=5040 and c=5041=71 squared give their exact inclusive cutoffs. PhysicalCompressedCosineMatrix.compression_zero_right and compression_zero_left make both shifts at +/-log(c) zero for every profile at the inclusive q=c row. At c=5041 the von Mangoldt weight of 71 squared remains nonzero; it is the compressed row that vanishes."))), DescribeRole.Theorem),
                 Describe.Lean(DescribeId.Create("prime-matrix-hermitian"),
                     DeclarationHandle.Create(Owner + "primeMatrix_hermitian"), H("primeMatrix hermitian"),
                     StatementSource.WithoutFormula(), AssessedProvenance.FromRepo(),
@@ -38,9 +40,5 @@ internal sealed class OriginalSignedPrimeFourierDocument : IScribeDocumentDefini
                 Describe.Lean(DescribeId.Create("finite-signed-prime-norm-le"),
                     DeclarationHandle.Create(Owner + "finite_signed_prime_norm_le"), H("finite signed prime norm le"),
                     StatementSource.WithoutFormula(), AssessedProvenance.FromRepo(),
-                    Blocks(Paragraph(Text("The all-complex quadratic value is bounded by 2*sum(abs(primeWeight(q)))*(sum(norm(v_n))) squared, using actual integral estimates."))), DescribeRole.Theorem),
-                Describe.Lean(DescribeId.Create("logarithmic-cutoff"),
-                    DeclarationHandle.Create(Owner + "logarithmic_cutoff"), H("logarithmic cutoff"),
-                    StatementSource.WithoutFormula(), AssessedProvenance.FromRepo(),
-                    Blocks(Paragraph(Text("For every integer c>=2 the half-window log(c)/2 has exact inclusive cutoff c. Both compressed shifts at log(c) vanish for every profile even when their prime-power weight is nonzero."))), DescribeRole.Theorem))));
+                    Blocks(Paragraph(Text("The all-complex quadratic value is bounded by 2*sum(abs(primeWeight(q)))*(sum(norm(v_n))) squared, using actual integral estimates."))), DescribeRole.Theorem))));
 }

@@ -42,6 +42,8 @@ Lean statement: `D5/S3/Weil/ZetaBridge/OriginalSignedPrimeFourier.finite_signed_
 
 The exact original primeSymmetric action on the literal zero-extended complex head equals the full double coefficient sum. The actual floor(exp(L)) cutoff is reused, all diagonal and conjugated mixed terms remain, and no matrix identity is an input.
 
+For an integer c>=2 and L=log(c), the original PhysicalCompressedCosineMatrix.primeCutoff at half-window L/2 equals c: unfold primeCutoff, use Real.exp_log for positive c, and take the natural floor of c. Thus c=5040 and c=5041=71 squared give their exact inclusive cutoffs. PhysicalCompressedCosineMatrix.compression_zero_right and compression_zero_left make both shifts at +/-log(c) zero for every profile at the inclusive q=c row. At c=5041 the von Mangoldt weight of 71 squared remains nonzero; it is the compressed row that vanishes.
+
 **Theorem 1.4 (primeMatrix hermitian).**
 
 Lean statement: `D5/S3/Weil/ZetaBridge/OriginalSignedPrimeFourier.primeMatrix_hermitian`
@@ -90,25 +92,12 @@ Lean statement: `D5/S3/Weil/ZetaBridge/OriginalSignedPrimeFourier.finite_signed_
 
 The all-complex quadratic value is bounded by 2*sum(abs(primeWeight(q)))*(sum(norm(v_n))) squared, using actual integral estimates.
 
-**Theorem 1.8 (logarithmic cutoff).**
-
-Lean statement: `D5/S3/Weil/ZetaBridge/OriginalSignedPrimeFourier.logarithmic_cutoff`
-
-*Proof.* Machine-checked in Lean as `D5/S3/Weil/ZetaBridge/OriginalSignedPrimeFourier.logarithmic_cutoff` (`✓ std3`). ∎
-
-*Source.* Repository-derived.
-
-*Commentary.*
-
-For every integer c>=2 the half-window log(c)/2 has exact inclusive cutoff c. Both compressed shifts at log(c) vanish for every profile even when their prime-power weight is nonzero.
-
 ## References
 
 - Truth anchor: `D5/S3/Weil/ZetaBridge/OriginalSignedPrimeFourier.finite_signed_prime_identity`
 - Truth anchor: `D5/S3/Weil/ZetaBridge/OriginalSignedPrimeFourier.finite_signed_prime_norm_le`
 - Truth anchor: `D5/S3/Weil/ZetaBridge/OriginalSignedPrimeFourier.finite_signed_prime_real`
 - Truth anchor: `D5/S3/Weil/ZetaBridge/OriginalSignedPrimeFourier.head`
-- Truth anchor: `D5/S3/Weil/ZetaBridge/OriginalSignedPrimeFourier.logarithmic_cutoff`
 - Truth anchor: `D5/S3/Weil/ZetaBridge/OriginalSignedPrimeFourier.primeMatrix`
 - Truth anchor: `D5/S3/Weil/ZetaBridge/OriginalSignedPrimeFourier.primeMatrix_hermitian`
 - Truth anchor: `D5/S3/Weil/ZetaBridge/OriginalSignedPrimeFourier.primeMatrix_norm_le`

@@ -176,12 +176,6 @@ theorem translation_squared_norm_le (L : ℝ) (hL : 0 < L) (n : ℤ) (h : ℝ)
     linarith [Real.cos_le_one (frequency L n * h)]
   nlinarith [mul_le_mul_of_nonneg_right hc1 hn]
 
-private lemma l2_energy (u : Lp ℂ 2 (volume : Measure ℝ)) :
-    ‖u‖ ^ 2 = ∫ x, ‖u x‖ ^ 2 := by
-  rw [@norm_sq_eq_re_inner ℂ, L2.inner_def, ← integral_re (L2.integrable_inner u u)]
-  apply integral_congr_ae
-  exact Eventually.of_forall fun x => by simp only [← norm_sq_eq_re_inner]
-
 /-- A subject-local line L2 representative of the actual displaced mode.
 It is a consumer of the literal integral estimate, not a replacement domain. -/
 def displacedMode (L : ℝ) (hL : 0 < L) (n : ℤ) (h : ℝ) :
@@ -191,7 +185,7 @@ def displacedMode (L : ℝ) (hL : 0 < L) (n : ℤ) (h : ℝ) :
 
 private lemma displacedMode_energy (L : ℝ) (hL : 0 < L) (n : ℤ) (h : ℝ) :
     ‖displacedMode L hL n h‖ ^ 2 = translationSquaredNorm L n h := by
-  rw [l2_energy]
+  rw [OriginalEvenCosineComplete.l2_energy volume]
   apply integral_congr_ae
   filter_upwards [((line_memLp L hL n).sub (shift_memLp L hL n h)).coeFn_toLp]
     with x hx

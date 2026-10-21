@@ -37,8 +37,15 @@ internal sealed class OriginalEvenCosineCompleteDocument : IScribeDocumentDefini
                 DeclarationHandle.Create("D5/S3/Weil/ZetaBridge/OriginalEvenCosineComplete.circleTransport"),
                 H("Transport to normalized Haar L2"),
                 StatementSource.WithoutFormula(), AssessedProvenance.FromRepo(),
-                Blocks(Paragraph(Text("With a>0, the Ioc lift gives an L2 class on AddCircle(2*a) for normalized Haar measure. Multiplication by sqrt(2*a) compensates for the dx/Haar mass ratio. The following two theorems record both the norm scale and the coefficient scale of this concrete construction."))),
+                Blocks(Paragraph(Text("With a>0, the Ioc lift gives an L2 class on AddCircle(2*a) for normalized Haar measure. Multiplication by sqrt(2*a) compensates for the dx/Haar mass ratio. The transport norm and coefficient theorems below record both scales of this concrete construction."))),
                 DescribeRole.Definition),
+            Describe.Lean(
+                DescribeId.Create("l2-energy"),
+                DeclarationHandle.Create("D5/S3/Weil/ZetaBridge/OriginalEvenCosineComplete.l2_energy"),
+                H("Squared L2 norm as integral energy"),
+                StatementSource.WithoutFormula(), AssessedProvenance.FromRepo(),
+                Blocks(Paragraph(Text("For any measurable space alpha, any measure mu and any complex L2 class u, the squared norm equals the integral of the pointwise squared norm with respect to mu. This identity applies both to the physical window and normalized Haar transport below, and to physical Lebesgue measure for the displaced signed modes."))),
+                DescribeRole.Theorem),
             Describe.Lean(
                 DescribeId.Create("circle-transport-norm"),
                 DeclarationHandle.Create("D5/S3/Weil/ZetaBridge/OriginalEvenCosineComplete.circleTransport_norm_sq"),
