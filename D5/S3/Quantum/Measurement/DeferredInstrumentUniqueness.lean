@@ -91,19 +91,27 @@ open D5.S3.Quantum.Foundation.FiniteKrausChannel.PhyslibLeaf
 def c (d : ℕ) (t : ℝ) : ℝ := Real.sqrt (t * ((d : ℝ) ^ 2 - 1) + 1)
 
 /-- The coefficient of the distinguished diagonal vector. -/
-def a (d : ℕ) (t : ℝ) : ℝ := a2 d t * d
+def a (d : ℕ) (t : ℝ) : ℝ := a2 d t
 
 /-- The distinguished diagonal coefficient. -/
 def k (d : ℕ) (t : ℝ) : ℝ := a d t + b t
 
+lemma It_apply {d : ℕ} (t : ℝ) (ρ : Matrix (Fin d) (Fin d) ℂ) :
+    It t ρ = (t : ℂ) • ρ +
+      (((((1 - t) / (d : ℝ)) : ℝ) : ℂ) * Matrix.trace ρ) • 1 := rfl
+
+lemma Itilde_apply {d : ℕ} (U : Matrix.unitaryGroup (Fin d) ℂ) (t : ℝ)
+    (x : Fin d) (ρ : Matrix (Fin d) (Fin d) ℂ) :
+    Itilde U t x ρ = (1 / (d : ℂ)) •
+      (((((b t) ^ 2 : ℝ) : ℂ) * Matrix.trace (ρ * Q U x)) • 1 +
+        (((a2 d t * b t : ℝ) : ℂ) • (ρ * Q U x + Q U x * ρ)) +
+        (((a2 d t) ^ 2 : ℝ) : ℂ) • ρ) := rfl
+
 lemma sum_Q {d : ℕ} (U : Matrix.unitaryGroup (Fin d) ℂ) :
     ∑ x, Q U x = 1 := by
-  ext i j
-  simp [Q, Matrix.sum_apply, Matrix.mul_apply, Matrix.single]
-  rw [← Finset.sum_mul]
-  rw [← Matrix.mul_apply]
-  rw [Matrix.mem_unitaryGroup_iff'.mp U.2]
-  simp
+  unfold Q
+  rw [← Matrix.sum_mul, ← Matrix.mul_sum, Matrix.sum_single_one, Matrix.mul_one]
+  exact Matrix.mem_unitaryGroup_iff.mp U.2
 
 /-- The quadratic certificate used in the standard-basis argument. -/
 def qCertificate (d : ℕ) (aa bb cc : ℝ) (x : Fin d)
@@ -141,16 +149,14 @@ lemma bc_sq {d : ℕ} (hd : 2 ≤ d) {t : ℝ}
 
 lemma a2_channel_coeff {d : ℕ} (hd : 2 ≤ d) {t : ℝ}
     (htl : -1 / ((d : ℝ) ^ 2 - 1) ≤ t) (htu : t ≤ 1) :
-    2 * a2 d t * b t + (d : ℝ) * (a2 d t) ^ 2 = t := by
+    2 * a2 d t * b t / d + (a2 d t) ^ 2 = t := by
+  have hd0 : (d : ℝ) ≠ 0 := by exact_mod_cast (show d ≠ 0 by omega)
   have hb := b_sq htu
   have hc := c_sq hd htl
-  dsimp [a2, b, c]
-  have hd0 : (0 : ℝ) < d := by exact_mod_cast (Nat.zero_lt_of_lt hd)
-  have hb' : (Real.sqrt (1 - t)) ^ 2 = 1 - t := Real.sq_sqrt (by linarith)
-  have hc' : (Real.sqrt (t * ((d : ℝ) ^ 2 - 1) + 1)) ^ 2 =
-      t * ((d : ℝ) ^ 2 - 1) + 1 := c_sq hd htl
+  dsimp [a2]
+  change 2 * ((c d t - b t) / d) * b t / d + ((c d t - b t) / d) ^ 2 = t
   field_simp
-  nlinarith [hb', hc']
+  nlinarith [c_sq hd htl, hb]
 
 lemma sMax_eq {d : ℕ} (hd : 2 ≤ d) {t : ℝ}
     (htl : -1 / ((d : ℝ) ^ 2 - 1) ≤ t) (htu : t ≤ 1) :
@@ -187,18 +193,6 @@ lemma one_sub_sMax_eq_a2_sq {d : ℕ} (hd : 2 ≤ d) {t : ℝ}
   field_simp
   nlinarith [hb', hc']
 
-lemma k_pos {d : ℕ} (hd : 2 ≤ d) {t : ℝ}
-    (htl : -1 / ((d : ℝ) ^ 2 - 1) < t) (htu : t < 1) : 0 < k d t := by
-  dsimp [k, a, a2, c, b]
-  have hd0 : (0 : ℝ) < d := by exact_mod_cast (Nat.zero_lt_of_lt hd)
-  have hcancel : (Real.sqrt (t * ((d : ℝ) ^ 2 - 1) + 1) - Real.sqrt (1 - t)) / d * d =
-      Real.sqrt (t * ((d : ℝ) ^ 2 - 1) + 1) - Real.sqrt (1 - t) := by
-    field_simp
-  rw [hcancel]
-  have hc : 0 < Real.sqrt (t * ((d : ℝ) ^ 2 - 1) + 1) :=
-    c_pos hd htl
-  linarith
-
 lemma c_pos {d : ℕ} (hd : 2 ≤ d) {t : ℝ}
     (ht : -1 / ((d : ℝ) ^ 2 - 1) < t) : 0 < c d t := by
   unfold c
@@ -212,35 +206,63 @@ lemma c_pos {d : ℕ} (hd : 2 ≤ d) {t : ℝ}
       _ < t * ((d : ℝ) ^ 2 - 1) := by gcongr
   nlinarith
 
+lemma k_pos {d : ℕ} (hd : 2 ≤ d) {t : ℝ}
+    (htl : -1 / ((d : ℝ) ^ 2 - 1) < t) (htu : t < 1) : 0 < k d t := by
+  have hdR : (2 : ℝ) ≤ d := by exact_mod_cast hd
+  have hc := c_pos hd htl
+  have hb : 0 < b t := Real.sqrt_pos.2 (by linarith)
+  change 0 < (c d t - b t) / d + b t
+  apply (mul_pos_iff_of_pos_right (by linarith : (0 : ℝ) < d)).mp
+  rw [add_mul, div_mul_cancel₀ _ (by linarith)]
+  nlinarith
+
 lemma Itilde_sum {d : ℕ} (hd : 2 ≤ d) (U : Matrix.unitaryGroup (Fin d) ℂ)
     {t : ℝ} (htl : -1 / ((d : ℝ) ^ 2 - 1) ≤ t) (htu : t ≤ 1) :
     ∑ x, Itilde U t x = It t := by
-  ext ρ i j
-  simp only [LinearMap.sum_apply, Itilde, It, LinearMap.coe_mk, AddHom.coe_mk,
-    Matrix.smul_apply, Matrix.add_apply, Matrix.mul_apply, Matrix.trace,
-    Finset.sum_apply]
-  have hQ := sum_Q U
-  have ha := a2_channel_coeff hd htl htu
-  have hb := b_sq htu
-  simp only [hQ]
-  ring_nf
-  nlinarith [ha, hb]
+  have hd0 : (d : ℂ) ≠ 0 := by exact_mod_cast (show d ≠ 0 by omega)
+  have ha : 2 * (a2 d t : ℂ) * (b t : ℂ) / d + (a2 d t : ℂ) ^ 2 = t := by
+    exact_mod_cast a2_channel_coeff hd htl htu
+  have hb : (b t : ℂ) ^ 2 = 1 - t := by exact_mod_cast b_sq htu
+  apply LinearMap.ext
+  intro ρ
+  have htr : ∑ x, Matrix.trace (ρ * Q U x) = Matrix.trace ρ := by
+    rw [← Matrix.trace_sum, ← Matrix.mul_sum, sum_Q U, Matrix.mul_one]
+  have hmul : ∑ x, (ρ * Q U x + Q U x * ρ) = ρ + ρ := by
+    rw [Finset.sum_add_distrib, ← Matrix.mul_sum, ← Matrix.sum_mul, sum_Q U,
+      Matrix.mul_one, Matrix.one_mul]
+  rw [LinearMap.sum_apply, It_apply]
+  simp_rw [Itilde_apply]
+  rw [← Finset.smul_sum, Finset.sum_add_distrib, Finset.sum_add_distrib,
+    ← Finset.sum_smul, ← Finset.mul_sum, htr, ← Finset.smul_sum, hmul]
+  simp only [Finset.sum_const, Finset.card_univ, Fintype.card_fin]
+  rw [← Nat.cast_smul_eq_nsmul ℂ]
+  ext i j
+  simp only [Matrix.smul_apply, Matrix.add_apply, smul_eq_mul,
+    Nat.cast_comm, Complex.ofReal_pow, Complex.ofReal_mul, Complex.ofReal_div,
+    Complex.ofReal_sub, Complex.ofReal_one, Complex.ofReal_natCast]
+  field_simp at ha ⊢
+  linear_combination ρ i j * ha + Matrix.trace ρ * (1 : Matrix (Fin d) (Fin d) ℂ) i j * hb
 
 lemma Itilde_trace {d : ℕ} (hd : 2 ≤ d) (U : Matrix.unitaryGroup (Fin d) ℂ)
     {t : ℝ} (htl : -1 / ((d : ℝ) ^ 2 - 1) ≤ t) (htu : t ≤ 1)
     (x : Fin d) (ρ : Matrix (Fin d) (Fin d) ℂ) :
     Matrix.trace (Itilde U t x ρ) =
       Matrix.trace (ρ * Qs U (sMax d t) x) := by
-  have ha := a2_channel_coeff hd htl htu
-  have hb := b_sq htu
-  have hs := sMax_eq hd htl htu
-  have h1 := one_sub_sMax_eq_a2_sq hd htl htu
-  simp only [Itilde, Qs, LinearMap.coe_mk, AddHom.coe_mk, Matrix.trace,
-    Matrix.smul_apply, Matrix.add_apply, Matrix.mul_apply, Matrix.one_apply]
-  rw [Matrix.trace_mul_cycle]
-  rw [hs, h1]
-  ring_nf
-  nlinarith [ha, hb]
+  have hd0 : (d : ℂ) ≠ 0 := by exact_mod_cast (show d ≠ 0 by omega)
+  have hs : (sMax d t : ℂ) = (b t : ℂ) ^ 2 + 2 * (a2 d t : ℂ) * b t / d := by
+    exact_mod_cast sMax_eq hd htl htu
+  have h1 : 1 - (sMax d t : ℂ) = (a2 d t : ℂ) ^ 2 := by
+    exact_mod_cast one_sub_sMax_eq_a2_sq hd htl htu
+  rw [Itilde_apply]
+  simp only [Matrix.trace_smul, Matrix.trace_add, Matrix.trace_one, Fintype.card_fin,
+    smul_eq_mul, Qs, Matrix.mul_add, Matrix.mul_smul, Matrix.mul_one]
+  rw [Matrix.trace_mul_comm (Q U x) ρ]
+  simp only [Matrix.trace_add, Matrix.trace_smul, smul_eq_mul, Complex.ofReal_pow,
+    Complex.ofReal_mul, Complex.ofReal_div, Complex.ofReal_sub, Complex.ofReal_one,
+    Complex.ofReal_natCast]
+  rw [h1, hs]
+  field_simp
+  ring
 
 lemma choi_Itilde_standard (d : ℕ) (t : ℝ) (x : Fin d) :
     MatrixMap.choi_matrix (Itilde (1 : Matrix.unitaryGroup (Fin d) ℂ) t x) =
@@ -277,7 +299,7 @@ lemma trace_condition_entry {d : ℕ} {U : Matrix.unitaryGroup (Fin d) ℂ}
       simp [MatrixMap.choi_matrix, Matrix.trace]
     _ = Matrix.trace (Matrix.single i₁ i₂ 1 * Qs U s x) := htrace x _
     _ = Qs U s x i₂ i₁ := by
-      simp [Matrix.trace, Matrix.mul_apply, Matrix.single]
+      simp only [Matrix.trace_single_mul, one_smul]
 
 lemma choi_gram_rows {d : ℕ} {C : Matrix (Fin d × Fin d) (Fin d × Fin d) ℂ}
     (hC : C.PosSemidef) :
@@ -382,13 +404,14 @@ lemma endpoint_support_upper {d : ℕ} (hd : 2 ≤ d) (J : Fin d → MatrixMap (
     (hCP : ∀ x, (J x).IsCompletelyPositive) : True := by
   trivial
 
-set_option maxHeartbeats 800000 in
 theorem result : claim := by
   intro d hd U t htl htu J
   constructor
   · rintro ⟨hCP, hsum, htrace⟩
     exact transport_forward hd U htl htu J hCP hsum htrace
   · intro hJ
+    have hJEq : J = Itilde U t := funext hJ
+    subst J
     exact backward_direction hd U t htl htu
 
 end D5.S3.Quantum.Measurement.DeferredInstrumentUniqueness
