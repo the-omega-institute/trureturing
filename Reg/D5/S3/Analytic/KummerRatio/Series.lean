@@ -397,7 +397,7 @@ noncomputable def audit : Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0}
     definition := none
     coordinates := #[0, 1, 2]
     readouts := #[{
-      path := #["body", "body", "body", "body", "arg"]
+      path := #["body", "body", "body", "body", "fn", "arg"]
       stateBinder := 0
       functionOperand := true
       stateOperand := none
