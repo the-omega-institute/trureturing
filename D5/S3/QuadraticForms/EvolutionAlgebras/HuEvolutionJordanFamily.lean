@@ -505,7 +505,7 @@ private theorem jordan_coefficients_product (m : ℕ) (x y : Coord (m+1)) :
       split_ifs <;> ring
 
 /-- Any linear structure map defines a bilinear evolution law in standard coordinates. -/
-private def coordinateProduct {n : ℕ} (M : Coord n →ₗ[ℂ] Coord n) : Product n where
+def coordinateProduct {n : ℕ} (M : Coord n →ₗ[ℂ] Coord n) : Product n where
   toFun x :=
     { toFun := fun y => M (x*y)
       map_add' := by intro y z; rw [mul_add, map_add]
@@ -523,7 +523,7 @@ private def coordinateProduct {n : ℕ} (M : Coord n →ₗ[ℂ] Coord n) : Prod
     change M ((a • x)*y) = a • M (x*y)
     rw [smul_mul_assoc,map_smul]
 
-private theorem coordinate_product_natural {n : ℕ} (M : Coord n →ₗ[ℂ] Coord n) :
+theorem coordinate_product_natural {n : ℕ} (M : Coord n →ₗ[ℂ] Coord n) :
     hasNaturalBasis (coordinateProduct M) := by
   classical
   refine ⟨Pi.basisFun ℂ (Fin n), ?_⟩
@@ -537,7 +537,7 @@ private theorem coordinate_product_natural {n : ℕ} (M : Coord n →ₗ[ℂ] Co
     · simp [Pi.single_apply,hi]
   rw [hzero,map_zero]
 
-private theorem coordinate_product_square {n : ℕ} (M : Coord n →ₗ[ℂ] Coord n) :
+theorem coordinate_product_square {n : ℕ} (M : Coord n →ₗ[ℂ] Coord n) :
     square (coordinateProduct M) ⊤ = LinearMap.range M := by
   classical
   apply le_antisymm

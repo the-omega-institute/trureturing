@@ -1,0 +1,84 @@
+## 152. Applications to positive-side limits and normalization
+
+These are direct consequences of Theorem 146.1 and the coefficients
+$P_1,P_2$ in §149, under the same conditional premises.
+
+**Positive-side optimizer cluster set.** In the Choi-matrix topology,
+define the positive-side cluster set by limits of sequences
+$\mathcal R_n\in\operatorname{Opt}_{q_n}$ with $q_n\downarrow0$.
+It is exactly
+
+$$
+ \left\{\mathcal R_{1,z}:z\in\mathbb C,\ |z|\le1\right\},
+\tag{152.1}
+$$
+
+where $\mathcal R_{1,z}$ is (139.3) evaluated at $r=1$.
+Indeed (149.2) and its bounded $e$ give $r(q)\to1$.
+Every sequence of optimal decoders is of the form
+$\mathcal R_{r(q_n),z_n}$ with $|z_n|\le1$. The closed complex disk
+is compact, so a subsequence of the $z_n$ converges to some $z$ in
+that disk. The matrix coefficients in (139.3), equivalently the Choi
+coefficients in (146.1), depend continuously on $(r,z)$. Thus every
+decoder limit is $\mathcal R_{1,z}$. Conversely, for each fixed
+$|z|\le1$ the optimal curve $q\mapsto\mathcal R_{r(q),z}$ converges
+to $\mathcal R_{1,z}$. The endpoint map is CPTP by (139.4) with
+$r=1$. These two inclusions prove (152.1). This is the cluster set
+of the positive-parameter optimal family; it is not a classification
+of all optimizers at $q=0$.
+
+**Identity defect, state displacement and recovery gain.** For the
+selected optimal family, substitution of the unnormalized identity
+$I_3$ in (139.3) gives, independently of $z$,
+
+$$
+ \mathcal R_{r,z}(I_3)-I_3
+ =\operatorname{diag}(0,r^2-1,1-r^2),\qquad
+ d_I(q):=\tfrac12\|\mathcal R_{r(q),z}(I_3)-I_3\|_1=1-r(q)^2.
+\tag{152.2}
+$$
+
+Here $0<r(q)<1$ justifies the last equality. The rows $P_1,P_2$,
+together with the bounded remainder in (149.2), give
+
+$$
+ \begin{aligned}
+ r(q)&=1-\tfrac12q+\tfrac{25}{24}q^2+O(q^3),\\
+ \mu(q)=L(q)&=\tfrac23-\tfrac29q+\tfrac4{27}q^2+O(q^3).
+ \end{aligned}
+\tag{152.3}
+$$
+
+Squaring the first expansion yields
+$r(q)^2=1-q+(1/4+25/12)q^2+O(q^3)
+=1-q+(7/3)q^2+O(q^3)$. Consequently, as $q\downarrow0$,
+
+$$
+ \begin{aligned}
+ d_I(q)&=q-\tfrac73q^2+O(q^3),\\
+ G(q):=\tfrac23-\mu(q)&=\tfrac29q-\tfrac4{27}q^2+O(q^3),\\
+ \frac{G(q)}{d_I(q)}&\longrightarrow\tfrac29.
+ \end{aligned}
+\tag{152.4}
+$$
+
+The actual maximally mixed density is $I_3/3$. Linearity and
+homogeneity of the trace norm give its displacement as
+
+$$
+ \begin{aligned}
+ \delta_u(q)&:=\tfrac12
+ \|\mathcal R_{r(q),z}(I_3/3)-I_3/3\|_1
+ =\tfrac13d_I(q)
+ =\tfrac13q-\tfrac79q^2+O(q^3),\\
+ \frac{G(q)}{\delta_u(q)}&\longrightarrow\tfrac23.
+ \end{aligned}
+\tag{152.5}
+$$
+
+Thus $d_I$ uses the unnormalized identity, whereas $\delta_u$ is a
+state displacement. Both ratios concern the selected optimal decoder
+family only. They assert no channel-independent tradeoff law and do
+not solve the minimax problem constrained to unital decoders. The
+recovery objective remains (141.1).
+

@@ -1,0 +1,9 @@
+fingerprints:
+  raw_sha256: sha256:18cfb894b0f595b06eae76dce18259d8bdda9114d7a54f8f1b6210e13f6ada14
+  normalized_sha256: sha256:18cfb894b0f595b06eae76dce18259d8bdda9114d7a54f8f1b6210e13f6ada14
+cas_ref: sha256:18cfb894b0f595b06eae76dce18259d8bdda9114d7a54f8f1b6210e13f6ada14
+coverage_gids:
+  - gid: D5/S3/Observer/WindowCharacter.window_algebra_has_no_character
+    target_statement_id: sha256:1762dfcfbcf1b350626e711534c61da8425e1e829dfb73e4ab1b7fb74e30db39
+receipts:
+  unresolved_subitems: []

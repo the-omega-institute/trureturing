@@ -1,0 +1,56 @@
+**引理 22.2（正则系数与完全过滤）。** 在
+$k>0$, $k\ne2$, $\eta_k\ne0$, $N\ne0$ 时，定义
+
+$$
+\begin{aligned}
+ A_2&=D(o_2-ke_2)+42kN,& A_1&=D(o_1-ke_1)-128kN,\\
+ B_3&=De_3-12N,& B_2&=De_2+44N,\\
+ \mathcal P(k)&=A_2^2-\eta_kB_3A_2-\eta_kNA_1+\eta_k^2NB_2.
+\end{aligned}
+$$
+
+对每个满足 $\mathcal P(k)=0$ 的不同实根 $k$，置
+
+$$
+\lambda={N\over D},\qquad
+H=E+\lambda R,\qquad F=O-kE+k\lambda V,\qquad
+s={\eta_kH_3-F_2\over \eta_k\lambda},
+$$
+
+并只保留下列全部条件：$s>2k$；
+
+$$
+A=1-k,\quad B=(1-k)s-\eta_k,\quad
+C_1=F_0+sF_1-\eta_kH_1,\quad C_0=sF_0,
+$$
+
+满足漂移行列式
+
+$$
+AC_0-BC_1=0,\qquad A^2+B^2>0,
+$$
+
+且以
+
+$$
+ d={AC_1+BC_0\over A^2+B^2},\qquad
+ g={s\over\eta_k}\bigl(F-(1-k)d\bigr)
+$$
+
+重构出的 $g$ 的首项为 $s\lambda\ne0$，源坐标为
+$r=2k/s$, $b=2/s$, $c=k(1-2k/s)$，并通过所有八个原时钟和全部正性、漂移、增益过滤。每个保留的 $k$ 恰给一个完整世界。
+
+证明。$F_3=N-4k\lambda=\eta_k\lambda$。又有
+$F_2=A_2/D,F_1=A_1/D,H_3=B_3/D,H_2=B_2/D$，所以
+
+$$
+{\mathcal P\over D^2}
+=F_2^2-\eta_kH_3F_2-\eta_k\lambda F_1+\eta_k^2\lambda H_2.
+$$
+
+定义 22.1 最后一个恒等式的四次项由 $F_3=\eta_k\lambda$ 消去，三次项恰给上述 $s$，二次项在乘以 $\eta_k\lambda$ 后为 $-\mathcal P/D^2$，一次和常数项恰为 $C_1=Ad,C_0=Bd$。漂移行列式与显示的 $d$ 公式等价于这最后两式。若 $A=B=0$，则 $k=1$ 且 $\eta_k=0$，与 $\eta_1=-1$ 矛盾；故分母合法。
+
+反过来，所有这些系数等式恢复整个恒等式，并由所定义的 $g$ 得
+$H-d=(1+t/s)g$ 及
+$O+k\lambda S=d+[k(1+t/s)+\eta_k/s]g$。在八个节点取值即返回字面叶；$s>2k>0$ 恰给严格正源，$s\lambda\ne0$ 恰给真三次。正向从任一该分支世界的实际系数得到同样的 $k,s,d,g$，故两方向互逆。此证明没有除以任何 $g(i)$、$e_3$、$o_3$、判别式或增益根。$\square$
+

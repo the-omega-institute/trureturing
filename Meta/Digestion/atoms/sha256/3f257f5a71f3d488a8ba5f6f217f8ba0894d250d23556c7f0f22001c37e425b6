@@ -1,0 +1,23 @@
+**Corollary 8.2 (All supports fail the simultaneous terminal guards).**
+For each $\sigma\in\{-,+\}$, $\mathfrak W(s_\sigma(p_J))$ is
+false. More precisely, for either sign and
+every finite or infinite $S\subseteq\mathcal C_\sigma$,
+
+$$
+\neg L_1(S,(H_4,M,p_J,M,s_\sigma(p_J))),
+\tag{8.3}
+$$
+
+where $L_k$ is the original recursion of O, Definition 1.2.
+
+Proof. By Theorem 8.1 every actual terminal-M response fiber in
+$S$ has at most one complete world. Hence every such fiber fails
+$L_0$, whose guard is cardinality at least two. The terminal-M
+conjunct in the definition of $L_1$ fails. Empty and singleton
+supports fail its initial nonsingleton guard as well.
+In (1.8) the required distinct pair $W_2,W_3$ with equal
+$f_{MM}$ therefore cannot exist. The argument permits the two
+terminal pairs to overlap and makes no four-distinct-world
+assumption. It covers pairs not involving the singular world
+because Theorem 8.1 covers the entire child. ∎
+

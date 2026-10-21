@@ -1,0 +1,55 @@
+**Identity defect, state displacement and recovery gain.** For the
+selected optimal family, substitution of the unnormalized identity
+$I_3$ in (139.3) gives, independently of $z$,
+
+$$
+ \mathcal R_{r,z}(I_3)-I_3
+ =\operatorname{diag}(0,r^2-1,1-r^2),\qquad
+ d_I(q):=\tfrac12\|\mathcal R_{r(q),z}(I_3)-I_3\|_1=1-r(q)^2.
+\tag{152.2}
+$$
+
+Here $0<r(q)<1$ justifies the last equality. The rows $P_1,P_2$,
+together with the bounded remainder in (149.2), give
+
+$$
+ \begin{aligned}
+ r(q)&=1-\tfrac12q+\tfrac{25}{24}q^2+O(q^3),\\
+ \mu(q)=L(q)&=\tfrac23-\tfrac29q+\tfrac4{27}q^2+O(q^3).
+ \end{aligned}
+\tag{152.3}
+$$
+
+Squaring the first expansion yields
+$r(q)^2=1-q+(1/4+25/12)q^2+O(q^3)
+=1-q+(7/3)q^2+O(q^3)$. Consequently, as $q\downarrow0$,
+
+$$
+ \begin{aligned}
+ d_I(q)&=q-\tfrac73q^2+O(q^3),\\
+ G(q):=\tfrac23-\mu(q)&=\tfrac29q-\tfrac4{27}q^2+O(q^3),\\
+ \frac{G(q)}{d_I(q)}&\longrightarrow\tfrac29.
+ \end{aligned}
+\tag{152.4}
+$$
+
+The actual maximally mixed density is $I_3/3$. Linearity and
+homogeneity of the trace norm give its displacement as
+
+$$
+ \begin{aligned}
+ \delta_u(q)&:=\tfrac12
+ \|\mathcal R_{r(q),z}(I_3/3)-I_3/3\|_1
+ =\tfrac13d_I(q)
+ =\tfrac13q-\tfrac79q^2+O(q^3),\\
+ \frac{G(q)}{\delta_u(q)}&\longrightarrow\tfrac23.
+ \end{aligned}
+\tag{152.5}
+$$
+
+Thus $d_I$ uses the unnormalized identity, whereas $\delta_u$ is a
+state displacement. Both ratios concern the selected optimal decoder
+family only. They assert no channel-independent tradeoff law and do
+not solve the minimax problem constrained to unital decoders. The
+recovery objective remains (141.1).
+

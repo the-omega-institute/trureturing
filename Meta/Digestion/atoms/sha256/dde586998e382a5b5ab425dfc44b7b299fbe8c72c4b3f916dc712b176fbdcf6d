@@ -1,0 +1,30 @@
+**Proposition 20.1 (route-specific consequence).** A plan that repeatedly
+uses the fresh complete Recover route must reserve native-work and retained-
+material budgets satisfying (19.1)--(19.4), even when it recalls the same
+old target. Hence pointwise successful four-view recovery on this route does
+not imply a uniformly bounded fresh-call cost, a positive native-row
+completion density, or a fixed positive ratio of target ordinal to return
+ordinal. These consequences concern the installed full-predecessor replay
+and full-bank emission; they do not quantify already acquired reuse or a
+different lawful route.
+
+The conclusion is compatible with the standard persistence distinction of
+Driscoll, Sarnak, Sleator and Tarjan, *Making Data Structures Persistent*,
+JCSS 38 (1989), 86--124, [primary text](https://www.cs.cmu.edu/~sleator/papers/making-data-structures-persistent.pdf):
+sharing in their pointer model does not remove the full-bank-emission
+premise used here, and their bounds are not a native GCA tariff. It is also
+compatible with the rr project's [primary Background](https://rr-project.org/),
+which describes restoring a checkpoint and executing forward to a selected
+point: that alternative supplies neither this installed checkpoint nor a
+current GCA permission or cost identity.
+
+The proposition establishes no original-$Q$ admission, complete original
+successor/continuation correspondence, acquired class recognition, actor
+read permission, autonomous target selection, upper runtime, attainable
+schedule, physical time or energy law, universal representation lower bound,
+or impossibility of a cached, checkpointed, incremental or differently
+represented recovery route. The independent $S$, $B$, $T$ and $M$ meanings,
+all current-authority checks, complete receipts, source-growth/input,
+mixed, raw, fault, unfinished, changed-return and terminal domains remain
+those of Definitions 1.3--1.4 and §§7--10.
+

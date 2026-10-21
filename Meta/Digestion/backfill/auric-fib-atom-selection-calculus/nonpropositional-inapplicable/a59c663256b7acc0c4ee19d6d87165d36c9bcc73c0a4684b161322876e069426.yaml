@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:a59c663256b7acc0c4ee19d6d87165d36c9bcc73c0a4684b161322876e069426
+  normalized_sha256: sha256:a59c663256b7acc0c4ee19d6d87165d36c9bcc73c0a4684b161322876e069426
+cas_ref: sha256:a59c663256b7acc0c4ee19d6d87165d36c9bcc73c0a4684b161322876e069426
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: Resource and protocol scope requirements; these prescribe additional inputs/cost accounting and do not assert a new mathematical theorem.
+    previous_atom_id: 7821664ce6a7579a5cbbd58e8e36cc28bf8ab988a577e26f2565d863e7d5b670
+    next_atom_id: d57e77810709bb8218215ea2e492de03b79634f8df833bae2e57e392bf9a32d7

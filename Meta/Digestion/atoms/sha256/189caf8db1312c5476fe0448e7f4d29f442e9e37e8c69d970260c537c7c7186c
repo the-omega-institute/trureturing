@@ -1,0 +1,35 @@
+**定义 6.1（固定父、所选第五动作与完整切片）。** 仍取式 (1.1) 的全部严格正、秩恰一、迹一来源，一个整个非零实多项式 $g$、$\deg g\le3$，以及任意实常漂移 $d$；完整目标始终是 $(P,g,d)$。读数仍为 $y_i=d+g(i)\operatorname{tr}(Q_iP)$，$Q_i=E_iQ_{i-1}$，$Q_0=I$，只用实际左动作 $J,M$ 和计入初读的原时钟 $0,\ldots,7$。对任意实数 $C,z,Y$，置
+
+$$
+H_3=(0,J,24,M,C,J,z),\qquad
+H_4^M=(H_3,M,Y),\qquad
+\mathcal C=\mathcal C_{67}(0).
+\tag{6.1}
+$$
+
+因此 $\mathcal C$ 恰由初读零且 $g(6)=g(7)=0$ 的合法完整世界组成。定理 3.1 的第五选择在此父上为
+
+$$
+F_\star(C)=
+\begin{cases}
+J,&248/7<C<328/7,\\
+M,&C\le248/7\ \text{或}\ C\ge328/7.
+\end{cases}
+\tag{6.2}
+$$
+
+这只是式 (3.1) 在 $A=24$ 的取值。对一个固定的有限或无限支持 $K\subseteq\mathcal F(H_4^M)$、第五动作 $F$ 和实响应 $p,v$，记
+
+$$
+\begin{aligned}
+H_5^F(p)&=(H_4^M,F,p),&
+K_5^F(p)&=K\cap\mathcal F(H_5^F(p)),\\
+H_6^{F,E}(p,v)&=(H_5^F(p),E,v),&
+B_E^F(p,v)&=K\cap\mathcal F(H_6^{F,E}(p,v)),
+\qquad E\in\{J,M\}.
+\end{aligned}
+\tag{6.3}
+$$
+
+$B_E^F(p,v)$ 是 $K$ 的整个实际第六响应切片，包含该同一历史下 $K$ 的所有兼容世界。失败递归 $L_s$ 取式 (1.3)，包括每层 $|K|\ge2$ 的停止守卫。
+

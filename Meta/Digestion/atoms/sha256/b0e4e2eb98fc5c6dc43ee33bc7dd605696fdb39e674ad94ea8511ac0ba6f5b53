@@ -1,0 +1,35 @@
+**定义 1.1（原时钟模型）。** 置
+
+$$
+J=\begin{pmatrix}0&1\\1&0\end{pmatrix},\qquad
+M=\begin{pmatrix}0&1\\1&1\end{pmatrix}.
+$$
+
+完整世界为 $W=(P,g,d)$，其中
+
+$$
+P=\begin{pmatrix}r&b\\c&1-r\end{pmatrix},\quad
+0<r<1,\quad b,c>0,\quad bc=r(1-r),\qquad
+0\ne g\in\mathbb R[T],\quad\deg g\le3,\quad d\in\mathbb R.
+\tag{1.1}
+$$
+
+按时间先后执行 $E_1\cdots E_i$，令 $A_0=I$、$A_i=E_iA_{i-1}$，原时钟 $i$ 的读数为
+
+$$
+z_i(W)=d+g(i)\operatorname{tr}(A_iP).
+\tag{1.2}
+$$
+
+初读计数，每个单独动作后立即读取；八次总读数使用原时钟 $0,\ldots,7$。轨迹不能重置、复制、跳读、补空动作、重编号时钟或增加观测端口。未选动作的响应函数只用于比较固定世界。增益允许正负系数、次数下降、采样根及重根；非对角元没有小于一的限制。目标始终是整个 $(P,g,d)$。
+
+这些是 [V，定义 1.1、20.1](FIB_SELF_CALIBRATING_RELATION_MATHEMATICS_V.md) 的同一模型。以下固定
+
+$$
+H_4=(0,J,24,M,48,J,z,M,Y),\qquad
+j=b+c,\quad\ell=1+b,\quad T=r+j,\quad V=2\ell-1.
+\tag{1.3}
+$$
+
+各结论分别声明 $0<z<48$ 或 $24<z<48$；二者均包含窗口 $144/5<z<216/5$。$Y$ 任意。记 $\mathcal F(H)$ 为实现字面历史 $H$ 的全部完整世界。
+

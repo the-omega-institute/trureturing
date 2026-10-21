@@ -1,0 +1,77 @@
+**Definition 119.1 (Polynomial data).** In this appendix the symbols
+$a,b,c,\eta$ are decoder parameters, independent of the channel
+parameter $s$. Order the eleven real variables as
+
+$$
+\theta=(a,b,c,\eta,L,p_e,p_i,x_i,\alpha,\beta,\tau).
+\tag{119.1}
+$$
+
+For independent population coordinates $p,x$ put
+
+$$
+\begin{aligned}
+y&=1-p-x,& v_1&=(x+3y)/4,&v_2&=(3x+y)/4,\\
+h_0&=ap,&h_1&=bv_1+cv_2,&h_2&=1-h_0-h_1,\\
+d_0&=L+h_0-p,&d_1&=L+h_1-x,&d_2&=L+h_2-y,\\
+\kappa&=1-\eta/2.
+\end{aligned}
+\tag{119.2}
+$$
+
+Define the rational-coefficient polynomial
+
+$$
+N(p,x)=d_0d_1d_2-d_0xy-d_1py-\kappa^2d_2px-2\kappa pxy.
+\tag{119.3}
+$$
+
+A derivative $N_t$ means that $a,b,c,\eta,L,p,x$ are independent
+before differentiation. For example
+$N_{e,a}=N_a(p_e,0)$ and $N_{i,p}=N_p(p_i,x_i)$; the subscripts
+$e,i$ indicate substitution only after differentiation. Set
+$N_e=N(p_e,0)$ and $N_i=N(p_i,x_i)$.
+The eleven polynomials, with zero-based indexing, are
+
+$$
+\begin{aligned}
+F_0&=ab-\eta^2,\\
+F_1&=N_e,&F_2&=N_{e,p},\\
+F_3&=N_i,&F_4&=N_{i,p},&F_5&=N_{i,x},\\
+F_6&=\alpha N_{e,L}+\beta N_{i,L}-1,\\
+F_7&=\alpha N_{e,a}+\beta N_{i,a}+\tau b,\\
+F_8&=\alpha N_{e,b}+\beta N_{i,b}+\tau a,\\
+F_9&=\alpha N_{e,c}+\beta N_{i,c},\\
+F_{10}&=\alpha N_{e,\eta}+\beta N_{i,\eta}-2\tau\eta.
+\end{aligned}
+\tag{119.4}
+$$
+
+These formulas define every coefficient of $F$ over $\mathbb Q$.
+For an explicit population expansion, write
+
+$$
+N(p,x)=\sum_{i+j\le3}n_{ij}p^ix^j,\qquad
+B=a-1,\quad V=(3b+c)/4,\quad D=(c-b)/2-1.
+\tag{119.5}
+$$
+
+All ten coefficients, including the zero cubic coefficient, are
+
+$$
+\begin{aligned}
+n_{00}&=L(L-V)(L+V),\\
+n_{01}&=-L(2DV+1),\\
+n_{02}&=-L(D-1)(D+1),\\
+n_{03}&=0,\\
+n_{10}&=-BLV-BV^2+2LV^2-L-V,\\
+n_{11}&=-BDL-2BDV-B+2DLV-D-L\kappa^2+2L
+          +V\kappa^2+V-2\kappa,\\
+n_{12}&=-BD^2+B+D\kappa^2+D+2\kappa,\\
+n_{20}&=-B^2L-B^2V+BLV+2BV^2-LV^2+L+2V,\\
+n_{21}&=-B^2D+2BDV+B\kappa^2+B+D-V\kappa^2-V+2\kappa,\\
+n_{30}&=V(B^2-BV-1).
+\end{aligned}
+\tag{119.6}
+$$
+

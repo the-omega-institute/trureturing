@@ -1,0 +1,9 @@
+fingerprints:
+  raw_sha256: sha256:79ae32ff683224947215a09b8c64b2a6f79cbab250a96e5632f3511e29d76884
+  normalized_sha256: sha256:79ae32ff683224947215a09b8c64b2a6f79cbab250a96e5632f3511e29d76884
+cas_ref: sha256:79ae32ff683224947215a09b8c64b2a6f79cbab250a96e5632f3511e29d76884
+coverage_gids:
+  - gid: D5/S3/Fourier/Asymptotics/TorusObservationWindowReturns.result
+    target_statement_id: sha256:1d193404c9518ba239c7991446d44b8aedda6c16f277317a7f471787e6bd193f
+receipts:
+  unresolved_subitems: []

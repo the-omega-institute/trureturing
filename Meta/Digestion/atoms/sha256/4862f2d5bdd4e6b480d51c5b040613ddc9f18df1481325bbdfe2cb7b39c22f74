@@ -1,0 +1,85 @@
+**Theorem 3.1 (At most two worlds outside the saturated direction).** For
+every $\beta>0$ and every nonzero real $f$ of degree at most three, put
+
+$$
+\mathcal D_f=\{(P,g,d)\in\mathcal F(H_{4,\beta}):g=\lambda f,
+\ \lambda\ne0\}.
+\tag{3.1}
+$$
+
+If $[f]=[h]$, this class is $K_\beta$. Otherwise it contains at most two
+complete worlds. Both signs of $\lambda$ are allowed.
+
+Proof. Write $f_i=f(i)$. If either $f_1$ or $f_3$ is zero in a nonempty
+class, the corresponding row forces $d=24$, so Theorem 2.2 makes the class
+$K_\beta$ or empty. Hence assume $f_1f_3\ne0$. Lift the source to
+
+$$
+R=\lambda P=\begin{pmatrix}u&v\\w&\mu-u\end{pmatrix},
+\qquad\mu=\lambda\ne0,\qquad d=-f_0\mu.
+\tag{3.2}
+$$
+
+For the chosen representative $f$, the lift and $d$ determine the
+complete world injectively. The four parent rows after clock zero are
+
+$$
+\begin{aligned}
+f_1(v+w)-f_0\mu&=24,\\
+(f_2-f_0)\mu+f_2v&=C_\beta,\\
+f_3(u+v+w)-f_0\mu&=24,\\
+(f_4-f_0)\mu+2f_4v&=Y_\beta.
+\end{aligned}
+\tag{3.3}
+$$
+
+The odd rows imply
+
+$$
+u=\kappa(v+w),\qquad
+\kappa=\frac{f_1}{f_3}-1=\frac rj>0
+\tag{3.4}
+$$
+
+at every legal point. The even-row coefficient matrix in $(\mu,v)$ has
+rank at least one: a zero first row would contradict $C_\beta>0$.
+Rank two fixes $\mu,v$, after which the odd rows fix $u,w$. In the
+consistent rank-one case $(\mu,v)$ lies on an affine line, and $u,w$ are
+affine functions on it. Its determinant is a polynomial of degree at most
+two. Unless that polynomial vanishes identically, it gives at most two
+candidate lifts; all remaining legality conditions only delete them.
+
+It remains to exclude a nonconstant determinant-zero line containing a
+legal lift $R_0$. Factor $R_0=xy^{\mathsf T}$; all coordinates of $x,y$
+are nonzero. If $R_0+tN$ has identically zero determinant and $N\ne0$,
+then $\det N=0$. Factoring $N=ab^{\mathsf T}$, its mixed determinant
+coefficient is
+$(x_1a_2-x_2a_1)(y_1b_2-y_2b_1)$. Thus $N$ shares either the column factor
+$x$ or the row factor $y$ with $R_0$.
+
+On a shared-column line, (3.4) becomes the homogeneous row-factor equation
+
+$$
+(x_1-\kappa x_2)y_1-\kappa x_1y_2=0.
+\tag{3.5}
+$$
+
+Its second coefficient is nonzero, so its kernel is one dimensional.
+Both row factors lie in that kernel, forcing $N$ proportional to $R_0$.
+For a shared-row line the corresponding column-factor equation is
+
+$$
+(y_1-\kappa y_2)x_1-\kappa y_1x_2=0,
+\tag{3.6}
+$$
+
+and gives the same conclusion. But the first functional in (3.3) takes
+value $24$ on $R_0$ and value zero on $N$, because the whole affine line
+satisfies that row. Proportionality forces $N=0$, a contradiction. The
+identically rank-one line therefore contains no legal point. This proves
+the bound without a generic-rank, drift-sign or nonzero-$\Lambda$
+hypothesis. The lifting and rank-one-line method is inherited from
+[the promised-fiber volume](FIB_JMJM_PROMISED_FIBERS_AND_JOINT_EXCEPTION_GEOMETRY.md),
+Theorem 4.1; (3.4)–(3.6) provide the equal-odd-read argument required here,
+outside that theorem's $C=48$, $24<z<48$ hypotheses. ∎
+

@@ -1,0 +1,11 @@
+**Lemma 7.2 (Guarded response intervals for every retained category).**
+For the four possible regular categories, the following bounds
+hold on the entire indicated $r,b$ boxes. The columns for the
+$b$ input interval and $D_m$ guard are divided by $10^6$.
+
+| $\sigma$ | $k$ | $b$ input interval numerators | $D_m$ guard numerators | Strict interval for $N_m/D_m$ |
+| --- | --- | --- | --- | --- |
+| $-$ | $1$ | $[189704,189705]$ | $[-65867,-65864]$ | $(487,488)$ |
+| $+$ | $1$ | $[223805,223806]$ | $[-29605,-29595]$ | $(601,603)$ |
+| $+$ | $2$ | $[161056,161057]$ | $[67164,67174]$ | $(621,623)$ |
+| $+$ | $4$ | $[247293,247294]$ | $[-157947,-157782]$ | $(611,613)$ |

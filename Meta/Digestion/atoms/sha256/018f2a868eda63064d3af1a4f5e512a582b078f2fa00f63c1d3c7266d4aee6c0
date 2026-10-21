@@ -1,0 +1,22 @@
+**Definition 1.3 (Singular-response children).** Let $r_-,r_+$ be
+exactly the two strict roots designated by O, Theorem 4.2, of
+
+$$
+\Phi(t)=438272t^4-931328t^3+540800t^2-50728t-853.
+\tag{1.6}
+$$
+
+For $\sigma\in\{-,+\}$ retain the exact function $s_\sigma(p)$ of
+O, Definition 29.1, evaluated at $r_\sigma$. Define
+
+$$
+\mathcal C_v=\mathcal F(H_4,M,p_J,M,v),\qquad
+\mathcal C_\sigma=\mathcal C_{s_\sigma(p_J)}.
+\tag{1.7}
+$$
+
+Let $S_\sigma(p)$ denote the unique complete fifth-response lift at
+$(r_\sigma,1/8)$ supplied by O, Theorems 12.3 and 29.2. In particular
+$u_M(S_\sigma(p))=s_\sigma(p)$. This is an equality of actual
+responses, rather than a choice of a center from a response interval.
+

@@ -228,3 +228,38 @@ Each layer has at most $2^k+1$ records. A candidate, its parent index and its ma
 Proof. At each nontrivial cut the only clause crosses, so $|C_i|=1$. Every already processed variable shares this unfinished clause with a future variable, so $B_i=P_i$ until the final cut. Clause satisfaction needs only one bit, whereas retaining all previous values stores $i$ bits. Thus the two sufficient representations have different widths. The observation does not establish a lower bound for arbitrary succinct completion programs; Proposition 4 already separates explicit residual counts from a selector's runtime. $\square$
 
 ## 追加锚（本行以下为增补区）
+
+## 6. Cardinality objectives on an explicit graph frontier
+
+The same standard frontier method handles optimization without retaining the entire past assignment. This is an elementary max-sum application of elimination, not a new general dynamic-programming theorem. Let the input explicitly encode a finite simple graph $G=(V,E)$, a vertex order $v_1,\ldots,v_n$ and an integer threshold $K$, with total bit length $N$. Define
+
+$$
+P_i=\{v_1,\ldots,v_i\},\qquad
+B_i=\{v\in P_i:\exists u\notin P_i,\ \{v,u\}\in E\},\qquad
+w=\max_i|B_i|.
+$$
+
+These are graph frontiers; they are not being identified with the source paper's induced width. For each boundary assignment $\sigma:B_i\to\{0,1\}$ store
+
+$$
+D_i(\sigma)=\max\{|S|:S\subseteq P_i\text{ is independent},\
+\mathbf1_S|_{B_i}=\sigma\},
+$$
+
+using $-\infty$ for an infeasible entry and $D_0(\varnothing)=0$. The score, unlike a mere feasibility bit, retains the contribution of forgotten selected vertices to the global cardinality objective.
+
+When inserting $v_{i+1}$, try its two values $b\in\{0,1\}$. If $b=1$, every already processed neighbor must have value zero. Every such neighbor belongs to $B_i$, since $v_{i+1}$ was unprocessed at cut $i$. Thus this test needs only $\sigma$. The new frontier satisfies $B_{i+1}\subseteq B_i\cup\{v_{i+1}\}$. Restrict the extended assignment to it, add $b$ to the score and take the maximum among candidates with the same new boundary code.
+
+To justify forgetting, a vertex in $P_i\setminus B_i$ has no edge to the future. For histories with the same boundary assignment, every allowed future independent set has the same compatibility test, and the only remaining objective dependence on the past is its stored cardinality. Keeping the largest such cardinality is therefore exact. Conversely, every independent subset of $P_{i+1}$ restricts to a candidate from its predecessor boundary and its actual last bit. These two observations prove the recurrence by induction. At the final empty boundary, $D_n(\varnothing)$ is the maximum independent-set size; comparison with $K$ decides the threshold question. Parent records recover an attaining set, including ties by any fixed deterministic rule.
+
+There are at most $2^w$ entries per layer and two candidates per entry. In a deterministic sequential-tape bit model the full algorithm, including witness recovery, has bound
+
+$$
+O\!\left((n+1)2^{w+1}\operatorname{poly}(N)\right).
+$$
+
+Indeed, scan the explicit graph and order to form each frontier and perform each neighbor test. Use fixed-length boundary codes in vertex order, scores of $O(\log(n+2))$ bits, and parent indices of $O(N)$ bits. Produce at most $2^{w+1}$ records, merge sort them by the new code and keep a maximum-score representative per group. The sorting logarithm is $O(w+1)\subseteq\operatorname{poly}(N)$; all record operations and graph scans also cost polynomially in $N$. Stored-layer scans follow the chosen parents using at most another polynomial factor. This argument assumes no free random access, unit-cost unbounded integers or semantic equivalence oracle. The $n+1$ convention also covers an empty graph. For $w=O(\log N)$ it gives deterministic polynomial time with a witness. Finding a suitable order is a separate task unless that order is supplied or efficiently constructed.
+
+The exact AURIC correspondence is the [selection-calculus §15 shared-network contract](../../docs/develop/theory/AURIC_FIB_ATOM_SELECTION_CALCULUS.md): use one shared bit $u_v$ per vertex, put $(x,y,z)=(u_v,0,u_{v'})$ at edge $\{v,v'\}$ in $\Sigma=\{xz=yz=0\}$, and count each vertex once in $\sum_vu_v\ge K$. The local relation becomes $u_vu_{v'}=0$, so the above optimizer applies without introducing an additional local constraint. Arbitrary sharing, zero ports and the global cardinality objective are declared input features; they are not supplied by the native adjacent-window chain alone. A constant-size local relation can therefore coexist with both an NP-complete unrestricted graph problem and this width-dependent sufficient algorithm.
+
+## 追加锚（本行以下为增补区）

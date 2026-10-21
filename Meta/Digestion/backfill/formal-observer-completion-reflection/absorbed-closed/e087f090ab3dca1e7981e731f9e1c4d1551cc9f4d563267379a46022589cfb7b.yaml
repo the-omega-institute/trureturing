@@ -1,0 +1,26 @@
+fingerprints:
+  raw_sha256: sha256:e087f090ab3dca1e7981e731f9e1c4d1551cc9f4d563267379a46022589cfb7b
+  normalized_sha256: sha256:e087f090ab3dca1e7981e731f9e1c4d1551cc9f4d563267379a46022589cfb7b
+cas_ref: sha256:e087f090ab3dca1e7981e731f9e1c4d1551cc9f4d563267379a46022589cfb7b
+coverage_gids:
+  - gid: D5/S3/Observer/Conditioning.conditionalState_isState
+    target_statement_id: sha256:e1759f9d54b56d254a45623c1a09d897a48b1f767c39a7809eff555a18e0cd6d
+  - gid: D5/S3/Observer/Conditioning.recordWeight_sum
+    target_statement_id: sha256:5312b03759c2cf79a2c8999423f8ca4e648ad67da3fd5eb0e7bf6e0002cca1af
+  - gid: D5/S3/Observer/Conditioning.unreadState_fixed_iff
+    target_statement_id: sha256:39e5d9432cd5657cce1cf249b9135c8562408b3b88b418941b04536a36d9bada
+  - gid: D5/S3/Observer/Conditioning.unreadState_idempotent
+    target_statement_id: sha256:40a59c00ad5c06e8478f18ec37e960d3cb0be1d483718f2bc553ac24464c1797
+  - gid: D5/S3/Observer/Conditioning.unreadState_trace
+    target_statement_id: sha256:0e84333aa70c9c65a46709e7f86b8c3069a7c68721ecf59d41f08db46c7316a2
+  - gid: D5/S3/Observer/Conditioning.unread_eq_weighted_ensemble
+    target_statement_id: sha256:023a682c92253dbd56197f032344ca5995d6e29880ffcc6c607224899369d6cc
+receipts:
+  unresolved_subitems: []
+  chain_atoms:
+    - 1c147e5f7580f5f5f496b449a5ef440801eefc165285575cb542c4afa3444b31
+    - 1b775015ab3ca01ccd3a976b20114176cbe562afba02d2d189ce25961083d4c2
+    - de7546ae47cc6d520ead01c4019cc57378ba9f8d6de12707e6360bd41d527558
+    - 71ecd74400d33ea672eac29d12bc0015b34fffda7d54230e67e443704184786e
+    - d4c0afcde0e0c5d1086f4377a71cb9535f0d673da7608a206db7b6e0c12168ee
+    - 59ccac289fffabefc4474050957ea57106615f2efb2b98b66ae65491d8d5788f

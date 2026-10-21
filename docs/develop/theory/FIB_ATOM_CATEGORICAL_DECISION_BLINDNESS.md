@@ -625,3 +625,1113 @@ The same statements hold with $J,J_N$ exchanged. The last inequality follows fro
 The parameter $e_N$ measures input-approximation error relative to the original noisy apparatus. Sending it to zero does not send the observation noise $\sigma$ to zero, remove overlap between the five likelihoods, or drive either Bayes error to zero. The finite attainers in Theorems 7.2–7.3 and the full-support infimum in Proposition 7.4 have no asserted realization by these five Gaussian preparations. The bridge uses only unconditional, externally fixed-word, complete-record laws and one common quantizer; it yields no rare-event or exact-history conditioning bound, adaptive-word statement, trained-network attainment, native-atom encoding, process-dimension bound or physical-resource claim. The mathematical additions are the graph-specific soft-risk region and attainers, their full-support boundary, and their application to the cited preparation/record correspondence. Classical Bayes identities, posterior splitting, gain functions, visible choice and TV control are reused intermediate tools; no worldwide priority claim follows. $\square$
 
 ## 追加锚（本行以下为增补区）
+
+## 8. Fixed a/d overlap and the attained improvement envelope
+
+**定义 8.1（同侧两标签的联合质量重叠）。** Retain the uniform five-label prior, the graph $G$ and the finite-law notation of Definitions 1.1 and 7.1, without imposing (1.3). For the joint table $J(i,q)=\lambda_qv_i(q)$ define
+
+$$
+ o_{ad}(J)=\sum_q\min\{J(a,q),J(d,q)\}
+ =\mathbb E\min\{v_a(Q),v_d(Q)\}.
+\tag{8.1}
+$$
+
+Write $o=o_{ad}(J)$ and $\ell=\ell_G(J)$ when the law is understood. This is the overlap of the two joint-mass rows, each of mass $1/5$, rather than the overlap of two probability rows of mass one. The vertices $a,d$ comprise the smaller bipartition class $L$ of this particular graph. A full-support law has the meaning in Definition 7.1. The finite posterior realization and observed-selector constructions used below are precisely those of Definition 1.1 and Definition 7.1, with their cited posterior-splitting and gain-function tools.
+
+**定理 8.2（固定重叠的精确可行域、下包络与严格正支撑）。** Over all finite joint laws with this uniform prior, the exact feasible overlap/leakage domain is
+
+$$
+ \boxed{0\le o\le\frac15,\qquad o\le\ell\le\frac25+o.}
+\tag{8.2}
+$$
+
+At every pair in (8.2), the minimum total indicator improvement is attained and equals
+
+$$
+ \boxed{\min_{o_{ad}=o,\,\ell_G=\ell}D
+ =\left(\frac15-2\ell+2o\right)_+.}
+\tag{8.3}
+$$
+
+Here $x_+=\max\{0,x\}$. Restricting to finite full-support laws, the exact feasible domain is
+
+$$
+ \boxed{0<o\le\frac15,\qquad o<\ell\le\frac25+o,}
+\tag{8.4}
+$$
+
+and the same minimum (8.3) is attained at every pair in (8.4). Each specified pair admits an attaining finite source with deterministic label and readout maps, at most six active outputs and at most thirty positive-mass states. At a fixed $o\in[0,1/5]$, the full indicator plateau is attainable exactly for
+
+$$
+ \frac1{10}+o\le\ell\le\frac25+o.
+\tag{8.5}
+$$
+
+For every $0<o\le1/5$, all of (8.5), including its lower endpoint, is attainable with full support.
+
+Proof. For a posterior $v$ put
+
+$$
+ h=\min(v_a,v_d),\qquad M=\max(v_a,v_d),\qquad
+ m=\max_i v_i,\qquad s=s_G(v).
+$$
+
+Then $\mathbb Eh=o$, $\mathbb EM=2/5-o$ and $0\le o\le1/5$. Every edge contains one member of $L$ and one member of $R=\{b,c,e\}$. Moreover $b$ is adjacent to both $a$ and $d$. Thus, pointwise,
+
+$$
+ M+v_b\le s\le1-h,\qquad s\le M+m.
+\tag{8.6}
+$$
+
+The middle bound holds because the other member of $L$, omitted by any edge, has mass at least $h$. Averaging the first two bounds gives
+
+$$
+ \frac35-o\le1-\ell\le1-o,
+$$
+
+which proves the necessary strip (8.2). Reusing (2.3), at most one coordinate can exceed $1/2$, so
+
+$$
+ D=\mathbb E(2m-1)_+\ge\max\{0,2\mathbb Em-1\}.
+$$
+
+The last inequality in (8.6) gives $\mathbb Em\ge3/5-\ell+o$. Consequently every law obeys (8.3) as a lower bound. It also gives the necessary categorical-risk inequality
+
+$$
+ \epsilon\le\frac25+\ell-o.
+\tag{8.7}
+$$
+
+For simultaneous feasibility and attainment, first take parameters
+$0\le o\le1/5$ and $0\le u\le1/10$. Use the following four output indices $(l,r)$ and output masses:
+
+$$
+ \begin{array}{c|cccc}
+ (l,r)&(a,c)&(a,e)&(d,b)&(d,e)\\ \hline
+ \lambda_{lr}&1/3&1/6&1/3&1/6.
+ \end{array}
+\tag{8.8}
+$$
+
+For an index $(l,r)$, let $l'$ be the other member of $L$ and prescribe its posterior by
+
+$$
+ v_l=\frac25-o,\qquad v_{l'}=o,\qquad
+ v_r=\frac35-u,\qquad
+ v_j=\frac u2\quad(j\in R\setminus\{r\}).
+\tag{8.9}
+$$
+
+These are nonnegative coordinates summing to one. The output indices select each member of $L$ with total probability $1/2$ and each member of $R$ with total probability $1/3$. Hence the mean mass at either left label is
+$\tfrac12(2/5-o)+\tfrac12o=1/5$, while the mean mass at any right label is
+$\tfrac13(3/5-u)+\tfrac23(u/2)=1/5$. Thus the prior is uniform.
+
+Every designated pair $(l,r)$ is an actual edge of $G$. At each of these posteriors,
+
+$$
+ h=o,\qquad M=\frac25-o,\qquad m=\frac35-u,\qquad
+ s=v_l+v_r=1-o-u.
+$$
+
+Indeed $v_l\ge v_{l'}$, the designated right coordinate is maximal among all five coordinates, and its designated left neighbour realizes the upper bound $s\le M+m$. Call this law $F_{o,u}$. It satisfies
+
+$$
+ (o_{ad},\ell_G,\epsilon,D)(F_{o,u})
+ =\left(o,o+u,\frac25+u,\frac15-2u\right).
+\tag{8.10}
+$$
+
+Its posteriors have full support exactly when $o>0$ and $u>0$. In particular it attains the entire lower branch of (8.3), including $u=0$ and the plateau endpoint $u=1/10$.
+
+For the upper leakage endpoint, take a two-output law $T_o$ with equal output masses and posteriors, in $(a,b,c,d,e)$ order,
+
+$$
+ \left(\frac25-o,\frac15,\frac15,o,\frac15\right),\qquad
+ \left(o,\frac15,\frac15,\frac25-o,\frac15\right).
+\tag{8.11}
+$$
+
+It has the uniform prior, and each posterior has $h=o$, $m=2/5-o$ and $s=3/5-o$: all right coordinates are $1/5$, and either possible maximizing left vertex has a neighbour. Therefore
+
+$$
+ (o_{ad},\ell_G,\epsilon,D)(T_o)
+ =\left(o,\frac25+o,\frac35+o,0\right).
+\tag{8.12}
+$$
+
+This law has full support exactly when $o>0$.
+
+For $o+1/10\le\ell\le o+2/5$, reveal a selector choosing
+$T_o$ with probability
+
+$$
+ \theta=\frac{\ell-o-1/10}{3/10}\in[0,1]
+\tag{8.13}
+$$
+
+and $F_{o,1/10}$ with probability $1-\theta$. More explicitly, give the two disjoint groups of outputs joint masses
+$\theta\lambda_q^{T}v_i^{T}(q)$ and
+$(1-\theta)\lambda_q^{F}v_i^{F}(q)$, respectively, discarding outputs of zero mass. Both component priors are uniform. The observed selector preserves their posteriors, so $o_{ad},\ell_G,D$ are affine in these weights. The resulting law has the prescribed $(o,\ell)$ and $D=0$. This proves attainment throughout (8.2).
+
+For each law just specified, the states $(i,q)$ of positive masses
+$J(i,q)=\lambda_qv_i(q)$, with $C(i,q)=i$ and $Q(i,q)=q$, give the promised deterministic realization. The lower branch uses four outputs; the selector construction uses at most six. This is the finite splitting realization already attributed in Definition 1.1, with the selector included in the supplied finite carrier.
+
+For necessity of (8.4), full support gives $h>0$ at every active output. Every edge also omits two positive right coordinates as well as the other left coordinate, so $s<1-h$. Finite positive-weight averaging gives $o>0$ and $\ell>o$. The other inequalities remain those of (8.2). Conversely, the lower-branch laws are full support whenever $o>0$ and $\ell-o=u>0$; for the remaining part of (8.4), both selector components have full support when $o>0$. This proves the exact full-support domain and attained minimum there. Finally, the individual improvements $1/5-r_i$ are nonnegative, so their sum vanishes exactly on the full indicator plateau. Equations (8.3), (8.10) and (8.13) prove (8.5) and its full-support assertion. $\square$
+
+**推论 8.3（无条件包络与正支撑阈值的细化）。** Minimizing (8.3) over feasible overlaps at a fixed $\ell\in[0,3/5]$ recovers Theorem 7.3:
+
+$$
+ \min_{\ell_G=\ell}D=\left(\frac15-2\ell\right)_+.
+\tag{8.14}
+$$
+
+For prescribed positive overlap, the plateau threshold is the attained value $1/10+o$, including among full-support laws. Over all finite full-support plateau laws the leakage infimum remains $1/10$ and is not attained, as in Proposition 7.4. The classification (8.2)–(8.4) concerns the feasible $(o,\ell)$ projection and the minimum of $D$ above each pair; it supplies neither a complete joint upper boundary for $D$ nor an all-risk region involving the individual $r_i$, $\epsilon$ or $I$.
+
+Proof. At fixed $\ell$, feasible overlaps are
+$\max\{0,\ell-2/5\}\le o\le\min\{1/5,\ell\}$. Since (8.3) is nondecreasing in $o$, its minimum is at the lower endpoint. For $\ell\le2/5$ this gives (8.14) directly; for $\ell>2/5$ both sides of (8.14) vanish. The attainers of Theorem 8.2 give equality. Full support forces $o>0$, so (8.5) forces $\ell>1/10$. Conversely $F_{o,1/10}$ is a full-support plateau law for every $o>0$ and has $\ell=1/10+o\downarrow1/10$ as $o\downarrow0$. $\square$
+
+**假设 8.4（原始共同高斯记录与仅输入投影的配对）。** Retain exactly Assumption 7.6: five supplied original preparations $\rho_{W_i}$ with $W_i\in K_J$, uniform labels, one externally fixed word $w=E_1\cdots E_t$ with $0\le t\le7$, one fixed $\sigma>0$ and one common finite Borel quantizer $\kappa:\mathbb R^{t+1}\to\mathcal Q$. The original states are the preparations (12.3) of [the Gaussian record volume](FIB_SHARED_GAUSSIAN_RECORD_LAWS.md); their normalized input projections are its (13.1). Both use the unchanged complete-record measurement of its Definition 14.1. In the notation of its Theorem 5.1 and Proposition 14.2, set
+
+$$
+ \begin{gathered}
+ \mu_i=L_w\mu(W_i),\qquad
+ \Sigma=\frac12L_wL_w^T+\sigma^2I_{t+1}>0,\\
+ d=\sqrt{(\mu_a-\mu_d)^T\Sigma^{-1}(\mu_a-\mu_d)},\qquad
+ g=\frac25\Phi(-d/2),\\
+ \rho_N=\frac{\sqrt{t_N(W_a)}+\sqrt{t_N(W_d)}}5
+ \le\frac25\delta_N,\qquad
+ \gamma_N=(g-\rho_N)_+.
+ \end{gathered}
+\tag{8.15}
+$$
+
+Here $\Phi$ is the standard normal distribution function, and $t_N,\delta_N$ are the input-tail and uniform input-error quantities of the source's (13.1)–(13.3). The symbol $\rho_N$ in (8.15) is a scalar pairwise error bound, distinct from the input density operators $\rho_{W_i,N}$. The laws $J,J_N$ remain precisely the quantized joint laws (7.10).
+
+**命题 8.5（实际记录重叠与各自平台的必要界）。** Under Assumption 8.4, the original and projected-input laws satisfy
+
+$$
+ \boxed{o_{ad}(J)\ge g,\qquad o_{ad}(J_N)\ge\gamma_N.}
+\tag{8.16}
+$$
+
+In particular, each law separately obeys the necessary risk bounds
+
+$$
+ \begin{aligned}
+ D(J)&\ge\left(\frac15-2\ell_G(J)+2g\right)_+,&
+ \epsilon(J)&\le\frac25+\ell_G(J)-g,\\
+ D(J_N)&\ge\left(\frac15-2\ell_G(J_N)+2\gamma_N\right)_+,&
+ \epsilon(J_N)&\le\frac25+\ell_G(J_N)-\gamma_N.
+ \end{aligned}
+\tag{8.17}
+$$
+
+The inequalities of Theorem 7.2 also continue to apply to each law. A full indicator plateau of $J$ requires
+$\ell_G(J)\ge1/10+g$. A full indicator plateau of $J_N$ requires
+
+$$
+ \ell_G(J_N)\ge\frac1{10}+\gamma_N
+ \ge\frac1{10}+g-\rho_N
+ \ge\frac1{10}+g-\frac25\delta_N.
+\tag{8.18}
+$$
+
+After null bins are discarded, both laws have full support. Hence also
+$\ell_G(J)>o_{ad}(J)\ge g>0$ and
+$\ell_G(J_N)>o_{ad}(J_N)>0$. The plateau conditions above concern the plateau of the named law itself; no plateau implication between $J$ and $J_N$ is assumed. These are necessary conditions for the prescribed preparation families. The finite-law equality constructions in Theorem 8.2 assert no attainment within those families, native atom-to-preparation encoding, neural-training outcome or empirical conclusion. The projected-input law need not be Gaussian.
+
+Proof. The original five complete-record laws are
+$\nu_i=\mathcal N_{t+1}(\mu_i,\Sigma)$, with the same $\Sigma$ for every label. Use the classical equal-covariance total-variation identity stated by Devroye–Mehrabian–Reddad, [*The total variation distance between high-dimensional Gaussians*, arXiv:1810.08693v7, §2, equal-covariance passage](https://arxiv.org/html/1810.08693v7#S2), there attributed to Barsov–Ul’yanov, Theorem 1:
+
+$$
+ \operatorname{TV}(\nu_a,\nu_d)=2\Phi(d/2)-1,
+ \qquad
+ \int\min\{p_a(z),p_d(z)\}\,dz=2\Phi(-d/2).
+\tag{8.19}
+$$
+
+This is a reused Gaussian identity, with the TV convention of Proposition 7.5. The functions $p_a,p_d$ here are complete-record densities, rather than label-prior coordinates. If $B_q=\kappa^{-1}(q)$, then
+
+$$
+ \begin{aligned}
+ o_{ad}(J)
+ &=\frac15\sum_q\min\left\{\int_{B_q}p_a,\int_{B_q}p_d\right\}\\
+ &\ge\frac15\sum_q\int_{B_q}\min\{p_a,p_d\}
+ =\frac25\Phi(-d/2)=g.
+ \end{aligned}
+$$
+
+Thus a common quantizer can increase the row overlap; equality is not asserted for an arbitrary quantizer.
+
+For the projection bound, write $K_i=\kappa_*\nu_w(W_i)$ and
+$K_{i,N}=\kappa_*\nu_{w,N}(W_i)$, which are probability laws on the same finite alphabet. Since $\sum_q\min\{P(q),Q(q)\}=1-\operatorname{TV}(P,Q)$ for probability rows,
+
+$$
+ \begin{aligned}
+ |o_{ad}(J_N)-o_{ad}(J)|
+ &=\frac15\left|\operatorname{TV}(K_a,K_d)
+       -\operatorname{TV}(K_{a,N},K_{d,N})\right|\\
+ &\le\frac15\bigl(\operatorname{TV}(K_a,K_{a,N})
+                    +\operatorname{TV}(K_d,K_{d,N})\bigr)\\
+ &\le\frac{\sqrt{t_N(W_a)}+\sqrt{t_N(W_d)}}5=\rho_N.
+ \end{aligned}
+\tag{8.20}
+$$
+
+The first inequality is the TV triangle inequality in both directions. The second uses contraction under the common quantizer and [the Gaussian record volume, Proposition 14.2](FIB_SHARED_GAUSSIAN_RECORD_LAWS.md). Only the two indicated preparations enter this estimate. Combining it with the original overlap bound and nonnegativity proves (8.16). Apply (8.3) and (8.7) directly to each finite law to obtain (8.17). Setting its own $D$ equal to zero proves the corresponding plateau condition and (8.18).
+
+Proposition 7.7 proves full support for both laws from the positive original Gaussian densities and the positive Gaussian-pointer convolution (7.14) for projected inputs. The strict overlap/leakage statements now follow from (8.4); $g>0$ follows because $d$ is finite. This use of the projected law requires no Gaussianity of that law. The limit $\rho_N\to0$ holds at fixed original apparatus noise $\sigma>0$ and with the same complete fixed-word measurement; it approximates only the initial inputs. It does not remove that observation noise or identify a finite equality construction with a preparation in this family. All statements concern unconditional externally fixed-word laws and their common quantized images. $\square$
+
+## 追加锚（本行以下为增补区）
+
+## 9. Equal-covariance Gaussian plateaux and the exact copy threshold
+
+**假设 9.1（均匀原标签与独立重复记录）。** Let $C$ be uniform on the five original labels $\{a,b,c,d,e\}$. For a positive integer $n$, conditional on $C=i$, observe
+
+$$
+ X_1,\ldots,X_n\ \overset{\mathrm{iid}}\sim\mathcal N_p(\mu_i,\Sigma),
+ \qquad p\ge1,\quad \mu_i\in\mathbb R^p,\quad \Sigma=\Sigma^T>0.
+\tag{9.1}
+$$
+
+The covariance is common to all labels and copies. Coincident means retain their separate labels and individual priors $1/5$; the affine hull of the means may have any dimension. Each repetition is an additional independent observation conditional on the same label. No legal-edge support condition (1.3) is imposed.
+
+**定义 9.2（原始平台、均值簇与有限读出）。** Put $\bar X=n^{-1}\sum_{k=1}^nX_k$. Let $v_i^{(n)}$ be the posterior given the whole tuple, and define
+
+$$
+ r_i^{(n)}=\mathbb E\min\{v_i^{(n)},1-v_i^{(n)}\},\qquad
+ \epsilon_n=\mathbb E(1-\max_i v_i^{(n)}).
+\tag{9.2}
+$$
+
+The full raw indicator plateau means $r_i^{(n)}=1/5$ for all five labels. These are unweighted binary $0$–$1$ Bayes errors under the stated deployment prior, not balanced-resampling errors or an assertion about every scoring rule. A mean cluster consists of the labels with exactly the same mean; its multiplicity is their number. For any finite Borel quantizer $Q=\kappa_n(X_1,\ldots,X_n)$ common to the five labels, use $r_i(Q)$ and $\epsilon(Q)$ as in Definition 1.1. The quantizer may depend on the specified experiment and on $n$. Write
+
+$$
+ \langle x,y\rangle_{\Sigma^{-1}}=x^T\Sigma^{-1}y,\qquad
+ h_e(\theta)=-\theta\ln\theta-(1-\theta)\ln(1-\theta),
+ \quad 0<\theta<1.
+\tag{9.3}
+$$
+
+Here $h_e$ uses natural logarithms, unlike $h$ in Definition 1.1.
+
+**定理 9.3（五标签的穷尽平台分类与首个逃逸整数）。** Under Assumption 9.1 the full raw plateau holds for every positive integer $n$ precisely in either of the following permanent cases: there is one mean cluster, or there are exactly two distinct mean clusters of multiplicities $2$ and $3$. The only other configuration that can have a raw plateau is three distinct clusters with multiplicities $2,1,2$, whose singleton mean lies strictly between the two double-cluster means. Denote these means by
+
+$$
+ \mu_0=(1-\theta)\mu_-+\theta\mu_+,\qquad
+ 0<\theta<1,\qquad
+ \Delta^2=\|\mu_+-\mu_-\|_{\Sigma^{-1}}^2>0.
+\tag{9.4}
+$$
+
+In this configuration the exact criterion and first escaping copy number are
+
+$$
+ \boxed{\quad r_i^{(n)}=1/5\ \text{for all }i
+ \iff n\le n_{\rm crit},\qquad
+ n_{\rm crit}=\frac{2[\ln2+h_e(\theta)]}
+ {\theta(1-\theta)\Delta^2},\qquad
+ n_{\rm esc}=\lfloor n_{\rm crit}\rfloor+1.\quad}
+\tag{9.5}
+$$
+
+Only the singleton indicator can improve in this case. Equality in (9.5) belongs to the plateau: if $n_{\rm crit}$ is an integer, escape starts at the next integer; if $n_{\rm crit}<1$, escape starts at $1$. Every configuration outside the permanent cases and (9.4) has an exposed singleton mean whose indicator strictly improves for every $n\ge1$. Endpoint coincidences $\theta=0,1$ merge the singleton with an endpoint and give the permanent $3+2$ case; if the endpoints coincide, all three means coincide. These degeneracies use the cluster classification, not division by zero in (9.5).
+
+Within this experiment, the raw plateau is equivalent to the plateau of every finite common Borel quantizer. When the raw plateau fails, some two-bin common Borel quantizer retains a strict indicator improvement. This is an application of the mature binary Bayes/conditioning identities used in Proposition 2.1, not an additional generic comparison theorem. A constant quantizer always has the full plateau, including when the raw experiment escapes; no threshold is asserted for an arbitrary fixed quantizer.
+
+Proof. The classical common-covariance Gaussian discriminants, as in Hastie–Tibshirani–Friedman, [*The Elements of Statistical Learning*, corrected twelfth printing, §4.3, equation (4.10), printed p.109](https://hastie.su.domains/ElemStatLearn/download.html), give here
+
+$$
+ \begin{aligned}
+ \ell_i(x)&=n\langle\mu_i,x\rangle_{\Sigma^{-1}}
+       -\tfrac n2\|\mu_i\|_{\Sigma^{-1}}^2,\\
+ v_i^{(n)}(x)&=\frac{e^{\ell_i(x)}}{\sum_j e^{\ell_j(x)}},
+ \qquad x=\bar X.
+ \end{aligned}
+\tag{9.6}
+$$
+
+Indeed expanding the product density cancels every term independent of the label, leaving (9.6); thus the full tuple has the same posterior as its mean. The equal priors cancel per original label, not per mean cluster. The identity (2.3) becomes
+
+$$
+ \frac15-r_i^{(n)}=\mathbb E(2v_i^{(n)}(\bar X)-1)_+.
+\tag{9.7}
+$$
+
+All posteriors in (9.6) are continuous and the law of $\bar X$ has an everywhere positive density. Therefore the raw plateau is equivalent to $v_i^{(n)}(x)\le1/2$ for every $i,x$. A label in a cluster of multiplicity $m\ge2$ satisfies $v_i^{(n)}(x)\le1/m\le1/2$ for all $x,n$. If every cluster has multiplicity at least two, five labels allow exactly the two permanent cases stated above.
+
+For a singleton mean that is a vertex of the convex hull of the distinct means, strictly separate that vertex from the convex hull of the others. Equivalently, for the whitened means $b_j=\Sigma^{-1/2}\mu_j$, there is a vector $u$ with $u^Tb_i>u^Tb_j$ for all other clusters. Along $\Sigma^{-1/2}x=tu$ as $t\to\infty$, (9.6) makes its posterior tend to one for each fixed $n>0$. It consequently exceeds $1/2$ on an open set of positive probability, giving strict improvement by (9.7). If there are at least two distinct means and no singleton vertex, at least two vertices must each have multiplicity at least two. They use at least four labels. Thus either they exhaust the clusters in the $2+3$ case, or the only remaining label is a singleton strictly inside their segment, giving exactly (9.4). This proves exhaustiveness, including lower-dimensional affine hulls.
+
+For (9.4) set $d=\mu_+-\mu_-$, $R=n\Delta^2$, and $T=n\langle d,x-\mu_0\rangle_{\Sigma^{-1}}$. Since $d\ne0$, $T$ ranges over all real numbers. After dividing the endpoint likelihoods by the singleton likelihood, its posterior is $v_0^{(n)}=1/(1+F_n(T))$, where
+
+$$
+ \begin{aligned}
+ F_n(T)&=2e^{-\theta T-\theta^2R/2}
+        +2e^{(1-\theta)T-(1-\theta)^2R/2},\\
+ T_*&=\ln\frac{\theta}{1-\theta}+\frac{1-2\theta}{2}R,\\
+ \min_{T\in\mathbb R}F_n(T)
+ &=F_n(T_*)
+ =2\exp\!\left(h_e(\theta)-\tfrac12\theta(1-\theta)n\Delta^2\right).
+ \end{aligned}
+\tag{9.8}
+$$
+
+To verify the minimum, differentiate: $F_n''>0$, $F_n\to\infty$ at both ends, and $F_n'=0$ says that the second exponential divided by the first is $\theta/(1-\theta)$. Substitution gives (9.8). This is the two-coordinate log-sum-exp/entropy conjugacy of Boyd–Vandenberghe, [*Convex Optimization*, Example 3.25, printed p.93](https://web.stanford.edu/~boyd/cvxbook/bv_cvxbook.pdf), used as an intermediate tool. The condition $F_n\ge1$ everywhere is exactly (9.5). At equality the singleton reaches $1/2$ only on the hyperplane $T=T_*$, which has probability zero. Above the threshold it exceeds $1/2$ on a nonempty open slab, so the improvement is strict. Since $n_{\rm crit}$ is positive and finite, the integer and permanent-case assertions follow.
+
+For the finite-readout assertions, the posterior given $Q$ is $\mathbb E[v_i^{(n)}\mid Q]$. Hence a raw plateau remains a plateau under every such quantizer. Conversely, if label $i$ improves, use the two bins of its Bayes decision,
+$Q_i=\mathbf1_{\{v_i^{(n)}(\bar X)>1/2\}}$. On each bin the optimal binary action is constant, so $r_i(Q_i)=r_i^{(n)}<1/5$. A constant readout has posterior $1/5$ at every label. The quantifiers concern all finite quantizers or an experiment-dependent witness, not preservation of escape by an unspecified fixed readout. $\square$
+
+**定理 9.4（对称分类风险与共同有限见证）。** In dimension one take $\Sigma=s^2$, $s>0$, and means $(-a,0,a)$ with multiplicities $(2,1,2)$, $a>0$. Put $q=\sqrt n\,a/s$. Then
+
+$$
+ \boxed{\epsilon_n=\frac{6-4\Phi(q/2)}5<\frac45,\qquad
+ \text{full raw plateau}\iff\frac{q^2}{2}\le\ln4.}
+\tag{9.9}
+$$
+
+The finite common readout reporting which of the three intervals
+
+$$
+ \bar X<-a/2,\qquad -a/2\le\bar X\le a/2,\qquad \bar X>a/2
+\tag{9.10}
+$$
+
+contains the sample mean has exactly the same categorical Bayes error as the raw tuple. Throughout the plateau range in (9.9), it also has $r_i(Q)=1/5$ for every original label. Thus one finite joint law exhibits categorical improvement and the full unweighted indicator plateau simultaneously. This is an observation-law witness, not an asserted preparation tuple in the source model.
+
+Proof. Equal original-label priors make a categorical Bayes rule choose the largest individual likelihood, rather than the cluster likelihood multiplied by its multiplicity. The three maximizing mean regions are (9.10); within either double cluster choose one fixed representative label. The conditional probabilities of its correct region at means $-a,0,a$ are respectively $\Phi(q/2)$, $2\Phi(q/2)-1$, $\Phi(q/2)$. Only one label per cluster is guessed, so the total correct probability is $(4\Phi(q/2)-1)/5$, proving the error formula. The same rule is a function of the finite readout (9.10), so its categorical risk equals the raw optimum; quantization cannot improve that optimum. Since $q>0$, $\Phi(q/2)>1/2$, giving the displayed strict categorical improvement. Substituting $\theta=1/2$ and $\Delta^2=4a^2/s^2$ in (9.5) gives $q^2/2\le\ln4$, including equality. The finite plateau then follows from Theorem 9.3. All finite $q$ give positive categorical error, and the error tends to $2/5$ as $q\to\infty$ because the duplicate labels remain indistinguishable. The existence of this common three-bin witness supplies no escape threshold for an arbitrary fixed quantizer. $\square$
+
+**定理 9.5（原始固定词高斯源的条件代入）。** Supply five original preparations $W_i\in K_J$ exactly as in Assumptions 7.6 and 8.4, with uniform original labels, one externally fixed word $w=E_1\cdots E_t$, $0\le t\le7$, and fixed apparatus noise $\sigma>0$. For their complete original record laws set
+
+$$
+ p=t+1,\qquad \mu_i=L_wm_{W_i}=L_w\mu(W_i),\qquad
+ \Sigma=\tfrac12L_wL_w^T+\sigma^2I_{t+1}.
+\tag{9.11}
+$$
+
+For $n=1$, Theorem 9.3 applies to precisely this original observation. For $n>1$, it applies if each copy is produced by an independent preparation conditional on the same label, using that same word and apparatus. The experiment consumes $n$ independently prepared copies in total, each with its full record; the later copies are additional resources, not extra reads extracted from the first preparation. With the supplied means, its classification and threshold hold for the raw records, imply a plateau for every finite common quantization when the raw plateau holds, and guarantee an escaping two-bin quantization when it fails. The symmetric conclusion of Theorem 9.4 applies only if the supplied observation laws have its specified symmetric parameters; no such preparation attainer is asserted.
+
+Proof. [The Gaussian record volume, Theorem 5.1 and Proposition 14.2](FIB_SHARED_GAUSSIAN_RECORD_LAWS.md) give exactly $\nu_w(W_i)=\mathcal N_{t+1}(L_wm_{W_i},\Sigma)$, with $\Sigma\succeq\sigma^2I>0$ independent of $i$. Conditional independence of the separately prepared repetitions gives (9.1); correlations among the clock reads within one full record remain in $\Sigma$. The equal label prior is explicitly supplied, so (9.11) verifies every hypothesis of the preceding classification, with no prior on all of $K_J$ required.
+
+The normalized projected-input laws of the source's §14 need not be Gaussian. Their TV approximation to the original laws does not supply this exact Gaussian plateau threshold or transfer a plateau equality between the two families. For each finite $n$, the original conditional product densities are everywhere positive; hence no zero-error categorical decision follows from escape, consistently with the finite-copy equivalence argument in the source's §33. This conditional substitution assumes the specified preparations and fixed protocol; it establishes no native atom encoding, preparation realization or cost, adaptive-word conclusion, unequal-prior or unequal-covariance extension, training gain, empirical truth or useful uniform positive error margin. The Gaussian discriminants, entropy conjugacy, Bayes partitions and exposed-vertex argument are mature intermediate tools. The five-label multiplicity classification, exact copy boundary and witness above are repo-derived application exposition, without a global-priority claim. $\square$
+
+## 追加锚（本行以下为增补区）
+
+## 10. Exact singleton gain, acquisition targets and inward-threshold retention
+
+**假设 10.1（对称实验与已知律风险）。** Retain exactly the experiment of Theorem 9.4: five original labels with priors $1/5$, scalar means $(-a,0,a)$ of multiplicities $(2,1,2)$, common variance $s^2$, and $a,s>0$. Denote the singleton label by $0$. For a positive integer $n$, given one fixed label, the observations come from conditionally independent preparations as in (9.1), and
+
+$$
+ Y=\frac{\sqrt n\,\bar X}{s},\qquad
+ q=\frac{\sqrt n\,a}{s},\qquad
+ q_c=\sqrt{2\ln4},\qquad
+ e=\frac{q^2}{2}-\ln4,\qquad
+ B(q)=\frac15-r_0(q).
+\tag{10.1}
+$$
+
+Here $r_0(q)$ is the singleton's binary $0$–$1$ Bayes risk for the full observation under its known law. Conditional on the three means, $Y$ has laws $\mathcal N(-q,1)$, $\mathcal N(0,1)$ and $\mathcal N(q,1)$, respectively. The same three laws define a continuous interpolation for real $q>0$; actual copy counts remain positive integers. Let $\phi$ and $\Phi$ be the standard normal density and distribution function.
+
+The Bayes and conditioning identities of Proposition 2.1 and §9 are reused below. As mature statistical context, Audibert–Tsybakov, [*Fast learning rates for plug-in classifiers*, equation (1.1) and margin assumption (1.7)](https://arxiv.org/pdf/0708.2321), study classifier estimation regret and the posterior margin for a fixed experiment. Here the classifier is already Bayes optimal and $q$ changes the experiment; the local exponent below is not a training rate or a neural-learning exponent. The following is repo-derived application exposition of these mature tools, without a claim of literature novelty or global priority.
+
+**定理 10.2（精确增益及其起始系数）。** For $0<q\le q_c$, $B(q)=0$. For $q>q_c$, set
+
+$$
+ z=z(q)=\frac{\operatorname{arcosh}(\exp(e))}{q}.
+$$
+
+Then
+
+$$
+ \boxed{B(q)=\frac{2\Phi(z)-1
+ -4\bigl(\Phi(z-q)+\Phi(z+q)-1\bigr)}5.}
+\tag{10.2}
+$$
+
+The function is continuous at $q_c$, strictly increasing on $(q_c,\infty)$, satisfies $0<B(q)<1/5$ at every finite $q>q_c$, and tends to $1/5$ as $q\to\infty$. Along the continuous interpolation, as $e\downarrow0$ through positive values,
+
+$$
+ \boxed{B(q)\sim C e^{3/2},\qquad
+ C=\frac4{15q_c\sqrt\pi}.}
+\tag{10.3}
+$$
+
+Proof. Equal priors per original label and (9.6) give the singleton posterior $v_0(y)=(1+4e^{-q^2/2}\cosh(qy))^{-1}$. Multiplying the positive-part identity (9.7) by the mixture density gives
+
+$$
+ \begin{aligned}
+ D_q(y)&=\phi(y)-2\phi(y-q)-2\phi(y+q)
+       =\phi(y)\bigl[1-e^{-e}\cosh(qy)\bigr],\\
+ B(q)&=\frac15\int_{\mathbb R}(D_q(y))_+\,dy.
+ \end{aligned}
+\tag{10.4}
+$$
+
+Thus $D_q\le0$ everywhere when $e\le0$; at $e=0$ its sole zero is $y=0$. For $e>0$ its positive set is exactly $(-z,z)$. Integrating the three Gaussian densities on this interval proves (10.2), including the factor four from the two labels at each endpoint.
+
+On $(q_c,\infty)$ the endpoints are smooth and $D_q(\pm z)=0$, so differentiating that finite-interval integral has no endpoint term and yields
+
+$$
+ B'(q)=\frac45\bigl[\phi(z-q)-\phi(z+q)\bigr]>0.
+\tag{10.5}
+$$
+
+Indeed $(z+q)^2-(z-q)^2=4zq>0$. Positivity follows also from the positive integrand near zero, and
+$B(q)\le[2\Phi(z)-1]/5<1/5$ for finite $z$. As $q\downarrow q_c$, $z\to0$ and (10.2) tends to zero. As $q\to\infty$, $\operatorname{arcosh}(\exp(e))=e+\ln2+o(1)$, hence $z=q/2-(\ln2)/q+o(q^{-1})$. Consequently $z\to\infty$, $z-q\to-\infty$ and $z+q\to\infty$, giving the stated limit in (10.2).
+
+For the onset, put $t=qz=\operatorname{arcosh}(\exp(e))$. Taylor expansion of $\cosh t=\exp(e)$ at zero gives $t^2=2e+O(e^2)$, while $q=q_c+O(e)$ and $z\sim\sqrt{2e}/q_c$. Uniformly for $-1\le x\le1$,
+
+$$
+ \begin{aligned}
+ 1-e^{-e}\cosh(tx)&=e(1-x^2)+O(e^2),\\
+ \phi(zx)&=\phi(0)(1+O(e)),\\
+ B(q)&=\frac{ze\phi(0)}5
+       \left[\int_{-1}^1(1-x^2)\,dx+O(e)\right]
+       \sim\frac{4\sqrt2\phi(0)}{15q_c}e^{3/2}.
+ \end{aligned}
+\tag{10.6}
+$$
+
+Since $\phi(0)=(2\pi)^{-1/2}$, the coefficient is exactly (10.3). This is a local asymptotic, and does not supply a useful uniform positive gain as the threshold is approached. $\square$
+
+**推论 10.3（给定正增益的最少独立取得次数）。** For each $0<\delta<1/5$, there is exactly one $q_\delta>q_c$ with $B(q_\delta)=\delta$. Under Assumption 10.1 the least permitted number of copies achieving $B(\sqrt n\,a/s)\ge\delta$ is
+
+$$
+ \boxed{n_\delta=\left\lceil (s/a)^2q_\delta^2\right\rceil.}
+\tag{10.7}
+$$
+
+Equality at the continuous target achieves the target; no extra copy is required when $(s/a)^2q_\delta^2$ is an integer. Before integer rounding, the excess precision satisfies
+
+$$
+ e_\delta=\frac{q_\delta^2}{2}-\ln4
+ \sim\left(\frac\delta C\right)^{2/3}
+ \quad(\delta\downarrow0).
+\tag{10.8}
+$$
+
+For $\delta=0$ the least allowed count is $1$; $\delta=1/5$ is unattainable at finite $n$. The count in (10.7) concerns independent acquisitions conditional on one label, and omits preparation, control and threshold-computation costs. It is neither a training-set size nor the number of repeated reads of one preparation.
+
+Proof. Continuity, strict increase and the endpoint limits in Theorem 10.2 prove existence and uniqueness. For positive integer $n$, monotonicity gives $B(\sqrt n\,a/s)\ge\delta$ exactly when $n\ge(s/a)^2q_\delta^2$, proving the ceiling and its equality case. As $\delta\downarrow0$, $q_\delta\downarrow q_c$; substituting into (10.3) and inverting gives (10.8). The endpoint targets follow from $B\ge0$ and its strict finite-$q$ upper bound. Continuous interpolation and (10.8) introduce no fractional preparations and no asymptotic assertion about a ceiling's rounding error. $\square$
+
+**定理 10.4（向内阈值误差下的量化增益保留）。** Fix $q>q_c$ and let the same binary Borel readout for all five labels be $Q_u=\mathbf1_{\{|Y|<u\}}$, where $0\le u\le z(q)$. Its singleton Bayes gain is exactly
+
+$$
+ \begin{aligned}
+ G(q,u)&:=\frac15-r_0(Q_u)\\
+ &=\frac{2\Phi(u)-1
+ -4\bigl(\Phi(u-q)+\Phi(u+q)-1\bigr)}5,
+ \qquad G(q,z)=B(q).
+ \end{aligned}
+\tag{10.9}
+$$
+
+If an inward placement error is explicitly assumed to satisfy $0\le z-u\le h<z$, then
+
+$$
+ G(q,u)\ge G(q,z-h).
+\tag{10.10}
+$$
+
+In particular, for $0<\theta<1$, the known-law inequality $G(q,z-h)\ge\theta B(q)$ is sufficient to retain at least a fraction $\theta$ of the raw singleton gain for every placement obeying that error bound. Along $e\downarrow0$, if $u/z\to\rho\in[0,1]$, then
+
+$$
+ \boxed{\frac{G(q,u)}{B(q)}\longrightarrow
+ \frac{3\rho-\rho^3}{2}.}
+\tag{10.11}
+$$
+
+Thus placing $u=z/2$ retains asymptotically $11/16$ of the gain.
+
+Proof. The signed difference of the joint masses for singleton versus nonsingleton on $A_u=(-u,u)$ is $\frac15\int_{A_u}D_q(y)\,dy\ge0$, since $A_u\subseteq(-z,z)$. Its difference on the complement is $-3/5-\frac15\int_{A_u}D_q<0$, because $\frac15\int_{\mathbb R}D_q=-3/5$. Hence the binary Bayes action based on $Q_u$ guesses singleton on its central bin and nonsingleton on its complement. At $u=0$ the central bin is null and only the latter action matters. Subtracting this risk from $1/5$ gives $G(q,u)=\frac15\int_{-u}^uD_q$, proving (10.9) for the quantized Bayes optimum, rather than merely for a proposed decision rule. Boundary points have zero probability.
+
+On $0\le u\le z$, the integrand is nonnegative, so $G$ is nondecreasing in $u$ and (10.10) follows. For the ratio write $v=u/z$. The uniform expansion (10.6), now integrated on $[-v,v]$, gives uniformly for $0\le v\le1$,
+
+$$
+ \frac{G(q,u)}{B(q)}
+ =\frac{2v-2v^3/3+O(e)}{4/3+O(e)}.
+$$
+
+Taking $v\to\rho$ proves (10.11), including both endpoints; at $\rho=1/2$ it equals $11/16$.
+
+This retention statement assumes the stated inward threshold bound. A two-symbol output alphabet by itself establishes neither finite physical threshold precision nor a cheap implementation, and the law-dependent choice of $u$ supplies no guarantee for an arbitrary fixed quantizer. The conditional source substitution remains exactly Theorem 9.5, using [the Gaussian record volume, Theorem 5.1 and Proposition 14.2](FIB_SHARED_GAUSSIAN_RECORD_LAWS.md): no preparation realizing these symmetric means is asserted, and Gaussianity of the original law supplies no Gaussianity for a projected-input law. The Gaussian experiment, existence of a finite readout and physical precision of that readout are separate claims. These known-law conclusions establish no native atom encoding, adaptive-word result, empirical or out-of-distribution performance, or training gain. $\square$
+
+## 追加锚（本行以下为增补区）
+## 11. Off-axis Gaussian escape is exponentially faint
+
+**假设 11.1（uniform five-original-label Gaussian experiment）。** Let the five original labels have prior $1/5$, covariance $I_2$, and means
+
+$$
+\mu_1=\mu_2=(-q,0),\qquad \mu_3=(0,b),\qquad
+\mu_4=\mu_5=(q,0),
+$$
+
+where $q$ is fixed with $0<q<\sqrt{2\ln4}$ and $b>0$. Write $r_0(q,b)$ for the infimum binary zero--one risk for deciding whether the label is the singleton $3$ from one complete observation, and put
+
+$$
+B(q,b)=\frac15-r_0(q,b),\qquad
+c(q)=\ln4-\frac{q^2}{2}>0.
+$$
+
+This is a continuous two-dimensional observation law; no preparation, quantizer, training, or physical-realization assertion is part of the assumption.
+
+**定理 11.2（exact pointwise logarithmic gain）。** Under Assumption 11.1,
+
+$$
+\boxed{\displaystyle
+\lim_{b\downarrow0} b^2\ln B(q,b)
+=-\frac12\left(\ln4-\frac{q^2}{2}\right)^2.}
+\tag{11.1}
+$$
+
+The conclusion is pointwise in the fixed $q$ and supplies neither a prefactor nor a statement at the critical value $q=\sqrt{2\ln4}$.
+
+Proof. Let $x=(u,v)$ and let $\phi$ be the standard normal density. The singleton density and the two duplicated endpoint densities are
+
+$$
+ f_0(u,v)=\phi(u)\phi(v-b),\qquad
+ f_\pm(u,v)=\phi(u\mp q)\phi(v).
+$$
+
+The signed Bayes gain is the positive part of the singleton prior density minus the aggregate competing prior density, hence the binary Bayes identity used in Proposition 2.1 gives
+
+$$
+ B(q,b)=\frac15\int_{\mathbb R^2}
+ \bigl(f_0-2f_- -2f_+\bigr)_+\,du\,dv.
+\tag{11.2}
+$$
+
+Factoring the common density gives the signed integrand
+
+$$
+ D_b(u,v):=f_0-2f_- -2f_+
+ =\phi(u)\phi(v)
+ \left[e^{bv-b^2/2}-4e^{-q^2/2}\cosh(qu)\right].
+\tag{11.3}
+$$
+
+Set $A(u)=4e^{-q^2/2}\cosh(qu)$. Since $A(u)\ge A(0)=e^{c(q)}$, the positive region of $D_b$ is contained in
+
+$$
+ v>\frac{\ln A(u)+b^2/2}{b}
+ \quad\Longrightarrow\quad
+ v>\frac{c(q)}b+\frac b2.
+\tag{11.4}
+$$
+
+As $D_b\le f_0$ pointwise, (11.2), (11.4), and the standard Gaussian-tail logarithmic asymptotic
+$\lim_{x\to\infty}x^{-2}\ln\overline\Phi(x)=-1/2$ imply
+
+$$
+\limsup_{b\downarrow0} b^2\ln B(q,b)
+\le -\frac{c(q)^2}{2}.
+\tag{11.5}
+$$
+
+For the reverse inequality, fix $\varepsilon>0$. By continuity of $\ln\cosh(qu)$ at $u=0$, choose $\delta>0$ such that
+$\ln A(u)\le c(q)+\varepsilon/2$ whenever $|u|\le\delta$. For all sufficiently small $b$, on the slab
+
+$$
+R_b=\left\{|u|\le\delta,\quad v\ge\frac{c(q)+\varepsilon}{b}\right\}
+$$
+
+we have $e^{bv-b^2/2}\ge e^{c(q)+\varepsilon-b^2/2}$ and therefore, for a constant $\kappa_\varepsilon>0$ independent of $b$,
+
+$$
+D_b(u,v)\ge \kappa_\varepsilon\,f_0(u,v)\qquad ((u,v)\in R_b).
+\tag{11.6}
+$$
+
+This signed lower bound is essential: the probability of the positive region alone would not lower-bound the positive-part integral. Integrating (11.6) in (11.2) yields
+
+$$
+ B(q,b)\ge \frac{\kappa_\varepsilon}{5}
+ \Pr\{|U|\le\delta\}\,
+ \overline\Phi\!\left(\frac{c(q)+\varepsilon}{b}-b\right),
+\tag{11.7}
+$$
+
+where $U\sim\mathcal N(0,1)$. Consequently,
+
+$$
+\liminf_{b\downarrow0} b^2\ln B(q,b)
+\ge -\frac{(c(q)+\varepsilon)^2}{2}.
+\tag{11.8}
+$$
+
+Letting $\varepsilon\downarrow0$ and combining (11.5) with (11.8) proves (11.1). $\square$
+
+**推论 11.3（approximate blindness and the finite-law TV bridge）。** For every fixed $q$ in the range of Theorem 11.2,
+
+$$
+ B(q,b)=\exp\!\left[-\frac{c(q)^2}{2b^2}+o(b^{-2})\right],
+\qquad b\downarrow0,
+\tag{11.9}
+$$
+
+so the singleton binary risk remains within this exponentially small gain of its blind value $1/5$. This quantifies the approach to the $b=0$ plateau without asserting a derivative, a prefactor, or a uniform estimate in $q$.
+
+If a finite common Borel quantizer is subsequently supplied for the same-prior experiment, its singleton gain $B_Q=1/5-r_0(Q)$ satisfies $0\le B_Q\le B(q,b)$ by conditioning. For two finite joint laws on that common alphabet, Proposition 7.5 gives $|B_Q-B'_Q|\le\operatorname{TV}(J,J')$; under the original/projected-input hypotheses of Proposition 7.7 this becomes $|B_Q-B'_{Q}|\le e_N$. Relative retention from these additive certificates requires a positive $B_Q$ and an error bound small relative to $B_Q$. An explicitly supplied lower bound making $B_Q$ comparable to $B(q,b)$, together with an error bound small relative to $B(q,b)$, also suffices. A constant quantizer has $B_Q=0$, so $\operatorname{TV}(J,J')=o(B(q,b))$ alone gives no relative-retention guarantee for an arbitrary quantizer. These are the existing same-prior soft-risk certificates applied to this gain; they do not transfer (11.1) to a projected law, imply a hard-support impossibility, or provide a native preparation attainer. $\square$
+
+## 追加锚（本行以下为增补区）
+
+## 12. Exact off-axis prefactor and a gain-preserving binary readout
+
+**定义 12.1（fixed-law notation）。** Retain exactly Assumption 11.1: one complete two-dimensional observation, uniform prior on the five original labels, covariance $I_2$, means $(-q,0),(-q,0),(0,b),(q,0),(q,0)$, and fixed $0<q<\sqrt{2\ln4}$ while $b\downarrow0$. Write
+
+$$
+\begin{aligned}
+ c&=c(q)=\ln4-q^2/2>0,\\
+ L(u)&=c+\ln\cosh(qu),\\
+ \phi(x)&=(2\pi)^{-1/2}e^{-x^2/2},\qquad
+ \overline\Phi(x)=\int_x^\infty\phi(v)\,dv,\\
+ E_b&=\exp\!\left(-\frac{c^2}{2b^2}\right),\qquad
+ B(q,b)=\frac15-r_0(q,b).
+\end{aligned}
+\tag{12.1}
+$$
+
+The quantities $r_0$ and $B$ concern the known-law binary decision of label $3$ versus its complement. The five Gaussian labels here are the labels of this observation experiment; their specification does not construct a native recursive FIB classification or its preparations.
+
+**定理 12.2（pointwise exact prefactor）。** Under Definition 12.1,
+
+$$
+ \boxed{B(q,b)\sim C(q)b^4E_b,\qquad
+ C(q)=\frac{e^{c(q)/2}}{5\sqrt{2\pi}\,q\,c(q)^{5/2}}>0.}
+\tag{12.2}
+$$
+
+Thus the power $\alpha=4$ is common to every fixed $q$ in the stated open interval. The equivalence is pointwise in $q$; it asserts no endpoint, joint-$q$ limit, uniform remainder or explicit finite-$b$ cutoff.
+
+Proof. Reuse the signed density $D_b$ of (11.3) and its positive-part Bayes identity (11.2). For a scalar $\ell>0$, put
+
+$$
+\begin{aligned}
+ t_b(\ell)&=\frac{\ell+b^2/2}{b},\\
+ J_b(\ell)&=\int_{\mathbb R}\phi(v)
+       [e^{bv-b^2/2}-e^\ell]_+\,dv\\
+ &=\overline\Phi(t_b(\ell)-b)
+       -e^\ell\overline\Phi(t_b(\ell)),\\
+ B(q,b)&=\frac15\int_{\mathbb R}\phi(u)J_b(L(u))\,du.
+\end{aligned}
+\tag{12.3}
+$$
+
+Indeed, the bracket is positive exactly when $v>t_b(\ell)$, and $\phi(v)e^{bv-b^2/2}=\phi(v-b)$. Tonelli's theorem applies to the nonnegative integrand. This integrates the signed excess itself, including the cancellation between its two tails; the probability of the positive region would not determine its prefactor.
+
+For $x>0$, let $R(x)=\overline\Phi(x)/\phi(x)$. The complementary-error-function expansion and real-positive remainder bound in [NIST DLMF §7.12(i), equation (7.12.1)](https://dlmf.nist.gov/7.12#i), with $\overline\Phi(x)=\tfrac12\operatorname{erfc}(x/\sqrt2)$, give
+
+$$
+ R(x)=x^{-1}-x^{-3}+O(x^{-5}).
+$$
+
+Its exact derivative identity, obtained by differentiating the defining quotient, gives
+
+$$
+ R'(x)=xR(x)-1=-x^{-2}+O(x^{-4}).
+\tag{12.4}
+$$
+
+No differentiation of an asymptotic remainder is used. Fix $0<a<A<\infty$. Uniformly for $\ell\in[a,A]$ and $x\in[t_b(\ell)-b,t_b(\ell)]$, we have $x=\ell/b+O(b)$ and $x\ge a/(2b)$ for all sufficiently small $b$. The real-positive remainder estimate in (12.4) therefore gives, uniformly on these intervals,
+
+$$
+ -R'(x)=\frac{b^2}{\ell^2}(1+O(b^2)),\qquad
+ R(t_b(\ell)-b)-R(t_b(\ell))
+ =\int_{t_b(\ell)-b}^{t_b(\ell)}-R'(x)\,dx
+ =\frac{b^3}{\ell^2}(1+O(b^2)).
+\tag{12.5}
+$$
+
+The constants may depend on $a,A$, not on $\ell$ or $b$. Since
+
+$$
+ \phi(t_b(\ell)-b)=e^\ell\phi(t_b(\ell)),\qquad
+ e^\ell\phi(t_b(\ell))
+ =\frac1{\sqrt{2\pi}}
+   \exp\!\left(-\frac{\ell^2}{2b^2}+\frac\ell2-\frac{b^2}{8}\right),
+$$
+
+(12.3) and (12.5) imply the compact-uniform estimate
+
+$$
+ J_b(\ell)=\frac{b^3}{\sqrt{2\pi}\,\ell^2}
+       \exp\!\left(-\frac{\ell^2}{2b^2}+\frac\ell2\right)
+       (1+O(b^2)),\qquad \ell\in[a,A].
+\tag{12.6}
+$$
+
+In particular, the displacement $b/2$ in the threshold contributes the factor $e^{\ell/2}$.
+
+To control the noncompact $u$-integral, choose a sufficiently small fixed $\delta>0$. The function $L$ is even, has its unique minimum $c$ at zero and is strictly increasing on $(0,\infty)$. Thus, with $m=L(\delta)>c$, we have $L(u)\ge m$ for $|u|\ge\delta$. The integral definition of $J_b$ shows it is nonincreasing in $\ell$. Consequently
+
+$$
+ 0\le\int_{|u|\ge\delta}\phi(u)J_b(L(u))\,du
+ \le J_b(m)
+ \le\overline\Phi(m/b-b/2)
+ =O\!\left(b\exp\!\left[-\frac{m^2}{2b^2}\right]\right).
+\tag{12.7}
+$$
+
+For the last bound, $m/b-b/2>0$ for small $b$, and
+$\overline\Phi(x)\le\phi(x)/x$ for $x>0$; this inequality follows by bounding $1\le v/x$ inside the tail integral. The factor $\exp(m/2-b^2/8)$ is bounded with $m$ fixed. Dividing (12.7) by $b^4E_b$ gives an upper bound of order $b^{-3}\exp(-(m^2-c^2)/(2b^2))$, which tends to zero. No compact-uniform Mills estimate is being applied to unbounded $L(u)$.
+
+On $|u|\le\delta$, Taylor expansion gives
+
+$$
+ L(u)=c+\frac{q^2u^2}{2}+O(u^4).
+\tag{12.8}
+$$
+
+Because $q>0$, shrink $\delta$ so that $L(u)-c\ge\kappa u^2$ there for some $\kappa>0$. On this interval $L$ lies in the compact positive interval $[c,L(\delta)]$, so (12.6) applies uniformly. After extracting $E_b$, its remaining local integral is
+
+$$
+ H_b=\int_{|u|\le\delta}\phi(u)L(u)^{-2}
+       \exp\!\left(-\frac{L(u)^2-c^2}{2b^2}+\frac{L(u)}2\right)du.
+$$
+
+Set $u=by$, and extend the resulting integrand by zero outside $|y|\le\delta/b$. For each fixed $y$, (12.8) gives
+
+$$
+ \frac{L(by)^2-c^2}{2b^2}\longrightarrow\frac{cq^2y^2}{2}.
+$$
+
+The other factors converge to $\phi(0)c^{-2}e^{c/2}$. Moreover,
+
+$$
+ \frac{L(u)^2-c^2}{2b^2}
+ =\frac{(L(u)-c)(L(u)+c)}{2b^2}
+ \ge\frac{c\kappa u^2}{b^2}.
+$$
+
+The prefactor $\phi(u)L(u)^{-2}e^{L(u)/2}$ is bounded on $[-\delta,\delta]$. Hence a fixed constant times $e^{-c\kappa y^2}$ dominates the scaled integrand. Dominated convergence now yields
+
+$$
+\begin{aligned}
+ \frac{H_b}{b}
+ &\longrightarrow\phi(0)c^{-2}e^{c/2}
+      \int_{\mathbb R}e^{-cq^2y^2/2}\,dy\\
+ &=\frac{e^{c/2}}{q\,c^{5/2}}.
+\end{aligned}
+\tag{12.9}
+$$
+
+This is the local Gaussian scaling underlying the mature Watson and Laplace methods in [NIST DLMF §2.3(ii)](https://dlmf.nist.gov/2.3#ii) and [§2.3(iii)](https://dlmf.nist.gov/2.3#iii); the domination above supplies the needed integral justification in this experiment. By positivity and the uniform relative error in (12.6), the local contribution to (12.3) equals $b^3E_bH_b(1+O(b^2))/(5\sqrt{2\pi})$. Combining (12.7) and (12.9) proves (12.2), including the prior factor $1/5$. The factors $b^3$ from the signed tail difference and $b$ from localization in $u$ give the power four. These classical asymptotic tools are mature intermediates; their explicit prefactor for the specified five-label law is repo-derived application exposition, with no global-priority assertion. $\square$
+
+**定理 12.3（an explicit common binary readout attains the raw singleton gain）。** Under Definition 12.1, for every $b>0$ use the same Borel function for all five labels,
+
+$$
+ A_b=\left\{(u,v):v>\frac{L(u)+b^2/2}{b}\right\},\qquad
+ Q_b(u,v)=\mathbf1_{A_b}(u,v).
+\tag{12.10}
+$$
+
+Let $\mathcal J_b$ denote the joint law of the original label and this binary output, and let $B_{Q_b}=1/5-r_0(Q_b)$. Then
+
+$$
+ B_{Q_b}=B(q,b)>0.
+\tag{12.11}
+$$
+
+For any comparison law $\mathcal J'_b$ on the same label-output alphabet with the same uniform label prior, put $B'_{Q_b}=1/5-r_0(\mathcal J'_b)$. Then
+
+$$
+ \operatorname{TV}(\mathcal J_b,\mathcal J'_b)\le e_b
+ \quad\Longrightarrow\quad
+ |B'_{Q_b}-B(q,b)|\le e_b.
+\tag{12.12}
+$$
+
+Proof. Continuity of $L$ makes $A_b$ Borel. By (11.3), it is exactly the positive set of $D_b$. The set is nonempty and open, and $D_b$ is strictly positive on it, so (11.2) gives $B(q,b)>0$. Since $f_0,f_-,f_+$ are probability densities, $\int D_b=1-2-2=-3$. The two unweighted signed bin masses and their prior-weighted counterparts are therefore
+
+$$
+\begin{aligned}
+ \int_{A_b}D_b&=5B(q,b),&
+ \int_{A_b^c}D_b&=-3-5B(q,b),\\
+ \mathcal J_b(3,1)-\sum_{i\ne3}\mathcal J_b(i,1)&=B(q,b),&
+ \mathcal J_b(3,0)-\sum_{i\ne3}\mathcal J_b(i,0)&=-\frac35-B(q,b).
+\end{aligned}
+\tag{12.13}
+$$
+
+For each bin the Bayes action chooses singleton exactly when its signed joint mass is positive. Equivalently, relative to always choosing nonsingleton, the optimal improvement is the sum of the positive signed bin masses. Thus bin $1$ contributes $B(q,b)$ and bin $0$ contributes zero, proving (12.11) for the quantized Bayes optimum. This uses the classical Bayes decision partition already underlying Proposition 2.1, inside this explicit observation law. The boundary graph has zero Gaussian probability, so its inclusion convention changes neither mass. Apply Proposition 7.5 to the two finite laws: their singleton risks differ by at most TV, and subtracting each from the common prior $1/5$ proves (12.12). If $\mathcal J'_b$ is supplied by a complete-record approximation, it must use the very same readout (12.10); data processing and the hypotheses of Proposition 7.7, when supplied, give one way to furnish such an $e_b$.
+
+The readout depends on the known $q,b$ and an exact curved threshold. Its two-symbol output proves this decision's information retention, without establishing preparation availability, finite physical precision or low acquisition or computation cost. It supplies no retention claim for an arbitrary quantizer and no claim about the other four singleton decisions or the categorical optimum. $\square$
+
+**推论 12.4（same-exponential-scale error budgets with their leading constants）。** Fix $q$ as in Definition 12.1, and suppose the comparison laws of Theorem 12.3 are supplied for small $b>0$ with
+
+$$
+ \operatorname{TV}(\mathcal J_b,\mathcal J'_b)\le e_b,
+ \qquad e_b=d\,b^\beta E_b,\qquad d>0,\quad\beta\in\mathbb R,
+\tag{12.14}
+$$
+
+where $d,\beta$ are fixed independently of $b$. With $C=C(q)$ from (12.2),
+
+$$
+ \frac{e_b}{B(q,b)}=\frac dC b^{\beta-4}(1+o(1)),\qquad
+ \left|\frac{B'_{Q_b}}{B(q,b)}-1\right|
+ \le\frac{e_b}{B(q,b)}.
+\tag{12.15}
+$$
+
+If $\beta>4$, this certificate tends to zero, so $B'_{Q_b}/B(q,b)\to1$. If $\beta=4$, the certificate tends to $d/C$, and
+
+$$
+ \limsup_{b\downarrow0}
+ \left|\frac{B'_{Q_b}}{B(q,b)}-1\right|\le\frac dC,
+ \qquad
+ \liminf_{b\downarrow0}\frac{B'_{Q_b}}{B(q,b)}
+ \ge\max\!\left\{0,1-\frac dC\right\}.
+\tag{12.16}
+$$
+
+In particular, $d<C$ certifies a positive limiting lower fraction; every fixed $0<\theta<1-d/C$ is retained for all sufficiently small $b$. If $\beta<4$, the right-hand certificate in (12.15) diverges and gives neither a vanishing relative-error certificate nor a positive retained fraction. A nonvanishing or diverging upper budget does not prove any actual degradation, and $d\ge C$ at $\beta=4$ does not imply that the gain is lost.
+
+Proof. Divide (12.14)'s budget by the positive asymptotic (12.2) to obtain the first equality in (12.15); its second inequality is (12.12) divided by $B(q,b)>0$. A constant nonsingleton decision remains available for every $\mathcal J'_b$ with this prior, so $B'_{Q_b}\ge0$. Thus the additive certificate gives
+
+$$
+ \frac{B'_{Q_b}}{B(q,b)}
+ \ge\max\!\left\{0,1-\frac{e_b}{B(q,b)}\right\}.
+\tag{12.17}
+$$
+
+For $\beta>4$, the budget ratio tends to zero; for $\beta=4$, it tends to $d/C$, proving (12.16) and the eventual bound for each strictly smaller $\theta$. For $\beta<4$, it tends to infinity, leaving (12.17) with only zero as a lower certificate. In all regimes the choice $\mathcal J'_b=\mathcal J_b$ satisfies the budget while its actual risk discrepancy is zero. Hence the size of an upper bound alone cannot establish approximation failure or an attained loss. The pointwise asymptotic supplies no numerical finite-$b$ cutoff for any of these eventual statements without a quantitative remainder estimate.
+
+These are consequences for the explicit known-law readout and supplied comparison laws. They neither identify a projected-input law with a Gaussian law nor assert a native preparation realizing these means. There is no endpoint or $q$-uniform estimate, physical-cost model, unknown-law training guarantee, empirical gain or out-of-distribution conclusion. $\square$
+
+## 追加锚（本行以下为增补区）
+## 13. Critical crossover for the five-label Gaussian singleton experiment
+
+**定义 13.1（全参数已知律与临界量）。** Let $C$ be uniform on the five original labels $\{1,2,3,4,5\}$. For every $q>0$ and $b>0$, and each label $i$, the full class-conditional law is $X\mid(C=i)\sim\mathcal N_2(\mu_i,I_2)$, where the complete observation $X=(U,V)\in\mathbb R^2$ has means
+
+$$
+ \mu_1=\mu_2=(-q,0),\qquad \mu_3=(0,b),\qquad
+ \mu_4=\mu_5=(q,0).
+\tag{13.1}
+$$
+
+A measurable binary rule decides whether $C=3$ and incurs zero--one loss. Let $r_0(q,b)$ be the infimum of its expected loss and put
+
+$$
+ B(q,b)=\frac15-r_0(q,b),\qquad
+ c(q)=\ln4-\frac{q^2}{2},\qquad q_c=\sqrt{2\ln4},\qquad
+ \phi(v)=\frac{e^{-v^2/2}}{\sqrt{2\pi}}.
+\tag{13.2}
+$$
+
+The family in (13.1) is defined for all $q>0$ and $b>0$; no one-sided restriction relative to $q_c$, rate assumption, smoothness assumption, or finite-$b$ remainder is part of this definition.
+
+**定理 13.2（临界交叉的全路径极限）。** Define, for $\tau\in\mathbb R$,
+
+$$
+ H(\tau)=\frac{4}{15q_c\sqrt\pi}
+       \int_{\tau}^{\infty}(v-\tau)^{3/2}\phi(v)\,dv.
+\tag{13.3}
+$$
+
+Then $H(\tau)$ is finite and strictly positive for every real $\tau$. For every $\tau\in\mathbb R$ and every pair of sequences $b_n>0$, $q_n>0$ satisfying
+
+$$
+ b_n\longrightarrow0,\qquad \frac{c(q_n)}{b_n}\longrightarrow\tau,
+\tag{13.4}
+$$
+
+one has
+
+$$
+ \frac{B(q_n,b_n)}{b_n^{3/2}}\longrightarrow H(\tau).
+\tag{13.5}
+$$
+
+Thus the same $H$ covers paths approaching $q_c$ from either side. No uniform-in-$\tau$ estimate, quantitative finite-$b$ remainder, or matching theorem with the neighboring regimes is asserted.
+
+**Proof.** Write
+
+$$
+ f_0(u,v)=\phi(u)\phi(v-b),\qquad
+ f_-(u,v)=\phi(u+q)\phi(v),\qquad
+ f_+(u,v)=\phi(u-q)\phi(v).
+$$
+
+The singleton joint density is $f_0/5$ and the complement joint density is $(2f_-+2f_+)/5$. The signed-density Bayes identity used in Proposition 2.1 therefore gives, for every $q,b>0$,
+
+$$
+ \begin{aligned}
+ B(q,b)
+ &=\frac15\int_{\mathbb R^2}(f_0-2f_--2f_+)_+\,du\,dv\\
+ &=\frac15\int_{\mathbb R^2}\phi(u)\phi(v)
+ \left[e^{bv-b^2/2}-e^{c(q)}\cosh(qu)\right]_+\,du\,dv.
+ \end{aligned}
+\tag{13.6}
+$$
+
+The positive set is Borel because the bracket is continuous, so the measurable Bayes rule used by this identity is available without any sign restriction on $c(q)$.
+
+Fix an arbitrary pair of sequences satisfying (13.4), and write
+
+$$
+ \tau_n=\frac{c(q_n)}{b_n}.
+$$
+
+Since $c(q_n)=b_n\tau_n\to0$ and $q_n>0$, we have $q_n\to q_c$. In (13.6) make the exact substitution $u=\sqrt{b_n}\,y/q_n$. Then
+
+$$
+ \frac{B(q_n,b_n)}{b_n^{3/2}}
+ =\frac1{5q_n}\int_{\mathbb R^2}F_n(y,v)\,dy\,dv,
+\tag{13.7}
+$$
+
+where
+
+$$
+ F_n(y,v)=\phi\!\left(\frac{\sqrt{b_n}\,y}{q_n}\right)\phi(v)
+ \frac{\left[e^{b_nv-b_n^2/2}-e^{b_n\tau_n}\cosh(\sqrt{b_n}\,y)\right]_+}{b_n}.
+\tag{13.8}
+$$
+
+For fixed $y,v$, Taylor expansion and $\tau_n\to\tau$ give
+
+$$
+ F_n(y,v)\longrightarrow
+ \phi(0)\phi(v)\left(v-\tau-\frac{y^2}{2}\right)_+.
+\tag{13.9}
+$$
+
+We next give a single integrable bound on the whole $(y,v)$-plane. Choose $M\ge1$ so that $|\tau_n|\le M$ for all sufficiently large $n$, and also take $b_n\le1$. At a point where the positive part in (13.8) is nonzero, set
+
+$$
+ t=v-\frac{b_n}{2}-\tau_n,\qquad s=(v+M)_+.
+$$
+
+Positivity implies $e^{b_nt}>\cosh(\sqrt{b_n}y)\ge1$, hence $0<t\le s$. Using $\cosh z\ge1+z^2/2$ and $e^x-1\le xe^x$ for $x\ge0$ gives
+
+$$
+ \frac{y^2}{2}<\frac{e^{b_nt}-1}{b_n}\le t e^{b_nt}\le s e^s,
+\tag{13.10}
+$$
+
+and
+
+$$
+ \frac{\left[e^{b_nv-b_n^2/2}-e^{b_n\tau_n}\cosh(\sqrt{b_n}y)\right]_+}{b_n}
+ \le e^{M}\,s e^s.
+\tag{13.11}
+$$
+
+Since $\phi(x)\le\phi(0)$, (13.10)--(13.11) imply $0\le F_n\le D$, where
+
+$$
+ D(y,v)=\phi(0)\phi(v)e^M s e^s
+ \mathbf 1_{\{|y|\le\sqrt{2s}\,e^{s/2}\}},\qquad s=(v+M)_+.
+\tag{13.12}
+$$
+
+Integrating first in $y$ shows
+
+$$
+ \int_{\mathbb R^2}D(y,v)\,dy\,dv
+ =2\sqrt2\,\phi(0)e^M
+   \int_{\mathbb R}\phi(v)s^{3/2}e^{3s/2}\,dv<\infty.
+\tag{13.13}
+$$
+
+Indeed, the integrand vanishes for $v<-M$, and for $v\ge-M$ its exponential factor is bounded by a constant times $\exp(-v^2/2+3v/2)$, a Gaussian-integrable function. This is also explicit tail control for arbitrary expanding rectangles; no far-$u$ or far-$v$ contribution is discarded.
+
+Dominated convergence in (13.7), together with $q_n\to q_c$, now yields
+
+$$
+ \lim_{n\to\infty}\frac{B(q_n,b_n)}{b_n^{3/2}}
+ =\frac{\phi(0)}{5q_c}
+   \int_{\mathbb R}\phi(v)
+   \left[\int_{\mathbb R}\left(v-\tau-\frac{y^2}{2}\right)_+dy\right]dv.
+\tag{13.14}
+$$
+
+For $a=v-\tau>0$,
+
+$$
+ \int_{\mathbb R}\left(a-\frac{y^2}{2}\right)_+dy
+ =\int_{-\sqrt{2a}}^{\sqrt{2a}}\left(a-\frac{y^2}{2}\right)dy
+ =\frac{4\sqrt2}{3}a^{3/2},
+\tag{13.15}
+$$
+
+and the integral is zero for $a\le0$. Since $\phi(0)=1/\sqrt{2\pi}$, (13.14)--(13.15) are exactly (13.3)--(13.5). Gaussian moment integrability proves finiteness of (13.3), while the integrand is positive on $\tau+1<v<\tau+2$, proving strict positivity. The argument began with an arbitrary admissible sequence, so it establishes the full sequential assertion. $\square$
+
+Dominated convergence and Gaussian moments are mature intermediate tools here. The particular coefficient and all-path statement for (13.1) are this repository's application derivation; they are not presented as a global originality or priority claim.
+
+**定理 13.3（全参数的共同 Borel 二元读出）。** For every $q,b>0$, define
+
+$$
+ A_{q,b}=\left\{(u,v):v>
+ \frac{c(q)+\ln\cosh(qu)+b^2/2}{b}\right\},\qquad
+ Q_{q,b}(u,v)=\mathbf 1_{A_{q,b}}(u,v).
+\tag{13.16}
+$$
+
+This is a Borel readout applied identically for all five labels, and its singleton Bayes gain satisfies
+
+$$
+ B_{Q_{q,b}}=B(q,b)>0.
+\tag{13.17}
+$$
+
+If $\mathcal J_{q,b}'$ is any supplied comparison law on the same label--output alphabet, with the same uniform original-label prior, and $B_{Q_{q,b}}'$ denotes its singleton gain, then
+
+$$
+ \operatorname{TV}(\mathcal J_{q,b},\mathcal J_{q,b}')\le e_{q,b}
+ \quad\Longrightarrow\quad
+ \left|B_{Q_{q,b}}'-B(q,b)\right|\le e_{q,b}.
+\tag{13.18}
+$$
+
+**Proof.** The threshold in (13.16) is continuous, hence $A_{q,b}$ is Borel, and (13.6) shows it is exactly the positive set of the signed density. It is nonempty and open, so (13.17)'s strict positivity follows from the positive Gaussian density on a nonempty open subset. Since the three component densities integrate to one,
+
+$$
+ \int_{\mathbb R^2}(f_0-2f_--2f_+)\,du\,dv=-3.
+$$
+
+Consequently the two unweighted signed bin masses and their prior-weighted versions are
+
+$$
+ \begin{aligned}
+ \int_{A_{q,b}}(f_0-2f_--2f_+)&=5B(q,b),
+ &\int_{A_{q,b}^c}(f_0-2f_--2f_+)&=-3-5B(q,b),\\
+ \mathcal J_{q,b}(3,1)-\sum_{i\ne3}\mathcal J_{q,b}(i,1)&=B(q,b),
+ &\mathcal J_{q,b}(3,0)-\sum_{i\ne3}\mathcal J_{q,b}(i,0)&=-\frac35-B(q,b).
+ \end{aligned}
+\tag{13.19}
+$$
+
+The binary Bayes action chooses the singleton exactly on bins with positive signed joint mass. Thus bin $1$ contributes $B(q,b)$ and bin $0$ contributes zero, proving (13.17) by the existing decision-partition argument. Proposition 7.5, applied to the two finite joint laws on $\{1,\ldots,5\}\times\{0,1\}$, gives (13.18). The boundary graph has zero Gaussian probability, so its inclusion convention does not alter either bin mass. This readout is parameter-dependent and exact; it supplies no retention statement for an arbitrary quantizer.
+
+**推论 13.4（临界尺度的条件 TV 保留证书）。** Let $(q_n,b_n)$ satisfy (13.4), and apply the same parameter-dependent readout $Q_{q_n,b_n}$ to a supplied comparison law with the same original-label prior and binary output alphabet. Write its singleton gain as $B_n'$, and suppose the resulting joint laws obey
+
+$$
+ \operatorname{TV}(\mathcal J_{q_n,b_n},\mathcal J_{q_n,b_n}')\le e_n.
+\tag{13.20}
+$$
+
+If $e_n=o(b_n^{3/2})$, then
+
+$$
+ \frac{B_n'}{B(q_n,b_n)}\longrightarrow1.
+\tag{13.21}
+$$
+
+More generally, if $e_n\le d\,b_n^{3/2}$ eventually for a fixed $d\ge0$, then
+
+$$
+ \limsup_{n\to\infty}
+ \left|\frac{B_n'}{B(q_n,b_n)}-1\right|\le\frac d{H(\tau)},\qquad
+ \liminf_{n\to\infty}\frac{B_n'}{B(q_n,b_n)}
+ \ge\max\left\{0,1-\frac d{H(\tau)}\right\}.
+\tag{13.22}
+$$
+
+In particular, $d<H(\tau)$ gives a positive eventual retained fraction, and every fixed $0<\theta<1-d/H(\tau)$ is eventually certified. These are sufficient certificates for the respective Bayes optima under the supplied TV bound; they are neither necessary conditions nor an achieved approximation rate. They do not assert a comparison-law construction, training guarantee, or actual loss when an upper budget is loose.
+
+**Proof.** Equation (13.18) gives $|B_n'-B(q_n,b_n)|\le e_n$. Divide by the positive quantity $B(q_n,b_n)$ and use (13.5), with $H(\tau)>0$. The little-$o$ case gives (13.21); the eventual bound gives the first inequality in (13.22). A constant nonsingleton action is always available under the common prior, so $B_n'\ge0$, which gives the second inequality. The stated fraction follows when $d<H(\tau)$. $\square$
+
+The source correspondences are Proposition 2.1 and (11.2)--(11.3) for the signed Bayes identity, Theorem 10.2 for the on-axis onset context, Theorem 12.2 for the fixed-$q$ off-axis context, and Proposition 7.5 for the same-prior finite-law TV bound. The proof of Theorem 13.2 is direct and does not substitute a varying $q_n$ into the fixed-$q$ theorem. No native recursive-FIB realization, physical-cost claim, unknown-law learning, empirical benefit, formal certification, comparison-law approximation rate, or global originality claim follows.
+
+## 追加锚（本行以下为增补区）

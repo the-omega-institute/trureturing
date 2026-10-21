@@ -1,0 +1,11 @@
+**Lemma 3.4 (Five upper rectangles).** The following closed rectangles
+cover $[0,1]\times[2,31/10]$ in $(r,b)$. The coefficient inequalities
+use (3.2) in the listed degrees.
+
+| $r$ interval | $b$ interval | Polynomial | Degree | Bound on every coefficient |
+| --- | --- | --- | --- | --- |
+| $[0,1/4]$ | $[2,51/20]$ | $\mathscr P$ | $(4,6)$ | $\le-33$ |
+| $[1/4,1/2]$ | $[2,91/40]$ | $\mathscr P$ | $(4,6)$ | $\le-16$ |
+| $[1/4,1/2]$ | $[91/40,51/20]$ | $J_U$ | $(11,16)$ | $\ge2452054904$ |
+| $[0,1/2]$ | $[51/20,31/10]$ | $J_U$ | $(11,16)$ | $\ge5037074268$ |
+| $[1/2,1]$ | $[2,31/10]$ | $J_U$ | $(11,16)$ | $\ge198340608$ |

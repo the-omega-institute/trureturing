@@ -1,0 +1,35 @@
+**Lemma 130.1 (Decoder on the whole qutrit).** For every $0\le r\le1$
+let $\mathcal R_r$ have the Kraus operators (128.4) with $r_*$ replaced
+by $r$. Then
+
+$$
+\mathcal R_r(X)=
+\begin{pmatrix}
+X_{00}&rX_{01}&0\\
+rX_{10}&r^2X_{11}&0\\
+0&0&(1-r^2)X_{11}+X_{22}
+\end{pmatrix}.
+\tag{130.1}
+$$
+
+It is CPTP, since the three adjoint products sum to
+$\operatorname{diag}(1,r^2,0)+(1-r^2)E_{11}+E_{22}=I_3$.
+The square root in its Kraus list is real by $0\le r\le1$.
+In particular $\mathcal R_*:=\mathcal R_{r_*}$ is legal on all of $M_3$.
+
+For completeness, specializing [TR, (105.4)] gives the following Kraus
+list for $\Phi$:
+
+$$
+\operatorname{diag}(1,1/4,0),\quad
+\tfrac34 E_{11},\quad
+\sqrt{3/8}\,E_{21},\quad
+\sqrt{3/8}\,E_{12},\quad
+\sqrt{5/8}\,E_{22}.
+\tag{130.2}
+$$
+
+Their adjoint products sum to $I_3$ and give (127.4) on every complex
+matrix. Consequently every recovered density used below is positive
+and has trace one.
+

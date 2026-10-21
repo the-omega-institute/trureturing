@@ -1,0 +1,21 @@
+**Proposition 19.5 (fixed-target finite nonvacuity).** For every finite
+$m$, the class in Corollary 19.4 contains a lawful $m$-flight schedule in
+which every selected target is the same $k=a$. At each restored authentic
+Ready supply outer gate $1$, separate HistoryMode $1$, and the frame
+
+$$
+111\,U(2)\,0\,U(0)=11111000.
+\tag{19.5}
+$$
+
+The AcquisitionOffset parser reads the final zero offset, so Definition
+5.2 binds $k=a$. The accepted-target binding of Lemma 5.3, finite completion
+of Lemma 8.1 and the completed-return induction of Theorem 8.2 apply at
+each step. Thus every prescribed finite number of these requests completes
+on the same initialization, while (19.2)--(19.4) still hold.
+
+This is an externally supplied finite schedule. It does not give the
+observer a predecessor read, a class label, an adaptive target chooser or
+an infinite execution. Its purpose is to show that the recurrence is caused
+by the growing actual predecessor $b$, not by an assumed advance of $k$.
+

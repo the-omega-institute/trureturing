@@ -1,0 +1,9 @@
+fingerprints:
+  raw_sha256: sha256:fabfcccb0207fe1b86148bc2e696ff3b5ab3fcc0c35b0ee5140394de120339d8
+  normalized_sha256: sha256:fabfcccb0207fe1b86148bc2e696ff3b5ab3fcc0c35b0ee5140394de120339d8
+cas_ref: sha256:fabfcccb0207fe1b86148bc2e696ff3b5ab3fcc0c35b0ee5140394de120339d8
+coverage_gids:
+  - gid: D5/S3/Analytic/PrimeZeckendorf/PrimeZeckendorfCoordinates.decode_wEncoding
+    target_statement_id: sha256:7b6edabf3b2e575b794ab997a099a9e52fb6bb03a23f66a24950627f4a96c9a4
+receipts:
+  unresolved_subitems: []

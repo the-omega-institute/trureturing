@@ -1,0 +1,44 @@
+**Lemma 17.3 (Fixed quadratic–quartic elimination inside the companion
+system).** For coefficients in a commutative ring, write
+
+$$
+F=Ay^2+By+C,\qquad G=G_4y^4+G_3y^3+G_2y^2+G_1y+G_0
+$$
+
+and define the polynomial expressions
+
+$$
+\begin{aligned}
+\alpha&=G_4(-B^3+2ABC)+G_3A(B^2-AC)-G_2A^2B+G_1A^3,\\
+\beta&=G_4(-B^2C+AC^2)+G_3ABC-G_2A^2C+G_0A^3,\\
+Z(F,G)&=A\beta^2-B\alpha\beta+C\alpha^2.
+\end{aligned}
+$$
+
+Then, with the fixed degree-$(2,4)$ Sylvester determinant,
+
+$$
+\begin{gathered}
+A^3G=HF+\alpha y+\beta,\\
+H=A^2G_4y^2+(A^2G_3-ABG_4)y
+  +A^2G_2-ABG_3+(B^2-AC)G_4,\\
+Z(F,G)=A^3\operatorname{Res}_y(F,G).
+\end{gathered}
+$$
+
+In particular every finite common root forces
+$\alpha y+\beta=0$ and $Z(F,G)=0$, including specializations with
+leading-degree drops.
+
+**Proof.** Multiplication of $HF$ gives the first identity coefficient
+by coefficient. The second is the fixed Sylvester determinant identity;
+equivalently it is the quadratic norm of the linear remainder, first
+over the universal coefficient fraction field and hence as a polynomial
+identity over $\mathbb Z$. For a finite common root the evaluation vector
+$(y^5,y^4,\ldots,1)^{\mathsf T}$ is in the kernel of the fixed Sylvester
+matrix, regardless of the leading coefficients. No division by $A$ is
+needed for either implication. This is the classical resultant method
+of Moreno Maza, *The resultant*, Definition 4 and Propositions 5–7,
+[primary text](https://www.csd.uwo.ca/~mmorenom/AM583/Lectures/ResultantGcd.html/node3.html),
+applied here to the specified companion polynomials. ∎
+

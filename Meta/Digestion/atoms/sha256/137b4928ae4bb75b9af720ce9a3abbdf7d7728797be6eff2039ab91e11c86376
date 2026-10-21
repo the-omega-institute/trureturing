@@ -1,0 +1,29 @@
+**Definition 13.1 (Original simultaneous-pair obligation).** Set
+$\mathcal C_v=\mathcal F(H_4,M,p_J,M,v)$, with the complete-world
+domain of Section 1 and the unchanged exact $p_J$ of Definition
+11.1. The remaining question is whether there exist a real $v$ and
+four labels $W_{J0},W_{J1},W_{M0},W_{M1}\in\mathcal C_v$ with
+
+$$
+\begin{gathered}
+W_{J0}\ne W_{J1},\qquad W_{M0}\ne W_{M1},\\
+f_{MJ}(W_{J0})=f_{MJ}(W_{J1}),\qquad
+f_{MM}(W_{M0})=f_{MM}(W_{M1}).
+\end{gathered}
+\tag{13.1}
+$$
+
+Labels can coincide across the two pairs. The original terminal
+functions are $O$ (1.7), after the acquired sixth action M.
+By $S$, Corollary 9.1, every hypothetical witness child in (13.1)
+is wholly regular and has $Q(p_J,v)=0$; $E$, Theorem 1.3,
+excludes the strip $[142,150]$. Theorem 10.2 bounds each such
+entire child by eighteen worlds, and Theorem 12.2 bounds actual
+terminal-M pairs across all acquired responses at $p_J$ by 2401
+unordered pairs in total. These cardinality statements supply
+neither a pair enumeration nor an existence or exclusion result
+for (13.1). The same-child joint question remains unresolved,
+with all strict sources, one entire nonzero gain of degree at most
+three and one fixed drift per world retained, and with no common
+gain or drift condition between different worlds.
+

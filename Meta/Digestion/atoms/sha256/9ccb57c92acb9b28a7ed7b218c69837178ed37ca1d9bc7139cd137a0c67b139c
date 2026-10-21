@@ -1,0 +1,32 @@
+**Definition 2.1 (three later responses).** The same interpolation formula gives
+
+$$
+\begin{aligned}
+g(5)&=-4q_0+15q_1-20q_2+10q_3,\\
+g(6)&=-10q_0+36q_1-45q_2+20q_3,\\
+g(7)&=-20q_0+70q_1-84q_2+35q_3.
+\end{aligned}
+$$
+
+Define the actual response map of this complete world by
+
+$$
+\Psi(r,b)=\left(
+ d+(U+n)g(5),
+ d+(2U+n)g(6),
+ d+(3U+2n)g(7)
+\right).
+\tag{4}
+$$
+
+The three entries are respectively the actual fifth-$M$, sixth-$M$, and seventh-$M$ readings. They evaluate the one polynomial and the one drift already fixed by (1)–(2).
+
+The source-specific matrix products are
+
+$$
+\operatorname{tr}(Q_iP)=\left(1,j,T,n,U,U+n,2U+n,3U+2n\right)_i,\qquad 0\le i\le7,
+\tag{5}
+$$
+
+as follows by direct multiplication of $(J,M,J,M,M,M,M)$. Therefore equality of the three coordinates of $\Psi$ is equality of the actual readings, rather than equality of a projected or rescaled system.
+

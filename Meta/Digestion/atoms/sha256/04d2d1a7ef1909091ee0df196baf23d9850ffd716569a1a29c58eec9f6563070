@@ -1,0 +1,23 @@
+**命题 8.7（已知尺度上的二阶运输）。** 令随机固定基组成 $`D=(\xi,\eta)^{\mathsf{\text{𝖳}}}`$，实际尺度组成为 $`D_j=H^jD`$。其一阶均值与原始二阶矩矩阵满足
+
+```math
+\bar D_j=H^j\begin{pmatrix}U\\V\end{pmatrix},\qquad
+R=\mathbb{\text{𝔼}}_p[DD^{\mathsf{\text{𝖳}}}]
+=\begin{pmatrix}U+S&T\\T&V\end{pmatrix},\qquad
+R_j=H^jR(H^j)^{\mathsf{\text{𝖳}}}.
+```
+
+若已知尺度 $`j`$ 并取得这些实际一、二阶矩，则可先用
+
+```math
+\begin{pmatrix}U\\V\end{pmatrix}=H^{-j}\bar D_j,
+\qquad R=H^{-j}R_j(H^{-j})^{\mathsf{\text{𝖳}}},
+\qquad S=R_{11}-U,\quad T=R_{12}
+```
+
+回到固定基坐标，再使用定理 8.2。
+
+证明。$`\xi^2=\xi+\xi(\xi-1)`$，而五点中 $`\eta\in\{0,1\}`$，所以 $`\eta^2=\eta`$，得 $`R`$。确定线性映射与有限期望交换，给均值及矩阵运输。$`\det H=-1`$，故逆存在并给反解。∎
+
+不能把实际高层两分量直接代入零层五点反演；逆坐标运输也不授予逆树操作。窗口尺度、测得的分量及使用的矩必须一起声明。
+

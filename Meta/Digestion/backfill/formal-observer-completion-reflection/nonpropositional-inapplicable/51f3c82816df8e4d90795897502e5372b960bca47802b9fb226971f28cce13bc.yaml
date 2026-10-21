@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:51f3c82816df8e4d90795897502e5372b960bca47802b9fb226971f28cce13bc
+  normalized_sha256: sha256:51f3c82816df8e4d90795897502e5372b960bca47802b9fb226971f28cce13bc
+cas_ref: sha256:51f3c82816df8e4d90795897502e5372b960bca47802b9fb226971f28cce13bc
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: Defines finite commitment depth; the bit interpretation names the chosen log-base convention.
+    previous_atom_id: 2cfffecf386dde06112fa793c12c53d35a5486773aea731a3f8d8569d241f064
+    next_atom_id: 9c5d43973b39f665131599a23cfc26e7d47176863683c317f5bca15dac4d1edc

@@ -1,0 +1,23 @@
+**Theorem 21.2 (All base factors and the six possible b lifts).** On
+$\mathcal P\times\mathcal V$, the following table bounds
+$-\mathcal L_0/\mathcal L_1$ throughout each entire indicated box.
+The $b$ numerator intervals have common denominator $10^6$.
+
+| Projected interval | Sign of $\mathcal L_1$ | $b$ numerator interval | Possible constructed world |
+| --- | --- | --- | --- |
+| $I_1$ | $+$ | $[254495,254496]$ | $C$ |
+| $I_2$ | $-$ | $[159165,159166]$ | $B$ |
+| $I_3$ | $-$ | $[319421,319426]$ | $A$ |
+| $I_4$ | $-$ | $[150424,150425]$ | $D$ |
+| $I_5$ | $-$ | $[-393738,-393737]$ | none with $b>0$ |
+| $I_6$ | $+$ | $[-598255,-596853]$ | none with $b>0$ |
+
+There is one strict root of $\Psi_2$, one of $\Psi_4$ and two of
+$\Phi$. Their boxes and forced lifts are
+
+| Factor | Lower $r$ endpoint | Upper $r$ endpoint | Sign of $\mathcal L_1$ | Forced $b$ |
+| --- | --- | --- | --- | --- |
+| $\Psi_2$ | $416020/514229$ | $1762289/2178309$ | $+$ | $-1/2$ |
+| $\Psi_4$ | $985995/1135192$ | $802168/923549$ | $-$ | $-2/5$ |
+| $\Phi$ | $149383/1108052$ | $182914/1356769$ | $+$ | $1/8$ |
+| $\Phi$ | $1412683/1565387$ | $1774115/1965888$ | $+$ | $1/8$ |

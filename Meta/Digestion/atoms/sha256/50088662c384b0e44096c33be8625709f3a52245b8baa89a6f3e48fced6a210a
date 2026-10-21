@@ -1,0 +1,10 @@
+**Definition 7.4 (failure scope).** Retain GCA's first-detecting parser,
+descriptor, occurrence, range and binding rejections and their actual
+received rejection/check/ACK/return path. A decoder/stage failure uses
+CYCLE Definition 8.5's finite cleanup: do not ACK twice, release only
+held resources, publish/import/check the typed fault where available,
+and append a single failed-cycle item only on its actual final return.
+All partial material and receipts remain. No failure becomes a source
+reply or removes an enabled raw successor. The positive theorem does
+not promise recovery from arbitrary corrupted code or unavailable rights.
+

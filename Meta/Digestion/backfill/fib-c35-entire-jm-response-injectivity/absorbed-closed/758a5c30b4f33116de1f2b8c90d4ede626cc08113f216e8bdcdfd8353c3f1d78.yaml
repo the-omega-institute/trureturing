@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:758a5c30b4f33116de1f2b8c90d4ede626cc08113f216e8bdcdfd8353c3f1d78
+  normalized_sha256: sha256:758a5c30b4f33116de1f2b8c90d4ede626cc08113f216e8bdcdfd8353c3f1d78
+cas_ref: sha256:758a5c30b4f33116de1f2b8c90d4ede626cc08113f216e8bdcdfd8353c3f1d78
+coverage_gids:
+  - gid: D5/S0/Certificates/BoxCover/RationalIntervalExpression.checked_expression_encloses
+    target_statement_id: sha256:55fd549ad21c17edd29bfbda30075f70836c1b8c2023a9cc913348680e05632f
+  - gid: D5/S0/Observation/MatrixTracePowerSum.pow_add_two
+    target_statement_id: sha256:477f52a1cada3768c6c6695f7bf1e92216cc53ac6f22ad3f67270f1f31f452be
+receipts:
+  unresolved_subitems: []

@@ -1,0 +1,22 @@
+**Proposition 103.2 (The common all-complex optima at the first two
+horizons).** A single decoder attains every rank-one task optimum at
+$n=0$ and at $n=1$. No restriction to real vectors is involved.
+
+*Proof.* At $n=0$ take the identity. At $n=1$, $\Phi_1=\Delta_W$. Let
+$W_+=P_0+P_1$ and $W_-=P_2$. For any complex unit vector $v$, write
+$v=u+z$ with $u=W_+v$ and $z=W_-v$, and let $E=|v\rangle\langle v|$. Then
+
+$$
+\Delta_W(E)-E=-|u\rangle\langle z|-|z\rangle\langle u|,
+\qquad
+\|\Delta_W(E)-E\|_{\rm op}=\|u\|\,\|z\|.
+\tag{103.6}
+$$
+
+For an arbitrary decoder, $C=\Phi_1^\dagger(\mathcal R^\dagger(E))$
+is block diagonal with respect to $W_+\oplus W_-$. The $W_+$--$W_-$
+compression of $C-E$ is $-|u\rangle\langle z|$, whose norm is
+$\|u\|\|z\|$. Therefore $\|C-E\|_{\rm op}\ge\|u\|\|z\|$, while
+$\mathcal R=\operatorname{id}$ attains equality in (103.6). The actual
+terminal decoder is $D=\operatorname{Ad}_{U_0^\dagger}$ by (93.10). $\square$
+
