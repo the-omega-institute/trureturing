@@ -32,16 +32,20 @@ internal sealed class BahturinCentronePereiraPeakGroupsDocument : IScribeDocumen
             Definition("claim", "Conjecture 31", Equal(X("claim"), Parenthesized(ClaimBody())),
                 "For every finite peak group, exactly one of solvability and the Frobenius alternative holds.", true),
             Node("result", "The conjecture is false", new Formula.Not(Parenthesized(ClaimBody())),
-                "The additive group of (ZMod 11) squared admits the displayed fixed-point-free SL(2, ZMod 5) action. Its semidirect product has a simple representation of dimension 120 and every simple degree divides 120. An abelian direct factor of order two preserves these degrees. The SL(2, ZMod 5) quotient prevents solvability, while the central element from the direct factor prevents every Frobenius complement.", DescribeRole.Theorem, false))));
+                "The additive group of (ZMod 11) squared admits the displayed fixed-point-free SL(2, ZMod 5) action. Its semidirect product has a simple representation of dimension 120 and every simple degree divides 120. An abelian direct factor of order two preserves these degrees. The SL(2, ZMod 5) quotient prevents solvability, while the central element from the direct factor prevents every Frobenius complement.", DescribeRole.Theorem, false,
+                new OpenProblemResolutionClaim(
+                    ProblemSlugRef.Create("bahturin-centrone-pereira-2026-peak-group-refutation"),
+                    ResolutionKind.Refuted)))));
 
     private static DocumentBlock Definition(string name, string title, Formula formula, string prose, bool literature) =>
         Node(name, title, formula, prose, DescribeRole.Definition, literature);
-    private static DocumentBlock Node(string name, string title, Formula formula, string prose, DescribeRole role, bool literature) =>
+    private static DocumentBlock Node(string name, string title, Formula formula, string prose, DescribeRole role, bool literature,
+        OpenProblemResolutionClaim? resolution = null) =>
         Describe.Lean(DescribeId.Create("bcp31-" + name.Replace('_', '-').ToLowerInvariant()),
             DeclarationHandle.Create("D5/S3/FiniteGroups/BahturinCentronePereiraPeakGroups." + name),
             H(title), StatementSource.FromAuthor(Disp(formula)),
             literature ? AssessedProvenance.FromLiterature(Source) : AssessedProvenance.FromRepo(Source),
-            Blocks(Paragraph(Text(prose))), role);
+            Blocks(Paragraph(Text(prose))), role, resolution);
 
     private static Formula DegreeSet()
     {
