@@ -5,7 +5,7 @@ year: 2026
 title: Optimal large sieve for fixed order characters
 doi: null
 url: https://arxiv.org/abs/2610.04045v1
-claim: Theorem 1.1 supplies a source-conditional mixed moment for the original common-character sextic detector; specified pure-power pieces, a Gauss-row correction and a balanced-sector prime-labelled residue quadratic are controlled, while the full primitive-residue quadratic, complementary operator and signed restoration remain open.
+claim: Theorem 1.1 supplies a source-conditional mixed moment for the original common-character sextic detector; specified pure-power pieces, a Gauss-row correction, a balanced-sector prime-labelled residue quadratic and one complete continuous primitive-inversion summand are controlled, while the full primitive-residue quadratic, complementary operator and signed restoration remain open.
 strata_touched: []
 license: citation-only
 triage: anchor
@@ -13,7 +13,7 @@ triage: anchor
 
 # Optimal large sieve for fixed order characters
 
-The source is [arXiv:2610.04045v1](https://arxiv.org/pdf/2610.04045v1), submitted 2 October 2026. This card records Theorem 1.1, a conditional application to the original common-character detector, a reduction of its remaining coefficient-sensitive estimate to actual-order-six ratios, classwise all-column pure-dual-power applications under specified length conditions, fixed-ray angular theta and second-moment applications on the coprime squarefree packet, growing-ray, zero-support and weighted-interpolation applications improving the complete classwise pole and paying the specified pure-power subterm on stated original witness sectors, a squarefree-component consumer covering all original witness lengths under the original height reserve, a weighted powerful-part positive majorant extending that collective pure-power payment to every original column, an actual Gauss-row compression with its growing-label Gram condition supplied and coherent correction consumed in every original core packet, a prime-labelled primitive-residue estimate for the unsplit convolution on a balanced witness sector, and the separate conditions relevant to the transported FIB sextic packet. The paper already supplies a zero-density estimate in Corollary 1.5. Neither the sieve nor the zero-density method is a project invention. The analytical source and the applications have no independent local Lean certification; they do not establish a Robin or Riemann-hypothesis conclusion.
+The source is [arXiv:2610.04045v1](https://arxiv.org/pdf/2610.04045v1), submitted 2 October 2026. This card records Theorem 1.1, a conditional application to the original common-character detector, a reduction of its remaining coefficient-sensitive estimate to actual-order-six ratios, classwise all-column pure-dual-power applications under specified length conditions, fixed-ray angular theta and second-moment applications on the coprime squarefree packet, growing-ray, zero-support and weighted-interpolation applications improving the complete classwise pole and paying the specified pure-power subterm on stated original witness sectors, a squarefree-component consumer covering all original witness lengths under the original height reserve, a weighted powerful-part positive majorant extending that collective pure-power payment to every original column, an actual Gauss-row compression with its growing-label Gram condition supplied and coherent correction consumed in every original core packet, a prime-labelled primitive-residue estimate and an exact unchanged-numerator term of its continuous adjoint for the unsplit convolution on a balanced witness sector, and the separate conditions relevant to the transported FIB sextic packet. The paper already supplies a zero-density estimate in Corollary 1.5. Neither the sieve nor the zero-density method is a project invention. The analytical source and the applications have no independent local Lean certification; they do not establish a Robin or Riemann-hypothesis conclusion.
 
 The theorem fixes $n\ge3$, a number field containing the $n$-th roots of unity, and a finite set $S$ containing the places above $n$ such that the ring of $S$-integers has class number one. The family $\chi_a$ is built from fixed ray data. Its reciprocity law has the form
 
@@ -2704,6 +2704,97 @@ Q_\rho^P(b)\ll K^{2-\zeta+\varepsilon}\mathcal N^2,\qquad
 $$
 
 For bounded $\mathcal N$ and small enough $\varepsilon$, this pays the prime-labelled primitive-residue quadratic below $K^2$ on that original balanced sector. It does not pay the remainder pairing or projection replacement at $K^2$, the full projection energy, all labels, the complement, every original length or height, or F4's different squarefree-column quadratic. The original height reserve has not been certified for $\mathcal N$. Signed Robin restoration and RH remain open.
+
+### An unchanged-numerator term in the primitive continuous adjoint
+
+Reuse H1–H5, G7 and the two manuscripts cited above, with all original masks, ray sections and unrestricted columns. This is a `repo-derived` application of their local inversions and standard self-adjoint cusp spectral theory, conditional on the same analytical inputs. It gives no literature-priority or local Lean claim. Patterson's [Metaplectic forms and Gauss sums I, Theorem 5.1](https://www.numdam.org/item/CM_1987__62_3_343_0/) supplies qualitative continuation, not the quantitative coherent estimate used here.
+
+Put $u=1+\eta+it$, $0<\eta<1/12$, and use the primitive-mean manuscript's raw full series $D_{\nu;S}(r,u)$ and primitive series $H_{\nu;S}(r,u)$. Define
+$$
+\lambda_q=q_q^{5-6u},\qquad \mathcal v_u(r)=\prod_{q\mid r,\ q\notin S}(1-\lambda_q)^{-1},\qquad
+z_u(q)=\frac{\lambda_q}{1-\lambda_q},\quad z_u(q^k)=0\ (k\ge2).
+\tag{I1}
+$$
+Extend $z_u$ multiplicatively. Thus $\mathcal v_u=1*z_u$, $|z_u(g)|\ll q_g^{-1-6\eta+\varepsilon}$ on squarefree $g$, and $\mathcal v_u$ is uniformly bounded. Apply the manuscript's §3 local inversions in a fixed order. At numerator valuation $1\le j\le4$ they read $D_{Qq,j}=(D_{Q,j}-a_jD_{Q,4-j}^{\nu\epsilon_{q,j}})/(1-\lambda_q)$, with the original $a_j=\nu(q)^{j+1}q_q^{j+1/2-(j+1)u}\gamma_{j+1}(q)\chi_q(k)^{-(j+1)}$ and reciprocity section. At $j=5$ only $D_{Q,5}/(1-\lambda_q)$ remains. At $j\ge6$, the Type-I manuscript's Lemma 2 in raw normalization is $D_Q(q^6n,u)=q_q^{6-6u}D_Q(n,u)+(1-\lambda_q)D_{Qq}(n,u)$, so $D_{Qq,j}=(D_{Q,j}-q_q^{6-6u}D_{Q,j-6})/(1-\lambda_q)$. Consequently
+$$
+H_{\nu;S}(r,u)=\mathcal v_u(r)D_{\nu;S}(r,u)+R_{\nu;S}(r,u).
+\tag{I2}
+$$
+Here $R$ contains every nonempty second-choice branch of this specified finite recursion, with its changed numerator, phase, ray section and exclusions. No off-pole residue density or scalar sixth-power periodicity is used. With H1's actual $b$, define $C_p^0(t)=\sum_h b(h)\overline{\mathcal v_u(ph)D_{\nu_{[h]};S}(ph,u)}$. In the exact Mellin integral of the primitive-mean manuscript's §7 adjoint, this gives $E^*b=e^0+e^{\rm ref}$ without changing the row kernel; $e^{\rm ref}$ retains all of $R$.
+
+#### Quantitative height control on the actual fixed cusp family
+
+The unnormalized fixed-$Q$ sections and H2's rational numerator projectors have a common fixed group and finite unitary weight-zero Kubota multiplier. Its transformation law makes the multiplier a character. Pass to its finite-index kernel, intersect the finitely many required subgroups, and take a fixed torsion-free cover. The resulting finite-volume $X=\Gamma'\backslash\mathbb H^3$ is independent of $p,h,t$. The same finite bottom-row-orbit calculation as the Type-I manuscript's §2.1 identifies every actual section and rational translate as $\sum_j a_j(u)E_j(u)$, where $E_j$ has incoming term $y^u$ at cusp $j$. Each $a_j(u)$ is a finite sum of fixed constants times fixed positive scales to power $u$, hence bounded on this vertical line. This identifies the complete actual cusp family, not an unspecified full-series vector.
+
+Use the nonnegative self-adjoint Laplacian $\Delta$. Its essential spectrum begins at $1$, and its spectrum below $1$ is discrete, with accumulation only at $1$. Choose $\eta$ in the required interval with $1-\eta^2\notin\operatorname{spec}\Delta$. Such choices exist arbitrarily close to zero; this is not a spectral-gap assumption or a numerical choice certificate. Constants may depend on this fixed $\eta$. For
+$$
+\Lambda(u)=u(2-u)=1-\eta^2+t^2-2i\eta t,
+\qquad \|(\Delta-\Lambda(u))^{-1}\|\le(2\eta|t|)^{-1}\quad(|t|\ge1),
+\tag{I3}
+$$
+the remaining compact $t$-range has bounded resolvent by the chosen spectral avoidance. Choose a fixed cusp cutoff $\chi$, put $P_j=\chi(y)y^u$ in cusp $j$, $F_j=(\Delta-\Lambda)P_j$, and $G_j=-(\Delta-\Lambda)^{-1}F_j$. The source $F_j$ has fixed compact annular support and $\|F_j\|_{H^m}\ll(1+|t|)^{m+1}$. Hence $\|G_j\|_2\ll1$. Recursion with $\Delta G_j=\Lambda G_j-F_j$ and global integration-by-parts/Bochner estimates on this complete constant-curvature quotient gives $\|G_j\|_{H^m}\ll(1+|t|)^{B_m}$ for each fixed $m$; no cusp injectivity-radius bound is needed. Prescribed incoming data and $L^2$ uniqueness first identify $E_j=P_j+G_j$ in the absolute half-plane and then by continuation on the chosen line.
+
+At cusp $l$, the constant term of $G_j$ is $b_{jl}(u)y^{2-u}$, and its $L^2$ integral gives $|b_{jl}|^2\operatorname{area}_lY_0^{-2\eta}/(2\eta)\le\|G_j\|_2^2$. For its nonconstant part, horizontal Poincaré on the fixed period lattice gives $\|y^kG_j^\perp\|_2\le C_k\sum_{|\alpha|=k}\|(y\partial_x)^\alpha G_j\|_2\le C'_k\|G_j\|_{H^k}$. Thus all fixed polynomial cusp weights have polynomial $t$ cost. Normalize by the Type-I manuscript's exact $\mathcal A(u)=2\pi(c_*/2)^{u-1}/(V_0\Gamma(u))$. Stirling gives $|\mathcal A(u)|^{-2}\ll e^{-\pi|t|}(1+|t|)^{1+2\eta}$, so the squared compact, constant and weighted nonconstant norms of every actual normalized section have this exponential times a polynomial.
+
+In Lemma 3's regularized Rankin identity subtract all four constant products, with exponents $2+2\eta,2-2\eta,2+2it,2-2it$, at every cusp. At fixed $2s_0>2+2\eta$, the test Eisenstein series has fixed polynomial cusp growth. The preceding weighted bounds control the full cusp differences and the constant products against the test series' nonconstant part. The compact integral and every truncation/scattering correction are also $\ll e^{-\pi|t|}(1+|t|)^B$: their cutoff is fixed and correction denominators have no poles to the right of $2+2\eta$. The positive Bessel Mellin factor is
+$$
+B_u(2s_0)=\frac{2^{2s_0-3}c_*^{-2s_0}}{\Gamma(2s_0)}
+\Gamma(s_0+\eta)\Gamma(s_0-\eta)\Gamma(s_0+it)\Gamma(s_0-it).
+$$
+It is comparable to $e^{-\pi|t|}$ times a fixed power of $1+|t|$. The regularized identity is holomorphic for $\Re v>2+2\eta$; Parseval initially identifies a positive coefficient Dirichlet series with finite abscissa. Landau positivity therefore supplies convergence for $\Re s>1+\eta$. Dividing the complete transform by $B_u(2s_0)$, and taking $s_0=1+\eta+\varepsilon$, proves, for every actual fixed cusp component,
+$$
+\sum_{0<q_{n/M}\le H}|t_{u,k}(n/M)|^2\ll(1+|t|)^{B} H^{1+\eta+\varepsilon},
+\qquad t_u(n)=q_n^{(u-1)/2}D_{\nu;S}(n,u).
+\tag{I4}
+$$
+All constants depend only on fixed data, $\eta,\varepsilon$ and fixed seminorms. Fixed-$t$ convergence or formal Gamma cancellation alone would not supply I4.
+
+#### Progression and Euler-denominator transport
+
+Apply the Type-I manuscript's §§5–6 transform with I4, retaining both cusp exponents $u,2-u$. Let $\phi$ be any original H2 fixed numerator mask, $\mathcal W$ a smooth annular profile, and $\mathfrak M_a(Y)$ the unweighted main $q_a^{-1}\sum_{z\in\{1,2-u\}}C_z(u)Y^z\widehat{\mathcal W}(z)$. The same finite cusp family supplies its constants. For squarefree $a\asymp A\le Y$ the averaged unweighted error is
+$$
+\left|\sum_a\alpha_a\left(\sum_{a\mid n}\phi(n)D_{\nu;S}(n,u)\mathcal W(q_n/Y)-\mathfrak M_a(Y)\right)\right|
+\ll(AY)^\varepsilon(1+|t|)^{B} Y^{5/12-\eta}A^{1/6+\eta}\|\alpha\|_2.
+\tag{I5}
+$$
+Indeed the rightmost real kernel pole is $\eta/2$, the dual dyadic coefficient exponent is $7/12+\eta/2$, and the kernel cost is $(K_r/H)^{\eta/2+\varepsilon}$ with $K_r=q_r^2/Y$. Removing $q_n^{(u-1)/2}$ gives I5; Gamma-quotient bounds are polynomial jointly in transform height and $t$. For sixth-power-free $a$, the H5 imprimitive step instead has gcd-Cauchy bound $q_r^{1/2}H^{1+\eta/2}$ and gives pointwise unweighted error $\ll(Yq_a)^\varepsilon(1+|t|)^{B} Y^{-\eta}q_a^{1/2+\eta}$. Only $r=1$ contributes a cusp constant. Both small-height mains are retained; the large-height constants give the Gamma-cancelled poles.
+
+Expand $\mathcal v_u(n)=\sum_{g\mid n}z_u(g)$ after the original filters. For squarefree $a$, split $g=eg_0$, $e\mid a$, $(g_0,a)=1$. The $e$-sum gives $\mathcal v_u(a)$; $ag_0$ remains squarefree. On $q_{g_0}\asymp G$ the aggregated coefficient norm is $\ll G^{-1/2-6\eta+\varepsilon}\|\alpha\|_2$ by divisor Cauchy and counting. I5 then costs $G^{-1/3-5\eta+\varepsilon}$, which is summable; $(A/Y)^\eta\le1$. Therefore the weighted averaged error is $\ll(AY)^\varepsilon(1+|t|)^{B} Y^{5/12}A^{1/6}\|\alpha\|_2$, and the main is
+$$
+\mathfrak M_a^{\rm wt}(Y)=\frac{v_u(\operatorname{rad}a)}{q_a}Z_u
+\sum_{z\in\{1,2-u\}}C_z(u)Y^z\widehat{\mathcal W}(z),\quad
+Z_u=\prod_{q\notin S}(1+z_u(q)/q_q),\quad
+v_u(a)=\prod_{q\mid a}(1-\lambda_q+\lambda_q/q_q)^{-1}.
+\tag{I6}
+$$
+The products and main tails converge uniformly in $t$ for fixed $\eta>0$. For sixth-power-free $a$, the small-$g$ pointwise error is $Y^{-\eta}q_a^{1/2+\eta}G^{1/2-5\eta+\varepsilon}$. The primitive-mean manuscript's full-series convexity bound $D_{\nu;S}(n,u)\ll(1+|t|)^{B}q_n^{1/4-\eta/2+\varepsilon}$ follows from its absolute line $3/2+\varepsilon$ and reflected line $1/2-\varepsilon$, including fixed-$Q$ components. It bounds the large-$g$ tail by $Y^{5/4-\eta/2+\varepsilon}/(q_aG^{1+6\eta})$. Set $G=Y^{5/6}/q_a$ when this is at least $1$. Both errors and main tails are $\ll(Yq_a)^\varepsilon(1+|t|)^{B}Y^{5/12+\eta}$. For $q_a>Y^{5/6}$, direct counting and the same point bound suffice on the nonempty annular support. Thus the pointwise weighted main I6 has this error for sixth-power-free $a$, without an arbitrary-modulus claim.
+
+#### Consumption with the original prime-labelled vector
+
+Let $\mathcal N_{\rm cont}$ be a fixed finite seminorm envelope for the original profiles, the Mellin integrals weighted by the polynomial powers just obtained, and the reciprocal-$L$ costs below. No original growing-height allowance is certified for this envelope. Apply H2–H3 at $m=pdn$. For $p\nmid d$, I6's averaged error uses $Y=q_pK$, $A=q_pD$, $\|\alpha\|_2\ll D^{1/2+\varepsilon}\mathcal N_{\rm cont}$, giving $K^{5/12}D^{2/3}q_p^{7/12}$. For $d=pe$, $(e,p)=1$, the outer $p^2e$ is sixth-power-free; the pointwise weighted error summed over $e\asymp D/q_p$ is $K^{5/12+\eta}Dq_p^{-7/12+\eta}$. All original overlaps are present.
+
+The mains use the owned $B_0=7/8$ inputs for fixed finite-order Hecke characters, now with $\mu(d)v_u(d)\xi(d)/q_d$. The corresponding Dirichlet series is $L(s,\xi)^{-1}$ times an Euler product normally convergent on $\Re s>0$, uniformly in $t$, because $v_u(q)=1+O(q_q^{-1-6\eta})$. This half-plane suffices for the $B_0+\varepsilon$ shift; no convergence across $\Re s=0$ is asserted. The two constants depend on $u$ and the fixed $p$-class, not $d,e$. The $z=1$ main costs $KD^{-1/8}q_p^\varepsilon$; $z=2-u$ is smaller, and the $d=pe$ main has an extra $q_p^{-B_0}$. Consequently
+$$
+|C_p^0(t)|\ll(KL)^\varepsilon(1+|t|)^{B}\mathcal N_{\rm cont}
+\left(KD^{-1/8}+K^{5/12}D^{2/3}q_p^{7/12}+K^{5/12+\eta}Dq_p^{-7/12+\eta}\right).
+\tag{I7}
+$$
+Integrate against the actual adjoint's rapidly decreasing row Mellin profile, including $U^\eta$, and use G7 on the same prime sub-Gram. This yields
+$$
+\begin{aligned}
+Q_{E0}:=(e^0)^*G_P^{-1}e^0\ll(UKL)^\varepsilon\mathcal N_{\rm cont}^2U^{2\eta}
+\left(K^2D^{-1/4}L+K^{5/6}D^{4/3}L^{13/6}
++K^{5/6+2\eta}D^2L^{-1/6+2\eta}\right).
+\end{aligned}
+\tag{I8}
+$$
+On H8's same sector $U\asymp K$, $L=K^\ell$, $0<\ell<1/9$, $K^{1/2}\le D\le K^{1/2}L^{1/6-\delta}$, $0<\delta<1/6$, the reserves before the displayed $\eta$ losses are $1/8-\ell$, $1/2-(43/18-4\delta/3)\ell$, and $1/6-(1/6-2\delta)\ell$. The first is the smallest. Choose the spectrally permissible $0<\eta<(1/8-\ell)/32$. The losses are $2\eta,2\eta,(4+2\ell)\eta$, so
+$$
+Q_{E0}\ll K^{2-\zeta_0+\varepsilon}\mathcal N_{\rm cont}^2,\qquad
+\zeta_0=(1/8-\ell)/2>0.
+\tag{I9}
+$$
+For bounded profile envelopes and sufficiently small $\varepsilon$, H8 and I9 control the complete known vector $w+e^0$, where $w=W_P^*b$. The actual projection energy is still $\|G_P^{-1/2}(w+e^0+e^{\rm ref})\|_2^2$. Every nonempty local branch remains unpaid, including its character phases and original coefficients. This is one complete exact primitive-inversion summand for unrestricted original $h$; it is not a bound for the whole projection or its complement. Other lengths/heights, F4 transfer, signed Robin restoration and RH remain open.
 
 ## The possible FIB interface
 
