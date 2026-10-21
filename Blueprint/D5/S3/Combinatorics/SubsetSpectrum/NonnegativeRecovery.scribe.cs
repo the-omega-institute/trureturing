@@ -6,7 +6,7 @@ internal sealed class NonnegativeRecoveryDocument : IScribeDocumentDefinition
 {
     private const string Prefix = "D5/S3/Combinatorics/SubsetSpectrum/NonnegativeRecovery.";
     private static readonly LibraryNoteRef Source =
-        LibraryNoteRef.Create("D5/L/Combinatorics/ciprietti2023subsetsums");
+        LibraryNoteRef.Create("D5/L/Hamming/ciprietti2023subsetsums");
 
     public DocumentDefinition Create() => DocumentDefinition.Create(ScribeNode.Create(
         "Nonnegative real coefficient multisets are determined by their full subset-sum multisets.",

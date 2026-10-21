@@ -6,7 +6,7 @@ internal sealed class TengokuSubsetSumsDocument : IScribeDocumentDefinition
 {
     private const string Prefix = "D5/S3/Combinatorics/SubsetSpectrum/TengokuSubsetSums.";
     private static readonly LibraryNoteRef Source =
-        LibraryNoteRef.Create("D5/L/Combinatorics/tengoku2026subsetsums");
+        LibraryNoteRef.Create("D5/L/Hamming/tengoku2026subsetsums");
 
     public DocumentDefinition Create() => DocumentDefinition.Create(ScribeNode.Create(
         "The multiset powerset records every occurrence of a subset sum.",
