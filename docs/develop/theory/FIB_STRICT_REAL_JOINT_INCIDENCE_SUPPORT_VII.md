@@ -2818,3 +2818,736 @@ its guarded lifts and the five-root filtering give the complete
 original-model critical locus (24.3).
 
 ## 追加锚（本行以下为增补区）
+
+## 25. Two exact J-critical singleton children
+
+Write $\operatorname{base}(W)=(p(W),v(W))$. Continue with the complete worlds of
+Definition 1.1 and the exact algebraic worlds $\mathcal W_i^J$ of (23.8), for $i=1,2$. Put
+
+$$
+z_i=(\rho_i,\beta_i),\qquad
+q_i=(p_i,v_i)=(p(\mathcal W_i^J),v(\mathcal W_i^J)),\qquad
+x_i=\frac{j(z_i)+\rho_i}{1+2\beta_i}.
+\tag{25.1}
+$$
+
+The algebraic definitions in (23.8) are retained. In particular the
+rational centres below are data for enclosing these exact sources;
+none replaces $z_i$, $q_i$ or a complete world.
+
+**Theorem 25.1 (The two entire-child inventories).** At both exact bases,
+
+$$
+C(q_1)=\{\mathcal W_1^J\},\qquad
+C(q_2)=\{\mathcal W_2^J\}.
+\tag{25.2}
+$$
+
+There are no other actual worlds, singular or regular, in either child.
+Consequently each child has zero unordered distinct equal-$M$ pairs.
+
+**Theorem 25.2 (Open complete-child M exclusions).** For each $i=1,2$
+there is an open neighborhood $V_i\subset\{(p,v):p\ne24\}$ of $q_i$ such
+that $m:C(p,v)\to\mathbb R$ is injective for every $(p,v)\in V_i$.
+Neither a numerical radius nor constant singleton cardinality on $V_i$
+is asserted.
+
+**Theorem 25.3 (No strict J-diagonal joint limit).** There is no sequence
+of configurations (1.2) whose two selected $J$ endpoints both converge,
+as complete worlds, to a single strict world $Z\in\mathcal H$.
+Convergence of complete worlds means convergence of $(r,b,d)$ and all
+four coefficients of the entire gain polynomial. The selected $M$
+endpoints need not converge. The two independent pairs may overlap,
+and their common terminal values may differ.
+
+Sections 26–29 give the finite data and prove (25.2). Section 30 proves
+the two local consequences. No assertion of global disjointness of
+$D_J,D_M$ follows.
+
+## 26. Exact source boxes and evaluated differential units
+
+Here is a polynomial version of (2.5), in original source coordinates.
+It also fixes the normalization for all differential evaluations below:
+
+$$
+\begin{gathered}
+X=b^2+r-r^2,\quad N=X+br,\quad T=1+b,\quad U=1+2b,\\
+L=b^2+8b+4,\quad A=(8b-1)(5b+2),\\
+\Delta=5\{LXN-2bTU(X+N)\},\qquad \ell=b\Delta,\\
+\bar C_0=-24\Delta+3AXN,\quad
+\bar C_1=3ANb,\\
+\bar C_2=3(49b+34)XN-54Ub(X+N),\quad
+\bar C_3=3AXb,\\
+\bar B_5=-4\bar C_0+15\bar C_1-20\bar C_2+10\bar C_3,\\
+\bar B_6=-10\bar C_0+36\bar C_1-45\bar C_2+20\bar C_3,\\
+\bar B_7=-20\bar C_0+70\bar C_1-84\bar C_2+35\bar C_3,\\
+P=-b\bar C_0+(Ub+N)\bar B_5,\quad
+V=-b\bar C_0+(2Ub+N)\bar B_6,\\
+A_J=-b\bar C_0+(Tb+2X+4rb)\bar B_7,\quad
+M_M=-b\bar C_0+(3Ub+2N)\bar B_7.
+\end{gathered}
+\tag{26.1}
+$$
+
+The letters $P,V,A_J,M_M$ in this circuit are polynomials; $P$ here is
+not the source matrix. Precisely,
+$\Delta=b^2D(r/b,b)$ and $\bar C_k=b^2C_k(r/b,b)$. Thus
+
+$$
+(p,v,a,m)=(P,V,A_J,M_M)/\ell,\qquad
+ d=-\bar C_0/\Delta,\qquad g(k)=\bar C_k/\Delta\quad(0\le k\le3).
+\tag{26.2}
+$$
+
+The gain is the same fixed-node interpolant (2.2). These are whole-world
+identities with the original clocks, rather than a change of model.
+For a numerator $F$ define
+$L_{F,r}=\ell F_r-F\ell_r$ and $L_{F,b}=\ell F_b-F\ell_b$.
+For the ordered pairs $(P,V),(P,A_J),(V,A_J)$ the coefficient identities
+are
+
+$$
+L_{F,r}L_{G,b}-L_{F,b}L_{G,r}
+ =45b^2\Delta E_{fh}(r,b),
+\quad (f,h)=(p,v),(p,a),(v,a),
+\tag{26.3}
+$$
+
+with exactly the $E_{fh}$ of (21.7), including signs and scalars.
+Indeed the determinant on the left is $\ell^4$ times the corresponding
+rational Jacobian minor; substituting (21.10) and
+$D=\Delta/b^2$ gives (26.3). Each $E_{fh}$ has the $134$ terms and
+degrees (21.9). Formula (26.3) or (21.7), with convolution (21.8),
+is a finite coefficient specification, not an additional eliminant.
+
+All finite decimals in the following source and root tables denote
+exact rational numbers. Define $\widehat z_i=(\widehat r_i,\widehat b_i)$
+by the complete entries in this table:
+
+| $i$ | $\widehat r_i$ | $\widehat b_i$ |
+| --- | --- | --- |
+| 1 | $0.0474991739156158648087872696795839340094732632129244067254357987$ | $0.04632607241297142362371158699116141188135188088603214209272150218$ |
+| 2 | $0.8995316741215982684097269764207819803504111050038539630302674411$ | $0.12856673030826475721724380187978394414949243099439809190709327953$ |
+
+Set $h=10^{-55}$ and
+$K_i=\widehat z_i+[-h,h]^2$. The following interval convention specifies
+all remaining finite calculations. For $H=10^{120}$ let
+
+$$
+\mathcal E([l,u])=
+ [\lfloor Hl\rfloor/H,\lceil Hu\rceil/H].
+\tag{26.4}
+$$
+
+Enclose an input rational by $\mathcal E([t,t])$. After every elementary
+addition, subtraction, multiplication or reciprocal, apply $\mathcal E$
+to the ordinary endpoint interval. Multiplication uses the minimum and
+maximum of the four endpoint products. A reciprocal is formed only
+when zero is excluded, and uses $[1/u,1/l]$; division means
+multiplication by this reciprocal. Negation is endpoint reversal.
+All these operations contain the exact real operation.
+
+For a sparse polynomial in a specified variable order, form each power
+table from power zero upward by successive multiplication. Sum nonzero
+monomials in increasing lexicographic exponent order, starting from
+zero; for each monomial multiply its coefficient by the powers in
+variable order. Use order $(r,b)$ for (26.1), $E_{fh}$ and their
+polynomial derivatives, order $(x,p,v)$ for the carrier and drift
+polynomials, and order $(p,v)$ for a fixed $x$ coefficient. All quotient
+rule expressions use their displayed polynomial derivatives before
+interval evaluation. This removes any ambiguity from cancellation or
+choice of evaluation order.
+
+Put $E=(E_{pv},E_{pa})^{\mathsf T}$. Compute the rational matrix
+$J_i=DE(\widehat z_i)$ exactly, and set
+
+$$
+(Y_i)_{uv}=10^{-90}\lfloor10^{90}(J_i^{-1})_{uv}\rfloor,
+\quad
+\eta_i=\|Y_iE(\widehat z_i)\|_\infty,\quad
+\theta_i=\sup_{z\in K_i}\|I-Y_iDE(z)\|_\infty.
+\tag{26.5}
+$$
+
+Here an upper bound for $\eta_i$ uses (26.4) and the polynomial rule;
+an upper bound for $\theta_i$ is the largest row sum of the component
+absolute interval bounds for $I-Y_iDE(K_i)$. The inverse defining $Y_i$
+is the exact two-by-two rational inverse before downward rounding.
+Both $\det J_i$ and $\det Y_i$ are nonzero. The finite bounds are
+
+| $i$ | Upper bound for $\eta_i$ | Upper bound for $\theta_i$ | Sign of $\ell(K_i)$ |
+| --- | --- | --- | --- |
+| 1 | $2943\,10^{-69}$ | $2\,10^{-45}$ | $+$ |
+| 2 | $223\,10^{-68}$ | $10^{-40}$ | $-$ |
+
+All upper comparisons in this and subsequent bound tables are strict.
+In particular
+
+$$
+\eta_i+\theta_i h<h,\qquad
+\frac{\eta_i}{1-\theta_i}<3\,10^{-66}.
+\tag{26.6}
+$$
+
+For reproducible differential bounds, evaluate
+
+$$
+p_r=\frac{L_{P,r}}{\ell^2},\qquad
+k=(-p_b,p_r),\qquad \kappa=dx(k),\qquad
+\mu=p_rm_b-p_bm_r,\qquad x=\frac{N}{bU}.
+\tag{26.7}
+$$
+
+The derivatives of $x$ are obtained from this last rational formula.
+The following enclosures hold on the entire $K_i$; thus they hold at
+the exact source as well.
+
+| $i$ | $p_r$ | $\kappa$ | $\mu=\det D_{(r,b)}(p,m)$ |
+| --- | --- | --- | --- |
+| 1 | $(32013849,32013850)$ | $(-12774005,-12774004)$ | $(2250469535,2250469536)$ |
+| 2 | $(160908,160909)$ | $(-376697,-376696)$ | $(10415315,10415316)$ |
+
+**Lemma 26.1 (Source enclosure and identification).** Each $K_i$ contains
+one zero of $E$, lying within $3\,10^{-66}$ of its centre in maximum
+norm. This zero is exactly $z_i$ of (25.1). The source is strict and
+regular, and (26.2) gives precisely $\mathcal W_i^J$.
+
+Proof. The endpoint operations and the integer coefficient recurrences
+(21.8), (26.1), (26.3) give the bounds in (26.5)–(26.7) by rational
+arithmetic. More explicitly, every lower comparison is a comparison
+with the minimum endpoint of its prescribed interval and every upper
+comparison is with the maximum endpoint; after clearing positive powers
+of $10$, they are integer inequalities. Invert $J_i$ exactly by its
+adjugate and determinant, round its four entries as in (26.5), evaluate
+$E$ at the centre and $DE$ on $K_i$, and take the two row sums. These
+finite operations give respectively the first two columns of the
+bound table. Evaluation of (26.7) by its quotient rule gives the three
+integer-interval enclosures. No algebraic-root approximation enters
+these comparisons.
+
+The map $z\mapsto z-Y_iE(z)$ has Lipschitz constant at most
+$\theta_i<1$ on the convex cube, and its displacement from the centre
+is at most $\eta_i+\theta_i h<h$. It therefore maps $K_i$ strictly
+into itself. The contraction theorem gives a unique fixed point and,
+since $Y_i$ is invertible, a unique zero of $E$ there. The usual
+geometric-series bound gives (26.6).
+
+The displayed cubes are strict source cubes, and their $\ell$ signs
+make them regular. Their $r$ coordinates are in the corresponding
+$r$ intervals of Lemma 23.2, and their $b$ coordinates are in the
+corresponding intervals (23.3). At the zero, $p_r\ne0$ and the two
+minors $(p,v),(p,a)$ vanish. The determinant identity
+
+$$
+p_r\det D(v,a)-v_r\det D(p,a)+a_r\det D(p,v)=0
+\tag{26.8}
+$$
+
+forces the third minor to vanish. The full-parent classification
+Theorem 24.1 now identifies its unique whole-world lift with the
+corresponding world (23.8). The cubes cannot interchange the two
+worlds because their source intervals are disjoint. The whole gain
+and the drift are forced by (26.2), not chosen anew. ∎
+
+The following open enclosures record the exact bases and the critical
+carrier and terminal values; each entire interval evaluation of the
+corresponding expression on $K_i$ is inside the displayed interval.
+For $d,m$ the forced lift in Section 28 supplies these bounds.
+
+| Quantity | $i=1$ | $i=2$ |
+| --- | --- | --- |
+| $p$ | $(-533512131/1000000,-53351213/100000)$ | $(-5445191/500000,-10890381/1000000)$ |
+| $v$ | $(-203835443/200000,-509588607/500000)$ | $(-509599/62500,-8153583/1000000)$ |
+| $x$ | $(244919203169/250000000000,979676812677/1000000000000)$ | $(688485537633/500000000000,1376971075267/1000000000000)$ |
+| $d$ | $(76059941/125000,608479529/1000000)$ | $(3850713/125000,6161141/200000)$ |
+| $m$ | $(-1817532459/1000000,-908766229/500000)$ | $(104587403/1000000,26146851/250000)$ |
+
+## 27. Exact double roots and the thirty-two remaining root locations
+
+Use exactly the all-world carrier $\mathscr R(x;p,v)$ of (15.4)–(15.6),
+with its coefficient construction (20.1)–(20.2). In particular its
+normalization is the fixed six-by-six determinant, not a primitive or
+squarefree associate. Every actual off-$24$ complete world is covered
+by Lemma 15.1, including singular sources, $F_0=0$, zero drift and all
+specialized degree drops. The coefficients of $\alpha,\zeta$ are
+exactly (16.1), and the fixed-degree identity is
+
+$$
+A_f^3K-\alpha d-\zeta=f\bigl\{
+ K_4(A_f^2d^2-A_fB_fd+B_f^2-A_fC_f)
+ +K_3A_f(A_fd-B_f)+K_2A_f^2\bigr\}.
+\tag{27.1}
+$$
+
+Neither this identity nor the all-world carrier necessity assumes
+that the specialized $d$ degrees of $f,K$ remain two and four. The
+identity is used without dividing by $A_f$.
+
+**Lemma 27.1 (The exact critical multiplicity).** At $q_i$, $x_i$ is a
+root of $\mathscr R_i(x)=\mathscr R(x;p_i,v_i)$ of multiplicity exactly
+two. The remaining factor
+
+$$
+Q_i(x)=\mathscr R_i(x)/(x-x_i)^2
+\tag{27.2}
+$$
+
+has degree sixteen.
+
+Here is a finite definition of $Q_i$ before using the claimed exact
+divisibility. Write $\mathscr R_i=\sum_{j=0}^{18}a_jx^j$ and perform
+two monic synthetic divisions:
+
+$$
+\begin{aligned}
+b_{17}&=a_{18},&b_j&=a_{j+1}+x_i b_{j+1}\quad(j=16,\ldots,0),\\
+c_{16}&=b_{17},&c_j&=b_{j+1}+x_i c_{j+1}\quad(j=15,\ldots,0),\\
+Q_i(x)&=\sum_{j=0}^{16}c_jx^j.
+\end{aligned}
+\tag{27.3}
+$$
+
+For interval coefficient enclosures, first evaluate $p,v,x$ from
+(26.1)–(26.2) on $K_i$, evaluate each coefficient $[x^j]\mathscr R$
+in order $(p,v)$, and then apply exactly the descending recurrences
+(27.3) with the enclosed $x_i$. The following deliberately coarse
+open unit intervals suffice:
+
+| $i$ | $[x^{16}]Q_i$ | $Q_i(x_i)$ |
+| --- | --- | --- |
+| 1 | $(4152,4154)10^{18}$ | $(7543,7545)10^{25}$ |
+| 2 | $(-1912,-1911)10^{16}$ | $(-1338,-1337)10^{17}$ |
+
+Proof. On a regular source neighborhood of $z_i$ the all-world identity
+is
+$\mathscr R(x(r,b);p(r,b),v(r,b))=0$.
+At $z_i$, $dp(k)=0$ by definition, and $dv(k)=0$ because
+$\det D(p,v)=0$. Differentiating this identity in the direction $k$
+therefore gives
+
+$$
+\mathscr R_x(x_i;p_i,v_i)\,\kappa(z_i)=0.
+\tag{27.4}
+$$
+
+The nonzero $\kappa$ in (26.7) implies $\mathscr R_x=0$ exactly.
+Also $\mathscr R_i(x_i)=0$ by actual-world necessity. Hence both
+synthetic remainders in (27.3) vanish, proving exact divisibility;
+there is no numerical repeated-root inference. The leading-coefficient
+and $Q_i(x_i)$ bounds follow by the coefficient evaluation and
+synthetic recurrences just specified. They show degree eighteen for
+$\mathscr R_i$, degree sixteen for $Q_i$, and that the multiplicity
+at $x_i$ is exactly two. ∎
+
+The complete Gaussian-rational centres for the sixteen roots of each
+$Q_i$ follow. A row $(u,w)$ denotes $u+\mathrm i w$. Every digit belongs
+to the exact rational centre.
+
+| $i$ | Label | Real part | Imaginary part |
+| --- | --- | --- | --- |
+| 1 | 0 | $-17.204912539881110005435168966517538531622671160935998655784525$ | $0$ |
+| 1 | 1 | $-6.802983073768707865951316192934942789250956376898648282476451$ | $0$ |
+| 1 | 2 | $-5.61613902288354458466562786106590383170924856039622755808893$ | $0$ |
+| 1 | 3 | $-4.663736772855965715928291773890655630268800710574345883333303$ | $0$ |
+| 1 | 4 | $-3.192214458821642688222121697800181720558715689102684156124976$ | $0$ |
+| 1 | 5 | $-3.183280190053983336179958104891621994191873793675236630634401$ | $0$ |
+| 1 | 6 | $-2.484770248851014631709182134124342692956858535589877043486206$ | $0$ |
+| 1 | 7 | $-0.41117975645377918541109012195977864573523459235718552011354$ | $0$ |
+| 1 | 8 | $0.343570947835516740115217276126420708680798015352502896724819$ | $0$ |
+| 1 | 9 | $0.40731123039692087494796549316233885064760309617249612055874$ | $0$ |
+| 1 | 10 | $0.723726015262573419654769046589890407887009286413610994503756$ | $-0.113158669004540093770039863290588680702219718407116641041479$ |
+| 1 | 11 | $0.723726015262573419654769046589890407887009286413610994503756$ | $0.113158669004540093770039863290588680702219718407116641041478$ |
+| 1 | 12 | $1.925673504107261411174176685611727724250808228457016190398161$ | $0$ |
+| 1 | 13 | $2.516873089789538395407096030937636043496254284256593437548574$ | $0$ |
+| 1 | 14 | $32.48034958720553701414877617862974008774014564450660425743932$ | $0$ |
+| 1 | 15 | $32.526854386828547340402539824989737349096410902936134109173758$ | $0$ |
+| 2 | 0 | $-2.568000509276987398066592277385676880613833457712876975492048$ | $0$ |
+| 2 | 1 | $-2.489213582346254040998703115653978309992649685198896857326866$ | $0$ |
+| 2 | 2 | $-2.398848096540993579325818318318788845350957634321972536867227$ | $0$ |
+| 2 | 3 | $-2.25376330935195395140302889973730079455225641322784439647741$ | $0$ |
+| 2 | 4 | $-2.252775740793204607208846251947533387584596161812667986665717$ | $0$ |
+| 2 | 5 | $-2.184353310178111271728025273058080536458834101378295370375374$ | $0$ |
+| 2 | 6 | $-0.38499495317989164002131318832906298594957433990051768506322$ | $0$ |
+| 2 | 7 | $0.326907090497820223955774717126803340691185532462639816278445$ | $0$ |
+| 2 | 8 | $0.49982143061345030060953466687918806432126982270502533362085$ | $0$ |
+| 2 | 9 | $0.688814923200144174323568061802979306925406376378754700057885$ | $-0.099673423662482223204658511383522417083194755184880009523756$ |
+| 2 | 10 | $0.688814923200144174323568061802979306925406376378754700057885$ | $0.099673423662482223204658511383522417083194755184880009523755$ |
+| 2 | 11 | $1.090403006257325102335291532501916287741031481071114143395378$ | $0$ |
+| 2 | 12 | $1.227258007013282484865144707446261495108078963610857708422573$ | $0$ |
+| 2 | 13 | $1.309019007410061783728028260320496291409098044096286368455698$ | $0$ |
+| 2 | 14 | $2.155439292164872086956791732010645428122210978027988998411327$ | $0$ |
+| 2 | 15 | $2.831373015960780199190057215891874303274860371529190515411766$ | $0$ |
+
+For each centre $c_{ij}$ let $B_{ij}$ be the closed complex rectangle
+of component radius $\rho=10^{-18}$. Extend (26.4) to complex
+rectangles by representing real and imaginary intervals separately;
+complex multiplication uses
+$(a+\mathrm ib)(c+\mathrm id)=(ac-bd)+\mathrm i(ad+bc)$ with those real
+interval operations. Complex polynomial evaluation is descending
+Horner, starting with zero; derivative coefficients are formed from
+the real coefficient intervals by multiplication by their positive
+integer indices.
+
+Let $\mathcal D_{ij}$ be the resulting rectangle enclosure of
+$Q_i'(c_{ij})$, and let $\jmath_{ij}$ be its exact complex midpoint.
+Define the Gaussian rational
+
+$$
+\gamma_{ij}=\frac{\overline{\jmath_{ij}}}{|\jmath_{ij}|^2}.
+\tag{27.5}
+$$
+
+The midpoint is nonzero for every row. It is formed before enclosing
+$\gamma_{ij}$ on the grid (26.4). For a complex rectangle
+$Z=Z_R+\mathrm iZ_I$ put
+$\|Z\|_{\max}=\max(|Z_R|_{\max},|Z_I|_{\max})$ and
+$\nu(Z)=|Z_R|_{\max}+|Z_I|_{\max}$, where
+$|[l,u]|_{\max}=\max(|l|,|u|)$. Form the exact rational upper bounds
+
+$$
+\begin{gathered}
+\epsilon_{ij}=\|\gamma_{ij}Q_i(c_{ij})\|_{\max},\qquad
+\omega_{ij}=\nu\bigl(1-\gamma_{ij}Q_i'(B_{ij})\bigr),\\
+\text{using the interval coefficient enclosures (27.3) in both expressions.}
+\end{gathered}
+\tag{27.6}
+$$
+
+This defines each entry without storing a choice of a numerical
+inverse. The bounds below apply to every one of the sixteen labels
+in the indicated row, with no omitted complex or negative root.
+
+| $i$ | Labels | Upper bound for $\epsilon_{ij}$ | Upper bound for $\omega_{ij}$ |
+| --- | --- | --- | --- |
+| 1 | $0,1,2,3,4,5,6,7,8,9,10,11,12,13,14,15$ | $6\,10^{-40}$ | $2\,10^{-13}$ |
+| 2 | $0,1,2,3,4,5,6,7,8,9,10,11,12,13,14,15$ | $4\,10^{-38}$ | $8\,10^{-10}$ |
+
+In particular the weaker common bounds
+$\epsilon_{ij}<10^{-37}$, $\omega_{ij}<10^{-8}$ hold, and
+
+$$
+\epsilon_{ij}+\omega_{ij}\rho<\rho.
+\tag{27.7}
+$$
+
+**Lemma 27.2 (Complete root and multiplicity budgets).** Each $B_{ij}$
+contains exactly one root of $Q_i$, and that root is simple. The boxes
+are pairwise disjoint for fixed $i$ and avoid $x_i$. The full budgets
+for $\mathscr R_i$, with multiplicity, are
+
+| $i$ | Negative simple | Other positive simple | Critical positive multiplicity | Nonreal simple | Total degree |
+| --- | --- | --- | --- | --- | --- |
+| 1 | 8 | 6 | 2 | 2 | 18 |
+| 2 | 7 | 7 | 2 | 2 | 18 |
+
+There are seventeen distinct complex root locations for each carrier,
+seven and eight positive locations respectively, and no zero root.
+
+Proof. Apply the finite interval rules (26.4), (27.3), (27.5)–(27.6)
+to every literal centre in the table. Their upper endpoints give the
+two bound rows. All comparisons are rational: coefficient construction
+is (15.4), (20.1)–(20.2); midpoint and conjugate division are rational;
+and absolute values use endpoint maxima. Thus these rules specify
+all finite input data and all comparisons in (27.7).
+
+For fixed exact $Q_i$, the map $z\mapsto z-\gamma_{ij}Q_i(z)$ has
+operator bound at most $\omega_{ij}$ in the real maximum norm: complex
+multiplication by $u+\mathrm iv$ has that operator norm $|u|+|v|$.
+The derivative estimate on the convex rectangle and (27.7) make the
+map a strict contraction into the same rectangle. Its fixed point
+is a root, and $\gamma_{ij}\ne0$. At this root,
+$\nu(1-\gamma_{ij}Q_i')<1$ excludes $Q_i'=0$, proving simplicity.
+
+The centre table gives, for every two different labels, a real or
+imaginary coordinate separation greater than $2\rho$. It also separates
+every real-centred box from zero and from the corresponding $x_i$
+interval in Section 26. At $i=1$ precisely labels $10,11$ are nonreal;
+at $i=2$ they are $9,10$. Their imaginary intervals exclude zero.
+For a real centre the box is invariant under conjugation. The real
+coefficients and uniqueness make its root real. The other real boxes
+have the indicated strict signs. There are sixteen distinct simple
+roots of a degree-sixteen $Q_i$, so these exhaust it. Adding the exact
+double root gives the budgets. In particular no unlisted finite root,
+root at zero, higher multiplicity or missing large root is possible. ∎
+
+## 28. All fifteen positive locations and their forced lifts
+
+For clarity, the late-node reconstruction used here is precisely
+(15.1)–(15.3), with the drift forced by (16.3). At a possible positive
+$x$ at a fixed off-$24$ base form
+
+$$
+\begin{gathered}
+d=-\zeta(x,p,v)/\alpha(x,p,v),\\
+h_3=(24-d)/x,\quad h_4=18-d,\quad
+h_5=(p-d)/(x+1),\quad h_6=(v-d)/(x+2),\\
+H_0=20h_3-45h_4+36h_5-10h_6,\\
+H_1=10h_3-20h_4+15h_5-4h_6,\quad
+H_2=4h_3-6h_4+4h_5-h_6,\\
+H_7=-h_3+4h_4-6h_5+4h_6,\quad
+B_0=294/5-2d-H_2,\quad C_0=d^2+B_0^2,\\
+U=(-dH_0+B_0H_2)/C_0,\quad b=(U-1)/2,\quad
+j=U(24-d)/H_1,\quad r=xU-j,\\
+m=d+(3+2x)H_7.
+\end{gathered}
+\tag{28.1}
+$$
+
+These local $B_0,C_0$ are those of (15.1). They are not the source
+numerators $\bar C_k$. Let $H(s)$ be the unique degree-at-most-three
+interpolant of $h_3,h_4,h_5,h_6$ at the fixed nodes $3,4,5,6$.
+At an actual lift $g(s)=H(s)/U$, with the same drift $d$.
+
+For a positive simple-root label use the real interval
+$I_{ij}=[c_{ij}-\rho,c_{ij}+\rho]$. For the critical label, written
+$*$, use the interval enclosure of $x_i=N/(bU)$ on $K_i$. In both
+cases use the enclosures of $p_i,v_i$ on $K_i$, rather than the much
+wider displayed response intervals. Evaluate (28.1) in its displayed
+order with (26.4), evaluating $\alpha,\zeta$ by the polynomial rule
+in order $(x,p,v)$ before the drift quotient.
+
+The following table gives all fifteen lift locations. In its last
+four columns each entry $(L,U)$ means the open enclosure
+$(L,U)/10^6$, including both entire endpoint calculations. The
+$\alpha$ column instead gives its signed interval with the explicitly
+printed multiplier.
+
+| $i$ | Label | $\alpha$ | $H_1$ | $C_0$ | $d$ | $m$ |
+| --- | --- | --- | --- | --- | --- | --- |
+| 1 | $*$ | $(4153,4156)\,10^{21}$ | $(-624306967,-624306964)$ | $(676544044877,676544044880)$ | $(608479527,608479530)$ | $(-1817532460,-1817532457)$ |
+| 1 | $8$ | $(-6773,-6770)\,10^{15}$ | $(-690321401,-690321398)$ | $(30003494795,30003494799)$ | $(-171728037,-171728034)$ | $(1149833291,1149833294)$ |
+| 1 | $9$ | $(-2024,-2021)\,10^{17}$ | $(502203171,502203174)$ | $(197275971364,197275971368)$ | $(-314874780,-314874777)$ | $(682252559,682252562)$ |
+| 1 | $12$ | $(7762,7765)\,10^{29}$ | $(12686736,12686739)$ | $(115817032841,115817032844)$ | $(181785729,181785732)$ | $(-2078928511,-2078928508)$ |
+| 1 | $13$ | $(6193,6196)\,10^{32}$ | $(31043569,31043572)$ | $(63693397588,63693397591)$ | $(131937694,131937697)$ | $(-2253748524,-2253748521)$ |
+| 1 | $14$ | $(-2551,-2548)\,10^{62}$ | $(-18094,-18091)$ | $(656203596,656203599)$ | $(24451634,24451637)$ | $(-3160837724,-3160837721)$ |
+| 1 | $15$ | $(-2680,-2677)\,10^{62}$ | $(-11685,-11682)$ | $(656055115,656055118)$ | $(24442468,24442471)$ | $(-3161112356,-3161112353)$ |
+| 2 | $*$ | $(-6877,-6874)\,10^{19}$ | $(-10289394,-10289391)$ | $(950542872,950542875)$ | $(30805703,30805706)$ | $(104587402,104587405)$ |
+| 2 | $7$ | $(-1623,-1620)\,10^{12}$ | $(-30254268,-30254265)$ | $(219551203,219551206)$ | $(14637470,14637473)$ | $(237753213,237753216)$ |
+| 2 | $8$ | $(-7994,-7991)\,10^{12}$ | $(49270209,49270212)$ | $(47583520,47583523)$ | $(-2969575,-2969572)$ | $(210258863,210258866)$ |
+| 2 | $11$ | $(-4238,-4235)\,10^{17}$ | $(-12822106,-12822103)$ | $(1667073635,1667073638)$ | $(39344668,39344671)$ | $(98421693,98421696)$ |
+| 2 | $12$ | $(-7932,-7929)\,10^{17}$ | $(2071484,2071487)$ | $(1451118491,1451118494)$ | $(36144586,36144589)$ | $(85887671,85887674)$ |
+| 2 | $13$ | $(-5521,-5518)\,10^{17}$ | $(6619010,6619013)$ | $(1322546117,1322546121)$ | $(34519694,34519697)$ | $(81552189,81552192)$ |
+| 2 | $14$ | $(-1248,-1245)\,10^{27}$ | $(-498673,-498670)$ | $(661518618,661518621)$ | $(25245411,25245414)$ | $(84886967,84886970)$ |
+| 2 | $15$ | $(-6251,-6248)\,10^{30}$ | $(1468028,1468031)$ | $(613736823,613736826)$ | $(23360645,23360648)$ | $(74280366,74280369)$ |
+
+Every entry has the common strict guards
+
+$$
+|\alpha|>\frac{16}{10}10^{15},\qquad
+|H_1|>\frac{11}{1000},\qquad C_0>\frac{95}{2}.
+\tag{28.2}
+$$
+
+The weaker bounds $|\alpha|>10^{15}$, $|H_1|>1/100$, $C_0>47$ also
+suffice for all arguments. The positive $x$ intervals guard division
+by $x,x+1,x+2$. In particular every quotient in (28.1) is guarded
+before use. The common bounds include both critical roots; the
+critical multiplicity does not introduce an extra drift.
+
+Here is the full source filtering table. The thirteen noncritical
+rows use the exact rational open enclosures printed below; there is
+no rounding convention attached to these $b,r$ entries. The critical
+rows enclose the exact critical source by Lemma 26.1; they do not
+assert containment of the independent interval lift in that tiny cube.
+
+| $i$ | Label | $b$ | $r$ | Strict-source conclusion |
+| --- | --- | --- | --- | --- |
+| 1 | $*$ | $\widehat b_1+[-h,h]$ | $\widehat r_1+[-h,h]$ | actual $\mathcal W_1^J$ |
+| 1 | 8 | $(-988022267/100000000,-494011133/50000000)$ | $(-73529537/6250000,-1176472591/100000000)$ | $b<0$ |
+| 1 | 9 | $(-209901761/100000000,-655943/312500)$ | $(42768129/50000000,85536259/100000000)$ | $b<0$ |
+| 1 | 12 | $(-5879127/12500000,-9406603/20000000)$ | $(85228031/100000000,332922/390625)$ | $b<0$ |
+| 1 | 13 | $(-10467881/20000000,-13084851/25000000)$ | $(-28044063/100000000,-14022031/50000000)$ | $b<0$ |
+| 1 | 14 | $(-35203919/100000000,-17601959/50000000)$ | $(55616403/25000000,222465613/100000000)$ | $b<0$ |
+| 1 | 15 | $(-17625021/50000000,-35250041/100000000)$ | $(-78831603/50000000,-31532641/20000000)$ | $b<0$ |
+| 2 | $*$ | $\widehat b_2+[-h,h]$ | $\widehat r_2+[-h,h]$ | actual $\mathcal W_2^J$ |
+| 2 | 7 | $(135377069/25000000,541508277/100000000)$ | $(94104309/12500000,752834473/100000000)$ | $r>1$ |
+| 2 | 8 | $(-38743481/6250000,-123979139/20000000)$ | $(1693997/3125000,10841581/20000000)$ | $b<0$ |
+| 2 | 11 | $(-8864417/100000000,-277013/3125000)$ | $(-874811/10000000,-8748109/100000000)$ | $b<0$ |
+| 2 | 12 | $(-21964373/50000000,-8785749/20000000)$ | $(86090401/100000000,86090403/100000000)$ | $b<0$ |
+| 2 | 13 | $(-55258217/100000000,-6907277/12500000)$ | $(-3810017/12500000,-15240067/50000000)$ | $b<0$ |
+| 2 | 14 | $(-15524661/100000000,-776233/5000000)$ | $(-4716501/20000000,-2947813/12500000)$ | $b<0$ |
+| 2 | 15 | $(-669281/2500000,-26771239/100000000)$ | $(22261099/20000000,13913187/12500000)$ | $b<0$ |
+
+**Lemma 28.1 (Exhaustive positive-root filtering).** Every noncritical
+positive location fails the strict source conditions, while at $x_i$
+there is at most one possible actual complete world.
+
+Proof. Polynomial evaluation of (16.1), followed by (28.1) on the
+specified intervals, gives (28.2), the first table and all
+noncritical rows of the second table. Its critical source rows follow
+from Lemma 26.1. The integer pairs
+in the first table are outward enclosures with strict margin. For
+the second table the endpoint comparisons are the displayed rational
+comparisons themselves. Together with the finite definitions of the
+carrier, $\alpha,\zeta$ and the literal centres, these are complete
+source-specific finite inequalities, requiring no additional
+coefficient or root files.
+
+For necessity, (27.1) at any actual common root $f=K=0$ gives
+$\alpha d+\zeta=0$, even if $A_f=0$. At every positive location
+(28.2) forces its one drift. The fixed-node interpolation and the
+zero-safe reconstruction of Section 15 then force its $U,b,j,r$;
+these implications do not presume that an eliminant root is actual.
+At $i=1$, all six other positive roots have $b<0$. At $i=2$, six
+other positive roots have $b<0$ and label $7$ has $r>1$.
+All these violations have a strict margin from the closed admissible
+conditions $b\ge0$, $0\le r\le1$.
+
+At $x_i$ the same drift and source uniqueness applies. The strict
+critical lift has $U>1$ and its whole polynomial is $H/U$, so there
+is at most one complete world there. No division by $d$, $d-24$,
+$\Lambda$, a gain sample, a gain leading coefficient or a gain-root
+difference has been introduced in this filter. ∎
+
+## 29. Proof of the singleton inventories and their precise scope
+
+Proof of Theorem 25.1. Fix either $i$. The bounds in Section 26 place
+$p_i$ strictly below zero and hence off $24$. If $W\in C(q_i)$ is
+any actual complete world, its $x=n/U$ is positive. By Lemma 15.1,
+$\mathscr R_i(x)=0$, including when the source is singular or any
+drift or gain degree has dropped. Lemma 27.2 exhausts all roots and
+Lemma 28.1 rejects every positive location except $x_i$. At $x_i$,
+(27.1), (28.2) force the unique drift, and (15.1) forces the unique
+source and whole gain. This gives at most one complete world.
+Lemma 26.1 and (23.8) already supply the actual $\mathcal W_i^J$ in
+that child. Thus (25.2) holds. Its regularity also proves that there
+is no actual singular companion in either inventory. ∎
+
+The retained domain is all of Definition 1.1: strict $0<r<1$, $b>0$,
+any nonzero entire real gain of degree at most three, and its own
+fixed real drift. The acquired actions are $J,M,J,M,M,M$ at original
+clocks $0,\ldots,6$, with the original alternatives at clock seven.
+Nothing has required exact cubic degree, positive gain, nonzero gain
+samples, distinct gain roots or nonzero drift. In particular a double
+carrier root is a single possible world, rather than two choices of a
+gain polynomial. The lift uses the whole interpolant.
+
+The fixed Sylvester construction and (27.1) retain all specialized
+leading-degree drops. Lemma 15.1 supplies the removed $F_0=0$ factor
+by its regular density argument and covers $\Lambda=0$ by the
+undivided full-parent continuation. Thus these strata are retained
+before filtering; they are not inferred absent from the regular
+source boxes alone. The numerical root budget is eighteen with
+multiplicity, not a count of eighteen actual worlds.
+
+At either exact base there are zero distinct actual $M$ pairs.
+Accordingly any set of tangent tests indexed by such pairs is empty;
+no pair determinant or $J$ jet is needed for (25.2). The targets
+remain exactly the algebraic worlds (23.8).
+
+## 30. Complete-child concentration and the strict diagonal exclusion
+
+**Lemma 30.1 (All-world concentration at each exact base).** If actual
+complete worlds $W_n$ have bases $\operatorname{base}(W_n)\to q_i$, then
+$W_n\to\mathcal W_i^J$ as complete worlds.
+
+Proof. Since $q_i$ is off $24$, all sufficiently late bases are off
+$24$. The leading coefficient of $\mathscr R_i$ is nonzero by
+Lemma 27.1, and its constant coefficient is nonzero by the complete
+root budget. Coefficients vary polynomially with $(p,v)$. Thus on
+some base neighborhood all coefficients have absolute value at most
+$M$, while the leading and constant coefficients have absolute
+values at least $\varepsilon_{18}>0$ and $\varepsilon_0>0$.
+Cauchy's elementary root estimate, applied also to the reversed
+polynomial, gives for every nonzero root there
+
+$$
+\frac1{1+M/\varepsilon_0}\le |x|
+ \le1+M/\varepsilon_{18}.
+\tag{30.1}
+$$
+
+For completeness, the upper estimate follows because for
+$|x|>1+M/\varepsilon_{18}$ the leading term strictly exceeds the
+sum of the others, using the finite geometric sum. The reversed
+polynomial gives the lower estimate. Hence the positive carrier
+coordinates of any such actual sequence have convergent
+subsequences with strictly positive limits. Polynomial continuity
+places each limit among the positive locations tabulated for its
+target: seven locations for $i=1$ and eight for $i=2$.
+
+At every such location $\alpha,H_1,C_0$ are units by (28.2), so the
+forced expressions (28.1) are continuous on a neighborhood of that
+location and base. Along an actual subsequence its drift and source
+must equal these expressions. A noncritical limit would therefore
+have one of the strictly rejected source coordinates in the second
+Section 28 table. This is incompatible with $b_n>0$, $0<r_n<1$,
+whose finite limits satisfy $b\ge0$, $0\le r\le1$.
+Thus every subsequential carrier limit is $x_i$, forcing $x_n\to x_i$.
+
+The same continuous forced lift now gives
+$(r_n,b_n,d_n)\to(\rho_i,\beta_i,d_i^J)$. At this limit $U>1$.
+The interpolant of the four late samples depends linearly on those
+samples, and $g_n=H_n/U_n$ for the entire polynomial. Hence all four
+gain coefficients converge to those of $g_i^J$. This also rules out
+unbounded drift, source or gain coefficients along such a sequence;
+no compactness of the whole parent was assumed. ∎
+
+Proof of Theorem 25.2. The evaluated determinant $\mu(z_i)>0$ in
+(26.7) and the inverse-function theorem give a parent neighborhood
+$N_i$ of $\mathcal W_i^J$ on which $(p,m)$ is injective. It may be
+chosen in its regular source chart. Lemma 30.1 puts every entire
+child over sufficiently nearby bases inside $N_i$: otherwise choose
+bases within $1/n$ of $q_i$ and actual worlds outside $N_i$, contrary
+to their complete-world convergence to its interior point.
+Choose such an open base neighborhood $V_i$ off $24$. Two worlds in
+a child over $V_i$ with equal $m$ have equal $(p,m)$ in $N_i$, so
+they coincide. This proves entire-child $M$ injectivity. It does not
+assert global injectivity of $(p,m)$ or singleton cardinality for
+every nearby child. ∎
+
+Proof of Theorem 25.3. Suppose both selected distinct $J$ endpoints
+of a sequence (1.2) converge to a strict complete parent world $Z$.
+If $\operatorname{rank}d(p,v,a)_Z=2$, some two output coordinates
+have invertible differential on the two-dimensional parent. The
+inverse-function theorem makes that submap, and hence $(p,v,a)$,
+injective on a neighborhood of $Z$. Both endpoints eventually lie
+there and have the same $(p,v,a)$, contradicting their distinctness.
+
+The full-parent classification (24.3), including its separate
+singular-source assertion, leaves only
+$Z=\mathcal W_1^J$ or $Z=\mathcal W_2^J$. Their common bases then
+tend to $q_i$. They eventually lie in $V_i$ of Theorem 25.2, where
+no distinct equal-$M$ pair exists anywhere in the entire child.
+This contradicts the independently selected $M$ pair of (1.2).
+No relation between the two terminal common values, no disjointness
+between the pairs, and no convergence of the $M$ endpoints was used. ∎
+
+The target-specific contributions are the two complete inventories,
+their exact multiplicity and root covers, all strict companion
+rejections, and the evaluated $(p,m)$ differential units that yield
+these local exclusions. The full-parent and whole-gain correspondence
+is O, Theorem 2.1, in (2.1)–(2.7); the all-world carrier and linear
+drift identity are Lemma 15.1 and (16.2); the full augmented-$J$
+critical classification is Theorem 24.1. These mechanisms are reused.
+Fixed-node interpolation is the classical formula of J.-P. Berrut
+and L. N. Trefethen, *Barycentric Lagrange Interpolation*, SIAM Review
+46 (2004), 501–517, §2, equations (2.1)–(2.2),
+[author-hosted primary text](https://people.maths.ox.ac.uk/trefethen/barycentric.pdf),
+[DOI 10.1137/S0036144502417715](https://doi.org/10.1137/S0036144502417715).
+Only interpolation is attributed to that reference, not these
+source-specific inventories.
+
+The global question (1.2) remains unresolved. The results exclude
+these two exact bases, some unspecified open neighborhoods of them,
+and every strict complete-world $J$-diagonal limiting route. Reusing
+SIII, Theorem 7.1, Corollaries 8.1–8.3 and Proposition 9.1, every
+original joint base lies in the compact ambient $K$ of SIII, (8.3),
+separated from $p=24$, and every actual companion above such a base
+has bounded original source coordinates, drift and all four whole-gain
+coefficients, including worlds unused by either selected pair. One
+endpoint per selected pair can be chosen in SIII's compact strict
+anchor set; this gives no uniform interior margin for all endpoints
+or companions. The remaining analysis concerns actual separated strict
+$J/M$ incidences over the remaining part of $K$ and finite
+source-boundary or interior limiting routes not already excluded under
+their owning suppliers' hypotheses, as in SIII, Definition 9.2.
+The pairs remain independently chosen, may overlap and may have
+different common terminal values. Boundary limits are necessary
+limiting configurations, not actual collisions. Auxiliary chart ratios
+or slopes may diverge at a finite boundary without an unbounded
+original source or base regime. The bounds do not assert closedness
+of the strict incidence loci or properness of their projections,
+and no global incidence classification is supplied here.
+
+## 追加锚（本行以下为增补区）
