@@ -55,6 +55,16 @@ theorem norm_powerFamily {p a : ℝ} (_hp : 0 < p) (ha : 0 ≤ a) (ha1 : a < 1)
   rw [powerFamily, hc, Complex.norm_exp, Complex.re_ofReal_mul, Complex.log_re,
     Real.rpow_def_of_pos hn, mul_comm]
 
+private lemma powerFamily_bound {p a : ℝ} (hp : 0 < p) (ha : 0 ≤ a) (ha1 : a < 1)
+    {w : ℂ} (hw : ‖w‖ < 1) : ‖powerFamily p a w‖ ≤ (1 + a) ^ (2 / p) := by
+  rw [norm_powerFamily hp ha ha1 hw]
+  apply Real.rpow_le_rpow (norm_nonneg _) _ (by positivity)
+  calc
+    ‖1 + (a : ℂ) * w‖ ≤ ‖(1 : ℂ)‖ + ‖(a : ℂ) * w‖ := norm_add_le _ _
+    _ ≤ 1 + a := by
+      rw [norm_one, norm_mul, Complex.norm_real, Real.norm_eq_abs, abs_of_nonneg ha]
+      nlinarith [hw.le]
+
 private lemma norm_circle {ρ θ : ℝ} (hρ : 0 ≤ ρ) :
     ‖(ρ : ℂ) * Complex.exp (θ * Complex.I)‖ = ρ := by
   rw [norm_mul, Complex.norm_real, Real.norm_eq_abs, abs_of_nonneg hρ,
@@ -228,7 +238,8 @@ theorem refutes_of_gap {p q α a : ℝ} (hp : 0 < p) (hq : 0 < q) (hα : 0 < α)
     ‖z‖ < 1 ∧
     mixedNorm (ENNReal.ofReal p) (ENNReal.ofReal q) α (powerFamily p a) <
       ENNReal.ofReal ‖powerFamily p a z‖ *
-        ENNReal.ofReal ((1 - ‖z‖ ^ 2) ^ (α + 1 / (ENNReal.ofReal p).toReal)) := by
+        ENNReal.ofReal ((1 - ‖z‖ ^ 2) ^ (α + 1 / (ENNReal.ofReal p).toReal)) ∧
+    (∀ w : ℂ, ‖w‖ < 1 → ‖powerFamily p a w‖ ≤ (1 + a) ^ (2 / p)) := by
   let c := 1 / (1 + α * p)
   let z : ℂ := ((c * a : ℝ) : ℂ)
   have hpt := evaluation_point hp hα ha.le ha1
@@ -238,29 +249,32 @@ theorem refutes_of_gap {p q α a : ℝ} (hp : 0 < p) (hq : 0 < q) (hα : 0 < α)
   have hz : ‖z‖ < 1 := hzn.trans_lt hpt.2
   refine ⟨powerFamily_differentiableOn hp ha.le ha1,
     mixedNorm_powerFamily_lt_top hp hq hα ha.le ha1, hz, ?_⟩
-  let U : ℝ := ‖powerFamily p a z‖ * (1 - ‖z‖ ^ 2) ^ (α + 1 / p)
-  have hb : 0 < 1 - ‖z‖ ^ 2 := by nlinarith [norm_nonneg z]
-  have hU : 0 ≤ U := by dsimp [U]; positivity
-  have hUq : U ^ q = evaluationExcess p q α (a ^ 2) := by
-    rw [Real.mul_rpow (norm_nonneg _) (Real.rpow_nonneg hb.le _),
-      ← Real.rpow_mul hb.le, mul_comm (α + 1 / p), hzn]
-    exact evaluation_powerFamily hp hα ha.le ha1
-  have hN : 0 ≤ radialIntegral p q α (a ^ 2) := by
-    unfold radialIntegral
-    apply mul_nonneg (by positivity)
-    apply intervalIntegral.integral_nonneg zero_le_one
-    intro ρ hρ
-    have hρ0 := hρ.1
-    have : 0 ≤ 1 - ρ ^ 2 := by nlinarith [hρ.1, hρ.2]
-    positivity
-  have hroot : (radialIntegral p q α (a ^ 2)) ^ (1 / q) < U := by
-    by_contra hh
-    have hle := Real.rpow_le_rpow hU (le_of_not_gt hh) hq.le
-    rw [← Real.rpow_mul hN, one_div_mul_cancel hq.ne', Real.rpow_one, hUq] at hle
-    exact (not_lt_of_ge hle) hgap
-  rw [mixedNorm_powerFamily_finite hp hq hα ha.le ha1,
-    ENNReal.toReal_ofReal hp.le, ← ENNReal.ofReal_mul (norm_nonneg _)]
-  exact (ENNReal.ofReal_lt_ofReal_iff_of_nonneg (Real.rpow_nonneg hN _)).mpr hroot
+  constructor
+  · let U : ℝ := ‖powerFamily p a z‖ * (1 - ‖z‖ ^ 2) ^ (α + 1 / p)
+    have hb : 0 < 1 - ‖z‖ ^ 2 := by nlinarith [norm_nonneg z]
+    have hU : 0 ≤ U := by dsimp [U]; positivity
+    have hUq : U ^ q = evaluationExcess p q α (a ^ 2) := by
+      rw [Real.mul_rpow (norm_nonneg _) (Real.rpow_nonneg hb.le _),
+        ← Real.rpow_mul hb.le, mul_comm (α + 1 / p), hzn]
+      exact evaluation_powerFamily hp hα ha.le ha1
+    have hN : 0 ≤ radialIntegral p q α (a ^ 2) := by
+      unfold radialIntegral
+      apply mul_nonneg (by positivity)
+      apply intervalIntegral.integral_nonneg zero_le_one
+      intro ρ hρ
+      have hρ0 := hρ.1
+      have : 0 ≤ 1 - ρ ^ 2 := by nlinarith [hρ.1, hρ.2]
+      positivity
+    have hroot : (radialIntegral p q α (a ^ 2)) ^ (1 / q) < U := by
+      by_contra hh
+      have hle := Real.rpow_le_rpow hU (le_of_not_gt hh) hq.le
+      rw [← Real.rpow_mul hN, one_div_mul_cancel hq.ne', Real.rpow_one, hUq] at hle
+      exact (not_lt_of_ge hle) hgap
+    rw [mixedNorm_powerFamily_finite hp hq hα ha.le ha1,
+      ENNReal.toReal_ofReal hp.le, ← ENNReal.ofReal_mul (norm_nonneg _)]
+    exact (ENNReal.ofReal_lt_ofReal_iff_of_nonneg (Real.rpow_nonneg hN _)).mpr hroot
+  · intro w hw
+    exact powerFamily_bound hp ha.le ha1 hw
 
 private lemma weighted_mean_le_one {p α t u : ℝ} (hp : 0 < p) (hα : 0 < α)
     (ht : 0 ≤ t) (htp : t ≤ α * p) (hu : 0 ≤ u) (hu1 : u < 1) :
@@ -355,7 +369,8 @@ theorem refutes_at_infinity {p α : ℝ} (hp : 0 < p) (hα : 0 < α) :
       mixedNorm (ENNReal.ofReal p) ∞ α (powerFamily p a) < ∞ ∧
       mixedNorm (ENNReal.ofReal p) ∞ α (powerFamily p a) <
         ENNReal.ofReal ‖powerFamily p a z‖ *
-          ENNReal.ofReal ((1 - ‖z‖ ^ 2) ^ (α + 1 / (ENNReal.ofReal p).toReal)) := by
+          ENNReal.ofReal ((1 - ‖z‖ ^ 2) ^ (α + 1 / (ENNReal.ofReal p).toReal)) ∧
+      (∀ w : ℂ, ‖w‖ < 1 → ‖powerFamily p a w‖ ≤ (1 + a) ^ (2 / p)) := by
   obtain ⟨t, ht0, ht1, htα, hE⟩ := infinity_evaluation_excess hp hα
   let a := Real.sqrt t
   have ha : 0 < a := Real.sqrt_pos.mpr ht0
@@ -375,11 +390,14 @@ theorem refutes_at_infinity {p α : ℝ} (hp : 0 < p) (hα : 0 < α) :
     ring
   have hnorm := mixedNorm_powerFamily_infinity hp hα ha.le ha1 (hat ▸ htα)
   refine ⟨a, ⟨ha, ha1⟩, z, hz, hnorm ▸ ENNReal.one_lt_top, ?_⟩
-  rw [hnorm, ENNReal.toReal_ofReal hp.le, ← ENNReal.ofReal_mul (norm_nonneg _)]
-  rw [norm_powerFamily hp ha.le ha1 hz, he, Complex.norm_of_nonneg (by
-    have : 0 < c := by dsimp [c]; positivity
-    positivity), hzn, mul_pow, hat]
-  rw [show (1 : ℝ≥0∞) = ENNReal.ofReal 1 by simp]
-  exact (ENNReal.ofReal_lt_ofReal_iff_of_nonneg zero_le_one).mpr hE
+  constructor
+  · rw [hnorm, ENNReal.toReal_ofReal hp.le, ← ENNReal.ofReal_mul (norm_nonneg _)]
+    rw [norm_powerFamily hp ha.le ha1 hz, he, Complex.norm_of_nonneg (by
+      have : 0 < c := by dsimp [c]; positivity
+      positivity), hzn, mul_pow, hat]
+    rw [show (1 : ℝ≥0∞) = ENNReal.ofReal 1 by simp]
+    exact (ENNReal.ofReal_lt_ofReal_iff_of_nonneg zero_le_one).mpr hE
+  · intro w hw
+    exact powerFamily_bound hp ha.le ha1 hw
 
 end D5.S3.Analytic.MixedNorm.DmitrovicPointEvaluation.CircleMean
