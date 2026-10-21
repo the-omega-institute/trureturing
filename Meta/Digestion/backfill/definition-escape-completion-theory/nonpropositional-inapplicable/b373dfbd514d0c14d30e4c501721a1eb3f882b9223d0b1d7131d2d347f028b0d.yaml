@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:b373dfbd514d0c14d30e4c501721a1eb3f882b9223d0b1d7131d2d347f028b0d
+  normalized_sha256: sha256:b373dfbd514d0c14d30e4c501721a1eb3f882b9223d0b1d7131d2d347f028b0d
+cas_ref: sha256:b373dfbd514d0c14d30e4c501721a1eb3f882b9223d0b1d7131d2d347f028b0d
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 'nonpropositional: 不得给正文级洗白添加报告时间戳前件的规范要求。'
+    previous_atom_id: 70ea9588b4bebed7835c45b3b0a1d4088a045de40e3811fbe00a2f88ea4f5d8e
+    next_atom_id: 6b0c7e3b75c64f37e13fb0222a3675e9933456c11ba51f61e7e6f811ae752725
