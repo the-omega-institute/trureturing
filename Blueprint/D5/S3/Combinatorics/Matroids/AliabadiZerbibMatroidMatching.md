@@ -70,6 +70,10 @@ $$\neg (\forall (G: Type), [AddCommGroup\left(G\right)] [IsAddTorsionFree\left(G
 
 *Proof.* Machine-checked in Lean as `D5/S3/Combinatorics/Matroids/AliabadiZerbibMatroidMatching.result` (`✓ std3`). ∎
 
+*Resolves.* `Problems/aliabadi-zerbib-2022-matroid-matching-question-2-7` (refuted) by `D5/S3/Combinatorics/Matroids/AliabadiZerbibMatroidMatching.result`.
+
+<!-- scribe-open-problem-resolution-v1 {"problem_slug":"aliabadi-zerbib-2022-matroid-matching-question-2-7","declaration_gid":"D5/S3/Combinatorics/Matroids/AliabadiZerbibMatroidMatching.result","resolution_kind":"refuted"} -->
+
 *Source.* Repository-derived.
 
 *Acknowledgement.* Mohsen Aliabadi; Shira Zerbib (2024). *Matchings in matroids over abelian groups*. DOI: [10.1007/s10801-024-01308-z](https://doi.org/10.1007/s10801-024-01308-z). URL: <https://arxiv.org/abs/2202.07719v3>.

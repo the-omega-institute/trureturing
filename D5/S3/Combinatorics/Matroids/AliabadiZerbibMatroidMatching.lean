@@ -7,7 +7,8 @@
    digest: A sparse paving integer matroid need not be matched to itself. -/
 
 /- admission_basis: open-problem-resolution (#19681; Refuted)
-   Module escape_witness: none.
+   Module escape_witness: none. Escape audit unfinished under #20096 for the public declarations;
+   no declared_validated registration is claimed. The designated refutation result is exempt.
    Direct frozen dependencies: none (all imports are pinned Mathlib).
    Per-declaration proof_shape (same-module helpers inlined; escape_witness: none for all):
    IsPaving: definition; consumer(s): IsSparsePaving, punctured_paving, punctured_dual_paving, family_sparse_paving.

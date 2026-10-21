@@ -49,14 +49,17 @@ internal sealed class AliabadiZerbibMatroidMatchingDocument : IScribeDocumentDef
             Node("result", Seq(Neg, Sp, Parenthesized(ClaimBody())),
                 AssessedProvenance.FromRepo(Source),
                 "Over ℤ, let E = {1, …, n + s} and H = {s + 1, …, s + n}, with n, s ≥ 2. The bases are exactly the n-element subsets of E other than H. A two-exchange argument constructs a matroid; extension of smaller sets and complementary bases show that it and its dual are paving. For a in {1, …, n}, b in E and a + b outside E, one has b in H. Thus an injective n-tuple of targets has range H, which is not a base. Taking M = N at n = s = 2 disproves the proposition.",
-                DescribeRole.Theorem))));
+                DescribeRole.Theorem,
+                new OpenProblemResolutionClaim(
+                    ProblemSlugRef.Create("aliabadi-zerbib-2022-matroid-matching-question-2-7"),
+                    ResolutionKind.Refuted)))));
 
     private static DocumentBlock Node(string name, Formula formula, AssessedProvenance provenance,
-        string prose, DescribeRole role) => Describe.Lean(
+        string prose, DescribeRole role, OpenProblemResolutionClaim? resolution = null) => Describe.Lean(
             DescribeId.Create(name.ToLowerInvariant()),
             DeclarationHandle.Create("D5/S3/Combinatorics/Matroids/AliabadiZerbibMatroidMatching." + name),
             H(name), StatementSource.FromAuthor(Disp(formula)), provenance,
-            Blocks(Paragraph(Text(prose))), role);
+            Blocks(Paragraph(Text(prose))), role, resolution);
 
     private static Formula MatchedBody()
     {
