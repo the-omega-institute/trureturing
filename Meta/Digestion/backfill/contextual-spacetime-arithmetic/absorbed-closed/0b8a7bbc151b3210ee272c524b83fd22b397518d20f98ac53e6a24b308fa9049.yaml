@@ -2,6 +2,8 @@ fingerprints:
   raw_sha256: sha256:0b8a7bbc151b3210ee272c524b83fd22b397518d20f98ac53e6a24b308fa9049
   normalized_sha256: sha256:0b8a7bbc151b3210ee272c524b83fd22b397518d20f98ac53e6a24b308fa9049
 cas_ref: sha256:0b8a7bbc151b3210ee272c524b83fd22b397518d20f98ac53e6a24b308fa9049
-coverage_gids: []
+coverage_gids:
+  - gid: D5/S3/ConceptDynamics/Spacetime/RegionFilterQExpressibility.q_expressible_iff_tail
+    target_statement_id: sha256:6517d1f5af2ab0d4c1b4ccdf06c23f099c9561eb9be3c3989ac0a4a85e610f0d
 receipts:
   unresolved_subitems: []
