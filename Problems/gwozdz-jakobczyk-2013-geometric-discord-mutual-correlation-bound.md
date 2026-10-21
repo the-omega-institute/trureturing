@@ -79,7 +79,7 @@ The module is admitted under the open-problem-resolution basis of CLAUDE.md §3.
 
 **Argued, not formalized.**
 - *Mechanism.* Measuring A along its own Bloch vector leaves only the part of the correlation tensor orthogonal to x. That part is the correlation matrix Q with its x-direction removed, so its two remaining singular directions are each witnessed by a pair of spin observables.
-- *Sharpness.* Equality holds for pure states, where the source shows C_M = √D_G^A, and whenever the two singular values of PQ coincide with ‖Q‖.
+- *Sharpness.* Equality holds for pure states, where the source shows C_M = √D_G^A.
 - *Trace norm.* The same measurement gives ‖ρ − 𝒫(ρ)‖₁ = s_max(PQ) numerically, which would settle the trace-norm comparison D₁ ≤ C_M of arXiv:1607.06585; that is the separate preregistration #19706.
 
 **Effect on the paper.** The first inequality of (II.23) holds for all two-qubit states, so C_M bounds both √D_G^A and, by the source's second inequality, the negativity.
