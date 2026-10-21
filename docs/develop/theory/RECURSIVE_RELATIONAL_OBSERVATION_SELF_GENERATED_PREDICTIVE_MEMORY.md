@@ -771,3 +771,69 @@ In particular, a proof must account for additional transient configurations, per
 The conditional stochastic results advance the relation between retained boundary, lawful continuing use and represented process. Coarse-error minima outside the separation domain, randomized retention with averaged error, minimal total numerical workspace, effective arbitrary-real synthesis, native physical storage, thermodynamic price, and general space–time–boundary–memory reconstruction require their own hypotheses and mathematical bridges. They remain outside the proved scope.
 
 ## 追加锚（本行以下为增补区）
+
+## 11. Endogenous quantum summaries and the learning state they must retain
+
+**Definition 11.1 (a record-controlled extension of Definition 1.3).**
+At stage $t$, let $c$ contain the actually retained gate word, finitely encoded parameters, record and optimizer memory.
+Use a finite-dimensional classical–quantum space $\mathcal H_t=\bigoplus_{c\in C_t}\mathcal H_{t,c}$ with states block diagonal in $c$.
+The sets $C_t$ are finite at each declared resource cut; this does not bound their growth uniformly in $t$.
+Allowed actions depend on retained records and state-dependent guards.
+For each legal action $a$, the actual branches $\mathcal I_{t,a,y}$ are completely positive and trace nonincreasing,
+and their sum is trace preserving. Classical control and memory updates are included in those branches.
+
+A predictive carrier $\widehat{\mathcal H}_t$ has branches $\mathcal J_{t,a,y}$ with the same instrument conditions.
+A supplied summary $\mathcal E_t$ is CPTP on the declared block algebras and satisfies, on every reachable unnormalized state,
+
+$$
+\mathcal E_{t+1}\mathcal I_{t,a,y}
+=\mathcal J_{t,a,y}\mathcal E_t,\qquad
+\widehat\sigma_\emptyset=\mathcal E_0(\sigma_\emptyset).
+$$
+
+The summary preserves action legality: every relevant guard factors through the summary with the same answer.
+The policy in the two descriptions uses the same retained record and corresponding guards.
+These requirements define a supplied exact predictive interface, not its acquisition algorithm.
+
+**Proposition 11.2 (the recursive-memory interface for instrument growth).**
+Under Definition 11.1, actual execution and the internal model give the same probability for every finite record,
+including under feedback that appends legal gates and changes optimizer memory.
+On positive-probability records, predicted conditional states are summaries of actual conditional states.
+When the block states are classical labels and the branches implement deterministic $z\mapsto U(z,y)$ with weight $e_z(y)$,
+the law reduces to Definition 1.3's decoder using the same $U$ after each predicted symbol.
+
+Proof. The standard instrument composition lemma is stated and derived in the
+[Watrous source note](../../../Library/Quantum/watrous2018theory.md#instrument-composition-and-predictive-intertwining).
+For the present substitution, its source algebra is the block algebra retaining $(w,\theta,m)$ and the quantum register;
+its target is the internal predictive carrier, its action is the selected native control, and its outcome is the actual recorded symbol.
+The initial state and branch intertwining are exactly Definition 11.1's two identities.
+Induction gives $\widehat\sigma_h=\mathcal E_{|h|}(\sigma_h)$; trace preservation gives equality of record probabilities.
+Matched histories and guards select the same next action, so induction includes adaptive gate choice and stopping flags encoded as records.
+In the classical specialization, the branch from label $z$ has weight $e_z(y)$ and next label $U(z,y)$;
+composing it multiplies the weights along precisely the recursion in Definition 1.3. QED.
+
+The new application is the common control/record/learning-state interface. Instrument composition itself is standard.
+Exact finite-future preservation supplies neither a small carrier, an efficient predictor, the intertwining maps, nor a realized random outcome in advance.
+A single-valued guess after a classical history succeeds with probability at most the largest conditional outcome probability;
+the preserved object is the conditional law.
+
+The learning-state obstruction is the existing witness in [Machine Learning Whitebox §9](FIB_ATOM_MACHINE_LEARNING_WHITEBOX.md),
+reused here to test Definition 11.1's factorization. For $f_{a,b}(x)=abx$, it supplies
+$w^+=(1+\eta^2g^2)w-\eta g(a^2+b^2)$.
+With $\ell(w)=w$ and $\eta=1/10$, the pairs $(1,1)$ and $(2,1/2)$ both have $w=1$,
+but their next summaries are $81/100$ and $117/200$.
+A target branch depending only on $w$ cannot give both, so current-output preservation does not meet the instrument-summary contract.
+This is the cited witness's application to that contract, not a new counterexample.
+
+**Definition 11.3 (growth embeddings and static propagation).**
+For an actually supplied ancillary register and unitary, a dimension-changing step is the isometry
+$V_t\psi=U_t(\psi\otimes|0\rangle)$ from $\mathcal H_t$ to $\mathcal H_{t+1}$.
+Its pure conditional histories may be placed on a path of the propagation construction in
+[Static Compatibility Fiber §7](AURIC_OMEGA_STATIC_COMPATIBILITY_FIBER_THEORY.md).
+The zero-defect condition there specifies the same transported history; it does not construct the summary in Definition 11.1.
+For a connected graph with reversible unitary edges, a full parallel orthonormal frame requires identity holonomy on all loops,
+whereas one parallel vector requires only a common fixed vector for rooted loop transports.
+These are the existing propagation/holonomy conditions, not consequences of the five probabilities alone.
+A classical gate program and record do not supply a second copy of an arbitrary unknown quantum state.
+
+## 追加锚（本行以下为增补区）
