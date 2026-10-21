@@ -1,0 +1,9 @@
+fingerprints:
+  raw_sha256: sha256:b152305b9d39a52c5f6a4a2945a8d15da39c54d8c2383d16ed864114a2d344cb
+  normalized_sha256: sha256:b152305b9d39a52c5f6a4a2945a8d15da39c54d8c2383d16ed864114a2d344cb
+cas_ref: sha256:b152305b9d39a52c5f6a4a2945a8d15da39c54d8c2383d16ed864114a2d344cb
+coverage_gids:
+  - gid: D5/S3/Observer/WindowAlgebra/DynamicalObservableKernel.dynamical_observable_kernel
+    target_statement_id: sha256:b55d83aa8e4ab32cfa42bc97a7b798112ac2756f60153bd6af4e6df020f1d675
+receipts:
+  unresolved_subitems: []

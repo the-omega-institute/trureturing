@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:766980f47e22618ab79231783daee2e9d983679f4536280a5fa7d52b4f5dd352
+  normalized_sha256: sha256:766980f47e22618ab79231783daee2e9d983679f4536280a5fa7d52b4f5dd352
+cas_ref: sha256:766980f47e22618ab79231783daee2e9d983679f4536280a5fa7d52b4f5dd352
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 固定动力学的假设设定。不另主张独立数学命题。
+    previous_atom_id: 4ae7189774f2502769b665b5f4c3adb09e139da4381e9f1d922532bb6707378a
+    next_atom_id: 62ddc72c087d58f0ffa3eaef762421bc23cd0a5246767d60ff053ae86111c9dc
