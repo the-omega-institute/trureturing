@@ -118,7 +118,10 @@ internal sealed class FlipConjugateGeometricMeasureDocument : IScribeDocumentDef
                             + "Choosing a = χ/‖χ‖ attains the upper bound. Transport by the local "
                             + "unitaries, and then by conjugation for H_Ibar, yields the asserted "
                             + "constant geometric measure for every unit state in either subspace."))),
-                DescribeRole.Theorem)
+                DescribeRole.Theorem,
+                openProblemResolutionClaim: new OpenProblemResolutionClaim(
+                    ProblemSlugRef.Create("denker-imai-guhne-2025-flip-conjugate-geometric-measure"),
+                    ResolutionKind.Proved))
         )));
 
     private static DocumentBlock Node(string id, string title, string declaration, Formula formula,
