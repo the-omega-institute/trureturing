@@ -2697,3 +2697,100 @@ route supplies the still-missing occurrence-to-physical-carrier metric,
 transport, clock, observation, or dimension-sensitive invariant.
 
 ## 214.99 追加锚（本行以下为增补区）
+
+## 215. Exponential resolution threshold
+
+The necessary budget in (214.6) can be stated as a phase boundary. This
+separates a change of resolution law from a claim about the dimension of the
+carrier.
+
+**Theorem 215.1 (subcritical resolution is impossible).** Suppose the
+metric-doubling cover constant $K$, the root-radius constants $A,B$, and the
+source separation constants are as in Definition 214.1, except that the
+separation may vary with $n$ and is denoted by $delta_n$. Let
+
+$$
+q=\log_2K,qquad
+\delta_n\ge c,n^{-s}e^{-\kappa n}
+\quad(n\ge n_0),
+\tag{215.1}
+$$
+
+for fixed $c>0$, $s\ge0$, and $\kappa\ge0$. If every prefix is
+resolved in one common metric-doubling carrier, then necessarily
+
+$$
+\boxed{
+\kappa\ge\frac{\log\varphi}{q}.
+}
+\tag{215.2}
+$$
+
+In particular, a fixed or polynomially shrinking resolution cannot support
+all Fibonacci prefixes for any finite $K$.
+
+Proof. From (214.3) and $\lceil x\rceil<x+1$,
+
+$$
+N_n
+<K\left(1+\frac{2R_n}{\delta_n}\right)^q.
+\tag{215.3}
+$$
+
+Since $R_n=A(n-1)+B=O(n)$, (215.1) gives a constant $C>0$ such that
+
+$$
+1+\frac{2R_n}{\delta_n}
+\le C n^{s+1}e^{\kappa n}
+\tag{215.4}
+$$
+
+for all sufficiently large $n$. Hence
+
+$$
+N_n\le C' n^{q(s+1)}e^{q\kappa n}.
+\tag{215.5}
+$$
+
+On the other hand, the Binet formula used in (160.8) gives
+
+$$
+N_n\ge c'\varphi^n
+\tag{215.6}
+$$
+
+for some $c'>0$ and all large $n$. If $q\kappa<\log\varphi$, the ratio of
+(215.6) to (215.5) tends to infinity, a contradiction. Therefore (215.2)
+is necessary. The case $\kappa=0$ includes every lower bound of polynomial
+order. $\square$
+
+**Corollary 215.2 (the critical polynomial window).** At the threshold
+
+$$
+\kappa_*:=\frac{\log\varphi}{q},
+$$
+
+the packing estimate requires
+
+$$
+\delta_n=O\!\left(n e^{-\kappa_* n}\right).
+\tag{215.7}
+$$
+
+Thus a law bounded below by $c n^{1+\epsilon}e^{-\kappa_*n}$ for any
+$\epsilon>0$ is impossible, while the law $n e^{-\kappa_*n}$ is only a
+necessary scale and is not an existence construction.
+
+For the stipulated $K=8$, one has $q=3$ and therefore
+
+$$
+\kappa_*=rac{\log\varphi}{3}.
+\tag{215.8}
+$$
+
+This number is a resolution exponent of the declared occurrence bridge. It
+is not a spatial dimension, a heat-kernel exponent, or a Fock/observation
+rank. A physical three-dimensional conclusion still needs an independent
+realization law and an observable correspondence.
+
+## 215.99 追加锚（本行以下为增补区）
