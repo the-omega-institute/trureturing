@@ -1,0 +1,9 @@
+fingerprints:
+  raw_sha256: sha256:59a7ad56ffae990b97849cfbef9a1768f28ea795d12c7535830d0d49490a1250
+  normalized_sha256: sha256:59a7ad56ffae990b97849cfbef9a1768f28ea795d12c7535830d0d49490a1250
+cas_ref: sha256:59a7ad56ffae990b97849cfbef9a1768f28ea795d12c7535830d0d49490a1250
+coverage_gids:
+  - gid: D5/S3/ConceptDynamics/Spacetime/ComplementFibers.empty_full_fiber_members_distinct
+    target_statement_id: sha256:f20ff03af79cb30d449863205fe28ea58227290253eb24fe1f24934fa86dbf3c
+receipts:
+  unresolved_subitems: []

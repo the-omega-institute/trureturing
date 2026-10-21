@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:9dde891533aa869a1839d05801be903f9cd12d3e9f91a3e638e178af789181ac
+  normalized_sha256: sha256:9dde891533aa869a1839d05801be903f9cd12d3e9f91a3e638e178af789181ac
+cas_ref: sha256:9dde891533aa869a1839d05801be903f9cd12d3e9f91a3e638e178af789181ac
+coverage_gids:
+  - gid: D5/S3/Arith/GoelPisanoRatioRefutation.pisanoPeriod
+    target_statement_id: sha256:d2c01e66db693e4bfd0f5212b8f798cf3de963f407c0e556f99f0f3c2f8b24be
+  - gid: D5/S3/Arith/PisanoMatrixBridge.pisanoPeriod_eq_matrix_order
+    target_statement_id: sha256:c6d02a5fc143b64043a2f69d6c1b880c8d4e469f9b5cc5b3ab6f4022d9dd3cbb
+receipts:
+  unresolved_subitems: []
