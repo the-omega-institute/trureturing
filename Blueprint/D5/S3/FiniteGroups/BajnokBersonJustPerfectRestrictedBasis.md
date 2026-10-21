@@ -34,6 +34,10 @@ $$\forall G \in Type,\; [\operatorname{AddCommGroup}\left(G\right)] [\operatorna
 
 *Proof.* Machine-checked in Lean as `D5/S3/FiniteGroups/BajnokBersonJustPerfectRestrictedBasis.result` (`✓ std3`). ∎
 
+*Resolves.* `Problems/bajnok-berson-just-2022-perfect-restricted-bases-question-6` (proved) by `D5/S3/FiniteGroups/BajnokBersonJustPerfectRestrictedBasis.result`.
+
+<!-- scribe-open-problem-resolution-v1 {"problem_slug":"bajnok-berson-just-2022-perfect-restricted-bases-question-6","declaration_gid":"D5/S3/FiniteGroups/BajnokBersonJustPerfectRestrictedBasis.result","resolution_kind":"proved"} -->
+
 *Source.* Repository-derived.
 
 *Acknowledgement.* B. Bajnok, C. Berson and H. A. Just (2022). *On Perfect Bases in Finite Abelian Groups*. DOI: [10.2140/involve.2022.15.525](https://doi.org/10.2140/involve.2022.15.525). URL: <https://arxiv.org/abs/2211.13675v1>.
