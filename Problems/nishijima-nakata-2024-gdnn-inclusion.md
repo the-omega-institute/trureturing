@@ -55,8 +55,7 @@ generator $s$ of $K^*$. Thus $\mathrm{DNN}^{\mathrm{NN}}(K)\subseteq
 
 The settling GID is `D5/S3/QuadraticForms/ConicGDNN/Result.result`.
 The source note is `D5/L/QuadraticForms/nishijimanakata2024generalizations`.
-The admission basis is open-problem-resolution (Proved), with preregistration
-#20006. The result compares the two specified approximations for the full
+The admission basis is open-problem-resolution (Proved). The result compares the two specified approximations for the full
 orthant and Lorentz product family.
 
 ## Gap
