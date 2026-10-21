@@ -223,4 +223,4 @@ search-reduction-replay-vocabulary:
 search-reduction-index:
 	@$(MAKE) lean LEAN_TARGETS="regInspector/searchReductionIndex" && $(MAKE) search-reduction-index-run
 search-reduction-index-run:
-	@lake -d tools/lean-inspector-reg env ../../.lake/build/lean-inspector/reg/bin/searchReductionIndex "$(INDEX_BASIS)" "$(INDEX_DIR)" $(INDEX_MODULES)
+	@lake -d tools/lean-inspector-reg env .lake/build/lean-inspector/reg/bin/searchReductionIndex "$(INDEX_BASIS)" "$(INDEX_DIR)" $(INDEX_MODULES)

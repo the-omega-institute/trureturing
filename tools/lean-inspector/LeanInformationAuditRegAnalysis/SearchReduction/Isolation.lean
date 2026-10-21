@@ -274,7 +274,7 @@ private def intervalRun (graph : ProofGraph) (interval : Interval) : Run :=
   else .incomplete .undecided
 
 private unsafe def runCore (source base : Environment) (request : Request)
-    (lookupComplete : Bool) : IO Observation := do
+    (lookupComplete : Bool) (disk? : Option DiskLookup.Index := none) : IO Observation := do
   let unknown (reason : String) (failure := Failure.isolation) : Observation := {
     target := request.target, base := .incomplete failure,
     paired := .incomplete failure, verdict := .insufficient, reason}
@@ -311,7 +311,7 @@ private unsafe def runCore (source base : Environment) (request : Request)
       let graphEnv ← getEnv
       let enabled := (← IO.getEnv "SEARCH_REDUCTION_LOOKUP") != some "0"
       let reading ← withEnv graphEnv <| evaluateGraph graph (some {
-        environment := base, complete := lookupComplete, enabled})
+        environment := base, complete := lookupComplete, enabled, disk?})
       let baselineProof? ← if upperIsZero reading.baseline then
         withEnv graphEnv <| assembleZero reading.graph else pure none
       let pairedProof? ← if upperIsZero reading.paired then
@@ -374,7 +374,12 @@ unsafe def run (source : Environment) (request : Request)
       if let some index := source.getModuleIdxFor? n then
         delivery := delivery.push source.header.moduleNames[index.toNat]!
     let catalog ← baselineCatalog request.baselineCommit delivery base
-    let result ← runCore source base request (catalog.scope != "B_load")
+    let directory := (← IO.getEnv "SEARCH_REDUCTION_INDEX").getD
+      s!".lake/build/lean-inspector/lookup-index/{request.baselineCommit}"
+    let disk? ← try
+      pure (some (← DiskLookup.openIndex directory request.baselineCommit mathlibRevision catalog.excluded))
+      catch _ => pure none
+    let result ← runCore source base request disk?.isSome disk?
     let used := request.additions.filter fun name =>
       result.graph?.any fun reading => reading.selectedSeeds.any fun id =>
         reading.graph.vertices.any fun vertex => vertex.id == id &&

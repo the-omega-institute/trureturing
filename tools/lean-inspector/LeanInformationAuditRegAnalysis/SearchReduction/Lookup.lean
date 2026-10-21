@@ -1,11 +1,11 @@
-import Lean
+import LeanInformationAuditRegAnalysis.SearchReduction.DiskLookup
 
-/-! One-basis-declaration retrieval. This streaming backend deliberately owns
-no environment-wide tree. A paged backend must preserve this query contract. -/
+/-! One-basis-declaration retrieval from checked disk pages. No query scans
+the baseline environment or constructs an environment-wide tree. -/
 namespace LeanInformationAudit.SearchReduction
 open Lean Meta
 
-abbrev lookupVersion : String := "R_lookup/one-B/stream-v2-independent"
+abbrev lookupVersion : String := "R_lookup/one-B/disk-beta-zeta-alpha-v1-independent"
 
 /-- The table is captured before delivery vocabulary or S is installed. A
 partial basis may supply a hit, but never a completed negative query. -/
@@ -13,6 +13,7 @@ structure LookupTable where
   environment : Environment
   complete : Bool := true
   enabled : Bool := true
+  disk? : Option DiskLookup.Index := none
 
 structure LookupTrace where
   visited : Nat := 0
@@ -25,23 +26,37 @@ private def eligible : ConstantInfo → Bool
   | .thmInfo _ | .defnInfo _ | .opaqueInfo _ => true
   | _ => false
 
-/-- The fast membership pass retains no bucket and checks hash collisions by
-unification. Expr hashes ignore binder names; no hash is a proof certificate. -/
+private def tableIndex (table : LookupTable) : IO (Option DiskLookup.Index) := do
+  if table.disk?.isSome then return table.disk?
+  let directory := (← IO.getEnv "SEARCH_REDUCTION_INDEX").getD
+    ".lake/build/lean-inspector/lookup-index/fixture"
+  try
+    return some (← DiskLookup.openIndex directory "fixture"
+      "56a005855ea17e0b0958f73ec801ae140b0a1679")
+  catch _ => return none
+
+/-- The membership page is only a prefilter. Alpha-invariant hashes never
+substitute for definitional equality or the caller's closed kernel check. -/
 def lookupExact (table : LookupTable) (goal : MVarId) : MetaM LookupTrace := goal.withContext do
   if !table.enabled then return {complete := true}
+  let some index ← tableIndex table | return {}
   let type ← goal.getType
-  table.environment.constants.foldM (init := ({} : LookupTrace)) fun trace name info => do
-    if trace.source?.isSome then return trace
+  let candidates ← DiskLookup.query index (DiskLookup.memberKeys type)
+  let mut trace : LookupTrace := {complete := candidates.complete && table.complete}
+  for entry in candidates.entries do
     checkSystem "lookup.membership"
-    let trace := {trace with visited := trace.visited + 1}
-    if !eligible info || info.isUnsafe || info.type.hash != type.hash then return trace
+    let name := entry.name.toName
+    let some info := (table.environment.setExporting false).find? name
+      | trace := {trace with complete := false}; continue
+    trace := {trace with visited := trace.visited + 1}
+    if !eligible info || info.isUnsafe then continue
     let saved ← saveState
     let value ← mkConstWithFreshMVarLevels name
     if ← withReducible <| isDefEq (← inferType value) type then
       goal.assign value
       return {trace with source? := some name, attempted := trace.attempted + 1}
     saved.restore
-    return trace
+  return trace
 
 /-- A wildcard denotes a head which reduction or instantiation may change.
 Only rigid unequal heads can be discarded without testing an application. -/
@@ -113,9 +128,14 @@ def lookupLeaf (table : LookupTable) (goal : MVarId)
     (unify close : MVarId → MetaM Bool) : MetaM LookupTrace := goal.withContext do
   if !table.enabled then return {complete := true}
   let head := rigidHead (← getEnv) (← goal.getType)
-  let trace ← table.environment.constants.foldM (init := ({} : LookupTrace)) fun trace name info => do
+  let some index ← tableIndex table | return {}
+  let candidates ← DiskLookup.query index (DiskLookup.candidateKeys (← getEnv) (← goal.getType))
+  let trace ← candidates.entries.foldlM (init := ({complete := candidates.complete && table.complete} : LookupTrace)) fun trace entry => do
     if trace.source?.isSome then return trace
-    checkSystem "lookup.scan"
+    checkSystem "lookup.page_candidate"
+    let name := entry.name.toName
+    let some info := (table.environment.setExporting false).find? name
+      | return {trace with complete := false}
     let trace := {trace with visited := trace.visited + 1}
     if !eligible info || info.isUnsafe then return trace
     unless possibleView table.environment head info.type do return trace
@@ -157,6 +177,6 @@ def lookupLeaf (table : LookupTable) (goal : MVarId)
     set initial
     modifyThe Core.State fun s => {s with cache}
     return {trace with attempted}
-  return {trace with complete := trace.source?.isNone && table.complete}
+  return {trace with complete := trace.source?.isNone && trace.complete}
 
 end LeanInformationAudit.SearchReduction
