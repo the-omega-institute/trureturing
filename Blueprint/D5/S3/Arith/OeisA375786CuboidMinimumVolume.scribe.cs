@@ -70,7 +70,10 @@ internal sealed class OeisA375786CuboidMinimumVolumeDocument : IScribeDocumentDe
                     + "gives the solution (2, 2, 3m² − 1), of volume S − 4. With the first "
                     + "edge fixed, a smaller second edge gives no larger volume. These "
                     + "comparisons cover every competitor; n = 1 has only the unit cube."))),
-                DescribeRole.Theorem))));
+                DescribeRole.Theorem,
+                openProblemResolutionClaim: new OpenProblemResolutionClaim(
+                    ProblemSlugRef.Create("oeis-a375786-cuboid-minimum-volume-huber"),
+                    ResolutionKind.Proved)))));
 
     private static Formula CuboidsFormula()
     {

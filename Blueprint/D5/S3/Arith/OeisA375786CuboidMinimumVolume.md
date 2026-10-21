@@ -46,6 +46,10 @@ $$\forall n \in \mathbb{N},\; (1 \le n) \Rightarrow (\forall p \in (\mathbb{N} \
 
 *Proof.* Machine-checked in Lean as `D5/S3/Arith/OeisA375786CuboidMinimumVolume.result` (`✓ std3`). ∎
 
+*Resolves.* `Problems/oeis-a375786-cuboid-minimum-volume-huber` (proved) by `D5/S3/Arith/OeisA375786CuboidMinimumVolume.result`.
+
+<!-- scribe-open-problem-resolution-v1 {"problem_slug":"oeis-a375786-cuboid-minimum-volume-huber","declaration_gid":"D5/S3/Arith/OeisA375786CuboidMinimumVolume.result","resolution_kind":"proved"} -->
+
 *Source.* Repository-derived.
 
 *Acknowledgement.* F. Huber (2024). *OEIS A375786: minimum volume of a cuboid with the surface of an n-cube*. URL: <https://oeis.org/A375786>.
