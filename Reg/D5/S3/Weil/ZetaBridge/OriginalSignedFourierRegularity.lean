@@ -2,6 +2,8 @@ import LeanInformationAuditInterface.Contract.Registration
 import D5.S3.Weil.ZetaBridge.OriginalSignedFourierRegularity
 import Reg.Support.DependentFamily
 
+/-! Faithful dependent-family audit of the literal two-boundary translation energy. -/
+
 namespace Reg.D5.S3.Weil.ZetaBridge.OriginalSignedFourierRegularity
 
 open _root_.D5.S3.ConceptDynamics.InformationEscape.DependentFamily
@@ -58,7 +60,7 @@ def family : Registration arena
     · intro i
       refine ⟨rejected, ?_, rfl, rejected_law⟩
       intro j hji
-      exact (hji (Subsingleton.elim j i)).elim
+      exact (hji (show (j : Unit) = (i : Unit) from Subsingleton.elim _ _)).elim
     · intro e
       exact nomatch e
   dependence := actual_dependence

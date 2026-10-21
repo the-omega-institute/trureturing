@@ -2,6 +2,8 @@ import LeanInformationAuditInterface.Contract.Registration
 import D5.S3.Weil.ZetaBridge.OriginalSignedCompressedFourier
 import Reg.Support.DependentFamily
 
+/-! Faithful dependent-family audit of the original all-shift complex matrix. -/
+
 namespace Reg.D5.S3.Weil.ZetaBridge.OriginalSignedCompressedFourier
 
 open _root_.D5.S3.ConceptDynamics.InformationEscape.DependentFamily
@@ -36,8 +38,8 @@ def arena : Arena where
     R.readout () ⟨L, m, n⟩ h = matrix L m n h
 
 private lemma matrix_at_origin : matrix 1 0 0 0 = 1 := by
-  simp only [matrix, abs_zero, show ¬ (1 : ℝ) ≤ 0 by norm_num, if_false,
-    le_refl, if_true, sub_zero, div_self (by norm_num : (1 : ℝ) ≠ 0),
+  simp only [matrix, abs_zero, show ¬ (1 : ℝ) ≤ 0 by norm_num, ite_false,
+    le_refl, ite_true, sub_zero, div_self (by norm_num : (1 : ℝ) ≠ 0),
     Complex.ofReal_one, one_mul, neg_zero]
   change Complex.exp (((frequency 1 0 * 0 : ℝ) : ℂ) * Complex.I) = 1
   simp
@@ -67,7 +69,7 @@ def family : Registration arena
     · intro i
       refine ⟨rejected, ?_, rfl, rejected_law⟩
       intro j hji
-      exact (hji (Subsingleton.elim j i)).elim
+      exact (hji (show (j : Unit) = (i : Unit) from Subsingleton.elim _ _)).elim
     · intro e
       exact nomatch e
   dependence := actual_dependence
