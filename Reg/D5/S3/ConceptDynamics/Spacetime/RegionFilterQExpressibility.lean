@@ -17,6 +17,7 @@ open ComplementCharge TotalCopyNormalization RegionFilterQExpressibility
 open scoped BigOperators
 
 noncomputable section
+open Classical
 
 @[reducible] def signature : Signature where
   Params := Word
@@ -165,6 +166,246 @@ def registration : LeanInformationAudit.Contract.Registration.{_,_,_,0,0,0,_,_,_
 
 #print axioms evidence
 #print axioms registration
+
+namespace TailConstruction
+
+@[reducible] def signature : Signature where
+  Params := Σ _ : Region, Σ _ : Int, Int
+  State _ := B
+  Role := Fin 2
+  finiteRole := inferInstance
+  nonemptyRole := inferInstance
+  Output _ _ := Int
+  Anchor := Empty
+  finiteAnchor := inferInstance
+
+def actual : Realization signature := realize signature
+  (fun i p X => Fin.cases (q (tailConstruction p.1 p.2.2 X).val)
+    (fun _ => regionReadout p.1 X) i) (fun e => nomatch e)
+
+@[reducible] def arena : Arena where
+  signature := signature
+  Law F := ∀ (R : Region) (c k : Int), TailAt R c → k ≤ c - 1 → ∀ X : B,
+    F.readout 0 ⟨R,c,k⟩ X = F.readout 1 ⟨R,c,k⟩ X
+
+private theorem positive : arena.Law actual := tail_construction_q
+
+def changed (i : Fin 2) : Realization signature := realize signature
+  (fun j p X => if j = i then actual.readout j p X + 1
+    else actual.readout j p X) (fun e => nomatch e)
+
+private theorem emptyTail : TailAt (∅ : Region) 0 := by
+  intro p t t' ht ht'
+  simp
+
+private theorem changed_negative (i : Fin 2) : ¬ arena.Law (changed i) := by
+  intro law
+  have h := law ∅ 0 (-1) emptyTail (by omega) unitBalanced
+  have hp := positive ∅ 0 (-1) emptyTail (by omega) unitBalanced
+  change (if (0 : Fin 2) = i then q (tailConstruction ∅ (-1) unitBalanced).val + 1
+    else q (tailConstruction ∅ (-1) unitBalanced).val) =
+    (if (1 : Fin 2) = i then regionReadout ∅ unitBalanced + 1
+    else regionReadout ∅ unitBalanced) at h
+  change q (tailConstruction ∅ (-1) unitBalanced).val = regionReadout ∅ unitBalanced at hp
+  have hi : i = 0 ∨ i = 1 := by omega
+  rcases hi with rfl | rfl <;> norm_num at h <;> omega
+
+private theorem univTail : TailAt (Set.univ : Region) 0 := by
+  intro p t t' ht ht'
+  simp
+
+private theorem univ_readout (X : B) : regionReadout Set.univ X = q X.val := by
+  simp [regionReadout, q, readout, charge]
+
+def evidence : Registration arena (type_of% (@tail_construction_q)) where
+  actual := actual
+  bridge := Iff.rfl
+  variation := ⟨positive, changed 0, changed_negative 0⟩
+  sensitivity := ⟨fun i => ⟨changed i,
+    fun j h => by
+      funext p X
+      simp only [changed, realize, if_neg h], rfl, changed_negative i⟩,
+    fun i => nomatch i⟩
+  dependence := by
+    intro i
+    change Fin 2 at i
+    refine ⟨⟨Set.univ,0,-1⟩, ComplementFibers.balancedSection 3 0,
+      ComplementFibers.balancedSection 3 1, ?_⟩
+    have h0 := tail_construction_q Set.univ 0 (-1) univTail (by omega)
+      (ComplementFibers.balancedSection 3 0)
+    have h1 := tail_construction_q Set.univ 0 (-1) univTail (by omega)
+      (ComplementFibers.balancedSection 3 1)
+    have hq0 : q (ComplementFibers.balancedSection 3 0).val = 0 :=
+      ComplementFibers.balancedSection_readout 3 0
+    have hq1 : q (ComplementFibers.balancedSection 3 1).val = 1 :=
+      ComplementFibers.balancedSection_readout 3 1
+    have hi : i = 0 ∨ i = 1 := by omega
+    rcases hi with rfl | rfl <;>
+      simp only [actual, realize, ite_true, show (1 : Fin 2) ≠ 0 by decide, ite_false] <;>
+      simp only [h0, h1, univ_readout, hq0, hq1] <;> decide
+
+def registration : LeanInformationAudit.Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0}
+    (@_root_.D5.S3.ConceptDynamics.Spacetime.RegionFilterQExpressibility.tail_construction_q)
+    (Realization signature) Unit Unit := {
+  unitName := `Reg.D5.S3.ConceptDynamics.Spacetime.RegionFilterQExpressibility.tail_construction_q
+  realizationName := `Reg.D5.S3.ConceptDynamics.Spacetime.RegionFilterQExpressibility.TailConstruction.evidence
+  realizationSource := none
+  generated := false
+  arena := .source ⟨arena⟩
+  objectArena := .source ⟨arena⟩
+  catalog := Lean.Name.anonymous
+  localNames := false
+  realization := .source arena ⟨evidence⟩
+  correspondence := { stage := .evidence, objectStage := .evidence }
+  bundleNonempty := .absent
+  readout := some (realize signature actual.readout actual.anchor)
+  variation := .absent
+  sensitivity := .absent
+  partialSensitivity := none
+  escapeFrom := none
+  sourceSelection := some {
+    owner := `D5.S3.ConceptDynamics.Spacetime.RegionFilterQExpressibility
+    definition := none
+    coordinates := #[0,1,2]
+    readouts := #[{
+      path := #["body","body","body","body","body","body","fn","arg"]
+      stateBinder := 5
+      functionOperand := false
+      stateOperand := none
+      booleanPredicate := false }, {
+      path := #["body","body","body","body","body","body","arg"]
+      stateBinder := 5
+      functionOperand := false
+      stateOperand := none
+      booleanPredicate := false }] }
+  continuation := .unknown
+  familyRecord := none
+  options := #[] }
+
+#print axioms evidence
+#print axioms registration
+end TailConstruction
+
+namespace Classification
+
+@[reducible] def signature : Signature where
+  Params := Unit
+  State _ := Region
+  Role := Fin 2
+  finiteRole := inferInstance
+  nonemptyRole := inferInstance
+  Output _ _ := Bool
+  Anchor := Empty
+  finiteAnchor := inferInstance
+
+def actual : Realization signature := realize signature
+  (fun i _ R => Fin.cases (decide (QExpressible R)) (fun _ => decide (Tail R)) i)
+  (fun e => nomatch e)
+
+@[reducible] def arena : Arena where
+  signature := signature
+  Law F := ∀ R : Region, F.readout 0 () R = true ↔ F.readout 1 () R = true
+
+private theorem positive : arena.Law actual := by
+  intro R
+  change decide (QExpressible R) = true ↔ decide (Tail R) = true
+  simpa only [decide_eq_true_eq] using q_expressible_iff_tail R
+
+private theorem empty_tail : Tail (∅ : Region) := ⟨0, by
+  intro p t t' ht ht'
+  simp⟩
+
+private def alternating : Region := {z | z.1 % 2 = 0}
+
+private theorem alternating_not_tail : ¬ Tail alternating := by
+  rintro ⟨c,hc⟩
+  have h := hc (fun _ => 0) (2 * (min c 0 - 1)) (2 * (min c 0 - 1) - 1)
+    (by omega) (by omega)
+  change (2 * (min c 0 - 1)) % 2 = 0 ↔ (2 * (min c 0 - 1) - 1) % 2 = 0 at h
+  omega
+
+def changed (i : Fin 2) : Realization signature := realize signature
+  (fun j p R => if j = i then !(actual.readout j p R) else actual.readout j p R)
+  (fun e => nomatch e)
+
+private theorem changed_negative (i : Fin 2) : ¬ arena.Law (changed i) := by
+  intro law
+  have h := law ∅
+  have he := (q_expressible_iff_tail ∅).mpr empty_tail
+  change ((if (0 : Fin 2) = i then !(decide (QExpressible ∅))
+    else decide (QExpressible ∅)) = true ↔
+    (if (1 : Fin 2) = i then !(decide (Tail ∅)) else decide (Tail ∅)) = true) at h
+  have hi : i = 0 ∨ i = 1 := by omega
+  rcases hi with rfl | rfl <;>
+    simp [he, empty_tail] at h
+
+def evidence : Registration arena (type_of% (@q_expressible_iff_tail)) where
+  actual := actual
+  bridge := by
+    change (∀ R : Region, QExpressible R ↔ Tail R) ↔
+      ∀ R : Region, decide (QExpressible R) = true ↔ decide (Tail R) = true
+    simp only [decide_eq_true_eq]
+  variation := ⟨positive, changed 0, changed_negative 0⟩
+  sensitivity := ⟨fun i => ⟨changed i,
+    fun j h => by
+      funext p R
+      simp only [changed, realize, if_neg h], rfl, changed_negative i⟩,
+    fun i => nomatch i⟩
+  dependence := by
+    intro i
+    change Fin 2 at i
+    refine ⟨(), ∅, alternating, ?_⟩
+    have he := (q_expressible_iff_tail ∅).mpr empty_tail
+    have hn : ¬ QExpressible alternating := fun h =>
+      alternating_not_tail ((q_expressible_iff_tail alternating).mp h)
+    have hi : i = 0 ∨ i = 1 := by omega
+    rcases hi with rfl | rfl
+    · change decide (QExpressible ∅) ≠ decide (QExpressible alternating)
+      simp [he, hn]
+    · change decide (Tail ∅) ≠ decide (Tail alternating)
+      simp [empty_tail, alternating_not_tail]
+
+def registration : LeanInformationAudit.Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0}
+    (@_root_.D5.S3.ConceptDynamics.Spacetime.RegionFilterQExpressibility.q_expressible_iff_tail)
+    (Realization signature) Unit Unit := {
+  unitName := `Reg.D5.S3.ConceptDynamics.Spacetime.RegionFilterQExpressibility.q_expressible_iff_tail
+  realizationName := `Reg.D5.S3.ConceptDynamics.Spacetime.RegionFilterQExpressibility.Classification.evidence
+  realizationSource := none
+  generated := false
+  arena := .source ⟨arena⟩
+  objectArena := .source ⟨arena⟩
+  catalog := Lean.Name.anonymous
+  localNames := false
+  realization := .source arena ⟨evidence⟩
+  correspondence := { stage := .evidence, objectStage := .evidence }
+  bundleNonempty := .absent
+  readout := some (realize signature actual.readout actual.anchor)
+  variation := .absent
+  sensitivity := .absent
+  partialSensitivity := none
+  escapeFrom := none
+  sourceSelection := some {
+    owner := `D5.S3.ConceptDynamics.Spacetime.RegionFilterQExpressibility
+    definition := none
+    coordinates := #[]
+    readouts := #[{
+      path := #["body","fn","arg"]
+      stateBinder := 0
+      functionOperand := false
+      stateOperand := some #["arg"]
+      booleanPredicate := true }, {
+      path := #["body","arg"]
+      stateBinder := 0
+      functionOperand := false
+      stateOperand := some #["arg"]
+      booleanPredicate := true }] }
+  continuation := .unknown
+  familyRecord := none
+  options := #[] }
+
+#print axioms evidence
+#print axioms registration
+end Classification
 
 end
 end Reg.D5.S3.ConceptDynamics.Spacetime.RegionFilterQExpressibility
