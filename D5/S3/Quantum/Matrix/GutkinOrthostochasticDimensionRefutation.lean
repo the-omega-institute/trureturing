@@ -4,7 +4,7 @@
    mirror-E: none(waiver:external-open-problem-resolution)
    anchors: []
    utility: kind=certified-instance; basis=refutes=gid:D5/S3/Quantum/Matrix/GutkinOrthostochasticDimensionRefutation.claim; result=D5/S3/Quantum/Matrix/GutkinOrthostochasticDimensionRefutation.result; claim=D5/S3/Quantum/Matrix/GutkinOrthostochasticDimensionRefutation.claim
-   digest: Star matrices force unbounded internal dimension in vector-valued orthostochastic lifts. -/
+   digest: Star matrices force unbounded dimension in vector-valued orthostochastic lifts. -/
 
 import Mathlib.Analysis.Convex.DoublyStochasticMatrix
 

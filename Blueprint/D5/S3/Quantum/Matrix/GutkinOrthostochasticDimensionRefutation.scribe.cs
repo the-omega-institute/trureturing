@@ -173,7 +173,7 @@ internal sealed class GutkinOrthostochasticDimensionRefutationDocument : IScribe
     private static Formula Subtract(Formula left, Formula right) => new Formula.Binary(left, FormulaBinaryOperator.Subtract, right);
     private static Formula SumOver(string name, Formula type, Formula summand) =>
         Seq(new Formula.Subscript(Sum, Typed(V(name), type)), Sp, summand);
-    private static Formula Inner(Formula left, Formula right) => Seq(Langle, left, Comma, Sp, right, Rangle);
+    private static Formula Inner(Formula left, Formula right) => Seq(Langle, Sp, left, Comma, Sp, right, Rangle);
     private static Formula DeltaEntry(Formula j, Formula k) => Seq(Begin, Grp(V("cases")),
         D(1), Amp, Eqn(j, k), RowBreak, D(0), Amp, NE(j, k), End, Grp(V("cases")));
 }
