@@ -4,8 +4,7 @@
    mirror-E: none(waiver:evidence-not-specified-by-formal-manifest)
    anchors: []
    utility: none
-   digest: Actual oscillator parity, convergent inserted traces and paired T and T-squared laws.
--/
+   digest: Actual oscillator parity, convergent inserted traces and paired T and T-squared laws. -/
 
 import D5.S3.VertexAlgebra.LatticeHalfFockGradedTrace
 import D5.S3.VertexAlgebra.LatticeInvolution
