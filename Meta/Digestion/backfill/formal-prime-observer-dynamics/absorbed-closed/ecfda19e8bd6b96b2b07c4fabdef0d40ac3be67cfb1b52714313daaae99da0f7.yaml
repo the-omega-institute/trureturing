@@ -1,0 +1,9 @@
+fingerprints:
+  raw_sha256: sha256:ecfda19e8bd6b96b2b07c4fabdef0d40ac3be67cfb1b52714313daaae99da0f7
+  normalized_sha256: sha256:ecfda19e8bd6b96b2b07c4fabdef0d40ac3be67cfb1b52714313daaae99da0f7
+cas_ref: sha256:ecfda19e8bd6b96b2b07c4fabdef0d40ac3be67cfb1b52714313daaae99da0f7
+coverage_gids:
+  - gid: D5/S3/Analytic/PrimeProducts/PrimePrecisionMarginalGain.primeTruncatedReadout
+    target_statement_id: sha256:94a293db91bf3819eda10a5488c29af8a4044feb0be6519fa4bf39ec2f624d60
+receipts:
+  unresolved_subitems: []
