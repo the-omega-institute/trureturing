@@ -20,7 +20,7 @@ The displayed identity or comparison relates binary embedding counts and their r
 
 **Definition 1.2 (altList).**
 
-$$\forall (b: \operatorname{Bool}), (\forall (n: \mathbb{N}), (\operatorname{altList} b n = (\operatorname{List}.\operatorname{ofFn} (\operatorname{fun} i : \operatorname{Fin} n\mapsto (\operatorname{D5}.\operatorname{S3}.\operatorname{Observer}.\operatorname{ProbabilisticClosure}.\operatorname{AdaptiveMarkerStoppingTails}.\operatorname{alternatingBit} b i.\operatorname{val})))))$$
+$$\forall (b: \operatorname{Bool}), (\forall (n: \mathbb{N}), (\operatorname{altList} b n = (\operatorname{List}.\operatorname{ofFn} (\operatorname{fun} i : \operatorname{Fin} n\mapsto (\operatorname{D5}.\operatorname{S3}.\operatorname{Observer}.\operatorname{ProbabilisticClosure}.\operatorname{AdaptiveMarkerStoppingTails}.\operatorname{alternatingBit} b \operatorname{val}\left(i\right))))))$$
 
 *Formalization.* `D5/S3/Entropy/AlternatingTwoDeletionCounts.altList` (`✓ std3`).
 
@@ -118,7 +118,7 @@ The displayed identity or comparison relates binary embedding counts and their r
 
 **Theorem 1.9 (ofFn_alternating).**
 
-$$\forall (n: \mathbb{N}), (\operatorname{List}.\operatorname{ofFn} ((\operatorname{fun} i : \operatorname{Fin} n\mapsto (\operatorname{decide} (i.\operatorname{val} \bmod 2 = 1)))) = \operatorname{altList} \operatorname{false} n)$$
+$$\forall (n: \mathbb{N}), (\operatorname{List}.\operatorname{ofFn} ((\operatorname{fun} i : \operatorname{Fin} n\mapsto (\operatorname{decide} (\operatorname{val}\left(i\right) \bmod 2 = 1)))) = \operatorname{altList} \operatorname{false} n)$$
 
 *Proof.* Machine-checked in Lean as `D5/S3/Entropy/AlternatingTwoDeletionCounts.ofFn_alternating` (`✓ std3`). ∎
 

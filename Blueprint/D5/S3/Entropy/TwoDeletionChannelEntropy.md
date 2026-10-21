@@ -34,7 +34,7 @@ The displayed expression defines phi.
 
 **Theorem 1.3 (ofFn_complement_alternating).**
 
-$$\forall (n: \mathbb{N}), (\operatorname{List}.\operatorname{ofFn} (\operatorname{fun} i\mapsto (! (\operatorname{fun} i : \operatorname{Fin} n\mapsto (\operatorname{decide} (i.\operatorname{val} \bmod 2 = 1))) i)) = \operatorname{altList} \operatorname{true} n)$$
+$$\forall (n: \mathbb{N}), (\operatorname{List}.\operatorname{ofFn} (\operatorname{fun} i\mapsto (! (\operatorname{fun} i : \operatorname{Fin} n\mapsto (\operatorname{decide} (\operatorname{val}\left(i\right) \bmod 2 = 1))) i)) = \operatorname{altList} \operatorname{true} n)$$
 
 *Proof.* Machine-checked in Lean as `D5/S3/Entropy/TwoDeletionChannelEntropy.ofFn_complement_alternating` (`✓ std3`). ∎
 
@@ -62,7 +62,7 @@ The displayed expression defines RunDeletionCountingLowerBound.
 
 **Theorem 1.5 (alternating_insertion_phi).**
 
-$$\forall (m: \mathbb{N}), (\operatorname{phi} (\operatorname{fun} x : \operatorname{Fin} m \to \operatorname{Bool}\mapsto (\operatorname{embeddings} x ((\operatorname{fun} i : \operatorname{Fin} (m + 2)\mapsto (\operatorname{decide} (i.\operatorname{val} \bmod 2 = 1)))))) = f (m + 1))$$
+$$\forall (m: \mathbb{N}), (\operatorname{phi} (\operatorname{fun} x : \operatorname{Fin} m \to \operatorname{Bool}\mapsto (\operatorname{embeddings} x ((\operatorname{fun} i : \operatorname{Fin} (m + 2)\mapsto (\operatorname{decide} (\operatorname{val}\left(i\right) \bmod 2 = 1)))))) = f (m + 1))$$
 
 *Proof.* Machine-checked in Lean as `D5/S3/Entropy/TwoDeletionChannelEntropy.alternating_insertion_phi` (`✓ std3`). ∎
 
@@ -76,7 +76,7 @@ The displayed identity or comparison relates binary embedding counts and their r
 
 **Theorem 1.6 (alternating_deletion_phi).**
 
-$$\forall (m: \mathbb{N}), ((1 \leq m) \to (\operatorname{phi} (\operatorname{fun} x : \operatorname{Fin} (m + 2) \to \operatorname{Bool}\mapsto (\operatorname{embeddings} ((\operatorname{fun} i : \operatorname{Fin} m\mapsto (\operatorname{decide} (i.\operatorname{val} \bmod 2 = 1)))) x)) = 4 \cdot (m: \mathbb{R})^{2} + 3 \cdot m \cdot \operatorname{Real}.\operatorname{logb} 2 3 + ((m: \mathbb{R}) + 1) \cdot \operatorname{Real}.\operatorname{logb} 2 ((m: \mathbb{R}) + 1)))$$
+$$\forall (m: \mathbb{N}), ((1 \leq m) \to (\operatorname{phi} (\operatorname{fun} x : \operatorname{Fin} (m + 2) \to \operatorname{Bool}\mapsto (\operatorname{embeddings} ((\operatorname{fun} i : \operatorname{Fin} m\mapsto (\operatorname{decide} (\operatorname{val}\left(i\right) \bmod 2 = 1)))) x)) = 4 \cdot (m: \mathbb{R})^{2} + 3 \cdot m \cdot \operatorname{Real}.\operatorname{logb} 2 3 + ((m: \mathbb{R}) + 1) \cdot \operatorname{Real}.\operatorname{logb} 2 ((m: \mathbb{R}) + 1)))$$
 
 *Proof.* Machine-checked in Lean as `D5/S3/Entropy/TwoDeletionChannelEntropy.alternating_deletion_phi` (`✓ std3`). ∎
 
@@ -104,7 +104,7 @@ For m ≥ 2, this is Lemma 3 with n = m and k = 2. The cases m = 0 and m = 1 ext
 
 **Theorem 1.8 (alternating_insertion_closed_form).**
 
-$$\forall (m: \mathbb{N}), ((\operatorname{D5}.\operatorname{S3}.\operatorname{Entropy}.\operatorname{MaxEntropy}.\operatorname{shannonEntropy} ((\operatorname{fun} \{m: \mathbb{N}\} (y: (\operatorname{Fin} (m + 2)) \to (\operatorname{Bool})) (x: (\operatorname{Fin} m) \to (\operatorname{Bool}))\mapsto ((\operatorname{embeddings} x y: \mathbb{R}) / \sum_{x' : \operatorname{Fin} m \to \operatorname{Bool}} ((\operatorname{embeddings} x' y: \mathbb{R})))) ((\operatorname{fun} i : \operatorname{Fin} (m + 2)\mapsto (\operatorname{decide} (i.\operatorname{val} \bmod 2 = 1))))) / \operatorname{Real}.\operatorname{log} 2) = \operatorname{Real}.\operatorname{logb} 2 ((m + 2) . \operatorname{choose} 2) - ((m: \mathbb{R}) + 1) \cdot \operatorname{Real}.\operatorname{logb} 2 ((m: \mathbb{R}) + 1) / (m + 2) . \operatorname{choose} 2)$$
+$$\forall (m: \mathbb{N}), ((\operatorname{D5}.\operatorname{S3}.\operatorname{Entropy}.\operatorname{MaxEntropy}.\operatorname{shannonEntropy} ((\operatorname{fun} \{m: \mathbb{N}\} (y: (\operatorname{Fin} (m + 2)) \to (\operatorname{Bool})) (x: (\operatorname{Fin} m) \to (\operatorname{Bool}))\mapsto ((\operatorname{embeddings} x y: \mathbb{R}) / \sum_{x' : \operatorname{Fin} m \to \operatorname{Bool}} ((\operatorname{embeddings} x' y: \mathbb{R})))) ((\operatorname{fun} i : \operatorname{Fin} (m + 2)\mapsto (\operatorname{decide} (\operatorname{val}\left(i\right) \bmod 2 = 1))))) / \operatorname{Real}.\operatorname{log} 2) = \operatorname{Real}.\operatorname{logb} 2 ((m + 2) . \operatorname{choose} 2) - ((m: \mathbb{R}) + 1) \cdot \operatorname{Real}.\operatorname{logb} 2 ((m: \mathbb{R}) + 1) / (m + 2) . \operatorname{choose} 2)$$
 
 *Proof.* Machine-checked in Lean as `D5/S3/Entropy/TwoDeletionChannelEntropy.alternating_insertion_closed_form` (`✓ std3`). ∎
 
@@ -158,7 +158,7 @@ The displayed identity or comparison relates binary embedding counts and their r
 
 **Theorem 1.12 (alternating_deletion_closed_form).**
 
-$$\forall (m: \mathbb{N}), ((1 \leq m) \to ((\operatorname{D5}.\operatorname{S3}.\operatorname{Entropy}.\operatorname{MaxEntropy}.\operatorname{shannonEntropy} ((\operatorname{fun} \{m: \mathbb{N}\} (y: (\operatorname{Fin} m) \to (\operatorname{Bool})) (x: (\operatorname{Fin} (m + 2)) \to (\operatorname{Bool}))\mapsto ((\operatorname{embeddings} y x: \mathbb{R}) / \sum_{x' : \operatorname{Fin} (m + 2) \to \operatorname{Bool}} ((\operatorname{embeddings} y x': \mathbb{R})))) ((\operatorname{fun} i : \operatorname{Fin} m\mapsto (\operatorname{decide} (i.\operatorname{val} \bmod 2 = 1))))) / \operatorname{Real}.\operatorname{log} 2) = \operatorname{Real}.\operatorname{logb} 2 (4 \cdot (m + 2) . \operatorname{choose} 2) - (4 \cdot (m: \mathbb{R})^{2} + 3 \cdot m \cdot \operatorname{Real}.\operatorname{logb} 2 3 + ((m: \mathbb{R}) + 1) \cdot \operatorname{Real}.\operatorname{logb} 2 ((m: \mathbb{R}) + 1)) / (4 \cdot (m + 2) . \operatorname{choose} 2)))$$
+$$\forall (m: \mathbb{N}), ((1 \leq m) \to ((\operatorname{D5}.\operatorname{S3}.\operatorname{Entropy}.\operatorname{MaxEntropy}.\operatorname{shannonEntropy} ((\operatorname{fun} \{m: \mathbb{N}\} (y: (\operatorname{Fin} m) \to (\operatorname{Bool})) (x: (\operatorname{Fin} (m + 2)) \to (\operatorname{Bool}))\mapsto ((\operatorname{embeddings} y x: \mathbb{R}) / \sum_{x' : \operatorname{Fin} (m + 2) \to \operatorname{Bool}} ((\operatorname{embeddings} y x': \mathbb{R})))) ((\operatorname{fun} i : \operatorname{Fin} m\mapsto (\operatorname{decide} (\operatorname{val}\left(i\right) \bmod 2 = 1))))) / \operatorname{Real}.\operatorname{log} 2) = \operatorname{Real}.\operatorname{logb} 2 (4 \cdot (m + 2) . \operatorname{choose} 2) - (4 \cdot (m: \mathbb{R})^{2} + 3 \cdot m \cdot \operatorname{Real}.\operatorname{logb} 2 3 + ((m: \mathbb{R}) + 1) \cdot \operatorname{Real}.\operatorname{logb} 2 ((m: \mathbb{R}) + 1)) / (4 \cdot (m + 2) . \operatorname{choose} 2)))$$
 
 *Proof.* Machine-checked in Lean as `D5/S3/Entropy/TwoDeletionChannelEntropy.alternating_deletion_closed_form` (`✓ std3`). ∎
 
