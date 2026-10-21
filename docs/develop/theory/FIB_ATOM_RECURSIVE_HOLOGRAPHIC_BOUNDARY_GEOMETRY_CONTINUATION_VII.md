@@ -3741,3 +3741,471 @@ The following boundaries remain unresolved by these results:
 
 
 ## 225.99 追加锚（本行以下为增补区）
+
+
+## 226. The fixed native principal-root cut
+
+**Definition 226.1 (native family and closed extension).** Retain the stopped
+singleton history and coordinate order $(r,\ell,R)$ of VI §139. Write
+
+$$
+\begin{gathered}
+T=(1,1,1)^\top,\qquad
+L=\begin{pmatrix}2&-1&-1\\-1&1&0\\-1&0&1\end{pmatrix},\\
+\pi_q=(1-u-v,u,v)^\top,\qquad
+G_q=L+\pi_q\pi_q^\top,\qquad
+S_q=G_q^{1/2},\qquad V_q=S_qT,\\
+p(q)=(V_q)_\ell^2,\\
+D=\{(u,v):u>0,\ v>0,\ u+v<1\},\qquad
+\Delta=\{(u,v):u\ge0,\ v\ge0,\ u+v\le1\}.
+\tag{226.1}
+\end{gathered}
+$$
+
+The square root is the positive principal square root. The cut is the
+second coordinate after this normalization. No additional orthogonal
+rotation is permitted. The irreducible native family has domain $D$;
+$\Delta$ is its closed mathematical extension. In this appendix the vector
+$\pi_q$ and the circle constant $\pi_{\mathrm c}$ are distinct symbols.
+
+**Definition 226.2 (algebraic endpoints).** Let $\sigma_*$ be the unique root
+in $(13/4,7/2)$ of
+
+$$
+\sigma_*^3-\sigma_*^2-9\sigma_*+1=0.
+\tag{226.2}
+$$
+
+Put
+
+$$
+\tau_*=\frac{\sigma_*^2-5}{2},\qquad
+H_*=\sigma_*\tau_*-1,\qquad
+m=\frac{\sigma_*^2}{H_*^2},\qquad
+M=\frac{(\sigma_*+\tau_*+3)^2}{H_*^2}.
+\tag{226.3}
+$$
+
+The uniqueness, positivity and endpoint interpretation follow in §§227–229.
+The conclusions there concern the particular source family (226.1), rather
+than an arbitrary coordinate of a matrix square root.
+
+## 227. A scalar reduction for every asymmetric native parameter
+
+**Proposition 227.1 (native root reduction and uniform bounds).** For every
+$q\in\Delta$, define
+
+$$
+\begin{gathered}
+\sigma=\operatorname{tr}S_q,\qquad
+\tau=\operatorname{tr}(S_q^{-1}),\qquad H=\sigma\tau-1,\\
+A=5+2u^2+2uv-2u+2v^2-2v,\qquad
+B=5+3u^2-2u+3v^2-2v.
+\tag{227.1}
+\end{gathered}
+$$
+
+Then
+
+$$
+\begin{gathered}
+G_q\succ0,\quad \det G_q=1,\quad \|V_q\|^2=1,\\
+\sigma^2=A+2\tau,\qquad \tau^2=B+2\sigma,\\
+\frac{13}{4}<\sigma<\frac72,\qquad
+\frac{13}{4}<\tau<\frac{15}{4},\qquad H>\frac{153}{16},\\
+V_q=\frac{(\tau+4)\pi_q-L\pi_q+\sigma T}{H}.
+\tag{227.2}
+\end{gathered}
+$$
+
+In particular, all three coordinates of $V_q$ are positive, and
+
+$$
+\begin{aligned}
+(V_q)_r&=\frac{\sigma+1+(\tau+1)(1-u-v)}{H},\\
+(V_q)_\ell&=\frac{\sigma+(1-u-v)+(\tau+3)u}{H},\\
+(V_q)_R&=\frac{\sigma+(1-u-v)+(\tau+3)v}{H}.
+\tag{227.3}
+\end{aligned}
+$$
+
+The value of $\sigma$ is equivalently the unique root in $(13/4,7/2)$ of
+
+$$
+(\sigma^2-A)^2-8\sigma-4B=0,\qquad
+\tau=\frac{\sigma^2-A}{2}.
+\tag{227.4}
+$$
+
+Proof. For $x=(x_r,x_\ell,x_R)^\top$,
+
+$$
+x^\top G_qx=(\pi_q^\top x)^2+(x_\ell-x_r)^2+(x_R-x_r)^2.
+\tag{227.5}
+$$
+
+Its vanishing forces $x=aT$ and then $a=0$, since $\pi_q^\top T=1$.
+The matrix with rows $\pi_q^\top$, $(-1,1,0)$, $(-1,0,1)$ has determinant
+$1$, and its Gram matrix is $G_q$. Hence $\det G_q=1$.
+Also $G_qT=\pi_q$ and $T^\top G_qT=1$, proving the normalization.
+The finite real spectral theorem supplies the unique positive principal
+root. All subsequent polynomial identities concern this root.
+
+Let its eigenvalues be $a\ge b\ge c>0$. Their product is $1$,
+so $\tau=e_2(S_q)$. Direct expansion gives $A=\operatorname{tr}G_q$
+and $B=e_2(G_q)$; the displayed trace identities follow. Since
+$G_q\succeq L$ and the eigenvalues of $L$ are $3,1,0$, eigenvalue
+monotonicity gives $a\ge\sqrt3$ and $b\ge1$. Both
+$a+b+1/(ab)$ and $ab+1/a+1/b$ increase in $a,b$ on that region. Thus
+
+$$
+\sigma,\tau\ge1+\frac4{\sqrt3}>\frac{13}{4}.
+\tag{227.6}
+$$
+
+On $\Delta$ one has $A=4+\|\pi_q\|^2\le5$ and
+$B\le5+u+v\le6$. Therefore
+
+$$
+(\sigma^2-5)^2\le4\tau^2\le24+8\sigma.
+\tag{227.7}
+$$
+
+The polynomial $P(x)=x^4-10x^2-8x+1$ is strictly increasing on
+$[7/2,\infty)$, while $P(7/2)=9/16>0$. Inequality (227.7) yields
+$\sigma<7/2$. Now $\tau^2=B+2\sigma<13$, so $\tau<15/4$,
+and the bound on $H$ follows.
+
+Cayley–Hamilton for $S_q$ gives
+
+$$
+S_q=\frac{-G_q^2+(\sigma^2-\tau)G_q+\sigma I}{H}.
+\tag{227.8}
+$$
+
+Indeed its characteristic polynomial is
+$x^3-\sigma x^2+\tau x-1$; reduction of the numerator modulo this
+polynomial gives $HS_q$. Applying (227.8) to $T$ and using
+$G_q\pi_q=L\pi_q+\|\pi_q\|^2\pi_q$ proves (227.2), hence
+(227.3). The positive coordinates and normalization imply
+$0<(V_q)_i<1$ for every coordinate.
+Finally, eliminating $\tau$ gives (227.4). Its derivative in $\sigma$ is
+$4\sigma(\sigma^2-A)-8>0$ throughout $(13/4,7/2)$ when $A\le5$.
+Existence follows from the actual principal root just constructed, proving
+uniqueness without selecting another algebraic branch.
+
+The spectral theorem, eigenvalue monotonicity and Cayley–Hamilton used
+inside this proof are standard matrix results. The reduction (227.3) is a
+source-specific consequence for (226.1).
+
+## 228. Global extrema on the full closed simplex
+
+**Theorem 228.1 (unique native extrema).** On $\Delta$, the function $p$
+has a unique minimum at $q_-=(0,1)$ and a unique maximum at $q_+=(1,0)$.
+Their values are $m$ and $M$ from (226.3). In particular
+
+$$
+0<m<\frac12<M<1.
+\tag{228.1}
+$$
+
+Proof. Write $z=(V_q)_\ell$. It is positive, so extrema and strict
+comparisons for $z$ pass to $p=z^2$.
+
+For the minimum, spectral calculus gives the convergent vector integral
+
+$$
+V_q=\frac2{\pi_{\mathrm c}}\int_0^\infty
+(t^2I+G_q)^{-1}\pi_q\,dt.
+\tag{228.2}
+$$
+
+This is the standard square-root integral applied to $T$, using
+$G_qT=\pi_q$; the scalar identity follows by integrating
+$\lambda/(t^2+\lambda)$ for $\lambda>0$. For fixed $q$, positive
+definiteness makes the integrand bounded near $t=0$ and $O(t^{-2})$
+as $t\to\infty$. At $t=0$ its continuous extension is
+$G_q^{-1}\pi_q=T$, since $G_qT=\pi_q$.
+
+For $x=t^2>0$, set $N=(L+xI)^{-1}$ and $K=x(x+1)(x+3)$.
+Its $\ell$ row, in the declared coordinate order, is
+
+$$
+(N_{\ell r},N_{\ell\ell},N_{\ell R})
+=\frac{(x+1,x^2+3x+1,1)}K.
+\tag{228.3}
+$$
+
+The Sherman–Morrison identity gives
+
+$$
+(t^2I+G_q)^{-1}\pi_q
+=\frac{N\pi_q}{1+\pi_q^\top N\pi_q}.
+\tag{228.4}
+$$
+
+Since $\pi_q$ has nonnegative coordinates summing to $1$,
+$(N\pi_q)_\ell\ge N_{\ell R}>0$, strictly unless $\pi_q=e_R$.
+Convexity of the positive quadratic form gives
+
+$$
+\pi_q^\top N\pi_q\le\sum_i(\pi_q)_iN_{ii}
+\le N_{RR}=N_{\ell\ell}.
+\tag{228.5}
+$$
+
+For the last inequality, the two child diagonal entries agree and exceed
+the root diagonal entry by $x/K$. The $\ell$ component of (228.4) is
+therefore at least $N_{\ell R}/(1+N_{RR})$, its value at $\pi_q=e_R$.
+It is strictly greater for every other $\pi_q$ and every $t>0$.
+Integration proves the asserted unique minimum, with no assertion about
+$N$ at the excluded point $t=0$.
+
+For the maximum, differentiate the trace identities of §227. Subscripts
+$u,v$ denote partial derivatives of their smooth extension to a
+neighborhood of each point of $\Delta$. One obtains
+
+$$
+\begin{aligned}
+\sigma_u&=\frac{\tau(2u+v-1)+(3u-1)}H,&
+\tau_u&=\frac{\sigma(3u-1)+(2u+v-1)}H,\\
+Hz_u&=\tau+2+(1-\tau z)\sigma_u+(u-\sigma z)\tau_u.
+\tag{228.6}
+\end{aligned}
+$$
+
+Here the smooth extension exists because $G_q$ is positive definite and
+the principal square root is smooth on positive definite matrices; the
+strict scalar derivative in (227.4) also provides this extension locally.
+The uniform bounds of §227 imply
+
+$$
+\begin{gathered}
+|\sigma_u|\le\frac{92}{153},\quad
+|\tau_u|\le\frac{128}{153},\quad
+|1-\tau z|\le\frac{11}{4},\quad
+|u-\sigma z|\le\frac72,\\
+Hz_u\ge\frac{21}{4}
+-\frac{11}{4}\frac{92}{153}
+-\frac72\frac{128}{153}
+=\frac{409}{612}>0.
+\tag{228.7}
+\end{gathered}
+$$
+
+In obtaining the first two bounds use $|2u+v-1|\le1$ and
+$|3u-1|\le2$. The other two follow from $0<z<1$ and $0\le u\le1$.
+For $\delta=\partial_u-\partial_v$, direct subtraction instead gives
+
+$$
+\begin{aligned}
+\sigma_\delta&=\frac{(\tau+3)(u-v)}H,&
+\tau_\delta&=\frac{(3\sigma+1)(u-v)}H,\\
+Hz_\delta&=\tau+3+(1-\tau z)\sigma_\delta
+ +(u-\sigma z)\tau_\delta.
+\tag{228.8}
+\end{aligned}
+$$
+
+Consequently
+
+$$
+\begin{gathered}
+|\sigma_\delta|\le\frac{108}{153},\qquad
+|\tau_\delta|\le\frac{184}{153},\\
+Hz_\delta\ge\frac{25}{4}
+-\frac{11}{4}\frac{108}{153}
+-\frac72\frac{184}{153}
+=\frac{61}{612}>0.
+\tag{228.9}
+\end{gathered}
+$$
+
+From any point of $\Delta$, first increase $u$ at fixed $v$ until
+$u+v=1$, then increase $u$ and decrease $v$ equally along that edge
+toward $(1,0)$. Both segments increase $z$ whenever nontrivial, and
+at least one segment is nontrivial unless the original point is $(1,0)$.
+This proves the unique global maximum on the full asymmetric domain.
+The same argument in direction $\delta$ shows strict increase on every
+segment of constant $u+v$.
+
+At either child vertex, $G_q$ has characteristic polynomial
+$x^3-5x^2+6x-1$. Thus the trace identities give
+
+$$
+\sigma^4-10\sigma^2-8\sigma+1
+=(\sigma+1)(\sigma^3-\sigma^2-9\sigma+1)=0.
+\tag{228.10}
+$$
+
+The cubic is strictly increasing on $(13/4,7/2)$, and its signs at the
+two endpoints differ. Proposition 227.1 therefore identifies
+$\sigma=\sigma_*$, $\tau=\tau_*$. Formula (227.3) now reads
+
+$$
+V_{(1,0)}=
+\frac{(\sigma_*+1,\sigma_*+\tau_*+3,\sigma_*)^\top}{H_*},
+\qquad
+V_{(0,1)}=
+\frac{(\sigma_*+1,\sigma_*,\sigma_*+\tau_*+3)^\top}{H_*}.
+\tag{228.11}
+$$
+
+This proves the endpoint formulas. Positivity of all three coordinates
+and unit norm give $0<m$ and $M<1$. The trace bounds give
+
+$$
+\sqrt m<\frac{56}{153},\qquad
+\sqrt M>\frac{76}{97},
+\tag{228.12}
+$$
+
+because $H_*>153/16$, $H_*<97/8$ and
+$\sigma_*+\tau_*+3>19/2$. Squaring proves $m<1/2<M$.
+
+The integral and rank-one inverse identities in this proof are standard
+spectral-calculus and Sherman–Morrison tools. Their use here proves the
+extremal statement for the declared native cut; no general theorem of
+vertex extremality for matrix-function coordinates is assumed.
+
+## 229. Exact native images and inverse realization
+
+**Theorem 229.1 (full image, attainment and monotone inverse).** The images
+of the declared native family and its closed extension are exactly
+
+$$
+p(D)=(m,M),\qquad p(\Delta)=[m,M],\qquad
+p(\partial\Delta)=[m,M].
+\tag{229.1}
+$$
+
+The endpoint $m$ is attained only at $(0,1)$ and $M$ only at $(1,0)$.
+Every other value is attained both in $D$ and on $\partial\Delta$.
+The third vertex has the previously established value $p(0,0)=1/6$,
+strictly between the endpoints.
+
+For $y\in[m,M]$, the boundary inverse is the unique solution of
+
+$$
+p(s,1-s)=y,\qquad 0\le s\le1.
+\tag{229.2}
+$$
+
+For $m<y<M$, choose any integer $n\ge2$ large enough that, with
+$\varepsilon=1/n$,
+
+$$
+p(0,1-\varepsilon)<y<p(1-\varepsilon,0).
+\tag{229.3}
+$$
+
+Then an interior inverse is the unique $s\in(0,1)$ satisfying
+
+$$
+p\big((1-\varepsilon)s,(1-\varepsilon)(1-s)\big)=y.
+\tag{229.4}
+$$
+
+Proof. Positive-root continuity and (228.9) make $p(s,1-s)$ continuous
+and strictly increasing from $m$ to $M$. This proves boundary coverage
+and uniqueness in (229.2). Endpoint uniqueness in Theorem 228.1 excludes
+both endpoints from $D$.
+
+Continuity at the two child vertices guarantees an $n$ satisfying
+(229.3). Along the segment in (229.4), the derivative is a positive
+multiple of $\partial_u p-\partial_v p$, so it is strictly positive.
+The intermediate value theorem gives a unique $s\in(0,1)$. Both
+coordinates are positive and their sum is $1-\varepsilon<1$, proving
+interior realization. These scalar inversions use the unique root in
+(227.4); they do not choose an arbitrary square-root branch. The endpoint
+formulas and interior inverses establish both exclusion and coverage.
+The claim at $(0,0)$ follows from VI §140 and the unique extrema.
+
+## 230. Which scalar filtering parameters are native
+
+**Theorem 230.1 (native membership inside the scalar image).** Retain the
+scalar formulas and the ideal known-parameter preparation and operation
+assumptions of §§215–216. To distinguish the native coordinate $u$ from
+the interaction scalar in (216.1), write the latter as
+
+$$
+\upsilon=(1-t)^2p(1-p),\qquad
+h=t+(1-t)p,\qquad
+\lambda=\frac{\upsilon}{2t+\upsilon},\qquad
+w=\frac1{1+(1-\lambda)h},\qquad 0<t\le1.
+\tag{230.1}
+$$
+
+For $0<\lambda<1$ and $(2-\lambda)^{-1}<w<1$, define
+
+$$
+\begin{gathered}
+h_{\lambda,w}=\frac{1-w}{w(1-\lambda)},\\
+t_{\lambda,w}=
+\frac{h_{\lambda,w}(1-h_{\lambda,w})(1-\lambda)}
+{(1-h_{\lambda,w})(1-\lambda)+2\lambda},\\
+p_{\lambda,w}=\frac{h_{\lambda,w}-t_{\lambda,w}}{1-t_{\lambda,w}}.
+\tag{230.2}
+\end{gathered}
+$$
+
+Such a pair $(\lambda,w)$ is realized by some $q\in D$ and finite
+$t\in(0,1]$ exactly when
+
+$$
+m<p_{\lambda,w}<M.
+\tag{230.3}
+$$
+
+For the closed extension $\Delta$, replace the strict inequalities by
+$m\le p_{\lambda,w}\le M$. In either domain, the part with
+$\lambda=0$ consists only of $(\lambda,w)=(0,1/2)$.
+
+Proof. The inverse in (230.2) is (216.4). For positive $\lambda$,
+$h$ is determined by $\lambda,w$, the defining scalar relation determines
+$t$, and $p=(h-t)/(1-t)$; thus this inverse is necessary, not merely one
+optional realization. Theorem 229.1 now proves necessity of (230.3),
+and its monotone inverses prove sufficiency with the same $t$.
+For $\lambda=0$, the strict bounds $0<m\le p\le M<1$ imply
+$\upsilon=0$ only when $t=1$. Formula (230.1) then gives $w=1/2$.
+Conversely every $q\in D$ at $t=1$ realizes this pair.
+
+**Corollary 230.2 (native attainment of the scalar thermal threshold).**
+For each fixed $0<t<1$, some $q\in D$ attains
+
+$$
+\lambda_{\max}(t)=\frac{(1-t)^2}{1+6t+t^2}.
+\tag{230.4}
+$$
+
+Writing $t=e^{-\beta}$ with finite $\beta\ge0$, a native $q\in D$
+can enter the positive-negativity branch of the stated one-copy
+postfilter menu exactly when
+
+$$
+\beta>2\operatorname{arsinh}(1).
+\tag{230.5}
+$$
+
+Proof. Theorem 228.1 and Theorem 229.1 give an interior realization of
+$p=1/2$. It attains the scalar bound in (216.7). Conversely that bound
+holds for every native parameter because it holds for every scalar
+$p\in[0,1]$. The threshold in (216.9) is
+$4\sinh^2(\beta/2)p(1-p)>1$; its left side is at most
+$\sinh^2(\beta/2)$, with equality at the attained value $p=1/2$.
+This proves (230.5), including the exclusion of equality.
+The assertion concerns existence of positive negativity, not maximization
+of the full weighted success frontier over $q$.
+
+Theorems 229.1 and 230.1 resolve the native scalar-realization boundary
+of §225 for the family (226.1). They do not assert realization of arbitrary
+$p\in[0,1]$ by that family, other native metrics or physical subsystem
+cuts. The physical availability of the source-informed basis and controls,
+unknown-$q$ extraction, original unfiltered optimization and the other
+operation and resource boundaries in §225 are unchanged assumptions or
+unresolved questions. The image and membership results are source-specific
+mathematical derivations; no literature-priority or physical-realization
+assertion is included.
+
+
+## 230.99 追加锚（本行以下为增补区）
