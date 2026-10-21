@@ -56,7 +56,7 @@ The module's q_j = (T ρ T*)_jj uses the transpose of the source's T_ij = ⟨b_j
 
 ## Evidence
 
-The canonical source is `D5/S3/Quantum/Information/QutritOverlapBoundNonOptimality.lean` (563 lines).
+The canonical source is `D5/S3/Quantum/Information/QutritOverlapBoundNonOptimality.lean` (557 lines).
 - **Proof.** It proves `result : ¬ claim`.
 - **Axioms.** It uses only the standard axioms `propext`, `Classical.choice` and `Quot.sound`; no `sorry`, `native_decide`, or new axiom.
 
@@ -84,7 +84,7 @@ The module is admitted under the open-problem-resolution basis of CLAUDE.md §3.
 - *Scope.* The argument uses only the Tsallis-2 entropy and the strict monotonicity of D on [0, π/4]. It is expected to carry over to other pairs whose D is strictly increasing there, but this is not proved here.
 - *Endpoint.* At c = 1 the bound is 0 and is attained by T = I and a basis state, so the suspicion holds at c = 1.
 
-**Effect on the paper.** Corollary 2 cannot be extended to N = 3 for every admissible pair of entropies. The exact c-optimal bound for qutrits remains open; at c = 3/4 the numerical minimum 0.443040 lies above B(3/4) = 7/16.
+**Effect on the paper.** Corollary 2 cannot be extended to N = 3 for every admissible pair of entropies. The exact c-optimal bound for qutrits remains open; at c = 3/4 the smallest value found, 0.443040, lies above B(3/4) = 7/16.
 
 ## ASSUMED-UNVERIFIED
 
