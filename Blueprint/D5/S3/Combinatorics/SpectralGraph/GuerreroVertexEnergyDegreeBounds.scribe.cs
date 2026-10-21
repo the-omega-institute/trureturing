@@ -50,7 +50,10 @@ internal sealed class GuerreroVertexEnergyDegreeBoundsDocument : IScribeDocument
                     DescribeRole.Definition, AssessedProvenance.FromLiterature(Source)),
                 Node("result", "Refutation on the six-vertex path", "result", Seq(Neg, Sp, Parenthesized(ClaimBody())),
                     "At zero-based vertex 2 of SimpleGraph.pathGraph 6 the adjacency energy is (7 + 4b − 2b²)/7, where 1 < b < 4/3 and b³ + b² − 2b − 1 = 0. Positive semidefinite square-root certificates identify this value and the normalized Laplacian energy (4 + √5)/10. The adjacency energy exceeds 5/4, whereas twice the normalized energy is below 5/4. The maximum degree is two. Thus the upper inequality fails. This proves no universal assertion about the lower inequality or about blow-ups. Literature completeness is ASSUMED-UNVERIFIED: the statement compared here is arXiv v1; the publisher edition and an exhaustive search of citing works have not been verified.",
-                    DescribeRole.Theorem, AssessedProvenance.FromRepo(Source)))));
+                    DescribeRole.Theorem, AssessedProvenance.FromRepo(Source),
+                    new OpenProblemResolutionClaim(
+                        ProblemSlugRef.Create("guerrero-2022-vertex-energy-degree-bounds-remark-6"),
+                        ResolutionKind.Refuted)))));
     }
 
     private static Formula ClaimBody()
@@ -65,10 +68,11 @@ internal sealed class GuerreroVertexEnergyDegreeBoundsDocument : IScribeDocument
     }
 
     private static DocumentBlock Node(string id, string title, string name, Formula formula,
-        string prose, DescribeRole role, AssessedProvenance provenance) =>
+        string prose, DescribeRole role, AssessedProvenance provenance,
+        OpenProblemResolutionClaim? resolution = null) =>
         Describe.Lean(DescribeId.Create("guerrero-energy-" + id), DeclarationHandle.Create(Prefix + name),
             H(title), StatementSource.FromAuthor(Disp(formula)), provenance,
-            Blocks(Paragraph(Text(prose))), role);
+            Blocks(Paragraph(Text(prose))), role, resolution);
     private static Formula Carrier(Formula body) => All("V", C("Type"), Seq(
         OpenBracket, Call("Fintype", V("V")), CloseBracket, Sp,
         OpenBracket, Call("DecidableEq", V("V")), CloseBracket, Sp, body));

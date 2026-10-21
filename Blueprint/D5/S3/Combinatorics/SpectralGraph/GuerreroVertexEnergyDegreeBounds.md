@@ -82,6 +82,10 @@ $$\neg (\forall V \in \operatorname{Type},\; [\operatorname{Fintype}\left(V\righ
 
 *Proof.* Machine-checked in Lean as `D5/S3/Combinatorics/SpectralGraph/GuerreroVertexEnergyDegreeBounds.result` (`✓ std3`). ∎
 
+*Resolves.* `Problems/guerrero-2022-vertex-energy-degree-bounds-remark-6` (refuted) by `D5/S3/Combinatorics/SpectralGraph/GuerreroVertexEnergyDegreeBounds.result`.
+
+<!-- scribe-open-problem-resolution-v1 {"problem_slug":"guerrero-2022-vertex-energy-degree-bounds-remark-6","declaration_gid":"D5/S3/Combinatorics/SpectralGraph/GuerreroVertexEnergyDegreeBounds.result","resolution_kind":"refuted"} -->
+
 *Source.* Repository-derived.
 
 *Acknowledgement.* J. Guerrero (2022). *Laplacian Energies of Vertices*. DOI: [10.1016/j.laa.2024.11.016](https://doi.org/10.1016/j.laa.2024.11.016). URL: <https://arxiv.org/abs/2201.01252v1>.
