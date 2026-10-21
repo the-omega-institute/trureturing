@@ -54,7 +54,10 @@ internal sealed class SteeringTemporalCompatibilityRefutationDocument : IScribeD
                 DescribeId.Create("song-steering-result"),
                 DeclarationHandle.Create(Prefix + "result"),
                 H("A steerable state with a temporal channel"),
-                StatementSource.FromAuthor(Disp(new Formula.Not(X("claim")))),
+                StatementSource.FromAuthor(Disp(Neg(All("R", BipartiteMatrix(),
+                    Implies(Density(X("R")), Implies(
+                        Or(Call("SteerableBA", X("R")), Call("SteerableAB", X("R"))),
+                        Call("Atemporal", X("R")))))))),
                 AssessedProvenance.FromRepo(Source),
                 Blocks(
                     Paragraph(Text(
