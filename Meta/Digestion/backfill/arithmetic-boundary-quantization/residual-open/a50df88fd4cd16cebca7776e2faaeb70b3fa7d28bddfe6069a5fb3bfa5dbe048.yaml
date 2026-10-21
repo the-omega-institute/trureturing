@@ -2,9 +2,7 @@ fingerprints:
   raw_sha256: sha256:a50df88fd4cd16cebca7776e2faaeb70b3fa7d28bddfe6069a5fb3bfa5dbe048
   normalized_sha256: sha256:a50df88fd4cd16cebca7776e2faaeb70b3fa7d28bddfe6069a5fb3bfa5dbe048
 cas_ref: sha256:a50df88fd4cd16cebca7776e2faaeb70b3fa7d28bddfe6069a5fb3bfa5dbe048
-coverage_gids:
-  - gid: D5/S3/Analytic/Interpolation/QuadraticMajorantEnvelope.weighted_le_psiK_of_variance_ge
-    target_statement_id: sha256:72b688054d6ee3201acdf8e754a09370f604a37e0b84d1c7880696a022a0fff8
+coverage_gids: []
 receipts:
   unresolved_subitems: []
   chain_atoms:

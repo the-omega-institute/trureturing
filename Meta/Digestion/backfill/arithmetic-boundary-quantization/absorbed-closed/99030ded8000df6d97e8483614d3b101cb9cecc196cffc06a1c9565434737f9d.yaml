@@ -3,8 +3,6 @@ fingerprints:
   normalized_sha256: sha256:99030ded8000df6d97e8483614d3b101cb9cecc196cffc06a1c9565434737f9d
 cas_ref: sha256:99030ded8000df6d97e8483614d3b101cb9cecc196cffc06a1c9565434737f9d
 coverage_gids:
-  - gid: D5/S3/Analytic/Knapsack/GridDualStructure.fractional_optimum_matching_price
-    target_statement_id: sha256:c9f23babe31f801ee9822d7b197cf1d186e5492cde6718da08f397b8be50da8d
   - gid: D5/S3/Analytic/Knapsack/GridDualStructure.grid_dual_eq_fill_sup
     target_statement_id: sha256:ea7509f2575c6f22fce53eade1c349b3be4a166148ed461bd7fa5134553abe90
 receipts:

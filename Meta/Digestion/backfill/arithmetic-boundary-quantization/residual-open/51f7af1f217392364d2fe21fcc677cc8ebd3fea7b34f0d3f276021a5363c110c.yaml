@@ -2,11 +2,7 @@ fingerprints:
   raw_sha256: sha256:51f7af1f217392364d2fe21fcc677cc8ebd3fea7b34f0d3f276021a5363c110c
   normalized_sha256: sha256:51f7af1f217392364d2fe21fcc677cc8ebd3fea7b34f0d3f276021a5363c110c
 cas_ref: sha256:51f7af1f217392364d2fe21fcc677cc8ebd3fea7b34f0d3f276021a5363c110c
-coverage_gids:
-  - gid: D5/S3/Analytic/Interpolation/QuadraticMajorantEnvelope.weighted_majorant_bound
-    target_statement_id: sha256:9185030a45329789f8e03aaeb8f76bddf2e8f5d280bbe6d2597d0a95f79e8f72
-  - gid: D5/S3/Analytic/Interpolation/TwoPointGridDominanceBound.inner_secant_bound
-    target_statement_id: sha256:19ff2076aa53bf02d8a4f5e9964021499e866952b8f4539e0a5d64315465928c
+coverage_gids: []
 receipts:
   unresolved_subitems: []
   chain_atoms:

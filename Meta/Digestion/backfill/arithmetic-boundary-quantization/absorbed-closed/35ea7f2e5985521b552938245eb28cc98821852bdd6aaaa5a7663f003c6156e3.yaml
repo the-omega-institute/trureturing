@@ -3,9 +3,7 @@ fingerprints:
   normalized_sha256: sha256:35ea7f2e5985521b552938245eb28cc98821852bdd6aaaa5a7663f003c6156e3
 cas_ref: sha256:35ea7f2e5985521b552938245eb28cc98821852bdd6aaaa5a7663f003c6156e3
 coverage_gids:
-  - gid: D5/S3/Analytic/Interpolation/EnvelopeKMonotone.coordinate_variance_domain
-    target_statement_id: sha256:0156ea429a9816ca30aef9627a0fd4285e109fafa7b0c544bb4c203afa23a8d9
-  - gid: D5/S3/Analytic/Interpolation/EnvelopeKMonotone.sum_logValue_le_psiK
-    target_statement_id: sha256:ac00ba186877ed0b2895b79111e07712b4113343d805594cc77b0071df9a982a
+  - gid: D5/S3/Analytic/Interpolation/QuadraticMajorantEnvelope.weighted_quadratic_sum
+    target_statement_id: sha256:8f82a20eac1c651faab2fa8298552aaa7b2e138f9144cc988fd7d102a262fd5c
 receipts:
   unresolved_subitems: []
