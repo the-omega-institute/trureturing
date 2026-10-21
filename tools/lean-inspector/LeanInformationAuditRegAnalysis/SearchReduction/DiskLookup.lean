@@ -5,7 +5,7 @@ application and kernel checking remain the authority for successful queries. -/
 namespace LeanInformationAudit.SearchReduction.DiskLookup
 open Lean Meta
 
-abbrev version : String := "disk-beta-zeta-alpha-v6"
+abbrev version : String := "disk-beta-zeta-alpha-v7"
 abbrev pageSize : Nat := 256
 
 structure Entry where
@@ -129,6 +129,30 @@ private partial def conclusions (e : Expr) (fuel : Nat := 32) : Array Expr :=
   else if e.isAppOfArity ``Subtype 2 then result.push (mkBVar 0)
   else result
 
+private structure Packed where
+  directory : System.FilePath
+  stem : String
+  page : Nat := 0
+  values : Array String := #[]
+  bytes : Nat := 0
+
+private def flushPack : StateT Packed IO Unit := do
+  let state ← get
+  unless state.values.isEmpty do
+    discard <| writeJson (state.directory / s!"packs/{state.stem}-{state.page}.json") state.values
+    set {state with page := state.page + 1, values := #[], bytes := 0}
+
+/-- Physical pages hold at most 256 checked logical records. References retain
+an individual record checksum, so packing changes neither keys nor candidates. -/
+private def pack [ToJson α] (value : α) : StateT Packed IO (String × UInt64) := do
+  let text := (toJson value).compress
+  let state ← get
+  if state.values.size >= pageSize || state.bytes + text.utf8ByteSize > 262144 then flushPack
+  let state ← get
+  let file := s!"packs/{state.stem}-{state.page}.json#{state.values.size}"
+  set {state with values := state.values.push text, bytes := state.bytes + text.utf8ByteSize}
+  return (file, hash text)
+
 private structure BuildNode where
   children : Std.HashMap String String := {}
   entries : Array Entry := #[]
@@ -152,7 +176,7 @@ private def fileId (key : String) : String := toString (hash key)
 
 /-- Statement-name payloads are spilled one module at a time. The producer
 retains only trie routing and page descriptors across module boundaries. -/
-private def spill (directory : System.FilePath) (localNodes : Nodes) (all : Nodes) : IO Nodes := do
+private def spill (localNodes : Nodes) (all : Nodes) : StateT Packed IO Nodes := do
   let mut all := all
   for (key, node) in localNodes.toArray do
     let mut previous := all[key]?.getD {}
@@ -162,11 +186,10 @@ private def spill (directory : System.FilePath) (localNodes : Nodes) (all : Node
     for entry in node.entries do
       groups := groups.insert entry.module ((groups[entry.module]?.getD #[]).push entry)
     let mut pages := previous.pages
-    for (owner, entries) in groups.toArray.qsort (fun a b => a.1 < b.1) do
+    for (_, entries) in groups.toArray.qsort (fun a b => a.1 < b.1) do
       for offset in [: (entries.size + pageSize - 1) / pageSize] do
         let chunk := entries.extract (offset * pageSize) ((offset + 1) * pageSize)
-        let file := s!"{fileId key}-{fileId owner}-{offset}.page.json"
-        let digest ← writeJson (directory / file) chunk
+        let (file, digest) ← pack chunk
         pages := pages.push {file, digest, count := chunk.size}
     all := all.insert key {previous with pages}
   return all
@@ -206,13 +229,13 @@ private partial def repack (directory : System.FilePath) (file : String)
   modify (·.insert file digest)
   return digest
 
-private partial def flush (directory : System.FilePath) (nodes : Nodes) (key : String) : IO UInt64 := do
+private partial def flush (nodes : Nodes) (key : String) : StateT Packed IO (String × UInt64) := do
   let node := nodes[key]?.getD {}
   let mut children := #[]
   for (token, next) in node.children.toArray.qsort (fun a b => a.1 < b.1) do
-    let digest ← flush directory nodes next
-    children := children.push (token, fileId next, digest)
-  writeRouted directory (fileId key) ({children, pages := node.pages} : Node)
+    let (file, digest) ← flush nodes next
+    children := children.push (token, file, digest)
+  pack ({children, pages := node.pages} : Node)
 
 private structure ModuleCheckpoint where
   name : String
@@ -267,10 +290,13 @@ private def finishBuckets (directory journals : System.FilePath) : IO UInt64 := 
             nodes := nodes.insert key {previous with pages := previous.pages ++ node.pages}
         return nodes
       let parent := nodes[topKey kind]?.getD {}
-      let mut children := #[]
-      for (token, next) in parent.children.toArray.qsort (fun a b => a.1 < b.1) do
-        let digest ← flush directory nodes next
-        children := children.push (token, fileId next, digest)
+      let children ← (do
+        let mut children := #[]
+        for (token, next) in parent.children.toArray.qsort (fun a b => a.1 < b.1) do
+          let (file, digest) ← flush nodes next
+          children := children.push (token, file, digest)
+        flushPack
+        pure children).run' {directory, stem := s!"nodes-{kind}-{bucket}"}
       if !children.isEmpty then
         let file := s!"{fileId (topKey kind)}.r0-{bucket}"
         let digest ← writeRouted directory file {children} 1
@@ -373,6 +399,7 @@ unsafe def produce (directory : System.FilePath) (basis mathlib : String)
   let mut missing : Array String := #[]
   let mut inputs : UInt64 := hash (version, basis, mathlib, Lean.versionString)
   let mut compatibleInputs : UInt64 := hash ("disk-beta-zeta-alpha-v5", basis, mathlib, Lean.versionString)
+  let mut previousInputs : UInt64 := hash ("disk-beta-zeta-alpha-v6", basis, mathlib, Lean.versionString)
   while !todo.isEmpty do
     let name := todo.back!
     todo := todo.pop
@@ -382,6 +409,7 @@ unsafe def produce (directory : System.FilePath) (basis mathlib : String)
       let (deps, names, reducible, fingerprint) ← summary name
       inputs := mixHash inputs (mixHash (hash name) fingerprint)
       compatibleInputs := mixHash compatibleInputs (mixHash (hash name) fingerprint)
+      previousInputs := mixHash previousInputs (mixHash (hash name) fingerprint)
       for n in names do rigidNames := rigidNames.insert n
       for n in reducible do reducibleNames := reducibleNames.insert n
       todo := todo ++ deps
@@ -396,6 +424,13 @@ unsafe def produce (directory : System.FilePath) (basis mathlib : String)
           old.inputs == inputs && old.complete then
         IO.println (Json.mkObj [("reused", toJson true), ("header", toJson old)]).compress
         return old
+      if old.format == "disk-beta-zeta-alpha-v6" && old.basis == basis && old.mathlib == mathlib &&
+          old.inputs == previousInputs && old.complete then
+        let header := {old with format := version, inputs}
+        discard <| writeJson (directory / "header.json.tmp") header
+        IO.FS.rename (directory / "header.json.tmp") (directory / "header.json")
+        IO.println (Json.mkObj [("upgraded", toJson true), ("header", toJson header)]).compress
+        return header
       if old.format == "disk-beta-zeta-alpha-v5" && old.basis == basis && old.mathlib == mathlib &&
           old.inputs == compatibleInputs && old.complete then
         let digest ← (repack (directory / old.storage) old.root old.digest).run' {}
@@ -405,9 +440,12 @@ unsafe def produce (directory : System.FilePath) (basis mathlib : String)
         IO.println (Json.mkObj [("repaged", toJson true), ("header", toJson header)]).compress
         return header
     catch _ => pure ()
-  let storage := s!"{version}-{inputs}"
+  let previousStorage := s!"disk-beta-zeta-alpha-v6-{previousInputs}"
+  let storage ← if ← (directory / previousStorage / "stream-v1").isDir then
+      pure previousStorage
+    else pure s!"{version}-{inputs}"
   let pagesDirectory := directory / storage
-  IO.FS.createDirAll pagesDirectory
+  IO.FS.createDirAll (pagesDirectory / "packs")
   let journals := pagesDirectory / "stream-v1"
   IO.FS.createDirAll journals
   let selected := (modules.qsort Name.quickLt).filter fun name =>
@@ -441,12 +479,15 @@ unsafe def produce (directory : System.FilePath) (basis mathlib : String)
             let token := keys[1]!
             let file := s!"{kind}-{routeByte token 0}.jsonl"
             groups := groups.insert file ((groups[file]?.getD #[]).push (keys, entry))
-          let mut ends := #[]
-          for (file, group) in groups.toArray do
-            let mut nodes : Nodes := {}
-            for (keys, entry) in group do nodes := insert nodes keys entry
-            let spilled ← spill pagesDirectory nodes {}
-            ends := ends.push (file, ← appendNodes (journals / file) spilled)
+          let ends ← (do
+            let mut ends := #[]
+            for (file, group) in groups.toArray do
+              let mut nodes : Nodes := {}
+              for (keys, entry) in group do nodes := insert nodes keys entry
+              let spilled ← spill nodes {}
+              ends := ends.push (file, ← appendNodes (journals / file) spilled)
+            flushPack
+            pure ends).run' {directory := pagesDirectory, stem := s!"module-{fileId name.toString}"}
           let checkpoint : ModuleCheckpoint := {name := name.toString, count, offsets := ends}
           let path := journals / s!"{fileId name.toString}.checkpoint.json"
           discard <| writeJson (path.addExtension "tmp") checkpoint
@@ -481,9 +522,26 @@ def openIndex (directory : System.FilePath) (basis mathlib : String)
   return {directory := directory / header.storage, header, excluded}
 
 private def readChecked [FromJson α] (path : System.FilePath) (digest : UInt64) : IO α := do
-  let text ← IO.FS.readFile path
+  let parts := path.toString.splitOn "#"
+  let (file, slot?) := if parts.length > 1 then
+      match parts.getLast!.toNat? with
+      | some slot => (System.FilePath.mk (String.intercalate "#" parts.dropLast), some slot)
+      | none => (path, none)
+    else (path, none)
+  let physical ← IO.FS.readFile file
+  let text ← match slot? with
+    | none => pure physical
+    | some slot => do
+      let records : Array String ← IO.ofExcept <| fromJson? (← IO.ofExcept <| Json.parse physical)
+      let some text := records[slot]? | throw <| IO.userError "lookup.packed_record_missing"
+      pure text
   unless hash text == digest do throw <| IO.userError s!"lookup.index_page_mismatch:{path}"
   IO.ofExcept <| fromJson? (← IO.ofExcept <| Json.parse text)
+
+private def nodePath (directory : System.FilePath) (file : String) : System.FilePath :=
+  if (file.splitOn "#").length > 1 && (file.splitOn "#").getLast!.toNat?.isSome then
+    directory / file
+  else directory / s!"{file}.node.json"
 
 private partial def routedChildren (index : Index) (node : Node)
     (wanted : Option (List String)) : IO (Array (String × String × UInt64)) := do
@@ -496,7 +554,7 @@ private partial def routedChildren (index : Index) (node : Node)
       let some depth := depthText.toNat? | throw <| IO.userError "lookup.invalid_routing_depth"
       let some bucket := bucketText.toNat? | throw <| IO.userError "lookup.invalid_routing_bucket"
       if wanted.any (fun keys => !keys.any (fun key => routeByte key depth == bucket)) then continue
-      let page : Node ← readChecked (index.directory / s!"{next}.node.json") digest
+      let page : Node ← readChecked (nodePath index.directory next) digest
       children := children ++ (← routedChildren index page wanted)
     else if wanted.all (·.contains token) then children := children.push child
   return children.qsort (fun a b => a.1 < b.1)
@@ -512,7 +570,7 @@ private partial def skip (keys : List String) (pending : Nat) : List String :=
 
 private partial def collect (index : Index) (file : String) (digest : UInt64)
     (query : List String) (storedPending : Nat := 0) : IO Candidates := do
-  let node : Node ← readChecked (index.directory / s!"{file}.node.json") digest
+  let node : Node ← readChecked (nodePath index.directory file) digest
   let mut result : Candidates := {complete := true}
   if query.isEmpty && storedPending == 0 then
     for page in node.pages do

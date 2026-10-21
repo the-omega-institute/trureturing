@@ -7,6 +7,7 @@ DRAFT ?= 0
 ALLOW_LOW_DISK ?= 0
 WORKTREE_DEST = $(if $(DEST),$(DEST),../trureturing-$(NAME))
 LEAN_REPORT ?= .lake/build/stratalint/raw-lean-report.json
+INDEX_DIR ?= build/lean-inspector/lookup-index/$(INDEX_BASIS)
 LEAN_REPORT_CACHE_MISS_POLICY ?= fetch-or-fail
 REBUILD_REPORT_CACHE ?= 0
 REGENERATE_REPORT_ARTIFACTS ?= 0
@@ -225,4 +226,4 @@ search-reduction-index-run:
 	@lake -d tools/lean-inspector-reg env .lake/build/lean-inspector/reg/bin/searchReductionIndex "$(INDEX_BASIS)" "$(INDEX_DIR)" $(INDEX_MODULES)
 
 search-reduction-index-fixtures:
-	@$(MAKE) lean LEAN_TARGETS="regInspector/searchReductionIndex LeanInformationAuditRegTests.SearchReduction.LookupBaseline" && $(MAKE) search-reduction-index-run INDEX_BASIS=fixture INDEX_DIR=.lake/build/lean-inspector/lookup-index/fixture INDEX_MODULES=Mathlib && $(MAKE) search-reduction-index-run INDEX_BASIS=lookup-fixture INDEX_DIR=.lake/build/lean-inspector/lookup-index/lookup-fixture INDEX_MODULES=LeanInformationAuditRegTests.SearchReduction.LookupBaseline
+	@$(MAKE) lean LEAN_TARGETS="regInspector/searchReductionIndex LeanInformationAuditRegTests.SearchReduction.LookupBaseline" && $(MAKE) search-reduction-index-run INDEX_BASIS=fixture INDEX_DIR=build/lean-inspector/lookup-index/fixture INDEX_MODULES=Mathlib && $(MAKE) search-reduction-index-run INDEX_BASIS=lookup-fixture INDEX_DIR=build/lean-inspector/lookup-index/lookup-fixture INDEX_MODULES=LeanInformationAuditRegTests.SearchReduction.LookupBaseline

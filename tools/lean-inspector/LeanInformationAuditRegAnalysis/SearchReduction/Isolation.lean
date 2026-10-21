@@ -375,7 +375,7 @@ unsafe def run (source : Environment) (request : Request)
         delivery := delivery.push source.header.moduleNames[index.toNat]!
     let catalog ← baselineCatalog request.baselineCommit delivery base
     let directory := (← IO.getEnv "SEARCH_REDUCTION_INDEX").getD
-      s!".lake/build/lean-inspector/lookup-index/{request.baselineCommit}"
+      s!"build/lean-inspector/lookup-index/{request.baselineCommit}"
     let disk? ← try
       pure (some (← DiskLookup.openIndex directory request.baselineCommit mathlibRevision catalog.excluded))
       catch _ => pure none

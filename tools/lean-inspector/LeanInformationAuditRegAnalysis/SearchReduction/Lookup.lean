@@ -5,7 +5,7 @@ the baseline environment or constructs an environment-wide tree. -/
 namespace LeanInformationAudit.SearchReduction
 open Lean Meta
 
-abbrev lookupVersion : String := "R_lookup/one-B/disk-beta-zeta-alpha-v6-independent"
+abbrev lookupVersion : String := "R_lookup/one-B/disk-beta-zeta-alpha-v7-independent"
 
 /-- The table is captured before delivery vocabulary or S is installed. A
 partial basis may supply a hit, but never a completed negative query. -/
@@ -31,7 +31,7 @@ private def eligible : ConstantInfo → Bool
 private def tableIndex (table : LookupTable) : IO (Option DiskLookup.Index) := do
   if table.disk?.isSome then return table.disk?
   let directory := (← IO.getEnv "SEARCH_REDUCTION_INDEX").getD
-    ".lake/build/lean-inspector/lookup-index/fixture"
+    "build/lean-inspector/lookup-index/fixture"
   try
     return some (← DiskLookup.openIndex directory "fixture"
       "56a005855ea17e0b0958f73ec801ae140b0a1679")

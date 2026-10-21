@@ -14,7 +14,7 @@ run_cmd do
     (leakEnv := false) (loadExts := true)
   liftTermElabM do
     let index ← DiskLookup.openIndex
-      ".lake/build/lean-inspector/lookup-index/lookup-fixture" "lookup-fixture"
+      "build/lean-inspector/lookup-index/lookup-fixture" "lookup-fixture"
       "56a005855ea17e0b0958f73ec801ae140b0a1679"
     let table : LookupTable := {environment := base, disk? := some index}
     let cases ← #[
@@ -108,3 +108,35 @@ run_cmd liftTermElabM do
   unless (DiskLookup.canonical shared).hash == shared.hash do
     throwError "shared statement normalization changed its shape"
   logInfo "LOOKUP_SHARED_NORMALIZATION dag_depth=24 equal=true"
+
+run_cmd do
+  let directory : System.FilePath := "build/lean-inspector/lookup-index/packed-record-fixture"
+  IO.FS.createDirAll directory
+  let entry : DiskLookup.Entry := {module := "fixture", name := "packedFixture", parts := #[("packedFixture", 0)]}
+  let payload := (toJson (#[entry] : Array DiskLookup.Entry)).compress
+  let leaf : DiskLookup.Node := {pages := #[{file := "records.json#0", digest := hash payload, count := 1}]}
+  let text := (toJson leaf).compress
+  let records := toJson (#[payload, text] : Array String)
+  IO.FS.writeFile (directory / "records.json") records.compress
+  IO.FS.writeFile (directory / "root.node.json") text
+  let header : DiskLookup.Header := {
+    basis := "packed-record-fixture", mathlib := "fixture", inputs := 0, storage := "",
+    root := "root", digest := hash text, complete := true, modules := 1,
+    declarations := 1, indexed := 1, missing := #[]}
+  let index : DiskLookup.Index := {directory, header}
+  let found ← DiskLookup.query index []
+  unless found.complete && found.entries.map (·.name) == #["packedFixture"] do
+    throwError "packed page did not return its checked logical record"
+  let packedRoot ← DiskLookup.query {index with header := {header with root := "records.json#1"}} []
+  unless packedRoot.complete && packedRoot.entries.map (·.name) == #["packedFixture"] do
+    throwError "packed routing node did not return its checked payload"
+  IO.FS.writeFile (directory / "records.json") (toJson (#["{}"] : Array String)).compress
+  let corrupt ← DiskLookup.query index []
+  unless !corrupt.complete && corrupt.entries.isEmpty do
+    throwError "corrupt packed record became a certified negative"
+  IO.FS.writeFile (directory / "records.json") (toJson (#[] : Array String)).compress
+  let missing ← DiskLookup.query index []
+  unless !missing.complete && missing.entries.isEmpty do
+    throwError "missing packed record became a certified negative"
+  IO.FS.writeFile (directory / "records.json") records.compress
+  logInfo "LOOKUP_PACKED_RECORD selected=true checksum=true missing=true"
