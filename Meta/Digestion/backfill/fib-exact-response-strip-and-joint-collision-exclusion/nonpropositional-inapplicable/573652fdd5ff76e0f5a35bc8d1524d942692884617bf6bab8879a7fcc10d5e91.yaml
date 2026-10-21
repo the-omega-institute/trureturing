@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:573652fdd5ff76e0f5a35bc8d1524d942692884617bf6bab8879a7fcc10d5e91
+  normalized_sha256: sha256:573652fdd5ff76e0f5a35bc8d1524d942692884617bf6bab8879a7fcc10d5e91
+cas_ref: sha256:573652fdd5ff76e0f5a35bc8d1524d942692884617bf6bab8879a7fcc10d5e91
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: Defines the legal triples, actual action/readout rule, clocks, parent history and compatibility notation; domain restrictions are part of the definition.
+    previous_atom_id: f76143a262477e7bb4b84f44a7cba38c87c03be4a86c4602d94dfe27202ded32
+    next_atom_id: e9de63dbb3c59b0b6f85d8254c070602803f9bd5b8b7aaa35400ad2e1910dc62
