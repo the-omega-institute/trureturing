@@ -92,10 +92,9 @@ def pairWeights : List ℕ → List ℕ
 
 private lemma count_as_sum_indicator {α : Type*} [DecidableEq α] [BEq α] [LawfulBEq α] (l : List α) (x : α) :
     l.count x=(l.map (fun y => if y=x then 1 else 0)).sum := by
-  induction l with
-  | nil => rfl
-  | cons a l ih =>
-    by_cases ha : a=x <;> simp [List.count_cons,ih,ha,Nat.add_comm]
+  simpa only [List.flatMap_singleton', List.map_map, Function.comp_def,
+      List.count_singleton, beq_iff_eq] using
+      (List.count_flatMap (x := x) (l := l) (f := fun y => [y]))
 
 def prefixBlocks (pre : List Bool) (bs : List (List Bool × ℕ)) : List (List Bool × ℕ) :=
   bs.map (fun p => (pre++p.1,p.2))

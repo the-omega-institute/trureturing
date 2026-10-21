@@ -203,20 +203,14 @@ private lemma embeddings_sublistsLen {m n : ℕ} (x : Fin m → Bool) (y : Fin n
 private lemma sum_count_patterns (m : ℕ) (l : List (List Bool))
     (hl : ∀ x ∈ l, x.length = m) :
     (∑ x : Fin m → Bool, l.count (List.ofFn x)) = l.length := by
-  induction l with
-  | nil => simp
-  | cons a l ih =>
-    have ha : a.length = m := hl a (by simp)
-    have htail : ∀ x ∈ l, x.length = m := fun x hx => hl x (by simp [hx])
-    simp only [List.count_cons, Finset.sum_add_distrib, ih htail, List.length_cons]
-    have he : ∃ x : Fin m → Bool, a = List.ofFn x := by
-      refine ⟨fun i => a[i.val]'(by omega), ?_⟩
-      apply List.ext_getElem
-      · simpa using ha
-      · simp
-    obtain ⟨x, rfl⟩ := he
-    simp only [Bool.beq_eq_decide_eq, decide_eq_true_eq, List.ofFn_inj]
-    simp
+  have h := sum_function_counts l hl (fun n => (n : ℝ)) (by norm_num)
+  have hsum := List.sum_map_count_dedup_eq_length l
+  have hreal : (∑ x : Fin m → Bool, (l.count (List.ofFn x) : ℝ)) = (l.length : ℝ) := by
+    rw [h]
+    simpa only [Nat.cast_list_sum, List.map_map, Function.comp_def,
+      List.count_eq_countP, beq_eq_decide] using
+      congrArg (fun n : ℕ => (n : ℝ)) hsum
+  exact_mod_cast hreal
 
 lemma empty_embeddings {n : ℕ} (y : Fin n → Bool) : embeddings (fun i : Fin 0 => Fin.elim0 i) y = 1 := by
   simp [embeddings_eq_count, List.ofFn_zero, scatteredCount]
