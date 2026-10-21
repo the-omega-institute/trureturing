@@ -6,7 +6,6 @@
    utility: none
    digest: Literal upper-boundary meter, channel, instrument, and uniqueness claim. -/
 
-import D5.S3.Quantum.Foundation.FiniteKrausChannel
 import D5.S3.Quantum.Foundation.FiniteKrausRepresentation
 
 set_option autoImplicit false
@@ -383,6 +382,76 @@ lemma choi_gram_rows {d : ℕ} {C : Matrix (Fin d × Fin d) (Fin d × Fin d) ℂ
   apply CStarAlgebra.nonneg_iff_eq_star_mul_self.mp
   exact Matrix.nonneg_iff_posSemidef.mpr hC
 
+private lemma sum_except {ι : Type*} [Fintype ι] [DecidableEq ι]
+    (f : ι → ℝ) (x : ι) :
+    (∑ i, if i ≠ x then f i else 0) = (∑ i, f i) - f x := by
+  rw [← Finset.sum_filter, Finset.filter_ne', Finset.sum_erase_eq_sub (Finset.mem_univ x)]
+
+private lemma gram_entry_norm {d : ℕ}
+    (B : Matrix (Fin d × Fin d) (Fin d × Fin d) ℂ) (p : Fin d × Fin d) :
+    (∑ r, Complex.normSq (star (B r p))) = ((B.conjTranspose * B) p p).re := by
+  have h : ((∑ r, Complex.normSq (star (B r p))) : ℂ) =
+      (B.conjTranspose * B) p p := by
+    simp only [Complex.ofReal_sum, Complex.normSq_eq_conj_mul_self,
+      Matrix.mul_apply, Matrix.conjTranspose_apply, Complex.star_def]
+    apply Finset.sum_congr rfl
+    intro r hr
+    simp only [Complex.conj_conj]
+    exact mul_comm _ _
+  simpa only [Complex.re_sum, Complex.ofReal_re] using congrArg Complex.re h
+
+private lemma gram_diagonal_norm {d : ℕ}
+    (B : Matrix (Fin d × Fin d) (Fin d × Fin d) ℂ) :
+    (∑ r, Complex.normSq (∑ i, star (B r (i, i)))) =
+      (∑ i, ∑ j, (B.conjTranspose * B) (i, i) (j, j)).re := by
+  have hrow (r : Fin d × Fin d) :
+      Complex.normSq (∑ i, star (B r (i, i))) =
+        Complex.normSq (∑ i, B r (i, i)) := by
+    simp only [Complex.star_def, ← map_sum, Complex.normSq_conj]
+  simp_rw [hrow]
+  have h : ((∑ r, Complex.normSq (∑ i, B r (i, i))) : ℂ) =
+      ∑ i, ∑ j, (B.conjTranspose * B) (i, i) (j, j) := by
+    simp only [Complex.ofReal_sum, Complex.normSq_eq_conj_mul_self,
+      Matrix.mul_apply, Matrix.conjTranspose_apply, Complex.star_def, map_sum,
+      Complex.conj_conj, Finset.sum_mul, Finset.mul_sum]
+    conv_rhs => rw [Finset.sum_comm]
+    rw [Finset.sum_comm]
+    apply Finset.sum_congr rfl
+    intro i hi
+    rw [Finset.sum_comm]
+  simpa only [Complex.re_sum, Complex.ofReal_re] using congrArg Complex.re h
+
+private lemma qCertificate_gram {d : ℕ} (aa bb cc : ℝ) (x : Fin d)
+    (B : Matrix (Fin d × Fin d) (Fin d × Fin d) ℂ) :
+    (∑ r, qCertificate d aa bb cc x (fun j i => star (B r (j, i)))) =
+      (∑ i, ∑ j, if j ≠ i then ((B.conjTranspose * B) (j, i) (j, i)).re else 0) -
+      (∑ j, ((B.conjTranspose * B) (j, x) (j, x)).re) +
+      ((aa + bb) / bb) * ((∑ i, ((B.conjTranspose * B) (i, i) (i, i)).re) -
+        (aa / cc) * (∑ i, ∑ j, (B.conjTranspose * B) (i, i) (j, j)).re) := by
+  have hoff : (∑ r, ∑ i, ∑ j,
+      if i ≠ x ∧ j ≠ i then Complex.normSq (star (B r (j, i))) else 0) =
+      (∑ i, ∑ j, if j ≠ i then ((B.conjTranspose * B) (j, i) (j, i)).re else 0) -
+      (∑ j, if j ≠ x then ((B.conjTranspose * B) (j, x) (j, x)).re else 0) := by
+    have hswap : (∑ r, ∑ i, ∑ j,
+        if i ≠ x ∧ j ≠ i then Complex.normSq (star (B r (j, i))) else 0) =
+        ∑ i, ∑ j, if i ≠ x ∧ j ≠ i then
+          (∑ r, Complex.normSq (star (B r (j, i)))) else 0 := by
+      rw [Finset.sum_comm]
+      apply Finset.sum_congr rfl
+      intro i hi
+      rw [Finset.sum_comm]
+      simp only [Finset.sum_ite_irrel, Finset.sum_const_zero]
+    rw [hswap]
+    simp_rw [gram_entry_norm, ite_and, Finset.sum_ite_irrel, Finset.sum_const_zero]
+    exact sum_except _ x
+  have hcol := sum_except (fun j => ((B.conjTranspose * B) (j, x) (j, x)).re) x
+  simp only [qCertificate, Finset.sum_add_distrib, Finset.sum_sub_distrib,
+    ← Finset.mul_sum]
+  rw [hoff, Finset.sum_comm (f := fun r i => Complex.normSq (star (B r (i, i))))]
+  simp_rw [gram_entry_norm]
+  rw [gram_diagonal_norm]
+  linarith
+
 lemma certificate_identity {d : ℕ} (hd : 2 ≤ d) {t : ℝ}
     (htl : -1 / ((d : ℝ) ^ 2 - 1) < t) (htu : t < 1)
     (J : Fin d → MatrixMap (Fin d) (Fin d) ℂ)
@@ -393,7 +462,98 @@ lemma certificate_identity {d : ℕ} (hd : 2 ≤ d) {t : ℝ}
     (hB : ∀ x, MatrixMap.choi_matrix (J x) = (B x).conjTranspose * B x) :
     ∑ x, ∑ r, qCertificate d (a2 d t) (b t) (c d t) x
       (fun j i => star (B x r (j, i))) = 0 := by
-  sorry
+  let C := fun x => MatrixMap.choi_matrix (J x)
+  have hC (p q : Fin d × Fin d) :
+      (∑ x, (C x p q).re) = (MatrixMap.choi_matrix (It t) p q).re := by
+    have h := congrArg (fun M => (M p q).re) (choi_sum d t J hsum)
+    simpa only [Matrix.sum_apply, Complex.re_sum] using h
+  have hd0 : (d : ℝ) ≠ 0 := by exact_mod_cast (show d ≠ 0 by omega)
+  have hD : (∑ x, ∑ i, (C x (i, i) (i, i)).re) = d * t + 1 - t := by
+    rw [Finset.sum_comm]
+    simp_rw [hC, choi_It_formula]
+    simp only [and_self, ite_true, Complex.add_re, Complex.mul_re, Complex.ofReal_re,
+      Complex.ofReal_im, Complex.one_re, Complex.one_im, mul_one, mul_zero,
+      sub_zero, Finset.sum_const, Finset.card_univ, Fintype.card_fin, nsmul_eq_mul]
+    field_simp
+    <;> ring
+  have hO : (∑ x, ∑ i, ∑ j, if j ≠ i then (C x (j, i) (j, i)).re else 0) =
+      ((d : ℝ) - 1) * (1 - t) := by
+    have hswap : (∑ x, ∑ i, ∑ j, if j ≠ i then (C x (j, i) (j, i)).re else 0) =
+        ∑ i, ∑ j, if j ≠ i then (∑ x, (C x (j, i) (j, i)).re) else 0 := by
+      rw [Finset.sum_comm]
+      apply Finset.sum_congr rfl
+      intro i hi
+      rw [Finset.sum_comm]
+      simp only [Finset.sum_ite_irrel, Finset.sum_const_zero]
+    rw [hswap]
+    simp_rw [hC]
+    have he (i j : Fin d) : (if j ≠ i then
+        (MatrixMap.choi_matrix (It t) (j, i) (j, i)).re else 0) =
+        if j ≠ i then (1 - t) / d else 0 := by
+      by_cases h : j = i
+      · subst j; simp [choi_It_formula]
+      · simp [choi_It_formula, h, Ne.symm h]
+    simp_rw [he, sum_except]
+    simp only [Finset.sum_const, Finset.card_univ, Fintype.card_fin, nsmul_eq_mul]
+    field_simp
+    <;> ring
+  have hM : (∑ x, (∑ i, ∑ j, C x (i, i) (j, j)).re) = (c d t) ^ 2 := by
+    simp only [Complex.re_sum]
+    rw [Finset.sum_comm]
+    have hs (i : Fin d) : (∑ x, ∑ j, (C x (i, i) (j, j)).re) =
+        ∑ j, (MatrixMap.choi_matrix (It t) (i, i) (j, j)).re := by
+      rw [Finset.sum_comm]
+      simp_rw [hC]
+    simp_rw [hs]
+    have he (i j : Fin d) :
+        (MatrixMap.choi_matrix (It t) (i, i) (j, j)).re =
+        t + if j = i then (1 - t) / d else 0 := by
+      by_cases h : j = i
+      · subst j; simp [choi_It_formula]
+      · simp [choi_It_formula, h, Ne.symm h]
+    simp_rw [he, Finset.sum_add_distrib]
+    simp only [Finset.sum_ite_eq', Finset.mem_univ, ite_true, Finset.sum_const,
+      Finset.card_univ, Fintype.card_fin, nsmul_eq_mul]
+    rw [c_sq hd (le_of_lt htl)]
+    field_simp
+    <;> ring
+  have hR : (∑ x, ∑ j, (C x (j, x) (j, x)).re) =
+      d * sMax d t + 1 - sMax d t := by
+    have he (x : Fin d) : (∑ j, (C x (j, x) (j, x)).re) =
+        sMax d t + (1 - sMax d t) / d := by
+      have h := congrArg Complex.re (trace_condition_entry x x x htrace)
+      simpa [C, Complex.re_sum, Qs, Q] using h
+    simp_rw [he]
+    simp only [Finset.sum_const, Finset.card_univ, Fintype.card_fin, nsmul_eq_mul]
+    field_simp
+    <;> ring
+  simp_rw [qCertificate_gram, ← hB]
+  change (∑ x, ((∑ i, ∑ j, if j ≠ i then (C x (j, i) (j, i)).re else 0) -
+    (∑ j, (C x (j, x) (j, x)).re) +
+    ((a2 d t + b t) / b t) * ((∑ i, (C x (i, i) (i, i)).re) -
+      (a2 d t / c d t) * (∑ i, ∑ j, C x (i, i) (j, j)).re))) = 0
+  rw [Finset.sum_add_distrib, Finset.sum_sub_distrib, ← Finset.mul_sum,
+    Finset.sum_sub_distrib, ← Finset.mul_sum, hO, hR, hD, hM]
+  have hb0 : b t ≠ 0 := ne_of_gt (Real.sqrt_pos.mpr (by linarith))
+  have hc0 : c d t ≠ 0 := ne_of_gt (c_pos hd htl)
+  have hb := b_sq (le_of_lt htu)
+  have hs := sMax_eq hd (le_of_lt htl) (le_of_lt htu)
+  have h1 := one_sub_sMax_eq_a2_sq hd (le_of_lt htl) (le_of_lt htu)
+  have ha := a2_channel_coeff hd (le_of_lt htl) (le_of_lt htu)
+  have hrel : c d t = b t + d * a2 d t := by
+    change c d t = b t + d * ((c d t - b t) / d)
+    field_simp
+    <;> ring
+  field_simp at ha hs
+  have hds : d * t + 1 - t - a2 d t * c d t = b t * (a2 d t + b t) := by
+    rw [hrel]
+    nlinarith only [ha, hb]
+  have hrs : d * sMax d t + 1 - sMax d t =
+      ((d : ℝ) - 1) * (b t) ^ 2 + (a2 d t + b t) ^ 2 := by
+    nlinarith only [hs, h1]
+  field_simp
+  rw [hds, hrs, ← hb]
+  ring
 
 private def realDiagonalForm (d : ℕ) (aa bb cc : ℝ) (x : Fin d) (v : Fin d → ℝ) : ℝ :=
   ((aa + bb) / bb) * ((∑ i, v i ^ 2) - (aa / cc) * (∑ i, v i) ^ 2) - v x ^ 2
