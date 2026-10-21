@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:5011ec1137470931488cc3eaf9e0dbf4681a12bf2a78006d6bec3c5039c871ba
+  normalized_sha256: sha256:5011ec1137470931488cc3eaf9e0dbf4681a12bf2a78006d6bec3c5039c871ba
+cas_ref: sha256:5011ec1137470931488cc3eaf9e0dbf4681a12bf2a78006d6bec3c5039c871ba
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: Defines a target-residual relation and introduces action readouts.
+    previous_atom_id: e7e1d7c77ee5e69a8e34531d019171ac995068a250a84d33f87f0f27f43f8bf8
+    next_atom_id: 93e6cd347da5cec31d96c06d24f9a7e6c01d65d43618cb4f80e3cdbe36d26c26

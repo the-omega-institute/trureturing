@@ -1,0 +1,9 @@
+fingerprints:
+  raw_sha256: sha256:cfdda4e3e747ec22ce316e39ab0e48c5e946abe02f4d90b8718cc76db50fd88c
+  normalized_sha256: sha256:cfdda4e3e747ec22ce316e39ab0e48c5e946abe02f4d90b8718cc76db50fd88c
+cas_ref: sha256:cfdda4e3e747ec22ce316e39ab0e48c5e946abe02f4d90b8718cc76db50fd88c
+coverage_gids:
+  - gid: D5/S3/ConceptDynamics/Policy/DeterministicPolicySectionCount.deterministic_policy_sections_lower_bound
+    target_statement_id: sha256:d77c69faf1030c9a600cee65fe6e8b535cfa171f84c55fe9b7dd85bd18c201e6
+receipts:
+  unresolved_subitems: []
