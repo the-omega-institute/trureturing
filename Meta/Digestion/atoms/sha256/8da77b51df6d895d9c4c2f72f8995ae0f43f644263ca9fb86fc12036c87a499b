@@ -1,0 +1,67 @@
+**Lemma 3.3 (Exact singular projection).** For either designated
+strict $\Phi$ root and every real $p$,
+
+$$
+\widehat s(r_\sigma,p)=s_\sigma(p),\qquad
+R(r_\sigma,p,s_\sigma(p))=0.
+\tag{3.5}
+$$
+
+The polynomial certificate for the second equality is
+
+$$
+\operatorname{rem}_r\bigl(D^7R(r,p,\widehat s(r,p)),\Phi(r)\bigr)=0
+\quad\text{in }\mathbb Q[p][r].
+\tag{3.6}
+$$
+
+Proof. Use the polynomials $j(t),n(t)$ of (2.4), and form
+
+$$
+\begin{aligned}
+F_5(t)&=j(t)n(t)+(n(t)+5/4)
+       \{(196/9)j(t)n(t)-15n(t)-10j(t)\},\\
+F_6(t)&=j(t)n(t)+(n(t)+5/2)
+       \{50j(t)n(t)-36n(t)-20j(t)\},\\
+F_0(t)&=84+24n(t).
+\end{aligned}
+\tag{3.7}
+$$
+
+Then $F_5=jnA_5$, and the source expression is
+
+$$
+s(t,p)=F_0(t)+(p-24)F_6(t)/F_5(t).
+\tag{3.8}
+$$
+
+At the designated roots $j,n>0$ and $A_5\ne0$ by O,
+Theorems 4.2 and 29.2, also with the explicit guards of Lemma 2.4.
+Thus this division is defined.
+
+For an explicit remainder convention reduce every occurrence of
+$t^4$ by
+
+$$
+t^4\equiv
+\frac{931328t^3-540800t^2+50728t+853}{438272}\pmod\Phi,
+\tag{3.9}
+$$
+
+in descending order of degree. Equivalently, let $q_0=1,q_1=t$,
+$q_2=t^2,q_3=t^3$, and for $m\ge4$ put
+
+$$
+q_m=\frac{931328q_{m-1}-540800q_{m-2}
+                  +50728q_{m-3}+853q_{m-4}}{438272}.
+\tag{3.10}
+$$
+
+The remainder of $\sum_m a_mt^m$ is $\sum_m a_mq_m$.
+Substitution of (3.4) and (3.7) gives the following coefficient
+vectors of remainders, in the order $(1,t,t^2,t^3)$:
+
+| Polynomial | Remainder vector modulo $\Phi$ |
+| --- | --- |
+| $DF_6+3A_sF_5$ | $(0,0,0,0)$ |
+| $D(F_0F_5-24F_6)+3B_sF_5$ | $(0,0,0,0)$ |

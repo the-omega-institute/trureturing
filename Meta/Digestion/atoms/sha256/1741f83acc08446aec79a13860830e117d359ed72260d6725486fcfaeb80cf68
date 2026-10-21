@@ -1,0 +1,81 @@
+**Theorem 6.1 (Singular worlds and all possible regular companions).**
+The entire child $\mathcal C_-$ contains exactly the singular world
+$S_-(p_J)$ among its $\Lambda=0$ members and at most one
+nonsingular world. Any such nonsingular world has source coordinate
+$r=\alpha_{-,1}(p_J,s_-(p_J))$ and width in
+$[189704,189705]/10^6$.
+
+The entire child $\mathcal C_+$ contains exactly $S_+(p_J)$ among
+its $\Lambda=0$ members. Every nonsingular member belongs to one
+of the three categories $k=1,2,4$, with
+$r=\alpha_{+,k}(p_J,s_+(p_J))$ and its width in the corresponding
+interval of Lemma 5.3. Each category contains at most one complete
+world. Consequently
+
+$$
+|\mathcal C_-|\le2,\qquad |\mathcal C_+|\le4.
+\tag{6.1}
+$$
+
+These are upper bounds; no existence assertion for any regular
+projected candidate is included.
+
+Proof. Let $W$ be any member of one selected child. Write
+$e=d-24$ and use the zero-safe parent equation of O, Theorem 2.1:
+
+$$
+e\Lambda+\frac{24}{5}(b-1/8)B_{\rm coef}=0,\qquad
+B_{\rm coef}=\frac{2(2+5b)}{TU}>0.
+\tag{6.2}
+$$
+
+First suppose $\Lambda=0$. Positivity forces $b=1/8$, and
+O (4.9) gives $\Phi(r)=0$. O, Theorem 29.2, identifies every
+complete fifth-response lift at this stratum as exactly
+$S_-(p_J)$ or $S_+(p_J)$, with actual acquired sixth-M responses
+$s_-(p_J)$ and $s_+(p_J)$. Lemma 2.4 puts these responses in
+disjoint boxes. Hence only $S_\sigma(p_J)$ belongs to
+$\mathcal C_\sigma$, and it does belong by its actual response
+equality. The cited reconstruction provides a legal source, one
+entire gain and one fixed drift, with a nonzero entire gain forced
+by the unequal original $0,24$ rows. This uses actual $u_M$,
+not merely the vanishing of $\mathsf A,\mathsf B$ at a singular
+base point.
+
+Now suppose $\Lambda\ne0$. O, Theorem 20.2, gives (3.3), including
+the necessary finite-root projection under specialization. Since
+$0<r<1$, (3.2) leaves $E(r)R(r,p_J,s_\sigma(p_J))=0$.
+Lemma 5.2 excludes every strict base-factor possibility in this
+nonsingular branch. Thus $r$ is one of the four or six strict $R$
+roots exhausted by Lemmas 4.2 and 4.4.
+
+At every one of these roots Lemma 5.3 excludes
+$\mathcal L_1=0$ and (3.3) forces the unique possible width
+$b=-\mathcal L_0/\mathcal L_1$. The negative-width rows
+$(-,3),(-,4),(+,3),(+,5)$ violate $b>0$.
+At the exact parameter pair, Lemma 4.4 identifies the rows
+$(-,2)$ and $(+,6)$ exactly with $r_-$ and $r_+$.
+The $\Phi$ identity (5.2) and the same nonzero minor force
+$b=1/8$ at these roots. O (4.9) then forces $\Lambda=0$.
+Thus these two projected categories contribute no nonsingular
+companion; their actual singular member has already been counted
+by its acquired response.
+
+The only possible remaining regular categories are $(-,1)$ and
+$(+,1),(+,2),(+,4)$. Each has exactly one projected $r$ coordinate
+and at most one $b$. O, Theorem 12.3, gives at most one complete
+world at that strict source. With $A_5$ as in O (12.1), its
+squared-norm denominator $Z=\Lambda^2+A_5^2>0$ is justified
+by O, Lemma 12.2; no auxiliary inverse-chart denominator is
+required. It fixes the drift and all four coefficients of the
+entire polynomial. In particular it includes every lower-degree,
+sampled-zero, repeated-root and zero-drift possibility.
+
+The two branches exhaust all legal worlds. No drift, gain sample,
+gain leading coefficient, root difference or specialized minor
+has been cancelled without a guard. The determinant implication
+holds for every finite real $b$ and therefore covers arbitrarily
+large positive $b,c$. The illegal endpoints $r=0,1$ are outside
+the original domain. This proves the coverage and the upper
+bounds (6.1). ∎
+
