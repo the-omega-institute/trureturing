@@ -3809,6 +3809,10 @@ $$
 \tag{157.1}
 $$
 
+Here $B$ is the two-dimensional one-particle mode space, while
+$\mathbb C^4_B$ denotes its four-dimensional fermionic Fock factor
+$\mathcal F_-(B)$.
+
 The tensor product here is the ordinary occupation tensor product induced
 by the declared creation order.  It is the fixed cut for every partial
 transpose below.
@@ -3993,7 +3997,8 @@ NPT of the specified native member.
 
 ## 161. An explicit full-unitary NPT placement
 
-Choose an orthonormal basis $b_0,b_1,b_2,b_3$ of $B$.  On
+Choose an orthonormal basis $b_0,b_1,b_2,b_3$ of the four-dimensional
+fermionic Fock factor $\mathcal F_-(B)\cong\mathbb C^4_B$.  On
 $\mathcal S=\mathbb C^2\otimes\operatorname{span}\{b_0,b_1\}$ use the
 ordered product basis
 
@@ -4117,8 +4122,9 @@ $$
 This is a matrix-level proof of NPT at the fixed cut.
 
 The witness uses the full global unitary class.  If $b_0$ is chosen as the
-$B$-vacuum, then $|0b_0\rangle$ is the total vacuum and has weight $t/Z$
-in (161.2), while the original Gibbs vacuum has weight $1/Z$.  For
+vacuum vector of $\mathcal F_-(B)$, then $|0b_0\rangle$ is the total
+vacuum and has weight $t/Z$ in (161.2), while the original Gibbs vacuum
+has weight $1/Z$.  For
 $t<1$, the one-dimensional vacuum sector cannot change weight under any
 unitary commuting with total number.  Therefore this witness is not
 number-preserving.  No physical implementation or SSR legality is
