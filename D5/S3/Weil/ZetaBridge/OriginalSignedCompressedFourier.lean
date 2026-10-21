@@ -85,8 +85,9 @@ theorem normalization_dictionary (L : ℝ) (hL : 0 < L) (n : ℤ) (x : ℝ) :
   have hp : wave (frequency L n) (L / 2) = (-1 : ℂ) ^ n := by
     unfold wave frequency
     rw [show ((2 * Real.pi * (n : ℝ) / L) * (L / 2)) =
-        (n : ℝ) * Real.pi by field_simp [hL.ne']; ring]
-    rw [Complex.ofReal_mul, mul_assoc, Complex.exp_int_mul, Complex.exp_pi_mul_I]
+        (n : ℝ) * Real.pi by field_simp [hL.ne']]
+    rw [Complex.ofReal_mul, Complex.ofReal_intCast, mul_assoc,
+      Complex.exp_int_mul, Complex.exp_pi_mul_I]
   have hc : wave (frequency L n) x = OriginalEvenCosineComplete.character (L / 2) n x := by
     simp only [wave, frequency, OriginalEvenCosineComplete.character, fourier_coe_apply]
     congr 1
@@ -103,7 +104,8 @@ private lemma mode_product (L : ℝ) (hL : 0 < L) (m n : ℤ) (x s : ℝ) :
     norm_cast
     nlinarith [Real.sq_sqrt hL.le]
   simp only [mode, map_div₀, Complex.conj_ofReal]
-  rw [show x + s + L / 2 = (x + L / 2) + s by ring, wave_add]
+  rw [show x + s + L / 2 = (x + L / 2) + s by ring,
+    wave_add (frequency L n) (x + L / 2) s]
   rw [show conj (wave (frequency L m) (x + L / 2)) / (Real.sqrt L : ℂ) *
       (wave (frequency L n) (x + L / 2) * wave (frequency L n) s /
         (Real.sqrt L : ℂ)) =
@@ -242,24 +244,26 @@ theorem entry_paired (L : ℝ) (hL : 0 < L) (m n : ℤ) (h : ℝ)
     entry_nonneg L hL n m h hh hcap]
   by_cases he : m = n
   · subst n
-    simp only [if_pos rfl, map_mul, Complex.conj_ofReal]
-    unfold wave
-    simp only [Complex.exp_mul_I, Complex.ofReal_mul, Complex.ofReal_neg,
-      ← Complex.ofReal_cos, ← Complex.ofReal_sin, Complex.cos_neg, Complex.sin_neg,
-      map_add, map_mul, Complex.conj_ofReal, Complex.conj_I]
+    simp only [ite_eq_left rfl, wave, Complex.exp_ofReal_mul_I, mul_neg,
+      Real.cos_neg, Real.sin_neg, map_add, map_mul, map_neg, map_div₀,
+      Complex.conj_ofReal, Complex.conj_I]
     push_cast
-    ring
-  · rw [if_neg he, if_neg (Ne.symm he), if_neg he]
-    unfold wave
-    simp only [map_div₀, map_sub, map_mul, Complex.conj_I, Complex.conj_ofReal,
-      Complex.exp_mul_I, Complex.ofReal_mul, Complex.ofReal_neg,
-      ← Complex.ofReal_cos, ← Complex.ofReal_sin, Complex.cos_neg, Complex.sin_neg,
-      map_add, map_neg, map_intCast]
+    simp only [map_mul, map_add, map_sub, map_div₀, map_neg, map_inv₀,
+      Complex.conj_ofReal, Complex.conj_I, ← Complex.cos_conj, ← Complex.sin_conj]
+    field_simp [Complex.ofReal_ne_zero.mpr hL.ne']
+    <;> ring
+  · rw [ite_eq_right he, ite_eq_right (Ne.symm he), ite_eq_right he]
+    simp only [wave, Complex.exp_ofReal_mul_I, mul_neg, Real.cos_neg, Real.sin_neg,
+      map_div₀, map_sub, map_add, map_mul, map_neg, map_intCast,
+      Complex.conj_I, Complex.conj_ofReal]
     have hd : (n : ℂ) - (m : ℂ) ≠ 0 := by exact_mod_cast (sub_ne_zero.mpr (Ne.symm he))
+    have hd' : (m : ℂ) - (n : ℂ) ≠ 0 := sub_ne_zero.mpr (by exact_mod_cast he)
+    have hd'' : -(n : ℂ) + (m : ℂ) ≠ 0 := by
+      simpa only [sub_eq_add_neg, add_comm] using hd'
     push_cast
-    field_simp [hd, Complex.I_ne_zero, Real.pi_ne_zero]
-    simp only [Complex.I_sq]
-    ring
+    simp only [mul_comm]
+    field_simp [hd, hd', hd'', Complex.I_ne_zero, Real.pi_ne_zero]
+    <;> ring
 
 /-- The uniform mode bound is obtained from the literal overlap integral.
 In particular no desired matrix contraction is an input. -/

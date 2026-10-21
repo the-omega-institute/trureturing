@@ -40,7 +40,8 @@ private lemma mode_memLp (L : ℝ) (hL : 0 < L) (n : ℤ) :
   exact Eventually.of_forall fun x => by
     have hx := mode_norm_sq L hL n x
     have hr := Real.sq_sqrt (inv_nonneg.mpr hL.le)
-    nlinarith [norm_nonneg (mode L n x), Real.sqrt_nonneg (L⁻¹)]
+    apply (sq_le_sq₀ (norm_nonneg (mode L n x)) (Real.sqrt_nonneg (L⁻¹))).mp
+    rw [hx, hr]
 
 private lemma line_memLp (L : ℝ) (hL : 0 < L) (n : ℤ) :
     MemLp (lineMode L n) 2 (volume : Measure ℝ) := by
@@ -121,7 +122,7 @@ theorem translation_squared_norm (L : ℝ) (hL : 0 < L) (n : ℤ) (h : ℝ)
   have hiG : Integrable (fun x => ‖G x‖ ^ 2) :=
     (memLp_two_iff_integrable_sq_norm hG.aestronglyMeasurable).mp hG
   have hip : Integrable (fun x => conj (F x) * G x) := by
-    have H := L2.integrable_inner (hF.toLp F) (hG.toLp G)
+    have H := L2.integrable_inner (𝕜 := ℂ) (hF.toLp F) (hG.toLp G)
     apply H.congr
     filter_upwards [hF.coeFn_toLp, hG.coeFn_toLp] with x hx hy
     simp [hx, hy, RCLike.inner_apply', mul_comm]
@@ -134,7 +135,7 @@ theorem translation_squared_norm (L : ℝ) (hL : 0 < L) (n : ℤ) (h : ℝ)
     exact line_energy L hL n
   have he (x : ℝ) : ‖F x - G x‖ ^ 2 =
       ‖F x‖ ^ 2 - 2 * (conj (F x) * G x).re + ‖G x‖ ^ 2 := by
-    simpa [RCLike.inner_apply', mul_comm] using norm_sub_sq (F x) (G x)
+    simpa [RCLike.inner_apply', mul_comm] using norm_sub_sq (𝕜 := ℂ) (F x) (G x)
   unfold translationSquaredNorm
   change (∫ x, ‖F x - G x‖ ^ 2) = _
   simp_rw [he]
@@ -195,7 +196,10 @@ private lemma displacedMode_bound (L : ℝ) (hL : 0 < L) (n : ℤ) (h : ℝ)
   have hid : (Real.sqrt (2 / L) * Real.sqrt h) ^ 2 = 2 * h / L := by
     rw [mul_pow, hs, ht]
     ring
-  nlinarith [norm_nonneg (displacedMode L hL n h), sq_abs (frequency L n)]
+  apply (sq_le_sq₀ (norm_nonneg (displacedMode L hL n h)) (add_nonneg hf hw)).mp
+  have hw2 : (|frequency L n| * h) ^ 2 = frequency L n ^ 2 * h ^ 2 := by
+    rw [mul_pow, sq_abs]
+  nlinarith [mul_nonneg hf hw]
 
 /-- Literal finite complex head displacement on the line L2 carrier. -/
 def displacedHead (L : ℝ) (hL : 0 < L) (S : Finset ℤ) (v : ℤ → ℂ) (h : ℝ) :
@@ -245,16 +249,20 @@ theorem finite_head_translation_bound_l2 (L : ℝ) (hL : 0 < L) (S : Finset ℤ)
       Real.sqrt (S.card : ℝ) * Real.sqrt (∑ n ∈ S, ‖v n‖ ^ 2) := by
     have he : (Real.sqrt (S.card : ℝ) * Real.sqrt (∑ n ∈ S, ‖v n‖ ^ 2)) ^ 2 =
         (S.card : ℝ) * (∑ n ∈ S, ‖v n‖ ^ 2) := by rw [mul_pow, hrc, hrm]
-    nlinarith [mul_nonneg (Real.sqrt_nonneg (S.card : ℝ))
-      (Real.sqrt_nonneg (∑ n ∈ S, ‖v n‖ ^ 2))]
+    apply (sq_le_sq₀ hsum (mul_nonneg (Real.sqrt_nonneg (S.card : ℝ))
+      (Real.sqrt_nonneg (∑ n ∈ S, ‖v n‖ ^ 2)))).mp
+    rw [he]
+    simpa only [mul_comm] using hc
   have hw' : (∑ n ∈ S, ‖v n‖ * |frequency L n|) ≤
       Real.sqrt (∑ n ∈ S, ‖v n‖ ^ 2) * Real.sqrt (∑ n ∈ S, frequency L n ^ 2) := by
     have he : (Real.sqrt (∑ n ∈ S, ‖v n‖ ^ 2) *
         Real.sqrt (∑ n ∈ S, frequency L n ^ 2)) ^ 2 =
         (∑ n ∈ S, ‖v n‖ ^ 2) * (∑ n ∈ S, frequency L n ^ 2) := by
       rw [mul_pow, hrm, hrf]
-    nlinarith [mul_nonneg (Real.sqrt_nonneg (∑ n ∈ S, ‖v n‖ ^ 2))
-      (Real.sqrt_nonneg (∑ n ∈ S, frequency L n ^ 2))]
+    apply (sq_le_sq₀ hwsum (mul_nonneg (Real.sqrt_nonneg (∑ n ∈ S, ‖v n‖ ^ 2))
+      (Real.sqrt_nonneg (∑ n ∈ S, frequency L n ^ 2)))).mp
+    rw [he]
+    exact hw
   have hs : Real.sqrt (2 / L) * Real.sqrt (S.card : ℝ) =
       Real.sqrt (2 * (S.card : ℝ) / L) := by
     rw [← Real.sqrt_mul (by positivity : 0 ≤ 2 / L)]

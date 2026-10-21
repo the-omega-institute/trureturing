@@ -39,8 +39,8 @@ private lemma matrix_at_origin : matrix 1 0 0 0 = 1 := by
   simp only [matrix, abs_zero, show ¬ (1 : ℝ) ≤ 0 by norm_num, if_false,
     le_refl, if_true, sub_zero, div_self (by norm_num : (1 : ℝ) ≠ 0),
     Complex.ofReal_one, one_mul, neg_zero]
-  change Complex.exp 0 = 1
-  exact Complex.exp_zero
+  change Complex.exp (((frequency 1 0 * 0 : ℝ) : ℂ) * Complex.I) = 1
+  simp
 
 private lemma rejected_law : ¬ arena.Law rejected := by
   intro h
