@@ -37,7 +37,10 @@ internal sealed class ShalaCosetLikeAtomisticLatticeDocument : IScribeDocumentDe
                 AssessedProvenance.FromRepo(Source),
                 Blocks(Paragraph(Text(
                     "The twelve-element lattice has eight singleton join-irreducibles. Its element x has three join-irreducibles below it, so 3 does not divide 8. The upper Möbius coefficient of x vanishes, and the remaining terms give P L s = 1 − 2^(−s) − 4·8^(−s), an ordinary Dirichlet series. Thus the lattice is weakly coset-like but not strongly coset-like, refuting the universal implication and answering the question affirmatively. The d-divisible partition-lattice question and minimality are not settled here."))),
-                DescribeRole.Theorem)
+                DescribeRole.Theorem,
+                new OpenProblemResolutionClaim(
+                    ProblemSlugRef.Create("shala-2024-coset-like-lattice-question-7-4"),
+                    ResolutionKind.Refuted))
         ), []));
 
     private static DocumentBlock Node(string id, string title, string name, Formula formula, string prose, AssessedProvenance provenance) =>

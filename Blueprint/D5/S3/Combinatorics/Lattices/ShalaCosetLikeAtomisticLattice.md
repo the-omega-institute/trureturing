@@ -94,6 +94,10 @@ $$\neg \left(\forall L \in \operatorname{Type},\; [\operatorname{Lattice}\left(L
 
 *Proof.* Machine-checked in Lean as `D5/S3/Combinatorics/Lattices/ShalaCosetLikeAtomisticLattice.result` (`✓ std3`). ∎
 
+*Resolves.* `Problems/shala-2024-coset-like-lattice-question-7-4` (refuted) by `D5/S3/Combinatorics/Lattices/ShalaCosetLikeAtomisticLattice.result`.
+
+<!-- scribe-open-problem-resolution-v1 {"problem_slug":"shala-2024-coset-like-lattice-question-7-4","declaration_gid":"D5/S3/Combinatorics/Lattices/ShalaCosetLikeAtomisticLattice.result","resolution_kind":"refuted"} -->
+
 *Source.* Repository-derived.
 
 *Acknowledgement.* Besfort Shala (2024). *The Probabilistic Zeta Function of a Finite Lattice*. URL: <https://arxiv.org/abs/2112.13766v6>.
