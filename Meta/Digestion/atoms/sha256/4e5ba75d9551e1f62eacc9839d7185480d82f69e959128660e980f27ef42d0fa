@@ -1,0 +1,37 @@
+**Convention 196.2 (Fixed-source input comparison, VI §154).**
+For the input comparison in [N, §154], the original
+single-copy state $\rho$ and its Alice occupation dephasing
+$\overline\rho=\mathcal D_A(\rho)$ agree on all single-copy local
+SSR product-observable statistics. On one Alice mode, allowed local-number
+observables are diagonal, so removing Alice's occupation off-diagonal blocks
+does not change their product expectations. In the aligned coordinates,
+
+$$
+\overline\rho=|0\rangle\langle0|\otimes\operatorname{diag}(a,b)\otimes\tau
+ +|1\rangle\langle1|\otimes\operatorname{diag}(c,d)\otimes\tau.
+$$
+
+Both Bob blocks are positive and commute with Bob number; normalizing each
+nonzero block gives an explicit separable mixture. The original and dephased
+preparations have effective factors $\sigma$ and $\operatorname{diag}(a,b,c,d)$.
+Applying F to two compatible
+preparations of either input gives the same success probability and diagonal
+populations. The latter input has no active middle coherence.
+
+On the chosen source's selected space the Hermitian witness
+
+$$
+\mathsf W=|A_1b_2\rangle\langle A_2b_1|
+ +|A_2b_1\rangle\langle A_1b_2|
+ =\frac{X_A\otimes X_b+Y_A\otimes Y_b}{2}
+$$
+
+uses rail Pauli operators $X,Y$, with Bob's operators zero on spectators,
+and preserves local total number. Its conditional
+expectations are $-2r_0^2\mu/P_F=-\eta$ and $0$, respectively, in the
+literal CAR convention. Their difference for $\mu>0$ does not require
+entanglement. This comparison uses one fixed $q,\beta$ and joint local
+access; it does not identify $\overline\rho$ with the other native model
+or claim that the original single-copy observation rule was already a
+tensor-compatible process equivalence.
+

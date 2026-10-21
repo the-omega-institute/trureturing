@@ -2661,3 +2661,186 @@ direct local-block proof of §§192–194.
   domain. It concerns the trace-norm functional of Convention 191.2.
 
 ## 200.99 追加锚（本行以下为增补区）
+
+## 201. Measure-free packing and the resolution budget
+
+### 201.1 A metric-doubling replacement for the volume hypothesis
+
+The Ahlfors measure in §160 is one sufficient way to turn a resolved
+occurrence set into a packing bound. The measure is not essential to that
+counting step. The following version uses only a uniform metric covering
+property and therefore has a different scope.
+
+**Definition 201.1 (uniform metric-doubling occurrence bridge).** Retain the
+occurrence sets $V_n$, their counts and heights from (160.1). Let
+$\iota_n:V_n\hookrightarrow X$ map every task-distinct occurrence into one
+metric space $(X,\rho)$. Assume that, for fixed $\delta>0$ and fixed
+$A,B>0$,
+
+$$
+\rho(\iota_n(x),\iota_n(y))\ge\delta\quad(x\ne y),
+\qquad
+\rho(o,\iota_n(x))\le A(n-1)+B.
+\tag{201.1}
+$$
+
+Assume also that every closed ball at every center and radius used below is
+covered by at most $K\ge2$ closed balls of half its radius, with the same
+finite $K$ at every level. Put
+
+$$
+R_n=A(n-1)+B,
+\qquad q=\log_2K.
+\tag{201.2}
+$$
+
+No measure, Green kernel, generator, or spatial dimension is part of this
+definition.
+
+**Theorem 201.2 (metric-doubling packing obstruction).** Under Definition
+201.1,
+
+$$
+\boxed{
+N_n\le
+K^{\left\lceil\log_2\left(1+\frac{2R_n}{\delta}\right)\right\rceil}.
+}
+\tag{201.3}
+$$
+
+Proof. Let
+
+$$
+k_n=\left\lceil\log_2\left(1+\frac{2R_n}{\delta}\right)\right\rceil.
+$$
+
+Iterating the half-radius covering property $k_n$ times covers the closed
+ball $\overline B(o,R_n)$ by at most $K^{k_n}$ closed balls of radius
+$R_n/2^{k_n}$. Since
+
+$$
+\frac{2R_n}{2^{k_n}}<\delta,
+$$
+
+each final ball has diameter strictly smaller than $\delta$ and contains at
+most one point of the $\delta$-separated set $\iota_n(V_n)$. All occurrences
+lie in the original ball by (201.1), so (201.3) follows. $\square$
+
+If $\delta$ is fixed, (201.3) is polynomial in $n$:
+
+$$
+K^{\lceil\log_2(1+2R_n/\delta)\rceil}
+=O(n^q).
+\tag{201.4}
+$$
+
+But $N_n=2F_{n+1}-1$ has
+
+$$
+\log N_n=n\log\varphi+O(1).
+\tag{201.5}
+$$
+
+Consequently no one metric-doubling carrier with fixed $K,A,B,\delta$ can
+resolve every prefix. This is a measure-free obstruction; it does not say
+that the source has metric dimension $q$, and it does not select $q=3$.
+
+### 201.2 Necessary resolution budget
+
+The same estimate gives a quantitative condition when the resolution is
+allowed to vary. Since
+
+$$
+\left\lceil\log_2(1+2R_n/\delta_n)\right\rceil
+<\log_2(1+2R_n/\delta_n)+1,
+$$
+
+every prefix with $N_n>K$ must satisfy
+
+$$
+\boxed{
+\delta_n
+<
+\frac{2R_n}{(N_n/K)^{1/q}-1}
+=
+\frac{4R_n}{N_n^{1/q}-2}.
+}
+\tag{201.6}
+$$
+
+The second form uses $K^{1/q}=2$. Thus, for fixed $K,A,B$, the required
+resolution is at most
+
+$$
+\delta_n=O\!\left(n\,\varphi^{-n/q}\right).
+\tag{201.7}
+$$
+
+This is a necessary budget, not an embedding construction and not a
+sufficient stability condition. Passing from a finite prefix to an infinite
+carrier therefore requires a declared scale law; a fixed positive spatial
+resolution is incompatible with the stated uniform bridge.
+
+**Proposition 201.3 (finite exact certificate).** For
+
+$$
+K=8,\qquad A=B=\delta=1,\qquad n=26,
+$$
+
+one has $R_{26}=26$, $N_{26}=2F_{27}-1=392835$, and
+
+$$
+\left\lceil\log_2(1+2R_{26}/\delta)\right\rceil
+=\lceil\log_2 53\rceil=6.
+$$
+
+The cover capacity is therefore $8^6=262144$, so (201.3) fails:
+
+$$
+\boxed{392835>262144.}
+\tag{201.8}
+$$
+
+This rejects these constants at this prefix. It is not by itself an
+all-prefix theorem, and it does not identify $K=8$ with a three-dimensional
+covering number.
+
+### 201.3 Why an upper measure bound alone is insufficient
+
+Replacing the doubling condition by an upper estimate on ball masses loses
+the packing conclusion unless a uniform lower mass or a direct covering
+bound is also supplied. A concrete countermodel is the infinite rooted
+binary occurrence tree with unit graph metric. Give a vertex at depth $h$
+the mass
+
+$$
+\mu(v)=Z^{-1}4^{-h},
+\qquad
+Z=\sum_v4^{-\operatorname{depth}(v)}.
+\tag{201.9}
+$$
+
+Since there are at most $2^h$ vertices at depth $h$, $1\le Z\le2$.
+Every occurrence remains separated by one unit and the prefix of height
+$n-1$ lies in a ball of radius $n$. Nevertheless, for any fixed $d>0$ and
+any $t\ge1/3$,
+
+$$
+\mu(B(z,t))\le1\le 3^d t^d.
+\tag{201.10}
+$$
+
+Thus the required upper $t^d$ estimate at the macroscopic radii can hold
+while exponentially many occurrences still fit in radius $n$. At radius
+$1/3$, the ball about a vertex contains only that vertex and its mass tends
+to zero along any infinite spine. There is no uniform lower mass and no
+metric-doubling packing control.
+
+This countermodel does not assert an upper estimate at arbitrarily small
+radii; it isolates exactly the missing hypothesis. Therefore §160's
+measure-theoretic proof may be replaced by Theorem 201.2 only after a
+metric-doubling or direct packing property has been established. Neither
+route supplies the still-missing occurrence-to-physical-carrier metric,
+transport, clock, observation, or dimension-sensitive invariant.
+
+## 201.99 追加锚（本行以下为增补区）

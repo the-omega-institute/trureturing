@@ -1,0 +1,48 @@
+**Proposition 183.2 (A second exact obstruction with unequal endpoint weights).**
+Choose
+
+$$
+t=\frac1{10},\qquad
+v=\frac{(1,\sqrt{19},0)}{\sqrt{20}},\qquad
+w=\frac{(\sqrt5,2,1)}{\sqrt{10}}.
+\tag{183.7}
+$$
+
+Then the same failure of necessity holds, with
+
+$$
+x=\frac1{20},\quad y=\frac12,\quad z=\frac{19}{50},\qquad
+q_0=\frac{140049}{220000}<1,\quad
+q_3=\frac{21951}{38200}<1.
+\tag{183.8}
+$$
+
+Proof. The squared coordinates of each full vector sum to one, and
+$z=(19/20)(4/10)=19/50$. Substitution in (178.4) gives (183.8).
+The four residuals in (180.1), in the same order as (183.5), are
+
+$$
+\frac{79951}{220000},\qquad\frac{20}{191},\qquad
+\frac1{55},\qquad\frac{16249}{3820000}.
+\tag{183.9}
+$$
+
+They are all positive. In contrast, (183.1) yields the directly
+reproducible diagonal entry
+
+$$
+(K_1)_{11}=\frac1{10}-\frac{1539}{40000}-\frac{18}{275}
+=-\frac{1729}{440000}<0.
+\tag{183.10}
+$$
+
+This is again a nonpassive member below $t=1/3$: $z>0$ and $x\ne y$.
+Indeed $0<19/50<19/40=(1-x)(1-y)$, so its two middle vectors are
+neither orthogonal nor collinear. Theorem 181.1 establishes separability.
+
+Both propositions are counterexamples to necessity of $K_0,K_1\succeq0$.
+They are separable states, not examples of PPT entanglement. The common
+factorization in (179.2) lets one product direction carry both actual
+couplings; a failure of the separate-coherence allocation does not
+obstruct that identity.
+
