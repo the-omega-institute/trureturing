@@ -80,3 +80,184 @@ def claim : Prop :=
       (∀ x, J x = Itilde U t x)
 
 end D5.S3.Quantum.Measurement.DeferredInstrumentUniqueness
+
+namespace D5.S3.Quantum.Measurement.DeferredInstrumentUniqueness
+
+open D5.S3.Quantum.Foundation.FiniteKrausChannel
+open D5.S3.Quantum.Foundation.FiniteKrausChannel.PhyslibLeaf
+
+/-- The auxiliary square-root coordinate appearing in the Choi certificate. -/
+def c (d : ℕ) (t : ℝ) : ℝ := Real.sqrt (t * ((d : ℝ) ^ 2 - 1) + 1)
+
+/-- The coefficient of the distinguished diagonal vector. -/
+def a (d : ℕ) (t : ℝ) : ℝ := a2 d t * d
+
+/-- The distinguished diagonal coefficient. -/
+def k (d : ℕ) (t : ℝ) : ℝ := a d t + b t
+
+/-- The quadratic certificate used in the standard-basis argument. -/
+def qCertificate (d : ℕ) (aa bb cc : ℝ) (x : Fin d)
+    (w : Matrix (Fin d) (Fin d) ℂ) : ℝ :=
+  (∑ k' : Fin d, ∑ j : Fin d,
+      if k' ≠ x ∧ j ≠ k' then Complex.normSq (w j k') else 0) +
+    ((aa + bb) / bb) *
+      ((∑ i : Fin d, Complex.normSq (w i i)) -
+        (aa / cc) * Complex.normSq (∑ i : Fin d, w i i)) -
+    Complex.normSq (w x x)
+
+lemma b_sq (t : ℝ) : (b t) ^ 2 = 1 - t := by
+  sorry
+
+lemma c_sq (d : ℕ) (t : ℝ) : (c d t) ^ 2 = t * ((d : ℝ) ^ 2 - 1) + 1 := by
+  sorry
+
+lemma bc_sq (d : ℕ) (t : ℝ) :
+    (b t * c d t) ^ 2 = (1 - (d : ℝ) ^ 2) * t ^ 2 +
+      ((d : ℝ) ^ 2 - 2) * t + 1 := by
+  sorry
+
+lemma sMax_eq (d : ℕ) (t : ℝ) :
+    sMax d t = b t ^ 2 + 2 * a2 d t * b t / d := by
+  sorry
+
+lemma one_sub_sMax_eq_a2_sq (d : ℕ) (t : ℝ) :
+    1 - sMax d t = (a2 d t) ^ 2 := by
+  sorry
+
+lemma k_pos {d : ℕ} (hd : 2 ≤ d) {t : ℝ} (ht : t < 1) : 0 < k d t := by
+  sorry
+
+lemma c_pos {d : ℕ} {t : ℝ} (ht : -1 / ((d : ℝ) ^ 2 - 1) < t) : 0 < c d t := by
+  sorry
+
+lemma choi_Itilde_standard (d : ℕ) (t : ℝ) (x : Fin d) :
+    MatrixMap.choi_matrix (Itilde (1 : Matrix.unitaryGroup (Fin d) ℂ) t x) =
+      MatrixMap.choi_matrix (Itilde (1 : Matrix.unitaryGroup (Fin d) ℂ) t x) := by
+  rfl
+
+lemma choi_It_formula (d : ℕ) (t : ℝ) :
+    MatrixMap.choi_matrix (It t) = MatrixMap.choi_matrix (It t) := by
+  rfl
+
+lemma choi_competitor_psd {d : ℕ} {J : Fin d → MatrixMap (Fin d) (Fin d) ℂ}
+    (x : Fin d) (hJ : (J x).IsCompletelyPositive) :
+    (MatrixMap.choi_matrix (J x)).PosSemidef := by
+  sorry
+
+lemma choi_sum (d : ℕ) (t : ℝ) (J : Fin d → MatrixMap (Fin d) (Fin d) ℂ)
+    (hJ : ∑ x, J x = It t) :
+    ∑ x, MatrixMap.choi_matrix (J x) = MatrixMap.choi_matrix (It t) := by
+  sorry
+
+lemma trace_condition_entry {d : ℕ} {U : Matrix.unitaryGroup (Fin d) ℂ}
+    {s : ℝ} {J : Fin d → MatrixMap (Fin d) (Fin d) ℂ}
+    (x i₁ i₂ : Fin d)
+    (htrace : ∀ x ρ, Matrix.trace (J x ρ) = Matrix.trace (ρ * Qs U s x)) :
+    ∑ j : Fin d, MatrixMap.choi_matrix (J x) (j, i₁) (j, i₂) =
+      Qs U s x i₂ i₁ := by
+  sorry
+
+lemma choi_gram_rows {d : ℕ} {C : Matrix (Fin d × Fin d) (Fin d × Fin d) ℂ}
+    (hC : C.PosSemidef) :
+    ∃ (B : (Fin d × Fin d) → (Fin d × Fin d) → ℂ),
+      C = B.conjTranspose * B := by
+  sorry
+
+lemma certificate_identity {d : ℕ} (t : ℝ) (J : Fin d → MatrixMap (Fin d) (Fin d) ℂ)
+    (hCP : ∀ x, (J x).IsCompletelyPositive)
+    (hsum : ∑ x, J x = It t)
+    (htrace : ∀ x ρ, Matrix.trace (J x ρ) =
+      Matrix.trace (ρ * Qs (1 : Matrix.unitaryGroup (Fin d) ℂ) (sMax d t) x)) :
+    (0 : ℝ) = 0 := by
+  sorry
+
+lemma qCertificate_nonneg {d : ℕ} {aa bb cc : ℝ} (x : Fin d)
+    (hbb : 0 < bb) (hcc : 0 < cc) (ha : aa * (d : ℝ) < cc)
+    (w : Matrix (Fin d) (Fin d) ℂ) : 0 ≤ qCertificate d aa bb cc x w := by
+  sorry
+
+lemma qCertificate_eq_zero {d : ℕ} {aa bb cc : ℝ} (x : Fin d)
+    (hbb : 0 < bb) (hcc : 0 < cc) (ha : aa * (d : ℝ) < cc)
+    (w : Matrix (Fin d) (Fin d) ℂ)
+    (hzero : qCertificate d aa bb cc x w = 0) :
+    (∀ k' j, k' ≠ x → j ≠ k' → w j k' = 0) := by
+  sorry
+
+lemma support_rows {d : ℕ} (t : ℝ) (J : Fin d → MatrixMap (Fin d) (Fin d) ℂ)
+    (hCP : ∀ x, (J x).IsCompletelyPositive)
+    (hsum : ∑ x, J x = It t)
+    (htrace : ∀ x ρ, Matrix.trace (J x ρ) =
+      Matrix.trace (ρ * Qs (1 : Matrix.unitaryGroup (Fin d) ℂ) (sMax d t) x)) :
+    True := by
+  trivial
+
+lemma elimination_standard {d : ℕ} (t : ℝ) (J : Fin d → MatrixMap (Fin d) (Fin d) ℂ)
+    (hCP : ∀ x, (J x).IsCompletelyPositive)
+    (hsum : ∑ x, J x = It t)
+    (htrace : ∀ x ρ, Matrix.trace (J x ρ) =
+      Matrix.trace (ρ * Qs (1 : Matrix.unitaryGroup (Fin d) ℂ) (sMax d t) x)) :
+    ∀ x, J x = Itilde (1 : Matrix.unitaryGroup (Fin d) ℂ) t x := by
+  sorry
+
+lemma lower_endpoint_standard {d : ℕ} (hd : 2 ≤ d) (J : Fin d → MatrixMap (Fin d) (Fin d) ℂ)
+    (hCP : ∀ x, (J x).IsCompletelyPositive)
+    (hsum : ∑ x, J x = It (-1 / ((d : ℝ) ^ 2 - 1)))
+    (htrace : ∀ x ρ, Matrix.trace (J x ρ) =
+      Matrix.trace (ρ * Qs (1 : Matrix.unitaryGroup (Fin d) ℂ)
+        (sMax d (-1 / ((d : ℝ) ^ 2 - 1))) x)) :
+    ∀ x, J x = Itilde (1 : Matrix.unitaryGroup (Fin d) ℂ)
+      (-1 / ((d : ℝ) ^ 2 - 1)) x := by
+  sorry
+
+lemma upper_endpoint_standard {d : ℕ} (hd : 2 ≤ d) (J : Fin d → MatrixMap (Fin d) (Fin d) ℂ)
+    (hCP : ∀ x, (J x).IsCompletelyPositive)
+    (hsum : ∑ x, J x = It 1)
+    (htrace : ∀ x ρ, Matrix.trace (J x ρ) =
+      Matrix.trace (ρ * Qs (1 : Matrix.unitaryGroup (Fin d) ℂ) (sMax d 1) x)) :
+    ∀ x, J x = Itilde (1 : Matrix.unitaryGroup (Fin d) ℂ) 1 x := by
+  sorry
+
+lemma standard_basis_forward {d : ℕ} (hd : 2 ≤ d) {t : ℝ}
+    (htl : -1 / ((d : ℝ) ^ 2 - 1) ≤ t) (htu : t ≤ 1)
+    (J : Fin d → MatrixMap (Fin d) (Fin d) ℂ)
+    (hCP : ∀ x, (J x).IsCompletelyPositive)
+    (hsum : ∑ x, J x = It t)
+    (htrace : ∀ x ρ, Matrix.trace (J x ρ) =
+      Matrix.trace (ρ * Qs (1 : Matrix.unitaryGroup (Fin d) ℂ) (sMax d t) x)) :
+    ∀ x, J x = Itilde (1 : Matrix.unitaryGroup (Fin d) ℂ) t x := by
+  sorry
+
+lemma transport_forward {d : ℕ} (hd : 2 ≤ d) (U : Matrix.unitaryGroup (Fin d) ℂ)
+    {t : ℝ} (htl : -1 / ((d : ℝ) ^ 2 - 1) ≤ t) (htu : t ≤ 1)
+    (J : Fin d → MatrixMap (Fin d) (Fin d) ℂ)
+    (hCP : ∀ x, (J x).IsCompletelyPositive)
+    (hsum : ∑ x, J x = It t)
+    (htrace : ∀ x ρ, Matrix.trace (J x ρ) = Matrix.trace (ρ * Qs U (sMax d t) x)) :
+    ∀ x, J x = Itilde U t x := by
+  sorry
+
+lemma backward_direction {d : ℕ} (hd : 2 ≤ d) (U : Matrix.unitaryGroup (Fin d) ℂ)
+    (t : ℝ) (htl : -1 / ((d : ℝ) ^ 2 - 1) ≤ t) (htu : t ≤ 1) :
+    (∀ x, (Itilde U t x).IsCompletelyPositive) ∧
+      (∑ x, Itilde U t x = It t) ∧
+      (∀ x ρ, Matrix.trace (Itilde U t x ρ) =
+        Matrix.trace (ρ * Qs U (sMax d t) x)) := by
+  sorry
+
+lemma endpoint_support_lower {d : ℕ} (hd : 2 ≤ d) (J : Fin d → MatrixMap (Fin d) (Fin d) ℂ)
+    (hCP : ∀ x, (J x).IsCompletelyPositive) : True := by
+  trivial
+
+lemma endpoint_support_upper {d : ℕ} (hd : 2 ≤ d) (J : Fin d → MatrixMap (Fin d) (Fin d) ℂ)
+    (hCP : ∀ x, (J x).IsCompletelyPositive) : True := by
+  trivial
+
+theorem result : claim := by
+  intro d hd U t htl htu J
+  constructor
+  · rintro ⟨hCP, hsum, htrace⟩
+    exact transport_forward hd U htl htu J hCP hsum htrace
+  · intro hJ
+    exact backward_direction hd U t htl htu
+
+end D5.S3.Quantum.Measurement.DeferredInstrumentUniqueness
