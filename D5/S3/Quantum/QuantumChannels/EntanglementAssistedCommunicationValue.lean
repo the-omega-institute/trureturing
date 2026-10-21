@@ -4,7 +4,7 @@
    mirror-E: none(waiver:external-open-problem-resolution)
    anchors: []
    utility: none
-   digest: Entanglement-assisted communication value is bounded by the output dimension times cv. -/
+   digest: Shared entanglement increases communication value by at most the output dimension. -/
 
 import D5.S3.Quantum.QuantumChannels.PositiveFilterTransposeRefutation
 import D5.S3.Quantum.Foundation.FiniteKrausRepresentation
@@ -146,7 +146,7 @@ private theorem comm_value_bounds {a b : ℕ} (ha : 1 ≤ a)
         ext j l
         change single i i (1 : ℂ) j l = _
         by_cases hj : j = i <;> by_cases hl : l = i <;>
-          simp [Matrix.single, vecMulVec_apply, Pi.single_apply, hj, hl, eq_comm]
+          simp [Matrix.single, vecMulVec_apply, hj, hl, eq_comm]
       · exact Matrix.trace_single_eq_same i 1
     · intro y
       exact Matrix.PosSemidef.one
@@ -238,14 +238,13 @@ private theorem separable_value_upper {a b : ℕ} (ha : 1 ≤ a) (hb : 1 ≤ b)
       · exact (hQP i).2.transpose.smul (inv_nonneg.mpr (ht i))
       · rw [trace_smul, trace_transpose, htc]
         rw [Complex.real_smul]
-        change (((t i)⁻¹ : ℝ) : ℂ) * (t i : ℂ) = 1
         rw [← Complex.ofReal_mul, inv_mul_cancel₀ hi, Complex.ofReal_one]
   have hM (i : Fin k) : (M i).PosSemidef := (hQP i).1.smul (ht i)
   have hsM : ∑ i, M i = 1 := by
     rw [← hmarg, hΩ]
     ext u v
     simp only [M, partialTraceRight, Matrix.sum_apply, Matrix.smul_apply,
-      kroneckerMap_apply, Complex.real_smul, smul_eq_mul]
+      kroneckerMap_apply, Complex.real_smul]
     rw [Finset.sum_comm]
     apply Finset.sum_congr rfl
     intro i _
@@ -260,7 +259,7 @@ private theorem separable_value_upper {a b : ℕ} (ha : 1 ≤ a) (hb : 1 ≤ b)
         Matrix.zero_mul, trace_zero]
     · have hscale : t i • ρ i = (P i)ᵀ := by
         dsimp only [ρ]
-        rw [if_neg hi, smul_smul, mul_inv_cancel₀ hi, one_smul]
+        rw [ite_eq_right hi, smul_smul, mul_inv_cancel₀ hi, one_smul]
       change trace (Q i * N (P i)ᵀ) = trace ((t i • Q i) * N (ρ i))
       rw [Matrix.smul_mul, ← Matrix.mul_smul, ← N.map_smul_of_tower, hscale]
   have hv : classicalCV hk (fun y x => (trace (M y * N (ρ x))).re) ∈ commValues N :=
@@ -290,17 +289,41 @@ private theorem link_entry {a b r : ℕ}
     (M : Matrix (Fin b × Fin r) (Fin b × Fin r) ℂ) (i j : Fin b × Fin a) :
     linkOp σ M i j = ∑ u, ∑ v, σ (j.2, v) (i.2, u) * M (i.1, u) (j.1, v) := by
   classical
-  simp [linkOp, contraction, Matrix.mul_apply, Fintype.sum_prod_type,
-    Matrix.conjTranspose_apply, Matrix.transpose_apply, kroneckerMap_apply,
-    ite_and, mul_ite, ite_mul, apply_ite]
-  rw [Finset.sum_comm]
+  calc
+    _ = ∑ v, ∑ u, σ (j.2, v) (i.2, u) * M (i.1, u) (j.1, v) := by
+      simp [linkOp, contraction, Matrix.mul_apply, Fintype.sum_prod_type,
+        Matrix.conjTranspose_apply, Matrix.transpose_apply, kroneckerMap_apply,
+        ite_and, ite_mul, apply_ite]
+    _ = _ := Finset.sum_comm
 
 private theorem encoding_marginal {a a' r : ℕ}
     (E : MatrixMap (Fin a') (Fin a) ℂ) (hE : IsChannel E)
     (φ : Matrix (Fin a' × Fin r) (Fin a' × Fin r) ℂ) :
     partialTraceLeft (MatrixMap.kron E (MatrixMap.id (Fin r) ℂ) φ) =
       partialTraceLeft φ := by
-  sorry
+  ext u v
+  simp only [partialTraceLeft, MatrixMap.kron_def, MatrixMap.id, LinearMap.id_apply,
+    Matrix.single_apply, ite_and, mul_ite, mul_one, mul_zero, ite_mul, zero_mul,
+    Finset.sum_ite_irrel, Finset.sum_ite_eq', Finset.mem_univ, ↓reduceIte,
+    Finset.sum_const_zero]
+  rw [Finset.sum_comm]
+  apply Finset.sum_congr rfl
+  intro p _
+  rw [Finset.sum_comm]
+  change (∑ q, ∑ i, E (single p q 1) i i * φ (p, u) (q, v)) = φ (p, u) (p, v)
+  calc
+    _ = ∑ q, trace (E (single p q 1)) * φ (p, u) (q, v) := by
+      apply Finset.sum_congr rfl
+      intro q _
+      exact (Finset.sum_mul _ _ _).symm
+    _ = _ := by
+      simp only [hE.2]
+      rw [Finset.sum_eq_single p]
+      · rw [trace_single_eq_same, one_mul]
+      · intro q _ hq
+        rw [trace_single_eq_of_ne p q 1 hq.symm, zero_mul]
+      · intro hp
+        exact (hp (Finset.mem_univ p)).elim
 
 private theorem links_marginal {a b r n n' : ℕ}
     (σ : Fin n → Matrix (Fin a × Fin r) (Fin a × Fin r) ℂ)
@@ -337,7 +360,7 @@ private theorem links_marginal {a b r n n' : ℕ}
   by_cases hij : i = j
   · subst j
     simpa [Matrix.one_apply, Prod.mk.injEq, trace] using hτ
-  · simp [Matrix.one_apply, Prod.mk.injEq, hij]
+  · simp [Prod.mk.injEq, hij]
 
 private theorem link_pair_composed {a a' b r : ℕ}
     (N : MatrixMap (Fin a) (Fin b) ℂ) (E : MatrixMap (Fin a') (Fin a) ℂ)
@@ -346,7 +369,28 @@ private theorem link_pair_composed {a a' b r : ℕ}
     trace (MatrixMap.choi_matrix N *
       linkOp (MatrixMap.kron E (MatrixMap.id (Fin r) ℂ) φ) M) =
       trace (M * MatrixMap.kron (N ∘ₗ E) (MatrixMap.id (Fin r) ℂ) φ) := by
-  sorry
+  have hNE (p q : Fin a') : N (E (single p q 1)) =
+      fun i j => ∑ s, ∑ t, E (single p q 1) s t * N (single s t 1) i j :=
+    congrArg (fun L : MatrixMap (Fin a) (Fin b) ℂ => L (E (single p q 1)))
+      (MatrixMap.choi_map_inv N).symm
+  simp only [trace, diag_apply, Matrix.mul_apply, Fintype.sum_prod_type, link_entry,
+    MatrixMap.choi_matrix, MatrixMap.kron_def, MatrixMap.id, LinearMap.id_apply,
+    Matrix.single_apply, ite_and, mul_ite, mul_one, mul_zero, ite_mul, zero_mul,
+    Finset.sum_ite_irrel, Finset.sum_ite_eq', Finset.mem_univ, ↓reduceIte,
+    Finset.sum_const_zero, LinearMap.comp_apply, hNE, Finset.mul_sum, Finset.sum_mul]
+  let e : (Fin b × Fin a × Fin b × Fin a × Fin r × Fin r × Fin a' × Fin a') ≃
+      (Fin b × Fin r × Fin b × Fin r × Fin a' × Fin a' × Fin a × Fin a) :=
+    { toFun := fun ⟨i, s, j, t, u, v, p, q⟩ => (j, u, i, v, p, q, s, t)
+      invFun := fun ⟨j, u, i, v, p, q, s, t⟩ => (i, s, j, t, u, v, p, q)
+      left_inv := by rintro ⟨i, s, j, t, u, v, p, q⟩; rfl
+      right_inv := by rintro ⟨j, u, i, v, p, q, s, t⟩; rfl }
+  have he := Fintype.sum_equiv e
+    (fun ⟨i, s, j, t, u, v, p, q⟩ => N (single s t 1) i j *
+      (E (single p q 1) s t * φ (p, v) (q, u) * M (j, u) (i, v)))
+    (fun ⟨j, u, i, v, p, q, s, t⟩ => M (j, u) (i, v) *
+      (E (single p q 1) s t * N (single s t 1) i j * φ (p, v) (q, u)))
+    (by rintro ⟨i, s, j, t, u, v, p, q⟩; dsimp only [e, Equiv.coe_fn_mk]; ring)
+  simpa only [Fintype.sum_prod_type] using he
 
 private theorem assisted_operator {a b : ℕ} (N : MatrixMap (Fin a) (Fin b) ℂ)
     {v : ℝ} (hv : v ∈ eaCommValues N) :
