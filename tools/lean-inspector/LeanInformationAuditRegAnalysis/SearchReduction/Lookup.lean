@@ -66,14 +66,15 @@ def resolveLookupTable (table : LookupTable) : IO LookupTable := do
 
 /-- The membership page is only a prefilter. Alpha-invariant hashes never
 substitute for definitional equality or the caller's closed kernel check. -/
-def lookupExact (table : LookupTable) (goal : MVarId) : MetaM LookupTrace := goal.withContext do
+unsafe def lookupExact (table : LookupTable) (goal : MVarId) : MetaM LookupTrace := goal.withContext do
   if !table.enabled then return {complete := true}
   let some index ← tableIndex table | return {}
   let type ← goal.getType
   let context ← readThe Core.Context
   let limit := if context.maxHeartbeats == 0 then none
     else some (context.initHeartbeats + context.maxHeartbeats)
-  let candidates ← DiskLookup.query index (DiskLookup.memberKeys type) limit
+  let candidates ← if index.mature then DiskLookup.queryMature index type limit
+    else DiskLookup.query index (DiskLookup.memberKeys type) limit
   checkSystem "lookup.membership-index"
   let mut trace : LookupTrace := {complete := candidates.complete && table.complete, pages := candidates.pages}
   for entry in candidates.entries do
@@ -196,7 +197,7 @@ partial def views (value : Expr) (fuel : Nat := 32) : MetaM (Array Expr) := do
 /-- The closure callback is the frozen local table, with lookup disabled.
 All unresolved data and universe metavariables are rejected by the caller's
 closed kernel certificate check. An exception aborts enumeration. -/
-def lookupLeaf (table : LookupTable) (goal : MVarId)
+unsafe def lookupLeaf (table : LookupTable) (goal : MVarId)
     (unify close : MVarId → MetaM Bool) : MetaM LookupTrace := goal.withContext do
   if !table.enabled then return {complete := true}
   let detailed := (← IO.getEnv "SEARCH_REDUCTION_PROFILE_DETAIL").isSome
@@ -205,8 +206,8 @@ def lookupLeaf (table : LookupTable) (goal : MVarId)
   let context ← readThe Core.Context
   let limit := if context.maxHeartbeats == 0 then none
     else some (context.initHeartbeats + context.maxHeartbeats)
-  let candidates ← DiskLookup.query index
-    (DiskLookup.candidateKeys (← getEnv) (← goal.getType)) limit
+  let candidates ← if index.mature then DiskLookup.queryMature index (← goal.getType) limit
+    else DiskLookup.query index (DiskLookup.candidateKeys (← getEnv) (← goal.getType)) limit
   checkSystem "lookup.candidate-index"
   let trace ← candidates.entries.foldlM (init := ({complete := candidates.complete && table.complete, pages := candidates.pages} : LookupTrace)) fun (trace : LookupTrace) entry => do
     if trace.source?.isSome then return trace

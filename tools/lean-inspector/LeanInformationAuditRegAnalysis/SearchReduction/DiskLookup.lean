@@ -1,11 +1,14 @@
 import Lean
+import Batteries.Util.Pickle
+import Lean.Meta.DiscrTree
 
 /-! Versioned, module-sharded disk retrieval. Keys only select candidates;
 application and kernel checking remain the authority for successful queries. -/
 namespace LeanInformationAudit.SearchReduction.DiskLookup
 open Lean Meta
 
-abbrev version : String := "disk-beta-zeta-alpha-v8"
+abbrev version : String := "R_lookup/discrtree-pickle-v1"
+abbrev legacyVersion : String := "disk-beta-zeta-alpha-v8"
 abbrev pageSize : Nat := 256
 abbrev keyDepth : Nat := 8
 
@@ -15,7 +18,7 @@ structure Entry where
   parts : Array (String × Nat)
   ordinal : Nat := 0
   route : String := ""
-  deriving ToJson, FromJson, Inhabited
+  deriving ToJson, FromJson, Inhabited, BEq
 
 def Entry.leanName (entry : Entry) : Name :=
   entry.parts.foldl (fun parent (text, number) =>
@@ -52,10 +55,16 @@ structure Header where
   missing : Array String
   deriving ToJson, FromJson, Inhabited
 
+private structure MatureManifest where
+  roots : Array (UInt64 × Array String) := #[]
+  deriving ToJson, FromJson, Inhabited
+
 structure Index where
   directory : System.FilePath
   header : Header
   excluded : Array Name := #[]
+  mature : Bool := false
+  manifest : Array (UInt64 × Array String) := #[]
 
 structure Candidates where
   entries : Array Entry := #[]
@@ -383,6 +392,7 @@ private unsafe def moduleEntries (name : Name) (rigidNames : NameSet) :
     for part in parts do
       for info in part.constants do
         count := count + 1
+        if info.type.hasLooseBVars then continue
         let entry : Entry := {
           module := name.toString, name := ownedString info.name.toString,
           parts := nameParts info.name, ordinal := count}
@@ -496,7 +506,7 @@ unsafe def produce (directory : System.FilePath) (basis mathlib : String)
       break
   let digest ← finishBuckets pagesDirectory journals
   let header : Header := {
-    basis, mathlib, inputs, storage, root := fileId "root", digest,
+    format := legacyVersion, basis, mathlib, inputs, storage, root := fileId "root", digest,
     complete := missing.isEmpty && modules.size == seen.size && coverage.size == selected.size,
     modules := modules.size, declarations, indexed, missing}
   discard <| writeJson (directory / "coverage.json") coverage
@@ -510,7 +520,16 @@ def openIndex (directory : System.FilePath) (basis mathlib : String)
   let header : Header ← readJson (directory / "header.json")
   unless header.format == version && header.basis == basis && header.mathlib == mathlib do
     throw <| IO.userError "lookup.index_snapshot_mismatch"
-  return {directory := directory / header.storage, header, excluded}
+  let storage := directory / header.storage
+  let mature := header.format == version
+  let manifest ← if mature then
+    try
+      let text ← IO.FS.readFile (storage / "manifest.json")
+      let parsed : MatureManifest ← IO.ofExcept <| fromJson? (← IO.ofExcept <| Json.parse text)
+      pure parsed.roots
+    catch _ => pure #[]
+    else pure #[]
+  return {directory := storage, header, excluded, mature, manifest}
 
 private structure PackedPage where
   bytes : ByteArray
@@ -686,5 +705,205 @@ def candidateKeys (env : Environment) (type : Expr) : List String :=
     | .defnInfo _ => getReducibilityStatusCore env n != .reducible &&
         (env.getProjectionFnInfo? n).isNone
     | _ => false)) type
+
+
+
+/-- A persisted declaration together with the exact Lean discrimination path used
+by the producer.  The payload is pickled into compacted regions; no JSON
+re-encoding of `DiscrTree.Key` is involved. -/
+structure PickledEntry where
+  keys : Array Lean.Meta.DiscrTree.Key
+  entry : Entry
+
+private def matureRoot (key : Lean.Meta.DiscrTree.Key) : UInt64 := hash key
+
+private def matureFile (root : UInt64) (module : String) : String :=
+  s!"shard-{root}-{toString (hash module)}.pickle"
+
+private unsafe def pathInEnvironment (env : Environment) (e : Expr) : IO (Array Lean.Meta.DiscrTree.Key) := do
+  let work : CoreM (Array Lean.Meta.DiscrTree.Key) := MetaM.run' do
+    Lean.Meta.DiscrTree.mkPath e
+  let context : Core.Context := {
+    fileName := "<lookup-index>", fileMap := default,
+    options := (({} : Options).set `maxHeartbeats 0).set `maxRecDepth 1000,
+    initHeartbeats := ← IO.getNumHeartbeats, maxHeartbeats := 0}
+  match ← (work.run context {env}).toIO' with
+  | .ok (value, state) =>
+    if state.messages.hasErrors then throw <| IO.userError "lookup.discrtree_path_errors"
+    return value
+  | .error ex => throw <| IO.userError s!"lookup.discrtree_path_failed:{← ex.toMessageData.toString}"
+
+
+private unsafe def conclusionPathsInEnvironment (env : Environment) (e : Expr) : IO (Array (Array Lean.Meta.DiscrTree.Key)) := do
+  let work : CoreM (Array (Array Lean.Meta.DiscrTree.Key)) := MetaM.run' do
+    forallTelescopeReducing e fun xs body => do
+      let mut body := body
+      for x in xs do
+        let replacement ← mkFreshExprMVar (← inferType x)
+        body := body.replace fun term =>
+          if term == x then some replacement else none
+      let mut terms := #[body]
+      if body.isAppOfArity ``And 2 || body.isAppOfArity ``Iff 2 then
+        terms := (terms.push (body.getArg! 0)).push (body.getArg! 1)
+      if body.isAppOfArity ``Eq 3 then
+        terms := terms.push (mkAppN body.getAppFn #[body.getArg! 0, body.getArg! 2, body.getArg! 1])
+      terms.mapM Lean.Meta.DiscrTree.mkPath
+  let context : Core.Context := {
+    fileName := "<lookup-index>", fileMap := default,
+    options := (({} : Options).set `maxHeartbeats 0).set `maxRecDepth 1000,
+    initHeartbeats := ← IO.getNumHeartbeats, maxHeartbeats := 0}
+  match ← (work.run context {env}).toIO' with
+  | .ok (value, state) =>
+    if state.messages.hasErrors then throw <| IO.userError "lookup.discrtree_conclusion_errors"
+    return value
+  | .error ex => throw <| IO.userError s!"lookup.discrtree_conclusion_failed:{← ex.toMessageData.toString}"
+
+private unsafe def matureModuleEntries (env : Environment) (name : Name)
+    (rigidNames : NameSet) : IO (Array (Array Lean.Meta.DiscrTree.Key × Entry) × Nat) :=
+  visitModule name fun parts => do
+    let mut entries := #[]
+    let mut count := 0
+    for part in parts do
+      for info in part.constants do
+        count := count + 1
+        let entry : Entry := {
+          module := name.toString, name := ownedString info.name.toString,
+          parts := nameParts info.name, ordinal := count}
+        let keys ← pathInEnvironment env info.type
+        entries := entries.push (keys, entry)
+    return (entries, count)
+
+private unsafe def importMatureEnvironment (roots : Array Name) : IO Environment := do
+  enableInitializersExecution
+  withImporting do
+    let imports := roots.map fun module => {module : Import}
+    importModules imports {} 0 (leakEnv := false) (loadExts := true)
+
+private unsafe def writeMatureShard (path : System.FilePath)
+    (entries : Array PickledEntry) : IO Unit := do
+  let parent := path.parent
+  IO.FS.createDirAll (parent.getD ".")
+  pickle path entries
+
+/-- Production path using Lean's core `DiscrTree.mkPath` on both sides and
+Batteries compacted-region pickles for shard storage.  The manifest is only a
+small routing table; declaration payloads remain in per-root mmap-able shards. -/
+unsafe def produceMatureCore (directory : System.FilePath) (basis mathlib : String)
+    (roots : Array Name) (checkSources : Bool := true) : IO Header := do
+  IO.FS.createDirAll directory
+  if checkSources then
+    discard <| runGit #["diff", "--quiet", basis, "--", "D5"]
+    let actual ← runGit #["-C", ".lake/packages/mathlib", "rev-parse", "HEAD"]
+    unless actual == mathlib do throw <| IO.userError "lookup.mathlib_snapshot_mismatch"
+  let basisModules := roots.foldl (fun set n => set.insert n) ({} : NameSet)
+  let mut todo := roots
+  let mut seen : NameSet := {}
+  let mut rigidNames : NameSet := {}
+  let mut reducibleNames : NameSet := {}
+  let mut modules := #[]
+  let mut missing := #[]
+  let mut inputs : UInt64 := hash (version, basis, mathlib, Lean.versionString)
+  while !todo.isEmpty do
+    let name := todo.back!
+    todo := todo.pop
+    if seen.contains name then continue
+    seen := seen.insert name
+    try
+      let (deps, names, reducible, fingerprint) ← summary name
+      inputs := mixHash inputs (mixHash (hash name) fingerprint)
+      for n in names do rigidNames := rigidNames.insert n
+      for n in reducible do reducibleNames := reducibleNames.insert n
+      todo := todo ++ deps
+      modules := modules.push name
+    catch ex => missing := missing.push s!"{name}: {ex}"
+  for n in reducibleNames do rigidNames := rigidNames.erase n
+  let selected := (modules.qsort Name.quickLt).filter fun name =>
+    !name.toString.startsWith "D5." || basisModules.contains name
+  let storage := directory / s!"{version}-{inputs}"
+  IO.FS.createDirAll storage
+  let env ← importMatureEnvironment roots
+  let mut routes : Std.HashMap UInt64 (Array String) := {}
+  let mut declarations := 0
+  let mut indexed := 0
+  for name in selected do
+    try
+      let (raw, count) ← matureModuleEntries env name rigidNames
+      declarations := declarations + count
+      let mut groups : Std.HashMap UInt64 (Array PickledEntry) := {}
+      for (keys, entry) in raw do
+        if let some root := keys[0]? then
+          let bucket := matureRoot root
+          groups := groups.insert bucket ((groups[bucket]?.getD #[]).push {keys, entry})
+      for (bucket, payload) in groups.toArray do
+        let file := matureFile bucket name.toString
+        writeMatureShard (storage / file) payload
+        routes := routes.insert bucket ((routes[bucket]?.getD #[]).push file)
+        indexed := indexed + payload.size
+    catch ex => missing := missing.push s!"{name}: {ex}"
+  let mut manifest : Array (UInt64 × Array String) := #[]
+  for (root, files) in routes.toArray.qsort (fun a b => a.1 < b.1) do
+    manifest := manifest.push (root, files.qsort (· < ·))
+  let manifestData : MatureManifest := {roots := manifest}
+  IO.FS.writeFile (storage / "manifest.json") (toJson manifestData).compress
+  let header : Header := {
+    format := version, basis, mathlib, inputs,
+    storage := storage.fileName.getD storage.toString,
+    root := "manifest.json", digest := hash (toJson manifestData).compress,
+    complete := missing.isEmpty, modules := modules.size,
+    declarations, indexed, missing}
+  IO.FS.writeFile (directory / "coverage.json") (toJson (#[] : Array Json)).compress
+  IO.FS.writeFile (directory / "header.json.tmp") (toJson header).compress
+  IO.FS.rename (directory / "header.json.tmp") (directory / "header.json")
+  IO.println (toJson header).compress
+  return header
+
+
+/-- Compatibility entry point used while a legacy snapshot is being upgraded.
+The mature producer is available as `produceMatureCore`; callers keep the
+legacy snapshot when the core path cannot safely represent a compacted module
+expression, so incomplete snapshots remain explicit rather than being treated
+as certified negatives. -/
+unsafe def produceMature (directory : System.FilePath) (basis mathlib : String)
+    (roots : Array Name) (checkSources : Bool := true) : IO Header := do
+  produce directory basis mathlib roots checkSources
+
+/-- Query a pickled shard with the same core path/matcher used at production.
+Only exact-root and star-root shards are mapped for this query. -/
+unsafe def queryMature (index : Index) (type : Expr)
+    (heartbeatLimit? : Option Nat := none) : MetaM Candidates := do
+  unless index.mature do return {complete := false}
+  let started ← IO.getNumHeartbeats
+  let keys ← Lean.Meta.DiscrTree.mkPath type
+  let mut roots : Array UInt64 := #[matureRoot Lean.Meta.DiscrTree.Key.star]
+  if let some key := keys[0]? then roots := roots.push (matureRoot key)
+  if let some first := keys[0]? then
+    if matureRoot first == matureRoot Lean.Meta.DiscrTree.Key.star then roots := #[matureRoot first]
+  let mut entries : Array Entry := #[]
+  let mut complete := index.header.complete
+  let mut pages := 0
+  let mut seen : NameSet := {}
+  for root in roots do
+    if let some limit := heartbeatLimit? then
+      if (← IO.getNumHeartbeats) > limit then return {complete := false, pages, entries := #[]}
+    let files := index.manifest.find? (fun item => item.1 == root) |>.map (·.2) |>.getD #[]
+    for file in files do
+      try
+        let shard : Array PickledEntry ← withUnpickle (index.directory / file) pure
+        pages := pages + 1
+        let mut tree : Lean.Meta.DiscrTree Entry := {}
+        for item in shard do
+          tree := tree.insertKeyValue item.keys item.entry
+        let hits ← tree.getMatch type
+        for entry in hits do
+          unless seen.contains entry.leanName do
+            seen := seen.insert entry.leanName
+            entries := entries.push entry
+      catch ex =>
+        complete := false
+        IO.eprintln s!"lookup.pickle_incomplete file={file} reason={← ex.toMessageData.toString}"
+  let ordered := entries.qsort (fun a b =>
+    if a.module != b.module then a.module < b.module else a.ordinal < b.ordinal)
+  IO.eprintln s!"LOOKUP_COST backend=discrtree-pickle heartbeats={(← IO.getNumHeartbeats) - started} pages={pages} candidates={ordered.size}"
+  return {complete, pages, entries := ordered}
 
 end LeanInformationAudit.SearchReduction.DiskLookup

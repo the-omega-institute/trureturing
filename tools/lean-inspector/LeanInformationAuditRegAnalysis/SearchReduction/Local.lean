@@ -323,7 +323,7 @@ structure LocalResult where
   sharedData? : Option Bool := none
   lookup : LookupTrace := {}
 
-private partial def solveLookupGoal (table : LookupTable) (goal : MVarId)
+private unsafe partial def solveLookupGoal (table : LookupTable) (goal : MVarId)
     (facts : Array Expr) (tryLocal := true) : MetaM LookupTrace := goal.withContext do
   if tryLocal && (← solveLocalGoal goal facts) then return {complete := true}
   let type ← withReducible <| whnf (← goal.getType)
@@ -405,7 +405,7 @@ def independentRebuild (localRoute lookup : MetaM LocalResult) : MetaM LocalResu
 
 /-- Only statement types enter R. The successful lambda retains precisely its
 used premise binders, so zero edges carry their actual premises. -/
-private def rebuildRoute (target : Expr) (types : List Expr)
+private unsafe def rebuildRoute (target : Expr) (types : List Expr)
     (lookup? : Option LookupTable) : MetaM LocalResult := do
   let originalEnv ← getEnv
   let finish (proof : Expr) : MetaM Expr := do
@@ -455,7 +455,7 @@ private def rebuildRoute (target : Expr) (types : List Expr)
       detail := if let some name := trace.source? then s!"kernel-checked-lookup:{name}"
         else "kernel-checked-statement"}
 
-def localRebuild (target : Expr) (types : List Expr := [])
+unsafe def localRebuild (target : Expr) (types : List Expr := [])
     (lookup? : Option LookupTable := none) : MetaM LocalResult := do
   let localRoute := rebuildRoute target types none
   if let some table := lookup? then
@@ -529,7 +529,7 @@ private def annotateGraph (graph : ProofGraph) : MetaM ProofGraph := do
   return {graph with edges}
 
 /-- Same price function in each arm; only the seed flag changes. -/
-def priceGraph (graph : ProofGraph) (paired := false) (allGiven := false)
+unsafe def priceGraph (graph : ProofGraph) (paired := false) (allGiven := false)
     (lookup? : Option LookupTable := none) : MetaM ProofGraph := do
   let mut edges := []
   let seeds := (graph.vertices.filter (fun v =>
@@ -564,7 +564,7 @@ private def armGraph (graph : ProofGraph) (paired allGiven : Bool) : ProofGraph 
         (if paired then edge.pairedGivenUsedPremises else edge.givenUsedPremises)
        else if paired then edge.pairedUsedPremises else edge.usedPremises) else edge.premises}}
 
-def rootProbe (graph : ProofGraph) (paired := false)
+unsafe def rootProbe (graph : ProofGraph) (paired := false)
     (lookup? : Option LookupTable := none) : MetaM ProbeResult := do
   let seeds := armSeeds graph paired
   let result ← localRebuild (vertex graph graph.root).type (seeds.map (vertex graph · |>.type)) lookup?
@@ -603,7 +603,7 @@ def assembleZero (graph : ProofGraph) (paired := false) : MetaM (Option Expr) :=
 
 /-- Two root probes, target-part reverse probes and declaration-level k=2.
 The d_given ablation supplies all premise types; it does not affect verdicts. -/
-def evaluateGraph (raw : ProofGraph) (lookup? : Option LookupTable := none) : MetaM GraphReading := do
+unsafe def evaluateGraph (raw : ProofGraph) (lookup? : Option LookupTable := none) : MetaM GraphReading := do
   lookupPhase "graph/target-part-start"
   if raw.vertices.isEmpty then return {graph := raw}
   let mut raw := raw
