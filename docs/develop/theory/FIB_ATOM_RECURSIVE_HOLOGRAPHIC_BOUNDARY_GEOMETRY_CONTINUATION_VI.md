@@ -2098,3 +2098,156 @@ questions separate. The arguments here are mathematical prose and carry
 no Lean kernel-verification assertion.
 
 ## 130.99 追加锚（本行以下为增补区）
+
+## 131. Occurrence support and a physical realization interface
+
+For an accepted epoch $e$, write
+
+$$
+A_e:=\{(x,y)\in V_e\times V_e:x\ne y\ \text{and}\ Q_e(x,y)>0\}.
+\tag{131.1}
+$$
+
+Thus $A_e$ is the positive off-diagonal support of the generator. A
+physical realization interface at epoch $e$ consists of a set $X_e$, a
+nonnegative distance function $\rho_e$ on $X_e$, and a map
+$\iota_e:V_e\to X_e$:
+
+$$
+(V_e,d_e,Q_e)\longmapsto (X_e,\rho_e,\iota_e).
+\tag{131.2}
+$$
+
+The statement below uses the following explicit interpretation. Positive
+entries of $Q_e$ are being read as direct physical transitions, and a
+**direct-generator locality radius** $\ell<\infty$ means
+
+$$
+(x,y)\in A_e\quad\Longrightarrow\quad
+\rho_e(\iota_e(x),\iota_e(y))\le \ell.
+\tag{131.3}
+$$
+
+This is a realization assumption, not a consequence of the occurrence
+algebra. If $Q_e$ is an effective generator obtained after eliminating
+microscopic variables, (131.3) concerns the effective transitions only;
+the theorem below then says nothing about microscopic locality.
+
+## 132. The minimal bounded-preimage bridge
+
+**Theorem 132.1 (bounded-preimage obstruction to direct physical locality).**
+Fix one uncapped full-source compatible conservative Markov family from
+Theorem 129.3. Suppose a realization interface (131.2) and one finite
+radius $\ell$ satisfy direct-generator locality (131.3). Assume in
+addition the minimal bounded-preimage condition at that radius: there is
+one finite $R$, independent of $e$, such that
+
+$$
+(x,y)\in A_e\ \text{and}\
+\rho_e(\iota_e(x),\iota_e(y))\le\ell
+\quad\Longrightarrow\quad d_e(x,y)\le R
+\tag{132.1}
+$$
+
+for every accepted epoch $e$. Then
+
+$$
+\operatorname{jr}(Q_e)\le R\qquad\text{for every }e,
+\tag{132.2}
+$$
+
+which contradicts the uncapped universal conclusion
+$\sup_e\operatorname{jr}(Q_e)=+\infty$ in Theorem 129.3.
+
+**Proof.** Take any $(x,y)\in A_e$. By (131.3) its physical distance is at
+most $\ell$, so (132.1) gives $d_e(x,y)\le R$. The occurrence jump range is
+the supremum of these $d_e(x,y)$ over $A_e$, hence (132.2). Theorem 129.3
+rules out this uniform finite bound for the fixed uncapped family. The
+contradiction uses no claim about a physical dimension or about a
+microscopic realization. $\square$
+
+The bounded-preimage clause is the smallest comparison condition used here:
+it controls only active pairs inside the declared physical locality radius.
+It does not require a correspondence for inactive pairs, a global
+quasi-isometry, or an upper control on $\rho_e$.
+
+## 133. A transparent sufficient lower-control hypothesis
+
+A convenient sufficient hypothesis for (132.1) is the affine lower control
+
+$$
+\rho_e(\iota_e(x),\iota_e(y))\ge a\,d_e(x,y)-b
+\tag{133.1}
+$$
+
+with fixed finite $b$ and fixed $a>0$, for all epochs and all pairs to which
+the interface is applied. For an active pair, (131.3) and (133.1) imply
+
+$$
+ a\,d_e(x,y)-b\le\ell,
+ \qquad	ext{hence}qquad
+ d_e(x,y)\le R:=\frac{\ell+b}{a}.
+\tag{133.2}
+$$
+
+After replacing $R$ by its ceiling when needed, Theorem 132.1 applies. The
+affine estimate is only a transparent sufficient special case. It is not
+necessary, it is not asserted to be a full quasi-isometry, and no upper
+control of $\rho_e$ by $d_e$ is used. More generally, a uniform
+nondecreasing lower control
+
+$$
+\rho_e(\iota_e(x),\iota_e(y))\ge\Phi(d_e(x,y)),
+\qquad \Phi(t)\longrightarrow+\infty,
+\tag{133.3}
+$$
+
+would give the same conclusion whenever one fixes $\ell$ and chooses a
+finite $R$ with $\Phi(t)>\ell$ for $t>R$. This alternative remains
+conditional on the stated uniform control and does not add a physical
+interpretation to $\Phi$.
+
+## 134. Prefixes, drifting constants, and logical boundaries
+
+The uncapped quantifier in Theorem 132.1 is essential. Every finite stopped
+or capped prefix has finitely many finite state spaces and therefore a finite
+maximum occurrence range. It may satisfy prefix-dependent locality and
+comparison constants without contradiction. For affine controls that vary
+by layer or epoch, the relevant bound is explicitly
+
+$$
+R_e=\frac{\ell_e+b_e}{a_e},
+\qquad a_e>0.
+\tag{134.1}
+$$
+
+A bounded supremum of this ratio over all accepted epochs still contradicts
+Theorem 129.3. If the ratio is unbounded, this argument has no contradiction
+left; that removes this proof of incompatibility and proves no compatible
+realization.
+
+Upper compression alone cannot transfer occurrence range. For the two-point
+abstract family $V_N=\{0,1\}$, set
+
+$$
+ d_N(0,1)=N,\qquad \rho_N(\iota_N(0),\iota_N(1))=1,
+ \qquad
+ Q_N=\begin{pmatrix}-1&1\\[2pt]1&-1\end{pmatrix}.
+\tag{134.2}
+$$
+
+The positive support is local at physical radius $1$ for every $N$, while
+its occurrence jump is $N$. Thus an upper-only compression or locality
+statement cannot imply (132.1). This two-point family is only a logical
+boundary example; it is not a §129-compatible FIB family and is not offered
+as a counterexample to Theorem 129.3.
+
+The conclusion is a conditional realization obstruction. The target sets
+$X_e$ may have any dimension and may vary with $e$. No Euclidean dimension,
+physical clock, continuum operator, finite propagation statement for
+$\exp(tQ_e)$, global (all-epoch) irreducibility, native-edge support, or physical
+three-dimensional conclusion follows. The next test is therefore concrete:
+for the proposed realization, verify whether direct positive generator
+support really has a uniform finite-radius bounded preimage (or a stated
+sufficient lower control). If that bridge fails, Theorem 129.3 alone does
+not decide physical locality.
