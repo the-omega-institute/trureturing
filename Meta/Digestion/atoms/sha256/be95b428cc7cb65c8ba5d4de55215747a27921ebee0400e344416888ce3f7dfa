@@ -1,0 +1,7 @@
+**定义 4.1（细化）。** Suppose $Q_A=f(Q_B)$ on the same finite law. For the indicator tasks put
+
+$$
+\Delta r_i=r_i(A)-r_i(B),\qquad
+\Delta I_i=I(Y_i;Q_B\mid Q_A).
+$$
+

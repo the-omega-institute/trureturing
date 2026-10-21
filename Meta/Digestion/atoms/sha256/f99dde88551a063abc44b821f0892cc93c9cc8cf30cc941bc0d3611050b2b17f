@@ -1,0 +1,21 @@
+**定义 1.1（有限任务账本）。** Let $S$ be a finite probability space, $C:S\to\Sigma$ a label, $Q_A:S\to\mathcal Q_A$ a deterministic readout, and $(Y_d:S\to\mathcal Y_d)_{d\in D}$ a finite task family. All tasks and readouts in a comparison use this same law. For nonnegative weights $w_d$ with $W=\sum_dw_d>0$, put $\alpha_d=w_d/W$ and
+
+$$
+\begin{aligned}
+e_d(A)&=\inf_{g:\mathcal Q_A\to\mathcal Y_d}\Pr(g(Q_A)\ne Y_d),\\
+I_d(A)&=I(Y_d;Q_A),\\
+\bar e(A)&=\sum_d\alpha_de_d(A),\qquad
+\bar I(A)=\sum_d\alpha_dI_d(A).
+\end{aligned}
+$$
+
+Entropy is in bits, $h(t)=-t\log_2t-(1-t)\log_2(1-t)$, and $0\log_20=0$. Zero-probability outputs are omitted from conditional distributions. A channel relative to $C$ is represented by finite states $(c,q)$ of masses $\Pr(C=c,Q=q)$; both $C$ and $Q$ are deterministic projections. Determinism of $Q$ on $S$ does not require $Q=f(C)$.
+
+For a deterministic response task $F_d$, let $X_A$ be its completion domain at observation $A$. Define $x\sim_A^{F_d}x'$ when all required completion responses agree, and put
+
+$$
+\kappa_A(F_d)=|X_A/{\sim_A^{F_d}}|.
+$$
+
+The response quotient and its continuation conditions are those of [the task-partition Galois volume](FIB_TASK_PARTITION_GALOIS_AND_WHITEBOX.md) and [the observation-boundary algebra](OBSERVATION_BOUNDARY_ALGEBRA_MINIMAL_REALIZATION.md). The ledger consists of the capacity vector, risk vector and information vector; it does not identify these coordinates.
+
