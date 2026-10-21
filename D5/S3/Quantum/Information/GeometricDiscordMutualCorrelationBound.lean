@@ -17,10 +17,10 @@ noncomputable section
 open Matrix
 open scoped Kronecker ComplexOrder Matrix.Norms.L2Operator
 open D5.S3.Quantum.Entanglement.SteeringEllipsoidFullyEntangledFraction
-  (pauli blochA blochB corr vlen trace_mul_kron_one)
+  (pauli pauli_zero pauli_one pauli_two blochA blochB corr vlen trace_mul_kron_one)
 open D5.S3.QuantumChannels.PauliThreeWeightBayesianInverseUniqueness (sigma spin)
 open D5.S3.Quantum.Entanglement.SteeringEllipsoidCHSH
-  (normalized_unit vlen_sq trace_pauli_kronecker_eq_corr)
+  (sigma_succ normalized_unit vlen_sq trace_pauli_kronecker_eq_corr)
 open D5.S3.Quantum.Information.PartialTraceMutualInformation
 open D5.S3.Quantum.FiniteDimensional (qubitX qubitZ)
 open D5.S3.Quantum.Information.StabilizerPairLocalUnitaryInequivalence (pauliMatrix)
@@ -119,8 +119,6 @@ private lemma spin_covariance (ρ : TwoQubit) (hρ : ρ.IsHermitian)
     (c d : Fin 3 → ℝ) :
     localCovariance ρ (spin c) (spin d) =
       ((c ⬝ᵥ (connectedCorrelation ρ *ᵥ d) : ℝ) : ℂ) := by
-  have hs (i : Fin 3) : sigma i.succ = pauli i := by
-    fin_cases i <;> rfl
   have hA (i : Fin 3) : trace (ρ * (pauli i ⊗ₖ (1 : Qubit))) = (blochA ρ i : ℂ) := by
     refine Complex.ext (by rfl) ?_
     exact D5.S3.Quantum.Dynamics.ProjectionProbabilityFlow.trace_hermitian_product_real
@@ -132,7 +130,7 @@ private lemma spin_covariance (ρ : TwoQubit) (hρ : ρ.IsHermitian)
     exact D5.S3.Quantum.Dynamics.ProjectionProbabilityFlow.trace_hermitian_product_real
       ρ _ hρ (isHermitian_kronecker (Matrix.isHermitian_one)
         (D5.S3.Quantum.QuantumChannels.QubitWassersteinCouplings.pauli_hermitian i))
-  simp only [localCovariance, spin, hs, Fin.sum_univ_three, add_kronecker,
+  simp only [localCovariance, spin, sigma_succ, Fin.sum_univ_three, add_kronecker,
     kronecker_add, smul_kronecker, kronecker_smul, Matrix.mul_add, Matrix.mul_smul,
     trace_add, trace_smul, smul_eq_mul, hA, hB, trace_pauli_kronecker_eq_corr ρ hρ,
     dotProduct, Matrix.mulVec, connectedCorrelation, Complex.ofReal_add,
@@ -276,13 +274,6 @@ private lemma disturbance_coordinates (R : TwoQubit) (hR : R.IsHermitian)
     (h0 : blochA R 0 = 0) (h1 : blochA R 1 = 0) :
     hilbertSchmidtSquare (R - measuredState 1 R) =
       (vlen (connectedCorrelation R 0) ^ 2 + vlen (connectedCorrelation R 1) ^ 2) / 4 := by
-  have hp0 : pauli 0 = !![0, 1; 1, 0] := by
-    simp [pauli.eq_def, pauliMatrix, qubitX]
-  have hp1 : pauli 1 = !![0, -Complex.I; Complex.I, 0] := by
-    ext i j; fin_cases i <;> fin_cases j <;>
-      simp [pauli.eq_def, pauliMatrix, qubitX, qubitZ]
-  have hp2 : pauli 2 = !![1, 0; 0, -1] := by
-    simp [pauli.eq_def, pauliMatrix, qubitZ]
   have hid : 4 * trace ((R - measuredState 1 R) * (R - measuredState 1 R)) =
       trace (R * (pauli 0 ⊗ₖ (1 : Qubit))) ^ 2 +
       trace (R * (pauli 1 ⊗ₖ (1 : Qubit))) ^ 2 +
@@ -290,7 +281,7 @@ private lemma disturbance_coordinates (R : TwoQubit) (hR : R.IsHermitian)
         trace (R * (pauli 1 ⊗ₖ pauli j)) ^ 2) := by
     simp [measuredState, unreadState, Matrix.trace, Matrix.diag, Matrix.mul_apply,
       Fintype.sum_prod_type, Fin.sum_univ_two, Fin.sum_univ_three,
-      Matrix.single_apply, Matrix.one_apply, hp0, hp1, hp2]
+      Matrix.single_apply, Matrix.one_apply, pauli_zero, pauli_one, pauli_two]
     ring_nf
     simp only [Complex.I_sq]
     ring
@@ -367,11 +358,6 @@ private lemma disturbance_rotation (ρ : TwoQubit) (U : Matrix.unitaryGroup (Fin
 private lemma marginal_basis (ρ : TwoQubit) (hρ : ρ.PosSemidef) :
     ∃ U : Matrix.unitaryGroup (Fin 2) ℂ,
       blochA (rotateState U ρ) 0 = 0 ∧ blochA (rotateState U ρ) 1 = 0 := by
-  have hp0 : pauli 0 = !![0, 1; 1, 0] := by
-    simp [pauli.eq_def, pauliMatrix, qubitX]
-  have hp1 : pauli 1 = !![0, -Complex.I; Complex.I, 0] := by
-    ext i j; fin_cases i <;> fin_cases j <;>
-      simp [pauli.eq_def, pauliMatrix, qubitX, qubitZ]
   let h := (partialTraceRight_posSemidef hρ).isHermitian
   let U := h.eigenvectorUnitary
   refine ⟨U, ?_⟩
@@ -388,8 +374,8 @@ private lemma marginal_basis (ρ : TwoQubit) (hρ : ρ.PosSemidef) :
   have hm := hp.trans hh
   constructor
   all_goals simp only [blochA, trace_mul_kron_one, hm]
-  · simp [hp0, Matrix.trace, Matrix.diag, Matrix.diagonal_mul, Fin.sum_univ_two]
-  · simp [hp1, Matrix.trace, Matrix.diag, Matrix.diagonal_mul, Fin.sum_univ_two]
+  · simp [pauli_zero, Matrix.trace, Matrix.diag, Matrix.diagonal_mul, Fin.sum_univ_two]
+  · simp [pauli_one, Matrix.trace, Matrix.diag, Matrix.diagonal_mul, Fin.sum_univ_two]
 
 private lemma discord_sq_bound (ρ : TwoQubit) (hρ : ρ.PosSemidef) (ht : trace ρ = 1) :
     geometricDiscord ρ ≤ maximalMutualCorrelation ρ ^ 2 := by

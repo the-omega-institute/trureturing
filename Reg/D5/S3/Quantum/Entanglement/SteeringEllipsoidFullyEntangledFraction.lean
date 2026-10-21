@@ -809,3 +809,191 @@ def registration :
 end ConjugateKroneckerTrace
 end
 end Reg.D5.S3.Quantum.Entanglement.SteeringEllipsoidFullyEntangledFraction
+
+namespace Reg.D5.S3.Quantum.Entanglement.SteeringEllipsoidFullyEntangledFraction
+open _root_.D5.S3.Quantum.Entanglement.SteeringEllipsoidFullyEntangledFraction
+  (pauli pauli_zero pauli_one pauli_two)
+open _root_.D5.S3.ConceptDynamics.InformationEscape.DependentFamily
+open Matrix
+
+set_option autoImplicit false
+set_option relaxedAutoImplicit false
+noncomputable section
+
+namespace PauliReadout
+
+/-- Observe the Pauli matrix as its index varies. -/
+abbrev signature : Signature :=
+  Reg.Support.SingleDependentReadout.signature Unit (fun _ => Fin 3)
+    (fun _ => Matrix (Fin 2) (Fin 2) ℂ)
+
+def actual : Realization signature :=
+  realize signature (fun _ _ i => pauli i) (fun e => nomatch e)
+
+def rejected : Realization signature :=
+  realize signature (fun _ _ _ => 0) (fun e => nomatch e)
+
+theorem dependence : ObservationalDependence signature actual := by
+  intro i
+  refine ⟨(), 0, 2, ?_⟩
+  change pauli 0 ≠ pauli 2
+  intro h
+  have he := congrArg (fun M : Matrix (Fin 2) (Fin 2) ℂ => (M 0 0).re) h
+  norm_num [pauli_zero, pauli_two] at he
+
+end PauliReadout
+
+namespace PauliZero
+abbrev arena : Arena where
+  signature := PauliReadout.signature
+  Law R := R.readout () () 0 = !![0, 1; 1, 0]
+
+theorem rejected_law : ¬ arena.Law PauliReadout.rejected := by
+  intro h
+  change (0 : Matrix (Fin 2) (Fin 2) ℂ) = !![0, 1; 1, 0] at h
+  have he := congrArg (fun M : Matrix (Fin 2) (Fin 2) ℂ => (M 0 1).re) h
+  norm_num [PauliReadout.rejected, realize, Matrix.zero_apply] at he
+
+def source_registration : Registration arena (type_of% @pauli_zero) where
+  actual := PauliReadout.actual
+  bridge := Iff.rfl
+  variation := ⟨pauli_zero, PauliReadout.rejected, rejected_law⟩
+  sensitivity := Reg.Support.SingleDependentReadout.sensitivity arena.Law
+    PauliReadout.actual PauliReadout.rejected rejected_law
+  dependence := PauliReadout.dependence
+
+def registration :
+    LeanInformationAudit.Contract.Registration.{_, _, _, 0, 0, 0, _, _, _, _, _, 0}
+      (@_root_.D5.S3.Quantum.Entanglement.SteeringEllipsoidFullyEntangledFraction.pauli_zero)
+      (Realization PauliReadout.signature) Unit Unit := {
+  unitName := `Reg.D5.S3.Quantum.Entanglement.SteeringEllipsoidFullyEntangledFraction.PauliZero.unit
+  realizationName := Lean.Name.str
+    `Reg.D5.S3.Quantum.Entanglement.SteeringEllipsoidFullyEntangledFraction.PauliZero
+    "source_registration"
+  realizationSource := none, generated := false
+  arena := .source ⟨arena⟩, objectArena := .source ⟨arena⟩
+  catalog := Lean.Name.anonymous, localNames := false
+  realization := .source arena ⟨source_registration⟩
+  correspondence := { stage := .evidence, objectStage := .evidence }
+  bundleNonempty := .absent
+  readout := some (realize PauliReadout.signature (fun _ _ i => pauli i) (fun e => nomatch e))
+  variation := .absent, sensitivity := .absent
+  partialSensitivity := none, escapeFrom := none
+  sourceSelection := some {
+    owner := `D5.S3.Quantum.Entanglement.SteeringEllipsoidFullyEntangledFraction
+    definition := none, coordinates := #[]
+    readouts := #[{
+      path := #["fn", "arg"]
+      stateBinder := 0, functionOperand := false
+      stateOperand := some #["arg"], booleanPredicate := false }] }
+  continuation := .unknown
+  familyRecord := none, options := #[] }
+
+#print axioms source_registration
+#print axioms registration
+
+end PauliZero
+
+namespace PauliOne
+abbrev arena : Arena where
+  signature := PauliReadout.signature
+  Law R := R.readout () () 1 = !![0, -Complex.I; Complex.I, 0]
+
+theorem rejected_law : ¬ arena.Law PauliReadout.rejected := by
+  intro h
+  change (0 : Matrix (Fin 2) (Fin 2) ℂ) = !![0, -Complex.I; Complex.I, 0] at h
+  have he := congrArg (fun M : Matrix (Fin 2) (Fin 2) ℂ => (M 0 1).im) h
+  norm_num [PauliReadout.rejected, realize, Matrix.zero_apply] at he
+
+def source_registration : Registration arena (type_of% @pauli_one) where
+  actual := PauliReadout.actual
+  bridge := Iff.rfl
+  variation := ⟨pauli_one, PauliReadout.rejected, rejected_law⟩
+  sensitivity := Reg.Support.SingleDependentReadout.sensitivity arena.Law
+    PauliReadout.actual PauliReadout.rejected rejected_law
+  dependence := PauliReadout.dependence
+
+def registration :
+    LeanInformationAudit.Contract.Registration.{_, _, _, 0, 0, 0, _, _, _, _, _, 0}
+      (@_root_.D5.S3.Quantum.Entanglement.SteeringEllipsoidFullyEntangledFraction.pauli_one)
+      (Realization PauliReadout.signature) Unit Unit := {
+  unitName := `Reg.D5.S3.Quantum.Entanglement.SteeringEllipsoidFullyEntangledFraction.PauliOne.unit
+  realizationName := Lean.Name.str
+    `Reg.D5.S3.Quantum.Entanglement.SteeringEllipsoidFullyEntangledFraction.PauliOne
+    "source_registration"
+  realizationSource := none, generated := false
+  arena := .source ⟨arena⟩, objectArena := .source ⟨arena⟩
+  catalog := Lean.Name.anonymous, localNames := false
+  realization := .source arena ⟨source_registration⟩
+  correspondence := { stage := .evidence, objectStage := .evidence }
+  bundleNonempty := .absent
+  readout := some (realize PauliReadout.signature (fun _ _ i => pauli i) (fun e => nomatch e))
+  variation := .absent, sensitivity := .absent
+  partialSensitivity := none, escapeFrom := none
+  sourceSelection := some {
+    owner := `D5.S3.Quantum.Entanglement.SteeringEllipsoidFullyEntangledFraction
+    definition := none, coordinates := #[]
+    readouts := #[{
+      path := #["fn", "arg"]
+      stateBinder := 0, functionOperand := false
+      stateOperand := some #["arg"], booleanPredicate := false }] }
+  continuation := .unknown
+  familyRecord := none, options := #[] }
+
+#print axioms source_registration
+#print axioms registration
+
+end PauliOne
+
+namespace PauliTwo
+abbrev arena : Arena where
+  signature := PauliReadout.signature
+  Law R := R.readout () () 2 = !![1, 0; 0, -1]
+
+theorem rejected_law : ¬ arena.Law PauliReadout.rejected := by
+  intro h
+  change (0 : Matrix (Fin 2) (Fin 2) ℂ) = !![1, 0; 0, -1] at h
+  have he := congrArg (fun M : Matrix (Fin 2) (Fin 2) ℂ => (M 0 0).re) h
+  norm_num [PauliReadout.rejected, realize, Matrix.zero_apply] at he
+
+def source_registration : Registration arena (type_of% @pauli_two) where
+  actual := PauliReadout.actual
+  bridge := Iff.rfl
+  variation := ⟨pauli_two, PauliReadout.rejected, rejected_law⟩
+  sensitivity := Reg.Support.SingleDependentReadout.sensitivity arena.Law
+    PauliReadout.actual PauliReadout.rejected rejected_law
+  dependence := PauliReadout.dependence
+
+def registration :
+    LeanInformationAudit.Contract.Registration.{_, _, _, 0, 0, 0, _, _, _, _, _, 0}
+      (@_root_.D5.S3.Quantum.Entanglement.SteeringEllipsoidFullyEntangledFraction.pauli_two)
+      (Realization PauliReadout.signature) Unit Unit := {
+  unitName := `Reg.D5.S3.Quantum.Entanglement.SteeringEllipsoidFullyEntangledFraction.PauliTwo.unit
+  realizationName := Lean.Name.str
+    `Reg.D5.S3.Quantum.Entanglement.SteeringEllipsoidFullyEntangledFraction.PauliTwo
+    "source_registration"
+  realizationSource := none, generated := false
+  arena := .source ⟨arena⟩, objectArena := .source ⟨arena⟩
+  catalog := Lean.Name.anonymous, localNames := false
+  realization := .source arena ⟨source_registration⟩
+  correspondence := { stage := .evidence, objectStage := .evidence }
+  bundleNonempty := .absent
+  readout := some (realize PauliReadout.signature (fun _ _ i => pauli i) (fun e => nomatch e))
+  variation := .absent, sensitivity := .absent
+  partialSensitivity := none, escapeFrom := none
+  sourceSelection := some {
+    owner := `D5.S3.Quantum.Entanglement.SteeringEllipsoidFullyEntangledFraction
+    definition := none, coordinates := #[]
+    readouts := #[{
+      path := #["fn", "arg"]
+      stateBinder := 0, functionOperand := false
+      stateOperand := some #["arg"], booleanPredicate := false }] }
+  continuation := .unknown
+  familyRecord := none, options := #[] }
+
+#print axioms source_registration
+#print axioms registration
+
+end PauliTwo
+end
+end Reg.D5.S3.Quantum.Entanglement.SteeringEllipsoidFullyEntangledFraction

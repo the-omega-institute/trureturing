@@ -41,7 +41,7 @@ def claim : Prop :=
   (∀ t : ℝ, 0 ≤ t → t ≤ 1 → ∀ ε : ℝ, 0 < ε → ∃ ρ : TwoQubit,
      ρ.PosSemidef ∧ Matrix.trace ρ = 1 ∧ vlen (centre ρ) = t ∧ bound t - ε < chsh ρ)
 
-private lemma sigma_succ (i : Fin 3) : sigma i.succ = pauli i := by
+lemma sigma_succ (i : Fin 3) : sigma i.succ = pauli i := by
   fin_cases i <;> rfl
 
 private lemma unit_coord (u : Fin 3 → ℝ) (hu : vlen u = 1) (i : Fin 3) : |u i| ≤ 1 := by

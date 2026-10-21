@@ -31,6 +31,9 @@ internal sealed class SteeringEllipsoidCHSHDocument : IScribeDocumentDefinition
             Node("claim", "Conjecture 1", ClaimFormula(),
                 "Section V, Conjecture 1: Let rho be a general two-qubit state with its steering ellipsoid centred at c. The CHSH nonlocality is tightly bounded as beta(rho) <= max[2 sqrt(2(1 - c)), 2]. Here c is the Euclidean length of D5.S3.Quantum.Entanglement.SteeringEllipsoidFullyEntangledFraction.centre. The first clause gives the inequality for every positive semidefinite matrix of trace one. The second expresses tightness as a supremum: for each t in [0, 1] and each epsilon > 0 there is a positive semidefinite trace-one matrix with centre length exactly t and CHSH value strictly greater than bound(t) - epsilon.",
                 "claim", DescribeRole.Definition, AssessedProvenance.FromLiterature(Source)),
+            Node("sigma-succ", "Agreement of Pauli indexing", SigmaSuccFormula(),
+                "For every index i in Fin 3, the Pauli operator sigma at the successor index in Fin 4 equals pauli i.",
+                "sigma_succ", DescribeRole.Theorem, AssessedProvenance.FromRepo(Source)),
             Node("vlen-sq", "Squared Euclidean length", VlenSqFormula(),
                 "For every real three-vector, the square of its Euclidean length equals its dot product with itself.",
                 "vlen_sq", DescribeRole.Theorem, AssessedProvenance.FromRepo(Source)),
@@ -134,6 +137,14 @@ internal sealed class SteeringEllipsoidCHSHDocument : IScribeDocumentDefinition
     private static Formula Spin(Formula vector) => QCall(SpinOwner, "spin", vector);
     private static Formula Bell(Formula a, Formula aPrime, Formula b, Formula bPrime) =>
         Call("bell", a, aPrime, b, bPrime);
+    private static Formula SigmaSuccFormula()
+    {
+        Formula i = F.Id("i");
+        return All("i", Fin(3), EqTo(
+            QCall(SpinOwner, "sigma", QCall("Fin", "succ", i)),
+            QCall(Companion, "pauli", i)));
+    }
+
     private static Formula VlenSqFormula()
     {
         Formula u = F.Id("u");

@@ -379,3 +379,89 @@ def registration :
 end NormalizedUnit
 end
 end Reg.D5.S3.Quantum.Entanglement.SteeringEllipsoidCHSH
+
+namespace Reg.D5.S3.Quantum.Entanglement.SteeringEllipsoidCHSH
+open _root_.D5.S3.Quantum.Entanglement.SteeringEllipsoidCHSH (sigma_succ)
+open _root_.D5.S3.Quantum.Entanglement.SteeringEllipsoidFullyEntangledFraction
+  (pauli pauli_zero pauli_two)
+open _root_.D5.S3.QuantumChannels.PauliThreeWeightBayesianInverseUniqueness (sigma)
+open _root_.D5.S3.ConceptDynamics.InformationEscape.DependentFamily
+
+set_option autoImplicit false
+set_option relaxedAutoImplicit false
+noncomputable section
+
+namespace SigmaSuccessor
+
+/-- Observe the Pauli matrix as its index varies. -/
+abbrev signature : Signature :=
+  Reg.Support.SingleDependentReadout.signature Unit (fun _ => Fin 3)
+    (fun _ => Matrix (Fin 2) (Fin 2) ℂ)
+
+def actual : Realization signature :=
+  realize signature (fun _ _ i => pauli i) (fun e => nomatch e)
+
+def rejected : Realization signature :=
+  realize signature (fun _ _ _ => 0) (fun e => nomatch e)
+
+theorem dependence : ObservationalDependence signature actual := by
+  intro i
+  refine ⟨(), 0, 2, ?_⟩
+  change pauli 0 ≠ pauli 2
+  intro h
+  have he := congrArg (fun M : Matrix (Fin 2) (Fin 2) ℂ => (M 0 0).re) h
+  norm_num [pauli_zero, pauli_two] at he
+
+abbrev arena : Arena where
+  signature := signature
+  Law R := ∀ i : Fin 3, sigma i.succ = R.readout () () i
+
+theorem rejected_law : ¬ arena.Law rejected := by
+  intro h
+  have hz := h 0
+  change sigma (0 : Fin 3).succ = (0 : Matrix (Fin 2) (Fin 2) ℂ) at hz
+  rw [sigma_succ, pauli_zero] at hz
+  have he := congrArg (fun M : Matrix (Fin 2) (Fin 2) ℂ => (M 0 1).re) hz
+  norm_num [Matrix.zero_apply] at he
+
+def source_registration : Registration arena (type_of% @sigma_succ) where
+  actual := actual
+  bridge := Iff.rfl
+  variation := ⟨sigma_succ, rejected, rejected_law⟩
+  sensitivity := Reg.Support.SingleDependentReadout.sensitivity arena.Law actual rejected
+    rejected_law
+  dependence := dependence
+
+def registration :
+    LeanInformationAudit.Contract.Registration.{_, _, _, 0, 0, 0, _, _, _, _, _, 0}
+      (@_root_.D5.S3.Quantum.Entanglement.SteeringEllipsoidCHSH.sigma_succ)
+      (Realization signature) Unit Unit := {
+  unitName := `Reg.D5.S3.Quantum.Entanglement.SteeringEllipsoidCHSH.SigmaSuccessor.unit
+  realizationName := Lean.Name.str
+    `Reg.D5.S3.Quantum.Entanglement.SteeringEllipsoidCHSH.SigmaSuccessor
+    "source_registration"
+  realizationSource := none, generated := false
+  arena := .source ⟨arena⟩, objectArena := .source ⟨arena⟩
+  catalog := Lean.Name.anonymous, localNames := false
+  realization := .source arena ⟨source_registration⟩
+  correspondence := { stage := .evidence, objectStage := .evidence }
+  bundleNonempty := .absent
+  readout := some (realize signature (fun _ _ i => pauli i) (fun e => nomatch e))
+  variation := .absent, sensitivity := .absent
+  partialSensitivity := none, escapeFrom := none
+  sourceSelection := some {
+    owner := `D5.S3.Quantum.Entanglement.SteeringEllipsoidCHSH
+    definition := none, coordinates := #[]
+    readouts := #[{
+      path := #["body", "arg"]
+      stateBinder := 0, functionOperand := false
+      stateOperand := none, booleanPredicate := false }] }
+  continuation := .unknown
+  familyRecord := none, options := #[] }
+
+#print axioms source_registration
+#print axioms registration
+
+end SigmaSuccessor
+end
+end Reg.D5.S3.Quantum.Entanglement.SteeringEllipsoidCHSH
