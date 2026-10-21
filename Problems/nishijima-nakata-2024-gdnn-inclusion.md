@@ -1,0 +1,148 @@
+---
+slug: nishijima-nakata-2024-gdnn-inclusion
+bibkey: nishijimanakata2024generalizations
+doi: 10.15807/jorsj.67.84
+triage: theorem
+motivation_gids:
+  - D5/S3/QuadraticForms/ConicGDNN/Result.result
+url: https://arxiv.org/abs/2204.12119
+---
+
+# Generalized doubly nonnegative cone inclusion
+
+## Problem
+
+The cited article, arXiv:2204.12119v4, Section 5.1, Conjecture 5.1, asks for
+the inclusion of the NN-type generalized doubly nonnegative cone in the
+BD-type cone for products of a nonnegative orthant and second-order cones.
+The same inclusion is Conjecture 4.24 of Nishijima's 2024 thesis.
+
+The supplied statement is: “for K a direct product of a nonnegative orthant
+and second-order cones, the NN-type generalized doubly nonnegative cone is
+contained in the BD-type one.” This is the supplied statement, rather than
+an independently verified verbatim transcription of the article.
+
+### Formal reading
+
+Let $p,r\ge0$ and $k_j\ge1$ for $1\le j\le r$, and put
+
+$$K=\mathbb R_+^p\times\prod_{j=1}^r
+\{(t,z)\in\mathbb R\times\mathbb R^{k_j}:\|z\|_2\le t\}.$$
+
+Let $q$ square each orthant coordinate and send each Lorentz block $(t,z)$
+to $(t^2+\|z\|_2^2,2tz)$. Write $\Sigma_{n,4}$ for the convex hull of
+squares of homogeneous quadratic polynomials. With the standard coordinate
+pairing and $n=p+\sum_j(k_j+1)$, define
+
+$$\mathcal K_{\mathrm{NN},0}(K)
+=\{A\in\mathbb S^n:q(x)^\mathsf{T}Aq(x)\in\Sigma_{n,4}\}.$$
+
+Every $X\in\mathbb S^n$ satisfying
+$\operatorname{tr}(XA)\ge0$ for every $A\in\mathcal K_{\mathrm{NN},0}(K)$
+is positive semidefinite and satisfies $Xs\in K$ for every extreme ray
+generator $s$ of $K^*$. Thus $\mathrm{DNN}^{\mathrm{NN}}(K)\subseteq
+\mathrm{DNN}^{\mathrm{BD}}(K)$.
+
+| Source object | Lean counterpart | Correspondence |
+| --- | --- | --- |
+| Orthant and Lorentz product | `Defs.Idx`, `Defs.cone` | Orthant coordinates and a time coordinate plus $k_j$ spatial coordinates per block. |
+| Jordan square | `Defs.jsq` | Homogeneous quadratic polynomials with the displayed block formula. |
+| Quartic SOS cone | `Defs.sos4` | Real convex hull of homogeneous quadratic squares. |
+| Zeroth approximation | `Defs.quartic`, `Defs.knn0` | Symmetric matrices with SOS quartic pullback. |
+| NN-type dual | `Defs.dnnNN` | Symmetric trace dual of exactly this approximation. |
+| BD-type cone | `Defs.dualCone`, `Defs.extremeRays`, `Defs.dnnBD` | Positive semidefiniteness and preservation of every dual extreme ray generator. |
+| All product dimensions | `Defs.claim`, `Result.result` | All $p,r$ and all positive spatial dimensions; no factor is omitted. |
+
+## Motivation
+
+The settling GID is `D5/S3/QuadraticForms/ConicGDNN/Result.result`.
+The source note is `D5/L/QuadraticForms/nishijimanakata2024generalizations`.
+The admission basis is open-problem-resolution (Proved), with preregistration
+#20006. The result compares the two specified approximations for the full
+orthant and Lorentz product family.
+
+## Gap
+
+Status: **Proved** for the stated inclusion. Preservation holds for the
+entire cone, and the intermediate theorems also allow $k_j=0$. Products
+with positive semidefinite cone factors and the strictness question in
+Triage are outside the formal claim.
+
+## Route
+
+Every rank-one symmetric matrix $ww^\mathsf{T}$ supplies the single-square
+quartic $(w\cdot q(x))^2$, so trace positivity implies $X\succeq0$.
+For $u,v\in K=K^*$, the quadratic polynomials $h_u=u\cdot q$ and
+$h_v=v\cdot q$ have homogeneous linear-square certificates. Their product
+is a sum of squares of homogeneous quadratics, so
+$(uv^\mathsf{T}+vu^\mathsf{T})/2$ belongs to $\mathcal K_{\mathrm{NN},0}(K)$.
+Trace positivity gives $u^\mathsf{T}Xv\ge0$. Self-duality then yields
+$Xv\in K$ for every $v\in K$.
+
+The structural argument needs only a finite-dimensional self-dual closed
+cone and a homogeneous quadratic map $q$ taking values in it. For any
+$u$ in that cone, $u\cdot q(x)\ge0$ for all $x$. A nonnegative real
+homogeneous quadratic polynomial is a sum of squares of linear forms:
+diagonalize its positive semidefinite symmetric coefficient matrix and
+absorb the square roots of its nonnegative eigenvalues. Multiplication
+gives the quadratic-square certificate above; no further Jordan identity
+is used in the rank-one or trace-duality steps. The Lean development
+specializes this argument to the stated products and constructs the
+linear-square certificates explicitly; it does not state an abstract
+theorem for arbitrary cones or quadratic maps.
+
+## Falsifier
+
+A symmetric matrix in the specified trace dual that is not positive
+semidefinite, or that sends some dual extreme ray generator outside $K$,
+would contradict `Result.result`. A cone vector $v$ with $Xv\notin K$
+would already contradict `Duality.mulVec_mem_cone`.
+
+## Evidence
+
+`D5/S3/QuadraticForms/ConicGDNN/Result.result` proves exactly `Defs.claim`.
+The principal dependencies are `Lorentz.dualCone_cone`,
+`Lorentz.pullback_eq_sum_sq`, `Duality.quartic_rankOne`,
+`Duality.posSemidef_of_mem_dnnNN`, `Duality.sym_mem_knn0`, and
+`Duality.mulVec_mem_cone`. The accepted axiom closure of the result is
+contained in `{propext, Classical.choice, Quot.sound}`.
+
+The source identification and bounded literature screen are supplied
+information: the listed later articles 2402.12964, 2502.04006, 2510.27160,
+2602.23725 and 2608.27062 contain no reported settlement in that screen.
+This is not an exhaustive citation-index or priority certification.
+
+The Result registration is unfinished. Its source-binding diagnostic is
+`IE-C050 ClosedTruthReadout reason=unclassified_form
+rule=source.definition_owner`: the claim definition is in Defs and the
+theorem is in Result. No validated Result registration is asserted.
+
+## Triage
+
+- **Proved (formalized).** The stronger conclusion $XK\subseteq K$ holds
+  for every cone vector, beyond extreme ray generators of $K^*$, by
+  `Duality.mulVec_mem_cone`. No positive spatial-dimension hypothesis is
+  needed for this stronger conclusion.
+- **Proved (argument in this delivery).** The mechanism uses only that the
+  Jordan square is a homogeneous quadratic map into a self-dual closed
+  cone, by the nonnegative-quadratic SOS argument in Route. The abstract
+  generalization is a mathematical derivation; the Lean theorem concerns
+  the pinned orthant and Lorentz products.
+- **Open (not formalized here).** The same inclusion for products with
+  positive semidefinite cone factors, as in the article's Section 4.2,
+  admits the same argument: the matrix-square map is homogeneous
+  quadratic and takes values in the self-dual positive semidefinite
+  cone under the trace pairing. Its coordinate model and SOS certificate
+  are not formalized in this development.
+- **Open.** Whether the inclusion is strict for every product with at
+  least one Lorentz block and one further factor is not settled here.
+
+## ASSUMED-UNVERIFIED
+
+The bibliographic identifiers, conjecture numbering and statement wording
+are supplied source information; an independent verbatim source-text check
+is not available. Literature completeness, priority and exhaustive coverage
+of subsequent papers are unverified. The abstract generalization and the
+positive semidefinite factor extension have no general Lean theorem in
+this development. The Result registration remains unfinished as specified
+in Evidence.

@@ -10,7 +10,13 @@ Lean statement: `D5/S3/QuadraticForms/ConicGDNN/Result.result`
 
 *Proof.* Machine-checked in Lean as `D5/S3/QuadraticForms/ConicGDNN/Result.result` (`✓ std3`). ∎
 
+*Resolves.* `Problems/nishijima-nakata-2024-gdnn-inclusion` (proved) by `D5/S3/QuadraticForms/ConicGDNN/Result.result`.
+
+<!-- scribe-open-problem-resolution-v1 {"problem_slug":"nishijima-nakata-2024-gdnn-inclusion","declaration_gid":"D5/S3/QuadraticForms/ConicGDNN/Result.result","resolution_kind":"proved"} -->
+
 *Source.* Repository-derived.
+
+*Acknowledgement.* M. Nishijima and K. Nakata (2024). *Generalizations of doubly nonnegative cones and their comparison*. DOI: [10.15807/jorsj.67.84](https://doi.org/10.15807/jorsj.67.84). URL: <https://arxiv.org/abs/2204.12119>.
 
 *Commentary.*
 
