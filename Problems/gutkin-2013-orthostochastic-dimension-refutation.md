@@ -81,9 +81,12 @@ The module is admitted under the open-problem-resolution basis of CLAUDE.md §3.
 
 ### What the settlement shows
 
-**Proved by `result`:** for every n ≥ 2 and d < n − 1, the star matrix S_n has no lift in ℝ^d satisfying the norm equations and column orthogonality. Consequently d_min(n) ≥ n − 1 for every n ≥ 2, and d_min(n) ∉ [2, 3] once n ≥ 5.
+**Proved in the module:**
+- *The obstruction.* The private `star_lift_dimension_bound` proves that, for n ≥ 2, every lift of the star matrix S_n in ℝ^d satisfying the norm equations and column orthogonality has n − 1 ≤ d.
+- *The refutation.* `result` proves that the conjecture fails. Assuming 2 ≤ d_min(n) for n = max(n₀, 5), the set defining d_min(n) is nonempty, so S_n has a lift in dimension d_min(n), and d_min(n) ≥ n − 1 ≥ 4.
 
 **Argued, not formalized.**
+- *Unconditional lower bound.* The set defining d_min(n) is nonempty, since the lift V_rc = √P_rc (e_r ⊗ e_c) in ℝ^{n²} satisfies both equations. With the obstruction this gives d_min(n) ≥ n − 1 for every n ≥ 2. The module does not formalize the nonemptiness, so the unconditional bound is not a Lean theorem.
 - *Mechanism.* A bistochastic matrix whose row r spreads its mass over columns j whose other rows have pairwise disjoint supports forces the vectors V_rj to be pairwise orthogonal. So it forces at least as many internal dimensions as the number of such columns. The dimension count behind the conjecture compares numbers of parameters and does not see this orthogonality constraint.
 - *Other fields.* Steps 2–3 use only the inner-product structure, so the same bound d_min(F, n) ≥ n − 1 holds for F = ℂ and F = ℍ.
 - *Effect on the paper.*
