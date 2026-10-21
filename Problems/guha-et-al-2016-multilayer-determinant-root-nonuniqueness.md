@@ -74,7 +74,9 @@ The module is admitted under the open-problem-resolution basis of CLAUDE.md §3.
 
 ### What the settlement shows
 
-**Proved by `result`:** for M = 3 and p = δ₆₅ (C = 64), det A(q) has at least three distinct zeros in [0, 1], so the conjecture fails.
+**Proved in the module:**
+- *Three zeros.* The private `determinant_three_roots` proves that, for M = 3 and C = 64, det A(q) has three distinct zeros in [0, 1].
+- *The refutation.* `result` applies it to p = δ₆₅ (z = 65, C = 64) and proves that the conjecture fails.
 
 **Computed, not formalized** (orchestrator, sympy, recorded in #19823):
 - **The three zeros.** For M = 3 and C = 64, the zeros in [0, 1] are 0.015178, 0.343759 and 0.909396.
@@ -82,7 +84,7 @@ The module is admitted under the open-problem-resolution basis of CLAUDE.md §3.
 - **Thresholds.** The count changes from one to three at C ≈ 26.036 for M = 3 and at C ≈ 35.247 for M = 4.
 
 **Argued, not formalized.**
-- *Scope of the failure.* In every computed case with C ≤ 20 the zero is unique; the failure appears once C, the ratio of the second factorial moment to the mean degree, is large. So uniqueness holds only in a moderate-C range, not as a structural property of A(q). The exact threshold as a function of M is not determined here.
+- *Scope of the failure.* In the finite scan (M ≤ 6 and the ten listed values of C), the zero is unique for every C ≤ 20, and three zeros appear only at the larger values of C. For M = 1, det A(q) = 1 − Cq has the single zero 1/C for every C > 1. The scan does not determine, for general M, the set of C for which the zero is unique; nor does it determine the threshold as a function of M.
 - *Effect on the paper.* The source's characterization of q_c(M) as the smallest zero of det A(q) in [0, 1] is proved there and is unaffected. Only the shortcut "the unique zero" fails: for dense degree distributions, a root-finder must select the smallest zero.
 
 ## ASSUMED-UNVERIFIED
