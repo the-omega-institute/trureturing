@@ -32,7 +32,7 @@ Direct frozen dependencies:
 The partial traces and density predicate use their existing owners. Matrix.traceRight
 and its Hermitian theorem belong to the closed, unfrozen FiniteDensityPurification;
 no pinned Mathlib partial trace provides the literal expression required by #19494.
-Escape audit unfinished: https://github.com/the-omega-institute/trureturing/issues/19585.
+`result` is the designated refutation result of the line-6 utility record and is exempt from four-slot registration under CLAUDE.md §3.9.
 -/
 
 import D5.S3.Weil.ZetaLinear.PosIndex
