@@ -4,13 +4,13 @@
    mirror-E: none(waiver:evidence-not-specified-by-formal-manifest)
    anchors: [mathlib/module/Mathlib.LinearAlgebra.Matrix.Charpoly.Basic, mathlib/module/Mathlib.Algebra.BigOperators.Intervals]
    utility: none
-   digest: Fourier eigenvectors and paired characteristic factors for odd real symmetric circulants. -/
+   digest: Fourier characteristic factors for circulants and paired cosine factors for odd real symmetric circulants. -/
 
 import D5.S3.Quantum.Dynamics.PolygonalFourierCouplings
 import Mathlib.LinearAlgebra.Matrix.Charpoly.Basic
 import Mathlib.Algebra.BigOperators.Intervals
 
-/-! Fourier modes and characteristic factors, including real odd-order pairing. -/
+set_option maxHeartbeats 2000000
 
 noncomputable section
 open Finset Matrix Polynomial Complex
@@ -18,125 +18,48 @@ open scoped BigOperators
 
 namespace D5.S3.Quantum.Matrix.CirculantCharpoly
 
-private abbrev toZ (n : ℕ) [NeZero n] := ZMod.finEquiv n
+variable (n : ℕ) [NeZero n]
 
-/-- The positive primitive complex root used for the Fourier modes. -/
-def root (n : ℕ) : ℂ := Complex.exp (2 * Real.pi * I / n)
-
-/-- The eigenvalue with a positive Fourier exponent. -/
-def fourierValue {n : ℕ} (v : Fin n → ℂ) (j : Fin n) : ℂ :=
-  ∑ k : Fin n, v k * root n ^ (j.val * k.val)
-
-private lemma toZ_eq_cast {n : ℕ} [NeZero n] (j : Fin n) :
-    toZ n j = (j.val : ZMod n) := by
-  cases n with
-  | zero => exact (NeZero.ne 0 rfl).elim
-  | succ n => exact (Fin.cast_val_eq_self j).symm
-
-private lemma character_eq_pow {n : ℕ} [NeZero n] (j k : Fin n) :
-    ZMod.stdAddChar (toZ n j * toZ n k) = root n ^ (j.val * k.val) := by
-  rw [toZ_eq_cast, toZ_eq_cast, ← Nat.cast_mul]
-  have h (a : ℕ) : ZMod.stdAddChar (a : ZMod n) = ZMod.stdAddChar (1 : ZMod n) ^ a := by
-    simpa using AddChar.map_nsmul_eq_pow (ZMod.stdAddChar (N := n)) a 1
-  rw [h]
-  congr 1
-  simpa [root] using ZMod.stdAddChar_coe (N := n) (1 : ℤ)
-
-/-- Fourier vectors, with the negative exponent for Mathlib's circulant convention. -/
-def fourierVector {n : ℕ} (j : Fin n) (k : Fin n) : ℂ :=
-  (root n ^ (j.val * k.val))⁻¹
-
-private lemma fourierVector_eq_character {n : ℕ} [NeZero n] (j k : Fin n) :
-    fourierVector j k = ZMod.stdAddChar (-(toZ n j * toZ n k)) := by
-  rw [AddChar.map_neg_eq_inv, character_eq_pow]
-  rfl
-
-/-- The Fourier vectors form a basis, transported from the invertible discrete transform. -/
-def fourierBasis (n : ℕ) [NeZero n] : Module.Basis (Fin n) ℂ (Fin n → ℂ) :=
-  ((Pi.basisFun ℂ (ZMod n)).map (ZMod.dft (N := n))).reindex (toZ n).toEquiv.symm |>.map
-    (LinearEquiv.funCongrLeft ℂ ℂ (toZ n).toEquiv)
-
-private lemma fourierBasis_apply {n : ℕ} [NeZero n] (j k : Fin n) :
-    fourierBasis n j k = fourierVector j k := by
-  classical
-  rw [fourierVector_eq_character]
-  simp [fourierBasis, Module.Basis.reindex_apply,
-    Pi.basisFun_apply, ZMod.dft_apply, Pi.single_apply]
-
-/-- The Fourier vectors are eigenvectors with the positive-exponent eigenvalue. -/
-theorem circulant_mulVec_fourier {n : ℕ} [NeZero n] (v : Fin n → ℂ) (j : Fin n) :
-    Matrix.circulant v *ᵥ fourierVector j = fourierValue v j • fourierVector j := by
-  classical
-  let e := (toZ n).toEquiv
-  let b : ZMod n → ℂ := fun k => v (e.symm (-k))
-  have hv : ZMod.dft b (e j) = fourierValue v j := by
-    rw [ZMod.dft_apply, fourierValue]
-    refine Fintype.sum_equiv ((Equiv.neg (ZMod n)).trans e.symm) _ _ ?_
-    intro k
-    simp only [Equiv.trans_apply, Equiv.neg_apply, smul_eq_mul, b]
-    rw [← character_eq_pow]
-    change ZMod.stdAddChar (-(k * e j)) * v (e.symm (-k)) =
-      v (e.symm (-k)) * ZMod.stdAddChar (e j * e (e.symm (-k)))
-    rw [e.apply_symm_apply]
-    simp only [mul_comm, neg_mul]
+theorem circulant_charpoly (b : ZMod n → ℂ) :
+    (Matrix.circulant b).charpoly = ∏ j : ZMod n, (X - C (ZMod.dft b j)) := by
   have hs := D5.S3.Quantum.Dynamics.PolygonalFourierCouplings.circulant_spectral n b
-  ext a
-  let S : ℂ := Real.sqrt n
-  have hS : S ≠ 0 := by
-    exact Complex.ofReal_ne_zero.mpr
-      (Real.sqrt_ne_zero'.mpr (Nat.cast_pos.mpr (NeZero.pos n)))
-  have heq := congrArg (fun M : Matrix (ZMod n) (ZMod n) ℂ => M (e j) (e a)) hs
-  rw [Matrix.mul_apply, Matrix.diagonal_mul] at heq
-  change (∑ k : ZMod n, (ZMod.stdAddChar (-(e j * k)) / S) * b (k - e a)) =
-    ZMod.dft b (e j) * (ZMod.stdAddChar (-(e j * e a)) / S) at heq
-  rw [hv] at heq
-  have hsum : (∑ k : ZMod n, (ZMod.stdAddChar (-(e j * k)) / S) * b (k - e a)) =
-      (Matrix.circulant v *ᵥ fourierVector j) a / S := by
-    simp only [Matrix.mulVec, dotProduct, Matrix.circulant_apply, Finset.sum_div]
-    refine Fintype.sum_equiv e.symm _ _ ?_
-    intro k
-    have hk : e.symm (-(k - e a)) = a - e.symm k := by
-      rw [neg_sub]
-      change (toZ n).symm (toZ n a - k) = a - (toZ n).symm k
-      rw [map_sub, (toZ n).symm_apply_apply]
-    simp only [b, hk, fourierVector_eq_character]
-    change _ = v (a - e.symm k) * ZMod.stdAddChar (-(e j * e (e.symm k))) / S
-    rw [e.apply_symm_apply]
-    ring
-  rw [hsum] at heq
-  have ha : ZMod.stdAddChar (-(e j * e a)) = fourierVector j a :=
-    (fourierVector_eq_character j a).symm
-  rw [ha] at heq
-  apply (div_left_inj' hS).mp
-  simpa only [Pi.smul_apply, smul_eq_mul, mul_div_assoc] using heq
+  have hu := D5.S3.Quantum.Dynamics.PolygonalFourierCouplings.transform_unitary n
+  have hi : IsUnit (D5.S3.Quantum.Dynamics.PolygonalFourierCouplings.transform n) :=
+    isUnit_iff_exists_inv.mpr
+      ⟨(D5.S3.Quantum.Dynamics.PolygonalFourierCouplings.transform n)ᴴ, hu⟩
+  have hd : (D5.S3.Quantum.Dynamics.PolygonalFourierCouplings.transform n).det ≠ 0 :=
+    ((Matrix.isUnit_iff_isUnit_det _).mp hi).ne_zero
+  have hcp := Matrix.charpoly_eq_of_mul_eq_mul hd hs.symm
+  change (Matrix.diagonal (ZMod.dft b)).charpoly = (Matrix.circulant b).charpoly at hcp
+  rw [Matrix.charpoly_diagonal] at hcp
+  exact hcp.symm
 
-/-- The complete complex characteristic polynomial of a circulant. -/
-theorem circulant_charpoly {n : ℕ} [NeZero n] (v : Fin n → ℂ) :
-    (Matrix.circulant v).charpoly = ∏ j : Fin n, (X - C (fourierValue v j)) := by
-  classical
-  let P : Matrix (Fin n) (Fin n) ℂ := Matrix.of fun a j => fourierVector j a
-  have hcols : P.col = fourierBasis n := by
-    ext j a
-    exact (fourierBasis_apply j a).symm
-  have hu : IsUnit P := Matrix.linearIndependent_col_iff_isUnit.mp (by
-    rw [hcols]
-    exact (fourierBasis n).linearIndependent)
-  have hd : P.det ≠ 0 := ((Matrix.isUnit_iff_isUnit_det P).mp hu).ne_zero
-  have hs : Matrix.circulant v * P = P * Matrix.diagonal (fourierValue v) := by
-    ext a j
-    rw [Matrix.mul_apply, Matrix.mul_diagonal]
-    change (∑ x, Matrix.circulant v a x * fourierVector j x) =
-      fourierVector j a * fourierValue v j
-    have h := congr_fun (circulant_mulVec_fourier v j) a
-    simpa only [Matrix.mulVec, dotProduct, Pi.smul_apply, smul_eq_mul, mul_comm] using h
-  rw [Matrix.charpoly_eq_of_mul_eq_mul hd hs, Matrix.charpoly_diagonal]
+theorem dft_real_of_even (b : ZMod n → ℝ) (hb : ∀ k, b (-k) = b k) (j : ZMod n) :
+    ZMod.dft (fun k => (b k : ℂ)) j = (ZMod.dft (fun k => (b k : ℂ)) j).re := by
+  apply (Complex.conj_eq_iff_re.mp ?_).symm
+  rw [ZMod.dft_apply]
+  simp only [smul_eq_mul, map_sum, map_mul, Complex.conj_ofReal,
+    ← AddChar.map_neg_eq_conj, neg_neg]
+  apply Fintype.sum_equiv (Equiv.neg (ZMod n))
+  intro k
+  simp only [Equiv.neg_apply, neg_mul, neg_neg, hb]
 
-/-- A real circulant specified by its values at natural residue representatives. -/
+theorem real_circulant_charpoly (b : ZMod n → ℝ) (hb : ∀ k, b (-k) = b k) :
+    (Matrix.circulant b).charpoly =
+      ∏ j : ZMod n, (X - C (ZMod.dft (fun k => (b k : ℂ)) j).re) := by
+  apply Polynomial.map_injective Complex.ofRealHom Complex.ofReal_injective
+  rw [← Matrix.charpoly_map, Matrix.map_circulant, circulant_charpoly]
+  simp only [Polynomial.map_prod, Polynomial.map_sub, Polynomial.map_X, Polynomial.map_C]
+  apply Finset.prod_congr rfl
+  intro j _
+  change (X - C (ZMod.dft (fun k => (b k : ℂ)) j) : ℂ[X]) =
+    X - C ((ZMod.dft (fun k => (b k : ℂ)) j).re : ℂ)
+  exact congrArg (fun z : ℂ => (X - C z : ℂ[X])) (dft_real_of_even n b hb j)
+
 def realCirculant (m : ℕ) (f : ℕ → ℝ) :
     Matrix (Fin (2 * m + 1)) (Fin (2 * m + 1)) ℝ :=
   Matrix.circulant (fun k => f k.val)
 
-/-- The real cosine expression for the mode indexed by a natural number. -/
 def cosineValue (m : ℕ) (f : ℕ → ℝ) (j : ℕ) : ℝ :=
   f 0 + 2 * ∑ l ∈ Icc 1 m, f l * Real.cos (2 * Real.pi * j * l / (2 * m + 1))
 
@@ -179,28 +102,80 @@ private lemma character_pair (n : ℕ) [NeZero n] (j l : ℕ) (hl : l ≤ n) :
   push_cast at hc ⊢
   simpa only [mul_neg, neg_mul] using hc
 
-private lemma fourierValue_eq_cosineValue (m : ℕ) (f : ℕ → ℝ)
+private lemma dft_eq_cosineComplex (m : ℕ) (f : ℕ → ℝ)
     (hf : ∀ k ∈ Icc 1 (2 * m), f (2 * m + 1 - k) = f k)
-    (j : Fin (2 * m + 1)) :
-    fourierValue (fun k : Fin (2 * m + 1) => (f k.val : ℂ)) j =
-      (cosineValue m f j.val : ℂ) := by
+    (j : ZMod (2 * m + 1)) :
+    ZMod.dft (fun k => (f k.val : ℂ)) j = (cosineValue m f j.val : ℂ) := by
   classical
-  simp only [fourierValue, ← character_eq_pow, toZ_eq_cast]
-  rw [Fin.sum_univ_eq_sum_range (fun k : ℕ => (f k : ℂ) *
-    ZMod.stdAddChar ((j.val : ZMod (2 * m + 1)) * (k : ZMod (2 * m + 1))))]
-  rw [odd_sum]
-  simp only [Nat.cast_zero, mul_zero, AddChar.map_zero_eq_one, mul_one]
+  rw [ZMod.dft_apply]
+  rw [← (ZMod.finEquiv (2 * m + 1)).toEquiv.sum_comp]
+  simp only [smul_eq_mul]
+  have hfin_val (x : Fin (2 * m + 1)) :
+      ((ZMod.finEquiv (2 * m + 1)).toEquiv x).val = x.val := by
+    simp only [ZMod.finEquiv]
+    change x.val = x.val
+    rfl
+  have hcast_val (x : Fin (2 * m + 1)) :
+      ((x.val : ZMod (2 * m + 1)).val) = x.val := by
+    exact ZMod.val_cast_of_lt x.isLt
+  have hfin (x : Fin (2 * m + 1)) :
+      (ZMod.finEquiv (2 * m + 1)).toEquiv x = (x.val : ZMod (2 * m + 1)) := by
+    apply (ZMod.val_injective (2 * m + 1))
+    rw [hfin_val]
+    simp [ZMod.val_cast_of_lt x.isLt]
+  simp only [hfin, hcast_val]
+  rw [Fin.sum_univ_eq_sum_range
+    (fun k : ℕ => ZMod.stdAddChar (-((k : ZMod (2 * m + 1)) * j)) * (f k : ℂ)), odd_sum]
+  simp only [Nat.cast_zero, zero_mul, AddChar.map_zero_eq_one, one_mul,
+    Complex.ofReal_zero, add_zero]
   rw [cosineValue]
-  push_cast
   congr 1
+  push_cast
+  simp only [neg_zero, AddChar.map_zero_eq_one, one_mul]
   rw [mul_sum]
+  congr 1
   apply sum_congr rfl
   intro l hl
   have hl' := mem_Icc.mp hl
-  rw [hf l (mem_Icc.mpr ⟨hl'.1, by omega⟩), ← mul_add,
-    character_pair _ _ _ (by omega)]
-  push_cast
+  have hpair :
+      ZMod.stdAddChar (-(l : ZMod (2 * m + 1)) * (j : ZMod (2 * m + 1))) +
+        ZMod.stdAddChar (-((2 * m + 1 - l : ℕ) : ZMod (2 * m + 1)) * (j : ZMod (2 * m + 1))) =
+        (2 * Real.cos (2 * Real.pi * j.val * l / (2 * m + 1)) : ℂ) := by
+    rw [show -(l : ZMod (2 * m + 1)) * (j : ZMod (2 * m + 1)) =
+      -((j.val : ZMod (2 * m + 1)) * (l : ZMod (2 * m + 1))) by
+        simp [mul_comm, ZMod.natCast_zmod_val]]
+    rw [show -((2 * m + 1 - l : ℕ) : ZMod (2 * m + 1)) * (j : ZMod (2 * m + 1)) =
+      -((j.val : ZMod (2 * m + 1)) * ((2 * m + 1 - l : ℕ) : ZMod (2 * m + 1))) by
+        simp [mul_comm, ZMod.natCast_zmod_val]]
+    rw [AddChar.map_neg_eq_conj, AddChar.map_neg_eq_conj]
+    have hpos := character_pair (2 * m + 1) j.val l (by omega)
+    rw [← map_add, hpos]
+    rw [Complex.conj_ofReal]
+    push_cast
+    ring
+  rw [hf l (mem_Icc.mpr ⟨hl'.1, by omega⟩)]
+  rw [← add_mul]
+  have hsum :
+      ZMod.stdAddChar (-(l : ZMod (2 * m + 1)) * (j : ZMod (2 * m + 1))) +
+        ZMod.stdAddChar (-((2 * m + 1 - l : ℕ) : ZMod (2 * m + 1)) * (j : ZMod (2 * m + 1))) =
+        2 * (cos (2 * Real.pi * j.val * l / (2 * m + 1)) : ℂ) := by
+    convert hpair using 1 <;> simp [Complex.ofReal_cos] <;> (try congr 1) <;> ring
+  have hsum' :
+      ZMod.stdAddChar (-(l : ZMod (2 * m + 1)) * (j : ZMod (2 * m + 1))) +
+        ZMod.stdAddChar (-((2 * m + 1 - l : ℕ) : ZMod (2 * m + 1)) * (j : ZMod (2 * m + 1))) =
+        2 * (cos (2 * Real.pi * j.val * l / (2 * m + 1)) : ℂ) := by
+    simpa [neg_mul] using hsum
+  simp only [neg_mul] at *
+  rw [hsum']
   ring
+
+
+private lemma dft_eq_cosineValue (m : ℕ) (f : ℕ → ℝ)
+    (hf : ∀ k ∈ Icc 1 (2 * m), f (2 * m + 1 - k) = f k)
+    (j : ZMod (2 * m + 1)) :
+    (ZMod.dft (fun k => (f k.val : ℂ)) j).re = cosineValue m f j.val := by
+  rw [dft_eq_cosineComplex m f hf j]
+  simp
 
 private lemma cosineValue_reflect (m : ℕ) (f : ℕ → ℝ) (j : ℕ)
     (hj : j ≤ 2 * m + 1) :
@@ -218,28 +193,47 @@ private lemma cosineValue_reflect (m : ℕ) (f : ℕ → ℝ) (j : ℕ)
       field_simp]
   exact Real.cos_nat_mul_two_pi_sub _ l
 
-/-- Odd-order real symmetric circulants have one constant mode and paired cosine factors. -/
 theorem realCirculant_charpoly (m : ℕ) (f : ℕ → ℝ)
     (hf : ∀ k ∈ Icc 1 (2 * m), f (2 * m + 1 - k) = f k) :
     (realCirculant m f).charpoly =
       (X - C (cosineValue m f 0)) *
         ∏ j ∈ Icc 1 m, (X - C (cosineValue m f j)) ^ 2 := by
   classical
-  apply Polynomial.map_injective Complex.ofRealHom Complex.ofReal_injective
-  rw [← Matrix.charpoly_map]
-  simp only [realCirculant, Matrix.map_circulant, circulant_charpoly,
-    Polynomial.map_mul, Polynomial.map_prod, Polynomial.map_pow,
-    Polynomial.map_sub, Polynomial.map_X, Polynomial.map_C]
-  change (∏ j : Fin (2 * m + 1),
-    (X - C (fourierValue (fun k : Fin (2 * m + 1) => (f k.val : ℂ)) j))) = _
-  simp_rw [fourierValue_eq_cosineValue m f hf]
+  let b : ZMod (2 * m + 1) → ℝ := fun k => f k.val
+  have hb : ∀ k, b (-k) = b k := by
+    intro k
+    change f (-k).val = f k.val
+    by_cases hk : k = 0
+    · rw [ZMod.neg_val, if_pos hk]
+      simp [hk]
+    · have hkval : k.val ≠ 0 := by
+        intro h
+        exact hk (ZMod.val_eq_zero k |>.mp h)
+      rw [ZMod.neg_val, if_neg hk]
+      have hklt : k.val < 2 * m + 1 := k.val_lt
+      exact hf k.val (mem_Icc.mpr ⟨Nat.one_le_iff_ne_zero.mpr hkval, by omega⟩)
+  have hc := real_circulant_charpoly (2 * m + 1) b hb
+  rw [show (realCirculant m f).charpoly = (Matrix.circulant b).charpoly by
+    rfl, hc]
+  rw [← (ZMod.finEquiv (2 * m + 1)).toEquiv.prod_comp]
+  simp only [b]
+  simp_rw [dft_eq_cosineValue m f hf]
+  have hfin_val (x : Fin (2 * m + 1)) :
+      ((ZMod.finEquiv (2 * m + 1)).toEquiv x).val = x.val := by
+    simp only [ZMod.finEquiv]
+    change x.val = x.val
+    rfl
+  have hcast_val (x : Fin (2 * m + 1)) :
+      ((x.val : ZMod (2 * m + 1)).val) = x.val := by
+    exact ZMod.val_cast_of_lt x.isLt
+  simp_rw [hfin_val]
   rw [Fin.prod_univ_eq_prod_range
-    (fun j : ℕ => (X - C (cosineValue m f j : ℂ) : ℂ[X]))]
-  change (∏ j ∈ range (2 * m + 1), (X - C (cosineValue m f j : ℂ))) =
-    (X - C (cosineValue m f 0 : ℂ)) *
-      ∏ j ∈ Icc 1 m, (X - C (cosineValue m f j : ℂ)) ^ 2
+    (fun j : ℕ => (X - C (cosineValue m f j) : ℝ[X]))]
+  change (∏ j ∈ range (2 * m + 1), (X - C (cosineValue m f j))) =
+    (X - C (cosineValue m f 0)) *
+      ∏ j ∈ Icc 1 m, (X - C (cosineValue m f j)) ^ 2
   rw [odd_prod]
-  apply congrArg (fun p : ℂ[X] => (X - C (cosineValue m f 0 : ℂ)) * p)
+  apply congrArg (fun p : ℝ[X] => (X - C (cosineValue m f 0)) * p)
   apply prod_congr rfl
   intro j hj
   rw [cosineValue_reflect m f j (by have := (mem_Icc.mp hj).2; omega), pow_two]

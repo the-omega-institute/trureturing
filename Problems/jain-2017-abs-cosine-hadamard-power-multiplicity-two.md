@@ -111,7 +111,7 @@ finite check.
 
 - PROVED (formalized): the exact sign formulas for every real r, strict top-mode separation and injectivity of nonzero Fourier representatives for every real r, and algebraic multiplicity exactly two for every nonzero non-top eigenvalue at every nonnegative real r.
 - PROVED (formalized): the generalized Descartes bound and exact sign theorem for real exponential sums; the odd real symmetric circulant characteristic-polynomial factorization; the trigonometric coefficient variation counts and low-even-exponent forced zeros.
-- PROVED (paper proof, not formalized here): the multiplicity conclusion for negative r follows by the alternating mode signs and the step-two gap inequalities.
+- PROVED (paper proof, not formalized as a separate theorem here): the exported claim restricts to r ≥ 0 as in the source; the formalized sign and separation theorems hold for every real r, and the same multiplicity argument applies verbatim for r < 0.
 - PROVED (paper proof): the nonzero exception is necessary. At n=7 and r=2 the spectrum is 7/2, 7/4, 7/4, 0, 0, 0, 0, so the zero eigenvalue has multiplicity four.
 - COMPUTED (mpmath, 40-digit arithmetic, outside the Lean development): sign formulas for m=1,...,15 and 67 exponents r in [-6,30], with zero violations. These are numerical checks and not part of the formal proof.
 - OPEN: even orders and the analogous multiplicity statement for other entrywise functions of C.

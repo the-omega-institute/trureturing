@@ -2,7 +2,7 @@
 
 ## Abstract
 
-Absolute cosine matrix powers and their Fourier modes.
+Absolute cosine matrix powers and their Fourier modes. The matrix and conjecture are those of Jain.
 
 **Definition 1.1 (Angular step).**
 
@@ -11,6 +11,8 @@ Lean statement: `D5/S3/Quantum/Matrix/JainAbsCosine/Defs.angle`
 *Formalization.* `D5/S3/Quantum/Matrix/JainAbsCosine/Defs.angle` (`✓ std3`).
 
 *Source.* Repository-derived.
+
+*Acknowledgement.* Tanvi Jain (2017). *Hadamard powers of some positive matrices*. DOI: [10.1016/j.laa.2016.06.030](https://doi.org/10.1016/j.laa.2016.06.030). URL: <https://doi.org/10.1016/j.laa.2016.06.030>.
 
 *Commentary.*
 
@@ -24,6 +26,8 @@ Lean statement: `D5/S3/Quantum/Matrix/JainAbsCosine/Defs.absCosPow`
 
 *Source.* Repository-derived.
 
+*Acknowledgement.* Tanvi Jain (2017). *Hadamard powers of some positive matrices*. DOI: [10.1016/j.laa.2016.06.030](https://doi.org/10.1016/j.laa.2016.06.030). URL: <https://doi.org/10.1016/j.laa.2016.06.030>.
+
 *Commentary.*
 
 The matrix entry at a,b is the real power r of the absolute value of cos((a-b) pi/(2m+1)).
@@ -35,6 +39,8 @@ Lean statement: `D5/S3/Quantum/Matrix/JainAbsCosine/Defs.modeValue`
 *Formalization.* `D5/S3/Quantum/Matrix/JainAbsCosine/Defs.modeValue` (`✓ std3`).
 
 *Source.* Repository-derived.
+
+*Acknowledgement.* Tanvi Jain (2017). *Hadamard powers of some positive matrices*. DOI: [10.1016/j.laa.2016.06.030](https://doi.org/10.1016/j.laa.2016.06.030). URL: <https://doi.org/10.1016/j.laa.2016.06.030>.
 
 *Commentary.*
 
@@ -48,6 +54,8 @@ Lean statement: `D5/S3/Quantum/Matrix/JainAbsCosine/Defs.rootProduct`
 
 *Source.* Repository-derived.
 
+*Acknowledgement.* Tanvi Jain (2017). *Hadamard powers of some positive matrices*. DOI: [10.1016/j.laa.2016.06.030](https://doi.org/10.1016/j.laa.2016.06.030). URL: <https://doi.org/10.1016/j.laa.2016.06.030>.
+
 *Commentary.*
 
 The product over s less than j of r-2s records the proposed roots and their signs.
@@ -59,6 +67,8 @@ Lean statement: `D5/S3/Quantum/Matrix/JainAbsCosine/Defs.claim`
 *Formalization.* `D5/S3/Quantum/Matrix/JainAbsCosine/Defs.claim` (`✓ std3`).
 
 *Source.* Repository-derived.
+
+*Acknowledgement.* Tanvi Jain (2017). *Hadamard powers of some positive matrices*. DOI: [10.1016/j.laa.2016.06.030](https://doi.org/10.1016/j.laa.2016.06.030). URL: <https://doi.org/10.1016/j.laa.2016.06.030>.
 
 *Commentary.*
 
