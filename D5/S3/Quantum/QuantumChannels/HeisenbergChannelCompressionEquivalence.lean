@@ -74,7 +74,61 @@ private theorem isometric_factorization {d n : ℕ} (hnd : n ≤ d)
     (K : Matrix (Fin d) (Fin n) ℂ) :
     ∃ (V : Matrix (Fin d) (Fin n) ℂ) (C : Matrix (Fin n) (Fin n) ℂ),
       Vᴴ * V = 1 ∧ K = V * C := by
-  sorry
+  classical
+  let col : Fin n → EuclideanSpace ℂ (Fin d) :=
+    fun j => WithLp.toLp 2 (fun i => K i j)
+  let f : Fin d → EuclideanSpace ℂ (Fin d) :=
+    fun j => if hj : j.val < n then col ⟨j.val, hj⟩ else 0
+  have hf (j : Fin n) : f (Fin.castLE hnd j) = col j := by
+    dsimp only [f, Fin.castLE]
+    rw [dite_eq_left j.isLt]
+  have hdim : Module.finrank ℂ (EuclideanSpace ℂ (Fin d)) = Fintype.card (Fin d) :=
+    finrank_euclideanSpace
+  let q := InnerProductSpace.gramSchmidtOrthonormalBasis hdim f
+  let V : Matrix (Fin d) (Fin n) ℂ := fun i j => q (Fin.castLE hnd j) i
+  let C : Matrix (Fin n) (Fin n) ℂ := fun i j => q.repr (col j) (Fin.castLE hnd i)
+  have htail (j : Fin n) (i : Fin d) (hi : n ≤ i.val) : q.repr (col j) i = 0 := by
+    have hij : Fin.castLE hnd j < i := Nat.lt_of_lt_of_le j.isLt hi
+    have hz := InnerProductSpace.gramSchmidtOrthonormalBasis_inv_triangular' hdim f hij
+    change q.repr (f (Fin.castLE hnd j)) i = 0 at hz
+    rw [hf j] at hz
+    exact hz
+  refine ⟨V, C, ?_, ?_⟩
+  · ext i j
+    rw [← inner_matrix_col_col V V i j, Matrix.one_apply]
+    change inner ℂ (q (Fin.castLE hnd i)) (q (Fin.castLE hnd j)) =
+      if i = j then 1 else 0
+    rw [q.inner_eq_ite]
+    by_cases hij : i = j
+    · rw [if_pos (congrArg (Fin.castLE hnd) hij), if_pos hij]
+    · rw [if_neg (fun h => hij (Fin.castLE_injective hnd h)), if_neg hij]
+  · symm
+    ext i j
+    change (∑ k : Fin n,
+      q (Fin.castLE hnd k) i * q.repr (col j) (Fin.castLE hnd k)) = K i j
+    let s : Finset (Fin d) := Finset.univ.image (Fin.castLE hnd)
+    have hsum : (∑ k : Fin d, q k i * q.repr (col j) k) = K i j := by
+      have h := congrArg (fun v : EuclideanSpace ℂ (Fin d) => v i)
+        (q.sum_repr (col j))
+      simp only [WithLp.ofLp_sum, Finset.sum_apply, PiLp.smul_apply, smul_eq_mul] at h
+      change (∑ k : Fin d, q.repr (col j) k * q k i) = K i j at h
+      calc
+        _ = ∑ k : Fin d, q.repr (col j) k * q k i :=
+          Finset.sum_congr rfl (fun k _ => mul_comm _ _)
+        _ = _ := h
+    calc
+      _ = ∑ k ∈ s, q k i * q.repr (col j) k :=
+        (Finset.sum_image (Fin.castLE_injective hnd).injOn).symm
+      _ = ∑ k : Fin d, q k i * q.repr (col j) k := by
+        apply Finset.sum_subset (Finset.subset_univ _)
+        intro k _ hk
+        have hn : n ≤ k.val := by
+          by_contra hn
+          have hkn : k.val < n := Nat.lt_of_not_ge hn
+          apply hk
+          exact Finset.mem_image.mpr ⟨⟨k.val, hkn⟩, Finset.mem_univ _, rfl⟩
+        rw [htail j k hn, mul_zero]
+      _ = _ := hsum
 
 private theorem sum_compressed_parents {n : ℕ} {X R : Type} [Fintype X] [Fintype R]
     {Ω : X → Type} [∀ x, Fintype (Ω x)]
