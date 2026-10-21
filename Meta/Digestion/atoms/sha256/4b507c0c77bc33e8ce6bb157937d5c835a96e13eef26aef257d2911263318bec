@@ -1,0 +1,51 @@
+**Definition 15.2 (Exact four-variable equation).**  In the order
+$x=(t,b,r,e)$, let
+
+$$
+F(t,b,r,e)=
+\begin{pmatrix}
+H(r,b,e)\\
+X_0(r,b,e)-p_1(t)\\
+X_1(r,b,e)-v_1(t)\\
+X_3(r,b,e)-m_1(t)
+\end{pmatrix},
+\tag{15.4}
+$$
+
+where $H$ and $X_i$ are the parent-consistency and response functions
+of (10.1) and (10.5).  The following centre consists of exact
+terminating rationals:
+
+Writing $H_B=H(r,b,e)$, $p_B=X_0(r,b,e)$,
+$v_B=X_1(r,b,e)$, and $m_B=X_3(r,b,e)$, this is exactly
+
+$$
+F=(H_B,p_B-p_1(t),v_B-v_1(t),m_B-m_1(t))^{\mathsf T}.
+\tag{15.4a}
+$$
+
+$$
+x_0=\begin{pmatrix}
+8987958556003912/10^{16}\\
+8707641022982145/10^{16}\\
+9275770846479353/10^{16}\\
+4981230390477398/10^{15}
+\end{pmatrix},
+\qquad
+Q=x_0+[-10^{-8},10^{-8}]^4.
+\tag{15.5}
+$$
+
+Let
+
+$$
+R=10^{-6}
+\begin{pmatrix}
+-19276441&4040634&-1158716&124302\\
+-32067794&7561101&-2554574&335613\\
+-34766236&9531752&-3733207&557972\\
+5399875&-17649922&12206129&-2425481
+\end{pmatrix}.
+\tag{15.6}
+$$
+

@@ -1,0 +1,56 @@
+**Definition 2.2 (Exact source polynomials).** Use $\mathscr P$ for a
+polynomial, distinct from the source matrix $P$ in (1.1). Define
+$\mathscr P,D,N\in\mathbb Z[r,b]$ by the following coefficient table.
+The last column gives $[b^k](N/2)$, so the factor two in $N$ is part of
+the definition.
+
+| $k$ | $[b^k]\mathscr P$ | $[b^k]D$ | $[b^k](N/2)$ |
+| --- | --- | --- | --- |
+| $6$ | $1$ | $3$ | $-15$ |
+| $5$ | $r$ | $4r+17$ | $-r-77$ |
+| $4$ | $-2r^2+6r-8$ | $-3r^2-35r+64$ | $25r^2+230r-294$ |
+| $3$ | $-r^3-7r^2+6r-4$ | $-2r^3+25r^2-67r+50$ | $-18r^3-323r^2+621r-254$ |
+| $2$ | $r^4-10r^3+13r^2-6r$ | $r^4+30r^3-15r^2-28r+10$ | $4r^4+160r^3-535r^2+434r-61$ |
+| $1$ | $4r(1-r)^2(2r-1)$ | $-16r^4+56r^3-40r^2$ | $-32r^4+178r^3-232r^2+86r$ |
+| $0$ | $4r^2(1-r)^2$ | $-12r^2(1-r)^2$ | $-21r^2(1-r)^2$ |
+
+For arbitrary strict sources set
+
+$$
+\begin{aligned}
+L_5&=\frac14-\frac5{2T}-\frac{15}{4U}+\frac5n,\\
+L_6&=1-\frac9T-\frac9U+\frac{16}n,\\
+L_7&=\frac52-\frac{21}T-\frac{35}{2U}+\frac{35}n,\\
+\widetilde A_5&=1+(U+n)L_5,\quad
+\widetilde A_6=1+(2U+n)L_6,\quad
+\widetilde A_J=1+(T+2j+4r)L_7.
+\end{aligned}
+\tag{2.5}
+$$
+
+Put $q=r(1-r)$ and $t=1+rz$. The following are exact polynomial
+quotients, interpreted by polynomial continuation at $r=0,1$:
+
+$$
+H(r,z)=\frac{\mathscr P(r,qt)}{rq^2},\qquad
+N_L(r,z)=\frac{N(r,qt)}{q^2},\qquad
+D_L(r,z)=\frac{D(r,qt)}{q^2}.
+\tag{2.6}
+$$
+
+They are definitions in $\mathbb Q[r,z]$, not pointwise divisions by
+zero. Define also the polynomial derivative circuits
+
+$$
+\begin{aligned}
+J_U={}&(N_rD-ND_r)\mathscr P_b-(N_bD-ND_b)\mathscr P_r,\\
+\mathcal B={}&((N_L)_rD_L-N_L(D_L)_r)H_z\\
+&-((N_L)_zD_L-N_L(D_L)_z)H_r,\\
+J_L={}&\frac{\mathcal B+16H}{r}\quad\text{in }\mathbb Q[r,z].
+\end{aligned}
+\tag{2.7}
+$$
+
+Every polynomial needed for the certificates is determined by this
+coefficient table, substitution, differentiation and exact division.
+

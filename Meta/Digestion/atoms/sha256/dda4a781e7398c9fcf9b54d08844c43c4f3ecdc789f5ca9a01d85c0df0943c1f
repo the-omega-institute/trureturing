@@ -1,0 +1,43 @@
+**Definition 18.1 (one correlated mixed class).** Keep Assumption 1.2
+and Definitions 2.1–2.3 literally. Let $P$ be this canonical
+installation's actual first Ready, with its fixed complete history and
+state, acquisition tally $a$, and current $K=1$. Write $U(n)=1^n0$.
+For every nonempty finite list
+
+$$
+\mathbf j=(J_1,\ldots,J_s),\qquad 2\le J_1<\cdots<J_s,
+$$
+
+prescribe the following actual continuation from this same $P$.
+For each $i$, supply outer01 and the complete original source frame
+
+$$
+R(J_i)=101\,U(J_i+1)\,U(J_i).
+$$
+
+Complete its original source/row/dependency/ACK/token return,
+InnerReturn normalization, CaptureCAP and Ready. From that actual
+Ready, whose tally is denoted $b_i$, supply outer1, the separate
+HistoryMode bit1, and the complete history frame
+
+$$
+H(J_i)=111\,U(J_i+2)\,0\,U(J_i).
+$$
+
+Complete the entire GENERAL history flight through its final Ready,
+including the five-view suffix. After the last such return, supply
+outer01, execute the actual original header Base/setup prelude, and
+supply the first original header IN5 with bit0. Denote the resulting
+history, immediately before its matching EX13, by $r_{\mathbf j}$,
+and let $\mathcal D$ consist of these histories. The finite completions
+required in this description are established below under Assumption
+1.2's actual supply and pointwise local-termination premises.
+
+The history selector is thus explicitly linked to the value of its
+preceding source request. These are external supplied words at the
+existing input sites; the installation is not asserted to compute or
+resupply $J_i$ internally. No later entry state or controller trace is
+a further parameter of the class. There is no bound on $s$ or $J_s$.
+The final source frame is unfinished: only its first input bit has
+been consumed, and no ReadE response has occurred there.
+

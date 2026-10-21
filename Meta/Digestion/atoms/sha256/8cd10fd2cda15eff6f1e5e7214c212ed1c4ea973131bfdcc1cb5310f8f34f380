@@ -1,0 +1,97 @@
+**Lemma 18.3 (source-origin parsing and exhaustive input recovery).**
+From the original13 byte record in the matching EX13 successor of
+$r_{\mathbf j}$, together with the single fixed $P$, one recovers
+exactly $\mathbf j$, including its length. This determines every
+post-$P$ external input consumed up to that successor, including all
+gates, modes, history frames and the last incomplete source header.
+No70/71/73 response coordinate, acquired descriptor list or unobserved
+controller trace is an argument of this inverse.
+
+Proof. First establish origin on this particular route. ARC
+Definition 4.1 makes $F^A$ a separately numbered inlining of the
+complete external raw CAP frame reader, retaining its actual IN5
+sites even if the parked client has an automatic mode. Each01
+enters that reader before its header Base. The original client
+stays parked on24–27 throughout this class: no00 or client workspace
+loan occurs. It therefore constructs no automatic source command.
+CAP Definition 2.2 puts response blocks on20, staged public blocks
+on21, descriptors on17 and rows/indices on their own ports;
+maintenance, delivery and ACK work do not append another request
+to13. Its Reserve branch writes its new private interval on16 and
+directory on0, not an old13 wire cell. InnerReturn moves13/17
+heads without changing their ordinary symbols, and CaptureCAP
+imports28/29 into the annex. By Definition 2.3 and ARC's relocated
+compiler, the added history/bank/channel/conversion work uses the
+annex, never producer13 as a new output buffer or computed-command
+port. It supplies no independent external IN outside the actual
+gate, mode and history ingress. Thus the only new ordinary13 blocks
+between $P$ and this endpoint are the specified $F^A$ request
+blocks and the final unfinished header cell.
+
+This is stronger information than durability alone. ARC Definition
+3.4's installed parser resolves acquired request references and row
+bindings; it is not an installed parser for an unclassified raw13
+stream. SOURCECALL Proposition 4.7 explicitly allows a different
+resumed client to construct indistinguishable three-block commands
+without external IN. The parked-client and port-use facts just
+proved exclude that source of blocks here. SOURCECALL §§4.2–4.3
+and GENERAL §15's source-only hypotheses are not being applied to
+these history1 continuations.
+
+For an explicit mathematical parsing rule, select ordinary symbols
+from the included13 byte record: take each ordinary cell's symbol,
+omit L/R and head or permission fields, and retain all ordinary
+separators and status symbols. Let $C_P$ be the
+fixed ordinary prefix before the R cell at $P$. CAP Definition 4.6
+makes one completed Reserve request contribute exactly
+
+$$
+Z_J=101\,\mathsf{sep}\,1\;
+       U(J+1)\,\mathsf{sep}\,1\;
+       U(J)\,\mathsf{sep}\,1.
+$$
+
+The three status1 symbols occupy their own cells at
+base+length+1; they are not wire bits. The three descriptors and
+sealing work are real but are not extra ordinary13 blocks. Header
+and length bits have their actual append writes, and the preallocated
+payload's matching writes fill exactly its supplied unary value.
+Lemma 4.1 preserves every such wire symbol across both kinds of
+later work. Later source calls append at their measured R, even on
+this nonempty port.
+
+The final Base/setup only reads/positions13 and constructs its
+address on work ports. Its first IN5(0) changes latch5 without
+writing13. The prescribed EX13 makes the old R a blank ordinary
+cell and constructs the new R, before the matching WR. Therefore
+the selected symbol word in this successor is exactly
+
+$$
+C_P\,Z_{J_1}\cdots Z_{J_s}\,\square.
+$$
+
+After removing the fixed $C_P$, read a three-bit101 header with
+its sep/status, then one complete unary length and its sep/status,
+then the indicated number of payload bits and their sep/status.
+Check that length and payload are $U(J+1)$ and $U(J)$. Repeat
+until the final single blank, which is the unfinished header's EX
+cell, not a completed request or an unwritten payload bit. No
+completed request block contains a blank, so this stopping boundary
+is unambiguous on the stated image. It recovers the number of complete
+requests as well as every $J$. A first differing value changes its
+unary blocks; a strict list extension contributes another entire
+completed request before that last blank. In particular lists of
+different lengths cannot have the same selected word.
+
+Finally use Definition 18.1's proved route and explicit correlation,
+not an independently given control history. For each recovered $J$
+the consumed external words, at their respective installed sites,
+are exactly outer01, $R(J)$, outer1, separate mode1, $H(J)$.
+After the recovered list they are outer01 and the first header0.
+There are no additional external INs in source generation,
+CaptureCAP, represented replay, callbacks or five-view conversion
+by ARC Definition 6.1, GCA Definition 3.3 and Lemma 4.1. A represented
+historical IN is bank computation, not another physical supply.
+These facts exhaust actual input and determine the final unfinished
+header without reading its as-yet-unwritten0 from13. $\square$
+

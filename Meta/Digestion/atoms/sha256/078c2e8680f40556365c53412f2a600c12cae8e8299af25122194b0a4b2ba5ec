@@ -1,0 +1,46 @@
+**Definition 18.1 (Regular five-variable interface on the $J$ arc).**
+For $10\le p\le34$, $p\ne24$, let $z_J(p)$ and $v_J(p)$ be
+(16.15)–(16.16).  A regular independent-$M$ crossing is a solution of
+
+$$
+\begin{gathered}
+10\le p\le34,\quad p\ne24,\quad \tau_i>0,\quad b_i>0,
+\quad \tau_i b_i<1,\quad D_i\ne0,\\
+(\tau_2-\tau_3)^2+(b_2-b_3)^2>0,\\
+p_2-p=0,\quad p_3-p=0,\\
+v_2-v_J(p)=0,\quad v_3-v_J(p)=0,\quad m_2-m_3=0.
+\end{gathered}
+\tag{18.1}
+$$
+
+The variables are $(p,\tau_2,b_2,\tau_3,b_3)$ and each response is the
+complete-world response (16.5).  The Jacobian, in this order, is
+
+$$
+\begin{pmatrix}
+-1&p_{\tau}(2)&p_b(2)&0&0\\
+-1&0&0&p_{\tau}(3)&p_b(3)\\
+-v_J'&v_{\tau}(2)&v_b(2)&0&0\\
+-v_J'&0&0&v_{\tau}(3)&v_b(3)\\
+0&m_{\tau}(2)&m_b(2)&-m_{\tau}(3)&-m_b(3)
+\end{pmatrix},
+\tag{18.2}
+$$
+
+where
+
+$$
+ z_J'(p)=(D_zF(z_J(p),p))^{-1}(1,1,0,0)^{\mathsf T},\qquad
+ v_J'=(v_{\tau}(H),v_b(H),0,0)z_J'.
+\tag{18.3}
+$$
+
+Whenever an actual distinct $J$ pair is present in the same entire
+off-$24$ child, S, Corollary 18.2 excludes a singular selected-$M$
+endpoint.  Theorem 16.4 supplies exactly that actual $J$-pair hypothesis.
+Consequently (18.1) is equivalent to the existence of any actual
+independent $M$ pair in this entire child, with no regularity assumption
+on unused companions.  The two pairs
+may overlap or be disjoint, and their common terminal values are
+independent.
+

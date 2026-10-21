@@ -1,0 +1,113 @@
+**Theorem 129.3 (full-source universal uncapped obstruction).** For every
+initial source $u\in\mathcal T$, including every initial branch and
+both $\alpha$ and $\beta$, let $(G_e)_{e\ge0}$ be any sequence of
+finite SPD metrics on the uncapped actual iteration $s_e=\rho^e u$.
+Suppose that at every accepted step the unchanged native unit-edge forms
+and parent-copy maps satisfy (128.2), with $A_e=G_e^{-1}L_e$, and that
+every $Q_e=-A_e$ is conservative Markov. No diagonality is imposed on
+any metric, and the residual parameters may vary arbitrarily subject to
+these hypotheses. Then
+
+$$
+\sup_{e\ge0}\operatorname{jr}(Q_e)=+\infty.
+\tag{129.3}
+$$
+
+For every finite stopped or capped history on any $u\in\mathcal T$,
+the coherent realizations of Theorem 128.1 and Proposition 128.2 apply
+through its last accepted epoch, and the maximum of its finitely many
+finite ranges is finite. The uncapped conclusion quantifies over all
+coherent Markov families, not only the construction $q_e=0$ or the source
+of Proposition 125.3.
+
+**Proof.** Suppose an integer $R\ge0$ bounds all the ranges; an arbitrary
+finite real bound can be replaced by its ceiling. Begin the nonempty-birth
+argument at $h=h(u)$ of Proposition 128.3. At that epoch fix its entire
+terminal antichain $\mathcal L_h$, which has at least two leaves. Each
+later leaf is below exactly one $\ell\in\mathcal L_h$. Over two
+accepted updates a beta terminal is replaced by descendants at least one
+edge deeper, and an alpha terminal first becomes beta and then acquires
+two children. Consequently every terminal $p$ at epoch $e\ge h$ has
+
+$$
+d_e(p,\ell)\ge\left\lfloor\frac{e-h}{2}\right\rfloor
+\quad\text{for its unique ancestor }\ell\in\mathcal L_h.
+\tag{129.4}
+$$
+
+Indeed the assertion holds at offsets $0$ and $1$, and applying the
+two-update observation to every terminal proves it by induction in pairs
+of updates. Distinct original terminal cones remain separate, by the
+actual address substitution. Choose another $\ell'\in\mathcal L_h$.
+It remains an old occurrence, and the unique tree path from $p$ to
+$\ell'$ passes through $\ell$, so
+$d_e(p,\ell')=d_e(p,\ell)+d_h(\ell,\ell')>R$ whenever
+$e\ge h+2(R+1)$. This holds simultaneously for every beta leaf.
+Lemma 129.1 therefore forces $q_e=0$ for every step starting at
+$e\ge E:=h+2(R+1)$. Formula (127.7) now says that all old rates are
+unchanged and no old state has a rate to a newborn. This is a consequence
+of the supposed range bound on a tail, not a restriction on the original
+family or its finite initial steps.
+
+At every finite epoch, connectedness and the unit-edge energy identity
+give $\ker L_e=\mathbb R\mathbf1$. Invertibility of $G_e$ then gives
+$\operatorname{rank}Q_e=|V_e|-1$, so its left nullity is one. Here is
+the finite Markov consequence needed below. The directed graph of
+positive off-diagonal rates has a terminal strongly connected component,
+hence at least one closed communicating class. On each such class $C$,
+choose $r>\max_{x\in C}(-Q_e(x,x))$. The matrix
+$S_C=I+Q_e|_C/r$ is stochastic. The Cesaro averages
+$m^{-1}\sum_{i=0}^{m-1}\delta_x S_C^i$ have an accumulation point
+$\mu_C$ in the finite probability simplex. Their difference after
+right multiplication by $S_C$ is
+$(\delta_xS_C^m-\delta_x)/m$, which tends to zero. Thus
+$\mu_CQ_e|_C=0$. Extended by zero, it is a nonzero left null vector
+of $Q_e$, since $C$ is closed. Different closed classes give linearly
+independent such vectors by their disjoint supports. Left nullity one
+therefore gives exactly one closed class. In particular two disjoint
+nonempty closed sets are impossible, because each contains a terminal
+communicating class of its finite induced graph.
+
+Fix an epoch $e\ge E$. Suppose a beta leaf $p\in\mathcal P_e$ has a
+positive rate to $y\notin\mathcal P_e$. The actual beta-left lineage
+$p_j=pL^j$ is a beta leaf at epoch $e+j$ and has composite image $p$.
+Lemma 129.2 gives, for every integer $j\ge0$,
+
+$$
+\sum_{z:\pi_{e,e+j}(z)=y}Q_{e+j}(p_j,z)=Q_e(p,y)>0.
+\tag{129.5}
+$$
+
+Every summand is off-diagonal: the composite image of $p_j$ is $p\ne y$.
+Thus some such $z$ has a positive rate. If $y$ is an old branch occurrence,
+its composite fibre is the singleton $\{y\}$, since it can never again
+be a beta leaf. If $y$ is an alpha leaf, it is distinct from the leaf $p$,
+and its entire later fibre lies in its own descendant cone, separated from
+the descendant cone of $p$. These exhaust $y\notin\mathcal P_e$.
+In the first case appending $L^j$ to $p$ adds $j$ edges to the path to
+$y$; in the second the path also includes the descent below $y$. Hence
+every target in (129.5) satisfies
+
+$$
+d_{e+j}(p_j,z)\ge d_e(p,y)+j.
+\tag{129.6}
+$$
+
+For sufficiently large $j$ a positive summand contradicts the range bound.
+Thus at every $e\ge E$ all beta rows must stay inside
+$\mathcal P_e$, which is nonempty by Proposition 128.3. The set
+$\mathcal P_e$ is therefore closed. Since $q_e=0$, its old rows are
+unchanged at epoch $e+1$ and have no exits to newborns, so this same set
+of old occurrences remains a nonempty closed set for $Q_{e+1}$.
+All its elements become branch occurrences at that step. Accordingly it
+is disjoint from $\mathcal P_{e+1}$, which consists of the new beta left
+children and the old alpha leaves promoted to beta. The latter set is
+also nonempty and closed, by the same conclusion at epoch $e+1$.
+This gives two disjoint nonempty closed sets for $Q_{e+1}$, contradicting
+the rank/nullity consequence just proved. The uniform bound cannot exist.
+
+The finite-prefix assertion uses no such arbitrarily long lineage: each
+$V_e$ is finite and there are only finitely many accepted epochs. In
+particular a history stopping before $h(u)$ still includes every accepted
+empty step it actually took, and is covered by Theorem 128.1. $\square$
+

@@ -1,0 +1,40 @@
+**Proposition 7.4 (local lift and exact structural bill).** These patches
+have simultaneous native enabledness, identical event/receipt and the
+same raw successor under the new unary representation, at every actual
+raw cut. For $C=2+A+n$ constructed tape cells and $c$ present finite bits,
+
+$$
+V_B=149+2q_B+c+24C,\qquad L_B=75+q_B+8C.
+$$
+
+Their exact row and full structural costs are GENERAL21.14's displayed
+$p_i^{\rm st},v_i,w_i,g_i$ with these actual lists, and
+
+$$
+\rho_B+1+8(197+2q_B+c_0)+\sum_{i=1}^n g_i.
+$$
+
+Proof. Definition4.1's local cores and finite effects are exactly the
+ones enumerated. UAS's unary old-bit, absent-bit, cell-append and head-link
+templates produce those same final tracks. In particular ordinary WR74
+has an existing cell, WRITE$_L$ has an absent finite socket, and a seal
+CTL has a designated marker assignment, with no seal-read role. Receipt
+aliases preserve the new meter read mark as in Lemma4.2. Their finite
+pattern table therefore gives the claimed local square, including wrong
+raw input without promising its recovery or termination.
+
+A $k$-cell tape has $24k+1$ vertices/$8k+1$ terminals. Seventy-five tapes,
+the $2q_B-1+c$ finite component and75 outer internal vertices give the
+two formulas. At the irreducible entrance $C=2$, so the vertex count is
+$197+2q_B+c_0$. Charge its seven initialized slots and each birth plus
+commit, giving $1+8V_{B,0}$; the fixed finite rule apparatus $\rho_B$
+is additional. Cell inspection still costs68, finite-component
+inspection $6q_B+3c-4$; changed outer paths enter their actual route
+lengths. Each designated old bit has three assignments, each new cell
+24 vertices, each new finite bit one, head retarget/activation three/two.
+Empty/no-op assignments remain charged. These disjoint lists give
+$v_i=24e_i+s_i$ and
+$w_i=3t_i+2e_i+2s_i+3r_i+2a_i+7v_i$, then
+$g_i=1+p_i^{\rm st}+w_i+v_i$. Summation is on this one actual run.
+No old74-port foundation or stencil constant is transferred unchanged. ∎
+

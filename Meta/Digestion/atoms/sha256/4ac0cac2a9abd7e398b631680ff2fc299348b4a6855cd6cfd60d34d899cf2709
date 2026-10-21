@@ -1,0 +1,18 @@
+**Assumption 16.3 (Classical tools and their exact domains).** The
+inverse-function theorem is used only for an analytic map from a
+specified two-dimensional chart with a displayed nonzero minor:
+(13.1)–(13.2), (13.16)–(13.18), or the strict off-$24$ parent in
+Theorem 16.1. The analytic implicit-function theorem and references
+in Assumption 11.1 supply these classical local tools. Taylor's integral
+formula is used on the single neighbourhood of the compact rectangle
+(13.4), with derivatives justified in (13.11); see the Taylor theorem
+reference in Assumption 11.1. The lower-corner injectivity itself is
+the convex-segment estimate (13.15). Compactness in Sections 14–16
+is closed bounded finite-dimensional compactness, applied to padded
+whole gain coefficients and source entries with all original reading
+equations imposed. The distinction between strict pairs and diagonal
+limits agrees with the multiple-point-space distinction cited in
+Assumption 11.1; no additional holomorphic hypothesis or conclusion
+is transferred. The source-specific fractions, localized ideals,
+transverse minors and corner jets are the explicit calculations above.
+

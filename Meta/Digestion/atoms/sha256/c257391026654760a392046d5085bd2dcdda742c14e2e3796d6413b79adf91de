@@ -1,0 +1,13 @@
+**Assumption 1.3 (Owning results and quantified scopes).** The parent lift
+and singular-source classification used below are O, Theorems 2.1–2.2
+and 4.2, and Theorem 29.2. The coordinate interface and the fixed resultant
+are F, Lemmas 30.2, 31.2–31.3; the finite-world premise is F,
+Theorem 32.1. O, Theorem 9.1, already supplies a joint child at $p=24$.
+F, Theorems 24.2–24.3, exclude the entire sixth-$M$ children only at their
+specified exact $p_J$, and F, Theorem 29.1, classifies terminal-$M$
+pairs at $p=24$. These restrictions are not extended to other $p$ here.
+The [published off-$24$ collision](FIB_OFF_P24_UNEQUAL_RATIO_COLLISION_GEOMETRY.md)
+supplies one terminal-$M$ pair; its existence alone is not membership
+in $D_J\cap D_M$. No theorem from a different history is a premise
+for a common-base collision in this volume.
+

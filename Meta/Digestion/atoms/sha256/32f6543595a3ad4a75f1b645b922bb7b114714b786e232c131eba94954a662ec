@@ -1,0 +1,47 @@
+**Theorem 18.4 (Global root count, separation and labelling).**
+For every real $p\in I$ and every $0<r<1$, the original
+$\mathsf A(r,b,p)$ has exactly two positive real roots, both simple.
+There are unique global labels satisfying
+
+$$
+0<b_-(r,p)<\sigma(r)<b_+(r,p).
+\tag{18.12}
+$$
+
+They are smooth on $(0,1)\times\operatorname{int}I$ and continuous
+on $(0,1)\times I$. At each point with $p$ an endpoint of $I$,
+each is locally the restriction of a smooth root function on an
+open neighbourhood in $(r,p)$. In the original coordinate
+$c=r(1-r)/b$, the lower branch has $c>4b$ and the upper branch
+has $c<4b$.
+
+**Proof.** Lemma 18.2 gives exactly two variations in the nonzero
+coefficient word of $(1+b)^2\mathsf A$. If $r\le1/100$ the
+ascending word is $(+,+,-,-,-,q_5,+,+,+,+)$, with $q_5$ arbitrary;
+if $r\ge1/100$ it is $(+,+,-,-,q_4,+,+,+,+,+)$, with $q_4$
+arbitrary. Deleting a zero coefficient leaves two variations
+in either case. Descartes' rule of signs, counting multiplicity,
+therefore bounds the number of positive roots by two; see
+Mourrain–Rouillier–Roy, cited in Lemma 18.2, Theorem 1.1.
+The factor $(1+b)^2$ introduces no positive root.
+
+On the other hand $\mathsf A(r,0,p)=96r^3(1-r)^3>0$,
+and its leading coefficient in $b$ is $5p+216>0$.
+Together with Lemma 18.3, the intermediate value theorem gives
+one root between zero and $\sigma(r)$ and one root larger than
+$\sigma(r)$. They exhaust the multiplicity bound, so each is
+simple and no other positive root exists.
+
+At either root $\partial_b\mathsf A\ne0$. The smooth implicit
+function theorem supplies a root function near that $(r,p)$.
+After shrinking its neighbourhood it stays positive and on the
+same side of the continuous separator. Uniqueness on that side
+makes it equal to its global label where $p\in I$. These local
+functions agree on overlaps, proving continuity and smoothness,
+including the endpoint restriction statement. The smooth implicit
+function theorem is used in its usual local form; see Krantz–Parks,
+[*The Implicit Function Theorem*](https://doi.org/10.1007/978-1-4612-0059-8),
+Chapter 1. Finally, for $b>0$,
+$b<\sigma(r)$ is equivalent to $4b^2<r(1-r)$ and hence to
+$c>4b$; the upper inequality is handled in the same way. ∎
+

@@ -1,0 +1,40 @@
+**Definition 1.4 (the common spectral variables).** In the deferred-pointer
+dilation of source (30.4)--(30.6), write
+
+$$
+Z=u+Lq,
+\qquad
+p=(p_A,p_B)=H\pi-HL^{\mathsf T}\zeta,
+\qquad
+-HL^{\mathsf T}=\begin{pmatrix}0&1&-8\\0&-1&0\end{pmatrix}.
+\tag{1.4}
+$$
+
+The output observables in (1.4) commute. Their joint Gaussian law
+has $Z$ independent of $p$, with
+
+$$
+Z\sim G_W:=\mathcal N_3(L\mu(W),\Sigma_Z),
+\qquad
+p\sim\mathcal N_2(0,P_{\boldsymbol\eta}),
+\tag{1.5}
+$$
+
+where
+
+$$
+P_{\boldsymbol\eta}=
+\begin{pmatrix}
+1+\eta_A+\eta_B+65r&-1/2-\eta_B-r\\
+-1/2-\eta_B-r&1/2+\eta_B+r
+\end{pmatrix},
+\qquad
+\Sigma_Z=LL^{\mathsf T}/2+\sigma^2I_3.
+\tag{1.6}
+$$
+
+The variable $p$ is a spectral integration variable for the commuting
+observable in the actual dilation. It is not an acquired momentum value and
+(1.5) is not a joint classical assignment of the incompatible initial $q$
+and $\pi$.
+

@@ -1,0 +1,49 @@
+**Proposition 4.4 (the compilation and metadata joins).** These relations
+give finite executable replacements for every74-port supplier routine
+used in GENERAL21, with the following exact joins.
+
+Proof. A source-level word assignment has a finite list of $r_B$ fields.
+RCA11.3's first pass measures precisely those fields from the unchanged
+source bank, and its second emits the same fields, including each new
+persistent word and temporary, into the other bank. Separators/F/seal,
+actual Base, descriptor count/write and parity CTL establish the new
+boundary relation. The usual per-field induction is over this actual
+finite list, so it proves preservation of unchanged bootWitness/bootRef
+and service fields. Its interior relation is the emitted prefix plus
+remaining fields of that list, not an assumed complete bank. Scratch
+remains64–68; sources26/28/29/69/70/73/74 are disjoint and retain the
+head facts their respective proofs require. Old CAP descriptors and
+new RCA descriptors keep their different grammars and ordinals.
+
+Use Definition4.1 to replace every raw-state count/range in Step, input
+extraction, body layout, Image serializer and Image-value checker,
+including each nested older-history interpreter. All are finite source
+programs with fixed port alternatives, not source-dependent code patches.
+Lemma4.2 proves their common local semantics. A numeric port74 is valid
+only in this new codec; it was not valid in the old74-list codec.
+
+After expanding/numbering the resulting graph, construct GCAEntries and
+ConstructionDirectory as GENERAL2.2's exact pair. SourceEntrySet contains
+each parity alternative of the actual01 dispatch CTL to $F^A$'s header
+prelude; SourceExitSet its final idle CTL to InnerReturn. The parser
+uses these fixed slots, exhausts their lists, checks unique keys, all75
+port bounds, actual CTL effects and the indicated successors. Extend
+the construction-role directory with the fixed $H_B$ mirror span,
+source74 import, and the two new initial69 field exports/stage; all
+other construction sites follow their actual hygienic paths. For the
+earlier loader the directory's PCs are the independently fixed $H_B$
+PCs. Its version tag distinguishes them from main PCs with equal
+numerals. On EX its role fold adds the old R immediately, on seal it
+closes only that actual span. The directory is finite archival data,
+not a native grant or a source of input bits.
+
+There is no dependence of a graph edge on the digits of its own row
+number: graph edges and call paths are symbolic until numbering, and
+metadata are then generated without adding graph instructions. The
+fixed capture $L$ acquires the actual resulting $\Delta(G_B)$ and the
+second load consumes its matching $E(G_B)$. Field zero is validated
+against this same grammar/metadata. The parser reads self-description
+from captured backing; no self-description constant enters the graph.
+Thus register count, raw codecs, entry tests, role fold and code lineage
+all join this one expanded instance. ∎
+

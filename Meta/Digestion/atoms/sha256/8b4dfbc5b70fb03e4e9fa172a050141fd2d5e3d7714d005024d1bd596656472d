@@ -1,0 +1,55 @@
+## 163. The passive boundary and its separation from the full boundary
+
+Since $\max_{0\le p\le1}p(1-p)=1/4$, the entire passive orbit is
+separable exactly when
+
+$$
+\frac{(1-t)^2}{4}\le t
+\Longleftrightarrow
+\sinh^2(\beta/2)\le1.
+\tag{163.1}
+$$
+
+Define
+
+$$
+\boxed{\beta_{\rm pass}=2\operatorname{arsinh}1
+=\log(3+2\sqrt2).}
+\tag{163.2}
+$$
+
+The endpoint statements are
+
+$$
+\begin{array}{c|c}
+\text{range} & \text{passive orbit}\\ \hline
+0\le\beta\le\beta_{\rm pass}
+& \text{every }\rho_W(\beta)\text{ is separable (and PPT)}\\
+\beta>\beta_{\rm pass}
+& p=1/2\text{ gives an NPT member, while }p=0,1
+\text{ remain separable.}
+\end{array}
+\tag{163.3}
+$$
+
+At $\beta=\beta_{\rm pass}$ the $p=1/2$ state is exactly on the PPT and
+separable boundary.  Above it the passive orbit is still not all
+entangled because its endpoint placements are product factors.
+
+The exact boundaries obey
+
+$$
+\boxed{\beta_*<\log2<\beta_{\rm pass}.}
+\tag{163.4}
+$$
+
+Thus at $\beta=\log2$ the explicit matrix (161.8) is NPT, whereas every
+passive placement is separable because
+
+$$
+(1-t)^2p(1-p)\le\frac1{16}<\frac12=t.
+\tag{163.5}
+$$
+
+This separates the quantified full-unitary and passive conclusions.
+

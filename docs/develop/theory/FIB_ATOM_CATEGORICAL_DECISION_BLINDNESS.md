@@ -1273,3 +1273,229 @@ so the singleton binary risk remains within this exponentially small gain of its
 If a finite common Borel quantizer is subsequently supplied for the same-prior experiment, its singleton gain $B_Q=1/5-r_0(Q)$ satisfies $0\le B_Q\le B(q,b)$ by conditioning. For two finite joint laws on that common alphabet, Proposition 7.5 gives $|B_Q-B'_Q|\le\operatorname{TV}(J,J')$; under the original/projected-input hypotheses of Proposition 7.7 this becomes $|B_Q-B'_{Q}|\le e_N$. Relative retention from these additive certificates requires a positive $B_Q$ and an error bound small relative to $B_Q$. An explicitly supplied lower bound making $B_Q$ comparable to $B(q,b)$, together with an error bound small relative to $B(q,b)$, also suffices. A constant quantizer has $B_Q=0$, so $\operatorname{TV}(J,J')=o(B(q,b))$ alone gives no relative-retention guarantee for an arbitrary quantizer. These are the existing same-prior soft-risk certificates applied to this gain; they do not transfer (11.1) to a projected law, imply a hard-support impossibility, or provide a native preparation attainer. $\square$
 
 ## 追加锚（本行以下为增补区）
+
+## 12. Exact off-axis prefactor and a gain-preserving binary readout
+
+**定义 12.1（fixed-law notation）。** Retain exactly Assumption 11.1: one complete two-dimensional observation, uniform prior on the five original labels, covariance $I_2$, means $(-q,0),(-q,0),(0,b),(q,0),(q,0)$, and fixed $0<q<\sqrt{2\ln4}$ while $b\downarrow0$. Write
+
+$$
+\begin{aligned}
+ c&=c(q)=\ln4-q^2/2>0,\\
+ L(u)&=c+\ln\cosh(qu),\\
+ \phi(x)&=(2\pi)^{-1/2}e^{-x^2/2},\qquad
+ \overline\Phi(x)=\int_x^\infty\phi(v)\,dv,\\
+ E_b&=\exp\!\left(-\frac{c^2}{2b^2}\right),\qquad
+ B(q,b)=\frac15-r_0(q,b).
+\end{aligned}
+\tag{12.1}
+$$
+
+The quantities $r_0$ and $B$ concern the known-law binary decision of label $3$ versus its complement. The five Gaussian labels here are the labels of this observation experiment; their specification does not construct a native recursive FIB classification or its preparations.
+
+**定理 12.2（pointwise exact prefactor）。** Under Definition 12.1,
+
+$$
+ \boxed{B(q,b)\sim C(q)b^4E_b,\qquad
+ C(q)=\frac{e^{c(q)/2}}{5\sqrt{2\pi}\,q\,c(q)^{5/2}}>0.}
+\tag{12.2}
+$$
+
+Thus the power $\alpha=4$ is common to every fixed $q$ in the stated open interval. The equivalence is pointwise in $q$; it asserts no endpoint, joint-$q$ limit, uniform remainder or explicit finite-$b$ cutoff.
+
+Proof. Reuse the signed density $D_b$ of (11.3) and its positive-part Bayes identity (11.2). For a scalar $\ell>0$, put
+
+$$
+\begin{aligned}
+ t_b(\ell)&=\frac{\ell+b^2/2}{b},\\
+ J_b(\ell)&=\int_{\mathbb R}\phi(v)
+       [e^{bv-b^2/2}-e^\ell]_+\,dv\\
+ &=\overline\Phi(t_b(\ell)-b)
+       -e^\ell\overline\Phi(t_b(\ell)),\\
+ B(q,b)&=\frac15\int_{\mathbb R}\phi(u)J_b(L(u))\,du.
+\end{aligned}
+\tag{12.3}
+$$
+
+Indeed, the bracket is positive exactly when $v>t_b(\ell)$, and $\phi(v)e^{bv-b^2/2}=\phi(v-b)$. Tonelli's theorem applies to the nonnegative integrand. This integrates the signed excess itself, including the cancellation between its two tails; the probability of the positive region would not determine its prefactor.
+
+For $x>0$, let $R(x)=\overline\Phi(x)/\phi(x)$. The complementary-error-function expansion and real-positive remainder bound in [NIST DLMF §7.12(i), equation (7.12.1)](https://dlmf.nist.gov/7.12#i), with $\overline\Phi(x)=\tfrac12\operatorname{erfc}(x/\sqrt2)$, give
+
+$$
+ R(x)=x^{-1}-x^{-3}+O(x^{-5}).
+$$
+
+Its exact derivative identity, obtained by differentiating the defining quotient, gives
+
+$$
+ R'(x)=xR(x)-1=-x^{-2}+O(x^{-4}).
+\tag{12.4}
+$$
+
+No differentiation of an asymptotic remainder is used. Fix $0<a<A<\infty$. Uniformly for $\ell\in[a,A]$ and $x\in[t_b(\ell)-b,t_b(\ell)]$, we have $x=\ell/b+O(b)$ and $x\ge a/(2b)$ for all sufficiently small $b$. The real-positive remainder estimate in (12.4) therefore gives, uniformly on these intervals,
+
+$$
+ -R'(x)=\frac{b^2}{\ell^2}(1+O(b^2)),\qquad
+ R(t_b(\ell)-b)-R(t_b(\ell))
+ =\int_{t_b(\ell)-b}^{t_b(\ell)}-R'(x)\,dx
+ =\frac{b^3}{\ell^2}(1+O(b^2)).
+\tag{12.5}
+$$
+
+The constants may depend on $a,A$, not on $\ell$ or $b$. Since
+
+$$
+ \phi(t_b(\ell)-b)=e^\ell\phi(t_b(\ell)),\qquad
+ e^\ell\phi(t_b(\ell))
+ =\frac1{\sqrt{2\pi}}
+   \exp\!\left(-\frac{\ell^2}{2b^2}+\frac\ell2-\frac{b^2}{8}\right),
+$$
+
+(12.3) and (12.5) imply the compact-uniform estimate
+
+$$
+ J_b(\ell)=\frac{b^3}{\sqrt{2\pi}\,\ell^2}
+       \exp\!\left(-\frac{\ell^2}{2b^2}+\frac\ell2\right)
+       (1+O(b^2)),\qquad \ell\in[a,A].
+\tag{12.6}
+$$
+
+In particular, the displacement $b/2$ in the threshold contributes the factor $e^{\ell/2}$.
+
+To control the noncompact $u$-integral, choose a sufficiently small fixed $\delta>0$. The function $L$ is even, has its unique minimum $c$ at zero and is strictly increasing on $(0,\infty)$. Thus, with $m=L(\delta)>c$, we have $L(u)\ge m$ for $|u|\ge\delta$. The integral definition of $J_b$ shows it is nonincreasing in $\ell$. Consequently
+
+$$
+ 0\le\int_{|u|\ge\delta}\phi(u)J_b(L(u))\,du
+ \le J_b(m)
+ \le\overline\Phi(m/b-b/2)
+ =O\!\left(b\exp\!\left[-\frac{m^2}{2b^2}\right]\right).
+\tag{12.7}
+$$
+
+For the last bound, $m/b-b/2>0$ for small $b$, and
+$\overline\Phi(x)\le\phi(x)/x$ for $x>0$; this inequality follows by bounding $1\le v/x$ inside the tail integral. The factor $\exp(m/2-b^2/8)$ is bounded with $m$ fixed. Dividing (12.7) by $b^4E_b$ gives an upper bound of order $b^{-3}\exp(-(m^2-c^2)/(2b^2))$, which tends to zero. No compact-uniform Mills estimate is being applied to unbounded $L(u)$.
+
+On $|u|\le\delta$, Taylor expansion gives
+
+$$
+ L(u)=c+\frac{q^2u^2}{2}+O(u^4).
+\tag{12.8}
+$$
+
+Because $q>0$, shrink $\delta$ so that $L(u)-c\ge\kappa u^2$ there for some $\kappa>0$. On this interval $L$ lies in the compact positive interval $[c,L(\delta)]$, so (12.6) applies uniformly. After extracting $E_b$, its remaining local integral is
+
+$$
+ H_b=\int_{|u|\le\delta}\phi(u)L(u)^{-2}
+       \exp\!\left(-\frac{L(u)^2-c^2}{2b^2}+\frac{L(u)}2\right)du.
+$$
+
+Set $u=by$, and extend the resulting integrand by zero outside $|y|\le\delta/b$. For each fixed $y$, (12.8) gives
+
+$$
+ \frac{L(by)^2-c^2}{2b^2}\longrightarrow\frac{cq^2y^2}{2}.
+$$
+
+The other factors converge to $\phi(0)c^{-2}e^{c/2}$. Moreover,
+
+$$
+ \frac{L(u)^2-c^2}{2b^2}
+ =\frac{(L(u)-c)(L(u)+c)}{2b^2}
+ \ge\frac{c\kappa u^2}{b^2}.
+$$
+
+The prefactor $\phi(u)L(u)^{-2}e^{L(u)/2}$ is bounded on $[-\delta,\delta]$. Hence a fixed constant times $e^{-c\kappa y^2}$ dominates the scaled integrand. Dominated convergence now yields
+
+$$
+\begin{aligned}
+ \frac{H_b}{b}
+ &\longrightarrow\phi(0)c^{-2}e^{c/2}
+      \int_{\mathbb R}e^{-cq^2y^2/2}\,dy\\
+ &=\frac{e^{c/2}}{q\,c^{5/2}}.
+\end{aligned}
+\tag{12.9}
+$$
+
+This is the local Gaussian scaling underlying the mature Watson and Laplace methods in [NIST DLMF §2.3(ii)](https://dlmf.nist.gov/2.3#ii) and [§2.3(iii)](https://dlmf.nist.gov/2.3#iii); the domination above supplies the needed integral justification in this experiment. By positivity and the uniform relative error in (12.6), the local contribution to (12.3) equals $b^3E_bH_b(1+O(b^2))/(5\sqrt{2\pi})$. Combining (12.7) and (12.9) proves (12.2), including the prior factor $1/5$. The factors $b^3$ from the signed tail difference and $b$ from localization in $u$ give the power four. These classical asymptotic tools are mature intermediates; their explicit prefactor for the specified five-label law is repo-derived application exposition, with no global-priority assertion. $\square$
+
+**定理 12.3（an explicit common binary readout attains the raw singleton gain）。** Under Definition 12.1, for every $b>0$ use the same Borel function for all five labels,
+
+$$
+ A_b=\left\{(u,v):v>\frac{L(u)+b^2/2}{b}\right\},\qquad
+ Q_b(u,v)=\mathbf1_{A_b}(u,v).
+\tag{12.10}
+$$
+
+Let $\mathcal J_b$ denote the joint law of the original label and this binary output, and let $B_{Q_b}=1/5-r_0(Q_b)$. Then
+
+$$
+ B_{Q_b}=B(q,b)>0.
+\tag{12.11}
+$$
+
+For any comparison law $\mathcal J'_b$ on the same label-output alphabet with the same uniform label prior, put $B'_{Q_b}=1/5-r_0(\mathcal J'_b)$. Then
+
+$$
+ \operatorname{TV}(\mathcal J_b,\mathcal J'_b)\le e_b
+ \quad\Longrightarrow\quad
+ |B'_{Q_b}-B(q,b)|\le e_b.
+\tag{12.12}
+$$
+
+Proof. Continuity of $L$ makes $A_b$ Borel. By (11.3), it is exactly the positive set of $D_b$. The set is nonempty and open, and $D_b$ is strictly positive on it, so (11.2) gives $B(q,b)>0$. Since $f_0,f_-,f_+$ are probability densities, $\int D_b=1-2-2=-3$. The two unweighted signed bin masses and their prior-weighted counterparts are therefore
+
+$$
+\begin{aligned}
+ \int_{A_b}D_b&=5B(q,b),&
+ \int_{A_b^c}D_b&=-3-5B(q,b),\\
+ \mathcal J_b(3,1)-\sum_{i\ne3}\mathcal J_b(i,1)&=B(q,b),&
+ \mathcal J_b(3,0)-\sum_{i\ne3}\mathcal J_b(i,0)&=-\frac35-B(q,b).
+\end{aligned}
+\tag{12.13}
+$$
+
+For each bin the Bayes action chooses singleton exactly when its signed joint mass is positive. Equivalently, relative to always choosing nonsingleton, the optimal improvement is the sum of the positive signed bin masses. Thus bin $1$ contributes $B(q,b)$ and bin $0$ contributes zero, proving (12.11) for the quantized Bayes optimum. This uses the classical Bayes decision partition already underlying Proposition 2.1, inside this explicit observation law. The boundary graph has zero Gaussian probability, so its inclusion convention changes neither mass. Apply Proposition 7.5 to the two finite laws: their singleton risks differ by at most TV, and subtracting each from the common prior $1/5$ proves (12.12). If $\mathcal J'_b$ is supplied by a complete-record approximation, it must use the very same readout (12.10); data processing and the hypotheses of Proposition 7.7, when supplied, give one way to furnish such an $e_b$.
+
+The readout depends on the known $q,b$ and an exact curved threshold. Its two-symbol output proves this decision's information retention, without establishing preparation availability, finite physical precision or low acquisition or computation cost. It supplies no retention claim for an arbitrary quantizer and no claim about the other four singleton decisions or the categorical optimum. $\square$
+
+**推论 12.4（same-exponential-scale error budgets with their leading constants）。** Fix $q$ as in Definition 12.1, and suppose the comparison laws of Theorem 12.3 are supplied for small $b>0$ with
+
+$$
+ \operatorname{TV}(\mathcal J_b,\mathcal J'_b)\le e_b,
+ \qquad e_b=d\,b^\beta E_b,\qquad d>0,\quad\beta\in\mathbb R,
+\tag{12.14}
+$$
+
+where $d,\beta$ are fixed independently of $b$. With $C=C(q)$ from (12.2),
+
+$$
+ \frac{e_b}{B(q,b)}=\frac dC b^{\beta-4}(1+o(1)),\qquad
+ \left|\frac{B'_{Q_b}}{B(q,b)}-1\right|
+ \le\frac{e_b}{B(q,b)}.
+\tag{12.15}
+$$
+
+If $\beta>4$, this certificate tends to zero, so $B'_{Q_b}/B(q,b)\to1$. If $\beta=4$, the certificate tends to $d/C$, and
+
+$$
+ \limsup_{b\downarrow0}
+ \left|\frac{B'_{Q_b}}{B(q,b)}-1\right|\le\frac dC,
+ \qquad
+ \liminf_{b\downarrow0}\frac{B'_{Q_b}}{B(q,b)}
+ \ge\max\!\left\{0,1-\frac dC\right\}.
+\tag{12.16}
+$$
+
+In particular, $d<C$ certifies a positive limiting lower fraction; every fixed $0<\theta<1-d/C$ is retained for all sufficiently small $b$. If $\beta<4$, the right-hand certificate in (12.15) diverges and gives neither a vanishing relative-error certificate nor a positive retained fraction. A nonvanishing or diverging upper budget does not prove any actual degradation, and $d\ge C$ at $\beta=4$ does not imply that the gain is lost.
+
+Proof. Divide (12.14)'s budget by the positive asymptotic (12.2) to obtain the first equality in (12.15); its second inequality is (12.12) divided by $B(q,b)>0$. A constant nonsingleton decision remains available for every $\mathcal J'_b$ with this prior, so $B'_{Q_b}\ge0$. Thus the additive certificate gives
+
+$$
+ \frac{B'_{Q_b}}{B(q,b)}
+ \ge\max\!\left\{0,1-\frac{e_b}{B(q,b)}\right\}.
+\tag{12.17}
+$$
+
+For $\beta>4$, the budget ratio tends to zero; for $\beta=4$, it tends to $d/C$, proving (12.16) and the eventual bound for each strictly smaller $\theta$. For $\beta<4$, it tends to infinity, leaving (12.17) with only zero as a lower certificate. In all regimes the choice $\mathcal J'_b=\mathcal J_b$ satisfies the budget while its actual risk discrepancy is zero. Hence the size of an upper bound alone cannot establish approximation failure or an attained loss. The pointwise asymptotic supplies no numerical finite-$b$ cutoff for any of these eventual statements without a quantitative remainder estimate.
+
+These are consequences for the explicit known-law readout and supplied comparison laws. They neither identify a projected-input law with a Gaussian law nor assert a native preparation realizing these means. There is no endpoint or $q$-uniform estimate, physical-cost model, unknown-law training guarantee, empirical gain or out-of-distribution conclusion. $\square$
+
+## 追加锚（本行以下为增补区）

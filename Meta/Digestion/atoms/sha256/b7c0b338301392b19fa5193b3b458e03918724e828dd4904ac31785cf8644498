@@ -1,0 +1,43 @@
+## 155. Native correspondence and scope of the application
+
+The source and model interfaces used here are explicit:
+
+| Object or operation | Correspondence and condition |
+| --- | --- |
+| Native accepted history | The singleton source of §139, with two actual children and unchanged $L_\star$, from Definition 127.1 and Proposition 128.3 |
+| Metric variation | Proposition 127.2 specialized to $G_0=[1]$, $K=I_2$, residual vector $q$; (139.2) gives $G_q=L_\star+\pi_q\pi_q^{\mathsf T}$ |
+| Native generator | Corollary 127.3 gives (139.3), with the interior probabilities in (139.4) |
+| Quantum coordinate space | The explicitly added principal-root normalization, complexification and common normalized cut of §140 |
+| Full Gibbs preparation | All eight fermionic occupations of §141, finite $\beta$, zero mode retained |
+| Effective state | The even B-local alignment and spectator factorization (142.3)--(142.6), reused in (148.1)--(148.2) |
+| Two-preparation input | Two independent instances of that same specified full state, with compatible CAR and coupling phase |
+| Joint local SSR | One total number or parity per party across both preparations, with coherent degenerate filtering |
+| Common success event | Equation (151.1) on the native normalized modes, counting all of Bob's modes |
+| Proof block coordinates | Source-dependent B alignments commuting with that common success projector |
+
+The native definitions at [N] and the Fock extension at [F] are reference
+inputs to this finite application. Sections 139--146 supply the intervening
+Gibbs correspondence. The additional relation evaluated here is the
+specified two-preparation local projection, not a new generic activation
+principle. The original accepted history, inherited norm, edge form and
+comparison clock remain those of §139. Only the native metric parameter
+and hence the quantum state vary in the native comparison.
+
+The ordinary tensor partial transpose is used after the CAR convention has
+been fixed. Its sufficiency for separability is invoked only on actual
+$2\times2$ blocks; the full output uses the proved B-local direct sum.
+The negativity values are finite diagnostics of those states. No Bell
+advantage, physical implementation, deterministic extraction or asymptotic
+distillation rate follows from them. The normalized coordinate model does
+not establish a physical clock, raw-site tensor split, or the realization
+and uniform comparison hypotheses of §§131--134.
+
+The established mixed-state method is reused from [M], with [P] supplying
+the two-qubit separability criterion. The source-specific content consists
+of the native substitution, explicit CAR phase, spectator-inclusive common
+filter and exact finite probabilities. No generic-theorem novelty or
+literature-priority claim is attached to that application. It is ordinary
+mathematical exposition without a Lean kernel certificate.
+The availability of the preparation and instrument remains an explicit
+physical premise, separate from the conditional finite matrix conclusions.
+

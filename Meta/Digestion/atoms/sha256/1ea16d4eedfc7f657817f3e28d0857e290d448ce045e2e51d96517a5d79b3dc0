@@ -1,0 +1,29 @@
+**Proposition 19.2 (Suppliers and scope of the component conclusions).**
+The parent reconstruction, original clocks, whole gain and fixed drift
+are O, Definitions 1.1–1.3 and Theorem 2.1; its zero-safe source equation
+and unique whole-world lift are O, Definition 12.1, Lemma 12.2 and
+Theorem 12.3.  The seed identified by (16.14) is the $A,B$ pair of O,
+Theorem 18.2 and box (18.7), over its whole interval (18.1).  Entire-child
+and independent-pair semantics are F, Sections 30–33, in particular
+Theorem 32.1 and Definition 33.1.  The selected-$M$ singular exclusion
+used in Theorem 18.3 is S, Theorem 18.1 and Corollary 18.2.  Definition
+10.1 and Lemma 10.2 above supply the ambient undivided response
+extension.  The actual $M$-pair family of SII, Proposition 4.1 and
+Theorem 9.3 has its own hypotheses; it is not an $M$ pair on the arc
+(16.15) merely because both are pair families.
+
+*Proof.* The parameter and response correspondence is (16.1)–(16.6);
+its traces are the original products of O, Definition 1.3.  The
+compatibility identity (17.3) is O, (12.8), with $r=\tau b$.
+The whole-box conversion (16.14) and uniqueness in Lemma 16.3 identify
+the inherited seed.  The selected-$M$ exclusion uses the actual $J$
+pair of Theorem 16.4 and precisely the quantifiers of S, Corollary 18.2,
+without removing any unused companion.  Thus the component extensions
+are the continuation from O's seed interval to $[10,34]$ and the
+all-real-$p$, fixed-positive-$\tau$ quartic noncollapse and bound;
+(18.1) gives their independent-$M$ consumer.  Cubic interpolation,
+Banach contraction, the analytic implicit function theorem and the
+Sylvester resultant are the classical mathematical inputs used in the
+displayed proofs.  The full joint relation (19.1) is outside their
+conclusions. ∎
+

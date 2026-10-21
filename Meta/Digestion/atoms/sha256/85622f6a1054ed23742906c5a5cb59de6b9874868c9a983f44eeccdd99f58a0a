@@ -1,0 +1,32 @@
+**Definition 15.1 (Auxiliary C1 face).**  For $t>0$, use the boundary
+source label $(r,b,c)=(1,t,0)$ only as an analytic extension.  It is not
+an actual strict world.  Set
+
+$$
+q(t)=t^3-4t-2,\qquad D_1(t)=5(t+1)q(t).
+\tag{15.1}
+$$
+
+On the C1 face the parent equation and its drift solution are
+
+$$
+\Lambda_1(t)=\frac{2q(t)}{t(t+1)(2t+1)},\qquad
+e_1(t)=-\frac{3t(8t-1)(5t+2)}{5q(t)}.
+\tag{15.2}
+$$
+
+For $q(t)\ne0$ define the boundary response extension by
+
+$$
+\begin{aligned}
+p_1(t)-24&=-\frac{6(8t-1)(7t^3+11t^2+19t+10)}{D_1(t)},\\
+v_1(t)-24&=-\frac{3(415t^4+921t^3+2326t^2+1466t+186)}{D_1(t)},\\
+m_1(t)-24&=-\frac{3(1128t^4+3523t^3+9818t^2+6862t+1140)}{D_1(t)}.
+\end{aligned}
+\tag{15.3}
+$$
+
+These are the original-clock responses obtained from (10.2)--(10.5)
+at the C1 boundary label.  They are used below only on a box where
+$q$ and $\Lambda_1$ are separated from zero.
+

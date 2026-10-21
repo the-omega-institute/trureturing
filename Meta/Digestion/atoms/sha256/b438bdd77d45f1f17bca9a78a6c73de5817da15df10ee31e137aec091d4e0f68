@@ -1,0 +1,31 @@
+**定义 16.1（固定有理父与全部实际迹）。** 本章及第 17 章固定
+
+$$
+\begin{gathered}
+C_0=\frac{71}{2},\quad z_0=\frac{27478}{875},\quad
+Y_0=\frac{612}{35},\quad p_0=-\frac{1418}{105},\\
+H_4=(0,J,24,M,C_0,J,z_0,M,Y_0),\qquad H_5=(H_4,M,p_0),\\
+g_*(s)=\frac{(s-1)(s-7)(199s-720)}{210},\qquad
+W_1=(P_1,g_*,24),\quad W_2=(P_2,g_*,24),\quad B_* =\{W_1,W_2\},\\
+r_1=\frac35,\quad r_2=\frac9{10},\qquad
+v_1=-\frac{3068}{175},\quad v_2=-\frac{7321}{350},
+\end{gathered}
+\tag{16.1}
+$$
+
+其中 $P_i$ 是式 (12.1) 的两个源。这里 $(C_0,z_0)\in\mathrm{Ch}$，见定理 12.2。
+所有竞争世界仍遍及完整域，漂移 $d$ 为任意实数，整个 $g$ 只限非零且次数至多三。
+以 $c=r(1-r)/b$ 表示任意严格源，沿用 $j=b+c,T=1+b,n=r+j,U=1+2b$。
+下表包括原时钟零至七的实际左乘积；最终 $G$ 是择一的动作。
+
+| 原时钟 | 实际左乘积 | 迹 |
+| --- | --- | --- |
+| $0$ | $I$ | $1$ |
+| $1$ | $\left(\begin{smallmatrix}0&1\\1&0\end{smallmatrix}\right)$ | $j$ |
+| $2$ | $\left(\begin{smallmatrix}1&0\\1&1\end{smallmatrix}\right)$ | $T$ |
+| $3$ | $\left(\begin{smallmatrix}1&1\\1&0\end{smallmatrix}\right)$ | $n$ |
+| $4$ | $\left(\begin{smallmatrix}1&0\\2&1\end{smallmatrix}\right)$ | $U$ |
+| $5$ | $\left(\begin{smallmatrix}2&1\\3&1\end{smallmatrix}\right)$ | $n+U$ |
+| $6:J$ | $\left(\begin{smallmatrix}3&1\\2&1\end{smallmatrix}\right)$ | $1+2r+2b+c$ |
+| $7:J$ | $\left(\begin{smallmatrix}2&1\\3&1\end{smallmatrix}\right)$ | $n+U$ |
+| $7:M$ | $\left(\begin{smallmatrix}2&1\\5&2\end{smallmatrix}\right)$ | $2+5b+c$ |
