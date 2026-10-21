@@ -60,6 +60,10 @@ $$\forall n \in \mathbb{N},\; (0 < n) \Rightarrow ((n: \mathbb{Z}) - (\operatorn
 
 *Proof.* Machine-checked in Lean as `D5/S3/Arith/Primes/OeisA347285PrimePowerDescent.result` (`✓ std3`). ∎
 
+*Resolves.* `Problems/oeis-a347285-de-vlieger-prime-power-descent` (proved) by `D5/S3/Arith/Primes/OeisA347285PrimePowerDescent.result`.
+
+<!-- scribe-open-problem-resolution-v1 {"problem_slug":"oeis-a347285-de-vlieger-prime-power-descent","declaration_gid":"D5/S3/Arith/Primes/OeisA347285PrimePowerDescent.result","resolution_kind":"proved"} -->
+
 *Source.* Repository-derived.
 
 *Acknowledgement.* M. De Vlieger; OEIS Foundation Inc. (2021). *OEIS A347285 descending prime-power exponents*. URL: <https://oeis.org/A347285>.
