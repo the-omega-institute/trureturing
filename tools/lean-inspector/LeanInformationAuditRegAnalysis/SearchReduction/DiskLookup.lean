@@ -1,19 +1,21 @@
 import Lean
 import Batteries.Util.Pickle
 import Lean.Meta.DiscrTree
+import Lean.Meta.Tactic.LibrarySearch
 
 /-! Module-owned, versioned discrimination trees stored in compacted regions.
 Only candidate certificates carry semantic authority. -/
 namespace LeanInformationAudit.SearchReduction.DiskLookup
 open Lean Meta
 
-abbrev version : String := "R_lookup/discrtree-pickle-v4"
+abbrev version : String := "R_lookup/discrtree-pickle-v5"
 
 structure Entry where
   module : String
   name : String
   parts : Array (String × Nat)
   ordinal : Nat := 0
+  /-- Dropped-key provenance; never used for matching or certification. -/
   route : String := ""
   deriving ToJson, FromJson, Inhabited, BEq
 
@@ -203,6 +205,8 @@ unsafe def produceShard (storage : System.FilePath) (planPath resultPath : Syste
           count := count + 1
           let some stable := (env.setExporting false).find? info.name
             | throw <| IO.userError s!"lookup.declaration_not_loaded:{info.name}"
+          if stable.isUnsafe || LazyDiscrTree.blacklistInsertion env info.name ||
+              Linter.isDeprecated env info.name || info.name.isMetaprogramming then continue
           let entry : Entry := {
             module, name := ownedString info.name.toString,
             parts := nameParts info.name, ordinal := count}
@@ -212,6 +216,9 @@ unsafe def produceShard (storage : System.FilePath) (planPath resultPath : Syste
             if seen.contains keys then continue
             seen := seen.insert keys
             let fallback := dropped keys
+            let entry := if fallback then
+                {entry with route := if keys == #[.star] then "star" else "eq-star"}
+              else entry
             let bucket := if fallback then rootKey .star else rootKey (keys[0]?.getD .star)
             roots := roots.insert bucket
             payload := if fallback then {payload with fallback := payload.fallback.push entry}
@@ -378,7 +385,7 @@ unsafe def produceMature (directory : System.FilePath) (basis mathlib : String)
         IO.println (toJson old).compress
         return old
   catch _ => pure ()
-  let storage := directory / s!"discrtree-pickle-v4-{inputs}"
+  let storage := directory / s!"discrtree-pickle-v5-{inputs}"
   IO.FS.createDirAll storage
   let mut all : ShardResult := {missing}
   let ordinary := selected.filter fun n => !n.toString.startsWith "D5."
