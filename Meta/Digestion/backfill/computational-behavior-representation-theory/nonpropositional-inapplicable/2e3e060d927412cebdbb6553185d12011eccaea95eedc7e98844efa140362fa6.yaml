@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:2e3e060d927412cebdbb6553185d12011eccaea95eedc7e98844efa140362fa6
+  normalized_sha256: sha256:2e3e060d927412cebdbb6553185d12011eccaea95eedc7e98844efa140362fa6
+cas_ref: sha256:2e3e060d927412cebdbb6553185d12011eccaea95eedc7e98844efa140362fa6
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 'Nonpropositional: Section heading only; it names the subject of section 42 and asserts no proposition.'
+    previous_atom_id: a480ce9f8f275b584b866a696fec49cca5205fb5b6d6b6764887c6db9f0ca0f9
+    next_atom_id: de76a0c7fd71606cfee1ce479f9c1fb2303ec026b1a661005f393fddab9e7b82

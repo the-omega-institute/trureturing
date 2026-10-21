@@ -4,9 +4,21 @@
 
 Trace norm, actual density-state distance, and contraction for every canonical quantum channel.
 
-DensityState and QuantumChannel are the canonical FiniteStateChannel carriers. raw denotes CStarMatrix.ofMatrix.symm, applied to the value of a state when its argument is a density state; toCstar denotes the forward equivalence. All coordinate types are finite with decidable equality, including empty types. RCLike is the existing Mathlib scalar interface. Adjoint means conjugate transpose and the square root uses the positive-semidefinite matrix order.
+DensityState and QuantumChannel are the canonical FiniteStateChannel carriers. raw denotes CStarMatrix.ofMatrix.symm, applied to the value of a state when its argument is a density state; toCstar denotes the forward equivalence. FiniteType denotes a finite coordinate type with decidable equality, including the empty type. Explicit Type binders carry only the displayed instances. RCLike is the existing Mathlib scalar interface. Adjoint means conjugate transpose and the square root uses the positive-semidefinite matrix order.
 
-**Theorem 1.1 (Singular value decomposition).**
+**Theorem 1.1 (The Gram matrix computes transformed inner products).**
+
+$$\forall n \in Type,\; [\operatorname{Fintype}\left(n\right)]\forall A \in \operatorname{Matrix}\left(n, n, \mathbb{C}\right), v \in n \to \mathbb{C}, w \in n \to \mathbb{C},\; \operatorname{inner}\left(\mathbb{C}, \operatorname{WithLp.toLp}(2, \operatorname{Matrix.mulVec}(A, v)), \operatorname{WithLp.toLp}(2, \operatorname{Matrix.mulVec}(A, w))\right) = \operatorname{dotProduct}\left(\operatorname{star}\left(v\right), \operatorname{Matrix.mulVec}(A^{*} \cdot A, w)\right)$$
+
+*Proof.* Machine-checked in Lean as `D5/S3/Quantum/Foundation/FiniteTraceDistance.inner_A_mulVec_eq` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+For any finite coordinate type and complex square matrix A, the inner product of A v and A w is the quadratic pairing of v and w through the Gram matrix A* A. The vectors are equipped with the Euclidean inner product by WithLp.toLp 2. No invertibility, normalization or decidable equality is required.
+
+**Theorem 1.2 (Singular value decomposition).**
 
 $$\forall n \in Type,\; [\operatorname{Fintype}\left(n\right)][\operatorname{DecidableEq}\left(n\right)]\forall A \in \operatorname{Matrix}\left(n, n, \mathbb{C}\right),\; \text{let } hH:\operatorname{Matrix.IsHermitian}(\operatorname{Matrix.conjTranspose}(A) \cdot A),\exists V \in \operatorname{Matrix.unitaryGroup}(n, \mathbb{C}), W \in \operatorname{Matrix.unitaryGroup}(n, \mathbb{C}),\; A = \operatorname{val}\left(V\right) \cdot \operatorname{Matrix.diagonal}(\lambda(i:n)\mapsto\operatorname{Complex.ofReal}(\operatorname{Real.sqrt}(\operatorname{Matrix.IsHermitian.eigenvalues}(hH, i)))) \cdot \operatorname{Matrix.conjTranspose}(\operatorname{val}\left(W\right))$$
 
@@ -18,7 +30,7 @@ $$\forall n \in Type,\; [\operatorname{Fintype}\left(n\right)][\operatorname{Dec
 
 For every finite complex square matrix, two unitary factors give a diagonal singular-value decomposition. The diagonal entries are the real square roots of the eigenvalues of its Gram matrix. The let-bound hH is the canonical Hermitian proof for that Gram matrix; ofReal denotes the real-to-complex embedding. The retained proof is Alex Meiburg's Physlib SVD.
 
-**Theorem 1.2 (The trace of a Hermitian matrix is real).**
+**Theorem 1.3 (The trace of a Hermitian matrix is real).**
 
 $$\forall n \in Type, R \in Type,\; [\operatorname{Fintype}\left(n\right)][\operatorname{RCLike}\left(R\right)]\forall A \in \operatorname{Matrix}\left(n, n, R\right),\; \operatorname{Matrix.IsHermitian}(A) \Rightarrow (\operatorname{RCLike.re}(\operatorname{Matrix.trace}(A)):R) = \operatorname{Matrix.trace}(A)$$
 
@@ -30,7 +42,7 @@ $$\forall n \in Type, R \in Type,\; [\operatorname{Fintype}\left(n\right)][\oper
 
 For every Hermitian square matrix over an RCLike scalar type, coercing the real part of its trace back to that scalar type gives the original trace. Only the index type is assumed finite; no decidable equality is required.
 
-**Definition 1.3 (Actual trace norm).**
+**Definition 1.4 (Actual trace norm).**
 
 $$\forall m \in FiniteType, n \in FiniteType, R \in RCLike, A \in \operatorname{Matrix}\left(m, n, R\right),\; \operatorname{traceNorm}\left(A\right) = \operatorname{re}\left(\operatorname{trace}\left(\operatorname{sqrt}\left(A^{*} \cdot A\right)\right)\right)$$
 
@@ -42,7 +54,7 @@ $$\forall m \in FiniteType, n \in FiniteType, R \in RCLike, A \in \operatorname{
 
 This is the real part of the trace of the positive square root of the Gram matrix.
 
-**Theorem 1.4 (Negation invariance).**
+**Theorem 1.5 (Negation invariance).**
 
 $$\forall m \in FiniteType, n \in FiniteType, R \in RCLike, A \in \operatorname{Matrix}\left(m, n, R\right),\; \operatorname{traceNorm}\left(0 - A\right) = \operatorname{traceNorm}\left(A\right)$$
 
@@ -54,7 +66,7 @@ $$\forall m \in FiniteType, n \in FiniteType, R \in RCLike, A \in \operatorname{
 
 Negation leaves the Gram matrix unchanged.
 
-**Theorem 1.5 (Nonnegative trace norm).**
+**Theorem 1.6 (Nonnegative trace norm).**
 
 $$\forall m \in FiniteType, n \in FiniteType, R \in RCLike, A \in \operatorname{Matrix}\left(m, n, R\right),\; 0 \le \operatorname{traceNorm}\left(A\right)$$
 
@@ -66,7 +78,7 @@ $$\forall m \in FiniteType, n \in FiniteType, R \in RCLike, A \in \operatorname{
 
 The positive square root is positive semidefinite and has nonnegative real trace.
 
-**Theorem 1.6 (Unitary maximum formula).**
+**Theorem 1.7 (Unitary maximum formula).**
 
 $$\forall n \in FiniteType, A \in \operatorname{Matrix}\left(n, n, \mathbb{C}\right),\; \left(\exists U \in \operatorname{unitaryGroup}\left(n, \mathbb{C}\right),\; \operatorname{re}\left(\operatorname{trace}\left(\operatorname{val}\left(U\right) \cdot A\right)\right) = \operatorname{traceNorm}\left(A\right)\right) \land \left(\forall U \in \operatorname{unitaryGroup}\left(n, \mathbb{C}\right),\; \operatorname{re}\left(\operatorname{trace}\left(\operatorname{val}\left(U\right) \cdot A\right)\right) \le \operatorname{traceNorm}\left(A\right)\right)$$
 
@@ -78,7 +90,7 @@ $$\forall n \in FiniteType, A \in \operatorname{Matrix}\left(n, n, \mathbb{C}\ri
 
 A unitary attains the trace norm as the real trace of its product with A, and every unitary gives a value at most the trace norm. Here val denotes the underlying matrix. The formula holds in every finite complex square dimension, including the empty type.
 
-**Theorem 1.7 (Trace norm triangle inequality).**
+**Theorem 1.8 (Trace norm triangle inequality).**
 
 $$\forall n \in FiniteType, A \in \operatorname{Matrix}\left(n, n, \mathbb{C}\right), B \in \operatorname{Matrix}\left(n, n, \mathbb{C}\right),\; \operatorname{traceNorm}\left(A + B\right) \le \operatorname{traceNorm}\left(A\right) + \operatorname{traceNorm}\left(B\right)$$
 
@@ -90,7 +102,7 @@ $$\forall n \in FiniteType, A \in \operatorname{Matrix}\left(n, n, \mathbb{C}\ri
 
 The retained SVD proof identifies the norm as the maximum real trace over unitaries; trace additivity gives the bound.
 
-**Theorem 1.8 (Positive trace norm).**
+**Theorem 1.9 (Positive trace norm).**
 
 $$\forall n \in FiniteType, R \in RCLike, A \in \operatorname{Matrix}\left(n, n, R\right),\; \operatorname{PosSemidef}\left(A\right) \Rightarrow \operatorname{embed}\left(R, \operatorname{traceNorm}\left(A\right)\right) = \operatorname{trace}\left(A\right)$$
 
@@ -102,7 +114,7 @@ $$\forall n \in FiniteType, R \in RCLike, A \in \operatorname{Matrix}\left(n, n,
 
 For a positive semidefinite matrix, the Gram matrix is its square and its positive square root is the original matrix.
 
-**Definition 1.9 (Canonical channel on matrix coordinates).**
+**Definition 1.10 (Canonical channel on matrix coordinates).**
 
 $$\forall n \in FiniteType, C \in \operatorname{QuantumChannel}\left(n, n\right), A \in \operatorname{Matrix}\left(n, n, \mathbb{C}\right),\; \operatorname{act}\left(C, A\right) = \operatorname{raw}\left(\operatorname{applyCP}\left(C, \operatorname{toCstar}\left(A\right)\right)\right)$$
 
@@ -114,7 +126,7 @@ $$\forall n \in FiniteType, C \in \operatorname{QuantumChannel}\left(n, n\right)
 
 The matrix coordinate equivalence transports the actual completely positive map.
 
-**Definition 1.10 (Actual density distance).**
+**Definition 1.11 (Actual density distance).**
 
 $$\forall n \in FiniteType, rho \in \operatorname{DensityState}\left(n\right), sigma \in \operatorname{DensityState}\left(n\right),\; \operatorname{traceDistance}\left(rho, sigma\right) = \frac{\operatorname{traceNorm}\left(\operatorname{raw}\left(rho\right) - \operatorname{raw}\left(sigma\right)\right)}{2}$$
 
@@ -126,7 +138,7 @@ $$\forall n \in FiniteType, rho \in \operatorname{DensityState}\left(n\right), s
 
 The canonical density-state values are converted to matrices before taking half the trace norm of their difference.
 
-**Theorem 1.11 (Nonnegative density distance).**
+**Theorem 1.12 (Nonnegative density distance).**
 
 $$\forall n \in FiniteType, rho \in \operatorname{DensityState}\left(n\right), sigma \in \operatorname{DensityState}\left(n\right),\; 0 \le \operatorname{traceDistance}\left(rho, sigma\right)$$
 
@@ -138,7 +150,7 @@ $$\forall n \in FiniteType, rho \in \operatorname{DensityState}\left(n\right), s
 
 Trace-norm nonnegativity gives the lower endpoint of the density-distance interval.
 
-**Theorem 1.12 (Symmetry).**
+**Theorem 1.13 (Symmetry).**
 
 $$\forall n \in FiniteType, rho \in \operatorname{DensityState}\left(n\right), sigma \in \operatorname{DensityState}\left(n\right),\; \operatorname{traceDistance}\left(rho, sigma\right) = \operatorname{traceDistance}\left(sigma, rho\right)$$
 
@@ -150,7 +162,7 @@ $$\forall n \in FiniteType, rho \in \operatorname{DensityState}\left(n\right), s
 
 Reversing the state difference negates the matrix and preserves its trace norm.
 
-**Theorem 1.13 (Density distance triangle inequality).**
+**Theorem 1.14 (Density distance triangle inequality).**
 
 $$\forall n \in FiniteType, rho \in \operatorname{DensityState}\left(n\right), sigma \in \operatorname{DensityState}\left(n\right), tau \in \operatorname{DensityState}\left(n\right),\; \operatorname{traceDistance}\left(rho, tau\right) \le \operatorname{traceDistance}\left(rho, sigma\right) + \operatorname{traceDistance}\left(sigma, tau\right)$$
 
@@ -162,7 +174,7 @@ $$\forall n \in FiniteType, rho \in \operatorname{DensityState}\left(n\right), s
 
 Split the state difference through the intermediate state and apply the trace-norm triangle inequality.
 
-**Theorem 1.14 (All density distances are at most one).**
+**Theorem 1.15 (All density distances are at most one).**
 
 $$\forall n \in FiniteType, rho \in \operatorname{DensityState}\left(n\right), sigma \in \operatorname{DensityState}\left(n\right),\; \operatorname{traceDistance}\left(rho, sigma\right) \le 1$$
 
@@ -174,7 +186,7 @@ $$\forall n \in FiniteType, rho \in \operatorname{DensityState}\left(n\right), s
 
 Each density matrix has trace norm one; the triangle inequality bounds their difference by two.
 
-**Theorem 1.15 (Orthogonal positive difference).**
+**Theorem 1.16 (Orthogonal positive difference).**
 
 $$\forall n \in Type,\; [\operatorname{Fintype}\left(n\right)] [\operatorname{DecidableEq}\left(n\right)] \forall A \in \operatorname{Matrix}\left(n, n, \mathbb{C}\right), B \in \operatorname{Matrix}\left(n, n, \mathbb{C}\right),\; \operatorname{PosSemidef}\left(A\right) \Rightarrow \left(\operatorname{PosSemidef}\left(B\right) \Rightarrow \left(A \cdot B = 0 \Rightarrow \operatorname{traceNorm}\left(A - B\right) = \operatorname{re}\left(\operatorname{trace}\left(A\right)\right) + \operatorname{re}\left(\operatorname{trace}\left(B\right)\right)\right)\right)$$
 
@@ -186,7 +198,7 @@ $$\forall n \in Type,\; [\operatorname{Fintype}\left(n\right)] [\operatorname{De
 
 For positive semidefinite complex matrices A and B with A B zero, A plus B is the positive square root of the Gram matrix of A minus B. The trace norm is therefore the sum of their real traces.
 
-**Theorem 1.16 (Hermitian Jordan mass).**
+**Theorem 1.17 (Hermitian Jordan mass).**
 
 $$\forall n \in FiniteType, A \in \operatorname{Matrix}\left(n, n, \mathbb{C}\right),\; \operatorname{Matrix.IsHermitian}(A) \Rightarrow \operatorname{traceNorm}\left(A\right) = \operatorname{re}\left(\operatorname{trace}\left(\operatorname{posPart}\left(A\right)\right)\right) + \operatorname{re}\left(\operatorname{trace}\left(\operatorname{negPart}\left(A\right)\right)\right)$$
 
@@ -198,7 +210,7 @@ $$\forall n \in FiniteType, A \in \operatorname{Matrix}\left(n, n, \mathbb{C}\ri
 
 For a Hermitian matrix A, its trace norm equals the sum of the real traces of its positive and negative Jordan parts.
 
-**Theorem 1.17 (Every CPTP channel contracts trace distance).**
+**Theorem 1.18 (Every CPTP channel contracts trace distance).**
 
 $$\forall n \in FiniteType, C \in \operatorname{QuantumChannel}\left(n, n\right), rho \in \operatorname{DensityState}\left(n\right), sigma \in \operatorname{DensityState}\left(n\right),\; \operatorname{traceDistance}\left(\operatorname{mapState}\left(C, rho\right), \operatorname{mapState}\left(C, sigma\right)\right) \le \operatorname{traceDistance}\left(rho, sigma\right)$$
 
@@ -226,6 +238,7 @@ The two Kronecker algebra embeddings preserve the exponential and their images c
 
 - Truth anchor: `D5/S3/Quantum/Foundation/FiniteTraceDistance.act`
 - Truth anchor: `D5/S3/Quantum/Foundation/FiniteTraceDistance.exists_svd_sqrt_eigenvalues`
+- Truth anchor: `D5/S3/Quantum/Foundation/FiniteTraceDistance.inner_A_mulVec_eq`
 - Truth anchor: `D5/S3/Quantum/Foundation/FiniteTraceDistance.re_trace_eq_trace`
 - Truth anchor: `D5/S3/Quantum/Foundation/FiniteTraceDistance.traceDistance`
 - Truth anchor: `D5/S3/Quantum/Foundation/FiniteTraceDistance.traceDistance_contract`

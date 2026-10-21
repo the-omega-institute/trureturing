@@ -1,0 +1,17 @@
+**Definition 81.1 (the whole-rho occurrence metric).** Use the whole-rho contract of §55.1–§55.2, and write
+
+$$
+\mathcal P=\{L,R\}^{*},\qquad
+p\sim pL,\quad p\sim pR,
+$$
+
+with one unit-length, unit-conductance seam for each displayed parent–child pair, counting measure $\mu(\{p\})=1$, and graph distance $d_{\mathcal P}$. The root is $o=\varepsilon$. Throughout the packing argument, $R\in\mathbb N_0=\{0,1,2,\ldots\}$ is a nonnegative integer graph radius. Thus
+
+$$
+B_{\mathcal P}(o,R)=\{p:|p|\le R\},\qquad
+|B_{\mathcal P}(o,R)|=\sum_{k=0}^{R}2^k=2^{R+1}-1.
+\tag{81.1}
+$$
+
+This is the complete occurrence graph in the explicit §55 realization. It is not the one-spine direct-limit graph used by §52.1–§52.4, and neither graph distance nor the cardinality in (81.1) is a physical spatial radius or a dimension assignment.
+

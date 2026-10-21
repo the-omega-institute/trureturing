@@ -771,6 +771,19 @@ def registration : Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0}
 
 end PolynomialInsertion
 
+/- Exact source-type mirrors for the consumed APIs. These
+   exact source mirrors are not four-slot registrations; the missing
+   realization/readout evidence is reported with this delivery. -/
+abbrev sourceScope_singletonLinear_coefficient :=
+  type_of% (@_root_.D5.S3.VertexAlgebra.LatticeHalfFockFockNormalField.singletonLinear_coefficient)
+theorem source_actual_singletonLinear_coefficient : sourceScope_singletonLinear_coefficient :=
+  @_root_.D5.S3.VertexAlgebra.LatticeHalfFockFockNormalField.singletonLinear_coefficient
+
+abbrev sourceScope_wordField_cons_singleton :=
+  type_of% (@_root_.D5.S3.VertexAlgebra.LatticeHalfFockFockNormalField.wordField_cons_singleton)
+theorem source_actual_wordField_cons_singleton : sourceScope_wordField_cons_singleton :=
+  @_root_.D5.S3.VertexAlgebra.LatticeHalfFockFockNormalField.wordField_cons_singleton
+
 namespace PolynomialMonomial
 abbrev Parameter := Σ data : BoundData, Charge data.val
 abbrev signature : Signature := Reg.Support.SingleDependentReadout.signature
@@ -865,6 +878,44 @@ def registration : Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0}
   options := #[{ name := `autoImplicit, value := .bool false }]
 
 end PolynomialMonomial
+
+/- The actual family and exact source bridge below are partial audit evidence.
+   Whole-family variation, sensitivity, observational dependence and exact
+   sourceSelection reconstruction remain unfinished at
+   https://github.com/the-omega-institute/trureturing/issues/19578.
+   No Contract.Registration is asserted without those proofs. -/
+
+namespace SingletonCoefficientAttempt
+abbrev Parameter := Σ data : BoundData, NativeField data.val data.property × Index data.val × ℤ
+abbrev signature : Signature := Reg.Support.SingleDependentReadout.signature
+  Parameter (fun p => ActualTensor p.1.val p.1.property)
+    (fun p => ActualTensor p.1.val p.1.property)
+def actual : Realization signature := realize signature
+  (fun _ p v => (singletonLinear p.1.val p.1.property p.2.2.1 p.2.1).coeff p.2.2.2 v)
+  (fun empty => nomatch empty)
+def arena : Arena where
+  signature := signature
+  Law readout := ∀ (D : LatticeData) (hu : IsUnit D.G.det)
+    (F : NativeField D hu) (i : Index D) (e : ℤ) (v : ActualTensor D hu),
+    readout.readout () ⟨⟨D, hu⟩, F, i, e⟩ v =
+      ∑ᶠ m : ℤ, flatTerm D hu F [i] e v (m, ())
+theorem source_bridge : (type_of% (@singletonLinear_coefficient)) ↔ arena.Law actual := Iff.rfl
+end SingletonCoefficientAttempt
+
+namespace WordConsAttempt
+abbrev Parameter := Σ data : BoundData, NativeField data.val data.property × Index data.val
+abbrev signature : Signature := Reg.Support.SingleDependentReadout.signature
+  Parameter (fun p => List (Index p.1.val)) (fun p => NativeField p.1.val p.1.property)
+def actual : Realization signature := realize signature
+  (fun _ p w => wordField p.1.val p.1.property p.2.1 (p.2.2 :: w))
+  (fun empty => nomatch empty)
+def arena : Arena where
+  signature := signature
+  Law readout := ∀ (D : LatticeData) (hu : IsUnit D.G.det)
+    (F : NativeField D hu) (i : Index D) (w : List (Index D)),
+    readout.readout () ⟨⟨D, hu⟩, F, i⟩ w = singletonLinear D hu i (wordField D hu F w)
+theorem source_bridge : (type_of% (@wordField_cons_singleton)) ↔ arena.Law actual := Iff.rfl
+end WordConsAttempt
 
 end
 end Reg.D5.S3.VertexAlgebra.LatticeHalfFockFockNormalField
