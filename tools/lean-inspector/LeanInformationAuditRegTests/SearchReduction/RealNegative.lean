@@ -22,11 +22,12 @@ open LeanInformationAudit.SearchReduction
     D5.S0.Tower.NonPisot.GapCounts,
     D5.S0.Tower.TribonacciSurvivors.StrictFiniteDepth]
   using [] as frozenPackageResult
-/- The first conjunct uses distinct compiler-generated matchers. Their types
-are kernel definitionally equal, but reducible statement matching does not
-identify the two matcher heads. With no S the graph records no reduction. -/
+/- The first conjunct uses distinct compiler-generated matchers. With no S
+there is no certified reduction. An unfinished lookup is undecided; it is
+neither normal exhaustion nor a whole-target execution failure. -/
 #guard frozenPackageResult = Verdict.insufficient
-#guard frozenPackageResult.baseline = Run.exhausted
+#guard frozenPackageResult.baseline = Run.exhausted ∨
+  frozenPackageResult.baseline = Run.incomplete Failure.undecided
 
 /- §5 preserves the complete source telescope. robustKnowledge is a predicate
 definition, not a proof of the factivity statement; the conjunction theorem has
