@@ -118,8 +118,8 @@ private noncomputable def Pminus := pProjector qMinus
 
 private theorem pProjector_eq_vec (q : ℂ) (hq : q * star q = 1) :
     pProjector q = (1 / 2 : ℝ) • Matrix.vecMulVec (pKet q) (star (pKet q)) := by
-  ext i j
-  fin_cases i <;> fin_cases j <;>
+  ext ⟨a, b⟩ ⟨c, d⟩
+  fin_cases a <;> fin_cases b <;> fin_cases c <;> fin_cases d <;>
     simp [pProjector, pKet, Matrix.vecMulVec, Pi.star_apply] <;>
       first | exact hq | ring
 
@@ -147,8 +147,8 @@ private noncomputable def witnessP : Fin 4 → ℝ := ![16 / 25, 9 / 25, 0, 0]
 
 private theorem bellDiagonal_witness :
     bellDiagonal witnessP = (1 / 2 : ℂ) • Pplus + (1 / 2 : ℂ) • Pminus := by
-  ext i j
-  fin_cases i <;> fin_cases j <;>
+  ext ⟨a, b⟩ ⟨c, d⟩
+  fin_cases a <;> fin_cases b <;> fin_cases c <;> fin_cases d <;>
     simp [bellDiagonal, witnessP, bellProjector, Pplus, Pminus, pProjector,
       qPlus, qMinus, Fin.sum_univ_succ, D5.S3.QuantumBounds.CHSHWitness.bellDensity,
       D5.S3.QuantumBounds.CHSHWitness.bellVector, D5.S3.Quantum.QubitWitnesses.bellCoefficients,
