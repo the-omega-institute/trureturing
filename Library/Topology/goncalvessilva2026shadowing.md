@@ -50,3 +50,22 @@ Definitions 2.1--2.4 are on printed/PDF p.3. Definition 3.3 is on p.5;
 Corollary 3.5, Remark 3.6 and the literal product-metric open question are on
 printed/PDF p.6. The supplied primary PDF has SHA-256
 `9e30b597eee45fb3cb1fb1e1612a9042c13ef13ef2fa6f6b23bf08d933c01494`.
+
+## Quantitative boundary supplied by the repository
+
+`HeadWeightedLipschitz` resumes the October 14 ordinary classification for the
+full head-weighted shift family. The target is the exact equivalence between
+Lipschitz shadowing and a single C>0 satisfying
+`weight(s,n) <= C * weight(t,n-1)` for all heads s,t and n>=1. Sufficiency uses
+the infinite diagonal-mismatch telescope; necessity combines a uniform finite
+depth cutoff with the existing single-defect infinite pseudo-orbits. This is
+repository-derived, not attributed to the source and not another count of the
+already proved unrestricted metric counterexample. The separately scoped
+locally compact problem and arbitrary compatible-metric classification are
+outside this statement. Canonical Lean acceptance is required before calling
+the new classification formally checked.
+
+The unversioned primary arXiv page was read back on 2026-10-21: submission
+history still lists only v1 (3 March 2026), and its abstract still describes
+arbitrary uniform-metric product-model stability as unclear. This primary
+version check does not certify that no other publication has answered it.
