@@ -8,7 +8,6 @@
 
 import D5.S3.Quantum.QuantumChannels.ConcealmentKernelNecessityRefutation
 import D5.S3.Quantum.Foundation.FiniteKrausRepresentation
-import Mathlib.Analysis.InnerProductSpace.GramSchmidtOrtho
 
 /-! Isometric compressions and unital completely positive maps give the same
 compatibility condition at a fixed output dimension. -/
