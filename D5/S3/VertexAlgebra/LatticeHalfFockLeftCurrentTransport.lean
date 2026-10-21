@@ -47,10 +47,6 @@ private theorem target_current_mode (D : LatticeData) (hu : IsUnit D.G.det)
     (targetCurrent D hu i)[[n]] = LatticeHalfFock.tensorCurrent D (ActualGround D hu) i n := by
   simp [targetCurrent, physicalJet_mode, jetCurrent, jetScalar]
 
-local macro "orderedCurrent" : term => pure (Lean.mkIdent
-  ((Lean.Name.num `_private.D5.S3.VertexAlgebra.LatticeHalfFockCurrentBorcherds 0) ++
-    `D5.S3.VertexAlgebra.LatticeHalfFockCurrentBorcherds.positive_ordered_commutators))
-
 private theorem current_slice_locality (D : LatticeData) (hu : IsUnit D.G.det)
     (i : Fin D.rank) (b : Carrier D) (delta : ℤ) :
     (deltaEnd ^ (vectorFrequencyBound D b + 1))
@@ -65,7 +61,7 @@ private theorem current_slice_locality (D : LatticeData) (hu : IsUnit D.G.det)
     have vanishes := neutralMode_vanish D i b ((cutoff : ℤ) + j) (by dsimp [cutoff]; omega)
     simp [currentLeftTerm, vanishes]
   have law := (current_borcherds D hu i b delta p q cutoff x).2.2.2
-  have ordered := orderedCurrent D hu i b delta p q cutoff x
+  have ordered := D5.S3.VertexAlgebra.LatticeHalfFockCurrentBorcherds.positive_ordered_commutators D hu i b delta p q cutoff x
   rw [← law, zero] at ordered
   rw [FieldDeltaBinomial.delta_binomial]
   simp only [LinearMap.sum_apply, LinearMap.smul_apply, FieldNormalProductLocality.commutator,
@@ -127,7 +123,7 @@ def qField (s r : ℤ) (K : ℕ) (A B : VertexOperator ℂ M) : VertexOperator �
   ∑ ell ∈ Finset.range ((K : ℤ) - r).toNat,
     Ring.choose (-(s : ℂ) / 2) ell • modeShift ell (ordinaryResidue (r + ell) A B)
 
-private theorem qField_mode (s r : ℤ) (K : ℕ) (A B : VertexOperator ℂ M)
+theorem qField_mode (s r : ℤ) (K : ℕ) (A B : VertexOperator ℂ M)
     (n : ℤ) (x : M) :
     ((qField s r K A B)[[n]]) x =
       ∑ ell ∈ Finset.range ((K : ℤ) - r).toNat,
@@ -183,11 +179,7 @@ private theorem current_residue_identification (D : LatticeData) (hu : IsUnit D.
     currentResidue, StateFieldResidueReconstruction.epsilon, choose,
     target_current_mode, targetSlice, physicalSlice_mode]
 
-local macro "currentInverse" : term => pure (Lean.mkIdent
-  ((Lean.Name.num `_private.D5.S3.VertexAlgebra.LatticeHalfFockCurrentBorcherds 0) ++
-    `D5.S3.VertexAlgebra.LatticeHalfFockCurrentBorcherds.inverse_all))
-
-private theorem current_q (D : LatticeData) (hu : IsUnit D.G.det)
+theorem current_q (D : LatticeData) (hu : IsUnit D.G.det)
     (i : Fin D.rank) (a : Carrier D) (s r : ℤ) :
     targetSlice D hu (neutralMode D i r a) (s + 1) =
       qField 1 r (vectorFrequencyBound D a + 1) (targetCurrent D hu i)
@@ -199,17 +191,9 @@ private theorem current_q (D : LatticeData) (hu : IsUnit D.G.det)
   rw [VertexOperator.coeff_eq_ncoeff, VertexOperator.coeff_eq_ncoeff,
     qField_mode, targetSlice, physicalSlice_mode]
   simp only [current_residue_identification, Int.cast_one]
-  have law := currentInverse D hu i a s r (-e - 1) x
+  have law := D5.S3.VertexAlgebra.LatticeHalfFockCurrentBorcherds.inverse_all D hu i a s r (-e - 1) x
     (((vectorFrequencyBound D a + 1 : ℕ) : ℤ) - r).toNat (by omega)
   convert law using 1 <;> congr 1 <;> ring
-
-local macro "residuePositiveLocality" : term => pure (Lean.mkIdent
-  ((Lean.Name.num `_private.D5.S3.VertexAlgebra.StateFieldResidueReconstruction 0) ++
-    `D5.S3.VertexAlgebra.StateFieldResidueReconstruction.fieldResidue_nonnegative_locality))
-
-local macro "residueNegativeNormal" : term => pure (Lean.mkIdent
-  ((Lean.Name.num `_private.D5.S3.VertexAlgebra.StateFieldResidueReconstruction 0) ++
-    `D5.S3.VertexAlgebra.StateFieldResidueReconstruction.fieldResidue_negative_normal))
 
 private theorem ordinaryResidue_local (A B C : VertexOperator ℂ M)
     (hAC : FiniteFieldLocality.Local A C) (hBC : FiniteFieldLocality.Local B C)
@@ -225,11 +209,11 @@ private theorem ordinaryResidue_local (A B C : VertexOperator ℂ M)
         (deltaEnd ^ k) (FieldNormalProductLocality.commutator U W) = 0 := by
       rw [Module.End.pow_apply]
       exact h
-    exact ⟨_, residuePositiveLocality A B C L N K degree
+    exact ⟨_, D5.S3.VertexAlgebra.StateFieldResidueReconstruction.fieldResidue_nonnegative_locality A B C L N K degree
       (power A C L hL) (power B C N hN) (power A B K hK)⟩
   · let degree := (-r - 1).toNat
     rw [ordinaryResidue, show r = -(degree : ℤ) - 1 by dsimp [degree]; omega,
-      residueNegativeNormal A B degree]
+      D5.S3.VertexAlgebra.StateFieldResidueReconstruction.fieldResidue_negative_normal A B degree]
     exact FiniteFieldLocality.localNormal _ _ _
       (FiniteFieldLocality.localDerivative A C degree hAC) hBC
       (FiniteFieldLocality.localDerivative A B degree hAB)
@@ -279,7 +263,7 @@ open CollisionLaurentKernels.LaurentCollision
 open OrderedCollisionCoordinates.ContextualLaurentKernel
 open StateFieldResidueReconstruction
 
-private theorem binary_kernel_coeff (r a b : ℤ) :
+theorem binary_kernel_coeff (r a b : ℤ) :
     (contextPair ℂ 0 0 (kernelZX ℂ r)).coeff (pairIndex 0 0 (toLex (a, b))) =
       if 0 ≤ a then if b = r - a then
         BinomialKernelDelta.chooseSign r a.toNat else 0 else 0 := by
@@ -414,7 +398,7 @@ private theorem binary_ordered_extract (A B : VertexOperator ℂ M) (x : M)
         _ = _ := rfl
     all_goals contradiction
 
-private theorem reverse_kernel (r : ℤ) :
+theorem reverse_kernel (r : ℤ) :
     kernelXZ ℂ r = (HahnSeries.C (HahnSeries.C (StateFieldResidueReconstruction.epsilon r))) * kernelZX ℂ r := by
   unfold kernelXZ kernelZX StateFieldResidueReconstruction.epsilon
   rw [neg_eq_neg_one_mul, mul_zpow, map_mul]
@@ -423,7 +407,7 @@ private theorem reverse_kernel (r : ℤ) :
 
 /-- Both signed chambers are read on their own supported words, before taking
 their difference. No locality or truncation of a single ordered residue is used. -/
-private theorem binary_residue_readout (A B : VertexOperator ℂ M) (x : M)
+theorem binary_residue_readout (A B : VertexOperator ℂ M) (x : M)
     (phi : M →ₗ[ℂ] ℂ) (r n : ℤ) :
     phi (((ordinaryResidue r A B)[[n]]) x) =
       (contextPair ℂ 0 0 (kernelZX ℂ r) *
@@ -513,11 +497,11 @@ private theorem twoPoleValue_append (side : Bool) (u v : List (RatFunc ℂ × �
     twoPoleValue side (u ++ v) = twoPoleValue side u + twoPoleValue side v := by
   simp only [twoPoleValue, List.map_append, List.sum_append]
 
-private theorem rational_x : rationalX ℂ RatFunc.X = x ℂ := by
+theorem rational_x : rationalX ℂ RatFunc.X = x ℂ := by
   rw [← RatFunc.algebraMap_X, rationalX, IsFractionRing.lift_algebraMap]
   rfl
 
-private theorem rational_z : rationalZ ℂ RatFunc.X = z ℂ := by
+theorem rational_z : rationalZ ℂ RatFunc.X = z ℂ := by
   rw [← RatFunc.algebraMap_X, rationalZ, IsFractionRing.lift_algebraMap]
   simp [zPolynomial, z]
 

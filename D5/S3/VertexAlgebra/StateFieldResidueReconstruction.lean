@@ -204,7 +204,7 @@ noncomputable def residueField (r : ℤ) (a b : V) : ResidueField (Y := Y) r a b
           left_finite := field.left_finite
           right_finite := field.right_finite }
 
-private theorem fieldResidue_nonnegative_locality
+theorem fieldResidue_nonnegative_locality
     (A B C : VertexOperator ℂ V) (firstOrder secondOrder thirdOrder r : ℕ)
     (firstKilled : (deltaEnd ^ firstOrder) (FieldNormalProductLocality.commutator A C) = 0)
     (secondKilled : (deltaEnd ^ secondOrder) (FieldNormalProductLocality.commutator B C) = 0)
@@ -396,7 +396,7 @@ theorem residue_nonnegative_locality
     firstOrder secondOrder thirdOrder r (power _ _ _ firstKilled)
       (power _ _ _ secondKilled) (power _ _ _ thirdKilled)⟩
 
-private theorem fieldResidue_negative_normal (A B : VertexOperator ℂ V) (degree : ℕ) :
+theorem fieldResidue_negative_normal (A B : VertexOperator ℂ V) (degree : ℕ) :
     (fieldResidue (-(degree : ℤ) - 1) A B).operator =
       (normalMinusOne (dividedDerivative degree A) B).val := by
   have derivativeModes (index : ℤ) (vector : V) : ((dividedDerivative degree A) [[index]]) vector = ((Ring.choose (-index - 1 + degree) degree : ℤ) : ℂ) • (A

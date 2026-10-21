@@ -205,5 +205,187 @@ def registration : LeanInformationAudit.Contract.Registration.{_,_,_,0,0,0,_,_,_
   familyRecord := none
   options := #[{ name := `autoImplicit, value := .bool false }]
 
+namespace CollisionTaylor
+set_option maxHeartbeats 2000000
+open CollisionLaurentKernels.LaurentCollision
+
+structure Input (p : Parameters) where
+  K : ℕ
+  gamma : ℤ
+  delta : ℤ
+  d : ℤ
+  r : ℤ
+  n : ℤ
+  x : ActualTensor p.D p.hu
+  phi : ActualTensor p.D p.hu →ₗ[ℂ] ℂ
+  P : LabelledPolynomial ℂ 3
+  u : ℕ
+  v : ℕ
+  m : ℤ
+  degree : ℕ
+
+abbrev signature : Signature := Reg.Support.SingleDependentReadout.signature
+  Parameters Input (fun _ => ℂ × ℂ × ℂ)
+
+def chart (p : Parameters) (z : Input p) : Rational ℂ :=
+  collisionChart z.P z.gamma z.d z.r
+    (vectorFrequencyBound p.D p.a + 1) (vectorFrequencyBound p.D p.b + 1) z.K
+
+def fused (p : Parameters) (z : Input p) : ℂ :=
+  ∑ u ∈ Finset.range (z.degree + 1), collisionTaylor z.P z.gamma u (z.degree - u) *
+    fusedResidueWeight ((u : ℤ) - (vectorFrequencyBound p.D p.b + 1 : ℕ))
+      (z.d - (vectorFrequencyBound p.D p.a + 1 : ℕ))
+
+def chambers (p : Parameters) (z : Input p) : ℂ :=
+  (∑ u ∈ Finset.range (z.degree + 1), collisionTaylor z.P z.gamma u (z.degree - u) *
+    orderedResidueWeight (z.d - (vectorFrequencyBound p.D p.a + 1 : ℕ))
+      ((z.degree - u : ℕ) + z.r - z.K)) -
+  StateFieldResidueReconstruction.epsilon (z.d - (vectorFrequencyBound p.D p.a + 1 : ℕ)) *
+    ∑ u ∈ Finset.range (z.degree + 1), collisionTaylor z.P z.gamma u (z.degree - u) *
+      orderedResidueWeight (z.d - (vectorFrequencyBound p.D p.a + 1 : ℕ))
+        ((u : ℤ) - (vectorFrequencyBound p.D p.b + 1 : ℕ))
+
+def observed (p : Parameters) (z : Input p) : ℂ × ℂ × ℂ :=
+  (associatedTaylor z.P z.gamma z.u z.v,
+   (resZ_XZ ℂ (iotaFused ℂ (chart p z))).coeff z.m, fused p z)
+
+def actual : Realization signature := realize signature (fun _ p z =>
+  (∑ j ∈ Finset.range (z.v + 1),
+      ((z.u + j).choose z.u : ℂ) * collisionTaylor z.P z.gamma (z.u + j) (z.v - j),
+   (resZ_ZX ℂ (iotaZX ℂ (chart p z)) - resZ_XZ ℂ (iotaXZ ℂ (chart p z))).coeff z.m,
+   chambers p z)) (fun empty => nomatch empty)
+
+def rejected : Realization signature := realize signature (fun _ _ _ => (1, 1, 1))
+  (fun empty => nomatch empty)
+
+def arena : Arena where
+  signature := signature
+  Law R := ∀ p, ∃ K : ℕ, ∀ (gamma delta d r n : ℤ) (x : ActualTensor p.D p.hu)
+      (phi : ActualTensor p.D p.hu →ₗ[ℂ] ℂ),
+      ∃ P : LabelledPolynomial ℂ 3,
+        (∀ e : Exponent 3, P.coeff e =
+          if totalExponent e =
+              (∑ q ∈ labelledPairs 3, (threeOrders p.D p.a p.b K q : ℤ)) - d - r - n - 3
+          then phi (actualNumerator p.D p.hu p.i p.a p.b gamma delta K x e) else 0) ∧
+        (∀ (H₁ H₂ H₃ : ℕ) (j : ℤ),
+          phi (((qField (gamma + 1) r H₁
+            (targetSlice p.D p.hu (neutralMode p.D p.i d p.a) (gamma + 1))
+            (targetSlice p.D p.hu p.b delta))[[n]]) x) =
+            nestedLeftReadout (gamma + 1) 1 d r n (vectorFrequencyBound p.D p.a + 1) H₁
+              (targetCurrent p.D p.hu p.i) (targetSlice p.D p.hu p.a gamma) (targetSlice p.D p.hu p.b delta)
+              x (rationalTripleReadout p.D p.a p.b K P) ∧
+          phi (((qField 1 (d - j) H₂ (targetCurrent p.D p.hu p.i)
+            (qField gamma (r + j) K (targetSlice p.D p.hu p.a gamma)
+              (targetSlice p.D p.hu p.b delta)))[[n]]) x) =
+            nestedRightReadout 1 gamma (r + j) (d - j) n K H₂
+              (targetCurrent p.D p.hu p.i) (targetSlice p.D p.hu p.a gamma) (targetSlice p.D p.hu p.b delta)
+              x (rationalTripleReadout p.D p.a p.b K P) ∧
+          phi (((qField gamma (d + r - j) H₃ (targetSlice p.D p.hu p.a gamma)
+            (targetSlice p.D p.hu (neutralMode p.D p.i j p.b) (delta + 1)))[[n]]) x) =
+            nestedRightReadout gamma 1 j (d + r - j) n (vectorFrequencyBound p.D p.b + 1) H₃
+              (targetSlice p.D p.hu p.a gamma) (targetCurrent p.D p.hu p.i) (targetSlice p.D p.hu p.b delta)
+              x (swapCurrentSourceReadout (rationalTripleReadout p.D p.a p.b K P))) ∧
+        (∀ u v : ℕ,
+          (observed p ⟨K, gamma, delta, d, r, n, x, phi, P, u, v, 0, 0⟩).1 =
+            (R.readout () p ⟨K, gamma, delta, d, r, n, x, phi, P, u, v, 0, 0⟩).1) ∧
+        (∀ m : ℤ,
+          (observed p ⟨K, gamma, delta, d, r, n, x, phi, P, 0, 0, m, 0⟩).2.1 =
+            (R.readout () p ⟨K, gamma, delta, d, r, n, x, phi, P, 0, 0, m, 0⟩).2.1) ∧
+        ∀ degree : ℕ,
+          (degree : ℤ) = (vectorFrequencyBound p.D p.a + 1 : ℕ) +
+            (vectorFrequencyBound p.D p.b + 1 : ℕ) + K - d - r - 2 →
+          (observed p ⟨K, gamma, delta, d, r, n, x, phi, P, 0, 0, 0, degree⟩).2.2 =
+            (R.readout () p ⟨K, gamma, delta, d, r, n, x, phi, P, 0, 0, 0, degree⟩).2.2
+
+theorem source_bridge : (type_of% (@actual_collision_taylor_balance)) ↔ arena.Law actual := by
+  constructor
+  · intro h p
+    obtain ⟨K, hp⟩ := h p.D p.hu p.i p.a p.b
+    refine ⟨K, ?_⟩
+    intro gamma delta d r n x phi
+    obtain ⟨P, coefficients, readouts, cocycle, balance, numeric⟩ := hp gamma delta d r n x phi
+    refine ⟨P, coefficients, readouts, cocycle, ?_, numeric⟩
+    intro m
+    exact congrArg (fun F : LaurentSeries ℂ => F.coeff m) balance
+  · intro h D hu i a b
+    obtain ⟨K, hp⟩ := h ⟨D, hu, i, a, b⟩
+    refine ⟨K, ?_⟩
+    intro gamma delta d r n x phi
+    obtain ⟨P, coefficients, readouts, cocycle, balance, numeric⟩ := hp gamma delta d r n x phi
+    refine ⟨P, coefficients, readouts, cocycle, ?_, numeric⟩
+    apply HahnSeries.ext
+    funext m
+    exact balance m
+
+theorem actual_law : arena.Law actual := source_bridge.mp (@actual_collision_taylor_balance)
+
+theorem rejected_law : ¬ arena.Law rejected := by
+  intro law
+  let p : Parameters :=
+    ⟨Reg.D5.S3.VertexAlgebra.LatticeHalfFockOriginalTranslation.hyperbolic,
+      Reg.D5.S3.VertexAlgebra.LatticeHalfFockOriginalTranslation.hyperbolic_unit,
+      ⟨0, by decide⟩, 0, 0⟩
+  obtain ⟨K, hp⟩ := law p
+  obtain ⟨P, coefficients, _, cocycle, _, _⟩ := hp 0 0 0 0 0 0 0
+  have Pzero : P = 0 := by
+    apply AddMonoidAlgebra.coeff_injective
+    ext e
+    simpa using coefficients e
+  have bad := cocycle 0 0
+  simp [observed, rejected, realize, Pzero, associatedTaylor] at bad
+
+theorem sensitivity : Sensitivity arena actual :=
+  Reg.Support.SingleDependentReadout.sensitivity arena.Law actual rejected rejected_law
+
+theorem dependence : ObservationalDependence signature actual := by
+  intro role
+  let p : Parameters :=
+    ⟨Reg.D5.S3.VertexAlgebra.LatticeHalfFockOriginalTranslation.hyperbolic,
+      Reg.D5.S3.VertexAlgebra.LatticeHalfFockOriginalTranslation.hyperbolic_unit,
+      ⟨0, by decide⟩, 0, 0⟩
+  let input (P : LabelledPolynomial ℂ 3) : Input p :=
+    ⟨0, 0, 0, 0, 0, 0, 0, 0, P, 0, 0, 0, 0⟩
+  refine ⟨p, input 0, input (AddMonoidAlgebra.single 0 1), ?_⟩
+  intro h
+  have bad := congrArg Prod.fst h
+  norm_num [actual, realize, input, collisionTaylor,
+    AddMonoidAlgebra.coeff_single, Finsupp.linearCombination_single] at bad
+
+def familyRegistration : Registration arena (type_of% (@actual_collision_taylor_balance)) where
+  actual := actual
+  bridge := source_bridge
+  variation := ⟨actual_law, rejected, rejected_law⟩
+  sensitivity := sensitivity
+  dependence := dependence
+
+def registration : LeanInformationAudit.Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0}
+    (@actual_collision_taylor_balance) (type_of% (realize signature actual.readout actual.anchor))
+    Type Unit where
+  unitName := Lean.Name.str
+    `D5.S3.VertexAlgebra.LatticeHalfFockNestedQReadout.actual_collision_taylor_balance
+    "__information_unit"
+  realizationName :=
+    `Reg.D5.S3.VertexAlgebra.LatticeHalfFockNestedQReadout.CollisionTaylor.familyRegistration
+  realizationSource := none
+  generated := false
+  arena := .source ⟨arena⟩
+  objectArena := .source ⟨arena⟩
+  catalog := Lean.Name.anonymous
+  localNames := false
+  realization := .source arena ⟨familyRegistration⟩
+  correspondence := { stage := .evidence, objectStage := .evidence }
+  bundleNonempty := .absent
+  readout := some (realize signature actual.readout actual.anchor)
+  variation := .absent
+  sensitivity := .absent
+  partialSensitivity := none
+  escapeFrom := none
+  sourceSelection := none
+  continuation := .unknown
+  familyRecord := none
+  options := #[{ name := `autoImplicit, value := .bool false }]
+
+end CollisionTaylor
+
 end
 end Reg.D5.S3.VertexAlgebra.LatticeHalfFockNestedQReadout

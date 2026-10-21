@@ -24,9 +24,32 @@ finiteQReadout uses the literal finite fractional sum and both complete residue 
 
 nestedLeftReadout and nestedRightReadout retain all four resulting triple words and their signs. rationalTripleReadout reads each word from the supported permutation expansion of P divided by the original clearing polynomial. The third nesting exchanges current and first-source labels in the readout while leaving P and its denominator unchanged. Every summand has total mode index d+r+n; hence its total exponent is -d-r-n-3 and the same slice T applies to every fractional correction, residue offset and j.
 
-This theorem identifies nested ordered rational coefficients. It does not identify the collision-coordinate Taylor coefficients, prove the fractional cocycle cancellation, or establish Lambda_tar=0. The Taylor antidiagonal L+M+N-d-r-2, integration of the signed lift carry with the collision charts, residual-free DE-L, universal negative first-word transport and all-charge induction remain separate obligations. GroundFirst remains an independent final lifting base. No target vacuum, positive definiteness, energy eigenstate, or compatibility law is assumed.
+This theorem identifies nested ordered rational coefficients. The separate collision-Taylor theorem below proves the finite fractional coordinate cocycle and the signed two-residue balance of the same actual numerator. Identification of these chart residues with the three complete nested Q readouts remains unproved. Consequently Lambda_tar=0, residual-free DE-L, universal negative first-word transport and all-charge induction remain open. GroundFirst is an independent final lifting base. No target vacuum, positive definiteness, energy eigenstate, or compatibility law is assumed.
+
+**Theorem 1.2 (The same actual numerator satisfies the finite coordinate cocycle and signed collision balance).**
+
+Lean statement: `D5/S3/VertexAlgebra/LatticeHalfFockNestedQReadout.actual_collision_taylor_balance`
+
+*Proof.* Machine-checked in Lean as `D5/S3/VertexAlgebra/LatticeHalfFockNestedQReadout.actual_collision_taylor_balance` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Acknowledgement.* Bojko Bakalov and Victor G. Kac (2004). *Twisted Modules over Lattice Vertex Algebras*. DOI: [10.1142/9789812702562_0001](https://doi.org/10.1142/9789812702562_0001). URL: <https://arxiv.org/abs/math/0402315v1>.
+
+*Commentary.*
+
+For every D, determinant-unit witness hu, current label i and original source states a,b, choose K from the nested ordered theorem. For every signed gamma,delta,d,r,n, actual tensor x and complex linear functional phi, P is the same finite labelled degree-T slice of the actual numerator, T=L+M+N-d-r-n-3. Here L=vectorFrequencyBound(a)+1, M=vectorFrequencyBound(b)+1 and N=K. The same existential K,P also retain all three actual nested ordered-Q equations, for every outer cutoff and signed j, before the additional chart identities are stated. No numerator exponent is required to be nonnegative.
+
+Write C(u,v) for the finite sum of P_e times choose(e_0-1/2,u) choose(e_1-gamma/2,v). The left-associated coefficient is the finite sum of P_e times choose(e_0-1/2,u) choose(e_0+e_1-u-(gamma+1)/2,v). The theorem proves that this coefficient equals sum over 0<=j<=v of choose(u+j,u) C(u+j,v-j). This is the coefficient identity under x=h+t for the exact common fractional factor. The proof uses choose_smul_choose and finite Vandermonde; it never divides by a binomial coefficient.
+
+Set D=L+M+N-d-r-2. The collisionChart is the finite rational sum, over 0<=u<=D, of C(u,D-u) x^(u-M) t^(D-u+r-N) (x-t)^(d-L). The native rational kernel uses integration variable z=x and coefficient-field variable X=t. A negative D gives the empty sum. Its fused residue in x equals the difference of its two supported ordered residues as complete Laurent series in t. Negative powers of both x and x-t use the existing negative_laurent_collision theorem. Nonnegative x powers use the original polynomial collision theorem, and nonnegative diagonal powers use a recurrence from separated rational poles. Rational coefficients in t are pulled through the supported residue maps.
+
+For every nonnegative integer degree equal to D, the theorem also gives the literal scalar two-residue coefficient identity. For A=u-M, B=D-u+r-N and k=d-L, A+B+k=-2. The fused weight is choose(A,-k-1) when k<0 and zero otherwise. It equals the forward weight chooseSign(k,-B-1) when B<0 minus epsilon(k) times the reverse weight chooseSign(k,-A-1) when A<0. Every inequality is strict at the zero boundary. Both chambers, all integer signs and the complete epsilon(k) factor are retained.
+
+These are finite chart identities for the actual numerator. sameNumeratorCollisionBridge states the still-unproved identification with the complete nested Q products, using one outer locality order for the first product and independent orders for every intermediate field in the two finite families. Equality of either chart residue with a complete nested Q coefficient has not been established. In particular no complete intermediate cutoff is imposed on an individual ordered half. The binary Taylor readout remains valid, but its integration with the three-field supported extraction, the source theta/lift carry, target interchange, residual-free DE-L and the all-charge first-word consumer remain further obligations. GroundFirst remains a separate final base.
 
 ## References
 
+- Truth anchor: `D5/S3/VertexAlgebra/LatticeHalfFockNestedQReadout.actual_collision_taylor_balance`
 - Truth anchor: `D5/S3/VertexAlgebra/LatticeHalfFockNestedQReadout.actual_nested_ordered_readouts`
 - Dependency: [D5/S3/VertexAlgebra/LatticeHalfFockClearedTaylorReadout](LatticeHalfFockClearedTaylorReadout.md)

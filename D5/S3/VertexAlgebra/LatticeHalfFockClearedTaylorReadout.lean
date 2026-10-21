@@ -275,7 +275,7 @@ private theorem negative_kernel_choose (k j : ℕ) :
   norm_num only [neg_mul_neg, one_mul, one_pow]
   rw [Nat.choose_symm_add]
 
-private theorem signed_kernel_choose (k : ℕ) (a : ℤ) :
+theorem signed_kernel_choose (k : ℕ) (a : ℤ) :
     (if 0 ≤ a - k then
       BinomialKernelDelta.chooseSign (-(k : ℤ) - 1) (a - k).toNat else 0) -
     StateFieldResidueReconstruction.epsilon (-(k : ℤ) - 1) *
@@ -316,14 +316,6 @@ private def polynomialTaylor (P : LabelledPolynomial ℂ 2) (k : ℕ) (t : ℤ) 
   Finsupp.linearCombination ℂ (fun e : Exponent 2 =>
     if totalExponent e = t then ((Ring.choose (e 0) k : ℤ) : ℂ) else 0) P.coeff
 
-local macro "forwardKernelCoefficient" : term => pure (Lean.mkIdent
-  ((Lean.Name.num `_private.D5.S3.VertexAlgebra.LatticeHalfFockLeftCurrentTransport 0) ++
-    `D5.S3.VertexAlgebra.LatticeHalfFockLeftCurrentTransport.binary_kernel_coeff))
-
-local macro "reverseKernel" : term => pure (Lean.mkIdent
-  ((Lean.Name.num `_private.D5.S3.VertexAlgebra.LatticeHalfFockLeftCurrentTransport 0) ++
-    `D5.S3.VertexAlgebra.LatticeHalfFockLeftCurrentTransport.reverse_kernel))
-
 private theorem backward_kernel_coefficient (r a b : ℤ) :
     (contextPair ℂ 0 0 (kernelXZ ℂ r)).coeff (pairIndex 0 0 (toLex (a, b))) =
       StateFieldResidueReconstruction.epsilon r *
@@ -333,8 +325,8 @@ private theorem backward_kernel_coefficient (r a b : ℤ) :
       (HahnSeries.C (HahnSeries.C (StateFieldResidueReconstruction.epsilon r))) =
       HahnSeries.C (StateFieldResidueReconstruction.epsilon r) := by
     simp only [StateFieldResidueReconstruction.epsilon, map_zpow₀, map_neg, map_one]
-  rw [reverseKernel, map_mul, constant, HahnSeries.C_apply,
-    HahnSeries.coeff_single_zero_mul, forwardKernelCoefficient]
+  rw [D5.S3.VertexAlgebra.LatticeHalfFockLeftCurrentTransport.reverse_kernel, map_mul, constant, HahnSeries.C_apply,
+    HahnSeries.coeff_single_zero_mul, D5.S3.VertexAlgebra.LatticeHalfFockLeftCurrentTransport.binary_kernel_coeff]
 
 private theorem ordered_single (sigma : Equiv.Perm (Fin 2)) (e : Exponent 2) (c : ℂ) :
     orderedPolynomialFor ℂ 2 sigma (AddMonoidAlgebra.single e c) =
@@ -372,7 +364,7 @@ private theorem finite_polynomial_jump (P : LabelledPolynomial ℂ 2) (k : ℕ) 
       simp only [orderExponents, AddEquiv.trans_apply, labelPermutation,
         binarySwap, Equiv.swap_apply_left, Equiv.swap_apply_right]
       rfl
-    rw [first, second, forwardKernelCoefficient, backward_kernel_coefficient]
+    rw [first, second, D5.S3.VertexAlgebra.LatticeHalfFockLeftCurrentTransport.binary_kernel_coeff, backward_kernel_coefficient]
     simp only [polynomialTaylor, AddMonoidAlgebra.coeff_single,
       Finsupp.linearCombination_single, smul_eq_mul]
     have degreeTwo : totalExponent e = e 0 + e 1 := by
@@ -426,7 +418,7 @@ private theorem binaryKernel_degree (reverse : Bool) (r : ℤ) :
   rw [deg]
   rw [rep] at hg
   cases reverse <;> simp only [binaryKernel, Bool.false_eq_true, ite_false, ite_true] at hg
-  · rw [forwardKernelCoefficient] at hg
+  · rw [D5.S3.VertexAlgebra.LatticeHalfFockLeftCurrentTransport.binary_kernel_coeff] at hg
     split_ifs at hg with ha hb
     · omega
     all_goals contradiction
@@ -564,10 +556,6 @@ private theorem binary_extraction {V : Type*} [AddCommGroup V] [Module ℂ V]
     change (-n - 1) + -1 = t - K + r
     omega
 
-local macro "completeBinaryResidue" : term => pure (Lean.mkIdent
-  ((Lean.Name.num `_private.D5.S3.VertexAlgebra.LatticeHalfFockLeftCurrentTransport 0) ++
-    `D5.S3.VertexAlgebra.LatticeHalfFockLeftCurrentTransport.binary_residue_readout))
-
 private theorem binary_residue_taylor {V : Type*} [AddCommGroup V] [Module ℂ V]
     (A B : VertexOperator ℂ V) (K : ℕ) (x : V) (phi : V →ₗ[ℂ] ℂ)
     (t r n : ℤ) (k : ℕ) (P : LabelledPolynomial ℂ 2)
@@ -590,13 +578,9 @@ private theorem binary_residue_taylor {V : Type*} [AddCommGroup V] [Module ℂ V
     scalarWordCarrier 2 ![A, B] id x phi).coeff
       (pairIndex 0 0 (toLex (-n - 1, -1))) at forward
   rw [reverseFields] at backward
-  rw [completeBinaryResidue, ← forward, ← backward,
+  rw [D5.S3.VertexAlgebra.LatticeHalfFockLeftCurrentTransport.binary_residue_readout, ← forward, ← backward,
     show r - K = -(k : ℤ) - 1 by omega,
     finite_polynomial_jump P k n, show (k : ℤ) - n - 1 = t by omega]
-
-local macro "completeQCoefficient" : term => pure (Lean.mkIdent
-  ((Lean.Name.num `_private.D5.S3.VertexAlgebra.LatticeHalfFockLeftCurrentTransport 0) ++
-    `D5.S3.VertexAlgebra.LatticeHalfFockLeftCurrentTransport.qField_mode))
 
 /-- The complete fractional residue is the finite Taylor readout of its
 actual cleared binary array, on every actual tensor input and signed lift. -/
@@ -626,7 +610,7 @@ theorem actual_binary_taylor_readout (D : LatticeData) (hu : IsUnit D.G.det)
     (checkpoint gamma delta).1 x phi t
   refine ⟨P, coefficients, ?_⟩
   intro s
-  rw [completeQCoefficient, map_sum]
+  rw [D5.S3.VertexAlgebra.LatticeHalfFockLeftCurrentTransport.qField_mode, map_sum]
   have cutoff : ((K : ℤ) - r).toNat = k + 1 := by omega
   rw [cutoff]
   have residual (ell : ℕ) (member : ell ∈ Finset.range (k + 1)) :

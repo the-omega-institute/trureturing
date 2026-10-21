@@ -210,7 +210,7 @@ private theorem finite_zero_transform
 
 set_option maxHeartbeats 4000000 in
 -- Finite dependent sums retain both orderings and the original source cutoff.
-private theorem inverse_all
+theorem inverse_all
     (D : LatticeData) (hu : IsUnit D.G.det) (i : Fin D.rank) (b : Carrier D)
     (delta r t : ℤ) (x : ActualTensor D hu) (K : ℕ)
     (hK : (vectorFrequencyBound D b + 1 : ℤ) ≤ r + K) :
@@ -527,7 +527,7 @@ private theorem zero_seed
   rw [left, ← forward_seed D hu i b delta r q x K hK, right]
   abel
 
-private theorem positive_ordered_commutators
+theorem positive_ordered_commutators
     (D : LatticeData) (hu : IsUnit D.G.det) (i : Fin D.rank) (b : Carrier D)
     (delta p q : ℤ) (s : ℕ) (x : ActualTensor D hu) :
     (∑ᶠ j : ℕ, currentRightFirstTerm D hu i b delta p q s x j) -
