@@ -306,10 +306,10 @@ private theorem finite_joint_input (Qs : List (Set (Attributes 3))) (K : Int) :
   refine ⟨X, Y, star_pair v p lo hi t t' htv ht'v hlo hhi, h, ?_, ?_, ?_⟩
   · change ((starInput v p lo hi t htv).val.1.archive.attributes
       (eventEquiv (starCode Qs.length) (starExceptional Qs.length))).time = t
-    exact congrArg Attributes.time (star_attributes_eq v p lo hi t htv _) 
+    exact congrArg Attributes.time (star_attributes_eq v p lo hi t htv _)
   · change ((starInput v p lo hi t' ht'v).val.1.archive.attributes
       (eventEquiv (starCode Qs.length) (starExceptional Qs.length))).time = t'
-    exact congrArg Attributes.time (star_attributes_eq v p lo hi t' ht'v _) 
+    exact congrArg Attributes.time (star_attributes_eq v p lo hi t' ht'v _)
   · intro Q hQ hn
     obtain ⟨i, hiQ⟩ := List.mem_iff_get.mp hQ
     have hvQ : v i ∈ Q := hiQ ▸ hv i (hiQ ▸ hn)
