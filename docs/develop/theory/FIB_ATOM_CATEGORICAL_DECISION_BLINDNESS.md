@@ -625,3 +625,261 @@ The same statements hold with $J,J_N$ exchanged. The last inequality follows fro
 The parameter $e_N$ measures input-approximation error relative to the original noisy apparatus. Sending it to zero does not send the observation noise $\sigma$ to zero, remove overlap between the five likelihoods, or drive either Bayes error to zero. The finite attainers in Theorems 7.2–7.3 and the full-support infimum in Proposition 7.4 have no asserted realization by these five Gaussian preparations. The bridge uses only unconditional, externally fixed-word, complete-record laws and one common quantizer; it yields no rare-event or exact-history conditioning bound, adaptive-word statement, trained-network attainment, native-atom encoding, process-dimension bound or physical-resource claim. The mathematical additions are the graph-specific soft-risk region and attainers, their full-support boundary, and their application to the cited preparation/record correspondence. Classical Bayes identities, posterior splitting, gain functions, visible choice and TV control are reused intermediate tools; no worldwide priority claim follows. $\square$
 
 ## 追加锚（本行以下为增补区）
+
+## 8. Fixed a/d overlap and the attained improvement envelope
+
+**定义 8.1（同侧两标签的联合质量重叠）。** Retain the uniform five-label prior, the graph $G$ and the finite-law notation of Definitions 1.1 and 7.1, without imposing (1.3). For the joint table $J(i,q)=\lambda_qv_i(q)$ define
+
+$$
+ o_{ad}(J)=\sum_q\min\{J(a,q),J(d,q)\}
+ =\mathbb E\min\{v_a(Q),v_d(Q)\}.
+\tag{8.1}
+$$
+
+Write $o=o_{ad}(J)$ and $\ell=\ell_G(J)$ when the law is understood. This is the overlap of the two joint-mass rows, each of mass $1/5$, rather than the overlap of two probability rows of mass one. The vertices $a,d$ comprise the smaller bipartition class $L$ of this particular graph. A full-support law has the meaning in Definition 7.1. The finite posterior realization and observed-selector constructions used below are precisely those of Definition 1.1 and Definition 7.1, with their cited posterior-splitting and gain-function tools.
+
+**定理 8.2（固定重叠的精确可行域、下包络与严格正支撑）。** Over all finite joint laws with this uniform prior, the exact feasible overlap/leakage domain is
+
+$$
+ \boxed{0\le o\le\frac15,\qquad o\le\ell\le\frac25+o.}
+\tag{8.2}
+$$
+
+At every pair in (8.2), the minimum total indicator improvement is attained and equals
+
+$$
+ \boxed{\min_{o_{ad}=o,\,\ell_G=\ell}D
+ =\left(\frac15-2\ell+2o\right)_+.}
+\tag{8.3}
+$$
+
+Here $x_+=\max\{0,x\}$. Restricting to finite full-support laws, the exact feasible domain is
+
+$$
+ \boxed{0<o\le\frac15,\qquad o<\ell\le\frac25+o,}
+\tag{8.4}
+$$
+
+and the same minimum (8.3) is attained at every pair in (8.4). Each specified pair admits an attaining finite source with deterministic label and readout maps, at most six active outputs and at most thirty positive-mass states. At a fixed $o\in[0,1/5]$, the full indicator plateau is attainable exactly for
+
+$$
+ \frac1{10}+o\le\ell\le\frac25+o.
+\tag{8.5}
+$$
+
+For every $0<o\le1/5$, all of (8.5), including its lower endpoint, is attainable with full support.
+
+Proof. For a posterior $v$ put
+
+$$
+ h=\min(v_a,v_d),\qquad M=\max(v_a,v_d),\qquad
+ m=\max_i v_i,\qquad s=s_G(v).
+$$
+
+Then $\mathbb Eh=o$, $\mathbb EM=2/5-o$ and $0\le o\le1/5$. Every edge contains one member of $L$ and one member of $R=\{b,c,e\}$. Moreover $b$ is adjacent to both $a$ and $d$. Thus, pointwise,
+
+$$
+ M+v_b\le s\le1-h,\qquad s\le M+m.
+\tag{8.6}
+$$
+
+The middle bound holds because the other member of $L$, omitted by any edge, has mass at least $h$. Averaging the first two bounds gives
+
+$$
+ \frac35-o\le1-\ell\le1-o,
+$$
+
+which proves the necessary strip (8.2). Reusing (2.3), at most one coordinate can exceed $1/2$, so
+
+$$
+ D=\mathbb E(2m-1)_+\ge\max\{0,2\mathbb Em-1\}.
+$$
+
+The last inequality in (8.6) gives $\mathbb Em\ge3/5-\ell+o$. Consequently every law obeys (8.3) as a lower bound. It also gives the necessary categorical-risk inequality
+
+$$
+ \epsilon\le\frac25+\ell-o.
+\tag{8.7}
+$$
+
+For simultaneous feasibility and attainment, first take parameters
+$0\le o\le1/5$ and $0\le u\le1/10$. Use the following four output indices $(l,r)$ and output masses:
+
+$$
+ \begin{array}{c|cccc}
+ (l,r)&(a,c)&(a,e)&(d,b)&(d,e)\\ \hline
+ \lambda_{lr}&1/3&1/6&1/3&1/6.
+ \end{array}
+\tag{8.8}
+$$
+
+For an index $(l,r)$, let $l'$ be the other member of $L$ and prescribe its posterior by
+
+$$
+ v_l=\frac25-o,\qquad v_{l'}=o,\qquad
+ v_r=\frac35-u,\qquad
+ v_j=\frac u2\quad(j\in R\setminus\{r\}).
+\tag{8.9}
+$$
+
+These are nonnegative coordinates summing to one. The output indices select each member of $L$ with total probability $1/2$ and each member of $R$ with total probability $1/3$. Hence the mean mass at either left label is
+$\tfrac12(2/5-o)+\tfrac12o=1/5$, while the mean mass at any right label is
+$\tfrac13(3/5-u)+\tfrac23(u/2)=1/5$. Thus the prior is uniform.
+
+Every designated pair $(l,r)$ is an actual edge of $G$. At each of these posteriors,
+
+$$
+ h=o,\qquad M=\frac25-o,\qquad m=\frac35-u,\qquad
+ s=v_l+v_r=1-o-u.
+$$
+
+Indeed $v_l\ge v_{l'}$, the designated right coordinate is maximal among all five coordinates, and its designated left neighbour realizes the upper bound $s\le M+m$. Call this law $F_{o,u}$. It satisfies
+
+$$
+ (o_{ad},\ell_G,\epsilon,D)(F_{o,u})
+ =\left(o,o+u,\frac25+u,\frac15-2u\right).
+\tag{8.10}
+$$
+
+Its posteriors have full support exactly when $o>0$ and $u>0$. In particular it attains the entire lower branch of (8.3), including $u=0$ and the plateau endpoint $u=1/10$.
+
+For the upper leakage endpoint, take a two-output law $T_o$ with equal output masses and posteriors, in $(a,b,c,d,e)$ order,
+
+$$
+ \left(\frac25-o,\frac15,\frac15,o,\frac15\right),\qquad
+ \left(o,\frac15,\frac15,\frac25-o,\frac15\right).
+\tag{8.11}
+$$
+
+It has the uniform prior, and each posterior has $h=o$, $m=2/5-o$ and $s=3/5-o$: all right coordinates are $1/5$, and either possible maximizing left vertex has a neighbour. Therefore
+
+$$
+ (o_{ad},\ell_G,\epsilon,D)(T_o)
+ =\left(o,\frac25+o,\frac35+o,0\right).
+\tag{8.12}
+$$
+
+This law has full support exactly when $o>0$.
+
+For $o+1/10\le\ell\le o+2/5$, reveal a selector choosing
+$T_o$ with probability
+
+$$
+ \theta=\frac{\ell-o-1/10}{3/10}\in[0,1]
+\tag{8.13}
+$$
+
+and $F_{o,1/10}$ with probability $1-\theta$. More explicitly, give the two disjoint groups of outputs joint masses
+$\theta\lambda_q^{T}v_i^{T}(q)$ and
+$(1-\theta)\lambda_q^{F}v_i^{F}(q)$, respectively, discarding outputs of zero mass. Both component priors are uniform. The observed selector preserves their posteriors, so $o_{ad},\ell_G,D$ are affine in these weights. The resulting law has the prescribed $(o,\ell)$ and $D=0$. This proves attainment throughout (8.2).
+
+For each law just specified, the states $(i,q)$ of positive masses
+$J(i,q)=\lambda_qv_i(q)$, with $C(i,q)=i$ and $Q(i,q)=q$, give the promised deterministic realization. The lower branch uses four outputs; the selector construction uses at most six. This is the finite splitting realization already attributed in Definition 1.1, with the selector included in the supplied finite carrier.
+
+For necessity of (8.4), full support gives $h>0$ at every active output. Every edge also omits two positive right coordinates as well as the other left coordinate, so $s<1-h$. Finite positive-weight averaging gives $o>0$ and $\ell>o$. The other inequalities remain those of (8.2). Conversely, the lower-branch laws are full support whenever $o>0$ and $\ell-o=u>0$; for the remaining part of (8.4), both selector components have full support when $o>0$. This proves the exact full-support domain and attained minimum there. Finally, the individual improvements $1/5-r_i$ are nonnegative, so their sum vanishes exactly on the full indicator plateau. Equations (8.3), (8.10) and (8.13) prove (8.5) and its full-support assertion. $\square$
+
+**推论 8.3（无条件包络与正支撑阈值的细化）。** Minimizing (8.3) over feasible overlaps at a fixed $\ell\in[0,3/5]$ recovers Theorem 7.3:
+
+$$
+ \min_{\ell_G=\ell}D=\left(\frac15-2\ell\right)_+.
+\tag{8.14}
+$$
+
+For prescribed positive overlap, the plateau threshold is the attained value $1/10+o$, including among full-support laws. Over all finite full-support plateau laws the leakage infimum remains $1/10$ and is not attained, as in Proposition 7.4. The classification (8.2)–(8.4) concerns the feasible $(o,\ell)$ projection and the minimum of $D$ above each pair; it supplies neither a complete joint upper boundary for $D$ nor an all-risk region involving the individual $r_i$, $\epsilon$ or $I$.
+
+Proof. At fixed $\ell$, feasible overlaps are
+$\max\{0,\ell-2/5\}\le o\le\min\{1/5,\ell\}$. Since (8.3) is nondecreasing in $o$, its minimum is at the lower endpoint. For $\ell\le2/5$ this gives (8.14) directly; for $\ell>2/5$ both sides of (8.14) vanish. The attainers of Theorem 8.2 give equality. Full support forces $o>0$, so (8.5) forces $\ell>1/10$. Conversely $F_{o,1/10}$ is a full-support plateau law for every $o>0$ and has $\ell=1/10+o\downarrow1/10$ as $o\downarrow0$. $\square$
+
+**假设 8.4（原始共同高斯记录与仅输入投影的配对）。** Retain exactly Assumption 7.6: five supplied original preparations $\rho_{W_i}$ with $W_i\in K_J$, uniform labels, one externally fixed word $w=E_1\cdots E_t$ with $0\le t\le7$, one fixed $\sigma>0$ and one common finite Borel quantizer $\kappa:\mathbb R^{t+1}\to\mathcal Q$. The original states are the preparations (12.3) of [the Gaussian record volume](FIB_SHARED_GAUSSIAN_RECORD_LAWS.md); their normalized input projections are its (13.1). Both use the unchanged complete-record measurement of its Definition 14.1. In the notation of its Theorem 5.1 and Proposition 14.2, set
+
+$$
+ \begin{gathered}
+ \mu_i=L_w\mu(W_i),\qquad
+ \Sigma=\frac12L_wL_w^T+\sigma^2I_{t+1}>0,\\
+ d=\sqrt{(\mu_a-\mu_d)^T\Sigma^{-1}(\mu_a-\mu_d)},\qquad
+ g=\frac25\Phi(-d/2),\\
+ \rho_N=\frac{\sqrt{t_N(W_a)}+\sqrt{t_N(W_d)}}5
+ \le\frac25\delta_N,\qquad
+ \gamma_N=(g-\rho_N)_+.
+ \end{gathered}
+\tag{8.15}
+$$
+
+Here $\Phi$ is the standard normal distribution function, and $t_N,\delta_N$ are the input-tail and uniform input-error quantities of the source's (13.1)–(13.3). The symbol $\rho_N$ in (8.15) is a scalar pairwise error bound, distinct from the input density operators $\rho_{W_i,N}$. The laws $J,J_N$ remain precisely the quantized joint laws (7.10).
+
+**命题 8.5（实际记录重叠与各自平台的必要界）。** Under Assumption 8.4, the original and projected-input laws satisfy
+
+$$
+ \boxed{o_{ad}(J)\ge g,\qquad o_{ad}(J_N)\ge\gamma_N.}
+\tag{8.16}
+$$
+
+In particular, each law separately obeys the necessary risk bounds
+
+$$
+ \begin{aligned}
+ D(J)&\ge\left(\frac15-2\ell_G(J)+2g\right)_+,&
+ \epsilon(J)&\le\frac25+\ell_G(J)-g,\\
+ D(J_N)&\ge\left(\frac15-2\ell_G(J_N)+2\gamma_N\right)_+,&
+ \epsilon(J_N)&\le\frac25+\ell_G(J_N)-\gamma_N.
+ \end{aligned}
+\tag{8.17}
+$$
+
+The inequalities of Theorem 7.2 also continue to apply to each law. A full indicator plateau of $J$ requires
+$\ell_G(J)\ge1/10+g$. A full indicator plateau of $J_N$ requires
+
+$$
+ \ell_G(J_N)\ge\frac1{10}+\gamma_N
+ \ge\frac1{10}+g-\rho_N
+ \ge\frac1{10}+g-\frac25\delta_N.
+\tag{8.18}
+$$
+
+After null bins are discarded, both laws have full support. Hence also
+$\ell_G(J)>o_{ad}(J)\ge g>0$ and
+$\ell_G(J_N)>o_{ad}(J_N)>0$. The plateau conditions above concern the plateau of the named law itself; no plateau implication between $J$ and $J_N$ is assumed. These are necessary conditions for the prescribed preparation families. The finite-law equality constructions in Theorem 8.2 assert no attainment within those families, native atom-to-preparation encoding, neural-training outcome or empirical conclusion. The projected-input law need not be Gaussian.
+
+Proof. The original five complete-record laws are
+$\nu_i=\mathcal N_{t+1}(\mu_i,\Sigma)$, with the same $\Sigma$ for every label. Use the classical equal-covariance total-variation identity stated by Devroye–Mehrabian–Reddad, [*The total variation distance between high-dimensional Gaussians*, arXiv:1810.08693v7, §2, equal-covariance passage](https://arxiv.org/html/1810.08693v7#S2), there attributed to Barsov–Ul’yanov, Theorem 1:
+
+$$
+ \operatorname{TV}(\nu_a,\nu_d)=2\Phi(d/2)-1,
+ \qquad
+ \int\min\{p_a(z),p_d(z)\}\,dz=2\Phi(-d/2).
+\tag{8.19}
+$$
+
+This is a reused Gaussian identity, with the TV convention of Proposition 7.5. The functions $p_a,p_d$ here are complete-record densities, rather than label-prior coordinates. If $B_q=\kappa^{-1}(q)$, then
+
+$$
+ \begin{aligned}
+ o_{ad}(J)
+ &=\frac15\sum_q\min\left\{\int_{B_q}p_a,\int_{B_q}p_d\right\}\\
+ &\ge\frac15\sum_q\int_{B_q}\min\{p_a,p_d\}
+ =\frac25\Phi(-d/2)=g.
+ \end{aligned}
+$$
+
+Thus a common quantizer can increase the row overlap; equality is not asserted for an arbitrary quantizer.
+
+For the projection bound, write $K_i=\kappa_*\nu_w(W_i)$ and
+$K_{i,N}=\kappa_*\nu_{w,N}(W_i)$, which are probability laws on the same finite alphabet. Since $\sum_q\min\{P(q),Q(q)\}=1-\operatorname{TV}(P,Q)$ for probability rows,
+
+$$
+ \begin{aligned}
+ |o_{ad}(J_N)-o_{ad}(J)|
+ &=\frac15\left|\operatorname{TV}(K_a,K_d)
+       -\operatorname{TV}(K_{a,N},K_{d,N})\right|\\
+ &\le\frac15\bigl(\operatorname{TV}(K_a,K_{a,N})
+                    +\operatorname{TV}(K_d,K_{d,N})\bigr)\\
+ &\le\frac{\sqrt{t_N(W_a)}+\sqrt{t_N(W_d)}}5=\rho_N.
+ \end{aligned}
+\tag{8.20}
+$$
+
+The first inequality is the TV triangle inequality in both directions. The second uses contraction under the common quantizer and [the Gaussian record volume, Proposition 14.2](FIB_SHARED_GAUSSIAN_RECORD_LAWS.md). Only the two indicated preparations enter this estimate. Combining it with the original overlap bound and nonnegativity proves (8.16). Apply (8.3) and (8.7) directly to each finite law to obtain (8.17). Setting its own $D$ equal to zero proves the corresponding plateau condition and (8.18).
+
+Proposition 7.7 proves full support for both laws from the positive original Gaussian densities and the positive Gaussian-pointer convolution (7.14) for projected inputs. The strict overlap/leakage statements now follow from (8.4); $g>0$ follows because $d$ is finite. This use of the projected law requires no Gaussianity of that law. The limit $\rho_N\to0$ holds at fixed original apparatus noise $\sigma>0$ and with the same complete fixed-word measurement; it approximates only the initial inputs. It does not remove that observation noise or identify a finite equality construction with a preparation in this family. All statements concern unconditional externally fixed-word laws and their common quantized images. $\square$
+
+## 追加锚（本行以下为增补区）

@@ -1,0 +1,13 @@
+fingerprints:
+  raw_sha256: sha256:bb60ff34725140a0b23d2ff1b102ad85d241d3e98e6e9ee1742873e99c1260e3
+  normalized_sha256: sha256:bb60ff34725140a0b23d2ff1b102ad85d241d3e98e6e9ee1742873e99c1260e3
+cas_ref: sha256:bb60ff34725140a0b23d2ff1b102ad85d241d3e98e6e9ee1742873e99c1260e3
+coverage_gids:
+  - gid: D5/S1/Recurrence/GoldenFibDivisibility.fib_dvd_iff
+    target_statement_id: sha256:355076a74b13f4f9113502f4e965b7f78b429f8d2165d24eb8a4062a12392561
+  - gid: D5/S1/Scale/Fibonacci.fib_cassini_from_golden_norm
+    target_statement_id: sha256:705efb41c8ed2d7be8efa40e9fd10e4fde55225d9335e386144b0f6c5c0d04d2
+  - gid: D5/S3/Arith/Primes/FibonacciFiveAdicDepth.fibonacci_five_adic_depth
+    target_statement_id: sha256:8991ee39c841b80438fe71589499ba55e5ee0c001c9c97d4cc8af0a5846bea27
+receipts:
+  unresolved_subitems: []
