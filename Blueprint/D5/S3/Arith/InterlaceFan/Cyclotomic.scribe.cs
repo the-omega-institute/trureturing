@@ -23,12 +23,12 @@ internal sealed class CyclotomicDocument : IScribeDocumentDefinition
                 DeclarationHandle.Create("D5/S3/Arith/InterlaceFan/Cyclotomic.rational_const_on_orderClass"),
                 H("Rational values propagate through an order class"), StatementSource.WithoutFormula(),
                 AssessedProvenance.FromRepo(),
-                Blocks(Paragraph(Text("For rational coordinates and a positive darga n, a rational certificate value at one primitive d-th root is the same at every certificate root of order d, where d divides n. The rational coefficient polynomial minus the rational value has the d-th cyclotomic polynomial as a divisor, because that polynomial is the minimal polynomial of a primitive d-th root."))),
+                Blocks(Paragraph(Text("For rational coordinates and a positive darga n, a rational certificate value at one primitive d-th root is the same at every certificate root of order d, where d divides n. Multiplying the certificate value by minus two gives the rational polynomial value. Subtracting that constant gives a polynomial divisible by the d-th cyclotomic polynomial, the minimal polynomial of a primitive d-th root."))),
                 DescribeRole.Theorem),
             Describe.Lean(DescribeId.Create("interlace-rational-witness"),
                 DeclarationHandle.Create("D5/S3/Arith/InterlaceFan/Cyclotomic.rational_witness"),
                 H("Rational coordinates realizing an order indicator"), StatementSource.WithoutFormula(),
                 AssessedProvenance.FromRepo(),
-                Blocks(Paragraph(Text("For every divisor d of n with n at least two, rational sigma coordinates realize the values minus one half of n times the order-class indicator minus the totient of d. The coordinates are Ramanujan sums, with the middle coordinate halved when n is even. The public divisor-sum identity proves integrality by induction on the modulus. Finite geometric sums then give the full Fourier transform: n on primitive roots of order d and zero elsewhere. Removing the constant coefficient subtracts the totient of d. Coefficient reconstruction pairs reciprocal exponents and accounts for the doubled middle monomial."))),
+                Blocks(Paragraph(Text("For every divisor d of n with n at least two, rational sigma coordinates realize the values obtained by subtracting n times the order-class indicator from the totient of d and dividing by two. The coordinates are Ramanujan sums, with the middle coordinate halved when n is even. The public divisor-sum identity proves integrality by induction on the modulus. Finite geometric sums then give the full Fourier transform: n on primitive roots of order d and zero elsewhere. Removing the constant coefficient subtracts the totient of d. Coefficient reconstruction pairs reciprocal exponents and accounts for the doubled middle monomial."))),
                 DescribeRole.Theorem))));
 }
