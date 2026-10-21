@@ -104,7 +104,7 @@ internal sealed class TraceNormDiscordMutualCorrelationBoundDocument : IScribeDo
                             + "= max(|a|, |b|) ≤ C_M(ρ)."))),
                 DescribeRole.Theorem,
                 openProblemResolutionClaim: new OpenProblemResolutionClaim(
-                    ProblemSlugRef.Create("gwozdz-jakobczyk-2013-geometric-discord-mutual-correlation-bound"),
+                    ProblemSlugRef.Create("jakobczyk-2016-trace-norm-discord-mutual-correlation-bound"),
                     ResolutionKind.Proved))
         )));
 

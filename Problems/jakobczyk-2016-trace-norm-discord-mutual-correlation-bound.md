@@ -1,64 +1,67 @@
 ---
-slug: gwozdz-jakobczyk-2013-geometric-discord-mutual-correlation-bound
-bibkey: gwozdz2014discordspontaneous
-doi: 10.1007/s11128-013-0639-0
-url: https://arxiv.org/abs/1306.0130v2
+slug: jakobczyk-2016-trace-norm-discord-mutual-correlation-bound
+bibkey: jakobczyk2016maximalmutual
+doi: null
+url: https://arxiv.org/abs/1607.06585v1
 triage: theorem
 motivation_gids:
-  - D5/S3/Quantum/Information/GeometricDiscordMutualCorrelationBound.result
+  - D5/S3/Quantum/Information/TraceNormDiscordMutualCorrelationBound.result
 ---
 
-# Maximal mutual correlation dominates the square root of geometric discord for all two-qubit states
+# Maximal mutual correlation dominates the trace-norm geometric discord of two qubits
 
 ## Problem
 
-M. Gwóźdź and L. Jakóbczyk, *Spontaneous emission can locally create quantum discord out of classical correlations*, arXiv:1306.0130v2, Quantum Inf. Process. 13 (2014) 171–183, Section II:
+L. Jakóbczyk, *Maximal mutual correlation: an algebraic measure of correlations in bipartite quantum systems*, arXiv:1607.06585v1, abstract:
 
-> C_{M}(\ro)\geq \sqrt{D_{G}^{A}(\ro)}\geq N(\ro).
+> In the  states containing some quantum correlations, maximal mutual correlation is always greater or equal to geometric measure of quantum discord. This relation is proved to be valid in the class of Bell - diagonal states and it is conjectured that  is also true for general two - qubit states.
 
-> The second inequality was shown in Ref. \cite{Adesso} whereas the first one can be proved analytically for Bell-diagonal states and numerical simulations suggest that it is valid for all mixed two-qubit states \cite{J}.
+The quantities are defined as follows:
+- **Trace-norm geometric discord:** D₁(ρ) = min over projective measurements 𝒫 on A of ‖ρ − 𝒫(ρ)‖₁, where 𝒫(ρ) = Σ_k (P_k ⊗ I) ρ (P_k ⊗ I).
+- **Maximal mutual correlation:** C_M(ρ) is the supremum of |ω(ab) − ω(a)ω(b)| over local a, b of operator norm 1.
 
-D_G^A is the normalized one-sided geometric discord, d/(d − 1) times the least squared Hilbert–Schmidt distance between ρ and its image under a projective measurement of A. C_M is the maximal mutual correlation, the supremum of |ω_ρ(ab) − ω_ρ(a) ω_ρ(b)| over local elements of norm 1. Both definitions are quoted in [the literature note](../Library/QuantumContext/gwozdz2014discordspontaneous.md).
+The definitions are quoted in [the literature note](../Library/QuantumContext/jakobczyk2016maximalmutual.md); C_M is the quantity of the companion settlement `D5/S3/Quantum/Information/GeometricDiscordMutualCorrelationBound`.
 
-Issue [#19704](https://github.com/the-omega-institute/trureturing/issues/19704) fixes the reading: for every two-qubit density matrix ρ, √(D_G^A(ρ)) ≤ C_M(ρ). The conjecture is proved.
+Issue [#19706](https://github.com/the-omega-institute/trureturing/issues/19706) fixes the reading: for every two-qubit density matrix ρ, D₁(ρ) ≤ C_M(ρ). This is proved.
 
 ## Motivation
 
-The source uses C_M as a measure of total correlations and D_G^A as a measure of quantum correlations. The first inequality states that C_M sees at least as much as the geometric discord, which the source proves for Bell-diagonal states and supports numerically otherwise. For pure states the three quantities C_M, √D_G^A and the negativity N agree.
+The source proposes C_M as an algebraic measure of correlations. It argues that C_M bounds quantum discord from above, so that discord is the quantum part of the correlations that C_M measures. The companion question for the Hilbert–Schmidt discord, √D_G ≤ C_M, was settled in the repository by #19777. The source uses the trace-norm discord D₁ as its discord measure.
 
 ## Gap
 
-The literature check before any Lean is recorded in #19704:
-- arXiv:1306.0130 has v1 and v2, and v2 keeps the statement;
-- Ref. [23] appeared as arXiv:1607.06585, which treats the trace-norm discord D₁ and leaves its own comparison as a conjecture, recorded as #19706;
-- the search seat reports that the citing works and related papers, including arXiv:1902.07297, give no settlement;
+The literature check before any Lean is recorded in #19706:
+- arXiv:1607.06585 has only v1;
+- OpenAlex and INSPIRE list no citing work;
+- Crossref finds no journal version;
+- the related works checked for the companion (#19704), including arXiv:1902.07297, do not compare D₁ with C_M;
 - the repository had no record.
 
 `not-found-in-searched-scope`.
 
 ## Route
 
-Write x_i = tr(ρ σ_i ⊗ I), y_j = tr(ρ I ⊗ σ_j), T_ij = tr(ρ σ_i ⊗ σ_j) and Q = T − x yᵀ.
-1. **Measurement disturbance.** Measure A along a unit u parallel to x (any u if x = 0), and let P = I − uuᵀ. The measurement keeps the components of the Bloch expansion along u and removes the others. The disturbance is δ = ¼ Σ_ij (PT)_ij σ_i ⊗ σ_j, so ‖δ‖₂² = ‖PT‖_F²/4. Since Px = 0, PT = PQ.
-2. **Discord bound.** D_G^A(ρ) ≤ 2‖δ‖₂² = ‖PQ‖_F²/2 = (‖Qᵀv‖² + ‖Qᵀw‖²)/2 for an orthonormal completion u, v, w.
-3. **Correlation witnesses.** For real unit vectors c and d, the operators c·σ and d·σ have operator norm 1, and the covariance of c·σ ⊗ I and I ⊗ d·σ is cᵀ Q d. Hence C_M ≥ ‖Qᵀv‖ and C_M ≥ ‖Qᵀw‖.
-4. **Conclusion.** D_G^A(ρ) ≤ C_M(ρ)², and both sides are nonnegative.
+Write x for the Bloch vector of A, T for the correlation matrix, and Q = T − x yᵀ for the connected correlation matrix.
+1. **Measurement.** Measure A along a unit u ∥ x (any u if x = 0). The disturbance δ = ρ − 𝒫(ρ) equals ¼ Σ_ij (PQ)_ij σ_i ⊗ σ_j with P = I − uuᵀ.
+2. **Rotation in the plane.** Rotate an orthonormal pair (v, w) of u^⊥ so that a = Qᵀv′ and b = Qᵀw′ are orthogonal. Then δ = ¼ ((v′·σ) ⊗ (a·σ) + (w′·σ) ⊗ (b·σ)).
+3. **The two terms.** They commute, and their squares are |a|² I and |b|² I.
+4. **Trace norm.** The positive square root of δ² is explicit, so ‖δ‖₁ = max(|a|, |b|).
+5. **Comparison.** For unit c = v′ and d = a/|a|, the covariance of c·σ ⊗ I and I ⊗ d·σ is |a|, and likewise for b. Hence C_M ≥ max(|a|, |b|) ≥ D₁.
 
 ## Falsifier
 
-The proof would not settle the conjecture if the module's quantities differed from the source's. The module:
-- takes the minimum over all projective measurements of A, parametrized by the unitary basis U, with the normalization d/(d − 1) = 2 and ‖m‖₂² = tr(m m*);
-- takes the supremum over all 2×2 complex matrices a, b of operator norm 1, placed as a ⊗ I and I ⊗ b;
-- quantifies over every positive semidefinite trace-one 4×4 matrix.
+The proof would not settle the conjecture if the module's D₁ or C_M differed from the source's. The module:
+- takes D₁ as the infimum over all orthonormal bases of ℂ² (the columns of U ∈ U(2)) of the trace norm of ρ − 𝒫_U(ρ), with the source's 𝒫;
+- uses the companion settlement's C_M, a supremum over 2 × 2 local operators of operator norm 1;
+- quantifies over all positive semidefinite ρ of trace one.
 
 ## Evidence
 
-The canonical source is `D5/S3/Quantum/Information/GeometricDiscordMutualCorrelationBound.lean` (402 lines).
+The canonical source is `D5/S3/Quantum/Information/TraceNormDiscordMutualCorrelationBound.lean` (402 lines).
 - **Proof.** It proves `result : claim`.
 - **Axioms.** It uses only the standard axioms `propext`, `Classical.choice` and `Quot.sound`; no `sorry`, `native_decide`, or new axiom.
-- **Registration.** The §3.9 registration is `Reg/D5/S3/Quantum/Information/GeometricDiscordMutualCorrelationBound.lean`.
 
-Frozen state: `Golden/Frozen/state/D5/S3/Quantum/Information/GeometricDiscordMutualCorrelationBound.lean.json`, statement `sha256:92f535fc5d24c7b228aefc6c01ef7322b89781ae802add6fade1950e590e3ebf`.
+Frozen state: `Golden/Frozen/state/D5/S3/Quantum/Information/TraceNormDiscordMutualCorrelationBound.lean.json`, statement `sha256:92f535fc5d24c7b228aefc6c01ef7322b89781ae802add6fade1950e590e3ebf`.
 
 Declaration statements:
 - `result`: `sha256:263ca98fe1592e8d4936e677d43e6e9a5f29b83f13287e35bfa2b54d9c345bc9`;
@@ -66,24 +69,24 @@ Declaration statements:
 
 ## Triage
 
-Tier 1 conjecture of a 2013 paper, preregistered in issue #19704 before any Lean.
+Tier 1 conjecture of a 2016 paper, preregistered in issue #19706 before any Lean.
 `theorem`; resolution `proved`.
 
-The module is admitted under the open-problem-resolution basis of CLAUDE.md §3.2; the per-declaration proof shapes are listed in the delivery PR. `utility: none`. There is no digestion atom.
+The module is admitted under the open-problem-resolution basis of CLAUDE.md §3.2; the per-declaration proof shapes are listed in the delivery PR. There is no digestion atom.
 
 ### What the settlement shows
 
-**Proved by `result`:** for every two-qubit density matrix ρ, √(D_G^A(ρ)) ≤ C_M(ρ).
+**Proved by `result`:** for every two-qubit density matrix ρ, D₁(ρ) ≤ C_M(ρ).
 
-**Computed, not formalized** (orchestrator, numpy, recorded in #19704): over 3000 random states of ranks 1–4, the least value of ‖Q‖² − D_G^A is −8.3·10⁻¹⁶, roundoff at equality.
+**Computed, not formalized** (orchestrator, numpy, recorded in #19706):
+- over 2000 random states of ranks 1–4, the trace norm of the disturbance along u equals the largest singular value of PQ to 5.6·10⁻¹⁶;
+- with 60 sampled further directions, the smallest value found never exceeds ‖Q‖_op.
 
 **Argued, not formalized.**
-- *Mechanism.* Measuring A along its own Bloch vector leaves only the part of the correlation tensor orthogonal to x. That part is the correlation matrix Q with its x-direction removed, so its two remaining singular directions are each witnessed by a pair of spin observables.
-- *Sharpness.* Equality holds for pure states, where the source shows C_M = √D_G^A, and whenever the two singular values of PQ coincide with ‖Q‖.
-- *Trace norm.* The same measurement gives ‖ρ − 𝒫(ρ)‖₁ = s_max(PQ) numerically, which would settle the trace-norm comparison D₁ ≤ C_M of arXiv:1607.06585; that is the separate preregistration #19706.
-
-**Effect on the paper.** The first inequality of (II.23) holds for all two-qubit states, so C_M bounds both √D_G^A and, by the source's second inequality, the negativity.
+- *Mechanism.* After the measurement along the Bloch vector of A, the disturbance is a sum of two commuting local Pauli products. Its trace norm is therefore the larger of their two weights, and each weight is witnessed in C_M by one pair of local spin observables.
+- *Comparison with the Hilbert–Schmidt case.* The Hilbert–Schmidt version (#19777) bounds D_G by half the sum of the two squared weights, each at most C_M². The trace-norm version keeps only the larger weight, so the same witnesses give the bound without the square root.
+- *Effect on the paper.* The inequality C_M ≥ D₁, which the source proves for Bell-diagonal states, holds for all two-qubit states.
 
 ## ASSUMED-UNVERIFIED
 
-The bounded literature check does not establish exhaustive worldwide novelty or priority. The published journal text was not read; the quotations are from arXiv v2. The statements in "Computed, not formalized" and "Argued, not formalized" are not formalized.
+The bounded literature check does not establish exhaustive worldwide novelty or priority. The statements in "Computed, not formalized" and "Argued, not formalized" are not formalized.

@@ -36,9 +36,9 @@ $$\operatorname{claim}$$
 
 *Proof.* Machine-checked in Lean as `D5/S3/Quantum/Information/TraceNormDiscordMutualCorrelationBound.result` (`✓ std3`). ∎
 
-*Resolves.* `Problems/gwozdz-jakobczyk-2013-geometric-discord-mutual-correlation-bound` (proved) by `D5/S3/Quantum/Information/TraceNormDiscordMutualCorrelationBound.result`.
+*Resolves.* `Problems/jakobczyk-2016-trace-norm-discord-mutual-correlation-bound` (proved) by `D5/S3/Quantum/Information/TraceNormDiscordMutualCorrelationBound.result`.
 
-<!-- scribe-open-problem-resolution-v1 {"problem_slug":"gwozdz-jakobczyk-2013-geometric-discord-mutual-correlation-bound","declaration_gid":"D5/S3/Quantum/Information/TraceNormDiscordMutualCorrelationBound.result","resolution_kind":"proved"} -->
+<!-- scribe-open-problem-resolution-v1 {"problem_slug":"jakobczyk-2016-trace-norm-discord-mutual-correlation-bound","declaration_gid":"D5/S3/Quantum/Information/TraceNormDiscordMutualCorrelationBound.result","resolution_kind":"proved"} -->
 
 *Source.* Repository-derived.
 
