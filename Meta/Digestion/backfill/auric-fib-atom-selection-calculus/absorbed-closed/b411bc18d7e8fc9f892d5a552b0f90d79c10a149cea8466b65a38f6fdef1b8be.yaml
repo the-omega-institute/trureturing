@@ -1,0 +1,13 @@
+fingerprints:
+  raw_sha256: sha256:b411bc18d7e8fc9f892d5a552b0f90d79c10a149cea8466b65a38f6fdef1b8be
+  normalized_sha256: sha256:b411bc18d7e8fc9f892d5a552b0f90d79c10a149cea8466b65a38f6fdef1b8be
+cas_ref: sha256:b411bc18d7e8fc9f892d5a552b0f90d79c10a149cea8466b65a38f6fdef1b8be
+coverage_gids:
+  - gid: D5/S1/Words/AdmissibleWords/PathStableSetPolytope.convexHull_three_pyramid
+    target_statement_id: sha256:cb8453432b773cbb3f2a94a0877e8c4351c6c0b9a00b22f2129c58922ce7f4f5
+  - gid: D5/S3/Arith/FibonacciAtomic/LiteralWindowEnd.bits
+    target_statement_id: sha256:182ffa96cb7ebe707b3cd97b36541208e571ea395392c1e1440b2ef7a90c43ed
+  - gid: D5/S3/Combinatorics/ConstraintRelations/BooleanNullBoundary.a_window_iff
+    target_statement_id: sha256:f3c106f6b2c38122875eed6760156768b1bd7cd96bc5e9906780bb2d85d54955
+receipts:
+  unresolved_subitems: []
