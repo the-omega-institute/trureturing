@@ -50,6 +50,12 @@ internal sealed class IntegerStrongOrderingDocument : IScribeDocumentDefinition
                         + "simultaneous recursion absent among the inspected formal "
                         + "suppliers. It does not solve the arbitrary abelian-group or "
                         + "integral-primitive target, and implements no ordered-kernel "
-                        + "extension."))),
+                        + "extension.")),
+                    Paragraph(Text("The escape registration remains unfinished "
+                        + "(declared_unresolved, source-equivalence): forbidden_dependency "
+                        + "under source.unsafe_or_external at Nat.pow. The faithful Reg "
+                        + "family proofs compile, but an accepted source-binding "
+                        + "certificate is missing. See "
+                        + "https://github.com/the-omega-institute/trureturing/issues/20106."))),
                 DescribeRole.Theorem))));
 }

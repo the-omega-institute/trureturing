@@ -22,6 +22,8 @@ The final word is reverse(p) followed by map neg n. Positive-prefix strictness h
 
 This formalizes Kravitz, Theorem 1.3 and Remark (1), arXiv:2407.01835v2, pages 2-3. Kravitz credits a similar route to Sawin's 2015 MathOverflow contribution. The result is known mathematics. The retained construction supplies an unbounded simultaneous recursion absent among the inspected formal suppliers. It does not solve the arbitrary abelian-group or integral-primitive target, and implements no ordered-kernel extension.
 
+The escape registration remains unfinished (declared_unresolved, source-equivalence): forbidden_dependency under source.unsafe_or_external at Nat.pow. The faithful Reg family proofs compile, but an accepted source-binding certificate is missing. See https://github.com/the-omega-institute/trureturing/issues/20106.
+
 ## References
 
 - Truth anchor: `D5/S1/Words/Sequenceability/IntegerStrongOrdering.exists_integer_strong_ordering`
