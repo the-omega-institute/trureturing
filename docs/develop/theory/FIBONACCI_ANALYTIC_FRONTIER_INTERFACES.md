@@ -1885,3 +1885,233 @@ $$
 相近的既有 mollified second-moment 方法仍按其范围复用。[David–de Faveri–Dunn–Stucky v3，§1.2 的（1.8）、（1.26）—（1.27）](https://arxiv.org/html/2410.03048v3)处理平方自由三次字符的 central $L$-值及其 mollifier；其 power-saving asymptotic 使用 $M\ll X^{1/6-\delta}$。它不直接给出本条六次字符原 annular $\mu$／plain 向量在 $D=N\asymp\sqrt U$ 时的完整联合界，不能把不同阶数、central-value 来源及长度条件删去。这里新增的是上述原向量的完整组合消费，所用分箱、次幂逆界及 plain 四矩本身都是既有输入。
 
 ## 追加锚（本行以下为增补区）
+
+## 460. 全部六次幂自由标记的原卷积投影预算
+
+**定理 460.1（保留六次幂重叠的共同投影）。** 沿用 [G7、H1—H5](../../../Library/Analytic/faveri2026fixedorder.md#actual-gauss-compression-on-all-original-column-packets) 的实际 Gauss 行族、固定坏素集合 $S$、乘法 primary 约定、全部有限 ray sections、相位及零掩码。取原不拆分列向量
+
+$$
+b(h)=\omega_j(h)\sum_{dn=h}\mu(d)V(q_d/D)W(q_n/N),
+\qquad K=DN,
+\tag{460.1}
+$$
+
+其中 $h$ 不限重数，也不要求 $(d,n)=1$。负 orientation 同时共轭整个族。令 $D,N\ge1$、$L\ge1$、$2L\le D$，并固定 $0<\bar\varkappa<1/3$ 使 $L\le U^{1/3-\bar\varkappa}$。精确定义 $\mathcal L_L=\{R:R\text{ good、sixth-power-free},\ q_R\le L\}$；$V_L$ 的列为 G7 的实际 $v_R$，$G_L=V_L^*V_L$，$P_L=V_LG_L^{-1}V_L^*$。行算子 $A$ 保留原 good sixth-power-free 行和全部列；$v_R$ 在非平方自由行上为零。
+
+定义实际极点矩阵和二次型
+
+$$
+\begin{aligned}
+\mathsf W_L(h,R)&=U^{1/6}\widehat\Omega(2/3)
+ \rho_{\mathrm{prim},\nu_{[h]};S}(hR),\\
+Q_{\rho,L}(b)&=(\mathsf W_L^*b)^*G_L^{-1}(\mathsf W_L^*b).
+\end{aligned}
+\tag{460.2}
+$$
+
+假设 H5 的固定形式输入、H6 的同一 $B_0=7/8$ 固定字符 inverse-$L$ 输入以及 [primitive-mean 原稿 v2，§7、Corollary 5](https://rstation.ai/api/v1/papers/riemann_hypothesis_10/versions/2/download) 的输入成立。共同包络 $\mathcal N\ge1$ 包含这些固定有限族的常数、所需有限阶 profile seminorms、原固定 twists、共同 Mellin 分离变换及 reciprocal-strip 成本，并覆盖实际推导中这些费用的有限乘积和，不按标签或除数重新选择。则对充分大的原尺度和任意最终 $\varepsilon>0$，
+
+$$
+\begin{aligned}
+Q_{\rho,L}(b)\ll_\varepsilon{}&
+\mathcal N^2(UKL)^\varepsilon U^{1/3}
+\left(K^{5/3}D^{-1/4}L^{2/3}
+      +K^{2/3}D^2L^{5/3}\right),\\
+\|P_LAb\|_2^2\ll_\varepsilon{}&
+\mathcal N^2(UKL)^\varepsilon
+\left\{U^{1/3}
+\left(K^{5/3}D^{-1/4}L^{2/3}
+      +K^{2/3}D^2L^{5/3}\right)+K^2L^{3/2}\right\}.
+\end{aligned}
+\tag{460.3}
+$$
+
+这是一条 `repo-derived` 的原系数组合估计。H5、极点留数的六次幂周期律、primitive density、共同 Gram 条件与原 unrestricted adjoint 直接复用；不将它们另立为新结果。新增消费覆盖全部 $\mathcal L_L$，包括 $v_p(R)=5$ 且 $p\mid d$ 的分支。
+
+证明。对每个 $R$ 定义原 coherent 配对
+
+$$
+T_R=\sum_h b(h)
+ \overline{\rho_{\mathrm{prim},\nu_{[h]};S}(Rh)}.
+\tag{460.4}
+$$
+
+在 H2 中把 $p^{-1}\bmod B$ 换成 $R^{-1}\bmod B$，所有 original masks 仍包含于固定函数 $\phi_{R,j,\tau}$。$R$ 与固定 $B$ 互素，故这仍只置换同一个固定有限函数族，没有 growing conductor。对 $m=Rdn$ 使用 H3 的完全相同原配对及共同 Mellin 分离。其总 norm 尺度为 $Y=q_RK$；分离后外变量只有原 $d$ 的 smooth profile，内部是 $R d\mid m$ 的 H5 型和。原有限因子若需要 character 分解，仍属于 H6 的同一固定族。
+
+先处理 H5 不能直接覆盖的六次幂指数。以下只在极点留数上使用 [averaged Type-I 原稿 v1，（2.6）、（3.3）](https://rstation.ai/api/v1/papers/riemann_hypothesis_8/versions/1/download) 及 H4 的固定额外排除版本：
+
+$$
+\rho_{\mathrm{full},\tau;S}(c^6m)
+=\rho_{\mathrm{full},\tau;S}(m),\qquad
+\rho_{\mathrm{prim},\tau;S}(m)=w_S(m)
+ \rho_{\mathrm{full},\tau;S}(m),\qquad
+w_S(m)=\prod_{p\mid m}\frac{q_p}{q_p+1}.
+\tag{460.5}
+$$
+
+对 good squarefree $c$，两式直接给出精确有限密度展开
+
+$$
+\rho_{\mathrm{prim},\tau;S}(c^6m)
+=w_S(c)\sum_{k\mid c}\frac{\mathbf1_{k\mid m}}{q_k}
+ \rho_{\mathrm{prim},\tau;S}(m).
+\tag{460.6}
+$$
+
+确实，每个 $p\mid c$ 的乘子在 $p\nmid m$ 时为 $q_p/(q_p+1)$，在 $p\mid m$ 时为 $1$。这里没有对离开极点的 primitive 或 full series 使用周期律，也没有删去 principal sixth-power 项。
+
+若 $a=a_0c^6$，其中 $a_0$ sixth-power-free、$c$ squarefree 且 $(a_0,c)=1$，置 $Y'=Y/q_c^6$、$\phi_c(m)=\phi(c^6m)$。由（460.6），原 progression 和恰为
+
+$$
+w_S(c)\sum_{k\mid c}\frac1{q_k}
+\sum_{a_0k\mid m}\phi_c(m)\rho_{\mathrm{prim},\tau;S}(m)
+ \mathcal W(q_m/Y').
+\tag{460.7}
+$$
+
+每一个 $a_0k$ 仍 sixth-power-free，可直接应用 H5；$\phi_c$ 仍只属于固定模 $B$ 上的有限函数族。记 H5 的主项常数为 $C_{\tau,Q,\phi_c}$，保留它对 $c\bmod B$ 的依赖。因 $v$ 在平方自由理想上乘法，且
+
+$$
+\frac{q_p}{q_p+1}\left(1+\frac{v(p)}{q_p^2}\right)=v(p),
+\qquad
+w_S(c)\sum_{k\mid c}\frac1{q_k}=1,
+\tag{460.8}
+$$
+
+（460.7）的主项与误差分别是
+
+$$
+\begin{aligned}
+&C_{\tau,Q,\phi_c}Z_S Y^{5/6}\widehat{\mathcal W}(5/6)
+ \frac{q_c\,v(\operatorname{rad}a)}{q_a},\\
+&O_\varepsilon\left((Yq_a)^\varepsilon
+ Y^{1/3}q_c^{-2}\right).
+\end{aligned}
+\tag{460.9}
+$$
+
+此处 $Y'\ge1$ 的条件在下述应用中成立。与把 $a$ 当成 sixth-power-free 的错误代入相比，主项保留了必要的 $q_c$ 增益。
+
+现在按同一个原 Möbius 变量分解
+
+$$
+\begin{aligned}
+g&=(d,\operatorname{rad}R),&d&=ge,&(e,R)&=1,\\
+R_5&=\prod_{v_p(R)=5}p,&c&=(g,R_5),&
+a_0&=(Rg/c^6)e.
+\end{aligned}
+\tag{460.10}
+$$
+
+Möbius support 保证 $g,e$ 平方自由且互素。$Rd=a_0c^6$，$a_0$ 的每个指数至多为5，且 $(a_0,c)=1$，所以（460.9）包含每一个重叠。由 $q_c^5\le q_R\le L$ 及 $K\ge D\ge2L$，有 $Y'=q_RK/q_c^6\ge K/L^{1/5}\ge1$。不约化原 $h$ 的估值，也不改变其列掩码。
+
+固定 $R,g$ 后，主项常数及 $c$ 都与 $e$ 无关。只对实际 $e\asymp D/q_g$ 的 Möbius 和使用 H6 原固定字符输入：
+
+$$
+\sum_{(e,RS)=1}\frac{\mu(e)v(e)\xi(e)}{q_e}
+ V_*(q_e/(D/q_g))
+\ll\mathcal N(D/q_g)^{-1/8+\varepsilon}q_R^\varepsilon.
+\tag{460.11}
+$$
+
+新增的算术删除只是原固定字符 Euler product 中 $p\mid R$ 的因子，其正向及倒数在 $B_0+\varepsilon$ 线上均为 $q_R^\varepsilon$ 成本；不把它当作 changing ray level。所需 $v(p)=1+O(q_p^{-1})$ 的 Euler 修正与 H6 相同。共同 Mellin 分离后仍使用这份同一包络。
+
+（460.9）的误差在每个 $g$ 分支至多有 $O(D/q_g)$ 个 $e$。因此完整 coherent 和满足
+
+$$
+\begin{aligned}
+|T_R|\ll{}&\mathcal N(Kq_R)^\varepsilon\left\{
+K^{5/6}D^{-1/8}q_R^{-1/6}
+ \sum_{g\mid\operatorname{rad}R}\frac{q_{(g,R_5)}}{q_g^{7/8}}
+ +K^{1/3}Dq_R^{1/3}
+ \sum_{g\mid\operatorname{rad}R}
+  \frac1{q_gq_{(g,R_5)}^2}\right\}\\
+\ll{}&\mathcal N(Kq_R)^\varepsilon
+\left(K^{5/6}D^{-1/8}q_R^{-1/6}q_{R_5}^{1/8}
+      +K^{1/3}Dq_R^{1/3}\right).
+\end{aligned}
+\tag{460.12}
+$$
+
+最后一步逐素使用 $1+q_p^{-7/8}$，而 $p\mid R_5$ 时使用 $1+q_p^{1/8}$；剩余有限除数乘积由次幂界支付。六次幂主项的增益没有在除数和中被丢弃。
+
+在平方之前已对原 $h$ 作 coherent 求和。随后只需正标签和。写 $R=R_0s^5$，$s=R_5$，放宽互素及 fifth-power-free 限制以取得上界。固定域的理想计数给出
+
+$$
+\begin{aligned}
+\sum_{R\in\mathcal L_L}q_R^{-1/3}q_{R_5}^{1/4}
+&\le\sum_{q_s^5\le L}q_s^{-5/3+1/4}
+       \sum_{q_{R_0}\le L/q_s^5}q_{R_0}^{-1/3}\\
+&\ll L^{2/3}\sum_s q_s^{-19/4}\ll L^{2/3},\\
+\sum_{R\in\mathcal L_L}q_R^{2/3}&\ll L^{5/3}.
+\end{aligned}
+\tag{460.13}
+$$
+
+G7 供给同一个实际 $G_L^{-1}$ 的范数界；将（460.12）平方，使用（460.13）及 $\mathsf W_L$ 的 $U^{1/6}$ 因子，得到（460.3）的第一式。没有将不同标签视为正交，也没有用 upper sieve bound 代替 Gram 下界。
+
+对于第二式，直接用 primitive-mean v2 的 unrestricted-column Corollary 5：
+
+$$
+A^*V_L=\mathsf W_L+E_L,\qquad
+\|E_L\|_{\mathrm{HS}}^2
+\ll(UKL)^\varepsilon K\sum_{q_R\le L}q_R^{1/2}
+\ll(UKL)^\varepsilon KL^{3/2}.
+\tag{460.14}
+$$
+
+非平方自由行上的 $v_R$ 为零，故原较大行空间的 adjoint 与该原稿 §7 完全相同；这里不从 G9 的平方自由列范围外推。原列向量的除数界给出 $\|b\|_2^2\ll\mathcal N^2K^{1+\varepsilon}$。因此
+
+$$
+\begin{aligned}
+\|P_LAb\|_2^2
+&=\|G_L^{-1/2}(\mathsf W_L+E_L)^*b\|_2^2\\
+&\le2Q_{\rho,L}(b)
+ +2\|G_L^{-1}\|\,\|E_L\|_{\mathrm{HS}}^2\|b\|_2^2,
+\end{aligned}
+\tag{460.15}
+$$
+
+从而得到第二式。全部原列和标签均在同一实际向量上，既没有先取逐列绝对值的 residue majorant，也没有把独立可达的向量最优值拼接。证毕。
+
+**推论 460.2（平衡点与完整能量的严格比较）。** 在定理 460.1 的同一条件和有界共同成本下，取 $U\asymp K$、$D=N=\sqrt K$、$L=K^\ell$。若固定 $\ell>0$ 满足共同 Gram 范围，则
+
+$$
+\begin{aligned}
+Q_{\rho,L}(b)&\ll_\varepsilon\mathcal N^2K^\varepsilon
+ (K^{15/8}L^{2/3}+K^2L^{5/3}),\\
+\|P_LAb\|_2^2&\ll_\varepsilon
+ \mathcal N^2K^{2+5\ell/3+\varepsilon}.
+\end{aligned}
+\tag{460.16}
+$$
+
+若同时满足定理 459.1，使用一次共同包络 $\mathcal H\ge\max\{\mathcal N,\mathcal C\}$。当
+
+$$
+0<\ell<\frac{25-10\sqrt6}{20},
+\tag{460.17}
+$$
+
+当前全部标记投影的幂次上界严格小于从（459.3）直接得到的 $\kappa_{\mathrm{joint}}$；差额为
+
+$$
+\kappa_{\mathrm{joint}}-(2+5\ell/3)
+=\frac{25-10\sqrt6}{12}-\frac{5\ell}3>0.
+\tag{460.18}
+$$
+
+最终 $\varepsilon$ 取小于这个正差额；所有组合成本由上述同一个 $\mathcal H$ 支付。改进的对象是由（459.3）整体能量直接继承的该投影界。
+
+证明。把平衡尺度代入（460.3）；第一项的 $K$ 幂为 $1/3+5/3-1/8=15/8$，第二项为 $2$，余项为 $K^2L^{3/2}$。因 $K,L\ge1$，前者和余项都被 $K^2L^{5/3}$ 吸收，得到（460.16）。再直接比较（459.2）的幂次即得（460.18）。证毕。
+
+在相同固定或 polylog 次幂成本合同下，（460.3）保留全部六次幂自由标签，但其 $2+5\ell/3$ 仍高于 $2$。既有定理 457.1 对指定素标签的更强结论不被替换。原恒等式
+
+$$
+\|Ab\|_2^2=\|P_LAb\|_2^2+\|(I-P_L)Ab\|_2^2
+\tag{460.19}
+$$
+
+仍需对同一完整补空间给出更强上界；（459.3）对它的 $K^{\kappa_{\mathrm{joint}}+\varepsilon}$ 预算没有因本条而降低。其他原长度、高度、growing-height allowance、F4 的不同列二次型及 signed Robin restoration 也不由（460.3）推出。
+
+## 追加锚（本行以下为增补区）

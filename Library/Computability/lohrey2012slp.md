@@ -37,3 +37,28 @@ The finiteness hypothesis is substantive. If the group, multiplication table, ge
 - [Crossref metadata](https://api.crossref.org/works/10.1515/gcc-2012-0016).
 
 This note is an original citation-only exposition and includes no copied article text or PDF.
+
+## Fibonacci source word and indexed reading
+
+The following elementary example separates aperiodicity of a source word from the cost of observing it. It imports no unverified survey theorem. Define $W_0=a$, $W_1=b$, and $W_{k+2}=W_{k+1}W_k$, with $F_0=0,F_1=1$. For $k\ge1$, $W_k$ is a prefix of $W_{k+1}$; $W_0$ is not a prefix of $W_1$. Their lengths tend to infinity, defining a unique infinite word. Induction gives
+
+$$
+|W_k|=F_{k+1},\qquad \#_b(W_k)=F_k.
+$$
+
+This is the classical Fibonacci word, with $b=0,a=1$: under the substitution $0\mapsto01,1\mapsto0$, its $j$th iterated word is $W_{j+1}$. The exact source definition and its bibliographic locator are in the [Garg note](../Words/garg2021antipowers.md). The following facts are elementary consequences of that definition, not new antipower results.
+
+If the infinite word were eventually periodic, its frequency of $b$ along all sufficiently long prefixes would converge to a rational number: the number of $b$'s in one period divided by the period length. But along its prefix subsequence $W_k$ the frequency tends to
+
+$$
+\lim_{k\to\infty}\frac{F_k}{F_{k+1}}=\frac1\varphi,
+\qquad \varphi=\frac{1+\sqrt5}{2},
+$$
+
+which is irrational. Hence the word is not eventually periodic. Only this subsequence limit is needed for the contradiction.
+
+Nevertheless, for a positive one-based index $M$ given in canonical binary without leading zeros, its $M$th letter can be computed in $O(\log^2(M+2))$ bit operations. If padded encodings are allowed, add their actual input-reading length to this bound. Build successive Fibonacci lengths until $|W_k|\ge M$, choosing the least such $k\ge1$. For $k\ge2$, compare $M$ with $|W_{k-1}|$: descend to $W_{k-1}$ if it lies in the left part of $W_k=W_{k-1}W_{k-2}$, otherwise subtract that length and descend to $W_{k-2}$. At $k=0,1$, return $a,b$ respectively. There are $O(\log(M+2))$ descents and every integer has $O(\log(M+2))$ bits. Maintain consecutive Fibonacci lengths and update them by subtraction when descending, using a constant number of sequentially stored registers. The construction, comparisons, register movement and subtraction then have the stated bit bound, without free access to an exponentially expanded word.
+
+Aperiodicity therefore does not imply high indexed-reading cost. Nor must every observable of an aperiodic source retain its aperiodicity: the [fixed Pauli endpoint of these finite words](../../docs/develop/theory/AURIC_FIB_SECOND_ORDER_RELATION_COMPLETION.md#116-固定-pauli-端口上的-fib-统一短编译) has the project's three-periodic root value and short compiler. That observation preserves a specified operator, not the entire infinite word or its history.
+
+The same logical distinction appears for primes: eventual periodicity of the prime indicator with a positive period $d$ would, for a sufficiently large prime $p$, force $p+pd=p(1+d)$ to be prime, a contradiction. Yet [AKS](../PrimeObserver/agrawal2004primes.md) supplies polynomial-time binary primality testing. This comparison asserts neither an efficient factorization algorithm nor any connection between aperiodicity alone and NP hardness.
