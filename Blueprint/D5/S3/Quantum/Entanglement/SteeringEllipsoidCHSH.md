@@ -64,7 +64,35 @@ $$(claim) \Leftrightarrow ((\forall rho \in \operatorname{Matrix}\left((\operato
 
 Section V, Conjecture 1: Let rho be a general two-qubit state with its steering ellipsoid centred at c. The CHSH nonlocality is tightly bounded as beta(rho) <= max[2 sqrt(2(1 - c)), 2]. Here c is the Euclidean length of D5.S3.Quantum.Entanglement.SteeringEllipsoidFullyEntangledFraction.centre. The first clause gives the inequality for every positive semidefinite matrix of trace one. The second expresses tightness as a supremum: for each t in [0, 1] and each epsilon > 0 there is a positive semidefinite trace-one matrix with centre length exactly t and CHSH value strictly greater than bound(t) - epsilon.
 
-**Theorem 1.6 (Pauli expectations equal the correlations).**
+**Theorem 1.6 (Squared Euclidean length).**
+
+$$\forall u \in \operatorname{Fin}\left(3\right) \to \mathbb{R},\; (\operatorname{D5}.\operatorname{S3}.\operatorname{Quantum}.\operatorname{Entanglement}.\operatorname{SteeringEllipsoidFullyEntangledFraction}.\operatorname{vlen}\left(u\right))^{2} = \operatorname{dotProduct}\left(u, u\right)$$
+
+*Proof.* Machine-checked in Lean as `D5/S3/Quantum/Entanglement/SteeringEllipsoidCHSH.vlen_sq` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Acknowledgement.* Antony Milne; David Jennings; Sania Jevtic; Terry Rudolph (2014). *Quantum correlations of two-qubit states with one maximally mixed marginal*. DOI: [10.1103/PhysRevA.90.024302](https://doi.org/10.1103/PhysRevA.90.024302). URL: <https://arxiv.org/abs/1404.3951v2>.
+
+*Commentary.*
+
+For every real three-vector, the square of its Euclidean length equals its dot product with itself.
+
+**Theorem 1.7 (Unit normalization).**
+
+$$\forall u \in \operatorname{Fin}\left(3\right) \to \mathbb{R},\; (u \ne 0) \Rightarrow ((\operatorname{D5}.\operatorname{S3}.\operatorname{Quantum}.\operatorname{Entanglement}.\operatorname{SteeringEllipsoidFullyEntangledFraction}.\operatorname{vlen}\left((\operatorname{inv}\left(\operatorname{D5}.\operatorname{S3}.\operatorname{Quantum}.\operatorname{Entanglement}.\operatorname{SteeringEllipsoidFullyEntangledFraction}.\operatorname{vlen}\left(u\right)\right)) \cdot (u)\right) = 1) \land ((\operatorname{D5}.\operatorname{S3}.\operatorname{Quantum}.\operatorname{Entanglement}.\operatorname{SteeringEllipsoidFullyEntangledFraction}.\operatorname{vlen}\left(u\right)) \cdot ((\operatorname{inv}\left(\operatorname{D5}.\operatorname{S3}.\operatorname{Quantum}.\operatorname{Entanglement}.\operatorname{SteeringEllipsoidFullyEntangledFraction}.\operatorname{vlen}\left(u\right)\right)) \cdot (u)) = u))$$
+
+*Proof.* Machine-checked in Lean as `D5/S3/Quantum/Entanglement/SteeringEllipsoidCHSH.normalized_unit` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Acknowledgement.* Antony Milne; David Jennings; Sania Jevtic; Terry Rudolph (2014). *Quantum correlations of two-qubit states with one maximally mixed marginal*. DOI: [10.1103/PhysRevA.90.024302](https://doi.org/10.1103/PhysRevA.90.024302). URL: <https://arxiv.org/abs/1404.3951v2>.
+
+*Commentary.*
+
+Every nonzero real three-vector becomes unit length after division by its Euclidean length, and rescaling the normalized vector recovers the original vector.
+
+**Theorem 1.8 (Pauli expectations equal the correlations).**
 
 $$\forall rho \in \operatorname{Matrix}\left((\operatorname{Fin}\left(2\right) \times \operatorname{Fin}\left(2\right)), (\operatorname{Fin}\left(2\right) \times \operatorname{Fin}\left(2\right)), \mathbb{C}\right),\; (\operatorname{Matrix}.\operatorname{IsHermitian}\left(rho\right)) \Rightarrow (\forall i \in \operatorname{Fin}\left(3\right),\; \forall j \in \operatorname{Fin}\left(3\right),\; \operatorname{Matrix}.\operatorname{trace}\left(rho \cdot \operatorname{Matrix}.\operatorname{kronecker}\left(\operatorname{D5}.\operatorname{S3}.\operatorname{Quantum}.\operatorname{Entanglement}.\operatorname{SteeringEllipsoidFullyEntangledFraction}.\operatorname{pauli}\left(i\right), \operatorname{D5}.\operatorname{S3}.\operatorname{Quantum}.\operatorname{Entanglement}.\operatorname{SteeringEllipsoidFullyEntangledFraction}.\operatorname{pauli}\left(j\right)\right)\right) = \operatorname{Complex}.\operatorname{ofReal}\left(\operatorname{D5}.\operatorname{S3}.\operatorname{Quantum}.\operatorname{Entanglement}.\operatorname{SteeringEllipsoidFullyEntangledFraction}.\operatorname{corr}\left(rho, i, j\right)\right))$$
 
@@ -78,7 +106,7 @@ $$\forall rho \in \operatorname{Matrix}\left((\operatorname{Fin}\left(2\right) \
 
 For every Hermitian complex two-qubit operator rho and every pair of Pauli indices i and j in Fin 3, the trace of rho times the corresponding Kronecker product equals its real correlation entry embedded in the complex numbers. Hermiticity makes this trace real.
 
-**Theorem 1.7 (The centre bound holds).**
+**Theorem 1.9 (The centre bound holds).**
 
 $$(\forall rho \in \operatorname{Matrix}\left((\operatorname{Fin}\left(2\right) \times \operatorname{Fin}\left(2\right)), (\operatorname{Fin}\left(2\right) \times \operatorname{Fin}\left(2\right)), \mathbb{C}\right),\; (\operatorname{Matrix}.\operatorname{PosSemidef}\left(rho\right)) \Rightarrow ((\operatorname{Matrix}.\operatorname{trace}\left(rho\right) = 1) \Rightarrow (\operatorname{chsh}\left(rho\right) \le \operatorname{bound}\left(\operatorname{D5}.\operatorname{S3}.\operatorname{Quantum}.\operatorname{Entanglement}.\operatorname{SteeringEllipsoidFullyEntangledFraction}.\operatorname{vlen}\left(\operatorname{D5}.\operatorname{S3}.\operatorname{Quantum}.\operatorname{Entanglement}.\operatorname{SteeringEllipsoidFullyEntangledFraction}.\operatorname{centre}\left(rho\right)\right)\right)))) \land (\forall t \in \mathbb{R},\; (0 \le t) \Rightarrow ((t \le 1) \Rightarrow (\forall epsilon \in \mathbb{R},\; (0 < epsilon) \Rightarrow (\exists rho \in \operatorname{Matrix}\left((\operatorname{Fin}\left(2\right) \times \operatorname{Fin}\left(2\right)), (\operatorname{Fin}\left(2\right) \times \operatorname{Fin}\left(2\right)), \mathbb{C}\right),\; (\operatorname{Matrix}.\operatorname{PosSemidef}\left(rho\right)) \land ((\operatorname{Matrix}.\operatorname{trace}\left(rho\right) = 1) \land ((\operatorname{D5}.\operatorname{S3}.\operatorname{Quantum}.\operatorname{Entanglement}.\operatorname{SteeringEllipsoidFullyEntangledFraction}.\operatorname{vlen}\left(\operatorname{D5}.\operatorname{S3}.\operatorname{Quantum}.\operatorname{Entanglement}.\operatorname{SteeringEllipsoidFullyEntangledFraction}.\operatorname{centre}\left(rho\right)\right) = t) \land (\operatorname{bound}\left(t\right) - epsilon < \operatorname{chsh}\left(rho\right))))))))$$
 
@@ -107,8 +135,10 @@ For tightness, let R(t, s) = |v><v|/2 + t(1 - s)|01><01|/2, where v = sqrt(1 + s
 - Truth anchor: `D5/S3/Quantum/Entanglement/SteeringEllipsoidCHSH.chsh`
 - Truth anchor: `D5/S3/Quantum/Entanglement/SteeringEllipsoidCHSH.chshValues`
 - Truth anchor: `D5/S3/Quantum/Entanglement/SteeringEllipsoidCHSH.claim`
+- Truth anchor: `D5/S3/Quantum/Entanglement/SteeringEllipsoidCHSH.normalized_unit`
 - Truth anchor: `D5/S3/Quantum/Entanglement/SteeringEllipsoidCHSH.result`
 - Truth anchor: `D5/S3/Quantum/Entanglement/SteeringEllipsoidCHSH.trace_pauli_kronecker_eq_corr`
+- Truth anchor: `D5/S3/Quantum/Entanglement/SteeringEllipsoidCHSH.vlen_sq`
 - Dependency: [D5/S3/Quantum/Entanglement/SteeringEllipsoidFullyEntangledFraction](SteeringEllipsoidFullyEntangledFraction.md)
 - Dependency: [D5/S3/Quantum/Information/ActualPureQubitCostInfimum](../Information/ActualPureQubitCostInfimum.md)
 - Dependency: [D5/S3/Quantum/Information/ActualQubitChordObstruction](../Information/ActualQubitChordObstruction.md)

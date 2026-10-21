@@ -91,7 +91,10 @@ internal sealed class GeometricDiscordMutualCorrelationBoundDocument : IScribeDo
                             + "|tr(ρX)| ≤ ‖X‖ and compactness of the local unit spheres "
                             + "bound the covariance values, so their supremum is finite. "
                             + "Taking square roots proves √D_G(ρ) ≤ C_M(ρ)."))),
-                DescribeRole.Theorem)
+                DescribeRole.Theorem,
+                openProblemResolutionClaim: new OpenProblemResolutionClaim(
+                    ProblemSlugRef.Create("gwozdz-jakobczyk-2013-geometric-discord-mutual-correlation-bound"),
+                    ResolutionKind.Proved))
         )));
 
     private static DocumentBlock Node(string declaration, string title, Formula formula, string prose) =>
