@@ -46,6 +46,10 @@ $$\forall G \in Type,\; [Group\left(G\right)] [Finite\left(G\right)] C\left(G\ri
 
 *Proof.* Machine-checked in Lean as `D5/S3/FiniteGroups/LemosMouraRibasSilvaConsecutiveDavenport.result` (`✓ std3`). ∎
 
+*Resolves.* `Problems/lemos-moura-ribas-silva-2024-consecutive-davenport-conjecture-3-4` (proved) by `D5/S3/FiniteGroups/LemosMouraRibasSilvaConsecutiveDavenport.result`.
+
+<!-- scribe-open-problem-resolution-v1 {"problem_slug":"lemos-moura-ribas-silva-2024-consecutive-davenport-conjecture-3-4","declaration_gid":"D5/S3/FiniteGroups/LemosMouraRibasSilvaConsecutiveDavenport.result","resolution_kind":"proved"} -->
+
 *Source.* Repository-derived.
 
 *Acknowledgement.* A. Lemos, A. O. Moura, S. Ribas and A. T. Silva (2024). *A note on weighted consecutive Davenport constant*. DOI: [10.48550/arXiv.2404.11312](https://doi.org/10.48550/arXiv.2404.11312). URL: <https://arxiv.org/abs/2404.11312v1>.

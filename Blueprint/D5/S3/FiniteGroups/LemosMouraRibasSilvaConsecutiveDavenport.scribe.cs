@@ -49,13 +49,19 @@ internal sealed class LemosMouraRibasSilvaConsecutiveDavenportDocument : IScribe
                     + "These upper and lower bounds identify the least positive threshold. "
                     + "The argument uses arbitrary finite groups and does not require commutativity or metacyclic structure. "
                     + "Larger weight sets and the enumeration of extremal words are outside this statement.",
-                DescribeRole.Theorem, AssessedProvenance.FromRepo(Source)))));
+                DescribeRole.Theorem, AssessedProvenance.FromRepo(Source),
+                resolution: new OpenProblemResolutionClaim(
+                    ProblemSlugRef.Create(
+                        "lemos-moura-ribas-silva-2024-consecutive-davenport-conjecture-3-4"),
+                    ResolutionKind.Proved)))));
 
     private static DocumentBlock Node(
         string id, string title, string declaration, Formula formula, string prose,
-        DescribeRole role, AssessedProvenance provenance) => Describe.Lean(
+        DescribeRole role, AssessedProvenance provenance,
+        OpenProblemResolutionClaim? resolution = null) => Describe.Lean(
             DescribeId.Create(id), DeclarationHandle.Create(Prefix + declaration), H(title),
-            StatementSource.FromAuthor(formula), provenance, Blocks(Paragraph(Text(prose))), role);
+            StatementSource.FromAuthor(formula), provenance, Blocks(Paragraph(Text(prose))), role,
+            openProblemResolutionClaim: resolution);
 
     private static Formula Call(string name, params Formula[] arguments) =>
         new Formula.Apply(F.Id(name), [.. arguments]);
