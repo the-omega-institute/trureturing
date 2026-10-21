@@ -1,0 +1,36 @@
+**Definition 16.1 (Coefficient topology and ordered collisions).** Give
+complete worlds the Euclidean topology of the four entries of $P$,
+the four real coefficients of $g$ padded by zero, and $d$. The parent
+$\mathcal F(H_4)$ carries the relative topology. On it put
+
+$$
+\begin{gathered}
+p=d+(U+n)g(5),\qquad u=u_M=d+(2U+n)g(6),\\
+f=f_{MM}=d+(3U+2n)g(7),\qquad k=f-\frac{32}{5}u.
+\end{gathered}
+\tag{16.1}
+$$
+
+These are actual functions of the same whole gain and fixed drift at
+the original clocks $5,6,7$ along $JMJMMMM$. In this section $u,f$
+have this sixth-M meaning, in contrast to the sixth-J functions in
+Sections 14–15. Define the full ordered collision correspondence
+
+$$
+\mathcal C_{MM}=\{(W,W')\in\mathcal F(H_4)^2:
+ W\ne W',\ p(W)=p(W'),\ u(W)=u(W'),\ f(W)=f(W')\}.
+\tag{16.2}
+$$
+
+Equality of $(p,u,f)$ is equivalently equality of $(p,k,u)$.
+The common responses are allowed to vary over $\mathcal C_{MM}$.
+Writing $A_r=\mathcal K(r)$ and $s=9/8-r$, put
+
+$$
+\begin{aligned}
+\Gamma_+&=\{(A_r,A_{9/8-r}):1/8<r<9/16\},\\
+\Gamma_-&=\{(A_r,A_{9/8-r}):9/16<r<1\}.
+\end{aligned}
+\tag{16.3}
+$$
+

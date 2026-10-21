@@ -1,0 +1,47 @@
+**Lemma 13.2 (Derivative and endpoint inequalities for tube zero).**
+The rational data (11.6) satisfy
+
+$$
+\frac8{1000}<(L_0)_r<\frac9{1000},\qquad
+\max_{k=0,1}\mathcal N(\partial_t\mathcal P_{0k})
+ <\frac1{5000}.
+\tag{13.2}
+$$
+
+For $a\ge0$ let $\mathcal N_a$ be (11.8) with $a^d$ in
+place of $2^{-d}$, and define
+
+$$
+E(t)=\max_{k=0,1}\mathcal N_{|t|}
+ (\mathcal P_{0k}(0,0,e,t)).
+\tag{13.3}
+$$
+
+Here the polynomial in (13.3) is expanded in $e,t$ before the
+weight $|t|^d$ is assigned. Then the following comparisons hold:
+
+$$
+\begin{aligned}
+\frac{E(-29/100)}{1-74/1000}&<\frac{15}{10^6},&
+(m_0)_r-\frac{29}{100}(L_0)_r+\frac{15}{10^6}
+ &<\frac{\nu_-}{10^{45}},\\
+\frac{E(-28/100)}{1-74/1000}&<\frac{14}{10^6},&
+\frac{\nu_-+1}{10^{45}}
+ &<(m_0)_r-\frac{28}{100}(L_0)_r-\frac{14}{10^6}.
+\end{aligned}
+\tag{13.4}
+$$
+
+Proof. Use the same finite coefficient formula (11.11) and exact
+$C_0,L_0$ as in Lemma 11.4. For the second comparison in (13.2),
+multiply each coefficient of $\mathcal P_{0k}$ by its $t$
+exponent, lower that exponent by one, then use the weights (11.8).
+Both resulting sums are less than $1/5000$.
+For (13.4), retain only the terms with $y_0,y_1$ exponents zero,
+and replace the $t$ weight by $(29/100)^d$ or $(28/100)^d$.
+After division by $1-74/1000$, the sums are strictly below the
+stated $15/10^6$ and $14/10^6$. Substitution of the exact
+$(m_0)_r,(L_0)_r$ and the integer $\nu_-$ gives the other two
+strict rational comparisons. These are finite sums from the same
+source polynomials and centre, without a new response normalization. ∎
+

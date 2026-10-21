@@ -1,0 +1,45 @@
+**Theorem 28.5 (Strict order on the whole external H graph).** Let
+$\mathcal H(r)$ be the complete world in O, Theorem 13.2. For
+$0<r<s<1$,
+
+$$
+\left[m-\frac{24}{5}u\right](\mathcal H(r))
+<
+\left[m-\frac{24}{5}u\right](\mathcal H(s)).
+\tag{28.18}
+$$
+
+Proof. Along the strict graph, (28.3) and O, Theorem 13.2 give
+$G_t=H_b/q^2>0$. Implicit differentiation gives
+$t'(r)=-G_r/G_t$. From (28.9) and (28.12),
+
+$$
+\frac{d}{dr}\left(m-\frac{24}{5}u\right)
+=\frac{12}{5}\frac{t\,\mathcal A}{B^2G_t}>0.
+\tag{28.19}
+$$
+
+Here $t>0$, $B=tD\ne0$ by (28.5), and $\mathcal A>0$ by Lemma
+28.4. The mean value theorem on every compact subinterval of $(0,1)$
+proves (28.18). Equality of both actual responses on two H worlds
+therefore forces equal $r$; O, Theorem 13.2 then forces equal $b$ and
+the identical complete gain and drift. ∎
+
+The certificate includes the auxiliary boundaries $r=0$ and $r=1$.
+At them,
+
+$$
+G(0,t)=30t^2-32,\qquad
+G(1,t)=4(5t^3+2t^2-16t-8).
+\tag{28.20}
+$$
+
+The first has its unique root in $[1,2]$ at $4/\sqrt{15}$; the second
+has a unique root there because its derivative is positive on $[1,2]$.
+Consequently every sequence of strict graph points approaching either
+strict source endpoint has $t$ bounded in the same closed interval,
+$b=q t\to0$, and $1/t$ remains finite and positive. These boundary
+points are not admitted as worlds. At either of the two O13.2 K/H
+intersections, $\delta=0$, so (28.4) reduces to the same exact world
+$g=h,d=24$; no intersection is deleted or duplicated.
+

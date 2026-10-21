@@ -1,0 +1,83 @@
+**Lemma 16.4 (An explicit positive transverse certificate).** For
+$s=9/8-r$, $1/8<r<1$, $r\ne9/16$, set $n=n(r)=n(s)$,
+$j_r=n-r$, $j_s=n-s$, and
+
+$$
+R(n)=-8192n^3+119952n^2-12320n-57875.
+\tag{16.11}
+$$
+
+Then
+
+$$
+\mathcal D(r):=\alpha(r)\eta(s)-\alpha(s)\eta(r)
+ =\frac{(s-r)R(n)}{1680n j_rj_s}\ne0.
+\tag{16.12}
+$$
+
+Proof. On the exact-$h$ family the actual responses in this section are
+
+$$
+p=24,\qquad u=84+24n(r),\qquad
+f=312+\frac{768}{5}n(r),\qquad k=-\frac{1128}{5},
+\tag{16.13}
+$$
+
+where $n(r)=1/8+9r-8r^2$. Its exact difference is
+$n(r)-n(t)=(r-t)\{9-8(r+t)\}$. Thus distinct exact-$h$ worlds collide
+in $(p,u,f)$ exactly when $t=s=9/8-r$. Legality gives $1/8<r<1$,
+and distinctness removes $9/16$. These are the inherited mirror pairs;
+(16.12) concerns their transverse relation to the full parent.
+
+For a short coefficient check write $\alpha=a_0+a_1/j$ and
+$\eta=e_0-c_0/j$, with
+
+$$
+\begin{aligned}
+a_0&=\frac{-512n^2-218n+475}{42n},&
+a_1&=\frac{85(4n+5)}{84},\\
+e_0&=\frac{10240n^2+33924n-32375}{140n},&
+c_0&=\frac{1672n+7455}{70}.
+\end{aligned}
+\tag{16.14}
+$$
+
+The denominator-cleared polynomial identity is
+
+$$
+\begin{aligned}
+&4(-512n^2-218n+475)(1672n+7455)\\
+&\quad +(340n+425)(10240n^2+33924n-32375)\\
+&=57344n^3-839664n^2+86240n+405125=-7R(n).
+\end{aligned}
+\tag{16.15}
+$$
+
+Consequently $a_0c_0+a_1e_0=-R/(1680n)$. Expanding the determinant
+in (16.12) gives this scalar times $(1/j_r-1/j_s)$.
+Since $j_s-j_r=r-s$, (16.12) follows. Also
+$j_rj_s=n^2-n-1/64$, from $r+s=9/8$ and $rs=(n-1/8)/8$.
+
+To prove the sign without numerical root estimates, use
+
+$$
+n=\frac{85}{32}-8(r-9/16)^2,\qquad
+\frac98<n\le\frac{85}{32}.
+\tag{16.16}
+$$
+
+On the closed interval $[9/8,85/32]$,
+
+$$
+\begin{aligned}
+R(9/8)&=\frac{273661}{4}>0,\\
+R'(n)&=-24576n^2+239904n-12320\\
+&\ge-24576(85/32)^2+239904(9/8)-12320=84172>0.
+\end{aligned}
+\tag{16.17}
+$$
+
+Thus $R(n)>0$, and $n,j_r,j_s>0$ by source legality. The determinant
+is nonzero at every distinct mirror pair, including any member on a
+singular $\Lambda=0$ source. ∎
+

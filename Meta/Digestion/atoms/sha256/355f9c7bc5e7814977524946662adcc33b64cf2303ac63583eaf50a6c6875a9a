@@ -1,0 +1,41 @@
+**定义 15.1（漂移切片与插值坐标）。** 本章使用定义 1.1 的完整合法域：
+$W=(P,g,d)$，$P=\left(\begin{smallmatrix}r&b\\c&1-r\end{smallmatrix}\right)$，
+$0<r<1$、$b,c>0$、$bc=r(1-r)$，以及整个非零实多项式 $g$、$\deg g\le3$。
+读数仍为 $y_k=d+g(k)\operatorname{tr}(Q_kP)$，$Q_0=I$、$Q_k=E_kQ_{k-1}$。
+取实参数 $D,C,z,Y,p$，置
+
+$$
+H_4(D,C,z,Y)=(0,J,D,M,C,J,z,M,Y),\qquad
+H_5(D,C,z,Y,p)=(H_4(D,C,z,Y),M,p).
+\tag{15.1}
+$$
+
+以下只在明确标出的切片 $d=D$ 上定义
+
+$$
+A=C-D,\quad B=Y-D,\quad Z=z-D,\quad
+T=1+b>1,\quad U=2T-1,\quad n=r+b+c.
+\tag{15.2}
+$$
+
+这里 $A,B$ 是响应差，不是增益系数，也不沿用定义 1.2 的双末根承诺。
+实际前六个迹仍为 $(1,b+c,T,n,U,n+U)$。
+若 $d=D$，原初读和第一响应强制 $g(0)=-D$、$g(1)=0$，第二、第四响应给
+
+$$
+g(2)=\frac A T,\qquad g(4)=\frac B U.
+\tag{15.3}
+$$
+
+四个互异节点 $0,1,2,4$ 的值唯一确定整个次数至多三的多项式，故定义
+
+$$
+a(T)=g(3)=\frac{3A}{2T}+\frac B{4U}-\frac D4,\qquad
+q(T)=g(5)=\frac{3D}{2}-\frac{5A}T+\frac{5B}{2U}.
+\tag{15.4}
+$$
+
+所用的是普通 Lagrange 插值，参见 Berrut–Trefethen，
+《[Barycentric Lagrange Interpolation](https://doi.org/10.1137/S0036144502417715)》，§2，式 (2.1)。
+这里只在证明内部使用其四节点恒等式，低次数多项式也由同一公式覆盖。
+

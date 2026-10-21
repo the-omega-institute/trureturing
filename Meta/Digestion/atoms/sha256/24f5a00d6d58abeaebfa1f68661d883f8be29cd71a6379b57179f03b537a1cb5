@@ -1,0 +1,94 @@
+**Theorem 13.2 (Full fiber and unique positive sextic graph).** For each
+$0<r<1$, $H(r,b)=0$ has exactly one positive root, denoted $B_H(r)$.
+It is simple, $B_H$ is continuously differentiable, and
+$H_b(r,B_H(r))>0$. On every strict zero of $H$, $E_2\ne0$. Define
+
+$$
+\begin{aligned}
+\epsilon_H(r)&=-\frac{a(B_H(r)-1/8)}{E_2(r,B_H(r))},\\
+\mathcal H(r)&=
+\bigl(P(r,B_H(r)),h+\epsilon_H(r)v_{r,B_H(r)},24+\epsilon_H(r)\bigr),\\
+\mathcal K(t)&=(P(t,1/8),h,24),\qquad 0<t<1.
+\end{aligned}
+\tag{13.4}
+$$
+
+Then the entire complete-world fiber is exactly
+
+$$
+\mathcal F(H_4,M,24)
+ =\{\mathcal K(t):0<t<1\}\ \cup\ \{\mathcal H(r):0<r<1\}.
+\tag{13.5}
+$$
+
+This is a set union. At an intersection $B_H(r)=1/8$ the two formulas
+represent the identical complete world and contribute one element.
+
+Proof. The four actual rows at clocks $0,1,3,5$ force
+$g=h+\epsilon v$, where $\epsilon=d-24$, by uniqueness at four fixed
+distinct nodes. The clock-two and clock-four equations are precisely
+
+$$
+\epsilon E_2=-a(b-1/8),\qquad
+\epsilon E_4=2a(b-1/8).
+\tag{13.6}
+$$
+
+If $\epsilon=0$, these give $b=1/8$ and $g=h$, hence $\mathcal K$.
+If $\epsilon\ne0$, their sum and (13.3) give $H=0$.
+
+Before solving (13.6), suppose $H=0$ and $E_2=0$. Then $E_4=0$.
+The nonzero polynomial $v$, with $v(0)=-1$, would satisfy
+$1+\tau_i v(i)=0$ at all six original traces
+$(1,j,T,n,U,V)$. Its first four values determine it. The clock-four and
+clock-five drift-null discrepancies from that interpolant are
+$a_4=U\Lambda$ and $a_{5,M}=A_5$, so both would vanish. This contradicts
+Lemma 12.2. Therefore $E_2\ne0$ on every strict zero of $H$.
+Conversely there (13.4) solves both (13.6) by (13.3), and all six original
+rows hold for this one entire gain and fixed drift. The $0,24$ rows
+again exclude an identically zero gain.
+
+For existence and uniqueness of $B_H$, divide $H$ by the positive
+$b^2$. For fixed $0<r<1$, its derivative is
+
+$$
+\begin{aligned}
+\partial_b(H/b^2)={}&56b^3+3(95-73r)b^2
+ +2(47r^2-39r+30)b\\
+&+r(147r^2-232r+105)
+ +\frac{64r^3(1-r)^2}{b^2}
+ +\frac{64r^3(1-r)^3}{b^3}>0.
+\end{aligned}
+\tag{13.7}
+$$
+
+Indeed $95-73r>22$, and the quadratic discriminants for
+$47r^2-39r+30$ and $147r^2-232r+105$ are respectively $-4119$ and
+$-7916$, with positive leading coefficients. The function $H/b^2$
+tends to $-\infty$ as $b\downarrow0$ and to $+\infty$ as
+$b\to+\infty$. The intermediate value theorem and strict increase
+give exactly one positive root. At it
+$H_b=b^2\partial_b(H/b^2)>0$. The ordinary implicit function theorem
+therefore gives compatible local continuously differentiable graphs;
+uniqueness joins them over $(0,1)$, with $B_H'=-H_r/H_b$.
+This proves (13.5) over the unbounded strict domain.
+
+At $B_H(r)=1/8$, (13.4) has $\epsilon_H=0$, so both complete triples
+are literally $\mathcal K(r)$. No gain direction, drift or sampled-zero
+stratum has been quotiented out. ∎
+
+The two curves have exactly two complete-world intersections. In fact
+
+$$
+\begin{aligned}
+131072H(r,1/8)=Q(r)={}&4194304r^6-13631488r^5+14499840r^4\\
+&-4799744r^3-344608r^2+86780r+1347.
+\end{aligned}
+\tag{13.8}
+$$
+
+The signed Sturm convention in Section 14 gives endpoint sign vectors
+$(+,+,-,+,+,-,+)$ at zero and $(+,+,-,-,-,+,+)$ at one, with variations
+$4$ and $2$. It ends at a nonzero constant. Thus there are exactly two
+strict roots; Theorem 13.2 turns each into exactly one common triple.
+

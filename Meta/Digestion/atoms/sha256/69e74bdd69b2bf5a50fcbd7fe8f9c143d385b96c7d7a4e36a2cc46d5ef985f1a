@@ -1,0 +1,42 @@
+**Theorem 9.2 (Equivalent necessary-candidate remainder).**
+
+$$
+\exists v\in\mathbb R\;\mathcal J(v)
+\quad\Longleftrightarrow\quad
+\exists v\in\mathcal U\setminus[142,150]\;\mathcal J(v),
+\qquad |\mathcal U\setminus[142,150]|\le74935.
+\tag{9.3}
+$$
+
+Proof. Owning Theorems 28.2, 30.2 and 31.1 give, for this same
+$p_J$, $Q(p_J,0)\ne0$, $\deg_vQ(p_J,v)\le74935$, and the
+necessary condition that any distinct actual terminal-M pair has
+$v\in\mathcal U$. The nonzero-polynomial assertion is supplied
+there by the exact root-disk and image-separation proof at $v=0$;
+it is not inferred from the strip computation.
+
+Thus (9.1) forces $v\in\mathcal U$. Theorem 1.3 makes (9.1)
+false throughout $[142,150]$, even with overlap between its pairs,
+by excluding a terminal-M pair altogether. This proves the forward
+implication. The reverse is restriction to a subset of $\mathbb R$.
+
+Theorem 8.2 exhibits two distinct roots of $Q(p_J,v)$ inside the
+removed strip. A nonzero polynomial of degree at most $74935$ has
+at most $74935$ distinct real roots; at most $74933$ remain outside
+the strip. Adding the two singular responses gives at most $74935$
+distinct members. Coincidences can only lower the count. No assertion
+that $v_\star$ is itself a root of $Q$ is needed for this subtraction. ∎
+
+**Open problem 9.3 (The remaining actual joint decision).**
+Whether (9.1) holds at any member of the remainder (9.2) is unresolved
+here. A root of $Q$ can be extraneous and supplies neither a legal
+world nor either collision pair. Both singular responses, any
+degree-drop candidate such as $v=-225$, and every other outside-strip
+candidate retain their original complete-world obligations.
+
+The argument does not resolve other fifth responses, the all-fifth
+or common-parent question, earlier histories, global eight-versus-nine
+recovery, or full-original-domain nine-read sufficiency. It gives no
+physical realization or physical claim. These boundaries identify
+the remaining quantifiers; they do not restrict the original domain.
+
