@@ -2120,7 +2120,7 @@ $$
 
 The statement below uses the following explicit interpretation. Positive
 entries of $Q_e$ are being read as direct physical transitions, and a
-**direct-generator locality radius** $\ell<\infty$ means
+**direct-generator locality radius** $0\le\ell<\infty$ means
 
 $$
 (x,y)\in A_e\quad\Longrightarrow\quad
@@ -2138,9 +2138,10 @@ the theorem below then says nothing about microscopic locality.
 **Theorem 132.1 (bounded-preimage obstruction to direct physical locality).**
 Fix one uncapped full-source compatible conservative Markov family from
 Theorem 129.3. Suppose a realization interface (131.2) and one finite
-radius $\ell$ satisfy direct-generator locality (131.3). Assume in
-addition the minimal bounded-preimage condition at that radius: there is
-one finite $R$, independent of $e$, such that
+radius $0\le\ell<\infty$ satisfy direct-generator locality (131.3) for
+every accepted epoch $e$. Assume in addition the minimal bounded-preimage
+condition at that radius: there is one finite $R\ge0$, independent of $e$,
+such that
 
 $$
 (x,y)\in A_e\ \text{and}\
@@ -2180,7 +2181,7 @@ $$
 \tag{133.1}
 $$
 
-with fixed finite $b$ and fixed $a>0$, for all epochs and all pairs to which
+with fixed finite $b\ge0$ and fixed $a>0$, for all epochs and all pairs to which
 the interface is applied. For an active pair, (131.3) and (133.1) imply
 
 $$
@@ -2213,18 +2214,18 @@ The uncapped quantifier in Theorem 132.1 is essential. Every finite stopped
 or capped prefix has finitely many finite state spaces and therefore a finite
 maximum occurrence range. It may satisfy prefix-dependent locality and
 comparison constants without contradiction. For affine controls that vary
-by layer or epoch, the relevant bound is explicitly
+by layer or epoch, with $\ell_e\ge0$, $b_e\ge0$, and $a_e>0$, the relevant
+bound is explicitly
 
 $$
 R_e=\frac{\ell_e+b_e}{a_e},
-\qquad a_e>0.
+\qquad \ell_e\ge0,\quad b_e\ge0,\quad a_e>0.
 \tag{134.1}
 $$
 
 A bounded supremum of this ratio over all accepted epochs still contradicts
 Theorem 129.3. If the ratio is unbounded, this argument has no contradiction
-left; that removes this proof of incompatibility and proves no compatible
-realization.
+left; it removes this proof of incompatibility and leaves compatibility open.
 
 Upper compression alone cannot transfer occurrence range. For the two-point
 abstract family $V_N=\{0,1\}$, set
