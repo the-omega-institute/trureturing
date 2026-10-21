@@ -1,0 +1,36 @@
+**Proposition 85.2 (sharp fibre cap and strong free reduction).** The domain $\mathcal F_\Lambda$ is nonzero and dense in $\mathcal H_\Lambda$, is closed in the free form norm, and satisfies
+$$
+\mathcal F_\Lambda=P_\Lambda D(L^{1/2}).
+\tag{85.4}
+$$
+Every band state has a continuous central representative on almost every fibre, with
+$$
+|\psi(\xi,w)|^2\le\frac{\Lambda}{\pi}m_\psi(\xi),\qquad
+m_\psi(\xi)=\int_{\mathbb R}|\psi(\xi,w)|^2dw.
+\tag{85.5}
+$$
+The constant $\Lambda/\pi$ is optimal even on $\mathcal F_\Lambda$. The projection strongly commutes with $L$: it commutes with every spectral projection of $L$, hence with $e^{-tL}$ for $t\ge0$ and $e^{-itL}$ for real $t$. These free evolutions preserve $\mathcal H_\Lambda$ and $\mathcal F_\Lambda$.
+
+Proof. The mature Fourier inversion and Plancherel supplies (Teschl, *Mathematical Methods in Quantum Mechanics*, §7.1), in the explicitly fixed normalization (85.2), and Cauchy--Schwarz on $B_\Lambda$ give (85.5). A fibre of zero marginal has zero Fourier transform and zero continuous representative; no conditional division is used there. On positive-marginal fibres the normalized density is bounded by $\Lambda/\pi$. The zero-fibre convention of Definition 84.1 remains available, for example $(\Lambda/\pi)\mathbf1_{[0,\pi/\Lambda]}$ if a probability density is wanted.
+
+For sharpness put
+$$
+h_\Lambda(w)=\frac{\sin(\Lambda w)}{\sqrt{\pi\Lambda}\,w},\qquad
+h_\Lambda(0)=\sqrt{\frac{\Lambda}{\pi}}.
+\tag{85.6}
+$$
+Its Fourier transform in $w$ is $\sqrt{\pi/\Lambda}\,\mathbf1_{B_\Lambda}$, so $\|h_\Lambda\|_2=1$ and $\|h_\Lambda'\|_2^2=\Lambda^2/3$. For nonzero $u\in C_c^\infty(\mathbb R^3)$, the state $u(\xi)h_\Lambda(w)$ belongs to $\mathcal F_\Lambda$: in particular its second horizontal derivative of order one is $(\partial_yu)h_\Lambda+xu h_\Lambda'$. Its conditional density is $|h_\Lambda|^2$, whose essential supremum is $\Lambda/\pi$ by continuity at zero. This also verifies that the sharp cap is attained as a fibre evaluation norm, not as a claim about the finite-band energy constant.
+
+More generally finite sums of products $u(\xi)h(w)$ with $u\in C_c^\infty(\mathbb R^3)$ and $\widetilde h\in C_c^\infty((-\Lambda,\Lambda))$, using the $w$ transform, lie in the actual horizontal domain and are dense in $\mathcal H_\Lambda$. The central projection commutes with all three horizontal distributional derivatives, and Plancherel gives $T[P_\Lambda\psi]\le T[\psi]$. It therefore splits the closed free form into orthogonal band and complementary forms. Equivalently the central direct integral has fibre form
+$$
+\begin{aligned}
+t_\lambda[b]&=\left\|\left(\partial_x-\frac{i\lambda y}{2}\right)b\right\|_2^2
+ +\left\|\left(\partial_y+\frac{i\lambda x}{2}\right)b\right\|_2^2
+ +\|\partial_zb\|_2^2,\\
+L_\lambda&=-\partial_x^2-\partial_y^2
+ -i\lambda(x\partial_y-y\partial_x)+\frac{\lambda^2r_\perp^2}{4}-\partial_z^2,
+\end{aligned}
+\tag{85.7}
+$$
+with the operator interpreted through its closed free form. The standard direct-integral spectral theorem now gives strong commutation, rather than just a formal commutator on smooth functions. The restriction of the closed free form to the closed band subspace proves (85.4). Its spectral calculus proves preservation of the form domain; the unitary preserves $T$ and norm, whereas heat can decrease both. The time in these formulas is precisely the $L$ clock of (82.7). For a declared free Hamiltonian $aL$, the unitary parameter $\theta$ corresponds to $t=a\theta$. $\square$
+

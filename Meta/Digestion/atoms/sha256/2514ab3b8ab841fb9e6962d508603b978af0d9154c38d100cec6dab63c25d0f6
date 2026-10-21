@@ -1,0 +1,38 @@
+**Definition 86.1 (actual energy, domains and the different observation model).** Fix the same unit source at $e$, $G=H^1\times\mathbb R$, Lebesgue Haar measure, projection $\pi$, horizontal metric and free $L$ clock as (82.5). Thus, in the original coordinates,
+
+$$
+X_1=\partial_x,\quad X_2=\partial_y+x\partial_w,\quad
+X_3=\partial_z,\quad L=-\sum_{i=1}^3X_i^2,
+\quad \delta_r(\xi,w)=(r\xi,r^2w),\quad Q=5.
+\tag{86.1}
+$$
+
+Here $L$ is the nonnegative self-adjoint free realization of Definition 84.1, and $\Gamma$ is exactly (82.8), with degree $-3$, not a truncated, massive or compressed substitute. Put $\mathcal H=L^2(G,d\mu)$, with inner product $\langle f,u\rangle=\int\overline f u\,d\mu$, conjugate linear in the first argument. Write
+
+$$
+\begin{gathered}
+\mathcal D=D(L^{1/2})\cap D(M_{\sqrt\Gamma}),\qquad
+\mathcal R=D(L)\cap D(M_\Gamma),\qquad
+\mathcal D_0=C_c^\infty(G\setminus\{e\}),\\
+t(f,u)=\sum_i\langle X_if,X_iu\rangle,\quad T[u]=t(u,u),\quad
+V[u]=\|\sqrt\Gamma u\|_2^2,\quad q[u]=aT[u]-gV[u],\quad a,g>0,\\
+\|u\|_H^2=\|u\|_2^2+T[u].
+\end{gathered}
+\tag{86.2}
+$$
+
+The functional $q$ has finite integrals on $\mathcal D$. No closed or semibounded full-space singular interacting form is assumed. In particular $\mathcal R\subset\mathcal D$: the free spectral calculus gives $D(L)\subset D(L^{1/2})$, and $V[u]\le\|\Gamma u\|_2\|u\|_2$ on $D(M_\Gamma)$. Every punctured compact test belongs to $\mathcal R$, by the free integration-by-parts domain and boundedness of $\Gamma$ on its support. All these domains are complex vector spaces.
+
+For any $m\ge0$ and any $f_1,\ldots,f_m\in\mathcal H$, the finite amplitude observation is
+
+$$
+Au=(\langle f_1,u\rangle,\ldots,\langle f_m,u\rangle),\qquad
+F=\operatorname{span}_{\mathbb C}\{f_1,\ldots,f_m\},\quad
+E=A\mathcal H\subseteq\mathbb C^m,\quad k=\dim F=\dim E.
+\tag{86.3}
+$$
+
+Each observation is bounded, complex linear, and $\ker A=F^\perp$. Dependent and zero probes are allowed; a right inverse has domain $E$, not an assumed $\mathbb C^m$. These amplitudes are a different observation model from the continuous marginal reader $\mathscr R$ of Theorem 82.5. Neither amplitudes nor the optional scalar $T$ are identified with native Reads. The band $\mathcal H_\Lambda$, projector $P_\Lambda$ and conditional-density cap $\mathcal C_M$ retain Definitions 85.1 and 84.1, including the convention on zero marginal fibres.
+
+For support arguments use the homogeneous norm $N(\xi,s)=(|\xi|^4+s^2)^{1/4}$ in the gauge $s=w-xy/2$. It is continuous, vanishes only at $e$, and satisfies $N(\delta_rp)=rN(p)$. Smoothness, positivity and homogeneity of the actual field give $\Gamma\le C N^{-3}$ off $e$, by its maximum on $N=1$.
+

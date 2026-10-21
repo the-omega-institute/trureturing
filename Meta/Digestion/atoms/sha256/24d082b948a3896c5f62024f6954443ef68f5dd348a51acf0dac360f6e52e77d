@@ -1,0 +1,65 @@
+**Theorem 86.8 (actual interaction-weighted error and a conditional energy-transfer consumer).** For any $\psi,\phi\in\mathcal D$, define
+
+$$
+d_\Gamma=\|\sqrt\Gamma(\psi-\phi)\|_2,qquad
+d_H=\left(\sum_i\|X_i(\psi-\phi)\|_2^2\right)^{1/2}.
+\tag{86.23}
+$$
+
+On this whole domain, without any multiplier-domain assumption,
+
+$$
+\begin{aligned}
+|V[\psi]-V[\phi]|&\le2\sqrt{V[\phi]}d_\Gamma+d_\Gamma^2,\\
+|T[\psi]-T[\phi]|&\le2\sqrt{T[\phi]}d_H+d_H^2.
+\end{aligned}
+\tag{86.24}
+$$
+
+Suppose a comparator $\phi$ and actual state $\psi$ are normalized, and independently justified data supply $V[\phi]\le B<\infty$, $d_\Gamma\le\epsilon$ and $|T[\psi]-T[\phi]|\le\kappa$. Then
+
+$$
+\begin{aligned}
+|q[\psi]-q[\phi]|&\le a\kappa+g(2\sqrt B\epsilon+\epsilon^2),\\
+q[\psi]&\ge a(T[\phi]-\kappa)-g(\sqrt B+\epsilon)^2.
+\end{aligned}
+\tag{86.25}
+$$
+
+For an independently justified $\phi\in\mathcal C_M$, one may take $B=M\sqrt{T[\phi]}/(4\pi)$ and use the actual §84 lower bound to obtain
+
+$$
+q[\psi]\ge-\frac{g^2M^2}{64\pi^2a}
+ -a\kappa-g(2\sqrt B\epsilon+\epsilon^2).
+\tag{86.26}
+$$
+
+For an independently justified $\phi\in\mathcal H_\Lambda$, replace $B$ by $\Lambda\sqrt{T[\phi]}/(4\pi^2)$ and the first constant by $g^2\Lambda^2/(64\pi^4a)$. These are sufficient scalar error and admissibility interfaces; they do not require full-state, full marginal or conditional-density recovery. In particular, a valid supplied cap on $\psi$ itself already suffices for its existing §84 lower bound, without comparison with $\phi$.
+
+Proof. Put $h=\psi-\phi$. In the genuine Hilbert space $L^2(G,\Gamma d\mu)$, expansion and Cauchy--Schwarz give
+
+$$
+V[\psi]-V[\phi]
+ =2\operatorname{Re}\langle\sqrt\Gamma\phi,\sqrt\Gamma h\rangle+d_\Gamma^2.
+\tag{86.27}
+$$
+
+All terms are finite by $\mathcal D$; this neither uses $\Gamma\phi\in L^2$ nor introduces it as a bounded-probe representer. The same expansion in the three-component horizontal derivative space proves the kinetic estimate. Substitute the separately supplied kinetic accuracy and potential bound to obtain (86.25). The cap estimate is (84.6) combined with (84.10); its normalized lower bound is (84.7). The band estimates are exactly (85.8)–(85.9). Substituting them in the first line of (86.25) proves (86.26) and its band version. The original regular subclass is included, but is not needed for these weighted Hilbert calculations. $\square$
+
+A concrete way to close the missing weighted control is to supply, in addition to an $L^2$ error $\|\psi-\phi\|_2\le e_0$, an actual weighted remainder estimate
+
+$$
+\int_{G\setminus\Omega}\Gamma|\psi-\phi|^2d\mu\le\eta^2,qquad
+\Omega=\{\rho\le N\le R_0\},\quad 0<\rho<R_0<\infty.
+\tag{86.28}
+$$
+
+Then the bounded field on $\Omega$ gives
+
+$$
+d_\Gamma^2\le C\rho^{-3}e_0^2+\eta^2.
+\tag{86.29}
+$$
+
+Alternatively separately supplied weighted tail norms of $\psi$ and $\phi$ bound the remainder by their sum through triangle inequality. The remainder includes the puncture and the exterior tail, so an unweighted far-tail estimate alone does not discharge (86.28). Theorem 86.3 has $d_H\to0$ and $\|\psi_r-\phi\|_2\to0$ while $d_\Gamma\to\infty$, by the reverse triangle and $V[\psi_r]\to\infty$. Theorem 86.5 has exact common amplitudes and kinetic value with the same divergent weighted obstruction relative to its fixed comparison state. Thus neither a name for $\eta$ or $\epsilon$, nor finite amplitudes plus free-kinetic accuracy, acquires the missing estimate. The conditional consumer in (86.25) becomes valid when the estimate or a sufficient actual admissibility bound is independently established.
+

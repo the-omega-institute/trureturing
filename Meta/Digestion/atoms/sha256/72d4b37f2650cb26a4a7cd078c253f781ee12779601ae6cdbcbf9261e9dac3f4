@@ -1,0 +1,48 @@
+**Theorem 85.8 (matched leading collapse as the finite cutoff is removed).** For the same actual field and fixed $a,g>0$,
+$$
+\lim_{\Lambda\to\infty}\frac{E_\Lambda(a,g)}{\Lambda^2}
+ =-\frac{g^2}{64\pi^4a}.
+\tag{85.30}
+$$
+In particular the fixed-band lower bound has the correct leading coefficient in this limit, without a claim that it is sharp at any finite $\Lambda$.
+
+Proof. The lower limit follows from (85.8). For the matching upper limit, use the mature normalized Coulomb minimizer from (82.4), with the different, explicitly matched coupling
+$$
+k_0=\frac{g}{4\pi^2},\qquad \kappa_0=\frac{k_0}{2a},\qquad
+\nu(\xi)=\left(\frac{\kappa_0^3}{\pi}\right)^{1/2}e^{-\kappa_0R}.
+$$
+Thus $\|\nu\|_2=1$, $\nu\in H^1(\mathbb R^3)$, $x\nu\in L^2$, and
+$$
+a\|\nabla\nu\|_2^2-\frac{g}{4\pi^2}\int\frac{|\nu|^2}{R}d\xi
+ =-\frac{g^2}{64\pi^4a}.
+\tag{85.31}
+$$
+Define, in the original $w$ gauge,
+$$
+\nu_\Lambda(\xi)=\Lambda^{3/2}\nu(\Lambda\xi),\qquad
+\psi_\Lambda(\xi,w)=\nu_\Lambda(\xi)h_\Lambda(w),
+\tag{85.32}
+$$
+where $h_\Lambda$ is exactly (85.6). This normalized state is in $\mathcal F_\Lambda$: its weak horizontal derivatives are square integrable. Both factors are real, and $\int h_\Lambda h_\Lambda'\,dw=0$, so the actual $X_2=\partial_y+x\partial_w$ gives
+$$
+T[\psi_\Lambda]
+ =\Lambda^2\|\nabla\nu\|_2^2
+  +\frac13\int_{\mathbb R^3}x^2|\nu(\xi)|^2d\xi.
+\tag{85.33}
+$$
+In particular the magnetic contribution is controlled rather than silently omitted.
+
+Let $h_1(t)=\sin t/(\sqrt\pi t)$ with its continuous value at zero. Substituting $\xi=v/\Lambda$ and $w=t/\Lambda^2$, and using the actual degree $-3$ Green homogeneity in the original coordinates, gives the exact identity
+$$
+\frac{V[\psi_\Lambda]}{\Lambda^2}
+ =\int_{\mathbb R^3}\int_{\mathbb R}|\nu(v)|^2\Gamma(v,t)
+   |h_1(t/\Lambda)|^2dt\,dv.
+\tag{85.34}
+$$
+Here $|h_1(t/\Lambda)|^2\le1/\pi$ and it tends to $1/\pi$ for every finite $t$. The dominating integral is finite by the actual fibre marginal:
+$$
+\frac1\pi\int|\nu(v)|^2\left(\int\Gamma(v,t)dt\right)dv
+ =\frac1{4\pi^2}\int\frac{|\nu(v)|^2}{|v|}dv<\infty.
+$$
+Dominated convergence therefore proves $V[\psi_\Lambda]/\Lambda^2\to(4\pi^2)^{-1}\int|\nu|^2/R$. Equations (85.31)--(85.34) give the upper limit, hence (85.30). The trial proves an energy asymptotic on the actual field; it makes no state/profile convergence claim and supplies no rate beyond the stated limit. $\square$
+

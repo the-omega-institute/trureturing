@@ -2415,3 +2415,182 @@ $$
 这份通用供应未改善完整 detector 的现有统一计数预算。在 $1/50<\delta\le5/6$ 的比较范围内，对原实际 $\tau=r+m\ge1-\text{小损失}$，其计数公式的指数不低于 $7/6-\delta-\text{小损失}$；已有 inverse amplification 和零槽 plain 四阶矩在合法设置 $t=1$ 或 $t=5/4$ 上，已经对整类提供不超过 $7/6-\delta-1/36+\text{小损失}$ 的指数。前者是上界公式的下限，不是实际行数下界；仅固定 $t=1$ 的局部改善不能算作整体进展。条件、实际 witness 域和比较推导均归上述来源条目，不重复证明筛法或重新优化 Liu 的边界。
 
 能超过这一通用预算的候选缺口，是保留原截断 Möbius 卷积系数的 off-block 相关和；上述条目给出其准确合同及已可直接控制的同六次幂自由部分。该估计仍 open，平衡长度上的结果也不自动覆盖其他实际 witness 长度或接通完整 signed Robin 目标。
+
+### Coherent simultaneous high-valuation branches
+
+本节为 `repo-derived` 的原系数联合应用，复用[完整原始反演、固定 cusp 估计及标记素数的全部重数贡献](faveri2026fixedorder.md#an-unchanged-numerator-term-in-the-primitive-continuous-adjoint) I1–I16、I14a，以及同条目的 H1–H8、G7。不重证局部六层递推、通用筛法或 Euler 乘积收敛。这里新增的消费是：在同一份未限平方自由的原卷积上，同时汇总任意多个其他素因子的高重数第二分支，并控制其移动删因子。所有所引解析供应均作为前提；没有本仓完整解析 Lean 认证，也不主张文献原创性。
+
+沿用 good 素理想及其 norm $q_a$，$p\nmid S$，$Q=q_p$，$u=1+\eta+it$，$\lambda_q=q_q^{5-6u}$，以及
+$$
+b(h)=\omega(h)\sum_{dn=h}\mu(d)V(q_d/D)W(q_n/N),\qquad K=DN.
+$$
+原 physical mask、ray section、正负方向的全族共轭及 profiles 全部保留。H2 的固定观察模数在本节记为 $\mathfrak M$；以下 $B$ 是随分支变化的平方自由 good 理想，不是该固定模数。所有原分支按 I1 的未约化 valuation 反演，只在原 numerator 上判断允许的选择。
+
+#### 同一个原反演中的完整高重数族
+
+先消去标记 $p$，允许它的第一分支及全部合法第二分支；在每个 $q\ne p$，若原 $v_q(ph)\ge6$ 则允许两支，否则只允许第一支。记这份实际分支族为 $\mathcal A_p(h)$。它的补集恰为至少一个 $q\ne p$ 在原 valuation $1,\ldots,4$ 选择第二分支的所有模式；valuation $5$ 没有第二分支。
+
+选择第二分支的其他素因子唯一组成平方自由 $B$，满足 $(B,pS)=1$、$B^6\mid h$。原始六层步的总因子为 $\mu(B)q_B^{6-6u}$，分母仍来自原 $\mathcal v_u(ph)$。每个素因子只消去一次。原始高步不改变有限 ray character；标记 $p$ 的偶数低重数反射仍保留其 ray 置换，而该字符在其他素因子处的六次幂为 $1$。同样 $\chi_p(B^6)=1$，没有被舍去的交叉字符。
+
+$p$ 取第一支时，写 $h=B^6m$，这一 $B$ 的确切贡献为
+$$
+\mu(B)\sum_m b(B^6m)\overline{
+q_B^{6-6u}\mathcal v_u(pBm)
+D_{\nu_{[B^6m]};S}(pm,u)}.
+\tag{SH1}
+$$
+$p$ 取第二支且 $1\le j=v_p(ph)\le4$ 时，写 $h=p^{j-1}B^6m$、$p\nmid m$，贡献为
+$$
+-\mu(B)\sum_{p\nmid m}b(p^{j-1}B^6m)\overline{
+\frac{q_B^{6-6u}\mathcal v_u(Bm)a_j^\nu(m,u)}{1-\lambda_p}
+D_{\nu\epsilon_{p,j};S}(p^{4-j}m,u)}.
+\tag{SH2}
+$$
+这里 $a_j^\nu$、$\epsilon_{p,j}$ 是 I1 的完整原因子，$\nu=\nu_{[p^{j-1}B^6m]}$；奇数 Gauss 相位未改成绝对值。所有 $j\ge6$ 的 $p$ 第二支一次写为
+$$
+-\mu(B)\sum_m b(p^5B^6m)\overline{
+q_B^{6-6u}Q^{6-6u}\mathcal v_u(pBm)
+D_{\nu_{[p^5B^6m]};S}(m,u)}.
+\tag{SH3}
+$$
+SH3 的 $m$ 在 $p$ 处不受限。这里使用原始六层恒等式，不把 valuation 约化模 $6$，也不以 residual theta 的周期性代替它。各式都在原系数的有限支撑上求和。
+
+#### 原卷积分解与每个分母恰好一次
+
+对于 SH1，原变量准确分解为
+$$
+d=Ed_0,\qquad n=(B^6/E)n_0,\qquad E\mid B,\quad(d_0,B)=1,
+$$
+$$
+D_E=D/q_E,\qquad N_E=Nq_E/q_B^6,\qquad K_B=D_EN_E=K/q_B^6,
+\qquad \mu(d)=\mu(E)\mu(d_0).
+\tag{SH4}
+$$
+非零 Möbius 系数强迫 $d$ 平方自由，故 $E=\gcd(d,B)$ 唯一，给出原卷积的双射分解。$n_0$ 在 $B$ 处不受限，且没有另加 $(d_0,n_0)=1$。SH2 再按 I14 写 $d_0=p^ed_1$、$n_0=p^{j-1-e}n_1$，$0\le e\le\min(1,j-1)$、$p\nmid d_1n_1$。SH3 按 I14a 写 $d_0=p^ed_1$、$n_0=p^{5-e}n_1$，$e=0,1$、$p\nmid d_1$，而 $n_1$ 在 $p$ 处不受限。两份符号 $\mu(E)$、$\mu(p^e)$ 均保留。
+
+由 I1 的 $\mathcal v_u=1*z_u$，即使 $B$ 与 $m$ 重叠，也有
+$$
+\mathcal v_u(Bm)=P_B(u)
+\sum_{\substack{g\mid m\\(g,B)=1}}z_u(g),\qquad
+P_B(u)=\prod_{q\mid B}(1-\lambda_q)^{-1}.
+\tag{SH5}
+$$
+SH1、SH3 将这里的 $m$ 换成 $pm$。固定 $\eta>0$ 后，$|P_B(u)|\ll_\eta1$ 一致成立，因为 $|\lambda_q|=q_q^{-1-6\eta}$。每个 $B$ 素因子的分母只出现一次，不能在 $g$-和中再保留同一局部因子。另有 $|q_B^{6-6u}|=q_B^{-6\eta}$；其复相位在估计前保留。
+
+原 mask 与 section 经 $h=B^6m$、$p^{j-1}B^6m$ 或 $p^5B^6m$ 运输。$B$ 模 $\mathfrak M$ 为单位，所以仍只涉及原固定有限函数族。SH2 的新 Fourier 变量为 $z=p^{4-j}m$，对应原 $h=B^6p^{2j-5}z$；完整过滤系数仍为 $\phi(z)t_u(z)$。移动 $B$ 仅删算术 $d,g$ 因子，不增加自守形式的坏素排除或 level。
+
+#### 移动删因子的一致控制
+
+在 I5–I7、I12–I14 的底层 pointwise 证明处使用 SH5，而不把平衡区间上的 I16 外推到 $K_B,D_E$。展开只取实际剩余 numerator 的 $g$ 约数，保留全部有限 Euler 和及极点尾项。
+
+I6 中写 $g=eg_0$、$e\mid a$、$(g_0,a)=1$。I7 的 $a=pd_0$ 或 $p^2e_0$ 以及 I14 的 $a=d_1$ 都与 $B$ 互素；故所有 $e\mid a$ 保留，只将 $g_0$ 限制为避开 $B$。除数 Cauchy 系数范数、large-$g$ 及有限 polar-tail 的绝对 majorant 均不增加。$P_B$ 一致有界，原 $p$ 的重叠仍按 I7、I14、I14a 支付。固定 cusp 族、两个 cusp 指数及其 $\eta$ 范围不变。
+
+主项只将 $Z_u$ 换为
+$$
+Z_u^B=\prod_{\substack{q\notin S\\q\nmid B}}
+\left(1+\frac{z_u(q)}{q_q}\right),
+$$
+同时保留 $P_B$。因为 $(a,B)=1$，原 $v_u(a)$ 不变。这个主项表达仍由 I6 的有限 Euler 与 polar-tail 估计支持，不是把有限总表达式无偿换成无限乘积。
+
+Möbius 主项中的 $(d_0,B)=1$，相对于原固定字符 Dirichlet 级数，准确增加
+$$
+M_B(s,u,\xi)=\prod_{q\mid B}
+\left(1-v_u(q)\xi(q)q_q^{-s}\right)^{-1}
+\ll_{\sigma,\theta}q_B^\theta,
+\quad \Re s\ge\sigma>7/8,\quad\theta>0.
+\tag{SH6}
+$$
+确实，原局部式给出
+$$
+|v_u(q)|\le
+\left[1-q_q^{-1-6\eta}(1-q_q^{-1})\right]^{-1}.
+$$
+Good 素 norm 至少为 $7$，所以每个 $|v_u(q)|q_q^{-\sigma}$ 一致小于 $1$，并趋于 $0$。对固定 $\theta>0$，充分大的 $q$ 满足
+$$
+-\log\left(1-|v_u(q)|q_q^{-\sigma}\right)\le\theta\log q_q;
+$$
+有限个较小素因子只给固定乘积。这证明非零性和 SH6，且对 spectral $t$、固定 ray 字符族一致。原 reciprocal-$L$ 成本仍归同一包络，没有引入 growing-character 无零假设；$p$ 的删因子与 $B$ 不相交。
+
+所以每个实际 $(B,E)$ 分支可在 $K'=K_B,D'=D_E$ 调用原底层 I7 或 I14、I14a，仅增加 $q_B^\theta$。令 $\mathcal N_H$ 为一次固定的共同 profile、Mellin、cusp 和 reciprocal-$L$ 包络。Profiles $V,W$ 只按 SH4 精确改长度，不随 $B$ 或行重新优化。
+
+只对非空支撑使用估计。其 $D',N'$ 至少为原 annular 支撑给出的固定正常数；再提取 $p$ 后，每个实际非空 sector 的 $D'/Q^e$、$N'/Q^k$ 也满足这一条件。固定 annular enlargement 处理有界边界。因此不要求每个 $B$ 都有 $N_E/Q^5\ge1$：某个 $e=0$ 高-$p$ sector 可以为空，而非空 $e=1$ sector 使用自身的 $N_E/Q^4$。这些底层 pointwise 估计无需最终平衡条件；平衡条件只在恢复原 $K,D,N,L$ 后施加。
+
+#### 汇总全部实际分支
+
+写 $x=q_B$、$y=q_E$。除共同因子 $(KL)^\varepsilon(1+|t|)^A\mathcal N_Hx^\theta$ 及有利的外部 $x^{-6\eta}$ 外，SH1 的界为
+$$
+KD^{-1/8}x^{-6}y^{1/8}
++K^{5/12}D^{2/3}Q^{7/12}x^{-5/2}y^{-2/3}
++K^{5/12+\eta}DQ^{-7/12+\eta}x^{-5/2-6\eta}y^{-1}.
+\tag{SH7}
+$$
+SH2、SH3 的全部 $p$ 第二分支合计为
+$$
+(K/Q)x^{-6}
++K^{5/12+\eta}DQ^{11/4+12\eta}x^{-5/2-6\eta}y^{-1}.
+\tag{SH8}
+$$
+这里直接使用各 sector 的 I14、I14a，而非其平衡推论。$D_E,Q$ 在非空支撑上的固定正下界使高-$p$ 两项被 SH8 吸收；空 sector 为零。局部有限乘积与除数小幂一并纳入 $\theta$，内部损失先于最终 $\varepsilon$ 选择。
+
+这些数值质量对全部平方自由 $B$、$E\mid B$ 一致可和。例如
+$$
+\sum_{B\ {\rm sf}}q_B^{-6+\theta}\sum_{E\mid B}q_E^{1/8}
+=\prod_q\left[1+q_q^{-6+\theta}(1+q_q^{1/8})\right]<\infty,
+$$
+$$
+\sum_{B\ {\rm sf}}q_B^{-5/2+\theta}\sum_{E\mid B}q_E^{-2/3}
+=\prod_q\left[1+q_q^{-5/2+\theta}(1+q_q^{-2/3})\right]<\infty.
+$$
+其余内和权为 $1$ 或 $q_E^{-1}$，同样在任意固定 $0<\theta<1/4$ 下收敛。保留 $(B,pS)=1$ 只减小上界。先在同一原系数上将有限实际分支作 coherent 求和，再用三角不等式和这些质量；只把正 majorant 扩成无限 Euler 乘积，没有增加实际模式，也没有用分别可达的最优系数替换共同系数。
+
+令 $C_p^H(t)$ 为 $\mathcal A_p(h)$ 对原 $b(h)$ 的全部贡献，则
+$$
+\begin{aligned}
+|C_p^H(t)|\ll{}&(KL)^\varepsilon(1+|t|)^A\mathcal N_H\bigl[
+KD^{-1/8}+K^{5/12}D^{2/3}Q^{7/12}\\
+&+K^{5/12+\eta}DQ^{-7/12+\eta}
++K/Q+K^{5/12+\eta}DQ^{11/4+12\eta}\bigr].
+\end{aligned}
+\tag{SH9}
+$$
+这包含所有同时 $B\ne1$ 选择，不限所选素因子数目；仅取该新增子族时同一界也成立。它消费的是原未限平方自由的列、全部原符号及掩码。
+
+#### 原 Mellin 与实际 inverse Gram 的共同消费
+
+将 SH9 配入原 adjoint 的 row Mellin profile，记所得向量为 $e^H$。保留原 $U^\eta$ 及全部固定多项式高度成本，仍用 G7 的实际 $G_P^{-1}$。有限项平方的交叉项用固定常数吸收，原素 annulus $L\le Q<2L$ 的计数给出
+$$
+\begin{aligned}
+Q_H:=(e^H)^*G_P^{-1}e^H
+\ll{}&(UKL)^\varepsilon\mathcal N_H^2U^{2\eta}\bigl[
+K^2D^{-1/4}L+K^{5/6}D^{4/3}L^{13/6}\\
+&+K^{5/6+2\eta}D^2L^{-1/6+2\eta}
++K^2/L+K^{5/6+2\eta}D^2L^{13/2+24\eta}\bigr].
+\end{aligned}
+\tag{SH10}
+$$
+没有把实际 Gram 换成正 label 形式。只在原 I16 的窄区间
+$$
+U\asymp K,\qquad K^{1/2}\le D\le K^{1/2}L^{1/6-\delta},\qquad
+0<\delta<1/6,
+$$
+$$
+L=K^\ell,\quad0<\ell<\frac1{41-12\delta},\qquad
+r_{\ell,\delta}=\frac16-\left(\frac{41}6-2\delta\right)\ell>0
+$$
+施加原 spectral 允许的固定选择
+$$
+0<\eta<\min\left\{
+\frac{1/8-\ell}{32},\frac\ell8,
+\frac{r_{\ell,\delta}}{8+48\ell}\right\}.
+$$
+于是 I9 与 I16 的两份节省在同一原参数上共同给出
+$$
+Q_H\ll K^{2-\zeta_H+\varepsilon}\mathcal N_H^2,
+\qquad
+\zeta_H=\min\left\{\frac{1/8-\ell}{2},\frac\ell2,
+\frac{r_{\ell,\delta}}2\right\}>0.
+\tag{SH11}
+$$
+对有界的原显式包络及充分小 $\varepsilon$，H8 与 SH11 共同控制 $w+e^H$ 的实际二次型为 $o(K^2)$。这里只支付已指定的完整高重数分支族。
+
+完整 primitive continuous 向量仍准确分成 $e^H+e^{\rm low}$；后者包含至少一个 $q\ne p$ 在原 valuation $1,\ldots,4$ 的第二分支，其余 $p$ 或高重数选择仍可同时存在。该低重数族及其跨素数 coherent 耦合尚未支付。完整 projection／complement、其他原长度与高度、原 growing-height 包络、F4 transfer，以及原固定 $\eta_{\rm R}$ 的 signed Robin restoration 也仍未支付。SH11 不供应区间外统一界，不证明 RH 或全部 $n>5040$ 的严格 Robin 不等式。FIB 五模式、四相与收缩区间仍作为来源和运输语言复用，不替代这些未证估计。
