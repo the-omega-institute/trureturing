@@ -19,6 +19,8 @@ coverage_gids:
     target_statement_id: sha256:856a0e3454c4ff81b6eb64b6812ed7b73cab29daad704d2be1c76ece40dc104e
   - gid: D5/S3/ConceptDynamics/Spacetime/ComplementCharge.q
     target_statement_id: sha256:bb0ca36ef5cadc0a4e91dca5da062bbb7809e399832b57fa5a561b75eda7b5b2
+  - gid: D5/S3/ConceptDynamics/Spacetime/ProductNodes.mem_selectedParents
+    target_statement_id: sha256:087c9a65265b546a91768ef0e9aafa70b4096f74e01e9c5b957538b8a413b5cf
   - gid: D5/S3/ConceptDynamics/Spacetime/ProductNodes.selectedParents
     target_statement_id: sha256:95216f5690ce1c37aaa8924ad6fdd282aeb03501e7e7a3a45633c831d472427e
 receipts:
