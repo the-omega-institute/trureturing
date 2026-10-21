@@ -16,12 +16,10 @@ Lean statement: `D5/S3/ConceptDynamics/DecisionValue/PartialMenuFiniteHorizonDes
 
 *Commentary.*
 
-Two models are related by an abstraction. Their legal menus agree on every abstract fiber. Legal successors, rewards, terminal values, successful outputs and costs, and illegal failure reports and costs all factor through that abstraction.
+Two models are related by an abstraction. Their legal menus agree on every abstract fiber. Successors, rewards, successful outputs and costs factor through the abstraction on legal actions only. Failure reports and costs factor on illegal actions only. Terminal values factor at every state; unused branch data are unconstrained.
 
 Induction on the remaining horizon compares the finite maxima over the same legal labels. It gives equal Bellman values and exactly the same set of all tied optimal legal labels. A second induction on an arbitrary named action prefix compares the tagged execution records: successful outputs, total cost, failure reports, and the final abstract state agree. An illegal label remains a failure in both runs.
 
 ## References
 
 - Truth anchor: `D5/S3/ConceptDynamics/DecisionValue/PartialMenuFiniteHorizonDescent.partial_menu_finite_horizon_descent`
-- Dependency: [D5/S3/ConceptDynamics/DecisionValue/FiniteHorizonOptimalActionDescent](FiniteHorizonOptimalActionDescent.md)
-- Dependency: [D5/S3/ConceptDynamics/DecisionValueScale/FiniteHorizonValueFactorization](../DecisionValueScale/FiniteHorizonValueFactorization.md)

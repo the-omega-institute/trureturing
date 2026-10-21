@@ -6,8 +6,7 @@
    utility: none
    digest: Fiberwise partial menus preserve finite-horizon values, all tied legal actions, and tagged prefix traces. -/
 
-import D5.S3.ConceptDynamics.DecisionValueScale.FiniteHorizonValueFactorization
-import D5.S3.ConceptDynamics.DecisionValue.FiniteHorizonOptimalActionDescent
+import Mathlib.Data.Real.Basic
 import Mathlib.Data.Finset.Basic
 import Mathlib.Order.ConditionallyCompleteLattice.Finset
 
@@ -140,28 +139,29 @@ def partialHorizonOptimalActions
 
 /-- Fiberwise partial menus preserve Bellman values, every tied legal action,
 and the complete tagged trace of every finite action prefix.  The menu
-equality is used only to transport legal labels; an action outside that menu
-continues to produce the failure branch in both systems. -/
+equality transports legal labels. Success data need factor only on legal
+actions and failure data only on illegal actions; unused branch data are
+unconstrained. Terminal values factor at every state. -/
 theorem partial_menu_finite_horizon_descent
     {MicroState MacroState Action Output Failure : Type*}
     (abstract : MicroState → MacroState)
     (micro : PartialMenuModel MicroState Action Output Failure)
     (macroModel : PartialMenuModel MacroState Action Output Failure)
     (menuFactors : ∀ state, micro.menu state = macroModel.menu (abstract state))
-    (successorFactors : ∀ action state,
+    (successorFactors : ∀ action state, action ∈ micro.menu state →
       abstract (micro.successor action state) =
         macroModel.successor action (abstract state))
-    (rewardFactors : ∀ state action,
+    (rewardFactors : ∀ state action, action ∈ micro.menu state →
       micro.reward state action = macroModel.reward (abstract state) action)
     (terminalFactors : ∀ state,
       micro.terminal state = macroModel.terminal (abstract state))
-    (outputFactors : ∀ state action,
+    (outputFactors : ∀ state action, action ∈ micro.menu state →
       micro.output state action = macroModel.output (abstract state) action)
-    (successCostFactors : ∀ state action,
+    (successCostFactors : ∀ state action, action ∈ micro.menu state →
       micro.successCost state action = macroModel.successCost (abstract state) action)
-    (failureReportFactors : ∀ state action,
+    (failureReportFactors : ∀ state action, action ∉ micro.menu state →
       micro.failureReport state action = macroModel.failureReport (abstract state) action)
-    (failureCostFactors : ∀ state action,
+    (failureCostFactors : ∀ state action, action ∉ micro.menu state →
       micro.failureCost state action = macroModel.failureCost (abstract state) action) :
     (∀ horizon state,
       partialHorizonValue micro.menu micro.menuNonempty micro.successor micro.reward
@@ -191,21 +191,21 @@ theorem partial_menu_finite_horizon_descent
         intro state
         simp only [partialHorizonValue]
         apply Finset.sup'_congr (micro.menuNonempty state) (menuFactors state)
-        intro action _
-        rw [rewardFactors state action,
+        intro action actionLegal
+        rw [rewardFactors state action actionLegal,
           inductionHypothesis (micro.successor action state),
-          successorFactors action state]
-  have scoreFactors : ∀ horizon state action,
+          successorFactors action state actionLegal]
+  have scoreFactors : ∀ horizon state action, action ∈ micro.menu state →
       micro.reward state action +
           partialHorizonValue micro.menu micro.menuNonempty micro.successor micro.reward
             micro.terminal horizon (micro.successor action state) =
         macroModel.reward (abstract state) action +
           partialHorizonValue macroModel.menu macroModel.menuNonempty macroModel.successor macroModel.reward
             macroModel.terminal horizon (macroModel.successor action (abstract state)) := by
-    intro horizon state action
-    rw [rewardFactors state action,
+    intro horizon state action actionLegal
+    rw [rewardFactors state action actionLegal,
       valueFactors horizon (micro.successor action state),
-      successorFactors action state]
+      successorFactors action state actionLegal]
   have optimalFactors : ∀ horizon state,
       partialHorizonOptimalActions micro.menu micro.menuNonempty micro.successor
           micro.reward micro.terminal horizon state =
@@ -215,33 +215,38 @@ theorem partial_menu_finite_horizon_descent
     apply Set.ext
     intro action
     simp only [partialHorizonOptimalActions, Set.mem_setOf_eq]
-    rw [menuFactors state]
     constructor
     · rintro ⟨actionLegal, actionOptimal⟩
-      refine ⟨actionLegal, ?_⟩
+      refine ⟨by simpa only [menuFactors state] using actionLegal, ?_⟩
       intro alternative alternativeLegal
-      rw [← scoreFactors horizon state alternative,
-        ← scoreFactors horizon state action]
-      exact actionOptimal alternative alternativeLegal
+      have alternativeMicro : alternative ∈ micro.menu state := by
+        rwa [menuFactors state]
+      rw [← scoreFactors horizon state alternative alternativeMicro,
+        ← scoreFactors horizon state action actionLegal]
+      exact actionOptimal alternative alternativeMicro
     · rintro ⟨actionLegal, actionOptimal⟩
-      refine ⟨actionLegal, ?_⟩
+      have actionMicro : action ∈ micro.menu state := by rwa [menuFactors state]
+      refine ⟨actionMicro, ?_⟩
       intro alternative alternativeLegal
-      rw [scoreFactors horizon state alternative,
-        scoreFactors horizon state action]
-      exact actionOptimal alternative alternativeLegal
+      rw [scoreFactors horizon state alternative alternativeLegal,
+        scoreFactors horizon state action actionMicro]
+      exact actionOptimal alternative (by simpa only [menuFactors state] using alternativeLegal)
   have stepFactors : ∀ state action,
       ActionResult.mapState abstract (micro.step state action) =
         macroModel.step (abstract state) action := by
     intro state action
     unfold PartialMenuModel.step
-    rw [menuFactors state]
-    by_cases h : action ∈ macroModel.menu (abstract state)
-    · simp only [dif_pos h]
-      simp [ActionResult.mapState, outputFactors state action,
-        successCostFactors state action, successorFactors action state]
-    · simp only [dif_neg h]
-      simp [ActionResult.mapState, failureReportFactors state action,
-        failureCostFactors state action]
+    by_cases h : action ∈ micro.menu state
+    · have hmacro : action ∈ macroModel.menu (abstract state) := by
+        simpa only [menuFactors state] using h
+      simp only [dif_pos h, dif_pos hmacro]
+      simp [ActionResult.mapState, outputFactors state action h,
+        successCostFactors state action h, successorFactors action state h]
+    · have hmacro : action ∉ macroModel.menu (abstract state) := by
+        simpa only [menuFactors state] using h
+      simp only [dif_neg h, dif_neg hmacro]
+      simp [ActionResult.mapState, failureReportFactors state action h,
+        failureCostFactors state action h]
   have prefixFactors : ∀ state actions,
       PrefixRecord.mapState abstract (runPrefix micro.step state actions) =
         runPrefix macroModel.step (abstract state) actions := by
@@ -267,47 +272,5 @@ theorem partial_menu_finite_horizon_descent
   exact ⟨valueFactors, optimalFactors, prefixFactors⟩
 
 #print axioms partial_menu_finite_horizon_descent
-
-/-- A concrete identical two-state model witnesses the hypotheses without
-introducing a default for an illegal action. -/
-example :
-    ∃ model : PartialMenuModel Bool Bool Bool Bool,
-      (model.menu false).Nonempty := by
-  classical
-  let model : PartialMenuModel Bool Bool Bool Bool :=
-    { menu := fun _ => Finset.univ
-      menuNonempty := by intro state; simp
-      successor := fun _ state => state
-      reward := fun _ _ => 0
-      terminal := fun _ => 0
-      output := fun state _ => state
-      successCost := fun _ _ => 0
-      failureReport := fun _ action => action
-      failureCost := fun _ _ => 1 }
-  exact ⟨model, model.menuNonempty false⟩
-
-example : True := by
-  classical
-  let model : PartialMenuModel Bool Bool Bool Bool :=
-    { menu := fun _ => Finset.univ
-      menuNonempty := by intro state; simp
-      successor := fun _ state => state
-      reward := fun _ _ => 0
-      terminal := fun _ => 0
-      output := fun state _ => state
-      successCost := fun _ _ => 0
-      failureReport := fun _ action => action
-      failureCost := fun _ _ => 1 }
-  have _ := partial_menu_finite_horizon_descent
-    (abstract := (id : Bool → Bool)) model model
-    (by intro state; rfl)
-    (by intro action state; rfl)
-    (by intro state action; rfl)
-    (by intro state; rfl)
-    (by intro state action; rfl)
-    (by intro state action; rfl)
-    (by intro state action; rfl)
-    (by intro state action; rfl)
-  trivial
 
 end D5.S3.ConceptDynamics.DecisionValue.PartialMenuFiniteHorizonDescent

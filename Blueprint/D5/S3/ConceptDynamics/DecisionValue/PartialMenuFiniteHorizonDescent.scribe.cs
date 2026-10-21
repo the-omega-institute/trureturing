@@ -25,9 +25,10 @@ internal sealed class PartialMenuFiniteHorizonDescentDocument : IScribeDocumentD
                 Blocks(
                     Paragraph(Text(
                         "Two models are related by an abstraction. Their legal menus agree on every "
-                            + "abstract fiber. Legal successors, rewards, terminal values, successful "
-                            + "outputs and costs, and illegal failure reports and costs all factor through "
-                            + "that abstraction.")),
+                            + "abstract fiber. Successors, rewards, successful outputs and costs factor "
+                            + "through the abstraction on legal actions only. Failure reports and costs "
+                            + "factor on illegal actions only. Terminal values factor at every state; "
+                            + "unused branch data are unconstrained.")),
                     Paragraph(Text(
                         "Induction on the remaining horizon compares the finite maxima over the same "
                             + "legal labels. It gives equal Bellman values and exactly the same set of "
