@@ -9,8 +9,6 @@
 module
 
 public import Mathlib.InformationTheory.Hamming
-public import Mathlib.LinearAlgebra.Dual.Lemmas
-public import Mathlib.LinearAlgebra.Matrix.ToLin
 public import Mathlib.LinearAlgebra.SesquilinearForm.Orthogonal
 public import Mathlib.Tactic
 
