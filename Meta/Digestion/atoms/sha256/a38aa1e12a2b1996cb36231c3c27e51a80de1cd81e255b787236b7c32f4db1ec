@@ -1,0 +1,21 @@
+**Theorem 166.1 (All-small-subfamilies criterion).** Put
+$d_s=\dim\operatorname{aff}K_s$. For every $\Gamma\subseteq\mathcal I$,
+
+$$
+\alpha(\Gamma)\ne\varnothing
+\iff \forall\Gamma_0\subseteq\Gamma,\quad
+ |\Gamma_0|\le d_s+1\Longrightarrow\alpha(\Gamma_0)\ne\varnothing.
+$$
+
+*Proof.* View every budget set inside $K_s$, intersecting it with this
+carrier. It is closed and convex there. If the full intersection is empty,
+compactness of $K_s$ supplies a finite empty subfamily by the finite
+intersection property. The preceding finite argument reduces it to at
+most $d_s+1$ sets. The reverse implication is immediate. Nonemptiness in
+$K_s$ is equivalent to a legal decoder realizing its point. $\square$
+
+Thus 41 tasks suffice to witness any infeasibility at every actual finite
+$n\ge1$, and 17 suffice at the limit. These are sufficient upper bounds;
+no sharpness or minimal cardinality is asserted. Feasibility of just one
+small subfamily does not establish feasibility of the entire family.
+

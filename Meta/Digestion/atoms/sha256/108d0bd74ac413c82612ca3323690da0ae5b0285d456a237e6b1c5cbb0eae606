@@ -1,0 +1,13 @@
+## 164. Attained budget slack and individual-optimum regret
+
+Empty intersections have their usual conventions:
+$\alpha(\varnothing)=\mathcal C$ and $\beta(\varnothing)=\mathcal I$.
+If $\alpha(\Gamma)=\varnothing$, its ordinary closure is
+$\beta\alpha(\Gamma)=\mathcal I$ by vacuous inclusion.
+To measure the incompatibility define, with $\sup\varnothing=0$,
+
+$$
+\delta_s(\Gamma)=\min_{\mathcal R\in\mathcal C}
+ \sup_{(E,\epsilon)\in\Gamma}(e_E(\mathcal R;s)-\epsilon)_+.
+$$
+

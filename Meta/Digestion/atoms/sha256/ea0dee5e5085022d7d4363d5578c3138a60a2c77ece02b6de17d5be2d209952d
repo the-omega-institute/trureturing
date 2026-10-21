@@ -1,0 +1,21 @@
+**Lemma 132.1 (Stationary-zero cubic chord lemma).** Let $K$ be a compact
+convex body with nonempty interior in a finite-dimensional real affine
+space. Let $f$ be a real polynomial of degree at most three on that
+space. If $u\in\operatorname{int}K$, $f(u)=0$, $Df(u)=0$ and
+$f>0$ on $\partial K$, then $f>0$ on $K\setminus\{u\}$.
+
+*Proof.* Fix a nonzero direction $v$ through $u$. Its intersection with
+$K$ is a segment whose boundary parameters satisfy $t_-<0<t_+$.
+The zero and stationary conditions give
+
+$$
+f(u+tv)=t^2(\alpha+\beta t).
+\tag{132.1}
+$$
+
+At both boundary endpoints the affine factor is positive, since the
+quadratic factor is nonzero. An affine function positive at both ends
+of an interval is positive on the entire interval. Thus
+$f(u+tv)>0$ for $t\ne0$ between these endpoints. Every point of
+$K\setminus\{u\}$ lies on one such line. $\square$
+

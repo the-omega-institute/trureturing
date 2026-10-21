@@ -1,0 +1,47 @@
+**Lemma 141.4 (All strict conditions can be retained together).**
+Along the branch define
+
+$$
+\begin{aligned}
+a_0&=L^2-d^2-xy,& a_1&=L(L+d)-py,\\
+a_2&=L(L-d)-k^2px,& \tau&=a_0+a_1+a_2=N_L,\\
+\beta&=k(L+d)+y,& \omega&=qpx\beta,\\
+w&=\omega/\tau,& g&=p(a_0-a_2)+r\omega.
+\end{aligned}
+\tag{141.9}
+$$
+
+One common smaller open interval around $q_0$ retains
+
+$$
+\begin{gathered}
+0<q,r<1,\qquad p,x,y>0,\qquad L,\tau,a_0,a_1,a_2>0,\\
+\beta,\ L-d+kx,\ L+kp,\ a_2-a_0,\ a_2-a_1,\ g>0.
+\end{gathered}
+\tag{141.10}
+$$
+
+It also retains $\eta=1-r^2>0$, $v_1,v_2,k,w>0$, and all the
+strict scalar slacks displayed in §143.
+
+*Proof.* Analytic IFT applied to the polynomial $F$ and Lemma 141.2
+first gives (141.8) on an open interval about $q_0$. The rational
+centre and box of Definition 128.1 and Lemma 129.2 give the first
+line of basic parameter signs. At $q_0$, (141.9) specializes exactly
+to (129.9), with $\omega=\omega_0$. Thus every remaining sign in
+(141.10) is supplied by the whole-box bounds in §129. The following
+additional outer intervals specify the small margin and useful
+positive factors more precisely, again at $q=q_0$ and for every
+$u\in\mathcal B$:
+
+| Expression | Rational lower endpoint | Rational upper endpoint |
+| --- | --- | --- |
+| $g$ | $0.00011128205452303927215155916$ | $0.00011128205452303931320279159$ |
+| $g/\tau$ | $0.00013053824554842534240889235$ | $0.00013053824554842539059288603$ |
+| $\eta$ | $0.15071210256946835223440677$ | $0.15071210256946835227126951$ |
+| $k$ | $0.76960795675759931317030883$ | $0.76960795675759931317530884$ |
+| $w$ | $0.023137200311339624401525323$ | $0.023137200311339624412468074$ |
+| $\Gamma/\sqrt{xy}$, with $\Gamma$ as in (139.9) | $0.38187019888773971797618789$ | $0.38187019888773971812051055$ |
+| $pr^2(v_1-q^2x)$ | $0.082831250381897860842067617$ | $0.082831250381897860858603919$ |
+| $(1-r^2)v_1+v_2$ | $0.40709797066733872287663940$ | $0.40709797066733872298039953$ |
+| $w(r+1/r)$ | $0.046428843542101801214667873$ | $0.046428843542101801237634023$ |

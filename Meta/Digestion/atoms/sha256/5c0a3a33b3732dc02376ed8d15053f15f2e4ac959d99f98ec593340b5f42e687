@@ -1,0 +1,71 @@
+## 159. Closed slices, covariance and nonunitality
+
+If only $z_1$ is nonzero, permutation separates the blocks $(0,3)$,
+$(2,4)$ and the positive scalar $1-a$. Their determinants give
+
+$$
+|z_1|^2\le\min\{ac,(1-b)(1-c)/k^2\}.
+\tag{159.1}
+$$
+
+If only $z_2$ is nonzero, the only nonscalar block is $(0,4)$, so
+the exact closed slice is
+
+$$
+|z_2|^2\le a(1-c).
+\tag{159.2}
+$$
+
+The circle in (159.2) has a singular $2\times2$ block and gives
+legal rank-four completions, illustrating the included PSD boundary.
+For explicit nonzero examples the public box [TR, (119.7)] implies
+
+$$
+\frac9{10}<a<\frac{19}{20},\quad 0<b<\frac25,\quad
+\frac25<c<\frac12,\quad 0<k^2=b/a<\frac49.
+\tag{159.3}
+$$
+
+The tuple $(z_1,z_2,z_3,z_4)=(1/100,0,0,0)$ has strict determinant
+margins
+
+$$
+ac-10^{-4}>\frac9{25}-\frac1{10000}>0,\qquad
+(1-b)(1-c)-k^2 10^{-4}>\frac3{10}-\frac1{22500}>0.
+\tag{159.4}
+$$
+
+It therefore has $H>0$. So does $(0,1/100,0,0)$, since
+$a(1-c)-10^{-4}>9/20-1/10000>0$.
+
+Covariance here means
+$\mathcal R\operatorname{Ad}_U=\operatorname{Ad}_U\mathcal R$
+for every diagonal unitary $U$ and every input matrix. The six
+offdiagonal matrix units have distinct torus characters
+$u_i\overline u_j$, whereas diagonals have character zero.
+In (158.3), $E_{02}\mapsto E_{01}$ forces $z_1=0$,
+$E_{02}\mapsto E_{21}$ forces $z_3=0$, and
+$E_{12}\mapsto E_{21}$ forces $z_4=0$. Conversely, if these
+coordinates vanish, every offdiagonal unit maps into its own
+character space and every diagonal unit remains diagonal.
+Thus the entire covariant optimizer family is exactly
+
+$$
+z_1=z_3=z_4=0,\qquad |z_2|^2\le a(1-c).
+\tag{159.5}
+$$
+
+The $z_1=1/100$ example is noncovariant; the $z_2=1/100$ example
+is covariant. The complex disk (159.5) is a proper subfamily of the
+eight-dimensional family, not the positive-parameter disk of §139.
+
+Finally $\Phi(I)=I$. Formula (156.5) therefore gives for every
+optimizer
+
+$$
+\mathcal R(I)=\operatorname{diag}(a,b+c,3-a-b-c)\ne I,
+\tag{159.6}
+$$
+
+because $a<1$. All these second-horizon optimizers are nonunital.
+

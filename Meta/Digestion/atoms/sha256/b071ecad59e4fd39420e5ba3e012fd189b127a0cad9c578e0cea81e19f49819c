@@ -1,0 +1,10 @@
+## 139. The complete complex optimal-decoder disk
+
+Throughout this section put $r=r_*$, $L=L_*$ and
+$(p,x,y)=(p_*,x_*,y_*)$, with the root specified in Definition 128.1
+and isolated by Lemma 129.2. The value and necessary support used here
+are Theorems 128.2 and 137.1. The competitors remain all complex CPTP
+maps on $M_3$, with the common-decoder, all-density, identity-target
+quantifiers of Definition 127.2. In particular no reality, covariance,
+unitality or prescribed-family condition is imposed on a competitor.
+

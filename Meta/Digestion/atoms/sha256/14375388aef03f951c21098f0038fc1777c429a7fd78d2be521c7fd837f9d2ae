@@ -1,0 +1,170 @@
+**Theorem 102.2 (The unital equality set).** For the actual horizons,
+
+$$
+\delta_n^{\mathrm u}=\delta_n
+\quad(n=0,\ n\ge1\text{ odd},\ n=\infty),
+\qquad
+\delta_n^{\mathrm u}>\delta_n
+\quad(n\ge2\text{ finite even}).
+\tag{102.2}
+$$
+
+At every finite even horizon, every unrestricted optimal terminal decoder is
+therefore nonunital. The strict inequality is per horizon; no uniform lower
+bound for $\delta_n^{\mathrm u}-\delta_n$ is asserted.
+
+*Proof.* The unrestricted class contains the unital class, so the first
+inequality in the comparison is always $\delta_n^{\mathrm u}\ge\delta_n$.
+At $n=0$ the identity is an attainer. For every odd $n\ge1$, the decoder
+$D_n=\operatorname{Ad}_{U_0^\dagger}$ in (94.6) is unitary and unital. At
+the limit the identity decoder is unital and attains the value $\delta_\infty
+=4/5$ in (94.2). It remains to exclude equality at a finite even horizon.
+
+Fix such a horizon, put $s=-t$ with $t>0$, and let $p$ be the strictly
+positive probe in (97.2) when $n=2$, or in (98.2) when $n\ge4$. For an
+arbitrary reduced decoder define $T_{ij}$ and $\ell$ as in (95.1), put
+$u=\sqrt{T_{11}}$ and $z=T_{22}$, and let $G_{\mathcal R}(p)$ and
+$L_s(p;u,z)$ be (95.2) and (95.3). The exact even-sign remainder is
+
+$$
+\begin{aligned}
+L_s(p;u,z)-G_{\mathcal R}(p)
+={}&p_0^2(1-T_{00})
+ +b p_1^2(1-z-T_{12})\\
+&+b p_2^2(1-u^2-T_{21})
+ +2t p_0p_1(u+\operatorname{Re}\ell).
+\end{aligned}
+\tag{102.3}
+$$
+
+Every term is nonnegative. The first three assertions follow from
+column stochasticity and $T_{00}\le1$; for the last one,
+$|\ell|^2\le T_{00}T_{11}$ gives $\operatorname{Re}\ell\ge-u$.
+The lower certificate (95.4), together with the optimal value
+$\delta_n=1-\eta_n$, gives for every decoder
+
+$$
+\delta_n\ge 1-G_{\mathcal R}(p)\ge1-L_s(p;u,z)\ge\delta_n
+$$
+
+whenever the decoder attains $\delta_n$. Hence equality holds throughout,
+and (102.3) forces
+
+$$
+T_{00}=1,\qquad T_{12}=1-z,\qquad T_{21}=1-u^2,
+\qquad \ell=-u.
+\tag{102.4}
+$$
+
+Indeed all coefficients in (102.3) are strictly positive, and the last
+identity uses $|\ell|\le u$. Column sums then give
+$T_{10}=T_{20}=T_{01}=T_{02}=0$. If $\mathcal R$ is unital, its population
+matrix is doubly stochastic; the sum of row one in (102.4) gives
+
+$$
+ z=u^2.
+\tag{102.5}
+$$
+
+We next record the complete consequence of saturation in the trace-distance
+certificate. Let $P_p=|\psi_p\rangle\langle\psi_p|$ and
+$\rho=(\mathcal C\otimes\operatorname{id})(P_p)$. Equality in the
+measurement bound in (95.4) says
+
+$$
+\frac12\lVert\rho-P_p\rVert_1
+ =1-\langle\psi_p|\rho|\psi_p\rangle=1-\eta_n.
+\tag{102.6}
+$$
+Put $H=P_p-\rho$ and write its Jordan decomposition
+$H=H_+-H_-$. Since $\operatorname{Tr}H=0$,
+$\operatorname{Tr}H_+=\operatorname{Tr}H_-=1-\eta_n$; and (102.6) gives
+$\operatorname{Tr}(P_pH)=1-\eta_n$. Therefore
+$\operatorname{Tr}(P_pH_-)=0$ and $H_+=(1-\eta_n)P_p$.
+Consequently
+
+$$
+\rho=\eta_nP_p+H_-,\qquad H_-\succeq0.
+\tag{102.7}
+$$
+
+Let $S=\operatorname{diag}(\sqrt{p_0},\sqrt{p_1},\sqrt{p_2})$. In the
+output-first Choi convention (93.9),
+$\rho=(I\otimes S)J(\mathcal C)(I\otimes S)$ and
+$P_p=(I\otimes S)J(\operatorname{id})(I\otimes S)$. All $p_i$ are positive,
+so the inverse congruence in (102.7) yields
+
+$$
+J(\mathcal C)-\eta_nJ(\operatorname{id})\succeq0,
+\qquad
+\mathcal C-\eta_n\operatorname{id}\ \text{is completely positive}.
+\tag{102.8}
+$$
+
+This is a necessity for an equality case in the present weighted probe; it is
+not a general trace-distance equality theorem for unrelated channels.
+
+For $n=2$, (97.7) and the strict signs in (97.4) give
+
+$$
+L_s(p;u,z)-\eta_2=A(u-r_*)^2+Bz,
+\qquad A<0,\quad B<0.
+\tag{102.9}
+$$
+
+The ratio estimate (97.5) is the reason both signs are strict. Equality in
+(102.9) forces $u=r_*$ and $z=0$, whereas (102.5) would require
+$z=r_*^2>0$. Thus an unital decoder cannot attain $\delta_2$.
+
+Now let $n\ge4$ be even. Use $h,r,z_*,p,\eta$ from (98.1)--(98.2), where
+$z_*$ is the attainer's parameter in (94.6). Equality in (98.12) forces
+$u=r$; a unital equality case would have $z=r^2$. The principal Choi block
+of $\mathcal C=\mathcal R\Phi_{-t}$ on
+$|00\rangle,|11\rangle,|22\rangle$, using (102.4), (102.5), is
+
+$$
+M=\begin{pmatrix}1&tr&0\\tr&q&0\\0&0&q\end{pmatrix},
+\qquad q=b-tr^2.
+\tag{102.10}
+$$
+
+By (102.8), $N=M-\eta\mathbf1\mathbf1^{\mathsf T}$ must be positive
+semidefinite. Let $M_*$ be the block (95.5) with the same $r$ and with
+$z=z_*$. Equations (98.7)--(98.10) say $M_*p=\eta\mathbf1$. Put
+
+$$
+ d=r^2-z_*
+ =\frac{h-1}{h+1}
+   \left[h-\left(\frac{1+h^2}{h^2+3}\right)^2\right]>0.
+\tag{102.11}
+$$
+
+The positivity is immediate from $h>1$ and
+$(1+h^2)/(h^2+3)<1$. Since $p_2=hp_1$ and $b=ah^2$, direct subtraction of
+$M_*p=\eta\mathbf1$ from (102.10) gives
+
+$$
+Np=\begin{pmatrix}0\\-b p_1d\\a p_2d\end{pmatrix},
+\qquad
+p^{\mathsf T}Np=-bp_1^2d+ap_2^2d=0.
+\tag{102.12}
+$$
+
+A positive semidefinite matrix whose quadratic form vanishes on $p$ must
+annihilate $p$; (102.12) does not. This contradiction excludes every unital
+optimal decoder at every later finite even horizon.
+
+Finally, for fixed $n$ the unital Choi set is closed and bounded: it is
+specified by complete positivity, trace preservation, and the additional
+unital partial-trace constraint, while its trace is fixed at three. It is
+therefore compact, and the diamond objective is continuous in the Choi
+entries. The restricted minimum exists. Since it cannot equal the
+unrestricted minimum by the preceding arguments, the inequality is strict.
+This proves (102.2). $\square$
+
+The parity in (102.2) is a statement about the actual horizon parameter of
+this qutrit channel. A structurally related analysis in a different setting
+is [Shahbeigi et al.][SHA]. That work concerns dimension $d>3$ and average
+fidelity, with a dimension-parity issue rather than the horizon parity here. No general
+nonunital-correction principle is inferred from either result.
+
