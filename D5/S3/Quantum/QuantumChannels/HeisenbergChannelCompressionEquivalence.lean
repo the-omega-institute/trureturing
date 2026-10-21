@@ -10,6 +10,9 @@ import D5.S3.Quantum.QuantumChannels.ConcealmentKernelNecessityRefutation
 import D5.S3.Quantum.Foundation.FiniteKrausRepresentation
 import Mathlib.Analysis.InnerProductSpace.GramSchmidtOrtho
 
+/-! Isometric compressions and unital completely positive maps give the same
+compatibility condition at a fixed output dimension. -/
+
 set_option autoImplicit false
 set_option relaxedAutoImplicit false
 
@@ -50,9 +53,9 @@ private theorem compression_channel {d n : ℕ} (V : Matrix (Fin d) (Fin n) ℂ)
     (compressionMap V).IsCompletelyPositive ∧ compressionMap V 1 = 1 ∧
       ∀ A, compressionMap V A = Vᴴ * A * V := by
   have hA (A : Matrix (Fin d) (Fin d) ℂ) : compressionMap V A = Vᴴ * A * V := by
-    simp only [compressionMap, MatrixMap.of_kraus, LinearMap.sum_apply,
-      LinearMap.coe_mk, AddHom.coe_mk, Matrix.conjTranspose_conjTranspose,
-      Fintype.sum_unique]
+    rw [compressionMap, MatrixMap.of_kraus, Fintype.sum_unique]
+    change Vᴴ * A * (Vᴴ)ᴴ = Vᴴ * A * V
+    rw [Matrix.conjTranspose_conjTranspose]
   refine ⟨MatrixMap.of_kraus_isCompletelyPositive (fun _ : Unit => Vᴴ), ?_, hA⟩
   rw [hA, Matrix.mul_one, hV]
 
@@ -61,14 +64,21 @@ private theorem heisenberg_kraus {d n : ℕ}
     ∃ K : (Fin n × Fin d) → Matrix (Fin d) (Fin n) ℂ,
       (∑ r, (K r)ᴴ * K r) = 1 ∧ ∀ A, Φ A = ∑ r, (K r)ᴴ * A * K r := by
   obtain ⟨L, hL⟩ := MatrixMap.IsCompletelyPositive.exists_kraus Φ hCP
+  have hA (A : Matrix (Fin d) (Fin d) ℂ) : Φ A = ∑ r, L r * A * (L r)ᴴ := by
+    rw [hL, MatrixMap.of_kraus, LinearMap.sum_apply]
+    rfl
   refine ⟨fun r => (L r)ᴴ, ?_, ?_⟩
-  · rw [hL] at hu
-    simpa only [MatrixMap.of_kraus, LinearMap.sum_apply, LinearMap.coe_mk,
-      AddHom.coe_mk, Matrix.mul_one, Matrix.conjTranspose_conjTranspose] using hu
+  · calc
+      _ = ∑ r, L r * 1 * (L r)ᴴ := by
+        apply Finset.sum_congr rfl
+        intro r _
+        rw [Matrix.conjTranspose_conjTranspose, Matrix.mul_one]
+      _ = 1 := (hA 1).symm.trans hu
   · intro A
-    rw [hL]
-    simp only [MatrixMap.of_kraus, LinearMap.sum_apply, LinearMap.coe_mk,
-      AddHom.coe_mk, Matrix.conjTranspose_conjTranspose]
+    rw [hA]
+    apply Finset.sum_congr rfl
+    intro r _
+    rw [Matrix.conjTranspose_conjTranspose]
 
 private theorem isometric_factorization {d n : ℕ} (hnd : n ≤ d)
     (K : Matrix (Fin d) (Fin n) ℂ) :
