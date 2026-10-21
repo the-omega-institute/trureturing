@@ -166,6 +166,10 @@ $$(\forall a: \mathbb{R}, ((a = 0) \lor (a = 1)) \Rightarrow (\forall z: \mathbb
 
 *Proof.* Machine-checked in Lean as `D5/S3/QuantumChannels/FlatPairEndpointHomomorphisms.result` (`✓ std3`). ∎
 
+*Resolves.* `Problems/verhagen-tomamichel-haapasalo-2025-flat-pair-endpoint-homomorphisms-remark-15` (proved) by `D5/S3/QuantumChannels/FlatPairEndpointHomomorphisms.result`.
+
+<!-- scribe-open-problem-resolution-v1 {"problem_slug":"verhagen-tomamichel-haapasalo-2025-flat-pair-endpoint-homomorphisms-remark-15","declaration_gid":"D5/S3/QuantumChannels/FlatPairEndpointHomomorphisms.result","resolution_kind":"proved"} -->
+
 *Source.* Repository-derived.
 
 *Acknowledgement.* Frits Verhagen; Marco Tomamichel; Erkka Haapasalo (2026). *Conditions for Large-Sample Majorization of Pairs of Flat States in Terms of α-z Relative Entropies*. DOI: [10.1007/s00220-026-05675-5](https://doi.org/10.1007/s00220-026-05675-5). URL: <https://arxiv.org/abs/2507.07520v3>.

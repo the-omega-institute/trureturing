@@ -55,12 +55,17 @@ internal sealed class FlatPairEndpointHomomorphismsDocument : IScribeDocumentDef
                 "claim", AssessedProvenance.FromLiterature(Source)),
             Node("result", "The endpoint suspicion holds", Disp(ClaimBody()),
                 "An orthogonally flagged two-outcome filter takes one squared overlap 1/2 to squared overlaps 1/4 and 3/4 with equal second weights. Strict concavity for 0 < z < 1 and strict convexity for z < 0 give opposite strict inequalities. Erasure gives the other failed order. Swapping the two matrices transfers a = 0 to a = 1. For negative z the tropical maximum increases from (1/2)^z to (1/4)^z. The tropical opposite order and monotone derivations remain separate questions.",
-                "result", AssessedProvenance.FromRepo(Source), DescribeRole.Theorem))));
+                "result", AssessedProvenance.FromRepo(Source), DescribeRole.Theorem,
+                new OpenProblemResolutionClaim(
+                    ProblemSlugRef.Create("verhagen-tomamichel-haapasalo-2025-flat-pair-endpoint-homomorphisms-remark-15"),
+                    ResolutionKind.Proved)))));
 
     private static DocumentBlock Node(string id, string title, Formula formula, string prose,
-        string declaration, AssessedProvenance provenance, DescribeRole role = DescribeRole.Definition) =>
+        string declaration, AssessedProvenance provenance, DescribeRole role = DescribeRole.Definition,
+        OpenProblemResolutionClaim? resolution = null) =>
         Describe.Lean(DescribeId.Create("flat-pair-" + id), DeclarationHandle.Create(Prefix + declaration),
-            H(title), StatementSource.FromAuthor(formula), provenance, Blocks(Paragraph(Text(prose))), role);
+            H(title), StatementSource.FromAuthor(formula), provenance, Blocks(Paragraph(Text(prose))), role,
+            openProblemResolutionClaim: resolution);
 
     private static Formula V(string name) => F.Id(name);
     private static Formula N(string name) => Seq(Operatorname, Grp(V(name)));
