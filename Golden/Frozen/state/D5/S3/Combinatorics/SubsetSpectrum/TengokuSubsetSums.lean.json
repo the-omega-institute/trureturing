@@ -1,0 +1,1 @@
+{"statement_id":"sha256:963f4954022f8c37ec93c8d6de95ff31f458b75cea6c12f1ba122146826c682a","declarations":[{"declaration_name_key":"ns(ns(ns(ns(ns(n0,2:D5),2:S3),13:Combinatorics),14:SubsetSpectrum),10:subsetSums)","kind":"def"},{"declaration_name_key":"ns(ns(ns(ns(ns(n0,2:D5),2:S3),13:Combinatorics),14:SubsetSpectrum),15:powerset_map_eq)","kind":"theorem"}]}

@@ -1,0 +1,9 @@
+fingerprints:
+  raw_sha256: sha256:e27f2f40f53b483ae3e9abb84de6562a9a641671235caee822fbacad58e3eb5f
+  normalized_sha256: sha256:e27f2f40f53b483ae3e9abb84de6562a9a641671235caee822fbacad58e3eb5f
+cas_ref: sha256:e27f2f40f53b483ae3e9abb84de6562a9a641671235caee822fbacad58e3eb5f
+coverage_gids:
+  - gid: D5/S0/Diagonal/Naturality/NaturalityDefectComposition.naturality_defect_comp_le
+    target_statement_id: sha256:03255a1d1bf17d7788c74728ed2da68ba2488acee5734d3d7270e6f32c7227e1
+receipts:
+  unresolved_subitems: []

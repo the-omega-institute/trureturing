@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:c584b90ad1924cab53e0dfc3cbc5563ba285bf12a914e968271ea78340b80161
+  normalized_sha256: sha256:c584b90ad1924cab53e0dfc3cbc5563ba285bf12a914e968271ea78340b80161
+cas_ref: sha256:c584b90ad1924cab53e0dfc3cbc5563ba285bf12a914e968271ea78340b80161
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 只有第46节章节标题，不含数学断言。
+    previous_atom_id: 3e7b99806c956279ad22c57f6c114cf83f9048a82da7ca54d7b6384b2deec5bc
+    next_atom_id: 374492c3399441b9f81caec6a8f62cdf8e0653b82eb0b76adc15877ec26bca79

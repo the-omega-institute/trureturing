@@ -457,6 +457,148 @@ the conditional Wilson-loop assertions remain open. Neither the
 general product-weight question nor these residuals follow from the
 boundary argument or from the arbitrary-joint-weight refutation.
 
+### Uniform raw split real-stability obstruction
+
+The physical specialization has a uniform obstruction to one tempting
+intermediate route. This is a statement about the raw split generating
+polynomial, not about the Lee--Yang state sum. Keep $a,b\ge3$ fixed, put
+$N=a+b$, and use the leaf-oriented incidence $0\to1\leftarrow2$ (equivalently,
+reverse both printed arrows when reading the source convention). Set
+
+$$
+f(t)=\frac{(2t)!}{(t-1)!\,t!},\qquad
+U_n(j)=\binom nj\binom n{j+1}.
+$$
+
+The source's (2.15) gives
+$\mathcal V(t_1,\ldots,t_\alpha)=\frac{(d-1)!}{(d-\alpha+2)!}
+\prod_i f(t_i)$, where $d=\sum_i t_i$. Thus the two leaves contribute
+$f(k)/(k(k+1))$ and $f(\ell)/(\ell(\ell+1))$, while the degree-two
+centre contributes $f(a-k)f(b-\ell)/(N-k-\ell)$. Including all three
+vertex factors, as required by the physical product in (2.31), gives
+
+$$
+\rho_{k\ell}=\binom{2a}{2k}\binom{2b}{2\ell}
+ \frac{f(k)}{k(k+1)}
+ \frac{f(a-k)f(b-\ell)}{N-k-\ell}
+ \frac{f(\ell)}{\ell(\ell+1)}.
+$$
+
+For every $1\le j<n$ the factorial cancellation is exact:
+
+$$
+\binom{2n}{2j}\frac{f(j)f(n-j)}{j(j+1)}
+ =\binom{2n}{n}\binom nj\binom n{j+1}.
+$$
+
+Indeed, after cancelling $(2j)!$ and $(2n-2j)!$, use
+$j!=j(j-1)!$ and $(j+1)!=(j+1)j!$; every factorial argument is
+nonnegative on the displayed split range. Consequently
+
+$$
+\rho_{k\ell}=C_{ab}\,w_{k\ell},\qquad
+C_{ab}=\binom{2a}{a}\binom{2b}{b}>0,\qquad
+w_{k\ell}=\frac{U_a(k)U_b(\ell)}{N-k-\ell}.
+$$
+
+This is the source echo and scalar bridge; it does not replace the state
+sum in (2.30). Define only the raw split polynomial
+
+$$
+K_{a,b}(u,v)=\sum_{k=1}^{a-1}\sum_{\ell=1}^{b-1}
+ w_{k\ell}u^{k-1}v^{\ell-1}.
+$$
+
+At $\tau=-1$, the eight-state sum for a fixed split is
+$(1-X^k)(1+X^{N-k-\ell})(1-X^\ell)$, so the physical polynomial is
+
+$$
+P^{\mathrm{ph}}_{a,b}(-1,X)=C_{ab}\sum_{k=1}^{a-1}\sum_{\ell=1}^{b-1}
+w_{k\ell}(1-X^k)(1+X^{N-k-\ell})(1-X^\ell).
+$$
+
+The following calculation concerns $K_{a,b}$ only.
+
+It has bidegree $(a-2,b-2)$. Apply
+$\partial_u^{a-3}\partial_v^{b-3}$. Only
+$k\in\{a-2,a-1\}$ and $\ell\in\{b-2,b-1\}$ survive. Writing
+
+$$
+A_n=U_n(n-2)=\frac{n^2(n-1)}2,\qquad B_n=U_n(n-1)=n,
+$$
+
+the four undifferentiated corner coefficients are
+
+$$
+\begin{pmatrix}
+A_aA_b/4 & A_aB_b/3\\[2pt]
+B_aA_b/3 & B_aB_b/2
+\end{pmatrix};
+$$
+
+the denominators $4,3,3,2$ are respectively
+$N-(a-2)-(b-2)$, $N-(a-2)-(b-1)$,
+$N-(a-1)-(b-2)$, and $N-(a-1)-(b-1)$. Including the derivative
+factors and dividing by the positive scalar
+$(a-3)!(b-3)!A_aA_b/4$ gives exactly
+
+$$
+1+c_a u+c_b v+\frac98c_ac_buv,
+\qquad
+c_a=\frac{8(a-2)}{3a(a-1)},\quad
+c_b=\frac{8(b-2)}{3b(b-1)}.
+$$
+
+Both $c_a$ and $c_b$ are strictly positive, including the corner case
+$a=b=3$ (where no differentiation is taken). This calculation checks the
+degree, all four central denominators, and every factorial scalar.
+
+The closure step uses Borcea--Brändén--Liggett, *Negative Dependence and
+the Geometry of Polynomials*, [arXiv:0707.2340](https://ar5iv.labs.arxiv.org/html/0707.2340), Proposition 3.1(2): a
+partial derivative of a real-stable polynomial is real-stable or zero,
+and positive coordinate scaling preserves real stability. The derivative
+above is nonzero because its $uv$ coefficient is positive. After the
+positive rescaling $x=c_au$, $y=c_bv$, a real-stable $K_{a,b}$ would force
+
+$$
+G(x,y)=1+x+y+\frac98xy
+$$
+
+to be real-stable. But the exact bilinear zero
+
+$$
+x=i,\qquad
+y=-\frac{1+i}{1+9i/8}=-\frac{136}{145}+\frac{8}{145}i
+$$
+
+has both coordinates in the open upper half-plane and satisfies
+$G(x,y)=0$. Thus $G$, the differentiated polynomial, and $K_{a,b}$ are
+all non-stable. Multiplication by the positive physical scalar $C_{ab}$
+does not change this conclusion. The same paper's Theorem 4.1 gives the
+corresponding bilinear real-stability criterion; the displayed zero is a
+direct witness, so no sign convention from that criterion is being used
+implicitly here.
+
+The mechanism is the degree-two central factor. In a $2\times2$ corner,
+dividing the stable product coefficients by the successive central
+degrees produces $1/M,1/(M-1),1/(M-1),1/(M-2)$, whose bilinear minor is
+
+$$
+\frac1{(M-1)^2}-\frac1{M(M-2)}
+=-\frac1{M(M-2)(M-1)^2}<0\qquad(M\ge4).
+$$
+
+This rules out the raw split-real-stability lemma as a route for every
+interior pair $a,b\ge3$. It does not produce a zero of
+$P^{\mathrm{ph}}_{a,b}(-1,X)$ off the unit circle: that polynomial still
+contains the three spin factors from (2.30); the scalar bridge only
+relates the weights without identifying the two zero sets. The physical
+two-edge Lee--Yang question for $a,b\ge3$, the full tree problem, other
+$\tau$, assignment sums, and Conjecture 2 therefore remain open. This is
+source-grounded prose only, with no new Lean declaration, kernel claim,
+or literature-priority assertion; alternative disk-specific or
+interlacing routes remain available.
+
 ## ASSUMED-UNVERIFIED
 
 The preregistration's search producer reports its forward-citation screen;

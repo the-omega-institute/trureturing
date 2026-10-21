@@ -1,0 +1,26 @@
+**Lemma 17.6 (The degree-two factor has an actual exceptional consumer).**
+An actual companion of a singular world at $p\ne24$ with
+$x\ne x_s$ cannot give a distinct terminal-$M$ pair through $W_2(x)=0$.
+
+**Proof.** Lemma 17.4 gives $D\ell\ne0$. At $x\ne x_s$, the
+necessary equations give $F_s=G_s=0$. Lemma 17.3 gives
+$\alpha_tt+\beta_t=0$ even when $A=0$. At a $W_2$ root, Lemma
+17.5 gives $\alpha_t\ne0$, so $t=-\beta_t/\alpha_t$, and its last
+congruence gives
+
+$$
+N_0+N_1t=(\alpha_tN_0-\beta_tN_1)/\alpha_t=0,\qquad d=0.
+$$
+
+For an actual world the clock-zero identity in Theorem 3.2 is
+
+$$
+2F_0=d\bigl(45x^3+89x^2-32x-40+UD\bigr).
+$$
+
+Thus $d=0$ implies $F_0=0$. The companion and the singular endpoint
+are both in the actual exceptional union $E(p,v)$. Theorem 3.2 makes
+$f_{MM}$ injective on that union, excluding their distinctness. This
+uses the full original clock-zero equation of a world; it does not
+assign a world to a root merely because it lies on $W_2$. ∎
+

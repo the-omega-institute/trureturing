@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:7e2d877d113ea27b88f86052fc0ef2d608daaa4bc07b6769274f4936d7c4c379
+  normalized_sha256: sha256:7e2d877d113ea27b88f86052fc0ef2d608daaa4bc07b6769274f4936d7c4c379
+cas_ref: sha256:7e2d877d113ea27b88f86052fc0ef2d608daaa4bc07b6769274f4936d7c4c379
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 上游闭合命题，非 nonpropositional：Set.image_comp 将世界像转为实际响应像；按既定严格函数的域谓词分拆 R_W=(R_W∩D)∪(R_W\D)，Set.image_union 与 Set.mem_image 展开成功像和非空失败单点集，Option.some_ne_none 保持标签互斥。mathlib revision 56a005855ea17e0b0958f73ec801ae140b0a1679。搜索 D5/**/*.lean 含 private 的一般条件像/标签像形状，未命中可用冻结供应；GuardedArithmeticTerms 的四符号语法没有供应这个任意响应/值域映射的像等式。
+    previous_atom_id: 66166b4937bf410b16c32f8ef268175f233c13b2cd602ddb4bf6328736d12b7b
+    next_atom_id: 4efcbef42a57c1634c076de16c77d5648c7577f5a575bab99430a6dc7ea13477

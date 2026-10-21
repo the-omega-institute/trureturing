@@ -1,0 +1,10 @@
+**Theorem 88.2 (source-side persistence certificate).** For a
+terminal-recognized \((I,B)\), exactly one of the following alternatives is
+returned by the finite procedure:
+
+1. Some face has \(\mathcal C_K\) true. The procedure then constructs, for
+   every requested \(h\), actual finite originals in every row of \(B\) whose
+   complete outputs share one prefix of depth \(h\).
+2. Every face has \(\mathcal C_K\) false. The procedure then returns a finite
+   \(H\) with \(\neg J_B(H)\).
+

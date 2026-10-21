@@ -1,0 +1,60 @@
+**Lemma 2.3 (Polynomial identities and endpoint continuation).** On
+strict sources,
+
+$$
+\begin{gathered}
+\Lambda=\frac{2\mathscr P}{b^2TUjn},\\
+q_s(5)-L_5=\frac{15}{4}\Lambda,\qquad
+q_s(6)-L_6=9\Lambda,\qquad
+q_s(7)-L_7=\frac{35}{2}\Lambda,\\
+\widetilde A_5=\frac{D}{2b^2TUn},\qquad
+\widetilde A_J-3\widetilde A_6=\frac{N}{2b^2TUn}.
+\end{gathered}
+\tag{2.8}
+$$
+
+In the middle line $q_s$ denotes the interpolant (2.2) at the source
+in question, whether or not $\Lambda=0$. The divisions in (2.6) and
+(2.7) have zero remainders. Their coordinate degrees are
+
+$$
+\begin{array}{c|cccccccc}
+\text{polynomial}&\mathscr P&D&N&H&N_L&D_L&J_U&J_L\\ \hline
+\text{degrees}&(4,6)&(4,6)&(4,6)&(13,6)&(14,6)&(14,6)&(11,16)&(37,16).
+\end{array}
+\tag{2.9}
+$$
+
+Moreover,
+
+$$
+\begin{gathered}
+H(0,z)=2-4z,\qquad H(1,z)=4-2(1+z)^2,\\
+\mathcal B+16H=rJ_L,\qquad
+\mathcal B(0,z)=32(2z-1)=-16H(0,z).
+\end{gathered}
+\tag{2.10}
+$$
+
+Proof. Interpolation at the four nodes gives
+
+$$
+\begin{aligned}
+q_s(5)&=4-15/j+20/T-10/n,\\
+q_s(6)&=10-36/j+45/T-20/n,\\
+q_s(7)&=20-70/j+84/T-35/n.
+\end{aligned}
+\tag{2.11}
+$$
+
+Subtracting (2.5) gives the middle line of (2.8). Substitute
+$c=r(1-r)/b$ in the other expressions and collect powers of $b$;
+their numerators are exactly the coefficient table in Definition 2.2.
+Substitution $b=r(1-r)(1+rz)$ in that table cancels $rq^2$ or $q^2$
+as specified in (2.6). The resulting endpoint substitutions give the
+first line of (2.10); substituting those polynomial quotients into
+$\mathcal B$ gives its last identity. Hence $\mathcal B+16H$ is
+divisible by $r$. These operations give (2.9) and all the asserted
+polynomial identities. They involve only finite rational polynomial
+arithmetic. In particular they do not cancel an actual singular world. ∎
+

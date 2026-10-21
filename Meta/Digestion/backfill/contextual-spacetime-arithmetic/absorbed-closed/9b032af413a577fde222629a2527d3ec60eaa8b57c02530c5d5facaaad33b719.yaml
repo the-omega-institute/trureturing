@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:9b032af413a577fde222629a2527d3ec60eaa8b57c02530c5d5facaaad33b719
+  normalized_sha256: sha256:9b032af413a577fde222629a2527d3ec60eaa8b57c02530c5d5facaaad33b719
+cas_ref: sha256:9b032af413a577fde222629a2527d3ec60eaa8b57c02530c5d5facaaad33b719
+coverage_gids:
+  - gid: D5/S3/ConceptDynamics/Spacetime/LeafSquareReadout.sourceFilter
+    target_statement_id: sha256:9759d5a892ccc1a4b3ee7f2b2cac3612504d17be9b1699bb8aa6de8390eec453
+  - gid: D5/S3/ConceptDynamics/Spacetime/LeafSquareReadout.sourceFilterBalanced
+    target_statement_id: sha256:7706d6d86a0af70bdc702355bc271779a51e8ff2ed6970aa09d9101751b281b9
+receipts:
+  unresolved_subitems: []

@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:322737458050c9e207be83bcdceee1f58521c2a34ce133121b1e1eda88e2ebaa
+  normalized_sha256: sha256:322737458050c9e207be83bcdceee1f58521c2a34ce133121b1e1eda88e2ebaa
+cas_ref: sha256:322737458050c9e207be83bcdceee1f58521c2a34ce133121b1e1eda88e2ebaa
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 候选构造清单的图/树/molecule 项，非普遍有效性定理。
+    previous_atom_id: bc841c51f0159fa36cd42de54364adcefaff133a1c33cd3a11b679a1030a8918
+    next_atom_id: 86cd229762520630870e9e015d761ca99e420a2c176419ea3b817d7d9dd715b1

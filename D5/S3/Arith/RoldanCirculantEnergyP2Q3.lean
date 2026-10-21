@@ -30,9 +30,9 @@ The source adjacency, energy, divisor set and claim use the expressions of #1914
 The spectral proof uses the original Fourier and Ramanujan owners.
 
 Declaration classification:
-  circulant_charpoly: bind-only; consumers: real_circulant_charpoly.
-  dft_real_of_even: bind-only; consumers: real_circulant_charpoly.
-  real_circulant_charpoly: bind-only; consumers: real_circulant_roots.
+  CirculantCharpoly.circulant_charpoly: reused from D5/S3/Quantum/Matrix/CirculantCharpoly; consumer: real_circulant_roots.
+  CirculantCharpoly.dft_real_of_even: reused from D5/S3/Quantum/Matrix/CirculantCharpoly; consumer: real_circulant_charpoly.
+  CirculantCharpoly.real_circulant_charpoly: reused from D5/S3/Quantum/Matrix/CirculantCharpoly; consumer: real_circulant_roots.
   real_circulant_roots: bind-only; consumers: energy_eq_dft.
   ramanujan_prime_power: bind-only; consumers: ramanujan_prime_power_values.
   ramanujan_prime_power_values: bind-only; consumers: ramanujan_prime_power_mixed.
@@ -84,6 +84,7 @@ Declaration classification:
 -/
 
 import D5.S3.Quantum.Dynamics.PolygonalFourierCouplings
+import D5.S3.Quantum.Matrix.CirculantCharpoly
 import D5.S3.Analytic.Certified.FiniteRamanujanDivisorIdentity
 import D5.S3.Arith.RoldanCirculantEnergyP2Q3Certificate
 import D5.S3.ConceptDynamics.Coding.CountedOriginalOrbitGyration
@@ -98,45 +99,14 @@ open Matrix Polynomial Complex
 noncomputable section
 namespace D5.S3.Arith.RoldanCirculantEnergyP2Q3
 variable (n : ℕ) [NeZero n]
-private theorem circulant_charpoly (b : ZMod n → ℂ) :
-    (Matrix.circulant b).charpoly = ∏ j : ZMod n, (X - C (ZMod.dft b j)) := by
-  have hs := D5.S3.Quantum.Dynamics.PolygonalFourierCouplings.circulant_spectral n b
-  have hu := D5.S3.Quantum.Dynamics.PolygonalFourierCouplings.transform_unitary n
-  have hi : IsUnit (D5.S3.Quantum.Dynamics.PolygonalFourierCouplings.transform n) := isUnit_iff_exists_inv.mpr ⟨(D5.S3.Quantum.Dynamics.PolygonalFourierCouplings.transform n)ᴴ, hu⟩
-  have hd : (D5.S3.Quantum.Dynamics.PolygonalFourierCouplings.transform n).det ≠ 0 := ((Matrix.isUnit_iff_isUnit_det _).mp hi).ne_zero
-  have hcp := Matrix.charpoly_eq_of_mul_eq_mul hd hs.symm
-  change (Matrix.diagonal (ZMod.dft b)).charpoly = (Matrix.circulant b).charpoly at hcp
-  rw [Matrix.charpoly_diagonal] at hcp
-  exact hcp.symm
-private theorem dft_real_of_even (b : ZMod n → ℝ) (hb : ∀ k, b (-k) = b k) (j : ZMod n) :
-    ZMod.dft (fun k => (b k : ℂ)) j = (ZMod.dft (fun k => (b k : ℂ)) j).re := by
-  apply (Complex.conj_eq_iff_re.mp ?_).symm
-  rw [ZMod.dft_apply]
-  simp only [smul_eq_mul, map_sum, map_mul, Complex.conj_ofReal,
-    ← AddChar.map_neg_eq_conj, neg_neg]
-  apply Fintype.sum_equiv (Equiv.neg (ZMod n))
-  intro k
-  simp only [Equiv.neg_apply, neg_mul, neg_neg, hb]
-private theorem real_circulant_charpoly (b : ZMod n → ℝ) (hb : ∀ k, b (-k) = b k) :
-    (Matrix.circulant b).charpoly =
-      ∏ j : ZMod n, (X - C (ZMod.dft (fun k => (b k : ℂ)) j).re) := by
-  apply Polynomial.map_injective Complex.ofRealHom Complex.ofReal_injective
-  rw [← Matrix.charpoly_map, Matrix.map_circulant, circulant_charpoly]
-  simp only [Polynomial.map_prod, Polynomial.map_sub, Polynomial.map_X, Polynomial.map_C]
-  apply Finset.prod_congr rfl
-  intro j _
-  change (X - C (ZMod.dft (fun k => (b k : ℂ)) j) : ℂ[X]) =
-    X - C ((ZMod.dft (fun k => (b k : ℂ)) j).re : ℂ)
-  exact congrArg (fun z : ℂ => (X - C z : ℂ[X])) (dft_real_of_even n b hb j)
 private theorem real_circulant_roots (b : ZMod n → ℝ) (hb : ∀ k, b (-k) = b k) :
     (Matrix.circulant b).charpoly.roots =
       Finset.univ.val.map (fun j => (ZMod.dft (fun k => (b k : ℂ)) j).re) := by
-  rw [real_circulant_charpoly n b hb]
+  rw [D5.S3.Quantum.Matrix.CirculantCharpoly.real_circulant_charpoly n b hb]
   have he := Polynomial.roots_multiset_prod_X_sub_C
     (Finset.univ.val.map (fun j => (ZMod.dft (fun k => (b k : ℂ)) j).re))
   simpa only [Multiset.map_map, Function.comp_def, Finset.prod] using he
 end D5.S3.Arith.RoldanCirculantEnergyP2Q3
-
 
 open scoped BigOperators
 namespace D5.S3.Arith.RoldanCirculantEnergyP2Q3

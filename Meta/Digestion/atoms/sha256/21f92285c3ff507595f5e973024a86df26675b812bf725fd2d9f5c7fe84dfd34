@@ -1,0 +1,57 @@
+**Theorem 16.4 (a completed-return collision of K and its original
+response selection).** With exactly Definition 15.1's
+
+$$
+K(h)=\bigl(\operatorname{old}_{13}(X(h)),\operatorname{latch}_5(X(h)),n(h)\bigr),
+$$
+
+the $\binom Lr$ distinct histories $h_x$, $x\in\mathcal X_{L,r}$, have
+one common $K$. Their actual original Advance responses also have one
+common existing selected successor:
+
+$$
+\begin{aligned}
+K(h_x)&=(B_{P,L,r},0,N_{P,L,r}),\\
+\operatorname{sel}\bigl(\mathcal R_{h_x}(\mathrm{Advance})\bigr)
+ &=K(h_x^+)=(B^+_{P,L,r},0,N_{P,L,r}+1).
+\end{aligned}
+$$
+
+Here $B$ and $B^+$ name the corresponding original13 records, not a
+natural boundary view. The response before selection is still the
+complete original response, including its actual legality, label,
+released output and full original joint successor. It has not been
+redefined to be this triple. There is no history inverse, nor any
+of the four independent view inverses, through this $K$ or this selected
+response on a mixed domain containing this class. Its fibres have no
+uniform finite cardinality bound.
+
+Proof. Lemmas 16.2–16.3 prove the displayed equalities at the lawful
+unchanged original row and its one-step successor. If $x\ne y$, their
+actual supplied history bits differ, and the matching WR70 places them
+at the same respective created wire positions: before frame import
+all ingress allocations and positioning depend only on $L$. Those
+immutable bits survive every subsequent publication, ACK, $M$ append,
+Ready and source reentry by Lemma 4.1. Thus $h_x\ne h_y$, and likewise
+$h_x^+\ne h_y^+$. An inverse of the common selected value would have
+to return two different histories. Corollary 4.4 supplies, separately
+for each $V\in\{S,B,T,M_J\}$, the different values $V(h_x)\ne V(h_y)$
+and $V(h_x^+)\ne V(h_y^+)$. It therefore also forbids recovery of
+any one of those independent views through the selected value. This
+last implication reuses the existing history kernels; it is not
+another four-view or larger-input replay theorem.
+
+For a literal pair take $L=2,r=1$:
+
+$$
+x=01,\quad y=10,\qquad w_x=00011001,\quad w_y=00011010.
+$$
+
+Both histories separately acquire outer1 and mode1, complete the entire
+rejected flight and true Ready, then outer01/header IN5(0). They have
+19 actual external supplied bits after the same $P$. Their equal
+native clocks follow from Lemma 16.2's full expansion comparison,
+not from their eight-bit frame lengths alone. More generally
+$|\mathcal X_{L,1}|=L$ is unbounded, already giving arbitrarily large
+fibres without a counting assumption on native runtime. $\square$
+

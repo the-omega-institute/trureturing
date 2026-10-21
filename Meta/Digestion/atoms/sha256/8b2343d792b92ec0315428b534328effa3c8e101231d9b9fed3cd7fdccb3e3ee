@@ -1,0 +1,9 @@
+**定义 92.1（只经三分量端口的空间因子）。** 设 $\mathcal X$ 是一组实际来源，$q:\mathcal X\to\mathbb R^3$ 是 §90.1 的固定有向三分量端口。称一个空间状态因子为 $q$-only，如果存在映射 $\iota$ 使
+
+$$
+F=\iota\circ q:\mathcal X\longrightarrow M.
+\tag{92.1}
+$$
+
+这里 $M$ 可以是 $\mathbb R^3$、带度量的三维流形，或任何其它目标；定义不把目标误称为空间位置。
+

@@ -1,0 +1,9 @@
+fingerprints:
+  raw_sha256: sha256:9f1ad3454b0d348f63bb7a909535569794f08fd546e13e3c5e3d854c000dfd32
+  normalized_sha256: sha256:9f1ad3454b0d348f63bb7a909535569794f08fd546e13e3c5e3d854c000dfd32
+cas_ref: sha256:9f1ad3454b0d348f63bb7a909535569794f08fd546e13e3c5e3d854c000dfd32
+coverage_gids:
+  - gid: D5/S3/ConceptDynamics/DefinitionEscapeLaws/DirectlyProvableLaws.directly_provable_laws
+    target_statement_id: sha256:d7aa624bddb34050aed861cd803b79feebaabd131f1af5df9054a6c271ba9481
+receipts:
+  unresolved_subitems: []

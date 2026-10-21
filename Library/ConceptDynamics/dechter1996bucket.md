@@ -179,3 +179,87 @@ Auxiliary variables can enlarge total variable count while reorganizing unfinish
 [COOK]: cook2006pversusnp.md
 
 ## 追加锚（本行以下为增补区）
+
+## 5. CNF crossing-clause satisfaction masks
+
+**Definition 5.1 (Clause frontier, with an explicit order).** Let a CNF formula and an order $x_1,\ldots,x_m$ of all its listed variables have total explicit encoding length $N$. Variable names are finite strings renumbered by occurrence, not integers whose magnitudes supply unlisted variables. For $P_i=\{x_1,\ldots,x_i\}$ and $U_i=\{x_{i+1},\ldots,x_m\}$, put
+
+$$
+C_i=\{D:\operatorname{var}(D)\cap P_i\ne\varnothing,
+\ \operatorname{var}(D)\cap U_i\ne\varnothing\},
+\qquad k=\max_{0\le i\le m}|C_i|.
+\tag{15}
+$$
+
+Clause occurrences have distinct indices even if their texts coincide. The parameter counts crossing clauses, whereas (2) counts retained variable values. Neither is defined here as induced width. The construction below is an elementary clause-specific application of ordered dynamic programming and residual sharing; it is not a new theorem attributed to Dechter's induced-width analysis or to Bryant's reduced-graph theorem.
+
+**Proposition 5.2 (A sufficient clause record).** At layer $i$, use failure $\bot$ if a completed clause is false; otherwise record the subset $S\subseteq C_i$ already satisfied by a processed literal. Prefixes with the same record have the same residual Boolean function. There are at most $2^{|C_i|}+1$ records, and each next-bit record is computable in $\operatorname{poly}(N)$ bit operations.
+
+Proof. A completed true clause imposes no further condition, a future-only clause is fixed by the supplied formula and layer, and a crossing clause is either already true or still requires its fixed unprocessed literals. Thus the residual for a normal record is exactly
+
+$$
+\bigwedge_{\operatorname{var}(D)\subseteq U_i}D
+\ \land\!
+\bigwedge_{D\in C_i\setminus S}(D|_{U_i}),
+\tag{16}
+$$
+
+with empty clauses handled by the failure test. This proves sufficiency without computing a minimal semantic quotient.
+
+To append $x_{i+1}=b$, scan the clauses. A previously crossing clause has prior satisfaction bit $\mathbf1[D\in S]$. A clause whose first variable is $x_{i+1}$ has prior bit zero. OR that bit with the truth values of its literals on $x_{i+1}$. If the clause now completes with bit zero, enter failure. Otherwise retain the updated bit exactly for clauses crossing the new cut. Completed clauses were already checked; clauses still wholly future need no bit. Failure propagates. The clause indices, scopes, literals and masks have polynomial length, so scans and updates have polynomial bit cost.
+
+At initialization, any empty clause causes failure. Repeated literals are evaluated by OR and tautological clauses become satisfied when a complementary pair's variable is processed. Unused listed variables have a valid transition that changes no clause bit. At the final cut all clauses are complete, so a normal empty mask accepts and failure rejects. The empty conjunction accepts; the zero-variable case is settled at initialization. $\square$
+
+**Proposition 5.3 (Decision and witness cost on a bit model).** A fixed deterministic multitape algorithm decides satisfiability and, on YES inputs, outputs a witness within
+
+$$
+O\bigl((m+1)2^k\operatorname{poly}(N)\bigr)
+\tag{17}
+$$
+
+bit operations. In particular, a supplied order with $k=O(\log(N+2))$ gives polynomial time. Producing an order not supplied with the input requires its own charged algorithm.
+
+Proof. Generate reachable masks layer by layer from the actual initialization. Each mask produces two candidate successor records by Proposition 5.2. Sort the candidates by their exact bit-string masks and retain one parent index and input bit per distinct successor. Every retained record is reached by a real prefix; conversely induction shows every prefix reaches a retained record. Terminal acceptance therefore decides satisfiability, and the parent indices reconstruct an accepting assignment.
+
+Each layer has at most $2^k+1$ records. A candidate, its parent index and its mask use $\operatorname{poly}(N)$ bits, since $k\le N$ and $m\le N$. Deterministic merge sorting of $O(2^k+1)$ such records on a fixed finite number of sequential tapes takes $O((2^k+1)\log(2^k+2)\operatorname{poly}(N))$ bit operations. Its logarithmic factor is polynomial in $N$. No random-access table lookup or semantic equivalence oracle is assumed. Assign parent indices in the sorted previous layer; for witness reconstruction, scan the stored layer lists to find the indicated parents. Even scanning the entire stored table for each of the at most $m$ output bits adds only a polynomial factor in $N$ to its $O((m+1)2^k\operatorname{poly}(N))$ size. Formula scans, sorting, addresses, output and initialization are all included in (17). $\square$
+
+**Proposition 5.4 (Clause records can be smaller than full variable records).** For the single clause $x_1\lor\cdots\lor x_m$, $m\ge2$, the order shown has $k=1$ in (15), but maximum variable frontier size $m-1$ in (2).
+
+Proof. At each nontrivial cut the only clause crosses, so $|C_i|=1$. Every already processed variable shares this unfinished clause with a future variable, so $B_i=P_i$ until the final cut. Clause satisfaction needs only one bit, whereas retaining all previous values stores $i$ bits. Thus the two sufficient representations have different widths. The observation does not establish a lower bound for arbitrary succinct completion programs; Proposition 4 already separates explicit residual counts from a selector's runtime. $\square$
+
+## 追加锚（本行以下为增补区）
+
+## 6. Cardinality objectives on an explicit graph frontier
+
+The same standard frontier method handles optimization without retaining the entire past assignment. This is an elementary max-sum application of elimination, not a new general dynamic-programming theorem. Let the input explicitly encode a finite simple graph $G=(V,E)$, a vertex order $v_1,\ldots,v_n$ and an integer threshold $K$, with total bit length $N$. Define
+
+$$
+P_i=\{v_1,\ldots,v_i\},\qquad
+B_i=\{v\in P_i:\exists u\notin P_i,\ \{v,u\}\in E\},\qquad
+w=\max_i|B_i|.
+$$
+
+These are graph frontiers; they are not being identified with the source paper's induced width. For each boundary assignment $\sigma:B_i\to\{0,1\}$ store
+
+$$
+D_i(\sigma)=\max\{|S|:S\subseteq P_i\text{ is independent},\
+\mathbf1_S|_{B_i}=\sigma\},
+$$
+
+using $-\infty$ for an infeasible entry and $D_0(\varnothing)=0$. The score, unlike a mere feasibility bit, retains the contribution of forgotten selected vertices to the global cardinality objective.
+
+When inserting $v_{i+1}$, try its two values $b\in\{0,1\}$. If $b=1$, every already processed neighbor must have value zero. Every such neighbor belongs to $B_i$, since $v_{i+1}$ was unprocessed at cut $i$. Thus this test needs only $\sigma$. The new frontier satisfies $B_{i+1}\subseteq B_i\cup\{v_{i+1}\}$. Restrict the extended assignment to it, add $b$ to the score and take the maximum among candidates with the same new boundary code.
+
+To justify forgetting, a vertex in $P_i\setminus B_i$ has no edge to the future. For histories with the same boundary assignment, every allowed future independent set has the same compatibility test, and the only remaining objective dependence on the past is its stored cardinality. Keeping the largest such cardinality is therefore exact. Conversely, every independent subset of $P_{i+1}$ restricts to a candidate from its predecessor boundary and its actual last bit. These two observations prove the recurrence by induction. At the final empty boundary, $D_n(\varnothing)$ is the maximum independent-set size; comparison with $K$ decides the threshold question. Parent records recover an attaining set, including ties by any fixed deterministic rule.
+
+There are at most $2^w$ entries per layer and two candidates per entry. In a deterministic sequential-tape bit model the full algorithm, including witness recovery, has bound
+
+$$
+O\!\left((n+1)2^{w+1}\operatorname{poly}(N)\right).
+$$
+
+Indeed, scan the explicit graph and order to form each frontier and perform each neighbor test. Use fixed-length boundary codes in vertex order, scores of $O(\log(n+2))$ bits, and parent indices of $O(N)$ bits. Produce at most $2^{w+1}$ records, merge sort them by the new code and keep a maximum-score representative per group. The sorting logarithm is $O(w+1)\subseteq\operatorname{poly}(N)$; all record operations and graph scans also cost polynomially in $N$. Stored-layer scans follow the chosen parents using at most another polynomial factor. This argument assumes no free random access, unit-cost unbounded integers or semantic equivalence oracle. The $n+1$ convention also covers an empty graph. For $w=O(\log N)$ it gives deterministic polynomial time with a witness. Finding a suitable order is a separate task unless that order is supplied or efficiently constructed.
+
+The exact AURIC correspondence is the [selection-calculus §15 shared-network contract](../../docs/develop/theory/AURIC_FIB_ATOM_SELECTION_CALCULUS.md): use one shared bit $u_v$ per vertex, put $(x,y,z)=(u_v,0,u_{v'})$ at edge $\{v,v'\}$ in $\Sigma=\{xz=yz=0\}$, and count each vertex once in $\sum_vu_v\ge K$. The local relation becomes $u_vu_{v'}=0$, so the above optimizer applies without introducing an additional local constraint. Arbitrary sharing, zero ports and the global cardinality objective are declared input features; they are not supplied by the native adjacent-window chain alone. A constant-size local relation can therefore coexist with both an NP-complete unrestricted graph problem and this width-dependent sufficient algorithm.
+
+## 追加锚（本行以下为增补区）

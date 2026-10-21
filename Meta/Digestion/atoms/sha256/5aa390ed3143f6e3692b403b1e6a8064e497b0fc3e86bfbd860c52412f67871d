@@ -1,0 +1,43 @@
+**Definition 7.2 (fixed successful control path).** Every handoff below
+is the actual named TOK followed by its finite CTL. Bank assignments
+remain fully expanded as in Definition 2.1.
+
+| Entry | Operation and successor |
+| --- | --- |
+| ClientImage | Position/import73; run inherited full Image/binding checks; build $b_*$ from that acquired target. ACK Image and return mailbox availability. Keep the flight's invocation, with no M append/Ready. Transfer client→handler and enter RenderS. |
+| RenderS | Use only the acquired Image's raw projection to emit S. Clear acquired Image work fields. Publish stage0 and enter CheckS0. |
+| CheckS0 | Position73, clear candidate, import actual stage0 to received, parse body into sourceBody, independently run $D_S$/re-encoding/binding checks. Save this received body as firstS. ACK/mailbox return; client→handler; FromS. |
+| FromS / CheckB | Compute B solely from sourceBody; publish stage1. CheckB positions/imports73 after clearing candidate; independently checks B and binding; ACK/mailbox return; transfer to FromB. |
+| FromB / CheckM | Compute M solely from received B; publish stage2. CheckM independently imports/checks the actual M; ACK/mailbox return; transfer to FromM. |
+| FromM / CheckT | Compute T solely from received M; publish stage3. CheckT independently imports/checks actual T; ACK/mailbox return; transfer to FromT. |
+| FromT / CheckS1 | Compute S solely from received T; publish stage4. CheckS1 independently imports/decodes/checks actual final S and compares it with firstS. Serialize its own decoded prefix/raw record as HistoricalImage and run the original ClientImage value-checker subgraph on that value. |
+| FinalReturn | ACK final channel exactly once; return mailbox availability; append one complete five-field GCA history item, including actual mode/frame, typed outcome and received-reference bindings; return invocation to outer client; execute the sole final Ready. |
+
+No later arrow reads the initial Image. firstS is read only for the
+final equality comparison. All callback candidates are cleared before
+actual import; sourceBody is assigned only from that import. There is
+no repair or implicit input branch. The original checker in CheckS1
+does not repeat an ACK: it is CYCLE's CheckImageValue parser/check
+subgraph, with the final ACK in FinalReturn.
+
+The successful five-field completed item is exactly
+`[choice,mode,wholeFrame,outcome,receivedBindings]`. Its last field is
+the ordered eight-item list for CoverRef, PackageRef, Image, then
+View0 through View4. Each item is the already acquired complete
+binding header from that actual imported tuple: the complete CoverRef
+and PackageRef tuples; the Image tuple with only its final Image value
+removed; and each View tuple with only its final natural body removed.
+Thus all service/source/cover/package/target fields and the static View
+stage/tag remain. Complete origins inside those fields retain their
+inherited grammars, not just their ordinals. Current receiver placement,
+copy and completion origins remain in the actual channel material and
+native history; this list does not invent a receiver's future origin
+inside its own sent word.
+Append that record at its callback by actual word operations. Typed
+rejections instead retain the ordered list of bindings actually received
+on that rejection route. The completed-item parser requires five fields,
+then parses this list by outcome/kind; reservoir recovery uses only the
+mode and whole-frame fields. The decoder/arrow work-clear preserves
+this list as a service field, but no arrow reads it as a logical input.
+FinalReturn writes it only after the final value check and ACK.
+

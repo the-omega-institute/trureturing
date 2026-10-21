@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:8026c5608a4b425d43bd4146258b1fdd9926833b0cf69d33ba7371877dbeb6ee
+  normalized_sha256: sha256:8026c5608a4b425d43bd4146258b1fdd9926833b0cf69d33ba7371877dbeb6ee
+cas_ref: sha256:8026c5608a4b425d43bd4146258b1fdd9926833b0cf69d33ba7371877dbeb6ee
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: Defines structural entanglement and global structural entanglement as nonfactorization; the last sentence limits physical interpretation.
+    previous_atom_id: 45840836a17aac975b0880dd32de0ff16cc5f2bff5420e4fb3dcc740c74bcab2
+    next_atom_id: ef02846f4c913837565717808c058514516436eb5740783cfa18d4512e867e45

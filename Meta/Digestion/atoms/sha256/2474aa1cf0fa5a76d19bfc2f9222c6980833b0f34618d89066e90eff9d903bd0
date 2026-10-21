@@ -1,0 +1,35 @@
+**Proposition 7.2 (native counts).** The local first-load fragment has
+$7e+6$ rows, $e$ actual IN bits, $e$ new target finite bits and $e+1$
+new ordinary74 cells. Relative to the old $4e+2$ first fragment its row
+increment is $3e+4$. The two74 boundaries, all paid $H_B$/owner/phase/
+cursor bits and their installation rows are additional original boot
+work. For every finite actual prefix,
+
+$$
+(\mathrm{ticks},\mathrm{fee},\mathrm{bits})
+=(n,2n,S_{\rm irreducible,B}+b_{\rm ctl}+8A+8n),
+\qquad n=\sum_{o,p}N_{o,p}.
+$$
+
+Proof. Definition2.2 has seven executed rows per bit and six end rows;
+only $X_j,X_e$ allocate ordinary74 cells and only $C_j$ construct first
+target bits. Its control table and rights were installed earlier, so
+their costs are not counted twice in this subtotal. For their earlier
+installation let $k_B$ be the length of the finite literal initial
+control/token encoding obtained from the original boot with $H_B$ and
+these added fields. Its actual five-state bitwise installer has
+$4k_B+2$ occurrences, with any original boundary/input/preparation work
+outside that bit-store fragment counted by its own leaves. $k_B$ is
+the length of a fully specified finite encoding, not free endowed code
+or an unmeasured runtime constant. Irreducible primitive control remains
+the declared finite foundation only. All later first/second stores remain
+retained in $b_{\rm ctl}$.
+
+Induction over each actual leaf yields Definition7.1's increments.
+Summing gives the displayed full vector and storage equation, including
+all dead banks, raw partial words, old versions, actual and represented
+receipts, initial mirrors/copies and the original final consumer.
+The actual eight payload lengths retain the existing disjoint copy/print
+subtotal $17(L_C+L_P+L_I+\sum_{s=0}^4L_s)+56$, with all other leaves
+additional. This is no numeric benchmark or optimum assertion. ∎
+

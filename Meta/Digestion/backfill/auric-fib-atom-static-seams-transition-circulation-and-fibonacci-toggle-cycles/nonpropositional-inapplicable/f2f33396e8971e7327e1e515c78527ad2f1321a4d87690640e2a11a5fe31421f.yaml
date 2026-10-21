@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:f2f33396e8971e7327e1e515c78527ad2f1321a4d87690640e2a11a5fe31421f
+  normalized_sha256: sha256:f2f33396e8971e7327e1e515c78527ad2f1321a4d87690640e2a11a5fe31421f
+cas_ref: sha256:f2f33396e8971e7327e1e515c78527ad2f1321a4d87690640e2a11a5fe31421f
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: This atom is a single Markdown heading, '6.6. 完整记录识别与平方矩比较'. It names the following material and contains no mathematical assertion or truth-valued predicate; the adjacent proposition-bearing atoms carry any claims. The complete exact probe source was compiled successfully, and no frozen declaration is applicable.
+    previous_atom_id: 6995505da08e47101376f633f07098185640e37b78f9203d4450befbd1b0ec4b
+    next_atom_id: 30c38509040babb5e4308b88543d8af03c5ed68d81abc2408b49678c7a336d77

@@ -1,0 +1,69 @@
+**Proposition 24.1 (Reused exclusions and the classical regular secant
+condition).** Suppose $p_i\in[10,34]\setminus\{24\}$ and
+$W_i\ne W'_i\in C(p_i,v_J(p_i))$ are actual selected equal-$M$
+endpoints. They have simultaneous subsequential limits in $K_J$.
+Every such limiting parameter $p_*$ is off $24$. If the limiting
+endpoints are distinct, both are regular and form an actual equal-$M$
+pair in the child of the actual $J$ pair. If the limiting endpoints
+coincide, their common source is regular, and the augmented regular
+map $f_M=(N_p/D,N_v/D,N_m/D)$ has rank less than two there.
+
+*Proof.* Theorem 23.2 gives simultaneous complete-world limits and
+continuity gives equal terminal $M$ responses. SII, Theorem 29.1 gives
+one $\epsilon>0$, uniform for all real $v$, excluding every actual
+$M$ pair with $0<|p-24|<\epsilon$. Thus $|p_i-24|\ge\epsilon$ and
+$p_*\ne24$. This already published exclusion covers singular sources
+and all gain strata, and does not depend on this compactness proof.
+
+If the limits are distinct, they are an actual $M$ pair, while
+Theorem 16.4 supplies an actual distinct $J$ pair at the same limiting
+base. S, Corollary 18.2 then excludes a singular selected $M$
+endpoint. If the limits coincide, Theorem 13.1 and Corollary 13.2
+exclude singular coalescence: local injectivity on the full parent at
+such a singular world would contradict the distinctness of the nearby
+matching endpoints. These are existing exclusions for selected pairs;
+they remove no unused singular companion from $K_J$.
+
+For completeness, at a regular coalescence write $x=(t,b)$ with
+$t=r/b$ and $D(x_*)\ne0$. The regular reconstruction is analytic
+in a neighbourhood of $x_*$. The nearby distinct complete endpoints
+have distinct coordinates $x_i,y_i$ and $f_M(x_i)=f_M(y_i)$.
+Take a subsequence of
+$w_i=(x_i-y_i)/\|x_i-y_i\|$ converging to a unit vector $w$.
+On a small convex neighbourhood the ordinary integral difference
+formula gives
+
+$$
+0=\int_0^1 Df_M(y_i+s(x_i-y_i))w_i\,ds
+\longrightarrow Df_M(x_*)w.
+\tag{24.1}
+$$
+
+The derivative therefore has a nonzero kernel. This standard calculus
+argument is a necessary condition only. In polynomial form, for
+$f\in\{p,v,m\}$ define
+
+$$
+B_{f,t}=D\partial_tN_f-N_f\partial_tD,\qquad
+B_{f,b}=D\partial_bN_f-N_f\partial_bD.
+\tag{24.2}
+$$
+
+Use the original circuit
+$N_m=-C_0+(3U+2n)B_7$,
+$B_7=-20C_0+70C_1-84C_2+35C_3$.
+All three polynomials
+
+$$
+\begin{gathered}
+B_{p,t}B_{v,b}-B_{p,b}B_{v,t},\qquad
+B_{p,t}B_{m,b}-B_{p,b}B_{m,t},\\
+B_{v,t}B_{m,b}-B_{v,b}B_{m,t}
+\end{gathered}
+\tag{24.3}
+$$
+
+must vanish at a regular coalescence, because the corresponding
+Jacobian minors have common denominator $D^4$. Nothing here proves
+that this rank-drop set is empty or excludes an actual incidence. ∎
+

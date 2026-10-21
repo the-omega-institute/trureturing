@@ -106,7 +106,7 @@ private lemma exponent_measure_activation (s : Real) (hs : 0 < s)
   congr 1
   ring
 
-private lemma exponent_product_activation (s : Real) (hs : 0 < s)
+lemma exponent_product_activation (s : Real) (hs : 0 < s)
     (p : Nat.Primes) :
     exponentProduct s hs (activationEvent p) =
       ENNReal.ofReal (activationProbability s p) := by
@@ -119,7 +119,7 @@ private lemma exponent_product_activation (s : Real) (hs : 0 < s)
     _ = ENNReal.ofReal (activationProbability s p) := by
       exact exponent_measure_activation s hs p
 
-private lemma activation_events_independent (s : Real) (hs : 0 < s) :
+lemma activation_events_independent (s : Real) (hs : 0 < s) :
     iIndepSet activationEvent (exponentProduct s hs) := by
   have hindependent :
       iIndepFun (fun p (exponents : Nat.Primes -> Nat) => exponents p)

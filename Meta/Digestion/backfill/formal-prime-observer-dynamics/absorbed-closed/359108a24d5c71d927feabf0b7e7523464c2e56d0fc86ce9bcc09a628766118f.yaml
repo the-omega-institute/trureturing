@@ -1,0 +1,9 @@
+fingerprints:
+  raw_sha256: sha256:359108a24d5c71d927feabf0b7e7523464c2e56d0fc86ce9bcc09a628766118f
+  normalized_sha256: sha256:359108a24d5c71d927feabf0b7e7523464c2e56d0fc86ce9bcc09a628766118f
+cas_ref: sha256:359108a24d5c71d927feabf0b7e7523464c2e56d0fc86ce9bcc09a628766118f
+coverage_gids:
+  - gid: D5/S3/Analytic/ZetaEntropyPlane/PrimeEvidenceSharpThreshold.primeEvidence_one_not_summable
+    target_statement_id: sha256:ee4896291e8ac5028121d1e1a794078b3f317f66d6b89ca4d111d8976cd8e1d8
+receipts:
+  unresolved_subitems: []

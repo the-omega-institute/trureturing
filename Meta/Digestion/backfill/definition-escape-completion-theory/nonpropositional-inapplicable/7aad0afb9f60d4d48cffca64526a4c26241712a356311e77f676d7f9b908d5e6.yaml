@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:7aad0afb9f60d4d48cffca64526a4c26241712a356311e77f676d7f9b908d5e6
+  normalized_sha256: sha256:7aad0afb9f60d4d48cffca64526a4c26241712a356311e77f676d7f9b908d5e6
+cas_ref: sha256:7aad0afb9f60d4d48cffca64526a4c26241712a356311e77f676d7f9b908d5e6
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 容差残差标题、目标空间带度量的前提及定义引导语。
+    previous_atom_id: d90c9e4cf67473bf20cebaaaf55e75b406b5868c44ee9c48b9e187cf83d758ea
+    next_atom_id: 385e0bd1aaa217fb88f8cedb1ec9fd5388b1bf7f3e012ecf0e1d250c31611ff6

@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:968cce520546ed53c22e4a335b11fa70fd378aa5b39a31dbb16f05a5c4a1eaa5
+  normalized_sha256: sha256:968cce520546ed53c22e4a335b11fa70fd378aa5b39a31dbb16f05a5c4a1eaa5
+cas_ref: sha256:968cce520546ed53c22e4a335b11fa70fd378aa5b39a31dbb16f05a5c4a1eaa5
+coverage_gids:
+  - gid: D5/S3/Arith/Congruence/PadicObservationDistance.observation_distance_eq_padic_valuation
+    target_statement_id: sha256:2c0dccd54db233b396eaecdd46022c895720c24d0ee6e1f73297a9d344645ae0
+  - gid: D5/S3/Arith/Congruence/PadicPrecisionBlindSpot.first_distinguishing_precision
+    target_statement_id: sha256:e1d21da0d6019a2e82b8fb377c71c618007622e8a4d4881dc629f5924c3c391e
+receipts:
+  unresolved_subitems: []

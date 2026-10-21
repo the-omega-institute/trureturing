@@ -1,0 +1,110 @@
+**Theorem 118.2 (necessary profile for a diagonal clock).** Assume the old
+tree is connected and nontrivial, \(B_e\ne\varnothing\), and \(\mathsf G_e\) and
+\(\mathsf G_{e+1}\) are strictly positive diagonal. If (F), (N), and (118.1) hold, then
+\(S_Q=T_e\), and, writing
+
+$$
+\mathsf G_{e+1}=
+\begin{pmatrix}\mathsf G_o&0\\0&\mathsf G_c\end{pmatrix},
+\qquad \mathsf G_c>0,
+$$
+
+one necessarily has
+
+$$
+\boxed{
+\mathsf G_o=\mathsf G_e\Lambda_e^{-1},
+\qquad
+C_e\mathsf G_cC_e^*
+   =\mathsf G_e(I-\Lambda_e^{-1}).
+}
+\tag{118.2}
+$$
+
+Consequently:
+
+1. every old vertex outside \(M_e\) has \(\lambda_e(p)=1\);
+2. every beta parent \(p\in M_e\) must satisfy
+
+   $$
+   m_{pL}+m_{pR}<m_e(p),
+   \qquad
+   \lambda_e(p)
+   =
+   \frac{m_e(p)}
+        {m_e(p)-m_{pL}-m_{pR}},
+   \tag{118.3}
+   $$
+
+   where \(m_e(p)=\mathsf G_e(p,p)\) and
+   \(m_{p\sigma}=\mathsf G_c(p\sigma,p\sigma)\).
+
+**Proof.** Condition (F) again forces \(S_Q=T_e\). Using
+\(A_{e+1}T_e=J_eA_e\), the old-coordinate part of (118.1) becomes
+
+$$
+\mathsf G_o^{-1}A_e=\Lambda_e\mathsf G_e^{-1}A_e.
+\tag{118.4}
+$$
+
+Every row of \(A_e\) is nonzero, so the diagonal factors in (118.4) agree
+row by row:
+
+$$
+\mathsf G_o^{-1}=\Lambda_e\mathsf G_e^{-1},
+\qquad
+\mathsf G_o=\mathsf G_e\Lambda_e^{-1}.
+\tag{118.5}
+$$
+
+The norm identity (N) is
+
+$$
+\mathsf G_o+C_e\mathsf G_cC_e^*=\mathsf G_e.
+\tag{118.6}
+$$
+
+Substitution gives the second equation of (118.2). Since
+\(C_e\mathsf G_cC_e^*\) is supported exactly on beta-parent coordinates and its
+diagonal entry at \(p\in M_e\) is \(m_{pL}+m_{pR}\), (118.3) follows.
+Positivity of \(\Lambda_e\) requires the denominator in (118.3) to be
+positive. At every \(p\notin M_e\), the left side of the second equation in
+(118.2) is zero, so positivity of \(m_e(p)\) forces
+\(\lambda_e(p)=1\). \(\square\)
+
+The first witness \(x=\langle\alpha,\beta\rangle\) exposes the profile
+without any abstraction. With old order
+\((\varepsilon,L,R)\), the two children \(RL,RR\) are born at the single
+beta parent \(R\), and
+
+$$
+C_e\mathsf G_cC_e^*
+   =\operatorname{diag}(0,0,m_{RL}+m_{RR}).
+\tag{118.7}
+$$
+
+Thus \(\lambda_e(\varepsilon)=\lambda_e(L)=1\), while
+
+$$
+\lambda_e(R)
+   =\frac{m_R}{m_R-m_{RL}-m_{RR}}.
+\tag{118.8}
+$$
+
+For the literal counting measure,
+\(m_\varepsilon=m_L=m_R=m_{RL}=m_{RR}=1\), so (118.8) has a negative
+denominator. Hence a positive diagonal node-dependent clock cannot repair
+the counting-measure transport even after the global scalar restriction is
+removed.
+
+For a general positive mass assignment, (118.3) leaves a genuine but narrow
+bridge candidate: every beta parent must reserve enough old mass to pay for
+both children, and the clock must speed up precisely on those parent
+coordinates. The condition is necessary, not sufficient. In particular,
+the full transport equation still has the child-block obstruction
+\(0=\Lambda_{e+1,\mathrm{child}}C_e^*\mathcal L_e\) whenever its child
+response is required. A successful realization would therefore need both a
+mass profile satisfying (118.3) and a separate rule for the newly born
+coordinates. This result does not establish such a realization, and it
+does not select a physical dimension.
+

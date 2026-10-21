@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:97a9211824fd61c188efccfcfb0ac40b3d2f2de756904a7a2877914bc27c4dff
+  normalized_sha256: sha256:97a9211824fd61c188efccfcfb0ac40b3d2f2de756904a7a2877914bc27c4dff
+cas_ref: sha256:97a9211824fd61c188efccfcfb0ac40b3d2f2de756904a7a2877914bc27c4dff
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 成本—时域逃逸曲面的标题和定义引导语。
+    previous_atom_id: 94454d84b9ec664595e687cf8152f0f5b427dfd164614a34628902878e93f2e3
+    next_atom_id: 699da18cd92eaf54cbf91d270486fe4427277175bc4f19ea6c759fbd9dd49b27

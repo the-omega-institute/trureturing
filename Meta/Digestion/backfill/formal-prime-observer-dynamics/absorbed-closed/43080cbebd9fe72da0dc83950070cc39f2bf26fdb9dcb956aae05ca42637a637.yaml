@@ -1,0 +1,15 @@
+fingerprints:
+  raw_sha256: sha256:43080cbebd9fe72da0dc83950070cc39f2bf26fdb9dcb956aae05ca42637a637
+  normalized_sha256: sha256:43080cbebd9fe72da0dc83950070cc39f2bf26fdb9dcb956aae05ca42637a637
+cas_ref: sha256:43080cbebd9fe72da0dc83950070cc39f2bf26fdb9dcb956aae05ca42637a637
+coverage_gids:
+  - gid: D5/S3/ConceptDynamics/Faithfulness/LocalGlobalResidualCriterion.local_global_residual_empty_iff_joint_injective
+    target_statement_id: sha256:e337b3681f90a46d65874ab5bf8b58421736ffc55e170405db3efa5593b58b53
+  - gid: D5/S3/Factorization/PrimePowers/FiniteCrtJoin.finite_crt_join
+    target_statement_id: sha256:54051c2576596a2b1c01a249167daa874d5c97fcee1a2c68344f3f6a73ae12f8
+  - gid: D5/S3/Factorization/PrimePowers/SamePrimeScaleRedundancy.old_layer_factors_through_new
+    target_statement_id: sha256:b28908a2d5dd605a8df4a0e4aeb83821a07e233181eb4429a32289b33ada0a56
+  - gid: D5/S3/ObserverMemory/PrimePowerTensorTower.prime_power_tensor_factor_decomposition
+    target_statement_id: sha256:21ccc90ac6460735fea019b3d313e2e63d85d801ab4ec568467ad780c2806be3
+receipts:
+  unresolved_subitems: []

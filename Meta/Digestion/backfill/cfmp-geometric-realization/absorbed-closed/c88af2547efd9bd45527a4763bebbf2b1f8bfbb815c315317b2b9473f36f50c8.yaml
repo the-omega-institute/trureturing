@@ -1,0 +1,9 @@
+fingerprints:
+  raw_sha256: sha256:c88af2547efd9bd45527a4763bebbf2b1f8bfbb815c315317b2b9473f36f50c8
+  normalized_sha256: sha256:c88af2547efd9bd45527a4763bebbf2b1f8bfbb815c315317b2b9473f36f50c8
+cas_ref: sha256:c88af2547efd9bd45527a4763bebbf2b1f8bfbb815c315317b2b9473f36f50c8
+coverage_gids:
+  - gid: D5/S3/Geometry/Hyperideal/CriticalTransitionStar.critical_transition_star
+    target_statement_id: sha256:862eb6fc4cbb96e99566fd2e3a42510fc05a7921c444e520c9cf3ec3ee369f09
+receipts:
+  unresolved_subitems: []

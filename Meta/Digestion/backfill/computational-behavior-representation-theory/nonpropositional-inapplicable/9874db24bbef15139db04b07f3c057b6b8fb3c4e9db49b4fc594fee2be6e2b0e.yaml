@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:9874db24bbef15139db04b07f3c057b6b8fb3c4e9db49b4fc594fee2be6e2b0e
+  normalized_sha256: sha256:9874db24bbef15139db04b07f3c057b6b8fb3c4e9db49b4fc594fee2be6e2b0e
+cas_ref: sha256:9874db24bbef15139db04b07f3c057b6b8fb3c4e9db49b4fc594fee2be6e2b0e
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 'Chapter navigation and scope only: identifies the tools, subdomain and remaining gap discussed later; explicitly withholds settlement of the general conjecture.'
+    previous_atom_id: 4b05d980aa9e51a4ae5ef0fe725a58db16720cb384656aa2c4eaf43c53482056
+    next_atom_id: e7486b2c1cb78f7dc502e7f00df8b1692753a28a96d77667d7d68c67b5a486dd
