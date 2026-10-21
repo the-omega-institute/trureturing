@@ -11,7 +11,6 @@ import Mathlib.LinearAlgebra.Matrix.Kronecker
 import Mathlib.NumberTheory.Zsqrtd.GaussianInt
 import Mathlib.Tactic.IntervalCases
 import Mathlib.Tactic.NormNum.RealSqrt
-import Mathlib.Tactic.FieldSimp
 import Mathlib.Tactic.LinearCombination
 
 set_option autoImplicit false
