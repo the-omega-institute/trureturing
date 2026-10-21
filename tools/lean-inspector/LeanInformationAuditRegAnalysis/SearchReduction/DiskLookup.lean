@@ -214,6 +214,73 @@ private partial def flush (directory : System.FilePath) (nodes : Nodes) (key : S
     children := children.push (token, fileId next, digest)
   writeRouted directory (fileId key) ({children, pages := node.pages} : Node)
 
+private structure ModuleCheckpoint where
+  name : String
+  count : Nat
+  offsets : Array (String × UInt64)
+  deriving ToJson, FromJson
+
+private def topKey (kind : String) : String := s!"{hash ("root", kind)}"
+
+/-- A committed module records the durable ends of its bucket journals. On
+restart, uncommitted journal tails are truncated before any module is retried. -/
+private def restoreJournal (path : System.FilePath) (size : UInt64) : IO Unit := do
+  if !(← path.pathExists) then
+    unless size == 0 do throw <| IO.userError "lookup.checkpoint_missing_journal"
+    IO.FS.writeFile path ""
+  IO.FS.withFile path .readWrite fun handle => do
+    let mut remaining := size.toNat
+    while remaining > 0 do
+      let bytes ← handle.read (min remaining 1048576).toUSize
+      if bytes.isEmpty then throw <| IO.userError "lookup.checkpoint_short_journal"
+      remaining := remaining - bytes.size
+    handle.truncate
+
+private def appendNodes (path : System.FilePath) (nodes : Nodes) : IO UInt64 := do
+  let records := nodes.toArray.map fun (key, node) =>
+    (key, ({children := node.children.toArray.map fun (token, next) =>
+      (token, next, 0), pages := node.pages} : Node))
+  IO.FS.withFile path .append fun handle => do
+    handle.putStrLn (toJson records).compress
+    handle.flush
+  return (← path.metadata).byteSize
+
+/-- Only one hash bucket is resident while global routing is assembled. The
+module payload pages have already been committed and released. -/
+private def finishBuckets (directory journals : System.FilePath) : IO UInt64 := do
+  let mut rootChildren := #[]
+  for kind in #["member", "candidate"] do
+    let mut routes := #[]
+    for bucket in [:256] do
+      let journal := journals / s!"{kind}-{bucket}.jsonl"
+      let nodes ← IO.FS.withFile journal .read fun handle => do
+        let mut nodes : Nodes := {}
+        repeat
+          let line ← handle.getLine
+          if line.isEmpty then break
+          let records : Array (String × Node) ← IO.ofExcept <|
+            fromJson? (← IO.ofExcept <| Json.parse line)
+          for (key, node) in records do
+            let mut previous := nodes[key]?.getD {}
+            for (token, next, _) in node.children do
+              previous := {previous with children := previous.children.insert token next}
+            nodes := nodes.insert key {previous with pages := previous.pages ++ node.pages}
+        return nodes
+      let parent := nodes[topKey kind]?.getD {}
+      let mut children := #[]
+      for (token, next) in parent.children.toArray.qsort (fun a b => a.1 < b.1) do
+        let digest ← flush directory nodes next
+        children := children.push (token, fileId next, digest)
+      if !children.isEmpty then
+        let file := s!"{fileId (topKey kind)}.r0-{bucket}"
+        let digest ← writeRouted directory file {children} 1
+        routes := routes.push (s!"@route:0:{bucket}", file, digest)
+      if bucket % 32 == 0 then IO.eprintln s!"lookup.index_bucket={kind}:{bucket}"
+    let file := fileId (topKey kind)
+    let digest ← writeJson (directory / s!"{file}.node.json") ({children := routes} : Node)
+    rootChildren := rootChildren.push (kind, file, digest)
+  writeJson (directory / s!"{fileId "root"}.node.json") ({children := rootChildren} : Node)
+
 private def runGit (args : Array String) : IO String := do
   let result ← IO.Process.output {cmd := "git", args}
   unless result.exitCode == 0 do throw <| IO.userError result.stderr
@@ -341,28 +408,64 @@ unsafe def produce (directory : System.FilePath) (basis mathlib : String)
   let storage := s!"{version}-{inputs}"
   let pagesDirectory := directory / storage
   IO.FS.createDirAll pagesDirectory
-  let mut allNodes : Nodes := {}
+  let journals := pagesDirectory / "stream-v1"
+  IO.FS.createDirAll journals
+  let selected := (modules.qsort Name.quickLt).filter fun name =>
+    !name.toString.startsWith "D5." || basisModules.contains name
+  let mut completed : Std.HashMap Name ModuleCheckpoint := {}
+  let mut offsets : Std.HashMap String UInt64 := {}
+  for name in selected do
+    let path := journals / s!"{fileId name.toString}.checkpoint.json"
+    if ← path.pathExists then
+      let checkpoint : ModuleCheckpoint ← readJson path
+      unless checkpoint.name == name.toString do throw <| IO.userError "lookup.checkpoint_module_mismatch"
+      completed := completed.insert name checkpoint
+      for (file, offset) in checkpoint.offsets do
+        offsets := offsets.insert file (max offset (offsets[file]?.getD 0))
+  for kind in #["member", "candidate"] do
+    for bucket in [:256] do
+      let file := s!"{kind}-{bucket}.jsonl"
+      restoreJournal (journals / file) (offsets[file]?.getD 0)
   let mut coverage : Array Json := #[]
   let mut declarations := 0
   let mut indexed := 0
-  for name in modules.qsort Name.quickLt do
-    -- Imported vocabulary outside frozen D5 is not a direct basis fact.
-    if name.toString.startsWith "D5." && !basisModules.contains name then continue
+  for name in selected do
     try
-      let (entries, count) ← moduleEntries name rigidNames
-      let mut nodes : Nodes := {}
-      for (keys, entry) in entries do nodes := insert nodes keys entry
-      allNodes ← spill pagesDirectory nodes allNodes
-      declarations := declarations + count
-      indexed := indexed + count
+      let checkpoint ← match completed[name]? with
+        | some checkpoint => pure checkpoint
+        | none => do
+          let (entries, count) ← moduleEntries name rigidNames
+          let mut groups : Std.HashMap String (Array (List String × Entry)) := {}
+          for (keys, entry) in entries do
+            let kind := keys.head!
+            let token := keys[1]!
+            let file := s!"{kind}-{routeByte token 0}.jsonl"
+            groups := groups.insert file ((groups[file]?.getD #[]).push (keys, entry))
+          let mut ends := #[]
+          for (file, group) in groups.toArray do
+            let mut nodes : Nodes := {}
+            for (keys, entry) in group do nodes := insert nodes keys entry
+            let spilled ← spill pagesDirectory nodes {}
+            ends := ends.push (file, ← appendNodes (journals / file) spilled)
+          let checkpoint : ModuleCheckpoint := {name := name.toString, count, offsets := ends}
+          let path := journals / s!"{fileId name.toString}.checkpoint.json"
+          discard <| writeJson (path.addExtension "tmp") checkpoint
+          IO.FS.rename (path.addExtension "tmp") path
+          pure checkpoint
+      declarations := declarations + checkpoint.count
+      indexed := indexed + checkpoint.count
       coverage := coverage.push <| Json.mkObj [("module", toJson name.toString),
-        ("declarations", toJson count), ("indexed", toJson count)]
-      if coverage.size % 100 == 0 then IO.eprintln s!"lookup.index_written={coverage.size},module={name},nodes={allNodes.size},declarations={declarations}"
-    catch ex => missing := missing.push s!"{name}: {ex}"
-  let digest ← flush pagesDirectory allNodes "root"
+        ("declarations", toJson checkpoint.count), ("indexed", toJson checkpoint.count)]
+      if coverage.size % 100 == 0 then IO.eprintln s!"lookup.index_written={coverage.size},module={name},declarations={declarations}"
+    catch ex =>
+      missing := missing.push s!"{name}: {ex}"
+      -- A failed module may have appended uncommitted tails. Stop instead of
+      -- letting later commits make those tails part of a complete journal.
+      break
+  let digest ← finishBuckets pagesDirectory journals
   let header : Header := {
     basis, mathlib, inputs, storage, root := fileId "root", digest,
-    complete := missing.isEmpty && modules.size == seen.size,
+    complete := missing.isEmpty && modules.size == seen.size && coverage.size == selected.size,
     modules := modules.size, declarations, indexed, missing}
   discard <| writeJson (directory / "coverage.json") coverage
   discard <| writeJson (directory / "header.json.tmp") header
