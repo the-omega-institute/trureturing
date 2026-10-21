@@ -2812,7 +2812,7 @@ In this section the declared scalar family means all
 $t\in(0,1]$, $p\in[0,1]$ in the preceding scalar formulas. This is
 an explicit mathematical family. It is not a claim that every such $p$ is
 realized by a physically admissible native metric $q$ or by the earlier
-Markov metric subclass. The authenticated native examples retain
+Markov metric subclass. The native examples retain
 $p_a=49/198$ and $p_b=1/3$.
 
 Set
@@ -3072,7 +3072,7 @@ The nontrivial step connecting the homogeneous numerator to the conditional
 quantity is $q\ge\delta$. Average entanglement monotonicity by itself
 does not provide this normalization control.
 
-### 4.3. Concurrence route and the factor of two
+### 217.3. Concurrence route and the factor of two
 
 The same bound follows from the standard concurrence suppliers in §224.
 The spin flip fixes $W_\lambda$, whose eigenvalues are
@@ -3674,8 +3674,7 @@ the scalar weights, CAR singlet block, filter, spectator direct sum, probability
 normalization, and benchmark; and §§155–156 for application and supplier
 boundaries.
 The mature mathematical suppliers are listed by exact arXiv versions and
-the result used. The supporting source texts are original versioned TeX;
-no PDF-reading claim is required for these references.
+the result used.
 
 | Reference | Primary source | Scope used here |
 | --- | --- | --- |
