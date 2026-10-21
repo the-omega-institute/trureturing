@@ -4866,3 +4866,125 @@ verification is attached to it.
 
 
 ## 238.99 追加锚（本行以下为增补区）
+
+## 239. Two actual native sources obstruct common exact heralding
+
+**Definition 239.1 (native input and common success contract).** Retain
+$q\in D$ of §226, the principal-root normalization and fixed cut of §215,
+and the compatible two full Gibbs preparations, coupling phases, coherent
+filter $F$ and fixed register identification $J$ of §§235–236. In Alice,
+copy, space order, normalize (236.6) to obtain
+
+$$
+\begin{gathered}
+\rho_q=w_q(W_{\lambda_q}\otimes U_q)+(1-w_q)\tau_q,\qquad
+\tau_q=\tfrac14 I_A\otimes I_{\mathrm{copy}}\otimes D_q,\\
+U_q=|u_q\rangle\langle u_q|,\quad D_q=|d_q\rangle\langle d_q|,
+\quad u_q=V_B/\sqrt{1-p_q},\quad \|d_q\|=1,\quad u_q^*d_q=0,\\
+W_\lambda=(1-\lambda)I_4/4+\lambda P_-,\qquad
+p_q=|(V_q)_\ell|^2,\quad g_q=(1-t)^2p_q(1-p_q),\quad
+h_q=t+(1-t)p_q,\\
+\lambda_q=\frac{g_q}{2t+g_q},\qquad
+w_q=\frac{2t+g_q}{2t+g_q+2th_q}.
+\end{gathered}
+\tag{239.1}
+$$
+
+Here $V_B$ is in $(r,R)$ order, $P_-$ has the fixed singlet orientation
+of (236.4), and $0<w_q<1$ at finite temperature. The vectors $u_q,d_q$
+describe the actual native state; their use does not apply a source-dependent
+alignment or replace the source by freely chosen rays.
+
+At fixed $t$, a common success map $\mathcal E_t$ acts from the selected
+$\mathbb C^2_A\otimes\mathbb C^2_{\mathrm{copy}}\otimes
+\mathbb C^2_{\mathrm{space}}$ to one fixed encoded two-qubit output register.
+It may depend on $t$ but not on the unknown $q$. Exact heralding requires
+$\mathcal E_t(\rho_q)=s_qW_{\lambda_q}$ with $s_q>0$ for every required
+source, after erasing all records except success. The target parameter may
+vary with $q$; the common register does not require identical target states.
+No uniform positive lower bound on $s_q$ is imposed. In the finite adaptive
+local-number-preserving LOCC menu of §§214,218, local neutral memories,
+separable auxiliaries and classical coins are allowed, with no additional
+input copy, entangled ancillary resource or external phase reference.
+Failure outcomes are stopped and supply no further input. Every such success
+map is separable, completely positive and trace-nonincreasing by §218.
+
+**Theorem 239.2 (native two-point consequence of §§217–218).** At
+$t_0=1/10$, no single separable completely positive trace-nonincreasing
+success map satisfies Definition 239.1 simultaneously for
+$q_a=(1/6,1/6)$ and $q_b=(1/3,1/3)$. In particular, the assertion that
+for every $t\in(0,1]$ there exists one allowed $q$-independent instrument
+with positive success and exact $W_{\lambda(q,t)}$ output for every native
+$q\in D$ is false under this preparation and operation contract.
+
+Proof. Use exactly the principal-root vectors in (215.4). In $(r,R)$ order,
+their normalized Bob components and orthogonal spectator vectors are
+
+$$
+\begin{gathered}
+u_a=(10,7)^{\mathsf T}/\sqrt{149},\qquad
+ d_a=(7,-10)^{\mathsf T}/\sqrt{149},\\
+u_b=(1,1)^{\mathsf T}/\sqrt2,\qquad
+ d_b=(1,-1)^{\mathsf T}/\sqrt2.
+\end{gathered}
+\tag{239.2}
+$$
+
+Substituting $p_a=49/198$, $p_b=1/3$ and $t_0=1/10$ into (239.1) gives
+
+$$
+(\lambda_a,w_a)=\left(\frac{7301}{16981},\frac{16981}{20105}\right),
+\qquad
+(\lambda_b,w_b)=\left(\frac9{19},\frac{19}{23}\right).
+\tag{239.3}
+$$
+
+Thus $N_i=(3\lambda_i-1)/4>0$ for $i=a,b$. Suppose a common map
+$\mathcal E=\mathcal E_{t_0}$ has the stated outputs. For each $i$ put
+$Q_i=\mathcal E(W_{\lambda_i}\otimes U_i)$,
+$Z_i=\mathcal E(\tau_i)$, $a_i=\operatorname{Tr}Q_i$ and
+$b_i=\operatorname{Tr}Z_i$. Restricting each product Kraus factor on Bob
+to $\mathbb C^2_{\mathrm{copy}}\otimes u_i$ gives the two-dimensional
+filters of Lemma 217.2. The spectator input is separable. Consequently
+§218's summation argument, with homogeneous negativity $n$ of (217.1), gives
+
+$$
+n(\mathcal E(\rho_i))\le w_iN_i a_i,\qquad
+s_i=w_i a_i+(1-w_i)b_i.
+\tag{239.4}
+$$
+
+Exactness gives $n(\mathcal E(\rho_i))=n(s_iW_{\lambda_i})=s_iN_i$.
+Dividing by $N_i>0$ yields $s_i\le w_i a_i$. Since $b_i\ge0$ and
+$1-w_i>0$, (239.4) forces $b_i=0$. Positivity then gives $Z_i=0$.
+Spectator annihilation has therefore been derived from exactness, without
+assuming sector-pure heralding or measuring a source-dependent flag.
+
+Let $M=\mathcal E^*(I_4)\ge0$ be the success effect and put
+$P_i=I_A\otimes I_{\mathrm{copy}}\otimes D_i$, so $\tau_i=P_i/4$.
+The preceding zero trace gives
+
+$$
+0=\operatorname{Tr}(MP_i)
+ =\|M^{1/2}P_i\|_{\mathrm{HS}}^2,
+\qquad M^{1/2}P_i=0.
+\tag{239.5}
+$$
+
+The unnormalized columns $(7,-10)^{\mathsf T}$ and $(1,-1)^{\mathsf T}$
+have determinant $3$, so the two spectator rays span the spatial register.
+Hence the ranges of $P_a,P_b$ span the entire selected input space, forcing
+$M=0$. A positive output of $\mathcal E$ then has zero trace for every
+positive input, so $\mathcal E=0$. This contradicts the required individual
+positive success probabilities. The two sources belong to $D$, so this one
+fixed-temperature obstruction also disproves the stated universal assertion.
+
+This source-specific application uses the native bridge of §§215,235–236
+and the existing filtering bound of §§217–218. It asserts no failure at every
+temperature. Approximate extraction, best degraded decoding, existence for
+separable targets, additional-copy protocols and optimization on the original
+unfiltered $64$-dimensional resource are not determined by this theorem.
+The preparation and ideal control assumptions do not establish physical
+availability, gate synthesis or thermodynamic costs.
+
+## 239.99 追加锚（本行以下为增补区）
