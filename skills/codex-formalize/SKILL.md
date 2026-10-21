@@ -37,6 +37,14 @@ Helpers in `Reg`, `Interface` and `Impl` create no recursive D5 audit target and
 
 ## State machine
 
+**Pure digestion route** (`CLAUDE.md` §1.2). A delivery that adds or first-freezes no D5 declaration is a pure digestion task. Such a task covers with existing frozen declarations, settles or clears nonpropositional or upstream-only atoms, decomposes into the ledger, or makes a §4.3 private-only exposure with canonical repin and registration. Run Step 0, then:
+- skip Steps 1–2 and 4–7: run the canonical writers (`make cover` / `cover-batch`, `make settle` / `make -C tools settle-batch` / `make settle-clear`, `make decompose`) and commit their delta;
+- per-sentence probes, evidence archives and live-closure readings are not required, and no review triplet, evidence seat or repair seat is dispatched;
+- in Step 8, open the PR with `AUTO_MERGE=0` and merge once the writers exited 0 and the required checks are green on the exact head; the required checks, including `current`, carry §4.3 consumer validation;
+- report the ledger moves and unsettled atoms truthfully, and note ledger deviations under §1.2 for later correction by the writers.
+
+All other deliveries follow the steps below.
+
 Follow these steps in order. Do not pass a step until its postcondition holds.
 
 ### 0. Establish the environment and isolation
@@ -99,14 +107,7 @@ Apply `CLAUDE.md` 11, "library before proof." Search pinned mathlib and the repo
 
 Check the bind path first: the cheapest faithful discharge is an existing frozen theorem, and dozens of residues have been discharged with zero new Lean. If a frozen declaration already covers the residue leg verbatim (not narrower — watch the grader traps below), the correct deliverable is a bind recommendation naming that declaration and the evidence, not a new module. Ledger surgery itself is dispatcher-owned; your report carries the finding.
 
-**Pure digestion needs no verification work** (`CLAUDE.md` §1.2). A delivery that adds or first-freezes no D5 declaration is a pure digestion task. It covers with existing frozen declarations, settles nonpropositional or upstream-only atoms, decomposes, or makes a §4.3 private-only exposure with canonical repin and registration. For such a task:
-- run the canonical writers (`make cover` / `cover-batch`, `make settle` / `make -C tools settle-batch`, `make decompose`);
-- open the PR with `AUTO_MERGE=0`, and merge once the writers exited 0 and the required checks are green;
-- do not write per-sentence probes, evidence archives or live-closure readings, and do not dispatch a review triplet, evidence seat or repair seat;
-- report the ledger moves and unsettled atoms truthfully;
-- note ledger deviations under §1.2 and correct them later with the writers.
-
-Steps 4–7 and the review triplet below apply only to deliveries that add or freeze D5 declarations.
+A delivery that adds or first-freezes no D5 declaration follows the pure digestion route under "State machine" instead of a new module.
 
 If the result exists upstream, import and apply it. Do not reprove it: a reproof of an existing declaration creates a second source of truth.
 
@@ -241,7 +242,7 @@ finding it lists is resolved in the tree that goes through the doors. In the two
 `CLAUDE.md` §3.6 (探针 → Stage A → 镜像核对 → Stage B → 三席评审) it is the mirror-check and
 judgement-form seat between Stage A and the Stage-B doors. The sshx review triplet (tests / quality /
 architecture) follows the doors in that order and must pass before merge; a pure digestion delivery
-(Step 3) has no review triplet. If a review needs an early
+(pure digestion route above) has no review triplet. If a review needs an early
 draft, first complete the publication boundary below and use Step 8 to publish the draft with freeze
 and cover still pending; return here after that review.
 
@@ -342,7 +343,7 @@ make gate BASE=<explicit-existing-40-hex-commit-sha>
 Report its raw exit and rejected rules; it does not replace the configured independent workflow required checks or gate
 the push. Fix actual failures under their existing owners without weakening required checks.
 
-`make pr` and `make pr-open` default to auto-merge; use `AUTO_MERGE=0` while review is pending. `DRAFT=1` creates a draft and returns without arming auto-merge or waiting for CI. Do not arm auto-merge before review passes: the independent pre-freeze review (Step 7) passes before the doors, and the sshx review triplet (tests / quality / architecture) must finish and pass before merge; the triplet may run before or after PR publication as reviewer access permits. Before any later push, query the actual PR state and head. If the PR is still `OPEN`, update the same branch with a complete publication unit under Step 7, then rerun the required checks on the new exact head and watch them with `make pr-watch PR=<number> HEAD_SHA=<new-40-hex-head-sha>`. If the PR is `MERGED` or `CLOSED`, route later work to a new branch and a new pull request. Never infer that a successful later push reached `dev`; verify the actual merge and `dev` state.
+`make pr` and `make pr-open` default to auto-merge; use `AUTO_MERGE=0` while review is pending. `DRAFT=1` creates a draft and returns without arming auto-merge or waiting for CI. A pure digestion delivery (route above) has no review triplet and merges once the required checks are green on the exact head. Otherwise, do not arm auto-merge before review passes: the independent pre-freeze review (Step 7) passes before the doors, and the sshx review triplet (tests / quality / architecture) must finish and pass before merge; the triplet may run before or after PR publication as reviewer access permits. Before any later push, query the actual PR state and head. If the PR is still `OPEN`, update the same branch with a complete publication unit under Step 7, then rerun the required checks on the new exact head and watch them with `make pr-watch PR=<number> HEAD_SHA=<new-40-hex-head-sha>`. If the PR is `MERGED` or `CLOSED`, route later work to a new branch and a new pull request. Never infer that a successful later push reached `dev`; verify the actual merge and `dev` state.
 
 If the dispatched sandbox forbids git writes, state that constraint explicitly and hand the exact `git push` and `make pr-open` invocations above, with substituted arguments, to the caller; do not report `success` as though the work landed. Otherwise report `success` only with the opened pull request, touched paths, door-produced commit subjects, every relevant exit code and completed fidelity-gate evidence. For each new public D5 theorem/lemma in scope, report either its retained Reg path, compiled target exit code, validated four-slot/binding-evidence result and continuation kind, or the linked issue and explicit unfinished-audit disclosure under the exception above. Report actual attempted compilation failures without inventing missing Reg targets or successful evidence. Delivery success with an issue does not mean registration completion. `proof_shape` (`content` | `bind-only`), direct frozen public dependencies (GID + `statement_id`), `escape_witness` (or `bind-only`) and the module's `admission_basis` remain required for the mathematical declaration. Or report `open`, naming the stopping step and carrying every evidence class reached; mark each unreached class not run and explain why. There is no third outcome.
 
