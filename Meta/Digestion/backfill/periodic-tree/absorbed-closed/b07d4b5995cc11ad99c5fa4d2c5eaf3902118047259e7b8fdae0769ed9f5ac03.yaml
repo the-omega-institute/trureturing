@@ -3,8 +3,6 @@ fingerprints:
   normalized_sha256: sha256:b07d4b5995cc11ad99c5fa4d2c5eaf3902118047259e7b8fdae0769ed9f5ac03
 cas_ref: sha256:b07d4b5995cc11ad99c5fa4d2c5eaf3902118047259e7b8fdae0769ed9f5ac03
 coverage_gids:
-  - gid: D5/S0/Carrier/Ring.GoldenInt
-    target_statement_id: sha256:8bf6f1de4fbb92f8fd52becdb104129e8c8e08d3a6b16425b2767277b2ccaf4b
   - gid: D5/S0/Carrier/Ring.a
     target_statement_id: sha256:9a55d3914a2c2abc9cb7f35a377e5cdff87dc3d9947c4cc7b46586ccffa6bc3b
   - gid: D5/S0/Carrier/Ring.addGroupWithOne

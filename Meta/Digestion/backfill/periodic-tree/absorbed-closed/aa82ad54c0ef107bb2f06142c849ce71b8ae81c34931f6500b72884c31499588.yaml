@@ -3,8 +3,6 @@ fingerprints:
   normalized_sha256: sha256:aa82ad54c0ef107bb2f06142c849ce71b8ae81c34931f6500b72884c31499588
 cas_ref: sha256:aa82ad54c0ef107bb2f06142c849ce71b8ae81c34931f6500b72884c31499588
 coverage_gids:
-  - gid: D5/S0/Certificates/BoxCover/RationalIntervalExpression.Expr
-    target_statement_id: sha256:7740d0d639e691784931b94a9f39a1e729a89943b3d162fba0338723c2634562
   - gid: D5/S0/Certificates/BoxCover/RationalIntervalExpression.bounds
     target_statement_id: sha256:80b990090589e41d7b17dd2c077f625c7948ccee7ea79be2582db82bd0911139
   - gid: D5/S0/Certificates/BoxCover/RationalIntervalExpression.check
@@ -15,8 +13,6 @@ coverage_gids:
     target_statement_id: sha256:7c1ff706fd917d42fd8bac14c6f0823e57eb66d7d31e76616f7baea58a3ea428
   - gid: D5/S0/Certificates/BoxCover/RationalIntervalExpression.neg
     target_statement_id: sha256:885ae424fe49611ff9ecd91cc5ed0fa3fc0a91f5f14c6f0d43681fde0f796826
-  - gid: D5/S0/Certificates/BoxCover/RationalIntervalExpression.value
-    target_statement_id: sha256:563dbc7e0fc0596db696c2b1a71aa49ec288d39d8cf201638560baef6cca7f55
   - gid: D5/S3/Fourier/FullBispectrumStability.unit_mul_conj
     target_statement_id: sha256:c294b57855b1480c8089551bdebd391d65a8fb4ecdb0a654ab50158add006b8c
 receipts:

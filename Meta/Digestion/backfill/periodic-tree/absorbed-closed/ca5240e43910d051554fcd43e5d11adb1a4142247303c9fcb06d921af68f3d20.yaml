@@ -5,8 +5,6 @@ cas_ref: sha256:ca5240e43910d051554fcd43e5d11adb1a4142247303c9fcb06d921af68f3d20
 coverage_gids:
   - gid: D5/S0/Carrier/GoldenRatio.golden_ratio_spec
     target_statement_id: sha256:27ade5b921f83f26ced1225caa7020b05bb0313023ebb4852d27c5b9eb541e1b
-  - gid: D5/S0/Certificates/BoxCover/RationalIntervalExpression.Expr
-    target_statement_id: sha256:7740d0d639e691784931b94a9f39a1e729a89943b3d162fba0338723c2634562
   - gid: D5/S0/Certificates/BoxCover/RationalIntervalExpression.bounds
     target_statement_id: sha256:80b990090589e41d7b17dd2c077f625c7948ccee7ea79be2582db82bd0911139
   - gid: D5/S0/Certificates/BoxCover/RationalIntervalExpression.check
@@ -19,8 +17,6 @@ coverage_gids:
     target_statement_id: sha256:7c1ff706fd917d42fd8bac14c6f0823e57eb66d7d31e76616f7baea58a3ea428
   - gid: D5/S0/Certificates/BoxCover/RationalIntervalExpression.mul
     target_statement_id: sha256:b961a54e1cd3f732396a35f036a1063ecddf913e56610486ab178f76030fbd77
-  - gid: D5/S0/Certificates/BoxCover/RationalIntervalExpression.value
-    target_statement_id: sha256:563dbc7e0fc0596db696c2b1a71aa49ec288d39d8cf201638560baef6cca7f55
 receipts:
   unresolved_subitems: []
   chain_atoms:

@@ -3,8 +3,6 @@ fingerprints:
   normalized_sha256: sha256:e7fe898f59df39c0541deba07109dde6908fe46e292150b67adebd8f630ec680
 cas_ref: sha256:e7fe898f59df39c0541deba07109dde6908fe46e292150b67adebd8f630ec680
 coverage_gids:
-  - gid: D5/S0/Certificates/BoxCover/RationalIntervalExpression.Expr
-    target_statement_id: sha256:7740d0d639e691784931b94a9f39a1e729a89943b3d162fba0338723c2634562
   - gid: D5/S0/Certificates/BoxCover/RationalIntervalExpression.bounds
     target_statement_id: sha256:80b990090589e41d7b17dd2c077f625c7948ccee7ea79be2582db82bd0911139
   - gid: D5/S0/Certificates/BoxCover/RationalIntervalExpression.check

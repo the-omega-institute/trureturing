@@ -3,8 +3,6 @@ fingerprints:
   normalized_sha256: sha256:7f50b34edee9a57579ec16c99434fdce340ae786ec9cd2367ced0f980e86ebba
 cas_ref: sha256:7f50b34edee9a57579ec16c99434fdce340ae786ec9cd2367ced0f980e86ebba
 coverage_gids:
-  - gid: D5/S1/Words/AdmissibleWords/AdmissibleCount.Adm
-    target_statement_id: sha256:bb445754dd65a8a958b93be45ef942927e1513ea2bd332fe1841673525a3b4c9
   - gid: D5/S1/Words/AdmissibleWords/AdmissibleCount.admissibleWord_card_eq_fib
     target_statement_id: sha256:705c7bcc0099280c8ed68bf461eca8cd390b7cba0709b2017097cd718d7e6bba
   - gid: D5/S1/Words/AdmissibleWords/AdmissibleCount.decAdm

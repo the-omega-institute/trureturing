@@ -7,8 +7,6 @@ coverage_gids:
     target_statement_id: sha256:9ac3149001d62a60513aea2ea286510d8318a6320f2c0b4fb185aeb1c165d872
   - gid: D5/S0/Carrier/Conj.conjEquiv
     target_statement_id: sha256:ba1cb329c95648bc84b828b550114ce4d8174484c57d70283de31866f1e4dee4
-  - gid: D5/S0/Carrier/Ring.GoldenInt
-    target_statement_id: sha256:8bf6f1de4fbb92f8fd52becdb104129e8c8e08d3a6b16425b2767277b2ccaf4b
   - gid: D5/S0/Carrier/Ring.a
     target_statement_id: sha256:9a55d3914a2c2abc9cb7f35a377e5cdff87dc3d9947c4cc7b46586ccffa6bc3b
   - gid: D5/S0/Carrier/Ring.addGroupWithOne

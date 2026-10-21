@@ -3,6 +3,8 @@ fingerprints:
   normalized_sha256: sha256:1496d152d79d52a5eb472c4ac8cc26f7337d2f78517e66b9d5ee75989070a3de
 cas_ref: sha256:1496d152d79d52a5eb472c4ac8cc26f7337d2f78517e66b9d5ee75989070a3de
 coverage_gids:
+  - gid: D5/S0/Carrier/GoldenRatio.golden_ratio_spec
+    target_statement_id: sha256:27ade5b921f83f26ced1225caa7020b05bb0313023ebb4852d27c5b9eb541e1b
   - gid: D5/S1/Scale/Fibonacci.fib_cassini_from_golden_norm
     target_statement_id: sha256:705efb41c8ed2d7be8efa40e9fd10e4fde55225d9335e386144b0f6c5c0d04d2
   - gid: D5/S3/Arith/FibonacciAtomic/GraftAffineClosure.atomicBlock

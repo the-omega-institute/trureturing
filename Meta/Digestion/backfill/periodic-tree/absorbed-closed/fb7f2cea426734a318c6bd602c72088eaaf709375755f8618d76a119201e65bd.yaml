@@ -3,8 +3,6 @@ fingerprints:
   normalized_sha256: sha256:fb7f2cea426734a318c6bd602c72088eaaf709375755f8618d76a119201e65bd
 cas_ref: sha256:fb7f2cea426734a318c6bd602c72088eaaf709375755f8618d76a119201e65bd
 coverage_gids:
-  - gid: D5/S0/Certificates/BoxCover/RationalIntervalExpression.Expr
-    target_statement_id: sha256:7740d0d639e691784931b94a9f39a1e729a89943b3d162fba0338723c2634562
   - gid: D5/S0/Certificates/BoxCover/RationalIntervalExpression.add
     target_statement_id: sha256:5de53c0c21af00283b7122bf98d3837ef8ead8e83fc76566c9470310e38b6b50
   - gid: D5/S0/Certificates/BoxCover/RationalIntervalExpression.bounds
@@ -19,7 +17,5 @@ coverage_gids:
     target_statement_id: sha256:7c1ff706fd917d42fd8bac14c6f0823e57eb66d7d31e76616f7baea58a3ea428
   - gid: D5/S0/Certificates/BoxCover/RationalIntervalExpression.mul
     target_statement_id: sha256:b961a54e1cd3f732396a35f036a1063ecddf913e56610486ab178f76030fbd77
-  - gid: D5/S0/Certificates/BoxCover/RationalIntervalExpression.value
-    target_statement_id: sha256:563dbc7e0fc0596db696c2b1a71aa49ec288d39d8cf201638560baef6cca7f55
 receipts:
   unresolved_subitems: []
