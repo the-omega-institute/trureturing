@@ -5,3 +5,7 @@ cas_ref: sha256:5dc421fb907caf42478b8f4599847d568fb435361ac79bd3fc24771f5a94dd2c
 coverage_gids: []
 receipts:
   unresolved_subitems: []
+  nonpropositional:
+    justification: Volume title and reference-input/append-only and verification-scope notice; no mathematical proposition is stated.
+    previous_atom_id: null
+    next_atom_id: 5a5019190310686fb288c5f3abd19a44b51a5d825c3e0fd65fca5f7acc67b682
