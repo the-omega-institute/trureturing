@@ -83,3 +83,33 @@ The grouped-versus-alternating equality example and its explicit next-bit select
 Finally, Cook Theorem 6.1 constructs the full topological order as part of a SAT reduction. Evaluating one fixed input then uses Proposition 1.2, whereas completion quantifies over the input assignments. A known schedule and a total verifier do not eliminate that quantifier. The exact uniform success-order equivalence, including NO instances, is Cook Theorem 8.2. These comparisons separate the tasks without assuming either $P=NP$ or $P\ne NP$. $\square$
 
 ## 追加锚（本行以下为增补区）
+
+## 2. Exact residual distinctions and quantum memory
+
+Fix a Boolean formula $\varphi$ and variable order $x_1,\ldots,x_m$. At cut $i$, define $F_u(z)=\varphi(uz)$ for prefixes $u\in\{0,1\}^i$, and let $r_i$ be the number of distinct functions $F_u$. These are residual functions at prescribed layers, not a count of all nodes in a reduced graph that can skip tests.
+
+**Proposition 2.1 (Exact future answers require distinct states).** A deterministic machine reading this order and correctly evaluating every full assignment requires at least $r_i$ reachable states at cut $i$. Suppose instead that all prefix-dependent information available to future operations passes through a joint memory of finite Hilbert-space dimension $d_i$. If for every suffix $z$ a continuation fixed independently of the hidden prefix returns $F_u(z)$ with zero error, then $d_i\ge r_i$. A memory of $q$ qubits therefore requires $q\ge\lceil\log_2r_i\rceil$.
+
+Proof. Identical deterministic states followed by the same suffix give the same answer, so their residual functions must coincide. For the quantum statement, choose a density state $\rho_u$ for each distinct residual. Two distinct residuals have some separating suffix $z$; reverse their names if necessary so $F_u(z)=1$ and $F_v(z)=0$. Pull the entire continuation and its final binary measurement back to an effect $0\le E_z\le I$ on the current joint memory. Exactness gives
+
+$$
+\operatorname{tr}(E_z\rho_u)=1,
+\qquad\operatorname{tr}(E_z\rho_v)=0.
+\tag{B.2}
+$$
+
+Positivity places the support of $\rho_u$ in the one-eigenspace of $E_z$ and that of $\rho_v$ in its zero-eigenspace. Indeed the nonnegative traces against $I-E_z$ and $E_z$, respectively, vanish, so their positive square roots annihilate the corresponding support. The supports are orthogonal. This argument applies to every pair even though different pairs may use different suffixes. Selecting a nonzero vector from each support gives $r_i$ orthogonal vectors, proving $d_i\ge r_i$. This is the standard perfect-discrimination obstruction discussed in [Barnett–Croke §§2, 3.2.b](../Quantum/barnett2009discrimination.md), applied here to suffix-selected tests; it requires no common measurement supplied in advance for all residuals. $\square$
+
+Any accessible classical transcript, retained input prefix, reference, control register or environment that can return must be included in this joint memory. Fixed prefix-independent ancillary states may be part of the continuation, but an omitted prefix-dependent register would invalidate (B.2) as a common effect on the stated memory. The result concerns exact zero error and all specified suffixes; it does not give the same dimension bound for bounded error or a smaller test menu. It is a capacity bound, not a runtime bound: $r_i=2^i$ requires only $q\ge i$ by this argument.
+
+## 3. A small effective layered representation
+
+**Definition 3.1 (Uniform layered codes).** For a formula/order encoding of length $N$ with $m\le N$ listed variables, fix programs for an initial code, an update $T(\varphi,i,q,b)$ and a terminal bit $A(\varphi,q)$. Code lengths and initialization, transition and readout costs are bounded by fixed polynomials in $N$. For every assignment $w$, starting at the initial code and applying its bits yields $q_m$ with $A(\varphi,q_m)=\varphi(w)$. Let the total number of reachable layered codes $(i,q)$ be bounded by a fixed polynomial $B(N)$. Codes have exact bit-string equality; they need not identify all semantically equal residuals.
+
+**Proposition 3.2 (Uniform construction, decision and witness).** Under Definition 3.1, satisfiability is decidable in deterministic polynomial time, and a satisfying assignment can be output in polynomial time when one exists.
+
+Proof. From the initial code, generate both successors of every reached code in each layer and merge exact duplicate strings. At most $B(N)$ layered codes and $2B(N)$ edges occur. Their lengths and update costs are polynomial, so even direct comparisons and sequential scans take polynomial total time. Save one parent and selected bit per newly reached code. Every saved parent chain is a genuine prefix and every assignment's state appears by induction. An accepting terminal code therefore has a parent chain producing a witness, while absence of such a code rules out all assignments. Initialization, enumeration, deduplication, parent reconstruction and final readout are charged. The construction supplies a sufficient algorithmic condition, not an assumption that semantic equivalence testing or a small representation is automatically available. $\square$
+
+The clause-specific masks in [Dechter Propositions 5.2–5.3](dechter1996bucket.md#5-cnf-crossing-clause-satisfaction-masks) give such codes when their crossing-clause bound is logarithmic. The grouped equality example in that note still has an inexpensive selector despite an exponential full residual table, so small explicit layered representations are not a necessary condition for efficient witness search. These statements are elementary automaton and dynamic-programming exposition, not additional results attributed to Bryant's Theorem 1.
+
+## 追加锚（本行以下为增补区）

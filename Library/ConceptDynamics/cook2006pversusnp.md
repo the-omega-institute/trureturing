@@ -596,3 +596,100 @@ The following restricted theorem is the relevant single-message boundary. There 
 Then the language is in $BPP$.
 
 **Source anchors for the protocol claims.** The auxiliary-input and black-box distinctions, including the one-message triviality boundary used here, are attributed to Goldreich and Oren, *Definitions and Properties of Zero-Knowledge Proof Systems*, Journal of Cryptology 7 (1994), 1–32, [author copy](https://www.wisdom.weizmann.ac.il/~oded/PSX/oren.pdf). The graph-isomorphism protocol, the NP zero-knowledge construction under cryptographic assumptions, and the distinction between simulation and witness revelation are attributed to Goldreich, Micali and Wigderson, *Proofs that Yield Nothing But Their Validity or All Languages in NP Have Zero-Knowledge Proof Systems*, Journal of the ACM 38 (1991), 691–729, [paper](https://people.csail.mit.edu/silvio/Selected%20Scientific%20Papers/Zero%20Knowledge/Proofs_That_Yield_Nothing_But_Their_Validity_or_All_Languages_in_NP_Have_Zero-Knowledge_Proof_Systems.pdf). The sparse arithmetic-circuit and R1CS translation interface cited in the AURIC adapter is from Justin Thaler, *Proofs, Arguments, and Zero-Knowledge*, §8.4, [survey](https://people.cs.georgetown.edu/jthaler/ProofsArgsAndZK.pdf). These references supply the standard protocol interfaces; the finite-field correspondence and resource qualifications in this note remain subject to the definitions stated here.
+
+
+## Primitive simulations and calibrated execution costs
+
+The source's PDF p. 1 explicitly motivates the robustness of P by
+polynomial simulations of more efficient machine models; p. 2 gives the
+bounded checking-relation definition of NP. The following spells out the
+resource correspondence used by the native observer protocol. It is
+supporting exposition and an elementary cost comparison, not a new
+complexity-class result or a claim about all physical computers.
+
+Fix two effective primitive models acting on the same binary inputs.
+For every fixed program in model A, assume a uniform B simulator that
+returns the same output on an $n$-bit input after at most $p(n+T)$ steps
+when the A execution takes $T$ steps; $p$ is a fixed polynomial for that
+simulation. Charge input conversion, installation, memory access and
+output conversion. If simulations exist in both directions, a time
+bound $T\le q(n)$ transfers to $p(n+q(n))$, still polynomial. Thus
+$\mathrm P_A=\mathrm P_B$. The same argument applied to polynomial-time
+verifiers on input-and-witness pairs, with polynomial witness lengths,
+gives $\mathrm{NP}_A=\mathrm{NP}_B$. Agreement merely on computable
+functions does not imply polynomial simulation. A unit-cost instruction
+that solves SAT would assume the ability being studied.
+
+For a macro trajectory $s_0\to\cdots\to s_m$ with implementation costs
+$c_i$, total primitive work is $W=\sum_{i<m}c_i$. If
+$m\le q(n)$, $|s_i|\le r(n)$ and
+$c_i\le p(n+|s_i|)$ uniformly, then
+$W\le q(n)p(n+r(n))$. Preparation, acquired auxiliary data and final
+output must also satisfy polynomial bounds. Simple primitive transitions
+alone do not bound $m$ or the intermediate representation size.
+
+A separate elementary comparison fixes a proper-time unit $\tau_0>0$.
+Partition the complete charged execution into $K$ positive-duration
+primitive intervals, with durations $d_i$, and let the reference clock
+be absolutely continuous in proper time with
+$dt/d\tau=\alpha(\tau)^{-1}>0$ almost everywhere. Suppose throughout the
+same input family
+
+$$
+\frac{\tau_0}{p(n)}\le d_i\le\tau_0p(n),\qquad
+\frac1{q(n)}\le\alpha(\tau)\le q(n),
+$$
+
+where $p,q\ge1$ are fixed polynomials. On each interval the reference
+duration lies between $\tau_0/(pq)$ and $\tau_0pq$. Hence
+
+$$
+\frac{K}{p(n)q(n)}\le\frac{T_t}{\tau_0}\le p(n)q(n)K,
+\qquad
+\frac{K}{p(n)}\le\frac{T_\tau}{\tau_0}\le p(n)K.
+$$
+
+These bounds preserve polynomial time for this execution family.
+Extending the conclusion to computational classes also requires the
+uniform simulations and realizability of the programs being compared.
+Independent uncharged delays or an uncharged answer oracle are outside
+the partition assumption. The calibration is an extra mathematical
+hypothesis, not a physical conclusion of Cook's article.
+
+Arbitrary monotone reparametrizations need not have these bounds:
+$u=\log_2(1+\tau/\tau_0)$ maps a duration
+$\tau=2^n\tau_0$ to $u=\log_2(1+2^n)$, while later primitive intervals
+have exponentially small $u$-length. It does not reduce the number of
+executed primitives.
+
+The protocol-specific application is
+[Native capacity, §20](../../docs/develop/theory/RECURSIVE_RELATIONAL_OBSERVATION_NATIVE_CAPACITY_COHERENCE_AND_GROWTH.md#20-serial-literal-self-images-under-calibrated-clocks).
+That application supplies its own copy codec and native ordinal lower
+bound; neither follows from complexity-model robustness.
+
+## 15. Equality of clean reversible verification interfaces
+
+**Definition 15.1 (Logical action with clean workspace).** Given an explicitly encoded CNF formula $\varphi$ on $m$ variables, construct a polynomial-size reversible circuit from fixed NOT, CNOT and Toffoli gates. Compute the Boolean formula into work bits, XOR its value into target $b$, then reverse the computation. With $a$ work bits initialized to zero, its physical unitary $U_\varphi$ satisfies
+
+$$
+U_\varphi|w,b,0^a\rangle
+=|w,b\oplus\varphi(w),0^a\rangle.
+\tag{34}
+$$
+
+The construction is a uniform polynomial-time gate-list translation: each Boolean gate writes its value into a fresh clean bit, the input wires are retained, and inverse gates clear the work after the target XOR. All variable addressing and output description costs are included. Constants handle empty clauses, empty conjunctions and $m=0$. Equation (34) defines the induced logical unitary $O_\varphi$ on the invariant zero-workspace subspace; it is not a promise that the same circuit acts identically on arbitrary dirty work registers. The reversible-computation interface also underlies the uniformly generated verification circuits discussed in [Watrous](../Computability/watrous2011quantumcircuits.md).
+
+**Proposition 15.2 (Logical identity is exactly unsatisfiability).** For this constructed family,
+
+$$
+O_\varphi=I
+\quad\Longleftrightarrow\quad
+\operatorname{Ad}(O_\varphi)=\operatorname{id}
+\quad\Longleftrightarrow\quad
+\varphi\text{ is unsatisfiable}.
+\tag{35}
+$$
+
+Proof. If no assignment satisfies the formula, (34) fixes every logical basis vector and hence every vector by linearity. If $w_*$ satisfies it, $|w_*,0\rangle$ maps to the orthogonal vector $|w_*,1\rangle$, so both its vector action and its density-state channel differ from identity. This also handles a tautology: its target flip remains visible. No comparison of unobservable global phases is needed. $\square$
+
+Consequently a uniform deterministic polynomial-time exact identity test for these supplied clean-workspace logical circuits decides UNSAT; complementing its answer decides SAT, and Cook's NP-completeness premise gives $P=NP$. This is an elementary reduction and not a claim that such a test has been constructed. In particular (35) cannot be applied to a test of the full physical unitary on all dirty work inputs without another valid reduction. It identifies one place where recognizing task equivalence can contain the original search difficulty. The source of the complexity premise is Cook's SAT completeness, while (34)–(35) are the explicit reversible-interface calculation, not a separately numbered theorem of his exposition.
