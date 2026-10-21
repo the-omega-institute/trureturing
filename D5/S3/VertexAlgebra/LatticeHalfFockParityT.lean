@@ -217,7 +217,7 @@ private theorem vacuum_normalization_T (r : ℕ) (τ : ℂ) :
   ring
 
 /-- Forward T interchanges the two genuine trace characters with the rank/48 phase. -/
-theorem actual_paired_T (D : LatticeData) (hu : IsUnit D.G.det)
+private theorem actual_paired_T_forward (D : LatticeData) (hu : IsUnit D.G.det)
     (A : Module.End ℂ (ActualGround D hu)) (τ : ℂ) (hτ : 0 < τ.im) :
     actualInsertedCharacter D hu A (τ + 1) =
       exp (2 * Real.pi * I * D.rank / 48) * actualParityInsertedCharacter D hu A τ ∧
@@ -232,25 +232,30 @@ theorem actual_paired_T (D : LatticeData) (hu : IsUnit D.G.det)
     intro N
     rw [vacuum_normalization_T, oscillator_parameter_T, parity_term_eq_neg]
     ring
-  · rw [actualParityInsertedCharacter, actualInsertedCharacter,
-      vacuum_normalization_T, oscillator_parameter_T]
-    have hterm : (fun N : ℕ => actualParityTraceTerm D hu A
-        (-exp (Real.pi * I * τ)) N) = actualTraceTerm D hu A (exp (Real.pi * I * τ)) := by
-      funext N
-      rw [parity_term_eq_neg, neg_neg]
-    rw [hterm]
+  · have hm := actual_character_modular D hu A τ hτ
+    have hsum := hm.2.1.mul_left (exp (2 * Real.pi * I * D.rank / 48))
+    rw [← hm.2.2.1] at hsum
+    rw [actualParityInsertedCharacter, ← tsum_mul_left]
+    apply HasSum.tsum_eq
+    apply hsum.congr_fun
+    intro N
+    rw [vacuum_normalization_T, oscillator_parameter_T, parity_term_eq_neg, neg_neg]
     ring
 
-/-- Applying the forward pair twice gives the rank/24 phase for each character. -/
-theorem actual_paired_T_sq (D : LatticeData) (hu : IsUnit D.G.det)
+/-- Both forward T laws and both T-squared laws for the genuine trace characters. -/
+theorem actual_paired_T (D : LatticeData) (hu : IsUnit D.G.det)
     (A : Module.End ℂ (ActualGround D hu)) (τ : ℂ) (hτ : 0 < τ.im) :
+    actualInsertedCharacter D hu A (τ + 1) =
+      exp (2 * Real.pi * I * D.rank / 48) * actualParityInsertedCharacter D hu A τ ∧
+    actualParityInsertedCharacter D hu A (τ + 1) =
+      exp (2 * Real.pi * I * D.rank / 48) * actualInsertedCharacter D hu A τ ∧
     actualInsertedCharacter D hu A (τ + 2) =
       exp (2 * Real.pi * I * D.rank / 24) * actualInsertedCharacter D hu A τ ∧
     actualParityInsertedCharacter D hu A (τ + 2) =
       exp (2 * Real.pi * I * D.rank / 24) * actualParityInsertedCharacter D hu A τ := by
   have hτ' : 0 < (τ + 1).im := by simpa using hτ
-  have hfirst := actual_paired_T D hu A τ hτ
-  have hsecond := actual_paired_T D hu A (τ + 1) hτ'
+  have hfirst := actual_paired_T_forward D hu A τ hτ
+  have hsecond := actual_paired_T_forward D hu A (τ + 1) hτ'
   have hphase : exp (2 * Real.pi * I * D.rank / 48) *
       exp (2 * Real.pi * I * D.rank / 48) =
       exp (2 * Real.pi * I * D.rank / 24) := by
@@ -258,7 +263,7 @@ theorem actual_paired_T_sq (D : LatticeData) (hu : IsUnit D.G.det)
     congr 1
     ring
   have hshift : τ + 2 = (τ + 1) + 1 := by ring
-  constructor
+  refine ⟨hfirst.1, hfirst.2, ?_, ?_⟩
   · rw [hshift, hsecond.1, hfirst.2, ← mul_assoc, hphase]
   · rw [hshift, hsecond.2, hfirst.1, ← mul_assoc, hphase]
 
@@ -267,4 +272,3 @@ end D5.S3.VertexAlgebra.LatticeHalfFockParityT
 #print axioms D5.S3.VertexAlgebra.LatticeHalfFockParityT.actual_parity_trace_series
 #print axioms D5.S3.VertexAlgebra.LatticeHalfFockParityT.actual_parity_character_series
 #print axioms D5.S3.VertexAlgebra.LatticeHalfFockParityT.actual_paired_T
-#print axioms D5.S3.VertexAlgebra.LatticeHalfFockParityT.actual_paired_T_sq

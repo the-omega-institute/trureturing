@@ -356,7 +356,11 @@ abbrev arena : Arena where
     a.readout () () (actualInsertedCharacter D hu A (τ + 1))
       (exp (2 * Real.pi * I * D.rank / 48) * actualParityInsertedCharacter D hu A τ) ∧
     actualParityInsertedCharacter D hu A (τ + 1) =
-      exp (2 * Real.pi * I * D.rank / 48) * actualInsertedCharacter D hu A τ
+      exp (2 * Real.pi * I * D.rank / 48) * actualInsertedCharacter D hu A τ ∧
+    actualInsertedCharacter D hu A (τ + 2) =
+      exp (2 * Real.pi * I * D.rank / 24) * actualInsertedCharacter D hu A τ ∧
+    actualParityInsertedCharacter D hu A (τ + 2) =
+      exp (2 * Real.pi * I * D.rank / 24) * actualParityInsertedCharacter D hu A τ
 
 private theorem source_bridge :
     (type_of% (@actual_paired_T)) ↔ arena.Law equalityActual := Iff.rfl
@@ -416,74 +420,6 @@ def audit : Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0}
 
 end PairedT
 
-namespace PairedTSquared
-
-abbrev arena : Arena where
-  signature := equalitySignature
-  Law a := ∀ (D : LatticeData) (hu : IsUnit D.G.det)
-    (A : Module.End ℂ (ActualGround D hu)) (τ : ℂ) (hτ : 0 < τ.im),
-    a.readout () () (actualInsertedCharacter D hu A (τ + 2))
-      (exp (2 * Real.pi * I * D.rank / 24) * actualInsertedCharacter D hu A τ) ∧
-    actualParityInsertedCharacter D hu A (τ + 2) =
-      exp (2 * Real.pi * I * D.rank / 24) * actualParityInsertedCharacter D hu A τ
-
-private theorem source_bridge :
-    (type_of% (@actual_paired_T_sq)) ↔ arena.Law equalityActual := Iff.rfl
-
-private theorem rejected_law : ¬ arena.Law equalityRejected := by
-  intro h
-  exact (h emptyLattice empty_unit 0 I (by norm_num)).1
-
-def family : Registration arena (type_of% (@actual_paired_T_sq)) where
-  actual := equalityActual
-  bridge := source_bridge
-  variation := ⟨source_bridge.mp actual_paired_T_sq, equalityRejected, rejected_law⟩
-  sensitivity := by
-    constructor
-    · intro i
-      refine ⟨equalityRejected, ?_, rfl, rejected_law⟩
-      intro j hj
-      exact (hj (Subsingleton.elim _ _)).elim
-    · intro e
-      cases e
-  dependence := equalityDependence
-
-def audit : Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0}
-    (@actual_paired_T_sq) (Realization equalitySignature) Unit Unit where
-  unitName := `Reg.D5.S3.VertexAlgebra.LatticeHalfFockParityT.Analytic.PairedTSquared.unit
-  realizationName := `Reg.D5.S3.VertexAlgebra.LatticeHalfFockParityT.Analytic.PairedTSquared.family
-  realizationSource := none
-  generated := false
-  arena := .source ⟨arena⟩
-  objectArena := .source ⟨arena⟩
-  catalog := Lean.Name.anonymous
-  localNames := false
-  realization := .source arena ⟨family⟩
-  correspondence := { stage := .evidence, objectStage := .evidence }
-  bundleNonempty := .absent
-  readout := some (realize equalitySignature equalityActual.readout equalityActual.anchor)
-  variation := .absent
-  sensitivity := .absent
-  partialSensitivity := none
-  escapeFrom := none
-  sourceSelection := some {
-    owner := `D5.S3.VertexAlgebra.LatticeHalfFockParityT
-    definition := none
-    coordinates := #[]
-    readouts := #[{
-      path := #["body", "body", "body", "body", "body", "fn", "arg", "fn", "fn"]
-      stateBinder := 0
-      functionOperand := true
-      stateOperand := none
-      booleanPredicate := false }] }
-  continuation := .unknown
-  familyRecord := none
-  options := #[]
-
-#print axioms family
-#print axioms audit
-
-end PairedTSquared
 
 end Analytic
 

@@ -98,29 +98,24 @@ internal sealed class LatticeHalfFockParityTDocument : IScribeDocumentDefinition
             Describe.Lean(
                 DescribeId.Create("actual-paired-t"),
                 DeclarationHandle.Create(Prefix + "actual_paired_T"),
-                H("Both forward paired T laws"),
+                H("Both forward T laws and both T-squared laws"),
                 StatementSource.WithoutFormula(),
                 AssessedProvenance.FromRepo(Background),
                 Blocks(Paragraph(Text("The identity exp(pi*I*(tau+1))=-exp(pi*I*tau) "
                     + "interchanges the ordinary and parity trace series. The vacuum shift "
-                    + "contributes phase48=exp(2*pi*I*rank/48). The two conclusions are "
+                    + "contributes phase48=exp(2*pi*I*rank/48). The first two clauses are "
                     + "character(tau+1)=phase48*parityCharacter(tau) and "
-                    + "parityCharacter(tau+1)=phase48*character(tau). They are forward "
-                    + "laws, retain all complex phases, and are consumed by the T-squared proof."))),
-                DescribeRole.Theorem),
-            Describe.Lean(
-                DescribeId.Create("actual-paired-t-squared"),
-                DeclarationHandle.Create(Prefix + "actual_paired_T_sq"),
-                H("Both T-squared laws"),
-                StatementSource.WithoutFormula(),
-                AssessedProvenance.FromRepo(Background),
-                Blocks(Paragraph(Text("Apply the paired T laws at tau and tau+1, both in "
-                    + "the upper half-plane, and combine the two vacuum phases by exp_add. "
-                    + "Each character at tau+2 equals exp(2*pi*I*rank/24) times itself at "
-                    + "tau. Every theorem retains arbitrary lattice data D, IsUnit determinant, "
-                    + "arbitrary ground endomorphism A, rank zero, grade zero and zero or "
-                    + "complex trace. No positivity, even-rank premise, trace division or "
-                    + "charge-reflection theta is used."))),
+                    + "parityCharacter(tau+1)=phase48*character(tau). The ordinary normalized "
+                    + "HasSum and its identification from Character.actual_character_modular "
+                    + "give the second direction by transport of each literal trace term. "
+                    + "Applying the forward laws at tau and tau+1 and combining the phases "
+                    + "gives the final two clauses: character(tau+2)=phase24*character(tau) "
+                    + "and parityCharacter(tau+2)=phase24*parityCharacter(tau), where "
+                    + "phase24=exp(2*pi*I*rank/24). All four clauses retain arbitrary lattice "
+                    + "data D, IsUnit determinant, ground endomorphism A and upper-half-plane "
+                    + "tau, including rank zero and zero or complex trace. The finite traces "
+                    + "include grade zero. No positivity, even-rank premise or trace division "
+                    + "is used."))),
                 DescribeRole.Theorem),
             Paragraph(Text("These results establish the oscillator-parity paired T action "
                 + "on the original half-Fock trace characters. Full SL2Z closure of a sector "
