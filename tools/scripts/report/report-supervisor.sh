@@ -125,9 +125,13 @@ fi
 now_seconds() {
   local value=""
   if [[ -n "$CLOCK_SOURCE" ]]; then
-    value="$("$CLOCK_SOURCE")"
+    value="$("$CLOCK_SOURCE")" || {
+      echo "report-supervisor: clock command failed exit=$?" >&2; return 2;
+    }
   else
-    value="$(date +%s)"
+    value="$(date +%s)" || {
+      echo "report-supervisor: clock command failed exit=$?" >&2; return 2;
+    }
   fi
   [[ "$value" =~ ^[0-9]+$ ]] \
     || { echo "report-supervisor: clock source returned a non-integer epoch" >&2; return 2; }
@@ -135,7 +139,9 @@ now_seconds() {
 }
 
 now_ms() {
-  printf '%s000\n' "$(now_seconds)"
+  local value
+  value="$(now_seconds)" || return "$?"
+  printf '%s000\n' "$value"
 }
 
 process_exists() { kill -0 "$1" >/dev/null 2>&1; }
@@ -166,6 +172,7 @@ lock_is_stale() {
   local expected_start=""
   local actual_start=""
   local mtime=""
+  local current_time
   if [[ -f "$lock/owner" ]]; then
     read -r owner < "$lock/owner" || owner=""
   fi
@@ -183,7 +190,8 @@ lock_is_stale() {
   fi
   mtime="$(lock_mtime "$lock" || true)"
   [[ "$mtime" =~ ^[0-9]+$ ]] || return 1
-  (( $(now_seconds) - mtime >= LOCK_INITIALIZATION_GRACE_SECONDS ))
+  current_time="$(now_seconds)" || return "$?"
+  (( current_time - mtime >= LOCK_INITIALIZATION_GRACE_SECONDS ))
 }
 
 process_command() {
@@ -288,7 +296,7 @@ report_lean_slot_holder() {
     echo "report-supervisor: $slot holder command unavailable for confirmed pid=$pid" >&2
     return
   fi
-  current_time="$(now_seconds)"
+  current_time="$(now_seconds)" || return "$?"
   if [[ ! "$mtime" =~ ^[0-9]+$ || "$mtime" -gt "$current_time" ]]; then
     echo "report-supervisor: $slot hold duration unavailable: lock timestamp is invalid" >&2
     return
@@ -303,13 +311,13 @@ report_lean_slot_timeout() {
   local index
   echo "report-supervisor: timed out waiting for a Lean slot" >&2
   for ((index = 1; index <= MAX_CONCURRENCY; index++)); do
-    report_lean_slot_holder "$SLOT_ROOT/slot-$index.lock"
+    report_lean_slot_holder "$SLOT_ROOT/slot-$index.lock" || return "$?"
   done
 }
 
 reclaim_lock_without_guard() {
   local lock="$1"
-  lock_is_stale "$lock" || return 1
+  lock_is_stale "$lock" || return "$?"
   local stale="${lock}.stale.$$.$RANDOM"
   if mv "$lock" "$stale" 2>/dev/null; then
     rm -rf -- "$stale"
@@ -321,13 +329,18 @@ reclaim_lock_without_guard() {
 acquire_lock_guard() {
   local lock="$1"
   local guard="${lock}.reclaim-guard"
-  local deadline=$(( $(now_seconds) + LOCK_TIMEOUT_SECONDS ))
+  local current_time deadline rc
+  current_time="$(now_seconds)" || return "$?"
+  deadline=$((current_time + LOCK_TIMEOUT_SECONDS))
   local identity
   identity="$(owner_identity)" \
     || { echo "report-supervisor: could not identify lock owner process" >&2; return 2; }
   while ! mkdir "$guard" 2>/dev/null; do
-    reclaim_lock_without_guard "$guard" || true
-    if (( $(now_seconds) >= deadline )); then return 2; fi
+    reclaim_lock_without_guard "$guard" || {
+      rc=$?; (( rc == 1 )) || return "$rc";
+    }
+    current_time="$(now_seconds)" || return "$?"
+    if (( current_time >= deadline )); then return 2; fi
     sleep 0.05
   done
   if ! printf '%s\n' "$identity" > "$guard/owner"; then
@@ -342,9 +355,9 @@ release_lock_guard() {
 
 reclaim_stale_lock() {
   local lock="$1"
-  acquire_lock_guard "$lock" || return 1
-  reclaim_lock_without_guard "$lock"
-  local rc=$?
+  acquire_lock_guard "$lock" || return "$?"
+  local rc=0
+  reclaim_lock_without_guard "$lock" || rc=$?
   release_lock_guard "$lock"
   return "$rc"
 }
@@ -354,7 +367,7 @@ claim_lock() {
   local identity
   identity="$(owner_identity)" \
     || { echo "report-supervisor: could not identify lock owner process" >&2; return 2; }
-  acquire_lock_guard "$lock" || return 1
+  acquire_lock_guard "$lock" || return "$?"
   if ! mkdir "$lock" 2>/dev/null; then
     release_lock_guard "$lock"
     return 1
@@ -370,17 +383,24 @@ claim_lock() {
 acquire_lean_slot() {
   local index
   local candidate
-  local deadline=$(( $(now_seconds) + LOCK_TIMEOUT_SECONDS ))
+  local current_time deadline rc
+  current_time="$(now_seconds)" || return "$?"
+  deadline=$((current_time + LOCK_TIMEOUT_SECONDS))
   while true; do
     for ((index = 1; index <= MAX_CONCURRENCY; index++)); do
       candidate="$SLOT_ROOT/slot-$index.lock"
       if claim_lock "$candidate"; then
         SLOT_DIR="$candidate"
         return 0
+      else
+        rc=$?; (( rc == 1 )) || return "$rc"
       fi
-      reclaim_stale_lock "$candidate" || true
+      reclaim_stale_lock "$candidate" || {
+        rc=$?; (( rc == 1 )) || return "$rc";
+      }
     done
-    if (( $(now_seconds) >= deadline )); then
+    current_time="$(now_seconds)" || return "$?"
+    if (( current_time >= deadline )); then
       report_lean_slot_timeout
       return 2
     fi
@@ -404,7 +424,7 @@ collect_process_tree() {
 }
 
 marker_processes() {
-  local process_dir fd target pid candidates elapsed_window
+  local process_dir fd target pid candidates elapsed_window current_ms
   if [[ -d /proc ]]; then
     for process_dir in /proc/[1-9]*; do
       [[ -d "$process_dir/fd" ]] || continue
@@ -422,7 +442,8 @@ marker_processes() {
       done
     done
   else
-    elapsed_window=$(( ($(now_ms) - STARTED_MS) / 1000 + 5 ))
+    current_ms="$(now_ms)" || return "$?"
+    elapsed_window=$(( (current_ms - STARTED_MS) / 1000 + 5 ))
     if candidates="$(ps -axo pid=,ppid=,etime= 2>/dev/null \
       | awk -v window="$elapsed_window" '
           function elapsed(value, fields, count, hour) {
@@ -599,12 +620,17 @@ terminate_process_group() {
 
 wait_for_relay() {
   local pid="$1"
-  local deadline=$(( $(now_seconds) + 2 ))
+  # Without a cleanup clock, drain the owned relay immediately and preserve
+  # the worker outcome already collected by finish().
+  local current_time=0 deadline=0 rc=0
+  current_time="$(now_seconds)" || rc=$?
+  if (( rc == 0 )); then deadline=$((current_time + 2)); fi
   local state=""
   while process_exists "$pid"; do
     state="$(ps -o stat= -p "$pid" 2>/dev/null | awk '{$1=$1; print; exit}')"
     if [[ -z "$state" || "$state" == Z* ]]; then break; fi
-    if (( $(now_seconds) >= deadline )); then
+    if (( rc == 0 )); then current_time="$(now_seconds)" || rc=$?; fi
+    if (( rc != 0 || current_time >= deadline )); then
       kill -TERM "$pid" >/dev/null 2>&1 || true
       sleep 0.1
       kill -KILL "$pid" >/dev/null 2>&1 || true
@@ -647,13 +673,16 @@ if [[ "$LEAN_SLOT" == "1" ]]; then
   acquire_lean_slot
 fi
 
-STARTED_MS="$(now_ms)"
+STARTED_MS="$(now_ms)" || exit "$?"
 BUILD_DEADLINE=0
+CURRENT_TIME=0
 if (( BUILD_TIMEOUT_SECONDS > 0 )); then
-  BUILD_DEADLINE=$(( $(now_seconds) + BUILD_TIMEOUT_SECONDS ))
+  CURRENT_TIME="$(now_seconds)" || exit "$?"
+  BUILD_DEADLINE=$((CURRENT_TIME + BUILD_TIMEOUT_SECONDS))
 fi
 if [[ -n "${PREFLIGHT_DEADLINE_AT:-}" ]]; then
-  if (( OUTER_DEADLINE <= $(now_seconds) )); then
+  CURRENT_TIME="$(now_seconds)" || exit "$?"
+  if (( OUTER_DEADLINE <= CURRENT_TIME )); then
     echo 'PREFLIGHT_BUDGET_EXHAUSTED owner=outer-deadline' >&2
     exit 2
   fi
@@ -673,7 +702,10 @@ set +m
 BUILD_TIMED_OUT=0
 while process_exists "$CHILD_PID"; do
   sample_supervised_resources
-  if (( BUILD_DEADLINE > 0 )) && (( $(now_seconds) >= BUILD_DEADLINE )); then
+  if (( BUILD_DEADLINE > 0 )); then
+    CURRENT_TIME="$(now_seconds)" || exit "$?"
+  fi
+  if (( BUILD_DEADLINE > 0 && CURRENT_TIME >= BUILD_DEADLINE )); then
     if (( BUILD_DEADLINE == OUTER_DEADLINE )); then
       echo 'PREFLIGHT_BUDGET_EXHAUSTED owner=outer-deadline' >&2
     else
