@@ -26,7 +26,7 @@ Issue [#19923](https://github.com/the-omega-institute/trureturing/issues/19923) 
 
 ## Motivation
 
-The source introduces atemporality as a certificate that observed correlations need a common cause: no temporal process, sending one qubit through a channel, reproduces them. It proves that atemporal two-qubit states must be entangled, and that sufficiently strong entanglement guarantees atemporality. It then asks where atemporality sits in the hierarchy of quantum correlations, in particular whether steering already guarantees it.
+The source introduces atemporality as a certificate that observed correlations need a common cause: no temporal process, sending one qubit through a channel, reproduces them. It states that some forms of quantum correlation are required for a two-qubit system to be temporal, and that sufficient entanglement guarantees atemporality; it also states that it has no proof that atemporality guarantees entanglement. It then asks where atemporality sits in the hierarchy of quantum correlations, in particular whether steering already guarantees it.
 
 ## Gap
 
@@ -85,8 +85,8 @@ The module is admitted under the open-problem-resolution basis of CLAUDE.md §3.
 
 **Argued, not formalized.**
 - *Mechanism.* Temporal compatibility from A to B asks only that R be the image of K under some channel on B, and K depends on R only through ρ_A. With ρ_A = diag(9/10, 1/10), the Pauli channel E keeps enough X and Z correlation in (id ⊗ E)K for Bob's two measurements to violate the two-setting LHS bound.
-- *Scope.* The example is one-way steerable. Whether a state steerable in both directions, or a Bell-nonlocal state, can be temporally compatible is not determined here.
-- *Effect on the paper.* Atemporality is not implied by one-way EPR steering. The question remains whether it is implied by two-way steering or by Bell nonlocality.
+- *Scope.* The example is steerable from B to A. Whether it is steerable from A to B with some other finite family of measurements is not determined here; the SDP only rules out the two families tested. Whether a state steerable in both directions, or a Bell-nonlocal state, can be temporally compatible is not determined here either.
+- *Effect on the paper.* Steerability in at least one direction does not imply atemporality. The question remains open for states steerable in both directions, and for Bell-nonlocal states.
 
 ## ASSUMED-UNVERIFIED
 
