@@ -1,0 +1,33 @@
+**Lemma 4.1 (matching-write table for both reservoirs).** On
+$\mathcal C_{\mathrm{gc}}$, let $j$ be the absolute ordinal immediately
+before a variable IN. Its matching retained write has post-row ordinal
+$w$ and the following actual location and latch.
+
+| Actual reader | Retained wire location fixed before IN | $w$ | Pending latch |
+| --- | --- | --- | --- |
+| 70 outer first/second gate bit | Its old append R, made a cell by EX | $j+3$ | 6 |
+| 70 separate HistoryMode | Its own old append R | $j+3$ | 6 |
+| 70 history tag, length or tested payload bit | Its old append R | $j+3$ | 6 |
+| 13 source header or length bit | Its old append R | $j+3$ | 5 |
+| 13 source preallocated payload bit | Its already positioned payload cell | $j+2$ | 5 |
+
+Between this IN and WR no other IN or overwrite of that pending latch
+occurs. After WR that wire location is not overwritten in the domain.
+Every callback, converter, bank rebuild and computed command has no
+external IN. Earlier original preparation/boot/capture inputs have their
+original sites and are reconstructed from the acquired seed and fixed
+canonical code, not from these variable reservoirs.
+
+Proof. SOURCECALL Lemma 3.2 gives the two13 rows: header/length
+`IN; EX; WR`, preallocated payload `IN; WR`, with later status writes
+on distinct cells. ARC Definitions 5.2–5.3 give `IN6; EX70; WR70,6` for
+gate/header/length and, following its separate bound test, for every
+append payload bit. GCA Definition 3.1 gives exactly the same three
+rows for mode, followed by MR and a test of unchanged latch6. There is
+no compiled assignment inside these intervals. Subsequent F/seal and
+descriptor work append distinct material; no existing wire bit is
+reused. New converters only read bank/acquired data and emit by native
+WR/OUT. GCA's inlined original source reader and all original pre-activation
+sites are preserved. The table therefore exhausts variable sites before
+00. ∎
+

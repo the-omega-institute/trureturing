@@ -1,0 +1,55 @@
+**Theorem 21.8 (union-domain inverses and native compatibility).**
+For each $V\in\{S_B,B_B,T_B,M_B\}$ and every $h\in\mathcal C_B$,
+the corresponding decoder terminates and returns the actual consumed
+typed input, complete native history $h$ and raw endpoint $W(h)$.
+Consequently, on the entire unlabelled domain,
+
+$$
+V(h)=V(h')\ \Longleftrightarrow\ h=h'.
+$$
+
+For transport write $D_V$ for its recovered-history component.
+On actual images let $F_{VW}=W\circ D_V$. Then $F_{VV}=\mathrm{id}$,
+$F_{WV}\circ F_{VW}=\mathrm{id}$ and
+$F_{WU}\circ F_{VW}=F_{VU}$. For each allowed labelled native edge
+$h\xrightarrow{\lambda}h'$ with both endpoints in $\mathcal C_B$,
+transport has exactly the same enabled action/input domain and commutes
+with its successor and label.
+
+Proof. Unary masks and maximal terminal contours independently recover
+raw records for any finite $q_B$; no canonical-input premise enters that
+geometric inverse. The seed and actual meter give the true entrance
+packet and row count $n$. At a first-loader IN already included in $n$,
+its mirror WR is either included, or the endpoint lies between that IN
+and WR. In the first case its bit persists at the derived74 identity.
+In the second case no intervening input or latch overwrite exists, so
+the actual occupied $\ell$ supplies exactly that bit. This covers the
+cut after IN, after EX, after WR, and all later cuts; a blank allocated
+cell is not mistaken for input. Before this IN no bit is requested.
+
+Induct on row ordinal up to $n$. The preceding equality gives identical
+PC, raw version, marked cells, rights, cursor and latches. It determines
+the true next fixed or variable input site and its true bit by the rule
+above or Lemma 4.1. Non-IN rows then have identical guards, effects,
+event and receipt. This proves equality of the next complete state,
+including literal execution of any older recovery code. No simulated
+historical Call is invoked as a semantic subroutine. Countdown decreases
+once per represented row. All list lookups and Step emissions are finite.
+BRN Lemma 4.2 supplies that complete75-port Step at every partial cut;
+its Theorem 6.1 proves the independent codec/role joins on this domain.
+Only afterwards does the role fold classify actually constructed spans.
+Full raw equality checks S/B, and full reselection checks M. T instead
+supplies its own bits and uses the same local row square at each record.
+
+The induction never selects a future completion of the first word. It
+therefore applies before its first differing bit, on both continuations
+afterwards, and at partial initialization without a future manifest.
+Equal bodies give equal recovered histories across the whole union,
+not merely within each completed load. Conversely equal histories give
+the same independent objects. Encoding the recovered history in another
+view proves every stated transport identity. Define the view action at
+$V(h)$ by its actual native guard and input at the uniquely recovered
+$h$; all views then have the same domain and successor. This proves
+the commuting square for all claimed edges, with no extra original
+experiment or global $Q$ conclusion. ∎
+

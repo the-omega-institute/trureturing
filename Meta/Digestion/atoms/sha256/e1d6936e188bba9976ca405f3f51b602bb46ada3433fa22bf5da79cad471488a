@@ -1,0 +1,23 @@
+**Definition 19.1 (fresh complete recovery flight).** Fix the initialization of
+Assumption 1.2 and one actual run. A fresh complete recovery flight is an
+interval whose first state is an authentic completed-predecessor Ready at
+absolute native ordinal $b$ and whose last state is the next Ready at ordinal
+$t$. During the interval the installed Recover route accepts a supplied
+mode-one history request, runs `Boundary` from the irreducible entrance,
+accepts the target $k$ with $a\leq k\leq b$, and completes the inherited
+CoverRef, PackageRef and Image publications, the five received-body stages,
+all independent checks, ACKs, invocation return and the final Ready. The
+current seals, phase/read slots, positioned imports and callback tokens are
+those of the actual route; historical ownership is only data. All current
+owner, token, input, code, scratch, copy, sender/mailbox/receiver, check, ACK
+and return records are the actual records of this flight, and their work is
+included in $t-b$ and $A(t)-A(b)$.
+
+The flight is called fresh because its `Boundary` does not reuse a previously
+materialized predecessor simulation. It executes the $b$ literal `Step`
+instances specified by GCA Definition 4.1 and ARC Definition 6.4, including
+rows belonging to earlier recovery flights. The installed source compiler
+emits every tally assignment as a complete new bank version, retains earlier
+versions, and materializes every appended unary symbol by the actual
+$\mathrm{EX};\mathrm{WR};\mathrm{MR}$ expansion of RCA Definition 11.3.
+
