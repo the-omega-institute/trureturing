@@ -2,6 +2,8 @@ fingerprints:
   raw_sha256: sha256:e2870aafc582f73bd4642bda9872f06554a33178c690cd94f3316a24084bf259
   normalized_sha256: sha256:e2870aafc582f73bd4642bda9872f06554a33178c690cd94f3316a24084bf259
 cas_ref: sha256:e2870aafc582f73bd4642bda9872f06554a33178c690cd94f3316a24084bf259
-coverage_gids: []
+coverage_gids:
+  - gid: D5/S3/ConceptDynamics/Spacetime/TaggedPresentation.attributes_eventEquiv
+    target_statement_id: sha256:5d7251d08c38e00a946c724e506622be4e25b0abe8c1ced9237dc340eee410d3
 receipts:
   unresolved_subitems: []
