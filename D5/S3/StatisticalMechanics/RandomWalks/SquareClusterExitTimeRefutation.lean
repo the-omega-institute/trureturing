@@ -8,14 +8,9 @@
 
 import Mathlib.Algebra.BigOperators.Field
 import Mathlib.Analysis.SpecificLimits.Normed
-import Mathlib.Data.Fin.Tuple.Basic
 import Mathlib.Data.Fin.VecNotation
 import Mathlib.Data.Int.Interval
-import Mathlib.LinearAlgebra.Pi
-import Mathlib.Tactic.FinCases
 import Mathlib.Tactic.FieldSimp
-import Mathlib.Tactic.IntervalCases
-import Mathlib.Tactic.NormNum
 import Mathlib.Tactic.Linarith
 import Mathlib.Tactic.Ring
 
