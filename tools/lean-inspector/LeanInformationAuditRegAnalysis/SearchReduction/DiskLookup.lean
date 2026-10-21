@@ -5,13 +5,16 @@ application and kernel checking remain the authority for successful queries. -/
 namespace LeanInformationAudit.SearchReduction.DiskLookup
 open Lean Meta
 
-abbrev version : String := "disk-beta-zeta-alpha-v7"
+abbrev version : String := "disk-beta-zeta-alpha-v8"
 abbrev pageSize : Nat := 256
+abbrev keyDepth : Nat := 8
 
 structure Entry where
   module : String
   name : String
   parts : Array (String × Nat)
+  ordinal : Nat := 0
+  route : String := ""
   deriving ToJson, FromJson, Inhabited
 
 def Entry.leanName (entry : Entry) : Name :=
@@ -95,19 +98,28 @@ private def rigid : ConstantInfo → Bool
   | .inductInfo _ | .ctorInfo _ | .axiomInfo _ | .opaqueInfo _ | .thmInfo _ => true
   | _ => false
 
-/-- A prefix discrimination path. Definition heads, projections, binders and
-parameters are wildcards; this deliberately over-recalls reductions and
-instantiations. Rigid constants retain application arity and nested structure. -/
-partial def path (isRigid : Name → Bool) (e : Expr) (fuel : Nat := 1) : List String :=
+/-- A prefix discrimination path with application arities and binder positions.
+Instantiable parameters, projection/reducible heads and the fixed depth boundary
+are subtree wildcards. Binder names and telescope-variable indices cannot filter
+candidates: instantiation and reordered telescopes are checked after retrieval.
+Both producer and consumer use this exact, versioned shape. -/
+private partial def pathCore (isRigid : Name → Bool) (e : Expr) (fuel : Nat) : List String :=
   if fuel == 0 then ["*"] else
-  let e := canonical e
-  match e.getAppFn with
-  | .const n _ =>
-    if isRigid n then
-      (s!"c:{e.getAppNumArgs}:{n}") ::
-        e.getAppArgs.toList.flatMap (fun a => path isRigid a (fuel - 1))
-    else ["*"]
-  | _ => ["*"]
+  let e := e.eta
+  match e with
+  | .lam _ _ b _ => "l:1" :: pathCore isRigid b (fuel - 1)
+  | .forallE _ t b _ => "f:2" ::
+      (pathCore isRigid t (fuel - 1) ++ pathCore isRigid b (fuel - 1))
+  | _ => match e.getAppFn with
+    | .const n _ =>
+      if isRigid n then
+        (s!"c:{e.getAppNumArgs}:{n}") ::
+          e.getAppArgs.toList.flatMap (fun a => pathCore isRigid a (fuel - 1))
+      else ["*"]
+    | _ => ["*"]
+
+def path (isRigid : Name → Bool) (e : Expr) : List String :=
+  pathCore isRigid (canonical e) keyDepth
 
 private partial def body : Expr → Expr
   | .forallE _ _ b _ => body b
@@ -373,12 +385,13 @@ private unsafe def moduleEntries (name : Name) (rigidNames : NameSet) :
         count := count + 1
         let entry : Entry := {
           module := name.toString, name := ownedString info.name.toString,
-          parts := nameParts info.name}
+          parts := nameParts info.name, ordinal := count}
         entries := entries.push (["member", toString (canonical info.type).hash], entry)
         let mut paths : Std.HashSet (List String) := {}
         for view in conclusions info.type do
           paths := paths.insert (path rigidNames.contains view)
-        for keys in paths do entries := entries.push ("candidate" :: keys, entry)
+        for keys in paths do
+          entries := entries.push ("candidate" :: keys, {entry with route := keys.head!})
     return (entries, count)
 
 /-- Production inputs are protected frozen membership, compiled module data,
@@ -398,8 +411,6 @@ unsafe def produce (directory : System.FilePath) (basis mathlib : String)
   let mut modules : Array Name := #[]
   let mut missing : Array String := #[]
   let mut inputs : UInt64 := hash (version, basis, mathlib, Lean.versionString)
-  let mut compatibleInputs : UInt64 := hash ("disk-beta-zeta-alpha-v5", basis, mathlib, Lean.versionString)
-  let mut previousInputs : UInt64 := hash ("disk-beta-zeta-alpha-v6", basis, mathlib, Lean.versionString)
   while !todo.isEmpty do
     let name := todo.back!
     todo := todo.pop
@@ -408,8 +419,6 @@ unsafe def produce (directory : System.FilePath) (basis mathlib : String)
     try
       let (deps, names, reducible, fingerprint) ← summary name
       inputs := mixHash inputs (mixHash (hash name) fingerprint)
-      compatibleInputs := mixHash compatibleInputs (mixHash (hash name) fingerprint)
-      previousInputs := mixHash previousInputs (mixHash (hash name) fingerprint)
       for n in names do rigidNames := rigidNames.insert n
       for n in reducible do reducibleNames := reducibleNames.insert n
       todo := todo ++ deps
@@ -424,26 +433,8 @@ unsafe def produce (directory : System.FilePath) (basis mathlib : String)
           old.inputs == inputs && old.complete then
         IO.println (Json.mkObj [("reused", toJson true), ("header", toJson old)]).compress
         return old
-      if old.format == "disk-beta-zeta-alpha-v6" && old.basis == basis && old.mathlib == mathlib &&
-          old.inputs == previousInputs && old.complete then
-        let header := {old with format := version, inputs}
-        discard <| writeJson (directory / "header.json.tmp") header
-        IO.FS.rename (directory / "header.json.tmp") (directory / "header.json")
-        IO.println (Json.mkObj [("upgraded", toJson true), ("header", toJson header)]).compress
-        return header
-      if old.format == "disk-beta-zeta-alpha-v5" && old.basis == basis && old.mathlib == mathlib &&
-          old.inputs == compatibleInputs && old.complete then
-        let digest ← (repack (directory / old.storage) old.root old.digest).run' {}
-        let header := {old with format := version, inputs, digest}
-        discard <| writeJson (directory / "header.json.tmp") header
-        IO.FS.rename (directory / "header.json.tmp") (directory / "header.json")
-        IO.println (Json.mkObj [("repaged", toJson true), ("header", toJson header)]).compress
-        return header
     catch _ => pure ()
-  let previousStorage := s!"disk-beta-zeta-alpha-v6-{previousInputs}"
-  let storage ← if ← (directory / previousStorage / "stream-v1").isDir then
-      pure previousStorage
-    else pure s!"{version}-{inputs}"
+  let storage := s!"{version}-{inputs}"
   let pagesDirectory := directory / storage
   IO.FS.createDirAll (pagesDirectory / "packs")
   let journals := pagesDirectory / "stream-v1"
@@ -649,7 +640,13 @@ def query (index : Index) (keys : List String) : IO Candidates := do
     let result ← collect cache index index.header.root index.header.digest keys
     let mut seen : NameSet := {}
     let mut entries := #[]
-    for entry in result.entries do
+    -- Refining the key filters the old depth-one enumeration; it must not
+    -- prioritize candidates by their newly visible nested shape.
+    let ordered := result.entries.qsort fun a b =>
+      if a.route != b.route then a.route < b.route
+      else if a.module != b.module then Name.quickLt a.module.toName b.module.toName
+      else a.ordinal < b.ordinal
+    for entry in ordered do
       let name := entry.leanName
       unless seen.contains name do entries := entries.push entry; seen := seen.insert name
     if (← IO.getEnv "SEARCH_REDUCTION_PROFILE").isSome then

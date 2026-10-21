@@ -8,6 +8,22 @@ set_option Elab.async false
 set_option maxHeartbeats 0
 
 run_cmd do
+  let parameter := mkBVar 0
+  let nested := mkApp2 (mkConst ``And) (mkConst ``True) parameter
+  let first := DiskLookup.path (fun _ => true) (mkApp2 (mkConst ``And) nested parameter)
+  let second := DiskLookup.path (fun _ => true) (mkApp2 (mkConst ``And) (mkConst ``False) parameter)
+  unless first != second && first.length > 3 do
+    throwError "candidate keys lost nested application structure"
+  let bound := DiskLookup.path (fun _ => true)
+    (.lam `renamed (mkConst ``Nat) nested .default)
+  unless bound.head? == some "l:1" && bound.contains "*" do
+    throwError "candidate keys lost binder position or parameter wildcard"
+  let eta := .lam `x (mkConst ``Nat) (mkApp (mkBVar 1) (mkBVar 0)) .default
+  unless DiskLookup.path (fun _ => true) eta == DiskLookup.path (fun _ => true) parameter do
+    throwError "candidate key is not eta invariant"
+  logInfo s!"LOOKUP_KEY_SHAPE nested=true binders=true parameters=true eta=true depth={DiskLookup.keyDepth}"
+
+run_cmd do
   enableInitializersExecution
   let base ← importModules #[{module :=
     `LeanInformationAuditRegTests.SearchReduction.LookupBaseline}] {} 0

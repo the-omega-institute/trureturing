@@ -10,7 +10,7 @@ def lookupPhase (label : String) : IO Unit := do
     IO.FS.withFile path .append fun handle => do
       handle.putStrLn s!"{← IO.monoMsNow} {label}"
 
-abbrev lookupVersion : String := "R_lookup/one-B/disk-beta-zeta-alpha-v7-independent"
+abbrev lookupVersion : String := "R_lookup/one-B/disk-beta-zeta-alpha-v8-independent"
 
 /-- The table is captured before delivery vocabulary or S is installed. A
 partial basis may supply a hit, but never a completed negative query. -/
