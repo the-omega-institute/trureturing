@@ -62,3 +62,30 @@ run_cmd liftTermElabM do
   let b ← instantiateMVars b
   unless a.hash == b.hash do throwError "full statement hash is not alpha invariant"
   logInfo "LOOKUP_ALPHA_HASH equal=true"
+
+run_cmd liftTermElabM do
+  let timeout : MetaM LocalResult := do
+    IO.addHeartbeats (localBudget * 1000 + 1)
+    checkSystem "lookup.isolation.fixture"
+    return {cost := .one}
+  let exhausted : MetaM LocalResult := pure {cost := .one, detail := "exhausted"}
+  let success : MetaM LocalResult := do
+    let type := mkConst ``True
+    let proof := mkConst ``True.intro
+    checkLocalProof type proof
+    return {cost := .zero, proof? := some proof, detail := "certified"}
+  let recovered ← independentRebuild timeout success
+  unless recovered.cost == .zero && recovered.proof?.isSome do
+    throwError "local timeout escaped to successful lookup: {recovered.detail}"
+  let preserved ← independentRebuild success timeout
+  unless preserved.cost == .zero do throwError "lookup timeout erased local success"
+  let unknown ← independentRebuild exhausted timeout
+  unless unknown.cost == .unknown do throwError "lookup timeout became NoHit"
+  let both ← independentRebuild timeout timeout
+  unless both.cost == .unknown do throwError "two timeouts became NoHit"
+  let negative ← independentRebuild exhausted exhausted
+  unless negative.cost == .one do throwError "normal exhaustion became unknown"
+  let cancelled ← boundedRebuildBranch (throwInterruptException : MetaM LocalResult)
+  unless cancelled.cost == .unknown && cancelled.detail == "cancelled" do
+    throwError "interrupt escaped branch boundary"
+  logInfo s!"LOOKUP_BRANCH_ISOLATION local_timeout_lookup_success=zero local_success=zero lookup_timeout={reprStr unknown.cost} both_timeout={reprStr both.cost} both_exhausted=one interrupt=unknown budget={localBudget}"

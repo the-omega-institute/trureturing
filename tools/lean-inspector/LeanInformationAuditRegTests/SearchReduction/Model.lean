@@ -22,7 +22,14 @@ theorem chain_dp_is_min_max :
 
 theorem graph_verdicts_are_nonempty :
     classifyGraph (({baseline := ⟨.finite 0, .finite 0⟩} : GraphReading)) = .bindOnly ∧
-    classifyGraph (({baseline := ⟨.finite 1, .finite 1⟩, paired := ⟨.finite 0, .finite 0⟩, pairedUsesSeed := true, isolated := true, structureChecked := true, structureClean := true, presentationComplete := true, witnessEdges := [0], selectedSeeds := [0], graph := {vertices := [{id := 0, structureSeed := true}], edges := [{conclusion := 1, cost := .one, pairedCost := .zero, pairedUsedPremises := [0]}]}} : GraphReading)) = .nonBindOnly ∧
+    classifyGraph (({
+      baseline := ⟨.finite 1, .finite 1⟩, paired := ⟨.finite 0, .finite 0⟩,
+      baselineProbe := {outcome := .exhausted}, pairedUsesSeed := true,
+      isolated := true, structureChecked := true, structureClean := true,
+      presentationComplete := true, witnessEdges := [0], selectedSeeds := [0],
+      graph := {vertices := [{id := 0, structureSeed := true}], edges := [{
+        conclusion := 1, cost := .one, pairedCost := .zero,
+        pairedUsedPremises := [0]}]}} : GraphReading)) = .nonBindOnly ∧
     classifyGraph (({} : GraphReading)) =
       .insufficient := by decide
 
@@ -213,3 +220,6 @@ theorem verdicts_exhaustive (checked restated checkedS cleanS : Bool) (base pair
 #print axioms verdicts_exhaustive
 
 end LeanInformationAudit.Tests.SearchReduction
+
+#print axioms LeanInformationAudit.Tests.SearchReduction.chain_dp_is_min_max
+#print axioms LeanInformationAudit.Tests.SearchReduction.graph_verdicts_are_nonempty

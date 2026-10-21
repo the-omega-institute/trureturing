@@ -358,68 +358,97 @@ private def withFacts {α : Type} (types : List Expr)
     | type :: rest => withLocalDeclD (Name.num `_premise facts.size) type (fun fact => go rest (facts.push fact))
   go types #[]
 
-/-- Only statement types enter R. The successful lambda retains precisely its
-used premise binders, so zero edges carry their actual premises. -/
-def localRebuild (target : Expr) (types : List Expr := [])
-    (lookup? : Option LookupTable := none) : MetaM LocalResult := do
+/-- A branch boundary catches resource limits and interrupts at the underlying
+EIO layer. Core's ordinary try/catch deliberately rethrows these exceptions. -/
+private def catchBranch {α : Type} (action : MetaM α)
+    (handler : Exception → MetaM α) : MetaM α :=
+  controlAt CoreM fun runInBase => fun ctx state => do
+    try runInBase action ctx state
+    catch ex => runInBase (handler ex) ctx state
+
+/-- Each route receives the same independent budget and exports only a closed
+certificate. Failed metavariables, caches and messages cannot reach its peer. -/
+def boundedRebuildBranch (action : MetaM LocalResult) : MetaM LocalResult := do
   let original ← saveState
   let started ← IO.getNumHeartbeats
-  try
-    let result : LocalResult ← withTheReader Core.Context (fun ctx =>
-        {ctx with initHeartbeats := started, maxHeartbeats := localBudget * 1000}) do
-      withFacts types fun facts => do
-        let root ← mkFreshExprMVar target
-        let mut goal := root.mvarId!
-        let mut available := facts
-        while (← goal.withContext <| withReducible <| whnf (← goal.getType)).isForall do
-          let (fvar, next) ← goal.intro1
-          available := available.push (mkFVar fvar)
-          goal := next
-        let mut trace : LookupTrace := {complete := true}
-        unless ← goal.withContext (solveLocalGoal goal available) do
-          if let some table := lookup? then
-            let exactRoot ← mkFreshExprMVar target
-            let exactTrace ← lookupExact table exactRoot.mvarId!
-            if exactTrace.source?.isSome then
-              let proof ← instantiateMVars exactRoot
-              checkLocalProof target proof
-              return {
-                cost := .zero, proof? := some proof, lookup := exactTrace,
-                detail := s!"kernel-checked-lookup:{exactTrace.source?}"}
-            trace ← goal.withContext (solveLookupGoal table goal available false)
-          unless ← goal.isAssigned do
-            return {
-              cost := if trace.complete then .one else .unknown
-              lookup := trace
-              detail := if trace.complete then
-                if lookup?.any (·.enabled) then
-                  s!"normal-exhaustion/lookup-complete:visited={trace.visited},attempted={trace.attempted}"
-                else "normal-exhaustion/local-only"
-                else "lookup-incomplete-basis"}
-        let proof ← instantiateMVars root
-        unless !proof.hasMVar do return {cost := .unknown, detail := "unclosed-reconstruction"}
-        let used := facts.toList.zipIdx.filterMap fun (fact, i) =>
-          if proof.containsFVar fact.fvarId! then some i else none
-        let selected := used.toArray.map (facts[·]!)
-        let certificate ← mkLambdaFVars selected proof
-        let certificateType ← mkForallFVars selected target
-        checkLocalProof certificateType certificate
-        return {
-          cost := .zero, proof? := some certificate, used, lookup := trace,
-          detail := if let some name := trace.source? then s!"kernel-checked-lookup:{name}"
-            else "kernel-checked-statement"}
-    original.restore
-    set original.meta
-    modifyThe Core.State fun s => {s with cache := original.core.cache}
-    return result
-  catch ex =>
-    original.restore
-    set original.meta
-    modifyThe Core.State fun s => {s with cache := original.core.cache}
-    if ex.isMaxHeartbeat then return {cost := .unknown, detail := "heartbeat"}
-    if ex.isInterrupt then return {cost := .unknown, detail := "cancelled"}
-    let detail ← ex.toMessageData.toString
-    return {cost := .unknown, detail := s!"execution:{detail}"}
+  let result ← catchBranch
+    (withTheReader Core.Context (fun ctx =>
+      {ctx with initHeartbeats := started, maxHeartbeats := localBudget * 1000}) action)
+    (fun ex => do
+      if ex.isMaxHeartbeat then return {detail := "heartbeat"}
+      if ex.isInterrupt then return {detail := "cancelled"}
+      if ex.isRuntime then return {detail := "runtime-limit"}
+      return {detail := "execution"})
+  original.restore
+  set original.meta
+  modifyThe Core.State fun s => {s with cache := original.core.cache}
+  return result
+
+/-- A success in either route wins. Negative evidence requires both routes to
+finish normally; timeout in one route never becomes a one-price edge. -/
+def independentRebuild (localRoute lookup : MetaM LocalResult) : MetaM LocalResult := do
+  let old ← boundedRebuildBranch localRoute
+  if old.cost == .zero then return old
+  let found ← boundedRebuildBranch lookup
+  if found.cost == .zero then return found
+  return {found with
+    cost := if old.cost == .one && found.cost == .one then .one else .unknown
+    detail := s!"local={old.detail};lookup={found.detail}"}
+
+/-- Only statement types enter R. The successful lambda retains precisely its
+used premise binders, so zero edges carry their actual premises. -/
+private def rebuildRoute (target : Expr) (types : List Expr)
+    (lookup? : Option LookupTable) : MetaM LocalResult :=
+  withFacts types fun facts => do
+    let root ← mkFreshExprMVar target
+    let mut goal := root.mvarId!
+    let mut available := facts
+    while (← goal.withContext <| withReducible <| whnf (← goal.getType)).isForall do
+      let (fvar, next) ← goal.intro1
+      available := available.push (mkFVar fvar)
+      goal := next
+    if let some table := lookup? then
+        let exactRoot ← mkFreshExprMVar target
+        let exactTrace ← lookupExact table exactRoot.mvarId!
+        if exactTrace.source?.isSome then
+          let proof ← instantiateMVars exactRoot
+          checkLocalProof target proof
+          return {
+            cost := .zero, proof? := some proof, lookup := exactTrace,
+            detail := s!"kernel-checked-lookup:{exactTrace.source?}"}
+    let trace ← if let some table := lookup? then
+        goal.withContext (solveLookupGoal table goal available false)
+      else do
+        discard <| goal.withContext (solveLocalGoal goal available)
+        pure {complete := true}
+    unless ← goal.isAssigned do
+      return {
+        cost := if trace.complete then .one else .unknown, lookup := trace
+        detail := if trace.complete then
+          if lookup?.isSome then
+            s!"normal-exhaustion/lookup-complete:visited={trace.visited},attempted={trace.attempted}"
+          else "normal-exhaustion/local-only"
+          else "lookup-incomplete-basis"}
+    let proof ← instantiateMVars root
+    unless !proof.hasMVar do return {detail := "unclosed-reconstruction"}
+    let used := facts.toList.zipIdx.filterMap fun (fact, i) =>
+      if proof.containsFVar fact.fvarId! then some i else none
+    let selected := used.toArray.map (facts[·]!)
+    let certificate ← mkLambdaFVars selected proof
+    let certificateType ← mkForallFVars selected target
+    checkLocalProof certificateType certificate
+    return {
+      cost := .zero, proof? := some certificate, used, lookup := trace,
+      detail := if let some name := trace.source? then s!"kernel-checked-lookup:{name}"
+        else "kernel-checked-statement"}
+
+def localRebuild (target : Expr) (types : List Expr := [])
+    (lookup? : Option LookupTable := none) : MetaM LocalResult := do
+  let localRoute := rebuildRoute target types none
+  if let some table := lookup? then
+    if table.enabled then
+      return ← independentRebuild localRoute (rebuildRoute target types (some table))
+  boundedRebuildBranch localRoute
 
 private def vertex (graph : ProofGraph) (id : Nat) : GraphVertex :=
   (graph.vertices.find? (·.id == id)).getD default

@@ -5,7 +5,7 @@ no environment-wide tree. A paged backend must preserve this query contract. -/
 namespace LeanInformationAudit.SearchReduction
 open Lean Meta
 
-abbrev lookupVersion : String := "R_lookup/one-B/stream-v1"
+abbrev lookupVersion : String := "R_lookup/one-B/stream-v2-independent"
 
 /-- The table is captured before delivery vocabulary or S is installed. A
 partial basis may supply a hit, but never a completed negative query. -/
