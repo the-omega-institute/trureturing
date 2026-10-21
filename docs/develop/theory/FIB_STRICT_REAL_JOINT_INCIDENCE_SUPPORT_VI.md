@@ -1074,3 +1074,547 @@ print("ALL_FINITE_CHECKS_PASSED")
 ```
 
 ## 追加锚（本行以下为增补区）
+## 11. Quantitative collars and the effective collision-chart boundary
+
+**Definition 11.1 (Sources and output region).** Retain the complete worlds of Definition 1.1, the zero-safe parent and whole-gain reconstruction of Definition 2.1, and the actual analytic $J$ arc $v_J$ of [III], Theorem 16.4. Write $e=d-24$, $c=r(1-r)/b$, $j=b+c$, $n=j+r$, $T=1+b$ and $U=1+2b$. Define
+
+$$
+\mathcal Q=\left\{(p,v):10\le p\le34,\quad 0\le v\le200,\quad
+v\ge\frac{37p+426}{10}\right\}.
+\tag{11.1}
+$$
+
+The quantifier over a companion means every complete world in $C(p,v)$, including worlds unused by a selected pair. Singular sources, zero drift $d=0$, $e=0$, sampled gain zeros and all gain degrees at most three remain in this quantifier. Write SIII for [III] of Definition 1.2. In addition to those suppliers, use [SIV](FIB_STRICT_REAL_JOINT_INCIDENCE_SUPPORT_IV.md), Theorems 8.2–8.3 and 9.1 for the universal response algebra and coefficient separation, and [SV](FIB_STRICT_REAL_JOINT_INCIDENCE_SUPPORT_V.md), Section 3 for the zero-safe interval-cover method. SIV's particular rectangle is not substituted for $\mathcal Q$.
+
+### 11.1. A quantitative collar for every companion
+
+**Theorem 11.2 (All-companion source collar).** Every complete world with $(p,v)\in\mathcal Q$ satisfies
+
+$$
+\begin{gathered}
+10^{-6}\le r\le1-10^{-6},\qquad b\ge10^{-6},\qquad c\ge10^{-6},\\
+b<30,\qquad c<10,\qquad \frac1{1024}<j<40,\qquad
+|e|<643520<655000.
+\end{gathered}
+\tag{11.2}
+$$
+
+*Proof.* The first two exclusion arguments in SIV, Theorem 8.3, apply to every parent world with $p\ge0$: $b\ge30$ forces $p<0$, and $c\ge10$ forces $p<-7/2$. Thus $b<30$, $c<10$, $j<40$, $n<41$ and $U<61$. These conclusions precede any lower bound on a source coordinate.
+
+For the drift bound use the coefficients of SIV, (9.1), here denoted $A^{\mathrm{IV}},B^{\mathrm{IV}},P_0^{\mathrm{IV}},V_0^{\mathrm{IV}}$ to distinguish them from the coefficients below. Their undivided identities and universal separation give
+
+$$
+p-24=P_0^{\mathrm{IV}}+eA^{\mathrm{IV}},\qquad
+v-24=V_0^{\mathrm{IV}}+eB^{\mathrm{IV}},\qquad
+\max(|A^{\mathrm{IV}}|,|B^{\mathrm{IV}}|)>1/100.
+$$
+
+The same source bounds give $|P_0^{\mathrm{IV}}|<1224$ and $|V_0^{\mathrm{IV}}|<31296/5$. Since $|p-24|\le14$ and $|v-24|\le176$,
+
+$$
+|e|<100\max\{14+1224,176+31296/5\}=643520.
+\tag{11.3}
+$$
+
+To prove the lower bound for $j$, suppose $0<z=j\le1/1024$. The rank relation gives $r(1-r)=bc\le z^2/4$. If $r\le1/2$, then $u=r/z\in[0,z/2]$; if $r\ge1/2$, then $a=1-r\in[0,z^2/2]$. Put
+
+$$
+q=-\frac{6(8b-1)(5b+2)}{5TU},\qquad e=zw.
+$$
+
+Multiplying the parent equation by $z$ gives the following two exact forms:
+
+$$
+\begin{array}{c|c|c|c}
+ &n&w&(G_0,G_1,G_2,G_3)\\ \hline
+r\le1/2&z(1+u)&\displaystyle\frac q{z(1+6/T+1/U)-4-4/(1+u)}
+&(-24-e,-w,(27/5-e)/T,-w/(1+u))\\
+r\ge1/2&z+1-a&\displaystyle\frac q{z(1+6/T+1/U)-4-4z/n}
+&(-24-e,-w,(27/5-e)/T,-zw/n).
+\end{array}
+\tag{11.4}
+$$
+
+For clarity, the exact interval arithmetic in this proof uses $[a,b]+[c,d]=[a+c,b+d]$, negation $-[a,b]=[-b,-a]$, the minimum and maximum of the four endpoint products for multiplication, and reciprocal $[1/b,1/a]$ only when $0\notin[a,b]$. Every rational input is a point interval. Powers mean repeated multiplication. Horner evaluation starts at zero and visits every descending coefficient, including zeros. There is no rounding.
+
+Evaluate (11.4) on $b,z\in[0,1/1024]$, with respectively $u\in[0,1/2048]$ and $a\in[0,1/(2\cdot1024^2)]$. The two denominator intervals are
+
+$$
+[-8,-2095615/262272],\qquad
+[-8396796/2097151,-511/128].
+\tag{11.5}
+$$
+
+In particular both divisions are legal, including on these enlarged closed boxes. Set $g_5=-4G_0+15G_1-20G_2+10G_3$ and $g_6=-10G_0+36G_1-45G_2+20G_3$, as in Lemma 2.2, and set $p=24+e+(U+n)g_5$, $v=24+e+(2U+n)g_6$. Interval evaluation in the displayed order gives
+
+$$
+\begin{array}{c|c}
+ &\text{upper endpoint for }v-37p/10-213/5\\ \hline
+r\le1/2&-816054840064061222792519/13140085367094902784000\\
+r\ge1/2&-18851570816816384430377401873/689085087558387648823296000.
+\end{array}
+\tag{11.6}
+$$
+
+Both endpoints are less than $-20$, contradicting (11.1). Thus $j>1/1024$.
+
+It remains to prove the four source collars. The following finite rational tree specifies the certificate completely. Its root is the box
+
+$$
+B_\varnothing=[0,1]_r\times[0,30]_b\times[1/1024,40]_j,
+\qquad \delta=1/10^6.
+\tag{11.7}
+$$
+
+For a node $B=R\times B_b\times J_0$, first mark it interior if
+
+$$
+\inf R\ge\delta,\quad \sup R\le1-\delta,\quad
+\inf B_b\ge\delta,\quad \inf J_0-\sup B_b\ge\delta.
+\tag{11.8}
+$$
+
+An interior node is a terminal node. Otherwise form the exact range $Q_R$ of $r(1-r)$ on $R$: its lower endpoint is the smaller endpoint value, and its upper endpoint is $1/4$ if $1/2\in R$, or the larger endpoint value otherwise. Form successively
+
+$$
+J=J_0\cap(B_b+[0,10]),\qquad
+J\leftarrow J\cap(B_b+Q_R/B_b)\quad\hbox{if }\inf B_b>0.
+\tag{11.9}
+$$
+
+An empty intersection marks an excluded terminal node. Next exclude the node if $0\notin B_b(J-B_b)-Q_R$. In all remaining interval expressions use $r\in R$, $b\in B_b$, $j\in J$, $n=J+R$, $T=1+B_b$, $U=1+2B_b$, and the circuits
+
+$$
+\begin{aligned}
+\Lambda&=1+6/T+1/U-4/J-4/n,&
+ d_b&=6(8B_b-1)(5B_b+2)/(5TU),\\
+p_0&=24+(U+n)(96-108/T),&
+ A_p&=1+(U+n)(4-15/J+20/T-10/n),\\
+v_0&=24+(2U+n)(240-243/T),&
+ A_v&=1+(2U+n)(10-36/J+45/T-20/n).
+\end{aligned}
+\tag{11.10}
+$$
+
+Here an integer denotes a point interval. The exact parent and reading equations are $\Lambda e=-d_b$, $A_pe=p-p_0$, $A_ve=v-v_0$. Start with $E=[-655000,655000]$. In the order
+
+$$
+(\Lambda,-d_b),\quad(A_p,[10,34]-p_0),\quad(A_v,[0,200]-v_0),
+\tag{11.11}
+$$
+
+replace $E$ by $E\cap H/A$ for a pair $(A,H)$ only when $0\notin A$. An empty intersection excludes the node. With the resulting common $E$, exclude the node if any of the three intervals $AE-H$ excludes zero. Finally exclude it if the upper endpoint of
+
+$$
+v_0-\frac{37}{10}p_0-\frac{213}{5}
++\left(A_v-\frac{37}{10}A_p\right)E
+\tag{11.12}
+$$
+
+is negative. If no terminal condition applies, split the original box $B$, not its contraction, at the rational midpoint of its coordinate of greatest normalized width
+
+$$
+\bigl(\operatorname{wid}R,\operatorname{wid}B_b/3,
+\operatorname{wid}J_0/4\bigr).
+\tag{11.13}
+$$
+
+Ties use the first coordinate in this displayed order. Both closed midpoint halves are children. These rules determine every node without choices. Their finite rational data are
+
+| Node or terminal condition | Count |
+| --- | ---: |
+| All nodes | 169103 |
+| Binary splits | 84551 |
+| Interior terminal nodes | 31787 |
+| Empty first intersection in (11.9) | 4724 |
+| Empty second intersection in (11.9) | 4901 |
+| Rank residual excluding zero | 14136 |
+| Empty common-$e$ intersection | 27652 |
+| Common-$e$ residual excluding zero | 128 |
+| Negative barrier (11.12) | 1224 |
+| Nonterminal nodes at depth 49 | 0 |
+
+The maximum node depth is $49$. Thus there are $52765$ excluded terminal nodes and $31787$ interior terminal nodes, and $169103=2(52765+31787)-1$. The table is obtained by the rational endpoint rules (11.7)–(11.13); these rules are also a finite definition of every leaf and every rational inequality represented by the counts.
+
+Every contraction contains every actual source in its original node: (11.9) follows from $c\in(0,10)$ and $bc=r(1-r)$, and (11.11) uses the same actual $e$ in all equations. All $J,n,T,U$ intervals have positive lower endpoints. Coefficient intervals containing zero are never divided. Every excluded node contradicts a necessary equation or (11.1), whereas (11.8) gives all four collars on every interior node, since $c=j-b$. Closed midpoint children cover their parent. The finite tree therefore covers the root with precisely these two types of terminal node and proves the four collars. Neither a nonzero drift nor regularity nor a nonzero gain sample has entered the argument. ∎
+
+**Corollary 11.3 (Every actual-arc companion is covered).** For every $p\in[10,34]$, every complete world in $C(p,v_J(p))$ satisfies (11.2).
+
+*Proof.* SIII, Theorem 22.3 gives $v_J(p)>(37p+426)/10$. To check the remaining output bound use precisely the $\tau_L,b_L$ descending coefficient rows of SIII, (16.7), with denominator $10^{20}$ and radius $\rho=10^{-5}$. For each of the three parameter blocks $[L,H]$, put
+
+$$
+I_k=[-1+2k/1024,-1+2(k+1)/1024],\quad
+p(u)=(L+H)/2+(H-L)u/2,\quad 0\le k\le1023,
+$$
+
+and let $X_t=\widehat\tau_L(I_k)+[-\rho,\rho]$, $X_b=\widehat b_L(I_k)+[-\rho,\rho]$. Evaluate the integer $D,N_v$ arrays in SIII, Lemma 16.3 by descending $b$ Horner inside descending $t$ Horner, retaining all seven rows and five columns. The exact interval rules above give the following strict rational enclosures over all $1024$ cells of each block:
+
+$$
+\begin{array}{c|c|c}
+[L,H]&D&N_v/D\\ \hline
+[10,20]&(4728407/125000,44307113/10^6)&(16368057/200000,117541097/10^6)\\
+[20,30]&(23208057/10^6,9490353/250000)&(29153959/250000,31126333/200000)\\
+[30,34]&(7678107/500000,14607/625)&(76502951/500000,85080543/500000).
+\end{array}
+\tag{11.14}
+$$
+
+In particular the denominators are positive, and the three response ranges lie respectively in $(81,118)$, $(116,156)$ and $(153,171)$. SIII, Lemma 16.3 places the actual endpoint in these boxes; its response is $v_J$. Thus $0<v_J<200$ and the actual arc lies in $\mathcal Q$. Theorem 11.2 applies to all its companions, regardless of whether they are among the two endpoints defining the arc. Arc existence, analyticity, the scalar barrier and the parameter-to-world correspondence are reused from SIII, Sections 16 and 22, rather than inferred from the response enclosures. ∎
+
+### 11.2. A zero-safe comparator and an explicit source tube
+
+**Definition 11.4 (Polynomial comparator).** In the regular polynomial circuit of Lemma 2.2 write $N_p=N_0$, $N_v=N_1$ and $N_m=N_2$. Define polynomial quotients
+
+$$
+S(t,b)=-\frac{N_p-24D}{3(8b-1)},\qquad
+C(t,b)=-\frac{5N_m-32N_v+1128D}{3(8b-1)}.
+\tag{11.15}
+$$
+
+These expressions mean exact polynomial division, including evaluation at $b=1/8$. Their remainders are zero. Define
+
+$$
+\begin{aligned}
+\mathscr H(r,b)={}&14b^6+(95-73r)b^5+(47r^2-39r+30)b^4
++r(147r^2-232r+105)b^3\\
+&+2r(1-r)(44r^2-55r+15)b^2-64r^3(1-r)^2b-32r^3(1-r)^3,\\
+C_*(r,b)={}&-1055b^6+(5815r-7529)b^5+(-5140r^2+5260r-3102)b^4\\
+&+(-8795r^3+13798r^2-6351r)b^3
+ +(7015r^4-16924r^3+13011r^2-3102r)b^2\\
+&+(1920r^5-1610r^4-2540r^3+2230r^2)b
+ -960r^6+2880r^5-2880r^4+960r^3.
+\end{aligned}
+\tag{11.16}
+$$
+
+The symbol $\mathscr H$ is the source sextic of O, (12.2), and SII, (25.7), distinct from the full-parent equation $H(r,b,e)$ in (2.1). Exact substitution gives
+
+$$
+b^3 S(r/b,b)=\mathscr H(r,b),\qquad
+b^3 C(r/b,b)=C_*(r,b).
+\tag{11.17}
+$$
+
+For two sources define
+
+$$
+F(r,s,b_1,b_2)=C_*(s,b_2)\mathscr H(r,b_1)
+-C_*(r,b_1)\mathscr H(s,b_2).
+\tag{11.18}
+$$
+
+**Lemma 11.5 (Comparator on every source stratum).** At every strict parent world,
+
+$$
+\begin{aligned}
+(5b+2)jn(p-24)&=eS(r/b,b),\\
+(5b+2)jn(5m-32v+1128)&=eC(r/b,b).
+\end{aligned}
+\tag{11.19}
+$$
+
+Consequently $p\ne24$ implies $eS\ne0$, and at fixed off-$24$ readings $(p,v)$ two companions have equal $m$ if and only if $F=0$.
+
+*Proof.* Use the whole-gain samples (2.2) and the three interpolation rows of Lemma 2.2 before solving the parent for $e$. Denote these ambient readings by $\widetilde p,\widetilde v,\widetilde m$, and put $R_0=e\Lambda+d_b$, with $d_b$ as in (11.10). Direct multiplication gives the stronger ambient identities
+
+$$
+\begin{aligned}
+(5b+2)jn(\widetilde p-24)-eS(r/b,b)
+ &=10Ujn(U+n)R_0,\\
+(5b+2)jn(5\widetilde m-32\widetilde v+1128)-eC(r/b,b)
+ &=-10Ujn(170b+30n+89)R_0.
+\end{aligned}
+\tag{11.20}
+$$
+
+One can reproduce these identities by keeping $b,j,n,e$ independent in the interpolated readings, subtracting the displayed multiples of $R_0$, and then substituting $j=t+b(1-t^2)$, $n=j+tb$. The remaining coefficients of $e$ are exactly the two polynomial quotients (11.15). Thus the identities use no division by $\Lambda$, $e$, $8b-1$ or a gain value. On the parent $R_0=0$, proving (11.19), including singular worlds. Since $(5b+2)jn>0$, the first identity gives $eS\ne0$ when $p\ne24$. Dividing the two identities and using (11.17) gives
+
+$$
+m=\frac{32}{5}v-\frac{1128}{5}
++\frac{p-24}{5}\frac{C_*(r,b)}{\mathscr H(r,b)}.
+\tag{11.21}
+$$
+
+The two nonzero sextic denominators allow cross multiplication, yielding exactly (11.18). This last equivalence is restricted to $p\ne24$. ∎
+
+**Theorem 11.6 (Explicit mirror-tube exclusion).** On the source tube
+
+$$
+\begin{gathered}
+267/1000\le r\le277/1000,\qquad |s+r-9/8|\le10^{-5},\\
+|b_1-1/8|\le10^{-5},\qquad |b_2-1/8|\le10^{-5},
+\end{gathered}
+\tag{11.22}
+$$
+
+one has $F>1/40$. Hence no pair of companions at common $(p,v)$ with $p\ne24$ and equal $m$ has a labeling satisfying (11.22). The same exclusion holds for the reversed labeling.
+
+*Proof.* On the central segment $s=9/8-r$, $b_1=b_2=1/8$, exact expansion of (11.16)–(11.18) gives
+
+$$
+\begin{aligned}
+F_0(r)=\frac{21(16r-9)(64r^2-72r-1)}{68719476736}
+\bigl(&16777216r^6-56623104r^5+93622272r^4\\
+&-91210752r^3+37316032r^2+622224r-230227\bigr).
+\end{aligned}
+\tag{11.23}
+$$
+
+Here is the exact Bernstein convention for all coefficient bounds in this section. If a degree-$q$ polynomial $f$ has $f(a+(b-a)x)=\sum_{i=0}^q c_ix^i$, its Bernstein coefficients on $[a,b]$ are
+
+$$
+\mathcal B_k(f;a,b)=\sum_{i=0}^k c_i\frac{\binom{k}{i}}{\binom{q}{i}},
+\qquad 0\le k\le q.
+\tag{11.24}
+$$
+
+Expansion in $\binom qk x^k(1-x)^{q-k}$ proves this formula by coefficient comparison. These basis functions are nonnegative and sum to one on $[0,1]$, so their coefficient minimum is a lower bound for $f$. For the degree-nine polynomial (11.23), $a=267/1000$, $b=277/1000$, the ten rational coefficients (11.24) have their minimum at $k=0$, namely
+
+$$
+\frac{14656469065762145135535204561}
+{512000000000000000000000000000}>\frac1{35}.
+\tag{11.25}
+$$
+
+For the perturbation, use the rectangular intervals
+
+$$
+R=[267/1000,277/1000],\quad
+S_0=[9/8-277/1000-10^{-5},9/8-267/1000+10^{-5}],\quad
+B=[1/8-10^{-5},1/8+10^{-5}].
+$$
+
+For any of $\mathscr H,C_*$ or their derivatives, expand in powers of $r,b$, pad the coefficient matrix to indices $0\le i,j\le6$, and evaluate descending $b$ Horner inside descending $r$ Horner. Use the exact interval operations specified after (11.4). Denote these enclosures on $(R,B)$ by $H_1,C_1,H_{1b},C_{1b}$ and on $(S_0,B)$ by $H_2,C_2,H_{2b},C_{2b},H_{2s},C_{2s}$. Product-rule enclosures are
+
+$$
+\begin{aligned}
+F_{b_1}&\in C_2H_{1b}-C_{1b}H_2\subset(-11,19),\\
+F_{b_2}&\in C_{2b}H_1-C_1H_{2b}\subset(-24,19),\\
+F_s&\in C_{2s}H_1-C_1H_{2s}\subset(-62,58).
+\end{aligned}
+\tag{11.26}
+$$
+
+All inclusions follow by rational multiplication and addition of the explicitly defined coefficient matrices; in particular they imply $|F_{b_1}|<20$, $|F_{b_2}|<25$, $|F_s|<65$. For a point of (11.22), hold $r$ fixed and join it to $(r,9/8-r,1/8,1/8)$. The segment stays in the rectangle, and each of its three varying coordinates changes by at most $10^{-5}$. The mean-value formula gives
+
+$$
+F>\frac1{35}-(20+25+65)10^{-5}
+=\frac{1923}{70000}>\frac1{40}.
+\tag{11.27}
+$$
+
+Lemma 11.5 excludes an off-$24$ collision. Reversing labels changes the sign of the comparator and transports the stated tube to its reversed image; nonvanishing is preserved. ∎
+
+**Proposition 11.7 (Correspondence with the actual mirror sources).** The tube (11.22) contains the two actual $p=24$ K-mirror sources in the labeling with smaller first coordinate. Its off-$24$ interpretation does not exclude that $p=24$ collision and does not specify a numerical width in $p$.
+
+*Proof.* Lemma 7.2 gives $131<v_J(24)<132$. Set
+
+$$
+n_0=\frac{v_J(24)-84}{24}\in(47/24,2),\qquad
+\Delta=\sqrt{\frac{85/32-n_0}{2}},\qquad
+r_0=\frac9{16}-\frac\Delta2,\quad
+s_0=\frac9{16}+\frac\Delta2.
+\tag{11.28}
+$$
+
+On the published K family, $b=1/8$, $e=0$, $n(r)=1/8+9r-8r^2$ and $(p,v,m)=(24,84+24n,312+768n/5)$; these are SII, (25.5)–(25.6). Thus the two distinct sources in (11.28), each with $b=1/8$, are complete companions with equal $m$. Since
+
+$$
+(571/1000)^2<21/64<\Delta^2<67/192<(591/1000)^2,
+$$
+
+one has $267/1000<r_0<277/1000$ and $s_0+r_0=9/8$. This proves the tube correspondence. Equation (11.21) used $p\ne24$, so $F>1/40$ at the mirror is consistent with their actual equality of $m$ at $p=24$. The tube is a source-coordinate statement; no quantitative inverse control from $p$ to sources has been inferred. ∎
+
+### 11.3. Actual companion branches with unbounded chart slope
+
+**Theorem 11.8 (Blowup on the broader common-child carrier).** There are two analytic strict complete branches $W_r(p),W_s(p)\in C(p,v_J(p))$ through the mirrors in (11.28). Write
+
+$$
+\beta=(b_s-b_r)'(24),\qquad \mu=(m_s-m_r)'(24).
+$$
+
+Then
+
+$$
+\frac1{600}<-\beta<\frac1{250},\qquad
+\frac1{10}<\mu<\frac14,\qquad
+-65<\frac\mu\beta<-61.
+\tag{11.29}
+$$
+
+For $p\ne24$ sufficiently close to $24$, order these two branches by $b_y>b_x$ and set
+
+$$
+h=b_y-b_x,\qquad
+\sigma=\frac{r_y/b_y-r_x/b_x}{h}.
+\tag{11.30}
+$$
+
+They satisfy
+
+$$
+\frac h{|p-24|}\longrightarrow-\beta>0,\qquad
+|\sigma|\longrightarrow\infty,\qquad
+\frac{m_y-m_x}{h}\longrightarrow\frac\mu\beta\in(-65,-61).
+\tag{11.31}
+$$
+
+These branches have unequal $m$ at every sufficiently close off-$24$ parameter. Thus they rule out an $h$ floor or a slope cap on the broader carrier of distinct companions matching only $(p,v_J(p))$.
+
+*Proof.* Use the full-parent chart from O, Lemma 16.2 and SII, (27.4). At every K source the dependent coordinate $b=b(r,e)$ exists analytically because the derivative of the parent with respect to $b$ is $448/25$. It obeys
+
+$$
+b(r,0)=1/8,\quad b_r(r,0)=0,\quad
+b_e(r,0)=-25\Lambda(r,1/8)/448.
+\tag{11.32}
+$$
+
+This chart includes singular source parameters. Let $k=m-32v/5$. On K, $p_r=k_r=0$ and $v_r=24n'(r)$, with $n'(r)=9-16r$. The derivatives in the $e$ direction are the full-parent derivatives of SII, (27.5), explicitly
+
+$$
+\begin{aligned}
+\Lambda&=107/15-4/j-4/n,& b_e&=-25\Lambda/448,\\
+\gamma_5&=(-256+85/j+190/n)/21,&
+\gamma_6&=(-185+48/j+160/n)/7,\\
+\gamma_7&=-48+10/j+45/n,&
+\alpha:=p_e&=1+(n+5/4)\gamma_5,\\
+\eta:=k_e&=-27/5+(15/4+2n)\gamma_7
+ -(32/5)(5/2+n)\gamma_6-(768/5)b_e.
+\end{aligned}
+\tag{11.33}
+$$
+
+They follow by differentiating the same four gain samples: their $e$ derivatives in this chart are $(-1,-1/j,-\theta/T,-1/n)$, where $T=9/8$ and $\theta=1+(24/5)b_e$. Apply the three fixed-node rows, then differentiate the response traces. The terms involving $n_e$ cancel from $k_e$ because $2(384/5)-(32/5)24=0$. This yields (11.33), so no drift or gain parameter was independently reselected.
+
+For an indeterminate $n$ define
+
+$$
+\begin{aligned}
+P(n)={}&16777216n^6-13631488n^5-53190656n^4+34142752n^3
+ +41464676n^2-21500400n-225625,\\
+B(n)={}&716n^2+31n-900,\\
+R(n)={}&-8192n^3+119952n^2-12320n-57875.
+\end{aligned}
+\tag{11.34}
+$$
+
+Substitute $r=9/16-\Delta/2$, $s=9/16+\Delta/2$, $j_r=n-r$, $j_s=n-s$ into (11.33). Rational collection using $\Delta^2=(85/32-n)/2$ gives
+
+$$
+\begin{aligned}
+\alpha(r)\alpha(s)&=\frac{P(n)}{1764n^2(64n^2-64n-1)},\\
+\frac{b_e(s)}{\alpha(s)}-\frac{b_e(r)}{\alpha(r)}
+ &=-\frac{175nB(n)\Delta}{P(n)},\\
+\frac{\eta(s)}{\alpha(s)}-\frac{\eta(r)}{\alpha(r)}
+ &=\frac{336nR(n)\Delta}{5P(n)}.
+\end{aligned}
+\tag{11.35}
+$$
+
+The quadratic $B$ is the polynomial denoted $D(n)$ in SIII, Lemma 14.2; the cubic $R$ is SII, (28.1). Their use in the normalized derivative differences is through (11.35). These are exact identities in the quadratic rational algebra with the displayed relation for $\Delta^2$: clear denominators, replace each even power of $\Delta$ by the corresponding power of $(85/32-n)/2$, and compare the constant and linear coefficients. Formulae (11.33)–(11.35) therefore specify every coefficient of the derivative calculation.
+
+Using (11.24) on $n\in[47/24,2]$ gives the finite bounds
+
+$$
+\begin{array}{c|c|c|c}
+f&\text{degree}&\min_k\mathcal B_k(f)&\max_k\mathcal B_k(f)\\ \hline
+P&6&842710954799/5832&182258007\\
+B&2&274553/144&2026\\
+R&3&34181767/108&331757\\
+48R-61\cdot125B&3&476086&31388821/48\\
+65\cdot125B-48R&3&43110037/144&536914.
+\end{array}
+\tag{11.36}
+$$
+
+In particular $P>0$ and $64n^2-64n-1>0$ on this interval. Thus both $\alpha(r_0),\alpha(s_0)$ are nonzero. Also $n'(r_0)=8\Delta$ and $n'(s_0)=-8\Delta$ are nonzero. The $(e,r)$ Jacobian determinant of $(p,v)$ is $24\alpha n'$, since $p_r=0$. The analytic implicit-function theorem applied separately at the two mirrors gives the asserted branches for the same prescribed analytic $v_J(p)$. Strictness persists in a neighbourhood, and the whole-gain reconstruction gives actual complete worlds on both branches.
+
+Differentiating $p(W_i(p))=p$ gives $e_i'=1/\alpha_i$ at $24$. Since $b_r=k_r=0$ there,
+
+$$
+b_i'(24)=b_{e,i}/\alpha_i,\qquad
+m_i'(24)=\frac{32}{5}v_J'(24)+\eta_i/\alpha_i.
+$$
+
+The common $v_J'$ term cancels in their difference. Equations (11.35) at $n=n_0$ prove
+
+$$
+\beta=-175n_0B(n_0)\Delta/P(n_0),\qquad
+\mu=336n_0R(n_0)\Delta/(5P(n_0)),\qquad
+\mu/\beta=-48R(n_0)/(125B(n_0)).
+\tag{11.37}
+$$
+
+For explicit numerical bounds, $57/100<\Delta<3/5$, since $(57/100)^2<21/64$ and $67/192<(3/5)^2$. Applying the positive bounds in (11.36) to (11.37) gives the enclosing intervals
+
+$$
+\begin{aligned}
+\frac{1716230803}{839844896256}
+ &<-\beta<\frac{354468960}{120387279257},\\
+\frac{213670225517}{1640322063000}
+ &<\mu<\frac{557224365312}{3009681981425}.
+\end{aligned}
+\tag{11.38}
+$$
+
+These imply the first two bounds in (11.29); positivity of the last two rows of (11.36) implies the ratio bounds.
+
+Finally $b_s-b_r=\beta(p-24)+o(|p-24|)$, $m_s-m_r=\mu(p-24)+o(|p-24|)$, whereas $r_s/b_s-r_r/b_r\to8\Delta\ne0$. Sorting by $b$ gives $h=|b_s-b_r|$, proving the first two limits in (11.31). For either sorting, $(m_y-m_x)/h=(m_s-m_r)/(b_s-b_r)$, proving the third. Since $\mu\ne0$, the unsorted $m$ difference is nonzero for every sufficiently close off-$24$ parameter. These are companion branches in a common acquired child, with an actual $J$ pair also present, but they are not $M$ collisions off $24$. ∎
+
+### 11.4. The collision chart and its missing effective gap
+
+**Definition 11.9 (Unequal-$b$ collision chart and coverage premise).** For two distinct actual off-$24$ equal-$m$ companions on the arc whose $b$ coordinates differ, label them so $b_y>b_x$ and set
+
+$$
+t=r_x/b_x,\quad b=b_x,\quad h=b_y-b_x>0,\quad
+\sigma=(r_y/b_y-t)/h,\qquad
+x=(t,b),\quad y=(t+h\sigma,b+h).
+\tag{11.39}
+$$
+
+The strict source guards are $t>0$, $b>0$, $tb<1$ at $x$, and the same three inequalities at $y$. To extend this chart to all distinct off-$24$ collisions, the supplied fixed-$b$ injectivity conclusion is used in precisely the following form: distinct complete worlds with common $(p,v,m)$ and $p\ne24$ have unequal $b$. This conclusion is a premise of that coverage assertion, not a new quantitative result here. The chart and Theorem 11.8 require no unpublished source or fixed-$b$ theorem beyond this explicitly stated scope. The selected collision endpoints are regular by [S], Corollary 18.2, because the actual $J$ pair exists; unused companions retain all source strata.
+
+For each of the three pairs $(f,g)=(N_p,D),(N_v,D),(C,S)$ define the polynomial
+
+$$
+R_{f,g}(t,b,h,\sigma)=
+\frac{f(t+h\sigma,b+h)g(t,b)-f(t,b)g(t+h\sigma,b+h)}h.
+\tag{11.40}
+$$
+
+The numerator vanishes identically at $h=0$, so division is exact in $\mathbb Q[t,b,h,\sigma]$. In the order just given, the quotients have respectively $1518,1518,853$ monomials and total degrees $23,23,21$. These data are obtained directly from the coefficient circuits (2.3) and (11.15); every remainder is zero. In particular the third quotient uses $C,S$ in $(t,b)$ coordinates, not $C_*,\mathscr H$ evaluated as if their first variable were $t$.
+
+**Proposition 11.10 (Exact chart correspondence and quantitative boundary).** With the coverage premise of Definition 11.9, the actual off-$24$ collision relation on the arc is in bijection with solutions of
+
+$$
+\begin{gathered}
+10\le p\le34,\quad p\ne24,\quad h>0,\quad
+D(x)D(y)\ne0,\quad\text{both strict source guards},\\
+N_p(x)/D(x)=p,\qquad N_v(x)/D(x)=v_J(p),\\
+R_{N_p,D}=R_{N_v,D}=R_{C,S}=0,
+\end{gathered}
+\tag{11.41}
+$$
+
+with one ordering bit recovering both original endpoint orderings. Every such solution satisfies
+
+$$
+10^{-6}\le b<30,\qquad
+\frac1{30000000}<t<10^6,\qquad
+0<h<30-10^{-6},\qquad |h\sigma|<10^6.
+\tag{11.42}
+$$
+
+*Proof.* A collision has unequal $b$ by the stated premise, and its selected endpoints are regular by S, Corollary 18.2. Sorting and (11.39) give unique chart coordinates; equality of $p,v$ gives the first two polynomial residuals and Lemma 11.5 gives the third. Conversely, the regular reconstruction of Lemma 2.2 at both guarded points gives two complete worlds. The first two residuals give the same $(p,v_J(p))$ at both, and the third gives equal $m$ by Lemma 11.5. The positive $h$ makes their sources distinct. This proves both directions and uniqueness. The only analytic input in (11.41) is the given function $v_J$; the three divided differences are polynomial.
+
+Theorem 11.2 applies to both endpoints by Corollary 11.3. Thus $r\ge10^{-6}$ and $b<30$ give $t>1/30000000$, while $r<1$ and $b\ge10^{-6}$ give $t<10^6$. The $b$ bounds give the bound on $h$, and both $t$ coordinates belong to $(0,10^6)$, giving $|h\sigma|<10^6$. ∎
+
+**Definition 11.11 (The effective gap still required).** The unresolved effective collision-chart problem is to exhibit a rational $\eta>0$ and prove that (11.41) has no solution with $0<h<\eta$, retaining all original world strata and the actual arc. Such a proof would combine with (11.42) to give $|\sigma|<10^6/\eta$ on actual collisions. Theorem 11.6 quantifies one source neighbourhood of distinct mirror limits; it supplies neither this $\eta$ nor a numerical $p=24$ exclusion width.
+
+The diagonal part still requires quantitative local-injectivity radii in full-parent charts over all actual companions, including singular source charts. The separated, nearly equal-$b$ part outside (11.22) still requires a robust unequal-$b$ residual bound with all exceptional factors and degree drops retained. Exact injectivity at $h=0$, including positivity of an elimination polynomial there, is not such a perturbation bound. Theorem 11.8 proves why replacing the actual collision set by all $(p,v)$-matching pairs cannot supply the missing bound.
+
+The qualitative counterpart is the existing compactness inference: Theorems 7.3 and 8.1 and Corollaries 8.2–8.3 give a compact off-$24$ collision relation separated from the diagonal. With the fixed-$b$ premise, its $b$-ordered half is closed, since $h=0$ cannot occur on that relation. If nonempty, continuous $h$ has a positive minimum and continuous $\sigma$ has a finite maximum in absolute value; if empty, these bounds are vacuous. This is reuse of compactness and the supplied injectivity conclusion, not a computed rational bound.
+
+The source collar, polynomial mirror tube and branch asymptotics are model-specific repository-derived calculations. Their methods are fixed-node interpolation, exact rational interval inclusion, finite covering, the Bernstein convex-hull identity (11.24), and the analytic implicit-function theorem. The source correspondence is O, Sections 2, 12 and 16; F, Sections 30–33; S, Corollary 18.2; SII, Sections 25–29; SIII, Lemma 14.2 and Sections 16 and 20–23; SIV, Sections 8–9; SV, Section 3; and the preceding VI results. No claim of literature priority attaches to these calculations. The original independent-pair objective remains unresolved: these results provide neither an actual off-$24$ $M$ witness over the arc, nor arcwise or global absence, nor a completed whole-domain target. The two selected terminal pairs may still overlap or be disjoint, and their terminal values need not coincide.
+
+## 追加锚（本行以下为增补区）
