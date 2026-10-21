@@ -12,6 +12,8 @@ Lean statement: `D5/S3/Analytic/MixedNorm/DmitrovicPointEvaluation/Defs.circleMe
 
 *Source.* Repository-derived.
 
+*Acknowledgement.* D. Dmitrović (2024). *Norm of composition operator on mixed norm spaces*. DOI: [10.7153/oam-2024-18-42](https://doi.org/10.7153/oam-2024-18-42). URL: <https://doi.org/10.7153/oam-2024-18-42>.
+
 *Commentary.*
 
 For finite positive p the angular p-th powers are averaged over one full period and the p-th root is taken. At infinity the mean is the angular supremum.
@@ -24,6 +26,8 @@ Lean statement: `D5/S3/Analytic/MixedNorm/DmitrovicPointEvaluation/Defs.mixedNor
 
 *Source.* Repository-derived.
 
+*Acknowledgement.* D. Dmitrović (2024). *Norm of composition operator on mixed norm spaces*. DOI: [10.7153/oam-2024-18-42](https://doi.org/10.7153/oam-2024-18-42). URL: <https://doi.org/10.7153/oam-2024-18-42>.
+
 *Commentary.*
 
 For finite positive q the q-th power integral uses density 2 alpha q r (1-r squared) raised to alpha q minus one. At infinity the norm is the supremum of the weighted angular means on radii strictly between zero and one.
@@ -35,6 +39,8 @@ Lean statement: `D5/S3/Analytic/MixedNorm/DmitrovicPointEvaluation/Defs.claim`
 *Formalization.* `D5/S3/Analytic/MixedNorm/DmitrovicPointEvaluation/Defs.claim` (`✓ std3`).
 
 *Source.* Repository-derived.
+
+*Acknowledgement.* D. Dmitrović (2024). *Norm of composition operator on mixed norm spaces*. DOI: [10.7153/oam-2024-18-42](https://doi.org/10.7153/oam-2024-18-42). URL: <https://doi.org/10.7153/oam-2024-18-42>.
 
 *Commentary.*
 
