@@ -3157,3 +3157,143 @@ displayed calculations specify.
   (145.1)--(145.2) carries the SSR conclusion used here.
 
 ## 146.99 追加锚（本行以下为增补区）
+## 147. Quantitative robustness of the normalized bound state
+
+The strict gap in Theorem 55.4 also has a perturbative meaning. This
+section keeps the common rooted carrier, counting measure, inherited seams
+and normalization of §§55.1--55.5 fixed; §138 supplies the later native-lift
+ledger. A perturbation below is only a
+bounded real multiplication operator on that carrier; it is not a new
+physical field, a change of source history, or a claim about a spatial
+dimension.
+
+For a bounded real sequence $w=(w(p))_{p\in\mathcal P}$, write
+
+$$
+W_w f(p)=w(p)f(p),
+\qquad
+\delta_w=\|W_w\|=\sup_{p\in\mathcal P}|w(p)|,
+\qquad
+\mathsf H_w=\mathsf H+W_w.
+\tag{147.1}
+$$
+
+Let
+
+$$
+m_w=\inf_{\|f\|=1}\langle f,\mathsf H_wf\rangle.
+\tag{147.2}
+$$
+
+The finite restriction on an actual domain $D_j(t)$ is obtained by
+compressing both $\mathsf H$ and the same multiplication operator $W_w$;
+write its quadratic form as
+
+$$
+\mathcal E_{D_j,w}(f)=\mathcal E_{D_j}(f)+\langle I_{D_j}f,W_wI_{D_j}f\rangle
+$$
+
+and denote its normalized minimum by $m_{j,w}(t)$. No stage-dependent
+renormalization of $w$ is made.
+
+**Theorem 147.1 (uniform bounded-potential robustness).** Let
+
+$$
+\Delta=\epsilon_*-m>0,
+\qquad
+0\le\delta_w<\frac{\Delta}{2},
+\tag{147.3}
+$$
+
+where $m$ and $\epsilon_*=a(3-2\sqrt2)$ are the common infimum and escape
+edge of §§55.3--55.4. Then
+
+1. $m_w<\epsilon_*-\delta_w$ and the normalized infimum $m_w$ is attained;
+2. every normalized $\mathsf H_w$-minimizing sequence has a strongly
+   convergent subsequence in $\ell^2(\mathcal P)$, and every cluster point is
+   a normalized ground state;
+3. for every fixed original source $t$, $m_{j,w}(t)\downarrow m_w$ as the
+   actual whole-$\rho$ domains exhaust the common carrier; if $f_j$ is any
+   normalized finite state satisfying
+   $\mathcal E_{D_j,w}(f_j)-m_{j,w}(t)\to0$, their zero extensions are
+   strongly precompact and their cluster points are common normalized ground
+   states.
+
+For any sequence of original sources and accepted indices $(t_n,j_n)$ whose
+contained ball radii tend to infinity, the corresponding minimum values
+converge to $m_w$ and normalized near-minimizers have the same strong
+precompactness conclusion, with the same fixed $w$ and common embedding; no
+monotonicity is asserted for this varying sequence.
+
+**Proof.** The bounded perturbation gives the two elementary Rayleigh
+inequalities
+
+$$
+m-\delta_w\le m_w\le m+\delta_w.
+\tag{147.4}
+$$
+
+The second inequality follows by evaluating $\mathsf H_w$ on a normalized
+near-minimizer of $\mathsf H$; the first is the analogous lower estimate.
+For a normalized sequence $f_n\rightharpoonup f$, put
+$r_n=f_n-f$ and $\alpha=\|f\|^2$. The compactness of $M_\phi$ and the
+boundedness of $W_w$ make all mixed terms tend to zero. The kinetic gap in
+(55.10), together with $W_w\ge-\delta_wI$, therefore gives
+
+$$
+\liminf_n\langle f_n,\mathsf H_wf_n\rangle
+\ge
+\langle f,\mathsf H_wf\rangle
++(\epsilon_*-\delta_w)(1-\alpha).
+\tag{147.5}
+$$
+
+Since $\langle f,\mathsf H_wf\rangle\ge m_w\alpha$, a minimizing sequence
+and (147.4) imply
+
+$$
+m_w
+\ge m_w\alpha+(\epsilon_*-\delta_w)(1-\alpha),
+\qquad
+\epsilon_*-\delta_w-m_w
+\ge\Delta-2\delta_w>0.
+\tag{147.6}
+$$
+
+Consequently $\alpha=1$. Weak convergence is then strong convergence, and
+the limit attains $m_w$. The same calculation applies to every normalized
+near-minimizer, proving the second assertion.
+
+For the finite restrictions, zero extension identifies each finite Rayleigh
+quotient with the common quadratic form on its support. Nested exhaustion
+gives $m_{j,w}(t)\ge m_w$ and monotonicity. A finite-support approximation to
+any common unit trial gives the reverse limiting inequality, so
+$m_{j,w}(t)\downarrow m_w$. Finite near-minimizers are consequently common
+near-minimizers, and (147.5)--(147.6) gives strong precompactness. The varying
+source statement uses exactly the same contained-ball argument as (55.13),
+with no change to the common embedding. $\square$
+
+The radius in (147.3) is a certified worst-case margin, not an optimal
+radius for each particular $w$. It is nevertheless a new distinction from
+finite negativity: the quantity that protects normalization is the distance
+from the infinite minimum to the escape edge, and a perturbation consumes at
+most two copies of its operator-norm budget, one in the trial value and one
+in the escaping lower bound.
+
+The zero-margin boundary is already realized inside the same carrier. In the
+weak-coupling range of (55.18b), $m=\epsilon_*$ and the radial strings there
+are weakly null normalized near-minimizers. Thus no positive uniform radius
+depending only on $\epsilon_*-m$ can be asserted at equality; at $w=0$ itself
+there need not be a normalized ground state. This is a sharp boundary for
+the *gap-based certificate*. It does not claim that every individual
+perturbation at equality destroys every possible threshold state, nor that
+the sufficient radius is necessary for a fixed perturbation.
+
+The result is a stability statement for the declared occurrence operator.
+It does not turn bounded multiplication into a native FIB action, does not
+identify $\epsilon_*-m$ with a physical noise budget, and does not establish
+an operation-, metric-, field- or clock-preserving bridge to Euclidean space.
+In particular it supplies no dimension-selection theorem; it records how a
+strict escape gap can be spent while retaining a normalized boundary state.
+
+## 147.99 追加锚（本行以下为增补区）
