@@ -208,35 +208,7 @@ $$claim = (\forall A \in \mathbb{N} \to \mathrm{BasedComplex},\; \forall C \in \
 
 Conjecture D.1 (Appendix D, p. 18): "Let C• ←f• A• →g• D• be a basis-preserving monic span in Ch(MatF2), and let Q• be the pushout chain complex of this monic span. Further, let the monic span be a representative of a family of monic spans which are parameterised by some n ∈ ℕ, and let A•, C• and D• be the Z-type complexes of quantum LDPC codes. Then (Q•, Q•) is also LDPC." The Lean proposition expands the source objects and counts.
 
-**Theorem 1.17 (Representative independent degree-two differential).**
-
-$$\forall A \in \mathrm{BasedComplex},\; \forall C \in \mathrm{BasedComplex},\; \forall D \in \mathrm{BasedComplex},\; \forall phi \in \operatorname{BPChainMap}\left(A, C\right),\; \forall psi \in \operatorname{BPChainMap}\left(A, D\right),\; (\operatorname{BPChainMap.Monic}\left(phi\right)) \Rightarrow ((\operatorname{BPChainMap.Monic}\left(psi\right)) \Rightarrow (\forall Y \in \operatorname{PBasis}\left(phi, psi, 2\right),\; \forall y \in \operatorname{Sum}\left(\operatorname{Fin}\left(\operatorname{dim}\left(C\right)\left(2\right)\right), \operatorname{Fin}\left(\operatorname{dim}\left(D\right)\left(2\right)\right)\right),\; (\operatorname{Quot.mk}\left(\operatorname{glue}\left(phi, psi, 2\right), y\right) = Y) \Rightarrow (\forall X \in \operatorname{PBasis}\left(phi, psi, 1\right),\; \operatorname{pushoutD2}\left(phi, psi\right)\left(X, Y\right) = \operatorname{Finset.sum}\left(\operatorname{filter}\left(\lambda x \mapsto \operatorname{Quot.mk}\left(\operatorname{glue}\left(phi, psi, 1\right), x\right) = X, \operatorname{Finset.univ}\right), \lambda x \mapsto \operatorname{sumD2}\left(C, D\right)\left(x, y\right)\right))))$$
-
-*Proof.* Machine-checked in Lean as `D5/S3/Quantum/Information/CssMonicPushoutLdpc.pushoutD2_representative_independent` (`✓ std3`). ∎
-
-*Source.* Repository-derived.
-
-*Acknowledgement.* Alexander Cowtan; Simon Burton (2024). *CSS code surgery as a universal construction*. DOI: [10.22331/q-2024-05-14-1344](https://doi.org/10.22331/q-2024-05-14-1344). URL: <https://arxiv.org/abs/2301.13738v6>.
-
-*Commentary.*
-
-For every quotient degree-two basis class, replacing its representative leaves the degree-two column unchanged after summing coefficients over quotient classes. The commuting degree-two chain-map identities and monicity identify the two glued columns. The degree-two column bound uses this equality to estimate the image of any representative column.
-
-**Theorem 1.18 (Representative independent degree-one differential).**
-
-$$\forall A \in \mathrm{BasedComplex},\; \forall C \in \mathrm{BasedComplex},\; \forall D \in \mathrm{BasedComplex},\; \forall phi \in \operatorname{BPChainMap}\left(A, C\right),\; \forall psi \in \operatorname{BPChainMap}\left(A, D\right),\; (\operatorname{BPChainMap.Monic}\left(phi\right)) \Rightarrow ((\operatorname{BPChainMap.Monic}\left(psi\right)) \Rightarrow (\forall Y \in \operatorname{PBasis}\left(phi, psi, 1\right),\; \forall y \in \operatorname{Sum}\left(\operatorname{Fin}\left(\operatorname{dim}\left(C\right)\left(1\right)\right), \operatorname{Fin}\left(\operatorname{dim}\left(D\right)\left(1\right)\right)\right),\; (\operatorname{Quot.mk}\left(\operatorname{glue}\left(phi, psi, 1\right), y\right) = Y) \Rightarrow (\forall X \in \operatorname{PBasis}\left(phi, psi, 0\right),\; \operatorname{pushoutD1}\left(phi, psi\right)\left(X, Y\right) = \operatorname{Finset.sum}\left(\operatorname{filter}\left(\lambda x \mapsto \operatorname{Quot.mk}\left(\operatorname{glue}\left(phi, psi, 0\right), x\right) = X, \operatorname{Finset.univ}\right), \lambda x \mapsto \operatorname{sumD1}\left(C, D\right)\left(x, y\right)\right))))$$
-
-*Proof.* Machine-checked in Lean as `D5/S3/Quantum/Information/CssMonicPushoutLdpc.pushoutD1_representative_independent` (`✓ std3`). ∎
-
-*Source.* Repository-derived.
-
-*Acknowledgement.* Alexander Cowtan; Simon Burton (2024). *CSS code surgery as a universal construction*. DOI: [10.22331/q-2024-05-14-1344](https://doi.org/10.22331/q-2024-05-14-1344). URL: <https://arxiv.org/abs/2301.13738v6>.
-
-*Commentary.*
-
-For every quotient degree-one basis class, replacing its representative leaves the degree-one column unchanged after summing coefficients over quotient classes. The commuting degree-one chain-map identities and monicity identify the two glued columns. The degree-one column bound uses this equality to estimate the image of any representative column.
-
-**Theorem 1.19 (The proved LDPC closure).**
+**Theorem 1.17 (The proved LDPC closure).**
 
 $$\forall A \in \mathbb{N} \to \mathrm{BasedComplex},\; \forall C \in \mathbb{N} \to \mathrm{BasedComplex},\; \forall D \in \mathbb{N} \to \mathrm{BasedComplex},\; \forall phi \in \left(\forall n \in \mathbb{N},\; \operatorname{BPChainMap}\left(A\left(n\right), C\left(n\right)\right)\right),\; \forall psi \in \left(\forall n \in \mathbb{N},\; \operatorname{BPChainMap}\left(A\left(n\right), D\left(n\right)\right)\right),\; (\forall n \in \mathbb{N},\; \operatorname{BPChainMap.Monic}\left(phi\left(n\right)\right)) \Rightarrow ((\forall n \in \mathbb{N},\; \operatorname{BPChainMap.Monic}\left(psi\left(n\right)\right)) \Rightarrow ((\operatorname{IsLDPC}\left(\lambda n \mapsto \operatorname{weights2}\left(A\left(n\right)\right), \lambda n \mapsto \operatorname{weights1}\left(A\left(n\right)\right)\right)) \Rightarrow ((\operatorname{IsLDPC}\left(\lambda n \mapsto \operatorname{weights2}\left(C\left(n\right)\right), \lambda n \mapsto \operatorname{weights1}\left(C\left(n\right)\right)\right)) \Rightarrow ((\operatorname{IsLDPC}\left(\lambda n \mapsto \operatorname{weights2}\left(D\left(n\right)\right), \lambda n \mapsto \operatorname{weights1}\left(D\left(n\right)\right)\right)) \Rightarrow (\operatorname{IsLDPC}\left(\lambda n \mapsto (\operatorname{maxRowWeight}\left(\operatorname{pushoutD2}\left(phi\left(n\right), psi\left(n\right)\right)\right), \operatorname{maxColWeight}\left(\operatorname{pushoutD2}\left(phi\left(n\right), psi\left(n\right)\right)\right)), \lambda n \mapsto (\operatorname{maxRowWeight}\left(\operatorname{pushoutD1}\left(phi\left(n\right), psi\left(n\right)\right)\right), \operatorname{maxColWeight}\left(\operatorname{pushoutD1}\left(phi\left(n\right), psi\left(n\right)\right)\right))\right))))))$$
 
@@ -263,9 +235,7 @@ Monicity makes each quotient fibre contain at most one basis element from either
 - Truth anchor: `D5/S3/Quantum/Information/CssMonicPushoutLdpc.maxColWeight`
 - Truth anchor: `D5/S3/Quantum/Information/CssMonicPushoutLdpc.maxRowWeight`
 - Truth anchor: `D5/S3/Quantum/Information/CssMonicPushoutLdpc.pushoutD1`
-- Truth anchor: `D5/S3/Quantum/Information/CssMonicPushoutLdpc.pushoutD1_representative_independent`
 - Truth anchor: `D5/S3/Quantum/Information/CssMonicPushoutLdpc.pushoutD2`
-- Truth anchor: `D5/S3/Quantum/Information/CssMonicPushoutLdpc.pushoutD2_representative_independent`
 - Truth anchor: `D5/S3/Quantum/Information/CssMonicPushoutLdpc.result`
 - Truth anchor: `D5/S3/Quantum/Information/CssMonicPushoutLdpc.sumD1`
 - Truth anchor: `D5/S3/Quantum/Information/CssMonicPushoutLdpc.sumD2`

@@ -76,18 +76,6 @@ internal sealed class CssMonicPushoutLdpcDocument : IScribeDocumentDefinition
                 H("Cowtan--Burton Conjecture D.1"), StatementSource.FromAuthor(Eq(F.Id("claim"), Parenthesized(ClaimBody()))),
                 AssessedProvenance.FromLiterature(Source),
                 Blocks(Paragraph(Text("Conjecture D.1 (Appendix D, p. 18): \"Let C• ←f• A• →g• D• be a basis-preserving monic span in Ch(MatF2), and let Q• be the pushout chain complex of this monic span. Further, let the monic span be a representative of a family of monic spans which are parameterised by some n ∈ ℕ, and let A•, C• and D• be the Z-type complexes of quantum LDPC codes. Then (Q•, Q•) is also LDPC.\" The Lean proposition expands the source objects and counts."))), DescribeRole.Definition),
-            Describe.Lean(DescribeId.Create("pushout-d2-representative-independent"),
-                DeclarationHandle.Create(Prefix + "pushoutD2_representative_independent"),
-                H("Representative independent degree-two differential"),
-                StatementSource.FromAuthor(RepresentativeFormula("pushoutD2", "sumD2", 2, 1)),
-                AssessedProvenance.FromRepo(Source),
-                Blocks(Paragraph(Text("For every quotient degree-two basis class, replacing its representative leaves the degree-two column unchanged after summing coefficients over quotient classes. The commuting degree-two chain-map identities and monicity identify the two glued columns. The degree-two column bound uses this equality to estimate the image of any representative column."))), DescribeRole.Theorem),
-            Describe.Lean(DescribeId.Create("pushout-d1-representative-independent"),
-                DeclarationHandle.Create(Prefix + "pushoutD1_representative_independent"),
-                H("Representative independent degree-one differential"),
-                StatementSource.FromAuthor(RepresentativeFormula("pushoutD1", "sumD1", 1, 0)),
-                AssessedProvenance.FromRepo(Source),
-                Blocks(Paragraph(Text("For every quotient degree-one basis class, replacing its representative leaves the degree-one column unchanged after summing coefficients over quotient classes. The commuting degree-one chain-map identities and monicity identify the two glued columns. The degree-one column bound uses this equality to estimate the image of any representative column."))), DescribeRole.Theorem),
             Describe.Lean(DescribeId.Create("result"), DeclarationHandle.Create(Prefix + "result"),
                 H("The proved LDPC closure"), StatementSource.FromAuthor(Disp(ClaimBody())),
                 AssessedProvenance.FromRepo(Source),
@@ -179,30 +167,6 @@ internal sealed class CssMonicPushoutLdpcDocument : IScribeDocumentDefinition
         var body=Seq(LambdaLower,Sp,Parenthesized(Seq(X,Colon,p)),Sp,Mapsto,Sp,
             LambdaLower,Sp,Parenthesized(Seq(Y,Colon,q)),Sp,Mapsto,Sp,rhs);
         return Disp(All("A",Based(),All("C",Based(),All("D",Based(),All("phi",Call("BPChainMap",A,C),All("psi",Call("BPChainMap",A,Dd),Eq(Call(name,phi,psi),body)))))));
-    }
-    private static Formula RepresentativeFormula(string differential, string sum, int sourceDeg, int targetDeg) {
-        var A=Id("A"); var C=Id("C"); var Dd=Id("D"); var phi=Id("phi"); var psi=Id("psi");
-        var Y=Id("Y"); var y=Id("y"); var X=Id("X"); var x=Id("x");
-        Formula basis(int degree) => Call("PBasis", phi, psi, D((byte)degree));
-        Formula side(int degree) {
-            var left = Fin(App(Call("dim", C), D((byte)degree)));
-            var right = Fin(App(Call("dim", Dd), D((byte)degree)));
-            return Call("Sum", left, right);
-        }
-        Formula mk(int degree, Formula value) =>
-            App(Qualified("Quot", "mk"), Call("glue", phi, psi, D((byte)degree)), value);
-        var filter = Filter(Lambda("x", Eq(mk(targetDeg, x), X)), Univ());
-        var rhs = App(Qualified("Finset", "sum"), filter,
-            Lambda("x", App(Call(sum, C, Dd), x, y)));
-        var conclusion = Eq(App(Call(differential, phi, psi), X, Y), rhs);
-        var quantifiedX = All("X", basis(targetDeg), conclusion);
-        var representative = Imp(Eq(mk(sourceDeg, y), Y), quantifiedX);
-        var quantifiedY = All("Y", basis(sourceDeg), All("y", side(sourceDeg), representative));
-        var assumptions = Imp(App(Qualified("BPChainMap", "Monic"), phi),
-            Imp(App(Qualified("BPChainMap", "Monic"), psi), quantifiedY));
-        var body = All("A", Based(), All("C", Based(), All("D", Based(),
-            All("phi", Call("BPChainMap", A, C), All("psi", Call("BPChainMap", A, Dd), assumptions)))));
-        return Disp(body);
     }
     private static Formula MaxRowFormula() {
         var i=Id("i"); var j=Id("j"); var M=Id("M");
