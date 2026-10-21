@@ -10,7 +10,7 @@ Lean statement: `D5/S3/Analytic/KummerRatio/Defs.kummerCoeff`
 
 *Formalization.* `D5/S3/Analytic/KummerRatio/Defs.kummerCoeff` (`✓ std3`).
 
-*Source.* Repository-derived.
+*Citation.* D. Karp and S. M. Sitnik (2010). *Log-convexity and log-concavity of hypergeometric-like functions*. DOI: [10.1016/j.jmaa.2009.10.057](https://doi.org/10.1016/j.jmaa.2009.10.057). URL: <https://arxiv.org/abs/0902.3073>.
 
 *Commentary.*
 
@@ -22,7 +22,7 @@ Lean statement: `D5/S3/Analytic/KummerRatio/Defs.kummer`
 
 *Formalization.* `D5/S3/Analytic/KummerRatio/Defs.kummer` (`✓ std3`).
 
-*Source.* Repository-derived.
+*Citation.* D. Karp and S. M. Sitnik (2010). *Log-convexity and log-concavity of hypergeometric-like functions*. DOI: [10.1016/j.jmaa.2009.10.057](https://doi.org/10.1016/j.jmaa.2009.10.057). URL: <https://arxiv.org/abs/0902.3073>.
 
 *Commentary.*
 
@@ -34,7 +34,7 @@ Lean statement: `D5/S3/Analytic/KummerRatio/Defs.ratio`
 
 *Formalization.* `D5/S3/Analytic/KummerRatio/Defs.ratio` (`✓ std3`).
 
-*Source.* Repository-derived.
+*Citation.* D. Karp and S. M. Sitnik (2010). *Log-convexity and log-concavity of hypergeometric-like functions*. DOI: [10.1016/j.jmaa.2009.10.057](https://doi.org/10.1016/j.jmaa.2009.10.057). URL: <https://arxiv.org/abs/0902.3073>.
 
 *Commentary.*
 
@@ -46,7 +46,7 @@ Lean statement: `D5/S3/Analytic/KummerRatio/Defs.claim`
 
 *Formalization.* `D5/S3/Analytic/KummerRatio/Defs.claim` (`✓ std3`).
 
-*Source.* Repository-derived.
+*Citation.* D. Karp and S. M. Sitnik (2010). *Log-convexity and log-concavity of hypergeometric-like functions*. DOI: [10.1016/j.jmaa.2009.10.057](https://doi.org/10.1016/j.jmaa.2009.10.057). URL: <https://arxiv.org/abs/0902.3073>.
 
 *Commentary.*
 

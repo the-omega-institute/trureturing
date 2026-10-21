@@ -10,7 +10,13 @@ Lean statement: `D5/S3/Analytic/KummerRatio/Result.result`
 
 *Proof.* Machine-checked in Lean as `D5/S3/Analytic/KummerRatio/Result.result` (`✓ std3`). ∎
 
+*Resolves.* `Problems/karp-sitnik-2010-kummer-ratio-monotonicity` (proved) by `D5/S3/Analytic/KummerRatio/Result.result`.
+
+<!-- scribe-open-problem-resolution-v1 {"problem_slug":"karp-sitnik-2010-kummer-ratio-monotonicity","declaration_gid":"D5/S3/Analytic/KummerRatio/Result.result","resolution_kind":"proved"} -->
+
 *Source.* Repository-derived.
+
+*Acknowledgement.* D. Karp and S. M. Sitnik (2010). *Log-convexity and log-concavity of hypergeometric-like functions*. DOI: [10.1016/j.jmaa.2009.10.057](https://doi.org/10.1016/j.jmaa.2009.10.057). URL: <https://arxiv.org/abs/0902.3073>.
 
 *Commentary.*
 
