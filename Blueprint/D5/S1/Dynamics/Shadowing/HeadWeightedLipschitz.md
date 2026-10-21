@@ -24,7 +24,7 @@ For necessity, let L and c be proposed positive Lipschitz controls and set C=max
 
 When UniformBounds are available, HeadWeightedMetric replaces the metric uniformity by the standard product uniformity while keeping exactly the same distance. The theorem therefore gives the same criterion for that compatible product metric. The constant weight family has the discrete metric and is also covered, although it has no uniformly vanishing upper envelope. Thus the raw-metric statement extends beyond the product-uniform subclass.
 
-HeadWeightedMetric supplies the metric, prefix controls and exact infinite defect family; MetricTracing supplies diagonal_mismatch_edge. The cross-head iff is repository-derived content relative to those suppliers. It does not count the existing metric counterexample again or assert a classification of arbitrary compatible metrics, the locally compact variant, publication priority or official external acceptance. The retained Reg mirror preserves the complete original telescopes and records unresolved registration issue #5214.
+HeadWeightedMetric supplies the metric, prefix controls and exact infinite defect family; MetricTracing supplies diagonal_mismatch_edge. The cross-head iff is repository-derived content relative to those suppliers. It does not count the existing metric counterexample again or assert a classification of arbitrary compatible metrics, the locally compact variant, publication priority or official external acceptance.
 
 ## References
 
