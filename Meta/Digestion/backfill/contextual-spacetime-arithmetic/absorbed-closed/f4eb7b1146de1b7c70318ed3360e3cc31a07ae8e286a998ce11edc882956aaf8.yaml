@@ -1,0 +1,19 @@
+fingerprints:
+  raw_sha256: sha256:f4eb7b1146de1b7c70318ed3360e3cc31a07ae8e286a998ce11edc882956aaf8
+  normalized_sha256: sha256:f4eb7b1146de1b7c70318ed3360e3cc31a07ae8e286a998ce11edc882956aaf8
+cas_ref: sha256:f4eb7b1146de1b7c70318ed3360e3cc31a07ae8e286a998ce11edc882956aaf8
+coverage_gids:
+  - gid: D5/S3/ConceptDynamics/Spacetime/ComplementCharge.charge_eq_signed_card
+    target_statement_id: sha256:e2ba152bf501e5796ae3170a88d5262fe15986babc6cc80ec7fb804ebabf2184
+  - gid: D5/S3/ConceptDynamics/Spacetime/GeneratedProduct.archive_card
+    target_statement_id: sha256:82e0f0b6e27d98774dd9a6788cad29c628ef69b183945f0c94169c2324f2c988
+  - gid: D5/S3/ConceptDynamics/Spacetime/GeneratedProduct.current_card
+    target_statement_id: sha256:b9387f3697b140afb867bd71a976449d4096ec02f7e7a48ea397a9b9fa1d2b51
+  - gid: D5/S3/ConceptDynamics/Spacetime/IntegerRepresentatives.representative_archive_card
+    target_statement_id: sha256:32b7f281ab1a7afa96a88cd664e50b122c04c14622837e126361e7e638b4949b
+  - gid: D5/S3/ConceptDynamics/Spacetime/IntegerRepresentatives.representative_current_card
+    target_statement_id: sha256:28ca3788a82a3e9c02387cd19e35d26521fd21bb7cbf284c2e2946c81543ff84
+  - gid: D5/S3/ConceptDynamics/Spacetime/IntegerRepresentatives.representative_readout
+    target_statement_id: sha256:b8e58ca59bfd9ec2d71da811712fa1c8e004537358e529ff85477983e23768a0
+receipts:
+  unresolved_subitems: []
