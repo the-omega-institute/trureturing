@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:8a96f51ec00771a6fbf865ae1b1c655714e0e6a4f55fca729d89bb2400af6332
+  normalized_sha256: sha256:8a96f51ec00771a6fbf865ae1b1c655714e0e6a4f55fca729d89bb2400af6332
+cas_ref: sha256:8a96f51ec00771a6fbf865ae1b1c655714e0e6a4f55fca729d89bb2400af6332
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 定义 130 按坐标、位号及正负标签给出事件、反链、属性、选择和配置表示的构造公式；配对函数在此作为指定公式使用，合法性和读数结论属于后续定理。
+    previous_atom_id: acdcc39dbacb4f5d2137f2aca4c5278baee5b8ccee610dabb25a42a4df7a80d3
+    next_atom_id: 3be03b4aa9e15899ec3390cb3f00fde7b799de389f3bf5218b2b3c214d93b8ec
