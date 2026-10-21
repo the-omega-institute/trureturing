@@ -64,7 +64,10 @@ internal sealed class MaityFuruichiDuttaOrderingRefutationDocument : IScribeDocu
     private static DocumentBlock Entry(string id, string name, string title, Formula formula,
         string prose, DescribeRole role, AssessedProvenance provenance) => Describe.Lean(
             DescribeId.Create(id), DeclarationHandle.Create(Prefix + name), H(title),
-            StatementSource.FromAuthor(formula), provenance, Blocks(Paragraph(Text(prose))), role);
+            StatementSource.FromAuthor(formula), provenance, Blocks(Paragraph(Text(prose))), role,
+            name == "result" ? new OpenProblemResolutionClaim(
+                ProblemSlugRef.Create("maity-furuichi-dutta-2026-tsallis-ordering-case-5"),
+                ResolutionKind.Refuted) : null);
 
     private static Formula V(string name) => F.Id(name);
     private static Formula Parenthesized(Formula value) => Seq(Open, value, Close);

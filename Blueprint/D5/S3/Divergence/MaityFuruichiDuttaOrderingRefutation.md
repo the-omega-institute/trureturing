@@ -70,6 +70,10 @@ $$\neg (\forall (n: \mathbb{N}), \forall (rho: \operatorname{Matrix}\left(\opera
 
 *Proof.* Machine-checked in Lean as `D5/S3/Divergence/MaityFuruichiDuttaOrderingRefutation.result` (`✓ std3`). ∎
 
+*Resolves.* `Problems/maity-furuichi-dutta-2026-tsallis-ordering-case-5` (refuted) by `D5/S3/Divergence/MaityFuruichiDuttaOrderingRefutation.result`.
+
+<!-- scribe-open-problem-resolution-v1 {"problem_slug":"maity-furuichi-dutta-2026-tsallis-ordering-case-5","declaration_gid":"D5/S3/Divergence/MaityFuruichiDuttaOrderingRefutation.result","resolution_kind":"refuted"} -->
+
 *Source.* Repository-derived.
 
 *Acknowledgement.* Srikrishna Maity; Shigeru Furuichi; Supriyo Dutta (2026). *r-deformed α-z-Rényi relative entropy*. URL: <https://arxiv.org/abs/2607.01805v1>.
