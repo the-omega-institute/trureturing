@@ -3483,3 +3483,386 @@ mathematical dependency. No physical or formal-kernel conclusion is
 asserted.
 
 ## 追加锚（本行以下为增补区）
+
+## 162. Budgeted tasks on the original recovered channel
+
+Work in the ordered complex qutrit basis (127.1), with the channel
+$\Phi_s$ of (127.3), for real $-1/2\le s\le1$. Explicitly, writing
+$a=(1+s)/2$ and $b=(1-s)/2$,
+
+$$
+\Phi_s(X)=\begin{pmatrix}
+X_{00}&sX_{01}&0\\
+sX_{10}&aX_{11}+bX_{22}&0\\
+0&0&bX_{11}+aX_{22}
+\end{pmatrix}.
+$$
+
+Let $\mathcal C$ be all complex CPTP maps $\mathcal R:M_3\to M_3$ and
+$K_s=\{\mathcal R\Phi_s:\mathcal R\in\mathcal C\}$. A decoder is fixed
+before the unknown input and the task subsequently selected from its
+prescribed family. Inputs range over all complex qutrit densities; the
+target is the original input. The decoder receives the terminal qutrit.
+The metric here is the unassisted half trace distance of (127.5).
+
+For the actual positive finite horizon $n\ge1$, the exact correspondence is
+
+$$
+s_n=(-1/2)^{n-1},\quad
+\mathcal N_n=\operatorname{Ad}_{U_0}\Phi_{s_n},\quad
+\mathcal R=D\operatorname{Ad}_{U_0},\quad
+D=\mathcal R\operatorname{Ad}_{U_0^\dagger}.
+$$
+
+Here $U_0=1\oplus\left(\begin{smallmatrix}-1/2&\sqrt3/2\\
+\sqrt3/2&1/2\end{smallmatrix}\right)$, as in (127.2). This is a bijection
+on all CPTP decoders, with $D\mathcal N_n=\mathcal R\Phi_{s_n}$ and no
+target rotation. The limiting channel is $\Phi_0=\mathcal N_\infty$.
+The empty horizon instead has $\mathcal N_0=\operatorname{id}$.
+
+Fix any set $\mathcal E$ of effects $0\preceq E\preceq I_3$; the set of
+all rank-one projectors is the principal example. Let
+$\mathcal I=\mathcal E\times[0,\infty)$ and define
+
+$$
+e_E(\mathcal R;s)=\| (\mathcal R\Phi_s)^\dagger(E)-E\|_{\rm op},\qquad
+F_{E,\epsilon}=\{\mathcal R\in\mathcal C:e_E(\mathcal R;s)\le\epsilon\}.
+$$
+
+For Hermitian $A$, $\sup_{\rho\in\mathsf D_3}|\operatorname{Tr}(A\rho)|
+=\|A\|_{\rm op}$, by spectral decomposition and a maximal absolute
+eigenvector. Thus this is exactly worst-density expectation error.
+Both $E$ and $(\mathcal R\Phi_s)^\dagger(E)$ are effects, so
+$0\le e_E\le1$. Every such error depends only on $T=\mathcal R\Phi_s$.
+
+## 163. Compactness and the quantified incidence closures
+
+Use the unnormalized output-first convention
+
+$$
+J(\mathcal R)=\sum_{i,j}\mathcal R(E_{ij})\otimes E_{ij},\qquad
+\mathcal R(X)=\operatorname{Tr}_{\rm in}
+ [J(\mathcal R)(I_{\rm out}\otimes X^{\mathsf T})].
+$$
+
+The Choi characterization gives
+$\mathcal C\simeq\{J\succeq0:\operatorname{Tr}_{\rm out}J=I_3\}$
+[FC-W, Theorems 2.22 and 2.26]. This set is nonempty, convex and closed,
+and every member has trace three; positivity therefore bounds it.
+Consequently $\mathcal C$ and its continuous linear image $K_s$ are
+compact convex sets. Each error above is continuous and convex in either
+decoder or recovered-channel coordinates, so each budget set is closed
+and convex, including for an infinite, noncompact task language.
+
+For arbitrary $\Gamma\subseteq\mathcal I$ and $D\subseteq\mathcal C$, set
+
+$$
+\alpha(\Gamma)=\bigcap_{t\in\Gamma}F_t,\qquad
+\beta(D)=\{t\in\mathcal I:D\subseteq F_t\}.
+$$
+
+**Theorem 163.1 (Exact incidence correspondence).** For every such pair,
+
+$$
+\Gamma\subseteq\beta(D)\iff D\subseteq\alpha(\Gamma).
+$$
+
+Both maps reverse inclusion. The maps $\beta\alpha$ on task families
+and $\alpha\beta$ on decoder families are extensive, monotone and
+idempotent. In particular
+$\alpha\beta\alpha=\alpha$ and $\beta\alpha\beta=\beta$.
+
+*Proof.* Both sides of the equivalence state
+$\forall t\in\Gamma\ \forall\mathcal R\in D:\mathcal R\in F_t$.
+The definitions give antitonicity and
+$\Gamma\subseteq\beta\alpha\Gamma$, $D\subseteq\alpha\beta D$.
+Applying antitonicity to these inclusions, and extensiveness to their
+images, gives both triple identities. They imply idempotence;
+composition of two inclusion reversals gives monotonicity. $\square$
+
+For every $E$, compactness gives
+$m_E(s)=\min_{\mathcal R\in\mathcal C}e_E(\mathcal R;s)$.
+For every $\Lambda\subseteq\mathcal E$, one decoder attains all individual
+minima exactly when
+$\alpha(\{(E,m_E(s)):E\in\Lambda\})\ne\varnothing$.
+The minima need not be zero. The established individual optima and common
+attainer obstruction in [FC-TR, §§103–104] remain separate results.
+
+This is a polarity between budgeted tasks and legal decoders. It does not
+identify deterministic state partitions with the convex decoder set.
+The arbitrary-set static extension in [FC-TP, §10] removes a finite-state
+restriction from its own deterministic setting; it does not supply this
+quantitative channel geometry. Distinct decoders may have the same $T$,
+and all present losses identify those invisible decoder directions.
+
+## 164. Attained budget slack and individual-optimum regret
+
+Empty intersections have their usual conventions:
+$\alpha(\varnothing)=\mathcal C$ and $\beta(\varnothing)=\mathcal I$.
+If $\alpha(\Gamma)=\varnothing$, its ordinary closure is
+$\beta\alpha(\Gamma)=\mathcal I$ by vacuous inclusion.
+To measure the incompatibility define, with $\sup\varnothing=0$,
+
+$$
+\delta_s(\Gamma)=\min_{\mathcal R\in\mathcal C}
+ \sup_{(E,\epsilon)\in\Gamma}(e_E(\mathcal R;s)-\epsilon)_+.
+$$
+
+**Theorem 164.1 (Uniform relaxation).** The displayed minimum is attained,
+and $\delta_s(\Gamma)=0$ if and only if $\alpha(\Gamma)\ne\varnothing$.
+More generally, for every $\eta\ge0$, there is one decoder satisfying
+$e_E\le\epsilon+\eta$ for every $(E,\epsilon)\in\Gamma$ if and only if
+$\delta_s(\Gamma)\le\eta$. Thus every infeasible family has strictly
+positive attained slack. At budgets $\epsilon=m_E(s)$ this is the
+least worst excess above individual optima.
+
+*Proof.* Each positive-part loss is continuous and lies in $[0,1]$.
+Its arbitrary supremum is finite and lower semicontinuous, so it attains
+a minimum on the nonempty compact set $\mathcal C$. At an attaining
+decoder the supremum is at most $\eta$ exactly when every original error
+is at most its budget plus $\eta$. This proves all equivalences, including
+the empty family. For individual-minimum budgets each difference is
+already nonnegative. $\square$
+
+## 165. The exact affine dimension of the recovered-channel carrier
+
+**Theorem 165.1.** Writing $r_s=\operatorname{rank}_{\mathbb R}
+(\Phi_s|_{\operatorname{Herm}(3)})$, one has
+
+$$
+\dim_{\mathbb R}\operatorname{aff}K_s=8r_s
+=\begin{cases}40&s\ne0,\\16&s=0.\end{cases}
+$$
+
+*Proof.* Let $V=\operatorname{Herm}(3)$ and
+$W=\{Y\in V:\operatorname{Tr}Y=0\}$, of real dimensions nine and eight.
+Differences of trace-preserving Hermiticity-preserving maps form precisely
+$\operatorname{Hom}_{\mathbb R}(V,W)$. Every real-linear map on Hermitian
+matrices has a unique complex-linear Hermiticity-preserving extension.
+The completely depolarizing decoder has $J=I_9/3\succ0$; small perturbations
+in every trace-preserving Hermitian Choi direction remain positive.
+Hence $\mathcal C$ has a relative open neighborhood in the full
+trace-preserving affine space, whose tangent dimension is $9\cdot8$.
+
+Composition sends $L$ to $L\Phi_s$. Restriction onto
+$\operatorname{Hom}_{\mathbb R}(\operatorname{im}\Phi_s,W)$ is surjective:
+extend any linear map from $\operatorname{im}\Phi_s$ to a basis of $V$.
+The image tangent space has dimension $8r_s$. A surjective linear map
+between finite-dimensional spaces sends a neighborhood onto a
+neighborhood in its image, so the CPTP restriction has this exact affine
+dimension, rather than merely this upper bound.
+
+On diagonal Hermitian matrices, the directions $E_{00}$, $E_{11}+E_{22}$,
+$E_{11}-E_{22}$ have multipliers $1,1,s$. The two real $01$ coherence
+directions have multiplier $s$; the four $02,12$ directions are killed.
+Thus $r_s=5$ for every nonzero $s$ and $r_0=2$. In particular the boundary
+$s=-1/2$ retains rank five. $\square$
+
+All actual finite $n\ge1$ therefore have dimension 40, while the actual
+limit has dimension 16. For the separate empty-horizon identity carrier,
+the same tangent argument gives dimension 72. With nonnegative effect
+budgets, its identity decoder satisfies every task, so an empty-horizon
+infeasibility witness does not arise.
+
+## 166. Finite witnesses for arbitrary budgeted task families
+
+We use the following elementary finite-dimensional intersection fact.
+For a finite family of convex sets in a real affine space of dimension
+$d$, an empty intersection has an empty subfamily of at most $d+1$ sets.
+Indeed, take an inclusion-minimal empty family $A_1,\ldots,A_m$ and choose
+$x_i\in\bigcap_{j\ne i}A_j$. If $m\ge d+2$, any $d+2$ of these points
+have an affine dependence $\sum_i c_ix_i=0$, $\sum_i c_i=0$, with some
+positive and some negative coefficients. Normalize their two signs to
+obtain a point in both corresponding convex hulls. For each $A_j$, use
+the hull whose selected indices omit $j$; every point in that hull belongs
+to $A_j$. If $j$ was not selected, either hull works. This gives a point
+in every $A_j$, a contradiction. Zero coefficients may be discarded.
+
+**Theorem 166.1 (All-small-subfamilies criterion).** Put
+$d_s=\dim\operatorname{aff}K_s$. For every $\Gamma\subseteq\mathcal I$,
+
+$$
+\alpha(\Gamma)\ne\varnothing
+\iff \forall\Gamma_0\subseteq\Gamma,\quad
+ |\Gamma_0|\le d_s+1\Longrightarrow\alpha(\Gamma_0)\ne\varnothing.
+$$
+
+*Proof.* View every budget set inside $K_s$, intersecting it with this
+carrier. It is closed and convex there. If the full intersection is empty,
+compactness of $K_s$ supplies a finite empty subfamily by the finite
+intersection property. The preceding finite argument reduces it to at
+most $d_s+1$ sets. The reverse implication is immediate. Nonemptiness in
+$K_s$ is equivalent to a legal decoder realizing its point. $\square$
+
+Thus 41 tasks suffice to witness any infeasibility at every actual finite
+$n\ge1$, and 17 suffice at the limit. These are sufficient upper bounds;
+no sharpness or minimal cardinality is asserted. Feasibility of just one
+small subfamily does not establish feasibility of the entire family.
+
+## 167. An exact finite certificate for the full density-input value
+
+Let $\mathcal P_3=\{P\in\mathsf D_3:P^2=P\}$ be the compact pure-state
+set and write
+
+$$
+f_P(T)=\tfrac12\|T(P)-P\|_1,\qquad
+\mu(s)=\min_{T\in K_s}\max_{\rho\in\mathsf D_3}
+ \tfrac12\|T(\rho)-\rho\|_1.
+$$
+
+**Theorem 167.1 (Exact finite pure-input value).** There exist
+$1\le k\le d_s+1$ pure inputs $P_1,\ldots,P_k$ such that
+
+$$
+\min_{T\in K_s}\max_{1\le i\le k} f_{P_i}(T)=\mu(s).
+$$
+
+Both the full and finite minima are attained. In particular 41 inputs
+suffice at any actual finite positive horizon and 17 at the limit.
+
+*Proof.* For fixed $T$, the loss is convex in the density input. A spectral
+decomposition bounds any mixed-state loss by the largest loss among its
+pure components. Hence the full maximum equals $\max_{P\in\mathcal P_3}
+f_P(T)$. Joint continuity and compactness give this maximum and a full
+minimizer $T_*\in K_s$. Denote its value by $\mu$.
+
+If $\mu=0$, any one pure input has finite minimum zero, using $T_*$ and
+nonnegativity. If $\mu>0$, choose $0\le a_j<\mu$ with $a_j\uparrow\mu$.
+For each $j$, the closed convex sets
+$\{T\in K_s:f_P(T)\le a_j\}$, indexed by pure $P$, have empty total
+intersection. The compact-carrier intersection argument of §166 supplies
+at most $d_s+1$ pure inputs whose finite minimum $v_j$ exceeds $a_j$.
+The strict inequality uses attainment of the continuous finite maximum
+on compact $K_s$. Evaluation at $T_*$ gives $v_j\le\mu$.
+
+Pad the input tuples with repetitions to length $d_s+1$. Compactness of
+$\mathcal P_3^{d_s+1}$ supplies a convergent subsequence. Joint continuity
+on $K_s\times\mathcal P_3$ is uniform, so convergence of the tuple makes
+its finite maximum converge uniformly on $K_s$. Minima differ by at most
+this uniform difference. Passing to the limit gives a tuple with finite
+minimum $\mu$, since $a_j<v_j\le\mu$. Repetitions may be removed, and
+$T_*$ attains the finite value as well. $\square$
+
+This supplies existence of an exact supporting input family for the
+unrestricted problem. It specifies neither an input list nor a procedure
+for obtaining one. It does not evaluate $\mu(s)$ or interchange a minimax.
+For the separate identity horizon, $\mu_0=0$ and one arbitrary pure input
+already suffices.
+
+## 168. Symmetry, restricted representatives and full orbit expansion
+
+Let $\omega=e^{2\pi i/3}$ and
+$G=\{U_{pq}=\operatorname{diag}(1,\omega^p,\omega^q):p,q\in\mathbb Z_3\}$.
+The channel $\Phi_s$ commutes with each $\operatorname{Ad}_{U_{pq}}$ and
+is real in the specified basis. Write $c(X)=\overline X$.
+The decoder actions
+$\mathcal R\mapsto\operatorname{Ad}_{U^\dagger}\mathcal R
+\operatorname{Ad}_U$ and $\mathcal R\mapsto c\mathcal Rc$ generate a
+finite group $H$ of 18 real-linear actions. The latter preserves CPTP:
+conjugating every Kraus operator gives a Kraus list for $c\mathcal Rc$.
+It does not use $c$ alone as a legal decoder.
+
+Let $\mathsf P_H\mathcal R$ denote the average of these decoder actions.
+Covariance, conjugation invariance of trace norm and convexity imply
+
+$$
+f_P((\mathsf P_H\mathcal R)\Phi_s)
+ \le |H|^{-1}\sum_{h\in H}f_{hP}(\mathcal R\Phi_s)
+ \le\max_{h\in H}f_{hP}(\mathcal R\Phi_s),
+$$
+
+where $hP$ is the corresponding unitary or antiunitary action on a pure
+state; inverse conventions give the same full orbit. Maximizing over
+all pure inputs shows that an $H$-fixed full minimizer exists. Thus
+restriction to $K_s^H=\{(\mathsf P_H\mathcal R)\Phi_s:\mathcal R\in\mathcal C\}$
+preserves the full value.
+
+For $s\ne0$ this fixed carrier has exact real affine dimension seven.
+To check it, give the basis vectors phase weights $(0,0),(1,0),(0,1)$.
+Their six ordered nonzero differences in $\mathbb Z_3^2$ are distinct.
+Character orthogonality therefore leaves a phase-fixed decoder with
+$\mathcal R(E_{jj})=\sum_i C_{ij}E_{ii}$ and
+$\mathcal R(E_{ij})=\lambda_{ij}E_{ij}$ for $i\ne j$.
+Hermiticity gives conjugate multipliers and trace preservation gives
+three population column sums one: six real population parameters.
+Precomposition by $\Phi_s$ retains all six, since its population block
+has determinant $s$, and retains only the $01$ coherence multiplier.
+Phase averaging alone leaves two real coordinates of that multiplier;
+$c\mathcal Rc$ fixes it to be real, leaving one. These seven tangent
+directions are independent. The fixed depolarizing decoder has strictly
+positive Choi matrix, so small fixed TP perturbations in all seven
+directions remain CPTP. This proves equality of affine dimension.
+
+Theorem 167.1 on this carrier gives at most eight representative pure
+inputs $S$ for the restricted optimization. For arbitrary untwirled
+$\mathcal R$, the preceding averaging inequality gives
+
+$$
+\max_{Q\in H S} f_Q(\mathcal R\Phi_s)
+ \ge\max_{P\in S}f_P((\mathsf P_H\mathcal R)\Phi_s)\ge\mu(s).
+$$
+
+A fixed full minimizer gives the opposite finite-minimax inequality.
+Hence the full physical orbit $HS$ is an exact unrestricted certificate,
+with at most $18\cdot8=144$ states before repetitions are removed.
+The generic unrestricted bound 41 is smaller than this orbit upper
+bound. Eight representatives by themselves certify only the restricted
+problem. The seven-dimensional assertion applies only to $s\ne0$;
+at zero the unconditional unrestricted bound remains 17.
+
+For a prescribed effect-task family, averaging requires its own invariance
+check, including transport of budgets. Closure under $E\mapsto hE$ with
+unchanged budget is sufficient: the transported inequalities and convexity
+then preserve feasibility and the worst budget slack. Literal orbit
+closure is not necessary in every redundant or accidentally invariant
+instance. No such invariance is assumed for an arbitrary $\Gamma$.
+
+For example, at $s=1$ let $X$ swap $|0\rangle,|1\rangle$ and fix $|2\rangle$,
+and take $\mathcal R=\operatorname{Ad}_X$. The input
+$P=|+\rangle\langle+|$, $|+\rangle=(|0\rangle+|1\rangle)/\sqrt2$, has zero
+state and effect error. For $U=\operatorname{diag}(1,\omega,1)$,
+$UPU^\dagger$ is still in the preserved $01$ block, but its overlap with
+its swapped vector has modulus $1/2$. Its trace-distance error is therefore
+$\sqrt{1-1/4}=\sqrt3/2$; the difference of the two rank-one projectors has
+eigenvalues $0,\pm\sqrt3/2$, giving the same effect error. A representative
+can consequently miss an orbit failure of an unrestricted decoder.
+
+## 169. Source correspondence and the remaining scope
+
+The incidence polarity and finite convex-intersection argument are mature
+general tools, proved explicitly above in the forms used here. Compactness
+adds the infinite-family passage; compactness of pure inputs adds exact
+finite value attainment. The channel-specific contributions are their
+parameter correspondence, the recovered affine dimensions 40 and 16,
+and the justified fixed-family and orbit bounds. The proofs use no
+historical original-text attribution for Helly or Carathéodory.
+
+[FC-W, (2.65)–(2.66), Theorems 2.22 and 2.26] supplies the unnormalized
+output-first Choi, complete-positivity and trace-preservation interfaces:
+its input and output spaces are both $\mathbb C^3$ here. Trace preservation
+ensures its nonzero-map hypothesis where required. The compact-carrier
+proof avoids any additional constrained-subgradient supplier.
+
+The common-map experiment comparisons already stated in §138 have source
+states $\Phi_s(\rho)$, target states $\rho$, and reconstruction map
+$\mathcal R$. A half-trace threshold $a$ corresponds to the full trace
+threshold $2a$ there. Their auxiliary comparison tests do not change the
+input or decoder permissions specified in §162. The present proofs do not
+depend on any further experiment-comparison theorem.
+
+Existing exact results include [FC-TR, §§107, 115–118] at the stated
+endpoints and second horizon, §§153–161 for its full optimizer classification,
+and §§128, 139–152 for the third horizon and positive interval $0<s\le1/4$.
+The latter retains Theorem 146.1's explicit base premises and gives its
+anchored exact value and optimizer disk. The finite-certificate theorems
+apply throughout their stated domains, independently of whether a value
+has been evaluated. They do not turn those published evaluations into
+unknown problems or supply a general negative-parameter evaluation.
+They assert no sharp certificate cardinality, explicit optimal input list,
+or classification beyond the existing parameter-specific results.
+
+[FC-W]: https://cs.uwaterloo.ca/~watrous/TQI/TQI.2.pdf "John Watrous, The Theory of Quantum Information, Chapter 2, equations (2.65)–(2.66), Theorems 2.22 and 2.26"
+[FC-TR]: AURIC_FIB_ACTUAL_ERASED_HISTORY_TERMINAL_RECOVERY.md "Actual erased-history terminal recovery, original channel and no-reference objective"
+[FC-TP]: FIB_TASK_PARTITION_GALOIS_AND_WHITEBOX.md "Task–partition Galois correspondence, arbitrary-set extension in Section 10"
+
+## 追加锚（本行以下为增补区）
