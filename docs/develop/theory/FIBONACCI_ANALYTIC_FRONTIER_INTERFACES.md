@@ -2931,3 +2931,116 @@ $$
 在平衡点 $c=a=1$ 时，$D_a=N_b=\sqrt U$，对每个固定 $k\ge3,C_N$ 和充分大 $U$ 仍不满足（465.1）。完整单位核心、其余原包、原更大高度费用与 signed Robin restoration 均未支付；（465.3）—（465.4）没有证明完整原矩、严格幂次节省、$o(UK)$、RH 或逐整数 Robin 不等式。
 
 ## 追加锚（本行以下为增补区）
+
+## 466. 物理行的低阶切面与完整原能量
+
+**定理 466.1（平方与立方物理行的完整预算）。** 沿用定理 458.1 的原行算子、原列系数、全部固定物理表示与零延拓。另使用 [de Faveri Theorem 1.1 的三阶情形及 Goldmakher–Louvel 的二阶筛界](../../../Library/Analytic/faveri2026fixedorder.md#separating-the-lower-order-character-blocks)，包括所引原稿 `eq:quadratic-large-sieve` 已核对的 primary、ramified conductor 与有限 ray 接口。它们分别为
+
+$$
+\Theta_3(A,B)\ll_\epsilon(AB)^\epsilon
+ \{A+B+(AB)^{2/3}\},\qquad
+\Xi_2(A,B)\ll_\epsilon(AB)^\epsilon(A+B).
+\tag{466.1}
+$$
+
+三阶筛的两个索引均为 cubefree；二阶筛的两个索引均为 squarefree。本节直接使用这两份既有结果。
+
+固定有限物理标签 $j$，把原行的 good 理想部分记为 $v$，其中每个素估值均在 $0,\ldots,5$。其单位与 $S$-部分已经按原约定记入 $j$，且 $q_v\asymp U$，只差固定标签导致的常数因子。定义两个原物理行子集
+
+$$
+\mathcal R_{3,j}=\{v=r^2:r\text{ good、cubefree、非单位}\},
+\qquad
+\mathcal R_{2,j}=\{v=r^3:r\text{ good、squarefree、非单位}\}.
+\tag{466.2}
+$$
+
+子集仍保留原行选择及非负有界 norm 权。这里的下标指 $S$ 外的实际字符阶数；固定 $S$-twist 仍保留，不把它的导子删除。两子集在 good 非单位 sixth-power-free 行中不相交。
+
+令 $K=DN$，$b(h)$ 是定理 458.1 的同一个完整原系数，也允许再乘与行无关、绝对值至多为一的列乘子；该乘子须对所用 smooth 参数固定，或乘后系数的全部所需参数导数仍满足同一共同包络。原有限 Fourier 表示及必要的有限 profile 导数满足同一个除数型包络，组合成本写作 $\mathcal C$；它包含实际 profile 包络与（466.1）算子成本的乘积、有限标签及 smooth/Sobolev 恢复。Profiles 与 norm-twist 高度固定，或满足该共同费用为次幂的 polylog 合同，不扩大原高度许可。
+
+把完整行能量限制到（466.2），分别记为 $Q_{3,j}(b),Q_{2,j}(b)$。则在所列解析输入下
+
+$$
+\begin{aligned}
+Q_{3,j}(b)&\ll_\varepsilon
+ \mathcal C^2(UK)^\varepsilon K
+ \{U^{1/2}+K+U^{1/3}K^{2/3}\},\\
+Q_{2,j}(b)&\ll_\varepsilon
+ \mathcal C^2(UK)^\varepsilon K\{U^{1/3}+K\}.
+\end{aligned}
+\tag{466.3}
+$$
+
+特别地，对每个固定 $C_0>0$，当 $K\le C_0U$ 时，两类完整原行能量的和为
+
+$$
+\sum_j\{Q_{3,j}(b)+Q_{2,j}(b)\}
+\ll_{\varepsilon,C_0}\mathcal C^2(UK)^\varepsilon UK.
+\tag{466.4}
+$$
+
+该式保留完整原 $h=dn$，不要求 $h$ 平方自由或 $d,n$ 互素，也不要求 $D$ 或 $N$ 单独变短。
+
+证明。固定一个原 Fourier 分量和物理标签。若 $v=r^2$，原乘法性连同零值给出
+$\chi_h^{(6),\rm raw}(r^2)=\chi_h^{(3),\rm raw}(r)$；若 $v=r^3$，得到相同意义的二阶字符。单位与 $S$-部分以及源字符族的修正只产生原固定有限 ray 数据中的列 twist。按同一有限分区把它们吸收入系数；负 orientation 先整体共轭。三阶的行尺度为 $R_3\asymp U^{1/2}$，二阶为 $R_2\asymp U^{1/3}$。物理元素与其 good 理想、单位及 $S$-标签之间的有限重数已纳入共同成本。没有把素估值减模，也没有删掉原非单位处的零值。
+
+在三阶行上唯一提取原列的全部立方：$h=\ell^3h_0$，其中 $h_0$ cubefree，允许 $h_0,\ell$ 相交。精确字符因子为
+
+$$
+\chi_{\ell^3h_0}^{(3),\rm raw}(r)
+=\chi_{h_0}^{(3),\rm raw}(r)\mathbf1_{(\ell,r)=1}.
+\tag{466.5}
+$$
+
+原系数的除数界和理想计数给出，对每个实际非空 $\ell$，
+
+$$
+\sum_{h_0\ {\rm cubefree}}
+ |b(\ell^3h_0)|^2
+\ll_\epsilon\mathcal P^2 K^{1+\epsilon}q_\ell^{-3}.
+\tag{466.6}
+$$
+
+固定 $\ell$ 时，保留（466.5）的行限制后，只在正行范数中扩大该行集。用（466.1），列长为 $O(K/q_\ell^3)$；其筛界由单调性统一控制为 $\Theta_3(R_3,CK)$。再在同一个原行 Hilbert 空间使用 Minkowski。理想级数 $\sum_\ell q_\ell^{-3/2}$ 收敛，于是得到（466.3）的第一式。
+
+二阶行上同样唯一写 $h=\ell^2h_0$，$h_0$ squarefree，并保留精确零值
+
+$$
+\chi_{\ell^2h_0}^{(2),\rm raw}(r)
+=\chi_{h_0}^{(2),\rm raw}(r)\mathbf1_{(\ell,r)=1},\qquad
+\sum_{h_0\ {\rm sf}}|b(\ell^2h_0)|^2
+\ll_\epsilon\mathcal P^2K^{1+\epsilon}q_\ell^{-2}.
+\tag{466.7}
+$$
+
+在固定 $\ell$ 的正行范数上用二阶筛，再用 Minkowski。原 annulus 给出 $q_\ell\ll\sqrt K$，而固定域理想和满足
+$\sum_{q_\ell\ll\sqrt K}q_\ell^{-1}\ll\log(2K)$。这份对数及其平方由最终小幂支付，得（466.3）的第二式。两种提取都只对实际非空项求和；有界 subunit annuli 归入原固定 annular enlargement，更短项为零。列乘子不改变支持计数或除数包络，因此同样适用。
+
+最后，当 $K\le C_0U$ 时，$K\ll U$ 且 $U^{1/3}K^{2/3}\ll_{C_0}U$，其余括号项也为 $O_{C_0}(U)$。有限物理分区、Fourier 分量及原允许的有限 smooth 参数都按共同成本恢复，不给每类行追加独立高度预算。由此得到（466.4）。证毕。
+
+**命题 466.2（同权 F4 子和与剩余物理行）。** 沿用 [F1–F4](../../../Library/Analytic/faveri2026fixedorder.md#a-weighted-powerful-part-majorant-for-all-original-columns) 的全部原系数及 $s=1/2+\eta$。当 $K\le C_0U$ 时，实际 F4 包在（466.2）两类物理行上的完整能量，沿同一个 F4 正权的总和满足
+
+$$
+Z_s|\mathcal T|\sum_{c\ {\rm powerful}}
+ q_c^s\tau(\operatorname{rad}c)
+ \sum_{a\mid\operatorname{rad}c}\sum_{\kappa\in\mathcal T}
+ \widetilde T^{{\rm sf},\,{\rm proper}}_{j;c,a,\kappa}
+\ll_{\varepsilon,C_0}\mathcal C^2(UK)^\varepsilon UK.
+\tag{466.8}
+$$
+
+证明。每个实际包的原系数具有同一除数型包络，支撑长度为 $X=K/q_c\ll K$，其列 mask 与有限过滤仍与物理行无关。把（466.4）的 $K$ 换成 $X$，得到完整包的 $UX$ 上界；这里只在包实际非空时应用固定 annular 合同。然后直接使用（464.14）的同一个临界 powerful-core 求和，并按一个最终 $\varepsilon$ 选择同一个 $\eta$ 与全部内部损失，得到（466.8）。没有估计独立 signed pole，也没有把正范数界相减。证毕。
+
+在原平衡 $U\asymp K$、$D=N=\sqrt K$ 中，该行切面包含全部 $c=a=1$ 的平方自由列系数在这些物理行上的完整能量。这不要求这些列属于第 464–465 节的短因子范围。该切面也不是列对 $h,k$ 的比值阶数选择：已知的 $H_{2,j},H_{3,j},H_{6,j}$ 是列对的分块，不能将其有符号拼接直接认作（466.2）的正行能量。
+
+把其余 good 非单位 sixth-power-free 行记为 $\mathcal R_{6,j}$。它们在 $S$ 外的字符阶数恰为六，因为其素估值不全被二整除，也不全被三整除。这给出同一个原正能量的精确行分拆
+
+$$
+Q(b)=Q_{\rm exc}(b)+
+ \sum_j\{Q_{3,j}(b)+Q_{2,j}(b)+Q_{6,j}(b)\}.
+\tag{466.9}
+$$
+
+有限 $S$-例外保持原处理。在 $K\le C_0U$ 范围内，完整 $UK$ 正预算仍需估计 $Q_{6,j}$；（466.3）在 $K/U$ 无界时也不自动给出 $UK$ 预算。原更大高度费用、完整六阶行及 signed Robin restoration 仍是独立义务；这些结论不证明 RH 或逐整数 Robin 不等式。
+
+## 追加锚（本行以下为增补区）
