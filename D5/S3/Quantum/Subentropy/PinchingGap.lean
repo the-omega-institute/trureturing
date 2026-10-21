@@ -6,12 +6,15 @@
    utility: none
    digest: Gaussian entropy gives concavity and convex nonnegative block-pinching gaps. -/
 
+import D5.S3.Quantum.Subentropy.Basic
 import D5.S3.Quantum.Subentropy.ClassicalQuantumGram
 import D5.S3.Quantum.Subentropy.EntropyJensenGap
 import D5.S3.Quantum.Subentropy.GaussianMatrix
+import D5.S3.Quantum.Subentropy.GaussianQuadratic
 import Mathlib.Logic.Equiv.Bool
 
-/-! Exact finite sign-twirl algebra, including empty coordinate blocks. -/
+/-! Exact finite sign-twirl algebra, including empty coordinate blocks.
+Escape audit unfinished for sign_unitary and signTwirl_eq_blockPinch: https://github.com/the-omega-institute/trureturing/issues/19176. -/
 
 noncomputable section
 set_option autoImplicit false
@@ -54,7 +57,7 @@ private theorem sign_square (s : X → Bool) :
     cases h : s i.1 <;> simp [blockSign, h]
   rw [hs, diagonal_one]
 
-private theorem sign_unitary (s : X → Bool) :
+theorem sign_unitary (s : X → Bool) :
     (signUnitary (B := B) s).conjTranspose * signUnitary (B := B) s = 1 ∧
       signUnitary (B := B) s * (signUnitary (B := B) s).conjTranspose = 1 := by
   constructor <;> rw [sign_adjoint, sign_square]
@@ -100,7 +103,7 @@ private theorem sign_correlation (x y : X) :
         _ = _ := Finset.sum_neg_distrib _
     exact CharZero.eq_neg_self_iff.mp hneg
 
-private theorem signTwirl_eq_blockPinch (A : Matrix (X × B) (X × B) ℂ) :
+theorem signTwirl_eq_blockPinch (A : Matrix (X × B) (X × B) ℂ) :
     signTwirl A = blockPinch A := by
   have hn : (Fintype.card (X → Bool) : ℂ) ≠ 0 := by
     exact_mod_cast Fintype.card_ne_zero

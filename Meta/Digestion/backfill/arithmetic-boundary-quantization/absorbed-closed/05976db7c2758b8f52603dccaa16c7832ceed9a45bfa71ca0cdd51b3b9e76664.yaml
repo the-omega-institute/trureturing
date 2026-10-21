@@ -1,0 +1,15 @@
+fingerprints:
+  raw_sha256: sha256:05976db7c2758b8f52603dccaa16c7832ceed9a45bfa71ca0cdd51b3b9e76664
+  normalized_sha256: sha256:05976db7c2758b8f52603dccaa16c7832ceed9a45bfa71ca0cdd51b3b9e76664
+cas_ref: sha256:05976db7c2758b8f52603dccaa16c7832ceed9a45bfa71ca0cdd51b3b9e76664
+coverage_gids:
+  - gid: D5/S3/Analytic/Interpolation/EnvelopeKMonotone.psiK_strictAnti_variance
+    target_statement_id: sha256:f42ef6fdde1bd94b4d67e794448928953c454e8a768fa9b95a88c89afbed99d9
+  - gid: D5/S3/Analytic/Interpolation/EnvelopeKMonotone.psiK_strictMono_mean
+    target_statement_id: sha256:91a819d05136b849bee7248cca5d6ae5ea22fbec5a17d6e47895746440d92aeb
+  - gid: D5/S3/Analytic/Interpolation/EnvelopeKMonotone.radius_envelope_hasDerivAt
+    target_statement_id: sha256:03eaff88cb9e4c8321e283bdd71fed9befa984d660a9f5d32480e7dee2825734
+  - gid: D5/S3/Analytic/Interpolation/LogOneSubExpDerivatives.log_one_sub_exp_derivatives
+    target_statement_id: sha256:baf75f495e116a3231c6f4fa767198ed0335aba4c158eb3410ee5b1dc815b89b
+receipts:
+  unresolved_subitems: []
