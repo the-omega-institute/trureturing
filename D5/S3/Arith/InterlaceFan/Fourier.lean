@@ -229,4 +229,65 @@ theorem exists_of_I_values (n : ℕ) (hn : 2 ≤ n) (y : ℕ → ℝ)
   simpa [evaluation, Fin.sum_univ_succ, cosine, I, Fin.val_succ, hz,
     neg_mul_neg, i] using hi
 
+/-- Every proper nonempty certificate set is exactly the maximizing set of a
+nonzero point of its closed face. -/
+theorem exists_face_exact (n : ℕ) (hn : 2 ≤ n) (S : Finset ℕ)
+    (hS : S ⊆ certIdx n) (hSne : S.Nonempty) (hSproper : S ≠ certIdx n) :
+    ∃ x ∈ face n S, x ≠ 0 ∧
+      (∀ j ∈ certIdx n, I n j x = interlaceNumber n x ↔ j ∈ S) ∧
+      (∀ j ∈ certIdx n \ S, I n j x < interlaceNumber n x) := by
+  classical
+  have hnR : (n : ℝ) ≠ 0 := by exact_mod_cast (by omega : n ≠ 0)
+  have hw : (∑ j ∈ certIdx n, certWeight n j) = (n : ℝ) := by
+    simpa [cosine] using cosine_weighted_sum n 0 hn (by omega)
+  let z : ℕ → ℝ := fun j => if j ∈ S then 1 else 0
+  let c : ℝ := (∑ j ∈ certIdx n, certWeight n j * z j) / n
+  have hy : (∑ j ∈ certIdx n, certWeight n j * (z j - c)) = 0 := by
+    simp_rw [mul_sub, sum_sub_distrib, ← sum_mul]
+    rw [hw]
+    dsimp [c]
+    field_simp
+    ring
+  obtain ⟨x, hx⟩ := exists_of_I_values n hn (fun j => z j - c) hy
+  obtain ⟨s, hs⟩ := hSne
+  have hsJ := hS hs
+  have hM : interlaceNumber n x = 1 - c := by
+    apply le_antisymm
+    · apply Finset.sup'_le
+      intro j hj
+      rw [hx j hj]
+      dsimp [z]
+      split_ifs <;> linarith
+    · have hle := Finset.le_sup' (fun j => I n j x) hsJ
+      change I n s x ≤ interlaceNumber n x at hle
+      rw [hx s hsJ] at hle
+      simpa [z, hs] using hle
+  have ht : ∃ t ∈ certIdx n, t ∉ S := by
+    by_contra h
+    push Not at h
+    exact hSproper (Subset.antisymm hS h)
+  obtain ⟨t, htJ, htS⟩ := ht
+  refine ⟨x, ?_, ?_, ?_, ?_⟩
+  · intro i hi j hj
+    rw [hx i (hS hi), hx j hj]
+    dsimp [z]
+    simp only [hi, ite_true]
+    split_ifs <;> linarith
+  · intro h0
+    have hsx := hx s hsJ
+    have htx := hx t htJ
+    simp [h0, I, z, hs, htS] at hsx htx
+    linarith
+  · intro j hj
+    rw [hx j hj, hM]
+    dsimp [z]
+    by_cases hjS : j ∈ S
+    · simp [hjS]
+    · simp only [hjS, ite_false, zero_sub, iff_false]
+      linarith
+  · intro j hj
+    obtain ⟨hjJ, hjS⟩ := mem_sdiff.mp hj
+    rw [hx j hjJ, hM]
+    simp [z, hjS]
+
 end D5.S3.Arith.InterlaceFan.Fourier
