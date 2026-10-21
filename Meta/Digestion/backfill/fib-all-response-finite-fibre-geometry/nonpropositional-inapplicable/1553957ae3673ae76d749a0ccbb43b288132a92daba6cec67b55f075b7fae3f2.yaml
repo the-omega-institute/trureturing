@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:1553957ae3673ae76d749a0ccbb43b288132a92daba6cec67b55f075b7fae3f2
+  normalized_sha256: sha256:1553957ae3673ae76d749a0ccbb43b288132a92daba6cec67b55f075b7fae3f2
+cas_ref: sha256:1553957ae3673ae76d749a0ccbb43b288132a92daba6cec67b55f075b7fae3f2
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 卷名与导言说明主题和来源，没有给出或量化有限纤维结论。
+    previous_atom_id: null
+    next_atom_id: e07391de5ee3fa21c5b90ced14f7081ead9341de85f0a4094a0c326a5fc0161d
