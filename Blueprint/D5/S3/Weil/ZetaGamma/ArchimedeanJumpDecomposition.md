@@ -32,6 +32,42 @@ The jump density is exp(-x/2)/(1-exp(-2x)) on positive scales, and the jump ener
 
 The first public conjunct is the exact complex identity. The second public conjunct records positivity of the independently constructed continuous jump energy.
 
+**Theorem 1.3 (Nonnegative actual density).**
+
+Lean statement: `D5/S3/Weil/ZetaGamma/ArchimedeanJumpDecomposition.archimedeanJumpDensity_nonneg`
+
+*Proof.* Machine-checked in Lean as `D5/S3/Weil/ZetaGamma/ArchimedeanJumpDecomposition.archimedeanJumpDensity_nonneg` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+The actual density exp(-x/2)/(1-exp(-2*x)) is nonnegative for positive x.
+
+**Theorem 1.4 (Levy integral and digamma).**
+
+Lean statement: `D5/S3/Weil/ZetaGamma/ArchimedeanJumpDecomposition.levy_integral_eq_digamma`
+
+*Proof.* Machine-checked in Lean as `D5/S3/Weil/ZetaGamma/ArchimedeanJumpDecomposition.levy_integral_eq_digamma` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+For every real z, the integral over positive x of 2*rho(x)*(1-cos(z*x)) equals Re digamma(1/4+i*z/2)-Re digamma(1/4). This identity determines the spectral multiplier of the periodic and whole-line translation energies.
+
+**Theorem 1.5 (Integrable Levy kernel).**
+
+Lean statement: `D5/S3/Weil/ZetaGamma/ArchimedeanJumpDecomposition.levy_integrableOn`
+
+*Proof.* Machine-checked in Lean as `D5/S3/Weil/ZetaGamma/ArchimedeanJumpDecomposition.levy_integrableOn` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+For every real z, 2*rho(x)*(1-cos(z*x)) is integrable on the positive half-line. The statement includes z=0 and uses the actual density.
+
 The same density has an exact interval L2 application. Let a>0, d=2*a, I=(-a,a], and u be complex-valued with MemLp(u,2,dx restricted to I). Write z=1_I*u for its zero extension and v for its d-periodic extension obtained from AddCircle.liftIoc at base point -a. For s>0, set rho(s)=exp(-s/2)/(1-exp(-2*s)), F0(s)=rho(s)*integral_R |z(x)-z(x-s)|^2 dx, and Fp(s)=rho(s)*integral_I |u(x)-v(x-s)|^2 dx. These use Lebesgue measure and the original half-open interval; no pointwise agreement of the two outer endpoints is assumed.
 
 For epsilon>=0 define K_epsilon(x,y) as the sum over every nonzero integer m of rho(|x-y+m*d|) when epsilon<|x-y+m*d|, with that summand zero otherwise. Let B_epsilon be the real part of integral_{I x I} conjugate(u(x))*K_epsilon(x,y)*u(y) dx dy. This retains both nearest images and the whole remaining integer lattice, with the zero image omitted.
@@ -54,6 +90,9 @@ These interval and Fourier conclusions apply the existing Gamma density and Levy
 
 ## References
 
+- Truth anchor: `D5/S3/Weil/ZetaGamma/ArchimedeanJumpDecomposition.archimedeanJumpDensity_nonneg`
 - Truth anchor: `D5/S3/Weil/ZetaGamma/ArchimedeanJumpDecomposition.archimedean_jump_decomposition`
 - Truth anchor: `D5/S3/Weil/ZetaGamma/ArchimedeanJumpDecomposition.jump_density_eq_tsum`
+- Truth anchor: `D5/S3/Weil/ZetaGamma/ArchimedeanJumpDecomposition.levy_integrableOn`
+- Truth anchor: `D5/S3/Weil/ZetaGamma/ArchimedeanJumpDecomposition.levy_integral_eq_digamma`
 - Dependency: [D5/S3/Weil/TestFunctions/ConvolutionSquarePositivity](../TestFunctions/ConvolutionSquarePositivity.md)
