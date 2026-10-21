@@ -168,7 +168,7 @@ private unsafe def pathsInEnvironment (env : Environment) (type : Expr)
   let work : CoreM (Array (Array DiscrTree.Key)) := MetaM.run' do
     try viewPaths type
     catch ex =>
-      if ex.isInterrupt || ex.isRuntime then throw ex
+      if ex.isInterrupt || ex.isMaxHeartbeat then throw ex
       IO.eprintln s!"lookup.path_fallback declaration={label} reason={← ex.toMessageData.toString}"
       return #[← DiscrTree.mkPath (← mkFreshExprMVar (mkSort .zero))]
   let context : Core.Context := {
