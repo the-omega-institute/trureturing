@@ -6,13 +6,8 @@
    utility: kind=certified-instance; basis=refutes=gid:D5/S3/StatisticalMechanics/Percolation/MultilayerDeterminantRootNonuniqueness.claim; result=D5/S3/StatisticalMechanics/Percolation/MultilayerDeterminantRootNonuniqueness.result; claim=D5/S3/StatisticalMechanics/Percolation/MultilayerDeterminantRootNonuniqueness.claim
    digest: Three zeros refute the multilayer percolation determinant uniqueness conjecture. -/
 
-import Mathlib.Algebra.BigOperators.Finsupp.Basic
-import Mathlib.Data.Nat.Choose.Basic
 import Mathlib.Topology.Algebra.Ring.Real
 import Mathlib.Topology.Instances.Matrix
-import Mathlib.Topology.Order.IntermediateValue
-import Mathlib.Tactic.Linarith
-import Mathlib.Tactic.NormNum
 
 /-!
 The matrix and excess-degree ratio are those of Guha, Towsley, Nain, Çapar, Swami and Basu,
