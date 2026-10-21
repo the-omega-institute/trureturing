@@ -28,14 +28,18 @@ internal sealed class LiMorganSiegristInflectionRefutationDocument : IScribeDocu
                 AssessedProvenance.FromLiterature(Source)),
             Node("result", "Conjecture 6.1 is false", Disp(Seq(Neg, Parenthesized(ClaimBody()))),
                 "Take α = 3/2 and f(x) = (1 − x)(1 + 5x¹²). This polynomial satisfies all six assumptions in Hypotheses. Multiplying the second derivative by the positive factor x^(3/2) Γ(3/2) gives the polynomial 180640483/1764461790 + x/2 − x² + (10485760/676039)x¹³ − (4194304/260015)x¹⁴. Its signs at 7/10, 3/4 and 4/5 are positive, negative and positive. Continuity gives one zero in each of the disjoint intervals (7/10, 3/4) and (3/4, 4/5), contradicting uniqueness. This proves nonuniqueness; an exact count of three zeros and simplicity of those zeros are not conclusions of this theorem. The at-least-one conclusion of Theorem 5.2 is compatible with this example, and the principal-eigenfunction Mittag–Leffler zero question is unaffected.",
-                AssessedProvenance.FromRepo(Source), DescribeRole.Theorem)),
+                AssessedProvenance.FromRepo(Source), DescribeRole.Theorem,
+                new OpenProblemResolutionClaim(
+                    ProblemSlugRef.Create("li-morgan-siegrist-2026-inflection-points-conjecture-6-1"),
+                    ResolutionKind.Refuted))),
         []));
 
     private static DocumentBlock Node(string name, string title, Formula formula, string prose,
-        AssessedProvenance provenance, DescribeRole role = DescribeRole.Definition) =>
+        AssessedProvenance provenance, DescribeRole role = DescribeRole.Definition,
+        OpenProblemResolutionClaim? resolution = null) =>
         Describe.Lean(DescribeId.Create("li-morgan-siegrist-" + name.ToLowerInvariant()),
             DeclarationHandle.Create(Prefix + name), H(title), StatementSource.FromAuthor(formula),
-            provenance, Blocks(Paragraph(Text(prose))), role);
+            provenance, Blocks(Paragraph(Text(prose))), role, resolution);
 
     private static Formula Named(string name) => Seq(Operatorname,
         Grp(Seq([.. name.Split('.').SelectMany((part, index) =>

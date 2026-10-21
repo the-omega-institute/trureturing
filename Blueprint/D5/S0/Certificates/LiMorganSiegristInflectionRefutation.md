@@ -58,6 +58,10 @@ $$\neg(\forall \alpha: \mathbb{R}, (1 < \alpha) \Rightarrow ((\alpha < 2) \Right
 
 *Proof.* Machine-checked in Lean as `D5/S0/Certificates/LiMorganSiegristInflectionRefutation.result` (`✓ std3`). ∎
 
+*Resolves.* `Problems/li-morgan-siegrist-2026-inflection-points-conjecture-6-1` (refuted) by `D5/S0/Certificates/LiMorganSiegristInflectionRefutation.result`.
+
+<!-- scribe-open-problem-resolution-v1 {"problem_slug":"li-morgan-siegrist-2026-inflection-points-conjecture-6-1","declaration_gid":"D5/S0/Certificates/LiMorganSiegristInflectionRefutation.result","resolution_kind":"refuted"} -->
+
 *Source.* Repository-derived.
 
 *Acknowledgement.* Yulong Li; Rachel Morgan; Michael Siegrist (2026). *Concavity structure of fractional differential equations and zeros of Mittag–Leffler functions*. DOI: [10.1007/s41478-026-01192-9](https://doi.org/10.1007/s41478-026-01192-9). URL: <https://link.springer.com/article/10.1007/s41478-026-01192-9>.
