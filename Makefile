@@ -201,7 +201,7 @@ search-reduction-run:
 	@test -f "$$SEARCH_REDUCTION_REQUESTS" || { echo 'REQUESTS must name a Lean declaration list' >&2; exit 2; }; lake -d tools/lean-inspector-reg env lean -j1 "$$SEARCH_REDUCTION_REQUESTS"
 search-reduction search-reduction-run: export SEARCH_REDUCTION_REQUESTS := $(value REQUESTS)
 
-search-reduction-test:
+search-reduction-test: search-reduction-index-fixtures
 	@for module in GraphModel LookupModel LookupTests GraphCalibration Calibration FaultPaths SingleSourceModel VocabularyModel PresentationCoverage SingleSourceTests RawOriginsTests Faults RealNegative VocabularyTransport VocabularyTests InformationTests; do $(MAKE) lean LEAN_TARGETS="LeanInformationAuditRegTests.SearchReduction.$$module" || exit $$?; done
 
 # Reexecute every probe and guard even when the compiled fixtures are current.
@@ -224,3 +224,9 @@ search-reduction-index:
 	@$(MAKE) lean LEAN_TARGETS="regInspector/searchReductionIndex" && $(MAKE) search-reduction-index-run
 search-reduction-index-run:
 	@lake -d tools/lean-inspector-reg env .lake/build/lean-inspector/reg/bin/searchReductionIndex "$(INDEX_BASIS)" "$(INDEX_DIR)" $(INDEX_MODULES)
+
+.PHONY: search-reduction-index-fixtures
+search-reduction-index-fixtures:
+	@$(MAKE) lean LEAN_TARGETS="regInspector/searchReductionIndex LeanInformationAuditRegTests.SearchReduction.LookupBaseline"
+	@$(MAKE) search-reduction-index-run INDEX_BASIS=fixture INDEX_DIR=.lake/build/lean-inspector/lookup-index/fixture INDEX_MODULES=Mathlib
+	@$(MAKE) search-reduction-index-run INDEX_BASIS=lookup-fixture INDEX_DIR=.lake/build/lean-inspector/lookup-index/lookup-fixture INDEX_MODULES=LeanInformationAuditRegTests.SearchReduction.LookupBaseline

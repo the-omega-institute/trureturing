@@ -5,7 +5,7 @@ the baseline environment or constructs an environment-wide tree. -/
 namespace LeanInformationAudit.SearchReduction
 open Lean Meta
 
-abbrev lookupVersion : String := "R_lookup/one-B/disk-beta-zeta-alpha-v1-independent"
+abbrev lookupVersion : String := "R_lookup/one-B/disk-beta-zeta-alpha-v3-independent"
 
 /-- The table is captured before delivery vocabulary or S is installed. A
 partial basis may supply a hit, but never a completed negative query. -/
@@ -45,7 +45,7 @@ def lookupExact (table : LookupTable) (goal : MVarId) : MetaM LookupTrace := goa
   let mut trace : LookupTrace := {complete := candidates.complete && table.complete}
   for entry in candidates.entries do
     checkSystem "lookup.membership"
-    let name := entry.name.toName
+    let name := entry.leanName
     let some info := (table.environment.setExporting false).find? name
       | trace := {trace with complete := false}; continue
     trace := {trace with visited := trace.visited + 1}
@@ -133,7 +133,7 @@ def lookupLeaf (table : LookupTable) (goal : MVarId)
   let trace ← candidates.entries.foldlM (init := ({complete := candidates.complete && table.complete} : LookupTrace)) fun trace entry => do
     if trace.source?.isSome then return trace
     checkSystem "lookup.page_candidate"
-    let name := entry.name.toName
+    let name := entry.leanName
     let some info := (table.environment.setExporting false).find? name
       | return {trace with complete := false}
     let trace := {trace with visited := trace.visited + 1}

@@ -5,13 +5,23 @@ application and kernel checking remain the authority for successful queries. -/
 namespace LeanInformationAudit.SearchReduction.DiskLookup
 open Lean Meta
 
-abbrev version : String := "disk-beta-zeta-alpha-v1"
+abbrev version : String := "disk-beta-zeta-alpha-v3"
 abbrev pageSize : Nat := 256
 
 structure Entry where
   module : String
   name : String
+  parts : Array (String × Nat)
   deriving ToJson, FromJson, Inhabited
+
+def Entry.leanName (entry : Entry) : Name :=
+  entry.parts.foldl (fun parent (text, number) =>
+    if number == 0 then .str parent text else .num parent (number - 1)) .anonymous
+
+private def nameParts : Name → Array (String × Nat)
+  | .anonymous => #[]
+  | .str parent text => (nameParts parent).push (String.ofList text.toList, 0)
+  | .num parent n => (nameParts parent).push ("", n + 1)
 
 structure Page where
   file : String
@@ -29,6 +39,7 @@ structure Header where
   basis : String
   mathlib : String
   inputs : UInt64
+  storage : String
   root : String
   digest : UInt64
   complete : Bool
@@ -98,7 +109,7 @@ private partial def body : Expr → Expr
   | e => e
 
 private partial def conclusions (e : Expr) (fuel : Nat := 32) : Array Expr :=
-  if fuel == 0 then #[] else
+  if fuel == 0 then #[mkBVar 0] else
   let e := body e
   let result := #[e]
   if e.isAppOfArity ``And 2 then
@@ -133,21 +144,27 @@ private def fileId (key : String) : String := toString (hash key)
 
 private partial def flush (directory : System.FilePath) (nodes : Nodes) (key : String) : IO UInt64 := do
   let node := nodes[key]?.getD {}
-  let mut children := #[]
+  let output := directory / s!"{fileId key}.node.json"
+  let previous : Node ← if ← output.pathExists then readJson output else pure {}
+  let mut branches : Std.HashMap String (String × UInt64) := {}
+  for (token, file, digest) in previous.children do
+    branches := branches.insert token (file, digest)
   for (token, next) in node.children.toArray.qsort (fun a b => a.1 < b.1) do
     let digest ← flush directory nodes next
-    children := children.push (token, fileId next, digest)
+    branches := branches.insert token (fileId next, digest)
   let mut groups : Std.HashMap String (Array Entry) := {}
   for entry in node.entries do
     groups := groups.insert entry.module ((groups[entry.module]?.getD #[]).push entry)
-  let mut pages := #[]
+  let mut pages := previous.pages
   for (owner, entries) in groups.toArray.qsort (fun a b => a.1 < b.1) do
     for offset in [: (entries.size + pageSize - 1) / pageSize] do
       let chunk := entries.extract (offset * pageSize) ((offset + 1) * pageSize)
       let file := s!"{fileId key}-{fileId owner}-{offset}.page.json"
       let digest ← writeJson (directory / file) chunk
-      pages := pages.push {file, digest, count := chunk.size}
-  writeJson (directory / s!"{fileId key}.node.json") ({children, pages} : Node)
+      pages := (pages.filter (·.file != file)).push {file, digest, count := chunk.size}
+  let children := branches.toArray.qsort (fun a b => a.1 < b.1) |>.map
+    (fun (token, file, digest) => (token, file, digest))
+  writeJson output ({children, pages} : Node)
 
 private def runGit (args : Array String) : IO String := do
   let result ← IO.Process.output {cmd := "git", args}
@@ -165,7 +182,10 @@ private unsafe def moduleParts (name : Name) : IO (Array (ModuleData × Compacte
   main.2.free
   return parts
 
-private def ownedName (n : Name) : Name := (String.ofList n.toString.toList).toName
+private def ownedName : Name → Name
+  | .anonymous => .anonymous
+  | .str parent text => .str (ownedName parent) (String.ofList text.toList)
+  | .num parent n => .num (ownedName parent) n
 private def ownedString (s : String) : String := String.ofList s.toList
 
 /-- The callback retains only freshly allocated metadata. The module payload
@@ -210,7 +230,9 @@ private unsafe def moduleEntries (name : Name) (rigidNames : NameSet) :
     for part in parts do
       for info in part.constants do
         count := count + 1
-        let entry : Entry := {module := name.toString, name := ownedString info.name.toString}
+        let entry : Entry := {
+          module := name.toString, name := ownedString info.name.toString,
+          parts := nameParts info.name}
         entries := entries.push (["member", toString (canonical info.type).hash], entry)
         let mut paths : Std.HashSet (List String) := {}
         for view in conclusions info.type do
@@ -223,6 +245,10 @@ the pinned Mathlib data and explicit format. Program bytes are excluded. -/
 unsafe def produce (directory : System.FilePath) (basis mathlib : String)
     (roots : Array Name) (checkSources : Bool := true) : IO Header := do
   IO.FS.createDirAll directory
+  if checkSources then
+    discard <| runGit #["diff", "--quiet", basis, "--", "D5"]
+    let actual ← runGit #["-C", ".lake/packages/mathlib", "rev-parse", "HEAD"]
+    unless actual == mathlib do throw <| IO.userError "lookup.mathlib_snapshot_mismatch"
   let mut todo := roots
   let mut seen : NameSet := {}
   let mut rigidNames : NameSet := {}
@@ -236,11 +262,6 @@ unsafe def produce (directory : System.FilePath) (basis mathlib : String)
     if seen.contains name then continue
     seen := seen.insert name
     try
-      if checkSources && name.toString.startsWith "D5." then
-        let source := name.toString.replace "." "/" ++ ".lean"
-        let expected ← runGit #["rev-parse", s!"{basis}:{source}"]
-        let actual ← runGit #["hash-object", source]
-        unless expected == actual do throw <| IO.userError "source does not match protected basis"
       let (deps, names, reducible, fingerprint) ← summary name
       inputs := mixHash inputs (mixHash (hash name) fingerprint)
       for n in names do rigidNames := rigidNames.insert n
@@ -258,23 +279,27 @@ unsafe def produce (directory : System.FilePath) (basis mathlib : String)
         IO.println (Json.mkObj [("reused", toJson true), ("header", toJson old)]).compress
         return old
     catch _ => pure ()
-  let mut nodes : Nodes := {}
+  let storage := s!"{version}-{inputs}"
+  let pagesDirectory := directory / storage
+  IO.FS.createDirAll pagesDirectory
+  let mut digest : UInt64 := 0
   let mut coverage : Array Json := #[]
   let mut declarations := 0
   let mut indexed := 0
   for name in modules.qsort Name.quickLt do
     try
       let (entries, count) ← moduleEntries name rigidNames
+      let mut nodes : Nodes := {}
       for (keys, entry) in entries do nodes := insert nodes keys entry
+      digest ← flush pagesDirectory nodes "root"
       declarations := declarations + count
       indexed := indexed + count
       coverage := coverage.push <| Json.mkObj [("module", toJson name.toString),
         ("declarations", toJson count), ("indexed", toJson count)]
       if coverage.size % 1000 == 0 then IO.eprintln s!"lookup.index_written={coverage.size}"
     catch ex => missing := missing.push s!"{name}: {ex}"
-  let digest ← flush directory nodes "root"
   let header : Header := {
-    basis, mathlib, inputs, root := fileId "root", digest,
+    basis, mathlib, inputs, storage, root := fileId "root", digest,
     complete := missing.isEmpty && modules.size == seen.size,
     modules := modules.size, declarations, indexed, missing}
   discard <| writeJson (directory / "coverage.json") coverage
@@ -288,7 +313,7 @@ def openIndex (directory : System.FilePath) (basis mathlib : String)
   let header : Header ← readJson (directory / "header.json")
   unless header.format == version && header.basis == basis && header.mathlib == mathlib do
     throw <| IO.userError "lookup.index_snapshot_mismatch"
-  return {directory, header, excluded}
+  return {directory := directory / header.storage, header, excluded}
 
 private def readChecked [FromJson α] (path : System.FilePath) (digest : UInt64) : IO α := do
   let text ← IO.FS.readFile path
@@ -339,7 +364,7 @@ def query (index : Index) (keys : List String) : IO Candidates := do
     let mut seen : NameSet := {}
     let mut entries := #[]
     for entry in result.entries do
-      let name := entry.name.toName
+      let name := entry.leanName
       unless seen.contains name do entries := entries.push entry; seen := seen.insert name
     return {result with entries, complete := result.complete && index.header.complete}
   catch _ => return {}

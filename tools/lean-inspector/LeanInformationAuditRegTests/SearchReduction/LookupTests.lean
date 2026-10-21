@@ -13,7 +13,10 @@ run_cmd do
     `LeanInformationAuditRegTests.SearchReduction.LookupBaseline}] {} 0
     (leakEnv := false) (loadExts := true)
   liftTermElabM do
-    let table : LookupTable := {environment := base}
+    let index ← DiskLookup.openIndex
+      ".lake/build/lean-inspector/lookup-index/lookup-fixture" "lookup-fixture"
+      "56a005855ea17e0b0958f73ec801ae140b0a1679"
+    let table : LookupTable := {environment := base, disk? := some index}
     let cases ← #[
       ← `(Mark 9),
       ← `(∀ renamed : Nat, Mark renamed),
@@ -35,6 +38,14 @@ run_cmd do
     let result ← localRebuild type [] (some table)
     unless result.cost == .one do
       throwError "lookup composed two B declarations: {result.detail}"
+    let node := index.directory / s!"{index.header.root}.node.json"
+    let withheld := node.addExtension "withheld"
+    IO.FS.rename node withheld
+    let missingPage ← try localRebuild type [] (some table)
+      finally IO.FS.rename withheld node
+    unless missingPage.cost == .unknown do
+      throwError "missing index node became certified NoHit"
+    logInfo "LOOKUP_MISSING_PAGE unknown=true"
     let incomplete ← localRebuild type [] (some {table with complete := false})
     unless incomplete.cost == .unknown do
       throwError "partial enumeration became NoHit: {incomplete.detail}"
