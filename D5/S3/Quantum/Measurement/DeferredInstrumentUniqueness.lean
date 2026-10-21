@@ -223,7 +223,7 @@ lemma certificate_identity {d : ℕ} (t : ℝ) (J : Fin d → MatrixMap (Fin d) 
     (htrace : ∀ x ρ, Matrix.trace (J x ρ) =
       Matrix.trace (ρ * Qs (1 : Matrix.unitaryGroup (Fin d) ℂ) (sMax d t) x)) :
     (0 : ℝ) = 0 := by
-  sorry
+  rfl
 
 lemma qCertificate_nonneg {d : ℕ} {aa bb cc : ℝ} (x : Fin d)
     (hbb : 0 < bb) (hcc : 0 < cc) (ha : aa * (d : ℝ) < cc)
