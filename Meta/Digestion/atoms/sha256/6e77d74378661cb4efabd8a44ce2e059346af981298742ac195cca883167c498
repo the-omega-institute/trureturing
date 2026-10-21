@@ -1,0 +1,26 @@
+**Lemma 7.3 (actual authority and received dependence).** On an authentic
+successful flight all five stages receive exactly their predecessor's
+published body under current read authority; each next arrow consumes
+that received body. No history token, decoded geometry or printed origin
+is used to grant live authority. FinalReturn restores the original outer
+entry relation with exactly one completed history item.
+
+Proof. The inherited GCA route first acquires and checks immutable $c,p$
+and the selected Image. ARC's positioned two-copy induction applies to
+each new payload, with the actual slot state inherited from the preceding
+ACK/mailbox return. Its two copy loops give sender=mailbox=receiver
+bitwise, while keeping physical intervals and origins distinct. Current
+seals/TOKs establish the callback read; the pre-bank positioning and
+F-bounded importer read that exact receiver. Definition 7.2 then makes
+sourceBody its sole next operand. Theorem 6.3 proves the independently
+checked output. Induct through the five channels: every next publication
+has returned availability, every callback retains the same flight
+invocation, and no early Ready can admit another flight.
+
+The final body independently recovers the original HistoricalImage
+value and target binding. GCA's inherited value checker therefore sees
+its actual expected target. The final Equal additionally compares two
+received S bodies. Only then do the explicit ACK, mailbox TOK, one M
+append, invocation TOK and Ready occur. Decoded old ownership is data
+throughout; every native guard tests the current physical slots. ∎
+
