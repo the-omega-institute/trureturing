@@ -170,8 +170,88 @@ private theorem state_density : TwoQubitDensity stateR := by
       · exact Matrix.PosSemidef.one.smul (by norm_num : (0 : ℝ) ≤ 1 / 2)
   · norm_num [Matrix.trace, Matrix.diag, stateR, Fintype.sum_prod_type, Fin.sum_univ_two]
 
+private def channelWeights : Fin 4 → ℝ :=
+  ![4183 / 10000, 3787 / 10000, 223 / 10000, 1807 / 10000]
+
+private def pauliKraus (j : Fin 4) : Matrix (Fin 2) (Fin 2) ℂ :=
+  Real.sqrt (channelWeights j) • pauliMatrix
+    (D5.S3.Quantum.Information.SignedPauliSumNormRefutation.sigmaOfDigit j.val)
+
+private def pauliAction (M : Matrix (Fin 2) (Fin 2) ℂ) : Matrix (Fin 2) (Fin 2) ℂ :=
+  ∑ j : Fin 4, channelWeights j •
+    (pauliMatrix (D5.S3.Quantum.Information.SignedPauliSumNormRefutation.sigmaOfDigit j.val) *
+      M * (pauliMatrix
+        (D5.S3.Quantum.Information.SignedPauliSumNormRefutation.sigmaOfDigit j.val)).conjTranspose)
+
+private theorem channel_weights_nonnegative (j : Fin 4) : 0 ≤ channelWeights j := by
+  fin_cases j <;> norm_num [channelWeights]
+
+private theorem pauli_kraus_complete : (∑ j, (pauliKraus j).conjTranspose * pauliKraus j) = 1 := by
+  have hterm (j : Fin 4) : (pauliKraus j).conjTranspose * pauliKraus j =
+      channelWeights j • (1 : Matrix (Fin 2) (Fin 2) ℂ) := by
+    simp only [pauliKraus, Matrix.conjTranspose_smul, star_trivial,
+      pauli_hermitian, smul_mul_smul, Real.mul_self_sqrt (channel_weights_nonnegative j),
+      letter_mul]
+    fin_cases j <;>
+      simp [D5.S3.Quantum.Information.SignedPauliSumNormRefutation.sigmaOfDigit,
+        letterPhase, letterProduct, pauliMatrix.eq_1]
+  simp_rw [hterm]
+  rw [← Finset.sum_smul]
+  have hsum : (∑ j, channelWeights j) = 1 := by
+    norm_num [channelWeights, Fin.sum_univ_succ]
+  rw [hsum, one_smul]
+
+private theorem pauli_kraus_action (M : Matrix (Fin 2) (Fin 2) ℂ) :
+    (∑ j, pauliKraus j * M * (pauliKraus j).conjTranspose) = pauliAction M := by
+  unfold pauliAction
+  apply Finset.sum_congr rfl
+  intro j _
+  simp only [pauliKraus, Matrix.conjTranspose_smul, star_trivial,
+    Matrix.smul_mul, Matrix.mul_smul, smul_smul,
+    Real.mul_self_sqrt (channel_weights_nonnegative j)]
+
+private theorem state_marginal : partialTraceRight stateR = marginalA := by
+  ext i j
+  fin_cases i <;> fin_cases j <;>
+    norm_num [partialTraceRight, stateR, marginalA, diagonal, Fin.sum_univ_two]
+
+private theorem pauli_action_entries (M : Matrix (Fin 2) (Fin 2) ℂ) : pauliAction M =
+    !![(599 / 1000 : ℂ) * M 0 0 + (401 / 1000) * M 1 1,
+       (297 / 1250) * M 0 1 + (891 / 2500) * M 1 0;
+       (297 / 1250) * M 1 0 + (891 / 2500) * M 0 1,
+       (401 / 1000) * M 0 0 + (599 / 1000) * M 1 1] := by
+  ext i j
+  fin_cases i <;> fin_cases j <;>
+    norm_num [pauliAction, channelWeights, Fin.sum_univ_succ,
+      D5.S3.Quantum.Information.SignedPauliSumNormRefutation.sigmaOfDigit,
+      pauliMatrix, D5.S3.Quantum.FiniteDimensional.qubitX,
+      D5.S3.Quantum.FiniteDimensional.qubitZ, Matrix.mul_apply,
+      Matrix.conjTranspose_apply, Fin.sum_univ_two, map_ofNat, Matrix.vecMul, dotProduct] <;>
+    ring_nf <;> norm_num [Complex.I_sq] <;> ring
+
+private theorem temporal_certificate : stateR =
+    Matrix.of (fun p q => pauliAction
+      (Matrix.of fun b d => temporalKernel stateR (p.1, b) (q.1, d)) p.2 q.2) := by
+  simp only [pauli_action_entries]
+  unfold temporalKernel
+  rw [state_marginal]
+  ext ⟨a, b⟩ ⟨c, d⟩
+  fin_cases a <;> fin_cases b <;> fin_cases c <;> fin_cases d <;>
+    norm_num [
+      D5.S3.Quantum.Entanglement.ConicalDesignConcurrenceComparability.swap,
+      stateR, marginalA, diagonal, Matrix.mul_apply, Matrix.conjTranspose_apply,
+      Fintype.sum_prod_type, Fin.sum_univ_two, kroneckerMap_apply, map_ofNat,
+      Matrix.one_apply, Matrix.submatrix_apply, Prod.swap, id_eq]
+
 private theorem state_temporal : TemporalForward stateR := by
-  sorry
+  obtain ⟨E, hE⟩ := finite_kraus_quantum_channel pauliKraus pauli_kraus_complete
+  have haction (M : Matrix (Fin 2) (Fin 2) ℂ) :
+      CStarMatrix.ofMatrix.symm (E.toCompletelyPositiveMap (CStarMatrix.ofMatrix M)) =
+        pauliAction M := (hE M).trans (pauli_kraus_action M)
+  refine ⟨E, temporal_certificate.trans ?_⟩
+  funext p q
+  exact (congrArg (fun M : Matrix (Fin 2) (Fin 2) ℂ => M p.2 q.2)
+    (haction (fun b d => temporalKernel stateR (p.1, b) (q.1, d)))).symm
 
 private theorem measurements_projective : BinaryProjective measurements := by
   constructor
@@ -182,19 +262,98 @@ private theorem measurements_projective : BinaryProjective measurements := by
         Matrix.conjTranspose_one, pauli_hermitian]
       cases b <;> norm_num
     · fin_cases x <;> cases b <;>
-        simp [measurements, Matrix.mul_add, Matrix.add_mul, Matrix.smul_mul,
-          Matrix.mul_smul, smul_smul, letter_mul, letterPhase, letterProduct,
+        simp [measurements, Matrix.mul_add, Matrix.add_mul,
+          smul_smul, letter_mul, letterPhase, letterProduct,
           pauliMatrix.eq_1] <;> module
   · intro x
     ext i j
     simp [measurements, Matrix.add_apply, Matrix.smul_apply]
     ring
 
-set_option maxHeartbeats 800000 in
+private theorem deterministic_difference {ι : Type*} [Fintype ι]
+    (H : ι → Matrix (Fin 2) (Fin 2) ℂ) (r : ι → Bool) :
+    (∑ k, if r k = false then H k else 0) - (∑ k, if r k = true then H k else 0) =
+      ∑ k, if r k then -H k else H k := by
+  rw [← Finset.sum_sub_distrib]
+  apply Finset.sum_congr rfl
+  intro k _
+  cases r k <;> simp
+
+private theorem deterministic_total {ι : Type*} [Fintype ι]
+    (H : ι → Matrix (Fin 2) (Fin 2) ℂ) (r : ι → Bool) :
+    (∑ k, if r k = false then H k else 0) + (∑ k, if r k = true then H k else 0) =
+      ∑ k, H k := by
+  rw [← Finset.sum_add_distrib]
+  apply Finset.sum_congr rfl
+  intro k _
+  cases r k <;> simp
+
+private theorem score_sum {ι : Type*} [Fintype ι]
+    (A B : ι → Matrix (Fin 2) (Fin 2) ℂ) :
+    (witnessU * ((∑ k, A k) + (∑ k, B k)) +
+      witnessV * ((∑ k, A k) - (∑ k, B k))).trace.re =
+      ∑ k, (witnessU * (A k + B k) + witnessV * (A k - B k)).trace.re := by
+  rw [← Finset.sum_add_distrib, ← Finset.sum_sub_distrib,
+    Matrix.mul_sum, Matrix.mul_sum, ← Finset.sum_add_distrib, Matrix.trace_sum]
+  exact Complex.re_sum _ _
+
+private theorem trace_pair_sum {ι : Type*} [Fintype ι]
+    (C : Matrix (Fin 2) (Fin 2) ℂ) (H : ι → Matrix (Fin 2) (Fin 2) ℂ) :
+    (C * ∑ k, H k).trace.re = ∑ k, (C * H k).trace.re := by
+  rw [Matrix.mul_sum, Matrix.trace_sum]
+  exact Complex.re_sum _ _
+
+private theorem hidden_score_point (s t : Bool) (M : Matrix (Fin 2) (Fin 2) ℂ)
+    (hM : M.PosSemidef) :
+    (witnessU * ((if s then -M else M) + (if t then -M else M)) +
+      witnessV * ((if s then -M else M) - (if t then -M else M))).trace.re ≤
+      2 * (witnessC * M).trace.re := by
+  have hp := RHLinalg.trace_mul_nonneg_of_posSemidef (witness_domination s t) hM
+  change 0 ≤ ((witnessC - responseWitness s t) * M).trace.re at hp
+  cases s <;> cases t <;>
+    simp only [responseWitness, Bool.false_eq_true, Bool.true_eq_false,
+      eq_self, ite_true, ite_false] at hp ⊢ <;>
+    simp only [Matrix.sub_mul, Matrix.neg_mul, Matrix.mul_add, Matrix.mul_sub,
+      Matrix.mul_neg, Matrix.trace_add, Matrix.trace_sub, Matrix.trace_neg,
+      Complex.add_re, Complex.sub_re, Complex.neg_re] at hp ⊢ <;> linarith
+
 private theorem lhs_bound (σ : Fin 2 → Bool → Matrix (Fin 2) (Fin 2) ℂ)
     (hσ : σ 0 false + σ 0 true = marginalA) (h : HasLHS σ) :
     steeringScore σ ≤ 2 / 5 := by
-  sorry
+  obtain ⟨H, hH, hmodel⟩ := h
+  have hdiff (x : Fin 2) : σ x false - σ x true =
+      ∑ k, if k x then -H k else H k :=
+    (congrArg₂ (fun A B : Matrix (Fin 2) (Fin 2) ℂ => A - B)
+      (hmodel x false).symm (hmodel x true).symm).trans
+        (deterministic_difference H (fun k => k x))
+  have htotal : (∑ k, H k) = marginalA :=
+    (deterministic_total H (fun k => k 0)).symm.trans
+      ((congrArg₂ (fun A B : Matrix (Fin 2) (Fin 2) ℂ => A + B)
+        (hmodel 0 false) (hmodel 0 true)).trans hσ)
+  let A : (Fin 2 → Bool) → Matrix (Fin 2) (Fin 2) ℂ :=
+    fun k => if k 0 then -H k else H k
+  let B : (Fin 2 → Bool) → Matrix (Fin 2) (Fin 2) ℂ :=
+    fun k => if k 1 then -H k else H k
+  have hscore : steeringScore σ =
+      (witnessU * ((∑ k, A k) + (∑ k, B k)) +
+        witnessV * ((∑ k, A k) - (∑ k, B k))).trace.re :=
+    congrArg₂ (fun X Y : Matrix (Fin 2) (Fin 2) ℂ =>
+      (witnessU * (X + Y) + witnessV * (X - Y)).trace.re) (hdiff 0) (hdiff 1)
+  have hpoint : (∑ k, (witnessU * (A k + B k) + witnessV * (A k - B k)).trace.re) ≤
+      ∑ k, 2 * (witnessC * H k).trace.re :=
+    Finset.sum_le_sum fun k _ => hidden_score_point (k 0) (k 1) (H k) (hH k)
+  have hsum : (∑ k, 2 * (witnessC * H k).trace.re) = 2 / 5 := by
+    calc
+      (∑ k, 2 * (witnessC * H k).trace.re) =
+          2 * ∑ k, (witnessC * H k).trace.re := (Finset.mul_sum _ _ _).symm
+      _ = 2 * (witnessC * ∑ k, H k).trace.re :=
+        congrArg (fun x : ℝ => 2 * x) (trace_pair_sum witnessC H).symm
+      _ = 2 * (witnessC * marginalA).trace.re :=
+        congrArg (fun M : Matrix (Fin 2) (Fin 2) ℂ => 2 * (witnessC * M).trace.re) htotal
+      _ = 2 / 5 := by
+        norm_num [witnessC, marginalA, Matrix.trace, Matrix.diag,
+          Matrix.mul_apply, Fin.sum_univ_two, diagonal]
+  exact (hscore.trans (score_sum A B)).le.trans (hpoint.trans_eq hsum)
 
 private theorem state_steering : SteerableBA stateR := by
   refine ⟨2, measurements, measurements_projective, ?_⟩
