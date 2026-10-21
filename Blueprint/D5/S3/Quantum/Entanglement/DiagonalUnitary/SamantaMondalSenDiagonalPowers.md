@@ -84,6 +84,10 @@ $$\forall (N: \mathbb{N}), (\forall (\theta: ((\operatorname{Fin}\left(N\right) 
 
 *Proof.* Machine-checked in Lean as `D5/S3/Quantum/Entanglement/DiagonalUnitary/SamantaMondalSenDiagonalPowers.result` (`✓ std3`). ∎
 
+*Resolves.* `Problems/samanta-mondal-sen-2025-diagonal-unitary-entangling-power-appendix-b-3` (proved) by `D5/S3/Quantum/Entanglement/DiagonalUnitary/SamantaMondalSenDiagonalPowers.result`.
+
+<!-- scribe-open-problem-resolution-v1 {"problem_slug":"samanta-mondal-sen-2025-diagonal-unitary-entangling-power-appendix-b-3","declaration_gid":"D5/S3/Quantum/Entanglement/DiagonalUnitary/SamantaMondalSenDiagonalPowers.result","resolution_kind":"proved"} -->
+
 *Source.* Repository-derived.
 
 *Acknowledgement.* M. Samanta; S. Mondal; A. Sen (De) (2025). *Disparity between multipartite entangling and disentangling powers of unitaries: Even vs Odd*. DOI: [10.48550/arXiv.2505.18539](https://doi.org/10.48550/arXiv.2505.18539). URL: <https://arxiv.org/abs/2505.18539v1>.

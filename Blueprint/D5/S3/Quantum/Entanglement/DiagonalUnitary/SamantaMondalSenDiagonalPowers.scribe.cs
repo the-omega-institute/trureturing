@@ -28,14 +28,15 @@ internal sealed class SamantaMondalSenDiagonalPowersDocument : IScribeDocumentDe
             Node("claim", "The Appendix B.3 expectation", Equivalence(X("claim"), ClaimBody()),
                 "Page 8, Appendix B.3: “It also indicates that such an equivalence may hold for arbitrary diagonal unitary operators acted on arbitrary number of qubits.” The variable N is the number of qubits; θ assigns a real phase to every computational-basis label. The diagonal entries are Complex.exp (θ x * Complex.I).", DescribeRole.Definition, AssessedProvenance.FromLiterature(Source)),
             Node("result", "Equality for every diagonal phase gate", ClaimBody(),
-                "Coordinatewise conjugation preserves normalization and both product factorizations. It conjugates the overlap, preserving its squared modulus, and therefore preserves G. For diagonal U it satisfies U.conjTranspose.mulVec (star ψ) = star (U.mulVec ψ). Conjugation bijects the fully separable inputs, so the two families of values have the same supremum. No hypothesis about attainment or local phases is required.", DescribeRole.Theorem, AssessedProvenance.FromRepo(Source))
+                "Coordinatewise conjugation preserves normalization and both product factorizations. It conjugates the overlap, preserving its squared modulus, and therefore preserves G. For diagonal U it satisfies U.conjTranspose.mulVec (star ψ) = star (U.mulVec ψ). Conjugation bijects the fully separable inputs, so the two families of values have the same supremum. No hypothesis about attainment or local phases is required.", DescribeRole.Theorem, AssessedProvenance.FromRepo(Source),
+                new OpenProblemResolutionClaim(ProblemSlugRef.Create("samanta-mondal-sen-2025-diagonal-unitary-entangling-power-appendix-b-3"), ResolutionKind.Proved))
         )));
 
     private static DocumentBlock Node(string name, string title, Formula formula, string prose,
-        DescribeRole role, AssessedProvenance provenance) => Describe.Lean(
+        DescribeRole role, AssessedProvenance provenance, OpenProblemResolutionClaim? resolution = null) => Describe.Lean(
             DescribeId.Create("sms-diagonal-" + (name switch { "IsFullySeparable" => "fully", "IsBiseparable" => "biseparable", "G" => "ggm", "E" => "entangling", "D" => "disentangling", _ => name })), DeclarationHandle.Create(Prefix + name),
             H(title), StatementSource.FromAuthor(Disp(formula)), provenance,
-            Blocks(Paragraph(Text(prose))), role);
+            Blocks(Paragraph(Text(prose))), role, resolution);
 
     private static Formula X(string name) => F.Id(name);
     private static Formula Parenthesized(Formula value) => Seq(Open, value, Close);
