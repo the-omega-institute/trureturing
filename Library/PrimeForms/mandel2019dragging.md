@@ -14,8 +14,11 @@ triage: anchor
 
 # Rational points in the fan of interlace certs
 
-Locator: [arXiv:1908.03208](https://arxiv.org/abs/1908.03208), version 3,
-Section 10, Problem 3. Section 5.2, equations (12)–(15), defines the interlace
+## Verified locator
+
+Source: https://arxiv.org/abs/1908.03208
+
+Version 3, Section 10, Problem 3. Section 5.2, equations (12)–(15), defines the interlace
 functionals and their fan; Proposition 5.5 describes its faces. Theorem 4.2
 identifies the interlace number with the maximum of the interlace functionals.
 
