@@ -6,6 +6,8 @@
    utility: none
    digest: Integral prime-power recursion and logarithmic differentiation prove Hanna A393867. -/
 
+/- Escape audit unfinished: https://github.com/the-omega-institute/trureturing/issues/19840; prime_is_prime. -/
+
 import Mathlib.RingTheory.PowerSeries.Derivative
 import Mathlib.RingTheory.PowerSeries.Inverse
 import Mathlib.NumberTheory.PrimeCounting
@@ -22,7 +24,7 @@ theorem lt_prime (n : ℕ) (hn : 1 ≤ n) : n < prime n := by
   unfold prime
   omega
 
-private theorem prime_is_prime (n : ℕ) : Nat.Prime (prime n) :=
+theorem prime_is_prime (n : ℕ) : Nat.Prime (prime n) :=
   Nat.prime_nth_prime _
 
 private theorem prime_coeff (B : PowerSeries ℤ) (h0 : constantCoeff B = 1)
@@ -267,12 +269,5 @@ theorem printed_formula_false :
   have := h 2 (by omega)
   norm_num [prime, hl2] at this
 
-#print axioms lt_prime
-#print axioms generating_equation
-#print axioms generating_unique
-#print axioms prime_dvd_coeff_pow
-#print axioms log_derivative_identity
-#print axioms hanna_conjecture
-#print axioms printed_formula_false
 
 end D5.S1.Recurrence.Parity.PrimePowerShiftLogDerivative

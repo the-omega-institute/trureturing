@@ -140,7 +140,7 @@ private theorem structure_map_embedding_lower_bound {d n : ℕ}
   simpa [hnull, Coord] using hsum
 
 /-- Expansion of a natural-basis product through the linear structure map. -/
-private theorem natural_basis_structure_map {n : ℕ} (ν : Product n)
+theorem natural_basis_structure_map {n : ℕ} (ν : Product n)
     (b : Module.Basis (Fin n) ℂ (Coord n))
     (hb : ∀ i j : Fin n, i ≠ j → ν (b i) (b j) = 0) :
     ∃ M : Coord n →ₗ[ℂ] Coord n, ∀ x y,
