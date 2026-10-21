@@ -1,7 +1,7 @@
 ---
 slug: mandel-robins-2019-minimal-rational-foic-faces
 bibkey: mandel2019dragging
-doi: 10.48550/arXiv.1908.03208
+doi: null
 triage: theorem
 motivation_gids:
   - D5/S3/Arith/InterlaceFan/Result.result
