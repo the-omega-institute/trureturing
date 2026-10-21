@@ -42,6 +42,10 @@ def L {n m : ℕ} (M : Matrix (Fin n) (Fin m) ℝ) : ℝ :=
 def a (k : ℕ) : ℝ :=
   ((2 : ℝ) ^ k)⁻¹ * ∑ ε : Fin k → Sign, |∑ i, signValue (ε i)|
 
+private lemma a_nonneg (k : ℕ) : 0 ≤ a k := by
+  unfold a
+  positivity
+
 def claim : Prop :=
   ∀ k : ℕ, 3 ≤ k → ∃ c : ℝ, c < k ∧
     ∀ n m (M : Matrix (Fin n) (Fin m) ℝ), Lk k M ≤ c * L M
@@ -64,7 +68,7 @@ theorem result : claim := by
   intro k hk
   have hk0 : 0 < k := by omega
   have ha : (3 / 2 : ℝ) ≤ a k := a_lower_three_halves k hk
-  have hak : 1 < a k := by linarith
+  have hak : 1 < a k := by linarith [a_nonneg k]
   let c : ℝ := (k : ℝ) / a k
   refine ⟨c, ?_, ?_⟩
   · dsimp [c]
