@@ -139,6 +139,19 @@ lemma bc_sq {d : ℕ} (hd : 2 ≤ d) {t : ℝ}
   rw [mul_pow, b_sq htu, c_sq hd htl]
   ring
 
+lemma a2_channel_coeff {d : ℕ} (hd : 2 ≤ d) {t : ℝ}
+    (htl : -1 / ((d : ℝ) ^ 2 - 1) ≤ t) (htu : t ≤ 1) :
+    2 * a2 d t * b t + (d : ℝ) * (a2 d t) ^ 2 = t := by
+  have hb := b_sq htu
+  have hc := c_sq hd htl
+  dsimp [a2, b, c]
+  have hd0 : (0 : ℝ) < d := by exact_mod_cast (Nat.zero_lt_of_lt hd)
+  have hb' : (Real.sqrt (1 - t)) ^ 2 = 1 - t := Real.sq_sqrt (by linarith)
+  have hc' : (Real.sqrt (t * ((d : ℝ) ^ 2 - 1) + 1)) ^ 2 =
+      t * ((d : ℝ) ^ 2 - 1) + 1 := c_sq hd htl
+  field_simp
+  nlinarith [hb', hc']
+
 lemma sMax_eq {d : ℕ} (hd : 2 ≤ d) {t : ℝ}
     (htl : -1 / ((d : ℝ) ^ 2 - 1) ≤ t) (htu : t ≤ 1) :
     sMax d t = b t ^ 2 + 2 * a2 d t * b t / d := by
@@ -198,6 +211,20 @@ lemma c_pos {d : ℕ} (hd : 2 ≤ d) {t : ℝ}
       -1 = (-1 / ((d : ℝ) ^ 2 - 1)) * ((d : ℝ) ^ 2 - 1) := by field_simp
       _ < t * ((d : ℝ) ^ 2 - 1) := by gcongr
   nlinarith
+
+lemma Itilde_sum {d : ℕ} (hd : 2 ≤ d) (U : Matrix.unitaryGroup (Fin d) ℂ)
+    {t : ℝ} (htl : -1 / ((d : ℝ) ^ 2 - 1) ≤ t) (htu : t ≤ 1) :
+    ∑ x, Itilde U t x = It t := by
+  ext ρ i j
+  simp only [LinearMap.sum_apply, Itilde, It, LinearMap.coe_mk, AddHom.coe_mk,
+    Matrix.smul_apply, Matrix.add_apply, Matrix.mul_apply, Matrix.trace,
+    Finset.sum_apply]
+  have hQ := sum_Q U
+  have ha := a2_channel_coeff hd htl htu
+  have hb := b_sq htu
+  simp only [hQ]
+  ring_nf
+  nlinarith [ha, hb]
 
 lemma choi_Itilde_standard (d : ℕ) (t : ℝ) (x : Fin d) :
     MatrixMap.choi_matrix (Itilde (1 : Matrix.unitaryGroup (Fin d) ℂ) t x) =
