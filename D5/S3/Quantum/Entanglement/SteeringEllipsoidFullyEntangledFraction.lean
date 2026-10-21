@@ -160,14 +160,14 @@ def claim : Prop :=
     ∀ t : ℝ, 0 ≤ t → t ≤ 1 → ∃ ρ : TwoQubit, ρ.PosSemidef ∧ trace ρ = 1 ∧
       vlen (centre ρ) = t ∧ fef ρ = 1 - t / 2
 
-lemma pauli_zero : pauli 0 = !![0, 1; 1, 0] := by
+private lemma pauli_zero : pauli 0 = !![0, 1; 1, 0] := by
   simp [pauli.eq_def, pauliMatrix, qubitX]
 
-lemma pauli_one : pauli 1 = !![0, -Complex.I; Complex.I, 0] := by
+private lemma pauli_one : pauli 1 = !![0, -Complex.I; Complex.I, 0] := by
   ext i j; fin_cases i <;> fin_cases j <;>
     simp [pauli.eq_def, pauliMatrix, qubitX, qubitZ]
 
-lemma pauli_two : pauli 2 = !![1, 0; 0, -1] := by
+private lemma pauli_two : pauli 2 = !![1, 0; 0, -1] := by
   simp [pauli.eq_def, pauliMatrix, qubitZ]
 
 def blochVec (X : Matrix (Fin 2) (Fin 2) ℂ) (i : Fin 3) : ℝ := (trace (X * pauli i)).re
@@ -193,7 +193,7 @@ private lemma vlen_add_le (u v : Fin 3 → ℝ) : vlen (u + v) ≤ vlen u + vlen
 private lemma vlen_smul (c : ℝ) (v : Fin 3 → ℝ) : vlen (c • v) = |c| * vlen v := by
   rw [vlen_eq_norm, vlen_eq_norm, WithLp.toLp_smul, norm_smul, Real.norm_eq_abs]
 
-lemma vlen_nonneg (v : Fin 3 → ℝ) : 0 ≤ vlen v := Real.sqrt_nonneg _
+private lemma vlen_nonneg (v : Fin 3 → ℝ) : 0 ≤ vlen v := Real.sqrt_nonneg _
 
 private lemma blochVec_add (X Y : Matrix (Fin 2) (Fin 2) ℂ) :
     blochVec (X + Y) = blochVec X + blochVec Y := by
