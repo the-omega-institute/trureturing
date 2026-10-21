@@ -98,7 +98,10 @@ internal sealed class SteeringTemporalCompatibilityRefutationDocument : IScribeD
                             + "The Pauli channel supplies forward temporal compatibility, so R is not atemporal. "
                             + "This answers the steering clause of the source's question; the Bell-nonlocality "
                             + "clause is not addressed."))),
-                DescribeRole.Theorem)
+                DescribeRole.Theorem,
+                new OpenProblemResolutionClaim(
+                    ProblemSlugRef.Create("song-et-al-2024-steering-temporal-compatibility-refutation"),
+                    ResolutionKind.Refuted))
         )));
 
     private static DocumentBlock Node(string name, string title, Formula formula, string prose,
