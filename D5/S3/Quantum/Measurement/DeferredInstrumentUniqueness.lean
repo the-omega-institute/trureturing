@@ -5,30 +5,21 @@
    anchors: []
    utility: none
    digest: Literal upper-boundary meter, channel, instrument, and uniqueness claim. -/
-
 import D5.S3.Quantum.Foundation.FiniteKrausRepresentation
-
 set_option autoImplicit false
 set_option relaxedAutoImplicit false
-
 noncomputable section
-
 open scoped BigOperators ComplexOrder MatrixOrder
-
 namespace D5.S3.Quantum.Measurement.DeferredInstrumentUniqueness
-
 open D5.S3.Quantum.Foundation.FiniteKrausChannel
 open D5.S3.Quantum.Foundation.FiniteKrausChannel.PhyslibLeaf
-
 def Q {d : ℕ} (U : Matrix.unitaryGroup (Fin d) ℂ) (x : Fin d) :
     Matrix (Fin d) (Fin d) ℂ :=
   (U : Matrix (Fin d) (Fin d) ℂ) * Matrix.single x x (1 : ℂ) *
     (U : Matrix (Fin d) (Fin d) ℂ).conjTranspose
-
 def Qs {d : ℕ} (U : Matrix.unitaryGroup (Fin d) ℂ) (s : ℝ) (x : Fin d) :
     Matrix (Fin d) (Fin d) ℂ :=
   (s : ℂ) • Q U x + (((1 - s) / (d : ℝ) : ℝ) : ℂ) • 1
-
 def It {d : ℕ} (t : ℝ) : MatrixMap (Fin d) (Fin d) ℂ where
   toFun ρ := (t : ℂ) • ρ +
     ((((1 - t) / (d : ℝ) : ℝ) : ℂ) * Matrix.trace ρ) • 1
@@ -41,17 +32,13 @@ def It {d : ℕ} (t : ℝ) : MatrixMap (Fin d) (Fin d) ℂ where
     ext i j
     simp [Matrix.trace_smul, Matrix.smul_apply, Matrix.add_apply, Matrix.one_apply]
     split_ifs <;> ring
-
 def sMax (d : ℕ) (t : ℝ) : ℝ :=
   (((d : ℝ) ^ 2 - 2) * (1 - t) +
       2 * Real.sqrt ((1 - (d : ℝ) ^ 2) * t ^ 2 + ((d : ℝ) ^ 2 - 2) * t + 1)) /
     (d : ℝ) ^ 2
-
 def a2 (d : ℕ) (t : ℝ) : ℝ :=
   (Real.sqrt (t * ((d : ℝ) ^ 2 - 1) + 1) - Real.sqrt (1 - t)) / (d : ℝ)
-
 def b (t : ℝ) : ℝ := Real.sqrt (1 - t)
-
 def Itilde {d : ℕ} (U : Matrix.unitaryGroup (Fin d) ℂ) (t : ℝ) (x : Fin d) :
     MatrixMap (Fin d) (Fin d) ℂ where
   toFun ρ := (1 / (d : ℂ)) •
@@ -68,7 +55,6 @@ def Itilde {d : ℕ} (U : Matrix.unitaryGroup (Fin d) ℂ) (t : ℝ) (x : Fin d)
     simp [Matrix.mul_smul, Matrix.smul_mul, Matrix.trace_smul, Matrix.smul_apply,
       Matrix.add_apply, Matrix.one_apply]
     split_ifs <;> ring
-
 def claim : Prop :=
   ∀ (d : ℕ), 2 ≤ d →
     ∀ (U : Matrix.unitaryGroup (Fin d) ℂ),
@@ -474,8 +460,7 @@ lemma certificate_identity {d : ℕ} (hd : 2 ≤ d) {t : ℝ}
     simp only [and_self, ite_true, Complex.add_re, Complex.mul_re, Complex.ofReal_re,
       Complex.ofReal_im, Complex.one_re, Complex.one_im, mul_one, mul_zero,
       sub_zero, Finset.sum_const, Finset.card_univ, Fintype.card_fin, nsmul_eq_mul]
-    field_simp
-    <;> ring
+    field_simp <;> ring
   have hO : (∑ x, ∑ i, ∑ j, if j ≠ i then (C x (j, i) (j, i)).re else 0) =
       ((d : ℝ) - 1) * (1 - t) := by
     have hswap : (∑ x, ∑ i, ∑ j, if j ≠ i then (C x (j, i) (j, i)).re else 0) =
@@ -495,8 +480,7 @@ lemma certificate_identity {d : ℕ} (hd : 2 ≤ d) {t : ℝ}
       · simp [choi_It_formula, h, Ne.symm h]
     simp_rw [he, sum_except]
     simp only [Finset.sum_const, Finset.card_univ, Fintype.card_fin, nsmul_eq_mul]
-    field_simp
-    <;> ring
+    field_simp <;> ring
   have hM : (∑ x, (∑ i, ∑ j, C x (i, i) (j, j)).re) = (c d t) ^ 2 := by
     simp only [Complex.re_sum]
     rw [Finset.sum_comm]
@@ -515,8 +499,7 @@ lemma certificate_identity {d : ℕ} (hd : 2 ≤ d) {t : ℝ}
     simp only [Finset.sum_ite_eq', Finset.mem_univ, ite_true, Finset.sum_const,
       Finset.card_univ, Fintype.card_fin, nsmul_eq_mul]
     rw [c_sq hd (le_of_lt htl)]
-    field_simp
-    <;> ring
+    field_simp <;> ring
   have hR : (∑ x, ∑ j, (C x (j, x) (j, x)).re) =
       d * sMax d t + 1 - sMax d t := by
     have he (x : Fin d) : (∑ j, (C x (j, x) (j, x)).re) =
@@ -525,8 +508,7 @@ lemma certificate_identity {d : ℕ} (hd : 2 ≤ d) {t : ℝ}
       simpa [C, Complex.re_sum, Qs, Q] using h
     simp_rw [he]
     simp only [Finset.sum_const, Finset.card_univ, Fintype.card_fin, nsmul_eq_mul]
-    field_simp
-    <;> ring
+    field_simp <;> ring
   simp_rw [qCertificate_gram, ← hB]
   change (∑ x, ((∑ i, ∑ j, if j ≠ i then (C x (j, i) (j, i)).re else 0) -
     (∑ j, (C x (j, x) (j, x)).re) +
@@ -542,8 +524,7 @@ lemma certificate_identity {d : ℕ} (hd : 2 ≤ d) {t : ℝ}
   have ha := a2_channel_coeff hd (le_of_lt htl) (le_of_lt htu)
   have hrel : c d t = b t + d * a2 d t := by
     change c d t = b t + d * ((c d t - b t) / d)
-    field_simp
-    <;> ring
+    field_simp <;> ring
   field_simp at ha hs
   have hds : d * t + 1 - t - a2 d t * c d t = b t * (a2 d t + b t) := by
     rw [hrel]
@@ -608,8 +589,7 @@ private lemma real_diagonal_shift {d : ℕ} {aa bb cc : ℝ} (x : Fin d)
   have hb0 := ne_of_gt hbb
   have hc0 := ne_of_gt hcc
   have hk0 := ne_of_gt hkk
-  field_simp
-  <;> ring
+  field_simp <;> ring
 
 private lemma diagonal_energy {d : ℕ} {aa bb cc : ℝ}
     (hbb : 0 < bb) (hcc : 0 < cc) (hc : cc = bb + d * aa) (v : Fin d → ℝ) :
@@ -750,8 +730,7 @@ lemma support_rows {d : ℕ} (hd : 2 ≤ d) {t : ℝ}
   have hrel : c d t = b t + d * a2 d t := by
     have hd0 : (d : ℝ) ≠ 0 := by exact_mod_cast (show d ≠ 0 by omega)
     change c d t = b t + d * ((c d t - b t) / d)
-    field_simp
-    <;> ring
+    field_simp <;> ring
   have hnonneg (x : Fin d) (r : Fin d × Fin d) :
       0 ≤ qCertificate d (a2 d t) (b t) (c d t) x
         (fun j i => star (B x r (j, i))) :=
@@ -775,8 +754,102 @@ lemma elimination_standard {d : ℕ} (hd : 2 ≤ d) {t : ℝ}
     (htrace : ∀ x ρ, Matrix.trace (J x ρ) =
       Matrix.trace (ρ * Qs (1 : Matrix.unitaryGroup (Fin d) ℂ) (sMax d t) x)) :
     ∀ x, J x = Itilde (1 : Matrix.unitaryGroup (Fin d) ℂ) t x := by
-  sorry
-
+  choose B hB using fun x => choi_gram_rows (choi_competitor_psd x (hCP x))
+  have hS := support_rows hd htl htu J hsum htrace B hB
+  let C := fun x => MatrixMap.choi_matrix (J x)
+  let A := fun x => MatrixMap.choi_matrix (Itilde (1 : Matrix.unitaryGroup (Fin d) ℂ) t x)
+  have hCzero (x j i : Fin d) (q : Fin d × Fin d) (hji : j ≠ i) (hix : i ≠ x) :
+      C x (j, i) q = 0 := by
+    change MatrixMap.choi_matrix (J x) (j, i) q = 0
+    rw [hB x]
+    simp only [Matrix.mul_apply, Matrix.conjTranspose_apply]
+    apply Finset.sum_eq_zero
+    intro r hr
+    rw [(hS x r).1 i j hix hji, star_zero, zero_mul]
+  have hAzero (x j i : Fin d) (q : Fin d × Fin d) (hji : j ≠ i) (hix : i ≠ x) :
+      A x (j, i) q = 0 := by
+    dsimp [A]
+    rw [choi_Itilde_standard]
+    simp [Matrix.smul_apply, Matrix.vecMulVec_apply, choiVector, hji, hix,
+      Matrix.diagonal_apply, Prod.mk.injEq]
+  have hOff (x j i : Fin d) (q : Fin d × Fin d) (hji : j ≠ i) :
+      C x (j, i) q = A x (j, i) q := by
+    by_cases hix : i = x
+    · subst i
+      have hc := congrArg (fun M => M (j, x) q) (choi_sum d t J hsum)
+      have ha := congrArg (fun M => M (j, x) q)
+        (choi_sum d t (Itilde 1 t) (Itilde_sum hd 1 htl.le htu.le))
+      simp only [Matrix.sum_apply] at hc ha
+      have hcx : (∑ y, C y (j, x) q) = C x (j, x) q := by
+        apply Finset.sum_eq_single x
+        · intro y hy hyx; exact hCzero y j x q hji (Ne.symm hyx)
+        · simp
+      have hax : (∑ y, A y (j, x) q) = A x (j, x) q := by
+        apply Finset.sum_eq_single x
+        · intro y hy hyx; exact hAzero y j x q hji (Ne.symm hyx)
+        · simp
+      exact hcx.symm.trans (hc.trans (ha.symm.trans hax))
+    · rw [hCzero x j i q hji hix, hAzero x j i q hji hix]
+  have hxx (x : Fin d) : C x (x, x) (x, x) = A x (x, x) (x, x) := by
+    have hc := trace_condition_entry x x x htrace
+    have ha := trace_condition_entry x x x
+      (fun x ρ => Itilde_trace hd 1 htl.le htu.le x ρ)
+    have hz : (∑ j, (C x (j, x) (j, x) - A x (j, x) (j, x))) = 0 := by
+      rw [Finset.sum_sub_distrib]
+      exact sub_eq_zero.mpr (hc.trans ha.symm)
+    have he : (∑ j, (C x (j, x) (j, x) - A x (j, x) (j, x))) =
+        C x (x, x) (x, x) - A x (x, x) (x, x) := by
+      apply Finset.sum_eq_single x
+      · intro j hj hjx; rw [hOff x j x (j, x) hjx, sub_self]
+      · simp
+    exact sub_eq_zero.mp (he.symm.trans hz)
+  let v := fun x i : Fin d => ((a2 d t + if i = x then b t else 0 : ℝ) : ℂ)
+  let kk : ℂ := ((a2 d t + b t : ℝ) : ℂ)
+  have hk : kk ≠ 0 := by
+    have hkr : a2 d t + b t ≠ 0 := ne_of_gt (k_pos hd htl htu)
+    dsimp [kk]
+    exact_mod_cast hkr
+  have hDiag (x i j : Fin d) :
+      C x (i, i) (j, j) = C x (x, x) (x, x) * (v x i / kk) * (v x j / kk) := by
+    change MatrixMap.choi_matrix (J x) (i, i) (j, j) =
+      MatrixMap.choi_matrix (J x) (x, x) (x, x) * _ * _
+    rw [hB x]
+    simp only [Matrix.mul_apply, Matrix.conjTranspose_apply]
+    rw [Finset.sum_mul, Finset.sum_mul]
+    apply Finset.sum_congr rfl
+    intro r hr
+    have hi := (hS x r).2 i
+    have hj : B x r (j, j) = (B x r (x, x) / kk) * v x j := by
+      simpa [v, kk, Complex.star_def] using congrArg star ((hS x r).2 j)
+    rw [hi, hj]
+    dsimp [v, kk]
+    ring
+  have hAv (x i j : Fin d) : A x (i, i) (j, j) = (1 / (d : ℂ)) * v x i * v x j := by
+    have hv (x i : Fin d) : choiVector (a2 d t) (b t) x (i, i) = v x i := by
+      by_cases h : i = x <;> simp [choiVector, v, h]
+    dsimp [A]
+    rw [choi_Itilde_standard]
+    simp [Matrix.smul_apply, Matrix.vecMulVec_apply, Pi.star_apply,
+      Matrix.diagonal_apply, hv, Complex.real_smul, v]
+    <;> ring
+  intro x
+  apply MatrixMap.choi_matrix_inj
+  change C x = A x
+  ext ⟨j, i⟩ ⟨l, k'⟩
+  by_cases hji : j = i
+  · subst j
+    by_cases hlk : l = k'
+    · subst l
+      rw [hDiag, hxx, hAv, hAv]
+      have hvx : v x x = kk := by simp [v, kk]
+      rw [hvx]
+      field_simp
+      <;> ring
+    · have hc := (choi_competitor_psd x (hCP x)).isHermitian
+      have ha := ((MatrixMap.choi_PSD_iff_CP_map _).mp (Itilde_standard_cp t x)).isHermitian
+      exact (hc.apply _ _).symm.trans
+        ((congrArg star (hOff x l k' (i, i) hlk)).trans (ha.apply _ _))
+  · exact hOff x j i (l, k') hji
 lemma lower_endpoint_standard {d : ℕ} (hd : 2 ≤ d) (J : Fin d → MatrixMap (Fin d) (Fin d) ℂ)
     (hCP : ∀ x, (J x).IsCompletelyPositive)
     (hsum : ∑ x, J x = It (-1 / ((d : ℝ) ^ 2 - 1)))
@@ -786,7 +859,6 @@ lemma lower_endpoint_standard {d : ℕ} (hd : 2 ≤ d) (J : Fin d → MatrixMap 
     ∀ x, J x = Itilde (1 : Matrix.unitaryGroup (Fin d) ℂ)
       (-1 / ((d : ℝ) ^ 2 - 1)) x := by
   sorry
-
 lemma upper_endpoint_standard {d : ℕ} (hd : 2 ≤ d) (J : Fin d → MatrixMap (Fin d) (Fin d) ℂ)
     (hCP : ∀ x, (J x).IsCompletelyPositive)
     (hsum : ∑ x, J x = It 1)
