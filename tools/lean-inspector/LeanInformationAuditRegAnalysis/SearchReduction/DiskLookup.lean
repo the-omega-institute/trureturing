@@ -41,26 +41,6 @@ structure Header where
   missing : Array String
   deriving ToJson, FromJson, Inhabited
 
-private partial def canonicalCached (e : Expr) : StateM (Std.HashMap Expr Expr) Expr := do
-  if let some found := (← get)[e]? then return found
-  let result ← match e with
-    | .mdata _ e => canonicalCached e
-    | .letE _ _ v b _ => canonicalCached (b.instantiate1 v)
-    | .app f a => do
-      let f ← canonicalCached f
-      let a ← canonicalCached a
-      if f.isLambda then canonicalCached (f.bindingBody!.instantiate1 a) else pure (mkApp f a)
-    | .lam _ t b _ => return .lam .anonymous (← canonicalCached t) (← canonicalCached b) .default
-    | .forallE _ t b _ => return .forallE .anonymous (← canonicalCached t) (← canonicalCached b) .default
-    | .const n ls => pure (.const n (ls.map fun _ => .zero))
-    | .sort _ => pure (.sort .zero)
-    | .proj n i e => return .proj n i (← canonicalCached e)
-    | e => pure e
-  modify (·.insert e result)
-  return result
-
-def canonical (e : Expr) : Expr := (canonicalCached e).run' {}
-
 private def runGit (args : Array String) : IO String := do
   let result ← IO.Process.output {cmd := "git", args}
   unless result.exitCode == 0 do throw <| IO.userError result.stderr
@@ -229,7 +209,7 @@ unsafe def produceShard (storage : System.FilePath) (planPath resultPath : Syste
       let mut routes := #[]
       for (bucket, payload) in groups.toArray do
         let file := s!"shard-{bucket}-{hash module}.pickle"
-        pickle (storage / file) payload
+        pickle (storage / file) payload (key := .str `lookup file)
         routes := routes.push (bucket, #[file])
       return (routes, ({name := module, declarations := count, indexed} : ModuleSummary))
     result := {result with routes := result.routes ++ routes, coverage := result.coverage.push summary}
@@ -257,6 +237,60 @@ private unsafe def runShard (storage : System.FilePath) (modules : Array String)
     coverage := a.coverage ++ b.coverage
     missing := a.missing ++ b.missing}
 
+private abbrev Signature := Std.HashMap Name Name
+
+private unsafe def signature (graph : Std.HashMap Name (Array Name))
+    (own : Std.HashMap Name (Array Name)) (module : Name) :
+    StateM (Std.HashMap Name (Signature × Bool)) (Signature × Bool) := do
+  if let some cached := (← get)[module]? then return cached
+  let mut result : Signature := {}
+  let mut valid := true
+  for dep in graph[module]?.getD #[] do
+    unless dep.toString.startsWith "D5." do continue
+    let (inherited, clean) ← signature graph own dep
+    valid := valid && clean
+    for (constant, owner) in inherited.toArray do
+      if let some previous := result[constant]? then
+        if previous != owner then valid := false
+      result := result.insert constant owner
+  for constant in own[module]?.getD #[] do
+    if let some previous := result[constant]? then
+      if previous != module then valid := false
+    result := result.insert constant module
+  modify (·.insert module (result, valid))
+  return (result, valid)
+
+private def compatible (a b : Signature) : Bool :=
+  b.toArray.all fun (constant, owner) => (a[constant]?).all (· == owner)
+
+private unsafe def partitionImports (modules : Array Name)
+    (graph : Std.HashMap Name (Array Name)) (collisions : Array Collision) : Array (Array Name) := Id.run do
+  let mut own : Std.HashMap Name (Array Name) := {}
+  for collision in collisions do
+    for owner in collision.modules do
+      own := own.insert owner.toName ((own[owner.toName]?.getD #[]).push collision.constant.toName)
+  let mut cache := {}
+  let mut assignments := #[]
+  for module in modules do
+    let (result, next) := (signature graph own module).run cache
+    cache := next
+    assignments := assignments.push (module, result)
+  assignments := assignments.qsort fun a b => a.2.1.size > b.2.1.size
+  let mut groups : Array (Array Name × Signature) := #[]
+  let mut isolated := #[]
+  for (module, sig, valid) in assignments do
+    if !valid then isolated := isolated.push #[module]; continue
+    let mut placed := false
+    for i in [:groups.size] do
+      let (assigned, current) := groups[i]!
+      if assigned.size < 512 && compatible current sig then
+        let combined := sig.toArray.foldl (fun map (n, m) => map.insert n m) current
+        groups := groups.set! i (assigned.push module, combined)
+        placed := true
+        break
+    unless placed do groups := groups.push (#[module], sig)
+  return groups.map (·.1) ++ isolated
+
 /-- Fingerprints cover compiled data and explicit schema version. The producer
 records duplicate definitions before attempting any combined import. -/
 unsafe def produceMature (directory : System.FilePath) (basis mathlib : String)
@@ -273,6 +307,7 @@ unsafe def produceMature (directory : System.FilePath) (basis mathlib : String)
   let mut missing : Array String := #[]
   let mut inputs : UInt64 := hash (version, basis, mathlib, Lean.versionString)
   let mut owners : Std.HashMap Name (Array String) := {}
+  let mut graph : Std.HashMap Name (Array Name) := {}
   while !todo.isEmpty do
     let name := todo.back!
     todo := todo.pop
@@ -289,6 +324,7 @@ unsafe def produceMature (directory : System.FilePath) (basis mathlib : String)
             if name.toString.startsWith "D5." then names := names.push (ownedName info.name)
           for dependency in part.imports do deps := deps.push (ownedName dependency.module)
         return (deps, fingerprint, names)
+      graph := graph.insert name deps
       for n in names do
         let previous := owners[n]?.getD #[]
         unless previous.contains name.toString do owners := owners.insert n (previous.push name.toString)
@@ -301,6 +337,7 @@ unsafe def produceMature (directory : System.FilePath) (basis mathlib : String)
       inputs := mixHash inputs (mixHash (hash name) (mixHash fingerprint fileFingerprint))
       todo := todo ++ deps
       modules := modules.push name
+      if modules.size % 1000 == 0 then IO.eprintln s!"lookup.inputs_summarized={modules.size}"
     catch ex => missing := missing.push s!"{name}: {ex}"
   let selected := (modules.qsort Name.quickLt).filter fun name =>
     !name.toString.startsWith "D5." || basisModules.contains name
@@ -321,14 +358,15 @@ unsafe def produceMature (directory : System.FilePath) (basis mathlib : String)
   let mut all : ShardResult := {missing}
   let ordinary := selected.filter fun n => !n.toString.startsWith "D5."
   let d5 := selected.filter fun n => n.toString.startsWith "D5."
-  for (label, assigned) in #[("base", ordinary), ("d5", d5)] do
-    for chunk in [: (assigned.size + 511) / 512] do
-      let names := (assigned.extract (chunk * 512) ((chunk + 1) * 512)).map Name.toString
-      let result ← runShard storage names s!"{label}-{chunk}"
-      all := {
-        routes := all.routes ++ result.routes, coverage := all.coverage ++ result.coverage,
-        missing := all.missing ++ result.missing}
-      writeJson (directory / "coverage.json") all
+  let groups := (#[ordinary]).filter (!·.isEmpty) ++ partitionImports d5 graph collisions
+  IO.eprintln s!"lookup.import_partitions={groups.size} collision_constants={collisions.size}"
+  writeJson (directory / "import-partitions.json") (groups.map fun group => group.map Name.toString)
+  for chunk in [:groups.size] do
+    let result ← runShard storage (groups[chunk]!.map Name.toString) s!"group-{chunk}"
+    all := {
+      routes := all.routes ++ result.routes, coverage := all.coverage ++ result.coverage,
+      missing := all.missing ++ result.missing}
+    writeJson (directory / "coverage.json") all
   let mut routes : Std.HashMap UInt64 (Array String) := {}
   for (bucket, files) in all.routes do routes := routes.insert bucket ((routes[bucket]?.getD #[]) ++ files)
   let manifest : Manifest := {roots := routes.toArray.map fun (root, files) => (root, files.qsort (· < ·))}
@@ -346,7 +384,10 @@ unsafe def produceMature (directory : System.FilePath) (basis mathlib : String)
 def openIndex (directory : System.FilePath) (basis mathlib : String)
     (excluded : Array Name := #[]) : IO Index := do
   let header : Header ← readJson (directory / "header.json")
-  unless header.format == version && header.basis == basis && header.mathlib == mathlib do
+  let sameBasis ← if header.basis == basis then pure true else
+    try pure ((← runGit #["rev-parse", header.basis]) == (← runGit #["rev-parse", basis]))
+    catch _ => pure false
+  unless header.format == version && sameBasis && header.mathlib == mathlib do
     throw <| IO.userError "lookup.index_snapshot_mismatch"
   let storage := directory / header.storage
   let text ← IO.FS.readFile (storage / header.root)

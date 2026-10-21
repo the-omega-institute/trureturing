@@ -38,7 +38,10 @@ run_cmd do
     let result ← localRebuild type [] (some table)
     unless result.cost == .one do
       throwError "lookup composed two B declarations: {result.detail}"
-    let node := index.directory / (index.manifest[0]!.2[0]!)
+    let bucket := hash (DiscrTree.Key.const ``Last 0)
+    let files := index.manifest.find? (fun item => item.1 == bucket) |>.map (·.2) |>.getD #[]
+    unless !files.isEmpty do throwError "missing Last fixture shard"
+    let node := index.directory / files[0]!
     let withheld := node.addExtension "withheld"
     IO.FS.rename node withheld
     let missingPage ← try localRebuild type [] (some table)
@@ -66,16 +69,6 @@ run_cmd do
     logInfo "LOOKUP_ACTUAL_TAIL used=[0]"
 
 run_cmd liftTermElabM do
-  let a ← Term.elabType (← `(∀ left : Nat, left = left))
-  let b ← Term.elabType (← `(∀ renamed : Nat, renamed = renamed))
-  Term.synthesizeSyntheticMVarsNoPostponing
-  let a ← instantiateMVars a
-  let b ← instantiateMVars b
-  unless (DiskLookup.canonical a).hash == (DiskLookup.canonical b).hash do
-    throwError "disk member key is not alpha invariant"
-  logInfo "LOOKUP_ALPHA_HASH equal=true"
-
-run_cmd liftTermElabM do
   let timeout : MetaM LocalResult := do
     IO.addHeartbeats (localBudget * 1000 + 1)
     checkSystem "lookup.isolation.fixture"
@@ -101,13 +94,6 @@ run_cmd liftTermElabM do
   unless cancelled.cost == .unknown && cancelled.detail == "cancelled" do
     throwError "interrupt escaped branch boundary"
   logInfo s!"LOOKUP_BRANCH_ISOLATION local_timeout_lookup_success=zero local_success=zero lookup_timeout={reprStr unknown.cost} both_timeout={reprStr both.cost} both_exhausted=one interrupt=unknown budget={localBudget}"
-
-run_cmd liftTermElabM do
-  let mut shared := mkConst ``True
-  for _ in [:24] do shared := mkApp2 (mkConst ``And) shared shared
-  unless (DiskLookup.canonical shared).hash == shared.hash do
-    throwError "shared statement normalization changed its shape"
-  logInfo "LOOKUP_SHARED_NORMALIZATION dag_depth=24 equal=true"
 
 run_cmd do
   enableInitializersExecution
