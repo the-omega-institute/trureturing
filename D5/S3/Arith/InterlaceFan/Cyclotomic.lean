@@ -176,7 +176,6 @@ private lemma ramanujan_pow_sum (d k : ℕ) :
   intro a ha
   simp only [zeta, ← Complex.exp_nat_mul]
   congr 1
-  push_cast
   ring
 
 private lemma geometric_period (n : ℕ) (z : ℂ) (hz : z ^ n = 1) :
@@ -184,7 +183,7 @@ private lemma geometric_period (n : ℕ) (z : ℂ) (hz : z ^ n = 1) :
   classical
   by_cases h : z = 1
   · simp [h]
-  · rw [if_neg h, geom_sum_eq h, hz, sub_self, zero_div]
+  · rw [ite_eq_right h, geom_sum_eq h, hz, sub_self, zero_div]
 
 private lemma ramanujan_fourier (n d : ℕ) (hn : 0 < n) (hd : d ∣ n)
     (z : ℂ) (hz : z ^ n = 1) :
@@ -194,7 +193,7 @@ private lemma ramanujan_fourier (n d : ℕ) (hn : 0 < n) (hd : d ∣ n)
   have hdpos := Nat.pos_of_dvd_of_pos hd hn
   have hz0 : z ≠ 0 := by
     intro h
-    simpa [h, hn.ne'] using hz
+    simp [h, hn.ne'] at hz
   let A := (range d).filter (fun a => a.Coprime d)
   have hp (a : ℕ) (ha : a ∈ A) : IsPrimitiveRoot (zeta d ^ a) d := by
     exact (Complex.isPrimitiveRoot_exp d hdpos.ne').pow_of_coprime a
@@ -213,17 +212,17 @@ private lemma ramanujan_fourier (n d : ℕ) (hn : 0 < n) (hd : d ∣ n)
     rw [mul_pow, hpn, hz, one_mul]
   rw [hs]
   by_cases hprim : IsPrimitiveRoot z d
-  · rw [if_pos hprim]
+  · rw [ite_eq_left hprim]
     obtain ⟨a, had, hac, hphase⟩ :=
       (Complex.isPrimitiveRoot_iff z⁻¹ d hdpos.ne').mp hprim.inv
     have hphase' : zeta d ^ a = z⁻¹ := by
       rw [zeta, ← Complex.exp_nat_mul]
-      convert hphase using 1 <;> congr 1 <;> ring
+      convert hphase using 1; congr 1; ring
     have haA : a ∈ A := mem_filter.mpr ⟨mem_range.mpr had, hac⟩
     rw [sum_eq_single a]
-    · rw [hphase', inv_mul_cancel₀ hz0, if_pos rfl]
+    · rw [hphase', inv_mul_cancel₀ hz0, ite_eq_left rfl]
     · intro b hb hba
-      rw [if_neg]
+      rw [ite_eq_right]
       intro hbz
       have hba' : zeta d ^ b = zeta d ^ a := by
         rw [hphase']
@@ -231,13 +230,168 @@ private lemma ramanujan_fourier (n d : ℕ) (hn : 0 < n) (hd : d ∣ n)
       exact hba ((Complex.isPrimitiveRoot_exp d hdpos.ne').pow_inj
         (mem_range.mp (mem_filter.mp hb).1) had hba')
     · exact fun h => (h haA).elim
-  · rw [if_neg hprim]
+  · rw [ite_eq_right hprim]
     apply sum_eq_zero
     intro a ha
-    rw [if_neg]
+    rw [ite_eq_right]
     intro h
     have heq : zeta d ^ a = z⁻¹ := (mul_eq_one_iff_eq_inv₀ hz0).mp h
     exact hprim (IsPrimitiveRoot.inv_iff.mp (heq ▸ hp a ha))
 
+private lemma reconstruct_symmetric (n : ℕ) (hn : 2 ≤ n) (g : ℕ → ℝ)
+    (hg : ∀ k, 0 < k → k < n → g (n - k) = g k) :
+    sigmaPoly n (fun k => if n = 2 * ((k : ℕ) + 1) then g ((k : ℕ) + 1) / 2
+      else g ((k : ℕ) + 1)) =
+    (∑ k ∈ range n, Polynomial.C (g k) * Polynomial.X ^ k) - Polynomial.C (g 0) := by
+  classical
+  let x : Fin (n / 2) → ℝ := fun k =>
+    if n = 2 * ((k : ℕ) + 1) then g ((k : ℕ) + 1) / 2 else g ((k : ℕ) + 1)
+  have hc (l : ℕ) : (sigmaPoly n x).coeff l =
+      ∑ k : Fin (n / 2),
+        ((if l = (k : ℕ) + 1 then x k else 0) +
+          (if l = n - ((k : ℕ) + 1) then x k else 0)) := by
+    simp [sigmaPoly, mul_add]
+  apply Polynomial.ext
+  intro l
+  change (sigmaPoly n x).coeff l = _
+  rw [hc]
+  simp only [Polynomial.coeff_sub, Polynomial.finsetSum_coeff, Polynomial.coeff_C_mul_X_pow,
+    Polynomial.coeff_C]
+  rw [Finset.sum_ite_eq]
+  by_cases hl0 : l = 0
+  · subst l
+    rw [ite_eq_left (mem_range.mpr (by omega)), ite_eq_left rfl, sub_self]
+    apply sum_eq_zero
+    intro k hk
+    have hklt := k.isLt
+    simp [show ¬0 = n - ((k : ℕ) + 1) by omega]
+  · rw [ite_eq_right hl0, sub_zero]
+    by_cases hln : l < n
+    · rw [ite_eq_left (mem_range.mpr hln)]
+      by_cases hlow : 2 * l ≤ n
+      · let i : Fin (n / 2) := ⟨l - 1, by omega⟩
+        rw [sum_eq_single i]
+        · have hi : (i : ℕ) + 1 = l := by dsimp [i]; omega
+          rw [hi, ite_eq_left rfl]
+          by_cases hmid : n = 2 * l
+          · rw [ite_eq_left (by omega)]
+            dsimp [x]
+            rw [hi, ite_eq_left hmid]
+            ring
+          · rw [ite_eq_right (by omega)]
+            dsimp [x]
+            rw [hi, ite_eq_right hmid, add_zero]
+        · intro k hk hki
+          have hklt := k.isLt
+          have hne : (k : ℕ) + 1 ≠ l := by
+            intro heq
+            apply hki
+            apply Fin.ext
+            dsimp [i]
+            omega
+          rw [ite_eq_right (by omega), ite_eq_right (by omega), add_zero]
+        · simp
+      · let i : Fin (n / 2) := ⟨n - l - 1, by omega⟩
+        rw [sum_eq_single i]
+        · have hi : (i : ℕ) + 1 = n - l := by dsimp [i]; omega
+          rw [hi, ite_eq_right (by omega), ite_eq_left (by omega), zero_add]
+          dsimp [x]
+          rw [hi, ite_eq_right (by omega), hg l (by omega) hln]
+        · intro k hk hki
+          have hklt := k.isLt
+          have hne : n - ((k : ℕ) + 1) ≠ l := by
+            intro heq
+            apply hki
+            apply Fin.ext
+            dsimp [i]
+            omega
+          rw [ite_eq_right (by omega), ite_eq_right (by omega), add_zero]
+        · simp
+    · rw [ite_eq_right (by simpa using hln)]
+      apply sum_eq_zero
+      intro k hk
+      have hklt := k.isLt
+      rw [ite_eq_right (by omega), ite_eq_right (by omega), add_zero]
+
+private lemma ramanujan_real_cast (d k : ℕ) (hd : 0 < d) :
+    ((ramanujanSum d k).re : ℂ) = ramanujanSum d k := by
+  obtain ⟨a, ha⟩ := ramanujan_integer d k hd
+  rw [ha]
+  simp
+
+private lemma ramanujan_zero (d : ℕ) : ramanujanSum d 0 = (Nat.totient d : ℂ) := by
+  simp [ramanujanSum, Nat.totient_eq_card_coprime, Nat.coprime_comm]
+
+private lemma ramanujan_reflect (n d k : ℕ) (hn : 0 < n) (hd : d ∣ n)
+    (hk : k ≤ n) : ramanujanSum d (n - k) = ramanujanSum d k := by
+  have hdpos := Nat.pos_of_dvd_of_pos hd hn
+  have hc : starRingEnd ℂ (ramanujanSum d k) = ramanujanSum d k := by
+    rw [← ramanujan_real_cast d k hdpos, Complex.conj_ofReal]
+  rw [← hc, ramanujan_pow_sum, ramanujan_pow_sum, map_sum]
+  apply sum_congr rfl
+  intro a ha
+  have hp : IsPrimitiveRoot (zeta d ^ a) d :=
+    (Complex.isPrimitiveRoot_exp d hdpos.ne').pow_of_coprime a (mem_filter.mp ha).2
+  have hpn : (zeta d ^ a) ^ n = 1 := by
+    obtain ⟨r, rfl⟩ := hd
+    rw [pow_mul, hp.pow_eq_one, one_pow]
+  rw [pow_sub₀ _ (pow_ne_zero _ (show zeta d ≠ 0 from Complex.exp_ne_zero _)) hk, hpn, one_mul,
+    ← inv_pow, Complex.inv_eq_conj (hp.norm'_eq_one hdpos.ne')]
+  simp only [map_pow]
+
+/-- Rational sigma coordinates realizing the Ramanujan order indicator. -/
+theorem rational_witness (n d : ℕ) (hn : 2 ≤ n) (hd : d ∣ n) :
+    ∃ x : Fin (n / 2) → ℝ, IsRationalPt x ∧
+      ∀ j ∈ certIdx n, I n j x = -(1 / 2 : ℝ) *
+        ((n : ℝ) * (if j ∈ orderClass n d then 1 else 0) - Nat.totient d) := by
+  classical
+  have hnpos : 0 < n := by omega
+  have hdpos := Nat.pos_of_dvd_of_pos hd hnpos
+  let g : ℕ → ℝ := fun k => (ramanujanSum d k).re
+  let x : Fin (n / 2) → ℝ := fun k =>
+    if n = 2 * ((k : ℕ) + 1) then g ((k : ℕ) + 1) / 2 else g ((k : ℕ) + 1)
+  have hg (k : ℕ) : (g k : ℂ) = ramanujanSum d k := ramanujan_real_cast d k hdpos
+  have hp : sigmaPoly n x = (∑ k ∈ range n, C (g k) * X ^ k) - C (g 0) := by
+    apply reconstruct_symmetric n hn g
+    intro k hk hkn
+    exact congrArg Complex.re (ramanujan_reflect n d k hnpos hd hkn.le)
+  refine ⟨x, ?_, ?_⟩
+  · intro k
+    obtain ⟨a, ha⟩ := ramanujan_integer d ((k : ℕ) + 1) hdpos
+    have hga : g ((k : ℕ) + 1) = (a : ℝ) := by
+      simpa [g] using congrArg Complex.re ha
+    dsimp [x]
+    by_cases hmid : n = 2 * ((k : ℕ) + 1)
+    · refine ⟨(a : ℚ) / 2, ?_⟩
+      simp [hmid, hga]
+    · refine ⟨(a : ℚ), ?_⟩
+      simp [hmid, hga]
+  · intro j hj
+    have hz : (zeta n ^ j) ^ n = 1 := by
+      rw [← pow_mul, mul_comm j n, pow_mul]
+      simp [zeta, (Complex.isPrimitiveRoot_exp n hnpos.ne').pow_eq_one]
+    have hdf := ramanujan_fourier n d hnpos hd (zeta n ^ j) hz
+    have hiff : IsPrimitiveRoot (zeta n ^ j) d ↔ j ∈ orderClass n d := by
+      constructor
+      · intro h
+        apply mem_filter.mpr
+        refine ⟨hj, ?_⟩
+        exact ((Complex.isPrimitiveRoot_exp n hnpos.ne').pow_div_gcd j
+          (Nat.ne_of_gt (Nat.gcd_pos_of_pos_left j hnpos))).unique h
+      · exact primitive_orderClass n d j hnpos
+    rw [hiff] at hdf
+    have he := I_eq_eval_poly n j x
+    rw [hp] at he
+    simp only [Polynomial.map_sub, Polynomial.map_sum, Polynomial.map_mul,
+      Polynomial.map_C, Polynomial.map_pow, Polynomial.map_X, Polynomial.eval_sub,
+      Polynomial.eval_finsetSum, Polynomial.eval_mul, Polynomial.eval_C,
+      Polynomial.eval_pow, Polynomial.eval_X, Complex.ofRealHom_eq_coe] at he
+    simp_rw [hg] at he
+    rw [hdf, ramanujan_zero] at he
+    have hreal := congrArg Complex.re he
+    have heval : evalCos n j x =
+        (n : ℝ) * (if j ∈ orderClass n d then 1 else 0) - Nat.totient d := by
+      split_ifs at hreal ⊢ <;> simpa using hreal.symm
+    rw [I_eq_eval, heval]
 
 end D5.S3.Arith.InterlaceFan.Cyclotomic
