@@ -49,7 +49,10 @@ internal sealed class OeisA347285PrimePowerDescentDocument : IScribeDocumentDefi
                 + "A positive exponent immediately before zero must therefore equal one. "
                 + "Monotonicity turns each absolute difference into the preceding exponent minus the next, "
                 + "and the sum telescopes from n to one.",
-                DescribeRole.Theorem, AssessedProvenance.FromRepo(Source)))));
+                DescribeRole.Theorem, AssessedProvenance.FromRepo(Source),
+                new OpenProblemResolutionClaim(
+                    ProblemSlugRef.Create("oeis-a347285-de-vlieger-prime-power-descent"),
+                    ResolutionKind.Proved)))));
 
     private static DocumentBlock Node(string name, string title, Formula formula, string prose,
         DescribeRole role, AssessedProvenance provenance,
