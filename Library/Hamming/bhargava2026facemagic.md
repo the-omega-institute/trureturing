@@ -5,9 +5,10 @@ year: 2026
 title: "The existence and uniqueness of magic-faced hypercubes, and applications to Khajuraho most-perfect magic squares, cubes, and hypercubes"
 doi: null
 url: https://arxiv.org/html/2609.26762v1
-claim: "Section 6.2 asks for the structure of the unrestricted face-magic hypercube module in even positive characteristic."
+claim: "Section 6.2 asks for the unrestricted face-magic hypercube module in even positive characteristic and for real even-subset-sum collisions."
 strata_touched:
   - D5/S3/Combinatorics/Graph/Hypercube/FaceMagicModule
+  - D5/S3/Combinatorics/SubsetSpectrum/RealClassification
 license: citation-only
 triage: anchor
 ---
@@ -25,3 +26,20 @@ URL: https://arxiv.org/html/2609.26762v1
 Section 2 defines the common face sum in equation (4) and develops the face recurrence and induction in equations (8), (9) and Theorem 13. Its determinant-two coordinates motivate the distinction from the integral empty-entry, singleton-entry and common-face-sum coordinates used here.
 
 Section 6.2, https://arxiv.org/html/2609.26762v1#S6.SS2, asks the quoted module-structure question in even positive characteristic. The question concerns unrestricted entries, rather than a prescribed set of labels.
+
+## Real even-subset spectra
+
+Section 6.2 also asks whether the collisions in Example 25, over characteristic
+17, can occur over the reals, and whether the analogues of Lemmas 16 and 17 hold
+for achievable real label collections. The even-dimensional coefficient portion
+has the following precise structural answer. For odd `m ≥ 3`, the multisets of
+even-cardinality subset sums of two real families of length `m` agree exactly
+when a permutation of the coefficient occurrences and a sign reversal on an
+even-cardinality zero-sum index set carry one family to the other. Zeros and
+repetitions are allowed.
+
+The theorem `real_even_spectrum_classification` in `SubsetSpectrum/RealClassification`
+proves this coefficient statement. Its full-spectrum predecessor is attributed separately to Ciprietti
+and Glaudo. The result does not assert the odd-dimensional Lemma 17 analogue or
+identify the group denoted `W(B_n)` in the source, and does not settle all of the
+source's real-label questions.
