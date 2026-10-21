@@ -140,7 +140,7 @@ internal sealed class PrepareMeasureLkBoundDocument : IScribeDocumentDefinition
                 DeclarationHandle.Create(Module + ".signValue"),
                 H("The two real signs"),
                 StatementSource.FromAuthor(Disp(SignDefinition)),
-                AssessedProvenance.FromLiterature(Source),
+                AssessedProvenance.FromRepo(Source),
                 Blocks(Paragraph(Text(
                     "The two elements of Fin 2 encode the signs: zero represents minus one, "
                     + "and one represents plus one."))),
@@ -155,21 +155,24 @@ internal sealed class PrepareMeasureLkBoundDocument : IScribeDocumentDefinition
                     "For arbitrary finite row and column types, the Manhattan norm is the "
                     + "sum of the absolute values of all real entries. An empty index type gives zero."))),
                 DescribeRole.Definition),
+            Describe.Remark(
+                DescribeId.Create("standard-basis-rows"),
+                H("Matrices with standard basis rows"),
+                WDefinition,
+                AssessedProvenance.FromLiterature(Source),
+                Blocks(Paragraph(Text(
+                    "Each function f from Fin n to Fin k encodes exactly one matrix whose "
+                    + "ith row is the standard basis vector indexed by f(i). These are precisely "
+                    + "the matrices in the source's set.")))),
             Describe.Lean(
                 DescribeId.Create("fiber-sum"),
                 DeclarationHandle.Create(Module + ".fiberSum"),
-                H("Matrices with standard basis rows"),
+                H("Grouped matrix entries"),
                 StatementSource.FromAuthor(Disp(FiberDefinition)),
-                AssessedProvenance.FromLiterature(Source),
-                Blocks(
-                    Paragraph(Text(
-                        "Each function f from Fin n to Fin k encodes exactly one matrix whose "
-                        + "ith row is the standard basis vector indexed by f(i). These are precisely "
-                        + "the matrices in the source's set:")),
-                    new DocumentBlock.DisplayFormula(WDefinition),
-                    Paragraph(Text(
-                        "The fiber sum is the (j,q) entry of the transpose product WᵀM: "
-                        + "it sums column q over the rows assigned to j."))),
+                AssessedProvenance.FromRepo(Source),
+                Blocks(Paragraph(Text(
+                    "The fiber sum is the (j,q) entry of the transpose product WᵀM: "
+                    + "it sums column q over the rows assigned to j."))),
                 DescribeRole.Definition),
             Describe.Lean(
                 DescribeId.Create("lk"),
@@ -198,7 +201,7 @@ internal sealed class PrepareMeasureLkBoundDocument : IScribeDocumentDefinition
                 DeclarationHandle.Create(Module + ".a"),
                 H("The averaged absolute sign sum"),
                 StatementSource.FromAuthor(Disp(ADefinition)),
-                AssessedProvenance.FromLiterature(Source),
+                AssessedProvenance.FromRepo(Source),
                 Blocks(Paragraph(Text(
                     "The constant a_k averages the absolute sum of k independent uniform signs. "
                     + "The factor two to the power minus k divides by the number of sign vectors."))),
