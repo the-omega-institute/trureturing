@@ -3,6 +3,10 @@ import LeanInformationAuditRegAnalysis.SearchReduction.DiskLookup
 open Lean LeanInformationAudit.SearchReduction.DiskLookup
 
 unsafe def main (args : List String) : IO UInt32 := do
+  if let ["--shard", storage, plan, result] := args then
+    initSearchPath (← findSysroot)
+    produceShard storage plan result
+    return 0
   let basis :: directory :: rest := args
     | IO.eprintln "usage: searchReductionIndex BASIS DIRECTORY [MODULE ...]"; return 2
   initSearchPath (← findSysroot)

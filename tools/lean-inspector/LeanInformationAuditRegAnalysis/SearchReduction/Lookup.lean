@@ -10,7 +10,7 @@ def lookupPhase (label : String) : IO Unit := do
     IO.FS.withFile path .append fun handle => do
       handle.putStrLn s!"{← IO.monoMsNow} {label}"
 
-abbrev lookupVersion : String := "R_lookup/one-B/disk-beta-zeta-alpha-v8-independent"
+abbrev lookupVersion : String := "R_lookup/one-B/discrtree-pickle-v2-independent"
 
 /-- The table is captured before delivery vocabulary or S is installed. A
 partial basis may supply a hit, but never a completed negative query. -/
@@ -66,15 +66,14 @@ def resolveLookupTable (table : LookupTable) : IO LookupTable := do
 
 /-- The membership page is only a prefilter. Alpha-invariant hashes never
 substitute for definitional equality or the caller's closed kernel check. -/
-unsafe def lookupExact (table : LookupTable) (goal : MVarId) : MetaM LookupTrace := goal.withContext do
+private unsafe def lookupExactPass (fallback : Bool) (table : LookupTable) (goal : MVarId) : MetaM LookupTrace := goal.withContext do
   if !table.enabled then return {complete := true}
   let some index ← tableIndex table | return {}
   let type ← goal.getType
   let context ← readThe Core.Context
   let limit := if context.maxHeartbeats == 0 then none
     else some (context.initHeartbeats + context.maxHeartbeats)
-  let candidates ← if index.mature then DiskLookup.queryMature index type limit
-    else DiskLookup.query index (DiskLookup.memberKeys type) limit
+  let candidates ← DiskLookup.queryMature index type limit fallback
   checkSystem "lookup.membership-index"
   let mut trace : LookupTrace := {complete := candidates.complete && table.complete, pages := candidates.pages}
   for entry in candidates.entries do
@@ -97,6 +96,16 @@ unsafe def lookupExact (table : LookupTable) (goal : MVarId) : MetaM LookupTrace
     set saved.meta
     modifyThe Core.State fun state => {state with cache := saved.core.cache}
   return trace
+
+unsafe def lookupExact (table : LookupTable) (goal : MVarId) : MetaM LookupTrace := do
+  let primary ← lookupExactPass false table goal
+  if primary.source?.isSome then return primary
+  let fallback ← lookupExactPass true table goal
+  return {fallback with
+    complete := primary.complete && fallback.complete,
+    visited := primary.visited + fallback.visited, pages := primary.pages + fallback.pages,
+    attempted := primary.attempted + fallback.attempted,
+    missing := primary.missing ++ fallback.missing, failures := primary.failures ++ fallback.failures}
 
 /-- A wildcard denotes a head which reduction or instantiation may change.
 Only rigid unequal heads can be discarded without testing an application. -/
@@ -197,7 +206,7 @@ partial def views (value : Expr) (fuel : Nat := 32) : MetaM (Array Expr) := do
 /-- The closure callback is the frozen local table, with lookup disabled.
 All unresolved data and universe metavariables are rejected by the caller's
 closed kernel certificate check. An exception aborts enumeration. -/
-unsafe def lookupLeaf (table : LookupTable) (goal : MVarId)
+private unsafe def lookupLeafPass (fallback : Bool) (table : LookupTable) (goal : MVarId)
     (unify close : MVarId → MetaM Bool) : MetaM LookupTrace := goal.withContext do
   if !table.enabled then return {complete := true}
   let detailed := (← IO.getEnv "SEARCH_REDUCTION_PROFILE_DETAIL").isSome
@@ -206,8 +215,7 @@ unsafe def lookupLeaf (table : LookupTable) (goal : MVarId)
   let context ← readThe Core.Context
   let limit := if context.maxHeartbeats == 0 then none
     else some (context.initHeartbeats + context.maxHeartbeats)
-  let candidates ← if index.mature then DiskLookup.queryMature index (← goal.getType) limit
-    else DiskLookup.query index (DiskLookup.candidateKeys (← getEnv) (← goal.getType)) limit
+  let candidates ← DiskLookup.queryMature index (← goal.getType) limit fallback
   checkSystem "lookup.candidate-index"
   let trace ← candidates.entries.foldlM (init := ({complete := candidates.complete && table.complete, pages := candidates.pages} : LookupTrace)) fun (trace : LookupTrace) entry => do
     if trace.source?.isSome then return trace
@@ -271,5 +279,16 @@ unsafe def lookupLeaf (table : LookupTable) (goal : MVarId)
     modifyThe Core.State fun s => {s with cache}
     return {trace with attempted}
   return {trace with complete := trace.source?.isNone && trace.complete}
+
+unsafe def lookupLeaf (table : LookupTable) (goal : MVarId)
+    (unify close : MVarId → MetaM Bool) : MetaM LookupTrace := do
+  let primary ← lookupLeafPass false table goal unify close
+  if primary.source?.isSome then return primary
+  let fallback ← lookupLeafPass true table goal unify close
+  return {fallback with
+    complete := primary.complete && fallback.complete,
+    visited := primary.visited + fallback.visited, pages := primary.pages + fallback.pages,
+    attempted := primary.attempted + fallback.attempted,
+    missing := primary.missing ++ fallback.missing, failures := primary.failures ++ fallback.failures}
 
 end LeanInformationAudit.SearchReduction
