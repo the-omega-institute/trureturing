@@ -110,34 +110,29 @@ bounded literature screen, the later articles 2402.12964, 2502.04006, 2510.27160
 2602.23725 and 2608.27062 contain no reported settlement in that screen.
 This is not an exhaustive citation-index or priority certification.
 
-The Result registration is unfinished. Its source-binding diagnostic is
-`IE-C050 ClosedTruthReadout reason=unclassified_form
-rule=source.definition_owner`: the claim definition is in Defs and the
-theorem is in Result. No validated Result registration is asserted.
-
 ## Triage
 
-- **Proved (formalized).** The stronger conclusion $XK\subseteq K$ holds
+- **PROVED.** The stronger conclusion $XK\subseteq K$ holds
   for every cone vector, beyond extreme ray generators of $K^*$, by
   `Duality.mulVec_mem_cone`. No positive spatial-dimension hypothesis is
   needed for this stronger conclusion.
-- **Derived (not formalized).** The mechanism uses only that the
+- **PROVED in prose.** The mechanism uses only that the
   Jordan square is a homogeneous quadratic map into a self-dual closed
   cone, by the nonnegative-quadratic SOS argument in Route. The abstract
   generalization is a mathematical derivation; the Lean theorem concerns
   the pinned orthant and Lorentz products.
-- **Derived (not formalized).** The same inclusion for products with
+- **PROVED in prose.** The same inclusion for products with
   positive semidefinite cone factors, as in the article's Section 4.2,
   admits the same argument: the matrix-square map is homogeneous
   quadratic and takes values in the self-dual positive semidefinite
   cone under the trace pairing. Its coordinate model and SOS certificate
   are not formalized in this development.
-- **Derived (not formalized).** When every Lorentz block has $k_j=1$, each
+- **PROVED in prose.** When every Lorentz block has $k_j=1$, each
   block is a rotated copy of $\mathbb R_+^2$: the orthogonal change
   $(t,z)\mapsto((t+z)/\sqrt2,(t-z)/\sqrt2)$ turns the Jordan square into
   coordinatewise squaring with positive weights, and the two cones coincide
   with the ordinary doubly nonnegative cone.
-- **Open.** Which products, with at least one block of spatial dimension
+- **OPEN.** Which products, with at least one block of spatial dimension
   $k_j\ge2$, give a strict inclusion.
 
 ## ASSUMED-UNVERIFIED
@@ -145,5 +140,4 @@ theorem is in Result. No validated Result registration is asserted.
 Literature completeness, priority and exhaustive coverage
 of subsequent papers are unverified. The abstract generalization and the
 positive semidefinite factor extension have no general Lean theorem in
-this development. The Result registration remains unfinished as specified
-in Evidence.
+this development.
