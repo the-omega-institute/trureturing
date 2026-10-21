@@ -26,7 +26,7 @@ internal sealed class OriginalSignedFourierRegularityDocument : IScribeDocumentD
                 Describe.Lean(DescribeId.Create("translation-squared-norm"),
                     DeclarationHandle.Create(Owner + "translation_squared_norm"), H("translation squared norm"),
                     StatementSource.WithoutFormula(), AssessedProvenance.FromRepo(),
-                    Blocks(Paragraph(Text("For 0<=h<=L the squared gap is 2*h/L+2*(1-h/L)*(1-cos(w_n*h)). The correlation proof uses the two-strip mass term, including n=0, h=0 and h=L."))), DescribeRole.Theorem),
+                    Blocks(Paragraph(Text("For 0<=h<=L the squared gap is 2*h/L+2*(1-h/L)*(1-cos(w_n*h)). The literal line integral is partitioned into the left strip, overlap and right strip. Both endpoint-strip equalities contribute h/L; the overlap norm expansion uses the conjugate-first correlation, including n=0, h=0 and h=L."))), DescribeRole.Theorem),
                 Describe.Lean(DescribeId.Create("translation-squared-norm-le"),
                     DeclarationHandle.Create(Owner + "translation_squared_norm_le"), H("translation squared norm le"),
                     StatementSource.WithoutFormula(), AssessedProvenance.FromRepo(),
@@ -42,7 +42,7 @@ internal sealed class OriginalSignedFourierRegularityDocument : IScribeDocumentD
                 Describe.Lean(DescribeId.Create("finite-head-translation-bound"),
                     DeclarationHandle.Create(Owner + "finite_head_translation_bound"), H("finite head translation bound"),
                     StatementSource.WithoutFormula(), AssessedProvenance.FromRepo(),
-                    Blocks(Paragraph(Text("The finite head gap is bounded by sqrt(2/L)*sum(norm(v_n))*sqrt(h)+sum(norm(v_n)*abs(w_n))*h for 0<=h<=L."))), DescribeRole.Theorem),
+                    Blocks(Paragraph(Text("Minkowski on the literal zero-extended finite-head displacement gives its line L2 seminorm bound sqrt(2/L)*sum(norm(v_n))*sqrt(h)+sum(norm(v_n)*abs(w_n))*h for 0<=h<=L. The all-real-h displacedHead_ae bridge then transfers this estimate to the existing L2 class norm."))), DescribeRole.Theorem),
                 Describe.Lean(DescribeId.Create("finite-head-translation-bound-l2"),
                     DeclarationHandle.Create(Owner + "finite_head_translation_bound_l2"), H("finite head translation bound l2"),
                     StatementSource.WithoutFormula(), AssessedProvenance.FromRepo(),
@@ -50,5 +50,5 @@ internal sealed class OriginalSignedFourierRegularityDocument : IScribeDocumentD
                 Describe.Lean(DescribeId.Create("displaced-head-ae"),
                     DeclarationHandle.Create(Owner + "displacedHead_ae"), H("displacedHead ae"),
                     StatementSource.WithoutFormula(), AssessedProvenance.FromRepo(),
-                    Blocks(Paragraph(Text("The constructed finite L2 sum agrees almost everywhere with the displacement of the actual original zero-extended finite complex profile, rather than a periodic profile."))), DescribeRole.Theorem))));
+                    Blocks(Paragraph(Text("The constructed finite L2 sum agrees almost everywhere with the displacement of the actual original zero-extended finite complex profile, rather than a periodic profile. This all-real-h equality transfers the literal-function L2 estimate into finite_head_translation_bound; the quantitative range remains 0<=h<=L."))), DescribeRole.Theorem))));
 }

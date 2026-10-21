@@ -52,7 +52,7 @@ Lean statement: `D5/S3/Weil/ZetaBridge/OriginalSignedFourierRegularity.translati
 
 *Commentary.*
 
-For 0<=h<=L the squared gap is 2*h/L+2*(1-h/L)*(1-cos(w_n*h)). The correlation proof uses the two-strip mass term, including n=0, h=0 and h=L.
+For 0<=h<=L the squared gap is 2*h/L+2*(1-h/L)*(1-cos(w_n*h)). The literal line integral is partitioned into the left strip, overlap and right strip. Both endpoint-strip equalities contribute h/L; the overlap norm expansion uses the conjugate-first correlation, including n=0, h=0 and h=L.
 
 **Theorem 1.5 (translation squared norm le).**
 
@@ -100,7 +100,7 @@ Lean statement: `D5/S3/Weil/ZetaBridge/OriginalSignedFourierRegularity.finite_he
 
 *Commentary.*
 
-The finite head gap is bounded by sqrt(2/L)*sum(norm(v_n))*sqrt(h)+sum(norm(v_n)*abs(w_n))*h for 0<=h<=L.
+Minkowski on the literal zero-extended finite-head displacement gives its line L2 seminorm bound sqrt(2/L)*sum(norm(v_n))*sqrt(h)+sum(norm(v_n)*abs(w_n))*h for 0<=h<=L. The all-real-h displacedHead_ae bridge then transfers this estimate to the existing L2 class norm.
 
 **Theorem 1.9 (finite head translation bound l2).**
 
@@ -124,7 +124,7 @@ Lean statement: `D5/S3/Weil/ZetaBridge/OriginalSignedFourierRegularity.displaced
 
 *Commentary.*
 
-The constructed finite L2 sum agrees almost everywhere with the displacement of the actual original zero-extended finite complex profile, rather than a periodic profile.
+The constructed finite L2 sum agrees almost everywhere with the displacement of the actual original zero-extended finite complex profile, rather than a periodic profile. This all-real-h equality transfers the literal-function L2 estimate into finite_head_translation_bound; the quantitative range remains 0<=h<=L.
 
 ## References
 

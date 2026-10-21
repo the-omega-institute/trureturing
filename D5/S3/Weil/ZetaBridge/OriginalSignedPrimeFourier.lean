@@ -131,33 +131,6 @@ theorem finite_signed_prime_identity (L : ℝ) (hL : 0 < L) (M : ℕ)
   unfold primeMatrix
   rw [mul_neg, Finset.mul_sum, ← Finset.sum_neg_distrib]
 
-/-- Hermiticity follows from adjointness of the actual two translations. -/
-theorem primeMatrix_hermitian (L : ℝ) (hL : 0 < L) (M : ℕ) (m n : ℤ) :
-    conj (primeMatrix L M n m) = primeMatrix L M m n := by
-  unfold primeMatrix
-  simp only [map_neg, map_sum, map_mul, Complex.conj_ofReal]
-  apply congrArg Neg.neg
-  apply Finset.sum_congr rfl
-  intro q _
-  congr 1
-  simp only [map_add, ← entry_eq_matrix L hL]
-  rw [← entry_adjoint, ← entry_adjoint, neg_neg, add_comm]
-
-/-- In particular the full complex quadratic form is real, without deleting
-any mixed coefficient or requiring real/even data. -/
-theorem finite_signed_prime_real (L : ℝ) (hL : 0 < L) (M : ℕ)
-    (S : Finset ℤ) (v : ℤ → ℂ) :
-    conj (∑ m ∈ S, ∑ n ∈ S, (conj (v m) * v n) * primeMatrix L M m n) =
-      ∑ m ∈ S, ∑ n ∈ S, (conj (v m) * v n) * primeMatrix L M m n := by
-  simp only [map_sum, map_mul, Complex.conj_conj]
-  rw [Finset.sum_comm]
-  apply Finset.sum_congr rfl
-  intro m _
-  apply Finset.sum_congr rfl
-  intro n _
-  rw [primeMatrix_hermitian L hL]
-  ring
-
 /-- Actual integral mode bounds control every entry of the signed finite
 matrix. The weights are kept inside absolute values; positivity is unused. -/
 theorem primeMatrix_norm_le (L : ℝ) (hL : 0 < L) (M : ℕ) (m n : ℤ) :
