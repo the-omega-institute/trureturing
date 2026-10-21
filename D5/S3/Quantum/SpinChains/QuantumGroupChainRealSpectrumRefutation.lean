@@ -13,7 +13,6 @@ import Mathlib.Tactic.IntervalCases
 import Mathlib.Tactic.NormNum.RealSqrt
 
 set_option autoImplicit false
-set_option linter.style.longLine false
 set_option maxRecDepth 100000
 
 open scoped BigOperators Matrix
@@ -249,7 +248,8 @@ private theorem projector_integer_certificate :
 
 set_option maxHeartbeats 0 in
 private theorem chain_outer_integer_certificate :
-    (196 : GaussianInt) • ((siteOperator (n := 2) (N := 4) (0 : Fin 3) p14G + siteOperator (n := 2) (N := 4) (2 : Fin 3) p14G) * wG) =
+    (196 : GaussianInt) • ((siteOperator (n := 2) (N := 4) (0 : Fin 3) p14G +
+      siteOperator (n := 2) (N := 4) (2 : Fin 3) p14G) * wG) =
       (14 : GaussianInt) • (wG * a196G) := by
   apply Matrix.ext
   intro x j
@@ -332,7 +332,8 @@ private theorem chain_certificate :
     norm_num [smul_smul] at h
     exact h
   have hh : hamiltonian 2 1 4 γ₀ (fun _ => 1) =
-      (1 / 14 : ℂ) • (siteOperator (n := 2) (N := 4) (0 : Fin 3) P + siteOperator (n := 2) (N := 4) (1 : Fin 3) P +
+      (1 / 14 : ℂ) • (siteOperator (n := 2) (N := 4) (0 : Fin 3) P +
+        siteOperator (n := 2) (N := 4) (1 : Fin 3) P +
         siteOperator (n := 2) (N := 4) (2 : Fin 3) P) := by
     simp [hamiltonian, hp, siteOperator_smul, Fin.sum_univ_succ, smul_add, add_assoc]
   ext x j
@@ -353,7 +354,8 @@ private theorem chain_certificate :
     Matrix.mul_add, Matrix.mul_smul]
   simp only [Matrix.add_apply, Matrix.smul_apply, smul_eq_mul]
   change (1 / 14 : ℂ) * (((siteOperator (n := 2) (N := 4) (0 : Fin 3) P * W) x j +
-      (siteOperator (n := 2) (N := 4) (1 : Fin 3) P * W) x j) + (siteOperator (n := 2) (N := 4) (2 : Fin 3) P * W) x j) =
+      (siteOperator (n := 2) (N := 4) (1 : Fin 3) P * W) x j) +
+      (siteOperator (n := 2) (N := 4) (2 : Fin 3) P * W) x j) =
       (1 / 196 : ℂ) * (W * a196G.map GaussianInt.toComplex) x j +
         (W * bG.map GaussianInt.toComplex) x j
   linear_combination (1 / 2744 : ℂ) * ho + (1 / 14 : ℂ) * hm
