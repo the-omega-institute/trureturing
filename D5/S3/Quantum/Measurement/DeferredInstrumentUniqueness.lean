@@ -264,14 +264,58 @@ lemma Itilde_trace {d : ℕ} (hd : 2 ≤ d) (U : Matrix.unitaryGroup (Fin d) ℂ
   field_simp
   ring
 
+def choiVector {d : ℕ} (aa bb : ℝ) (x : Fin d) (p : Fin d × Fin d) : ℂ :=
+  (aa : ℂ) * (if p.1 = p.2 then 1 else 0) +
+    (bb : ℂ) * (if p = (x, x) then 1 else 0)
+
+private lemma choi_of_boundary_formula {d : ℕ}
+    (Φ : MatrixMap (Fin d) (Fin d) ℂ) (aa bb : ℝ) (x : Fin d)
+    (hΦ : ∀ ρ, Φ ρ = (1 / (d : ℂ)) •
+      ((((bb ^ 2 : ℝ) : ℂ) * Matrix.trace
+        (ρ * Q (1 : Matrix.unitaryGroup (Fin d) ℂ) x)) • 1 +
+        (((aa * bb : ℝ) : ℂ) •
+          (ρ * Q (1 : Matrix.unitaryGroup (Fin d) ℂ) x +
+            Q (1 : Matrix.unitaryGroup (Fin d) ℂ) x * ρ)) +
+        (((aa ^ 2 : ℝ) : ℂ) • ρ))) :
+    MatrixMap.choi_matrix Φ = (1 / (d : ℝ)) •
+      (Matrix.vecMulVec (choiVector aa bb x) (star (choiVector aa bb x)) +
+        Matrix.diagonal (fun p : Fin d × Fin d =>
+          if p.2 = x ∧ p.1 ≠ x then ((bb : ℂ) ^ 2) else 0)) := by
+  sorry
+
 lemma choi_Itilde_standard (d : ℕ) (t : ℝ) (x : Fin d) :
     MatrixMap.choi_matrix (Itilde (1 : Matrix.unitaryGroup (Fin d) ℂ) t x) =
-      MatrixMap.choi_matrix (Itilde (1 : Matrix.unitaryGroup (Fin d) ℂ) t x) := by
-  rfl
+      (1 / (d : ℝ)) •
+        (Matrix.vecMulVec (choiVector (a2 d t) (b t) x)
+          (star (choiVector (a2 d t) (b t) x)) +
+        Matrix.diagonal (fun p : Fin d × Fin d =>
+          if p.2 = x ∧ p.1 ≠ x then ((b t : ℂ) ^ 2) else 0)) := by
+  exact choi_of_boundary_formula _ _ _ x (Itilde_apply 1 t x)
 
-lemma choi_It_formula (d : ℕ) (t : ℝ) :
-    MatrixMap.choi_matrix (It (d := d) t) = MatrixMap.choi_matrix (It (d := d) t) := by
-  rfl
+lemma choi_It_formula (d : ℕ) (t : ℝ) (j₁ i₁ j₂ i₂ : Fin d) :
+    MatrixMap.choi_matrix (It (d := d) t) (j₁, i₁) (j₂, i₂) =
+      (t : ℂ) * (if i₁ = j₁ ∧ i₂ = j₂ then 1 else 0) +
+        (((1 - t) / (d : ℝ) : ℝ) : ℂ) *
+          (if i₁ = i₂ then 1 else 0) * (if j₁ = j₂ then 1 else 0) := by
+  rw [MatrixMap.choi_matrix, It_apply]
+  simp only [Matrix.add_apply, Matrix.smul_apply, smul_eq_mul, Matrix.single_apply,
+    Matrix.one_apply]
+  by_cases h : i₁ = i₂ <;> simp [h] <;> ring
+
+lemma Itilde_standard_cp {d : ℕ} (t : ℝ) (x : Fin d) :
+    (Itilde (1 : Matrix.unitaryGroup (Fin d) ℂ) t x).IsCompletelyPositive := by
+  apply (MatrixMap.choi_PSD_iff_CP_map _).mpr
+  rw [choi_Itilde_standard]
+  apply Matrix.PosSemidef.smul
+  · apply (Matrix.posSemidef_vecMulVec_self_star _).add
+    apply Matrix.PosSemidef.diagonal
+    intro p
+    change 0 ≤ if p.2 = x ∧ p.1 ≠ x then (b t : ℂ) ^ 2 else 0
+    split_ifs
+    · rw [← Complex.ofReal_pow]
+      exact Complex.zero_le_real.mpr (sq_nonneg (b t))
+    · exact le_rfl
+  · positivity
 
 lemma choi_competitor_psd {d : ℕ} {J : Fin d → MatrixMap (Fin d) (Fin d) ℂ}
     (x : Fin d) (hJ : (J x).IsCompletelyPositive) :
@@ -308,35 +352,233 @@ lemma choi_gram_rows {d : ℕ} {C : Matrix (Fin d × Fin d) (Fin d × Fin d) ℂ
   apply CStarAlgebra.nonneg_iff_eq_star_mul_self.mp
   exact Matrix.nonneg_iff_posSemidef.mpr hC
 
-lemma certificate_identity {d : ℕ} (t : ℝ) (J : Fin d → MatrixMap (Fin d) (Fin d) ℂ)
-    (hCP : ∀ x, (J x).IsCompletelyPositive)
+lemma certificate_identity {d : ℕ} (hd : 2 ≤ d) {t : ℝ}
+    (htl : -1 / ((d : ℝ) ^ 2 - 1) < t) (htu : t < 1)
+    (J : Fin d → MatrixMap (Fin d) (Fin d) ℂ)
     (hsum : ∑ x, J x = It t)
     (htrace : ∀ x ρ, Matrix.trace (J x ρ) =
-      Matrix.trace (ρ * Qs (1 : Matrix.unitaryGroup (Fin d) ℂ) (sMax d t) x)) :
-    (0 : ℝ) = 0 := by
-  rfl
+      Matrix.trace (ρ * Qs (1 : Matrix.unitaryGroup (Fin d) ℂ) (sMax d t) x))
+    (B : Fin d → Matrix (Fin d × Fin d) (Fin d × Fin d) ℂ)
+    (hB : ∀ x, MatrixMap.choi_matrix (J x) = (B x).conjTranspose * B x) :
+    ∑ x, ∑ r, qCertificate d (a2 d t) (b t) (c d t) x
+      (fun j i => star (B x r (j, i))) = 0 := by
+  sorry
+
+private def realDiagonalForm (d : ℕ) (aa bb cc : ℝ) (x : Fin d) (v : Fin d → ℝ) : ℝ :=
+  ((aa + bb) / bb) * ((∑ i, v i ^ 2) - (aa / cc) * (∑ i, v i) ^ 2) - v x ^ 2
+
+private lemma real_diagonal_shift {d : ℕ} {aa bb cc : ℝ} (x : Fin d)
+    (hbb : 0 < bb) (hcc : 0 < cc) (hkk : 0 < aa + bb)
+    (hc : cc = bb + d * aa) (v : Fin d → ℝ) :
+    realDiagonalForm d aa bb cc x v =
+      ((aa + bb) / bb) *
+        ((∑ i, (v i - (v x / (aa + bb)) * (aa + if i = x then bb else 0)) ^ 2) -
+          (aa / cc) * (∑ i, (v i - (v x / (aa + bb)) *
+            (aa + if i = x then bb else 0))) ^ 2) := by
+  let u : Fin d → ℝ := fun i => aa + if i = x then bb else 0
+  let r : ℝ := v x / (aa + bb)
+  let z : Fin d → ℝ := fun i => v i - r * u i
+  have hu : ∑ i, u i = cc := by
+    dsimp [u]
+    simp only [Finset.sum_add_distrib, Finset.sum_const, Finset.card_univ,
+      Fintype.card_fin, nsmul_eq_mul, Finset.sum_ite_eq', Finset.mem_univ, ite_true]
+    linarith
+  have huv : ∑ i, v i * u i = aa * (∑ i, v i) + bb * v x := by
+    dsimp [u]
+    simp only [mul_add, mul_ite, mul_zero, Finset.sum_add_distrib,
+      ← Finset.sum_mul, Finset.sum_ite_eq', Finset.mem_univ, ite_true]
+    ring
+  have huu : ∑ i, u i ^ 2 = aa * cc + bb * (aa + bb) := by
+    have heach (i : Fin d) : u i ^ 2 = aa ^ 2 +
+        (2 * aa * bb + bb ^ 2) * (if i = x then 1 else 0) := by
+      dsimp [u]
+      split_ifs <;> ring
+    simp_rw [heach]
+    simp only [Finset.sum_add_distrib, ← Finset.mul_sum, Finset.sum_const,
+      Finset.card_univ, Fintype.card_fin, nsmul_eq_mul,
+      Finset.sum_ite_eq', Finset.mem_univ, ite_true]
+    rw [hc]
+    ring
+  have hzsum : ∑ i, z i = (∑ i, v i) - r * cc := by
+    dsimp [z]
+    rw [Finset.sum_sub_distrib, ← Finset.mul_sum, hu]
+  have hzsq : ∑ i, z i ^ 2 = (∑ i, v i ^ 2) -
+      2 * r * (aa * (∑ i, v i) + bb * v x) +
+      r ^ 2 * (aa * cc + bb * (aa + bb)) := by
+    have heach (i : Fin d) : z i ^ 2 = v i ^ 2 -
+        (2 * r) * (v i * u i) + r ^ 2 * u i ^ 2 := by dsimp [z]; ring
+    simp_rw [heach]
+    rw [Finset.sum_add_distrib, Finset.sum_sub_distrib,
+      ← Finset.mul_sum, ← Finset.mul_sum, huv, huu]
+  change realDiagonalForm d aa bb cc x v =
+    ((aa + bb) / bb) * ((∑ i, z i ^ 2) - (aa / cc) * (∑ i, z i) ^ 2)
+  rw [hzsum, hzsq]
+  dsimp [realDiagonalForm, r]
+  have hb0 := ne_of_gt hbb
+  have hc0 := ne_of_gt hcc
+  have hk0 := ne_of_gt hkk
+  field_simp
+  <;> ring
+
+private lemma diagonal_energy {d : ℕ} {aa bb cc : ℝ}
+    (hbb : 0 < bb) (hcc : 0 < cc) (hc : cc = bb + d * aa) (v : Fin d → ℝ) :
+    0 ≤ (∑ i, v i ^ 2) - (aa / cc) * (∑ i, v i) ^ 2 ∧
+      (((∑ i, v i ^ 2) - (aa / cc) * (∑ i, v i) ^ 2) = 0 → ∀ i, v i = 0) := by
+  let N : ℝ := ∑ i, v i ^ 2
+  let S : ℝ := ∑ i, v i
+  have hN : 0 ≤ N := Finset.sum_nonneg fun _ _ => sq_nonneg _
+  have hcs : S ^ 2 ≤ d * N := by
+    have h := Finset.sum_mul_sq_le_sq_mul_sq Finset.univ v (fun _ => (1 : ℝ))
+    simpa [N, S, mul_comm] using h
+  obtain ⟨δ, hδ, hbound⟩ : ∃ δ : ℝ, 0 < δ ∧
+      δ * N ≤ N - (aa / cc) * S ^ 2 := by
+    by_cases haa : 0 ≤ aa
+    · refine ⟨bb / cc, div_pos hbb hcc, ?_⟩
+      have hid : N - (aa / cc) * S ^ 2 = (cc * N - aa * S ^ 2) / cc := by
+        field_simp
+        <;> ring
+      rw [hid, div_mul_eq_mul_div]
+      apply (div_le_div_iff_of_pos_right hcc).mpr
+      rw [hc]
+      nlinarith [mul_nonneg haa (sub_nonneg.mpr hcs)]
+    · refine ⟨1, zero_lt_one, ?_⟩
+      have ha : aa / cc ≤ 0 := div_nonpos_of_nonpos_of_nonneg (le_of_not_ge haa) hcc.le
+      have hp := mul_nonpos_of_nonpos_of_nonneg ha (sq_nonneg S)
+      linarith
+  have hE : 0 ≤ N - (aa / cc) * S ^ 2 :=
+    le_trans (mul_nonneg hδ.le hN) hbound
+  refine ⟨hE, ?_⟩
+  intro hzero i
+  have hmul : δ * N = 0 := le_antisymm (by linarith) (mul_nonneg hδ.le hN)
+  have hNz : N = 0 := (mul_eq_zero.mp hmul).resolve_left (ne_of_gt hδ)
+  have hi := (Finset.sum_eq_zero_iff_of_nonneg (fun i _ => sq_nonneg (v i))).mp hNz i
+    (Finset.mem_univ i)
+  exact sq_eq_zero_iff.mp hi
+
+private lemma real_diagonal_nonneg {d : ℕ} {aa bb cc : ℝ} (x : Fin d)
+    (hbb : 0 < bb) (hcc : 0 < cc) (hkk : 0 < aa + bb)
+    (hc : cc = bb + d * aa) (v : Fin d → ℝ) :
+    0 ≤ realDiagonalForm d aa bb cc x v ∧
+      (realDiagonalForm d aa bb cc x v = 0 →
+        ∀ i, v i = (v x / (aa + bb)) * (aa + if i = x then bb else 0)) := by
+  let z : Fin d → ℝ := fun i => v i - (v x / (aa + bb)) *
+    (aa + if i = x then bb else 0)
+  have he := diagonal_energy hbb hcc hc z
+  have hs := real_diagonal_shift x hbb hcc hkk hc v
+  change realDiagonalForm d aa bb cc x v =
+    ((aa + bb) / bb) * ((∑ i, z i ^ 2) - (aa / cc) * (∑ i, z i) ^ 2) at hs
+  have hp : 0 < (aa + bb) / bb := div_pos hkk hbb
+  constructor
+  · rw [hs]
+    exact mul_nonneg hp.le he.1
+  · intro hz i
+    rw [hs] at hz
+    have hE := (mul_eq_zero.mp hz).resolve_left (ne_of_gt hp)
+    exact sub_eq_zero.mp (he.2 hE i)
+
+private lemma qCertificate_decomposition {d : ℕ} (aa bb cc : ℝ) (x : Fin d)
+    (w : Matrix (Fin d) (Fin d) ℂ) :
+    qCertificate d aa bb cc x w =
+      (∑ k', ∑ j, if k' ≠ x ∧ j ≠ k' then Complex.normSq (w j k') else 0) +
+        realDiagonalForm d aa bb cc x (fun i => (w i i).re) +
+        realDiagonalForm d aa bb cc x (fun i => (w i i).im) := by
+  simp only [qCertificate, realDiagonalForm, Complex.normSq_apply, Complex.re_sum,
+    Complex.im_sum, Finset.sum_add_distrib, pow_two]
+  ring
 
 lemma qCertificate_nonneg {d : ℕ} {aa bb cc : ℝ} (x : Fin d)
-    (hbb : 0 < bb) (hcc : 0 < cc) (ha : aa * (d : ℝ) < cc)
-    (w : Matrix (Fin d) (Fin d) ℂ) : 0 ≤ qCertificate d aa bb cc x w := by
-  sorry
+    (hbb : 0 < bb) (hcc : 0 < cc) (hkk : 0 < aa + bb)
+    (hc : cc = bb + d * aa) (w : Matrix (Fin d) (Fin d) ℂ) :
+    0 ≤ qCertificate d aa bb cc x w := by
+  have hoff : 0 ≤ ∑ k', ∑ j,
+      if k' ≠ x ∧ j ≠ k' then Complex.normSq (w j k') else 0 := by
+    apply Finset.sum_nonneg
+    intro k' hk'
+    apply Finset.sum_nonneg
+    intro j hj
+    split_ifs
+    · exact Complex.normSq_nonneg _
+    · exact le_rfl
+  rw [qCertificate_decomposition]
+  exact add_nonneg (add_nonneg hoff
+    (real_diagonal_nonneg x hbb hcc hkk hc (fun i => (w i i).re)).1)
+    (real_diagonal_nonneg x hbb hcc hkk hc (fun i => (w i i).im)).1
 
 lemma qCertificate_eq_zero {d : ℕ} {aa bb cc : ℝ} (x : Fin d)
-    (hbb : 0 < bb) (hcc : 0 < cc) (ha : aa * (d : ℝ) < cc)
-    (w : Matrix (Fin d) (Fin d) ℂ)
+    (hbb : 0 < bb) (hcc : 0 < cc) (hkk : 0 < aa + bb)
+    (hc : cc = bb + d * aa) (w : Matrix (Fin d) (Fin d) ℂ)
     (hzero : qCertificate d aa bb cc x w = 0) :
-    (∀ k' j, k' ≠ x → j ≠ k' → w j k' = 0) := by
-  sorry
+    (∀ k' j, k' ≠ x → j ≠ k' → w j k' = 0) ∧
+      (∀ i, w i i = (w x x / ((aa + bb : ℝ) : ℂ)) *
+        ((aa + if i = x then bb else 0 : ℝ) : ℂ)) := by
+  have hterm (k' j : Fin d) :
+      0 ≤ if k' ≠ x ∧ j ≠ k' then Complex.normSq (w j k') else 0 := by
+    split_ifs
+    · exact Complex.normSq_nonneg _
+    · exact le_rfl
+  have hoff : 0 ≤ ∑ k', ∑ j,
+      if k' ≠ x ∧ j ≠ k' then Complex.normSq (w j k') else 0 :=
+    Finset.sum_nonneg fun k' _ => Finset.sum_nonneg fun j _ => hterm k' j
+  have hr := real_diagonal_nonneg x hbb hcc hkk hc (fun i => (w i i).re)
+  have hi := real_diagonal_nonneg x hbb hcc hkk hc (fun i => (w i i).im)
+  rw [qCertificate_decomposition] at hzero
+  have hrz : realDiagonalForm d aa bb cc x (fun i => (w i i).re) = 0 := by linarith [hr.1, hi.1]
+  have hiz : realDiagonalForm d aa bb cc x (fun i => (w i i).im) = 0 := by linarith [hr.1, hi.1]
+  have hoz : (∑ k', ∑ j,
+      if k' ≠ x ∧ j ≠ k' then Complex.normSq (w j k') else 0) = 0 := by linarith
+  constructor
+  · intro k' j hk' hj
+    have hz := (Finset.sum_eq_zero_iff_of_nonneg
+      (fun k' _ => Finset.sum_nonneg fun j _ => hterm k' j)).mp hoz k' (Finset.mem_univ k')
+    have hz' := (Finset.sum_eq_zero_iff_of_nonneg (fun j _ => hterm k' j)).mp hz j
+      (Finset.mem_univ j)
+    apply Complex.normSq_eq_zero.mp
+    simpa only [if_pos (And.intro hk' hj)] using hz'
+  · intro i
+    apply Complex.ext
+    · simpa only [Complex.mul_re, Complex.div_ofReal_re, Complex.ofReal_re,
+        Complex.ofReal_im, mul_zero, sub_zero] using hr.2 hrz i
+    · simpa only [Complex.mul_im, Complex.div_ofReal_im, Complex.ofReal_re,
+        Complex.ofReal_im, mul_zero, zero_add] using hi.2 hiz i
 
-lemma support_rows {d : ℕ} (t : ℝ) (J : Fin d → MatrixMap (Fin d) (Fin d) ℂ)
-    (hCP : ∀ x, (J x).IsCompletelyPositive)
+lemma support_rows {d : ℕ} (hd : 2 ≤ d) {t : ℝ}
+    (htl : -1 / ((d : ℝ) ^ 2 - 1) < t) (htu : t < 1)
+    (J : Fin d → MatrixMap (Fin d) (Fin d) ℂ)
     (hsum : ∑ x, J x = It t)
     (htrace : ∀ x ρ, Matrix.trace (J x ρ) =
-      Matrix.trace (ρ * Qs (1 : Matrix.unitaryGroup (Fin d) ℂ) (sMax d t) x)) :
-    True := by
-  trivial
+      Matrix.trace (ρ * Qs (1 : Matrix.unitaryGroup (Fin d) ℂ) (sMax d t) x))
+    (B : Fin d → Matrix (Fin d × Fin d) (Fin d × Fin d) ℂ)
+    (hB : ∀ x, MatrixMap.choi_matrix (J x) = (B x).conjTranspose * B x) :
+    ∀ x r, (∀ k' j, k' ≠ x → j ≠ k' → B x r (j, k') = 0) ∧
+      (∀ i, star (B x r (i, i)) =
+        (star (B x r (x, x)) / ((a2 d t + b t : ℝ) : ℂ)) *
+          ((a2 d t + if i = x then b t else 0 : ℝ) : ℂ)) := by
+  have hb : 0 < b t := Real.sqrt_pos.mpr (by linarith)
+  have hc := c_pos hd htl
+  have hk : 0 < a2 d t + b t := k_pos hd htl htu
+  have hrel : c d t = b t + d * a2 d t := by
+    have hd0 : (d : ℝ) ≠ 0 := by exact_mod_cast (show d ≠ 0 by omega)
+    change c d t = b t + d * ((c d t - b t) / d)
+    field_simp
+    <;> ring
+  have hnonneg (x : Fin d) (r : Fin d × Fin d) :
+      0 ≤ qCertificate d (a2 d t) (b t) (c d t) x
+        (fun j i => star (B x r (j, i))) :=
+    qCertificate_nonneg x hb hc hk hrel _
+  have htotal := certificate_identity hd htl htu J hsum htrace B hB
+  intro x r
+  have hx := (Finset.sum_eq_zero_iff_of_nonneg
+    (fun x _ => Finset.sum_nonneg fun r _ => hnonneg x r)).mp htotal x (Finset.mem_univ x)
+  have hr := (Finset.sum_eq_zero_iff_of_nonneg
+    (fun r _ => hnonneg x r)).mp hx r (Finset.mem_univ r)
+  obtain ⟨hoff, hdiag⟩ := qCertificate_eq_zero x hb hc hk hrel _ hr
+  refine ⟨?_, hdiag⟩
+  intro k' j hk' hj
+  exact star_eq_zero.mp (hoff k' j hk' hj)
 
-lemma elimination_standard {d : ℕ} (t : ℝ) (J : Fin d → MatrixMap (Fin d) (Fin d) ℂ)
+lemma elimination_standard {d : ℕ} (hd : 2 ≤ d) {t : ℝ}
+    (htl : -1 / ((d : ℝ) ^ 2 - 1) < t) (htu : t < 1)
+    (J : Fin d → MatrixMap (Fin d) (Fin d) ℂ)
     (hCP : ∀ x, (J x).IsCompletelyPositive)
     (hsum : ∑ x, J x = It t)
     (htrace : ∀ x ρ, Matrix.trace (J x ρ) =
@@ -370,7 +612,91 @@ lemma standard_basis_forward {d : ℕ} (hd : 2 ≤ d) {t : ℝ}
     (htrace : ∀ x ρ, Matrix.trace (J x ρ) =
       Matrix.trace (ρ * Qs (1 : Matrix.unitaryGroup (Fin d) ℂ) (sMax d t) x)) :
     ∀ x, J x = Itilde (1 : Matrix.unitaryGroup (Fin d) ℂ) t x := by
-  sorry
+  by_cases hl : t = -1 / ((d : ℝ) ^ 2 - 1)
+  · subst t
+    exact lower_endpoint_standard hd J hCP hsum htrace
+  by_cases hu : t = 1
+  · subst t
+    exact upper_endpoint_standard hd J hCP hsum htrace
+  exact elimination_standard hd (lt_of_le_of_ne htl (Ne.symm hl))
+    (lt_of_le_of_ne htu hu) J hCP hsum htrace
+
+def transformMap {d : ℕ} (W : Matrix (Fin d) (Fin d) ℂ)
+    (Φ : MatrixMap (Fin d) (Fin d) ℂ) : MatrixMap (Fin d) (Fin d) ℂ where
+  toFun ρ := W * Φ (W.conjTranspose * ρ * W) * W.conjTranspose
+  map_add' ρ σ := by simp only [Matrix.mul_add, Matrix.add_mul, map_add]
+  map_smul' z ρ := by simp only [Matrix.mul_smul, Matrix.smul_mul, map_smul, RingHom.id_apply]
+
+lemma transformMap_apply {d : ℕ} (W : Matrix (Fin d) (Fin d) ℂ)
+    (Φ : MatrixMap (Fin d) (Fin d) ℂ) (ρ : Matrix (Fin d) (Fin d) ℂ) :
+    transformMap W Φ ρ = W * Φ (W.conjTranspose * ρ * W) * W.conjTranspose := rfl
+
+lemma transformMap_cp {d : ℕ} (W : Matrix (Fin d) (Fin d) ℂ)
+    (Φ : MatrixMap (Fin d) (Fin d) ℂ) (hΦ : Φ.IsCompletelyPositive) :
+    (transformMap W Φ).IsCompletelyPositive := by
+  obtain ⟨K, rfl⟩ := MatrixMap.IsCompletelyPositive.exists_kraus Φ hΦ
+  have hmap : transformMap W (MatrixMap.of_kraus K K) =
+      MatrixMap.of_kraus (fun r => W * K r * W.conjTranspose)
+        (fun r => W * K r * W.conjTranspose) := by
+    apply LinearMap.ext
+    intro ρ
+    rw [transformMap_apply]
+    simp only [MatrixMap.of_kraus, LinearMap.sum_apply, LinearMap.coe_mk,
+      AddHom.coe_mk, Matrix.mul_sum, Matrix.sum_mul]
+    apply Finset.sum_congr rfl
+    intro r hr
+    simp only [Matrix.conjTranspose_mul, Matrix.conjTranspose_conjTranspose,
+      Matrix.mul_assoc]
+  rw [hmap]
+  exact MatrixMap.of_kraus_isCompletelyPositive _
+
+lemma Itilde_transform {d : ℕ} (U : Matrix.unitaryGroup (Fin d) ℂ)
+    (t : ℝ) (x : Fin d) :
+    transformMap (U : Matrix (Fin d) (Fin d) ℂ)
+      (Itilde (1 : Matrix.unitaryGroup (Fin d) ℂ) t x) = Itilde U t x := by
+  have hUV : (U : Matrix (Fin d) (Fin d) ℂ) *
+      (U : Matrix (Fin d) (Fin d) ℂ).conjTranspose = 1 :=
+    Matrix.mem_unitaryGroup_iff.mp U.2
+  apply LinearMap.ext
+  intro ρ
+  let W : Matrix (Fin d) (Fin d) ℂ := U
+  let V := W.conjTranspose
+  let P := Matrix.single x x (1 : ℂ)
+  let Y := V * ρ * W
+  have hWV : W * V = 1 := hUV
+  have hWY : W * Y = ρ * W := by
+    dsimp [Y]
+    rw [← Matrix.mul_assoc, ← Matrix.mul_assoc, hWV, Matrix.one_mul]
+  have hYV : Y * V = V * ρ := by
+    dsimp [Y]
+    rw [Matrix.mul_assoc, Matrix.mul_assoc, hWV, Matrix.mul_one]
+  have hYP : W * (Y * P) * V = ρ * (W * P * V) := by
+    calc
+      _ = (W * Y) * (P * V) := by simp only [Matrix.mul_assoc]
+      _ = _ := by rw [hWY]; simp only [Matrix.mul_assoc]
+  have hPY : W * (P * Y) * V = (W * P * V) * ρ := by
+    calc
+      _ = W * P * (Y * V) := by simp only [Matrix.mul_assoc]
+      _ = _ := by rw [hYV]; simp only [Matrix.mul_assoc]
+  have hY : W * Y * V = ρ := by
+    rw [hWY, Matrix.mul_assoc, hWV, Matrix.mul_one]
+  have htr : Matrix.trace (Y * P) = Matrix.trace (ρ * (W * P * V)) := by
+    change Matrix.trace (V * ρ * W * P) = _
+    rw [Matrix.mul_assoc (V * ρ) W P, Matrix.trace_mul_cycle V ρ (W * P),
+      Matrix.trace_mul_comm (W * P * V) ρ]
+  rw [transformMap_apply, Itilde_apply, Itilde_apply]
+  change W * ((1 / (d : ℂ)) •
+    (((((b t) ^ 2 : ℝ) : ℂ) * Matrix.trace (Y * Q 1 x)) • 1 +
+      (((a2 d t * b t : ℝ) : ℂ) • (Y * Q 1 x + Q 1 x * Y)) +
+      (((a2 d t) ^ 2 : ℝ) : ℂ) • Y)) * V = _
+  have hQ1 : Q (1 : Matrix.unitaryGroup (Fin d) ℂ) x = P := by
+    simp only [Q, OneMemClass.coe_one, Matrix.one_mul, Matrix.conjTranspose_one,
+      Matrix.mul_one, P]
+  have hQU : Q U x = W * P * V := rfl
+  rw [hQ1, hQU]
+  simp only [Matrix.mul_smul, Matrix.smul_mul, Matrix.mul_add, Matrix.add_mul,
+    Matrix.mul_one]
+  rw [hWV, hYP, hPY, hY, htr]
 
 lemma transport_forward {d : ℕ} (hd : 2 ≤ d) (U : Matrix.unitaryGroup (Fin d) ℂ)
     {t : ℝ} (htl : -1 / ((d : ℝ) ^ 2 - 1) ≤ t) (htu : t ≤ 1)
@@ -384,7 +710,9 @@ lemma transport_forward {d : ℕ} (hd : 2 ≤ d) (U : Matrix.unitaryGroup (Fin d
 lemma Itilde_cp {d : ℕ} (hd : 2 ≤ d) (U : Matrix.unitaryGroup (Fin d) ℂ)
     {t : ℝ} (htl : -1 / ((d : ℝ) ^ 2 - 1) ≤ t) (htu : t ≤ 1) :
     ∀ x, (Itilde U t x).IsCompletelyPositive := by
-  sorry
+  intro x
+  rw [← Itilde_transform U t x]
+  exact transformMap_cp _ _ (Itilde_standard_cp t x)
 
 lemma backward_direction {d : ℕ} (hd : 2 ≤ d) (U : Matrix.unitaryGroup (Fin d) ℂ)
     (t : ℝ) (htl : -1 / ((d : ℝ) ^ 2 - 1) ≤ t) (htu : t ≤ 1) :
@@ -395,14 +723,6 @@ lemma backward_direction {d : ℕ} (hd : 2 ≤ d) (U : Matrix.unitaryGroup (Fin 
   refine ⟨Itilde_cp hd U htl htu, Itilde_sum hd U htl htu, ?_⟩
   intro x ρ
   exact Itilde_trace hd U htl htu x ρ
-
-lemma endpoint_support_lower {d : ℕ} (hd : 2 ≤ d) (J : Fin d → MatrixMap (Fin d) (Fin d) ℂ)
-    (hCP : ∀ x, (J x).IsCompletelyPositive) : True := by
-  trivial
-
-lemma endpoint_support_upper {d : ℕ} (hd : 2 ≤ d) (J : Fin d → MatrixMap (Fin d) (Fin d) ℂ)
-    (hCP : ∀ x, (J x).IsCompletelyPositive) : True := by
-  trivial
 
 theorem result : claim := by
   intro d hd U t htl htu J
