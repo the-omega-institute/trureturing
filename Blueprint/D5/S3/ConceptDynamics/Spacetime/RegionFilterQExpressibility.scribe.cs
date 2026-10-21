@@ -33,7 +33,7 @@ internal sealed class RegionFilterQExpressibilityDocument : IScribeDocumentDefin
                 StatementSource.WithoutFormula(), AssessedProvenance.FromRepo(),
                 Blocks(
                     Paragraph(Text("For every fixed native word total on all balanced rich inputs, there is an integer c such that every position p and every pair t,t' below c admit two legal inputs with equal final optional charge. Their archives have the same literal event names, order, current region and selection. Only the time of the unique selected positive event differs, from t to t'; its position is p and its source agrees. Common earlier and later archive events strictly enclose both times.")),
-                    Paragraph(Text("Exact total-word normalization removes temporal composition. The finite family of pulled-back causal predicates before the first product supplies finitely many target attributes and a common lower time bound. A balanced star adds a current successor for each nonempty predicate, an unselected opposite-sign twin for every current contribution, and two common inactive endpoints. Every prefix filter therefore acts synchronously. The first product erases the exceptional time from current attributes; if there is no product, matching selected signs give the same conclusion directly."))),
+                    Paragraph(Text("Exact total-word normalization removes temporal composition. The finite family of pulled-back causal predicates before the first product supplies finitely many target attributes and a common lower time bound. A balanced star adds a current successor for each nonempty predicate, an unselected opposite-sign twin for every current contribution, and two common inactive endpoints. Every prefix filter therefore acts synchronously. A current correspondence preserves attributes, causal order and selection, without matching inactive archive attributes. Parallel composition transports it through a disjoint sum and generated product through current-parent pairs. At the first product in either slot, the exceptional time is below every current parent time in the fixed factor, so the maximum erases it from generated attributes. An empty current factor also satisfies this argument. Every subsequent temporal-free step preserves the current correspondence. If there is no product, matching selected signs give the same conclusion directly."))),
                 DescribeRole.Theorem),
             Describe.Lean(
                 DescribeId.Create("tail-construction"),
@@ -52,7 +52,9 @@ internal sealed class RegionFilterQExpressibilityDocument : IScribeDocumentDefin
                 Blocks(Paragraph(Text("Necessity applies total-word saturation to the expressing word. The unique selected positive point reads the two region membership bits, forcing their equality below one common c at every position. Sufficiency uses the shifted-unit construction with k=c-1. Neither direction restricts the region or the balanced input."))),
                 DescribeRole.Theorem)),
         [DocumentEdge.Dependency.Create(
-            GidRef.Create("D5/S3/ConceptDynamics/Spacetime/InteriorArchiveTimeInvisibility"))]));
+            GidRef.Create("D5/S3/ConceptDynamics/Spacetime/TotalCopyNormalization")),
+         DocumentEdge.Dependency.Create(
+            GidRef.Create("D5/S3/ConceptDynamics/Spacetime/CoarseObservation"))]));
 
     private static Formula TailConstructionFormula() => Disp(Seq(
         Forall, Sp, F.Id("R"), Comma, Sp, F.Id("c"), Comma, Sp, F.Id("k"),
