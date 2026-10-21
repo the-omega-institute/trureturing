@@ -19,6 +19,7 @@ open D5.S0.History.Spacetime.ArchiveCarrier
 open D5.S3.ConceptDynamics.Observation.StrictOneHoleContexts
 open ComplementCharge TotalCopyNormalization ProductNodes
 open CoarseObservation (generatedCurrentEquiv parallelCurrentEquiv)
+open CoarseObservation renaming parallelCurrentEquiv → parEquiv
 open GeneratedProduct (causal_equiv generatedMap generated_mem_current
   generated_mem_selection product productBalanced)
 open ParallelComposition (parallelBalanced)
@@ -351,37 +352,36 @@ private def unary_variant {X Y : B} (h : PreVariant X Y) (f : Unary) (hm : ∀ Q
     refine { h with attributes_other := ?_ }
     intro a ha; exact congrArg (fun z : Attributes 3 => {z with time := z.time + k}) (h.attributes_other a ha)
 
-private abbrev parEquiv (X Z : B) := parallelCurrentEquiv X.val.1 Z.val.1
 private theorem par_attr (X Z : B) (a : ↥X.val.1.current ⊕ ↥Z.val.1.current) :
-    (parArchive X.val.1.archive Z.val.1.archive).attributes (parEquiv X Z a).val =
+    (parArchive X.val.1.archive Z.val.1.archive).attributes (parEquiv X.val.1 Z.val.1 a).val =
       a.elim (fun e => X.val.1.archive.attributes e.val) (fun e => Z.val.1.archive.attributes e.val) := by
   cases a with
   | inl a => exact ParallelComposition.attributes_left _ _ _
   | inr a => exact ParallelComposition.attributes_right _ _ _
 private theorem mask_parallel_left (X Z : B) (a : ↥X.val.1.current) (Q : Set (Attributes 3)) :
-    mask (parallelBalanced X Z) (parEquiv X Z (.inl a)) Q ↔ mask X a Q := by
+    mask (parallelBalanced X Z) (parEquiv X.val.1 Z.val.1 (.inl a)) Q ↔ mask X a Q := by
   unfold mask; change (∃ d : ↥(parContext X.val.1 Z.val.1).current,
     (parArchive X.val.1.archive Z.val.1.archive).attributes d.val ∈ Q ∧
-      (parEquiv X Z (.inl a) = d ∨
+      (parEquiv X.val.1 Z.val.1 (.inl a) = d ∨
         (parArchive X.val.1.archive Z.val.1.archive).causal
-          (parEquiv X Z (.inl a)).val d.val)) ↔ _
-  refine (Equiv.exists_congr_right (parEquiv X Z)).symm.trans ?_
-  simp only [par_attr, (parEquiv X Z).injective.eq_iff, Sum.exists]
-  simp only [parEquiv, parallelCurrentEquiv, Equiv.ofBijective_apply,
+          (parEquiv X.val.1 Z.val.1 (.inl a)).val d.val)) ↔ _
+  refine (Equiv.exists_congr_right (parEquiv X.val.1 Z.val.1)).symm.trans ?_
+  simp only [par_attr, (parEquiv X.val.1 Z.val.1).injective.eq_iff, Sum.exists]
+  simp only [parEquiv, Equiv.ofBijective_apply,
     ParallelComposition.causal_cases,
     parInternal, Sum.map_inl, Sum.map_inr, Sum.elim_inl, Sum.elim_inr,
     Sum.inl.injEq, Sum.inl_ne_inr, Sum.inr_ne_inl, or_false, false_or,
     and_false, false_and, exists_false, or_false]
 private theorem mask_parallel_right (Z X : B) (a : ↥X.val.1.current) (Q : Set (Attributes 3)) :
-    mask (parallelBalanced Z X) (parEquiv Z X (.inr a)) Q ↔ mask X a Q := by
+    mask (parallelBalanced Z X) (parEquiv Z.val.1 X.val.1 (.inr a)) Q ↔ mask X a Q := by
   unfold mask; change (∃ d : ↥(parContext Z.val.1 X.val.1).current,
     (parArchive Z.val.1.archive X.val.1.archive).attributes d.val ∈ Q ∧
-      (parEquiv Z X (.inr a) = d ∨
+      (parEquiv Z.val.1 X.val.1 (.inr a) = d ∨
         (parArchive Z.val.1.archive X.val.1.archive).causal
-          (parEquiv Z X (.inr a)).val d.val)) ↔ _
-  refine (Equiv.exists_congr_right (parEquiv Z X)).symm.trans ?_
-  simp only [par_attr, (parEquiv Z X).injective.eq_iff, Sum.exists]
-  simp only [parEquiv, parallelCurrentEquiv, Equiv.ofBijective_apply,
+          (parEquiv Z.val.1 X.val.1 (.inr a)).val d.val)) ↔ _
+  refine (Equiv.exists_congr_right (parEquiv Z.val.1 X.val.1)).symm.trans ?_
+  simp only [par_attr, (parEquiv Z.val.1 X.val.1).injective.eq_iff, Sum.exists]
+  simp only [parEquiv, Equiv.ofBijective_apply,
     ParallelComposition.causal_cases,
     parInternal, Sum.map_inl, Sum.map_inr, Sum.elim_inl, Sum.elim_inr,
     Sum.inr.injEq, Sum.inl_ne_inr, Sum.inr_ne_inl, or_false, false_or,
@@ -390,19 +390,19 @@ private def parallel_variant_left {X Y : B} (h : PreVariant X Y) (Z : B) :
     PreVariant (parallelBalanced X Z) (parallelBalanced Y Z) := by
   let hz : CurrentPairData Z Z := ⟨Equiv.refl _, fun _ _ => Iff.rfl, fun _ => Iff.rfl⟩
   let hp := parallel_pair h.toCurrentPairData hz
-  have he (a) : hp.equiv (parEquiv X Z a) = parEquiv Y Z ((Equiv.sumCongr h.equiv (Equiv.refl _)) a) := by
-    change parEquiv Y Z ((Equiv.sumCongr h.equiv (Equiv.refl _)) ((parEquiv X Z).symm (parEquiv X Z a))) = _
+  have he (a) : hp.equiv (parEquiv X.val.1 Z.val.1 a) = parEquiv Y.val.1 Z.val.1 ((Equiv.sumCongr h.equiv (Equiv.refl _)) a) := by
+    change parEquiv Y.val.1 Z.val.1 ((Equiv.sumCongr h.equiv (Equiv.refl _)) ((parEquiv X.val.1 Z.val.1).symm (parEquiv X.val.1 Z.val.1 a))) = _
     rw [Equiv.symm_apply_apply]
-  refine ⟨hp, parEquiv X Z (.inl h.exceptional), ?_, ?_, ?_, ?_, ?_⟩
+  refine ⟨hp, parEquiv X.val.1 Z.val.1 (.inl h.exceptional), ?_, ?_, ?_, ?_, ?_⟩
   · intro a ha
-    obtain ⟨a, rfl⟩ := (parEquiv X Z).surjective a
+    obtain ⟨a, rfl⟩ := (parEquiv X.val.1 Z.val.1).surjective a
     have heattr := congrArg (fun u : ↥(parContext Y.val.1 Z.val.1).current =>
       (parArchive Y.val.1.archive Z.val.1.archive).attributes u.val) (he a)
     refine heattr.trans ((par_attr Y Z ((Equiv.sumCongr h.equiv (Equiv.refl _)) a)).trans
       (Eq.trans ?_ (par_attr X Z a).symm))
     cases a with
     | inl a =>
-      have hne : a ≠ h.exceptional := fun eq => ha (congrArg (fun z => parEquiv X Z (.inl z)) eq)
+      have hne : a ≠ h.exceptional := fun eq => ha (congrArg (fun z => parEquiv X.val.1 Z.val.1 (.inl z)) eq)
       exact h.attributes_other a hne
     | inr a => rfl
   · change ((parArchive Y.val.1.archive Z.val.1.archive).attributes _).position =
@@ -415,7 +415,7 @@ private def parallel_variant_left {X Y : B} (h : PreVariant X Y) (Z : B) :
       ((parArchive X.val.1.archive Z.val.1.archive).attributes _).source
     simpa only [he, par_attr, Equiv.sumCongr_apply, Equiv.refl_apply, Sum.map_inl, Sum.elim_inl] using h.source_eq
   · intro a hr
-    obtain ⟨a, rfl⟩ := (parEquiv X Z).surjective a
+    obtain ⟨a, rfl⟩ := (parEquiv X.val.1 Z.val.1).surjective a
     have hh := (ParallelComposition.causal_cases _ _ _ _).mp hr; cases a with
     | inl a => exact h.no_incoming a hh
     | inr a => exact hh.elim
@@ -423,12 +423,12 @@ private def parallel_variant_right {X Y : B} (h : PreVariant X Y) (Z : B) :
     PreVariant (parallelBalanced Z X) (parallelBalanced Z Y) := by
   let hz : CurrentPairData Z Z := ⟨Equiv.refl _, fun _ _ => Iff.rfl, fun _ => Iff.rfl⟩
   let hp := parallel_pair hz h.toCurrentPairData
-  have he (a) : hp.equiv (parEquiv Z X a) = parEquiv Z Y ((Equiv.sumCongr (Equiv.refl _) h.equiv) a) := by
-    change parEquiv Z Y ((Equiv.sumCongr (Equiv.refl _) h.equiv) ((parEquiv Z X).symm (parEquiv Z X a))) = _
+  have he (a) : hp.equiv (parEquiv Z.val.1 X.val.1 a) = parEquiv Z.val.1 Y.val.1 ((Equiv.sumCongr (Equiv.refl _) h.equiv) a) := by
+    change parEquiv Z.val.1 Y.val.1 ((Equiv.sumCongr (Equiv.refl _) h.equiv) ((parEquiv Z.val.1 X.val.1).symm (parEquiv Z.val.1 X.val.1 a))) = _
     rw [Equiv.symm_apply_apply]
-  refine ⟨hp, parEquiv Z X (.inr h.exceptional), ?_, ?_, ?_, ?_, ?_⟩
+  refine ⟨hp, parEquiv Z.val.1 X.val.1 (.inr h.exceptional), ?_, ?_, ?_, ?_, ?_⟩
   · intro a ha
-    obtain ⟨a, rfl⟩ := (parEquiv Z X).surjective a
+    obtain ⟨a, rfl⟩ := (parEquiv Z.val.1 X.val.1).surjective a
     have heattr := congrArg (fun u : ↥(parContext Z.val.1 Y.val.1).current =>
       (parArchive Z.val.1.archive Y.val.1.archive).attributes u.val) (he a)
     refine heattr.trans ((par_attr Z Y ((Equiv.sumCongr (Equiv.refl _) h.equiv) a)).trans
@@ -436,7 +436,7 @@ private def parallel_variant_right {X Y : B} (h : PreVariant X Y) (Z : B) :
     cases a with
     | inl a => rfl
     | inr a =>
-      have hne : a ≠ h.exceptional := fun eq => ha (congrArg (fun z => parEquiv Z X (.inr z)) eq)
+      have hne : a ≠ h.exceptional := fun eq => ha (congrArg (fun z => parEquiv Z.val.1 X.val.1 (.inr z)) eq)
       exact h.attributes_other a hne
   · change ((parArchive Z.val.1.archive Y.val.1.archive).attributes _).position =
       ((parArchive Z.val.1.archive X.val.1.archive).attributes _).position
@@ -448,19 +448,19 @@ private def parallel_variant_right {X Y : B} (h : PreVariant X Y) (Z : B) :
       ((parArchive Z.val.1.archive X.val.1.archive).attributes _).source
     simpa only [he, par_attr, Equiv.sumCongr_apply, Equiv.refl_apply, Sum.map_inr, Sum.elim_inr] using h.source_eq
   · intro a hr
-    obtain ⟨a, rfl⟩ := (parEquiv Z X).surjective a
+    obtain ⟨a, rfl⟩ := (parEquiv Z.val.1 X.val.1).surjective a
     have hh := (ParallelComposition.causal_cases _ _ _ _).mp hr; cases a with
     | inl a => exact hh.elim
     | inr a => exact h.no_incoming a hh
 private theorem parallel_variant_left_equiv {X Y : B} (h : PreVariant X Y) (Z : B)
-    (a : ↥X.val.1.current ⊕ ↥Z.val.1.current) : (parallel_variant_left h Z).equiv (parEquiv X Z a) =
-      parEquiv Y Z ((Equiv.sumCongr h.equiv (Equiv.refl _)) a) := by
-  change parEquiv Y Z ((Equiv.sumCongr h.equiv (Equiv.refl _)) ((parEquiv X Z).symm (parEquiv X Z a))) = _
+    (a : ↥X.val.1.current ⊕ ↥Z.val.1.current) : (parallel_variant_left h Z).equiv (parEquiv X.val.1 Z.val.1 a) =
+      parEquiv Y.val.1 Z.val.1 ((Equiv.sumCongr h.equiv (Equiv.refl _)) a) := by
+  change parEquiv Y.val.1 Z.val.1 ((Equiv.sumCongr h.equiv (Equiv.refl _)) ((parEquiv X.val.1 Z.val.1).symm (parEquiv X.val.1 Z.val.1 a))) = _
   rw [Equiv.symm_apply_apply]
 private theorem parallel_variant_right_equiv {X Y : B} (h : PreVariant X Y) (Z : B)
-    (a : ↥Z.val.1.current ⊕ ↥X.val.1.current) : (parallel_variant_right h Z).equiv (parEquiv Z X a) =
-      parEquiv Z Y ((Equiv.sumCongr (Equiv.refl _) h.equiv) a) := by
-  change parEquiv Z Y ((Equiv.sumCongr (Equiv.refl _) h.equiv) ((parEquiv Z X).symm (parEquiv Z X a))) = _
+    (a : ↥Z.val.1.current ⊕ ↥X.val.1.current) : (parallel_variant_right h Z).equiv (parEquiv Z.val.1 X.val.1 a) =
+      parEquiv Z.val.1 Y.val.1 ((Equiv.sumCongr (Equiv.refl _) h.equiv) a) := by
+  change parEquiv Z.val.1 Y.val.1 ((Equiv.sumCongr (Equiv.refl _) h.equiv) ((parEquiv Z.val.1 X.val.1).symm (parEquiv Z.val.1 X.val.1 a))) = _
   rw [Equiv.symm_apply_apply]
 private def shiftAttributes (k : Int) (a : Attributes 3) : Attributes 3 := {a with time := a.time + k}
 
