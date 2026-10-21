@@ -10,8 +10,9 @@ internal sealed class BoundaryObservationSplicingDocument : IScribeDocumentDefin
         "D5/S3/ConceptDynamics/Gluing/BoundaryObservationSplicing.";
 
     public DocumentDefinition Create() => DocumentDefinition.Create(ScribeNode.Create(
-        "Boundary-preserving partial splicing of dependent raw joins has an exact compatibility "
-            + "domain, a single-valued observation graph, and an exact reachable image.",
+        "Compatible dependent raw records have a unique splice with the prescribed union "
+            + "assignment. Two complete-context replacements preserve a retained global output, "
+            + "and arbitrary summaries define a partial observation relation.",
         H("Boundary Observation Splicing"),
         Blocks(
             Paragraph(Text(
@@ -31,16 +32,25 @@ internal sealed class BoundaryObservationSplicingDocument : IScribeDocumentDefin
                 "For x in U_{A union B}, use a(x) when x is in U_A and b(x) otherwise. The latter branch is defined because every x in U_{A union B} lies in U_A or U_B.", DescribeRole.Definition),
             Entry("compatible_splice_unique", "compatible-splice-unique", "Unique compatible raw join",
                 "For disjoint A and B, if the two complete overlap restrictions agree, the pointwise splice is a rawJoin record on A union B and is the unique rawJoin record with that value function. Empty local scopes and empty local relations remain allowed; the theorem is conditional on the displayed compatible pair.", DescribeRole.Theorem),
-            Entry("compatible_overlap_transport", "compatible-overlap-transport", "Transport of initial overlap compatibility",
-                "If equal local summaries preserve their corresponding complete overlap restrictions, an initially compatible pair remains compatible after both records are replaced. This is the boundary transport step used by the partial graph.", DescribeRole.Theorem),
+            Entry("two_context_output_eq", "two-context-output-equality", "Two complete-context substitutions",
+                "Let A and B be disjoint. Suppose each local summary retains its full boundary and every specified output G against every complete compatible complement. Two global raw records with equal A summaries, equal B summaries, and identical restrictions outside A union B have the same G output. First replace the A record while keeping its complete complement. The intermediate record keeps B unchanged; on the complement of B it agrees with the final record, by combining its A restriction with the common outside restriction. The B replacement then gives the second output equality. BoundaryOutputRetention is an explicit hypothesis; it is not inferred here for arbitrary summaries.", DescribeRole.Theorem),
             Entry("spliceGraph", "partial-splice-graph", "Partial observation graph",
                 "The graph contains ((q_A(a),q_B(b)),q_C(a union b)) exactly for pairs whose complete overlap restrictions agree. Its domain is therefore a partial domain of summary pairs.", DescribeRole.Definition),
-            Entry("spliceGraph_single_valued", "partial-splice-single-valued", "Single-valued observation graph",
-                "If equal left summaries preserve the left overlap, equal right summaries preserve the right overlap, and equal summary pairs preserve the union observation after the compatible splice, then the partial graph is single-valued on its summary domain. The hypotheses are explicit so no quotient lift or representative choice is hidden.", DescribeRole.Theorem),
-            Entry("spliceGraph_domain", "partial-splice-domain", "Exact compatible summary domain",
-                "The graph domain is exactly the set of pairs (q_A(a),q_B(b)) with representatives whose complete overlap restrictions agree. This is an equality of sets and does not require either component relation or value family to be nonempty.", DescribeRole.Theorem),
-            Entry("spliceGraph_range", "partial-splice-range", "Exact reachable union image",
-                "The range of the partial graph is exactly the set of q_C observations of compatible raw pairs. Thus every reachable union observation has two local witnesses, and every compatible pair contributes a reachable observation. No global representative-selection function is asserted." , DescribeRole.Theorem))));
+            Paragraph(Text(
+                "For local summaries q_A and q_B, assume equality of summaries preserves the "
+                    + "corresponding complete overlap restriction. If a and b initially agree on the "
+                    + "overlap, and q_A(a)=q_A(a') and q_B(b)=q_B(b'), symmetry and transitivity of "
+                    + "equality give agreement of a' and b'. This conditional observation uses the "
+                    + "overlap-retention assumptions; it does not derive them from observational "
+                    + "equivalence or prove that the two union summaries agree.")),
+            Paragraph(Text(
+                "The relation above does not assert a well-defined operation on observation "
+                    + "quotients. That additionally requires preservation of the full union boundary and a "
+                    + "bridge from the specified observation equivalence to the retention hypotheses. Its image "
+                    + "is not identified here with every union observation. Restriction and "
+                    + "reconstruction of arbitrary union records, finite contraction with independence "
+                    + "of order, the unique empty root context, and the descended root map preserving "
+                    + "the complete joint output image remain unproved here.")))));
 
     private static DocumentBlock Entry(string declaration, string id, string title,
         string explanation, DescribeRole role) =>

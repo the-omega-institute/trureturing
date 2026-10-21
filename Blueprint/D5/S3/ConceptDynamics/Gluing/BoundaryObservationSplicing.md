@@ -2,7 +2,7 @@
 
 ## Abstract
 
-Boundary-preserving partial splicing of dependent raw joins has an exact compatibility domain, a single-valued observation graph, and an exact reachable image.
+Compatible dependent raw records have a unique splice with the prescribed union assignment. Two complete-context replacements preserve a retained global output, and arbitrary summaries define a partial observation relation.
 
 A node component A carries a dependent rawJoin record on the union of its local scopes. For disjoint components A and B, overlapScope is the complete variable carrier shared by their scopes. The left and right overlap boundaries are the restrictions of the two records to this same carrier. The splice assignment uses the left value on the left scope and the right value elsewhere; agreement on the overlap makes this independent of the branch.
 
@@ -66,17 +66,17 @@ Lean statement: `D5/S3/ConceptDynamics/Gluing/BoundaryObservationSplicing.compat
 
 For disjoint A and B, if the two complete overlap restrictions agree, the pointwise splice is a rawJoin record on A union B and is the unique rawJoin record with that value function. Empty local scopes and empty local relations remain allowed; the theorem is conditional on the displayed compatible pair.
 
-**Theorem 1.6 (Transport of initial overlap compatibility).**
+**Theorem 1.6 (Two complete-context substitutions).**
 
-Lean statement: `D5/S3/ConceptDynamics/Gluing/BoundaryObservationSplicing.compatible_overlap_transport`
+Lean statement: `D5/S3/ConceptDynamics/Gluing/BoundaryObservationSplicing.two_context_output_eq`
 
-*Proof.* Machine-checked in Lean as `D5/S3/ConceptDynamics/Gluing/BoundaryObservationSplicing.compatible_overlap_transport` (`✓ std3`). ∎
+*Proof.* Machine-checked in Lean as `D5/S3/ConceptDynamics/Gluing/BoundaryObservationSplicing.two_context_output_eq` (`✓ std3`). ∎
 
 *Source.* Repository-derived.
 
 *Commentary.*
 
-If equal local summaries preserve their corresponding complete overlap restrictions, an initially compatible pair remains compatible after both records are replaced. This is the boundary transport step used by the partial graph.
+Let A and B be disjoint. Suppose each local summary retains its full boundary and every specified output G against every complete compatible complement. Two global raw records with equal A summaries, equal B summaries, and identical restrictions outside A union B have the same G output. First replace the A record while keeping its complete complement. The intermediate record keeps B unchanged; on the complement of B it agrees with the final record, by combining its A restriction with the common outside restriction. The B replacement then gives the second output equality. BoundaryOutputRetention is an explicit hypothesis; it is not inferred here for arbitrary summaries.
 
 **Definition 1.7 (Partial observation graph).**
 
@@ -90,52 +90,17 @@ Lean statement: `D5/S3/ConceptDynamics/Gluing/BoundaryObservationSplicing.splice
 
 The graph contains ((q_A(a),q_B(b)),q_C(a union b)) exactly for pairs whose complete overlap restrictions agree. Its domain is therefore a partial domain of summary pairs.
 
-**Theorem 1.8 (Single-valued observation graph).**
+For local summaries q_A and q_B, assume equality of summaries preserves the corresponding complete overlap restriction. If a and b initially agree on the overlap, and q_A(a)=q_A(a') and q_B(b)=q_B(b'), symmetry and transitivity of equality give agreement of a' and b'. This conditional observation uses the overlap-retention assumptions; it does not derive them from observational equivalence or prove that the two union summaries agree.
 
-Lean statement: `D5/S3/ConceptDynamics/Gluing/BoundaryObservationSplicing.spliceGraph_single_valued`
-
-*Proof.* Machine-checked in Lean as `D5/S3/ConceptDynamics/Gluing/BoundaryObservationSplicing.spliceGraph_single_valued` (`✓ std3`). ∎
-
-*Source.* Repository-derived.
-
-*Commentary.*
-
-If equal left summaries preserve the left overlap, equal right summaries preserve the right overlap, and equal summary pairs preserve the union observation after the compatible splice, then the partial graph is single-valued on its summary domain. The hypotheses are explicit so no quotient lift or representative choice is hidden.
-
-**Theorem 1.9 (Exact compatible summary domain).**
-
-Lean statement: `D5/S3/ConceptDynamics/Gluing/BoundaryObservationSplicing.spliceGraph_domain`
-
-*Proof.* Machine-checked in Lean as `D5/S3/ConceptDynamics/Gluing/BoundaryObservationSplicing.spliceGraph_domain` (`✓ std3`). ∎
-
-*Source.* Repository-derived.
-
-*Commentary.*
-
-The graph domain is exactly the set of pairs (q_A(a),q_B(b)) with representatives whose complete overlap restrictions agree. This is an equality of sets and does not require either component relation or value family to be nonempty.
-
-**Theorem 1.10 (Exact reachable union image).**
-
-Lean statement: `D5/S3/ConceptDynamics/Gluing/BoundaryObservationSplicing.spliceGraph_range`
-
-*Proof.* Machine-checked in Lean as `D5/S3/ConceptDynamics/Gluing/BoundaryObservationSplicing.spliceGraph_range` (`✓ std3`). ∎
-
-*Source.* Repository-derived.
-
-*Commentary.*
-
-The range of the partial graph is exactly the set of q_C observations of compatible raw pairs. Thus every reachable union observation has two local witnesses, and every compatible pair contributes a reachable observation. No global representative-selection function is asserted.
+The relation above does not assert a well-defined operation on observation quotients. That additionally requires preservation of the full union boundary and a bridge from the specified observation equivalence to the retention hypotheses. Its image is not identified here with every union observation. Restriction and reconstruction of arbitrary union records, finite contraction with independence of order, the unique empty root context, and the descended root map preserving the complete joint output image remain unproved here.
 
 ## References
 
-- Truth anchor: `D5/S3/ConceptDynamics/Gluing/BoundaryObservationSplicing.compatible_overlap_transport`
 - Truth anchor: `D5/S3/ConceptDynamics/Gluing/BoundaryObservationSplicing.compatible_splice_unique`
 - Truth anchor: `D5/S3/ConceptDynamics/Gluing/BoundaryObservationSplicing.overlapBoundaryLeft`
 - Truth anchor: `D5/S3/ConceptDynamics/Gluing/BoundaryObservationSplicing.overlapBoundaryRight`
 - Truth anchor: `D5/S3/ConceptDynamics/Gluing/BoundaryObservationSplicing.overlapScope`
 - Truth anchor: `D5/S3/ConceptDynamics/Gluing/BoundaryObservationSplicing.spliceAssignment`
 - Truth anchor: `D5/S3/ConceptDynamics/Gluing/BoundaryObservationSplicing.spliceGraph`
-- Truth anchor: `D5/S3/ConceptDynamics/Gluing/BoundaryObservationSplicing.spliceGraph_domain`
-- Truth anchor: `D5/S3/ConceptDynamics/Gluing/BoundaryObservationSplicing.spliceGraph_range`
-- Truth anchor: `D5/S3/ConceptDynamics/Gluing/BoundaryObservationSplicing.spliceGraph_single_valued`
+- Truth anchor: `D5/S3/ConceptDynamics/Gluing/BoundaryObservationSplicing.two_context_output_eq`
 - Dependency: [D5/S3/ConceptDynamics/Gluing/RunningIntersectionRecords](RunningIntersectionRecords.md)
