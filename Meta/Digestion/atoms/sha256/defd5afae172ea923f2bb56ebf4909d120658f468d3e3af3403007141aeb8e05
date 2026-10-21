@@ -1,0 +1,17 @@
+**Proposition 9.1 (Bounded-region reduction with unchanged guards).**
+The original joint problem is equivalent to finding one configuration
+(1.6) over $K$, or excluding every such configuration there, with all
+the actual-world guards of Definition 1.1. Theorems 4.1–7.1 exclude
+every unbounded-fifth-response actual $J$-pair mechanism. They do not
+settle that bounded-region joint alternative.
+
+Proof. Every original joint base lies in $K$ by Corollary 8.2, while
+every actual configuration (1.6) over $K$ is already an original joint
+configuration. No constraint on cross-pair distinctness or equality of
+the two terminal common values was added. Theorem 7.1 rules out any
+actual selected $J$-pair sequence with $|p|\to\infty$, including
+the entire finite-source infinite-drift boundary exhausted in
+Theorem 4.1. Corollary 8.1 then bounds all complete-world coordinates
+over joint bases. Neither argument constructs a joint configuration
+or excludes all configurations over $K$. ∎
+
