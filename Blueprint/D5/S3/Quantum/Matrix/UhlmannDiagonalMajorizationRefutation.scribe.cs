@@ -47,7 +47,10 @@ internal sealed class UhlmannDiagonalMajorizationRefutationDocument : IScribeDoc
     private static DocumentBlock Entry(string id, string name, string title, Formula formula,
         string prose, AssessedProvenance provenance, DescribeRole role = DescribeRole.Definition) =>
         Describe.Lean(DescribeId.Create(id), DeclarationHandle.Create(Prefix + name), H(title),
-            StatementSource.FromAuthor(formula), provenance, Blocks(Paragraph(Text(prose))), role);
+            StatementSource.FromAuthor(formula), provenance, Blocks(Paragraph(Text(prose))), role,
+            openProblemResolutionClaim: name == "result" ? new OpenProblemResolutionClaim(
+                ProblemSlugRef.Create("uhlmann-2023-diagonal-majorization-question"),
+                ResolutionKind.Refuted) : null);
 
     private static Formula MajorizesFormula()
     {

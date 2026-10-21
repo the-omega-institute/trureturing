@@ -34,6 +34,10 @@ $$\neg(\forall (n: \mathbb{N}), \forall (P: \operatorname{Matrix}\left(\operator
 
 *Proof.* Machine-checked in Lean as `D5/S3/Quantum/Matrix/UhlmannDiagonalMajorizationRefutation.result` (`✓ std3`). ∎
 
+*Resolves.* `Problems/uhlmann-2023-diagonal-majorization-question` (refuted) by `D5/S3/Quantum/Matrix/UhlmannDiagonalMajorizationRefutation.result`.
+
+<!-- scribe-open-problem-resolution-v1 {"problem_slug":"uhlmann-2023-diagonal-majorization-question","declaration_gid":"D5/S3/Quantum/Matrix/UhlmannDiagonalMajorizationRefutation.result","resolution_kind":"refuted"} -->
+
 *Source.* Repository-derived.
 
 *Acknowledgement.* Jeffrey Uhlmann (2023). *Partial Proof of a Conjecture with Implications for Spectral Majorization*. DOI: [10.46571/JCI.2023.2.4](https://doi.org/10.46571/JCI.2023.2.4). URL: <https://arxiv.org/abs/2309.01302v1>.
