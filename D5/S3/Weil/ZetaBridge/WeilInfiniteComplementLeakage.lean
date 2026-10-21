@@ -97,7 +97,7 @@ theorem inverse_square_summable {d : ℝ} (hd : 0 < d) :
     Summable (fun j : ℕ => ((d + (j : ℝ) + 1)⁻¹) ^ 2) :=
   summable_of_sum_range_le (fun _ => sq_nonneg _) (inverse_square_partial_le hd)
 
-private theorem cauchyHalf_norm_summable {d : ℝ} (hd : 0 < d)
+theorem cauchyHalf_norm_summable {d : ℝ} (hd : 0 < d)
     (u : ℕ → ℂ) (hu : Summable (fun j => ‖u j‖ ^ 2)) :
     Summable (fun j : ℕ => ‖u j * (((d + (j : ℝ) + 1)⁻¹ : ℝ) : ℂ)‖) := by
   have hdom := (hu.add (inverse_square_summable hd)).div_const 2

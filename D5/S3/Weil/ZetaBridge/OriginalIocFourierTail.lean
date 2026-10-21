@@ -176,16 +176,8 @@ theorem exteriorSeries_norm_summable {L : ℝ} (hL : 0 < L) {f : ℝ → ℂ}
   have hNr : 0 < (N : ℝ) := by exact_mod_cast hN
   have hp : 0 < (N : ℝ) + s := by linarith [(abs_le.mp hs).1]
   have hm : 0 < (N : ℝ) - s := by linarith [(abs_le.mp hs).2]
-  have hbound (u : ℕ → ℂ) (hu : Summable (fun j ↦ ‖u j‖ ^ 2))
-      (d : ℝ) (hd : 0 < d) :
-      Summable (fun j : ℕ ↦ ‖u j * (((d + (j : ℝ) + 1)⁻¹ : ℝ) : ℂ)‖) := by
-    apply Summable.of_nonneg_of_le (fun _ ↦ norm_nonneg _) _
-      ((hu.add (WeilInfiniteComplementLeakage.inverse_square_summable hd)).div_const 2)
-    intro j
-    have hi : 0 ≤ (d + (j : ℝ) + 1)⁻¹ := by positivity
-    rw [norm_mul, Complex.norm_real, Real.norm_eq_abs, abs_of_nonneg hi]
-    nlinarith [sq_nonneg (‖u j‖ - (d + (j : ℝ) + 1)⁻¹)]
-  exact ⟨hbound _ hu _ hp, hbound _ hv _ hm⟩
+  exact ⟨WeilInfiniteComplementLeakage.cauchyHalf_norm_summable hp _ hu,
+    WeilInfiniteComplementLeakage.cauchyHalf_norm_summable hm _ hv⟩
 
 /-- Exact signed series on the leakage owner's band, for the original arbitrary
 complex L2 function with its actual low coefficients zero. -/

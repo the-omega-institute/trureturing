@@ -41,10 +41,6 @@ theorem interval_left_lt_right {L : ℝ} (hL : 0 < L) :
     -L / 2 < L / 2 := by
   linarith
 
-theorem iocZeroExtend_eq_of_not_mem {L : ℝ} {f : ℝ → ℂ} {x : ℝ}
-    (hx : x ∉ interval L) : iocZeroExtend L f x = 0 := by
-  simp [iocZeroExtend, hx]
-
 theorem iocZeroExtend_eq_on_mem {L : ℝ} {f : ℝ → ℂ} {x : ℝ}
     (hx : x ∈ interval L) : iocZeroExtend L f x = f x := by
   simp [iocZeroExtend, hx]
@@ -106,9 +102,6 @@ def centeredExpIntegral (L r : ℝ) : ℂ :=
       Complex.exp (-Complex.I * (r * L / 2 : ℝ))) /
       (Complex.I * (r : ℂ))
 
-theorem centeredExpIntegral_zero {L : ℝ} : centeredExpIntegral L 0 = (L : ℂ) := by
-  simp [centeredExpIntegral]
-
 theorem integral_centered_exp {L r : ℝ} (hL : 0 < L) :
     (∫ x in (-L / 2)..(L / 2),
       Complex.exp (Complex.I * (r : ℂ) * (x : ℂ))) =
@@ -151,9 +144,8 @@ theorem centeredExpIntegral_sinc {L r : ℝ} (hL : 0 < L) :
   field_simp [hr]
   <;> ring
 
-/-! Exact one-basis transform.  The theorem is stated through the centered
-    integral first; the rational expression is obtained only under the
-    displayed non-resonance hypothesis. -/
+/-! Exact one-basis transform through the centered integral and the
+    resonance-safe sinc expression. -/
 
 def basisPaperFT (L : ℝ) (n : ℤ) (t : ℝ) : ℂ :=
   paperFT (signedBasis L n) t
@@ -197,16 +189,5 @@ theorem basisPaperFT_eq_sinc {L : ℝ} (hL : 0 < L) (n : ℤ) (t : ℝ) :
           ((t + frequency L n) * L / 2)) := by
   rw [basisPaperFT_eq_centered hL]
   rw [centeredExpIntegral_sinc hL]
-
-theorem basisPaperFT_eq_rational {L : ℝ} (hL : 0 < L) (n : ℤ) {t : ℝ}
-    (hrt : t + frequency L n ≠ 0) :
-    basisPaperFT L n t =
-      phase n * (Real.sqrt L : ℂ)⁻¹ *
-        ((Complex.exp (Complex.I * ((t + frequency L n : ℝ) : ℂ) * (L / 2 : ℝ)) -
-          Complex.exp (-Complex.I * ((t + frequency L n : ℝ) : ℂ) * (L / 2 : ℝ))) /
-          (Complex.I * ((t + frequency L n : ℝ) : ℂ))) := by
-  rw [basisPaperFT_eq_centered hL, integral_centered_exp hL]
-  simp only [centeredExpIntegral, if_neg hrt]
-  congr 3 <;> push_cast <;> ring
 
 end D5.S3.Weil.ZetaBridge.OriginalIocFourier

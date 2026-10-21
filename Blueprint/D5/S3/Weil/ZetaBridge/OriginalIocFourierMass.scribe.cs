@@ -47,7 +47,7 @@ internal sealed class OriginalIocFourierMassDocument : IScribeDocumentDefinition
                     H("Literal Ioc zero extension"),
                     StatementSource.FromAuthor(Disp(Seq(
                         Call("iocZeroExtend", L, f), Eq,
-                        Call("indicator", Call("Ioc", Seq(Minus, L, D(2)), Seq(L, D(2))), f)))),
+                        Call("indicator", Call("Ioc", Seq(Minus, L, Slash, D(2)), Seq(L, Slash, D(2))), f)))),
                     AssessedProvenance.FromRepo(), Blocks(Paragraph(Text("The interval indicator retains the original Lebesgue dx measure and specifies the endpoint convention explicitly."))), DescribeRole.Definition),
                 Describe.Lean(
                     DescribeId.Create("signed-parseval-mass"),

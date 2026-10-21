@@ -8,7 +8,7 @@ The original interval is Ioc(-L/2,L/2), with literal zero extension. The phase-a
 
 **Definition 1.1 (Literal Ioc zero extension).**
 
-$$\operatorname{iocZeroExtend}(L, f)=\operatorname{indicator}(\operatorname{Ioc}(-L2, L2), f)$$
+$$\operatorname{iocZeroExtend}(L, f)=\operatorname{indicator}(\operatorname{Ioc}(-L/2, L/2), f)$$
 
 *Formalization.* `D5/S3/Weil/ZetaBridge/OriginalIocFourierMass.iocZeroExtend` (`✓ std3`).
 
