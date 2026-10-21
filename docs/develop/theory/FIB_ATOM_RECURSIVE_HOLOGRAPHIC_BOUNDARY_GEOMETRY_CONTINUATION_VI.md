@@ -3791,3 +3791,673 @@ physical premise, separate from the conditional finite matrix conclusions.
   §§149--151 specify the two-preparation CAR coordinates and common filter.
 
 ## 156.99 追加锚（本行以下为增补区）
+
+## 157. Full-spectrum comparison at the fixed CAR cut
+
+This appendix fixes the finite model specified in §§139--146 and
+asks what follows from its complete spectrum before any further restriction
+on the allowed unitary.  The one-particle space is
+$\mathfrak h=\mathbb C^3$, with the normalized $A$-first CAR
+identification
+
+$$
+ \mathcal F_-(\mathfrak h)
+ =\mathbb C^2_A\otimes\mathbb C^4_B,
+ \qquad
+ A=\mathbb C e_\ell,\quad
+ B=\operatorname{span}_{\mathbb C}\{e_r,e_R\}.
+\tag{157.1}
+$$
+
+Here $B$ is the two-dimensional one-particle mode space, while
+$\mathbb C^4_B$ denotes its four-dimensional fermionic Fock factor
+$\mathcal F_-(B)$.
+
+The tensor product here is the ordinary occupation tensor product induced
+by the declared creation order.  It is the fixed cut for every partial
+transpose below.
+
+For a unit vector $V\in\mathbb C^3$, put
+
+$$
+ H_V=I_3-VV^*,\qquad \|V\|_2=1,\qquad
+ \rho_V(\beta)
+ =\frac{\exp[-\beta\,d\Gamma_-(H_V)]}{Z_\beta},
+ \qquad t=e^{-\beta},\quad \beta\ge0 .
+\tag{157.2}
+$$
+
+The eigenvalues of $H_V$ are $0,1,1$, independently of the placement
+of $V$ relative to the fixed $A|B$ cut.  We retain the zero mode and
+all particle-number sectors.  Thus this is the same eight-dimensional
+full Gibbs state as in §141, with $V$ as the varying
+one-particle eigenvector.
+
+The two questions that must be separated are:
+
+* what the spectrum forces for every global $W\in U(8)$, and
+* what a specified state $\rho_V(\beta)$, or a restricted orbit of it,
+does at the fixed cut (157.1).
+
+The first question is spectral.  The second also depends on eigenvector
+placement and on the unitary class that is admitted.
+
+## 158. The full $2,4,2$ Gibbs spectrum
+
+In the eigenmode occupation basis, write the zero-energy mode as $0$
+and the two unit-energy modes as $1,2$.  The four particle-number
+sectors have the following unnormalized Gibbs weights:
+
+| Sector | Energies | Weights |
+| --- | --- | --- |
+| $j=0$ | $0$ | $1$ |
+| $j=1$ | $0,1,1$ | $1,t,t$ |
+| $j=2$ | $1,1,2$ | $t,t,t^2$ |
+| $j=3$ | $2$ | $t^2$ |
+
+Thus
+
+$$
+Z_\beta=1+(1+2t)+(2t+t^2)+t^2=2(1+t)^2.
+\tag{158.1}
+$$
+
+For $0\le t\le1$ the sorted spectrum, with multiplicities retained, is
+
+$$
+\boxed{\operatorname{spec}\rho_V(\beta)
+=\frac1Z(1,1,t,t,t,t,t^2,t^2).}
+\tag{158.2}
+$$
+
+The ordering is nonincreasing; at $t=1$ all eight values coincide.  In
+particular,
+
+$$
+\lambda_1=\lambda_2=\frac1Z,\qquad
+\lambda_3=\cdots=\lambda_6=\frac tZ,\qquad
+\lambda_7=\lambda_8=\frac{t^2}Z.
+\tag{158.3}
+$$
+
+The repeated values in (158.3), rather than a nondegenerate perturbation,
+are part of the input to the spectral criterion.
+
+## 159. The exact global-unitary quantifiers
+
+For a density operator on the fixed $2\times4$ cut, define
+
+$$
+\begin{aligned}
+\operatorname{APPT}_{2:4}(\rho)
+&\Longleftrightarrow
+\forall W\in U(8),\quad (W\rho W^*)^{T_A}\succeq0,\\
+\operatorname{AS}_{2:4}(\rho)
+&\Longleftrightarrow
+\forall W\in U(8),\quad W\rho W^*\text{ is separable across }A|B.
+\end{aligned}
+\tag{159.1}
+$$
+
+The $U(8)$ in (159.1) is the full global unitary group.  It is not the
+local group $U(2)\otimes U(4)$ and is not restricted to commute with
+total particle number.
+
+Johnston's qubit--qudit spectral theorem, Theorem 1, gives for $2\times n$
+states the equivalence of absolute separability, absolute PPT, and
+
+$$
+\operatorname{AS}_{2:n}(\rho)
+\Longleftrightarrow
+\operatorname{APPT}_{2:n}(\rho)
+\Longleftrightarrow
+\lambda_1\le
+\lambda_{2n-1}+2\sqrt{\lambda_{2n-2}\lambda_{2n}}.
+\tag{159.2}
+$$
+
+Hildebrand's Corollary 2 supplies the absolute-PPT side of (159.2).
+For the present $n=4$, the needed entries of (158.3) are
+
+$$
+\lambda_1=\frac1Z,\qquad
+\lambda_6=\frac tZ,\qquad
+\lambda_7=\lambda_8=\frac{t^2}Z.
+\tag{159.3}
+$$
+
+Substitution into (159.2) yields
+
+$$
+\operatorname{AS}_{2:4}(\rho_V(\beta))
+\Longleftrightarrow
+\operatorname{APPT}_{2:4}(\rho_V(\beta))
+\Longleftrightarrow
+1\le t^2+2t^{3/2}.
+\tag{159.4}
+$$
+
+This is a statement about the complete $U(8)$ orbit of the spectrum.
+It is not a claim that an arbitrary individual $2\times4$ PPT state is
+separable.  The only PPT-to-separability use here is the absolute
+qubit--qudit equivalence in Johnston's theorem; later $2\times2$ uses are
+separately identified.
+
+## 160. The full-unitary boundary and equality
+
+Let
+
+$$
+F(t)=t^2+2t^{3/2},\qquad 0<t\le1.
+\tag{160.1}
+$$
+
+Then
+
+$$
+F'(t)=2t+3\sqrt t>0,\qquad
+F(1/2)=\frac14+\frac1{\sqrt2}<1,\qquad
+F(9/16)=\frac{297}{256}>1.
+\tag{160.2}
+$$
+
+There is a unique $t_*\in(1/2,9/16)$ satisfying
+
+$$
+t_*^2+2t_*^{3/2}=1.
+\tag{160.3}
+$$
+
+If $x_*=\sqrt{t_*}$, this is $x_*^4+2x_*^3-1=0$.  Define
+
+$$
+\beta_*=-\log t_*,
+\qquad
+\log(16/9)<\beta_*<\log2.
+\tag{160.4}
+$$
+
+Because $t=e^{-\beta}$ decreases with $\beta$,
+
+$$
+\boxed{
+0\le\beta\le\beta_*
+\Longleftrightarrow
+\operatorname{AS}_{2:4}(\rho_V(\beta))
+\Longleftrightarrow
+\operatorname{APPT}_{2:4}(\rho_V(\beta)).
+}
+\tag{160.5}
+$$
+
+At $\beta=\beta_*$ every global-unitary placement is PPT and separable.
+For $\beta>\beta_*$ the spectrum is outside the absolute-separability
+region; the consequence used below is existence of an NPT placement, not
+NPT of the specified native member.
+
+## 161. An explicit full-unitary NPT placement
+
+Choose an orthonormal basis $b_0,b_1,b_2,b_3$ of the four-dimensional
+fermionic Fock factor $\mathcal F_-(B)\cong\mathbb C^4_B$.  On
+$\mathcal S=\mathbb C^2\otimes\operatorname{span}\{b_0,b_1\}$ use the
+ordered product basis
+
+$$
+|0b_0\rangle,\ |0b_1\rangle,\ |1b_0\rangle,\ |1b_1\rangle.
+\tag{161.1}
+$$
+
+Define
+
+$$
+R_t=\frac1Z
+\begin{pmatrix}
+t&0&0&0\\
+0&(1+t^2)/2&(1-t^2)/2&0\\
+0&(1-t^2)/2&(1+t^2)/2&0\\
+0&0&0&t^2
+\end{pmatrix},
+\tag{161.2}
+$$
+
+and on the orthogonal product complement, in the ordered basis
+$|0b_2\rangle,|0b_3\rangle,|1b_2\rangle,|1b_3\rangle$, put
+
+$$
+D_t=\frac1Z\operatorname{diag}(1,t,t,t),\qquad
+\rho_*(t)=R_t\oplus D_t.
+\tag{161.3}
+$$
+
+The middle block in (161.2) has eigenvectors
+
+$$
+\frac{|0b_1\rangle+|1b_0\rangle}{\sqrt2},\qquad
+\frac{|0b_1\rangle-|1b_0\rangle}{\sqrt2}
+$$
+
+with eigenvalues $1/Z$ and $t^2/Z$.  The other two eigenvalues of
+$R_t$ are $t/Z$ and $t^2/Z$, so
+
+$$
+\operatorname{spec}\rho_*(t)
+=\frac1Z(1,1,t,t,t,t,t^2,t^2).
+\tag{161.4}
+$$
+
+If $\rho_V(\beta)=\sum_{i=1}^8\lambda_i|\phi_i\rangle\langle\phi_i|$ is
+any orthonormal eigenbasis realization of (158.2), choose an orthonormal
+eigenbasis $w_i$ of (161.3) carrying the same eigenvalues, including the
+degenerate eigenspaces.  Then
+
+$$
+W=\sum_{i=1}^8|w_i\rangle\langle\phi_i|
+\tag{161.5}
+$$
+
+is a global unitary with $W\rho_V(\beta)W^*=\rho_*(t)$.  Thus (161.3) is
+an actual point of the full $U(8)$ orbit, retaining all multiplicities.
+
+Partial transpose on $A$ moves the middle coherence to the corner
+spanned by $|0b_0\rangle,|1b_1\rangle$.  That principal block is
+
+$$
+C_t=\frac1Z
+\begin{pmatrix}
+t&(1-t^2)/2\\
+(1-t^2)/2&t^2
+\end{pmatrix},
+\qquad
+\det C_t=\frac{t^3-(1-t^2)^2/4}{Z^2}.
+\tag{161.6}
+$$
+
+For $0<t\le1$,
+
+$$
+\det C_t<0
+\Longleftrightarrow
+1-t^2>2t^{3/2}
+\Longleftrightarrow
+F(t)<1.
+\tag{161.7}
+$$
+
+A negative principal determinant makes the full partial transpose
+nonpositive.  Hence this explicit placement is NPT for every
+$\beta>\beta_*$.
+
+At $t=1/2$, so $\beta=\log2$ and $Z=9/2$, the density matrix is
+
+$$
+\boxed{
+\rho_*(1/2)=\frac1{36}
+\left[
+\begin{pmatrix}
+4&0&0&0\\
+0&5&3&0\\
+0&3&5&0\\
+0&0&0&2
+\end{pmatrix}
+\oplus
+\operatorname{diag}(8,4,4,4)
+\right].
+}
+\tag{161.8}
+$$
+
+Its spectrum is $(8,8,4,4,4,4,2,2)/36$.  The corresponding partial
+transpose corner is
+
+$$
+\frac1{36}\begin{pmatrix}4&3\\3&2\end{pmatrix},
+\qquad
+\det=-\frac1{1296},
+\qquad
+\lambda_{\min}(\rho_*(1/2)^{T_A})
+=\frac{3-\sqrt{10}}{36}.
+\tag{161.9}
+$$
+
+This is a matrix-level proof of NPT at the fixed cut.
+
+The witness uses the full global unitary class.  If $b_0$ is chosen as the
+vacuum vector of $\mathcal F_-(B)$, then $|0b_0\rangle$ is the total
+vacuum and has weight $t/Z$ in (161.2), while the original Gibbs vacuum
+has weight $1/Z$.  For
+$t<1$, the one-dimensional vacuum sector cannot change weight under any
+unitary commuting with total number.  Therefore this witness is not
+number-preserving.  No physical implementation or SSR legality is
+asserted for (161.5).
+
+## 162. The passive $\Gamma(U(3))$ orbit
+
+For $U\in U(3)$, let
+
+$$
+\Gamma(U)=\bigoplus_{j=0}^3\wedge^jU
+\tag{162.1}
+$$
+
+be its fermionic exterior-power lift.  Since $H_{UV}=UH_VU^*$, the
+second-quantized covariance gives
+
+$$
+\Gamma(U)\rho_V(\beta)\Gamma(U)^*=\rho_{UV}(\beta).
+\tag{162.2}
+$$
+
+The group $U(3)$ acts transitively on the unit sphere of $\mathbb C^3$.
+Consequently the mathematical passive orbit is exactly
+
+$$
+\mathcal P_\beta(V)
+=\{\rho_W(\beta):W\in\mathbb C^3,\ \|W\|_2=1\}.
+\tag{162.3}
+$$
+
+This is an orbit equality for the specified Hamiltonian family.  It does
+not say that every $W$ is in the image of a native construction $q\mapsto
+V(q)$.
+
+Let $p=|W_\ell|^2$.  For $p>0$ choose the representative
+$\widetilde W=(\overline{W_\ell}/|W_\ell|)W$; for $p=0$ put
+$\widetilde W=W$.  Then $\widetilde W_\ell=\sqrt p$ and
+$\widetilde W\widetilde W^*=WW^*$, so $H_{\widetilde W}=H_W$ and
+$\rho_{\widetilde W}(\beta)=\rho_W(\beta)$.  This is a choice of phase
+representative, not a physical local operation.
+
+Choose $U_B\in U(2)$ sending the $B$ component $\widetilde W_B$ to
+$\sqrt{1-p}\,e_b$.  At $p=0$ this aligns a unit vector in $B$; at $p=1$
+we already have $\widetilde W=e_\ell$, so any $U_B$ suffices.  With
+$L=1_A\oplus U_B$ and $v_p=\sqrt p\,e_\ell+\sqrt{1-p}\,e_b$,
+
+$$
+L\widetilde W=v_p,\qquad LWW^*L^*=v_pv_p^*.
+$$
+
+By (162.2) and §142, the even, number-preserving lift
+$\Gamma(L)=I_A\otimes\Gamma(U_B)$ is local for the declared occupation
+tensor product and conjugates $\rho_W(\beta)$ to $\rho_{v_p}(\beta)$.
+The orthogonal $B$-mode is a spectator, so the factorization from §142 is
+
+$$
+\rho_W(\beta)\simeq_{\rm local}\sigma_\beta(p)\otimes\tau_\beta,
+\qquad
+\tau_\beta=\frac{\operatorname{diag}(1,t)}{1+t},
+\tag{162.4}
+$$
+
+with
+
+$$
+\sigma_\beta(p)=\frac1{2(1+t)}
+\begin{pmatrix}
+1&0&0&0\\
+0&1-(1-t)p&(1-t)\sqrt{p(1-p)}&0\\
+0&(1-t)\sqrt{p(1-p)}&t+(1-t)p&0\\
+0&0&0&t
+\end{pmatrix}.
+\tag{162.5}
+$$
+
+The partial transpose of (162.5) has a $2\times2$ corner whose
+determinant has the sign of
+
+$$
+t-(1-t)^2p(1-p).
+\tag{162.6}
+$$
+
+The PPT criterion is sufficient here because (162.5) is a two-qubit state
+and the spectator in (162.4) is a local product factor.  Thus
+
+$$
+\boxed{
+\rho_W(\beta)\text{ is NPT}
+\Longleftrightarrow
+(1-t)^2p(1-p)>t
+\Longleftrightarrow
+4\sinh^2(\beta/2)p(1-p)>1.
+}
+\tag{162.7}
+$$
+
+Equality in (162.7) is PPT and separable.  No arbitrary $2\times4$ PPT
+sufficiency is used.
+
+## 163. The passive boundary and its separation from the full boundary
+
+Since $\max_{0\le p\le1}p(1-p)=1/4$, the entire passive orbit is
+separable exactly when
+
+$$
+\frac{(1-t)^2}{4}\le t
+\Longleftrightarrow
+\sinh^2(\beta/2)\le1.
+\tag{163.1}
+$$
+
+Define
+
+$$
+\boxed{\beta_{\rm pass}=2\operatorname{arsinh}1
+=\log(3+2\sqrt2).}
+\tag{163.2}
+$$
+
+The endpoint statements are
+
+$$
+\begin{array}{c|c}
+\text{range} & \text{passive orbit}\\ \hline
+0\le\beta\le\beta_{\rm pass}
+& \text{every }\rho_W(\beta)\text{ is separable (and PPT)}\\
+\beta>\beta_{\rm pass}
+& p=1/2\text{ gives an NPT member, while }p=0,1
+\text{ remain separable.}
+\end{array}
+\tag{163.3}
+$$
+
+At $\beta=\beta_{\rm pass}$ the $p=1/2$ state is exactly on the PPT and
+separable boundary.  Above it the passive orbit is still not all
+entangled because its endpoint placements are product factors.
+
+The exact boundaries obey
+
+$$
+\boxed{\beta_*<\log2<\beta_{\rm pass}.}
+\tag{163.4}
+$$
+
+Thus at $\beta=\log2$ the explicit matrix (161.8) is NPT, whereas every
+passive placement is separable because
+
+$$
+(1-t)^2p(1-p)\le\frac1{16}<\frac12=t.
+\tag{163.5}
+$$
+
+This separates the quantified full-unitary and passive conclusions.
+
+## 164. Native eigenvector placement: the $q_a,q_b$ pair
+
+For the two native metrics fixed in §139, the normalized zero-mode vectors
+and common cut give
+
+$$
+p_a=\frac{49}{198},\qquad p_b=\frac13,
+\qquad
+p_a(1-p_a)=\frac{7301}{198^2},\qquad
+p_b(1-p_b)=\frac29.
+\tag{164.1}
+$$
+
+The native Hamiltonians $H_{V_a}$ and $H_{V_b}$ have the same
+one-particle spectrum $\{0,1,1\}$, so their full Gibbs states have the
+same spectrum (158.2) at every $\beta$.  Their eigenvectors occupy the
+fixed $A|B$ cut differently.
+
+For $0<p<1$, (162.7) gives
+
+$$
+\beta_c(p)=2\operatorname{arsinh}
+\frac1{2\sqrt{p(1-p)}}.
+\tag{164.2}
+$$
+
+Hence
+
+$$
+\beta_{c,a}=2\operatorname{arsinh}\frac{99}{\sqrt{7301}},
+\qquad
+\beta_{c,b}=2\operatorname{arsinh}\frac3{2\sqrt2},
+\tag{164.3}
+$$
+
+with exact ordering
+
+$$
+\beta_{\rm pass}<\beta_{c,b}<\log7<\beta_{c,a}.
+\tag{164.4}
+$$
+
+Indeed $\sinh(\log7/2)=3/\sqrt7$, and
+
+$$
+1<\frac3{2\sqrt2}<\frac3{\sqrt7}
+<\frac{99}{\sqrt{7301}},
+\qquad
+9\cdot7301<7\cdot9801.
+\tag{164.5}
+$$
+
+At the common inverse temperature $\beta=\log7$,
+
+$$
+4\sinh^2(\beta/2)p_a(1-p_a)=\frac{7301}{7623}<1,
+\qquad
+4\sinh^2(\beta/2)p_b(1-p_b)=\frac87>1.
+\tag{164.6}
+$$
+
+Therefore
+
+$$
+\boxed{
+\rho_{q_a}(\log7)\text{ is separable},\qquad
+\rho_{q_b}(\log7)\text{ is NPT}.
+}
+\tag{164.7}
+$$
+
+Both $Q_{q_a}$ and $Q_{q_b}$ are the irreducible native generators from
+(139.3)--(139.6): their off-diagonal rates are strictly positive.
+Equation (164.7) is an eigenvector-placement comparison between two
+specified native members, not a claim about physical subsystems or all
+native parameters.
+
+The full spectrum determines the universal $U(8)$ boundary (160.5) and,
+beyond it, guarantees an NPT placement.  It does not determine whether a
+particular native $\rho_{V(q)}$ is separable.  That answer uses $V(q)$'s
+placement relative to $A|B$, together with the permitted orbit.
+
+## 165. Operation classes and the exact scope of each conclusion
+
+| Operation class | Additional structure | Conclusion supplied here |
+| --- | --- | --- |
+| All global $U(8)$ | Arbitrary eight-dimensional conjugation; sectors and particle number may mix. | Johnston--Hildebrand give the exact $\beta_*$ boundary for all-orbit separability/PPT; (161.3) gives an explicit NPT placement above it. |
+| Global number-preserving | $[U,N]=0$; each particle-number sector is preserved. | The specific witness (161.8) is excluded for $t<1$; no sharp intermediate-orbit classification is supplied here. |
+| Passive $\Gamma(U(3))$ | One single-particle $U$ acts by all exterior powers. | The orbit is (162.3), with exact all-separable boundary $\beta_{\rm pass}$ and criterion (162.7). |
+| Native $G_q$ | $V=V(q)$ must arise from the allowed native parameter construction. | (164.7) holds for the supplied $q_a,q_b$; no equality of the native image with the full unit sphere is asserted. |
+| Local SSR--LOCC | Local charge restrictions, instruments, communication and resource availability. | These orbit calculations supply no finite protocol, accessible entanglement, or operational advantage. |
+
+The passive global orbit is a mathematical orbit of states and is not a
+local SSR--LOCC operation class.  An NPT member of a global or passive
+orbit is not by itself a physically available protocol.  The one-copy SSR
+twirl in §145 and the two-copy resource construction in §§147--156 have
+their own stated operation menus; neither is silently replaced by this
+table.
+
+This appendix supplies no classification of the intermediate global
+number-preserving orbit.  That question is independent of both endpoint
+calculations and cannot be filled by interpolating between $\beta_*$ and
+$\beta_{\rm pass}$.
+
+## 166. The scalar-bound boundary and theorem applicability
+
+The five-row scalar bound stated in PR19694 is a conditional statement
+in its own parameter range, $5\le n\le18$, with total Hilbert dimension
+$N=5n$, hence $25\le N\le90$, and its own $j$-range and scalar
+hypotheses.  The literal Fock space in (157.1) has total dimension
+$2\cdot4=8$, which lies outside that total-dimension range.  It is useful
+here only as a quantifier check: a scalar bound cannot be read as the
+literal $2\times4$ criterion without a dimension map, a
+multiplicity-preserving spectral assignment, and a proof that all mapped
+hypotheses imply the target partial-transpose statement.  No such bridge
+is used in (159.4).
+
+The direct suppliers for the literal fixed-cut conclusion are therefore
+the qubit--qudit results in §159, together with the source-dependent
+two-mode factorization in §162.  The latter invokes the ordinary
+two-qubit PPT criterion only after the B-local spectator factor has been
+exhibited.  It does not promote a PPT test for arbitrary $2\times4$
+states to separability.
+
+The conclusions in this appendix are conditional on the specified finite
+model (157.1)--(157.2), the supplied native $q_a,q_b$ data, and the stated
+ordinary tensor cut.  They establish the displayed matrix and orbit
+consequences only.  They do not establish a physical realization, native
+reachability of all intermediate vectors, or a complete
+global-number-preserving classification.
+
+## 167. Primary suppliers and exact reuse scopes
+
+- **[J] Qubit--qudit absolute separability.** Nathaniel Johnston,
+  *Separability from Spectrum for Qubit--Qudit States*, Physical Review A
+  **88**, 062330 (2013), DOI
+  [10.1103/PhysRevA.88.062330](https://doi.org/10.1103/PhysRevA.88.062330),
+  arXiv:1309.2006v1, Theorem 1, PDF p. 1.  It supplies the equivalence
+  between all-global-unitary separability, all-global-unitary PPT, and
+  the ordered $2\times n$ spectral inequality.
+
+- **[H] Positive partial transpose from spectra.** Roland Hildebrand,
+  *Positive partial transpose from spectra*, Physical Review A **76**,
+  052325 (2007), DOI
+  [10.1103/PhysRevA.76.052325](https://doi.org/10.1103/PhysRevA.76.052325),
+  arXiv:quant-ph/0502170v1, §4, Corollary 2, PDF p. 5.  It supplies the
+  absolute-PPT spectral condition used in the same fixed $2\times4$
+  global-unitary quantifier.
+
+- **[P] Two-qubit PPT sufficiency.** M. Horodecki, P. Horodecki and
+  R. Horodecki, *Separability of Mixed States: Necessary and Sufficient
+  Conditions*, Theorem 3, PDF p. 8,
+  [quant-ph/9605038v2](https://arxiv.org/pdf/quant-ph/9605038v2),
+  Physics Letters A **223**, 1--8 (1996), DOI
+  [10.1016/S0375-9601(96)00706-2](https://doi.org/10.1016/S0375-9601(96)00706-2).
+  It is used only for the actual $2\times2$ factor in (162.6), after
+  the local spectator factorization.
+
+- **[F] Finite Fock and passive covariance.** The finite fermionic
+  Fock/exterior-power and second-quantization ingredients are the
+  supplied source used in §§141--142.  Equations (162.1)--(162.3) apply
+  that existing structure to the full $H_V=I_3-VV^*$ family.
+
+The source-dependent content here is the spectrum substitution, the
+fixed-cut placement (161.1)--(161.8), the passive-orbit threshold, and the
+native $q_a,q_b$ comparison.  The cited results are reused within their
+stated quantifiers and dimensions.  No independent literature-priority
+claim is attached to this application.
+
+## 168. Scope of the endpoint conclusions
+
+The full-spectrum statement is exhausted by (160.5) and the explicit
+placement (161.2); the passive-family statement is exhausted by
+(162.4)--(163.3); and the supplied native comparison is (164.7).  Any
+claim about a narrower native image, the intermediate global
+number-preserving orbit, or an SSR--LOCC protocol requires additional
+definitions and proof beyond this appendix.
+
+## 168.99 追加锚（本行以下为增补区）
+
