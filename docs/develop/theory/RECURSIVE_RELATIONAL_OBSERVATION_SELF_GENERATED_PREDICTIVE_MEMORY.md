@@ -817,18 +817,15 @@ Exact finite-future preservation supplies neither a small carrier, an efficient 
 A single-valued guess after a classical history succeeds with probability at most the largest conditional outcome probability;
 the preserved object is the conditional law.
 
-**Proposition 11.3 (current-output compression need not preserve learning).**
-For the two-factor predictor of [Machine Learning Whitebox §9](FIB_ATOM_MACHINE_LEARNING_WHITEBOX.md),
-the summary consisting only of $w=ab$ cannot intertwine all synchronous gradient steps, even though it preserves all current outputs $f_{a,b}(x)=wx$.
+The learning-state obstruction is the existing witness in [Machine Learning Whitebox §9](FIB_ATOM_MACHINE_LEARNING_WHITEBOX.md),
+reused here to test Definition 11.1's factorization. For $f_{a,b}(x)=abx$, it supplies
+$w^+=(1+\eta^2g^2)w-\eta g(a^2+b^2)$.
+With $\ell(w)=w$ and $\eta=1/10$, the pairs $(1,1)$ and $(2,1/2)$ both have $w=1$,
+but their next summaries are $81/100$ and $117/200$.
+A target branch depending only on $w$ cannot give both, so current-output preservation does not meet the instrument-summary contract.
+This is the cited witness's application to that contract, not a new counterexample.
 
-Proof. The cited update is $w^+=(1+\eta^2g^2)w-\eta gs$, with $s=a^2+b^2$ and $g=\ell'(w)$.
-Take the same legal gradient action, the loss $\ell(w)=w$, and $\eta=1/10$.
-The actual pairs $(a,b)=(1,1)$ and $(2,1/2)$ have the same $w=1$, but $s=2$ and $17/4$.
-The next summaries are respectively $81/100$ and $117/200$, which are unequal.
-A deterministic predicted update from the common summary cannot give both.
-This witnesses failure of the branch factorization required in Definition 11.1, rather than failure of current-output reconstruction. QED.
-
-**Definition 11.4 (growth embeddings and static propagation).**
+**Definition 11.3 (growth embeddings and static propagation).**
 For an actually supplied ancillary register and unitary, a dimension-changing step is the isometry
 $V_t\psi=U_t(\psi\otimes|0\rangle)$ from $\mathcal H_t$ to $\mathcal H_{t+1}$.
 Its pure conditional histories may be placed on a path of the propagation construction in
