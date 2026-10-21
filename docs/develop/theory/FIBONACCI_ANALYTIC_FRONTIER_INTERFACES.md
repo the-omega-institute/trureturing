@@ -4280,3 +4280,176 @@ $$
 该结果是 `repo-derived` 的指定观察器分辨率应用；Bourgain 的次凸界、经典 Cauchy 估计、源论文的正核与四矩及第 474 节的振幅运输均直接复用，不主张新的次凸估计、一般不确定性原理或文献优先权。它将“尚无集中定理”细化成了当前固定窗形和次数预算下的定量障碍：任意单个允许线性滤波器及其有限正组合，都不能将归一化观察质量集中到原高度坐标上的微观区间。该界没有排除改变窗长、次数预算或观察器类别后的集中，也没有断言所有平均正性论证都必须通过近似点质量恢复逐点符号。它仍以所引来源的解析估计为前提；逐点全阶 Laguerre 条件与逐整数 Robin 恢复尚未由此得到。
 
 ## 追加锚（本行以下为增补区）
+
+## 476. 实际 Xi 观察器的无条件联合第二矩
+
+**定理 476.1（增长次数下的完整 Gram 与分辨率）。** 沿用（475.1）—（475.2）的实际普通导数观察器 $Y_P,N_P,\mu_P$。固定非负非零 $w\in C_c^\infty((0,1))$、$0<\delta<1/2$ 和 $0<\varepsilon<1/4$。令 $L=\log T$，并要求
+
+$$
+T\le X\le2T,\qquad T^{1/2+\delta}\le H\le T,
+\qquad d\le(1/4-\varepsilon)\frac{L}{\log L}.
+\tag{476.1}
+$$
+
+对每份非零实多项式 $P(z)=\sum_{r=0}^dc_rz^r$，充分大 $T$ 上一致有
+
+$$
+N_P\gg_w\frac{HL}{(d+1)^2\,85^{2d}}\|c\|_1^2>0,
+\qquad
+\sup_{t\in\operatorname{supp}w_{X,H}}|Y_P(t)|
+\ll T^{1/4}\|c\|_1.
+\tag{476.2}
+$$
+
+因而，对每个有限 Lebesgue 测度的可测集 $E$ 及每个 $\eta>0$，
+
+$$
+\boxed{
+\mu_P(E)\ll_w
+ \frac{|E|\sqrt T(d+1)^2\,85^{2d}}{HL}
+\ll_{\eta,\varepsilon,\delta,w}
+ \frac{|E|T^{1/2+\eta}}{HL}.
+}
+\tag{476.3}
+$$
+
+每次积分内 $P$ 固定；其系数可以任意依赖 $T,X,H$，常数不依赖系数方向。阈值允许依赖 $\varepsilon,\delta,w$，第二个（476.3）还允许依赖 $\eta$。相同界适用于以任意非零有限正组合 $\sum_j a_jY_{P_j}^2$ 替换平方后所得的归一化质量，其中 $a_j\ge0$，每份多项式满足同一次数限制。特别地，当 $0<\eta<\delta$ 时，对全部长度至多 $1/L$ 的区间一致有
+
+$$
+\mu_P(I)\ll_{\eta,\varepsilon,\delta,w}
+ T^{-\delta+\eta}L^{-2}=o(1).
+\tag{476.4}
+$$
+
+这些结论不使用定理 475.2 的四移位矩前提。
+
+证明。先将经典近似函数方程用于同一个实际观察器。所用两段公式直接复用 [Conrey，*The fourth moment of derivatives of the Riemann zeta-function*，Quart. J. Math. 39（1988），21–36，p.26，（31）](https://aimath.org/~kaur/publications/15.pdf) 所引的经典公式；下文不使用其固定求导阶数的余项。
+
+对实 $t\in[T,3T]$，记 $N(t)=\lfloor\sqrt{t/(2\pi)}\rfloor$。在复圆盘 $|b|\le1$ 上，令 $z=t+b/L$、$s=1/2+iz$、$\tau=\Im s=t+\Re b/L$。选择固定实截断 $x=\sqrt{t/(2\pi)}$ 和 $y=\tau/(2\pi x)$。于是 $|y-x|=O((\sqrt T L)^{-1})$；将双侧截断都改为 $N(t)$ 至多改变一项，其大小为 $O(T^{-1/4})$。近似函数方程本身的误差同样是 $O(T^{-1/4})$，一致于当前紧实部带。在 Hardy 相位的局部解析分支中，函数方程给出 $\chi(1/2+iz)=e^{-2i\theta(z)}$，故
+
+$$
+\begin{aligned}
+Z(t+b/L)={}&e^{i\theta(t+b/L)}
+ \sum_{n\le N(t)}n^{-1/2-it-ib/L}\\
+&+e^{-i\theta(t+b/L)}
+ \sum_{n\le N(t)}n^{-1/2+it+ib/L}+R_t(b),
+\qquad \sup_{|b|\le1}|R_t(b)|\ll T^{-1/4}.
+\end{aligned}
+\tag{476.5}
+$$
+
+$R_t$ 是解析左边与两份固定有限解析和之差，因而全纯；不需对变化的截断求导。微观圆盘上的 Hardy 相位因子均有统一模界。
+
+复用（474.7）的解析振幅估计，并令
+
+$$
+\beta=-\frac{\pi}{4L},\qquad Q(z)=P(z+\beta),\qquad
+x_n(t)=\frac{\theta'(t)-\log n}{L}.
+\tag{476.6}
+$$
+
+经典解析 Stirling 还给出 $\theta'(t)=\frac12\log(t/(2\pi))+O(T^{-2})$、$\theta''(t)=1/(2t)+O(T^{-3})>0$ 及 $\theta(t+b/L)=\theta(t)+b\theta'(t)/L+O((TL^2)^{-1})$。在（476.5）中乘 $-A(t+b/L)/A(t)$ 后，两份和的线性化指数为 $b(\beta\pm ix_n(t))$。和的绝对值是 $O(T^{1/4})$，故振幅与相位线性化误差 $O(T^{-3/4}/L)$ 小于（476.5）的余项。对完整全纯余项使用单位圆盘的 Cauchy 估计，得到
+
+$$
+\begin{aligned}
+Y_P(t)&=B_Q(t)+r_P(t),\\
+B_Q(t)&=-2\Re\bigl(e^{i\theta(t)}D_Q(t)\bigr),\qquad
+D_Q(t)=\sum_{n\le N(t)}n^{-1/2-it}Q(ix_n(t)),\\
+|r_P(t)|&\ll d!T^{-1/4}\|c\|_1.
+\end{aligned}
+\tag{476.7}
+$$
+
+这里 $A(t)$ 始终未移位，因而左边恰是 $\Xi$ 的普通导数观察器。若 $q$ 为 $Q$ 的系数向量，二项式公式及逆平移给出
+
+$$
+e^{-|\beta|d}\|c\|_1\le\|q\|_1
+\le e^{|\beta|d}\|c\|_1.
+\tag{476.8}
+$$
+
+接着估计完整第二矩。恒等式
+
+$$
+B_Q^2=2|D_Q|^2+2\Re\bigl(e^{2i\theta}D_Q^2\bigr)
+\tag{476.9}
+$$
+
+同时保留反向与同向相位。每对 $(m,n)$ 的积分仅从 $t\ge2\pi\max(m,n)^2$ 起算。实际出现的 $|x_n(t)|\le0.6$，从而 $|Q(ix_n)|\le\|q\|_1$、$|Q'(ix_n)|\le d\|q\|_1$，且 $x_n'=O((TL)^{-1})$。在这份截断区间上，含 $w_{X,H}$ 的复振幅之上确界加总变差至多
+
+$$
+\ll_w(mn)^{-1/2}\|q\|_1^2
+ \left(1+\frac{dH}{TL}\right).
+\tag{476.10}
+$$
+
+切入端点由上确界项支付，不对截断跳跃作微分。反向非对角相位的导数模为 $|\log(m/n)|$。同向非对角相位 $2\theta(t)-t\log(mn)$ 的导数单调，且截断条件保证
+
+$$
+2\theta'(t)-\log(mn)
+\ge|\log(m/n)|+O(T^{-2})
+\ge\tfrac12|\log(m/n)|.
+\tag{476.11}
+$$
+
+经典带有界变差振幅的一阶导数积分估计因而控制两类非对角项。对 $N\ll\sqrt T$，使用 $m\ge n/2$ 与 $m<n/2$ 的划分求和，得到
+
+$$
+\sum_{\substack{m,n\le N\\m\ne n}}
+ \frac1{\sqrt{mn}|\log(m/n)|}\ll N\log(2N).
+$$
+
+同向对角 $m=n$ 可以在切入端点附近驻相，但其二阶相位导数 $2\theta''\asymp T^{-1}$。经典二阶导数积分估计给出每项 $O_w(\sqrt T\|q\|_1^2/n)$，总和为 $O_w(\sqrt T L\|q\|_1^2)$。所以完整地有
+
+$$
+\int w_{X,H}B_Q^2
+=2\int w_{X,H}\sum_{n\le N(t)}\frac{|Q(ix_n(t))|^2}{n}
+ +O_w\bigl(\sqrt T L(1+d/L)\|q\|_1^2\bigr).
+\tag{476.12}
+$$
+
+为控制最弱系数方向，只使用确实包含在原和中的频段 $T^{1/8}\le n\le T^{1/4}$。变量 $x=(\theta'(t)-\log u)/L$ 将其积分区间映为包含 $I=[9/32,11/32]$ 的区间，一致于 $t\in[T,3T]$。对 $u^{-1}|Q(i(\theta'(t)-\log u)/L)|^2$ 使用一阶求和积分比较，其端点和总变差为 $O(T^{-1/8}(1+d/L)\|q\|_1^2)$。因此
+
+$$
+\sum_{T^{1/8}\le n\le T^{1/4}}\frac{|Q(ix_n(t))|^2}{n}
+\ge L\int_I|Q(ix)|^2\,dx
+ -O\bigl(T^{-1/8}(1+d/L)\|q\|_1^2\bigr).
+\tag{476.13}
+$$
+
+使用经典 Legendre 正交基 $e_k(x)=4\sqrt{2k+1}\,\mathrm P_k(32x-10)$。若 $b_k$ 为 $\mathrm P_k(32x-10)$ 的单项式系数绝对值和，其递推给出 $b_0=1,b_1=42$、$b_{k+1}\le84b_k+b_{k-1}$，因而 $b_k\le85^k$。将 $Q(ix)$ 展开为这份正交基并用 Cauchy–Schwarz，得到全部复系数方向上同样有效的界
+
+$$
+\|q\|_1\le4(d+1)85^d\|Q(i\,\cdot)\|_{L^2(I)}.
+\tag{476.14}
+$$
+
+将（476.13）—（476.14）代入（476.12），其正主项至少为 $c_wHL\|q\|_1^2/((d+1)^2 85^{2d})$。求和积分误差及振荡误差相对此主项分别至多
+
+$$
+\begin{aligned}
+&\ll_w T^{-1/8}(1+d/L)(d+1)^2 85^{2d}/L
+ =T^{-1/8+o(1)},\\
+&\ll_w\frac{\sqrt T}{H}(1+d/L)(d+1)^2 85^{2d}
+ \le T^{-\delta+o(1)}.
+\end{aligned}
+\tag{476.15}
+$$
+
+这里 $d=O(L/\log L)$ 保证每份所列指数系数损失都是 $T^{o(1)}$。于是 $B_Q$ 的完整加权范数有同一主项下界。（476.7）的误差范数至多 $O_w(\sqrt H d!T^{-1/4}\|c\|_1)$；相对于该主项平方根，其比值由（476.8）控制为
+
+$$
+\ll_w d!T^{-1/4}\frac{(d+1)85^d}{\sqrt L}e^{O(d/L)}
+\le T^{-\varepsilon+o(1)}.
+\tag{476.16}
+$$
+
+最后一步使用 $\log(d!)\le d\log d\le(1/4-\varepsilon)L$；$d=0$ 时直接成立。加权 $L^2$ 三角不等式遂给出实际 $N_P$ 的（476.2）下界。
+
+点态上直接使用（476.7）中的实际截断和，而不对分子使用阶乘界：$|D_Q|\le\|q\|_1\sum_{n\ll\sqrt T}n^{-1/2}\ll T^{1/4}\|q\|_1$，余项 $d!T^{-1/4}\|c\|_1\le T^{-\varepsilon}\|c\|_1$ 更小。这给出（476.2）的上界。分子至多为 $\|w\|_\infty|E|$ 乘该上界的平方，除以同一个实际 $N_P$ 即得（476.3）。正组合沿用定理 475.2 证明中的归一化凸组合关系，没有项数损失；（476.4）由（476.1）及（476.3）直接得到。证毕。
+
+短窗口混合第二矩的先例包括 [Das–Pujahari，*Zeros of higher derivatives of Riemann zeta function*，arXiv:2104.10243v1，Theorem 5](https://arxiv.org/abs/2104.10243v1) 的带 Dirichlet 多项式权的 Hardy 混合导数渐近。本条所需的统一性同时覆盖增长次数、最弱系数方向、实际普通 $\Xi$ 导数归一化与相应质量比；不将既有混合矩公式本身作为新增结果。
+
+本条是 `repo-derived` 的实际观察器联合消费；经典近似函数方程、解析 Stirling、Cauchy、振荡积分与 Legendre 正交性均为复用工具，不单独构成新增结果。该消费独立于第 475 节的四矩输入，控制的是指定归一化质量及次数、窗口预算。逐点全阶 Laguerre 条件和逐整数严格 Robin 估计仍需额外论证；这里没有最优分辨率或文献优先权主张。
+
+## 追加锚（本行以下为增补区）
