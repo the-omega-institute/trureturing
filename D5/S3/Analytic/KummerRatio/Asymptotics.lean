@@ -7,6 +7,8 @@
    digest: Gamma-normalized endpoint asymptotics of the entire Kummer series. -/
 
 import D5.S3.Analytic.KummerRatio.Series
+import D5.S3.Analytic.KummerRatio.BetaIntegral
+import D5.S3.Analytic.KummerRatio.BetaAsymptotics
 import Mathlib.Analysis.SpecialFunctions.Pow.Asymptotics
 
 open Filter Topology
@@ -24,7 +26,6 @@ private lemma scaled_contiguous {s c x : ℝ} (hc : 0 < c) (hx : 0 < x) :
     rw [show c + 1 - s = (c - s) + 1 by ring, Real.rpow_add hx, Real.rpow_one]
   rw [show c + 2 - (s + 1) = c + 1 - s by ring, hp, kummer_contiguous s hc]
   field_simp [hx.ne']
-  <;> ring
 
 private lemma gamma_step_constant {s c : ℝ} (hs : 0 < s) (hc : 0 < c) :
     s / (c * (c + 1)) * (Real.Gamma (c + 2) / Real.Gamma (s + 1)) =
@@ -81,5 +82,27 @@ private lemma tendsto_kummer_of_subcritical
   obtain ⟨n, hn⟩ := exists_nat_gt (s - c)
   apply hind n hs hc
   linarith
+
+private lemma tendsto_kummer_subcritical {s c : ℝ} (hs : 0 < s) (hsc : s < c) :
+    Tendsto (fun x : ℝ => Real.exp (-x) * x ^ (c - s) * kummer s c x)
+      atTop (𝓝 (Real.Gamma c / Real.Gamma s)) := by
+  have hd : 0 < c - s := sub_pos.mpr hsc
+  have ht := (BetaAsymptotics.tendsto_beta_laplace hs hd).const_mul
+    (Real.Gamma c / (Real.Gamma s * Real.Gamma (c - s)))
+  have hconstant : Real.Gamma c / (Real.Gamma s * Real.Gamma (c - s)) *
+      Real.Gamma (c - s) = Real.Gamma c / Real.Gamma s := by
+    field_simp [(Real.Gamma_pos_of_pos hs).ne', (Real.Gamma_pos_of_pos hd).ne']
+  rw [hconstant] at ht
+  apply ht.congr'
+  filter_upwards [] with x
+  rw [BetaIntegral.kummer_eq_betaIntegral hs hsc x]
+  ring
+
+/-- The leading Kummer asymptotic on the positive real axis, for every pair of
+positive parameters. -/
+theorem tendsto_kummer_atTop {s c : ℝ} (hs : 0 < s) (hc : 0 < c) :
+    Tendsto (fun x : ℝ => Real.exp (-x) * x ^ (c - s) * kummer s c x)
+      atTop (𝓝 (Real.Gamma c / Real.Gamma s)) :=
+  tendsto_kummer_of_subcritical (fun hs _hc hsc => tendsto_kummer_subcritical hs hsc) hs hc
 
 end D5.S3.Analytic.KummerRatio.Asymptotics
