@@ -128,20 +128,6 @@ private lemma coefficient_normalization (d : ℕ) (hd : 2 ≤ d) (ψ : State d)
   change ‖WithLp.toLp 2 ψ‖ = 1 at hψ
   nlinarith [norm_nonneg (WithLp.toLp 2 α)]
 
-private lemma overlap_transport (d : ℕ) [NeZero d] (hd : 2 ≤ d)
-    (α : Fin d → ℂ) (hα : UnitVector α) :
-    overlapSet (∑ n, α n • φ d n) = overlapSet (φ d 0) := by
-  sorry
-
-private lemma sharp_upper (d : ℕ) [NeZero d] (hd : 2 ≤ d)
-    (a b c : Fin d → ℂ) (ha : UnitVector a) (hb : UnitVector b) (hc : UnitVector c) :
-    ‖overlap a b c (φ d 0)‖ ^ 2 ≤ sharpValue d := by
-  sorry
-
-private lemma sharp_attainment (d : ℕ) [NeZero d] (hd : 2 ≤ d) :
-    sharpValue d ∈ overlapSet (φ d 0) := by
-  sorry
-
 private lemma conjugate_norm {ι : Type*} [Fintype ι] (v : ι → ℂ) :
     ‖WithLp.toLp 2 (fun i => conj (v i))‖ = ‖WithLp.toLp 2 v‖ := by
   rw [EuclideanSpace.norm_eq, EuclideanSpace.norm_eq]
@@ -183,6 +169,38 @@ private lemma conjugate_reduction (d : ℕ) (ψ : State d)
   ext p
   have he := congrArg (fun v : State d => conj (v p)) hβ
   simpa only [Finset.sum_apply, Pi.smul_apply, smul_eq_mul, map_sum, map_mul, hbar] using he
+
+private def overlapForm (d : ℕ) (α A B C : EuclideanSpace ℂ (Fin d)) : ℂ :=
+  (conj (z d) * inner ℂ B α * inner ℂ C A +
+    z d * inner ℂ C α * inner ℂ B A) / (Real.sqrt ((d : ℝ) + 1) : ℂ)
+
+set_option maxHeartbeats 1000000 in
+private lemma coefficient_overlap (d : ℕ) (α a b c : Fin d → ℂ) :
+    overlap a b c (∑ n, α n • φ d n) =
+      overlapForm d (WithLp.toLp 2 α) (WithLp.toLp 2 (fun i => conj (a i)))
+        (WithLp.toLp 2 b) (WithLp.toLp 2 c) := by
+  classical
+  unfold overlap overlapForm
+  simp only [Finset.sum_apply, Pi.smul_apply, smul_eq_mul, φ, PiLp.inner_apply,
+    RCLike.inner_apply', PiLp.toLp_apply]
+  simp [Finset.mul_sum, Finset.sum_mul, Finset.sum_add_distrib, Finset.sum_div,
+    div_eq_mul_inv, mul_add, add_mul, ite_and, mul_ite, ite_mul,
+    mul_comm, mul_left_comm, mul_assoc]
+  rw [Finset.sum_comm]
+
+private lemma overlap_transport (d : ℕ) [NeZero d] (hd : 2 ≤ d)
+    (α : Fin d → ℂ) (hα : UnitVector α) :
+    overlapSet (∑ n, α n • φ d n) = overlapSet (φ d 0) := by
+  sorry
+
+private lemma sharp_upper (d : ℕ) [NeZero d] (hd : 2 ≤ d)
+    (a b c : Fin d → ℂ) (ha : UnitVector a) (hb : UnitVector b) (hc : UnitVector c) :
+    ‖overlap a b c (φ d 0)‖ ^ 2 ≤ sharpValue d := by
+  sorry
+
+private lemma sharp_attainment (d : ℕ) [NeZero d] (hd : 2 ≤ d) :
+    sharpValue d ∈ overlapSet (φ d 0) := by
+  sorry
 
 private lemma basis_supremum (d : ℕ) [NeZero d] (hd : 2 ≤ d) :
     sSup (overlapSet (φ d 0)) = sharpValue d := by
