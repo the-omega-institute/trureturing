@@ -1,0 +1,54 @@
+using static StrataLint.Scribe.DefinitionDsl;
+using static StrataLint.Scribe.FormulaDsl;
+namespace StrataLint.Scribe.Blueprint.D5.S3.Quantum.Entanglement.AbsolutePPT;
+internal sealed class UniformSchmidtBellDocument : IScribeDocumentDefinition
+{
+    public DocumentDefinition Create() => DocumentDefinition.Create(ScribeNode.Create(
+        "A block Hadamard unitary on every edge pair realizes the independently labelled Bell family. The principal partial-transpose compression is one half of the complexification of the real Schmidt matrix. Literal APPT gives positive semidefiniteness for every independent assignment.", H("UniformSchmidtBell"), Blocks(
+            Paragraph(Text("A block Hadamard unitary on every edge pair realizes the independently labelled Bell family. The principal partial-transpose compression is one half of the complexification of the real Schmidt matrix. Literal APPT gives positive semidefiniteness for every independent assignment.")),
+            Describe.Lean(DescribeId.Create("uniformschmidtbell-pairmatrix"),
+                DeclarationHandle.Create("D5/S3/Quantum/Entanglement/AbsolutePPT/UniformSchmidtBell.pairMatrix"),
+                H("pairMatrix"), StatementSource.WithoutFormula(), AssessedProvenance.FromRepo(),
+                Blocks(Paragraph(Text("def pairMatrix (r : ℕ) : Matrix (Edge r ⊕ Edge r) (Edge r ⊕ Edge r) ℂ"))), DescribeRole.Definition),
+            Describe.Lean(DescribeId.Create("uniformschmidtbell-pairmatrix-unitary"),
+                DeclarationHandle.Create("D5/S3/Quantum/Entanglement/AbsolutePPT/UniformSchmidtBell.pairMatrix_unitary"),
+                H("pairMatrix unitary"), StatementSource.WithoutFormula(), AssessedProvenance.FromRepo(),
+                Blocks(Paragraph(Text("theorem pairMatrix_unitary (r : ℕ) : pairMatrix r ∈ unitaryGroup _ ℂ"))), DescribeRole.Theorem),
+            Describe.Lean(DescribeId.Create("uniformschmidtbell-pairunitary"),
+                DeclarationHandle.Create("D5/S3/Quantum/Entanglement/AbsolutePPT/UniformSchmidtBell.pairUnitary"),
+                H("pairUnitary"), StatementSource.WithoutFormula(), AssessedProvenance.FromRepo(),
+                Blocks(Paragraph(Text("def pairUnitary (r : ℕ) : unitaryGroup (Edge r ⊕ Edge r) ℂ"))), DescribeRole.Definition),
+            Describe.Lean(DescribeId.Create("uniformschmidtbell-bellequiv"),
+                DeclarationHandle.Create("D5/S3/Quantum/Entanglement/AbsolutePPT/UniformSchmidtBell.bellEquiv"),
+                H("bellEquiv"), StatementSource.WithoutFormula(), AssessedProvenance.FromRepo(),
+                Blocks(Paragraph(Text("def bellEquiv (r : ℕ) : ((Edge r ⊕ Edge r) ⊕ Fin r) ≃ (Fin r × Fin r)"))), DescribeRole.Definition),
+            Describe.Lean(DescribeId.Create("uniformschmidtbell-bellunitary"),
+                DeclarationHandle.Create("D5/S3/Quantum/Entanglement/AbsolutePPT/UniformSchmidtBell.bellUnitary"),
+                H("bellUnitary"), StatementSource.WithoutFormula(), AssessedProvenance.FromRepo(),
+                Blocks(Paragraph(Text("def bellUnitary (r : ℕ) : unitaryGroup (Fin r × Fin r) ℂ"))), DescribeRole.Definition),
+            Describe.Lean(DescribeId.Create("uniformschmidtbell-pair-conjugate-diagonal"),
+                DeclarationHandle.Create("D5/S3/Quantum/Entanglement/AbsolutePPT/UniformSchmidtBell.pair_conjugate_diagonal"),
+                H("pair conjugate diagonal"), StatementSource.WithoutFormula(), AssessedProvenance.FromRepo(),
+                Blocks(Paragraph(Text("theorem pair_conjugate_diagonal {r : ℕ} (u v : Edge r → ℂ) : (pairUnitary r : Matrix _ _ ℂ) * diagonal (Sum.elim u v) * (pairUnitary r : Matrix _ _ ℂ)ᴴ = fromBlocks (diagonal (fun e => (u e + v e) / 2)) (diagonal (fun e => (u e - v e) / 2)) (diagonal (fun e => (u e - v e) / 2)) (diagonal (fun e => (u e + v e) / 2))"))), DescribeRole.Theorem),
+            Describe.Lean(DescribeId.Create("uniformschmidtbell-pack"),
+                DeclarationHandle.Create("D5/S3/Quantum/Entanglement/AbsolutePPT/UniformSchmidtBell.pack"),
+                H("pack"), StatementSource.WithoutFormula(), AssessedProvenance.FromRepo(),
+                Blocks(Paragraph(Text("def pack {r : ℕ} (t : Edge r → ℝ) (b : BottomSlot r → ℝ) : Fin r × Fin r → ℂ"))), DescribeRole.Definition),
+            Describe.Lean(DescribeId.Create("uniformschmidtbell-bell-conjugate"),
+                DeclarationHandle.Create("D5/S3/Quantum/Entanglement/AbsolutePPT/UniformSchmidtBell.bell_conjugate"),
+                H("bell conjugate"), StatementSource.WithoutFormula(), AssessedProvenance.FromRepo(),
+                Blocks(Paragraph(Text("theorem bell_conjugate {r : ℕ} (t : Edge r → ℝ) (b : BottomSlot r → ℝ) : (bellUnitary r : Matrix _ _ ℂ) * diagonal (pack t b) * (bellUnitary r : Matrix _ _ ℂ)ᴴ = (fromBlocks (fromBlocks (diagonal (fun e => ((b (.inr e) + t e : ℝ) : ℂ) / 2)) (diagonal (fun e => ((b (.inr e) - t e : ℝ) : ℂ) / 2)) (diagonal (fun e => ((b (.inr e) - t e : ℝ) : ℂ) / 2)) (diagonal (fun e => ((b (.inr e) + t e : ℝ) : ℂ) / 2))) 0 0 (diagonal (fun i => (b (.inl i) : ℂ)))).submatrix (bellEquiv r).symm (bellEquiv r).symm"))), DescribeRole.Theorem),
+            Describe.Lean(DescribeId.Create("uniformschmidtbell-bell-pt-principal"),
+                DeclarationHandle.Create("D5/S3/Quantum/Entanglement/AbsolutePPT/UniformSchmidtBell.bell_pt_principal"),
+                H("bell pt principal"), StatementSource.WithoutFormula(), AssessedProvenance.FromRepo(),
+                Blocks(Paragraph(Text("theorem bell_pt_principal {r : ℕ} (t : Edge r → ℝ) (b : BottomSlot r → ℝ) : (partialTranspose ((bellUnitary r : Matrix _ _ ℂ) * diagonal (pack t b) * (bellUnitary r : Matrix _ _ ℂ)ᴴ)).submatrix (fun i => (i, i)) (fun i => (i, i)) = (1 / 2 : ℂ) • (K t b).map Complex.ofReal"))), DescribeRole.Theorem),
+            Describe.Lean(DescribeId.Create("uniformschmidtbell-actual-pack"),
+                DeclarationHandle.Create("D5/S3/Quantum/Entanglement/AbsolutePPT/UniformSchmidtBell.actual_pack"),
+                H("actual pack"), StatementSource.WithoutFormula(), AssessedProvenance.FromRepo(),
+                Blocks(Paragraph(Text("theorem actual_pack {r N : ℕ} (hN : a r + b r ≤ N) (l : Fin N → ℝ) (π : Equiv.Perm (Fin (a r))) (σ : Equiv.Perm (Fin (b r))) : (fun q => (l (label hN π σ q) : ℂ)) = pack (fun e => l (assignedTopIndex hN π e)) (fun p => l (assignedBottomIndex hN σ p))"))), DescribeRole.Theorem),
+            Describe.Lean(DescribeId.Create("uniformschmidtbell-literal-assignment-psd"),
+                DeclarationHandle.Create("D5/S3/Quantum/Entanglement/AbsolutePPT/UniformSchmidtBell.literal_assignment_psd"),
+                H("literal assignment psd"), StatementSource.WithoutFormula(), AssessedProvenance.FromRepo(),
+                Blocks(Paragraph(Text("theorem literal_assignment_psd {r m n : ℕ} (hm : r ≤ m) (hn : r ≤ n) (e : (Fin m × Fin n) ≃ Fin (m * n)) (l : Fin (m * n) → ℝ) (h : APPT (diagonal (fun p => (l (e p) : ℂ)))) (π : Equiv.Perm (Fin (a r))) (σ : Equiv.Perm (Fin (b r))) : let hN : a r + b r ≤ m * n := (pool_card_sum r).trans_le (Nat.mul_le_mul hm hn) (assignedK hN l π σ).PosSemidef"))), DescribeRole.Theorem)
+        )));
+}

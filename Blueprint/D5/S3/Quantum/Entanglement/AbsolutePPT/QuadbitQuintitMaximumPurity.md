@@ -4,7 +4,19 @@
 
 The maximum purity of a literal four-by-five APPT density matrix is 7/121.
 
-**Definition 1.1 (Nine extremal spectral coordinates).**
+**Theorem 1.1 (Partial transpose on a product submatrix).**
+
+Lean statement: `D5/S3/Quantum/Entanglement/AbsolutePPT/QuadbitQuintitMaximumPurity.product_partialTranspose`
+
+*Proof.* Machine-checked in Lean as `D5/S3/Quantum/Entanglement/AbsolutePPT/QuadbitQuintitMaximumPurity.product_partialTranspose` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+For arbitrary types A, B, C and D, maps a:C to A and b:D to B, and a complex matrix M on A times B, taking the product submatrix along Prod.map a b commutes with partial transpose. No finiteness, injectivity, invertibility or positivity is required. The identity holds entry by entry.
+
+**Definition 1.2 (Nine extremal spectral coordinates).**
 
 $$\forall (N:Nat), (9\leq N)\Rightarrow \forall (l:Fin\left(N\right)\to \mathbb{R}), \forall (q:Fin\left(9\right)), cornerBoundaryValues\left(N, l, q\right)=l\left((if val\left(q\right)<3 then val\left(q\right) else N-9+val\left(q\right):Fin\left(N\right))\right)$$
 
@@ -18,7 +30,7 @@ $$\forall (N:Nat), (9\leq N)\Rightarrow \forall (l:Fin\left(N\right)\to \mathbb{
 
 For every total dimension N at least nine, the selector observes the top three and bottom six ordered coordinates. Its proof argument 9<=N is omitted from this display. At N=20 it is the same observation as SpectralBoundaryTransfer.boundaryValues 11.
 
-**Theorem 1.2 (Both pencils for the actual labelled diagonal).**
+**Theorem 1.3 (Both pencils for the actual labelled diagonal).**
 
 $$\forall (m:Nat), \forall (n:Nat), ((3\leq m)\land (3\leq n))\Rightarrow \forall (e:Equiv\left((Fin\left(m\right)\times Fin\left(n\right)), Fin\left(m\cdot n\right)\right)), \forall (l:Fin\left(m\cdot n\right)\to \mathbb{R}), (APPT\left(diagonal\left((fun(p:(Fin\left(m\right)\times Fin\left(n\right)))\mapsto Complex.ofReal\left(l\left(e\left(p\right)\right)\right))\right)\right))\Rightarrow (Matrix.PosSemidef\left(K1\left(cornerBoundaryValues\left(m\cdot n, l\right)\right)\right))\land (Matrix.PosSemidef\left(K2\left(cornerBoundaryValues\left(m\cdot n, l\right)\right)\right))$$
 
@@ -32,7 +44,7 @@ $$\forall (m:Nat), \forall (n:Nat), ((3\leq m)\land (3\leq n))\Rightarrow \foral
 
 For arbitrary natural m,n at least three, every labelling e:(Fin m × Fin n) ≃ Fin(mn) and every real diagonal l, actual APPT of diag(l composed with e) implies positive semidefiniteness of both K1 and K2 on cornerBoundaryValues(mn,l). This selector is (l0,l1,l2,l_(mn−6),...,l_(mn−1)); its proof 9≤mn follows from the two dimension bounds and is suppressed in the display. There is no ordering, nonnegativity, normalization, strictness or distinctness premise. The proof packs a genuine three-by-three product corner and extends its Bell unitaries by the finite complement. Arbitrary labellings are related by global permutation unitaries, not by a claimed partial-transpose covariance. Both necessary pencils are retained; they do not give an APPT sufficiency theorem. This public source interface exposes the already used corner construction in the Hildebrand framework and is not a new discovery merely because it is public.
 
-**Theorem 1.3 (One spectrum retaining its actual APPT diagonal).**
+**Theorem 1.4 (One spectrum retaining its actual APPT diagonal).**
 
 $$\forall (m:Nat), \forall (n:Nat), \forall (e:Equiv\left((Fin\left(m\right)\times Fin\left(n\right)), Fin\left(m\cdot n\right)\right)), \forall (rho:Matrix\left((Fin\left(m\right)\times Fin\left(n\right)), (Fin\left(m\right)\times Fin\left(n\right)), \mathbb{C}\right)), ((Matrix.PosSemidef\left(rho\right))\land (Matrix.trace\left(rho\right)=1)\land (APPT\left(rho\right)))\Rightarrow \exists (l:Fin\left(m\cdot n\right)\to \mathbb{R}), (Antitone\left(l\right))\land (\forall (i:Fin\left(m\cdot n\right)), 0\leq l\left(i\right))\land (\sum_{i:Fin\left(m\cdot n\right)} l\left(i\right)=1)\land (APPT\left(diagonal\left((fun(p:(Fin\left(m\right)\times Fin\left(n\right)))\mapsto Complex.ofReal\left(l\left(e\left(p\right)\right)\right))\right)\right))\land (Complex.re\left(Matrix.trace\left(rho\cdot rho\right)\right)=\sum_{i:Fin\left(m\cdot n\right)} (l\left(i\right))^{2})$$
 
@@ -46,7 +58,7 @@ $$\forall (m:Nat), \forall (n:Nat), \forall (e:Equiv\left((Fin\left(m\right)\tim
 
 For every natural m,n, with no dimension lower bound, every supplied equivalence e:(Fin m × Fin n) ≃ Fin(mn), and every complex matrix rho on that product, assume rho is positive semidefinite, has trace one and is APPT after all global unitaries. There is one real l:Fin(mn)→R that is antitone, coordinatewise nonnegative, has total mass one, has an actual APPT labelled diagonal diag(l composed with e), and satisfies Re trace(rho*rho)=sum_i l_i^2. All five conclusion clauses refer to this single spectrum. Zero-dimensional products stay in the quantified domain; trace one then makes the premises infeasible rather than justifying a dimension restriction. Repeated and zero eigenvalues are included. The proof chooses sorted eigenvalues, diagonalizes rho by a global unitary and transports APPT back to that same diagonal. It does not sort again for the rank-four row. The original spectral_reduction telescope remains public and unchanged: at m,n≥3 it consumes this diagonal and diagonal_necessary_both to recover both K1 and K2. Standard spectral diagonalization and the earlier source interface are not claimed as new mathematics.
 
-**Theorem 1.4 (Necessary spectral matrices in arbitrary finite local dimensions).**
+**Theorem 1.5 (Necessary spectral matrices in arbitrary finite local dimensions).**
 
 $$\forall (m:Nat), \forall (n:Nat), ((3\leq m)\land (3\leq n))\Rightarrow \forall (rho:Matrix\left((Fin\left(m\right)\times Fin\left(n\right)), (Fin\left(m\right)\times Fin\left(n\right)), \mathbb{C}\right)), ((Matrix.PosSemidef\left(rho\right))\land (Matrix.trace\left(rho\right)=1)\land (APPT\left(rho\right)))\Rightarrow \exists (l:Fin\left(m\cdot n\right)\to \mathbb{R}), (Antitone\left(l\right))\land (\forall (i:Fin\left(m\cdot n\right)), 0\leq l\left(i\right))\land (\sum_{i:Fin\left(m\cdot n\right)} l\left(i\right)=1)\land (Matrix.PosSemidef\left(K1\left(cornerBoundaryValues\left(m\cdot n, l\right)\right)\right))\land (Matrix.PosSemidef\left(K2\left(cornerBoundaryValues\left(m\cdot n, l\right)\right)\right))\land (Complex.re\left(Matrix.trace\left(rho\cdot rho\right)\right)=\sum_{i:Fin\left(m\cdot n\right)} (l\left(i\right))^{2})$$
 
@@ -74,7 +86,7 @@ Ahiable–Kothakonda–Winter, arXiv:2608.03390v2, Theorem6.3 and Corollary6.4, 
 
 Evidence distinction. The earlier n>=17 application compiled with an accepted scoped axiom closure containing only Classical.choice, Quot.sound and propext; that historical result and its closure evidence are preserved. Official CI has now compiled the physical suppliers, ContinuousSpectrumAssembly and the entire n>=14 application, including its final anonymous least-onset application. The scalar N>=56 theorem also has a separate selected successful build. The current full axiom/report closure, the four public supplier registration audits and final official acceptance remain pending. The scalar Reg square-nonnegativity repair and these Scribe/Reg source changes are uncompiled. Historical scalar audit issues #17891 and #17908 do not establish registration of the four supplier targets. These observations do not certify whole-library health or unique completion. Sources: `D5/L/QuantumStates/hildebrand2007pptspectra`; `D5/L/QuantumStates/ahiablekothakondawinter2026geometry`
 
-**Definition 1.5 (Normalized rank-one ray).**
+**Definition 1.6 (Normalized rank-one ray).**
 
 $$\forall (m:Nat),(\forall (n:Nat),(\forall (v:(Fin\left(m\right)\times Fin\left(n\right))\to \mathbb{C}),(normalizedRay\left(v\right)=\frac{1}{m\cdot n + 2}\cdot (1 + 2\cdot vecMulVec\left(v, star\left(v\right)\right)))))$$
 
@@ -88,7 +100,7 @@ $$\forall (m:Nat),(\forall (n:Nat),(\forall (v:(Fin\left(m\right)\times Fin\left
 
 For arbitrary natural local dimensions m,n and a complex vector v on their product, normalizedRay is (I+2|v><v|)/(mn+2). Scalar multiplication uses the real reciprocal embedded into the complex numbers.
 
-**Theorem 1.6 (Density normalization and universal APPT of the ray).**
+**Theorem 1.7 (Density normalization and universal APPT of the ray).**
 
 $$\forall (m:Nat),(\forall (n:Nat),(\forall (v:(Fin\left(m\right)\times Fin\left(n\right))\to \mathbb{C}),((dotProduct\left(star\left(v\right), v\right)=1)\Rightarrow (((PosSemidef\left(normalizedRay\left(v\right)\right))\land (trace\left(normalizedRay\left(v\right)\right)=1))\land (APPT\left(normalizedRay\left(v\right)\right))\land (re\left(trace\left(normalizedRay\left(v\right)\cdot normalizedRay\left(v\right)\right)\right)=\frac{m\cdot n + 8}{(m\cdot n + 2)^{2}})))))$$
 
@@ -102,7 +114,7 @@ $$\forall (m:Nat),(\forall (n:Nat),(\forall (v:(Fin\left(m\right)\times Fin\left
 
 The sole vector hypothesis is star(v) dot v=1. The normalized matrix is positive semidefinite, has complex trace exactly one, is APPT, and has real trace-square (mn+8)/(mn+2)^2. APPT quantifies over every global unitary on the full product space, with partial transpose on the second factor. A unitary sends v to another unit vector. LowRankRays.separableCone_one_add_two_rankOne makes I+2|Uv><Uv| separable; positive scaling and separableCone_partialTranspose_posSemidef give positivity after partial transpose. The rank-one square identity gives the trace-square formula. Dimensions with no unit vector are included conditionally, without an existence assumption.
 
-**Theorem 1.7 (Diagonal representative of the ray).**
+**Theorem 1.8 (Diagonal representative of the ray).**
 
 $$\forall (m:Nat),(\forall (n:Nat),(\forall (a:(Fin\left(m\right)\times Fin\left(n\right))),(normalizedRay\left(Pi.single\left(a, 1\right)\right)=diagonal\left((fun(i:(Fin\left(m\right)\times Fin\left(n\right)))\mapsto if(i=a)then\frac{3}{m\cdot n + 2}else\frac{1}{m\cdot n + 2})\right))))$$
 
@@ -264,7 +276,7 @@ The two spectral matrices have the Hildebrand Eq. (5), Corollary 4 origin record
 
 Ahiable–Kothakonda–Winter, arXiv:2608.03390v2, Corollary 6.4 and Eq. (44), pages 26–27, give (mn+8)/(mn+2)^2 and the spectrum (3,1^(mn-1))/(mn+2) inside the inscribed APPT polytope when n<n*. At m=4, n* = 7+3 sqrt(5) > 7, so its value is 1/25. The calculation above establishes that value for the full actual APPT set in the single four-by-seven sector. Conjecture 6.7, page 29, quantifies over other local dimensions as well; neither that full conjecture, classification of maximizers, nor equality of APPT with absolute separability follows from this sector calculation. Source: `D5/L/QuantumStates/ahiablekothakondawinter2026geometry`
 
-**Definition 1.8 (Literal density-matrix extremum).**
+**Definition 1.9 (Literal density-matrix extremum).**
 
 $$claim\iff ((\forall (rho:Matrix\left((Fin\left(4\right)\times Fin\left(5\right)), (Fin\left(4\right)\times Fin\left(5\right)), \mathbb{C}\right)),((((PosSemidef\left(rho\right))\land (trace\left(rho\right)=1))\land (APPT\left(rho\right)))\Rightarrow (re\left(trace\left(rho\cdot rho\right)\right)\leq \frac{7}{121})))\land (sSup\left(\{p:\mathbb{R}\mid \exists (rho:Matrix\left((Fin\left(4\right)\times Fin\left(5\right)), (Fin\left(4\right)\times Fin\left(5\right)), \mathbb{C}\right)),(((PosSemidef\left(rho\right))\land (trace\left(rho\right)=1))\land (APPT\left(rho\right))\land (re\left(trace\left(rho\cdot rho\right)\right)=p))\}\right)=\frac{7}{121})\land (\exists (rho:Matrix\left((Fin\left(4\right)\times Fin\left(5\right)), (Fin\left(4\right)\times Fin\left(5\right)), \mathbb{C}\right)),((rho=diagonal\left((fun(i:(Fin\left(4\right)\times Fin\left(5\right)))\mapsto if(i=(0,0))then\frac{3}{22}else\frac{1}{22})\right))\land (((PosSemidef\left(rho\right))\land (trace\left(rho\right)=1))\land (APPT\left(rho\right))\land (re\left(trace\left(rho\cdot rho\right)\right)=\frac{7}{121})))))$$
 
@@ -278,7 +290,7 @@ $$claim\iff ((\forall (rho:Matrix\left((Fin\left(4\right)\times Fin\left(5\right
 
 The three clauses assert the universal upper bound, the real supremum of the attainable purity set, and existence of the prescribed diagonal density. Every matrix is complex and indexed by Fin 4 times Fin 5. Positivity, trace one and APPT are actual matrix properties.
 
-**Theorem 1.9 (Sharp literal four-by-five maximum).**
+**Theorem 1.10 (Sharp literal four-by-five maximum).**
 
 $$(\forall (rho:Matrix\left((Fin\left(4\right)\times Fin\left(5\right)), (Fin\left(4\right)\times Fin\left(5\right)), \mathbb{C}\right)),((((PosSemidef\left(rho\right))\land (trace\left(rho\right)=1))\land (APPT\left(rho\right)))\Rightarrow (re\left(trace\left(rho\cdot rho\right)\right)\leq \frac{7}{121})))\land (sSup\left(\{p:\mathbb{R}\mid \exists (rho:Matrix\left((Fin\left(4\right)\times Fin\left(5\right)), (Fin\left(4\right)\times Fin\left(5\right)), \mathbb{C}\right)),(((PosSemidef\left(rho\right))\land (trace\left(rho\right)=1))\land (APPT\left(rho\right))\land (re\left(trace\left(rho\cdot rho\right)\right)=p))\}\right)=\frac{7}{121})\land (\exists (rho:Matrix\left((Fin\left(4\right)\times Fin\left(5\right)), (Fin\left(4\right)\times Fin\left(5\right)), \mathbb{C}\right)),((rho=diagonal\left((fun(i:(Fin\left(4\right)\times Fin\left(5\right)))\mapsto if(i=(0,0))then\frac{3}{22}else\frac{1}{22})\right))\land (((PosSemidef\left(rho\right))\land (trace\left(rho\right)=1))\land (APPT\left(rho\right))\land (re\left(trace\left(rho\cdot rho\right)\right)=\frac{7}{121}))))$$
 
@@ -301,6 +313,7 @@ For every positive semidefinite trace-one complex four-by-five matrix that remai
 - Truth anchor: `D5/S3/Quantum/Entanglement/AbsolutePPT/QuadbitQuintitMaximumPurity.normalizedRay`
 - Truth anchor: `D5/S3/Quantum/Entanglement/AbsolutePPT/QuadbitQuintitMaximumPurity.normalized_basis_diagonal`
 - Truth anchor: `D5/S3/Quantum/Entanglement/AbsolutePPT/QuadbitQuintitMaximumPurity.normalized_ray`
+- Truth anchor: `D5/S3/Quantum/Entanglement/AbsolutePPT/QuadbitQuintitMaximumPurity.product_partialTranspose`
 - Truth anchor: `D5/S3/Quantum/Entanglement/AbsolutePPT/QuadbitQuintitMaximumPurity.result`
 - Truth anchor: `D5/S3/Quantum/Entanglement/AbsolutePPT/QuadbitQuintitMaximumPurity.spectral_reduction`
 - Dependency: [D5/S3/Quantum/Entanglement/AbsolutePPT/DimensionTwentySpectralPurityBound](DimensionTwentySpectralPurityBound.md)
