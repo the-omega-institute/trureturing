@@ -1,7 +1,7 @@
-import D5.S1.Recurrence.Algebraic.FractionFieldDerivation
+import D5.S1.DifferentialAlgebra.FractionFieldDerivation
 
 /-!
-Agreement, uniqueness, and commutation of the extended derivation have arbitrary
+Agreement and commutation of the extended derivation have arbitrary
 integral-domain and fraction-field carriers with separate algebra and localization
 structures. A source-bound observation family must preserve these parameters and
 the derivation-compatibility hypotheses in the raw telescope. Bundling the field

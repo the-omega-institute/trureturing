@@ -1,6 +1,6 @@
-/- GID: D5/S1/Recurrence/Algebraic/ExponentialTranscendence
+/- GID: D5/S1/DifferentialAlgebra/ExponentialTranscendence
    generality: I
-   mirror-B: D5/B/S1/Recurrence/Algebraic/ExponentialTranscendence
+   mirror-B: D5/B/S1/DifferentialAlgebra/ExponentialTranscendence
    mirror-E: none(waiver:unbounded-symbolic-proof)
    anchors: [mathlib/module/Mathlib.RingTheory.PowerSeries.Exp, mathlib/module/Mathlib.LinearAlgebra.Eigenspace.Basic, mathlib/module/Mathlib.LinearAlgebra.DFinsupp, mathlib/module/Mathlib.RingTheory.Algebraic.Basic, mathlib/module/Mathlib.Tactic.Ring]
    utility: none
@@ -12,7 +12,7 @@ import Mathlib.LinearAlgebra.DFinsupp
 import Mathlib.RingTheory.Algebraic.Basic
 import Mathlib.Tactic.Ring
 
-namespace D5.S1.Recurrence.Algebraic.ExponentialTranscendence
+namespace D5.S1.DifferentialAlgebra.ExponentialTranscendence
 
 open Polynomial PowerSeries
 
@@ -95,4 +95,4 @@ theorem exp_transcendental : Transcendental (Polynomial ℚ) (exp ℚ) := by
 
 #print axioms exp_transcendental
 
-end D5.S1.Recurrence.Algebraic.ExponentialTranscendence
+end D5.S1.DifferentialAlgebra.ExponentialTranscendence

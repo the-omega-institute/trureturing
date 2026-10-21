@@ -1,12 +1,12 @@
 import LeanInformationAuditInterface.Contract.Registration
-import D5.S1.Recurrence.Algebraic.ExponentialTranscendence
+import D5.S1.DifferentialAlgebra.ExponentialTranscendence
 import Reg.Support.DependentFamily
 
 noncomputable section
 
-namespace Reg.D5.S1.Recurrence.Algebraic.ExponentialTranscendence
+namespace Reg.D5.S1.DifferentialAlgebra.ExponentialTranscendence
 
-open _root_.D5.S1.Recurrence.Algebraic.ExponentialTranscendence
+open _root_.D5.S1.DifferentialAlgebra.ExponentialTranscendence
 open _root_.D5.S3.ConceptDynamics.InformationEscape.DependentFamily
 open LeanInformationAudit
 
@@ -58,10 +58,10 @@ def injection_family : Registration arena (type_of% exponentialEval_injective) w
 def injection_registration : Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0}
     exponentialEval_injective (Realization signature) Unit Unit where
   unitName := Lean.Name.str
-    `D5.S1.Recurrence.Algebraic.ExponentialTranscendence.exponentialEval_injective
+    `D5.S1.DifferentialAlgebra.ExponentialTranscendence.exponentialEval_injective
     "__information_unit"
   realizationName :=
-    `Reg.D5.S1.Recurrence.Algebraic.ExponentialTranscendence.injection_family
+    `Reg.D5.S1.DifferentialAlgebra.ExponentialTranscendence.injection_family
   realizationSource := none
   generated := false
   arena := .source ⟨arena⟩
@@ -77,7 +77,7 @@ def injection_registration : Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0}
   partialSensitivity := none
   escapeFrom := none
   sourceSelection := some {
-    owner := `D5.S1.Recurrence.Algebraic.ExponentialTranscendence
+    owner := `D5.S1.DifferentialAlgebra.ExponentialTranscendence
     definition := none
     coordinates := #[]
     readouts := #[{
@@ -116,10 +116,10 @@ def transcendental_family : Registration arena (type_of% exp_transcendental) whe
 def transcendental_registration : Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0}
     exp_transcendental (Realization signature) Unit Unit where
   unitName := Lean.Name.str
-    `D5.S1.Recurrence.Algebraic.ExponentialTranscendence.exp_transcendental
+    `D5.S1.DifferentialAlgebra.ExponentialTranscendence.exp_transcendental
     "__information_unit"
   realizationName :=
-    `Reg.D5.S1.Recurrence.Algebraic.ExponentialTranscendence.transcendental_family
+    `Reg.D5.S1.DifferentialAlgebra.ExponentialTranscendence.transcendental_family
   realizationSource := none
   generated := false
   arena := .source ⟨arena⟩
@@ -139,4 +139,4 @@ def transcendental_registration : Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0
   familyRecord := none
   options := #[]
 
-end Reg.D5.S1.Recurrence.Algebraic.ExponentialTranscendence
+end Reg.D5.S1.DifferentialAlgebra.ExponentialTranscendence

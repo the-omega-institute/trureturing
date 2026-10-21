@@ -1,15 +1,15 @@
-/- GID: D5/S1/Recurrence/Algebraic/ExponentialDifferentialField
+/- GID: D5/S1/DifferentialAlgebra/ExponentialDifferentialField
    generality: I
-   mirror-B: D5/B/S1/Recurrence/Algebraic/ExponentialDifferentialField
+   mirror-B: D5/B/S1/DifferentialAlgebra/ExponentialDifferentialField
    mirror-E: none(waiver:unbounded-symbolic-proof)
    anchors: [mathlib/module/Mathlib.FieldTheory.RatFunc.AsPolynomial, mathlib/module/Mathlib.RingTheory.Localization.Integral, mathlib/module/Mathlib.RingTheory.PowerSeries.Log, mathlib/module/Mathlib.Tactic.Ring]
    utility: none
    digest: The normalized logarithmic exponential series is transcendental over the rational differential field in the variable and its exponential. -/
 
-import D5.S1.Recurrence.Algebraic.ExponentialTranscendence
-import D5.S1.Recurrence.Algebraic.ExponentialPoleObstruction
-import D5.S1.Recurrence.Algebraic.AlgebraicPrimitiveDescent
-import D5.S1.Recurrence.Algebraic.FractionFieldDerivation
+import D5.S1.DifferentialAlgebra.ExponentialTranscendence
+import D5.S1.DifferentialAlgebra.ExponentialPoleObstruction
+import D5.S1.DifferentialAlgebra.AlgebraicPrimitiveDescent
+import D5.S1.DifferentialAlgebra.FractionFieldDerivation
 import Mathlib.FieldTheory.RatFunc.AsPolynomial
 import Mathlib.RingTheory.Localization.Integral
 import Mathlib.RingTheory.PowerSeries.Log
@@ -17,7 +17,7 @@ import Mathlib.Tactic.Ring
 
 set_option autoImplicit false
 
-namespace D5.S1.Recurrence.Algebraic.LogarithmicExponentialSeries
+namespace D5.S1.DifferentialAlgebra.LogarithmicExponentialSeries
 
 open PowerSeries
 
@@ -70,13 +70,13 @@ theorem normalized_characterization :
 
 #print axioms normalized_characterization
 
-end D5.S1.Recurrence.Algebraic.LogarithmicExponentialSeries
+end D5.S1.DifferentialAlgebra.LogarithmicExponentialSeries
 
 
 open Polynomial
 open scoped Differential
 
-namespace D5.S1.Recurrence.Algebraic.ExponentialDifferentialField
+namespace D5.S1.DifferentialAlgebra.ExponentialDifferentialField
 
 attribute [local instance 2000] Algebra.toSMul
 
@@ -269,4 +269,4 @@ theorem logImage_transcendental : Transcendental H logImage := by
 
 #print axioms logImage_transcendental
 
-end D5.S1.Recurrence.Algebraic.ExponentialDifferentialField
+end D5.S1.DifferentialAlgebra.ExponentialDifferentialField

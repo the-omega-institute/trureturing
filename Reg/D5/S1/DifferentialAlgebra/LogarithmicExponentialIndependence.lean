@@ -1,5 +1,5 @@
 import LeanInformationAuditInterface.Contract.Registration
-import D5.S1.Recurrence.Algebraic.LogarithmicExponentialIndependence
+import D5.S1.DifferentialAlgebra.LogarithmicExponentialIndependence
 import Reg.Support.DependentFamily
 
 /-!
@@ -10,9 +10,9 @@ theorem telescopes under the current source-selection contract.
 
 noncomputable section
 
-namespace Reg.D5.S1.Recurrence.Algebraic.LogarithmicExponentialIndependence
+namespace Reg.D5.S1.DifferentialAlgebra.LogarithmicExponentialIndependence
 
-open _root_.D5.S1.Recurrence.Algebraic.LogarithmicExponentialIndependence
+open _root_.D5.S1.DifferentialAlgebra.LogarithmicExponentialIndependence
 open _root_.D5.S3.ConceptDynamics.InformationEscape.DependentFamily
 open LeanInformationAudit
 
@@ -28,9 +28,9 @@ abbrev signature : Signature where
 
 private def coordinates : Fin 3 → PowerSeries ℚ :=
   ![PowerSeries.X,
-    _root_.D5.S1.Recurrence.Algebraic.LogarithmicExponentialSeries.F,
+    _root_.D5.S1.DifferentialAlgebra.LogarithmicExponentialSeries.F,
     PowerSeries.derivative
-      _root_.D5.S1.Recurrence.Algebraic.LogarithmicExponentialSeries.F]
+      _root_.D5.S1.DifferentialAlgebra.LogarithmicExponentialSeries.F]
 
 def actual : Realization signature :=
   realize signature (fun _ _ i => coordinates i) (fun e => nomatch e)
@@ -70,10 +70,10 @@ def injection_family : Registration arena (type_of% algebraically_independent) w
 def injection_registration : Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0}
     algebraically_independent (Realization signature) Unit Unit where
   unitName := Lean.Name.str
-    `D5.S1.Recurrence.Algebraic.LogarithmicExponentialIndependence.algebraically_independent
+    `D5.S1.DifferentialAlgebra.LogarithmicExponentialIndependence.algebraically_independent
     "__information_unit"
   realizationName :=
-    `Reg.D5.S1.Recurrence.Algebraic.LogarithmicExponentialIndependence.injection_family
+    `Reg.D5.S1.DifferentialAlgebra.LogarithmicExponentialIndependence.injection_family
   realizationSource := none
   generated := false
   arena := .source ⟨arena⟩
@@ -89,7 +89,7 @@ def injection_registration : Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0}
   partialSensitivity := none
   escapeFrom := none
   sourceSelection := some {
-    owner := `D5.S1.Recurrence.Algebraic.LogarithmicExponentialIndependence
+    owner := `D5.S1.DifferentialAlgebra.LogarithmicExponentialIndependence
     definition := none
     coordinates := #[]
     readouts := #[{
@@ -102,4 +102,4 @@ def injection_registration : Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0}
   familyRecord := none
   options := #[]
 
-end Reg.D5.S1.Recurrence.Algebraic.LogarithmicExponentialIndependence
+end Reg.D5.S1.DifferentialAlgebra.LogarithmicExponentialIndependence

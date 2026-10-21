@@ -1,15 +1,19 @@
 using static StrataLint.Scribe.DefinitionDsl;
 
-namespace StrataLint.Scribe.Blueprint.D5.S1.Recurrence.Algebraic;
+namespace StrataLint.Scribe.Blueprint.D5.S1.DifferentialAlgebra;
 
 internal sealed class ExponentialTranscendenceDocument : IScribeDocumentDefinition
 {
-    private const string Prefix = "D5/S1/Recurrence/Algebraic/ExponentialTranscendence.";
+    private const string Prefix = "D5/S1/DifferentialAlgebra/ExponentialTranscendence.";
+
+    private static readonly LibraryNoteRef Source =
+        LibraryNoteRef.Create("D5/L/DifferentialAlgebra/ax1971schanuel");
 
     public DocumentDefinition Create() => DocumentDefinition.Create(ScribeNode.Create(
         "The formal variable and its exponential satisfy no nonzero rational polynomial relation.",
         H("Polynomial Independence of the Formal Exponential"),
         Blocks(
+            Paragraph(Text("Generality I: these statements concern the fixed exponential in Q[[X]]. Exponential transcendence is classical and is also the one-pair case of Ax's theorem.")),
             Paragraph(Text("Work in the ring Q[[X]] of formal power series. "
                 + "Write E=sum over n>=0 of X^n/n!. The expression p(X,E) is defined "
                 + "for every bivariate polynomial p with rational coefficients; "
@@ -47,7 +51,7 @@ internal sealed class ExponentialTranscendenceDocument : IScribeDocumentDefiniti
             DeclarationHandle.Create(Prefix + name),
             H(title),
             StatementSource.WithoutFormula(),
-            AssessedProvenance.FromRepo(),
+            AssessedProvenance.FromLiterature(Source),
             Blocks(Paragraph(Text(prose))),
             role);
 }

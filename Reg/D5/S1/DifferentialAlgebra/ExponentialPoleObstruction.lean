@@ -1,4 +1,4 @@
-import D5.S1.Recurrence.Algebraic.ExponentialPoleObstruction
+import D5.S1.DifferentialAlgebra.ExponentialPoleObstruction
 
 /-!
 The current bounded raw-source selector does not provide a faithful binding from

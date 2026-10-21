@@ -1,12 +1,12 @@
-/- GID: D5/S1/Recurrence/Algebraic/LogarithmicExponentialIndependence
+/- GID: D5/S1/DifferentialAlgebra/LogarithmicExponentialIndependence
    generality: I
-   mirror-B: D5/B/S1/Recurrence/Algebraic/LogarithmicExponentialIndependence
+   mirror-B: D5/B/S1/DifferentialAlgebra/LogarithmicExponentialIndependence
    mirror-E: none(waiver:unbounded-symbolic-proof)
    anchors: [mathlib/module/Mathlib.RingTheory.AlgebraicIndependent.Transcendental, mathlib/module/Mathlib.RingTheory.Algebraic.Integral, mathlib/module/Mathlib.Tactic.FinCases, mathlib/module/Mathlib.Tactic.Ring]
    utility: none
    digest: Algebraic independence of the formal variable, minus log of two minus its exponential, and the derivative. -/
 
-import D5.S1.Recurrence.Algebraic.ExponentialDifferentialField
+import D5.S1.DifferentialAlgebra.ExponentialDifferentialField
 import Mathlib.RingTheory.AlgebraicIndependent.Transcendental
 import Mathlib.RingTheory.Algebraic.Integral
 import Mathlib.Tactic.FinCases
@@ -14,7 +14,7 @@ import Mathlib.Tactic.Ring
 
 attribute [local instance 2000] Algebra.toSMul
 
-namespace D5.S1.Recurrence.Algebraic.RationalPrimitiveIndependence
+namespace D5.S1.DifferentialAlgebra.RationalPrimitiveIndependence
 
 variable {K H : Type*} [Field K] [Field H] [Algebra K H] [CharZero H]
 
@@ -97,9 +97,9 @@ theorem rational_primitive_independent (x : K0) (e : H0) (f : L)
 
 #print axioms rational_primitive_independent
 
-end D5.S1.Recurrence.Algebraic.RationalPrimitiveIndependence
+end D5.S1.DifferentialAlgebra.RationalPrimitiveIndependence
 
-namespace D5.S1.Recurrence.Algebraic.LogarithmicExponentialIndependence
+namespace D5.S1.DifferentialAlgebra.LogarithmicExponentialIndependence
 
 open ExponentialDifferentialField
 open LogarithmicExponentialSeries
@@ -139,4 +139,4 @@ theorem algebraically_independent :
 
 #print axioms algebraically_independent
 
-end D5.S1.Recurrence.Algebraic.LogarithmicExponentialIndependence
+end D5.S1.DifferentialAlgebra.LogarithmicExponentialIndependence

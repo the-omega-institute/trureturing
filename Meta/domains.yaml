@@ -68,6 +68,9 @@ domains:
   Diagonal:
     stratum: S0
     definition: Diagonal constructions on finite listings, their exact distance-profile and escape counts, and their asymptotic escape rates.
+  DifferentialAlgebra:
+    stratum: S1
+    definition: Derivations of integral domains and fields, algebraic dependence in differential field extensions, and transcendence of formal power series.
   Digit:
     stratum: S1
     definition: Raw and canonical W-digit representations and local value-preserving carry rules.

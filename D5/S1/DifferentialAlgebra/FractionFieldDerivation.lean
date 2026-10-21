@@ -1,6 +1,6 @@
-/- GID: D5/S1/Recurrence/Algebraic/FractionFieldDerivation
-   generality: I
-   mirror-B: D5/B/S1/Recurrence/Algebraic/FractionFieldDerivation
+/- GID: D5/S1/DifferentialAlgebra/FractionFieldDerivation
+   generality: G
+   mirror-B: D5/B/S1/DifferentialAlgebra/FractionFieldDerivation
    mirror-E: none(waiver:unbounded-symbolic-proof)
    anchors: [mathlib/module/Mathlib.RingTheory.Derivation.Basic, mathlib/module/Mathlib.Algebra.TrivSqZeroExt.Basic, mathlib/module/Mathlib.RingTheory.Localization.FractionRing]
    utility: none
@@ -15,16 +15,17 @@ The extension is the second coordinate of the homomorphism to dual numbers
 obtained from the localization universal property. Its first coordinate is
 the identity. Every helper enters the construction or its agreement theorem.
 
-proof_shape: extend_algebraMap: bind-only; consumer: extend_unique, extend_commutes
-proof_shape: extend_unique: content
-proof_shape: extend_commutes: content
+proof_shape: extend_algebraMap: bind-only; consumer: extend_commutes
+proof_shape: extend_commutes: bind-only; consumers:
+ExponentialDifferentialField.kAmbientDifferential,
+ExponentialDifferentialField.hAmbientDifferential
 escape_witness: the localization lift of the graph into dual numbers is a
 ring homomorphism whose second coordinate satisfies the Leibniz rule.
 -/
 
 set_option autoImplicit false
 
-namespace D5.S1.Recurrence.Algebraic.FractionFieldDerivation
+namespace D5.S1.DifferentialAlgebra.FractionFieldDerivation
 
 variable {R : Type*} [CommRing R] [IsDomain R]
 variable (F : Type*) [Field F] [Algebra R F] [IsFractionRing R F]
@@ -92,22 +93,6 @@ theorem extend_algebraMap (D : Derivation ℤ R R) (r : R) :
   rw [graphLift_algebraMap]
   rfl
 
-/-- Agreement on the integral domain determines a derivation on its
-fraction field uniquely. -/
-theorem extend_unique (D : Derivation ℤ R R) (d : Derivation ℤ F F)
-    (h : ∀ r : R, d (algebraMap R F r) = algebraMap R F (D r)) :
-    d = extend F D := by
-  ext x
-  obtain ⟨⟨a, b⟩, hx⟩ := IsLocalization.surj (nonZeroDivisors R) x
-  have hb : algebraMap R F (b : R) ≠ 0 := (IsLocalization.map_units F b).ne_zero
-  have hd := congrArg d hx
-  have he := congrArg (extend F D) hx
-  rw [Derivation.leibniz, h, h] at hd
-  rw [Derivation.leibniz, extend_algebraMap, extend_algebraMap] at he
-  apply mul_left_cancel₀ hb
-  apply add_left_cancel (a := x * algebraMap R F (D (b : R)))
-  exact hd.trans he.symm
-
 /-- A derivation in a further field extension commutes with the extended
 derivation as soon as it agrees on the original integral domain. -/
 theorem extend_commutes (L : Type*) [Field L] [Algebra F L] [Algebra R L]
@@ -135,7 +120,6 @@ theorem extend_commutes (L : Type*) [Field L] [Algebra F L] [Algebra R L]
   exact hd.trans heL.symm
 
 #print axioms extend_algebraMap
-#print axioms extend_unique
 #print axioms extend_commutes
 
-end D5.S1.Recurrence.Algebraic.FractionFieldDerivation
+end D5.S1.DifferentialAlgebra.FractionFieldDerivation

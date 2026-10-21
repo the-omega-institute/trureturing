@@ -1,6 +1,6 @@
-/- GID: D5/S1/Recurrence/Algebraic/AlgebraicPrimitiveDescent
-   generality: I
-   mirror-B: D5/B/S1/Recurrence/Algebraic/AlgebraicPrimitiveDescent
+/- GID: D5/S1/DifferentialAlgebra/AlgebraicPrimitiveDescent
+   generality: G
+   mirror-B: D5/B/S1/DifferentialAlgebra/AlgebraicPrimitiveDescent
    mirror-E: none(waiver:unbounded-symbolic-proof)
    anchors: [mathlib/module/Mathlib.RingTheory.Derivation.MapCoeffs, mathlib/module/Mathlib.FieldTheory.Minpoly.Field, mathlib/module/Mathlib.Tactic.FieldSimp, mathlib/module/Mathlib.Tactic.Ring]
    utility: none
@@ -26,7 +26,7 @@ set_option autoImplicit false
 open Polynomial
 open scoped Differential
 
-namespace D5.S1.Recurrence.Algebraic.AlgebraicPrimitiveDescent
+namespace D5.S1.DifferentialAlgebra.AlgebraicPrimitiveDescent
 
 variable {K L : Type*} [Field K] [CharZero K] [Differential K]
   [CommRing L] [Nontrivial L] [Differential L] [Algebra K L]
@@ -82,4 +82,4 @@ theorem exists_primitive_of_isAlgebraic (x : L) (g : K)
 
 #print axioms exists_primitive_of_isAlgebraic
 
-end D5.S1.Recurrence.Algebraic.AlgebraicPrimitiveDescent
+end D5.S1.DifferentialAlgebra.AlgebraicPrimitiveDescent

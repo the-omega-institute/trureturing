@@ -4,15 +4,17 @@
 
 Algebraic independence of a logarithmic exponential series and its derivative.
 
+Generality I: the main statement concerns the fixed rational formal series. This is a formalization of a known result whose role here is the analytic core of the Laubie counterexample. Ax's differential Schanuel theorem applied to (t,exp(t)) and (log(2-exp(t)),2-exp(t)) gives transcendence degree three over C; the inverse rational formula exp(t)=2F'/(1+F') transfers it to (t,F,F'). The Library note gives the hypotheses and correspondence. The Lean proof supplies a direct differential-algebra argument.
+
 Let E=exp(X) in the ring of rational formal power series, and let F=-log(2-E), normalized by F(0)=0. Equivalently, F is the unique series with zero constant coefficient and derivative E/(2-E). The denominator has constant coefficient one and is therefore invertible.
 
 **Lemma 1.1 (A rational change of variable).**
 
-Lean statement: `D5/S1/Recurrence/Algebraic/LogarithmicExponentialIndependence.mobius_transcendental`
+Lean statement: `D5/S1/DifferentialAlgebra/LogarithmicExponentialIndependence.mobius_transcendental`
 
-*Proof.* Machine-checked in Lean as `D5/S1/Recurrence/Algebraic/LogarithmicExponentialIndependence.mobius_transcendental` (`✓ std3`). ∎
+*Proof.* Machine-checked in Lean as `D5/S1/DifferentialAlgebra/LogarithmicExponentialIndependence.mobius_transcendental` (`✓ std3`). ∎
 
-*Source.* Repository-derived.
+*Citation.* James Ax (1971). *On Schanuel's conjectures*. DOI: [10.2307/1970774](https://doi.org/10.2307/1970774). URL: <https://annals.math.princeton.edu/1971/93-2/p03>.
 
 *Commentary.*
 
@@ -20,11 +22,11 @@ For a field extension of characteristic zero, put g=e/(2-e). Transcendence ensur
 
 **Theorem 1.2 (Independence in a tower of fields).**
 
-Lean statement: `D5/S1/Recurrence/Algebraic/LogarithmicExponentialIndependence.rational_primitive_independent`
+Lean statement: `D5/S1/DifferentialAlgebra/LogarithmicExponentialIndependence.rational_primitive_independent`
 
-*Proof.* Machine-checked in Lean as `D5/S1/Recurrence/Algebraic/LogarithmicExponentialIndependence.rational_primitive_independent` (`✓ std3`). ∎
+*Proof.* Machine-checked in Lean as `D5/S1/DifferentialAlgebra/LogarithmicExponentialIndependence.rational_primitive_independent` (`✓ std3`). ∎
 
-*Source.* Repository-derived.
+*Citation.* James Ax (1971). *On Schanuel's conjectures*. DOI: [10.2307/1970774](https://doi.org/10.2307/1970774). URL: <https://annals.math.princeton.edu/1971/93-2/p03>.
 
 *Commentary.*
 
@@ -32,11 +34,11 @@ Assume compatible algebra maps in the four-field tower, characteristic zero for 
 
 **Theorem 1.3 (Three algebraically independent series).**
 
-Lean statement: `D5/S1/Recurrence/Algebraic/LogarithmicExponentialIndependence.algebraically_independent`
+Lean statement: `D5/S1/DifferentialAlgebra/LogarithmicExponentialIndependence.algebraically_independent`
 
-*Proof.* Machine-checked in Lean as `D5/S1/Recurrence/Algebraic/LogarithmicExponentialIndependence.algebraically_independent` (`✓ std3`). ∎
+*Proof.* Machine-checked in Lean as `D5/S1/DifferentialAlgebra/LogarithmicExponentialIndependence.algebraically_independent` (`✓ std3`). ∎
 
-*Source.* Repository-derived.
+*Citation.* James Ax (1971). *On Schanuel's conjectures*. DOI: [10.2307/1970774](https://doi.org/10.2307/1970774). URL: <https://annals.math.princeton.edu/1971/93-2/p03>.
 
 *Commentary.*
 
@@ -50,7 +52,7 @@ If F were algebraic over Q(X,E), differentiate its monic minimal polynomial. Min
 
 ## References
 
-- Truth anchor: `D5/S1/Recurrence/Algebraic/LogarithmicExponentialIndependence.algebraically_independent`
-- Truth anchor: `D5/S1/Recurrence/Algebraic/LogarithmicExponentialIndependence.mobius_transcendental`
-- Truth anchor: `D5/S1/Recurrence/Algebraic/LogarithmicExponentialIndependence.rational_primitive_independent`
-- Dependency: [D5/S1/Recurrence/Algebraic/ExponentialDifferentialField](ExponentialDifferentialField.md)
+- Truth anchor: `D5/S1/DifferentialAlgebra/LogarithmicExponentialIndependence.algebraically_independent`
+- Truth anchor: `D5/S1/DifferentialAlgebra/LogarithmicExponentialIndependence.mobius_transcendental`
+- Truth anchor: `D5/S1/DifferentialAlgebra/LogarithmicExponentialIndependence.rational_primitive_independent`
+- Dependency: [D5/S1/DifferentialAlgebra/ExponentialDifferentialField](ExponentialDifferentialField.md)

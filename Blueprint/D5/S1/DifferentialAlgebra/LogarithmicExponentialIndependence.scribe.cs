@@ -1,13 +1,17 @@
 using static StrataLint.Scribe.DefinitionDsl;
 
-namespace StrataLint.Scribe.Blueprint.D5.S1.Recurrence.Algebraic;
+namespace StrataLint.Scribe.Blueprint.D5.S1.DifferentialAlgebra;
 
 internal sealed class LogarithmicExponentialIndependenceDocument : IScribeDocumentDefinition
 {
+    private static readonly LibraryNoteRef Source =
+        LibraryNoteRef.Create("D5/L/DifferentialAlgebra/ax1971schanuel");
+
     public DocumentDefinition Create() => DocumentDefinition.Create(ScribeNode.Create(
         "Algebraic independence of a logarithmic exponential series and its derivative.",
         H("Algebraic Independence of a Formal Logarithm"),
         Blocks(
+            Paragraph(Text("Generality I: the main statement concerns the fixed rational formal series. This is a formalization of a known result whose role here is the analytic core of the Laubie counterexample. Ax's differential Schanuel theorem applied to (t,exp(t)) and (log(2-exp(t)),2-exp(t)) gives transcendence degree three over C; the inverse rational formula exp(t)=2F'/(1+F') transfers it to (t,F,F'). The Library note gives the hypotheses and correspondence. The Lean proof supplies a direct differential-algebra argument.")),
             Paragraph(Text("Let E=exp(X) in the ring of rational formal power series, and let "
                 + "F=-log(2-E), normalized by F(0)=0. Equivalently, F is the unique series "
                 + "with zero constant coefficient and derivative E/(2-E). "
@@ -15,10 +19,10 @@ internal sealed class LogarithmicExponentialIndependenceDocument : IScribeDocume
             Describe.Lean(
                 DescribeId.Create("logarithmic-exponential-mobius-transcendence"),
                 DeclarationHandle.Create(
-                    "D5/S1/Recurrence/Algebraic/LogarithmicExponentialIndependence.mobius_transcendental"),
+                    "D5/S1/DifferentialAlgebra/LogarithmicExponentialIndependence.mobius_transcendental"),
                 H("A rational change of variable"),
                 StatementSource.WithoutFormula(),
-                AssessedProvenance.FromRepo(),
+                AssessedProvenance.FromLiterature(Source),
                 Blocks(Paragraph(Text("For a field extension of characteristic zero, "
                     + "put g=e/(2-e). Transcendence ensures 2-e is nonzero, and "
                     + "(1+g)(2-e)=2 ensures 1+g is nonzero. The inverse formula "
@@ -27,10 +31,10 @@ internal sealed class LogarithmicExponentialIndependenceDocument : IScribeDocume
             Describe.Lean(
                 DescribeId.Create("logarithmic-exponential-transcendence-tower"),
                 DeclarationHandle.Create(
-                    "D5/S1/Recurrence/Algebraic/LogarithmicExponentialIndependence.rational_primitive_independent"),
+                    "D5/S1/DifferentialAlgebra/LogarithmicExponentialIndependence.rational_primitive_independent"),
                 H("Independence in a tower of fields"),
                 StatementSource.WithoutFormula(),
-                AssessedProvenance.FromRepo(),
+                AssessedProvenance.FromLiterature(Source),
                 Blocks(Paragraph(Text("Assume compatible algebra maps in the four-field "
                     + "tower, characteristic zero for H_0, x in K_0 transcendental over Q_0, "
                     + "e in H_0 transcendental over K_0, and f in L transcendental over H_0. "
@@ -41,10 +45,10 @@ internal sealed class LogarithmicExponentialIndependenceDocument : IScribeDocume
             Describe.Lean(
                 DescribeId.Create("logarithmic-exponential-algebraic-independence"),
                 DeclarationHandle.Create(
-                    "D5/S1/Recurrence/Algebraic/LogarithmicExponentialIndependence.algebraically_independent"),
+                    "D5/S1/DifferentialAlgebra/LogarithmicExponentialIndependence.algebraically_independent"),
                 H("Three algebraically independent series"),
                 StatementSource.WithoutFormula(),
-                AssessedProvenance.FromRepo(),
+                AssessedProvenance.FromLiterature(Source),
                 Blocks(
                     Paragraph(Text("For every polynomial P in three indeterminates with "
                         + "rational coefficients, evaluating its indeterminates at X,F,F' "

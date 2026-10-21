@@ -4,15 +4,17 @@
 
 The formal variable and its exponential satisfy no nonzero rational polynomial relation.
 
+Generality I: these statements concern the fixed exponential in Q[[X]]. Exponential transcendence is classical and is also the one-pair case of Ax's theorem.
+
 Work in the ring Q[[X]] of formal power series. Write E=sum over n>=0 of X^n/n!. The expression p(X,E) is defined for every bivariate polynomial p with rational coefficients; no analytic convergence or substitution of an infinite series with nonzero constant coefficient is required.
 
 **Definition 1.1 (Bivariate evaluation).**
 
-Lean statement: `D5/S1/Recurrence/Algebraic/ExponentialTranscendence.exponentialEval`
+Lean statement: `D5/S1/DifferentialAlgebra/ExponentialTranscendence.exponentialEval`
 
-*Formalization.* `D5/S1/Recurrence/Algebraic/ExponentialTranscendence.exponentialEval` (`✓ std3`).
+*Formalization.* `D5/S1/DifferentialAlgebra/ExponentialTranscendence.exponentialEval` (`✓ std3`).
 
-*Source.* Repository-derived.
+*Citation.* James Ax (1971). *On Schanuel's conjectures*. DOI: [10.2307/1970774](https://doi.org/10.2307/1970774). URL: <https://annals.math.princeton.edu/1971/93-2/p03>.
 
 *Commentary.*
 
@@ -20,11 +22,11 @@ View Q[t,u] as polynomials in u with coefficients in Q[t]. The homomorphism expo
 
 **Theorem 1.2 (Injectivity of exponential evaluation).**
 
-Lean statement: `D5/S1/Recurrence/Algebraic/ExponentialTranscendence.exponentialEval_injective`
+Lean statement: `D5/S1/DifferentialAlgebra/ExponentialTranscendence.exponentialEval_injective`
 
-*Proof.* Machine-checked in Lean as `D5/S1/Recurrence/Algebraic/ExponentialTranscendence.exponentialEval_injective` (`✓ std3`). ∎
+*Proof.* Machine-checked in Lean as `D5/S1/DifferentialAlgebra/ExponentialTranscendence.exponentialEval_injective` (`✓ std3`). ∎
 
-*Source.* Repository-derived.
+*Citation.* James Ax (1971). *On Schanuel's conjectures*. DOI: [10.2307/1970774](https://doi.org/10.2307/1970774). URL: <https://annals.math.princeton.edu/1971/93-2/p03>.
 
 *Commentary.*
 
@@ -32,11 +34,11 @@ The homomorphism p(t,u) -> p(X,E) is injective. Equivalently, if sum_j p_j(X)E^j
 
 **Theorem 1.3 (Transcendence over the polynomial coefficient ring).**
 
-Lean statement: `D5/S1/Recurrence/Algebraic/ExponentialTranscendence.exp_transcendental`
+Lean statement: `D5/S1/DifferentialAlgebra/ExponentialTranscendence.exp_transcendental`
 
-*Proof.* Machine-checked in Lean as `D5/S1/Recurrence/Algebraic/ExponentialTranscendence.exp_transcendental` (`✓ std3`). ∎
+*Proof.* Machine-checked in Lean as `D5/S1/DifferentialAlgebra/ExponentialTranscendence.exp_transcendental` (`✓ std3`). ∎
 
-*Source.* Repository-derived.
+*Citation.* James Ax (1971). *On Schanuel's conjectures*. DOI: [10.2307/1970774](https://doi.org/10.2307/1970774). URL: <https://annals.math.princeton.edu/1971/93-2/p03>.
 
 *Commentary.*
 
@@ -44,6 +46,6 @@ With the canonical inclusion Q[t] -> Q[[X]], t=X, the series E is transcendental
 
 ## References
 
-- Truth anchor: `D5/S1/Recurrence/Algebraic/ExponentialTranscendence.exp_transcendental`
-- Truth anchor: `D5/S1/Recurrence/Algebraic/ExponentialTranscendence.exponentialEval`
-- Truth anchor: `D5/S1/Recurrence/Algebraic/ExponentialTranscendence.exponentialEval_injective`
+- Truth anchor: `D5/S1/DifferentialAlgebra/ExponentialTranscendence.exp_transcendental`
+- Truth anchor: `D5/S1/DifferentialAlgebra/ExponentialTranscendence.exponentialEval`
+- Truth anchor: `D5/S1/DifferentialAlgebra/ExponentialTranscendence.exponentialEval_injective`

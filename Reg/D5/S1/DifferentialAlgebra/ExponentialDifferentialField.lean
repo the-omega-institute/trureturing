@@ -1,15 +1,15 @@
 import LeanInformationAuditInterface.Contract.Registration
-import D5.S1.Recurrence.Algebraic.ExponentialDifferentialField
+import D5.S1.DifferentialAlgebra.ExponentialDifferentialField
 import Reg.Support.DependentFamily
 
 /-! Readouts for the normalized logarithmic series and its rational differential field. -/
 
 noncomputable section
 
-namespace Reg.D5.S1.Recurrence.Algebraic.ExponentialDifferentialField
+namespace Reg.D5.S1.DifferentialAlgebra.ExponentialDifferentialField
 
-open _root_.D5.S1.Recurrence.Algebraic.ExponentialDifferentialField
-open _root_.D5.S1.Recurrence.Algebraic.LogarithmicExponentialSeries
+open _root_.D5.S1.DifferentialAlgebra.ExponentialDifferentialField
+open _root_.D5.S1.DifferentialAlgebra.LogarithmicExponentialSeries
 open _root_.D5.S3.ConceptDynamics.InformationEscape.DependentFamily
 open LeanInformationAudit
 open scoped Differential
@@ -76,8 +76,8 @@ def normalizedFamily : Registration normalizedArena (type_of% normalized_charact
 
 def normalizedRegistration : Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0}
     normalized_characterization (Realization normalizedSignature) Unit Unit where
-  unitName := Lean.Name.str `D5.S1.Recurrence.Algebraic.LogarithmicExponentialSeries.normalized_characterization "__information_unit"
-  realizationName := `Reg.D5.S1.Recurrence.Algebraic.ExponentialDifferentialField.normalizedFamily
+  unitName := Lean.Name.str `D5.S1.DifferentialAlgebra.LogarithmicExponentialSeries.normalized_characterization "__information_unit"
+  realizationName := `Reg.D5.S1.DifferentialAlgebra.ExponentialDifferentialField.normalizedFamily
   realizationSource := none
   generated := false
   arena := .source ⟨normalizedArena⟩
@@ -147,8 +147,8 @@ def kXFamily : Registration kXArena (type_of% kX_image) where
 
 def kXRegistration : Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0}
     kX_image (Realization kSignature) Unit Unit where
-  unitName := Lean.Name.str `D5.S1.Recurrence.Algebraic.ExponentialDifferentialField.kX_image "__information_unit"
-  realizationName := `Reg.D5.S1.Recurrence.Algebraic.ExponentialDifferentialField.kXFamily
+  unitName := Lean.Name.str `D5.S1.DifferentialAlgebra.ExponentialDifferentialField.kX_image "__information_unit"
+  realizationName := `Reg.D5.S1.DifferentialAlgebra.ExponentialDifferentialField.kXFamily
   realizationSource := none
   generated := false
   arena := .source ⟨kXArena⟩
@@ -164,7 +164,7 @@ def kXRegistration : Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0}
   partialSensitivity := none
   escapeFrom := none
   sourceSelection := some {
-    owner := `D5.S1.Recurrence.Algebraic.ExponentialDifferentialField
+    owner := `D5.S1.DifferentialAlgebra.ExponentialDifferentialField
     definition := none
     coordinates := #[]
     readouts := #[{
@@ -222,8 +222,8 @@ def hXFamily : Registration hXArena (type_of% hX_image) where
 
 def hXRegistration : Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0}
     hX_image (Realization hSignature) Unit Unit where
-  unitName := Lean.Name.str `D5.S1.Recurrence.Algebraic.ExponentialDifferentialField.hX_image "__information_unit"
-  realizationName := `Reg.D5.S1.Recurrence.Algebraic.ExponentialDifferentialField.hXFamily
+  unitName := Lean.Name.str `D5.S1.DifferentialAlgebra.ExponentialDifferentialField.hX_image "__information_unit"
+  realizationName := `Reg.D5.S1.DifferentialAlgebra.ExponentialDifferentialField.hXFamily
   realizationSource := none
   generated := false
   arena := .source ⟨hXArena⟩
@@ -239,7 +239,7 @@ def hXRegistration : Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0}
   partialSensitivity := none
   escapeFrom := none
   sourceSelection := some {
-    owner := `D5.S1.Recurrence.Algebraic.ExponentialDifferentialField
+    owner := `D5.S1.DifferentialAlgebra.ExponentialDifferentialField
     definition := none
     coordinates := #[]
     readouts := #[{
@@ -281,8 +281,8 @@ def logDerivativeFamily : Registration logDerivativeArena (type_of% logImage_der
 
 def logDerivativeRegistration : Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0}
     logImage_derivative (Realization hSignature) Unit Unit where
-  unitName := Lean.Name.str `D5.S1.Recurrence.Algebraic.ExponentialDifferentialField.logImage_derivative "__information_unit"
-  realizationName := `Reg.D5.S1.Recurrence.Algebraic.ExponentialDifferentialField.logDerivativeFamily
+  unitName := Lean.Name.str `D5.S1.DifferentialAlgebra.ExponentialDifferentialField.logImage_derivative "__information_unit"
+  realizationName := `Reg.D5.S1.DifferentialAlgebra.ExponentialDifferentialField.logDerivativeFamily
   realizationSource := none
   generated := false
   arena := .source ⟨logDerivativeArena⟩
@@ -298,7 +298,7 @@ def logDerivativeRegistration : Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0}
   partialSensitivity := none
   escapeFrom := none
   sourceSelection := some {
-    owner := `D5.S1.Recurrence.Algebraic.ExponentialDifferentialField
+    owner := `D5.S1.DifferentialAlgebra.ExponentialDifferentialField
     definition := none
     coordinates := #[]
     readouts := #[{
@@ -341,8 +341,8 @@ def rationalImageFamily : Registration rationalImageArena (type_of% rational_ima
 
 def rationalImageRegistration : Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0}
     rational_image (Realization hSignature) Unit Unit where
-  unitName := Lean.Name.str `D5.S1.Recurrence.Algebraic.ExponentialDifferentialField.rational_image "__information_unit"
-  realizationName := `Reg.D5.S1.Recurrence.Algebraic.ExponentialDifferentialField.rationalImageFamily
+  unitName := Lean.Name.str `D5.S1.DifferentialAlgebra.ExponentialDifferentialField.rational_image "__information_unit"
+  realizationName := `Reg.D5.S1.DifferentialAlgebra.ExponentialDifferentialField.rationalImageFamily
   realizationSource := none
   generated := false
   arena := .source ⟨rationalImageArena⟩
@@ -358,7 +358,7 @@ def rationalImageRegistration : Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0}
   partialSensitivity := none
   escapeFrom := none
   sourceSelection := some {
-    owner := `D5.S1.Recurrence.Algebraic.ExponentialDifferentialField
+    owner := `D5.S1.DifferentialAlgebra.ExponentialDifferentialField
     definition := none
     coordinates := #[]
     readouts := #[{
@@ -425,8 +425,8 @@ def transcendentalFamily : Registration transcendentalArena (type_of% logImage_t
 
 def transcendentalRegistration : Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0}
     logImage_transcendental (Realization transcendentalSignature) Unit Unit where
-  unitName := Lean.Name.str `D5.S1.Recurrence.Algebraic.ExponentialDifferentialField.logImage_transcendental "__information_unit"
-  realizationName := `Reg.D5.S1.Recurrence.Algebraic.ExponentialDifferentialField.transcendentalFamily
+  unitName := Lean.Name.str `D5.S1.DifferentialAlgebra.ExponentialDifferentialField.logImage_transcendental "__information_unit"
+  realizationName := `Reg.D5.S1.DifferentialAlgebra.ExponentialDifferentialField.transcendentalFamily
   realizationSource := none
   generated := false
   arena := .source ⟨transcendentalArena⟩
@@ -446,4 +446,4 @@ def transcendentalRegistration : Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0}
   familyRecord := none
   options := #[]
 
-end Reg.D5.S1.Recurrence.Algebraic.ExponentialDifferentialField
+end Reg.D5.S1.DifferentialAlgebra.ExponentialDifferentialField

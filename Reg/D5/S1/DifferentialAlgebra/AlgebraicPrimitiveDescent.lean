@@ -1,4 +1,4 @@
-import D5.S1.Recurrence.Algebraic.AlgebraicPrimitiveDescent
+import D5.S1.DifferentialAlgebra.AlgebraicPrimitiveDescent
 
 /-!
 The primitive-descent theorem quantifies over a characteristic-zero differential

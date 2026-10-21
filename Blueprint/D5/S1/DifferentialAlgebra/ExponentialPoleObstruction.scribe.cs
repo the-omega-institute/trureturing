@@ -1,16 +1,20 @@
 using static StrataLint.Scribe.DefinitionDsl;
 
-namespace StrataLint.Scribe.Blueprint.D5.S1.Recurrence.Algebraic;
+namespace StrataLint.Scribe.Blueprint.D5.S1.DifferentialAlgebra;
 
 internal sealed class ExponentialPoleObstructionDocument : IScribeDocumentDefinition
 {
     private const string Prefix =
-        "D5/S1/Recurrence/Algebraic/ExponentialPoleObstruction.";
+        "D5/S1/DifferentialAlgebra/ExponentialPoleObstruction.";
+
+    private static readonly LibraryNoteRef Source =
+        LibraryNoteRef.Create("D5/L/DifferentialAlgebra/ax1971schanuel");
 
     public DocumentDefinition Create() => DocumentDefinition.Create(ScribeNode.Create(
         "The rational function u/(2-u) has no primitive when the derivative of u is u.",
         H("A Simple Pole Obstructs a Rational Primitive"),
         Blocks(
+            Paragraph(Text("Generality G: the coefficient field is arbitrary of characteristic zero, and its derivation may be nonzero. This is the classical local pole obstruction to rational integration.")),
             Paragraph(Text(
                 "Let K be a field of characteristic zero and let d be an integer-linear "
                 + "derivation of K[u] satisfying d(u)=u. The restriction of d to K may "
@@ -21,7 +25,7 @@ internal sealed class ExponentialPoleObstructionDocument : IScribeDocumentDefini
                 DeclarationHandle.Create(Prefix + "polynomial_obstruction"),
                 H("The Cleared Polynomial Identity Is Impossible"),
                 StatementSource.WithoutFormula(),
-                AssessedProvenance.FromRepo(),
+                AssessedProvenance.FromLiterature(Source),
                 Blocks(Paragraph(Text(
                     "For coprime polynomials p,q with q nonzero, the identity "
                     + "(2-u)(d(p)q-pd(q))=u q² is impossible. Evaluating at u=2 "
@@ -37,7 +41,7 @@ internal sealed class ExponentialPoleObstructionDocument : IScribeDocumentDefini
                 DeclarationHandle.Create(Prefix + "rational_expression_obstruction"),
                 H("Injective Differential Evaluation"),
                 StatementSource.WithoutFormula(),
-                AssessedProvenance.FromRepo(),
+                AssessedProvenance.FromLiterature(Source),
                 Blocks(Paragraph(Text(
                     "Let j inject K[u] into a field L with derivation D, and suppose "
                     + "D(j(p))=j(d(p)) for every polynomial p. For every reduced "
@@ -52,7 +56,7 @@ internal sealed class ExponentialPoleObstructionDocument : IScribeDocumentDefini
                 DeclarationHandle.Create(Prefix + "no_rational_primitive"),
                 H("No Primitive in K(u)"),
                 StatementSource.WithoutFormula(),
-                AssessedProvenance.FromRepo(),
+                AssessedProvenance.FromLiterature(Source),
                 Blocks(Paragraph(Text(
                     "If D is a derivation on K(u) that agrees with d on K[u], "
                     + "then D(h) differs from u/(2-u) for every rational function h. "

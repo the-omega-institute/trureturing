@@ -4,15 +4,17 @@
 
 The rational function u/(2-u) has no primitive when the derivative of u is u.
 
+Generality G: the coefficient field is arbitrary of characteristic zero, and its derivation may be nonzero. This is the classical local pole obstruction to rational integration.
+
 Let K be a field of characteristic zero and let d be an integer-linear derivation of K[u] satisfying d(u)=u. The restriction of d to K may be nonzero. The conclusions therefore apply to the differential field K=Q(t), with d(t)=1, as well as to constant coefficient fields.
 
 **Theorem 1.1 (The Cleared Polynomial Identity Is Impossible).**
 
-Lean statement: `D5/S1/Recurrence/Algebraic/ExponentialPoleObstruction.polynomial_obstruction`
+Lean statement: `D5/S1/DifferentialAlgebra/ExponentialPoleObstruction.polynomial_obstruction`
 
-*Proof.* Machine-checked in Lean as `D5/S1/Recurrence/Algebraic/ExponentialPoleObstruction.polynomial_obstruction` (`✓ std3`). ∎
+*Proof.* Machine-checked in Lean as `D5/S1/DifferentialAlgebra/ExponentialPoleObstruction.polynomial_obstruction` (`✓ std3`). ∎
 
-*Source.* Repository-derived.
+*Citation.* James Ax (1971). *On Schanuel's conjectures*. DOI: [10.2307/1970774](https://doi.org/10.2307/1970774). URL: <https://annals.math.princeton.edu/1971/93-2/p03>.
 
 *Commentary.*
 
@@ -20,11 +22,11 @@ For coprime polynomials p,q with q nonzero, the identity (2-u)(d(p)q-pd(q))=u q�
 
 **Theorem 1.2 (Injective Differential Evaluation).**
 
-Lean statement: `D5/S1/Recurrence/Algebraic/ExponentialPoleObstruction.rational_expression_obstruction`
+Lean statement: `D5/S1/DifferentialAlgebra/ExponentialPoleObstruction.rational_expression_obstruction`
 
-*Proof.* Machine-checked in Lean as `D5/S1/Recurrence/Algebraic/ExponentialPoleObstruction.rational_expression_obstruction` (`✓ std3`). ∎
+*Proof.* Machine-checked in Lean as `D5/S1/DifferentialAlgebra/ExponentialPoleObstruction.rational_expression_obstruction` (`✓ std3`). ∎
 
-*Source.* Repository-derived.
+*Citation.* James Ax (1971). *On Schanuel's conjectures*. DOI: [10.2307/1970774](https://doi.org/10.2307/1970774). URL: <https://annals.math.princeton.edu/1971/93-2/p03>.
 
 *Commentary.*
 
@@ -32,11 +34,11 @@ Let j inject K[u] into a field L with derivation D, and suppose D(j(p))=j(d(p)) 
 
 **Theorem 1.3 (No Primitive in K(u)).**
 
-Lean statement: `D5/S1/Recurrence/Algebraic/ExponentialPoleObstruction.no_rational_primitive`
+Lean statement: `D5/S1/DifferentialAlgebra/ExponentialPoleObstruction.no_rational_primitive`
 
-*Proof.* Machine-checked in Lean as `D5/S1/Recurrence/Algebraic/ExponentialPoleObstruction.no_rational_primitive` (`✓ std3`). ∎
+*Proof.* Machine-checked in Lean as `D5/S1/DifferentialAlgebra/ExponentialPoleObstruction.no_rational_primitive` (`✓ std3`). ∎
 
-*Source.* Repository-derived.
+*Citation.* James Ax (1971). *On Schanuel's conjectures*. DOI: [10.2307/1970774](https://doi.org/10.2307/1970774). URL: <https://annals.math.princeton.edu/1971/93-2/p03>.
 
 *Commentary.*
 
@@ -44,6 +46,6 @@ If D is a derivation on K(u) that agrees with d on K[u], then D(h) differs from 
 
 ## References
 
-- Truth anchor: `D5/S1/Recurrence/Algebraic/ExponentialPoleObstruction.no_rational_primitive`
-- Truth anchor: `D5/S1/Recurrence/Algebraic/ExponentialPoleObstruction.polynomial_obstruction`
-- Truth anchor: `D5/S1/Recurrence/Algebraic/ExponentialPoleObstruction.rational_expression_obstruction`
+- Truth anchor: `D5/S1/DifferentialAlgebra/ExponentialPoleObstruction.no_rational_primitive`
+- Truth anchor: `D5/S1/DifferentialAlgebra/ExponentialPoleObstruction.polynomial_obstruction`
+- Truth anchor: `D5/S1/DifferentialAlgebra/ExponentialPoleObstruction.rational_expression_obstruction`

@@ -1,6 +1,6 @@
-/- GID: D5/S1/Recurrence/Algebraic/ExponentialPoleObstruction
-   generality: I
-   mirror-B: D5/B/S1/Recurrence/Algebraic/ExponentialPoleObstruction
+/- GID: D5/S1/DifferentialAlgebra/ExponentialPoleObstruction
+   generality: G
+   mirror-B: D5/B/S1/DifferentialAlgebra/ExponentialPoleObstruction
    mirror-E: none(waiver:unbounded-symbolic-proof)
    anchors: [mathlib/module/Mathlib.Algebra.Polynomial.FieldDivision, mathlib/module/Mathlib.FieldTheory.RatFunc.AsPolynomial, mathlib/module/Mathlib.RingTheory.Derivation.Basic, mathlib/module/Mathlib.Tactic.FieldSimp, mathlib/module/Mathlib.Tactic.Ring, mathlib/module/Mathlib.Tactic.NormNum]
    utility: none
@@ -13,7 +13,7 @@ import Mathlib.Tactic.FieldSimp
 import Mathlib.Tactic.Ring
 import Mathlib.Tactic.NormNum
 
-namespace D5.S1.Recurrence.Algebraic.ExponentialPoleObstruction
+namespace D5.S1.DifferentialAlgebra.ExponentialPoleObstruction
 
 open Polynomial
 
@@ -128,4 +128,4 @@ theorem no_rational_primitive (d : Derivation ℤ K[X] K[X])
 
 #print axioms no_rational_primitive
 
-end D5.S1.Recurrence.Algebraic.ExponentialPoleObstruction
+end D5.S1.DifferentialAlgebra.ExponentialPoleObstruction
