@@ -4039,3 +4039,669 @@ at revision 88e708c6e499168a6bf79cabb6bd08d4e62fb6fb (§§105--111, including
 the exact stabilized values).
 
 ## 追加锚（本行以下为增补区）
+
+## 96. Exact second-horizon premises and the original decoder domain
+
+The exact second-horizon result in [Terminal recovery, §§118–126][F96TERM]
+supplies a fixed supporting certificate for the original density-input
+recovery problem. Its positive residual gives necessary structure for every
+optimal decoder, as well as a forbidden-direction budget for nearoptimizers.
+The deductions below take that exact value, its attaining decoder and its
+certificate as paper premises. They do not repeat the root-isolation or
+global upper-bound argument.
+
+**Definition 96.1 (Unassisted whole-state contract).** Work on
+$M_3=\mathcal B(\mathbb C^3)$, using the ordered orthonormal basis
+
+$$
+|0\rangle=\frac{(1,1,1)^{\mathsf T}}{\sqrt3},\qquad
+|1\rangle=\frac{(1,1,-2)^{\mathsf T}}{\sqrt6},\qquad
+|2\rangle=\frac{(1,-1,0)^{\mathsf T}}{\sqrt2}.
+\tag{96.1}
+$$
+
+At the actual horizon $n=2$, the erased-history channel and its reduced
+form are, by Terminal (93.5) and (118.3),
+
+$$
+\begin{aligned}
+F^2&=\operatorname{Ad}_{U_0}\circ\Phi,\qquad
+U_0=1\oplus
+\begin{pmatrix}-1/2&\sqrt3/2\\ \sqrt3/2&1/2\end{pmatrix},\\
+\Phi(X)&=\Phi_{-1/2}(X)=
+\begin{pmatrix}
+x_{00}&-x_{01}/2&0\\
+-x_{10}/2&(x_{11}+3x_{22})/4&0\\
+0&0&(3x_{11}+x_{22})/4
+\end{pmatrix}.
+\end{aligned}
+\tag{96.2}
+$$
+
+Here $X=(x_{jk})$ is any complex matrix and
+$\operatorname{Ad}_U(X)=UXU^\dagger$. A legal decoder $D:M_3\to M_3$
+is one input-independent completely positive trace-preserving map
+(CPTP), defined on the entire complex matrix algebra. It receives only
+the terminal qutrit. Set
+
+$$
+\begin{aligned}
+\mathcal R&=D\circ\operatorname{Ad}_{U_0},&
+D&=\mathcal R\circ\operatorname{Ad}_{U_0^\dagger},\\
+e_2(D)&=\max_{\rho\in\mathsf D(\mathbb C^3)}
+ \frac12\|DF^2(\rho)-\rho\|_1,&
+e(\mathcal R)&=\max_{\rho\in\mathsf D(\mathbb C^3)}
+ \frac12\|\mathcal R\Phi(\rho)-\rho\|_1 .
+\end{aligned}
+\tag{96.3}
+$$
+
+The set $\mathsf D(\mathbb C^3)$ contains every positive semidefinite
+complex matrix of trace one, pure or mixed;
+$\|X\|_1=\operatorname{Tr}\sqrt{X^\dagger X}$. Composition in (96.3)
+is a bijection between all legal $D$ and all CPTP $\mathcal R$, and
+$e_2(D)=e(\mathcal R)$. The target remains the original input $\rho$.
+There is no reference in the input test or decoder, no history register,
+no smaller input code, no postselection, no intermediate correction and
+no additional observer resource. In particular this is the
+unassisted half trace norm objective, not the stabilized objective of
+Terminal §93 or a projection-probability task from §§86–93 of this volume.
+
+**Definition 96.2 (Exact parameters and attainment premise).** Let
+
+$$
+\theta_*=(a,b,c,\eta,L,p_e,p_i,x_i,\alpha,\beta,\tau)
+\tag{96.4}
+$$
+
+be exactly the unique real zero of the eleven rational polynomials
+in Terminal (119.4), in the rational box specified by its table and
+(119.7). This source specification defines all eleven parameters;
+the printed rational centre is not substituted for the zero.
+The symbols $a,b,c$ here are decoder parameters, distinct from the
+channel-population notation in Terminal §93. Its Theorem 118.2,
+Lemma 120.1 and (120.12) supply
+
+$$
+\begin{gathered}
+\min_{\mathcal R\ {\rm CPTP}}e(\mathcal R)=L=L_*,
+\qquad e(\mathcal R_*)=L,\qquad 0.606<L<0.607,\\
+0<a,b,c,\eta<1,\qquad \eta=\sqrt{ab},\qquad
+\alpha,\beta,\tau>0,\\
+0<p_e<1,\qquad p_i,x_i>0,\qquad p_i+x_i<1.
+\end{gathered}
+\tag{96.5}
+$$
+
+The exact value is approximately $0.60644699139906989$; all formulas
+use the isolated coordinate $L$. The attaining CPTP map $\mathcal R_*$
+is precisely Terminal (121.1), and $D_*=\mathcal R_*\circ
+\operatorname{Ad}_{U_0^\dagger}$. Thus the second-horizon
+no-reference minimum is supplied exactly by that source. The older
+finite-minimum boundary in §§94–95 is not an unresolved interval
+for this particular $n=2$ problem.
+
+For an explicit coefficient recipe for the fixed certificate, put
+$r\in\{e,i\}$ and define
+
+$$
+\begin{aligned}
+(p_r,x_r,y_r)&=
+\begin{cases}(p_e,0,1-p_e),&r=e,\\
+(p_i,x_i,1-p_i-x_i),&r=i,\end{cases}\\
+v_{0r}&=p_r,\qquad v_{1r}=(x_r+3y_r)/4,\qquad
+v_{2r}=(3x_r+y_r)/4,\\
+h_{0r}&=ap_r,\qquad h_{1r}=bv_{1r}+cv_{2r},\qquad
+h_{2r}=1-h_{0r}-h_{1r},\\
+d_{0r}&=L+h_{0r}-p_r,\qquad d_{1r}=L+h_{1r}-x_r,\qquad
+d_{2r}=L+h_{2r}-y_r,\qquad \kappa=1-\eta/2,\\
+m_{0r}&=d_{1r}d_{2r}-x_ry_r,\qquad
+m_{1r}=d_{0r}d_{2r}-p_ry_r,\\
+m_{2r}&=d_{0r}d_{1r}-\kappa^2p_rx_r,\qquad
+M_{ij}=\sum_{r=e,i}\zeta_r m_{ir}v_{jr},\qquad
+\zeta_e=\alpha,\quad\zeta_i=\beta .
+\end{aligned}
+\tag{96.6}
+$$
+
+These are Terminal (119.2), (123.2) and (124.3), evaluated at
+$\theta_*$. In particular the contact label $r$ is not a decoder
+index. Define
+
+$$
+\begin{aligned}
+Y&=\operatorname{diag}(M_{20},M_{21},M_{22}),\\
+s_{10}&=M_{20}-M_{10},\qquad
+s_{01}=M_{21}-M_{01},\qquad s_{02}=M_{22}-M_{02}.
+\end{aligned}
+\tag{96.7}
+$$
+
+**Definition 96.3 (Choi normalization and fixed supporting data).**
+Write $E_{jk}=|j\rangle\langle k|$ and
+$|ij\rangle=|i\rangle_{\rm out}\otimes|j\rangle_{\rm in}$. Use
+output-first, unnormalized Choi matrices:
+
+$$
+J_{\mathcal R}=\sum_{j,k=0}^2\mathcal R(E_{jk})\otimes E_{jk},
+\qquad
+J_{\mathcal R}\succeq0,\quad
+\operatorname{Tr}_{\rm out}J_{\mathcal R}=I_3,\quad
+\operatorname{Tr}J_{\mathcal R}=3,\qquad
+\omega_{\mathcal R}=J_{\mathcal R}/3.
+\tag{96.8}
+$$
+
+The last three conditions hold for every legal $\mathcal R$.
+The input tensor factor in this representation does not grant a
+physical reference input to (96.3).
+
+The fixed input/effect pairs $P_{r,k\ell},T_{r,k\ell}$ and positive
+weights $\lambda_r/9$, for $r=e,i$ and $k,\ell=0,1,2$, are exactly
+Terminal (123.1)–(123.5). The effects obey $0\preceq T_{r,k\ell}
+\preceq I_3$ and $\lambda_e+\lambda_i=1$. They are constructed
+from the contacts (96.6); no test depends on the unknown decoder.
+Their supporting operator and constant, including tensor orientation,
+are
+
+$$
+\begin{aligned}
+W&=\sum_{r=e,i}\sum_{k,\ell=0}^2\frac{\lambda_r}{9}
+ T_{r,k\ell}\otimes\Phi(P_{r,k\ell})^{\mathsf T},\\
+b_{\rm test}&=\sum_{r=e,i}\lambda_r\operatorname{Tr}(T_rP_r),
+\qquad S=I_{\rm out}\otimes Y-W .
+\end{aligned}
+\tag{96.9}
+$$
+
+Here $P_r,T_r,\lambda_r$ are the unphased contact objects of Terminal
+(123.1)–(123.2); $\mathsf T$ means ordinary transpose, also for complex
+matrices. The source equations (124.9), (124.14), (125.3) and
+(125.6) give the following precise premises:
+
+$$
+\begin{gathered}
+S=\tau|v\rangle\langle v|
+ +s_{10}|10\rangle\langle10|
+ +s_{01}|01\rangle\langle01|
+ +s_{02}|02\rangle\langle02|,\qquad
+v=\sqrt b\,|00\rangle+\sqrt a\,|11\rangle,\\
+S\succeq0,\qquad SJ_*=0,\qquad J_*=J_{\mathcal R_*},\\
+e(\mathcal R)\ge b_{\rm test}-\operatorname{Tr}(WJ_{\mathcal R})
+\quad\hbox{for every complex CPTP }\mathcal R,\qquad
+b_{\rm test}-\operatorname{Tr}Y=L .
+\end{gathered}
+\tag{96.10}
+$$
+
+The physical-test inequality already uses the half trace norm in
+(96.3). The source's all-density upper certificate for $\mathcal R_*$
+is the separate premise establishing attainment in (96.5); a finite
+test optimum alone would not establish it.
+
+The premise correspondence is consequently specific: Terminal §§119–120
+fix the exact point and its signs; §§123–124 fix the physical tests,
+$W,Y,S$ and their coefficients; (125.3),(125.6) supply the supporting
+inequality and matching constant; Theorem 118.2 and §121 supply the
+original all-density optimum and attaining legal map. The following
+proofs use these results without an additional root or global-minimax
+claim.
+
+## 97. Retained residual and the five-dimensional certificate kernel
+
+**Proposition 97.1 (Residual for arbitrary complex decoders).** Every
+CPTP $\mathcal R:M_3\to M_3$ in Definition 96.1 satisfies
+
+$$
+e(\mathcal R)\ge L+\operatorname{Tr}(SJ_{\mathcal R})
+=L+3\operatorname{Tr}(S\omega_{\mathcal R}) .
+\tag{97.1}
+$$
+
+*Proof.* Trace preservation and the tensor order in (96.8) give
+
+$$
+\operatorname{Tr}[(I_{\rm out}\otimes Y)J_{\mathcal R}]
+=\operatorname{Tr}[Y\operatorname{Tr}_{\rm out}J_{\mathcal R}]
+=\operatorname{Tr}Y .
+\tag{97.2}
+$$
+
+Substitute $W=I_{\rm out}\otimes Y-S$ into the last line of
+(96.10), retaining the term that is nonnegative:
+
+$$
+\begin{aligned}
+e(\mathcal R)
+&\ge b_{\rm test}-\operatorname{Tr}Y+
+                    \operatorname{Tr}(SJ_{\mathcal R})\\
+&=L+\operatorname{Tr}(SJ_{\mathcal R}).
+\end{aligned}
+\tag{97.3}
+$$
+
+Since $S,J_{\mathcal R}\succeq0$, this residual is nonnegative:
+$\operatorname{Tr}(SJ_{\mathcal R})=
+\operatorname{Tr}(S^{1/2}J_{\mathcal R}S^{1/2})\ge0$.
+Finally $J_{\mathcal R}=3\omega_{\mathcal R}$ gives the second
+expression in (97.1). There is no additional factor of two: the
+supporting-test inequality in (96.10) already has the required metric.
+The phase average used to construct the fixed $W$ places no covariance,
+realness or sparsity requirement on $\mathcal R$. $\square$
+
+**Proposition 97.2 (Complete spectrum and exact positive gap).** Put
+
+$$
+A=a+b,\qquad
+u=\frac{\sqrt b\,|00\rangle+\sqrt a\,|11\rangle}{\sqrt A},
+\qquad
+h=\frac{\sqrt a\,|00\rangle-\sqrt b\,|11\rangle}{\sqrt A}.
+\tag{97.4}
+$$
+
+Then the certificate kernel and its orthogonal projections are
+
+$$
+\begin{aligned}
+K&=\ker S=\operatorname{span}_{\mathbb C}
+ \{h,|12\rangle,|20\rangle,|21\rangle,|22\rangle\},\\
+P&=|h\rangle\langle h|+|12\rangle\langle12|
+ +|20\rangle\langle20|+|21\rangle\langle21|+|22\rangle\langle22|,\\
+Q&=I_9-P=|u\rangle\langle u|+|10\rangle\langle10|
+                    +|01\rangle\langle01|+|02\rangle\langle02|.
+\end{aligned}
+\tag{97.5}
+$$
+
+In particular $\dim_{\mathbb C}K=5$ and $\operatorname{rank}S=4$.
+The spectrum, with multiplicities, is
+
+$$
+\operatorname{spec}(S)=
+\{0,0,0,0,0,\ \tau A,\ s_{10},\ s_{01},\ s_{02}\}.
+\tag{97.6}
+$$
+
+Its least positive eigenvalue and a safe rational lower bound are
+
+$$
+\begin{gathered}
+\gamma_S=s_{02},\qquad 0.008742<\gamma_S<0.008743,\\
+\gamma_0=\frac{4371}{500000}=0.008742<\gamma_S,\qquad
+S\succeq\gamma_S Q\succeq\gamma_0Q .
+\end{gathered}
+\tag{97.7}
+$$
+
+The symbol $\gamma_S$ denotes this spectral gap only. It is distinct
+from the cubic coefficient denoted $\gamma$ in Terminal (122.1).
+
+*Proof.* Since $a,b>0$, the vectors $u,h$ have norm one and inner
+product zero. The first term of $S$ in (96.10) equals
+$\tau A|u\rangle\langle u|$. The other three displayed terms act on
+three different coordinate vectors, all orthogonal to $u$ and $h$.
+The four remaining coordinate vectors in (97.5) occur in no nonzero
+entry of $S$. Thus the nine vectors
+
+$$
+u,\ |10\rangle,\ |01\rangle,\ |02\rangle,\
+h,\ |12\rangle,\ |20\rangle,\ |21\rangle,\ |22\rangle
+\tag{97.8}
+$$
+
+form an orthonormal eigenbasis, with eigenvalues in the order
+$\tau A,s_{10},s_{01},s_{02},0,0,0,0,0$.
+
+To identify the least positive value rather than merely bound it,
+use the source's strict rational enclosures in (124.13):
+
+$$
+0.054474<s_{10}<0.054475,\qquad
+0.027084<s_{01}<0.027085,\qquad
+0.008742<s_{02}<0.008743 .
+\tag{97.9}
+$$
+
+Terminal (120.12) also gives $\tau>0.067$, $a>0.937$ and
+$b>0.337$, hence
+
+$$
+\tau A>0.067(0.937+0.337)=0.085358.
+\tag{97.10}
+$$
+
+These rational inequalities yield the strict ordering
+$0<s_{02}<s_{01}<s_{10}<\tau A$. They prove (97.7) on the
+orthonormal eigenbasis. In particular $\gamma_0$ is a strict lower
+bound, not a replacement definition of the exact gap. $\square$
+
+## 98. Common necessary support, forbidden mass and original coordinates
+
+**Corollary 98.1 (Every optimal decoder has the common necessary support).**
+For every legal $\mathcal R$ with $e(\mathcal R)=L$,
+
+$$
+\operatorname{ran}J_{\mathcal R}\subseteq K,\qquad
+J_{\mathcal R}=PJ_{\mathcal R}P,\qquad
+SJ_{\mathcal R}=J_{\mathcal R}S=0,\qquad
+\operatorname{rank}J_{\mathcal R}\le5 .
+\tag{98.1}
+$$
+
+*Proof.* Equation (97.1) and positivity give
+$0\le\operatorname{Tr}(SJ_{\mathcal R})\le e(\mathcal R)-L=0$.
+For positive semidefinite $S,J_{\mathcal R}$,
+
+$$
+\operatorname{Tr}(SJ_{\mathcal R})
+=\|S^{1/2}J_{\mathcal R}^{1/2}\|_{\rm HS}^2,\qquad
+\|B\|_{\rm HS}^2=\operatorname{Tr}(B^\dagger B).
+\tag{98.2}
+$$
+
+The zero norm implies $S^{1/2}J_{\mathcal R}^{1/2}=0$, so
+$\operatorname{ran}J_{\mathcal R}^{1/2}\subseteq\ker S^{1/2}=\ker S$.
+A finite-dimensional positive matrix and its square root have the same
+range, as their positive spectral eigenspaces coincide. Hence
+$PJ_{\mathcal R}=J_{\mathcal R}$; taking adjoints also gives
+$J_{\mathcal R}P=J_{\mathcal R}$. These identities prove (98.1),
+including the rank bound from $\dim K=5$. $\square$
+
+This is a necessary support condition for all optimizers. It retains
+arbitrary complex coherences among the five allowed directions; it is
+not a real ansatz or a symmetry reduction of the decoder domain.
+The number five is a Choi support dimension and rank ceiling. It is
+not a minimum Kraus rank or a count of controller or hardware states.
+It is also distinct from the real dimension of the channel image in
+Theorem 83.4.
+
+**Corollary 98.2 (Nearoptimal forbidden-direction budget).** Let
+$\varepsilon\ge0$ and let $\mathcal R$ be any legal decoder with
+$e(\mathcal R)\le L+\varepsilon$. Define
+
+$$
+\delta=e(\mathcal R)-L,\qquad
+m=\operatorname{Tr}(QJ_{\mathcal R}),\qquad
+q=\operatorname{Tr}(Q\omega_{\mathcal R})=m/3 .
+\tag{98.3}
+$$
+
+Then
+
+$$
+\begin{gathered}
+0\le\gamma_S m\le\operatorname{Tr}(SJ_{\mathcal R})
+                         \le\delta\le\varepsilon,\\
+0\le m\le\min\{3,\varepsilon/\gamma_S\}
+          \le\min\{3,\varepsilon/\gamma_0\},\\
+0\le q\le\min\{1,\varepsilon/(3\gamma_S)\}
+          \le\min\{1,\varepsilon/(3\gamma_0)\}.
+\end{gathered}
+\tag{98.4}
+$$
+
+*Proof.* The exact minimum in (96.5) gives $\delta\ge0$.
+Equation (97.1) gives $\operatorname{Tr}(SJ_{\mathcal R})\le\delta$.
+By (97.7), $S-\gamma_SQ\succeq0$, and pairing this positive
+matrix with $J_{\mathcal R}\succeq0$ yields
+$\operatorname{Tr}(SJ_{\mathcal R})\ge\gamma_Sm\ge0$.
+Also $0\preceq Q\preceq I_9$ implies
+$m\le\operatorname{Tr}J_{\mathcal R}=3$. Division by the positive
+$\gamma_S$, followed by division by three, proves the two mass
+bounds. Finally $\gamma_0<\gamma_S$ weakens each upper bound in
+the displayed direction. $\square$
+
+Equivalently, the retained residual is the weighted forbidden mass:
+
+$$
+\begin{aligned}
+\operatorname{Tr}(SJ_{\mathcal R})
+={}&\tau A\langle u|J_{\mathcal R}|u\rangle
+ +s_{10}\langle10|J_{\mathcal R}|10\rangle\\
+&+s_{01}\langle01|J_{\mathcal R}|01\rangle
+ +s_{02}\langle02|J_{\mathcal R}|02\rangle
+\le\varepsilon .
+\end{aligned}
+\tag{98.5}
+$$
+
+Thus excessive forbidden mass rules out the proposed error tolerance.
+The bound on $q$ concerns the normalized Choi state; omitting its factor
+of three would change the normalization of the statement. These are
+leakage bounds, not distances to a legal optimal decoder.
+
+**Proposition 98.3 (Unitary transport to the original $D$).** Define
+
+$$
+\begin{aligned}
+G&=I_{\rm out}\otimes U_0^{\mathsf T},&
+S_D&=G^\dagger SG,&K_D&=G^\dagger K,\\
+P_D&=G^\dagger PG,&Q_D&=G^\dagger QG,&
+\omega_D&=J_D/3 .
+\end{aligned}
+\tag{98.6}
+$$
+
+Then every original legal decoder satisfies
+
+$$
+J_{\mathcal R}=GJ_DG^\dagger,\qquad
+\omega_{\mathcal R}=G\omega_DG^\dagger,\qquad
+e_2(D)\ge L+\operatorname{Tr}(S_DJ_D)
+            =L+3\operatorname{Tr}(S_D\omega_D).
+\tag{98.7}
+$$
+
+In particular, an original optimizer has
+$J_D=P_DJ_DP_D$, range contained in $K_D$, and rank at most five.
+If $e_2(D)\le L+\varepsilon$, its masses
+$m_D=\operatorname{Tr}(Q_DJ_D)$ and
+$q_D=\operatorname{Tr}(Q_D\omega_D)$ satisfy exactly (98.4).
+
+*Proof.* For a matrix $B$ define output-first vectorization by
+$|B\rangle\rangle=\sum_{i,j}B_{ij}|ij\rangle$. Directly from its
+coefficients,
+
+$$
+|BU_0\rangle\rangle=(I_{\rm out}\otimes U_0^{\mathsf T})
+                         |B\rangle\rangle=G|B\rangle\rangle .
+\tag{98.8}
+$$
+
+If $B_\nu$ are Kraus matrices for $D$, then $B_\nu U_0$ are Kraus
+matrices for $\mathcal R=D\circ\operatorname{Ad}_{U_0}$. Summing
+their vector outer products proves the first identity in (98.7).
+The matrix $G$ is unitary. Cyclicity of trace therefore gives
+$\operatorname{Tr}(SJ_{\mathcal R})=\operatorname{Tr}(S_DJ_D)$
+and likewise $m_D=m$, $q_D=q$. Unitary conjugation carries the
+kernel, projections and spectrum of $S$ to those of $S_D$, so
+$\dim K_D=5$ and the gap is still $\gamma_S$.
+Combine this with $e_2(D)=e(\mathcal R)$ and (98.1)–(98.4).
+This conjugation changes decoder input coordinates; the identity
+target in (96.3) is unchanged. $\square$
+
+## 99. Legal support and nearoptimal projection counterexamples
+
+**Proposition 99.1 (Necessary support does not suffice for optimality).**
+There is a legal decoder with zero supporting residual and Choi support
+in $K$ whose original all-density loss is one.
+
+*Proof.* Define the replacer
+$\mathcal R_{\rm bad}(X)=\operatorname{Tr}(X)|2\rangle\langle2|$.
+It has Kraus matrices $|2\rangle\langle j|$, $j=0,1,2$, whose
+adjoint products sum to $I_3$, so it is CPTP. Its Choi matrix is
+
+$$
+J_{\rm bad}=\sum_{j=0}^2|2j\rangle\langle2j|,\qquad
+\operatorname{Tr}_{\rm out}J_{\rm bad}=I_3,\qquad
+PJ_{\rm bad}P=J_{\rm bad},\qquad
+\operatorname{Tr}(SJ_{\rm bad})=0 .
+\tag{99.1}
+$$
+
+All three support vectors appear in (97.5). But (96.2) gives
+$\Phi(|0\rangle\langle0|)=|0\rangle\langle0|$, and hence
+
+$$
+\frac12\|\mathcal R_{\rm bad}\Phi(|0\rangle\langle0|)
+                              -|0\rangle\langle0|\|_1
+=\frac12\||2\rangle\langle2|-|0\rangle\langle0|\|_1=1 .
+\tag{99.2}
+$$
+
+For any two density matrices $\rho,\sigma$,
+$\|\rho-\sigma\|_1\le\|\rho\|_1+\|\sigma\|_1=2$.
+Thus the tested value is the maximum:
+$e(\mathcal R_{\rm bad})=1>L$. The corresponding
+$D_{\rm bad}=\mathcal R_{\rm bad}\circ
+\operatorname{Ad}_{U_0^\dagger}$ is an original legal decoder
+with the same loss and transported necessary support. $\square$
+
+**Proposition 99.2 (Compression fails TP arbitrarily near the optimum).**
+For every $\varepsilon>0$ there is a legal $\mathcal R$ with
+$e(\mathcal R)\le L+\varepsilon$ for which the positive matrix
+$PJ_{\mathcal R}P$ is not the Choi matrix of a trace-preserving map.
+
+*Proof.* The replacer
+$\mathcal R_0(X)=\operatorname{Tr}(X)|0\rangle\langle0|$ is CPTP,
+with Kraus matrices $|0\rangle\langle j|$ and
+
+$$
+J_0=\sum_{j=0}^2|0j\rangle\langle0j| .
+\tag{99.3}
+$$
+
+Since $\Phi$ preserves trace, $\mathcal R_0\Phi$ sends every density
+to $|0\rangle\langle0|$. The input $|1\rangle\langle1|$ gives
+half trace distance one, and the density bound used in (99.2)
+gives $e(\mathcal R_0)=1$. The projector (97.5) acts by
+
+$$
+P|00\rangle=\sqrt{a/A}\,h,\qquad
+P|01\rangle=P|02\rangle=0,\qquad
+PJ_0P=\frac aA|h\rangle\langle h| .
+\tag{99.4}
+$$
+
+Its trace is $a/A<1$, because $b>0$. It therefore cannot have
+partial output trace $I_3$, which would require total trace three.
+Positivity of a compression has not preserved trace preservation.
+
+The same failure occurs for legal arbitrarily nearoptimal maps.
+For $0<t\le1$ put
+
+$$
+\mathcal R_t=(1-t)\mathcal R_*+t\mathcal R_0,\qquad
+J_t=(1-t)J_*+tJ_0 .
+\tag{99.5}
+$$
+
+The mixture is CPTP. For every complex density $\rho$, the triangle
+inequality applied to
+$(1-t)(\mathcal R_*\Phi(\rho)-\rho)+
+t(\mathcal R_0\Phi(\rho)-\rho)$ gives the convexity bound
+
+$$
+L\le e(\mathcal R_t)\le(1-t)e(\mathcal R_*)+
+t e(\mathcal R_0)=L+t(1-L).
+\tag{99.6}
+$$
+
+The lower bound is the exact minimum (96.5). Corollary 98.1 applied
+to $\mathcal R_*$ gives $PJ_*P=J_*$ and
+$\operatorname{Tr}J_*=3$. Consequently
+
+$$
+\operatorname{Tr}(PJ_tP)=3(1-t)+t\,a/A
+                      =3-t(3-a/A)<3\qquad(t>0).
+\tag{99.7}
+$$
+
+For a prescribed $\varepsilon>0$, choose
+$t=\min\{1,\varepsilon/(1-L)\}>0$; the denominator is positive by
+(96.5). Equations (99.6)–(99.7) give the asserted nearoptimal legal
+example with non-TP compression. Taking $t\downarrow0$ gives the
+arbitrary-nearness statement. Transporting by (98.7) yields the same
+failure for $P_DJ_{D_t}P_D$ in the original decoder coordinates.
+$\square$
+
+Rescaling a compressed matrix to restore its total trace would supply
+only one scalar equality, not the required matrix equation
+$\operatorname{Tr}_{\rm out}J=I_3$. The forbidden-mass estimate and
+positive compression thus supply neither a TP repair nor a bound on
+distance to the set of legal optimal decoders.
+
+## 100. What the supporting-readout fibre retains and loses
+
+Let $\mathcal C$ denote the full set of complex CPTP maps
+$\mathcal R:M_3\to M_3$ in Definition 96.1. Define the scalar readout
+and the optimality indicator on this same domain by
+
+$$
+\mathfrak r(\mathcal R)=\operatorname{Tr}(SJ_{\mathcal R}),\qquad
+\chi_{\rm opt}(\mathcal R)=
+\begin{cases}1,&e(\mathcal R)=L,\\0,&e(\mathcal R)>L.\end{cases}
+\tag{100.1}
+$$
+
+The exact minimum ensures that these cases exhaust $\mathcal C$.
+On legal decoders, (97.2) also identifies the supporting-test value:
+
+$$
+b_{\rm test}-\operatorname{Tr}(WJ_{\mathcal R})
+                    =L+\mathfrak r(\mathcal R).
+\tag{100.2}
+$$
+
+Thus either scalar carries the same information. The zero fibre
+contains both $\mathcal R_*$ and $\mathcal R_{\rm bad}$, but
+
+$$
+\begin{array}{c|ccc}
+ &\mathfrak r&e&\chi_{\rm opt}\\ \hline
+\mathcal R_*&0&L&1\\
+\mathcal R_{\rm bad}&0&1&0
+\end{array}
+\tag{100.3}
+$$
+
+The first row uses (96.5),(96.10); the second is Proposition 99.1.
+If a function $f$ on $\mathfrak r(\mathcal C)$ satisfied
+$e=f\circ\mathfrak r$, the two rows would require both $f(0)=L$
+and $f(0)=1$, impossible since $L<1$. The identical argument for
+$\chi_{\rm opt}$ rules out its factorization through $\mathfrak r$.
+Any deterministic postprocessing of this scalar still gives the same
+value on the two maps and cannot restore either answer.
+
+This is the fibre-constancy criterion restated in Definition 74.1,
+applied to a concrete observation on the legal decoder domain.
+The conclusion concerns the scalar supporting readout, equivalently
+the weighted value (100.2). It asserts neither equality of the full
+individual test-data vectors nor equality of the two Choi ranges.
+It also does not identify this scalar observation with the physical
+terminal state available to a decoder.
+
+What survives is useful and precise: every optimal decoder must have
+Choi support in the explicit common $K$ (or $K_D$), and every
+nearoptimizer must obey the gap-controlled mass budget (98.4).
+What the zero fibre loses is the original all-input loss and the
+answer to optimality. Membership in that support remains necessary
+even after TP is imposed, and Proposition 99.1 proves it insufficient.
+Proposition 99.2 separately prevents interpreting projection as a
+legal-decoder reconstruction.
+
+The matrix arguments are a source-specific application of standard
+positive-semidefinite complementarity, spectral decomposition and
+Choi weak duality. Terminal §126 relates the supporting framework to
+Coutts, Girard and Watrous, Theorem 3; the explicit premises and trace
+identities above are the ones used here. No new general theorem or
+literature-priority claim is needed for these consequences. Complete
+classification or uniqueness of optimizers, minimum Kraus rank,
+minimum supporting-test cardinality, controller-state counts,
+hardware gains and quantitative distance or repair to a legal
+optimizer are not established by this argument. Other horizons and
+the unrelated open boundaries of §95 remain outside these deductions.
+
+[F96TERM]: https://github.com/the-omega-institute/trureturing/blob/94514292022da7e8c018c6bc99ccbfd8aa04b6bb/docs/develop/theory/AURIC_FIB_ACTUAL_ERASED_HISTORY_TERMINAL_RECOVERY.md "Terminal recovery, §§118–126; exact second-horizon value and fixed supporting certificate"
+
+## 追加锚（本行以下为增补区）
