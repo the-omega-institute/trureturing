@@ -13,9 +13,7 @@ import D5.S3.Quantum.Recovery.PointwiseTensorRecovery
 import D5.S3.Quantum.Recovery.MatrixUnitDecoder
 import D5.S3.Geometry.ProjectionRange.ActualRangeTensor
 import D5.S3.Quantum.QuantumChannels.IptPptSquaredEquivalence
-
 /-! The original ST37 target on actual smooth channels. -/
-
 noncomputable section
 open Bundle Filter Set Topology
 open scoped BigOperators Matrix MatrixOrder ComplexOrder Topology Manifold ContDiff TensorProduct
@@ -24,38 +22,28 @@ open D5.S3.Quantum.Recovery.SpectralTransposeRecovery
 open D5.S3.Quantum.Recovery.MatrixUnitDecoder
 open D5.S3.Quantum.Foundation.FiniteKrausChannel
 open PhyslibLeaf
-
 set_option backward.isDefEq.respectTransparency true
 set_option diagnostics false
-
 attribute [local instance] TensorProduct.instNormedAddCommGroup
   TensorProduct.instInnerProductSpace
-
 attribute [local instance] Matrix.seminormedAddCommGroup
   Matrix.normedAddCommGroup Matrix.normedSpace
-
 attribute [local irreducible] spectralInverseSqrt spectralSupport
-
 namespace Original8340Global
 
--- Name construction retains Lean's numeric private-name component. The expansion
--- is the existing current-dev constant, without a copied theorem or a new axiom.
+-- Reuse the existing private constant with Lean's numeric private-name component.
 local macro "st37_kron_id_apply" : term =>
   return Lean.mkIdent (Lean.mkPrivateNameCore
     `D5.S3.Quantum.QuantumChannels.IptPptSquaredEquivalence
     `D5.S3.Quantum.QuantumChannels.IptPptSquaredEquivalence.kron_id_apply)
-
--- Select the existing operator norm on matrix-valued CLMs explicitly.  The endpoint
--- norms remain Matrix.normedAddCommGroup, and their topology remains the imported one.
+-- Select the existing CLM operator norm at the original matrix norms and topology.
 private abbrev explicitCLMnorm (𝕜 : Type*) [NontriviallyNormedField 𝕜]
     [NormedSpace 𝕜 ℂ]
     (m n p q : Type*) [Fintype m] [Fintype n] [Fintype p] [Fintype q] :
     NormedAddCommGroup (Matrix m n ℂ →L[𝕜] Matrix p q ℂ) :=
   ContinuousLinearMap.toNormedAddCommGroup
     (E := Matrix m n ℂ) (F := Matrix p q ℂ) (σ₁₂ := RingHom.id 𝕜)
-
 attribute [local instance 2000] explicitCLMnorm
-
 private abbrev explicitCLMnormedSpace (𝕜 𝕜' : Type*)
     [NontriviallyNormedField 𝕜] [NormedField 𝕜']
     [NormedSpace 𝕜 ℂ] [NormedSpace 𝕜' ℂ] [SMulCommClass 𝕜 𝕜' ℂ]
@@ -64,44 +52,30 @@ private abbrev explicitCLMnormedSpace (𝕜 𝕜' : Type*)
   ContinuousLinearMap.toNormedSpace
     (E := Matrix m n ℂ) (F := Matrix p q ℂ)
     (σ₁₂ := RingHom.id 𝕜) (𝕜' := 𝕜')
-
 attribute [local instance 2000] explicitCLMnormedSpace
-
--- These abbreviations expose existing parent projections; they install no topology.
 private abbrev normedTopology (V : Type*) (nV : NormedAddCommGroup V) :
     TopologicalSpace V :=
   nV.toMetricSpace.toPseudoMetricSpace.toUniformSpace.toTopologicalSpace
-
 private abbrev normedIdentityChart (V : Type*) (nV : NormedAddCommGroup V) :
     @ChartedSpace V (normedTopology V nV) V (normedTopology V nV) :=
   @chartedSpaceSelf V (normedTopology V nV)
-
--- The model uses the selected norm's topology; the space uses the imported matrix
--- topology.  Use the Matrix topology instance in the result type: spelling it as
--- the raw function topology leaves a different input to instance matching, even
--- though the two topologies are definitionally equal.  No topology is installed.
+-- The norm-model and imported Matrix topologies are definitionally equal.
+-- Explicit Matrix topology spelling selects the canonical instance; it installs no topology.
 private abbrev matrixIdentityChart (m n : Type*) [Fintype m] [Fintype n] :
     @ChartedSpace (Matrix m n ℂ)
       (normedTopology _ (Matrix.normedAddCommGroup : NormedAddCommGroup (Matrix m n ℂ)))
       (Matrix m n ℂ) (inferInstanceAs (TopologicalSpace (Matrix m n ℂ))) :=
   normedIdentityChart (Matrix m n ℂ)
     (Matrix.normedAddCommGroup : NormedAddCommGroup (Matrix m n ℂ))
-
 attribute [local instance 2000] matrixIdentityChart
-
--- Expose the existing additive smooth structure at the selected matrix norm/chart.
 private abbrev matrixLieAddGroup (m n : Type*) [Fintype m] [Fintype n] :
     LieAddGroup 𝓘(ℝ, Matrix m n ℂ) ∞ (Matrix m n ℂ) :=
   instNormedSpaceLieAddGroup (𝕜 := ℝ) (E := Matrix m n ℂ) (n := ∞)
-
 private abbrev matrixContMDiffAdd (m n : Type*) [Fintype m] [Fintype n] :
     ContMDiffAdd 𝓘(ℝ, Matrix m n ℂ) ∞ (Matrix m n ℂ) :=
   instContMDiffAddSelf
-
 attribute [local instance 2000] matrixLieAddGroup matrixContMDiffAdd
-
--- The operator norm's uniformity is the imported bounded-convergence uniformity
--- (mathlib Analysis/Normed/Operator/Basic.lean, toPseudoMetricSpace).
+-- Reuse the operator norm's bounded-convergence uniformity (Operator/Basic).
 private abbrev clmIdentityChart (𝕜 : Type*) [NontriviallyNormedField 𝕜]
     [NormedSpace 𝕜 ℂ]
     (m n p q : Type*) [Fintype m] [Fintype n] [Fintype p] [Fintype q] :
@@ -112,11 +86,8 @@ private abbrev clmIdentityChart (𝕜 : Type*) [NontriviallyNormedField 𝕜]
         (E := Matrix m n ℂ) (F := Matrix p q ℂ) (σ := RingHom.id 𝕜)) :=
   normedIdentityChart (Matrix m n ℂ →L[𝕜] Matrix p q ℂ)
     (explicitCLMnorm 𝕜 m n p q)
-
 attribute [local instance 2000] clmIdentityChart
-
-set_option maxHeartbeats 3000000 in
--- Preserve the original ceiling for the complete canonical model and tensor structures.
+set_option maxHeartbeats 3000000 in -- Canonical structures; original ceiling.
 private theorem st37_matrix_unit_slice
     {E H B : Type*} [NormedAddCommGroup E] [NormedSpace ℝ E]
     [TopologicalSpace H] [TopologicalSpace B] [ChartedSpace H B] [CompactSpace B]
@@ -131,8 +102,7 @@ private theorem st37_matrix_unit_slice
   hpi.comp (contMDiff_id.prodMk contMDiff_const)
 
 -- Consumed finite tensor calculation at the original complex Euclidean structures.
-set_option maxHeartbeats 3000000 in
--- Preserve the original ceiling for the complete canonical model and tensor structures.
+set_option maxHeartbeats 3000000 in -- Canonical structures; original ceiling.
 private theorem st37_tensor_sum_inner {d n : ℕ}
     (AA : (Fin d × Fin n) → Matrix (Fin n) (Fin d) ℂ)
     (u w : EuclideanSpace ℂ (Fin d)) :
@@ -151,8 +121,7 @@ private theorem st37_tensor_sum_inner {d n : ℕ}
         ← LinearMap.adjoint_inner_right]
       exact (inner_sum (𝕜 := ℂ) (E := EuclideanSpace ℂ (Fin d)) Finset.univ _ _).symm
 
-set_option maxHeartbeats 3000000 in
--- Preserve the original ceiling for the complete canonical model and tensor structures.
+set_option maxHeartbeats 3000000 in -- Canonical structures; original ceiling.
 private theorem st37_tensor_sum_smooth
     {E H B : Type*} [NormedAddCommGroup E] [NormedSpace ℝ E]
     [TopologicalSpace H] [TopologicalSpace B] [ChartedSpace H B]
@@ -177,8 +146,7 @@ private theorem st37_tensor_sum_smooth
       contMDiff_fst
   exact T.contDiff.comp_contMDiff (ha.clm_apply contMDiff_snd)
 
--- Keep the full dependent conclusion opaque to transport at its two data inputs.
--- This consumed predicate retains the original canonical range and tensor structures.
+-- Transport the full dependent conclusion at the original range and tensor structures.
 private def st37_pointwise_statement {d n : ℕ}
     (Q : Matrix (Fin n) (Fin n) ℂ)
     (N : Matrix (Fin d) (Fin d) ℂ → Matrix (Fin n) (Fin n) ℂ)
@@ -223,8 +191,7 @@ private def st37_pointwise_statement {d n : ℕ}
       (∀ w : FK, (sigmaInv w : Vn) = (W * W).toEuclideanLin w)
 
 -- Reuse the complete pointwise construction, including its existing inverse formula.
-set_option maxHeartbeats 3000000 in
--- Preserve the original ceiling for the complete canonical model and tensor structures.
+set_option maxHeartbeats 3000000 in -- Canonical structures; original ceiling.
 private theorem st37_actual_pointwise {d n : ℕ} (hd : 0 < d)
     (N : Matrix (Fin d) (Fin d) ℂ →L[ℂ] Matrix (Fin n) (Fin n) ℂ)
     (hCP : MatrixMap.IsCompletelyPositive N.toLinearMap)
@@ -269,9 +236,7 @@ private theorem st37_actual_pointwise {d n : ℕ} (hd : 0 < d)
   rw [hq, hnfun] at hc
   exact hc
 
-set_option maxHeartbeats 3000000 in
--- Consumed integration proof: construct the actual bundles and smooth tensor maps
--- separately so their dependent instances have their own elaboration budget.
+set_option maxHeartbeats 3000000 in -- Canonical structures; original ceiling.
 private theorem st37_bundle_geometry
     {E H B : Type*} [NormedAddCommGroup E] [NormedSpace ℝ E]
     [TopologicalSpace H] [TopologicalSpace B] [ChartedSpace H B] [CompactSpace B]
@@ -547,8 +512,7 @@ private theorem st37_bundle_geometry
     hEL, hER, hFL, hFR, hforw, hbacksm, hsig, hinv, hsigsm, hinvsm,
     (fun x => ⟨hpos x, hstrict x, hright x, hleft x, htrace x⟩), hinter, hfactor⟩
 
-set_option maxHeartbeats 3000000 in
--- The original statement contains dependent complex range and tensor bundle instances.
+set_option maxHeartbeats 3000000 in -- Canonical structures; original ceiling.
 theorem whole_original_ST37
     {E H B : Type*} [NormedAddCommGroup E] [NormedSpace ℝ E]
     [TopologicalSpace H] [TopologicalSpace B] [ChartedSpace H B] [CompactSpace B]
