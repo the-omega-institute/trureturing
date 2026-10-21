@@ -8,6 +8,7 @@ internal sealed class RecurrenceDocument : IScribeDocumentDefinition
         "Elementary symmetric polynomials of part sizes and reciprocal coefficients.",
         H("Multipartite CHS recurrence"),
         Blocks(
+            Paragraph(Text("The module proves nonnegativity of every coefficient and strict positivity of the even coefficients when there are at least two positive parts. The extremal comparison is proved in the Extremal module and transferred to CHS norms in the Result module.")),
             Describe.Lean(DescribeId.Create("multipartite-esymm-parts"),
                 DeclarationHandle.Create("D5/S3/Combinatorics/Graph/MultipartiteCHS/Recurrence.esymmParts"),
                 H("Elementary symmetric part sum"), StatementSource.WithoutFormula(),

@@ -14,7 +14,7 @@ url: https://arxiv.org/abs/2311.04689v3
 
 Chávez et al., *Extremal polynomial norms of graphs*, arXiv:2311.04689v3, Section 8, Problem 3: “Can one find the extrema of the CHS norms over other families of graphs such as regular, unicyclic and complete multipartite graphs?”
 
-For a complete $r$-partite graph with positive part sizes $a_1,ldots,a_r$ and total order $n$, the cited article defines, for even $d=2m$, the CHS norm by
+For a complete $r$-partite graph with positive part sizes $a_1,\ldots,a_r$ and total order $n$, the cited article defines, for even $d=2m$, the CHS norm by
 
 $$\|G\|_{2m}=h_{2m}(\lambda_1,\ldots,\lambda_n)^{1/(2m)},$$
 
