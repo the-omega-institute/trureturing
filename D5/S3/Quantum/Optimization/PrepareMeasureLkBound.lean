@@ -243,7 +243,58 @@ private lemma a_lower_three_halves (k : ℕ) (hk : 3 ≤ k) :
 private lemma lk_bound (k : ℕ) (hk : 0 < k) (n m : ℕ)
     (M : Matrix (Fin n) (Fin m) ℝ) :
     Lk k M ≤ ((k : ℝ) / a k) * L M := by
-  sorry
+  classical
+  have hkR : (0 : ℝ) < k := by exact_mod_cast hk
+  have ha : 0 < a k := by
+    unfold a
+    apply mul_pos (inv_pos.mpr (pow_pos (by norm_num) k))
+    apply Finset.sum_pos'
+    · exact fun ε _ => abs_nonneg _
+    · refine ⟨fun _ => 1, Finset.mem_univ _, ?_⟩
+      have hone : signValue (1 : Fin 2) = 1 := by norm_num [signValue]
+      simpa only [hone, Finset.sum_const, Finset.card_univ, Fintype.card_fin,
+        nsmul_eq_mul, mul_one, abs_of_nonneg (Nat.cast_nonneg k : (0 : ℝ) ≤ k)] using hkR
+  unfold Lk
+  rw [dite_eq_left hk]
+  unfold fiberMax
+  apply Finset.sup'_le
+  intro f _
+  have hfiber (ε : Fin k → Fin 2) (q : Fin m) :
+      (∑ j, signValue (ε j) * fiberSum f M j q) =
+        ∑ i, signValue (ε (f i)) * M i q := by
+    unfold fiberSum
+    simp_rw [Finset.mul_sum]
+    rw [Finset.sum_comm]
+    apply Finset.sum_congr rfl
+    intro i _
+    simp only [mul_ite, mul_zero, Finset.sum_ite_eq, Finset.mem_univ, ↓reduceIte]
+  have hrow (ε : Fin k → Fin 2) :
+      (∑ q, |∑ j, signValue (ε j) * fiberSum f M j q|) ≤ L M := by
+    simp_rw [hfiber]
+    exact Finset.le_sup' (fun v : Fin n → Fin 2 =>
+      ∑ q, |∑ i, signValue (v i) * M i q|) (Finset.mem_univ (fun i => ε (f i)))
+  have havg : (a k / k) * manhattan (fun j q => fiberSum f M j q) ≤ L M := by
+    calc
+      _ = ∑ q : Fin m, (a k / k) * ∑ j : Fin k, |fiberSum f M j q| := by
+        unfold manhattan
+        rw [Finset.sum_comm, Finset.mul_sum]
+      _ ≤ ∑ q : Fin m, ((2 : ℝ) ^ k)⁻¹ *
+          ∑ ε : Fin k → Fin 2, |∑ j, signValue (ε j) * fiberSum f M j q| :=
+        Finset.sum_le_sum (fun q _ => averaged_abs_lower k hk (fun j => fiberSum f M j q))
+      _ = ((2 : ℝ) ^ k)⁻¹ * ∑ ε : Fin k → Fin 2,
+          ∑ q : Fin m, |∑ j, signValue (ε j) * fiberSum f M j q| := by
+        rw [← Finset.mul_sum, Finset.sum_comm]
+      _ ≤ ((2 : ℝ) ^ k)⁻¹ * ∑ _ : Fin k → Fin 2, L M :=
+        mul_le_mul_of_nonneg_left (Finset.sum_le_sum (fun ε _ => hrow ε))
+          (by positivity)
+      _ = L M := by
+        simp only [Finset.sum_const, Finset.card_univ, Fintype.card_fun,
+          Fintype.card_fin, nsmul_eq_mul, Nat.cast_pow, Nat.cast_ofNat]
+        rw [← mul_assoc, inv_mul_cancel₀ (ne_of_gt (pow_pos (by norm_num) k)), one_mul]
+  have h := (le_div_iff₀ (div_pos ha hkR)).mpr ((mul_comm _ _).trans_le havg)
+  calc
+    manhattan (fun j q => fiberSum f M j q) ≤ L M / (a k / k) := h
+    _ = ((k : ℝ) / a k) * L M := by rw [div_div_eq_mul_div]; ring
 
 theorem result : claim := by
   intro k hk
