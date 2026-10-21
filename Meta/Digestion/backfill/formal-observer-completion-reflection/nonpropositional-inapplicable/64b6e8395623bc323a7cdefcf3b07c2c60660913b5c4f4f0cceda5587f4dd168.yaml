@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:64b6e8395623bc323a7cdefcf3b07c2c60660913b5c4f4f0cceda5587f4dd168
+  normalized_sha256: sha256:64b6e8395623bc323a7cdefcf3b07c2c60660913b5c4f4f0cceda5587f4dd168
+cas_ref: sha256:64b6e8395623bc323a7cdefcf3b07c2c60660913b5c4f4f0cceda5587f4dd168
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: Names an external-closure case; no concrete realization is claimed.
+    previous_atom_id: 676b6ac02c10c5cf2076cc5b5dee39e87fb1af02e29275cfc525d63059b97920
+    next_atom_id: 67b59981d0713b2a44cd9ea1e91d4dc674d06b524c67567e4cf421cb8a9488d6

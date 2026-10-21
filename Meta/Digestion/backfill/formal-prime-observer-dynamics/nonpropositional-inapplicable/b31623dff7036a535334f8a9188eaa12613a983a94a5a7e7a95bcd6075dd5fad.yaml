@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:b31623dff7036a535334f8a9188eaa12613a983a94a5a7e7a95bcd6075dd5fad
+  normalized_sha256: sha256:b31623dff7036a535334f8a9188eaa12613a983a94a5a7e7a95bcd6075dd5fad
+cas_ref: sha256:b31623dff7036a535334f8a9188eaa12613a983a94a5a7e7a95bcd6075dd5fad
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: Interpretation boundary for relative observation equality and instructions for recovering additional structure.
+    previous_atom_id: e979af55ca0b41e76caa7ae2ba0c4754f61877ae4c0e27445fcfef17d269b88a
+    next_atom_id: 64efea1150f436566dfbef0348a713256d3aea6bf3e301151702a77d5375b91a

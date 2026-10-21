@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:26f8d20af8bde5b51a519f3355727d7cf9ed7bf733bde15f7c7b643e7933cddb
+  normalized_sha256: sha256:26f8d20af8bde5b51a519f3355727d7cf9ed7bf733bde15f7c7b643e7933cddb
+cas_ref: sha256:26f8d20af8bde5b51a519f3355727d7cf9ed7bf733bde15f7c7b643e7933cddb
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 有限维空间和线性映射的假设。不另主张独立数学命题。
+    previous_atom_id: 88b6d4dedbe4b405b96fbc24c0b1b222181f46f7451110c687813f4bda16a9cd
+    next_atom_id: 465dc5d629916b968cef41d7d1826bea04f36e740b2e0d7e5d1778f421719ab5
