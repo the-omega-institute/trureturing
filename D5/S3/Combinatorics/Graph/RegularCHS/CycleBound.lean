@@ -97,7 +97,7 @@ private lemma geom_ode (a : ℝ) :
     (1 - C 4 * X ^ 2) * (C a * geom a) =
       C a + C 4 * X - X * C (4 - a ^ 2) * geom a := by
   have h := geom_linear a
-  simp only [map_sub, map_pow] 
+  simp only [map_sub, map_pow]
   linear_combination (C a + C 4 * X) * h
 
 private lemma prod_geom_ode {ι : Type*} (s : Finset ι) (a : ι → ℝ) :
