@@ -849,3 +849,532 @@ The classification is pointwise in a fixed $W$ under the supplied seventeen-mode
 The assumed preparation family, shared ideal controls and probes remain those of §§2–4. The entanglement calculation supplies neither a legal encoding from an unknown native carrier, nor physical realization, Bell violation, quantum advantage, minimum resources or a literature priority claim. It does not repair the positive-noise failure of the literal-process requirement in Propositions 7.1 and 7.5. The additional result is the source-dependent state reduction, covariance and application of the cited separability criteria to that specified Gaussian program.
 
 ## 追加锚（本行以下为增补区）
+
+## 12. Whole-companion compactness and the specified preparation
+
+**Definition 12.1 (The entire compact region and its coordinates).**
+Write III for [Strict Real Joint Incidence Support III](https://github.com/the-omega-institute/trureturing/blob/30b32d5e17e23590839090a0b244c019c4796817/docs/develop/theory/FIB_STRICT_REAL_JOINT_INCIDENCE_SUPPORT_III.md).
+Use its Definition 1.1 and Definition 20.1 for the ambient parent
+$\mathcal H_{\rm par}$, distinguished here from the system Hilbert
+space $\mathcal H=L^2(\mathbb R^{17};\mathbb C)$. Set
+
+$$
+K_J=\{W\in\mathcal H_{\rm par}:10\le p(W)\le34,
+\quad v(W)=v_J(p(W))\}.
+\tag{12.1}
+$$
+
+This is III, Definition 23.1: at $p\ne24$ it contains every world of
+$C(p,v_J(p))$, and at $p=24$ it retains the same complete-world
+equations in the ambient parent. Unused companions, singular sources,
+degree drops, sampled gain zeros and zero drift remain included.
+No choice of a terminal pair enters (12.1).
+
+Write the full coordinates and the prescribed preparation mean as
+
+$$
+\begin{gathered}
+W=(P,g,d),\qquad
+P=\begin{pmatrix}r&b\\c&1-r\end{pmatrix},\qquad
+c=\frac{r(1-r)}b,\quad 0<r<1,\quad b>0,\quad d=e+24,\\
+g(s)=\sum_{k=0}^3a_ks^k\ne0,\qquad
+\operatorname{vec}(X)=(X_{11},X_{21},X_{12},X_{22})^T,\\
+\mu(W)=m_W=
+(d,\operatorname{vec}(a_0P),\operatorname{vec}(a_1P),
+\operatorname{vec}(a_2P),\operatorname{vec}(a_3P))\in\mathbb R^{17}.
+\end{gathered}
+\tag{12.2}
+$$
+
+The four coefficients are padded through degree three. In particular
+each four-coordinate block in (12.2) is
+$a_k(r,c,b,1-r)^T$, with column rather than row vectorization.
+The preparation is exactly Assumption 2.1:
+
+$$
+\psi_W(x)=\pi^{-17/4}e^{-\|x-\mu(W)\|^2/2},\qquad
+\rho_W=|\psi_W\rangle\langle\psi_W|.
+\tag{12.3}
+$$
+
+**Assumption 12.2 (The reused compactness premise).**
+Take III, Theorem 23.2 as the ordinary mathematical premise that
+$K_J$ is compact in the full source/drift/padded-gain coordinates.
+III, Theorem 16.4 supplies complete worlds above every
+$p\in[10,34]$, so this compact set is nonempty, including its
+retained twenty-four fibre. Assumptions 2.1 and 4.1 continue to
+supply the specified preparations and shared apparatus.
+
+**Proposition 12.3 (Uniform initial energy on all companions).**
+Under Assumption 12.2 the following maximum exists and is finite:
+
+$$
+\begin{aligned}
+\lambda(W)&=\frac{\|\mu(W)\|^2}{2}\\
+&=\frac12\left((e+24)^2+
+\bigl(r^2+c^2+b^2+(1-r)^2\bigr)\sum_{k=0}^3a_k^2\right),\\
+B&=\max_{W\in K_J}\lambda(W)<\infty.
+\end{aligned}
+\tag{12.4}
+$$
+
+For the reference oscillator and its total occupation operator,
+
+$$
+H_{\rm osc}=\frac12\sum_{j=1}^{17}(q_j^2+\pi_j^2),\qquad
+N_{\rm ref}=H_{\rm osc}-\frac{17}{2}I,
+\tag{12.5}
+$$
+
+the original preparation satisfies, uniformly on this entire region,
+
+$$
+\operatorname{tr}(\rho_WN_{\rm ref})=\lambda(W)\le B,
+\qquad
+\operatorname{tr}(\rho_WH_{\rm osc})\le\frac{17}{2}+B.
+\tag{12.6}
+$$
+
+*Proof.* In the full coordinates, (12.2) is polynomial and hence
+continuous. Thus (12.4) is a continuous real function on a nonempty
+compact set. The extreme-value theorem supplies its finite maximum.
+Theorem 2.2 already gives the energy identity in (12.6); substituting
+(12.4) into that identity gives the uniform bound.
+
+The correspondence with III does not divide by a gain coefficient,
+a sampled $g(i)$, $p-24$, or the parent quantity $\Lambda$.
+For clarity, III, Definition 20.1, Eq. (20.2), reconstructs $g$
+as the fixed-node interpolant with
+
+$$
+(g(0),g(1),g(2),g(3))=
+\left(-24-e,-\frac e{b+c},
+\frac{27/5-e}{1+b},-\frac e{b+c+r}\right).
+\tag{12.7}
+$$
+
+The conversion from these four values to $(a_0,a_1,a_2,a_3)$ is a
+fixed inverse Vandermonde matrix. Its source denominators in (12.7)
+are positive on the original parent. Compactness in the full
+coordinates is already the accepted premise; no regularity condition
+on individual companion strata is added by this reconstruction.
+III, Corollary 23.3 supplies qualitative coordinate bounds and
+interior margins, without numerical values for these extrema.
+Consequently (12.4) specifies $B$, but gives no certified numerical
+upper bound for it. $\square$
+
+## 13. One common finite Fock subspace and normalized preparations
+
+**Definition 13.1 (The cutoff family).**
+Use the usual seventeen-mode oscillator Fock basis
+$|\mathbf n\rangle$, $\mathbf n=(n_1,\ldots,n_{17})\in\mathbb N^{17}$,
+with $|\mathbf n|=\sum_jn_j$ and
+$N_{\rm ref}|\mathbf n\rangle=|\mathbf n|\,|\mathbf n\rangle$.
+For an integer $N\ge0$, put
+
+$$
+\begin{gathered}
+\Pi_N=1_{\{N_{\rm ref}\le N\}},\qquad
+\mathcal H_N=\operatorname{ran}\Pi_N,\\
+q_N(W)=\langle\psi_W,\Pi_N\psi_W\rangle,\qquad
+t_N(W)=1-q_N(W),\\
+\psi_{W,N}=\frac{\Pi_N\psi_W}{\sqrt{q_N(W)}},\qquad
+\rho_{W,N}=|\psi_{W,N}\rangle\langle\psi_{W,N}|.
+\end{gathered}
+\tag{13.1}
+$$
+
+Here $q_N(W)$ is a scalar retained mass, distinct from any position
+operator $q_j$. The same projector is used for every companion.
+The positivity needed for normalization follows below.
+
+**Proposition 13.2 (Explicit retained mass, dimension and error).**
+For all $W\in K_J$ and integers $N\ge0$,
+
+$$
+\begin{aligned}
+q_N(W)&=e^{-\lambda(W)}\sum_{n=0}^N\frac{\lambda(W)^n}{n!}
+\ \ge e^{-B}>0,\\
+t_N(W)&\le\min\left\{1,\frac{B}{N+1}\right\},\qquad
+\operatorname{rank}\Pi_N=\binom{N+17}{17}.
+\end{aligned}
+\tag{13.2}
+$$
+
+With trace distance defined by $D(\rho,\tau)=\tfrac12\|\rho-\tau\|_1$,
+the exact input error and its uniform consequence are
+
+$$
+\begin{aligned}
+D(\rho_W,\rho_{W,N})&=\sqrt{t_N(W)},\\
+\sup_{W\in K_J}D(\rho_W,\rho_{W,N})
+&\le\delta_N:=\min\left\{1,\sqrt{\frac{B}{N+1}}\right\}
+\xrightarrow[N\to\infty]{}0.
+\end{aligned}
+\tag{13.3}
+$$
+
+*Proof.* Let $\mathfrak a_j=(q_j+i\pi_j)/\sqrt2$ denote the
+annihilation operators, distinct from the gain coefficients $a_k$.
+Then $N_{\rm ref}=\sum_j\mathfrak a_j^\dagger\mathfrak a_j$.
+The real translated vacuum (12.3) is the product coherent state with
+amplitude $\alpha=\mu(W)/\sqrt2$, so
+$\sum_j|\alpha_j|^2=\lambda(W)$ and
+$\langle N_{\rm ref}\rangle=\lambda(W)$.
+Substitution into the standard coherent-state Fock expansion gives
+
+$$
+\psi_W=e^{-\lambda(W)/2}
+\sum_{\mathbf n\in\mathbb N^{17}}
+\frac{\prod_{j=1}^{17}\alpha_j^{n_j}}
+{\sqrt{\prod_{j=1}^{17}n_j!}}\,|\mathbf n\rangle.
+\tag{13.4}
+$$
+
+The expansion includes zero amplitudes, with the constant term
+interpreted in the usual way. Grouping its squared coefficients by
+total occupation and substituting the multinomial identity yields
+
+$$
+\mathbb P_W(N_{\rm ref}=n)
+=e^{-\lambda(W)}
+\sum_{|\mathbf n|=n}\prod_j\frac{|\alpha_j|^{2n_j}}{n_j!}
+=e^{-\lambda(W)}\frac{\lambda(W)^n}{n!}.
+\tag{13.5}
+$$
+
+Thus the total occupation is Poisson with parameter $\lambda(W)$.
+Summing through $N$ gives (13.2). Its vacuum term alone gives
+$q_N(W)\ge e^{-\lambda(W)}\ge e^{-B}$, including cutoffs for which
+the subsequent tail bound is trivial. Hence (13.1) always defines a
+unit vector and a trace-one pure state in the common subspace.
+
+The discrete spectral bound
+$N_{\rm ref}\ge(N+1)(I-\Pi_N)$, evaluated in this preparation, gives
+$(N+1)t_N(W)\le\lambda(W)\le B$. Combining with $t_N\le1$
+gives the tail estimate. The overlap is exactly
+
+$$
+\langle\psi_W,\psi_{W,N}\rangle=\sqrt{q_N(W)}.
+\tag{13.6}
+$$
+
+Applying the standard pure-state trace-distance identity
+$D(|u\rangle\langle u|,|v\rangle\langle v|)
+=\sqrt{1-|\langle u,v\rangle|^2}$ gives (13.3), with no additional
+normalization error. Finally, the occupation labels of total at most
+$N$ are counted by seventeen-variable stars and bars:
+
+$$
+\dim\mathcal H_N
+=\sum_{n=0}^N\binom{n+16}{16}=\binom{N+17}{17}.
+\tag{13.7}
+$$
+
+These are applications of the mature oscillator, counting and
+distance formulas identified in Definition 16.1. $\square$
+
+**Corollary 13.3 (A common tolerance choice).**
+For any $0<\varepsilon<1$, the integer
+
+$$
+N_\varepsilon=
+\max\left\{0,\left\lceil\frac{B}{\varepsilon^2}\right\rceil-1\right\}
+\tag{13.8}
+$$
+
+satisfies $N_\varepsilon+1\ge B/\varepsilon^2$ and gives input trace
+distance at most $\varepsilon$ for every $W\in K_J$, in a common
+subspace of rank $\binom{N_\varepsilon+17}{17}$.
+This is a theoretical choice conditional on $B$, not an evaluated
+cutoff or a preparation-resource estimate.
+
+*Proof.* The ceiling inequality and (13.3) give the conclusion.
+In a general coherent family with $B=0$, all amplitudes vanish and
+$N=0$ is exact. In the actual nonempty family here, $g\ne0$ implies
+$\sum_ka_k^2>0$, while $P\ne0$. Equation (12.4) then gives
+$\lambda(W)>0$ at every world and $B>0$. For every finite $N$ the
+Poisson term at $N+1$ is positive, so $t_N(W)>0$. Exact finite
+representation, or $\varepsilon=0$ in (13.8), is unavailable for
+these coherent preparations. $\square$
+
+## 14. The unchanged apparatus and the full fixed-word pointer law
+
+**Definition 14.1 (The same joint measurement on both input families).**
+Fix any $\sigma>0$ and retain Assumption 4.1: eight independent
+Gaussian probes, their original couplings, all original clock reads,
+and the controls of Definition 3.1 with adjoint action
+$q\mapsto A_Eq$, $\pi\mapsto A_E^{-T}\pi$.
+Only the initial system state is replaced by $\rho_{W,N}$.
+For an externally fixed chronological word $w=E_1\cdots E_t$,
+$E_i\in\{J,M\}$ and $0\le t\le7$, use all reads $0,\ldots,t$.
+
+The normal instruments of Theorem 4.2 compose to a normalized normal
+joint POVM $\mathsf E_w$ on $\mathbb R^{t+1}$. In the notation of
+Theorem 5.1 its density and normalization are understood weakly:
+
+$$
+\begin{gathered}
+\mathsf K_w(z)=K_t(z_t)U_{A_{E_t}}\cdots
+K_1(z_1)U_{A_{E_1}}K_0(z_0),\\
+\mathsf E_w(A)=\int_A\mathsf K_w(z)^\dagger\mathsf K_w(z)\,dz,
+\qquad
+0\le\mathsf E_w(A)\le I,\qquad
+\mathsf E_w(\mathbb R^{t+1})=I,\\
+\nu_w(W)(A)=\operatorname{tr}(\rho_W\mathsf E_w(A)),\qquad
+\nu_{w,N}(W)(A)=\operatorname{tr}(\rho_{W,N}\mathsf E_w(A)).
+\end{gathered}
+\tag{14.1}
+$$
+
+All $A$ in this section are Borel record events. Normality and
+countable additivity are those of the original instruments; no
+operator-norm integral over the outcome space is required.
+For the empty word, $\mathsf K_{\varnothing}(z_0)=K_0(z_0)$;
+only the clock-zero read is executed.
+The same measurement acts on both normal input states, independently
+of $W$ and of the cutoff used to specify the input.
+
+**Proposition 14.2 (Uniform approximation of the entire retained law).**
+Under Assumption 12.2, for every such fixed word,
+
+$$
+\begin{gathered}
+\nu_w(W)=\mathcal N_{t+1}\left(L_w\mu(W),
+\frac12L_wL_w^T+\sigma^2I_{t+1}\right),\\
+\operatorname{TV}(\nu_w(W),\nu_{w,N}(W))
+\le\sqrt{t_N(W)}\le\delta_N,\qquad
+\operatorname{TV}(P,Q):=\sup_{A\ \mathrm{Borel}}|P(A)-Q(A)|.
+\end{gathered}
+\tag{14.2}
+$$
+
+The input is the only approximation. The first law is exactly
+Theorem 5.1; the projected-input law is not asserted to be Gaussian.
+
+*Proof.* The original apparatus is defined on normal trace-class
+inputs by Theorem 4.2, so (14.1) applies to $\rho_{W,N}$ without
+assuming Gaussianity. For each event its effect obeys $0\le\mathsf
+E_w(A)\le I$. Apply the variational characterization of trace
+distance to the trace-zero self-adjoint trace-class difference:
+
+$$
+\begin{aligned}
+|\nu_w(W)(A)-\nu_{w,N}(W)(A)|
+&=|\operatorname{tr}(\mathsf E_w(A)(\rho_W-\rho_{W,N}))|\\
+&\le\tfrac12\|\rho_W-\rho_{W,N}\|_1
+=\sqrt{t_N(W)}.
+\end{aligned}
+\tag{14.3}
+$$
+
+Taking the event supremum gives (14.2). This is one measurement of
+the complete retained vector. It introduces no factor $t+1$ and no
+per-read union bound. Prefix and other record marginals inherit the
+same bound by taking cylinder events.
+
+More explicitly, the all-acquisition factorization in Theorem 5.1
+is an operator identity, independent of the initial Gaussian:
+$\mathsf K_w(z)=U_{T_t}\prod_{i=0}^tk_\sigma(z_i-L_iq)$.
+Substitute the normalized projected wavefunction to get its exact
+density
+
+$$
+p_{w,N}(z\mid W)=\int_{\mathbb R^{17}}|\psi_{W,N}(x)|^2
+\prod_{i=0}^t
+\frac{\exp(-(z_i-L_ix)^2/(2\sigma^2))}
+{\sqrt{2\pi\sigma^2}}\,dx.
+\tag{14.4}
+$$
+
+Every probe likelihood is retained. Integrating them and then the
+normalized input density gives total mass one. Equivalently, (14.4)
+uses the latent position density $|\psi_{W,N}|^2$ and the same
+independent Gaussian pointer noises as before. That latent density
+need not be Gaussian, so neither the target's exact mean and
+covariance nor its Gaussian conditional kernels are being assigned
+to the approximating law. $\square$
+
+**Corollary 14.3 (Quantifiers and the original two continuations).**
+Let $\mathscr W_7=\bigcup_{t=0}^7\{J,M\}^t$ be a menu of words
+fixed externally for their respective runs. Then
+
+$$
+\sup_{w\in\mathscr W_7}\sup_{W\in K_J}
+\operatorname{TV}(\nu_w(W),\nu_{w,N}(W))
+\le\delta_N\longrightarrow0.
+\tag{14.5}
+$$
+
+In particular, for every $\sigma>0$ and $0<\varepsilon<1$,
+the same $N_\varepsilon$ in (13.8) works for every companion,
+every externally fixed word in this menu and every Borel event.
+It depends on the preparation bound $B$ and $\varepsilon$, not on
+which word is executed. Different words still denote different runs.
+
+For $W\in K_J$, the three source substitutions most directly
+connected to the original child are
+
+$$
+\begin{aligned}
+w_A&=JMJMMM,&L_{w_A}\mu(W)&=h(p,v_J(p)),\\
+w_J&=JMJMMMJ,&L_{w_J}\mu(W)&=(h(p,v_J(p)),a(W)),\\
+w_M&=JMJMMMM,&L_{w_M}\mu(W)&=(h(p,v_J(p)),m(W)),\\
+h(p,v)&=(0,24,147/5,24,18,p,v).
+\end{aligned}
+\tag{14.6}
+$$
+
+Here $p=p(W)$, and $a,m$ are III, Definition 1.1's original
+seventh-clock alternatives, also denoted $f_{MJ},f_{MM}$ in
+Definition 1.2. Their covariances are the corresponding
+$C_w=\tfrac12L_wL_w^T+\sigma^2I$. These substitutions apply to
+unused and singular companions and to $p=24$ as well.
+
+*Proof.* Inequality (14.2) is independent of $W$ and of the chosen
+fixed word, giving (14.5) and the stated tolerance quantifiers.
+Theorem 3.2 and Theorem 5.1 identify $L_w\mu(W)=y_w(W)$.
+Membership in (12.1) supplies all seven prefix values; the two
+original seventh actions supply the last entries in (14.6).
+No common terminal value is imposed on different alternatives or on
+every companion. The fifth read between its two $M$ actions remains
+one of the entries of each complete law. $\square$
+
+## 15. Boundaries of the uniform approximation
+
+**Proposition 15.1 (Initial support is not process dimension).**
+The common finite space $\mathcal H_N$ constrains the initial
+system preparations. It is not an invariant space for the original
+controls, and (14.2) supplies no finite-dimensional replacement of
+the full process.
+
+*Proof.* Proposition 3.4 gives $A_MA_M^T\ne I$: the unchanged
+$M$ control squeezes the vacuum. In position coordinates its image
+has wavefunction proportional to
+$\exp(-\|A_M^{-1}x\|^2/2)$. A finite reference-Fock expansion is
+a polynomial in $x$ times $\exp(-\|x\|^2/2)$. Their ratio here is
+an exponential of a nonzero quadratic form, which cannot be such a
+polynomial. Thus even $U_{A_M}|0\rangle$ has infinite reference-Fock
+support. Since $|0\rangle\in\mathcal H_N$ for every $N$, no such
+cutoff space is invariant under this control.
+
+The original probes still have carriers $L^2(\mathbb R)$ and
+continuous position outcomes. Neither probe support nor pointer
+alphabet is truncated in (14.1). Finite initial system support
+therefore gives no finite protocol, invariant process dimension or
+numerical total-resource bound. $\square$
+
+**Proposition 15.2 (Why the full original domain is different).**
+There is no uniform version of (12.6) or convergence in (13.3) on
+the unrestricted $\mathcal W$ of Definition 1.1.
+
+*Proof.* Fix $P=\tfrac12\begin{pmatrix}1&1\\1&1\end{pmatrix}$
+and $g=1$, and let $|d|\to\infty$. These are strict complete
+worlds of $\mathcal W$, with $\lambda=(d^2+1)/2\to\infty$.
+The original energy diverges. For each fixed finite $N$,
+$e^{-\lambda}\sum_{n=0}^N\lambda^n/n!\to0$, so the exact input
+distance $\sqrt{1-q_N}$ tends to one. In particular its supremum
+on $\mathcal W$ is one for every $N$. This counterexample uses the
+unrestricted domain, not a variation asserted to remain in $K_J$.
+The whole-companion compactness premise is the additional datum
+that makes the present restricted uniform conclusion possible.
+$\square$
+
+**Definition 15.3 (Operational and inferential scope).**
+The normalized projection (13.1) specifies an approximating family
+of labelled initial states. It does not prescribe a deterministic
+physical preparation procedure or a channel encoding an unknown
+native carrier. Interpreting $\Pi_N$ as a selective measurement
+would require its own allowed operation and success treatment;
+the normalization in (13.1) does not add that operation to the
+original apparatus. Neither a preparation algorithm nor a numerical
+upper bound on $B$ is supplied by compactness.
+
+Equations (14.2)–(14.5) concern unconditional full record laws for
+externally fixed words. They assert no bound after rare-event
+conditioning, no pointwise control of conditional kernels at exact
+histories, and no conclusion for an outcome-dependent action word.
+A positive-probability conditioning estimate would require control
+relative to that event's probability. Exact histories of the
+original Gaussian law have probability zero, as in Theorem 7.2.
+No new meaning of conditioning on such a point is introduced here.
+
+Trace-distance and total-variation convergence control bounded
+effects and record events. They do not by themselves supply an
+energy-error estimate or errors for unbounded quadrature moments.
+The covariance and Gaussian separability calculation of §§8–11
+therefore is not transferred to the projected, generally
+non-Gaussian inputs by this argument. Likewise, approximate laws
+do not establish preservation of the exact law-equality fibres,
+distinct-state counts or recursive predicates of §§6–7.
+
+**Proposition 15.4 (The literal-history obstruction persists).**
+For every $W\in K_J$, finite $N$ and fixed original word $w$,
+the approximating law still fails the deterministic literal target:
+
+$$
+\nu_{w,N}(W)(\{y_w(W)\})=0,\qquad
+\operatorname{TV}(\nu_{w,N}(W),\delta_{y_w(W)})=1.
+\tag{15.1}
+$$
+
+*Proof.* With $\sigma>0$, (14.4) is a probability density on
+$\mathbb R^{t+1}$, so every singleton is null. The Dirac measure
+assigns mass one to the displayed singleton, giving (15.1).
+Thus convergence to the original Gaussian law does not repair the
+literal-process failure of Propositions 7.1 and 7.5. The classical
+latent representation of the pointer family and the separate
+internal-entanglement statement of Proposition 11.1 remain
+different observable claims. No physical realization, quantum
+advantage, minimum-resource or novelty conclusion is entailed by
+this compactness application. $\square$
+
+## 16. Sources and status of the mathematical application
+
+**Definition 16.1 (Reused results and their substitutions).**
+The source of whole-companion compactness is III at the immutable
+revision linked in Definition 12.1: Definition 1.1 fixes complete
+worlds; Theorem 16.4 supplies the actual arc and nonemptiness;
+Definition 20.1 and Eq. (20.2) give the coordinate correspondence;
+Definition 23.1, Theorem 23.2 and Corollary 23.3 give the entire
+compact region, retained twenty-four fibre and qualitative bounds.
+The compactness theorem is used as a premise, without substituting
+a compact set of only selected representatives for $K_J$.
+
+The Gaussian source is this volume's original §§1–7, also available
+at [the same immutable revision](https://github.com/the-omega-institute/trureturing/blob/30b32d5e17e23590839090a0b244c019c4796817/docs/develop/theory/FIB_SHARED_GAUSSIAN_RECORD_LAWS.md):
+Assumption 2.1 and Theorem 2.2 specify the preparation and energy;
+Definition 3.1 and Theorem 3.2 fix the controls, clocks and rows;
+Proposition 3.4 identifies squeezing; Assumption 4.1 and Theorem
+4.2 provide the shared normal instruments; Theorem 5.1 gives the
+exact full fixed-word Gaussian law and Kraus factorization;
+Proposition 5.4 and §§6–7 distinguish adaptive words, indexed
+fibres and literal acquired histories. The subsequent §§8–11
+concern the internal pair and remain outside any moment-error
+conclusion of this appendix.
+
+The oscillator expansion and coherent-state number statistics are
+literature-attested: R. J. Glauber, *Coherent and incoherent states
+of the radiation field*, Physical Review **131**, 2766–2788,
+[DOI:10.1103/PhysRev.131.2766](https://doi.org/10.1103/PhysRev.131.2766).
+Here the amplitude is specifically $\alpha=\mu/\sqrt2$ and the
+occupation is the sum over seventeen system modes. The pure-state
+distance and effect variational characterization are the standard
+trace-distance facts in M. A. Nielsen and I. L. Chuang, *Quantum
+Computation and Quantum Information*, tenth-anniversary edition,
+§9.2.1 (trace distance), with the fidelity comparison in §9.2.3,
+[DOI:10.1017/CBO9780511976667](https://doi.org/10.1017/CBO9780511976667).
+Their uses here require only a two-vector pure-state span and the
+trace-class/effect pairing, respectively; no finite-dimensional
+assumption on the process is introduced. The joint POVM's
+infinite-dimensional normality comes from Theorem 4.2.
+
+The compact extreme-value step, occupation tail bound and
+stars-and-bars count are mature mathematical tools used inside
+this application. The content of §§12–15 is their explicit
+source-dependent composition for the entire $K_J$, the specified
+seventeen-mode preparations and the unchanged full-pointer law.
+It is an application of existing results, with no priority claim
+and no new generic compactness or quantum-distance theorem.
+
+## 追加锚（本行以下为增补区）
