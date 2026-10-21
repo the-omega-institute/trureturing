@@ -142,10 +142,47 @@ private lemma sharp_attainment (d : ℕ) [NeZero d] (hd : 2 ≤ d) :
     sharpValue d ∈ overlapSet (φ d 0) := by
   sorry
 
-private lemma conjugate_reduction (d : ℕ) (hd : 2 ≤ d) (ψ : State d)
+private lemma conjugate_norm {ι : Type*} [Fintype ι] (v : ι → ℂ) :
+    ‖WithLp.toLp 2 (fun i => conj (v i))‖ = ‖WithLp.toLp 2 v‖ := by
+  rw [EuclideanSpace.norm_eq, EuclideanSpace.norm_eq]
+  simp only [PiLp.toLp_apply, Complex.norm_conj]
+
+private lemma overlap_conjugate {d : ℕ} (a b c : Fin d → ℂ) (ψ : State d) :
+    overlap (fun i => conj (a i)) (fun i => conj (b i)) (fun i => conj (c i))
+      (fun p => conj (ψ p)) = conj (overlap a b c ψ) := by
+  simp only [overlap, map_sum, map_mul, starRingEnd_self_apply]
+
+private lemma conjugate_overlap_set {d : ℕ} (ψ : State d) :
+    overlapSet (fun p => conj (ψ p)) = overlapSet ψ := by
+  have hsub (ξ : State d) : overlapSet ξ ⊆ overlapSet (fun p => conj (ξ p)) := by
+    rintro t ⟨a, b, c, ha, hb, hc, rfl⟩
+    refine ⟨fun i => conj (a i), fun i => conj (b i), fun i => conj (c i),
+      (conjugate_norm a).trans ha, (conjugate_norm b).trans hb,
+      (conjugate_norm c).trans hc, ?_⟩
+    rw [overlap_conjugate, Complex.norm_conj]
+  apply Set.Subset.antisymm
+  · have h := hsub (fun p => conj (ψ p))
+    simp only [starRingEnd_self_apply] at h
+    exact h
+  · exact hsub ψ
+
+private lemma conjugate_reduction (d : ℕ) (ψ : State d)
     (hψ : UnitVector ψ) (hmem : ψ ∈ H_Ibar d) :
     ∃ ξ : State d, UnitVector ξ ∧ ξ ∈ H_I d ∧ overlapSet ψ = overlapSet ξ := by
-  sorry
+  classical
+  obtain ⟨β, hβ⟩ := (Submodule.mem_span_range_iff_exists_fun ℂ).mp hmem
+  have hbar (n : Fin d) (p : Fin d × Fin d × Fin d) :
+      conj (φbar d n p) = φ d n p := by
+    rcases p with ⟨i, j, k⟩
+    simp only [φbar, φ, map_div₀, map_add, map_mul, apply_ite conj, map_one, map_zero,
+      starRingEnd_self_apply, Complex.conj_ofReal]
+  refine ⟨fun p => conj (ψ p), (conjugate_norm ψ).trans hψ, ?_,
+    (conjugate_overlap_set ψ).symm⟩
+  apply (Submodule.mem_span_range_iff_exists_fun ℂ).mpr
+  refine ⟨fun n => conj (β n), ?_⟩
+  ext p
+  have he := congrArg (fun v : State d => conj (v p)) hβ
+  simpa only [Finset.sum_apply, Pi.smul_apply, smul_eq_mul, map_sum, map_mul, hbar] using he
 
 private lemma basis_supremum (d : ℕ) [NeZero d] (hd : 2 ≤ d) :
     sSup (overlapSet (φ d 0)) = sharpValue d := by
@@ -165,7 +202,7 @@ theorem result : claim := by
   intro d hd ψ hψ hmem
   rcases hmem with hmem | hmem
   · exact subspace_measure d hd ψ hψ hmem
-  · obtain ⟨ξ, hξ, hξmem, heq⟩ := conjugate_reduction d hd ψ hψ hmem
+  · obtain ⟨ξ, hξ, hξmem, heq⟩ := conjugate_reduction d ψ hψ hmem
     change 1 - sSup (overlapSet ψ) = _
     rw [heq]
     exact subspace_measure d hd ξ hξ hξmem
