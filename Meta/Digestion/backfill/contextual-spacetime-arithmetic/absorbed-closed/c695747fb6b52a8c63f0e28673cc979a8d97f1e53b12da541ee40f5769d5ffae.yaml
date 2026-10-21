@@ -3,18 +3,38 @@ fingerprints:
   normalized_sha256: sha256:c695747fb6b52a8c63f0e28673cc979a8d97f1e53b12da541ee40f5769d5ffae
 cas_ref: sha256:c695747fb6b52a8c63f0e28673cc979a8d97f1e53b12da541ee40f5769d5ffae
 coverage_gids:
+  - gid: D5/S0/History/Spacetime/ArchiveCarrier.archive
+    target_statement_id: sha256:5118a3c7b36be168756a9ff7d9f01392bebed901a2bf1942732cbb2aaa4af92f
+  - gid: D5/S0/History/Spacetime/ArchiveCarrier.current
+    target_statement_id: sha256:0bd4945e1df93214027a004d426a93f953a44c861105160ba20d370ae0cbfb76
+  - gid: D5/S0/History/Spacetime/ArchiveCarrier.events
+    target_statement_id: sha256:ab47ca0b947ad0175faa44133c6958212fb2f730ca4f04e63f6a3682411fd14e
+  - gid: D5/S3/ConceptDynamics/Spacetime/ComplementCharge.q
+    target_statement_id: sha256:bb0ca36ef5cadc0a4e91dca5da062bbb7809e399832b57fa5a561b75eda7b5b2
   - gid: D5/S3/ConceptDynamics/Spacetime/GeneratedProduct.archive_card
     target_statement_id: sha256:82e0f0b6e27d98774dd9a6788cad29c628ef69b183945f0c94169c2324f2c988
   - gid: D5/S3/ConceptDynamics/Spacetime/GeneratedProduct.current_card
     target_statement_id: sha256:b9387f3697b140afb867bd71a976449d4096ec02f7e7a48ea397a9b9fa1d2b51
+  - gid: D5/S3/ConceptDynamics/Spacetime/GeneratedProduct.product
+    target_statement_id: sha256:8d751f1bc438328b5b630d3cbbbacc0e0f0d043b88d6b442ced25e23d25b5cef
   - gid: D5/S3/ConceptDynamics/Spacetime/GeneratedProduct.q_product
     target_statement_id: sha256:0317eecfaee3d90e91417539d454d8b3952e72ce7609a0490a3fc76bd1605f29
   - gid: D5/S3/ConceptDynamics/Spacetime/HistoricalEquivalence.eventEquiv
     target_statement_id: sha256:efb96da41eefa012b4067c47bdb561dfffb180cff0819d27533ea0766b246824
+  - gid: D5/S3/ConceptDynamics/Spacetime/IntegerRepresentatives.eventNames
+    target_statement_id: sha256:19157b1abc6185f86a87cbc6093170364e0d60c8b18a10535d3f22f05da214eb
+  - gid: D5/S3/ConceptDynamics/Spacetime/IntegerRepresentatives.representative
+    target_statement_id: sha256:2843e672a50e7f6221cd3ee7046c793618320034ad6012957bdd3716bfb37838
+  - gid: D5/S3/ConceptDynamics/Spacetime/IntegerRepresentatives.representativeArchive
+    target_statement_id: sha256:4ebd11dfeee03b2b03f96e67594acde62deec7ea95ad7d50cab494de465094d3
   - gid: D5/S3/ConceptDynamics/Spacetime/IntegerRepresentatives.representative_archive_card
     target_statement_id: sha256:32b7f281ab1a7afa96a88cd664e50b122c04c14622837e126361e7e638b4949b
+  - gid: D5/S3/ConceptDynamics/Spacetime/IntegerRepresentatives.representative_archive_eq
+    target_statement_id: sha256:3b388465e073f258b856cbc57dadf6b8ea9a9d65dae121fdb55d23ead1c089de
   - gid: D5/S3/ConceptDynamics/Spacetime/IntegerRepresentatives.representative_current_card
     target_statement_id: sha256:28ca3788a82a3e9c02387cd19e35d26521fd21bb7cbf284c2e2946c81543ff84
+  - gid: D5/S3/ConceptDynamics/Spacetime/IntegerRepresentatives.representative_current_eq
+    target_statement_id: sha256:ead6330b795dd4332ac8c8fb1c1c73a3e765ce12f8010ef6922f11fb2fb47ee3
   - gid: D5/S3/ConceptDynamics/Spacetime/IntegerRepresentatives.representative_readout
     target_statement_id: sha256:b8e58ca59bfd9ec2d71da811712fa1c8e004537358e529ff85477983e23768a0
 receipts:

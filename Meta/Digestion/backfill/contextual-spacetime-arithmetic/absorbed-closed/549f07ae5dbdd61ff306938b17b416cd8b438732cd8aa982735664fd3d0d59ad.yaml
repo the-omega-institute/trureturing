@@ -3,12 +3,22 @@ fingerprints:
   normalized_sha256: sha256:549f07ae5dbdd61ff306938b17b416cd8b438732cd8aa982735664fd3d0d59ad
 cas_ref: sha256:549f07ae5dbdd61ff306938b17b416cd8b438732cd8aa982735664fd3d0d59ad
 coverage_gids:
+  - gid: D5/S0/History/Spacetime/ArchiveCarrier.archive
+    target_statement_id: sha256:5118a3c7b36be168756a9ff7d9f01392bebed901a2bf1942732cbb2aaa4af92f
+  - gid: D5/S0/History/Spacetime/ArchiveCarrier.attributes
+    target_statement_id: sha256:5b297790fbcd5de51ff9cbcb4a7c00d275cec873cd5aef8572872d29b829450e
+  - gid: D5/S0/History/Spacetime/ArchiveCarrier.time
+    target_statement_id: sha256:1ae953a2d281b2c0c4fb2c6b2947ebb4ee437fd95c07ef22c6dcc2d4ad4ff858
   - gid: D5/S0/Rewriting/Quotients/DynamicsDescent.dynamics_descends_iff
     target_statement_id: sha256:1597f85593485709f45a1213c2894b011254268c520083900fa931f9f261c89f
   - gid: D5/S0/Rewriting/Quotients/SplitSurjectionFactorization.split_surjection_factorization
     target_statement_id: sha256:6aa03c9ee8a373e9514bc9e2ccdf876a2b00c37b0b412a939b47a4db1d0e4d34
+  - gid: D5/S3/ConceptDynamics/Spacetime/ComplementCharge.q
+    target_statement_id: sha256:bb0ca36ef5cadc0a4e91dca5da062bbb7809e399832b57fa5a561b75eda7b5b2
   - gid: D5/S3/ConceptDynamics/Spacetime/HiddenArchiveTemporalDomain.hidden_archive_preserves_current_changes_temporal_domain
     target_statement_id: sha256:08c0e3a9ad623c82bc01f4bee9db1033453c89775efcc2ac2d356b0cf8b7ddac
+  - gid: D5/S3/ConceptDynamics/Spacetime/IntegerRepresentatives.U
+    target_statement_id: sha256:dae23c2cc2350d5ac63c60bf5ba0b3451fd37b50a29153130ac2515b4691082d
   - gid: D5/S3/ConceptDynamics/Spacetime/IntegerRepresentatives.eventEquiv
     target_statement_id: sha256:4c5e4443b58a46410b72a065acb29b536a9221fbf84776231ac538f8bded2a57
   - gid: D5/S3/ConceptDynamics/Spacetime/IntegerRepresentatives.representative_readout
@@ -17,6 +27,8 @@ coverage_gids:
     target_statement_id: sha256:cf4a69906430c6382b9328ac1f274d52f891ec49d3d89739958a247eaed929b0
   - gid: D5/S3/ConceptDynamics/Spacetime/TemporalComposition.q_temporal
     target_statement_id: sha256:5cd6baa9a50f3b3d9d7c89a1f3d1573868fc0a7c5b08bb01c00654ed5fe0e841
+  - gid: D5/S3/ConceptDynamics/Spacetime/TemporalComposition.shiftRich
+    target_statement_id: sha256:a6856514b75891bb58d45e4bf58016a1dd45522d04249371c9aa59013a0e1a1e
 receipts:
   unresolved_subitems: []
   chain_atoms:
