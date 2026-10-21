@@ -865,7 +865,7 @@ expression, so incomplete snapshots remain explicit rather than being treated
 as certified negatives. -/
 unsafe def produceMature (directory : System.FilePath) (basis mathlib : String)
     (roots : Array Name) (checkSources : Bool := true) : IO Header := do
-  produce directory basis mathlib roots checkSources
+  produceMatureCore directory basis mathlib roots checkSources
 
 /-- Query a pickled shard with the same core path/matcher used at production.
 Only exact-root and star-root shards are mapped for this query. -/

@@ -17,5 +17,5 @@ unsafe def main (args : List String) : IO UInt32 := do
       if path.endsWith ".lean.json" then
         let name := ((path.drop "Golden/Frozen/state/".length).toString.dropEnd ".lean.json".length).toString
         roots := roots.push (name.replace "/" ".").toName
-  let header ← produce directory basis "56a005855ea17e0b0958f73ec801ae140b0a1679" roots checkSources
+  let header ← produceMature directory basis "56a005855ea17e0b0958f73ec801ae140b0a1679" roots checkSources
   return if header.complete then 0 else 1
