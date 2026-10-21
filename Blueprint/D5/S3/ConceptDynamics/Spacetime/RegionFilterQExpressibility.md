@@ -40,7 +40,7 @@ Lean statement: `D5/S3/ConceptDynamics/Spacetime/RegionFilterQExpressibility.tot
 
 For every fixed native word total on all balanced rich inputs, there is an integer c such that every position p and every pair t,t' below c admit two legal inputs with equal final optional charge. Their archives have the same literal event names, order, current region and selection. Only the time of the unique selected positive event differs, from t to t'; its position is p and its source agrees. Common earlier and later archive events strictly enclose both times.
 
-Exact total-word normalization removes temporal composition. The finite family of pulled-back causal predicates before the first product supplies finitely many target attributes and a common lower time bound. A balanced star adds a current successor for each nonempty predicate, an unselected opposite-sign twin for every current contribution, and two common inactive endpoints. Every prefix filter therefore acts synchronously. The first product erases the exceptional time from current attributes; if there is no product, matching selected signs give the same conclusion directly.
+Exact total-word normalization removes temporal composition. The finite family of pulled-back causal predicates before the first product supplies finitely many target attributes and a common lower time bound. A balanced star adds a current successor for each nonempty predicate, an unselected opposite-sign twin for every current contribution, and two common inactive endpoints. Every prefix filter therefore acts synchronously. A current correspondence preserves attributes, causal order and selection, without matching inactive archive attributes. Parallel composition transports it through a disjoint sum and generated product through current-parent pairs. At the first product in either slot, the exceptional time is below every current parent time in the fixed factor, so the maximum erases it from generated attributes. An empty current factor also satisfies this argument. Every subsequent temporal-free step preserves the current correspondence. If there is no product, matching selected signs give the same conclusion directly.
 
 **Theorem 1.4 (A shifted unit factor realizes every tail region).**
 
@@ -73,4 +73,5 @@ Necessity applies total-word saturation to the expressing word. The unique selec
 - Truth anchor: `D5/S3/ConceptDynamics/Spacetime/RegionFilterQExpressibility.q_expressible_iff_tail`
 - Truth anchor: `D5/S3/ConceptDynamics/Spacetime/RegionFilterQExpressibility.tail_construction_q`
 - Truth anchor: `D5/S3/ConceptDynamics/Spacetime/RegionFilterQExpressibility.total_word_saturation`
-- Dependency: [D5/S3/ConceptDynamics/Spacetime/InteriorArchiveTimeInvisibility](InteriorArchiveTimeInvisibility.md)
+- Dependency: [D5/S3/ConceptDynamics/Spacetime/CoarseObservation](CoarseObservation.md)
+- Dependency: [D5/S3/ConceptDynamics/Spacetime/TotalCopyNormalization](TotalCopyNormalization.md)
