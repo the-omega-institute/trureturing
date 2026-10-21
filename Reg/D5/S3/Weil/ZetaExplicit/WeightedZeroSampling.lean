@@ -83,7 +83,7 @@ def registration_1 : Contract.Registration.{_,_,_,0,0,0,0,0,0,0,0,0}
   variation := .absent
   sensitivity := .absent
   partialSensitivity := none
-  escapeFrom := some (ℝ → ℂ)
+  escapeFrom := none
   sourceSelection := some {
     owner := `D5.S3.Weil.ZetaExplicit.WeightedZeroSampling
     definition := none
@@ -262,7 +262,7 @@ def registration_2 : Contract.Registration.{_,_,_,0,0,0,0,0,0,0,0,0}
   variation := .absent
   sensitivity := .absent
   partialSensitivity := none
-  escapeFrom := some (ℝ → ℂ)
+  escapeFrom := none
   sourceSelection := some {
     owner := `D5.S3.Weil.ZetaExplicit.WeightedZeroSampling
     definition := none
