@@ -1015,3 +1015,144 @@ Proof. [The Gaussian record volume, Theorem 5.1 and Proposition 14.2](FIB_SHARED
 The normalized projected-input laws of the source's §14 need not be Gaussian. Their TV approximation to the original laws does not supply this exact Gaussian plateau threshold or transfer a plateau equality between the two families. For each finite $n$, the original conditional product densities are everywhere positive; hence no zero-error categorical decision follows from escape, consistently with the finite-copy equivalence argument in the source's §33. This conditional substitution assumes the specified preparations and fixed protocol; it establishes no native atom encoding, preparation realization or cost, adaptive-word conclusion, unequal-prior or unequal-covariance extension, training gain, empirical truth or useful uniform positive error margin. The Gaussian discriminants, entropy conjugacy, Bayes partitions and exposed-vertex argument are mature intermediate tools. The five-label multiplicity classification, exact copy boundary and witness above are repo-derived application exposition, without a global-priority claim. $\square$
 
 ## 追加锚（本行以下为增补区）
+
+## 10. Exact singleton gain, acquisition targets and inward-threshold retention
+
+**假设 10.1（对称实验与已知律风险）。** Retain exactly the experiment of Theorem 9.4: five original labels with priors $1/5$, scalar means $(-a,0,a)$ of multiplicities $(2,1,2)$, common variance $s^2$, and $a,s>0$. Denote the singleton label by $0$. For a positive integer $n$, given one fixed label, the observations come from conditionally independent preparations as in (9.1), and
+
+$$
+ Y=\frac{\sqrt n\,\bar X}{s},\qquad
+ q=\frac{\sqrt n\,a}{s},\qquad
+ q_c=\sqrt{2\ln4},\qquad
+ e=\frac{q^2}{2}-\ln4,\qquad
+ B(q)=\frac15-r_0(q).
+\tag{10.1}
+$$
+
+Here $r_0(q)$ is the singleton's binary $0$–$1$ Bayes risk for the full observation under its known law. Conditional on the three means, $Y$ has laws $\mathcal N(-q,1)$, $\mathcal N(0,1)$ and $\mathcal N(q,1)$, respectively. The same three laws define a continuous interpolation for real $q>0$; actual copy counts remain positive integers. Let $\phi$ and $\Phi$ be the standard normal density and distribution function.
+
+The Bayes and conditioning identities of Proposition 2.1 and §9 are reused below. As mature statistical context, Audibert–Tsybakov, [*Fast learning rates for plug-in classifiers*, equation (1.1) and margin assumption (1.7)](https://arxiv.org/pdf/0708.2321), study classifier estimation regret and the posterior margin for a fixed experiment. Here the classifier is already Bayes optimal and $q$ changes the experiment; the local exponent below is not a training rate or a neural-learning exponent. The following is repo-derived application exposition of these mature tools, without a claim of literature novelty or global priority.
+
+**定理 10.2（精确增益及其起始系数）。** For $0<q\le q_c$, $B(q)=0$. For $q>q_c$, set
+
+$$
+ z=z(q)=\frac{\operatorname{arcosh}(\exp(e))}{q}.
+$$
+
+Then
+
+$$
+ \boxed{B(q)=\frac{2\Phi(z)-1
+ -4\bigl(\Phi(z-q)+\Phi(z+q)-1\bigr)}5.}
+\tag{10.2}
+$$
+
+The function is continuous at $q_c$, strictly increasing on $(q_c,\infty)$, satisfies $0<B(q)<1/5$ at every finite $q>q_c$, and tends to $1/5$ as $q\to\infty$. Along the continuous interpolation, as $e\downarrow0$ through positive values,
+
+$$
+ \boxed{B(q)\sim C e^{3/2},\qquad
+ C=\frac4{15q_c\sqrt\pi}.}
+\tag{10.3}
+$$
+
+Proof. Equal priors per original label and (9.6) give the singleton posterior $v_0(y)=(1+4e^{-q^2/2}\cosh(qy))^{-1}$. Multiplying the positive-part identity (9.7) by the mixture density gives
+
+$$
+ \begin{aligned}
+ D_q(y)&=\phi(y)-2\phi(y-q)-2\phi(y+q)
+       =\phi(y)\bigl[1-e^{-e}\cosh(qy)\bigr],\\
+ B(q)&=\frac15\int_{\mathbb R}(D_q(y))_+\,dy.
+ \end{aligned}
+\tag{10.4}
+$$
+
+Thus $D_q\le0$ everywhere when $e\le0$; at $e=0$ its sole zero is $y=0$. For $e>0$ its positive set is exactly $(-z,z)$. Integrating the three Gaussian densities on this interval proves (10.2), including the factor four from the two labels at each endpoint.
+
+On $(q_c,\infty)$ the endpoints are smooth and $D_q(\pm z)=0$, so differentiating that finite-interval integral has no endpoint term and yields
+
+$$
+ B'(q)=\frac45\bigl[\phi(z-q)-\phi(z+q)\bigr]>0.
+\tag{10.5}
+$$
+
+Indeed $(z+q)^2-(z-q)^2=4zq>0$. Positivity follows also from the positive integrand near zero, and
+$B(q)\le[2\Phi(z)-1]/5<1/5$ for finite $z$. As $q\downarrow q_c$, $z\to0$ and (10.2) tends to zero. As $q\to\infty$, $\operatorname{arcosh}(\exp(e))=e+\ln2+o(1)$, hence $z=q/2-(\ln2)/q+o(q^{-1})$. Consequently $z\to\infty$, $z-q\to-\infty$ and $z+q\to\infty$, giving the stated limit in (10.2).
+
+For the onset, put $t=qz=\operatorname{arcosh}(\exp(e))$. Taylor expansion of $\cosh t=\exp(e)$ at zero gives $t^2=2e+O(e^2)$, while $q=q_c+O(e)$ and $z\sim\sqrt{2e}/q_c$. Uniformly for $-1\le x\le1$,
+
+$$
+ \begin{aligned}
+ 1-e^{-e}\cosh(tx)&=e(1-x^2)+O(e^2),\\
+ \phi(zx)&=\phi(0)(1+O(e)),\\
+ B(q)&=\frac{ze\phi(0)}5
+       \left[\int_{-1}^1(1-x^2)\,dx+O(e)\right]
+       \sim\frac{4\sqrt2\phi(0)}{15q_c}e^{3/2}.
+ \end{aligned}
+\tag{10.6}
+$$
+
+Since $\phi(0)=(2\pi)^{-1/2}$, the coefficient is exactly (10.3). This is a local asymptotic, and does not supply a useful uniform positive gain as the threshold is approached. $\square$
+
+**推论 10.3（给定正增益的最少独立取得次数）。** For each $0<\delta<1/5$, there is exactly one $q_\delta>q_c$ with $B(q_\delta)=\delta$. Under Assumption 10.1 the least permitted number of copies achieving $B(\sqrt n\,a/s)\ge\delta$ is
+
+$$
+ \boxed{n_\delta=\left\lceil (s/a)^2q_\delta^2\right\rceil.}
+\tag{10.7}
+$$
+
+Equality at the continuous target achieves the target; no extra copy is required when $(s/a)^2q_\delta^2$ is an integer. Before integer rounding, the excess precision satisfies
+
+$$
+ e_\delta=\frac{q_\delta^2}{2}-\ln4
+ \sim\left(\frac\delta C\right)^{2/3}
+ \quad(\delta\downarrow0).
+\tag{10.8}
+$$
+
+For $\delta=0$ the least allowed count is $1$; $\delta=1/5$ is unattainable at finite $n$. The count in (10.7) concerns independent acquisitions conditional on one label, and omits preparation, control and threshold-computation costs. It is neither a training-set size nor the number of repeated reads of one preparation.
+
+Proof. Continuity, strict increase and the endpoint limits in Theorem 10.2 prove existence and uniqueness. For positive integer $n$, monotonicity gives $B(\sqrt n\,a/s)\ge\delta$ exactly when $n\ge(s/a)^2q_\delta^2$, proving the ceiling and its equality case. As $\delta\downarrow0$, $q_\delta\downarrow q_c$; substituting into (10.3) and inverting gives (10.8). The endpoint targets follow from $B\ge0$ and its strict finite-$q$ upper bound. Continuous interpolation and (10.8) introduce no fractional preparations and no asymptotic assertion about a ceiling's rounding error. $\square$
+
+**定理 10.4（向内阈值误差下的量化增益保留）。** Fix $q>q_c$ and let the same binary Borel readout for all five labels be $Q_u=\mathbf1_{\{|Y|<u\}}$, where $0\le u\le z(q)$. Its singleton Bayes gain is exactly
+
+$$
+ \begin{aligned}
+ G(q,u)&:=\frac15-r_0(Q_u)\\
+ &=\frac{2\Phi(u)-1
+ -4\bigl(\Phi(u-q)+\Phi(u+q)-1\bigr)}5,
+ \qquad G(q,z)=B(q).
+ \end{aligned}
+\tag{10.9}
+$$
+
+If an inward placement error is explicitly assumed to satisfy $0\le z-u\le h<z$, then
+
+$$
+ G(q,u)\ge G(q,z-h).
+\tag{10.10}
+$$
+
+In particular, for $0<\theta<1$, the known-law inequality $G(q,z-h)\ge\theta B(q)$ is sufficient to retain at least a fraction $\theta$ of the raw singleton gain for every placement obeying that error bound. Along $e\downarrow0$, if $u/z\to\rho\in[0,1]$, then
+
+$$
+ \boxed{\frac{G(q,u)}{B(q)}\longrightarrow
+ \frac{3\rho-\rho^3}{2}.}
+\tag{10.11}
+$$
+
+Thus placing $u=z/2$ retains asymptotically $11/16$ of the gain.
+
+Proof. The signed difference of the joint masses for singleton versus nonsingleton on $A_u=(-u,u)$ is $\frac15\int_{A_u}D_q(y)\,dy\ge0$, since $A_u\subseteq(-z,z)$. Its difference on the complement is $-3/5-\frac15\int_{A_u}D_q<0$, because $\frac15\int_{\mathbb R}D_q=-3/5$. Hence the binary Bayes action based on $Q_u$ guesses singleton on its central bin and nonsingleton on its complement. At $u=0$ the central bin is null and only the latter action matters. Subtracting this risk from $1/5$ gives $G(q,u)=\frac15\int_{-u}^uD_q$, proving (10.9) for the quantized Bayes optimum, rather than merely for a proposed decision rule. Boundary points have zero probability.
+
+On $0\le u\le z$, the integrand is nonnegative, so $G$ is nondecreasing in $u$ and (10.10) follows. For the ratio write $v=u/z$. The uniform expansion (10.6), now integrated on $[-v,v]$, gives uniformly for $0\le v\le1$,
+
+$$
+ \frac{G(q,u)}{B(q)}
+ =\frac{2v-2v^3/3+O(e)}{4/3+O(e)}.
+$$
+
+Taking $v\to\rho$ proves (10.11), including both endpoints; at $\rho=1/2$ it equals $11/16$.
+
+This retention statement assumes the stated inward threshold bound. A two-symbol output alphabet by itself establishes neither finite physical threshold precision nor a cheap implementation, and the law-dependent choice of $u$ supplies no guarantee for an arbitrary fixed quantizer. The conditional source substitution remains exactly Theorem 9.5, using [the Gaussian record volume, Theorem 5.1 and Proposition 14.2](FIB_SHARED_GAUSSIAN_RECORD_LAWS.md): no preparation realizing these symmetric means is asserted, and Gaussianity of the original law supplies no Gaussianity for a projected-input law. The Gaussian experiment, existence of a finite readout and physical precision of that readout are separate claims. These known-law conclusions establish no native atom encoding, adaptive-word result, empirical or out-of-distribution performance, or training gain. $\square$
+
+## 追加锚（本行以下为增补区）
