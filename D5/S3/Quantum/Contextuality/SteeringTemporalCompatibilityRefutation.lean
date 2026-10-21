@@ -12,8 +12,6 @@ import D5.S3.Quantum.Information.PartialTraceMutualInformation
 import D5.S3.Quantum.Measurement.StabilizerPovmMaximalEntanglementRefutation
 import D5.S3.Quantum.Entanglement.ConicalDesignConcurrenceComparability
 import D5.S3.Quantum.Entanglement.StructuredNegativityCoincidenceRefutation
-import D5.S3.Weil.ZetaLinear.RankTrace
-import Mathlib.Algebra.Star.StarProjection
 
 /-! Spatial EPR steering and CPTP temporal compatibility for two-qubit operators. -/
 
