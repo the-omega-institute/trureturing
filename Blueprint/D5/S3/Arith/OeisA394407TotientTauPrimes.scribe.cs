@@ -46,13 +46,16 @@ internal sealed class OeisA394407TotientTauPrimesDocument : IScribeDocumentDefin
                 + "Nat.totient m < m and there are at least two positive divisors, giving "
                 + "ratio m <= Nat.totient m / 2 < (p - 1)/2. These cases exclude every "
                 + "smaller positive m.",
-                DescribeRole.Theorem, AssessedProvenance.FromRepo(Source)))));
+                DescribeRole.Theorem, AssessedProvenance.FromRepo(Source),
+                new OpenProblemResolutionClaim(
+                    ProblemSlugRef.Create("oeis-a394407-totient-tau-primes-huber"),
+                    ResolutionKind.Proved)))));
 
     private static DocumentBlock Node(string name, string title, Formula formula, string prose,
-        DescribeRole role, AssessedProvenance provenance) =>
+        DescribeRole role, AssessedProvenance provenance, OpenProblemResolutionClaim? resolution = null) =>
         Describe.Lean(DescribeId.Create("a394407-" + (name == "IsTerm" ? "is-term" : name)),
             DeclarationHandle.Create(Prefix + name), H(title), StatementSource.FromAuthor(Disp(formula)),
-            provenance, Blocks(Paragraph(Text(prose))), role);
+            provenance, Blocks(Paragraph(Text(prose))), role, resolution);
 
     private static Formula Named(string name) => Seq(Operatorname, Grp(F.Id(name)));
     private static Formula Qualified(string owner, string name) => Seq(Named(owner), Dot, Named(name));

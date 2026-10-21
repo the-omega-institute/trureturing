@@ -48,6 +48,10 @@ $$\forall p \in \mathbb{N},\; (\operatorname{Nat}.\operatorname{Prime}\left(p\ri
 
 *Proof.* Machine-checked in Lean as `D5/S3/Arith/OeisA394407TotientTauPrimes.result` (`✓ std3`). ∎
 
+*Resolves.* `Problems/oeis-a394407-totient-tau-primes-huber` (proved) by `D5/S3/Arith/OeisA394407TotientTauPrimes.result`.
+
+<!-- scribe-open-problem-resolution-v1 {"problem_slug":"oeis-a394407-totient-tau-primes-huber","declaration_gid":"D5/S3/Arith/OeisA394407TotientTauPrimes.result","resolution_kind":"proved"} -->
+
 *Source.* Repository-derived.
 
 *Acknowledgement.* Felix Huber (2026). *OEIS A394407: first occurrences of the totient-to-divisor-count ratio*. URL: <https://oeis.org/A394407>.
