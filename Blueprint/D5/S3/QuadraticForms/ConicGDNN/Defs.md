@@ -70,7 +70,7 @@ Lean statement: `D5/S3/QuadraticForms/ConicGDNN/Defs.sos4`
 
 *Formalization.* `D5/S3/QuadraticForms/ConicGDNN/Defs.sos4` (`✓ std3`).
 
-*Source.* Repository-derived.
+*Citation.* M. Nishijima and K. Nakata (2024). *Generalizations of doubly nonnegative cones and their comparison*. DOI: [10.15807/jorsj.67.84](https://doi.org/10.15807/jorsj.67.84). URL: <https://arxiv.org/abs/2204.12119>.
 
 *Commentary.*
 
@@ -94,7 +94,7 @@ Lean statement: `D5/S3/QuadraticForms/ConicGDNN/Defs.knn0`
 
 *Formalization.* `D5/S3/QuadraticForms/ConicGDNN/Defs.knn0` (`✓ std3`).
 
-*Source.* Repository-derived.
+*Citation.* M. Nishijima and K. Nakata (2024). *Generalizations of doubly nonnegative cones and their comparison*. DOI: [10.15807/jorsj.67.84](https://doi.org/10.15807/jorsj.67.84). URL: <https://arxiv.org/abs/2204.12119>.
 
 *Commentary.*
 
@@ -106,7 +106,7 @@ Lean statement: `D5/S3/QuadraticForms/ConicGDNN/Defs.dnnNN`
 
 *Formalization.* `D5/S3/QuadraticForms/ConicGDNN/Defs.dnnNN` (`✓ std3`).
 
-*Source.* Repository-derived.
+*Citation.* M. Nishijima and K. Nakata (2024). *Generalizations of doubly nonnegative cones and their comparison*. DOI: [10.15807/jorsj.67.84](https://doi.org/10.15807/jorsj.67.84). URL: <https://arxiv.org/abs/2204.12119>.
 
 *Commentary.*
 
@@ -118,7 +118,7 @@ Lean statement: `D5/S3/QuadraticForms/ConicGDNN/Defs.dnnBD`
 
 *Formalization.* `D5/S3/QuadraticForms/ConicGDNN/Defs.dnnBD` (`✓ std3`).
 
-*Source.* Repository-derived.
+*Citation.* M. Nishijima and K. Nakata (2024). *Generalizations of doubly nonnegative cones and their comparison*. DOI: [10.15807/jorsj.67.84](https://doi.org/10.15807/jorsj.67.84). URL: <https://arxiv.org/abs/2204.12119>.
 
 *Commentary.*
 
@@ -130,7 +130,7 @@ Lean statement: `D5/S3/QuadraticForms/ConicGDNN/Defs.claim`
 
 *Formalization.* `D5/S3/QuadraticForms/ConicGDNN/Defs.claim` (`✓ std3`).
 
-*Source.* Repository-derived.
+*Citation.* M. Nishijima and K. Nakata (2024). *Generalizations of doubly nonnegative cones and their comparison*. DOI: [10.15807/jorsj.67.84](https://doi.org/10.15807/jorsj.67.84). URL: <https://arxiv.org/abs/2204.12119>.
 
 *Commentary.*
 

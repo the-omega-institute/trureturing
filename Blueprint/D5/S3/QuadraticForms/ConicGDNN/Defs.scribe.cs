@@ -4,6 +4,9 @@ namespace StrataLint.Scribe.Blueprint.D5.S3.QuadraticForms.ConicGDNN;
 
 internal sealed class DefsDocument : IScribeDocumentDefinition
 {
+    private static readonly LibraryNoteRef Source =
+        LibraryNoteRef.Create("D5/L/QuadraticForms/nishijimanakata2024generalizations");
+
     public DocumentDefinition Create() => DocumentDefinition.Create(ScribeNode.Create(
         "Generalized doubly nonnegative cones on orthant and Lorentz products.",
         H("Product cones and Jordan squares"), Blocks(
@@ -40,7 +43,7 @@ internal sealed class DefsDocument : IScribeDocumentDefinition
             Describe.Lean(DescribeId.Create("conic-gdnn-defs-sos4"),
                 DeclarationHandle.Create("D5/S3/QuadraticForms/ConicGDNN/Defs.sos4"),
                 H("Homogeneous quartic sums of squares"), StatementSource.WithoutFormula(),
-                AssessedProvenance.FromRepo(),
+                AssessedProvenance.FromLiterature(Source),
                 Blocks(Paragraph(Text("The convex hull of squares of homogeneous quadratic polynomials is the chosen quartic sum of squares cone."))),
                 DescribeRole.Definition),
             Describe.Lean(DescribeId.Create("conic-gdnn-defs-quartic"),
@@ -52,25 +55,25 @@ internal sealed class DefsDocument : IScribeDocumentDefinition
             Describe.Lean(DescribeId.Create("conic-gdnn-defs-knn0"),
                 DeclarationHandle.Create("D5/S3/QuadraticForms/ConicGDNN/Defs.knn0"),
                 H("The zeroth copositive approximation"), StatementSource.WithoutFormula(),
-                AssessedProvenance.FromRepo(),
+                AssessedProvenance.FromLiterature(Source),
                 Blocks(Paragraph(Text("A symmetric matrix belongs when its quartic pullback is in the chosen sum of squares cone."))),
                 DescribeRole.Definition),
             Describe.Lean(DescribeId.Create("conic-gdnn-defs-dnnnn"),
                 DeclarationHandle.Create("D5/S3/QuadraticForms/ConicGDNN/Defs.dnnNN"),
                 H("The dual approximation"), StatementSource.WithoutFormula(),
-                AssessedProvenance.FromRepo(),
+                AssessedProvenance.FromLiterature(Source),
                 Blocks(Paragraph(Text("A symmetric matrix has nonnegative trace pairing with every matrix in the zeroth approximation."))),
                 DescribeRole.Definition),
             Describe.Lean(DescribeId.Create("conic-gdnn-defs-dnnbd"),
                 DeclarationHandle.Create("D5/S3/QuadraticForms/ConicGDNN/Defs.dnnBD"),
                 H("The extreme ray preserving cone"), StatementSource.WithoutFormula(),
-                AssessedProvenance.FromRepo(),
+                AssessedProvenance.FromLiterature(Source),
                 Blocks(Paragraph(Text("A matrix is positive semidefinite and maps every extreme ray generator of the dual cone into the original cone."))),
                 DescribeRole.Definition),
             Describe.Lean(DescribeId.Create("conic-gdnn-defs-claim"),
                 DeclarationHandle.Create("D5/S3/QuadraticForms/ConicGDNN/Defs.claim"),
                 H("The cone inclusion"), StatementSource.WithoutFormula(),
-                AssessedProvenance.FromRepo(),
+                AssessedProvenance.FromLiterature(Source),
                 Blocks(Paragraph(Text("For every finite orthant and finite product of Lorentz blocks with positive spatial dimensions, the dual approximation is contained in the extreme ray preserving cone."))),
                 DescribeRole.Definition))));
 }

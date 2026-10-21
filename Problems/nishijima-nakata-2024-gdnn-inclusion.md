@@ -132,8 +132,13 @@ theorem is in Result. No validated Result registration is asserted.
   quadratic and takes values in the self-dual positive semidefinite
   cone under the trace pairing. Its coordinate model and SOS certificate
   are not formalized in this development.
-- **Open.** Whether the inclusion is strict for every product with at
-  least one Lorentz block and one further factor is not settled here.
+- **Derived (not formalized).** When every Lorentz block has $k_j=1$, each
+  block is a rotated copy of $\mathbb R_+^2$: the orthogonal change
+  $(t,z)\mapsto((t+z)/\sqrt2,(t-z)/\sqrt2)$ turns the Jordan square into
+  coordinatewise squaring with positive weights, and the two cones coincide
+  with the ordinary doubly nonnegative cone.
+- **Open.** Which products, with at least one block of spatial dimension
+  $k_j\ge2$, give a strict inclusion.
 
 ## ASSUMED-UNVERIFIED
 
