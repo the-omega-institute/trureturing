@@ -1,0 +1,26 @@
+**Corollary 23.3 (The precise role of the retained twenty-four fibre).**
+Put $K_J^\times=K_J\cap\{p\ne24\}$. In the full complete-world
+coordinate topology,
+
+$$
+\overline{K_J^\times}\subseteq K_J,
+\tag{23.3}
+$$
+
+and the closure on the left is compact. For every closed parameter
+interval $I\subset[10,34]$ with $24\notin I$, the entire region
+$K_J(I)=K_J\cap p^{-1}(I)$ is compact. There are qualitative uniform
+positive interior margins for $r,1-r,b,c$ on $K_J$, and finite bounds
+for drift and all gain coefficients.
+
+*Proof.* The compact set $K_J$ is closed in the finite-dimensional
+ambient coordinate space, so it contains the closure in (23.3).
+That closure and $K_J(I)$ are closed subsets of $K_J$. Each source
+entry in the stated list is continuous and strictly positive on
+$K_J$, so its minimum is positive; the remaining coordinate bounds
+follow from compactness. These are qualitative extrema, without a
+numerical value supplied by the proof. No assertion is made that
+$K_J^\times$ itself is compact or that (23.3) is equality. Equality
+would require approximability of every unused $p=24$ companion by
+off-$24$ companions, which these arguments do not establish. ∎
+

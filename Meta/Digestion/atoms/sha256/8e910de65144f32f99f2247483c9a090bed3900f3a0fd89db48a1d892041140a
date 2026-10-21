@@ -1,0 +1,45 @@
+**Theorem 19.3 (fresh predecessor-bank lower bound).** Every fresh complete
+recovery flight satisfies
+
+$$
+ t-b\;\geq\;3H(b)+17\Lambda+56,
+ \qquad
+ A(t)-A(b)\;\geq\;H(b)+3\Lambda .
+ \tag{19.1}
+$$
+
+Consequently,
+
+$$
+ t+1\geq (b+1)^2.
+ \tag{19.2}
+$$
+
+These are necessary lower bounds for this installed route. They are not a
+runtime formula, an attainable schedule, or a bound on another recovery
+representation.
+
+**Proof.** `Boundary` executes exactly $b$ represented rows. After its
+$i$-th row, the separate tally field is the unary word $1^i$. By the
+full-bank rule in Definition 19.1, the real emission of that assignment
+contains all $i$ tally symbols in a newly appended bank version. The $b$
+selected emissions occur in chronological disjoint native intervals. Each
+new symbol uses an `EX`, a `WR`, and an `MR`; therefore the $i$-th selected
+interval contributes at least $3i$ native rows and $i$ new nonmeter cells.
+Summing over $i=1,\ldots,b$ gives $3H(b)$ rows and $H(b)$ cells. This counts
+only the selected tally field: the unchanged fields, dry emissions, Base,
+separators, seals, descriptors, scans and control rows remain additional.
+No represented row is identified with a native row.
+
+The selected emissions finish inside `Boundary`, before the CoverRef
+publication. Definition 8.5 and CYCLE Proposition 10.2 place the eight
+full sender/mailbox/receiver publication intervals after this point and
+make them disjoint. Their two-copy-plus-print subtotal is
+$17\Lambda+56$, and their three distinct payload intervals retain at least
+$3\Lambda$ cells. Adding these disjoint contributions proves (19.1); all
+remaining acquisition, binding, decoder, check, ACK and return rows and
+cells are nonnegative additions. Since
+$3H(b)\geq b(b+1)$, (19.1) gives
+$t\geq b+b(b+1)$, which is (19.2). The proof uses the actual compiler,
+actual native intervals and actual current authority throughout. ∎
+

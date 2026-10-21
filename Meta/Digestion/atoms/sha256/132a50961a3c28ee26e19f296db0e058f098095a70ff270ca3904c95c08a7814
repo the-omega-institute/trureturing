@@ -1,0 +1,21 @@
+**Proposition 4.4 (return and abstention contract).** If a report may be
+$\bot$ (abstention) or a run may have $T=\infty$, define wrong-only errors by
+counting only the opposite finite status. No positive lower bound follows for
+that loss: the always-$\bot$ rule has zero wrong-only error. If abstention and
+nonreturn are counted as failure, set
+
+$$
+e_i^{\rm total}=\Pr_i[\text{the output is not the correct status}],
+\qquad i\in\{\mathsf E,\mathsf S\}.
+$$
+
+Then the lower bound in (4.5) still holds with $e_i^{\rm total}$.
+
+**Proof.** Let $A$ be the event that the report is $\mathsf S$. The total
+error under $\mathsf E$ contains $A$, and the total error under $\mathsf S$
+contains the complementary event that the report is not $\mathsf S$,
+including $\mathsf E$, $\bot$ and nonreturn. Thus their sum is at least the
+left side used in the proof of Theorem 4.3. The wrong-only assertion follows
+from the always-abstain counterexample. The event $T=\infty$ remains a path
+event in (3.1), not a finite value delivered by the observer. $\square$
+
