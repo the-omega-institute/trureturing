@@ -200,7 +200,4 @@ theorem petz_input_support_columns (M : SupportedRelativeModularModel Φ ρ σ)
   intro i hi
   rw [Matrix.mul_vecMulVec, hcolumns, Matrix.smul_vecMulVec]
 
-#print axioms spectral_petz_coordinate_matrix
-#print axioms petz_input_support_columns
-
 end D5.S3.Quantum.Recovery.PetzSpectralCoordinates

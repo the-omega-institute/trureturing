@@ -42,7 +42,7 @@ internal sealed class PetzSpectralCoordinatesDocument : IScribeDocumentDefinitio
         Grp(Seq([.. names.SelectMany((name, index) => index == 0
             ? new Formula[] { X(name) } : new Formula[] { Dot, X(name) })])));
     private static Formula At(Formula function, params Formula[] arguments) => new Formula.Apply(function, [.. arguments]);
-    private static Formula Typed(Formula value, Formula type) => Seq(Open, value, Colon, Sp, type, Close);
+    private static Formula Typed(Formula value, Formula type) => Parenthesized(Seq(value, Colon, Sp, type));
     private static Formula All(string name, Formula type, Formula body) =>
         new Formula.Bind(FormulaQuantifier.ForAll, FormulaIdentifier.Create(name), type, body);
     private static Formula Arr(Formula left, Formula right) => new Formula.TypeArrow(left, right);

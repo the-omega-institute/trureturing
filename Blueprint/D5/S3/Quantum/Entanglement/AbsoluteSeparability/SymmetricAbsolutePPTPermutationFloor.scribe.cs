@@ -98,10 +98,10 @@ internal sealed class SymmetricAbsolutePPTPermutationFloorDocument : IScribeDocu
     private static Formula FiniteTypes(Formula body) => All("I", Types, All("L", Types,
         Seq(Inst("Fintype", X("I")), Inst("DecidableEq", X("I")), Inst("Fintype", X("L")), Inst("DecidableEq", X("L")), body)));
     private static Formula PermutationTypes(Formula body) => All("I", Types, All("L", Types,
-        Seq(Inst("Fintype", X("I")), Inst("DecidableEq", X("L")), body)));
+        Seq(Inst("Fintype", X("I")), Inst("DecidableEq", X("I")), Inst("Fintype", X("L")), Inst("DecidableEq", X("L")), body)));
     private static Formula LocalTypes(Formula body) => All("I", Types,
         Seq(Inst("Fintype", X("I")), Inst("DecidableEq", X("I")), All("L", Types,
-            Seq(Inst("DecidableEq", X("L")), body))));
+            Seq(Inst("Fintype", X("L")), Inst("DecidableEq", X("L")), body))));
     private static Formula Word => Arr(X("I"), X("L"));
 
 

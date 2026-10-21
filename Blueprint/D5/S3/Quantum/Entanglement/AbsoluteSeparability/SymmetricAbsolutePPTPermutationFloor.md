@@ -18,7 +18,7 @@ The source states on p. 1: “They satisfy ρ = πρπ′ with π and π′ any 
 
 **Definition 1.2 (Permutation matrices on words).**
 
-$$\forall I \in \operatorname{Type},\; \forall L \in \operatorname{Type},\; [\operatorname{Fintype}\left(I\right)] [\operatorname{DecidableEq}\left(L\right)] \forall sigma \in \operatorname{Equiv.Perm}\left(I\right),\; \operatorname{D5.S3.Quantum.Entanglement.AbsoluteSeparability.SymmetricAbsolutePPTPermutationFloor.Q}\left(sigma\right) = \operatorname{Equiv.Perm.permMatrix}\left(\mathbb{C}, \operatorname{Equiv.arrowCongr}\left(\operatorname{Equiv.symm}\left(sigma\right), \operatorname{Equiv.refl}\left(L\right)\right)\right)$$
+$$\forall I \in \operatorname{Type},\; \forall L \in \operatorname{Type},\; [\operatorname{Fintype}\left(I\right)] [\operatorname{DecidableEq}\left(I\right)] [\operatorname{Fintype}\left(L\right)] [\operatorname{DecidableEq}\left(L\right)] \forall sigma \in \operatorname{Equiv.Perm}\left(I\right),\; \operatorname{D5.S3.Quantum.Entanglement.AbsoluteSeparability.SymmetricAbsolutePPTPermutationFloor.Q}\left(sigma\right) = \operatorname{Equiv.Perm.permMatrix}\left(\mathbb{C}, \operatorname{Equiv.arrowCongr}\left(\operatorname{Equiv.symm}\left(sigma\right), \operatorname{Equiv.refl}\left(L\right)\right)\right)$$
 
 *Formalization.* `D5/S3/Quantum/Entanglement/AbsoluteSeparability/SymmetricAbsolutePPTPermutationFloor.Q` (`✓ std3`).
 
@@ -46,7 +46,7 @@ Averaging the word permutation matrices gives the orthogonal projector onto symm
 
 **Definition 1.4 (Local symmetric projector).**
 
-$$\forall I \in \operatorname{Type},\; [\operatorname{Fintype}\left(I\right)] [\operatorname{DecidableEq}\left(I\right)] \forall L \in \operatorname{Type},\; [\operatorname{DecidableEq}\left(L\right)] \forall S \in \operatorname{Finset}\left(I\right),\; \operatorname{D5.S3.Quantum.Entanglement.AbsoluteSeparability.SymmetricAbsolutePPTPermutationFloor.Local.localP}\left(S\right) = \operatorname{Finset.expect}\left(\operatorname{Finset.univ}, \operatorname{fun} (g: \operatorname{MulAction.stabilizer}\left(\operatorname{Equiv.Perm}\left(I\right), S\right)) \mapsto \operatorname{D5.S3.Quantum.Entanglement.AbsoluteSeparability.SymmetricAbsolutePPTPermutationFloor.Q}\left(\operatorname{Subtype.val}\left(g\right)\right)\right)$$
+$$\forall I \in \operatorname{Type},\; [\operatorname{Fintype}\left(I\right)] [\operatorname{DecidableEq}\left(I\right)] \forall L \in \operatorname{Type},\; [\operatorname{Fintype}\left(L\right)] [\operatorname{DecidableEq}\left(L\right)] \forall S \in \operatorname{Finset}\left(I\right),\; \operatorname{D5.S3.Quantum.Entanglement.AbsoluteSeparability.SymmetricAbsolutePPTPermutationFloor.Local.localP}\left(S\right) = \operatorname{Finset.expect}\left(\operatorname{Finset.univ}, \operatorname{fun} (g: \operatorname{MulAction.stabilizer}\left(\operatorname{Equiv.Perm}\left(I\right), S\right)) \mapsto \operatorname{D5.S3.Quantum.Entanglement.AbsoluteSeparability.SymmetricAbsolutePPTPermutationFloor.Q}\left(\operatorname{Subtype.val}\left(g\right)\right)\right)$$
 
 *Formalization.* `D5/S3/Quantum/Entanglement/AbsoluteSeparability/SymmetricAbsolutePPTPermutationFloor.localP` (`✓ std3`).
 
