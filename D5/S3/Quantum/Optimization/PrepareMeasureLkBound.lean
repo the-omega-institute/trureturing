@@ -47,23 +47,14 @@ def L {n m : ℕ} (M : Matrix (Fin n) (Fin m) ℝ) : ℝ :=
 def a (k : ℕ) : ℝ :=
   ((2 : ℝ) ^ k)⁻¹ * ∑ ε : Fin k → Fin 2, |∑ i, signValue (ε i)|
 
-private def signs3Equiv : (Fin 3 → Fin 2) ≃ Fin 2 × (Fin 2 × Fin 2) where
-  toFun := fun f => (f 0, (f 1, f 2))
-  invFun := fun x => ![x.1, x.2.1, x.2.2]
-  left_inv := by
-    intro f
-    funext i
-    fin_cases i <;> rfl
-  right_inv := by
-    rintro ⟨a, b, c⟩
-    rfl
-
 private lemma a_three : a 3 = (3 / 2 : ℝ) := by
   unfold a
-  rw [Fintype.sum_equiv signs3Equiv
+  rw [Fintype.sum_equiv
+    ((Fin.consEquiv (fun _ : Fin 3 => Fin 2)).symm.trans
+      (Equiv.prodCongr (Equiv.refl (Fin 2)) (finTwoArrowEquiv (Fin 2))))
     (fun ε => |∑ i, signValue (ε i)|)
     (fun x => |signValue x.1 + signValue x.2.1 + signValue x.2.2|)
-    (by intro ε; simp [signs3Equiv, Fin.sum_univ_succ]; ring_nf)]
+    (by intro ε; simp [Fin.consEquiv, finTwoArrowEquiv, Fin.tail, Fin.sum_univ_succ]; ring_nf)]
   simp_rw [Fintype.sum_prod_type]
   norm_num [signValue]
 
