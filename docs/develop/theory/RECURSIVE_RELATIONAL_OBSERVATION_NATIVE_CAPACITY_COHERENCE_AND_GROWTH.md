@@ -3730,3 +3730,261 @@ remains an open construction boundary rather than a conclusion of this
 appendix.
 
 ## 追加锚（本行以下为增补区）
+
+
+## 20. Serial literal self-images under calibrated clocks
+
+**Definition 20.1 (one actual serial image protocol).** On the same native run
+and with the literal codec, copy, handoff and Ready conventions of
+Propositions 18.2–18.3, let $s_0<s_1<\cdots<s_j$ be absolute native ordinals.
+Round $i$ starts at $s_i$, targets the cut $k_i=s_i$, and returns a literal
+encompassing image of that cut before round $i+1$ begins at $s_{i+1}$.
+Extra work and gaps between completed calls are allowed. Put
+$W_j=s_j-s_0$, counting every intervening native primitive, rather than
+counting one completed image as a unit-cost step. A statement for $j$ rounds
+is conditional on all those calls actually completing; their existence is
+not supplied by this definition.
+
+**Proposition 20.2 (serial image amplification and the round horizon).** Every
+protocol of Definition 20.1 satisfies
+
+$$
+\begin{aligned}
+s_j&\ge137^j s_0+\frac{279(137^j-1)}{136},\\
+W_j&\ge(137^j-1)\left(s_0+\frac{279}{136}\right).
+\end{aligned}
+\tag{C.20.1}
+$$
+
+If $s_j\le N$, then
+
+$$
+j\le
+\frac{\ln((136N+279)/(136s_0+279))}{\ln137}.
+\tag{C.20.2}
+$$
+
+Proof. Corollary 18.4, applied to the actual call with $k_i=s_i$, gives a
+completion ordinal at least $137s_i+279$. Seriality therefore implies
+$s_{i+1}\ge137s_i+279$. Set $b=279/136$; then
+$s_{i+1}+b\ge137(s_i+b)$. Induction gives
+$s_j+b\ge137^j(s_0+b)$, and subtracting $s_0+b$ gives the work bound.
+For the horizon bound, $137^j(136s_0+279)\le136N+279$, whose positive terms
+permit taking logarithms. The mechanism and constants are derived from the
+actual source codec and body counts, not from a general theorem about all
+self-representations. $\square$
+
+**Definition 20.3 (a calibration of the same trace).** Fix positive units
+$\tau_0,M_0,a_0$. For inputs of length $n$, partition the entire execution
+between $s_0$ and $s_j$ into its $W_j$ native intervals. Let interval $i$ have
+positive proper duration $d_i$ and let $t(\tau)$ be an absolutely continuous,
+strictly increasing reference clock with
+$dt/d\tau=1/\alpha(\tau)>0$ almost everywhere. All waiting, control,
+communication and copying in this interval is included in the partition.
+Write
+
+$$
+T_\tau=\sum_{i=1}^{W_j}d_i,\qquad
+T_t=\int_0^{T_\tau}\alpha(\tau)^{-1}\,d\tau.
+\tag{C.20.3}
+$$
+
+A polynomial calibration supplies fixed polynomials $p,q\ge1$, evaluated at
+$n$, with
+
+$$
+\frac{\tau_0}{p(n)}\le d_i\le\tau_0p(n),\qquad
+\frac1{q(n)}\le\alpha(\tau)\le q(n)
+\quad\text{almost everywhere}.
+\tag{C.20.4}
+$$
+
+This is an additional implementation assumption; a native tick is not
+identified by definition with a physical second.
+
+**Proposition 20.4 (image rounds in a polynomially comparable clock).** Under
+Definitions 20.1 and 20.3 with (C.20.4),
+
+$$
+\frac{W_j}{p(n)q(n)}
+\le\frac{T_t}{\tau_0}\le p(n)q(n)W_j,
+\qquad
+\frac{T_t}{\tau_0}\ge
+\frac{(137^j-1)(s_0+279/136)}{p(n)q(n)}.
+\tag{C.20.5}
+$$
+
+In particular, if $T_t/\tau_0\le B(n)$ for a fixed polynomial $B\ge0$, then
+
+$$
+j\le\frac{\ln\left(1+
+ B(n)p(n)q(n)/(s_0+279/136)\right)}{\ln137}
+=O(\log(n+2)).
+\tag{C.20.6}
+$$
+
+Proof. The elementary calibrated-trace estimate recorded in
+[Cook's model-robustness note](../../../Library/ConceptDynamics/cook2006pversusnp.md#primitive-simulations-and-calibrated-execution-costs)
+is used as an intermediate step: on interval $i$, integration of
+$q(n)^{-1}\le\alpha^{-1}\le q(n)$ gives reference duration between
+$\tau_0/(pq)$ and $\tau_0pq$. Summing gives the first two-sided bound.
+Apply Proposition 20.2 for the last bound. Rearranging it under the budget
+$B$ gives (C.20.6); its asymptotic estimate uses
+$s_0+279/136\ge279/136$ and the fixed polynomial upper bound on $Bpq$.
+This limits serial literal-image rounds in the stated trace. It is not a
+lower bound on a task computed by a different trace or representation.
+$\square$
+
+**Definition 20.5 (static exterior calibration).** Supply a Schwarzschild
+vacuum exterior with source mass $M(n)>0$, constants $G,c>0$, and a test
+apparatus held at fixed areal radius $R(n)>2GM(n)/c^2$. Its reference $t$ is
+normalized at infinity. Backreaction, rotation, free fall and additional
+kinematic time dilation are excluded. Supply the proper-duration bounds
+of (C.20.4) for the actual native intervals; they are not consequences of
+the metric. Let $a(n)$ be the proper acceleration required to remain
+static. Assume bounds on numerical values in fixed units,
+
+$$
+M(n)\le M_0P(n),\qquad a(n)\le a_0Q(n),
+\tag{C.20.7}
+$$
+
+for fixed polynomials $P,Q\ge1$. These assumptions do not assert that a
+physical suspension or its construction has been supplied at polynomial
+cost. The source mass $M$ is not the observer's record length and is not
+the bottom probability mass of the five-state pyramid.
+
+**Proposition 20.6 (conditional Schwarzschild cost of the native image
+protocol).** Under Definitions 20.1, 20.3 and 20.5, set
+
+$$
+C=\frac{64GM_0a_0}{9c^4},\qquad
+q_{\rm S}(n)=2+C P(n)Q(n).
+$$
+
+The actual static clock satisfies
+
+$$
+1\le\alpha^{-1}\le q_{\rm S}(n),\qquad
+\frac{T_t}{\tau_0}\ge
+\frac{(137^j-1)(s_0+279/136)}{p(n)}.
+\tag{C.20.8}
+$$
+
+If instead an external reference interval $T_{\rm ext}\ge0$ is compared
+with this apparatus's elapsed proper waiting time $\tau_{\rm wait}$,
+
+$$
+\frac{T_{\rm ext}}{q_{\rm S}(n)}
+\le\tau_{\rm wait}=\alpha T_{\rm ext}\le T_{\rm ext}.
+\tag{C.20.9}
+$$
+
+Thus this static, polynomially bounded source-and-acceleration family
+cannot convert an exponentially long external interval into a polynomial
+proper waiting interval. This compares interval lengths and supplies no
+external computation, return signal or readout protocol.
+
+Proof. Use the classical Schwarzschild clock and acceleration formulas as
+intermediate facts, with their derivation and limitations in
+[Reall's black-hole note](../../../Library/Observer/reall2024blackholes.md):
+
+$$
+\alpha=\sqrt{1-\frac{2GM}{c^2R}},\qquad
+ a=\frac{GM}{R^2\alpha},\qquad
+ Ma=\frac{c^4}{4G}\frac{(1-\alpha^2)^2}{\alpha}.
+\tag{C.20.10}
+$$
+
+For $0<\alpha\le1/2$,
+$(1-\alpha^2)^2\ge9/16$ gives
+$\alpha^{-1}\le64GMa/(9c^4)\le C P(n)Q(n)$.
+For $1/2<\alpha<1$ its inverse is less than two. This proves the first
+bound, with $q_{\rm S}$ a polynomial majorant for both branches.
+Since $\alpha\le1$, each actual native interval costs at least
+$\tau_0/p(n)$ in reference time; summing and applying Proposition 20.2
+proves the second bound in (C.20.8). At fixed $R$, $\alpha$ is constant,
+so (C.20.9) follows by integration of $d\tau=\alpha\,dt$.
+$\square$
+
+**Convention 20.7 (scope of computation and physical identification).**
+The following supplied bridges are kept distinct. Polynomial simulations
+between primitive models concern a uniform algorithm on all inputs,
+including negative instances; mutually polynomial simulations preserve P
+and verifier-defined NP as recorded in the Cook note. Proposition 20.2
+concerns only serial literal-image calls; incremental records, shared
+substructures and task projections do not inherit its premises merely
+by representing the same final answer. Polynomially calibrated durations
+compare the same actual execution, with all its charged operations;
+they do not establish that every abstract program has such a physical
+implementation.
+
+For the static conditional histories of
+[Collective oscillators, Definition 10.1](AURIC_COLLECTIVE_OSCILLATORS_AND_RECORD_CAPACITY.md),
+positive rescalings of the same propagation constraints preserve their
+common kernel but do not fix the physical energy scale; the intermediate
+linear-algebra facts are recorded in
+[Bausch--Crosson's note](../../../Library/Observer/bauschcrosson2018modifiedcircuits.md).
+A zero-energy history state does not itself traverse its conditional
+clock positions under its propagation Hamiltonian.
+
+For the pyramid's fixed-fiber equation, the already supplied solution
+$\kappa(t)-\kappa_*=(\kappa(0)-\kappa_*)e^{-\gamma\varrho t}$
+in [§3 of its dynamics volume](AURIC_FIB_PYRAMID_INFORMATION_ESCAPE_DYNAMICS_THERMODYNAMIC_ACTION.md#3-κ-纤维上的质量作用动力学)
+uses $\varrho=1-Z$ as probability mass. Its parameter time and relaxation
+rate are not identified with $\tau$ and $\alpha$. A relation to a common
+physical clock for different local processes remains a separate supplied
+or derived interface. None of these protocol bounds decides P versus NP.
+
+## 追加锚（本行以下为增补区）
+
+## 21. Endogenous primitive time and the size of the completed observer
+
+**Definition 21.1 (a task-start cut and endogenous completion).** Fix a finite uniform controller, an actual native start cut $s_0$, a problem record $x$ already present there, and $n=|x|$. The record need not originate outside the observer. After $k$ further primitives write the actual state as $\mathcal O_k(x)$ and its operation word as $h_k$; define $\tau(h_k)=k$. A completion flag and output port belong to the controller. Let $T(x)$ be the first $k$ at which that flag and its specified output are delivered, or $\infty$ if this never happens. Computing the flag, control, acquisition, copying and readout uses the same primitives. No external answer oracle or physical clock calibration from §20 is supplied.
+
+The following properties are distinct: the next primitive is legal at every nonterminal state; every input eventually completes; and there exist fixed $C,d$ with $T(x)\le C(n+1)^d$ on every input. The last includes negative instances of a decision task. Input-dependent auxiliary structure and its acquisition are charged when making a complexity claim; its presence at the chosen cut does not make it free advice.
+
+**Proposition 21.2 (the actual native time–storage consequence).** Let $r_x$ be the actual finite prefix ending at a completed task output, and write $K_{\rm nat}(r_x)$ for the quantity called $n(r_x)$ in Theorem 7.2. For that theorem's construction-counted storage,
+
+$$
+T(x)\le K_{\rm nat}(r_x)\le S(r_x)/8.
+\tag{C.21.1}
+$$
+
+Consequently, completion with correct output and a uniform bound $S(r_x)\le Q(|x|)$ on every input imply $T(x)\le Q(|x|)/8$. Here $Q$ is measured against the task-start problem record, not against the completed history's encoding length.
+
+Proof. Reuse Theorem 7.2 on the same actual prefix:
+
+$$
+S(r_x)=S_0+b_{\rm ctl}(r_x)+8A(r_x)+8K_{\rm nat}(r_x).
+$$
+
+All terms apart from the last are nonnegative. The task interval is a subinterval of this prefix, giving (C.21.1), and substitution gives the stated consequence. This does not assert that the task's incremental storage is exactly eight times its time: ordinary cells, control, acquisition and pre-start history are included in $S$. $\square$
+
+**Convention 21.3 (expanded size and initial size).** For a general append-only record with disjoint retained event fields of at least $b>0$ bits per primitive, counting fields gives $S_k\ge bk$ and hence $k\le S_k/b$. Proposition 21.2 uses the actual native receipt meter. A run with $T(x)\ge2^{|x|}$ must, in this record convention, leave at least $b2^{|x|}$ such bits. Its linear bound in completed size is compatible with exponential time in initial size. Compression without those disjoint fields and machines that erase their history do not inherit this storage argument. A polynomial bound on completed recorded size is an additional sufficient premise, not a consequence of defining one primitive as one tick.
+
+**Definition 21.4 (cost-supported task progress).** Expand a macro trajectory $s_0(x),s_1(x),\ldots$ into actual completed native segments with integer costs $c_j\ge1$. Every reachable nonterminal macro state supplies its next completed segment under the same uniform controller. Let a nonnegative task potential satisfy
+
+$$
+\Phi_x(s_0(x))\le q(n),\qquad
+c_j\le p(n)\bigl(\Phi_x(s_j(x))-\Phi_x(s_{j+1}(x))\bigr),
+\tag{C.21.2}
+$$
+
+for fixed polynomials $p\ge1,q\ge0$. Initialization and final delivery are included or separately polynomially bounded; terminal outputs satisfy the task specification. The potential need not be computable by the observer. If the controller uses its value to choose operations, computing it belongs to the charged segment.
+
+**Proposition 21.5 (endogenous completion from paid progress).** Under Definition 21.4, the macro-segment cost is at most $p(n)q(n)$ and the task completes in polynomial native time, including the stated preparation and delivery costs.
+
+Proof. Apply the standard telescoping estimate in [the amortized-analysis note](../../../Library/Computability/tarjan1985amortized.md) to the same native segments. Every finite prefix has cost at most $p(n)(\Phi_x(s_0)-\Phi_x(s_m))\le p(n)q(n)$. An infinite sequence would have prefix cost at least $m$ for every $m$, a contradiction. The next-completed-segment premise excludes getting stuck or running forever inside a macro update. Thus a terminal state is reached, with the specified correctness and preparation/delivery bounds. The additional project obligation is an actual native construction satisfying (C.21.2), not the telescoping identity. $\square$
+
+**Convention 21.6 (self-generation does not supply a progress rate).** [Predictive memory, Definition 1.3](RECURSIVE_RELATIONAL_OBSERVATION_SELF_GENERATED_PREDICTIVE_MEMORY.md) uses the same $U$ and emission rows $e_z$ for retention and the self-generated stochastic decoder. For $e_z(y)>0$, its finite-word product gives $D_z(\,\cdot\mid y)=D_{U(z,y)}(\,\cdot)$. This residual consistency supplies no bound of form (C.21.2). Its all-history, all-horizon accuracy requirement is a separate condition, not implied merely by deterministic control.
+
+Fix a total computable $f:\mathbb N\to\mathbb N$. As a conditional implementation example, suppose an actual finite deterministic controller table has been supplied and installed by the native boot interface, with native routines that scan a lawfully acquired finite input $x$ and its end marker, compute $f(|x|)$, perform that many counter advances, and deliver a fixed output. The table is fixed for $f$ across inputs; the growing counter and records are tape data, not unbounded controller fields. Require these routines to terminate and their finite allocations and accesses to remain legal on each input. Total computability alone does not supply this installed table or its acquisition interface. Input acquisition and scanning, compilation and installation, evaluation, counter operations, retained records and output delivery are all charged; no polynomial bound on these costs is assumed. Each counter advance includes at least one actual primitive, so any such completed task interval containing the loop has at least $f(|x|)$ primitives. Its next operation is determined by the current full configuration. A local next-action forecast can use the same transition rule, with its own implementation charged. This is the weaker local deterministic consistency notion, not a finite-state competitor for the fixed stochastic source of Predictive memory. It is not an optimal-algorithm lower bound: under the same fixed-output interface the unnecessary loop can be omitted. It separates lawful local self-generation from a completion-rate bound for the supplied controller.
+
+For SAT prefixes the rank $m-|u|$ decreases on every extension. Selecting that extension while maintaining a nonempty set of satisfying completions is the additional condition. The classical search/decision correspondence is already stated in [History records, §195](AURIC_FIB_HISTORY_RECORDS_TIME_ARROW.md); it does not follow from rank decrease or a unit-cost primitive clock.
+
+**Convention 21.7 (native controls, compilation and reliable answers).** Assumption 55.2 and Theorem 64.1 of [Static compatibility fibers](AURIC_OMEGA_STATIC_COMPATIBILITY_FIBER_THEORY.md) give a continuously parameterized exact finite-word menu. Its §61 counts adjustable pulses even if each is generously counted as one tick. An arbitrary real pulse parameter is not thereby an effectively specified native digital instruction: producing its parameter, selecting its site and implementing the requested accuracy remain charged obligations.
+
+Fix a local dimension $d_0$ and a finite inverse-closed instruction set $\mathcal G\subset SU(d_0)$ generating a dense subgroup, independently of input size and trajectory length. For $L\ge1$ effectively supplied targets $U_i\in SU(d_0)$ at declared sites, with effective numerical access sufficient for operator-norm accuracy $\epsilon/L$, the compilation and telescoping estimate in [Dawson–Nielsen's note](../../../Library/Computability/dawsonnielsen2006solovaykitaev.md) give compiled word length $O_{d_0,\mathcal G}(L\log^c(L/\epsilon))$ and total error at most $\epsilon$, for $0<\epsilon<1/2$. The exponent and constants are those of the fixed compiler; no uniformity in a growing whole-register dimension is asserted. This word-length bound uses the declared site-access model. Acquiring target descriptions, selecting sites, wiring or routing, obtaining precision, numerical arithmetic, compilation and installation are charged in any native total-work claim, along with preparation and final readout. None is made a free primitive by this estimate. This transfers a supplied trajectory bound; it supplies neither $L\le\operatorname{poly}(n)$ nor a constant probability of the correct task answer. The verifier experiment and uniform bounded-error definition in [Watrous's circuit note](../../../Library/Computability/watrous2011quantumcircuits.md) separate those obligations: a polynomial quantum SAT solver gives $\mathrm{NP}\subseteq\mathrm{BQP}$, whereas a deterministic polynomial classical solver gives $\mathrm P=\mathrm{NP}$. These distinctions use endogenous operation counts. This section contains reference-input derivations, without a claim of kernel certification or a solved SAT growth construction.
+
+## 追加锚（本行以下为增补区）
