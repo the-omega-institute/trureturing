@@ -1,0 +1,9 @@
+fingerprints:
+  raw_sha256: sha256:9e810e471e683a4ab089a8145daa5e8145533efc5324b337befde9cbc1e946ca
+  normalized_sha256: sha256:9e810e471e683a4ab089a8145daa5e8145533efc5324b337befde9cbc1e946ca
+cas_ref: sha256:9e810e471e683a4ab089a8145daa5e8145533efc5324b337befde9cbc1e946ca
+coverage_gids:
+  - gid: D5/S3/ConceptDynamics/ConceptJoinUniversal.concept_join_universal
+    target_statement_id: sha256:2afbda65f17a35ad2947adecb5293994f6d73774dd6d5ac532d5552d67f8340c
+receipts:
+  unresolved_subitems: []
