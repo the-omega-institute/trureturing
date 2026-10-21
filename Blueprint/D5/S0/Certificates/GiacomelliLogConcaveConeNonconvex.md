@@ -58,6 +58,10 @@ $$\neg (\forall d \in \mathrm{Nat},\; ((3 \le d) \Rightarrow (\forall p \in \ope
 
 *Proof.* Machine-checked in Lean as `D5/S0/Certificates/GiacomelliLogConcaveConeNonconvex.result` (`✓ std3`). ∎
 
+*Resolves.* `Problems/giacomelli-2026-log-concave-cone-convexity-question` (refuted) by `D5/S0/Certificates/GiacomelliLogConcaveConeNonconvex.result`.
+
+<!-- scribe-open-problem-resolution-v1 {"problem_slug":"giacomelli-2026-log-concave-cone-convexity-question","declaration_gid":"D5/S0/Certificates/GiacomelliLogConcaveConeNonconvex.result","resolution_kind":"refuted"} -->
+
 *Source.* Repository-derived.
 
 *Acknowledgement.* P. Giacomelli (2026). *Log-Concavity and Infinite Log-Concavity of Linear Recurrent Sequences with Linear Coefficients via Companion Matrix Methods*. DOI: [10.48550/arXiv.2604.14391](https://doi.org/10.48550/arXiv.2604.14391). URL: <https://arxiv.org/abs/2604.14391v1>.

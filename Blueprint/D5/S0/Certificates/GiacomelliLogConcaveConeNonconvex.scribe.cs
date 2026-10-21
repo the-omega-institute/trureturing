@@ -54,13 +54,17 @@ internal sealed class GiacomelliLogConcaveConeNonconvexDocument : IScribeDocumen
                     + "Both sequences are nonnegative, so U and V belong to coneInf p q. "
                     + "Their midpoint is (1, 3/2, 5/2). At index 1 its first determinant is "
                     + "(3/2)² − (5/2)·1 = −1/4. This contradicts convexity. "
-                    + "Characterization and simple connectedness are separate questions.", DescribeRole.Theorem))));
+                    + "Characterization and simple connectedness are separate questions.", DescribeRole.Theorem,
+                new OpenProblemResolutionClaim(
+                    ProblemSlugRef.Create("giacomelli-2026-log-concave-cone-convexity-question"),
+                    ResolutionKind.Refuted)))));
 
     private static DocumentBlock.Describe Node(string id, string name, string title, Formula formula,
-        AssessedProvenance provenance, string prose, DescribeRole role) => Describe.Lean(
+        AssessedProvenance provenance, string prose, DescribeRole role,
+        OpenProblemResolutionClaim? resolution = null) => Describe.Lean(
             DescribeId.Create("giacomelli-" + id), DeclarationHandle.Create(Prefix + name),
             H(title), StatementSource.FromAuthor(formula), provenance,
-            Blocks(Paragraph(Text(prose))), role);
+            Blocks(Paragraph(Text(prose))), role, resolution);
 
     private static Formula Nat() => new Formula.NamedConstant(FormulaIdentifier.Create("Nat"));
     private static Formula Real() => new Formula.NamedConstant(FormulaIdentifier.Create("Real"));
