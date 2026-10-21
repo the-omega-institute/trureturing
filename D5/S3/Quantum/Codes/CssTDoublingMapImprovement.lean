@@ -33,27 +33,13 @@ noncomputable def cssDistance {ι : Type*} [Fintype ι]
     {d | ∃ z, z ∈ C₂.orthogonalBilin (dotProductBilin (ZMod 2) (ZMod 2)) ∧
       z ∉ C₁.orthogonalBilin (dotProductBilin (ZMod 2) (ZMod 2)) ∧ hammingNorm z = d})
 
-/-- The graph embedding used to extend a subcode. -/
-def extensionMap {n : ℕ} {C C₁ : Submodule (ZMod 2) (Fin n → ZMod 2)}
-    (h : C ≤ C₁) (φ : C₁ →ₗ[ZMod 2] (Fin n → ZMod 2)) :
-    C →ₗ[ZMod 2] (Fin n ⊕ Fin n → ZMod 2) where
-  toFun x := Sum.elim x.val (φ ⟨x.val, h x.property⟩)
-  map_add' x y := by
-    funext i
-    cases i with
-    | inl j => rfl
-    | inr j => exact congrFun (φ.map_add ⟨x.val, h x.property⟩ ⟨y.val, h y.property⟩) j
-  map_smul' a x := by
-    funext i
-    cases i with
-    | inl j => rfl
-    | inr j => exact congrFun (φ.map_smul a ⟨x.val, h x.property⟩) j
-
 /-- The extension code consists of pairs `(x, φ x)` with `x` in the subcode. -/
 def extension {n : ℕ} {C C₁ : Submodule (ZMod 2) (Fin n → ZMod 2)}
     (h : C ≤ C₁) (φ : C₁ →ₗ[ZMod 2] (Fin n → ZMod 2)) :
     Submodule (ZMod 2) (Fin n ⊕ Fin n → ZMod 2) :=
-  LinearMap.range (extensionMap h φ)
+  LinearMap.range
+    ((LinearEquiv.sumArrowLequivProdArrow (Fin n) (Fin n) (ZMod 2) (ZMod 2)).symm.toLinearMap
+      ∘ₗ (C.subtype.prod (φ ∘ₗ Submodule.inclusion h)))
 
 /-- The triple-product parity condition characterizing an admissible CSS-T extension. -/
 def admissible {n : ℕ} (C₂ C₁ : Submodule (ZMod 2) (Fin n → ZMod 2))
@@ -77,10 +63,8 @@ private def diagonalMap : (Fin 13 → ZMod 2) →ₗ[ZMod 2] (Fin 26 → ZMod 2)
     (fun i => ((finProdFinEquiv (m := 2) (n := 13)).symm i).2)
 
 private lemma diagonalMap_injective : Function.Injective diagonalMap := by
-  apply LinearMap.funLeft_injective_of_surjective
-  intro i
-  refine ⟨(finProdFinEquiv (m := 2) (n := 13)) (0, i), ?_⟩
-  exact congrArg Prod.snd ((finProdFinEquiv (m := 2) (n := 13)).symm_apply_apply (0, i))
+  exact LinearMap.funLeft_injective_of_surjective _ _ _
+    (Prod.snd_surjective.comp (finProdFinEquiv (m := 2) (n := 13)).symm.surjective)
 
 private def parityMap : (Fin 13 → ZMod 2) →ₗ[ZMod 2] ZMod 2 :=
   LinearMap.lsum (ZMod 2) (fun _ : Fin 13 => ZMod 2) (ZMod 2) (fun _ => LinearMap.id)
@@ -114,10 +98,9 @@ private lemma rank_strict : finrank (ZMod 2) C₂ < finrank (ZMod 2) C₁ := by
   change finrank (ZMod 2) C₂ = finrank (ZMod 2) C₂₀ at h₂
   omega
 
-private def cyclicMap : (Fin 13 → ZMod 2) →ₗ[ZMod 2] (Fin 13 → ZMod 2) where
-  toFun x i := x i + x (i + 1) + x (i + 2)
-  map_add' x y := by ext i; simp only [Pi.add_apply]; ring
-  map_smul' a x := by ext i; simp only [Pi.smul_apply, smul_eq_mul, RingHom.id_apply]; ring
+private def cyclicMap : (Fin 13 → ZMod 2) →ₗ[ZMod 2] (Fin 13 → ZMod 2) :=
+  LinearMap.id + LinearMap.funLeft (ZMod 2) (ZMod 2) (fun i : Fin 13 => i + 1) +
+    LinearMap.funLeft (ZMod 2) (ZMod 2) (fun i : Fin 13 => i + 2)
 
 private def liftedMap (f : (Fin 13 → ZMod 2) →ₗ[ZMod 2] (Fin 13 → ZMod 2)) :
     C₁ →ₗ[ZMod 2] (Fin 26 → ZMod 2) :=
@@ -139,13 +122,26 @@ private lemma mem_extension_upper (f : (Fin 13 → ZMod 2) →ₗ[ZMod 2] (Fin 1
     v ∈ extension (le_refl C₁) (liftedMap f) ↔ ∃ x, graphVector f x = v := by
   constructor
   · rintro ⟨⟨v, x, rfl⟩, rfl⟩
-    exact ⟨x, by ext i; cases i <;> simp only [extensionMap, graphVector,
-      LinearMap.coe_mk, AddHom.coe_mk, Sum.elim_inl, Sum.elim_inr, liftedMap_apply]⟩
+    refine ⟨x, ?_⟩
+    change graphVector f x =
+      (LinearEquiv.sumArrowLequivProdArrow _ _ (ZMod 2) (ZMod 2)).symm
+        (diagonalMap x, liftedMap f ⟨diagonalMap x, ⟨x, rfl⟩⟩)
+    funext i
+    cases i with
+    | inl j => rw [LinearEquiv.sumArrowLequivProdArrow_symm_apply_inl]; rfl
+    | inr j =>
+      rw [LinearEquiv.sumArrowLequivProdArrow_symm_apply_inr]
+      exact (congrFun (liftedMap_apply f x) j).symm
   · rintro ⟨x, rfl⟩
     refine ⟨⟨diagonalMap x, ⟨x, rfl⟩⟩, ?_⟩
-    ext i
-    cases i <;> simp only [extensionMap, graphVector, LinearMap.coe_mk, AddHom.coe_mk,
-      Sum.elim_inl, Sum.elim_inr, liftedMap_apply]
+    change (LinearEquiv.sumArrowLequivProdArrow _ _ (ZMod 2) (ZMod 2)).symm
+      (diagonalMap x, liftedMap f ⟨diagonalMap x, ⟨x, rfl⟩⟩) = graphVector f x
+    funext i
+    cases i with
+    | inl j => rw [LinearEquiv.sumArrowLequivProdArrow_symm_apply_inl]; rfl
+    | inr j =>
+      rw [LinearEquiv.sumArrowLequivProdArrow_symm_apply_inr]
+      exact congrFun (liftedMap_apply f x) j
 
 private lemma mem_extension_lower (f : (Fin 13 → ZMod 2) →ₗ[ZMod 2] (Fin 13 → ZMod 2))
     (v : Fin 26 ⊕ Fin 26 → ZMod 2) :
@@ -154,15 +150,25 @@ private lemma mem_extension_lower (f : (Fin 13 → ZMod 2) →ₗ[ZMod 2] (Fin 1
   constructor
   · rintro ⟨⟨v, ⟨x, hx⟩, rfl⟩, rfl⟩
     refine ⟨x, hx, ?_⟩
-    ext i
-    cases i <;> simp only [extensionMap, graphVector, diagonalParityMap,
-      LinearMap.coe_comp, Function.comp_apply, Submodule.coe_subtype,
-      LinearMap.coe_mk, AddHom.coe_mk, Sum.elim_inl, Sum.elim_inr, liftedMap_apply]
+    change graphVector f x =
+      (LinearEquiv.sumArrowLequivProdArrow _ _ (ZMod 2) (ZMod 2)).symm
+        (diagonalMap x, liftedMap f ⟨diagonalMap x, _⟩)
+    funext i
+    cases i with
+    | inl j => rw [LinearEquiv.sumArrowLequivProdArrow_symm_apply_inl]; rfl
+    | inr j =>
+      rw [LinearEquiv.sumArrowLequivProdArrow_symm_apply_inr]
+      exact (congrFun (liftedMap_apply f x) j).symm
   · rintro ⟨x, hx, rfl⟩
     refine ⟨⟨diagonalMap x, ⟨⟨x, hx⟩, rfl⟩⟩, ?_⟩
-    ext i
-    cases i <;> simp only [extensionMap, graphVector, LinearMap.coe_mk, AddHom.coe_mk,
-      Sum.elim_inl, Sum.elim_inr, liftedMap_apply]
+    change (LinearEquiv.sumArrowLequivProdArrow _ _ (ZMod 2) (ZMod 2)).symm
+      (diagonalMap x, liftedMap f ⟨diagonalMap x, _⟩) = graphVector f x
+    funext i
+    cases i with
+    | inl j => rw [LinearEquiv.sumArrowLequivProdArrow_symm_apply_inl]; rfl
+    | inr j =>
+      rw [LinearEquiv.sumArrowLequivProdArrow_symm_apply_inr]
+      exact congrFun (liftedMap_apply f x) j
 
 private lemma diagonal_eval (x : Fin 13 → ZMod 2) (a : Fin 2) (i : Fin 13) :
     diagonalMap x ((finProdFinEquiv (m := 2) (n := 13)) (a, i)) = x i := by
@@ -184,33 +190,24 @@ private lemma admissible_witness : admissible C₂ C₁ C₂_le_C₁ (liftedMap 
 
 private lemma lifted_id :
     liftedMap (LinearMap.id : (Fin 13 → ZMod 2) →ₗ[ZMod 2] (Fin 13 → ZMod 2)) = C₁.subtype := by
-  apply LinearMap.ext
-  rintro ⟨_, x, rfl⟩
-  exact liftedMap_apply _ x
+  exact LinearMap.ext (LinearEquiv.ofInjective_symm_apply diagonalMap (h := diagonalMap_injective))
 
 private lemma graph_injective (f : (Fin 13 → ZMod 2) →ₗ[ZMod 2] (Fin 13 → ZMod 2)) :
     Function.Injective (graphVector f) := by
-  intro x y h
-  apply diagonalMap_injective
-  funext i
-  exact congrFun h (Sum.inl i)
+  exact fun _ _ h => diagonalMap_injective (Sum.elim_eq_iff.mp h).1
 
 private lemma weight_one
     (x : Fin 13 → ZMod 2) (h : hammingNorm x = 1) : ∃ i, x = Pi.single i 1 := by
-  change (Finset.univ.filter (fun i => x i ≠ 0)).card = 1 at h
-  obtain ⟨i, hi⟩ := Finset.card_eq_one.mp h
-  have hs (j : Fin 13) : x j ≠ 0 ↔ j = i := by
-    simpa only [Finset.mem_filter, Finset.mem_univ, true_and,
-      Finset.mem_singleton] using (Finset.ext_iff.mp hi j)
-  refine ⟨i, ?_⟩
-  funext j
-  by_cases hj : j = i
-  · subst j
-    rw [show x i = 1 from Fin.eq_one_of_ne_zero (x i) ((hs i).mpr rfl)]
-    exact (Pi.single_eq_same (M := fun _ : Fin 13 => ZMod 2) i 1).symm
-  · have hz : x j = 0 := by simpa only [not_not] using mt (hs j).mp hj
-    rw [hz]
-    exact (Pi.single_eq_of_ne (M := fun _ : Fin 13 => ZMod 2) hj 1).symm
+  let f := Finsupp.equivFunOnFinite.symm x
+  have hs : f.support = Finset.univ.filter (fun i => x i ≠ 0) := by
+    ext i
+    simp only [Finsupp.mem_support_iff, Finset.mem_filter, Finset.mem_univ, true_and]
+    rfl
+  have hf : f.support.card = 1 := hs ▸ h
+  obtain ⟨i, hi, he⟩ := Finsupp.card_support_eq_one.mp hf
+  rw [Fin.eq_one_of_ne_zero (f i) hi] at he
+  exact ⟨i, (congrArg (fun g : Fin 13 →₀ ZMod 2 => (g : Fin 13 → ZMod 2)) he).trans
+    (Finsupp.single_eq_pi_single i 1)⟩
 
 private lemma weight_cyclic_unit (i : Fin 13) : hammingNorm (cyclicMap (Pi.single i 1)) = 3 := by
   fin_cases i <;> decide
