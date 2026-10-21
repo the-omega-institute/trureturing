@@ -45,13 +45,17 @@ internal sealed class ContinuedFractionTailBeattyRefutationDocument : IScribeDoc
                 + "At n = 1 the Beatty line has floor 2, while the recurrence gives s 1 = 3 + 1/(s 2) > 3. "
                 + "Thus their floors differ. The assertion quantified over Pell indices, uniqueness of "
                 + "positive tails, and convergence of finite continued-fraction truncations are not proved here.",
-                DescribeRole.Theorem, AssessedProvenance.FromRepo(Source)))));
+                DescribeRole.Theorem, AssessedProvenance.FromRepo(Source),
+                new OpenProblemResolutionClaim(
+                    ProblemSlugRef.Create("fokkink-joshi-2025-continued-fraction-tail-beatty"),
+                    ResolutionKind.Refuted)))));
 
     private static DocumentBlock Node(string id, string title, string name, Formula formula,
-        string prose, DescribeRole role, AssessedProvenance provenance) => Describe.Lean(
+        string prose, DescribeRole role, AssessedProvenance provenance,
+        OpenProblemResolutionClaim? resolution = null) => Describe.Lean(
             DescribeId.Create("fokkink-joshi-tails-" + id), DeclarationHandle.Create(Prefix + name),
             H(title), StatementSource.FromAuthor(formula), provenance,
-            Blocks(Paragraph(Text(prose))), role);
+            Blocks(Paragraph(Text(prose))), role, resolution);
 
     private static Formula BetaFormula()
     {

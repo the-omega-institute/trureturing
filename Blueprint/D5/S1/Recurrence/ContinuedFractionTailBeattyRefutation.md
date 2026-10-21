@@ -46,6 +46,10 @@ $$\neg (\forall u \in \mathbb{N},\; (1 \le u) \Rightarrow (\forall v \in \mathbb
 
 *Proof.* Machine-checked in Lean as `D5/S1/Recurrence/ContinuedFractionTailBeattyRefutation.result` (`✓ std3`). ∎
 
+*Resolves.* `Problems/fokkink-joshi-2025-continued-fraction-tail-beatty` (refuted) by `D5/S1/Recurrence/ContinuedFractionTailBeattyRefutation.result`.
+
+<!-- scribe-open-problem-resolution-v1 {"problem_slug":"fokkink-joshi-2025-continued-fraction-tail-beatty","declaration_gid":"D5/S1/Recurrence/ContinuedFractionTailBeattyRefutation.result","resolution_kind":"refuted"} -->
+
 *Source.* Repository-derived.
 
 *Acknowledgement.* Robbert Fokkink, Gandhar Joshi (2025). *On Cloitre's hiccup sequences*. DOI: [10.1007/s11139-025-01305-1](https://doi.org/10.1007/s11139-025-01305-1). URL: <https://arxiv.org/abs/2507.16956v4>.
