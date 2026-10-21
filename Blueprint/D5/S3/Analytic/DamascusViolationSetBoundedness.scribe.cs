@@ -47,7 +47,10 @@ internal sealed class DamascusViolationSetBoundednessDocument : IScribeDocumentD
             DescribeId.Create("damascus-" + name.ToLowerInvariant()),
             DeclarationHandle.Create(Prefix + name), H(title),
             StatementSource.FromAuthor(Disp(formula)), provenance,
-            Blocks(Paragraph(Text(prose))), role);
+            Blocks(Paragraph(Text(prose))), role,
+            name == "result" ? new OpenProblemResolutionClaim(
+                ProblemSlugRef.Create("sujsuntinukul-chesneau-2026-damascus-violation-set-question-ii"),
+                ResolutionKind.Proved) : null);
     private static Formula X(string name) => F.Id(name);
     private static Formula Nat() => Seq(Mathbb, Grp(X("N")));
     private static Formula Real() => Seq(Mathbb, Grp(X("R")));

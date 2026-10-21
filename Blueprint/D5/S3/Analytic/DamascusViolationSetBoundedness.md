@@ -60,6 +60,10 @@ $$\forall (m : \mathbb{N}), \forall (n : \mathbb{N}), (1 \le m) \Rightarrow ((1 
 
 *Proof.* Machine-checked in Lean as `D5/S3/Analytic/DamascusViolationSetBoundedness.result` (`✓ std3`). ∎
 
+*Resolves.* `Problems/sujsuntinukul-chesneau-2026-damascus-violation-set-question-ii` (proved) by `D5/S3/Analytic/DamascusViolationSetBoundedness.result`.
+
+<!-- scribe-open-problem-resolution-v1 {"problem_slug":"sujsuntinukul-chesneau-2026-damascus-violation-set-question-ii","declaration_gid":"D5/S3/Analytic/DamascusViolationSetBoundedness.result","resolution_kind":"proved"} -->
+
 *Source.* Repository-derived.
 
 *Acknowledgement.* Chanatip Sujsuntinukul and Christophe Chesneau (2026). *Variants of the Damascus inequality*. DOI: [10.1007/s11139-026-01345-1](https://doi.org/10.1007/s11139-026-01345-1). URL: <https://arxiv.org/abs/2601.00916v4>.
