@@ -62,7 +62,7 @@ private lemma a_three : a 3 = (3 / 2 : ℝ) := by
   rw [Fintype.sum_equiv signs3Equiv
     (fun ε => |∑ i, signValue (ε i)|)
     (fun x => |signValue x.1 + signValue x.2.1 + signValue x.2.2|)
-    (by intro ε; simp [signs3Equiv, Fin.sum_univ_succ] <;> ring)]
+    (by intro ε; simp [signs3Equiv, Fin.sum_univ_succ] <;> ring_nf)]
   simp_rw [Fintype.sum_prod_type]
   norm_num [signValue]
 
@@ -75,9 +75,16 @@ private lemma averaged_abs_lower (k : ℕ) (hk : 0 < k) (x : Fin k → ℝ) :
       ((2 : ℝ) ^ k)⁻¹ * ∑ ε : Fin k → Sign, |∑ i, signValue (ε i) * x i| := by
   sorry
 
+private lemma a_succ_ge (k : ℕ) : a k ≤ a (k + 1) := by
+  sorry
+
 private lemma a_lower_three_halves (k : ℕ) (hk : 3 ≤ k) :
     (3 / 2 : ℝ) ≤ a k := by
-  sorry
+  induction k, hk using Nat.le_induction with
+  | base =>
+      simpa using (le_of_eq a_three.symm)
+  | succ k hk ih =>
+      exact le_trans ih (a_succ_ge k)
 
 private lemma lk_bound (k : ℕ) (hk : 0 < k) (n m : ℕ)
     (M : Matrix (Fin n) (Fin m) ℝ) :
