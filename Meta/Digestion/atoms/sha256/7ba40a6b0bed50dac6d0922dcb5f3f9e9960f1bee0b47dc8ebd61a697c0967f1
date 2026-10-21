@@ -1,0 +1,73 @@
+**Definition 1.1 (Complete worlds and one acquired child).** A complete world is
+
+$$
+W=(P(r,b),g,d),\qquad
+P(r,b)=\begin{pmatrix}r&b\\r(1-r)/b&1-r\end{pmatrix},\qquad
+0<r<1, b>0,\quad 0\ne g\in\mathbb R[s],\quad\deg g\le3,\quad d\in\mathbb R.
+$$
+
+Let $J=\begin{pmatrix}0&1\\1&0\end{pmatrix}$,
+$M=\begin{pmatrix}0&1\\1&1\end{pmatrix}$, and
+$H_4=(0,J,24,M,147/5,J,24,M,18)$. Starting with $A_0=I$ and
+$A_i=E_iA_{i-1}$, the read at clock $i$ is
+$d+g(i)\operatorname{tr}(A_iP)$. For real $(p,v)$, $p\ne24$, put
+
+$$
+C(p,v)=\mathcal F(H_4,M,p,M,v).
+$$
+
+The definition includes every lower-degree polynomial, every sampled or
+repeated root, zero drift, singular source, and unbounded positive
+off-diagonal. A world is in $C(p,v)$ only when every original read has
+occurred; there is no reset, copy, skipped read, clock shift, or extra port.
+
+For a world write
+
+$$
+j=b+\frac{r(1-r)}b,\qquad n=j+r,\qquad T=1+b,\qquad U=1+2b,\qquad x=\frac nU,\qquad H=Ug.
+$$
+
+At clocks $3,4,5,6$ the interpolating polynomial $H$ has samples
+
+$$
+h_3=\frac{24-d}{x},\quad h_4=18-d,\quad
+h_5=\frac{p-d}{x+1},\quad h_6=\frac{v-d}{x+2}.
+$$
+
+The distinct-node interpolation used here is the classical formula of
+Berrut–Trefethen, §2,
+[primary text](https://people.maths.ox.ac.uk/trefethen/barycentric.pdf).
+It assumes distinct nodes, with no restriction on sampled zeros.
+Its values $H_i=H(i)$, $i=0,1,2,7$, are
+
+$$
+\begin{aligned}
+H_0&=20h_3-45h_4+36h_5-10h_6,\\
+H_1&=10h_3-20h_4+15h_5-4h_6,\\
+H_2&=4h_3-6h_4+4h_5-h_6,\\
+H_7&=-h_3+4h_4-6h_5+4h_6.
+\end{aligned}
+$$
+
+The faithful reconstruction of F, Lemma 30.2, says that these coordinates,
+the strict inequalities, and its two source equations are equivalent to one
+whole legal world. Explicitly, with $C_2=147/5$ and
+$B_0=2(C_2-d)-H_2$, they are
+
+$$
+\begin{gathered}
+x>0,\quad d\ne24,\quad H_1\ne0,\quad C_0=d^2+B_0^2>0,\qquad
+U=\frac{-dH_0+B_0H_2}{C_0}>1,\\
+b=(U-1)/2,\quad j=\frac{U(24-d)}{H_1},\quad r=xU-j,\quad 0<r<1,\\
+j=b+\frac{r(1-r)}b,\qquad dU=-H_0,\qquad B_0U=H_2,\qquad g=H/U.
+\end{gathered}
+$$
+
+This is the cited reconstruction interface, not an additional theorem.
+Distinct complete worlds are exactly distinct guarded pairs $(x,d)$.
+The two terminal alternatives are
+
+$$
+f_{MJ}=d+\frac{T+2j+4r}{U}H_7,\qquad f_{MM}=d+(3+2x)H_7.
+$$
+
