@@ -166,12 +166,23 @@ private theorem channels_of_compressions {d n : ℕ} (hnd : n ≤ d)
   obtain ⟨K, hK, hΦ⟩ := heisenberg_kraus Φ hCP hu
   choose V C hV hfactor using fun r => isometric_factorization hnd (K r)
   have hC : (∑ r, (C r)ᴴ * C r) = 1 := by
-    sorry
+    calc
+      _ = ∑ r, (K r)ᴴ * K r := by
+        apply Finset.sum_congr rfl
+        intro r _
+        rw [hfactor r, Matrix.conjTranspose_mul, Matrix.mul_assoc,
+          ← Matrix.mul_assoc (V r)ᴴ (V r) (C r), hV r, Matrix.one_mul]
+      _ = 1 := hK
   have hp := sum_compressed_parents C (fun r x b => (V r)ᴴ * M x b * V r) hC
     (fun r => hM (V r) (hV r))
   have heq : (fun x b => ∑ r, (C r)ᴴ * ((V r)ᴴ * M x b * V r) * C r) =
       (fun x b => Φ (M x b)) := by
-    sorry
+    funext x b
+    rw [hΦ]
+    apply Finset.sum_congr rfl
+    intro r _
+    rw [hfactor r, Matrix.conjTranspose_mul]
+    simp only [Matrix.mul_assoc]
   rw [heq] at hp
   exact hp
 
