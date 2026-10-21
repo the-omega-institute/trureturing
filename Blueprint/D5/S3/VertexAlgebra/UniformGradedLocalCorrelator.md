@@ -6,7 +6,21 @@ Actual graded local fields have a common finite homogeneous numerator.
 
 Let V be a complex vector space, Omega a vacuum, and A_i actual VertexOperator maps with nonnegative integer weights h_i. An energy endomorphism H annihilates Omega and satisfies [H,A_i[-e-1]]=(h_i+e) A_i[-e-1] at every integer exponent. Creation means A_i[n] Omega=0 for n at least zero. The output selector P_d is an idempotent endomorphism satisfying H P_d=P_d H=d P_d and fixing every vector of energy d. The uniform order k is supplied by actual pairwise locality of the operator commutators, independently of the state on which they act.
 
-**Theorem 1.1 (A finite numerator for every insertion length and every ordering).**
+**Theorem 1.1 (Arbitrary-vector clearing with independent pair orders).**
+
+Lean statement: `D5/S3/VertexAlgebra/UniformGradedLocalCorrelator.common_cleared_fields`
+
+*Proof.* Machine-checked in Lean as `D5/S3/VertexAlgebra/UniformGradedLocalCorrelator.common_cleared_fields` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Acknowledgement.* Atsushi Matsuo; Kiyokazu Nagatomo (1997). *On axioms for a vertex algebra and the locality of quantum fields*. URL: <https://arxiv.org/abs/hep-th/9706118v1>.
+
+*Commentary.*
+
+For arbitrary actual fields A_i, an arbitrary input vector v and output endomorphism P, assume only pair locality with an independent natural order for each i<j. The product Q of their oriented pair differences to those orders gives the same coefficient array in every permutation of a list containing each label once. Every coordinate simultaneously has the lower bound given by the Hahn order of A_i(v). At any fixed integer total exponent the support is a finite Laurent simplex: subtract the coordinate lower bounds and bound each nonnegative coordinate by their total sum. No vacuum, creation, energy, positivity or output-grade assumption occurs in this statement. All adjacent exchanges act on the actual suffix vector, and no factor is cancelled in the unrestricted distribution space.
+
+**Theorem 1.2 (A finite numerator for every insertion length and every ordering).**
 
 Lean statement: `D5/S3/VertexAlgebra/UniformGradedLocalCorrelator.uniform_graded_local_correlator`
 
@@ -28,5 +42,6 @@ This statement applies to any actual family with these laws. Its application to 
 
 ## References
 
+- Truth anchor: `D5/S3/VertexAlgebra/UniformGradedLocalCorrelator.common_cleared_fields`
 - Truth anchor: `D5/S3/VertexAlgebra/UniformGradedLocalCorrelator.uniform_graded_local_correlator`
 - Dependency: [D5/S3/VertexAlgebra/FieldNormalProductLocality](FieldNormalProductLocality.md)

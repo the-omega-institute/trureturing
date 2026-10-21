@@ -1,0 +1,209 @@
+import D5.S3.VertexAlgebra.LatticeHalfFockNestedQReadout
+import Reg.D5.S3.VertexAlgebra.LatticeHalfFockLeftCurrentTransport
+import Reg.Support.SingleDependentReadout
+
+/-! The original dependent source family and its three scalar nested observations. -/
+set_option autoImplicit false
+
+namespace Reg.D5.S3.VertexAlgebra.LatticeHalfFockNestedQReadout
+open _root_.D5.S3.VertexAlgebra
+open LatticeGeneratingFieldLocality LatticeHalfFockChargedTensorCoefficients
+open LatticeHalfFockLeftCurrentTransport LatticeHalfFockNestedQReadout
+open LatticeFiniteNegativeGeneration LatticeSugawaraCurrents
+open SupportedFieldWords.OrderedWords SupportedFieldWords.OrderedDistribution
+open UniformGradedLocalCorrelator
+open CollisionRationalExpansions.OrderedRationalExpansion
+open _root_.D5.S3.ConceptDynamics.InformationEscape.DependentFamily
+open scoped VertexOperator BigOperators
+noncomputable section
+
+abbrev Parameters := Reg.D5.S3.VertexAlgebra.LatticeHalfFockLeftCurrentTransport.Parameters
+
+structure Input (p : Parameters) where
+  K : ℕ
+  gamma : ℤ
+  delta : ℤ
+  d : ℤ
+  r : ℤ
+  n : ℤ
+  x : ActualTensor p.D p.hu
+  phi : ActualTensor p.D p.hu →ₗ[ℂ] ℂ
+  P : LabelledPolynomial ℂ 3
+  H₁ : ℕ
+  H₂ : ℕ
+  H₃ : ℕ
+  j : ℤ
+
+abbrev signature : Signature := Reg.Support.SingleDependentReadout.signature
+  Parameters Input (fun _ => ℂ × ℂ × ℂ)
+
+def observed (p : Parameters) (u : Input p) : ℂ × ℂ × ℂ :=
+  (u.phi (((qField (u.gamma + 1) u.r u.H₁
+      (targetSlice p.D p.hu (neutralMode p.D p.i u.d p.a) (u.gamma + 1))
+      (targetSlice p.D p.hu p.b u.delta))[[u.n]]) u.x),
+   u.phi (((qField 1 (u.d - u.j) u.H₂ (targetCurrent p.D p.hu p.i)
+      (qField u.gamma (u.r + u.j) u.K (targetSlice p.D p.hu p.a u.gamma)
+        (targetSlice p.D p.hu p.b u.delta)))[[u.n]]) u.x),
+   u.phi (((qField u.gamma (u.d + u.r - u.j) u.H₃ (targetSlice p.D p.hu p.a u.gamma)
+      (targetSlice p.D p.hu (neutralMode p.D p.i u.j p.b) (u.delta + 1)))[[u.n]]) u.x))
+
+def actual : Realization signature := realize signature (fun _ p u =>
+  (nestedLeftReadout (u.gamma + 1) 1 u.d u.r u.n (vectorFrequencyBound p.D p.a + 1) u.H₁
+      (targetCurrent p.D p.hu p.i) (targetSlice p.D p.hu p.a u.gamma)
+      (targetSlice p.D p.hu p.b u.delta) u.x (rationalTripleReadout p.D p.a p.b u.K u.P),
+   nestedRightReadout 1 u.gamma (u.r + u.j) (u.d - u.j) u.n u.K u.H₂
+      (targetCurrent p.D p.hu p.i) (targetSlice p.D p.hu p.a u.gamma)
+      (targetSlice p.D p.hu p.b u.delta) u.x (rationalTripleReadout p.D p.a p.b u.K u.P),
+   nestedRightReadout u.gamma 1 u.j (u.d + u.r - u.j) u.n
+      (vectorFrequencyBound p.D p.b + 1) u.H₃
+      (targetSlice p.D p.hu p.a u.gamma) (targetCurrent p.D p.hu p.i)
+      (targetSlice p.D p.hu p.b u.delta) u.x
+      (swapCurrentSourceReadout (rationalTripleReadout p.D p.a p.b u.K u.P))))
+  (fun empty => nomatch empty)
+
+def rejected : Realization signature := realize signature (fun _ _ _ => (1, 1, 1))
+  (fun empty => nomatch empty)
+
+def arena : Arena where
+  signature := signature
+  Law R := ∀ p, ∃ K : ℕ, ∀ (gamma delta d r n : ℤ) (x : ActualTensor p.D p.hu)
+      (phi : ActualTensor p.D p.hu →ₗ[ℂ] ℂ),
+      ∃ P : LabelledPolynomial ℂ 3,
+        (∀ e : Exponent 3, P.coeff e =
+          if totalExponent e =
+              (∑ q ∈ labelledPairs 3, (threeOrders p.D p.a p.b K q : ℤ)) - d - r - n - 3
+          then phi (actualNumerator p.D p.hu p.i p.a p.b gamma delta K x e) else 0) ∧
+        ∀ (H₁ H₂ H₃ : ℕ) (j : ℤ),
+          observed p ⟨K, gamma, delta, d, r, n, x, phi, P, H₁, H₂, H₃, j⟩ =
+            R.readout () p ⟨K, gamma, delta, d, r, n, x, phi, P, H₁, H₂, H₃, j⟩
+
+theorem source_bridge : (type_of% (@actual_nested_ordered_readouts)) ↔ arena.Law actual := by
+  constructor
+  · intro h p
+    obtain ⟨K, hp⟩ := h p.D p.hu p.i p.a p.b
+    refine ⟨K, ?_⟩
+    intro gamma delta d r n x phi
+    obtain ⟨P, coefficients, observations⟩ := hp gamma delta d r n x phi
+    refine ⟨P, coefficients, ?_⟩
+    intro H₁ H₂ H₃ j
+    obtain ⟨first, second, third⟩ := observations H₁ H₂ H₃ j
+    exact Prod.ext first (Prod.ext second third)
+  · intro h D hu i a b
+    obtain ⟨K, hp⟩ := h ⟨D, hu, i, a, b⟩
+    refine ⟨K, ?_⟩
+    intro gamma delta d r n x phi
+    obtain ⟨P, coefficients, observations⟩ := hp gamma delta d r n x phi
+    refine ⟨P, coefficients, ?_⟩
+    intro H₁ H₂ H₃ j
+    have h := observations H₁ H₂ H₃ j
+    exact ⟨congrArg Prod.fst h, congrArg (fun t => t.2.1) h,
+      congrArg (fun t => t.2.2) h⟩
+
+theorem actual_law : arena.Law actual := source_bridge.mp (@actual_nested_ordered_readouts)
+
+private def witness : Parameters :=
+  ⟨Reg.D5.S3.VertexAlgebra.LatticeHalfFockOriginalTranslation.hyperbolic,
+    Reg.D5.S3.VertexAlgebra.LatticeHalfFockOriginalTranslation.hyperbolic_unit,
+    ⟨0, by decide⟩, 0, 0⟩
+
+theorem rejected_law : ¬ arena.Law rejected := by
+  intro law
+  obtain ⟨K, hp⟩ := law witness
+  obtain ⟨P, _, observations⟩ := hp 0 0 0 0 0 0 0
+  have bad := congrArg Prod.fst (observations 0 0 0 0)
+  have impossible : (0 : ℂ) = 1 := by simpa [observed, rejected, realize] using bad
+  exact zero_ne_one impossible
+
+theorem sensitivity : Sensitivity arena actual :=
+  Reg.Support.SingleDependentReadout.sensitivity arena.Law actual rejected rejected_law
+
+theorem dependence : ObservationalDependence signature actual := by
+  intro role
+  let Q := weightedClearingPolynomial (threeOrders witness.D witness.a witness.b 0)
+  have uniformNonzero : UniformGradedLocalCorrelator.clearingPolynomial 3 1 ≠ 0 :=
+    SupportedWordRationalCollision.ActualRationalReconstruction.originalQ_ne_zero 3 0 1
+  have pairs : ∀ q ∈ labelledPairs 3, pairPolynomial q.1 q.2 ≠ 0 := by
+    simpa only [UniformGradedLocalCorrelator.clearingPolynomial, pow_one] using
+      Finset.prod_ne_zero_iff.mp uniformNonzero
+  have nonzero : Q ≠ 0 :=
+    Finset.prod_ne_zero_iff.mpr (fun q hq => pow_ne_zero _ (pairs q hq))
+  have denominator : algebraMap _ (CommonRational ℂ 3) Q ≠ 0 := by
+    simpa only [map_zero] using
+      (IsFractionRing.injective (LabelledPolynomial ℂ 3) (CommonRational ℂ 3)).ne nonzero
+  let input (P : LabelledPolynomial ℂ 3) : Input witness :=
+    ⟨0, 0, 0, -1, -1, -1, 0, 0, P, 0, 0, 0, 0⟩
+  have bound : vectorFrequencyBound witness.D witness.a = 0 := by
+    change vectorFrequencyBound witness.D 0 = 0
+    simp [vectorFrequencyBound]
+  have extraction (P : LabelledPolynomial ℂ 3) :
+      (actual.readout () witness (input P)).1 =
+        rationalTripleReadout witness.D witness.a witness.b 0 P 0 ![-1, -1, -1] -
+          (1 / 2 : ℂ) *
+            rationalTripleReadout witness.D witness.a witness.b 0 P 0 ![0, -2, -1] := by
+    change nestedLeftReadout 1 1 (-1) (-1) (-1)
+      (vectorFrequencyBound witness.D witness.a + 1) 0 _ _ _ 0 _ = _
+    rw [bound]
+    norm_num [nestedLeftReadout, finiteQReadout, input, BinomialKernelDelta.chooseSign,
+      StateFieldResidueReconstruction.epsilon, Finset.sum_range_succ] <;> ring
+  refine ⟨witness, input 0, input Q, ?_⟩
+  intro equality
+  have h := congrArg Prod.fst equality
+  rw [extraction, extraction] at h
+  have zeroReadout (order : Fin 6) (modes : Exponent 3) :
+      rationalTripleReadout witness.D witness.a witness.b 0 0 order modes = 0 := by
+    simp [rationalTripleReadout]
+  have first : rationalTripleReadout witness.D witness.a witness.b 0 Q 0 ![-1, -1, -1] = 1 := by
+    unfold rationalTripleReadout
+    change (orderedRationalFor ℂ 3 (triplePermutation 0)
+      (algebraMap _ (CommonRational ℂ 3) Q / algebraMap _ (CommonRational ℂ 3) Q)).coeff _ = _
+    rw [div_self denominator, map_one]
+    norm_num [triplePermutation, orderExponents, labelPermutation,
+      exponentAddEquiv, exponents] <;> rfl
+  have second : rationalTripleReadout witness.D witness.a witness.b 0 Q 0 ![0, -2, -1] = 0 := by
+    unfold rationalTripleReadout
+    change (orderedRationalFor ℂ 3 (triplePermutation 0)
+      (algebraMap _ (CommonRational ℂ 3) Q / algebraMap _ (CommonRational ℂ 3) Q)).coeff _ = _
+    rw [div_self denominator, map_one]
+    norm_num [triplePermutation, orderExponents, labelPermutation,
+      exponentAddEquiv, exponents] <;>
+      (intro bad; have hzero := congrArg (fun g : Indices 3 => inverseExponents 3 g 0) bad;
+        change (-1 : ℤ) = 0 at hzero; norm_num at hzero)
+  rw [zeroReadout, zeroReadout, first, second] at h
+  norm_num at h
+
+def familyRegistration : Registration arena (type_of% (@actual_nested_ordered_readouts)) where
+  actual := actual
+  bridge := source_bridge
+  variation := ⟨actual_law, rejected, rejected_law⟩
+  sensitivity := sensitivity
+  dependence := dependence
+
+def registration : LeanInformationAudit.Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0}
+    (@actual_nested_ordered_readouts) (type_of% (realize signature actual.readout actual.anchor))
+    Type Unit where
+  unitName := Lean.Name.str
+    `D5.S3.VertexAlgebra.LatticeHalfFockNestedQReadout.actual_nested_ordered_readouts
+    "__information_unit"
+  realizationName :=
+    `Reg.D5.S3.VertexAlgebra.LatticeHalfFockNestedQReadout.familyRegistration
+  realizationSource := none
+  generated := false
+  arena := .source ⟨arena⟩
+  objectArena := .source ⟨arena⟩
+  catalog := Lean.Name.anonymous
+  localNames := false
+  realization := .source arena ⟨familyRegistration⟩
+  correspondence := { stage := .evidence, objectStage := .evidence }
+  bundleNonempty := .absent
+  readout := some (realize signature actual.readout actual.anchor)
+  variation := .absent
+  sensitivity := .absent
+  partialSensitivity := none
+  escapeFrom := none
+  sourceSelection := none
+  continuation := .unknown
+  familyRecord := none
+  options := #[{ name := `autoImplicit, value := .bool false }]
+
+end
+end Reg.D5.S3.VertexAlgebra.LatticeHalfFockNestedQReadout

@@ -6,6 +6,8 @@ Unrestricted state fields are closed under every integer residue and satisfy the
 
 Let V be the full complex module and let Y be the actual linear state-field map. The hypotheses are primitive creation, creativity, translation covariance and pairwise operator-uniform locality. The construction uses pointwise finite sums on every actual vector, so it does not form an infinite sum in End(V), assume Jacobi or associativity, or replace V by a polynomial Fock carrier.
 
+The fieldResidue constructor applies directly to any two VertexOperator maps on V, without a state-field map or a vacuum vector. Its two ordered sums have separate finite supports on each actual input. A finite family of intermediate-vector Hahn orders proves lower truncation of the complete residue. At every nonnegative residue index, reflection of the finite reverse sum identifies the complete mode with the zero-first-index coefficient of the corresponding commutator difference. This kills complete residues above a genuine locality order, while imposing no separate vanishing on the ordered halves. The state-labelled residueField uses this same field constructor at Y(a),Y(b).
+
 Primary attribution: Carpi--Codogni, arXiv:2605.26972v1, section 2.1, equation (8), with the standard reconstruction argument. The cited source motivates the mode formula; the declarations below are the native unrestricted-carrier proofs and do not assert Moonshine Conjecture 14.4.
 
 **Theorem 1.1 (Positive residues preserve uniform locality).**
@@ -62,4 +64,5 @@ For every actual a, b, c and every integers r and n, both binomial mode sums hav
 - Truth anchor: `D5/S3/VertexAlgebra/StateFieldResidueReconstruction.residue_closure`
 - Truth anchor: `D5/S3/VertexAlgebra/StateFieldResidueReconstruction.residue_nonnegative_locality`
 - Truth anchor: `D5/S3/VertexAlgebra/StateFieldResidueReconstruction.stateField_iterate_of_creation_translation_locality`
+- Dependency: [D5/S3/VertexAlgebra/BinomialKernelDelta](BinomialKernelDelta.md)
 - Dependency: [D5/S3/VertexAlgebra/FieldNormalProductLocality](FieldNormalProductLocality.md)

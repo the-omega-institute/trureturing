@@ -18,6 +18,17 @@ internal sealed class StateFieldResidueReconstructionDocument : IScribeDocumentD
                 + "construction uses pointwise finite sums on every actual vector, so it "
                 + "does not form an infinite sum in End(V), assume Jacobi or associativity, "
                 + "or replace V by a polynomial Fock carrier.")),
+            Paragraph(Text("The fieldResidue constructor applies directly to any two "
+                + "VertexOperator maps on V, without a state-field map or a vacuum vector. "
+                + "Its two ordered sums have separate finite supports on each actual input. "
+                + "A finite family of intermediate-vector Hahn orders proves lower "
+                + "truncation of the complete residue. At every nonnegative residue "
+                + "index, reflection of the finite reverse sum identifies the complete "
+                + "mode with the zero-first-index coefficient of the corresponding "
+                + "commutator difference. This kills complete residues above a genuine "
+                + "locality order, while imposing no separate vanishing on the ordered "
+                + "halves. The state-labelled residueField "
+                + "uses this same field constructor at Y(a),Y(b).")),
             Paragraph(Text("Primary attribution: Carpi--Codogni, arXiv:2605.26972v1, section 2.1, "
                 + "equation (8), with the standard reconstruction argument. The cited "
                 + "source motivates the mode formula; the declarations below are the "

@@ -23,6 +23,14 @@ internal sealed class UniformGradedLocalCorrelatorDocument : IScribeDocumentDefi
                 + "pairwise locality of the operator commutators, independently of "
                 + "the state on which they act.")),
             Describe.Lean(
+                DescribeId.Create("common-cleared-fields"),
+                DeclarationHandle.Create(Prefix + "common_cleared_fields"),
+                H("Arbitrary-vector clearing with independent pair orders"),
+                StatementSource.WithoutFormula(),
+                AssessedProvenance.FromRepo(LocalityBackground),
+                Blocks(Paragraph(Text("For arbitrary actual fields A_i, an arbitrary input vector v and output endomorphism P, assume only pair locality with an independent natural order for each i<j. The product Q of their oriented pair differences to those orders gives the same coefficient array in every permutation of a list containing each label once. Every coordinate simultaneously has the lower bound given by the Hahn order of A_i(v). At any fixed integer total exponent the support is a finite Laurent simplex: subtract the coordinate lower bounds and bound each nonnegative coordinate by their total sum. No vacuum, creation, energy, positivity or output-grade assumption occurs in this statement. All adjacent exchanges act on the actual suffix vector, and no factor is cancelled in the unrestricted distribution space."))),
+                DescribeRole.Theorem),
+            Describe.Lean(
                 DescribeId.Create("uniform-graded-local-correlator"),
                 DeclarationHandle.Create(Prefix + "uniform_graded_local_correlator"),
                 H("A finite numerator for every insertion length and every ordering"),

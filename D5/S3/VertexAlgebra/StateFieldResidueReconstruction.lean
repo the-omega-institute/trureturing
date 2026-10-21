@@ -28,6 +28,7 @@ admission_basis: escape-witness
 -/
 
 import D5.S3.VertexAlgebra.FieldNormalProductLocality
+import D5.S3.VertexAlgebra.BinomialKernelDelta
 
 set_option autoImplicit false
 
@@ -48,16 +49,39 @@ noncomputable def integerBinomial (index : ℤ) (offset : ℕ) : ℂ := ((Ring.c
 
 noncomputable def epsilon (index : ℤ) : ℂ := (-1 : ℂ) ^ index
 
+noncomputable def fieldResidueLeft (r n : ℤ) (A B : VertexOperator ℂ V) (vector : V) : V :=
+  ∑ᶠ offset : ℕ, (((-1 : ℂ) ^ offset) * integerBinomial r offset) •
+    (A [[r - offset]]) ((B [[n + offset]]) vector)
+
+noncomputable def fieldResidueRight (r n : ℤ) (A B : VertexOperator ℂ V) (vector : V) : V :=
+  ∑ᶠ offset : ℕ, (((-1 : ℂ) ^ offset) * integerBinomial r offset) •
+    (B [[r + n - offset]]) ((A [[offset]]) vector)
+
+noncomputable def fieldResidueCoefficient (r n : ℤ) (A B : VertexOperator ℂ V)
+    (vector : V) : V :=
+  fieldResidueLeft r n A B vector - epsilon r • fieldResidueRight r n A B vector
+
 noncomputable def residueLeft (r n : ℤ) (a b vector : V) : V :=
-  ∑ᶠ offset : ℕ, (((-1 : ℂ) ^ offset) * integerBinomial r offset) • ((Y a) [[r - offset]]) (((Y b) [[n + offset]])
-    vector)
+  fieldResidueLeft r n (Y a) (Y b) vector
 
 noncomputable def residueRight (r n : ℤ) (a b vector : V) : V :=
-  ∑ᶠ offset : ℕ, (((-1 : ℂ) ^ offset) * integerBinomial r offset) • ((Y b) [[r + n - offset]]) (((Y a) [[offset]])
-    vector)
+  fieldResidueRight r n (Y a) (Y b) vector
 
 noncomputable def residueCoefficient (r n : ℤ) (a b vector : V) : V :=
   residueLeft (Y := Y) r n a b vector - epsilon r • residueRight (Y := Y) r n a b vector
+
+structure FieldResidue (r : ℤ) (A B : VertexOperator ℂ V) where
+  operator : VertexOperator ℂ V
+  coefficient : ∀ n vector, (operator [[n]]) vector = fieldResidueCoefficient r n A B vector
+  nonnegative_modes : ∀ (degree : ℕ), r = degree → ∀ n vector,
+    (operator [[n]]) vector = ((deltaEnd ^ degree)
+      (FieldNormalProductLocality.commutator A B)) 0 n vector
+  left_finite : ∀ n vector, Function.HasFiniteSupport (fun offset : ℕ =>
+    (((-1 : ℂ) ^ offset) * integerBinomial r offset) •
+      (A [[r - offset]]) ((B [[n + offset]]) vector))
+  right_finite : ∀ n vector, Function.HasFiniteSupport (fun offset : ℕ =>
+    (((-1 : ℂ) ^ offset) * integerBinomial r offset) •
+      (B [[r + n - offset]]) ((A [[offset]]) vector))
 
 structure ResidueField (r : ℤ) (a b : V) where
   operator : VertexOperator ℂ V
@@ -80,7 +104,7 @@ theorem deltaEnd_iterate_apply (value : ℤ → ℤ → Module.End ℂ V) (order
       change delta (delta^[order] value) first second = delta^[order + 1] value first second
       rw [← Function.iterate_succ_apply' delta order value, Function.iterate_succ_apply]
 
-noncomputable def residueField (r : ℤ) (a b : V) : ResidueField (Y := Y) r a b := by
+noncomputable def fieldResidue (r : ℤ) (A B : VertexOperator ℂ V) : FieldResidue r A B := by
   classical
   have leftKernel (m n : ℤ) (A B : VertexOperator ℂ V) (vector : V) : (Function.support fun offset : ℕ => (Int.negOnePow offset) • Ring.choose n offset • (A [[n - offset]])
     ((B [[-m - 1 + offset]]) vector)).Finite := by
@@ -95,134 +119,106 @@ noncomputable def residueField (r : ℤ) (a b : V) : ResidueField (Y := Y) r a b
     suffices (A [[offset]]) vector = 0 by simp [this]
     apply VertexOperator.ncoeff_eq_zero_of_lt_order; omega
   have leftFinite (n : ℤ) (vector : V) : Function.HasFiniteSupport (fun offset : ℕ =>
-      (((-1 : ℂ) ^ offset) * integerBinomial r offset) • ((Y a) [[r - offset]]) (((Y b) [[n + offset]]) vector)) := by
-    have finite := leftKernel (-n - 1) r (Y a) (Y b) vector
+      (((-1 : ℂ) ^ offset) * integerBinomial r offset) • (A [[r - offset]]) ((B [[n + offset]]) vector)) := by
+    have finite := leftKernel (-n - 1) r A B vector
     simpa only [Function.HasFiniteSupport, Units.smul_def, ← Int.cast_smul_eq_zsmul ℂ, Int.cast_negOnePow_natCast, smul_smul, integerBinomial, show -(-n - 1) - 1 = n by omega]
       using finite
   have rightFinite (n : ℤ) (vector : V) : Function.HasFiniteSupport (fun offset : ℕ =>
-      (((-1 : ℂ) ^ offset) * integerBinomial r offset) • ((Y b) [[r + n - offset]]) (((Y a) [[offset]]) vector)) := by
-    have finite := rightKernel (-n - 1) r (Y a) (Y b) vector
+      (((-1 : ℂ) ^ offset) * integerBinomial r offset) • (B [[r + n - offset]]) ((A [[offset]]) vector)) := by
+    have finite := rightKernel (-n - 1) r A B vector
     simpa only [Function.HasFiniteSupport, Units.smul_def, ← Int.cast_smul_eq_zsmul ℂ, Int.cast_negOnePow_natCast, smul_smul, integerBinomial, show -(-n - 1) - 1 = n by omega]
       using finite
   let coefficient (n : ℤ) : Module.End ℂ V := {
-    toFun := residueCoefficient (Y := Y) r n a b
+    toFun := fieldResidueCoefficient r n A B
     map_add' first second := by
-      dsimp [residueCoefficient, residueLeft, residueRight]; simp only [map_add, smul_add]
+      dsimp [fieldResidueCoefficient, fieldResidueLeft, fieldResidueRight]; simp only [map_add, smul_add]
       rw [finsum_add_distrib (leftFinite n first) (leftFinite n second), finsum_add_distrib (rightFinite n first) (rightFinite n second)]
       module
     map_smul' scalar vector := by
-      dsimp [residueCoefficient, residueLeft, residueRight]; simp only [map_smul]; simp_rw [smul_comm _ scalar]
+      dsimp [fieldResidueCoefficient, fieldResidueLeft, fieldResidueRight]; simp only [map_smul]; simp_rw [smul_comm _ scalar]
       rw [← smul_finsum' scalar (leftFinite n vector), ← smul_finsum' scalar (rightFinite n vector)]
       rw [smul_comm (epsilon r) scalar, ← smul_sub] }
   have bounded (vector : V) : BddBelow (Function.support (fun power : ℤ => coefficient (-power - 1) vector)) := by
-    let cutoff : ℕ := (-((HahnModule.of ℂ).symm ((Y a) vector)).order - 1).toNat
+    let cutoff : ℕ := (-((HahnModule.of ℂ).symm (A vector)).order - 1).toNat
     let orders : Finset ℤ := (Finset.range (cutoff + 1)).image (fun offset : ℕ =>
-      ((HahnModule.of ℂ).symm ((Y b) (((Y a) [[offset]]) vector))).order + r - offset)
-    let lower : ℤ := min ((HahnModule.of ℂ).symm ((Y b) vector)).order (orders.min' (by
+      ((HahnModule.of ℂ).symm (B ((A [[offset]]) vector))).order + r - offset)
+    let lower : ℤ := min ((HahnModule.of ℂ).symm (B vector)).order (orders.min' (by
         apply Finset.image_nonempty.mpr; exact ⟨0, Finset.mem_range.mpr (by omega)⟩))
     refine ⟨lower, ?_⟩; intro power member; by_contra notLower
     have small : power < lower := lt_of_not_ge notLower
-    have firstZero (offset : ℕ) : ((Y a) [[r - offset]]) (((Y b) [[-power - 1 + offset]]) vector) = 0 := by
-      have vanish : ((Y b) [[-power - 1 + offset]]) vector = 0 := by apply VertexOperator.ncoeff_eq_zero_of_lt_order; dsimp [lower] at small; omega
+    have firstZero (offset : ℕ) : (A [[r - offset]]) ((B [[-power - 1 + offset]]) vector) = 0 := by
+      have vanish : (B [[-power - 1 + offset]]) vector = 0 := by apply VertexOperator.ncoeff_eq_zero_of_lt_order; dsimp [lower] at small; omega
       simp [vanish]
-    have secondZero (offset : ℕ) : ((Y b) [[r + (-power - 1) - offset]]) (((Y a) [[offset]]) vector) = 0 := by
+    have secondZero (offset : ℕ) : (B [[r + (-power - 1) - offset]]) ((A [[offset]]) vector) = 0 := by
       by_cases within : offset ≤ cutoff
-      · have inOrders : ((HahnModule.of ℂ).symm ((Y b) (((Y a) [[offset]]) vector))).order + r - offset ∈ orders := Finset.mem_image.mpr ⟨offset, Finset.mem_range.mpr (by omega),
+      · have inOrders : ((HahnModule.of ℂ).symm (B ((A [[offset]]) vector))).order + r - offset ∈ orders := Finset.mem_image.mpr ⟨offset, Finset.mem_range.mpr (by omega),
         rfl⟩
         have bound := Finset.min'_le orders _ inOrders
         apply VertexOperator.ncoeff_eq_zero_of_lt_order; dsimp [lower] at small; omega
-      · have vanish : ((Y a) [[offset]]) vector = 0 := by
+      · have vanish : (A [[offset]]) vector = 0 := by
           apply VertexOperator.ncoeff_eq_zero_of_lt_order; dsimp [cutoff] at within; omega
         simp [vanish]
-    exact member (by simp [coefficient, residueCoefficient, residueLeft, residueRight, firstZero, secondZero])
-  refine ⟨VertexOperator.of_coeff (fun power => coefficient (-power - 1)) bounded, ?_, leftFinite, rightFinite⟩; intro n vector
-  rw [VertexOperator.ncoeff_of_coeff, show -(-n - 1) - 1 = n by omega]; rfl
-
-theorem residue_nonnegative_locality
-    (localityHyp : ∀ a b : V, ∃ N : ℕ,
-      delta^[N] (FieldNormalProductLocality.commutator (Y a) (Y b)) = 0)
-    (a b c : V) (r : ℕ) : ∃ order : ℕ, delta^[order] (FieldNormalProductLocality.commutator (residueField (Y := Y) r a b).operator (Y c)) = 0 := by
-  classical
-  let shiftLeft : Module.End ℂ (ℤ → ℤ → Module.End ℂ V) := {
-    toFun value := fun first second => value (first + 1) second
-    map_add' _ _ := rfl
-    map_smul' _ _ := rfl }
-  let shiftRight : Module.End ℂ (ℤ → ℤ → Module.End ℂ V) := {
-    toFun value := fun first second => value first (second + 1)
-    map_add' _ _ := rfl
-    map_smul' _ _ := rfl }
-  have binomial (value : ℤ → ℤ → Module.End ℂ V) (order : ℕ) (first second : ℤ) : ((deltaEnd ^ order) value) first second = ∑ offset ∈ Finset.range (order + 1), (((-1 : ℂ) ^
-    offset) * (order.choose offset : ℂ)) • value (first + (order : ℤ) - offset) (second + offset) := by
-    have commute : Commute (-shiftRight) shiftLeft := by apply LinearMap.ext; intro distribution; funext left right; simp [shiftLeft, shiftRight]
-    have leftPower (degree : ℕ) (distribution : ℤ → ℤ → Module.End ℂ V) : (shiftLeft ^ degree) distribution = fun left right => distribution (left + degree) right := by
-      induction degree with
-      | zero => simp
-      | succ degree inductionHypothesis =>
-        rw [pow_succ', Module.End.mul_apply, inductionHypothesis]; funext left right
-        change distribution (left + 1 + degree) right = distribution (left + (degree + 1 : ℕ)) right; congr 1; push_cast; omega
-    have rightPower (degree : ℕ) (distribution : ℤ → ℤ → Module.End ℂ V) : ((-shiftRight) ^ degree) distribution = fun left right => ((-1 : ℂ) ^ degree) • distribution left
-      (right + degree) := by
-      induction degree with
-      | zero => simp
-      | succ degree inductionHypothesis =>
-        rw [pow_succ', Module.End.mul_apply, inductionHypothesis]; funext left right
-        change -(((-1 : ℂ) ^ degree) • distribution left (right + 1 + degree)) = ((-1 : ℂ) ^ (degree + 1)) • distribution left (right + (degree + 1 : ℕ))
-        rw [pow_succ', mul_smul, neg_one_smul]
-        have indices : right + 1 + (degree : ℤ) = right + (degree + 1 : ℕ) := by push_cast; omega
-        rw [indices]
-    have equation : (deltaEnd : Module.End ℂ (ℤ → ℤ → Module.End ℂ V)) = -shiftRight + shiftLeft := by
-      apply LinearMap.ext; intro distribution; funext left right; simp [deltaEnd, delta, shiftLeft, shiftRight]
-      abel
-    rw [equation, commute.add_pow, LinearMap.sum_apply]; simp only [Finset.sum_apply]; apply Finset.sum_congr rfl; intro offset member
-    have within : offset ≤ order := by simpa using Finset.mem_range.mp member
-    simp only [Module.End.mul_apply, Module.End.natCast_apply, map_nsmul, rightPower, leftPower, Pi.smul_apply]
-    rw [← Nat.cast_smul_eq_nsmul ℂ, smul_smul, mul_comm]; congr 2; push_cast [Int.natCast_sub within]; omega
-  have positiveModes (n : ℤ) (vector : V) : (((residueField (Y := Y) r a b).operator) [[n]]) vector = ((deltaEnd ^ r) (FieldNormalProductLocality.commutator (Y a) (Y b))) 0 n vector :=
-    by
-    have chooseNat (offset : ℕ) : integerBinomial r offset = (r.choose offset : ℂ) := by simp [integerBinomial, Ring.choose_natCast]
-    have leftSum : residueLeft (Y := Y) r n a b vector = ∑ offset ∈ Finset.range (r + 1), (((-1 : ℂ) ^ offset) * (r.choose offset : ℂ)) • ((Y a) [[(r : ℤ) - offset]]) (((Y b) [[n +
+    exact member (by simp [coefficient, fieldResidueCoefficient, fieldResidueLeft, fieldResidueRight, firstZero, secondZero])
+  have positiveModes (degree : ℕ) (hr : r = degree) (n : ℤ) (vector : V) :
+      coefficient n vector = ((deltaEnd ^ degree) (FieldNormalProductLocality.commutator A B)) 0 n vector := by
+    subst r
+    have chooseNat (offset : ℕ) : integerBinomial degree offset = (degree.choose offset : ℂ) := by simp [integerBinomial, Ring.choose_natCast]
+    have leftSum : fieldResidueLeft degree n A B vector = ∑ offset ∈ Finset.range (degree + 1), (((-1 : ℂ) ^ offset) * (degree.choose offset : ℂ)) • (A [[(degree : ℤ) - offset]]) ((B [[n +
       offset]]) vector) := by
-      unfold residueLeft; simp_rw [chooseNat]; apply finsum_eq_sum_of_support_subset; intro offset member
+      unfold fieldResidueLeft; simp_rw [chooseNat]; apply finsum_eq_sum_of_support_subset; intro offset member
       by_contra outside
-      have zeroChoose : r.choose offset = 0 := Nat.choose_eq_zero_of_lt (by simpa using outside)
+      have zeroChoose : degree.choose offset = 0 := Nat.choose_eq_zero_of_lt (by simpa using outside)
       exact member (by simp [zeroChoose])
-    have rightSum : residueRight (Y := Y) r n a b vector = ∑ offset ∈ Finset.range (r + 1), (((-1 : ℂ) ^ offset) * (r.choose offset : ℂ)) • ((Y b) [[(r : ℤ) + n - offset]]) (((Y a)
+    have rightSum : fieldResidueRight degree n A B vector = ∑ offset ∈ Finset.range (degree + 1), (((-1 : ℂ) ^ offset) * (degree.choose offset : ℂ)) • (B [[(degree : ℤ) + n - offset]]) ((A
       [[offset]]) vector) := by
-      unfold residueRight; simp_rw [chooseNat]; apply finsum_eq_sum_of_support_subset; intro offset member
+      unfold fieldResidueRight; simp_rw [chooseNat]; apply finsum_eq_sum_of_support_subset; intro offset member
       by_contra outside
-      have zeroChoose : r.choose offset = 0 := Nat.choose_eq_zero_of_lt (by simpa using outside)
+      have zeroChoose : degree.choose offset = 0 := Nat.choose_eq_zero_of_lt (by simpa using outside)
       exact member (by simp [zeroChoose])
-    rw [(residueField (Y := Y) r a b).coefficient, residueCoefficient, leftSum, rightSum, binomial, LinearMap.sum_apply]
+    change fieldResidueCoefficient degree n A B vector = _
+    rw [fieldResidueCoefficient, leftSum, rightSum, FieldDeltaBinomial.delta_binomial, LinearMap.sum_apply]
     simp only [zero_add, LinearMap.smul_apply, FieldNormalProductLocality.commutator, Module.End.mul_apply, LinearMap.sub_apply, smul_sub, Finset.sum_sub_distrib]
-    apply congrArg ((∑ offset ∈ Finset.range (r + 1), (((-1 : ℂ) ^ offset) * (r.choose offset : ℂ)) • ((Y a) [[(r : ℤ) - offset]]) (((Y b) [[n + offset]]) vector)) - ·)
+    apply congrArg ((∑ offset ∈ Finset.range (degree + 1), (((-1 : ℂ) ^ offset) * (degree.choose offset : ℂ)) • (A [[(degree : ℤ) - offset]]) ((B [[n + offset]]) vector)) - ·)
     rw [Finset.smul_sum, ← Finset.sum_range_reflect]; apply Finset.sum_congr rfl; intro offset member
-    have within : offset ≤ r := by simpa using Finset.mem_range.mp member
+    have within : offset ≤ degree := by simpa using Finset.mem_range.mp member
     simp only [Nat.add_sub_cancel, Nat.choose_symm within, smul_smul, epsilon, zpow_natCast]
-    have signs : (-1 : ℂ) ^ r * ((-1 : ℂ) ^ (r - offset) * (r.choose offset : ℂ)) = (-1 : ℂ) ^ offset * (r.choose offset : ℂ) := by
-      have split : (-1 : ℂ) ^ r = (-1 : ℂ) ^ offset * (-1 : ℂ) ^ (r - offset) := by rw [← pow_add, Nat.add_sub_of_le within]
+    have signs : (-1 : ℂ) ^ degree * ((-1 : ℂ) ^ (degree - offset) * (degree.choose offset : ℂ)) = (-1 : ℂ) ^ offset * (degree.choose offset : ℂ) := by
+      have split : (-1 : ℂ) ^ degree = (-1 : ℂ) ^ offset * (-1 : ℂ) ^ (degree - offset) := by rw [← pow_add, Nat.add_sub_of_le within]
       rw [split]
-      have squared : ((-1 : ℂ) ^ (r - offset)) ^ 2 = 1 := by rw [← pow_mul, mul_comm, pow_mul]; norm_num
+      have squared : ((-1 : ℂ) ^ (degree - offset)) ^ 2 = 1 := by rw [← pow_mul, mul_comm, pow_mul]; norm_num
       calc
-        _ = (-1 : ℂ) ^ offset * (((-1 : ℂ) ^ (r - offset)) ^ 2) * (r.choose offset : ℂ) := by ring
+        _ = (-1 : ℂ) ^ offset * (((-1 : ℂ) ^ (degree - offset)) ^ 2) * (degree.choose offset : ℂ) := by ring
         _ = _ := by rw [squared]; ring
-    rw [signs]; push_cast [Int.natCast_sub within]; rw [show (r : ℤ) + n - ((r : ℤ) - offset) = n + offset by omega]
-  have locality (first second : V) : ∃ order : ℕ, (deltaEnd ^ order) (FieldNormalProductLocality.commutator (Y first) (Y second)) = 0 := by
-    obtain ⟨order, law⟩ := localityHyp first second
-    have law' : (deltaEnd ^ order) (FieldNormalProductLocality.commutator (Y first) (Y second)) = 0 := by
-      funext left right
-      rw [deltaEnd_iterate_apply]
-      exact congrFun (congrFun law left) right
-    refine ⟨order, ?_⟩
-    funext left right
-    rw [binomial]
-    have lawPoint := congrFun (congrFun law' left) right
-    rw [binomial] at lawPoint
-    exact lawPoint
-  obtain ⟨firstOrder, firstKilled⟩ := locality a c; obtain ⟨secondOrder, secondKilled⟩ := locality b c
-  obtain ⟨thirdOrder, thirdKilled⟩ := locality a b
+    rw [signs]; push_cast [Int.natCast_sub within]; rw [show (degree : ℤ) + n - ((degree : ℤ) - offset) = n + offset by omega]
+  refine ⟨VertexOperator.of_coeff (fun power => coefficient (-power - 1)) bounded, ?_, ?_, leftFinite, rightFinite⟩
+  · intro n vector
+    rw [VertexOperator.ncoeff_of_coeff, show -(-n - 1) - 1 = n by omega]; rfl
+  · intro degree hr n vector
+    rw [VertexOperator.ncoeff_of_coeff, show -(-n - 1) - 1 = n by omega]
+    exact positiveModes degree hr n vector
+
+noncomputable def residueField (r : ℤ) (a b : V) : ResidueField (Y := Y) r a b := by
+  let field := fieldResidue r (Y a) (Y b)
+  exact { operator := field.operator
+          coefficient := field.coefficient
+          left_finite := field.left_finite
+          right_finite := field.right_finite }
+
+private theorem fieldResidue_nonnegative_locality
+    (A B C : VertexOperator ℂ V) (firstOrder secondOrder thirdOrder r : ℕ)
+    (firstKilled : (deltaEnd ^ firstOrder) (FieldNormalProductLocality.commutator A C) = 0)
+    (secondKilled : (deltaEnd ^ secondOrder) (FieldNormalProductLocality.commutator B C) = 0)
+    (thirdKilled : (deltaEnd ^ thirdOrder) (FieldNormalProductLocality.commutator A B) = 0) :
+    delta^[if thirdOrder ≤ r then 0 else firstOrder + thirdOrder - r - 1 + secondOrder]
+      (FieldNormalProductLocality.commutator (fieldResidue r A B).operator C) = 0 := by
+  classical
+  have positiveModes (n : ℤ) (vector : V) :
+      (((fieldResidue r A B).operator) [[n]]) vector =
+        ((deltaEnd ^ r) (FieldNormalProductLocality.commutator A B)) 0 n vector :=
+    (fieldResidue r A B).nonnegative_modes r rfl n vector
   let order := if thirdOrder ≤ r then 0 else firstOrder + thirdOrder - r - 1 + secondOrder
   have cancellation (vector : V) : ((plainYZ ^ order * plainXY ^ r : Module.End ℂ (Triple V)) (fun left middle right =>
-          FieldNormalProductLocality.commutator (Y a) (Y b) left middle (((Y c) [[right]]) vector) - ((Y c) [[right]]) (FieldNormalProductLocality.commutator (Y a) (Y b) left
+          FieldNormalProductLocality.commutator A B left middle ((C [[right]]) vector) - (C [[right]]) (FieldNormalProductLocality.commutator A B left
             middle vector))) = 0 := by
     dsimp only [order]
     let first : Module.End ℂ (Triple V) := plainXY
@@ -245,32 +241,32 @@ theorem residue_nonnegative_locality
       | succ degree inductionHypothesis =>
         simp only [pow_succ', Module.End.mul_apply]
         rw [law, inductionHypothesis]
-    have lawAB (side : Bool) (distribution : ℤ → ℤ → Module.End ℂ V) : liftAB (Y c) vector side (deltaEnd distribution) = first (liftAB (Y c) vector side distribution) := by
+    have lawAB (side : Bool) (distribution : ℤ → ℤ → Module.End ℂ V) : liftAB C vector side (deltaEnd distribution) = first (liftAB C vector side distribution) := by
       funext left middle right; dsimp [liftAB, deltaEnd, delta, first, plainXY, shiftXY]
       cases side <;> simp [map_sub]
-    have lawAC (side : Bool) (distribution : ℤ → ℤ → Module.End ℂ V) : liftAC (Y b) vector side (deltaEnd distribution) = combined (liftAC (Y b) vector side distribution) := by
+    have lawAC (side : Bool) (distribution : ℤ → ℤ → Module.End ℂ V) : liftAC B vector side (deltaEnd distribution) = combined (liftAC B vector side distribution) := by
       funext left middle right; dsimp [liftAC, deltaEnd, delta, combined, first, second, plainXY, plainYZ, shiftXY, shiftYZ]
       cases side <;> simp [map_sub]
-    have lawBC (side : Bool) (distribution : ℤ → ℤ → Module.End ℂ V) : liftBC (Y a) vector side (deltaEnd distribution) = second (liftBC (Y a) vector side distribution) := by
+    have lawBC (side : Bool) (distribution : ℤ → ℤ → Module.End ℂ V) : liftBC A vector side (deltaEnd distribution) = second (liftBC A vector side distribution) := by
       funext left middle right; dsimp [liftBC, deltaEnd, delta, second, plainYZ, shiftYZ]
       cases side <;> simp [map_sub]
-    let discrepancy := liftAB (Y c) vector true (FieldNormalProductLocality.commutator (Y a) (Y b)) - liftAB (Y c) vector false (FieldNormalProductLocality.commutator (Y a) (Y b))
-    let firstPart := liftAC (Y b) vector true (FieldNormalProductLocality.commutator (Y a) (Y c)) - liftAC (Y b) vector false (FieldNormalProductLocality.commutator (Y a) (Y c))
-    let secondPart := liftBC (Y a) vector true (FieldNormalProductLocality.commutator (Y b) (Y c)) - liftBC (Y a) vector false (FieldNormalProductLocality.commutator (Y b) (Y c))
+    let discrepancy := liftAB C vector true (FieldNormalProductLocality.commutator A B) - liftAB C vector false (FieldNormalProductLocality.commutator A B)
+    let firstPart := liftAC B vector true (FieldNormalProductLocality.commutator A C) - liftAC B vector false (FieldNormalProductLocality.commutator A C)
+    let secondPart := liftBC A vector true (FieldNormalProductLocality.commutator B C) - liftBC A vector false (FieldNormalProductLocality.commutator B C)
     have jacobi : discrepancy = firstPart + secondPart := by
       funext left middle right; dsimp [discrepancy, firstPart, secondPart, liftAB, liftAC, liftBC, FieldNormalProductLocality.commutator]
       simp only [map_sub]; abel
     have discrepancyKilled : (first ^ thirdOrder) discrepancy = 0 := by
       dsimp [discrepancy]
-      rw [map_sub, ← intertwiningPowersOT deltaEnd first (liftAB (Y c) vector true) (lawAB true), ← intertwiningPowersOT deltaEnd first (liftAB (Y c) vector false) (lawAB false), thirdKilled]
+      rw [map_sub, ← intertwiningPowersOT deltaEnd first (liftAB C vector true) (lawAB true), ← intertwiningPowersOT deltaEnd first (liftAB C vector false) (lawAB false), thirdKilled]
       simp
     have firstPartKilled : (combined ^ firstOrder) firstPart = 0 := by
       dsimp [firstPart]
-      rw [map_sub, ← intertwiningPowersOT deltaEnd combined (liftAC (Y b) vector true) (lawAC true), ← intertwiningPowersOT deltaEnd combined (liftAC (Y b) vector false) (lawAC false), firstKilled]
+      rw [map_sub, ← intertwiningPowersOT deltaEnd combined (liftAC B vector true) (lawAC true), ← intertwiningPowersOT deltaEnd combined (liftAC B vector false) (lawAC false), firstKilled]
       simp
     have secondPartKilled : (second ^ secondOrder) secondPart = 0 := by
       dsimp [secondPart]
-      rw [map_sub, ← intertwiningPowersOT deltaEnd second (liftBC (Y a) vector true) (lawBC true), ← intertwiningPowersOT deltaEnd second (liftBC (Y a) vector false) (lawBC false), secondKilled]
+      rw [map_sub, ← intertwiningPowersOT deltaEnd second (liftBC A vector true) (lawBC true), ← intertwiningPowersOT deltaEnd second (liftBC A vector false) (lawBC false), secondKilled]
       simp
     have annihilated : (combined ^ firstOrder * second ^ secondOrder) discrepancy = 0 := by
       rw [jacobi, map_add]
@@ -324,7 +320,7 @@ theorem residue_nonnegative_locality
           change (first ^ (exponent - degree) * second ^ secondOrder * first ^ r) discrepancy = 0
           rw [(commuting.pow_pow _ _).eq, mul_assoc, ← pow_add, Module.End.mul_apply, high _ bound, map_zero]
         simp [vanish]
-  refine ⟨order, ?_⟩; funext left right; apply LinearMap.ext; intro vector
+  funext left right; apply LinearMap.ext; intro vector
   let extract : Triple V →ₗ[ℂ] (ℤ → ℤ → V) := {
     toFun distribution := distribution 0
     map_add' _ _ := rfl
@@ -355,7 +351,7 @@ theorem residue_nonnegative_locality
       rw [law, inductionHypothesis]
   have extractLaw (distribution : Triple V) : extract (plainYZ distribution) = plainDelta (extract distribution) := by rfl
   have evaluateLaw (distribution : ℤ → ℤ → Module.End ℂ V) : evaluate vector (deltaEnd distribution) = plainDelta (evaluate vector distribution) := by rfl
-  have lawAB (side : Bool) (distribution : ℤ → ℤ → Module.End ℂ V) : liftAB (Y c) vector side (deltaEnd distribution) = plainXY (liftAB (Y c) vector side distribution) := by
+  have lawAB (side : Bool) (distribution : ℤ → ℤ → Module.End ℂ V) : liftAB C vector side (deltaEnd distribution) = plainXY (liftAB C vector side distribution) := by
     funext first middle third; dsimp [liftAB, deltaEnd, delta, plainXY, shiftXY]
     cases side <;> simp [map_sub]
   have intertwiningPowersOT
@@ -370,19 +366,84 @@ theorem residue_nonnegative_locality
     | succ degree inductionHypothesis =>
       simp only [pow_succ', Module.End.mul_apply]
       rw [law, inductionHypothesis]
-  let discrepancy := liftAB (Y c) vector true (FieldNormalProductLocality.commutator (Y a) (Y b)) - liftAB (Y c) vector false (FieldNormalProductLocality.commutator (Y a) (Y b))
-  have connection : extract ((plainXY ^ r) discrepancy) = evaluate vector (FieldNormalProductLocality.commutator (residueField (Y := Y) r a b).operator (Y c)) := by
+  let discrepancy := liftAB C vector true (FieldNormalProductLocality.commutator A B) - liftAB C vector false (FieldNormalProductLocality.commutator A B)
+  have connection : extract ((plainXY ^ r) discrepancy) = evaluate vector (FieldNormalProductLocality.commutator (fieldResidue r A B).operator C) := by
     dsimp only [discrepancy]
-    rw [map_sub, map_sub, ← intertwiningPowersOT deltaEnd plainXY (liftAB (Y c) vector true) (lawAB true), ← intertwiningPowersOT deltaEnd plainXY (liftAB (Y c) vector false) (lawAB
+    rw [map_sub, map_sub, ← intertwiningPowersOT deltaEnd plainXY (liftAB C vector true) (lawAB true), ← intertwiningPowersOT deltaEnd plainXY (liftAB C vector false) (lawAB
       false)]
     funext first second; dsimp [extract, liftAB, evaluate, FieldNormalProductLocality.commutator]
-    rw [← positiveModes first (((Y c) [[second]]) vector), ← positiveModes first vector]
+    rw [← positiveModes first ((C [[second]]) vector), ← positiveModes first vector]
   have killed := congrArg (fun distribution : Triple V => extract distribution) (cancellation vector)
   change extract ((plainYZ ^ order) ((plainXY ^ r) discrepancy)) = extract 0 at killed
   rw [intertwiningPowersTV plainYZ plainDelta extract extractLaw, connection, ← intertwiningPowersEV deltaEnd plainDelta (evaluate vector) evaluateLaw, map_zero] at killed
   have coefficient := congrFun (congrFun killed left) right
-  change ((deltaEnd : Module.End ℂ (ℤ → ℤ → Module.End ℂ V))^[order] (FieldNormalProductLocality.commutator (residueField (Y := Y) r a b).operator (Y c))) left right vector = 0
+  change ((deltaEnd : Module.End ℂ (ℤ → ℤ → Module.End ℂ V))^[order] (FieldNormalProductLocality.commutator (fieldResidue r A B).operator C)) left right vector = 0
   rw [← Module.End.pow_apply]; exact coefficient
+
+theorem residue_nonnegative_locality
+    (localityHyp : ∀ a b : V, ∃ N : ℕ,
+      delta^[N] (FieldNormalProductLocality.commutator (Y a) (Y b)) = 0)
+    (a b c : V) (r : ℕ) : ∃ order : ℕ, delta^[order] (FieldNormalProductLocality.commutator (residueField (Y := Y) r a b).operator (Y c)) = 0 := by
+  obtain ⟨firstOrder, firstKilled⟩ := localityHyp a c
+  obtain ⟨secondOrder, secondKilled⟩ := localityHyp b c
+  obtain ⟨thirdOrder, thirdKilled⟩ := localityHyp a b
+  have power (A B : VertexOperator ℂ V) (n : ℕ)
+      (h : delta^[n] (FieldNormalProductLocality.commutator A B) = 0) :
+      (deltaEnd ^ n) (FieldNormalProductLocality.commutator A B) = 0 := by
+    rw [Module.End.pow_apply]
+    exact h
+  exact ⟨_, fieldResidue_nonnegative_locality (Y a) (Y b) (Y c)
+    firstOrder secondOrder thirdOrder r (power _ _ _ firstKilled)
+      (power _ _ _ secondKilled) (power _ _ _ thirdKilled)⟩
+
+private theorem fieldResidue_negative_normal (A B : VertexOperator ℂ V) (degree : ℕ) :
+    (fieldResidue (-(degree : ℤ) - 1) A B).operator =
+      (normalMinusOne (dividedDerivative degree A) B).val := by
+  have derivativeModes (index : ℤ) (vector : V) : ((dividedDerivative degree A) [[index]]) vector = ((Ring.choose (-index - 1 + degree) degree : ℤ) : ℂ) • (A
+    [[index - degree]]) vector := by
+    change Ring.choose (-index - 1 + degree) degree • HVertexOperator.coeff A (-index - 1 + degree) vector = _
+    rw [VertexOperator.coeff_eq_ncoeff, show -(-index - 1 + degree) - 1 = index - degree by omega, ← Int.cast_smul_eq_zsmul ℂ]
+  have square (offset : ℕ) : (-1 : ℂ) ^ offset * (-1 : ℂ) ^ offset = 1 := by rw [← pow_add, ← two_mul, pow_mul]; norm_num
+  have negativeChoose (offset : ℕ) : (((Ring.choose (-(degree : ℤ) - 1) offset : ℤ) : ℂ)) = (-1 : ℂ) ^ offset * ((degree + offset).choose degree : ℂ) := by
+    rw [show -(degree : ℤ) - 1 = -((degree : ℤ) + 1) by omega, Ring.choose_neg, show (degree : ℤ) + 1 + offset - 1 = ((degree + offset : ℕ) : ℤ) by omega,
+      Ring.choose_natCast]
+    simp only [Units.smul_def, smul_eq_mul, Int.cast_mul, Int.cast_negOnePow_natCast, Int.cast_natCast]; rw [← Nat.choose_symm_add]
+  have weight (offset : ℕ) : (-1 : ℂ) ^ offset * integerBinomial (-(degree : ℤ) - 1) offset = ((degree + offset).choose degree : ℂ) := by
+    rw [integerBinomial, negativeChoose, ← mul_assoc, square, one_mul]
+  have sign : -epsilon (-(degree : ℤ) - 1) = (-1 : ℂ) ^ degree := by
+    rw [epsilon, show -(degree : ℤ) - 1 = -((degree + 1 : ℕ) : ℤ) by omega, zpow_neg, zpow_natCast, ← inv_pow]; norm_num [pow_succ]
+  apply HVertexOperator.coeff_inj; funext power; apply LinearMap.ext; intro vector
+  rw [VertexOperator.coeff_eq_ncoeff, VertexOperator.coeff_eq_ncoeff, (fieldResidue (-(degree : ℤ) - 1) A B).coefficient, (normalMinusOne (dividedDerivative degree A) B).property]
+  let index : ℤ := -power - 1
+  have firstEquality : fieldResidueLeft (-(degree : ℤ) - 1) index A B vector = ∑ᶠ offset : ℕ, ((dividedDerivative degree A) [[-(offset : ℤ) - 1]]) ((B [[index + offset]])
+    vector) := by
+    unfold fieldResidueLeft; apply finsum_congr; intro offset; rw [weight, derivativeModes]
+    have parameter : -(-(offset : ℤ) - 1) - 1 + degree = ((degree + offset : ℕ) : ℤ) := by omega
+    rw [parameter, Ring.choose_natCast]; rw [show -(degree : ℤ) - 1 - offset = -(offset : ℤ) - 1 - degree by omega]
+    simp only [Int.cast_natCast]
+  let term (offset : ℕ) : V := (B [[index - offset - 1]]) (((dividedDerivative degree A) [[offset]]) vector)
+  have initialZero (offset : Fin degree) : term offset = 0 := by
+    have parameter : -(offset : ℤ) - 1 + degree = ((degree - offset - 1 : ℕ) : ℤ) := by omega
+    have zeroChoose : Ring.choose (-(offset : ℤ) - 1 + degree) degree = 0 := by rw [parameter, Ring.choose_natCast, Nat.choose_eq_zero_of_lt (by omega)]; rfl
+    simp [term, derivativeModes, zeroChoose]
+  have split : (∑ᶠ offset : ℕ, term offset) = ∑ᶠ offset : ℕ, term (degree + offset) := by
+    have subset : Function.support term ⊆ Set.range (fun offset : ℕ => degree + offset) := by
+      intro offset member
+      have bound : degree ≤ offset := by by_contra smaller; exact member (initialZero ⟨offset, by omega⟩)
+      exact ⟨offset - degree, by change degree + (offset - degree) = offset; omega⟩
+    have sets : Set.range (fun offset : ℕ => degree + offset) ∩ Function.support term = Set.univ ∩ Function.support term := by rw [Set.inter_eq_right.mpr subset, Set.univ_inter]
+    rw [← finsum_mem_range (f := term) (g := fun offset : ℕ => degree + offset) (fun first second equality => Nat.add_left_cancel equality), finsum_mem_inter_support_eq term
+      _ _ sets, finsum_mem_univ]
+  have secondEquality : (∑ᶠ offset : ℕ, term offset) = (-1 : ℂ) ^ degree • fieldResidueRight (-(degree : ℤ) - 1) index A B vector := by
+    rw [split, fieldResidueRight, smul_finsum' _ ((fieldResidue (-(degree : ℤ) - 1) A B).right_finite index vector)]; apply finsum_congr
+    intro offset; dsimp [term]; rw [derivativeModes, map_smul, weight]
+    rw [show -((degree : ℤ) + offset) - 1 + degree = -(offset : ℤ) - 1 by omega, show -(offset : ℤ) - 1 = -((offset : ℤ) + 1) by omega, Ring.choose_neg, show (offset : ℤ) + 1
+      + degree - 1 = ((degree + offset : ℕ) : ℤ) by omega, Ring.choose_natCast]
+    simp only [Units.smul_def, smul_eq_mul, Int.cast_mul, Int.cast_negOnePow_natCast, Int.cast_natCast, smul_smul]
+    rw [show (degree : ℤ) + offset - degree = offset by omega, show index - ((degree : ℤ) + offset) - 1 = -(degree : ℤ) - 1 + index - offset by omega]
+  change fieldResidueCoefficient (-(degree : ℤ) - 1) index A B vector = _; rw [fieldResidueCoefficient, firstEquality]
+  change _ - epsilon (-(degree : ℤ) - 1) • fieldResidueRight (-(degree : ℤ) - 1) index A B vector = _ + ∑ᶠ offset : ℕ, term offset
+  rw [secondEquality, sub_eq_add_neg, ← neg_smul, sign]
 
 theorem relative_vacuum_uniqueness
     (vacuum : V) (T : Module.End ℂ V) (translation_vacuum : T vacuum = 0)
@@ -491,102 +552,12 @@ theorem residue_closure
     · let degree := (-r - 1).toNat
       have index : r = -(degree : ℤ) - 1 := by dsimp [degree]; omega
       rw [index]
-      have identification : (residueField (Y := Y) (-(degree : ℤ) - 1) a b).operator = (normalMinusOne (dividedDerivative degree (Y a)) (Y b)).val := by
-        have derivativeModes (index : ℤ) (vector : V) : ((dividedDerivative degree (Y a)) [[index]]) vector = ((Ring.choose (-index - 1 + degree) degree : ℤ) : ℂ) • ((Y a)
-          [[index - degree]]) vector := by
-          change Ring.choose (-index - 1 + degree) degree • HVertexOperator.coeff (Y a) (-index - 1 + degree) vector = _
-          rw [VertexOperator.coeff_eq_ncoeff, show -(-index - 1 + degree) - 1 = index - degree by omega, ← Int.cast_smul_eq_zsmul ℂ]
-        have square (offset : ℕ) : (-1 : ℂ) ^ offset * (-1 : ℂ) ^ offset = 1 := by rw [← pow_add, ← two_mul, pow_mul]; norm_num
-        have negativeChoose (offset : ℕ) : (((Ring.choose (-(degree : ℤ) - 1) offset : ℤ) : ℂ)) = (-1 : ℂ) ^ offset * ((degree + offset).choose degree : ℂ) := by
-          rw [show -(degree : ℤ) - 1 = -((degree : ℤ) + 1) by omega, Ring.choose_neg, show (degree : ℤ) + 1 + offset - 1 = ((degree + offset : ℕ) : ℤ) by omega,
-            Ring.choose_natCast]
-          simp only [Units.smul_def, smul_eq_mul, Int.cast_mul, Int.cast_negOnePow_natCast, Int.cast_natCast]; rw [← Nat.choose_symm_add]
-        have weight (offset : ℕ) : (-1 : ℂ) ^ offset * integerBinomial (-(degree : ℤ) - 1) offset = ((degree + offset).choose degree : ℂ) := by
-          rw [integerBinomial, negativeChoose, ← mul_assoc, square, one_mul]
-        have sign : -epsilon (-(degree : ℤ) - 1) = (-1 : ℂ) ^ degree := by
-          rw [epsilon, show -(degree : ℤ) - 1 = -((degree + 1 : ℕ) : ℤ) by omega, zpow_neg, zpow_natCast, ← inv_pow]; norm_num [pow_succ]
-        apply HVertexOperator.coeff_inj; funext power; apply LinearMap.ext; intro vector
-        rw [VertexOperator.coeff_eq_ncoeff, VertexOperator.coeff_eq_ncoeff, (residueField (Y := Y) (-(degree : ℤ) - 1) a b).coefficient, (normalMinusOne (dividedDerivative degree (Y a)) (Y
-          b)).property]
-        let index : ℤ := -power - 1
-        have firstEquality : residueLeft (Y := Y) (-(degree : ℤ) - 1) index a b vector = ∑ᶠ offset : ℕ, ((dividedDerivative degree (Y a)) [[-(offset : ℤ) - 1]]) (((Y b) [[index + offset]])
-          vector) := by
-          unfold residueLeft; apply finsum_congr; intro offset; rw [weight, derivativeModes]
-          have parameter : -(-(offset : ℤ) - 1) - 1 + degree = ((degree + offset : ℕ) : ℤ) := by omega
-          rw [parameter, Ring.choose_natCast]; rw [show -(degree : ℤ) - 1 - offset = -(offset : ℤ) - 1 - degree by omega]
-          simp only [Int.cast_natCast]
-        let term (offset : ℕ) : V := ((Y b) [[index - offset - 1]]) (((dividedDerivative degree (Y a)) [[offset]]) vector)
-        have initialZero (offset : Fin degree) : term offset = 0 := by
-          have parameter : -(offset : ℤ) - 1 + degree = ((degree - offset - 1 : ℕ) : ℤ) := by omega
-          have zeroChoose : Ring.choose (-(offset : ℤ) - 1 + degree) degree = 0 := by rw [parameter, Ring.choose_natCast, Nat.choose_eq_zero_of_lt (by omega)]; rfl
-          simp [term, derivativeModes, zeroChoose]
-        have split : (∑ᶠ offset : ℕ, term offset) = ∑ᶠ offset : ℕ, term (degree + offset) := by
-          have subset : Function.support term ⊆ Set.range (fun offset : ℕ => degree + offset) := by
-            intro offset member
-            have bound : degree ≤ offset := by by_contra smaller; exact member (initialZero ⟨offset, by omega⟩)
-            exact ⟨offset - degree, by change degree + (offset - degree) = offset; omega⟩
-          have sets : Set.range (fun offset : ℕ => degree + offset) ∩ Function.support term = Set.univ ∩ Function.support term := by rw [Set.inter_eq_right.mpr subset, Set.univ_inter]
-          rw [← finsum_mem_range (f := term) (g := fun offset : ℕ => degree + offset) (fun first second equality => Nat.add_left_cancel equality), finsum_mem_inter_support_eq term
-            _ _ sets, finsum_mem_univ]
-        have secondEquality : (∑ᶠ offset : ℕ, term offset) = (-1 : ℂ) ^ degree • residueRight (Y := Y) (-(degree : ℤ) - 1) index a b vector := by
-          rw [split, residueRight, smul_finsum' _ ((residueField (Y := Y) (-(degree : ℤ) - 1) a b).right_finite index vector)]; apply finsum_congr
-          intro offset; dsimp [term]; rw [derivativeModes, map_smul, weight]
-          rw [show -((degree : ℤ) + offset) - 1 + degree = -(offset : ℤ) - 1 by omega, show -(offset : ℤ) - 1 = -((offset : ℤ) + 1) by omega, Ring.choose_neg, show (offset : ℤ) + 1
-            + degree - 1 = ((degree + offset : ℕ) : ℤ) by omega, Ring.choose_natCast]
-          simp only [Units.smul_def, smul_eq_mul, Int.cast_mul, Int.cast_negOnePow_natCast, Int.cast_natCast, smul_smul]
-          rw [show (degree : ℤ) + offset - degree = offset by omega, show index - ((degree : ℤ) + offset) - 1 = -(degree : ℤ) - 1 + index - offset by omega]
-        change residueCoefficient (Y := Y) (-(degree : ℤ) - 1) index a b vector = _; rw [residueCoefficient, firstEquality]
-        change _ - epsilon (-(degree : ℤ) - 1) • residueRight (Y := Y) (-(degree : ℤ) - 1) index a b vector = _ + ∑ᶠ offset : ℕ, term offset
-        rw [secondEquality, sub_eq_add_neg, ← neg_smul, sign]
-      let shiftLeft : Module.End ℂ (ℤ → ℤ → Module.End ℂ V) := {
-        toFun value := fun first second => value (first + 1) second
-        map_add' _ _ := rfl
-        map_smul' _ _ := rfl }
-      let shiftRight : Module.End ℂ (ℤ → ℤ → Module.End ℂ V) := {
-        toFun value := fun first second => value first (second + 1)
-        map_add' _ _ := rfl
-        map_smul' _ _ := rfl }
-      have binomial (value : ℤ → ℤ → Module.End ℂ V) (order : ℕ) (first second : ℤ) : ((deltaEnd ^ order) value) first second = ∑ offset ∈ Finset.range (order + 1), (((-1 : ℂ) ^
-        offset) * (order.choose offset : ℂ)) • value (first + (order : ℤ) - offset) (second + offset) := by
-        have commute : Commute (-shiftRight) shiftLeft := by apply LinearMap.ext; intro distribution; funext left right; simp [shiftLeft, shiftRight]
-        have leftPower (degree : ℕ) (distribution : ℤ → ℤ → Module.End ℂ V) : (shiftLeft ^ degree) distribution = fun left right => distribution (left + degree) right := by
-          induction degree with
-          | zero => simp
-          | succ degree inductionHypothesis =>
-            rw [pow_succ', Module.End.mul_apply, inductionHypothesis]; funext left right
-            change distribution (left + 1 + degree) right = distribution (left + (degree + 1 : ℕ)) right; congr 1; push_cast; omega
-        have rightPower (degree : ℕ) (distribution : ℤ → ℤ → Module.End ℂ V) : ((-shiftRight) ^ degree) distribution = fun left right => ((-1 : ℂ) ^ degree) • distribution left
-          (right + degree) := by
-          induction degree with
-          | zero => simp
-          | succ degree inductionHypothesis =>
-            rw [pow_succ', Module.End.mul_apply, inductionHypothesis]; funext left right
-            change -(((-1 : ℂ) ^ degree) • distribution left (right + 1 + degree)) = ((-1 : ℂ) ^ (degree + 1)) • distribution left (right + (degree + 1 : ℕ))
-            rw [pow_succ', mul_smul, neg_one_smul]
-            have indices : right + 1 + (degree : ℤ) = right + (degree + 1 : ℕ) := by push_cast; omega
-            rw [indices]
-        have equation : (deltaEnd : Module.End ℂ (ℤ → ℤ → Module.End ℂ V)) = -shiftRight + shiftLeft := by
-          apply LinearMap.ext; intro distribution; funext left right; simp [deltaEnd, delta, shiftLeft, shiftRight]
-          abel
-        rw [equation, commute.add_pow, LinearMap.sum_apply]; simp only [Finset.sum_apply]; apply Finset.sum_congr rfl; intro offset member
-        have within : offset ≤ order := by simpa using Finset.mem_range.mp member
-        simp only [Module.End.mul_apply, Module.End.natCast_apply, map_nsmul, rightPower, leftPower, Pi.smul_apply]
-        rw [← Nat.cast_smul_eq_nsmul ℂ, smul_smul, mul_comm]; congr 2; push_cast [Int.natCast_sub within]; omega
+      have identification : (residueField (Y := Y) (-(degree : ℤ) - 1) a b).operator = (normalMinusOne (dividedDerivative degree (Y a)) (Y b)).val :=
+        fieldResidue_negative_normal (Y a) (Y b) degree
       rw [identification]
-      have locality (first second : V) : ∃ order : ℕ, delta^[order] (FieldNormalProductLocality.commutator (Y first) (Y second)) = 0 := by
-        obtain ⟨order, law⟩ := localityHyp first second
-        refine ⟨order, ?_⟩
-        change (deltaEnd : Module.End ℂ (ℤ → ℤ → Module.End ℂ V))^[order] (FieldNormalProductLocality.commutator (Y first) (Y second)) = 0
-        have law' : (deltaEnd ^ order) (FieldNormalProductLocality.commutator (Y first) (Y second)) = 0 := by
-          funext left right
-          rw [deltaEnd_iterate_apply]
-          exact congrFun (congrFun law left) right
-        rw [← Module.End.pow_apply]
-        funext left right
-        rw [binomial]
-        have lawPoint := congrFun (congrFun law' left) right
-        rw [binomial] at lawPoint
-        exact lawPoint
+      have locality (first second : V) : ∃ order : ℕ,
+          delta^[order] (FieldNormalProductLocality.commutator (Y first) (Y second)) = 0 :=
+        localityHyp first second
       obtain ⟨firstOrder, firstKilled⟩ := locality a c; obtain ⟨secondOrder, secondKilled⟩ := locality b c
       obtain ⟨thirdOrder, thirdKilled⟩ := locality a b; refine ⟨(firstOrder + degree) + secondOrder + (thirdOrder + degree), ?_⟩
       exact normalMinusOne_locality (dividedDerivative degree (Y a)) (Y b) (Y c) (firstOrder + degree) secondOrder (thirdOrder + degree) (dividedDerivative_locality (Y a) (Y c)
@@ -692,7 +663,7 @@ theorem residue_closure
         apply congrArg (fun value : V => (finish : ℂ) • value); apply finsum_congr; intro offset
         rw [show start - ((offset : ℤ) - 1) - 1 = start - offset by omega, show finish + ((offset : ℤ) - 1) = finish - 1 + offset by omega]
     have firstMatch (mode : ℤ) (input : V) : residueLeft (Y := Y) r mode a b input = weightedSum (Y a) (Y b) r mode input := by rfl
-    have secondMatch (mode : ℤ) (input : V) : residueRight (Y := Y) r mode a b input = weightedSum (Y b) (Y a) (r + mode) 0 input := by dsimp only [residueRight, weightedSum]; simp only [zero_add, weight]
+    have secondMatch (mode : ℤ) (input : V) : residueRight (Y := Y) r mode a b input = weightedSum (Y b) (Y a) (r + mode) 0 input := by dsimp only [residueRight, fieldResidueRight, weightedSum]; simp only [zero_add, weight]
     apply LinearMap.ext; intro vector
     change translationOp ((((residueField (Y := Y) r a b).operator) [[index]]) vector) - (((residueField (Y := Y) r a b).operator) [[index]]) (translationOp vector) = -(index : ℂ) • ((((residueField (Y := Y) r a
       b).operator) [[index - 1]]) vector)
@@ -710,11 +681,11 @@ theorem residue_closure
   have creation : (((residueField (Y := Y) r a b).operator) [[-1]]) vacuum = mu (Y := Y) a r b ∧ ∀ index : ℤ, 0 ≤ index → (((residueField (Y := Y) r a b).operator) [[index]]) vacuum = 0 := by
 
     have rightZero (index : ℤ) : residueRight (Y := Y) r index a b vacuum = 0 := by
-      unfold residueRight; apply finsum_eq_zero_of_forall_eq_zero; intro offset; rw [creative a offset (by omega)]
+      unfold residueRight fieldResidueRight; apply finsum_eq_zero_of_forall_eq_zero; intro offset; rw [creative a offset (by omega)]
       simp
     constructor
     · rw [(residueField (Y := Y) r a b).coefficient, residueCoefficient, rightZero, smul_zero, sub_zero]
-      unfold residueLeft; rw [finsum_eq_single _ 0]
+      unfold residueLeft fieldResidueLeft; rw [finsum_eq_single _ 0]
       · simp [integerBinomial, creationHyp b, mu]
       · intro offset distinct
         rw [creative b (-1 + (offset : ℤ)) (by omega)]; simp
