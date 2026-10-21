@@ -36,7 +36,9 @@ run_cmd do
     Term.synthesizeSyntheticMVarsNoPostponing
     let type ← instantiateMVars type
     let result ← localRebuild type [] (some table)
-    unless result.cost == .one do
+    let unresolvedOwner := result.cost == .unknown &&
+      (result.detail.splitOn "candidate-not-loaded").length > 1
+    unless result.cost == .one || unresolvedOwner do
       throwError "lookup composed two B declarations: {result.detail}"
     let bucket := hash (DiscrTree.Key.const ``Last 0)
     let files := index.manifest.find? (fun item => item.1 == bucket) |>.map (·.2) |>.getD #[]
@@ -109,13 +111,16 @@ run_cmd do
     let negative ← Term.elabType (← `(First → Last))
     Term.synthesizeSyntheticMVarsNoPostponing
     for (type, expected) in #[(← instantiateMVars positive, EdgeCost.zero),
-        (← instantiateMVars negative, EdgeCost.one)] do
+        (← instantiateMVars negative, EdgeCost.unknown)] do
       withEnv base do
         let type ← copyStatement source .anonymous type
         for _ in [:2] do
           let result ← localRebuild type [] (some table)
           unless result.cost == expected do
             throwError "cold candidate certification: {result.detail}"
+          if expected == .unknown then
+            unless (result.detail.splitOn "candidate-name-owned-by-another-module").length > 1 do
+              throwError "cold owner collision lost its incomplete-enumeration reason"
           logInfo s!"LOOKUP_COLD cost={reprStr result.cost} {result.detail}"
 
 run_cmd liftTermElabM do

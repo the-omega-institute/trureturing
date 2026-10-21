@@ -166,8 +166,7 @@ private partial def viewPaths (type : Expr) (fuel : Nat := 32) : MetaM (Array (A
 private unsafe def pathsInEnvironment (env : Environment) (type : Expr)
     (label : String) : IO (Array (Array DiscrTree.Key)) := do
   let work : CoreM (Array (Array DiscrTree.Key)) := MetaM.run' do
-    try viewPaths type
-    catch ex =>
+    tryCatchRuntimeEx (viewPaths type) fun ex => do
       if ex.isInterrupt || ex.isMaxHeartbeat then throw ex
       IO.eprintln s!"lookup.path_fallback declaration={label} reason={← ex.toMessageData.toString}"
       return #[← DiscrTree.mkPath (← mkFreshExprMVar (mkSort .zero))]
