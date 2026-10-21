@@ -43,7 +43,8 @@ private theorem basis_nonzero : WithLp.toLp 2 (φ 2 0) ≠ 0 := by
   have hc := congrArg (fun v : EuclideanSpace ℂ (Fin 2 × Fin 2 × Fin 2) =>
     v (0, 0, 0)) h
   have hz : conj (z 2) + z 2 = 1 := by
-    norm_num [z, map_div₀, map_add, map_mul, map_ofNat] <;> ring
+    norm_num [z, map_div₀, map_add, map_mul, map_ofNat]
+    ring
   have hentry : φ 2 0 (0, 0, 0) = 1 / (Real.sqrt 3 : ℂ) := by
     norm_num [φ, hz]
   change φ 2 0 (0, 0, 0) = 0 at hc
