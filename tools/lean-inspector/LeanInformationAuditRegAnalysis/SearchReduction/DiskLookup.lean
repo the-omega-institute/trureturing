@@ -28,6 +28,7 @@ structure Header where
   format : String := version
   basis : String
   mathlib : String
+  inputs : UInt64
   root : String
   digest : UInt64
   complete : Bool
@@ -155,15 +156,70 @@ private def runGit (args : Array String) : IO String := do
 
 /-- Read compiler module data without importing a full environment. All module
 parts, including private declarations, participate in the coverage counts. -/
-private def moduleParts (name : Name) : IO (Array (ModuleData × CompactedRegion)) := do
+private unsafe def moduleParts (name : Name) : IO (Array (ModuleData × CompactedRegion)) := do
   let file ← findOLean name
   let main ← readModuleData file
   if !main.1.isModule then return #[main]
-  readModuleDataParts #[file, OLeanLevel.server.adjustFileName file,
+  let parts ← readModuleDataParts #[file, OLeanLevel.server.adjustFileName file,
     OLeanLevel.private.adjustFileName file]
+  main.2.free
+  return parts
 
-/-- Production inputs are protected frozen membership, the pinned Mathlib data
-and the explicit format. Program bytes never enter the reuse identity. -/
+private def ownedName (n : Name) : Name := (String.ofList n.toString.toList).toName
+private def ownedString (s : String) : String := String.ofList s.toList
+
+/-- The callback retains only freshly allocated metadata. The module payload
+has left scope before its regions are released in reverse dependency order. -/
+@[noinline] private unsafe def visitModule (name : Name)
+    (visit : Array ModuleData → IO α) : IO α := do
+  let (result, regions) ← do
+    let parts ← moduleParts name
+    let result ← visit (parts.map (·.1))
+    pure (result, parts.map (·.2))
+  for region in regions.reverse do region.free
+  return result
+
+private unsafe def summary (name : Name) : IO (Array Name × Array Name × Array Name × UInt64) :=
+  visitModule name fun parts => do
+    let mut deps := #[]
+    let mut rigidNames := #[]
+    let mut reducible := #[]
+    let mut fingerprint : UInt64 := 0
+    for part in parts do
+      for info in part.constants do
+        fingerprint := mixHash fingerprint (mixHash info.type.hash (hash info.value?))
+        if rigid info then rigidNames := rigidNames.push (ownedName info.name)
+        if let .defnInfo value := info then
+          let mut body := value.value
+          while body.isLambda do body := body.bindingBody!
+          unless body.isProj || value.hints.isAbbrev do
+            rigidNames := rigidNames.push (ownedName info.name)
+      for (extension, entries) in part.entries do
+        if extension == `reducibilityCore then
+          for entry in entries do
+            let (n, status) : Name × ReducibilityStatus := unsafeCast entry
+            if status == .reducible then reducible := reducible.push (ownedName n)
+      for dependency in part.imports do deps := deps.push (ownedName dependency.module)
+    return (deps, rigidNames, reducible, fingerprint)
+
+private unsafe def moduleEntries (name : Name) (rigidNames : NameSet) :
+    IO (Array (List String × Entry) × Nat) :=
+  visitModule name fun parts => do
+    let mut entries := #[]
+    let mut count := 0
+    for part in parts do
+      for info in part.constants do
+        count := count + 1
+        let entry : Entry := {module := name.toString, name := ownedString info.name.toString}
+        entries := entries.push (["member", toString (canonical info.type).hash], entry)
+        let mut paths : Std.HashSet (List String) := {}
+        for view in conclusions info.type do
+          paths := paths.insert (path rigidNames.contains view)
+        for keys in paths do entries := entries.push ("candidate" :: keys, entry)
+    return (entries, count)
+
+/-- Production inputs are protected frozen membership, compiled module data,
+the pinned Mathlib data and explicit format. Program bytes are excluded. -/
 unsafe def produce (directory : System.FilePath) (basis mathlib : String)
     (roots : Array Name) (checkSources : Bool := true) : IO Header := do
   IO.FS.createDirAll directory
@@ -173,71 +229,55 @@ unsafe def produce (directory : System.FilePath) (basis mathlib : String)
   let mut reducibleNames : NameSet := {}
   let mut modules : Array Name := #[]
   let mut missing : Array String := #[]
-  -- This first pass retains only names and rigid-symbol metadata.
+  let mut inputs : UInt64 := hash (version, basis, mathlib, Lean.versionString)
   while !todo.isEmpty do
     let name := todo.back!
     todo := todo.pop
     if seen.contains name then continue
     seen := seen.insert name
     try
-      let parts ← moduleParts name
-      for (part, _) in parts do
-        for info in part.constants do
-          if rigid info then rigidNames := rigidNames.insert info.name
-          if let .defnInfo value := info then
-            let mut body := value.value
-            while body.isLambda do body := body.bindingBody!
-            unless body.isProj || value.hints.isAbbrev do
-              rigidNames := rigidNames.insert info.name
-        for (extension, entries) in part.entries do
-          if extension == `reducibilityCore then
-            for entry in entries do
-              let (n, status) : Name × ReducibilityStatus := unsafeCast entry
-              if status == .reducible then reducibleNames := reducibleNames.insert n
-        for dependency in part.imports do todo := todo.push dependency.module
+      if checkSources && name.toString.startsWith "D5." then
+        let source := name.toString.replace "." "/" ++ ".lean"
+        let expected ← runGit #["rev-parse", s!"{basis}:{source}"]
+        let actual ← runGit #["hash-object", source]
+        unless expected == actual do throw <| IO.userError "source does not match protected basis"
+      let (deps, names, reducible, fingerprint) ← summary name
+      inputs := mixHash inputs (mixHash (hash name) fingerprint)
+      for n in names do rigidNames := rigidNames.insert n
+      for n in reducible do reducibleNames := reducibleNames.insert n
+      todo := todo ++ deps
       modules := modules.push name
+      if modules.size % 1000 == 0 then IO.eprintln s!"lookup.index_summarized={modules.size}"
     catch ex => missing := missing.push s!"{name}: {ex}"
   for n in reducibleNames do rigidNames := rigidNames.erase n
+  if missing.isEmpty then
+    try
+      let old : Header ← readJson (directory / "header.json")
+      if old.format == version && old.basis == basis && old.mathlib == mathlib &&
+          old.inputs == inputs && old.complete then
+        IO.println (Json.mkObj [("reused", toJson true), ("header", toJson old)]).compress
+        return old
+    catch _ => pure ()
   let mut nodes : Nodes := {}
   let mut coverage : Array Json := #[]
   let mut declarations := 0
   let mut indexed := 0
   for name in modules.qsort Name.quickLt do
     try
-      if checkSources && name.toString.startsWith "D5." then
-        let source := name.toString.replace "." "/" ++ ".lean"
-        let expected ← runGit #["rev-parse", s!"{basis}:{source}"]
-        let actual ← runGit #["hash-object", source]
-        unless expected == actual do throw <| IO.userError "source does not match protected basis"
-      let parts ← moduleParts name
-      let mut count := 0
-      let mut localIndexed := 0
-      for (part, _) in parts do
-        for info in part.constants do
-          count := count + 1
-          let entry : Entry := {module := name.toString, name := info.name.toString}
-          nodes := insert nodes ["member", toString (canonical info.type).hash] entry
-          let mut paths : Std.HashSet (List String) := {}
-          for view in conclusions info.type do
-            paths := paths.insert (path rigidNames.contains view)
-          -- A reducible result may expose conjunction/iff/subtype views.
-          if (path rigidNames.contains (body info.type)).head? == some "*" then
-            paths := paths.insert ["*"]
-          for keys in paths do nodes := insert nodes ("candidate" :: keys) entry
-          localIndexed := localIndexed + 1
+      let (entries, count) ← moduleEntries name rigidNames
+      for (keys, entry) in entries do nodes := insert nodes keys entry
       declarations := declarations + count
-      indexed := indexed + localIndexed
+      indexed := indexed + count
       coverage := coverage.push <| Json.mkObj [("module", toJson name.toString),
-        ("declarations", toJson count), ("indexed", toJson localIndexed)]
+        ("declarations", toJson count), ("indexed", toJson count)]
+      if coverage.size % 1000 == 0 then IO.eprintln s!"lookup.index_written={coverage.size}"
     catch ex => missing := missing.push s!"{name}: {ex}"
   let digest ← flush directory nodes "root"
   let header : Header := {
-    basis, mathlib, root := fileId "root", digest,
+    basis, mathlib, inputs, root := fileId "root", digest,
     complete := missing.isEmpty && modules.size == seen.size,
     modules := modules.size, declarations, indexed, missing}
   discard <| writeJson (directory / "coverage.json") coverage
-  -- Publication is the final operation. A failed producer cannot publish a
-  -- complete header referring to unfinished pages.
   discard <| writeJson (directory / "header.json.tmp") header
   IO.FS.rename (directory / "header.json.tmp") (directory / "header.json")
   IO.println (toJson header).compress
