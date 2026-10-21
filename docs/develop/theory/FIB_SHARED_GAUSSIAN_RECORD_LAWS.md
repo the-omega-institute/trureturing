@@ -592,3 +592,260 @@ Proof. The mean assertion is Theorem 5.1 and the fibre assertions are Theorems 6
 This distinction uses the task-relative convention of [Second Order Relation Completion, Definition 0.1](AURIC_FIB_SECOND_ORDER_RELATION_COMPLETION.md). In the different native problem of [Joint Transfer–Coherence Interface Geometry, Definition 1.4](FIB_NATIVE_JOINT_TRANSFER_COHERENCE_INTERFACE_GEOMETRY.md), a single history-independent channel acts on one already reached specimen with fixed common metadata; that premise does not supply the world-dependent initial program here. Likewise [Native Nonlinear Readout Capacity, Definition 2.1](FIB_NATIVE_NONLINEAR_READOUT_CAPACITY_AND_MINIMAL_DIMENSION.md) requires an encoder intertwining its own native actions and one deterministic output map. The stochastic output and explicitly different preparation family here supply no correspondence satisfying that contract. These are distinctions of mathematical hypotheses and outputs. The repo-derived content is the concrete conditional FIB program, instrument and indexed-law correspondence proved above, using the cited mature representation and Gaussian tools; no priority, physical identification or nonclassical resource conclusion is entailed. $\square$
 
 ## 追加锚（本行以下为增补区）
+
+## 8. The retained two-action prefix and its system pair
+
+**Definition 8.1 (A fixed-world nonselective marginal).** Fix any $W\in\mathcal W$ and any $\sigma>0$, with exactly the preparations and apparatus of Assumptions 2.1 and 4.1. Execute the original prefix
+
+$$
+\mathrm{read}_0,\ J,\ \mathrm{read}_1,\ M,\ \mathrm{read}_2.
+$$
+
+All three acquisitions are made and retained. The state considered here is the final system marginal after averaging their actual records, followed by tracing out fifteen system modes. It is not a state selected by a numeric history. In the column vectorization of Definition 3.1, choose
+
+$$
+q_A=X_{3,11}=q_{14},\quad q_B=X_{3,21}=q_{15},\qquad
+p_A=\pi_{14},\quad p_B=\pi_{15},\qquad [q_j,p_k]=i\delta_{jk}.
+$$
+
+Thus $\mathcal H=\mathcal H_{AB}\otimes\mathcal H_{\rm rest}$ with $\mathcal H_{AB}=L^2(\mathbb R^2)$. Write $\mathcal U_E(\rho)=U_{A_E}\rho U_{A_E}^\dagger$ and retain the whole-outcome channels $\mathcal D_i$ of Proposition 4.3. The pair state is
+
+$$
+\rho_{AB}^{W,\sigma}
+=\operatorname{Tr}_{\rm rest}
+\bigl(\mathcal D_2\circ\mathcal U_M\circ\mathcal D_1
+\circ\mathcal U_J\circ\mathcal D_0\bigr)(\rho_W).
+$$
+
+Equivalently, if $\mathsf K_{JM}(z)=K_2(z_2)U_{A_M}K_1(z_1)U_{A_J}K_0(z_0)$ is the retained-record Kraus density from Theorem 5.1, this is
+
+$$
+\rho_{AB}^{W,\sigma}
+=\operatorname{Tr}_{\rm rest}\int_{\mathbb R^3}
+\mathsf K_{JM}(z)\rho_W\mathsf K_{JM}(z)^\dagger\,d^3z.
+$$
+
+The integral is the normal-instrument integral of Theorem 4.2. It marginalizes a retained record; it does not omit an acquisition, reset a probe or divide by a selected-event probability. The other five supplied probes are unused in this prefix and can be traced out in their independent input states.
+
+**Proposition 8.2 (Pair closure under the actual reads and controls).** The pair projections of the three laboratory readout rows are
+
+$$
+(\ell_0)_{AB}=(0,0),\qquad
+(\ell_1)_{AB}=(1,0),\qquad
+(\ell_2)_{AB}=(8,0).
+$$
+
+Each control preserves the pair as a closed canonical subsystem. Nonselective readout reduces to a Gaussian momentum kick on that pair even when the rest is correlated with it.
+
+Proof. The pair is the first column of $X_3$, so Definition 3.1 gives its readout contribution $i^3q_A$ and no $q_B$ term. Left multiplication by $J$ or $M$ acts separately on each matrix column, hence $U_{A_E}=U_E^{AB}\otimes U_E^{\rm rest}$ under this tensor splitting, with the inverse-transpose momentum action of Theorem 3.2.
+
+For a read at clock $i$, split $F_i(q)=f_i^{AB}+f_i^{\rm rest}$, where $f_i^{AB}=i^3q_A$ (zero at clock zero). Put
+
+$$
+r_\sigma=\frac{1}{4\sigma^2},\qquad
+\mu_\sigma=\mathcal N(0,r_\sigma),\qquad
+V_i^{AB}(\eta)=e^{-i\eta f_i^{AB}},\quad
+V_i^{\rm rest}(\eta)=e^{-i\eta f_i^{\rm rest}}.
+$$
+
+The spectral momentum distribution of the independent probe in Assumption 4.1 and its coupling in Theorem 4.2 give
+
+$$
+\mathcal D_i(\rho)=\int
+(V_i^{AB}(\eta)\otimes V_i^{\rm rest}(\eta))\rho
+(V_i^{AB}(\eta)\otimes V_i^{\rm rest}(\eta))^\dagger
+\,\mu_\sigma(d\eta).
+$$
+
+This is a common kick parameter on pair and rest, not an assumption of independent kicks on those subsystems. Unitary invariance of the partial trace on the rest gives, for any trace-class $\rho$ including correlated inputs,
+
+$$
+\operatorname{Tr}_{\rm rest}\mathcal D_i(\rho)
+=\int V_i^{AB}(\eta)
+(\operatorname{Tr}_{\rm rest}\rho)
+V_i^{AB}(\eta)^\dagger\,\mu_\sigma(d\eta).
+$$
+
+Pair-factorization of the controls and this identity justify successive pair reduction throughout the nonselective composition in Definition 8.1. In particular the initial read is still present even though its reduced pair channel is the identity. No such identity for a branch conditioned on the retained records is being asserted. $\square$
+
+## 9. Chronological quadratures and the full centered covariance
+
+**Proposition 9.1 (All three probe contributions).** Denote the initial pair quadratures by uppercase $Q_A,Q_B,P_A,P_B$. In the input state of Assumption 2.1 their means are
+
+$$
+\langle Q_A\rangle=a_3P_{11},\quad
+\langle Q_B\rangle=a_3P_{21},\quad
+\langle P_A\rangle=\langle P_B\rangle=0,
+$$
+
+and their centered symmetrized covariance is $I_4/2$ in ordering $(Q_A,P_A,Q_B,P_B)$. Let $\eta_0,\eta_1,\eta_2$ be the three initial probe momentum observables. They commute with the initial system, are independent of it and of one another in the input product state, and each has mean zero and variance $r_\sigma$. They are not the pointer position noises of variance $\sigma^2$ in Theorem 5.1. Uppercase system quadratures here are operators, not a proposed joint classical draw of positions and momenta.
+
+The final pair quadratures, pulled back to this common input dilation, are exactly
+
+$$
+q_A=Q_A,\qquad q_B=Q_A+Q_B,\qquad
+p_A=P_A-P_B+\eta_1-8\eta_2,\qquad
+p_B=P_B-\eta_1.
+$$
+
+Proof. Theorem 4.2 sends a pair momentum vector to itself minus $(\ell_i)_{AB}\eta_i$, while leaving the pair positions fixed. Proposition 8.2 and Theorem 3.2 therefore give the chronological list
+
+$$
+\begin{aligned}
+\mathrm{read}_0:\quad
+&(q_A,q_B)=(Q_A,Q_B),&
+&(p_A,p_B)=(P_A,P_B),\\
+J:\quad
+&(q_A,q_B)=(Q_B,Q_A),&
+&(p_A,p_B)=(P_B,P_A),\\
+\mathrm{read}_1:\quad
+&(q_A,q_B)=(Q_B,Q_A),&
+&(p_A,p_B)=(P_B-\eta_1,P_A),\\
+M:\quad
+&(q_A,q_B)=(Q_A,Q_A+Q_B),&
+&(p_A,p_B)=(P_A-P_B+\eta_1,P_B-\eta_1),\\
+\mathrm{read}_2:\quad
+&(q_A,q_B)=(Q_A,Q_A+Q_B),&
+&(p_A,p_B)=(P_A-P_B+\eta_1-8\eta_2,P_B-\eta_1).
+\end{aligned}
+$$
+
+For the $M$ line, $M^{-T}=\begin{pmatrix}-1&1\\1&0\end{pmatrix}$. The initial probe $\eta_0$ has zero pair coefficient; $\eta_1$ is present after both subsequent operations; the last read has coefficient eight, not one. Every line uses the same initial system and three independent probes. $\square$
+
+**Proposition 9.2 (Covariance and moment domain).** For every fixed $W\in\mathcal W$ and $\sigma>0$, $\rho_{AB}^{W,\sigma}$ is a two-mode Gaussian state with finite centered second moments. In ordering $\xi=(q_A,p_A,q_B,p_B)^T$, set
+
+$$
+V_{jk}=\frac12\left\langle
+\Delta\xi_j\Delta\xi_k+\Delta\xi_k\Delta\xi_j
+\right\rangle.
+$$
+
+Then
+
+$$
+V=\begin{pmatrix}
+\frac12&0&\frac12&0\\
+0&1+65r_\sigma&0&-(\frac12+r_\sigma)\\
+\frac12&0&1&0\\
+0&-(\frac12+r_\sigma)&0&\frac12+r_\sigma
+\end{pmatrix}.
+$$
+
+Proof. Insert Proposition 9.1 into the initial product-state moments. In particular
+
+$$
+\begin{aligned}
+\operatorname{Var}(p_A)&=\tfrac12+\tfrac12+r_\sigma+64r_\sigma,\\
+\operatorname{Var}(p_B)&=\tfrac12+r_\sigma,\\
+\operatorname{Cov}_{\rm sym}(p_A,p_B)&=-\tfrac12-r_\sigma,\\
+\operatorname{Cov}_{\rm sym}(q_A,q_B)&=\tfrac12.
+\end{aligned}
+$$
+
+All position–momentum centered cross terms vanish. Gaussianity follows from the specified Gaussian system and probes, their linear canonical controls and couplings, and the nonselective Gaussian kick averages and partial traces in Proposition 8.2. Equivalently the final quadratures in Proposition 9.1 are linear in the quadratures of that common Gaussian input.
+
+For the unbounded quadratures the identities can first be read on the joint Schwartz core: the initial Gaussian is Schwartz, and invertible linear pullbacks and the stated bilinear coupling shears preserve that class. Its first and second quadrature forms are finite. Passing to the reduced state preserves these expectations; alternatively the kick integrals have finite second moments because $r_\sigma<\infty$. Thus the covariance computation does not apply a bounded-observable channel to an unbounded operator without a moment extension. No uniform-in-$W$ energy estimate is used.
+
+Changing $W$ changes the final displacement
+
+$$
+\langle\xi\rangle=(a_3P_{11},0,a_3(P_{11}+P_{21}),0)^T,
+$$
+
+but leaves $V$ unchanged. In particular $a_3=0$ sets these means to zero; it does not remove the $X_3$ oscillator factors or their vacuum fluctuations of variance $1/2$. All lower-degree and sampled-zero worlds remain included. $\square$
+
+## 10. A sufficient EPR witness and the sharp Gaussian boundary
+
+**Proposition 10.1 (The fixed EPR witness).** For the nonselective pair in Definition 8.1 put
+
+$$
+u=q_B-q_A,\qquad v=p_A+p_B.
+$$
+
+Then
+
+$$
+u=Q_B,\qquad v=P_A-8\eta_2,\qquad
+\operatorname{Var}(u)=\tfrac12,\qquad
+\operatorname{Var}(v)=\tfrac12+64r_\sigma,
+$$
+
+and hence
+
+$$
+\operatorname{Var}(u)+\operatorname{Var}(v)
+=1+64r_\sigma=1+\frac{16}{\sigma^2}.
+$$
+
+The $\eta_1$ terms cancel exactly in $v$, while remaining visible in the full covariance of Proposition 9.2. This cancellation is not removal of read one.
+
+For the mature separability criterion use L.-M. Duan, G. Giedke, J. I. Cirac and P. Zoller, *Inseparability criterion for continuous variable systems*, [quant-ph/9908056v2](https://arxiv.org/pdf/quant-ph/9908056v2), PDF p. 1, Eqs. (2a)–(2b), and pp. 1–2, Theorem 1, Eq. (3); published in *Physical Review Letters* **84**, 2722, [DOI:10.1103/PhysRevLett.84.2722](https://doi.org/10.1103/PhysRevLett.84.2722). Apply its $a=1$ case to mode 1 $(x_1,p_1)=(q_B,p_B)$ and mode 2 $(x_2,p_2)=(-q_A,-p_A)$. The second choice is local parity on A and preserves the canonical commutator. The paper's $u=x_1+x_2$ and $v=p_1-p_2$ are exactly the pair above, so every separable state with these finite variances obeys their sum $\ge2$.
+
+The displayed sum is less than two precisely when $\sigma>4$. Thus this witness proves entanglement for every fixed $W$ when $\sigma>4$. At or below four this particular witness supplies no separability conclusion.
+
+Proof. Subtract and add the quadratures in Proposition 9.1, use their input moments, and apply the cited variance criterion with the stated local canonical choices. $\square$
+
+**Proposition 10.2 (Exact classification for this Gaussian marginal).** For every fixed $W\in\mathcal W$ and $\sigma>0$,
+
+$$
+\begin{aligned}
+\rho_{AB}^{W,\sigma}\text{ is separable}
+&\quad\Longleftrightarrow\quad
+0<\sigma\le\frac{4}{\sqrt{1+\sqrt{65}}},\\
+\rho_{AB}^{W,\sigma}\text{ is entangled}
+&\quad\Longleftrightarrow\quad
+\sigma>\frac{4}{\sqrt{1+\sqrt{65}}}.
+\end{aligned}
+$$
+
+In particular equality at the threshold is separable.
+
+Proof. Apply R. Simon, *Peres-Horodecki Separability Criterion for Continuous Variable Systems*, [quant-ph/9909044v1](https://arxiv.org/pdf/quant-ph/9909044v1), published in *Physical Review Letters* **84**, 2726, [DOI:10.1103/PhysRevLett.84.2726](https://doi.org/10.1103/PhysRevLett.84.2726). The normalization is that paper's $[q,p]=i$: PDF p. 2, Eq. (3) orders the quadratures as $(q_1,p_1,q_2,p_2)$, and Eq. (6) and its variance-matrix paragraph define the same symmetrized $V$, with Eq. (7) giving $V+i\Omega/2\ge0$. Its PDF p. 3, Eq. (16) uses the mode blocks $V=\begin{pmatrix}A&C\\C^T&B\end{pmatrix}$. For Proposition 9.2 these are
+
+$$
+A=\operatorname{diag}(\tfrac12,1+65r_\sigma),\quad
+B=\operatorname{diag}(1,\tfrac12+r_\sigma),\quad
+C=\operatorname{diag}(\tfrac12,-\tfrac12-r_\sigma).
+$$
+
+Write $J_2=\begin{pmatrix}0&1\\-1&0\end{pmatrix}$ for the paper's symplectic $J$, distinct from the FIB action $J$. Simon's Eq. (19), PDF p. 4, is
+
+$$
+\det A\det B+(\tfrac14-|\det C|)^2
+-\operatorname{tr}(AJ_2CJ_2BJ_2C^TJ_2)
+\ \ge\ \frac{\det A+\det B}{4}.
+$$
+
+The theorem directly below Eq. (19) makes this condition necessary and sufficient for separability of a two-mode Gaussian state. Proposition 9.2 supplies that Gaussian hypothesis and the required finite covariance. The finite substitution here gives
+
+$$
+\begin{aligned}
+\det A&=\tfrac12+\tfrac{65}{2}r_\sigma,&
+\det B&=\tfrac12+r_\sigma,&
+\det C&=-\tfrac14-\tfrac12r_\sigma,\\
+\operatorname{tr}(AJ_2CJ_2BJ_2C^TJ_2)
+&=(\tfrac12+r_\sigma)(\tfrac12+\tfrac{67}{4}r_\sigma).
+\end{aligned}
+$$
+
+Consequently left side minus right side of Eq. (19) is
+
+$$
+\frac{64r_\sigma^2-2r_\sigma-1}{4}.
+$$
+
+Since $r_\sigma>0$, this is nonnegative exactly when $r_\sigma\ge(1+\sqrt{65})/64$. Substituting $r_\sigma=1/(4\sigma^2)$ gives the stated classification, with equality included by the non-strict separability condition. This numerical boundary is the substitution for this FIB marginal, not a threshold asserted in Simon's general theorem. The Duan witness of Proposition 10.1 is sufficient on the smaller range $\sigma>4$; its failure to violate the bound does not settle the intermediate range. $\square$
+
+## 11. Classical pointer laws and the scope of the internal entanglement
+
+**Proposition 11.1 (Compatible conclusions for different observable families).** For each fixed original operation word, the exact classical latent-position representation of Theorem 5.1 and Proposition 5.3 coexists with the internal two-mode entanglement classified in Proposition 10.2 for the specified prefix. The original positions-only pointer protocol does not measure the additional conjugate observables needed to evaluate the EPR witness.
+
+Proof. Theorem 5.1 represents the actual fixed-word pointer vector by one common $X$ and independent pointer noises. Proposition 5.3 identifies why: the position controls and probe couplings pull all these pointers back to commuting position observables. This is an exact statement about that record family. In contrast $p_A+p_B$ in Proposition 10.1 contains initial system momentum and probe momentum. A classical representation for the pointer positions does not supply a joint classical representation of all canonical system observables or imply separability of $\rho_{AB}^{W,\sigma}$.
+
+Although $u$ and $v$ commute with one another, accessing their variances requires conjugate-observable measurements beyond the original outward pointer menu. No permission or implementation for such additional measurements is part of Assumption 4.1. The mathematical witness and covariance therefore identify an internal state property without replacing the recorded protocol by an augmented experiment. $\square$
+
+The classification is pointwise in a fixed $W$ under the supplied seventeen-mode Gaussian preparation, and concerns only the nonselective pair after the retained prefix. It makes no assertion about an arbitrary mixture over $W$, a branch conditioned on an exact history, or a word chosen adaptively from outcomes; Proposition 5.4 retains its fixed-word restriction. Zero cubic displacement does not change the mode count. Finite moments and finite preparation energy for each fixed world do not give a uniform energy or preparation-resource bound.
+
+The assumed preparation family, shared ideal controls and probes remain those of §§2–4. The entanglement calculation supplies neither a legal encoding from an unknown native carrier, nor physical realization, Bell violation, quantum advantage, minimum resources or a literature priority claim. It does not repair the positive-noise failure of the literal-process requirement in Propositions 7.1 and 7.5. The additional result is the source-dependent state reduction, covariance and application of the cited separability criteria to that specified Gaussian program.
+
+## 追加锚（本行以下为增补区）

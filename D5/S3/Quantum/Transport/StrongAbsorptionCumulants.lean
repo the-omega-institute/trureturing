@@ -53,8 +53,11 @@ correctionJet_moments: proof_shape: bind-only; escape_witness: none; consumers: 
 baseMoment_models: proof_shape: bind-only; escape_witness: none; consumers: D5.S3.Quantum.Transport.StrongAbsorptionCumulants.rescaledMomentExpansion
 rescaledMomentExpansion: proof_shape: content; escape_witness: none; consumers: D5.S3.Quantum.Transport.StrongAbsorptionCumulants.result
 result: proof_shape: content; escape_witness: none; consumers: none (settling result)
+Escape audit for public helper statements unfinished: https://github.com/the-omega-institute/trureturing/issues/19485
 -/
 
+import D5.S3.Quantum.Transport.StrongAbsorption.Foundations
+import D5.S3.Quantum.Transport.StrongAbsorption.LaguerreMoments
 import D5.S3.Quantum.Transport.StrongAbsorption.Density
 
 namespace D5.S3.Quantum.Transport.StrongAbsorptionCumulants
@@ -110,7 +113,7 @@ private theorem powerErrorPoly_eval (M k : ℕ) (p : (Fin M → ℝ) × (Fin M �
         (k+2 : ℝ)*((M : ℝ)⁻¹*powerSum M 3 p.1)*((Finset.univ.expect p.1))^(k+1) := by
   simp [powerErrorPoly,zPoly_eval,wPoly_eval,qPoly_eval]
 
-private noncomputable def baseExpectation (M : ℕ) (P : MvPolynomial (Fin M ⊕ Fin M) ℝ) : ℝ :=
+noncomputable def baseExpectation (M : ℕ) (P : MvPolynomial (Fin M ⊕ Fin M) ℝ) : ℝ :=
   (∫ p, baseWeight M M p*eval (Sum.elim p.1 p.2) P)/(partition M M)^2
 
 private theorem laguerreZPower_integrable {M : ℕ} (hM : 1 ≤ M) (r : ℕ) :
@@ -121,7 +124,7 @@ private theorem laguerreZPower_integrable {M : ℕ} (hM : 1 ≤ M) (r : ℕ) :
 private noncomputable def singleMoment (M r : ℕ) : ℝ :=
   (∫ x, laguerreWeight M M x*(Finset.univ.expect x)^r)/partition M M
 
-private noncomputable def singleWMoment (M r : ℕ) : ℝ :=
+noncomputable def singleWMoment (M r : ℕ) : ℝ :=
   (∫ x, laguerreWeight M M x*(Finset.univ.expect (fun i => x i^2))*(Finset.univ.expect x)^r)/partition M M
 
 private def RescaledMomentExpansion : Prop :=
@@ -169,7 +172,7 @@ private theorem baseExpectation_observableCorrection {M : ℕ} (hM : 1 ≤ M) (r
   field_simp
   <;> rfl
 
-private theorem baseExpectation_add {M : ℕ} (hM : 1 ≤ M) (P Q : MvPolynomial (Fin M ⊕ Fin M) ℝ) :
+theorem baseExpectation_add {M : ℕ} (hM : 1 ≤ M) (P Q : MvPolynomial (Fin M ⊕ Fin M) ℝ) :
     baseExpectation M (P+Q) = baseExpectation M P+baseExpectation M Q := by
   have hm : 0 < (M : ℝ) := Nat.cast_pos'.mpr hM
   unfold baseExpectation
@@ -199,7 +202,7 @@ private theorem laguerreHw_iterated {M : ℕ} (hM : 1 ≤ M) (r : ℕ) :
   have h := laguerreWeighted_mgf_derivative hM ((Finset.univ.expect (fun i : Fin M => ((X i)^2 : MvPolynomial (Fin M) ℝ)))) (singleWPoly_nonneg M) r
   simpa only [laguerreHw,singleWPoly_eval] using h
 
-private theorem law_polynomial_integrable {M : ℕ} (hM : 1 ≤ M) {γ : ℝ} (hγ : 0 < γ)
+theorem law_polynomial_integrable {M : ℕ} (hM : 1 ≤ M) {γ : ℝ} (hγ : 0 < γ)
     (P : MvPolynomial (Fin M ⊕ Fin M) ℝ) :
     Integrable (fun p => eval (Sum.elim p.1 p.2) P) (law M γ) := by
   unfold law
@@ -208,7 +211,7 @@ private theorem law_polynomial_integrable {M : ℕ} (hM : 1 ≤ M) {γ : ℝ} (h
     (Eventually.of_forall fun _ => ENNReal.ofReal_lt_top)).mpr
   simpa only [smul_eq_mul,ENNReal.toReal_ofReal (weight_nonneg M γ _)] using weightPolynomial_integrable hM hγ P
 
-private theorem rescaled_pow_integrable {M : ℕ} (hM : 1 ≤ M) {γ : ℝ} (hγ : 0 < γ) (r : ℕ) :
+theorem rescaled_pow_integrable {M : ℕ} (hM : 1 ≤ M) {γ : ℝ} (hγ : 0 < γ) (r : ℕ) :
     Integrable (fun p => rescaledObservable M γ p^r) (law M γ) := by
   have hs : integrableExpSet (rescaledObservable M γ) (law M γ) = Set.univ :=
     eq_univ_of_univ_subset (fun {t} _ => rescaledObservable_integrable_exp hM hγ t)
@@ -256,7 +259,7 @@ private theorem baseExpectation_densityCorrection {M : ℕ} (hM : 1 ≤ M) (r : 
   field_simp
   <;> ring
 
-private theorem singleWMoment_derivative {M : ℕ} (hM : 1 ≤ M) (r : ℕ) :
+theorem singleWMoment_derivative {M : ℕ} (hM : 1 ≤ M) (r : ℕ) :
     singleWMoment M r = iteratedDeriv r (laguerreHw M) 0 := (laguerreHw_iterated hM r).symm
 
 private theorem rescaledExpansion_of_moments (hm : RescaledMomentExpansion) : RescaledExpansion := by
@@ -506,7 +509,7 @@ private theorem baseMoment_models {M : ℕ} (hM : 1 ≤ M) (r : ℕ) :
       singleMoment_derivative hM,singleWMoment_derivative hM,correctionJet_moments hM r]
     ring
 
-private theorem rescaledMomentExpansion : RescaledMomentExpansion := by
+theorem rescaledMomentExpansion : RescaledMomentExpansion := by
   intro M hM r
   have h := rescaled_moment_integral_expansion hM r
   obtain ⟨h0,h1⟩ := baseMoment_models hM r
