@@ -4975,3 +4975,26 @@ follows from the spectral exponent.
 [PW101]: https://doi.org/10.1007/978-3-642-69894-1_4 "Allan Pinkus, n-Widths in Hilbert Spaces"
 
 ## 追加锚（本行以下为增补区）
+
+## 105. Static record capacity for the retained biased energy class
+
+**Theorem 105.1 (finite-record obstruction).** Retain the original biased real centered class $\mathcal B_E$, form and operator of Definitions 101.1–101.2, with their immutable [Biased Boundary][BA101] and named [IV][IV101] paper premises.
+Fix $0<E<\infty$, $\varepsilon>0$, $r=E/\varepsilon^2$ and an integer $\ell\ge0$. Let $\mathcal W_\ell$ be the independent length-$\ell$ binary records forbidding $11$, with preceding seam $0$ outside the record and no terminal constraint.
+For arbitrary $c:\mathcal B_E\to\mathcal W_\ell$ and one fixed $D:\mathcal W_\ell\to L^2(\Omega,M)$, suppose $\|F-D(c(F))\|_2\le\varepsilon$ for every $F\in\mathcal B_E$.
+The record is all accessible input-dependent data: public parameters, program and header are source-independent; no state, timing, advice, real parameter, side channel or archive supplies further source data.
+Neither map need be linear, continuous or measurable. This covers every acquisition producing such records, without granting acquisition permission; multiple-outcome acquisition must have a nonempty outcome set for every input and satisfy the error bound for every allowed record. Necessarily,
+
+$$
+F_{\ell+2}\ge\prod_{j=1}^{d}\sqrt{\frac{E}{\varepsilon^2\lambda_j}}\quad(d\ge1),\qquad \ell\ge\frac{bE}{8\varepsilon^2}\quad\left(r\ge\frac4b\right).
+$$
+
+*Proof.* §§76.4, 83.2 and 87.1 give $N:=|\mathcal W_\ell|=F_{\ell+2}$. For each positive integer $d$, put $K_d=\{x\in\mathbb R^d:\sum_{j=1}^d\lambda_jx_j^2\le E\}$.
+Writing $v_d$ for the Euclidean unit-ball volume, (101.2) puts $\sum_{j=1}^dx_je_j$ in $\mathcal B_E$ for every $x\in K_d$, and $\operatorname{vol}_d(K_d)=v_d\prod_{j=1}^d\sqrt{E/\lambda_j}$.
+The uniform guarantee covers these inputs by the $N$ radius-$\varepsilon$ balls centered at $D(w)$. Orthogonal projection onto $\operatorname{span}(e_1,\ldots,e_d)$ is a contraction, so their projected centers give $N$ Euclidean radius-$\varepsilon$ balls covering $K_d$, whatever the reconstructions are.
+Finite volume subadditivity gives $v_d\prod_{j=1}^d\sqrt{E/\lambda_j}\le Nv_d\varepsilon^d$; division proves the product bound. Only the balls and ellipsoid are measured, not encoder fibres.
+If $r\ge4/b$, choose $d=\lfloor br/4\rfloor\ge1$. Then $\lambda_j\le j/b\le r/4$ for $j\le d$ by (101.2), so $N\ge2^d$. Since $\mathcal W_\ell\subseteq\{0,1\}^\ell$, $N\le2^\ell$, giving $\ell\ge d\ge br/8$; here $\lfloor x\rfloor\ge x/2$ for $x\ge1$.
+For $E>0$, length zero is achievable exactly when $\varepsilon^2\ge E/\lambda_1$, by the $d=1$ bound and the zero reconstruction in (101.2); equality is included, as are unit factors at other spectral equalities. For $E=0$ the input is $0$ and the empty record suffices. The case $\varepsilon=0$ is outside this statement. $\square$
+The covering-volume method is classical: see [R. Vershynin, *High-Dimensional Probability*, §4.2](https://www.math.uci.edu/~rvershyn/papers/HDP-book/HDP-2.pdf). This is its source-specific application to (101.2), not a new general entropy theorem or a novelty claim.
+This bounds final static symbols independently of query type, unlike §102's scalar-read bound; it does not count reads, controller memory, online updates or physical cost. §§103–104 remain conditional and give neither a matching optimal-bit upper nor native realization.
+
+## 追加锚（本行以下为增补区）
