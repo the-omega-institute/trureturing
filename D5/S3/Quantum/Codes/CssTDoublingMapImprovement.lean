@@ -169,18 +169,17 @@ private lemma diagonal_eval (x : Fin 13 → ZMod 2) (a : Fin 2) (i : Fin 13) :
   exact congrArg (fun p => x p.2)
     ((finProdFinEquiv (m := 2) (n := 13)).symm_apply_apply (a, i))
 
-private lemma sum_blocks {R : Type*} [AddCommMonoid R] (g : Fin 26 → R) :
-    (∑ i, g i) = (∑ j, g ((finProdFinEquiv (m := 2) (n := 13)) (0, j))) +
-      ∑ j, g ((finProdFinEquiv (m := 2) (n := 13)) (1, j)) := by
-  rw [← (finProdFinEquiv (m := 2) (n := 13)).sum_comp g, Fintype.sum_prod_type, Fin.sum_univ_two]
-
 private lemma admissible_witness : admissible C₂ C₁ C₂_le_C₁ (liftedMap cyclicMap) := by
   rintro ⟨_, x, rfl⟩ ⟨_, y, rfl⟩ ⟨_, ⟨z, hz⟩, rfl⟩
   change (∑ i, diagonalMap x i * diagonalMap y i * diagonalMap z i) +
     (∑ i, liftedMap cyclicMap ⟨diagonalMap x, _⟩ i *
       liftedMap cyclicMap ⟨diagonalMap y, _⟩ i *
       liftedMap cyclicMap ⟨diagonalMap z, _⟩ i) = 0
-  rw [liftedMap_apply, liftedMap_apply, liftedMap_apply, sum_blocks, sum_blocks]
+  rw [liftedMap_apply, liftedMap_apply, liftedMap_apply,
+    ← (finProdFinEquiv (m := 2) (n := 13)).sum_comp _,
+    Fintype.sum_prod_type, Fin.sum_univ_two,
+    ← (finProdFinEquiv (m := 2) (n := 13)).sum_comp _,
+    Fintype.sum_prod_type, Fin.sum_univ_two]
   simp only [diagonal_eval, CharTwo.add_self_eq_zero]
 
 private lemma lifted_id :
@@ -263,7 +262,11 @@ private lemma x_weight_bound (x : Fin 13 → ZMod 2) (hx : parityMap x ≠ 0) :
     decide
   have hw : hammingNorm (graphVector cyclicMap x) =
       2 * (hammingNorm x + hammingNorm (cyclicMap x)) := by
-    rw [hammingNorm, Finset.card_filter, Fintype.sum_sum_type, sum_blocks, sum_blocks]
+    rw [hammingNorm, Finset.card_filter, Fintype.sum_sum_type,
+      ← (finProdFinEquiv (m := 2) (n := 13)).sum_comp _,
+      Fintype.sum_prod_type, Fin.sum_univ_two,
+      ← (finProdFinEquiv (m := 2) (n := 13)).sum_comp _,
+      Fintype.sum_prod_type, Fin.sum_univ_two]
     simp only [graphVector, Sum.elim_inl, Sum.elim_inr, diagonal_eval]
     rw [← Finset.card_filter, ← Finset.card_filter]
     change hammingNorm x + hammingNorm x +
@@ -279,17 +282,16 @@ private lemma x_weight_bound (x : Fin 13 → ZMod 2) (hx : parityMap x ≠ 0) :
 private def transposeVector (w : Fin 13 → ZMod 2) :
     (Fin 13 → ZMod 2) := fun i => w i + w (i - 1) + w (i - 2)
 
-private lemma sum_shift (x w : (Fin 13 → ZMod 2)) (k : Fin 13) :
-    (∑ i, x (i + k) * w i) = ∑ i, x i * w (i - k) := by
-  simpa only [dotProduct, Function.comp_apply, Equiv.coe_addRight, Equiv.addRight_symm,
-    sub_eq_add_neg] using (dotProduct_comp_equiv_symm x w (Equiv.addRight k)).symm
-
 private lemma transpose_dot (x w : (Fin 13 → ZMod 2)) :
     dotProduct (cyclicMap x) w = dotProduct x (transposeVector w) := by
   change (∑ i, (x i + x (i + 1) + x (i + 2)) * w i) =
     ∑ i, x i * (w i + w (i - 1) + w (i - 2))
   simp only [add_mul, mul_add, Finset.sum_add_distrib]
-  rw [sum_shift x w 1, sum_shift x w 2]
+  have h₁ := (dotProduct_comp_equiv_symm x w (Equiv.addRight (1 : Fin 13))).symm
+  have h₂ := (dotProduct_comp_equiv_symm x w (Equiv.addRight (2 : Fin 13))).symm
+  simp only [dotProduct, Function.comp_apply, Equiv.coe_addRight, Equiv.addRight_symm] at h₁ h₂
+  simp only [sub_eq_add_neg]
+  rw [h₁, h₂]
 
 private lemma transpose_weight (w : Fin 13 → ZMod 2) :
     hammingNorm (transposeVector w) ≤ 3 * hammingNorm w := by
@@ -356,7 +358,11 @@ private lemma weight_block_sums (z : Fin 26 ⊕ Fin 26 → ZMod 2) :
         (hammingNorm (rightBlock z 0) + hammingNorm (rightBlock z 1)) := Nat.add_le_add h₁ h₂
     _ = hammingNorm z := by
       symm
-      rw [hammingNorm, Finset.card_filter, Fintype.sum_sum_type, sum_blocks, sum_blocks]
+      rw [hammingNorm, Finset.card_filter, Fintype.sum_sum_type,
+        ← (finProdFinEquiv (m := 2) (n := 13)).sum_comp _,
+        Fintype.sum_prod_type, Fin.sum_univ_two,
+        ← (finProdFinEquiv (m := 2) (n := 13)).sum_comp _,
+        Fintype.sum_prod_type, Fin.sum_univ_two]
       rw [hammingNorm, Finset.card_filter, hammingNorm, Finset.card_filter,
         hammingNorm, Finset.card_filter, hammingNorm, Finset.card_filter]
       rfl
@@ -371,7 +377,10 @@ private lemma graph_dot (f : (Fin 13 → ZMod 2) →ₗ[ZMod 2] (Fin 13 → ZMod
   rw [show dotProduct (graphVector f x) z = _ from h]
   change (∑ i, diagonalMap x i * z (Sum.inl i)) +
     (∑ i, diagonalMap (f x) i * z (Sum.inr i)) = _
-  rw [sum_blocks, sum_blocks]
+  rw [← (finProdFinEquiv (m := 2) (n := 13)).sum_comp _,
+    Fintype.sum_prod_type, Fin.sum_univ_two,
+    ← (finProdFinEquiv (m := 2) (n := 13)).sum_comp _,
+    Fintype.sum_prod_type, Fin.sum_univ_two]
   simp only [diagonal_eval]
   change (∑ i, x i * leftBlock z 0 i) + (∑ i, x i * leftBlock z 1 i) +
     ((∑ i, f x i * rightBlock z 0 i) + (∑ i, f x i * rightBlock z 1 i)) = _
