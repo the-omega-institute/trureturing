@@ -5,20 +5,40 @@ cas_ref: sha256:e418f0d063801bc992bd7bb6b1526f6c7d86731b0f7fad560a22a47ffa97ad06
 coverage_gids:
   - gid: D5/S0/Carrier/Conj.add_conj_eq_trace
     target_statement_id: sha256:c0440126e7b1c37e2f57e66c8a531410c7fc61381fdbc863eb681b46b62ee424
+  - gid: D5/S0/Carrier/Conj.conj
+    target_statement_id: sha256:9ac3149001d62a60513aea2ea286510d8318a6320f2c0b4fb185aeb1c165d872
   - gid: D5/S0/Carrier/Conj.conjEquiv
     target_statement_id: sha256:ba1cb329c95648bc84b828b550114ce4d8174484c57d70283de31866f1e4dee4
+  - gid: D5/S0/Carrier/Conj.trace
+    target_statement_id: sha256:2694a56061db3fb7510c4dd8d63e0b7d21ea2e8f47d628ddb5ac564bdfa82277
   - gid: D5/S0/Carrier/GoldenRatio.golden_ratio_spec
     target_statement_id: sha256:27ade5b921f83f26ced1225caa7020b05bb0313023ebb4852d27c5b9eb541e1b
+  - gid: D5/S0/Carrier/Norm.norm
+    target_statement_id: sha256:8ed034d9005dcb500a780fae0a1e993c00f6b570fbfda7cde40f7ff8cc843134
   - gid: D5/S0/Carrier/Norm.norm_eq_mul_conj
     target_statement_id: sha256:0735beb3e0aea5b31b2b5eaaba6a1b5b1a64dee6c8674fe83f8f22510cc2e23d
-  - gid: D5/S0/Carrier/Ring.phi_sq
-    target_statement_id: sha256:a6efadb03b5785f7f097131ab07662f03e2a7282d2716cb6b535cf1099df4449
+  - gid: D5/S0/Carrier/Ring.a
+    target_statement_id: sha256:9a55d3914a2c2abc9cb7f35a377e5cdff87dc3d9947c4cc7b46586ccffa6bc3b
+  - gid: D5/S0/Carrier/Ring.addGroupWithOne
+    target_statement_id: sha256:27f9bb264236becffe3088f436177793d707ea143fb10885b6fdcd189a433191
+  - gid: D5/S0/Carrier/Ring.b
+    target_statement_id: sha256:30a979c47d05fa62c1eda3ed713ed96202a74f7a56426928eb1a73e1d674ebc6
+  - gid: D5/S0/Carrier/Ring.commRing
+    target_statement_id: sha256:922fa941bc6396a42fcdce845352e764f1a7cc59569c43799792de6e9704457a
+  - gid: D5/S0/Carrier/Ring.instAddGoldenInt
+    target_statement_id: sha256:b5b569d00965d6f5caf15e9239e143527c9ab804321a3d04df853cd8bd9b1d64
+  - gid: D5/S0/Carrier/Ring.mk
+    target_statement_id: sha256:84672879540d518b9c60ff31609672517b2f5368d599d416eba79d5e5cea563a
+  - gid: D5/S0/Carrier/Ring.phi
+    target_statement_id: sha256:b49f0b58129e5dd908333752a22134da0a1f6eb45340dced2f476522c4178bd9
   - gid: D5/S0/Carrier/Units.norm_phi_pow
     target_statement_id: sha256:68042ed4babee5ef77b2801c4dce97c1929d862ecd9e857d1547aacf638a6a0f
   - gid: D5/S1/Scale/Embedding.embedding
     target_statement_id: sha256:cb9006a9e40ec45ded5903d39b04f68ebca81215b6a65525236cd2d76412143c
   - gid: D5/S1/Scale/Embedding.embedding_apply
     target_statement_id: sha256:513cd5189cf2ec17f867bf43e963fb910b6ce7cba8d2ad7713be9bd279c4c189
+  - gid: D5/S1/Scale/Embedding.embedding_phi
+    target_statement_id: sha256:4e71a975ef97e7d18f616d6773712b5e992c78b57bc550e0d883826bfcdde8ab
 receipts:
   unresolved_subitems: []
   chain_atoms:

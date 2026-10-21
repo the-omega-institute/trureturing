@@ -5,6 +5,12 @@ cas_ref: sha256:fa201fb41e9c5866c87b555bb23e1359e7acf263b882f9f0665715337c2bb478
 coverage_gids:
   - gid: D5/S0/Carrier/GoldenRatio.golden_ratio_spec
     target_statement_id: sha256:27ade5b921f83f26ced1225caa7020b05bb0313023ebb4852d27c5b9eb541e1b
+  - gid: D5/S0/Carrier/Norm.norm
+    target_statement_id: sha256:8ed034d9005dcb500a780fae0a1e993c00f6b570fbfda7cde40f7ff8cc843134
+  - gid: D5/S0/Carrier/Ring.commRing
+    target_statement_id: sha256:922fa941bc6396a42fcdce845352e764f1a7cc59569c43799792de6e9704457a
+  - gid: D5/S0/Carrier/Ring.phi
+    target_statement_id: sha256:b49f0b58129e5dd908333752a22134da0a1f6eb45340dced2f476522c4178bd9
   - gid: D5/S0/Carrier/Units.norm_phi_pow
     target_statement_id: sha256:68042ed4babee5ef77b2801c4dce97c1929d862ecd9e857d1547aacf638a6a0f
 receipts:

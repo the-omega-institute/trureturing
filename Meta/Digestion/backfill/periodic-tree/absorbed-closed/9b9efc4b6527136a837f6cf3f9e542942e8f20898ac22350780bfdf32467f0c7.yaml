@@ -3,8 +3,34 @@ fingerprints:
   normalized_sha256: sha256:9b9efc4b6527136a837f6cf3f9e542942e8f20898ac22350780bfdf32467f0c7
 cas_ref: sha256:9b9efc4b6527136a837f6cf3f9e542942e8f20898ac22350780bfdf32467f0c7
 coverage_gids:
+  - gid: D5/S0/Carrier/Ring.a
+    target_statement_id: sha256:9a55d3914a2c2abc9cb7f35a377e5cdff87dc3d9947c4cc7b46586ccffa6bc3b
+  - gid: D5/S0/Carrier/Ring.b
+    target_statement_id: sha256:30a979c47d05fa62c1eda3ed713ed96202a74f7a56426928eb1a73e1d674ebc6
+  - gid: D5/S0/Carrier/Ring.commRing
+    target_statement_id: sha256:922fa941bc6396a42fcdce845352e764f1a7cc59569c43799792de6e9704457a
+  - gid: D5/S0/Carrier/Ring.mk
+    target_statement_id: sha256:84672879540d518b9c60ff31609672517b2f5368d599d416eba79d5e5cea563a
   - gid: D5/S0/Carrier/Units.phiUnit
     target_statement_id: sha256:feb2589fb8e43b0138c4ed500d6d5080cc9981e26eab478677f1f1f1dba352aa
+  - gid: D5/S3/Arith/GoldenApparition.a
+    target_statement_id: sha256:91c9dd733de9382f91f7d5ef20ed1c436bfd2de59f8c50bc33eb12f72c3e8ff8
+  - gid: D5/S3/Arith/GoldenApparition.b
+    target_statement_id: sha256:d1969a2c22e2fa628b1b338dbe2f6158a91cc29a66129b161c22019ccd189123
+  - gid: D5/S3/Arith/GoldenApparition.ext
+    target_statement_id: sha256:e7aa56d71ce2b85d9ad11da84788da63986ac65cb35fe683970c442a4132ffa7
+  - gid: D5/S3/Arith/GoldenApparition.instAdd
+    target_statement_id: sha256:3e0db4053989200a81b5ad0c02a71d553d23e3443770ef00c0cf273cd94ad258
+  - gid: D5/S3/Arith/GoldenApparition.instCommRing
+    target_statement_id: sha256:f9bd137b35f2781d30658bfbe41c90d258a5852ed72ea312ef5d5e60b6d85549
+  - gid: D5/S3/Arith/GoldenApparition.instMul
+    target_statement_id: sha256:ff57479d67304990053cfb3aba957996318154ad68729a03d85e6d1f972ab2cf
+  - gid: D5/S3/Arith/GoldenApparition.mk
+    target_statement_id: sha256:af9d32456f7d0570666e8e236a2a056b74625c0c2d231ca5b4c62162c91d3eb1
+  - gid: D5/S3/Arith/GoldenApparition.phi
+    target_statement_id: sha256:ef58eb2559a5c1b6de41eb69fc45d276fdea7d35ac20013422f3d6cd8429e07b
+  - gid: D5/S3/Arith/GoldenApparition.reduce
+    target_statement_id: sha256:9abed30c811cf8a9b772da7fd0450d3098806bf5aa8f95b8912e8851acb76b61
   - gid: D5/S3/Arith/GoldenFibonacciModulusPeriod.goldenMatrixHom
     target_statement_id: sha256:9c4a8d488b09a94fe4cc17f1cb4ad6598ddbb0fc0bc696a63779fdfbddd8acbf
 receipts:
