@@ -82,6 +82,10 @@ $$\forall (M : \mathbb{R}) , (\exists (a : \mathbb{N}) , (\exists (b : \mathbb{N
 
 *Proof.* Machine-checked in Lean as `D5/S3/Quantum/Classicalization/XuImaiGuhneSimultaneousUnboundedness.result` (`✓ std3`). ∎
 
+*Resolves.* `Problems/xu-imai-guhne-2022-classicalization-simultaneous-unboundedness` (proved) by `D5/S3/Quantum/Classicalization/XuImaiGuhneSimultaneousUnboundedness.result`.
+
+<!-- scribe-open-problem-resolution-v1 {"problem_slug":"xu-imai-guhne-2022-classicalization-simultaneous-unboundedness","declaration_gid":"D5/S3/Quantum/Classicalization/XuImaiGuhneSimultaneousUnboundedness.result","resolution_kind":"proved"} -->
+
 *Source.* Repository-derived.
 
 *Acknowledgement.* Zhen-Peng Xu, Satoya Imai, and Otfried Gühne (2023). *Fate of multiparticle entanglement when one particle becomes classical*. DOI: [10.1103/PhysRevA.107.L040401](https://doi.org/10.1103/PhysRevA.107.L040401). URL: <https://arxiv.org/abs/2206.12834v2>.
