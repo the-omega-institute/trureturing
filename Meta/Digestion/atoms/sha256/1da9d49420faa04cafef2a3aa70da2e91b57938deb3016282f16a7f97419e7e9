@@ -1,0 +1,17 @@
+**Proposition 8.1 (Whole-child $J$ injectivity and the possible $M$ pair).**
+For every $q\in Q_{70}$, $a=f_{MJ}$ is injective on the entire $C(q)$.
+If this child contains an $M$ pair, that pair consists of its one $A$-patch
+world and its one $B$-patch world, and is its unique unordered $M$ pair.
+
+Proof. The source squares in (3.2) are convex, disjoint and strict.
+Substitution of their rational endpoints into the regular circuit gives
+$\Lambda\in(5,6),(4,5),(-0.092,-0.091)$, respectively. Thus the original
+regular lift and its derivatives are defined throughout each square.
+With the exact matrices from (3.4)–(3.6), the uniform rational chart bounds
+and terminal ranges are
+
+| Source square | $\sup\|I-B_i^JD(p,a)\|_\infty$ | $a$ range | $m$ range |
+| --- | --- | --- | --- |
+| $\mathcal U_A$ | $<1/50$ | $(406,407)$ | $(522,524)$ |
+| $\mathcal U_B$ | $<1/50$ | $(517,518)$ | $(522,524)$ |
+| $\mathcal U_C$ | $<1/50$ | $(333,334)$ | $(492,493)$ |

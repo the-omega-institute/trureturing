@@ -1,0 +1,34 @@
+**Proposition 128.3 (empty initial steps and the first usable branch epoch).**
+For every $u\in\mathcal T$ the empty-birth steps have exactly
+$\mathcal P_e=B_e=\varnothing$, $V_{e+1}=V_e$, $L_{e+1}=L_e$,
+$T_e=I$ and $G_{e+1}=G_e$ for every compatible metric. Every terminal
+at such a step is alpha and becomes beta. In an uncapped iteration put
+
+$$
+h(u)=\min\{e\ge0:s_e\text{ is a branch and }\mathcal P_e\ne\varnothing\}.
+\tag{128.5}
+$$
+
+This epoch always exists. It is $0$ for a branch with a beta leaf, $1$
+for an all-alpha branch, $1$ for $u=\beta$, and $2$ for $u=\alpha$.
+At epoch $h(u)$ there are at least two distinct terminal leaf cones and
+a nonempty birth set. Every later epoch also has beta leaves.
+
+**Proof.** No beta leaf means no born children. The actual substitution
+in (127.1) then preserves all occurrences and changes every terminal
+label from alpha to beta, so the step is accepted and advances the epoch
+despite its identity matrices. For an all-alpha branch this is the step
+$0\to1$, after which the unchanged branch has beta leaves and its first
+nonempty births occur at $1\to2$. For the alpha singleton, the step
+$0\to1$ gives the beta singleton with its one old coordinate, zero form
+and unchanged positive scalar metric. Its first nonempty birth is
+$1\to2$, producing $\langle\beta,\alpha\rangle$ at epoch $2$.
+For the beta singleton the first nonempty birth is already $0\to1$,
+and the same branch is present at epoch $1$. Both singleton birth
+incidences are $P=(1,1)^{\mathsf T}$ with $T=\mathbf1_3$; Proposition
+127.2 includes any compatible parameters at this step, not only $q=0$.
+An arbitrary branch with a beta leaf has the required two leaf cones at
+epoch $0$. Finally a beta leaf always produces a beta left child, so
+nonemptiness persists after $h(u)$. A stopped history need not reach
+$h(u)$ and needs only the finite theorem. $\square$
+

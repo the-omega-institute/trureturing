@@ -1,0 +1,43 @@
+**Definition 2.1 (Regular response map).** On the strict source domain put
+
+$$
+\Lambda=1+\frac6T+\frac1U-\frac4j-\frac4n.
+$$
+
+Where $\Lambda\ne0$, the regular part of the owning lift O, Theorem 2.1, is
+
+$$
+e=-\frac{24}{5}\left(b-\frac18\right)
+       \frac{6/T-2/U}{\Lambda},\qquad d=24+e,
+$$
+
+with $g$ the unique degree-at-most-three polynomial having samples
+
+$$
+(g(0),g(1),g(2),g(3))=
+\left(-d,-\frac e j,\frac{27/5-e}{T},-\frac e n\right).
+\tag{2.1}
+$$
+
+Thus $(P(r,b),g,d)$ is the complete original world, rather than just a point
+in a response projection. Define $\Psi=(p,v,a,m)$ by
+
+$$
+\begin{aligned}
+p&=d+(U+n)g(5),&v&=d+(2U+n)g(6),\\
+a&=d+(T+2j+4r)g(7),&m&=d+(3U+2n)g(7).
+\end{aligned}
+\tag{2.2}
+$$
+
+The interpolation rows taking the four samples in (2.1) to $g(5),g(6),g(7)$
+are, respectively,
+
+$$
+(-4,15,-20,10),\qquad(-10,36,-45,20),\qquad(-20,70,-84,35).
+\tag{2.3}
+$$
+
+In particular (2.1)–(2.3) always specify one entire $g$, not independent gain
+samples. Its nonzeroness follows from the unequal original readings $0,24$.
+

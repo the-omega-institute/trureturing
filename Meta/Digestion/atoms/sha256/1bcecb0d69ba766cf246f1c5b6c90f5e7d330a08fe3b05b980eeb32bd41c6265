@@ -1,0 +1,27 @@
+## 175. The three uniform thresholds
+
+Let $t_*$ be the unique root in $(1/2,9/16)$ of
+$t_*^2+2t_*^{3/2}=1$, and set
+$\beta_*=-\log t_*$.  Let
+$\beta_{\mathrm{pass}}=\log(3+2\sqrt2)$.  The exact order is
+$$
+ \beta_*<\log2<\log3<\beta_{\mathrm{pass}}.
+\tag{175.1}
+$$
+The quantified conclusions are
+$$
+\begin{array}{c|c|c}
+\text{allowed orbit}&\text{all members PPT and separable}&\text{an NPT member exists}\\ \hline
+U(8)&\beta\le\beta_*&\beta>\beta_*\\
+\mathcal U_N&\beta\le\log3&\beta>\log3\\
+\Gamma(U(3))&\beta\le\beta_{\mathrm{pass}}&\beta>\beta_{\mathrm{pass}}
+\end{array}
+\tag{175.2}
+$$
+The first row is the preceding full-spectrum result; the second is
+(172.5); the third is the passive factorization.  Above a boundary the
+right column asserts existence, not that every orbit member is NPT.  At
+any finite $\beta$, a diagonal placement aligned with the $A$ mode
+still supplies a separable member, so no uniform-boundary statement is an
+all-members-entangled claim.
+

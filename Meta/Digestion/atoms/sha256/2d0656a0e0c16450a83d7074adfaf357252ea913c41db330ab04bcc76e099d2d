@@ -1,0 +1,44 @@
+**Definition 17.1 (The lower auxiliary face and its actual companions).**
+All strict worlds, clocks, histories, terminal functions and entire children
+remain those of Definitions 1.1–1.2. In particular $c=r(1-r)/b$,
+$0<r<1$, $b>0$, $d$ is fixed in each world, and its one nonzero whole
+real polynomial has degree at most three. Write $L(t)=B_0(t)$ for the
+auxiliary complete boundary label in Definition 12.1 with
+
+$$
+(r,b,c)=(0,0,t),\qquad t>0,\quad t\ne1.
+$$
+
+For this section only put
+
+$$
+\begin{gathered}
+q=10(t-1),\quad P=-48t^2+240t-195,\\
+V=135t^2+375t-516,\qquad M_t=1152t^2+813t-1977,\\
+p_L=P/q,\quad v_L=V/q,\quad m_L=M_t/q,\quad
+ a_L=3(384t^2-113t-273)/q.
+\end{gathered}
+\tag{17.1}
+$$
+
+The symbol $M_t$ is a polynomial, whereas the action $M$ is unchanged.
+These are precisely the $B_0$ fractions of Lemma 12.2, equivalently
+S, Theorem 13.1. Its drift is $24+3t/[10(t-1)]$ and its one whole gain
+is interpolated at $0,1,2,3$ from
+
+$$
+(-24-e,-e/t,27/5-e,-e/t),\qquad e=3t/[10(t-1)].
+\tag{17.2}
+$$
+
+The label is a limit, never a strict world. The relation to classify is
+
+$$
+\mathcal L_M=\{(t,W):t>0, t\ne1, p_L(t)\ne24,
+ W\in C(p_L(t),v_L(t)), m(W)=m_L(t)\}.
+\tag{17.3}
+$$
+
+There is no upper bound on $t$, and no compactness assumption on this
+rational curve or its pole approaches.
+

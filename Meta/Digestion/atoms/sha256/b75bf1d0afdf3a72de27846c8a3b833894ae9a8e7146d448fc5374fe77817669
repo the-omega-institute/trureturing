@@ -1,0 +1,45 @@
+**Lemma 20.3 (Projected factors and their strict-world filter).**
+Every actual companion in Lemma 20.2 has $Q_{41}(t)=0$,
+$x=-B(t)/A(t)$ and $d=d_n/(q\ell)$.
+The seven positive roots and their complete reconstruction enclosures
+are the following exact certificate.
+
+For a polynomial $Q$, define its signed primitive Sturm chain by
+$S_0=Q$, $S_1=Q'$, and $S_{i+1}=-\operatorname{rem}(S_{i-1},S_i)$,
+removing only positive rational content, clearing denominators positively,
+and never changing signs. Ignore zero entries in variation counts.
+The chain for $Q_{14}$ has length $15$ and endpoint signs
+
+$$
+\operatorname{sgn}S(-\infty)=(+,-,-,+,-,-,+,+,-,-,-,+,-,-,-).
+$$
+
+$$
+\operatorname{sgn}S(+\infty)=(+,+,-,-,-,+,+,-,-,+,-,-,-,+,-).
+$$
+
+Both variation counts are $7$, so $Q_{14}$ has no real root.
+The $Q_{41}$ chain has length $42$ and signs
+
+$$
+\operatorname{sgn}S(0)=(-,-,+,+,+,-,-,+,+,-,+,-,+,+,-,-,+,-,-,-,+,+,-,+,+,-,-,-,-,+,-,-,-,-,-,+,+,+,-,-,-,+).
+$$
+
+$$
+\operatorname{sgn}S(+\infty)=(+,+,+,+,-,-,-,+,-,-,-,+,+,-,-,-,+,+,+,+,+,-,-,-,-,-,-,+,+,+,-,+,+,-,-,-,-,-,-,-,-,+).
+$$
+
+The corresponding variation counts are $19,12$. In increasing order,
+put $I_i=[N_i,N_i+1]/10^{100}$ with the following integers.
+At each pair of endpoints $Q_{41}$ has opposite signs, and its
+Sturm variations are as listed.
+
+| $i$ | $N_i$ | Endpoint variations |
+| --- | --- | --- |
+| 1 | $3673966186886689544040020206438582231194471327213018740994213129258016135658119798769337922171432690$ | $19,18$ |
+| 2 | $4667791316805720920280933301326418468439245500987976078967815296049367378845772432102165034205472403$ | $18,17$ |
+| 3 | $5084261946711772408304108316073955415819997257278725792617513128825180432635635172816447522415646929$ | $17,16$ |
+| 4 | $7338861392973206190514597797787405360605022948262456145999677879059264177620068178150471279504301701$ | $16,15$ |
+| 5 | $8116670700777931359322069118350456305907943614178444264119653433583577228588933504877652918707121232$ | $15,14$ |
+| 6 | $10042876138781682369648017176544131204498789307264827912616897353309825581605044853782487143352466845$ | $14,13$ |
+| 7 | $10913496542724139053571273607590070503000268518569768199403379478359711342973362737574469633124326981$ | $13,12$ |
