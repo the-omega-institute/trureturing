@@ -3,7 +3,9 @@ fingerprints:
   normalized_sha256: sha256:817375bec7fd0182b5e92dda0fdc1d7e8e8957cad7b422aab02b133889c6a12d
 cas_ref: sha256:817375bec7fd0182b5e92dda0fdc1d7e8e8957cad7b422aab02b133889c6a12d
 coverage_gids:
-  - gid: D5/S0/Carrier/GoldenRatio.golden_ratio_spec
-    target_statement_id: sha256:27ade5b921f83f26ced1225caa7020b05bb0313023ebb4852d27c5b9eb541e1b
+  - gid: D5/S0/Carrier/Units.norm_phi_pow
+    target_statement_id: sha256:68042ed4babee5ef77b2801c4dce97c1929d862ecd9e857d1547aacf638a6a0f
+  - gid: D5/S0/Carrier/Units.phi_isUnit
+    target_statement_id: sha256:4ff934ff7441bf274c444196e8de889690288038b76df73718c1144e947023f3
 receipts:
   unresolved_subitems: []

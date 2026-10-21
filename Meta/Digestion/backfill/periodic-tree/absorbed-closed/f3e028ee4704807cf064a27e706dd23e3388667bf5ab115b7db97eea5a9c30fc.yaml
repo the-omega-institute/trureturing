@@ -3,7 +3,7 @@ fingerprints:
   normalized_sha256: sha256:f3e028ee4704807cf064a27e706dd23e3388667bf5ab115b7db97eea5a9c30fc
 cas_ref: sha256:f3e028ee4704807cf064a27e706dd23e3388667bf5ab115b7db97eea5a9c30fc
 coverage_gids:
-  - gid: D5/S3/Arith/Primes/GoldenPrimePowerMatrixPeriod.golden_matrix_prime_power_period
-    target_statement_id: sha256:5e54334557ce19ac0bd62886410ba11499bd0dbc638f3fcb566ee0ee8363275f
+  - gid: D5/S1/Scale/Fibonacci.golden_phi_pow_eq_fib_pair
+    target_statement_id: sha256:d216732e11d7a2e479d9c2c4667ce688b4f5a7eb54e80c6bce46e6858e22e2be
 receipts:
   unresolved_subitems: []

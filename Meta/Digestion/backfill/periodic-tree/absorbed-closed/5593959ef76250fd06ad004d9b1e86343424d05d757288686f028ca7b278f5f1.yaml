@@ -5,5 +5,7 @@ cas_ref: sha256:5593959ef76250fd06ad004d9b1e86343424d05d757288686f028ca7b278f5f1
 coverage_gids:
   - gid: D5/S0/Carrier/GoldenRatio.golden_ratio_spec
     target_statement_id: sha256:27ade5b921f83f26ced1225caa7020b05bb0313023ebb4852d27c5b9eb541e1b
+  - gid: D5/S0/Carrier/Units.norm_phi_pow
+    target_statement_id: sha256:68042ed4babee5ef77b2801c4dce97c1929d862ecd9e857d1547aacf638a6a0f
 receipts:
   unresolved_subitems: []

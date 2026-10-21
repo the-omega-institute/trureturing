@@ -1,9 +1,0 @@
-fingerprints:
-  raw_sha256: sha256:817ac76e7c085aa877ed94e146d45712d11d4ccfa2e2a8f7dc3b521e4c707375
-  normalized_sha256: sha256:817ac76e7c085aa877ed94e146d45712d11d4ccfa2e2a8f7dc3b521e4c707375
-cas_ref: sha256:817ac76e7c085aa877ed94e146d45712d11d4ccfa2e2a8f7dc3b521e4c707375
-coverage_gids:
-  - gid: D5/S3/Arith/GoldenApparition.fibonacci_apparition_entry_point
-    target_statement_id: sha256:78d0346c819f9913279ef688be6a8cc41b2e4f1507b0b156d064dc542b2f6f90
-receipts:
-  unresolved_subitems: []

@@ -1,0 +1,9 @@
+fingerprints:
+  raw_sha256: sha256:7993e03448d93601d9b4541aabccbe1517bf2ad327c43b361d0d56d20d2de191
+  normalized_sha256: sha256:7993e03448d93601d9b4541aabccbe1517bf2ad327c43b361d0d56d20d2de191
+cas_ref: sha256:7993e03448d93601d9b4541aabccbe1517bf2ad327c43b361d0d56d20d2de191
+coverage_gids:
+  - gid: D5/S0/Carrier/Units.norm_phi_pow
+    target_statement_id: sha256:68042ed4babee5ef77b2801c4dce97c1929d862ecd9e857d1547aacf638a6a0f
+receipts:
+  unresolved_subitems: []

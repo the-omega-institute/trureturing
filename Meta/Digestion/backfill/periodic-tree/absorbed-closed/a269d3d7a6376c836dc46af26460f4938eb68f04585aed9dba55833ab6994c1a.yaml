@@ -3,6 +3,8 @@ fingerprints:
   normalized_sha256: sha256:a269d3d7a6376c836dc46af26460f4938eb68f04585aed9dba55833ab6994c1a
 cas_ref: sha256:a269d3d7a6376c836dc46af26460f4938eb68f04585aed9dba55833ab6994c1a
 coverage_gids:
+  - gid: D5/S0/Carrier/Units.phiUnit
+    target_statement_id: sha256:feb2589fb8e43b0138c4ed500d6d5080cc9981e26eab478677f1f1f1dba352aa
   - gid: D5/S3/Arith/GoldenFibonacciModulusPeriod.goldenMatrixHom
     target_statement_id: sha256:9c4a8d488b09a94fe4cc17f1cb4ad6598ddbb0fc0bc696a63779fdfbddd8acbf
 receipts:
