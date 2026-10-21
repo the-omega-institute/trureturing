@@ -4461,3 +4461,397 @@ definitions and proof beyond this appendix.
 
 ## 168.99 追加锚（本行以下为增补区）
 
+## 169. The fixed charge cut and the complete number-preserving orbit
+
+Use the A-first creation order $(\ell,r,R)$ and the occupation tensor
+identification
+$$
+ |n_A,n_r,n_R\rangle=(a_\ell^\dagger)^{n_A}
+ (a_r^\dagger)^{n_r}(a_R^\dagger)^{n_R}|\Omega\rangle
+ =|n_A\rangle\otimes|n_r,n_R\rangle_B .
+$$
+The Bob basis is
+$$
+ b_0=|00\rangle,\quad b_1=|01\rangle\;(R),\quad
+ b_2=|10\rangle\;(r),\quad b_{12}=|11\rangle,
+$$
+where $b_{12}=a_r^\dagger a_R^\dagger|\Omega_B\rangle$.  The
+product-coordinate order is
+$$
+(0b_0,0b_1,0b_2,0b_{12},1b_0,1b_1,1b_2,1b_{12}).
+$$
+The $N=1$ basis is $(\ell,R,r)$.  In the two-particle sector the corresponding exterior basis is
+$$
+(r\wedge R,\ \ell\wedge R,\ \ell\wedge r).
+$$
+This fixes every sign in the ordinary partial transpose and in the
+exterior-power formulas below.
+
+Let
+$$
+ t=e^{-\beta}\in(0,1],\qquad s=1-t,\qquad Z=2(1+t)^2,
+$$
+for finite $\beta\geq0$.  The supplied Gibbs operator, before division
+by $Z$, has sector spectra
+$$
+ N=0:(1),\qquad N=1:(1,t,t),\qquad N=2:(t,t,t^2),
+ \qquad N=3:(t^2).
+\tag{169.1}
+$$
+The commutant of total number is
+$$
+ \mathcal U_N=\{W:[W,N]=0\}=U(1)\oplus U(3)\oplus U(3)\oplus U(1).
+$$
+Consequently every member of the specified orbit is
+$$
+ R(v,w)=1\oplus\bigl(tI_3+s|v\rangle\langle v|\bigr)
+ \oplus\bigl(tI_3-ts|w\rangle\langle w|\bigr)\oplus t^2,
+ \qquad \rho(v,w)=R(v,w)/Z,
+\tag{169.2}
+$$
+where $v,w\in\mathbb C^3$ are independent unit vectors.  Conversely,
+independent unitaries in the $N=1$ and $N=2$ sectors send the two
+simple eigenlines of the reference state to any prescribed $v,w$, so
+(169.2) is the whole orbit.  For $0<t<1$ its parameters are
+$([v],[w])\in\mathbb{CP}^2\times\mathbb{CP}^2$; at $t=1$ the orbit is
+the singleton $I_8/8$ and these rays are redundant.  The placement of
+the four sector spectra in (169.1) is part of the assertion.
+
+Write
+$$
+ v=(\alpha,u),\qquad w=(\gamma,h),\qquad
+ x=|\alpha|^2,\quad y=|\gamma|^2,
+$$
+with $u,h\in\mathbb C^2$, $\|u\|^2=1-x$, and
+$\|h\|^2=1-y$.  The vectors are independent; put
+$z=|u^*h|^2$, so $0\le z\le(1-x)(1-y)$.
+
+## 170. Exact partial transpose in the declared product basis
+
+In the product order above, the two diagonal entries of $R^{T_A}$ that
+are not in a nontrivial block are
+$$
+ c=t+sx\quad\text{on }|1,b_0\rangle,\qquad
+ b=t(1-sy)\quad\text{on }|0,b_{12}\rangle.
+\tag{170.1}
+$$
+The remaining entries split into the two blocks
+$$
+ M_0=\begin{pmatrix}
+ 1&s\alpha u^*\\
+ s\bar\alpha u&tI_2-ts\,hh^*
+ \end{pmatrix}
+\quad\text{on }( |0,b_0\rangle,|1,b_1\rangle,|1,b_2\rangle),
+\tag{170.2}
+$$
+$$
+ M_3=\begin{pmatrix}
+ t^2&-ts\gamma h^*\\
+ -ts\bar\gamma h&tI_2+s\,uu^*
+ \end{pmatrix}
+\quad\text{on }( |1,b_{12}\rangle,|0,b_1\rangle,|0,b_2\rangle).
+\tag{170.3}
+$$
+The displayed conjugations follow from ordinary partial transpose on the
+Alice factor; no real-vector replacement or fermion-mode swap is made.
+For $t>0$, $tI_2-ts\,hh^*\succeq t^2I_2$ and
+$tI_2+s\,uu^*\succeq tI_2$.  Thus Schur complements give the exact
+conditions
+$$
+ q_0:=\frac{s^2x}{t}\left((1-x)+\frac{s z}{t+sy}\right)\le1,
+\tag{170.4}
+$$
+$$
+ q_3:=\frac{s^2y}{t}\left((1-y)-\frac{s z}{t+s(1-x)}\right)\le1.
+\tag{170.5}
+$$
+The second expression is the Schur subtraction divided by the $t^2$
+pivot in (170.3).  The denominators are positive for every finite
+$\beta$.
+
+## 171. The uniform PPT boundary
+
+From the positive lower bounds on the Schur blocks,
+$$
+ q_0\le\frac{s^2x(1-x)}{t^2}\le\frac{s^2}{4t^2},
+ \qquad
+ q_3\le\frac{s^2y(1-y)}t\le\frac{s^2}{4t}.
+\tag{171.1}
+$$
+If $t\ge1/3$, then $s\le2t$, and (171.1) gives $q_0\le1$ and
+$q_3\le t\le1$.  Both blocks and the singleton entries (170.1) are
+therefore positive for every independent $v,w$.
+
+Sharpness comes from
+$$
+ v_*=(1,1,0)/\sqrt2,\qquad w_*=(0,1,0).
+\tag{171.2}
+$$
+On the Bob flag $\operatorname{span}(b_0,b_1)$, in the order
+$(0b_0,0b_1,1b_0,1b_1)$, this member has the block
+$$
+ X_t=\begin{pmatrix}
+ 1&0&0&0\\
+ 0&(1+t)/2&(1-t)/2&0\\
+ 0&(1-t)/2&(1+t)/2&0\\
+ 0&0&0&t^2
+ \end{pmatrix}.
+\tag{171.3}
+$$
+The $b_2$ flag has diagonal $\operatorname{diag}(t,t)$, and the
+$b_{12}$ flag has diagonal $\operatorname{diag}(t,t^2)$.  The partial
+transpose of (171.3) has the principal corner
+$$
+ \begin{pmatrix}1&s/2\\s/2&t^2\end{pmatrix},\qquad
+ \det= t^2-\frac{s^2}{4}=\frac{(1+t)(3t-1)}4.
+\tag{171.4}
+$$
+It is negative exactly when $0<t<1/3$.  After normalization by $Z$,
+the same corner determinant is divided by $Z^2$ and has the same sign.
+
+This block is an actual point of the orbit.  Let $V$ be the supplied
+zero-mode vector and choose an orthonormal basis $(V,E,F)$, with $E,F$
+in its orthogonal plane.  In the sector bases
+$(V,E,F)$ and $(E\wedge F,V\wedge E,V\wedge F)$, define
+$$
+ W_1=|v_*\rangle\langle V|
+ +|(e_A-e_R)/\sqrt2\rangle\langle E|+|e_r\rangle\langle F|,
+$$
+$$
+ W_2=|e_A\wedge e_R\rangle\langle E\wedge F|
+ +|e_r\wedge e_R\rangle\langle V\wedge E|
+ +|e_A\wedge e_r\rangle\langle V\wedge F|.
+\tag{171.5}
+$$
+Together with identity phases in the $N=0,3$ sectors,
+$W_*=1\oplus W_1\oplus W_2\oplus1$ is unitary, commutes with $N$,
+and maps the native state to (171.3).  The vacuum and triple-occupation
+weights remain $1/Z$ and $t^2/Z$.  Hence an NPT member exists for every
+$t<1/3$, while equality in (171.4) is PPT.
+
+## 172. Uniform separability by an invertible local filter
+
+For finite $\beta$, define
+$$
+ F_t=t^{-N/2}=F_A\otimes F_B,\quad
+ F_A=\operatorname{diag}(1,t^{-1/2}),\quad
+ F_B=\operatorname{diag}(1,t^{-1/2},t^{-1/2},t^{-1}).
+\tag{172.1}
+$$
+An invertible product congruence preserves ordinary separability in both
+directions: each positive product operator is sent to a positive product
+operator, and the inverse filter has the same property.
+
+Put $k=s/t$.  Applying (172.1) to (169.2) gives
+$$
+ \widetilde R=F_tR(v,w)F_t=I_8+k\Pi(v,w),
+$$
+where
+$$
+ \Pi(v,w)=0\oplus|v\rangle\langle v|
+ \oplus(I_3-|w\rangle\langle w|)\oplus1
+\tag{172.2}
+$$
+The filtered operator $\widetilde R$ has four eigenvalues $1/t$ and
+four eigenvalues $1$.  Therefore
+$$
+ \operatorname{spec}\!\left(\widetilde R/\operatorname{tr}\widetilde R\right)
+ =\frac1{4(1+t)}(1,1,1,1,t,t,t,t).
+\tag{172.3}
+$$
+Johnston's qubit--qudit theorem states that a $2\times n$ state is
+absolutely separable, equivalently absolutely PPT, precisely when its
+ordered eigenvalues satisfy
+$$
+ \lambda_1\le\lambda_{2n-1}+2\sqrt{\lambda_{2n-2}\lambda_{2n}}.
+\tag{172.4}
+$$
+For (172.3) with $n=4$, (172.4) is
+$$
+ \frac1{4(1+t)}\le\frac{3t}{4(1+t)},
+$$
+which is equivalent to $t\ge1/3$.  Thus every filtered state is
+separable in that range, and the inverse product filter makes every
+original $R(v,w)/Z$ separable as well.  This use of (172.4) is a
+spectrum theorem for the filtered family; it does not assert that every
+arbitrary $2\times4$ PPT state is separable.
+
+For $t<1/3$, the member (171.3) is NPT, hence is not separable.  Combining
+this fact with the preceding universal implication gives the exact uniform
+statement.  Let $\rho_{\mathrm{sup}}$ denote the supplied native member;
+(169.2) is its complete $\mathcal U_N$-orbit, so the following quantifiers
+are equivalent to quantifying over all independent $v,w$.
+$$
+\boxed{
+ \left[\forall W\in\mathcal U_N,\ (W\rho_{\mathrm{sup}}W^*)^{T_A}\succeq0\right]
+ \Longleftrightarrow
+ \left[\forall W\in\mathcal U_N,\ W\rho_{\mathrm{sup}}W^*\text{ is separable}\right]
+ \Longleftrightarrow t\ge\frac13
+ \Longleftrightarrow 0\le\beta\le\log3 .}
+\tag{172.5}
+$$
+The pointwise status of individual states below $t=1/3$ is not asserted.
+
+## 173. A finite product decomposition
+
+The separability implication can also be seen directly in the original
+matrix.  Embed $u,h$ in Bob's one-particle plane and set
+$$
+ c=t+sx,\qquad b=t(1-sy).
+$$
+Let
+$$
+ P=\bigl(|0\rangle+\sqrt c\,|1\rangle\bigr)
+ \otimes\left(b_0+\frac{s\bar\alpha}{\sqrt c}u\right),
+\tag{173.1}
+$$
+$$
+ Q=\left(|0\rangle+\frac{t}{\sqrt b}|1\rangle\right)
+ \otimes\left(-s\bar\gamma h+\sqrt b\,b_{12}\right).
+\tag{173.2}
+$$
+Let $\mathcal T$ be the four-phase average
+$$
+ \mathcal T(X)=\frac14\sum_{j=0}^3 L_jXL_j^*,\qquad
+ L_j=e^{ij\pi N_A/2}\otimes e^{ij\pi N_B/2}.
+\tag{173.3}
+$$
+Since the possible total numbers are $0,1,2,3$, this average retains
+exactly the equal-total-number blocks.  Define operators on Bob's
+one-particle plane by
+$$
+ K_0=tI_2+\frac{st}{t+sx}uu^*-s^2y\,hh^*,
+\tag{173.4}
+$$
+$$
+ K_1=tI_2-s^2x\,uu^*-\frac{ts}{1-sy}hh^*.
+\tag{173.5}
+$$
+Direct expansion in the declared bases gives the identity
+$$
+ R(v,w)=\mathcal T(|P\rangle\langle P|)
+ +\mathcal T(|Q\rangle\langle Q|)
+ +|0\rangle\langle0|\otimes K_0
+ +|1\rangle\langle1|\otimes K_1 .
+\tag{173.6}
+$$
+The $P$ term supplies the coherence between $|0\rangle\otimes u$ and
+$|1\rangle\otimes b_0$ within the $N=1$ block; the $Q$ term supplies the
+coherence between $|0\rangle\otimes b_{12}$ and $|1\rangle\otimes h$
+within the $N=2$ block.  The four-phase average removes all coherences
+between different total-number sectors.  Equations (173.4)--(173.5) give
+the remaining diagonal Alice blocks on Bob's one-particle plane.  This
+accounts for every block of (169.2), including all complex conjugations.
+
+For $t\ge1/3$, use $uu^*\preceq(1-x)I_2$ and
+$hh^*\preceq(1-y)I_2$ to obtain
+$$
+ K_0\succeq[t-s^2y(1-y)]I_2
+ \succeq[t-s^2/4]I_2\succeq0,
+\tag{173.7}
+$$
+while
+$$
+ K_1\succeq
+ \left[\frac{t^2}{1-sy}-s^2x(1-x)\right]I_2
+ \succeq[t^2-s^2/4]I_2\succeq0.
+\tag{173.8}
+$$
+Here $s\le2t$ and $t\le1$.  Each $L_j$ is a product unitary, so
+$\mathcal T(|P\rangle\langle P|)$ and
+$\mathcal T(|Q\rangle\langle Q|)$ are positive sums of product
+projectors.  The last two terms in (173.6) are positive product
+operators.  Resolving $K_0,K_1$ spectrally gives at most twelve pure
+product terms; division by $\operatorname{tr}R=Z$ makes their weights a
+convex combination.  The filter in §172 and this decomposition are
+mathematical separability certificates, not additional operations in the
+unitary class.
+
+## 174. Why the passive orbit is smaller
+
+In the fixed exterior bases, define the antiunitary Hodge map
+$$
+ J(\alpha,u_1,u_2)=(\bar\alpha,-\bar u_2,\bar u_1).
+\tag{174.1}
+$$
+For a one-particle unitary $U$, the exterior-power identity is
+$$
+ (\wedge^2U)Jv=\det(U)J(Uv).
+\tag{174.2}
+$$
+The determinant is a phase and disappears at the projector level.  For
+$0<t<1$, the passive orbit is therefore exactly the subset of (169.2)
+satisfying
+$$
+ |w\rangle\langle w|=|Jv\rangle\langle Jv|.
+\tag{174.3}
+$$
+In particular $y=x$ and $u^*h=0$.  Substitution in (170.4)--(170.5)
+reduces both Schur quantities to
+$$
+ \frac{s^2x(1-x)}t,
+\tag{174.4}
+$$
+which is the passive criterion from the preceding appendix.  The
+independent sector actions in (169.2) remove (174.3), allowing the
+one-particle coherence direction to align with the depressed $t^2$
+direction in the other block.  The witness (171.2) has $x=1/2$, $y=0$,
+and $u^*h\ne0$, so it is outside the passive orbit for $0<t<1$.
+No unsigned fermion-mode swap is involved in (174.1).
+
+## 175. The three uniform thresholds
+
+Let $t_*$ be the unique root in $(1/2,9/16)$ of
+$t_*^2+2t_*^{3/2}=1$, and set
+$\beta_*=-\log t_*$.  Let
+$\beta_{\mathrm{pass}}=\log(3+2\sqrt2)$.  The exact order is
+$$
+ \beta_*<\log2<\log3<\beta_{\mathrm{pass}}.
+\tag{175.1}
+$$
+The quantified conclusions are
+$$
+\begin{array}{c|c|c}
+\text{allowed orbit}&\text{all members PPT and separable}&\text{an NPT member exists}\\ \hline
+U(8)&\beta\le\beta_*&\beta>\beta_*\\
+\mathcal U_N&\beta\le\log3&\beta>\log3\\
+\Gamma(U(3))&\beta\le\beta_{\mathrm{pass}}&\beta>\beta_{\mathrm{pass}}
+\end{array}
+\tag{175.2}
+$$
+The first row is the preceding full-spectrum result; the second is
+(172.5); the third is the passive factorization.  Above a boundary the
+right column asserts existence, not that every orbit member is NPT.  At
+any finite $\beta$, a diagonal placement aligned with the $A$ mode
+still supplies a separable member, so no uniform-boundary statement is an
+all-members-entangled claim.
+
+## 176. Source correspondence and limits
+
+The spectral implication in §172 uses Nathaniel Johnston,
+*Separability from Spectrum for Qubit--Qudit States*, arXiv:1309.2006v1,
+Theorem 1, p. 1, with its stated $2\times n$ quantifiers.  The full and
+passive endpoint formulas, the finite Fock identification, and the native
+sector spectra are the supplied results in §§157--168.  The exterior-power
+relation (174.2) is the standard finite CAR second-quantization relation
+for the declared creation order.  The same finite CAR correspondence is
+presented in Terhal--DiVincenzo, *Classical Simulation of Noninteracting-
+Fermion Quantum Circuits*, arXiv:quant-ph/0108010v2, §III.  The warning
+that individual $2\times4$ PPT states need not be separable is the usual
+boundary illustrated by Horodecki, *Separability Criterion and Inseparable
+Mixed States with Positive Partial Transposition*, arXiv:quant-ph/9703004v2;
+no member of that unrelated family is used here.  The explicit matrices
+(169.2)--(173.8) are the ordinary finite-dimensional application at the
+fixed cut.
+
+The conclusions depend on the finite three-mode model, the sector
+assignment (169.1), the A-first tensor cut, and finite $\beta$.  They do
+not classify individual PPT states when $t<1/3$, identify the native
+$G_q$ image with the passive sphere, or provide an SSR--LOCC protocol,
+physical implementation, or resource advantage.  The passive global
+orbit and the number-preserving global orbit are mathematical state sets;
+neither is identified with a local
+SSR--LOCC operation class.  No claim about a broader theory follows from
+these finite matrix consequences.
+
+## 176.99 追加锚（本行以下为增补区）
