@@ -6,12 +6,13 @@
    utility: none
    digest: Logarithmic derivative ordering and strict ratio comparison for positive Kummer solutions. -/
 
-import D5.S3.Analytic.KummerRatio.Defs
+import D5.S3.Analytic.KummerRatio.Series
 import Mathlib.Analysis.Calculus.Deriv.MeanValue
 import Mathlib.Analysis.SpecialFunctions.Pow.Deriv
 import Mathlib.Analysis.SpecialFunctions.ExpDeriv
 
 open Set Filter Topology
+open D5.S3.Analytic.KummerRatio.Defs D5.S3.Analytic.KummerRatio.Series
 
 namespace D5.S3.Analytic.KummerRatio.Comparison
 
@@ -189,5 +190,29 @@ theorem solution_ratio_strictAntiOn (H : SolutionFamily c y dy ddy) (hc : 0 < c)
     rw [hd'.deriv]
     exact mul_neg_of_pos_of_neg (div_pos (mul_pos hyBD hyA) (mul_pos hyAD hyB))
       (sub_neg.mpr (w_lt H hc ha hab hδ hx))
+
+private lemma kummer_family (hc : 0 < c) :
+    SolutionFamily c (fun s x => kummer s c x)
+      (fun s x => s / c * kummer (s + 1) (c + 1) x)
+      (fun s x => s / c * ((s + 1) / (c + 1) * kummer (s + 2) (c + 2) x)) := by
+  refine ⟨?_, ?_, ?_, ?_, ?_, ?_⟩
+  · intro s hs x hx
+    exact lt_of_lt_of_le zero_lt_one (one_le_kummer hs.le hc hx)
+  · intro s _
+    exact (continuous_kummer s hc).continuousOn
+  · intro s _
+    exact (continuous_const.mul (continuous_kummer (s + 1) (by linarith : 0 < c + 1))).continuousOn
+  · intro s _ x _
+    exact hasDerivAt_kummer s hc x
+  · intro s _ x _
+    simpa only [add_assoc, one_add_one_eq_two] using
+      (hasDerivAt_kummer (s + 1) (by linarith : 0 < c + 1) x).const_mul (s / c)
+  · intro s _ x _
+    exact kummer_ode s hc x
+
+/-- The Kummer ratio with two shifted upper parameters strictly decreases on the positive ray. -/
+theorem ratio_strictAntiOn {a b c δ : ℝ} (ha : 0 < a) (hab : a < b)
+    (hc : 0 < c) (hδ : 0 < δ) : StrictAntiOn (ratio a b c δ) (Ioi 0) := by
+  exact solution_ratio_strictAntiOn (kummer_family hc) hc ha hab hδ
 
 end D5.S3.Analytic.KummerRatio.Comparison
