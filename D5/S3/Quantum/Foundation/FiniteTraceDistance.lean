@@ -292,7 +292,7 @@ theorem traceNorm_nonneg (A : Matrix m n R) : 0 ≤ traceNorm A :=
 variable [DecidableEq n]
 
 omit [Fintype m] [DecidableEq n] in
-private lemma inner_A_mulVec_eq (A : Matrix n n ℂ) (v w : n → ℂ) :
+lemma inner_A_mulVec_eq (A : Matrix n n ℂ) (v w : n → ℂ) :
     inner ℂ (WithLp.toLp 2 (A.mulVec v)) (WithLp.toLp 2 (A.mulVec w)) =
       star v ⬝ᵥ ((Aᴴ * A).mulVec w) := by
   rw [EuclideanSpace.inner_eq_star_dotProduct, dotProduct_comm, Matrix.star_mulVec,
