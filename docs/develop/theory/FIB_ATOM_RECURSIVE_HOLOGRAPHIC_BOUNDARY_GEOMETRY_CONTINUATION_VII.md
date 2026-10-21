@@ -3742,16 +3742,484 @@ The following boundaries remain unresolved by these results:
 
 ## 225.99 追加锚（本行以下为增补区）
 
-## 226. Measure-free packing and the resolution budget
 
-### 226.1 A metric-doubling replacement for the volume hypothesis
+## 226. The fixed native principal-root cut
+
+**Definition 226.1 (native family and closed extension).** Retain the stopped
+singleton history and coordinate order $(r,\ell,R)$ of VI §139. Write
+
+$$
+\begin{gathered}
+T=(1,1,1)^\top,\qquad
+L=\begin{pmatrix}2&-1&-1\\-1&1&0\\-1&0&1\end{pmatrix},\\
+\pi_q=(1-u-v,u,v)^\top,\qquad
+G_q=L+\pi_q\pi_q^\top,\qquad
+S_q=G_q^{1/2},\qquad V_q=S_qT,\\
+p(q)=(V_q)_\ell^2,\\
+D=\{(u,v):u>0,\ v>0,\ u+v<1\},\qquad
+\Delta=\{(u,v):u\ge0,\ v\ge0,\ u+v\le1\}.
+\tag{226.1}
+\end{gathered}
+$$
+
+The square root is the positive principal square root. The cut is the
+second coordinate after this normalization. No additional orthogonal
+rotation is permitted. The irreducible native family has domain $D$;
+$\Delta$ is its closed mathematical extension. In this appendix the vector
+$\pi_q$ and the circle constant $\pi_{\mathrm c}$ are distinct symbols.
+
+**Definition 226.2 (algebraic endpoints).** Let $\sigma_*$ be the unique root
+in $(13/4,7/2)$ of
+
+$$
+\sigma_*^3-\sigma_*^2-9\sigma_*+1=0.
+\tag{226.2}
+$$
+
+Put
+
+$$
+\tau_*=\frac{\sigma_*^2-5}{2},\qquad
+H_*=\sigma_*\tau_*-1,\qquad
+m=\frac{\sigma_*^2}{H_*^2},\qquad
+M=\frac{(\sigma_*+\tau_*+3)^2}{H_*^2}.
+\tag{226.3}
+$$
+
+The uniqueness, positivity and endpoint interpretation follow in §§227–229.
+The conclusions there concern the particular source family (226.1), rather
+than an arbitrary coordinate of a matrix square root.
+
+## 227. A scalar reduction for every asymmetric native parameter
+
+**Proposition 227.1 (native root reduction and uniform bounds).** For every
+$q\in\Delta$, define
+
+$$
+\begin{gathered}
+\sigma=\operatorname{tr}S_q,\qquad
+\tau=\operatorname{tr}(S_q^{-1}),\qquad H=\sigma\tau-1,\\
+A=5+2u^2+2uv-2u+2v^2-2v,\qquad
+B=5+3u^2-2u+3v^2-2v.
+\tag{227.1}
+\end{gathered}
+$$
+
+Then
+
+$$
+\begin{gathered}
+G_q\succ0,\quad \det G_q=1,\quad \|V_q\|^2=1,\\
+\sigma^2=A+2\tau,\qquad \tau^2=B+2\sigma,\\
+\frac{13}{4}<\sigma<\frac72,\qquad
+\frac{13}{4}<\tau<\frac{15}{4},\qquad H>\frac{153}{16},\\
+V_q=\frac{(\tau+4)\pi_q-L\pi_q+\sigma T}{H}.
+\tag{227.2}
+\end{gathered}
+$$
+
+In particular, all three coordinates of $V_q$ are positive, and
+
+$$
+\begin{aligned}
+(V_q)_r&=\frac{\sigma+1+(\tau+1)(1-u-v)}{H},\\
+(V_q)_\ell&=\frac{\sigma+(1-u-v)+(\tau+3)u}{H},\\
+(V_q)_R&=\frac{\sigma+(1-u-v)+(\tau+3)v}{H}.
+\tag{227.3}
+\end{aligned}
+$$
+
+The value of $\sigma$ is equivalently the unique root in $(13/4,7/2)$ of
+
+$$
+(\sigma^2-A)^2-8\sigma-4B=0,\qquad
+\tau=\frac{\sigma^2-A}{2}.
+\tag{227.4}
+$$
+
+Proof. For $x=(x_r,x_\ell,x_R)^\top$,
+
+$$
+x^\top G_qx=(\pi_q^\top x)^2+(x_\ell-x_r)^2+(x_R-x_r)^2.
+\tag{227.5}
+$$
+
+Its vanishing forces $x=aT$ and then $a=0$, since $\pi_q^\top T=1$.
+The matrix with rows $\pi_q^\top$, $(-1,1,0)$, $(-1,0,1)$ has determinant
+$1$, and its Gram matrix is $G_q$. Hence $\det G_q=1$.
+Also $G_qT=\pi_q$ and $T^\top G_qT=1$, proving the normalization.
+The finite real spectral theorem supplies the unique positive principal
+root. All subsequent polynomial identities concern this root.
+
+Let its eigenvalues be $a\ge b\ge c>0$. Their product is $1$,
+so $\tau=e_2(S_q)$. Direct expansion gives $A=\operatorname{tr}G_q$
+and $B=e_2(G_q)$; the displayed trace identities follow. Since
+$G_q\succeq L$ and the eigenvalues of $L$ are $3,1,0$, eigenvalue
+monotonicity gives $a\ge\sqrt3$ and $b\ge1$. Both
+$a+b+1/(ab)$ and $ab+1/a+1/b$ increase in $a,b$ on that region. Thus
+
+$$
+\sigma,\tau\ge1+\frac4{\sqrt3}>\frac{13}{4}.
+\tag{227.6}
+$$
+
+On $\Delta$ one has $A=4+\|\pi_q\|^2\le5$ and
+$B\le5+u+v\le6$. Therefore
+
+$$
+(\sigma^2-5)^2\le4\tau^2\le24+8\sigma.
+\tag{227.7}
+$$
+
+The polynomial $P(x)=x^4-10x^2-8x+1$ is strictly increasing on
+$[7/2,\infty)$, while $P(7/2)=9/16>0$. Inequality (227.7) yields
+$\sigma<7/2$. Now $\tau^2=B+2\sigma<13$, so $\tau<15/4$,
+and the bound on $H$ follows.
+
+Cayley–Hamilton for $S_q$ gives
+
+$$
+S_q=\frac{-G_q^2+(\sigma^2-\tau)G_q+\sigma I}{H}.
+\tag{227.8}
+$$
+
+Indeed its characteristic polynomial is
+$x^3-\sigma x^2+\tau x-1$; reduction of the numerator modulo this
+polynomial gives $HS_q$. Applying (227.8) to $T$ and using
+$G_q\pi_q=L\pi_q+\|\pi_q\|^2\pi_q$ proves (227.2), hence
+(227.3). The positive coordinates and normalization imply
+$0<(V_q)_i<1$ for every coordinate.
+Finally, eliminating $\tau$ gives (227.4). Its derivative in $\sigma$ is
+$4\sigma(\sigma^2-A)-8>0$ throughout $(13/4,7/2)$ when $A\le5$.
+Existence follows from the actual principal root just constructed, proving
+uniqueness without selecting another algebraic branch.
+
+The spectral theorem, eigenvalue monotonicity and Cayley–Hamilton used
+inside this proof are standard matrix results. The reduction (227.3) is a
+source-specific consequence for (226.1).
+
+## 228. Global extrema on the full closed simplex
+
+**Theorem 228.1 (unique native extrema).** On $\Delta$, the function $p$
+has a unique minimum at $q_-=(0,1)$ and a unique maximum at $q_+=(1,0)$.
+Their values are $m$ and $M$ from (226.3). In particular
+
+$$
+0<m<\frac12<M<1.
+\tag{228.1}
+$$
+
+Proof. Write $z=(V_q)_\ell$. It is positive, so extrema and strict
+comparisons for $z$ pass to $p=z^2$.
+
+For the minimum, spectral calculus gives the convergent vector integral
+
+$$
+V_q=\frac2{\pi_{\mathrm c}}\int_0^\infty
+(t^2I+G_q)^{-1}\pi_q\,dt.
+\tag{228.2}
+$$
+
+This is the standard square-root integral applied to $T$, using
+$G_qT=\pi_q$; the scalar identity follows by integrating
+$\lambda/(t^2+\lambda)$ for $\lambda>0$. For fixed $q$, positive
+definiteness makes the integrand bounded near $t=0$ and $O(t^{-2})$
+as $t\to\infty$. At $t=0$ its continuous extension is
+$G_q^{-1}\pi_q=T$, since $G_qT=\pi_q$.
+
+For $x=t^2>0$, set $N=(L+xI)^{-1}$ and $K=x(x+1)(x+3)$.
+Its $\ell$ row, in the declared coordinate order, is
+
+$$
+(N_{\ell r},N_{\ell\ell},N_{\ell R})
+=\frac{(x+1,x^2+3x+1,1)}K.
+\tag{228.3}
+$$
+
+The Sherman–Morrison identity gives
+
+$$
+(t^2I+G_q)^{-1}\pi_q
+=\frac{N\pi_q}{1+\pi_q^\top N\pi_q}.
+\tag{228.4}
+$$
+
+Since $\pi_q$ has nonnegative coordinates summing to $1$,
+$(N\pi_q)_\ell\ge N_{\ell R}>0$, strictly unless $\pi_q=e_R$.
+Convexity of the positive quadratic form gives
+
+$$
+\pi_q^\top N\pi_q\le\sum_i(\pi_q)_iN_{ii}
+\le N_{RR}=N_{\ell\ell}.
+\tag{228.5}
+$$
+
+For the last inequality, the two child diagonal entries agree and exceed
+the root diagonal entry by $x/K$. The $\ell$ component of (228.4) is
+therefore at least $N_{\ell R}/(1+N_{RR})$, its value at $\pi_q=e_R$.
+It is strictly greater for every other $\pi_q$ and every $t>0$.
+Integration proves the asserted unique minimum, with no assertion about
+$N$ at the excluded point $t=0$.
+
+For the maximum, differentiate the trace identities of §227. Subscripts
+$u,v$ denote partial derivatives of their smooth extension to a
+neighborhood of each point of $\Delta$. One obtains
+
+$$
+\begin{aligned}
+\sigma_u&=\frac{\tau(2u+v-1)+(3u-1)}H,&
+\tau_u&=\frac{\sigma(3u-1)+(2u+v-1)}H,\\
+Hz_u&=\tau+2+(1-\tau z)\sigma_u+(u-\sigma z)\tau_u.
+\tag{228.6}
+\end{aligned}
+$$
+
+Here the smooth extension exists because $G_q$ is positive definite and
+the principal square root is smooth on positive definite matrices; the
+strict scalar derivative in (227.4) also provides this extension locally.
+The uniform bounds of §227 imply
+
+$$
+\begin{gathered}
+|\sigma_u|\le\frac{92}{153},\quad
+|\tau_u|\le\frac{128}{153},\quad
+|1-\tau z|\le\frac{11}{4},\quad
+|u-\sigma z|\le\frac72,\\
+Hz_u\ge\frac{21}{4}
+-\frac{11}{4}\frac{92}{153}
+-\frac72\frac{128}{153}
+=\frac{409}{612}>0.
+\tag{228.7}
+\end{gathered}
+$$
+
+In obtaining the first two bounds use $|2u+v-1|\le1$ and
+$|3u-1|\le2$. The other two follow from $0<z<1$ and $0\le u\le1$.
+For $\delta=\partial_u-\partial_v$, direct subtraction instead gives
+
+$$
+\begin{aligned}
+\sigma_\delta&=\frac{(\tau+3)(u-v)}H,&
+\tau_\delta&=\frac{(3\sigma+1)(u-v)}H,\\
+Hz_\delta&=\tau+3+(1-\tau z)\sigma_\delta
+ +(u-\sigma z)\tau_\delta.
+\tag{228.8}
+\end{aligned}
+$$
+
+Consequently
+
+$$
+\begin{gathered}
+|\sigma_\delta|\le\frac{108}{153},\qquad
+|\tau_\delta|\le\frac{184}{153},\\
+Hz_\delta\ge\frac{25}{4}
+-\frac{11}{4}\frac{108}{153}
+-\frac72\frac{184}{153}
+=\frac{61}{612}>0.
+\tag{228.9}
+\end{gathered}
+$$
+
+From any point of $\Delta$, first increase $u$ at fixed $v$ until
+$u+v=1$, then increase $u$ and decrease $v$ equally along that edge
+toward $(1,0)$. Both segments increase $z$ whenever nontrivial, and
+at least one segment is nontrivial unless the original point is $(1,0)$.
+This proves the unique global maximum on the full asymmetric domain.
+The same argument in direction $\delta$ shows strict increase on every
+segment of constant $u+v$.
+
+At either child vertex, $G_q$ has characteristic polynomial
+$x^3-5x^2+6x-1$. Thus the trace identities give
+
+$$
+\sigma^4-10\sigma^2-8\sigma+1
+=(\sigma+1)(\sigma^3-\sigma^2-9\sigma+1)=0.
+\tag{228.10}
+$$
+
+The cubic is strictly increasing on $(13/4,7/2)$, and its signs at the
+two endpoints differ. Proposition 227.1 therefore identifies
+$\sigma=\sigma_*$, $\tau=\tau_*$. Formula (227.3) now reads
+
+$$
+V_{(1,0)}=
+\frac{(\sigma_*+1,\sigma_*+\tau_*+3,\sigma_*)^\top}{H_*},
+\qquad
+V_{(0,1)}=
+\frac{(\sigma_*+1,\sigma_*,\sigma_*+\tau_*+3)^\top}{H_*}.
+\tag{228.11}
+$$
+
+This proves the endpoint formulas. Positivity of all three coordinates
+and unit norm give $0<m$ and $M<1$. The trace bounds give
+
+$$
+\sqrt m<\frac{56}{153},\qquad
+\sqrt M>\frac{76}{97},
+\tag{228.12}
+$$
+
+because $H_*>153/16$, $H_*<97/8$ and
+$\sigma_*+\tau_*+3>19/2$. Squaring proves $m<1/2<M$.
+
+The integral and rank-one inverse identities in this proof are standard
+spectral-calculus and Sherman–Morrison tools. Their use here proves the
+extremal statement for the declared native cut; no general theorem of
+vertex extremality for matrix-function coordinates is assumed.
+
+## 229. Exact native images and inverse realization
+
+**Theorem 229.1 (full image, attainment and monotone inverse).** The images
+of the declared native family and its closed extension are exactly
+
+$$
+p(D)=(m,M),\qquad p(\Delta)=[m,M],\qquad
+p(\partial\Delta)=[m,M].
+\tag{229.1}
+$$
+
+The endpoint $m$ is attained only at $(0,1)$ and $M$ only at $(1,0)$.
+Every other value is attained both in $D$ and on $\partial\Delta$.
+The third vertex has the previously established value $p(0,0)=1/6$,
+strictly between the endpoints.
+
+For $y\in[m,M]$, the boundary inverse is the unique solution of
+
+$$
+p(s,1-s)=y,\qquad 0\le s\le1.
+\tag{229.2}
+$$
+
+For $m<y<M$, choose any integer $n\ge2$ large enough that, with
+$\varepsilon=1/n$,
+
+$$
+p(0,1-\varepsilon)<y<p(1-\varepsilon,0).
+\tag{229.3}
+$$
+
+Then an interior inverse is the unique $s\in(0,1)$ satisfying
+
+$$
+p\big((1-\varepsilon)s,(1-\varepsilon)(1-s)\big)=y.
+\tag{229.4}
+$$
+
+Proof. Positive-root continuity and (228.9) make $p(s,1-s)$ continuous
+and strictly increasing from $m$ to $M$. This proves boundary coverage
+and uniqueness in (229.2). Endpoint uniqueness in Theorem 228.1 excludes
+both endpoints from $D$.
+
+Continuity at the two child vertices guarantees an $n$ satisfying
+(229.3). Along the segment in (229.4), the derivative is a positive
+multiple of $\partial_u p-\partial_v p$, so it is strictly positive.
+The intermediate value theorem gives a unique $s\in(0,1)$. Both
+coordinates are positive and their sum is $1-\varepsilon<1$, proving
+interior realization. These scalar inversions use the unique root in
+(227.4); they do not choose an arbitrary square-root branch. The endpoint
+formulas and interior inverses establish both exclusion and coverage.
+The claim at $(0,0)$ follows from VI §140 and the unique extrema.
+
+## 230. Which scalar filtering parameters are native
+
+**Theorem 230.1 (native membership inside the scalar image).** Retain the
+scalar formulas and the ideal known-parameter preparation and operation
+assumptions of §§215–216. To distinguish the native coordinate $u$ from
+the interaction scalar in (216.1), write the latter as
+
+$$
+\upsilon=(1-t)^2p(1-p),\qquad
+h=t+(1-t)p,\qquad
+\lambda=\frac{\upsilon}{2t+\upsilon},\qquad
+w=\frac1{1+(1-\lambda)h},\qquad 0<t\le1.
+\tag{230.1}
+$$
+
+For $0<\lambda<1$ and $(2-\lambda)^{-1}<w<1$, define
+
+$$
+\begin{gathered}
+h_{\lambda,w}=\frac{1-w}{w(1-\lambda)},\\
+t_{\lambda,w}=
+\frac{h_{\lambda,w}(1-h_{\lambda,w})(1-\lambda)}
+{(1-h_{\lambda,w})(1-\lambda)+2\lambda},\\
+p_{\lambda,w}=\frac{h_{\lambda,w}-t_{\lambda,w}}{1-t_{\lambda,w}}.
+\tag{230.2}
+\end{gathered}
+$$
+
+Such a pair $(\lambda,w)$ is realized by some $q\in D$ and finite
+$t\in(0,1]$ exactly when
+
+$$
+m<p_{\lambda,w}<M.
+\tag{230.3}
+$$
+
+For the closed extension $\Delta$, replace the strict inequalities by
+$m\le p_{\lambda,w}\le M$. In either domain, the part with
+$\lambda=0$ consists only of $(\lambda,w)=(0,1/2)$.
+
+Proof. The inverse in (230.2) is (216.4). For positive $\lambda$,
+$h$ is determined by $\lambda,w$, the defining scalar relation determines
+$t$, and $p=(h-t)/(1-t)$; thus this inverse is necessary, not merely one
+optional realization. Theorem 229.1 now proves necessity of (230.3),
+and its monotone inverses prove sufficiency with the same $t$.
+For $\lambda=0$, the strict bounds $0<m\le p\le M<1$ imply
+$\upsilon=0$ only when $t=1$. Formula (230.1) then gives $w=1/2$.
+Conversely every $q\in D$ at $t=1$ realizes this pair.
+
+**Corollary 230.2 (native attainment of the scalar thermal threshold).**
+For each fixed $0<t<1$, some $q\in D$ attains
+
+$$
+\lambda_{\max}(t)=\frac{(1-t)^2}{1+6t+t^2}.
+\tag{230.4}
+$$
+
+Writing $t=e^{-\beta}$ with finite $\beta\ge0$, a native $q\in D$
+can enter the positive-negativity branch of the stated one-copy
+postfilter menu exactly when
+
+$$
+\beta>2\operatorname{arsinh}(1).
+\tag{230.5}
+$$
+
+Proof. Theorem 228.1 and Theorem 229.1 give an interior realization of
+$p=1/2$. It attains the scalar bound in (216.7). Conversely that bound
+holds for every native parameter because it holds for every scalar
+$p\in[0,1]$. The threshold in (216.9) is
+$4\sinh^2(\beta/2)p(1-p)>1$; its left side is at most
+$\sinh^2(\beta/2)$, with equality at the attained value $p=1/2$.
+This proves (230.5), including the exclusion of equality.
+The assertion concerns existence of positive negativity, not maximization
+of the full weighted success frontier over $q$.
+
+Theorems 229.1 and 230.1 resolve the native scalar-realization boundary
+of §225 for the family (226.1). They do not assert realization of arbitrary
+$p\in[0,1]$ by that family, other native metrics or physical subsystem
+cuts. The physical availability of the source-informed basis and controls,
+unknown-$q$ extraction, original unfiltered optimization and the other
+operation and resource boundaries in §225 are unchanged assumptions or
+unresolved questions. The image and membership results are source-specific
+mathematical derivations; no literature-priority or physical-realization
+assertion is included.
+
+
+## 230.99 追加锚（本行以下为增补区）
+
+## 231. Measure-free packing and the resolution budget
+
+### 231.1 A metric-doubling replacement for the volume hypothesis
 
 The Ahlfors measure in §160 is one sufficient way to turn a resolved
 occurrence set into a packing bound. The measure is not essential to that
 counting step. The following version uses only a uniform metric covering
 property and therefore has a different scope.
 
-**Definition 226.1 (uniform metric-doubling occurrence bridge).** Retain the
+**Definition 231.1 (uniform metric-doubling occurrence bridge).** Retain the
 occurrence sets $V_n$, their counts and heights from (160.1). Let
 $\iota_n:V_n\hookrightarrow X$ map every task-distinct occurrence into one
 metric space $(X,\rho)$. Assume that, for fixed $\delta>0$ and fixed
@@ -3761,7 +4229,7 @@ $$
 \rho(\iota_n(x),\iota_n(y))\ge\delta\quad(x\ne y),
 \qquad
 \rho(o,\iota_n(x))\le A(n-1)+B.
-\tag{226.1}
+\tag{231.1}
 $$
 
 Assume also that every closed ball at every center and radius used below is
@@ -3771,21 +4239,21 @@ finite $K$ at every level. Put
 $$
 R_n=A(n-1)+B,
 \qquad q=\log_2K.
-\tag{226.2}
+\tag{231.2}
 $$
 
 No measure, Green kernel, generator, or spatial dimension is part of this
 definition.
 
-**Theorem 226.2 (metric-doubling packing obstruction).** Under Definition
-226.1,
+**Theorem 231.2 (metric-doubling packing obstruction).** Under Definition
+231.1,
 
 $$
 \boxed{
 N_n\le
 K^{\left\lceil\log_2\left(1+\frac{2R_n}{\delta}\right)\right\rceil}.
 }
-\tag{226.3}
+\tag{231.3}
 $$
 
 Proof. Let
@@ -3804,28 +4272,28 @@ $$
 
 each final ball has diameter strictly smaller than $\delta$ and contains at
 most one point of the $\delta$-separated set $\iota_n(V_n)$. All occurrences
-lie in the original ball by (226.1), so (226.3) follows. $\square$
+lie in the original ball by (231.1), so (231.3) follows. $\square$
 
-If $\delta$ is fixed, (226.3) is polynomial in $n$:
+If $\delta$ is fixed, (231.3) is polynomial in $n$:
 
 $$
 K^{\lceil\log_2(1+2R_n/\delta)\rceil}
 =O(n^q).
-\tag{226.4}
+\tag{231.4}
 $$
 
 But $N_n=2F_{n+1}-1$ has
 
 $$
 \log N_n=n\log\varphi+O(1).
-\tag{226.5}
+\tag{231.5}
 $$
 
 Consequently no one metric-doubling carrier with fixed $K,A,B,\delta$ can
 resolve every prefix. This is a measure-free obstruction; it does not say
 that the source has metric dimension $q$, and it does not select $q=3$.
 
-### 226.2 Necessary resolution budget
+### 231.2 Necessary resolution budget
 
 The same estimate gives a quantitative condition when the resolution is
 allowed to vary. Since
@@ -3845,7 +4313,7 @@ $$
 =
 \frac{4R_n}{N_n^{1/q}-2}.
 }
-\tag{226.6}
+\tag{231.6}
 $$
 
 The second form uses $K^{1/q}=2$. Thus, for fixed $K,A,B$, the required
@@ -3853,7 +4321,7 @@ resolution is at most
 
 $$
 \delta_n=O\!\left(n\,\varphi^{-n/q}\right).
-\tag{226.7}
+\tag{231.7}
 $$
 
 This is a necessary budget, not an embedding construction and not a
@@ -3861,7 +4329,7 @@ sufficient stability condition. Passing from a finite prefix to an infinite
 carrier therefore requires a declared scale law; a fixed positive spatial
 resolution is incompatible with the stated uniform bridge.
 
-**Proposition 226.3 (finite exact certificate).** For
+**Proposition 231.3 (finite exact certificate).** For
 
 $$
 K=8,\qquad A=B=\delta=1,\qquad n=26,
@@ -3874,18 +4342,18 @@ $$
 =\lceil\log_2 53\rceil=6.
 $$
 
-The cover capacity is therefore $8^6=262144$, so (226.3) fails:
+The cover capacity is therefore $8^6=262144$, so (231.3) fails:
 
 $$
 \boxed{392835>262144.}
-\tag{226.8}
+\tag{231.8}
 $$
 
 This rejects these constants at this prefix. It is not by itself an
 all-prefix theorem, and it does not identify $K=8$ with a three-dimensional
 covering number.
 
-### 226.3 Why an upper measure bound alone is insufficient
+### 231.3 Why an upper measure bound alone is insufficient
 
 Replacing the doubling condition by an upper estimate on ball masses loses
 the packing conclusion unless a uniform lower mass or a direct covering
@@ -3897,7 +4365,7 @@ $$
 \mu(v)=Z^{-1}4^{-h},
 \qquad
 Z=\sum_v4^{-\operatorname{depth}(v)}.
-\tag{226.9}
+\tag{231.9}
 $$
 
 Since there are at most $2^h$ vertices at depth $h$, $1\le Z\le2$.
@@ -3907,7 +4375,7 @@ any $t\ge1/3$,
 
 $$
 \mu(B(z,t))\le1\le 3^d t^d.
-\tag{226.10}
+\tag{231.10}
 $$
 
 Thus the required upper $t^d$ estimate at the macroscopic radii can hold
@@ -3918,29 +4386,29 @@ metric-doubling packing control.
 
 This countermodel does not assert an upper estimate at arbitrarily small
 radii; it isolates exactly the missing hypothesis. Therefore §160's
-measure-theoretic proof may be replaced by Theorem 226.2 only after a
+measure-theoretic proof may be replaced by Theorem 231.2 only after a
 metric-doubling or direct packing property has been established. Neither
 route supplies the still-missing occurrence-to-physical-carrier metric,
 transport, clock, observation, or dimension-sensitive invariant.
 
-## 226.99 追加锚（本行以下为增补区）
+## 231.99 追加锚（本行以下为增补区）
 
-## 227. Exponential resolution threshold
+## 232. Exponential resolution threshold
 
-The necessary budget in (226.6) can be stated as a phase boundary. This
+The necessary budget in (231.6) can be stated as a phase boundary. This
 separates a change of resolution law from a claim about the dimension of the
 carrier.
 
-**Theorem 227.1 (subcritical resolution is impossible).** Suppose the
+**Theorem 232.1 (subcritical resolution is impossible).** Suppose the
 metric-doubling cover constant $K$, the root-radius constants $A,B$, and the
-source separation constants are as in Definition 226.1, except that the
+source separation constants are as in Definition 231.1, except that the
 separation may vary with $n$ and is denoted by $delta_n$. Let
 
 $$
 q=\log_2K,qquad
 \delta_n\ge c,n^{-s}e^{-\kappa n}
 \quad(n\ge n_0),
-\tag{227.1}
+\tag{232.1}
 $$
 
 for fixed $c>0$, $s\ge0$, and $\kappa\ge0$. If every prefix is
@@ -3950,48 +4418,48 @@ $$
 \boxed{
 \kappa\ge\frac{\log\varphi}{q}.
 }
-\tag{227.2}
+\tag{232.2}
 $$
 
 In particular, a fixed or polynomially shrinking resolution cannot support
 all Fibonacci prefixes for any finite $K$.
 
-Proof. From (226.3) and $\lceil x\rceil<x+1$,
+Proof. From (231.3) and $\lceil x\rceil<x+1$,
 
 $$
 N_n
 <K\left(1+\frac{2R_n}{\delta_n}\right)^q.
-\tag{227.3}
+\tag{232.3}
 $$
 
-Since $R_n=A(n-1)+B=O(n)$, (227.1) gives a constant $C>0$ such that
+Since $R_n=A(n-1)+B=O(n)$, (232.1) gives a constant $C>0$ such that
 
 $$
 1+\frac{2R_n}{\delta_n}
 \le C n^{s+1}e^{\kappa n}
-\tag{227.4}
+\tag{232.4}
 $$
 
 for all sufficiently large $n$. Hence
 
 $$
 N_n\le C' n^{q(s+1)}e^{q\kappa n}.
-\tag{227.5}
+\tag{232.5}
 $$
 
 On the other hand, the Binet formula used in (160.8) gives
 
 $$
 N_n\ge c'\varphi^n
-\tag{227.6}
+\tag{232.6}
 $$
 
 for some $c'>0$ and all large $n$. If $q\kappa<\log\varphi$, the ratio of
-(227.6) to (227.5) tends to infinity, a contradiction. Therefore (227.2)
+(232.6) to (232.5) tends to infinity, a contradiction. Therefore (232.2)
 is necessary. The case $\kappa=0$ includes every lower bound of polynomial
 order. $\square$
 
-**Corollary 227.2 (the critical polynomial window).** At the threshold
+**Corollary 232.2 (the critical polynomial window).** At the threshold
 
 $$
 \kappa_*:=\frac{\log\varphi}{q},
@@ -4001,7 +4469,7 @@ the packing estimate requires
 
 $$
 \delta_n=O\!\left(n e^{-\kappa_* n}\right).
-\tag{227.7}
+\tag{232.7}
 $$
 
 Thus a law bounded below by $c n^{1+\epsilon}e^{-\kappa_*n}$ for any
@@ -4012,7 +4480,7 @@ For the stipulated $K=8$, one has $q=3$ and therefore
 
 $$
 \kappa_*=rac{\log\varphi}{3}.
-\tag{227.8}
+\tag{232.8}
 $$
 
 This number is a resolution exponent of the declared occurrence bridge. It
@@ -4020,13 +4488,13 @@ is not a spatial dimension, a heat-kernel exponent, or a Fock/observation
 rank. A physical three-dimensional conclusion still needs an independent
 realization law and an observable correspondence.
 
-## 227.99 追加锚（本行以下为增补区）
+## 232.99 追加锚（本行以下为增补区）
 
-## 228. 仿射运输与全局标架
+## 233. 仿射运输与全局标架
 
 前面的局部三维条件只给出每个接口的方向空间。要判断这些接口是否能拼成一个全局载体，还必须指定沿合法边传播状态的规则。
 
-### 228.1 仿射边运输
+### 233.1 仿射边运输
 
 设 $G=(V,E)$ 是连通的有向关系图。每条有向边 $e:x\to y$ 携带一个仿射运输
 
@@ -4034,21 +4502,21 @@ $$
 T_e(z)=A_ez+b_e,
 \qquad A_e\in\mathrm{GL}(d,\mathbb R),
 \quad b_e\in\mathbb R^d.
-\tag{228.1}
+\tag{233.1}
 $$
 
 反向边的运输声明为逆映射：
 
 $$
 T_{\bar e}=T_e^{-1}.
-\tag{228.2}
+\tag{233.2}
 $$
 
 若 $p=e_k\cdots e_1$ 是一条路径，规定
 
 $$
 T_p=T_{e_k}\circ\cdots\circ T_{e_1}.
-\tag{228.3}
+\tag{233.3}
 $$
 
 对闭路 $\gamma$，$T_\gamma$ 是该闭路的仿射 holonomy。这里有两个容易混淆的条件。
@@ -4058,19 +4526,19 @@ $$
 $$
 T_\gamma(z_0)=z_0
 \qquad\text{for every closed }\gamma.
-\tag{228.4}
+\tag{233.4}
 $$
 
 **完整标架无歧义**要求
 
 $$
 \boxed{T_\gamma=\mathrm{id}\quad\text{for every closed }\gamma.}
-\tag{228.5}
+\tag{233.5}
 $$
 
 前者可以让一个特殊点路径无关，后者才让所有局部向量和仿射原点都能无歧义地运输。
 
-### 定理 228.1　平凡仿射 holonomy 的等价刻画
+### 定理 233.1　平凡仿射 holonomy 的等价刻画
 
 以下两项等价：
 
@@ -4079,19 +4547,19 @@ $$
 
 $$
 g_y=T_e\circ g_x.
-\tag{228.6}
+\tag{233.6}
 $$
 
 **证明。** 假设第一项成立。选定根 $o$ 和任意仿射双射 $g_o$。对每个 $x$，取一条从 $o$ 到 $x$ 的路径 $p_x$，定义
 
 $$
 g_x=T_{p_x}\circ g_o.
-\tag{228.7}
+\tag{233.7}
 $$
 
-若更换路径，两个路径的拼接给出一条闭路；平凡 holonomy 使结果不变。因此对边 $e:x\to y$，路径 $p_xe$ 可以作为 $y$ 的路径，得到 (228.6)。
+若更换路径，两个路径的拼接给出一条闭路；平凡 holonomy 使结果不变。因此对边 $e:x\to y$，路径 $p_xe$ 可以作为 $y$ 的路径，得到 (233.6)。
 
-反过来，沿任意闭路反复使用 (228.6)，得到
+反过来，沿任意闭路反复使用 (233.6)，得到
 
 $$
 T_\gamma\circ g_o=g_o.
@@ -4099,9 +4567,9 @@ $$
 
 由于 $g_o$ 是满射，故 $T_\gamma=\mathrm{id}$。\quad$\square$
 
-因此，“每个接口都有同一套三维坐标”不能只由局部 Gram 矩阵正性推出。还需要边运输满足 (228.5)，或者明确把 holonomy 作为边界状态保留下来。
+因此，“每个接口都有同一套三维坐标”不能只由局部 Gram 矩阵正性推出。还需要边运输满足 (233.5)，或者明确把 holonomy 作为边界状态保留下来。
 
-## 229. 非平凡 holonomy 是一种任务相对的信息逃逸
+## 234. 非平凡 holonomy 是一种任务相对的信息逃逸
 
 设历史 $h$ 记录一个端点、一个初始局部状态和一条合法运输路径。若观察只保留端点与当前粗粒度读出，而不保留路径的标架类，则两个历史可能满足
 
@@ -4113,26 +4581,26 @@ $$
 
 $$
 F(h)=T_p(z_0).
-\tag{229.1}
+\tag{234.1}
 $$
 
 若 $h'$ 在同一端点使用 $p\gamma$，则
 
 $$
 F(h')=T_p\bigl(T_\gamma(z_0)\bigr).
-\tag{229.2}
+\tag{234.2}
 $$
 
 只要 $T_\gamma(z_0)\ne z_0$，就有
 
 $$
 \boxed{q(h)=q(h'),\quad F(h)\ne F(h').}
-\tag{229.3}
+\tag{234.3}
 $$
 
 这正是目标相对的逃逸对。它不是说所有 holonomy 都必须被观察者辨认：若目标只看 holonomy 的某个不变量，非平凡运输仍可能对该目标无害。正确条件是，声明的目标和合法操作必须在所选观察纤维上保持不变。
 
-### 定义 229.1　提升边界
+### 定义 234.1　提升边界
 
 在端点 $x$ 处，令 $\mathcal P_x$ 为从根到 $x$ 的合法路径集合，并按右乘闭路 holonomy 的作用取等价类。任务需要的提升边界可以写成
 
@@ -4141,7 +4609,7 @@ $$
 =
 \bigl(\text{局部状态}\bigr)\times
 \bigl(\mathcal P_x/\ker \mathsf H_x\bigr),
-\tag{229.4}
+\tag{234.4}
 $$
 
 其中 $\mathsf H_x$ 是路径类在声明任务上的响应表示，$\ker\mathsf H_x$ 包含所有对该任务没有影响的回路差异。
@@ -4153,16 +4621,16 @@ $$
 \mathsf H_x\text{ 对所有回路平凡}:&\widetilde B_x\text{ 可退化为普通局部边界};\\[1mm]
 \mathsf H_x\text{ 非平凡}:&\text{必须保留路径/标架的任务相关部分，或接受目标逃逸}.
 \end{array}
-\tag{229.5}
+\tag{234.5}
 $$
 
 因此，高维内部通过边界返回的方式不只有记忆核。非平凡 holonomy 还会以路径类、共同标架或回路响应的形式进入边界；把它们静默压成一个局部向量，会破坏需要路径相容性的拼接任务。
 
-## 230. 欧氏载体的 packing 证书与解析阈值
+## 235. 欧氏载体的 packing 证书与解析阈值
 
 前面的 metric-doubling 估计使用抽象覆盖常数。若候选载体确实是欧氏 $d$ 维空间，还可以直接使用体积比得到更强的检查。
 
-### 定理 230.1　欧氏分离集的 packing 上界
+### 定理 235.1　欧氏分离集的 packing 上界
 
 若 $S_n\subseteq\mathbb R^d$ 满足
 
@@ -4180,12 +4648,12 @@ $$
 \le
 \left(1+\frac{2R_n}{\delta_n}\right)^d.
 }
-\tag{230.1}
+\tag{235.1}
 $$
 
-**证明。** 以每个 $x\in S_n$ 为中心取半径 $\delta_n/2$ 的闭球。它们的内部两两不交，并且都包含在半径 $R_n+\delta_n/2$ 的球中。比较 $d$ 维 Lebesgue 体积，消去单位球体积后得到 (230.1)。\quad$\square$
+**证明。** 以每个 $x\in S_n$ 为中心取半径 $\delta_n/2$ 的闭球。它们的内部两两不交，并且都包含在半径 $R_n+\delta_n/2$ 的球中。比较 $d$ 维 Lebesgue 体积，消去单位球体积后得到 (235.1)。\quad$\square$
 
-### 定理 230.2　Fibonacci 解析分辨率阈值
+### 定理 235.2　Fibonacci 解析分辨率阈值
 
 假设第 $n$ 个前缀有 $N_n=2F_{n+1}-1$ 个需区分的 occurrence，并且
 
@@ -4199,10 +4667,10 @@ $$
 
 $$
 \boxed{d\kappa\ge\log\varphi.}
-\tag{230.2}
+\tag{235.2}
 $$
 
-**证明。** 由 (230.1)，$N_n$ 至多为一个常数乘以
+**证明。** 由 (235.1)，$N_n$ 至多为一个常数乘以
 
 $$
 n^{d(s+1)}e^{d\kappa n}.
@@ -4217,12 +4685,12 @@ $$
 \kappa\ge\frac{\log\varphi}{3}
 \approx0.1604039416865345.
 }
-\tag{230.3}
+\tag{235.3}
 $$
 
 这个数是 occurrence-to-carrier 分辨率指数。它不是空间维数、热核指数、Fock 模式数或观察秩；只有在另行证明这些量之间的对应后，才可以讨论物理解释。
 
-### 命题 230.3　有限反例证书
+### 命题 235.3　有限反例证书
 
 取三维、$n=26$、$R_{26}=26$、$\delta_{26}=1$。则
 
@@ -4240,16 +4708,16 @@ $$
 
 $$
 \boxed{53^3=148877<392835=N_{26}.}
-\tag{230.4}
+\tag{235.4}
 $$
 
 这排除在这些具体半径、分离度和 occurrence 计数下的三维欧氏实现。它不排除改变分离率、允许更大半径、使用非欧氏载体或不要求所有 occurrence 同时可区分的模型，也不单独证明三维物理空间不存在。
 
-## 231. 从局部三框架到真正三维载体的桥接条件
+## 236. 从局部三框架到真正三维载体的桥接条件
 
 现在可以把“局部三维”与“整体三维”之间的缺口写成一组同时成立的条件。
 
-### 定义 231.1　任务相对的三维载体证书
+### 定义 236.1　任务相对的三维载体证书
 
 对每个有限前缀，要求存在：
 
@@ -4259,17 +4727,17 @@ $$
 4. occurrence 到载体的映射在声明分辨率下是注入的，并满足 $R_n,\delta_n$ 的统一尺度界；
 5. 时钟、读出和合法拼接规则都由同一观察边界恢复。
 
-### 命题 231.2　条件性桥接结论
+### 命题 236.2　条件性桥接结论
 
-若 Definition 231.1 的五项均成立，则每个有限前缀都具有一个任务相对的三维运输实现；若再有统一的全层级嵌入、统一的运输和观察极限，以及近似态的紧致性，则可把有限层结论传到极限载体。
+若 Definition 236.1 的五项均成立，则每个有限前缀都具有一个任务相对的三维运输实现；若再有统一的全层级嵌入、统一的运输和观察极限，以及近似态的紧致性，则可把有限层结论传到极限载体。
 
 若第五项或第三项失败，则已有三维局部状态只能称为三维接口：它不再保证整体路径、操作合法性和未来响应可由该接口无损恢复。若第四项失败，packing 阈值也不能用于该模型，因为尚未建立 occurrence 与欧氏点之间的注入对应。
 
 这不是一个从 FIB 语法单独推出的宇宙三维定理。它是一个可逐项反驳的桥接判据：局部三框架、无横向泄漏、任务相对平凡 holonomy、注入与分辨率证书、以及极限紧致性，缺一项都不能把“每个接口三维”升级为“实际载体三维”。
 
-本卷新增结果仍属于理论推导，尚未作为 Lean kernel 证明交付。它们的下一步验证对象已经具体化为：对项目原生合法运输构造 $T_e$；计算生成回路的 holonomy；检查任务观察是否切开 (229.3) 的逃逸对；最后用 (230.1) 和 (230.4) 检验候选 occurrence-to-carrier 桥。
+本卷新增结果仍属于理论推导，尚未作为 Lean kernel 证明交付。它们的下一步验证对象已经具体化为：对项目原生合法运输构造 $T_e$；计算生成回路的 holonomy；检查任务观察是否切开 (234.3) 的逃逸对；最后用 (235.1) 和 (235.4) 检验候选 occurrence-to-carrier 桥。
 
-## 232. 辛预测完成对“三个观测坐标”的限制
+## 237. 辛预测完成对“三个观测坐标”的限制
 
 DEV 的《统一预测几何》把观察边界与动力学放在同一个线性模型中。取
 
@@ -4287,12 +4755,12 @@ W_0=\operatorname{im}C^{\mathsf T},
 W_{k+1}=W_k+A^{\mathsf T}W_k,
 \qquad
 W=\bigcup_kW_k.
-\tag{232.1}
+\tag{237.1}
 $$
 
 取满行秩矩阵 $O$ 使其行空间为 $W$，则 $Oz$ 是全部连续未来读出的最小线性预测边界。
 
-### 定理 232.1　精确非退化辛预测边界具有偶数秩
+### 定理 237.1　精确非退化辛预测边界具有偶数秩
 
 在上述正定 Hamiltonian 模型中，$W$ 上的限制配对
 
@@ -4304,14 +4772,14 @@ $$
 
 $$
 \boxed{\operatorname{rank}O=\dim W\text{ 为偶数}.}
-\tag{232.2}
+\tag{237.2}
 $$
 
 若还存在矩阵 $K$ 使
 
 $$
 OA=KO,
-\tag{232.3}
+\tag{237.3}
 $$
 
 则约化边界满足
@@ -4334,9 +4802,9 @@ u^{\mathsf T}JA^{\mathsf T}u
 (Ju)^{\mathsf T}S(Ju)>0,
 $$
 
-与辛正交矛盾。因此限制配对非退化。非退化反对称矩阵的阶数为偶数，故 (232.2) 成立；其余等式由 $OA=KO$、$AS^{-1}=J$ 直接整理得到。\quad$\square$
+与辛正交矛盾。因此限制配对非退化。非退化反对称矩阵的阶数为偶数，故 (237.2) 成立；其余等式由 $OA=KO$、$AS^{-1}=J$ 直接整理得到。\quad$\square$
 
-### 推论 232.2　秩三的精确边界必须离开至少一个条件
+### 推论 237.2　秩三的精确边界必须离开至少一个条件
 
 若 $C$ 有三个独立读出，而这些读出本身已经形成全部精确自治预测边界，即
 
@@ -4344,7 +4812,7 @@ $$
 \operatorname{rank}O=3,
 $$
 
-则不可能同时满足正定 Hamiltonian 假设、精确闭合 (232.3) 和非退化辛约化。
+则不可能同时满足正定 Hamiltonian 假设、精确闭合 (237.3) 和非退化辛约化。
 
 所以一个“三分量边界”必须被解释为以下至少一种情况：
 
@@ -4355,11 +4823,11 @@ $$
 
 这条排除只针对精确线性辛预测边界，不能推广为“任何三维流形都不可能存在”。相位圆就是一维自治非线性读出，但它没有非退化二形式。
 
-## 233. 三维配置接口与六维正则完成
+## 238. 三维配置接口与六维正则完成
 
 “三维接口”与“完整预测状态”的最小容量，取决于三个读出是否被解释为配置坐标。
 
-### 定义 233.1　配置型三框架
+### 定义 238.1　配置型三框架
 
 称三个独立读出为配置型三框架，是指存在坐标
 
@@ -4372,16 +4840,16 @@ $$
 $$
 \omega|_L=0,
 \qquad \dim L=3.
-\tag{233.1}
+\tag{238.1}
 $$
 
-### 定理 233.2　配置型三框架的正则完成至少六维
+### 定理 238.2　配置型三框架的正则完成至少六维
 
 若 $L$ 是一个三维 Lagrange 子空间，则任何包含其三个独立共轭变量的非退化辛空间都至少是
 
 $$
 \boxed{L\oplus L^*\cong\mathbb R^3_q\oplus\mathbb R^3_p,\qquad \dim=6.}
-\tag{233.2}
+\tag{238.2}
 $$
 
 在标准正则坐标中，辛形式为
@@ -4392,7 +4860,7 @@ $$
 
 **证明。** 对一个 $2n$ 维辛空间，Lagrange 子空间的维数为 $n$。由 $\dim L=3$ 得 $n=3$，所以总维数为 $2n=6$。选择 $L$ 的一组基并取其辛对偶基，得到 $q,p$ 的 Darboux 坐标。\quad$\square$
 
-这里的“至少”是针对正则共轭完成的，不是说任意携带三个实数的编码都需要六个数。若只要求三个任意观测量的精确 Hamiltonian 预测闭合，定理 232.1 只给出偶数秩下界：秩三被排除，最低可能是四。只有当三个量确实是三维配置坐标并要求其共轭方向也可运输时，六维结论才适用。
+这里的“至少”是针对正则共轭完成的，不是说任意携带三个实数的编码都需要六个数。若只要求三个任意观测量的精确 Hamiltonian 预测闭合，定理 237.1 只给出偶数秩下界：秩三被排除，最低可能是四。只有当三个量确实是三维配置坐标并要求其共轭方向也可运输时，六维结论才适用。
 
 ### 一个可直接计算的 FIB 兼容样例
 
@@ -4406,7 +4874,7 @@ A=
 \end{pmatrix},
 \qquad
 C=\begin{pmatrix}I_3&0\end{pmatrix}.
-\tag{233.3}
+\tag{238.3}
 $$
 
 则
@@ -4421,12 +4889,12 @@ $$
 
 $$
 \ddot q+\Omega^2q=0.
-\tag{233.4}
+\tag{238.4}
 $$
 
 六维一阶状态与三维二阶历史是同一信息的两种表示。这里增加的是共轭记忆，不是第四根空间轴。
 
-## 234. 相空间 holonomy 会从隐藏共轭变量返回
+## 239. 相空间 holonomy 会从隐藏共轭变量返回
 
 前面的仿射运输只记录位置型 $T_e$。若接口承载 Hamiltonian 预测，还必须考虑其辛提升
 
@@ -4434,30 +4902,30 @@ $$
 \boxed{
 \widetilde T_e(q,p)=\bigl(A_eq+b_e,\,A_e^{-\mathsf T}p\bigr).
 }
-\tag{234.0}
+\tag{239.0}
 $$
 
-这是仿射位置运输的余切提升；直接代入 $dq'\wedge dp'=dq\wedge dp$ 可验证它保持标准辛形式。若模型另有磁势或生成函数项，必须把该项作为额外声明的边运输，不能由 (234.0) 自动推定。闭路给出相空间 holonomy $\widetilde H_\gamma$。
+这是仿射位置运输的余切提升；直接代入 $dq'\wedge dp'=dq\wedge dp$ 可验证它保持标准辛形式。若模型另有磁势或生成函数项，必须把该项作为额外声明的边运输，不能由 (239.0) 自动推定。闭路给出相空间 holonomy $\widetilde H_\gamma$。
 
-### 命题 234.1　位置平凡不等于预测平凡
+### 命题 239.1　位置平凡不等于预测平凡
 
 设 $C$ 只读出位置，且某闭路满足
 
 $$
 C\widetilde H_\gamma=C,
-\tag{234.1}
+\tag{239.1}
 $$
 
 但对某个有限未来词 $w$ 有
 
 $$
 C A_w\widetilde H_\gamma\ne C A_w.
-\tag{234.2}
+\tag{239.2}
 $$
 
 则存在两个当前读出相同的历史，它们在未来响应上不同；因此位置边界产生任务相对的信息逃逸。
 
-**证明。** 取两个相差该闭路 holonomy 的状态 $z$ 与 $\widetilde H_\gamma z$。由 (234.1)，当前读出相同；由 (234.2)，对某个未来词的响应不同。这正是同一观察纤维中的逃逸对。\quad$\square$
+**证明。** 取两个相差该闭路 holonomy 的状态 $z$ 与 $\widetilde H_\gamma z$。由 (239.1)，当前读出相同；由 (239.2)，对某个未来词的响应不同。这正是同一观察纤维中的逃逸对。\quad$\square$
 
 因此，真正需要检验的不是仅有
 
@@ -4469,32 +4937,32 @@ $$
 
 $$
 \boxed{O\widetilde H_\gamma=O.}
-\tag{234.3}
+\tag{239.3}
 $$
 
-若 (234.3) 不成立，隐藏动量、相位或共轭记忆就必须进入提升边界。它们可以以显式状态、历史核或路径类存储；直接把它们重置为零会改变拼接后的未来。
+若 (239.3) 不成立，隐藏动量、相位或共轭记忆就必须进入提升边界。它们可以以显式状态、历史核或路径类存储；直接把它们重置为零会改变拼接后的未来。
 
-## 235. 更新后的“三维载体”判据
+## 240. 更新后的“三维载体”判据
 
-将 §§228–234 合并，可以得到一个比“局部有三个方向”更严格的条件表。
+将 §§233–239 合并，可以得到一个比“局部有三个方向”更严格的条件表。
 
-### 定义 235.1　配置—预测双尺度证书
+### 定义 240.1　配置—预测双尺度证书
 
 候选 FIB 实现要声称“实际载体是三维”，至少需要同时给出：
 
 1. 三维配置型局部框架及其 occurrence-to-carrier 注入；
 2. 无横向运输泄漏，使局部框架形成三维可积切面；
 3. 位置运输的任务相对 holonomy 平凡；
-4. 辛或其他动力学提升的预测 holonomy 满足 (234.3)，或边界显式保留其任务相关轨道；
-5. 分辨率满足 §§226–230 的 packing 预算；
+4. 辛或其他动力学提升的预测 holonomy 满足 (239.3)，或边界显式保留其任务相关轨道；
+5. 分辨率满足 §§231–235 的 packing 预算；
 6. 三维配置的共轭变量、历史记忆或合法性档案满足动态预测充分性；
 7. 有统一细化嵌入和近极小态紧致性，使有限层结论能传到极限。
 
-### 命题 235.2　局部三维与完整预测维数的分离
+### 命题 240.2　局部三维与完整预测维数的分离
 
 若上述证书成立，则“三维”可以有一个严格的任务相对含义：它是配置载体的局部切维数。完整一阶预测边界则不必是三维；在正则 Hamiltonian 情形，包含三个配置坐标的最小自然完成是六维，而一般任意观测的精确辛预测秩必须是偶数。
 
-若只证明局部 Gram 正性、三个关系分量或一个三维投影，而没有 (234.3)、注入和尺度证书，则最多得到三维接口，不能得到无损的实际三维载体。
+若只证明局部 Gram 正性、三个关系分量或一个三维投影，而没有 (239.3)、注入和尺度证书，则最多得到三维接口，不能得到无损的实际三维载体。
 
 这把“为什么三维”拆成两个互不混淆的问题：
 
@@ -4506,4 +4974,4 @@ $$
 }
 $$
 
-本节仍是条件性理论推导，未作为 Lean kernel 证明交付。下一项可计算工作是：从项目原生运输提取位置与辛提升 $T_e,\widetilde T_e$；计算生成闭路的两个 holonomy；构造 $O$ 并检查其秩与 (234.3)；再将结果与 occurrence packing 和边界记忆核逐项合并。
+本节仍是条件性理论推导，未作为 Lean kernel 证明交付。下一项可计算工作是：从项目原生运输提取位置与辛提升 $T_e,\widetilde T_e$；计算生成闭路的两个 holonomy；构造 $O$ 并检查其秩与 (239.3)；再将结果与 occurrence packing 和边界记忆核逐项合并。
