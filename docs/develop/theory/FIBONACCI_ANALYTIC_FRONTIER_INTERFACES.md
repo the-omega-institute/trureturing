@@ -3566,3 +3566,147 @@ $$
 新的消费是共同保留 $R_2R_4^2$ 并对全部此类原行积分后的联合区域；三次筛、函数方程、列立方提取和通常理想计数本身均直接复用。充分大的原平方自由行仍有 $\mathscr H_{24}\asymp U^2$，不在此预算中。其他长度与高度、F4 的新运输、完整六阶余域和 signed Robin restoration 仍需独立估计；本节没有证明 RH 或逐整数严格 Robin 不等式，没有本仓解析 Lean 认证或文献优先权断言。
 
 ## 追加锚（本行以下为增补区）
+
+## 471. 完整反射后的原始一估值行预算
+
+**定理 471.1（平方自由一估值方向的完整原因子预算）。** 保持第 468—470 节的同一个完整原卷积、非负有界行权、固定有限物理/ray/Fourier 表示、原零延拓及平衡尺度 $D=N=\sqrt U$、$K=U$。直接复用[六阶大筛及其原族接口](../../../Library/Analytic/faveri2026fixedorder.md#the-large-sieve-statement)、该接口的完整列六次幂提取，以及第 468 节的实际 primitive 导子、完整 normalized plain 反射、有限 Euler 质量和 annular/supremum 恢复。令 $\mathcal C_1$ 包络所用解析输入、profiles 所需有限阶导数、全部原有限分量及 smooth/Sobolev 恢复的实际乘积费用。Norm-twist 高度仍限于原固定或相应次幂费用的 polylog 合同。
+
+在（469.1）的同一实际物理分解中记 $x_i=q_{R_i}$，定义
+
+$$
+\begin{aligned}
+a(v)&=x_1,\qquad g_1(v)=x_2x_3x_4x_5,\\
+c_1(v)&=x_2^2x_3^3x_4^4x_5^5,\qquad f(v)=a(v)g_1(v),\\
+\mathscr H_1(v)
+&=g_1(v)\{a(v)+f(v)+a(v)^{5/6}f(v)^{1/3}
+                         +a(v)^{1/3}f(v)^{5/6}\}\\
+&=f(v)+a(v)g_1(v)^2
+ +a(v)^{7/6}g_1(v)^{4/3}+a(v)^{7/6}g_1(v)^{11/6}.
+\end{aligned}
+\tag{471.1}
+$$
+
+这里 $q_v=a(v)c_1(v)\asymp U$。对固定 $C_0\ge1$、$1\le T\le C_0U$，令 $Q^{\langle1\rangle}_{\le T}(b)$ 为同一个完整原正能量在 $\mathscr H_1(v)\le T$ 上的限制，包括全部原有限物理标签。在所列解析输入及共同费用条件下，对每个 $\varepsilon>0$，
+
+$$
+Q^{\langle1\rangle}_{\le T}(b)
+\ll_{\varepsilon,C_0}\mathcal C_1^2U^{1+\varepsilon}T.
+\tag{471.2}
+$$
+
+因此 $T=U^{1-\nu}$、$0\le\nu\le1$ 给出 $O_\varepsilon(\mathcal C_1^2U^{2-\nu+\varepsilon})$；严格幂次节省须固定 $\nu>0$、共同费用次幂且最终损失足够小。此式不允许先给原系数增加任意列乘子，也不对孤立 F4 包宣称相同反射估计。
+
+证明。固定原物理标签、一个 Fourier 分量 $\xi$ 及五个 norm 的 dyadic 块，记
+
+$$
+A\asymp x_1,\qquad G\asymp x_2x_3x_4x_5,
+\qquad F=AG\asymp q_{\operatorname{rad}v}.
+\tag{471.3}
+$$
+
+单位因子归入尺度一；实际非空 subunit annuli 按原固定 annular enlargement 处理。固定实际 $R_2,R_3,R_4,R_5$，只让原 squarefree $R_1$ 变化。先在原允许行上使用第 468 节的实际非主 primitive 导子 $F_v\asymp F$ 和（468.6）的完整 normalized plain 反射。固定每个反射项、annulus、恢复尺度及 profiles 后，（468.8）的同一个完整列多项式为
+
+$$
+\sum_h\beta_X(h)\psi_v^0(h),\qquad
+\beta_X(h)=X^{-1/2}\sum_{dn=h}
+ \mu(d)V(q_d/D)\widetilde W(q_n/Y),\qquad
+X=DY\ll FU^{O(\xi_0)}.
+\tag{471.4}
+$$
+
+这里整个反射 plain 因子在绝对乘积内共轭，原 Möbius 因子不变；root number 的模长为一。$\beta_X$ 与变化的 $R_1$ 无关。行依赖实际主尺度不是额外的行依赖系数，而由第 468 节同一有限阶尺度 supremum 恢复支付。有限 $S$ Euler 系数的绝对总质量、全部尾部、原 collision zeros 及所需导数均保留在共同合同中；只在原行上使用实际导子恒等式。
+
+对每个固定项，字符连同零值恰好分解为
+
+$$
+\psi_v^0(h)=\xi(h)\chi_h^{\rm raw}(R_2^2R_3^3R_4^4R_5^5)
+                         \chi_h^{\rm raw}(R_1).
+\tag{471.5}
+$$
+
+前两个因子与 $R_1$ 无关，吸入列系数 $\gamma_X(h)$，模长至多一；不把它们的移动导子放入筛常数。负 orientation 先整体共轭。原族接口直接将最后一个字符识别为第 441 节六阶筛的同一族；不另作未付费用的 reciprocity 换向。
+
+对完整列唯一写 $h=\ell^6h_0$，$h_0$ sixth-power-free，允许 $\ell,h_0$ 相交。复用原接口的精确零延拓和除数型质量界，得到
+
+$$
+\chi_{\ell^6h_0}^{\rm raw}(R_1)
+ =\chi_{h_0}^{\rm raw}(R_1)\mathbf1_{(\ell,R_1)=1},
+\qquad
+\sum_{h_0\ {\rm sixth\ power\ free}}
+ |\gamma_X(\ell^6h_0)|^2
+ \ll_\delta\mathcal P^2X^\delta q_\ell^{-6}.
+\tag{471.6}
+$$
+
+固定 $\ell$ 后，先保留行限制 $(\ell,R_1)=1$，再只在正范数中扩大 $R_1$ 的允许集，解除它与四个固定标签的互素条件。原 $R_1$ squarefree，因而 sixth-power-free，列 $h_0$ 也满足同一筛条件。此时才使用原族六阶筛
+
+$$
+\begin{aligned}
+\Psi_6(A,X)&=A+X+A^{5/6}X^{1/3}+A^{1/3}X^{5/6},\\
+\sum_{R_1}\left|\sum_{h_0}c_{h_0}\chi_{h_0}^{\rm raw}(R_1)\right|^2
+&\ll_\delta(AX)^\delta\Psi_6(A,X)\sum_{h_0}|c_{h_0}|^2.
+\end{aligned}
+\tag{471.7}
+$$
+
+式（471.7）中行 $R_1$ 与列 $h_0$ 均按上述 sixth-power-free 条件取值，行 norm 尺度为 $A$、列 norm 至多为 $O(X)$；它是平方行范数界。列长为 $O(X/q_\ell^6)$，单调性允许用 $X$ 统一支配；Minkowski 的质量为 $q_\ell^{-3}$，其理想和收敛。若 $R_1=1$，单独用列 Cauchy 支付 $X$ 项，不把主字符误纳入非主字符函数方程。该原行的完整 $v$ 仍非单位，实际反射在此前已合法执行。由原归一化 $DN=U$，固定四个实际标签后的完整原能量至多
+
+$$
+\mathcal C_1^2U^{1+\delta}
+ \{A+F+A^{5/6}F^{1/3}+A^{1/3}F^{5/6}\}.
+\tag{471.8}
+$$
+
+先按最终损失选取 $\xi_0$，再吸收 $X\ll FU^{O(\xi_0)}$ 的扩大和内部小幂；反射、有限 Euler、profile 导数及原高度费用一起恢复，不能为不同因子另开高度预算。
+
+四个固定理想的实际选择至多 $O(G)$；忽略其互素性只用于正计数。于是该块上界是（471.8）乘 $G$。若原块与 $\mathscr H_1\le T$ 相交，该乘积的括号费用为 $O(T)$，因为五个 dyadic norm 与同一实际行的（471.1）只差固定因子。只对这些块正求和，块数及原有限分量用最终小幂支付，得到（471.2）。所有原 $h=dn$、共同因子、不同分解和列间交叉项始终留在同一个完整范数中。证毕。
+
+**推论 471.2（联合高估值所支付的一估值区域）。** 同一合同下，原允许行中满足
+
+$$
+x_1\le x_2x_3^7x_4^{13}x_5^{19}
+\tag{471.9}
+$$
+
+的部分具有 $O_\varepsilon(\mathcal C_1^2U^{2+\varepsilon})$ 的完整原能量。
+
+证明。记 $a=a(v)$、$g=g_1(v)$、$c=c_1(v)$。有 $c\ge g^2\ge g\ge1$，所以（471.1）的前两项均至多 $ac=q_v$，第三项不超过第四项。而
+
+$$
+\left(\frac{a^{7/6}g^{11/6}}{ac}\right)^6
+ =\frac{ag^{11}}{c^6},\qquad
+\frac{c^6}{g^{11}}=x_2x_3^7x_4^{13}x_5^{19}.
+\tag{471.10}
+$$
+
+故（471.9）使 $\mathscr H_1(v)\le4q_v$。取固定 $C_0$ 支付原 annular/物理标签常数，再应用（471.2）。证毕。
+
+**命题 471.3（全部既有物理截断之外的新原行）。** 保持原行权和允许有限标签 $j$。固定 $t_0$ 在 $\Omega$ 的正支撑中，在所需固定 ray 类中选取不同 good 素理想 $\ell,r$，范数为 $q_\ell\asymp P^5$、$q_r=P\to\infty$。同一 ray 类的素理想定理提供该选择，可避开固定 $S$。令
+
+$$
+v=\ell r^3,\qquad U=s_jq_v/t_0\asymp P^8.
+\tag{471.11}
+$$
+
+原权仍为 $\Omega(t_0)>0$；此时 $R_1=\ell$、$R_3=r$，其他 $R_i=1$。（471.1）的四项分别为 $\asymp P^6,P^7,P^{43/6},P^{23/3}$，均严格小于 $U^{47/48}\asymp P^{47/6}$ 的幂次。因此充分大 $P$ 时
+
+$$
+\mathscr H_1(v)\le U^{47/48}.
+\tag{471.12}
+$$
+
+但对每个固定 $C_0$，同一原行有
+
+$$
+q_{a_2}\asymp P^6>U^{1/3},\qquad
+q_{a_3}\asymp P^5>U^{2/5},\qquad
+\mathscr H_3(v)\asymp P^{11}>C_0U,\qquad
+\mathscr H_{24}(v)\asymp P^{12}>C_0U.
+\tag{471.13}
+$$
+
+故该完整原行族在第 467—470 节各已付截断之外。估值 $1,3$ 使 $S$ 外字符阶数恰为六；这里不声称检测器选择这些行，也不给出它们能量的正下界。
+
+第 441 节已有的四个形式尺度恰为（471.1）乘 $a(v)$，重排后为 $f^2,af,a^{5/6}f^{4/3},a^{1/3}f^{11/6}$；它们及所用大筛、反射、六次幂提取不是新增结果。本节的消费是把实际导子上的完整反射、原列系数和四个固定实际标签的求和接合，支付（471.2）的原正能量区域。合并既有区域时须覆盖所有实际支路的共同费用，或保留其平方费用之和，交集只计一次。充分大的原平方自由行仍满足 $g_1=c_1=1$、$\mathscr H_1\asymp U^{7/6}$，未获 $U^2$ 体积预算。完整六阶余域、其他长度与高度、F4 的新运输及 signed Robin restoration 仍未解决；本节没有证明 RH 或逐整数严格 Robin 不等式，没有解析 Lean 认证或文献优先权断言。
+
+## 追加锚（本行以下为增补区）
