@@ -12,9 +12,11 @@ import Mathlib.Topology.Algebra.MvPolynomial
 
 set_option autoImplicit false
 set_option relaxedAutoImplicit false
+set_option maxHeartbeats 2000000
+set_option Elab.async false
 
 open Matrix
-open scoped ComplexOrder Kronecker
+open scoped BigOperators ComplexOrder Kronecker
 open D5.S3.Resource.CompositeCones
 open D5.S3.Resource.EntanglementWitness
 open D5.S3.Quantum.Entanglement.AbsolutePPT.Bipartite (partialTranspose)
@@ -75,53 +77,153 @@ private def positiveVectors : Fin 8 → (Fin 2 × Fin 3 → ℂ) :=
     Pi.single (1, 0) 1, Pi.single (0, 2) 1]
 
 private lemma rho_trace (x y : ℝ) : (rho x y).trace = 1 := by
-  sorry
+  norm_num [Matrix.trace, Matrix.diag, Fintype.sum_prod_type, Fin.sum_univ_two,
+    Fin.sum_univ_three, rho]
+  push_cast
+  ring
 
 private lemma rho_positive_decomposition (x y : ℝ) :
     rho x y = ∑ i : Fin 8, positiveCoefficients x y i •
       vecMulVec (positiveVectors i) (star (positiveVectors i)) := by
-  sorry
+  ext ⟨a, b⟩ ⟨c, d⟩
+  fin_cases a <;> fin_cases b <;> fin_cases c <;> fin_cases d <;>
+    norm_num [rho, positiveCoefficients, positiveVectors, Fin.sum_univ_succ,
+      Matrix.sum_apply, Matrix.smul_apply, Matrix.vecMulVec_apply, Pi.single_apply,
+      Pi.star_apply, Complex.real_smul] <;> push_cast <;> ring
 
 private lemma rho_posSemidef {x y : ℝ} (hx : |x| ≤ 1 / 4) (hy : |y| ≤ 1 / 4) :
     (rho x y).PosSemidef := by
-  sorry
+  rw [rho_positive_decomposition]
+  apply Matrix.posSemidef_sum
+  intro i _
+  apply (posSemidef_vecMulVec_self_star _).smul
+  obtain ⟨hxl, hxu⟩ := abs_le.mp hx
+  obtain ⟨hyl, hyu⟩ := abs_le.mp hy
+  fin_cases i <;> dsimp [positiveCoefficients] <;> linarith
 
 private lemma rho_density {x y : ℝ} (hx : |x| ≤ 1 / 4) (hy : |y| ≤ 1 / 4) :
     IsDensity (rho x y) := by
-  sorry
+  exact ⟨rho_posSemidef hx hy, rho_trace x y⟩
 
 private lemma rho_affine (x y : ℝ) :
     rho x y = (1 - x - y) • rho 0 0 + x • rho 1 0 + y • rho 0 1 := by
-  sorry
+  ext ⟨a, b⟩ ⟨c, d⟩
+  fin_cases a <;> fin_cases b <;> fin_cases c <;> fin_cases d <;>
+    norm_num [rho, Matrix.add_apply, Matrix.smul_apply, Complex.real_smul] <;>
+      push_cast <;> ring
 
 private lemma base_zero_separable : separableCone (rho 0 0) := by
-  sorry
+  let a : Fin 6 → Fin 2 → ℂ :=
+    ![![1, 1], ![1, Complex.I], ![1, -1], ![1, -Complex.I], ![1, 0], ![0, 1]]
+  let b : Fin 6 → Fin 3 → ℂ :=
+    ![![1, -1, 1], ![-1, Complex.I, 1], ![1, 1, 1], ![-1, -Complex.I, 1],
+      ![0, 0, 1], ![1, 0, 0]]
+  let c : Fin 6 → ℝ := ![1 / 32, 1 / 32, 1 / 32, 1 / 32, 1 / 8, 1 / 8]
+  refine ⟨6, fun i => c i • vecMulVec (a i) (star (a i)),
+    fun i => vecMulVec (b i) (star (b i)), ?_, ?_⟩
+  · intro i
+    refine ⟨(posSemidef_vecMulVec_self_star _).smul ?_,
+      posSemidef_vecMulVec_self_star _⟩
+    fin_cases i <;> norm_num [c]
+  · ext ⟨u, v⟩ ⟨w, z⟩
+    fin_cases u <;> fin_cases v <;> fin_cases w <;> fin_cases z <;>
+      norm_num [a, b, c, rho, Fin.sum_univ_succ, Matrix.sum_apply,
+        Matrix.kroneckerMap_apply, Matrix.vecMulVec_apply, Matrix.smul_apply,
+        Pi.star_apply, Complex.real_smul, Complex.ext_iff]
 
 private lemma base_one_separable : separableCone (rho 1 0) := by
-  sorry
+  let a : Fin 8 → Fin 2 → ℂ :=
+    ![![1, 1], ![1, Complex.I], ![1, -1], ![1, -Complex.I],
+      ![1, 0], ![0, 1], ![1, 0], ![0, 1]]
+  let b : Fin 8 → Fin 3 → ℂ :=
+    ![![0, 1, -1], ![0, 1, -Complex.I], ![0, 1, 1], ![0, 1, Complex.I],
+      ![0, 0, 1], ![0, 1, 0], ![1, 0, 0], ![1, 0, 0]]
+  let c : Fin 8 → ℝ :=
+    ![1 / 40, 1 / 40, 1 / 40, 1 / 40, 1 / 10, 1 / 10, 1 / 5, 1 / 5]
+  refine ⟨8, fun i => c i • vecMulVec (a i) (star (a i)),
+    fun i => vecMulVec (b i) (star (b i)), ?_, ?_⟩
+  · intro i
+    refine ⟨(posSemidef_vecMulVec_self_star _).smul ?_,
+      posSemidef_vecMulVec_self_star _⟩
+    fin_cases i <;> norm_num [c]
+  · ext ⟨u, v⟩ ⟨w, z⟩
+    fin_cases u <;> fin_cases v <;> fin_cases w <;> fin_cases z <;>
+      norm_num [a, b, c, rho, Fin.sum_univ_succ, Matrix.sum_apply,
+        Matrix.kroneckerMap_apply, Matrix.vecMulVec_apply, Matrix.smul_apply,
+        Pi.star_apply, Complex.real_smul, Complex.ext_iff]
 
 private lemma base_two_separable : separableCone (rho 0 1) := by
-  sorry
+  let a : Fin 8 → Fin 2 → ℂ :=
+    ![![1, 1], ![1, Complex.I], ![1, -1], ![1, -Complex.I],
+      ![1, 0], ![0, 1], ![1, 0], ![0, 1]]
+  let b : Fin 8 → Fin 3 → ℂ :=
+    ![![1, -1, 0], ![1, -Complex.I, 0], ![1, 1, 0], ![1, Complex.I, 0],
+      ![0, 1, 0], ![1, 0, 0], ![0, 0, 1], ![0, 0, 1]]
+  let c : Fin 8 → ℝ :=
+    ![1 / 40, 1 / 40, 1 / 40, 1 / 40, 1 / 10, 1 / 10, 1 / 5, 1 / 5]
+  refine ⟨8, fun i => c i • vecMulVec (a i) (star (a i)),
+    fun i => vecMulVec (b i) (star (b i)), ?_, ?_⟩
+  · intro i
+    refine ⟨(posSemidef_vecMulVec_self_star _).smul ?_,
+      posSemidef_vecMulVec_self_star _⟩
+    fin_cases i <;> norm_num [c]
+  · ext ⟨u, v⟩ ⟨w, z⟩
+    fin_cases u <;> fin_cases v <;> fin_cases w <;> fin_cases z <;>
+      norm_num [a, b, c, rho, Fin.sum_univ_succ, Matrix.sum_apply,
+        Matrix.kroneckerMap_apply, Matrix.vecMulVec_apply, Matrix.smul_apply,
+        Pi.star_apply, Complex.real_smul, Complex.ext_iff]
 
 private lemma rho_separable {x y : ℝ} (hx : |x| ≤ 1 / 4) (hy : |y| ≤ 1 / 4)
     (hx0 : 0 ≤ x) (hy0 : 0 ≤ y) : separableCone (rho x y) := by
-  sorry
+  rw [rho_affine]
+  exact separableCone_add
+    (separableCone_add
+      (separableCone_smul (by linarith [abs_le.mp hx, abs_le.mp hy]) base_zero_separable)
+      (separableCone_smul hx0 base_one_separable))
+    (separableCone_smul hy0 base_two_separable)
 
 private lemma partialTranspose_quadratic_x (x y : ℝ) :
     (star (Pi.single (0, 0) 1 + Pi.single (1, 1) 1) ⬝ᵥ
       (partialTranspose (rho x y)) *ᵥ (Pi.single (0, 0) 1 + Pi.single (1, 1) 1)).re =
       2 * x / 5 := by
-  sorry
+  norm_num [partialTranspose, rho, dotProduct, Matrix.mulVec, Fintype.sum_prod_type,
+    Fin.sum_univ_two, Fin.sum_univ_three, Pi.single_apply, Pi.star_apply,
+    Complex.add_re]
+  ring
 
 private lemma partialTranspose_quadratic_y (x y : ℝ) :
     (star (Pi.single (0, 1) 1 + Pi.single (1, 2) 1) ⬝ᵥ
       (partialTranspose (rho x y)) *ᵥ (Pi.single (0, 1) 1 + Pi.single (1, 2) 1)).re =
       2 * y / 5 := by
-  sorry
+  norm_num [partialTranspose, rho, dotProduct, Matrix.mulVec, Fintype.sum_prod_type,
+    Fin.sum_univ_two, Fin.sum_univ_three, Pi.single_apply, Pi.star_apply,
+    Complex.add_re]
+  ring
 
 private lemma rho_entangled {x y : ℝ} (h : x < 0 ∨ y < 0) :
     ¬ separableCone (rho x y) := by
-  sorry
+  intro hs
+  have hp :=
+    D5.S3.Quantum.Entanglement.AbsolutePPT.QuadbitMaximumPurity.separableCone_partialTranspose_posSemidef hs
+  rcases h with hx | hy
+  · have hq := hp.re_dotProduct_nonneg (Pi.single (0, 0) 1 + Pi.single (1, 1) 1)
+    rw [partialTranspose_quadratic_x] at hq
+    linarith
+  · have hq := hp.re_dotProduct_nonneg (Pi.single (0, 1) 1 + Pi.single (1, 2) 1)
+    rw [partialTranspose_quadratic_y] at hq
+    linarith
+
+private lemma coords_affine (x y : ℝ)
+    (i : (Fin 2 × Fin 3) × (Fin 2 × Fin 3) × Bool) :
+    coords (rho x y) i = coords (rho 0 0) i +
+      x * (coords (rho 1 0) i - coords (rho 0 0) i) +
+      y * (coords (rho 0 1) i - coords (rho 0 0) i) := by
+  rw [rho_affine x y]
+  rcases i with ⟨p, q, t⟩
+  cases t <;> dsimp only [coords]
+  all_goals
+    simp only [Matrix.add_apply, Matrix.smul_apply, Complex.real_smul, Complex.add_re,
+      Complex.add_im, Complex.re_ofReal_mul, Complex.im_ofReal_mul] <;> ring
 
 private def restriction
     (f : MvPolynomial ((Fin 2 × Fin 3) × (Fin 2 × Fin 3) × Bool) ℝ) : Polynomial ℝ :=
@@ -132,12 +234,28 @@ private def restriction
 private lemma restriction_eval
     (f : MvPolynomial ((Fin 2 × Fin 3) × (Fin 2 × Fin 3) × Bool) ℝ) (y : ℝ) :
     Polynomial.eval y (restriction f) = MvPolynomial.eval (coords (rho 0 y)) f := by
-  sorry
+  unfold restriction
+  rw [MvPolynomial.polynomial_eval_eval₂]
+  have hc : (Polynomial.evalRingHom y).comp Polynomial.C = RingHom.id ℝ := by
+    ext r
+    exact Polynomial.eval_C
+  rw [hc]
+  change MvPolynomial.eval _ f = MvPolynomial.eval _ f
+  congr 1
+  funext i
+  simp only [Polynomial.eval_add, Polynomial.eval_mul, Polynomial.eval_C,
+    Polynomial.eval_X]
+  rw [coords_affine 0 y i]
+  ring
 
 private lemma evaluation_continuous
     (f : MvPolynomial ((Fin 2 × Fin 3) × (Fin 2 × Fin 3) × Bool) ℝ) (y : ℝ) :
     Continuous (fun x : ℝ => MvPolynomial.eval (coords (rho x y)) f) := by
-  sorry
+  apply (MvPolynomial.continuous_eval f).comp
+  apply continuous_pi
+  intro i
+  simp_rw [coords_affine]
+  fun_prop
 
 private lemma boundary_zero
     (f : MvPolynomial ((Fin 2 × Fin 3) × (Fin 2 × Fin 3) × Bool) ℝ)
@@ -145,10 +263,33 @@ private lemma boundary_zero
       IsDensity ρ → (0 ≤ MvPolynomial.eval (coords ρ) f ↔ separableCone ρ))
     {y : ℝ} (hy : 0 < y) (hy' : y < 1 / 4) :
     Polynomial.eval y (restriction f) = 0 := by
-  sorry
+  rw [restriction_eval]
+  have hyabs : |y| ≤ 1 / 4 := abs_le.mpr ⟨by linarith, hy'.le⟩
+  have hzero : |(0 : ℝ)| ≤ 1 / 4 := by norm_num
+  apply le_antisymm
+  · apply le_of_tendsto
+      ((evaluation_continuous f y).continuousAt.tendsto.mono_left nhdsWithin_le_nhds :
+        Filter.Tendsto _ (nhdsWithin 0 (Set.Iio 0)) _)
+    filter_upwards [Ioo_mem_nhdsLT (show (-1 / 4 : ℝ) < 0 by norm_num)] with x hx
+    have hd := rho_density (x := x) (y := y)
+      (abs_le.mpr ⟨by linarith [hx.1], by linarith [hx.2]⟩) hyabs
+    exact (lt_of_not_ge (fun hv => rho_entangled (Or.inl hx.2) ((hf _ hd).mp hv))).le
+  · exact (hf _ (rho_density hzero hyabs)).mpr
+      (rho_separable hzero hyabs le_rfl hy.le)
 
 /-- Qubit–qutrit states refute the dimension-dependent single-polynomial criterion. -/
 theorem result : ¬ claim := by
-  sorry
+  intro hc
+  obtain ⟨f, _, hf⟩ := hc 2 3 (by norm_num) (by norm_num)
+  have hg : restriction f = 0 := by
+    apply Polynomial.eq_zero_of_infinite_isRoot
+    apply (Set.Ioo_infinite (show (0 : ℝ) < 1 / 4 by norm_num)).mono
+    intro y hy
+    exact boundary_zero f hf hy.1 hy.2
+  have hd : IsDensity (rho 0 (-1 / 8)) := rho_density (by norm_num) (by norm_num)
+  have he : MvPolynomial.eval (coords (rho 0 (-1 / 8))) f = 0 := by
+    rw [← restriction_eval, hg, Polynomial.eval_zero]
+  exact rho_entangled (x := 0) (y := -1 / 8) (Or.inr (by norm_num))
+    ((hf _ hd).mp (by rw [he]))
 
 end D5.S3.Quantum.Information.SeparabilitySinglePolynomialRefutation
