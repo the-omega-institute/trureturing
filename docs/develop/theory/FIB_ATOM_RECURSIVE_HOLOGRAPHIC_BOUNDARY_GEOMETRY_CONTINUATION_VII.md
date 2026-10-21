@@ -4850,7 +4850,7 @@ necessary scale and is not an existence construction.
 For the stipulated $K=8$, one has $q=3$ and therefore
 
 $$
-\kappa_*=rac{\log\varphi}{3}.
+\kappa_*=\frac{\log\varphi}{3}.
 \tag{236.8}
 $$
 
