@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:ff56d865705adbc39eeba0ed2e5e4b7fddb4725e770721cbddee33e99501e359
+  normalized_sha256: sha256:ff56d865705adbc39eeba0ed2e5e4b7fddb4725e770721cbddee33e99501e359
+cas_ref: sha256:ff56d865705adbc39eeba0ed2e5e4b7fddb4725e770721cbddee33e99501e359
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: Defines environmental sufficiency by factorization; the prose explains that definition.
+    previous_atom_id: 144362bc3811e94fa0507b1efe1114d33580c2a13db1e2656d01b5fdce0fb839
+    next_atom_id: 1c0e993328e39cad40ccfec6a3a891f5d039e1f8010fdd88d2029e6d71b8a1da
