@@ -1,0 +1,18 @@
+fingerprints:
+  raw_sha256: sha256:534322f7e2bc3f2a22cafb426e9abde35ae239ef11ba39ddb17665e87f6cfd64
+  normalized_sha256: sha256:534322f7e2bc3f2a22cafb426e9abde35ae239ef11ba39ddb17665e87f6cfd64
+cas_ref: sha256:534322f7e2bc3f2a22cafb426e9abde35ae239ef11ba39ddb17665e87f6cfd64
+coverage_gids:
+  - gid: D5/S1/Digit/PrimeAxisEncoding.primeAxisEncoding_coe
+    target_statement_id: sha256:76f3f4bd65a9a62fdd405d157d2ee843106f23a340b456b4e0b486892eb323b6
+  - gid: D5/S1/Digit/PrimeAxisEncoding.primeSupportEquiv
+    target_statement_id: sha256:fd1cd787b1ad3c29c97e6e709cd3fa0f642f4d1f077d44f7b77ef71095fdc80d
+  - gid: D5/S1/Digit/Raw.rawValue_eq_sum_rawToZeckendorf
+    target_statement_id: sha256:7a4c3ec2a93de49533d98ab2b4c6b77eb156acd852d91e9c608e1547494485a0
+  - gid: D5/S3/ConceptDynamics/Spacetime/TaggedPresentation.charge_map
+    target_statement_id: sha256:7820a61a4912147f9d4712e22ea5cc9865613c64c04b36acbc62369dc6e30a76
+receipts:
+  unresolved_subitems: []
+  chain_atoms:
+    - 7fd3419ce9a87c4f6d412483460d1b5fc7ac3d87d68d5dd2e219f3fa80f31b6e
+    - b44baff8a774937baea65509f159fe03b2a9b5b09e4400707e38b98516720562

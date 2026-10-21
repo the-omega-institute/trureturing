@@ -1,0 +1,73 @@
+**Definition 160.1 (a uniformly resolved occurrence bridge).** Use the
+Fibonacci sources $T_n$ of Continuation VI §114, for $n\ge1$, with
+occurrence set $V_n$, root $r_n$, and unit-edge occurrence graph distance
+$d_n$. In the notation of VI (114.7),
+
+$$
+\operatorname{height}(T_n)=n-1,
+\qquad
+N_n=|V_n|=2F_{n+1}-1,
+\qquad F_0=0,\quad F_1=1.
+\tag{160.1}
+$$
+
+Let $j_n:V_n\hookrightarrow V_{n+1}$ be the old-occurrence inclusion under
+native Apply. A candidate external carrier consists of one metric space
+$(X,\rho)$, a Borel measure $\mu$, one basepoint $o\in X$, and maps
+$\iota_n:V_n\to X$ coherent on old occurrences:
+
+$$
+\iota_{n+1}\circ j_n=\iota_n.
+\tag{160.2}
+$$
+
+Fix finite constants $A,B,c,c_-,c_+>0$ and a finite real exponent
+$1\le d<\infty$, all independent of $n$. Full occurrence resolution means
+that the task requires every pair of distinct occurrences in $V_n$ to
+remain distinguishable, with the uniform metric separation
+
+$$
+x\ne y\quad\Longrightarrow\quad
+\rho(\iota_n(x),\iota_n(y))\ge c
+\qquad(x,y\in V_n).
+\tag{160.3}
+$$
+
+If a task distinguishes only a subset of occurrences, the count in the
+packing argument is that subset's cardinality; the use of $N_n$ requires
+(160.3) on all of $V_n$. The root-distance control is
+
+$$
+\rho(o,\iota_n(x))\le A\,d_n(r_n,x)+B
+\qquad(x\in V_n).
+\tag{160.4}
+$$
+
+The basepoint is common to every prefix; equality
+$o=\iota_n(r_n)$ is not needed. Define
+
+$$
+R_n=A(n-1)+B+c/3.
+\tag{160.5}
+$$
+
+The required uniform $d$-Ahlfors volume bounds are
+
+$$
+c_-t^d\le\mu(B_\rho(z,t))\le c_+t^d
+\quad\text{for}\quad
+(z,t)\in
+\{(\iota_n(x),c/3):n\ge1,\ x\in V_n\}
+\cup\{(o,R_n):n\ge1\},
+\tag{160.6}
+$$
+
+where $B_\rho(z,t)=\{w\in X:\rho(z,w)<t\}$ denotes an open ball.
+Only the lower bound at the occurrence centers with radius $c/3$ and the
+upper bound at $o$ with radius $R_n$ will be used. Thus the conclusion also
+holds under just those one-sided bounds. Ahlfors regularity restricted to
+a bounded local radius window does not supply (160.6) for the uncapped
+family unless it also supplies the displayed bounds at every required
+radius. No counting measure on $V_n$, pairwise lower comparison with
+$d_n$, or Markov generator is part of these assumptions.
+

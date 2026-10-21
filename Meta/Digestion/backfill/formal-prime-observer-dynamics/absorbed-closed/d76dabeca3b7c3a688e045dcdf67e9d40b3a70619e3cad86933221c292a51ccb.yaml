@@ -1,0 +1,9 @@
+fingerprints:
+  raw_sha256: sha256:d76dabeca3b7c3a688e045dcdf67e9d40b3a70619e3cad86933221c292a51ccb
+  normalized_sha256: sha256:d76dabeca3b7c3a688e045dcdf67e9d40b3a70619e3cad86933221c292a51ccb
+cas_ref: sha256:d76dabeca3b7c3a688e045dcdf67e9d40b3a70619e3cad86933221c292a51ccb
+coverage_gids:
+  - gid: D5/S3/PrimeForms/Crossing/CrossingNormForm.Qform_range_eq_eisNorm
+    target_statement_id: sha256:b866667e6c3aa34654c6f7711482762c40940fbba312741f5297ac49bcf569cc
+receipts:
+  unresolved_subitems: []
