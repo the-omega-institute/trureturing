@@ -1,0 +1,7 @@
+## 117. Scalar clock rescaling does not repair the positive-mass obstruction
+
+The remaining scalar-clock option can be tested without assuming the full
+child-coordinate response. This makes the obstruction stronger: if even the
+old-coordinate generator is required to run at one common rescaled clock, the
+form and norm requirements are already incompatible.
+

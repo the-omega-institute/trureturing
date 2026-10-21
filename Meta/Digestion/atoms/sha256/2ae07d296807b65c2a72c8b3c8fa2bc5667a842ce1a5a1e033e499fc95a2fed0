@@ -1,0 +1,67 @@
+## 143. Exact ordinary separability contrast at inverse temperature log 7
+
+At $t=1/7$, (142.6) reads
+
+$$
+\sigma(p)=\frac1{16}\begin{pmatrix}
+7&0&0&0\\0&7-6p&6\sqrt{p(1-p)}&0\\
+0&6\sqrt{p(1-p)}&1+6p&0\\0&0&0&1
+\end{pmatrix},\qquad \tau=\operatorname{diag}(7/8,1/8).
+\tag{143.1}
+$$
+
+Partial transpose on the ordinary A factor moves the coherence to the
+$|00\rangle,|11\rangle$ corner. The other two eigenvalues are the positive
+numbers $(7-6p)/16$ and $(1+6p)/16$; the corner is
+
+$$
+\frac1{16}\begin{pmatrix}7&6\sqrt{p(1-p)}\\6\sqrt{p(1-p)}&1\end{pmatrix},
+\qquad \det=\frac{7-36p(1-p)}{256}.
+\tag{143.2}
+$$
+
+The ordinary two-qubit PPT criterion, Horodecki--Horodecki--Horodecki,
+Theorem 3, PDF p. 8 [P], applies to $\sigma(p)$. Thus it is separable
+exactly when $36p(1-p)\le7$. For the interior model $a$,
+
+$$
+p_a(1-p_a)=\frac{7301}{39204},\quad
+36p_a(1-p_a)=\frac{7301}{1089}<7,\qquad
+\sigma_a=\frac1{528}\begin{pmatrix}
+231&0&0&0\\0&182&\sqrt{7301}&0\\
+0&\sqrt{7301}&82&0\\0&0&0&33
+\end{pmatrix}.
+\tag{143.3}
+$$
+
+The PT corner determinant is $322/528^2>0$. Its full PT spectrum is
+
+$$
+\left\{\frac{182}{528},\frac{82}{528},
+\frac{132+\sqrt{17102}}{528},\frac{132-\sqrt{17102}}{528}\right\},
+\qquad 132^2-17102=322>0.
+\tag{143.4}
+$$
+
+Hence $\sigma_a$ is separable. Tensor its product-state decomposition with
+the B-local $\tau$, then undo $\mathcal U_a$: the full $2\times4$ state
+$\rho_{a,\log7}$ is ordinary-tensor separable at the declared cut.
+For model $b$, $36p_b(1-p_b)=8>7$, and
+
+$$
+\sigma_b=\frac1{16}\begin{pmatrix}
+7&0&0&0\\0&5&2\sqrt2&0\\0&2\sqrt2&3&0\\0&0&0&1
+\end{pmatrix},\qquad
+\lambda_{\min}(\sigma_b^{T_A})=\frac{4-\sqrt{17}}{16}<0.
+\tag{143.5}
+$$
+
+The full partial transpose has negative eigenvalues
+$7(4-\sqrt{17})/128$ and $(4-\sqrt{17})/128$ after multiplication by
+the spectator weights. Undoing a B-local unitary preserves NPT. Therefore
+$\rho_{b,\log7}$ is ordinary-tensor entangled, despite (141.6).
+This uses two-qubit PPT sufficiency only after the proved B-local
+factorization. It invokes no PPT sufficiency for arbitrary $2\times4$ states.
+For the retained boundary model $p_0=1/6$, the same scalar test gives
+$36p_0(1-p_0)=5<7$, consistently with its separability and reducibility.
+
