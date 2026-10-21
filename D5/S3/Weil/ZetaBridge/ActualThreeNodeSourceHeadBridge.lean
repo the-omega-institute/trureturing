@@ -20,6 +20,14 @@ import Lean.Elab.Tactic.Omega
 import Mathlib.Tactic.Positivity
 import Mathlib.Tactic.Ring
 
+import D5.S3.Weil.ZetaBridge.ActualExplicit336
+import D5.S3.Weil.ZetaBridge.ActualNodalCoercivity
+import D5.S3.Weil.ZetaBridge.ActualPairedReciprocal
+import D5.S3.Weil.ZetaBridge.ActualThreeNodeFiniteAlgebra
+import D5.S3.Weil.ZetaBridge.PrimeSymbolResonance
+import D5.S3.Weil.ZetaBridge.WeilArithmeticCouplingParityGram
+import Mathlib.Analysis.SpecialFunctions.Integrals.Basic
+
 noncomputable section
 open scoped BigOperators ComplexConjugate ENNReal InnerProductSpace ComplexOrder Matrix
 open D5.S3.Weil.ZetaBridge
@@ -385,5 +393,619 @@ theorem actual_gram_posDef {c : ℕ} (hc : 3 ≤ c) {n : ℤ} (hn : n ≠ 0) (N 
     tsum_nonneg (fun j => add_nonneg (sq_nonneg _) (sq_nonneg _))
   have hpos := lt_of_le_of_ne hnonneg (Ne.symm hzero)
   exact (RCLike.ofReal_pos (K := ℂ)).mpr hpos
+
+end D5.S3.Weil.ZetaBridge.ActualThreeNodeSourceHeadBridge
+
+
+noncomputable section
+open scoped BigOperators ComplexConjugate InnerProductSpace ComplexOrder Matrix Topology
+open D5.S3.Weil.ZetaBridge
+open Polynomial MeasureTheory
+open scoped Interval
+open ActualThreeNodeSourceHeadBridge ActualPairedReciprocal ActualNodalCoercivity
+open WeilArithmeticCouplingJet WeilArithmeticCouplingParityGram PrimeSymbolResonance
+open D5.S3.Analytic.PolynomialReciprocalBounds
+local notation "U₃" => ActualThreeNodeFiniteAlgebra.U
+local notation "T₃" => ActualThreeNodeFiniteAlgebra.T
+local notation "C₃" => ActualThreeNodeFiniteAlgebra.C
+local notation "O₃" => ActualThreeNodeFiniteAlgebra.O
+
+set_option autoImplicit false
+set_option relaxedAutoImplicit false
+
+namespace D5.S3.Weil.ZetaBridge.ActualThreeNodeFiniteEnergy
+
+lemma nodes_distinct {n : ℤ} (hn : n ≠ 0) :
+    -n ≠ 0 ∧ -n ≠ n ∧ (0 : ℤ) ≠ n := by
+  refine ⟨neg_ne_zero.mpr hn, ?_, Ne.symm hn⟩
+  omega
+
+lemma threeNodes_card {n : ℤ} (hn : n ≠ 0) : (threeNodes n).card = 3 := by
+  rcases nodes_distinct hn with ⟨hm0, hmp, h0p⟩
+  simp [threeNodes, hn, hm0, hmp, h0p]
+
+lemma actual_symbol_zero (c : ℕ) : arithmeticBoundarySymbol c 0 = 0 := by
+  have h := arithmetic_boundary_symbol_neg c 0
+  simp only [neg_zero] at h
+  linarith
+
+/-- Exact D/P/Q of the literal signed set; there is no positivity assumption on n. -/
+lemma actual_three_nodal {n : ℤ} (hn : n ≠ 0) (c : ℕ) (v : ℤ → ℂ) :
+    D (threeNodes n) = X * (X ^ 2 - C ((n : ℂ) ^ 2)) ∧
+    Q (threeNodes n) v =
+      C (v (-n) + v 0 + v n) * X ^ 2 +
+        C ((n : ℂ) * (v n - v (-n))) * X - C ((n : ℂ) ^ 2 * v 0) ∧
+    P c (threeNodes n) v =
+      C ((arithmeticBoundarySymbol c n : ℂ) * (v n - v (-n))) * X ^ 2 +
+        C ((arithmeticBoundarySymbol c n : ℂ) * (n : ℂ) * (v n + v (-n))) * X := by
+  classical
+  rcases nodes_distinct hn with ⟨hm0, hmp, h0p⟩
+  have h0 := actual_symbol_zero c
+  constructor
+  · simp [D, threeNodes, Lagrange.nodal, hn, hm0, hmp, h0p]
+    ring
+  constructor
+  · simp [Q, threeNodes, Lagrange.nodal, hn, hm0, hmp, hmp.symm, h0p,
+      Finset.erase_insert_of_ne, hm0.symm, h0p.symm,
+      map_add, map_sub, map_mul, map_pow]
+    ring
+  · simp [P, threeNodes, Lagrange.nodal, hn, hm0, hmp, hmp.symm, h0p,
+      Finset.erase_insert_of_ne, hm0.symm, h0p.symm,
+      arithmetic_boundary_symbol_neg, h0, map_add, map_sub, map_mul, map_pow]
+    ring
+
+/-- Unnormalized coordinates are used only inside the finite algebra. -/
+def rawHead (n : ℤ) (p q s : ℂ) : ℤ → ℂ :=
+  p • (singletonHead (-n) + singletonHead 0 + singletonHead n) +
+  q • (-singletonHead (-n) + singletonHead n) +
+  s • (singletonHead (-n) - 2 • singletonHead 0 + singletonHead n)
+
+lemma rawHead_nodes {n : ℤ} (hn : n ≠ 0) (p q s : ℂ) :
+    rawHead n p q s (-n) = p - q + s ∧
+    rawHead n p q s 0 = p - 2 * s ∧
+    rawHead n p q s n = p + q + s := by
+  rcases nodes_distinct hn with ⟨hm0, hmp, h0p⟩
+  refine ⟨?_, ?_, ?_⟩
+  all_goals
+    simp [rawHead, singletonHead, Pi.single_apply, hn, hm0, hmp, hmp.symm,
+      h0p, h0p.symm, hm0.symm, smul_eq_mul] <;> ring
+
+lemma sourceHead_eq_rawHead (n : ℤ) (x : Fin 3 → ℂ) :
+    sourceHead n x = rawHead n (x 0 / (Real.sqrt 3 : ℂ))
+      (x 1 / (Real.sqrt 2 : ℂ)) (x 2 / (Real.sqrt 6 : ℂ)) := by
+  funext k
+  simp [sourceHead, normalizedHead, headE, headO, headS, rawHead,
+    Fin.sum_univ_succ, Pi.smul_apply, smul_eq_mul, div_eq_mul_inv]
+  <;> ring
+
+/-- These are evaluations of the genuine reciprocal polynomials, not premises. -/
+def rawA (a r : ℝ) (p q s : ℂ) : ℂ[X] :=
+  C (2 * (a : ℂ) * q) + C (2 * (a : ℂ) * (r : ℂ) * (p + s)) * X
+
+def rawB (r : ℝ) (p q s : ℂ) : ℂ[X] :=
+  C (3 * p) + C (2 * (r : ℂ) * q) * X +
+    C ((r : ℂ) ^ 2 * (-p + 2 * s)) * X ^ 2
+
+lemma reciprocal_three (N : ℕ) (b0 b1 b2 : ℂ) :
+    reciprocalPolynomial 3 N (C b0 + C b1 * X + C b2 * X ^ 2) =
+      C b2 + C (b1 / (N : ℂ)) * X + C (b0 / (N : ℂ) ^ 2) * X ^ 2 := by
+  simp [reciprocalPolynomial, Finset.sum_range_succ, Polynomial.coeff_X]
+  <;> ring
+
+lemma actual_raw_reciprocals {n : ℤ} (hn : n ≠ 0) (c N : ℕ) (hN : 0 < N)
+    (p q s : ℂ) :
+    reciprocalPolynomial 3 N (P c (threeNodes n) (rawHead n p q s)) =
+      rawA (arithmeticBoundarySymbol c n) ((n : ℝ) / N) p q s ∧
+    reciprocalPolynomial 3 N (Q (threeNodes n) (rawHead n p q s)) =
+      rawB ((n : ℝ) / N) p q s := by
+  rcases actual_three_nodal hn c (rawHead n p q s) with ⟨_hD, hQ, hP⟩
+  rcases rawHead_nodes hn p q s with ⟨hm, hz, hp⟩
+  simp only [hm, hz, hp] at hQ hP
+  have hPc : P c (threeNodes n) (rawHead n p q s) =
+      C 0 + C (2 * (arithmeticBoundarySymbol c n : ℂ) * (n : ℂ) * (p + s)) * X +
+        C (2 * (arithmeticBoundarySymbol c n : ℂ) * q) * X ^ 2 := by
+    rw [hP]
+    simp [map_add, map_sub, map_mul, map_neg, Polynomial.C_ofNat]
+    ring
+  have hQc : Q (threeNodes n) (rawHead n p q s) =
+      C ((n : ℂ) ^ 2 * (-p + 2 * s)) + C (2 * (n : ℂ) * q) * X + C (3 * p) * X ^ 2 := by
+    rw [hQ]
+    simp [map_add, map_sub, map_mul, map_neg, Polynomial.C_ofNat]
+    ring
+  have hnC : (N : ℂ) ≠ 0 := by exact_mod_cast hN.ne'
+  have h1 : 2 * (arithmeticBoundarySymbol c n : ℂ) * (n : ℂ) * (p + s) / (N : ℂ) =
+      2 * (arithmeticBoundarySymbol c n : ℂ) * (((n : ℝ) / N : ℝ) : ℂ) * (p + s) := by
+    push_cast
+    field_simp [hnC] <;> ring
+  have h2 : (2 * (n : ℂ) * q) / (N : ℂ) =
+      2 * (((n : ℝ) / N : ℝ) : ℂ) * q := by
+    push_cast
+    field_simp [hnC] <;> ring
+  have h3 : ((n : ℂ) ^ 2 * (-p + 2 * s)) / (N : ℂ) ^ 2 =
+      (((n : ℝ) / N : ℝ) : ℂ) ^ 2 * (-p + 2 * s) := by
+    push_cast
+    field_simp [hnC] <;> ring
+  constructor
+  · rw [hPc, reciprocal_three, h1]
+    simp [rawA]
+  · rw [hQc, reciprocal_three, h2, h3]
+    rfl
+
+def mixed (p s : ℂ) : ℝ := (conj p * s).re
+
+def rawIntegrand (g mu a r : ℝ) (p q s : ℂ) (t : ℝ) : ℝ :=
+  ‖value (rawA a r p q s) t + (g : ℂ) * value (rawB r p q s) t‖ ^ 2 +
+  ‖value (rawA a r p q s) (-t) - (g : ℂ) * value (rawB r p q s) (-t)‖ ^ 2 +
+  mu * (‖value (rawB r p q s) t‖ ^ 2 + ‖value (rawB r p q s) (-t)‖ ^ 2)
+
+/-- The cancellation is exact for arbitrary complex p/q/s, including zero. -/
+def quarticCoeffs (g mu a r : ℝ) (p q s : ℂ) : Fin 5 → ℝ :=
+  ![18 * (g ^ 2 + mu) * ‖p‖ ^ 2 + 8 * a ^ 2 * ‖q‖ ^ 2,
+    24 * g * a * r * (‖p‖ ^ 2 + mixed p s) + 16 * a * g * r * ‖q‖ ^ 2,
+    (8 * a ^ 2 - 12 * (g ^ 2 + mu)) * r ^ 2 * ‖p‖ ^ 2 +
+      8 * (g ^ 2 + mu) * r ^ 2 * ‖q‖ ^ 2 + 8 * a ^ 2 * r ^ 2 * ‖s‖ ^ 2 +
+      (16 * a ^ 2 + 24 * (g ^ 2 + mu)) * r ^ 2 * mixed p s,
+    8 * a * g * r ^ 3 * (-‖p‖ ^ 2 + 2 * ‖s‖ ^ 2 + mixed p s),
+    2 * (g ^ 2 + mu) * r ^ 4 * (‖p‖ ^ 2 + 4 * ‖s‖ ^ 2 - 4 * mixed p s)]
+
+lemma rawIntegrand_parity_pair (g mu a r : ℝ) (p q s : ℂ) (t : ℝ) :
+    rawIntegrand g mu a r p q s t =
+      2 * ‖value (rawA a r p 0 s) t + (g : ℂ) * value (rawB r p 0 s) t‖ ^ 2 +
+      2 * ‖value (rawA a r 0 q 0) t + (g : ℂ) * value (rawB r 0 q 0) t‖ ^ 2 +
+      2 * mu * (‖value (rawB r p 0 s) t‖ ^ 2 + ‖value (rawB r 0 q 0) t‖ ^ 2) := by
+  unfold rawIntegrand
+  simp only [Complex.sq_norm, Complex.normSq_apply]
+  simp [rawIntegrand, rawA, rawB, value,
+    Complex.mul_re, Complex.mul_im, pow_two]
+  <;> ring
+
+lemma rawIntegrand_quartic (g mu a r : ℝ) (p q s : ℂ) (t : ℝ) :
+    rawIntegrand g mu a r p q s t =
+      ∑ i : Fin 5, quarticCoeffs g mu a r p q s i * t ^ (i : ℕ) := by
+  rw [rawIntegrand_parity_pair]
+  unfold quarticCoeffs
+  simp only [Complex.sq_norm, Complex.normSq_apply]
+  simp [rawA, rawB, value, quarticCoeffs, mixed, Fin.sum_univ_succ,
+    Complex.mul_re, Complex.mul_im, pow_two]
+  <;> ring
+
+lemma integral_fin5_monomials (b : Fin 5 → ℝ) :
+    (∫ t in (0 : ℝ)..1, ∑ i : Fin 5, b i * t ^ (i : ℕ)) =
+      ∑ i : Fin 5, b i / (((i : ℕ) : ℝ) + 1) := by
+  rw [intervalIntegral.integral_finsetSum]
+  · apply Finset.sum_congr rfl
+    intro i hi
+    simp [intervalIntegral.integral_const_mul, integral_pow, div_eq_mul_inv]
+  · intro i hi
+    exact (by fun_prop : Continuous (fun t : ℝ => b i * t ^ (i : ℕ))).intervalIntegrable 0 1
+
+lemma raw_pairedEnergy (c : ℕ) (a r : ℝ) (p q s : ℂ) :
+    pairedEnergy c (rawA a r p q s) (rawB r p q s) =
+      U₃ (Real.pi / 4) (mean c) a r * ‖p‖ ^ 2 +
+      2 * O₃ (Real.pi / 4) (mean c) a r * ‖q‖ ^ 2 +
+      C₃ (Real.pi / 4) (mean c) a r * ‖s‖ ^ 2 +
+      2 * T₃ (Real.pi / 4) (mean c) a r * mixed p s := by
+  rw [pairedEnergy_integral]
+  change (∫ t in (0 : ℝ)..1, rawIntegrand (Real.pi / 4) (mean c) a r p q s t) = _
+  calc
+    _ = ∫ t in (0 : ℝ)..1,
+        ∑ i : Fin 5, quarticCoeffs (Real.pi / 4) (mean c) a r p q s i * t ^ (i : ℕ) := by
+      apply intervalIntegral.integral_congr
+      intro t ht
+      exact rawIntegrand_quartic _ _ _ _ _ _ _ _
+    _ = ∑ i : Fin 5,
+        quarticCoeffs (Real.pi / 4) (mean c) a r p q s i / (((i : ℕ) : ℝ) + 1) :=
+      integral_fin5_monomials _
+    _ = _ := by
+      simp [quarticCoeffs, Fin.sum_univ_succ, ActualThreeNodeFiniteAlgebra.U,
+        ActualThreeNodeFiniteAlgebra.T, ActualThreeNodeFiniteAlgebra.C,
+        ActualThreeNodeFiniteAlgebra.O]
+      <;> ring
+
+lemma mixed_div_real (p s : ℂ) (u v : ℝ) :
+    mixed (p / (u : ℂ)) (s / (v : ℂ)) = mixed p s / (u * v) := by
+  simp [mixed, div_eq_mul_inv, ← Complex.ofReal_inv,
+    Complex.mul_re, Complex.mul_im]
+  <;> ring
+
+lemma norm_div_sqrt_sq (p : ℂ) {d : ℝ} (hd : 0 ≤ d) :
+    ‖p / (Real.sqrt d : ℂ)‖ ^ 2 = ‖p‖ ^ 2 / d := by
+  rw [norm_div, div_pow, Complex.norm_real, Real.norm_eq_abs, sq_abs, Real.sq_sqrt hd]
+
+def finiteForm (g mu a r : ℝ) (x : Fin 3 → ℂ) : ℝ :=
+  U₃ g mu a r / 3 * ‖x 0‖ ^ 2 + O₃ g mu a r * ‖x 1‖ ^ 2 +
+    C₃ g mu a r / 6 * ‖x 2‖ ^ 2 +
+    2 * (T₃ g mu a r / Real.sqrt 18) * mixed (x 0) (x 2)
+
+def finiteMatrix (g mu a r : ℝ) : Matrix (Fin 3) (Fin 3) ℂ :=
+  !![((U₃ g mu a r / 3 : ℝ) : ℂ), 0, ((T₃ g mu a r / Real.sqrt 18 : ℝ) : ℂ);
+      0, (O₃ g mu a r : ℂ), 0;
+      ((T₃ g mu a r / Real.sqrt 18 : ℝ) : ℂ), 0, ((C₃ g mu a r / 6 : ℝ) : ℂ)]
+
+lemma finiteMatrix_form (g mu a r : ℝ) (x : Fin 3 → ℂ) :
+    star x ⬝ᵥ (finiteMatrix g mu a r *ᵥ x) = (finiteForm g mu a r x : ℂ) := by
+  apply Complex.ext
+  all_goals
+    simp [finiteMatrix, finiteForm, mixed, Matrix.mulVec, dotProduct,
+      Fin.sum_univ_succ, Pi.star_apply, Complex.star_def, Complex.sq_norm,
+      Complex.normSq_apply, Complex.mul_re, Complex.mul_im]
+    <;> ring
+
+lemma finiteMatrix_isHermitian (g mu a r : ℝ) :
+    (finiteMatrix g mu a r).IsHermitian := by
+  ext i j
+  fin_cases i <;> fin_cases j <;> simp [finiteMatrix, Matrix.conjTranspose_apply]
+
+/-- Physical finite-energy realization in the ORIGINAL orthonormal metric. -/
+theorem actual_finite_energy_form {n : ℤ} (hn : n ≠ 0) (c N : ℕ) (hN : 0 < N)
+    (x : Fin 3 → ℂ) :
+    pairedEnergy c
+        (reciprocalPolynomial 3 N (P c (threeNodes n) (sourceHead n x)))
+        (reciprocalPolynomial 3 N (Q (threeNodes n) (sourceHead n x))) =
+      finiteForm (Real.pi / 4) (mean c) (arithmeticBoundarySymbol c n) ((n : ℝ) / N) x := by
+  rw [sourceHead_eq_rawHead]
+  rcases actual_raw_reciprocals hn c N hN
+      (x 0 / (Real.sqrt 3 : ℂ)) (x 1 / (Real.sqrt 2 : ℂ))
+      (x 2 / (Real.sqrt 6 : ℂ)) with ⟨hA, hB⟩
+  rw [hA, hB, raw_pairedEnergy]
+  rw [norm_div_sqrt_sq _ (by norm_num : (0 : ℝ) ≤ 3),
+    norm_div_sqrt_sq _ (by norm_num : (0 : ℝ) ≤ 2),
+    norm_div_sqrt_sq _ (by norm_num : (0 : ℝ) ≤ 6), mixed_div_real]
+  have hs : Real.sqrt (3 : ℝ) * Real.sqrt 6 = Real.sqrt 18 := by
+    rw [← Real.sqrt_mul (by norm_num : (0 : ℝ) ≤ 3)]
+    norm_num
+  rw [hs]
+  unfold finiteForm
+  ring
+
+theorem actual_finite_matrix_realization {n : ℤ} (hn : n ≠ 0) (c N : ℕ) (hN : 0 < N)
+    (x : Fin 3 → ℂ) :
+    star x ⬝ᵥ (finiteMatrix (Real.pi / 4) (mean c)
+        (arithmeticBoundarySymbol c n) ((n : ℝ) / N) *ᵥ x) =
+      (pairedEnergy c
+        (reciprocalPolynomial 3 N (P c (threeNodes n) (sourceHead n x)))
+        (reciprocalPolynomial 3 N (Q (threeNodes n) (sourceHead n x))) : ℂ) := by
+  rw [finiteMatrix_form, actual_finite_energy_form hn c N hN]
+
+end D5.S3.Weil.ZetaBridge.ActualThreeNodeFiniteEnergy
+
+
+noncomputable section
+open scoped BigOperators ComplexConjugate InnerProductSpace ComplexOrder Matrix Topology
+open D5.S3.Weil.ZetaBridge
+open Polynomial MeasureTheory
+open ActualThreeNodeSourceHeadBridge ActualThreeNodeFiniteEnergy
+open ActualPairedReciprocal ActualNodalCoercivity ActualNodalTailEnclosure
+open WeilArithmeticCouplingJet WeilArithmeticCouplingParityGram PrimeSymbolResonance
+open D5.S3.Analytic.PolynomialReciprocalBounds
+
+set_option autoImplicit false
+set_option relaxedAutoImplicit false
+
+namespace D5.S3.Weil.ZetaBridge.ActualThreeNodeSymmetricDenominator
+
+/-- Exact single-source denominator. Its sign is retained until after norm square. -/
+lemma actual_single_symmetric_denominator {n : ℤ} (hn : n ≠ 0) (c N : ℕ)
+    (hN : 0 < N) (v : ℤ → ℂ) (m : ℤ) (hm : m ≠ 0) (hmS : m ∉ threeNodes n) :
+    Real.pi ^ 2 * (1 - ((n : ℝ) / (m : ℝ)) ^ 2) ^ 2 *
+        ‖couplingColumn c (threeNodes n) v m‖ ^ 2 =
+      ‖value (reciprocalPolynomial 3 N (P c (threeNodes n) v)) ((N : ℝ) / m) -
+          (arithmeticBoundarySymbol c m : ℂ) *
+            value (reciprocalPolynomial 3 N (Q (threeNodes n) v)) ((N : ℝ) / m)‖ ^ 2 /
+        (m : ℝ) ^ 2 := by
+  have hSne : (threeNodes n).Nonempty := by simp [threeNodes]
+  have hmodel := actual_nodal_polynomial_model c (threeNodes n) hSne v
+  have hP : (P c (threeNodes n) v).natDegree < 3 := by
+    simpa only [threeNodes_card hn] using hmodel.1
+  have hQ : (Q (threeNodes n) v).natDegree < 3 := by
+    simpa only [threeNodes_card hn] using hmodel.2.1
+  have hmC : (m : ℂ) ≠ 0 := by exact_mod_cast hm
+  have hmr : (m : ℝ) ≠ 0 := by exact_mod_cast hm
+  have hp := reciprocalPolynomial_exact (by norm_num : 1 ≤ 3) hN
+    (P c (threeNodes n) v) hP (m : ℂ) hmC
+  have hq := reciprocalPolynomial_exact (by norm_num : 1 ≤ 3) hN
+    (Q (threeNodes n) v) hQ (m : ℂ) hmC
+  have harg : (N : ℂ) / (m : ℂ) = (((N : ℝ) / m : ℝ) : ℂ) := by push_cast; rfl
+  norm_num at hp hq
+  rw [harg] at hp hq
+  have hnum : (Real.pi : ℂ) * (D (threeNodes n)).eval (m : ℂ) *
+      couplingColumn c (threeNodes n) v m =
+      (m : ℂ) ^ 2 *
+        (value (reciprocalPolynomial 3 N (P c (threeNodes n) v)) ((N : ℝ) / m) -
+          (arithmeticBoundarySymbol c m : ℂ) *
+            value (reciprocalPolynomial 3 N (Q (threeNodes n) v)) ((N : ℝ) / m)) := by
+    rw [hmodel.2.2 m hmS, ← hp, ← hq]
+    unfold value
+    ring
+  have hd : (D (threeNodes n)).eval (m : ℂ) =
+      (((m : ℝ) * ((m : ℝ) ^ 2 - (n : ℝ) ^ 2) : ℝ) : ℂ) := by
+    rw [(actual_three_nodal hn c v).1]
+    simp only [eval_mul, eval_sub, eval_X, eval_pow, eval_C]
+    push_cast <;> ring
+  have hnorm := congrArg (fun z : ℂ => ‖z‖ ^ 2) hnum
+  rw [hd] at hnorm
+  have hbase : Real.pi ^ 2 * ((m : ℝ) * ((m : ℝ) ^ 2 - (n : ℝ) ^ 2)) ^ 2 *
+      ‖couplingColumn c (threeNodes n) v m‖ ^ 2 =
+      (m : ℝ) ^ 4 *
+        ‖value (reciprocalPolynomial 3 N (P c (threeNodes n) v)) ((N : ℝ) / m) -
+          (arithmeticBoundarySymbol c m : ℂ) *
+            value (reciprocalPolynomial 3 N (Q (threeNodes n) v)) ((N : ℝ) / m)‖ ^ 2 := by
+    simpa only [norm_mul, norm_pow, mul_pow, Complex.norm_real, Real.norm_eq_abs,
+      Complex.norm_intCast, sq_abs, ← pow_mul] using hnorm
+  have hcancel : Real.pi ^ 2 * ((m : ℝ) ^ 2 - (n : ℝ) ^ 2) ^ 2 *
+      ‖couplingColumn c (threeNodes n) v m‖ ^ 2 =
+      (m : ℝ) ^ 2 *
+        ‖value (reciprocalPolynomial 3 N (P c (threeNodes n) v)) ((N : ℝ) / m) -
+          (arithmeticBoundarySymbol c m : ℂ) *
+            value (reciprocalPolynomial 3 N (Q (threeNodes n) v)) ((N : ℝ) / m)‖ ^ 2 := by
+    apply mul_left_cancel₀ (pow_ne_zero 2 hmr)
+    nlinarith only [hbase]
+  field_simp [hmr]
+  nlinarith only [hcancel]
+
+lemma threeNodes_radius (n : ℤ) :
+    ∀ k ∈ threeNodes n, |(k : ℝ)| ≤ |(n : ℝ)| := by
+  intro k hk
+  simp only [threeNodes, Finset.mem_insert, Finset.mem_singleton] at hk
+  rcases hk with rfl | rfl | rfl <;> simp
+
+/-- Both genuine signs have the SAME squared denominator; neither is discarded. -/
+lemma actual_pair_symmetric_denominator {n : ℤ} (hn : n ≠ 0) (c N : ℕ)
+    (hN : 0 < N) (hR : |(n : ℝ)| < (N : ℝ)) (v : ℤ → ℂ) (j : ℕ) :
+    Real.pi ^ 2 * (1 - ((n : ℝ) / (N + j + 1 : ℕ)) ^ 2) ^ 2 *
+        pairedColumnTerm c N (threeNodes n) v j =
+      pairedTerm c N
+        (reciprocalPolynomial 3 N (P c (threeNodes n) v))
+        (reciprocalPolynomial 3 N (Q (threeNodes n) v)) j := by
+  let m : ℤ := ((N + j + 1 : ℕ) : ℤ)
+  have hNr : (0 : ℝ) < N := by exact_mod_cast hN
+  have hNm : (N : ℝ) < (m : ℝ) := by
+    dsimp [m]
+    exact_mod_cast (show N < N + j + 1 by omega)
+  have hmp : (0 : ℝ) < m := hNr.trans hNm
+  have hm0 : m ≠ 0 := by intro he; simpa [he] using hmp
+  have hnot : m ∉ threeNodes n := by
+    intro he
+    have h := threeNodes_radius n m he
+    rw [abs_of_pos hmp] at h
+    linarith
+  have hnotm : -m ∉ threeNodes n := by
+    intro he
+    have h := threeNodes_radius n (-m) he
+    simp only [Int.cast_neg, abs_neg, abs_of_pos hmp] at h
+    linarith
+  have hp := actual_single_symmetric_denominator hn c N hN v m hm0 hnot
+  have hm := actual_single_symmetric_denominator hn c N hN v (-m)
+    (neg_ne_zero.mpr hm0) hnotm
+  simp only [Int.cast_neg, div_neg, neg_sq] at hm
+  have hs := congrArg₂ (fun x y : ℝ => x + y) hp hm
+  convert hs using 1 <;>
+    simp only [pairedColumnTerm, pairedTerm, m, Int.cast_natCast] <;> ring
+
+lemma symmetric_factor_bounds {b N m : ℝ} (hN : 0 < N) (hR : |b| < N) (hNm : N < m) :
+    0 < (1 - (b / N) ^ 2) ^ 2 ∧
+      (1 - (b / N) ^ 2) ^ 2 ≤ (1 - (b / m) ^ 2) ^ 2 ∧
+      (1 - (b / m) ^ 2) ^ 2 ≤ 1 := by
+  have hm := hN.trans hNm
+  have hratN : |b| / N < 1 := (div_lt_one hN).mpr hR
+  have hratN0 : 0 ≤ |b| / N := div_nonneg (abs_nonneg _) hN.le
+  have hratm0 : 0 ≤ |b| / m := div_nonneg (abs_nonneg _) hm.le
+  have hrat : |b| / m ≤ |b| / N :=
+    div_le_div_of_nonneg_left (abs_nonneg _) hN hNm.le
+  have hsqN : (b / N) ^ 2 < 1 := by
+    have hprod : 0 < (1 - |b| / N) * (1 + |b| / N) :=
+      mul_pos (sub_pos.mpr hratN) (by linarith)
+    have hs : (|b| / N) ^ 2 < 1 := by nlinarith only [hprod]
+    simpa only [div_pow, sq_abs] using hs
+  have hsq : (b / m) ^ 2 ≤ (b / N) ^ 2 := by
+    simpa only [div_pow, sq_abs] using pow_le_pow_left₀ hratm0 hrat 2
+  have hbaseN : 0 < 1 - (b / N) ^ 2 := sub_pos.mpr hsqN
+  have hbasem : 0 ≤ 1 - (b / m) ^ 2 := by linarith
+  refine ⟨sq_pos_of_pos hbaseN, pow_le_pow_left₀ hbaseN.le (by linarith) 2, ?_⟩
+  simpa only [one_pow] using
+    pow_le_pow_left₀ hbasem (by nlinarith [sq_nonneg (b / m)] : 1 - (b / m) ^ 2 ≤ 1) 2
+
+end D5.S3.Weil.ZetaBridge.ActualThreeNodeSymmetricDenominator
+
+
+noncomputable section
+open scoped BigOperators ComplexConjugate InnerProductSpace ComplexOrder Matrix Topology
+open D5.S3.Weil.ZetaBridge
+open Polynomial MeasureTheory
+open ActualThreeNodeSourceHeadBridge ActualThreeNodeFiniteEnergy ActualThreeNodeSymmetricDenominator
+open ActualPairedReciprocal ActualNodalCoercivity ActualNodalTailEnclosure
+open WeilArithmeticCouplingJet WeilArithmeticCouplingParityGram PrimeSymbolResonance
+open D5.S3.Analytic.PolynomialReciprocalBounds
+
+set_option autoImplicit false
+set_option relaxedAutoImplicit false
+
+namespace D5.S3.Weil.ZetaBridge.ActualThreeNodeFull336
+
+def delta336 (c : ℕ) : ℝ := 9 * 336 * (c : ℝ) ^ 2 * (1 + Real.log (c : ℝ)) ^ 3
+def lower336 (c N : ℕ) : ℝ := 1 - delta336 c / N
+def upper336 (c N : ℕ) (n : ℤ) : ℝ :=
+  (1 + delta336 c / N) / (1 - ((n : ℝ) / N) ^ 2) ^ 2
+
+def actualTailGram {c : ℕ} (hc : 3 ≤ c) (n : ℤ) (N : ℕ) : Matrix (Fin 3) (Fin 3) ℂ :=
+  Matrix.gram ℂ (sourceTailFamily hc N n)
+
+/-- Cutoff/radius conditions precede all vectors. The complete infinite tail is
+compared multiplicatively, without dividing by head energy or vector mass. -/
+theorem actual_full336_all_vector {c : ℕ} (hc : 3 ≤ c) {n : ℤ} (hn : n ≠ 0)
+    (N : ℕ) (hN9 : 9 ≤ N) (hR : |(n : ℝ)| < (N : ℝ)) :
+    ∀ x : Fin 3 → ℂ,
+      lower336 c N * finiteForm (Real.pi / 4) (mean c)
+          (arithmeticBoundarySymbol c n) ((n : ℝ) / N) x ≤
+        Real.pi ^ 2 * N * (star x ⬝ᵥ (actualTailGram hc n N *ᵥ x)).re ∧
+      Real.pi ^ 2 * N * (star x ⬝ᵥ (actualTailGram hc n N *ᵥ x)).re ≤
+        upper336 c N n * finiteForm (Real.pi / 4) (mean c)
+          (arithmeticBoundarySymbol c n) ((n : ℝ) / N) x := by
+  intro x
+  have hN : 0 < N := by omega
+  have hNr : (0 : ℝ) < N := by exact_mod_cast hN
+  let v := sourceHead n x
+  let A := reciprocalPolynomial 3 N (P c (threeNodes n) v)
+  let B := reciprocalPolynomial 3 N (Q (threeNodes n) v)
+  let dN : ℝ := (1 - ((n : ℝ) / N) ^ 2) ^ 2
+  have hdN : 0 < dN := (symmetric_factor_bounds hNr hR (lt_add_one (N : ℝ))).1
+  have hpair := ActualExplicit336.actual_paired_symbol_bounds_explicit336
+    hc (by norm_num : 1 ≤ 3) (by norm_num; exact hN9) A B
+    (reciprocalPolynomial_degree (by norm_num) _) (reciprocalPolynomial_degree (by norm_num) _)
+  have heps : (9 : ℝ) *
+      (336 * (c : ℝ) ^ 2 * (1 + Real.log (c : ℝ)) ^ 3) / N = delta336 c / N := by
+    unfold delta336
+    ring
+  dsimp only at hpair
+  norm_num only [Nat.cast_ofNat] at hpair
+  rw [heps] at hpair
+  have hcol : Summable (pairedColumnTerm c N (threeNodes n) v) :=
+    ActualThreeNodeSourceHeadBridge.actual_tail_summable_all hc (threeNodes n)
+      (by simp [threeNodes]) N v
+  have hpoint (j : ℕ) : pairedTerm c N A B j ≤
+        Real.pi ^ 2 * pairedColumnTerm c N (threeNodes n) v j ∧
+      Real.pi ^ 2 * pairedColumnTerm c N (threeNodes n) v j ≤ pairedTerm c N A B j / dN := by
+    have hNm : (N : ℝ) < (N + j + 1 : ℕ) := by
+      exact_mod_cast (show N < N + j + 1 by omega)
+    have hbounds := symmetric_factor_bounds hNr hR hNm
+    have he := actual_pair_symmetric_denominator hn c N hN hR v j
+    change Real.pi ^ 2 * (1 - ((n : ℝ) / (N + j + 1 : ℕ)) ^ 2) ^ 2 *
+      pairedColumnTerm c N (threeNodes n) v j = pairedTerm c N A B j at he
+    have hnon : 0 ≤ Real.pi ^ 2 * pairedColumnTerm c N (threeNodes n) v j := by
+      unfold pairedColumnTerm
+      positivity
+    constructor
+    · have hh := mul_le_mul_of_nonneg_right hbounds.2.2 hnon
+      nlinarith only [he, hh]
+    · apply (le_div_iff₀ hdN).mpr
+      have hh := mul_le_mul_of_nonneg_right hbounds.2.1 hnon
+      nlinarith only [he, hh]
+  have hsumlo : (∑' j : ℕ, pairedTerm c N A B j) ≤
+      Real.pi ^ 2 * (∑' j : ℕ, pairedColumnTerm c N (threeNodes n) v j) := by
+    rw [← hcol.tsum_mul_left (Real.pi ^ 2)]
+    exact hpair.1.tsum_le_tsum (fun j => (hpoint j).1) (hcol.mul_left _)
+  have hsumhi : Real.pi ^ 2 * (∑' j : ℕ, pairedColumnTerm c N (threeNodes n) v j) ≤
+      (∑' j : ℕ, pairedTerm c N A B j) / dN := by
+    rw [← hcol.tsum_mul_left (Real.pi ^ 2), ← tsum_div_const]
+    exact (hcol.mul_left _).tsum_le_tsum (fun j => (hpoint j).2) (hpair.1.div_const dN)
+  have hH : pairedEnergy c A B = finiteForm (Real.pi / 4) (mean c)
+      (arithmeticBoundarySymbol c n) ((n : ℝ) / N) x := by
+    have hm := actual_finite_matrix_realization hn c N hN x
+    rw [finiteMatrix_form] at hm
+    exact (Complex.ofReal_inj.mp hm).symm
+  have hlow : lower336 c N * pairedEnergy c A B ≤
+      (∑' j : ℕ, pairedTerm c N A B j) * N := by
+    have hh := (div_le_iff₀ hNr).mp hpair.2.1
+    simpa only [lower336] using hh
+  have hupp : (∑' j : ℕ, pairedTerm c N A B j) * N ≤
+      (1 + delta336 c / N) * pairedEnergy c A B := by
+    have hh := (le_div_iff₀ hNr).mp hpair.2.2
+    exact hh
+  have hK : (star x ⬝ᵥ (actualTailGram hc n N *ᵥ x)).re =
+      ∑' j : ℕ, pairedColumnTerm c N (threeNodes n) v j := by
+    have hh := congrArg Complex.re (actual_source_gram_tsum hc n N x)
+    simpa only [actualTailGram, Complex.ofReal_re] using hh
+  simp only [hK, ← hH]
+  constructor
+  · exact hlow.trans (by nlinarith only [mul_le_mul_of_nonneg_right hsumlo hNr.le])
+  · calc
+      Real.pi ^ 2 * N * (∑' j : ℕ, pairedColumnTerm c N (threeNodes n) v j) =
+          (Real.pi ^ 2 * (∑' j : ℕ, pairedColumnTerm c N (threeNodes n) v j)) * N := by ring
+      _ ≤ ((∑' j : ℕ, pairedTerm c N A B j) / dN) * N :=
+        mul_le_mul_of_nonneg_right hsumhi hNr.le
+      _ = ((∑' j : ℕ, pairedTerm c N A B j) * N) / dN := by ring
+      _ ≤ ((1 + delta336 c / N) * pairedEnergy c A B) / dN :=
+        div_le_div_of_nonneg_right hupp hdN.le
+      _ = upper336 c N n * pairedEnergy c A B := by dsimp [upper336, dN]; ring
+
+theorem actual_full336_loewner {c : ℕ} (hc : 3 ≤ c) {n : ℤ} (hn : n ≠ 0)
+    (N : ℕ) (hN9 : 9 ≤ N) (hR : |(n : ℝ)| < (N : ℝ)) :
+    let H := finiteMatrix (Real.pi / 4) (mean c)
+      (arithmeticBoundarySymbol c n) ((n : ℝ) / N)
+    let K := actualTailGram hc n N
+    ((((Real.pi ^ 2 * N : ℝ) : ℂ) • K) - ((lower336 c N : ℂ) • H)).PosSemidef ∧
+      (((upper336 c N n : ℂ) • H) - (((Real.pi ^ 2 * N : ℝ) : ℂ) • K)).PosSemidef := by
+  dsimp only
+  have hK : (actualTailGram hc n N).IsHermitian := Matrix.isHermitian_gram _ _
+  have hH := finiteMatrix_isHermitian (Real.pi / 4) (mean c)
+    (arithmeticBoundarySymbol c n) ((n : ℝ) / N)
+  have hreal (q : ℝ) : IsSelfAdjoint (q : ℂ) := by
+    change star (q : ℂ) = (q : ℂ)
+    simp
+  have hsource (x : Fin 3 → ℂ) :
+      star x ⬝ᵥ (actualTailGram hc n N *ᵥ x) =
+        ((∑' j : ℕ, pairedColumnTerm c N (threeNodes n) (sourceHead n x) j : ℝ) : ℂ) :=
+    actual_source_gram_tsum hc n N x
+  constructor
+  · apply Matrix.PosSemidef.of_dotProduct_mulVec_nonneg
+      ((hK.smul (hreal _)).sub (hH.smul (hreal _)))
+    intro x
+    simp only [Matrix.sub_mulVec, dotProduct_sub, Matrix.smul_mulVec,
+      dotProduct_smul, smul_eq_mul, hsource, finiteMatrix_form]
+    have hh := (actual_full336_all_vector hc hn N hN9 hR x).1
+    rw [hsource x] at hh
+    apply Complex.nonneg_iff.mpr
+    constructor
+    · simpa [pow_two, Complex.mul_re, Complex.mul_im] using sub_nonneg.mpr hh
+    · simp [pow_two, Complex.mul_im]
+  · apply Matrix.PosSemidef.of_dotProduct_mulVec_nonneg
+      ((hH.smul (hreal _)).sub (hK.smul (hreal _)))
+    intro x
+    simp only [Matrix.sub_mulVec, dotProduct_sub, Matrix.smul_mulVec,
+      dotProduct_smul, smul_eq_mul, hsource, finiteMatrix_form]
+    have hh := (actual_full336_all_vector hc hn N hN9 hR x).2
+    rw [hsource x] at hh
+    apply Complex.nonneg_iff.mpr
+    constructor
+    · simpa [pow_two, Complex.mul_re, Complex.mul_im] using sub_nonneg.mpr hh
+    · simp [pow_two, Complex.mul_im]
+
+end D5.S3.Weil.ZetaBridge.ActualThreeNodeFull336
+
+
+namespace D5.S3.Weil.ZetaBridge.ActualThreeNodeSourceHeadBridge
+open ActualThreeNodeFiniteEnergy ActualThreeNodeFull336 ActualThreeNodeSymmetricDenominator
+open PrimeSymbolResonance
+
+/-- The actual sharp upper estimate transfers positive complete source energy
+into strict positivity of the finite physical form at every exterior cutoff. -/
+theorem actual_finite_energy_pos {c : ℕ} (hc : 3 ≤ c) {n : ℤ} (hn : n ≠ 0)
+    (N : ℕ) (hN9 : 9 ≤ N) (hR : |(n : ℝ)| < (N : ℝ))
+    (x : Fin 3 → ℂ) (hx : x ≠ 0) :
+    0 < finiteForm (Real.pi / 4) (mean c)
+      (arithmeticBoundarySymbol c n) ((n : ℝ) / N) x := by
+  have hNr : (0 : ℝ) < N := by exact_mod_cast (show 0 < N by omega)
+  have htail : 0 < ∑' j : ℕ,
+      pairedColumnTerm c N (threeNodes n) (sourceHead n x) j := by
+    have hp := (actual_gram_posDef hc hn N).dotProduct_mulVec_pos hx
+    rw [actual_source_gram_tsum hc n N x] at hp
+    exact (RCLike.ofReal_pos (K := ℂ)).mp hp
+  have hK : (star x ⬝ᵥ (actualTailGram hc n N *ᵥ x)).re =
+      ∑' j : ℕ, pairedColumnTerm c N (threeNodes n) (sourceHead n x) j := by
+    simpa only [actualTailGram, Complex.ofReal_re] using
+      congrArg Complex.re (actual_source_gram_tsum hc n N x)
+  have hupper : Real.pi ^ 2 * (N : ℝ) *
+      (∑' j : ℕ, pairedColumnTerm c N (threeNodes n) (sourceHead n x) j) ≤
+      upper336 c N n * finiteForm (Real.pi / 4) (mean c)
+        (arithmeticBoundarySymbol c n) ((n : ℝ) / N) x := by
+    have hh := (Complex.nonneg_iff.mp
+      ((actual_full336_loewner hc hn N hN9 hR).2.dotProduct_mulVec_nonneg x)).1
+    simp only [Matrix.sub_mulVec, dotProduct_sub, Matrix.smul_mulVec,
+      dotProduct_smul, smul_eq_mul, finiteMatrix_form, Complex.sub_re,
+      Complex.mul_re, Complex.ofReal_re, Complex.ofReal_im, zero_mul, sub_zero, hK] at hh
+    exact sub_nonneg.mp hh
+  have hleft : 0 < Real.pi ^ 2 * (N : ℝ) *
+      (∑' j : ℕ, pairedColumnTerm c N (threeNodes n) (sourceHead n x) j) := by
+    exact mul_pos (mul_pos (sq_pos_of_pos Real.pi_pos) hNr) htail
+  have hlog : 0 ≤ Real.log (c : ℝ) := Real.log_nonneg (by exact_mod_cast (show 1 ≤ c by omega))
+  have hdelta : 0 ≤ delta336 c := by unfold delta336; positivity
+  have hden : 0 < (1 - ((n : ℝ) / N) ^ 2) ^ 2 :=
+    (symmetric_factor_bounds hNr hR (lt_add_one (N : ℝ))).1
+  have hu : 0 < upper336 c N n := by
+    unfold upper336
+    exact div_pos (add_pos_of_pos_of_nonneg zero_lt_one (div_nonneg hdelta hNr.le)) hden
+  by_contra he
+  have hnpos := mul_nonpos_of_nonneg_of_nonpos hu.le (le_of_not_gt he)
+  exact (not_lt_of_ge hnpos) (hleft.trans_le hupper)
 
 end D5.S3.Weil.ZetaBridge.ActualThreeNodeSourceHeadBridge

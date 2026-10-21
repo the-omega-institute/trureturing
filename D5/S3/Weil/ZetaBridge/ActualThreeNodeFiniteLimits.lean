@@ -46,9 +46,9 @@ lemma root_limits (g mu a : ℝ) (n : ℤ) (hh : 0 < g ^ 2 + mu) :
     fun_prop
   have hco : Continuous (fun r : ℝ => O g mu a r) := by unfold O; fun_prop
   refine ⟨?_, ?_, ?_⟩
-  · simpa only [(roots_at_zero g mu a hh.le).1] using (hcp.tendsto 0).comp hr
-  · simpa only [(roots_at_zero g mu a hh.le).2] using (hcm.tendsto 0).comp hr
-  · simpa [O] using (hco.tendsto 0).comp hr
+  · simpa only [Function.comp_def, (roots_at_zero g mu a hh.le).1] using (hcp.tendsto 0).comp hr
+  · simpa only [Function.comp_def, (roots_at_zero g mu a hh.le).2] using (hcm.tendsto 0).comp hr
+  · simpa [O, Function.comp_def] using (hco.tendsto 0).comp hr
 
 /-- The determinant divided algebraically by r^2, without performing a division. -/
 def detReduced (g mu a r : ℝ) : ℝ :=
@@ -107,6 +107,7 @@ lemma scaled_small_root_limit (g mu a : ℝ) (n : ℤ) (hh : 0 < g ^ 2 + mu) :
   filter_upwards [hep, eventually_ge_atTop (1 : ℕ)] with N hpN hN
   have he := rhoMinus_eq_div g mu a ((n : ℝ) / N) hpN.ne'
   rw [he, ← mul_div_assoc, scaled_det_two g mu a n N (by omega)]
+  rfl
 
 lemma scaled_small_root_limit_zero (g mu : ℝ) (n : ℤ) (hh : 0 < g ^ 2 + mu) :
     Tendsto (fun N : ℕ => (N : ℝ) ^ 4 * rhoMinus g mu 0 ((n : ℝ) / N)) atTop
@@ -125,6 +126,7 @@ lemma scaled_small_root_limit_zero (g mu : ℝ) (n : ℤ) (hh : 0 < g ^ 2 + mu) 
   filter_upwards [hep, eventually_ge_atTop (1 : ℕ)] with N hpN hN
   rw [rhoMinus_eq_div g mu 0 ((n : ℝ) / N) hpN.ne', ← mul_div_assoc,
     scaled_det_four_zero g mu n N (by omega)]
+  rfl
 
 /-- Eventual exact ordering in the nonzero branch. The large pair is left as
 max/min; its limiting values may be equal, and need not stabilize in order. -/

@@ -10,7 +10,7 @@ The source map is complex linear. Its Gram quadratic form equals the complete in
 
 The even, odd and second-difference heads have respective normalization factors 1/sqrt(3), 1/sqrt(2) and 1/sqrt(6). For n!=0 their node Gram is the identity, so the sum of squared original retained coefficients equals the Euclidean coefficient mass.
 
-Finite-head zero-energy reconstruction and this original metric imply positive definiteness of the actual three-column Gram at every cutoff. This is a qualitative statement and does not give either branch of sorted spectral asymptotics or a conclusion about RH or Robin.
+Finite-head zero-energy reconstruction and this original metric imply positive definiteness of the actual three-column Gram at every cutoff. For exterior cutoffs the sharp two-sign denominator comparison also controls the finite physical energy.
 
 For every natural c>=3, finite integer head S, natural cutoff N and complex coefficient function v, the complete paired tail energy vanishes exactly when v vanishes on S. The empty head and zero vector are included.
 
@@ -306,8 +306,21 @@ Lean statement: `D5/S3/Weil/ZetaBridge/ActualThreeNodeSourceHeadBridge.actual_gr
 
 theorem actual_gram_posDef {c : ℕ} (hc : 3 ≤ c) {n : ℤ} (hn : n ≠ 0) (N : ℕ) : (Matrix.gram ℂ (sourceTailFamily hc N n)).PosDef
 
+**Theorem 1.25 (Strict finite physical energy).**
+
+Lean statement: `D5/S3/Weil/ZetaBridge/ActualThreeNodeSourceHeadBridge.actual_finite_energy_pos`
+
+*Proof.* Machine-checked in Lean as `D5/S3/Weil/ZetaBridge/ActualThreeNodeSourceHeadBridge.actual_finite_energy_pos` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+For c>=3, signed n!=0, N>=9 and |n|<N, the finite physical energy is strictly positive for every nonzero complex coefficient vector in the original normalized node basis. The complete source Gram gives positive actual tail energy; its sharp full336 upper bound transfers that strict positivity to the finite form, without an arithmetic nonvanishing premise.
+
 ## References
 
+- Truth anchor: `D5/S3/Weil/ZetaBridge/ActualThreeNodeSourceHeadBridge.actual_finite_energy_pos`
 - Truth anchor: `D5/S3/Weil/ZetaBridge/ActualThreeNodeSourceHeadBridge.actual_finite_head_tail_pos`
 - Truth anchor: `D5/S3/Weil/ZetaBridge/ActualThreeNodeSourceHeadBridge.actual_finite_head_tail_zero_iff`
 - Truth anchor: `D5/S3/Weil/ZetaBridge/ActualThreeNodeSourceHeadBridge.actual_gram_posDef`
@@ -332,5 +345,11 @@ theorem actual_gram_posDef {c : ℕ} (hc : 3 ≤ c) {n : ℤ} (hn : n ≠ 0) (N 
 - Truth anchor: `D5/S3/Weil/ZetaBridge/ActualThreeNodeSourceHeadBridge.source_linear_combination`
 - Truth anchor: `D5/S3/Weil/ZetaBridge/ActualThreeNodeSourceHeadBridge.tailSpace`
 - Truth anchor: `D5/S3/Weil/ZetaBridge/ActualThreeNodeSourceHeadBridge.threeNodes`
+- Dependency: [D5/S3/Weil/ZetaBridge/ActualExplicit336](ActualExplicit336.md)
+- Dependency: [D5/S3/Weil/ZetaBridge/ActualNodalCoercivity](ActualNodalCoercivity.md)
 - Dependency: [D5/S3/Weil/ZetaBridge/ActualNodalTailEnclosure](ActualNodalTailEnclosure.md)
+- Dependency: [D5/S3/Weil/ZetaBridge/ActualPairedReciprocal](ActualPairedReciprocal.md)
+- Dependency: [D5/S3/Weil/ZetaBridge/ActualThreeNodeFiniteAlgebra](ActualThreeNodeFiniteAlgebra.md)
 - Dependency: [D5/S3/Weil/ZetaBridge/ActualUniformFiniteHeadTail](ActualUniformFiniteHeadTail.md)
+- Dependency: [D5/S3/Weil/ZetaBridge/PrimeSymbolResonance](PrimeSymbolResonance.md)
+- Dependency: [D5/S3/Weil/ZetaBridge/WeilArithmeticCouplingParityGram](WeilArithmeticCouplingParityGram.md)

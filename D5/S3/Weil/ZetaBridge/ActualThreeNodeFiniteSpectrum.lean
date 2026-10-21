@@ -74,9 +74,7 @@ lemma finite_charpoly_quadratic (g mu a r : ℝ) :
   rw [Matrix.charpoly, Matrix.det_fin_three]
   simp [Matrix.charmatrix_apply, finiteMatrix, Matrix.diagonal_apply,
     evenTau, evenDet] <;>
-    push_cast <;>
-    simp only [map_add, map_sub, map_mul, map_pow] <;>
-    ring
+    push_cast <;> ring
 
 /-- Polynomial factorization has no distinct-root or nonzero-entry premise. -/
 lemma finite_charpoly (g mu a r : ℝ) :
@@ -109,12 +107,14 @@ theorem finite_spectrum_multiset (g mu a r : ℝ) :
     (List.ofFn (finiteEigen g mu a r) : Multiset ℝ) =
       {rhoPlus g mu a r, O g mu a r, rhoMinus g mu a r} := by
   have hs := (finiteMatrix_isHermitian g mu a r).sort_roots_charpoly_eq_eigenvalues₀
+  rw [RCLike.re_eq_complex_re] at hs
   have he := congrArg (fun l : List ℝ => (l : Multiset ℝ)) hs
   have hr := congrArg (fun s : Multiset ℂ => s.map Complex.re) (finite_roots g mu a r)
   calc
     (List.ofFn (finiteEigen g mu a r) : Multiset ℝ) =
         (finiteMatrix g mu a r).charpoly.roots.map Complex.re := by
-      simpa only [finiteEigen, Multiset.sort_eq] using he.symm
+      rw [Multiset.sort_eq] at he
+      exact he.symm
     _ = {rhoPlus g mu a r, O g mu a r, rhoMinus g mu a r} := by
       simpa using hr
 
@@ -123,7 +123,7 @@ private lemma sort_three (p o m : ℝ) (hmp : m ≤ p) (hmo : m ≤ o) :
     ({p, o, m} : Multiset ℝ).sort (· ≥ ·) = [max p o, min p o, m] := by
   have he : ({p, o, m} : Multiset ℝ) = {max p o, min p o, m} := by
     rcases le_total p o with h | h
-    · simpa only [max_eq_right h, min_eq_left h] using
+    · simpa only [max_eq_right h, min_eq_left h, Multiset.insert_eq_cons] using
         (Multiset.cons_swap p o ({m} : Multiset ℝ))
     · simp only [max_eq_left h, min_eq_right h]
   have hmin : m ≤ min p o := le_min hmp hmo
@@ -134,7 +134,9 @@ private lemma sort_three (p o m : ℝ) (hmp : m ≤ p) (hmo : m ≤ o) :
     · intro b hb
       have : b = m := by simpa using hb
       simpa [this] using hmin
-  rw [he, Multiset.sort_cons, hsortmin]
+  rw [he]
+  simp only [Multiset.insert_eq_cons]
+  rw [Multiset.sort_cons, hsortmin]
   intro b hb
   simp only [Multiset.mem_cons, Multiset.mem_singleton] at hb
   rcases hb with rfl | rfl
@@ -148,14 +150,16 @@ theorem finite_sorted_eq (g mu a r : ℝ) (hmo : rhoMinus g mu a r ≤ O g mu a 
       ![max (rhoPlus g mu a r) (O g mu a r),
         min (rhoPlus g mu a r) (O g mu a r), rhoMinus g mu a r] := by
   apply List.ofFn_inj.mp
-  have hs := (finiteMatrix_isHermitian g mu a r).sort_roots_charpoly_eq_eigenvalues₀
-  have hr : (finiteMatrix g mu a r).charpoly.roots.map Complex.re =
-      {rhoPlus g mu a r, O g mu a r, rhoMinus g mu a r} := by
-    simpa using congrArg (fun s : Multiset ℂ => s.map Complex.re) (finite_roots g mu a r)
+  have hsorted : ((List.ofFn (finiteEigen g mu a r) : Multiset ℝ).sort (· ≥ ·)) =
+      List.ofFn (finiteEigen g mu a r) := by
+    rw [Multiset.coe_sort]
+    exact List.mergeSort_eq_self _
+      (finiteMatrix_isHermitian g mu a r).eigenvalues₀_antitone.sortedGE_ofFn.pairwise
   calc
     List.ofFn (finiteEigen g mu a r) =
-        ({rhoPlus g mu a r, O g mu a r, rhoMinus g mu a r} : Multiset ℝ).sort (· ≥ ·) := by
-      simpa only [finiteEigen, hr] using hs.symm
+        (List.ofFn (finiteEigen g mu a r) : Multiset ℝ).sort (· ≥ ·) := hsorted.symm
+    _ = ({rhoPlus g mu a r, O g mu a r, rhoMinus g mu a r} : Multiset ℝ).sort (· ≥ ·) := by
+      rw [finite_spectrum_multiset]
     _ = [max (rhoPlus g mu a r) (O g mu a r),
         min (rhoPlus g mu a r) (O g mu a r), rhoMinus g mu a r] :=
       sort_three _ _ _ (rho_order g mu a r) hmo

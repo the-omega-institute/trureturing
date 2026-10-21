@@ -92,10 +92,13 @@ theorem relative_factor_limits (c : ℕ) (n : ℤ) :
   have hd := tendsto_const_div_atTop_nhds_zero_nat (delta336 c)
   have hr := tendsto_const_div_atTop_nhds_zero_nat (n : ℝ)
   constructor
-  · simpa [lower336] using (tendsto_const_nhds (x := (1 : ℝ))).sub hd
+  · change Tendsto (fun N : ℕ => 1 - delta336 c / (N : ℝ)) atTop (𝓝 1)
+    simpa only [Pi.sub_apply, sub_zero] using (tendsto_const_nhds (x := (1 : ℝ))).sub hd
   · have hnum := (tendsto_const_nhds (x := (1 : ℝ))).add hd
     have hden := ((tendsto_const_nhds (x := (1 : ℝ))).sub (hr.pow 2)).pow 2
-    simpa [upper336] using hnum.div hden (by norm_num : (1 - (0 : ℝ) ^ 2) ^ 2 ≠ 0)
+    have hu := (hnum.div hden (by norm_num : (1 - (0 : ℝ) ^ 2) ^ 2 ≠ 0)).congr
+      (f₂ := fun N : ℕ => upper336 c N n) (fun N => rfl)
+    simpa using hu
 
 /-- One eventual cutoff precedes every vector and every sorted eigenvalue index.
 Strict positivity is stronger than the nonnegativity required by the scaling API. -/
