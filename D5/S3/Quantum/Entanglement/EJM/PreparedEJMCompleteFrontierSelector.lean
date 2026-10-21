@@ -13,6 +13,7 @@ theorem, which is generated from separate actual original suffix receipts.
 It never equates associated caches, reuses a shape's acceptance, or infers a
 local score bound from raw symmetry acceptance. -/
 import D5.S3.Quantum.Entanglement.EJM.PreparedEJMCompleteFrontierTable
+import D5.S3.Quantum.Entanglement.EJM.PreparedEJMCompleteFrontierTypes
 import D5.S3.Quantum.Entanglement.EJM.Frontier.EJMOriginalPrefixDecoder
 
 set_option autoImplicit false
