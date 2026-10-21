@@ -28,7 +28,10 @@ internal sealed class CssTDoublingMapImprovementDocument : IScribeDocumentDefini
                 DescribeRole.Definition, AssessedProvenance.FromLiterature(Source)),
             Node("result", "A cyclic length-thirteen construction", Disp(ClaimBody()),
                 "Write vectors of length 26 as two blocks over 𝔽₂¹³. Take C₁ = {(x,x) : x ∈ 𝔽₂¹³} and C₂ = {(x,x) : Σᵢ xᵢ = 0}. Their dimensions are 13 and 12. Let (Ax)ᵢ = xᵢ + xᵢ₊₁ + xᵢ₊₂, with indices modulo 13, and set φ(x,x) = (Ax,Ax). Every vector of C₁ and of φ(C₁) has two equal blocks, so each triple product has even weight and the admissibility condition holds. Identity doubling sends (x,x) to (x,x,x,x). Taking x to be a coordinate unit vector gives a vector outside the smaller extension of weight 4, hence identity distance at most 4. For the φ-extension a nontrivial X vector is (x,x,Ax,Ax) with Σᵢ xᵢ = 1, of weight 2(wt(x) + wt(Ax)). If wt(x) = 1, then wt(Ax) = 3. Otherwise wt(x) ≥ 3 and Ax ≠ 0: Ax = 0 would imply xᵢ₊₃ = xᵢ, hence x is constant because 3 is coprime to 13, and then x = 0. Thus the X-distance is at least 8. For a nontrivial Z vector (a,b,c,d), orthogonality to the smaller extension and failure of orthogonality to the larger one give a + b + Aᵀ(c + d) = 𝟙. Put w = c + d and j = wt(w). Its total weight is at least wt(w) + wt(𝟙 + Aᵀw) = j + 13 − wt(Aᵀw). The transpose is a sum of three coordinate permutations, so wt(Aᵀw) ≤ 3 wt(w). If j ≤ 4 the total weight is at least 13 − 2j ≥ 5; if j ≥ 5 it is already at least 5. Consequently the new distance is at least 5, strictly greater than the identity bound 4, at length 52 and encoded dimension 1.",
-                DescribeRole.Theorem, AssessedProvenance.FromRepo(Source))
+                DescribeRole.Theorem, AssessedProvenance.FromRepo(Source),
+                new OpenProblemResolutionClaim(
+                    ProblemSlugRef.Create("berardini-et-al-2024-csst-doubling-map-improvement"),
+                    ResolutionKind.Proved))
         )));
 
     private static DocumentBlock Node(string name, string title, Formula formula, string prose,
