@@ -1156,3 +1156,60 @@ Taking $v\to\rho$ proves (10.11), including both endpoints; at $\rho=1/2$ it equ
 This retention statement assumes the stated inward threshold bound. A two-symbol output alphabet by itself establishes neither finite physical threshold precision nor a cheap implementation, and the law-dependent choice of $u$ supplies no guarantee for an arbitrary fixed quantizer. The conditional source substitution remains exactly Theorem 9.5, using [the Gaussian record volume, Theorem 5.1 and Proposition 14.2](FIB_SHARED_GAUSSIAN_RECORD_LAWS.md): no preparation realizing these symmetric means is asserted, and Gaussianity of the original law supplies no Gaussianity for a projected-input law. The Gaussian experiment, existence of a finite readout and physical precision of that readout are separate claims. These known-law conclusions establish no native atom encoding, adaptive-word result, empirical or out-of-distribution performance, or training gain. $\square$
 
 ## 追加锚（本行以下为增补区）
+
+## 11. 占位仿射限制下的平台与四角读出核
+
+**假设 11.1（仿射原子编码）。** 在 §9 的五标签等先验、共同正定协方差 $\Sigma$ 和同标签条件独立记录合同下，另供占位仿射均值
+
+$$
+(\mu_0,\mu_1,\mu_2,\mu_3,\mu_{13})=(0,u,w,v,u+v),
+\qquad u,v,w\in\mathbb R^D.
+\tag{11.1}
+$$
+
+完整平台仍专指五个原标签各自的无权二元 $0$–$1$ Bayes 风险均为 $1/5$。以下将定理9.3直接应用于这个受四角仿射关系约束的子类，不重复证明一般五均值分类，也不由原生高斯记录自动推定（11.1）。
+
+**定理 11.2（仿射子类的穷尽平台判据）。** 固定正整数复制次数 $\ell$，完整原始平台恰好发生于以下情形：
+
+- $u=v=w=0$；
+- 交换端点后可写为 $u=0$、$v\ne0$、$w=\theta v$，其中 $0\le\theta\le1$。若 $\theta=0$ 或 $1$，平台永久成立；若 $0<\theta<1$，还必须且只须
+
+$$
+\ell\le
+\frac{2[\ln2+h_e(\theta)]}
+{\theta(1-\theta)\|v\|_{\Sigma^{-1}}^2}.
+\tag{11.2}
+$$
+
+第一种平台也永久成立；（11.2）等号属于平台。在严格内点构型超过该阈值时，中位标签判断严格改善；若均值几何不属于上述两类，则至少一个单标签判断在每个 $\ell\ge1$ 严格改善。
+
+证明。先设 $u,v$ 均非零。若线性独立，四个底角 $0,u,v,u+v$ 为一个非退化平行四边形的顶点。若 $w$ 与其中一个重合，仍有其他单标签顶点；若 $w$ 是不同的新点，则它位于原凸包内时原四顶点仍在，位于原凸包外时它自身是单标签顶点。故总有一个单标签暴露顶点。
+
+若两向量共线，取一个实坐标使它们为非零数 $a,b$。集合 $\{0,a,b,a+b\}$ 的最小值由分别选择两个负贡献唯一实现，最大值由分别选择两个正贡献唯一实现，所以两个端点各仅有一个底角标签。若 $w$ 在线段内，至多重复其中一个端点；若在原凸包外或离开该直线，则它自身为单标签顶点。因此该情形也不可能有完整平台。这里使用定理9.3的暴露顶点结论：在每个正复制次数下，其后验在一个正概率区域超过 $1/2$。
+
+若 $u=v=0$ 而 $w\ne0$，$w$ 是单标签顶点。余下恰有一个方向为零，交换后设 $u=0,v\ne0$。四个底角分为均值 $0$ 的标签 $\{0,1\}$ 与均值 $v$ 的标签 $\{3,13\}$。$w\notin[0,v]$ 时它自身为单标签顶点；$w=0,v$ 时为永久 $3+2$ 簇；严格内点 $w=\theta v$ 时恰为定理9.3的 $2$–$1$–$2$ 构型。将其端点距离代入（9.5）即得（11.2），包括阈值等号和退化边界。$\square$
+
+**命题 11.3（标签逃逸仍可与四角永久失明并存）。** 在（11.1）中，若任一正整数复制次数出现完整原始平台，则固定 $X,Y,Z$ 的四角概率族
+
+$$
+p_\kappa=(1-X-Y-Z+\kappa,\ X-\kappa,\ Z,\ Y-\kappa,\ \kappa)
+\tag{11.3}
+$$
+
+被该记录实验永久消去：对每个 $\ell\ge1$，整组同标签记录律均不依赖 $\kappa$。反向不成立；平台逃逸也不推出 $\kappa$ 可识别。
+
+证明。定理11.2强制 $u=0$ 或 $v=0$。设 $u=0$，则 $0,1$ 两标签具有同一个整组高斯产品律，$3,13$ 也具有同一个产品律；各簇的 $d=(1,-1,0,-1,1)$ 系数和为零，故组分布对 $\kappa$ 的导数为零。$v=0$ 同理。这个结论也可由[《记录单纯形与高阶相容》定理14.1](AURIC_FIB_ATOM_RECORD_SIMPLEX_AND_HIGHER_ORDER_COMPATIBILITY.md)在堆叠读出向量上直接获得。各组重新抽标签仍只产生这些相同律的独立乘积。
+
+具体取一维 $u=0,v=2,w=1,\Sigma=1$，均值为 $(0,0,1,2,2)$。等先验处 $X=Y=2/5,Z=1/5,\kappa=1/5$；在同一均值纤维的全部 $0\le\kappa\le2/5$，
+
+$$
+p_\kappa=(\kappa,2/5-\kappa,1/5,2/5-\kappa,\kappa),\qquad
+f_\kappa(r)=\tfrac25\phi(r)+\tfrac15\phi(r-1)+\tfrac25\phi(r-2).
+\tag{11.4}
+$$
+
+单份密度及任意同标签组密度都与 $\kappa$ 无关；但在等先验参考点，（11.2）的阈值为 $4\ln2\in(2,3)$，所以第三份同标签记录起中位标签判断严格改善。若改取 $w=3$，仍有 $u=0$ 和四角失明，但 $w$ 是单标签端点，第一份记录即严格改善，表明四角失明不蕴含平台。$\square$
+
+这些结论将两种目标放在同一个仿射实验中比较：判别一个抽中的原标签，与估计固定均值纤维上的总体概率关系，是不同任务。完整分布核、特定风险的平台及正信息下的取得成本分别由不同判据控制；有限标签可分类不等于总体概率可恢复。此处复用 §9 的一般平台分类，新增的是占位仿射约束下的排除几何及其与四角核的对应，不主张新的通用 Gaussian 判别工具、原生原子编码或物理制备实现。
+
+## 追加锚（本行以下为增补区）
