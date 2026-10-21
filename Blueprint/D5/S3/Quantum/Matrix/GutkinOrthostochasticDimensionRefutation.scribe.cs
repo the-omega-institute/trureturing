@@ -76,7 +76,10 @@ internal sealed class GutkinOrthostochasticDimensionRefutationDocument : IScribe
                             + "infimum would then be zero. Its natural-number infimum belongs to it, "
                             + "so S has a lift in dimension dMin(n). The dimension bound gives "
                             + "4 ≤ n − 1 ≤ dMin(n), contradicting dMin(n) ≤ 3."))),
-                DescribeRole.Theorem))));
+                DescribeRole.Theorem,
+                openProblemResolutionClaim: new OpenProblemResolutionClaim(
+                    ProblemSlugRef.Create("gutkin-2013-orthostochastic-dimension-refutation"),
+                    ResolutionKind.Refuted)))));
 
     private static DocumentBlock Entry(string id, string declaration, string title, Formula formula,
         string prose, AssessedProvenance provenance) =>
