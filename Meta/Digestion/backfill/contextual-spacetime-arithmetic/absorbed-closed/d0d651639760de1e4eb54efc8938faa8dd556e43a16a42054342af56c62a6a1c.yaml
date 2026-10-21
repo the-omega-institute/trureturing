@@ -2,7 +2,13 @@ fingerprints:
   raw_sha256: sha256:d0d651639760de1e4eb54efc8938faa8dd556e43a16a42054342af56c62a6a1c
   normalized_sha256: sha256:d0d651639760de1e4eb54efc8938faa8dd556e43a16a42054342af56c62a6a1c
 cas_ref: sha256:d0d651639760de1e4eb54efc8938faa8dd556e43a16a42054342af56c62a6a1c
-coverage_gids: []
+coverage_gids:
+  - gid: D5/S3/ConceptDynamics/Spacetime/TemporalComposition.exists_shift
+    target_statement_id: sha256:9ba6515eb1d67539fa2de0feab1aad0ed749d5cf3a2abae2e0de5be6fa4ae20a
+  - gid: D5/S3/ConceptDynamics/Spacetime/TemporalComposition.q_shift
+    target_statement_id: sha256:cf4a69906430c6382b9328ac1f274d52f891ec49d3d89739958a247eaed929b0
+  - gid: D5/S3/ConceptDynamics/Spacetime/TemporalComposition.shiftRich
+    target_statement_id: sha256:a6856514b75891bb58d45e4bf58016a1dd45522d04249371c9aa59013a0e1a1e
 receipts:
   unresolved_subitems: []
   chain_atoms:
