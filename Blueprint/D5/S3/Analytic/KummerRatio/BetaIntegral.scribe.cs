@@ -23,6 +23,6 @@ internal sealed class BetaIntegralDocument : IScribeDocumentDefinition
                 DeclarationHandle.Create("D5/S3/Analytic/KummerRatio/BetaIntegral.kummer_eq_betaIntegral"),
                 H("The beta representation of Kummer's function"), StatementSource.WithoutFormula(),
                 AssessedProvenance.FromRepo(),
-                Blocks(Paragraph(Text("When zero is less than s and s is less than c, Kummer's function M(s;c;x) is the integral of exp(xt) against the beta weight t^(s-1)(1-t)^(c-s-1), multiplied by Gamma(c)/(Gamma(s) Gamma(c-s)). The exponential series is integrated term by term. The terms in absolute value are bounded by the beta weight multiplied by |x|^n/n!, whose sum is integrable. The Gamma and ascending Pochhammer identity identifies each resulting beta moment with the pinned Kummer coefficient."))),
+                Blocks(Paragraph(Text("When zero is less than s and s is less than c, Kummer's function M(s;c;x) is the integral of exp(xt) against the beta weight t^(s-1)(1-t)^(c-s-1), multiplied by Gamma(c)/(Gamma(s) Gamma(c-s)). The exponential series is integrated term by term. The terms in absolute value are bounded by the beta weight multiplied by |x|^n/n!, whose sum is integrable. The Gamma and ascending Pochhammer identity identifies each resulting beta moment with the defining Kummer coefficient."))),
                 DescribeRole.Theorem))));
 }
