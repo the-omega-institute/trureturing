@@ -3995,6 +3995,7 @@ Fix a local dimension $d_0$ and a finite inverse-closed instruction set $\mathca
 Let $\varphi$ be a 3CNF formula with $n\ge1$ variables and $M\ge1$ clauses, supplied as a list of literals in binary.
 Remove repeated literals within a clause and discard tautological clauses. An empty clause is an immediate unsatisfiable input;
 if no clauses remain, the input is immediately satisfiable. For the remaining family, let $M\ge1$ count the retained clauses.
+Discard unused variables and relabel the distinct variables in the retained clauses as $1,\ldots,n$; thus $n\le3M$.
 The bounds below also apply to clauses of size one or two.
 Use the length-$2n-1$ legal FIB code
 
