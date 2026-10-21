@@ -4154,10 +4154,26 @@ This is an orbit equality for the specified Hamiltonian family.  It does
 not say that every $W$ is in the image of a native construction $q\mapsto
 V(q)$.
 
-Let $p=|W_\ell|^2$.  An even, number-preserving rotation inside $B$,
-which is local for the declared occupation tensor product, aligns $W$ to
-$\sqrt p\,e_\ell+\sqrt{1-p}\,e_b$ and leaves one $B$-mode as spectator.
-The factorization from §142 is
+Let $p=|W_\ell|^2$.  For $p>0$ choose the representative
+$\widetilde W=(\overline{W_\ell}/|W_\ell|)W$; for $p=0$ put
+$\widetilde W=W$.  Then $\widetilde W_\ell=\sqrt p$ and
+$\widetilde W\widetilde W^*=WW^*$, so $H_{\widetilde W}=H_W$ and
+$\rho_{\widetilde W}(\beta)=\rho_W(\beta)$.  This is a choice of phase
+representative, not a physical local operation.
+
+Choose $U_B\in U(2)$ sending the $B$ component $\widetilde W_B$ to
+$\sqrt{1-p}\,e_b$.  At $p=0$ this aligns a unit vector in $B$; at $p=1$
+we already have $\widetilde W=e_\ell$, so any $U_B$ suffices.  With
+$L=1_A\oplus U_B$ and $v_p=\sqrt p\,e_\ell+\sqrt{1-p}\,e_b$,
+
+$$
+L\widetilde W=v_p,\qquad LWW^*L^*=v_pv_p^*.
+$$
+
+By (162.2) and §142, the even, number-preserving lift
+$\Gamma(L)=I_A\otimes\Gamma(U_B)$ is local for the declared occupation
+tensor product and conjugates $\rho_W(\beta)$ to $\rho_{v_p}(\beta)$.
+The orthogonal $B$-mode is a spectator, so the factorization from §142 is
 
 $$
 \rho_W(\beta)\simeq_{\rm local}\sigma_\beta(p)\otimes\tau_\beta,
