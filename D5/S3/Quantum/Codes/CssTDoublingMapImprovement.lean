@@ -183,41 +183,6 @@ private lemma admissible_witness : admissible C₂ C₁ C₂_le_C₁ (liftedMap 
   rw [liftedMap_apply, liftedMap_apply, liftedMap_apply, sum_blocks, sum_blocks]
   simp only [diagonal_eval, CharTwo.add_self_eq_zero]
 
-private lemma weight_sum {ι : Type*} [Fintype ι] (x : ι → ZMod 2) :
-    hammingNorm x = ∑ i, if x i ≠ 0 then 1 else 0 := by
-  simp only [hammingNorm, Finset.sum_boole, Nat.cast_id]
-
-private lemma weight_add_le {ι : Type*} [Fintype ι] (x y : ι → ZMod 2) :
-    hammingNorm (x + y) ≤ hammingNorm x + hammingNorm y := by
-  have h := hammingDist_triangle (x + y) y 0
-  rw [hammingDist_zero_right, hammingDist_zero_right, hammingDist_eq_hammingNorm] at h
-  have he : -(x + y) + y = x := by
-    ext i
-    simp only [Pi.neg_apply, Pi.add_apply, CharTwo.neg_eq, CharTwo.add_cancel_right]
-  rw [he] at h
-  exact h
-
-private lemma weight_reindex {ι κ : Type*} [Fintype ι] [Fintype κ]
-    (e : ι ≃ κ) (x : κ → ZMod 2) : hammingNorm (fun i => x (e i)) = hammingNorm x := by
-  rw [weight_sum, weight_sum]
-  exact e.sum_comp (fun j => if x j ≠ 0 then (1 : ℕ) else 0)
-
-private lemma weight_diagonal
-    (x : Fin 13 → ZMod 2) : hammingNorm (diagonalMap x) = 2 * hammingNorm x := by
-  rw [weight_sum, sum_blocks]
-  simp only [diagonal_eval]
-  rw [← weight_sum]
-  omega
-
-private lemma weight_graph (f : (Fin 13 → ZMod 2) →ₗ[ZMod 2] (Fin 13 → ZMod 2))
-    (x : Fin 13 → ZMod 2) :
-    hammingNorm (graphVector f x) = 2 * (hammingNorm x + hammingNorm (f x)) := by
-  rw [weight_sum, Fintype.sum_sum_type]
-  change (∑ i, if diagonalMap x i ≠ 0 then 1 else 0) +
-    (∑ i, if diagonalMap (f x) i ≠ 0 then 1 else 0) = _
-  rw [← weight_sum, ← weight_sum, weight_diagonal, weight_diagonal]
-  omega
-
 private lemma lifted_id :
     liftedMap (LinearMap.id : (Fin 13 → ZMod 2) →ₗ[ZMod 2] (Fin 13 → ZMod 2)) = C₁.subtype := by
   apply LinearMap.ext
@@ -230,15 +195,6 @@ private lemma graph_injective (f : (Fin 13 → ZMod 2) →ₗ[ZMod 2] (Fin 13 �
   apply diagonalMap_injective
   funext i
   exact congrFun h (Sum.inl i)
-
-private lemma parity_weight (x : Fin 13 → ZMod 2) : parityMap x = (hammingNorm x : ZMod 2) := by
-  rw [weight_sum, Nat.cast_sum]
-  change (∑ i, x i) = ∑ i, ((if x i ≠ 0 then 1 else 0 : ℕ) : ZMod 2)
-  apply Finset.sum_congr rfl
-  intro i _
-  by_cases h : x i = 0
-  · rw [h]; norm_num
-  · rw [show x i = 1 from Fin.eq_one_of_ne_zero (x i) h]; norm_num
 
 private lemma weight_one
     (x : Fin 13 → ZMod 2) (h : hammingNorm x = 1) : ∃ i, x = Pi.single i 1 := by
@@ -295,9 +251,25 @@ private lemma x_weight_bound (x : Fin 13 → ZMod 2) (hx : parityMap x ≠ 0) :
   have ht : hammingNorm x ≠ 2 := by
     intro h
     apply hx
-    rw [parity_weight, h]
+    change (∑ i, x i) = 0
+    have hp : (∑ i, x i) = (hammingNorm x : ZMod 2) := by
+      rw [hammingNorm, Finset.card_filter, Nat.cast_sum]
+      apply Finset.sum_congr rfl
+      intro i _
+      by_cases hi : x i = 0
+      · rw [hi]; norm_num
+      · rw [show x i = 1 from Fin.eq_one_of_ne_zero (x i) hi]; norm_num
+    rw [hp, h]
     decide
-  rw [weight_graph]
+  have hw : hammingNorm (graphVector cyclicMap x) =
+      2 * (hammingNorm x + hammingNorm (cyclicMap x)) := by
+    rw [hammingNorm, Finset.card_filter, Fintype.sum_sum_type, sum_blocks, sum_blocks]
+    simp only [graphVector, Sum.elim_inl, Sum.elim_inr, diagonal_eval]
+    rw [← Finset.card_filter, ← Finset.card_filter]
+    change hammingNorm x + hammingNorm x +
+      (hammingNorm (cyclicMap x) + hammingNorm (cyclicMap x)) = _
+    omega
+  rw [hw]
   by_cases hs : hammingNorm x = 1
   · obtain ⟨i, rfl⟩ := weight_one x hs
     rw [weight_cyclic_unit]
@@ -321,26 +293,32 @@ private lemma transpose_dot (x w : (Fin 13 → ZMod 2)) :
 
 private lemma transpose_weight (w : Fin 13 → ZMod 2) :
     hammingNorm (transposeVector w) ≤ 3 * hammingNorm w := by
-  have h₁ := weight_add_le w (fun i => w (i - 1))
-  have h₂ := weight_add_le (w + fun i => w (i - 1)) (fun i => w (i - 2))
-  have h₃ := weight_reindex (Equiv.subRight (1 : Fin 13)) w
-  have h₄ := weight_reindex (Equiv.subRight (2 : Fin 13)) w
+  have h₁ : hammingNorm (w + fun i => w (i - 1)) ≤
+      hammingNorm w + hammingNorm (fun i => w (i - 1)) := by
+    have h := hammingDist_triangle (-w) 0 (fun i => w (i - 1))
+    rw [hammingDist_zero_right, hammingDist_zero_left,
+      hammingDist_eq_hammingNorm, neg_neg] at h
+    have hn : -w = w := by ext i; exact CharTwo.neg_eq _
+    rw [hn] at h
+    exact h
+  have h₂ : hammingNorm (transposeVector w) ≤
+      hammingNorm (w + fun i => w (i - 1)) + hammingNorm (fun i => w (i - 2)) := by
+    have h := hammingDist_triangle (-(w + fun i => w (i - 1))) 0 (fun i => w (i - 2))
+    rw [hammingDist_zero_right, hammingDist_zero_left,
+      hammingDist_eq_hammingNorm, neg_neg] at h
+    have hn : -(w + fun i => w (i - 1)) = (w + fun i => w (i - 1)) := by
+      ext i
+      exact CharTwo.neg_eq _
+    rw [hn] at h
+    exact h
+  have h₃ := (Equiv.subRight (1 : Fin 13)).sum_comp
+    (fun i => if w i ≠ 0 then (1 : ℕ) else 0)
+  have h₄ := (Equiv.subRight (2 : Fin 13)).sum_comp
+    (fun i => if w i ≠ 0 then (1 : ℕ) else 0)
+  rw [← Finset.card_filter, ← Finset.card_filter] at h₃ h₄
   change hammingNorm (fun i => w (i - 1)) = hammingNorm w at h₃
   change hammingNorm (fun i => w (i - 2)) = hammingNorm w at h₄
-  change hammingNorm (transposeVector w) ≤ _ at h₂
   omega
-
-private lemma complement_weight (v : Fin 13 → ZMod 2) :
-    hammingNorm (fun i => 1 + v i) + hammingNorm v = 13 := by
-  rw [weight_sum, weight_sum, ← Finset.sum_add_distrib]
-  calc
-    _ = ∑ _ : Fin 13, (1 : ℕ) := by
-      apply Finset.sum_congr rfl
-      intro i _
-      by_cases h : v i = 0
-      · rw [h]; decide
-      · rw [show v i = 1 from Fin.eq_one_of_ne_zero (v i) h]; decide
-    _ = 13 := by simp
 
 private def leftBlock (z : Fin 26 ⊕ Fin 26 → ZMod 2) (a : Fin 2) : (Fin 13 → ZMod 2) :=
   fun i => z (Sum.inl ((finProdFinEquiv (m := 2) (n := 13)) (a, i)))
@@ -355,19 +333,33 @@ private def rightSum (z : Fin 26 ⊕ Fin 26 → ZMod 2) :
 private def syndrome (z : Fin 26 ⊕ Fin 26 → ZMod 2) :
     (Fin 13 → ZMod 2) := leftSum z + transposeVector (rightSum z)
 
-private lemma weight_four_blocks (z : Fin 26 ⊕ Fin 26 → ZMod 2) :
-    hammingNorm z = hammingNorm (leftBlock z 0) + hammingNorm (leftBlock z 1) +
-      (hammingNorm (rightBlock z 0) + hammingNorm (rightBlock z 1)) := by
-  rw [weight_sum, Fintype.sum_sum_type, sum_blocks, sum_blocks]
-  rw [weight_sum, weight_sum, weight_sum, weight_sum]
-  rfl
-
 private lemma weight_block_sums (z : Fin 26 ⊕ Fin 26 → ZMod 2) :
     hammingNorm (leftSum z) + hammingNorm (rightSum z) ≤ hammingNorm z := by
-  have h₁ := weight_add_le (leftBlock z 0) (leftBlock z 1)
-  have h₂ := weight_add_le (rightBlock z 0) (rightBlock z 1)
-  rw [weight_four_blocks]
-  exact Nat.add_le_add h₁ h₂
+  have h₁ : hammingNorm (leftSum z) ≤
+      hammingNorm (leftBlock z 0) + hammingNorm (leftBlock z 1) := by
+    have h := hammingDist_triangle (-(leftBlock z 0)) 0 (leftBlock z 1)
+    rw [hammingDist_zero_right, hammingDist_zero_left,
+      hammingDist_eq_hammingNorm, neg_neg] at h
+    have hn : -(leftBlock z 0) = (leftBlock z 0) := by ext i; exact CharTwo.neg_eq _
+    rw [hn] at h
+    exact h
+  have h₂ : hammingNorm (rightSum z) ≤
+      hammingNorm (rightBlock z 0) + hammingNorm (rightBlock z 1) := by
+    have h := hammingDist_triangle (-(rightBlock z 0)) 0 (rightBlock z 1)
+    rw [hammingDist_zero_right, hammingDist_zero_left,
+      hammingDist_eq_hammingNorm, neg_neg] at h
+    have hn : -(rightBlock z 0) = (rightBlock z 0) := by ext i; exact CharTwo.neg_eq _
+    rw [hn] at h
+    exact h
+  calc
+    _ ≤ hammingNorm (leftBlock z 0) + hammingNorm (leftBlock z 1) +
+        (hammingNorm (rightBlock z 0) + hammingNorm (rightBlock z 1)) := Nat.add_le_add h₁ h₂
+    _ = hammingNorm z := by
+      symm
+      rw [hammingNorm, Finset.card_filter, Fintype.sum_sum_type, sum_blocks, sum_blocks]
+      rw [hammingNorm, Finset.card_filter, hammingNorm, Finset.card_filter,
+        hammingNorm, Finset.card_filter, hammingNorm, Finset.card_filter]
+      rfl
 
 private lemma graph_dot (f : (Fin 13 → ZMod 2) →ₗ[ZMod 2] (Fin 13 → ZMod 2))
     (x : Fin 13 → ZMod 2) (z : Fin 26 ⊕ Fin 26 → ZMod 2) :
@@ -433,10 +425,24 @@ private lemma z_weight_bound (z : Fin 26 ⊕ Fin 26 → ZMod 2)
     have hi := congrFun hs i
     change leftSum z i + transposeVector (rightSum z) i = 1 at hi
     exact CharTwo.add_eq_iff_eq_add.mp hi
-  have hc := complement_weight (transposeVector (rightSum z))
-  have ht := transpose_weight (rightSum z)
   have hb := weight_block_sums z
-  rw [he] at hb
+  have hc := Finset.card_filter_add_card_filter_not
+    (s := Finset.univ) (fun i => transposeVector (rightSum z) i = 0)
+  have hflip (i : Fin 13) :
+      1 + transposeVector (rightSum z) i ≠ 0 ↔ transposeVector (rightSum z) i = 0 := by
+    by_cases h : transposeVector (rightSum z) i = 0
+    · rw [h]; decide
+    · rw [show transposeVector (rightSum z) i = 1 from Fin.eq_one_of_ne_zero _ h]
+      decide
+  rw [Finset.card_univ, Fintype.card_fin] at hc
+  rw [he, hammingNorm] at hb
+  have hf : Finset.univ.filter (fun i => 1 + transposeVector (rightSum z) i ≠ 0) =
+      Finset.univ.filter (fun i => transposeVector (rightSum z) i = 0) :=
+    Finset.filter_congr (fun i _ => hflip i)
+  rw [hf] at hb
+  have ht := transpose_weight (rightSum z)
+  change (Finset.univ.filter (fun i => transposeVector (rightSum z) i = 0)).card +
+    hammingNorm (transposeVector (rightSum z)) = 13 at hc
   omega
 
 private lemma graph_nontrivial (f : (Fin 13 → ZMod 2) →ₗ[ZMod 2] (Fin 13 → ZMod 2)) :
@@ -476,7 +482,6 @@ private lemma identity_distance :
   have hn := graph_nontrivial (LinearMap.id : (Fin 13 → ZMod 2) →ₗ[ZMod 2] (Fin 13 → ZMod 2))
   have hw : hammingNorm (graphVector
       (LinearMap.id : (Fin 13 → ZMod 2) →ₗ[ZMod 2] (Fin 13 → ZMod 2)) (Pi.single 0 1)) = 4 := by
-    rw [weight_graph]
     decide
   exact Nat.sInf_le (Or.inl ⟨_, hn.1, hn.2, hw⟩)
 
