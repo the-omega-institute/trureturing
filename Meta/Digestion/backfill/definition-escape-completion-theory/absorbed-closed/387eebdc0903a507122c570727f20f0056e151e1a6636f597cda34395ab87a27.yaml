@@ -1,0 +1,9 @@
+fingerprints:
+  raw_sha256: sha256:387eebdc0903a507122c570727f20f0056e151e1a6636f597cda34395ab87a27
+  normalized_sha256: sha256:387eebdc0903a507122c570727f20f0056e151e1a6636f597cda34395ab87a27
+cas_ref: sha256:387eebdc0903a507122c570727f20f0056e151e1a6636f597cda34395ab87a27
+coverage_gids:
+  - gid: D5/S3/ConceptDynamics/TimeProjection/FiniteTimeProjectionKernelAntitone.finite_time_projection_kernel_antitone
+    target_statement_id: sha256:798d8244fd5670ccd8832819ec8e0b954df5f4e513e8b3ef1f110923b368e127
+receipts:
+  unresolved_subitems: []

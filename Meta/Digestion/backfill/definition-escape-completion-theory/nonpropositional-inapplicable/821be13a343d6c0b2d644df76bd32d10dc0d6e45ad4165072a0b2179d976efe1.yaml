@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:821be13a343d6c0b2d644df76bd32d10dc0d6e45ad4165072a0b2179d976efe1
+  normalized_sha256: sha256:821be13a343d6c0b2d644df76bd32d10dc0d6e45ad4165072a0b2179d976efe1
+cas_ref: sha256:821be13a343d6c0b2d644df76bd32d10dc0d6e45ad4165072a0b2179d976efe1
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 切割终止这一证书字段或工作项。
+    previous_atom_id: 57a21fe866ec2c0bc7c2abbbd483ec3b73eb0396047dd009ac884fbb575d2ac3
+    next_atom_id: fe7615c4ef8b0fd9fe47cd2f50ab30ada7690b7f490f83157abdfc9ab2e3e69e

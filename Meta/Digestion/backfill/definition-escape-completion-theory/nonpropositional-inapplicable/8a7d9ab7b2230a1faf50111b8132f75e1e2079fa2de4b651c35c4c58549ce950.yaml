@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:8a7d9ab7b2230a1faf50111b8132f75e1e2079fa2de4b651c35c4c58549ce950
+  normalized_sha256: sha256:8a7d9ab7b2230a1faf50111b8132f75e1e2079fa2de4b651c35c4c58549ce950
+cas_ref: sha256:8a7d9ab7b2230a1faf50111b8132f75e1e2079fa2de4b651c35c4c58549ce950
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 三成本坐标和非严格支配前沿的定义，以及研究建议；没有给定方案的最优性断言。
+    previous_atom_id: 6b906da6983c6c2589d6229a82428634d3134691ad9abbbc827f9d245d0eb773
+    next_atom_id: d5b5fa923eb50d3ff7d1914a7bda4350acae978a122d42b696c1930ea47b5a44

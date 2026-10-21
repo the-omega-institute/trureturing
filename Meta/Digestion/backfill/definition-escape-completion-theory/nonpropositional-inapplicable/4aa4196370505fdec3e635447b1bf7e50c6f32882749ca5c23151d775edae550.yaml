@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:4aa4196370505fdec3e635447b1bf7e50c6f32882749ca5c23151d775edae550
+  normalized_sha256: sha256:4aa4196370505fdec3e635447b1bf7e50c6f32882749ca5c23151d775edae550
+cas_ref: sha256:4aa4196370505fdec3e635447b1bf7e50c6f32882749ca5c23151d775edae550
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 定义对逃逸时间影响这一研究问题名目。
+    previous_atom_id: 08f79c70a144c38dfd522be9ed0dedc69c94537c5e5035437570941ac83b71cb
+    next_atom_id: 387eebdc0903a507122c570727f20f0056e151e1a6636f597cda34395ab87a27

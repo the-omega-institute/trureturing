@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:d589c48032f6759f421d41ba7ff41d9554cd3bf57dd451f7e7a39f127b8a37f5
+  normalized_sha256: sha256:d589c48032f6759f421d41ba7ff41d9554cd3bf57dd451f7e7a39f127b8a37f5
+cas_ref: sha256:d589c48032f6759f421d41ba7ff41d9554cd3bf57dd451f7e7a39f127b8a37f5
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 先归类残差模式的研究建议，没有给出可检验的普遍数学界。
+    previous_atom_id: 24f48de269964732af39085aa7193c5099b4f04a8c2fecc72ffd1cd9542d280a
+    next_atom_id: 59a02be7d52e11887f341beab8d32a0bd5fa232ddb1f31d8d52b2f8987f618c0
