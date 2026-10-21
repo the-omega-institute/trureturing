@@ -1580,3 +1580,194 @@ Theorem 12.1 have their respective quantifiers and require their
 respective proofs.
 
 ## 追加锚（本行以下为增补区）
+## 14. The acquired history excludes constant and affine whole gains
+
+**Definition 14.1 (Original observations for the degree test).** Retain
+exactly the complete worlds of Definition 1.1 and
+[O, Definitions 1.1–1.3](FIB_COMMON_PARENT_GEOMETRY_AND_MIXED_CHILDREN.md#1-complete-worlds-and-the-equal-odd-read-parent):
+
+$$
+\begin{gathered}
+W=(P,g,d),\qquad
+P=\begin{pmatrix}r&b\\c&1-r\end{pmatrix},\qquad
+c=\frac{r(1-r)}b,\quad b>0,\quad0<r<1,\\
+0\ne g\in\mathbb R[s],\qquad\deg g\le3,\qquad d\in\mathbb R.
+\end{gathered}
+\tag{14.1}
+$$
+
+The gain is one whole polynomial and the drift is fixed within each
+world. With the same matrices
+
+$$
+J=\begin{pmatrix}0&1\\1&0\end{pmatrix},\qquad
+M=\begin{pmatrix}0&1\\1&1\end{pmatrix},\qquad
+Q_0=I,\quad Q_i=E_iQ_{i-1},\quad
+y_i=d+g(i)\operatorname{tr}(Q_iP),
+$$
+
+the acquired actions are $(E_1,\ldots,E_6)=(J,M,J,M,M,M)$ and
+$(y_0,\ldots,y_6)=(0,24,147/5,24,18,p,v)$. Put, as in (1.2),
+$j=b+c$, $n=j+r$, $T=1+b$ and $U=1+2b$. The actual left products
+from O, Definition 1.3, give the following observation equations.
+
+| Clock $i$ | Product $Q_i$ | Reading equation |
+| --- | --- | --- |
+| $0$ | $\left(\begin{smallmatrix}1&0\\0&1\end{smallmatrix}\right)$ | $0=d+g(0)$ |
+| $1$ | $\left(\begin{smallmatrix}0&1\\1&0\end{smallmatrix}\right)$ | $24=d+jg(1)$ |
+| $2$ | $\left(\begin{smallmatrix}1&0\\1&1\end{smallmatrix}\right)$ | $147/5=d+Tg(2)$ |
+| $3$ | $\left(\begin{smallmatrix}1&1\\1&0\end{smallmatrix}\right)$ | $24=d+ng(3)$ |
+| $4$ | $\left(\begin{smallmatrix}1&0\\2&1\end{smallmatrix}\right)$ | $18=d+Ug(4)$ |
+| $5$ | $\left(\begin{smallmatrix}2&1\\3&1\end{smallmatrix}\right)$ | $p=d+(U+n)g(5)$ |
+| $6$ | $\left(\begin{smallmatrix}3&1\\5&2\end{smallmatrix}\right)$ | $v=d+(2U+n)g(6)$ |
+
+Thus $C(p,v)$ continues to mean the entire set of these complete worlds,
+with $p,v\in\mathbb R$ arbitrary. At clock seven the alternatives are
+
+$$
+a(W)=d+(T+2j+4r)g(7),\qquad
+m(W)=d+(3U+2n)g(7).
+\tag{14.2}
+$$
+
+They are alternative responses of the same world, not two acquired
+readings. No degree label, gain sample, drift or source coordinate is
+acquired.
+
+**Theorem 14.2 (Constant gains contradict the acquired even clocks).**
+No world satisfying (14.1) and the acquired readings through clock four
+has $\deg g=0$.
+
+Proof. Suppose $g(s)=k$ for a nonzero real constant $k$. The initial
+reading forces $d=-k$. The actual traces at clocks two and four then
+force
+
+$$
+\frac{147}{5}=-k+(1+b)k=bk,\qquad
+18=-k+(1+2b)k=2bk.
+$$
+
+Consequently $18=294/5$, a contradiction. This uses neither the odd
+readings nor the later readings $p,v$. ∎
+
+**Theorem 14.3 (Affine gains contradict the strict source relation).**
+No world satisfying (14.1) and the acquired readings through clock four
+has $\deg g=1$.
+
+Proof. Every nonconstant affine real polynomial has a unique expression
+$g(s)=q(s-\xi)$ with $q\ne0$ and $\xi\in\mathbb R$. The initial
+reading gives $d=q\xi$. Substitution into the actual clock-two and clock-four rows
+of Definition 14.1 yields
+
+$$
+\begin{aligned}
+\frac{147}{5}&=q\{2+(2-\xi)b\},\\
+18&=q\{4+2(4-\xi)b\}.
+\end{aligned}
+\tag{14.3}
+$$
+
+Subtracting twice the first equation from the second gives
+$4qb=18-294/5=-204/5$. Since $b>0$, it follows that
+
+$$
+q=-\frac{51}{5b},\qquad
+2+(2-\xi)b=-\frac{49b}{17},\qquad
+\xi=\frac{83}{17}+\frac2b>\frac{83}{17}>3.
+\tag{14.4}
+$$
+
+Define the following polynomials in this positive $b$:
+
+$$
+\mathcal A=40b^2+83b+34,\qquad
+L_0=66b+34>0,\qquad R_0=32b+34>0.
+\tag{14.5}
+$$
+
+The clock-one and clock-three equations are
+$24=q\{\xi+(1-\xi)j\}$ and
+$24=q\{\xi+(3-\xi)n\}$. Formula (14.4) gives
+
+$$
+\frac{24}{q}-\xi=-\frac{\mathcal A}{17b},\qquad
+1-\xi=-\frac{L_0}{17b},\qquad
+3-\xi=-\frac{R_0}{17b}.
+$$
+
+Both odd sample factors are nonzero. Therefore these two acquired rows,
+together with $r=n-j$ and $c=j-b$, force
+
+$$
+j=\frac{\mathcal A}{L_0},\qquad
+n=\frac{\mathcal A}{R_0},\qquad
+r=\frac{34b\mathcal A}{L_0R_0},\qquad
+c=\frac{\mathcal A}{L_0}-b.
+\tag{14.6}
+$$
+
+All variable denominators are justified by $q\ne0$, $b>0$,
+$L_0>0$ and $R_0>0$. In particular, no branch with a zero odd gain
+sample has been discarded: (14.4) rules out such a sample for every
+hypothetical affine solution of the even rows.
+
+The source determinant relation is $bc-r(1-r)=0$. On substituting
+(14.6), multiplication by the positive denominator $(L_0R_0)^2$
+gives the exact identity
+
+$$
+\begin{aligned}
+(L_0R_0)^2\{bc-r(1-r)\}
+&=b(\mathcal A-bL_0)L_0R_0^2
+  -34b\mathcal A L_0R_0+(34b\mathcal A)^2\\
+&=b^2\Pi(b),\\
+\Pi(b)&=92416b^4+3475904b^3+7750164b^2\\
+&\hspace{1.8em}+5516432b+1257728.
+\end{aligned}
+\tag{14.7}
+$$
+
+This identity follows by multiplication of the three polynomials in
+(14.5); in particular $\mathcal A-bL_0=-26b^2+49b+34$ specifies
+its first factor explicitly. Every coefficient of $\Pi$ is strictly
+positive. Thus $b>0$ implies $b^2\Pi(b)>0$, contradicting the zero
+determinant. No later reading or terminal equality is used. ∎
+
+**Corollary 14.4 (Degree scope for the entire original child).** For all
+real $p,v$ and every complete world $W=(P,g,d)\in C(p,v)$,
+
+$$
+\deg g\in\{2,3\}.
+\tag{14.8}
+$$
+
+In particular this conclusion also applies at $p=24$. The original joint
+condition retains exactly the quantifiers and responses of (1.1):
+
+$$
+\begin{gathered}
+\exists p,v\in\mathbb R,\quad p\ne24,\\
+\exists W_0,W_1,W_2,W_3\in C(p,v),\\
+W_0\ne W_1,\qquad a(W_0)=a(W_1),\\
+W_2\ne W_3,\qquad m(W_2)=m(W_3).
+\end{gathered}
+\tag{14.9}
+$$
+
+Requiring (14.8) for each of these worlds is an equivalent formulation
+of (14.9). Quadratic gains remain in this formulation, the pairs may
+overlap, and their two common terminal values are independent. The
+corollary supplies a necessary degree condition; it asserts neither the
+existence nor the exclusion of a configuration in (14.9).
+
+Proof. Every world in $C(p,v)$ satisfies the first five acquired rows
+in Definition 14.1. Theorems 14.2 and 14.3 exclude degrees zero and one.
+A nonzero polynomial of degree at most three has a degree in
+$\{0,1,2,3\}$, proving (14.8). This implication holds for every member
+of the entire child, so it applies to any selected worlds in (14.9)
+without adding a hypothesis on $p,v$, on either pair, or on either
+terminal common value. Conversely, (14.9) with this necessary degree
+condition implies (14.9) by forgetting the condition. ∎
+
+## 追加锚（本行以下为增补区）
+
