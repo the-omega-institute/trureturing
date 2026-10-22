@@ -85,13 +85,13 @@ internal sealed class OverlapLowRankDistanceDocument : IScribeDocumentDefinition
         var shift = Seq(matrix, Sp, Minus, Sp, a, Sp, Cdot, Sp,
             Parenthesized(Seq(D(1), Sp, Colon, Sp, Apply("Matrix", index, index, complex))));
         var eigenvalue = new Formula.Apply(Property(h, "eigenvalues"), [F.Id("i")]);
+        var lowerBound = All("i", index, Seq(a, Sp, Leq, Sp, eigenvalue));
+        var implication = Seq(Property(shift, "PosSemidef"), Sp, Implies, Sp, lowerBound);
+        var body = All("A", Apply("Matrix", index, index, complex),
+            All("h", Property(matrix, "IsHermitian"), All("a", real, implication)));
         return All("I", F.Id("Type"), Seq(
             OpenBracket, Apply("Fintype", index), CloseBracket, Sp,
-            OpenBracket, Apply("DecidableEq", index), CloseBracket, Comma, Sp,
-            All("A", Apply("Matrix", index, index, complex),
-                All("h", Property(matrix, "IsHermitian"), All("a", real,
-                    Seq(Property(shift, "PosSemidef"), Sp, Implies, Sp,
-                        All("i", index, Seq(a, Sp, Leq, Sp, eigenvalue)))))));
+            OpenBracket, Apply("DecidableEq", index), CloseBracket, Comma, Sp, body));
     }
 
     private static Formula Formula0() =>
