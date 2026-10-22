@@ -40,7 +40,7 @@ private theorem sitePauli_apply (μ : Fin 2) (i : Fin 3) (a b : Fin 2 × Fin 2) 
         (if i = 0 then pauliMatrix .X else if i = 1 then pauliMatrix .Y else pauliMatrix .Z) a.2 b.2 else 0 := by
   by_cases h : μ = 0 <;> simp [sitePauli, onSite, h]
 
-/-- The site quantum coherence deficit in its variational form. -/
+/-- The quantum correlation distance of one site in the variational form of Eq. `QCDrho`. -/
 noncomputable def siteQCD (μ : Fin 2)
     (σ : Matrix (Fin 2 × Fin 2) (Fin 2 × Fin 2) ℂ) : ℝ :=
   Complex.re (Matrix.trace (σ * σ)) -
@@ -113,8 +113,6 @@ private noncomputable def pProjector (q : ℂ) : Matrix (Fin 2 × Fin 2) (Fin 2 
 
 private noncomputable def qPlus : ℂ := (7 + 24 * Complex.I) / 25
 private noncomputable def qMinus : ℂ := (7 - 24 * Complex.I) / 25
-private noncomputable def Pplus := pProjector qPlus
-private noncomputable def Pminus := pProjector qMinus
 
 private theorem pProjector_eq_vec (q : ℂ) (hq : q * star q = 1) :
     pProjector q = (1 / 2 : ℝ) • Matrix.vecMulVec (pKet q) (star (pKet q)) := by
@@ -123,8 +121,8 @@ private theorem pProjector_eq_vec (q : ℂ) (hq : q * star q = 1) :
     simp [pProjector, pKet, Matrix.vecMulVec, Pi.star_apply] <;>
       first | exact hq | ring
 
-private theorem pPlus_state : Pplus.PosSemidef ∧ Matrix.trace Pplus = 1 := by
-  rw [show Pplus = pProjector qPlus by rfl, pProjector_eq_vec qPlus (by
+private theorem pPlus_state : (pProjector qPlus).PosSemidef ∧ Matrix.trace (pProjector qPlus) = 1 := by
+  rw [pProjector_eq_vec qPlus (by
     apply Complex.ext <;> norm_num [qPlus])]
   constructor
   · exact (Matrix.posSemidef_vecMulVec_self_star (pKet qPlus)).smul (by norm_num : (0 : ℝ) ≤ 1 / 2)
@@ -133,8 +131,8 @@ private theorem pPlus_state : Pplus.PosSemidef ∧ Matrix.trace Pplus = 1 := by
     norm_num [pKet, qPlus, Complex.normSq, Complex.mul_re, Complex.mul_im, Complex.ext_iff,
       Complex.I_mul_I]
 
-private theorem pMinus_state : Pminus.PosSemidef ∧ Matrix.trace Pminus = 1 := by
-  rw [show Pminus = pProjector qMinus by rfl, pProjector_eq_vec qMinus (by
+private theorem pMinus_state : (pProjector qMinus).PosSemidef ∧ Matrix.trace (pProjector qMinus) = 1 := by
+  rw [pProjector_eq_vec qMinus (by
     apply Complex.ext <;> norm_num [qMinus])]
   constructor
   · exact (Matrix.posSemidef_vecMulVec_self_star (pKet qMinus)).smul (by norm_num : (0 : ℝ) ≤ 1 / 2)
@@ -146,10 +144,10 @@ private theorem pMinus_state : Pminus.PosSemidef ∧ Matrix.trace Pminus = 1 := 
 private noncomputable def witnessP : Fin 4 → ℝ := ![16 / 25, 9 / 25, 0, 0]
 
 private theorem bellDiagonal_witness :
-    bellDiagonal witnessP = (1 / 2 : ℂ) • Pplus + (1 / 2 : ℂ) • Pminus := by
+    bellDiagonal witnessP = (1 / 2 : ℂ) • pProjector qPlus + (1 / 2 : ℂ) • pProjector qMinus := by
   ext ⟨a, b⟩ ⟨c, d⟩
   fin_cases a <;> fin_cases b <;> fin_cases c <;> fin_cases d <;>
-    simp [bellDiagonal, witnessP, bellProjector, Pplus, Pminus, pProjector,
+    simp [bellDiagonal, witnessP, bellProjector, pProjector,
       qPlus, qMinus, Fin.sum_univ_succ, D5.S3.QuantumBounds.CHSHWitness.bellDensity,
       D5.S3.QuantumBounds.CHSHWitness.bellVector, D5.S3.Quantum.QubitWitnesses.bellCoefficients,
       Matrix.vecMulVec, D5.S3.QuantumBounds.CHSHWitness.complex_sqrt_two_inv_mul_self]
@@ -186,14 +184,14 @@ private noncomputable def χ : Matrix (Fin 2 × Fin 2) (Fin 2 × Fin 2) ℂ :=
 set_option maxRecDepth 10000 in
 set_option maxHeartbeats 1000000 in
 private theorem rotated_witness (μ : Fin 2) :
-    rotated μ (![(1 / 2 : ℝ), 1 / 2]) (fun j : Fin 2 => if j = 0 then Pplus else Pminus)
+    rotated μ (![(1 / 2 : ℝ), 1 / 2]) (fun j : Fin 2 => if j = 0 then pProjector qPlus else pProjector qMinus)
       (fun j : Fin 2 => if j = 0 then U1 else U2) = χ := by
   simp only [rotated, Fin.sum_univ_two]
-  change ((1 / 2 : ℝ) : ℂ) • (onSite μ U1mat * Pplus * (onSite μ U1mat)ᴴ) +
-    ((1 / 2 : ℝ) : ℂ) • (onSite μ U2mat * Pminus * (onSite μ U2mat)ᴴ) = χ
+  change ((1 / 2 : ℝ) : ℂ) • (onSite μ U1mat * pProjector qPlus * (onSite μ U1mat)ᴴ) +
+    ((1 / 2 : ℝ) : ℂ) • (onSite μ U2mat * pProjector qMinus * (onSite μ U2mat)ᴴ) = χ
   ext ⟨a, b⟩ ⟨c, d⟩
   fin_cases μ <;> fin_cases a <;> fin_cases b <;> fin_cases c <;> fin_cases d <;>
-    norm_num [χ, onSite, Pplus, Pminus, pProjector, qPlus, qMinus,
+    norm_num [χ, onSite, pProjector, qPlus, qMinus,
       U1mat, U2mat, Matrix.mul_apply, Matrix.conjTranspose_apply, Matrix.diagonal,
       Fintype.sum_prod_type, Fin.sum_univ_two, Complex.ext_iff, map_ofNat]
 
@@ -248,7 +246,7 @@ private theorem sInf_le_of_mem_nonpos {s : Set ℝ} {a : ℝ} (ha : a ≤ 0) (ha
 private theorem ed_witness_le_zero : ED (bellDiagonal witnessP) ≤ 0 := by
   let p : Fin 2 → ℝ := ![(1 / 2 : ℝ), 1 / 2]
   let ρs : Fin 2 → Matrix (Fin 2 × Fin 2) (Fin 2 × Fin 2) ℂ :=
-    fun j => if j = 0 then Pplus else Pminus
+    fun j => if j = 0 then pProjector qPlus else pProjector qMinus
   let U : Fin 2 → Matrix.specialUnitaryGroup (Fin 2) ℂ :=
     fun j => if j = 0 then U1 else U2
   have hp : ∀ j, 0 ≤ p j := by intro j; fin_cases j <;> norm_num [p]
@@ -261,7 +259,7 @@ private theorem ed_witness_le_zero : ED (bellDiagonal witnessP) ≤ 0 := by
     rw [bellDiagonal_witness]
     ext ⟨a, b⟩ ⟨c, d⟩
     fin_cases a <;> fin_cases b <;> fin_cases c <;> fin_cases d <;>
-      norm_num [p, ρs, Fin.sum_univ_two, Pplus, Pminus, pProjector, qPlus, qMinus,
+      norm_num [p, ρs, Fin.sum_univ_two, pProjector, qPlus, qMinus,
         Complex.ext_iff, map_ofNat]
   have hinner (μ : Fin 2) : sInf {y : ℝ | ∃ U,
       y = siteQCD μ (rotated μ p ρs U)} ≤ 0 := by
