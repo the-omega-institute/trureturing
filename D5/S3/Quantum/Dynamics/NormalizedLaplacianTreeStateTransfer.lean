@@ -7,7 +7,6 @@
    digest: A seventeen-vertex tree has normalized-Laplacian perfect state transfer at three pi. -/
 
 import D5.S3.Quantum.Dynamics.EnergyEigenstateStationarity
-import Mathlib.Combinatorics.SimpleGraph.LapMatrix
 import Mathlib.Combinatorics.SimpleGraph.Acyclic
 
 set_option autoImplicit false
@@ -133,7 +132,13 @@ private lemma symmetric_eigenvectors :
 private lemma antisymmetric_eigenvector :
     normalizedLaplacian tree *ᵥ (Pi.single 0 1 - Pi.single 1 1 : Fin 17 → ℂ) =
       Pi.single 0 1 - Pi.single 1 1 := by
-  sorry
+  rw [mulVec_sub]
+  ext i
+  simp only [Pi.sub_apply, mulVec_single_one, col_apply]
+  fin_cases i <;>
+    norm_num [normalizedLaplacian, Matrix.diagonal_mul, Matrix.mul_diagonal,
+      SimpleGraph.lapMatrix, SimpleGraph.degMatrix, Matrix.diagonal_apply,
+      SimpleGraph.adjMatrix, tree_degree, tree, SimpleGraph.fromRel_adj, Pi.single_apply]
 
 private lemma symmetric_decomposition :
     (Pi.single 0 1 + Pi.single 1 1 : Fin 17 → ℂ) =
