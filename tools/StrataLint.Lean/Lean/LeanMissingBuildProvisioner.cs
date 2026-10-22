@@ -38,6 +38,16 @@ internal static class LeanMissingBuildProvisioner
         var source = Path.Combine(selection.Donor, ".lake", "build");
         var target = Path.Combine(lake, "build");
         var staged = Path.Combine(lake, "build.stage-" + Path.GetRandomFileName());
+        // An admitted existing build may contain a prior publication or worker progress.
+        // Keep its bytes authoritative; the writer guard excludes cooperative mutation.
+        var mergeExistingBuild = restoreDependencies && PathEntryExists(target);
+        bool CanPublishBuild()
+        {
+            if (!mergeExistingBuild)
+                return CanRestoreBuild(target, stateProbe, allowEmpty: restoreDependencies);
+            LeanCacheProvisioner.VerifyPrivateDirectory(target);
+            return true;
+        }
         using var guard = selection.TakeGuard()
             ?? LeanCacheGuard.TryAcquireShared(Path.Combine(selection.Donor, ".lake"));
         if (guard is null)
@@ -97,7 +107,7 @@ internal static class LeanMissingBuildProvisioner
             }
 
             LeanCacheProvisioner.VerifyPrivateDirectory(lake);
-            if (!CanRestoreBuild(target, stateProbe, allowEmpty: restoreDependencies))
+            if (!CanPublishBuild())
             {
                 LeanCacheProvisioner.RemovePartial(staged);
                 return new LeanBuildProvisionAttempt(
@@ -122,7 +132,7 @@ internal static class LeanMissingBuildProvisioner
                     cloneReceipt = LeanDependencyLayerRestorer.Combine(cloneReceipt, restored.Clonefile);
                     warning = restored.Notice;
                     LeanDependencyLayerRestorer.PrepareStaging(staged);
-                    if (!CanRestoreBuild(target, stateProbe)
+                    if (!CanPublishBuild()
                         || PathEntryExists(LeanCacheStamp.PathFor(lake)))
                         throw new InvalidOperationException("target build or stamp changed during dependency staging");
                 }

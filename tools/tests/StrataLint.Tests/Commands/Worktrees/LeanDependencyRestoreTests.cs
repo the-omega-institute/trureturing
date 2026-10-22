@@ -30,6 +30,8 @@ public sealed partial class LeanCacheEnsureCommandTests
         if (emptyBuild) Directory.CreateDirectory(Path.Combine(lake, "build"));
         if (stamped)
         {
+            WriteSplitOwnership(target);
+            _ = WriteFormerOwners(target);
             LeanCacheStamp.Write(lake, ReadPins(target));
             WriteRestoreFixture(lake, "build/lib/lean/InProgress.olean", "retained compiler bytes");
             WriteRestoreFixture(lake, "build/stratalint/raw-lean-report.json", "retained report bytes");
@@ -65,22 +67,30 @@ public sealed partial class LeanCacheEnsureCommandTests
         using var receipt = ParseReceipt(result.Output);
         Assert.Equal(stamped ? "restored" : "seeded", receipt.RootElement.GetProperty("status").GetString());
         Assert.Contains("native Lake must validate", receipt.RootElement.GetProperty("reason").GetString());
+        Assert.Equal("warm", receipt.RootElement.GetProperty("project_olean_state").GetString());
+        Assert.Equal("warm", receipt.RootElement.GetProperty("mathlib_olean_state").GetString());
     }
 
     [Theory]
-    [InlineData("toolchain")]
-    [InlineData("dependency")]
-    [InlineData("platform")]
-    [InlineData("missing-packages")]
-    [InlineData("busy-source")]
-    [InlineData("busy-target")]
-    public void DependencyRecoveryRefusesUnavailableOrIncompatibleSourcesWithoutTouchingTarget(string failure)
+    [InlineData(false, "toolchain")]
+    [InlineData(true, "toolchain")]
+    [InlineData(false, "dependency")]
+    [InlineData(true, "dependency")]
+    [InlineData(false, "platform")]
+    [InlineData(true, "platform")]
+    [InlineData(false, "missing-packages")]
+    [InlineData(true, "missing-packages")]
+    [InlineData(false, "busy-source")]
+    [InlineData(true, "busy-source")]
+    [InlineData(false, "busy-target")]
+    [InlineData(true, "busy-target")]
+    public void DependencyRecoveryRefusesUnavailableOrIncompatibleSourcesWithoutTouchingTarget(bool missingStamp, string failure)
     {
         using var repository = new TemporaryDirectory();
         InitializeRepository(repository.Path);
         WriteCache(repository.Path, "donor build", projectWarm: true);
         var target = AddWorktree(repository.Path, "dependency-refusal");
-        WriteCache(target, "retained build", mathlibComplete: false, projectWarm: true);
+        WriteCache(target, "retained build", stamp: !missingStamp, mathlibComplete: false, projectWarm: true);
         var lake = Path.Combine(target, ".lake");
         var before = Directory.GetFiles(lake, "*", SearchOption.AllDirectories)
             .ToDictionary(path => path, File.ReadAllBytes);
@@ -115,11 +125,13 @@ public sealed partial class LeanCacheEnsureCommandTests
         var cloner = new RecordingDirectoryCloner();
 
         var result = WorktreeCommand.Run(repository.Path,
-            ["ensure-cache", "--path", target, "--restore-dependencies"],
+            missingStamp ? ["ensure-cache", "--path", target]
+                : ["ensure-cache", "--path", target, "--restore-dependencies"],
             new RecordingWorktreeProcessRunner(), cloner);
 
         Assert.False(result.Success);
-        Assert.Empty(cloner.Invocations);
+        Assert.Empty(result.Output);
+        Assert.Equal(missingStamp && failure == "missing-packages" ? 1 : 0, cloner.Invocations.Count);
         foreach (var (path, bytes) in before) Assert.Equal(bytes, File.ReadAllBytes(path));
         Assert.Empty(Directory.GetDirectories(lake, "*.stage-*"));
     }

@@ -9,13 +9,15 @@ internal static partial class LeanCacheEnsureCommand
         ClonefileReceipt? clonefile, string reason) =>
         FailureReceipt("failed", root, location.MainCheckout, "clonefile-additive", pins.Sha256,
             reason + "; additive restoration did not complete; existing target artifacts were retained; "
-                + "repair the reported provisioning boundary before retrying",
+                + $"repair the reported provisioning boundary, then retry make -C {ShellQuote(root)} lean-cache-ensure",
             stampMiss, clonefile, LeanArchiveAttempt.Skipped(LinkedArchiveDisabled));
 
     private static CommandResult RestoreLinkedDependencies(
         string root, LeanPinSet pins, IWorktreeProcessRunner runner, IDirectoryCloner cloner,
-        LeanCacheWriterGuard writerGuard, ILeanCacheStateProbe stateProbe, Action<string>? removePartial)
+        LeanCacheWriterGuard writerGuard, ILeanCacheStateProbe stateProbe, Action<string>? removePartial,
+        out CacheState? cacheState)
     {
+        cacheState = null;
         var location = GitWorktreeInventory.Locate(root, runner);
         if (!location.IsLinked)
             return FailureReceipt("refused", root, null, "none", pins.Sha256,
@@ -31,9 +33,14 @@ internal static partial class LeanCacheEnsureCommand
         {
             var restored = LeanDependencyLayerRestorer.Restore(selection, root, pins, runner,
                 writerGuard, cloner, removePartial);
-            return SuccessReceipt("restored", root, location.MainCheckout, "clonefile-additive",
+            return SuccessWithState(
+                SuccessReceipt("restored", root, location.MainCheckout, "clonefile-additive",
                 pins.Sha256, restored.Notice, LeanCacheProvisioner.InspectMathlibOleans(Path.Combine(root, ".lake")),
-                clonefile: restored.Clonefile, archive: LeanArchiveAttempt.Skipped(LinkedArchiveDisabled));
+                clonefile: restored.Clonefile, archive: LeanArchiveAttempt.Skipped(LinkedArchiveDisabled)),
+                new CacheState(
+                    stateProbe.ProbeOleans(MathlibOleanRoot(Path.Combine(root, ".lake"))),
+                    stateProbe.ProbeOleans(ProjectOleanRoot(Path.Combine(root, ".lake")))),
+                out cacheState);
         }
         catch (Exception exception)
         {

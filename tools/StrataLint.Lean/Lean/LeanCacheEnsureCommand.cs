@@ -160,7 +160,7 @@ internal static partial class LeanCacheEnsureCommand
             if (IsSymlink(lake)) return RefusedSymlink(root, pins.Sha256);
             if (restoreDependencies)
                 return RestoreLinkedDependencies(root, pins, runner, cloner, writerGuard,
-                    stateProbe, removePartial);
+                    stateProbe, removePartial, out cacheState);
             var projectWarmth = stateProbe.ProbeOleans(ProjectOleanRoot(lake));
 
             string? missReason = null;
@@ -258,9 +258,9 @@ internal static partial class LeanCacheEnsureCommand
                     var location = GitWorktreeInventory.Locate(root, runner);
                     if (location.IsLinked)
                     {
-                        if (stamp.State == LeanCacheStampState.Missing
-                            && projectWarmth.State == OleanWarmth.Cold
-                            && LeanMissingBuildProvisioner.CanRestoreBuild(Path.Combine(lake, "build"), stateProbe))
+                        // Missing stamps can follow publication failures. Preserve the installed
+                        // build and dependencies on ordinary retry, regardless of their warmth.
+                        if (stamp.State == LeanCacheStampState.Missing)
                         {
                             return ProvisionLinkedBuildFromMain(
                                 root,
@@ -711,12 +711,10 @@ internal static partial class LeanCacheEnsureCommand
                     stampMiss,
                     attempt.Clonefile,
                     LeanArchiveAttempt.Skipped(LinkedArchiveDisabled)),
-                root,
-                new OleanWarmthInspection(OleanWarmth.Warm, null),
-                stateProbe,
-                out cacheState,
-                writerGuard,
-                runner);
+                new CacheState(
+                    stateProbe.ProbeOleans(MathlibOleanRoot(Path.Combine(root, ".lake"))),
+                    stateProbe.ProbeOleans(ProjectOleanRoot(Path.Combine(root, ".lake")))),
+                out cacheState);
         }
         catch (Exception exception)
         {
@@ -839,9 +837,16 @@ internal static partial class LeanCacheEnsureCommand
         }
         if (RetireRootJudgeOutputs(root, writerGuard))
             projectWarmth = stateProbe.ProbeOleans(ProjectOleanRoot(Path.Combine(root, ".lake")));
-        cacheState = new CacheState(
+        return SuccessWithState(result, new CacheState(
             mathlibWarmth ?? stateProbe.ProbeOleans(MathlibOleanRoot(Path.Combine(root, ".lake"))),
-            projectWarmth);
+            projectWarmth), out cacheState);
+    }
+
+    // Additive restoration observes state without retiring existing compiler/report outputs.
+    private static CommandResult SuccessWithState(
+        CommandResult result, CacheState observed, out CacheState? cacheState)
+    {
+        cacheState = observed;
         return result with { Output = RecordCacheState(result.Output, cacheState) };
     }
 
