@@ -4602,3 +4602,186 @@ response circuit, exceptional equal-ratio classification, finite carrier
 and negative-$J$ continuation are reused.
 
 ## 追加锚（本行以下为增补区）
+## 41. Strict rational failure of the exterior sign implication
+
+Retain the original world, action sequence, and readings of (35.1) and
+(35.3)--(35.5): the actions are $J,M,J,M,M,M$, the first five
+readings are $(0,24,147/5,24,18)$, and $p,v$ are respectively the clock-five and
+clock-six readings, both following $M$.  The terminal alternatives $a,m$ are the two
+clock-seven readings on the same world.  Consider the following direct
+uniform implication, with $c=r(1-r)/b$:
+
+**Proposition 41.1 (failure of the exterior sign implication).** For
+complete worlds with these chronological readings, the implication
+below is false:
+
+$$
+\begin{aligned}
+&0<r<1,\quad b>0,\quad 0\ne g\in\mathbb R[s],\quad \deg g\le3,\quad d\in\mathbb R,\\
+&\bigl(b>1/10\ \text{or}\ r/b<1\ \text{or}\ r/b>107/100\bigr),\qquad b<20,\qquad c<2,\\
+&-533\le p\le-458,\qquad p\le-425,\qquad v<0
+\quad\Longrightarrow\quad v<2p.
+\end{aligned}
+\tag{41.1}
+$$
+
+Here the readings $p,v$ are required to arise from the complete
+chronological products and the five fixed parent readings above.  The
+implication is false even when the regular denominator $D$ of (35.3)
+is nonzero.  A single strict world witnessing the failure is
+
+$$
+r=\frac{17}{154},\qquad b=\frac8{77},\qquad
+c=\frac{2329}{2464},\qquad
+P=\begin{pmatrix}17/154&8/77\\2329/2464&137/154\end{pmatrix},
+\tag{41.2}
+$$
+
+with one fixed drift and one whole gain polynomial
+
+$$
+d=\frac{530671617}{945590},\qquad
+g(s)=\frac{5497681s^3-61028667s^2+287890127s-2653358085}{4727950}.
+\tag{41.3}
+$$
+
+The leading coefficient $5497681/4727950$ is positive, so this is a
+nonzero cubic.  Literal left multiplication by the chronological
+actions gives the following complete trace and reading table; the last
+two rows are alternatives, not two successive seventh actions.
+
+| clock and action | trace | reading |
+| --- | ---: | ---: |
+| $0$ | $1$ | $0$ |
+| $1,J$ | $235/224$ | $24$ |
+| $2,M$ | $85/77$ | $147/5$ |
+| $3,J$ | $2857/2464$ | $24$ |
+| $4,M$ | $93/77$ | $18$ |
+| $5,M$ | $5833/2464$ | $p=-9703315251/20802980$ |
+| $6,M$ | $8809/2464$ | $v=-1501769676273/1664238400$ |
+| $7,J$ | $4489/1232$ | $a=-40666201527/52007450$ |
+| $7,M$ | $7321/1232$ | $m=-84734834583/52007450$ |
+
+The strict source and cap margins are
+
+$$
+\begin{gathered}
+r=17/154>0,\quad 1-r=137/154>0,\quad
+b-1/10=3/770>0,\\
+20-b=1532/77>0,\quad c=2329/2464>0,\quad
+2-c=2599/2464>0,\\
+r/b=17/16>1,\qquad 107/100-r/b=3/400>0.
+\end{gathered}
+\tag{41.4}
+$$
+
+The exterior disjunction in (41.1) is met by its $b>1/10$ branch.
+
+The fifth and sixth readings lie strictly in the required negative
+window, with exact margins
+
+$$
+p+467=\frac{11676409}{20802980}>0,\qquad
+-466-p=\frac{9126571}{20802980}>0,
+\tag{41.5}
+$$
+
+and
+
+$$
+v+903=\frac{1037598927}{1664238400}>0,\qquad
+-902-v=\frac{626639473}{1664238400}>0.
+\tag{41.6}
+$$
+
+Thus $-467<p<-466\subset[-533,-458]$, $p\le-425$, and
+$-903<v<-902<0$, while $p\ne24$.
+
+For a sign calculation tied to the regular circuit, put $x=r$,
+$H=b^2+x-x^2$, $K=H+bx$, $L=b^2+8b+4$, and use the
+$\widetilde C_i=b^2C_i(x/b,b)$ from (35.3):
+
+$$
+\begin{aligned}
+A&=LHK-2b(1+b)(1+2b)(H+K),\\
+\widetilde C_0&=-120A+3(8b-1)(2+5b)HK,\\
+\widetilde C_1&=3(8b-1)(2+5b)bK,\\
+\widetilde C_2&=3(49b+34)HK-54b(1+2b)(H+K),\\
+\widetilde C_3&=3(8b-1)(2+5b)bH,\\
+\widetilde B_5&=-4\widetilde C_0+15\widetilde C_1-20\widetilde C_2+10\widetilde C_3,\\
+\widetilde B_6&=-10\widetilde C_0+36\widetilde C_1-45\widetilde C_2+20\widetilde C_3,\\
+B&=-\frac13\{b\widetilde C_0+(2b(1+2b)+K)\widetilde B_6
+-2(b(1+2b)+K)\widetilde B_5\}.
+\end{aligned}
+\tag{41.7}
+$$
+
+Since $j=H/b$, $n=K/b$, the identities from (35.3)--(35.4)
+give $A=(b^2/5)D$, $B=-b^3(N_v-2N_p)/3$, and hence
+
+$$
+v-2p=-\frac{3B}{5Ab}.
+\tag{41.8}
+$$
+
+At (41.2), direct rational substitution gives
+
+$$
+D=\frac{2363975}{818107136}>0,\qquad
+A=\frac{472795}{75789956396}>0,\qquad
+B=-\frac{16920254629}{513552744539296}<0,
+\tag{41.9}
+$$
+
+and
+
+$$
+AB=-\frac{7999811787318055}{38922140115679370948537216}<0,\qquad
+v-2p=\frac{50760763887}{1664238400}>0.
+\tag{41.10}
+$$
+
+All $b,j,n,T,U$ in (35.3) are positive, and every denominator of a displayed rational value in
+(41.2)--(41.10) is a positive integer; $5Ab$ in (41.8) is positive.  Thus the world is strict,
+regular, and has no pole or non-strict endpoint.  The calculation uses
+one fixed $d$ and the entire polynomial $g$ at every clock; it does
+not divide by a sampled gain, a gain coefficient, a drift, or a root
+difference.  Consequently exterior position, both caps, negative
+$p,v$, and the narrower $p$-window together do not force
+$v<2p$.  The counterexample is local in the regular chart and does
+not remove singular $D=0$, degree-drop, sampled-gain-zero, repeated
+root, or arbitrary-drift worlds from the original domain.
+
+## 42. Scope relative to the independent-pair target
+
+The regular lift and whole-gain converse used above are exactly the
+interfaces in §35, equations (35.1), (35.3)--(35.7), with the polynomial
+rewrite of §24, equations (24.2)--(24.5), and the lift range of
+§28, equations (28.3)--(28.7).  Theorem 37.1 has the stated scope
+$P\in[-534,-457]$ and $W\in\mathscr R$, where
+$0<b\le1/10$ and $1\le r/b\le107/100$.  The world (41.2) is
+outside that class solely because $b>1/10$; therefore (41.9)--(41.10)
+do not contradict the source-class $M$-injectivity theorem.  Lemma
+38.1 concerns the two selected continued $J$-sources only and does
+not place every companion in $\mathscr R$.
+
+The $p$-projection of (41.2) lies in the interval used for some
+continued $J$ sources, but this construction does not establish an
+equal-$J$ pair at the full base $(p,v)$ in (41.5)--(41.6), nor does
+it exhibit a distinct equal-$M$ companion there.  Hence (41.2) is not
+a joint witness and gives no global negative answer.  The original target remains
+
+$$
+\exists\,p\ne24,\ v,\ W_0,W_1,W_2,W_3\in C(p,v):
+\quad W_0\ne W_1,\ a(W_0)=a(W_1),\quad
+W_2\ne W_3,\ m(W_2)=m(W_3).
+\tag{42.1}
+$$
+
+The independent $J/M$ incidence at a common full base, including
+mixed and exterior $M$-pairs and singular joins, remains open under
+the original complete-world domain.  The result above is only the
+explicit failed sufficient condition (41.1); it does not narrow the
+quantifiers or alter any earlier theorem's range.
+
+## 追加锚（本行以下为增补区）

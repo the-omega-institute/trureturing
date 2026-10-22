@@ -1,0 +1,14 @@
+**Corollary 112.1 (common-variable exclusions).** A feasible pair with $\Theta>r$ must satisfy simultaneously
+
+$$
+\begin{gathered}
+p_-<p<p_+,\qquad [P,V^TV]\ne0,\qquad 0<s_1<1,\\
+s_2^2<\delta_*,\qquad \tau+\zeta<\varepsilon_*,\qquad
+\|V\|_F>1/100,\\
+p\in[21/25,7/8]\ \Longrightarrow\ \|V\|_F>1/10.
+\end{gathered}
+\tag{U.28}
+$$
+
+Proof. Corollary 110.2 gives the spectral and residual restrictions. Theorem 111.1 excludes commutation, and in particular $V=0$. For the radii apply [volume II, Theorems 93.1 and 93.3](AURIC_OMEGA_FULL_INPUT_RECOVERY_CERTIFICATES_II.md#93-rational-spectral-band-and-all-spectrum-exclusion-radii), with the exact map $M=V^T$ and $\|M\|_F=\|V\|_F$. Their conclusions are respectively $\Theta\leq F_0(p)-\|V\|_F^2/4000$ in the stated spectral band at radius $1/10$, and $\Theta\leq r-\|V\|_F^2/4000$ at radius $1/100$ over the whole spectrum. The calibration $F_0(p)\leq r$ is (S.264). Taking contrapositives gives the two strict exclusions. These are radii and singular values of the common dual contraction, not of the physical Kraus list or the matrix $T$. $\square$
+

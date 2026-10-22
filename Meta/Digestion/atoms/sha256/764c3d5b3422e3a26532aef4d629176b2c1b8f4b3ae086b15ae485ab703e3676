@@ -1,0 +1,186 @@
+**命题 37（五模式的两个固定设置）。** 对定义 1.4 的同一个 $A,K,D$ 及实际等待—模式读出，成立
+
+$$
+\kappa(2/3)<\frac23,\qquad \kappa(1)<\frac{23}{50}.
+\tag{37.1}
+$$
+
+因此对 $1\leq q\leq5$，
+
+$$
+\varepsilon_{0,2/3}(q)\geq\frac{5-q}{30},\qquad
+\varepsilon_{0,1}(q)\geq\frac{27(5-q)}{500}\geq\frac{5-q}{20}.
+\tag{37.2}
+$$
+
+**证明。** 先将已有的谱过程验证方法接到共同端口，再给出这两个实际设置的有限证书。一般过程验证的归属是 Zhu–Zhang，*Efficient Verification of Quantum Gates with Local Operations*，[arXiv:1910.14032v2](https://arxiv.org/html/1910.14032v2)，式 (7)、(9)、(28)–(31) 及 Proposition 3；这里只使用单通道的谱不等式，不使用重复试验的样本量结论。
+
+**两投影的中间谱计算（35）。** 令
+
+$$
+V(a,b)=\sum_i a_iP_i+\sum_jb_jQ_j.
+$$
+
+其 Gram 矩阵及另一乘积为
+
+$$
+V^\dagger V=\begin{pmatrix}I&B\\B^{\mathsf T}&I\end{pmatrix},
+\qquad VV^\dagger=\mathcal P+\mathcal Q.
+$$
+
+设 $B$ 的奇异值为 $1=s_1\geq s_2\geq\cdots\geq s_d$。双随机性将常数方向与其正交补分开，给 $s_2=\|B-J\|=\kappa$。上述 Gram 矩阵的特征值为 $1\pm s_j$。去掉矩阵空间的标量恒等方向后，$\mathcal P+\mathcal Q$ 的最大特征值至多 $1+\kappa$。因此对任意复矩阵 $C$，
+
+$$
+\langle C,\mathcal L(C)\rangle_{\mathrm{HS}}
+\geq\gamma\left(\|C\|_{\mathrm{HS}}^2-
+\frac{|\operatorname{tr}C|^2}{d}\right).
+\tag{35.1}
+$$
+
+这里将 $C=(\operatorname{tr}C/d)I+C_0$、$\operatorname{tr}C_0=0$ 代入即可。$\gamma>0$ 时，$\mathcal L(C)=0$ 当且仅当 $C\in\mathbb CI$。同时二分图归一化拉普拉斯
+
+$$
+L_G=I_{2d}-\begin{pmatrix}0&B\\B^{\mathsf T}&0\end{pmatrix}
+$$
+
+的谱为 $1\pm s_j$，第二小值恰为 $\gamma$；它不是绝对混合谱隙，二分性仍给邻接特征值 $-1$。
+
+**共同端口的中间容量估计（36）。** 必须选取与编码—解码分解相适配的 Kraus 表示：编码的第 $f$ 块算子为 $E_{f\alpha}:\mathbb C^d\to\mathbb C^q$，解码在该块上的算子为 $D_{f\beta}:\mathbb C^q\to\mathbb C^d$，于是可取
+
+$$
+C_{f\beta\alpha}=D_{f\beta}E_{f\alpha},\qquad
+T(X)=\sum_aC_aXC_a^\dagger,\qquad\operatorname{rank}C_a\leq q.
+$$
+
+这是存在这种表示，不是断言任意 Kraus 表示都逐项满足该秩界。TP 与奇异值的 Cauchy–Schwarz 界给
+
+$$
+\sum_a\|C_a\|_{\mathrm{HS}}^2=d,\qquad
+|\operatorname{tr}C_a|^2\leq q\|C_a\|_{\mathrm{HS}}^2.
+$$
+
+将 (35.1) 求和，得 $\sum_a\langle C_a,\mathcal L(C_a)\rangle\geq\gamma(d-q)$。另一方面，输入 $P_i$ 在基底 $\mathcal E$ 中的原分布集中于 $i$，其 TV 损失为 $1-\operatorname{tr}(P_iT(P_i))$；$Q_j$ 也一样。这 $2d$ 项之和恰为上述 Kraus 和，每项不超过 $e_{\mathcal E,\mathcal V}(T)$。所以
+
+$$
+e_{\mathcal E,\mathcal V}(T)\geq\frac\gamma2\left(1-\frac qd\right),
+\qquad
+\varepsilon_{\mathcal E,\mathcal V}(q)\geq\frac{\gamma(d-q)}{2d}.
+\tag{36.1}
+$$
+
+无须秩约束时，同一求和给出纠缠保真度的中间结论：
+
+$$
+F_{\mathrm e}(T)=\frac1{d^2}\sum_a|\operatorname{tr}C_a|^2
+\geq1-\frac{2e_{\mathcal E,\mathcal V}(T)}\gamma,
+\qquad\gamma>0.
+\tag{36.2}
+$$
+
+为明确与文献的参数对应，置 $|\Phi_d\rangle=d^{-1/2}\sum_i e_i\otimes e_i$、$\chi_T=(T\otimes\operatorname{id})(|\Phi_d\rangle\langle\Phi_d|)$。平衡探针族取两个完整基底、每个探针权重 $1/(2d)$，验证算子为
+
+$$
+\Theta=\tfrac12\sum_i P_i\otimes\overline{P_i}
++\tfrac12\sum_j Q_j\otimes\overline{Q_j}.
+$$
+
+向量化后它对应 $(\mathcal P+\mathcal Q)/2$，故过程验证谱隙为 $\nu=\gamma/2$。平均通过率为 $p_{\mathrm{pass}}=\operatorname{tr}(\Theta\chi_T)$，满足
+
+$$
+1-p_{\mathrm{pass}}\leq e_{\mathcal E,\mathcal V}(T),\qquad
+1-p_{\mathrm{pass}}\geq\frac\gamma2(1-F_{\mathrm e}(T)).
+$$
+
+适配 Kraus 的秩—迹界给 $F_{\mathrm e}(T)\leq q/d$，与 (36.1) 一致；该秩—重叠步骤也是第 13.4 条所引 Terhal–Horodecki 的标准供应。若 $\gamma>0$ 且误差为零，(35.1) 迫使每个 $C_a$ 为标量恒等，TP 随即给 $T=\operatorname{id}$，而适配秩界要求 $q\geq d$。$q=d$ 的恒等端口可行。若另考虑 $q>d$，等距嵌入及全块 CPTP 补全也给误差零；(37.2) 的系数比较只在 $q\leq5$ 使用。
+
+**五模式的有限有理数据。** 取 $M=10^6$，
+
+$$
+T_0=I,\qquad T_k=T_{k-1}\frac{tA}{k},\qquad
+S_{16}(t)=\sum_{k=0}^{16}T_k,\qquad
+(N_t)_{ij}=\left\lfloor M(S_{16}(t)_{ji})^2+\frac12\right\rfloor,
+\qquad\widehat B_t=N_t/M.
+$$
+
+精确矩阵为
+
+$$
+N_{2/3}=\begin{pmatrix}
+187827&196965&283150&196965&135093\\
+196965&390384&33773&140770&238108\\
+283150&33773&641505&33773&7799\\
+196965&140770&33773&390384&238108\\
+135093&238108&7799&238108&380892
+\end{pmatrix},
+\tag{37.3}
+$$
+
+$$
+N_1=\begin{pmatrix}
+1151&114763&356813&114763&412509\\
+114763&103985&103127&459052&219073\\
+356813&103127&370073&103127&66859\\
+114763&459052&103127&103985&219073\\
+412509&219073&66859&219073&82485
+\end{pmatrix}.
+\tag{37.4}
+$$
+
+这些数可由给定有限递推及整数取整直接取得；相应逐项平方的最大舍入误差分别为
+
+$$
+\frac{11325031748188407259082663713}{24175165004592575654470874584500000}
+<\frac1{2M},\qquad
+\frac{4267827042099853319}{8933941565252960256000000}<\frac1{2M}.
+$$
+
+对称性有代数依据：$R=\operatorname{diag}(1,-1,-1,-1,1)$ 满足 $RAR=-A$，故
+
+$$
+O(t)^{\mathsf T}=RO(t)R,\qquad S_{16}(t)^{\mathsf T}=RS_{16}(t)R.
+$$
+
+逐项平方后对称，转置约定不改变 (37.3)–(37.4)。舍入矩阵不必恰好双随机，不对其行和作额外调整。
+
+因为 $\|tA\|_\infty=3t$，指数级数余项满足
+
+$$
+\|e^{tA}-S_{16}(t)\|_\infty
+\leq e^{3t}\frac{(3t)^{17}}{17!}.
+$$
+
+这里使用的两个严格指数界也有有限证明：对 $x=2,n=8$ 或 $x=3,n=10$，相邻尾项比至多 $x/(n+2)$，所以
+
+$$
+e^x\leq\sum_{k=0}^n\frac{x^k}{k!}
++\frac{x^{n+1}}{(n+1)!}\frac1{1-x/(n+2)}
+<\begin{cases}8,&x=2,\\21,&x=3.\end{cases}
+$$
+
+分别取 $r_{2/3}=8\cdot2^{17}/17!$、$r_1=21\cdot3^{17}/17!$。真实正交矩阵的每项绝对值至多一，平方误差至多 $r_t(2+r_t)$；再用五阶矩阵的算子范数至多五倍最大项，得
+
+$$
+\|B(t)-\widehat B_t\|_{2\to2}
+\leq5\left[r_t(2+r_t)+\frac1{2M}\right]
+=\begin{cases}
+\displaystyle\frac{7629716855893073}{3016317999495200400000}<\frac1{300000},&t=2/3,\\[2mm]
+\displaystyle\frac{76514051204692193}{971663500692684800000}<\frac1{10000},&t=1.
+\end{cases}
+\tag{37.5}
+$$
+
+最后给正定性的整数见证。取 $a_{2/3}=133/200$、$a_1=459/1000$，定义
+
+$$
+H_t^\pm=Ma_tI\pm(N_t-200000\,\mathbf1\mathbf1^{\mathsf T}).
+$$
+
+下表列出它们前 $k$ 行前 $k$ 列的行列式；$a_tI\pm(\widehat B_t-J)$ 的对应顺序主子式等于表项除以 $M^k$。
+
+| $k$ | $\det H_{2/3,k}^{-}$ | $\det H_{2/3,k}^{+}$ |
+| ---: | ---: | ---: |
+| 1 | 677173 | 652827 |
+| 2 | 321387929343 | 558408559343 |
+| 3 | 49751990304680768 | 594013168341089232 |
+| 4 | 16411661841695975006436 | 488104509828941036526436 |
+| 5 | 208640257571412315299700000 | 394535509521969771531499700000 |

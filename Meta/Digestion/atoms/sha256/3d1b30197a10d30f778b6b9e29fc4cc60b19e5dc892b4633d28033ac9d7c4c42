@@ -1,0 +1,26 @@
+**Proposition 120.2 (two explicit limits of generic substitutes).** Super-fidelity need not certify the required sharp constant even on the zero-contraction calibration. Convex averaging of rank-two residual factors need not stay within the allowed residual-factor family.
+
+Proof. For $\rho=I_4/4$ and $\sigma=\operatorname{diag}(P,P)/2$ with $p=c$, the squared-fidelity convention of Miszczak et al. gives
+
+$$
+F(\rho,\sigma)=\frac{(a+b)^2}{2}=c,
+$$
+
+since $pq=c(1-c)=1/8$. In Theorem 1 of that reference the upper bound is
+
+$$
+\operatorname{Tr}(\rho\sigma)
++\sqrt{(1-\operatorname{Tr}\rho^2)(1-\operatorname{Tr}\sigma^2)}
+=\frac14+\frac{\sqrt{30}}8>c.
+$$
+
+Here $\operatorname{Tr}\rho^2=1/4$ and $\operatorname{Tr}\sigma^2=(p^2+q^2)/2=3/8$. The strict comparison is $\sqrt{30}>2+2\sqrt2$, whose positive sides square to $30>12+8\sqrt2$. This demonstrates slack in that substitute, not a failure of the target.
+
+For the rank issue take four actual contractions $V^{(j)}=e_j e_1^T\in\mathbb R^{4\times2}$, $j=1,2,3,4$. Each has rank one and $(V^{(j)})^TV^{(j)}\preceq I_2$, but
+
+$$
+\frac14\sum_{j=1}^4V^{(j)}(V^{(j)})^T=I_4/4
+$$
+
+has rank four, whereas any $VV^T$ for a real $4\times2$ matrix has rank at most two. Thus averaging the positive matrices does not provide a common feasible factor of the required size. It supplies no convexity or simultaneous-realization shortcut for (U.1). $\square$
+

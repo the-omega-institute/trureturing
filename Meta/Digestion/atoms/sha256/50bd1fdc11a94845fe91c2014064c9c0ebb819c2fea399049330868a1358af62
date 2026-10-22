@@ -1,0 +1,11 @@
+**定理 74.2（四维星代数与三个无迹方向）。** 在假设 74.1 下，
+
+$$
+C^\dagger=C,\quad C^2=I,\qquad
+AB=iC,\quad BC=iA,\quad CA=iB.
+$$
+
+反序乘积取负号，$\operatorname{span}_{\mathbb C}\{I,A,B,C\}$ 对乘法与伴随封闭。其 Hermitian 部分是四维实空间，三个非恒定关系方向为 $A,B,C$。
+
+证明（74.2）。$C^\dagger=iBA=-iAB=C$，且 $C^2=-ABAB=A^2B^2=I$。定义给 $AB=iC$；$BC=-iBAB=iA$，$CA=-iABA=iB$。这些等式及平方关系列出任意两基元的乘积，因此有限复线性组合的乘法不出此空间；基元自伴又给伴随封闭。四维性、无迹性及 Hermitian 系数的实性由下一条的具体分解同时得到。$\square$
+
