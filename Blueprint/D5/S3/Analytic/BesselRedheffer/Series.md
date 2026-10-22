@@ -111,3 +111,4 @@ The second derivative multiplied by x, plus the first derivative multiplied by 2
 - Truth anchor: `D5/S3/Analytic/BesselRedheffer/Series.nbessel_zero`
 - Truth anchor: `D5/S3/Analytic/BesselRedheffer/Series.summable_nbessel`
 - Dependency: [D5/S3/Analytic/BesselRedheffer/Defs](Defs.md)
+- Dependency: [D5/S3/Analytic/KummerRatio/Series](../KummerRatio/Series.md)
