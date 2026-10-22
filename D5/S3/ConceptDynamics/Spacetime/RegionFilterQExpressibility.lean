@@ -258,7 +258,7 @@ structure PreVariant (X Y : B) extends CurrentPairData X Y where
   source_eq : (Y.val.1.archive.attributes (equiv exceptional).val).source =
     (X.val.1.archive.attributes exceptional.val).source
   no_incoming : ∀ (e : ↥X.val.1.current), ¬ X.val.1.archive.causal e.val exceptional.val
-private def mask (X : B) (e : ↥X.val.1.current) (Q : Set (Attributes 3)) : Prop :=
+def mask (X : B) (e : ↥X.val.1.current) (Q : Set (Attributes 3)) : Prop :=
   ∃ d : ↥X.val.1.current, X.val.1.archive.attributes d.val ∈ Q ∧ (e = d ∨ X.val.1.archive.causal e.val d.val)
 def Saturated {X Y : B} (h : PreVariant X Y) (Qs : List (Set (Attributes 3))) : Prop :=
   ∀ Q ∈ Qs, Q.Nonempty → mask X h.exceptional Q ∧ mask Y (h.equiv h.exceptional) Q
@@ -645,15 +645,15 @@ def SelectedVariant (X Y : B) (p : Fin 3 → Int) (t t' : Int) : Prop := ∃ h :
     X.val.2.val = {h.exceptional} ∧ (X.val.1.archive.attributes h.exceptional).position = p ∧
     (X.val.1.archive.attributes h.exceptional).positive = true ∧ (X.val.1.archive.attributes h.exceptional).time = t ∧
     (Y.val.1.archive.attributes (h.eventEquiv h.exceptional)).time = t'
-private abbrev StarNode (m : Nat) := ((Option (Fin m)) × Bool) ⊕ Bool
-private def starCode (m : Nat) : StarNode m ↪ HF where
+abbrev StarNode (m : Nat) := ((Option (Fin m)) × Bool) ⊕ Bool
+def starCode (m : Nat) : StarNode m ↪ HF where
   toFun x := natCode ((Fintype.equivFin (StarNode m)) x).val
   inj' _ _ h := (Fintype.equivFin (StarNode m)).injective (Fin.ext (natCode_inj.mp h))
-private def starExceptional (m : Nat) : StarNode m := .inl (none, true)
+def starExceptional (m : Nat) : StarNode m := .inl (none, true)
 private def starCurrent (m : Nat) : Finset (StarNode m) := Finset.univ.disjSum ∅
 private def starRelation {m : Nat} (a b : StarNode m) : Prop :=
   a = starExceptional m ∧ ∃ i : Fin m, b = .inl (some i, true)
-private def starAttributes {m : Nat} (v : Fin m → Attributes 3) (p : Fin 3 → Int)
+def starAttributes {m : Nat} (v : Fin m → Attributes 3) (p : Fin 3 → Int)
     (lo hi t : Int) : StarNode m → Attributes 3
   | .inl (none, true) => ⟨t, p, true, FreeMagma.of 0⟩
   | .inl (some i, true) => v i
@@ -682,17 +682,17 @@ private theorem star_balanced {m : Nat} (v : Fin m → Attributes 3) (p : Fin 3 
   intro i _; cases i with
   | none => simp [starAttributes]
   | some i => cases h : (v i).positive <;> simp [starAttributes, h]
-private def starInput {m : Nat} (v : Fin m → Attributes 3) (p : Fin 3 → Int)
+def starInput {m : Nat} (v : Fin m → Attributes 3) (p : Fin 3 → Int)
     (lo hi t : Int) (ht : ∀ i, t < (v i).time) : B :=
   ⟨⟨starContext v p lo hi t ht, selectionOf (starCode m) (starAttributes v p lo hi t) starRelation
       star_irrefl star_trans (star_time v p lo hi t ht) (starCurrent m)
       {starExceptional m} (by simp [starExceptional, starCurrent])⟩, star_balanced v p lo hi t ht⟩
-private theorem star_attributes_eq {m : Nat} (v : Fin m → Attributes 3)
+theorem star_attributes_eq {m : Nat} (v : Fin m → Attributes 3)
     (p : Fin 3 → Int) (lo hi t : Int) (ht : ∀ i, t < (v i).time) (a : StarNode m) :
     (starInput v p lo hi t ht).val.1.archive.attributes (eventEquiv (starCode m) a) = starAttributes v p lo hi t a :=
   attributes_eventEquiv (starCode m) (starAttributes v p lo hi t) starRelation
     star_irrefl star_trans (star_time v p lo hi t ht) a
-private theorem star_pair {m : Nat} (v : Fin m → Attributes 3) (p : Fin 3 → Int)
+theorem star_pair {m : Nat} (v : Fin m → Attributes 3) (p : Fin 3 → Int)
     (lo hi t t' : Int) (ht : ∀ i, t < (v i).time) (ht' : ∀ i, t' < (v i).time)
     (hlo : lo < t ∧ lo < t') (hhi : t < hi ∧ t' < hi) :
     SelectedVariant (starInput v p lo hi t ht) (starInput v p lo hi t' ht') p t t' := by
@@ -736,7 +736,7 @@ private theorem star_pair {m : Nat} (v : Fin m → Attributes 3) (p : Fin 3 → 
     · simpa [eqv, starInput, starContext, contextOf, archiveOf, starExceptional, starAttributes] using hhi.1
     · simpa [eqv, starInput, starContext, contextOf, archiveOf, starExceptional, starAttributes] using hhi.2
   · exact Finset.map_singleton _ _
-private def star_current_variant {m : Nat} (v : Fin m → Attributes 3) (p : Fin 3 → Int)
+def star_current_variant {m : Nat} (v : Fin m → Attributes 3) (p : Fin 3 → Int)
     (lo hi t t' : Int) (ht : ∀ i, t < (v i).time) (ht' : ∀ i, t' < (v i).time) :
     PreVariant (starInput v p lo hi t ht) (starInput v p lo hi t' ht') := by
   let eqv := eventEquiv (starCode m)
@@ -767,11 +767,11 @@ private def star_current_variant {m : Nat} (v : Fin m → Attributes 3) (p : Fin
   · intro a; change ¬ starRelation (eqv.symm a.val) (eqv.symm (eqv (starExceptional m)))
     rw [Equiv.symm_apply_apply]; rintro ⟨_, i, h⟩
     simp [starExceptional] at h
-private def starPoint {m : Nat} (v : Fin m → Attributes 3) (p : Fin 3 → Int)
+def starPoint {m : Nat} (v : Fin m → Attributes 3) (p : Fin 3 → Int)
     (lo hi t : Int) (ht : ∀ i, t < (v i).time) (i : Option (Fin m)) (b : Bool) :
     ↥(starInput v p lo hi t ht).val.1.current := ⟨eventEquiv (starCode m) (.inl (i, b)), by
     simp [starInput, starContext, contextOf, starCurrent]⟩
-private theorem star_hit {m : Nat} (v : Fin m → Attributes 3) (p : Fin 3 → Int)
+theorem star_hit {m : Nat} (v : Fin m → Attributes 3) (p : Fin 3 → Int)
     (lo hi t : Int) (ht : ∀ i, t < (v i).time) (i : Fin m) (Q : Set (Attributes 3)) (hv : v i ∈ Q) :
     mask (starInput v p lo hi t ht) (starPoint v p lo hi t ht none true) Q := by
   refine ⟨starPoint v p lo hi t ht (some i) true, ?_, Or.inr ?_⟩
