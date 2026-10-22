@@ -2,10 +2,12 @@
    generality: G
    mirror-B: D5/B/S3/Analytic/WallisRemainder/Measure
    mirror-E: none(waiver:evidence-not-specified-by-formal-manifest)
-   anchors: [mathlib/module/Mathlib.Analysis.SpecialFunctions.Trigonometric.Cotangent, mathlib/module/Mathlib.Analysis.SpecialFunctions.Trigonometric.DerivHyp, mathlib/module/Mathlib.NumberTheory.ZetaValues, mathlib/module/Mathlib.Analysis.SpecialFunctions.Gamma.Basic, mathlib/module/Mathlib.MeasureTheory.Integral.Bochner.SumMeasure, mathlib/module/Mathlib.MeasureTheory.Integral.Bochner.ContinuousLinearMap, mathlib/module/Mathlib.MeasureTheory.Measure.Map, mathlib/module/Mathlib.Analysis.SpecialFunctions.ImproperIntegrals, mathlib/module/Mathlib.Probability.Moments.Variance]
+   anchors: [mathlib/module/Mathlib.MeasureTheory.Integral.DominatedConvergence, mathlib/module/Mathlib.Analysis.SpecialFunctions.Trigonometric.Cotangent, mathlib/module/Mathlib.Analysis.SpecialFunctions.Trigonometric.DerivHyp, mathlib/module/Mathlib.NumberTheory.ZetaValues, mathlib/module/Mathlib.Analysis.SpecialFunctions.Gamma.Basic, mathlib/module/Mathlib.MeasureTheory.Integral.Bochner.SumMeasure, mathlib/module/Mathlib.MeasureTheory.Integral.Bochner.ContinuousLinearMap, mathlib/module/Mathlib.MeasureTheory.Measure.Map, mathlib/module/Mathlib.Analysis.SpecialFunctions.ImproperIntegrals, mathlib/module/Mathlib.Probability.Moments.Variance]
    utility: none
-   digest: An odd spectral probability mixture has exact moments and a positive size-biased law. -/
+   digest: The Wallis logarithmic remainder is a positive spectral Stieltjes transform with exact moments. -/
 
+import D5.S3.Analytic.WallisRemainder.Laplace
+import Mathlib.MeasureTheory.Integral.DominatedConvergence
 import Mathlib.NumberTheory.ZetaValues
 import Mathlib.Analysis.SpecialFunctions.Trigonometric.Cotangent
 import Mathlib.Analysis.SpecialFunctions.Trigonometric.DerivHyp
@@ -406,5 +408,113 @@ theorem tanh_div_hasSum {u : ℝ} (hu : 0 < u) :
     field_simp [(Real.sinh_pos_iff.mpr hu).ne', (Real.cosh_pos u).ne', hu.ne']
     <;> ring
 
+
+private lemma integrable_P_resolvent {x : ℝ} (hx : 0 < x) :
+    Integrable (fun v => 1 / (x ^ 2 + v)) P := by
+  apply (integrable_const (1 / x ^ 2) : Integrable (fun _ : ℝ => 1 / x ^ 2) P).mono'
+  · exact (show Measurable (fun v : ℝ => 1 / (x ^ 2 + v)) by fun_prop).aestronglyMeasurable
+  · filter_upwards [P_pos] with v hv
+    rw [Real.norm_eq_abs, abs_of_pos (by positivity)]
+    exact one_div_le_one_div_of_le (sq_pos_of_pos hx) (by linarith)
+
+private lemma integral_P_resolvent {x : ℝ} (hx : 0 < x) :
+    (∫ v, 1 / (x ^ 2 + v) ∂P) = ∑' n : ℕ, spectralWeight n *
+      ∫ u in Ioi (0 : ℝ), Real.exp (-u) / (x ^ 2 + spectralScale n * u ^ 2) := by
+  rw [P, integral_sum_measure (integrable_P_resolvent hx)]
+  apply tsum_congr
+  intro n
+  rw [integral_smul_measure, ENNReal.toReal_ofReal (spectralWeight_pos n).le, smul_eq_mul,
+    integral_map (by fun_prop)
+      (show AEStronglyMeasurable (fun v : ℝ => 1 / (x ^ 2 + v)) _ from
+        (show Measurable (fun v : ℝ => 1 / (x ^ 2 + v)) by fun_prop).aestronglyMeasurable),
+    exponentialLaw_integral]
+  simp only [mul_one_div]
+
+private noncomputable def spectralKernel (x : ℝ) (n : ℕ) (t : ℝ) : ℝ :=
+  spectralWeight n / 8 * (Real.exp (-x * t) / (1 + spectralScale n * t ^ 2))
+
+private lemma spectralKernel_nonneg (x : ℝ) (n : ℕ) (t : ℝ) :
+    0 ≤ spectralKernel x n t := by
+  unfold spectralKernel
+  have := (spectralWeight_pos n).le
+  have := (spectralScale_pos n).le
+  positivity
+
+private lemma spectralKernel_le (x : ℝ) (n : ℕ) (t : ℝ) :
+    spectralKernel x n t ≤ spectralWeight n / 8 * Real.exp (-x * t) := by
+  unfold spectralKernel
+  apply mul_le_mul_of_nonneg_left _ (by have := spectralWeight_pos n; positivity)
+  apply (div_le_iff₀ (by have := spectralScale_pos n; positivity)).mpr
+  have := mul_nonneg (Real.exp_pos (-x * t)).le
+    (mul_nonneg (spectralScale_pos n).le (sq_nonneg t))
+  nlinarith
+
+private lemma spectralKernel_integrable {x : ℝ} (hx : 0 < x) (n : ℕ) :
+    IntegrableOn (spectralKernel x n) (Ioi 0) := by
+  apply ((integrableOn_exp_mul_Ioi (show -x < 0 by linarith) 0).const_mul
+    (spectralWeight n / 8)).mono'
+  · exact (show Measurable (spectralKernel x n) by unfold spectralKernel; fun_prop).aestronglyMeasurable
+  · exact Eventually.of_forall (fun t => by
+      rw [Real.norm_of_nonneg (spectralKernel_nonneg x n t)]
+      exact spectralKernel_le x n t)
+
+private lemma spectralKernel_norm_integral_le {x : ℝ} (hx : 0 < x) (n : ℕ) :
+    (∫ t in Ioi (0 : ℝ), ‖spectralKernel x n t‖) ≤ spectralWeight n / (8 * x) := by
+  simp_rw [Real.norm_of_nonneg (spectralKernel_nonneg x n _)]
+  have h := integral_mono_ae (spectralKernel_integrable hx n)
+    ((integrableOn_exp_mul_Ioi (show -x < 0 by linarith) 0).const_mul (spectralWeight n / 8))
+    (Eventually.of_forall (spectralKernel_le x n))
+  rw [integral_const_mul, integral_exp_mul_Ioi (show -x < 0 by linarith) 0] at h
+  simp only [mul_zero, Real.exp_zero, neg_div_neg_eq] at h
+  convert h using 1 <;> ring
+
+private lemma spectralKernel_hasSum {x t : ℝ} (ht : 0 < t) :
+    HasSum (fun n : ℕ => spectralKernel x n t)
+      (D5.S3.Analytic.WallisRemainder.Laplace.laplaceKernel x t) := by
+  have h := (tanh_div_hasSum (show 0 < t / 4 by linarith)).mul_left (Real.exp (-x * t) / 8)
+  convert h using 1
+  · ext n
+    unfold spectralKernel spectralWeight spectralScale
+    have hn : (2 * (n : ℝ) + 1) ≠ 0 := by positivity
+    field_simp
+    <;> ring
+  · unfold D5.S3.Analytic.WallisRemainder.Laplace.laplaceKernel
+    field_simp
+    <;> ring
+
+private lemma component_resolvent_scale {x : ℝ} (hx : 0 < x) (n : ℕ) :
+    (x / 8) * (spectralWeight n *
+      ∫ u in Ioi (0 : ℝ), Real.exp (-u) / (x ^ 2 + spectralScale n * u ^ 2)) =
+      ∫ t in Ioi (0 : ℝ), spectralKernel x n t := by
+  have h := integral_comp_mul_left_Ioi'
+    (fun u : ℝ => Real.exp (-u) / (x ^ 2 + spectralScale n * u ^ 2)) 0 hx
+  simp only [mul_zero, smul_eq_mul] at h
+  rw [← h, ← integral_const_mul, ← integral_const_mul, ← integral_const_mul]
+  apply integral_congr_ae
+  exact Eventually.of_forall (fun t => by
+    unfold spectralKernel
+    have hden : 1 + spectralScale n * t ^ 2 ≠ 0 := by
+      have := spectralScale_pos n
+      positivity
+    field_simp
+    <;> ring)
+
+/-- The Wallis remainder is a Stieltjes transform of the positive spectral law. -/
+theorem r_eq_stieltjes {x : ℝ} (hx : 0 < x) :
+    -Real.log (D5.S3.Analytic.WallisRemainder.Defs.wallisB x) =
+      x / 8 * ∫ v, 1 / (x ^ 2 + v) ∂P := by
+  rw [D5.S3.Analytic.WallisRemainder.Laplace.r_eq_laplace hx, integral_P_resolvent hx]
+  rw [← tsum_mul_left]
+  have hsum : Summable (fun n : ℕ => ∫ t in Ioi (0 : ℝ), ‖spectralKernel x n t‖) :=
+    Summable.of_nonneg_of_le (fun n => integral_nonneg (fun _ => norm_nonneg _))
+      (spectralKernel_norm_integral_le hx) (hasSum_spectralWeight.summable.div_const (8 * x))
+  rw [show (fun n : ℕ => x / 8 * (spectralWeight n *
+      ∫ u in Ioi (0 : ℝ), Real.exp (-u) / (x ^ 2 + spectralScale n * u ^ 2))) =
+        fun n => ∫ t in Ioi (0 : ℝ), spectralKernel x n t by
+      funext n; exact component_resolvent_scale hx n]
+  rw [integral_tsum_of_summable_integral_norm (spectralKernel_integrable hx) hsum]
+  apply integral_congr_ae
+  filter_upwards [self_mem_ae_restrict measurableSet_Ioi] with t ht
+  exact (spectralKernel_hasSum (x := x) ht).tsum_eq.symm
 
 end D5.S3.Analytic.WallisRemainder.Measure
