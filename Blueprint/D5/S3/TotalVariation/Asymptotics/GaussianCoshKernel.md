@@ -20,7 +20,19 @@ $$\forall q \in \mathbb{R},\; \forall d \in \mathbb{R},\; J\left(q, d\right)=\in
 
 The integral uses Lebesgue measure on the whole real line. Its integrand is bounded by exp(d) times the standard normal density, so it is integrable for every real q and d.
 
-**Theorem 1.2 (The exact coefficient and a uniform fifth-half-power remainder).**
+**Theorem 1.2 (Integrability for every real parameter).**
+
+$$\forall q \in \mathbb{R},\; \forall d \in \mathbb{R},\; Integrable\left(K\left(q, d\right)\right)$$
+
+*Proof.* Machine-checked in Lean as `D5/S3/TotalVariation/Asymptotics/GaussianCoshKernel.kernel_integrable` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+The nonnegative clipped integrand is at most exp(d) times the standard normal density. This gives integrability without any sign or smallness restriction on either real parameter.
+
+**Theorem 1.3 (The exact coefficient and a uniform fifth-half-power remainder).**
 
 $$\forall lo \in \mathbb{R},\; \forall hi \in \mathbb{R},\; 0< lo\Rightarrow \exists delta \in \mathbb{R},\; \exists C \in \mathbb{R},\; 0< delta\land 0\le C\land \forall q \in \mathbb{R},\; q\in [lo,hi]\Rightarrow \forall d \in \mathbb{R},\; 0< d\land d\le delta\Rightarrow Integrable\left(K\left(q, d\right)\right)\land \left|J\left(q, d\right)-\frac{4\sqrt{2}\varphi(0)}{3\cdot q}\cdot d^{\frac{3}{2}}\right|\le C\cdot d^{\frac{5}{2}}$$
 
@@ -42,5 +54,6 @@ This is the local-kernel estimate in equation 14.5 of the categorical decision b
 
 - Truth anchor: `D5/S3/TotalVariation/Asymptotics/GaussianCoshKernel.gaussianCoshIntegral`
 - Truth anchor: `D5/S3/TotalVariation/Asymptotics/GaussianCoshKernel.gaussian_cosh_uniform_remainder`
+- Truth anchor: `D5/S3/TotalVariation/Asymptotics/GaussianCoshKernel.kernel_integrable`
 - Dependency: [D5/S3/TotalVariation/Asymptotics/StatLeanFourierSuppliers](StatLeanFourierSuppliers.md)
 - Dependency: [D5/S3/Zeros/Jensen/FactorialJensenKernelBound](../../Zeros/Jensen/FactorialJensenKernelBound.md)
