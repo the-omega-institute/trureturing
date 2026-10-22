@@ -22,7 +22,7 @@ case "${1:-}" in
     }
     if test -z "${SEARCH_REDUCTION_RESUME+x}"; then
       lookup_request_hash=$(shasum -a 256 "$SEARCH_REDUCTION_REQUESTS")
-      export SEARCH_REDUCTION_RESUME="build/lean-inspector/search-reduction-checkpoints/R_lookup-v14-checkpoint-v2/${lookup_request_hash%% *}"
+      export SEARCH_REDUCTION_RESUME="build/lean-inspector/search-reduction-checkpoints/R_lookup-v14-checkpoint-v3/${lookup_request_hash%% *}"
     fi
     while :; do
       lookup_exit=0

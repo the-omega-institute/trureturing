@@ -24,7 +24,7 @@ def timeLookup {α : Type} (label : String) (action : MetaM α) : MetaM α := do
   try action finally
     lookupPhase s!"{label}/end ns={(← IO.monoNanosNow) - start} heartbeats={(← IO.getNumHeartbeats) - heartbeats}"
 
-abbrev lookupVersion : String := "R_lookup/v14/scope-B_T/candidate-200000/preparation-8000000/G-340000000/memo-target-basis-R-v1/N-memo-2000000/checkpoint-v2/views-kappa"
+abbrev lookupVersion : String := "R_lookup/v14/scope-B_T/candidate-200000/preparation-8000000/G-340000000/memo-target-basis-R-v1/N-memo-2000000/checkpoint-v3/views-kappa"
 
 abbrev lookupCandidateBudget : Nat := 200000
 /-- Frozen from verdict-free fallback and fixed-stride candidate telemetry. -/
@@ -347,21 +347,22 @@ unsafe def boundedLookupCandidate (table : LookupTable) (entry : DiskLookup.Entr
   if let some path := checkpoint? then
     if ← path.pathExists then
       let record ← readLookupCheckpoint path
-      unless record.identity == ((← checkpointIdentity) ++ reprStr (table.disk?.map (fun d => (toJson d.header).compress ++ (toJson d.membership?).compress))) && record.query == query && record.entry == entry do
-        throwError "lookup.checkpoint_input_mismatch:{ordinal}"
-      let beforeReplay := (← table.budget?.mapM (·.get)).getD {}
-      if let some proof := record.proof? then
-        let arguments ← xs.filterM fun x => return !(← x.fvarId!.isLetVar)
-        goal.assign (mkAppN proof arguments)
-        discard <| checkLookupGoal table (← getEnv) goal
-      if let some budget := table.budget? then
-        budget.set {beforeReplay with
-          coverage := beforeReplay.coverage + record.search + record.preparation,
-          preparation := beforeReplay.preparation + record.preparation,
-          preparationStart := beforeReplay.preparation + record.preparation}
-      lookupPhase s!"lookup/resumed ordinal={ordinal} candidate={entry.name}"
-      IO.setNumHeartbeats (startedReplay + record.search)
-      return record.trace
+      if record.identity == ((← checkpointIdentity) ++ reprStr (table.disk?.map (fun d => (toJson d.header).compress ++ (toJson d.membership?).compress))) && record.query == query && record.entry == entry then
+        let beforeReplay := (← table.budget?.mapM (·.get)).getD {}
+        if let some proof := record.proof? then
+          let arguments ← xs.filterM fun x => return !(← x.fvarId!.isLetVar)
+          goal.assign (mkAppN proof arguments)
+          discard <| checkLookupGoal table (← getEnv) goal
+        if let some budget := table.budget? then
+          budget.set {beforeReplay with
+            coverage := beforeReplay.coverage + record.search + record.preparation,
+            preparation := beforeReplay.preparation + record.preparation,
+            preparationStart := beforeReplay.preparation + record.preparation}
+        lookupPhase s!"lookup/resumed ordinal={ordinal} candidate={entry.name}"
+        IO.setNumHeartbeats (startedReplay + record.search)
+        return record.trace
+      else
+        lookupPhase s!"lookup/checkpoint-miss ordinal={ordinal} reason=input-mismatch"
   if resume?.isSome && !candidateOwnerMatches table entry then
     if (← lookupExternalAttempts.get) >= 64 then
       emitLookupRecord s!"LOOKUP_CHECKPOINT_RESTART next={ordinal} candidate={entry.name}"
