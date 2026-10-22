@@ -517,19 +517,31 @@ unsafe def produceMembership (directory : System.FilePath) : IO MembershipHeader
     throw <| IO.userError "lookup.membership_requires_complete_candidate_index"
   let storage := directory / s!"membership-alpha-v1-{header.inputs}"
   IO.FS.createDirAll storage
-  let groups : Array (Array String) ← readJson (directory / "import-partitions.json")
+  let partitions : Array (Array String) ← readJson (directory / "import-partitions.json")
+  let mut groups : Array (String × Array String) := #[]
+  for i in [:partitions.size] do
+    let label := s!"group-{i}"
+    let modules := partitions[i]!
+    let complete ← try
+      let old : MembershipShardResult ← readJson (storage / label / "result.json")
+      pure (old.modules == modules && old.missing.isEmpty)
+      catch _ => pure false
+    if complete || modules.size <= 64 then groups := groups.push (label, modules)
+    else
+      for chunk in [:((modules.size + 63) / 64)] do
+        groups := groups.push (s!"{label}-chunk-{chunk}", modules.extract (chunk * 64) ((chunk + 1) * 64))
   let mut results : Array MembershipShardResult := #[]
   for i in [:groups.size] do
-    let part := storage / s!"group-{i}"
+    let part := storage / groups[i]!.1
     IO.FS.createDirAll part
     let plan := part / "plan.json"
     let resultPath := part / "result.json"
     let cached ← try
       let old : MembershipShardResult ← readJson resultPath
-      pure (if old.modules == groups[i]! then some old else none)
+      pure (if old.modules == groups[i]!.2 then some old else none)
       catch _ => pure none
     let result ← if let some old := cached then pure old else do
-      writeJson plan ({modules := groups[i]!} : ShardPlan)
+      writeJson plan ({modules := groups[i]!.2} : ShardPlan)
       let output ← IO.Process.output {
         cmd := (← IO.appPath).toString,
         args := #["--membership-shard", part.toString, plan.toString, resultPath.toString]}
@@ -543,7 +555,7 @@ unsafe def produceMembership (directory : System.FilePath) : IO MembershipHeader
     let mut page : MembershipPage := {}
     for i in [:groups.size] do
       let entries : Array (String × Array Entry) ← withUnpickle
-        (storage / s!"group-{i}" / membershipFile bucket) fun (part : MembershipPage) =>
+        (storage / groups[i]!.1 / membershipFile bucket) fun (part : MembershipPage) =>
           pure (part.toArray.map fun (key, values) => (toString key, values.map copyEntry))
       for (text, values) in entries do
         let key := text.toNat!.toUInt64
