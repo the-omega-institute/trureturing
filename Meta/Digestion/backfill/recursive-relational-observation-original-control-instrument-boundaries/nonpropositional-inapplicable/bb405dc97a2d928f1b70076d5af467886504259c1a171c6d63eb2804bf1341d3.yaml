@@ -5,3 +5,7 @@ cas_ref: sha256:bb405dc97a2d928f1b70076d5af467886504259c1a171c6d63eb2804bf1341d3
 coverage_gids: []
 receipts:
   unresolved_subitems: []
+  nonpropositional:
+    justification: Promised-pair heralded task assumptions only; no attainable probability or bound is asserted in this atom.
+    previous_atom_id: 8d585a9951c1f319d27f51ebd7830da791b351a6919180a30e5b2d98513f098c
+    next_atom_id: fb68ddef7dff4b2d8f2d453efa44b66203be783d2f70052bb9987dcb75121543
