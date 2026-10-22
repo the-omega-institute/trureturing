@@ -1,0 +1,9 @@
+**定义 64.1（保留控制的完整仪器历史）。** 固定有限维公共载体及实际仪器
+
+$$
+\mathcal J_y(\varrho)=\sum_\mu K_{y\mu}\varrho K_{y\mu}^\dagger,
+\qquad\sum_{y,\mu}K_{y\mu}^\dagger K_{y\mu}=I.
+$$
+
+每分支完全正、迹不增加。概率 $p_y=\operatorname{tr}\mathcal J_y(\varrho)$；仅当 $p_y>0$ 时条件态为 $\mathcal J_y(\varrho)/p_y$。固定一个完整自适应记录 $h$ 后，该路径动作由已保留的控制及记录决定，$\mathcal J_h=\mathcal J_{y_k}\circ\cdots\circ\mathcal J_{y_1}$，定义 $E_h=\mathcal J_h^\dagger(I)$。失败及完整记录也在实际实验族中。
+

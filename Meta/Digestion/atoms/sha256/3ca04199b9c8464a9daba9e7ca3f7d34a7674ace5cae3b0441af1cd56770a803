@@ -1,0 +1,10 @@
+**定义 26.1（类型响应与共同分布）。** 对 $x=(a,b)\in V_2$，定义实值角色函数
+
+$$
+\chi_1(x)=(-1)^a,\qquad
+\chi_2(x)=(-1)^b,\qquad
+\chi_3(x)=(-1)^{a+b}=\chi_1(x)\chi_2(x).
+$$
+
+函数内积取均匀平均 $\langle f,g\rangle=\tfrac14\sum_{x\in V_2}f(x)g(x)$。另取一个固定共同来源的类型概率 $p(x)$，$p(x)\ge0$、$\sum_xp(x)=1$，并记 $r_i=\mathbb E_p\chi_i$。均匀内积是函数空间的定义，不要求实际来源分布均匀。
+

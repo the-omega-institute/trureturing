@@ -1,0 +1,39 @@
+**Proposition 121.2 (symmetric coordinates for exact zero penalty).** Suppose $q>0$. Then $\tau=0$ if and only if there are real symmetric $2\times2$ matrices $S_0,S_1$ such that
+
+$$
+\begin{gathered}
+J=\begin{pmatrix}0&-1\\1&0\end{pmatrix},\qquad
+V_i=JS_iP^{-1/2},\qquad
+V^TV\preceq I_2\ \Longleftrightarrow\ \sum_iS_i^2\preceq P,
+\qquad B=P-\sum_iS_i^2.
+\end{gathered}
+\tag{U.63}
+$$
+
+Writing $\mathsf T_i=P^{-1/2}S_iP^{-1/2}$, $\overline P=\operatorname{diag}(q,p)$ and $\mathcal J=\operatorname{diag}(J,J)$ gives
+
+$$
+\begin{gathered}
+V_i=J\sqrt P\,\mathsf T_i,\qquad \mathsf T_i^T=\mathsf T_i,
+\qquad \sum_i\mathsf T_iP\mathsf T_i\preceq I_2,\\
+\mathcal J^TA\mathcal J=
+\begin{pmatrix}
+\overline P-g^2\mathsf T_0^2&-g^2\mathsf T_0\mathsf T_1\\
+-g^2\mathsf T_1\mathsf T_0&\overline P-g^2\mathsf T_1^2
+\end{pmatrix}.
+\end{gathered}
+\tag{U.64}
+$$
+
+These $\mathsf T_i$ are symmetric coordinate matrices, distinct from the physical third-column matrix $T$ of (U.2).
+
+Proof. Since $\tau$ is a sum of squares, it vanishes exactly when each $W_i=V_i\sqrt P$ is traceless. Write
+
+$$
+W_i=\begin{pmatrix}a_i&b_i\\d_i&-a_i\end{pmatrix},\qquad
+-JW_i=\begin{pmatrix}d_i&-a_i\\-a_i&-b_i\end{pmatrix}=S_i.
+$$
+
+This is symmetric; conversely $JS_i$ is traceless for every symmetric $S_i$. Since $J^TJ=I_2$,
+$Q=P^{-1/2}(\sum_iS_i^2)P^{-1/2}$, proving feasibility and the formula for $B$. Substituting $S_i=\sqrt P\mathsf T_i\sqrt P$ gives the first line of (U.64). The diagonal blocks of $A$ are $P-\sqrt P V_iV_i^T\sqrt P$, and its offdiagonal blocks are $-\sqrt P V_iV_j^T\sqrt P$. Use $\sqrt P J\sqrt P=gJ$ and $J^TPJ=\overline P$ to conjugate each block. This gives precisely the second line of (U.64). The product $\mathsf T_0\mathsf T_1$ and its transpose retain the same pair of symmetric matrices. No simultaneous diagonalization, or independent input and output spectral frame, has been assumed. $\square$
+

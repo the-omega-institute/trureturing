@@ -1,0 +1,20 @@
+**定义 46.1（固定量子程序处理器）。** 程序与数据独立输入一个固定等距映射 $W$，所有程序 $|p_a\rangle$ 及剩余态 $|r_a\rangle$ 归一化，并要求对整个数据空间精确确定性地实现
+
+$$
+W(|p_a\rangle\otimes|\psi\rangle)
+=|r_a\rangle\otimes U_a|\psi\rangle.
+$$
+
+一般 CPTP 处理器可先取等距扩张并把全部剩余环境计入 $r_a$。纯酉输出的纯态分解先迫使数据与环境乘积分离，再对数据基向量及其叠加使用线性性，迫使同一程序的剩余态不依赖未知数据；不能将数据藏进一个未计入的输出端口。
+
+**程序正交性的中间工具（46）。** Nielsen–Chuang 的 *Programmable Quantum Gate Arrays*，[arXiv:quant-ph/9703032v1](https://arxiv.org/html/quant-ph/9703032v1)，Result 及式 (6)–(10)，给不同整体相位等价类的精确酉程序必须正交。此处直接使用其内积论证：等距性使任意 $\psi,\phi$ 满足
+
+$$
+\langle p_a,p_b\rangle\langle\psi,\phi\rangle
+=\langle r_a,r_b\rangle\langle\psi,U_a^\dagger U_b\phi\rangle,
+\qquad
+\langle p_a,p_b\rangle I=\langle r_a,r_b\rangle U_a^\dagger U_b.
+$$
+
+若 $U_a^\dagger U_b$ 不是标量恒等，两个标量系数只能均为零。因此精确编程 $L$ 个两两不只差整体相位的酉需要至少 $L$ 维程序空间。应用于假设 45.1，只取 $e^{-i\theta H_2}$、$0<\theta<\pi/2$ 就已有任意多的不同相位类：$H_2$ 的零特征方向固定整体相位，$\pm1$ 特征方向区分区间内参数。故一个固定有限维纯程序端口不能精确确定性编程这整个连续子菜单。这是已知不可编程结果对本控制合同的应用，不另认作新的不可编程定理。
+

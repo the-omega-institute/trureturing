@@ -1,0 +1,22 @@
+**定理 12.2（仿射操作的矩合同）。** 若权重不随操作改变，则
+
+$$
+\begin{aligned}
+m_0'&=m_0,\\
+m'&=Am+m_0t,\\
+S'&=ASA^T+Am\,t^T+t\,m^TA^T+m_0tt^T.
+\end{aligned}
+$$
+
+故六个线性统计分量 $(m_0,m_a,m_b,S_{11},S_{12},S_{22})$ 对仿射操作闭合。归一概率 $m_0=1$ 后只有五个可变统计参数，这与六维齐次线性载体不同。
+
+证明。对每个来源展开 $(Ac_i+t)(Ac_i+t)^T$ 并按权重求和即可。等价地，令
+
+$$
+\bar c=\binom1c,\qquad
+\bar S=\begin{pmatrix}m_0&m^T\\m&S\end{pmatrix},\qquad
+\bar A=\begin{pmatrix}1&0_{1\times2}\\t&A\end{pmatrix}.
+$$
+
+则 $\bar S'=\bar A\bar S\bar A^T$。矩统计是六个单项式 $(1,a,b,a^2,ab,b^2)$ 的加权和。质量等于一时，首坐标固定，余下五坐标在一个仿射超平面中变化；不能把固定常数当成第六个可变统计参数。$\square$
+
