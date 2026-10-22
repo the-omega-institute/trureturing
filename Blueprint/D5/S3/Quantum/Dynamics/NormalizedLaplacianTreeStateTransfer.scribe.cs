@@ -36,7 +36,7 @@ internal sealed class NormalizedLaplacianTreeStateTransferDocument : IScribeDocu
                 DeclarationHandle.Create(Prefix + "result"),
                 H("A seventeen-vertex counterexample"),
                 StatementSource.FromAuthor(Disp(new Formula.Not(Parenthesized(Local("claim"))))),
-                AssessedProvenance.FromRepo(),
+                AssessedProvenance.FromRepo(Source),
                 Blocks(
                     Paragraph(Text(
                         "Let c be adjacent to the leaves u and v and to seven vertices x₁,…,x₇, with each xᵢ adjacent to a further leaf yᵢ. "
