@@ -47,8 +47,8 @@ are compared by neighborhood equality at positive arguments.
 
 `D5/S3/Analytic/ExpRatioCM/Result.result` refutes the universal
 assertion. `Positive.cm_of_le_two` gives the positive range through index
-two, while `Result.not_cm_of_three_le` excludes every index at least
-three; `Result.failure_on_every_tail` supplies simultaneous negative
+two, while `Result.failure_on_every_tail` excludes every index at least
+three by supplying simultaneous negative
 alternating derivatives of both ratios arbitrarily far to the right.
 
 ## Literature scope

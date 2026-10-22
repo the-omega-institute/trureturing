@@ -185,7 +185,7 @@ exhaustive citation-index coverage or priority.
   $(-1)^k\mathcal F_i^{(k)}$ first takes a negative value somewhere
   on $(0,\infty)$, as a function of $i\ge3$.
 
-## Scope
+## ASSUMED-UNVERIFIED
 
 Exhaustive citation-index coverage and priority are unverified.
 The bounded literature conclusions do not assert the absence of a
