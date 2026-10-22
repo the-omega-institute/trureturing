@@ -62,5 +62,5 @@ internal sealed class SeriesDocument : IScribeDocumentDefinition
             Describe.Lean(DescribeId.Create("exp-ratio-quotient-derivatives"),
                 DeclarationHandle.Create("D5/S3/Analytic/ExpRatioCM/Series.iteratedDeriv_ratioF"),
                 H("Signed derivatives of the quotient expansion"), StatementSource.WithoutFormula(), AssessedProvenance.FromRepo(),
-                Blocks(Paragraph(Text("For positive k and t greater than log(2^(i+2)), the signed k-th derivative of the first ratio equals the sum of b(n) n^k exp(-nt). Exponential coefficient bounds provide a summable local majorant at every derivative order."))), DescribeRole.Theorem)))));
+                Blocks(Paragraph(Text("For positive k and t greater than log(2^(i+2)), the signed k-th derivative of the first ratio equals the sum of b(n) n^k exp(-nt). Exponential coefficient bounds provide a summable local majorant at every derivative order."))), DescribeRole.Theorem))));
 }
