@@ -6,8 +6,8 @@
    utility: kind=certified-instance; basis=refutes=gid:D5/S3/Quantum/Information/EntanglementDistanceBellDiagonalRefutation.claim; result=D5/S3/Quantum/Information/EntanglementDistanceBellDiagonalRefutation.result; claim=D5/S3/Quantum/Information/EntanglementDistanceBellDiagonalRefutation.claim
    digest: Bell-diagonal entanglement distance differs from twice squared concurrence. -/
 
-import D5.S3.QuantumBounds.CHSHWitness
 import D5.S3.Quantum.Information.StabilizerPairLocalUnitaryInequivalence
+import D5.S3.Quantum.Entanglement.LocalMarginalCorrelationBlindSpot
 
 /-! A concrete two-qubit counterexample to the proposed Bell-diagonal formula. -/
 
@@ -21,6 +21,7 @@ open Matrix
 open scoped BigOperators ComplexOrder Kronecker
 open D5.S3.Quantum.FiniteDimensional
 open D5.S3.Quantum.Information.StabilizerPairLocalUnitaryInequivalence
+open D5.S3.Quantum.Entanglement.LocalMarginalCorrelationBlindSpot
 
 /-- A one-site operator on the two-qubit product basis. -/
 def onSite (μ : Fin 2) (U : Matrix (Fin 2) (Fin 2) ℂ) :
@@ -178,47 +179,46 @@ private noncomputable def U2 : Matrix.specialUnitaryGroup (Fin 2) ℂ := by
       norm_num [U2mat, Matrix.mul_apply, Matrix.diagonal, Complex.ext_iff, map_ofNat]
   · norm_num [U2mat, Matrix.det_fin_two, Matrix.diagonal, Complex.ext_iff, map_ofNat]
 
-private noncomputable def χ : Matrix (Fin 2 × Fin 2) (Fin 2 × Fin 2) ℂ :=
-  Matrix.diagonal (fun ij => if ij = (0, 0) ∨ ij = (1, 1) then (1 / 2 : ℂ) else 0)
-
 set_option maxRecDepth 10000 in
 set_option maxHeartbeats 1000000 in
 private theorem rotated_witness (μ : Fin 2) :
     rotated μ (![(1 / 2 : ℝ), 1 / 2]) (fun j : Fin 2 => if j = 0 then pProjector qPlus else pProjector qMinus)
-      (fun j : Fin 2 => if j = 0 then U1 else U2) = χ := by
+      (fun j : Fin 2 => if j = 0 then U1 else U2) = classicalCorrelatedDensity := by
   simp only [rotated, Fin.sum_univ_two]
   change ((1 / 2 : ℝ) : ℂ) • (onSite μ U1mat * pProjector qPlus * (onSite μ U1mat)ᴴ) +
-    ((1 / 2 : ℝ) : ℂ) • (onSite μ U2mat * pProjector qMinus * (onSite μ U2mat)ᴴ) = χ
+    ((1 / 2 : ℝ) : ℂ) • (onSite μ U2mat * pProjector qMinus * (onSite μ U2mat)ᴴ) =
+      classicalCorrelatedDensity
   ext ⟨a, b⟩ ⟨c, d⟩
   fin_cases μ <;> fin_cases a <;> fin_cases b <;> fin_cases c <;> fin_cases d <;>
-    norm_num [χ, onSite, pProjector, qPlus, qMinus,
+    norm_num [classicalCorrelatedDensity, onSite, pProjector, qPlus, qMinus,
       U1mat, U2mat, Matrix.mul_apply, Matrix.conjTranspose_apply, Matrix.diagonal,
       Fintype.sum_prod_type, Fin.sum_univ_two, Complex.ext_iff, map_ofNat]
 
-private theorem chi_trace_square : Complex.re (Matrix.trace (χ * χ)) = 1 / 2 := by
-  norm_num [χ, Matrix.diagonal, Matrix.trace, Matrix.mul_apply,
+private theorem chi_trace_square :
+    Complex.re (Matrix.trace (classicalCorrelatedDensity * classicalCorrelatedDensity)) = 1 / 2 := by
+  norm_num [classicalCorrelatedDensity, Matrix.diagonal, Matrix.trace, Matrix.mul_apply,
     Fintype.sum_prod_type, Fin.sum_univ_two]
 
 private theorem chi_variational (μ : Fin 2) (n : Fin 3 → ℝ) :
-    Complex.re (Matrix.trace (χ * (∑ i, (n i : ℂ) • sitePauli μ i) * χ *
-      (∑ i, (n i : ℂ) • sitePauli μ i))) = (n 2) ^ 2 / 2 := by
+    Complex.re (Matrix.trace (classicalCorrelatedDensity * (∑ i, (n i : ℂ) • sitePauli μ i) *
+      classicalCorrelatedDensity * (∑ i, (n i : ℂ) • sitePauli μ i))) = (n 2) ^ 2 / 2 := by
   fin_cases μ <;>
-    norm_num [χ, sitePauli_apply, pauliMatrix, qubitX, qubitZ,
+    norm_num [classicalCorrelatedDensity, sitePauli_apply, pauliMatrix, qubitX, qubitZ,
       Matrix.mul_apply, Matrix.diagonal, Matrix.trace, Fintype.sum_prod_type, Fin.sum_univ_succ] <;> ring
 
-private theorem chi_qcd_zero (μ : Fin 2) : siteQCD μ χ = 0 := by
+private theorem chi_qcd_zero (μ : Fin 2) : siteQCD μ classicalCorrelatedDensity = 0 := by
   have hmem : (1 / 2 : ℝ) ∈ {x : ℝ | ∃ n : Fin 3 → ℝ,
       (∑ i, n i ^ 2 = 1) ∧
-        x = Complex.re (Matrix.trace (χ * (∑ i, (n i : ℂ) • sitePauli μ i) * χ *
-          (∑ i, (n i : ℂ) • sitePauli μ i)))} := by
+        x = Complex.re (Matrix.trace (classicalCorrelatedDensity * (∑ i, (n i : ℂ) • sitePauli μ i) *
+          classicalCorrelatedDensity * (∑ i, (n i : ℂ) • sitePauli μ i)))} := by
     refine ⟨![0, 0, 1], ?_, ?_⟩
     · norm_num [Fin.sum_univ_succ]
     · rw [chi_variational]
       norm_num
   have hupper : ∀ x : ℝ, x ∈ {x : ℝ | ∃ n : Fin 3 → ℝ,
       (∑ i, n i ^ 2 = 1) ∧
-        x = Complex.re (Matrix.trace (χ * (∑ i, (n i : ℂ) • sitePauli μ i) * χ *
-          (∑ i, (n i : ℂ) • sitePauli μ i)))} → x ≤ 1 / 2 := by
+        x = Complex.re (Matrix.trace (classicalCorrelatedDensity * (∑ i, (n i : ℂ) • sitePauli μ i) *
+          classicalCorrelatedDensity * (∑ i, (n i : ℂ) • sitePauli μ i)))} → x ≤ 1 / 2 := by
     intro x hx
     rcases hx with ⟨n, hn, rfl⟩
     rw [chi_variational]
@@ -230,18 +230,13 @@ private theorem chi_qcd_zero (μ : Fin 2) : siteQCD μ χ = 0 := by
     nlinarith
   have hs : sSup {x : ℝ | ∃ n : Fin 3 → ℝ,
       (∑ i, n i ^ 2 = 1) ∧
-        x = Complex.re (Matrix.trace (χ * (∑ i, (n i : ℂ) • sitePauli μ i) * χ *
-          (∑ i, (n i : ℂ) • sitePauli μ i)))} = 1 / 2 := by
+        x = Complex.re (Matrix.trace (classicalCorrelatedDensity * (∑ i, (n i : ℂ) • sitePauli μ i) *
+          classicalCorrelatedDensity * (∑ i, (n i : ℂ) • sitePauli μ i)))} = 1 / 2 := by
     apply le_antisymm
     · exact csSup_le ⟨1 / 2, hmem⟩ hupper
     · exact le_csSup (show BddAbove _ from ⟨1 / 2, hupper⟩) hmem
   rw [siteQCD, chi_trace_square, hs]
   norm_num
-
-private theorem sInf_le_of_mem_nonpos {s : Set ℝ} {a : ℝ} (ha : a ≤ 0) (hamem : a ∈ s) : sInf s ≤ 0 := by
-  by_cases h : BddBelow s
-  · exact le_trans (csInf_le h hamem) ha
-  · rw [Real.sInf_of_not_bddBelow h]
 
 private theorem ed_witness_le_zero : ED (bellDiagonal witnessP) ≤ 0 := by
   let p : Fin 2 → ℝ := ![(1 / 2 : ℝ), 1 / 2]
@@ -263,7 +258,8 @@ private theorem ed_witness_le_zero : ED (bellDiagonal witnessP) ≤ 0 := by
         Complex.ext_iff, map_ofNat]
   have hinner (μ : Fin 2) : sInf {y : ℝ | ∃ U,
       y = siteQCD μ (rotated μ p ρs U)} ≤ 0 := by
-    apply sInf_le_of_mem_nonpos (le_refl 0)
+    apply Real.sInf_nonpos'
+    refine ⟨0, ?_, le_refl 0⟩
     refine ⟨U, ?_⟩
     rw [rotated_witness, chi_qcd_zero]
   have hmember : (∑ μ : Fin 2, sInf {y : ℝ | ∃ U,
@@ -275,7 +271,7 @@ private theorem ed_witness_le_zero : ED (bellDiagonal witnessP) ≤ 0 := by
       x = ∑ μ : Fin 2, sInf {y : ℝ | ∃ U,
         y = siteQCD μ (rotated μ p ρs U)}} := by
     exact ⟨2, p, ρs, hp, hpsum, hstate, hmix, rfl⟩
-  exact sInf_le_of_mem_nonpos (Finset.sum_nonpos (fun μ _ => hinner μ)) hmember
+  exact Real.sInf_nonpos' ⟨_, hmember, Finset.sum_nonpos (fun μ _ => hinner μ)⟩
 
 theorem result : ¬ claim := by
   intro h
