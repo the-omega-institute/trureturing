@@ -1,13 +1,13 @@
 import LeanInformationAuditInterface.Contract.Registration
-import D5.S3.Quantum.Entanglement.TernaryPartitionOrbit
+import D5.S3.Combinatorics.Partitions.TernaryPartitionOrbit
 import Reg.Support.DependentFamily
 
 /-! The observed operand is the original anchored colouring, with its entire
 arbitrary index type retained as a parameter. -/
 
-namespace Reg.D5.S3.Quantum.Entanglement.TernaryPartitionOrbit
+namespace Reg.D5.S3.Combinatorics.Partitions.TernaryPartitionOrbit
 
-open _root_.D5.S3.Quantum.Entanglement.TernaryPartitionOrbit
+open _root_.D5.S3.Combinatorics.Partitions.TernaryPartitionOrbit
 open _root_.D5.S3.ConceptDynamics.InformationEscape.DependentFamily
 open LeanInformationAudit
 
@@ -34,7 +34,7 @@ def rejected : Realization signature :=
 
 def arena : Arena where
   signature := signature
-  Law R := ∀ (α : Type u) (P : Set (α → ZMod 3)),
+  Law R := ∀ {α : Type u} (P : Set (α → ZMod 3)),
     (∀ u : α → ZMod 3, u ≠ 0 → (u ∈ P ↔ -u ∉ P)) →
     ∀ (u : α → ZMod 3), u ≠ 0 →
       ∃! v : α → ZMod 3, v ∈ P ∧
@@ -62,7 +62,7 @@ theorem rejected_law : ¬ arena.{u}.Law rejected := by
     intro he
     have hf := congrFun he PUnit.unit
     norm_num at hf
-  obtain ⟨v, hv, _⟩ := h PUnit P hP (fun _ => 1) hne
+  obtain ⟨v, hv, _⟩ := h (α := PUnit.{u+1}) P hP (fun _ => 1) hne
   have hv1 : v PUnit.unit = 1 := hv.1
   have he := (hv.2 none (some PUnit.unit)).mp rfl
   simpa [anchored, hv1] using he
@@ -96,10 +96,10 @@ def source_registration : Registration arena.{u}
 
 def registration :
     LeanInformationAudit.Contract.Registration.{_, _, _, 0, 0, 0, _, _, _, _, _, 0}
-      (@_root_.D5.S3.Quantum.Entanglement.TernaryPartitionOrbit.result.{u})
+      (@_root_.D5.S3.Combinatorics.Partitions.TernaryPartitionOrbit.result.{u})
       (Realization signature.{u}) Unit Unit := {
-  unitName := `Reg.D5.S3.Quantum.Entanglement.TernaryPartitionOrbit.unit
-  realizationName := `Reg.D5.S3.Quantum.Entanglement.TernaryPartitionOrbit.source_registration
+  unitName := `Reg.D5.S3.Combinatorics.Partitions.TernaryPartitionOrbit.unit
+  realizationName := `Reg.D5.S3.Combinatorics.Partitions.TernaryPartitionOrbit.source_registration
   realizationSource := none
   generated := false
   arena := .source ⟨arena⟩
@@ -116,7 +116,7 @@ def registration :
   partialSensitivity := none
   escapeFrom := none
   sourceSelection := some {
-    owner := `D5.S3.Quantum.Entanglement.TernaryPartitionOrbit
+    owner := `D5.S3.Combinatorics.Partitions.TernaryPartitionOrbit
     definition := none
     coordinates := #[0]
     readouts := #[{
@@ -133,4 +133,4 @@ def registration :
 #print axioms registration
 
 end
-end Reg.D5.S3.Quantum.Entanglement.TernaryPartitionOrbit
+end Reg.D5.S3.Combinatorics.Partitions.TernaryPartitionOrbit

@@ -220,7 +220,7 @@ and weighted_upper_sum_cancel, all on the live partition_count proof path.
 They do not assert a general Mobius formula or constitute a delivered independent
 finite-instance certificate, checker, or numerical reduction.
 Same-delivery structural dependency (not an already frozen premise):
-  D5/S3/Quantum/Entanglement/TernaryPartitionOrbit.result.
+  D5/S3/Combinatorics/Partitions/TernaryPartitionOrbit.result.
 Direct frozen dependencies:
   GID: D5/S3/VertexAlgebra/LatticeTwistedGroundRealization.SignQuotient.F₂
     statement_id: sha256:e975fc48104d0cb1a40271fdfb5ec7fcfe2730a1c600ee81758d5e89253bd60f
@@ -245,7 +245,7 @@ Direct frozen dependencies:
 import D5.S3.Quantum.Information.BinaryStabilizerGraphNormalForm
 import D5.S3.QuadraticForms.TernaryTranslationQuadraticNormalForm
 
-import D5.S3.Quantum.Entanglement.TernaryPartitionOrbit
+import D5.S3.Combinatorics.Partitions.TernaryPartitionOrbit
 import Mathlib.Combinatorics.Enumerative.IncidenceAlgebra
 import Mathlib.Order.Setoid.Basic
 import Mathlib.Data.Fintype.Card
@@ -784,7 +784,7 @@ private def partitionSum (q : ℕ) (P : Finset (Fin (q - 1) → ZMod 3))
 
 open Classical
 open scoped BigOperators
-open D5.S3.Quantum.Entanglement.TernaryPartitionOrbit
+open D5.S3.Combinatorics.Partitions.TernaryPartitionOrbit
 
 private def partition {α : Type*} (u : α → ZMod 3) : Setoid (Option α) :=
   Setoid.ker (anchored u)
@@ -807,7 +807,7 @@ private theorem representative_injOn {α : Type*}
   have hu0 : u ≠ 0 := by
     intro h
     exact h0 (h ▸ hu)
-  obtain ⟨w, _, hw⟩ := D5.S3.Quantum.Entanglement.TernaryPartitionOrbit.result (P : Set (α → ZMod 3)) hP u hu0
+  obtain ⟨w, _, hw⟩ := D5.S3.Combinatorics.Partitions.TernaryPartitionOrbit.result (P : Set (α → ZMod 3)) hP u hu0
   have hu' : u ∈ P ∧ SamePartition (anchored u) (anchored u) :=
     ⟨hu, fun _ _ => Iff.rfl⟩
   have hv' : v ∈ P ∧ SamePartition (anchored u) (anchored v) :=
@@ -1235,7 +1235,7 @@ private theorem four_party_counting_identity (Ω : Finset FourPartition)
   rw [weighted_upper_sum_cancel Ω hΩbot f, htop, mul_zero, sub_zero] at h
   exact h.symm
 
-open D5.S3.Quantum.Entanglement.TernaryPartitionOrbit
+open D5.S3.Combinatorics.Partitions.TernaryPartitionOrbit
 open scoped BigOperators
 
 private def anchorEquiv (r : ℕ) : Fin (r + 1) ≃ Option (Fin r) :=

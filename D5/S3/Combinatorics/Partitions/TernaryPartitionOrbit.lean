@@ -1,6 +1,6 @@
-/- GID: D5/S3/Quantum/Entanglement/TernaryPartitionOrbit
+/- GID: D5/S3/Combinatorics/Partitions/TernaryPartitionOrbit
    generality: I
-   mirror-B: D5/B/S3/Quantum/Entanglement/TernaryPartitionOrbit
+   mirror-B: D5/B/S3/Combinatorics/Partitions/TernaryPartitionOrbit
    mirror-E: none(waiver:structural-counting-foundation)
    anchors: []
    utility: none
@@ -14,7 +14,7 @@ import Mathlib.Tactic.Ring
 set_option autoImplicit false
 set_option relaxedAutoImplicit false
 
-namespace D5.S3.Quantum.Entanglement.TernaryPartitionOrbit
+namespace D5.S3.Combinatorics.Partitions.TernaryPartitionOrbit
 
 /-!
 Admission pre-registration (before the first Lean probe):
@@ -164,4 +164,4 @@ theorem result {α : Type*} (P : Set (α → ZMod 3))
         exact False.elim (hup hv.1)
       · exact h
 
-end D5.S3.Quantum.Entanglement.TernaryPartitionOrbit
+end D5.S3.Combinatorics.Partitions.TernaryPartitionOrbit
