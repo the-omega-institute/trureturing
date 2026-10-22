@@ -36,13 +36,17 @@ internal sealed class KageyInversionFirstLetterDocument : IScribeDocumentDefinit
             Node("result", "The first-letter expectation identity", ClaimBody(),
                 "Deleting first letter j removes j−1 inversions. Two successive insertions with total inversion contribution t have t+1 choices when t≤k<n. "
                     + "Their count equals the first-letter weight. Thus the natural weighted numerator is M(n+1,k); casting that identity to Q proves the displayed equality.",
-                DescribeRole.Theorem, AssessedProvenance.FromRepo(Source)))));
+                DescribeRole.Theorem, AssessedProvenance.FromRepo(Source),
+                new OpenProblemResolutionClaim(
+                    ProblemSlugRef.Create("kagey-2021-inversion-first-letter-conjecture-5-1"),
+                    ResolutionKind.Proved)))));
 
     private static DocumentBlock Node(string name, string title, Formula formula,
-        string prose, DescribeRole role, AssessedProvenance provenance) => Describe.Lean(
+        string prose, DescribeRole role, AssessedProvenance provenance,
+        OpenProblemResolutionClaim? resolution = null) => Describe.Lean(
         DescribeId.Create("kagey-inversion-" + name.ToLowerInvariant()),
         DeclarationHandle.Create(Root + name), H(title), StatementSource.FromAuthor(Disp(formula)),
-        provenance, Blocks(Paragraph(Text(prose))), role);
+        provenance, Blocks(Paragraph(Text(prose))), role, resolution);
 
     private static Formula V(string name) => F.Id(name);
     private static Formula Naturals => Seq(Mathbb, Grp(V("N")));
