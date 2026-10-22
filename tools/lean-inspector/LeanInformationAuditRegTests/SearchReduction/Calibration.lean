@@ -10,31 +10,30 @@ open LeanInformationAudit.Tests.SearchReduction
 
 #search_reduction_config
 
--- A baseline-provable synthetic statement remains eligible when its statement
--- supplies the hidden existential witness on the author's live path.
+-- A compliant baseline lookup certificate makes the square witness bind-only.
 #search_reduction LeanInformationAudit.Tests.SearchReduction.GraphCandidates.squareVia
   at "b530df86e6e9c4709edecd3009bb96c3d4ebc8be"
   baseline [LeanInformationAuditRegTests.SearchReduction.Baseline]
   using [LeanInformationAudit.Tests.SearchReduction.GraphCandidates.squareFact] as squareResult
-#guard squareResult = Verdict.nonBindOnly
-#guard squareResult.baseline = Run.exhausted
+#guard squareResult = Verdict.bindOnly
+#guard squareResult.baseline = Run.found
 #guard squareResult.paired = Run.found
 
 #search_reduction LeanInformationAudit.Tests.SearchReduction.GraphCandidates.squareVia
   at "b530df86e6e9c4709edecd3009bb96c3d4ebc8be"
   baseline [LeanInformationAuditRegTests.SearchReduction.Baseline]
   using [LeanInformationAudit.Tests.SearchReduction.GraphCandidates.trueFact] as neutralTrueResult
-#guard neutralTrueResult = Verdict.insufficient
-#guard neutralTrueResult.baseline = Run.exhausted
-#guard neutralTrueResult.paired = Run.exhausted
+#guard neutralTrueResult = Verdict.bindOnly
+#guard neutralTrueResult.baseline = Run.found
+#guard neutralTrueResult.paired = Run.found
 
 #search_reduction LeanInformationAudit.Tests.SearchReduction.GraphCandidates.squareVia
   at "b530df86e6e9c4709edecd3009bb96c3d4ebc8be"
   baseline [LeanInformationAuditRegTests.SearchReduction.Baseline]
   using [LeanInformationAudit.Tests.SearchReduction.GraphCandidates.arithmeticFact] as neutralArithmeticResult
-#guard neutralArithmeticResult = Verdict.insufficient
-#guard neutralArithmeticResult.baseline = Run.exhausted
-#guard neutralArithmeticResult.paired = Run.exhausted
+#guard neutralArithmeticResult = Verdict.bindOnly
+#guard neutralArithmeticResult.baseline = Run.found
+#guard neutralArithmeticResult.paired = Run.found
 
 #search_reduction LeanInformationAudit.Tests.SearchReduction.Candidates.statementAlias
   at "b530df86e6e9c4709edecd3009bb96c3d4ebc8be"
@@ -95,14 +94,14 @@ open LeanInformationAudit.Tests.SearchReduction
   at "b530df86e6e9c4709edecd3009bb96c3d4ebc8be"
   baseline [LeanInformationAuditRegTests.SearchReduction.Baseline]
   using [] as intermediateResult
-#guard intermediateResult.baseline = Run.exhausted
+#guard intermediateResult.baseline = Run.incomplete Failure.undecided
 #guard intermediateResult = Verdict.insufficient
 
 #search_reduction LeanInformationAudit.Tests.SearchReduction.Candidates.content
   at "b530df86e6e9c4709edecd3009bb96c3d4ebc8be"
   baseline [LeanInformationAuditRegTests.SearchReduction.Baseline]
   using [LeanInformationAudit.Tests.SearchReduction.Candidates.intermediate] as arithmeticRestatementResult
-#guard arithmeticRestatementResult.baseline = Run.exhausted
+#guard arithmeticRestatementResult.baseline = Run.incomplete Failure.undecided
 #guard arithmeticRestatementResult.paired = Run.incomplete Failure.isolation
 #guard arithmeticRestatementResult = Verdict.insufficient
 
@@ -170,7 +169,7 @@ open LeanInformationAudit.Tests.SearchReduction
 
 #print axioms aliasResult.baselineProof
 #print axioms squareResult.pairedProof
-#print axioms squareResult.baselineFailureGuard
+#print axioms squareResult.baselineProof
 #print axioms packageResult.baselineProof
 #print axioms aliasResult.presentationConversion
 #print axioms wrapResult.presentationConversion
