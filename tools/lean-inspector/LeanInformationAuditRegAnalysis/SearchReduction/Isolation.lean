@@ -280,14 +280,19 @@ unsafe def onDemandLookup (table : LookupTable)
     (sharedImports? : Option ImportState := none) : IO LookupTable := do
   let cache ← IO.mkRef (none : Option (String × Environment))
   let verified ← IO.mkRef false
-  let retained := if sharedImports?.isSome then table.environment.header.regions.map (·.filePath)
-    else #[]
+  let retained := if sharedImports?.isSome then
+      table.environment.header.regions.foldl (fun names region =>
+        names.insert region.filePath.toString) ({} : Std.HashSet String)
+    else {}
   let close : IO Unit := do
     let previous ← cache.get
     cache.set none
     if let some (_, env) := previous then
+      let started ← IO.monoMsNow
+      lookupPhase s!"candidate/close-start regions={env.header.regions.size} retained={retained.size}"
       for region in env.header.regions.reverse do
-        unless retained.contains region.filePath do region.free
+        unless retained.contains region.filePath.toString do region.free
+      lookupPhase s!"candidate/close-end ms={(← IO.monoMsNow) - started}"
   let acquire (module : Name) (options : Options) : IO Environment := withImporting do
     lookupPhase s!"candidate/import-start module={module}"
     let imports : Array Import := #[{module}]
