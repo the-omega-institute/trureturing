@@ -5,3 +5,7 @@ cas_ref: sha256:310e80f43de4b1c18c338942d537869850e405936bac94114dbc57107fae3075
 coverage_gids: []
 receipts:
   unresolved_subitems: []
+  nonpropositional:
+    justification: 'Operational and interpretation contract only: native permissions, clock types, resource exclusions and spatial scope. It asserts no new mathematical theorem.'
+    previous_atom_id: cd1a0d2141b677700d4d536e1038722e276f5c8af7449f448716b4fb3bb7d576
+    next_atom_id: null
