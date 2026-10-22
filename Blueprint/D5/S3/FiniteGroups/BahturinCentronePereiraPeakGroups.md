@@ -122,6 +122,10 @@ $$\neg (\forall G \in Type,\; [Group\left(G\right)], [Finite\left(G\right)], (\o
 
 *Proof.* Machine-checked in Lean as `D5/S3/FiniteGroups/BahturinCentronePereiraPeakGroups.result` (`✓ std3`). ∎
 
+*Resolves.* `Problems/bahturin-centrone-pereira-2026-peak-group-refutation` (refuted) by `D5/S3/FiniteGroups/BahturinCentronePereiraPeakGroups.result`.
+
+<!-- scribe-open-problem-resolution-v1 {"problem_slug":"bahturin-centrone-pereira-2026-peak-group-refutation","declaration_gid":"D5/S3/FiniteGroups/BahturinCentronePereiraPeakGroups.result","resolution_kind":"refuted"} -->
+
 *Source.* Repository-derived.
 
 *Acknowledgement.* Bahturin, Yuri; Centrone, Lucio; Pereira, Kauê (2026). *Quantum regularity of finite dimensional semisimple algebras*. DOI: [10.48550/arXiv.2608.21936](https://doi.org/10.48550/arXiv.2608.21936). URL: <https://arxiv.org/abs/2608.21936v1>.
