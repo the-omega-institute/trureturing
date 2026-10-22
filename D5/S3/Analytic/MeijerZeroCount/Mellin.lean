@@ -7,6 +7,7 @@
    digest: Mellin inversion identifies the Gamma quotient with its Rodrigues kernel. -/
 
 import D5.S3.Analytic.MeijerZeroCount.Rodrigues
+import D5.S3.Analytic.Asymptotics.FiniteCountertermMellinContinuation
 import Mathlib.Analysis.SpecialFunctions.Gamma.Beta
 import Mathlib.Analysis.SpecialFunctions.ImproperIntegrals
 import Mathlib.Topology.Algebra.Polynomial
@@ -15,7 +16,6 @@ import Mathlib.Data.Nat.Factorial.BigOperators
 open Polynomial Finset Complex MeasureTheory Set Filter
 open scoped BigOperators Topology
 namespace D5.S3.Analytic.MeijerZeroCount.Mellin
-open Defs
 open Defs
 set_option maxHeartbeats 800000
 
@@ -80,9 +80,19 @@ private lemma residue_denominator (N k : ℕ) (hk : k ≤ N) :
 
 private lemma asc_eval_prod (m : ℕ) (z : ℂ) :
     (ascPochhammer ℂ m).eval z = ∏ j ∈ range m, (z+j) := by
-  induction m with
-  | zero => simp
-  | succ m ih => simpa [ascPochhammer_succ_eval, ih, prod_range_succ]
+  have h := ascPochhammer_eval_neg_eq_descPochhammer ℂ (-z) m
+  rw [neg_neg, descPochhammer_eval_eq_prod_range] at h
+  rw [h]
+  have he : (∏ j ∈ range m, (-z - (j : ℂ))) =
+      (-1 : ℂ)^m * ∏ j ∈ range m, (z+j) := by
+    calc
+      _ = ∏ j ∈ range m, -(z + (j : ℂ)) := by
+        apply prod_congr rfl
+        intro j hj
+        ring
+      _ = _ := by rw [prod_neg, card_range]
+  rw [he, ← mul_assoc, ← mul_pow]
+  norm_num
 
 private lemma negative_numerator (n k : ℕ) :
     (ascPochhammer ℂ n).eval (-((n+k : ℕ) : ℂ)) =
@@ -177,16 +187,13 @@ theorem gammaQuot_family (n d : ℕ) (c : ℝ) (hd : 2 ≤ d) (hc : 0 < c)
 set_option maxHeartbeats 800000
 private lemma shifted_norm_mono (a b t : ℝ) (ha : 0 ≤ a) (hab : a ≤ b) :
     ‖(a : ℂ) + t * I‖ ≤ ‖(b : ℂ) + t * I‖ := by
-  have h₁ := Complex.sq_norm ((a : ℂ) + t * I)
-  have h₂ := Complex.sq_norm ((b : ℂ) + t * I)
-  simp [Complex.normSq_apply] at h₁ h₂
-  nlinarith [norm_nonneg ((a : ℂ) + t * I), norm_nonneg ((b : ℂ) + t * I)]
+  rw [Complex.norm_add_mul_I, Complex.norm_add_mul_I]
+  exact Real.sqrt_le_sqrt (add_le_add
+    ((sq_le_sq₀ ha (ha.trans hab)).mpr hab) le_rfl)
 
 private lemma shifted_norm_ge_one (a t : ℝ) (ha : 1 ≤ a) :
     1 ≤ ‖(a : ℂ) + t * I‖ := by
-  have h := Complex.sq_norm ((a : ℂ) + t * I)
-  simp [Complex.normSq_apply] at h
-  nlinarith [norm_nonneg ((a : ℂ) + t * I), sq_nonneg t]
+  exact ha.trans (by simpa using Complex.re_le_norm ((a : ℂ) + t * I))
 
 private lemma shifted_pair_norm (a b t : ℝ) (ha : 1 ≤ a) (hab : a ≤ b) :
     1 + t^2 ≤ ‖(a : ℂ) + t * I‖ * ‖(b : ℂ) + t * I‖ := by
@@ -305,19 +312,12 @@ private lemma hasMellin_f_sum (n d : ℕ) (c : ℝ) (hc : 0 < c) (s : ℂ)
         intro h
         exact hxone (le_antisymm h.2 (le_of_not_gt hxl))
       simp [f, hxout, g, hxout']
-  have hi : MellinConvergent (fun x => ∑ k ∈ u, g k x) s := by
-    unfold MellinConvergent
-    simp only [Finset.smul_sum]
-    exact integrable_finsetSum _ (fun k _ => (hg k).1)
-  have hm : mellin (fun x => ∑ k ∈ u, g k x) s =
-      ∑ k ∈ u, (coeffA n d k : ℂ) / (s+c+n+k) := by
-    unfold mellin
-    simp only [Finset.smul_sum]
-    rw [integral_finsetSum u (fun k _ => (hg k).1)]
-    exact sum_congr rfl (fun k _ => (hg k).2)
+  have hsum :=
+    D5.S3.Analytic.Asymptotics.FiniteCountertermMellinContinuation.hasMellin_finset_sum
+      (u := u) (fun k _ => hg k)
   constructor
-  · exact hi.congr (by filter_upwards [he] with x hx; simp [hx])
-  · exact (integral_congr_ae (by filter_upwards [he] with x hx; simp [hx])).trans hm
+  · exact hsum.1.congr (by filter_upwards [he] with x hx; simp [hx])
+  · exact (integral_congr_ae (by filter_upwards [he] with x hx; simp [hx])).trans hsum.2
 
 private lemma continuousAt_f (n d : ℕ) (c : ℝ) {x : ℝ}
     (hx : x ∈ Ioo (0 : ℝ) 1) : ContinuousAt (f n d c) x := by
