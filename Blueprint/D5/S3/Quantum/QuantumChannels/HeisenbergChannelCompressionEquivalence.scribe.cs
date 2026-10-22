@@ -46,7 +46,10 @@ internal sealed class HeisenbergChannelCompressionEquivalenceDocument : IScribeD
                     + "dimension n into dimension d. A parent POVM for each compressed family is "
                     + "then combined as H_a = sum_r C_rᴴ G^(r)_a C_r. Positivity and the Kraus "
                     + "normalization make H a parent POVM, and its x-marginal is exactly "
-                    + "Φ(M x b)."))));
+                    + "Φ(M x b).",
+                new OpenProblemResolutionClaim(
+                    ProblemSlugRef.Create("uola-et-al-2021-heisenberg-channel-compression-equivalence"),
+                    ResolutionKind.Proved)))));
 
     private static DocumentBlock Node(string id, string title, Formula formula,
         DescribeRole role, AssessedProvenance provenance, string prose,
