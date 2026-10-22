@@ -98,6 +98,10 @@ $$\forall n: \mathbb{N}, (6 \le n) \implies (\exists z: \mathbb{Z}, ((z: \mathbb
 
 *Proof.* Machine-checked in Lean as `D5/S3/Combinatorics/HannaLambertW/OeisA386655LambertWEgfModSix.result` (`✓ std3`). ∎
 
+*Resolves.* `Problems/oeis-a386655-hanna-lambert-w-egf-mod-six` (proved) by `D5/S3/Combinatorics/HannaLambertW/OeisA386655LambertWEgfModSix.result`.
+
+<!-- scribe-open-problem-resolution-v1 {"problem_slug":"oeis-a386655-hanna-lambert-w-egf-mod-six","declaration_gid":"D5/S3/Combinatorics/HannaLambertW/OeisA386655LambertWEgfModSix.result","resolution_kind":"proved"} -->
+
 *Source.* Repository-derived.
 
 *Acknowledgement.* Paul D. Hanna (2025). *OEIS A386655–A386658, Lambert W exponential generating functions*. URL: <https://oeis.org/A386655>.

@@ -18,12 +18,12 @@ internal sealed class OeisA386655LambertWEgfModSix_Document : IScribeDocumentDef
             Node("closedZ", "An integral closed form", ClosedFormula(), "The FORMULA field of OEIS A386655 (unpaginated) reads verbatim: a(n) = Sum_{k=0..n} binomial(n,k) * 2^(k*(k+1)) * (2^k - (n-k))^(n-k-1). Replace 2 by the natural parameter q. Separate the last summand, whose exponent in the source formula is negative, as q^(n*n). Every remaining exponent is a natural number. Subtractions in exponents and in n-k are natural subtraction, followed by the displayed integer cast.", DescribeRole.Definition, AssessedProvenance.FromLiterature(Source)),
             Node("egf_closed", "Integrality for every q and n", ClosedIdentity(), "Lagrange inversion evaluates the coefficients of exp(y W). Binomial expansion and triangular reindexing then give the integral finite sum. This identity also supplies the integer z for each of the four coefficient sequences.", DescribeRole.Theorem, AssessedProvenance.FromRepo(Source)),
             Node("closedZ_reduce", "Period six after the sixth index", ReductionFormula(), "In ZMod(6), x cubed equals x. The binomial transform satisfies B(n+9)=B(n+3), and its endpoint corrections depend only on n modulo six. Casting the resulting identity back to integer remainders gives the displayed formula for every q.", DescribeRole.Theorem, AssessedProvenance.FromRepo(Source)),
-            Node("result", "Hanna's congruence", Disp(ClaimBody()), "The integral closed form and its six-term periodicity reduce the assertion to the six indices from six through eleven, which give the displayed pattern.", DescribeRole.Theorem, AssessedProvenance.FromRepo(Source)))));
+            Node("result", "Hanna's congruence", Disp(ClaimBody()), "The integral closed form and its six-term periodicity reduce the assertion to the six indices from six through eleven, which give the displayed pattern.", DescribeRole.Theorem, AssessedProvenance.FromRepo(Source), new OpenProblemResolutionClaim(ProblemSlugRef.Create("oeis-a386655-hanna-lambert-w-egf-mod-six"), ResolutionKind.Proved)))));
     private static DocumentBlock Node(string name, string title, Formula formula, string prose,
-        DescribeRole role, AssessedProvenance provenance) =>
+        DescribeRole role, AssessedProvenance provenance, OpenProblemResolutionClaim? resolution = null) =>
         Describe.Lean(DescribeId.Create("a386655-" + name.Replace('_', '-').ToLowerInvariant()),
             DeclarationHandle.Create(Prefix + name), H(title), StatementSource.FromAuthor(formula),
-            provenance, Blocks(Paragraph(Text(prose))), role);
+            provenance, Blocks(Paragraph(Text(prose))), role, openProblemResolutionClaim: resolution);
     private static Formula Nat() => Seq(Mathbb, Grp(F.Id("N")));
     private static Formula Z() => Seq(Mathbb, Grp(F.Id("Z")));
     private static Formula Rat() => Seq(Mathbb, Grp(F.Id("Q")));
