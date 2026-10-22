@@ -137,7 +137,7 @@ def Q (A B : VertexOperator ℂ M) (s r : ℤ) (K : ℕ) :
   ∑ ell ∈ Finset.range ((K : ℤ) - r).toNat,
     Ring.choose (-(s : ℂ) / 2) ell • Z ell (R A B (r + ell))
 
-private theorem Q_mode (A B : VertexOperator ℂ M) (s r n : ℤ) (K : ℕ) (x : M) :
+theorem Q_mode (A B : VertexOperator ℂ M) (s r n : ℤ) (K : ℕ) (x : M) :
     ((Q A B s r K) [[n]]) x =
       ∑ ell ∈ Finset.range ((K : ℤ) - r).toNat,
         Ring.choose (-(s : ℂ) / 2) ell • ((R A B (r + ell)) [[n - ell]]) x := by
@@ -311,7 +311,7 @@ private theorem finsum_convolution (a c : ℂ) (v : ℕ → M)
   by_contra outside
   exact hn (by simp [tail n (by have := Finset.mem_range.not.mp outside; omega)])
 
-private theorem R_nat (A B : VertexOperator ℂ M) (r : ℕ) (n : ℤ) (x : M) :
+theorem R_nat (A B : VertexOperator ℂ M) (r : ℕ) (n : ℤ) (x : M) :
     ((R A B r)[[n]]) x =
       ((FieldNormalProductLocality.deltaEnd ^ r)
         (FieldNormalProductLocality.commutator A B)) 0 n x := by
