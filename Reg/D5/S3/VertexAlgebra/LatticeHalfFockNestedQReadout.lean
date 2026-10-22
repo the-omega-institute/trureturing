@@ -647,5 +647,31 @@ theorem actual_law : arena.Law actual := source_bridge.mp (@actual_nested_outer_
 
 end OuterCompletion
 
+namespace AssociatedTaylorCocycle
+structure Input where
+  P : LabelledPolynomial ℂ 3
+  gamma : ℤ
+  u : ℕ
+  v : ℕ
+abbrev signature : Signature := Reg.Support.SingleDependentReadout.signature
+  Unit (fun _ => Input) (fun _ => ℂ)
+def actual : Realization signature := realize signature (fun _ _ x =>
+  ∑ j ∈ Finset.range (x.v + 1),
+    ((x.u + j).choose x.u : ℂ) * collisionTaylor x.P x.gamma (x.u + j) (x.v - j))
+  (fun empty => nomatch empty)
+def arena : Arena where
+  signature := signature
+  Law R := ∀ (_ : Unit) (x : Input),
+    associatedTaylor x.P x.gamma x.u x.v = R.readout () () x
+
+theorem source_bridge : (type_of% (@associatedTaylor_cocycle)) ↔ arena.Law actual := by
+  constructor
+  · intro h _ x
+    exact h x.P x.gamma x.u x.v
+  · intro h P gamma u v
+    exact h () ⟨P, gamma, u, v⟩
+theorem actual_law : arena.Law actual := source_bridge.mp (@associatedTaylor_cocycle)
+end AssociatedTaylorCocycle
+
 end
 end Reg.D5.S3.VertexAlgebra.LatticeHalfFockNestedQReadout

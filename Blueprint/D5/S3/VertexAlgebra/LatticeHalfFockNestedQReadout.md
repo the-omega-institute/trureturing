@@ -66,7 +66,21 @@ nestedLeftReadout and nestedRightReadout retain all four resulting triple words 
 
 This theorem identifies nested ordered rational coefficients. The separate collision-Taylor theorem below proves the finite fractional coordinate cocycle and the signed two-residue balance of the same actual numerator. Identification of these chart residues with the three complete nested Q readouts remains unproved. Consequently Lambda_tar=0, residual-free DE-L, universal negative first-word transport and all-charge induction remain open. GroundFirst is an independent final lifting base. No target vacuum, positive definiteness, energy eigenstate, or compatibility law is assumed.
 
-**Theorem 1.4 (The same actual numerator satisfies the finite coordinate cocycle and signed collision balance).**
+**Theorem 1.4 (Associated fractional Taylor coordinates).**
+
+Lean statement: `D5/S3/VertexAlgebra/LatticeHalfFockNestedQReadout.associatedTaylor_cocycle`
+
+*Proof.* Machine-checked in Lean as `D5/S3/VertexAlgebra/LatticeHalfFockNestedQReadout.associatedTaylor_cocycle` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Acknowledgement.* Bojko Bakalov and Victor G. Kac (2004). *Twisted Modules over Lattice Vertex Algebras*. DOI: [10.1142/9789812702562_0001](https://doi.org/10.1142/9789812702562_0001). URL: <https://arxiv.org/abs/math/0402315v1>.
+
+*Commentary.*
+
+For arbitrary finite signed Laurent numerator and signed lift gamma, the associated coefficient is the finite sum of the common collisionTaylor coefficients weighted by choose(u+j,u). The two natural Taylor orders are independent. This coordinate identity supplies the finite fused Vandermonde contraction.
+
+**Theorem 1.5 (The same actual numerator satisfies the finite coordinate cocycle and signed collision balance).**
 
 Lean statement: `D5/S3/VertexAlgebra/LatticeHalfFockNestedQReadout.actual_collision_taylor_balance`
 
@@ -94,4 +108,5 @@ These are finite chart identities for the actual numerator. sameNumeratorCollisi
 - Truth anchor: `D5/S3/VertexAlgebra/LatticeHalfFockNestedQReadout.actual_nested_ordered_readouts`
 - Truth anchor: `D5/S3/VertexAlgebra/LatticeHalfFockNestedQReadout.actual_nested_outer_completion`
 - Truth anchor: `D5/S3/VertexAlgebra/LatticeHalfFockNestedQReadout.actual_supported_nested_extraction`
+- Truth anchor: `D5/S3/VertexAlgebra/LatticeHalfFockNestedQReadout.associatedTaylor_cocycle`
 - Dependency: [D5/S3/VertexAlgebra/LatticeHalfFockClearedTaylorReadout](LatticeHalfFockClearedTaylorReadout.md)

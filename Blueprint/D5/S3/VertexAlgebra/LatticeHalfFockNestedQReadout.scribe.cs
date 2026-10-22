@@ -52,6 +52,14 @@ internal sealed class LatticeHalfFockNestedQReadoutDocument : IScribeDocumentDef
                     Paragraph(Text("This theorem identifies nested ordered rational coefficients. The separate collision-Taylor theorem below proves the finite fractional coordinate cocycle and the signed two-residue balance of the same actual numerator. Identification of these chart residues with the three complete nested Q readouts remains unproved. Consequently Lambda_tar=0, residual-free DE-L, universal negative first-word transport and all-charge induction remain open. GroundFirst is an independent final lifting base. No target vacuum, positive definiteness, energy eigenstate, or compatibility law is assumed."))),
                 DescribeRole.Theorem),
             Describe.Lean(
+                DescribeId.Create("associated-taylor-cocycle"),
+                DeclarationHandle.Create("D5/S3/VertexAlgebra/LatticeHalfFockNestedQReadout.associatedTaylor_cocycle"),
+                H("Associated fractional Taylor coordinates"),
+                StatementSource.WithoutFormula(),
+                AssessedProvenance.FromRepo(LibraryNoteRef.Create("D5/L/VertexAlgebra/bakalovkac2004lattice")),
+                Blocks(Paragraph(Text("For arbitrary finite signed Laurent numerator and signed lift gamma, the associated coefficient is the finite sum of the common collisionTaylor coefficients weighted by choose(u+j,u). The two natural Taylor orders are independent. This coordinate identity supplies the finite fused Vandermonde contraction."))),
+                DescribeRole.Theorem),
+            Describe.Lean(
                 DescribeId.Create("actual-collision-taylor-balance"),
                 DeclarationHandle.Create("D5/S3/VertexAlgebra/LatticeHalfFockNestedQReadout.actual_collision_taylor_balance"),
                 H("The same actual numerator satisfies the finite coordinate cocycle and signed collision balance"),

@@ -1542,7 +1542,7 @@ private theorem fractional_coordinate_cocycle (a b : ℂ) (u v : ℕ) :
   rw [product]
   ring
 
-private theorem associatedTaylor_cocycle (P : LabelledPolynomial ℂ 3)
+theorem associatedTaylor_cocycle (P : LabelledPolynomial ℂ 3)
     (gamma : ℤ) (u v : ℕ) :
     associatedTaylor P gamma u v =
       ∑ j ∈ Finset.range (v + 1),
