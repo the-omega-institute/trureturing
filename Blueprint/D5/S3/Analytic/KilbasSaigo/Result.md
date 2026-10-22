@@ -10,7 +10,13 @@ Lean statement: `D5/S3/Analytic/KilbasSaigo/Result.result`
 
 *Proof.* Machine-checked in Lean as `D5/S3/Analytic/KilbasSaigo/Result.result` (`✓ std3`). ∎
 
+*Resolves.* `Problems/boudabsa-simon-2021-kilbas-saigo-hyperbolic-bounds` (proved) by `D5/S3/Analytic/KilbasSaigo/Result.result`.
+
+<!-- scribe-open-problem-resolution-v1 {"problem_slug":"boudabsa-simon-2021-kilbas-saigo-hyperbolic-bounds","declaration_gid":"D5/S3/Analytic/KilbasSaigo/Result.result","resolution_kind":"proved"} -->
+
 *Source.* Repository-derived.
+
+*Acknowledgement.* L. Boudabsa and T. Simon (2021). *Some properties of the Kilbas–Saigo function*. DOI: [10.3390/math9030217](https://doi.org/10.3390/math9030217). URL: <https://arxiv.org/abs/2012.05666>.
 
 *Commentary.*
 

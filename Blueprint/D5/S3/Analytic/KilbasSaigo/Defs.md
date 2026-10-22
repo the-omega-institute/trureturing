@@ -10,7 +10,7 @@ Lean statement: `D5/S3/Analytic/KilbasSaigo/Defs.ksCoeff`
 
 *Formalization.* `D5/S3/Analytic/KilbasSaigo/Defs.ksCoeff` (`✓ std3`).
 
-*Source.* Repository-derived.
+*Citation.* L. Boudabsa and T. Simon (2021). *Some properties of the Kilbas–Saigo function*. DOI: [10.3390/math9030217](https://doi.org/10.3390/math9030217). URL: <https://arxiv.org/abs/2012.05666>.
 
 *Commentary.*
 
@@ -22,7 +22,7 @@ Lean statement: `D5/S3/Analytic/KilbasSaigo/Defs.kilbasSaigo`
 
 *Formalization.* `D5/S3/Analytic/KilbasSaigo/Defs.kilbasSaigo` (`✓ std3`).
 
-*Source.* Repository-derived.
+*Citation.* L. Boudabsa and T. Simon (2021). *Some properties of the Kilbas–Saigo function*. DOI: [10.3390/math9030217](https://doi.org/10.3390/math9030217). URL: <https://arxiv.org/abs/2012.05666>.
 
 *Commentary.*
 
@@ -34,7 +34,7 @@ Lean statement: `D5/S3/Analytic/KilbasSaigo/Defs.claim`
 
 *Formalization.* `D5/S3/Analytic/KilbasSaigo/Defs.claim` (`✓ std3`).
 
-*Source.* Repository-derived.
+*Citation.* L. Boudabsa and T. Simon (2021). *Some properties of the Kilbas–Saigo function*. DOI: [10.3390/math9030217](https://doi.org/10.3390/math9030217). URL: <https://arxiv.org/abs/2012.05666>.
 
 *Commentary.*
 
