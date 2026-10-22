@@ -22,7 +22,7 @@ namespace Classification
   finiteAnchor := inferInstance
 
 def actual : Realization signature := realize signature
-  (fun i _ R => if i = 0 then decide (CopyQExpressible R) else decide (Tail R)) (fun e => nomatch e)
+  (fun i _ R => match i.val with | 0 => decide (CopyQExpressible R) | _ => decide (Tail R)) (fun e => nomatch e)
 
 @[reducible] def arena : Arena where
   signature := signature
@@ -30,6 +30,7 @@ def actual : Realization signature := realize signature
 
 private theorem positive : arena.Law actual := by
   intro R
+  change decide (CopyQExpressible R) = true ↔ decide (Tail R) = true
   simpa only [actual, realize, ite_true, show (1 : Fin 2) ≠ 0 by decide, ite_false, decide_eq_true_eq]
     using (proposition64 R)
 
@@ -60,7 +61,7 @@ def evidence : Registration arena (type_of% (@proposition64)) where
   actual := actual
   bridge := by
     change (∀ R : Region, CopyQExpressible R ↔ Tail R) ↔ _
-    simp only [actual, realize, ite_true, show (1 : Fin 2) ≠ 0 by decide, ite_false, decide_eq_true_eq]
+    simp only [actual, realize, Fin.val_zero, Fin.val_one, ite_true, show (1 : Fin 2) ≠ 0 by decide, ite_false, decide_eq_true_eq]
   variation := ⟨positive, changed 0, changed_negative 0⟩
   sensitivity := ⟨fun i => ⟨changed i,
     fun j h => by
@@ -103,7 +104,17 @@ def registration : LeanInformationAudit.Contract.Registration.{_,_,_,0,0,0,_,_,_
     owner := `D5.S3.ConceptDynamics.Spacetime.CopyRegionExpressibility
     definition := none
     coordinates := #[]
-    readouts := #[{ path := #["body","fn","arg"], stateBinder := 0, functionOperand := false, stateOperand := some #["arg"], booleanPredicate := true }, { path := #["body","arg"], stateBinder := 0, functionOperand := false, stateOperand := some #["arg"], booleanPredicate := true }] }
+    readouts := #[{
+      path := #["body","fn","arg"]
+      stateBinder := 0
+      functionOperand := false
+      stateOperand := some #["arg"]
+      booleanPredicate := true }, {
+      path := #["body","arg"]
+      stateBinder := 0
+      functionOperand := false
+      stateOperand := some #["arg"]
+      booleanPredicate := true }] }
   continuation := .unknown
   familyRecord := none
   options := #[] }
@@ -123,7 +134,7 @@ namespace ThreeWay
   finiteAnchor := inferInstance
 
 def actual : Realization signature := realize signature
-  (fun i _ R => if i = 0 then decide (CopyQExpressible R) else if i = 1 then decide (QExpressible R) else decide (Tail R)) (fun e => nomatch e)
+  (fun i _ R => match i.val with | 0 => decide (CopyQExpressible R) | 1 => decide (QExpressible R) | _ => decide (Tail R)) (fun e => nomatch e)
 
 @[reducible] def arena : Arena where
   signature := signature
@@ -131,6 +142,8 @@ def actual : Realization signature := realize signature
 
 private theorem positive : arena.Law actual := by
   intro R
+  change decide (CopyQExpressible R) = true ↔
+    decide (QExpressible R) = true ∧ decide (Tail R) = true
   simpa only [actual, realize, ite_true, show (1 : Fin 3) ≠ 0 by decide,
       show (2 : Fin 3) ≠ 0 by decide, show (2 : Fin 3) ≠ 1 by decide, ite_false, decide_eq_true_eq]
     using (proposition64_three_way R)
@@ -162,7 +175,7 @@ def evidence : Registration arena (type_of% (@proposition64_three_way)) where
   actual := actual
   bridge := by
     change (∀ R : Region, CopyQExpressible R ↔ QExpressible R ∧ Tail R) ↔ _
-    simp only [actual, realize, ite_true, show (1 : Fin 3) ≠ 0 by decide,
+    simp only [actual, realize, Fin.val_zero, Fin.val_one, ite_true, show (1 : Fin 3) ≠ 0 by decide,
       show (2 : Fin 3) ≠ 0 by decide, show (2 : Fin 3) ≠ 1 by decide, ite_false, decide_eq_true_eq]
   variation := ⟨positive, changed 0, changed_negative 0⟩
   sensitivity := ⟨fun i => ⟨changed i,
@@ -206,7 +219,22 @@ def registration : LeanInformationAudit.Contract.Registration.{_,_,_,0,0,0,_,_,_
     owner := `D5.S3.ConceptDynamics.Spacetime.CopyRegionExpressibility
     definition := none
     coordinates := #[]
-    readouts := #[{ path := #["body","fn","arg"], stateBinder := 0, functionOperand := false, stateOperand := some #["arg"], booleanPredicate := true }, { path := #["body","arg","fn","arg"], stateBinder := 0, functionOperand := false, stateOperand := some #["arg"], booleanPredicate := true }, { path := #["body","arg","arg"], stateBinder := 0, functionOperand := false, stateOperand := some #["arg"], booleanPredicate := true }] }
+    readouts := #[{
+      path := #["body","fn","arg"]
+      stateBinder := 0
+      functionOperand := false
+      stateOperand := some #["arg"]
+      booleanPredicate := true }, {
+      path := #["body","arg","fn","arg"]
+      stateBinder := 0
+      functionOperand := false
+      stateOperand := some #["arg"]
+      booleanPredicate := true }, {
+      path := #["body","arg","arg"]
+      stateBinder := 0
+      functionOperand := false
+      stateOperand := some #["arg"]
+      booleanPredicate := true }] }
   continuation := .unknown
   familyRecord := none
   options := #[] }

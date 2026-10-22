@@ -223,7 +223,7 @@ def CopySliceReadoutLaw : Prop := ∀ (R : Region) (n : Nat) (C : CopyTerm n), 0
 /-- The finite joint saturation principle used after slice normalization. -/
 def CopySaturationLaw : Prop := ∀ {ι : Type} [Fintype ι] (w : ι → Word),
   (∀ i, ∀ X : Bal, ∃ Y : Bal, contextDenote nativeSignature (w i) X = some Y) →
-  ∃ c : Int, ∀ (p : Fin 3 → Int) (t t' : Int), t < c → t' < c →
+  ∃ c : Int, c ≤ 0 ∧ ∀ (p : Fin 3 → Int) (t t' : Int), t < c → t' < c →
     ∃ X Y : Bal, SelectedVariant X Y p t t' ∧
       ∀ i, wordReadout (w i) X = wordReadout (w i) Y
 
@@ -277,7 +277,7 @@ theorem copy_saturation_law : CopySaturationLaw := by
   obtain ⟨K, hK⟩ := Finite.exists_ge (fun i => timeThreshold (v i))
   let Qs := Finset.univ.toList.flatMap (fun i => requiredPredicates (v i))
   obtain ⟨c, hc, hs⟩ := finite_joint_input Qs (min K 0)
-  refine ⟨c, fun p t t' ht ht' => ?_⟩
+  refine ⟨c, hc.trans (min_le_right K 0), fun p t t' ht ht' => ?_⟩
   obtain ⟨X, Y, pair, h, hx, hy, sat⟩ := hs p t t' ht ht'
   refine ⟨X, Y, pair, fun i => ?_⟩
   unfold wordReadout
@@ -327,7 +327,7 @@ theorem sum_word_readouts_implies_tail
     (w : ι → Word)
     (hw : ∀ i, ∀ X : Bal, ∃ Y : Bal, contextDenote nativeSignature (w i) X = some Y)
     (hsum : ∀ X : Bal, regionReadout R X = ∑ i, wordReadout (w i) X) : Tail R := by
-  obtain ⟨c, hc⟩ := copy_saturation_law (ι := ι) w hw
+  obtain ⟨c, _, hc⟩ := copy_saturation_law (ι := ι) w hw
   refine ⟨c, fun p t t' ht ht' => ?_⟩
   obtain ⟨X, Y, pair, same⟩ := hc p t t' ht ht'
   have values : regionReadout R X = regionReadout R Y := by
