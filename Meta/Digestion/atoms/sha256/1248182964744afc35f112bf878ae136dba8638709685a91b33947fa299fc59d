@@ -1,0 +1,15 @@
+**Definition 10.3 (legitimate one-step same-source port).** For a fixed public
+action $e\in\{J,M\}$, or for an action selected only from $R$, grant the
+following conditional interface on the actual run:
+
+$$
+\operatorname{Clock8Read}_e(W,7,Q_7,R)
+ =\bigl(W,8,eQ_7,R\mathbin{\|}(8,e,f_e(W))\bigr),
+\tag{10.6}
+$$
+
+and let the returned scalar be the exact $f_e(W)$. The port preserves the
+same $W,g,d$, grants no reset, second source, simultaneous counterfactual
+reply, unknown seed, decoder oracle or future-call right. It is an action/read/
+retention premise, not a record-only computation of $f_e$.
+

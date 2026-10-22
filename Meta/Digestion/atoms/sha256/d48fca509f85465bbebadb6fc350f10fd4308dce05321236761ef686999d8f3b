@@ -1,0 +1,45 @@
+**Definition 1.1 (source, clock and exact observation).** Fix an integer
+$m\ge3$. Throughout this companion, the source is literally the infinite
+ordered address tree $\mathcal P=\{L,R\}^{*}$ with root $o=\varepsilon$,
+unit symmetric parent--child seam rates and counting measure. The root
+has degree two and every nonroot has degree three. Retain the functions
+$q:\mathcal P\to C_m$ and $\delta:\mathcal P\to\{-1,0,+1\}$ of
+[V Definition 120.3, (120.12)](FIB_ATOM_RECURSIVE_HOLOGRAPHIC_BOUNDARY_GEOMETRY_CONTINUATION_V.md).
+In particular, their ordered child recursion, rather than an arbitrary
+cycle colouring, is part of the assumptions.
+
+Let $X$ have the conservative continuous-time law $\mathbf P_p$ from the
+deterministic start $p$, with backward generator $\mathscr G=-L_\infty$,
+in the unit counting clock of V Definition 121.1. Write
+
+$$
+n=d(p)=|p|,\qquad \phi(p)=2^{-|p|},\qquad
+O(p)=(q(p),d(p))\in E=C_m\times\mathbb N_0.
+\tag{1.1}
+$$
+
+The field and source are those of
+[Continuation Definitions 55.1--55.2 and Theorem 55.3](FIB_ATOM_RECURSIVE_HOLOGRAPHIC_BOUNDARY_GEOMETRY_CONTINUATION.md).
+The present probability law is the kinetic law alone, with neither a
+potential multiplier nor an amplitude evolution. The observation is the
+exact continuous path of $O$, including time zero and every jump time.
+Replacing depth by $\phi$ gives the same experiment only for exact
+noiseless field values. Every actual seam changes depth by one, including
+a seam that preserves $q$.
+
+Use the path spaces and coordinate sigma algebras of V Definition 121.1.
+Their full observed laws are denoted by $\mathsf L_p^T$ on $[0,T]$ and
+$\mathsf L_p^\infty$ on $[0,\infty)$. For probabilities on the same
+measurable space the convention is
+
+$$
+\|\mu-\nu\|_{\mathrm{TV}}=\sup_A|\mu(A)-\nu(A)|\in[0,1].
+\tag{1.2}
+$$
+
+All statements below quantify over deterministic starts in this fixed
+infinite law. Restricting allowed starts does not restrict the subsequent
+chain to a finite domain. No initial mixtures, changed seam rates,
+changed clock, masses, weights, potential, killing, noisy observations or
+discrete sampling are implicit.
+

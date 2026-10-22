@@ -1,0 +1,18 @@
+**Corollary 9.5 (germ and center cardinalities).** After shrinking the
+original germ radius so that its bases lie in $V$, for every sufficiently
+small $0<|h|$,
+
+$$
+C(y(h))=\{W_+(h),W_-(h),Z(y(h))\},
+$$
+
+and both $f_J$ and $f_M$ have three singleton response classes. At the
+center,
+
+$$
+C(y_3)=\{W_3,Z(y_3)\}
+$$
+
+and each response has two singleton classes. There is no assertion of three
+worlds, or constant cardinality, at every base in $V$. $\square$
+
