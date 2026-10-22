@@ -1787,3 +1787,420 @@ original independent-pair existence problem with exactly the
 undecided boundaries stated in Corollary 10.15.
 
 ## 追加锚（本行以下为增补区）
+## 11. An evaluated algebraic candidate cover on the entire response plane
+
+**Definition 11.1 (Full-domain assumptions and reused correspondence).**
+Throughout this section the worlds, matrices, clocks, readings, entire
+children and independent-pair predicate are exactly (10.1)–(10.6).
+In particular the target remains
+
+$$
+\exists p,v\in\mathbb R:\quad p\ne24,\quad\mathfrak I(p,v).
+\tag{11.1}
+$$
+
+There is no relation between the two common terminal values. The two
+within-pair inequalities are inequalities of complete worlds. The
+four drifts are arbitrary and independently selected. Every world uses
+one entire nonzero real polynomial of degree at most three, including
+lower degrees, zeros at sampled clocks and repeated roots.
+
+Use $D,N_i,F,G,H,Z_0,\ell_1,\ell_0$ from (10.11), (10.17),
+(10.23) and (10.29), now with $p,v$ algebraically independent.
+The identities and degree bound in Lemmas 10.9 and 10.11 hold before
+restriction to a singular line. Write
+
+$$
+R=\mathscr R=\operatorname{Res}_d(F,G)/(D^8H^2),\qquad
+c=[x^{18}]R,\qquad K=\mathbb Q(p,v).
+\tag{11.2}
+$$
+
+The carrier is a necessary carrier, not an enumeration of realizable
+worlds. The exact inverse and all its guards remain Lemma 10.5.
+
+**Definition 11.2 (Two actual terminal elements).** Whenever the stated
+inverses exist, form
+
+$$
+\begin{gathered}
+\widehat R=R/c,\qquad A_K=K[x]/(\widehat R),\qquad
+ d_R=-\ell_0\ell_1^{-1},\qquad n_i=N_i(x,d_R),\\
+ u_R=-d_RD\,n_0^{-1},\qquad
+ \alpha_R=(24-d_R)D\,n_1^{-1},\qquad h_R=n_7D^{-1},\\
+ A_R=d_R+\left\{\frac{1+u_R}{2}+4x-2\alpha_R\right\}h_R,\qquad
+ M_R=d_R+(3+2x)h_R.
+\end{gathered}
+\tag{11.3}
+$$
+
+All elements are represented in the basis $1,x,\ldots,x^{17}$.
+For an element $z$, let $\mu_z$ be its multiplication matrix, with
+column $k+1$ the remainder of $x^kz$ modulo $\widehat R$.
+Every inverse in (11.3) means
+$\operatorname{adj}(\mu_z)/\det(\mu_z)$ applied to the vector of $1$.
+Thus this is a specified finite rational construction rather than an
+unspecified choice of roots. Define
+
+$$
+ Q_J(Y)=\det(YI-\mu_{A_R}),\qquad
+ Q_M(Y)=\det(YI-\mu_{M_R}),\qquad
+ \delta_J=\operatorname{disc}_YQ_J,\quad
+ \delta_M=\operatorname{disc}_YQ_M.
+\tag{11.4}
+$$
+
+The subscripts refer to the two actual clock-seven actions.
+
+**Lemma 11.3 (Exact finite evaluation of both terminal elements).**
+The rational constructions in (11.2)–(11.4) are defined over $K$.
+They have a legitimate reduction modulo $179$ at $(p,v)=(1,123)$.
+At this reduction $c=146$, the monic carrier is exactly $R_*$ in
+(10.31), and the terminal-M polynomial is exactly (10.34).
+The terminal-J polynomial is
+
+$$
+\begin{aligned}
+ Q_{J,*}(Y)={}&Y^{18}+114Y^{17}+53Y^{16}+104Y^{15}+95Y^{14}
+ +9Y^{13}+138Y^{12}+58Y^{11}\\
+ &+93Y^{10}+55Y^9+4Y^8+44Y^7+84Y^6+52Y^5
+ +14Y^4\\
+ &+92Y^3+156Y^2+17Y+111.
+\end{aligned}
+\tag{11.5}
+$$
+
+Both characteristic polynomials are squarefree. Their discriminants
+in $\mathbb F_{179}$ are respectively $20$ and $68$.
+
+Proof. Here the coefficient ring is
+$\mathbb Z_{(179)}[p,v]$; no homomorphism from $\mathbb Q$ to a
+finite field is asserted. Every fixed numerical denominator is a
+unit in this ring. The independent parameters can be specialized
+without using a singular-line equation.
+
+The following monic gcds, together with (10.31), specify the needed
+finite inversions:
+
+$$
+\begin{gathered}
+\gcd(R_*,R_*')=1,\quad
+\gcd(\ell_{1,*},R_*H_*)=1,\quad
+\gcd(R_*,H_*D)=1,\quad\gcd(H_*,Z_{0,*})=1,\\
+\gcd(R_*,n_{0,*})=1,\qquad
+\gcd(R_*,n_{1,*})=1.
+\end{gathered}
+\tag{11.6}
+$$
+
+Here $H_*=85x^3+78x^2-85x+65$ and
+$d_*=-\ell_{0,*}/\ell_{1,*}$ in the carrier algebra, so
+$n_{i,*}=N_{i,*}(x,d_*)$. The first four gcds also occur in
+(10.32). The last two use the same fixed polynomials (10.11).
+These gcds imply that all multiplication determinants used for
+inversion in (11.3) are nonzero at the reduction.
+
+For completeness, the coefficient calculation can be specified by
+finite polynomial arithmetic without a real-root or realizability
+premise. Substitute $p=1,v=123$ in (10.11) and (10.17), reduce
+modulo $179$, and form the fixed degree-$(2,4)$ Sylvester
+determinant. Exact division gives $146D^8H_*^2R_*$. The degree of
+this identity is at most $48$. The four-by-five matrix (10.29)
+gives $\ell_{1,*},\ell_{0,*}$ of degree $32$. Euclidean division
+of the pairs in (11.6) gives monic final nonzero remainder $1$.
+Evaluation at $d_*$ also gives $F_*(x,d_*)=G_*(x,d_*)=0$
+in the carrier algebra.
+
+Here is an explicit recurrence specifying the remaining coefficient
+arithmetic. Write $R_*=x^{18}+c_1x^{17}+\cdots+c_{18}$ and
+$s_0=18$. Its root power sums for $1\le k\le17$ are
+
+$$
+ s_k=-\sum_{j=1}^{k-1}c_js_{k-j}-kc_k.
+\tag{11.7}
+$$
+
+For either $z=A_*$ or $z=M_*$, reduce $z^k$ modulo $R_*$,
+write that remainder as $\sum_{i=0}^{17}z_{ki}x^i$, and put
+$t_k=\sum_i z_{ki}s_i$ for $1\le k\le18$. Starting with
+$q_0=1$, set
+
+$$
+ q_k=-k^{-1}\sum_{i=1}^kq_{k-i}t_i,\qquad 1\le k\le18.
+\tag{11.8}
+$$
+
+The inverses of $1,\ldots,18$ exist modulo $179$. These Newton
+identities give $Y^{18}+q_1Y^{17}+\cdots+q_{18}$.
+For $A_*$ their coefficients in ascending order are
+
+$$
+(111,17,156,92,14,52,84,44,4,55,93,58,138,9,95,104,53,114,1).
+\tag{11.9}
+$$
+
+For $M_*$ they are those in (10.34). Euclidean division against
+their derivatives gives gcd one; the signed Sylvester determinants
+$(-1)^{153}\operatorname{Res}(Q,Q')$ are $20,68$.
+The recurrence is the elementary Newton trace computation of the
+specified multiplication matrices, so it calculates the same
+characteristic polynomials as (11.4).
+
+The generic degree of $R$ is at most eighteen by Lemma 10.9, and
+$c$ has nonzero reduction $146$, so its generic degree and the
+reduced degree are both eighteen. $H$ has constant nonzero leading
+coefficient $-810$ and $D$ is monic of degree three. The degree of
+$\ell_1$ is at most $32$, attained at this reduction. Consequently
+the displayed gcd nonvanishings do not rely on replacing a fixed
+Sylvester determinant by a lower-degree determinant at a degree drop.
+For $(H,Z_0)$ the full degree three of $H$ alone suffices: a drop
+of the second degree multiplies its actual resultant by a power of
+the nonzero leading coefficient of $H$.
+
+Localize the coefficient ring at the finitely many multiplication
+determinants and $c$ whose reductions are nonzero. All adjugate
+inversions, monic remainders, characteristic determinants and their
+discriminants commute with the stated reduction. Their nonzero
+reductions prove the required characteristic-zero nonvanishings.
+This proves the lemma over the whole coefficient field $K$.
+The finite-field point is used only for nonvanishing; no strict real
+world at this point is asserted. ∎
+
+**Definition 11.4 (A sufficient exceptional polynomial and two collision
+numerators).** The following construction specifies polynomials over
+$\mathbb Q[p,v]$; it does not claim irreducibility or minimality.
+Take the polynomial nonvanishing conditions
+
+$$
+\begin{gathered}
+ c,\quad \operatorname{Res}_x(R,R'),\quad
+ \operatorname{Res}_x(\ell_1,RH),\quad
+ \operatorname{Res}_x(R,HD),\quad \operatorname{Res}_x(H,Z_0).
+\end{gathered}
+\tag{11.10}
+$$
+
+Use the fixed Sylvester degrees from the generic input polynomials.
+In addition take the two rational nonvanishing conditions
+$\det\mu_{n_0},\det\mu_{n_1}$.
+Construct all rational functions by the adjugate rule in Definition
+11.2, monic polynomial division, and determinant expansion, keeping
+numerator/denominator representations before cancellation. Let $B$
+be the product of the nonzero numerators in this list and all
+denominators occurring in these constructions, including those of
+$Q_J,Q_M,\delta_J,\delta_M$. Constant nonzero factors may be
+retained. Equivalently any nonzero constant multiple of this product
+has the same role. Write the resulting discriminant representations
+as
+
+$$
+ \delta_J=P_J/T_J,\qquad \delta_M=P_M/T_M,
+ \qquad T_JT_M\mid B
+\tag{11.11}
+$$
+
+with multiplicities in $B$ increased if needed. This last convention
+only repeats existing nonzero denominator factors.
+Lemma 11.3 proves $B,P_J,P_M$ are all nonzero polynomials: their
+specified numerator and denominator factors have nonzero reductions
+at $(1,123)$ modulo $179$.
+
+Every failed condition is retained. In particular $B=0$ includes
+leading-degree loss, repeated carrier roots, the linear-lift base
+locus, zero-drift obstructions, and failed carrier inversions. A zero
+of $B$ is not asserted to contain an actual world or collision.
+
+**Theorem 11.5 (Full-plane whole-child separation and joint candidate
+cover).** Let $D_J,D_M$ be the actual off-diagonal images in F,
+Definition 33.1, on the whole real domain $p\ne24$. Then
+
+$$
+\begin{aligned}
+ D_J&\subseteq\{B=0\}\cup\{P_J=0\},\\
+ D_M&\subseteq\{B=0\}\cup\{P_M=0\},\\
+ D_J\cap D_M&\subseteq
+ \{B=0\}\ \cup\ \{P_J=P_M=0\}.
+\end{aligned}
+\tag{11.12}
+$$
+
+All sets here are intersected with $p\ne24$.
+The right-hand side of the last inclusion is a proper real algebraic
+subset of the response plane. Its complement is a nonempty dense
+open set on which at least one of the two terminal maps is injective
+on the entire original child. On
+$BP_JP_M\ne0$ both terminal maps are injective on that entire child.
+
+Proof. First fix an arbitrary real off-24 base with $B\ne0$ and an
+arbitrary actual world of its entire child. If $d=0$, Lemma 10.7
+would give $H(x)=Z_0(x)=0$, contradicting the nonvanishing resultant
+in (11.10). Thus $d\ne0$ is a consequence at these bases, not an
+original-domain restriction.
+
+If $H(x)=0$, the formulas for $F,G$ show that $(x,0)$ is also a
+common finite zero. Lemma 10.11 gives $\ell_0(x)=0$.
+Nonvanishing of $\operatorname{Res}_x(\ell_1,RH)$ gives
+$\ell_1(x)\ne0$, and its application to the actual $(x,d)$ gives
+$d=-\ell_0(x)/\ell_1(x)=0$, a contradiction. Therefore $H(x)\ne0$.
+We also have $D(x)>0$. The fixed resultant identity in (11.2)
+now gives $R(x)=0$, even if a leading coefficient of $F$ or $G$
+specializes to zero. The same common-root identity gives $d=d_R(x)$.
+Every actual world is therefore carried, including every regular
+companion and any singular, golden or exceptional source at this base.
+
+At an actual world, clock zero gives
+$u=1/U=-dD/N_0$; clock one gives $j/U=(24-d)D/N_1$; and $r/U=x-j/U$.
+Consequently
+
+$$
+ \frac{T+2j+4r}{U}=\frac{1+u}{2}+4x-2\frac jU.
+\tag{11.13}
+$$
+
+Thus the two elements in (11.3) evaluate to precisely the actual
+$a(W),m(W)$. No inverse of $N_7$, a gain leading coefficient or a
+gain-root difference has been used.
+
+The specialized algebra has eighteen distinct carrier roots by
+(11.10). Over an algebraic closure its multiplication characteristic
+polynomials are the products of $Y-A_R(\xi)$ and $Y-M_R(\xi)$
+over those roots $\xi$. If $P_J\ne0$, the first eighteen values
+are distinct. Equal actual J values then force equal $x$, hence
+equal $d_R(x)$, hence identical complete worlds by Lemma 10.5.
+The same argument with $P_M\ne0$ proves terminal-M injectivity.
+This establishes the first two inclusions in (11.12).
+
+For independent pairs at one base outside $B=0$, J noninjectivity
+requires $P_J=0$ and M noninjectivity independently requires $P_M=0$.
+The common values and the chosen pairs need not be related. This
+proves the last inclusion with the original four-endpoint quantifiers.
+
+Finally $B,P_J,P_M$ are nonzero polynomials by Lemma 11.3 and
+Definition 11.4. The last candidate set is the simultaneous zero
+set of $BP_J$ and $BP_M$, contained in the zero set of the nonzero
+polynomial $BP_JP_M$. A nonzero polynomial over $\mathbb R$
+cannot vanish on an open rectangle, as follows by applying the
+univariate root bound successively to its coefficients. Its zero
+set is closed with empty interior. The claimed complement is
+therefore nonempty, open and dense, also after removing $p=24$.
+No finite-field root or complex carrier point has been promoted to
+an actual original world. ∎
+
+**Corollary 11.6 (Exceptional strata and exact remaining obligation).**
+Theorem 11.5 supplies an evaluated necessary candidate cover on the
+whole original response plane. It does not supply an actual terminal-M
+pair, a joint witness or uniform exclusion. It does not prove that
+$P_J$ and $P_M$ are coprime, that their common zero set is finite,
+or that any of their real common zeros is feasible.
+
+Proof. Bases with $B=0$ are retained in full, with every possible
+endpoint stratum. The zero-drift examples in the supplied local
+ordinary source are therefore not erased. The same applies to
+leading-degree drops, repeated carrier roots, failed linear lifts,
+any common or vertical polynomial factor and any failed denominator.
+Outside this exceptional set the remaining obligation is the strict
+real realization of independently chosen off-diagonal J and M pairs
+at $P_J=P_M=0$. A shared algebraic component of these two numerators
+has not been excluded and remains in that displayed intersection.
+A component of $B=0$, including any vertical component, remains in
+the first part of the union. No assertion of enumeration or feasibility
+is implicit in either part.
+
+The carrier equations are only necessary; reconstruction and all
+strict guards are still required at any candidate. Complex projection,
+a real algebraic candidate and an actual four-world joint witness
+are different conditions. Theorem 11.5 proves only the first necessary
+restriction together with entire-child injectivity off its support.
+The prior finite singular-line restrictions and the prior local
+zero-drift existence retain their exact scopes. The original completion
+criterion is still (11.1), with all its original strata and independent
+pairs. ∎
+
+**Theorem 11.7 (A nonempty strict rational child outside the cover).**
+At the exact real base
+
+$$
+ p_0=9918/121,\qquad v_0=1068459/2420,
+\tag{11.14}
+$$
+
+the entire child $C(p_0,v_0)$ is nonempty, and both $a$ and $m$
+are injective on that entire child.
+
+Proof. Use the strict complete world
+
+$$
+ b=1,\quad r=1/2,\quad d=3933/121,\qquad
+ g(s)=(1199s^3-9783s^2+24133s-19665)/605.
+\tag{11.15}
+$$
+
+This is the same world as X, Proposition 6.2; no new collision or
+new world construction is asserted. Its traces at clocks zero through
+six are $(1,5/4,2,7/4,3,19/4,31/4)$. Its gain samples at clocks
+zero through seven are
+
+$$
+(-3933/121,-4116/605,-939/605,-588/121,-585/121,
+1260/121,31929/605,81156/605).
+\tag{11.16}
+$$
+
+Multiplication by those traces and addition of the same fixed drift
+gives exactly $(0,24,147/5,24,18,p_0,v_0)$. Its terminal values are
+$a=547179/605$ and $m=206823/121$. The source is strict and
+$p_0\ne24$.
+
+The rational base reduces to $(8,79)$ modulo $179$; the denominators
+$121,2420$ are units in $\mathbb Z_{(179)}$. The finite arithmetic
+of Lemma 11.3 at this base gives $c=121$, and the following ascending
+coefficient lists:
+
+| Polynomial | Coefficients from constant through degree eighteen |
+| --- | --- |
+| $\widehat R_0$ | $(60,80,75,117,7,80,111,72,82,113,28,29,138,113,37,154,31,172,1)$ |
+| $Q_{J,0}$ | $(82,147,41,113,96,92,8,130,155,55,2,49,15,16,129,5,141,142,1)$ |
+| $Q_{M,0}$ | $(109,42,37,123,90,133,68,17,111,172,146,103,117,136,176,6,92,0,1)$ |
+
+Each of the six gcds in (11.6) is again one, and the two terminal
+discriminants are $91,102$. These statements are obtained by the
+same displayed polynomial definitions, fixed Sylvester determinant,
+adjugate inversions and recurrences (11.7)–(11.8), with no additional
+normalization. The carrier identity is
+$\operatorname{Res}_d(F_0,G_0)=121D^8H_0^2\widehat R_0$ in this
+finite specialization; subscripts in this identity denote specialization,
+not a new gain or clock. Both specialized linear minors have degree
+$32$, and the carrier has full degree eighteen. Thus all denominator
+and leading-degree conditions used for the reduction are preserved.
+
+All factors defining $B,P_J,P_M$ consequently have nonzero reduction
+at this rational base, so none can vanish as a rational number there.
+Theorem 11.5 proves both entire-child injectivities. The explicit
+strict world proves nonemptiness independently of the necessary carrier.
+Neither injectivity is inferred from a count of feasible carrier roots. ∎
+
+**Definition 11.8 (Sources and mathematical status).** The exact model,
+whole-world inverse, universal carrier identity, subresultant identity
+and earlier M specialization are respectively (10.1)–(10.6), Lemma
+10.5, Lemma 10.9, Lemma 10.11 and Lemma 10.12 of this volume.
+F, Sections 30–33, supplies the same entire-child and actual-pair
+semantics. X, Theorem 6.1, supplies an equivalent actual J terminal
+formula; equation (11.13) derives the form used here directly.
+The supplied completed local zero-drift source supplies only the
+nonemptiness of one guarded denominator stratum and no collision.
+
+Fixed-node interpolation is used in the classical scope of
+[Berrut–Trefethen, §2](https://doi.org/10.1137/S0036144502417715).
+The Sylvester and subresultant identities use the classical tools cited
+in Lemmas 10.9 and 10.11. Newton identities and the Chinese remainder
+theorem are elementary finite-algebra tools; the finite separable
+algebra interpretation is the same one cited in Theorem 10.14,
+[Stacks Project, Tag 00U3](https://stacks.math.columbia.edu/tag/00U3).
+These literature references are inherited from the authenticated
+ordinary sources. No fresh external literature search, priority,
+physical-realization or Lean/kernel-validation claim is made.
+The additional evaluated content is (11.5)–(11.9) for the actual J
+terminal, and the guarded all-plane correspondence and obstruction
+(11.12); no coprimality or real feasibility conclusion is appended.
+
+## 追加锚（本行以下为增补区）
