@@ -7,6 +7,12 @@ internal sealed class StieltjesDocument : IScribeDocumentDefinition
     public DocumentDefinition Create() => DocumentDefinition.Create(ScribeNode.Create(
         "Strict inequalities for Stieltjes transforms of positive probability laws.",
         H("Stieltjes remainder monotonicity"), Blocks(
+            Describe.Lean(DescribeId.Create("stieltjes-resolvent-integrability"),
+                DeclarationHandle.Create("D5/S3/Analytic/WallisRemainder/Stieltjes.integrable_resolvent"),
+                H("Integrability of the positive resolvent"),
+                StatementSource.WithoutFormula(), AssessedProvenance.FromRepo(),
+                Blocks(Paragraph(Text("For z>0 and a probability measure concentrated on positive reals, v maps to 1/(z+v) is integrable. Measurability and the uniform bound 1/z give the result without a moment assumption."))),
+                DescribeRole.Theorem),
             Describe.Lean(DescribeId.Create("stieltjes-jensen-remainder-monotonicity"),
                 DeclarationHandle.Create("D5/S3/Analytic/WallisRemainder/Stieltjes.strictMonoOn_jensenRemainder"),
                 H("Strict increase of the normalized Jensen remainder"),

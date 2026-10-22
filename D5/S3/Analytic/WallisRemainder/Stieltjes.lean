@@ -23,7 +23,8 @@ private lemma integral_pos_of_not_zero {M : Measure ℝ} {f : ℝ → ℝ}
   exact lt_of_le_of_ne (integral_nonneg_of_ae hn)
     (fun h => hne ((integral_eq_zero_iff_of_nonneg_ae hn hi).mp h.symm))
 
-private lemma integrable_resolvent {M : Measure ℝ} [IsProbabilityMeasure M]
+/-- The resolvent is integrable against a positive probability law. -/
+theorem integrable_resolvent {M : Measure ℝ} [IsProbabilityMeasure M]
     (hp : ∀ᵐ v ∂M, 0 < v) {z : ℝ} (hz : 0 < z) :
     Integrable (fun v => 1 / (z + v)) M := by
   have hm : Measurable (fun v : ℝ => z+v) := measurable_const.add measurable_id
