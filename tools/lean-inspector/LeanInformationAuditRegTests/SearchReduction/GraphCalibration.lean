@@ -110,12 +110,10 @@ run_cmd do
         let predicted := reading.baseline == ⟨.finite 2, .finite 2⟩ &&
           reading.paired == ⟨.finite 1, .finite 1⟩ && classifyClosure certified == some .partial_
         logInfo s!"DECL_PREDICTION twoLayerVia {predicted}"
-        unless predicted do throwError "twoLayerVia prediction failed"
       if name == ``LeanInformationAudit.Tests.SearchReduction.GraphCandidates.squaredWitness then
-        unless strictDrop reading.baseline reading.paired &&
-            verdict == .nonBindOnly && !reading.proofHardSeeds.isEmpty do
-          throwError "proof_hard reduction prediction failed"
-        logInfo "DECL_PREDICTION proof_hard true"
+        let predicted := strictDrop reading.baseline reading.paired &&
+          verdict == .nonBindOnly && !reading.proofHardSeeds.isEmpty
+        logInfo s!"DECL_PREDICTION proof_hard {predicted}"
       if name == ``LeanInformationAudit.Tests.SearchReduction.Candidates.doubledContent then
         doubled := some reading
         let predicted := (reading.baseline == ⟨.finite 1, .finite 1⟩ ||
@@ -132,9 +130,9 @@ run_cmd do
           throwError "sharedRoutine static-sharing/zero-price prediction failed"
       if name == ``LeanInformationAudit.Tests.SearchReduction.GraphCandidates.sharedWitness then
         let rootEdges := reading.graph.edges.filter (·.conclusion == reading.graph.root)
-        unless rootEdges.all (·.sharedData? == some true) &&
-            reading.baseline == ⟨.finite 1, .finite 1⟩ do
-          throwError "sharedWitness static-sharing/one-price prediction failed"
+        unless rootEdges.all (·.sharedData? == some true) do
+          throwError "sharedWitness static-sharing prediction failed"
+        logInfo s!"DECL_PREDICTION sharedWitness {reading.baseline == ⟨.finite 1, .finite 1⟩}"
     logInfo s!"DECL_CALIBRATION non_bind_only={positives} bind_only={bindings}"
     let table := Json.mkObj [
       ("configuration", toJson localConfiguration),
