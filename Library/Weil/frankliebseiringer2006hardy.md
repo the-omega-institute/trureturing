@@ -775,3 +775,11 @@ $$
 Every complex source direction remains in the count. The argument pays the poles by their actual finite rank and the Gamma boundary by a bounded lower debit; it does not drop them from a positivity assertion. It applies along the inherited unbounded integer FIB support schedules but uses no new FIB distribution assumption.
 
 FLI1 improves NPC1's exponential index allowance, not a signed lower floor. It neither exhibits nor excludes negative eigenvalues, gives no smaller positive Fourier exterior or finite sign certificate, and does not determine the retained Schur minimum. It supplies no original same-integer Robin upper bound, cofinal Weil positivity or RH proof. The proof is a paper-level application under the inherited realization premises; it has not been compiled in Lean.
+
+The [finite-inertia and infinite-limit comparison](bombieri2000quadratic.md)
+keeps Bombieri's finite spectral matrices separate from this complete
+operator. Under the same spectral pairing, form-core identification and
+evaluation continuity on the completed form domain, a hypothetical finite set of $k>0$ distinct off-critical conjugate pairs
+would give a bounded negative-index allowance, compatible with FLI1.
+No such actual zero set is asserted. Improving the positive upper rate
+in FLI1 does not by itself provide the missing zero-index certificate.
