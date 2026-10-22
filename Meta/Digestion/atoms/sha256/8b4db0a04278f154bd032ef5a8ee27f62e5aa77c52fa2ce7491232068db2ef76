@@ -1,0 +1,55 @@
+**Theorem 23.1 (Exact whole-child inventory at the third critical target).**
+With the original complete-world meaning of the child,
+
+$$
+C(p_3,v_3)=\{W_3,Z_3\}.
+\tag{23.1}
+$$
+
+Moreover $\mathcal E(\,\cdot\,;p_3,v_3)$ has precisely six positive
+root locations: $b(Z_3)$, $b_3$, and one root in each $B_i$.
+The root at $b_3$ has multiplicity exactly two; the other five are simple.
+
+*Proof.* On a regular source neighbourhood of $W_3$ with $b\ne1/8$,
+(21.2)--(21.3) give the identity
+
+$$
+\mathcal E(b;p(r,b),v(r,b))=0.
+\tag{23.2}
+$$
+
+By (22.9) $dp(W_3)\ne0$. Theorem 13.3 gives
+$\operatorname{rank}D(p,v,m)(W_3)=1$, so $dv$ is proportional to $dp$
+there. The vector $k=(-p_b,p_r)$, in independent $(r,b)$ coordinates,
+satisfies $dp(k)=dv(k)=0$ and has $b$ component $p_r\ne0$.
+Differentiate (23.2) along this vector at $W_3$:
+
+$$
+0=\mathcal E_b(b_3;p_3,v_3)p_r(W_3).
+\tag{23.3}
+$$
+
+Thus $b_3$ is a positive root of multiplicity at least two. The
+nonzero leading coefficient in (22.3) ensures that this is a root
+of a nonzero polynomial.
+
+Theorem 18.1 supplies the actual $Z_3$ with $b(Z_3)\in I_Z$, hence
+another positive root. The four opposite endpoint signs supply a root
+inside each $B_i$. These six locations are pairwise disjoint, and
+$b_3\in\operatorname{int}I_c$ by Lemma 13.2. Their multiplicities
+total at least $1+2+4=7$. Descartes' upper bound (22.3) is seven.
+Consequently they exhaust all positive roots, with exactly the
+multiplicities stated in the theorem.
+
+Every regular world in the exact child projects to one of those roots
+by (21.6). The lifting table excludes a strict $r$ at the four $B_i$
+roots. At $b(Z_3)$ and $b_3$, $\gamma\lambda_1\ne0$, so (21.5) forces
+one unique finite $r$. The known actual worlds already supply those
+two lifts. The original parent and whole-gain reconstruction in Lemma
+2.2 then force a unique drift and polynomial at each geometry.
+Equation (22.6) and the existing singular coverage exclude all singular
+worlds, while the remaining regular $b=1/8$ case has $p=24$.
+This exhausts the entire original child, including unused companions.
+No lift is inferred from one of the four nonstrict eliminant roots,
+and a double root is not counted as two worlds. $\square$
+
