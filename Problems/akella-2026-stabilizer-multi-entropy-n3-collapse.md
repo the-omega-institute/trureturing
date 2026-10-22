@@ -2,7 +2,7 @@
 slug: akella-2026-stabilizer-multi-entropy-n3-collapse
 bibkey: akella2026genuine
 doi: 10.48550/arXiv.2607.06050
-url: https://arxiv.org/abs/2607.06050v1
+url: https://arxiv.org/abs/2607.06050v2
 triage: theorem
 motivation_gids:
   - D5/S3/Quantum/Entanglement/StabilizerMultiEntropyCollapse.result
@@ -13,7 +13,7 @@ motivation_gids:
 ## Problem
 
 S. Akella, N. Iizuka and A. Miyata, *Genuine Multi-Entropy in the Toric Code*,
-arXiv:2607.06050v1, state for stabilizer states the reduction
+arXiv:2607.06050v2, state for stabilizer states the reduction
 $\mathrm{GM}^{(4)}_{3}(A:B:C:D)=-\left(a-\tfrac19\right)I_3$ (Eq. (3)), where $I_3$ is the Rényi
 tripartite information and $a$ the convention parameter of the genuine multi-entropy, note that
 "this reduction is not a consequence of the Coxeter structure", and ask in §6 "Whether there is a
@@ -31,7 +31,7 @@ For a Kitaev–Preskill partition $I_3$ is the negative topological entanglement
 collapse says the $n=3$ genuine multi-entropy of a stabilizer state carries no four-partite
 information beyond it. The paper establishes the $n=2$ case by a Coxeter counting argument and
 the $n=3$ case by computation; `D5/S3/Quantum/Entanglement/StabilizerMultiEntropyCollapse.result`
-proves it for all stabilizer states with an explicit counting argument.
+proves it for all stabilizer states through ternary Fourier blocks and an exact finite partition identity. The separate source-style counting explanation asked for in §6 remains open here.
 
 ## Gap
 
@@ -134,12 +134,10 @@ qubits whose colours $t$ separates.
   block form of the replica quadratic form and its Gauss sum over the splitting field would have to
   be established first. No claim beyond $n=3$ is made.
 
-**Open.** The general conjecture of the abstract ($\mathtt q\ge4$, $n<\mathtt q$) beyond
+**Open.** The full source-style counting question in §6 is not settled by the finite arithmetic expansion alone. TernaryPartitionOrbit supplies a structural classification of nonzero modes modulo sign by anchored ternary equality partitions, including the thirteen four-party patterns, but is a counting foundation rather than a resolution of that question. The general conjecture of the abstract ($\mathtt q\ge4$, $n<\mathtt q$) beyond
 $\mathtt q=4$, $n=3$, and the qudit (level $k$) analogues, are not settled here.
 
-**Effect on the paper.** Eq. (3) holds for every qubit stabilizer state, and the §6 question has
-an affirmative answer: the $n=3$ collapse follows from a counting argument over the characters of
-$(\mathbb Z/3)^{\mathtt q-1}$.
+**Effect on the paper.** Eq. (3) holds for every qubit stabilizer state. The proof exposes a character/partition identity and the new orbit classification explains its nonduplicated ternary patterns; a complete answer matching the source-style §6 question is not claimed.
 
 ## ASSUMED-UNVERIFIED
 

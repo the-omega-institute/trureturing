@@ -4,10 +4,11 @@ authors: S. Akella, N. Iizuka, A. Miyata
 year: 2026
 title: "Genuine Multi-Entropy in the Toric Code"
 doi: 10.48550/arXiv.2607.06050
-url: https://arxiv.org/abs/2607.06050v1
-claim: "For stabilizer states and q ≥ 4 the q-partite genuine multi-entropy at replica index n < q collapses to multi-entropies of at most q − 2 parties; at q = 4 the n = 3 case reads GM^{(4)}_{n=3} = −(a − 1/9) I_3, and whether a counting argument exists for n = 3 is stated as open."
+url: https://arxiv.org/abs/2607.06050v2
+claim: "The paper conjectures that for stabilizer states and q ≥ 4 the q-partite genuine multi-entropy at replica index n < q collapses to multi-entropies of at most q − 2 parties; at q = 4 the n = 3 case reads GM^{(4)}_{n=3} = −(a − 1/9) I_3, and whether a counting argument exists for n = 3 is stated as open."
 strata_touched:
   - D5/S3/Quantum/Entanglement/StabilizerMultiEntropyCollapse
+  - D5/S3/Quantum/Entanglement/TernaryPartitionOrbit
 license: citation-only
 triage: anchor
 ---
@@ -15,13 +16,14 @@ triage: anchor
 # Akella, Iizuka and Miyata, genuine multi-entropy in the toric code
 
 S. Akella, N. Iizuka and A. Miyata, *Genuine Multi-Entropy in the Toric Code*,
-arXiv:2607.06050v1 (7 July 2026; hep-th, cross-listed cond-mat.str-el and quant-ph).
+arXiv:2607.06050 (v1: 7 July 2026; hep-th, cross-listed cond-mat.str-el and quant-ph).
+The current source checked for this note is v2, retrieved on 21 October 2026.
 
 ## Verified locator
 
 DOI: 10.48550/arXiv.2607.06050.
-Primary version: https://arxiv.org/abs/2607.06050v1 (the only arXiv version).
-The TeX source of v1 supplies §1 (Eq. (1), the tripartite information; Eqs. (2) and (3), the $n=2$ and $n=3$ collapses), §2 (the definition of $\mathrm{GM}^{(4)}_n$),
+Primary version checked: https://arxiv.org/abs/2607.06050v2.
+The TeX source of v2 supplies §1 (Eq. (1), the tripartite information; Eqs. (2) and (3), the $n=2$ and $n=3$ collapses), §2 (the definition of $\mathrm{GM}^{(4)}_n$),
 §6 (the open question) and Appendix A (the replica definition of the multi-entropy).
 
 ## Source statements
@@ -53,3 +55,5 @@ The paper establishes Eq. (3) by explicit computation for toric-code stabilizer 
 the general $\mathtt q=4$, $n=3$ collapse for stabilizer states; the follow-up arXiv:2608.29627 reports
 it as established numerically for general qubit stabilizer states. The $n=2$ counting argument is
 in arXiv:2601.16258.
+
+The structural theorem in TernaryPartitionOrbit classifies opposite nonzero ternary modes by their anchored equality partitions over an arbitrary index type. Its four-party application has thirteen two- or three-block patterns. This is a counting foundation, not a claim that the full source-style question in §6 has been settled.
