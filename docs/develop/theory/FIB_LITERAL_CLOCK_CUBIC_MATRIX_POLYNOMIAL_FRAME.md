@@ -401,3 +401,417 @@ Here $g_a$ denotes the whole polynomial of world $W_a$, rather than a coefficien
 
 ## 追加锚（本行以下为增补区）
 
+## 7. The unrestricted general-degree literal frame
+
+**Definition 7.1 (independent matrix coefficients and polynomial drift).** Fix known integers $k,\delta\ge0$. All entries of all coefficient matrices and all drift coefficients in
+
+$$
+Z(t)=\sum_{h=0}^k Z_ht^h,\qquad Z_h\in\operatorname{Mat}_2(\mathbb R),
+\qquad D(t)=\sum_{h=0}^{\delta}d_ht^h
+$$
+
+are independent unrestricted real unknowns. There is no common-source, rank, positivity, gain, trace or nonzero-coefficient hypothesis. The ambient dimension is
+
+$$
+N=4(k+1)+(\delta+1)=4k+\delta+5.
+$$
+
+The known atoms are precisely the matrices $M,J$ of Definition 1.1. Starting with $A_0=I$, every chronological atom is left multiplied, advances the local clock by one and is read. The current reading is included, and
+
+$$
+Y_i=D(i)+\operatorname{tr}(A_iZ(i)).
+$$
+
+Set
+
+$$
+q=k+1,\quad \rho=\delta+1,\quad s=2q+\rho=2k+\delta+3,
+\quad m=s-1=2k+\delta+2.
+$$
+
+**Theorem 7.2 (general-degree ambient reconstruction).** The chronological word
+
+$$
+\boxed{M^{\,2k+\delta+2}\ J\ M^{\,2k+1}}
+$$
+
+recovers every one of the $N$ independent coefficients of Definition 7.1 from exactly $N$ scalar readings including the current one. Each displayed power means that many executed and immediately read individual atoms. The complete cumulative path is
+
+$$
+A_i=M^i\quad(0\le i\le m),\qquad
+A_{s+j}=M^jJM^m\quad(0\le j<2q).
+$$
+
+The observation map is a linear bijection on the entire ambient space.
+
+**Proof.** Define
+
+$$
+\lambda=\frac{1+\sqrt5}{2},\quad
+\mu=\frac{1-\sqrt5}{2},\quad
+S=\begin{pmatrix}1&1\\\lambda&\mu\end{pmatrix},\qquad
+\Lambda=\operatorname{diag}(\lambda,\mu).
+$$
+
+Both roots satisfy $x^2=x+1$, so $MS=S\Lambda$. They are distinct, nonzero and different from one, and
+
+$$
+\lambda+\mu=1,\quad \lambda\mu=-1,\quad
+\mu-\lambda=-\sqrt5,\quad (1-\lambda)(1-\mu)=-1.
+$$
+
+Thus $S$ is invertible. Direct multiplication gives
+
+$$
+S^{-1}=\frac1{\mu-\lambda}\begin{pmatrix}\mu&-1\\-\lambda&1\end{pmatrix},\qquad
+K=S^{-1}JS=
+\frac1{\mu-\lambda}
+\begin{pmatrix}-2&\mu\\-\lambda&2\end{pmatrix},
+\qquad K_{12}K_{21}=\frac15\ne0.
+$$
+
+Write the independent eigenbasis entries as
+
+$$
+S^{-1}Z(t)S=
+\begin{pmatrix}a(t)&b(t)\\c(t)&e(t)\end{pmatrix}.
+$$
+
+Each has degree at most $k$, and conjugation preserves independence of all four matrix-entry polynomials. During the first $s$ readings,
+
+$$
+Y_i=\lambda^ia(i)+\mu^ie(i)+D(i),\qquad 0\le i<s.
+$$
+
+To invert this block and the switched block below, use the classical confluent Vandermonde calculation as an intermediate step. See Batenkov–Yomdin, “On the Accuracy of Solving Confluent Prony Systems”, §2B, [arXiv:1106.1137v3](https://arxiv.org/abs/1106.1137v3), [DOI:10.1137/110836584](https://doi.org/10.1137/110836584). The fixed-node and drift-separation ingredients are also used in [FIB self-calibrating relation mathematics, Theorems 35.2 and 39.2](FIB_SELF_CALIBRATING_RELATION_MATHEMATICS.md). The following derivation fixes the sign and factorial normalization required by this frame.
+
+For an integer $n\ge1$, put
+
+$$
+\mathfrak F(n)=\prod_{h=0}^{n-1}h!.
+$$
+
+Let $x_1,\ldots,x_a$ be distinct nonzero real numbers and let $n_1,\ldots,n_a$ be positive integers. Put $L=\sum_b n_b$. In the ordered columns $(b,h)$, first by $b$ and then by $0\le h<n_b$, define
+
+$$
+\mathcal V(x_1:n_1,\ldots,x_a:n_a)_{i,(b,h)}=i^h x_b^i,
+\qquad 0\le i<L.
+$$
+
+The convention is $i^0=1$, including at $i=0$. Then
+
+$$
+\boxed{
+\det\mathcal V
+=\left(\prod_{b=1}^a x_b^{n_b(n_b-1)/2}\mathfrak F(n_b)\right)
+ \prod_{b<c}(x_c-x_b)^{n_bn_c}\ne0.
+}
+$$
+
+Consequently $L$ consecutive samples beginning at zero uniquely recover all coefficients of $\sum_b x_b^i p_b(i)$, where the $p_b$ are independent real polynomials of degrees less than $n_b$. No condition is imposed on their actual degrees or coefficients.
+
+First consider the derivative evaluation matrix
+
+$$
+U_{i,(b,h)}=\left.\frac{d^h}{dx^h}x^i\right|_{x=x_b}
+=(i)_h x_b^{i-h},
+$$
+
+where $(i)_h=i(i-1)\cdots(i-h+1)$, with $(i)_0=1$. Its determinant is
+
+$$
+\det U=\left(\prod_b\mathfrak F(n_b)\right)
+\prod_{b<c}(x_c-x_b)^{n_bn_c}.
+$$
+
+Here is a derivation including its sign and factorial normalization. In each group choose distinct ordered auxiliary real numbers $\xi_{b,0},\ldots,\xi_{b,n_b-1}$ and apply the ordinary Vandermonde identity to the ordered nodes $x_b+\varepsilon\xi_{b,h}$. Let $c_0=\sum_b n_b(n_b-1)/2$. The coefficient of the lowest power $\varepsilon^{c_0}$ in its product formula is
+
+$$
+\left(\prod_b\prod_{u<v}(\xi_{b,v}-\xi_{b,u})\right)
+\prod_{b<c}(x_c-x_b)^{n_bn_c}.
+$$
+
+Expand each column by its finite Taylor formula at $x_b$. A term with two identical derivative orders in one group has equal columns and vanishes. The least possible sum of distinct nonnegative orders in that group is $0+\cdots+(n_b-1)$. Multilinearity therefore makes the same coefficient equal to
+
+$$
+\det U\prod_b
+\det\left[\frac{\xi_{b,u}^h}{h!}\right]_{0\le h,u<n_b}
+=\det U\prod_b
+\frac{\prod_{u<v}(\xi_{b,v}-\xi_{b,u})}{\mathfrak F(n_b)}.
+$$
+
+Cancelling the nonzero auxiliary factors proves the displayed formula for $U$. The ordinary Vandermonde identity itself follows because its determinant is alternating in its nodes, has total degree $L(L-1)/2$, and the coefficient of $\prod_{j=0}^{L-1}x_j^j$ is one.
+
+For every $h$, expansion in the monic falling-factorial basis gives $i^h=\sum_{u=0}^h c_{h,u}(i)_u$ with $c_{h,h}=1$. Hence
+
+$$
+i^h x_b^i=\sum_{u=0}^h c_{h,u}x_b^u U_{i,(b,u)}.
+$$
+
+This is a triangular column change of determinant $\prod_{h=0}^{n_b-1}x_b^h$ in group $b$. Multiplying these factors proves the formula for $\mathcal V$. Its nonzero determinant proves coefficient recovery, including when some or all coefficient polynomials vanish.
+
+The fixed-node calculation just derived at the three nodes $(\lambda:q,\mu:q,1:\rho)$ recovers the coefficients of $a,e,D$ uniquely. Explicitly, with $V_3=\mathcal V(\lambda:q,\mu:q,1:\rho)$ and coefficient columns in that group order,
+
+$$
+\begin{pmatrix}[a]\\[e]\\[D]\end{pmatrix}
+=\frac{\operatorname{adj}(V_3)}{\det V_3}
+\begin{pmatrix}Y_0\\\vdots\\Y_{s-1}\end{pmatrix}.
+$$
+
+Here $[p]$ always lists the polynomial's coefficients in ascending ordinary powers, padded with zero coefficients to its declared bound.
+
+The reading after the switch has absolute local clock $t=s+j$, not $j$. Conjugating its cumulative matrix gives $\Lambda^jK\Lambda^m$. The trace is therefore
+
+$$
+\begin{aligned}
+Y_{s+j}={}&D(s+j)
++\lambda^{j+m}K_{11}a(s+j)
++\mu^{j+m}K_{22}e(s+j)\\
+&+\lambda^j\mu^mK_{12}c(s+j)
++\mu^j\lambda^mK_{21}b(s+j).
+\end{aligned}
+$$
+
+Subtract the three known terms in the first line and call the residual $R_j$. Define independent polynomials
+
+$$
+F(u)=\mu^mK_{12}c(s+u),\qquad
+G(u)=\lambda^mK_{21}b(s+u).
+$$
+
+They have degree at most $k$, and
+
+$$
+R_j=\lambda^jF(j)+\mu^jG(j),\qquad 0\le j<2q.
+$$
+
+The fixed-node calculation above at $(\lambda:q,\mu:q)$ recovers both entire polynomials. In full finite form, with $V_2=\mathcal V(\lambda:q,\mu:q)$,
+
+$$
+\begin{pmatrix}[F]\\[G]\end{pmatrix}
+=\frac{\operatorname{adj}(V_2)}{\det V_2}
+\begin{pmatrix}R_0\\\vdots\\R_{2q-1}\end{pmatrix}.
+$$
+
+All denominators are fixed nonzero known constants. Undoing translation and scaling yields
+
+$$
+\boxed{
+c(t)=\frac{F(t-s)}{\mu^mK_{12}},\qquad
+b(t)=\frac{G(t-s)}{\lambda^mK_{21}},\qquad
+Z(t)=S\begin{pmatrix}a(t)&b(t)\\c(t)&e(t)\end{pmatrix}S^{-1}.
+}
+$$
+
+These formulas return the actual $Z,D$ for every point in the stated ambient space. Conversely, for arbitrary $Y\in\mathbb R^N$, the first inverse fits every initial reading and the second inverse fits every remaining residual, using these same four polynomials and the same drift. Thus they give a two-sided inverse and establish bijectivity. There are $s+2q=4q+\rho=N$ readings, at clocks $0,\ldots,N-1$. ∎
+
+## 8. Exact observation determinant and the switch conditions
+
+**Theorem 8.1 (determinant in ordinary entry coordinates).** Order the unknowns as
+
+$$
+x=(d_0,\ldots,d_\delta,
+ z_{0,11},z_{0,12},z_{0,21},z_{0,22},\ldots,
+ z_{k,11},z_{k,12},z_{k,21},z_{k,22})^{\mathsf T}.
+$$
+
+Let $C_{k,\delta}$ have the rows
+
+$$
+C_i=\bigl((i^h)_{h=0}^{\delta},\ (i^h v(A_i))_{h=0}^{k}\bigr),
+\qquad v(A)=(A_{11},A_{21},A_{12},A_{22}),
+$$
+
+in the path order of Theorem 7.2. The blocks are concatenated in the displayed order and $i^0=1$, including at $i=0$. For a zero degree bound the relevant list contains just its constant block. Then
+
+$$
+\boxed{
+\det C_{k,\delta}
+=5^{k(k+1)}
+\left(\prod_{h=0}^k h!\right)^4
+\left(\prod_{h=0}^{\delta}h!\right)>0.
+}
+$$
+
+**Proof.** Use the intermediate coefficient order
+
+$$
+\theta=([a],[e],[D],[c],[b])^{\mathsf T}.
+$$
+
+The first $s$ rows have zero coefficients on $[c],[b]$. The entire observation matrix in $\theta$ coordinates is block triangular. Its first diagonal block is $V_3$. For the second block, translation from coefficients in $t$ to coefficients in $u$ of a polynomial evaluated at $s+u$ is triangular with diagonal one. Its two scalar multipliers are $\mu^mK_{12}$ and $\lambda^mK_{21}$, each on $q$ coefficients. Consequently the determinant in these coordinates is
+
+$$
+B=\det V_3\det V_2\bigl((\lambda\mu)^mK_{12}K_{21}\bigr)^q.
+$$
+
+The fixed-node calculation in the proof of Theorem 7.2 gives the signed expressions
+
+$$
+\begin{aligned}
+\det V_2
+&=(\lambda\mu)^{q(q-1)/2}\mathfrak F(q)^2(\mu-\lambda)^{q^2},\\
+\det V_3
+&=\det V_2\,\mathfrak F(\rho)
+ (1-\lambda)^{q\rho}(1-\mu)^{q\rho}.
+\end{aligned}
+$$
+
+Because $q(q-1)$ is even, $(\mu-\lambda)^{2q^2}=5^{q^2}$ and $K_{12}K_{21}=1/5$, their product yields
+
+$$
+B=(-1)^{q\rho+mq}5^{q^2-q}\mathfrak F(q)^4\mathfrak F(\rho)
+=(-1)^q5^{q(q-1)}\mathfrak F(q)^4\mathfrak F(\rho).
+$$
+
+The last sign uses $m=2q+\rho-1$.
+
+It remains to transport this signed determinant to $x$. Conjugation $Z_h\mapsto S^{-1}Z_hS$ has determinant one on the four-dimensional matrix space: left multiplication contributes $(\det S^{-1})^2$ and right multiplication contributes $(\det S)^2$. Initially retain the coefficient-wise order $(a_h,b_h,c_h,e_h)$ and drift first. Grouping the four entries by entry type has $6\binom q2$ inversions, an even number. Reordering the four groups from $([a],[b],[c],[e])$ to $([a],[e],[c],[b])$ has $3q^2$ inversions, of parity $q$. Moving the $\rho$ drift coordinates past the first two groups has $2q\rho$ inversions, again even. Thus the coefficient change $x\mapsto\theta$ has determinant $(-1)^q$. Since the observation matrix in $x$ is the observation matrix in $\theta$ multiplied by that coefficient change, its determinant is $B(-1)^q$. Substitution of $q=k+1,\rho=\delta+1$ proves the formula. ∎
+
+At $k=\delta=0$, the word is $M^2JM$, the two block lengths are $3$ and $2$, and the ordinary-coordinate matrix is
+
+$$
+C_{0,0}=\begin{pmatrix}
+1&1&0&0&1\\
+1&0&1&1&1\\
+1&1&1&1&2\\
+1&1&1&2&1\\
+1&1&2&1&3
+\end{pmatrix},\qquad \det C_{0,0}=1.
+$$
+
+More generally, $k=0$ gives $q=1$, so neither spectral group is empty, and $\delta=0$ gives $\rho=1$, so the drift group is still present. All factorial products include $0!=1$. The argument uses degree upper bounds throughout, including constant and zero polynomials.
+
+**Proposition 8.2 (precise algebraic conditions behind the two blocks).** More generally, keep the same degree bounds and path lengths and suppose the known first atom is real diagonalizable with distinct nonzero real eigenvalues $\lambda,\mu$, both different from one. Let its eigenbasis switch matrix be $K$. For this two-block observation map, invertibility is equivalent to $K_{12}K_{21}\ne0$.
+
+**Proof.** The first-block formula and the fixed-node calculation in the proof of Theorem 7.2 remain valid for these three distinct nonzero nodes. The second-block determinant is exactly
+
+$$
+\det\mathcal V(\lambda:q,\mu:q)
+\bigl((\lambda\mu)^mK_{12}K_{21}\bigr)^q.
+$$
+
+It is nonzero if and only if $K_{12}K_{21}\ne0$. If $K_{12}=0$, any nonzero polynomial in entry $c$ alone is invisible in both blocks; if $K_{21}=0$, the same holds for entry $b$. These are explicit nonzero ambient kernel directions. The fixed $M,J$ of Theorem 7.2 satisfy every required condition by their displayed values, with $K_{12}K_{21}=1/5$. This proposition does not assert a criterion for atoms with repeated eigenvalues or eigenvalues zero or one. ∎
+
+## 9. Known-prefix transport and all degree and root degeneracies
+
+**Theorem 9.1 (known left multiplier and absolute clock).** Let $Q_0$ be any known invertible real matrix and $t_0$ any known real number. Suppose the independent absolute-time unknowns are
+
+$$
+U(t)=\sum_{h=0}^kU_ht^h,\qquad
+\mathcal D(t)=\sum_{h=0}^{\delta}\eta_ht^h,
+$$
+
+and readings on the same continuation word are
+
+$$
+Y_i=\mathcal D(t_0+i)+\operatorname{tr}(A_iQ_0U(t_0+i)).
+$$
+
+They uniquely recover all coefficients of $U,\mathcal D$. In the ordinary coefficient order of Theorem 8.1, now applied to $(\eta_h,U_h)$, the determinant is
+
+$$
+\boxed{\det C_{k,\delta}\,(\det Q_0)^{2(k+1)}\ne0.}
+$$
+
+**Proof.** Define local polynomials
+
+$$
+Z(s)=Q_0U(t_0+s),\qquad D(s)=\mathcal D(t_0+s).
+$$
+
+These are exactly the independent unknowns of Definition 7.1, because time translation and left multiplication are invertible. Theorem 7.2 recovers them, after which
+
+$$
+U(t)=Q_0^{-1}Z(t-t_0),\qquad
+\mathcal D(t)=D(t-t_0).
+$$
+
+For example, if $Z(s)=\sum_jZ_js^j$ and $D(s)=\sum_jd_js^j$, the absolute coefficients are
+
+$$
+U_h=Q_0^{-1}\sum_{j=h}^k\binom jh Z_j(-t_0)^{j-h},\qquad
+\eta_h=\sum_{j=h}^{\delta}\binom jh d_j(-t_0)^{j-h}.
+$$
+
+On every scalar polynomial coefficient vector, translation has a triangular matrix with diagonal one, hence determinant one. Left multiplication by $Q_0$ has determinant $(\det Q_0)^2$ on each matrix coefficient, since it acts on the two columns independently. There are $k+1$ such blocks and the drift block is unaffected by left multiplication. Multiplication of these determinants proves the assertion. ∎
+
+For an actually acquired legal prefix, $Q_0$ is its cumulative product and $t_0$ its nonnegative integer length. Since each atom has determinant $-1$, every such $Q_0$ is invertible. The theorem's extension to other specified invertible $Q_0$ and real $t_0$ is algebraic, with no assertion of legal attainability. Matrix inverses and translations occur only in the decoder, not as physical interventions.
+
+Invertibility and knowledge of the stated coordinates matter. If $Q_0$ is singular, take a nonzero matrix $H$ with $Q_0H=0$. Replacing $U(t)$ by $U(t)+H$ leaves every observation unchanged, even on arbitrarily long continuations. If the absolute origin is unknown, then for any real $h$ the simultaneous replacement
+
+$$
+t_0\mapsto t_0+h,\qquad U(t)\mapsto U(t-h),\qquad
+\mathcal D(t)\mapsto\mathcal D(t-h)
+$$
+
+preserves every reading and all degree bounds. Thus local polynomial recovery does not identify an unknown absolute time origin. This is the time-translation ambiguity already expressed in [FIB self-calibrating relation mathematics, Proposition 37.4](FIB_SELF_CALIBRATING_RELATION_MATHEMATICS.md).
+
+**Corollary 9.2 (zero and lower-degree strata).** The ambient inverse includes lower actual degrees of any entry or the drift, repeated roots, zero entries at any sampled clock, identically zero entry polynomials and $Z\equiv0$. No polynomial coefficient or value of an unknown polynomial is a denominator. In particular $Z\equiv0$ with arbitrary polynomial drift is still uniquely recovered in the ambient model.
+
+**Proof.** Every division in Theorem 7.2 is by a fixed determinant or by one of the fixed nonzero numbers $\mu^mK_{12},\lambda^mK_{21}$. The observation matrix itself is independent of all unknowns. Its bijectivity therefore applies to each named stratum and their intersections, including the zero matrix polynomial. No selection of nonzero samples or root positions is involved. ∎
+
+**Corollary 9.3 (common-source specialization and its exact boundary).** In the additional constrained model
+
+$$
+U(t)=g(t)P,\qquad \operatorname{tr}P=1,\qquad
+0\ne g\in\mathbb R[t],\quad\deg g\le k,
+$$
+
+the same ambient measurements recover $P,g,\mathcal D$ after every known invertible prefix and at every known clock. For arbitrary data, membership in the strictly positive rank-one common-source submodel is characterized as follows. From the recovered local $Z_j$ define
+
+$$
+B_j=Q_0^{-1}Z_j,\qquad h_j=\operatorname{tr}B_j.
+$$
+
+At least one $h_j$ must be nonzero. For any such index $a$, set $P=B_a/h_a$. The necessary and sufficient remaining conditions are that $P$ have four strictly positive entries, $\det P=0$, and $B_j=h_jP$ for all $j$. Then
+
+$$
+g(t)=\sum_{j=0}^k h_j(t-t_0)^j.
+$$
+
+**Proof.** A genuine realization has $B_j=h_jP$ with $h(s)=g(t_0+s)$, because taking traces uses $\operatorname{tr}P=1$. Translation preserves nonzeroness, so some coefficient $h_a$ is nonzero. Division by that recovered coefficient gives the genuine $P$ and then $g$. Conversely, under the stated conditions $\operatorname{tr}P=\operatorname{tr}(B_a)/h_a=1$, and $g$ is nonzero with the required degree bound. The identities $B_j=h_jP$ and the recovered drift give one common realization of every reading. Ambient uniqueness and the normalization formulas prove uniqueness in this constrained model. Different choices of $a$ give the same $P$. If $g\equiv0$ is allowed, every $P$ instead gives the same matrix polynomial $U\equiv0$; ambient recovery survives, but separate recovery of that $P$ does not. ∎
+
+This specialization uses an extra common-factor constraint only after the unrestricted inverse. It is not a hypothesis of Theorems 7.2, 8.1 or 9.1. Degree drops and all root degeneracies of a nonzero common gain are included without dividing by any gain sample. Without declared finite degree bounds, finite data do not certify future polynomial behavior: adding a nonzero multiple of $\prod_{i=0}^{N-1}(t-(t_0+i))$ to the drift preserves all these readings while changing its future values.
+
+## 10. Literal resource counts and the sharp ambient lower bound
+
+**Proposition 10.1 (one physical path and its exact counts).** Starting at an acquired prefix, Theorem 7.2 adds $N-1=4k+\delta+4$ atoms and the same number of new mandatory readings, and uses $N$ readings including the current one. The new terminal absolute clock is $t_0+N-1$. The switch reading is at $t_0+s$, and the second block uses $2k+2$ consecutive readings, including that switch reading.
+
+**Proof.** The first power executes $m=2k+\delta+2$ atoms, followed by one $J$ and then $2k+1$ more atoms. Their sum is $4k+\delta+4=N-1$. The first block reads clocks $0,\ldots,m$, including the already acquired clock zero. The switch advances to $m+1=s$ and is read. The last power contributes the following $2k+1$ read clocks. Thus the second block has $2k+2=2q$ readings and ends at $s+2q-1=N-1$. Every step on the displayed cumulative path is one allowed atom. Nothing resets the object, clock or drift; no unread atom, omitted intermediate reading, empty-word time advance, copy, extra port or physical inverse is used. ∎
+
+**Theorem 10.2 (sharp fixed-linear ambient reading bound).** On the unrestricted space
+
+$$
+\mathcal X_{k,\delta}
+=\operatorname{Mat}_2(\mathbb R)^{k+1}\oplus\mathbb R^{\delta+1},
+$$
+
+any recovery of every point from $n$ fixed scalar linear observations requires $n\ge N=4k+\delta+5$, regardless of the decoding rule. Theorem 7.2 attains this bound with legal literal-clock observations.
+
+**Proof.** The vector space has dimension $N$. For $n<N$, the linear observation map has rank at most $n$, hence a nonzero kernel. Zero and any nonzero point of that kernel give identical data, so no decoder can uniquely recover both. Theorem 8.1 supplies an invertible $N$-row observation matrix on a legal path. This proves sharpness in exactly the stated class. ∎
+
+The lower bound concerns fixed linear observations of the full unrestricted ambient space. It is not a lower bound for the common-source family, a particular acquired child or adaptive acquisition, and does not imply any terminal collision in those domains.
+
+## 11. Exact prior coverage and the unchanged original problem
+
+The known mathematical components have different scopes. [FIB self-calibrating relation mathematics, §§33–35](FIB_SELF_CALIBRATING_RELATION_MATHEMATICS.md) treats a fixed arbitrary matrix and polynomial drift, so it already includes the degree-zero matrix case. Its §36 imposes positive rank one and has a different recording contract at composite intermediate operations. Its Theorem 37.2 proves the unrestricted affine-matrix, affine-drift case $k=\delta=1$; that instance of the present ambient conclusion is already known. Its §§38–39 treat a single positive rank-one source multiplied by one common gain polynomial. Their arbitrary gain degree does not make the four matrix-entry polynomials independent. In particular, the $3k+\delta+5$-read upper bound of Theorem 39.2 applies to that constrained family, whereas Theorem 7.2 uses $4k+\delta+5$ readings to recover the larger independent-coefficient space. The first-block recurrence/interpolation inverse is already an intermediate ingredient of that theorem.
+
+The general unrestricted two-block conclusion here retains the two independent off-diagonal coefficient polynomials after the switch and recovers them by a second complete fixed-node evaluation inverse. Its exact determinant, all-degree literal-clock count, and invertible-prefix/absolute-time transport concern the entire space of Definition 7.1. They extend the named cubic ambient frame and the existing affine ambient case using established interpolation facts; they assert no literature priority.
+
+**Corollary 11.1 (cubic constant-drift instance at the acquired history).** At $k=3,\delta=0$, the chronological word is $M^8JM^7$, with sixteen atoms and seventeen readings including the current one. Starting after the original six atoms $(J,M,J,M,M,M)$, it ends at absolute clock $22$; the whole history has twenty-two atoms and twenty-three readings. It recovers every original world of Definition 1.1 from its actual new continuation data. For arbitrary proposed continuation data, realization by a world in the entire $C(p,v)$ is equivalent to Corollary 9.3's source conditions together with all seven original equations of Theorem 6.4.
+
+**Proof.** Substitute $k=3,\delta=0$ in Theorems 7.2 and 9.1 and Proposition 10.1. The acquired $Q_6$ and $t_0=6$ are those of Definition 6.3. The common-source inverse of Corollary 9.3 supplies exactly one original world if its source conditions hold. That world realizes the preceding history if and only if each of its seven actual acquired readings equals the given original row, which is exactly the seven equations in Theorem 6.4. The last such equation identifies the current continuation reading with $v$. Necessity and sufficiency follow using one whole gain, one drift and one source for every row; uniqueness follows from the continuation inverse. ∎
+
+The data word in Corollary 11.1 is distinct from the word in Theorem 2.1; no readings from their different continuations are equated. The original seven readings remain
+
+$$
+(0,24,147/5,24,18,p,v)
+$$
+
+at clocks $0,\ldots,6$, and both alternative terminal responses in Problem 6.5 are still evaluated at clock $7$. That problem still requires some $p\ne24,v$ and two independently chosen distinct-world pairs in the same entire $C(p,v)$, one pair colliding under $J$ and one under $M$. Its full degree/root/source domain and its allowance of independent drifts between worlds are unchanged.
+
+Later recovery from additional acquired readings proves neither existence nor nonexistence of these two pairs. Explicitly, if two distinct worlds share the entire acquired child and the terminal $M$ response, then their readings along $M^8JM^7$ agree at continuation indices zero and one but differ at some index $2\le i\le16$, by injectivity. If they instead collide under the alternative terminal $J$, injectivity only implies a differing index $1\le i\le16$ on this $M$-first path. Both statements are conditional on the respective pair's existence and create no such pair. The independent same-child $J/M$ existence question of Problem 6.5 remains open.
+
+## 追加锚（本行以下为增补区）
+
