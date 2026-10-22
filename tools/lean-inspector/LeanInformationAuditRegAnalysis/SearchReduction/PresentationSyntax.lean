@@ -12,33 +12,14 @@ def supportIncluded {α : Type} [BEq α] (target source : List α) : Bool :=
 def presentationLookup {α : Type} [BEq α] (target : List α) (entries : List (Name × List α)) :
     List (Name × List α) := entries.filter (supportIncluded target ·.2)
 
-private def primitive (n : Name) : Bool :=
-  #[``And, ``Iff, ``True, ``False, ``Eq, ``Nat, ``Int,
-    ``HAdd.hAdd, ``HMul.hMul, ``HSub.hSub, ``Neg.neg, ``OfNat.ofNat,
-    ``LE.le, ``LT.lt, ``Nat.add, ``Nat.mul, ``Nat.sub, ``Int.add,
-    ``Int.mul, ``Int.sub, ``Int.neg].contains n
+private abbrev primitive := DiskLookup.statementPrimitive
 
 /-- Only noncomputational aliases are unfolded. Recursive definitions,
 matchers, recursors and general computations are opaque. The visited graph
 rejects cycles; fuel exhaustion is an error, never an opaque miss. -/
-private partial def aliasBody (env : Environment) (e : Expr) : Bool :=
-  match e with
-  | .lam _ _ b _ => aliasBody env b
-  | .forallE _ d b _ => aliasBody env d && aliasBody env b
-  | .app f a => aliasBody env f && aliasBody env a
-  | .const n _ => !(match (env.setExporting false).find? n with
-      | some (.ctorInfo _) => !primitive n | _ => false) &&
-    !((n.toString.splitOn "match_").length > 1 || n.toString.endsWith ".rec" ||
-      n.toString.endsWith ".recOn" || n.toString.endsWith ".brecOn" ||
-      n.toString.endsWith ".below" || n.toString.endsWith ".ibelow" ||
-      n.toString.endsWith ".casesOn")
-  | .bvar _ | .sort _ | .lit _ => true
-  | .mdata _ b => aliasBody env b
-  | _ => false
+private abbrev aliasBody := DiskLookup.statementAliasBody
 
-private partial def instanceParameters : Expr → Bool
-  | .forallE _ _ body kind => kind == .instImplicit || instanceParameters body
-  | _ => false
+private abbrev instanceParameters := DiskLookup.statementInstanceParameters
 
 /-- Rigid domain heads cannot be erased by alias expansion. Unknown heads
 remain unconstrained; no reducible definition is treated as rigid. -/
@@ -250,48 +231,7 @@ def rawNecessary (env : Environment) (targetAtoms : List PresentationKey)
     (bound : RawOriginBound) : Bool :=
   targetAtoms.all (keyOriginCompatible env bound)
 
-private partial def normalizeAux (env : Environment) (e : Expr)
-    (seen : NameSet) : StateT Nat (Except String) Expr := do
-  let remaining ← get
-  if remaining == 0 then throw "search.presentation_normalization_fuel"
-  set (remaining - 1)
-  let e := e.consumeMData
-  match e with
-  | .app .. | .const .. =>
-    let fn := e.getAppFn
-    -- Instance dictionaries implement general computation. Keep their entire
-    -- subtrees opaque, including when they are arguments of arithmetic syntax.
-    let mut parameterType : Option Expr := match fn with
-      | .const n _ => ((env.setExporting false).find? n).map (·.type)
-      | _ => none
-    let mut args : Array Expr := #[]
-    for arg in e.getAppArgs do
-      let instanceArg : Bool := match parameterType with
-        | some (.forallE _ _ _ kind) => kind == .instImplicit
-        | _ => false
-      let normalized ← if instanceArg then pure arg else normalizeAux env arg seen
-      args := args.push normalized
-      parameterType := match parameterType with
-        | some (.forallE _ _ body _) => some body
-        | _ => none
-    if let .const n us := fn then
-      if seen.contains n then throw "search.presentation_alias_cycle"
-      if !primitive n then
-        if let some (.defnInfo d) := (env.setExporting false).find? n then
-          if !instanceParameters d.type && aliasBody env d.value then
-            let body := d.value.instantiateLevelParams d.levelParams us
-            return ← normalizeAux env (body.beta args) (seen.insert n)
-    return mkAppN fn args
-  | .forallE n d b bi =>
-    return .forallE n (← normalizeAux env d seen)
-      (← normalizeAux env b seen) bi
-  | .lam n d b bi =>
-    return .lam n (← normalizeAux env d seen)
-      (← normalizeAux env b seen) bi
-  | _ => return e
-
-def normalizeSyntax (env : Environment) (e : Expr) (fuel : Nat := 200000) : Except String Expr :=
-  (normalizeAux env e {}).run' fuel
+abbrev normalizeSyntax := DiskLookup.normalizeStatementSyntax
 
 private structure Affine where
   constant : Int := 0

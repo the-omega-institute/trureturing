@@ -115,7 +115,8 @@ private def tableIndex (table : LookupTable) : IO (Option DiskLookup.Index) := d
 
 def resolveLookupTable (table : LookupTable) : IO LookupTable := do
   let disk? ← tableIndex table
-  return {table with disk?, complete := table.complete && disk?.any (·.header.complete)}
+  return {table with disk?, complete := table.complete && disk?.any (fun index =>
+    index.header.complete && index.membership?.any (·.complete))}
 
 private unsafe def queryLookup (table : LookupTable) (index : DiskLookup.Index)
     (type : Expr) (limit : Option Nat) (fallback : Bool) : MetaM DiskLookup.Candidates := do

@@ -81,7 +81,79 @@ structure Manifest where
   roots : Array (UInt64 × Array String) := #[]
   deriving ToJson, FromJson, Inhabited
 
-abbrev membershipVersion : String := "R_lookup/membership-alpha-reducible-v1"
+def statementPrimitive (n : Name) : Bool :=
+  #[``And, ``Iff, ``True, ``False, ``Eq, ``Nat, ``Int,
+    ``HAdd.hAdd, ``HMul.hMul, ``HSub.hSub, ``Neg.neg, ``OfNat.ofNat,
+    ``LE.le, ``LT.lt, ``Nat.add, ``Nat.mul, ``Nat.sub, ``Int.add,
+    ``Int.mul, ``Int.sub, ``Int.neg].contains n
+
+
+partial def statementAliasBody (env : Environment) (e : Expr) : Bool :=
+  match e with
+  | .lam _ _ b _ => statementAliasBody env b
+  | .forallE _ d b _ => statementAliasBody env d && statementAliasBody env b
+  | .app f a => statementAliasBody env f && statementAliasBody env a
+  | .const n _ => !(match (env.setExporting false).find? n with
+      | some (.ctorInfo _) => !statementPrimitive n | _ => false) &&
+    !((n.toString.splitOn "match_").length > 1 || n.toString.endsWith ".rec" ||
+      n.toString.endsWith ".recOn" || n.toString.endsWith ".brecOn" ||
+      n.toString.endsWith ".below" || n.toString.endsWith ".ibelow" ||
+      n.toString.endsWith ".casesOn")
+  | .bvar _ | .sort _ | .lit _ => true
+  | .mdata _ b => statementAliasBody env b
+  | _ => false
+
+
+partial def statementInstanceParameters : Expr → Bool
+  | .forallE _ _ body kind => kind == .instImplicit || statementInstanceParameters body
+  | _ => false
+
+
+partial def normalizeStatementAux (env : Environment) (e : Expr)
+    (seen : NameSet) : StateT Nat (Except String) Expr := do
+  let remaining ← get
+  if remaining == 0 then throw "search.presentation_normalization_fuel"
+  set (remaining - 1)
+  let e := e.consumeMData
+  match e with
+  | .app .. | .const .. =>
+    let fn := e.getAppFn
+    -- Instance dictionaries implement general computation. Keep their entire
+    -- subtrees opaque, including when they are arguments of arithmetic syntax.
+    let mut parameterType : Option Expr := match fn with
+      | .const n _ => ((env.setExporting false).find? n).map (·.type)
+      | _ => none
+    let mut args : Array Expr := #[]
+    for arg in e.getAppArgs do
+      let instanceArg : Bool := match parameterType with
+        | some (.forallE _ _ _ kind) => kind == .instImplicit
+        | _ => false
+      let normalized ← if instanceArg then pure arg else normalizeStatementAux env arg seen
+      args := args.push normalized
+      parameterType := match parameterType with
+        | some (.forallE _ _ body _) => some body
+        | _ => none
+    if let .const n us := fn then
+      if seen.contains n then throw "search.presentation_alias_cycle"
+      if !statementPrimitive n then
+        if let some (.defnInfo d) := (env.setExporting false).find? n then
+          if !statementInstanceParameters d.type && statementAliasBody env d.value then
+            let body := d.value.instantiateLevelParams d.levelParams us
+            return ← normalizeStatementAux env (body.beta args) (seen.insert n)
+    return mkAppN fn args
+  | .forallE n d b bi =>
+    return .forallE n (← normalizeStatementAux env d seen)
+      (← normalizeStatementAux env b seen) bi
+  | .lam n d b bi =>
+    return .lam n (← normalizeStatementAux env d seen)
+      (← normalizeStatementAux env b seen) bi
+  | _ => return e
+
+def normalizeStatementSyntax (env : Environment) (e : Expr) (fuel : Nat := 200000) : Except String Expr :=
+  (normalizeStatementAux env e {}).run' fuel
+
+
+abbrev membershipVersion : String := "R_lookup/membership-alpha-syntax-v2"
 
 structure MembershipHeader where
   format : String := membershipVersion
@@ -97,22 +169,28 @@ abbrev MembershipPage := Std.HashMap UInt64 (Array Entry)
 private partial def alphaExpression (e : Expr) : StateM (Std.HashMap Expr Expr) Expr := do
   if let some result := (← get)[e]? then return result
   let result ← match e with
-    | .app f a => return .app (← alphaExpression f) (← alphaExpression a)
+    | .app f a => do
+      let f ← alphaExpression f
+      let a ← alphaExpression a
+      if f.isLambda then alphaExpression (f.beta #[a]) else pure (.app f a)
     | .lam _ t b _ => return .lam `_ (← alphaExpression t) (← alphaExpression b) .default
     | .forallE _ t b _ => return .forallE `_ (← alphaExpression t) (← alphaExpression b) .default
-    | .letE _ t v b nd => return .letE `_ (← alphaExpression t) (← alphaExpression v) (← alphaExpression b) nd
+    | .letE _ _ v b _ => alphaExpression (b.instantiate1 v)
     | .mdata _ b => alphaExpression b
     | .proj n i b => return .proj n i (← alphaExpression b)
     | e => pure e
   modify (·.insert e result)
   return result
 
-/-- Full statements retain their telescope. Lean performs beta/zeta/reducible
-normalization; de Bruijn binders and canonical universe parameters supply the
-alpha quotient. Hash collisions are checked by the existing certificate path. -/
+/-- Full statements use the shared frozen syntax normalization. Recursive
+computations and instance dictionaries remain opaque. De Bruijn binders and
+canonical universe parameters supply the alpha quotient. -/
 def membershipKey (type : Expr) : MetaM UInt64 := do
   let type ← instantiateMVars type
-  let type ← withReducible <| reduce type (explicitOnly := false) (skipTypes := false)
+  let type := (alphaExpression type).run' {}
+  let type ← match normalizeStatementSyntax (← getEnv) type with
+    | .ok type => pure type
+    | .error reason => throwError "{reason}"
   let params := (collectLevelParams {} type).params.toList
   let levels := (List.range params.length).map fun i => Level.param (.num `membership i)
   let type := type.instantiateLevelParams params levels
@@ -462,10 +540,14 @@ private def membershipFile (bucket : Nat) : String := s!"members-{bucket}.pickle
 unsafe def produceMembershipShard (storage : System.FilePath)
     (planPath resultPath : System.FilePath) : IO Unit := do
   let plan : ShardPlan ← readJson planPath
+  let progress := resultPath.addExtension "progress"
+  IO.FS.writeFile progress "importing"
   let env ← importEnvironment (plan.modules.map String.toName)
+  IO.FS.writeFile progress "imported"
   let mut pages : Std.HashMap Nat MembershipPage := {}
   let mut result : MembershipShardResult := {modules := plan.modules}
   for module in plan.modules do
+    IO.FS.writeFile progress s!"normalizing:{module}"
     let entries ← visitModule module.toName fun parts => do
       let mut known : NameSet := {}
       let mut entries : Array Entry := #[]
@@ -505,9 +587,11 @@ unsafe def produceMembershipShard (storage : System.FilePath)
     if result.indexed % 10000 < entries.size then
       IO.eprintln s!"lookup.membership_indexed={result.indexed} module={module} missing={result.missing.size}"
   for bucket in [:256] do
+    IO.FS.writeFile progress s!"writing:{bucket}"
     pickle (storage / membershipFile bucket) (pages[bucket]?.getD {})
       (key := .num `membership bucket)
   writeJson resultPath result
+  IO.FS.writeFile progress "complete"
 
 /-- Membership is an independently versioned sidecar. Existing discrimination
 trees, fallback lists and their ordering are reused without regeneration. -/
@@ -515,21 +599,10 @@ unsafe def produceMembership (directory : System.FilePath) : IO MembershipHeader
   let header : Header ← readJson (directory / "header.json")
   unless header.format == version && header.complete do
     throw <| IO.userError "lookup.membership_requires_complete_candidate_index"
-  let storage := directory / s!"membership-alpha-v1-{header.inputs}"
+  let storage := directory / s!"membership-alpha-syntax-v2-{header.inputs}"
   IO.FS.createDirAll storage
   let partitions : Array (Array String) ← readJson (directory / "import-partitions.json")
-  let mut groups : Array (String × Array String) := #[]
-  for i in [:partitions.size] do
-    let label := s!"group-{i}"
-    let modules := partitions[i]!
-    let complete ← try
-      let old : MembershipShardResult ← readJson (storage / label / "result.json")
-      pure (old.modules == modules && old.missing.isEmpty)
-      catch _ => pure false
-    if complete || modules.size <= 64 then groups := groups.push (label, modules)
-    else
-      for chunk in [:((modules.size + 63) / 64)] do
-        groups := groups.push (s!"{label}-chunk-{chunk}", modules.extract (chunk * 64) ((chunk + 1) * 64))
+  let groups := partitions.mapIdx fun i modules => (s!"group-{i}", modules)
   let mut results : Array MembershipShardResult := #[]
   for i in [:groups.size] do
     let part := storage / groups[i]!.1
