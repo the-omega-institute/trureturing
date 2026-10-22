@@ -36,6 +36,10 @@ $$(\exists A: \operatorname{PowerSeries}\left(\mathbb{Q}\right), \operatorname{I
 
 *Proof.* Machine-checked in Lean as `D5/S1/Recurrence/Invariants/HannaDiagonalDerivativeParityA375452.result` (`✓ std3`). ∎
 
+*Resolves.* `Problems/oeis-a375452-hanna-diagonal-parity` (proved) by `D5/S1/Recurrence/Invariants/HannaDiagonalDerivativeParityA375452.result`.
+
+<!-- scribe-open-problem-resolution-v1 {"problem_slug":"oeis-a375452-hanna-diagonal-parity","declaration_gid":"D5/S1/Recurrence/Invariants/HannaDiagonalDerivativeParityA375452.result","resolution_kind":"proved"} -->
+
 *Source.* Repository-derived.
 
 *Acknowledgement.* Paul D. Hanna (2024). *OEIS A375449 and A375452, diagonal derivative parity conjectures*. URL: <https://oeis.org/A375449>.
