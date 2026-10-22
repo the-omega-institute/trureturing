@@ -126,19 +126,16 @@ abbrev positiveSignature : Signature := inverseSignature
 def positiveActual : Realization positiveSignature :=
   realize positiveSignature (fun _ M z => stieltjes M z) (fun e => nomatch e)
 
-def positiveRejected : Realization positiveSignature :=
-  realize positiveSignature (fun _ _ _ => 0) (fun e => nomatch e)
-
 def positiveArena : Arena where
   signature := positiveSignature
   Law R := ∀ {M : Measure ℝ} [IsProbabilityMeasure M],
     (∀ᵐ v ∂M, 0 < v) → ∀ {z : ℝ}, 0 < z →
     0 < R.readout () M z
 
-private lemma positive_rejected : ¬ positiveArena.Law positiveRejected := by
+private lemma positive_rejected : ¬ positiveArena.Law inverseRejected := by
   intro h
   have hh := h (M := Measure.dirac 1) (by simp) (z := 1) (by norm_num)
-  norm_num [positiveRejected, realize] at hh
+  norm_num [inverseRejected, realize] at hh
 
 private lemma positive_dependence : ObservationalDependence positiveSignature positiveActual := by
   intro i
@@ -148,9 +145,9 @@ private lemma positive_dependence : ObservationalDependence positiveSignature po
 def positiveFamily : Registration positiveArena (type_of% @stieltjes_pos) where
   actual := positiveActual
   bridge := Iff.rfl
-  variation := ⟨@stieltjes_pos, positiveRejected, positive_rejected⟩
+  variation := ⟨@stieltjes_pos, inverseRejected, positive_rejected⟩
   sensitivity := _root_.Reg.Support.SingleDependentReadout.sensitivity
-    positiveArena.Law positiveActual positiveRejected positive_rejected
+    positiveArena.Law positiveActual inverseRejected positive_rejected
   dependence := positive_dependence
 
 def jensenAudit : Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0}
