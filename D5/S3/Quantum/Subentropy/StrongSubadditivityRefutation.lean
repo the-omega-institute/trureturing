@@ -13,6 +13,12 @@ import D5.S3.Quantum.Subentropy.UniformValues
 import D5.S3.Quantum.Foundation.FiniteStateChannel
 import D5.S3.Quantum.Information.PartialTraceMutualInformation
 import D5.S3.Quantum.Entanglement.BellPureStateMixedMarginal
+import D5.S3.Quantum.Divergence.QuantumRelativeEntropyDefectComposition
+import D5.S3.Quantum.EnvironmentRecords
+import D5.S3.Quantum.FiniteDimensional
+import D5.S3.Quantum.QubitWitnesses
+import D5.S3.Quantum.Subentropy.Basic
+import D5.S3.QuantumBounds.CHSHWitness
 
 /-! Density-state relabelling and the exact marginals of the Bell-pair witness. -/
 
@@ -178,7 +184,7 @@ private def canonicalSubentropy : SubentropyLike where
     rw [h]
     exact SpectralFormula.matrixSubentropy_diagonal_eq_distinct_formula p hp hs hi
 
-private def diagonalState {ι : Type} [Fintype ι] [DecidableEq ι]
+def diagonalState {ι : Type} [Fintype ι] [DecidableEq ι]
     (p : ι → ℝ) (hp : ∀ i, 0 ≤ p i) (hs : ∑ i, p i = 1) : DensityState ι := by
   refine ⟨CStarMatrix.ofMatrix (Matrix.diagonal fun i => (p i : ℂ)), ?_, ?_⟩
   · apply map_nonneg CStarMatrix.ofMatrixStarAlgEquiv
