@@ -9,7 +9,15 @@
 import D5.S3.Quantum.Information.StabilizerPairLocalUnitaryInequivalence
 import D5.S3.QuadraticForms.SymplecticBasis
 
-/-! Canonical Pauli line signs on nondegenerate binary four-spaces. -/
+/-! Canonical Pauli line signs on nondegenerate binary four-spaces.
+
+The fifteen isotropic triples are transported along a symplectic linear equivalence.
+For any four single-qubit binary labels, the sum of their fifteen multiplication
+exponents is twice the local pairing of the first symplectic pair. This identity is
+checked on the fixed four-generator coordinate space. Multiplication over all qubits
+makes the product of all line phases minus one. These phases are the actual matrix
+line signs, so the number of negative lines is odd.
+-/
 
 set_option autoImplicit false
 set_option relaxedAutoImplicit false
@@ -186,10 +194,14 @@ private theorem bitSign_add (a b : ZMod 2) :
 
 private theorem prod_bitSign {ι : Type*} (s : Finset ι) (f : ι → ZMod 2) :
     (∏ i ∈ s, bitSign (f i)) = bitSign (∑ i ∈ s, f i) := by
-  classical
-  induction s using Finset.induction_on with
-  | empty => simp [bitSign]
-  | @insert i s hi ih => simp [hi, bitSign_add, ih]
+  let χ : Multiplicative (ZMod 2) →* ℂ :=
+    { toFun := fun b => bitSign b.toAdd
+      map_one' := rfl
+      map_mul' := fun a b => bitSign_add a.toAdd b.toAdd }
+  have hχ (b : ZMod 2) : χ (Multiplicative.ofAdd b) = bitSign b := rfl
+  have hprod := (map_prod χ (fun i => Multiplicative.ofAdd (f i)) s).symm
+  rw [← ofAdd_sum] at hprod
+  simpa only [hχ] using hprod
 
 private theorem local_comm (u v : ZMod 2 × ZMod 2) :
     pauliMatrix (canonicalLabel u) * pauliMatrix (canonicalLabel v) =
@@ -396,7 +408,8 @@ private theorem line_sign {N : ℕ}
   have hv0 : v ≠ 0 := (Finset.mem_filter.mp (hl'.1 hv)).2.2
   obtain ⟨hsum, hcomm⟩ := hl'.2.2 u hu v hv huv
   have hsum' : u + v = u ∨ u + v = v ∨ u + v = w := by
-    simpa only [← Finset.mem_toList, hlist, List.mem_cons, List.mem_singleton, List.not_mem_nil, or_false] using hsum
+    simpa only [← Finset.mem_toList, hlist, List.mem_cons, List.mem_singleton,
+      List.not_mem_nil, or_false] using hsum
   have hw : u + v = w := by
     rcases hsum' with h | h | h
     · exact False.elim (hv0 (add_left_cancel (h.trans (add_zero u).symm)))
@@ -591,10 +604,14 @@ private theorem fourthRoot_add (a b : ZMod 4) :
 
 private theorem prod_fourthRoot {ι : Type*} (s : Finset ι) (f : ι → ZMod 4) :
     (∏ i ∈ s, fourthRoot (f i)) = fourthRoot (∑ i ∈ s, f i) := by
-  classical
-  induction s using Finset.induction_on with
-  | empty => simp [fourthRoot]
-  | @insert i s hi ih => simp [hi, fourthRoot_add, ih]
+  let χ : Multiplicative (ZMod 4) →* ℂ :=
+    { toFun := fun b => fourthRoot b.toAdd
+      map_one' := rfl
+      map_mul' := fun a b => fourthRoot_add a.toAdd b.toAdd }
+  have hχ (b : ZMod 4) : χ (Multiplicative.ofAdd b) = fourthRoot b := rfl
+  have hprod := (map_prod χ (fun i => Multiplicative.ofAdd (f i)) s).symm
+  rw [← ofAdd_sum] at hprod
+  simpa only [hχ] using hprod
 
 private theorem fourthRoot_two (b : ZMod 2) :
     fourthRoot (2 * b.val) = bitSign b := by
@@ -651,19 +668,186 @@ private theorem total_phase {N : ℕ}
   rw [he]
   norm_num [modelForm, bitSign]
 
+private theorem commute_of_B_zero {N : ℕ} (u v : Fin N → ZMod 2 × ZMod 2)
+    (h : B u v = 0) : Commute (observable u) (observable v) := by
+  change observable u * observable v = observable v * observable u
+  rw [observable_comm, h]
+  simp [bitSign]
+
+private theorem lineProduct_triple {N : ℕ} (u v : Fin N → ZMod 2 × ZMod 2)
+    (hu : u ≠ 0) (hv : v ≠ 0) (huv : u ≠ v) (hB : B u v = 0) :
+    lineProduct {u, v, u + v} = phase u v • 1 := by
+  classical
+  have hsu : u + v ≠ u := fun h => hv (add_left_cancel (h.trans (add_zero u).symm))
+  have hsv : u + v ≠ v := fun h => hu (add_right_cancel (h.trans (zero_add v).symm))
+  have hp : ({u, v, u + v} : Finset _).toList.Perm [u, v, u + v] := by
+    apply (List.perm_ext_iff_of_nodup (Finset.nodup_toList _)
+      (by simp [huv, Ne.symm hsu, Ne.symm hsv])).2
+    intro x
+    simp
+  have hBu : B u (u + v) = 0 := by rw [B_add_right, B_self, hB, zero_add]
+  have hBv : B v (u + v) = 0 := by rw [B_add_right, B_comm v u, hB, B_self, add_zero]
+  have hc : [observable u, observable v, observable (u + v)].Pairwise Commute := by
+    simp [commute_of_B_zero u v hB, commute_of_B_zero u (u + v) hBu,
+      commute_of_B_zero v (u + v) hBv]
+  have hprod := (hp.symm.map observable).prod_eq' hc
+  change (({u, v, u + v} : Finset _).toList.map observable).prod = _
+  rw [← hprod]
+  simp only [List.map_cons, List.map_nil, List.prod_cons, List.prod_nil, mul_one,
+    ← mul_assoc]
+  rw [observable_mul, smul_mul_assoc, observable_sq]
+
+private def embeddedLine {N : ℕ}
+    {U : Submodule (ZMod 2) (Fin N → ZMod 2 × ZMod 2)}
+    (e : (Fin 4 → ZMod 2) ≃ₗ[ZMod 2] U) (k : Fin 15) :
+    Finset (Fin N → ZMod 2 × ZMod 2) :=
+  (modelSet k).image fun a => (e a : Fin N → ZMod 2 × ZMod 2)
+
+private theorem embedded_lines {N : ℕ}
+    (U : Submodule (ZMod 2) (Fin N → ZMod 2 × ZMod 2))
+    (e : (Fin 4 → ZMod 2) ≃ₗ[ZMod 2] U)
+    (he : ∀ a b, B (e a : Fin N → ZMod 2 × ZMod 2)
+      (e b : Fin N → ZMod 2 × ZMod 2) = modelForm a b) :
+    lines U = Finset.univ.image (embeddedLine e) ∧ Function.Injective (embeddedLine e) := by
+  classical
+  have ei : Function.Injective (fun a => (e a : Fin N → ZMod 2 × ZMod 2)) :=
+    Subtype.val_injective.comp e.injective
+  have enz (a : Fin 4 → ZMod 2) (ha : a ≠ 0) :
+      (e a : Fin N → ZMod 2 × ZMod 2) ≠ 0 := by
+    intro h
+    apply ha
+    apply ei
+    simpa using h
+  constructor
+  · apply Finset.ext
+    intro l
+    constructor
+    · intro hl
+      have hl' : l ⊆ points U ∧ l.card = 3 ∧
+          ∀ u ∈ l, ∀ v ∈ l, u ≠ v → u + v ∈ l ∧ B u v = 0 := by
+        simpa only [lines, Finset.mem_filter, Finset.mem_powerset] using hl
+      obtain ⟨u, v, w, huv, huw, hvw, hset⟩ := Finset.card_eq_three.mp hl'.2.1
+      have hu : u ∈ l := by simp [hset]
+      have hv : v ∈ l := by simp [hset]
+      obtain ⟨huU, hu0⟩ := (Finset.mem_filter.mp (hl'.1 hu)).2
+      obtain ⟨hvU, hv0⟩ := (Finset.mem_filter.mp (hl'.1 hv)).2
+      obtain ⟨hsum, hB⟩ := hl'.2.2 u hu v hv huv
+      have hw : u + v = w := by
+        have hm : u + v = u ∨ u + v = v ∨ u + v = w := by simpa [hset] using hsum
+        rcases hm with h | h | h
+        · exact False.elim (hv0 (add_left_cancel (h.trans (add_zero u).symm)))
+        · exact False.elim (hu0 (add_right_cancel (h.trans (zero_add v).symm)))
+        · exact h
+      let a : Fin 4 → ZMod 2 := e.symm ⟨u, huU⟩
+      let b : Fin 4 → ZMod 2 := e.symm ⟨v, hvU⟩
+      have hea : (e a : Fin N → ZMod 2 × ZMod 2) = u := by simp [a]
+      have heb : (e b : Fin N → ZMod 2 × ZMod 2) = v := by simp [b]
+      have ha0 : a ≠ 0 := by intro h; apply hu0; simpa [h] using hea.symm
+      have hb0 : b ≠ 0 := by intro h; apply hv0; simpa [h] using heb.symm
+      have hab : a ≠ b := by intro h; apply huv; rw [← hea, ← heb, h]
+      have hform : modelForm a b = 0 := by rw [← he, hea, heb, hB]
+      obtain ⟨k, hk⟩ := model_cover a b ha0 hb0 hab hform
+      apply Finset.mem_image.mpr
+      refine ⟨k, Finset.mem_univ _, ?_⟩
+      simp [embeddedLine, hk, hea, heb, hset, ← hw, map_add]
+    · intro hl
+      obtain ⟨k, _, rfl⟩ := Finset.mem_image.mp hl
+      apply Finset.mem_filter.mpr
+      constructor
+      · apply Finset.mem_powerset.mpr
+        intro u hu
+        obtain ⟨a, ha, rfl⟩ := Finset.mem_image.mp hu
+        simp only [points, Finset.mem_filter, Finset.mem_univ, true_and]
+        exact ⟨(e a).property, enz a ((model_set_facts k).2.1 a ha)⟩
+      · constructor
+        · rw [embeddedLine, Finset.card_image_of_injective _ ei]
+          exact (model_set_facts k).1
+        · intro u hu v hv huv
+          obtain ⟨a, ha, rfl⟩ := Finset.mem_image.mp hu
+          obtain ⟨b, hb, rfl⟩ := Finset.mem_image.mp hv
+          have hab : a ≠ b := fun h => huv (by rw [h])
+          have hcond := (model_set_facts k).2.2 a ha b hb hab
+          refine ⟨?_, by rw [he]; exact hcond.2⟩
+          have hadd : (e (a + b) : Fin N → ZMod 2 × ZMod 2) =
+              (e a : Fin N → ZMod 2 × ZMod 2) + (e b : Fin N → ZMod 2 × ZMod 2) := by simp
+          rw [← hadd]
+          exact Finset.mem_image.mpr ⟨a + b, hcond.1, rfl⟩
+  · intro k m h
+    apply model_set_injective
+    exact Finset.image_injective ei h
+
+private theorem odd_of_sign_product {ι : Type*} [Fintype ι] (f : ι → ℂ)
+    (hf : ∀ i, f i = 1 ∨ f i = -1) (hp : (∏ i, f i) = -1) :
+    Odd (Finset.univ.filter fun i => f i = -1).card := by
+  classical
+  apply (neg_one_pow_eq_neg_one_iff_odd (by norm_num : (-1 : ℂ) ≠ 1)).mp
+  calc
+    (-1 : ℂ) ^ (Finset.univ.filter fun i => f i = -1).card =
+        ∏ i, if f i = -1 then (-1 : ℂ) else 1 := by simp [Finset.prod_ite]
+    _ = ∏ i, f i := by
+      apply Finset.prod_congr rfl
+      intro i _
+      rcases hf i with h | h <;> norm_num [h]
+    _ = -1 := hp
+
+private theorem scalar_identity_injective (N : ℕ) :
+    Function.Injective (fun c : ℂ => c • (1 : Matrix (Fin N → Fin 2) (Fin N → Fin 2) ℂ)) :=
+  smul_left_injective ℂ one_ne_zero
+
 private theorem parity_from_coordinates {N : ℕ}
-    (U : Submodule (ZMod 2) (Fin N → ZMod 2 × ZMod 2)) (hU : IsLinearDoily U)
+    (U : Submodule (ZMod 2) (Fin N → ZMod 2 × ZMod 2))
     (e : (Fin 4 → ZMod 2) ≃ₗ[ZMod 2] U)
     (he : ∀ a b, B (e a : Fin N → ZMod 2 × ZMod 2)
       (e b : Fin N → ZMod 2 × ZMod 2) = modelForm a b) :
     Odd (negativeLines U).card := by
-  sorry
+  classical
+  have ei : Function.Injective (fun a => (e a : Fin N → ZMod 2 × ZMod 2)) :=
+    Subtype.val_injective.comp e.injective
+  have enz (a : Fin 4 → ZMod 2) (ha : a ≠ 0) :
+      (e a : Fin N → ZMod 2 × ZMod 2) ≠ 0 := by
+    intro h
+    apply ha
+    apply ei
+    simpa using h
+  obtain ⟨hgeom, hinj⟩ := embedded_lines U e he
+  let f : Fin 15 → ℂ := fun k => phase
+    (e (modelPair k).1 : Fin N → ZMod 2 × ZMod 2)
+    (e (modelPair k).2 : Fin N → ZMod 2 × ZMod 2)
+  have hprod (k : Fin 15) : lineProduct (embeddedLine e k) = f k • 1 := by
+    have hpair := model_pair_facts k
+    have hne : (e (modelPair k).1 : Fin N → ZMod 2 × ZMod 2) ≠
+        (e (modelPair k).2 : Fin N → ZMod 2 × ZMod 2) := fun h => hpair.2.2.1 (ei h)
+    have hB : B (e (modelPair k).1 : Fin N → ZMod 2 × ZMod 2)
+        (e (modelPair k).2 : Fin N → ZMod 2 × ZMod 2) = 0 := by rw [he]; exact hpair.2.2.2
+    simpa [embeddedLine, modelSet, map_add, f] using
+      lineProduct_triple _ _ (enz _ hpair.1) (enz _ hpair.2.1) hne hB
+  have hneg (k : Fin 15) : lineProduct (embeddedLine e k) = -1 ↔ f k = -1 := by
+    rw [hprod k]
+    constructor
+    · intro h
+      apply scalar_identity_injective N
+      simpa using h
+    · intro h
+      simp [h]
+  have hs (k : Fin 15) : f k = 1 ∨ f k = -1 := by
+    have hmem : embeddedLine e k ∈ lines U := by
+      rw [hgeom]
+      exact Finset.mem_image.mpr ⟨k, Finset.mem_univ _, rfl⟩
+    rcases line_sign U _ hmem with h | h
+    · left
+      apply scalar_identity_injective N
+      simpa [hprod k] using h
+    · exact Or.inr ((hneg k).mp h)
+  have hodd := odd_of_sign_product f hs (total_phase e he)
+  unfold negativeLines
+  rw [hgeom, Finset.filter_image, Finset.card_image_of_injective _ hinj]
+  simpa only [hneg] using hodd
 
 /-- Every linear doily has an odd number of negative lines. -/
 theorem result : claim := by
   intro N _ U hU
   obtain ⟨e, he⟩ := symplectic_coordinates U hU
-  exact parity_from_coordinates U hU e he
+  exact parity_from_coordinates U e he
 
 end
 
