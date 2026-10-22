@@ -51,9 +51,7 @@ private theorem rejected_law : ¬ arena.Law sineReadout := by
   change 0 < Real.sin (Real.pi * (1 / 2)) - Real.pi * (1 - 1 / 2) *
     (Real.sin (Real.pi * (1 / 2)) / (Real.pi * (1 - 1 / 2))) at hh
   have hp : Real.pi * (1 - (1 / 2 : ℝ)) ≠ 0 := by positivity
-  have he : Real.sin (Real.pi * (1 / 2)) - Real.pi * (1 - 1 / 2) *
-      (Real.sin (Real.pi * (1 / 2)) / (Real.pi * (1 - 1 / 2))) = 0 := by field_simp; ring
-  rw [he] at hh
+  rw [mul_div_cancel₀ _ hp, sub_self] at hh
   exact lt_irrefl 0 hh
 
 def family : Registration arena (type_of% @denominator_pos) where

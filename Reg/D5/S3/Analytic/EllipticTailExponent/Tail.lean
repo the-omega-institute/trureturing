@@ -1,8 +1,7 @@
 import LeanInformationAuditInterface.Contract.Registration
-import D5.S3.Analytic.EllipticTailExponent.Tail
+import D5.S3.Analytic.EllipticTailExponent.Result
 import Reg.Support.DependentFamily
 import Reg.Support.SingleDependentReadout
-import Mathlib.Analysis.Real.Pi.Bounds
 
 namespace Reg.D5.S3.Analytic.EllipticTailExponent.Tail
 open _root_.D5.S3.Analytic.EllipticTailExponent.Defs
@@ -93,13 +92,12 @@ def tailArena : Arena where
 
 private theorem tailHalf_ne_zero :
     Real.sin (Real.pi * (1 / 2)) / (Real.pi * (1 - 1 / 2)) - S 0 (1 / 2) ≠ 0 := by
-  rw [show Real.pi * (1 / 2) = Real.pi / 2 by ring, Real.sin_pi_div_two]
-  norm_num [S, g6]
-  intro h
-  have hp := Real.pi_pos
-  have hp4 := Real.pi_lt_four
-  field_simp at h
-  nlinarith
+  have hd := _root_.D5.S3.Analytic.EllipticTailExponent.Result.denominator_pos
+    0 (a := 1 / 2) (by norm_num) (by norm_num)
+  have hp : 0 < Real.pi * (1 - (1 / 2 : ℝ)) := by positivity
+  have h := div_pos hd hp
+  rw [sub_div, mul_div_cancel_left₀ _ hp.ne'] at h
+  exact h.ne'
 
 private theorem tailRejected_law : ¬ tailArena.Law tailRejected := by
   intro h
@@ -156,4 +154,3 @@ def tailAudit : LeanInformationAudit.Contract.Registration.{_,_,_,0,0,0,_,_,_,_,
 
 end
 end Reg.D5.S3.Analytic.EllipticTailExponent.Tail
-
