@@ -2,17 +2,18 @@
    generality: G
    mirror-B: D5/B/S3/Analytic/MeijerZeroCount/Mellin
    mirror-E: none(waiver:evidence-not-specified-by-formal-manifest)
-   anchors: [mathlib/module/Mathlib.Analysis.SpecialFunctions.Gamma.Beta, mathlib/module/Mathlib.Analysis.SpecialFunctions.ImproperIntegrals, mathlib/module/Mathlib.LinearAlgebra.Lagrange, mathlib/module/Mathlib.Data.Nat.Factorial.BigOperators]
+   anchors: [mathlib/module/Mathlib.Analysis.SpecialFunctions.Gamma.Beta, mathlib/module/Mathlib.Analysis.SpecialFunctions.ImproperIntegrals, mathlib/module/Mathlib.Topology.Algebra.Polynomial, mathlib/module/Mathlib.LinearAlgebra.Lagrange, mathlib/module/Mathlib.Data.Nat.Factorial.BigOperators]
    utility: none
    digest: Mellin inversion identifies the Gamma quotient with its Rodrigues kernel. -/
 
-import D5.S3.Analytic.MeijerZeroCount.Defs
+import D5.S3.Analytic.MeijerZeroCount.Rodrigues
 import Mathlib.Analysis.SpecialFunctions.Gamma.Beta
 import Mathlib.Analysis.SpecialFunctions.ImproperIntegrals
+import Mathlib.Topology.Algebra.Polynomial
 import Mathlib.LinearAlgebra.Lagrange
 import Mathlib.Data.Nat.Factorial.BigOperators
-open Polynomial Finset Complex MeasureTheory Set
-open scoped BigOperators
+open Polynomial Finset Complex MeasureTheory Set Filter
+open scoped BigOperators Topology
 namespace D5.S3.Analytic.MeijerZeroCount.Mellin
 open Defs
 open Defs
@@ -241,4 +242,126 @@ private lemma rational_vertical_bound (n d : ℕ) (hd : 2 ≤ d) (c t : ℝ) (hc
     (mul_le_mul_of_nonneg_right hA (by positivity)).trans
       (mul_le_mul_of_nonneg_left hC hB.le)
   simpa using hh
+
+private lemma gammaQuot_vertical_bound (n d : ℕ) (c : ℝ) (hd : 2 ≤ d) (hc : 0 < c)
+    (t : ℝ) :
+    ‖gammaQuot ![(n : ℝ)+c, (n : ℝ)+c] ![c, ((2*n+d : ℕ) : ℝ)+c]
+      (1 + t * I)‖ ≤ 1 / (1+t^2) := by
+  rw [gammaQuot_pochhammer n d c _ hc (by simp)]
+  rw [asc_eval_prod, asc_eval_prod]
+  exact rational_vertical_bound n d hd c t hc
+
+private lemma gammaQuot_verticalIntegrable (n d : ℕ) (c : ℝ)
+    (hd : 2 ≤ d) (hc : 0 < c) :
+    VerticalIntegrable
+      (gammaQuot ![(n : ℝ)+c, (n : ℝ)+c] ![c, ((2*n+d : ℕ) : ℝ)+c]) 1 := by
+  change Integrable (fun t : ℝ =>
+    gammaQuot ![(n : ℝ)+c, (n : ℝ)+c] ![c, ((2*n+d : ℕ) : ℝ)+c] (1+t*I))
+  have hm : Measurable (fun t : ℝ =>
+      gammaQuot ![(n : ℝ)+c, (n : ℝ)+c] ![c, ((2*n+d : ℕ) : ℝ)+c] (1+t*I)) := by
+    have he : (fun t : ℝ =>
+        gammaQuot ![(n : ℝ)+c, (n : ℝ)+c] ![c, ((2*n+d : ℕ) : ℝ)+c] (1+t*I)) =
+        fun t : ℝ => (ascPochhammer ℂ n).eval (1+t*I+c) /
+          (ascPochhammer ℂ (n+d)).eval (1+t*I+c+n) := by
+      funext t
+      exact gammaQuot_pochhammer n d c _ hc (by simp)
+    rw [he]
+    exact ((ascPochhammer ℂ n).continuous.measurable.comp (by fun_prop)).div
+      ((ascPochhammer ℂ (n+d)).continuous.measurable.comp (by fun_prop))
+  exact integrable_inv_one_add_sq.mono' hm.aestronglyMeasurable
+    (Eventually.of_forall (fun t => by
+      simpa only [one_div] using gammaQuot_vertical_bound n d c hd hc t))
+open Defs Rodrigues
+set_option maxHeartbeats 800000
+
+private lemma hasMellin_f_sum (n d : ℕ) (c : ℝ) (hc : 0 < c) (s : ℂ)
+    (hs : 0 < s.re) :
+    HasMellin (f n d c) s
+      (∑ k ∈ range (n+d-1+1), (coeffA n d k : ℂ) / (s+c+n+k)) := by
+  let u := range (n+d-1+1)
+  let g : ℕ → ℝ → ℂ := fun k =>
+    (coeffA n d k : ℂ) • indicator (Ioc 0 1)
+      (fun x : ℝ => (x : ℂ)^(((n : ℝ)+c+k : ℝ) : ℂ))
+  have hg (k : ℕ) : HasMellin (g k) s
+      ((coeffA n d k : ℂ) / (s+c+n+k)) := by
+    have hh := hasMellin_cpow_Ioc (((n : ℝ)+c+k : ℝ) : ℂ)
+      (s := s) (by simp only [Complex.ofReal_re]; positivity)
+    have hh' := hasMellin_const_smul hh.1 (coeffA n d k : ℂ)
+    rw [hh.2] at hh'
+    convert hh' using 1 <;> simp only [g, smul_eq_mul] <;> push_cast <;> ring
+  have he : (f n d c) =ᵐ[volume.restrict (Ioi 0)] fun x => ∑ k ∈ u, g k x := by
+    filter_upwards [ae_restrict_mem measurableSet_Ioi,
+      ae_restrict_of_ae (volume.ae_ne (1 : ℝ))] with x hx hxone
+    by_cases hxl : x < 1
+    · rw [f_eq_sum n d c x ⟨hx, hxl⟩]
+      apply sum_congr rfl
+      intro k hk
+      dsimp only [g]
+      simp only [Pi.smul_apply, smul_eq_mul]
+      rw [indicator_of_mem (show x ∈ Ioc (0 : ℝ) 1 from ⟨hx, hxl.le⟩)]
+      rw [Complex.ofReal_cpow hx.le]
+    · have hxout : x ∉ Ioo (0 : ℝ) 1 := by intro h; exact hxl h.2
+      have hxout' : x ∉ Ioc (0 : ℝ) 1 := by
+        intro h
+        exact hxone (le_antisymm h.2 (le_of_not_gt hxl))
+      simp [f, hxout, g, hxout']
+  have hi : MellinConvergent (fun x => ∑ k ∈ u, g k x) s := by
+    unfold MellinConvergent
+    simp only [Finset.smul_sum]
+    exact integrable_finsetSum _ (fun k _ => (hg k).1)
+  have hm : mellin (fun x => ∑ k ∈ u, g k x) s =
+      ∑ k ∈ u, (coeffA n d k : ℂ) / (s+c+n+k) := by
+    unfold mellin
+    simp only [Finset.smul_sum]
+    rw [integral_finsetSum u (fun k _ => (hg k).1)]
+    exact sum_congr rfl (fun k _ => (hg k).2)
+  constructor
+  · exact hi.congr (by filter_upwards [he] with x hx; simp [hx])
+  · exact (integral_congr_ae (by filter_upwards [he] with x hx; simp [hx])).trans hm
+
+private lemma continuousAt_f (n d : ℕ) (c : ℝ) {x : ℝ}
+    (hx : x ∈ Ioo (0 : ℝ) 1) : ContinuousAt (f n d c) x := by
+  have hp : ContinuousAt (fun y : ℝ =>
+      ((y^((n : ℝ)+c) : ℝ) : ℂ) * (((rodriguesPoly n d).eval y : ℝ) : ℂ)) x :=
+    (Complex.continuous_ofReal.continuousAt.comp
+      (Real.continuousAt_rpow_const x _ (.inl hx.1.ne'))).mul
+      (Complex.continuous_ofReal.continuousAt.comp (rodriguesPoly n d).continuous.continuousAt)
+  apply hp.congr
+  filter_upwards [isOpen_Ioo.mem_nhds hx] with y hy
+  simp [f, hy]
+
+/-- The Mellin transform of the compactly supported Rodrigues kernel is the Gamma quotient. -/
+theorem mellin_f (n d : ℕ) (c : ℝ) (hd : 2 ≤ d) (hc : 0 < c) (s : ℂ)
+    (hs : 0 < s.re) :
+    mellin (f n d c) s =
+      gammaQuot ![(n : ℝ)+c, (n : ℝ)+c] ![c, ((2*n+d : ℕ) : ℝ)+c] s := by
+  rw [(hasMellin_f_sum n d c hc s hs).2, gammaQuot_family n d c hd hc s hs]
+  apply sum_congr rfl
+  intro k hk
+  congr 1
+  simp only [coeffA]
+  push_cast
+  rfl
+
+/-- Mellin inversion identifies the contour integral with the Rodrigues kernel. -/
+theorem meijerG_eq_f (n d : ℕ) (c : ℝ) (hd : 2 ≤ d) (hc : 0 < c)
+    {x : ℝ} (hx : x ∈ Ioo (0 : ℝ) 1) :
+    meijerG ![(n : ℝ)+c, (n : ℝ)+c] ![c, ((2*n+d : ℕ) : ℝ)+c] x = f n d c x := by
+  have hEq (t : ℝ) : mellin (f n d c) (1+t*I) =
+      gammaQuot ![(n : ℝ)+c, (n : ℝ)+c] ![c, ((2*n+d : ℕ) : ℝ)+c] (1+t*I) :=
+    mellin_f n d c hd hc _ (by simp)
+  have hF : VerticalIntegrable (mellin (f n d c)) 1 := by
+    exact (gammaQuot_verticalIntegrable n d c hd hc).congr
+      (Eventually.of_forall (fun t => (hEq t).symm))
+  have hInv : meijerG ![(n : ℝ)+c, (n : ℝ)+c] ![c, ((2*n+d : ℕ) : ℝ)+c] x =
+      mellinInv 1 (mellin (f n d c)) x := by
+    unfold meijerG mellinInv
+    congr 1
+    apply integral_congr_ae
+    exact Eventually.of_forall (fun t => by
+      dsimp only
+      simp only [Complex.ofReal_one]
+      rw [hEq t])
+  exact hInv.trans (mellinInv_mellin_eq 1 (f n d c) hx.1
+    (hasMellin_f_sum n d c hc 1 (by simp)).1 hF (continuousAt_f n d c hx))
 end D5.S3.Analytic.MeijerZeroCount.Mellin
