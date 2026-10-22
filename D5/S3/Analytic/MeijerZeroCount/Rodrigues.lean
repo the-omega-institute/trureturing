@@ -65,7 +65,7 @@ private lemma coefficient_identity (n N k : ℕ) (hk : k ≤ N) :
   have hkf : (k.factorial:ℝ) ≠ 0 := by positivity
   have hNk : ((N-k).factorial:ℝ) ≠ 0 := by positivity
   rw [← hfac]
-  field_simp
+  field_simp (discharger := first | assumption | positivity)
 
 private theorem rodriguesPoly_eq_sum (n d : ℕ) :
     rodriguesPoly n d = ∑ k ∈ range (n+d-1+1), C (coeffA n d k) * X^k := by
@@ -76,7 +76,8 @@ private theorem rodriguesPoly_eq_sum (n d : ℕ) :
   simp only [Nat.add_sub_cancel_left]
   rw [← mul_assoc, ← C_mul, ← mul_assoc, ← C_mul]
   congr 2
-  simpa only [coeffA, mul_assoc] using
+  dsimp only [coeffA]
+  simpa only [mul_assoc] using
     coefficient_identity n (n+d-1) k (Nat.le_of_lt_succ (mem_range.mp hk))
 
 theorem f_eq_sum (n d : ℕ) (c x : ℝ) (hx : x ∈ Set.Ioo 0 1) :
@@ -128,7 +129,8 @@ private def interiorRoots (p : ℝ[X]) : Finset ℝ :=
 
 private lemma mem_interiorRoots (p : ℝ[X]) (hp : p ≠ 0) (x : ℝ) :
     x ∈ interiorRoots p ↔ x ∈ Set.Ioo 0 1 ∧ p.eval x = 0 := by
-  simp only [interiorRoots, mem_filter, Multiset.mem_toFinset, mem_roots hp, IsRoot]
+  dsimp only [interiorRoots]
+  simp only [mem_filter, Multiset.mem_toFinset, mem_roots hp, IsRoot]
   exact and_comm
 
 private lemma rolle_count (p : ℝ[X]) (hp : p ≠ 0) (hp' : p.derivative ≠ 0)
@@ -150,8 +152,12 @@ private lemma rolle_count (p : ℝ[X]) (hp : p ≠ 0) (hp' : p.derivative ≠ 0)
     · exact ⟨lt_of_le_of_lt (hs x hx).1 hz.1, lt_of_lt_of_le hz.2 (hs y hy).2.1⟩
     · simpa only [← Polynomial.deriv] using hdz
   have hcS : S.card = (interiorRoots p).card + 2 := by
-    have h0' : (0 : ℝ) ∉ interiorRoots p := by simp [interiorRoots]
-    have h1' : (1 : ℝ) ∉ interiorRoots p := by simp [interiorRoots]
+    have h0' : (0 : ℝ) ∉ interiorRoots p := by
+      dsimp only [interiorRoots]
+      simp
+    have h1' : (1 : ℝ) ∉ interiorRoots p := by
+      dsimp only [interiorRoots]
+      simp
     simp [S, h0', h1']
   omega
 

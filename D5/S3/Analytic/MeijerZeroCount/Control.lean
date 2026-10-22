@@ -69,7 +69,8 @@ private lemma exists_h_zero (n d : ℕ) (hn : 0 < n) (hd : 0 < d) :
     obtain ⟨m, rfl⟩ := Nat.exists_eq_succ_of_ne_zero hn.ne'
     simp [Finset.sum_range_succ']
   have hone : h n d 1 = -(d : ℝ) := by
-    simp [h, Nat.cast_add]
+    dsimp only [h]
+    simp [Nat.cast_add]
   apply intermediate_value_Ioo' (show (0 : ℝ) ≤ 1 by norm_num) hc.continuousOn
   rw [hzero, hone]
   exact ⟨neg_neg_of_pos (by exact_mod_cast hd), by norm_num⟩
@@ -77,7 +78,8 @@ private lemma exists_h_zero (n d : ℕ) (hn : 0 < n) (hd : 0 < d) :
 private lemma control_family (n d : ℕ) (c : ℝ) {x : ℝ} (hx : 0 < x) :
     control ![(n : ℝ)+c, (n : ℝ)+c] ![c, ((2*n+d : ℕ) : ℝ)+c] x =
       x ^ c * (2*x^n - 1 - x^(2*n+d)) := by
-  simp only [Defs.control, Fin.sum_univ_two, Matrix.cons_val_zero, Matrix.cons_val_one]
+  dsimp only [Defs.control]
+  simp only [Fin.sum_univ_two, Matrix.cons_val_zero, Matrix.cons_val_one]
   simp only [Real.rpow_add hx, Real.rpow_natCast]
   ring
 

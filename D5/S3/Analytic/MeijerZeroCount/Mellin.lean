@@ -37,13 +37,14 @@ private theorem gammaQuot_pochhammer (n d : ℕ) (c : ℝ) (s : ℂ)
     linarith
   rw [← Complex.Gamma_add_nat_div_Gamma_eq _ (havoid _ hz),
     ← Complex.Gamma_add_nat_div_Gamma_eq _ (havoid _ hzn)]
-  simp only [gammaQuot, Fin.prod_univ_two, Matrix.cons_val_zero, Matrix.cons_val_one,
+  dsimp only [gammaQuot]
+  simp only [Fin.prod_univ_two, Matrix.cons_val_zero, Matrix.cons_val_one,
     Matrix.cons_val_fin_one]
   push_cast
   have e₁ : (n : ℂ) + c + s = s + c + n := by ring
   have e₂ : 2 * (n : ℂ) + d + c + s = s + c + n + (n + d) := by ring
   rw [e₁, e₂, show (c : ℂ) + s = s + c by ring]
-  field_simp
+  field_simp (discharger := first | assumption | positivity)
 
 set_option maxHeartbeats 800000
 private lemma residue_denominator (N k : ℕ) (hk : k ≤ N) :
@@ -103,7 +104,7 @@ private lemma negative_numerator (n k : ℕ) :
     exact_mod_cast (by simpa using Nat.factorial_mul_descFactorial (show n ≤ n+k by omega))
   have hk : (k.factorial : ℂ) ≠ 0 := by exact_mod_cast Nat.factorial_ne_zero k
   rw [← he]
-  field_simp
+  field_simp (discharger := first | assumption | positivity)
   <;> ring
 
 
@@ -339,7 +340,7 @@ theorem mellin_f (n d : ℕ) (c : ℝ) (hd : 2 ≤ d) (hc : 0 < c) (s : ℂ)
   apply sum_congr rfl
   intro k hk
   congr 1
-  simp only [coeffA]
+  dsimp only [coeffA]
   push_cast
   rfl
 
