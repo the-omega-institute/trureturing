@@ -306,6 +306,14 @@ unsafe def onDemandLookup (table : LookupTable)
     cache.set (some (module.toString, options, env))
     return env
   let finish (base : Environment) (proof : Expr) : MetaM Expr := do
+    -- Reduce the selected view before inspecting its support. Discarded
+    -- conjunction/subtype fields need not belong to the query vocabulary.
+    let proof ← Meta.transform proof (post := fun e => do
+      let projection := e.getAppFn.constName?.any (#[``And.left, ``And.right,
+        ``Iff.mp, ``Iff.mpr, ``Subtype.property, ``Eq.mp, ``Eq.mpr, ``Eq.symm].contains ·)
+      if projection || e.isProj || e.getAppFn.isLambda then
+        return .done (← withTransparency .all <| whnf e)
+      return .done e)
     let proof ← inlineLookupSupport base proof
     return detachLookupExpression proof
   return {table with

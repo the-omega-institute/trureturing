@@ -24,7 +24,7 @@ def withLookupPreparation {α : Type} (budget? : Option (IO.Ref LookupBudgetStat
   let some budget := budget? | return ← action
   let before ← budget.get
   if before.preparation >= lookupPreparationBudget * 1000 then
-    throwError "lookup.preparation-heartbeat"
+    Core.throwMaxHeartbeat `lookup.preparation `maxHeartbeats (lookupPreparationBudget * 1000)
   let started ← IO.getNumHeartbeats
   let nanos ← IO.monoNanosNow
   try
