@@ -59,7 +59,10 @@ internal sealed class FuchsLogarithmBasisRefutationDocument : IScribeDocumentDef
                         "The -1/4 eigenspace of the normalized Kronecker difference is the line through the vectorization of M = [[1,sqrt(5/6),0],[sqrt(5/6),sqrt(2/3),0],[0,0,0]]. Its upper-left two-by-two minor is sqrt(2/3)-5/6, which is nonzero. Every column induced by a physical unitary has zero value for that minor, so no physical unitary conjugation makes the logarithm argument diagonal.")),
                     Paragraph(Text(
                         "Thus the source's universal basis question is refuted by a faithful noncommuting qutrit pair. Arbitrary unitary diagonalization on the enlarged tensor space and the commuting sufficient case remain separate statements."))),
-                DescribeRole.Theorem))));
+                DescribeRole.Theorem,
+                openProblemResolutionClaim: new OpenProblemResolutionClaim(
+                    ProblemSlugRef.Create("fuchs-1996-thesis-logarithm-basis-question"),
+                    ResolutionKind.Refuted)))));
 
     private static Formula KsumFormula()
     {

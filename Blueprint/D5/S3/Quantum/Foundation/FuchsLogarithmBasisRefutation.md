@@ -48,6 +48,10 @@ $$\neg (\forall (d: \mathbb{N}), (\forall (rho0: \operatorname{Matrix}\left(\ope
 
 *Proof.* Machine-checked in Lean as `D5/S3/Quantum/Foundation/FuchsLogarithmBasisRefutation.result` (`✓ std3`). ∎
 
+*Resolves.* `Problems/fuchs-1996-thesis-logarithm-basis-question` (refuted) by `D5/S3/Quantum/Foundation/FuchsLogarithmBasisRefutation.result`.
+
+<!-- scribe-open-problem-resolution-v1 {"problem_slug":"fuchs-1996-thesis-logarithm-basis-question","declaration_gid":"D5/S3/Quantum/Foundation/FuchsLogarithmBasisRefutation.result","resolution_kind":"refuted"} -->
+
 *Source.* Repository-derived.
 
 *Acknowledgement.* Christopher A. Fuchs (1996). *Distinguishability and Accessible Information in Quantum Theory*. URL: <https://arxiv.org/abs/quant-ph/9601020v1>.
