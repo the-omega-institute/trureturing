@@ -10,23 +10,18 @@ import D5.S3.Analytic.ExpRatioCM.Series
 
 /-! Coefficient extraction from scaled alternating derivatives. -/
 
-open scoped Topology
+open scoped BigOperators Topology
 open Filter
 open D5.S3.Analytic.ExpRatioCM.Defs
 
-namespace D5.S3.Analytic.ExpRatioCM.Extraction
+open D5.S3.Analytic.ExpRatioCM.Series
 
-/-!
-The analytic estimate used in the coefficient argument has one reusable core:
-after the distinguished term has been separated, the remaining geometric tail
-tends to zero.  The statement below keeps that estimate independent of the
-particular quotient coefficients.  In the application, `hmain` is supplied by
-the exponential-series derivative identity and the geometric tail estimate.
--/
+noncomputable section
+namespace D5.S3.Analytic.ExpRatioCM.Extraction
 
 /-- A vanishing tail leaves the second exponential coefficient after scaling. -/
 theorem extraction_limit {b r : ℕ → ℝ} {h : ℝ → ℝ}
-    (hmain : ∀ k : ℕ, 3 ≤ k →
+    (hmain : ∀ᶠ k : ℕ in atTop,
       (49 / 32 : ℝ) ^ k *
           ((-1 : ℝ) ^ k * iteratedDeriv k h (k * Real.log (7 / 4))) =
         b 2 + r k)
@@ -40,8 +35,79 @@ theorem extraction_limit {b r : ℕ → ℝ} {h : ℝ → ℝ}
   have hlim' : Tendsto (fun k : ℕ => b 2 + r k) atTop (𝓝 (b 2)) := by
     simpa using hlim
   apply hlim'.congr'
-  filter_upwards [eventually_ge_atTop 3] with k hk
-  exact (hmain k hk).symm
+  filter_upwards [hmain] with k hk
+  exact hk.symm
+
+private def extractionWeight (n : ℕ) : ℝ :=
+  (49 / 32 : ℝ) * n * (4 / 7 : ℝ) ^ n
+
+private lemma weight_nonneg (n : ℕ) : 0 ≤ extractionWeight n := by
+  dsimp [extractionWeight]; positivity
+
+private lemma weight_tail (n : ℕ) :
+    extractionWeight (n + 3) ≤ (6 / 7 : ℝ) * (16 / 21 : ℝ) ^ n := by
+  have hstep (j : ℕ) : extractionWeight (j + 3 + 1) ≤
+      (16 / 21 : ℝ) * extractionWeight (j + 3) := by
+    dsimp [extractionWeight]
+    rw [pow_succ]
+    push_cast
+    have hp : 0 ≤ (4 / 7 : ℝ) ^ (j + 3) := by positivity
+    nlinarith [mul_nonneg (Nat.cast_nonneg j : (0 : ℝ) ≤ j) hp]
+  have h := le_geom (u := fun n => extractionWeight (n + 3))
+    (by norm_num : (0 : ℝ) ≤ 16 / 21) n (fun j _ => hstep j)
+  norm_num [extractionWeight] at h ⊢
+  simpa only [mul_comm] using h
+
+private lemma tail_term_bound {b : ℕ → ℝ} {B : ℝ}
+    (hB : 0 < B) (hb : ∀ n, |b n| ≤ B ^ n) (k n : ℕ)
+    (hk : B * (16 / 21 : ℝ) ^ k ≤ 1 / 2) :
+    ‖b (n + 3) * extractionWeight (n + 3) ^ k‖ ≤
+      (B ^ 3 * (6 / 7 : ℝ) ^ k) * (1 / 2 : ℝ) ^ n := by
+  rw [norm_mul, Real.norm_eq_abs, Real.norm_eq_abs,
+    abs_of_nonneg (pow_nonneg (weight_nonneg _) _)]
+  calc
+    _ ≤ B ^ (n + 3) * ((6 / 7 : ℝ) * (16 / 21 : ℝ) ^ n) ^ k :=
+      mul_le_mul (hb _) (pow_le_pow_left₀ (weight_nonneg _) (weight_tail n) k)
+        (pow_nonneg (weight_nonneg _) _) (by positivity)
+    _ = (B ^ 3 * (6 / 7 : ℝ) ^ k) * (B * (16 / 21 : ℝ) ^ k) ^ n := by
+      rw [pow_add, mul_pow, mul_pow, ← pow_mul, ← pow_mul, Nat.mul_comm n k]
+      ring
+    _ ≤ _ := mul_le_mul_of_nonneg_left
+      (pow_le_pow_left₀ (by positivity) hk n) (by positivity)
+
+private lemma normalized_series_bound {b : ℕ → ℝ} {B : ℝ}
+    (hB : 0 < B) (hb : ∀ n, |b n| ≤ B ^ n) {k : ℕ} (hk0 : 1 ≤ k)
+    (hk : B * (16 / 21 : ℝ) ^ k ≤ 1 / 2) :
+    |(∑' n : ℕ, b n * extractionWeight n ^ k) - b 2| ≤
+      |b 1| * (7 / 8 : ℝ) ^ k + 2 * B ^ 3 * (6 / 7 : ℝ) ^ k := by
+  have hs := ((summable_geometric_of_lt_one (by norm_num : (0 : ℝ) ≤ 1 / 2)
+    (by norm_num)).mul_left (B ^ 3 * (6 / 7 : ℝ) ^ k))
+  have htail : Summable (fun n : ℕ => ‖b (n + 3) * extractionWeight (n + 3) ^ k‖) :=
+    Summable.of_nonneg_of_le (fun _ => norm_nonneg _) (tail_term_bound hB hb k · hk) hs
+  have hall : Summable (fun n : ℕ => b n * extractionWeight n ^ k) :=
+    (summable_nat_add_iff 3).mp htail.of_norm
+  have hsplit := hall.sum_add_tsum_nat_add 3
+  have hzero : extractionWeight 0 ^ k = 0 := by
+    simp [extractionWeight, ne_of_gt (show 0 < k by omega)]
+  have hone : extractionWeight 1 = 7 / 8 := by norm_num [extractionWeight]
+  have htwo : extractionWeight 2 = 1 := by norm_num [extractionWeight]
+  have hsplit' : (∑' n : ℕ, b n * extractionWeight n ^ k) - b 2 =
+      b 1 * (7 / 8 : ℝ) ^ k + ∑' n : ℕ, b (n + 3) * extractionWeight (n + 3) ^ k := by
+    simp only [Finset.sum_range_succ, Finset.sum_range_zero, hzero, hone, htwo,
+      mul_zero, one_pow, mul_one, zero_add] at hsplit
+    linarith [hsplit]
+  rw [hsplit']
+  calc
+    _ ≤ |b 1 * (7 / 8 : ℝ) ^ k| + |∑' n : ℕ, b (n + 3) * extractionWeight (n + 3) ^ k| := abs_add_le _ _
+    _ ≤ |b 1| * (7 / 8 : ℝ) ^ k +
+        ∑' n : ℕ, (B ^ 3 * (6 / 7 : ℝ) ^ k) * (1 / 2 : ℝ) ^ n := by
+      apply add_le_add
+      · rw [abs_mul, abs_of_nonneg (pow_nonneg (by norm_num : (0 : ℝ) ≤ 7 / 8) _)]
+      · exact (norm_tsum_le_tsum_norm htail).trans
+          (htail.tsum_le_tsum (tail_term_bound hB hb k · hk) hs)
+    _ = _ := by
+      rw [tsum_mul_left, tsum_geometric_of_lt_one (by norm_num : (0 : ℝ) ≤ 1 / 2) (by norm_num)]
+      ring
 
 /-- A negative extracted coefficient rules out complete monotonicity. -/
 theorem not_completelyMonotone_of_extraction
