@@ -8,6 +8,7 @@
 
 import D5.S3.Quantum.Matrix.TaylorMajorization.Shift
 import D5.S3.Quantum.Measurement.StabilizerPovmMaximalEntanglementRefutation
+import D5.S3.Quantum.Information.TraceNormDiscordMutualCorrelationBound
 
 noncomputable section
 open Matrix BigOperators Finset
@@ -57,12 +58,15 @@ private theorem traceQ_closed (k : ℕ) :
     _ = _ := by rw [hs, hs, hs, hs]; norm_num; ring
 
 private theorem sum_square : (qubitZ + qubitX) ^ 2 = (2 : ℂ) • 1 := by
-  have hz := qubit_weyl_star.2.2.2.2
-  have hx := qubit_weyl_star.2.2.2.1
-  have ha := qubit_weyl_star.1
-  simp only [pow_two] at hz hx ⊢
-  rw [add_mul, mul_add, mul_add, hz, hx, ha]
-  module
+  have h := D5.S3.Quantum.Information.TraceNormDiscordMutualCorrelationBound.spin_square
+    (![1, 0, 1] : Fin 3 → ℝ)
+  rw [D5.S3.Quantum.Entanglement.SteeringEllipsoidCHSH.vlen_sq,
+    RCLike.real_smul_eq_coe_smul (K := ℂ)] at h
+  norm_num [D5.S3.QuantumChannels.PauliThreeWeightBayesianInverseUniqueness.spin,
+    D5.S3.Quantum.Entanglement.SteeringEllipsoidCHSH.sigma_succ,
+    D5.S3.Quantum.Entanglement.SteeringEllipsoidFullyEntangledFraction.pauli,
+    pauliMatrix, Fin.sum_univ_three, dotProduct, Complex.real_smul] at h
+  simpa [pow_two, add_comm] using h
 
 private theorem traceH_even (m : ℕ) :
     (((qubitZ + qubitX) ^ (2 * m)).trace).re = (2 : ℝ) ^ (m + 1) := by
@@ -114,11 +118,11 @@ theorem defect_shift_negative (k : ℕ) (hk : Odd k) (hk5 : 5 ≤ k)
         simp [hjm, defect_zero]
       · rw [hjm, defect_even m (by omega)]
         have hd : 0 ≤ (4 : ℝ)^m - 2^(m+1) := by
-          have hmp : m = 1 + (m-1) := by omega
-          rw [hmp, pow_add, pow_add, pow_add]
-          have hh : (2 : ℝ) ^ (m-1) ≤ 4 ^ (m-1) := by gcongr; norm_num
-          norm_num at *
-          nlinarith
+          apply sub_nonneg.mpr
+          calc
+            (2 : ℝ) ^ (m + 1) ≤ 2 ^ (2 * m) :=
+              pow_le_pow_right₀ (by norm_num) (by omega)
+            _ = 4 ^ m := by rw [pow_mul]; norm_num
         have ho : Odd (k - 2*m) := Nat.Odd.sub_even
           (by have := mem_range.mp hj; omega) hk (even_two_mul m)
         rw [ho.neg_pow]
