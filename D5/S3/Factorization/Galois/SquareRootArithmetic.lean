@@ -7,7 +7,7 @@
    digest: Arithmetic Frobenius and odd-prime unramifiedness for actual square-root extensions. -/
 /-
 Copyright (c) 2026 The Tau Ceti contributors, Chris Birkbeck. All rights reserved.
-Released under Apache 2.0 license as described in licenses/TauCeti-LICENSE.
+Released under Apache 2.0 license as described in docs/reports/licenses/TauCeti-LICENSE.txt.
 Authors: The Tau Ceti contributors, Chris Birkbeck
 Adapted from TauCetiProject/TauCeti at 14f2a0fe0892587f041a6ca7b6f6a05e31b1f65d.
 The exact declaration-level source map accompanies this source candidate.

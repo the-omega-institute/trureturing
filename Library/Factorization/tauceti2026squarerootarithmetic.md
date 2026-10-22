@@ -15,9 +15,9 @@ triage: anchor
 # Square-root arithmetic: source attribution and scope
 
 The receiving module is `D5.S3.Factorization.Galois.SquareRootArithmetic`.
-Its accepted source has SHA-256
-`aabfa33cc8bd79db0e337bbbf0441d3ebfd4435185c8839cba02d17a134a8cda`
-and 22,004 bytes. The source attribution below is to TauCeti revision
+Its current source has SHA-256
+`b9a2ab3403639147698c22d5728271163310a11e9253a7b251b30e4b64358a95`
+and 22,021 bytes. The source attribution below is to TauCeti revision
 `14f2a0fe0892587f041a6ca7b6f6a05e31b1f65d`; the receiving mathlib revision is
 `56a005855ea17e0b0958f73ec801ae140b0a1679`. TauCeti is not a receiving
 manifest dependency. These are source adaptations using the existing imports.
@@ -125,7 +125,7 @@ The inspected upstream source headers state:
 
 `EqTop.lean` additionally names Chris Birkbeck among its authors. Retain those
 notices and the receiving source's prominent adaptation/revision notice.
-Distribute the complete upstream license at `licenses/TauCeti-LICENSE`, the
+Distribute the complete upstream license at `docs/reports/licenses/TauCeti-LICENSE.txt`, the
 path named by the receiving header. The exact supplied license has 11,357
 bytes and SHA-256
 `b40930bbcf80744c86c46a12bc9da056641d722716c378f5659b9e555ef833e1`.
