@@ -17,6 +17,18 @@ internal sealed class LinearExponentDyadicSupportDocument : IScribeDocumentDefin
                 + "coefficient zero. For every m>1, [X^(m-1)](1-A)^m/(1-mX)=0. "
                 + "The inverse of the constant-one denominator is expressed by invOfUnit, "
                 + "and a(n) means the coefficient [X^n]A.")),
+            Describe.Lean(DescribeId.Create("linearrows-agree"),
+                DeclarationHandle.Create(Prefix + "Agree"), H("Agreement below a degree"),
+                StatementSource.FromAuthor(Disp(AgreementFormula())),
+                AssessedProvenance.FromRepo(),
+                Blocks(Paragraph(Text("Two series agree at every natural degree strictly below n."))),
+                DescribeRole.Definition),
+            Describe.Lean(DescribeId.Create("linearrows-pow-change"),
+                DeclarationHandle.Create(Prefix + "pow_change"), H("First coefficient difference of a power"),
+                StatementSource.FromAuthor(Disp(PowerChangeFormula())),
+                AssessedProvenance.FromRepo(),
+                Blocks(Paragraph(Text("For constant-one series agreeing below n, the degree-n difference of their e-th powers is e times the degree-n difference of the series."))),
+                DescribeRole.Theorem),
             Node("generatingSeries", "Construction over the integers",
                 "Write F=1-A. At degree n>0, put e=n+1 and g=(1-eX) inverse. "
                 + "Let R=[X^n](F^e g) and T=[X^(n-1)](F^(e-1) F' g+F^e g squared). "
@@ -107,4 +119,33 @@ internal sealed class LinearExponentDyadicSupportDocument : IScribeDocumentDefin
         "hanna_conjecture" => Conjecture(),
         _ => throw new System.ArgumentOutOfRangeException(nameof(name))
     });
+
+    private static Formula OwnerAll(string name, Formula type, Formula body) =>
+        Seq(Forall, Sp, F.Id(name), Colon, Sp, type, Comma, Sp, body);
+    private static Formula OwnerImp(Formula premise, Formula conclusion) =>
+        Seq(Parenthesized(premise), Sp, Implies, Sp, Parenthesized(conclusion));
+    private static Formula OwnerRing(Formula body) => OwnerAll("R", Call("Type"),
+        Seq(OpenBracket, Call("CommRing", F.Id("R")), CloseBracket, Sp, body));
+    private static Formula AgreementFormula()
+    {
+        var n = F.Id("n"); var f = F.Id("F"); var g = F.Id("G"); var k = F.Id("k");
+        var series = Call("PowerSeries", F.Id("R"));
+        return OwnerRing(OwnerAll("n", NatType(), OwnerAll("F", series,
+            OwnerAll("G", series, Seq(Call("Agree", n, f, g), Sp, Iff, Sp,
+                Parenthesized(OwnerAll("k", NatType(), OwnerImp(Seq(k, Sp, Lt, Sp, n),
+                    Equal(Coeff(k, f), Coeff(k, g))))))))));
+    }
+    private static Formula PowerChangeFormula()
+    {
+        var n = F.Id("n"); var f = F.Id("F"); var g = F.Id("G"); var e = F.Id("e");
+        var series = Call("PowerSeries", F.Id("R"));
+        var difference = Sub(Coeff(n, f), Coeff(n, g));
+        var equality = Equal(Sub(Coeff(n, Pow(f, e)), Coeff(n, Pow(g, e))),
+            Mul(Parenthesized(Seq(e, Colon, Sp, F.Id("R"))), Parenthesized(difference)));
+        return OwnerRing(OwnerAll("n", NatType(), OwnerAll("F", series,
+            OwnerAll("G", series, OwnerImp(Equal(Call("constantCoeff", f), D(1)),
+                OwnerImp(Equal(Call("constantCoeff", g), D(1)),
+                    OwnerImp(Call("Agree", n, f, g), OwnerAll("e", NatType(), equality))))))));
+    }
+    private static Formula Parenthesized(Formula value) => Seq(Open, value, Close);
 }
