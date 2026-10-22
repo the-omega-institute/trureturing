@@ -275,4 +275,228 @@ theorem hasDerivAt_f_param {a b x : ℝ} (ha : 0 < a) (hb : 0 < b)
   have h := hasDerivAt_f_param_of_gauss hN hD (gauss_pos ha hb (by linarith) hx hx1).ne'
   exact h.congr_deriv h.deriv.symm
 
+private lemma summable_derivative_majorant {a L r : ℝ} (ha : 0 < a)
+    (hL : 0 < L) (hr : 0 < r) (hr1 : r < 1) (k : ℕ) :
+    Summable (fun n : ℕ => (n : ℝ) * ((n : ℝ)^k * binomialCoeff a n / L) * r^(n-1)) := by
+  have heq (n : ℕ) :
+      (n : ℝ) * ((n : ℝ)^k * binomialCoeff a n / L) * r^(n-1) =
+        (n : ℝ)^(k+1) * binomialCoeff a n * r^n / (L*r) := by
+    cases n with
+    | zero => simp
+    | succ n =>
+      simp only [Nat.add_sub_cancel, pow_succ]
+      field_simp
+      <;> ring
+  simp_rw [heq]
+  exact (summable_binomial a r ha hr.le hr1 (k+1)).div_const (L*r)
+
+private lemma hasDerivAt_controlled_series {a L x : ℝ} {v : ℕ → ℝ}
+    (ha : 0 < a) (hL : 0 < L) (k : ℕ)
+    (hv : ∀ n, |v n| ≤ (n : ℝ)^k * binomialCoeff a n / L)
+    (hx : |x| < 1) :
+    HasDerivAt (fun z : ℝ => ∑' n : ℕ, v n * z^n)
+      (∑' n : ℕ, (n : ℝ) * v n * x^(n-1)) x := by
+  obtain ⟨r, hxr, hr1⟩ := exists_between hx
+  have hr : 0 < r := lt_of_le_of_lt (abs_nonneg x) hxr
+  apply hasDerivAt_tsum_of_isPreconnected
+    (summable_derivative_majorant ha hL hr hr1 k) isOpen_Ioo
+    (convex_Ioo (-r) r).isPreconnected (t := Ioo (-r) r) (y₀ := 0) (y := x)
+    (g := fun n z => v n * z^n)
+    (g' := fun n z => (n : ℝ) * v n * z^(n-1))
+  · intro n z _
+    simpa only [mul_assoc, mul_left_comm, mul_comm] using
+      (hasDerivAt_pow n z).const_mul (v n)
+  · intro n z hz
+    simp only [norm_mul, norm_pow, Real.norm_eq_abs, abs_of_nonneg (Nat.cast_nonneg (α := ℝ) n)]
+    apply mul_le_mul
+    · exact mul_le_mul_of_nonneg_left (hv n) (Nat.cast_nonneg n)
+    · exact pow_le_pow_left₀ (abs_nonneg z) (abs_lt.mpr hz).le _
+    · positivity
+    · have hp : 0 ≤ binomialCoeff a n :=
+        (div_pos (ascPochhammer_pos n a ha) (by positivity)).le
+      positivity
+  · exact ⟨by linarith, hr⟩
+  · apply summable_of_ne_finset_zero (s := {0})
+    intro n hn
+    have hn0 : n ≠ 0 := by simpa using hn
+    simp only [zero_pow hn0, mul_zero]
+  · exact abs_lt.mp hxr
+
+private lemma coefficient_bound {a b s : ℝ} (ha : 0 < a) (hb : 0 < b)
+    (hs : 0 < a+s) (n : ℕ) :
+    |ordinaryHypergeometricCoefficient a b (a+b+s) n| ≤ binomialCoeff a n := by
+  rw [coefficient_product, abs_mul]
+  have hp : 0 ≤ binomialCoeff a n :=
+    (div_pos (ascPochhammer_pos n a ha) (by positivity)).le
+  have hp0 : 0 ≤ ∏ j ∈ Finset.range n, (b+j)/(a+b+s+j) :=
+    Finset.prod_nonneg (fun j _ => (ratio_param ha hb hs j).2.1)
+  rw [abs_of_nonneg hp, abs_of_nonneg hp0]
+  calc
+    _ ≤ binomialCoeff a n * 1 := mul_le_mul_of_nonneg_left
+      (Finset.prod_le_one₀ (fun j _ => (ratio_param ha hb hs j).2.1)
+        (fun j _ => (ratio_param ha hb hs j).2.2.1)) hp
+    _ = _ := mul_one _
+
+private lemma hasDerivAt_gauss_series {a b s x : ℝ} (ha : 0 < a) (hb : 0 < b)
+    (hs : 0 < a+s) (hx : |x| < 1) :
+    HasDerivAt (gauss a b (a+b+s))
+      (∑' n : ℕ, (n : ℝ) * ordinaryHypergeometricCoefficient a b (a+b+s) n * x^(n-1)) x := by
+  have h := hasDerivAt_controlled_series (v := fun n => ordinaryHypergeometricCoefficient a b (a+b+s) n) (L := 1) ha zero_lt_one 0
+    (fun n => by simpa only [pow_zero, one_mul, div_one] using coefficient_bound ha hb hs n) hx
+  change HasDerivAt (fun z : ℝ => gauss a b (a+b+s) z) _ x
+  simpa only [gauss, ordinaryHypergeometric_eq_tsum, smul_eq_mul,
+    ordinaryHypergeometricCoefficient] using h
+
+/-- The parameter derivative of the Gauss series, as a power series in its argument. -/
+noncomputable def gaussParam (a b s x : ℝ) : ℝ :=
+  ∑' n : ℕ, deriv (fun β : ℝ => ordinaryHypergeometricCoefficient a β (a+β+s) n) b * x^n
+
+/-- Differentiation of the parameter-derivative series in the argument. -/
+theorem hasDerivAt_gaussParam {a b s x : ℝ} (ha : 0 < a) (hb : 0 < b)
+    (hs : 0 < a+s) (hx : |x| < 1) :
+    HasDerivAt (gaussParam a b s)
+      (∑' n : ℕ, (n : ℝ) *
+        deriv (fun β : ℝ => ordinaryHypergeometricCoefficient a β (a+β+s) n) b * x^(n-1)) x := by
+  exact hasDerivAt_controlled_series (v := fun n => deriv (fun β : ℝ => ordinaryHypergeometricCoefficient a β (a+β+s) n) b) ha hb 1 (fun n => by
+    rw [abs_of_nonneg (coefficient_param ha hb hs n).2.1, pow_one]
+    exact (coefficient_param ha hb hs n).2.2) hx
+
+/-- The mixed derivative series also differentiates the argument derivative in the parameter. -/
+theorem hasDerivAt_gauss_mixed {a b s x : ℝ} (ha : 0 < a) (hb : 0 < b)
+    (hs : 0 < a+s) (hx : |x| < 1) :
+    HasDerivAt (fun β : ℝ => deriv (gauss a β (a+β+s)) x)
+      (deriv (gaussParam a b s) x) b := by
+  let C : ℕ → ℝ → ℝ := fun n β => ordinaryHypergeometricCoefficient a β (a+β+s) n
+  let d : ℕ → ℝ → ℝ := fun n β => (n : ℝ) * deriv (C n) β * x^(n-1)
+  obtain ⟨r, hxr, hr1⟩ := exists_between hx
+  have hr : 0 < r := lt_of_le_of_lt (abs_nonneg x) hxr
+  have hsum : Summable (fun n : ℕ => (n : ℝ) * C n b * x^(n-1)) := by
+    apply Summable.of_norm_bounded (summable_derivative_majorant ha zero_lt_one hr hr1 0)
+    intro n
+    simp only [norm_mul, norm_pow, Real.norm_eq_abs, abs_of_nonneg (Nat.cast_nonneg (α := ℝ) n)]
+    apply mul_le_mul
+    · simpa only [pow_zero, one_mul, div_one, C] using mul_le_mul_of_nonneg_left (coefficient_bound ha hb hs n) (Nat.cast_nonneg (α := ℝ) n)
+    · exact pow_le_pow_left₀ (abs_nonneg x) hxr.le _
+    · positivity
+    · have hp : 0 ≤ binomialCoeff a n :=
+        (div_pos (ascPochhammer_pos n a ha) (by positivity)).le
+      positivity
+  have hd : HasDerivAt (fun β => ∑' n : ℕ, (n : ℝ) * C n β * x^(n-1))
+      (∑' n : ℕ, d n b) b := by
+    apply hasDerivAt_tsum_of_isPreconnected
+      (summable_derivative_majorant ha (by linarith : 0 < b/2) hr hr1 1)
+      isOpen_Ioo (convex_Ioo (b/2) (2*b)).isPreconnected
+      (t := Ioo (b/2) (2*b)) (y₀ := b)
+    · intro n β hβ
+      exact (((coefficient_param ha (by linarith [hβ.1]) hs n).1).const_mul (n : ℝ)).mul_const _
+    · intro n β hβ
+      have hβ0 : 0 < β := by linarith [hβ.1]
+      have hc := coefficient_param ha hβ0 hs n
+      change ‖(n : ℝ) * deriv (C n) β * x^(n-1)‖ ≤ _
+      simp only [norm_mul, norm_pow, Real.norm_eq_abs, abs_of_nonneg (Nat.cast_nonneg (α := ℝ) n),
+        C, abs_of_nonneg hc.2.1, pow_one]
+      apply mul_le_mul
+      · apply mul_le_mul_of_nonneg_left _ (Nat.cast_nonneg n)
+        exact hc.2.2.trans (div_le_div_of_nonneg_left
+          (mul_nonneg (Nat.cast_nonneg n)
+            (div_pos (ascPochhammer_pos n a ha) (by positivity)).le)
+          (by linarith) hβ.1.le)
+      · exact pow_le_pow_left₀ (abs_nonneg x) hxr.le _
+      · positivity
+      · have hp : 0 ≤ binomialCoeff a n :=
+          (div_pos (ascPochhammer_pos n a ha) (by positivity)).le
+        positivity
+    · constructor <;> linarith
+    · exact hsum
+    · constructor <;> linarith
+  have heq : (fun β : ℝ => deriv (gauss a β (a+β+s)) x) =ᶠ[𝓝 b]
+      (fun β : ℝ => ∑' n : ℕ, (n : ℝ) * C n β * x^(n-1)) := by
+    filter_upwards [Ioi_mem_nhds hb] with β hβ
+    exact (hasDerivAt_gauss_series ha hβ hs hx).deriv
+  rw [(hasDerivAt_gaussParam ha hb hs hx).deriv]
+  exact hd.congr_of_eventuallyEq heq
+
+/-- The parameter and argument derivatives of the contiguous quotient commute, including at zero. -/
+theorem hasDerivAt_f_mixed {a b x : ℝ} (ha : 0 < a) (hb : 0 < b)
+    (hx : 0 ≤ x) (hx1 : x < 1) :
+    HasDerivAt (fun z : ℝ => deriv (fun β : ℝ => f a β z) b)
+      (deriv (fun β : ℝ => deriv (f a β) x) b) x ∧
+      HasDerivAt (fun β : ℝ => deriv (f a β) x)
+        (deriv (fun z : ℝ => deriv (fun β : ℝ => f a β z) b) x) b := by
+  have hxabs : |x| < 1 := by simpa [abs_of_nonneg hx] using hx1
+  let N := gauss a b (a+b+1)
+  let D := gauss a b (a+b)
+  let Nb := gaussParam a b 1
+  let Db := gaussParam a b 0
+  have hN := (hasDerivAt_gauss_series (s := 1) ha hb (by linarith) hxabs).differentiableAt.hasDerivAt
+  have hD := (hasDerivAt_gauss_series (s := 0) ha hb (by simpa using ha) hxabs).differentiableAt.hasDerivAt
+  simp only [add_zero] at hD
+  have hNb := (hasDerivAt_gaussParam (s := 1) ha hb (by linarith) hxabs).differentiableAt.hasDerivAt
+  have hDb := (hasDerivAt_gaussParam (s := 0) ha hb (by simpa using ha) hxabs).differentiableAt.hasDerivAt
+  have hD0 : D x ≠ 0 := (gauss_pos ha hb (by linarith) hx hx1).ne'
+  have hdx := ((hNb.mul hD).sub (hN.mul hDb)).div (hD.pow 2) (pow_ne_zero 2 hD0)
+  have heqX : (fun z : ℝ => deriv (fun β : ℝ => f a β z) b) =ᶠ[𝓝 x]
+      (fun z => (Nb z * D z - N z * Db z) / (D z)^2) := by
+    have hunit : ∀ᶠ z in 𝓝 x, |z| < 1 :=
+      (continuous_abs.tendsto x).eventually (Iio_mem_nhds hxabs)
+    have hnon : ∀ᶠ z in 𝓝 x, D z ≠ 0 := hD.continuousAt.eventually_ne hD0
+    filter_upwards [hunit, hnon] with z hz hz0
+    have hNp := hasDerivAt_gauss_param (s := 1) ha hb (by linarith) hz
+    have hDp := hasDerivAt_gauss_param (s := 0) ha hb (by simpa using ha) hz
+    simp only [add_zero] at hDp
+    simpa only [Nb, Db, N, D, gaussParam, add_zero] using
+      (hasDerivAt_f_param_of_gauss hNp hDp hz0).deriv
+  have hNp : HasDerivAt (fun β : ℝ => gauss a β (a+β+1) x) (Nb x) b :=
+    hasDerivAt_gauss_param (s := 1) ha hb (by linarith) hxabs
+  have hDp : HasDerivAt (fun β : ℝ => gauss a β (a+β) x) (Db x) b := by
+    simpa only [Db, gaussParam, add_zero] using
+      hasDerivAt_gauss_param (s := 0) ha hb (by simpa using ha) hxabs
+  have hNxp := hasDerivAt_gauss_mixed (s := 1) ha hb (by linarith) hxabs
+  have hDxp := hasDerivAt_gauss_mixed (s := 0) ha hb (by simpa using ha) hxabs
+  simp only [add_zero] at hDxp
+  have hdb := ((hNxp.mul hDp).sub (hNp.mul hDxp)).div (hDp.pow 2) (pow_ne_zero 2 hD0)
+  have heqB : (fun β : ℝ => deriv (f a β) x) =ᶠ[𝓝 b]
+      (fun β => (deriv (gauss a β (a+β+1)) x * gauss a β (a+β) x -
+        gauss a β (a+β+1) x * deriv (gauss a β (a+β)) x) / (gauss a β (a+β) x)^2) := by
+    filter_upwards [Ioi_mem_nhds hb] with β hβ
+    exact (Series.hasDerivAt_f ha hβ hx hx1).deriv
+  have hdX := hdx.congr_of_eventuallyEq heqX
+  have hdB := hdb.congr_of_eventuallyEq heqB
+  have hcross : HasDerivAt (fun z : ℝ => deriv (fun β : ℝ => f a β z) b)
+      (deriv (fun β : ℝ => deriv (f a β) x) b) x := by
+    convert hdX using 1
+    rw [hdB.deriv]
+    dsimp only [N, D, Nb, Db, Pi.mul_apply, Pi.sub_apply, Pi.pow_apply]
+    field_simp
+    <;> ring
+  refine ⟨hcross, ?_⟩
+  rw [hcross.deriv]
+  exact hdB.differentiableAt.hasDerivAt
+
+/-- The parameter derivative vanishes at the series origin. -/
+theorem deriv_f_param_zero (a b : ℝ) : deriv (fun β : ℝ => f a β 0) b = 0 := by
+  simp only [f_zero, deriv_const]
+
+/-- The initial slope of the parameter derivative. -/
+theorem hasDerivAt_f_param_zero {a b : ℝ} (ha : 0 < a) (hb : 0 < b) :
+    HasDerivAt (fun x : ℝ => deriv (fun β : ℝ => f a β x) b)
+      (a * (b^2 - a*(a+1)) / ((a+b)^2 * (a+b+1)^2)) 0 := by
+  have hab : a+b ≠ 0 := by positivity
+  have hab1 : a+b+1 ≠ 0 := by positivity
+  have hc : HasDerivAt (fun β : ℝ => a+β) 1 b := by
+    simpa only [id_eq] using (hasDerivAt_id b).const_add a
+  have hd := (((hasDerivAt_id b).const_mul a).div (hc.mul (hc.add_const 1))
+    (mul_ne_zero hab hab1)).neg
+  have heq : (fun β : ℝ => deriv (f a β) 0) =ᶠ[𝓝 b]
+      (fun β : ℝ => -(a*β/((a+β)*(a+β+1)))) := by
+    filter_upwards [Ioi_mem_nhds hb] with β hβ
+    exact deriv_f_zero ha hβ
+  have hder := hd.congr_of_eventuallyEq heq
+  have hm := (hasDerivAt_f_mixed ha hb (x := 0) (by norm_num) (by norm_num)).1
+  rw [hder.deriv] at hm
+  convert hm using 1
+  dsimp
+  field_simp
+  <;> ring
+
 end D5.S3.Analytic.GaussZeroBalanced.ParamDeriv
