@@ -1,0 +1,34 @@
+**Theorem 113.1 (same-direction parameterization).** Suppose $q>0$ and $V=s\ell u^T$ with $0<s\leq1$ and $\|\ell\|=\|u\|=1$. Split $\ell=(\ell_0;\ell_1)$ into two real two-vectors and put
+
+$$
+t=s^2,\qquad \eta=\sqrt{1-t},\qquad m=u^TPu\in[q,p],\qquad
+J=\begin{pmatrix}0&-1\\1&0\end{pmatrix}.
+$$
+
+Then $\tau=0$ if and only if
+
+$$
+\ell_i=\kappa_i v,\qquad
+v=\frac{J\sqrt P u}{\sqrt m},\qquad
+\kappa_0^2+\kappa_1^2=1.
+\tag{U.30}
+$$
+
+Every $m\in[q,p]$ is attained by a unit $u$. A rotation between the two copies makes $\ell=(v;0)$ without changing $P,u,m,N,\tau,R$.
+
+Proof. Directly,
+
+$$
+\operatorname{Tr}(V_i\sqrt P)=s(\sqrt P u)^T\ell_i.
+$$
+
+Since $s>0$ and $\tau$ is a sum of two squares, zero penalty is equivalent to each $\ell_i$ being perpendicular to nonzero $\sqrt P u$. Its orthogonal complement is the line through $v$, and $\|v\|=1$. Normalizing $\ell$ gives exactly (U.30), including vanishing individual copies. If $p>q$, choose $u_1^2=(m-q)/(p-q)$, $u_2^2=(p-m)/(p-q)$. If $p=q=1/2$, the interval consists only of $m=1/2$ and every unit $u$ attains it.
+
+Choose $O\in O(2)$ with $O(\kappa_0,\kappa_1)^T=(1,0)^T$, and let $Q=O\otimes I_2$. It commutes with $D$, while $(QV)^T(QV)=V^TV$. The two-trace vector is multiplied by $O$, so its squared norm and $\tau$ are unchanged. Also
+
+$$
+D(I_4-QVV^TQ^T)D=QFQ^T.
+$$
+
+Thus $N$ is unchanged; $G$ and $P$ remain the same, so $R$ is unchanged as well. This is one lawful left rotation, with no independent choice of a right direction or residual spectrum. $\square$
+
