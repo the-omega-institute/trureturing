@@ -1,0 +1,44 @@
+### 定理 245.1　精确非退化辛预测边界具有偶数秩
+
+在上述正定 Hamiltonian 模型中，$W$ 上的限制配对
+
+$$
+(u,v)\longmapsto u^{\mathsf T}Jv
+$$
+
+非退化。因此：
+
+$$
+\boxed{\operatorname{rank}O=\dim W\text{ 为偶数}.}
+\tag{245.2}
+$$
+
+若还存在矩阵 $K$ 使
+
+$$
+OA=KO,
+\tag{245.3}
+$$
+
+则约化边界满足
+
+$$
+K=J_rP^{-1},
+\qquad
+P=OS^{-1}O^{\mathsf T}\succ0,
+\qquad
+J_r=OJO^{\mathsf T}
+$$
+
+且 $J_r$ 可逆。
+
+**证明。** 若非零 $u\in W$ 与 $W$ 中所有向量都辛正交，则 $A^{\mathsf T}W\subseteq W$ 和 $A=JS$ 给出
+
+$$
+u^{\mathsf T}JA^{\mathsf T}u
+=
+(Ju)^{\mathsf T}S(Ju)>0,
+$$
+
+与辛正交矛盾。因此限制配对非退化。非退化反对称矩阵的阶数为偶数，故 (245.2) 成立；其余等式由 $OA=KO$、$AS^{-1}=J$ 直接整理得到。\quad$\square$
+

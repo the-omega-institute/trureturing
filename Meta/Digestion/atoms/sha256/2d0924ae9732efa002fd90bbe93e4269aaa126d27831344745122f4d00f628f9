@@ -1,0 +1,51 @@
+## 2. Public interfaces and the undivided parent equation
+
+The original full-parent converse is [the common-parent volume](FIB_COMMON_PARENT_GEOMETRY_AND_MIXED_CHILDREN.md), Theorem 2.1. In the notation here put $e=d-24$. The four interpolated samples of the one entire gain are
+
+$$
+\bigl(g(0),g(1),g(2),g(3)\bigr)=
+\left(-24-e,-\frac e j,\frac{27/5-e}{T},-\frac e n\right).
+$$
+
+The fixed-node rows at clocks $4,5,6,7$ are respectively
+
+$$
+(-1,4,-6,4),\quad(-4,15,-20,10),\quad
+(-10,36,-45,20),\quad(-20,70,-84,35).
+$$
+
+The parent equation, with no division by $e$, $\Lambda$, a gain sample, or a gain
+coefficient, is
+
+$$
+\Lambda e=-D,\qquad
+\Lambda=1+\frac6T+\frac1U-\frac4j-\frac4n,\qquad
+D=\frac{24}{5}\left(b-\frac18\right)\left(\frac6T-\frac2U\right).
+\tag{2.1}
+$$
+
+The clock-four identity that checks the equation is
+
+$$
+g(4)-\frac{18-(24+e)}U
+=e\Lambda+\frac{24}{5}\left(b-\frac18\right)\left(\frac6T-\frac2U\right).
+\tag{2.2}
+$$
+
+The first four original readings are therefore identically $0,24,147/5,24$, and
+(2.1) is necessary and sufficient for the fourth reading $18$. Fixed-node
+interpolation supplies one whole polynomial of degree at most three, including all
+lower-degree and sampled-zero cases. It cannot be identically zero because the first
+two original readings differ.
+
+For the regional cover, use only [support IV](FIB_STRICT_REAL_JOINT_INCIDENCE_SUPPORT_IV.md),
+Theorem 12.1, in the form
+
+$$
+b<30,\qquad c<10,\qquad j>1/16,\qquad |e|<655000
+\tag{2.3}
+$$
+
+for every actual companion over $K$. No $\Lambda$ separation, selected-endpoint
+collar, or boundary classification from that theorem is used here.
+

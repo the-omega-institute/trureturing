@@ -1,0 +1,25 @@
+**Proposition 8.2 (Scope of the exceptional bounds).** The bound (8.1)
+includes singular $\Lambda=0$ sources, zero drift, $e=0$, zero
+gain samples, repeated gain roots, drops of gain degree, vanishing
+$n+U$ or $n+2U$, and all $Q_M=0$ points of the saturation
+closure. No additional localization by any of these equations is
+part of the corrected ideal.
+
+Proof. The only global source localization in (1.11) is by $Q_M$,
+in addition to the inverse guards already specified in $I_M$.
+The source equations (2.5)–(2.7) contain no division by $e$ or
+$\Lambda$, and construct all lower-degree gains. No gain-root
+simplicity or global nonzero-sample hypothesis is imposed. The generic
+reconstruction in Theorem 6.1 uses $H_0,H_1$ as justified units;
+any failure of these unit conditions is retained in the proper base
+complement of $\Omega$. Other permitted degeneracies over $\Omega$
+are handled directly by that theorem. The sets
+$d=0,e=0,n+U=0,n+2U=0$ were bounded by their images in
+Proposition 3.2. Other failures of a generic denominator or certificate
+lie on the proper base complement of $\Omega$; a source on such
+a set was not asserted to have a defined pointwise generic inverse.
+The identity (8.3) deals with the remaining closure boundary.
+Thus the upper bound is a conclusion about the whole saturated
+incidence, not an assertion that a nonzero generic chart is valid
+at every point. ∎
+

@@ -1,0 +1,163 @@
+## 11. 主定理的双设置证明与定量余量
+
+证明定理 2.1 的核心从实际矩阵指数开始，而不把一个数值近似当作非零证明。记
+
+$$
+M=\frac23A,\qquad S_{12}=\sum_{k=0}^{12}\frac{M^k}{k!}.
+$$
+
+诱导最大行和范数为 $\|X\|_\infty=\max_i\sum_j|X_{ij}|$；它次乘，且对所给矩阵 $\|M\|_\infty=2$。矩阵指数级数绝对收敛，于是
+
+$$
+\begin{aligned}
+\|e^M-S_{12}\|_\infty
+&\leq\sum_{k=13}^{\infty}\frac{2^k}{k!}\\
+&=\frac{2^{13}}{13!}\sum_{m=0}^{\infty}
+\frac{2^m13!}{(13+m)!}\\
+&\leq\frac{2^{13}}{13!}\sum_{m=0}^{\infty}(1/7)^m
+=\frac76\frac{2^{13}}{13!}
+<\frac{64}{6081075}.
+\end{aligned}
+\tag{11.1}
+$$
+
+不等式使用 $(14\cdots(13+m))\geq14^m$；$m=0$ 时空积为一。最后一个有理界也等于 $8\cdot2^{13}/13!$，所以严格性由 $7/6<8$ 直接得到，无需以未经控制的指数数值替代余项。每个矩阵元的误差不超过该行和范数。
+
+有限多项式的 $N$ 行按定义 1.4 的次序恰为
+
+$$
+(S_{12})_{N,*}=\left(
+\frac{107738440637}{248594813775},\quad
+\frac{490347766}{1104865839},\quad
+\frac{4899328858}{9207215325},\quad
+\frac{490347766}{1104865839},\quad
+-\frac{91371050044}{248594813775}
+\right).
+\tag{11.2}
+$$
+
+这些等式由 $M$ 的有理矩阵乘法与有限求和得到；例如可逐项用 $R_0=I$、$R_{k+1}=R_kM/(k+1)$ 写 $S_{12}=\sum_{k=0}^{12}R_k$，完全在有理数域中。上述每项绝对值大于 $367/1000$，且交叉相乘给
+
+$$
+\frac{367}{1000}-\frac{64}{6081075}>\frac9{25}.
+$$
+
+故对单位实向量
+
+$$
+v=O(2/3)^Te_N
+$$
+
+的全部五个坐标，都有
+
+$$
+|v_j|>\frac9{25},\qquad
+\mu:=\min_j|v_j|^2>\frac{81}{625}>\frac18.
+\tag{11.3}
+$$
+
+这把一个确切有限多项式与已证明的无穷级数尾界连接起来，证明的是实际 $O(2/3)$ 的坐标下界。
+
+若 $T$ 对所有输入保留两个设置的全部概率，就保留 $\Pi_2,\Pi_3,\Pi_5,\Pi_{25}$ 及 $Q_N(2/3)=vv^\dagger$ 的概率。五个向量
+
+$$
+e_2,e_3,e_5,e_{25},v
+$$
+
+张成 $\mathbb C^5$，因为 $v_N\ne0$；其非正交图是含四条辐条的连通星形，因为另外四个 $v_j$ 也非零。第 10 节的 Mayer–Knill 无扰动步骤给 $T=\operatorname{id}_5$。再用 (10.3) 或复合 Kraus 秩界，得任何精确端口必须 $q\geq5$。$q=5$ 取恒等编码和解码，给精确可行性。
+
+这里精确刚性只用了五个探针投影；加上 $I$，它们张成的实空间至多六维。即使使用两个完整 PVM 的全部十个投影，因为各自之和都为 $I$，总张成维数也至多九，小于 $\operatorname{Herm}_5$ 的二十五维。因此这不是状态层析。结论来自概率保持对全部输入同时成立与 CP 合法性，而非从有限探针数宣称取得全态读数。
+
+为得到显式近似界，下面的推导对任意维数 $d\geq1$、任意复 Kraus 算子都成立。取单位 $v\in\mathbb C^d$，$\mu=\min_i|v_i|^2>0$。对任意复矩阵 $C$ 定义
+
+$$
+L_v(C)=\sum_{i=1}^d\bigl(\|Ce_i\|^2-|\langle e_i,Ce_i\rangle|^2\bigr)
++\|Cv\|^2-|\langle v,Cv\rangle|^2.
+$$
+
+写 $C=\operatorname{diag}(\lambda_i)+B$，$B$ 对角为零；置
+
+$$
+b=\|B\|_{\mathrm{HS}},\qquad
+z=\|(I-vv^\dagger)Cv\|,\qquad
+\alpha=\operatorname{tr}C/d.
+$$
+
+各基向量的正交泄漏平方和恰为 $b^2$，故 $L_v(C)=b^2+z^2$。对任意复数中心 $c$，到 $\mathbb Cv$ 的距离公式给
+
+$$
+\begin{aligned}
+\|(I-vv^\dagger)\operatorname{diag}(\lambda_i)v\|^2
+&=\min_{c\in\mathbb C}\sum_i|v_i|^2|\lambda_i-c|^2\\
+&\geq\mu\min_{c\in\mathbb C}\sum_i|\lambda_i-c|^2
+=\mu\sum_i|\lambda_i-\alpha|^2.
+\end{aligned}
+$$
+
+另一方面，由三角不等式和 $\|Bv\|\leq\|B\|_{\mathrm{HS}}$，左侧开方不超过 $z+b$。所以
+
+$$
+\begin{aligned}
+\|C-\alpha I\|_{\mathrm{HS}}^2
+&=b^2+\sum_i|\lambda_i-\alpha|^2\\
+&\leq b^2+\frac{(z+b)^2}{\mu}
+\leq\left(1+\frac2\mu\right)(b^2+z^2).
+\end{aligned}
+$$
+
+展开 Hilbert–Schmidt 平方得
+
+$$
+L_v(C)\geq\frac{\mu}{2+\mu}
+\left(\|C\|_{\mathrm{HS}}^2-\frac{|\operatorname{tr}C|^2}{d}\right).
+\tag{11.4}
+$$
+
+这里允许复对角、复非对角以及任意非正规矩阵，未假定实 Kraus、unital 性或协变性。
+
+设 $T(X)=\sum_aC_aXC_a^\dagger$ 是通过 $q$ 维块和任意有限标记端口的复合通道。按第 10 节分解可取每个 $\operatorname{rank}C_a\leq q$，保迹给
+
+$$
+\sum_a\|C_a\|_{\mathrm{HS}}^2
+=\operatorname{tr}\sum_aC_a^\dagger C_a=d.
+$$
+
+对秩 $r$ 的任意复矩阵，奇异值分解与 Cauchy–Schwarz 给
+
+$$
+|\operatorname{tr}C|
+\leq\sum_{i=1}^r s_i(C)
+\leq\sqrt r\,\|C\|_{\mathrm{HS}},
+$$
+
+故 $|\operatorname{tr}C_a|^2\leq q\|C_a\|_{\mathrm{HS}}^2$。这是标准秩—迹界；经向量化也是 Terhal–Horodecki Lemma 1 的 Schmidt 秩重叠界。将其用于 (11.4)，先求 Kraus 和、再使用 TP，可得
+
+$$
+\sum_aL_v(C_a)\geq\frac{\mu}{2+\mu}(d-q).
+\tag{11.5}
+$$
+
+把此代数损失接回实际测量，需要 $d+1$ 个生存率测试：$d$ 个输入 $P_i=|e_i\rangle\langle e_i|$ 在基测量中检验结果 $i$，另一个输入 $P_v=vv^\dagger$ 在含该投影的实际设置中检验该结果。每项原始分布的指定事件概率都是一。保迹使
+
+$$
+\sum_aL_v(C_a)
+=\sum_{i=1}^d\bigl(1-\operatorname{tr}(P_iT(P_i))\bigr)
++1-\operatorname{tr}(P_vT(P_v)).
+$$
+
+任一指定事件的概率损失不超过完整分布的 TV。若这两个设置上的全输入误差为 $e_{\mathrm{two}}(T)$，则上式不超过 $(d+1)e_{\mathrm{two}}(T)$，从而
+
+$$
+e_{\mathrm{two}}(T)\geq
+\frac{\mu(d-q)}{(2+\mu)(d+1)}.
+\tag{11.6}
+$$
+
+应用到五模式时，这一步用了六个输入—结果测试，与精确刚性所用五个张成探针是不同的计数。由 (11.3) 得 $\mu/(2+\mu)>1/17$。因此对 $q<5$，每个允许通道满足 $e_{\mathrm{two}}(T)>(5-q)/102$；对所有允许通道取下确界，只能保留
+
+$$
+\varepsilon_{\mathrm{two}}(q)\geq(5-q)/102.
+$$
+
+$q=5$ 的恒等通道给零，单独完成端点。这证明定理 2.1 的定量及精确端口结论。
+

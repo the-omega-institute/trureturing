@@ -1,0 +1,70 @@
+**Theorem 34.1 (Multiplicity exactly two at all four projections).**
+For $i=1,2,3,4$, hold $p=p_i$ and $v=v_i$ fixed and consider the
+single polynomial $R_i(X)=R(X,p_i,v_i)$. It is nonzero and
+
+$$
+\operatorname{ord}_{X=x_i}R_i(X)=2.
+\tag{34.1}
+$$
+
+Thus the multiplicity assertion at the first point strengthens the
+lower bound of Theorem 29.1; the other three points have the same
+exact multiplicity. Each of these four multiple projections has
+exactly one strict whole-world lift among its common finite drifts,
+as in Theorem 33.2.
+
+Proof. Put $a=\alpha_r$ and $z=\zeta_r$ solely in this proof. The exact
+norm identity (22.4), after substitution of (22.7), reads near each
+point, where its denominator is a unit,
+
+$$
+R=\frac{4\{Az^2-B_faz+C_fa^2\}}{A^3D^2F_0^2}.
+\tag{34.2}
+$$
+
+All $x$ subscripts below are partial derivatives with $p,v$ fixed.
+At the point, $a=z=0$ by Theorem 33.2, and
+$A,D,F_0$ are nonzero by (30.5). Consequently (34.2) gives
+$R=R_x=0$ and
+
+$$
+R_{xx}=\frac{8\{A\zeta_{r,x}^2
+                  -B_f\alpha_{r,x}\zeta_{r,x}
+                  +C_f\alpha_{r,x}^2\}}
+                 {A^3D^2F_0^2}.
+\tag{34.3}
+$$
+
+Terms differentiating the denominator, or the coefficient functions
+inside the numerator, multiply either $a$ or $z$ and vanish there.
+Thus (34.3) uses fixed-base derivatives, without inferring a
+fixed-base multiplicity from a derivative along the arc.
+
+Differentiate the exact reduced coefficient arrays (22.7) with
+respect to $x$ before evaluating them. Use the same eight-step
+source enclosures over $[l_i,h_i]$ as in Theorem 33.2, and evaluate
+(34.3) at $x=n_H/U_H$, $p\in[l_i,h_i]$, $v=v_H$ with the outward
+operations (31.2) and exact translated arrays (31.3).
+The resulting open rational bounds are
+
+$$
+\begin{aligned}
+-17010000000000000000&<R_{xx}(x_1,p_1,v_1)
+                         <-17000000000000000000,\\
+7667000000000000000&<R_{xx}(x_2,p_2,v_2)
+                         <7668000000000000000,\\
+26270000000000000&<R_{xx}(x_3,p_3,v_3)
+                         <26290000000000000,\\
+-2955000000000000&<R_{xx}(x_4,p_4,v_4)
+                         <-2954000000000000.
+\end{aligned}
+\tag{34.4}
+$$
+
+Every denominator in (34.3) is guarded before this evaluation.
+The strict nonzero second derivative proves both that $R_i$ is not
+the zero polynomial and that its first nonzero Taylor coefficient at
+$x_i$ is the quadratic coefficient $R_i''(x_i)/2$. This is precisely
+(34.1). No reduced square-free carrier has replaced the polynomial
+$R$ of Definition 22.1. ∎
+

@@ -1,0 +1,60 @@
+**Convention 7.1 (attributed source-specific synthesis).** The
+classification in Theorems 2.1--2.2, the concrete alphabet
+construction (3.3)--(3.5), the direct same-signature bound
+(4.3), the all-cell bound (5.1) and their stated consequences
+are repo-derived deductions for the single source in
+Definition 1.1. Uniformization, coupling, gambler's ruin,
+fibrewise exact-label counting and the row criterion for
+lumpability are the attributed intermediate suppliers,
+rather than new generic theorems. No worldwide priority
+claim is made.
+
+V §§120--121 retain their own statements: the colouring
+and rate-three construction, exact singleton classes,
+transition-stable quotient injectivity, variable-time
+terminal distinction, exact full-law state counts and
+the special close anchors are used by reference.
+Definitions 55.1--55.2 and Theorem 55.3 retain source,
+field and clock custody. Nothing in the present finite
+experiments changes those predecessor assumptions.
+
+The following additional correspondences fix the scope
+of related suppliers:
+
+- [MarkedPredictiveQuotient.actual_endpoint_mass](../../../D5/S3/Observer/ProbabilisticClosure/TrajectoryLaws/MarkedPredictiveQuotient.lean)
+  takes a finite hidden producer, stationary binary
+  edge-emission matrices with zero original $11$-word mass,
+  row-unifilarity and the original integer-time cylinder law.
+  Its joint marked-word/final-class
+  endpoint mass is not (1.6), whose source is an
+  infinite deterministic-start true-jump chain. No
+  stationary synchronization or finite predictive-class
+  count is transferred.
+- [Shalizi--Crutchfield, Computational Mechanics: Pattern
+  and Prediction, Structure and Simplicity,
+  cond-mat/9907176v2, Theorems 2--3](https://arxiv.org/pdf/cond-mat/9907176v2)
+  concerns causal-state entropy minimality and almost-sure
+  uniqueness for stationary discrete-time histories.
+  Equality of future laws motivates a related equivalence,
+  but the present pointwise deterministic-start
+  classification is (2.1)--(2.6), not an application
+  of their almost-sure stationary conclusion.
+- [FinitePredictionTruncation.finite_prediction_truncation_formula_and_error](../../../D5/S3/Observer/MetricGeometry/FinitePredictionTruncation.lean)
+  uses a deterministic update, a bounded readout
+  discrepancy and a discount $0<\gamma\le1$ to bound a
+  discounted supremum along iterates. Neither a
+  discounted discrepancy nor a deterministic update
+  occurs in (5.1); the number $2^{-h}$ here is an
+  actual outward-biased cone-exit probability, not a
+  substituted discount factor.
+- [III §91](FIB_ATOM_RECURSIVE_HOLOGRAPHIC_BOUNDARY_GEOMETRY_CONTINUATION_III.md)
+  fixes an inclusive native four-reply prefix table,
+  a finite closed tree Laplacian and a screened
+  root resolvent. Its geometric remainder is for
+  that scalar same-operator response and its
+  acquired prefix contract. Here $S_h$ is an
+  ancestor-colour list on an infinite chain and
+  (4.2), (5.8) concern complete observed laws.
+  No native prefix acquisition conclusion follows
+  from their superficially similar truncation form.
+

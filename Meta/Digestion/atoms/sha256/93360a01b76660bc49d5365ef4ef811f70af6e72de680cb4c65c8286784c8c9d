@@ -1,0 +1,24 @@
+**Proposition 9.3 (Supports of the cleared polynomials).** Impose only
+
+$$
+T=1+b,\quad U=1+2b,\quad j=t+b(1-t^2),\quad n=j+tb,\quad r=tb.
+$$
+
+Let $\widehat P$ be $P^{\rm raw}$ after these substitutions. Define
+$R_p=P^{\rm out},R_v=V^{\rm out},R_a=A^{\rm out},R_m=M^{\rm out}$,
+suppressing the world label from Definition 2.1. For each response substitute
+$q=(-24-e,-e/j,(27/5-e)/T,-e/n)$ and define the polynomial
+$H_x=5TjnR_x$. With an independent output indeterminate $o_x$, put
+$G_x=H_x-5Tjn\,o_x$. Then
+
+| Polynomial | Nonzero monomials | Total degree |
+| --- | ---: | ---: |
+| $\widehat P$ | 39 | 9 |
+| $H_p$ | 53 | 11 |
+| $H_v$ | 54 | 11 |
+| $H_a$ | 54 | 11 |
+| $H_m$ | 54 | 11 |
+| $G_p$ | 67 | 11 |
+| $G_v$ | 68 | 11 |
+| $G_a$ | 68 | 11 |
+| $G_m$ | 68 | 11 |

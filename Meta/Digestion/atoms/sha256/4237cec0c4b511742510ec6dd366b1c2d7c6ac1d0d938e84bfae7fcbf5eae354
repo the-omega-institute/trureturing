@@ -1,0 +1,53 @@
+**Definition 21.2 (The existing singular image in a fixed sign convention).**
+At $b=1/8$ put
+
+$$
+\begin{gathered}
+J_s=1+64r-64r^2,\quad N_s=1+72r-64r^2,\\
+q=107J_sN_s-480(J_s+N_s)
+ =438272r^4-931328r^3+540800r^2-50728r-853,\\
+k_p=72J_sN_s+(10+N_s)(196J_sN_s-1080N_s-720J_s),\\
+k_v=8J_sN_s+(20+N_s)(50J_sN_s-288N_s-160J_s),\\
+E_s=9(p-24)k_v-(v-84-3N_s)k_p,\\
+h_s=(14982985728p-5246389760v+494892469248)r^3\\
+\qquad+(-19475629824p+5440701760v-449551623744)r^2\\
+\qquad+(-2154767712p+1307330280v-61223107032)r\\
+\qquad+40933920p+7210730v-1537135965,\\
+T_s(p,v)=\frac{\operatorname{Res}_r(q,h_s)}
+                  {4413938512638368063632179200}.
+\end{gathered}
+\tag{21.8}
+$$
+
+The resultant in (21.8) is the fixed $7$ by $7$ determinant with rows
+$r^2q,rq,q,r^3h_s,r^2h_s,rh_s,h_s$ in columns $r^6,\ldots,1$.
+The quotient is an integer polynomial with the fifteen coefficients
+in Section 24. Here $q$ is exactly the published singular polynomial
+$\Phi$ of [S], Section 3, not the target map $\Phi(W)$ of Section 17;
+$T_s$ is exactly $-S_4$ of [S], Definition 9.1. In particular the
+$v^4$ coefficient of $T_s$ is $-99133686444483896037925$.
+Singular coverage is [S], Lemma 9.2.
+
+The zero-safe correspondence with that coverage can also be expressed by
+the following polynomial and original-response identities:
+
+$$
+\begin{gathered}
+\Lambda(r,1/8)=q/(15J_sN_s),\\
+p-24=\frac{e k_p}{72J_sN_s},\qquad
+v-84-3N_s=\frac{e k_v}{8J_sN_s},\\
+107^3 E_s-24h_s=q R_s,\\
+R_s=27574321152r^4-62042222592r^3\\
+\quad+(-329731200p+143616256v+25511292672)r^2\\
+\quad+(370947600p-161568288v+10505729088)r\\
+\quad+109079010p-25033292v-437956836.
+\end{gathered}
+\tag{21.9}
+$$
+
+The parent equation with $\Lambda=0$ forces $b=1/8$, since $\kappa>0$.
+For a strict source $J_s,N_s>0$. Consequently a singular world has
+$q=E_s=h_s=0$, including when $e=0$, and hence $T_s(p,v)=0$.
+This uses the existing singular image and its coverage; the specialized
+nonzero bound over $K_3$ below is the additional exclusion used here.
+

@@ -1,0 +1,72 @@
+**定理 259.3（一般循环目标的尖锐逐项误差）。** 给定 $u>v\ge0$，定义四端口目标
+
+$$
+S(u,v)=\begin{pmatrix}
+2u+v&-u&-v&-u\\-u&2u+v&-u&-v\\-v&-u&2u+v&-u\\-u&-v&-u&2u+v
+\end{pmatrix}.
+\tag{259.3}
+$$
+
+对定义 257.2 的任意 $S_4$，
+
+$$
+\delta_{\rm off}:=\max_{i\ne j}|(S_4)_{ij}-S(u,v)_{ij}|
+\ge\frac{u-v}{2}.
+\tag{259.4}
+$$
+
+此下界可由有限、严格正权的二元树达到，且该例的全矩阵最大逐项误差也恰为 $(u-v)/2$。特别地，$S_{\rm cube}=S(6/5,2/15)$ 的尖锐误差为 $8/15$。这里最优化的比较类允许自由选择正边权及树对角；没有断言原生固定单位边权子类也达到下界，也没有断言算子范数最优性。
+
+证明。记 $\delta=\delta_{\rm off}$。若 $\delta<(u-v)/2$，则 $u-\delta>v+\delta\ge0$。由于所有候选 $w$ 非负，
+
+$$
+\begin{aligned}
+w_{ab}w_{cd},\ w_{ad}w_{bc}&\ge(u-\delta)^2,\\
+w_{ac}w_{bd}&\le(v+\delta)^2<(u-\delta)^2.
+\end{aligned}
+$$
+
+这给出唯一严格最小配对乘积，与 (258.1) 矛盾。这一论证只使用非对角元，不要求候选对角等于目标对角。
+
+为达到下界，取分裂 $ab|cd$ 的树，两个内点 $p,q$ 分别连接 $a,b$ 与 $c,d$。四条端臂的导通相同，中央边导通分别为
+
+$$
+\gamma=3u+v,\qquad t=\frac{2(u+v)\gamma}{u-v}.
+\tag{259.5}
+$$
+
+二者均有限且严格为正。采用此封闭加权树的自由 Laplacian，所以内块为
+
+$$
+K_{pq}=\begin{pmatrix}2\gamma+t&-t\\-t&2\gamma+t\end{pmatrix}>0,
+\qquad D=(2\gamma+t)^2-t^2=4\gamma(\gamma+t)>0.
+$$
+
+四端臂对角为 $\gamma$。直接消元给出同侧与交叉幅值
+
+$$
+\begin{aligned}
+w_{ab}=w_{cd}&=\frac{\gamma^2(2\gamma+t)}D=u,\\
+w_{ac}=w_{ad}=w_{bc}=w_{bd}&=\frac{\gamma^2t}D=\frac{u+v}{2},\\
+(S_4)_{ii}&=\gamma-u=2u+v.
+\end{aligned}
+\tag{259.6}
+$$
+
+因此四个交叉项相对目标的偏差绝对值为 $(u-v)/2$，同侧项和所有对角项精确相等，证明全矩阵逐项尖锐性。
+
+立方体情形的具体参数和响应为
+
+$$
+\gamma=56/15,\qquad t=28/3,\qquad
+S_*=\begin{pmatrix}
+38/15&-6/5&-2/3&-2/3\\-6/5&38/15&-2/3&-2/3\\
+-2/3&-2/3&38/15&-6/5\\-2/3&-2/3&-6/5&38/15
+\end{pmatrix}.
+\tag{259.7}
+$$
+
+把中央边细分成 $p-o-q$，每段导通为 $2t$。内点 $o$ 的对角为 $4t$，消去 $o$ 后两端间新增非对角为 $-(2t)^2/(4t)=-t$，两端的新增对角各为 $t$，恰好恢复原中央边。以 $o$ 为根，底图是具有七个实际出现的全二元树；例如来源 $\langle\langle\alpha,\alpha\rangle,\langle\alpha,\alpha\rangle\rangle$ 的形状恰为此图。立方体达到例的两段导通各为 $56/3$。所有内部 Dirichlet 块正定，因为连通正权树的零能量函数必为常数，而四个零边界值迫使该常数为零。
+
+这里实现的是“任意 Source 形状上另加可变正权自由 Laplacian”。Source 的任意元素与从单个固定 INITIAL 出发的 Fibonacci 替换轨道不同；尤其四个 $\alpha$ 叶的例子不是已证明沿该轨道取得的来源。此达到例也不使用 §55 的固定单位边权及缺失孩子接地对角。□
+

@@ -1,0 +1,35 @@
+#### 定义 11.5.1（Occurrence forest 的切面与两种合同）
+
+在祖先关系
+
+$$
+h\preceq h'\quad\Longleftrightarrow\quad h'=\delta_w(h)\text{ 对某个 }w\in E^*\text{ 定义}
+$$
+
+下，取一个非空有限 antichain $C\subseteq H$，即 $C$ 中任意两个节点互不为祖先。令
+
+$$
+H_C=\bigcup_{c\in C}\operatorname{Reach}_\delta(c),
+\qquad
+\operatorname{Term}_C=\operatorname{Term}\cap(H_C\times R),
+$$
+
+并把每个 $c$ 视为后续协议的根；对 $H_C$ 中从 $c$ 到达的节点 $h$，将原公开词重置为唯一的后缀词 $\ell_C(h)$，满足
+
+$$
+\ell(h)=\ell(c)\,\ell_C(h),\qquad \ell_C(c)=\varepsilon.
+$$
+
+后继限制为 $H_C$ 上的原有 $\delta_e$，终端记录限制为 $\operatorname{Term}_C$。这等价于只研究那些在该切面之后仍有合法后续的路径；所得、以 $C$ 为根的后缀协议记为
+
+$$
+\mathcal P\!\upharpoonright_C.
+$$
+
+在这个切面上区分两种初始化合同：
+
+- **重置合同**把所有 $c\in C$ 送入同一个固定初值；
+- **携带合同**给每个 $c$ 一个切面状态 $\sigma(c)$，其中 $\sigma$ 必须是切面之前某个实际实现沿合法前缀运行得到的状态映射。
+
+令 $G_C$ 表示 $\mathcal P\!\upharpoonright_C$ 的根冲突图。这里的根是切面节点 $C$，冲突只量化切面之后的公共合法继续。切面节点被重新称为“根”并不表示它们已经能够从原协议的固定初值取得。
+

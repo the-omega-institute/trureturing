@@ -1,0 +1,22 @@
+**Definition 4.1 (Cleared equations before drift substitution).** In
+(2.5), with $p=p_n/q_5,v=v_n/q_5$, put $A_i=q_5a_i$ and define
+
+$$
+\begin{aligned}
+Z_c&=xA_1-q_5D(24-d),\\
+B_c&=(294-10d)Dq_5-5A_2,\\
+A_c&=4Z_c^2-2Z_cA_1+(2x-1)A_1^2,\\
+E_c&=-2Z_cA_1+2(1-x)A_1^2,\\
+f_c&=5dDA_2q_5+A_0B_c,\\
+K_c&=A_cA_0^2-E_cA_0dDq_5-A_1^2d^2D^2q_5^2,\\
+K_{sc}&=25K_c+25A_cA_2^2+5E_cA_2B_c-A_1^2B_c^2.
+\end{aligned}
+\tag{4.1}
+$$
+
+Here $A_1=q_5a_1$ is local to this cleared circuit, not the linear
+coefficient in (3.2). Equivalently
+$f_c=q_5^2f$, $K_c=q_5^4K_d$ and $K_{sc}=q_5^4K_s$.
+The distinction avoids any division by $d$, $b_s$ or their leading
+coefficients.
+

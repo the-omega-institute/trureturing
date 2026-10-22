@@ -1,0 +1,44 @@
+**命题 5.2（约化面积与预量子线丛的整数条件）。**
+在正则关系球面 $S_b$ 上，给定实尺度 $s>0$。存在 Hermitian 复线丛及 unitary connection，曲率恰为
+
+$$
+F=-is\omega_{\rm red},
+$$
+
+当且仅当 $sw(b)\in\mathbb Z$。此时第一 Chern 数为 $sw(b)$。
+
+特别地，在条件 [(4.1)](#eq-geom-regular) 下 $0<w(b)<1/2$，所以尺度 $s=1$ 不可能给出该曲率的线丛。辛面积除以 $2\pi$ 是连续实数，不能直接视作 Chern 整数。
+
+**证明。**
+
+若存在这样的连接，Chern--Weil 公式和面积式给
+
+$$
+\int_{S_b}c_1
+=\frac{i}{2\pi}\int_{S_b}F
+=\frac{s}{2\pi}\int_{S_b}\omega_{\rm red}=sw(b).
+$$
+
+第一 Chern 类的积分性可由任意两盘间的 $U(1)$ 过渡函数绕数直接证明[11](#ref-hatcher)，故 $sw(b)$ 必为整数。
+
+反向设 $n=sw(b)\in\mathbb Z$。在上下两图之间以 $e_+=e_-e^{-in\chi}$ 粘合复线丛，并设置
+
+$$
+A_-=is(\kappa-\kappa_-)d\chi,\qquad
+A_+=is(\kappa-\kappa_+)d\chi.
+$$
+
+其差为 $-isw\,d\chi=-in\,d\chi$，正好符合过渡函数的连接变换律。下端 $t=\kappa-\kappa_-$ 时，$t\,d\chi=-\operatorname{Im}(\overline z_-dz_-)$ 光滑；上端同理，所以两个连接形式真正延伸至极点。直接求导得
+
+$$
+dA_\pm=is\,d\kappa\wedge d\chi=-is\omega_{\rm red}.
+$$
+
+这构造了所需连接，充分性成立。最后由 $w\le r/2<1/2$ 及非退化性知 $0<w<1/2$；正则条件实际排除了达到 $r/2$ 的对称点。
+
+证毕。
+
+上述命题讨论指定曲率在约化球面上的实现。它与整个 $\mathbb{CP}^4$ 上存在整数 Chern 类的 tautological 线丛并不矛盾：若要求原空间的线丛及连接下降后保留指定曲率 $-is\omega_{\rm red}$，须另外核对等变提升、连接对群作用的下降条件，以及 $sw$ 的整数条件。单独一个自由作用下的等变线丛可以下降，这不意味着其连接也自动具有这里规定的曲率。本稿不由面积公式单独宣称“量子化与约化交换”。
+
+<a id="thm-geom-sector"></a>
+

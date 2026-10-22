@@ -1,0 +1,68 @@
+**Proposition 121.2 (the joint readout is not an autonomous factor).**
+Each separate readout $q$ and $d$ has a common autonomous Markov law
+determined by its current value. The joint readout $O$ does not have
+such an autonomous factor law on all deterministic source starts.
+For every $m\ge3$ the literal addresses $a=LLR$ and $b=RRL$ have
+$O(a)=O(b)=(0,3)$, but their unit-rate destination multisets are
+
+$$
+\begin{aligned}
+\{O(z):z\sim a\}&=\{(1,2),(-1,4),(0,4)\},\\
+\{O(z):z\sim b\}&=\{(-1,2),(0,4),(1,4)\}.
+\end{aligned}
+\tag{121.3}
+$$
+
+In particular, the observed event of exactly one actual jump on
+$[0,T]$, with destination $(1,2)$, has probabilities $Te^{-3T}$
+and zero from $a$ and $b$, respectively, for every $T>0$.
+
+Proof. Proposition 120.4 already supplies the unit-cycle law of $q$.
+For depth, every nonroot has one parent and two children. Its
+generator on bounded functions $h:\mathbb N_0\to\mathbb R$ is
+
+$$
+(\mathscr B h)(n)=
+\begin{cases}
+2(h(1)-h(0)),&n=0,\\
+h(n-1)-h(n)+2(h(n+1)-h(n)),&n\ge1.
+\end{cases}
+\tag{121.4}
+$$
+
+These aggregate rates depend only on depth. Apply the same
+conditional-row uniformization argument as in (120.16): the depth
+row at positive depth has probabilities $1/3$ rootward and $2/3$
+outward, and at zero has probabilities $1/3$ holding and $2/3$
+outward. Thus depth has this autonomous birth--death law. The field
+readout alone has the corresponding relabelled law by (121.1).
+
+The recursion (120.12) gives
+
+$$
+\begin{aligned}
+(q,\delta)(LL)&=(1,0),&(q,\delta)(LLR)&=(0,-1),\\
+(q,\delta)(RR)&=(-1,0),&(q,\delta)(RRL)&=(0,+1).
+\end{aligned}
+\tag{121.5}
+$$
+
+Its child rules give exactly (121.3). The residues $0,1,-1$ are
+distinct also when $m=3$. The source rate from $a$ to the joint cell
+$(1,2)$ is one, whereas from $b$ it is zero. Equivalently, the
+generator applied to the pullback of that cell indicator has different
+values at two representatives of the same $O$ cell. The observed-row
+lumpability criterion used in §120.3 therefore fails.
+
+For the stated path event, the only allowed source jump from $a$ is
+to $LL$. Both endpoints have total escape rate three. Integrating its
+unit edge rate over the jump time gives
+$\int_0^T e^{-3s}e^{-3(T-s)}\,ds=Te^{-3T}$.
+There is no such one-jump destination from $b$. No later return or
+unobserved actual jump can enter this event, because depth reveals
+all actual jumps. Thus the failure concerns the joint transition law;
+it is distinct from the already established failure of $\phi$ to be
+constant on a $q$ fibre in (120.27). It does not assert that the joint
+process fails to be Markov under every separately selected start.
+$\square$
+

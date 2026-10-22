@@ -1,0 +1,48 @@
+## 27. The unique transverse strict-source corner
+
+Put $E(q)=Y(q)^2-q$. The following rational cube independently encloses
+the four-equation event. In the next table every center entry is divided
+by $10^{65}$; its coordinates are ordered $X,Y,K,q$.
+
+| Coordinate | Integer center numerator |
+| --- | --- |
+| $X$ | `102869832140216209209092689670665190791340142744995433124836749574` |
+| $Y$ | `4791088103043219140178249909350393572326818318610215355809217733` |
+| $K$ | `58572685567109174314161463780680974914585120509217795839398079844` |
+| $q$ | `229545252111222720256616727741767454210915555161701418701897253` |
+
+
+Let $z_*$ denote this rational center and $\sigma=10^{-35}$. Define
+
+$$
+\mathcal F(X,Y,K,q)=(H_1,H_2,H_3,Y^2-q),\quad
+C_* =10^{-50}\operatorname{round}
+ \bigl(10^{50}D\mathcal F(z_*)^{-1}\bigr),
+\tag{27.1}
+$$
+
+entrywise, with $\operatorname{round}(u)=\lfloor u+1/2\rfloor$.
+The singleton rational determinant of $D\mathcal F(z_*)$ is nonzero,
+and $C_*$ is invertible. Expanding the polynomials before interval
+evaluation on $z_*+[-\sigma,\sigma]^4$, the same grid (25.11) gives
+
+$$
+\begin{aligned}
+\|C_*\mathcal F(z_*)\|_\infty&<2\cdot10^{-60},\\
+\sup_{z\in z_*+[-\sigma,\sigma]^4}
+ \|I-C_*D\mathcal F(z)\|_\infty&<2\cdot10^{-25},\\
+\sup_{z\in z_*+[-\sigma,\sigma]^4}
+ \|(X,Y,K)-\widehat x_{11}(q)\|_\infty&<10^{-17}.
+\end{aligned}
+\tag{27.2}
+$$
+
+These comparisons require no unlisted constants. Compute the rational
+Jacobian at the table center, invert by exact rational elimination,
+round as in (27.1), and expand each entry of $I-C_*D\mathcal F$
+coefficientwise. Direct monomial interval evaluation on the displayed
+cube gives the second comparison. For the first use the singleton
+center, and for the third substitute the interval $q$ into (25.2).
+Invertibility of both singleton matrices is a rational determinant
+comparison. All event divisions are thus guarded.
+

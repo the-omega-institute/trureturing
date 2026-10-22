@@ -1,0 +1,19 @@
+**Definition 190.1 (Conditional parameters and states).**
+Normalize the success blocks and define
+
+$$
+\lambda=\frac{\mu}{S}=\frac{g}{Q_E},\qquad
+w=\frac{r_0^2P_E}{P_F}=\frac{S}{S+2tE}=\frac{Q_E}{Q_F},\qquad
+\eta=w\lambda=\frac{g}{Q_F}.
+$$
+
+Since $t>0$ and $v>0$, one has $0<w<1$ and
+$0\le\eta\le\lambda<1$; $\eta<\lambda$ when $g>0$.
+The states are
+
+$$
+\rho_E=W_\lambda=\frac{1-\lambda}{4}I_4+
+ \lambda|\psi^-\rangle\langle\psi^-|,\qquad
+\rho_F=wW_\lambda\ \oplus_B\ (1-w)\frac{I_{A\otimes B_{\mathrm{sp}}}}4.
+$$
+

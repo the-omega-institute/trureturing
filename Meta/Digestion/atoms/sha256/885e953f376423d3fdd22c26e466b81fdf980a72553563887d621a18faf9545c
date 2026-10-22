@@ -1,0 +1,83 @@
+**Lemma 16.1 (growing polynomial changes along the original third germ).**
+Put $\psi=-\varphi^{-1}$ and use the spectral projectors
+
+$$
+ \Pi_+=\frac{M-\psi I}{\varphi-\psi},\qquad
+ \Pi_-=I-\Pi_+,\qquad
+ A_\pm(W)=\operatorname{tr}(\Pi_\pm Q_8P).
+\tag{16.1}
+$$
+
+For every sufficiently small nonzero $h$, the actual pair $W_\pm(h)$
+of (3.5) has a nonzero polynomial
+
+$$
+ D_{+,h}(s)=A_+(W_+(h))g_+(s)-A_+(W_-(h))g_-(s).
+\tag{16.2}
+$$
+
+Its nonvanishing concerns the actual original-source lift, not merely
+an eighth-response tangent.
+
+**Proof.** Every entry of $\Pi_+=(M+\varphi^{-1}I)/\sqrt5$ is positive.
+Both $Q_8$ and $P$ have positive entries. Hence $A_+(W)>0$ on the
+entire original world domain. The projector is an algebraic proof
+tool, not an extra allowed acquisition action.
+
+At $W_3$ use the tangent $K$ of (3.2), and write
+$D_\theta=K/(K\theta)$ at this point. Lemma 9.2 gives
+$K\theta\ne0$, $Kp=Kv=0$, and
+
+$$
+ d_\theta:=D_\theta d\in[-8.75,-8.69]<0.
+\tag{16.3}
+$$
+
+The source bands give $p<d<v$ at this exact world. The genuine
+same-source samples (9.3) imply
+
+$$
+ \frac{g(5)}{g(6)}=
+ \frac{p-d}{v-d}\frac{2+\theta}{1+\theta},
+ \qquad g(5)g(6)\ne0.
+\tag{16.4}
+$$
+
+Differentiating while $D_\theta p=D_\theta v=0$ yields
+
+$$
+ D_\theta\log\left|\frac{g(5)}{g(6)}\right|
+ =-d_\theta\left(\frac1{p-d}-\frac1{v-d}\right)
+   -\frac1{(1+\theta)(2+\theta)}<0.
+\tag{16.5}
+$$
+
+The first parenthesis is negative, $-d_\theta>0$, and the last
+term is strictly negative. This proves the sign without a new
+numerical approximation or a separate gain fit.
+
+If both $K(A_+g(5))$ and $K(A_+g(6))$ were zero at $W_3$, their
+nonzero values would give
+
+$$
+ K\log|A_+g(5)|=K\log|A_+g(6)|=0,
+$$
+
+and hence $K\log|g(5)/g(6)|=0$. This contradicts (16.5) and
+$K\theta\ne0$. Choose $s_0\in\{5,6\}$ for which
+$K(A_+g(s_0))\ne0$.
+
+VI, Theorem 15.1, gives analytic complete-world branches with derivatives
+$+K,-K$ at zero and $W_-(h)=W_+(-h)$. The same whole gain coefficients
+are part of that lift. The odd analytic difference at this fixed sample
+therefore satisfies
+
+$$
+ D_{+,h}(s_0)=2hK(A_+g(s_0))(W_3)+O(h^3).
+\tag{16.6}
+$$
+
+Its nonzero linear coefficient makes it nonzero for every sufficiently
+small nonzero $h$. Thus the polynomial (16.2) is nonzero for each
+such pair, proving actual growing-mode noncancellation. $\square$
+

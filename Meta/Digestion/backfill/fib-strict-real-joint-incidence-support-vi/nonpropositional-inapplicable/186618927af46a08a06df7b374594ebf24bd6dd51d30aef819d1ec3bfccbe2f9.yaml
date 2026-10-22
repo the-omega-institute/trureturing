@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:186618927af46a08a06df7b374594ebf24bd6dd51d30aef819d1ec3bfccbe2f9
+  normalized_sha256: sha256:186618927af46a08a06df7b374594ebf24bd6dd51d30aef819d1ec3bfccbe2f9
+cas_ref: sha256:186618927af46a08a06df7b374594ebf24bd6dd51d30aef819d1ec3bfccbe2f9
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: Nonpropositional bibliographic and method-attribution paragraph; it specifies references and does not assert a new model-specific theorem.
+    previous_atom_id: 39d728cf5bb3a59b0635fff1f042617d5fec48f618b7d57da64d7fcac266a997
+    next_atom_id: 803756d375a5b45f979d0060e3566919b560f0b88eeffe1deb3aa2ace6c583f3

@@ -1,0 +1,35 @@
+**Definition 26.1 (Incidence inside the endpoint enclosure).** The
+remaining existence question is whether there are real $p\ne24,v$
+and four actual complete worlds satisfying (22.4), with the two
+selected $M$ endpoints in the enclosure of Corollary 25.2. By
+Theorem 25.1 this is equivalent to the original question
+$\mathscr Q\ne\varnothing$, or $D_J\cap D_M\ne\varnothing$.
+Its existence or nonexistence remains open.
+
+The collar is quantified by occurrence at a selected $M$ label.
+A world occupying both an $M$ and a $J$ label inherits it through
+its $M$ role. No lower collar for a world in only a $J$ role or
+for an unused companion is asserted. The all-companion upper
+bounds (22.7) have their separate entire-child quantifier.
+
+The set $\mathcal B_M$ encloses individual endpoints. It does not
+impose the condition that an endpoint has a distinct equal-$m$
+mate or that the same base has a distinct equal-$a$ pair. Those
+distinctness conditions are not closed conditions in the complete
+coordinates. The enclosure thus proves neither closedness nor
+compactness of the selected-pair or joint relation. It gives no
+uniform pair separation, no global augmented-$M$ immersion and
+no construction or exclusion of the remaining strict interior
+incidence.
+
+The separate compact regions of III, Theorem 23.2, concern its
+specified $10\le p\le34$ output region and actual $J$ arc.
+[SVI](FIB_STRICT_REAL_JOINT_INCIDENCE_SUPPORT_VI.md), Theorem 11.2,
+gives an all-companion collar only over its region
+$10\le p\le34$, $0\le v\le200$,
+$v\ge(37p+426)/10$. SVI, Theorem 6.2, concerns regular worlds with
+$10\le p\le34$. None of these restricted domains is substituted
+for the arbitrary bounded ambient joint base set (25.5). The
+global conclusion here is precisely (24.1) and its source
+consequence (25.2), with the unchanged joint quantifiers (22.4).
+

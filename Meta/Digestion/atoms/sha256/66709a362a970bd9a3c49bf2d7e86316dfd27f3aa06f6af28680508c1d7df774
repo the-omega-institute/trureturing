@@ -1,0 +1,19 @@
+**Convention 2.3 (relation to existing completion results).** Equations
+(2.1) and (2.5) identify a particular stochastic source's finite
+experiments. They do not replace
+[Main §§17 and 30](FIB_ATOM_RECURSIVE_HOLOGRAPHIC_BOUNDARY_GEOMETRY.md):
+§17 uses finite-dimensional real linear controlled updates and §30
+uses totalized deterministic operation words, including failure and
+termination. In the same way,
+[FiniteFutureCongruence](../../../D5/S3/Observer/Separation/FiniteFutureCongruence.lean)
+and
+[FiniteHorizonKernelRecurrence](../../../D5/S3/ObserverMemory/RefinementClosure/FiniteHorizonKernelRecurrence.lean)
+use one deterministic map $\tau$ and its iterates; their finite
+stabilization clauses require a finite state type.
+[PredictiveCompletionMaximalInvariantQuotient](../../../D5/S3/ObserverMemory/RefinementClosure/PredictiveCompletionMaximalInvariantQuotient.lean)
+constructs the complete-itinerary quotient for that deterministic map.
+Here the source is countably infinite and the transition is a
+stochastic row, so neither finite-state stabilization nor a
+deterministic update is imported. The additional correspondence
+proved in (2.2)--(2.6) is precisely the one needed for this source.
+

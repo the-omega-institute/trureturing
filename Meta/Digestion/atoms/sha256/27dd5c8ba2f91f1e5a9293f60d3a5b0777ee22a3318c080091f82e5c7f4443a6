@@ -1,0 +1,17 @@
+### Proposition 256.4 (the bridge does not choose physical dimension)
+
+Proposition 256.3 is valid for every normed target dimension in which a
+restricted bridge is actually supplied. It does not identify any target
+coordinate with a physical spatial direction, prove integrability of local
+frames, or establish holonomy, operation, clock, or source recovery. The
+canonical quantum obstructions in VII §239 and VIII §240 use their own
+preparation and operation contracts; no map from the native tree `Source` or
+$\delta_q$ to their parameters is declared here. They therefore exclude
+neither abstract encodings nor every record-keeping protocol.
+
+The remaining bridge obligations are the declared source domain, the two
+uniform constants, update commutation, lawful operation correspondence, and
+any requested holonomy or limit certificate. A finite-dimensional restricted
+encoding can be proposed only after those data are supplied; the full-source
+claim is already refuted by Theorem 255.2.
+

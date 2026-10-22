@@ -622,3 +622,156 @@ The standard IMS identity is reusable mathematics, not a new FIB positivity theo
 A sufficient next input would combine genuine lower margins for the localized tests with a lower bound for the **same** $W_f$ against $\Psi-u$, paying the displayed Gamma remainder uniformly over all allowed coefficients and growing supports. Equation (14) is a necessary benchmark on the slow dilations, not this all-test sufficient bound. The family $W_f$ is constrained by a common $f$ and square partition; it cannot be replaced by arbitrary independently optimized weights. The corresponding Robin research also retains a joint signed prime fluctuation, but identifying those two test families requires another explicit map.
 
 The analytic localization, Stieltjes calculations and uniform comparisons above are paper-level applications with their hypotheses displayed, not a new Lean closure. Transient exact Lean checks cover only the stated rational interval placement, first-prime support threshold, pointwise four-bump pairing, scalar Gamma cancellation, negativity of the scalar expression in (8) at $r=\varphi$, and the actual scalar inequalities $c_\Gamma+4<-1$ and $c_\Gamma+4+2(\sqrt2-1)<0$; no named wrapper is retained. The scalar checks do not prove the spectral-domain, asymptotic, integral or cutoff premises. The nonlocal source, these checks, and the missing all-scale arithmetic estimate have different evidentiary roles.
+
+## Logarithmic Fourier localization for the complete negative index
+
+Retain the entire complex physical realization, original form domain and source/form identification in [JPP1--JPP5 and NPC1--NPC6](connesconsanimoscovici2026spectral.md#a-smaller-negative-index-budget-for-the-complete-physical-form). For integers $c\to\infty$, put $d=\log c$, $a=\sqrt c$, $L=d/2$, and keep
+$$
+ \mathcal H_c=D_L+\mathsf R_L-\mathsf P_L+B_L
+ \quad\hbox{on }L^2((-L,L)).
+$$
+Here $\mathsf P_L$ uses the actual zero-extended translations, every proper prime power and both orientations; $\mathsf R_L$ contains both poles, and $B_L$ is the actual Gamma boundary correction. Let $n_-$ count strictly negative eigenvalues with multiplicity. A frequency-dependent localization of the existing word moments gives the paper bound
+$$
+ \boxed{\limsup_{\substack{c\to\infty\\c\in\mathbb N}}
+       \frac{\log(1+n_-(\mathcal H_c))}{\sqrt c}\le\frac12.}
+ \tag{FLI1}
+$$
+This is a project application of the classical quadratic-partition identity, weighted Schur test, scalar Jensen inequality and min--max principle to the already derived arithmetic word estimate. The fractional operator in the cited Frank--Lieb--Seiringer paper is not substituted for this operator, and FLI1 is not attributed to that paper. No new general localization or concentration theorem, literature-priority claim, or Lean/kernel certification is asserted. The inherited full-form identification remains a premise.
+
+### The unweighted word estimate is the reusable arithmetic input
+
+Write $\phi_m=d^{-1/2}e^{2\pi imx/d}$ and
+$$
+ W=\sum_{2\le n<c}\frac{\Lambda(n)}{\sqrt n}=O(a).
+$$
+Reuse NPC's estimate before insertion of a heat weight or any intermediate Fourier projections: for integers $r\ge1$, $U\ge0$, $H\ge1$,
+$$
+ \sum_{m=U+1}^{U+H}\|\mathsf P_L^r\phi_m\|^2
+ \le(H-1+D_r)E_r,\qquad
+ D_r\le2d\,c^{r+2},\qquad E_r\le(Crd^2)^r.
+ \tag{FLI2}
+$$
+The constant $C$ is independent of $c,r,U,H$ for large $c$. The same bound holds on reflected mode intervals because the physical prime operator is real. These are the actual clipped translation-word coefficients, grouped by rational endpoints, followed by the discrete large sieve and exact finite prime-circle coefficient extraction. Their derivation has no upper restriction on $r$. NPC2's additional restrictions belong to its heat-weighted, repeatedly compressed moment; that statement is not extrapolated here.
+
+The other reused inputs are
+$$
+ \|\mathsf P_L\|=(1+o(1))a,\quad \operatorname{rank}\mathsf R_L\le2,
+ \quad \|B_L\|\le C_B,\quad
+ |(\mathsf P_L)_{nm}|\le\frac{2W}{\pi|n-m|}\quad(n\ne m).
+ \tag{FLI3}
+$$
+The constant $C_B$ is fixed for sufficiently large $c$. The last estimate is the exact Fourier overlap bound for each clipped shift, summed over both orientations. The Gamma eigenvalues satisfy $D_m=\log(|m|/d)+O(1)$ uniformly on growing frequency bands with a fixed positive lower exponential endpoint.
+
+### A logarithmic partition has a small full localization error
+
+Fix $0<\delta<1/4$. Choose three real Lipschitz cutoffs $\chi_{lo},\chi_{mid},\chi_{hi}$ whose squared sum is $1$ on $u\ge0$. On $[\delta,2\delta]$, take $\chi_{lo}=\cos(\pi(u-\delta)/(2\delta))$, $\chi_{mid}=\sin(\pi(u-\delta)/(2\delta))$ and $\chi_{hi}=0$. Between the transitions take $\chi_{mid}=1$. On $[1+\delta,1+2\delta]$, take the analogous cosine--sine transition from $\chi_{mid}$ to $\chi_{hi}$. Outside them the low or high cutoff equals $1$, respectively. The supports satisfy
+$$
+ \operatorname{supp}\chi_{lo}\subset[0,2\delta],\quad
+ \operatorname{supp}\chi_{mid}\subset[\delta,1+2\delta],\quad
+ \operatorname{supp}\chi_{hi}\subset[1+\delta,\infty).
+$$
+Their Lipschitz constants depend only on $\delta$.
+
+Pull this partition back to Fourier coordinates by $u_m=\log(1+|m|)/a$. The diagonal multipliers preserve the form domain and commute with $D_L$. Set
+$$
+ H_0=D_L-\mathsf P_L-C_B I.
+$$
+The exact form identity is
+$$
+ H_0=\sum_j\chi_jH_0\chi_j-\mathcal E_c,\qquad
+ (\mathcal E_c)_{nm}
+ =\frac12\sum_j(\chi_j(u_n)-\chi_j(u_m))^2(\mathsf P_L)_{nm}.
+ \tag{FLI4}
+$$
+In particular the error diagonal vanishes. No positivity of this error operator is assumed.
+
+To bound its norm, the off-diagonal matrix
+$$
+ K_{nm}=\frac{\bigl(\log(1+|n|)-\log(1+|m|)\bigr)^2}{|n-m|},
+ \qquad K_{nn}=0,
+$$
+is bounded on $\ell^2(\mathbb Z)$ by the weighted Schur test with $w_m=(1+|m|)^{-1/2}$. Here are bounds that also cover the signed indices and the origin. Put $x=1+|n|$, $y=1+|m|$. For equal signs, split the weighted row sum into $y\le x/2$, $x/2<y<2x$, and $y\ge2x$. The outer dyadic blocks are bounded by constant multiples of
+$\sum_{k\ge0}(k+1)^2 2^{-k/2}<\infty$.
+In the middle block, $|\log(y/x)|\le2|y-x|/x$, so its sum is bounded uniformly. For opposite signs $|n-m|\ge||n|-|m||$; at equal absolute indices the numerator is zero, and at most two indices have each absolute value. Thus the same row bound applies. Symmetry supplies the corresponding column bound.
+
+The Lipschitz estimate, FLI3 and this Schur bound give
+$$
+ e_c:=\|\mathcal E_c\|\le C_\delta W/a^2=O_\delta(a^{-1}).
+ \tag{FLI5}
+$$
+This is localization in logarithmic Fourier frequency. It makes no assertion that narrow physical FIB windows lose no prime edges.
+
+### Count the middle band by scalar trace Jensen
+
+Let $P_j$, for $j\in\{lo,mid,hi\}$, project onto the full containing Fourier intervals just specified, so $P_j\chi_j=\chi_j$. For the middle band write
+$$
+ u=\delta>0,\qquad v=1+2\delta,
+ \qquad u\le u_m\le v.
+$$
+Its dimension $M_{mid}$ and positive-mode interval length are $\exp((v+o(1))a)$. Put $r=\lfloor(v-\delta)a/d\rfloor$, which is eventually positive. In FLI2,
+$$
+ \frac{D_r}{M_{mid}}\le\exp((-\delta+o(1))a),
+$$
+so the trace on this band satisfies
+$$
+ \operatorname{Tr}(P_{mid}\mathsf P_L^{2r}P_{mid})
+ \le M_{mid}(Crd^2)^r(1+o(1)).
+ \tag{FLI6}
+$$
+For the finite-dimensional selfadjoint compression $A_{mid}=P_{mid}\mathsf P_LP_{mid}$, scalar Jensen in an orthonormal eigenbasis of $A_{mid}$ gives
+$$
+ \operatorname{Tr}A_{mid}^{2r}
+ \le\operatorname{Tr}(P_{mid}\mathsf P_L^{2r}P_{mid}).
+$$
+Indeed for each such eigenvector $v_\ell$, convexity of $t\mapsto t^{2r}$ in its spectral measure for the bounded selfadjoint $\mathsf P_L$ bounds
+$\langle v_\ell,\mathsf P_Lv_\ell\rangle^{2r}$ by
+$\langle v_\ell,\mathsf P_L^{2r}v_\ell\rangle$.
+This proves the trace comparison without an operator ordering of compressed powers. There is no noncommuting heat weight in this step.
+
+On the same band,
+$$
+ P_{mid}H_0P_{mid}-e_cI\succeq t_{mid}I-A_{mid},
+ \qquad t_{mid}=ua-O(\log d)-C_B-e_c>0.
+$$
+Min--max followed by the even-moment bound yields
+$$
+ n_-(P_{mid}H_0P_{mid}-e_cI)
+ \le t_{mid}^{-2r}\operatorname{Tr}A_{mid}^{2r}.
+$$
+Since $\log a=d/2$, the logarithm of this allowance is at most
+$$
+ va+r\log\frac{Crd^2}{t_{mid}^2}+o(a)
+ =\left(v-\frac{v-\delta}{2}+o(1)\right)a
+ =\left(\frac{v+\delta}{2}+o(1)\right)a.
+ \tag{FLI7}
+$$
+All parameters remain fixed while $c$ grows. The equality uses
+$\log(Crd^2/t_{mid}^2)=-d/2+O_\delta(\log d)$; integer rounding contributes $o(a)$.
+
+### Glue the bands and pay the complete pole and boundary terms
+
+The map $f\mapsto(\chi_jf)_j$ is an isometry into the direct sum of the sharp band spaces. FLI4--FLI5 and min--max therefore give
+$$
+ n_-(H_0)\le\sum_{j\in\{lo,mid,hi\}}n_-(P_jH_0P_j-e_cI).
+ \tag{FLI8}
+$$
+To see the direction, a strictly negative subspace for $H_0$ maps injectively to a strictly negative subspace for this direct-sum form, because its value there is at most the original value. The high member is supported at $u_m\ge1+\delta$, where FLI3 gives the positive floor $\delta a+o(a)$ after the bounded shifts. The low member has dimension $\exp((2\delta+o(1))a)$. The middle member uses FLI7 with $v=1+2\delta$. Hence
+$$
+ \limsup_{c\to\infty}\frac{\log(1+n_-(H_0))}{a}
+ \le\max\left(2\delta,\frac{1+3\delta}{2}\right).
+$$
+Finally, the actual $B_L$ is bounded below by $-C_BI$, and intersecting any full negative subspace with $\ker\mathsf R_L$ loses at most two dimensions. Thus
+$$
+ n_-(\mathcal H_c)\le n_-(H_0)+2.
+$$
+Let $c\to\infty$ at each fixed $\delta$, then $\delta\downarrow0$. This proves the paper estimate FLI1. The starting scale depends on $\delta$; no effective or uniform finite-start bound is claimed.
+
+For every fixed $\alpha>1$, the positive full exterior in JPP5 gives the original retained Schur matrix $S_\alpha$. Its exact inertia identity in NPC6 therefore consumes the same estimate:
+$$
+ \boxed{n_-(S_\alpha)=n_-(\mathcal H_c),\qquad
+ \limsup_{c\to\infty}\frac{\log(1+n_-(S_\alpha))}{\sqrt c}\le\frac12.}
+ \tag{FLI9}
+$$
+Every complex source direction remains in the count. The argument pays the poles by their actual finite rank and the Gamma boundary by a bounded lower debit; it does not drop them from a positivity assertion. It applies along the inherited unbounded integer FIB support schedules but uses no new FIB distribution assumption.
+
+FLI1 improves NPC1's exponential index allowance, not a signed lower floor. It neither exhibits nor excludes negative eigenvalues, gives no smaller positive Fourier exterior or finite sign certificate, and does not determine the retained Schur minimum. It supplies no original same-integer Robin upper bound, cofinal Weil positivity or RH proof. The proof is a paper-level application under the inherited realization premises; it has not been compiled in Lean.

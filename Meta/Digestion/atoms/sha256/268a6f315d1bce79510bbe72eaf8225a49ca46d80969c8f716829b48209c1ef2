@@ -1,0 +1,56 @@
+**Proposition 120.7 (literal pullback domain and field non-descent).**
+For the infinite colouring of Definition 120.3,
+
+$$
+\{f:C_m\to\mathbb C:Uf\in\ell^2(\mathcal P,\mathrm{count})\}
+ =\{0\}.
+\tag{120.25}
+$$
+
+The common radial field $\phi(p)=2^{-|p|}$ of Continuation Theorem 55.3
+is not $\psi\circ q$ for any function $\psi$ on $C_m$. In particular
+the kinetic intertwining (120.13) does not extend, through this same
+pullback, to the potential multiplier of that common field. Moreover,
+prefix-colour limits do not define a readout on every infinite ray.
+
+Proof. For any nonzero $f$, choose $c$ with $f(c)\ne0$. There are
+infinitely many $k\ge1$ with $q(p_k)=c$, so
+
+$$
+\sum_{p\in\mathcal P}|f(q(p))|^2
+ \ge\sum_{\substack{k\ge1\\k\equiv c\ (\mathrm{mod}\ m)}}|f(c)|^2
+ =\infty.
+\tag{120.26}
+$$
+
+The zero function has zero pullback, proving (120.25). Although
+$L_\infty$ separately acts on counting $\ell^2$, no nonzero $Uf$ in
+(120.13) lies in that space. This is the fibre-counting distinction
+already stated in III Specification 81.5 and Proposition 119.5,
+here with every cycle fibre infinite rather than only selected cube
+fibres. It is not a general impossibility assertion about other Hilbert
+spaces or other correspondences.
+
+For field descent, $q(o)=q(p_m)=0$ but
+
+$$
+\phi(o)=1,\qquad \phi(p_m)=2^{-m}.
+\tag{120.27}
+$$
+
+This violates constancy on a fibre. It also witnesses non-descent on
+every finite cut containing these two addresses, in particular for
+$n\ge2m$. If $M_\phi U=UM_\psi$ were true on bounded observables,
+applying it to the constant one would give $\phi=U\psi$, contradicting
+(120.27). Since the kinetic identity already holds, an identity
+$(aL_\infty-gM_\phi)U=U(aK_m-gM_\psi)$ with $g>0$ would imply that
+same impossible multiplier identity. The source term
+$\mathbf1_{\{o\}}$ likewise differs at $o,p_m$ and is not a literal
+pullback. A projected force covector, as in §119.6, is a different
+relation. Finally, the prefixes of the ray $LRR\cdots$ have colours
+$k\pmod m$, $k\ge1$, and are not eventually constant. A convergent
+sequence in the finite discrete cycle must be eventually constant,
+so this ray has no prefix-colour limit. This neither rules out separately
+supplied measurable ray readouts nor asserts positive ray probability
+for this single example. $\square$
+

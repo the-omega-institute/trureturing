@@ -1,0 +1,41 @@
+**Theorem 13.2 (a concrete growing discrimination requirement).** For all
+$0\le z\le d$ the $c_z$ are lawful cuts of this same invocation, with
+
+$$
+n(c_z)=n_0+5z,\qquad C_{\rm old}(c_z)=C_{\rm old}(c_0).
+$$
+
+They are pairwise inequivalent for $Q_{\rm CAP}$. Consequently any
+supplement $E$ for which $(C_{\rm old},E)$ determines either the selected
+complete cut or its full $Q_{\rm CAP}$ response profile must take at least
+$d+1$ distinct values on this family. A fixed-width $b_{\rm sel}$-bit
+supplement must satisfy
+
+$$
+2^{b_{\rm sel}}\ge d+1,\qquad
+b_{\rm sel}\ge\lceil\log_2(d+1)\rceil.
+$$
+
+Proof. The bound is a sealed $U(d)$ on another port. One successful
+iteration executes exactly RD(bound), EX(16), WR(16,0), MR(16),
+MR(bound). It consumes its next leading 1 and constructs one fresh zero
+payload cell. Before publication none of those rows changes the old source
+payload, active reserve, current guard, completed directory or committed
+semantic/unified event counts. They leave 24–27 and the old acquired
+archives/rights untouched. The bound cursor, producer heads/latches,
+new arena and meter do change, and were explicitly excluded from
+$C_{\rm old}$. Induction on $z$ proves its constancy and the exact ordinal.
+At $z=d$ the cursor has reached the sealed zero; this is still a lawful
+pending RD. All these cuts have the same prescribed Advance for that RD.
+
+Its complete successor has $n_0+5z+1$ receipts. Different $z$ therefore
+give different complete successors on this same legal one-primitive
+experiment, whether the RD reads 1 or the final 0. The original
+complete-successor task distinguishes them without a private read by the
+actor. If two of their $E$ values were equal, a decoder of their equal
+$(C_{\rm old},E)$ would have to give two different cuts or response
+profiles. This is impossible. Counting the values proves the inequality.
+It is RCA Theorem 3.3's generic selection principle with an explicitly
+instantiated mandatory CAP fiber, not a new abstract information theorem.
+$\square$
+

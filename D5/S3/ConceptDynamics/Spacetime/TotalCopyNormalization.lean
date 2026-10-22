@@ -99,7 +99,7 @@ def DiagonalTotal {n : Nat} (C : CopyTerm n) : Prop := ∀ X, ∃ Y, evalDiagona
 
 def zero : B := ComplementFibers.balancedSection 3 0
 
-private theorem zero_empty : zero.val.1.archive.events = ∅ ∧
+theorem zero_empty : zero.val.1.archive.events = ∅ ∧
     zero.val.1.current = ∅ ∧ zero.val.2.val = ∅ :=
   IntegerRepresentatives.representative_zero_empty 3
 
@@ -458,7 +458,7 @@ private theorem normalize_total_correct {n : Nat} (C : CopyTerm n) (h : Diagonal
         rw [dif_pos g]
         exact congrArg some eqv
 
-private theorem temporal_free_total {n : Nat} (C : CopyTerm n) (h : TemporalFree C)
+theorem temporal_free_total {n : Nat} (C : CopyTerm n) (h : TemporalFree C)
     (v : Fin n → B) : ∃ Y, eval C v = some Y := by
   induction C with
   | input => exact ⟨v 0, rfl⟩

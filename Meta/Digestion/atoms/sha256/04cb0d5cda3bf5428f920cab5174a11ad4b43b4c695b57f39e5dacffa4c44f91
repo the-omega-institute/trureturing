@@ -1,0 +1,81 @@
+**Theorem 231.2 (exact native maximum and every maximizing source).** Put
+
+$$
+t_c=3-2\sqrt2,\qquad K_t=1+6t+t^2,\qquad
+\delta_t=1-6t+t^2.
+\tag{231.3}
+$$
+
+For $0<t<t_c$, define
+
+$$
+\begin{gathered}
+p_c(t)=\frac{\sqrt{15+14t}-3-2t}{2(1-t)},\qquad
+\frac25<p_c(t)<\frac12,\\
+s_0(t)=w_t(1/2)=\frac{K_t}{1+10t+5t^2},\qquad
+s_1(t)=w_t(p_c(t)),\qquad 0<s_0(t)<s_1(t)<1.
+\end{gathered}
+\tag{231.4}
+$$
+
+There is a unique maximizing scalar $p_*(t,s)$ on all $p\in(0,1)$:
+
+$$
+\begin{array}{c|c|c}
+\text{success interval}&p_*(t,s)&\mathcal V_t(s)\\ \hline
+0<s\le s_0&1/2&\delta_t/(2K_t)\\
+s_0<s<s_1&p_s&A_t(p_s)\\
+s_1\le s\le1&p_c&B_t(p_c)/s
+\end{array}
+\tag{231.5}
+$$
+
+Here $p_s$ is the unique solution of $w_t(p_s)=s$ in $(p_c,1/2)$.
+An exact inverse, used only on this middle interval, is
+
+$$
+c_{t,s}=1+t-\frac{2st}{1-s},\qquad
+h_s=\frac{c_{t,s}+\sqrt{c_{t,s}^2+4t}}2,\qquad
+p_s=\frac{h_s-t}{1-t}.
+\tag{231.6}
+$$
+
+The radical selects the sole positive root of
+$h_s^2-c_{t,s}h_s-t=0$; the other root is negative. The stated success
+interval ensures $h_s\in(h_t(p_c),h_t(1/2))$, so this is the admissible
+scalar branch. There is no inversion at $s=1$.
+At $s=s_0$ the unique scalar maximizer is $1/2$; at $s=s_1$ it is $p_c$.
+The middle formula extends continuously to these endpoints with the same
+points and values. Neither equality produces another scalar maximizer.
+
+All three scalar optimizers are actual native interior values, and
+
+$$
+\operatorname*{Argmax}_{q\in D}F_{t,s}(p(q))
+=\{q\in D:p(q)=p_*(t,s)\}.
+\tag{231.7}
+$$
+
+Thus the supremum in (231.2) is a maximum. Its maximizing sources form the
+entire inverse fibre; uniqueness of $p_*$ does not assert uniqueness of $q$.
+The same scalar maximum is obtained if $(m,M)$ is replaced by $(0,1)$.
+
+For $t_c\le t\le1$, the maximum is zero and every $p\in(0,1)$,
+hence every $q\in D$, is a maximizer. At $t=t_c$, $U_t(p)=t$ only
+at $p=1/2$, where $\lambda_t=1/3$ and negativity is still zero.
+At $t=1$ one has $U_t=\lambda_t=A_t=B_t=0$ and $w_t=1/2$ for every
+source. These cases do not have the positive-branch uniqueness property.
+
+For $0<t<t_c$, the exact positivity interval is
+
+$$
+p_-(t)=\frac{1-\sqrt{1-4t/(1-t)^2}}2,\qquad
+p_+(t)=1-p_-(t),\qquad
+F_{t,s}(p)>0\ \Longleftrightarrow\ p_-<p<p_+.
+\tag{231.8}
+$$
+
+At both endpoints and outside this interval $F_{t,s}=0$ for every $s>0$.
+Moreover $p_-<p_c<1/2<p_+$. For the native family intersect this
+positivity interval with $(m,M)$; it always contains the maximizer.
+

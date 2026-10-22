@@ -1,0 +1,28 @@
+**Definition 191.1 (Covariance, normalized Hilbert–Schmidt discord and negativity).**
+For a normalized state on $\mathbb C^2\otimes\mathbb C^d$, define
+
+$$
+\operatorname{Cov}_\rho(X,Y)=\operatorname{Tr}\rho(X\otimes Y)
+ -\operatorname{Tr}\rho(X\otimes I)\operatorname{Tr}\rho(I\otimes Y),
+$$
+
+$$
+C_M(\rho)=\sup_{\substack{X\in M_2(\mathbb C),\,Y\in M_d(\mathbb C)\\
+ \|X\|_{\mathrm{op}}=\|Y\|_{\mathrm{op}}=1}}
+ |\operatorname{Cov}_\rho(X,Y)|,
+\qquad
+D_G^A(\rho)=2\inf_{\{P_+,P_-\}}
+ \|\rho-\mathcal M_P(\rho)\|_{\mathrm{HS}}^2,
+$$
+
+$$
+\mathcal M_P(\rho)=\sum_{\epsilon=\pm}
+ (P_\epsilon\otimes I)\rho(P_\epsilon\otimes I),\qquad
+\mathcal N(\rho)=\frac{\|\rho^{T_A}\|_1-1}{2}.
+$$
+
+The covariance domain includes non-Hermitian complex matrices. The discord
+infimum includes every rank-one projective basis on Alice; the factor two
+is the measured-qubit normalization. Write $C_j,D_j,\mathcal N_j$ for
+these quantities on $\rho_j$, $j=E,F$, and $(x)_+=\max\{x,0\}$.
+

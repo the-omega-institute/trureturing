@@ -1,0 +1,10 @@
+**定义 62.1（最大单设置对比）。** 一个输入无关的预设菜单为非空有限字列表 $\mathcal F=(w_1,\ldots,w_m)$，其效果为 $P_j=P_{w_j}$。定义
+
+$$
+B_{\mathcal F}(\rho,\sigma)
+ =\max_{1\leq j\leq m}|\operatorname{tr}((\rho-\sigma)P_j)|.
+\tag{VIII.10}
+$$
+
+列表在看到未知输入及其测量记录之前固定。这里比较各二值实验中的最大概率差，不是把多个结果概率求和的单一 POVM 范数。
+

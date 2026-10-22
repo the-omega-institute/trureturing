@@ -1,0 +1,42 @@
+**Definition 120.8 (ray carrier and the scope of the added laws).** Retain
+exactly the original probability $\nu_u$ of (115.3) on infinite rays
+$\partial\mathcal P=\{L,R\}^{\mathbb N}$, with its cylinder sigma algebra.
+It is not counting measure on occurrence vertices. A ray observable
+readout would be a separately specified measurable function on
+$\partial\mathcal P$; a ray heat or path quotient would additionally
+specify its source law, induced fibre probabilities, generator or
+semigroup, domains and a same-map correspondence. These data are not
+part of Definition 120.3's finite-address readout.
+
+Neither (120.18) nor vertex normalization constructs an autonomous
+ray-boundary law or changes (120.25).
+
+All numerical floors above refer to unit symmetric seam rates and
+the unit counting clock, measured in normalized whole-vertex $L^2$.
+No transfer of these constants or witness times is made to $NL$,
+degree-normalized Laplacians, altered vertex masses, arbitrary
+reweightings, other scalar clocks, conditional subvolume norms or
+different targets. The exact infinite positive law
+concerns bounded observables and the stipulated kinetic heat/path law,
+without an operational conversion from heat time to source events or
+to physical time. It grants neither field preparation nor an infinite
+source execution.
+
+The form/norm/generator distinction of
+[VI Theorems 115.2 and 116.2](FIB_ATOM_RECURSIVE_HOLOGRAPHIC_BOUNDARY_GEOMETRY_CONTINUATION_VI.md)
+and the correspondence obligations of
+[III Specification 81.5](FIB_ATOM_RECURSIVE_HOLOGRAPHIC_BOUNDARY_GEOMETRY_CONTINUATION_III.md)
+retain their scopes. In particular the recurrence theorem III 81.4
+concerns its different one-spine graph $\Gamma_{52}$, not $\mathcal P$.
+The grouped cube form, constrained flow, chosen free-flow witness and
+counting-coordinate limits of §119 remain their existing results.
+Propositions 120.2 and 120.4--120.7 are repo-derived source-specific
+deductions using the attributed uniformization, external equitable and
+lumpability suppliers, without a worldwide-priority claim or a new
+generic covering or lumpability theory. The common source admits the
+displayed cycle law for every fixed $m\ge3$; neither that choice, the
+cube comparison target, nor the three values of increment memory
+select a physical spatial dimension. Metric placement and its measure,
+field, boundary, operation and physical-clock correspondences remain
+additional mathematical data for any such interpretation.
+

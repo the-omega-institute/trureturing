@@ -1,0 +1,28 @@
+**Theorem 14.1 (Uniform entire-child M injectivity).** For every real
+$(p,v)\in\mathcal B_-$ the entire actual child $C(p,v)$ has at most two
+complete worlds. Every actual world has carrier-root label $13$ or $15$.
+There is at most one complete world at each of those labels, and
+
+$$
+\begin{array}{c|c}
+\text{label}&\text{terminal }m(W)\\ \hline
+13&107<m(W)<108\\
+15&100<m(W)<104
+\end{array}.
+\tag{14.2}
+$$
+
+Consequently $m:C(p,v)\to\mathbb R$ is injective, and
+
+$$
+D_M\cap\mathcal B_-=\varnothing,
+\qquad (D_J\cap D_M)\cap\mathcal B_-=\varnothing.
+\tag{14.3}
+$$
+
+This includes every actual companion, whether selected for either pair or
+unused. No regularity, exact-cubic degree, gain positivity, nonzero drift,
+nonzero gain sample or separation between selected endpoints is assumed.
+At arbitrary bases of the rectangle this is only an upper bound on
+cardinality; a surviving algebraic root is not asserted to be actual.
+

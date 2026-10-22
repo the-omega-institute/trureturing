@@ -32,12 +32,19 @@ lean-cache-to-github-without-mathlib lean-cache-from-github-without-mathlib: exp
 lean-cache-to-github-without-mathlib lean-cache-from-github-without-mathlib: export LEAN_CACHE_REPOSITORY ?= .
 lean-cache-to-github-without-mathlib lean-cache-from-github-without-mathlib: export LEAN_CACHE_TAG ?=
 lean-cache-to-github-without-mathlib: export LEAN_CACHE_PUBLISH_ONLY ?= 0
+lean-cache-from-github-without-mathlib: export LEAN_CACHE_APPROVED_TAG ?=
+lean-cache-from-github-without-mathlib: export LEAN_CACHE_APPROVED_PRODUCER ?=
+lean-cache-from-github-without-mathlib: export LEAN_CACHE_LOCAL_ASSETS ?=
 
 lean-cache-to-github-without-mathlib:
 	@/bin/bash tools/scripts/worktree/lean-cache-publish.sh publish --repository "$$LEAN_CACHE_REPOSITORY" --mode "$$LEAN_CACHE_MODE" --source-ref "$$LEAN_CACHE_SOURCE_REF" --source-commit "$$LEAN_CACHE_SOURCE_COMMIT" $(if $(filter 1,$(LEAN_CACHE_PUBLISH_ONLY)),--no-build)
 
 lean-cache-from-github-without-mathlib:
-	@/bin/bash tools/scripts/worktree/lean-cache-publish.sh fetch --repository "$$LEAN_CACHE_REPOSITORY" --mode "$$LEAN_CACHE_MODE" --source-ref "$$LEAN_CACHE_SOURCE_REF" --source-commit "$$LEAN_CACHE_SOURCE_COMMIT" --tag "$$LEAN_CACHE_TAG" $(if $(filter 1,$(REFRESH_STALE)),--refresh-stale)
+	@args=(); \
+	if [[ -n "$$LEAN_CACHE_APPROVED_TAG" ]]; then args+=(--approved-tag "$$LEAN_CACHE_APPROVED_TAG"); fi; \
+	if [[ -n "$$LEAN_CACHE_APPROVED_PRODUCER" ]]; then args+=(--approved-producer "$$LEAN_CACHE_APPROVED_PRODUCER"); fi; \
+	if [[ -n "$$LEAN_CACHE_LOCAL_ASSETS" ]]; then args+=(--local-assets "$$LEAN_CACHE_LOCAL_ASSETS"); fi; \
+	/bin/bash tools/scripts/worktree/lean-cache-publish.sh fetch --repository "$$LEAN_CACHE_REPOSITORY" --mode "$$LEAN_CACHE_MODE" --source-ref "$$LEAN_CACHE_SOURCE_REF" --source-commit "$$LEAN_CACHE_SOURCE_COMMIT" --tag "$$LEAN_CACHE_TAG" $(if $(filter 1,$(REFRESH_STALE)),--refresh-stale) "$${args[@]}"
 
 warm-donor:
 	@/bin/bash tools/scripts/worktree/warm-donor.sh

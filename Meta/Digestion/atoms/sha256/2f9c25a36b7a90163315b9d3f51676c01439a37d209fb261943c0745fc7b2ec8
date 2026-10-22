@@ -1,0 +1,81 @@
+**Theorem 150.1 (quantitative strictness and the exact Schur certificate).** For every actual $T\in\mathcal T_3$ of (U.208), define
+
+$$
+s=\|[t_0,t_1]\|_F<1,\qquad
+\Delta_T=(1-s)\left(c-\frac12-\frac s4\right)>0.
+\tag{U.213}
+$$
+
+Then
+
+$$
+v_T^2\leq c-\Delta_T<c.
+\tag{U.214}
+$$
+
+There exists a real symmetric $Y\succ0$ on the entire five-dimensional physical output such that
+
+$$
+\operatorname{Tr}Y\leq c-\frac{\Delta_T}{2}<c,\qquad
+\frac{E_0^TY^{-1}E_0+E_1^TY^{-1}E_1}{16}
++\frac{T^TY^{-1}T}{4}\preceq I_3.
+\tag{U.215}
+$$
+
+Proof. Use the exact real common-$Q$ formula (S.205) at this fixed real $T$, already justified for the full complex auxiliary maximum in Proposition 85.3. Fix any one feasible triple $Q=[Q_0\mid Q_1\mid Q_2]$, with $\sum_iQ_iQ_i^T\preceq I_5$, and put
+$C=(E_0^TQ_0+E_1^TQ_1)/4$, $B=Q_2$, $A_Q=\|C\|_F^2$. Its last row is zero, $A_Q\leq1/4$ by the four unit-vector tests (S.210), and $\|B\|_{\rm op}\leq1$.
+
+When $0<s<1$, write $T=[sS_0,\sqrt{1-s^2}\,w_0]$, where $\|S_0\|_F=\|w_0\|=1$ and $[S_0,0]\in\mathcal T_\partial$. For this same $Q$ set
+
+$$
+\begin{gathered}
+b_Q=\frac14\|S_0^TB\|_F^2,\qquad
+e_Q=\frac14\|w_0^TB\|^2,\qquad
+d_Q=\langle C_{\rm top},S_0^TB\rangle_F,\qquad
+0\leq b_Q,e_Q\leq\frac14,\\
+\|C+T^TB/2\|_F^2
+=A_Q+b_Qs^2+d_Qs+e_Q(1-s^2)\leq g(s),\\
+g(s)=A_Q+b_Qs^2+|d_Q|s+e_Q(1-s^2),\qquad
+ g_0=A_Q+e_Q\leq\frac12,\qquad
+ g_1=A_Q+b_Q+|d_Q|\leq c.
+\end{gathered}
+\tag{U.216}
+$$
+
+The bound $g_1\leq c$ uses (U.209): one of the two boundary choices $\pm[S_0,0]$ attains this endpoint value for the same feasible $Q$. In this exact polynomial the first two rows and last row of $T^TB$ are separate, so there is no omitted $S_0,w_0$ cross term; all output components of $w_0$ remain in $e_Q$. The endpoint decomposition is
+
+$$
+\begin{aligned}
+g(s)&=(1-s)g_0+sg_1+(e_Q-b_Q)s(1-s)\\
+&\leq\frac{1-s}{2}+sc+\frac{s(1-s)}4
+=c-(1-s)\left(c-\frac12-\frac s4\right).
+\end{aligned}
+\tag{U.217}
+$$
+
+This is an inequality for every common $Q$ at the same actual $s$, since $e_Q-b_Q\leq1/4$. If $s=0$, no normalization of a zero first block is needed: $T=[0,0,w_0]$ already has objective $A_Q+e_Q\leq1/2$, exactly the bound $c-\Delta_T$ at $s=0$. Since $T\in\mathcal T_3$ implies $s<1$ and $c>3/4$,
+$\Delta_T\geq(1-s)(c-3/4)>0$. Maximizing (U.217) over $Q$ gives (U.214).
+
+Now use the attained recovery SDP of volume I, Theorem 7.1, transported as volume II, Proposition 74.4/(S.153). Its fixed-input dual has an optimum $Y_0\succeq0$ with
+
+$$
+I_3\otimes Y_0\succeq C_{\rho_\star,N_T},\qquad
+\operatorname{Tr}Y_0=v_T^2\leq c-\Delta_T.
+\tag{U.218}
+$$
+
+This is the full dual inequality, including singular optima. Its cost matrix is real, so replacing $Y_0$ by $(Y_0+\bar Y_0)/2$ preserves feasibility and trace and makes it real symmetric. Define on the full output
+
+$$
+Y=Y_0+\frac{\Delta_T}{10}I_5\succ0,\qquad
+I_3\otimes Y\succeq C_{\rho_\star,N_T},\qquad
+\operatorname{Tr}Y=\operatorname{Tr}Y_0+\frac{\Delta_T}{2}
+\leq c-\frac{\Delta_T}{2}<c.
+\tag{U.219}
+$$
+
+Feasibility is monotone under this positive addition. The exact positive-definite Schur equivalence in volume II, Proposition 74.3/(S.152), now gives (U.215) with three environment columns. All Kraus-index offdiagonal entries and the same $Y$ in every physical-input block are present. Thus (U.215) supplies the literal real SPD form of (S.152)–(S.154) for this restricted family.
+
+No equality or full-output-support hypothesis is needed: (U.214) places every actual rank-three $T$ in the strict branch of (S.334). In general, the Gram/output rank is
+$\operatorname{rank}\sigma_{RE}=\dim(\operatorname{span}\{b_1,b_2,g_1,g_2\}+\operatorname{ran}T)$, which is four or five, independently of the actual minimal Kraus rank. For instance $T=b_1e_2^T$ has matrix rank one, actual Kraus rank three and Gram/output rank four. At a general equality boundary point the support qualification of volume II, Proposition 108.2 remains necessary; it is not inferred from Kraus rank. The construction above is an existence certificate through an attained SDP optimum, not a closed formula for $Y_0$. $\square$
+

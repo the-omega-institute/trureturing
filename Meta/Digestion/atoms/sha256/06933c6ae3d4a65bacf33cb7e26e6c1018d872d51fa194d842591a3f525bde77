@@ -1,0 +1,61 @@
+**Theorem 5.1 (Explicit open-set lift).** Write
+
+$$
+w=v-4p,\qquad E(w)=(w+30)(w+72)(5w^2+684w+35793),
+$$
+
+and define the nonempty complex Zariski-open set
+
+$$
+\mathcal O=\{(p,v)\in\mathbb C^2:(p-24)E(v-4p)\ne0\}.
+$$
+
+Every base in $\mathcal O$ has the raw $M$ lift of Lemma 3.1. In
+particular the raw $M$ elimination ideal in $\mathbb Q[p,v]$ is zero.
+
+Proof. The family satisfies
+
+$$
+v-4p=\frac{6(32b^2+18b-5)}{b+1}.
+$$
+
+For a prescribed base choose a root of
+
+$$
+f_w(b)=192b^2+(108-w)b-30-w.
+$$
+
+This quadratic always has a complex root and has constant nonzero leading
+coefficient. Its exact resultant with the prohibited factors is
+
+$$
+\operatorname{Res}_b(f_w,bTU D_s)=432E(w).
+$$
+
+The four factor identities, proved in Proposition 9.2, are
+
+$$
+\begin{aligned}
+\operatorname{Res}_b(f_w,b)&=-w-30,\\
+\operatorname{Res}_b(f_w,b+1)&=54,\\
+\operatorname{Res}_b(f_w,2b+1)&=-2(w+72),\\
+\operatorname{Res}_b(f_w,5b^2+2b+1)&=4(5w^2+684w+35793).
+\end{aligned}
+$$
+
+Since $E(w)\ne0$, every root of $f_w$ avoids all four prohibited
+factors. Take any root, even if $f_w$ has a repeated root, and put
+
+$$
+z=\frac{p-24}{10U}-\frac{48}{5}+\frac{54}{5T}.
+$$
+
+Substitution into the family gives $p_{\rm lift}-p=0$ and
+$v_{\rm lift}-v=f_w(b)/T=0$. All remaining guards are those proved in
+Lemma 3.1. Thus $\mathcal O\subset\mathcal P_M$.
+
+A polynomial in the $M$ elimination ideal vanishes on this nonempty
+open subset of the irreducible affine plane, hence is the zero
+polynomial. This proves the ideal assertion without a genericity
+assumption about the roots of $f_w$. ∎
+

@@ -1,0 +1,24 @@
+**Definition 5.1 (Signed Sturm and interval conventions).** Start with
+$S_0=F$, $S_1=\operatorname{pp}(F')$, where $\operatorname{pp}$ divides
+by positive integer content and preserves sign. Recursively take
+$-\operatorname{rem}(S_{i-1},S_i)$ over $\mathbb Q[b]$ and clear
+denominators and content by positive factors only. Equivalently, if
+$k=\deg S_{i-1}-\deg S_i+1$, use
+
+$$
+\operatorname{pp}\left(
+-\operatorname{prem}(S_{i-1},S_i)
+\operatorname{sign}(\operatorname{lc}S_i)^k\right).
+\tag{5.1}
+$$
+
+No positive-leading-coefficient normalization is applied to this chain.
+$V(x)$ counts sign variations after zero entries are omitted, and the
+sign at $+\infty$ is the leading coefficient sign.
+
+All interval operations below have exact rational endpoints. Multiplication
+uses the minimum and maximum of the four endpoint products. Division
+uses the reciprocal interval only after zero is excluded. Horner
+means descending powers, starting at zero. For two variables use
+$b$ Horner inside the other variable's Horner, retaining zero coefficients.
+
