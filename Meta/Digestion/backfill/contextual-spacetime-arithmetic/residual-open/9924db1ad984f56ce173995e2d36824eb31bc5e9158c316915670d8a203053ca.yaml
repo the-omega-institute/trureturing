@@ -5,7 +5,3 @@ cas_ref: sha256:9924db1ad984f56ce173995e2d36824eb31bc5e9158c316915670d8a203053ca
 coverage_gids: []
 receipts:
   unresolved_subitems: []
-  nonpropositional:
-    justification: 本段只证明前述带时间因果剖面的操作更新及上下文充分性。
-    previous_atom_id: e086ce1df7016d9c4b990de58e04bc772944c3d4c623afe481db1e4f2e618e55
-    next_atom_id: eb87620c1312d25daf0f482de74604dfbdb2f93116adddfe192b68a5b5b748b4
