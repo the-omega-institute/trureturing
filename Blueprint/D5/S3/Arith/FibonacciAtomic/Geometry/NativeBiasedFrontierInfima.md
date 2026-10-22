@@ -304,6 +304,42 @@ $$\forall a: \mathbb{N}, (1 \leq a) \Rightarrow \forall theta: \mathbb{R}, (0 < 
 
 For every supplied a at least one and every real zero less than theta less than one, min(theta,one minus theta) is the least element of the entire binary-product value set. Thus it is both the exact infimum and an attained value. The triangle inequality and unit positive-shift distances give A+B at least one and A+C at least one. The exact decomposition and zero at most A at most one give the lower bound for all independent parameters. Taking s=t attains theta; taking s=S(t) attains one minus theta.
 
+**Theorem 1.26 (Pair Disagreement is Dominated by Triple Disagreement).**
+
+$$\forall theta: \mathbb{R}, (0 \leq theta) \Rightarrow (theta \leq 1) \Rightarrow \forall s: \operatorname{Source}\left(\right), \forall t: \operatorname{Source}\left(\right), \forall u: \operatorname{Source}\left(\right), \operatorname{distance}\left(theta, s, t\right) \leq \operatorname{tripleMass}\left(theta, s, t, u\right)$$
+
+*Proof.* Machine-checked in Lean as `D5/S3/Arith/FibonacciAtomic/Geometry/NativeBiasedFrontierInfima.pair_le_triple` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+For every real theta in the closed unit interval and all finite s,t,u, the pair distance of s,t is at most their three-source mass with u. Three common branches use the two child inequalities with nonnegative directional factors. If u terminates before a pair disagreement, the pair mass is at most the root cylinder mass one. All other root cases follow from the first-disagreement definition.
+
+**Definition 1.27 (The Entire Three-Stratum Product Value Set).**
+
+Lean statement: `D5/S3/Arith/FibonacciAtomic/Geometry/NativeBiasedFrontierInfima.tripleValues`
+
+*Formalization.* `D5/S3/Arith/FibonacciAtomic/Geometry/NativeBiasedFrontierInfima.tripleValues` (`✓ std3`).
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+The set contains the three-source mass for every independently chosen retained original in each of strata zero, one and two. The third source has its full distinctness condition, exterior and partition.
+
+**Theorem 1.28 (Attained Exact Three-Product Infimum).**
+
+$$\forall a: \mathbb{N}, (1 \leq a) \Rightarrow \forall theta: \mathbb{R}, (0 < theta) \Rightarrow (theta < 1) \Rightarrow \operatorname{IsLeast}\left(\operatorname{tripleValues}\left(theta, a\right), \operatorname{min}\left(theta, 1 - theta\right)\right)$$
+
+*Proof.* Machine-checked in Lean as `D5/S3/Arith/FibonacciAtomic/Geometry/NativeBiasedFrontierInfima.triple_product_minimum` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+For every a at least one and every real zero less than theta less than one, min(theta,one minus theta) is the least element of the entire three-stratum value set. Pair domination and the entire binary-product bound apply to every such triple, regardless of its third parameter. For any finite t, the triple v consists of U(a,t,t), U(a,S(t),t), and U(a,S(S(t)),t). Its exact frontier is L prefixed to Leaf(t), and its mass is theta. The triple w consists of U(a,S(t),S(t)), U(a,S(t),t), and U(a,S(t),S(S(t))). Its exact frontier is the union of RL prefixed to Leaf(t) and RR prefixed to Leaf(S(t)), with mass one minus theta. Positive-shift separation proves the full stratum-two negatives of both constructions. Hence both values are attained by actual finite originals satisfying the entire input.
+
 ## References
 
 - Truth anchor: `D5/S3/Arith/FibonacciAtomic/Geometry/NativeBiasedFrontierInfima.Q`
@@ -323,13 +359,16 @@ For every supplied a at least one and every real zero less than theta less than 
 - Truth anchor: `D5/S3/Arith/FibonacciAtomic/Geometry/NativeBiasedFrontierInfima.leaf_partition`
 - Truth anchor: `D5/S3/Arith/FibonacciAtomic/Geometry/NativeBiasedFrontierInfima.pairValues`
 - Truth anchor: `D5/S3/Arith/FibonacciAtomic/Geometry/NativeBiasedFrontierInfima.pair_decomposition`
+- Truth anchor: `D5/S3/Arith/FibonacciAtomic/Geometry/NativeBiasedFrontierInfima.pair_le_triple`
 - Truth anchor: `D5/S3/Arith/FibonacciAtomic/Geometry/NativeBiasedFrontierInfima.position`
 - Truth anchor: `D5/S3/Arith/FibonacciAtomic/Geometry/NativeBiasedFrontierInfima.retained_iff`
 - Truth anchor: `D5/S3/Arith/FibonacciAtomic/Geometry/NativeBiasedFrontierInfima.rowCondition`
 - Truth anchor: `D5/S3/Arith/FibonacciAtomic/Geometry/NativeBiasedFrontierInfima.stratum_iff`
 - Truth anchor: `D5/S3/Arith/FibonacciAtomic/Geometry/NativeBiasedFrontierInfima.tripleFrontier`
 - Truth anchor: `D5/S3/Arith/FibonacciAtomic/Geometry/NativeBiasedFrontierInfima.tripleMass`
+- Truth anchor: `D5/S3/Arith/FibonacciAtomic/Geometry/NativeBiasedFrontierInfima.tripleValues`
 - Truth anchor: `D5/S3/Arith/FibonacciAtomic/Geometry/NativeBiasedFrontierInfima.triple_frontier_shift`
+- Truth anchor: `D5/S3/Arith/FibonacciAtomic/Geometry/NativeBiasedFrontierInfima.triple_product_minimum`
 - Truth anchor: `D5/S3/Arith/FibonacciAtomic/Geometry/NativeBiasedFrontierInfima.weight`
 - Dependency: [D5/S3/Arith/FibonacciAtomic/ActualImageAlphaSeparation](../ActualImageAlphaSeparation.md)
 - Dependency: [D5/S3/Arith/FibonacciAtomic/Observer/NativePayloadHistoryInstallation](../Observer/NativePayloadHistoryInstallation.md)

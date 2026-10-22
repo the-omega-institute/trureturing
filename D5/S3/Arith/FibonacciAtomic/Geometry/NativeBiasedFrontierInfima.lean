@@ -311,12 +311,6 @@ theorem triple_frontier_shift (a : ℕ) (ha : 1 ≤ a) (t : Source) :
       ext p
       simp [leafAddresses,ActualTreeReadoutAcquisition.leaves]
 
-private theorem triple_mass_shift (θ : ℝ) (a : ℕ) (ha : 1 ≤ a) (t : Source) :
-    tripleMass θ t (substitution^[a] t) (substitution^[a] (substitution^[a] t)) = 1 := by
-  unfold tripleMass
-  rw [triple_frontier_shift a ha,leaf_partition]
-
-
 open Observer.NativeFiveHoleFiber (GuardedEqual Negative rootLabel)
 open ActualTreeReadoutAcquisition (readout)
 open ActualLeafHistoryRigidity (subtree)
@@ -600,5 +594,149 @@ theorem binary_product_minimum (a : ℕ) (ha : 1 ≤ a) (θ : ℝ)
     subst y
     rw [← hm]
     exact pair_lower θ hθ hθ1 a ha s t
+
+
+private theorem triple_mass_pair (θ : ℝ) (s u t v z w : Source) :
+    tripleMass θ (.mul s u) (.mul t v) (.mul z w) =
+      θ * tripleMass θ s t z + (1 - θ) * tripleMass θ u v w := by
+  unfold tripleMass
+  rw [tripleFrontier,weighted_split]
+
+private theorem triple_frontier_self (s : Source) : tripleFrontier s s s = ∅ := by
+  induction s with
+  | of b => simp [tripleFrontier]
+  | mul s t hs ht => simp [tripleFrontier,hs,ht]
+
+private theorem triple_swap (s t u : Source) :
+    tripleFrontier s t u = tripleFrontier t s u := by
+  induction s generalizing t u with
+  | of b =>
+      cases t with
+      | of c => cases u with
+        | of d => cases b <;> cases c <;> cases d <;> rfl
+        | mul l r => rfl
+      | mul l r => cases u <;> rfl
+  | mul s v hs hv =>
+      cases t with
+      | of c => cases u <;> rfl
+      | mul t w => cases u with
+        | of d => rfl
+        | mul u z => simp only [tripleFrontier,hs t u,hv w z]
+
+private theorem frontier_v (a : ℕ) (ha : 1 ≤ a) (t : Source) :
+    tripleFrontier (U a t t) (U a (substitution^[a] t) t)
+      (U a (substitution^[a] (substitution^[a] t)) t) =
+        (leafAddresses t).image (List.cons false) := by
+  change (tripleFrontier t (substitution^[a] t)
+      (substitution^[a] (substitution^[a] t))).image (List.cons false) ∪
+    (tripleFrontier (.mul t (substitution^[a] t)) (.mul t (substitution^[a] t))
+      (.mul t (substitution^[a] t))).image (List.cons true) = _
+  rw [triple_frontier_shift a ha,triple_frontier_self]
+  simp
+
+private theorem frontier_w (a : ℕ) (ha : 1 ≤ a) (t : Source) :
+    tripleFrontier (U a (substitution^[a] t) (substitution^[a] t))
+      (U a (substitution^[a] t) t)
+      (U a (substitution^[a] t) (substitution^[a] (substitution^[a] t))) =
+      ((leafAddresses t).image (List.cons false) ∪
+        (leafAddresses (substitution^[a] t)).image (List.cons true)).image (List.cons true) := by
+  simp only [U,tripleFrontier,triple_frontier_self,Finset.image_empty,Finset.empty_union]
+  rw [triple_swap (substitution^[a] t) t,triple_frontier_shift a ha t,
+    triple_swap (substitution^[a] (substitution^[a] t)) (substitution^[a] t),
+    triple_frontier_shift a ha (substitution^[a] t)]
+
+private theorem weighted_prefix (θ : ℝ) (b : Bool) (A : Finset Address) :
+    (∑ p ∈ A.image (List.cons b), weight θ p) =
+      (if b then 1 - θ else θ) * (∑ p ∈ A, weight θ p) := by
+  rw [Finset.sum_image (fun _ _ _ _ h => List.cons_injective h)]
+  cases b <;> simp only [weight,Bool.false_eq_true,ite_false,ite_true] <;>
+    rw [Finset.mul_sum]
+
+/-- A pair's disagreement event is contained in the three-source disagreement event. -/
+theorem pair_le_triple (θ : ℝ) (hθ : 0 ≤ θ) (hθ1 : θ ≤ 1) (s t u : Source) :
+    distance θ s t ≤ tripleMass θ s t u := by
+  induction s generalizing t u with
+  | of b =>
+      cases t with
+      | of c =>
+          cases u with
+          | of d =>
+              by_cases h : b = c
+              · subst c
+                rw [distance_self]
+                by_cases hd : b = d <;> simp [tripleMass,tripleFrontier,hd,weight]
+              · rw [distance_of_of θ b c h]
+                simp [tripleMass,tripleFrontier,h,weight]
+          | mul v w =>
+              simpa [tripleMass,tripleFrontier,weight] using
+                (biased_frontier_bounds θ hθ hθ1 (.of b) (.of c)).2
+      | mul v w =>
+          rw [distance_of_mul]
+          cases u <;> simp [tripleMass,tripleFrontier,weight]
+  | mul s v hs hv =>
+      cases t with
+      | of c =>
+          rw [distance_mul_of]
+          cases u <;> simp [tripleMass,tripleFrontier,weight]
+      | mul t w =>
+          cases u with
+          | of d =>
+              simpa [tripleMass,tripleFrontier,weight] using
+                (biased_frontier_bounds θ hθ hθ1 (.mul s v) (.mul t w)).2
+          | mul u z =>
+              rw [distance_mul_mul,triple_mass_pair]
+              exact add_le_add
+                (mul_le_mul_of_nonneg_left (hs t u) hθ)
+                (mul_le_mul_of_nonneg_left (hv w z) (sub_nonneg.mpr hθ1))
+
+private theorem shift_twice_ne (a : ℕ) (ha : 1 ≤ a) (t : Source) :
+    t ≠ substitution^[a] (substitution^[a] t) := by
+  simpa only [Function.iterate_add_apply] using shift_ne (a + a) (by omega) t
+
+private theorem in_two (a : ℕ) (ha : 1 ≤ a) (x y : Source)
+    (hxy : x ≠ y) (hxs : x ≠ substitution^[a] y) : Stratum a 2 (U a x y) := by
+  apply (stratum_iff a ha 2 _).mpr
+  exact ⟨x,y,rfl,by simpa [rowCondition] using And.intro hxy hxs⟩
+
+/-- Values of all triples of independently chosen originals in the three full strata. -/
+def tripleValues (θ : ℝ) (a : ℕ) : Set ℝ :=
+  {m | ∃ u v w : Source, Stratum a 0 u ∧ Stratum a 1 v ∧ Stratum a 2 w ∧
+    tripleMass θ u v w = m}
+
+private theorem triple_attained (θ : ℝ) (a : ℕ) (ha : 1 ≤ a) (t : Source) :
+    θ ∈ tripleValues θ a ∧ (1 - θ) ∈ tripleValues θ a := by
+  constructor
+  · refine ⟨U a t t,U a (substitution^[a] t) t,
+      U a (substitution^[a] (substitution^[a] t)) t,
+      in_zero a ha t,in_one a ha t,
+      in_two a ha _ t (Ne.symm (shift_twice_ne a ha t))
+        (Ne.symm (shift_ne a ha (substitution^[a] t))),?_⟩
+    unfold tripleMass
+    rw [frontier_v a ha,weighted_prefix,leaf_partition]
+    simp
+  · refine ⟨U a (substitution^[a] t) (substitution^[a] t),
+      U a (substitution^[a] t) t,
+      U a (substitution^[a] t) (substitution^[a] (substitution^[a] t)),
+      in_zero a ha _,in_one a ha t,
+      in_two a ha _ _ (shift_ne a ha (substitution^[a] t))
+        (shift_twice_ne a ha (substitution^[a] t)),?_⟩
+    unfold tripleMass
+    rw [frontier_w a ha,weighted_prefix,weighted_split,leaf_partition,leaf_partition]
+    simp
+
+/-- The exact three-stratum product infimum is attained for every positive shift. -/
+theorem triple_product_minimum (a : ℕ) (ha : 1 ≤ a) (θ : ℝ)
+    (hθ : 0 < θ) (hθ1 : θ < 1) :
+    IsLeast (tripleValues θ a) (min θ (1 - θ)) := by
+  refine ⟨?_,?_⟩
+  · have attained := triple_attained θ a ha (.of true)
+    by_cases h : θ ≤ 1 - θ
+    · simpa [min_eq_left h] using attained.1
+    · simpa [min_eq_right (le_of_not_ge h)] using attained.2
+  · rintro m ⟨u,v,w,hu,hv,_,hm⟩
+    rw [← hm]
+    exact ((binary_product_minimum a ha θ hθ hθ1).2
+      (show distance θ u v ∈ pairValues θ a from ⟨u,v,hu,hv,rfl⟩)).trans
+      (pair_le_triple θ hθ.le hθ1.le u v w)
 
 end D5.S3.Arith.FibonacciAtomic.Geometry.NativeBiasedFrontierInfima
