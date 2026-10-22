@@ -68,10 +68,6 @@ internal sealed class SignedWeakStarCompactnessDocument : IScribeDocumentDefinit
                         + "No Nonempty K, positivity, probability normalization, finite support, or zero-dimensional hypothesis is used; empty K remains covered.")),
                     Paragraph(Text(
                         "This supplier only provides the reference represented weak-star limit for compact metric successor stages. "
-                        + "It does not construct norm-preserving lifts, settle the CH scheduler or recursion, extend to the nonmetrizable final layer, or solve Problem 8.2.")),
-                    Paragraph(Text(
-                        "The four-slot escape registration for this theorem remains unfinished under linked issue #5214 (https://github.com/the-omega-institute/trureturing/issues/5214#issuecomment-6345688462). "
-                        + "A faithful encoding of the full telescope, the source-owner Contract.Registration mirror, lawful enrolled-template readout/sourceSelection, and the required realization, intervention, sensitivity, observational-dependence and current binding evidence have not been supplied. "
-                        + "Interface inspection did not construct or compile a four-slot candidate and did not establish template inexpressibility."))),
+                        + "It does not construct norm-preserving lifts, settle the CH scheduler or recursion, extend to the nonmetrizable final layer, or solve Problem 8.2."))),
                 DescribeRole.Theorem))));
 }
