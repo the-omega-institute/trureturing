@@ -37,7 +37,10 @@ internal sealed class SeparabilitySinglePolynomialRefutationDocument : IScribeDo
         AssessedProvenance provenance, DescribeRole role, params DocumentBlock[] explanation) => Describe.Lean(
             DescribeId.Create("kw-single-polynomial-" + name.ToLowerInvariant()),
             DeclarationHandle.Create(Prefix + name), H(title), StatementSource.FromAuthor(formula),
-            provenance, Blocks(explanation), role);
+            provenance, Blocks(explanation), role,
+            name == "result" ? new OpenProblemResolutionClaim(
+                ProblemSlugRef.Create("kruger-werner-2005-single-polynomial-separability-refutation"),
+                ResolutionKind.Refuted) : null);
 
     private static Formula Named(string name) => Seq(Operatorname, Grp(name.Split('.')
         .SelectMany((part, index) => index == 0 ? new[] { F.Id(part) } : new Formula[] { Dot, F.Id(part) })
