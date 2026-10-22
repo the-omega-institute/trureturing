@@ -8,7 +8,6 @@
 
 import D5.S3.Quantum.Codes.QuditStabilizerProductVector
 import Mathlib.FieldTheory.ChevalleyWarning
-import Mathlib.LinearAlgebra.Dimension.Finite
 
 /-!
 # The commutation-rank obstruction

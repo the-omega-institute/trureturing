@@ -8,13 +8,7 @@
 
 import D5.S3.Quantum.Algebra.WeylDisplacementTrace
 import D5.S3.Quantum.Algebra.WeylPhaseArithmetic
-import Mathlib.LinearAlgebra.Matrix.ToLin
-import Mathlib.LinearAlgebra.Matrix.Kronecker
 import Mathlib.LinearAlgebra.Eigenspace.Triangularizable
-import Mathlib.Analysis.Complex.Polynomial.Basic
-import Mathlib.Tactic.Ring.Basic
-import Mathlib.Tactic.Tauto
-import Mathlib.Tactic.ByContra
 
 /-!
 # Pauli words and product vectors
