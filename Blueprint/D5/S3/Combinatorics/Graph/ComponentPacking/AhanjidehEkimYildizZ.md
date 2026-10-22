@@ -34,6 +34,10 @@ $$\forall d: \mathbb{N}, (21 \le d) \Rightarrow ((\operatorname{Odd}\left(d\righ
 
 *Proof.* Machine-checked in Lean as `D5/S3/Combinatorics/Graph/ComponentPacking/AhanjidehEkimYildizZ.result` (`✓ std3`). ∎
 
+*Resolves.* `Problems/ahanjideh-ekim-yildiz-2022-z-of-d-conjecture-6-5` (proved) by `D5/S3/Combinatorics/Graph/ComponentPacking/AhanjidehEkimYildizZ.result`.
+
+<!-- scribe-open-problem-resolution-v1 {"problem_slug":"ahanjideh-ekim-yildiz-2022-z-of-d-conjecture-6-5","declaration_gid":"D5/S3/Combinatorics/Graph/ComponentPacking/AhanjidehEkimYildizZ.result","resolution_kind":"proved"} -->
+
 *Source.* Repository-derived.
 
 *Acknowledgement.* M. Ahanjideh; T. Ekim; M. A. Yıldız (2022). *Maximum size of a triangle-free graph with bounded maximum degree and matching number*. DOI: [10.1007/s10878-024-01123-z](https://doi.org/10.1007/s10878-024-01123-z). URL: <https://arxiv.org/abs/2207.02271v1>.

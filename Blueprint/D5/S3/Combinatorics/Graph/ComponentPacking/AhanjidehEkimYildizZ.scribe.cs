@@ -22,13 +22,17 @@ internal sealed class AhanjidehEkimYildizZDocument : IScribeDocumentDefinition
                 "claim", DescribeRole.Definition, AssessedProvenance.FromLiterature(Source)),
             Node("result", "The conjectured equality", Disp(ClaimBody()),
                 "A triangle-free graph below the proposed extremal order admits a pentagon partition through the three-eighths minimum-degree theorem. The exceptional degree 23 and order 59 is handled by deleting the deficient vertex and extending the partition. The cyclic missing-edge incidence inequalities rule out total slack one and three. The almost regular pentagon constructions attain the remaining matching number.",
-                "result", DescribeRole.Theorem, AssessedProvenance.FromRepo(Source))),
+                "result", DescribeRole.Theorem, AssessedProvenance.FromRepo(Source),
+                new OpenProblemResolutionClaim(
+                    ProblemSlugRef.Create("ahanjideh-ekim-yildiz-2022-z-of-d-conjecture-6-5"),
+                    ResolutionKind.Proved))),
         []));
 
     private static DocumentBlock Node(string id, string title, Formula formula, string prose,
-        string declaration, DescribeRole role, AssessedProvenance provenance) =>
+        string declaration, DescribeRole role, AssessedProvenance provenance,
+        OpenProblemResolutionClaim? resolution = null) =>
         Describe.Lean(DescribeId.Create("aeyz-" + id), DeclarationHandle.Create(Prefix + declaration),
-            H(title), StatementSource.FromAuthor(formula), provenance, Blocks(Paragraph(Text(prose))), role);
+            H(title), StatementSource.FromAuthor(formula), provenance, Blocks(Paragraph(Text(prose))), role, resolution);
 
     private static Formula Named(string name) => Seq(Operatorname, Grp(F.Id(name)));
     private static Formula Call(string name, params Formula[] args) => new Formula.Apply(Named(name), [.. args]);
