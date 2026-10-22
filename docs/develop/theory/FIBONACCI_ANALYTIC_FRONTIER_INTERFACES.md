@@ -4822,7 +4822,7 @@ $$
 
 ## 479. 任意离线零点的正累积峰值与显式整数位置
 
-本节复用第 478 节的完整 Mertens 量 $\mathcal U$ 与实际 lcm 消费命题；复用[完整积分显式公式与零点和](../../../Library/Analytic/polak2026finiterobinca.md#published-event-dynamics-and-the-unpaid-prime-state-work)，以及 [Révész 的 Cassel 幂和步骤及低高度零点事实](../../../Library/Analytic/revesz1988oscillation.md)。以下保留非振荡包络及全尾项的带符号应用记为 `repo-derived`；不主张文献优先权。
+本节复用第 478 节的完整 Mertens 量 $\mathcal U$ 与实际 lcm 消费命题；复用[完整积分显式公式与零点和](../../../Library/Analytic/polak2026finiterobinca.md#published-event-dynamics-and-the-unpaid-prime-state-work)，以及 [Révész 的 Cassel 幂和步骤及低高度零点事实](../../../Library/Zeros/revesz1988oscillation.md)。以下保留非振荡包络及全尾项的带符号应用记为 `repo-derived`；不主张文献优先权。
 
 **命题 479.1（不另设零点高度门槛的有限正峰值）。** 设实际非平凡零点 $\rho_0=\beta+i\gamma$ 满足 $\beta>1/2$、$\gamma>0$，令
 
