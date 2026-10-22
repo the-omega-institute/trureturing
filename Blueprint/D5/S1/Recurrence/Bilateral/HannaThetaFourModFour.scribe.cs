@@ -30,7 +30,10 @@ internal sealed class HannaThetaFourModFourDocument : IScribeDocumentDefinition
                 AssessedProvenance.FromLiterature(Source), Blocks(Paragraph(Text("For every normalized solution and every positive n, an integer coefficient witness has the two square biconditionals and the nonsquare divisibility conclusion."))), DescribeRole.Definition),
             Describe.Lean(DescribeId.Create("a379764-result"), DeclarationHandle.Create(Prefix + "result"),
                 H("The two A379764 conjectures"), StatementSource.FromAuthor(ClaimBody()),
-                AssessedProvenance.FromRepo(Source), Blocks(Paragraph(Text("The integral fixed-point construction gives a normalized solution. Its coefficient congruence is the theta-four source modulo four, and uniqueness identifies every normalized rational solution with it."))), DescribeRole.Theorem))));
+                AssessedProvenance.FromRepo(Source), Blocks(Paragraph(Text("The integral fixed-point construction gives a normalized solution. Its coefficient congruence is the theta-four source modulo four, and uniqueness identifies every normalized rational solution with it."))), DescribeRole.Theorem,
+                new OpenProblemResolutionClaim(
+                    ProblemSlugRef.Create("oeis-a379764-hanna-theta-mod-four"),
+                    ResolutionKind.Proved)))));
 
     private static Formula Named(string name) => Seq(Operatorname, Grp(F.Id(name)));
     private static Formula Qualified(string owner, string name) => Seq(Operatorname, Grp(F.Id(owner)), Dot, Operatorname, Grp(F.Id(name)));

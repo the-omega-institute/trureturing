@@ -62,6 +62,10 @@ $$(\exists A \in \operatorname{PowerSeries}\left(\mathbb{Q}\right),\; \operatorn
 
 *Proof.* Machine-checked in Lean as `D5/S1/Recurrence/Bilateral/HannaThetaFourModFour.result` (`✓ std3`). ∎
 
+*Resolves.* `Problems/oeis-a379764-hanna-theta-mod-four` (proved) by `D5/S1/Recurrence/Bilateral/HannaThetaFourModFour.result`.
+
+<!-- scribe-open-problem-resolution-v1 {"problem_slug":"oeis-a379764-hanna-theta-mod-four","declaration_gid":"D5/S1/Recurrence/Bilateral/HannaThetaFourModFour.result","resolution_kind":"proved"} -->
+
 *Source.* Repository-derived.
 
 *Acknowledgement.* Paul D. Hanna (2025). *OEIS A379764, theta-four bilateral generating function and coefficient congruences*. URL: <https://oeis.org/A379764>.
