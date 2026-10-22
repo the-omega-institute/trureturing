@@ -2,7 +2,7 @@
    generality: G
    mirror-B: D5/B/S3/Analytic/KilbasSaigo/Certificate
    mirror-E: none(waiver:evidence-not-specified-by-formal-manifest)
-   anchors: [mathlib/module/Mathlib.Analysis.SpecialFunctions.Gamma.Basic, mathlib/module/Mathlib.MeasureTheory.Integral.IntervalIntegral.Basic]
+   anchors: []
    utility: none
    digest: Fractional Gamma-ratio kernel and its zero-increment certificate. -/
 

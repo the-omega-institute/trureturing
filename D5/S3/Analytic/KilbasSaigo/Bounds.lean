@@ -261,23 +261,6 @@ private lemma convex_g0 {α m l : ℝ} (hα : 0 < α) (hm : 0 < m)
   rw [(hasDerivAt_g hα hm hl 0 x).deriv, (hasDerivAt_g hα hm hl 0 y).deriv]
   exact neg_le_neg (hm1 (interior_subset hx) (interior_subset hy) hxy)
 
-/-- Both hyperbolic bounds at the endpoint parameter alpha equal to one. -/
-theorem bounds_one {m l x : ℝ} (hm : 0 < m) (hl : m - 1 < l) (hx : 0 ≤ x) :
-    phi 1 m l 0 / (phi 1 m l 0 + x) ≤ g 1 m l 0 x ∧
-      g 1 m l 0 x ≤ phi 1 m l 1 / (phi 1 m l 1 + x) := by
-  have hl' : m - 1 / (1 : ℝ) < l := by simpa using hl
-  have hf0 : g 1 m l 0 0 = 1 := by simp [g_zero, ksCoeff]
-  have heq : ∀ y ≥ 0, m * y * (-g 1 m l 1 y) + (1 + (l - m) + y) * g 1 m l 0 y =
-      1 + (l - m) := by
-    intro y hy
-    nlinarith [ode_one_base hm hl y]
-  have h := hyperbolic_of_ode (by linarith : 0 < 1 + (l - m)) hm hf0
-    (hasDerivAt_g zero_lt_one hm hl' 0)
-    (fun y hy => neg_nonpos.mpr (g_positive_one hm hl 1 y hy).le)
-    (convex_g0 zero_lt_one hm hl' (g_positive_one hm hl 2)) heq x hx
-  simpa only [phi_one hm hl (show (0 : ℝ) ≤ 0 by rfl), phi_one hm hl zero_le_one,
-    mul_zero, mul_one, add_zero] using h
-
 namespace FractionalCertificate
 open D5.S3.Analytic.KilbasSaigo.Certificate
 open D5.S3.Analytic.KummerRatio.BetaIntegral
@@ -842,6 +825,25 @@ theorem pos_decreasing_convex {α m l x : ℝ} (hα : 0 < α) (hαle : α ≤ 1)
   · have hl' : m - 1 < l := by simpa using hl
     exact ⟨g_positive_one hm hl' 0 x hx, g_positive_one hm hl' 1 x hx,
       g_positive_one hm hl' 2 x hx⟩
+
+/-- Both hyperbolic bounds at the endpoint parameter alpha equal to one. -/
+theorem bounds_one {m l x : ℝ} (hm : 0 < m) (hl : m - 1 < l) (hx : 0 ≤ x) :
+    phi 1 m l 0 / (phi 1 m l 0 + x) ≤ g 1 m l 0 x ∧
+      g 1 m l 0 x ≤ phi 1 m l 1 / (phi 1 m l 1 + x) := by
+  have hl' : m - 1 / (1 : ℝ) < l := by simpa using hl
+  have hf0 : g 1 m l 0 0 = 1 := by simp [g_zero, ksCoeff]
+  have heq : ∀ y ≥ 0, m * y * (-g 1 m l 1 y) + (1 + (l - m) + y) * g 1 m l 0 y =
+      1 + (l - m) := by
+    intro y hy
+    nlinarith [ode_one_base hm hl y]
+  have h := hyperbolic_of_ode (by linarith : 0 < 1 + (l - m)) hm hf0
+    (hasDerivAt_g zero_lt_one hm hl' 0)
+    (fun y hy => neg_nonpos.mpr
+      (pos_decreasing_convex zero_lt_one le_rfl hm hl' hy).2.1.le)
+    (convex_g0 zero_lt_one hm hl'
+      (fun y hy => (pos_decreasing_convex zero_lt_one le_rfl hm hl' hy).2.2)) heq x hx
+  simpa only [phi_one hm hl (show (0 : ℝ) ≤ 0 by rfl), phi_one hm hl zero_le_one,
+    mul_zero, mul_one, add_zero] using h
 
 private lemma ratio_rewrite {p d x : ℝ} (hp : 0 < p) (hd : 0 < d) (hx : 0 ≤ x) :
     (p / d) / (p / d + x) = 1 / (1 + d / p * x) := by
