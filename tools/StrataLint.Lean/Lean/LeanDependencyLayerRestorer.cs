@@ -70,7 +70,7 @@ internal static class LeanDependencyLayerRestorer
             {
                 var packageRoot = Path.Combine(target, package);
                 if (Attributes(packageRoot) is not null) RequireDirectory(packageRoot);
-                AddMissing(Path.Combine(staged, package), Path.Combine(target, package),
+                MergePackage(Path.Combine(staged, package), Path.Combine(target, package),
                     ref added, ref retained, packageRoot);
             }
             removePartial(staged);
@@ -144,6 +144,63 @@ internal static class LeanDependencyLayerRestorer
         }
     }
 
+    private static void MergePackage(string staged, string target, ref int added, ref int retained,
+        string packageRoot)
+    {
+        var targetLinks = new HashSet<string>(StringComparer.Ordinal);
+        AddPackageMaterial(staged, target, ref added, ref retained, targetLinks);
+        AddPackageLinks(staged, target, ref added, ref retained, packageRoot);
+        foreach (var link in targetLinks)
+            RequirePackageFileLink(link, packageRoot);
+    }
+
+    private static void AddPackageMaterial(string staged, string target, ref int added, ref int retained,
+        HashSet<string> targetLinks)
+    {
+        var incoming = File.GetAttributes(staged);
+        if (incoming.HasFlag(FileAttributes.ReparsePoint)) return;
+        var existing = Attributes(target);
+        if (existing is null)
+        {
+            if (incoming.HasFlag(FileAttributes.Directory)) Directory.Move(staged, target);
+            else File.Move(staged, target, overwrite: false);
+            added++;
+            return;
+        }
+        if (existing.Value.HasFlag(FileAttributes.ReparsePoint))
+        {
+            retained++;
+            targetLinks.Add(target);
+            return;
+        }
+        if (existing.Value.HasFlag(FileAttributes.Directory)
+            && incoming.HasFlag(FileAttributes.Directory))
+        {
+            foreach (var entry in Directory.EnumerateFileSystemEntries(staged))
+                AddPackageMaterial(entry, Path.Combine(target, Path.GetFileName(entry)),
+                    ref added, ref retained, targetLinks);
+        }
+        else retained++;
+    }
+
+    private static void AddPackageLinks(string staged, string target, ref int added, ref int retained,
+        string packageRoot)
+    {
+        var incoming = Attributes(staged);
+        if (incoming is null) return; // The material pass moved this subtree.
+        if (incoming.Value.HasFlag(FileAttributes.ReparsePoint))
+        {
+            AddMissing(staged, target, ref added, ref retained, packageRoot);
+            return;
+        }
+        if (!incoming.Value.HasFlag(FileAttributes.Directory)) return;
+        var existing = Attributes(target);
+        if (existing is null || existing.Value.HasFlag(FileAttributes.ReparsePoint)
+            || !existing.Value.HasFlag(FileAttributes.Directory)) return;
+        foreach (var entry in Directory.EnumerateFileSystemEntries(staged))
+            AddPackageLinks(entry, Path.Combine(target, Path.GetFileName(entry)), ref added, ref retained, packageRoot);
+    }
+
     internal static void AddMissing(string staged, string target, ref int added, ref int retained,
         string? packageRoot = null)
     {
@@ -156,6 +213,8 @@ internal static class LeanDependencyLayerRestorer
         var existing = Attributes(target);
         if (existing is null)
         {
+            if (incomingLink && packageRoot is not null)
+                RequirePackageFileLink(target, packageRoot, new FileInfo(staged).LinkTarget);
             if (!incomingLink && incoming.HasFlag(FileAttributes.Directory)) Directory.Move(staged, target);
             else File.Move(staged, target, overwrite: false);
             added++;
@@ -179,6 +238,11 @@ internal static class LeanDependencyLayerRestorer
     private static void RequirePackageFileLink(string path, string? packageRoot)
     {
         var link = packageRoot is null ? null : new FileInfo(path).LinkTarget;
+        RequirePackageFileLink(path, packageRoot, link);
+    }
+
+    private static void RequirePackageFileLink(string path, string? packageRoot, string? link)
+    {
         void Refuse() => throw new InvalidOperationException($"dependency cache contains a forbidden symlink: {path}");
         if (string.IsNullOrEmpty(link) || Path.IsPathRooted(link)) Refuse();
         var current = Path.GetDirectoryName(path)!;
@@ -215,7 +279,22 @@ internal static class LeanDependencyLayerRestorer
     {
         try { return File.GetAttributes(path); }
         catch (Exception exception) when (exception is FileNotFoundException or DirectoryNotFoundException)
-        { return null; }
+        {
+            // File.GetAttributes follows links and therefore reports a dangling
+            // package link as missing. Preserve that link as an existing entry so a
+            // donor-known referent can be restored before it is validated.
+            try
+            {
+                return new FileInfo(path).LinkTarget is null
+                    ? null
+                    : FileAttributes.ReparsePoint;
+            }
+            catch (Exception linkException) when (
+                linkException is FileNotFoundException or DirectoryNotFoundException)
+            {
+                return null;
+            }
+        }
     }
 
     internal static ClonefileReceipt Combine(ClonefileReceipt first, ClonefileReceipt second) => new(

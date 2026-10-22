@@ -38,7 +38,10 @@ public sealed partial class LeanCacheEnsureCommandTests
             AfterClone = (source, staged) =>
             {
                 if (Path.GetFileName(source) == "packages")
+                {
+                    Directory.CreateDirectory(Path.Combine(staged, "batteries/docs"));
                     File.CreateSymbolicLink(Path.Combine(staged, "batteries/docs/README.md"), "../README.md");
+                }
             },
         };
 
@@ -64,6 +67,147 @@ public sealed partial class LeanCacheEnsureCommandTests
         Assert.Equal(stamped ? "restored" : "seeded", receipt.RootElement.GetProperty("status").GetString());
         Assert.Equal("warm", receipt.RootElement.GetProperty("project_olean_state").GetString());
         Assert.Equal("warm", receipt.RootElement.GetProperty("mathlib_olean_state").GetString());
+    }
+
+    [Theory]
+    [InlineData(false)]
+    [InlineData(true)]
+    public void DependencyRecoveryRestoresMissingReferentBeforeExistingPackageLink(bool stamped)
+    {
+        using var repository = new TemporaryDirectory();
+        InitializeFileLinkRepository(repository.Path);
+        WriteCache(repository.Path, "donor build", projectWarm: true);
+        var donorPackage = Path.Combine(repository.Path, ".lake/packages/batteries");
+        WriteRestoreFixture(donorPackage, "README.md", "donor documentation");
+        WriteRestoreFixture(donorPackage, "docs/other.md", "additional documentation");
+        var target = AddWorktree(repository.Path, "missing-link-referent");
+        WriteCache(target, "retained compiler", stamp: stamped, mathlibComplete: false, projectWarm: true);
+        var lake = Path.Combine(target, ".lake");
+        var package = Path.Combine(lake, "packages/batteries");
+        var link = Path.Combine(package, "docs/README.md");
+        Directory.CreateDirectory(Path.Combine(package, "docs"));
+        File.CreateSymbolicLink(link, "../README.md");
+        WriteRestoreFixture(package, "docs/target-only.md", "target-only source");
+        WriteRestoreFixture(lake, "build/lib/lean/TargetOnly.olean", "target-only compiler");
+        WriteRestoreFixture(lake, "build/stratalint/raw-lean-report.json", "target-only report");
+        var targetOnly = new[]
+        {
+            Path.Combine(package, "docs/target-only.md"),
+            Path.Combine(lake, "build/lib/lean/TargetOnly.olean"),
+            Path.Combine(lake, "build/stratalint/raw-lean-report.json"),
+        }.ToDictionary(path => path, path => (Bytes: File.ReadAllBytes(path), Time: File.GetLastWriteTimeUtc(path)));
+        var linkTime = File.GetLastWriteTimeUtc(link);
+        string[] stagedOrder = [];
+        var cloner = new RecordingDirectoryCloner
+        {
+            AfterClone = (source, staged) =>
+            {
+                if (Path.GetFileName(source) != "packages") return;
+                var stagedPackage = Path.Combine(staged, "batteries");
+                // Recreate the referent after the link-bearing directory so the
+                // public fixture observes the problematic link-before-referent order.
+                File.Delete(Path.Combine(stagedPackage, "README.md"));
+                File.CreateSymbolicLink(Path.Combine(stagedPackage, "docs/README.md"), "../README.md");
+                File.WriteAllText(Path.Combine(stagedPackage, "README.md"), "donor documentation");
+                stagedOrder = Directory.EnumerateFileSystemEntries(stagedPackage)
+                    .Select(Path.GetFileName)
+                    .ToArray()!;
+            },
+        };
+        string[] arguments = stamped
+            ? ["ensure-cache", "--path", target, "--restore-dependencies"]
+            : ["ensure-cache", "--path", target];
+
+        var first = WorktreeCommand.Run(repository.Path, arguments,
+            new RecordingWorktreeProcessRunner(), cloner);
+        Assert.True(first.Success, first.Error);
+        Assert.True(Array.IndexOf(stagedOrder, "docs") < Array.IndexOf(stagedOrder, "README.md"),
+            $"fixture order was {string.Join(", ", stagedOrder)}");
+        Assert.Equal("donor documentation", File.ReadAllText(Path.Combine(package, "README.md")));
+        Assert.Equal("../README.md", new FileInfo(link).LinkTarget);
+        Assert.Equal(linkTime, File.GetLastWriteTimeUtc(link));
+        foreach (var (path, prior) in targetOnly)
+        {
+            Assert.Equal(prior.Bytes, File.ReadAllBytes(path));
+            Assert.Equal(prior.Time, File.GetLastWriteTimeUtc(path));
+        }
+        Assert.Equal("additional documentation", File.ReadAllText(Path.Combine(package, "docs/other.md")));
+
+        var second = WorktreeCommand.Run(repository.Path, arguments,
+            new RecordingWorktreeProcessRunner(), cloner);
+        Assert.True(second.Success, second.Error);
+        Assert.Equal("donor documentation", File.ReadAllText(Path.Combine(package, "README.md")));
+        Assert.Equal("../README.md", new FileInfo(link).LinkTarget);
+        Assert.Equal(linkTime, File.GetLastWriteTimeUtc(link));
+        foreach (var (path, prior) in targetOnly)
+        {
+            Assert.Equal(prior.Bytes, File.ReadAllBytes(path));
+            Assert.Equal(prior.Time, File.GetLastWriteTimeUtc(path));
+        }
+        Assert.Empty(Directory.GetDirectories(lake, "*.stage-*"));
+    }
+
+    [Theory]
+    [InlineData(false, "file")]
+    [InlineData(true, "file")]
+    [InlineData(false, "directory")]
+    [InlineData(true, "directory")]
+    public void DependencyRecoveryKeepsReferentConflictOutcomeStableAcrossRetries(bool stamped, string conflict)
+    {
+        using var repository = new TemporaryDirectory();
+        InitializeFileLinkRepository(repository.Path);
+        WriteCache(repository.Path, "donor build", projectWarm: true);
+        var donorPackage = Path.Combine(repository.Path, ".lake/packages/batteries");
+        WriteRestoreFixture(donorPackage, "README.md", "donor documentation");
+        var target = AddWorktree(repository.Path, "link-referent-conflict");
+        WriteCache(target, "retained compiler", stamp: stamped, mathlibComplete: false, projectWarm: true);
+        var lake = Path.Combine(target, ".lake");
+        var package = Path.Combine(lake, "packages/batteries");
+        Directory.CreateDirectory(Path.Combine(package, "docs"));
+        if (conflict == "file")
+            WriteRestoreFixture(package, "README.md", "authoritative target documentation");
+        else
+            WriteRestoreFixture(package, "README.md/child", "authoritative target directory");
+        WriteRestoreFixture(lake, "build/stratalint/raw-lean-report.json", "target-only report");
+        var referent = Path.Combine(package, "README.md");
+        var referentBytes = conflict == "file" ? File.ReadAllBytes(referent) : null;
+        var referentTime = File.GetLastWriteTimeUtc(referent);
+        var link = Path.Combine(package, "docs/README.md");
+        var cloner = new RecordingDirectoryCloner
+        {
+            AfterClone = (source, staged) =>
+            {
+                if (Path.GetFileName(source) == "packages")
+                {
+                    Directory.CreateDirectory(Path.Combine(staged, "batteries/docs"));
+                    File.CreateSymbolicLink(Path.Combine(staged, "batteries/docs/README.md"), "../README.md");
+                }
+            },
+        };
+        string[] arguments = stamped
+            ? ["ensure-cache", "--path", target, "--restore-dependencies"]
+            : ["ensure-cache", "--path", target];
+
+        var first = WorktreeCommand.Run(repository.Path, arguments,
+            new RecordingWorktreeProcessRunner(), cloner);
+        var second = WorktreeCommand.Run(repository.Path, arguments,
+            new RecordingWorktreeProcessRunner(), cloner);
+        if (conflict == "file")
+        {
+            Assert.True(first.Success, first.Error);
+            Assert.True(second.Success, second.Error);
+            Assert.Equal("../README.md", new FileInfo(link).LinkTarget);
+            Assert.Equal(referentBytes, File.ReadAllBytes(referent));
+        }
+        else
+        {
+            Assert.False(first.Success);
+            Assert.False(second.Success);
+            Assert.False(File.Exists(link));
+            Assert.True(Directory.Exists(referent));
+        }
+        Assert.Equal(referentTime, File.GetLastWriteTimeUtc(referent));
+        Assert.Empty(Directory.GetDirectories(lake, "*.stage-*"));
     }
 
     [Theory]
