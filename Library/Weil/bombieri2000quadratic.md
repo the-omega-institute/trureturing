@@ -97,8 +97,14 @@ spectral pairing, separate from passing a finite matrix to its limit.
 pairs, let $f$ be the compact-test root variable in $T[f*f^*]$ and put
 $u_j=\widehat f(\gamma_j)$, $v_j=\widehat f(\overline\gamma_j)$. The $j$th
 paired term is $2m_j\operatorname{Re}(u_j\overline{v_j})$, with equal
-positive multiplicities $m_j>0$ at the two conjugate nodes. Imposing the
-$k$ complex-linear conditions $u_j=v_j$ makes these terms
+positive multiplicities $m_j>0$ at the two conjugate nodes. Here $j$ runs
+over all unordered conjugate pairs in the full spectral set: the reflected
+pair $\{-\gamma_j,-\overline\gamma_j\}$ is counted separately when it is
+distinct. No evenness or reflection quotient is imposed in this argument.
+For an even root on a four-point orbit, the two pair contributions combine
+to $4m_j\operatorname{Re}(u_j\overline{v_j})$, consistent with the existing
+[four-point orbit identity](../../D5/S3/Weil/ZetaBridge/ConvolutionSquareOffLineOrbits.lean).
+Imposing the $k$ complex-linear conditions $u_j=v_j$ makes these terms
 $2m_j|u_j|^2\ge0$ and leaves the whole critical-line sum with its positive
 weights. The antisymmetric pair-evaluation map is consequently injective
 on every strictly negative complex subspace of compact-test roots, so
