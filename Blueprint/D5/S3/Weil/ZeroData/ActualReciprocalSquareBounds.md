@@ -1,0 +1,45 @@
+# Actual Zeta Mass and Height
+
+## Abstract
+
+Actual multiplicity-exact zero mass and unconditional height-ten exclusion from the first xi resolvent at six.
+
+This owning document records the exact source family actualData = zetaZeroData, the real kernel pairWeight rho = Re(1/(rho*(1-rho))), and firstLiMass = 2 + EulerGamma - 2*log(2*sqrt(pi)). The source retains the normalized reflection and resolvent-positive R(6) chain, including sixWeight, sixDefect, the digamma-at-3 and H512 reductions, log(pi) and log(2) bounds, the complete von Mangoldt prime-power series, and the tail integral 1/648. The complex HasSum at six is consumed by the real HasSum for sixWeight; the positive kernel estimate and the evaluated defect are then consumed by the height contradiction. The companion XiSquareExteriorRemainder.lean is part of the exact checked source and remains unchanged (sealed SHA-256 540ac7144177a040a07dec7a58b33a97ab26efd19dd6d1545124f397faf70a9c).
+
+Every natural index is the sigma family of Fin (actualData.multiplicity n) over the exhaustive actual family. ActualZeroOccurrence, its infinite instance, actualOccurrenceEquiv : N ≃ ActualZeroOccurrence, actualZero, the exact fiber identity and fiber cardinality, and the finite inclusive cutoff transports are all retained. The sealed six-module retention record covers 467 module-qualified types and is unchanged. The resulting family includes both imaginary signs and every positive analytic multiplicity. The reciprocal-square summability and strict total bound are transported through those fibers; actual_count_both applies them to the literal cutoff |Im(actualZero k)| ≤ T and gives ncard ≤ floor(2*T^2) for every T ≥ 10, without a filtered family or RH premise.
+
+**Theorem 1.1 (Actual Inverse Square Mass and Literal Cutoffs).**
+
+$$\forall T \in \mathbb{R},\; 10 \le T \Rightarrow \operatorname{ncard}\left(\left\{k:\mathbb{N} \mid \left|\operatorname{im}\left(\operatorname{actualZero}\left(k\right)\right)\right| \le T\right\}\right) \le \left\lfloor2 \cdot T^{2}\right\rfloor$$
+
+*Proof.* Machine-checked in Lean as `D5/S3/Weil/ZeroData/ActualReciprocalSquareBounds.actual_count_both` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+The displayed telescope binds the real cutoff T and retains its hypothesis 10 ≤ T. The set is exactly the natural-index set {k : N | |im(actualZero k)| ≤ T}; its cardinality is bounded by the natural floor of 2*T^2. The proof consumes actual_inverse_square_summable, actual_inverse_square_mass_lt_two, mem_actualNatCutoff, actual_cutoff_sum_transport, actual_cutoff_card_by_fiber, and actual_finite_count_shell. The finite cutoff remains inclusive, and the bound is a conclusion of the exact family, not an assumed mass or height certificate.
+
+**Theorem 1.2 (First Resolvent at Six).**
+
+$$\forall rho \in \mathbb{C},\; \operatorname{IsNontrivialZero}\left(\mathit{rho}\right) \Rightarrow 10 < \left|\operatorname{im}\left(\mathit{rho}\right)\right|$$
+
+*Proof.* Machine-checked in Lean as `D5/S3/Weil/ZeroData/ActualReciprocalSquareBounds.actual_height_gt_ten` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+The displayed telescope binds an arbitrary complex rho and assumes only the actual predicate IsNontrivialZero rho; its conclusion is exactly 10 < |rho.im|. The proof first obtains the endpoint estimate S < 1/3 and the conjugate-pair bootstrap u > 5. The normalized resolvents at 1 and 6, the multiplicity-preserving reflection permutation, and the rational identity produce T6 = 165 * sum_n multiplicity(n) * sixWeight(zero n). The lower kernel is 9/(10*(u+1)*(u+31)); a zero with u ≤ 100 forces T6 ≥ 297/13231. Factorization at six gives T6 = 593/60 + 6*EulerGamma - 11*log(2) - 5*log(pi) + Q6; the H512 estimate, the one-term logarithm lower bound, all von Mangoldt prime powers, and the integrable tail 1/648 give T6 < 329/15000, a strict contradiction. Exhaustivity then transfers 100 < (Im(zero n))^2 to the arbitrary rho. No height, mass, numerical, critical-line, or RH premise is introduced.
+
+The unchanged original application is the existing owner narrative. For every m ≥ 1, its CompleteZeroFamily fields are supplied by the exact zero, strip, height, reciprocal-square summability, reciprocal-square mass < 2, finite count shell, and count bound above. For an actual rho, it sets gamma = |Im rho|, so the retained actual_height_gt_ten supplies gamma > 10. The existing checked4361 complete_low_h_weighted_mean_bound is then applied with the unchanged scalar hypothesis m ≥ 1 and the unchanged bound m*(gamma+10)^2*(2400000*exp(-83*m) + 2400 + 384*exp(-28*m)). Here the inner h-domain is the full Icc 0 2 with weight 1+h, whose integral is 4; the Gaussian center is 16*m with variance denominator 4*m; the physical envelope has coefficient 3; and the original shell route keeps core coefficient 20, giving 3*4*20 = 240 and the 2400000*exp(-83*m) term. The positive and negative extensions remain 2400 and 384*exp(-28*m). The exact preserved transient ActualOriginalFieldConsumer.lean has SHA-256 40271c899298c1d268b7976241dd3fedd5b66004756ad901591434e9787ce3db; it is cited as sealed evidence and is not copied into this overlay. No final-height wrapper or tracked mean specialization is introduced.
+
+Consumed helpers remain private or source-internal exactly as authored: endpoint normalization, strip and conjugation algebra, occurrence and fiber transports, finite cutoff membership, the real-part HasSum, kernel positivity, and the von Mangoldt tail comparison. This Scribe source is a proposed faithful overlay; native Lean, Scribe emission, DTR, CI, freezing, issue submission, and official acceptance remain caller-owned checks.
+
+## References
+
+- Truth anchor: `D5/S3/Weil/ZeroData/ActualReciprocalSquareBounds.actual_count_both`
+- Truth anchor: `D5/S3/Weil/ZeroData/ActualReciprocalSquareBounds.actual_height_gt_ten`
+- Dependency: [D5/S3/Weil/ZeroData/UnconditionalCanonicalZeroData](UnconditionalCanonicalZeroData.md)
+- Dependency: [D5/S3/Zeros/Endpoints/FirstLiCoefficientPositivity](../../Zeros/Endpoints/FirstLiCoefficientPositivity.md)
+- Dependency: [D5/S3/Zeros/Resolvent/XiSquareExteriorRemainder](../../Zeros/Resolvent/XiSquareExteriorRemainder.md)
