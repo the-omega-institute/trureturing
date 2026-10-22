@@ -2048,3 +2048,1246 @@ additional mathematical contributions.
 
 ## 追加锚（本行以下为增补区）
 
+## 31. Common whole-world coordinates for the fold and J incidence
+
+Retain Definitions 1.1–1.2 without restricting their domain or pair predicate.
+In particular the two distinct-world pairs may overlap, and their common
+terminal values need not agree. All gains are entire nonzero polynomials
+of degree at most three, each with its own one fixed real drift and the
+literal acquired and alternative clocks already specified.
+
+The full-parent bijection is (19.1)–(19.2), inherited from
+[Common Parent Geometry](FIB_COMMON_PARENT_GEOMETRY_AND_MIXED_CHILDREN.md),
+Theorem 2.1. Its parameters are $\beta=1/8$ and $a_{\rm parent}=24/5$;
+the latter is unrelated to the terminal reading $a(W)$. That bijection includes its $\Lambda=0$ branch; Lemma 2.2 supplies the
+complete original-world realization on the pole-free source chart.
+
+For Sections 32–38 use the following local aliases for exactly the
+polynomials and map of Definition 2.1 and Definition 19.1:
+
+$$
+\begin{gathered}
+X=\mathcal J,\quad N=\mathcal N,\quad K=S,\quad D=\widehat D,\quad
+C_i=\widehat C_i\ (0\le i\le4),\quad B_i=\widehat B_i\ (i=5,6,7),\\
+(N_p,N_v,N_a,N_m)=(P_p,P_v,P_a,P_m),\quad H=bD,\quad
+A=(p,v)=\mathcal R.
+\end{gathered}
+\tag{31.1}
+$$
+
+Thus $D$ is a scalar source denominator, not the critical-value set
+$D_{\rm crit}$ of (23.1). The polynomial $N$ in this correspondence is
+not the whole-world neighborhood $\mathcal N_{\rm f}$ below. The source
+box $\mathcal B_{\rm f}$ and fixed-response chart below are new local
+domains; neither is the record rectangle $\mathcal U$ of Definition 12.1
+or the record neighborhood $\mathcal V$ of Definition 24.1. In all charts
+$\Lambda$ remains the scalar coefficient of $\epsilon$ in (19.1).
+
+The correspondence includes the same entire gain, drift and responses:
+
+$$
+W(r,b)\text{ is Definition 2.1's complete world},\qquad
+(p,v,a,m)=(N_p,N_v,N_a,N_m)/H.
+\tag{31.2}
+$$
+
+In particular the regular-source identities are
+
+$$
+j=X/b,\quad n=N/b,\quad
+\Lambda=2D/(5TUXN),\qquad \epsilon=-3KXN/D.
+\tag{31.3}
+$$
+
+The fold arithmetic uses Definition 2.1's displayed factored expressions
+with the aliases and assignment order specified here. For reproducibility
+compute $X=b\cdot b+(r-r\cdot r)$, then $N=X+rb$, then $T,U,K,D$,
+then $C_0,C_1,C_2,C_3,C_4,B_5,B_6,B_7,H,N_p,N_v,N_a,N_m$.
+This specifies the interval expression as well as its exact polynomial.
+The first five rows, entire gain, and four literal response meanings are
+already proved by Lemma 2.2. Only $b,D$ and the positive parent traces
+are divided by; no gain sample, leading coefficient, root difference or
+drift is cancelled.
+
+For the J-incidence arithmetic in Section 40 use a second expression
+for the same rational responses, denoted $R_p=p,R_v=v,R_a=a,R_m=m$.
+In the displayed order set
+
+$$
+\begin{gathered}
+c_{\rm src}=r(1-r)/b,\quad j=b+c_{\rm src},\quad n=j+r,\quad
+T=1+b,\quad U=1+2b,\\
+\Lambda=1+6/T+1/U-4/j-4/n,\quad B_{\rm par}=6/T-2/U,\quad
+\epsilon=-\frac{24}{5}(b-1/8)B_{\rm par}/\Lambda,\\
+z_0=-24-\epsilon,\quad z_1=-\epsilon/j,\quad
+z_2=(27/5-\epsilon)/T,\quad z_3=-\epsilon/n,\quad d=24+\epsilon,\\
+t_5=-4z_0+15z_1-20z_2+10z_3,\quad
+t_6=-10z_0+36z_1-45z_2+20z_3,\\
+t_7=-20z_0+70z_1-84z_2+35z_3,\\
+R_p=d+(U+n)t_5,\quad R_v=d+(2U+n)t_6,\\
+R_a=d+(T+2j+4r)t_7,\quad R_m=d+(3U+2n)t_7.
+\end{gathered}
+\tag{31.4}
+$$
+
+Here $z_i=g(i)$ are exactly (19.2), and $t_i=g(i)$ by Lemma 2.2's
+fixed-node interpolation rows. Hence (31.4) and (31.1)–(31.3) are the
+same complete-world chart wherever $\Lambda\ne0$, rather than merely
+numerically matching response lists. This second expression fixes the
+arithmetic order for the seven-variable interval proof. The zero-safe
+parent itself is still $F_{\rm par}=0$: at $b\ne1/8$ it forces
+$\Lambda\ne0$; at $b=1/8,\Lambda\ne0$ it forces $\epsilon=0$; and at
+$b=1/8,\Lambda=0$ every real $\epsilon$ remains allowed with its own
+whole gain from (19.2). No chart assertion removes those exceptional
+worlds from any entire child.
+
+## 32. The determinant polynomial and an isolated algebraic source
+
+For $f=p,v$ define polynomial derivative numerators
+$$
+ U_{f,r}=H\partial_rN_f-N_f\partial_rH,\qquad
+ U_{f,b}=H\partial_bN_f-N_f\partial_bH.
+$$
+The bivariate determinant polynomial is specified without numerical
+interpolation by the finite coefficient formula
+$$
+ \mathscr K(r,b)=U_{p,r}U_{v,b}-U_{p,b}U_{v,r}.
+ \tag{32.1}
+$$
+It satisfies $\det DA=\mathscr K/H^4$. At $b=1$ set
+$$
+ Q(r)=13r^4-39r^3+24r^2+3r-11.
+$$
+The explicit degree-fifteen critical polynomial is
+$$
+ \begin{aligned}
+ \Phi_{\rm f}(r)={}&1335360r^{15}-16024320r^{14}+91908080r^{13}
+ -330185604r^{12}+798510927r^{11}\\
+ &-1292187068r^{10}+1284776451r^9-476294549r^8
+ -610032429r^7+1012598771r^6\\
+ &-495508869r^5-152421889r^4+265749570r^3
+ -59836247r^2-33422962r+10386802.
+ \end{aligned}
+ \tag{32.2}
+$$
+Exact polynomial expansion and cancellation give
+$$
+ D(r,1)=5Q(r),\qquad
+ \mathscr K(r,1)=-225Q(r)\Phi_{\rm f}(r),\qquad
+ \det DA(r,1)=-\frac{9\Phi_{\rm f}(r)}{25Q(r)^3}.
+ \tag{32.3}
+$$
+These formulas specify both the determinant orientation, using input
+order $(r,b)$ and output order $(p,v)$, and the polynomial scale.
+Zeros of $Q$ are poles of this chart and cannot be accepted as roots
+of its response determinant. No assertion is made that $\Phi_{\rm f}$ is the
+minimal polynomial of the selected root.
+
+Let
+$$
+ I_0=\left(\frac{31379336181}{10^{11}},
+                \frac{31379336182}{10^{11}}\right).
+$$
+There is exactly one zero $\alpha_{\rm f}$ of $\Phi_{\rm f}$ in $I_0$.
+More narrowly, put
+$$
+ L_{\rm f}=313793361813579284608955011483891013811213350270349554597836.
+$$
+Then the exact algebraic specification is
+$$
+ \Phi_{\rm f}(\alpha_{\rm f})=0,\qquad
+ \frac{L_{\rm f}}{10^{60}}<\alpha_{\rm f}<\frac{L_{\rm f}+1}{10^{60}}.
+ \tag{32.4}
+$$
+
+**Proof of isolation.** Rational Horner evaluation gives
+$\Phi_{\rm f}(31379336181/10^{11})>0$ and
+$\Phi_{\rm f}(31379336182/10^{11})<0$. On their closed interval,
+outward rational interval evaluation of the derivative gives
+$$
+ -21289867<\Phi_{\rm f}'(r)<-21289866.
+ \tag{32.5}
+$$
+The intermediate value theorem and strict decrease prove existence and
+uniqueness. Exact rational evaluation also gives
+$\Phi_{\rm f}(L_{\rm f}/10^{60})>0>\Phi_{\rm f}((L_{\rm f}+1)/10^{60})$, proving (32.4).
+These tests are on the printed polynomial, rather than on an approximate
+root's residual. ∎
+
+Define exact algebraic values
+$$
+ (p_{\rm f},v_{\rm f},a_{\rm f},m_{\rm f})=(p,v,a,m)(\alpha_{\rm f},1),\qquad d_{\rm f}=d(\alpha_{\rm f},1).
+ \tag{32.6}
+$$
+The following strict rational enclosures hold:
+$$
+ \begin{array}{c|cc}
+ \text{quantity}&\text{lower numerator}&\text{upper numerator}\\\hline
+ p_{\rm f}&82766464368943&82766464368944\\
+ v_{\rm f}&444178429468760&444178429468761\\
+ a_{\rm f}&815368979291905&815368979291906\\
+ m_{\rm f}&1695320121161200&1695320121161201\\
+ d_{\rm f}&30226790237556&30226790237557.
+ \end{array}
+ \tag{32.7}
+$$
+Every entry is divided by $10^{12}$. In particular $p_{\rm f}\ne24$.
+Decimal illustrations, carrying no extra exactness claim, are
+$$
+ \alpha_{\rm f}\approx0.3137933618135793,\quad
+ p_{\rm f}\approx82.76646436894354,\quad
+ v_{\rm f}\approx444.1784294687601.
+$$
+
+## 33. Uniform exact differential inequalities
+
+Put
+$$
+ r_{\rm f,c}=313793361815/10^{12},\qquad
+ \mathcal B_{\rm f}=[r_{\rm f,c}-10^{-6},r_{\rm f,c}+10^{-6}]\times[1-10^{-6},1+10^{-6}].
+ \tag{33.1}
+$$
+The closed box lies in the strict source domain and contains
+$(\alpha_{\rm f},1)$ in its interior. For a function $f$, write
+$$
+ \begin{gathered}
+ t=-p_r/p_b,\qquad \mathcal{L}f=f_r+tf_b,\\
+ T_f=f_{rr}+2tf_{rb}+t^2f_{bb},\\
+ \kappa=T_v-(v_b/p_b)T_p,\\
+ \zeta=\{v_{rb}+tv_{bb}-(v_b/p_b)(p_{rb}+tp_{bb})\}/p_b.
+ \end{gathered}
+ \tag{33.2}
+$$
+Here $T_f$ denotes a quadratic form with the value of $t$ at the
+point; it does not differentiate $t$. All the following inequalities
+hold throughout the whole box, not just at its center:
+
+| Quantity | Strict lower bound | Strict upper bound |
+| --- | ---: | ---: |
+| $D$ | $-44$ | $-43$ |
+| $H$ | $-44$ | $-43$ |
+| $d$ | $30$ | $31$ |
+| $p$ | $82$ | $83$ |
+| $v$ | $444$ | $445$ |
+| $p_r$ | $7$ | $8$ |
+| $p_b$ | $96$ | $97$ |
+| $v_r$ | $44$ | $46$ |
+| $v_b$ | $553$ | $557$ |
+| $t$ | $-82/1000$ | $-79/1000$ |
+| $\kappa$ | $111$ | $130$ |
+| $\mathcal{L}a$ | $556$ | $561$ |
+| $\mathcal{L}m$ | $133$ | $141$ |
+| $\zeta$ | $-1$ | $0$ |
+
+**Exact-arithmetic specification of the bounds.** The following finite
+integer computation proves the table and makes its precision explicit.
+Set $\sigma_{\rm f}=10^{80}$ and encode a rational $q$ by
+$$
+ [\lfloor \sigma_{\rm f}q\rfloor,\lceil \sigma_{\rm f}q\rceil]/\sigma_{\rm f}.
+$$
+Addition and negation act on endpoints exactly. For multiplication and
+reciprocal use
+$$
+ \begin{aligned}
+ ([l,u]/\sigma_{\rm f})([v,w]/\sigma_{\rm f})&\subseteq
+ [\lfloor\min(lv,lw,uv,uw)/\sigma_{\rm f}\rfloor,
+   \lceil\max(lv,lw,uv,uw)/\sigma_{\rm f}\rceil]/\sigma_{\rm f},\\
+ ([l,u]/\sigma_{\rm f})^{-1}&\subseteq
+ [\lfloor \sigma_{\rm f}^2/u\rfloor,\lceil \sigma_{\rm f}^2/l\rceil]/\sigma_{\rm f}\quad(lu>0).
+ \end{aligned}
+ \tag{33.3}
+$$
+Attach to each scalar its two first derivatives and symmetric two by two
+Hessian. Independent $r,b$ carry the respective unit first derivatives
+and zero Hessians; constants carry zero derivatives. Use
+$$
+ \begin{aligned}
+ (xy)_i&=x_i y+x y_i,\\
+ (xy)_{ij}&=x_{ij}y+x_i y_j+x_j y_i+x y_{ij},\\
+ (x^{-1})_i&=-x_i(x^{-1})^2,\\
+ (x^{-1})_{ij}&=2x_i x_j(x^{-1})^3-x_{ij}(x^{-1})^2.
+ \end{aligned}
+ \tag{33.4}
+$$
+All operations on the right are interval operations (33.3), including
+repeated multiplications. Evaluate (31.1) in displayed factored order,
+left to right within unparenthesized sums and products; use $r-r^2$
+as $r-r\cdot r$. Form (31.2) by a reciprocal followed by multiplication.
+Then evaluate (33.2), with $t^2=t\cdot t$. Endpoint comparisons give the
+strict bounds in the table. For scale, the unrounded enclosures for
+$\kappa,\mathcal{L}a,\mathcal{L}m$ lie respectively inside the rational intervals
+$$
+ (111214/1000,129280/1000),\quad
+ (556915/1000,560340/1000),\quad
+ (133004/1000,140491/1000).
+ \tag{33.5}
+$$
+The coarse integer table follows directly from these interval operations;
+it is not obtained by combining only its rounded derivative rows.
+Apply the same circuit to the root bracket (32.4) with $b=1$ for (32.7),
+and apply Horner's rule to $\Phi_{\rm f}'$ on $\overline I_0$ for (32.5).
+Thus the specification involves only integer arithmetic, ordered
+comparisons and integer floor or ceiling division. Each operation is an
+outer inclusion, so the table applies at every real point of the box.
+
+In particular $D,H\ne0$ throughout $\mathcal B_{\rm f}$, justifying every chart
+and response division. Positivity of $b,X,N,T,U$ justifies (31.3).
+
+**Theorem 33.1 (Rank and null curvature).** At $(\alpha_{\rm f},1)$,
+$$
+ \det DA=0,\qquad \operatorname{rank}DA=1,
+ \qquad 96<p_b<97.
+ \tag{33.6}
+$$
+With the specified normalization
+$$
+ k=(1,-p_r/p_b),\qquad \lambda=(-v_b/p_b,1),
+$$
+we have
+$$
+ DA\,k=0,\qquad \lambda DA=0,\qquad
+ 111<\lambda D^2A[k,k]=\kappa(\alpha_{\rm f},1)<130.
+ \tag{33.7}
+$$
+Consequently the weaker bounds $110<\kappa<131$ also hold.
+
+**Proof.** Equation (32.3) and $\Phi_{\rm f}(\alpha_{\rm f})=0$ give zero determinant.
+The strict $p_b$ bound gives rank at least one, hence exactly one.
+The displayed kernel and cokernel vectors then follow by substitution.
+Their second derivative contraction is precisely (33.2). The interval
+table proves its positive lower and upper bounds. This curvature uses
+$dr=1$; rescaling the null vector would rescale it quadratically. ∎
+
+The values
+$\kappa(\alpha_{\rm f},1)\approx120.212450343622$,
+$\mathcal{L}a(\alpha_{\rm f},1)\approx558.633655878502$, and
+$\mathcal{L}m(\alpha_{\rm f},1)\approx136.761630337034$
+are consistent illustrations of the exact inequalities, not their proof.
+
+## 34. A quantitative fixed-response chart
+
+Let
+$$
+ \eta=10^{-6},\qquad R=1/(2\cdot10^6),\qquad
+ I_p=(p_{\rm f}-\eta,p_{\rm f}+\eta),\qquad I_r=(\alpha_{\rm f}-R,\alpha_{\rm f}+R).
+ \tag{34.1}
+$$
+For every $(q,r)\in I_p\times I_r$ there is a unique
+$\beta_{\rm f}(q,r)\in(1-10^{-6},1+10^{-6})$ satisfying
+$$
+ p(r,\beta_{\rm f}(q,r))=q.
+ \tag{34.2}
+$$
+The function $\beta_{\rm f}$ is real analytic. Its two-variable notation
+distinguishes it from the fixed parent parameter $\beta=1/8$.
+
+**Proof.** At $b=1$, integration of $7<p_r<8$ gives
+$|p(r,1)-p_{\rm f}|<8R=4\cdot10^{-6}$. Integrating $p_b>96$ from
+$b=1$ to either horizontal box edge shows that the corresponding
+endpoint responses lie below $p_{\rm f}-92\cdot10^{-6}$ and above
+$p_{\rm f}+92\cdot10^{-6}$. They bracket all of $I_p$.
+Strict increase in $b$, the intermediate value theorem and the
+analytic implicit function theorem give existence, uniqueness and
+analyticity. The relevant segments stay in $\mathcal B_{\rm f}$; (32.4) and (33.1)
+put the whole closed $r$-strip inside its vertical extent. ∎
+
+Write
+$$
+ h(q,r)=v(r,\beta_{\rm f}(q,r)),\quad
+ a_q(r)=a(r,\beta_{\rm f}(q,r)),\quad m_q(r)=m(r,\beta_{\rm f}(q,r)).
+$$
+Implicit differentiation of (34.2) gives
+$$
+ \beta_{\rm f}_r=-p_r/p_b=t,\qquad \beta_{\rm f}_q=1/p_b,
+ \qquad h_r=v_r-v_b p_r/p_b=-\det DA/p_b.
+$$
+A second differentiation at fixed $q$, using
+$\beta_{\rm f}_{rr}=-T_p/p_b$, gives
+$$
+ h_{rr}=\kappa,\qquad h_{rq}=\zeta,
+ \qquad a_q'(r)=\mathcal{L}a,\qquad m_q'(r)=\mathcal{L}m.
+ \tag{34.3}
+$$
+Consequently the exact bounds
+$$
+ 110<h_{rr}<131,\quad -1<h_{rq}<0,\quad
+ 556<a_q'<561,\quad133<m_q'<141
+ \tag{34.4}
+$$
+hold on this whole chart. Also
+$h_r(p_{\rm f},\alpha_{\rm f})=0$ by (32.3).
+
+For each $q\in I_p$, there is a unique critical point
+$\chi_{\rm f}(q)\in I_r$ of $r\mapsto h(q,r)$. It is analytic and
+$$
+ \chi_{\rm f}(p_{\rm f})=\alpha_{\rm f},\qquad
+ |\chi_{\rm f}(q)-\alpha_{\rm f}|\le|q-p_{\rm f}|/110<\eta/110<R/2.
+ \tag{34.5}
+$$
+The first comparison in (34.5) is strict when $q\ne p_{\rm f}$. Indeed $|h_r(q,\alpha_{\rm f})|\le|q-p_{\rm f}|$, while increasing $r$ changes
+$h_r$ at rate greater than 110. Its signs at the two ends of $I_r$
+are opposite because $110R>\eta$. Strict increase gives a unique
+zero, the implicit function theorem gives analyticity, and integration
+of the derivative lower bound gives (34.5). This also proves
+$0<\chi_{\rm f}'(q)<1/110$.
+
+## 35. The actual fold and its inverse branches
+
+Put
+$$
+ h_0(q)=h(q,\chi_{\rm f}(q)),\qquad
+ w(q,r)=\int_0^1(1-u)h_{rr}(q,\chi_{\rm f}(q)+u(r-\chi_{\rm f}(q)))\,du.
+$$
+Taylor's integral identity gives
+$$
+ h(q,r)-h_0(q)=(r-\chi_{\rm f}(q))^2w(q,r),\qquad
+ 55<w(q,r)<131/2.
+ \tag{35.1}
+$$
+Define a source coordinate
+$$
+ z(q,r)=(r-\chi_{\rm f}(q))\sqrt{w(q,r)}.
+ \tag{35.2}
+$$
+It is real analytic, and $z_r>0$. Away from the critical point,
+$2zz_r=h_r$, with $z$ and $h_r$ of the same sign; at the
+critical point $z_r=\sqrt{h_{rr}/2}>0$. Therefore
+$(q,r)\mapsto(q,z)$ is an analytic coordinate change onto its image.
+The target change $(q,v)\mapsto(q,v-h_0(q))$ is also analytic and
+invertible. Together with (34.2) these give the **actual** response map
+in the form
+$$
+ (q,z)\longmapsto(q,z^2).
+ \tag{35.3}
+$$
+This proves a nondegenerate fold of the given whole-world source map;
+no realization hypothesis about a generic fold is being inserted.
+
+For clarity, let $\mathcal N_{\rm f}$ be the set of whole worlds
+$$
+ \mathcal N_{\rm f}=\{W(r,\beta_{\rm f}(q,r)):q\in I_p,\ r\in I_r\}.
+ \tag{35.4}
+$$
+It is an open parent neighborhood. Distinct source points give distinct
+whole worlds because their matrices retain both $r$ and $b$.
+Conversely the zero-safe parent equations and $D\ne0$ show that this
+chart has the entire whole-world lift of every source in its image.
+
+The fixed-response functions extend to the closed $r$-interval by the
+same endpoint-bracketing and strict derivative inequalities of Section 34.
+At either $r$-endpoint, (34.5)–(35.1) give
+$$
+ h(q,r)-h_0(q)>55(R/2)^2
+ =\frac{55}{16\cdot10^{12}}>2\cdot10^{-12}.
+ \tag{35.5}
+$$
+Thus, for every $q\in I_p$ and
+$0<\nu<2\cdot10^{-12}$, the base $(q,h_0(q)+\nu)$ has exactly
+two worlds in $\mathcal N_{\rm f}$. They are defined without a numerical
+solver by the two inverse branches
+$$
+ \begin{aligned}
+ r_\pm(q,\nu)&=z_q^{-1}(\pm\sqrt\nu),\\
+ b_\pm(q,\nu)&=\beta_{\rm f}(q,r_\pm(q,\nu)),\\
+ W_\pm(q,\nu)&=W(r_\pm(q,\nu),b_\pm(q,\nu)),
+ \end{aligned}
+ \tag{35.6}
+$$
+where $z_q$ is the strictly increasing function (35.2). Both branches
+are analytic for $\nu>0$; in the coordinate $s=\sqrt\nu$ they
+extend analytically through the common fold world. At $\nu=0$ the
+local child has one world. At negative $\nu$ it has none. These are
+counts in $\mathcal N_{\rm f}$ only. The entire child may contain additional
+worlds, including sources on other charts or on the singular parent
+branch of (19.1).
+
+## 36. Two exact worlds at the specified displacement
+
+Fix
+$$
+ q=p_{\rm f},\qquad \nu=10^{-12},\qquad
+ \widehat v_{\rm f}=v_{\rm f}+10^{-12},\qquad W_\pm=W_\pm(p_{\rm f},10^{-12}).
+ \tag{36.1}
+$$
+Because $\chi_{\rm f}(p_{\rm f})=\alpha_{\rm f}$ and $h_0(p_{\rm f})=v_{\rm f}$, (35.6) places both
+worlds in the exact same acquired child $C(p_{\rm f},\widehat v_{\rm f})$.
+They are distinct and all source guards remain strict.
+
+More precisely, put $s_-=\alpha_{\rm f}-r_->0$ and
+$s_+=r_+-\alpha_{\rm f}>0$. From (34.4) and Taylor's identity,
+$$
+ 55s_\pm^2<10^{-12}<(131/2)s_\pm^2.
+$$
+The exact rational comparisons
+$$
+ (131/2)(123/10^9)^2<10^{-12}
+ <55(135/10^9)^2
+$$
+therefore give
+$$
+ 123/10^9<s_-,s_+<135/10^9.
+ \tag{36.2}
+$$
+Integration of $-82/1000<\beta_{\rm f}_r<-79/1000$ also gives
+$$
+ \begin{aligned}
+ 1+9717/10^{12}&<b_-<1+11070/10^{12},\\
+ 1-11070/10^{12}&<b_+<1-9717/10^{12}.
+ \end{aligned}
+ \tag{36.3}
+$$
+In particular the sources are unequal and strictly legal.
+
+These exact worlds are algebraic, as well as analytic constructions.
+For example $r_-$ is the unique real $r\in I_r$, $r<\alpha_{\rm f}$,
+for which some $b\in(1-10^{-6},1+10^{-6})$ satisfies
+$$
+ N_p(r,b)-p_{\rm f}H(r,b)=0,\qquad
+ N_v(r,b)-\widehat v_{\rm f}H(r,b)=0;
+ \tag{36.4}
+$$
+use $r>\alpha_{\rm f}$ for $r_+$. Each sign selects exactly one source by
+Section 35. The algebraic coefficient field is the real algebraic field
+containing $\alpha_{\rm f},p_{\rm f},v_{\rm f}$. A singleton semialgebraic set over that
+field has algebraic coordinates: projection and real quantifier
+elimination reduce a singleton to polynomial sign conditions; away from
+all polynomial roots such signs are locally constant and cannot isolate
+a point. This standard real-algebraic argument proves algebraicity of
+$r_\pm,b_\pm$, hence of their drifts and gain coefficients. The strict
+pole bounds show that clearing denominators in (36.4) introduces no extra
+world in the specified box.
+
+Here are the whole gains and drifts explicitly. For each sign evaluate
+all polynomials (31.1) at its single source $(r_\pm,b_\pm)$, and denote
+the evaluations by a sign subscript. Set
+$$
+ \begin{aligned}
+ d_\pm&=-C_{0,\pm}/D_\pm,\\
+ g_\pm(s)&=D_\pm^{-1}\bigg[
+ -\frac{C_{0,\pm}}6(s-1)(s-2)(s-3)
+ +\frac{C_{1,\pm}}2s(s-2)(s-3)\\
+ &\hspace{28mm}-\frac{C_{2,\pm}}2s(s-1)(s-3)
+ +\frac{C_{3,\pm}}6s(s-1)(s-2)\bigg].
+ \end{aligned}
+ \tag{36.5}
+$$
+This is one complete polynomial for each world, with its own one fixed
+real drift; no per-clock parameter is chosen. The gains have degree at
+most three and cannot vanish identically by the unequal first two rows.
+In fact $30<d_\pm<31$, but this property of the constructed worlds
+does not restrict the original drift domain.
+
+For either sign, all seven acquired readings and both alternatives are
+as follows. Every entry in the gain column belongs to the same (36.5).
+
+| Clock | Action | Gain sample | Trace | Reading |
+| --- | --- | --- | --- | --- |
+| 0 | initial | $C_{0,\pm}/D_\pm$ | $1$ | $0$ |
+| 1 | $J$ | $C_{1,\pm}/D_\pm$ | $X_\pm/b_\pm$ | $24$ |
+| 2 | $M$ | $C_{2,\pm}/D_\pm$ | $T_\pm$ | $147/5$ |
+| 3 | $J$ | $C_{3,\pm}/D_\pm$ | $N_\pm/b_\pm$ | $24$ |
+| 4 | $M$ | $C_{4,\pm}/D_\pm$ | $U_\pm$ | $18$ |
+| 5 | $M$ | $B_{5,\pm}/D_\pm$ | $U_\pm+N_\pm/b_\pm$ | $p_{\rm f}$ |
+| 6 | $M$ | $B_{6,\pm}/D_\pm$ | $2U_\pm+N_\pm/b_\pm$ | $\widehat v_{\rm f}$ |
+| 7 | alternative $J$ | $B_{7,\pm}/D_\pm$ | $T_\pm+2X_\pm/b_\pm+4r_\pm$ | $a_\pm=N_{a,\pm}/H_\pm$ |
+| 7 | alternative $M$ | $B_{7,\pm}/D_\pm$ | $3U_\pm+2N_\pm/b_\pm$ | $m_\pm=N_{m,\pm}/H_\pm$ |
+
+The readings follow from Lemma 2.2, (34.2), and the exact branch
+definitions. Equality of the acquired responses is not inferred from
+overlapping numerical intervals.
+
+## 37. Terminal separation and the outside-companion obligation
+
+**Theorem 37.1.** At the base (36.1), the exact terminal differences satisfy
+$$
+ \frac{136776}{10^9}<a_+-a_-<\frac{151470}{10^9},\qquad
+ \frac{32718}{10^9}<m_+-m_-<\frac{38070}{10^9}.
+ \tag{37.1}
+$$
+In particular both terminal readings are distinct between the two local
+worlds.
+
+**Proof.** Equation (36.2) gives
+$$
+ 246/10^9<r_+-r_-<270/10^9.
+$$
+Integrating the two terminal derivative bounds in (34.4) along the single
+fixed-$p_{\rm f}$ curve gives
+$$
+ 556(r_+-r_-)<a_+-a_-<561(r_+-r_-),
+$$
+and the analogous inequalities with 133 and 141 for $m$.
+Multiplication gives exactly (37.1). ∎
+
+For orientation only, the two sources and terminal responses are
+approximately
+$$
+ \begin{array}{c|cc}
+ &-&+\\\hline
+ r&0.31379323282826445&0.31379349079889706\\
+ b&1.0000000103951462&0.9999999896048728\\
+ a&815.3689072363648&815.3690513474424\\
+ m&1695.3201035209611&1695.3201388014454.
+ \end{array}
+$$
+The rational inequalities and exact definitions, not these rounded
+illustrations, establish existence, equality of acquired readings and
+terminal separation.
+
+**Corollary 37.2 (Precise outside requirement).** For any base with two
+local worlds as in Section 35, every distinct terminal collision pair in
+the entire child, for either $J$ or $M$, has at least one member
+outside $\mathcal N_{\rm f}$. If both pairs in Definition 1.2 exist at (36.1), the entire
+child has at least three worlds.
+
+**Proof.** For a fixed $q$, each of $a_q,m_q$ is strictly increasing
+on $I_r$ by (34.4). Thus two distinct worlds of $\mathcal N_{\rm f}$ with
+the same acquired base cannot collide for either terminal action. Any
+collision pair in the entire child must therefore have a member outside
+$\mathcal N_{\rm f}$. At (36.1), the two local worlds already belong to that
+child, so even one such pair forces a third world. ∎
+
+This is a necessary condition, not an existence assertion. A collision
+pair could consist of one local and one outside world, or of two outside
+worlds. Neither local world is individually guaranteed a companion.
+Independent $J$ and $M$ pairs can share an outside member, use
+different outside members, or have other allowed overlaps. The argument
+imposes no equality between their common terminal values and does not
+exclude all outside realizations.
+
+## 38. Global and exceptional-source boundaries
+
+Within $\mathcal N_{\rm f}$ the counts are zero below the fold, one at
+the fold, and two above it, for the target strip of Section 35. This proves only a lower bound of two
+for the entire child at (36.1). No upper bound on that entire child is
+established here. The two-world statement of Theorem 28.1 for $\Omega_*$ cannot be transferred to these bases without proving
+component membership and the required continuation.
+
+Boundary properness, where available, is relative to an explicitly
+excluded escape barrier. It can prevent a lift from escaping over a
+compact subset of that region. It does not construct a path from a seed,
+prove that two specified bases share a regular component, or supply
+missing terminal collision worlds. The fold value itself is critical,
+so a covering theorem for regular values does not include it. No path to
+the previously studied M-collision seed component is assumed or proved.
+
+The entire child still quantifies over all strict original sources,
+including unbounded off-diagonal parameters, all regular charts and the
+singular branch in Section 31. Sampled gain zeros, degree drops, repeated
+roots and zero drift remain legal throughout the original problem.
+Our construction divides by none of them. Positivity and pole separation
+justify only the explicit source chart in use; they do not delete
+exceptional worlds elsewhere. Original strict boundaries $r=0,1$
+and $b=0$ remain excluded as before, without imposing a positive
+uniform distance from them on all worlds.
+
+The fold is specified by the exact
+polynomial (32.2), root (32.4), base enclosures (32.7), rank (33.6) and curvature
+(33.7). The terminal separation at the specified positive displacement is (37.1). The degree-fifteen polynomial is a critical
+polynomial on the slice $b=1$, not a claim about a minimal polynomial
+or the entire critical set. Nothing here solves the unrestricted
+independent-pair existence question of Definition 1.2.
+
+
+## 39. Mathematical attribution for the two response geometries
+
+The model, full-parent converse and literal response circuit are reused
+from Sections 1–2 and 19 and
+[Common Parent Geometry](FIB_COMMON_PARENT_GEOMETRY_AND_MIXED_CHILDREN.md),
+Theorem 2.1. The actual-source fold geometry is the model-specific result
+of *An actual source fold with separated terminal responses*; Sections
+32–38 retain its exact determinant, isolated algebraic source, full-box
+differential inequalities, actual inverse branches and terminal bounds.
+The four-world J geometry is the model-specific result of *A four-world
+acquired child with a genuine terminal-J collision*, retained in Sections
+40–41 with its exact incidence and interval proof.
+
+Fixed-node interpolation and finite differences are classical; see
+Berrut and Trefethen, *Barycentric Lagrange Interpolation*, SIAM Review 46
+(2004), 501–517. The contraction, intermediate, analytic inverse and
+implicit function theorems, Taylor's integral formula and interval
+inclusion arithmetic are standard. The analytic fold normal form belongs
+to Whitney's theory of plane-to-plane mappings; (35.1)–(35.3) also give
+the required form directly for this map. Real-algebraic projection and
+singleton algebraicity follow from real quantifier elimination; see
+Basu, Pollack and Roy, *Algorithms in Real Algebraic Geometry*. Neither the general fold theorem nor the general contraction
+principle is an additional model-specific result.
+
+## 40. Exact four-world J incidence
+
+For $x=(x_1,\ldots,x_7)$ set
+
+$$
+A=(1/4,x_1),\quad B=(x_2,x_3),\quad
+C=(x_4,x_5),\quad D=(x_6,x_7),
+$$
+
+where each ordered pair denotes $(r,b)$. These are source-point labels
+local to this section: $A$ is not the fold map, and $D$ is not the scalar
+denominator of (31.1). The center $c_{\rm J}$, box $X_{\rm J}$ and
+preconditioner $L_{\rm J}$ below are seven-dimensional; they are unrelated
+to the fold root-bracket integer $L_{\rm f}$ or the source entry $c_{\rm src}$. Define the rational map
+
+$$
+F_{\rm J}(x)=\begin{pmatrix}
+R_p(A)-R_p(B)\\ R_v(A)-R_v(B)\\ R_a(A)-R_a(B)\\
+R_p(A)-R_p(C)\\ R_v(A)-R_v(C)\\
+R_p(A)-R_p(D)\\ R_v(A)-R_v(D)
+\end{pmatrix}.                                                   \tag{40.1}
+$$
+
+Let $\rho_{\rm J}=10^{-11}$, and let $X_{\rm J}=\prod_{i=1}^7[c_i-\rho_{\rm J},c_i+\rho_{\rm J}]$,
+where $c_{\rm J}=(c_1,\ldots,c_7)$ and the following finite decimals
+are exact rationals:
+
+$$
+\begin{aligned}
+c_1&=0.114833501729356886661759878705,\\
+c_2&=0.761645896941701624224642579302,\\
+c_3&=0.311543071675176747899101662302,\\
+c_4&=0.861370986265965317403298544212,\\
+c_5&=0.117268362691626034293752321772,\\
+c_6&=0.243164373867715015960168619826,\\
+c_7&=0.217520896522692033906895429321,\\
+\end{aligned}                                                    \tag{40.2}
+$$
+
+Define the exact rational matrix
+
+$$
+L_{\rm J}=\begin{pmatrix}
+0.005593917741 & -0.000569413986 & -0.000371337599 & 0.000000000000 & 0.000000000000 & 0.000000000000 & 0.000000000000\\
+-0.035864955659 & 0.013565514774 & -0.002123235634 & 0.000000000000 & 0.000000000000 & 0.000000000000 & 0.000000000000\\
+0.023656485976 & -0.010018941343 & 0.001312265481 & 0.000000000000 & 0.000000000000 & 0.000000000000 & 0.000000000000\\
+0.007036346633 & -0.000716241170 & -0.000467089469 & -0.018406315740 & 0.007518312548 & 0.000000000000 & 0.000000000000\\
+0.004915382645 & -0.000500344795 & -0.000326294821 & -0.008343876383 & 0.000299728792 & 0.000000000000 & 0.000000000000\\
+-0.007874252954 & 0.000801533017 & 0.000522711688 & 0.000000000000 & 0.000000000000 & 0.020280074021 & -0.008064625967\\
+-0.005203066005 & 0.000529628552 & 0.000345391929 & 0.000000000000 & 0.000000000000 & 0.014078333191 & -0.006072527092
+\end{pmatrix}.                                                   \tag{40.3}
+$$
+
+**Proposition 40.1.** There is a unique $x_*\in X_{\rm J}$ satisfying $F_{\rm J}(x_*)=0$.
+The four associated worlds $W_A,W_B,W_C,W_D$ are distinct legal worlds in
+one entire $C(p_{\rm J},v_{\rm J})$, where
+
+$$
+\frac{2293}{100}<p_{\rm J}<\frac{2294}{100},\qquad
+\frac{12780}{100}<v_{\rm J}<\frac{12781}{100}.                           \tag{40.4}
+$$
+
+They satisfy
+
+$$
+a(W_A)=a(W_B),\qquad
+\frac{44766}{100}<a(W_A)<\frac{44767}{100},                       \tag{40.5}
+$$
+
+and their four terminal-M readings are pairwise distinct, with order
+$m(W_D)<m(W_B)<m(W_C)<m(W_A)$.
+In particular terminal J is not injective on all acquired children with
+$p\ne24$.
+
+**Proof.** All arithmetic bounds used here are specified over rational
+intervals. This also gives a finite reproduction of the existence proof.
+For a rational interval $I=[l,u]$, let
+
+$$
+\operatorname{rnd}_{36}(I)=10^{-36}
+ [\lfloor10^{36}l\rfloor,\lceil10^{36}u\rceil].                  \tag{40.6}
+$$
+
+After each addition, multiplication or reciprocal take $\operatorname{rnd}_{36}$ of
+the usual enclosing interval. Negation is exact. Products use the minimum
+and maximum of their four endpoint products. Reciprocals use
+$[1/u,1/l]$ and are used only when $0\notin I$. Division is multiplication
+by this reciprocal. Constants and input intervals are their exact
+rational intervals. For derivatives use seven-component interval jets:
+
+$$
+\begin{aligned}
+(v,q)+(w,t)&=(v+w,q+t),\\
+(v,q)(w,t)&=(vw,qw+vt),\\
+(v,q)^{-1}&=(v^{-1},-qv^{-1}v^{-1}).
+\end{aligned}                                                    \tag{40.7}
+$$
+
+Each operation on the right is the rounded interval operation just
+defined. Each variable $x_i$ begins with the $i$th unit derivative;
+constants have zero derivatives. Evaluate (31.4) through $\epsilon$,
+then $z_0,z_1,z_2,z_3,d$,
+then $t_5,t_6,t_7$, then the responses in (31.4), in displayed order.
+Within a sum evaluate terms from left to right. Evaluate (40.1) in row
+order. These rules enclose the map and its true first derivatives
+throughout the box, by induction on the displayed arithmetic expressions.
+
+The resulting strict rational comparisons are as follows. In the first
+table, the $i$th bound is for
+$\sum_j\sup_{x\in X_{\rm J}}|(I-L_{\rm J}DF_{\rm J}(x))_{ij}|$; compute each matrix product in
+increasing summation index starting at zero.
+
+| Row | Strict rational upper bound |
+| --- | --- |
+| 1 | $32\cdot10^{-8}$ |
+| 2 | $30\cdot10^{-7}$ |
+| 3 | $21\cdot10^{-7}$ |
+| 4 | $51\cdot10^{-8}$ |
+| 5 | $31\cdot10^{-8}$ |
+| 6 | $62\cdot10^{-6}$ |
+| 7 | $46\cdot10^{-6}$ |
+
+Evaluating $L_{\rm J}F_{\rm J}(c_{\rm J})$ by the same operations gives
+
+$$
+\|L_{\rm J}F_{\rm J}(c_{\rm J})\|_\infty<10^{-20},\qquad
+\sup_{x\in X_{\rm J}}\|I-L_{\rm J}DF_{\rm J}(x)\|_\infty<10^{-4}.                       \tag{40.8}
+$$
+
+The following additional enclosing intervals are obtained by the same
+expressions on the entire box; every endpoint is an exact rational.
+Only the common $p,v$ bounds in (40.4) are needed from the first world.
+
+| World | $\Lambda$ | $d$ | $g(7)$ | $a$ | $m$ |
+| --- | --- | --- | --- | --- | --- |
+| $A$ | $(2.90,2.91)$ | $(24.06,24.07)$ | $(75.50,75.51)$ | $(447.66,447.67)$ | $(604.27,604.29)$ |
+| $B$ | $(-0.70,-0.69)$ | $(28.28,28.30)$ | $(68.22,68.24)$ | $(447.66,447.67)$ | $(586.46,586.48)$ |
+| $C$ | $(1.65,1.66)$ | $(24.08,24.09)$ | $(75.35,75.36)$ | $(539.05,539.07)$ | $(604.13,604.15)$ |
+| $D$ | $(-0.20,-0.19)$ | $(31.96,31.97)$ | $(78.70,78.71)$ | $(371.76,371.78)$ | $(576.49,576.52)$ |
+
+These tables are finite inequalities obtained from (31.4) and
+(40.2)–(40.7), not rounded root assertions. All source intervals satisfy
+$b>0$ and $0<r<1$. Hence $j,n,T,U>0$ before division. The listed
+$\Lambda$ bounds justify the remaining divisions. In particular the
+interval evaluations do not cross an unhandled pole.
+
+To derive existence from the comparisons, set $N_{\rm J}(x)=x-L_{\rm J}F_{\rm J}(x)$.
+The mean-value estimate on the convex box gives
+
+$$
+\|N_{\rm J}(x)-c_{\rm J}\|_\infty
+\le \|L_{\rm J}F_{\rm J}(c_{\rm J})\|_\infty+10^{-4}\|x-c_{\rm J}\|_\infty
+<10^{-20}+10^{-4}\rho_{\rm J}<\rho_{\rm J}.                                    \tag{40.9}
+$$
+
+Thus $N_{\rm J}$ maps $X_{\rm J}$ into its interior and is a contraction with constant
+less than $10^{-4}$. The classical contraction principle gives one
+unique fixed point $x_*\in X_{\rm J}$.
+The norm bound at $c_{\rm J}$ also makes $L_{\rm J}DF_{\rm J}(c_{\rm J})$ invertible by its Neumann
+series, so $L_{\rm J}$ is invertible. Therefore $N_{\rm J}(x_*)=x_*$ is equivalent to
+$F_{\rm J}(x_*)=0$; every zero of $F_{\rm J}$ in $X_{\rm J}$ is this fixed point.
+
+Equations (40.1) now give one shared acquired $p_{\rm J},v_{\rm J}$ for all four
+worlds and the terminal-J equality for $A,B$. The disjoint $r$ intervals
+in (40.2), together with $r_A=1/4$, make all four source matrices and
+complete triples distinct. The actual realization in Section 31 proves
+membership in the entire child; membership does not require that child
+to have only four worlds. The response bounds give (40.4)–(40.5) and the
+strict M ordering. In particular $p_{\rm J}\ne24$. This proves the
+proposition. $\square$
+
+**Corollary 40.2.** A local real analytic family of four-world incidences
+as in Proposition 40.1 exists when $r_A$ varies through an open interval
+containing $1/4$. Every member has $p\ne24$, a distinct-world J pair,
+and the same strict ordering of the four listed M responses.
+
+**Proof.** The responses are rational without poles in neighborhoods
+of the four source boxes. Inequality (40.8) implies that $D_xF_{\rm J}(x_*)$
+is invertible. Regard $r_A$ as an additional free parameter in (40.1).
+The classical analytic implicit-function theorem supplies the local
+family. All source, distinctness, $p\ne24$ and M-ordering inequalities
+are strict, so continuity preserves them on a smaller open interval.
+Each family member lifts by (31.4) to its own one entire gain and fixed
+drift. $\square$
+
+## 41. Four-world scope and the original independent pairs
+
+The record rectangle $\mathcal U$ of Definition 12.1 lies
+inside $172<v<173$; Proposition 40.1 has $127.80<v_{\rm J}<127.81$ and therefore
+lies outside that rectangle. The new incidence includes both signs of
+$\Lambda$, without claiming that those signs classify all collisions.
+The construction disproves global terminal-J injectivity on the full
+strict parent, by actual complete-world collisions rather than critical
+response points.
+
+The four listed M responses are different. This does not prove
+terminal-M injectivity on their entire child: an additional world could
+share one of these responses, or two additional worlds could form a
+pair. It also does not exclude a different base with both required
+collision pairs. The unresolved original obligation is still to
+produce one entire $C(p,v)$ with $p\ne24$ containing a J pair and a
+possibly different M pair, or to prove impossibility for all such bases.
+
+The zero-safe parent theorem and the literal response formulas are
+reused at their stated scope from Section 19 and Lemma 2.2. The seven-variable incidence, exact rational isolating box,
+its actual J pair, four distinct M images and resulting local family
+are the model-specific derivation here. The contraction and implicit
+function theorems are classical tools used in that derivation. The pole-free existential
+construction licenses no universal exclusion of $\Lambda=0$,
+zero gain samples, lower degrees, repeated roots or zero drift.
+
+
+**Corollary 41.1 (Separation from the inherited two-world component).**
+The base $(p_{\rm J},v_{\rm J})$ of Proposition 40.1 lies outside
+$\Omega_*$ of Theorem 28.1. The same holds for every member of the
+local family of Corollary 40.2.
+
+**Proof.** Proposition 40.1 and Corollary 40.2 give at least four distinct
+complete worlds in each respective entire child. Every entire child over
+$\Omega_*$ has exactly two worlds by Theorem 28.1. Membership would
+contradict these cardinalities. $\square$
+
+This argument proves neither an exact count for the new child nor
+regularity of its base, a four-sheet covering component, or any collision
+involving worlds outside the four listed ones. In particular four
+pairwise different listed $m$ values exclude M collisions only among those
+four worlds. They do not exclude an outside world sharing one of those
+values or two outside worlds sharing another value. There is no asserted
+connection between the fold chart and $\Omega_*$. The unrestricted
+all-base question of Definition 1.2 remains unresolved: a J pair and an M
+pair must occur at one common base with $p\ne24$, with the original
+allowed overlaps and without requiring equal common terminal values.
+
+## 42. An isolated ordered J/M intersection at the forbidden base
+
+Retain the complete-world domain, clocks, entire child and independent
+pair predicate of Definitions 1.1–1.2. The zero-safe parent and its
+whole-world converse remain (19.1)–(19.2); all response functions in
+Sections 42–46 are exactly the rational circuit (31.4), with the same
+whole gain and fixed drift supplied by Lemma 2.2. Only the local
+construction uses the regular chart $\Lambda\ne0$. The singular branch
+of the parent remains part of every entire-child quantifier.
+
+The notation for this local intersection is independent of Section 40.
+Here $A=(r_A,b_A),B=(r_B,b_B),C=(r_C,b_C)$ are three variable sources;
+in particular $r_A$ is not fixed at $1/4$. They are not the four sources
+of Proposition 40.1, and $A$ is not the fold map of (31.1). The response
+symbols $p,v,a,m$ below equal $R_p,R_v,R_a,R_m$ in (31.4). In the
+local-intersection source, $e,B_0,c$ correspond respectively to
+$\epsilon,B_{\rm par},c_{\rm src}$ here. Its boxes $Y,X$ are denoted
+$Y_{\cap},X_{\cap}$ here; neither is $X_{\rm J}$, $\mathcal B_{\rm f}$,
+$\mathcal U$ or $\mathcal V$. The reduced map $G$, six-variable map $F$,
+centers $\bar u,\bar x$ and matrices $L_3,L_6$ are local to these
+sections. The root symbols $u_{\cap},x_{\cap}$ replace that source's
+$u_*,x_*$ and do not denote Section 40's $x_*$. That source's common
+base reading $v_*$ is written $v_{\cap}$. The interval scale
+$\sigma_{\cap}$ below replaces that source's $S$; it is not the
+polynomial $S$ of Definition 2.1.
+
+The reflection used in the construction is inherited parent geometry.
+At $b=1/8$ on the regular chart, (19.1)–(19.2) give
+
+$$
+\epsilon=0,\qquad d=24,\qquad
+ g=h,\quad h(s)=\frac85(s-1)(s-3)(s-5),\qquad p=24.
+\tag{42.1}
+$$
+
+For $1/8<r<1$ the reflected source has $r'=9/8-r$, and
+
+$$
+n(r)=1/8+9r-8r^2=n(9/8-r),\qquad U=5/4,\qquad
+h(5)=0,\quad h(6)=24,\quad h(7)=384/5.
+\tag{42.2}
+$$
+
+Thus the two regular sources $(r,1/8),(9/8-r,1/8)$ have equal
+$p,v,m$, by (31.4); both are strict. This reflection is context for
+the isolated intersection, rather than an additional result.
+
+**Theorem 42.1 (Exact isolated ordered intersection).** The rational
+boxes of Section 43 determine three pairwise distinct strict complete
+worlds $W_A,W_B,W_C$ in one entire $C(24,v_{\cap})$ such that
+
+$$
+a(W_A)=a(W_B),\qquad m(W_A)=m(W_C),\qquad
+131.70<v_{\cap}<131.71.
+\tag{42.3}
+$$
+
+Among regular-chart ordered source triples in $X_{\cap}$, this is the
+unique solution of the six incidence equations (43.3). Consequently
+there is no solution of that specified ordered pairing in $X_{\cap}$
+with common $p\ne24$. The first five equations of (43.3) have rank five
+at the solution; the sixth, the M-incidence, has a nonzero derivative
+along their one-dimensional local solution manifold.
+
+The exclusion quantifies only over this ordered box and the pairing
+$J(A,B),M(A,C)$. It is not an exclusion for an entire child, for other
+ordered triples, for four-world pairings or for all bases. The base in
+(42.3) differs from the $p_{\rm J}\ne24$ base of Proposition 40.1.
+
+## 43. Exact reduced and six-variable incidence boxes
+
+Let $u=(u_1,u_2,u_3)$ and define
+
+$$
+G(u)=\begin{pmatrix}
+p(u_2,u_3)-24\\
+v(u_1,1/8)-v(u_2,u_3)\\
+a(u_1,1/8)-a(u_2,u_3)
+\end{pmatrix}.                                                   \tag{43.1}
+$$
+
+The three-dimensional center is
+
+$$
+\begin{aligned}
+\bar u_1&=0.27338493277692062938117277534807800955236853281519814794646125,\\
+\bar u_2&=0.76858321041873328473685419579892559444456508936103355669942409,\\
+\bar u_3&=0.31244505105258409809358114188258746424822666166861670395489154.
+\end{aligned}
+$$
+
+Set $Y_{\cap}=\prod_{i=1}^3[\bar u_i-10^{-18},\bar u_i+10^{-18}]$ and let
+
+$$
+L_3=
+\begin{pmatrix}
+0.0148348466405305112715002370425455877288525820242097124 & 0.001595973632781291204866457466223520184051910701934427588 & 0.0009521894654311845886993058140527158340971697523235428547\\
+0.0409433875069983875230771566542029743624506006471315168 & 0.01382949714192748321484577446060447768304433602399625629 & -0.001776763661709536065741327507163935947637147054756316927\\
+-0.02375354484127071359214480282544269170827479249122335487 & -0.01007490838149822698449187123245238935534370450477117623 & 0.001294387707925291542246101550653191761187478889209669875
+\end{pmatrix}.                                                         \tag{43.2}
+$$
+
+For $x=(r_A,b_A,r_B,b_B,r_C,b_C)$ set
+
+$$
+F(x)=\begin{pmatrix}
+p(A)-p(B)\\v(A)-v(B)\\a(A)-a(B)\\
+p(A)-p(C)\\v(A)-v(C)\\m(A)-m(C)
+\end{pmatrix}.                                                   \tag{43.3}
+$$
+
+Its center $\bar x$ is, in this exact order,
+
+$$
+\begin{pmatrix}
+0.27338493277692062938117277534807800955236853281519814794646125\\
+0.125\\
+0.76858321041873328473685419579892559444456508936103355669942409\\
+0.31244505105258409809358114188258746424822666166861670395489154\\
+0.85161506722307937061882722465192199044763146718480185205353875\\
+0.125
+\end{pmatrix}.                                                   \tag{43.4}
+$$
+
+Let $X_{\cap}=\prod_{i=1}^6[\bar x_i-10^{-15},\bar x_i+10^{-15}]$. Its
+preconditioner is
+
+$$
+L_6=
+\begin{pmatrix}
+-0.0148348466405305112715002370425455877288525820242097124 & 0.001595973632781291204866457466223520184051910701934427588 & 0.0009521894654311845886993058140527158340971697523235428547 & -1.675214974905602584232591400689200183609183079419768849 & 0.9627143002571723238712916751412270949566073019892996227 & -0.1504241094151831756048893242408167335869698909358280661\\
+6.221834270730115390399741610875572884420105710871997137e-90 & -6.693620557216069629674742558202614454360347928375600537e-91 & -3.993546540657781035642059723774355727066762442369061296e-91 & -0.7259007552162769624652793691869324513976421505265814575 & 0.4171614079879926858442412224924629580763734863194251997 & -0.06518146999812385716316269101444733719943335723741018745\\
+-0.0409433875069983875230771566542029743624506006471315168 & 0.01382949714192748321484577446060447768304433602399625629 & -0.001776763661709536065741327507163935947637147054756316927 & -0.5157877126990621834066327641546026776357813247690060419 & 0.2964134241578790486236768409175529403501811916541811019 & -0.04631459752466860134744950639336764692971581119596579717\\
+0.02375354484127071359214480282544269170827479249122335487 & -0.01007490838149822698449187123245238935534370450477117623 & 0.001294387707925291542246101550653191761187478889209669875 & -0.08020071048150680908146114128650884129707532712435023758 & 0.04608982848645001782116605455718993368116528299481826203 & -0.007201535701007815284557196024560927137682075467940353443\\
+0.0148348466405305112715002370425455877288525820242097124 & -0.001595973632781291204866457466223520184051910701934427588 & -0.0009521894654311845886993058140527158340971697523235428547 & 0.6699363987796279985932108768705520486903590396822276861 & -0.3896998044356373868550036421739968974813367535915469922 & 0.06229799615884507213437111800204389786621167867995978019\\
+4.70982190574306410877656683658548392574108564831530061e-90 & -5.066956038578134156479035140820693180467839961551904701e-91 & -3.023046285125058259192687195643417835355272090064059659e-91 & -0.5568145716742213643665383145146666578538354687938672624 & 0.3157840360382837413407137722697281216273506028611158468 & -0.04934125563098183458448652691714501900427353169704935106
+\end{pmatrix}.                                                         \tag{43.5}
+$$
+
+These matrices are rational matrices, rather than unspecified numerical
+inverses. Their entries and all the centers above are finite decimals. In the
+scientific notation in $L_6$, an entry written $q\mathrm e{-k}$ denotes
+the exact rational $q\cdot10^{-k}$.
+
+## 44. Full-box rational interval inequalities
+
+Use $\sigma_{\cap}=10^{70}$ and represent an interval by $[L,U]/\sigma_{\cap}$. Encode a rational
+$t$ by $[\lfloor \sigma_{\cap}t\rfloor,\lceil \sigma_{\cap}t\rceil]/\sigma_{\cap}$. Addition and negation
+are exact. For multiplication use
+
+$$
+[L,U][V,W]/\sigma_{\cap}^2\ \subseteq\
+[\lfloor\min(LV,LW,UV,UW)/\sigma_{\cap}\rfloor,
+ \lceil\max(LV,LW,UV,UW)/\sigma_{\cap}\rceil]/\sigma_{\cap}.
+$$
+
+For a reciprocal, require $0\notin[L,U]$ and use
+
+$$
+([L,U]/\sigma_{\cap})^{-1}\subseteq
+[\lfloor \sigma_{\cap}^2/U\rfloor,\lceil \sigma_{\cap}^2/L\rceil]/\sigma_{\cap}.
+$$
+
+Division means multiplication by this reciprocal. These rounding rules
+apply after every multiplication or reciprocal, including operations
+inside derivative propagation. Use interval jets $(v,q)$ with
+
+$$
+(v,q)+(w,t)=(v+w,q+t),\quad
+(v,q)(w,t)=(vw,qw+vt),\quad
+(v,q)^{-1}=(v^{-1},-qv^{-1}v^{-1}).
+$$
+
+Variables start with their unit derivative vectors and constants with
+zero derivatives. Use the same response circuit (31.4), with
+$c_{\rm src},j,n,T,U,\Lambda$ followed by $\epsilon$, then
+$z_0,z_1,z_2,z_3,d$, then $t_5,t_6,t_7,p,v,a,m$. For this interval
+expression put $o=0r+1$, evaluate $j=b+r(1-r)/b$, $T=o+b$, $U=o+2b$,
+and use the following explicitly associated forms for the same scalars:
+
+$$
+\epsilon=-24(b-o/8)(6/T-2/U)/5/\Lambda,\qquad
+z_2=(27o/5-\epsilon)/T.
+\tag{44.1}
+$$
+
+The other expressions are exactly (31.4). All products,
+divisions and sums are associated from left to right, with each written
+pair of parentheses evaluated first. In $G$, construct its constant
+second source coordinate as $(0u_1+1)/8$. Form the indicated differences
+in (43.1) and (43.3). Matrix products sum in increasing column index,
+starting at zero. This finite rational arithmetic gives the following
+strict bounds. Row $i$ bounds
+$\sum_j\sup|(I-L_kD\mathcal H)_{ij}|$ for the indicated map $\mathcal H$ and box.
+
+| Dimension and map | Row | Strict upper bound |
+| --- | --- | --- |
+| 3, $G$ on $Y_{\cap}$ | 1 | $7\cdot10^{-14}$ |
+| 3, $G$ on $Y_{\cap}$ | 2 | $24\cdot10^{-14}$ |
+| 3, $G$ on $Y_{\cap}$ | 3 | $16\cdot10^{-14}$ |
+| 6, $F$ on $X_{\cap}$ | 1 | $13\cdot10^{-10}$ |
+| 6, $F$ on $X_{\cap}$ | 2 | $6\cdot10^{-10}$ |
+| 6, $F$ on $X_{\cap}$ | 3 | $7\cdot10^{-10}$ |
+| 6, $F$ on $X_{\cap}$ | 4 | $3\cdot10^{-10}$ |
+| 6, $F$ on $X_{\cap}$ | 5 | $6\cdot10^{-10}$ |
+| 6, $F$ on $X_{\cap}$ | 6 | $4\cdot10^{-10}$ |
+
+At both centers the corresponding interval matrix product satisfies
+
+$$
+\|L_3G(\bar u)\|_\infty<10^{-50},\qquad
+\|L_6F(\bar x)\|_\infty<10^{-50}.                               \tag{44.2}
+$$
+
+The same interval circuit on $X_{\cap}$ gives the following enclosing open
+rational intervals. Each displayed interval strictly contains the
+computed closed enclosure.
+
+| World | $\Lambda$ | $d$ | $g(7)$ | $v$ | $a$ | $m$ |
+| --- | --- | --- | --- | --- | --- | --- |
+| A | $(2.787,2.788)$ | $(23.999,24.001)$ | $(76.799,76.801)$ | $(131.70,131.71)$ | $(457.67,457.69)$ | $(617.28,617.30)$ |
+| B | $(-0.774,-0.773)$ | $(27.886,27.887)$ | $(69.882,69.884)$ | $(131.70,131.71)$ | $(457.67,457.69)$ | $(599.19,599.21)$ |
+| C | $(1.599,1.600)$ | $(23.999,24.001)$ | $(76.799,76.801)$ | $(131.70,131.71)$ | $(546.49,546.50)$ | $(617.28,617.30)$ |
+
+The source intervals satisfy $b>0$, $0<r<1$, hence $j,n,T,U>0$.
+The displayed $\Lambda$ intervals justify the remaining reciprocals.
+The three $r$ intervals lie respectively in $(.273,.274)$,
+$(.768,.769)$ and $(.851,.852)$; they are disjoint.
+For $G$ on $Y_{\cap}$, its first source box lies inside the A box of $X_{\cap}$ and
+its second inside the B box, so their denominator guards follow as well.
+
+Each arithmetic operation is an outer inclusion. Induction through
+the circuit therefore encloses the true values and derivatives at every
+real point of the indicated full box. The row inequalities and center
+bounds follow by the displayed integer endpoint comparisons.
+
+## 45. Reflected exact root and transverse uniqueness
+
+For either $(\mathcal H,L,c,Z,\rho)=(G,L_3,\bar u,Y_{\cap},10^{-18})$ or
+$(F,L_6,\bar x,X_{\cap},10^{-15})$, Section 44 gives
+
+$$
+\sup_Z\|I-LD\mathcal H\|_\infty<10^{-7},\qquad
+\|L\mathcal H(c)\|_\infty<10^{-50}.
+$$
+
+Thus $\mathscr T(z)=z-L\mathcal H(z)$ maps the closed box into its interior, since
+
+$$
+\|\mathscr T(z)-c\|_\infty
+<10^{-50}+10^{-7}\rho<\rho,
+$$
+
+and is a contraction. The contraction principle gives its unique fixed
+point. Also $LD\mathcal H(c)$ is invertible by the Neumann-series criterion.
+As these are square matrices, $L$ and $D\mathcal H(c)$ are invertible. Hence
+fixed points of $\mathscr T$ are precisely zeros of $\mathcal H$. This proves existence
+and uniqueness of a zero in each indicated box.
+
+Let $u_{\cap}$ be the zero of $G$ in $Y_{\cap}$ and define the exact six-tuple
+
+$$
+x_{\cap}=(u_{\cap,1},1/8,u_{\cap,2},u_{\cap,3},9/8-u_{\cap,1},1/8).              \tag{45.1}
+$$
+
+Inspection of the printed finite decimals shows
+$|\bar x_5-(9/8-\bar u_1)|<10^{-61}$, with the other corresponding
+coordinates equal. Therefore $10^{-18}+10^{-61}<10^{-15}$ implies
+$x_{\cap}\in X_{\cap}$. (42.1)–(42.2) give identical $p,v,m$ for A and C, with
+$p_A=p_C=24$. Equation $G(u_{\cap})=0$ gives $p_B=24$ and equality of the
+A/B $v$ and $a$ responses. It follows that $F(x_{\cap})=0$ exactly.
+The unique zero of $F$ in $X_{\cap}$ must consequently be (45.1), proving that
+its common $p$ is exactly 24, rather than merely close to 24.
+
+Section 31 and Lemma 2.2 lift all three sources to complete worlds.
+Their equal acquired responses place them in the same entire child. Disjoint source intervals give distinct
+complete triples. The interval table proves the remaining bounds in
+Theorem 42.1.
+
+Finally the same derivative bound at the zero implies that $DF(x_{\cap})$
+is invertible. Its first five rows are linearly independent, so the
+implicit-function theorem makes their local common zero set a smooth
+one-dimensional manifold. If the sixth row vanished on its tangent
+line, $DF(x_{\cap})$ would have a nonzero kernel. This is impossible.
+Thus the M-incidence is transverse on this local J-incidence curve.
+This proves Theorem 42.1. $\square$
+
+## 46. Scope of the ordered intersection and mathematical attribution
+
+The original common-base question retains exactly the quantifiers of
+Definition 1.2: one entire $C(p,v)$ with $p\ne24$ and distinct
+$W_{J0},W_{J1}$ and distinct $W_{M0},W_{M1}$ satisfying
+
+$$
+a(W_{J0})=a(W_{J1}),\qquad m(W_{M0})=m(W_{M1}).
+\tag{46.1}
+$$
+
+The pairs are independently selected, may overlap, and their common
+terminal values need not agree. Theorem 42.1 supplies these two pair
+incidences at the excluded value $p=24$, with a shared member $W_A$;
+it does not supply a solution of (46.1) at an allowed base. The full-box
+bounds even separate their common terminal readings:
+$a(W_A)\in(457.67,457.69)$ and $m(W_A)\in(617.28,617.30)$.
+Its $p\ne24$ exclusion concerns only (43.3) on $X_{\cap}$.
+It supplies no exclusion farther along a continuation, on another
+branch, for another ordered pairing, or for arbitrary independent
+pairs in an entire child.
+
+Proposition 40.1 instead supplies a J pair at an allowed base
+$22.93<p_{\rm J}<22.94$, with four pairwise distinct listed M values.
+Those inequalities are not M injectivity on the entire child.
+The reflected forbidden-base intersection is not that four-world
+incidence, and neither construction establishes a component connection,
+an entire-child upper bound at its new base, or a solution of (46.1).
+Pairwise different gain directions, if established for any collection,
+would not by themselves imply joint linear independence or either
+missing collision incidence. No gain-direction condition is imposed
+on (46.1).
+
+A global impossibility theorem for (46.1) would have to cover every
+allowed base and every independent choice of pairs, including singular
+parent strata. An existence theorem would require exact legal worlds
+at one allowed common base. These alternatives remain the original
+question. Sampled gain zeros, lower degrees, repeated roots, zero drift
+and singular parent sources remain in its domain. Positivity and the
+$\Lambda$ bounds here justify only the specified regular-chart
+construction and its local uniqueness.
+
+The model, zero-safe parent and whole-world realization are those of
+Sections 1–2, 19 and 31 and
+[Common Parent Geometry](FIB_COMMON_PARENT_GEOMETRY_AND_MIXED_CHILDREN.md),
+Definitions 1.1–1.3 and Theorem 2.1. The reflection at $b=1/8$ is
+inherited from that parent geometry. The exact reduced root, the
+six-variable rational box, its isolated ordered $J(A,B)/M(A,C)$
+intersection and transverse local uniqueness are the result of
+*A certified local forbidden-base intersection for actual J and M
+pairs*, expressed here in the common notation. Sections 32–38 and
+40–41 retain the distinct fold and four-world J geometries attributed
+in Section 39. Fixed-node interpolation, the contraction principle,
+the Neumann-series criterion and the implicit-function theorem are
+classical tools, applied with the displayed model-specific hypotheses.
+
+## 追加锚（本行以下为增补区）
+
