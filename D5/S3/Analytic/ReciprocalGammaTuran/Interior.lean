@@ -23,7 +23,7 @@ private lemma continuous_rgamma : Continuous rgamma := by
   rw [he]
   exact Complex.continuous_re.comp (h.comp Complex.continuous_ofReal)
 
-/-- Every finite Turanian coefficient is continuous in the three shifts. -/
+/-- The second Turanian coefficient is continuous in the three shifts. -/
 theorem continuous_turanCoeff_two :
     Continuous (fun p : ℝ × ℝ × ℝ => turanCoeff (fun _ => 1) p.1 p.2.1 p.2.2 2) := by
   unfold turanCoeff
