@@ -45,4 +45,5 @@ For every natural n, every natural d at least two, every positive real c, and ev
 - Truth anchor: `D5/S3/Analytic/MeijerZeroCount/Mellin.gammaQuot_family`
 - Truth anchor: `D5/S3/Analytic/MeijerZeroCount/Mellin.meijerG_eq_f`
 - Truth anchor: `D5/S3/Analytic/MeijerZeroCount/Mellin.mellin_f`
+- Dependency: [D5/S3/Analytic/Asymptotics/FiniteCountertermMellinContinuation](../Asymptotics/FiniteCountertermMellinContinuation.md)
 - Dependency: [D5/S3/Analytic/MeijerZeroCount/Rodrigues](Rodrigues.md)
