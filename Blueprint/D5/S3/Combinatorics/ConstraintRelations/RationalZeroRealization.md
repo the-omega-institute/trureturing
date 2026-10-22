@@ -112,7 +112,79 @@ Lean statement: `D5/S3/Combinatorics/ConstraintRelations/RationalZeroRealization
 
 The law at a is the marginal at a divided by the partition function. The representation theorem proves that the partition function is strictly positive.
 
-**Theorem 1.10 (Every rational law, including arbitrary zeros).**
+**Definition 1.10 (The indicator potential).**
+
+Lean statement: `D5/S3/Combinatorics/ConstraintRelations/RationalZeroRealization.pinRaw`
+
+*Formalization.* `D5/S3/Combinatorics/ConstraintRelations/RationalZeroRealization.pinRaw` (`✓ std3`).
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+The raw pin potential is one on each of the five tuples of A and zero on the remaining three tuples.
+
+**Definition 1.11 (The normalized exclusion table).**
+
+Lean statement: `D5/S3/Combinatorics/ConstraintRelations/RationalZeroRealization.pinTable`
+
+*Formalization.* `D5/S3/Combinatorics/ConstraintRelations/RationalZeroRealization.pinTable` (`✓ std3`).
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+Divide the raw pin potential by five. On (o,o,o) this forces the actual variable o to zero. On (u,u,w) it enforces that u and w are not simultaneously one, including a loop when u=w.
+
+**Definition 1.12 (The full activity potential).**
+
+Lean statement: `D5/S3/Combinatorics/ConstraintRelations/RationalZeroRealization.unaryRaw`
+
+*Formalization.* `D5/S3/Combinatorics/ConstraintRelations/RationalZeroRealization.unaryRaw` (`✓ std3`).
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+For rational r, the raw activity potential has value r at 110, value one at the four other tuples of A, and zero outside A. All eight entries are specified.
+
+**Definition 1.13 (The normalized activity table).**
+
+Lean statement: `D5/S3/Combinatorics/ConstraintRelations/RationalZeroRealization.unaryTable`
+
+*Formalization.* `D5/S3/Combinatorics/ConstraintRelations/RationalZeroRealization.unaryTable` (`✓ std3`).
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+For r nonnegative, divide the raw activity potential by four plus r. With an internally zero pin o, scope (u,u,o) has activities one and r, times the common normalization factor. When r is positive, every tuple of A has positive value.
+
+**Definition 1.14 (Numbering finite hidden and factor types).**
+
+Lean statement: `D5/S3/Combinatorics/ConstraintRelations/RationalZeroRealization.numberedNetwork`
+
+*Formalization.* `D5/S3/Combinatorics/ConstraintRelations/RationalZeroRealization.numberedNetwork` (`✓ std3`).
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+Given finite types H and J, a decidable equality on H and a family f indexed by J of actual factors on Fin n plus H, finite equivalences produce a Network n card(H) card(J). Visible names stay fixed. Hidden names and factor indices are renamed bijectively. Every Table is retained without alteration.
+
+**Theorem 1.15 (Marginals are unchanged by finite numbering).**
+
+$$\forall n \in \mathrm{Nat},\; \forall H \in \mathrm{Type},\; \forall J \in \mathrm{Type},\; [\operatorname{Fintype}\left(H\right)] [\operatorname{DecidableEq}\left(H\right)] [\operatorname{Fintype}\left(J\right)] \forall f \in (J) \to \operatorname{Factor}\left(\operatorname{Fin}\left(n\right) + H\right),\; \forall a \in (\operatorname{Fin}\left(n\right)) \to \mathrm{Bool},\; \operatorname{marginal}\left(\operatorname{numberedNetwork}\left(f\right), a\right) = \sum_{h \in (H) \to \mathrm{Bool}} \prod_{j \in J} \operatorname{value}\left(\operatorname{f}\left(j\right), \operatorname{combined}\left(a, h\right)\right)$$
+
+*Proof.* Machine-checked in Lean as `D5/S3/Combinatorics/ConstraintRelations/RationalZeroRealization.numbered_marginal` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+For every natural n, finite types H and J, a decidable equality on H, every factor family f on Fin n plus H and every visible assignment a, the canonical numbered Network marginal equals the sum over all h from H to Bool of the product over all j in J of the actual factor values in combined(a,h), the assignment Sum.elim a h. Empty types and empty products are included.
+
+**Theorem 1.16 (Every rational law, including arbitrary zeros).**
 
 $$\forall n \in \mathrm{Nat},\; (1 \le n) \Rightarrow (\forall P \in ((\operatorname{Fin}\left(n\right)) \to \mathrm{Bool}) \to \mathrm{Rat},\; ((\forall a \in (\operatorname{Fin}\left(n\right)) \to \mathrm{Bool},\; 0 \le \operatorname{P}\left(a\right)) \land (\sum_{a \in (\operatorname{Fin}\left(n\right)) \to \mathrm{Bool}} \operatorname{P}\left(a\right) = 1)) \Rightarrow (\exists m \in \mathrm{Nat},\; \exists k \in \mathrm{Nat},\; \exists net \in \operatorname{Network}\left(n, m, k\right),\; (0 < \operatorname{partition}\left(net\right)) \land (\forall a \in (\operatorname{Fin}\left(n\right)) \to \mathrm{Bool},\; \operatorname{law}\left(net, a\right) = \operatorname{P}\left(a\right))))$$
 
@@ -142,8 +214,14 @@ This is an elementary constructive consequence of the five-mode relation and NOR
 - Truth anchor: `D5/S3/Combinatorics/ConstraintRelations/RationalZeroRealization.Triple`
 - Truth anchor: `D5/S3/Combinatorics/ConstraintRelations/RationalZeroRealization.law`
 - Truth anchor: `D5/S3/Combinatorics/ConstraintRelations/RationalZeroRealization.marginal`
+- Truth anchor: `D5/S3/Combinatorics/ConstraintRelations/RationalZeroRealization.numberedNetwork`
+- Truth anchor: `D5/S3/Combinatorics/ConstraintRelations/RationalZeroRealization.numbered_marginal`
 - Truth anchor: `D5/S3/Combinatorics/ConstraintRelations/RationalZeroRealization.partition`
+- Truth anchor: `D5/S3/Combinatorics/ConstraintRelations/RationalZeroRealization.pinRaw`
+- Truth anchor: `D5/S3/Combinatorics/ConstraintRelations/RationalZeroRealization.pinTable`
 - Truth anchor: `D5/S3/Combinatorics/ConstraintRelations/RationalZeroRealization.result`
+- Truth anchor: `D5/S3/Combinatorics/ConstraintRelations/RationalZeroRealization.unaryRaw`
+- Truth anchor: `D5/S3/Combinatorics/ConstraintRelations/RationalZeroRealization.unaryTable`
 - Truth anchor: `D5/S3/Combinatorics/ConstraintRelations/RationalZeroRealization.value`
 - Truth anchor: `D5/S3/Combinatorics/ConstraintRelations/RationalZeroRealization.weight`
 - Dependency: [D5/S3/Combinatorics/ConstraintRelations/BooleanNullBoundary](BooleanNullBoundary.md)
