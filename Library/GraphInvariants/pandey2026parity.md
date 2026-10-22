@@ -62,7 +62,7 @@ proof instead performs exact counting and real/imaginary-part arithmetic.
 
 ## Prior exact refutation and attribution
 
-The distinct [prior-refutation Library note](demonstrandum2026pandeyrefutation.md)
+The distinct [prior-refutation Library note](../Combinatorics/demonstrandum2026pandeyrefutation.md)
 provides the structured source for the local result; this note remains
 the source for Pandey's graph definition and conjecture.
 
