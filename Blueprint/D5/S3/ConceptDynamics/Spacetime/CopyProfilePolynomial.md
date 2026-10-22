@@ -2,7 +2,7 @@
 
 ## Abstract
 
-The copy profile bridge is stated explicitly and its tail consequence is compiled conditionally.
+Native multilinear time profiles yield the complete copy polynomial and the finite slice argument for tail regions.
 
 **Definition 1.1 (Tagged parallel copies).**
 
@@ -38,9 +38,45 @@ Lean statement: `D5/S3/ConceptDynamics/Spacetime/CopyProfilePolynomial.CopyPolyn
 
 *Commentary.*
 
-For every positive temporal-free copy term and balanced input, diagonal evaluation on independently replicated leaves is an integer polynomial in the replication count. Its degree is bounded by the number of input occurrences, its constant coefficient is q(N(0)), and its linear coefficient is the sum of one-hole slice values minus the full constant correction r·q(N(0)). This is the explicit open bridge; the module does not assert it as proved.
+For every positive temporal-free copy term and balanced input, diagonal evaluation on independently replicated leaves is an integer polynomial in the replication count. Its degree is bounded by the number of input occurrences, its constant coefficient is q(N(0)), and its linear coefficient is the sum of one-hole slice values minus the full constant correction r·q(N(0)). The theorem copy_polynomial_law proves this statement from the actual native time profile.
 
-**Definition 1.4 (Region readout under copies).**
+**Definition 1.4 (Squarefree profile coefficients).**
+
+Lean statement: `D5/S3/ConceptDynamics/Spacetime/CopyProfilePolynomial.profileCoefficients`
+
+*Formalization.* `D5/S3/ConceptDynamics/Spacetime/CopyProfilePolynomial.profileCoefficients` (`✓ std3`).
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+A coefficient is the multilinear profile model evaluated with the input profile on the indicated set of leaf occurrences and the empty profile elsewhere.
+
+**Theorem 1.5 (Native independent-copy expansion).**
+
+Lean statement: `D5/S3/ConceptDynamics/Spacetime/CopyProfilePolynomial.profile_multiaffine`
+
+*Proof.* Machine-checked in Lean as `D5/S3/ConceptDynamics/Spacetime/CopyProfilePolynomial.profile_multiaffine` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+For every temporal-free copy term, balanced input and independently chosen natural replication counts, the actual native profile is the sum over sets of distinct leaf occurrences, weighted by the product of their counts. The proof consumes model_eval and the primitive profile updates.
+
+**Theorem 1.6 (Lemma 5B and the full 5C coefficient).**
+
+Lean statement: `D5/S3/ConceptDynamics/Spacetime/CopyProfilePolynomial.copy_polynomial_law`
+
+*Proof.* Machine-checked in Lean as `D5/S3/ConceptDynamics/Spacetime/CopyProfilePolynomial.copy_polynomial_law` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+The actual charge of a temporal-free term on m copies at every leaf is an integer polynomial of degree at most the arity. The constant coefficient is q(N(0)); the linear coefficient is the sum of the one-leaf slice charges minus r times q(N(0)). No vanishing constant is assumed.
+
+**Definition 1.7 (Region readout under copies).**
 
 Lean statement: `D5/S3/ConceptDynamics/Spacetime/CopyProfilePolynomial.CopiesRegionLinear`
 
@@ -50,9 +86,9 @@ Lean statement: `D5/S3/ConceptDynamics/Spacetime/CopyProfilePolynomial.CopiesReg
 
 *Commentary.*
 
-The second explicit open law records the expected integer linearity of every region readout under tagged parallel copies.
+This predicate specifies integer linearity of every region readout under tagged parallel copies; copies_region_linear proves it.
 
-**Definition 1.5 (Scalar readout of a native word).**
+**Definition 1.8 (Scalar readout of a native word).**
 
 Lean statement: `D5/S3/ConceptDynamics/Spacetime/CopyProfilePolynomial.wordReadout`
 
@@ -64,7 +100,7 @@ Lean statement: `D5/S3/ConceptDynamics/Spacetime/CopyProfilePolynomial.wordReado
 
 wordReadout extracts q from a successful native one-hole word and returns the neutral integer on failure.
 
-**Definition 1.6 (Finite one-hole slice family).**
+**Definition 1.9 (Finite one-hole slice family).**
 
 Lean statement: `D5/S3/ConceptDynamics/Spacetime/CopyProfilePolynomial.CopySliceReadoutLaw`
 
@@ -74,9 +110,9 @@ Lean statement: `D5/S3/ConceptDynamics/Spacetime/CopyProfilePolynomial.CopySlice
 
 *Commentary.*
 
-CopySliceReadoutLaw is the exact finite normalization consequence needed after the polynomial bridge: every total copy expression supplies a finite family of total one-hole words whose readouts sum to the target region.
+CopySliceReadoutLaw is the exact finite normalization consequence needed after the polynomial bridge: every total copy expression representing the fixed region supplies a finite family of total one-hole words whose readouts sum to that region.
 
-**Definition 1.7 (Joint saturation for finite word families).**
+**Definition 1.10 (Joint saturation for finite word families).**
 
 Lean statement: `D5/S3/ConceptDynamics/Spacetime/CopyProfilePolynomial.CopySaturationLaw`
 
@@ -86,9 +122,9 @@ Lean statement: `D5/S3/ConceptDynamics/Spacetime/CopyProfilePolynomial.CopySatur
 
 *Commentary.*
 
-CopySaturationLaw records the common low-time indistinguishability construction for any finite family of total one-hole words.
+CopySaturationLaw records the common indistinguishability construction below a nonpositive time threshold for any finite family of total one-hole words.
 
-**Definition 1.8 (Positive finite diagonal copy expression).**
+**Definition 1.11 (Positive finite diagonal copy expression).**
 
 Lean statement: `D5/S3/ConceptDynamics/Spacetime/CopyProfilePolynomial.CopyQExpressible`
 
@@ -100,7 +136,7 @@ Lean statement: `D5/S3/ConceptDynamics/Spacetime/CopyProfilePolynomial.CopyQExpr
 
 A region is copy-expressible when some positive finite copy term is total on every balanced input and its diagonal q readout equals the region readout.
 
-**Theorem 1.9 (Identification from natural evaluations).**
+**Theorem 1.12 (Identification from natural evaluations).**
 
 Lean statement: `D5/S3/ConceptDynamics/Spacetime/CopyProfilePolynomial.polynomial_identification`
 
@@ -112,7 +148,43 @@ Lean statement: `D5/S3/ConceptDynamics/Spacetime/CopyProfilePolynomial.polynomia
 
 An integer polynomial whose values at all natural numbers are n times a fixed integer is X multiplied by the constant polynomial a.
 
-**Theorem 1.10 (Finite word sums force a uniform tail).**
+**Theorem 1.13 (Exact regional replication law).**
+
+Lean statement: `D5/S3/ConceptDynamics/Spacetime/CopyProfilePolynomial.copies_region_linear`
+
+*Proof.* Machine-checked in Lean as `D5/S3/ConceptDynamics/Spacetime/CopyProfilePolynomial.copies_region_linear` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+Every fixed region readout on n tagged parallel copies equals n times its value on the original balanced input.
+
+**Theorem 1.14 (Lemma 6 for a common finite family).**
+
+Lean statement: `D5/S3/ConceptDynamics/Spacetime/CopyProfilePolynomial.copy_saturation_law`
+
+*Proof.* Machine-checked in Lean as `D5/S3/ConceptDynamics/Spacetime/CopyProfilePolynomial.copy_saturation_law` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+Any finite family of total one-hole words admits a common nonpositive threshold and, at every position and every pair of times below it, a pair of inputs with equal readouts for every word. The proof reuses the existing finite predicate construction and its saturation theorem.
+
+**Theorem 1.15 (Polynomial identification recovers the slices).**
+
+Lean statement: `D5/S3/ConceptDynamics/Spacetime/CopyProfilePolynomial.copy_slice_readout_law`
+
+*Proof.* Machine-checked in Lean as `D5/S3/ConceptDynamics/Spacetime/CopyProfilePolynomial.copy_slice_readout_law` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+Normalize the total copy term before choosing the input. Identify its polynomial from all natural replication counts using regional linearity, obtain zero constant coefficient, and use the full linear coefficient to recover the exact sum of the fixed one-hole slices.
+
+**Theorem 1.16 (Finite word sums force a uniform tail).**
 
 Lean statement: `D5/S3/ConceptDynamics/Spacetime/CopyProfilePolynomial.sum_word_readouts_implies_tail`
 
@@ -122,9 +194,9 @@ Lean statement: `D5/S3/ConceptDynamics/Spacetime/CopyProfilePolynomial.sum_word_
 
 *Commentary.*
 
-Under joint saturation, a finite sum of total one-hole word readouts cannot distinguish sufficiently early times at one position; equality of the sum and the selected-region calculation therefore forces Tail.
+The proved joint saturation shows that a finite sum of total one-hole word readouts cannot distinguish sufficiently early times at one position; equality of the sum and the selected-region calculation therefore forces Tail.
 
-**Theorem 1.11 (Conditional copy necessity).**
+**Theorem 1.17 (Copy necessity).**
 
 Lean statement: `D5/S3/ConceptDynamics/Spacetime/CopyProfilePolynomial.copy_q_expressible_implies_tail`
 
@@ -134,9 +206,9 @@ Lean statement: `D5/S3/ConceptDynamics/Spacetime/CopyProfilePolynomial.copy_q_ex
 
 *Commentary.*
 
-Copy expressibility implies Tail once the finite slice-readout and joint-saturation laws are supplied.
+Copy expressibility implies Tail by the proved polynomial, slice-readout and finite joint-saturation results, without additional law assumptions.
 
-**Theorem 1.12 (Tail supplies a one-copy expression).**
+**Theorem 1.18 (Tail supplies a one-copy expression).**
 
 Lean statement: `D5/S3/ConceptDynamics/Spacetime/CopyProfilePolynomial.tail_implies_copy_q_expressible`
 
@@ -156,11 +228,18 @@ The existing one-hole tail construction embeds as a positive one-occurrence copy
 - Truth anchor: `D5/S3/ConceptDynamics/Spacetime/CopyProfilePolynomial.CopySaturationLaw`
 - Truth anchor: `D5/S3/ConceptDynamics/Spacetime/CopyProfilePolynomial.CopySliceReadoutLaw`
 - Truth anchor: `D5/S3/ConceptDynamics/Spacetime/CopyProfilePolynomial.copies`
+- Truth anchor: `D5/S3/ConceptDynamics/Spacetime/CopyProfilePolynomial.copies_region_linear`
+- Truth anchor: `D5/S3/ConceptDynamics/Spacetime/CopyProfilePolynomial.copy_polynomial_law`
 - Truth anchor: `D5/S3/ConceptDynamics/Spacetime/CopyProfilePolynomial.copy_q_expressible_implies_tail`
+- Truth anchor: `D5/S3/ConceptDynamics/Spacetime/CopyProfilePolynomial.copy_saturation_law`
+- Truth anchor: `D5/S3/ConceptDynamics/Spacetime/CopyProfilePolynomial.copy_slice_readout_law`
 - Truth anchor: `D5/S3/ConceptDynamics/Spacetime/CopyProfilePolynomial.polynomial_identification`
+- Truth anchor: `D5/S3/ConceptDynamics/Spacetime/CopyProfilePolynomial.profileCoefficients`
+- Truth anchor: `D5/S3/ConceptDynamics/Spacetime/CopyProfilePolynomial.profile_multiaffine`
 - Truth anchor: `D5/S3/ConceptDynamics/Spacetime/CopyProfilePolynomial.sum_word_readouts_implies_tail`
 - Truth anchor: `D5/S3/ConceptDynamics/Spacetime/CopyProfilePolynomial.tail_implies_copy_q_expressible`
 - Truth anchor: `D5/S3/ConceptDynamics/Spacetime/CopyProfilePolynomial.value`
 - Truth anchor: `D5/S3/ConceptDynamics/Spacetime/CopyProfilePolynomial.wordReadout`
+- Dependency: [D5/S3/ConceptDynamics/Spacetime/NativeTimeProfile](NativeTimeProfile.md)
 - Dependency: [D5/S3/ConceptDynamics/Spacetime/RegionFilterQExpressibility](RegionFilterQExpressibility.md)
 - Dependency: [D5/S3/ConceptDynamics/Spacetime/TotalCopyNormalization](TotalCopyNormalization.md)
