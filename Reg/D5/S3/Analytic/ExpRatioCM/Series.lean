@@ -376,18 +376,8 @@ def secondRatioActual : Realization momentSignature :=
 private theorem ratioZero {t : ℝ} (ht : 0 < t) :
     ratioF 0 t = Real.exp t / (Real.exp t - 1) := by
   have hn : Real.exp t - 1 ≠ 0 := sub_ne_zero.mpr (ne_of_gt (Real.one_lt_exp_iff.mpr ht))
-  have he : deriv (fun x : ℝ => Real.log (1 - Real.exp (-x))) =ᶠ[𝓝 t] F 0 := by
-    filter_upwards [Ioi_mem_nhds ht] with x hx
-    simpa only [F, pow_zero, iteratedDeriv_zero, one_mul] using
-      (D5.S3.Analytic.Interpolation.LogOneSubExpDerivatives.log_one_sub_exp_derivatives.2 x hx).1
-  have hd := (D5.S3.Analytic.Interpolation.LogOneSubExpDerivatives.log_one_sub_exp_derivatives.2 t ht).2.1
-  rw [show (2 : ℕ) = 1 + 1 from rfl, iteratedDeriv_succ', he.iteratedDeriv_eq 1,
-    iteratedDeriv_F] at hd
-  norm_num only [zero_add, pow_one, neg_mul, one_mul] at hd
-  rw [neg_div] at hd
-  have hf := neg_injective hd
   change F 1 t / F 0 t = _
-  rw [hf]
+  rw [F_one ht]
   simp only [F, pow_zero, iteratedDeriv_zero, one_mul]
   field_simp
 
@@ -400,16 +390,7 @@ private theorem ratioDependence : ObservationalDependence momentSignature ratioA
 
 private theorem secondRatioZero {t : ℝ} (ht : 0 < t) :
     ratioG 0 t = 1 / (Real.exp t - 1) := by
-  rw [ratioG, G_eq_F (by omega : 1 ≤ 0 + 1) ht, G_zero_eq ht]
-  have he := ratioZero ht
-  have hf := F_pos 0 ht
-  have h0 : F 0 t = 1 / (Real.exp t - 1) := by simp [F]
-  have hn : Real.exp t - 1 ≠ 0 := sub_ne_zero.mpr (ne_of_gt (Real.one_lt_exp_iff.mpr ht))
-  change F 1 t / F 0 t = _ at he
-  have h1 := (div_eq_iff hf.ne').mp he
-  rw [h1, h0]
-  field_simp
-  <;> ring
+  simpa only [F, pow_zero, iteratedDeriv_zero, one_mul] using (ratio_low ht).2.2.2
 
 private theorem secondRatioDependence : ObservationalDependence momentSignature secondRatioActual := by
   intro i
@@ -584,5 +565,148 @@ def audit : Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0}
   options := #[]
 #print axioms audit
 end RatioDerivative
+
+
+namespace Reciprocal
+abbrev signature : Signature :=
+  _root_.Reg.Support.SingleDependentReadout.signature Unit (fun _ => ℝ) (fun _ => ℝ)
+def actual : Realization signature :=
+  realize signature (fun _ _ t => Real.exp (-t)) (fun e => nomatch e)
+def bad : Realization signature :=
+  realize signature (fun _ _ _ => 0) (fun e => nomatch e)
+theorem dependence : ObservationalDependence signature actual := by
+  intro i
+  refine ⟨(), 0, 1, ?_⟩
+  change Real.exp (-(0 : ℝ)) ≠ Real.exp (-(1 : ℝ))
+  exact Real.exp_injective.ne (by norm_num)
+
+end Reciprocal
+
+namespace ReciprocalIdentity
+
+def arena : Arena where
+  signature := Reciprocal.signature
+  Law R := ∀ {t : ℝ}, 0 < t → 1 / (1 - R.readout () () t) = 1 + 1 / (Real.exp t - 1)
+
+private theorem rejected : ¬ arena.Law Reciprocal.bad := by
+  intro H
+  have he := H (t := 1) (by norm_num)
+  have hp : 0 < 1 / (Real.exp 1 - 1) := one_div_pos.mpr
+    (sub_pos.mpr (Real.one_lt_exp_iff.mpr (by norm_num)))
+  change 1 / (1 - (0 : ℝ)) = 1 + 1 / (Real.exp 1 - 1) at he
+  norm_num only [sub_zero, div_one] at he
+  linarith
+
+def family : Registration arena (type_of% @reciprocal_eq) where
+  actual := Reciprocal.actual
+  bridge := Iff.rfl
+  variation := ⟨@reciprocal_eq, Reciprocal.bad, rejected⟩
+  sensitivity := _root_.Reg.Support.SingleDependentReadout.sensitivity
+    arena.Law Reciprocal.actual Reciprocal.bad rejected
+  dependence := Reciprocal.dependence
+
+def audit : Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0}
+    (@reciprocal_eq) (Realization Reciprocal.signature) Unit Unit where
+  unitName := `Reg.D5.S3.Analytic.ExpRatioCM.Series.ReciprocalIdentity.unit
+  realizationName := `Reg.D5.S3.Analytic.ExpRatioCM.Series.ReciprocalIdentity.family
+  realizationSource := none
+  generated := false
+  arena := .source ⟨arena⟩
+  objectArena := .source ⟨arena⟩
+  catalog := Lean.Name.anonymous
+  localNames := false
+  realization := .source arena ⟨family⟩
+  correspondence := { stage := .evidence, objectStage := .evidence }
+  bundleNonempty := .absent
+  readout := some (realize Reciprocal.signature (fun _ _ t => Real.exp (-t)) (fun e => nomatch e))
+  variation := .absent
+  sensitivity := .absent
+  partialSensitivity := none
+  escapeFrom := none
+  sourceSelection := some {
+    owner := `D5.S3.Analytic.ExpRatioCM.Series
+    definition := none
+    coordinates := #[]
+    readouts := #[{
+      path := #["body", "body", "fn", "arg", "arg", "arg"]
+      stateBinder := 0
+      functionOperand := false
+      stateOperand := none
+      booleanPredicate := false }] }
+  continuation := .unknown
+  familyRecord := none
+  options := #[]
+
+#print axioms audit
+end ReciprocalIdentity
+
+namespace MomentSequence
+abbrev signature : Signature :=
+  _root_.Reg.Support.SingleDependentReadout.signature (Σ _ : ℕ, ℝ) (fun _ => ℕ) (fun _ => ℝ)
+def actual : Realization signature :=
+  realize signature (fun _ p n => ((n + 1 : ℕ) : ℝ)^p.1 *
+    Real.exp (-((n + 1 : ℕ) : ℝ) * p.2)) (fun e => nomatch e)
+def bad : Realization signature :=
+  realize signature (fun _ _ _ => 1) (fun e => nomatch e)
+theorem dependence : ObservationalDependence signature actual := by
+  intro i
+  refine ⟨⟨1, 0⟩, 0, 1, ?_⟩
+  norm_num [actual, realize]
+end MomentSequence
+
+namespace MomentSummability
+
+def arena : Arena where
+  signature := MomentSequence.signature
+  Law R := ∀ (i : ℕ) {t : ℝ}, 0 < t → Summable (fun n : ℕ => R.readout () ⟨i, t⟩ n)
+
+private theorem rejected : ¬ arena.Law MomentSequence.bad := by
+  intro H
+  have he := H 0 (t := 1) (by norm_num)
+  norm_num [MomentSequence.bad, realize, summable_const_iff] at he
+
+def family : Registration arena (type_of% @summable_expMoment) where
+  actual := MomentSequence.actual
+  bridge := Iff.rfl
+  variation := ⟨@summable_expMoment, MomentSequence.bad, rejected⟩
+  sensitivity := _root_.Reg.Support.SingleDependentReadout.sensitivity
+    arena.Law MomentSequence.actual MomentSequence.bad rejected
+  dependence := MomentSequence.dependence
+
+def audit : Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0}
+    (@summable_expMoment) (Realization MomentSequence.signature) Unit Unit where
+  unitName := `Reg.D5.S3.Analytic.ExpRatioCM.Series.MomentSummability.unit
+  realizationName := `Reg.D5.S3.Analytic.ExpRatioCM.Series.MomentSummability.family
+  realizationSource := none
+  generated := false
+  arena := .source ⟨arena⟩
+  objectArena := .source ⟨arena⟩
+  catalog := Lean.Name.anonymous
+  localNames := false
+  realization := .source arena ⟨family⟩
+  correspondence := { stage := .evidence, objectStage := .evidence }
+  bundleNonempty := .absent
+  readout := some (realize MomentSequence.signature (fun _ p n => ((n + 1 : ℕ) : ℝ)^p.1 *
+    Real.exp (-((n + 1 : ℕ) : ℝ) * p.2)) (fun e => nomatch e))
+  variation := .absent
+  sensitivity := .absent
+  partialSensitivity := none
+  escapeFrom := none
+  sourceSelection := some {
+    owner := `D5.S3.Analytic.ExpRatioCM.Series
+    definition := none
+    coordinates := #[0, 1]
+    readouts := #[{
+      path := #["body", "body", "body", "fn", "arg"]
+      stateBinder := 0
+      functionOperand := true
+      stateOperand := none
+      booleanPredicate := false }] }
+  continuation := .unknown
+  familyRecord := none
+  options := #[]
+
+#print axioms audit
+end MomentSummability
 
 end Reg.D5.S3.Analytic.ExpRatioCM.Series

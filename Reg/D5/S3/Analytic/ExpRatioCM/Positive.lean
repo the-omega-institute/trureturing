@@ -138,17 +138,14 @@ def audit : Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0}
 end SecondZero
 
 namespace FirstRatioSmooth
-def arena : Arena where
-  signature := momentSignature
-  Law R := ∀ i : ℕ, ContDiffOn ℝ ⊤ (R.readout () i) (Ioi 0)
-private theorem rejected : ¬ arena.Law nonsmoothMoment := by
+private theorem rejected : ¬ MomentSmooth.arena.Law nonsmoothMoment := by
   exact nonsmoothRejected
-def family : Registration arena (type_of% (@contDiffOn_ratioF)) where
+def family : Registration MomentSmooth.arena (type_of% (@contDiffOn_ratioF)) where
   actual := ratioActual
   bridge := Iff.rfl
   variation := ⟨@contDiffOn_ratioF, nonsmoothMoment, rejected⟩
   sensitivity := _root_.Reg.Support.SingleDependentReadout.sensitivity
-    arena.Law ratioActual nonsmoothMoment rejected
+    MomentSmooth.arena.Law ratioActual nonsmoothMoment rejected
   dependence := RatioExpansion.family.dependence
 def audit : Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0}
     (@contDiffOn_ratioF) (Realization momentSignature) Unit Unit where
@@ -156,11 +153,11 @@ def audit : Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0}
   realizationName := `Reg.D5.S3.Analytic.ExpRatioCM.Positive.FirstRatioSmooth.family
   realizationSource := none
   generated := false
-  arena := .source ⟨arena⟩
-  objectArena := .source ⟨arena⟩
+  arena := .source ⟨MomentSmooth.arena⟩
+  objectArena := .source ⟨MomentSmooth.arena⟩
   catalog := Lean.Name.anonymous
   localNames := false
-  realization := .source arena ⟨family⟩
+  realization := .source MomentSmooth.arena ⟨family⟩
   correspondence := { stage := .evidence, objectStage := .evidence }
   bundleNonempty := .absent
   readout := some (realize momentSignature (fun _ i t => ratioF i t) (fun e => nomatch e))
@@ -185,17 +182,14 @@ def audit : Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0}
 end FirstRatioSmooth
 
 namespace SecondRatioSmooth
-def arena : Arena where
-  signature := momentSignature
-  Law R := ∀ i : ℕ, ContDiffOn ℝ ⊤ (R.readout () i) (Ioi 0)
-private theorem rejected : ¬ arena.Law nonsmoothMoment := by
+private theorem rejected : ¬ MomentSmooth.arena.Law nonsmoothMoment := by
   exact nonsmoothRejected
-def family : Registration arena (type_of% (@contDiffOn_ratioG)) where
+def family : Registration MomentSmooth.arena (type_of% (@contDiffOn_ratioG)) where
   actual := secondRatioActual
   bridge := Iff.rfl
   variation := ⟨@contDiffOn_ratioG, nonsmoothMoment, rejected⟩
   sensitivity := _root_.Reg.Support.SingleDependentReadout.sensitivity
-    arena.Law secondRatioActual nonsmoothMoment rejected
+    MomentSmooth.arena.Law secondRatioActual nonsmoothMoment rejected
   dependence := RatioAgreement.family.dependence
 def audit : Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0}
     (@contDiffOn_ratioG) (Realization momentSignature) Unit Unit where
@@ -203,11 +197,11 @@ def audit : Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0}
   realizationName := `Reg.D5.S3.Analytic.ExpRatioCM.Positive.SecondRatioSmooth.family
   realizationSource := none
   generated := false
-  arena := .source ⟨arena⟩
-  objectArena := .source ⟨arena⟩
+  arena := .source ⟨MomentSmooth.arena⟩
+  objectArena := .source ⟨MomentSmooth.arena⟩
   catalog := Lean.Name.anonymous
   localNames := false
-  realization := .source arena ⟨family⟩
+  realization := .source MomentSmooth.arena ⟨family⟩
   correspondence := { stage := .evidence, objectStage := .evidence }
   bundleNonempty := .absent
   readout := some (realize momentSignature (fun _ i t => ratioG i t) (fun e => nomatch e))
@@ -368,6 +362,148 @@ def audit : Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0}
 
 #print axioms audit
 end LowIndices
+
+
+namespace FirstMoment
+abbrev signature := SecondZero.signature
+def actual : Realization signature :=
+  realize signature (fun _ _ t => F 1 t) (fun e => nomatch e)
+abbrev bad := SecondZero.bad
+theorem dependence : ObservationalDependence signature actual := by
+  intro i
+  refine ⟨(), Real.log 2, Real.log 3, ?_⟩
+  change F 1 (Real.log 2) ≠ F 1 (Real.log 3)
+  rw [F_one (Real.log_pos (by norm_num)), F_one (Real.log_pos (by norm_num))]
+  norm_num [Real.exp_log (by norm_num : (0 : ℝ) < 2),
+    Real.exp_log (by norm_num : (0 : ℝ) < 3)]
+end FirstMoment
+
+namespace FirstMomentFormula
+
+def arena : Arena where
+  signature := FirstMoment.signature
+  Law R := ∀ {t : ℝ}, 0 < t → R.readout () () t = Real.exp t / (Real.exp t - 1)^2
+
+private theorem rejected : ¬ arena.Law FirstMoment.bad := by
+  intro H
+  have he := (F_one (t := 1) (by norm_num)).trans (H (t := 1) (by norm_num)).symm
+  exact (F_pos 1 (t := 1) (by norm_num)).ne' he
+
+def family : Registration arena (type_of% @F_one) where
+  actual := FirstMoment.actual
+  bridge := Iff.rfl
+  variation := ⟨@F_one, FirstMoment.bad, rejected⟩
+  sensitivity := _root_.Reg.Support.SingleDependentReadout.sensitivity
+    arena.Law FirstMoment.actual FirstMoment.bad rejected
+  dependence := FirstMoment.dependence
+
+def audit : Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0}
+    (@F_one) (Realization FirstMoment.signature) Unit Unit where
+  unitName := `Reg.D5.S3.Analytic.ExpRatioCM.Positive.FirstMomentFormula.unit
+  realizationName := `Reg.D5.S3.Analytic.ExpRatioCM.Positive.FirstMomentFormula.family
+  realizationSource := none
+  generated := false
+  arena := .source ⟨arena⟩
+  objectArena := .source ⟨arena⟩
+  catalog := Lean.Name.anonymous
+  localNames := false
+  realization := .source arena ⟨family⟩
+  correspondence := { stage := .evidence, objectStage := .evidence }
+  bundleNonempty := .absent
+  readout := some (realize FirstMoment.signature (fun _ _ t => F 1 t) (fun e => nomatch e))
+  variation := .absent
+  sensitivity := .absent
+  partialSensitivity := none
+  escapeFrom := none
+  sourceSelection := some {
+    owner := `D5.S3.Analytic.ExpRatioCM.Positive
+    definition := none
+    coordinates := #[]
+    readouts := #[{
+      path := #["body", "body", "fn", "arg"]
+      stateBinder := 0
+      functionOperand := false
+      stateOperand := none
+      booleanPredicate := false }] }
+  continuation := .unknown
+  familyRecord := none
+  options := #[]
+
+#print axioms audit
+end FirstMomentFormula
+
+namespace LowSecondRatio
+abbrev signature := SecondZero.signature
+def actual : Realization signature :=
+  realize signature (fun _ _ t => ratioG 0 t) (fun e => nomatch e)
+abbrev bad := SecondZero.bad
+theorem dependence : ObservationalDependence signature actual := by
+  intro i
+  refine ⟨(), Real.log 2, Real.log 3, ?_⟩
+  change ratioG 0 (Real.log 2) ≠ ratioG 0 (Real.log 3)
+  rw [(ratio_low (Real.log_pos (by norm_num))).2.2.2,
+    (ratio_low (Real.log_pos (by norm_num))).2.2.2]
+  norm_num [F, Real.exp_log (by norm_num : (0 : ℝ) < 2),
+    Real.exp_log (by norm_num : (0 : ℝ) < 3)]
+end LowSecondRatio
+
+namespace LowRatioFormulas
+
+def arena : Arena where
+  signature := LowSecondRatio.signature
+  Law R := ∀ {t : ℝ}, 0 < t →
+    ratioF 0 t = 1 + F 0 t ∧
+    ratioF 1 t = 1 + 2 * F 0 t ∧
+    ratioF 2 t = 1 + 4 * F 0 t - 2 * F 0 (2*t) ∧
+    R.readout () () t = F 0 t
+
+private theorem rejected : ¬ arena.Law LowSecondRatio.bad := by
+  intro H
+  have he := (H (t := 1) (by norm_num)).2.2.2
+  exact (F_pos 0 (t := 1) (by norm_num)).ne' he.symm
+
+def family : Registration arena (type_of% @ratio_low) where
+  actual := LowSecondRatio.actual
+  bridge := Iff.rfl
+  variation := ⟨@ratio_low, LowSecondRatio.bad, rejected⟩
+  sensitivity := _root_.Reg.Support.SingleDependentReadout.sensitivity
+    arena.Law LowSecondRatio.actual LowSecondRatio.bad rejected
+  dependence := LowSecondRatio.dependence
+
+def audit : Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0}
+    (@ratio_low) (Realization LowSecondRatio.signature) Unit Unit where
+  unitName := `Reg.D5.S3.Analytic.ExpRatioCM.Positive.LowRatioFormulas.unit
+  realizationName := `Reg.D5.S3.Analytic.ExpRatioCM.Positive.LowRatioFormulas.family
+  realizationSource := none
+  generated := false
+  arena := .source ⟨arena⟩
+  objectArena := .source ⟨arena⟩
+  catalog := Lean.Name.anonymous
+  localNames := false
+  realization := .source arena ⟨family⟩
+  correspondence := { stage := .evidence, objectStage := .evidence }
+  bundleNonempty := .absent
+  readout := some (realize LowSecondRatio.signature (fun _ _ t => ratioG 0 t) (fun e => nomatch e))
+  variation := .absent
+  sensitivity := .absent
+  partialSensitivity := none
+  escapeFrom := none
+  sourceSelection := some {
+    owner := `D5.S3.Analytic.ExpRatioCM.Positive
+    definition := none
+    coordinates := #[]
+    readouts := #[{
+      path := #["body", "body", "arg", "arg", "arg", "fn", "arg"]
+      stateBinder := 0
+      functionOperand := false
+      stateOperand := none
+      booleanPredicate := false }] }
+  continuation := .unknown
+  familyRecord := none
+  options := #[]
+
+#print axioms audit
+end LowRatioFormulas
 
 end Reg.D5.S3.Analytic.ExpRatioCM.Positive
 end

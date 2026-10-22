@@ -4,7 +4,31 @@
 
 Positive exponential coefficients and complete monotonicity.
 
-**Theorem 1.1 (The constant term in the second family).**
+**Theorem 1.1 (The first signed derivative).**
+
+Lean statement: `D5/S3/Analytic/ExpRatioCM/Positive.F_one`
+
+*Proof.* Machine-checked in Lean as `D5/S3/Analytic/ExpRatioCM/Positive.F_one` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+For positive t, F(1,t)=exp(t)/(exp(t)-1)^2. The existing logarithmic derivative formula yields this identity and the audit uses it for quotient normalization.
+
+**Theorem 1.2 (Low-index ratio formulas).**
+
+Lean statement: `D5/S3/Analytic/ExpRatioCM/Positive.ratio_low`
+
+*Proof.* Machine-checked in Lean as `D5/S3/Analytic/ExpRatioCM/Positive.ratio_low` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+For positive t, ratioF(0,t)=1+F(0,t), ratioF(1,t)=1+2F(0,t), ratioF(2,t)=1+4F(0,t)-2F(0,2t), and ratioG(0,t)=F(0,t). These identities support the low-index complete monotonicity proof.
+
+**Theorem 1.3 (The constant term in the second family).**
 
 Lean statement: `D5/S3/Analytic/ExpRatioCM/Positive.G_zero_eq`
 
@@ -16,7 +40,7 @@ Lean statement: `D5/S3/Analytic/ExpRatioCM/Positive.G_zero_eq`
 
 For positive t, G(0,t) equals 1+F(0,t).
 
-**Theorem 1.2 (Smooth exponential moments).**
+**Theorem 1.4 (Smooth exponential moments).**
 
 Lean statement: `D5/S3/Analytic/ExpRatioCM/Positive.contDiffOn_F`
 
@@ -28,7 +52,7 @@ Lean statement: `D5/S3/Analytic/ExpRatioCM/Positive.contDiffOn_F`
 
 Every F(i) is smooth on the positive half-line.
 
-**Theorem 1.3 (Smooth first ratios).**
+**Theorem 1.5 (Smooth first ratios).**
 
 Lean statement: `D5/S3/Analytic/ExpRatioCM/Positive.contDiffOn_ratioF`
 
@@ -40,7 +64,7 @@ Lean statement: `D5/S3/Analytic/ExpRatioCM/Positive.contDiffOn_ratioF`
 
 The quotient F(i+1)/F(i) is smooth on the positive half-line because its denominator is strictly positive.
 
-**Theorem 1.4 (Smooth second ratios).**
+**Theorem 1.6 (Smooth second ratios).**
 
 Lean statement: `D5/S3/Analytic/ExpRatioCM/Positive.contDiffOn_ratioG`
 
@@ -52,7 +76,7 @@ Lean statement: `D5/S3/Analytic/ExpRatioCM/Positive.contDiffOn_ratioG`
 
 The second consecutive ratios are smooth on the positive half-line. The zeroth denominator equals 1+F(0), and the positive-order denominators equal the corresponding F moments.
 
-**Theorem 1.5 (Nonnegative exponential expansion).**
+**Theorem 1.7 (Nonnegative exponential expansion).**
 
 Lean statement: `D5/S3/Analytic/ExpRatioCM/Positive.cm_of_nonnegative_exponential_expansion`
 
@@ -64,7 +88,7 @@ Lean statement: `D5/S3/Analytic/ExpRatioCM/Positive.cm_of_nonnegative_exponentia
 
 A smooth function whose every derivative is represented by nonnegative coefficients at nonnegative exponential frequencies has alternating derivatives of the required sign on the positive half-line.
 
-**Theorem 1.6 (Low-index positive cases).**
+**Theorem 1.8 (Low-index positive cases).**
 
 Lean statement: `D5/S3/Analytic/ExpRatioCM/Positive.cm_of_le_two`
 
@@ -78,11 +102,13 @@ The signed exponential moments give complete monotonicity of the zeroth moment. 
 
 ## References
 
+- Truth anchor: `D5/S3/Analytic/ExpRatioCM/Positive.F_one`
 - Truth anchor: `D5/S3/Analytic/ExpRatioCM/Positive.G_zero_eq`
 - Truth anchor: `D5/S3/Analytic/ExpRatioCM/Positive.cm_of_le_two`
 - Truth anchor: `D5/S3/Analytic/ExpRatioCM/Positive.cm_of_nonnegative_exponential_expansion`
 - Truth anchor: `D5/S3/Analytic/ExpRatioCM/Positive.contDiffOn_F`
 - Truth anchor: `D5/S3/Analytic/ExpRatioCM/Positive.contDiffOn_ratioF`
 - Truth anchor: `D5/S3/Analytic/ExpRatioCM/Positive.contDiffOn_ratioG`
+- Truth anchor: `D5/S3/Analytic/ExpRatioCM/Positive.ratio_low`
 - Dependency: [D5/S3/Analytic/ExpRatioCM/Series](Series.md)
 - Dependency: [D5/S3/Analytic/Interpolation/LogOneSubExpDerivatives](../Interpolation/LogOneSubExpDerivatives.md)

@@ -7,6 +7,14 @@ internal sealed class SeriesDocument : IScribeDocumentDefinition
     public DocumentDefinition Create() => DocumentDefinition.Create(ScribeNode.Create(
         "Exponential moments and their quotient coefficients.",
         H("Series and signed derivatives"), Blocks(
+            Describe.Lean(DescribeId.Create("exp-ratio-reciprocal-identity"),
+                DeclarationHandle.Create("D5/S3/Analytic/ExpRatioCM/Series.reciprocal_eq"),
+                H("The reciprocal identity"), StatementSource.WithoutFormula(), AssessedProvenance.FromRepo(),
+                Blocks(Paragraph(Text("For positive t, 1/(1-exp(-t)) is 1+1/(exp(t)-1). Both the positive-order equality and the zeroth-order constant shift use this identity."))), DescribeRole.Theorem),
+            Describe.Lean(DescribeId.Create("exp-ratio-moment-summability"),
+                DeclarationHandle.Create("D5/S3/Analytic/ExpRatioCM/Series.summable_expMoment"),
+                H("Summability of exponential moments"), StatementSource.WithoutFormula(), AssessedProvenance.FromRepo(),
+                Blocks(Paragraph(Text("For natural i and positive t, the sequence (n+1)^i exp(-(n+1)t) is summable. The shifted Mathlib exponential-moment theorem supplies this result."))), DescribeRole.Theorem),
             Describe.Lean(DescribeId.Create("exp-ratio-iteratedderiv-f"),
                 DeclarationHandle.Create("D5/S3/Analytic/ExpRatioCM/Series.iteratedDeriv_F"),
                 H("Signed derivative composition"), StatementSource.WithoutFormula(), AssessedProvenance.FromRepo(),

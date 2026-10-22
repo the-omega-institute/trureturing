@@ -7,6 +7,14 @@ internal sealed class PositiveDocument : IScribeDocumentDefinition
     public DocumentDefinition Create() => DocumentDefinition.Create(ScribeNode.Create(
         "Positive exponential coefficients and complete monotonicity.",
         H("The coefficient criterion"), Blocks(
+            Describe.Lean(DescribeId.Create("exp-ratio-first-moment-formula"),
+                DeclarationHandle.Create("D5/S3/Analytic/ExpRatioCM/Positive.F_one"),
+                H("The first signed derivative"), StatementSource.WithoutFormula(), AssessedProvenance.FromRepo(),
+                Blocks(Paragraph(Text("For positive t, F(1,t)=exp(t)/(exp(t)-1)^2. The existing logarithmic derivative formula yields this identity and the audit uses it for quotient normalization."))), DescribeRole.Theorem),
+            Describe.Lean(DescribeId.Create("exp-ratio-low-ratio-formulas"),
+                DeclarationHandle.Create("D5/S3/Analytic/ExpRatioCM/Positive.ratio_low"),
+                H("Low-index ratio formulas"), StatementSource.WithoutFormula(), AssessedProvenance.FromRepo(),
+                Blocks(Paragraph(Text("For positive t, ratioF(0,t)=1+F(0,t), ratioF(1,t)=1+2F(0,t), ratioF(2,t)=1+4F(0,t)-2F(0,2t), and ratioG(0,t)=F(0,t). These identities support the low-index complete monotonicity proof."))), DescribeRole.Theorem),
             Describe.Lean(DescribeId.Create("exp-ratio-g-zero-eq"),
                 DeclarationHandle.Create("D5/S3/Analytic/ExpRatioCM/Positive.G_zero_eq"),
                 H("The constant term in the second family"), StatementSource.WithoutFormula(), AssessedProvenance.FromRepo(),
