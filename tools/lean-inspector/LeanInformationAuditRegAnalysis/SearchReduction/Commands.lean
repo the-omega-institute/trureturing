@@ -519,9 +519,12 @@ indexes. Only compiled Lean declarations are read back; JSON is print-only. -/
           -- The child may use baseline vocabulary loaded for fixed tactics
           -- that the request module itself does not import. Reconstruct that
           -- support before rechecking the exported proof in the parent.
-          let source ← referenceEnvironment
-          for dependency in info.type.getUsedConstants ++ info.value.getUsedConstants do
-            exportConstant source target.getId dependency
+          let dependencies := info.type.getUsedConstants ++ info.value.getUsedConstants
+          unless dependencies.all (← getEnv).contains do
+            enableInitializersExecution
+            let source ← referenceEnvironment
+            for dependency in dependencies do
+              exportConstant source target.getId dependency
           discard <| checkProof n info.levelParams info.type info.value
         | _ => pure ()
   | _ => throwUnsupportedSyntax
