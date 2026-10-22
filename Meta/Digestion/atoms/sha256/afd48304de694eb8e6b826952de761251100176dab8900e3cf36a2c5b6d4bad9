@@ -1,0 +1,13 @@
+**定义 257.1（来源与几何供应项）。** 本卷承接[续卷 IX 的 §256](FIB_ATOM_RECURSIVE_HOLOGRAPHIC_BOUNDARY_GEOMETRY_CONTINUATION_IX.md)。来源是非空有限有序二元树：叶标签为 $\alpha,\beta$，分支写为 $\langle s,t\rangle$；相同标签的不同出现仍为不同顶点。采用[Whole-rho 续卷 §55.1–§55.5](FIB_ATOM_RECURSIVE_HOLOGRAPHIC_BOUNDARY_GEOMETRY_CONTINUATION.md) 的同地址来源及其附加几何合同：
+
+$$
+\rho\alpha=\beta,\qquad
+\rho\beta=\langle\beta,\alpha\rangle,\qquad
+\rho\langle s,t\rangle=\langle\rho s,\rho t\rangle,
+\qquad D_j(t)=\operatorname{Pos}(\rho^jt).
+$$
+
+地址为 $\{L,R\}^{*}$ 的有限字，根为 $\varepsilon$，边仅连接实际存在的父子地址。$D_j(t)$ 是实际有限树，不以完全层球替换。[§55.2](FIB_ATOM_RECURSIVE_HOLOGRAPHIC_BOUNDARY_GEOMETRY_CONTINUATION.md) 的零外延 Dirichlet 动能 $L_D$ 在根的对角为 $2$，其余实际顶点的对角均为 $3$，实际边的非对角为 $-1$；当前叶缺失的两个孩子贡献仍保留在对角。它不同于把有限树封闭后按其内部度数构成的自由 Laplacian。
+
+来源原有的 INITIAL、实际版本、标签、左右顺序、操作、整棵候选的守卫、接受或拒绝、Read、Stop、记录与取得权限均不因这个附加几何合同改变。固定容量的执行只采用分别合法的有限前缀；数学来源族不增加越过 Stop 或无限前缀后的事件。给一个实际地址安装电势和电流接口是另加的实现合同，不是从叶标签、原有数值 Read 或来源语法自动取得该接口。
+

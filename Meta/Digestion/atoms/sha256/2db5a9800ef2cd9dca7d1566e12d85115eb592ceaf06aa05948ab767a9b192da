@@ -1,0 +1,100 @@
+**定理 469.1（三次幂素估值方向的联合预算）。** 保持定理 467.1 的原始完整卷积、原非负行权、固定有限物理/ray/Fourier 表示和零延拓，取 $D=N=\sqrt U$、$K=U$、$U\ge2$。直接复用（467.5）—（467.6）的实际 primitive 导子及 plain 因子界和（466.1）的二次筛族接口。令 $\mathcal C_{\rm val}$ 一次包络该二次筛、原 plain 因子估计、profiles 所需有限阶导数、有限分量与 smooth/Sobolev 恢复的实际乘积费用。所有 norm-twist 高度仍满足原固定或 polylog 合同。
+
+固定有限物理标签后，把 good 非单位 sixth-power-free 理想行唯一写成
+
+$$
+v=R_1R_2^2R_3^3R_4^4R_5^5,
+\qquad R_i\text{ 两两互素且 squarefree}.
+\tag{469.1}
+$$
+
+$R_i$ 只包含原素估值恰为 $i$ 的素理想，不是列 $h=dn$ 的幂次提取，也不把原行估值减模。定义同一物理行的读数
+
+$$
+\mathscr H_3(v)=\frac{q_{\operatorname{rad}v}^{2}}{q_{R_3}}.
+\tag{469.2}
+$$
+
+对固定 $C_0\ge1$ 和 $1\le T\le C_0U$，令 $Q^{\langle3\rangle}_{\le T}(b)$ 为同一个完整原正行能量在 $\mathscr H_3(v)\le T$ 上的限制，包括全部原有限物理标签。则在所列解析输入及共同费用条件下，对每个 $\varepsilon>0$，
+
+$$
+Q^{\langle3\rangle}_{\le T}(b)
+\ll_{\varepsilon,C_0}\mathcal C_{\rm val}^{2}
+U^{1+\varepsilon}T.
+\tag{469.3}
+$$
+
+特别地，$T=U$ 给出 $O_\varepsilon(\mathcal C_{\rm val}^{2}U^{2+\varepsilon})$ 的体积预算；对 $0\le\nu\le1$，取 $T=U^{1-\nu}$ 得
+
+$$
+Q^{\langle3\rangle}_{\le U^{1-\nu}}(b)
+\ll_\varepsilon\mathcal C_{\rm val}^{2}U^{2-\nu+\varepsilon}.
+\tag{469.4}
+$$
+
+固定 $\nu>0$、共同费用为次幂且最终 $\varepsilon$ 足够小时，后一式严格低于 $U^2$。这是原完整 $\mu*\mathrm{plain}$ 卷积的行子域估计；不允许在原系数上增加任意列乘子后直接使用，也不推断孤立 F4 包的相同预算。
+
+证明。固定一个原乘法 Fourier 分量 $\xi$ 和物理标签。其完整原列多项式仍恰为（467.4）的两个未归一化原因子之积，即 $\mathsf M_\xi(v)\mathsf S_\xi(v)$。两个因子使用同一个自然字符、全部原零值和固定过滤；负 orientation 整体共轭。这里只沿用已有 plain 界和二次筛，不另立函数方程或筛定理。
+
+把（469.1）的五个 norm 分到 $q_{R_i}\asymp X_i$ 的 dyadic 块。单位因子归入尺度一；非空 subunit 尺度只作原固定 annular enlargement。记
+
+$$
+F=\prod_{i=1}^5X_i,\qquad
+G=\prod_{i\ne3}X_i=F/X_3.
+\tag{469.5}
+$$
+
+原 annulus 给出 $\prod_iX_i^i\asymp U$，故 $X_3\ll U^{1/3}$。如果该块有原允许行满足（469.2）的截断，则
+
+$$
+F^2/X_3\ll T.
+\tag{469.6}
+$$
+
+固定实际 $R_1,R_2,R_4,R_5$，只让原 $R_3$ 变化。其 good 素估值仍在 $1,\ldots,5$，且各 $R_i$ 在原允许行上互素，故（467.5）使用的非主 primitive inducing character 具有实际导子范数 $F_v\asymp_S q_{\operatorname{rad}v}\asymp F$。Good collision zeros 已在该字符中，额外 $S$ 零值按原固定 Euler 因子保留。（467.6）于是给出原允许行上的统一界
+
+$$
+|\mathsf S_\xi(v)|^2
+\ll_\delta C_{\xi,\rm plain}^{2}F^{1+\delta}.
+\tag{469.7}
+$$
+
+先在这些原允许行上取此界，再估计剩余 Möbius 因子的正范数；不把导子公式运输到新增的非互素行。对该因子，原零延拓下的精确式为
+
+$$
+\chi_d^{\rm raw}(v)
+=\chi_d^{\rm raw}(R_1R_2^2R_4^4R_5^5)
+ \chi_d^{(2),\rm raw}(R_3).
+\tag{469.8}
+$$
+
+把 $\xi(d)\chi_d^{\rm raw}(R_1R_2^2R_4^4R_5^5)$ 留在原 Möbius 列系数中。它与变化的 $R_3$ 无关，模长至多一；其移动导子没有进入筛常数。列 $d$ 因 $\mu(d)$ 而 squarefree，行 $R_3$ 也 squarefree。保留所有原行限制、与固定四个因子的互素条件及零值后，只在该正范数中扩大行集。直接使用（466.1）的二次筛得到
+
+$$
+\sum_{R_3\ {\rm original}}\Omega
+ |\mathsf M_\xi(v)|^2
+\ll_\delta C_{\xi,2}^{2}(UD)^\delta
+D(X_3+D).
+\tag{469.9}
+$$
+
+这不是对原两因子分别选取一个最优实现，而是在同一原行上先用（469.7），再对同一 $\mathsf M_\xi$ 作正范数估计。固定的四个实际理想至多有 $O(G)$ 种；遗忘其互素限制只用于这份正计数。乘合（469.7）—（469.9）并吸收任意小幂，该块的完整原能量为
+
+$$
+\ll_\delta\mathcal C_{\rm val}^{2}U^\delta
+\left\{DF^2+D^2F^2/X_3\right\}.
+\tag{469.10}
+$$
+
+由 $D=\sqrt U$、（469.6）及 $X_3\ll U^{1/3}$，第一项为 $O(TU^{5/6})$，第二项为 $O(TU)$。五个原估值位置只有对数幂数量的非空 dyadic 块。选择内部损失小于最终 $\varepsilon$，对这些块正求和，再以同一实际乘积费用恢复全部原有限分量和所需有限 profile 导数，得到（469.3）。恢复导数时只用原乘积结构的有限阶 Leibniz 展开；不引入任意行依赖系数或额外高度预算。（469.4）由代入得到。证毕。
+
+同一读数也给出按原素估值表达的联合区域：
+
+$$
+\frac{\mathscr H_3(v)}{q_v}
+=\frac{q_{R_1}}{q_{R_3}^{2}q_{R_4}^{2}q_{R_5}^{3}}.
+\tag{469.11}
+$$
+
+因此，原允许行中满足 $q_{R_1}\le q_{R_3}^{2}q_{R_4}^{2}q_{R_5}^{3}$ 的部分均有体积预算；这里取固定 $C_0$ 覆盖原 annulus 和有限物理标签的 $q_v/U$ 上界。此处每个 $R_i$ 必须来自同一个实际行，不能拼合不同对象上分别可达的 norm 值。
+

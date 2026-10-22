@@ -1,0 +1,39 @@
+## 8. Primary supplier correspondence and mathematical contribution
+
+**Mathematical citation 8.1 (directly used literature).** The following
+are literature-attested intermediate inputs, not new general theorems of
+this volume.
+
+| Reference | Exact supplied result and correspondence |
+| --- | --- |
+| [H] Y. Colin de Verdière, L. Hillairet, E. Trélat, *Small-time asymptotics of hypoelliptic heat kernels near the diagonal, nilpotentization and related results*, Annales Henri Lebesgue 4 (2021), 897--971, [DOI 10.5802/ahl.93](https://ahl.centre-mersenne.org/item/10.5802/ahl.93.pdf) | §3.1.2 supplies the free semigroup/heat setting; Theorem B, (2.8), pp.915--916, gives the rescaled positive-time local kernel limit for a bounded-step privileged chart and horizontal drift. Theorem 3.2, p.921, compares identical local expressions and densities with bounded semigroup norms. Our generator is (2.2), with smooth positive $\rho,A$ near the compact closure; the drift is horizontal, the potential zero, and the two fields bracket-generate. The applications are (3.5) and the integrable kernel difference (4.6); the theorem is not an infinite-time Green convergence assertion. |
+| [R] P. Ciatti, M. G. Cowling, F. Ricci, *Hardy and uncertainty inequalities on stratified Lie groups*, [arXiv:1308.2373v1](https://arxiv.org/html/1308.2373v1), [DOI 10.1016/j.aim.2014.12.040](https://doi.org/10.1016/j.aim.2014.12.040) | §2, (2.1) and (2.6)--(2.7): $I_2=\int_0^\infty p_t\,dt$ is the positive degree $2-Q$ unit-source kernel. Theorem A/Corollary 3.2: $\|N^{-\alpha}v\|_p\le C\|L^{\alpha/2}v\|_p$ for $0<\alpha<Q/p$. We use $p=2,\alpha=1,Q=4$, $L=L_H$, Haar measure $d\xi\,d\eta\,d\zeta$, then the explicit density conversion (4.3). No sharp constant is imported. |
+| [B] H. Bahouri, J.-Y. Chemin, I. Gallagher, *Refined Hardy inequalities*, Ann. Scuola Norm. Sup. Pisa Cl. Sci. (5) V (2006), 375--391, [primary PDF](https://www.numdam.org/item/ASNSP_2006_5_5_3_375_0.pdf) | Theorem 1.2, p.377, supplies the unweighted Heisenberg estimate for $s\in(0,N/2)$. Our choice is $d=1,N=4,s=1$; Definition 1.1 identifies its $\dot H^1$ norm with horizontal energy. The explicit map $(\xi,\eta,\zeta)\mapsto(\xi,\eta,\xi\eta-2\zeta)$ matches both horizontal fields and accounts for Haar Jacobian $2$. This is an alternative supplier of the intermediate inequality (4.8). |
+| [T] G. Teschl, *Mathematical Methods in Quantum Mechanics*, Graduate Studies in Mathematics 99, 2009 edition, [author's text](https://www.mat.univie.ac.at/~gerald/ftp/book-schroe/schroe.pdf), Theorem 6.24 (KLMN), §6.5, p.150 | The input is the closed form $T_\varepsilon$, with perturbation $-\gamma\varepsilon^2V_{\varepsilon,o}$ and verified relative bound $2rC_H\gamma<1$. It yields closedness and semiboundedness on the same form domain. Compactness comes separately from Proposition 2.1 and norm equivalence; attainment is proved in Theorem 5.1. |
+
+The gradient-weighted Hardy potential sometimes written
+$|\nabla_H N|^2/N^2$ is not substituted for $G_H$ or for
+$\Gamma_{\varepsilon,o}$. The horizontal-gradient factor can vanish in
+central directions, whereas $G_H$ is positive off its pole. Such a weighted
+estimate alone does not bound the unweighted multiplier needed in (4.7).
+
+**Mathematical citation 8.2 (repository correspondence and new application).**
+[N, §§2--4,8--10] supplies the native probability fiber, arbitrary fixed
+preparation phases, exact current-ray torus, common-command guards, fields,
+flag and local heat hypotheses. [C] is
+[Recursive holographic boundary geometry, Continuation III](FIB_ATOM_RECURSIVE_HOLOGRAPHIC_BOUNDARY_GEOMETRY_CONTINUATION_III.md),
+§§81--83. [A] is
+[Adaptive acquired-reference frontier](RECURSIVE_RELATIONAL_OBSERVATION_ADAPTIVE_ACQUIRED_REFERENCE_FRONTIER.md).
+[F, §10] is the finite-affine-factor classification in the immutable source
+[Native continuation affine obstruction and approximation](https://github.com/the-omega-institute/trureturing/blob/17b7165cce4/docs/develop/theory/FIB_NATIVE_CONTINUATION_AFFINE_OBSTRUCTION_AND_APPROXIMATION.md).
+
+The repo-derived contribution is the full rank-two source application in
+Theorem 3.1 and the new double-wall combination (4.4), (4.7), (6.2) and
+(6.8): actual killed-periodic Green control, normalized anisotropic local
+strength, exact global phase contribution, and a nonempty strictly stable
+attained-negative family. The common-domain and finiteness arguments make
+those applications well-defined. The separate sufficient stable and
+unstable conditions do not determine a sharp threshold. No general Hardy,
+heat, KLMN or compact-resolvent theorem is claimed as new, and no worldwide
+originality claim or physical realization follows from this composition.
+
