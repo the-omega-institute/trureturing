@@ -87,7 +87,7 @@ matcher、等式引理、`_proof_n` 等编译器生成常量用 Lean 自身的�
 
 查表是二值关系，不使用频度、惊奇度或重复登记次数。完整陈述的成员查询以规范化 N 后、α 等价不变的完整陈述哈希为键；推论查询以规范化结论的判别树键路径为键，并包含 And 投影、Iff 方向与必要通配视图。键只负责召回，实例化、`isDefEq` 与 kernel 证书决定命中。变量改名、全称参数次序、投影、Iff 方向和实例的等价写法均须经过召回验收；未证明覆盖的键筛选不能支持 NoHit。
 
-磁盘索引契约要求独立生产者按模块分片、分页写出，并对账受保护 B0 清单。索引按基底数据输入与显式版本号复用，不哈希程序字节。消费者只读取命中页及必要通配页，额外索引内存为 O(命中)，不对全环境建树，不调用 `exact?`、`apply?` 或 `LazyDiscrTree` 全库树。总内存仍包含 Lean 导入闭包；O(命中) 不是整个进程的内存界。
+磁盘索引契约要求独立生产者按模块分片、分页写出，并对账受保护 B0 清单。索引按基底数据输入与显式版本号复用，不哈希程序字节。消费者将完整路由 manifest 物化为堆数组，命中页及必要通配页通过 mmap 读取，只复制命中元数据；当前实现尚无总额外索引内存为 O(命中) 的严格上界。消费者不对全环境建树，不调用 `exact?`、`apply?` 或 `LazyDiscrTree` 全库树。总内存还包含 Lean 导入闭包与缓存区域。
 
 The current backend is `R_lookup/v14/scope-B_T/candidate-200000/preparation-8000000/G-340000000/memo-target-basis-R-v1/N-memo-2000000/checkpoint-v3/views-kappa/analytic-cut-k2/200000`. `make search-reduction-index INDEX_BASIS=<protected-commit> INDEX_DIR=<build-directory>` produces the index offline. Reuse depends on compiled basis data, the Mathlib pin, Lean version and explicit format versions. Implication candidates use Lean core `DiscrTree.mkPath` and `getMatch`, including projection and direction views; dropped `[*]` and `[Eq,*,*,*]` keys are separate fallback candidates. Batteries pickle/withUnpickle supplies module shards and mapped compacted storage. Candidate order is a stable partition with already loaded owners first, followed within each partition by module name and module-local declaration ordinal; fallback follows the primary route. Implication candidates are filtered to B_T without changing their module-local order.
 
@@ -229,7 +229,7 @@ FIB 五模式单元刻画两个选择的耦合，不刻画是否存在选择。�
 
 顶点数不超过活闭包内批内声明数加 `|B_used|`。每臂每顶点至多两次声明探针，另有两次根探针、每个 `S` 成员至多一次反向探针和一次基底独立探针，每次探针的旧局部路线分配 `200000` 搜索心跳；查表按 §3.4 为每候选分配 κ = `200000` 搜索心跳与 `8000000` 准备心跳，每查询另受覆盖上界 G = `340000000` 约束。截断与超限保留 unknown，不改变判词逻辑。没有证明项顶点容量扩容或子项义务搜索路径。
 
-内存为一份共享不可变基底导入，加 `O(Σ|type(v)|+|前提|)` 的当前目标数据；证明体仅线性遍历取依赖，目标结束即释放，不跨目标常驻增长，不建立全库索引。探针串行执行，整棵进程树物理 footprint 受 `12 GiB` 基础设施守卫约束；触发该守卫或挂钟截止时中断运行并记录 interrupted，不把基础设施中断计入 R 的语义判词。导入环境的基础驻留另行实测，不能冒称与库大小无关。
+内存包含一份共享不可变基底导入，加 `O(Σ|type(v)|+|前提|)` 的当前目标数据；证明体仅线性遍历取依赖，消费者不对全环境建树。完整路由 manifest 在堆上驻留，答案缓存与断点的 compacted regions 保留至进程退出；当前实现没有任意长批次跨目标常驻量的严格上界。探针串行执行，整棵进程树物理 footprint 受 `12 GiB` 基础设施守卫约束；触发该守卫或挂钟截止时中断运行并记录 interrupted，不把基础设施中断计入 R 的语义判词。导入环境的基础驻留另行实测，不能冒称与库大小无关。
 
 ## 11. 与现行准入的关系
 
