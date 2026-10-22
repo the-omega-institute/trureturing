@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:66f3a6cff5b47ce52b842ce684b6f6a9c5246ec05e77097faf94c14b45ca1798
+  normalized_sha256: sha256:66f3a6cff5b47ce52b842ce684b6f6a9c5246ec05e77097faf94c14b45ca1798
+cas_ref: sha256:66f3a6cff5b47ce52b842ce684b6f6a9c5246ec05e77097faf94c14b45ca1798
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: Chapter roadmap, parameter-name conventions and distinction between parameter optimization and operational realization; the differentiable and stability claims are deferred to subsequent theorem atoms.
+    previous_atom_id: 8e1ab5f741bba51418287b49ca374b46defd92ac8d60940666892e9521c1b51f
+    next_atom_id: 5d46e8b7d6023d83aa6b34fbb3ec7ddbf198016e0718a203fd43be0dd72f41f2

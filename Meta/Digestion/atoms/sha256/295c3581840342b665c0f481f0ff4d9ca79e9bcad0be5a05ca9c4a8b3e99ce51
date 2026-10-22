@@ -1,0 +1,24 @@
+**定理 7.4（隐藏二次关系的 Hecke 自然性）。** 对 $\psi=\sigma,\gamma,\beta$ 或
+总映射 $\Psi$，记目标表示为 $R'$。则
+
+$$
+\varepsilon_{R'}\circ H_\psi(\mathcal F_E)
+=(\psi_E\boxtimes\operatorname{id}_{\mathcal F_E})\circ\varepsilon_R.
+$$
+
+特别地，$\beta$ 把二次伴随系数的 Hecke 操作映到标准五维系数的 Hecke 操作。
+
+**证明。** $\psi$ 是 $\operatorname{Rep}(SO_5)$ 中的明确态射。Satake 把它送到卷积
+对象间态射，Hecke 作用再送到函子间自然变换；本征同构对表示态射的自然性就是所列
+交换式。若只有分别存在的本征同构，而没有态射和融合相容性，则不能推出此式。$□$
+
+因此完整链条是
+
+$$
+\text{实二拷贝统计}\longrightarrow A^{\odot2}
+\xrightarrow{\Psi}(1,14,5)\text{ 系数数据}
+\longrightarrow\text{平行局部系统}\longrightarrow\text{Hecke 自然性}.
+$$
+
+它没有构造“实验仪器到层范畴”的实现函子；这里使用的是共同表示及其张量态射。
+

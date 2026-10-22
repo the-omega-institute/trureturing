@@ -1,0 +1,15 @@
+## 1. Source and scope
+
+Ghanbari and Šámal, *Facial diagrams and cycle double cover*, arXiv:2605.01410v1, Section 4, Conjecture 1, proposes exact expectations $m/3$ for each of the three edge types of a random embedding of a bridgeless cubic graph. The types are regular (the two edge sides are in different faces), good singular (one face traverses the edge twice in the same direction), and bad singular (one face traverses it in opposite directions).
+
+The paper does not specify a probability law in its conjecture text. The authors' public notebook provides an explicit law: independently shuffle each vertex's neighbours to get a cyclic order, and independently choose a fair edge-sign bit. This note concerns that signed-rotation-system law. It does not claim a result for a different probability law on unlabelled topological embeddings.
+
+Sources, verified 2026-10-06:
+
+- Paper: https://arxiv.org/html/2605.01410v1, Section 4, Conjecture 1
+- Author notebook pinned at repository commit `0d4404941894d3ef8dd9f27f1e61829bec2bcde5`: https://github.com/babakghanbari993/cdc-random-embeddings/blob/0d4404941894d3ef8dd9f27f1e61829bec2bcde5/notebooks/random_embedding_experiment.ipynb
+- Notebook blob: `82fb13311d4c9ef254d644ab021346915e61618a`
+- Relevant functions: `random_pi`, `random_lambda`, `random_embedding`, `count_good_bad_regular`
+
+No Lean compilation, frozen theorem, or full repository admission is claimed. The proof below is mathematical prose, with exact integer checks from independent Python implementations.
+
