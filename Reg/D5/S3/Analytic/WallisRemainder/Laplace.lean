@@ -42,7 +42,7 @@ theorem logarithmPositive {x : ℝ} (hx : 0 < x) : 0 < -Real.log (wallisB x) := 
   rw [hs]
   simp
 
-private theorem logarithmDependence : ObservationalDependence logarithmSignature logarithmActual := by
+theorem logarithmDependence : ObservationalDependence logarithmSignature logarithmActual := by
   intro i
   refine ⟨(), 0, 1, ?_⟩
   change -Real.log (wallisB 0) ≠ -Real.log (wallisB 1)

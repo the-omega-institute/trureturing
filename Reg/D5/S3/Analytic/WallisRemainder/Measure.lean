@@ -26,20 +26,13 @@ private theorem stieltjesRejected : ¬ stieltjesArena.Law logarithmRejected := b
   have h1 := r_eq_stieltjes (x := 1) zero_lt_one
   linarith [_root_.Reg.D5.S3.Analytic.WallisRemainder.Laplace.logarithmPositive (x := 1) zero_lt_one]
 
-private theorem logarithmDependence : ObservationalDependence logarithmSignature logarithmActual := by
-  intro i
-  refine ⟨(), 0, 1, ?_⟩
-  change -Real.log (wallisB 0) ≠ -Real.log (wallisB 1)
-  rw [show wallisB 0 = 0 by simp [wallisB], Real.log_zero, neg_zero]
-  exact (_root_.Reg.D5.S3.Analytic.WallisRemainder.Laplace.logarithmPositive (x := 1) zero_lt_one).ne
-
 def stieltjesFamily : Registration stieltjesArena (type_of% @r_eq_stieltjes) where
   actual := logarithmActual
   bridge := Iff.rfl
   variation := ⟨r_eq_stieltjes, logarithmRejected, stieltjesRejected⟩
   sensitivity := _root_.Reg.Support.SingleDependentReadout.sensitivity
     stieltjesArena.Law logarithmActual logarithmRejected stieltjesRejected
-  dependence := logarithmDependence
+  dependence := _root_.Reg.D5.S3.Analytic.WallisRemainder.Laplace.logarithmDependence
 
 def stieltjesAudit : LeanInformationAudit.Contract.Registration.{_, _, _, 0, 0, 0, _, _, _, _, _, 0}
     (@r_eq_stieltjes) (Realization logarithmSignature) Unit Unit where
