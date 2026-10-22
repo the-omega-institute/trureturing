@@ -166,8 +166,10 @@ establish exhaustive citation-index coverage or priority.
   For $\mu\in\{0,0.5\}$ and $\alpha=\beta=0.5$, all computed
   coefficients of degrees zero through twenty are positive.
   These finite computations are separate from the Lean proof.
-- **OPEN.** The principal-range question of coefficientwise positivity for all
-  $\mu\ge0$ is left open here.
+- **OPEN.** For the unit sequence $g_n\equiv1$, coefficientwise positivity
+  for all $\mu\ge0$ and $\alpha,\beta>0$ is left open here. Strict
+  positivity cannot hold for every admissible sequence: $g_0=1$ and $g_n=0$
+  for $n>0$ is admissible and gives zero coefficients in every positive degree.
 
 ## ASSUMED-UNVERIFIED
 
