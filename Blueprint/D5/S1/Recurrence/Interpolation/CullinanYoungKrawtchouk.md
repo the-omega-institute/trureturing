@@ -48,6 +48,10 @@ $$\forall N \in \mathbb{N},\; ((2 \le N)) \Rightarrow (((\operatorname{Even}\lef
 
 *Proof.* Machine-checked in Lean as `D5/S1/Recurrence/Interpolation/CullinanYoungKrawtchouk.result` (`✓ std3`). ∎
 
+*Resolves.* `Problems/cullinan-young-2026-krawtchouk-sign-leading-coefficient-remark-8` (proved) by `D5/S1/Recurrence/Interpolation/CullinanYoungKrawtchouk.result`.
+
+<!-- scribe-open-problem-resolution-v1 {"problem_slug":"cullinan-young-2026-krawtchouk-sign-leading-coefficient-remark-8","declaration_gid":"D5/S1/Recurrence/Interpolation/CullinanYoungKrawtchouk.result","resolution_kind":"proved"} -->
+
 *Source.* Repository-derived.
 
 *Acknowledgement.* J. Cullinan and E. Young (2026). *The Gibbs phenomenon for the Krawtchouk polynomials*. DOI: [10.1007/s10958-026-08499-9](https://doi.org/10.1007/s10958-026-08499-9). URL: <https://arxiv.org/abs/2603.05408v1>.

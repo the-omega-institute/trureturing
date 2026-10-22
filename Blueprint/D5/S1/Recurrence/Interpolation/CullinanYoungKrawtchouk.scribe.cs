@@ -67,7 +67,10 @@ internal sealed class CullinanYoungKrawtchoukDocument : IScribeDocumentDefinitio
                         "The proof uses Vieta's next-coefficient identity, reflection of the centered nodes, alternating partial binomial sums, and the Catalan central-binomial identity. The nonzero next coefficient also gives degree 2m plus 1 for N equal to 2(m plus 1).")),
                     Paragraph(Text(
                         "The statement covers every even N at least two. The source's identification of F_N with I_N is Proposition 6 and is not asserted here; odd N is outside the source observation."))),
-                DescribeRole.Theorem))));
+                DescribeRole.Theorem,
+                new OpenProblemResolutionClaim(
+                    ProblemSlugRef.Create("cullinan-young-2026-krawtchouk-sign-leading-coefficient-remark-8"),
+                    ResolutionKind.Proved)))));
 
     private static Formula EllBody(Formula N, Formula i)
     {
