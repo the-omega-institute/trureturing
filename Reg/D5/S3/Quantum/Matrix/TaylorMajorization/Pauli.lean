@@ -1,6 +1,8 @@
 import LeanInformationAuditInterface.Contract.Registration
 import D5.S3.Quantum.Matrix.TaylorMajorization.Pauli
 import Reg.Support.SingleDependentReadout
+import Reg.D5.S3.Quantum.Schatten.UnitarilyInvariantNorm
+import Reg.D5.S3.Quantum.Matrix.LinGProperty.Normalization
 
 /-! Source-bound readout registrations for Taylor majorization. -/
 
@@ -26,19 +28,13 @@ abbrev arena : Arena where
 private theorem rejected_law : ¬ arena.Law rejected := by
   intro h
   exact h 1 (by omega)
-private theorem dependence : ObservationalDependence signature actual := by
-  intro i
-  refine ⟨(), (0 : ℝ), 1, ?_⟩
-  intro he
-  have hh : (1 : ℝ) = 0 := Eq.mp (congrFun he 0) rfl
-  norm_num at hh
 def source_registration : Registration arena (type_of% @defect_even) where
   actual := actual
   bridge := Iff.rfl
   variation := ⟨@defect_even, rejected, rejected_law⟩
   sensitivity := _root_.Reg.Support.SingleDependentReadout.sensitivity
     arena.Law actual rejected rejected_law
-  dependence := dependence
+  dependence := _root_.Reg.D5.S3.Quantum.Schatten.UnitarilyInvariantNorm.equality_dependence
 
 def registration :
     LeanInformationAudit.Contract.Registration.{_, _, _, 0, 0, 0, _, _, _, _, _, 0}
@@ -88,19 +84,13 @@ abbrev arena : Arena where
 private theorem rejected_law : ¬ arena.Law rejected := by
   intro h
   exact h 0
-private theorem dependence : ObservationalDependence signature actual := by
-  intro i
-  refine ⟨(), (0 : ℝ), 1, ?_⟩
-  intro he
-  have hh : (1 : ℝ) = 0 := Eq.mp (congrFun he 0) rfl
-  norm_num at hh
 def source_registration : Registration arena (type_of% @defect_odd) where
   actual := actual
   bridge := Iff.rfl
   variation := ⟨@defect_odd, rejected, rejected_law⟩
   sensitivity := _root_.Reg.Support.SingleDependentReadout.sensitivity
     arena.Law actual rejected rejected_law
-  dependence := dependence
+  dependence := _root_.Reg.D5.S3.Quantum.Schatten.UnitarilyInvariantNorm.equality_dependence
 
 def registration :
     LeanInformationAudit.Contract.Registration.{_, _, _, 0, 0, 0, _, _, _, _, _, 0}
@@ -150,19 +140,13 @@ abbrev arena : Arena where
 private theorem rejected_law : ¬ arena.Law rejected := by
   intro h
   exact h 5 (by decide) (by omega) 1 (by norm_num)
-private theorem dependence : ObservationalDependence signature actual := by
-  intro i
-  refine ⟨(), (0 : ℝ), 1, ?_⟩
-  intro he
-  have hh := congrFun he 1
-  norm_num [actual, realize] at hh
 def source_registration : Registration arena (type_of% @defect_shift_negative) where
   actual := actual
   bridge := Iff.rfl
   variation := ⟨@defect_shift_negative, rejected, rejected_law⟩
   sensitivity := _root_.Reg.Support.SingleDependentReadout.sensitivity
     arena.Law actual rejected rejected_law
-  dependence := dependence
+  dependence := _root_.Reg.D5.S3.Quantum.Matrix.LinGProperty.Normalization.PositiveTrace.dependence
 
 def registration :
     LeanInformationAudit.Contract.Registration.{_, _, _, 0, 0, 0, _, _, _, _, _, 0}

@@ -1,6 +1,8 @@
 import LeanInformationAuditInterface.Contract.Registration
 import D5.S3.Quantum.Matrix.TaylorMajorization.Shift
 import Reg.Support.SingleDependentReadout
+import Reg.D5.S3.Quantum.Schatten.UnitarilyInvariantNorm
+import Reg.D5.S3.Quantum.Matrix.LinGProperty.Normalization
 
 /-! Source-bound readout registrations for Taylor majorization. -/
 
@@ -27,20 +29,13 @@ abbrev arena : Arena where
 private theorem rejected_law : ¬ arena.Law rejected := by
   intro h
   exact @h 0 0 0 0 0
-private theorem dependence : ObservationalDependence signature actual := by
-  intro i
-  refine ⟨1, (0 : Matrix (Fin 1) (Fin 1) ℂ), 1, ?_⟩
-  intro he
-  have hh : (1 : Matrix (Fin 1) (Fin 1) ℂ) = 0 := Eq.mp (congrFun he 0) rfl
-  have hx := congrArg (fun M => M 0 0) hh
-  norm_num at hx
 def source_registration : Registration arena (type_of% @taylorQ_shift) where
   actual := actual
   bridge := Iff.rfl
   variation := ⟨@taylorQ_shift, rejected, rejected_law⟩
   sensitivity := _root_.Reg.Support.SingleDependentReadout.sensitivity
     arena.Law actual rejected rejected_law
-  dependence := dependence
+  dependence := _root_.Reg.D5.S3.Quantum.Matrix.LinGProperty.Normalization.ZeroBlock.dependence
 
 def registration :
     LeanInformationAudit.Contract.Registration.{_, _, _, 0, 0, 0, _, _, _, _, _, 0}
@@ -90,19 +85,13 @@ abbrev arena : Arena where
 private theorem rejected_law : ¬ arena.Law rejected := by
   intro h
   exact @h 0 0 0 0
-private theorem dependence : ObservationalDependence signature actual := by
-  intro i
-  refine ⟨(), (0 : ℝ), 1, ?_⟩
-  intro he
-  have hh : (1 : ℝ) = 0 := Eq.mp (congrFun he 0) rfl
-  norm_num at hh
 def source_registration : Registration arena (type_of% @trace_taylorR) where
   actual := actual
   bridge := Iff.rfl
   variation := ⟨@trace_taylorR, rejected, rejected_law⟩
   sensitivity := _root_.Reg.Support.SingleDependentReadout.sensitivity
     arena.Law actual rejected rejected_law
-  dependence := dependence
+  dependence := _root_.Reg.D5.S3.Quantum.Schatten.UnitarilyInvariantNorm.equality_dependence
 
 def registration :
     LeanInformationAudit.Contract.Registration.{_, _, _, 0, 0, 0, _, _, _, _, _, 0}
@@ -153,19 +142,13 @@ abbrev arena : Arena where
 private theorem rejected_law : ¬ arena.Law rejected := by
   intro h
   exact @h 0 0 0 0 0
-private theorem dependence : ObservationalDependence signature actual := by
-  intro i
-  refine ⟨(), (0 : ℝ), 1, ?_⟩
-  intro he
-  have hh : (1 : ℝ) = 0 := Eq.mp (congrFun he 0) rfl
-  norm_num at hh
 def source_registration : Registration arena (type_of% @defect_shift) where
   actual := actual
   bridge := Iff.rfl
   variation := ⟨@defect_shift, rejected, rejected_law⟩
   sensitivity := _root_.Reg.Support.SingleDependentReadout.sensitivity
     arena.Law actual rejected rejected_law
-  dependence := dependence
+  dependence := _root_.Reg.D5.S3.Quantum.Schatten.UnitarilyInvariantNorm.equality_dependence
 
 def registration :
     LeanInformationAudit.Contract.Registration.{_, _, _, 0, 0, 0, _, _, _, _, _, 0}
