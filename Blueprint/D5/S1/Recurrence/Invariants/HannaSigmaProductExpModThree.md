@@ -102,6 +102,10 @@ $$\forall n: \mathbb{N}, \exists u: \mathbb{Z}, \exists v: \mathbb{Z}, (\operato
 
 *Proof.* Machine-checked in Lean as `D5/S1/Recurrence/Invariants/HannaSigmaProductExpModThree.result` (`✓ std3`). ∎
 
+*Resolves.* `Problems/oeis-a382124-hanna-sigma-exponential-mod-three` (proved) by `D5/S1/Recurrence/Invariants/HannaSigmaProductExpModThree.result`.
+
+<!-- scribe-open-problem-resolution-v1 {"problem_slug":"oeis-a382124-hanna-sigma-exponential-mod-three","declaration_gid":"D5/S1/Recurrence/Invariants/HannaSigmaProductExpModThree.result","resolution_kind":"proved"} -->
+
 *Source.* Repository-derived.
 
 *Acknowledgement.* Paul D. Hanna (2025). *OEIS A382124 and A382125, sigma-product exponential series*. URL: <https://oeis.org/A382124>.

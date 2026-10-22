@@ -19,13 +19,16 @@ internal sealed class HannaSigmaProductExpModThreeCubeDocument : IScribeDocument
                 AssessedProvenance.FromLiterature(Source)),
             Node("result", "All three coefficient classes", ClaimBody(),
                 "The first congruence is the symmetric A382124 congruence. The other two follow from the characteristic-three coefficient pattern of the integer lift cubed.", DescribeRole.Theorem,
-                AssessedProvenance.FromRepo(Source)))));
+                AssessedProvenance.FromRepo(Source),
+                new OpenProblemResolutionClaim(
+                    ProblemSlugRef.Create("oeis-a382125-hanna-sigma-exponential-mod-three-cube"), ResolutionKind.Proved)))));
 
     private static DocumentBlock Node(string name, string title, Formula formula, string prose,
-        DescribeRole role, AssessedProvenance provenance) =>
+        DescribeRole role, AssessedProvenance provenance,
+        OpenProblemResolutionClaim? resolution = null) =>
         Describe.Lean(DescribeId.Create("hannasigmaproductexpmodthreecube-" + name.Replace('_', '-').ToLowerInvariant()),
             DeclarationHandle.Create(Prefix + name), H(title), StatementSource.FromAuthor(Disp(formula)),
-            provenance, Blocks(Paragraph(Text(prose))), role);
+            provenance, Blocks(Paragraph(Text(prose))), role, resolution);
 
     private static Formula V(string name) => F.Id(name);
     private static Formula Call(string name, params Formula[] args) =>
