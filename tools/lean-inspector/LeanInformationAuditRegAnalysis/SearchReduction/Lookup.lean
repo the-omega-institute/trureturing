@@ -24,7 +24,7 @@ def timeLookup {α : Type} (label : String) (action : MetaM α) : MetaM α := do
   try action finally
     lookupPhase s!"{label}/end ns={(← IO.monoNanosNow) - start} heartbeats={(← IO.getNumHeartbeats) - heartbeats}"
 
-abbrev lookupVersion : String := "R_lookup/v13/scope-B_T/candidate-200000/preparation-8000000/G-340000000/memo-target-basis-R-v1/N-memo-2000000/checkpoint-v1/views-kappa"
+abbrev lookupVersion : String := "R_lookup/v13/scope-B_T/candidate-200000/preparation-8000000/G-340000000/memo-target-basis-R-v1/N-memo-2000000/checkpoint-v2/views-kappa"
 
 abbrev lookupCandidateBudget : Nat := 200000
 /-- Frozen from verdict-free fallback and fixed-stride candidate telemetry. -/
@@ -297,12 +297,9 @@ initialize lookupCheckpointIdentity : IO.Ref (Option String) ← IO.mkRef none
 
 private def checkpointIdentity : IO String := do
   if let some identity ← lookupCheckpointIdentity.get then return identity
-  let head ← IO.Process.output {cmd := "git", args := #["rev-parse", "HEAD"]}
-  let diff ← IO.Process.output {cmd := "git", args := #["diff", "HEAD", "--", "tools", "Makefile"]}
-  unless head.exitCode == 0 && diff.exitCode == 0 do throw <| IO.userError "lookup.checkpoint_identity"
   let request ← IO.getEnv "SEARCH_REDUCTION_REQUESTS"
   let requestBytes ← request.mapM IO.FS.readFile
-  let identity := reprStr (lookupVersion, head.stdout, diff.stdout, request, requestBytes,
+  let identity := reprStr (lookupVersion, request, requestBytes,
     ← IO.getEnv "SEARCH_REDUCTION_SOURCE_LIBRARY", ← IO.getEnv "SEARCH_REDUCTION_RESUME_INPUTS")
   lookupCheckpointIdentity.set (some identity)
   return identity
