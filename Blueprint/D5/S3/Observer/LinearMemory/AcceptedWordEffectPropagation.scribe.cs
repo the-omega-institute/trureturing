@@ -185,7 +185,7 @@ internal sealed class AcceptedWordEffectPropagationDocument : IScribeDocumentDef
             OpenBracket, Call("AddCommGroup", V("E")), CloseBracket, Sp,
             OpenBracket, Call("Module", V("K"), V("E")), CloseBracket, Sp,
             All("L", N, All("U", Call("Submodule", V("K"), V("E")), Seq(Open, all, Close, Sp, Land, Sp,
-                Open, earlier, Close, Sp, Land, Sp, Eqn(C(V("L"), start), V("U")), Sp, Land, Sp, plateau)))));
+                Open, earlier, Close, Sp, Land, Sp, Eqn(C(V("L"), start), V("U")), Sp, Land, Sp, Open, plateau, Close)))));
     }
 
     private static Formula Call(string name, params Formula[] args)
