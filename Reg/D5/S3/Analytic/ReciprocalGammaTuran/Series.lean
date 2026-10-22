@@ -177,11 +177,11 @@ namespace Derivative
 def arena : Arena where
   signature := signature
   Law R := ∀ b x : ℝ, HasDerivAt (R.readout () () b)
-    (R.readout () () b x + (1-b) * R.readout () () (b+1) x) x
+    (F b x + (1-b) * F (b+1) x) x
 private theorem rejected_law : ¬ arena.Law oneReadout := by
   intro h
-  have he := (hasDerivAt_const (0 : ℝ) (1 : ℝ)).unique (h 0 0)
-  norm_num [oneReadout, realize] at he
+  have he := (hasDerivAt_const (0 : ℝ) (1 : ℝ)).unique (h 1 0)
+  norm_num [oneReadout, realize, F, zero_pow_eq, rgamma, Real.Gamma_one] at he
 def family : Registration arena (type_of% @hasDerivAt_F) where
   actual := actual
   bridge := Iff.rfl
@@ -215,16 +215,6 @@ def audit : Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0}
       stateBinder := 0
       functionOperand := false
       stateOperand := some #["arg"]
-      booleanPredicate := false }, {
-      path := #["body", "body", "fn", "arg", "fn", "arg", "fn"]
-      stateBinder := 0
-      functionOperand := false
-      stateOperand := some #["arg"]
-      booleanPredicate := false }, {
-      path := #["body", "body", "fn", "arg", "arg", "arg", "fn"]
-      stateBinder := 0
-      functionOperand := false
-      stateOperand := some #["arg"]
       booleanPredicate := false }] }
   continuation := .unknown
   familyRecord := none
@@ -236,12 +226,11 @@ namespace DifferentialEquation
 def arena : Arena where
   signature := signature
   Law R := ∀ b x : ℝ, x * deriv (R.readout () () b) x =
-    (x+1-b) * R.readout () () b x + (b-1) * rgamma b
+    (x+1-b) * F b x + (b-1) * rgamma b
 private theorem rejected_law : ¬ arena.Law zeroReadout := by
   intro h
-  have he := h 2 0
-  have h₂ : Real.Gamma 2 = 1 := by simpa using Real.Gamma_nat_eq_factorial 1
-  norm_num [zeroReadout, realize, rgamma, h₂] at he
+  have he := h 0 1
+  norm_num [zeroReadout, realize, F_zero, rgamma, Real.Gamma_zero] at he
 def family : Registration arena (type_of% @differential_recurrence) where
   actual := actual
   bridge := Iff.rfl
@@ -275,11 +264,6 @@ def audit : Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0}
       stateBinder := 0
       functionOperand := false
       stateOperand := some #["arg"]
-      booleanPredicate := false }, {
-      path := #["body", "body", "arg", "fn", "arg", "arg", "fn"]
-      stateBinder := 0
-      functionOperand := false
-      stateOperand := some #["arg"]
       booleanPredicate := false }] }
   continuation := .unknown
   familyRecord := none
@@ -292,8 +276,7 @@ def arena : Arena where
   signature := signature
   Law R := ∀ μ α β x : ℝ, HasSum
     (fun m : ℕ => turanCoeff (fun _ => 1) μ α β m * x ^ m)
-    (R.readout () () (μ+α) x * R.readout () () (μ+β) x -
-      R.readout () () μ x * R.readout () () (μ+α+β) x)
+    (R.readout () () (μ+α) x * F (μ+β) x - F μ x * F (μ+α+β) x)
 private theorem rejected_law : ¬ arena.Law zeroReadout := by
   intro h
   have he := (hasSum_turanCoeff 0 1 1 0).unique (h 0 1 1 0)
@@ -328,21 +311,6 @@ def audit : Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0}
     coordinates := #[]
     readouts := #[{
       path := #["body", "body", "body", "body", "fn", "arg", "fn", "arg", "fn", "arg", "fn"]
-      stateBinder := 0
-      functionOperand := false
-      stateOperand := some #["arg"]
-      booleanPredicate := false }, {
-      path := #["body", "body", "body", "body", "fn", "arg", "fn", "arg", "arg", "fn"]
-      stateBinder := 0
-      functionOperand := false
-      stateOperand := some #["arg"]
-      booleanPredicate := false }, {
-      path := #["body", "body", "body", "body", "fn", "arg", "arg", "fn", "arg", "fn"]
-      stateBinder := 0
-      functionOperand := false
-      stateOperand := some #["arg"]
-      booleanPredicate := false }, {
-      path := #["body", "body", "body", "body", "fn", "arg", "arg", "arg", "fn"]
       stateBinder := 0
       functionOperand := false
       stateOperand := some #["arg"]
@@ -401,7 +369,7 @@ abbrev boundarySignature : Signature := unitFormalSignature
 def boundaryActual : Realization boundarySignature :=
   realize boundarySignature (fun _ _ t => boundarySeries t) (fun e => nomatch e)
 def boundaryBad : Realization boundarySignature :=
-  realize boundarySignature (fun _ _ t => boundarySeries t + 1) (fun e => nomatch e)
+  realize boundarySignature (fun _ _ t => boundarySeries t + PowerSeries.X) (fun e => nomatch e)
 private theorem boundary_dependence : ObservationalDependence boundarySignature boundaryActual := by
   intro i
   refine ⟨(), 0, 2, ?_⟩
@@ -420,12 +388,12 @@ def arena : Arena where
   signature := formalSignature
   Law R := ∀ (g : ℕ → ℝ) (μ α β : ℝ) (m : ℕ),
     PowerSeries.coeff m
-      (R.readout () g (μ+α) * R.readout () g (μ+β) -
-        R.readout () g μ * R.readout () g (μ+α+β)) = turanCoeff g μ α β m
+      (R.readout () g (μ+α) * formalSeries g (μ+β) -
+        formalSeries g μ * formalSeries g (μ+α+β)) = turanCoeff g μ α β m
 private theorem rejected_law : ¬ arena.Law formalZero := by
   intro h
   have he := h (fun _ => 1) 0 1 1 0
-  norm_num [formalZero, realize, turanCoeff, rgamma, Real.Gamma_zero, Real.Gamma_one] at he
+  norm_num [formalZero, realize, formalSeries, turanCoeff, rgamma, Real.Gamma_zero, Real.Gamma_one] at he
 def family : Registration arena (type_of% @coeff_mul) where
   actual := formalActual
   bridge := Iff.rfl
@@ -456,22 +424,7 @@ def audit : Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0}
     coordinates := #[0]
     readouts := #[{
       path := #["body", "body", "body", "body", "body", "fn", "arg", "arg", "fn", "arg", "fn", "arg"]
-      stateBinder := 1
-      functionOperand := false
-      stateOperand := some #["arg"]
-      booleanPredicate := false }, {
-      path := #["body", "body", "body", "body", "body", "fn", "arg", "arg", "fn", "arg", "arg"]
-      stateBinder := 1
-      functionOperand := false
-      stateOperand := some #["arg"]
-      booleanPredicate := false }, {
-      path := #["body", "body", "body", "body", "body", "fn", "arg", "arg", "arg", "fn", "arg"]
-      stateBinder := 1
-      functionOperand := false
-      stateOperand := some #["arg"]
-      booleanPredicate := false }, {
-      path := #["body", "body", "body", "body", "body", "fn", "arg", "arg", "arg", "arg"]
-      stateBinder := 1
+      stateBinder := 0
       functionOperand := false
       stateOperand := some #["arg"]
       booleanPredicate := false }] }
@@ -486,13 +439,13 @@ def arena : Arena where
   signature := unitFormalSignature
   Law R := ∀ b : ℝ,
     PowerSeries.X * PowerSeries.derivative (R.readout () () b) =
-      (PowerSeries.X + PowerSeries.C (1-b)) * R.readout () () b +
+      (PowerSeries.X + PowerSeries.C (1-b)) * formalSeries (fun _ => 1) b +
         PowerSeries.C ((b-1) * rgamma b)
 private theorem rejected_law : ¬ arena.Law unitFormalZero := by
   intro h
-  have he := congrArg (PowerSeries.coeff 0) (h 2)
-  have h₂ : Real.Gamma 2 = 1 := by simpa using Real.Gamma_nat_eq_factorial 1
-  norm_num [unitFormalZero, realize, rgamma, h₂] at he
+  have he := congrArg (PowerSeries.coeff 1) (h 1)
+  norm_num [unitFormalZero, realize, formalSeries, rgamma, Real.Gamma_one,
+    PowerSeries.coeff_succ_X_mul] at he
 def family : Registration arena (type_of% @formal_recurrence) where
   actual := unitFormalActual
   bridge := Iff.rfl
@@ -523,11 +476,6 @@ def audit : Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0}
     coordinates := #[]
     readouts := #[{
       path := #["body", "fn", "arg", "arg", "arg"]
-      stateBinder := 0
-      functionOperand := false
-      stateOperand := some #["arg"]
-      booleanPredicate := false }, {
-      path := #["body", "arg", "fn", "arg", "arg"]
       stateBinder := 0
       functionOperand := false
       stateOperand := some #["arg"]
@@ -577,7 +525,7 @@ def audit : Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0}
     coordinates := #[0]
     readouts := #[{
       path := #["body", "body", "arg"]
-      stateBinder := 1
+      stateBinder := 0
       functionOperand := false
       stateOperand := some #["arg"]
       booleanPredicate := false }] }
@@ -592,14 +540,14 @@ def arena : Arena where
   signature := boundarySignature
   Law R := ∀ t : ℝ,
     PowerSeries.X * PowerSeries.derivative (R.readout () () t) =
-      2 * (PowerSeries.X + 1) * R.readout () () t +
+      2 * (PowerSeries.X + 1) * boundarySeries t +
         PowerSeries.C ((t+1) * rgamma (-t)) * formalSeries (fun _ => 1) t +
         PowerSeries.C ((1-t) * rgamma t) * formalSeries (fun _ => 1) (-t)
 private theorem rejected_law : ¬ arena.Law boundaryBad := by
   intro h
-  have he := congrArg (PowerSeries.coeff 0) (h 0)
+  have he := congrArg (PowerSeries.coeff 1) (h 0)
   norm_num [boundaryBad, realize, boundarySeries, pow_two, rgamma, Real.Gamma_zero,
-    PowerSeries.derivative_one, map_ofNat] at he
+    PowerSeries.derivative_X, map_ofNat] at he
 def family : Registration arena (type_of% @boundary_recurrence) where
   actual := boundaryActual
   bridge := Iff.rfl
@@ -633,11 +581,6 @@ def audit : Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0}
       stateBinder := 0
       functionOperand := false
       stateOperand := some #["arg"]
-      booleanPredicate := false }, {
-      path := #["body", "arg", "fn", "arg", "fn", "arg", "arg"]
-      stateBinder := 0
-      functionOperand := false
-      stateOperand := some #["arg"]
       booleanPredicate := false }] }
   continuation := .unknown
   familyRecord := none
@@ -649,7 +592,7 @@ namespace CoefficientEquation
 def arena : Arena where
   signature := coefficientSignature
   Law R := ∀ (t : ℝ) (m : ℕ), 3 ≤ m →
-    ((m : ℝ)-2) * R.readout () t m = 2 * R.readout () t (m-1) + r t m
+    ((m : ℝ)-2) * R.readout () t m = 2 * d t (m-1) + r t m
 private theorem rejected_law : ¬ arena.Law coefficientBad := by
   intro h
   have he := h 0 3 (by omega)
@@ -685,12 +628,7 @@ def audit : Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0}
     coordinates := #[0]
     readouts := #[{
       path := #["body", "body", "body", "fn", "arg", "arg"]
-      stateBinder := 1
-      functionOperand := false
-      stateOperand := some #["arg"]
-      booleanPredicate := false }, {
-      path := #["body", "body", "body", "arg", "fn", "arg", "arg"]
-      stateBinder := 1
+      stateBinder := 0
       functionOperand := false
       stateOperand := some #["arg"]
       booleanPredicate := false }] }

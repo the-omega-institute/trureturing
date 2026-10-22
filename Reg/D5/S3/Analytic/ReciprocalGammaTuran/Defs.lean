@@ -66,30 +66,34 @@ def audit : Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0}
 
 #print axioms audit
 namespace UnitSequence
+attribute [local instance] Classical.propDecidable
 abbrev signature : Signature :=
-  _root_.Reg.Support.SingleDependentReadout.signature Unit (fun _ => ℕ → ℝ) (fun _ => Prop)
+  _root_.Reg.Support.SingleDependentReadout.signature Unit (fun _ => ℕ → ℝ) (fun _ => Bool)
 def actual : Realization signature :=
-  realize signature (fun _ _ g => AdmissibleSeq g) (fun e => nomatch e)
+  realize signature (fun _ _ g => decide (AdmissibleSeq g)) (fun e => nomatch e)
 def rejected : Realization signature :=
-  realize signature (fun _ _ _ => False) (fun e => nomatch e)
+  realize signature (fun _ _ _ => false) (fun e => nomatch e)
 def arena : Arena where
   signature := signature
-  Law R := R.readout () () (fun _ => 1)
+  Law R := R.readout () () (fun _ => 1) = true
 private theorem rejected_law : ¬ arena.Law rejected := by
   intro h
-  exact h
+  change false = true at h
+  cases h
 private theorem dependence : ObservationalDependence signature actual := by
   intro i
   refine ⟨(), (fun _ => 0), (fun _ => 1), ?_⟩
   intro he
-  have hgood : AdmissibleSeq (fun _ => 0) := Eq.mpr he admissible_one
-  obtain ⟨n, hn⟩ := hgood.1
-  exact hn rfl
+  have hz : ¬ AdmissibleSeq (fun _ => 0) := by
+    intro hgood
+    obtain ⟨n, hn⟩ := hgood.1
+    exact hn rfl
+  simp [actual, realize, hz, admissible_one] at he
 
 def family : Registration arena (type_of% @admissible_one) where
   actual := actual
-  bridge := Iff.rfl
-  variation := ⟨admissible_one, rejected, rejected_law⟩
+  bridge := by simp [arena, actual, realize]
+  variation := ⟨by simpa [arena, actual, realize] using admissible_one, rejected, rejected_law⟩
   sensitivity := _root_.Reg.Support.SingleDependentReadout.sensitivity arena.Law actual rejected rejected_law
   dependence := dependence
 def audit : Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0}
@@ -105,7 +109,7 @@ def audit : Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0}
   realization := .source arena ⟨family⟩
   correspondence := { stage := .evidence, objectStage := .evidence }
   bundleNonempty := .absent
-  readout := some (realize signature (fun _ _ g => AdmissibleSeq g) (fun e => nomatch e))
+  readout := some (realize signature (fun _ _ g => decide (AdmissibleSeq g)) (fun e => nomatch e))
   variation := .absent
   sensitivity := .absent
   partialSensitivity := none
@@ -119,7 +123,7 @@ def audit : Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0}
       stateBinder := 0
       functionOperand := false
       stateOperand := some #["arg"]
-      booleanPredicate := false }] }
+      booleanPredicate := true }] }
   continuation := .unknown
   familyRecord := none
   options := #[]
