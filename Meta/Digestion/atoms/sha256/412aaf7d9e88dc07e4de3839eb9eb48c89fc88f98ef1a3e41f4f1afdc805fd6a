@@ -1,0 +1,41 @@
+**定理 81.3（强闭自治合同排除耦合项）。** 定义 81.1 成立，当且仅当
+
+$$
+H=H_A\otimes I_E+I_2\otimes H_E
+$$
+
+对某些 Hermitian $H_A,H_E$ 成立。此时局部态在全部时间按 $e^{-itH_A}$ 酉演化，即使初态关联也自治。
+
+证明（81.3）。以 Pauli 正交基展开
+
+$$
+H=I_2\otimes B_0+X\otimes B_x+Y\otimes B_y+Z\otimes B_z,
+$$
+
+其中 $B_j=\tfrac12\operatorname{Tr}_A((\sigma_j\otimes I_E)H)$，$\sigma_0=I_2$。部分迹在局部因子上的循环性使这些系数 Hermitian。Pauli 交换关系给
+
+$$
+i[H,X\otimes I_E]=2Z\otimes B_y-2Y\otimes B_z.
+$$
+
+由引理 81.2，此算子属于局部代数。分别以 $Z,Y$ 的局部迹配对抽取系数，说明 $B_y,B_z$ 必为标量乘 $I_E$，因为局部代数的每个 Pauli 系数都只能是标量单位。同理
+
+$$
+i[H,Y\otimes I_E]=-2Z\otimes B_x+2X\otimes B_z
+$$
+
+迫使 $B_x$ 也为标量单位。写 $B_i=b_iI_E$、$b_i\in\mathbb R$，令 $H_A=b_xX+b_yY+b_zZ$、$H_E=B_0$，即得分解；一个标量单位项可在两部分之间重分配而不影响结论。
+
+反向，局部交换子为 $i[H_A,A]\otimes I_E$，由引理知瞬时自治。两 Hamiltonian 项交换，故全酉因子化为 $e^{-itH_A}\otimes e^{-itH_E}$；环境酉不改变部分迹，所以
+
+$$
+\operatorname{Tr}_E\varrho(t)
+=e^{-itH_A}(\operatorname{Tr}_E\varrho(0))e^{itH_A},
+$$
+
+没有对初始相关性作任何限制。$\square$
+
+例如环境也为 qubit、$H=Z\otimes Z$ 时，联合态 $|+\rangle\langle+|\otimes\Pi_0$ 与 $|+\rangle\langle+|\otimes\Pi_1$ 有相同局部态，但 $i[H,Y\otimes I]=2X\otimes Z$ 的期望分别为 $2,-2$。只给局部态确实不能确定该耦合的局部瞬时变化。
+
+本章结论限于有限维环境、固定闭 Hamiltonian、全部联合来源的强合同。它没有排除受限制备族上的自治、有效 Markov 模型、环境重置、增加记忆或响应块，以及满足实际纠错条件的受保护子系统。Kribs–Laflamme–Poulin–Lesosky 上引 OQEC 的引理 2.3、定理 2.5 和§3 针对指定通道及恢复的噪声子系统，属于另一组操作条件；它不替代本章的全联合初态量词。新增联合边界资料在这里表示环境和关联，不能自动解释为额外物理空间轴。
+

@@ -1,0 +1,10 @@
+**Theorem 145.1 (the complete endpoint interval).** For every $18/25\leq p\leq17/20$ and every real unit $u$, the three original matrices satisfy
+
+$$
+C_{k_D,u}(2q/7)\succ0,\qquad
+C_{k_D,u}(q/2)\succ0,\qquad C_{S,u}(q/2)\succ0.
+\tag{U.197}
+$$
+
+Proof. The first assertion is Theorem 143.1. For the second use $b_2<\kappa_Dt/(1+t)$ from Theorem 142.1, and Theorem 144.1 at $(7/11,123/200)$. Loewner comparison (U.179) proves the original matrix is positive definite. For the third, (U.188) gives $b_3<\kappa_St/(1+t)$, and the other case $(2/3,31/50)$ of Theorem 144.1 applies. These comparisons use only positive denominators and the full continuum $J_1$. The endpoint theorem is independent of $V$ and imposes no condition on rank, commutation, trace cancellation or a minimizing eigenvector. $\square$
+

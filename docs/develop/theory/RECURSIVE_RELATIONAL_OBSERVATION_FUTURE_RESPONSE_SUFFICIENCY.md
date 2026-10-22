@@ -2037,3 +2037,524 @@ $$
 预测等价作为摘要商关系是成熟观念；Shalizi–Crutchfield 的 *Computational Mechanics: Pattern and Prediction, Structure and Simplicity*，J. Stat. Phys. 104, DOI [10.1023/A:1010388907793](https://doi.org/10.1023/A:1010388907793)，讨论平稳过程的整段过去、几乎处处预见性及熵最小性，不提供本节全部正初始化有限历史上的在线界。上述证明直接使用此原生来源的付费拒绝和共同后缀。[观察更新与返回预测](AURIC_FIB_ATOM_OBSERVATION_UPDATE_AND_RETURN_PREDICTION.md) §§6–9讨论控制回返、后验倾斜与逐配置精确预测的关系；其五模式条件闭包不作为本节状态数、全部切面最大值或完整风险的前提。两者共享普通条件化原则，不同来源和资源合同不互相替换。证毕。
 
 ## 追加锚（本行以下为增补区）
+
+
+## 45. A separate exact seventh-J acquisition and retention contract
+
+Sections 45–50 consider the original cubic-gain experiment, a different
+source from the native stochastic parser in §§1–44. The consumer is
+prediction of one declared numerical future from an exactly retained
+acquired record. No conclusion about the earlier parser, its fixed
+$E_1$ task, or its initialization is changed.
+
+**定义 45.1（Original worlds, parent and entire children）。** Use
+[CommonParent, §§1–3](https://github.com/the-omega-institute/trureturing/blob/da6aaf648e7e7c38d6020abe845eda950ef30ae8/docs/develop/theory/FIB_COMMON_PARENT_GEOMETRY_AND_MIXED_CHILDREN.md)
+and [StrictReal IX, §§18–23](https://github.com/the-omega-institute/trureturing/blob/d60954ebdbc38a530b4e367f531d048f6eec7709/docs/develop/theory/FIB_STRICT_REAL_JOINT_INCIDENCE_SUPPORT_IX.md)
+at these fixed versions. A complete world is
+
+$$
+W=(P(r,b),g,d),\qquad
+P(r,b)=\begin{pmatrix}r&b\\r(1-r)/b&1-r\end{pmatrix},\qquad
+0<r<1,\quad b>0,\quad
+0\ne g\in\mathbb R[s],\quad\deg g\le3,\quad d\in\mathbb R.
+\tag{45.1}
+$$
+
+Each world has its own one whole polynomial and its own fixed within-run
+drift. Different worlds need not share either. Put
+
+$$
+\begin{gathered}
+J=\begin{pmatrix}0&1\\1&0\end{pmatrix},\qquad
+M=\begin{pmatrix}0&1\\1&1\end{pmatrix},\qquad
+Q_0=I,\quad Q_i=E_iQ_{i-1},\\
+y_i(W)=d+g(i)\operatorname{tr}(Q_iP),\qquad
+H_4=(0,J,24,M,147/5,J,24,M,18).
+\end{gathered}
+\tag{45.2}
+$$
+
+For $p,v\in\mathbb R$, $C(p,v)$ is the set of **all** complete worlds
+realizing $H_4$ and then the actual fifth and sixth actions $M,M$ with
+readings $p,v$. Thus its six-action word is $J,M,J,M,M,M$, and its
+clock-zero through clock-six readings are
+
+$$
+(0,24,147/5,24,18,p,v).
+\tag{45.3}
+$$
+
+This is precisely IX Definition 18.1's acquired prefix. Its $a(W)$ and
+$m(W)$ are alternative clock-seven readings. In particular the prescribed
+fifth action is $M$. No regular-chart, bounded-source, positive-gain,
+exact-degree, nonzero-sample, simple-root or nonzero-drift assumption is
+added to $C(p,v)$; singular parent branches remain included.
+
+For clarity write
+
+$$
+\begin{gathered}
+c=r(1-r)/b,\quad j=b+c,\quad n_{\rm src}=j+r,\quad
+T=1+b,\quad U=1+2b,\\
+p=d+(U+n_{\rm src})g(5),\qquad
+v=d+(2U+n_{\rm src})g(6),\\
+a(W)=d+(T+2j+4r)g(7),\qquad
+m(W)=d+(3U+2n_{\rm src})g(7).
+\end{gathered}
+\tag{45.4}
+$$
+
+The chronological products are
+
+$$
+Q_6=\begin{pmatrix}3&1\\5&2\end{pmatrix},\qquad
+Q_7=JQ_6=\begin{pmatrix}5&2\\3&1\end{pmatrix}.
+\tag{45.5}
+$$
+
+**约定 45.2（Added acquisition and exact accessible retention）。**
+After the stipulated six-action acquisition, choose the seventh action
+$J$ publicly and constantly, acquire its immediate actual scalar $a(W)$,
+and retain every acquired scalar exactly with its chronological labels.
+This is an added declared operational contract. CommonParent Definition
+1.1 already permits clocks $0,\ldots,7$ with one immediate read per
+action and the seventh choice $J$ or $M$; the contract selects that
+permitted $J$ and specifies accessible exact retention. It does not say
+that IX's six-action prefix already acquired $a$.
+
+The complete numerical record, with its common public metadata, is
+
+$$
+\begin{aligned}
+R_7^J(W)&=\bigl(\mathfrak m;
+  0,24,147/5,24,18,p(W),v(W),a(W)\bigr),\\
+\mathfrak m&=\bigl((0,\varnothing),(1,J),(2,M),(3,J),(4,M),
+                         (5,M),(6,M),(7,J);\ \text{fixed contract}\bigr).
+\end{aligned}
+\tag{45.6}
+$$
+
+Here $\varnothing$ labels the initial read, and the fixed contract
+includes the public model, original absolute-clock convention and
+permission through seven. All public reference and control inputs in a
+comparison are identical. The seventh action has no world-dependent
+selector. The only variable numerical fields are the three exact reals
+$(p,v,a)$. There is no retained source or branch label, gain, drift,
+germ parameter or sign, alternative $m$, error residue, response oracle,
+or extra history. A source-dependent initialization or reference cannot
+be hidden in $\mathfrak m$.
+Each paired world is an alternative complete realization of this one
+stipulated acquisition contract; the pair supplies no second specimen
+accessible to the observer.
+
+Under this contract there are seven actions, three $J$ and four $M$,
+and eight immediate readings **including clock zero**. The eight-read
+count uses the explicitly added seventh-$J$ acquisition; IX's acquired
+prefix alone has six actions and seven readings. Three exact real fields
+are not bounded-bit storage. This contract supplies neither a mechanism
+for reaching the stipulated parent from an unknown source nor a
+finite-cost retention device or installed decoder.
+
+## 46. Every distinct off-24 equal-record pair separates in the declared future
+
+**定义 46.1（One common numerical all-M task）。** For every complete
+world in (45.1) define
+
+$$
+Y_N(W)=d+g(7+N)\operatorname{tr}(M^NQ_7P),\qquad N\in\mathbb N.
+\tag{46.1}
+$$
+
+In particular $Y_0(W)=a(W)$. This is mathematical numerical response
+evaluation from the seventh-$J$ boundary. It performs no post-seven
+action or read and grants no later port, invocation right, reset, copy,
+skip or clock shift. Each world keeps the same $P,g,d$, and both worlds
+are compared on the same word $M^N$ and the same absolute clock $7+N$.
+No polynomial is fitted anew to a later segment.
+
+**定理 46.2（Exact acquired-record obstruction on every qualifying pair）。**
+For every $p\in\mathbb R\setminus\{24\}$, every $v\in\mathbb R$, and
+every two complete worlds satisfying
+
+$$
+W,W'\in C(p,v),\qquad W\ne W',\qquad a(W)=a(W'),
+\tag{46.2}
+$$
+
+the records (45.6) are equal under Convention 45.2. For this **one fixed
+pair**, with $\varphi=(1+\sqrt5)/2$, every real $1\le\rho<\varphi$
+satisfies
+
+$$
+\lim_{N\to\infty}
+\frac{|Y_N(W)-Y_N(W')|}{\rho^N(1+N)^3}=+\infty.
+\tag{46.3}
+$$
+
+The same pair works for every displayed $\rho$. The statement does not
+assert the existence of a qualifying pair at every off-$24$ base.
+Its constants and onset are pair dependent; an onset for any prescribed
+normalized threshold may also depend on $\rho$.
+
+**证明。** Equality of the records follows from the shared parent,
+$p,v,a$, and the public constant seventh choice. For noncancellation use
+CommonParent **Theorem 3.2 directly**: on this entire literal parent,
+each proportional direction of the whole gain contains at most one
+complete world, except the single family
+
+$$
+K_{1/8}=\left\{\left(P(r,1/8),h_*,24\right):0<r<1\right\},\qquad
+h_*(s)=\frac85(s-1)(s-3)(s-5).
+\tag{46.4}
+$$
+
+Every member of this exceptional family has fifth-$M$ reading $p=24$,
+because $h_*(5)=0$. Consequently the distinct worlds in (46.2) have
+nonproportional **entire** gains: if $g'=\lambda g$ for a nonzero real
+$\lambda$, the direction theorem would either identify the worlds or
+place them in (46.4), both impossible. That theorem covers the full
+parent, both gain-scale signs, lower degrees, sampled zeros, zero drift
+and singular parent alternatives. A local gain-ratio derivative is
+unnecessary.
+
+Use the spectral decomposition already employed in
+[retained Clock8, §16](https://github.com/the-omega-institute/trureturing/blob/d90803a99ca59622918c084bac1b75cd4ad262be/docs/develop/theory/RECURSIVE_RELATIONAL_OBSERVATION_THIRD_GERM_RETENTION_THRESHOLD.md),
+with the present $Q_7$ and clock $7+N$:
+
+$$
+\begin{gathered}
+\psi=-\varphi^{-1},\qquad
+\Pi_+=\frac{M-\psi I}{\varphi-\psi},\qquad
+\Pi_-=I-\Pi_+,\qquad
+M^N=\varphi^N\Pi_++\psi^N\Pi_-,\\
+A_\pm(W)=\operatorname{tr}(\Pi_\pm Q_7P).
+\end{gathered}
+\tag{46.5}
+$$
+
+Every entry of $\Pi_+=(M+\varphi^{-1}I)/\sqrt5$, $Q_7$ and $P$ is
+strictly positive, so $A_+(W)>0$ for every original world. Define
+
+$$
+\begin{aligned}
+D(s)&=A_+(W)g(s)-A_+(W')g'(s),\\
+E(s)&=A_-(W)g(s)-A_-(W')g'(s).
+\end{aligned}
+\tag{46.6}
+$$
+
+Primes label the second world, not differentiation. If $D$ were the
+zero polynomial, positivity of both $A_+$ values would give
+$g'=(A_+(W)/A_+(W'))g$, contradicting the direction theorem.
+Thus $D$ is nonzero, of some degree $k\in\{0,1,2,3\}$, while $E$ has
+degree at most three or is zero. Exact evaluation gives
+
+$$
+Y_N(W)-Y_N(W')=(d-d')+\varphi^ND(7+N)+\psi^NE(7+N).
+\tag{46.7}
+$$
+
+For the fixed pair, the leading coefficient of $D$ supplies $c>0$ and
+$N_0\ge1$ such that $|D(7+N)|\ge cN^k$ for $N\ge N_0$.
+The quantity $\psi^NE(7+N)$ tends to zero, and $d-d'$ is constant.
+The reverse triangle inequality therefore gives, after enlarging $N_0$,
+
+$$
+|Y_N(W)-Y_N(W')|\ge\frac c2\varphi^NN^k
+\qquad(N\ge N_0).
+\tag{46.8}
+$$
+
+For completeness, if $\lambda=\varphi/\rho>1$, the ratio of successive
+terms of $\lambda^NN^k/(1+N)^3$ tends to $\lambda$. It is eventually
+bounded below by a constant greater than one, so the sequence tends
+to infinity. Divide (46.8) by $\rho^N(1+N)^3$ to obtain (46.3).
+This is the reused exponential-polynomial argument; the new
+source-specific link is the exact acquired record together with
+full-parent noncancellation. $\square$
+
+The argument claims no divergence at $\rho=\varphi$. Indeed (46.7)
+and the degree bounds give, for each fixed pair, a finite $C_{W,W'}$
+with
+
+$$
+|Y_N(W)-Y_N(W')|\le C_{W,W'}\varphi^N(1+N)^3
+\qquad(N\ge0).
+\tag{46.9}
+$$
+
+This follows by bounding each fixed polynomial by a constant times
+$(1+N)^3$, using $|\psi|<1<\varphi$, and absorbing the fixed drift.
+No uniform lower-bound constants or onsets are claimed over nearby
+pairs or as a germ coalesces.
+
+## 47. Supplied actual first-J worlds make the exact-record obstruction nonempty
+
+**约定 47.1（The original whole-world lift）。** The witnesses use IX
+Definition 18.2 and Theorem 21.1, not a new incidence construction.
+A concise equivalent specification of IX's regular lift is the following.
+For $z=(r,b)$ put
+
+$$
+\begin{gathered}
+D_z=5\{(b^2+8b+4)j n_{\rm src}-2TU(j+n_{\rm src})\},\qquad
+A_s=(8b-1)(2+5b),\\
+e_z=-3A_sj n_{\rm src}/D_z,\qquad d_z=24+e_z.
+\end{gathered}
+\tag{47.1}
+$$
+
+When $D_z\ne0$, let $g_z$ be the unique degree-at-most-three polynomial
+with its values at the distinct nodes $0,1,2,3$ equal to
+
+$$
+\left(-24-e_z,-\frac{e_z}{j},
+                    \frac{27/5-e_z}{T},-\frac{e_z}{n_{\rm src}}\right),
+\qquad W(z)=(P(r,b),g_z,d_z).
+\tag{47.2}
+$$
+
+This is the supplied fixed-node interpolation, equivalent to IX (18.4)–
+(18.5). CommonParent Theorem 2.1 and IX (18.6)–(18.7) verify all original
+clock identities, including clock four and both later prefix readings.
+The same interpolant supplies $g_z(5),g_z(6),g_z(7)$ and all later
+numerical evaluations; these are not independent sample choices. The
+whole polynomial cannot vanish, since then clocks zero and one would
+both read $d_z$, contradicting $0\ne24$. This regular chart specifies
+the witnesses only; it does not restrict the entire children in §46.
+
+Let $z_0=(r_0,b_0)$ be IX Definition 19.1's exact first $J$-critical
+source, equivalently the source of $\mathcal W_1^J$ in
+[SVII, §§23–26](https://github.com/the-omega-institute/trureturing/blob/da6aaf648e7e7c38d6020abe845eda950ef30ae8/docs/develop/theory/FIB_STRICT_REAL_JOINT_INCIDENCE_SUPPORT_VII.md).
+This is the exact source, rather than
+a rounded numerical center. It has $D_{z_0}>0$, $p_b(z_0)\ne0$; set
+$k_0=-p_r(z_0)/p_b(z_0)$. The supplied base satisfies
+
+$$
+-533.512131<p_0<-533.512130,\qquad
+-1019.177215<v_0<-1019.177214.
+\tag{47.3}
+$$
+
+**推论 47.2（Nonempty exact-record fibers arbitrarily near the first source）。**
+There is $\delta>0$ such that every fixed $0<|h|<\delta$ gives
+actual distinct complete original worlds
+
+$$
+\begin{gathered}
+z_\pm(h)=(R(h)\pm h,\ B(h)\pm k(h)h),\qquad
+W_\pm(h)=W(z_\pm(h)),\\
+R(0)=r_0,\quad B(0)=b_0,\quad k(0)=k_0,
+\end{gathered}
+\tag{47.4}
+$$
+
+where $R,B,k$ are IX's even analytic functions. Under Convention 45.2
+they have the same exact $R_7^J$, with $p(h)<-533$, $v(h)<-1018$,
+and satisfy (46.3) for every $1\le\rho<\varphi$ on that one pair.
+They converge in complete-world coordinates to $W(z_0)$ as $h\to0$.
+
+**证明。** IX Theorem 21.1 supplies (47.4) on an existential interval,
+with strict $0<r_\pm<1$, $b_\pm>0$, $D_{z_\pm}>0$ and exact equal
+$p,v,a$. Its original-world lift (47.2) gives each endpoint's own
+whole nonzero gain and fixed drift. Their $r$ coordinates differ by
+exactly $2h$, so their matrices and complete worlds are distinct for
+$h\ne0$. Continuity and the supplied strict base bounds allow the
+interval to be shrunk so that $p(h)<-533$ and $v(h)<-1018$ throughout.
+All hypotheses of Theorem 46.2 now hold. Analyticity of the lift gives
+the stated complete-world convergence. $\square$
+
+The supplied germ is genuinely punctured. IX gives
+$p(h)=p_0+P_2h^2+O(h^4)$ with $34271<P_2<34272$, and a right-opening
+graph $v=\gamma(p)$ for $p\in(p_0,p_0+\eta)$, for some $\eta>0$.
+These are attributed witness facts, not new coefficients or a claim of
+collisions at every nearby base. At $h=0$ the endpoints coalesce;
+SVII Theorem 25.1 identifies the center's entire child as a singleton.
+No collision is asserted at that center, and no effective positive
+value of $\delta$ or $\eta$ is supplied here.
+
+## 48. What predictions can use, and which response remains unacquired
+
+For any fixed pair in (46.2), let $q_N$ be an arbitrary real-valued
+prediction depending only on $R_7^J$, its common public inputs and $N$.
+No restriction on mathematical computation is imposed. Equality of
+these inputs gives the same $q_N$ for both worlds. The generic
+two-point prediction inequality, reused from retained Clock8
+Corollary 16.3, gives
+
+$$
+\max\{|q_N-Y_N(W)|,|q_N-Y_N(W')|\}
+\ge\tfrac12|Y_N(W)-Y_N(W')|.
+\tag{48.1}
+$$
+
+It follows immediately from the triangle inequality. Its application
+to this exact acquired record and task yields, for every
+$1\le\rho<\varphi$,
+
+$$
+\lim_{N\to\infty}
+\frac{\max\{|q_N-Y_N(W)|,|q_N-Y_N(W')|\}}
+     {\rho^N(1+N)^3}=+\infty.
+\tag{48.2}
+$$
+
+Consequently no such predictor has a finite normalized error bound
+uniform over this two-world record fiber and all $N$. For each fixed
+$\rho$, at least one endpoint has unbounded normalized error: if both
+error sequences were bounded, their maximum would be bounded,
+contradicting (48.2). This does not assert divergence at each endpoint,
+or both endpoints' unboundedness, or one failing endpoint independent
+of $\rho$. An exact autonomous predictor initialized solely from this
+record is also a record-only predictor. Extra lawfully acquired data
+or distinguishing retained inputs change that comparison class.
+
+The seventh-$M$ alternative and a later numerical eighth-$M$ response
+must remain separate:
+
+$$
+\begin{aligned}
+m(W)&=d+g(7)\operatorname{tr}(MQ_6P),&
+MQ_6&=\begin{pmatrix}5&2\\8&3\end{pmatrix},\\
+Y_1(W)&=d+g(8)\operatorname{tr}(MQ_7P),&
+MQ_7&=\begin{pmatrix}3&1\\8&3\end{pmatrix}.
+\end{aligned}
+\tag{48.3}
+$$
+
+Neither $m$ nor $Y_1$ is acquired on the declared seventh-$J$ run.
+They use different products and different absolute gain inputs; there
+is no clock reset or identification between them. IX Theorem 21.1
+also supplies $d_+-d_-=2L_dh+O(h^3)$ and
+$m_+-m_-=2L_mh+O(h^3)$ with $621<L_d<623$, $66<L_m<67$.
+Thus the witnessed exact record also fails to recover geometry, drift,
+whole-gain direction and the alternative $m$. Those terminal
+non-injectivity facts are supplier reuse. The new conclusion (48.2)
+compares one fixed pair under one common numerical continuation,
+rather than comparing unexecuted different terminal actions.
+
+SVII Theorem 25.2 and its §30 proof already give injectivity of $m$ on
+every entire child in an existential neighborhood of this first base.
+An alternative run choosing seventh $M$ would have a different exact
+record and the supplied mathematical source inverse there. That is
+not a new recovery theorem or an installed inverse. Unequal $m$ on
+the selected $J$ pair alone would not exclude some other equal-$M$
+pair. IX §22 invokes the entire-child theorem for that local exclusion;
+the global independent equal-$J$/equal-$M$ pair problem of IX (18.3)
+remains open in its original domain.
+
+## 49. The four expressions and the missing observer bridges
+
+For each one complete world, the independently specified expressions
+in this experiment are:
+
+| Expression | Exposed mathematical object |
+| --- | --- |
+| Space | The positive trace-one rank-one projector $P$, equivalently its image line and complementary kernel line; its transport is $H_i=Q_iP$. This is linear-incidence geometry. |
+| Time | The original absolute clock $i$ and the ordered executed word. Their labels are public premises, not recovered from scalar boundary values. |
+| Boundary | The actual immediate scalar $d+g(i)\operatorname{tr}(H_i)$ at each acquired event, on that same world's source. Unexecuted alternatives are not observations. |
+| Memory | Exactly the retained acquired scalars and common chronological metadata in (45.6), under the declared accessible retention contract. |
+
+The source-side numerical evolution is
+
+$$
+\begin{aligned}
+F_E(i,H,g,d)&=(i+1,EH,g,d),\\
+q(i,H,g,d)&=d+g(i)\operatorname{tr}(H).
+\end{aligned}
+\tag{49.1}
+$$
+
+Starting at $(0,P,g,d)$, induction gives $H_i=Q_iP$ and every original
+boundary reading. Starting at $(7,Q_7P,g,d)$, $N$ iterations of $F_M$
+give exactly (46.1). For consecutive numerical words, applying the
+first word and then the second multiplies their left products in the
+same order as concatenation and adds their lengths to the same clock.
+This is source-side route agreement, already used in retained Clock8
+§17. It does not put $(H,g,d)$ in the retained observer's memory or
+install the update (49.1) as an available operation.
+
+The new obstruction says that even an exact complete acquired record
+through this seventh $J$ is insufficient for bounded prediction of the
+declared all-$M$ numerical future. It therefore rules out identifying
+this particular memory relation with that future-task relation.
+Improving the precision of these same three fields cannot separate
+the actual equal-record witnesses. This adds a concrete constraint on
+candidate memory/boundary/dynamics identifications in the common
+four-expression programme.
+
+It supplies no four-way mutual recovery, no recovery of time from
+boundary, no equality of complete action-behavior kernels, and no
+adaptive operational equivalence. Such claims must also preserve
+actual initialization, current legality, complete outputs, successors
+and selector inputs on one common actual process. Unknown-source
+initialization, a lawful additional relation separating the witnessed
+fiber, an installed decoder, finite-input arithmetic, retained callable
+backing, continued authorized use and resource-optimal storage remain
+unproved. The exact-field count is not a memory or cost optimum.
+
+NCR's actually acquired seed and installed clocked controller, PVC's
+explicit Install and paid conversions, PR57's packet/tape/token runtime,
+PG's joint partial-action transport and selector descent, and Atlas's
+retained backing and invocation rights retain their separate contracts;
+see retained Clock8 Convention 7.3. No such service is transferred to
+this real-source experiment. The original fixed-$G_{gc}$, original-$Q$,
+parked-consumer and unchanged-initialization outcomes keep their exact
+scopes. No physical or universal observer impossibility, universal
+alpha/beta reduction, or completion of the sustained programme follows.
+
+## 50. Source-specific synthesis and credited tools
+
+The additional ordinary mathematical result is the combination of
+(46.2)–(46.3), its actual nonempty witnesses in §47, and the exact-record
+prediction consequence (48.2). CommonParent Theorem 3.2 owns the full
+parent gain-direction rigidity. IX Theorem 21.1 owns the original-world
+collision germ, its opening graph and its evaluated coefficients.
+Spectral projectors, exponential-polynomial growth and the two-point
+prediction inequality are reused tools, not new general theorems of
+this append. No incidence, quotient, inverse or local gain-direction
+lemma is credited as new.
+
+Retained Clock8 §§15–17 at the fixed version cited in §46 concern a
+different third germ near $p=7.283036$, a clock-eight boundary $Q_8$
+and absolute clock $8+N$. Its Theorem 16.2 requires both retention
+radii strictly positive to construct its common record. That theorem
+does not prove its zero-error endpoint; its exact eighth-$M$ record
+instead identifies the source on its stated neighborhood. Here the
+record already collides exactly after the first germ's seventh $J$.
+Its spectral and prediction reasoning is reused with the present product
+and clock. No third-germ radius, inventory, uniform constant, eighth port
+or acquisition count is transplanted.
+
+The read-only repository suppliers
+`TargetRecoveryCriterion.target_recovery_criterion`,
+`PredictiveMemoryMinimalQuotient.predictive_memory_minimal_quotient`
+and `TypedFiniteViewKernel.typed_finite_view_kernel`, with their owning
+Blueprint Scribes, supply respectively fiber constancy, separate
+readout/update factorization premises, and the need to preserve legality,
+full labels and successor behavior. The historical formal foundation
+used here is at `57235d816537668f092de005a3f9dd370566798a`.
+`SpectralFutureReadoutBridge.future_readout_word_eq_crystal_time_word`
+identifies finite diagonal spectral time samples with the existing
+future-readout word; it supplies no acquisition of the samples.
+NativeFullSourceProducer and NativeSerialEffective require their own
+actual finite-tree reads and effective selector/register realization.
+Neither supplies a bridge to this arbitrary-real source. These are
+mathematical source comparisons, not a current compiled application or
+new Lean certification.
+
+For the mature observable-evolution distinction, Brunton, Brunton,
+Proctor and Kutz, *Koopman invariant subspaces and finite linear
+representations of nonlinear dynamical systems for control*,
+[arXiv:1510.03007v2, §§2–3](https://arxiv.org/html/1510.03007v2),
+define evolution of observables by composition and explicitly separate
+it from invertibility back to the original state. Their state/data and
+invariant-subspace hypotheses supply no acquired record, initialization
+or legal port here; no global Koopman impossibility result is applied.
+The present contribution is repository-derived source-specific
+synthesis, with no literature-wide priority claim. Its proofs are
+ordinary mathematics from the fixed original suppliers; their finite
+rational certificates are not re-executed and no formal certification
+is asserted.
+
+## 追加锚（本行以下为增补区）
