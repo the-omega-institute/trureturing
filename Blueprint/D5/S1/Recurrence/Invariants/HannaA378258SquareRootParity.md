@@ -36,6 +36,10 @@ $$(\exists A: \operatorname{PowerSeries}\left(\mathbb{Q}\right), \operatorname{I
 
 *Proof.* Machine-checked in Lean as `D5/S1/Recurrence/Invariants/HannaA378258SquareRootParity.result` (`✓ std3`). ∎
 
+*Resolves.* `Problems/oeis-a378258-hanna-square-root-parity` (proved) by `D5/S1/Recurrence/Invariants/HannaA378258SquareRootParity.result`.
+
+<!-- scribe-open-problem-resolution-v1 {"problem_slug":"oeis-a378258-hanna-square-root-parity","declaration_gid":"D5/S1/Recurrence/Invariants/HannaA378258SquareRootParity.result","resolution_kind":"proved"} -->
+
 *Source.* Repository-derived.
 
 *Acknowledgement.* Paul D. Hanna (2024). *OEIS A378258, a compositional square root and dyadic parity*. URL: <https://oeis.org/A378258>.
