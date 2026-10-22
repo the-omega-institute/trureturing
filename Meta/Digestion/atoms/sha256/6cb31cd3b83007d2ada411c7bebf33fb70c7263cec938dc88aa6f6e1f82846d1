@@ -1,0 +1,39 @@
+**Theorem 15.1 (Strict continuation and actual nonclosedness).** Put
+
+$$
+Y=\{(p,v)\in\mathbb R^2:p\ne24,\ C(p,v)\ne\varnothing\}.
+\tag{15.4}
+$$
+
+There is an analytic $w(z)$ for all sufficiently small $|z|$ with
+$w(0)=(r_*,b_*,t_*)$ and $G(w(z),z)=0$. For every sufficiently
+small $z>0$, the source (15.1) and $(r_B(z),b_B(z))$ give two
+distinct actual strict worlds with equal terminal $J$ in the same
+$C(p(z),v(z))$. Their bases lie in $D_J\subset Y$ and tend to
+$y_*\in Y\setminus D_J$. Thus $D_J$ is not relatively closed in $Y$.
+
+Proof. Both rational charts are analytic at the target: the strict
+source is regular and the auxiliary side has $t_*>1$. The nonzero
+determinant in (15.3) permits the analytic implicit-function theorem.
+For small positive $z$ one has $t(z)>0$, $0<t(z)z<1$ and
+$b_A=z>0$, so (15.1) is an original strict source with
+$c_A=r_A(1-r_A)/b_A$. Its $D$ stays nonzero. The other source
+remains strict and regular near $(r_*,b_*)$. Shrinking the parameter
+interval gives $b_A<1$, $b_B<1$, and
+$b_A<b_*/2<b_B$, ensuring distinctness. The base remains off $24$.
+
+Apply (10.2) to each source for each $z$. Every world has its own
+single entire nonzero real gain of degree at most three and its own
+fixed drift at every original clock. These may vary with the family
+parameter, never with the clock within a world. Equation (15.2)
+gives exact equality of $p,v,a$. These are actual equal-$J$ pairs,
+separately established from the auxiliary tuple and root necessity.
+Continuity gives their limiting base $y_*$, and (15.3) makes the
+base arc nonconstant.
+
+Theorem 14.1 puts $y_*$ in $Y$ and makes its entire child
+$J$-injective. Therefore $y_*\notin D_J$. Any positive sequence
+$z_n\to0$ supplies the required failure of relative closedness.
+The endpoint $b_A=z_n\to0$ escapes the strict source domain at a
+bounded base. Its limiting tuple is never counted as an actual pair. ∎
+

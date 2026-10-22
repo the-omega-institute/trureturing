@@ -1,0 +1,101 @@
+**Lemma 23.1 (Complete positive-root signs).** The degrees of (23.2)
+are $83,82,\ldots,0$. The following are its full ordered sign words,
+with each character representing one sign. All finite-argument signs
+in the table are nonzero. In the row labels put
+
+$$
+(q_1,q_2,q_3,q_4,q_5)
+ =(4632607,12856673,64878432,90481370,2515351400),\qquad
+L_i=q_i/10^8,\quad U_i=(q_i+1)/10^8.
+\tag{23.3}
+$$
+
+| Argument | Sign word of $S_0,\ldots,S_{83}$ | $V$ |
+| --- | --- | --- |
+| $0$ | `--+-++++---++-+---+----+-+---+---+++--++--++---++--+++---++-+++++--++------+++++--++` | 35 |
+| $+\infty$ | `+++++-++---+++---++--++-++----++++-+--+++---++----+-----+++-+++++--+-------+++++--++` | 30 |
+| $L_1$ | `-+--++----++--+---+---+--+---+---+++--+--++--++++--++----++-+++++--+-------+++++--++` | 35 |
+| $U_1$ | `++--++----++--+---+---+--+---+---+++--+--++--++++--++----++-+++++--+-------+++++--++` | 34 |
+| $L_2$ | `+-++--++++--++-+++-+++-++-+++-+++---++-+++-++----+++----+++-+++++--+-------+++++--++` | 34 |
+| $U_2$ | `--++--++++--++-+++-+++-++-+++-+++---++-+++-++----+++----+++-+++++--+-------+++++--++` | 33 |
+| $L_3$ | `-++-++----++--+---++---+-+----+++--+--++++--+-----+-----+++-+++++--+-------+++++--++` | 33 |
+| $U_3$ | `+++-++----++--+---++---+-+----+++--+--++++--+-----+-----+++-+++++--+-------+++++--++` | 32 |
+| $L_4$ | `+--+--++++--++-+++--+++--+----+++--+--++++--+-----+-----+++-+++++--+-------+++++--++` | 32 |
+| $U_4$ | `---+--++++--++-+++--+++--+----+++--+--++++--+-----+-----+++-+++++--+-------+++++--++` | 31 |
+| $L_5$ | `-++++-++---+++---++--++-++----++++-+--+++---++----+-----+++-+++++--+-------+++++--++` | 31 |
+| $U_5$ | `+++++-++---+++---++--++-++----++++-+--+++---++----+-----+++-+++++--+-------+++++--++` | 30 |
+
+There are exactly five positive roots of $F_J$, all simple, with exactly
+one root $\beta_i$ in each open interval $(L_i,U_i)$.
+
+Proof. Recurrence (23.2), starting with the complete integer array in
+Section 22, gives one nonzero polynomial of each degree down to zero.
+All its coefficients are determined by (23.1), polynomial division
+(22.6), and division by positive integer content. Evaluate each
+polynomial by descending Horner at the displayed rational arguments;
+the resulting signs are exactly the words in the table. Thus its
+entries and variation counts are finite rational sign relations.
+The chain has $84$ entries; in particular it has no zero polynomial
+before the final constant. The gcd relation with $F'_J$ in (22.4)
+also excludes a repeated root.
+
+Sturm's theorem gives $V(0)-V(+\infty)=35-30=5$ positive roots.
+The five disjoint intervals have the respective variation drops
+$(35,34),(34,33),(33,32),(32,31),(31,30)$, so each contains one.
+Their total is five and exhausts the positive roots. ∎
+
+The following finite rational interval definitions specify the lifts,
+including the denominator guards and strict comparisons. They use exact
+rational endpoints, without a rounding grid. For intervals $A=[l,u]$,
+$B=[v,w]$, use endpoint addition and negation, and
+
+$$
+\begin{aligned}
+AB&=[\min(lv,lw,uv,uw),\max(lv,lw,uv,uw)],\\
+A/B&=[\min(l/v,l/w,u/v,u/w),\max(l/v,l/w,u/v,u/w)]
+               \quad(0\notin B).
+\end{aligned}
+\tag{23.4}
+$$
+
+For a univariate polynomial $P=\sum_{j=0}^m p_jb^j$, define its interval
+Horner value on $I$ from $Z_m=[p_m,p_m]$ by
+$Z_j=Z_{j+1}I+[p_j,p_j]$, descending to $j=0$.
+For $P(r,b)=\sum_{u=0}^m P_u(b)r^u$, first form the Horner value
+of each $P_u$ on $I$, then use those intervals as the coefficients
+of descending Horner in the interval for $r$. Denote these fixed
+finite expressions by $\mathfrak H(P;I)$ and $\mathfrak H(P;R,I)$,
+respectively. Induction using (23.4) proves containment of the exact
+polynomial values for every argument in the intervals.
+
+Starting with $I_i^{(0)}=[L_i,U_i]$, define exactly $400$ dyadic
+refinements. If $I_i^{(j)}=[l,u]$ and $z=(l+u)/2$, set
+
+$$
+I_i^{(j+1)}=
+\begin{cases}
+[l,z],&F_J(l)F_J(z)<0,\\
+[z,u],&F_J(z)F_J(u)<0.
+\end{cases}
+\quad(0\le j<400).
+\tag{23.5}
+$$
+
+The finite guards for this rule are $F_J(z)\ne0$ at every one of its
+$2000$ midpoints and opposite nonzero endpoint signs at every step.
+Let $I_i=I_i^{(400)}$ and form
+
+$$
+\begin{gathered}
+A_i=\mathfrak H(a_J;I_i),\qquad C_i=\mathfrak H(c_J;I_i),\qquad
+\mathcal R_i=-C_i/A_i,\\
+\mathcal D_i=\mathfrak H(\overline D;\mathcal R_i,I_i),\qquad
+\mathcal N_i=\mathfrak H(\overline N_p;\mathcal R_i,I_i),\qquad
+\mathcal P_i=\mathcal N_i/(I_i\mathcal D_i).
+\end{gathered}
+\tag{23.6}
+$$
+
+The factor $I_i$ in the last denominator is essential:
+$p=\overline N_p/(b\overline D)$ in the original model.
+

@@ -1,0 +1,74 @@
+## 16. Supplier scope, provenance and the remaining question
+
+The global question is still precisely Definition 1.2: at one real
+off-$24$ acquired base, find independently selected distinct equal-$J$
+and equal-$M$ pairs in the same entire child, or exclude every such
+configuration. No extra common terminal value, cross-pair restriction,
+selected gain degree or positivity condition has been introduced.
+
+SIII, Theorem 7.1 and Corollary 8.1, bound the
+acquired bases and all complete companion coordinates over $D_J$.
+SIII, Corollary 8.2, supplies separation from $p=24$ only on the
+joint locus $D_J\cap D_M$, where it gives a compact ambient region.
+They exclude unbounded fifth-response joint mechanisms
+and unbounded companion coordinates. Their bounds give no individual
+positive lower bound for every endpoint's $b,c$, do not make the
+strict locus closed, and do not make the actual collision projection
+compact. The finite-face arc above is consistent with those bounds.
+The unresolved global remainder consists of actually undecided
+finite boundary incidences and strict separated-pair incidences in
+that bounded region, with all original exceptional and gain strata
+retained. No unbounded joint regime is reintroduced as a global gap.
+
+The evaluated target, its three-world inventory, the explicit
+whole-child gap and the actual nonclosedness at this target are
+source-specific content. The circuit, carrier, faithful inverse and
+zero-safe identities are reused:
+
+| Supplier | Exact role and limit |
+| --- | --- |
+| O, Definitions 1.1–1.3 and Theorem 2.1 | Original whole nonzero gain, fixed drift, acquired history, matrix products and full-parent necessity and converse. |
+| F, Lemma 30.2 and Definition 31.1–Lemma 31.2 | Injective whole-world inverse with all guards and the fixed normalized carrier. A root alone supplies no actual world. |
+| S, Theorem 4.1; SVII, Lemma 15.1 and Section 16 | All-world necessity through singular, zero-drift and $F_0=0$ strata, and the zero-safe drift identity. The normalization here uses $K=4k$. |
+| SVII, Sections 14–20 | Existing carrier-root and whole-companion filtering on a different negative-base rectangle. Its rectangle is not transferred to this target. |
+| SVII, Theorem 24.1 and Corollary 24.2 | Strict augmented-$J$ critical classification and immersion at nonnegative $p$. This local strict information does not prevent the separated strict/boundary escape above. |
+| SIII, Sections 7–9 | Bounded global joint region and bounded complete companions, with no global closedness or individual endpoint margin. |
+
+Fixed-node interpolation is the classical distinct-node formula; see
+Berrut–Trefethen, *Barycentric Lagrange Interpolation*, §2,
+[doi:10.1137/S0036144502417715](https://doi.org/10.1137/S0036144502417715).
+The Sylvester determinant is the classical elimination construction,
+used in its stated necessary direction; see Basu, Pollack and Roy,
+*Algorithms in Real Algebraic Geometry*, second edition, Chapter 8,
+[doi:10.1007/3-540-33099-2](https://doi.org/10.1007/3-540-33099-2).
+The self-map arguments use Banach's contraction theorem; see Lebl,
+*Basic Analysis II*, [§8.5](https://www.jirka.org/ra/realanal2.pdf),
+which also gives the $C^1$ implicit-function theorem (Theorem 8.5.6).
+For the analytic regularity in Theorem 15.1, use Lebl,
+*Tasty Bits of Several Complex Variables*, version 4.4,
+[Theorem 1.3.8, p. 32](https://www.jirka.org/scv/scv.pdf),
+the holomorphic implicit-function theorem.
+
+To apply it, regard the parameter $z$ in (15.2) as complex and
+$w=(r_B,b_B,t)$ as three complex variables. The strict chart has
+$b_*>0$ and $D(r_*,b_*)\ne0$ by Proposition 11.1. On the auxiliary
+chart (15.1), the substituted denominator $D$ at $z=0$ is
+$20t(t-1)$, nonzero at $t=t_*>1$. The source quotient
+$r_A(1-r_A)/b_A$ has already been replaced by the polynomial
+$c_A=t(1-tz)$ before forming that chart. Both rational charts
+therefore extend holomorphically to a complex neighborhood of the
+target on which their denominators are nonzero. Their difference
+$G$ has real coefficients, vanishes at the target, and has invertible
+complex $w$-Jacobian there: its determinant is the same nonzero
+real number enclosed in (15.3). The cited theorem supplies a unique
+local holomorphic solution $w(z)$ through $(r_*,b_*,t_*)$.
+After shrinking to conjugation-invariant neighborhoods, the real
+coefficients and uniqueness give
+$w(\overline z)=\overline{w(z)}$. Thus $w(z)$ is real for real
+$z$, and its restriction is the real-analytic solution asserted in
+Theorem 15.1.
+These standard tools are not claimed as new.
+
+The global existence-or-exclusion question outside this evaluated
+neighborhood remains unresolved.
+

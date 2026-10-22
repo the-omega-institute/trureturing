@@ -1,0 +1,138 @@
+**Theorem 17.1 (Empty lower-face/strict-unit-$j$ J incidence).** For
+every finite auxiliary complete label $B_s$ satisfying the original
+parent readings, and every actual strict complete parent world $W$
+with $j(W)=1$, one has
+
+$$
+(p(B_s),v(B_s),a(B_s))\ne(p(W),v(W),a(W)).
+\tag{17.1}
+$$
+
+The quantifier includes every $s>0$; at $s=1$ there is no such finite
+complete label. The strict mate ranges over the entire unit-$j$ parent
+layer, including any world unused by selected pairs. No $M$ collision
+or off-$24$ hypothesis is needed for this theorem. In particular,
+$p=24$, $d=0$, $d=24$ and endogenous gain-sample zeros are retained
+whenever the original equations permit them. The label $B_s$ is never
+an actual strict world.
+
+For clarity, the unchanged interface used in the proof is recorded
+explicitly. A strict source has $0<r<1$, $b>0$,
+$c=r(1-r)/b$, $j=b+c$, $n=j+r$, $T=1+b$, $U=1+2b$.
+Its single entire real gain has degree at most three, its fixed drift
+is $d=24+e$, and its first four gain samples are
+
+$$
+(q_0,q_1,q_2,q_3)
+=\left(-24-e,-\frac e j,\frac{27/5-e}{T},-\frac e n\right).
+\tag{17.2}
+$$
+
+The polynomial is exactly the interpolant in Lemma 1.3. The original
+clock-four condition, before solving for any parameter, is
+
+$$
+\begin{gathered}
+\Lambda=1+\frac6T+\frac1U-\frac4j-\frac4n,
+\qquad
+\eta=-\frac{6(8b-1)(5b+2)}{5TU},\\
+g(4)-\frac{-6-e}{U}=e\Lambda-\eta=0.
+\end{gathered}
+\tag{17.3}
+$$
+
+The literal trace row is $(1,j,T,n,U,U+n,2U+n)$ at clocks
+$0,\ldots,6$. At the original clock seven the alternative traces are
+$T+2j+4r$ and $3U+2n$. Consequently
+
+$$
+\begin{aligned}
+p&=24+e+(U+n)g(5),&
+v&=24+e+(2U+n)g(6),\\
+a&=24+e+(T+2j+4r)g(7),&
+m&=24+e+(3U+2n)g(7).
+\end{aligned}
+\tag{17.4}
+$$
+
+These are the original unshifted clocks, actions and readings of
+Section 1. The first two readings, $0$ and $24$, force the whole
+interpolant to be nonzero. Equations (17.2)–(17.4) impose no condition
+on a sample being nonzero, an exact gain degree or multiplicity of a
+gain root, and do not divide by $e$ or $\Lambda$.
+
+For the auxiliary matrix
+
+$$
+P_s=\begin{pmatrix}0&0\\s&1\end{pmatrix}
+\tag{17.5}
+$$
+
+the same literal products have $j=n=s$ and $T=U=1$.
+Thus the undivided parent (17.3) reads
+
+$$
+\frac{8e(s-1)}s-\frac{12}{5}=0.
+\tag{17.6}
+$$
+
+At $s=1$ this is the contradiction $-12/5=0$, for every finite
+proposed gain and drift. Only after this exclusion may one solve it.
+For $s>0$, $s\ne1$, the unique finite auxiliary complete label has
+
+$$
+\begin{gathered}
+e_s=\frac{3s}{10(s-1)},\qquad
+d_s=\frac{3(81s-80)}{10(s-1)}
+=\frac{243}{10}+\frac{3}{10(s-1)},\\
+g_s(t)=\frac32t^3-\frac{141}{10}t^2+\frac{369}{10}t-d_s,\\
+g_s(4)=-\frac{63}{10}-\frac{3}{10(s-1)},\qquad
+g_s(5)=-\frac{24}{5}-\frac{3}{10(s-1)},\\
+g_s(6)=\frac{27}{2}-\frac{3}{10(s-1)},\qquad
+g_s(7)=\frac{288}{5}-\frac{3}{10(s-1)}.
+\end{gathered}
+\tag{17.7}
+$$
+
+Here $t$ is the gain's polynomial argument; $s$ is the source
+parameter. Interpolation at $0,1,2,3$ gives exactly (17.7), rather
+than separate gains for separate clocks. Its four responses are
+
+$$
+\begin{aligned}
+p_s&=\frac{96}{5}-\frac{24s}{5}-\frac{3}{10(s-1)}
+=-\frac{3(16s^2-80s+65)}{10(s-1)},\\
+v_s&=51+\frac{27s}{2}-\frac{3}{5(s-1)}
+=\frac{3(45s^2+125s-172)}{10(s-1)},\\
+a_s&=\frac{813}{10}+\frac{576s}{5}-\frac{3}{5(s-1)}
+=\frac{3(384s^2-113s-273)}{10(s-1)},\\
+m_s&=\frac{3(384s^2+271s-659)}{10(s-1)}.
+\end{aligned}
+\tag{17.8}
+$$
+
+Direct multiplication gives three identities needed below:
+
+$$
+\begin{aligned}
+10v_s-20p_s-126&=231s,\\
+770a_s+6780p_s-4160v_s+19383&=0,\\
+48s^2+(10p_s-240)s+195-10p_s&=0.
+\end{aligned}
+\tag{17.9}
+$$
+
+These are necessary equations for the evaluated boundary response,
+not sufficient conditions for an actual source. The zero-drift label
+$s=80/81$ is included. There is no $d_s=24$ label for $s>0$, since
+$e_s\ne0$. Also
+
+$$
+10(s-1)(p_s-24)=3(15-16s^2),
+\tag{17.10}
+$$
+
+so the positive $p_s=24$ label $s=\sqrt{15}/4$ is retained. These
+boundary fractions are the existing B0 response, also given in SII,
+Definition 12.1 and Lemma 12.2; the new assertion is (17.1).
+

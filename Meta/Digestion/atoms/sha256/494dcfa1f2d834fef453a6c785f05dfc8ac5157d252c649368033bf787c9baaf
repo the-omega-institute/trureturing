@@ -1,0 +1,17 @@
+**Theorem 10.2 (Evaluated result).** The exact target belongs to the
+actual off-$24$ base image. Its entire child consists of exactly the
+three strict complete worlds constructed in Section 14, and both
+terminal responses are injective on it. The explicit closed rectangle
+$\mathcal B$ in Section 11 contains $y_*$ in its interior, and on
+every entire child over $\mathcal B$ any two distinct worlds have
+$M$ responses separated by more than $1/20$. There is an actual
+distinct equal-$J$ pair arc tending to $y_*$, with one endpoint
+having $b\to0$ and both endpoints having $b<1$. Consequently $D_J$
+is not relatively closed in the actual off-$24$ base image. No
+original joint base lies in $\mathcal B$.
+
+The proof consists of the target contraction in Section 11, the
+all-world root filter in Sections 12–13, the strict constructions and
+exact face rejection in Section 14, and the continuation in Section 15.
+No constant child cardinality in a neighborhood is asserted.
+
