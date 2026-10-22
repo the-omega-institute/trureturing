@@ -70,3 +70,9 @@ under frozen protection to cite the upstream declaration directly, and
 retire the corresponding port and approximation helpers. Retain any still
 useful project measurable-section and signed-lift bridges; the availability
 of KRN alone does not make those bridges redundant.
+
+## Verified locator
+
+Source: https://github.com/LeanPool/lean-pool/blob/7d5e94f7172d47c78cac7f23c0dd01cef1665e42/LeanPool/BicausalOT/BicausalOT/DescriptiveSetTheory/MeasurableSelection.lean
+Pinned commit: 7d5e94f7172d47c78cac7f23c0dd01cef1665e42.
+Acquired source SHA256: a7f86e5daa9a7a200064e77f77a0e7d1f2dd2d99314b80ee5456b8892d7fb2d7.
