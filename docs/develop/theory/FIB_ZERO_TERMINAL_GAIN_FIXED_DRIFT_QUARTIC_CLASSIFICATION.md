@@ -92,14 +92,16 @@ $$
 
 For each fixed $d\in\mathbb R\setminus\{0,24\}$, the first five acquired rows together with $g(7)=0$ have at most ten complete worlds. For each fixed $p,v\in\mathbb R$ and $d\in\mathbb R\setminus\{0,24\}$, the set in (3.1) has at most four complete worlds.
 
-**Proof.** Let $c=r(1-r)/b$, so $j=b+c$, $n=j+r$, $u=1+2b$, and $T=(u+1)/2$. If $g(7)=0$, the factor theorem gives a unique $h\in\mathbb R[t]$ of degree at most two with $g(t)=(7-t)h(t)$. The rows at clocks $0,2,4$ give
+The classification and bounds of Theorem 3.1 are model-specific ordinary derivations in this repository (`repo-derived`), with no claim of literature priority.
+
+**Proof.** Let $c=r(1-r)/b$, so $j=b+c$, $n=j+r$, $u=1+2b$, and $T=(u+1)/2$. If $g(7)=0$, the classical factor theorem gives a unique $h\in\mathbb R[t]$ of degree at most two with $g(t)=(7-t)h(t)$. The rows at clocks $0,2,4$ give
 
 $$
 h(0)=e_0=-d/7,\qquad h(2)=e_2=\frac{294-10d}{25(u+1)},\qquad
 h(4)=e_4=\frac{18-d}{3u}.
 $$
 
-The three distinct nodes determine $h$, and the Lagrange formula is (3.2). Its values at the four odd or later clocks are
+The three distinct nodes determine $h$, and the Lagrange formula is (3.2). Here classical finite fixed-node Lagrange interpolation is an intermediate input: Berrut–Trefethen, *[Barycentric Lagrange Interpolation](https://doi.org/10.1137/S0036144502417715)*, §2, as cited in Section 11 of the [common-parent volume](FIB_COMMON_PARENT_GEOMETRY_AND_MIXED_CHILDREN.md#11-mathematical-scope-and-predecessor-correspondence). Its values at the four odd or later clocks are
 
 $$
 \begin{aligned}
@@ -143,13 +145,15 @@ which is equivalent to $F_{d,v}(u)=0$. This proves the forward map and verifies 
 Conversely, let $u\in S(d,p,v)$. Then $b>0$ and $0<r<1$. Since $L\ne0$, the equality $R_d(u)=0$ reverses the preceding rank calculation and gives $r(1-r)=b(j-b)$. Hence $j=b+r(1-r)/b$, and $n=j+r$. Formula (3.2) supplies a polynomial of degree at most three with $g(7)=0$. The interpolation values give rows $0,2,4$; (3.4) gives rows $1,3$; and the two displayed quotient identities give rows $5,6$. Thus the constructed triple lies in $C(p,v)$. Its gain is not identically zero because the first two readings are different. The construction is unique because $u$ determines $b,h,j,n,r,g,d$, while every world determines $u=1+2b$. Therefore the correspondence is bijective.
 
 For the bounds, when $d\ne0$, $A$ and $B$ have degree two with leading coefficients $-225d$ and $75d$. Therefore $L$ has degree four and leading coefficient $-202500d^2$. The last term of $R_d$ has degree ten and leading coefficient
-$-(-202500d^2)^2=-41006250000d^4\ne0$, while the other terms have degree at most nine. Thus $R_d$ has at most ten real roots, and the first bound follows. The first term of $E_{d,p}$ has degree at most three; the product $ZB$ in the second term has leading coefficient $-16875d^2$, so $E_{d,p}$ has degree four with leading coefficient $16875d^2\ne0$. Every element of $S(d,p,v)$ is a root of $E_{d,p}$, proving the bound four. ∎
+$-(-202500d^2)^2=-41006250000d^4\ne0$, while the other terms have degree at most nine. Thus $R_d$ has at most ten real roots by classical polynomial root counting, and the first bound follows. The first term of $E_{d,p}$ has degree at most three; the product $ZB$ in the second term has leading coefficient $-16875d^2$, so $E_{d,p}$ has degree four with leading coefficient $16875d^2\ne0$. Every element of $S(d,p,v)$ is a root of $E_{d,p}$, proving the bound four by the same classical polynomial root count. ∎
 
 ## 4. The zero-drift layer
 
 **Theorem 4.1.** No original world realizing the first five readings $(0,24,147/5,24,18)$ has both $d=0$ and $g(7)=0$.
 
-**Proof.** The preceding factorization and interpolation remain valid at $d=0$. For $u=1+2b>1$, (3.4) becomes
+The exclusion in Theorem 4.1 is a model-specific ordinary derivation in this repository (`repo-derived`), with no claim of literature priority.
+
+**Proof.** The preceding factorization and interpolation remain valid at $d=0$. These are the same intermediate applications of the classical factor theorem and finite fixed-node Lagrange interpolation (Berrut–Trefethen, §2, cited above). For $u=1+2b>1$, (3.4) becomes
 
 $$
 j=\frac{400u(u+1)}{3(269u-25)},\qquad
