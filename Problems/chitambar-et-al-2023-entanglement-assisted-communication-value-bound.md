@@ -26,7 +26,7 @@ Issue [#20033](https://github.com/the-omega-institute/trureturing/issues/20033) 
 
 ## Motivation
 
-The communication value measures how well a single use of a channel transmits a classical message in a guessing game; its entanglement-assisted version is the zero-error cost of simulating the channel with quantum non-signalling resources. The source shows that shared entanglement can raise cv by at most a factor 2 for qubit channels and conjectures the dimension factor $d_B$ in general, the single-shot analogue of bounding entanglement-assisted capacity gains by the dimension.
+The communication value measures how well a single use of a channel transmits a classical message in a guessing game; the ceiling of its entanglement-assisted version is the zero-error classical cost of simulating the channel with quantum non-signalling resources. The source shows that shared entanglement can raise cv by at most a factor 2 for qubit channels and conjectures the dimension factor $d_B$ in general, the single-shot analogue of bounding entanglement-assisted capacity gains by the dimension.
 
 ## Gap
 
@@ -42,7 +42,7 @@ The literature check before any Lean is recorded in #20033:
 Write $b=d_B$ and $J$ for the Choi matrix of $\mathcal N$.
 1. **Assisted protocols as operators.** Every assisted protocol value equals $\mathrm{tr}[J\Omega]$ for a positive semidefinite $\Omega$ with $\mathrm{tr}_A\Omega=I_B$.
 2. **Depolarizing Bob's factor.** The channel $D_b(X)=[X+\mathrm{tr}(X)I]/(b+1)$ is entanglement breaking, with an explicit finite measure-and-prepare decomposition from a phase-averaging identity. So $\Omega'=(\mathrm{id}\otimes D_b)\Omega$ is a finite sum of products of positive matrices with $\mathrm{tr}_A\Omega'=I_B$.
-3. **Back to an unassisted protocol.** $\Omega'$ defines an unassisted protocol of value $(\mathrm{tr}[J\Omega]+b)/(b+1)$. Hence every assisted value is at most $(b+1)\,\mathrm{cv}-b$.
+3. **Back to an unassisted protocol.** $\Omega'$ defines an unassisted protocol with diagonal guessing score $(\mathrm{tr}[J\Omega]+b)/(b+1)$, so its communication value is at least that score. Hence every assisted value is at most $(b+1)\,\mathrm{cv}-b$.
 4. **Conclusion.** Every unassisted value is at most $b$, so $(b+1)\mathrm{cv}-b\le b\,\mathrm{cv}$.
 
 ## Falsifier
