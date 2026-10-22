@@ -295,7 +295,7 @@ unsafe def onDemandLookup (table : LookupTable)
   let acquire (module : Name) (options : Options) : IO Environment := withImporting do
     close
     lookupPhase s!"candidate/import-start module={module}"
-    let imports : Array Import := #[{module}]
+    let imports : Array Import := table.environment.header.imports.push {module}
     let (_, state) ← (importModulesCore imports).run (sharedImports?.getD default)
     let env ← finalizeImport state imports options 0 (leakEnv := false) (loadExts := false)
     let owned := env.header.regions.filter fun region =>
@@ -325,7 +325,7 @@ unsafe def onDemandLookup (table : LookupTable)
   return {table with
     memo? := some memo, budget? := some budget,
     close? := some close, finish? := some finish,
-    load? := some fun entry head => do
+    load? := some fun entry head queryType => do
       let context ← readThe Core.Context
       if entry.module.startsWith "D5." && !(← verified.get) then
         let some disk := table.disk? | throwError "lookup.candidate_without_snapshot"
@@ -340,12 +340,37 @@ unsafe def onDemandLookup (table : LookupTable)
         resetCache
         modifyThe Core.State fun state => {state with cache := {}}
         withLookupPreparation (some budget) <| acquire entry.module.toName context.options
-      timeLookup s!"candidate/signature-copy name={entry.name}" <|
-        copyLookupCandidateWith (fun source proof =>
-          withLookupPreparation (some budget) <|
-            copyCertificateExpression {
-              source, enclosingBudget := true, certifiedBasis := true,
-              lookupPreparation? := some budget} proof) source entry head (some budget)}
+      let query ← getEnv
+      -- Native imports carry nested inductives, recursors and generated
+      -- declarations intact. Only query vocabulary is reconstructed here.
+      setEnv source
+      resetCache
+      modifyThe Core.State fun state => {state with cache := {}}
+      let transport : TransportContext := {
+        source := query, enclosingBudget := true, certifiedBasis := true,
+        lookupPreparation? := some budget}
+      discard <| withLookupPreparation (some budget) <|
+        copyCertificateExpression transport queryType
+      for decl in ← getLCtx do
+        discard <| withLookupPreparation (some budget) <|
+          copyCertificateExpression transport decl.type
+        if let some value := decl.value? then
+          discard <| withLookupPreparation (some budget) <|
+            copyCertificateExpression transport value
+      -- Goal metavariables live in Meta state, independently of imports.
+      -- Copy their types' computational vocabulary without importing T or S.
+      let some info := (source.setExporting false).find? entry.leanName
+        | throwError "lookup.module_candidate_missing"
+      if info.isUnsafe then return {}
+      unless unloadedPossibleView source head info.type do return {}
+      let params := info.levelParams.map ownedLookupName
+      let levels ← params.mapM fun _ => mkFreshLevelMVar
+      let type := info.type.instantiateLevelParams info.levelParams levels
+      let placeholder ← mkFreshExprMVar type
+      return {values := #[placeholder], certify := do
+        lookupPhase s!"candidate/signature-matched name={entry.name} module={entry.module}"
+        placeholder.mvarId!.assign (mkConst entry.leanName levels)}}
+
 
 private unsafe def runCore (source base : Environment) (request : Request)
     (lookupComplete : Bool) (disk? : Option DiskLookup.Index := none)

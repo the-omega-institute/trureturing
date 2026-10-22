@@ -24,7 +24,7 @@ def timeLookup {α : Type} (label : String) (action : MetaM α) : MetaM α := do
   try action finally
     lookupPhase s!"{label}/end ns={(← IO.monoNanosNow) - start} heartbeats={(← IO.getNumHeartbeats) - heartbeats}"
 
-abbrev lookupVersion : String := "R_lookup/v8/candidate-200000/preparation-8000000/G-340000000/memo-off/N-memo-2000000/checkpoint-v1/external-64"
+abbrev lookupVersion : String := "R_lookup/v9/candidate-200000/preparation-8000000/G-340000000/memo-off/N-memo-2000000/checkpoint-v1/external-64/native-signature/views-kappa"
 
 abbrev lookupCandidateBudget : Nat := 200000
 /-- Frozen from verdict-free fallback and fixed-stride candidate telemetry. -/
@@ -49,7 +49,7 @@ structure LookupTable where
   complete : Bool := true
   enabled : Bool := true
   disk? : Option DiskLookup.Index := none
-  load? : Option (DiskLookup.Entry → Option Name → MetaM LookupCandidate) := none
+  load? : Option (DiskLookup.Entry → Option Name → Expr → MetaM LookupCandidate) := none
   close? : Option (IO Unit) := none
   finish? : Option (Environment → Expr → MetaM Expr) := none
   memo? : Option (IO.Ref LookupQueryMemo) := none
@@ -105,14 +105,14 @@ private unsafe def profileCandidateSet (table : LookupTable) (type : Expr)
   lookupPhase s!"lookup/query mode={mode} fallback={fallback} closed={!type.hasMVar && !type.hasFVar} expression={(toJson (reprStr type)).compress}"
   lookupPhase s!"lookup/recall-profile/end ns={(← IO.monoNanosNow) - started} heartbeats={(← IO.getNumHeartbeats) - heartbeats}"
 
-private def candidateValue (table : LookupTable) (entry : DiskLookup.Entry) (head : Option Name) :
+private def candidateValue (table : LookupTable) (entry : DiskLookup.Entry) (head : Option Name) (query : Expr) :
     MetaM LookupCandidate := do
   if let some info := (table.environment.setExporting false).find? entry.leanName |>.filter (fun _ => candidateOwnerMatches table entry) then
     if !eligible info || info.isUnsafe then return {}
     return {values := #[← mkConstWithFreshMVarLevels entry.leanName]}
   let some load := table.load? | return {failure? := some "candidate-not-loaded", unloaded := true}
   try
-    let result ← load entry head
+    let result ← load entry head query
     let collision := (table.environment.setExporting false).contains entry.leanName &&
       !candidateOwnerMatches table entry
     return {result with
@@ -436,7 +436,7 @@ unsafe def lookupExact (table : LookupTable) (goal : MVarId) : MetaM LookupTrace
     unless ← coverageAvailable table do
       return {trace with complete := false, failures := trace.failures.push "G-truncated:membership"}
     let attempt ← boundedLookupCandidate table entry goal do
-      let candidate ← candidateValue table entry none
+      let candidate ← candidateValue table entry none type
       if let some reason := candidate.failure? then
         return {complete := false, failures := #[reason], missing := #[entry.leanName]}
       for value in candidate.values do
@@ -536,8 +536,8 @@ partial def unloadedDirectView (env : Environment) (head : Option Name) (type : 
 
 /-- Projection is performed inside the source telescope. Its data parameters
 are subsequently determined by application unification, never enumeration. -/
-partial def views (value : Expr) (fuel : Nat := 32) : MetaM (Array Expr) := do
-  if fuel == 0 then throwError "lookup.view_depth_incomplete"
+partial def views (value : Expr) : MetaM (Array Expr) := do
+  checkSystem "lookup.views"
   forallTelescopeReducing (← inferType value) fun xs body => do
     let applied := mkAppN value xs
     let body ← withReducible <| whnf body
@@ -546,7 +546,7 @@ partial def views (value : Expr) (fuel : Nat := 32) : MetaM (Array Expr) := do
       for projection in #[``And.left, ``And.right] do
         let projected ← mkAppM projection #[applied]
         let projected ← mkLambdaFVars xs projected
-        result := result ++ (← views projected (fuel - 1))
+        result := result ++ (← views projected)
     if body.isAppOfArity ``Iff 2 then
       for direction in #[``Iff.mp, ``Iff.mpr] do
         result := result.push (← mkLambdaFVars xs (← mkAppM direction #[applied]))
@@ -557,7 +557,7 @@ partial def views (value : Expr) (fuel : Nat := 32) : MetaM (Array Expr) := do
           result := result.push (← mkLambdaFVars xs (← mkAppM direction #[applied]))
     if body.isAppOfArity ``Subtype 2 then
       let projected ← mkLambdaFVars xs (← mkAppM ``Subtype.property #[applied])
-      result := result ++ (← views projected (fuel - 1))
+      result := result ++ (← views projected)
     return result
 
 /-- A fresh metavariable stands only for the candidate signature. No proof
@@ -590,12 +590,63 @@ placeholder never leaves the branch: success materializes it before checking. -/
     let proof ← withLookupPreparation budget? <| pure (detachLookupExpression proof)
     placeholder.mvarId!.assign proof}
 
+/-- Shared candidate attempt used by enumeration and focused regressions. -/
+unsafe def attemptLookupLeaf (table : LookupTable) (entry : DiskLookup.Entry)
+    (goal : MVarId) (unify close : MVarId → MetaM Bool) : MetaM LookupTrace := goal.withContext do
+  let head := rigidHead (← getEnv) (← goal.getType)
+  boundedLookupCandidate table entry goal do
+    let name := entry.leanName
+    if let some info := (table.environment.setExporting false).find? name |>.filter (fun _ => candidateOwnerMatches table entry) then
+      if !eligible info || info.isUnsafe || !possibleView table.environment head info.type then
+        return {complete := true}
+    let candidate ← candidateValue table entry head (← goal.getType)
+    if let some reason := candidate.failure? then
+      return {
+        complete := false, failures := #[reason], missing := #[name],
+        unloaded := if candidate.unloaded then 1 else 0}
+    let mut attempted := 0
+    for value in candidate.values do
+      let type ← inferType value
+      unless possibleView (← getEnv) head type do continue
+      let suitable ← if ← isProp type then pure true else
+        forallTelescopeReducing type fun _ body => do
+          return (← withReducible <| whnf body).isAppOfArity ``Subtype 2
+      unless suitable do continue
+      let alternatives ← views value
+      for view in alternatives do
+        let saved ← saveState
+        attempted := attempted + 1
+        -- Ordinary apply failure tries the next view. Resource failure and
+        -- unsupported views escape to the candidate-local boundary.
+        let matched ← try
+          let obligations ← withReducible <| goal.apply view {approx := false}
+          let obligations := obligations.filter fun next =>
+            !candidate.values.any (fun value => value.isMVar && value.mvarId! == next)
+          let propositions ← obligations.filterM fun g => g.withContext do isProp (← g.getType)
+          for next in propositions do
+            if (← instantiateMVars (← next.getType)).hasMVar then discard <| unify next
+          let dataClosed ← obligations.allM fun next => do
+            if ← next.isAssigned then return true
+            next.withContext do isProp (← instantiateMVars (← next.getType))
+          pure (dataClosed && (← propositions.allM fun next => do
+            if ← next.isAssigned then return true else close next))
+        catch ex =>
+          if ex.isMaxHeartbeat || ex.isInterrupt || ex.isRuntime then throw ex
+          pure false
+        if matched then
+          candidate.certify
+          let proof ← instantiateMVars (mkMVar goal)
+          unless proof.hasMVar do return {
+            complete := true, source? := some name, attempted,
+            unloaded := if candidate.unloaded then 1 else 0}
+        saved.restore
+    return {complete := true, attempted, unloaded := if candidate.unloaded then 1 else 0}
+
 /-- The frozen closure table has lookup disabled. Every candidate exception
 is accounted for locally; only the coverage guard truncates enumeration. -/
 unsafe def lookupLeafPass (fallback : Bool) (table : LookupTable) (goal : MVarId)
     (unify close : MVarId → MetaM Bool) : MetaM LookupTrace := goal.withContext do
   if !table.enabled then return {complete := true}
-  let head := rigidHead (← getEnv) (← goal.getType)
   let some index ← tableIndex table | return {}
   let telemetry := (← IO.getEnv "SEARCH_REDUCTION_TELEMETRY").isSome
   let floorStart ← IO.getNumHeartbeats
@@ -625,53 +676,7 @@ unsafe def lookupLeafPass (fallback : Bool) (table : LookupTable) (goal : MVarId
       break
     if position % 128 == 0 then
       emitLookupRecord s!"LOOKUP_ENUMERATION_PROGRESS fallback={fallback} next={position} total={candidates.entries.size}"
-    let result ← boundedLookupCandidate table entry goal do
-      let name := entry.leanName
-      if let some info := (table.environment.setExporting false).find? name |>.filter (fun _ => candidateOwnerMatches table entry) then
-        if !eligible info || info.isUnsafe || !possibleView table.environment head info.type then
-          return {complete := true}
-      let candidate ← candidateValue table entry head
-      if let some reason := candidate.failure? then
-        return {
-          complete := false, failures := #[reason], missing := #[name],
-          unloaded := if candidate.unloaded then 1 else 0}
-      let mut attempted := 0
-      for value in candidate.values do
-        let type ← inferType value
-        unless possibleView (← getEnv) head type do continue
-        let suitable ← if ← isProp type then pure true else
-          forallTelescopeReducing type fun _ body => do
-            return (← withReducible <| whnf body).isAppOfArity ``Subtype 2
-        unless suitable do continue
-        let alternatives ← views value
-        for view in alternatives do
-          let saved ← saveState
-          attempted := attempted + 1
-          -- Ordinary apply failure tries the next view. Resource failure and
-          -- unsupported views escape to the candidate-local boundary.
-          let matched ← try
-            let obligations ← withReducible <| goal.apply view {approx := false}
-            let obligations := obligations.filter fun next =>
-              !candidate.values.any (fun value => value.isMVar && value.mvarId! == next)
-            let propositions ← obligations.filterM fun g => g.withContext do isProp (← g.getType)
-            for next in propositions do
-              if (← instantiateMVars (← next.getType)).hasMVar then discard <| unify next
-            let dataClosed ← obligations.allM fun next => do
-              if ← next.isAssigned then return true
-              next.withContext do isProp (← instantiateMVars (← next.getType))
-            pure (dataClosed && (← propositions.allM fun next => do
-              if ← next.isAssigned then return true else close next))
-          catch ex =>
-            if ex.isMaxHeartbeat || ex.isInterrupt || ex.isRuntime then throw ex
-            pure false
-          if matched then
-            candidate.certify
-            let proof ← instantiateMVars (mkMVar goal)
-            unless proof.hasMVar do return {
-              complete := true, source? := some name, attempted,
-              unloaded := if candidate.unloaded then 1 else 0}
-          saved.restore
-      return {complete := true, attempted, unloaded := if candidate.unloaded then 1 else 0}
+    let result ← attemptLookupLeaf table entry goal unify close
     trace := mergeLookupTrace trace result
     if fallback then trace := {trace with fallbackVisited := trace.fallbackVisited + 1}
     if trace.source?.isSome && !telemetry then break
