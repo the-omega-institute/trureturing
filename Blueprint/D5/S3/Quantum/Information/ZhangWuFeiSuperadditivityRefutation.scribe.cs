@@ -33,7 +33,10 @@ internal sealed class ZhangWuFeiSuperadditivityRefutationDocument : IScribeDocum
                 AssessedProvenance.FromRepo(Source),
                 Blocks(Paragraph(Text("Take a = b = 2, ρ = I/4 and σ = diag(61,1,1,1)/64 in product order (0,0), (0,1), (1,0), (1,1). All four reference eigenvalues are positive. The two input marginals equal I/2, and the two reference marginals equal diag(31,1)/32. Every unitary fixes the input and its marginals.")),
                     Paragraph(Text("The joint relative entropy is log(1/4) − log(61/64)/4 − 3 log(1/64)/4. Each marginal relative entropy is log(1/2) − log(31/32)/2 − log(1/32)/2. Four times the difference between the joint value and twice the marginal value is log(923521/3997696), which is negative. Thus no choice of the three unitaries satisfies the displayed inequality."))),
-                DescribeRole.Theorem))));
+                DescribeRole.Theorem,
+                openProblemResolutionClaim: new OpenProblemResolutionClaim(
+                    ProblemSlugRef.Create("zhang-wu-fei-2012-relative-entropy-superadditivity-conjecture-4-2"),
+                    ResolutionKind.Refuted)))));
 
     private static Formula Named(string name) => Seq(Operatorname, Grp(F.Id(name)));
     private static Formula Qualified(string owner, string name) => Seq(Named(owner), Dot, Named(name));

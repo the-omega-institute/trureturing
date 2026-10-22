@@ -24,6 +24,10 @@ $$\neg (\forall (a: \mathbb{N}), (\forall (b: \mathbb{N}), (\forall (rho: \opera
 
 *Proof.* Machine-checked in Lean as `D5/S3/Quantum/Information/ZhangWuFeiSuperadditivityRefutation.result` (`✓ std3`). ∎
 
+*Resolves.* `Problems/zhang-wu-fei-2012-relative-entropy-superadditivity-conjecture-4-2` (refuted) by `D5/S3/Quantum/Information/ZhangWuFeiSuperadditivityRefutation.result`.
+
+<!-- scribe-open-problem-resolution-v1 {"problem_slug":"zhang-wu-fei-2012-relative-entropy-superadditivity-conjecture-4-2","declaration_gid":"D5/S3/Quantum/Information/ZhangWuFeiSuperadditivityRefutation.result","resolution_kind":"refuted"} -->
+
 *Source.* Repository-derived.
 
 *Acknowledgement.* Lin Zhang, Junde Wu, and Shao-Ming Fei (2013). *Comment on 'Convergence of macrostates under reproducible processes' [Phys. Lett. A 374: 3715–3717 (2010)]*. DOI: [10.1016/j.physleta.2013.05.047](https://doi.org/10.1016/j.physleta.2013.05.047). URL: <https://arxiv.org/abs/1210.4720v4>.

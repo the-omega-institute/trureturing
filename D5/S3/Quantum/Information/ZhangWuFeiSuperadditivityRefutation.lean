@@ -46,6 +46,7 @@ The original diagonalState definition is publicized unchanged in this delivery;
 its current declaration identity is supplied by the scoped publication report.
 The public result is the designated refutation result (`basis=refutes`) and is exempt from
 four-slot escape registration (CLAUDE.md §3.9).
+Unfinished escape audit for the published diagonalState: https://github.com/the-omega-institute/trureturing/issues/20328.
 The claim uses the preregistered expressions; proofs reuse the original diagonalState constructor.
 -/
 

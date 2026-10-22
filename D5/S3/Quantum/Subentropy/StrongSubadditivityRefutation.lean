@@ -6,6 +6,8 @@
    utility: kind=certified-instance; basis=refutes=gid:D5/S3/Quantum/Subentropy/StrongSubadditivityRefutation.conjecture; result=D5/S3/Quantum/Subentropy/StrongSubadditivityRefutation.result; claim=D5/S3/Quantum/Subentropy/StrongSubadditivityRefutation.conjecture
    digest: Canonical density states and partial traces for a Bell pair with an independent qubit. -/
 
+/- Unfinished escape audit for diagonalState: https://github.com/the-omega-institute/trureturing/issues/20328. -/
+
 import D5.S3.Quantum.Subentropy.SpectralFormula
 import D5.S3.Quantum.Subentropy.DensityKernel
 import D5.S3.Quantum.Information.InputInformationBalance
