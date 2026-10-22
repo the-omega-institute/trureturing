@@ -74,8 +74,9 @@ the claim and are not addressed.
 
 The canonical sources are `D5/S3/Quantum/Entanglement/StabilizerMultiEntropyCollapse.lean`
 (public `shift`, `Z`, `S`, `I3`, `GM4`, `claim`, `result`), the structural classification source
-`D5/S3/Quantum/Entanglement/TernaryPartitionOrbit.lean` (public `SamePartition`, `anchored`, `result`),
-and the graph/Fourier helper modules
+`D5/S3/Combinatorics/Partitions/TernaryPartitionOrbit.lean` (public `SamePartition`, `anchored`, `result`),
+and its consumer `D5/S3/Combinatorics/Partitions/TernaryPartitionCounting.lean`
+(public `merger_sum_transport`, `result`), together with the graph/Fourier helper modules
 `D5/S3/Quantum/Information/BinaryStabilizerGraphNormalForm.lean` (public `complex_sign_val`,
 `graphAmp`, `stabilizer_graph_normal_form`) and
 `D5/S3/QuadraticForms/TernaryTranslationQuadraticNormalForm.lean` (public `F`, `C`,

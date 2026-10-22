@@ -9,7 +9,7 @@ internal sealed class TernaryPartitionOrbitDocument : IScribeDocumentDefinition
         LibraryNoteRef.Create("D5/L/QuantumStates/akella2026genuine");
 
     public DocumentDefinition Create() => DocumentDefinition.Create(ScribeNode.Create(
-        "Opposite nonzero ternary modes give distinct anchored equality partitions, for any index type and any choice of opposite-pair representatives.",
+        "Nonzero ternary modes modulo sign are classified by their anchored equality partitions, for any index type and any choice of opposite-pair representatives.",
         H("Ternary mode orbits and partition counting"),
         Blocks(
             Paragraph(Text("Akella, Iizuka and Miyata, arXiv:2607.06050v2, Section 6, ask whether a counting argument analogous to their n=2 Coxeter argument exists at n=3. The theorem below is consumed by TernaryPartitionCounting, whose generic merger transport and arbitrary-weight result feed the structural partition-counting proof in StabilizerMultiEntropyCollapse for the n=3 four-party relation. Surjective mergers induce quotient colourings, normalization at the chosen target anchor removes translation, and representative selection transports arbitrary weighted sums. This does not identify a Coxeter group or settle other party or replica counts.")),
