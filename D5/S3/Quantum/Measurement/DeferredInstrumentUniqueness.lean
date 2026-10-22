@@ -6,6 +6,7 @@
    utility: none
    digest: Literal upper-boundary meter, channel, instrument, and uniqueness claim. -/
 import D5.S3.Quantum.Foundation.FiniteKrausRepresentation
+import D5.S3.Quantum.QuantumChannels.TracePreservingEigenvalueBound
 set_option autoImplicit false
 set_option relaxedAutoImplicit false
 noncomputable section
@@ -13,6 +14,7 @@ open scoped BigOperators ComplexOrder MatrixOrder
 namespace D5.S3.Quantum.Measurement.DeferredInstrumentUniqueness
 open D5.S3.Quantum.Foundation.FiniteKrausChannel
 open D5.S3.Quantum.Foundation.FiniteKrausChannel.PhyslibLeaf
+open D5.S3.Quantum.QuantumChannels.TracePreservingEigenvalueBound
 def Q {d : ℕ} (U : Matrix.unitaryGroup (Fin d) ℂ) (x : Fin d) :
     Matrix (Fin d) (Fin d) ℂ :=
   (U : Matrix (Fin d) (Fin d) ℂ) * Matrix.single x x (1 : ℂ) *
@@ -20,17 +22,8 @@ def Q {d : ℕ} (U : Matrix.unitaryGroup (Fin d) ℂ) (x : Fin d) :
 def Qs {d : ℕ} (U : Matrix.unitaryGroup (Fin d) ℂ) (s : ℝ) (x : Fin d) :
     Matrix (Fin d) (Fin d) ℂ :=
   (s : ℂ) • Q U x + (((1 - s) / (d : ℝ) : ℝ) : ℂ) • 1
-def It {d : ℕ} (t : ℝ) : MatrixMap (Fin d) (Fin d) ℂ where
-  toFun ρ := (t : ℂ) • ρ +
-    ((((1 - t) / (d : ℝ) : ℝ) : ℂ) * Matrix.trace ρ) • 1
-  map_add' ρ σ := by
-    ext i j
-    simp only [Matrix.trace_add, smul_add, add_smul, Matrix.add_apply,
-      Matrix.smul_apply, Matrix.one_apply]
-    ring_nf
-  map_smul' c ρ := by
-    ext i j; simp [Matrix.trace_smul, Matrix.smul_apply, Matrix.add_apply, Matrix.one_apply]
-    split_ifs <;> ring
+def It {d : ℕ} (t : ℝ) : MatrixMap (Fin d) (Fin d) ℂ :=
+  depolarized (d := d) LinearMap.id (1 - t)
 def sMax (d : ℕ) (t : ℝ) : ℝ :=
   (((d : ℝ) ^ 2 - 2) * (1 - t) +
       2 * Real.sqrt ((1 - (d : ℝ) ^ 2) * t ^ 2 + ((d : ℝ) ^ 2 - 2) * t + 1)) /
@@ -69,7 +62,10 @@ private def c (d : ℕ) (t : ℝ) : ℝ := Real.sqrt (t * ((d : ℝ) ^ 2 - 1) + 
 private def k (d : ℕ) (t : ℝ) : ℝ := a2 d t + b t
 private lemma It_apply {d : ℕ} (t : ℝ) (ρ : Matrix (Fin d) (Fin d) ℂ) :
     It t ρ = (t : ℂ) • ρ +
-      (((((1 - t) / (d : ℝ)) : ℝ) : ℂ) * Matrix.trace ρ) • 1 := rfl
+      (((((1 - t) / (d : ℝ)) : ℝ) : ℂ) * Matrix.trace ρ) • 1 := by
+  ext i j
+  simp [It, depolarized, LinearMap.smulRight_apply, Matrix.traceLinearMap_apply,
+    Matrix.smul_apply, Matrix.add_apply, Matrix.one_apply]
 private lemma Itilde_apply {d : ℕ} (U : Matrix.unitaryGroup (Fin d) ℂ) (t : ℝ)
     (x : Fin d) (ρ : Matrix (Fin d) (Fin d) ℂ) :
     Itilde U t x ρ = (1 / (d : ℂ)) •

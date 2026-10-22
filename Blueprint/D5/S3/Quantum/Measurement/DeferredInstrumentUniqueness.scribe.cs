@@ -20,7 +20,7 @@ internal sealed class DeferredInstrumentUniquenessDocument : IScribeDocumentDefi
                 "Equation (eq:QsPt) mixes each sharp effect with the uniform effect. The definition is a matrix formula for every real s; its use as a meter is subject to positivity. Every displayed cast specifies its target field.",
                 AssessedProvenance.FromLiterature(Source)),
             Node("it", "The depolarizing map", "It", ChannelFormula(),
-                "Equation (eq:Ir) defines the depolarizing map. Its action is specified on every complex matrix, without a positivity or trace-one restriction on the argument. The trace factor is complex, while the noise coefficient is formed in ℝ before being cast to ℂ.",
+                "It is the depolarizing channel depolarized id (1 - t) from the frozen TracePreservingEigenvalueBound. Its action is specified on every complex matrix, without a positivity or trace-one restriction on the argument. The formula is t ρ + (1 - t)/d · tr(ρ) 1; the trace factor is complex, while the noise coefficient is formed in ℝ before being cast to ℂ.",
                 AssessedProvenance.FromLiterature(Source)),
             Node("smax", "The upper-boundary noise", "sMax", BoundaryFormula(),
                 "Solving the upper equality in Eq. (eq:QI_comp_neg) for s gives this expression. The compatibility theorem uses d ≥ 2 and −1/(d²−1) ≤ t ≤ 1. The real-valued definition itself is total and imposes none of these restrictions.",
