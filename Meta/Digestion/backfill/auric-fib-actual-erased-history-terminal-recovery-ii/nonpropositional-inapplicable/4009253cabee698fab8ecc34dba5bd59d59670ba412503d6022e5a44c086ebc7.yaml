@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:4009253cabee698fab8ecc34dba5bd59d59670ba412503d6022e5a44c086ebc7
+  normalized_sha256: sha256:4009253cabee698fab8ecc34dba5bd59d59670ba412503d6022e5a44c086ebc7
+cas_ref: sha256:4009253cabee698fab8ecc34dba5bd59d59670ba412503d6022e5a44c086ebc7
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: Evaluation-point and notation conventions only; binds P=zz^T and the symbols used in the section without asserting contact or stationarity.
+    previous_atom_id: b8618027870f86ab65d517572f4dc6c40153faff6f14bea9962b07c5129cb20c
+    next_atom_id: ffa82afdf9c0b034333596e9963de1194a4519c30f1afbd857ef34d642dbdb44
