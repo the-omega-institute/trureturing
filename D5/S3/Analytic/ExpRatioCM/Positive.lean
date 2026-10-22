@@ -24,11 +24,7 @@ namespace D5.S3.Analytic.ExpRatioCM.Positive
 /-- The zeroth second-family function has one additional constant term. -/
 theorem G_zero_eq {t : ℝ} (ht : 0 < t) : G 0 t = 1 + F 0 t := by
   simp only [G, F, pow_zero, iteratedDeriv_zero, one_mul]
-  have he : Real.exp t ≠ 0 := (Real.exp_pos t).ne'
-  have h1 : Real.exp t - 1 ≠ 0 := sub_ne_zero.mpr (ne_of_gt (Real.one_lt_exp_iff.mpr ht))
-  rw [Real.exp_neg]
-  field_simp
-  ring
+  exact reciprocal_eq ht
 
 /-- Smoothness of every first-family signed derivative on the positive half-line. -/
 theorem contDiffOn_F (i : ℕ) : ContDiffOn ℝ ⊤ (F i) (Ioi 0) := by
@@ -83,7 +79,7 @@ theorem cm_of_nonnegative_exponential_expansion
 private lemma F_zero (t : ℝ) : F 0 t = 1 / (Real.exp t - 1) := by
   simp [F]
 
-private lemma F_one {t : ℝ} (ht : 0 < t) :
+lemma F_one {t : ℝ} (ht : 0 < t) :
     F 1 t = Real.exp t / (Real.exp t - 1)^2 := by
   have he : deriv (fun x : ℝ => Real.log (1 - Real.exp (-x))) =ᶠ[𝓝 t] F 0 := by
     filter_upwards [Ioi_mem_nhds ht] with x hx
@@ -151,7 +147,7 @@ private lemma ratio_closed_forms {t : ℝ} (ht : 0 < t) :
   · field_simp; ring
 
 
-private lemma ratio_low {t : ℝ} (ht : 0 < t) :
+lemma ratio_low {t : ℝ} (ht : 0 < t) :
     ratioF 0 t = 1 + F 0 t ∧
     ratioF 1 t = 1 + 2 * F 0 t ∧
     ratioF 2 t = 1 + 4 * F 0 t - 2 * F 0 (2*t) ∧
@@ -188,13 +184,7 @@ private lemma iteratedDeriv_scaled_F (k : ℕ) {t : ℝ} (ht : 0 < t) :
 private lemma even_moment_le (k : ℕ) {t : ℝ} (ht : 0 < t) :
     2^k * F k (2*t) ≤ F k t := by
   let f : ℕ → ℝ := fun n => ((n+1 : ℕ) : ℝ)^k * Real.exp (-((n+1 : ℕ) : ℝ)*t)
-  have hs : Summable f := by
-    have hh := (Real.summable_pow_mul_exp_neg_nat_mul k ht).comp_injective (add_left_injective 1)
-    convert hh using 1
-    ext n
-    dsimp [f, Function.comp_def]
-    push_cast
-    congr 2 <;> ring
+  have hs : Summable f := summable_expMoment k ht
   have hh := tsum_comp_le_tsum_of_inj hs (fun n => by dsimp [f]; positivity)
     (i := fun n : ℕ => 2*n+1) (by intro a b h; dsimp at h; omega)
   rw [← F_eq_tsum k ht] at hh
@@ -235,13 +225,10 @@ private lemma cm_affine (a c : ℝ) (ha : 0 ≤ a) (hc : 0 ≤ c) :
   intro k t ht
   by_cases hk : k=0
   · subst k; simpa using add_nonneg ha (mul_nonneg hc (F_pos 0 ht).le)
-  rw [iteratedDeriv_const_add (by omega), iteratedDeriv_const_mul_field,
-    iteratedDeriv_F]
-  have hs : (-1:ℝ)^k * (-1)^k = 1 := by rw [← mul_pow]; norm_num
+  rw [iteratedDeriv_const_add (by omega), iteratedDeriv_const_mul_field]
   calc
-    _ = ((-1:ℝ)^k * (-1)^k) * (c * F k t) := by simp only [zero_add]; ring
-    _ = c * F k t := by rw [hs, one_mul]
-    _ ≥ 0 := mul_nonneg hc (F_pos k ht).le
+    _ = c * ((-1 : ℝ)^k * iteratedDeriv k (F 0) t) := by ring
+    _ ≥ 0 := mul_nonneg hc (cm_F_zero.2 k t ht)
 
 private lemma cm_ratio_two : CompletelyMonotoneOn (ratioF 2) := by
   refine ⟨contDiffOn_ratioF 2, ?_⟩

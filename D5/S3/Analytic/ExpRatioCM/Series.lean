@@ -50,6 +50,67 @@ theorem G_eq_F {i : ℕ} (hi : 1 ≤ i) {t : ℝ} (ht : 0 < t) : G i t = F i t :
     exact reciprocal_eq hs
   rw [G, he.iteratedDeriv_eq i, iteratedDeriv_const_add (by omega : 0 < i), F]
 
+private def weightedSeries (b : ℕ → ℝ) (k : ℕ) (t : ℝ) : ℝ :=
+  ∑' n : ℕ, b n * (n : ℝ) ^ k * Real.exp (-(n : ℝ) * t)
+
+private lemma summable_weighted {b : ℕ → ℝ} {B : ℝ} (hB : 0 < B)
+    (hb : ∀ n, |b n| ≤ B ^ n) (k : ℕ) {t : ℝ} (ht : Real.log B < t) :
+    Summable (fun n : ℕ => ‖b n * (n : ℝ) ^ k * Real.exp (-(n : ℝ) * t)‖) := by
+  have hr : B * Real.exp (-t) < 1 := by
+    calc
+      _ = Real.exp (Real.log B - t) := by rw [Real.exp_sub, Real.exp_log hB, Real.exp_neg]; rfl
+      _ < 1 := Real.exp_lt_one_iff.mpr (sub_neg.mpr ht)
+  apply Summable.of_nonneg_of_le (fun n => norm_nonneg _) _
+    (summable_pow_mul_geometric_of_norm_lt_one k (r := B * Real.exp (-t))
+      (by simpa only [Real.norm_eq_abs, abs_of_pos (by positivity : 0 < B * Real.exp (-t))] using hr))
+  intro n
+  simp only [norm_mul, norm_pow, Real.norm_eq_abs,
+    abs_of_nonneg (Nat.cast_nonneg n : (0 : ℝ) ≤ n), abs_of_pos (Real.exp_pos _)]
+  calc
+    _ ≤ B ^ n * (n : ℝ) ^ k * Real.exp (-(n : ℝ) * t) := by gcongr; exact hb n
+    _ = _ := by
+      rw [mul_pow, ← Real.exp_nat_mul]
+      rw [show (n : ℝ) * (-t) = -(n : ℝ) * t by ring]
+      ring
+
+private lemma hasDerivAt_weighted {b : ℕ → ℝ} {B : ℝ} (hB : 0 < B)
+    (hb : ∀ n, |b n| ≤ B ^ n) (k : ℕ) {t : ℝ} (ht : Real.log B < t) :
+    HasDerivAt (weightedSeries b k) (-weightedSeries b (k + 1) t) t := by
+  let a : ℝ := (Real.log B + t) / 2
+  have ha : Real.log B < a := by dsimp [a]; linarith
+  have hat : a < t := by dsimp [a]; linarith
+  let d : ℕ → ℝ → ℝ := fun n x => -(b n * (n : ℝ) ^ (k + 1) * Real.exp (-(n : ℝ) * x))
+  have hd (n : ℕ) (x : ℝ) : HasDerivAt
+      (fun x : ℝ => b n * (n : ℝ) ^ k * Real.exp (-(n : ℝ) * x)) (d n x) x := by
+    convert (((hasDerivAt_id x).const_mul (-(n : ℝ))).exp.const_mul
+      (b n * (n : ℝ) ^ k)) using 1 <;> dsimp [d] <;> ring
+  have h := hasDerivAt_tsum_of_isPreconnected
+    (u := fun n : ℕ => ‖b n * (n : ℝ) ^ (k + 1) * Real.exp (-(n : ℝ) * a)‖)
+    (t := Ioi a) (y₀ := t) (y := t) (summable_weighted hB hb (k + 1) ha)
+    isOpen_Ioi (convex_Ioi a).isPreconnected (fun n x _ => hd n x)
+    (fun n x hx => ?_) hat ((summable_weighted hB hb k ht).of_norm) hat
+  · convert h using 1 <;> first | rfl | simp only [weightedSeries, d, tsum_neg]
+  · dsimp [d]
+    simp only [abs_neg, norm_neg, norm_mul, Real.norm_eq_abs, abs_mul, abs_of_pos (Real.exp_pos _)]
+    apply mul_le_mul_of_nonneg_left _ (by positivity)
+    apply Real.exp_le_exp.mpr
+    exact mul_le_mul_of_nonpos_left (le_of_lt hx) (neg_nonpos.mpr (Nat.cast_nonneg _))
+
+private lemma iteratedDeriv_weighted {b : ℕ → ℝ} {B : ℝ} (hB : 0 < B)
+    (hb : ∀ n, |b n| ≤ B ^ n) (k : ℕ) {t : ℝ} (ht : Real.log B < t) :
+    iteratedDeriv k (weightedSeries b 0) t = (-1) ^ k * weightedSeries b k t := by
+  induction k generalizing t with
+  | zero => simp
+  | succ k ih =>
+    rw [iteratedDeriv_succ]
+    have he : iteratedDeriv k (weightedSeries b 0) =ᶠ[𝓝 t]
+        (fun x => (-1 : ℝ) ^ k * weightedSeries b k x) := by
+      filter_upwards [Ioi_mem_nhds ht] with x hx
+      exact ih hx
+    rw [he.deriv_eq, ((hasDerivAt_weighted hB hb k ht).const_mul ((-1 : ℝ) ^ k)).deriv]
+    simp only [pow_succ]
+    ring
+
 private def expMoment (i : ℕ) (t : ℝ) : ℝ :=
   ∑' n : ℕ, ((n + 1 : ℕ) : ℝ) ^ i * Real.exp (-((n + 1 : ℕ) : ℝ) * t)
 
@@ -63,29 +124,27 @@ lemma summable_expMoment (i : ℕ) {t : ℝ} (ht : 0 < t) :
   congr 2
   ring
 
+private lemma expMoment_eq_weighted (i : ℕ) {t : ℝ} (ht : 0 < t) :
+    expMoment i t = weightedSeries (fun n => if n = 0 then 0 else 1) i t := by
+  have hb : ∀ n : ℕ, |if n = 0 then (0 : ℝ) else 1| ≤ (1 : ℝ)^n := by
+    intro n
+    split_ifs <;> norm_num
+  symm
+  unfold weightedSeries
+  rw [((summable_weighted zero_lt_one hb i (by simpa using ht)).of_norm).tsum_eq_zero_add]
+  simp [expMoment]
+
 private lemma hasDerivAt_expMoment (i : ℕ) {t : ℝ} (ht : 0 < t) :
     HasDerivAt (expMoment i) (-expMoment (i + 1) t) t := by
-  let d : ℕ → ℝ → ℝ := fun n x =>
-    -(((n + 1 : ℕ) : ℝ) ^ (i + 1) * Real.exp (-((n + 1 : ℕ) : ℝ) * x))
-  have hd (n : ℕ) (x : ℝ) : HasDerivAt
-      (fun x : ℝ => ((n + 1 : ℕ) : ℝ) ^ i *
-        Real.exp (-((n + 1 : ℕ) : ℝ) * x)) (d n x) x := by
-    convert (((hasDerivAt_id x).const_mul (-((n + 1 : ℕ) : ℝ))).exp.const_mul
-      (((n + 1 : ℕ) : ℝ) ^ i)) using 1 <;> dsimp [d] <;> ring
-  have h := hasDerivAt_tsum_of_isPreconnected
-    (u := fun n : ℕ => ((n + 1 : ℕ) : ℝ) ^ (i + 1) *
-      Real.exp (-((n + 1 : ℕ) : ℝ) * (t / 2)))
-    (t := Ioi (t / 2)) (y₀ := t) (y := t)
-    (summable_expMoment (i + 1) (by linarith : 0 < t / 2)) isOpen_Ioi
-    (convex_Ioi (t / 2)).isPreconnected (fun n x _ => hd n x)
-    (fun n x hx => ?_) (by simpa using (show t / 2 < t by linarith))
-    (summable_expMoment i ht) (by simpa using (show t / 2 < t by linarith))
-  · convert h using 1 <;> first | rfl | simp only [expMoment, d, tsum_neg]
-  · dsimp [d]
-    rw [abs_neg, abs_of_nonneg (by positivity)]
-    apply mul_le_mul_of_nonneg_left _ (by positivity)
-    apply Real.exp_le_exp.mpr
-    exact mul_le_mul_of_nonpos_left (le_of_lt hx) (neg_nonpos.mpr (Nat.cast_nonneg _))
+  have hb : ∀ n : ℕ, |if n = 0 then (0 : ℝ) else 1| ≤ (1 : ℝ)^n := by
+    intro n
+    split_ifs <;> norm_num
+  have he : expMoment i =ᶠ[𝓝 t] weightedSeries (fun n => if n = 0 then 0 else 1) i := by
+    filter_upwards [Ioi_mem_nhds ht] with x hx
+    exact expMoment_eq_weighted i hx
+  have hd := hasDerivAt_weighted zero_lt_one hb i (by simpa using ht)
+  rw [← expMoment_eq_weighted (i + 1) ht] at hd
+  exact hd.congr_of_eventuallyEq he
 
 private lemma expMoment_zero {t : ℝ} (ht : 0 < t) :
     expMoment 0 t = 1 / (Real.exp t - 1) := by
@@ -223,67 +282,6 @@ theorem abs_quotCoeff_le (i n : ℕ) : |quotCoeff i n| ≤ ((2 : ℝ) ^ (i + 2))
                 norm_num at hh
                 simpa only [pow_succ'] using hh
         _ ≤ B ^ (n + 1) := by nlinarith [pow_pos hB (n + 1)]
-
-private def weightedSeries (b : ℕ → ℝ) (k : ℕ) (t : ℝ) : ℝ :=
-  ∑' n : ℕ, b n * (n : ℝ) ^ k * Real.exp (-(n : ℝ) * t)
-
-private lemma summable_weighted {b : ℕ → ℝ} {B : ℝ} (hB : 0 < B)
-    (hb : ∀ n, |b n| ≤ B ^ n) (k : ℕ) {t : ℝ} (ht : Real.log B < t) :
-    Summable (fun n : ℕ => ‖b n * (n : ℝ) ^ k * Real.exp (-(n : ℝ) * t)‖) := by
-  have hr : B * Real.exp (-t) < 1 := by
-    calc
-      _ = Real.exp (Real.log B - t) := by rw [Real.exp_sub, Real.exp_log hB, Real.exp_neg]; rfl
-      _ < 1 := Real.exp_lt_one_iff.mpr (sub_neg.mpr ht)
-  apply Summable.of_nonneg_of_le (fun n => norm_nonneg _) _
-    (summable_pow_mul_geometric_of_norm_lt_one k (r := B * Real.exp (-t))
-      (by simpa only [Real.norm_eq_abs, abs_of_pos (by positivity : 0 < B * Real.exp (-t))] using hr))
-  intro n
-  simp only [norm_mul, norm_pow, Real.norm_eq_abs,
-    abs_of_nonneg (Nat.cast_nonneg n : (0 : ℝ) ≤ n), abs_of_pos (Real.exp_pos _)]
-  calc
-    _ ≤ B ^ n * (n : ℝ) ^ k * Real.exp (-(n : ℝ) * t) := by gcongr; exact hb n
-    _ = _ := by
-      rw [mul_pow, ← Real.exp_nat_mul]
-      rw [show (n : ℝ) * (-t) = -(n : ℝ) * t by ring]
-      ring
-
-private lemma hasDerivAt_weighted {b : ℕ → ℝ} {B : ℝ} (hB : 0 < B)
-    (hb : ∀ n, |b n| ≤ B ^ n) (k : ℕ) {t : ℝ} (ht : Real.log B < t) :
-    HasDerivAt (weightedSeries b k) (-weightedSeries b (k + 1) t) t := by
-  let a : ℝ := (Real.log B + t) / 2
-  have ha : Real.log B < a := by dsimp [a]; linarith
-  have hat : a < t := by dsimp [a]; linarith
-  let d : ℕ → ℝ → ℝ := fun n x => -(b n * (n : ℝ) ^ (k + 1) * Real.exp (-(n : ℝ) * x))
-  have hd (n : ℕ) (x : ℝ) : HasDerivAt
-      (fun x : ℝ => b n * (n : ℝ) ^ k * Real.exp (-(n : ℝ) * x)) (d n x) x := by
-    convert (((hasDerivAt_id x).const_mul (-(n : ℝ))).exp.const_mul
-      (b n * (n : ℝ) ^ k)) using 1 <;> dsimp [d] <;> ring
-  have h := hasDerivAt_tsum_of_isPreconnected
-    (u := fun n : ℕ => ‖b n * (n : ℝ) ^ (k + 1) * Real.exp (-(n : ℝ) * a)‖)
-    (t := Ioi a) (y₀ := t) (y := t) (summable_weighted hB hb (k + 1) ha)
-    isOpen_Ioi (convex_Ioi a).isPreconnected (fun n x _ => hd n x)
-    (fun n x hx => ?_) hat ((summable_weighted hB hb k ht).of_norm) hat
-  · convert h using 1 <;> first | rfl | simp only [weightedSeries, d, tsum_neg]
-  · dsimp [d]
-    simp only [abs_neg, norm_neg, norm_mul, Real.norm_eq_abs, abs_mul, abs_of_pos (Real.exp_pos _)]
-    apply mul_le_mul_of_nonneg_left _ (by positivity)
-    apply Real.exp_le_exp.mpr
-    exact mul_le_mul_of_nonpos_left (le_of_lt hx) (neg_nonpos.mpr (Nat.cast_nonneg _))
-
-private lemma iteratedDeriv_weighted {b : ℕ → ℝ} {B : ℝ} (hB : 0 < B)
-    (hb : ∀ n, |b n| ≤ B ^ n) (k : ℕ) {t : ℝ} (ht : Real.log B < t) :
-    iteratedDeriv k (weightedSeries b 0) t = (-1) ^ k * weightedSeries b k t := by
-  induction k generalizing t with
-  | zero => simp
-  | succ k ih =>
-    rw [iteratedDeriv_succ]
-    have he : iteratedDeriv k (weightedSeries b 0) =ᶠ[𝓝 t]
-        (fun x => (-1 : ℝ) ^ k * weightedSeries b k x) := by
-      filter_upwards [Ioi_mem_nhds ht] with x hx
-      exact ih hx
-    rw [he.deriv_eq, ((hasDerivAt_weighted hB hb k ht).const_mul ((-1 : ℝ) ^ k)).deriv]
-    simp only [pow_succ]
-    ring
 
 private lemma quotient_convolution (i n : ℕ) :
     (∑ j ∈ Finset.range (n + 1), ((j + 1 : ℕ) : ℝ) ^ i * quotCoeff i (n - j)) =
