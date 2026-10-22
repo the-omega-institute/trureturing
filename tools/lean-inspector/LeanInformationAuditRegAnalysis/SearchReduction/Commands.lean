@@ -137,6 +137,8 @@ def computationalJson (r : Observation) (baselineCommit : String := "") : Json :
   ("B0_excluded", toJson (r.catalogExcluded.map Name.toString)),
   ("paired_structure_use", toJson (r.pairedStructureUse.map Name.toString)), ("baseline_commit", toJson baselineCommit),
   ("mathlib", toJson mathlibRevision), ("maxHeartbeats", toJson localBudget),
+  ("preparationMaxHeartbeats", toJson lookupPreparationBudget),
+  ("membershipNormalizationFuel", toJson DiskLookup.membershipNormalizationFuel),
   ("target", toJson r.target.toString), ("verdict", toJson (if r.verdict == .nonBindOnly then s!"non-bind-only[G,R_lookup,k; {r.scope}]" else verdictName r.verdict)),
   ("baseline", runJson r.base), ("paired", runJson r.paired),
   ("presentation", runJson r.presentation),
@@ -484,6 +486,8 @@ syntax (name := searchReductionCatalogCmd) "#search_reduction_catalog " str : co
 syntax (name := searchReductionConfigCmd) "#search_reduction_config" : command
 @[command_elab searchReductionConfigCmd] unsafe def elabSearchReductionConfig : CommandElab := fun _ => do
   logInfo (Json.mkObj [("version", toJson "R_lookup"), ("maxHeartbeats", toJson localBudget),
+    ("preparationMaxHeartbeats", toJson lookupPreparationBudget),
+    ("membershipNormalizationFuel", toJson DiskLookup.membershipNormalizationFuel),
     ("transport", toJson transportVersion), ("reconstructionMaxHeartbeats", toJson reconstructionBudget),
     ("reconstructionBudgetSemantics", toJson "independent_units"),
     ("pinnedDeriving", toJson (pinnedDerivingClasses.map Name.toString)),

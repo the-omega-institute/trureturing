@@ -373,17 +373,39 @@ private def catchBranch {α : Type} (action : MetaM α)
 
 /-- Each route receives the same independent budget and exports only a closed
 certificate. Failed metavariables, caches and messages cannot reach its peer. -/
-def boundedRebuildBranch (action : MetaM LocalResult) : MetaM LocalResult := do
+def boundedRebuildBranch (action : MetaM LocalResult)
+    (budget? : Option (IO.Ref LookupBudgetState) := none) : MetaM LocalResult := do
   let original ← saveState
+  resetCache
+  modifyThe Core.State fun s => {s with cache := {}}
+  if let some budget := budget? then budget.set {}
   let started ← IO.getNumHeartbeats
+  let nanos ← IO.monoNanosNow
   let result ← catchBranch
     (withTheReader Core.Context (fun ctx =>
-      {ctx with initHeartbeats := started, maxHeartbeats := localBudget * 1000}) action)
+      {ctx with initHeartbeats := started, maxHeartbeats := localBudget * 1000}) do
+        let result ← action
+        checkSystem "lookup.search-branch"
+        return result)
     (fun ex => do
-      if ex.isMaxHeartbeat then return {detail := "heartbeat"}
+      if ex.isMaxHeartbeat then
+        let preparation := (← budget?.mapM (·.get)).any
+          (·.preparation >= lookupPreparationBudget * 1000)
+        return {detail := if preparation then "preparation-heartbeat" else "heartbeat"}
       if ex.isInterrupt then return {detail := "cancelled"}
       if ex.isRuntime then return {detail := "runtime-limit"}
-      return {detail := "execution"})
+      return {detail := s!"execution:{← ex.toMessageData.toString}"})
+  let search := (← IO.getNumHeartbeats) - started
+  let elapsed := (← IO.monoNanosNow) - nanos
+  let preparation := (← budget?.mapM (·.get)).getD {}
+  IO.eprintln s!"LOOKUP_BUDGET {Json.mkObj [
+    ("finished_monotonic_ms", toJson (← IO.monoMsNow)),
+    ("search_internal_heartbeats", toJson search),
+    ("preparation_internal_heartbeats", toJson preparation.preparation),
+    ("search_limit", toJson localBudget), ("preparation_limit", toJson lookupPreparationBudget),
+    ("preparation_ns", toJson preparation.preparationNs),
+    ("search_ns", toJson (elapsed - preparation.preparationNs)),
+    ("cost", toJson (reprStr result.cost)), ("detail", toJson result.detail)] |>.compress}"
   original.restore
   set original.meta
   modifyThe Core.State fun s => {s with cache := original.core.cache}
@@ -391,13 +413,14 @@ def boundedRebuildBranch (action : MetaM LocalResult) : MetaM LocalResult := do
 
 /-- A success in either route wins. Negative evidence requires both routes to
 finish normally; timeout in one route never becomes a one-price edge. -/
-def independentRebuild (localRoute lookup : MetaM LocalResult) : MetaM LocalResult := do
+def independentRebuild (localRoute lookup : MetaM LocalResult)
+    (budget? : Option (IO.Ref LookupBudgetState) := none) : MetaM LocalResult := do
   let started ← IO.monoMsNow
   let old ← boundedRebuildBranch localRoute
   lookupPhase s!"rebuild/local ms={(← IO.monoMsNow) - started} cost={reprStr old.cost}"
   if old.cost == .zero then return old
   let lookupStart ← IO.monoMsNow
-  let found ← boundedRebuildBranch lookup
+  let found ← boundedRebuildBranch lookup budget?
   lookupPhase s!"rebuild/lookup ms={(← IO.monoMsNow) - lookupStart} cost={reprStr found.cost} detail={found.detail}"
   if found.cost == .zero then return found
   return {found with
@@ -421,9 +444,11 @@ private unsafe def rebuildRoute (target : Expr) (types : List Expr)
       let (fvar, next) ← goal.intro1
       available := available.push (mkFVar fvar)
       goal := next
+    let mut membershipTrace : LookupTrace := {complete := true}
     if let some table := lookup? then
         let exactRoot ← mkFreshExprMVar target
         let exactTrace ← lookupExact table exactRoot.mvarId!
+        membershipTrace := exactTrace
         if exactTrace.source?.isSome then
           let proof ← finish (← instantiateMVars exactRoot)
           withEnv originalEnv <| checkLocalProof target proof
@@ -435,6 +460,10 @@ private unsafe def rebuildRoute (target : Expr) (types : List Expr)
       else do
         discard <| goal.withContext (solveLocalGoal goal available)
         pure {complete := true}
+    let trace := {trace with
+      complete := trace.complete && membershipTrace.complete,
+      missing := membershipTrace.missing ++ trace.missing,
+      failures := membershipTrace.failures ++ trace.failures}
     unless ← goal.isAssigned do
       return {
         cost := if trace.complete then .one else .unknown, lookup := trace
@@ -462,7 +491,7 @@ unsafe def localRebuild (target : Expr) (types : List Expr := [])
   if let some table := lookup? then
     if table.enabled then
       try
-        return ← independentRebuild localRoute (rebuildRoute target types (some table))
+        return ← independentRebuild localRoute (rebuildRoute target types (some table)) table.budget?
       finally
         if let some close := table.close? then close
   boundedRebuildBranch localRoute

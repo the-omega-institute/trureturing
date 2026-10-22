@@ -3,6 +3,8 @@ import LeanInformationAuditRegAnalysis.SearchReduction.DiskLookup
 open Lean LeanInformationAudit.SearchReduction.DiskLookup
 
 unsafe def main (args : List String) : IO UInt32 := do
+  if let ["--compare-membership", directory, oldHeader] := args then
+    return if ← compareMembership directory oldHeader then 0 else 1
   if let ["--membership-shard", storage, plan, result] := args then
     initSearchPath (← findSysroot)
     produceMembershipShard storage plan result

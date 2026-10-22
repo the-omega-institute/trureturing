@@ -181,3 +181,21 @@ run_cmd liftTermElabM do
       found.entries[0]!.module != found.entries[1]!.module do
     throwError "distinct compiled owners were collapsed by constant name"
   logInfo "LOOKUP_COLLIDING_OWNERS retained=true"
+
+run_cmd liftTermElabM do
+  let budget ← IO.mkRef ({} : LookupBudgetState)
+  let prepared ← boundedRebuildBranch (do
+    withLookupPreparation (some budget) do
+      IO.addHeartbeats (localBudget * 1000 + 1)
+    checkSystem "lookup.search_after_preparation"
+    return {cost := .one}) (some budget)
+  unless prepared.cost == .one && (← budget.get).preparation > localBudget * 1000 do
+    throwError "preparation was charged to search"
+  let exceeded ← boundedRebuildBranch (do
+    withLookupPreparation (some budget) do
+      IO.addHeartbeats (lookupPreparationBudget * 1000 + 1)
+      checkSystem "lookup.preparation_overflow"
+    return {cost := .one}) (some budget)
+  unless exceeded.cost == .unknown && exceeded.detail == "preparation-heartbeat" do
+    throwError "preparation overflow became NoHit or escaped its branch: {exceeded.detail}"
+  logInfo "LOOKUP_SPLIT_BUDGET preparation_excluded=true preparation_overflow=unknown"

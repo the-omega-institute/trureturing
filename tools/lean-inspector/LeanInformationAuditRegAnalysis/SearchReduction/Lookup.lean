@@ -19,13 +19,19 @@ def timeLookup {α : Type} (label : String) (action : MetaM α) : MetaM α := do
   try action finally
     lookupPhase s!"{label}/end ns={(← IO.monoNanosNow) - start} heartbeats={(← IO.getNumHeartbeats) - heartbeats}"
 
-abbrev lookupVersion : String := "R_lookup/one-B/discrtree-pickle-v5-independent"
+abbrev lookupVersion : String := "R_lookup/v6/signature-first/search-200000/preparation-2000000/N-memo-2000000"
 
 /-- Bounded, query-local metadata reuse; certificates are always checked anew. -/
 structure LookupQueryMemo where
   primary? : Option (Environment × Expr × DiskLookup.Candidates) := none
   fallback? : Option DiskLookup.Candidates := none
   profile? : Option (Environment × Array DiskLookup.Entry × Nat × Nat) := none
+
+structure LookupCandidate where
+  values : Array Expr := #[]
+  certify : MetaM Unit := pure ()
+  failure? : Option String := none
+  unloaded : Bool := false
 
 /-- The table is captured before delivery vocabulary or S is installed. A
 partial basis may supply a hit, but never a completed negative query. -/
@@ -34,10 +40,11 @@ structure LookupTable where
   complete : Bool := true
   enabled : Bool := true
   disk? : Option DiskLookup.Index := none
-  load? : Option (DiskLookup.Entry → Option Name → MetaM (Array Expr × Array String)) := none
+  load? : Option (DiskLookup.Entry → Option Name → MetaM LookupCandidate) := none
   close? : Option (IO Unit) := none
   finish? : Option (Environment → Expr → MetaM Expr) := none
   memo? : Option (IO.Ref LookupQueryMemo) := none
+  budget? : Option (IO.Ref LookupBudgetState) := none
 
 structure LookupTrace where
   visited : Nat := 0
@@ -87,22 +94,22 @@ private unsafe def profileCandidateSet (table : LookupTable) (type : Expr)
   lookupPhase s!"lookup/recall-profile/end ns={(← IO.monoNanosNow) - started} heartbeats={(← IO.getNumHeartbeats) - heartbeats}"
 
 private def candidateValue (table : LookupTable) (entry : DiskLookup.Entry) (head : Option Name) :
-    MetaM (Array Expr × Option String × Bool) := do
+    MetaM LookupCandidate := do
   if let some info := (table.environment.setExporting false).find? entry.leanName |>.filter (fun _ => candidateOwnerMatches table entry) then
-    if !eligible info || info.isUnsafe then return (#[], none, false)
-    return (#[← mkConstWithFreshMVarLevels entry.leanName], none, false)
-  let some load := table.load? | return (#[], some "candidate-not-loaded", true)
+    if !eligible info || info.isUnsafe then return {}
+    return {values := #[← mkConstWithFreshMVarLevels entry.leanName]}
+  let some load := table.load? | return {failure? := some "candidate-not-loaded", unloaded := true}
   try
-    let (values, failures) ← load entry head
+    let result ← load entry head
     let collision := (table.environment.setExporting false).contains entry.leanName &&
       !candidateOwnerMatches table entry
-    let failure := if !failures.isEmpty then some s!"{failures}"
-      else if collision then some s!"candidate-name-owned-by-another-module:{entry.module}:{entry.name}"
-      else none
-    return (values, failure, true)
+    return {result with
+      unloaded := true
+      failure? := result.failure?.or (if collision then
+        some s!"candidate-name-owned-by-another-module:{entry.module}:{entry.name}" else none)}
   catch ex =>
     if ex.isMaxHeartbeat || ex.isInterrupt || ex.isRuntime then throw ex
-    return (#[], some s!"candidate-certification:{← ex.toMessageData.toString}", true)
+    return {failure? := some s!"candidate-certification:{← ex.toMessageData.toString}", unloaded := true}
 
 private def tableIndex (table : LookupTable) : IO (Option DiskLookup.Index) := do
   if table.disk?.isSome then return table.disk?
@@ -116,27 +123,15 @@ private def tableIndex (table : LookupTable) : IO (Option DiskLookup.Index) := d
 def resolveLookupTable (table : LookupTable) : IO LookupTable := do
   let disk? ← tableIndex table
   return {table with disk?, complete := table.complete && disk?.any (fun index =>
-    index.header.complete && index.membership?.any (·.complete))}
+    index.header.complete)}
 
 private unsafe def queryLookup (table : LookupTable) (index : DiskLookup.Index)
     (type : Expr) (limit : Option Nat) (fallback : Bool) : MetaM DiskLookup.Candidates := do
-  let env ← getEnv
-  let cacheable := !type.hasMVar && !type.hasFVar
-  if let some memo := table.memo? then
-    let cached ← memo.get
-    let hit := if fallback then cached.fallback? else
-      cached.primary?.bind fun (previous, key, candidates) =>
-        if cacheable && ptrEq previous env && key == type then some candidates else none
-    if let some candidates := hit then
-      lookupPhase s!"lookup/cache-hit fallback={fallback} candidates={candidates.entries.size}"
-      return candidates
-  let result ← DiskLookup.queryMature index type limit fallback
-  if result.complete then
-    if let some memo := table.memo? then
-      if fallback then memo.modify fun m => {m with fallback? := some result}
-      else if cacheable then
-        memo.modify fun m => {m with primary? := some (env, type, result)}
-  return result
+  -- Recompute matching in every reset search branch; only module bytes cache.
+  let candidates ← DiskLookup.queryMature index type limit fallback table.budget?
+  withLookupPreparation table.budget? do
+    let (loaded, external) := candidates.entries.partition (candidateOwnerMatches table)
+    return {candidates with entries := loaded ++ external}
 
 /-- The membership page is only a prefilter. Alpha-invariant hashes never
 substitute for definitional equality or the caller's closed kernel check. -/
@@ -145,17 +140,26 @@ private unsafe def lookupExactPass (table : LookupTable) (goal : MVarId) : MetaM
   let some index ← tableIndex table | return {}
   let type ← goal.getType
   let indexStart ← IO.monoMsNow
-  let candidates ← DiskLookup.queryMembership index type
+  let candidates ← DiskLookup.queryMembership index type table.budget?
+  let candidates ← withLookupPreparation table.budget? do
+    let (loaded, external) := candidates.entries.partition (candidateOwnerMatches table)
+    return {candidates with entries := loaded ++ external}
   lookupPhase s!"lookup/index ms={(← IO.monoMsNow) - indexStart} membership=true"
   profileCandidateSet table type candidates false "exact"
   checkSystem "lookup.membership-index"
-  let mut trace : LookupTrace := {complete := candidates.complete && table.complete, pages := candidates.pages}
+  let mut trace : LookupTrace := {
+    complete := candidates.complete && table.complete
+    pages := candidates.pages
+    failures := candidates.missing}
   for entry in candidates.entries do
     checkSystem "lookup.membership"
     let name := entry.leanName
     let saved ← saveState
     lookupPhase s!"lookup/visit mode=exact name={name} module={entry.module}"
-    let (values, failure?, unloaded) ← timeLookup "lookup/load" <| candidateValue table entry none
+    let candidate ← timeLookup "lookup/load" <| candidateValue table entry none
+    let values := candidate.values
+    let failure? := candidate.failure?
+    let unloaded := candidate.unloaded
     trace := {trace with unloaded := trace.unloaded + (if unloaded then 1 else 0)}
     if let some failure := failure? then
       trace := {trace with
@@ -165,7 +169,8 @@ private unsafe def lookupExactPass (table : LookupTable) (goal : MVarId) : MetaM
     trace := {trace with visited := trace.visited + 1}
     for value in values do
       if ← timeLookup "lookup/isDefEq" (withReducible <| isDefEq (← inferType value) type) then
-        goal.assign value
+        timeLookup "candidate/certificate" candidate.certify
+        goal.assign (← instantiateMVars value)
         return {trace with source? := some name, attempted := trace.attempted + 1}
     saved.restore
     set saved.meta
@@ -329,50 +334,33 @@ partial def views (value : Expr) (fuel : Nat := 32) : MetaM (Array Expr) := do
       result := result ++ (← views projected (fuel - 1))
     return result
 
-@[noinline] def copyLookupCandidateWith (copy : Environment → Expr → MetaM Expr) (source : Environment)
-    (entry : DiskLookup.Entry) (head : Option Name) :
-    MetaM (Array Expr × List Name × Array String) := do
+/-- A fresh metavariable stands only for the candidate signature. No proof
+body is read until application and the frozen closure table both succeed. The
+placeholder never leaves the branch: success materializes it before checking. -/
+@[noinline] def copyLookupCandidateWith (copy : Environment → Expr → MetaM Expr)
+    (source : Environment) (entry : DiskLookup.Entry) (head : Option Name) :
+    MetaM LookupCandidate := do
   let some info := (source.setExporting false).find? entry.leanName
     | throwError "lookup.module_candidate_missing"
-  let empty := (#[], [], #[])
-  if info.isUnsafe then return empty
-  unless unloadedPossibleView source head info.type do return empty
+  if info.isUnsafe then return {}
+  unless unloadedPossibleView source head info.type do return {}
   match info with
   | .thmInfo _ | .defnInfo _ | .opaqueInfo _ => pure ()
-  | _ => return empty
-  let suitable ← timeLookup "candidate/suitability" <| withEnv source do
-    if ← isProp info.type then return true
-    forallTelescopeReducing info.type fun _ body => do
-      return (← whnf body).isAppOfArity ``Subtype 2
-  unless suitable do return empty
-  let value := mkConst entry.leanName (info.levelParams.map Level.param)
-  let alternatives ← timeLookup "candidate/views" <| withEnv source <| views value
-  let mut proofs := #[]
-  let mut failures := #[]
-  for view in alternatives do
-    let type ← withEnv source <| inferType view
-    unless unloadedDirectView source head type do continue
-    try
-      let expanded ← timeLookup "candidate/expand" <| Core.transform view (pre := fun e => do
-        if let .const name levels := e then
-          if name == entry.leanName then
-            if let some body := info.value? (allowOpaque := true) then
-              return .done (body.instantiateLevelParams info.levelParams levels)
-        return .continue)
-      let expanded ← timeLookup "candidate/normalize" <| withEnv source <| Meta.transform expanded (post := fun e => do
-        let projection := e.getAppFn.constName?.any (#[``And.left, ``And.right,
-          ``Iff.mp, ``Iff.mpr, ``Subtype.property, ``Eq.mp, ``Eq.mpr, ``Eq.symm].contains ·)
-        if projection || e.isProj || e.getAppFn.isLambda then
-          return .done (← withTransparency .all <| whnf e)
-        return .done e)
-      let proof ← timeLookup "candidate/transport" <| copy source expanded
-      checkSystem "lookup.imported_candidate"
-      let proof ← timeLookup "candidate/detach" <| pure (detachLookupExpression proof)
-      proofs := proofs.push proof
-    catch ex =>
-      if ex.isMaxHeartbeat || ex.isInterrupt || ex.isRuntime then throw ex
-      failures := failures.push (← ex.toMessageData.toString)
-  return (proofs, info.levelParams.map ownedLookupName, failures)
+  | _ => return {}
+  let params := info.levelParams.map ownedLookupName
+  let levels ← params.mapM fun _ => mkFreshLevelMVar
+  let type ← timeLookup "candidate/signature" <| copy source
+    (info.type.instantiateLevelParams info.levelParams levels)
+  let type := detachLookupExpression type
+  let placeholder ← mkFreshExprMVar type
+  return {values := #[placeholder], certify := do
+    lookupPhase s!"candidate/signature-matched name={entry.name} module={entry.module}"
+    let some body := info.value? (allowOpaque := true)
+      | throwError "lookup.candidate_value_missing"
+    let proof ← timeLookup "candidate/transport" <| copy source
+      (body.instantiateLevelParams info.levelParams levels)
+    let proof ← withLookupPreparation none <| pure (detachLookupExpression proof)
+    placeholder.mvarId!.assign proof}
 
 /-- The closure callback is the frozen local table, with lookup disabled.
 All unresolved data and universe metavariables are rejected by the caller's
@@ -402,7 +390,10 @@ private unsafe def lookupLeafPass (fallback : Bool) (table : LookupTable) (goal 
     let cache := (← getThe Core.State).cache
     let original ← saveState
     lookupPhase s!"lookup/visit mode=leaf name={name} module={entry.module}"
-    let (values, failure?, unloaded) ← timeLookup "lookup/load" <| candidateValue table entry head
+    let candidate ← timeLookup "lookup/load" <| candidateValue table entry head
+    let values := candidate.values
+    let failure? := candidate.failure?
+    let unloaded := candidate.unloaded
     let trace := {trace with unloaded := trace.unloaded + (if unloaded then 1 else 0)}
     let trace := if let some failure := failure? then
         {trace with
@@ -416,7 +407,7 @@ private unsafe def lookupLeafPass (fallback : Bool) (table : LookupTable) (goal 
       modifyThe Core.State fun state => {state with cache}
       return trace
     let trace := {trace with visited := trace.visited + 1}
-    let alternatives : Array Expr ← if unloaded then pure values else (do
+    let alternatives : Array Expr ← (do
       let value := values[0]!
       let type ← inferType value
       unless possibleView (← getEnv) head type do return #[]
@@ -444,6 +435,9 @@ private unsafe def lookupLeafPass (fallback : Bool) (table : LookupTable) (goal 
           return (propositions, dataClosed)
         if dataClosed && (← timeLookup "lookup/closure" <| propositions.allM fun next => do
             if ← next.isAssigned then return true else close next) then
+          -- Materialize only after the signature and all side conditions match.
+          -- Any remaining data metavariable still fails the closed proof check.
+          timeLookup "candidate/certificate" candidate.certify
           let proof ← instantiateMVars (mkMVar goal)
           unless proof.hasMVar do return {trace with attempted, source? := some name}
       catch ex =>

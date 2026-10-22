@@ -5,8 +5,43 @@ import Lean.Meta.Tactic.LibrarySearch
 
 /-! Module-owned, versioned discrimination trees stored in compacted regions.
 Only candidate certificates carry semantic authority. -/
-namespace LeanInformationAudit.SearchReduction.DiskLookup
+namespace LeanInformationAudit.SearchReduction
 open Lean Meta
+
+/-- Independent per-branch preparation allocation, in user-facing heartbeats. -/
+abbrev lookupPreparationBudget : Nat := 2000000
+
+structure LookupBudgetState where
+  preparation : Nat := 0
+  preparationNs : Nat := 0
+  deriving Inhabited
+
+/-- Only immutable I/O and deterministic byte transport belong here. Semantic
+normalization, matching, synthesis and kernel checks keep the search clock.
+Lean's thread-local heartbeat counter is restored after charging preparation. -/
+def withLookupPreparation {α : Type} (budget? : Option (IO.Ref LookupBudgetState))
+    (action : MetaM α) : MetaM α := do
+  let some budget := budget? | return ← action
+  let before ← budget.get
+  if before.preparation >= lookupPreparationBudget * 1000 then
+    throwError "lookup.preparation-heartbeat"
+  let started ← IO.getNumHeartbeats
+  let nanos ← IO.monoNanosNow
+  try
+    withTheReader Core.Context (fun ctx => {ctx with
+      initHeartbeats := started,
+      maxHeartbeats := lookupPreparationBudget * 1000 - before.preparation}) do
+      let result ← action
+      checkSystem "lookup.preparation"
+      return result
+  finally
+    let used := (← IO.getNumHeartbeats) - started
+    let elapsed := (← IO.monoNanosNow) - nanos
+    budget.modify fun s => {s with
+      preparation := s.preparation + used, preparationNs := s.preparationNs + elapsed}
+    IO.setNumHeartbeats started
+
+namespace DiskLookup
 
 abbrev version : String := "R_lookup/discrtree-pickle-v5"
 
@@ -109,51 +144,63 @@ partial def statementInstanceParameters : Expr → Bool
   | _ => false
 
 
+abbrev membershipNormalizationFuel : Nat := 2000000
+
+structure StatementNormalizationState where
+  remaining : Nat
+  memo : Std.HashMap (Expr × List Name) Expr := {}
+
+/-- Memoization includes the alias stack; it changes work, never N's result. -/
 partial def normalizeStatementAux (env : Environment) (e : Expr)
-    (seen : NameSet) : StateT Nat (Except String) Expr := do
-  let remaining ← get
+    (seen : List Name) : StateT StatementNormalizationState (Except String) Expr := do
+  if let some result := (← get).memo[(e, seen)]? then return result
+  let remaining := (← get).remaining
   if remaining == 0 then throw "search.presentation_normalization_fuel"
-  set (remaining - 1)
-  let e := e.consumeMData
-  match e with
-  | .app .. | .const .. =>
-    let fn := e.getAppFn
-    -- Instance dictionaries implement general computation. Keep their entire
-    -- subtrees opaque, including when they are arguments of arithmetic syntax.
-    let mut parameterType : Option Expr := match fn with
-      | .const n _ => ((env.setExporting false).find? n).map (·.type)
-      | _ => none
-    let mut args : Array Expr := #[]
-    for arg in e.getAppArgs do
-      let instanceArg : Bool := match parameterType with
-        | some (.forallE _ _ _ kind) => kind == .instImplicit
-        | _ => false
-      let normalized ← if instanceArg then pure arg else normalizeStatementAux env arg seen
-      args := args.push normalized
-      parameterType := match parameterType with
-        | some (.forallE _ _ body _) => some body
+  modify fun state => {state with remaining := remaining - 1}
+  let compute : Unit → StateT StatementNormalizationState (Except String) Expr := fun _ => do
+    let e := e.consumeMData
+    match e with
+    | .app .. | .const .. =>
+      let fn := e.getAppFn
+      -- Instance dictionaries implement general computation. Keep their entire
+      -- subtrees opaque, including when they are arguments of arithmetic syntax.
+      let mut parameterType : Option Expr := match fn with
+        | .const n _ => ((env.setExporting false).find? n).map (·.type)
         | _ => none
-    if let .const n us := fn then
-      if seen.contains n then throw "search.presentation_alias_cycle"
-      if !statementPrimitive n then
-        if let some (.defnInfo d) := (env.setExporting false).find? n then
-          if !statementInstanceParameters d.type && statementAliasBody env d.value then
-            let body := d.value.instantiateLevelParams d.levelParams us
-            return ← normalizeStatementAux env (body.beta args) (seen.insert n)
-    return mkAppN fn args
-  | .forallE n d b bi =>
-    return .forallE n (← normalizeStatementAux env d seen)
-      (← normalizeStatementAux env b seen) bi
-  | .lam n d b bi =>
-    return .lam n (← normalizeStatementAux env d seen)
-      (← normalizeStatementAux env b seen) bi
-  | _ => return e
+      let mut args : Array Expr := #[]
+      for arg in e.getAppArgs do
+        let instanceArg : Bool := match parameterType with
+          | some (.forallE _ _ _ kind) => kind == .instImplicit
+          | _ => false
+        let normalized ← if instanceArg then pure arg else normalizeStatementAux env arg seen
+        args := args.push normalized
+        parameterType := match parameterType with
+          | some (.forallE _ _ body _) => some body
+          | _ => none
+      if let .const n us := fn then
+        if seen.contains n then throw "search.presentation_alias_cycle"
+        if !statementPrimitive n then
+          if let some (.defnInfo d) := (env.setExporting false).find? n then
+            if !statementInstanceParameters d.type && statementAliasBody env d.value then
+              let body := d.value.instantiateLevelParams d.levelParams us
+              return ← normalizeStatementAux env (body.beta args) (n :: seen)
+      return mkAppN fn args
+    | .forallE n d b bi =>
+      return .forallE n (← normalizeStatementAux env d seen)
+        (← normalizeStatementAux env b seen) bi
+    | .lam n d b bi =>
+      return .lam n (← normalizeStatementAux env d seen)
+        (← normalizeStatementAux env b seen) bi
+    | _ => return e
+  let result ← compute ()
+  modify fun state => {state with memo := state.memo.insert (e, seen) result}
+  return result
 
-def normalizeStatementSyntax (env : Environment) (e : Expr) (fuel : Nat := 200000) : Except String Expr :=
-  (normalizeStatementAux env e {}).run' fuel
+def normalizeStatementSyntax (env : Environment) (e : Expr)
+    (fuel : Nat := membershipNormalizationFuel) : Except String Expr :=
+  (normalizeStatementAux env e []).run' {remaining := fuel}
 
-
-abbrev membershipVersion : String := "R_lookup/membership-alpha-syntax-v2"
+abbrev membershipVersion : String := "R_lookup/membership-alpha-syntax-v3-memo-2000000"
 
 structure MembershipHeader where
   format : String := membershipVersion
@@ -205,6 +252,7 @@ structure Index where
 
 structure Candidates where
   entries : Array Entry := #[]
+  missing : Array String := #[]
   complete : Bool := false
   pages : Nat := 0
   deriving Inhabited
@@ -599,7 +647,7 @@ unsafe def produceMembership (directory : System.FilePath) : IO MembershipHeader
   let header : Header ← readJson (directory / "header.json")
   unless header.format == version && header.complete do
     throw <| IO.userError "lookup.membership_requires_complete_candidate_index"
-  let storage := directory / s!"membership-alpha-syntax-v2-{header.inputs}"
+  let storage := directory / s!"membership-alpha-syntax-v3-memo-2000000-{header.inputs}"
   IO.FS.createDirAll storage
   let partitions : Array (Array String) ← readJson (directory / "import-partitions.json")
   let groups := partitions.mapIdx fun i modules => (s!"group-{i}", modules)
@@ -644,6 +692,33 @@ unsafe def produceMembership (directory : System.FilePath) : IO MembershipHeader
   IO.println (toJson result).compress
   return result
 
+/-- Compare the exact serialized key and identity of every previously completed
+entry. Newly completed entries do not alter the old-result comparison. -/
+unsafe def compareMembership (directory oldHeader : System.FilePath) : IO Bool := do
+  let old : MembershipHeader ← readJson oldHeader
+  let current : MembershipHeader ← readJson (directory / "membership-header.json")
+  let mut previous : Std.HashMap (String × String) String := {}
+  let mut now : Std.HashMap (String × String) String := {}
+  for bucket in [:256] do
+    for (header, isOld) in #[(old, true), (current, false)] do
+      let rows ← withUnpickle (directory / header.storage / membershipFile bucket)
+        fun (page : MembershipPage) => pure (page.toArray.foldl (fun rows (key, entries) =>
+          rows ++ entries.map (fun entry =>
+            ((ownedString entry.module, ownedString entry.name),
+              (toJson (toString key, copyEntry entry)).compress))) #[])
+      for (identity, bytes) in rows do
+        if isOld then previous := previous.insert identity bytes
+        else now := now.insert identity bytes
+  let changed := previous.toArray.filter fun (identity, bytes) => now[identity]? != some bytes
+  let equal := changed.isEmpty
+  IO.println (Json.mkObj [
+    ("completed_results_bytes_equal", toJson equal),
+    ("old_completed", toJson previous.size), ("new_completed", toJson now.size),
+    ("changed_or_lost", toJson changed.size),
+    ("remaining_missing", toJson current.missing.size),
+    ("comparison", toJson "UTF-8 JSON of membership key and full candidate metadata, per (module, Name)")]).compress
+  return equal
+
 def openIndex (directory : System.FilePath) (basis mathlib : String)
     (excluded : Array Name := #[]) : IO Index := do
   let header : Header ← readJson (directory / "header.json")
@@ -664,19 +739,20 @@ def openIndex (directory : System.FilePath) (basis mathlib : String)
 
 /-- One disk hash bucket, followed by an expected constant-time hash lookup.
 No implication candidates or baseline declarations are enumerated here. -/
-unsafe def queryMembership (index : Index) (type : Expr) : MetaM Candidates := do
+unsafe def queryMembership (index : Index) (type : Expr)
+    (budget? : Option (IO.Ref LookupBudgetState) := none) : MetaM Candidates := do
   let some header := index.membership? | return {}
   let key ← membershipKey type
   let file := index.directory.parent.getD index.directory / header.storage /
     membershipFile (key.toNat % 256)
   try
-    let entries ← withUnpickle file fun (page : MembershipPage) =>
+    let entries ← withLookupPreparation budget? <| withUnpickle file fun (page : MembershipPage) =>
       pure ((page[key]?.getD #[]).map copyEntry)
     let entries := entries.filter fun entry => !index.excluded.contains entry.module.toName
     let entries := entries.qsort fun a b =>
       if a.module != b.module then a.module < b.module else a.ordinal < b.ordinal
     IO.eprintln s!"LOOKUP_COST backend=membership-alpha key={key} pages=1 candidates={entries.size}"
-    return {entries, complete := header.complete && index.header.complete, pages := 1}
+    return {entries, complete := header.complete && index.header.complete, pages := 1, missing := header.missing}
   catch ex =>
     if ex.isMaxHeartbeat || ex.isInterrupt || ex.isRuntime then throw ex
     IO.eprintln s!"lookup.membership_incomplete:{← ex.toMessageData.toString}"
@@ -686,7 +762,8 @@ unsafe def queryMembership (index : Index) (type : Expr) : MetaM Candidates := d
 candidate metadata leaves the callback. Fallback is requested after primary
 certificate attempts fail; an incomplete pass cannot certify NoHit. -/
 unsafe def queryMature (index : Index) (type : Expr)
-    (heartbeatLimit? : Option Nat := none) (fallback : Bool := false) : MetaM Candidates := do
+    (heartbeatLimit? : Option Nat := none) (fallback : Bool := false)
+    (budget? : Option (IO.Ref LookupBudgetState) := none) : MetaM Candidates := do
   let started ← IO.getNumHeartbeats
   let keys ← DiscrTree.mkPath type
   let bucket := if fallback then rootKey .star else rootKey (keys[0]?.getD .star)
@@ -699,9 +776,12 @@ unsafe def queryMature (index : Index) (type : Expr)
     if let some limit := heartbeatLimit? then
       if (← IO.getNumHeartbeats) > limit then return {complete := false, pages}
     try
-      let hits : Array Entry ← withUnpickle (index.directory / file) fun (shard : PickledShard) => do
+      let (shard, region) ← withLookupPreparation budget? <|
+        (unpickle PickledShard (index.directory / file))
+      let hits : Array Entry ← try
         let hits ← if fallback then pure shard.fallback else shard.tree.getMatch type
-        return hits.map copyEntry
+        withLookupPreparation budget? <| pure (hits.map copyEntry)
+      finally withLookupPreparation budget? region.free
       pages := pages + 1
       for entry in hits do
         unless seen.contains (entry.module, entry.leanName) || index.excluded.any (fun n => n == entry.module.toName) do
@@ -716,4 +796,5 @@ unsafe def queryMature (index : Index) (type : Expr)
   IO.eprintln s!"LOOKUP_COST backend=discrtree-pickle fallback={fallback} heartbeats={(← IO.getNumHeartbeats) - started} pages={pages} candidates={ordered.size}"
   return {complete, pages, entries := ordered}
 
-end LeanInformationAudit.SearchReduction.DiskLookup
+end DiskLookup
+end LeanInformationAudit.SearchReduction
