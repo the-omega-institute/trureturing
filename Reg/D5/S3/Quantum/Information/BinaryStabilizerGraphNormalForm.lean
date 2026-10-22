@@ -358,7 +358,7 @@ abbrev arena : Arena where
 theorem rejected_law : ¬ arena.Law rejected := by
   intro h
   have he := congrFun (h (N := 0) (0, 0) (fun _ => 1)) (fun i => nomatch i)
-  change (∑ _ : Fin 0 → Fin 2, (∏ i : Fin 0, _) * (1 : ℂ)) = 0 at he
+  change (∑ _ : Fin 0 → Fin 2, (∏ _ : Fin 0, (1 : ℂ)) * (1 : ℂ)) = 0 at he
   norm_num at he
 
 theorem dependence : ObservationalDependence signature actual := by
