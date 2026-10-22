@@ -1,0 +1,18 @@
+{
+  "sha256": "5f028133fd49e987a7c96da720ffdad56d984ee02c6a59bcbc8855c73b788117",
+  "numstat": "8\t6\ttools/lean-inspector/scoped.py\n2\t0\ttools/tests/StrataLint.Lean.Tests/Native/LeanReportScopedTests.cs\n50\t0\ttools/tests/StrataLint.Lean.Tests/Native/lean_report_scoped_fixture.py",
+  "files": [
+    {
+      "path": "tools/lean-inspector/scoped.py",
+      "sha256": "b17d48ca8073568b10fc4d8819a5d4daf6462ce290de78f5123c46b9e1540f34"
+    },
+    {
+      "path": "tools/tests/StrataLint.Lean.Tests/Native/LeanReportScopedTests.cs",
+      "sha256": "db45e0f9503f419b9cefe0b2aa5cec972aabd50c908dd5405eb268b7974881ed"
+    },
+    {
+      "path": "tools/tests/StrataLint.Lean.Tests/Native/lean_report_scoped_fixture.py",
+      "sha256": "dd2ccf1cf977ba8e200b628366bb0ad8489b4d5bb5278161b1b1c03c417d159f"
+    }
+  ]
+}

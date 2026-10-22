@@ -1,0 +1,9 @@
+test_cache_replacement_preserves_scoped_discovery_logs (__main__.ScopedContracts) ... LEAN_INSPECTOR_PHASE phase=scope status=started
+LEAN_INSPECTOR_PHASE phase=scope status=completed exit=0
+LEAN_INSPECTOR_PHASE phase=report status=started
+ok
+
+----------------------------------------------------------------------
+Ran 1 test in 0.334s
+
+OK

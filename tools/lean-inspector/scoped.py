@@ -212,9 +212,10 @@ class Entry:
         if not Path(self.lake).is_absolute() or not os.access(self.lake, os.X_OK):
             raise ValueError('an absolute executable lake path is required (LAKE_BIN)')
         self.environment['LAKE_BIN'] = self.lake
-        self.phase('ensure', ['/bin/bash', str(self.root / 'tools/scripts/worktree/lean-cache-ensure.sh')])
 
     def guarded(self, *arguments):
+        # Scope discovery and report production each admit/provision their cache
+        # through this guard; standalone ensure also requests archive refresh.
         return ['/bin/bash', str(self.root / 'tools/scripts/worktree/lean-cache-run.sh'),
                 self.lake, '-d', str(self.root / 'tools/lean-inspector-reg'), *arguments]
 
@@ -270,8 +271,7 @@ def compiled_modules(root, logs):
     return sorted(result)
 
 
-def produce(entry, output, roots):
-    scope, utilities = entry.discover(roots)
+def produce(entry, output, scope, utilities):
     before = capture(entry.root, scope, utilities)
     shutil.copyfile(entry.temporary / 'selected-modules.json', entry.logs / 'selected-modules.json')
     for name in ('module-work.jsonl', 'native-work.jsonl', 'native-phases.jsonl'):
@@ -313,7 +313,7 @@ def main():
     roots = parse_targets(args.targets)
     output = args.report if args.report.is_absolute() else root / args.report
     check_destination(root, output)
-    # Input failures precede ensure, output-directory creation and any report seal.
+    # Input failures precede cache admission, output-directory creation and any report seal.
     inputs = public.selection.Selection(root)
     inputs.validate('lean-report')
     if not set(roots) <= inputs.modules().keys():
@@ -328,8 +328,10 @@ def main():
         startup_logs.mkdir()
         entry = Entry(root, temporary, startup_logs)
         entry.provision()
+        # Cache admission may replace .lake, including the default log directory.
+        # Keep discovery logs outside that projection until admission completes.
+        scope, utilities = entry.discover(roots)
         if args.command == 'verify':
-            scope, utilities = entry.discover(roots)
             validate_bundle(output, root, scope, utilities=utilities)
             print('SCOPED_LEAN_REPORT_VERIFIED path=' + str(output))
         else:
@@ -340,7 +342,7 @@ def main():
             for path in startup_logs.iterdir():
                 shutil.copyfile(path, logs / path.name)
             entry.logs = logs
-            produce(entry, output, roots)
+            produce(entry, output, scope, utilities)
 
 
 if __name__ == '__main__':

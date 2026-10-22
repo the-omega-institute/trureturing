@@ -1,0 +1,10 @@
+LEAN_INSPECTOR_PHASE phase=producer-build status=started
+LEAN_INSPECTOR_PHASE phase=producer-build status=completed exit=0
+LEAN_INSPECTOR_PHASE phase=utility status=started
+LEAN_INSPECTOR_PHASE phase=utility status=completed exit=0
+LEAN_INSPECTOR_PHASE phase=utility-scope status=started
+LEAN_INSPECTOR_PHASE phase=utility-scope status=completed exit=0
+LEAN_INSPECTOR_PHASE phase=scope status=started
+lean-report-scoped: [Errno 2] No such file or directory: '/Users/macstudio/omega/trureturing-scoped-cache-refresh-01a124c6-20261023/.lake/build/stratalint/scoped-lean-report.json.logs/scope.exit.log'
+RESOURCE_OBSERVATION stage=report-supervisor-lean-producer disk_free_kb=48608312 fd_soft_limit=4096 fd_peak=280 rss_peak_kb=1853632
+make: *** [lean-report-scoped] Error 2

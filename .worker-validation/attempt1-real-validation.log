@@ -1,0 +1,3 @@
+START real-produce
+EXIT real-produce 2
+{"status": "failed", "evidence": "/Users/macstudio/omega/research/open-problem-search-20261016/scoped-report-cache-refresh-fix-20261023/darwin435-scoped-acceptance.json", "error": "RuntimeError('real-produce exit 2')"}

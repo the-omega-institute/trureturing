@@ -1,0 +1,5 @@
+START real-produce
+EXIT real-produce 0
+START real-verify
+EXIT real-verify 0
+{"status": "failed", "evidence": "/Users/macstudio/omega/research/open-problem-search-20261016/scoped-report-cache-refresh-fix-20261023/darwin435-scoped-acceptance.json", "error": "ValueError(\"Invalid isoformat string: '2026-10-20T04:52:31.273960+00:00\\\\n'\")"}

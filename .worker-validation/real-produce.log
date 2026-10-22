@@ -1,0 +1,14 @@
+LEAN_INSPECTOR_PHASE phase=producer-build status=started
+LEAN_INSPECTOR_PHASE phase=producer-build status=completed exit=0
+LEAN_INSPECTOR_PHASE phase=utility status=started
+LEAN_INSPECTOR_PHASE phase=utility status=completed exit=0
+LEAN_INSPECTOR_PHASE phase=utility-scope status=started
+LEAN_INSPECTOR_PHASE phase=utility-scope status=completed exit=0
+LEAN_INSPECTOR_PHASE phase=scope status=started
+LEAN_INSPECTOR_PHASE phase=scope status=completed exit=0
+LEAN_INSPECTOR_PHASE phase=report status=started
+LEAN_INSPECTOR_PHASE phase=report status=completed exit=0
+LEAN_INSPECTOR_AGGREGATE modules=1 declarations=45
+LEAN_INSPECTOR_SCOPED_WORK {"compiled_module_names": [], "compiled_modules": 0, "extracted_module_names": [], "extracted_modules": 0, "selected_modules": 1}
+SCOPED_LEAN_REPORT path=/Users/macstudio/omega/trureturing-scoped-cache-refresh-01a124c6-20261023/.lake/build/stratalint/scoped-lean-report.json sha256=1695e0eb193076867894e58d3cae196112af3a6ecd77b91686c07b040d761b07
+RESOURCE_OBSERVATION stage=report-supervisor-lean-producer disk_free_kb=47960272 fd_soft_limit=4096 fd_peak=256 rss_peak_kb=2744928
