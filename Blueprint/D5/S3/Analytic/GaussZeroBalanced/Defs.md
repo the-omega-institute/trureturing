@@ -10,7 +10,7 @@ Lean statement: `D5/S3/Analytic/GaussZeroBalanced/Defs.gauss`
 
 *Formalization.* `D5/S3/Analytic/GaussZeroBalanced/Defs.gauss` (`✓ std3`).
 
-*Source.* Repository-derived.
+*Citation.* S.-L. Qiu, X.-Y. Ma and X.-Y. Xiang (2024). *Turán-type inequalities for Gaussian hypergeometric functions, and Baricz's conjecture*. DOI: [10.48550/arXiv.2408.15723](https://doi.org/10.48550/arXiv.2408.15723). URL: <https://arxiv.org/abs/2408.15723>.
 
 *Commentary.*
 
@@ -22,7 +22,7 @@ Lean statement: `D5/S3/Analytic/GaussZeroBalanced/Defs.quot`
 
 *Formalization.* `D5/S3/Analytic/GaussZeroBalanced/Defs.quot` (`✓ std3`).
 
-*Source.* Repository-derived.
+*Citation.* S.-L. Qiu, X.-Y. Ma and X.-Y. Xiang (2024). *Turán-type inequalities for Gaussian hypergeometric functions, and Baricz's conjecture*. DOI: [10.48550/arXiv.2408.15723](https://doi.org/10.48550/arXiv.2408.15723). URL: <https://arxiv.org/abs/2408.15723>.
 
 *Commentary.*
 
@@ -34,7 +34,7 @@ Lean statement: `D5/S3/Analytic/GaussZeroBalanced/Defs.f`
 
 *Formalization.* `D5/S3/Analytic/GaussZeroBalanced/Defs.f` (`✓ std3`).
 
-*Source.* Repository-derived.
+*Citation.* S.-L. Qiu, X.-Y. Ma and X.-Y. Xiang (2024). *Turán-type inequalities for Gaussian hypergeometric functions, and Baricz's conjecture*. DOI: [10.48550/arXiv.2408.15723](https://doi.org/10.48550/arXiv.2408.15723). URL: <https://arxiv.org/abs/2408.15723>.
 
 *Commentary.*
 
@@ -46,7 +46,7 @@ Lean statement: `D5/S3/Analytic/GaussZeroBalanced/Defs.ineq17`
 
 *Formalization.* `D5/S3/Analytic/GaussZeroBalanced/Defs.ineq17` (`✓ std3`).
 
-*Source.* Repository-derived.
+*Citation.* S.-L. Qiu, X.-Y. Ma and X.-Y. Xiang (2024). *Turán-type inequalities for Gaussian hypergeometric functions, and Baricz's conjecture*. DOI: [10.48550/arXiv.2408.15723](https://doi.org/10.48550/arXiv.2408.15723). URL: <https://arxiv.org/abs/2408.15723>.
 
 *Commentary.*
 
@@ -58,7 +58,7 @@ Lean statement: `D5/S3/Analytic/GaussZeroBalanced/Defs.claim`
 
 *Formalization.* `D5/S3/Analytic/GaussZeroBalanced/Defs.claim` (`✓ std3`).
 
-*Source.* Repository-derived.
+*Citation.* S.-L. Qiu, X.-Y. Ma and X.-Y. Xiang (2024). *Turán-type inequalities for Gaussian hypergeometric functions, and Baricz's conjecture*. DOI: [10.48550/arXiv.2408.15723](https://doi.org/10.48550/arXiv.2408.15723). URL: <https://arxiv.org/abs/2408.15723>.
 
 *Commentary.*
 

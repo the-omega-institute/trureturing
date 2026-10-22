@@ -10,7 +10,13 @@ Lean statement: `D5/S3/Analytic/GaussZeroBalanced/Result.result`
 
 *Proof.* Machine-checked in Lean as `D5/S3/Analytic/GaussZeroBalanced/Result.result` (`✓ std3`). ∎
 
+*Resolves.* `Problems/qiu-ma-xiang-2024-zero-balanced-gauss-turan` (proved) by `D5/S3/Analytic/GaussZeroBalanced/Result.result`.
+
+<!-- scribe-open-problem-resolution-v1 {"problem_slug":"qiu-ma-xiang-2024-zero-balanced-gauss-turan","declaration_gid":"D5/S3/Analytic/GaussZeroBalanced/Result.result","resolution_kind":"proved"} -->
+
 *Source.* Repository-derived.
+
+*Acknowledgement.* S.-L. Qiu, X.-Y. Ma and X.-Y. Xiang (2024). *Turán-type inequalities for Gaussian hypergeometric functions, and Baricz's conjecture*. DOI: [10.48550/arXiv.2408.15723](https://doi.org/10.48550/arXiv.2408.15723). URL: <https://arxiv.org/abs/2408.15723>.
 
 *Commentary.*
 
