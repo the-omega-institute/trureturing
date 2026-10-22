@@ -1,0 +1,19 @@
+**推论 472.2（允许的不平衡长度上的严格原行预算）。** 保持原非零行权及允许有限 ray 类。选 $t_0$ 在原 $\Omega$ 的正支撑内，在所需固定 ray 类中取不同 good 素理想 $\ell,r$，满足 $q_r=P\to\infty$、$q_\ell\asymp P^5$。该选择直接复用固定 ray 类素理想定理；不另证素数计数。令
+
+$$
+v=\ell r^5,\qquad U=s_jq_v/t_0\asymp P^{10},
+\qquad D=U^{3/5},\quad N=U^{2/5},\quad K=U.
+\tag{472.5}
+$$
+
+这是原长度限制 $r_{\rm length}\le t$、$r_{\rm length}+m\ge t$、$0\le m\le1/2$ 在 $t=1$ 下允许的 $(3/5,2/5)$；此处不声称检测器必选该长度或这些行。其实际 $a\asymp P^5$、$g=P$、$f\asymp P^6$、$X_{D,N}\asymp P^8$，所以（472.1）四项依次为
+
+$$
+P^6,\qquad P^9,\qquad P^{47/6},\qquad P^{28/3}.
+\tag{472.6}
+$$
+
+因此这些实际原行最终满足 $\mathscr H_{1;D,N}\le U^{19/20}$，其所在（472.2）正截断具有 $O_\varepsilon(\mathcal C_{472}^2U^{39/20+\varepsilon})$ 的完整原能量。固定 dyadic 估值区域 $q_{R_1}\asymp U^{1/2}$、$q_{R_5}\asymp U^{1/10}$、$R_2=R_3=R_4=1$ 本身还满足 $\mathscr H_{1;D,N}\ll U^{14/15}$，故其完整能量为 $O_\varepsilon(\mathcal C_{472}^2U^{29/15+\varepsilon})$。
+
+证明。代入（472.1）；最大幂次 $28/3$ 小于 $10\cdot19/20=19/2$。原物理权仍为 $\Omega(t_0)>0$，素估值 $1,5$ 使 $S$ 外实际阶数恰为六。Dyadic 区域的固定隐常数可放进 $T=C_1U^{14/15}$，充分大 $U$ 时仍在 $T\le C_0U$ 内；再用（472.2）。不从行权非零推断完整卷积响应非零，也不给出能量下界。证毕。
+
