@@ -38,14 +38,18 @@ internal sealed class BilateralProductModFourUnitExponentDocument : IScribeDocum
                 + "The fixed point identity makes the difference from twice the geometric series "
                 + "minus one divisible by four, yielding the stated congruence. The same argument "
                 + "works for every exponent parameter at least one.",
-                DescribeRole.Theorem, AssessedProvenance.FromRepo(Source)))));
+                DescribeRole.Theorem, AssessedProvenance.FromRepo(Source),
+                new OpenProblemResolutionClaim(
+                    ProblemSlugRef.Create("oeis-a380066-hanna-bilateral-product-mod-four"),
+                    ResolutionKind.Proved)))));
 
     private static DocumentBlock Node(string name, string title, Formula formula,
-        string prose, DescribeRole role, AssessedProvenance provenance) => Describe.Lean(
+        string prose, DescribeRole role, AssessedProvenance provenance,
+        OpenProblemResolutionClaim? resolution = null) => Describe.Lean(
         DescribeId.Create("bilateral-unit-exponent-" + name.ToLowerInvariant()),
         DeclarationHandle.Create(DeclarationPath(name)), H(title),
         StatementSource.FromAuthor(formula), provenance,
-        Blocks(Paragraph(Text(prose))), role);
+        Blocks(Paragraph(Text(prose))), role, resolution);
 
     private static string DeclarationPath(string name) => Prefix + name;
 

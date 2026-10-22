@@ -36,6 +36,10 @@ $$(\exists A \in (\operatorname{PowerSeries}\left(\mathbb{Z}\right)),\; (\operat
 
 *Proof.* Machine-checked in Lean as `D5/S1/Recurrence/Bilateral/BilateralProductModFourUnitExponent.result` (`✓ std3`). ∎
 
+*Resolves.* `Problems/oeis-a380066-hanna-bilateral-product-mod-four` (proved) by `D5/S1/Recurrence/Bilateral/BilateralProductModFourUnitExponent.result`.
+
+<!-- scribe-open-problem-resolution-v1 {"problem_slug":"oeis-a380066-hanna-bilateral-product-mod-four","declaration_gid":"D5/S1/Recurrence/Bilateral/BilateralProductModFourUnitExponent.result","resolution_kind":"proved"} -->
+
 *Source.* Repository-derived.
 
 *Acknowledgement.* Paul D. Hanna (2025). *OEIS A380066, bilateral product generating function*. URL: <https://oeis.org/A380066>.
