@@ -5,7 +5,7 @@ year: 2026
 title: "Primitive sets and von Mangoldt chains: Erdős Problem #1196 and beyond"
 doi: 10.48550/arXiv.2605.00301
 url: https://arxiv.org/abs/2605.00301v1
-claim: Lemmas 3.2 and 3.3(ii) supply unconditional positive-kernel upper bounds. Their application to the Diamond–Ford error controls a full-domain smoothed integral, not the signed Robin tail at the original CA source.
+claim: Lemmas 3.2 and 3.3(ii) supply unconditional positive-kernel upper bounds. Section 10.2 supplies the zeta process; its finite-divisor cut exposes the divisor sum as an endpoint density. Neither application supplies the signed Robin estimate at the original CA source.
 strata_touched: []
 license: citation-only
 triage: anchor
@@ -15,7 +15,9 @@ triage: anchor
 
 The inspected primary is [arXiv:2605.00301v1](https://arxiv.org/pdf/2605.00301v1),
 submitted 1 May 2026, with 35 printed pages. The bounds and their proofs
-in §3.1, printed pp.12–16, are reused. The paper proves results about
+in §3.1, printed pp.12–16, the invariant weight in Example 2.8, printed
+pp.9–10, and the zeta process in §10.2, printed p.31, are reused.
+The paper proves results about
 primitive sets and divisibility chains; no RH conclusion is attributed
 to it. This note records a parameter correspondence and its limits,
 not a new estimate, novelty claim or Lean verification.
@@ -107,3 +109,84 @@ The DF comparison still involves both $R_{\rm DF}(A)$ and
 $K_{\rm DF}(A)$ at this same $A$. The source's positive-kernel bounds
 do not by themselves supply that joint lower estimate or remove the
 full CA reserve. A localization and signed comparison remains unpaid.
+
+## The existing zeta process on the actual finite divisor cut
+
+Example 2.8, equation (2.9), gives the invariant weight
+
+$$
+\nu_\Lambda(1)=1,\qquad
+\nu_\Lambda(n)=\int_1^\infty
+            \frac{\log n}{\zeta(s)n^s}\,ds\quad(n>1)
+$$
+
+for the downward transition
+$P(n\to n/q)=\Lambda(q)/\log n$, where $q\mid n$ and $q>1$.
+Section 10.2 realizes it by a common divisibility chain $Z_s$ with
+$\mathbb P(Z_s=n)=1/(\zeta(s)n^s)$ for $s>1$. Both the chain and
+invariant measure are existing constructions, not new FIB processes.
+
+For the same actual integer $N$, take its finite divisor ideal
+$\mathcal D_N=\{d:d\mid N\}$ and put
+
+$$
+F_N(s)=\sum_{d\mid N}d^{-s},\qquad
+Q_N(s)=\mathbb P(Z_s\mid N)=\frac{F_N(s)}{\zeta(s)}.
+\tag{VM6}
+$$
+
+Write $a_p=v_p(N)$, including $a_p=0$ outside the finite support.
+The Euler product is
+$Q_N(s)=\prod_p(1-p^{-(a_p+1)s})$. Thus it retains the actual finite
+exponents, as well as all primes outside the support. Its cut flux is
+
+$$
+Q_N'(s)=\frac1{\zeta(s)}
+ \sum_{d\mid N}\ \sum_{\substack{q\ge2\\dq\nmid N}}
+       \frac{\Lambda(q)}{(dq)^s}\ge0\qquad(s>1).
+\tag{VM7}
+$$
+
+Indeed the internal transition sum is
+$\sum_{m\mid N}(\log m)m^{-s}=-F_N'(s)$, using the classical identity
+$\sum_{q\mid m}\Lambda(q)=\log m$. Subtracting it from
+$-F_N(s)\zeta'(s)/\zeta(s)$ gives (VM7) after division by $\zeta(s)$.
+All sums are absolutely convergent for $s>1$.
+
+The pole of $\zeta$ at $1$ and the limits at infinity now give
+
+$$
+Q_N(1+)=0,\qquad Q_N(\infty)=1,\qquad
+\int_1^\infty Q_N'(s)\,ds=1,\qquad
+Q_N'(1+)=F_N(1)=\frac{\sigma(N)}N.
+\tag{VM8}
+$$
+
+This is the source's invariant-flow conservation applied to a finite
+divisor ideal. The conserved mass is $1$ for every $N$; the Robin
+quantity is instead the endpoint density $Q_N'(1+)$. In particular,
+unit mass alone does not bound that density: the positive densities
+$b e^{-b(s-1)}$ on $s>1$ have mass $1$ and endpoint value $b$ for
+arbitrary $b>0$. This elementary comparison concerns general densities;
+it is not an arithmetic counterexample or a substitute source.
+
+To retain the original signed-tail obligation exactly, put
+$A=\log N$, $L=\log A$ and
+$h_N=\log G(N)-\gamma$. On the same retained regular sources,
+$I_\psi(A)=-h_N-R_{\rm CA}(A)$, so its fixed-floor target reads
+
+$$
+\log\!\left(\frac{Q_N'(1+)}{e^\gamma L}\right)
+ +R_{\rm CA}(A)
+\le\frac{M}{\sqrt A\,L}.
+\tag{VM9}
+$$
+
+Here $M$ must be fixed uniformly over all sufficiently large retained
+sources. Equation (VM9) is the existing obligation in these
+coordinates, not an established estimate. The invariant flow and
+normalization (VM8) do not supply it. A new use of the joint GA1,
+CA and full future-record constraints would have to control this
+endpoint and the same source's full reserve together. Neither replacing
+the cut by the minimal nondivisors nor omitting prime-power jumps
+preserves the full flux (VM7).
