@@ -1,0 +1,66 @@
+**Lemma 14.2 (Nonzero source-jet certificates).** The preceding
+interval expressions are defined in all four rows. They give the
+tables of Lemma 13.2 and the following strict inclusions:
+
+| $i$ | $p_b$ | $\Delta$ | $a_K$ | $\chi$ |
+| --- | --- | --- | --- | --- |
+| $1$ | $(-830779,-830778)$ | $(-3418000000000000,-3417000000000000)$ | $(176,177)$ | $(47481,47482)$ |
+| $2$ | $(702,703)$ | $(16.52,16.54)$ | $(5,6)$ | $(-0.951,-0.950)$ |
+| $3$ | $(405954,405955)$ | $(1543600000,1543700000)$ | $(4,5)$ | $(0.140,0.141)$ |
+| $4$ | $(35,36)$ | $(168543,168544)$ | $(173,174)$ | $(-37.564,-37.563)$ |
+
+In particular $p_b\Delta a_K\chi\ne0$ and $a_K>0$ at every $W_i$.
+
+*Proof.* The rational operations of Definition 14.1 give the stated
+inclusions by substitution into (14.2) and (14.3). More precise
+intermediate enclosing intervals for the three jet quantities that
+certify rank, cross-cap recognition and $J$ separation are
+
+$$
+\begin{array}{c|c|c|c}
+i&p_b&\Delta&a_K\\ \hline
+1&(-830778.852988,-830778.852987)
+ &(-3417716279736341.173526,-3417716279736341.173525)
+ &(176.491607,176.491608)\\
+2&(702.496383,702.496384)
+ &(16.528488,16.528489)&(5.534633,5.534634)\\
+3&(405954.500756,405954.500757)
+ &(1543628106.368296,1543628106.368297)&(4.299489,4.299490)\\
+4&(35.324086,35.324087)
+ &(168543.426152,168543.426153)&(173.429994,173.429995).
+\end{array}
+\tag{14.7}
+$$
+
+The corresponding $\chi$ intervals are
+
+$$
+\begin{aligned}
+&(47481.395648,47481.395649),\quad
+(-0.950574,-0.950573),\\
+&(0.140892,0.140893),\quad
+(-37.563042,-37.563041).
+\end{aligned}
+\tag{14.8}
+$$
+
+These are finite rational inequalities: for example the $i=2$
+determinant enclosure in (14.7) means that the lower and upper
+endpoints of the interval expression (14.6), with (14.2)–(14.5)
+substituted, are strictly between $16528488/10^6$ and
+$16528489/10^6$. The other entries have the same meaning. Thus
+the tables specify both the algebraic objects and explicit rational
+comparison bounds without an external source of coefficients.
+
+Horner enclosure follows inductively from interval addition and
+multiplication. Each application of $\mathcal R$ enlarges the exact
+interval, so it preserves inclusion. The intervals for $D$ have the
+nonzero signs of Lemma 13.2, and the $p_b$ intervals in (14.7)
+exclude zero before their reciprocals are used. Hence every quotient
+in these expressions is valid on its entire evaluation rectangle.
+The derivative identity (14.2) follows by differentiating $N/D$
+twice; it therefore bounds the actual two-jet, rather than an
+unrelated cleared expression. Finally the sign-preserving bisections
+keep $b_i$ in $I_i^*$ and (14.5) keeps $r_i,t_i$ in $R_i,T_i$.
+The inclusions thus apply at the exact algebraic worlds. ∎
+

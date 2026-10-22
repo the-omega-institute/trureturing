@@ -1,0 +1,54 @@
+**Lemma 5.2 (Exhaustive positive-root certificate).** The Sturm chain
+has $68$ polynomials of degrees $67,66,\ldots,0$, with
+$V(0)=27$ and $V(+\infty)=21$. Its six positive roots are simple and
+lie one each in the following disjoint open intervals. In the first
+column $I=(q/10^8,(q+1)/10^8)$.
+
+| $q$ | $\operatorname{sign}F$ at the two endpoints | $V$ at the two endpoints | Exact lifted $r$ enclosure | Original-source or response exclusion |
+| --- | --- | --- | --- | --- |
+| $845744$ | $+,-$ | $27,26$ | $0<r<1/100$ | $690<p<691$ |
+| $4228383$ | $-,+$ | $26,25$ | $519/1000<r<520/1000$ | $1<p<2$ |
+| $5311219$ | $+,-$ | $25,24$ | $-3/1000<r<-2/1000$ | $r<0$ |
+| $6737603$ | $-,+$ | $24,23$ | $-4/1000<r<-3/1000$ | $r<0$ |
+| $12758053$ | $+,-$ | $23,22$ | $900/1000<r<901/1000$ | $7<p<8$ |
+| $88676283$ | $-,+$ | $22,21$ | $964/1000<r<965/1000$ | $57<p<58$ |
+
+For each row the enclosures mean the following deterministic rational
+calculation. Bisect $I$ exactly $256$ times, always retaining the half
+with opposite nonzero endpoint $F$ signs. Denote the resulting closed
+interval by $I^*$. Its width is $1/(10^8 2^{256})$. Evaluate $a,c$ by
+interval Horner on $I^*$ and set
+
+$$
+R=-c(I^*)/a(I^*).
+\tag{5.2}
+$$
+
+The signs of $a(I^*)$ in the six rows are $-,+,+,+,+,-$; thus every
+division in (5.2) is legal. The resulting $R$ lies strictly inside the
+listed $r$ enclosure. In rows $1,2,5,6$, form the integer polynomials
+
+$$
+\widetilde D(r,b)=b^2D(r/b,b),\qquad
+\widetilde N(r,b)=b^3N_0(r/b,b).
+\tag{5.3}
+$$
+
+Evaluate them on the full rectangle $R\times I^*$, then divide by the
+positive interval powers of $b$. The $D$ interval signs are respectively
+$-,+,-,-$ and the quotient $N_0/D$ lies strictly within the listed
+$p$ enclosure.
+
+Proof. The coefficient list `FC`, the recurrence (5.1), and the exact
+interval operations in Section 10 give these finite assertions. The
+public code checks all chain degrees, endpoint variations, opposite
+endpoint signs, $1536$ midpoint bisections, six lift denominators and
+four response denominators. In particular it does not use floating-point
+root labels. Sturm's theorem gives six positive roots in total. The six
+unit variation drops sum to six, so every positive root occurs in the
+table; $\gcd(F,F')=1$ also supplies simplicity. Every root retained by
+the necessary lift (4.4) is therefore either outside the original strict
+source domain or outside the closed response window $[10,34]$.
+The table does not assert that each resultant candidate is a genuine
+common zero of all three minors. It excludes them even if it is. ∎
+

@@ -1,0 +1,24 @@
+## 4. What this does and does not settle
+
+The proposition supplies a faithful finite-fibre lift of the unresolved
+four-endpoint relation. It separates the only three possible overlap
+patterns and prevents the fixed-\((p,v,m)\) bound seven from being applied
+to the independent \(m_0,m_1,m\) problem. It also identifies the precise
+coordinate reduction available in the fully overlapping stratum: only
+\((p,v,m)\) remains continuous there.
+
+It does not construct a point of \(D_J\cap D_M\), prove that any overlap
+stratum is nonempty, or prove a global absence theorem. It does not infer
+that the number of response coordinates is a physical space dimension,
+that a semialgebraic dimension equals the displayed coordinate count, or
+that raw or complex lifts are strict-real witnesses. The remaining joint
+question still ranges over ordinary/exceptional mixtures, repeated roots,
+degree drops, zero drift, sampled gain zeros, and singular sources exactly
+as in Definition 6.5 of the preceding continuation.
+
+The result is a combinatorial reduction over the exact real inverse. Its
+role is to turn a single unstructured search into three finite-fibre
+strata; a subsequent exact or exclusion argument must still address the
+actual equality of the \(J\)-responses and the independently chosen
+\(M\)-pair.
+

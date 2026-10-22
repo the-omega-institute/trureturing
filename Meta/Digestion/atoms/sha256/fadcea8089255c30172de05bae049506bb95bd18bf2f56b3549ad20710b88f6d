@@ -1,0 +1,24 @@
+**Definition 20.1 (The surviving complete world).** Let $t_*$ be the
+fourth positive root of the exact polynomial $Q_{55}$, equivalently
+the unique root in the interior of $I_4$. Put
+
+$$
+\begin{gathered}
+x_*=-C(t_*)/A(t_*),\qquad
+d_*=N(t_*,x_*)/(q_d(t_*)K(x_*)),\\
+p_*=p_1(t_*),\quad v_*=v_1(t_*),\quad m_*=m_1(t_*).
+\end{gathered}
+\tag{20.1}
+$$
+
+Use (15.6)–(15.8) at these values to define $H_*,U_*,b_*,j_*,r_*$,
+and put
+
+$$
+c_*=r_*(1-r_*)/b_*,\qquad
+W_*=\left(
+\begin{pmatrix}r_*&b_*\\c_*&1-r_*\end{pmatrix},
+H_*/U_*,d_*\right).
+\tag{20.2}
+$$
+
