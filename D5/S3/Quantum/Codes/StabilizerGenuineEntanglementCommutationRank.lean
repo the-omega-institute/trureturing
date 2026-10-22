@@ -88,7 +88,7 @@ private theorem zero_sum_subset_exists {p m r : ℕ} [Fact p.Prime]
         Finset.sum_le_sum (fun i _ => hdegree i)
       _ = r * (p - 1) := by simp
       _ < Fintype.card (Fin m) := by simpa using h
-  letI : Fintype {x : Fin m → ZMod p //
+  let : Fintype {x : Fin m → ZMod p //
       ∀ i ∈ (Finset.univ : Finset (Fin r)), MvPolynomial.eval x (f i) = 0} :=
     @Subtype.fintype _
       (fun x : Fin m → ZMod p =>
@@ -199,7 +199,7 @@ private theorem no_vanishing_subsum {n p k : ℕ} [Fact p.Prime]
 
 theorem result : claim := by
   intro N p k hN hp G hS hGE
-  letI : Fact p.Prime := ⟨hp⟩
+  let : Fact p.Prime := ⟨hp⟩
   obtain ⟨n, rfl⟩ := Nat.exists_eq_succ_of_ne_zero (by omega : N ≠ 0)
   have hbound := rank_bound_of_no_vanishing_subsum (commutationSpace G)
     (no_vanishing_subsum G hS hGE)
@@ -214,6 +214,5 @@ end
 
 end D5.S3.Quantum.Codes.StabilizerGenuineEntanglementCommutationRank
 
-#print axioms D5.S3.Quantum.Codes.StabilizerGenuineEntanglementCommutationRank.result
 
 end

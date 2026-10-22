@@ -94,7 +94,7 @@ private theorem scalar_word_operator {N p : ℕ} [NeZero p] (r : ZMod p) :
   rw [coordinate_product_one]
   ext u v
   by_cases huv : u = v <;>
-    simp [Matrix.scalar_apply, Matrix.diagonal_apply, Matrix.one_apply, huv]
+    simp [Matrix.scalar_apply, huv]
 
 private theorem pauli_word_mul {N p : ℕ} [NeZero p] (a b : PauliWord N p) :
     pauliWordOperator a * pauliWordOperator b =
@@ -168,7 +168,7 @@ private theorem exists_common_eigenvector {ι V : Type*}
     exact ⟨0, v, hv, by simp⟩
   | @insert i s hi ih =>
     obtain ⟨μ, hμ⟩ := (f i).exists_eigenvalue
-    letI : Nontrivial ((f i).eigenspace μ) := Submodule.nontrivial_iff_ne_bot.mpr hμ
+    let : Nontrivial ((f i).eigenspace μ) := Submodule.nontrivial_iff_ne_bot.mpr hμ
     have hpres (j : ι) : ∀ v ∈ (f i).eigenspace μ, f j v ∈ (f i).eigenspace μ :=
       Module.End.mapsTo_genEigenspace_of_comm (hcomm i j) μ 1
     let g (j : ι) : Module.End ℂ ((f i).eigenspace μ) := (f j).restrict (hpres j)
@@ -198,7 +198,7 @@ private theorem product_fixed_vector {ι α β : Type*} [Finite ι] [Fintype α]
       ∀ i, (c i • Matrix.kronecker (A i) (B i)).mulVec
         (fun x : α × β => a x.1 * b x.2) = (fun x : α × β => a x.1 * b x.2) := by
   classical
-  letI : Fintype ι := Fintype.ofFinite ι
+  let : Fintype ι := Fintype.ofFinite ι
   let T (i : ι) := c i • Matrix.kronecker (A i) (B i)
   let L (i : ι) : Module.End ℂ ((α × β) → ℂ) :=
     (Matrix.kronecker (1 : Matrix α α ℂ) (B i)).mulVecLin
@@ -229,7 +229,7 @@ private theorem product_fixed_vector {ι α β : Type*} [Finite ι] [Fintype α]
       ← Matrix.mul_kronecker_mul, ← Matrix.mul_kronecker_mul, (hcomm i j).eq]
   obtain ⟨ψ, hψ, hψfix⟩ := hV
   have hψmem : ψ ∈ W := hψfix
-  letI : Nontrivial W := Submodule.nontrivial_iff_ne_bot.mpr (by
+  let : Nontrivial W := Submodule.nontrivial_iff_ne_bot.mpr (by
     intro heq
     exact hψ (by simpa only [heq, Submodule.mem_bot] using hψmem))
   let f (i : ι) : Module.End ℂ W := (L i).restrict (hpres i)
@@ -302,9 +302,13 @@ private theorem local_pauli_commutation {p : ℕ} [NeZero p]
   change displacement p x z * displacement p x' z' =
     windowRoot p ^ (z * x' - x * z').val •
       (displacement p x' z' * displacement p x z)
-  rw [displacement_mul, displacement_mul, smul_smul, ← windowRoot_pow_val_add]
-  rw [show z * x' - x * z' + z' * x = z * x' by ring,
-    add_comm x' x, add_comm z' z]
+  have hunit : IsUnit (windowRoot p ^ (z' * x).val) :=
+    isUnit_iff_ne_zero.mpr
+      (pow_ne_zero _ ((windowRoot_isPrimitiveRoot p).ne_zero (NeZero.ne p)))
+  apply hunit.smul_left_cancel.mp
+  rw [smul_smul, ← windowRoot_pow_val_add]
+  rw [show z' * x + (z * x' - x * z') = z * x' by ring]
+  exact displacement_comm x z x' z'
 
 private theorem coordinate_product_commutation {ι : Type*} {p : ℕ}
     [Fintype ι] [DecidableEq ι] [NeZero p] (x z x' z' : ι → ZMod p) :
@@ -382,7 +386,7 @@ theorem common_fixed_subspace_nontrivial {N p : ℕ} [NeZero p]
     exact ⟨a, rfl⟩)
   have hfinite : (T : Set (Matrix (Fin N → ZMod p) (Fin N → ZMod p) ℂ)).Finite :=
     (Set.finite_range pauliWordOperator).subset hTC
-  letI : Fintype T := hfinite.fintype
+  let : Fintype T := hfinite.fintype
   have htrace (A : T) (hne : A ≠ 1) : Matrix.trace A.1 = 0 := by
     obtain ⟨w, hw⟩ := hTC A.2
     rw [← hw]
