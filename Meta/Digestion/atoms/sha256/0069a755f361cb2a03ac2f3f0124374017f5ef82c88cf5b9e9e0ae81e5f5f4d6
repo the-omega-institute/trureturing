@@ -1,0 +1,36 @@
+**Definition 3.1 (Polynomial numerators and strict ordinary roots).** All
+the following polynomials have coefficients in $\mathbb Q[p,v,m]$:
+
+$$
+\begin{gathered}
+f_4=18K-N,\qquad f_5=\frac{pK-N}{x+1},\qquad
+f_6=\frac{vK-N}{x+2},\qquad f_7=\frac{mK-N}{2x+3},\\
+Z_0=35f_4-84f_5+70f_6-20f_7,\\
+Z_1=20f_4-45f_5+36f_6-10f_7,\\
+Z_2=10f_4-20f_5+15f_6-4f_7,\\
+Z_3=4f_4-6f_5+4f_6-f_7,\\
+B_*=5Z_2+10N-294K,\qquad D_*=5(Z_0^2+Z_2^2),\\
+W_*=-5NZ_0-Z_2B_*,\qquad L=24K-N,\qquad Z=xZ_1-L,\\
+F=Z_0B_*-5NZ_2,\\
+G=(D_*-W_*)\bigl(2LZ_1D_*-(D_*-W_*)Z_1^2\bigr)
+ -4ZD_*(W_*Z_1-ZD_*).
+\end{gathered}
+\tag{3.1}
+$$
+
+The displayed quotients defining $f_5,f_6,f_7$ are exact polynomial
+quotients, not rational functions with additional exceptional domains.
+The starred symbols are particular polynomials of this volume; $D_*$
+is not a regular-source denominator from another chart.
+
+Let $\mathcal R(p,v,m)$ be the set of real $x$ satisfying
+
+$$
+\begin{gathered}
+F(x)=G(x)=0,\qquad x>0,\qquad K(x)\ne0,\qquad D_*(x)>0,\\
+0<W_*(x)<D_*(x),\qquad Z(x)Z_1(x)>0,\\
+\bigl(W_*(x)Z_1(x)-Z(x)D_*(x)\bigr)Z_1(x)>0.
+\end{gathered}
+\tag{3.2}
+$$
+
