@@ -124,7 +124,39 @@ private lemma witness_scale_upper : scale witnessRate witnessJump ≤ 1 := by
     exact witness_value_le_one ψ hψ
 
 private lemma witness_scale_pos : 0 < scale witnessRate witnessJump := by
-  sorry
+  let ψ : Fin 3 → ℂ := ![((1 + I) / 2), ((1 + I) / 2), 0]
+  have hnorm : ‖(1 + I : ℂ)‖ ^ 2 = 2 := by
+    rw [Complex.sq_norm]
+    norm_num [Complex.normSq_apply]
+  have hψ : ∑ i, ‖ψ i‖ ^ 2 = 1 := by
+    simp [ψ, Fin.sum_univ_three, norm_div]
+    nlinarith [hnorm]
+  have hp : ‖ψ 0‖ ^ 2 = (1 / 2 : ℝ) := by
+    simp [ψ]
+    nlinarith [hnorm]
+  have hp1 : ‖ψ 1‖ ^ 2 = (1 / 2 : ℝ) := by
+    simp [ψ]
+    nlinarith [hnorm]
+  have hp2 : ‖ψ 2‖ ^ 2 = (0 : ℝ) := by
+    simp [ψ]
+  have hp2pow : ‖ψ 2‖ ^ 4 = (0 : ℝ) := by
+    rw [show ‖ψ 2‖ ^ 4 = (‖ψ 2‖ ^ 2) ^ 2 by ring, hp2]
+    norm_num
+  have hval : ‖star ψ ⬝ᵥ
+      (generator witnessRate witnessJump (vecMulVec ψ (star ψ)) *ᵥ ψ)‖ = 1 := by
+    rw [witness_expectation]
+    rw [hp, hp1, hp2, hp2pow]
+    norm_num
+  have hBdd : BddAbove {r : ℝ | ∃ φ : Fin 3 → ℂ,
+      (∑ i, ‖φ i‖ ^ 2) = 1 ∧
+        r = ‖star φ ⬝ᵥ
+          (generator witnessRate witnessJump (vecMulVec φ (star φ)) *ᵥ φ)‖} := by
+    refine ⟨1, ?_⟩
+    rintro r ⟨φ, hφ, rfl⟩
+    exact witness_value_le_one φ hφ
+  have hle : (1 : ℝ) ≤ scale witnessRate witnessJump := by
+    exact le_csSup hBdd ⟨ψ, hψ, hval.symm⟩
+  exact lt_of_lt_of_le (by norm_num) hle
 
 private lemma witness_eigenvalue :
     generator witnessRate witnessJump matrixUnit01 =
