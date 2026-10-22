@@ -52,8 +52,6 @@ theorem volume_pos (ds : List OddRadix) : 0 < volume ds := by
   | nil => exact Nat.zero_lt_one
   | cons d ds ih => exact Nat.mul_pos (NeZero.pos d.val) ih
 
-instance (ds : List OddRadix) : NeZero (volume ds) := ⟨(volume_pos ds).ne'⟩
-
 /-- The tuple of ones, including the empty tuple. -/
 def ones : (ds : List OddRadix) → Box ds
   | [] => PUnit.unit
