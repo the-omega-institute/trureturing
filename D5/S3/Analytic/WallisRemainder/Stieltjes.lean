@@ -149,4 +149,124 @@ theorem strictMonoOn_jensenRemainder {M : Measure ℝ} [IsProbabilityMeasure M]
     rw [integral_congr_ae hz]; simp
   linarith
 
+private lemma stieltjes_le {M : Measure ℝ} [IsProbabilityMeasure M]
+    (hp : ∀ᵐ v ∂M, 0 < v) {z : ℝ} (hz : 0 < z) :
+    stieltjes M z ≤ 1 / z := by
+  have hh : (fun v : ℝ => 1 / (z+v)) ≤ᵐ[M] (fun _ => 1/z) := by
+    filter_upwards [hp] with v hv
+    exact one_div_le_one_div_of_le hz (by linarith)
+  simpa [stieltjes] using integral_mono_ae (integrable_resolvent hp hz)
+    (integrable_const (1/z)) hh
+
+private lemma reciprocal_remainder {x y q v : ℝ} (hx : 0 < x) (hxy : x < y)
+    (hv : 0 < v) (ht : 0 < 1-(y-x)*q) :
+    1/(x+v) - q/(1-(y-x)*q) -
+      (1/(y+v)-q)/(1-(y-x)*q)^2 =
+    (y-x) * (1/(y+v)-q)^2 * (y+v) /
+      ((x+v)*(1-(y-x)*q)^2) := by
+  have h1 : x+v ≠ 0 := ne_of_gt (by linarith)
+  have h2 : y+v ≠ 0 := ne_of_gt (by linarith)
+  generalize he : 1-(y-x)*q = t at ht ⊢
+  field_simp [h1, h2, ht.ne']
+  rw [← he]
+  ring
+
+/-- The reciprocal Stieltjes transform minus its argument is strictly increasing. -/
+theorem strictMonoOn_inv_stieltjes_sub {M : Measure ℝ} [IsProbabilityMeasure M]
+    (hp : ∀ᵐ v ∂M, 0 < v)
+    (hnd : ∀ a : ℝ, ¬ ∀ᵐ v ∂M, v = a) :
+    StrictMonoOn (fun z => 1 / stieltjes M z - z) (Ioi 0) := by
+  intro x hx y hy hxy
+  change 0 < x at hx
+  change 0 < y at hy
+  have hd : 0 < y-x := sub_pos.mpr hxy
+  let q := stieltjes M y
+  let t := 1-(y-x)*q
+  have hq : 0 < q := stieltjes_pos hp hy
+  have ht : 0 < t := by
+    have hh := stieltjes_le hp hy
+    have hqy : q*y ≤ 1 := (le_div_iff₀ hy).mp hh
+    dsimp [t]
+    nlinarith [mul_pos hx hq]
+  let f : ℝ → ℝ := fun v =>
+    1/(x+v) - q/t - (1/(y+v)-q)/t^2
+  have hix : Integrable (fun v : ℝ => 1/(x+v)-q/t) M :=
+    (integrable_resolvent hp hx).sub (integrable_const (q/t))
+  have hiy : Integrable (fun v : ℝ => (1/(y+v)-q)/t^2) M :=
+    ((integrable_resolvent hp hy).sub (integrable_const q)).div_const (t^2)
+  have hfi : Integrable f M := hix.sub hiy
+  have hid (v : ℝ) (hv : 0 < v) :
+      f v = (y-x)*(1/(y+v)-q)^2*(y+v)/((x+v)*t^2) :=
+    reciprocal_remainder hx hxy hv ht
+  have hnn : ∀ᵐ v ∂M, 0 ≤ f v := by
+    filter_upwards [hp] with v hv
+    rw [hid v hv]
+    have hyv : 0 < y+v := by linarith
+    have hxv : 0 < x+v := by linarith
+    positivity
+  have hpos : 0 < ∫ v, f v ∂M := by
+    apply integral_pos_of_not_zero hfi hnn
+    intro he
+    apply hnd (1/q-y)
+    filter_upwards [hp, he] with v hv he
+    have he' : 1/(y+v)=q := by
+      by_contra hne
+      have hh : 0 < f v := by
+        rw [hid v hv]
+        have hh : 0 < (1/(y+v)-q)^2 := sq_pos_of_ne_zero (sub_ne_zero.mpr hne)
+        have hyv : 0 < y+v := by linarith
+        have hxv : 0 < x+v := by linarith
+        positivity
+      exact hh.ne' he
+    have hyvn : y+v ≠ 0 := ne_of_gt (by linarith)
+    have hqv : q*(y+v)=1 := by rw [← he']; field_simp
+    apply (eq_sub_iff_add_eq).mpr
+    apply (eq_div_iff hq.ne').mpr
+    nlinarith
+  have hint : (∫ v, f v ∂M) = stieltjes M x - q/t := by
+    dsimp [f]
+    rw [integral_sub hix hiy,
+      integral_sub (f := fun v : ℝ => 1/(x+v)) (g := fun _ => q/t)
+        (integrable_resolvent hp hx) (integrable_const (q/t)),
+      integral_div (f := fun v : ℝ => 1/(y+v)-q),
+      integral_sub (f := fun v : ℝ => 1/(y+v)) (g := fun _ => q)
+        (integrable_resolvent hp hy) (integrable_const q)]
+    simp [q, stieltjes]
+  rw [hint] at hpos
+  have hsx : 0 < stieltjes M x := stieltjes_pos hp hx
+  have hmain : q < stieltjes M x * t := (div_lt_iff₀ ht).mp (sub_pos.mp hpos)
+  have hh : (1+(y-x)*stieltjes M x) / stieltjes M x < 1/q := by
+    apply (div_lt_div_iff₀ hsx hq).mpr
+    dsimp [t] at hmain
+    nlinarith
+  have he : (1+(y-x)*stieltjes M x) / stieltjes M x =
+      1/stieltjes M x + (y-x) := by field_simp
+  rw [he] at hh
+  change 1/stieltjes M x - x < 1/q-y
+  linarith
+
+/-- A positive probability law has a strictly positive, strictly subunit resolvent mass. -/
+theorem stieltjes_bounds {M : Measure ℝ} [IsProbabilityMeasure M]
+    (hp : ∀ᵐ v ∂M, 0 < v) {z : ℝ} (hz : 0 < z) :
+    0 < stieltjes M z ∧ z * stieltjes M z < 1 := by
+  refine ⟨stieltjes_pos hp hz, ?_⟩
+  have hi : Integrable (fun v : ℝ => 1/z-1/(z+v)) M :=
+    (integrable_const (1/z)).sub (integrable_resolvent hp hz)
+  have hh (v : ℝ) (hv : 0 < v) : 0 < 1/z-1/(z+v) := by
+    exact sub_pos.mpr (one_div_lt_one_div_of_lt hz (by linarith))
+  have hpos : 0 < ∫ v, (1/z-1/(z+v)) ∂M := by
+    apply integral_pos_of_not_zero hi
+    · filter_upwards [hp] with v hv using (hh v hv).le
+    · intro he
+      have hf : ∀ᵐ v ∂M, False := by
+        filter_upwards [hp, he] with v hv he using (hh v hv).ne' he
+      have he : M = 0 := by simpa using hf
+      have ht : M Set.univ = 1 := measure_univ
+      simp [he] at ht
+  rw [integral_sub (f := fun _ : ℝ => 1/z) (g := fun v => 1/(z+v))
+    (integrable_const (1/z)) (integrable_resolvent hp hz)] at hpos
+  simp only [integral_const, probReal_univ, one_smul] at hpos
+  have hh := (lt_div_iff₀ hz).mp (sub_pos.mp hpos)
+  simpa [stieltjes, mul_comm] using hh
+
 end D5.S3.Analytic.WallisRemainder.Stieltjes

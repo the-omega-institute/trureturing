@@ -13,5 +13,18 @@ internal sealed class StieltjesDocument : IScribeDocumentDefinition
                 StatementSource.WithoutFormula(), AssessedProvenance.FromRepo(),
                 Blocks(Paragraph(Text("Let M be a probability measure on the real line concentrated on strictly positive values. Its Stieltjes transform is S(z)=integral 1/(z+v) dM(v). Let a be its finite mean, and suppose the centered second moment s=integral (v-a)^2 dM(v) is finite and strictly positive. Then z^3(S(z)-1/(z+a))/s is strictly increasing for z>0.")),
                     Paragraph(Text("Centering gives S(z)-1/(z+a)=integral ((v-a)^2/(z+v)) dM(v)/(z+a)^2. Inside the resulting normalized integral, the kernel is the product (z/(z+a))^2 times z/(z+v). Both factors increase, and the kernel increases strictly for every positive v. Positive centered second moment ensures that the multiplier (v-a)^2 does not vanish almost everywhere."))),
+                DescribeRole.Theorem),
+            Describe.Lean(DescribeId.Create("stieltjes-inverse-offset-monotonicity"),
+                DeclarationHandle.Create("D5/S3/Analytic/WallisRemainder/Stieltjes.strictMonoOn_inv_stieltjes_sub"),
+                H("Strict increase of the inverse transform offset"),
+                StatementSource.WithoutFormula(), AssessedProvenance.FromRepo(),
+                Blocks(Paragraph(Text("For every probability measure M concentrated on positive reals and not concentrated at any single point, the function 1/S(z)-z is strictly increasing for z>0. No moment assumption is required.")),
+                    Paragraph(Text("For 0<x<y put q=S(y), d=y-x, and t=1-dq. Positivity of the support gives q>0 and t>0. The pointwise identity 1/(x+v)-q/t-(1/(y+v)-q)/t^2 = d(1/(y+v)-q)^2(y+v)/((x+v)t^2) has a nonnegative right hand side. Its integral is strictly positive: equality would force 1/(y+v)=q almost everywhere and hence concentration at the single value 1/q-y. Integration cancels the centered linear term and yields S(x)>q/t, which is equivalent to the stated strict inequality."))),
+                DescribeRole.Theorem),
+            Describe.Lean(DescribeId.Create("stieltjes-positive-subunit-mass"),
+                DeclarationHandle.Create("D5/S3/Analytic/WallisRemainder/Stieltjes.stieltjes_bounds"),
+                H("Strict positive support bounds"),
+                StatementSource.WithoutFormula(), AssessedProvenance.FromRepo(),
+                Blocks(Paragraph(Text("For a probability measure concentrated on strictly positive values and z>0, its transform satisfies 0<S(z) and zS(z)<1. Both inequalities follow from the corresponding strict pointwise bounds on 1/(z+v); they ensure that the inverse expressions in the remainder formulas have nonzero denominators."))),
                 DescribeRole.Theorem))));
 }
