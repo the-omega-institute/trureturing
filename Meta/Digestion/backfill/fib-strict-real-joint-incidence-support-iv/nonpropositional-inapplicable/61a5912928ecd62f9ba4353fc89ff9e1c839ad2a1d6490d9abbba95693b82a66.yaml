@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:61a5912928ecd62f9ba4353fc89ff9e1c839ad2a1d6490d9abbba95693b82a66
+  normalized_sha256: sha256:61a5912928ecd62f9ba4353fc89ff9e1c839ad2a1d6490d9abbba95693b82a66
+cas_ref: sha256:61a5912928ecd62f9ba4353fc89ff9e1c839ad2a1d6490d9abbba95693b82a66
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 'Nonpropositional setup: defines the base rectangle K, its entire-child domain and the rational coefficient functions (8.2); the quantifier convention is part of the domain definition.'
+    previous_atom_id: fbead554d5fefd9cee69aa5a6b7eb5fd31c4840faf9a2360e313e7da007b01cd
+    next_atom_id: cbba82375cf5c5fa50f15797f94601ecaf6a252c3d22ae4f7561d0b415f3112d

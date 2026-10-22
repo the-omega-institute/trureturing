@@ -82,7 +82,7 @@ public refutation through its separate Library note and retains
 `OpenProblemResolutionClaim(Refuted)`. Under spec §11.20.5 this records
 the local theorem-to-problem binding, not worldwide novelty or the
 validity of historical novelty admission.
-The graph and claim retain the [Pandey Library source](../Library/Combinatorics/pandey2026parity.md).
+The graph and claim retain the [Pandey Library source](../Library/GraphInvariants/pandey2026parity.md).
 
 Primary-source hashes: TeX
 `5147f84b91867223e59aa63486af9b4276eadd08dc785fa40ab3c670c80ef004`;

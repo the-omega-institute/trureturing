@@ -2558,3 +2558,606 @@ rational certificates are not re-executed and no formal certification
 is asserted.
 
 ## 追加锚（本行以下为增补区）
+
+
+## 51. A uniform exclusion for the complete singular projection
+
+**Definition 51.1 (The original parent and its singular projection).**
+Use the original ordered basis and the complete worlds
+
+$$
+\begin{gathered}
+W=(P(r,b),g,d),\qquad
+P(r,b)=\begin{pmatrix}r&b\\r(1-r)/b&1-r\end{pmatrix},\\
+0<r<1,\quad b>0,\quad 0\ne g\in\mathbb R[s],\quad
+\deg g\le3,\quad d\in\mathbb R,\\
+J=\begin{pmatrix}0&1\\1&0\end{pmatrix},\qquad
+M=\begin{pmatrix}0&1\\1&1\end{pmatrix},\qquad
+Q_0=I,\quad Q_i=E_iQ_{i-1},\\
+(E_1,\ldots,E_6)=(J,M,J,M,M,M),\qquad
+y_i(W)=d+g(i)\operatorname{tr}(Q_iP).
+\end{gathered}
+\tag{51.1}
+$$
+
+The parent satisfies $(y_0,\ldots,y_4)=(0,24,147/5,24,18)$;
+write $p=y_5$, $v=y_6$, and for $p\ne24$ let $C(p,v)$ contain
+all its compatible complete worlds. Each world has its own whole polynomial and its own
+fixed drift. No degree-three, nonzero-sample, simple-root or nonzero-drift
+restriction is added. Put
+
+$$
+\begin{gathered}
+j=b+r(1-r)/b,\quad n=j+r,\quad T=1+b,\quad U=1+2b,\\
+e=d-24,\qquad
+\Lambda=1+6/T+1/U-4/j-4/n,\\
+D_s=5\{(b^2+8b+4)jn-2TU(j+n)\}.
+\end{gathered}
+\tag{51.2}
+$$
+
+The singular parent is the locus $\Lambda=0$. All four factors
+$T,U,j,n$ are positive, and
+$D_s=(5/2)TUjn\Lambda$, so this is exactly the $D_s=0$ locus.
+The undivided parent equation is
+
+$$
+e\Lambda+\frac{24}{5}(b-1/8)(6/T-2/U)=0,
+\qquad 6/T-2/U=\frac{2(2+5b)}{TU}>0.
+\tag{51.3}
+$$
+
+The mathematical suppliers for this definition are
+[CommonParent](FIB_COMMON_PARENT_GEOMETRY_AND_MIXED_CHILDREN.md),
+Theorems 2.1–2.2 and 4.2, and
+[StrictReal III](FIB_STRICT_REAL_JOINT_INCIDENCE_SUPPORT_III.md),
+Proposition 11.1 and Lemma 14.2. In particular their exhaustive singular
+classification, rather than a regular-chart parametrization, gives
+exactly the two lines
+
+$$
+\begin{gathered}
+b=1/8,\quad r=\rho_-\ \hbox{or}\ \rho_+,\quad e\in\mathbb R,\\
+\Phi(r)=438272r^4-931328r^3+540800r^2-50728r-853=0,\\
+134815/10^6<\rho_-<134816/10^6,\qquad
+902449/10^6<\rho_+<902450/10^6.
+\end{gathered}
+\tag{51.4}
+$$
+
+Every point of either line has its unique legal nonzero whole gain.
+The symbols $\rho_\pm$ distinguish these fixed singular roots from
+the continued regular endpoints below. On these lines, the supplied
+responses, with $n=1/8+9r-8r^2$, are
+
+$$
+\begin{gathered}
+p=24+eA(n),\qquad v=84+24n+eB(n),\\
+A(n)=-\frac{716n^2+31n-900}{144n},\qquad
+B(n)=-\frac{142n^2+185n-400}{10n},\\
+23/20<n(\rho_-)<5/4,\qquad 5/3<n(\rho_+)<7/4.
+\end{gathered}
+\tag{51.5}
+$$
+
+**Theorem 51.2 (Uniform singular half-plane exclusion).**
+Every actual singular parent world in Definition 51.1 satisfies
+
+$$
+p\le-497\quad\Longrightarrow\quad v<-23942/25.
+\tag{51.6}
+$$
+
+The quantifier includes both entire singular lines and every real
+$e$, including $e=0$ and $e=-24$, before imposing the displayed
+antecedent.
+
+Proof. The lower root bound in (51.4) gives
+$\rho_->337/2500$. Since $n'(r)=9-16r>0$ between this rational
+point and $\rho_-$,
+
+$$
+n(\rho_-)>\frac{3727599}{3125000}>\frac{625}{524},\qquad
+3727599\cdot524-625\cdot3125000=136876>0.
+\tag{51.7}
+$$
+
+For the upper line, $n(\rho_+)>5/3>625/524$. Both lines have
+$n<7/4$. The polynomial $D(n)=716n^2+31n-900$ is increasing for
+$n>0$ and $D(23/20)=2064/25>0$. Consequently $A(n)<0$ on
+both lines. Subtracting the supplied response coefficients gives
+
+$$
+B(n)-\frac{52}{25}A(n)
+=\frac{24300-16247n-3472n^2}{900n}.
+\tag{51.8}
+$$
+
+The numerator is strictly decreasing on $n>0$, and its value at
+$625/524$ is $-4945700/524^2<0$. Equations (51.7)–(51.8)
+therefore give $B-(52/25)A<0$. Division by the negative $A$
+reverses the inequality, so $B/A>52/25$.
+If $p\le-497$, then $p-24\le-521<0$. Eliminating $e$ only by
+this now justified nonzero $A$ yields
+
+$$
+\begin{aligned}
+v&=84+24n+(p-24)B/A\\
+ &<126-521\cdot52/25=-23942/25.
+\end{aligned}
+\tag{51.9}
+$$
+
+No gain coefficient, sampled gain or drift has been cancelled. The
+classification and (51.5) include all of their exceptional strata;
+the antecedent, rather than an extra hypothesis, decides which points
+on those full lines enter (51.9). ∎
+
+## 52. All original companions and an independent spatial predicate
+
+**Definition 52.1 (The exact closed continued-base domain).**
+Use exactly the continued first equal-$J$ germ of
+[StrictReal IX](FIB_STRICT_REAL_JOINT_INCIDENCE_SUPPORT_IX.md),
+Sections 24–28 at `79635cbec3aca2eaed7f64dcc3ce6ce4ba13a0db`,
+restricted as in
+[StrictReal X, Section 12](FIB_STRICT_REAL_JOINT_INCIDENCE_SUPPORT_X.md#12-the-entire-regular-inventory-on-a-closed-actual-negative-j-segment),
+at the original version
+`233e926a9af4af12e21e9a0b74ebaf32503b642c`.
+Its parameter interval and enclosing rectangle are
+
+$$
+\begin{gathered}
+Q=[999/10^6,1001/10^6],\\
+p_c=-4978573051372107/10^{13},\qquad r_p=17/500,\\
+v_c=-476795440523806079/(5\cdot10^{14}),\qquad r_v=31/500,\\
+\mathcal B=[p_c-r_p,p_c+r_p]\times[v_c-r_v,v_c+r_v].
+\end{gathered}
+\tag{52.1}
+$$
+
+Precisely, $(X,Y,K_{\rm sec})(q)$ is the exact secant zero attached
+to that first germ by IX Theorem 26.1 and continued on its closed
+cells. It is not the polynomial predictor. For $h=\sqrt q$ put
+
+$$
+\begin{gathered}
+t_\pm=X(q)\pm K_{\rm sec}(q)h,\quad
+b_\pm=Y(q)\pm h,\quad r_\pm=t_\pm b_\pm,\\
+W_\pm(q)=(P(r_\pm,b_\pm),g_\pm,d_\pm),\qquad
+\mathcal D=\bigcup_{q\in Q} C(p(q),v(q)).
+\end{gathered}
+\tag{52.2}
+$$
+
+Here $g_\pm,d_\pm$ are the original regular whole-world lift in
+IX (12.5)–(12.6), also X (12.5)–(12.6), at those source coordinates;
+$p(q),v(q)$ are their common exact fifth and sixth readings.
+These references specify the continuation and lift with their original
+initial attachment and uniqueness conditions. IX's corner bound
+$q_*>0.0022954525$ places the entire closed $Q$ strictly before
+the corner. X (12.19) joins the exact solutions at the common endpoint
+$q=1/1000$ of the two closed cells; it supplies no extra branch choice.
+All terminating decimals in this section denote exact rationals.
+
+**Theorem 52.2 (Complete-domain threshold factorization).**
+There is no singular world above any base in $\mathcal B$. In particular
+
+$$
+C(p(q),v(q))=\{W_-(q),W_+(q)\}\qquad(q\in Q).
+\tag{52.3}
+$$
+
+Define, independently on all original strict source matrices in the
+fixed ordered basis,
+
+$$
+\sigma(P)=\mathbf1_{\{P_{12}>1/16\}}=\mathbf1_{\{b>1/16\}},\qquad
+\theta=-17027/10,\qquad h_\theta(z)=\mathbf1_{\{z\ge\theta\}}.
+\tag{52.4}
+$$
+
+For the original seventh-$M$ response
+$m(W)=d+(3U+2n)g(7)$, every $W\in\mathcal D$ satisfies
+
+$$
+\sigma(P(W))=h_\theta(m(W)).
+\tag{52.5}
+$$
+
+This is uniform over all compatible original worlds, with no regularity,
+selected-endpoint or hidden-branch promise supplied to the receiver.
+
+Proof. Direct rational comparison in (52.1) gives
+$p_c+r_p<-497$ and $v_c-r_v>-954$. But
+$-23942/25<-954$. Theorem 51.2 therefore excludes every singular
+parent world from the whole rectangle. X (12.18) bounds the complete
+regular inventory there by two. X Theorem 12.1 supplies, for each
+$q\in Q$, two distinct strict original lifts $W_\pm(q)$ at the
+simultaneous actual base $(p(q),v(q))\in\operatorname{int}\mathcal B$.
+Every world is regular or singular by (51.2), so these two exhaust the
+entire child, proving (52.3). This argument does not require that a
+previously unselected companion belongs to a source box.
+
+On both closed cells, including the seam, X Section 12.6 gives the
+simultaneous original-source and terminal bands
+
+$$
+\begin{aligned}
+0.015374868&\le b_-\le0.015406492<1/16,\\
+1/16&<0.078619724\le b_+\le0.078652727,\\
+-1705.04831638&\le m(W_-)\le-1704.83443702<\theta,\\
+\theta&<-1700.57340993\le m(W_+)\le-1700.35474402.
+\end{aligned}
+\tag{52.6}
+$$
+
+The spatial cut is defined on the original matrix, without reference
+to these terminal bands. They prove respectively $\sigma(P_-)=0$,
+$\sigma(P_+)=1$, $h_\theta(m(W_-))=0$ and
+$h_\theta(m(W_+))=1$. Exhaustiveness (52.3) proves (52.5) for
+every compatible world. Neither equality convention at the two cuts
+is exercised on this domain. Whole gains and drifts are those of the
+same original lifts; there is no common-drift assumption. ∎
+
+**Theorem 52.3 (A genuine acquisition distinction).**
+At every fixed $q\in Q$, the complete acquired six-action record
+fails to determine $\sigma$. The record obtained by choosing the
+original seventh $J$ also fails to determine $\sigma$. These statements
+allow all public source-independent constants in (52.4).
+
+Proof. The two actual worlds in (52.3) have equal entire six-action
+records, and opposite spatial bits by (52.6). IX's exact secant equality,
+retained in X (12.27), gives
+$a(W_-)=a(W_+)$ for the alternative seventh $J$, where
+$a=d+(T+2j+4r)g(7)$. Thus adding that raw reading still identifies
+the same two records. A function of either identical record and the
+same constants has the same value at both worlds, so cannot give the
+two different spatial bits. This compares alternative runs. It does
+not acquire both clock-seven alternatives on one specimen or alter the
+seventh-$J$ contract of Sections 45–50. ∎
+
+## 53. An exact-real receiver attached to the original source
+
+**Hypothesis 53.1 (Initialization, accessible inputs and installed rights).**
+There is one actual unknown complete world $W\in\mathcal D$ and one
+specimen at original clock zero. Membership in $\mathcal D$ is a
+mathematical domain condition. It supplies no procedure for preparing
+such a specimen or testing domain membership. The source is initialized
+at $(0,P(W),g(W),d(W))$ with its original zero-clock reading. There is
+no reset or second copy of a previously acquired specimen.
+
+A receiver is installed before this initialization with the same finite
+control, original ordered-basis convention, named source endpoint
+$\epsilon$, public comparison reference $\theta$, empty transient
+storage, and task latch $\eta=\bot$ for every $W$. Installation and
+provisioning of that endpoint and its rights are explicit resources.
+They contain no $q$, source inverse, source coordinates, gain or drift,
+unknown seed, future-response table, task bit or branch label. The
+receiver's accessible source-dependent inputs are only the immediate
+raw reports from this endpoint on its actual run. The source parameters
+and mathematical source state below are not accessible registers.
+
+The endpoint has the original $J,M$ move-and-immediate-read law through
+clock seven. At any clock $i<7$, both source moves $E\in\{J,M\}$
+are legal for an authorized source invocation. Such an invocation
+advances to $i+1$ on the same specimen and supplies its one actual
+raw report. At clock seven this receiver has no further source move or
+read right. There is no free reread, reset, copy, extra port or clock
+shift. The installed selector invokes only the literal word
+$(J,M,J,M,M,M,M)$. In particular the original seventh $J$ is a legal
+unselected alternative at clock six, not a second acquisition in this
+run. The receiver exports no direct source-action port to its local
+caller.
+
+The receiver has total ideal primitives for capturing the current exact
+real report, comparing that scalar with its stored exact rational
+$\theta$, writing a Boolean latch and clearing transient storage. A
+comparison and a write finish before another request is accepted. Each
+is charged local work and uses its declared transient storage; they
+advance no source clock. There is no finite-word or physical realization
+assumption for these ideal real primitives. All local calls require an
+installed invocation right. No additional hidden source-dependent
+failure is present in these stipulated primitives.
+
+**Definition 53.2 (Joint state and complete relevant transition law).**
+The full source component is $(i,H,g,d)$, initially $(0,P,g,d)$,
+with observation and source successor
+
+$$
+y(i,H,g,d)=d+g(i)\operatorname{tr}(H),\qquad
+F_E(i,H,g,d)=(i+1,EH,g,d).
+\tag{53.1}
+$$
+
+The joint state also includes the receiver phase, $\eta\in\{\bot,0,1\}$,
+a transient real input cell $z$, a transient Boolean comparison cell,
+the public endpoint/reference/control and actual source and local
+invocation rights. At an idle cut, the phase is $\mathrm{Ready}_i$
+for $0\le i\le6$, or $\mathrm{Acquired}$ at $i=7$; the transient
+cells are empty. At $\mathrm{Ready}_i$, $\eta=\bot$.
+The initialization captures and reports the actual $y_0$, then clears
+the transient input, leaving $\mathrm{Ready}_0$. Its raw event is
+$(\epsilon,0,\mathrm{initial},\mathrm{ok},y_0)$.
+
+A raw source report always carries endpoint, original clock, source
+action, source success status and scalar value. It is an outgoing
+actual event. Clearing an input cell does not delete this past event
+from the mathematical trace. No readable archive of past events is
+part of this receiver's retained interface; a caller that keeps one
+has additional storage and acquisition resources.
+
+The complete local request alphabet consists of $\mathrm{Tick}$,
+$\mathrm{Recall}$ and finite request strings other than those two.
+For an authorized request at an idle cut, its executed response and
+joint successor are as follows.
+
+* At $\mathrm{Ready}_i$ with $0\le i<6$, $\mathrm{Tick}$ invokes
+  exactly $E_{i+1}$ from the installed word. The source successor is
+  $F_{E_{i+1}}(i,H,g,d)$ and the raw event is
+  $(\epsilon,i+1,E_{i+1},\mathrm{ok},d+g(i+1)
+  \operatorname{tr}(E_{i+1}H))$. The actual scalar is captured in $z$.
+  The input is then cleared and the receiver becomes
+  $\mathrm{Ready}_{i+1}$ with $\eta=\bot$.
+  The local response has endpoint, the request $\mathrm{Tick}$,
+  status $\mathrm{Advanced}$ and the new phase and source clock.
+* At $\mathrm{Ready}_6$, $\mathrm{Tick}$ invokes the original seventh
+  $M$, with source successor $F_M(6,H,g,d)$ and raw event
+  $(\epsilon,7,M,\mathrm{ok},d+g(7)\operatorname{tr}(MH))$.
+  After this actual scalar is captured in $z$, comparison stores
+  $h_\theta(z)$ in the transient Boolean cell; the next local step
+  writes that value into $\eta$. Clearing both transient cells then
+  gives $\mathrm{Acquired}$. The local response has endpoint, request,
+  status $\mathrm{Acquired}$, phase and source clock seven.
+  The source state is unchanged during comparison, write and clearing.
+* A $\mathrm{Recall}$ at $\mathrm{Ready}_i$ executes locally with
+  status $\mathrm{NotAcquired}$, endpoint, request, phase and clock,
+  and no bit. Its entire joint successor is the input joint state.
+  At $\mathrm{Acquired}$ it executes with status $\mathrm{ok}$,
+  endpoint, request, phase, source clock seven and the bit $\eta$.
+  Its entire joint successor again equals its input state.
+* A $\mathrm{Tick}$ at $\mathrm{Acquired}$ executes locally with
+  status $\mathrm{Finished}$, endpoint, request, phase and clock seven.
+  Its entire joint successor is unchanged, and it invokes no source.
+  Any other finite request executes locally with status
+  $\mathrm{BadRequest}$, its request string, endpoint, phase and clock,
+  no bit and the unchanged entire joint successor.
+
+Each source step consumes one of the remaining $7-i$
+source-invocation rights;
+local invocation rights persist. No local response installs a new right.
+Raw events and local response labels are distinct components of the
+complete output. In particular a local error is an executed observation
+with an actual unchanged successor, not a raw reading of the source.
+
+While a $\mathrm{Tick}$ is in progress, its successive internal phases
+are source capture, clearing if $i<6$, or comparison, latch write and
+clearing if $i=6$. At each such phase only its specified next internal
+step is enabled. The source changes only at the source step in
+(53.1); only $z$, the comparison cell, latch, phase and rights change
+at the stated local steps. Calls interrupting these phases, calls
+without invocation authority, attempted direct endpoint invocations
+bypassing the exported local interface, and attempted endpoint
+invocations using absent source rights are
+illegal-unexecuted attempts: they have no executed event, reading or
+successor in this transition relation. The model includes no silent
+execution or implicit denial event for such attempts. This separates
+them from the executed $\mathrm{NotAcquired}$, $\mathrm{Finished}$
+and $\mathrm{BadRequest}$ responses above.
+
+## 54. Actual acquisition, retained use and task-relative agreement
+
+**Theorem 54.1 (All-world same-run acquisition and callable retention).**
+Under Hypothesis 53.1 and Definition 53.2, for every $W\in\mathcal D$
+and every authorized local request sequence, seven completed
+$\mathrm{Tick}$ calls, possibly interspersed with other idle local
+requests, acquire the spatial predicate and actually set retained
+memory. At the resulting acquired cut,
+
+$$
+\begin{gathered}
+Q_6=\begin{pmatrix}3&1\\5&2\end{pmatrix},\qquad
+Q_7=MQ_6=\begin{pmatrix}5&2\\8&3\end{pmatrix},\\
+(i,H,g,d)=(7,Q_7P(W),g(W),d(W)),\\
+\eta=h_\theta\bigl(d(W)+g(W)(7)\operatorname{tr}(Q_7P(W))\bigr)
+     =h_\theta(m(W))=\sigma(P(W)).
+\end{gathered}
+\tag{54.1}
+$$
+
+Every subsequent authorized $\mathrm{Recall}$ returns this correct
+bit with the same retained state. Any finite number of continued
+local requests leaves the source at this original clock-seven state.
+This conclusion needs no $q$, regularity flag or endpoint-selection
+label as receiver input.
+
+Proof. At initialization the raw zero-clock report comes from this
+same $W$, not an installed constant standing in for a read. Suppose
+$i$ advances have completed. Induction in (53.1) gives
+$H=Q_iP(W)$, unchanged whole $g,d$, and exactly the original
+read $y_i(W)$ at each source clock. Interspersed local responses
+leave this source state and the relevant ready phase unchanged.
+For $i<6$ the latch remains $\bot$. Thus all six literal acquired
+readings, including the actual $p(q),v(q)$ for any witness of domain
+membership, occur on this run. No reconstruction is used to replace
+one of those readings.
+
+The seventh advance is $M$. Multiplication gives the two matrices in
+(54.1) and $\operatorname{tr}(Q_7P)=3U+2n$. Consequently its
+captured scalar is exactly $m(W)$. The enabled comparison reads this
+input cell, and the enabled latch write stores its comparison value
+before clearing. It follows that the retained $\eta$ actually equals
+$h_\theta(m(W))$, rather than merely being recoverable from an
+unretained number. Theorem 52.2 identifies it with the independently
+defined spatial predicate for every compatible original world.
+Every acquired-state request has an identity joint successor by
+Definition 53.2. Induction on the length of a local suffix proves
+both continued correctness and the unchanged source, latch and rights.
+A finite prefix with fewer advances is not asserted to have acquired
+the bit; its Recall status is exactly the one declared. ∎
+
+**Theorem 54.2 (Route and dynamics agreement on the declared interface).**
+At acquired idle cuts with the same installed public data and rights,
+project the joint state to
+
+$$
+\pi(S)=(\epsilon,\mathrm{Acquired},7,\eta,
+              \text{public invocation rights}).
+\tag{54.2}
+$$
+
+Every supported local transition factors through this projection,
+including its full local response and its projected joint successor.
+Two such cuts have identical projected future response behavior for all
+common finite legal local request words if and only if their spatial
+bits are equal. The source route from initialization to acquisition is
+the original chronological route. Source-free local words compose
+without changing that route or advancing its source clock.
+
+Proof. For $\mathrm{Recall}$ the complete local label depends only on
+the fields in (54.2), with its bit equal to $\sigma$ by (54.1).
+For $\mathrm{Tick}$ it is $\mathrm{Finished}$, and for any other
+request it is the specified $\mathrm{BadRequest}$ label. All projected
+successors are identity successors. The legality of idle local calls
+is determined by the same public invocation rights, not by hidden
+source coordinates. Hence this local factorization preserves current
+legality, executed labels and projected successors. Induction proves
+agreement for arbitrary finite words and concatenation. Different bits
+are separated by a single authorized Recall, proving the converse.
+
+For source moves $E,F\in\{J,M\}$, (53.1) gives
+$F_F(F_E(i,H,g,d))=(i+2,FEH,g,d)$ whenever the two original
+invocations lie within the available horizon. Induction gives the
+chronological product and additive source-clock length for any such
+word. In the installed run that word is exactly the seven actions in
+(54.1); each intervening local step is the identity on $(i,H,g,d)$.
+Thus the source dynamics, acquired boundary event, comparator route,
+retained latch and executed Recall agree in the specific commuting
+chain
+
+$$
+P(W)\ \xrightarrow{\ \sigma\ }\ \{0,1\},\qquad
+W\ \xrightarrow{\text{actual seven-action run}}\ m(W)
+\ \xrightarrow{h_\theta}\ \eta
+\ \xrightarrow{\mathrm{Recall}}\ \sigma(P(W)).
+\tag{54.3}
+$$
+
+This is task-relative equality of results and supported local dynamics.
+It does not identify different full hidden joint successors, replay past
+raw labels, or install the source evolution law as a receiver operation.
+No quotient agreement is asserted for arbitrary intervening $J,M$
+choices, internal busy cuts or additional source services. The time
+labels in (54.2) are public protocol state; they are not reconstructed
+from the bit. ∎
+
+## 55. Same-run resources, supplier overlap and the bounded correspondence
+
+**Theorem 55.1 (Task distinction and resource separation).**
+The acquisition in Theorem 54.1 uses seven original source actions,
+namely two $J$ and five $M$, and eight actual immediate source reads
+including clock zero. Relative to its already acquired six-action cut,
+it uses one original $M$ action and its one read, one exact-real
+comparison and one task-latch write, followed by transient clearing.
+For $k$ subsequent successful Recall calls it uses $k$ local dispatches,
+$k$ latch reads and $k$ bit/status responses, and no additional source
+actions or source reads. The committed task-dependent latch has two
+values after acquisition. Among exact source-free retained interfaces
+for this task on $\mathcal D$, at least two distinguishable accessible
+source-dependent states are necessary. This last bound concerns the
+task distinction, not total memory, arithmetic cost or global optimality.
+
+Proof. Count the literal actions and the read at each clock in
+Definition 53.2. The seventh input is the only compared scalar, and the
+subsequent write is the only post-initialization task-latch write.
+The Recall transition reads that latch and leaves the joint state
+unchanged. Repetition needs no growing internal query counter, though
+local work and output traffic grow with $k$.
+
+For the lower bound, fix any one $q\in Q$. The two worlds
+$W_-(q),W_+(q)$ have opposite task answers. If, after acquisition,
+a source-free deterministic Recall interface had the same complete
+accessible retained state in both runs, the same Recall request with
+the same public constants and rights would have the same response.
+It could not be correct for both. Here retained state includes every
+accessible source-dependent register, archive, analog remnant,
+external backing and source-dependent permission; none may be excluded
+to manufacture the lower bound. The present two latch values distinguish
+these two task outcomes and suffice by Theorem 54.1. This is the usual
+retained-target distinction argument, applied to the actual all-world
+acquisition above; it supplies no new general memory lower-bound tool. ∎
+
+**Definition 55.2 (Resources and mathematical scope of the correspondence).**
+The task-latch count in Theorem 55.1 is separate from the coexisting
+resources in Hypothesis 53.1: source provisioning and the original
+analog source, endpoint and rights, fixed basis and rational reference,
+finite phase and selector control, transient exact-real capture and
+transmission, comparison storage, initialization, clearing and output
+handling. Control checks and updates, all local requests including
+executed errors, and any retained external archive also incur their
+own work and storage. During capture and latch writing, the analog
+input, comparison cell and latch can coexist; the count is not the
+maximum storage of the entire joint system. Ideal scalar storage and
+comparison have no asserted finite bit complexity. Arbitrarily many
+Recall calls use arbitrarily much local work while the original source
+clock remains seven. Installation of these operations is a model
+hypothesis, distinct from the observational factorization (52.5).
+
+The independently meaningful spatial view is the original fixed-basis
+matrix predicate $b>1/16$. The temporal view here exposes original
+source clocks and chronological action order. The boundary view
+contains actual endpoint/action/clock/status/scalar reports. Memory
+exposes only the acquired task bit through Recall. Equations
+(52.5) and (54.1)–(54.3) prove the stated spatial-task recovery,
+actual acquisition and continued local use on one common run. They
+claim no recovery of raw scalar reports, $q$, full $P,g,d$, full source
+state, time or all boundary behavior from that bit. The comparison
+reference and ordered basis are indispensable parts of this declared
+coordinate task, not basis-free observations or a whole-source decoder.
+
+The new source-specific content is the full-singular projection
+inequality (51.6), used with the exact closed-base suppliers to justify
+the all-compatible-world acquisition and retained-consumer
+correspondence (54.1). CommonParent's classification and rational root
+isolations, StrictReal III's response formulas, and StrictReal X's
+regular inventory and simultaneous bands are reused ordinary
+mathematics. StrictReal base Section 18 and X Theorem 12.1 already
+exclude the relevant terminal-$M$ pairs in these children; III
+Theorem 14.3 already proves terminal-$M$ injectivity on the singular
+locus. Those exclusions by themselves do not remove unused singular
+companions. IX Section 12 also supplies an all-world necessary carrier;
+composing it with X's denominator-free drift and source filters gives
+another route to an inventory bound. No inventory, injectivity,
+recurrence, rank bound or independent-pair exclusion is credited here
+as a new general result.
+
+The generic comparator and retained-target distinction are supplied by
+[retained row-depth recovery, Section 7](RECURSIVE_RELATIONAL_OBSERVATION_RETAINED_ROW_DEPTH_RECOVERY.md),
+and [fixed-offset precision payload, Section 11](RECURSIVE_RELATIONAL_OBSERVATION_FIXED_OFFSET_PRECISION_PAYLOAD.md).
+The formal suppliers
+`TargetRecoveryCriterion.target_recovery_criterion`,
+`PredictiveMemoryMinimalQuotient.predictive_memory_minimal_quotient`
+and `TypedFiniteViewKernel.typed_finite_view_kernel`, with their owning
+Scribes, supply fiber constancy and the separate readout, update,
+legality, label and successor obligations.
+[PG, Section 19](RECURSIVE_RELATIONAL_OBSERVATION_PROCESS_GEOMETRY.md)
+supplies the corresponding joint partial-action and selector distinctions. None of
+these generic interfaces acquires this source's $m(W)$ or writes this
+receiver's latch; that bridge is Definition 53.2 and Theorem 54.1.
+This is repository-derived ordinary theory synthesis. Unavailable
+literature locator entries furnish no premise or priority conclusion;
+no literature-wide novelty or new formal certification is asserted.
+
+The original seventh-$J$ run of Sections 45–50 remains an alternative
+with its original prediction obstruction. The present source action
+horizon ends at seven, without acquiring both terminal alternatives.
+The exact closed $Q$ is not enlarged to other branches, other children,
+other continuations or arbitrary original worlds outside $\mathcal D$.
+No preparation method, finite-input digitizer, physical conformance,
+whole-source inverse, full mutual recovery of space/time/boundary/memory,
+universal alpha/beta reduction or global cost optimum is supplied.
+The broader original-$Q$, fixed-$G_{gc}$, native, parked-consumer and
+unchanged-initialization obligations retain their own exact conditions.
+This bounded correspondence does not complete those obligations or the
+sustained four-expression objective.
+
+## 追加锚（本行以下为增补区）
