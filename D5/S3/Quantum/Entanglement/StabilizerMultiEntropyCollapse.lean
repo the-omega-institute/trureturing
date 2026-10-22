@@ -384,7 +384,7 @@ private theorem bilinear_sum {N : ℕ} (A : Matrix (Fin N) (Fin N) (ZMod 2)) :
   omega
 
 /-- Scalar multiplication contributes one squared norm per replica. -/
-private theorem Z_smul {N : ℕ} (n q : ℕ) [NeZero n] (col : Fin N → Fin q)
+theorem Z_smul {N : ℕ} (n q : ℕ) [NeZero n] (col : Fin N → Fin q)
     (ψ : (Fin N → Fin 2) → ℂ) (c : ℂ) :
     Z n q col (c • ψ) = (star c * c) ^ (n ^ (q - 1)) * Z n q col ψ := by
   classical
@@ -492,7 +492,7 @@ private theorem graph_norm {N : ℕ} (A : Matrix (Fin N) (Fin N) (ZMod 2)) :
   simp [graphAmp.eq_1, norm_pow]
 
 /-- Product unitaries preserve replica contractions even with an arbitrary scalar. -/
-private theorem Z_local_scalar {N : ℕ} (n q : ℕ) [NeZero n] (col : Fin N → Fin q)
+theorem Z_local_scalar {N : ℕ} (n q : ℕ) [NeZero n] (col : Fin N → Fin q)
     (ψ : (Fin N → Fin 2) → ℂ) (U : Fin N → Matrix (Fin 2) (Fin 2) ℂ)
     (hU : ∀ u, U u ∈ Matrix.unitaryGroup (Fin 2) ℂ) (c : ℂ) :
     Z n q col (c • (tensorOp U *ᵥ ψ)) = Z n q col (c • ψ) := by
@@ -500,7 +500,7 @@ private theorem Z_local_scalar {N : ℕ} (n q : ℕ) [NeZero n] (col : Fin N →
   simpa only [one_smul, Matrix.mulVec_smul] using h
 
 /-- A normalized local-unitary graph amplitude has the reciprocal graph normalization. -/
-private theorem graph_scalar_norm {N : ℕ} (A : Matrix (Fin N) (Fin N) (ZMod 2))
+theorem graph_scalar_norm {N : ℕ} (A : Matrix (Fin N) (Fin N) (ZMod 2))
     (U : Fin N → Matrix (Fin 2) (Fin 2) ℂ)
     (hU : ∀ u, U u ∈ Matrix.unitaryGroup (Fin 2) ℂ) (c : ℂ)
     (hn : (∑ x : Fin N → Fin 2, ‖(c • (tensorOp U *ᵥ graphAmp A)) x‖ ^ 2) = 1) :
