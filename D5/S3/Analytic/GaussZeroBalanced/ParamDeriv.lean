@@ -4,9 +4,10 @@
    mirror-E: none(waiver:evidence-not-specified-by-formal-manifest)
    anchors: [mathlib/module/Mathlib.Analysis.Calculus.Deriv.Inv, mathlib/module/Mathlib.Tactic]
    utility: none
-   digest: Parameter quotient differentiation and the differentiated Riccati identity. -/
+   digest: Parameter differentiation, mixed derivatives and the sharp first Gauss quotient classification. -/
 
 import D5.S3.Analytic.GaussZeroBalanced.Series
+import D5.S3.Analytic.GaussZeroBalanced.Comparison
 import Mathlib.Analysis.Calculus.Deriv.Inv
 import Mathlib.Tactic
 
@@ -19,8 +20,7 @@ open D5.S3.Analytic.GaussZeroBalanced.Series
 
 namespace D5.S3.Analytic.GaussZeroBalanced.ParamDeriv
 
-/-! The quotient rule in the parameter is isolated so that the two Gauss
-parameter series can be supplied by the eventual termwise parameter proof. -/
+/-! The parameter quotient rule separates numerator and denominator derivatives. -/
 theorem hasDerivAt_f_param_of_gauss {a b x dN dD : ℝ}
     (hN : HasDerivAt (fun β : ℝ => gauss a β (a + β + 1) x) dN b)
     (hD : HasDerivAt (fun β : ℝ => gauss a β (a + β) x) dD b)
@@ -41,7 +41,7 @@ theorem parameter_riccati_deriv {a b x : ℝ} {F K : ℝ → ℝ}
     (ha : 0 < a) (hb : 0 < b) (hx : x ≠ 1)
     (hF : HasDerivAt F (deriv F b) b)
     (hK : HasDerivAt K (deriv K b) b)
-    (hEq : ∀ β : ℝ,
+    (hEq : ∀ᶠ β : ℝ in 𝓝 b,
       x * K β = (a + β) * (1 - F β) -
         (a * β / (a + β)) * (x / (1 - x)) * (F β) ^ 2) :
     x * deriv K b +
@@ -88,7 +88,7 @@ theorem parameter_riccati_deriv {a b x : ℝ} {F K : ℝ → ℝ}
   have heq : (fun β => x * K β) =ᶠ[𝓝 b]
       (fun β => (a + β) * (1 - F β) -
         (a * β / (a + β)) * (x / (1 - x)) * (F β) ^ 2) :=
-    Filter.Eventually.of_forall (fun β => hEq β)
+    hEq
   have hder := hleft.congr_of_eventuallyEq heq.symm
   have hder' := hder.deriv
   rw [hright.deriv] at hder'
@@ -498,5 +498,121 @@ theorem hasDerivAt_f_param_zero {a b : ℝ} (ha : 0 < a) (hb : 0 < b) :
   dsimp
   field_simp
   <;> ring
+
+/-- The Riccati equation differentiated in its upper parameter. -/
+theorem parameter_equation {a b x : ℝ} (ha : 0 < a) (hb : 0 < b)
+    (hx : x ∈ Ioo (0:ℝ) 1) :
+    let h := fun z : ℝ => deriv (fun β : ℝ => f a β z) b
+    x * deriv h x +
+      ((a+b) + 2*(a*b/(a+b))*(x/(1-x))*f a b x) * h x =
+      (1-f a b x) - (a^2/(a+b)^2)*(x/(1-x))*(f a b x)^2 := by
+  have hm := hasDerivAt_f_mixed ha hb hx.1.le hx.2
+  have heq : ∀ᶠ β : ℝ in 𝓝 b,
+      x * deriv (f a β) x = (a+β)*(1-f a β x) -
+        (a*β/(a+β))*(x/(1-x))*(f a β x)^2 := by
+    filter_upwards [Ioi_mem_nhds hb] with β hβ
+    exact riccati ha hβ hx.1 hx.2
+  have hid := parameter_riccati_deriv ha hb (ne_of_lt hx.2)
+    (hasDerivAt_f_param ha hb hx.1.le hx.2) hm.2.differentiableAt.hasDerivAt heq
+  rw [← hm.1.deriv] at hid
+  exact hid
+
+/-- The parameter derivative of the quotient in the first classification. -/
+theorem hasDerivAt_quot_param {a b x : ℝ} (ha : 0 < a) (hb : 0 < b)
+    (hx : 0 ≤ x) (hx1 : x < 1) :
+    HasDerivAt (fun β : ℝ => quot a β x)
+      (deriv (fun β : ℝ => f a β x) b / (1-x)) b := by
+  have h := (hasDerivAt_f_param ha hb hx hx1).div_const (1-x)
+  apply h.congr_of_eventuallyEq
+  filter_upwards [Ioi_mem_nhds hb] with β hβ
+  exact quot_eq ha hβ hx hx1
+
+private lemma deriv_f_param_neg {a b x : ℝ} (ha : 0 < a) (hb : 0 < b)
+    (hthreshold : b^2 ≤ a*(a+1)) (hx : x ∈ Ioo (0:ℝ) 1) :
+    deriv (fun β : ℝ => f a β x) b < 0 := by
+  let h := fun z : ℝ => deriv (fun β : ℝ => f a β z) b
+  let R : ℝ := (x+1)/2
+  let P := fun z : ℝ => (a+b) + 2*(a*b/(a+b))*(z/(1-z))*f a b z
+  have hR0 : 0 < R := by dsimp [R]; linarith [hx.1]
+  have hR1 : R < 1 := by dsimp [R]; linarith [hx.2]
+  have hxR : x ∈ Ioo (0:ℝ) R := ⟨hx.1, by dsimp [R]; linarith [hx.2]⟩
+  have hq : a*b/((a+b)*(a+b+1)) ≤ a^2/(a+b)^2 := by
+    apply (div_le_div_iff₀ (by positivity : 0 < (a+b)*(a+b+1))
+      (by positivity : 0 < (a+b)^2)).2
+    nlinarith [mul_nonneg (show 0 ≤ a*(a+b) by positivity) (sub_nonneg.mpr hthreshold)]
+  have hcont : ContinuousOn (fun z => -h z) (Icc 0 R) := by
+    intro z hz
+    exact ((hasDerivAt_f_mixed ha hb hz.1 (hz.2.trans_lt hR1)).1.continuousAt.neg).continuousWithinAt
+  have hd : ∀ z ∈ Ioo (0:ℝ) R,
+      HasDerivAt (fun w => -h w) (deriv (fun w => -h w) z) z := by
+    intro z hz
+    exact ((hasDerivAt_f_mixed ha hb hz.1.le (hz.2.trans hR1)).1.neg).differentiableAt.hasDerivAt
+  have hP : ∀ z ∈ Ioo (0:ℝ) R, 0 < P z := by
+    intro z hz
+    have hz1 := hz.2.trans hR1
+    have hf := f_pos ha hb hz.1.le hz1
+    have ht : 0 < z/(1-z) := div_pos hz.1 (by linarith)
+    dsimp [P]
+    positivity
+  have hi : ∀ z ∈ Ioo (0:ℝ) R,
+      0 < z * deriv (fun w => -h w) z + P z * (-h z) := by
+    intro z hz
+    have hz1 := hz.2.trans hR1
+    have hf := f_pos ha hb hz.1.le hz1
+    have ht : 0 < (z/(1-z))*(f a b z)^2 := by
+      have ht' : 0 < z/(1-z) := div_pos hz.1 (by linarith)
+      positivity
+    have hcert := Comparison.certificate ha hb ⟨hz.1, hz1⟩
+    have hstrict := (div_lt_iff₀ ht).1 (hcert.trans_le hq)
+    have hid := parameter_equation ha hb ⟨hz.1, hz1⟩
+    have hneg : deriv (fun w => -h w) z = -deriv h z := by
+      exact ((hasDerivAt_f_mixed ha hb hz.1.le hz1).1.neg).deriv.trans
+        (congrArg Neg.neg (hasDerivAt_f_mixed ha hb hz.1.le hz1).1.deriv.symm)
+    rw [hneg]
+    change 0 < z * -deriv h z + P z * -h z
+    change z * deriv h z + P z * h z = _ at hid
+    nlinarith [hstrict, hid]
+  have hpos := Comparison.singular_comparison hR0
+    (u := fun z => -h z) (P := P) (by simp [h, deriv_f_param_zero]) hcont hd hP hi x hxR
+  dsimp [h] at hpos
+  linarith
+
+/-- The first parameter classification of the zero-balanced Gauss quotient. -/
+theorem clause1 (a b : ℝ) (ha : 0 < a) (hb : 0 < b) :
+    ((∀ x ∈ Ioo (0:ℝ) 1, deriv (fun β : ℝ => quot a β x) b < 0) ↔
+      b ≤ Real.sqrt (a*(a+1))) := by
+  rw [Real.le_sqrt hb.le (by positivity)]
+  constructor
+  · intro hneg
+    by_contra hbad
+    have hbad' : a*(a+1) < b^2 := lt_of_not_ge hbad
+    let h := fun x : ℝ => deriv (fun β : ℝ => f a β x) b
+    have h0 : h 0 = 0 := deriv_f_param_zero a b
+    have hn : ∀ x ∈ Ioo (0:ℝ) 1, h x < 0 := by
+      intro x hx
+      have hq := hneg x hx
+      rw [(hasDerivAt_quot_param ha hb hx.1.le hx.2).deriv] at hq
+      exact neg_of_div_neg_left hq (by linarith [hx.2])
+    have hmax : IsMaxOn h (Icc (0:ℝ) (1/2)) 0 := by
+      intro z hz
+      rw [h0]
+      rcases eq_or_lt_of_le hz.1 with (rfl | hz0)
+      · exact h0.le
+      · exact (hn z ⟨hz0, by linarith [hz.2]⟩).le
+    have ht : (1/2:ℝ) - 0 ∈ posTangentConeAt (Icc (0:ℝ) (1/2)) 0 := by
+      apply sub_mem_posTangentConeAt_of_segment_subset
+      rw [segment_eq_Icc (by norm_num : (0:ℝ) ≤ 1/2)]
+    have hz := hasDerivAt_f_param_zero ha hb
+    have hnon := hmax.isLocalMaxOn.hasFDerivWithinAt_nonpos
+      hz.hasFDerivAt.hasFDerivWithinAt ht
+    have hnon' : (a*(b^2-a*(a+1))/((a+b)^2*(a+b+1)^2))*(1/2:ℝ) ≤ 0 := by
+      simpa [ContinuousLinearMap.toSpanSingleton_apply, smul_eq_mul, mul_comm] using hnon
+    have hp : 0 < a*(b^2-a*(a+1))/((a+b)^2*(a+b+1)^2) := by
+      apply div_pos (mul_pos ha (sub_pos.mpr hbad'))
+      positivity
+    nlinarith
+  · intro hthreshold x hx
+    rw [(hasDerivAt_quot_param ha hb hx.1.le hx.2).deriv]
+    exact div_neg_of_neg_of_pos (deriv_f_param_neg ha hb hthreshold hx) (by linarith [hx.2])
 
 end D5.S3.Analytic.GaussZeroBalanced.ParamDeriv
