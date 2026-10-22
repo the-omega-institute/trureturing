@@ -5,3 +5,7 @@ cas_ref: sha256:32f720ed6bab3125505686b7e77709b84de072590defc717d5f2304f883d4857
 coverage_gids: []
 receipts:
   unresolved_subitems: []
+  nonpropositional:
+    justification: 'Nonpropositional: 定义仅输出系统的恢复任务、零周期约定及最坏迹误差；未给最优值。'
+    previous_atom_id: 54857529775f54dad64885ba9f9ee29e2edfbe73a066ceec11eff0bf5543cbea
+    next_atom_id: afba150a7f8fa93a38ecca49f7f490fec94b35005af4ce19d36c26adab7ccc6b
