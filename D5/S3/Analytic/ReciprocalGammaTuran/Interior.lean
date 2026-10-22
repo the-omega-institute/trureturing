@@ -38,23 +38,25 @@ theorem continuous_turanCoeff_two :
     · exact continuous_rgamma.comp (by fun_prop)
     · exact continuous_rgamma.comp (by fun_prop)
 
+private lemma interior_negative_interval {t : ℝ} (ht : 0 < t) (ht1 : t < 1) :
+    ∃ δ : ℝ, 0 < δ ∧ ∀ ε : ℝ, 0 < ε → ε < δ →
+      0 < (-t + ε) + t ∧ -1 ≤ -t + ε ∧
+        turanCoeff (fun _ => 1) (-t + ε) t t 2 < 0 := by
+  have hc : Continuous (fun ε : ℝ => turanCoeff (fun _ => 1) (-t + ε) t t 2) :=
+    continuous_turanCoeff_two.comp (f := fun ε : ℝ => (-t + ε, (t, t))) (by fun_prop)
+  have hneg : ∀ᶠ ε : ℝ in 𝓝 0, turanCoeff (fun _ => 1) (-t + ε) t t 2 < 0 :=
+    (hc.tendsto 0).eventually (gt_mem_nhds (by simpa using d_two_neg ht ht1))
+  obtain ⟨δ, hδ, hcoef⟩ := Metric.eventually_nhds_iff.mp hneg
+  refine ⟨δ, hδ, fun ε hε hεδ => ⟨by linarith, by linarith, ?_⟩⟩
+  apply hcoef
+  simpa [Real.dist_eq, abs_of_pos hε] using hεδ
+
 /-- Strict coefficient negativity persists at strictly interior parameters. -/
 theorem interior_failure : ∃ μ α β : ℝ,
     0 < μ + α ∧ 0 < μ + β ∧ 0 < α ∧ 0 < β ∧ -1 ≤ μ ∧
       turanCoeff (fun _ => 1) μ α β 2 < 0 := by
-  have hc : Continuous (fun ε : ℝ =>
-      turanCoeff (fun _ => 1) (-(1 / 2) + ε) (1 / 2) (1 / 2) 2) :=
-    continuous_turanCoeff_two.comp (f := fun ε : ℝ =>
-      (-(1 / 2) + ε, (1 / 2, 1 / 2))) (by fun_prop)
-  have hneg : ∀ᶠ ε : ℝ in 𝓝 0,
-      turanCoeff (fun _ => 1) (-(1 / 2) + ε) (1 / 2) (1 / 2) 2 < 0 := by
-    exact (hc.tendsto 0).eventually (gt_mem_nhds (by simpa using d_two_half_neg))
-  obtain ⟨δ, hδ, hcoef⟩ := Metric.eventually_nhds_iff.mp hneg
-  refine ⟨-(1 / 2) + δ / 2, 1 / 2, 1 / 2, ?_, ?_, by norm_num, by norm_num, ?_, ?_⟩
-  · linarith
-  · linarith
-  · linarith
-  · apply hcoef
-    rw [Real.dist_eq, sub_zero, abs_of_pos (by positivity)]
-    linarith
+  obtain ⟨δ, hδ, H⟩ := interior_negative_interval (t := 1 / 2) (by norm_num) (by norm_num)
+  obtain ⟨hshift, hμ, hneg⟩ := H (δ / 2) (by linarith) (by linarith)
+  exact ⟨-(1 / 2) + δ / 2, 1 / 2, 1 / 2, hshift, hshift,
+    by norm_num, by norm_num, hμ, hneg⟩
 end D5.S3.Analytic.ReciprocalGammaTuran.Interior
