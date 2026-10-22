@@ -1,0 +1,31 @@
+**Lemma 32.1 (Exhaustion of the remaining closed cells).** Let
+$\Theta(p)=\mathcal T(t_H(p),b_H(p))$. On each of the fourteen
+remaining cells in Lemma 31.2, $\Theta'$ has a strict sign. Endpoint
+signs, in increasing cell order, are
+
+$$
+\begin{array}{c|l}
+[10,20] &(+,+),(+,+),(+,+),(+,-),(-,-),(-,-),
+          (-,-),(-,-),(-,-),(-,+),(+,+),(+,+)\\
+[30,34] &(+,-),(-,+).
+\end{array}
+\tag{32.1}
+$$
+
+The four sign-changing cells, in increasing order, have these
+whole-cell derivative enclosures:
+
+| Cell | Enclosure of $\Theta'$ |
+| --- | --- |
+| $[6725/512,3365/256]$ | $[-6000000000000,-4900000000000]$ |
+| $[625/32,10005/512]$ | $[13200000000000,14300000000000]$ |
+| $[8415/256,263/8]$ | $[-231400000000000,-228400000000000]$ |
+| $[8697/256,4349/128]$ | $[155100000000000,156600000000000]$ |
+
+For the two groups of six remaining cells in $[10,20]$, the following
+whole-cell bounds hold uniformly within each group:
+
+| Remaining indices $k$ | Enclosure of $\Theta'$ |
+| --- | --- |
+| $318,319,320,321,322,323$ | $[-5600000000000,-5300000000000]$ |
+| $973,974,975,976,977,978$ | $[13000000000000,14100000000000]$ |

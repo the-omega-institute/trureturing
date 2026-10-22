@@ -1,0 +1,27 @@
+**Theorem 11.1 (Entire-child classification and M injectivity).** For every
+$i\in\{1,2,3,4\}$ and every real $(p,v)\in B_i$, the entire original
+$C(p,v)$ consists of exactly four distinct complete strict worlds.
+Its M reading is injective. If these worlds are ordered by increasing M
+reading, every successive gap exceeds, respectively,
+
+$$
+ \gamma_1=\frac13,\qquad\gamma_2=\frac25,\qquad
+ \gamma_3=\frac{14}5,\qquad\gamma_4=\frac72.
+$$
+
+Moreover $v_J(p)\in V_i$ for every $p\in P_i$. Hence this excludes an
+unrestricted M pair in the entire actual J-arc child throughout each
+$P_i$, including the enclosed exceptional parameter $p_i$ of SVIII,
+Theorem 30.3. No common drift or any other equality between the M
+endpoints is assumed.
+
+The exhaustive four-H/no-L inventory is SVIII, Theorem 30.3; the two
+finite drifts and unique strict lift at each fixed exceptional H
+projection are SVIII, Theorem 33.2. Exact projected multiplicity two
+at those four projections is SVIII, Theorem 34.1. The source-specific
+conclusion here counts every actual companion in the child, constructs all four worlds,
+and separates every pair of their M readings. In particular it does not
+identify a double projected root with two actual worlds. Sections 12–15
+give the proof of Theorem 11.1, using the finite rational specifications
+of Section 16.
+

@@ -1,0 +1,12 @@
+给定有限颜色集 $C$，映射 $c:H\to C$ 称为稳定着色，如果满足：
+
+1. **根条件：** 存在 $c_\circ\in C$，使 $c(h)=c_\circ$ 对所有 $h\in H_\circ$ 成立；
+2. **后继条件：** 若 $c(h)=c(h')$，且 $\delta_e(h),\delta_e(h')$ 都定义，则
+   $$
+   c(\delta_e(h))=c(\delta_e(h'));
+   $$
+3. **终端条件：** 若 $c(h)=c(h')$，且 $(h,r),(h',r)\in\operatorname{Term}$，则
+   $$
+   t(h,r)=t(h',r).
+   $$
+

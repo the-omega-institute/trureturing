@@ -1,0 +1,9 @@
+**定义 11.1（全菜单比较与未定精确值）。** 令 $e_{\mathrm{all}}$ 把定义 1.5 的两设置最大值换成全部实际有限协议上确界，$\varepsilon_{\mathrm{all}}(q)=\inf_{T\in\mathfrak C_q}e_{\mathrm{all}}(T)$。既有 [《实际等待读出下的近似单份量子边界》Theorem 5.1](RECURSIVE_RELATIONAL_OBSERVATION_MEASUREMENT_RELATIVE_QUANTUM_BOUNDARY.md) 在同一个全复输入、同一个有限标记合同下给
+
+$$
+\frac{7(5-q)}{68}\leq\varepsilon_{\mathrm{all}}(q)
+\leq\frac{5-q}{7}.
+$$
+
+因为 $e_{\mathrm{two}}(T)\leq e_{\mathrm{all}}(T)$，全菜单下界不能推出两设置下界；(11.4)–(11.6) 正是补上这一步。全菜单上界可给两设置的上界，但不证明最优性。$q<5$ 时两设置精确 minimax 值及最优通道在本文中未定；$1/102$ 不声称最优常数，也不表示一次实验能直接读出一个通道的最坏情形误差。这里的贡献是指定实际两个设置的解析余项、连通探针应用及显式统一下界，不作全球原创性断言。
+

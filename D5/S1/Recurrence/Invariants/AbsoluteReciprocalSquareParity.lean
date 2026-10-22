@@ -6,6 +6,8 @@
    utility: none
    digest: Absolute reciprocal square contraction and binary Catalan support prove A380710. -/
 
+/- Escape audit unfinished: https://github.com/the-omega-institute/trureturing/issues/19951. -/
+
 import D5.S1.Recurrence.Invariants.CatalanCompositionSquareParity
 
 open PowerSeries
@@ -120,7 +122,7 @@ theorem generating_unique (B : PowerSeries ℤ) (h0 : constantCoeff B = 1)
   ext i
   exact h (i + 1) i (by omega)
 
-private theorem map_abs (F : PowerSeries ℤ) :
+theorem map_abs (F : PowerSeries ℤ) :
     (absSeries F).map (Int.castRingHom (ZMod 2)) = F.map (Int.castRingHom (ZMod 2)) := by
   ext n
   simp only [coeff_map, absSeries, coeff_mk]
@@ -185,9 +187,5 @@ theorem hanna_conjecture (n : ℕ) (hn : 0 < n) :
   rw [he]
   exact CatalanCompositionSquareParity.binary_catalan n
 
-#print axioms generating_equation
-#print axioms generating_unique
-#print axioms mod_two_identity
-#print axioms hanna_conjecture
 
 end D5.S1.Recurrence.Invariants.AbsoluteReciprocalSquareParity

@@ -1,0 +1,101 @@
+**Theorem 2.1 (signature classification of the stopped observed law).**
+For every $h\ge0$ and all $p,p'\in\mathcal P$, the following are equivalent:
+
+$$
+\begin{aligned}
+&S_h(p)=S_h(p'),\\
+&\mathsf F_{h,p}^\infty=\mathsf F_{h,p'}^\infty,\\
+&\mathsf F_{h,p}^T=\mathsf F_{h,p'}^T
+       \quad\text{for a specified fixed }T>0.
+\end{aligned}
+\tag{2.1}
+$$
+
+In particular the equivalence holds separately for every fixed $T>0$.
+At $T=0$, equality of the restricted laws means exactly $O(p)=O(p')$,
+regardless of $h$.
+
+**Proof.** First record the concrete one-step correspondence. Suppose
+$h\ge1$, $S_h(p)=S_h(p')$ and their common depth $n$ is positive.
+The difference $c_0-c_1$ determines $\delta(p)=\delta(p')$: the three
+integer possibilities $-1,0,+1$ have distinct residues in every
+$C_m$ under consideration, including $m=3$. Match the parent move
+with the parent move and each literal child move with the same child
+move. Under this matching,
+
+$$
+\begin{aligned}
+S_{h-1}(\operatorname{par}p)&=
+ S_{h-1}(\operatorname{par}p'),\\
+S_{h-1}(pL)&=S_{h-1}(p'L),\\
+S_{h-1}(pR)&=S_{h-1}(p'R).
+\end{aligned}
+\tag{2.2}
+$$
+
+For the parent, the list is the common list $c_1,c_2,\ldots$, truncated
+at the lesser of the remaining budget and the remaining depth.
+For a child, its first colour is determined by $(c_0,\delta(p))$ and
+its literal letter through (120.12); the subsequent colours are the
+needed prefix of $c_0,c_1,\ldots$. When $h=1$, only that first child
+colour and its depth are required. This proves all three equalities
+without requesting a nonexistent ancestor.
+
+Both nonroot states have the same escape rate three and assign
+probability $1/3$ to each matched move. If the common depth is zero,
+both states are the single root. Match its two child moves, each of
+probability $1/2$ in $J$, and use the common parameter-two waiting
+time; (2.2) for its children is immediate. Thus equal signatures at
+budget $h$ allow a coupling of the next true jump with equal waiting
+times and equal budget-$(h-1)$ signatures afterwards.
+
+Iterate this construction for $h$ actual jumps. Before each jump the
+two depths agree, so the exponential parameters agree even if a route
+visits the root and later leaves it. The observations agree initially
+and after every coupled jump. Freeze both displays at their $h$th
+jumps. Their entire paths, including all waiting times, are identical
+under this coupling. This proves that the first line of (2.1) implies
+the other two. At $h=0$, the signature is just the initial observation
+and the assertion follows directly from (1.4). The root's virtual
+Poisson holds are not involved in this true-jump construction.
+
+For the converse, different initial $O$ values are separated at time
+zero. Suppose the initial observations agree, with common depth $n$,
+but the signatures differ. There is a first unequal colour at some
+
+$$
+1\le k\le\min(h,n-1).
+\tag{2.3}
+$$
+
+Indeed $c_0$ agrees and, if included, $c_n$ is the root colour zero
+for both starts. Consider the event that the frozen display has at
+least $k$ jumps before $T$, that its first $k$ depths decrease by one,
+and that its successive colours are
+$c_1(p),\ldots,c_k(p)$. This event prescribes the unique all-parent
+route of $k$ seams. All visited depths through its $k$th jump are
+positive by (2.3). From $p$, its probability is
+
+$$
+\int_0^T e^{-3s}\frac{s^{k-1}}{(k-1)!}\,ds
+ =3^{-k}\mathbf P\{\operatorname{Pois}(3T)\ge k\}>0.
+\tag{2.4}
+$$
+
+To see the density, each specified seam has rate one; the survival
+factor up to the last prescribed time $s$ is $e^{-3s}$; the preceding
+$k-1$ ordered times have simplex volume $s^{k-1}/(k-1)!$.
+After jump $k$ the event imposes no conditions. Thus this same formula
+applies whether $k<h$ or $k=h$, when the display freezes immediately.
+From $p'$ the event has probability zero, because the forced parent
+route has a different $k$th colour. Hence equality on any fixed
+positive window forces signature equality. Equality of the complete
+frozen laws also forces equality on that window.
+
+At time zero the display is the deterministic value $O(p)$, proving
+the final assertion. The convention $\min(h,n)$ includes $n=0$ and
+short addresses. For $h\ge n$, V Theorem 121.3's complete-ancestor
+decoding also says that each signature cell on level $n$ is a
+singleton; no new complete-address decoding theorem is needed here.
+$\square$
+

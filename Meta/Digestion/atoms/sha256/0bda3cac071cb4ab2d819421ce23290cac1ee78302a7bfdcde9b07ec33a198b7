@@ -1,0 +1,60 @@
+**定理 66.2（每次调用的普适谱上界）。** 对定义 66.1 的全部维数、投影和旧盲态对，令 $t_k=\min(kq,h)$，空和为零，则
+
+$$
+B_k(\rho,\sigma)\leq\sum_{j=1}^{t_k}a_j\leq D(\rho,\sigma).
+\tag{IX.13}
+$$
+
+特别地，$B_0=0$；$r=0,d$ 时所有预算的对比均为零。
+
+**证明。** 对含 $j\leq k$ 次调用的字 $U$，先只作代数上的整体标量归一化。置
+
+$$
+\widehat S=
+\begin{cases}
+S=I+(i-1)P,&p\leq d/2,\\
+-iS=I+(-i-1)(I-P),&p>d/2.
+\end{cases}
+\qquad
+\operatorname{rank}(\widehat S-\overline{\widehat S})=q.
+\tag{IX.14}
+$$
+
+将 $U$ 中每个 $S$ 换为 $\widehat S$ 得 $\widehat U$，只改变整体相位，所以 $Q=U^\dagger RU=\widehat U^\dagger R\widehat U$。乘积差的望远镜展开以及实控制 $O=\bar O$ 给
+
+$$
+\begin{aligned}
+\operatorname{rank}(\widehat U-\overline{\widehat U})&\leq jq,\\
+Q-\bar Q
+ &=(\widehat U^\dagger-\widehat U^T)R\widehat U
+     +\widehat U^T R(\widehat U-\overline{\widehat U}),\\
+\operatorname{rank}(Q-\bar Q)&\leq2jq.
+\end{aligned}
+\tag{IX.15}
+$$
+
+这里的标量归一化没有增添一个可调用的门。又因 $Q,\bar Q$ 都是秩 $r$ 投影，分别对它们及其补投影使用秩的次可加性，得到 $\operatorname{rank}(Q-\bar Q)\leq2h$。
+
+令 $H=(Q-\bar Q)/2$。这是 Hermitian 矩阵，$\bar H=-H$，故每个正特征值 $b$ 的共轭特征向量具有特征值 $-b$。两个投影之差介于 $-I$ 和 $I$ 之间，因此
+
+$$
+\operatorname{rank}H=2s,\qquad
+s\leq\min(jq,h)\leq t_k,\qquad
+H=H_+-H_-,\qquad
+0\preceq H_\pm\preceq\tfrac12 I,\quad
+\operatorname{rank}H_\pm=s.
+\tag{IX.16}
+$$
+
+实对称矩阵 $(Q+\bar Q)/2$ 与 $iA$ 的迹配对为零，所以 $\operatorname{tr}(\Delta Q)=\operatorname{tr}(\Delta H)$。复用定理 60.2 所用的 Fan 谱极值：对秩不超过 $s$、满足 $0\preceq C\preceq I/2$ 的矩阵，将其写成超水平谱投影的积分 $C=\int_0^{1/2}\mathbf1_{(u,\infty)}(C)\,du$。每个积分中的投影秩不超过 $s\leq m$，而 $\Delta$ 和 $-\Delta$ 的前 $s$ 个特征值都是 $a_1,\ldots,a_s$，故
+
+$$
+\operatorname{tr}(\pm\Delta C)\leq\tfrac12\sum_{v=1}^{s}a_v,
+\qquad
+|\operatorname{tr}(\Delta H)|\leq\sum_{v=1}^{s}a_v
+ \leq\sum_{v=1}^{t_k}a_v.
+\tag{IX.17}
+$$
+
+将第一项分别用于 $H_+,H_-$ 及 $\pm\Delta$，即得第二项的双向界。对全部有限字取最大值得 (IX.13)。$j=0$ 或 $h=0$ 时 $s=0$，也包含在此论证内。$\square$
+

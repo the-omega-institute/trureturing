@@ -1,0 +1,10 @@
+**定义 108.1（同一来源的两路径记录模型）。** 目标初态为 $\varrho$，两支酉为 $U,V$，环境记录为归一化向量 $e_0,e_1$，并给共同相干实现。纯输入时联合输出为
+
+$$
+\frac{|0\rangle\otimes U\psi\otimes e_0+
+|1\rangle\otimes V\psi\otimes e_1}{\sqrt2},
+\qquad \eta=\langle e_1|e_0\rangle.
+$$
+
+混合输入用同一个线性等距实现。历史在同一环境中比较，不能独立替换各支的记录后再虚构其共同内积。
+

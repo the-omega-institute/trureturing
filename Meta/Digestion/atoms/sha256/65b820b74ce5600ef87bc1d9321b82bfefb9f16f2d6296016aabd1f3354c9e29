@@ -1,0 +1,20 @@
+**定义 76.2（自然互补占位块）。** 取
+
+$$
+P=\Pi_3+\Pi_{25},\qquad Q=I_5-P,\qquad
+\mathcal K_{\mathrm{loc}}=P\mathcal H_F
+=\operatorname{span}\{|3\rangle,|25\rangle\},
+$$
+
+以及按局部顺序 $(3,25)$ 的算子
+
+$$
+\begin{aligned}
+X_P&=|3\rangle\langle25|+|25\rangle\langle3|,\\
+Y_P&=-i|3\rangle\langle25|+i|25\rangle\langle3|,\\
+Z_P&=\Pi_3-\Pi_{25}.
+\end{aligned}
+$$
+
+模式 $010$ 与 $101$ 在三位上互补，此语法关系用于选择该块，不自动授予相干门。三个算子在 $Q$ 上均为零。
+

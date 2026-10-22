@@ -1,0 +1,42 @@
+**Theorem 181.1 (Pointwise classification at the fixed finite cut).**
+For every $0<t\le1$ and every pair of independent complex unit vectors
+$v,w$ in (177.2),
+
+$$
+\boxed{\rho(v,w)\text{ is ordinary }A|B\text{ tensor-separable}
+\ \Longleftrightarrow\ \rho(v,w)^{T_A}\succeq0
+\ \Longleftrightarrow\ q_0\le1\ \text{and}\ q_3\le1.}
+\tag{181.1}
+$$
+
+Whenever these conditions hold, at most twelve normalized pure product
+projectors suffice for a convex decomposition of $\rho$.
+
+Proof. Under the two inequalities, every residual coefficient in (180.1)
+is nonnegative; the middle two coefficients are strictly positive for
+$t>0$. Its other terms are the eight positive product projectors
+$\frac14|L_k\Psi_j\rangle\langle L_k\Psi_j|$.
+Dividing by $Z$ proves ordinary separability.
+
+Explicitly, write $a_{jk}=A_k(|0\rangle+\sqrt{\lambda_j}|1\rangle)$
+and let $b_{jk}$ be $B_k$ applied to the Bob factor in (179.3).
+Normalize both factors separately. The corresponding convex weight is
+
+$$
+p_{jk}=\frac{(1+\lambda_j)}{4Z}
+\left(\frac{|\eta_j|^2}{\lambda_j}+\|x_j\|^2
+ +\frac{|\zeta_j|^2}{\lambda_j}\right).
+\tag{181.2}
+$$
+
+The other four weights are the residuals in (180.1) divided by $Z$.
+All weights sum to one by taking the trace of that identity.
+Zero-weight endpoints may be omitted, giving at most twelve terms.
+No minimal-length assertion is needed.
+
+Conversely a pure product projector has partial transpose
+$|\bar a\rangle\langle\bar a|\otimes|b\rangle\langle b|\succeq0$.
+Convex sums preserve positivity. Thus separability implies PPT, and
+the Schur criterion of VI §170, recalled in (178.4)–(178.5), supplies
+the scalar equivalence.
+

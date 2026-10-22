@@ -1,0 +1,92 @@
+**Theorem 3.1 (no uniform finite two-qubit encoded checkpoint).** For every
+finite bank $\mathcal B$ of Definition 1.1, there exist a unit ray $\eta$ and
+$\epsilon>0$ with $x_*+\epsilon<1/2$ such that, for every
+$x\in(x_*,x_*+\epsilon)$ and every $j\le N$,
+
+$$
+\tau_j(x,\eta)^{T_A}\succeq0.
+\tag{3.1}
+$$
+
+Nevertheless, every source $\Omega_{x,\eta}$ in this same interval has a
+lawful source-dependent encoded NPT branch of strictly positive probability
+in the sense of VII §208. Consequently no one finite source-independent bank
+in this output class supplies an NPT two-qubit checkpoint with positive
+probability for every source in the declared unknown-ray family.
+
+**Proof.** First consider a bank element for which either $A_j$ or $B_j$ has
+rank at most one. Its positive output has one-dimensional support on one
+party and is therefore a separable, hence PPT, operator for every source.
+
+Suppose both ranks are two. Put
+
+$$
+C_j=\overline{A_j}\otimes B_j.
+$$
+
+Then $C_j$ has full row rank and
+
+$$
+\tau_j(x_*,\eta)^{T_A}=C_jM_\eta C_j^*.
+\tag{3.2}
+$$
+
+Because $C_j^*$ is injective and $M_\eta$ has the one-dimensional kernel
+in Lemma 2.1, the compression in (3.2) fails to be positive definite only
+if $\chi_\eta\in\operatorname{ran}(C_j^*)$. But
+
+$$
+\operatorname{ran}(C_j^*)
+ =\operatorname{ran}(A_j^{\mathsf T})\otimes
+  \operatorname{ran}(B_j^*).
+\tag{3.3}
+$$
+
+Membership forces the Bob Schmidt support $K_\eta$ to be contained in
+$\operatorname{ran}(B_j^*)$. Both spaces have dimension two, so it forces
+$K_\eta=\operatorname{ran}(B_j^*)$. By Lemma 2.1 a fixed rank-two $B_j$
+can match at most one projective ray. There are finitely many such $j$;
+choose a unit ray $\eta$ outside their finite exceptional set. For this
+choice every rank-two/rank-two compression is positive definite at $x_*$.
+
+Each matrix in (3.2) depends continuously on $x$. Positive definiteness is
+open, and there are only finitely many bank elements, so one common
+$\epsilon>0$ exists for which all of them remain positive definite on
+$(x_*,x_*+\epsilon)$. Shrink it so that $x_*+\epsilon<1/2$.
+The rank-deficient elements remain PPT by the first paragraph. This proves
+(3.1).
+
+For the pointwise comparison, use the source-dependent direction from VII
+§208. In this family $E\eta=t^2\eta$, so its inverse direction is
+$k_0=\eta$. With
+
+$$
+a_0=t^2,\qquad m_0=s^2x(1-x),\qquad B_0=t+m_0,
+$$
+
+the legal encoded branch has unnormalized matrix
+
+$$
+X_0=\frac1{Z^2}
+\begin{pmatrix}
+t^2&0&0&0\\
+0&B_0&-m_0&0\\
+0&-m_0&B_0&0\\
+0&0&0&t^2
+\end{pmatrix}.
+\tag{3.4}
+$$
+
+Because $9x(1-x)>1$ on $(x_*,1/2]$, $m_0>t^2$. The partial transpose of
+(3.4) has eigenvalue $(t^2-m_0)/Z^2<0$, while
+
+$$
+\operatorname{Tr}X_0=\frac{2(t^2+B_0)}{Z^2}>0.
+\tag{3.5}
+$$
+
+Thus each selected source has a positive-probability pointwise NPT witness,
+but its direction is $\eta$ and is not an acquired controller input. This
+is a source-specific existence statement, not a uniform selection rule.
+$\square$
+

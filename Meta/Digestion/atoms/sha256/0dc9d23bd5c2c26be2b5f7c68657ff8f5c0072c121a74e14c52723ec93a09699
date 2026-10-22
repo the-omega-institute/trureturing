@@ -1,0 +1,143 @@
+**定理 58.1（全尺寸翻转代数与同一相位的精确行列式类）。** 对假设 55.2 中每个 $n\geq1$，使用 (VII.18) 的标架，有
+
+$$
+\operatorname{Lie}_{\mathbb R}\{A_1^{(n)},\ldots,A_n^{(n)}\}
+ =\mathfrak{so}(d_n),\qquad
+\overline{\mathcal V_n}=D_nSO(d_n)D_n^\dagger.
+\tag{VII.21}
+$$
+
+对每个 $n\geq3$，只加入原来同一处固定相位 (VII.4)，令
+
+$$
+r_n=\operatorname{rank}(n_1n_3|_{\mathcal K_n})=F_{n-2},
+\qquad C_n=\langle i^{r_n}\rangle\subseteq U(1).
+\tag{VII.22}
+$$
+
+则整个合法空间上的算子范数闭包恰为
+
+$$
+\overline{\mathcal W_n}
+ =\{Q\in U(d_n):\det Q\in C_n\},\qquad
+SU(d_n)\subseteq\overline{\mathcal W_n},\qquad
+[\overline{\mathcal W_n}]=PU(d_n).
+\tag{VII.23}
+$$
+
+方括号表示除去整体相位的像。特别地，对每个 $U\in U(\mathcal K_n)$ 和每个 $\varepsilon>0$，存在 $|z|=1$ 及一个输入无关有限字 $W\in\mathcal W_n$，使
+
+$$
+\|W-zU\|_{\mathrm{op}}<\varepsilon;
+\quad U\in SU(d_n)\text{ 时可以取 }z=1.
+\tag{VII.24}
+$$
+
+本结论作用于全部 $F_{n+2}$ 维合法空间，既不限制为交替码，也不要求分隔位初始化。对任意合法输入及任意有限被动参考，实际输出与目标酉通道的输出迹范数距离小于 $2\varepsilon$，全过程到非法域的泄漏精确为零。$C_n$ 是有限群，故字面上的 $U(d_n)$ 稠密性不成立。
+
+**证明。** 先证明 (VII.21) 的 Lie 代数等式。由 (VII.18)，生成代数 $\mathfrak g_n$ 包含于 $\mathfrak{so}(d_n)$。$n=1$ 的唯一控制给 $\mathfrak{so}(2)$；$n=2$ 在基序 $00,10,01$ 上给两个坐标旋转 $J_{00,10},J_{00,01}$，其括号给第三个方向，故为 $\mathfrak{so}(3)$。这里及下文 $J_{pq}=E_{pq}-E_{qp}$。$n=3$ 正是命题 45 已有的 $\mathfrak{so}(5)$，不另行重证。
+
+现设 $n\geq4$，归纳已知长度 $n-1$ 的结论。按同一实际链的末位分解
+
+$$
+\begin{aligned}
+\mathcal K_n&=\mathcal A\oplus\mathcal B,\\
+\mathcal A&=\operatorname{span}\{|x0\rangle:x\in\Sigma_{n-1}\},
+ &a&=d_{n-1},\\
+\mathcal B&=\operatorname{span}\{|u01\rangle:u\in\Sigma_{n-2}\},
+ &b&=d_{n-2}.
+\end{aligned}
+\tag{VII.25}
+$$
+
+前 $n-1$ 个控制保持两个分支，在 $\mathcal A$ 上的限制恰为长度 $n-1$ 的控制及其标架。它们在 $\mathcal B$ 上的限制仍实反对称，但不预设两个分支可以独立控制。令 $\mathfrak l$ 为这些分块对角生成元的 Lie 代数，则归纳假设给 $\pi_{\mathcal A}(\mathfrak l)=\mathfrak{so}(a)$。置
+
+$$
+\mathfrak k=\{X\in\mathfrak{so}(a):
+                    \operatorname{diag}(X,0)\in\mathfrak l\}.
+\tag{VII.26}
+$$
+
+这是 $\mathfrak{so}(a)$ 的理想：给 $Y\in\mathfrak{so}(a)$，取其提升 $\operatorname{diag}(Y,Z)\in\mathfrak l$，与 $\operatorname{diag}(X,0)$ 交换即得 $\operatorname{diag}([Y,X],0)$。第 $n-1$ 个控制在 $\mathcal B$ 上被末位的一阻断，而其 $\mathcal A$ 分量是 $B=A_m^{(m)}$、$m=n-1$，所以 $B\in\mathfrak k$。
+
+以下直接从这个种子取得整个理想，不用简单 Lie 代数分类。在长度 $m$ 的合法基中取
+
+$$
+p=0^m,\qquad q=0^{m-1}1,\qquad
+r=0^{m-2}10.
+\tag{VII.27}
+$$
+
+末位控制 $B$ 在 $p,q$ 上是 $J_{pq}$，在 $r$ 的行列上均为零，其余翻转块与这些指标不交。因此
+
+$$
+[J_{rp},B]=J_{rq}\in\mathfrak k.
+\tag{VII.28}
+$$
+
+对任意其他指标 $x$，理想性质给 $[J_{xr},J_{rq}]=J_{xq}\in\mathfrak k$；再用 $[J_{xq},J_{qy}]=J_{xy}$ 得到所有坐标旋转。于是 $\mathfrak k=\mathfrak{so}(a)$，从而
+
+$$
+\mathfrak{so}(a)\oplus0\subseteq\mathfrak l\subseteq\mathfrak g_n.
+\tag{VII.29}
+$$
+
+这一步证明了所需的分支独立性，而没有从第一投影满射直接假定它。
+
+最后一个控制在 (VII.25) 的分块形式为
+
+$$
+A_n^{(n)}=\mathcal J(M),\qquad
+\mathcal J(C)=
+ \begin{pmatrix}0&C\\-C^{\mathsf T}&0\end{pmatrix}.
+\tag{VII.30}
+$$
+
+每个 $\mathcal B$ 基态 $|u01\rangle$ 恰与 $\mathcal A$ 基态 $|u00\rangle$ 配对。因此 $M$ 的列 $u$ 仅在互异行 $p(u)=u00$ 上有系数 $\sigma_u=(-1)^{|u|}$。特别地，$\mathcal A$ 中合法态 $r_0=0^{n-2}10$ 对应一个零行。对任意 $X\in\mathfrak{so}(a)$，
+
+$$
+[\operatorname{diag}(X,0),\mathcal J(M)]=\mathcal J(XM).
+\tag{VII.31}
+$$
+
+分别取 $X=J_{r_0,p(u)}$，零行及匹配结构使
+
+$$
+J_{r_0,p(u)}M=\sigma_u e_{r_0}e_u^{\mathsf T}.
+\tag{VII.32}
+$$
+
+由 (VII.29)–(VII.32) 得 $\mathcal J(e_{r_0}e_u^{\mathsf T})\in\mathfrak g_n$。再与 $\operatorname{diag}(J_{x,r_0},0)$ 交换，得到每个 $\mathcal J(e_xe_u^{\mathsf T})$，故全部跨分支矩形方向都已取得。对 $u\ne v$，
+
+$$
+[\mathcal J(e_xe_u^{\mathsf T}),\mathcal J(e_xe_v^{\mathsf T})]
+ =\operatorname{diag}(0,-J_{uv}).
+\tag{VII.33}
+$$
+
+这给整个 $0\oplus\mathfrak{so}(b)$。它与 (VII.29) 及全部跨分支方向共同张成 $\mathfrak{so}(a+b)$，归纳闭合。
+
+乘积极限与交换子极限沿用命题 45 的论证；每个所需逆都在有限菜单中。它们把上述 Lie 括号和实线性组合的指数放入翻转字闭包，全部平面旋转又生成 $SO(d_n)$。反向包含由每个 $A_j^{(n)}$ 实反对称立即成立，得 (VII.21)。此全尺寸归纳不以有限尺寸的矩阵秩或数值外推为前提。
+
+现在加入 (VII.4)。投影 $P=n_1n_3|_{\mathcal K_n}$ 非零且非恒等：$101$ 延拓给前者，$0^n$ 给后者。$n=3$ 时秩为一；$n\geq4$ 时强制前缀 $1010$，余下任意合法长度 $n-4$ 尾链，所以秩为 $d_{n-4}=F_{n-2}$，得到 (VII.22)。$S_{\star,n}$ 与 $D_n$ 对易，在 $P$ 的像上为 $i$、在核上为一。
+
+在此被动标架中取闭群的 Lie 代数 $\mathfrak h$。由 (VII.21)，$\mathfrak h$ 包含全部 $J_{pq}$；它也在 $S_{\star,n}$ 共轭下不变。对满足 $|p\rangle\in\operatorname{ran}P$、$|q\rangle\in\ker P$ 的计算基指标，
+
+$$
+\begin{aligned}
+S_{\star,n}J_{pq}S_{\star,n}^{-1}
+ &=i(E_{pq}+E_{qp}),\\
+[J_{pq},i(E_{pq}+E_{qp})]
+ &=2i(E_{pp}-E_{qq}).
+\end{aligned}
+\tag{VII.34}
+$$
+
+两非空指标集之间的完全二分图连通，故这些对角差张成全部迹零虚对角矩阵。再与全部 $J_{uv}$ 交换，得到所有 $i(E_{uv}+E_{vu})$。它们与实反对称部分共同张成 $\mathfrak{su}(d_n)$，所以闭群包含 $SU(d_n)$。
+
+每个翻转生成元迹零，翻转脉冲行列式为一，而 $\det S_{\star,n}=i^{r_n}$，故全部字及其极限的行列式均在有限群 $C_n$ 中。反之，任意 $Q$ 若行列式在 $C_n$，可取整数 $s$ 使 $\det Q=\det S_{\star,n}^s$，于是 $QS_{\star,n}^{-s}\in SU(d_n)$；两因子均在闭群中。这证明 (VII.23)，不把一个固定角替换成连续相位权限。$D_nSU(d_n)D_n^\dagger=SU(d_n)$，所以该等式也在原坐标成立。
+
+对给定 $U$ 选 $z$ 满足 $z^{d_n}\det U=1$，则 $zU\in SU(d_n)$，闭包定义给 (VII.24) 的一个有限字。若 $\det U=1$，取 $z=1$。对任意参考输入，用 (VII.15) 的同一两项展开，其中 $A=W$、$B=zU$，得迹范数界；$z$ 在通道中消去。原生脉冲及相位都保持整个 $\mathcal K_n$，故合法域泄漏为零。另一方面，$\operatorname{diag}(e^{i\pi/4},1,\ldots,1)$ 的行列式不在 $C_n\subseteq\{1,i,-1,-i\}$，由行列式连续性，它不在该闭包中，字面 $U(d_n)$ 稠密性因此被排除。
+
+取 $n=2k-1$，本定理处理的是整个 $F_{2k+1}$ 维合法链，回答了区别于 $2^k$ 维交替码的全空间控制问题。编码定理 56.1 的无附加相位结论与这里的行列式限制相容：其目标只固定码上的作用，辅助方向可补偿行列式。本定理是同一独立菜单上的全链推导；不从 PXP 背景文献、编码空间通用性或小尺寸结论直接推断全链控制，也不据此主张文献原创性、有效率综合或物理资源供应。$\square$
+

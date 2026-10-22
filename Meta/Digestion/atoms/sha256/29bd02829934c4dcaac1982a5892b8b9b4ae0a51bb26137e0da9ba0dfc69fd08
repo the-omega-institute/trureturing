@@ -1,0 +1,90 @@
+## 17. Endpoint collar and the second critical consumer
+
+On $B_2$, the four tensor signs for
+$P_\star-p_{\rm lo}E$, $P_\star-p_{\rm hi}E$,
+$V_\star-v_{\rm lo}E$, and $V_\star-v_{\rm hi}E$ are respectively
+$+,-,+,-$, with $E>0$.  Their coefficient intervals are
+
+$$
+\begin{array}{c|c}
+\text{polynomial}&\text{coefficient interval}\\ \hline
+P_\star-p_{\rm lo}E&[15632871249295034892899101863589135503503564225604976260708207/64000000000000000000000000000000000000000000000000000000000000000000,\\
+\quad18306868805882728350506043194571853383464463262006135713/61035156250000000000000000000000000000000000000000000000000000]\\
+P_\star-p_{\rm hi}E&[-143513940503677688145026587497654979597799806166268865419025497/512000000000000000000000000000000000000000000000000000000000000000000,\\
+\quad-109679960121835866240682337107470049878838089735172940823/488281250000000000000000000000000000000000000000000000000000000]\\
+V_\star-v_{\rm lo}E&[116437808364870343161240787916944000232973076332998112621/244140625000000000000000000000000000000000000000000000000000000,\\
+\quad77191997698005018186359560886774831716883491109761887968220447/128000000000000000000000000000000000000000000000000000000000000000000]\\
+V_\star-v_{\rm hi}E&[-69848551102013674941744947373550438356790359749111956953/122070312500000000000000000000000000000000000000000000000000000,\\
+\quad-114192915102027930915500280632818400192061337751584899568250259/256000000000000000000000000000000000000000000000000000000000000000000]
+\end{array}
+\tag{17.1}
+$$
+
+Thus every source in $B_2$ has acquired base in
+$\operatorname{int}K_2$.  VI, Lemma 13.2, gives the strict enclosures
+
+$$
+\begin{gathered}
+0.5195359430<r_2<0.5195359431,\qquad
+0.0422838313<b_2<0.0422838314,\\
+1.830485<p_2<1.830486,\qquad
+175.912050<v_2<175.912051.
+\end{gathered}
+\tag{17.2}
+$$
+
+Hence $W_2$ lies over $K_2$, and Theorem 13.2 gives
+$\neg\mathsf J_2$.  In VI, Definition 16.3, $\mathsf Q_2$ uses
+$z=(r,b,d)$ and the sum of the two squared Euclidean distances to $z_2$.
+In exact form, VI, (16.7), defines
+
+$$
+\mathsf J_2\;\Longleftrightarrow\;
+\exists w_0,w_1:\mathscr W(p_2,v_2;w_0)\land
+\mathscr W(p_2,v_2;w_1)\land
+\mathfrak a(w_0)=\mathfrak a(w_1)\land
+\lVert w_0-w_1\rVert^2>0,
+$$
+
+where the norm is on the full eight-coordinate world tuple.  VI, (16.8),
+defines
+
+$$
+\mathsf Q_2\;\Longleftrightarrow\;
+\forall\epsilon>0\;\exists p,v,w_0,w_1,w_2,w_3:
+\mathscr I(p,v;w_0,w_1,w_2,w_3)\land
+\lVert z(w_2)-z_2\rVert^2+\lVert z(w_3)-z_2\rVert^2<\epsilon^2.
+$$
+
+Here $\mathscr I$ retains $p\ne24$, all four entire-child witnesses,
+the independent equal-$\mathfrak a$ pair with positive full-world squared
+norm, and the independent equal-$\mathfrak m$ pair with positive full-world
+squared norm; it imposes no cross-pair sharing restriction and no equality of
+the two common terminal values.  If the displayed sum is less than
+$\epsilon^2$, every $r$- and $b$-coordinate deviation is less than
+$\epsilon$.  With
+
+$$
+\epsilon=\frac1{10^{10}},
+\tag{17.3}
+$$
+
+(17.2) places both such coordinate intervals strictly inside $B_2$, since
+
+$$
+[0.5195359429,0.5195359432]
+ \subset(0.519535942,0.519535944),
+\quad
+[0.0422838312,0.0422838315]
+ \subset(0.0422838305,0.0422838320).
+\tag{17.4}
+$$
+
+A selected $M$-endpoint satisfying the $Q_2$ neighbourhood condition would
+therefore lie in $B_2$, contradicting the endpoint exclusion in Theorem 13.2.
+Thus $\neg\mathsf Q_2$, with no condition on the other endpoint, on cross-pair
+sharing, or on the common terminal values.  VI, Theorem 15.1, supplies actual
+strict off-(24) equal-$M$ germs converging to $W_2$; continuity and the
+interior of $B_2$ put their sufficiently small nonzero endpoints in $B_2$.
+Their entire children are $J$-injective by Theorem 13.2.
+

@@ -1,0 +1,9 @@
+**Convention 1.1 (status and scope).** This volume gives ordinary mathematical
+definitions and proofs for a sequential constructed-tape instrument. It is
+reference input, with no Lean-kernel certification or physical-realization
+claim. Merged text is append-only. The fixed source revision for the suppliers
+is `a31331d631db225e94b3a650a67498d812228d33`; the acquired-input supplier is
+also read at `346647b9c5e41ec76f0ea19d5796323dc813f750`. The new result concerns
+an instrument installed with its maintenance authority at its original boot.
+It does not install new authority into an arbitrary closed legacy controller.
+

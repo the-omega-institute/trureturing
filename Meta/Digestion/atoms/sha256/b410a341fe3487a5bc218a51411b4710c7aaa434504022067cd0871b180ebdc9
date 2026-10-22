@@ -1,0 +1,135 @@
+**Proposition 116.7 (zero time and exact finite distinctions).**
+The finite identities above include both singleton labels and empty
+birth blocks. With births, zero time cannot be included in the uniform
+full-successor convergence: there is a unit $h\in\ker D$ and
+
+$$
+(I-ED)h=h,\qquad \|I-ED\|_{H'\to H'}\ge1.
+\tag{116.29}
+$$
+
+The conservative ingress $C$ sends uniform old density to $r/m$,
+rather than to the new uniform equilibrium whenever $m$ is nonconstant.
+The family $ES(t)D$ is positive, but is not in general an exact finite
+conservative semigroup on the successor.
+
+Proof. For an alpha singleton the accepted alpha-to-beta step has no
+birth, $N=N'=1$, and $E=D=C=I$. For a beta singleton the successor has
+three nodes, $r=m=3$, $E$ repeats the old value, $D$ takes the mean,
+and $C=E$. These satisfy all displayed finite contracts; no edge or
+inverse is inserted into the singleton old carrier.
+An empty birth block on a general old source similarly gives
+$V'=V$, $r=m=1$ and the same underlying operators and identity maps.
+
+With births $|V'|>|V|$, so $D$ has a nonzero kernel by $DC=I$.
+Any unit vector in that kernel proves (116.29). For example opposite
+values on two born siblings give such a vector. All sources have births
+at sufficiently large accepted epochs, including the alpha orbit, so
+this is also a uniform-domain zero-time obstruction.
+
+The constant and integral formulae are already (116.4).
+In particular $ED$ need not be the identity at zero. On a pair with
+nonconstant $m$, conservation of $ES(t)D$ would require
+$S(t)W\mathbf1=\mathbf1$: its successor integral is
+$\langle S(t)W\mathbf1,Dh\rangle_\mu$, whereas the integral of $h$ is
+$\langle\mathbf1,Dh\rangle_\mu$, and $D$ is onto.
+As $S(t)$ is invertible and fixes constants at every finite $t$,
+that equality would force $W\mathbf1=\mathbf1$, which fails.
+Thus no exact finite conservative-semigroup contract is supplied.
+$\square$
+
+**Mathematical citation 116.8 (ordinary synthesis and actual operations).**
+IV §108 supplies the literal birth/count identities, uniform ratio and
+bounded-gradient beta corrector; IV §112.2 supplies their all-node
+accepted-step correspondence. Section 115 already supplies complete
+signed-state comparison and consecutive polar transfers. Its compact
+positive-time scalar functional calculus argument is reused in
+(116.24)--(116.26). Finite self-adjoint spectral calculus has exactly the
+hypotheses of the mature supplier cited there, Teschl,
+[*Mathematical Methods in Quantum Mechanics*, Theorem 3.7 and Theorem
+6.6](https://www.mat.univie.ac.at/~gerald/ftp/book-schroe/schroe.pdf):
+the operators here are finite symmetric nonnegative, and their resolvents
+are positive contractions. No covariance norm bound is needed.
+
+The varying-space form/semigroup framework of Mugnolo--Nittka--Post,
+[*Norm convergence of sectorial operators on varying Hilbert spaces*,
+Definition 2.3 and Example 3.9](https://files.ele-math.com/articles/oam-07-54.pdf),
+is context, not a theorem invoked with unverified identification
+hypotheses. In particular (116.8) is not a small $H$-operator norm of
+$DE-I$, and an automatic multiplication of identification maps would
+miss (116.20). The new source-specific ordinary synthesis is the full
+successor estimate (116.23), paid by the literal mass discrepancy,
+arbitrary successor resolvent tests, and the compositional correction.
+The positive local finite identities alone would not settle that target.
+These deductions are repo-derived, without an exhaustive novelty or
+worldwide priority claim.
+
+The exact arbitrary-clock finite obstruction in §114 remains intact.
+The centered ancestry obstruction of IV §109 remains intact: the present
+claim compares $S'$ with $ESD$ and uses the different ingress $C$;
+it does not assert same-map intertwining $S'E=ES$.
+Neither positivity nor locality makes $C$ a positive equilibrium-preserving
+isometry with a positive unital reverse. Its norm bounds and attained-range
+recovery are (116.5), with $D\mathbf1=m/r$.
+
+The field maps require genuinely acquired source data: actual addresses
+and birth-parent incidence, the beta mask, and the actual counts $N,N'$.
+Conditional on an authenticated stationary register and lawful access,
+the reply-driven full-description acquisition of IV §112.5 and §115.6
+allows their finite local calculation. This is a sufficient paid route,
+not a free size/index oracle or an optimized uniform acquisition bill.
+Computing a successor from a retained description is not a fresh Read
+or an executed Apply. Old version records and current version replies,
+repeated and absent invocations, and the complete chronological history
+retain their existing distinctions.
+
+The native contract is exactly IV Contract 112.1a: four-valued
+constructor Read, accepted/refused actual Apply under its declared common
+guard, and absorbing Stop on the same original-root register.
+A refused attempt leaves the carrier, operator and epoch unchanged;
+its comparison uses identity maps on that unchanged carrier.
+Stop executes no suffix and has no fictitious successor. The analytic
+limit is indexed by accepted epochs, conditional on their being reached;
+no guard is assumed to grant infinitely many updates. The uncapped
+all-accepted service and every declared lawful guarded history retain
+their original scope.
+
+On the branch service the entire INITIAL target remains IV (112.2):
+the reached ordered list $(L,R)$, exterior
+$\langle\square_1,\square_2\rangle$, and the complete partition according
+to equality of the two entire initial ordered subtrees. No heat value,
+birth mask or current-row target replaces it. Other original sources,
+including the singletons, remain in the mathematical comparison domain.
+
+[Native Birth Provenance §10](RECURSIVE_RELATIONAL_OBSERVATION_NATIVE_BIRTH_PROVENANCE.md)
+owns its same-$r,q$ joint acquired/exported supplement and fresh-query
+reduction on each full actual one-image fibre. Its paid acquisition,
+common entry, authentic update, stationary reading and isolation are
+assumptions; its class-root experiments are constructor tests.
+[Native Alpha Recut Memory §13](RECURSIVE_RELATIONAL_OBSERVATION_NATIVE_ALPHA_RECUT_MEMORY.md)
+owns its separated-age restricted-menu whole-row conflict graph and
+binary retained-code criterion. Neither result supplies an occurrence
+amplitude field, a heat actuator or a spatial port. Their source, history,
+permission and resource contracts are reused without extending them.
+
+The integer $n$ is an accepted source epoch; $t$ is comparison time,
+with unaccelerated heat parameters $Nt$ and $N't$.
+Acquisition chronology, old-set occupation time of IV §108 and physical
+elapsed time are separate. The modulus (116.22) does not identify them.
+There is no zero-time or shrinking-time uniformity, inverse heat,
+complete finite-spectrum recovery, automatic point accuracy or physical
+clock conversion in this conclusion.
+
+Constructor acquisition and local matrix calculation do not install
+signed-amplitude preparation, lawful execution of $C$, $D$, $E$ or $F$,
+closed-heat evolution or real-linear readout services. Encoding and
+precision, computation/storage/communication prices, authentication,
+access isolation, actuation permissions, physical duration, metric,
+spatial dimension and stable matter still require their actual bridges.
+The result narrows the original-source/operator/transport gap by a
+positive, occurrence-local analytical correspondence on the complete
+successor space. Native or physical implementation and spatial
+propagation remain unsupplied. This is ordinary mathematical source,
+with no new Lean/kernel, registration, freezing or physical verification
+claim, and no completion of the ongoing through-2027 why-three programme.
+

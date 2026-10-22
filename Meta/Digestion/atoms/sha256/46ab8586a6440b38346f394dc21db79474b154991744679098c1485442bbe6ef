@@ -1,0 +1,23 @@
+**Assumption 188.1 (Compatible preparations and operation menu, VI §147).**
+Use two independently prepared instances of the same specified $q,\beta$,
+with compatible labelled CAR modes and coupling phase. This is neither cloning
+nor a product of different native models. The untwirled even CAR product is
+formed before imposing one common total-number SSR per party:
+
+$$
+\mathcal G_N(X)=\int_0^{2\pi}\!\int_0^{2\pi}
+ e^{i\theta N_A^{\mathrm{tot}}}e^{i\phi N_B^{\mathrm{tot}}}
+ X e^{-i\phi N_B^{\mathrm{tot}}}e^{-i\theta N_A^{\mathrm{tot}}}
+ \frac{d\theta\,d\phi}{(2\pi)^2}.
+$$
+
+Independent, unrecorded local phase randomization of the two preparations
+would remove their useful relative coherence and specifies a different input.
+Allowed mathematical resources include joint handling of a party's modes,
+number-preserving rotations and phases, coherent projections onto degenerate
+local-number spaces, local discard, classical communication and heralding.
+The instrument $X\mapsto FXF$ preserves selected rail coherence. Resolving
+every individual occupation first and forgetting the outcome does not.
+Availability of these preparations and instruments is an additional
+physical premise, separate from the finite matrix assumptions.
+

@@ -1,0 +1,60 @@
+**Lemma 6.1 (The sole regular exceptional critical world).** At $b=1/8$
+the regular parent has $e=0$, $d=24$ and
+
+$$
+g(s)=h(s)=\frac85(s-1)(s-3)(s-5),\qquad p=24.
+\tag{6.1}
+$$
+
+The only regular common zero of $E_0,E_1,E_2$ on this strict branch is
+$r=9/16$. Its world $W_c$ satisfies
+
+$$
+(p,v,m)(W_c)=(24,591/4,720),\quad
+D(W_c)=4762875/65536,\quad\Lambda(W_c)=12701/3417.
+\tag{6.2}
+$$
+
+Proof. The undivided parent gives $e\Lambda=0$ at $b=1/8$.
+Regularity forces $e=0$, and (2.2) uniquely interpolates (6.1).
+Its fifth value is zero, so $p=24$. For an explicit branch certificate,
+put
+
+$$
+\begin{aligned}
+S(r)&=438272r^4-931328r^3+540800r^2-50728r-853,\\
+A_s(r)&=64r^2-64r-1,\qquad B_s(r)=64r^2-72r-1.
+\end{aligned}
+\tag{6.3}
+$$
+
+Exact univariate gcd gives
+
+$$
+\gcd\bigl(E_0(r,1/8),E_1(r,1/8),E_2(r,1/8)\bigr)
+\doteq(16r-9)S(r)^2,
+\qquad \Lambda(r,1/8)=\frac{S(r)}{15A_s(r)B_s(r)}.
+\tag{6.4}
+$$
+
+Here $\doteq$ permits a nonzero rational scalar. For $0<r<1$,
+$A_s=-1-64r(1-r)<0$ and $B_s=A_s-8r<0$. Thus $S=0$ is exactly
+the singular condition on this branch, and every regular common zero
+has $r=9/16$. Substitution in (2.3) gives (6.2). At this point $t=9/2$
+and direct quotient differentiation gives
+
+$$
+D_{(t,b)}f_M(W_c)=
+\begin{pmatrix}
+0&39437184/317525\\
+0&31382784/317525\\
+0&-209979456/317525
+\end{pmatrix}.
+\tag{6.5}
+$$
+
+Its rank is exactly one, so it really is critical. Equations
+(6.4)–(6.5) are also checked by the public certificate. This central
+world and its output are the world already described in F,
+Definition 27.1; they are not a separate new configuration. ∎
+

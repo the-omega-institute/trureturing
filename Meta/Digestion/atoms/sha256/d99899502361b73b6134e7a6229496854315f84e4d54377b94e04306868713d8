@@ -1,0 +1,65 @@
+**Definition 28.1 (Seven equations and an exact rational box).** For a
+source pair $(t,b)$ put
+
+$$
+\begin{gathered}
+r=tb,\qquad j=t+b(1-t^2),\qquad n=j+r,\qquad
+T=1+b,\qquad U=1+2b,\\
+\mathcal D=5\{(b^2+8b+4)jn-2TU(j+n)\},\qquad
+A_s=(8b-1)(2+5b),\\
+C_0=-24\mathcal D+3A_sjn,\qquad C_1=3A_sn,\\
+C_2=3(49b+34)jn-54U(j+n),\qquad C_3=3A_sj,\\
+B_5=-4C_0+15C_1-20C_2+10C_3,\\
+B_6=-10C_0+36C_1-45C_2+20C_3,\\
+B_7=-20C_0+70C_1-84C_2+35C_3.
+\end{gathered}
+\tag{28.1}
+$$
+
+Where the displayed denominators are nonzero define
+
+$$
+\begin{aligned}
+p_s&=\frac{-C_0+(U+n)B_5}{\mathcal D},&
+v_s&=\frac{-C_0+(2U+n)B_6}{\mathcal D},\\
+a_s&=\frac{-C_0+(T+2j+4r)B_7}{\mathcal D},&
+m_s&=\frac{-C_0+(3U+2n)B_7}{\mathcal D},\\
+d_s&=-\frac{C_0}{\mathcal D},&x_s&=\frac nU.
+\end{aligned}
+\tag{28.2}
+$$
+
+These are exactly the rational functions of SIII (16.1)–(16.5), with
+$t=\tau=r/b$ and its denominator renamed $\mathcal D$. In particular
+$\mathcal D$ is distinct from $D=x(x+1)(x+2)$ in (22.2).
+
+Use coordinates $z=(t_H,b_H,t_L,b_L,t_G,b_G,p)$ and the exact rational
+vector
+
+$$
+\begin{aligned}
+c={}&(2.2370940478987060045085363750558034267468,\\
+&0.3169968078628325686668274079165338900579,\\
+&2.0957225084128123115511607571336586558593,\\
+&0.0306709682738657107657705994335984762705,\\
+&-2.0787332127658314313751707162468341877283,\\
+&-0.4166428794531794513317775898703661812074,\\
+&13.1377186191279091547601137468519685572483).
+\end{aligned}
+\tag{28.3}
+$$
+
+Every terminating decimal here and below denotes its exact rational
+value. Set $\rho_*=10^{-30}$ and
+
+$$
+\begin{gathered}
+\mathcal B_*=c+[-\rho_*,\rho_*]^7,\\
+\Phi(z)=\bigl(p_H-p,\ p_L-p,\ v_H-v_L,\ a_H-a_L,
+\ p_G-p,\ v_G-v_H,\ x_G-x_H\bigr).
+\end{gathered}
+\tag{28.4}
+$$
+
+A subscript in (28.4) means evaluation at that source pair in $z$.
+

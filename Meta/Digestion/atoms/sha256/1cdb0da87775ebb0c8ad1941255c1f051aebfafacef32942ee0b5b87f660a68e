@@ -1,0 +1,25 @@
+**Theorem 19.2 (Positive-root exhaustion).** The polynomial $Q_9$ has
+no positive real roots. The polynomial $Q_{55}$ has exactly eight
+positive real roots, all simple, with exactly one in the interior of
+each $I_i$.
+
+Proof. The chains have respectively $10,56$ entries and end in
+nonzero constants. Their signs and variations are
+
+| Polynomial | Chain signs at $0$ | Chain signs at $+\infty$ | $V(0)$ | $V(+\infty)$ |
+| --- | --- | --- | --- | --- |
+| $Q_9$ | `++--+++---` | `+++-+++---` | $3$ | $3$ |
+| $Q_{55}$ | `++-++-++++-++--+-++---++--+---++--++--+----+-++-+++-----` | `++----++--+++---+++--+++---++++--++++-++++--+++--++-----` | $27$ | $19$ |
+
+The endpoint variations on the eight intervals are
+
+| $i$ | $V_{Q_{55}}(n_i/10^{100})$ | $V_{Q_{55}}((n_i+1)/10^{100})$ |
+| --- | --- | --- |
+| $1$ | $27$ | $26$ |
+| $2$ | $26$ | $25$ |
+| $3$ | $25$ | $24$ |
+| $4$ | $24$ | $23$ |
+| $5$ | $23$ | $22$ |
+| $6$ | $22$ | $21$ |
+| $7$ | $21$ | $20$ |
+| $8$ | $20$ | $19$ |

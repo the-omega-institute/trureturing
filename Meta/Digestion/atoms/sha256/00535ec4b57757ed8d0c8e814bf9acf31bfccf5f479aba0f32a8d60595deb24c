@@ -1,0 +1,30 @@
+**Definition 5.1 (full closed scalar-retention relation).** Fix a public
+known radius $\varepsilon\ge0$. The original exact scalar $a(W)$ is
+actually acquired by $J$. Its retained substitute may be **any** real
+$z$ satisfying
+
+$$
+|z-a(W)|\le\varepsilon.
+\tag{5.1}
+$$
+
+The decoder's complete variable input is exactly
+
+$$
+(p,v,z,\varepsilon).
+\tag{5.2}
+$$
+
+The model and literal history $H_4$ are fixed public parameters. The
+base $(p,v)$ is retained exactly and can be an infinite-precision
+reference. The radius is common to every world compared within a
+child; it cannot carry a branch label. A radius depending on the
+acquired base is allowed in Corollary 6.2, with the same value for
+all worlds having that base.
+
+There is no retained original $a$, error residue, $m$, germ parameter,
+sign, local/remote flag, source coordinate or world-dependent lookup
+table in (5.2). The full relation (5.1) is substantive: a particular
+quantizer or channel with a proper subset of these allowed outputs
+has a different necessity question.
+

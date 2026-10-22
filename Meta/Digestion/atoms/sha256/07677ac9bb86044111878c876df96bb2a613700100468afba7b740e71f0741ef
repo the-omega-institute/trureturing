@@ -1,0 +1,36 @@
+## 2. The moving boundary kernel
+
+The substitutions in VII §202 are, for the family above,
+
+$$
+\begin{aligned}
+D&=tI_2+s(1-x)\eta\eta^*,&
+E&=tI_2-ts\eta\eta^*,\\
+f&=s\sqrt{x(1-x)}\,\eta,&g=0,\\
+c&=t+sx,&b=t,&d=t^2,\\
+q_0&=9x(1-x),&q_3&=0.
+\end{aligned}
+\tag{2.1}
+$$
+
+The exact identity $9x_*(1-x_*)=1$ gives
+
+$$
+f=t\eta,\qquad E-ff^*=t(I_2-\eta\eta^*).
+\tag{2.2}
+$$
+
+All other factors in VII §§203–206 are strictly positive at $x=x_*$. More
+explicitly, the one-dimensional-Alice blocks are tensor products of the
+positive blocks $A_0$ and $A_1$; the $N_B=0,4$ blocks are $cI_2$ and $bdI_2$;
+the $N_B=1$ partial transpose is unitarily equivalent to
+
+$$
+cD\oplus cD\oplus(E-ff^*)\oplus(E+ff^*);
+$$
+
+and, since $g=0$, the two $N_B=2$ blocks in VII (206.4) are positive
+diagonal block matrices with entries $E\otimes D$, $D\otimes E$, and $d$.
+The $N_B=3$ blocks are $bE$ and $dD$ (twice). Thus the only zero direction
+of $M_\eta:=\Omega_{x_*,\eta}^{T_A}$ is the null direction of $E-ff^*$.
+
