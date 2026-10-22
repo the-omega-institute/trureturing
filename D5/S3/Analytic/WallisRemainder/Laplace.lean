@@ -7,6 +7,7 @@
    digest: The logarithmic Wallis remainder has a positive convergent hyperbolic Laplace representation. -/
 
 import D5.S3.Analytic.WallisRemainder.Defs
+import D5.S3.Entropy.RenyiCombining.HircheArimotoCombining
 import Mathlib.Analysis.SpecialFunctions.Gamma.BohrMollerup
 import Mathlib.Analysis.SpecialFunctions.Trigonometric.DerivHyp
 import Mathlib.Analysis.SpecialFunctions.Pow.Asymptotics
@@ -92,10 +93,11 @@ noncomputable def laplace (x : ℝ) : ℝ := ∫ t in Ioi (0 : ℝ), laplaceKern
 
 private lemma tanh_quarter_bounds {t : ℝ} (ht : 0 < t) :
     0 < Real.tanh (t / 4) ∧ Real.tanh (t / 4) ≤ t / 4 := by
-  rw [Real.tanh_eq_sinh_div_cosh]
   constructor
-  · exact div_pos (Real.sinh_pos_iff.mpr (by linarith)) (Real.cosh_pos _)
-  · exact (div_le_iff₀ (Real.cosh_pos _)).mpr
+  · exact (D5.S3.Entropy.RenyiCombining.HircheArimotoCombining.tanh_mem
+      (by linarith : 0 < t / 4)).1
+  · rw [Real.tanh_eq_sinh_div_cosh]
+    exact (div_le_iff₀ (Real.cosh_pos _)).mpr
       (D5.S3.Observer.Fluctuation.ThermalCoefficientFloor.sinh_le_self_mul_cosh_of_nonneg
         (by linarith))
 
@@ -122,12 +124,13 @@ theorem integrableOn_laplaceKernel {x : ℝ} (hx : 0 < x) :
 
 private lemma tanh_halfstep (t : ℝ) :
     (1 + Real.exp (-t / 2)) * Real.tanh (t / 4) = 1 - Real.exp (-t / 2) := by
-  have he : Real.exp (-t / 2) = Real.exp (-(t / 4)) / Real.exp (t / 4) := by
-    rw [← Real.exp_sub]
-    congr 1
-    ring
-  rw [he, Real.tanh_eq]
-  field_simp (disch := first | assumption | positivity)
+  have h := D5.S3.Entropy.RenyiCombining.HircheArimotoCombining.ratio_tanh (t / 4)
+  change (1 - Real.tanh (t / 4)) / (1 + Real.tanh (t / 4)) = _ at h
+  rw [show -2 * (t / 4) = -t / 2 by ring] at h
+  have hd : 1 + Real.tanh (t / 4) ≠ 0 :=
+    ne_of_gt (by linarith [Real.neg_one_lt_tanh (t / 4)])
+  have he := (div_eq_iff hd).mp h
+  nlinarith [he]
 
 /-- The Laplace integral satisfies the same half-step equation. -/
 private theorem laplace_add_half {x : ℝ} (hx : 0 < x) :

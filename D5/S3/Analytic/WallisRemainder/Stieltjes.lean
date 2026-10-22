@@ -130,12 +130,14 @@ theorem strictMonoOn_jensenRemainder {M : Measure ℝ} [IsProbabilityMeasure M]
     ring
   rw [hf x hx, hf y hy]
   apply (div_lt_div_iff_of_pos_right hvar).mpr
+  have hfactor (z v : ℝ) : f z v = (v-a)^2 * (z^3 / ((z+a)^2 * (z+v))) := by
+    dsimp [f]
+    simp only [div_eq_mul_inv, mul_inv_rev]
+    ring
   have hle : f x ≤ᵐ[M] f y := by
     filter_upwards [hp] with v hv
     have hh := (kernel_strict hx hxy ha hv).le
-    have he (z : ℝ) : f z v = (v-a)^2 * (z^3 / ((z+a)^2 * (z+v))) := by
-      dsimp [f]; simp only [div_eq_mul_inv, mul_inv_rev]; ring
-    rw [he, he]
+    rw [hfactor, hfactor]
     exact mul_le_mul_of_nonneg_left hh (sq_nonneg _)
   apply lt_of_le_of_ne (integral_mono_ae (hi x hx) (hi y hy) hle)
   intro he
@@ -143,9 +145,7 @@ theorem strictMonoOn_jensenRemainder {M : Measure ℝ} [IsProbabilityMeasure M]
   have hz : (fun v => (v-a)^2) =ᵐ[M] 0 := by
     filter_upwards [hp, heq] with v hv heq
     have hh := kernel_strict hx hxy ha hv
-    have he (z : ℝ) : f z v = (v-a)^2 * (z^3 / ((z+a)^2 * (z+v))) := by
-      dsimp [f]; simp only [div_eq_mul_inv, mul_inv_rev]; ring
-    rw [he, he] at heq
+    rw [hfactor, hfactor] at heq
     dsimp
     nlinarith [sq_nonneg (v-a)]
   have hzint : (∫ v, (v-a)^2 ∂M) = 0 := by
