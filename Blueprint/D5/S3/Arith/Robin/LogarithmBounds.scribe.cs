@@ -31,5 +31,16 @@ internal sealed class LogarithmBoundsDocument : IScribeDocumentDefinition
                     "For 0<=x<=1/2, -log(1-x)<=x+x^2. Monotonicity of "
                     + "log(1-x)+x+x^2 on that interval proves the estimate. For 0<=x<=1/4, "
                     + "the right side is at most 4*x/3, as used in the prefix-lcm tail bound."))),
+                DescribeRole.Lemma),
+            Describe.Lean(
+                DescribeId.Create("original-first-clock-buffer-log-size"),
+                DeclarationHandle.Create(Prefix + "buffer_log_size"),
+                H("Logarithms near an endpoint"),
+                StatementSource.WithoutFormula(),
+                AssessedProvenance.FromRepo(),
+                Blocks(Paragraph(Text(
+                    "For real x>=256 and x-2<=z<=x+1, one has 5<log(z)<=x/20. "
+                    + "The estimate controls original endpoint windows and gives the lower logarithm "
+                    + "bound used for cumulative Mertens peaks at cutoffs at least 10000."))),
                 DescribeRole.Lemma))));
 }

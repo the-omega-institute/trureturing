@@ -28,8 +28,21 @@ Lean statement: `D5/S3/Arith/Robin/LogarithmBounds.neg_log_one_sub_le`
 
 For 0<=x<=1/2, -log(1-x)<=x+x^2. Monotonicity of log(1-x)+x+x^2 on that interval proves the estimate. For 0<=x<=1/4, the right side is at most 4*x/3, as used in the prefix-lcm tail bound.
 
+**Lemma 1.3 (Logarithms near an endpoint).**
+
+Lean statement: `D5/S3/Arith/Robin/LogarithmBounds.buffer_log_size`
+
+*Proof.* Machine-checked in Lean as `D5/S3/Arith/Robin/LogarithmBounds.buffer_log_size` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+For real x>=256 and x-2<=z<=x+1, one has 5<log(z)<=x/20. The estimate controls original endpoint windows and gives the lower logarithm bound used for cumulative Mertens peaks at cutoffs at least 10000.
+
 ## References
 
+- Truth anchor: `D5/S3/Arith/Robin/LogarithmBounds.buffer_log_size`
 - Truth anchor: `D5/S3/Arith/Robin/LogarithmBounds.loglog_tangent`
 - Truth anchor: `D5/S3/Arith/Robin/LogarithmBounds.neg_log_one_sub_le`
 - Dependency: [D5/S3/Arith/Robin/ActualRobinClockCovariance](ActualRobinClockCovariance.md)
