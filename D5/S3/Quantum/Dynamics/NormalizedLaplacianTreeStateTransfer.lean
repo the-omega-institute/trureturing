@@ -117,7 +117,18 @@ private lemma symmetric_eigenvectors :
         (2 / 3 : ℂ) • symMode 1 1 (-(Real.sqrt 2 : ℂ) / 7) (-3 / 7) ∧
     normalizedLaplacian tree *ᵥ symMode 1 (-1) (-(Real.sqrt 2 : ℂ) / 7) (3 / 7) =
         (4 / 3 : ℂ) • symMode 1 (-1) (-(Real.sqrt 2 : ℂ) / 7) (3 / 7) := by
-  sorry
+  have hs : (Real.sqrt 2 : ℂ) ≠ 0 := Complex.ofReal_ne_zero.mpr
+    (Real.sqrt_ne_zero'.mpr (by norm_num))
+  have hs2 : (Real.sqrt 2 : ℂ) ^ 2 = 2 := by
+    norm_cast
+    exact Real.sq_sqrt (by norm_num)
+  simp only [sym_action]
+  repeat' apply And.intro
+  all_goals
+    ext i
+    simp only [Pi.smul_apply, smul_eq_mul, symMode]
+    split_ifs <;>
+      field_simp [hs] <;> ring_nf <;> simp [hs2] <;> ring
 
 private lemma antisymmetric_eigenvector :
     normalizedLaplacian tree *ᵥ (Pi.single 0 1 - Pi.single 1 1 : Fin 17 → ℂ) =
