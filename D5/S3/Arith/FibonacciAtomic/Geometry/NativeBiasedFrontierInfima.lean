@@ -7,6 +7,7 @@
    digest: Biased native frontier distances and exact shift-copy product minima. -/
 
 import D5.S3.Arith.FibonacciAtomic.ActualImageAlphaSeparation
+import D5.S3.Arith.FibonacciAtomic.Observer.NativePrefixIdentityReflection
 
 set_option maxHeartbeats 1000000
 set_option autoImplicit false
@@ -184,5 +185,135 @@ theorem biased_frontier_triangle (θ : ℝ) (hθ : 0 ≤ θ) (hθ1 : θ ≤ 1)
 theorem biased_frontier_bounds (θ : ℝ) (hθ : 0 ≤ θ) (hθ1 : θ ≤ 1)
     (s t : Source) : 0 ≤ distance θ s t ∧ distance θ s t ≤ 1 := by
   exact ⟨distance_nonneg θ hθ hθ1 s t, distance_le_one θ hθ hθ1 s t⟩
+
+
+open GenealogicalFiberTransport (substitution)
+open ActualImageAlphaSeparation (frontier)
+open ActualImageSevenLeafSeparation (leafAddresses)
+
+private theorem iterate_pair (a : ℕ) (s t : Source) :
+    substitution^[a] (.mul s t) = .mul (substitution^[a] s) (substitution^[a] t) :=
+  Function.Semiconj₂.iterate
+    (show Function.Semiconj₂ substitution FreeMagma.mul FreeMagma.mul from
+      substitution.map_mul) a s t
+
+private theorem shift_ne (a : ℕ) (ha : 1 ≤ a) (t : Source) :
+    t ≠ substitution^[a] t := by
+  intro h
+  have hk := Observer.NativePrefixIdentityReflection.kappa_iterate a t
+  rw [← h] at hk
+  omega
+
+private theorem frontier_self (s : Source) : frontier s s = ∅ := by
+  cases s <;> simp [ActualImageAlphaSeparation.frontier]
+
+private theorem frontier_pair (s u t v : Source) :
+    frontier (.mul s u) (.mul t v) =
+      (frontier s t).image (List.cons false) ∪ (frontier u v).image (List.cons true) := by
+  by_cases h : (.mul s u : Source) = .mul t v
+  · injection h with hs hu
+    subst t
+    subst v
+    simp [frontier_self]
+  · simp only [ActualImageAlphaSeparation.frontier, if_neg h]
+
+/-- Every positive shift first disagrees at precisely the original leaves. -/
+theorem frontier_shift (a : ℕ) (ha : 1 ≤ a) (t : Source) :
+    frontier t (substitution^[a] t) = leafAddresses t := by
+  induction t with
+  | of b =>
+      simp [ActualImageAlphaSeparation.frontier, shift_ne a ha (.of b), leafAddresses,
+        ActualTreeReadoutAcquisition.leaves]
+  | mul s t hs ht =>
+      rw [iterate_pair, frontier_pair, hs, ht]
+      ext p
+      simp [leafAddresses, ActualTreeReadoutAcquisition.leaves]
+
+private theorem weighted_split (θ : ℝ) (A B : Finset Address) :
+    (∑ p ∈ A.image (List.cons false) ∪ B.image (List.cons true), weight θ p) =
+      θ * (∑ p ∈ A, weight θ p) + (1 - θ) * (∑ p ∈ B, weight θ p) := by
+  have hd : Disjoint (A.image (List.cons false)) (B.image (List.cons true)) := by
+    simp only [Finset.disjoint_left, Finset.mem_image]
+    rintro _ ⟨a, _, rfl⟩ ⟨b, _, hb⟩
+    cases hb
+  rw [Finset.sum_union hd,
+    Finset.sum_image (fun _ _ _ _ h => List.cons_injective h),
+    Finset.sum_image (fun _ _ _ _ h => List.cons_injective h)]
+  simp only [weight]
+  rw [← Finset.mul_sum, ← Finset.mul_sum]
+
+/-- The leaves of every finite full binary source have total cylinder weight one. -/
+theorem leaf_partition (θ : ℝ) (t : Source) :
+    (∑ p ∈ leafAddresses t, weight θ p) = 1 := by
+  induction t with
+  | of b => simp [leafAddresses, ActualTreeReadoutAcquisition.leaves, weight]
+  | mul s t hs ht =>
+      have h : leafAddresses (.mul s t) =
+          (leafAddresses s).image (List.cons false) ∪
+            (leafAddresses t).image (List.cons true) := by
+        ext p
+        simp [leafAddresses, ActualTreeReadoutAcquisition.leaves]
+      rw [h, weighted_split, hs, ht]
+      ring
+
+/-- A source and any positive native shift have unit biased distance. -/
+theorem distance_shift (θ : ℝ) (a : ℕ) (ha : 1 ≤ a) (t : Source) :
+    distance θ t (substitution^[a] t) = 1 := by
+  unfold distance
+  rw [frontier_shift a ha, leaf_partition]
+
+private theorem distance_symm (θ : ℝ) (s t : Source) :
+    distance θ s t = distance θ t s := by
+  induction s generalizing t with
+  | of b =>
+      cases t with
+      | of c =>
+          by_cases h : b = c
+          · subst c; rfl
+          · rw [distance_of_of θ b c h, distance_of_of θ c b (Ne.symm h)]
+      | mul u v => rw [distance_of_mul, distance_mul_of]
+  | mul s u hs hu =>
+      cases t with
+      | of c => rw [distance_mul_of, distance_of_mul]
+      | mul t v => rw [distance_mul_mul, distance_mul_mul, hs t, hu v]
+
+
+/-- First disagreements of three original reply traces, stopping at their common leaves. -/
+def tripleFrontier : Source → Source → Source → Finset Address
+  | .mul s u, .mul t v, .mul z w =>
+      (tripleFrontier s t z).image (List.cons false) ∪
+        (tripleFrontier u v w).image (List.cons true)
+  | .of b, .of c, .of d => if b = c ∧ c = d then ∅ else {[]}
+  | _, _, _ => {[]}
+
+/-- Normalized three-source frontier mass with per-original-address weights. -/
+def tripleMass (θ : ℝ) (s t u : Source) : ℝ :=
+  ∑ p ∈ tripleFrontier s t u, weight θ p
+
+private theorem triple_leaf (b : Bool) (y z : Source) (h : (.of b : Source) ≠ y) :
+    tripleFrontier (.of b) y z = {[]} := by
+  cases y with
+  | of c =>
+      have bc : b ≠ c := by intro eq; apply h; rw [eq]
+      cases z <;> simp [tripleFrontier,bc]
+  | mul l r => rfl
+
+/-- The first two positive-shift coordinates already disagree at every original leaf. -/
+theorem triple_frontier_shift (a : ℕ) (ha : 1 ≤ a) (t : Source) :
+    tripleFrontier t (substitution^[a] t) (substitution^[a] (substitution^[a] t)) =
+      leafAddresses t := by
+  induction t with
+  | of b =>
+      rw [triple_leaf b _ _ (shift_ne a ha _)]
+      simp [leafAddresses,ActualTreeReadoutAcquisition.leaves]
+  | mul s t hs ht =>
+      simp only [iterate_pair,tripleFrontier,hs,ht]
+      ext p
+      simp [leafAddresses,ActualTreeReadoutAcquisition.leaves]
+
+private theorem triple_mass_shift (θ : ℝ) (a : ℕ) (ha : 1 ≤ a) (t : Source) :
+    tripleMass θ t (substitution^[a] t) (substitution^[a] (substitution^[a] t)) = 1 := by
+  unfold tripleMass
+  rw [triple_frontier_shift a ha,leaf_partition]
 
 end D5.S3.Arith.FibonacciAtomic.Geometry.NativeBiasedFrontierInfima

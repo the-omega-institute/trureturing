@@ -52,10 +52,89 @@ $$\forall theta: \mathbb{R}, (0 \leq theta) \Rightarrow (theta \leq 1) \Rightarr
 
 For every real theta in the closed unit interval and every source pair, the frontier distance lies between zero and one. All directional cylinder weights are nonnegative. Structural induction uses theta plus one minus theta equals one at a common branch.
 
+**Theorem 1.5 (Exact Positive-Shift Frontier).**
+
+$$\forall a: \mathbb{N}, (1 \leq a) \Rightarrow \forall t: \operatorname{Source}\left(\right), \operatorname{frontier}\left(t, \operatorname{iterate}\left(\operatorname{rho}\left(\right), a, t\right)\right) = \operatorname{leafAddresses}\left(t\right)$$
+
+*Proof.* Machine-checked in Lean as `D5/S3/Arith/FibonacciAtomic/Geometry/NativeBiasedFrontierInfima.frontier_shift` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+For every natural a at least one and every source t, the frontier between t and rho iterated a times on t is exactly the set of original leaves of t. The right-spine rank increases by a, excluding equality at each original leaf. Iterated substitution preserves every original branch, so structural induction identifies the entire frontier.
+
+**Theorem 1.6 (Weighted Leaf Partition).**
+
+$$\forall theta: \mathbb{R}, \forall t: \operatorname{Source}\left(\right), \operatorname{sum}\left(\operatorname{leafAddresses}\left(t\right), \operatorname{weight}\left(theta\right)\right) = 1$$
+
+*Proof.* Machine-checked in Lean as `D5/S3/Arith/FibonacciAtomic/Geometry/NativeBiasedFrontierInfima.leaf_partition` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+For every real theta and arbitrary finite full binary source t, the sum of directional weights of its leaves equals one. This algebraic identity includes uneven trees and follows by structural induction and the two directional weight factors.
+
+**Theorem 1.7 (Unit Distance to Every Positive Shift).**
+
+$$\forall theta: \mathbb{R}, \forall a: \mathbb{N}, (1 \leq a) \Rightarrow \forall t: \operatorname{Source}\left(\right), \operatorname{distance}\left(theta, t, \operatorname{iterate}\left(\operatorname{rho}\left(\right), a, t\right)\right) = 1$$
+
+*Proof.* Machine-checked in Lean as `D5/S3/Arith/FibonacciAtomic/Geometry/NativeBiasedFrontierInfima.distance_shift` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+For every real theta, every natural a at least one, and every finite source t, the biased distance from t to its a-fold native substitution is one. The exact leaf frontier and its weighted partition give the identity.
+
+**Definition 1.8 (Three-Source Frontier).**
+
+Lean statement: `D5/S3/Arith/FibonacciAtomic/Geometry/NativeBiasedFrontierInfima.tripleFrontier`
+
+*Formalization.* `D5/S3/Arith/FibonacciAtomic/Geometry/NativeBiasedFrontierInfima.tripleFrontier` (`✓ std3`).
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+Three common branches recurse on their respective left and right children. Three equal labelled leaves contribute nothing. Every other root combination contributes the empty address. This is the first disagreement of the three original reply traces.
+
+**Definition 1.9 (Three-Source Normalized Mass).**
+
+Lean statement: `D5/S3/Arith/FibonacciAtomic/Geometry/NativeBiasedFrontierInfima.tripleMass`
+
+*Formalization.* `D5/S3/Arith/FibonacciAtomic/Geometry/NativeBiasedFrontierInfima.tripleMass` (`✓ std3`).
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+The three-source mass is the sum of the same directional weights over the three-source first-disagreement frontier.
+
+**Theorem 1.10 (Exact Three-Shift Leaf Frontier).**
+
+$$\forall a: \mathbb{N}, (1 \leq a) \Rightarrow \forall t: \operatorname{Source}\left(\right), \operatorname{tripleFrontier}\left(t, \operatorname{iterate}\left(\operatorname{rho}\left(\right), a, t\right), \operatorname{iterate}\left(\operatorname{rho}\left(\right), a, \operatorname{iterate}\left(\operatorname{rho}\left(\right), a, t\right)\right)\right) = \operatorname{leafAddresses}\left(t\right)$$
+
+*Proof.* Machine-checked in Lean as `D5/S3/Arith/FibonacciAtomic/Geometry/NativeBiasedFrontierInfima.triple_frontier_shift` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+For every positive a, the three sources t, rho iterated a times on t, and rho iterated twice a times on t have exactly the original leaf set of t as their joint first-disagreement frontier. The first two coordinates already disagree at every original leaf, and all three retain the original branches.
+
 ## References
 
 - Truth anchor: `D5/S3/Arith/FibonacciAtomic/Geometry/NativeBiasedFrontierInfima.biased_frontier_bounds`
 - Truth anchor: `D5/S3/Arith/FibonacciAtomic/Geometry/NativeBiasedFrontierInfima.biased_frontier_triangle`
 - Truth anchor: `D5/S3/Arith/FibonacciAtomic/Geometry/NativeBiasedFrontierInfima.distance`
+- Truth anchor: `D5/S3/Arith/FibonacciAtomic/Geometry/NativeBiasedFrontierInfima.distance_shift`
+- Truth anchor: `D5/S3/Arith/FibonacciAtomic/Geometry/NativeBiasedFrontierInfima.frontier_shift`
+- Truth anchor: `D5/S3/Arith/FibonacciAtomic/Geometry/NativeBiasedFrontierInfima.leaf_partition`
+- Truth anchor: `D5/S3/Arith/FibonacciAtomic/Geometry/NativeBiasedFrontierInfima.tripleFrontier`
+- Truth anchor: `D5/S3/Arith/FibonacciAtomic/Geometry/NativeBiasedFrontierInfima.tripleMass`
+- Truth anchor: `D5/S3/Arith/FibonacciAtomic/Geometry/NativeBiasedFrontierInfima.triple_frontier_shift`
 - Truth anchor: `D5/S3/Arith/FibonacciAtomic/Geometry/NativeBiasedFrontierInfima.weight`
 - Dependency: [D5/S3/Arith/FibonacciAtomic/ActualImageAlphaSeparation](../ActualImageAlphaSeparation.md)
+- Dependency: [D5/S3/Arith/FibonacciAtomic/Observer/NativePrefixIdentityReflection](../Observer/NativePrefixIdentityReflection.md)
