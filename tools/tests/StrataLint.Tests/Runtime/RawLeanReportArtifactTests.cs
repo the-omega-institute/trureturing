@@ -309,6 +309,76 @@ public sealed class RawLeanReportArtifactTests
     }
 
     [Theory]
+    [InlineData(16381)]
+    [InlineData(16382)]
+    [InlineData(16383)]
+    [InlineData(16384)]
+    public void ScopedValidationPreservesUtf8AcrossReadAndCanonicalStringBoundaries(int prefixLength)
+    {
+        var material = "\ufeff" + new string('a', prefixLength) + "𝒪😀\uFEFF\n\\\"" + new string('b', 16384);
+        using var temporary = new TemporaryDirectory();
+        var path = Path.Combine(temporary.Path, "scoped.json");
+        WriteMaterialFixture(path, material);
+        File.WriteAllText(path, File.ReadAllText(path)
+            .Replace(RawLeanReportArtifact.Schema, RawLeanReportArtifact.ScopedSchema, StringComparison.Ordinal)
+            .Replace("\"imports\": []", "\"imports\": [\"Init\"]", StringComparison.Ordinal));
+        var scope = LeanReportScope.Create(Snapshot(), [RepoPath.CreateKnown("Trureturing.lean")]);
+        var report = RawLeanReportArtifact.ReadFileForScope(path, scope, validateMaterials: true);
+        Assert.Equal(material, Assert.Single(Assert.Single(report.Files).Value.Declarations).LoadTypeRepresentation());
+    }
+
+    [Theory]
+    [InlineData("f09f92")]
+    [InlineData("f09f9241")]
+    [InlineData("eda080")]
+    [InlineData("c080")]
+    [InlineData("efbbbf80")]
+    public void FullMaterialValidationRejectsMalformedUtf8AtIncrementalBoundaries(string malformedHex)
+    {
+        using var temporary = new TemporaryDirectory();
+        var path = Path.Combine(temporary.Path, "raw.json");
+        WriteMaterialFixture(path, "statement-v1(test)");
+        using (var archive = ZipFile.Open(RawLeanReportArtifact.MaterialsPath(path), ZipArchiveMode.Update))
+        {
+            var old = Assert.Single(archive.Entries);
+            var name = old.FullName;
+            old.Delete();
+            using var destination = archive.CreateEntry(name).Open();
+            destination.Write(Encoding.UTF8.GetBytes(new string('a', 16383)));
+            destination.Write(Convert.FromHexString(malformedHex));
+        }
+        var failure = Assert.Throws<InvalidDataException>(() =>
+            RawLeanReportArtifact.ReadFile(path, Snapshot(), validateMaterials: true));
+        Assert.Contains("strict UTF-8", failure.Message, StringComparison.Ordinal);
+    }
+
+    [Fact]
+    public void ScopedValidationRecomputesExcludedAuxiliaryIdentitiesWithoutDemandReading()
+    {
+        using var temporary = new TemporaryDirectory();
+        var path = Path.Combine(temporary.Path, "scoped.json");
+        var declaration = new LeanDeclaration("probe._proof_2", "theorem", "statement-v1(test)", [])
+        {
+            IncludeInStatement = false,
+        };
+        RawLeanReportArtifact.WriteFile(path, Snapshot(), LeanAxiomReport.Create(
+            new Dictionary<string, LeanFileReport> { ["Trureturing.lean"] = new([], [declaration]) }));
+        var text = File.ReadAllText(path)
+            .Replace(RawLeanReportArtifact.Schema, RawLeanReportArtifact.ScopedSchema, StringComparison.Ordinal)
+            .Replace("\"imports\": []", "\"imports\": [\"Init\"]", StringComparison.Ordinal);
+        File.WriteAllText(path, text);
+        var scope = LeanReportScope.Create(Snapshot(), [RepoPath.CreateKnown("Trureturing.lean")]);
+        var report = RawLeanReportArtifact.ReadFileForScope(path, scope, validateMaterials: true);
+        Assert.False(Assert.Single(Assert.Single(report.Files).Value.Declarations).IncludeInStatement);
+        File.WriteAllText(path, text.Replace(declaration.PrecomputedStatementId
+            ?? CanonicalStatementWriter.DeclarationStatementId(RepoPath.CreateKnown("Trureturing.lean"), declaration),
+            "sha256:" + new string('0', 64), StringComparison.Ordinal));
+        var failure = Assert.Throws<InvalidDataException>(() =>
+            RawLeanReportArtifact.ReadFileForScope(path, scope, validateMaterials: true));
+        Assert.Contains("statement identity", failure.Message, StringComparison.Ordinal);
+    }
+
+    [Theory]
     [InlineData("hash", "hash mismatch")]
     [InlineData("utf8", "strict UTF-8")]
     [InlineData("missing", "missing")]

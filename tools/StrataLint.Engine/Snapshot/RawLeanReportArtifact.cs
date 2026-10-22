@@ -178,8 +178,7 @@ internal static class RawLeanReportArtifact
                 foreach (var (path, report) in reports)
                 foreach (var declaration in report.Declarations)
                 {
-                    var actual = CanonicalStatementWriter.DeclarationStatementId(RepoPath.CreateKnown(path),
-                        declaration with { PrecomputedStatementId = null });
+                    var actual = materialArchive.DeclarationStatementId(RepoPath.CreateKnown(path), declaration);
                     if (!string.Equals(actual, declaration.PrecomputedStatementId, StringComparison.Ordinal))
                         throw new InvalidDataException($"Scoped Lean report statement identity does not match material: {path}:{declaration.Name}.");
                 }
@@ -545,6 +544,29 @@ internal static class RawLeanReportArtifact
                 _ = ReadCore("sha256:" + name[EntryPrefix.Length..], materialize: false);
         }
 
+        internal string DeclarationStatementId(RepoPath path, LeanDeclaration declaration)
+        {
+            _ = addressesValidated.Value;
+            var archive = contents.Value;
+            var address = declaration.StatementTypeAddress;
+            if (!archive.Entries.TryGetValue(EntryName(address), out var entry))
+                throw new InvalidDataException($"Lean statement material is missing for {address}.");
+            lock (archive.Gate)
+            {
+                using var stream = entry.Open();
+                using var reader = new StreamReader(stream, StrictUtf8, detectEncodingFromByteOrderMarks: false);
+                try
+                {
+                    return CanonicalStatementWriter.DeclarationStatementId(path, declaration, reader);
+                }
+                catch (DecoderFallbackException exception)
+                {
+                    throw new InvalidDataException(
+                        $"Lean statement material is not strict UTF-8 for {address}.", exception);
+                }
+            }
+        }
+
         private string? ReadCore(string address, bool materialize)
         {
             var archive = contents.Value;
@@ -557,18 +579,30 @@ internal static class RawLeanReportArtifact
                 throw new InvalidDataException($"Lean statement material is too large for {address}.");
             }
 
-            var bytes = new byte[(int)entry.Length];
-            lock (archive.Gate)
-            {
-                using var stream = entry.Open();
-                stream.ReadExactly(bytes);
-            }
-
-            string? value = null;
+            using var hash = IncrementalHash.CreateHash(HashAlgorithmName.SHA256);
+            hash.AppendData(Encoding.UTF8.GetBytes(FrozenHashDomains.Statement));
+            var bytes = new byte[16384];
+            var characters = new char[StrictUtf8.GetMaxCharCount(bytes.Length)];
+            var decoder = StrictUtf8.GetDecoder();
+            var value = materialize ? new StringBuilder() : null;
             try
             {
-                if (materialize) value = StrictUtf8.GetString(bytes);
-                else _ = StrictUtf8.GetCharCount(bytes);
+                lock (archive.Gate)
+                {
+                    using var stream = entry.Open();
+                    long total = 0;
+                    int read;
+                    do
+                    {
+                        read = stream.Read(bytes);
+                        total += read;
+                        hash.AppendData(bytes.AsSpan(0, read));
+                        var count = decoder.GetChars(bytes.AsSpan(0, read), characters, flush: read == 0);
+                        value?.Append(characters.AsSpan(0, count));
+                    } while (read > 0);
+                    if (total != entry.Length)
+                        throw new InvalidDataException($"Lean statement material length mismatch for {address}.");
+                }
             }
             catch (DecoderFallbackException exception)
             {
@@ -577,14 +611,14 @@ internal static class RawLeanReportArtifact
                     exception);
             }
 
-            var actual = FrozenContentHash.Compute(FrozenHashDomains.Statement, bytes);
+            var actual = "sha256:" + Convert.ToHexStringLower(hash.GetHashAndReset());
             if (!string.Equals(actual, address, StringComparison.Ordinal))
             {
                 throw new InvalidDataException(
                     $"Lean statement material hash mismatch for {address}: actual {actual}.");
             }
 
-            return value;
+            return value?.ToString();
         }
 
         private sealed class ArchiveContents(ZipArchive archive, ImmutableDictionary<string, ZipArchiveEntry> entries)

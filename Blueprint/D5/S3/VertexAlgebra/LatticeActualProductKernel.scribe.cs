@@ -19,6 +19,11 @@ internal sealed class LatticeActualProductKernelDocument : IScribeDocumentDefini
                 + "Normalized coefficient q means the Laurent coefficient at -q-1. The vacuum is "
                 + "single(0,1), Y is the constructed actual state-field map, T is the charge-sensitive "
                 + "translation, and mu(a,q,b)=(Y(a))_q b.")),
+            Paragraph(Text("coefficientConvolution and bivariateCoefficientConvolution parameterize the coefficient supplier "
+                + "over any commutative ring and arbitrary integer-indexed creation sequences. Their monomial, constant "
+                + "multiplication and coordinate-shift laws are consumed by both the original ordinary convolution "
+                + "and the native odd-frequency half-Fock product kernel. This is shared proof organization, "
+                + "not additional mathematical novelty or a second implementation of the native charged field.")),
             Paragraph(Text("A one-variable polynomial convolution pairs a translated coefficient with "
                 + "creationCoeff(alpha,s+d). A two-variable convolution pairs each actual translated "
                 + "polynomial monomial with creationCoeff(alpha,u+e_0) creationCoeff(beta,v+e_1). Actual "

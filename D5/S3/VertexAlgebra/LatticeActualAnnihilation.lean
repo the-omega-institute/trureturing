@@ -117,6 +117,65 @@ theorem actual_exponential_derivation (D : LatticeData)
         exact (smul_right_inj (Nat.succ_ne_zero n)).mp hr'
   exact sub_eq_zero.mp hz
 
+theorem actual_exponential_derivation_series (D : LatticeData)
+    (d : Derivation ℂ (Oscillator D) (Oscillator D))
+    (S : PowerSeries (Oscillator D)) (hS : PowerSeries.constantCoeff S = 0) :
+    seriesDerivation D d ((PowerSeries.exp (Oscillator D)).subst S) =
+      (PowerSeries.exp (Oscillator D)).subst S * seriesDerivation D d S := by
+  let E := (PowerSeries.exp (Oscillator D)).subst S
+  let A := PowerSeries.derivative (Oscillator D) S
+  let H := seriesDerivation D d E - E * seriesDerivation D d S
+  have hE0 : PowerSeries.coeff 0 E = 1 := by
+    dsimp only [E]
+    rw [PowerSeries.coeff_subst'
+      (PowerSeries.HasSubst.of_constantCoeff_zero' hS), finsum_eq_single _ 0]
+    · simp
+    · intro degree hdegree
+      rw [PowerSeries.coeff_zero_eq_constantCoeff, map_pow, hS]
+      simp [hdegree]
+  have hE : PowerSeries.derivative (Oscillator D) E = E*A := by
+    dsimp [E,A]
+    rw [PowerSeries.derivative_subst (PowerSeries.HasSubst.of_constantCoeff_zero' hS),
+      PowerSeries.derivative_exp]
+  have hH : PowerSeries.derivative (Oscillator D) H = H*A := by
+    dsimp only [H]
+    rw [map_sub, ← derivative_commute, hE, (seriesDerivation D d).leibniz,
+      (PowerSeries.derivative (Oscillator D)).leibniz, hE,
+      ← derivative_commute]
+    change _ = (seriesDerivation D d E - E * seriesDerivation D d S)*A
+    simp only [smul_eq_mul]
+    ring
+  have h0 : PowerSeries.coeff 0 H = 0 := by
+    dsimp only [H]
+    rw [map_sub, series_coeff, hE0, Derivation.map_one_eq_zero]
+    rw [PowerSeries.coeff_mul]
+    have hS0 : d (PowerSeries.coeff 0 S) = 0 := by
+      rw [PowerSeries.coeff_zero_eq_constantCoeff, hS, map_zero]
+    simp only [Finset.Nat.antidiagonal_zero,Finset.sum_singleton,series_coeff,
+      hS0, mul_zero, sub_zero]
+  have hz : H = 0 := by
+    apply PowerSeries.ext
+    intro n
+    rw [map_zero]
+    induction n using Nat.strong_induction_on with
+    | h n ih =>
+      cases n with
+      | zero => exact h0
+      | succ n =>
+        have hr := congrArg (PowerSeries.coeff n) hH
+        rw [PowerSeries.coeff_derivative, PowerSeries.coeff_mul] at hr
+        have hs : (∑ x ∈ Finset.HasAntidiagonal.antidiagonal n,
+            PowerSeries.coeff x.1 H * PowerSeries.coeff x.2 A) = 0 := by
+          apply Finset.sum_eq_zero
+          intro x hx
+          rw [ih x.1 (by have := Finset.HasAntidiagonal.mem_antidiagonal.mp hx; omega),zero_mul]
+        rw [hs] at hr
+        have hr' : (n+1) • PowerSeries.coeff (n+1) H = (n+1) • (0 : Oscillator D) := by
+          simpa only [nsmul_eq_mul, Nat.cast_add, Nat.cast_one, mul_comm,
+            mul_zero, zero_mul] using hr
+        exact (smul_right_inj (Nat.succ_ne_zero n)).mp hr'
+  exact sub_eq_zero.mp hz
+
 end
 end D5.S3.VertexAlgebra.ActualSeriesDerivation
 

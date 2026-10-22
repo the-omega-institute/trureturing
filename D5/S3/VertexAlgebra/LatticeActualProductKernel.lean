@@ -93,17 +93,65 @@ open LatticeActualGeneratorLocality MvPolynomial
 open scoped BigOperators VertexOperator
 noncomputable section
 
+def coefficientConvolution {Ring : Type*} [CommRing Ring]
+    (creation : ℤ → Ring) (shift : ℤ) : Polynomial Ring →ₗ[Ring] Ring :=
+  (Finsupp.lsum Ring (fun degree : ℕ =>
+    LinearMap.mulRight Ring (creation (shift + degree)))).comp
+      ((AddMonoidAlgebra.coeffLinearEquiv Ring).toLinearMap.comp
+        (Polynomial.toFinsuppIsoLinear Ring).toLinearMap)
+
+theorem coefficientConvolution_monomial {Ring : Type*} [CommRing Ring]
+    (creation : ℤ → Ring) (shift : ℤ) (degree : ℕ) (coefficient : Ring) :
+    coefficientConvolution creation shift (Polynomial.monomial degree coefficient) =
+      coefficient * creation (shift + degree) := by
+  simp [coefficientConvolution, Polynomial.toFinsupp_monomial]
+
+theorem coefficientConvolution_expansion {Ring : Type*} [CommRing Ring]
+    (creation : ℤ → Ring) (shift : ℤ) (polynomial : Polynomial Ring) :
+    coefficientConvolution creation shift polynomial =
+      ∑ degree ∈ polynomial.support, polynomial.coeff degree * creation (shift + degree) := by
+  classical
+  first
+  | rfl
+  | calc
+      coefficientConvolution creation shift polynomial =
+          coefficientConvolution creation shift
+            (polynomial.sum fun degree coefficient => Polynomial.monomial degree coefficient) :=
+        congrArg (coefficientConvolution creation shift) (Polynomial.sum_monomial_eq polynomial).symm
+      _ = _ := by
+        change coefficientConvolution creation shift
+          (∑ degree ∈ polynomial.support, Polynomial.monomial degree (polynomial.coeff degree)) = _
+        simp only [map_sum, coefficientConvolution_monomial]
+
+theorem coefficientConvolution_C_mul {Ring : Type*} [CommRing Ring]
+    (creation : ℤ → Ring) (shift : ℤ) (coefficient : Ring) (polynomial : Polynomial Ring) :
+    coefficientConvolution creation shift (Polynomial.C coefficient * polynomial) =
+      coefficient * coefficientConvolution creation shift polynomial := by
+  rw [← Polynomial.smul_eq_C_mul]
+  exact map_smul _ _ _
+
+theorem coefficientConvolution_X_pow {Ring : Type*} [CommRing Ring]
+    (creation : ℤ → Ring) (shift : ℤ) (degree : ℕ) (polynomial : Polynomial Ring) :
+    coefficientConvolution creation shift (Polynomial.X ^ degree * polynomial) =
+      coefficientConvolution creation (shift + degree) polynomial := by
+  induction polynomial using Polynomial.induction_on' with
+  | add first second firstProof secondProof =>
+    simp only [mul_add, map_add, firstProof, secondProof]
+  | monomial exponent coefficient =>
+    rw [Polynomial.X_pow_mul_monomial, coefficientConvolution_monomial,
+      coefficientConvolution_monomial]
+    congr 2
+    push_cast
+    omega
+
 def convolution (D : LatticeData) (α : Charge D) (s : ℤ) :
     Polynomial (Oscillator D) →ₗ[Oscillator D] Oscillator D :=
-  (Finsupp.lsum (Oscillator D) (fun d : ℕ =>
-    LinearMap.mulRight (Oscillator D) (creationCoeff D α (s + d)))).comp
-      ((AddMonoidAlgebra.coeffLinearEquiv (Oscillator D)).toLinearMap.comp
-        (Polynomial.toFinsuppIsoLinear (Oscillator D)).toLinearMap)
+  coefficientConvolution (creationCoeff D α) s
 
 theorem convolution_monomial (D : LatticeData) (α : Charge D) (s : ℤ)
     (d : ℕ) (a : Oscillator D) :
     convolution D α s (Polynomial.monomial d a) = a * creationCoeff D α (s+d) := by
-  simp [convolution, Polynomial.toFinsupp_monomial]
+  exact coefficientConvolution_monomial _ _ _ _
 
 theorem convolution_C_mul (D : LatticeData) (α : Charge D) (s : ℤ)
     (a : Oscillator D) (q : Polynomial (Oscillator D)) :
@@ -130,18 +178,72 @@ theorem raw_single_convolution (D : LatticeData) (α : Charge D) (k : ℤ)
   rw [(actual_creation_coefficient_transport D α α).2.2.1]
   rfl
 
+def bivariateCoefficientConvolution {Ring : Type*} [CommRing Ring]
+    (left right : ℤ → Ring) (first second : ℤ) :
+    MvPolynomial (Fin 2) Ring →ₗ[Ring] Ring :=
+  (Finsupp.lsum Ring (fun exponent : Fin 2 →₀ ℕ =>
+    LinearMap.mulRight Ring (left (first + exponent 0) * right (second + exponent 1)))).comp
+      (AddMonoidAlgebra.coeffLinearEquiv Ring).toLinearMap
+
+theorem bivariateCoefficientConvolution_monomial {Ring : Type*} [CommRing Ring]
+    (left right : ℤ → Ring) (first second : ℤ) (exponent : Fin 2 →₀ ℕ) (coefficient : Ring) :
+    bivariateCoefficientConvolution left right first second (MvPolynomial.monomial exponent coefficient) =
+      coefficient * (left (first + exponent 0) * right (second + exponent 1)) := by
+  simp [bivariateCoefficientConvolution, MvPolynomial.monomial, mul_assoc]
+
+theorem bivariateCoefficientConvolution_C_mul {Ring : Type*} [CommRing Ring]
+    (left right : ℤ → Ring) (first second : ℤ) (coefficient : Ring)
+    (polynomial : MvPolynomial (Fin 2) Ring) :
+    bivariateCoefficientConvolution left right first second (MvPolynomial.C coefficient * polynomial) =
+      coefficient * bivariateCoefficientConvolution left right first second polynomial := by
+  rw [MvPolynomial.C_mul']
+  exact map_smul _ _ _
+
+theorem bivariateCoefficientConvolution_X_zero {Ring : Type*} [CommRing Ring]
+    (left right : ℤ → Ring) (first second : ℤ) (degree : ℕ)
+    (polynomial : MvPolynomial (Fin 2) Ring) :
+    bivariateCoefficientConvolution left right first second (MvPolynomial.X 0 ^ degree * polynomial) =
+      bivariateCoefficientConvolution left right (first + degree) second polynomial := by
+  classical
+  induction polynomial using MvPolynomial.induction_on' with
+  | add firstPolynomial secondPolynomial firstProof secondProof =>
+    simp only [mul_add, map_add, firstProof, secondProof]
+  | monomial exponent coefficient =>
+    rw [MvPolynomial.X_pow_eq_monomial, MvPolynomial.monomial_mul,
+      bivariateCoefficientConvolution_monomial, bivariateCoefficientConvolution_monomial]
+    simp only [one_mul, Finsupp.add_apply, Finsupp.single_eq_same,
+      Finsupp.single_eq_of_ne (by decide : (1 : Fin 2) ≠ 0), zero_add]
+    congr 3
+    push_cast
+    omega
+
+theorem bivariateCoefficientConvolution_X_one {Ring : Type*} [CommRing Ring]
+    (left right : ℤ → Ring) (first second : ℤ) (degree : ℕ)
+    (polynomial : MvPolynomial (Fin 2) Ring) :
+    bivariateCoefficientConvolution left right first second (MvPolynomial.X 1 ^ degree * polynomial) =
+      bivariateCoefficientConvolution left right first (second + degree) polynomial := by
+  classical
+  induction polynomial using MvPolynomial.induction_on' with
+  | add firstPolynomial secondPolynomial firstProof secondProof =>
+    simp only [mul_add, map_add, firstProof, secondProof]
+  | monomial exponent coefficient =>
+    rw [MvPolynomial.X_pow_eq_monomial, MvPolynomial.monomial_mul,
+      bivariateCoefficientConvolution_monomial, bivariateCoefficientConvolution_monomial]
+    simp only [one_mul, Finsupp.add_apply, Finsupp.single_eq_same,
+      Finsupp.single_eq_of_ne (by decide : (0 : Fin 2) ≠ 1), zero_add]
+    congr 3
+    push_cast
+    omega
+
 def pairConvolution (D : LatticeData) (α β : Charge D) (s t : ℤ) :
     PairPolynomial D →ₗ[Oscillator D] Oscillator D :=
-  (Finsupp.lsum (Oscillator D) (fun e : Fin 2 →₀ ℕ =>
-    LinearMap.mulRight (Oscillator D)
-      (creationCoeff D α (s+e 0) * creationCoeff D β (t+e 1)))).comp
-        (AddMonoidAlgebra.coeffLinearEquiv (Oscillator D)).toLinearMap
+  bivariateCoefficientConvolution (creationCoeff D α) (creationCoeff D β) s t
 
 theorem pairConvolution_monomial (D : LatticeData) (α β : Charge D) (s t : ℤ)
     (e : Fin 2 →₀ ℕ) (a : Oscillator D) :
     pairConvolution D α β s t (MvPolynomial.monomial e a) =
       a * (creationCoeff D α (s+e 0) * creationCoeff D β (t+e 1)) := by
-  simp [pairConvolution, MvPolynomial.monomial, mul_assoc]
+  exact bivariateCoefficientConvolution_monomial _ _ _ _ _ _
 
 theorem pairConvolution_C_mul (D : LatticeData) (α β : Charge D) (s t : ℤ)
     (a : Oscillator D) (q : PairPolynomial D) :
@@ -190,9 +292,16 @@ theorem kernel_single_convolution (D : LatticeData) (α β : Charge D) (u v : �
           (translatedPairPolynomial D α β p)) := by
   rw [(actual_creation_coefficient_transport D α β).2.2.2]
   unfold commonKernelSingle
-  congr 2
-  simp only [pairConvolution, LinearMap.comp_apply, Finsupp.lsum_apply,
-    Finsupp.sum, LinearMap.mulRight_apply]
+  apply congrArg (fun value : Oscillator D =>
+    epsilon D (α+β) δ • Finsupp.single (α+β+δ) value)
+  change (∑ exponent ∈ (translatedPairPolynomial D α β p).support,
+    (translatedPairPolynomial D α β p).coeff exponent *
+      creationCoeff D α (u-bilinear D α δ+exponent 0) *
+        creationCoeff D β (v-bilinear D β δ+exponent 1)) =
+    ∑ exponent ∈ (translatedPairPolynomial D α β p).support,
+      (translatedPairPolynomial D α β p).coeff exponent *
+        (creationCoeff D α (u-bilinear D α δ+exponent 0) *
+          creationCoeff D β (v-bilinear D β δ+exponent 1))
   apply Finset.sum_congr rfl
   intro e he
   change MvPolynomial.coeff e (translatedPairPolynomial D α β p) *

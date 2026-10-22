@@ -1,0 +1,15 @@
+using static StrataLint.Scribe.DefinitionDsl;
+namespace StrataLint.Scribe.Blueprint.D5.S3.VertexAlgebra;
+internal sealed class LatticeBcGhostCohomologyLocalityDocument : IScribeDocumentDefinition
+{
+    private const string Prefix = "D5/S3/VertexAlgebra/LatticeBcGhostCohomologyLocality.";
+    public DocumentDefinition Create() => DocumentDefinition.Create(ScribeNode.Create(
+        "Uniform signed locality on the full original BRST quotient.",
+        H("Scope"),
+        Blocks(
+            Paragraph(Text("The carrier is the existing full OriginalCycles quotient by OriginalBoundaries for arbitrary original lattice data D and matrix H. The two states are fixed by their actual descended parity projections. One locality order annihilates the Koszul-signed commutator as a distribution of quotient linear maps: it is uniform over all integer mode pairs and all quotient inputs. No inverse, rank, eigenstate or global cutoff assumption is introduced.")),
+            Describe.Lean(DescribeId.Create("cycle-delta"), DeclarationHandle.Create(Prefix + "iterated_cycle_val"), H("Cycle delta and the actual tensor commutator"), StatementSource.WithoutFormula(), AssessedProvenance.FromRepo(), Blocks(Paragraph(Text("For every natural iterate and every pair of integer indices, the cycle commutator evaluates to the corresponding tensor supercommutator. The induction retains both shifted integer indices."))), DescribeRole.Theorem),
+            Describe.Lean(DescribeId.Create("quotient-delta"), DeclarationHandle.Create(Prefix + "iterated_quotient_mk"), H("Evaluation on quotient representatives"), StatementSource.WithoutFormula(), AssessedProvenance.FromRepo(), Blocks(Paragraph(Text("Every delta iterate of the quotient commutator on an actual cycle class is the quotient image of the cycle iterate. Bilinear product_mk and the quotient linear map transport each shifted term."))), DescribeRole.Theorem),
+            Describe.Lean(DescribeId.Create("projected-locality"), DeclarationHandle.Create(Prefix + "projected_superLocal"), H("Uniform locality of actual parity projections"), StatementSource.WithoutFormula(), AssessedProvenance.FromRepo(), Blocks(Paragraph(Text("The existing tensor homogeneous_superFieldLocal theorem supplies a single order. Quotient surjectivity and the two delta identities transport its linear-map equality to every quotient input."))), DescribeRole.Theorem),
+            Describe.Lean(DescribeId.Create("uniform-locality"), DeclarationHandle.Create(Prefix + "superLocal"), H("Uniform signed locality of homogeneous quotient states"), StatementSource.WithoutFormula(), AssessedProvenance.FromRepo(), Blocks(Paragraph(Text("The parity-fixed hypotheses identify the original two quotient states with actual parity-projected representatives. The result is equality of the entire killed distribution, not an input-dependent locality bound. Tensor locality is reused; no independent locality discovery or complete physical theory is claimed."))), DescribeRole.Theorem))));
+}

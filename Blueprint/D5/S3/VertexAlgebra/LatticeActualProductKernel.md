@@ -6,6 +6,8 @@ Polynomial convolutions give finite intermediate-vector bounds for the actual co
 
 Let D be any finite-rank ordinary lattice: its Gram matrix G is integral and symmetric with even diagonal. Rank zero is included. No positivity, nondegeneracy or unimodularity is assumed. Charges are Fin(rank(D)) to Z, oscillators are complex multivariate polynomials indexed by Fin(rank(D)) times N, and V is the finite-support charge direct sum of that polynomial algebra. Write B for the original integral bilinear form. Normalized coefficient q means the Laurent coefficient at -q-1. The vacuum is single(0,1), Y is the constructed actual state-field map, T is the charge-sensitive translation, and mu(a,q,b)=(Y(a))_q b.
 
+coefficientConvolution and bivariateCoefficientConvolution parameterize the coefficient supplier over any commutative ring and arbitrary integer-indexed creation sequences. Their monomial, constant multiplication and coordinate-shift laws are consumed by both the original ordinary convolution and the native odd-frequency half-Fock product kernel. This is shared proof organization, not additional mathematical novelty or a second implementation of the native charged field.
+
 A one-variable polynomial convolution pairs a translated coefficient with creationCoeff(alpha,s+d). A two-variable convolution pairs each actual translated polynomial monomial with creationCoeff(alpha,u+e_0) creationCoeff(beta,v+e_1). Actual rawCoeff and commonKernel on single(delta,p) agree with these convolutions and their actual cocycle scalars.
 
 **Theorem 1.1 (The actual cocycle skew law).**
