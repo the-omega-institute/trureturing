@@ -24,6 +24,11 @@ internal sealed class UnitReversionSquareParityDocument : IScribeDocumentDefinit
                 + "P(n), r(f), and q(f) in the construction are integer power series. Indices "
                 + "and exponents are natural numbers, including subtraction in 2^k-1; a(n) "
                 + "is an integer. In the mod-two identity X and the arithmetic lie over ZMod(2).")),
+            Node("square_subst", "Squaring in characteristic two", PublishedSquareSubstitution(),
+                "Squaring a series over ZMod(2) substitutes X squared for X."),
+            Node("lacunary_coeff", "The lacunary coefficient criterion", PublishedLacunaryCoefficients(),
+                "A zero-constant series with linear coefficient one satisfying f = X + X*f.subst(X^2) "
+                + "has coefficient one exactly at the positive Mersenne indices."),
             Node("Agree", "Agreement of coefficient prefixes", PublishedAgreeFormula(),
                 "Two series agree below d when their coefficients at every natural index less than d coincide.", DescribeRole.Definition),
             Node("agree_pow", "Powers preserve agreement", PublishedPowerFormula(),
@@ -222,4 +227,30 @@ internal sealed class UnitReversionSquareParityDocument : IScribeDocumentDefinit
                 Equal(Call("constantCoeff", Call("subst", u, f)), Call("constantCoeff", f)))));
     }
 
+    private static Formula PubAll(string name, Formula type, Formula body) =>
+        Seq(Forall, Sp, F.Id(name), Colon, Sp, type, Comma, Sp, Parenthesized(body));
+    private static Formula PubImp(Formula premise, Formula conclusion) =>
+        Seq(Parenthesized(premise), Sp, Implies, Sp, Parenthesized(conclusion));
+
+    private static Formula PubSubst(Formula f) =>
+        new Formula.Apply(Seq(f, Dot, Named("subst")), [Power(X(), D(2))]);
+    private static Formula PublishedSquareSubstitution()
+    {
+        var f = F.Id("f");
+        return Disp(PubAll("f", Call("PowerSeries", Call("ZMod", D(2))),
+            Equal(Power(f, D(2)), PubSubst(f))));
+    }
+    private static Formula PublishedLacunaryCoefficients()
+    {
+        var f = F.Id("f");
+        var n = F.Id("n");
+        var k = F.Id("k");
+        return Disp(PubAll("f", Call("PowerSeries", Call("ZMod", D(2))),
+            PubImp(Equal(Call("constantCoeff", f), D(0)),
+            PubImp(Equal(Call("coeff", D(1), f), D(1)),
+            PubImp(Equal(f, Add(X(), Mul(X(), PubSubst(f)))),
+            PubAll("n", Naturals(), Seq(Parenthesized(Equal(Call("coeff", n, f), D(1))), Sp, Iff, Sp,
+                Parenthesized(Seq(Exists, Sp, k, Colon, Sp, Naturals(), Comma, Sp,
+                    And(Positive(k), Equal(n, Subtract(Power(D(2), k), D(1)))))))))))));
+    }
 }
