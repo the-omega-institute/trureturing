@@ -54,40 +54,7 @@ internal sealed class SourceWidthDocument : IScribeDocumentDefinition
                         Paragraph(Text("For a positive parent a and a negative ladder of length j and total magnitude S=(2^j-1)b, put n=min(2^j-1,floor(h/b)). Select the original ladder labels indicated by the binary digits of n before the parent, and place the complementary labels after it. The recursive binary selection returns both lists together with a permutation proof and selected mass nb; it never replaces physical labels by distinct numerical values. Before the parent, heights decrease from h to h-nb. Afterwards they decrease from h-nb+a to the original endpoint h+a-S. If h is at least S, the peak is that endpoint. Otherwise 0 <= h-nb <= b-1, so the peak is at most a+b-1. Because a>A, this is N-a-1 <= B. Negative parents use the same construction at reflected height B-h. The two actual endpoints and this one capacity inequality control every intermediate height for either sign or zero arc net.")),
                         Paragraph(Text("If no large label exists, take a label of maximum magnitude m. If m is zero, every source value is zero. Otherwise an inner successor would have magnitude 2m, contradicting maximality. An outer successor forces N <= 3m <= 3A <= N, hence N=3A and m=A. The deterministic original path is then trapped in the alternating values A and -A. Its unsigned potentials lie in [A,2A]; rotating at a minimum potential gives all heights in [0,A], which is contained in [0,B]. This retains all repeated occurrences and covers zero within the universal quantifiers.")),
                         Paragraph(Text("The external target is Damasdi–Frankl–Pach–Palvolgyi, Monochromatic configurations on a circle, arXiv:2504.10687v2, Conjecture 3.1, DOI 10.5070/C6.68671. That conjecture requests C=(N-1)/2 for every positive k. The theorem here is a separate repository development of the support bound B for k>=3; it makes no literature-novelty claim and does not settle the full conjecture or its preregistration #20057. For k>=4, B>C, and the all-source capacity-C gap remains open. The k=1 and k=2 boundary cases are outside this theorem."))),
-                    DescribeRole.Theorem),
-                GeometricRelocation()), []));
-    }
-
-    private static DocumentBlock GeometricRelocation()
-    {
-        Formula r = V("r"), m = V("m"), d = V("d"), n = V("n");
-        Formula b = Pow(Num(2), m), k = Add(Mul(r, m), d);
-        Formula t = Call("ediv", Sub(Pow(b, r), Num(1)), Sub(b, Num(1)));
-        Formula a = Sub(d, Num(1)), A = Pow(Num(2), a);
-        Formula C = Sub(Pow(Num(2), Sub(k, Num(1))), Num(1));
-        Formula W = Sub(C, Call("min", Sub(A, Num(1)), Call("ediv", Sub(t, Num(1)), Num(2))));
-        Formula labels = Call("finRange", k);
-        Formula word = Call("append", Call("rotate", Call("take", Sub(k, Num(1)), labels), a),
-            Call("drop", Sub(k, Num(1)), labels));
-        Formula f = Call("actualSource", k, t);
-        Formula height = Call("sum", Call("map", f, Call("take", n, word)));
-        Formula conclusion = And(Call("Perm", word, labels), Le(W, C),
-            Q(And(Le(Num(0), height), Le(height, W)), ("n", Nat())),
-            Eq(Call("sum", Call("map", f, word)), Num(0)),
-            Ex("n", Nat(), And(Le(n, k), Eq(height, W))));
-        return Describe.Lean(DescribeId.Create("geometric-source-relocation"),
-            DeclarationHandle.Create(Prefix + "geometric_source_relocation"),
-            H("Exact width after relocating the low physical labels"),
-            StatementSource.FromAuthor(Disp(Q(Imp(And(Le(Num(1), r), Le(Num(1), m), Le(Num(1), d)),
-                conclusion), ("r", Nat()), ("m", Nat()), ("d", Nat())))),
-            AssessedProvenance.FromRepo(),
-            Blocks(
-                Paragraph(Text("Let r,m,d be arbitrary positive naturals, B=2^m, k=rm+d and t=(B^r-1)/(B-1), with the quotient taken in the naturals. Put a=d-1, A=2^a, C=2^(k-1)-1 and W=C-min(A-1,(t-1)/2), with integer subtraction and Euclidean division in the width. The literal word rotates the first k-1 entries of finRange(k) by a and appends its last entry. Thus its labels are a,...,k-2,0,...,a-1,k-1. It is a permutation of the original Fin(k) labels. Every natural-length prefix, including saturated takes beyond k, has integer sum in [0,W], the total is zero, W<=C, and some prefix of length at most k attains W. This includes r=1, m=1, d=1, their intersections and the empty low block.")),
-                Paragraph(Text("Multiplication by two on residues modulo N=2^k-1 is a cyclic action because 2^k=1 modulo N. Each original label retains its position in that action even when values coincide. The unsigned representative U_i=s_i+N when the centered source s_i is negative, and U_i=s_i otherwise, is an integer potential: U_(i+1)-U_i=s_i, including the last-to-first edge. Contiguous physical sums therefore telescope in the integers; a modular relation alone would not control their heights.")),
-                Paragraph(Text("The geometric quotient equals the r-term sum of powers of B. Write L_j=sum_(e<j) B^e and u_j=2At-(2A-1)L_j. The exact source identity 2^(jm+d)t=N L_j+u_j, together with representative range checks, gives the negative-label representatives at nu_j=a+jm for 1<=j<=r. The nonfinal returns satisfy At<=u_j<=2At, and all intervening powers of two remain in the same full physical envelope At<=U_i<=ABt for a<=i<=k-1. Its upper endpoint is attained at i=a+m; the last unsigned and centered representatives are (N+t)/2 and (t-N)/2. These bounds are derived from the source, with no annulus, unit, distinctness or true-period hypothesis.")),
-                Paragraph(Text("The main block has heights U_(a+n)-At and attains M=ABt-At=C-(A-1) at n=m. Reinserting the low labels adds only nonnegative actual increments, ending at L=C-(t-1)/2 at n=k-1. The final physical label returns to zero. Both M and L are visited, so their maximum is exactly W. This is the attained width of the displayed word; no minimum over all permutations or global optimality is claimed.")),
-                Paragraph(Text("The source reference is Damasdi–Frankl–Pach–Palvolgyi, Monochromatic configurations on a circle, arXiv:2504.10687v2, Conjecture 3.1, DOI 10.5070/C6.68671. This symbolic family construction is repository-derived and makes no literature-novelty claim. The earlier ThreeParentFamily sources form the sign-and-rotation subfamily r=3,m=2,d=R-2 for R>=4: modulo N, -2^(R-1)*21 equals 11*2^(R-1)-1. Their sources overlap; their schedules and optimality statements are not identified here. The full arbitrary-source Conjecture 3.1 remains open. No unit-cycle, girth or full-demand conclusion outside this source family is asserted."))),
-            DescribeRole.Theorem);
+                    DescribeRole.Theorem)), []));
     }
 
     private static DocumentBlock Node(string id, string title, string declaration,
