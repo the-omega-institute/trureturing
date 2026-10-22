@@ -7,6 +7,7 @@
    digest: Actual nested Q readouts and finite signed collision Taylor balance. -/
 
 import D5.S3.VertexAlgebra.LatticeHalfFockClearedTaylorReadout
+import D5.S3.VertexAlgebra.NestedResidues.ContextualKernelExtraction
 
 /-! Complete intermediate-field cutoffs precede expansion of the inner
 ordered halves. The original source and acted-on tensor carriers stay distinct.
@@ -18,6 +19,7 @@ set_option backward.isDefEq.respectTransparency false
 
 namespace D5.S3.VertexAlgebra.LatticeHalfFockNestedQReadout
 open LatticeHalfFockLeftCurrentTransport LatticeHalfFockClearedTaylorReadout
+open NestedResidues.ContextualKernelExtraction
 open UniformGradedLocalCorrelator
 open SupportedFieldWords.OrderedWords SupportedFieldWords.OrderedDistribution
 open CollisionRationalExpansions.OrderedRationalExpansion

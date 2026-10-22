@@ -1,4 +1,4 @@
-import D5.S3.VertexAlgebra.OrderedCollisionCoordinates
+import D5.S3.VertexAlgebra.NestedResidues.ContextualKernelExtraction
 import Reg.Support.DependentFamily
 import LeanInformationAuditInterface.Contract.Registration
 import Mathlib.Algebra.Field.ULift
@@ -8,10 +8,11 @@ set_option backward.isDefEq.respectTransparency false
 /-! Dependent-family audit of complete contextual Hahn extraction. -/
 
 noncomputable section
-namespace Reg.D5.S3.VertexAlgebra.OrderedCollisionCoordinates
+namespace Reg.D5.S3.VertexAlgebra.NestedResidues.ContextualKernelExtraction
 open _root_.D5.S3.VertexAlgebra
 open SupportedFieldWords.OrderedWords
 open OrderedCollisionCoordinates.ContextualLaurentKernel
+open NestedResidues.ContextualKernelExtraction
 open CollisionLaurentKernels.LaurentCollision
 open _root_.D5.S3.ConceptDynamics.InformationEscape.DependentFamily
 universe u
@@ -115,9 +116,9 @@ def registration : LeanInformationAudit.Contract.Registration.{_,_,_,0,0,0,_,_,_
     (@contextual_kernel_extraction.{u}) (type_of% (realize signature.{u} actual.{u}.readout actual.{u}.anchor))
     Type Unit where
   unitName := Lean.Name.str
-    `D5.S3.VertexAlgebra.OrderedCollisionCoordinates.ContextualLaurentKernel.contextual_kernel_extraction
+    `D5.S3.VertexAlgebra.NestedResidues.ContextualKernelExtraction.contextual_kernel_extraction
     "__information_unit"
-  realizationName := `Reg.D5.S3.VertexAlgebra.OrderedCollisionCoordinates.familyRegistration
+  realizationName := `Reg.D5.S3.VertexAlgebra.NestedResidues.ContextualKernelExtraction.familyRegistration
   realizationSource := none
   generated := false
   arena := .source ⟨arena.{u}⟩
@@ -137,4 +138,4 @@ def registration : LeanInformationAudit.Contract.Registration.{_,_,_,0,0,0,_,_,_
   familyRecord := none
   options := #[{ name := `autoImplicit, value := .bool false }]
 
-end Reg.D5.S3.VertexAlgebra.OrderedCollisionCoordinates
+end Reg.D5.S3.VertexAlgebra.NestedResidues.ContextualKernelExtraction

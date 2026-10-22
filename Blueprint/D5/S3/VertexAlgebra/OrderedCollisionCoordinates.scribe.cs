@@ -17,16 +17,6 @@ internal sealed class OrderedCollisionCoordinatesDocument : IScribeDocumentDefin
                 + "equivalences encode both complete orders and the remaining order, with no finite exponent "
                 + "cutoff.")),
             Describe.Lean(
-                DescribeId.Create("contextual-kernel-extraction"),
-                DeclarationHandle.Create(Prefix + "contextual_kernel_extraction"),
-                H("The full Hahn support makes each adjacent residue fiber finite"),
-                StatementSource.WithoutFormula(),
-                AssessedProvenance.FromRepo(LocalityBackground),
-                Blocks(
-                    Paragraph(Text("For any field K, prefix and suffix lengths pre,post, signed kernel exponent r, full supported Hahn carrier W and output exponent g, the coefficient of contextPair(kernelZX(r)) times W is the finite-support sum over natural j of (-1)^j choose(r,j) W[g-pairIndex(j,r-j)]. The theorem proves finiteness together with the coefficient equation. Every spectator exponent remains fixed; neither nonnegative numerator powers nor a uniform clearing denominator is assumed.")),
-                    Paragraph(Text("The proof uses the finite full Hahn multiplication antidiagonal. The binomial kernel support has an injective parametrization by j, and its nonzero convolution terms embed into that antidiagonal. The native nested-Q consumer applies the theorem before any local Taylor substitution, retaining the complete inner difference in its outer supported residue."))),
-                DescribeRole.Theorem),
-            Describe.Lean(
                 DescribeId.Create("orderedcollisioncoordinates-first-coefficient-square"),
                 DeclarationHandle.Create(Prefix + "first_coefficient_square"),
                 H("The first complete expansion agrees on remaining coefficients"),

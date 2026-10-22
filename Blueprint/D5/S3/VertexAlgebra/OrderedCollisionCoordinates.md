@@ -6,23 +6,7 @@ Explicit finite order maps retain every pre/post label and prove the coefficient
 
 The complete orders are pre,z,x,post and pre,x,z,post. The equivalence tau enumerates every label other than z; its entry at the pre boundary is x. Recursive additive exponent equivalences encode both complete orders and the remaining order, with no finite exponent cutoff.
 
-**Theorem 1.1 (The full Hahn support makes each adjacent residue fiber finite).**
-
-Lean statement: `D5/S3/VertexAlgebra/OrderedCollisionCoordinates.contextual_kernel_extraction`
-
-*Proof.* Machine-checked in Lean as `D5/S3/VertexAlgebra/OrderedCollisionCoordinates.contextual_kernel_extraction` (`✓ std3`). ∎
-
-*Source.* Repository-derived.
-
-*Acknowledgement.* Atsushi Matsuo; Kiyokazu Nagatomo (1997). *On axioms for a vertex algebra and the locality of quantum fields*. URL: <https://arxiv.org/abs/hep-th/9706118v1>.
-
-*Commentary.*
-
-For any field K, prefix and suffix lengths pre,post, signed kernel exponent r, full supported Hahn carrier W and output exponent g, the coefficient of contextPair(kernelZX(r)) times W is the finite-support sum over natural j of (-1)^j choose(r,j) W[g-pairIndex(j,r-j)]. The theorem proves finiteness together with the coefficient equation. Every spectator exponent remains fixed; neither nonnegative numerator powers nor a uniform clearing denominator is assumed.
-
-The proof uses the finite full Hahn multiplication antidiagonal. The binomial kernel support has an injective parametrization by j, and its nonzero convolution terms embed into that antidiagonal. The native nested-Q consumer applies the theorem before any local Taylor substitution, retaining the complete inner difference in its outer supported residue.
-
-**Theorem 1.2 (The first complete expansion agrees on remaining coefficients).**
+**Theorem 1.1 (The first complete expansion agrees on remaining coefficients).**
 
 Lean statement: `D5/S3/VertexAlgebra/OrderedCollisionCoordinates.first_coefficient_square`
 
@@ -36,7 +20,7 @@ Lean statement: `D5/S3/VertexAlgebra/OrderedCollisionCoordinates.first_coefficie
 
 The first exponent equivalence inserts z immediately before the boundary x. The second uses the full exponent equivalence with z after x. Order embeddings and their split inverses prove the actual coefficient-field squares and supported residue maps.
 
-**Theorem 1.3 (Full remaining expansion commutes with the u-residue).**
+**Theorem 1.2 (Full remaining expansion commutes with the u-residue).**
 
 Lean statement: `D5/S3/VertexAlgebra/OrderedCollisionCoordinates.fused_residue_square`
 
@@ -56,7 +40,6 @@ Matsuo and Nagatomo, hep-th/9706118v1, Proposition 1.5.5 and Theorem 5.4.1 provi
 
 ## References
 
-- Truth anchor: `D5/S3/VertexAlgebra/OrderedCollisionCoordinates.contextual_kernel_extraction`
 - Truth anchor: `D5/S3/VertexAlgebra/OrderedCollisionCoordinates.first_coefficient_square`
 - Truth anchor: `D5/S3/VertexAlgebra/OrderedCollisionCoordinates.fused_residue_square`
 - Dependency: [D5/S3/VertexAlgebra/CollisionLaurentKernels](CollisionLaurentKernels.md)
