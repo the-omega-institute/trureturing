@@ -22,6 +22,10 @@ $$(\forall n: \mathbb{N}, \exists u: \mathbb{Z}, \exists v: \mathbb{Z}, (\operat
 
 *Proof.* Machine-checked in Lean as `D5/S1/Recurrence/Invariants/HannaSigmaProductExpModThreeCube.result` (`✓ std3`). ∎
 
+*Resolves.* `Problems/oeis-a382125-hanna-sigma-exponential-mod-three-cube` (proved) by `D5/S1/Recurrence/Invariants/HannaSigmaProductExpModThreeCube.result`.
+
+<!-- scribe-open-problem-resolution-v1 {"problem_slug":"oeis-a382125-hanna-sigma-exponential-mod-three-cube","declaration_gid":"D5/S1/Recurrence/Invariants/HannaSigmaProductExpModThreeCube.result","resolution_kind":"proved"} -->
+
 *Source.* Repository-derived.
 
 *Acknowledgement.* Paul D. Hanna (2025). *OEIS A382124 and A382125, sigma-product exponential series*. URL: <https://oeis.org/A382124>.
