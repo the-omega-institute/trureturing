@@ -155,7 +155,43 @@ private lemma phases :
     Complex.exp (Complex.I * ((3 * Real.pi : ℝ) : ℂ) * (2 / 3)) = 1 ∧
     Complex.exp (Complex.I * ((3 * Real.pi : ℝ) : ℂ) * (4 / 3)) = 1 ∧
     Complex.exp (Complex.I * ((3 * Real.pi : ℝ) : ℂ)) = -1 := by
-  sorry
+  have phase (k : ℕ) : Complex.exp ((k : ℂ) * ((Real.pi : ℂ) * Complex.I)) =
+      (-1 : ℂ) ^ k := by
+    rw [Complex.exp_nat_mul, Complex.exp_pi_mul_I]
+  have h6 := phase 6
+  have h2 := phase 2
+  have h4 := phase 4
+  have h3 := phase 3
+  norm_num at h6 h2 h4 h3
+  constructor
+  · simp
+  constructor
+  · calc
+      _ = Complex.exp ((6 : ℂ) * ((Real.pi : ℂ) * Complex.I)) := by
+        congr 1
+        push_cast
+        ring
+      _ = 1 := h6
+  constructor
+  · calc
+      _ = Complex.exp ((2 : ℂ) * ((Real.pi : ℂ) * Complex.I)) := by
+        congr 1
+        push_cast
+        ring
+      _ = 1 := h2
+  constructor
+  · calc
+      _ = Complex.exp ((4 : ℂ) * ((Real.pi : ℂ) * Complex.I)) := by
+        congr 1
+        push_cast
+        ring
+      _ = 1 := h4
+  · calc
+      _ = Complex.exp ((3 : ℂ) * ((Real.pi : ℂ) * Complex.I)) := by
+        congr 1
+        push_cast
+        ring
+      _ = -1 := h3
 
 private lemma transfer :
     walk tree (3 * Real.pi) *ᵥ (Pi.single 0 1 : Fin 17 → ℂ) = Pi.single 1 1 := by
