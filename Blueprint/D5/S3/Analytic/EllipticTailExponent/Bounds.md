@@ -50,7 +50,7 @@ Lean statement: `D5/S3/Analytic/EllipticTailExponent/Bounds.deriv_b_bounds`
 
 *Commentary.*
 
-For positive k and 0<=a<=3/4, the derivative of b(k,a) is strictly negative and has absolute value at most 4/(k(k+1)). Differentiating the product leaves nonpositive contributions. The finite reciprocal-square sum is at most two, and the derivative of the leading linear factor is strictly negative.
+For positive k and 0<=a<=3/4, the derivative of b(k,a) is strictly negative and has absolute value at most 4/(k(k+1)). Differentiating the product leaves nonpositive contributions. The shared NormalizedPochhammerBounds.inverse_square_sum theorem bounds the finite reciprocal-square sum by two, and the derivative of the leading linear factor is strictly negative.
 
 **Definition 1.5 (Normalized infinite tails).**
 
@@ -150,3 +150,4 @@ For 0<a<3/4, the norm of the derivative of U(n,a) is at most four times the sum 
 - Truth anchor: `D5/S3/Analytic/EllipticTailExponent/Bounds.hasDerivAt_U`
 - Truth anchor: `D5/S3/Analytic/EllipticTailExponent/Bounds.norm_deriv_U_le`
 - Dependency: [D5/S3/Analytic/EllipticTailExponent/Defs](Defs.md)
+- Dependency: [D5/S3/Analytic/SeriesInequalities/NormalizedPochhammerBounds](../SeriesInequalities/NormalizedPochhammerBounds.md)
