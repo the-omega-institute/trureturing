@@ -1,0 +1,54 @@
+**Definition 116.1 (the original step and its forms).** On every nonempty
+finite ordered original $u\in\mathcal T$ of IV Definition 112.1, retain
+$s_n=\rho^n u$, every literal occurrence and label, and the closed unit-edge
+counting Laplacian $L_n$ of §115.1. The substitution is still
+$\rho\alpha=\beta$, $\rho\beta=\langle\beta,\alpha\rangle$, homomorphically
+on ordered pairs. For one actual accepted step abbreviate
+
+$$
+\begin{aligned}
+V&=V_n,& V'&=V_{n+1},& N&=N_n,& N'&=N_{n+1},& r&=N'/N,\\
+H&=L^2(V,\mu),& H'&=L^2(V',\mu'),&
+\mu&=N^{-1}\sum_{x\in V}\delta_x,&
+\mu'&=(N')^{-1}\sum_{y\in V'}\delta_y,\\
+A&=NL_n,& A'&=N'L_{n+1},&
+S(t)&=e^{-tA},& S'(t)&=e^{-tA'}.
+\end{aligned}
+\tag{116.1}
+$$
+
+Every repeated occurrence remains distinct. Probability normalization
+changes the norm and readout convention; it removes no unit counting mass
+and changes no literal edge or closed Laplacian. Write $\mathcal E$ and
+$\mathcal E'$ for the actual old and successor edge sets. The associated
+real bilinear forms are exactly
+
+$$
+\begin{aligned}
+\mathfrak a(f,g)&=\langle f,Ag\rangle_\mu
+ =\sum_{\{x,y\}\in \mathcal E}(f(x)-f(y))(g(x)-g(y)),\\
+\mathfrak a'(h,k)&=\langle h,A'k\rangle_{\mu'},\\
+\|f\|_1^2&=\|f\|_\mu^2+\mathfrak a(f,f),&
+\|h\|_{1'}^2&=\|h\|_{\mu'}^2+\mathfrak a'(h,h).
+\end{aligned}
+\tag{116.2}
+$$
+
+Write $H_1=(H,\|\cdot\|_1)$ and $H'_1=(H',\|\cdot\|_{1'})$.
+Let $\mathcal B$ be the actual old beta-leaf set and $\mathcal Z$ its two
+born children per parent, as in IV (112.6)--(112.9). The map
+$\pi:V'\to V$ fixes old addresses and sends each born child to its actual
+parent. Put $m(x)=|\pi^{-1}(x)|=1+2\mathbf1_{\mathcal B}(x)$ and define
+
+$$
+E f=f\circ\pi,\qquad
+D=E^{*_\mu}=r^{-1}E^{\mathsf T},\qquad
+C=r E\operatorname{diag}(m)^{-1},\qquad
+F=r^{-1}C.
+\tag{116.3}
+$$
+
+Here $E^{\mathsf T}$ is the raw counting transpose, while the indicated
+adjoint uses the two probability inner products. These names are local
+to this section; $D$ here is not the incidence operator of §115.
+

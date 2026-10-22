@@ -1,0 +1,28 @@
+**Convention 8.3 (ordinary literature and unavailable contexts).**
+The source-specific deduction in §§4–6 uses the named supplier
+identities, elementary analytic power series, norm inequalities and
+closed intervals. The general inverse, kernel and midpoint principles
+are credited reuse. The following source/version restrictions remain
+explicit; unavailable texts are not replaced by snippets or another
+edition.
+
+| Source | Evidence and use boundary |
+| --- | --- |
+| Basu–Pollack–Roy, *Algorithms in Real Algebraic Geometry*, second edition, Chapters 2, 8 and 9 | `UNVERIFIED-CITATION`: the complete cited book contexts are unavailable. They provide no separately checked load-bearing theorem body here. |
+| Rudin, *Principles of Mathematical Analysis*, Theorem 2.41 | `UNVERIFIED-CITATION`: edition unspecified and complete cited context unavailable. |
+| Krantz–Parks, *The Implicit Function Theorem*, Chapters 1–2 | `UNVERIFIED-CITATION`: edition unspecified and complete cited contexts unavailable. The analytic parametrization is the explicit VI supplier, not an assertion of having checked this book. |
+| Cox–Little–O'Shea, *Ideals, Varieties, and Algorithms*, Chapter 3 | `UNVERIFIED-CITATION`: edition unspecified and complete cited context unavailable. |
+| Basu, [author-linked real-algebraic-geometry survey PDF](https://www.math.purdue.edu/~sbasu/raag_survey2011_final-sep4-2014.pdf), SHA-256 `4d32f328179a354e8ad19b5fd07233581f8d0408ed39fc2a175d7461f9b949e4` | The supplied complete PDF matches its requested title and literal page/section locators. Identity with the exact earlier copy is not uniquely certified, and equivalence to an arXiv revision or publisher edition is unverified. PDF creation metadata and the author-page 2017 publication entry are distinct. This does not independently certify the source eliminations. |
+| Hasegawa–Honda–Naokawa–Umehara–Yamada, *Intrinsic Invariants of Cross Caps*, [arXiv:1207.3853v2](https://arxiv.org/abs/1207.3853v2) | `literature-attested` at this version only: the Whitney criterion cited by VI. Complete TeX and original PDF are supplied; the PDF derivative has 96 fontTools/CFF encoding notices, and mathematical glyph/formula/layout fidelity is not certified. The criterion supplies no metric retention constant; (4.2) uses the original-source jets directly. |
+| Jelonek, the 1993 paper at [DOI 10.4064/ap-58-3-259-266](https://doi.org/10.4064/ap-58-3-259-266) | The complete original PDF and text derivative preserve their extraction limits; unchanged strings do not certify formulas or layout. Dominant complex polynomial nonproperness is not a substitute for the strict-real complete-world exhaustion used here. Publisher metadata labels CC-BY without an exact license-version link; no version-specific license is certified. |
+| [Affine Finite Reply Recovery](RECURSIVE_RELATIONAL_OBSERVATION_AFFINE_FINITE_REPLY_RECOVERY.md), complete §§2 and 7 at `4442fb66c4d7017bb7b932cc63f058b46c83b71c` | Reused separation of finite closed values from exact/analog data, approximate task guarantees from exact source recovery, and numerical inverses from chronology and rights. Its affine source, noise model and native response task are not the present cubic-gain experiment. |
+
+Independent PGP signature trust is unvalidated. Documentary byte,
+version, index and seal checks certify neither source completeness
+nor mathematical correctness, novelty or applicability. In particular
+the finite source certificates for O, III, V, VI and X are attributed
+to those sources; no execution or independent recomputation of them,
+and no new Lean/axiom-closure verification, is asserted here. The
+ordinary conditional proofs above establish their displayed deduction
+from those inputs, not a new certification of the inputs themselves.
+
