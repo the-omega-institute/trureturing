@@ -112,12 +112,6 @@ with G1–G5 remains unsettled. The
 also remains available. G1–G5 record the particular periodic-Gamma
 comparison below, with no priority claim over these earlier methods.
 
-[Suzuki’s inspected earlier primary](suzuki2023aspects.md) supplies the
-high-complement estimate in a primitive metric and the corrected finite
-form, and distinguishes smooth-source from completed-space nondegeneracy.
-Those methods are reused; their existence does not supply the actual
-corrected sign or the all-support hypothesis required here.
-
 ### Compare periodic and zero-extended Gamma energies
 
 Let $D_L$ be the diagonal selfadjoint operator with eigenvalues
