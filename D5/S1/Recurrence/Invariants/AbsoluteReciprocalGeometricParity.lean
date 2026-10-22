@@ -6,6 +6,8 @@
    utility: none
    digest: Degree contraction and geometric cancellation prove A383377 parity. -/
 
+/- Escape audit unfinished for published helpers: https://github.com/the-omega-institute/trureturing/issues/19794. -/
+
 /- Escape audit unfinished for published suppliers: https://github.com/the-omega-institute/trureturing/issues/19089. -/
 
 import Mathlib.RingTheory.PowerSeries.Inverse
@@ -21,7 +23,7 @@ private theorem agree_iff (d : ℕ) (f g : PowerSeries R) :
     Agree d f g ↔ (X : PowerSeries R) ^ d ∣ f - g := by
   simp [Agree, X_pow_dvd_iff, map_sub, sub_eq_zero]
 
-private theorem agree_mul {d : ℕ} {f g u v : PowerSeries R}
+theorem agree_mul {d : ℕ} {f g u v : PowerSeries R}
     (h : Agree d f g) (h' : Agree d u v) : Agree d (f * u) (g * v) := by
   apply (agree_iff _ _ _).mpr
   have h1 := dvd_mul_of_dvd_left ((agree_iff _ _ _).mp h) u
