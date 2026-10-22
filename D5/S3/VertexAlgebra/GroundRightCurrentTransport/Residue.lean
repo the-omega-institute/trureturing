@@ -311,7 +311,7 @@ private theorem finsum_convolution (a c : ℂ) (v : ℕ → M)
   by_contra outside
   exact hn (by simp [tail n (by have := Finset.mem_range.not.mp outside; omega)])
 
-private theorem R_nat (A B : VertexOperator ℂ M) (r : ℕ) (n : ℤ) (x : M) :
+theorem R_nat (A B : VertexOperator ℂ M) (r : ℕ) (n : ℤ) (x : M) :
     ((R A B r)[[n]]) x =
       ((FieldNormalProductLocality.deltaEnd ^ r)
         (FieldNormalProductLocality.commutator A B)) 0 n x := by

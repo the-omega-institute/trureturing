@@ -72,13 +72,14 @@ internal sealed class LatticeHalfFockChargedResidueDocument : IScribeDocumentDef
                 AssessedProvenance.FromRepo(LibraryNoteRef.Create("D5/L/VertexAlgebra/flm1988monster")),
                 Blocks(Paragraph(Text("The finite triangular inverse reindexes finite sums and consumes Ring.add_choose_eq. "
                     + "L=0 is discharged from the explicit tail rather than a positive-cutoff argument. Its charged "
-                    + "forward-row and complete-physical-residue hypotheses still have to be instantiated; neither is "
-                    + "smuggled into this theorem as an assumption."))),
+                    + "forward-row hypothesis still has to be proved for the actual physical rows before this generic "
+                    + "inverse can be instantiated."))),
                 DescribeRole.Theorem),
             Paragraph(Text("The construction uses the public StateFieldResidueReconstruction integerBinomial, physicalSlice_mode, "
                 + "native_ordered_product and the existing actual ground-action/collision APIs. The remaining mathematical "
-                + "gap is the native two-order forward telescope on arbitrary actual inputs, followed by an independent "
-                + "complete-residue tail and charged-family inverse instantiation. No full VOA, CFT, string or AdS/CFT "
+                + "gap is the native two-order forward telescope on arbitrary actual inputs and the resulting "
+                + "charged-family inverse instantiation. ChargedResidue.Locality proves the independent complete-residue "
+                + "tail, including the zero cutoff. No full VOA, CFT, string or AdS/CFT "
                 + "claim is made. Classical residue and twisted-lattice background is attributed to the inherited "
-                + "repository sources and FLM; no literature novelty is asserted."))));
+                + "repository sources and FLM; no literature novelty is asserted.")))));
 }
