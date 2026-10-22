@@ -424,6 +424,10 @@ private unsafe def lookupLeafPass (fallback : Bool) (table : LookupTable) (goal 
         lookupPhase s!"lookup/candidate-start name={name} visited={trace.visited} attempted={attempted}"
       try
         let obligations ← timeLookup "lookup/apply" <| withReducible <| goal.apply view {approx := false}
+        -- Meta.apply includes the signature placeholder among its metavariable
+        -- obligations. Its certificate is deliberately supplied only below.
+        let obligations := obligations.filter fun next =>
+          !values.any (fun value => value.isMVar && value.mvarId! == next)
         let (propositions, dataClosed) ← timeLookup "lookup/instantiate" do
           let propositions ← obligations.filterM fun g => g.withContext do isProp (← g.getType)
           -- Only visible facts may recover data absent from the conclusion.
