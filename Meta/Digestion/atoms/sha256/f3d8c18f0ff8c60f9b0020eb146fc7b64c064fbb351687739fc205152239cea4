@@ -1,0 +1,28 @@
+**Definition 201.1 (The fixed independent-ray family).** Use the family,
+one-copy occupation convention and sector bases of (177.2) and
+(178.1)–(178.3). Fix $0<t\leq 1$, $s=1-t$, and
+
+$$
+ Z=2(1+t)^2.
+$$
+
+Let $v=(\alpha,u)$ and $w=(\gamma,h)$ be unit vectors in
+$\mathbb C^3=\mathbb C\oplus\mathbb C^2$. Write
+
+$$
+ x=|\alpha|^2,\qquad y=|\gamma|^2,\qquad z=|u^*h|^2.
+$$
+
+The one-copy number blocks, in the supplied bases
+$(\ell,R,r)$ for $N=1$ and $(r\wedge R,\ell\wedge R,\ell\wedge r)$ for
+$N=2$, are
+
+$$
+ R=1\oplus(tI_3+s vv^*)\oplus(tI_3-ts ww^*)\oplus t^2,
+ \qquad \rho=R/Z.
+$$
+
+The arbitrary global-number-preserving orbit is a premise of this manuscript. It is
+separate from passive one-particle $\Gamma(U_3)$, native reachability, and local
+SSR operations.
+

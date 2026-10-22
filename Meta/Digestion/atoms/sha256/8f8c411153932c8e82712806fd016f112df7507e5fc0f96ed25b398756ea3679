@@ -1,0 +1,24 @@
+**Proposition 226.3 (finite exact certificate).** For
+
+$$
+K=8,\qquad A=B=\delta=1,\qquad n=26,
+$$
+
+one has $R_{26}=26$, $N_{26}=2F_{27}-1=392835$, and
+
+$$
+\left\lceil\log_2(1+2R_{26}/\delta)\right\rceil
+=\lceil\log_2 53\rceil=6.
+$$
+
+The cover capacity is therefore $8^6=262144$, so (226.3) fails:
+
+$$
+\boxed{392835>262144.}
+\tag{226.8}
+$$
+
+This rejects these constants at this prefix. It is not by itself an
+all-prefix theorem, and it does not identify $K=8$ with a three-dimensional
+covering number.
+
