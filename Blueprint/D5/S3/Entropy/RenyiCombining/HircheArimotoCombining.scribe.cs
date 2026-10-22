@@ -82,9 +82,11 @@ internal sealed class HircheArimotoCombiningDocument : IScribeDocumentDefinition
 
     private static DocumentBlock Node(string name, string title, Formula formula, DescribeRole role, string prose,
         OpenProblemResolutionClaim? resolution = null) =>
-        Describe.Lean(DescribeId.Create("hirche-arimoto-" + name.ToLowerInvariant()),
+        Describe.Lean(DescribeId.Create("hirche-arimoto-" + name.ToLowerInvariant().Replace('_', '-')),
             DeclarationHandle.Create(Prefix + name), H(title), StatementSource.FromAuthor(Disp(formula)),
-            (name == "result" ? AssessedProvenance.FromRepo(Source) : AssessedProvenance.FromLiterature(Source)),
+            (name == "result" ? AssessedProvenance.FromRepo(Source)
+                : name is "ratio_tanh" or "tanh_mem" ? AssessedProvenance.FromRepo()
+                : AssessedProvenance.FromLiterature(Source)),
             Blocks(Paragraph(Text(prose))), role,
             openProblemResolutionClaim: resolution);
     private static Formula N(string x) => F.Id(x);

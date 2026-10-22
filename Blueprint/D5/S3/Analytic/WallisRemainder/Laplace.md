@@ -14,7 +14,7 @@ Lean statement: `D5/S3/Analytic/WallisRemainder/Laplace.integrableOn_laplaceKern
 
 *Commentary.*
 
-For positive x, the function exp(-xt) tanh(t/4)/(2t) is integrable over positive t. The hyperbolic sine bound gives an upper bound exp(-xt)/8.
+For positive x, the function exp(-xt) tanh(t/4)/(2t) is integrable over positive t. The hyperbolic sine bound gives an upper bound exp(-xt)/8; positivity uses the shared tanh interval theorem.
 
 **Theorem 1.2 (The integral representation).**
 
@@ -26,11 +26,12 @@ Lean statement: `D5/S3/Analytic/WallisRemainder/Laplace.r_eq_laplace`
 
 *Commentary.*
 
-For every positive x, minus log B(x) equals the integral of exp(-xt) tanh(t/4)/(2t) over positive t. Gamma recurrence gives a half-step equation, and log convexity gives a nonnegative remainder tending to zero. The exponential case of Frullani's integral evaluates the corresponding difference integral. The proposed integral obeys the same half-step equation and tends to zero; their difference is periodic with period one, so the difference vanishes.
+For every positive x, minus log B(x) equals the integral of exp(-xt) tanh(t/4)/(2t) over positive t. Gamma recurrence gives a half-step equation, and log convexity gives a nonnegative remainder tending to zero. The exponential case of Frullani's integral evaluates the corresponding difference integral. The shared hyperbolic bias ratio identity gives the kernel half-step equation. The proposed integral obeys the same half-step equation and tends to zero; their difference is periodic with period one, so the difference vanishes.
 
 ## References
 
 - Truth anchor: `D5/S3/Analytic/WallisRemainder/Laplace.integrableOn_laplaceKernel`
 - Truth anchor: `D5/S3/Analytic/WallisRemainder/Laplace.r_eq_laplace`
 - Dependency: [D5/S3/Analytic/WallisRemainder/Defs](Defs.md)
+- Dependency: [D5/S3/Entropy/RenyiCombining/HircheArimotoCombining](../../Entropy/RenyiCombining/HircheArimotoCombining.md)
 - Dependency: [D5/S3/Observer/Fluctuation/ThermalCoefficientFloor](../../Observer/Fluctuation/ThermalCoefficientFloor.md)
