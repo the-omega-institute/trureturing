@@ -77,8 +77,8 @@ def standardAxioms (xs : Array Name) : Bool :=
 def checkProof (name : Name) (levels : List Name) (type value : Expr) : MetaM (Array Name) := do
   unless !value.hasMVar && !value.hasFVar && !value.hasSorry do
     throwError "search.proof_not_closed"
-  addDecl (.thmDecl { name, levelParams := levels, type, value })
-  let xs ← collectAxioms name
+  timeLookup "certificate/kernel" <| addDecl (.thmDecl { name, levelParams := levels, type, value })
+  let xs ← timeLookup "certificate/axioms" <| collectAxioms name
   unless standardAxioms xs do throwError "search.axioms_outside_standard: {xs}"
   return xs
 

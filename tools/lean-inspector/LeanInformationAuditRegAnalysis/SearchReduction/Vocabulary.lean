@@ -74,7 +74,7 @@ private partial def installGenerated (generated : Environment) (n : Name) : Meta
     | throwError "search.generated_dependency_missing: {n}"
   for dep in info.getUsedConstantsAsSet do installGenerated generated dep
   match info with
-  | .defnInfo value => addDecl (.defnDecl value)
+  | .defnInfo value => timeLookup "certificate/kernel" <| addDecl (.defnDecl value)
   | .thmInfo value => discard <| checkProof n value.levelParams value.type value.value
   | _ => throwError "search.generated_dependency_unsupported: {n}"
 
@@ -224,7 +224,7 @@ mutual
         | throwError "search.generated_reconstruction_failed: {n}"
       let type ← reconstructExpression next n value.type
       let body ← reconstructExpression next n value.value
-      addDecl (.defnDecl {value with type, value := body})
+      timeLookup "certificate/kernel" <| addDecl (.defnDecl {value with type, value := body})
       setReducibilityStatus n .reducible
       IO.eprintln s!"vocabulary rebuilt: {n}"
 
@@ -345,7 +345,7 @@ mutual
       if let some names := ctx.regenerated? then names.modify (·.insert name)
     unless (← getEnv).contains info.name do
       match info with
-      | .defnInfo original => addDecl (.defnDecl {original with value := body})
+      | .defnInfo original => timeLookup "certificate/kernel" <| addDecl (.defnDecl {original with value := body})
       | .thmInfo original => discard <| checkProof info.name original.levelParams original.type body
       | _ => throwError "search.derived_generator_name_mismatch: {info.name}"
       if let some names := ctx.regenerated? then names.modify (·.insert info.name)
@@ -368,7 +368,7 @@ mutual
         ctors := ctors ++ [{name := c, type : Constructor}]
       let type ← reconstructExpression signatureContext n member.type
       types := types ++ [{name := n, type, ctors : InductiveType}]
-    addDecl (.inductDecl value.levelParams value.numParams types false)
+    timeLookup "certificate/kernel" <| addDecl (.inductDecl value.levelParams value.numParams types false)
     Lean.compileDecls group.toArray
     for n in group do
       mkCasesOn n

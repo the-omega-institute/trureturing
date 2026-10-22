@@ -21,6 +21,11 @@ def timeLookup {α : Type} (label : String) (action : MetaM α) : MetaM α := do
 
 abbrev lookupVersion : String := "R_lookup/one-B/discrtree-pickle-v5-independent"
 
+/-- Bounded, query-local metadata reuse; certificates are always checked anew. -/
+structure LookupQueryMemo where
+  primary? : Option (Environment × Expr × DiskLookup.Candidates) := none
+  fallback? : Option DiskLookup.Candidates := none
+
 /-- The table is captured before delivery vocabulary or S is installed. A
 partial basis may supply a hit, but never a completed negative query. -/
 structure LookupTable where
@@ -31,6 +36,7 @@ structure LookupTable where
   load? : Option (DiskLookup.Entry → Option Name → MetaM (Array Expr × Array String)) := none
   close? : Option (IO Unit) := none
   finish? : Option (Environment → Expr → MetaM Expr) := none
+  memo? : Option (IO.Ref LookupQueryMemo) := none
 
 structure LookupTrace where
   visited : Nat := 0
@@ -55,11 +61,15 @@ private def candidateOwnerMatches (table : LookupTable) (entry : DiskLookup.Entr
 private def profileCandidateSet (table : LookupTable) (type : Expr)
     (candidates : DiskLookup.Candidates) (fallback : Bool) (mode : String) : IO Unit := do
   if (← IO.getEnv "SEARCH_REDUCTION_PROFILE").isNone then return
+  let started ← IO.monoNanosNow
+  let heartbeats ← IO.getNumHeartbeats
   let loaded := candidates.entries.filter (candidateOwnerMatches table)
   let modules := candidates.entries.foldl (fun acc entry =>
     if candidateOwnerMatches table entry then acc else acc.insert entry.module)
     ({} : Std.HashSet String)
   lookupPhase s!"lookup/set mode={mode} fallback={fallback} query={type.hash} total={candidates.entries.size} loaded={loaded.size} unloaded={candidates.entries.size - loaded.size} unloaded_modules={modules.size}"
+  lookupPhase s!"lookup/query mode={mode} fallback={fallback} closed={!type.hasMVar && !type.hasFVar} expression={(toJson (reprStr type)).compress}"
+  lookupPhase s!"lookup/recall-profile/end ns={(← IO.monoNanosNow) - started} heartbeats={(← IO.getNumHeartbeats) - heartbeats}"
 
 private def candidateValue (table : LookupTable) (entry : DiskLookup.Entry) (head : Option Name) :
     MetaM (Array Expr × Option String × Bool) := do
@@ -92,6 +102,26 @@ def resolveLookupTable (table : LookupTable) : IO LookupTable := do
   let disk? ← tableIndex table
   return {table with disk?, complete := table.complete && disk?.any (·.header.complete)}
 
+private unsafe def queryLookup (table : LookupTable) (index : DiskLookup.Index)
+    (type : Expr) (limit : Option Nat) (fallback : Bool) : MetaM DiskLookup.Candidates := do
+  let env ← getEnv
+  let cacheable := !type.hasMVar && !type.hasFVar
+  if let some memo := table.memo? then
+    let cached ← memo.get
+    let hit := if fallback then cached.fallback? else
+      cached.primary?.bind fun (previous, key, candidates) =>
+        if cacheable && ptrEq previous env && key == type then some candidates else none
+    if let some candidates := hit then
+      lookupPhase s!"lookup/cache-hit fallback={fallback} candidates={candidates.entries.size}"
+      return candidates
+  let result ← DiskLookup.queryMature index type limit fallback
+  if result.complete then
+    if let some memo := table.memo? then
+      if fallback then memo.modify fun m => {m with fallback? := some result}
+      else if cacheable then
+        memo.modify fun m => {m with primary? := some (env, type, result)}
+  return result
+
 /-- The membership page is only a prefilter. Alpha-invariant hashes never
 substitute for definitional equality or the caller's closed kernel check. -/
 private unsafe def lookupExactPass (fallback : Bool) (table : LookupTable) (goal : MVarId) : MetaM LookupTrace := goal.withContext do
@@ -102,7 +132,7 @@ private unsafe def lookupExactPass (fallback : Bool) (table : LookupTable) (goal
   let limit := if context.maxHeartbeats == 0 then none
     else some (context.initHeartbeats + context.maxHeartbeats)
   let indexStart ← IO.monoMsNow
-  let candidates ← DiskLookup.queryMature index type limit fallback
+  let candidates ← queryLookup table index type limit fallback
   lookupPhase s!"lookup/index ms={(← IO.monoMsNow) - indexStart} fallback={fallback}"
   profileCandidateSet table type candidates fallback "exact"
   checkSystem "lookup.membership-index"
@@ -351,7 +381,7 @@ private unsafe def lookupLeafPass (fallback : Bool) (table : LookupTable) (goal 
   let limit := if context.maxHeartbeats == 0 then none
     else some (context.initHeartbeats + context.maxHeartbeats)
   let indexStart ← IO.monoMsNow
-  let candidates ← DiskLookup.queryMature index (← goal.getType) limit fallback
+  let candidates ← queryLookup table index (← goal.getType) limit fallback
   lookupPhase s!"lookup/index ms={(← IO.monoMsNow) - indexStart} fallback={fallback}"
   profileCandidateSet table (← goal.getType) candidates fallback "leaf"
   checkSystem "lookup.candidate-index"
@@ -397,15 +427,16 @@ private unsafe def lookupLeafPass (fallback : Bool) (table : LookupTable) (goal 
         lookupPhase s!"lookup/candidate-start name={name} visited={trace.visited} attempted={attempted}"
       try
         let obligations ← timeLookup "lookup/apply" <| withReducible <| goal.apply view {approx := false}
-        let propositions ← obligations.filterM fun g => g.withContext do isProp (← g.getType)
-        -- Only visible-fact unification may recover parameters absent from
-        -- the conclusion. Decision procedures cannot invent a data argument.
-        for next in propositions do
-          if (← instantiateMVars (← next.getType)).hasMVar then discard <| unify next
-        let dataClosed ← obligations.allM fun next => do
-          if ← next.isAssigned then return true
-          next.withContext do isProp (← instantiateMVars (← next.getType))
-        if dataClosed && (← propositions.allM fun next => do
+        let (propositions, dataClosed) ← timeLookup "lookup/instantiate" do
+          let propositions ← obligations.filterM fun g => g.withContext do isProp (← g.getType)
+          -- Only visible facts may recover data absent from the conclusion.
+          for next in propositions do
+            if (← instantiateMVars (← next.getType)).hasMVar then discard <| unify next
+          let dataClosed ← obligations.allM fun next => do
+            if ← next.isAssigned then return true
+            next.withContext do isProp (← instantiateMVars (← next.getType))
+          return (propositions, dataClosed)
+        if dataClosed && (← timeLookup "lookup/closure" <| propositions.allM fun next => do
             if ← next.isAssigned then return true else close next) then
           let proof ← instantiateMVars (mkMVar goal)
           unless proof.hasMVar do return {trace with attempted, source? := some name}

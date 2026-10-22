@@ -281,14 +281,16 @@ private initialize candidateRegions : IO.Ref (Array CompactedRegion) ← IO.mkRe
 certificate is inlined and checked against the original query environment. -/
 unsafe def onDemandLookup (table : LookupTable)
     (sharedImports? : Option ImportState := none) : IO LookupTable := do
-  let cache ← IO.mkRef (none : Option (String × Environment))
+  let cache ← IO.mkRef (#[] : Array (String × Options × Environment))
+  let boundary ← IO.mkRef false
+  let memo ← IO.mkRef ({} : LookupQueryMemo)
   let verified ← IO.mkRef false
   let retained := if sharedImports?.isSome then
       table.environment.header.regions.foldl (fun names region =>
         names.insert region.filePath.toString) ({} : Std.HashSet String)
     else {}
   let close : IO Unit := do
-    cache.set none
+    boundary.set true
   let acquire (module : Name) (options : Options) : IO Environment := withImporting do
     lookupPhase s!"candidate/import-start module={module}"
     let imports : Array Import := #[{module}]
@@ -304,6 +306,7 @@ unsafe def onDemandLookup (table : LookupTable)
     let proof ← inlineLookupSupport base proof
     return detachLookupExpression proof
   return {table with
+    memo? := some memo
     close? := some close
     finish? := some finish
     load? := some fun entry head => do
@@ -317,24 +320,28 @@ unsafe def onDemandLookup (table : LookupTable)
         unless check.exitCode == 0 do throwError "lookup.candidate_snapshot_changed"
         verified.set true
       let ready ← cache.get
-      let source ← if let some (name, source) := ready then
-          if name == entry.module then pure source else do
-            close
-            let source ← acquire entry.module.toName context.options
-            cache.set (some (entry.module, source))
-            pure source
-        else do
-          let source ← acquire entry.module.toName context.options
-          cache.set (some (entry.module, source))
+      let crossed ← boundary.get
+      boundary.set false
+      let source ← if let some (_, _, source) := ready.find? (fun (name, options, _) =>
+          name == entry.module && options == context.options) then
+          lookupPhase s!"candidate/import-cache module={entry.module} boundary={crossed} displaced={ready.back?.any (fun row => row.1 != entry.module)}"
           pure source
+        else do
+          acquire entry.module.toName context.options
+      cache.modify fun previous =>
+        let remaining := previous.filter fun (name, options, _) =>
+          name != entry.module || options != context.options
+        (remaining.extract (remaining.size - 1) remaining.size).push
+          (entry.module, context.options, source)
       let result ← timeLookup s!"candidate/copy name={entry.name}" <| copyLookupCandidateWith (fun source proof =>
         copyCertificateExpression {source, enclosingBudget := true} proof) source entry head
       if (← IO.getEnv "SEARCH_REDUCTION_PROFILE").isSome then
         IO.eprintln s!"LOOKUP_COST candidate_import_copy_ms={(← IO.monoMsNow) - started} module={entry.module}"
       checkSystem "lookup.candidate_import"
       let (proofs, params, failures) := result
-      let levels ← params.mapM fun _ => mkFreshLevelMVar
-      return (proofs.map (·.instantiateLevelParams params levels), failures)}
+      timeLookup "candidate/instantiate" do
+        let levels ← params.mapM fun _ => mkFreshLevelMVar
+        return (proofs.map (·.instantiateLevelParams params levels), failures)}
 
 private unsafe def runCore (source base : Environment) (request : Request)
     (lookupComplete : Bool) (disk? : Option DiskLookup.Index := none)
