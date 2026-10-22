@@ -5,3 +5,7 @@ cas_ref: sha256:91cfcb5defebae69f7c3c39b1002662a1e3c31a6bebdcfc8cf5392d2ef3a50f3
 coverage_gids: []
 receipts:
   unresolved_subitems: []
+  nonpropositional:
+    justification: Section heading and definition of the phrase fixed height path only.
+    previous_atom_id: 4d354c2fccc14fffe6a86cbb1c912841f08ba6d98cfbc3e818d29b5bb1304aef
+    next_atom_id: 8fecce142af548413d9c8411f012cd84a86571025954454e3c11075447af6a19
