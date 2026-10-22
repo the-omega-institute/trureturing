@@ -8,7 +8,37 @@ K is compact Hausdorff and totally disconnected, with its Borel measurable struc
 
 signedFunctional(s) is the continuous linear map from C(K,Real) to Real given by the actual vector-measure signed integral of f against s, with scalar multiplication as its bilinear pairing. Its operator norm is bounded by the real total mass of the Hahn–Jordan totalVariation of s. SignedMeasure itself is not assigned a normed-space instance. weakSignedFunctional(s) means pointwise application of StrongDual.toWeakDual to this functional. totalVariationMass(s) means totalVariation(s)(univ), an extended nonnegative real; toReal is used only for its finite total mass.
 
-**Theorem 1.1 (Every norm-preserving choice has the reference limit).**
+**Theorem 1.1 (Preserved mass makes variation commute with pushforward).**
+
+$$\begin{aligned}\forall X: \operatorname{Type}\left(u\right), \forall Y: \operatorname{Type}\left(v\right), \operatorname{MeasurableSpaces}\left(X, Y\right) \Rightarrow\\\forall s: \operatorname{SignedMeasure}\left(X\right), \forall p: X \to Y, \operatorname{Measurable}\left(p\right) \Rightarrow\\\operatorname{totalVariation}\left(\operatorname{map}\left(s, p\right), \operatorname{univ}\left(\right)\right) = \operatorname{totalVariation}\left(s, \operatorname{univ}\left(\right)\right) \Rightarrow\\\operatorname{totalVariation}\left(\operatorname{map}\left(s, p\right)\right) = \operatorname{map}\left(\operatorname{totalVariation}\left(s\right), p\right)\end{aligned}$$
+
+*Proof.* Machine-checked in Lean as `D5/S3/Topology/Measures/NormPreservingLifts.totalVariation_map_of_mass` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+X and Y carry measurable spaces, s is an actual signed measure on X, and p is measurable. If pushing s forward preserves its entire total variation mass, then the positive measures totalVariation(map(s,p)) and map(totalVariation(s),p) are equal. The proof combines Mathlib's variation_map_le with equality of finite measures from domination and equal total mass. No topology, surjectivity, mass-one normalization or regularity premise is required.
+
+**Theorem 1.2 (Supported lifts agree on a fibre-constant clopen).**
+
+$$\begin{aligned}\forall K: \operatorname{Type}\left(u\right), \forall L: \operatorname{Type}\left(v\right), \operatorname{CompactBorel}\left(K\right) \land \operatorname{HausdorffBorel}\left(L\right) \Rightarrow\\\forall p: K \to L, \operatorname{Continuous}\left(p\right) \Rightarrow\\\forall V: \operatorname{Set}\left(L\right), \forall A: \operatorname{Set}\left(K\right), \operatorname{IsClopen}\left(V\right) \land \operatorname{IsClopen}\left(A\right) \Rightarrow\\\forall s: \operatorname{SignedMeasure}\left(K\right), \forall t: \operatorname{SignedMeasure}\left(K\right), \operatorname{map}\left(s, p\right) = \operatorname{map}\left(t, p\right) \Rightarrow\\\operatorname{totalVariation}\left(s, \operatorname{compl}\left(\operatorname{preimage}\left(p, V\right)\right)\right) = 0 \land \operatorname{totalVariation}\left(t, \operatorname{compl}\left(\operatorname{preimage}\left(p, V\right)\right)\right) = 0 \Rightarrow\\\operatorname{FibreConstantOn}\left(\operatorname{indicator}\left(A\right), p, V\right) \Rightarrow\operatorname{s}\left(A\right) = \operatorname{t}\left(A\right)\end{aligned}$$
+
+*Proof.* Machine-checked in Lean as `D5/S3/Topology/Measures/NormPreservingLifts.apply_eq_of_supported_clopen` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+K is compact with its Borel structure; L is Hausdorff with its Borel structure. The map p is continuous. V in L and A in K are clopen. The signed measures s and t have the same pushforward and give zero total variation to the complement of p-preimage(V). FibreConstantOn(indicator(A),p,V) means that p(x),p(y) in V and p(x)=p(y) imply x in A if and only if y in A. Then s(A)=t(A). Neither Hausdorffness of K nor surjectivity of p is needed.
+
+The compact image p[A intersect p-preimage(V)] is closed in L. Its preimage differs from A only off the common support. Zero variation on both set differences identifies each signed evaluation with its pushforward evaluation on that image.
+
+For a fixed finite coordinate test, each clopen atom is an A of this kind once the supported fibres are constant on those coordinates. Norm-preserving lifts first obtain their common positive pushforward and support from totalVariation_map_of_mass. Applying this clopen comparison gives equality of their signed atom values. For positive-variation atom values, convert the finite measures totalVariation(s) and totalVariation(t) with Measure.toSignedMeasure. Their signed pushforwards agree by the common positive pushforward; Measure.variation_toSignedMeasure preserves the same concentration hypotheses. The same clopen comparison then gives equality of real positive evaluations, hence equality of the finite measure values. This argument does not claim that variation commutes with the finite coordinate map.
+
+A finite sum of the reference atom errors consequently bounds every lift at once, provided that the finitely many reference evaluations converge. Signed weak-star convergence gives signed clopen evaluation convergence by the continuous clopen indicator. For positive evaluations, extract a separate probability-measure limit of the mass-one variations on a compact metric carrier and use clopen convergence for that probability limit. The probability limit is not identified with the variation of a signed weak-star limit. A finite coordinate family is fixed before choosing its tail; moving families require a new finite-stage choice. These are applications of the existing comparison, not a construction of the successor space, its split traces, the transfinite recursion or the final analytic endpoints.
+
+**Theorem 1.3 (Every norm-preserving choice has the reference limit).**
 
 $$\begin{aligned}\forall K: \operatorname{Type}\left(u\right), \forall L: \operatorname{Type}\left(v\right), \forall I: \operatorname{Type}\left(w\right), \\\operatorname{CompactHausdorffTotallyDisconnected}\left(K\right) \land \operatorname{Hausdorff}\left(L\right) \land \operatorname{BorelSpaces}\left(K, L\right) \Rightarrow\\\forall l: \operatorname{Filter}\left(I\right), \forall p: K \to L, \operatorname{Continuous}\left(p\right) \Rightarrow\\\forall V: I \to \operatorname{Set}\left(L\right), \forall nu: I \to \operatorname{SignedMeasure}\left(L\right), \\\forall s: I \to \operatorname{SignedMeasure}\left(K\right), \forall t: I \to \operatorname{SignedMeasure}\left(K\right), \forall C: \operatorname{Real}\left(\right), \forall F: \operatorname{WeakDual}\left(\operatorname{Real}\left(\right), \operatorname{ContinuousMap}\left(K, \operatorname{Real}\left(\right)\right)\right), \\C \ge 0 \land {\forall i: I, \operatorname{IsClopen}\left(\operatorname{V}\left(i\right)\right) \land {\operatorname{map}\left(\operatorname{s}\left(i\right), p\right) = \operatorname{nu}\left(i\right) \land \operatorname{totalVariationMass}\left(\operatorname{s}\left(i\right)\right) = \operatorname{totalVariationMass}\left(\operatorname{nu}\left(i\right)\right)} \land {\operatorname{map}\left(\operatorname{t}\left(i\right), p\right) = \operatorname{nu}\left(i\right) \land \operatorname{totalVariationMass}\left(\operatorname{t}\left(i\right)\right) = \operatorname{totalVariationMass}\left(\operatorname{nu}\left(i\right)\right)}} \Rightarrow\\{\forall i: I, \operatorname{totalVariation}\left(\operatorname{nu}\left(i\right), \operatorname{compl}\left(\operatorname{V}\left(i\right)\right)\right) = 0 \land \operatorname{toReal}\left(\operatorname{totalVariationMass}\left(\operatorname{nu}\left(i\right)\right)\right) \le C} \Rightarrow\\{\forall f: \operatorname{LocallyConstant}\left(K, \operatorname{Real}\left(\right)\right), \operatorname{Eventually}\left(l, \operatorname{FibreConstantOn}\left(f, p, V\right)\right)} \Rightarrow\\\operatorname{Tendsto}\left(\operatorname{weakSignedFunctional}\left(s\right), l, \operatorname{nhds}\left(F\right)\right) \Rightarrow \operatorname{Tendsto}\left(\operatorname{weakSignedFunctional}\left(t\right), l, \operatorname{nhds}\left(F\right)\right)\end{aligned}$$
 
@@ -28,4 +58,6 @@ Repository search found no exact all-lifts signed-measure convergence theorem in
 
 ## References
 
+- Truth anchor: `D5/S3/Topology/Measures/NormPreservingLifts.apply_eq_of_supported_clopen`
 - Truth anchor: `D5/S3/Topology/Measures/NormPreservingLifts.arbitrary_lifts_tendsto`
+- Truth anchor: `D5/S3/Topology/Measures/NormPreservingLifts.totalVariation_map_of_mass`

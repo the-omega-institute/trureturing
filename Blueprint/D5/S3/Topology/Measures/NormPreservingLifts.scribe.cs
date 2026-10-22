@@ -39,6 +39,34 @@ internal sealed class NormPreservingLiftsDocument : IScribeDocumentDefinition
         Seq(Limit("s"), Sp, Rightarrow, Sp, Limit("t"))
     ]));
 
+    private static Formula VariationMapStatement() => Disp(new Formula.Aligned([
+        Seq(All("X", Call("Type", V("u"))), All("Y", Call("Type", V("v"))),
+            Call("MeasurableSpaces", V("X"), V("Y")), Sp, Rightarrow),
+        Seq(All("s", Call("SignedMeasure", V("X"))), All("p", Fun(V("X"), V("Y"))),
+            Call("Measurable", V("p")), Sp, Rightarrow),
+        Seq(Call("totalVariation", Call("map", V("s"), V("p")), Call("univ")),
+            Sp, Eq, Sp, Call("totalVariation", V("s"), Call("univ")), Sp, Rightarrow),
+        Seq(Call("totalVariation", Call("map", V("s"), V("p"))), Sp, Eq, Sp,
+            Call("map", Call("totalVariation", V("s")), V("p")))
+    ]));
+
+    private static Formula SupportedClopenStatement() => Disp(new Formula.Aligned([
+        Seq(All("K", Call("Type", V("u"))), All("L", Call("Type", V("v"))),
+            Call("CompactBorel", V("K")), Sp, Land, Sp,
+            Call("HausdorffBorel", V("L")), Sp, Rightarrow),
+        Seq(All("p", Fun(V("K"), V("L"))), Call("Continuous", V("p")), Sp, Rightarrow),
+        Seq(All("V", Call("Set", V("L"))), All("A", Call("Set", V("K"))),
+            Call("IsClopen", V("V")), Sp, Land, Sp, Call("IsClopen", V("A")), Sp, Rightarrow),
+        Seq(All("s", Call("SignedMeasure", V("K"))), All("t", Call("SignedMeasure", V("K"))),
+            Call("map", V("s"), V("p")), Sp, Eq, Sp, Call("map", V("t"), V("p")), Sp, Rightarrow),
+        Seq(Call("totalVariation", V("s"), Call("compl", Call("preimage", V("p"), V("V")))),
+            Sp, Eq, Sp, Num(0), Sp, Land, Sp,
+            Call("totalVariation", V("t"), Call("compl", Call("preimage", V("p"), V("V")))),
+            Sp, Eq, Sp, Num(0), Sp, Rightarrow),
+        Seq(Call("FibreConstantOn", Call("indicator", V("A")), V("p"), V("V")), Sp, Rightarrow,
+            Call("s", V("A")), Sp, Eq, Sp, Call("t", V("A")))
+    ]));
+
     public DocumentDefinition Create() => DocumentDefinition.Create(ScribeNode.Create(
         "Norm-preserving signed lifts on compact spaces inherit a reference weak-star limit when each fixed locally constant test is eventually constant on supported projection fibres.",
         H("Arbitrary signed lifts and weak-star stability"),
@@ -51,6 +79,48 @@ internal sealed class NormPreservingLiftsDocument : IScribeDocumentDefinition
                 "signedFunctional(s) is the continuous linear map from C(K,Real) to Real given by the actual vector-measure signed integral of f against s, with scalar multiplication as its bilinear pairing. "
                 + "Its operator norm is bounded by the real total mass of the Hahn–Jordan totalVariation of s. SignedMeasure itself is not assigned a normed-space instance. "
                 + "weakSignedFunctional(s) means pointwise application of StrongDual.toWeakDual to this functional. totalVariationMass(s) means totalVariation(s)(univ), an extended nonnegative real; toReal is used only for its finite total mass.")),
+            Describe.Lean(
+                DescribeId.Create("total-variation-map-of-mass"),
+                DeclarationHandle.Create(Owner + "totalVariation_map_of_mass"),
+                H("Preserved mass makes variation commute with pushforward"),
+                StatementSource.FromAuthor(VariationMapStatement()),
+                AssessedProvenance.FromRepo(),
+                Blocks(Paragraph(Text(
+                    "X and Y carry measurable spaces, s is an actual signed measure on X, and p is measurable. "
+                    + "If pushing s forward preserves its entire total variation mass, then the positive measures totalVariation(map(s,p)) and map(totalVariation(s),p) are equal. "
+                    + "The proof combines Mathlib's variation_map_le with equality of finite measures from domination and equal total mass. "
+                    + "No topology, surjectivity, mass-one normalization or regularity premise is required."))),
+                DescribeRole.Theorem),
+            Describe.Lean(
+                DescribeId.Create("apply-eq-of-supported-clopen"),
+                DeclarationHandle.Create(Owner + "apply_eq_of_supported_clopen"),
+                H("Supported lifts agree on a fibre-constant clopen"),
+                StatementSource.FromAuthor(SupportedClopenStatement()),
+                AssessedProvenance.FromRepo(),
+                Blocks(
+                    Paragraph(Text(
+                        "K is compact with its Borel structure; L is Hausdorff with its Borel structure. The map p is continuous. "
+                        + "V in L and A in K are clopen. The signed measures s and t have the same pushforward and give zero total variation to the complement of p-preimage(V). "
+                        + "FibreConstantOn(indicator(A),p,V) means that p(x),p(y) in V and p(x)=p(y) imply x in A if and only if y in A. "
+                        + "Then s(A)=t(A). Neither Hausdorffness of K nor surjectivity of p is needed.")),
+                    Paragraph(Text(
+                        "The compact image p[A intersect p-preimage(V)] is closed in L. Its preimage differs from A only off the common support. "
+                        + "Zero variation on both set differences identifies each signed evaluation with its pushforward evaluation on that image.")),
+                    Paragraph(Text(
+                        "For a fixed finite coordinate test, each clopen atom is an A of this kind once the supported fibres are constant on those coordinates. "
+                        + "Norm-preserving lifts first obtain their common positive pushforward and support from totalVariation_map_of_mass. Applying this clopen comparison gives equality of their signed atom values. "
+                        + "For positive-variation atom values, convert the finite measures totalVariation(s) and totalVariation(t) with Measure.toSignedMeasure. "
+                        + "Their signed pushforwards agree by the common positive pushforward; Measure.variation_toSignedMeasure preserves the same concentration hypotheses. "
+                        + "The same clopen comparison then gives equality of real positive evaluations, hence equality of the finite measure values. "
+                        + "This argument does not claim that variation commutes with the finite coordinate map.")),
+                    Paragraph(Text(
+                        "A finite sum of the reference atom errors consequently bounds every lift at once, provided that the finitely many reference evaluations converge. "
+                        + "Signed weak-star convergence gives signed clopen evaluation convergence by the continuous clopen indicator. "
+                        + "For positive evaluations, extract a separate probability-measure limit of the mass-one variations on a compact metric carrier and use clopen convergence for that probability limit. "
+                        + "The probability limit is not identified with the variation of a signed weak-star limit. "
+                        + "A finite coordinate family is fixed before choosing its tail; moving families require a new finite-stage choice. "
+                        + "These are applications of the existing comparison, not a construction of the successor space, its split traces, the transfinite recursion or the final analytic endpoints."))),
+                DescribeRole.Theorem),
             Describe.Lean(
                 DescribeId.Create("arbitrary-lifts-tendsto"),
                 DeclarationHandle.Create(Owner + "arbitrary_lifts_tendsto"),
