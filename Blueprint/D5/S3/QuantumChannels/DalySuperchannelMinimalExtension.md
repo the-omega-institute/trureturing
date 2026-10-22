@@ -142,6 +142,10 @@ $$\neg (\forall (d1: \mathbb{N}), \forall (r1: \mathbb{N}), \forall (d2: \mathbb
 
 *Proof.* Machine-checked in Lean as `D5/S3/QuantumChannels/DalySuperchannelMinimalExtension.result` (`✓ std3`). ∎
 
+*Resolves.* `Problems/daly-2022-superchannel-minimal-extension-extremality` (refuted) by `D5/S3/QuantumChannels/DalySuperchannelMinimalExtension.result`.
+
+<!-- scribe-open-problem-resolution-v1 {"problem_slug":"daly-2022-superchannel-minimal-extension-extremality","declaration_gid":"D5/S3/QuantumChannels/DalySuperchannelMinimalExtension.result","resolution_kind":"refuted"} -->
+
 *Source.* Repository-derived.
 
 *Acknowledgement.* P. C. Daly (2022). *Axiomatic Approach to Quantum Superchannels*. DOI: [10.48550/arXiv.2210.00370](https://doi.org/10.48550/arXiv.2210.00370). URL: <https://arxiv.org/abs/2210.00370v1>.
