@@ -8,12 +8,12 @@ internal sealed class ShiftDocument : IScribeDocumentDefinition
     public DocumentDefinition Create() => DocumentDefinition.Create(ScribeNode.Create(
         "Scalar translation of Taylor defects.",
         H("Scalar translation of Taylor defects."), Blocks(
-            Describe.Lean(DescribeId.Create("taylor-majorization-shift-taylorQ-shift"),
+            Describe.Lean(DescribeId.Create("taylor-majorization-shift-taylorq-shift"),
                 DeclarationHandle.Create(Module + ".taylorQ_shift"),
                 H("Scalar translation of the ordered coefficients"), StatementSource.WithoutFormula(),
                 AssessedProvenance.FromRepo(),
                 Blocks(Paragraph(Text("For arbitrary complex square matrices A and B, a complex scalar s and every natural k, Q(A+sI,B) at order k is the sum over j from zero to k of choose(k,j) times s to the k-j times Q(A,B) at order j. Left multiplication by A and right multiplication by B commute as linear endomorphisms. The matrix coefficient is their binomial power applied to the identity, and translating A adds s times the identity endomorphism."))), DescribeRole.Theorem),
-            Describe.Lean(DescribeId.Create("taylor-majorization-shift-trace-taylorR"),
+            Describe.Lean(DescribeId.Create("taylor-majorization-shift-trace-taylorr"),
                 DeclarationHandle.Create(Module + ".trace_taylorR"),
                 H("Real trace of Hermitian symmetrization"), StatementSource.WithoutFormula(),
                 AssessedProvenance.FromRepo(),
