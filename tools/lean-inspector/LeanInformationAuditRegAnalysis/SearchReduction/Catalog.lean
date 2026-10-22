@@ -97,7 +97,7 @@ def baselineCatalog (commit : String) (delivery : Array Name) (base : Environmen
 /-- Protected ancestors of the target owner, excluding the delivery pollution
 closure. Only these already registered modules enter the implication table. -/
 def targetBaselineImports (commit : String) (delivery : Array Name)
-    (source : Environment) (target : Name) : IO (Array Name) := do
+    (source : Environment) (target : Name) (prerequisites : Array Name) : IO (Array Name) := do
   let (frozen, graph) ← protectedCatalog commit
   let mut polluted := delivery.foldl (fun names n => names.insert n) ({} : NameSet)
   let mut changed := true
@@ -109,7 +109,8 @@ def targetBaselineImports (commit : String) (delivery : Array Name)
         changed := true
   let some owner := source.getModuleIdxFor? target | return #[]
   let ownerName := source.header.moduleNames[owner.toNat]!
-  let mut closure := ({} : NameSet).insert ownerName
+  let mut closure := prerequisites.foldl (fun names n => names.insert n)
+    (({} : NameSet).insert ownerName)
   changed := true
   while changed do
     changed := false
@@ -119,6 +120,8 @@ def targetBaselineImports (commit : String) (delivery : Array Name)
         unless closure.contains imported.module do
           closure := closure.insert imported.module
           changed := true
-  return frozen.filter fun name => closure.contains name && !polluted.contains name
+  return source.header.moduleNames.filter fun name =>
+    closure.contains name && !polluted.contains name &&
+      (!name.toString.startsWith "D5." || frozen.contains name)
 
 end LeanInformationAudit.SearchReduction

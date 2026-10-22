@@ -46,6 +46,7 @@ structure LookupCandidate where
 partial basis may supply a hit, but never a completed negative query. -/
 structure LookupTable where
   environment : Environment
+  implicationModules? : Option (Array Name) := none
   complete : Bool := true
   enabled : Bool := true
   disk? : Option DiskLookup.Index := none
@@ -142,7 +143,9 @@ private unsafe def queryLookup (table : LookupTable) (index : DiskLookup.Index)
   -- Recompute matching in every reset search branch; only module bytes cache.
   let candidates ← DiskLookup.queryMature index type limit fallback table.budget?
   withLookupPreparation table.budget? do
-    let entries := candidates.entries.filter (candidateOwnerMatches table)
+    let entries := candidates.entries.filter fun entry =>
+      candidateOwnerMatches table entry &&
+        table.implicationModules?.all (·.contains entry.module.toName)
     lookupPhase s!"lookup/scope=B_T retained={entries.size} excluded={candidates.entries.size - entries.size}"
     return {candidates with entries}
 
@@ -170,18 +173,19 @@ private def checkLookupGoal (table : LookupTable) (base : Environment)
   let type ← mkForallFVars xs (← goal.getType)
   unless !proof.hasFVar && !proof.hasMVar && !proof.hasSorry && !type.hasMVar do
     throwError "lookup.unclosed_certificate"
-  withEnv base do
-    let name ← mkFreshUserName `_lookupChecked
-    let levels := (collectLevelParams {} type).params.toList
-    if ← isProp type then
-      addDecl (.thmDecl {name, levelParams := levels, type, value := proof})
-    else
-      addDecl (.defnDecl {
-        name, levelParams := levels, type, value := proof,
-        hints := .abbrev, safety := .safe})
-    let axioms ← collectAxioms name
-    unless axioms.all (#[`propext, `Classical.choice, `Quot.sound].contains ·) do
-      throwError "lookup.nonstandard_axioms"
+  timeLookup "lookup-certificate" do
+    withEnv base do
+      let name ← mkFreshUserName `_lookupChecked
+      let levels := (collectLevelParams {} type).params.toList
+      if ← isProp type then
+        addDecl (.thmDecl {name, levelParams := levels, type, value := proof})
+      else
+        addDecl (.defnDecl {
+          name, levelParams := levels, type, value := proof,
+          hints := .abbrev, safety := .safe})
+      let axioms ← collectAxioms name
+      unless axioms.all (#[`propext, `Classical.choice, `Quot.sound].contains ·) do
+        throwError "lookup.nonstandard_axioms"
   emitLookupRecord s!"LOOKUP_CERTIFICATE {Json.mkObj [
     ("support", toJson (proof.getUsedConstants.map Name.toString)),
     ("query_environment_only", toJson true)] |>.compress}"
@@ -444,8 +448,10 @@ unsafe def lookupExact (table : LookupTable) (goal : MVarId) : MetaM LookupTrace
         if ← withReducible <| isDefEq (← inferType value) type then
           candidate.certify
           goal.assign (← instantiateMVars value)
-          return {complete := true, source? := some entry.leanName, attempted := 1}
-      return {complete := true}
+          return {
+            complete := true, source? := some entry.leanName, attempted := 1,
+            unloaded := if candidate.unloaded then 1 else 0}
+      return {complete := true, unloaded := if candidate.unloaded then 1 else 0}
     trace := mergeLookupTrace trace attempt
     if trace.source?.isSome then return trace
   return trace

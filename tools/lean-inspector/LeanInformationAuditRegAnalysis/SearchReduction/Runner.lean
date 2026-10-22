@@ -48,7 +48,7 @@ structure Observation where
   catalogCount : Nat := 0
   loadedModules : Array Name := #[]
   catalogExcluded : Array Name := #[]
-  scope : String := "unverified"
+  scope : String := "B_T"
   catalogVerified : Bool := false
   pairedStructureUse : Array Name := #[]
   targetChecked : Bool := false

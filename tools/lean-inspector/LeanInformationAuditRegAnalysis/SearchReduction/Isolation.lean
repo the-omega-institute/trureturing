@@ -388,7 +388,8 @@ unsafe def onDemandLookup (table : LookupTable)
 
 private unsafe def runCore (source base : Environment) (request : Request)
     (lookupComplete : Bool) (disk? : Option DiskLookup.Index := none)
-    (sharedImports? : Option ImportState := none) : IO Observation := do
+    (sharedImports? : Option ImportState := none)
+    (implicationModules? : Option (Array Name) := none) : IO Observation := do
   let unknown (reason : String) (failure := Failure.isolation) : Observation := {
     target := request.target, base := .incomplete failure,
     paired := .incomplete failure, verdict := .insufficient, reason}
@@ -430,7 +431,7 @@ private unsafe def runCore (source base : Environment) (request : Request)
       let enabled := (← IO.getEnv "SEARCH_REDUCTION_LOOKUP") != some "0"
       profilePhase "query/evaluation-start"
       let table ← onDemandLookup {
-        environment := base, complete := lookupComplete, enabled, disk?} sharedImports?
+        environment := base, complete := lookupComplete, enabled, disk?, implicationModules?} sharedImports?
       let reading ← withEnv graphEnv <| evaluateGraph graph (some table)
       profilePhase "query/assembly-start"
       let baselineProof? ← if upperIsZero reading.baseline then
@@ -489,8 +490,8 @@ unsafe def run (source : Environment) (request : Request)
     for n in #[request.target] ++ request.additions do
       if let some index := source.getModuleIdxFor? n then
         delivery := delivery.push source.header.moduleNames[index.toNat]!
-    let ancestors ← targetBaselineImports request.baselineCommit delivery source request.target
-    let modules := (ancestors ++ request.baseline).foldl
+    let ancestors ← targetBaselineImports request.baselineCommit delivery source request.target request.baseline
+    let modules := ((ancestors.filter (·.toString.startsWith "D5.")) ++ request.baseline).foldl
       (fun out n => if out.contains n then out else out.push n) (#[] : Array Name)
     let imports : Array Import := #[{module := `Mathlib}] ++ modules.map (fun n => {module := n})
     profilePhase "query/base-import-start"
@@ -505,7 +506,7 @@ unsafe def run (source : Environment) (request : Request)
     let disk? ← try
       pure (some (← DiskLookup.openIndex directory request.baselineCommit mathlibRevision catalog.excluded))
       catch _ => pure none
-    let result ← runCore source base request disk?.isSome disk? (some baseImports)
+    let result ← runCore source base request disk?.isSome disk? (some baseImports) (some ancestors)
     let used := request.additions.filter fun name =>
       result.graph?.any fun reading => reading.selectedSeeds.any fun id =>
         reading.graph.vertices.any fun vertex => vertex.id == id &&

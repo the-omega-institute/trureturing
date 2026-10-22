@@ -131,7 +131,7 @@ def computationalJson (r : Observation) (baselineCommit : String := "") : Json :
   ("reference", toJson "R_lookup"),
   ("configuration", toJson (if r.graph?.any (fun g => !g.lookupEnabled) then
     "R_loc-decl/analytic-cut-k2/200000;lookup-ablation" else r.configuration)),
-  ("scope", toJson "B_T"), ("B_load_count", toJson r.loadedModules.size),
+  ("scope", toJson r.scope), ("B_load_count", toJson r.loadedModules.size),
   ("B0_count", toJson r.catalogCount), ("B_load_subset_B0", toJson r.catalogVerified),
   ("B_load", toJson (r.loadedModules.map Name.toString)),
   ("B0_excluded", toJson (r.catalogExcluded.map Name.toString)),

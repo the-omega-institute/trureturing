@@ -541,7 +541,7 @@ private def prepareLocalMemo (table : LookupTable) (graph : ProofGraph) : MetaM 
   let root := graph.vertices.find? (·.id == graph.root)
   let identity := reprStr (localConfiguration,
     table.disk?.map (fun d => ((toJson d.header).compress, (toJson d.membership?).compress)),
-    table.complete, table.enabled, table.environment.header.moduleNames,
+    table.complete, table.enabled, table.environment.header.moduleNames, table.implicationModules?,
     root.bind (·.origin.constName?), graph.vertices.map (·.type), vocabulary,
     ← IO.getEnv "SEARCH_REDUCTION_RESUME_INPUTS")
   localMemoContext.set identity
@@ -556,8 +556,6 @@ private def checkMemoProof (target : Expr) (types : List Expr)
       let some fact := facts[index]? | throwError "lookup.memo_premise_mismatch"
       selected := selected.push fact
     let expected ← mkForallFVars selected target
-    unless ← withReducible <| isDefEq (← inferType proof) expected do
-      throwError "lookup.memo_certificate_type_mismatch"
     checkLocalProof expected proof
 
 private unsafe def memoizedLocalRebuild (target : Expr) (types : List Expr)
