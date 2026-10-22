@@ -7,6 +7,8 @@ internal sealed class MeasureDocument : IScribeDocumentDefinition
     public DocumentDefinition Create() => DocumentDefinition.Create(ScribeNode.Create(
         "An odd spectral mixture and its size-biased probability law.",
         H("Spectral probability laws"), Blocks(
+            Entry("wallis-tanh-fractions", "tanh_div_hasSum", "Hyperbolic partial fractions",
+                "For positive u, tanh(u)/u is the sum, over natural n, of 8/(pi squared times (2n+1) squared plus 4u squared). The cotangent expansion on the positive imaginary axis gives the hyperbolic cotangent expansion. Splitting its even and odd terms gives the formula."),
             Entry("wallis-hasSum-spectralWeight", "hasSum_spectralWeight", "Spectral normalization",
                 "The positive weights 8/(pi squared times (2n+1) squared), for natural n, sum to one."),
             Entry("wallis-P-pos", "P_pos", "Positive support of the spectral law",

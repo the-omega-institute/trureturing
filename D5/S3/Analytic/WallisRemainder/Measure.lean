@@ -2,11 +2,13 @@
    generality: G
    mirror-B: D5/B/S3/Analytic/WallisRemainder/Measure
    mirror-E: none(waiver:evidence-not-specified-by-formal-manifest)
-   anchors: [mathlib/module/Mathlib.NumberTheory.ZetaValues, mathlib/module/Mathlib.Analysis.SpecialFunctions.Gamma.Basic, mathlib/module/Mathlib.MeasureTheory.Integral.Bochner.SumMeasure, mathlib/module/Mathlib.MeasureTheory.Integral.Bochner.ContinuousLinearMap, mathlib/module/Mathlib.MeasureTheory.Measure.Map, mathlib/module/Mathlib.Analysis.SpecialFunctions.ImproperIntegrals, mathlib/module/Mathlib.Probability.Moments.Variance]
+   anchors: [mathlib/module/Mathlib.Analysis.SpecialFunctions.Trigonometric.Cotangent, mathlib/module/Mathlib.Analysis.SpecialFunctions.Trigonometric.DerivHyp, mathlib/module/Mathlib.NumberTheory.ZetaValues, mathlib/module/Mathlib.Analysis.SpecialFunctions.Gamma.Basic, mathlib/module/Mathlib.MeasureTheory.Integral.Bochner.SumMeasure, mathlib/module/Mathlib.MeasureTheory.Integral.Bochner.ContinuousLinearMap, mathlib/module/Mathlib.MeasureTheory.Measure.Map, mathlib/module/Mathlib.Analysis.SpecialFunctions.ImproperIntegrals, mathlib/module/Mathlib.Probability.Moments.Variance]
    utility: none
    digest: An odd spectral probability mixture has exact moments and a positive size-biased law. -/
 
 import Mathlib.NumberTheory.ZetaValues
+import Mathlib.Analysis.SpecialFunctions.Trigonometric.Cotangent
+import Mathlib.Analysis.SpecialFunctions.Trigonometric.DerivHyp
 import Mathlib.Analysis.SpecialFunctions.Gamma.Basic
 import Mathlib.MeasureTheory.Integral.Bochner.SumMeasure
 import Mathlib.MeasureTheory.Integral.Bochner.ContinuousLinearMap
@@ -327,5 +329,82 @@ theorem variance_Q : ProbabilityTheory.variance (fun v : ℝ => v) Q = 771 / 560
   change (∫ v : ℝ, v ^ 2 ∂Q) - (∫ v : ℝ, v ∂Q) ^ 2 = _
   rw [integral_Q_sq, integral_Q_id]
   norm_num
+
+
+private lemma coth_hasSum {u : ℝ} (hu : 0 < u) :
+    HasSum (fun n : ℕ => 1 / (u ^ 2 + Real.pi ^ 2 * ((n : ℝ) + 1) ^ 2))
+      ((Real.cosh u / Real.sinh u - 1 / u) / (2 * u)) := by
+  let z : ℂ := (u / Real.pi : ℝ) * Complex.I
+  have hz : z ∈ Complex.integerComplement :=
+    UpperHalfPlane.coe_mem_integerComplement ⟨z, by dsimp [z]; simpa using div_pos hu Real.pi_pos⟩
+  have hc : HasSum (cotTerm z) ((Real.pi : ℂ) * Complex.cot (Real.pi * z) - 1 / z) := by
+    rw [cot_series_rep' hz]
+    exact (summable_cotTerm hz).hasSum
+  have harg : (Real.pi : ℂ) * z = (u : ℂ) * Complex.I := by
+    dsimp [z]
+    push_cast
+    field_simp
+  have hL : ((Real.pi : ℂ) * Complex.cot (Real.pi * z) - 1 / z).im =
+      -Real.pi * (Real.cosh u / Real.sinh u - 1 / u) := by
+    rw [harg, Complex.cot, Complex.cos_mul_I, Complex.sin_mul_I,
+      ← Complex.ofReal_cosh, ← Complex.ofReal_sinh]
+    simp [z, Complex.div_im, Complex.normSq_apply]
+    simp only [← Complex.ofReal_sinh, Complex.ofReal_re]
+    field_simp [(Real.sinh_pos_iff.mpr hu).ne']
+    <;> ring
+  have hterm (n : ℕ) : (cotTerm z n).im =
+      (-2 * u * Real.pi) * (1 / (u ^ 2 + Real.pi ^ 2 * ((n : ℝ) + 1) ^ 2)) := by
+    simp [cotTerm, z, one_div, Complex.inv_im, Complex.normSq_apply]
+    field_simp
+    <;> ring
+  have hh := (Complex.hasSum_im hc).div_const (-2 * u * Real.pi)
+  rw [hL] at hh
+  convert hh using 1
+  · ext n
+    rw [hterm]
+    field_simp
+  · field_simp
+    <;> ring
+
+private lemma coth_full_hasSum {u : ℝ} (hu : 0 < u) :
+    HasSum (fun n : ℕ => 1 / (u ^ 2 + Real.pi ^ 2 * (n : ℝ) ^ 2))
+      (1 / u ^ 2 + (Real.cosh u / Real.sinh u - 1 / u) / (2 * u)) := by
+  have h := HasSum.zero_add (f := fun n : ℕ => 1 / (u ^ 2 + Real.pi ^ 2 * (n : ℝ) ^ 2))
+    (by simpa only [Nat.cast_add, Nat.cast_one] using coth_hasSum hu)
+  simpa using h
+
+/-- The odd hyperbolic partial fraction expansion on the positive ray. -/
+theorem tanh_div_hasSum {u : ℝ} (hu : 0 < u) :
+    HasSum (fun n : ℕ => 8 / (Real.pi ^ 2 * (2 * (n : ℝ) + 1) ^ 2 + 4 * u ^ 2))
+      (Real.tanh u / u) := by
+  let f : ℕ → ℝ := fun n => 1 / ((2 * u) ^ 2 + Real.pi ^ 2 * (n : ℝ) ^ 2)
+  have hfull : HasSum f (1 / (2 * u) ^ 2 +
+      (Real.cosh (2 * u) / Real.sinh (2 * u) - 1 / (2 * u)) / (2 * (2 * u))) :=
+    coth_full_hasSum (by positivity)
+  have he : HasSum (fun n : ℕ => f (2 * n))
+      ((1/4 : ℝ) * (1 / u ^ 2 + (Real.cosh u / Real.sinh u - 1 / u) / (2 * u))) := by
+    convert (coth_full_hasSum hu).mul_left (1/4 : ℝ) using 1
+    ext n
+    dsimp [f]
+    push_cast
+    field_simp
+    <;> ring
+  have ho : Summable (fun n : ℕ => f (2 * n + 1)) :=
+    hfull.summable.comp_injective (by intro i j hij; dsimp at hij; omega)
+  have hs := (HasSum.even_add_odd (f := f) he ho.hasSum).unique hfull
+  have hodd : (∑' n : ℕ, f (2 * n + 1)) =
+      (1 / (2 * u) ^ 2 +
+        (Real.cosh (2 * u) / Real.sinh (2 * u) - 1 / (2 * u)) / (2 * (2 * u))) -
+      (1/4 : ℝ) * (1 / u ^ 2 + (Real.cosh u / Real.sinh u - 1 / u) / (2 * u)) := by
+    linarith
+  convert ho.hasSum.mul_left 8 using 1
+  · ext n
+    dsimp [f]
+    push_cast
+    ring
+  · rw [hodd, Real.tanh_eq_sinh_div_cosh, Real.cosh_two_mul, Real.sinh_two_mul]
+    field_simp [(Real.sinh_pos_iff.mpr hu).ne', (Real.cosh_pos u).ne', hu.ne']
+    <;> ring
+
 
 end D5.S3.Analytic.WallisRemainder.Measure
