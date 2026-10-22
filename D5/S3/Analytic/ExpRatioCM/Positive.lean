@@ -135,30 +135,18 @@ private lemma ratio_low {t : ℝ} (ht : 0 < t) :
   · field_simp; ring
   · field_simp
 
-private lemma hasDerivAt_F (i : ℕ) {t : ℝ} (ht : 0 < t) :
-    HasDerivAt (F i) (-F (i+1) t) t := by
-  have hh := ((contDiffOn_F i).contDiffAt (isOpen_Ioi.mem_nhds ht)).differentiableAt (by simp)
-  convert hh.hasDerivAt using 1
-  have hd := iteratedDeriv_F i 1 t
-  simpa using hd.symm
-
 private lemma iteratedDeriv_scaled_F (k : ℕ) {t : ℝ} (ht : 0 < t) :
     iteratedDeriv k (fun x => F 0 (2*x)) t =
       (-1 : ℝ)^k * 2^k * F k (2*t) := by
-  induction k generalizing t with
-  | zero => simp
-  | succ k ih =>
-    rw [iteratedDeriv_succ]
-    have he : iteratedDeriv k (fun x => F 0 (2*x)) =ᶠ[𝓝 t]
-        (fun x => (-1 : ℝ)^k * 2^k * F k (2*x)) := by
-      filter_upwards [Ioi_mem_nhds ht] with x hx
-      exact ih hx
-    have hd := ((hasDerivAt_F k (by linarith : 0 < 2*t)).comp t
-      ((hasDerivAt_id t).const_mul 2)).const_mul ((-1 : ℝ)^k * 2^k)
-    change HasDerivAt (fun x => (-1:ℝ)^k * 2^k * F k (2*x)) _ t at hd
-    rw [he.deriv_eq, hd.deriv]
-    simp only [pow_succ]
-    ring
+  have hs : MapsTo (fun x : ℝ => 2 * x) (Ioi 0) (Ioi 0) := by
+    intro x hx
+    change 0 < 2 * x
+    exact mul_pos (by norm_num) hx
+  have hd := iteratedDerivWithin_comp_const_smul (n := k) (s := Ioi (0 : ℝ)) (f := F 0)
+    ht (uniqueDiffOn_Ioi 0) ((contDiffOn_F 0).of_le (by simp)) (2 : ℝ) hs
+  rw [iteratedDerivWithin_of_isOpen isOpen_Ioi ht,
+    iteratedDerivWithin_of_isOpen isOpen_Ioi (by positivity : (0 : ℝ) < 2*t)] at hd
+  simpa only [smul_eq_mul, iteratedDeriv_F, zero_add, mul_left_comm, mul_assoc] using hd
 
 private lemma even_moment_le (k : ℕ) {t : ℝ} (ht : 0 < t) :
     2^k * F k (2*t) ≤ F k t := by
