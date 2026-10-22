@@ -25,13 +25,14 @@ def checkLocalProof (type proof : Expr) : MetaM Unit := do
   let name ← mkFreshUserName `_declLocal
   let levels := (collectLevelParams {} type).params.toList
   let before ← getEnv
-  if ← isProp type then
-    addDecl (.thmDecl {name, levelParams := levels, type, value := proof})
-  else
-    addDecl (.defnDecl {
-      name, levelParams := levels, type, value := proof,
-      hints := .abbrev, safety := .safe})
-  let axioms ← collectAxioms name
+  timeLookup "certificate/kernel" do
+    if ← isProp type then
+      addDecl (.thmDecl {name, levelParams := levels, type, value := proof})
+    else
+      addDecl (.defnDecl {
+        name, levelParams := levels, type, value := proof,
+        hints := .abbrev, safety := .safe})
+  let axioms ← timeLookup "certificate/axioms" <| collectAxioms name
   setEnv before
   unless standardClosure axioms do throwError "graph.nonstandard_axioms: {axioms}"
 

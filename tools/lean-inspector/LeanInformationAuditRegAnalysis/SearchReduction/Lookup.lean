@@ -10,6 +10,15 @@ def lookupPhase (label : String) : IO Unit := do
     IO.FS.withFile path .append fun handle => do
       handle.putStrLn s!"{← IO.monoMsNow} {label}"
 
+/-- Includes exceptional exits; nested spans must not be added to their parent. -/
+def timeLookup {α : Type} (label : String) (action : MetaM α) : MetaM α := do
+  if (← IO.getEnv "SEARCH_REDUCTION_PROFILE").isNone then return ← action
+  let start ← IO.monoNanosNow
+  let heartbeats ← IO.getNumHeartbeats
+  lookupPhase s!"{label}/start"
+  try action finally
+    lookupPhase s!"{label}/end ns={(← IO.monoNanosNow) - start} heartbeats={(← IO.getNumHeartbeats) - heartbeats}"
+
 abbrev lookupVersion : String := "R_lookup/one-B/discrtree-pickle-v5-independent"
 
 /-- The table is captured before delivery vocabulary or S is installed. A
@@ -42,6 +51,15 @@ private def candidateOwnerMatches (table : LookupTable) (entry : DiskLookup.Entr
   match table.environment.getModuleIdxFor? entry.leanName with
   | some idx => table.environment.header.moduleNames[idx.toNat]?.any (fun n => n.toString == entry.module)
   | none => false
+
+private def profileCandidateSet (table : LookupTable) (type : Expr)
+    (candidates : DiskLookup.Candidates) (fallback : Bool) (mode : String) : IO Unit := do
+  if (← IO.getEnv "SEARCH_REDUCTION_PROFILE").isNone then return
+  let loaded := candidates.entries.filter (candidateOwnerMatches table)
+  let modules := candidates.entries.foldl (fun acc entry =>
+    if candidateOwnerMatches table entry then acc else acc.insert entry.module)
+    ({} : Std.HashSet String)
+  lookupPhase s!"lookup/set mode={mode} fallback={fallback} query={type.hash} total={candidates.entries.size} loaded={loaded.size} unloaded={candidates.entries.size - loaded.size} unloaded_modules={modules.size}"
 
 private def candidateValue (table : LookupTable) (entry : DiskLookup.Entry) (head : Option Name) :
     MetaM (Array Expr × Option String × Bool) := do
@@ -86,13 +104,15 @@ private unsafe def lookupExactPass (fallback : Bool) (table : LookupTable) (goal
   let indexStart ← IO.monoMsNow
   let candidates ← DiskLookup.queryMature index type limit fallback
   lookupPhase s!"lookup/index ms={(← IO.monoMsNow) - indexStart} fallback={fallback}"
+  profileCandidateSet table type candidates fallback "exact"
   checkSystem "lookup.membership-index"
   let mut trace : LookupTrace := {complete := candidates.complete && table.complete, pages := candidates.pages}
   for entry in candidates.entries do
     checkSystem "lookup.membership"
     let name := entry.leanName
     let saved ← saveState
-    let (values, failure?, unloaded) ← candidateValue table entry none
+    lookupPhase s!"lookup/visit mode=exact name={name} module={entry.module}"
+    let (values, failure?, unloaded) ← timeLookup "lookup/load" <| candidateValue table entry none
     trace := {trace with unloaded := trace.unloaded + (if unloaded then 1 else 0)}
     if let some failure := failure? then
       trace := {trace with
@@ -101,7 +121,7 @@ private unsafe def lookupExactPass (fallback : Bool) (table : LookupTable) (goal
         failures := trace.failures.push s!"{name}:{failure}"}
     trace := {trace with visited := trace.visited + 1}
     for value in values do
-      if ← withReducible <| isDefEq (← inferType value) type then
+      if ← timeLookup "lookup/isDefEq" (withReducible <| isDefEq (← inferType value) type) then
         goal.assign value
         return {trace with source? := some name, attempted := trace.attempted + 1}
     saved.restore
@@ -118,6 +138,64 @@ unsafe def lookupExact (table : LookupTable) (goal : MVarId) : MetaM LookupTrace
     visited := primary.visited + fallback.visited, pages := primary.pages + fallback.pages,
     attempted := primary.attempted + fallback.attempted,
     missing := primary.missing ++ fallback.missing, failures := primary.failures ++ fallback.failures}
+
+def ownedLookupName : Name → Name
+  | .anonymous => .anonymous
+  | .str p s => .str (ownedLookupName p) (String.ofList s.toList)
+  | .num p n => .num (ownedLookupName p) (toString n).toNat!
+
+private def ownedLookupLevel : Level → Level
+  | .zero => .zero
+  | .succ l => .succ (ownedLookupLevel l)
+  | .max a b => .max (ownedLookupLevel a) (ownedLookupLevel b)
+  | .imax a b => .imax (ownedLookupLevel a) (ownedLookupLevel b)
+  | .param n => .param (ownedLookupName n)
+  | .mvar n => .mvar ⟨ownedLookupName n.name⟩
+
+/-- The result must own every byte before its temporary module regions close. -/
+private partial def ownedLookupExpr (e : Expr) : StateM (Std.HashMap Expr Expr) Expr := do
+  if let some found := (← get)[e]? then return found
+  let result : Expr ← match e with
+    | .bvar i => pure (.bvar i)
+    | .fvar n => pure (.fvar ⟨ownedLookupName n.name⟩)
+    | .mvar n => pure (.mvar ⟨ownedLookupName n.name⟩)
+    | .sort l => pure (.sort (ownedLookupLevel l))
+    | .const n ls => pure (.const (ownedLookupName n) (ls.map ownedLookupLevel))
+    | .app f a => return .app (← ownedLookupExpr f) (← ownedLookupExpr a)
+    | .lam n t b bi => do
+      return .lam (ownedLookupName n) (← ownedLookupExpr t) (← ownedLookupExpr b) bi
+    | .forallE n t b bi => do
+      return .forallE (ownedLookupName n) (← ownedLookupExpr t) (← ownedLookupExpr b) bi
+    | .letE n t v b nd => do
+      let t ← ownedLookupExpr t
+      let v ← ownedLookupExpr v
+      let b ← ownedLookupExpr b
+      return .letE (ownedLookupName n) t v b nd
+    | .lit (.natVal n) => pure (.lit (.natVal (toString n).toNat!))
+    | .lit (.strVal s) => pure (.lit (.strVal (String.ofList s.toList)))
+    | .mdata _ b => ownedLookupExpr b
+    | .proj n i b => return .proj (ownedLookupName n) i (← ownedLookupExpr b)
+  modify (·.insert e result)
+  return result
+
+/-- Detach all expression storage from a temporary import region. -/
+def detachLookupExpression (proof : Expr) : Expr :=
+  (ownedLookupExpr proof).run' {}
+
+partial def inlineLookupSupport (base : Environment) (proof : Expr)
+    (seen : NameSet := {}) : MetaM Expr :=
+  Core.transform proof (pre := fun e => do
+    if let .const name levels := e then
+      unless (base.setExporting false).contains name do
+        if seen.contains name then throwError "lookup.recursive-support:{name}"
+        let info ← getConstInfo name
+        if info.isUnsafe then throwError "lookup.unsafe_support:{name}"
+        let some body := info.value? (allowOpaque := true)
+          | throwError "lookup.support_requires_import:{name}"
+        let body ← inlineLookupSupport base
+          (body.instantiateLevelParams info.levelParams levels) (seen.insert name)
+        return .done body
+    return .continue)
 
 /-- A wildcard denotes a head which reduction or instantiation may change.
 Only rigid unequal heads can be discarded without testing an application. -/
@@ -215,6 +293,51 @@ partial def views (value : Expr) (fuel : Nat := 32) : MetaM (Array Expr) := do
       result := result ++ (← views projected (fuel - 1))
     return result
 
+@[noinline] def copyLookupCandidateWith (copy : Environment → Expr → MetaM Expr) (source : Environment)
+    (entry : DiskLookup.Entry) (head : Option Name) :
+    MetaM (Array Expr × List Name × Array String) := do
+  let some info := (source.setExporting false).find? entry.leanName
+    | throwError "lookup.module_candidate_missing"
+  let empty := (#[], [], #[])
+  if info.isUnsafe then return empty
+  unless unloadedPossibleView source head info.type do return empty
+  match info with
+  | .thmInfo _ | .defnInfo _ | .opaqueInfo _ => pure ()
+  | _ => return empty
+  let suitable ← timeLookup "candidate/suitability" <| withEnv source do
+    if ← isProp info.type then return true
+    forallTelescopeReducing info.type fun _ body => do
+      return (← whnf body).isAppOfArity ``Subtype 2
+  unless suitable do return empty
+  let value := mkConst entry.leanName (info.levelParams.map Level.param)
+  let alternatives ← timeLookup "candidate/views" <| withEnv source <| views value
+  let mut proofs := #[]
+  let mut failures := #[]
+  for view in alternatives do
+    let type ← withEnv source <| inferType view
+    unless unloadedDirectView source head type do continue
+    try
+      let expanded ← timeLookup "candidate/expand" <| Core.transform view (pre := fun e => do
+        if let .const name levels := e then
+          if name == entry.leanName then
+            if let some body := info.value? (allowOpaque := true) then
+              return .done (body.instantiateLevelParams info.levelParams levels)
+        return .continue)
+      let expanded ← timeLookup "candidate/normalize" <| withEnv source <| Meta.transform expanded (post := fun e => do
+        let projection := e.getAppFn.constName?.any (#[``And.left, ``And.right,
+          ``Iff.mp, ``Iff.mpr, ``Subtype.property, ``Eq.mp, ``Eq.mpr, ``Eq.symm].contains ·)
+        if projection || e.isProj || e.getAppFn.isLambda then
+          return .done (← withTransparency .all <| whnf e)
+        return .done e)
+      let proof ← timeLookup "candidate/transport" <| copy source expanded
+      checkSystem "lookup.imported_candidate"
+      let proof ← timeLookup "candidate/detach" <| pure (detachLookupExpression proof)
+      proofs := proofs.push proof
+    catch ex =>
+      if ex.isMaxHeartbeat || ex.isInterrupt || ex.isRuntime then throw ex
+      failures := failures.push (← ex.toMessageData.toString)
+  return (proofs, info.levelParams.map ownedLookupName, failures)
+
 /-- The closure callback is the frozen local table, with lookup disabled.
 All unresolved data and universe metavariables are rejected by the caller's
 closed kernel certificate check. An exception aborts enumeration. -/
@@ -230,6 +353,7 @@ private unsafe def lookupLeafPass (fallback : Bool) (table : LookupTable) (goal 
   let indexStart ← IO.monoMsNow
   let candidates ← DiskLookup.queryMature index (← goal.getType) limit fallback
   lookupPhase s!"lookup/index ms={(← IO.monoMsNow) - indexStart} fallback={fallback}"
+  profileCandidateSet table (← goal.getType) candidates fallback "leaf"
   checkSystem "lookup.candidate-index"
   let trace ← candidates.entries.foldlM (init := ({complete := candidates.complete && table.complete, pages := candidates.pages} : LookupTrace)) fun (trace : LookupTrace) entry => do
     if trace.source?.isSome then return trace
@@ -241,7 +365,8 @@ private unsafe def lookupLeafPass (fallback : Bool) (table : LookupTable) (goal 
     let initial ← get
     let cache := (← getThe Core.State).cache
     let original ← saveState
-    let (values, failure?, unloaded) ← candidateValue table entry head
+    lookupPhase s!"lookup/visit mode=leaf name={name} module={entry.module}"
+    let (values, failure?, unloaded) ← timeLookup "lookup/load" <| candidateValue table entry head
     let trace := {trace with unloaded := trace.unloaded + (if unloaded then 1 else 0)}
     let trace := if let some failure := failure? then
         {trace with
@@ -271,7 +396,7 @@ private unsafe def lookupLeafPass (fallback : Bool) (table : LookupTable) (goal 
       if detailed then
         lookupPhase s!"lookup/candidate-start name={name} visited={trace.visited} attempted={attempted}"
       try
-        let obligations ← withReducible <| goal.apply view {approx := false}
+        let obligations ← timeLookup "lookup/apply" <| withReducible <| goal.apply view {approx := false}
         let propositions ← obligations.filterM fun g => g.withContext do isProp (← g.getType)
         -- Only visible-fact unification may recover parameters absent from
         -- the conclusion. Decision procedures cannot invent a data argument.
