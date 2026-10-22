@@ -7,6 +7,7 @@
    digest: Scalar translation of ordered matrix Taylor coefficients and their trace defects. -/
 
 import D5.S3.Quantum.Matrix.TaylorMajorization.Defs
+import D5.S3.Quantum.Measurement.IncoherentCone
 
 noncomputable section
 open Matrix BigOperators Finset
@@ -43,8 +44,10 @@ theorem taylorQ_shift (A B : Matrix (Fin n) (Fin n) ℂ) (s : ℂ) (k : ℕ) :
 /-- Taking the real trace commutes with Hermitian symmetrization. -/
 theorem trace_taylorR (A B : Matrix (Fin n) (Fin n) ℂ) (k : ℕ) :
     (taylorR A B k).trace.re = (taylorQ A B k).trace.re := by
-  simp [taylorR, trace_smul, trace_add, trace_conjTranspose, Complex.mul_re]
-  ring
+  simpa [RHLinalg.rtrace, taylorR, selfAdjointPart_apply_coe, invOf_eq_inv,
+    Matrix.star_eq_conjTranspose] using
+    (D5.S3.Quantum.Measurement.IncoherentCone.trace_hermitianPart
+      (G := (1 : Matrix (Fin n) (Fin n) ℂ)) isHermitian_one (taylorQ A B k))
 
 /-- Scalar translation acts on the real trace defect by the same binomial transform. -/
 theorem defect_shift (A B : Matrix (Fin n) (Fin n) ℂ) (s : ℝ) (k : ℕ) :
