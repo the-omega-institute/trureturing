@@ -1,0 +1,125 @@
+**Lemma 11.4 (Finite rational inequalities for the second strip).**
+For $i\notin\{2,5,13\}$, the constant coefficient in (11.4)
+has the sign below and $B_i/|\gamma_{i00}|<u_i/1000$:
+
+| $i$ | Sign of $\gamma_{i00}$ | $u_i$ |
+| --- | --- | --- |
+| $0$ | $-$ | $100$ |
+| $1$ | $-$ | $123$ |
+| $2$ | unrestricted | — |
+| $3$ | $+$ | $34$ |
+| $4$ | $+$ | $79$ |
+| $5$ | unrestricted | — |
+| $6$ | $-$ | $29$ |
+| $7$ | $-$ | $3$ |
+| $8$ | $-$ | $6$ |
+| $9$ | $-$ | $7$ |
+| $10$ | $-$ | $6$ |
+| $11$ | $-$ | $1$ |
+| $12$ | $-$ | $17$ |
+| $13$ | unrestricted | — |
+| $14$ | $+$ | $18$ |
+| $15$ | $+$ | $50$ |
+| $16$ | $-$ | $287$ |
+| $17$ | $-$ | $39$ |
+| $18$ | $-$ | $141$ |
+
+In particular all sixteen ratios are less than $3/10$.
+For the four tubes the following bounds are strict:
+
+| $i$ | Interval containing $\det J_i$ | Upper bound $\bar\eta_i$ for $\eta_i$ | Upper bound $\bar q_i$ for $q_i$ | Interval containing $\mathcal I_i(D_m)$ |
+| --- | --- | --- | --- | --- |
+| $0$ | $(-15,-14)$ | $42/10^6$ | $74/1000$ | $(-49/1000,-44/1000)$ |
+| $1$ | $(-1,-1/2)$ | $37/10^6$ | $282/1000$ | $(21/10000,36/10000)$ |
+| $2$ | $(22,24)$ | $19/10^6$ | $7/10$ | $(15/10000,19/10000)$ |
+| $3$ | $(5217,5218)$ | $4/10^7$ | $24/1000$ | $(61/1000,63/1000)$ |
+
+Each row satisfies $\bar\eta_i+\bar q_i\rho_*<\rho_*$.
+The coordinate projections of the whole tubes lie strictly inside
+the following intervals; entries in the last two columns have
+denominator $1000$:
+
+| $i$ | $r$ interval numerator pair | $b$ interval numerator pair |
+| --- | --- | --- |
+| $0$ | $(132,142)$ | $(185,187)$ |
+| $1$ | $(162,170)$ | $(144,148)$ |
+| $2$ | $(872,874)$ | $(-370,-367)$ |
+| $3$ | $(888,889)$ | $(-596,-595)$ |
+
+Finally, using the exact intervals (11.9) before any coarsening,
+
+$$
+\begin{aligned}
+\frac{\mathcal I_0(N_m-526D_m)}{\mathcal I_0(D_m)}
+ &\subset\left(-\frac{387}{100},\frac{379}{100}\right),\\
+\frac{\mathcal I_1(N_m-540D_m)}{\mathcal I_1(D_m)}
+ &\subset\left(-\frac{491}{100},\frac{999}{200}\right).
+\end{aligned}
+\tag{11.10}
+$$
+
+Proof. Formula (11.5) expresses every entry of the first table as
+a rational sum of the original integers. For each fixed-sign row,
+sum the absolute values of all terms except $(a,d)=(0,0)$ after
+collecting equal powers. Comparison with
+$u_i|\gamma_{i00}|/1000$ gives the strict bounds in that table.
+The three unrestricted rows require no comparison.
+
+Here is an explicit coefficient formula for the remaining tables.
+For $H(r,b)=\sum h_{k\ell}r^kb^\ell$, the coefficient of
+$y_0^ay_1^bt^d$ in $\widehat H_i$ is
+
+$$
+\sum_{\substack{k\ge a,\ \ell\ge b,\ u+w=d\\
+ 0\le u\le k-a,\ 0\le w\le\ell-b}}
+h_{k\ell}\binom ka\binom{k-a}{u}
+(m_i)_r^{k-a-u}(L_i)_r^u
+\binom\ell b\binom{\ell-b}{w}
+(m_i)_b^{\ell-b-w}(L_i)_b^w.
+\tag{11.11}
+$$
+
+Use the integer polynomials (3.6), taking both exact divisions by
+$T$ before this expansion. Their correspondence to the original
+responses can also be seen directly: substitute (3.3), (3.5) and
+$\epsilon=-3K_\Lambda XN/(5D)$ into (1.5). Multiplying the fifth,
+sixth-M and terminal-M expressions by $5bD$ gives respectively
+$N_p,N_u,N_m$. Subtracting each stated numerator leaves the zero
+polynomial after clearing $b,T,D,X,N$. For strict regular sources
+these are nonzero denominators. Also (3.6) gives
+$\mathsf A=5b(p-24)D+3(8b-1)H=\mathsf S_p/2$.
+This fixes the source correspondence of the finite coefficients.
+
+Evaluate the first derivatives of (11.3) at the listed $m_i,p_0,v_c$
+and form the two-by-two determinants and inverses (11.6).
+Equation (11.11) then gives $\widehat D_{m,i}$,
+$\widehat N_{p,i}$, $\widehat N_{u,i}$ and $\widehat N_{m,i}$.
+The preconditioned polynomials are explicitly
+
+$$
+\mathcal P_i=C_i
+\begin{pmatrix}
+(p_0+e)\widehat D_{m,i}-\widehat N_{p,i}\\
+(v_c+t)\widehat D_{m,i}-\widehat N_{u,i}
+\end{pmatrix}.
+\tag{11.12}
+$$
+
+Collect equal monomials in (11.12), differentiate for (11.8),
+and sum their absolute coefficients with the weights shown there.
+The results are strictly below the displayed $\bar\eta_i,\bar q_i$.
+The determinant comparisons give the four stated open intervals.
+The coordinate comparisons use exactly
+$[(m_i)_j-|(L_i)_j|/2-\rho_*,
+  (m_i)_j+|(L_i)_j|/2+\rho_*]$.
+The same coefficient sums (11.9) for $D_m$ give its guards.
+Thus (3.6), (11.1), the four centre rows and (11.6), (11.11)
+specify every rational number in these comparisons.
+
+For (11.10) apply (11.11) to $N_m-526D_m$ or $N_m-540D_m$
+and to $D_m$. Form their two endpoint pairs by (11.9), then take
+the four endpoint quotients. All four quotients are strictly between
+the indicated bounds in each row. The denominator intervals in
+this operation are the uncoarsened (11.9), not their displayed
+nonvanishing guards. This proves the finite inequalities. ∎
+

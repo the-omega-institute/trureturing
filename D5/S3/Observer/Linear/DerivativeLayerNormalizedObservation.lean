@@ -30,6 +30,9 @@ namespace D5.S3.Observer.Linear.DerivativeLayerNormalizedObservation
 open ContinuousLinearMap Finset
 open scoped Function InnerProductSpace RealInnerProductSpace ENNReal NNReal
 
+local instance {V : Type*} [NormedAddCommGroup V] [InnerProductSpace ℝ V]
+    [FiniteDimensional ℝ V] : CompleteSpace V := FiniteDimensional.complete ℝ V
+
 /-- The actual derivative layers resolve the observable complement, and the
 normalized exponential observation converges there at a uniform linear rate. -/
 theorem derivative_layer_normalized_observation
@@ -57,8 +60,10 @@ theorem derivative_layer_normalized_observation
         ∀ T : ℝ, 0 < T → T * ‖b‖ < 1 →
           ∀ s ∈ Set.Icc (0 : ℝ) 1, ‖F T s - F₀ s‖ ≤ Ksum * T := by
   classical
+  letI : NormedSpace ℝ V := InnerProductSpace.toNormedSpace
+  letI : NormedSpace ℝ W := InnerProductSpace.toNormedSpace
   intro n N U E b c L F F₀
-  letI : CompleteSpace V := FiniteDimensional.complete ℝ V
+  letI : NormedSpace ℝ U := inferInstance
   letI (j : Fin n) : CompleteSpace (E j) := FiniteDimensional.complete ℝ (E j)
   have hN (j : ℕ) (z : V) :
       z ∈ N j ↔ ∀ k : ℕ, k < j → C ((B ^ k) z) = 0 := by
@@ -229,7 +234,7 @@ theorem derivative_layer_normalized_observation
         _ ≤ ‖L j‖ * ‖NormedSpace.exp ((T * s) • b) -
             taylor ((j : ℕ) + 1) ((T * s) • b)‖ := (L j).le_opNorm _
         _ ≤ ‖L j‖ * (C₀ * (a * ‖(T * s) • b‖) ^ ((j : ℕ) + 1)) :=
-          mul_le_mul_of_nonneg_left hrem (norm_nonneg _)
+          mul_le_mul_of_nonneg_left hrem (norm_nonneg (L j))
         _ ≤ ‖L j‖ * (C₀ * (a * (T * ‖b‖)) ^ ((j : ℕ) + 1)) := by gcongr
         _ = _ := by ring
     have hp : T ^ (j : ℕ) ≠ 0 := pow_ne_zero _ (ne_of_gt hT)
@@ -239,7 +244,15 @@ theorem derivative_layer_normalized_observation
       rw [smul_smul, mul_pow]
       congr 1
       field_simp [hp]
-    rw [← hsimpl, ← smul_sub, norm_smul, Real.norm_eq_abs,
+    have hscaled :
+        (T ^ (j : ℕ))⁻¹ • L j (NormedSpace.exp ((T * s) • b)) -
+          (s ^ (j : ℕ) / (Nat.factorial (j : ℕ) : ℝ)) • L j (b ^ (j : ℕ)) =
+        (T ^ (j : ℕ))⁻¹ •
+          (L j (NormedSpace.exp ((T * s) • b)) -
+            ((T * s) ^ (j : ℕ) / (Nat.factorial (j : ℕ) : ℝ)) •
+              L j (b ^ (j : ℕ))) := by
+      rw [smul_sub, hsimpl]
+    rw [hscaled, norm_smul, Real.norm_eq_abs,
       abs_of_pos (inv_pos.mpr (pow_pos hT (j : ℕ)))]
     calc
       _ ≤ (T ^ (j : ℕ))⁻¹ *

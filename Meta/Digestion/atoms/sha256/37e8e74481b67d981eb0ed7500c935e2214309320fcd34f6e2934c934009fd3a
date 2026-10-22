@@ -1,0 +1,22 @@
+**Theorem 19.1 (Direction constraints at the two attained M parents).** At each exact parent $H_4^{[3]}$ of (7.10) and $H_4^{[4]}$ of (8.6), and every real fifth-J response $p$, any actual sixth-J child with $L_1$ contains at least two nonproportional entire gains. Thus its gain span over $\mathbb R$ has dimension at least two. No finite or infinite support contained in one gain direction can supply the fifth-J $L_2$ at either parent.
+
+At $H_4^{[4]}$, every distinct final-J collision pair in any actual sixth-J child itself has nonproportional entire gains. Also each one-direction sixth-J child there contains at most two complete worlds. The individual-pair conclusion is asserted at the positive-$Y$ parent only. At negative-$Y$ $H_4^{[3]}$ the conclusion is the whole-child diversity constraint, which does not identify the directions of every possible final-J pair.
+
+Proof. The parent values are the exact algebraic quantities defined by their respective roots in (7.7)–(7.10) and (8.1)–(8.6). Their defining roots are not replaced by independently chosen points in response intervals. The enclosures in §§7–8 give the following closed bounds. In each row the denominator $D$ applies to all interval endpoints, and $A=24$.
+
+| Exact parent | $D$ | $C$ numerator interval | $z$ numerator interval | $Y$ numerator interval | $F_0$ numerator interval | $F_1$ numerator interval |
+| --- | --- | --- | --- | --- | --- | --- |
+| $H_4^{[3]}$ | $10^6$ | $[69388395,69388396]$ | $[13172131,13172132]$ | $[-14554448,-14554447]$ | $[-170230486,-170230389]$ | $[-3039718312,-3039718235]$ |
+| $H_4^{[4]}$ | $10^8$ | $[3467682605,3467682606]$ | $[3364873983,3364873984]$ | $[2428092588,2428092589]$ | $[-27983154182,-27983154085]$ | $[-22259428872,-22259428795]$ |
+
+For example the lower and upper $F_0$ numerators are
+$14C_{\rm lo}+35Y_{\rm lo}-48z_{\rm hi}$ and
+$14C_{\rm hi}+35Y_{\rm hi}-48z_{\rm lo}$; those for $F_1$ are
+$35Y_{\rm lo}-42C_{\rm hi}+384D$ and
+$35Y_{\rm hi}-42C_{\rm lo}+384D$.
+These give the displayed exact integer bounds. All four residual upper endpoints are negative.
+
+Each parent satisfies $AzCY\ne0$, $z\ne A$, $C\ne Y$, and $F_0F_1\ne0$. Theorem 17.2 applies separately at each one. If an $L_1$ child's gains spanned one dimension, choosing any of its nonzero gains as $h$ would put the whole child inside $\mathcal S_h$, contradicting that theorem. The sixth-J conjunct is required in every fifth-J $L_2$.
+
+At $H_4^{[4]}$ the enclosures also give $C>Y>0$, $F_1<0$, and $Y/C<4/5$. For the last inequality, already the coarser bounds in (12.1) give $5\cdot2429=12145<13868=4\cdot3467$. Theorem 18.1 gives the individual final-J-pair statement and Theorem 18.2 gives the one-direction child bound. The strict hypotheses persist on the same local continuous realization family of Theorem 8.4 after shrinking its parameter neighborhood. This uses continuity of that family; it does not assert a full-rank parent-response map or M-arm existence on a Cartesian response box. ∎
+

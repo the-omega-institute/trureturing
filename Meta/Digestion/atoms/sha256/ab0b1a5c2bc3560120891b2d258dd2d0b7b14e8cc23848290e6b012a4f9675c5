@@ -1,0 +1,30 @@
+**Proposition 140.3 (The larger exposed face and the nonface disk).**
+The exposed CPTP face selected by the slack $S$ in Lemma 135.1 is
+exactly
+
+$$
+\mathcal E_r=\left\{B_rH(h,z)B_r^\dagger:
+ h,z\in\mathbb C,\quad |h|^2/\eta+|z|^2\le1\right\}.
+\tag{140.6}
+$$
+
+It has real affine dimension four. The optimal disk is a proper
+subset of this face and is not itself a face of the CPTP set.
+
+*Proof.* On the CPTP set $\operatorname{Tr}(SJ)\ge0$, and it is zero
+at $J_{\mathcal R_*}$. Hence its zero set is an exposed face. For PSD
+matrices, equality is equivalent to $\operatorname{ran}J\subseteq
+\ker S=\operatorname{ran}B_r$, as proved in Theorem 137.1. Equations
+(139.5)–(139.7) give precisely (140.6). Its two complex coordinates
+are independent and its inequality has strict interior at $(0,0)$,
+so its affine dimension is four.
+
+Choose any real $t$ with $0<t<\sqrt\eta$. The two matrices
+$B_rH(t,0)B_r^\dagger$ and $B_rH(-t,0)B_r^\dagger$ are CPTP by
+(139.7). Each is nonoptimal: among the three numbers
+$\operatorname{Re}(\pm t\zeta^m)$ at least one is negative, and
+(139.11) then gives an individual score strictly exceeding $L$.
+Their midpoint is $B_rH(0,0)B_r^\dagger=J_{\mathcal R_*}$, which
+is optimal. This violates the defining segment property of a face
+for the optimal disk. $\square$
+

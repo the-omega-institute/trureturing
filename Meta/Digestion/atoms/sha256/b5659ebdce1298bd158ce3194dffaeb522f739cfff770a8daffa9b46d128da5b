@@ -1,0 +1,17 @@
+**Theorem 29.2 (Coverage of every legal singular world).**
+For every real fifth response $p$, the complete worlds in
+$\mathcal F(H_4,M,p)$ with $\Lambda=0$ are exactly the unique
+fifth-response lifts at $(r_-,1/8)$ and $(r_+,1/8)$.
+Their acquired sixth-M responses are respectively $s_-(p),s_+(p)$.
+
+Proof. The zero-safe parent equation (2.2) and $B_{\rm coef}>0$
+force $b=1/8$ when $\Lambda=0$. Then (4.9), equivalently (22.2),
+gives $\Lambda=\Phi(r)/(960jn)$. Theorem 4.2 supplies exactly the
+two strict roots. At either, Lemma 12.2 gives $A_5\ne0$, since its
+full strict-source assertion is $\Lambda^2+A_5^2>0$.
+Theorem 12.3, or the entire singular lines of Theorem 4.1, gives
+$\epsilon=(p-24)/A_5$ and the unique whole-world reconstruction.
+It is legal for every $p$, including $p=24$, and its gain is nonzero
+by the original unequal $0,24$ rows. Substitution into (22.3) gives
+(29.1). No singular line or zero-drift value is removed. ∎
+

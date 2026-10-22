@@ -1,0 +1,44 @@
+**Theorem 27.2 (The actual terminal-M rational image).**
+The quotient in (27.1) is exact in $\mathbb Z[r,b]$.
+The coordinate degree pairs $(\deg_r,\deg_b)$ of $N_m,D_m$ are
+$(6,7),(4,7)$ respectively; $N_m$ has $28$ nonzero terms. Moreover
+
+$$
+\deg_r F\le188,\quad\deg_r G\le186,\qquad
+\deg_p F,\deg_v F,\deg_p G,\deg_v G\le42.
+\tag{27.3}
+$$
+
+At every nonsingular parent world, $f_{MM}=N_m/D_m$.
+At a nonsingular child source with $\mathcal L_1\ne0$, this is $F/G$.
+
+Proof. The single four-node interpolant (12.6), at the original
+clock seven, gives
+
+$$
+g(7)=\frac{12(200b+11)}{5T}
+       +\epsilon\frac{G_{7,\Lambda}}{TXN}.
+\tag{27.4}
+$$
+
+For $\Lambda\ne0$, (20.8)–(20.9) give
+$\epsilon=-3K_\Lambda XN/(5D_\Lambda)$ and $D_m\ne0$.
+The actual trace in (1.7) is $3U+2n=Z_7/b$.
+Multiplying $24+\epsilon+(Z_7/b)g(7)$ by $5bD_\Lambda T$
+yields the numerator in (27.1). Its value at $b=-1$ vanishes
+identically in $r$, so division by the monic $T=b+1$ is exact over
+$\mathbb Z[r,b]$. Expansion gives the stated degree pairs and term
+count. Since each $\mathcal L_i$ has coordinate degrees $(26,6,6)$,
+(27.2) gives (27.3). Theorem 20.2 fixes
+$b=-\mathcal L_0/\mathcal L_1$ at every common finite root where
+$\mathcal L_1\ne0$. Homogenization to the fixed degree seven gives
+
+$$
+F=\mathcal L_1^7N_m(r,b),\qquad
+G=\mathcal L_1^7D_m(r,b),\qquad f_{MM}=F/G.
+\tag{27.5}
+$$
+
+No gain sample, drift, gain leading coefficient or gain root difference
+was divided out. These identities concern the entire original world. ∎
+

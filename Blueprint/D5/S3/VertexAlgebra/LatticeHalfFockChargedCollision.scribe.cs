@@ -23,56 +23,11 @@ internal sealed class LatticeHalfFockChargedCollisionDocument : IScribeDocumentD
                 + "collisionScalar(m-d(0)-Q(sigma),B,N) times halfCreationCoeff(sigma,m) "
                 + "times halfCreationCoeff(tau,total-m). These are formal coefficients; "
                 + "no analytic substitution or convergence claim is used.")),
-            Describe.Lean(
-                DescribeId.Create("charged-collision-unit"),
-                DeclarationHandle.Create("D5/S3/VertexAlgebra/LatticeHalfFockChargedCollision.collisionUnit"),
-                H("The normalized square-root unit"), StatementSource.WithoutFormula(),
-                AssessedProvenance.FromRepo(),
-                Blocks(Paragraph(Text("collisionUnit is the unit of PowerSeries Complex whose value "
-                    + "is one half times (binomialSeries(1/2)+1). Its constant coefficient is one."))),
-                DescribeRole.Definition),
-            Describe.Lean(
-                DescribeId.Create("charged-collision-scalar"),
-                DeclarationHandle.Create("D5/S3/VertexAlgebra/LatticeHalfFockChargedCollision.collisionScalar"),
-                H("Every scalar Taylor coefficient"), StatementSource.WithoutFormula(),
-                AssessedProvenance.FromRepo(),
-                Blocks(Paragraph(Text("For a,B:Int and N:Nat, collisionScalar a B N is coefficient N "
-                    + "of binomialSeries(a/2) multiplied by collisionUnit^(-2*B). The signed integer "
-                    + "power is taken in the power-series unit group."))), DescribeRole.Definition),
-            Describe.Lean(
-                DescribeId.Create("charged-collision-oscillator"),
-                DeclarationHandle.Create("D5/S3/VertexAlgebra/LatticeHalfFockChargedCollision.collisionOscillator"),
-                H("The finite oscillator coefficient"), StatementSource.WithoutFormula(),
-                AssessedProvenance.FromRepo(),
-                Blocks(Paragraph(Text("For D:LatticeData, sigma,tau:Charge D, N:Nat and e:Int, "
-                    + "collisionOscillator D sigma tau N e is a Complex-linear endomorphism of "
-                    + "Oscillator D. It first applies the actual pairTranslation and then evaluates "
-                    + "each translated monomial by the finite creator sum described above. "
-                    + "Polynomial coefficients and repeated-variable multiplicities are retained."))),
-                DescribeRole.Definition),
-            Describe.Lean(
-                DescribeId.Create("charged-collision-tensor-coefficient"),
-                DeclarationHandle.Create("D5/S3/VertexAlgebra/LatticeHalfFockChargedCollision.collisionCoefficient"),
-                H("The complete actual tensor coefficient"), StatementSource.WithoutFormula(),
-                AssessedProvenance.FromRepo(),
-                Blocks(Paragraph(Text("For D:LatticeData, hu:IsUnit D.G.det, sigma,tau:Charge D, "
-                    + "N:Nat and e:Int, collisionCoefficient D hu sigma tau N e is chargeScalar "
-                    + "D (sigma+tau) times TensorProduct.map of collisionOscillator D sigma tau N e "
-                    + "and the chosen groundAction D hu (sigma+tau). Thus it acts on arbitrary "
-                    + "oscillator and ground inputs and extends linearly to every ActualTensor D hu."))),
-                DescribeRole.Definition),
-            Describe.Lean(
-                DescribeId.Create("charged-collision-field"),
-                DeclarationHandle.Create("D5/S3/VertexAlgebra/LatticeHalfFockChargedCollision.collisionField"),
-                H("The pointwise lower-truncated collision field"), StatementSource.WithoutFormula(),
-                AssessedProvenance.FromRepo(),
-                Blocks(Paragraph(Text("For D:LatticeData, hu:IsUnit D.G.det, sigma,tau:Charge D "
-                    + "and N:Nat, collisionField D hu sigma tau N is the NativeField with signed "
-                    + "coefficient collisionCoefficient D hu sigma tau N. Its lower bound depends "
-                    + "on the actual input. For p tensor g one bound is -Q(sigma+tau)-2*N minus "
-                    + "the largest d(0)+d(1) in the support of pairTranslation(p); tensor induction "
-                    + "extends this bound to arbitrary inputs. Endomorphism support is not assumed finite."))),
-                DescribeRole.Definition),
+
+
+
+
+
             Describe.Lean(
                 DescribeId.Create("charged-collision-all-natural-orders"),
                 DeclarationHandle.Create("D5/S3/VertexAlgebra/LatticeHalfFockChargedCollision.charged_allN_draft"),

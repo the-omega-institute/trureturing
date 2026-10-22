@@ -1,0 +1,174 @@
+**Theorem 139.1 (All optimizers, including the PSD circle).** Set
+
+$$
+\eta=1-r^2>0,\qquad
+B_r=\big[\,|00\rangle+r|11\rangle,\ |21\rangle,\ |22\rangle\,\big].
+\tag{139.1}
+$$
+
+A complex CPTP map $\mathcal R$ has $e(\mathcal R)=L$ if and only if
+there is a unique $z\in\mathbb C$, $|z|\le1$, such that
+
+$$
+J_{\mathcal R}=B_r
+\begin{pmatrix}
+1&0&z\\
+0&\eta&0\\
+\overline z&0&1
+\end{pmatrix}B_r^\dagger.
+\tag{139.2}
+$$
+
+In the output-first convention (134.2), this is exactly the map
+
+$$
+\boxed{
+\mathcal R_z(X)=
+\begin{pmatrix}
+X_{00}&rX_{01}&zX_{02}\\
+rX_{10}&r^2X_{11}&rzX_{12}\\
+\overline zX_{20}&r\overline zX_{21}&\eta X_{11}+X_{22}
+\end{pmatrix}}
+\qquad(X\in M_3).
+\tag{139.3}
+$$
+
+A Kraus list valid on the entire closed disk is
+
+$$
+K_0=\operatorname{diag}(1,r,\overline z),\qquad
+K_1=\sqrt\eta\,|2\rangle\langle1|,\qquad
+K_2=\sqrt{1-|z|^2}\,|2\rangle\langle2|.
+\tag{139.4}
+$$
+
+Here $\mathcal R_0=\mathcal R_*$ of (128.4). The conjugate in $K_0$
+is essential: $K_0E_{02}K_0^\dagger=zE_{02}$, in agreement with
+(139.3) and with $J_{\mathcal R,00,22}=z$ in (139.2).
+
+*Proof.* First determine the entire supported CPTP family, without
+performing a twirl. By Theorem 137.1 an optimal Choi matrix has range
+in $\operatorname{ran}B_r$. The three columns of $B_r$ are independent,
+so it has a unique representation $J=B_rHB_r^\dagger$ with $H$
+Hermitian. A left inverse of $B_r$ shows that $J\succeq0$ is
+equivalent to $H\succeq0$. For general Hermitian $H=(H_{ab})_{a,b=0}^2$,
+the output partial trace is
+
+$$
+\operatorname{Tr}_{\rm out}(B_rHB_r^\dagger)
+=H_{00}E_{00}+(r^2H_{00}+H_{11})E_{11}+H_{22}E_{22}
+ +H_{12}E_{12}+\overline{H_{12}}E_{21}.
+\tag{139.5}
+$$
+
+For example the two terms joining the first column to $|21\rangle$
+have distinct output indices and vanish under this partial trace;
+$|21\rangle\langle22|$ has equal output indices and contributes
+$E_{12}$. Thus trace preservation imposes exactly
+
+$$
+H=H(h,z):=
+\begin{pmatrix}
+1&h&z\\
+\overline h&\eta&0\\
+\overline z&0&1
+\end{pmatrix},\qquad h,z\in\mathbb C.
+\tag{139.6}
+$$
+
+Since $\operatorname{diag}(\eta,1)$ is positive definite, its Schur
+complement gives the closed condition
+
+$$
+H(h,z)\succeq0
+\quad\Longleftrightarrow\quad
+\frac{|h|^2}{\eta}+|z|^2\le1.
+\tag{139.7}
+$$
+
+This equivalence includes every singular boundary matrix. Reading
+matrix units with the same output-first convention gives
+
+$$
+\begin{aligned}
+\mathcal R_{h,z}(X)-\mathcal R_{0,z}(X)
+={}&hX_{01}E_{02}+rhX_{11}E_{12}\\
+ &+\overline hX_{10}E_{20}+r\overline hX_{11}E_{21}.
+\end{aligned}
+\tag{139.8}
+$$
+
+It remains to exclude $h\ne0$ by individual physical inputs. Use
+$P,T,U_{j\ell},P_{j\ell},T_{j\ell}$ from §§133–134, and write
+$q=1/4$. Define
+
+$$
+\Gamma=q\sqrt{px}\,T_{02}+rv_1T_{12}
+=\frac{\sqrt{xy}}{\tau}
+ \{qp(L-d+kx)+rv_1(L+kp)\}>0.
+\tag{139.9}
+$$
+
+All the factors needed for this strict sign are positive by the
+rational bounds of §129. The extra terms of
+$\mathcal R_{h,z}\Phi(P_{j\ell})$ relative to
+$\mathcal R_{0,z}\Phi(P_{j\ell})$ have entries
+
+$$
+\Delta_{02}=qh\sqrt{px}\,\zeta^{-j},\qquad
+\Delta_{12}=rhv_1,
+\tag{139.10}
+$$
+
+and their Hermitian conjugates. Also
+$(T_{j\ell})_{20}=\zeta^\ell T_{02}$ and
+$(T_{j\ell})_{21}=\zeta^{\ell-j}T_{12}$. Since $\Phi$ deletes the
+$02$ and $12$ coherences, $\mathcal R_{0,z}\Phi=\mathcal R_*\Phi$.
+The identity $AT=LT$ from Lemma 133.1 and diagonal covariance of this
+composite therefore give the exact score
+
+$$
+\operatorname{Tr}\{T_{j\ell}
+ [P_{j\ell}-\mathcal R_{h,z}\Phi(P_{j\ell})]\}
+=L-2\Gamma\operatorname{Re}(h\zeta^{\ell-j}).
+\tag{139.11}
+$$
+
+For an optimal decoder every such score is at most $L$, by the
+trace-distance variational formula for the individual input.
+Taking $\ell-j=0,1,2$ modulo three gives
+
+$$
+\operatorname{Re}h\ge0,\qquad
+\operatorname{Re}(h\zeta)\ge0,\qquad
+\operatorname{Re}(h\zeta^2)\ge0.
+\tag{139.12}
+$$
+
+Their sum is zero because $1+\zeta+\zeta^2=0$. Each is therefore zero.
+Writing $h=a+ib$, the first gives $a=0$ and the second then gives
+$-\sqrt3 b/2=0$. Hence $h=0$. Condition (139.7) now becomes precisely
+$|z|\le1$, proving necessity on the whole PSD boundary as well as
+in its interior.
+
+Conversely, for any $|z|\le1$ the Kraus operators (139.4) have adjoint
+products summing to
+
+$$
+\operatorname{diag}(1,r^2,|z|^2)+\eta E_{11}
+ +(1-|z|^2)E_{22}=I_3.
+\tag{139.13}
+$$
+
+They give (139.3) directly, hence a CPTP map with Choi matrix (139.2).
+The erased coherences again give
+$\mathcal R_z\Phi=\mathcal R_*\Phi$, so Theorem 128.2 proves its
+optimality. Finally $\mathcal R_z(E_{02})=zE_{02}$ proves uniqueness
+of the disk coordinate. $\square$
+
+The reduction from (139.7) to (139.2) uses the individual phase scores,
+not their average. Their average cancels the $h$ term and would leave
+all of (139.7). Similarly a twirl can remove $h$ from a noncovariant
+map without proving that the untwirled map was optimal. Theorem 139.1
+therefore supplies the classification not asserted by Proposition 137.2.
+

@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:76360ad8f81869d30ce28b0c558728fbfa7f4a2cbf7057c183890a3d36e8fbc8
+  normalized_sha256: sha256:76360ad8f81869d30ce28b0c558728fbfa7f4a2cbf7057c183890a3d36e8fbc8
+cas_ref: sha256:76360ad8f81869d30ce28b0c558728fbfa7f4a2cbf7057c183890a3d36e8fbc8
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: Defines the original joint-pair predicate and U; pair distinctness and equalities occur inside the definition rather than as asserted witnesses.
+    previous_atom_id: c0a69476179b5cded41de1722257d182dc1b0750e45e3f63d53e863432fc0695
+    next_atom_id: 69e74bdd69b2bf5a50fcbd7fe8f9c143d385b96c7d7a4e36a2cc46d5ef985f1a

@@ -1,0 +1,24 @@
+**Theorem 15.1 (Joint injectivity on each curve).** The map
+$W\mapsto(u_J(W),f_{JJ}(W))$ is injective on each of the two sets in
+(13.5). Moreover $r\mapsto t_J(\mathcal H(r))$ is strictly increasing
+on the whole interval $(0,1)$.
+
+Proof. On $\mathcal K$ the identity (14.4) recovers $t$ exactly; this
+is the parameter correspondence $\beta=1/8$ in the entire-response
+volume, Theorem 15.4, equation (15.12). Thus its joint map is injective.
+For $\mathcal H$, a zero of $D_t$ on its graph would make the second
+resultant in (14.9) vanish. Since $r\in(0,1)$ and $A$ has no root there,
+its coordinate must be the one root of $P_{t,42}$ or the one root of
+$C$. Lemma 14.4 locates these in t-critical-0 and t-critical-1. The
+uniform positive-root brackets and the strictly positive $D_t$ bounds
+in both boxes exclude a zero on the actual positive $H$ graph. These
+projected roots are therefore spurious for criticality on that graph.
+
+There are no other candidates. The graph is connected, and $D_t$
+is continuous and nowhere zero on it. The t-sign box at $r=1/2$
+shows its sign is positive. Since $D^2>0$ and $H_b>0$, (14.8) makes
+$t_J$ strictly increasing throughout $(0,1)$. Equal $u_J,f_{JJ}$
+therefore give equal $t_J$, hence equal $r$, equal positive root $b$
+and the identical reconstructed complete world. This proof uses no
+bounded segment of the graph and makes no genericity deletion. ∎
+
