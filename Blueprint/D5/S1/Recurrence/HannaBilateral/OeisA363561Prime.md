@@ -22,6 +22,10 @@ $$\forall p: \mathbb{N}, (\operatorname{Nat}.\operatorname{Prime}\left(p\right))
 
 *Proof.* Machine-checked in Lean as `D5/S1/Recurrence/HannaBilateral/OeisA363561Prime.result` (`✓ std3`). ∎
 
+*Resolves.* `Problems/oeis-a363561-hanna-bilateral-prime-values` (proved) by `D5/S1/Recurrence/HannaBilateral/OeisA363561Prime.result`.
+
+<!-- scribe-open-problem-resolution-v1 {"problem_slug":"oeis-a363561-hanna-bilateral-prime-values","declaration_gid":"D5/S1/Recurrence/HannaBilateral/OeisA363561Prime.result","resolution_kind":"proved"} -->
+
 *Source.* Repository-derived.
 
 *Acknowledgement.* Paul D. Hanna (2023). *OEIS A363558, A363559, A363561 and A363569: bilateral power sums*. URL: <https://oeis.org/A363558>.

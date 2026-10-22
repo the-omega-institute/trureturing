@@ -21,7 +21,10 @@ internal sealed class OeisA363561PrimeDocument : IScribeDocumentDefinition
         DescribeRole role, AssessedProvenance provenance) =>
         Describe.Lean(DescribeId.Create("hanna-" + name.Replace('_', '-').ToLowerInvariant()),
             DeclarationHandle.Create(Prefix + name), H(title), StatementSource.FromAuthor(formula),
-            provenance, Blocks(Paragraph(Text(prose))), role);
+            provenance, Blocks(Paragraph(Text(prose))), role,
+            name == "result"
+                ? new OpenProblemResolutionClaim(ProblemSlugRef.Create("oeis-a363561-hanna-bilateral-prime-values"), ResolutionKind.Proved)
+                : null);
     private static Formula X(string name) => F.Id(name);
     private static Formula Named(string name) => Seq(Operatorname, Grp(X(name)));
     private static Formula Q(string owner, string name) => Seq(Named(owner), Dot, Named(name));

@@ -34,6 +34,10 @@ $$\forall n: \mathbb{N}, (0 < n) \implies (\operatorname{a}\left((2)^{n}\right) 
 
 *Proof.* Machine-checked in Lean as `D5/S1/Recurrence/HannaBilateral/OeisA363569PowerOfTwo.result` (`✓ std3`). ∎
 
+*Resolves.* `Problems/oeis-a363569-hanna-bilateral-power-of-two-values` (proved) by `D5/S1/Recurrence/HannaBilateral/OeisA363569PowerOfTwo.result`.
+
+<!-- scribe-open-problem-resolution-v1 {"problem_slug":"oeis-a363569-hanna-bilateral-power-of-two-values","declaration_gid":"D5/S1/Recurrence/HannaBilateral/OeisA363569PowerOfTwo.result","resolution_kind":"proved"} -->
+
 *Source.* Repository-derived.
 
 *Acknowledgement.* Paul D. Hanna (2023). *OEIS A363558, A363559, A363561 and A363569: bilateral power sums*. URL: <https://oeis.org/A363558>.

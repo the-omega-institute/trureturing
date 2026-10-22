@@ -74,6 +74,10 @@ $$\forall n: \mathbb{N}, (0 < n) \implies (\operatorname{a}\left((2)^{n}\right) 
 
 *Proof.* Machine-checked in Lean as `D5/S1/Recurrence/HannaBilateral/OeisA363558PowerOfTwo.result` (`✓ std3`). ∎
 
+*Resolves.* `Problems/oeis-a363558-a363569-hanna-bilateral-power-and-prime-values` (proved) by `D5/S1/Recurrence/HannaBilateral/OeisA363558PowerOfTwo.result`.
+
+<!-- scribe-open-problem-resolution-v1 {"problem_slug":"oeis-a363558-a363569-hanna-bilateral-power-and-prime-values","declaration_gid":"D5/S1/Recurrence/HannaBilateral/OeisA363558PowerOfTwo.result","resolution_kind":"proved"} -->
+
 *Source.* Repository-derived.
 
 *Acknowledgement.* Paul D. Hanna (2023). *OEIS A363558, A363559, A363561 and A363569: bilateral power sums*. URL: <https://oeis.org/A363558>.
