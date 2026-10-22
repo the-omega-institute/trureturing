@@ -1,0 +1,9 @@
+## 8. 仓内结果的参数对应与未决桥梁
+
+本卷的抽象与当前项目结果有三条可核对的连接：
+
+| 已有结果 | 在本卷中的位置 |
+|---|---|
+| [`FIB_ATOM_MACHINE_LEARNING_WHITEBOX.md`](FIB_ATOM_MACHINE_LEARNING_WHITEBOX.md) 的行为响应商和训练更新例 | 作为 $\Gamma_{\mathrm{learn}}$ 的具体任务源；本卷把它们放入任务—分割对偶，而不重算其数值表。 |
+| `FIB_RELATIONAL_FIBER_CALCULUS.md` 的纤维饱和与运算下降判据 | 作为定理 2.2 和定理 6.2 的一般下降机制。 |
+| `AURIC_FIB_ENVIRONMENT_RECORD_MEMORY.md` 关于相同平均通道和不同精确记录容量的结果 | 作为“任务语言不同则商不同”的记录层实例。 |
