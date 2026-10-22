@@ -1,7 +1,7 @@
 # FIB atomic boundary geometry IX: source-faithful resolution and boundary obligations
 
 **Convention 241.0 (canonical continuation and scope).** This volume continues
-canonical Continuation VII §239 and canonical Continuation VIII §240. Those two
+canonical Continuation VII §239 and canonical Continuation VIII §§240–241. Those two
 files remain the published source texts at their existing paths. The distinct
 branch results formerly drafted as §§239–252 are retained here under the local
 IX numbering §§241–254: former §239 is IX §241, former §240 is IX §242, and
@@ -16,13 +16,16 @@ here.
 
 ### 241.1 A metric-doubling replacement for the volume hypothesis
 
-The Ahlfors measure in §160 is one sufficient way to turn a resolved
+Uniform lower masses for disjoint small balls, together with an upper mass
+bound for their enclosing ball, are one sufficient way to turn a resolved
 occurrence set into a packing bound. The measure is not essential to that
 counting step. The following version uses only a uniform metric covering
 property and therefore has a different scope.
 
 **Definition 241.1 (uniform metric-doubling occurrence bridge).** Retain the
-occurrence sets $V_n$, their counts and heights from (160.1). Let
+occurrence sets $V_n=V_{T_n}$, their counts $N_n=2F_{n+1}-1$ and heights
+$n-1$ for $n\ge1$ from
+[Continuation VI, Proposition 114.2(5), equation (114.7)](FIB_ATOM_RECURSIVE_HOLOGRAPHIC_BOUNDARY_GEOMETRY_CONTINUATION_VI.md#114-a-finite-depth-source-to-carrier-certificate-and-its-first-failures). Let
 $\iota_n:V_n\hookrightarrow X$ map every task-distinct occurrence into one
 metric space $(X,\rho)$. Assume that, for fixed $\delta>0$ and fixed
 $A,B>0$,
@@ -187,8 +190,8 @@ to zero along any infinite spine. There is no uniform lower mass and no
 metric-doubling packing control.
 
 This countermodel does not assert an upper estimate at arbitrarily small
-radii; it isolates exactly the missing hypothesis. Therefore §160's
-measure-theoretic proof may be replaced by Theorem 241.2 only after a
+radii; it isolates exactly the missing hypothesis. Therefore a
+measure-based packing proof may be replaced by Theorem 241.2 only after a
 metric-doubling or direct packing property has been established. Neither
 route supplies the still-missing occurrence-to-physical-carrier metric,
 transport, clock, observation, or dimension-sensitive invariant.
@@ -249,7 +252,7 @@ N_n\le C' n^{q(s+1)}e^{q\kappa n}.
 \tag{242.5}
 $$
 
-On the other hand, the Binet formula used in (160.8) gives
+On the other hand, Binet's formula for $N_n=2F_{n+1}-1$ gives
 
 $$
 N_n\ge c'\varphi^n
@@ -756,7 +759,7 @@ $$
 2. 无横向运输泄漏，使局部框架形成三维可积切面；
 3. 位置运输的任务相对 holonomy 平凡；
 4. 辛或其他动力学提升的预测 holonomy 满足 (249.3)，或边界显式保留其任务相关轨道；
-5. 分辨率满足 canonical VII §239、canonical VIII §240 与本卷 §§241–245 的 packing 预算；
+5. 分辨率满足本卷定理 241.2、242.1 与 245.1–245.2 在各自假设下给出的 packing 预算；
 6. 三维配置的共轭变量、历史记忆或合法性档案满足动态预测充分性；
 7. 有统一细化嵌入和近极小态紧致性，使有限层结论能传到极限。
 
@@ -802,7 +805,7 @@ $$
 还须使合法更新及其定义域的交换图成立；完整来源目标要求 $L$ 在声明来源等价类上单射。正向充分性由复合拉回，但逃逸见证向原生来源传递还要求两个见证世界均在 $L$ 的像中且可同时合法提升；单有映射不够。上述对应、更新与提升条件仍为 open；同名、同维或相同终端数值不能代替它们。
 
 ### 有限检验与范围
-对 $D_J\cap D_M$ 保留四个世界变量和两组独立见证对，对 $D_{JM}^{\rm same}$ 使用同一对的联合等式；所有世界都须满足完整 child 的原始严格守卫。一个精确见证足以证明相应非空；空性需覆盖全部 child 的区间、Bernstein 或实代数证书，有限抽样不足。候选 $\Gamma$ 的反例是同边界而目标不同的合法世界对；运输与 holonomy 还须在同一来源和合法历史上保持上述交换图，未保留的预测轨道不能重置为零。局部关系维度、预测边界维度、完整来源恢复和物理载体维度继续分立，canonical VII §239、canonical VIII §240 及本卷 §§241–250 的注入、packing、holonomy 与极限条件仍须分别满足。全局 $D_J\cap D_M$、物理三维载体实现及本节的 Lean 形式化均保持 open；此应用不提供无条件维数结论，也不把不同 source contract 的解析前沿接口视为物理实现。
+对 $D_J\cap D_M$ 保留四个世界变量和两组独立见证对，对 $D_{JM}^{\rm same}$ 使用同一对的联合等式；所有世界都须满足完整 child 的原始严格守卫。一个精确见证足以证明相应非空；空性需覆盖全部 child 的区间、Bernstein 或实代数证书，有限抽样不足。候选 $\Gamma$ 的反例是同边界而目标不同的合法世界对；运输与 holonomy 还须在同一来源和合法历史上保持上述交换图，未保留的预测轨道不能重置为零。局部关系维度、预测边界维度、完整来源恢复和物理载体维度继续分立；本卷定义 241.1 与 246.1(4) 的注入和尺度假设、定理 241.2 与 245.1–245.2 的 packing 预算、§§243–244 及 §249 的运输与 holonomy 条件，以及命题 246.2 和定义 250.1(7) 的极限假设仍须分别满足。全局 $D_J\cap D_M$、物理三维载体实现及本节的 Lean 形式化均保持 open；此应用不提供无条件维数结论，也不把不同 source contract 的解析前沿接口视为物理实现。
 
 ## 251.99 追加锚（本行以下为增补区）
 
@@ -929,7 +932,7 @@ $B$ 可逆使 $\widehat A$ 可逆；全部前缀等式于是违反定理 252.3�
 
 ## 253. augmented-J 的局部逆与未实例化的原生拉回
 
-**定义 253.1（完整世界、基点和局部图）。** 取 [SJ] 的全部严格完整世界
+**定义 253.1（完整世界、基点和局部图）。** 取[支持卷 VII §§1–2](FIB_STRICT_REAL_JOINT_INCIDENCE_SUPPORT_VII.md#1-complete-worlds-and-the-original-joint-question) 的全部严格完整世界
 
 $$
 W=(P(r,b),g,d)\in\mathcal H,\qquad
@@ -944,7 +947,7 @@ $$
 \tag{253.1}
 $$
 
-$a$ 是同一完整世界的第七时钟 $J$ 响应；$g,d$ 不随目标更换。为避免与世界的 drift $d$ 混淆，本节不用 $d$ 表示维数。[SJ] 推论 24.2 供应
+$a$ 是同一完整世界的第七时钟 $J$ 响应；$g,d$ 不随目标更换。为避免与世界的 drift $d$ 混淆，本节不用 $d$ 表示维数。[支持卷 VII 定理 24.1 及推论 24.2](FIB_STRICT_REAL_JOINT_INCIDENCE_SUPPORT_VII.md#24-complete-augmented-j-critical-classification-and-the-nonnegative-p-consequence) 供应
 
 $$
 p(W)\ge0\quad\Longrightarrow\quad
@@ -952,7 +955,7 @@ p(W)\ge0\quad\Longrightarrow\quad
 \tag{253.2}
 $$
 
-在完整二维解析 parent 上成立，包括奇异来源；它不是固定 drift 切片的秩断言。
+在完整二维解析 parent 上成立，包括奇异来源；它不是固定 drift 切片的秩断言。[支持卷 VIII §§28–29](FIB_STRICT_REAL_JOINT_INCIDENCE_SUPPORT_VIII.md#29-a-vanishing-drift-coefficient-and-a-multiple-carrier-root) 的实际 $J$ 弧点满足 $\alpha=\zeta=0$、$F_0\ne0$、$\Lambda_H\ne0$ 且投影载体根为重根；这否定该点的非零线性漂移消元图，不改变 (253.2)，其中负 $b$ 的代数提升 $G$ 也不是严格完整世界。
 
 **命题 253.2（局部来源恢复与原生守卫缺口同时存在）。** 固定任意 $W_0\in\mathcal H$ 且 $p(W_0)\ge0$。存在包含 $W_0$ 的 parent 邻域 $U$，使 $\Gamma|_U$ 单射，且每个确定性完整世界目标 $T:U\to Y$ 在 $\Gamma(U)$ 上唯一下降。然而，对同一个 $U$，存在保留原生合法前缀的来源扩张及其中两个合法状态，具有相同的基点和 augmented-J 边界，下一次 $[5]$ 的合法性却不同。这是静态局部逆不能自动供应原生拉回的失败见证。
 
@@ -970,7 +973,7 @@ L_U(q)=\psi^{-1}(\operatorname{pr}_{f,h}q),\qquad
 \tag{253.3}
 $$
 
-恢复来源和目标。基点由 $q$ 的前两个分量恢复。这个 $L_U$ 的类型是 $\Gamma(U)\to U$，不是原生历史到完整世界的映射；它只在该分支实际像上定义。上述局部逆推导亦是 [SJ] §24 明示的用途，不把它重新列为独立的新定理。
+恢复来源和目标。基点由 $q$ 的前两个分量恢复。这个 $L_U$ 的类型是 $\Gamma(U)\to U$，不是原生历史到完整世界的映射；它只在该分支实际像上定义。上述局部逆推导亦是[支持卷 VII §24](FIB_STRICT_REAL_JOINT_INCIDENCE_SUPPORT_VII.md#24-complete-augmented-j-critical-classification-and-the-nonnegative-p-consequence) 明示的用途，不把它重新列为独立的新定理。
 
 构造扩张
 
@@ -1035,9 +1038,9 @@ $$
 
 证明。定理 252.3 的量词是全部有限维 $V$；命题 252.4 又给出离开可逆性后确实存在的原生守卫表示。因而被排除的是“有限维、固定可逆更新、固定线性合法性读出、精确全前缀”这一联合合同。物理配置维数没有被这些假设识别为 $\dim V$，不能由此取得空间维数结论。
 
-对于 [SJ]，三分量 $\Gamma$ 在二维 parent 上的局部秩为二，只给该来源的局部静态坐标。命题 253.2 已在保留它的局部逆时产生守卫逃逸，故还须先解决 (253.7) 的来源及操作对应。其后，occurrence 到配置载体的注入、统一分辨率与 packing 预算、实际运输与 holonomy、细化嵌入与极限紧致性，仍分别是 canonical VII §239、canonical VIII §240 与本卷 §§241–250 的独立输入。这里没有构造它们。
+对于[支持卷 VII 推论 24.2](FIB_STRICT_REAL_JOINT_INCIDENCE_SUPPORT_VII.md#24-complete-augmented-j-critical-classification-and-the-nonnegative-p-consequence) 中 $p\ge0$ 的严格完整世界，三分量 $\Gamma$ 在二维 parent 上的局部秩为二，只给该来源的局部静态坐标。命题 253.2 已在保留它的局部逆时产生守卫逃逸，故还须先解决 (253.7) 的来源及操作对应。其后，occurrence 到配置载体的注入仍是本卷定义 241.1 与 246.1(4) 的独立假设，统一分辨率须满足定理 241.2、242.1 与 245.1–245.2 的相应 packing 预算；实际运输与 holonomy 仍须满足 §§243–244 及 §249 的条件，细化嵌入与极限紧致性仍是命题 246.2 和定义 250.1(7) 的额外输入。这里没有构造这些桥接数据。
 
-同样，[SJ] §24 的局部秩结论没有断言跨分支单射；本卷定义 251.2 的 $D_J\cap D_M$ 仍保留同一完整 child 内的两组独立见证对。局部逆、直积反模型与本卷的守卫障碍均未给出该全局集合的存在或排除。任何把这些任务合并的结论都须在同一实际来源、允许历史和共同基点上同时满足它们，不能由各自分立的可达性拼成联合实现。∎
+同样，[支持卷 VII §24](FIB_STRICT_REAL_JOINT_INCIDENCE_SUPPORT_VII.md#24-complete-augmented-j-critical-classification-and-the-nonnegative-p-consequence) 的局部秩结论没有断言跨分支单射；本卷定义 251.2 的 $D_J\cap D_M$ 仍保留同一完整 child 内的两组独立见证对。局部逆、直积反模型与本卷的守卫障碍均未给出该全局集合的存在或排除。任何把这些任务合并的结论都须在同一实际来源、允许历史和共同基点上同时满足它们，不能由各自分立的可达性拼成联合实现。∎
 
 ## 255. Native first-disagreement mass forbids a fixed finite-dimensional full-source bridge
 
