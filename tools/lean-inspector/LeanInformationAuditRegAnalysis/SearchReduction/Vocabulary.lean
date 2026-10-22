@@ -35,6 +35,7 @@ structure TransportContext where
   budgetStart : Nat := 0
   /-- Query copies keep the enclosing frozen allocation, without declaration units. -/
   enclosingBudget : Bool := false
+  lookupPreparation? : Option (IO.Ref LookupBudgetState) := none
   searchHeartbeats? : Option (IO.Ref Nat) := none
   budgetExcludedStart : Nat := 0
   regenerated? : Option (IO.Ref NameSet) := none
@@ -43,7 +44,8 @@ private def sourceConstant (ctx : TransportContext) (n : Name) : MetaM ConstantI
   let some info := (ctx.source.setExporting false).find? n
     | throwError "search.missing_vocabulary: {n}"
   if info.isUnsafe then throwError "search.unsafe_vocabulary: {n}"
-  return info
+  return ← withLookupPreparation ctx.lookupPreparation? <|
+    pure (detachLookupConstantInfo info)
 
 private def localParameters : MetaM (Array Expr) := do
   let mut xs := #[]

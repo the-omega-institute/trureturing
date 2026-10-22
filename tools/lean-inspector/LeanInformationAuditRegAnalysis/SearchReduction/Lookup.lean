@@ -193,7 +193,9 @@ private def ownedLookupLevel : Level → Level
   | .param n => .param (ownedLookupName n)
   | .mvar n => .mvar ⟨ownedLookupName n.name⟩
 
-/-- The result must own every byte before its temporary module regions close. -/
+/-- Meta's environment-level realization caches can retain names even after
+Core/Meta state is restored. Inputs as well as exported results must own their
+storage before they enter Meta. -/
 private partial def ownedLookupExpr (e : Expr) : StateM (Std.HashMap Expr Expr) Expr := do
   if let some found := (← get)[e]? then return found
   let result : Expr ← match e with
@@ -222,6 +224,41 @@ private partial def ownedLookupExpr (e : Expr) : StateM (Std.HashMap Expr Expr) 
 /-- Detach all expression storage from a temporary import region. -/
 def detachLookupExpression (proof : Expr) : Expr :=
   (ownedLookupExpr proof).run' {}
+
+/-- Copy the declaration metadata used by vocabulary reconstruction. No
+temporary module pointer may become a kernel declaration or realization key. -/
+def detachLookupConstantInfo (info : ConstantInfo) : ConstantInfo := Id.run do
+  let val := info.toConstantVal
+  let val : ConstantVal := {
+    name := ownedLookupName val.name
+    levelParams := val.levelParams.map ownedLookupName
+    type := detachLookupExpression val.type}
+  return match info with
+    | .axiomInfo v => .axiomInfo {v with toConstantVal := val}
+    | .defnInfo v => .defnInfo {v with
+        toConstantVal := val
+        value := detachLookupExpression v.value, all := v.all.map ownedLookupName,
+        hints := match v.hints with
+          | .opaque => .opaque
+          | .abbrev => .abbrev
+          | .regular height => .regular height}
+    | .thmInfo v => .thmInfo {v with
+        toConstantVal := val
+        value := detachLookupExpression v.value, all := v.all.map ownedLookupName}
+    | .opaqueInfo v => .opaqueInfo {v with
+        toConstantVal := val
+        value := detachLookupExpression v.value, all := v.all.map ownedLookupName}
+    | .inductInfo v => .inductInfo {v with
+        toConstantVal := val
+        all := v.all.map ownedLookupName, ctors := v.ctors.map ownedLookupName}
+    | .ctorInfo v => .ctorInfo {v with toConstantVal := val, induct := ownedLookupName v.induct}
+    | .recInfo v => .recInfo {v with
+        toConstantVal := val
+        all := v.all.map ownedLookupName,
+        rules := v.rules.map (fun r => {r with
+          ctor := ownedLookupName r.ctor
+          rhs := detachLookupExpression r.rhs})}
+    | .quotInfo v => .quotInfo {v with toConstantVal := val}
 
 partial def inlineLookupSupport (base : Environment) (proof : Expr)
     (seen : NameSet := {}) : MetaM Expr :=
@@ -349,16 +386,18 @@ placeholder never leaves the branch: success materializes it before checking. -/
   | _ => return {}
   let params := info.levelParams.map ownedLookupName
   let levels ← params.mapM fun _ => mkFreshLevelMVar
-  let type ← timeLookup "candidate/signature" <| copy source
-    (info.type.instantiateLevelParams info.levelParams levels)
+  let signature ← withLookupPreparation budget? <| pure <|
+    detachLookupExpression (info.type.instantiateLevelParams info.levelParams levels)
+  let type ← timeLookup "candidate/signature" <| copy source signature
   let type ← withLookupPreparation budget? <| pure (detachLookupExpression type)
   let placeholder ← mkFreshExprMVar type
   return {values := #[placeholder], certify := do
     lookupPhase s!"candidate/signature-matched name={entry.name} module={entry.module}"
     let some body := info.value? (allowOpaque := true)
       | throwError "lookup.candidate_value_missing"
-    let proof ← timeLookup "candidate/transport" <| copy source
-      (body.instantiateLevelParams info.levelParams levels)
+    let body ← withLookupPreparation budget? <| pure <|
+      detachLookupExpression (body.instantiateLevelParams info.levelParams levels)
+    let proof ← timeLookup "candidate/transport" <| copy source body
     let proof ← withLookupPreparation budget? <| pure (detachLookupExpression proof)
     placeholder.mvarId!.assign proof}
 
