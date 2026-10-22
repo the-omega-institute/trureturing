@@ -21,28 +21,28 @@ internal sealed class EntanglementDistanceBellDiagonalRefutationDocument : IScri
                 "sitePauli chooses X, Y or Z from the Fin(3) label i and places that Pauli on site μ through onSite. The Pauli matrices are the existing X, Y and Z matrices.",
                 DescribeRole.Definition, AssessedProvenance.FromRepo()),
             Node("siteQCD", "The variational site quantum-correlation distance", SiteQcdFormula(),
-                "The source's variational expression is the real trace of σ squared minus the supremum of the quadratic form over real unit vectors n. Each Pauli coefficient n i is embedded into the complex matrices. This is the one-site form of the source QCD.",
+                "The site QCD is the real part of the trace of σ squared minus the supremum of the real trace quadratic form over real unit vectors n. Each Pauli coefficient n i is embedded into the complex matrices by Complex.ofReal. This is the one-site variational form of the source QCD.",
                 DescribeRole.Definition, AssessedProvenance.FromLiterature(Source)),
             Node("rotated", "The locally rotated mixture", RotatedFormula(),
                 "For a finite ensemble, rotated applies the SU(2) matrix selected for each component on site μ, conjugates that component, and averages with the real weights embedded in ℂ.",
                 DescribeRole.Definition, AssessedProvenance.FromLiterature(Source)),
             Node("ED", "Entanglement distance", EdFormula(),
-                "ED takes the infimum over finite decompositions into positive trace-one matrices and sums the two inner infima of the site QCD over local SU(2) rotations. The mixture constraint reconstructs ρ exactly.",
+                "ED takes the infimum over finite decompositions into positive semidefinite trace-one matrices and sums the two inner infima of the site QCD over families of local SU(2) rotations. The mixture constraint reconstructs ρ exactly. The sum includes both sites, μ = 0 and μ = 1, matching the source's twice-squared-concurrence normalization; the printed ED equation starts its site sum at μ = 1.",
                 DescribeRole.Definition, AssessedProvenance.FromLiterature(Source)),
             Node("bellProjector", "The four Bell projectors", BellProjectorFormula(),
-                "The four projectors are written entrywise in the product basis. The first is the existing CHSH Bell density; the remaining three are the projectors of the plus and minus Bell vectors on the 00,11 and 01,10 subspaces.",
-                DescribeRole.Definition, AssessedProvenance.FromRepo()),
+                "The four projectors are written entrywise in the product basis, in the order (|00⟩ + |11⟩)/√2, (|00⟩ − |11⟩)/√2, (|01⟩ + |10⟩)/√2 and (|01⟩ − |10⟩)/√2. These are the four Bell states in the source's Bell-diagonal decomposition.",
+                DescribeRole.Definition, AssessedProvenance.FromLiterature(Source)),
             Node("bellDiagonal", "Bell-diagonal states", BellDiagonalFormula(),
-                "A Bell-diagonal state is the weighted sum of the four Bell projectors, with real weights embedded into the complex matrix algebra. This is the Bell-diagonal family used in the source.",
+                "For nonnegative weights summing to one, the weighted sum of the four Bell projectors is a Bell-diagonal state. The displayed definition also admits arbitrary real weights, embedded into the complex matrix algebra. This is the Bell-diagonal family used in the source.",
                 DescribeRole.Definition, AssessedProvenance.FromLiterature(Source)),
             Node("concurrence", "Concurrence of a Bell-diagonal state", ConcurrenceFormula(),
-                "For Bell-diagonal weights, concurrence is the positive part of twice the largest weight minus one. This is the standard Bell-diagonal concurrence formula of Bennett, DiVincenzo, Smolin and Wootters (1996).",
+                "For nonnegative Bell-diagonal weights summing to one, concurrence is the positive part of twice the largest weight minus one. This is the standard Bell-diagonal concurrence formula of Bennett, DiVincenzo, Smolin and Wootters (1996). The displayed definition extends the same expression to arbitrary real weights.",
                 DescribeRole.Definition, AssessedProvenance.FromRepo()),
             Node("claim", "The Bell-diagonal entanglement-distance claim", ClaimFormula(),
-                "The source reports the conjectured identity ED = 2 times squared concurrence for every probability vector on the four Bell states. The formal statement keeps the nonnegative-weight and normalization hypotheses explicit.",
+                "The source reports numerical evidence for the identity ED = 2 times squared concurrence on Bell-diagonal states, with its figure plotting ED/2. The claim requires this identity for every nonnegative weight vector on the four Bell states whose weights sum to one.",
                 DescribeRole.Definition, AssessedProvenance.FromLiterature(Source)),
             Node("result", "A two-qubit counterexample", Disp(new Formula.Not(F.Id("claim"))),
-                "Take the Bell-diagonal weights (16/25, 9/25, 0, 0). Its state decomposes as the equal mixture of the two nonorthogonal pure states with q₊ = (7 + 24i)/25 and q₋ = (7 − 24i)/25. The SU(2) rotations diag((4 + 3i)/5,(4 − 3i)/5) and diag((3 + 4i)/5,(3 − 4i)/5) take these two states to Bell projectors, so the rotated mixture is diag(1/2,0,0,1/2). Both site QCD values are zero, hence ED is at most zero, while twice the squared concurrence is 98/625. Therefore ED ≤ 0 < 98/625 and the claim is false.",
+                "Take the Bell-diagonal state with weights (16/25, 9/25, 0, 0). It is the equal mixture of the projectors onto the two nonorthogonal pure states (|00⟩ + q₊|11⟩)/√2 and (|00⟩ + q₋|11⟩)/√2, where q₊ = (7 + 24i)/25 and q₋ = (7 − 24i)/25. On either site, the SU(2) rotations diag((4 + 3i)/5,(4 − 3i)/5) and diag((3 + 4i)/5,(3 − 4i)/5) take the respective projectors to the first two Bell projectors. The rotated mixture is therefore diag(1/2,0,0,1/2). Both site QCD values are zero, hence ED is at most zero, while twice the squared concurrence is 98/625. Thus ED ≤ 0 < 98/625. These states and rotations give a counterexample to the claim.",
                 DescribeRole.Theorem, AssessedProvenance.FromRepo())
         ),
         []));
@@ -97,6 +97,9 @@ internal sealed class EntanglementDistanceBellDiagonalRefutationDocument : IScri
     private static Formula SomeG(Formula name, Formula type, Formula body) =>
         Seq(Exists, Sp, Typed(name, type), Comma, Sp, body);
 
+    private static Formula SomeAnon(Formula type, Formula body) =>
+        SomeG(new Formula.Placeholder(), type, body);
+
     private static Formula Arrow(Formula domain, Formula codomain) =>
         new Formula.TypeArrow(domain, codomain);
 
@@ -132,6 +135,9 @@ internal sealed class EntanglementDistanceBellDiagonalRefutationDocument : IScri
     private static Formula Cast(Formula value, Formula type) =>
         Parenthesized(Seq(value, Sp, Colon, Sp, type));
 
+    private static Formula RealToComplex(Formula value) =>
+        Cast(Call("Complex.ofReal", value), Complex());
+
     private static Formula Nat() => Seq(Mathbb, Grp(F.Id("N")));
     private static Formula Real() => Seq(Mathbb, Grp(F.Id("R")));
     private static Formula Complex() => Seq(Mathbb, Grp(F.Id("C")));
@@ -158,7 +164,8 @@ internal sealed class EntanglementDistanceBellDiagonalRefutationDocument : IScri
     private static Formula Scale(Formula scalar, Formula value) =>
         Seq(Parenthesized(scalar), Sp, Cdot, Sp, Parenthesized(value));
     private static Formula Field(Formula value, byte index) => Seq(value, Dot, D(index));
-    private static Formula HalfComplex() => Div(Cast(D(1), Complex()), Cast(D(2), Complex()));
+    private static Formula HalfComplex(bool negative = false) =>
+        Div(negative ? Neg(Cast(D(1), Complex())) : Cast(D(1), Complex()), Cast(D(2), Complex()));
     private static Formula SupPrime(Formula p) =>
         Call("Finset.sup'", Call("Finset.univ"), Call("Finset.univ_nonempty"), p);
 
@@ -179,8 +186,8 @@ internal sealed class EntanglementDistanceBellDiagonalRefutationDocument : IScri
     private static Formula SitePauliFormula()
     {
         Formula μ = Mu, i = F.Id("i");
-        Formula pauli = ApplyIf(Eqn(i, D(0)), Call("pauliMatrix", Seq(Dot, F.Id("X"))),
-            ApplyIf(Eqn(i, D(1)), Call("pauliMatrix", Seq(Dot, F.Id("Y"))), Call("pauliMatrix", Seq(Dot, F.Id("Z")))));
+        Formula pauli = ApplyIf(Eqn(i, D(0)), Call("pauliMatrix", Named("Pauli.X")),
+            ApplyIf(Eqn(i, D(1)), Call("pauliMatrix", Named("Pauli.Y")), Call("pauliMatrix", Named("Pauli.Z"))));
         return Disp(AllG(μ, Fin(D(2)), All("i", Fin(D(3)),
             Eqn(Call("sitePauli", μ, i), Call("onSite", μ, pauli)))));
     }
@@ -188,7 +195,7 @@ internal sealed class EntanglementDistanceBellDiagonalRefutationDocument : IScri
     private static Formula SiteQcdFormula()
     {
         Formula μ = Mu, σ = SigmaLower, n = F.Id("n"), i = F.Id("i"), x = F.Id("x");
-        Formula pauliSum = SumOver(i, Fin(D(3)), Scale(Cast(At(n, i), Complex()),
+        Formula pauliSum = SumOver(i, Fin(D(3)), Scale(RealToComplex(At(n, i)),
             Call("sitePauli", μ, i)));
         Formula quadratic = Re(Trace(Mul(Mul(Mul(σ, pauliSum), σ), pauliSum)));
         Formula unit = Eqn(SumOver(i, Fin(D(3)), Pow(At(n, i), D(2))), D(1));
@@ -200,10 +207,10 @@ internal sealed class EntanglementDistanceBellDiagonalRefutationDocument : IScri
 
     private static Formula RotatedFormula()
     {
-        Formula k = F.Id("k"), μ = Mu, p = F.Id("p"), ρs = Seq(Rho, F.Id("s")), U = F.Id("U"), j = F.Id("j");
+        Formula k = F.Id("k"), μ = Mu, p = F.Id("p"), ρs = Seq(Rho, Grp(F.Id("s"))), U = F.Id("U"), j = F.Id("j");
         Formula unitary = Call("Matrix.specialUnitaryGroup", Fin(D(2)), Complex());
-        Formula local = Call("onSite", μ, Call("val", At(U, j)));
-        Formula term = Scale(Cast(At(p, j), Complex()),
+        Formula local = Call("onSite", μ, Cast(Call("Subtype.val", At(U, j)), OneQubitMatrix()));
+        Formula term = Scale(RealToComplex(At(p, j)),
             Mul(Mul(local, At(ρs, j)), Adj(local)));
         Formula body = Eqn(Call("rotated", μ, p, ρs, U), SumOver(j, Fin(k), term));
         return Disp(All("k", Nat(), AllG(μ, Fin(D(2)),
@@ -213,19 +220,19 @@ internal sealed class EntanglementDistanceBellDiagonalRefutationDocument : IScri
 
     private static Formula EdFormula()
     {
-        Formula ρ = Rho, x = F.Id("x"), k = F.Id("k"), p = F.Id("p"), ρs = Seq(Rho, F.Id("s"));
+        Formula ρ = Rho, x = F.Id("x"), k = F.Id("k"), p = F.Id("p"), ρs = Seq(Rho, Grp(F.Id("s")));
         Formula j = F.Id("j"), μ = Mu, U = F.Id("U"), y = F.Id("y");
         Formula unitary = Call("Matrix.specialUnitaryGroup", Fin(D(2)), Complex());
-        Formula inner = SetOf("y", Real(), Some("U", unitary,
+        Formula inner = SetOf("y", Real(), Some("U", Arrow(Fin(k), unitary),
             Eqn(y, Call("siteQCD", μ, Call("rotated", μ, p, ρs, U)))));
         Formula value = SumOver(μ, Fin(D(2)), Call("sInf", inner));
         Formula positivity = All("j", Fin(k), Leq(D(0), At(p, j)));
         Formula total = Eqn(SumOver(j, Fin(k), At(p, j)), D(1));
-        Formula state = All("j", Fin(k), And(Call("PosSemidef", At(ρs, j)), Eqn(Trace(At(ρs, j)), D(1))));
-        Formula mixture = Eqn(SumOver(j, Fin(k), Scale(Cast(At(p, j), Complex()), At(ρs, j))), ρ);
+        Formula state = All("j", Fin(k), And(Call("Matrix.PosSemidef", At(ρs, j)), Eqn(Trace(At(ρs, j)), Cast(D(1), Complex()))));
+        Formula mixture = Eqn(SumOver(j, Fin(k), Scale(RealToComplex(At(p, j)), At(ρs, j))), ρ);
         Formula existential = SetOf("x", Real(), Some("k", Nat(), Some("p", Arrow(Fin(k), Real()),
             SomeG(ρs, Arrow(Fin(k), TwoQubitMatrix()),
-                Some("hp", positivity, Some("hsum", total, Some("hstate", state, Some("hmix", mixture,
+                SomeAnon(positivity, SomeAnon(total, SomeAnon(state, SomeAnon(mixture,
                     Eqn(x, value)))))))));
         return Disp(AllG(ρ, TwoQubitMatrix(), Eqn(Call("ED", ρ), Call("sInf", existential))));
     }
@@ -240,12 +247,12 @@ internal sealed class EntanglementDistanceBellDiagonalRefutationDocument : IScri
                 If(And(Eqn(i, b), Eqn(j, b)), HalfComplex(),
                     If(And(Eqn(i, a), Eqn(j, b)), c,
                         If(And(Eqn(i, b), Eqn(j, a)), d, Cast(D(0), Complex())))));
-        Formula plus00 = branch(p00, p11, HalfComplex(), HalfComplex());
+        Formula minus00 = branch(p00, p11, HalfComplex(true), HalfComplex(true));
         Formula plus01 = branch(p01, p10, HalfComplex(), HalfComplex());
-        Formula minus01 = branch(p01, p10, Neg(HalfComplex()), Neg(HalfComplex()));
+        Formula minus01 = branch(p01, p10, HalfComplex(true), HalfComplex(true));
         Formula body = Eqn(Call("bellProjector", α), Call("Matrix.of", Lambda2(pair,
             If(Eqn(α, D(0)), zero,
-                If(Eqn(α, D(1)), plus00,
+                If(Eqn(α, D(1)), minus00,
                     If(Eqn(α, D(2)), plus01, minus01))))));
         return Disp(AllG(α, Fin(D(4)), body));
     }
@@ -255,7 +262,7 @@ internal sealed class EntanglementDistanceBellDiagonalRefutationDocument : IScri
         Formula p = F.Id("p"), α = Alpha;
         return Disp(All("p", Arrow(Fin(D(4)), Real()),
             Eqn(Call("bellDiagonal", p), SumOver(α, Fin(D(4)),
-                Scale(Cast(At(p, α), Complex()), Call("bellProjector", α))))));
+                Scale(RealToComplex(At(p, α)), Call("bellProjector", α))))));
     }
 
     private static Formula ConcurrenceFormula()
