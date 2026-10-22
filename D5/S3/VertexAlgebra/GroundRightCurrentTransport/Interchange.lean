@@ -34,9 +34,6 @@ local macro "R_mode" : term => pure (Lean.mkIdent
 local macro "Z_mode" : term => pure (Lean.mkIdent
   ((Lean.Name.num `_private.D5.S3.VertexAlgebra.GroundRightCurrentTransport.Residue 0) ++
     `D5.S3.VertexAlgebra.LatticeHalfFockGroundRightCurrentTransport.Calculus.Z_mode))
-local macro "Q_mode" : term => pure (Lean.mkIdent
-  ((Lean.Name.num `_private.D5.S3.VertexAlgebra.GroundRightCurrentTransport.Residue 0) ++
-    `D5.S3.VertexAlgebra.LatticeHalfFockGroundRightCurrentTransport.Calculus.Q_mode))
 local macro "R_zero" : term => pure (Lean.mkIdent
   ((Lean.Name.num `_private.D5.S3.VertexAlgebra.GroundRightCurrentTransport.Residue 0) ++
     `D5.S3.VertexAlgebra.LatticeHalfFockGroundRightCurrentTransport.Calculus.R_zero))
