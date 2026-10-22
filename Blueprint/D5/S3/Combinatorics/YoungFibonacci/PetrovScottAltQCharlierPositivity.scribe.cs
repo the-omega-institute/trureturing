@@ -70,13 +70,17 @@ internal sealed class PetrovScottAltQCharlierPositivityDocument : IScribeDocumen
                 + "A continuous deformation to the diagonal matrix preserves nonsingularity and hence "
                 + "the positive determinant sign. Induction on the list then proves positivity for "
                 + "every Fibonacci word, with no bound on its weight.",
-                AssessedProvenance.FromRepo(Source), DescribeRole.Theorem))));
+                AssessedProvenance.FromRepo(Source), DescribeRole.Theorem,
+                new OpenProblemResolutionClaim(
+                    ProblemSlugRef.Create("petrov-scott-2026-alternative-q-charlier-fibonacci-positivity-conjecture-6-3"),
+                    ResolutionKind.Proved)))));
 
     private static DocumentBlock Node(string name, string title, Formula formula, string prose,
-        AssessedProvenance provenance, DescribeRole role = DescribeRole.Definition) => Describe.Lean(
+        AssessedProvenance provenance, DescribeRole role = DescribeRole.Definition,
+        OpenProblemResolutionClaim? resolution = null) => Describe.Lean(
             DescribeId.Create("petrov-scott-qcharlier-" + name.ToLowerInvariant()),
             DeclarationHandle.Create(Prefix + name), H(title), StatementSource.FromAuthor(formula),
-            provenance, Blocks(Paragraph(Text(prose))), role);
+            provenance, Blocks(Paragraph(Text(prose))), role, resolution);
 
     private static Formula DeterminantFormula(bool second)
     {

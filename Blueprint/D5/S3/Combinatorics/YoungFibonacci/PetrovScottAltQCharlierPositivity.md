@@ -106,6 +106,10 @@ $$\exists rho \in Real, q \in Real,\; FibonacciPositive\left(xAQC\left(rho, q\ri
 
 *Proof.* Machine-checked in Lean as `D5/S3/Combinatorics/YoungFibonacci/PetrovScottAltQCharlierPositivity.result` (`✓ std3`). ∎
 
+*Resolves.* `Problems/petrov-scott-2026-alternative-q-charlier-fibonacci-positivity-conjecture-6-3` (proved) by `D5/S3/Combinatorics/YoungFibonacci/PetrovScottAltQCharlierPositivity.result`.
+
+<!-- scribe-open-problem-resolution-v1 {"problem_slug":"petrov-scott-2026-alternative-q-charlier-fibonacci-positivity-conjecture-6-3","declaration_gid":"D5/S3/Combinatorics/YoungFibonacci/PetrovScottAltQCharlierPositivity.result","resolution_kind":"proved"} -->
+
 *Source.* Repository-derived.
 
 *Acknowledgement.* Leonid Petrov and Jeanne Scott (2026). *Random Fibonacci words via clone Schur functions*. DOI: [10.1017/fms.2025.10165](https://doi.org/10.1017/fms.2025.10165). URL: <https://arxiv.org/abs/2412.21126v2>.
