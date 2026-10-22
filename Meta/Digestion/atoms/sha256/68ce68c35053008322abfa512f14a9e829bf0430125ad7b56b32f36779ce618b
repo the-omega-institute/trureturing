@@ -1,0 +1,31 @@
+**Definition 7.1 (Regular construction chart).** Only for constructing
+the worlds in Sections 8–9, set $\beta=1/8$ and use the open chart
+$\Lambda\ne0$, with
+
+$$
+\epsilon=-\frac{24}{5}(b-1/8)\frac B\Lambda,\qquad
+W(r,b)=(P(r,b),g,24+\epsilon),\qquad
+ g(s)=h(s)+\sum_{i=0}^3w_i\ell_i(s),
+\tag{7.1}
+$$
+
+where $w_i$ are (2.3) and
+$\ell_i(s)=\prod_{0\le k\le3,\ k\ne i}(s-k)/(i-k)$.
+The parent equation holds identically. In the formulas for its actual
+responses use
+
+$$
+\begin{aligned}
+g(5)&=-4w_0+15w_1-20w_2+10w_3,\\
+g(6)&=24-10w_0+36w_1-45w_2+20w_3,\\
+g(7)&=\frac{384}{5}-20w_0+70w_1-84w_2+35w_3.
+\end{aligned}
+\tag{7.2}
+$$
+
+All response functions below mean exactly (1.7) evaluated through
+(1.6), (2.1), (2.3), (7.1), (7.2), with $B=6/T-2/U$. Thus their factorized
+rational expressions are fixed, including the equations' scale and order.
+This chart defines some legal worlds; it does not remove $\Lambda=0$ or
+any $D=0$ worlds from the full unresolved problem.
+

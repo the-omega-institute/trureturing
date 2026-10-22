@@ -1,0 +1,29 @@
+**Theorem 20.4 (Uniform affine separation on the full source branches).**
+For every $p\in I$ and $0<r<1$,
+
+$$
+m_-(r,p)>6u_-(r,p)-216,\qquad
+m_+(r,p)<6u_+(r,p)-216.
+\tag{20.14}
+$$
+
+**Proof.** If either branch had a zero separator, Lemma 20.2 would
+put its $r$ in one of the five cells, contradicting Lemma 20.3.
+Thus neither separator vanishes anywhere on its entire stated
+domain. Fix any $p\in I$. By Theorem 19.2 and the actual response
+definitions, $F_i(r,p)$ is continuous for all $0<r<1$, including
+singular sources. Lemma 20.3 supplies its positive sign on $J_1$
+for $i=-$ and its negative sign there for $i=+$. The intermediate
+value theorem on the connected interval $(0,1)$ keeps each sign
+unchanged throughout that interval. This proves (20.14) for the
+arbitrary fixed $p$, and hence on all of $I$.
+
+The Bernstein convex-hull identity, Descartes' rule and the
+common-root implication for a Sylvester determinant are the
+standard supplier steps already used in Sections 6, 14 and 18.
+The polynomial identity (20.7), its coefficient bounds, the actual
+response bounds in Lemma 20.3 and their full-branch consequence
+(20.14) concern the particular source and responses of this volume.
+No restriction on a gain sample, gain degree, gain roots or drift
+has entered the argument. ∎
+

@@ -1,0 +1,16 @@
+**Definition 29.1 (Explicit algebraic exceptional responses).**
+Let $r_-,r_+$ be exactly the two strict roots of $\Phi$ specified
+by Theorem 4.2 and its rational intervals (4.6). At $b=1/8$ use
+$j=1/8+8r(1-r)$, $n=j+r$, $T=9/8$, and put
+
+$$
+\begin{aligned}
+A_5(r)&=1+(n+5/4)(4-15/j+20/T-10/n),\\
+a_6(r)&=10-36/j+45/T-20/n,\\
+s_\pm(p)&=\left.
+\left[24+24(5/2+n)+\frac{p-24}{A_5(r)}
+              \{1+(5/2+n)a_6(r)\}\right]\right|_{r=r_\pm}.
+\end{aligned}
+\tag{29.1}
+$$
+

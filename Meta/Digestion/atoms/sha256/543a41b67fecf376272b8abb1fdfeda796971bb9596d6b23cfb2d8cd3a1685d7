@@ -1,0 +1,110 @@
+**定义 19.1（代数常数、整个多项式与实际行）。** 本章保持定义 1.1 的完整模型、
+式 (1.2) 的实际左动作与式 (1.3) 的含停止守卫递归。定义整数多项式
+
+$$
+f(x)=2104+1520x-14654x^2+1108x^3+27037x^4
+-8977x^5-13559x^6+6408x^7,
+\tag{19.1}
+$$
+
+并置
+
+$$
+L=\frac{1351701382645090609}{10^{18}},\qquad
+R=\frac{1351701382645090610}{10^{18}}.
+\tag{19.2}
+$$
+
+$\kappa$ 表示 $f$ 在 $(L,R)$ 内的唯一实根；下述证明同时给出其存在唯一性。
+这里不对 $f$ 在该区间外的实根作断言。
+以下八行数组均按 $x$ 的升幂给出一个整数多项式的全部系数：
+
+| 多项式 | 升幂系数数组 |
+| --- | --- |
+| $u_0(x)$ | $(12624,12528,-61716,-53004,100062,63696,-70146,-23340,18918)$ |
+| $u_1(x)$ | $(-1664,-232,8240,14792,-21500,-27295,24225,12935,-9060)$ |
+| $u_2(x)$ | $(1248,-4560,-3240,13509,1578,-14739,2238,5361,-1962)$ |
+| $u_3(x)$ | $(-208,760,484,-2699,212,3400,-1089,-1370,636)$ |
+| $v_0(x)$ | $(12624,1632,-45312,20400,50046,-33378,-18486,12600)$ |
+| $v_1(x)$ | $(-1664,-6976,-14310,11770,35638,-15028,-18364,8640)$ |
+| $v_2(x)$ | $(1248,1200,2748,-1731,-9432,3498,5241,-2394)$ |
+| $v_3(x)$ | $(-208,16,114,-253,344,94,-263,72)$ |
+
+置
+
+$$
+U_x(t)=\sum_{j=0}^3u_j(x)t^j,\qquad
+V_x(t)=\sum_{j=0}^3v_j(x)t^j,\qquad
+U(t)=U_\kappa(t),\quad V(t)=V_\kappa(t).
+\tag{19.3}
+$$
+
+$x$ 是系数的代数变量，$t$ 始终是原时钟变量；系数多项式的次数不是增益的次数。
+对 $0<r<1$，定义严格源候选
+
+$$
+P_r=\begin{pmatrix}r&\kappa r\\(1-r)/\kappa&1-r\end{pmatrix}.
+\tag{19.4}
+$$
+
+下表的行索引依次为 $1,2,3,4,5,6,7J,7M$；两条末行都在原时钟 $7$，
+分别表示从同一个第六 $J$ 节点选择最终 $J$ 或 $M$。
+表中 $A_i,B_i$ 为 $x$ 的多项式，取 $x=\kappa$ 时使用
+$\operatorname{tr}(Q_iP_r)=(A_i(\kappa)+B_i(\kappa)r)/\kappa$。
+初始行另为 $Q_0=I$、$\operatorname{tr}P_r=1$。
+
+| 索引及实际时间词 | 实际左乘积 $Q_i$ | $A_i(x)$ | $B_i(x)$ |
+| --- | --- | --- | --- |
+| $1:J$ | $\left(\begin{smallmatrix}0&1\\1&0\end{smallmatrix}\right)$ | $1$ | $x^2-1$ |
+| $2:JM$ | $\left(\begin{smallmatrix}1&0\\1&1\end{smallmatrix}\right)$ | $x$ | $x^2$ |
+| $3:JMJ$ | $\left(\begin{smallmatrix}1&1\\1&0\end{smallmatrix}\right)$ | $1$ | $x^2+x-1$ |
+| $4:JMJM$ | $\left(\begin{smallmatrix}1&0\\2&1\end{smallmatrix}\right)$ | $x$ | $2x^2$ |
+| $5:JMJMM$ | $\left(\begin{smallmatrix}2&1\\3&1\end{smallmatrix}\right)$ | $x+1$ | $3x^2+x-1$ |
+| $6:JMJMMJ$ | $\left(\begin{smallmatrix}3&1\\2&1\end{smallmatrix}\right)$ | $x+1$ | $2x^2+2x-1$ |
+| $7J:JMJMMJJ$ | $\left(\begin{smallmatrix}2&1\\3&1\end{smallmatrix}\right)$ | $x+1$ | $3x^2+x-1$ |
+| $7M:JMJMMJM$ | $\left(\begin{smallmatrix}2&1\\5&2\end{smallmatrix}\right)$ | $2x+1$ | $5x^2-1$ |
+
+在含索引 $7J,7M$ 的表达式中，$U_x(i),V_x(i)$ 均指 $U_x(7),V_x(7)$。
+参数域是整个闭矩形
+
+$$
+\mathcal R=\left[\frac9{10},\frac{19}{20}\right]
+\times\left[\frac{49}{50},\frac{99}{100}\right],\qquad
+(\theta,\psi)\in\mathcal R,\qquad S=\theta+\psi,\quad\Pi=\theta\psi.
+\tag{19.5}
+$$
+
+对每一实际行定义精确代数数
+
+$$
+N_i=(A_i(\kappa)+B_i(\kappa)S)V(i)
+-B_i(\kappa)\Pi U(i)-\kappa V(0),\qquad
+\lambda=\frac{24\kappa}{N_1},
+\tag{19.6}
+$$
+
+以及从初读之前即固定的两个整个世界
+
+$$
+\begin{aligned}
+g_\theta(t)&=\lambda\bigl(V(t)-\psi U(t)\bigr),&
+d_\theta&=-g_\theta(0),&W_\theta&=(P_\theta,g_\theta,d_\theta),\\
+g_\psi(t)&=\lambda\bigl(V(t)-\theta U(t)\bigr),&
+d_\psi&=-g_\psi(0),&W_\psi&=(P_\psi,g_\psi,d_\psi).
+\end{aligned}
+\tag{19.7}
+$$
+
+共同响应及父历史定义为
+
+$$
+\begin{gathered}
+C=\frac{24N_2}{N_1},\quad z=\frac{24N_3}{N_1},\quad
+Y=\frac{24N_4}{N_1},\quad p_M=\frac{24N_5}{N_1},\quad
+v=\frac{24N_6}{N_1},\quad
+w_J=\frac{24N_{7J}}{N_1},\quad w_M=\frac{24N_{7M}}{N_1},\\
+H_4=(0,J,24,M,C,J,z,M,Y),\qquad H_5=(H_4,M,p_M).
+\end{gathered}
+\tag{19.8}
+$$
+

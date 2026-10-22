@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:125d79fa99cf206107827aba7bc08f87b6f75132c84afc040e867467569c62b1
+  normalized_sha256: sha256:125d79fa99cf206107827aba7bc08f87b6f75132c84afc040e867467569c62b1
+cas_ref: sha256:125d79fa99cf206107827aba7bc08f87b6f75132c84afc040e867467569c62b1
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: Volume subject and scope introduction; states the intended problem and mathematical setting without claiming its value or optimizer properties.
+    previous_atom_id: null
+    next_atom_id: b92ac1a2681bdd4b0acc4ecd0c0ebb28ff1746fd9fe3a00cd445d0523ef8eec6

@@ -1,0 +1,52 @@
+**Definition 10.1 (The p-free eight-slot M system).** In the complete
+zero-safe parameter space (2.2) at $\beta=1/8$, associate to each label
+$(E,F,a)\in\{J,M\}^2\times\{0,1\}$ a triple
+$x_{EFa}=(b_{EFa},r_{EFa},\epsilon_{EFa})$ and its reconstructed complete
+world $W_{EFa}$ from Theorem 2.1. Require for every label
+
+$$
+b_{EFa}>0,\quad0<r_{EFa}<1,\quad
+\epsilon_{EFa}\Lambda_{EFa}
++\frac{24}{5}(b_{EFa}-1/8)B_{EFa}=0.
+\tag{10.1}
+$$
+
+The unresolved M system asks for one real $p$, one real $v_J$ and one real
+$v_M$ such that
+
+$$
+\begin{aligned}
+p(W_{EFa})&=p &&\text{for all }E,F,a,\\
+u_E(W_{EFa})&=v_E &&\text{for all }E,F,a,\\
+f_{EF}(W_{EF0})&=f_{EF}(W_{EF1})&&\text{for each }E,F,\\
+(b_{EF0}-b_{EF1})^2+(r_{EF0}-r_{EF1})^2
+ +(\epsilon_{EF0}-\epsilon_{EF1})^2&>0&&\text{for each }E,F.
+\end{aligned}
+\tag{10.2}
+$$
+
+The formulas for $p,u,f$ are the literal responses (1.7), using one
+entire interpolant per label. Labels may reuse a world across slots;
+the last line distinguishes complete worlds within each terminal pair.
+By the bijection in Theorem 2.1, this three-coordinate guard is exactly
+the complete-triple guard, including singular parent sources.
+
+This is the M-only instance of the already published guarded finite-slot
+argument, rather than a new finite-extraction theorem. The
+entire-response volume, Theorem 16.5, states that argument for its
+fifth-J atlas; the terminal-zero-plane volume, Theorem 11.2, states its
+joint form at its chamber parents. Their chamber or fifth-action
+hypotheses are not transferred here. For the present M instance,
+unfolding (1.5) first selects the actual $v_E$, then a final response,
+then two different worlds in that $L_0$ leaf, giving (10.2). Conversely
+the finite union of the selected worlds has both terminal $L_0$ leaves
+inside each single acquired $v_E$ child and hence $L_2$ under the common
+$p$. Extra worlds preserve these witnesses by the recursive definition.
+No losing pair has been extracted from a nonterminal support.
+
+Theorem 5.1 permits the additional necessary filter that at least one
+selected label has $b\ne1/8$. It does not replace any equation or guard
+in (10.1)–(10.2). At $p\ne24$ at least three distinct gain directions
+are necessary, but this also is not a substitute for the actual response
+equalities.
+

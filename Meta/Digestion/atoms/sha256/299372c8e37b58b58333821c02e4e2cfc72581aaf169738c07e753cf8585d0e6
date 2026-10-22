@@ -1,0 +1,60 @@
+**Lemma 18.3 (Negativity on the separating curve).** For every
+$p\in I$ and $0<r<1$,
+
+$$
+\mathsf A(r,\sigma(r),p)<0.
+\tag{18.6}
+$$
+
+**Proof.** Set $r=t^2/(1+t^2)$ and $b=t/(2(1+t^2))$, where
+$t>0$. This parametrizes the entire separating curve, with
+$0<r<1$. Substitution into the original $\mathsf A$ gives
+
+$$
+128d_e(1+t^2)^7\mathsf A
+ \left(\frac{t^2}{1+t^2},\frac{t}{2(1+t^2)},e\right)
+ =t^4P_e(t),\qquad d_L=5,\quad d_{H_I}=4,
+\tag{18.7}
+$$
+
+where the coefficient vectors in increasing powers of $t$ are
+
+$$
+\begin{aligned}
+P_L:\;&(-31760,52108,183972,-261702,-181136,112088,6672,-7552),\\
+P_{H_I}:\;&(-25440,41712,147168,-209283,-144894,89712,5328,-6048).
+\end{aligned}
+\tag{18.8}
+$$
+
+For signs on the entire positive half-line put
+
+$$
+G_e(x)=(1-x)^7P_e\left(\frac{x}{1-x}\right).
+\tag{18.9}
+$$
+
+These are polynomials, with increasing coefficient vectors
+
+$$
+\begin{aligned}
+G_L:\;&(-31760,274428,-795636,711658,551632,-1305856,670788,-82806),\\
+G_{H_I}:\;&(-25440,219792,-637344,570957,439278,-1043064,535842,-66069).
+\end{aligned}
+\tag{18.10}
+$$
+
+For each closed cell $[\alpha,\beta]$ below, the entries are the
+exact maximum of the eight degree-seven Bernstein coefficients
+of $G_e(\alpha+(\beta-\alpha)y)$.
+
+| $[\alpha,\beta]$ | Maximum for $G_L$ | Maximum for $G_{H_I}$ |
+| --- | --- | --- |
+| $[0,1/4]$ | $-5917235/8192$ | $-9514125/16384$ |
+| $[1/4,5/16]$ | $-1659020735/134217728$ | $-2920175505/268435456$ |
+| $[5/16,21/64]$ | $-147469619705/240518168576$ | $-620433751095/481036337152$ |
+| $[21/64,11/32]$ | $-8967359819695/2199023255552$ | $-17285328487905/4398046511104$ |
+| $[11/32,3/8]$ | $-684445779505/17179869184$ | $-1108515042495/34359738368$ |
+| $[3/8,1/2]$ | $-212980217/1048576$ | $-340658391/2097152$ |
+| $[1/2,3/4]$ | $-6416993/28672$ | $-10268199/57344$ |
+| $[3/4,1]$ | $-2186305/8192$ | $-3505695/16384$ |

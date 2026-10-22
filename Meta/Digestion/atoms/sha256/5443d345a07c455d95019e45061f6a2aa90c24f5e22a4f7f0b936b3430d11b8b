@@ -1,0 +1,70 @@
+### 95.1. Exact overlap against an unrestricted decoder
+
+Fix $s\in\mathcal S_{\rm actual}$, with $a,b,t$ as in (93.4), and a
+probability vector $p$. For an arbitrary CPTP decoder $\mathcal R$ define
+
+$$
+T_{ij}=\langle i|\mathcal R(|j\rangle\langle j|)|i\rangle,\qquad
+\ell=\langle0|\mathcal R(|0\rangle\langle1|)|1\rangle.
+\tag{95.1}
+$$
+
+Positivity and trace preservation make $T$ entrywise nonnegative with
+$\sum_iT_{ij}=1$ for each column $j$. The decoder Choi principal block
+on $(|00\rangle,|11\rangle)$ is
+$\left(\begin{smallmatrix}T_{00}&\ell\\\overline\ell&T_{11}\end{smallmatrix}\right)$.
+Its positivity gives $|\ell|^2\le T_{00}T_{11}$.
+
+Expanding (94.8) and using every matrix unit in (93.5) gives the exact
+target overlap
+
+$$
+\begin{aligned}
+G_{\mathcal R}(p)
+&=\langle\psi_p|(\mathcal R\Phi_s\otimes\operatorname{id})
+     (|\psi_p\rangle\langle\psi_p|)|\psi_p\rangle\\
+&=p_0^2T_{00}
+ +p_1^2(aT_{11}+bT_{12})
+ +p_2^2(bT_{21}+aT_{22})
+ +2s p_0p_1\operatorname{Re}\ell.
+\end{aligned}
+\tag{95.2}
+$$
+
+Put $u=\sqrt{T_{11}}$ and $v=T_{22}$. Then $u,v\in[0,1]$ and
+
+$$
+T_{00}\le1,\quad T_{12}\le1-v,\quad
+T_{21}\le1-u^2,\quad |\ell|\le u.
+$$
+
+Since $a,b\ge0$ on the actual domain, these inequalities imply
+
+$$
+\begin{aligned}
+G_{\mathcal R}(p)&\le L_s(p;u,v),\\
+L_s(p;u,v)
+&=p_0^2+b(p_1^2+p_2^2)
+ +(ap_1^2-bp_2^2)u^2
+ +2t p_0p_1u+(ap_2^2-bp_1^2)v.
+\end{aligned}
+\tag{95.3}
+$$
+
+In particular a probability vector satisfying
+$L_s(p;u,v)\le\eta$ for every $u,v\in[0,1]$ gives, for every
+$\mathcal R$,
+
+$$
+\frac12\|\mathcal R\Phi_s-\operatorname{id}\|_\diamond
+\ge\frac12\|(\mathcal R\Phi_s\otimes\operatorname{id})
+       (|\psi_p\rangle\langle\psi_p|)-|\psi_p\rangle\langle\psi_p|\|_1
+\ge1-G_{\mathcal R}(p)\ge1-\eta.
+\tag{95.4}
+$$
+
+The second inequality is the two-outcome measurement with first effect
+$|\psi_p\rangle\langle\psi_p|$. It uses a legitimate normalized
+entangled input, with marginals $\operatorname{diag}(p)$ on both factors.
+No covariance assumption was imposed on $\mathcal R$.
+

@@ -1,0 +1,107 @@
+**定义 22.1（实际双末对、两族源直线与系数矩阵）。** 本章使用定义 1.1 的全部合法完整世界：
+$P=\left(\begin{smallmatrix}r&b\\c&1-r\end{smallmatrix}\right)$，
+$0<r<1$、$b,c>0$、$bc=r(1-r)$，一个从初读之前即固定的整个非零实多项式
+$g$、$\deg g\le3$，以及任意实常漂移 $d$。正非对角元无上界；
+增益允许任意符号、低次数、采样与非采样零及重根。
+实际动作、原时钟 $0,\ldots,7$、初读计数和每个单独动作后的立即读取均取式 (1.2)。
+互择响应只比较固定世界；轨迹不重置、不复制、不跳读、不加空动作、不重编号、不增端口。
+
+对任意实数 $C,z,Y,p$，固定同一个实际历史
+
+$$
+H_5=(0,J,24,M,C,J,z,M,Y,M,p).
+\tag{22.1}
+$$
+
+对 $E\in\{J,M\}$，称两个不同完整世界 $W_0,W_1\in\mathcal F(H_5)$ 为该第六节点的
+双末对，若存在实数 $v_E,w_{EJ},w_{EM}$，使
+
+$$
+\begin{gathered}
+y_{6,E}(W_0)=y_{6,E}(W_1)=v_E,\\
+y_{7,EG}(W_0)=y_{7,EG}(W_1)=w_{EG}\qquad(G=J,M).
+\end{gathered}
+\tag{22.2}
+$$
+
+这里 $y_{6,E}(W)=d+g(6)\operatorname{tr}(EQ_5P)$、
+$y_{7,EG}(W)=d+g(7)\operatorname{tr}(GEQ_5P)$，$Q_5$ 是实际 $JMJMM$ 乘积。
+同一节点的两个最终动作使用同一对世界；不要求 $w_{EJ}=w_{EM}$。
+称其源差奇异，若 $\det(P_0-P_1)=0$。
+比较两个第六节点时，两对世界可以不同、交叠或不相交，$v_J,v_M$ 也可以不同。
+
+对 $x>0$、$0<r<1$，置
+
+$$
+R_x(r)=\begin{pmatrix}r&xr\\(1-r)/x&1-r\end{pmatrix},\qquad
+L_x(r)=R_x(r)^{\mathsf T}.
+\tag{22.3}
+$$
+
+下表给出全部实际行。最后三行按第六动作选择其一列，
+其中 $7J,7M$ 均在原时钟 $7$，分别表示最终 $J,M$。
+
+| 原时钟 | 共同前缀或第六 $J$ 的实际乘积 | 第六 $M$ 的实际乘积 |
+| --- | --- | --- |
+| $1$ | $\left(\begin{smallmatrix}0&1\\1&0\end{smallmatrix}\right)$ | 同左 |
+| $2$ | $\left(\begin{smallmatrix}1&0\\1&1\end{smallmatrix}\right)$ | 同左 |
+| $3$ | $\left(\begin{smallmatrix}1&1\\1&0\end{smallmatrix}\right)$ | 同左 |
+| $4$ | $\left(\begin{smallmatrix}1&0\\2&1\end{smallmatrix}\right)$ | 同左 |
+| $5$ | $\left(\begin{smallmatrix}2&1\\3&1\end{smallmatrix}\right)$ | 同左 |
+| $6$ | $\left(\begin{smallmatrix}3&1\\2&1\end{smallmatrix}\right)$ | $\left(\begin{smallmatrix}3&1\\5&2\end{smallmatrix}\right)$ |
+| $7J$ | $\left(\begin{smallmatrix}2&1\\3&1\end{smallmatrix}\right)$ | $\left(\begin{smallmatrix}5&2\\3&1\end{smallmatrix}\right)$ |
+| $7M$ | $\left(\begin{smallmatrix}2&1\\5&2\end{smallmatrix}\right)$ | $\left(\begin{smallmatrix}5&2\\8&3\end{smallmatrix}\right)$ |
+
+若表中 $Q=\left(\begin{smallmatrix}a&\beta\\\gamma&e\end{smallmatrix}\right)$，定义
+
+$$
+\begin{aligned}
+A_R(Q,x)&=\beta+ex,&B_R(Q,x)&=-\beta+(a-e)x+\gamma x^2,\\
+A_L(Q,x)&=\gamma+ex,&B_L(Q,x)&=-\gamma+(a-e)x+\beta x^2.
+\end{aligned}
+\tag{22.4}
+$$
+
+于是 $\operatorname{tr}(QR_x(r))=(A_R+B_Rr)/x$，
+$\operatorname{tr}(QL_x(r))=(A_L+B_Lr)/x$。
+对 $E\in\{J,M\}$、$T\in\{R,L\}$，按表中八行及
+$t_i=(1,2,3,4,5,6,7,7)$，取对应 $A_i,B_i$，定义八阶多项式矩阵
+
+$$
+(D_{ET}(x))_{i,\bullet}
+=(A_i-x,\ A_it_i,\ A_it_i^2,\ A_it_i^3,\ B_i,\ B_it_i,\ B_it_i^2,\ B_it_i^3).
+\tag{22.5}
+$$
+
+列号从 $0$ 至 $7$。记 $D_{ET}^{[7]}$ 为前七行，置
+
+$$
+c_j(x)=(-1)^j\det\bigl(D_{ET}^{[7]}(x)\text{ 删除第 }j\text{ 列}\bigr),\qquad
+q_j(x)=\frac{c_j(x)}{48x^3}\quad(0\le j\le7).
+\tag{22.6}
+$$
+
+各 $q_j$ 均为有理系数多项式。在 $q_7(x)\ne0$ 处，定义
+
+$$
+\widehat U_{ET,x}(t)=\sum_{j=0}^3\frac{q_j(x)}{q_7(x)}t^j,\qquad
+\widehat V_{ET,x}(t)=\sum_{j=0}^3\frac{q_{j+4}(x)}{q_7(x)}t^j.
+\tag{22.7}
+$$
+
+这只归一化公共核向量，使 $[t^3]\widehat V=1$，不归一化任何实际增益。
+定义五行三列的响应矩阵
+
+$$
+(H_{ET}(x))_{i,\bullet}
+=\bigl(A_i\widehat V(i)-x\widehat V(0),\ B_i\widehat V(i),\ -B_i\widehat U(i)\bigr),
+\qquad 1\le i\le5.
+\tag{22.8}
+$$
+
+每一项的多项式分子由式 (22.4)–(22.7) 唯一指定，分别为
+$A_i\sum_{j=0}^3q_{j+4}i^j-xq_4$、
+$B_i\sum_{j=0}^3q_{j+4}i^j$、$-B_i\sum_{j=0}^3q_ji^j$，公共分母为 $q_7$。
+对 $ET=JR$，式 (22.6) 的 $(q_0,\ldots,q_7)$ 正是定义 19.1 的
+$(u_0,u_1,u_2,u_3,v_0,v_1,v_2,v_3)$；直接使用该八个已给数组。
+

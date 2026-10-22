@@ -1,0 +1,37 @@
+**Theorem 15.3 (An exact rational actual $L_2$).** Take $\beta=1/8$ and the three complete worlds with the common $g=h,d=24$ and sources
+
+$$
+P_0=\begin{pmatrix}1/2&1/8\\2&1/2\end{pmatrix},\quad
+P_1=\begin{pmatrix}5/8&1/8\\15/8&3/8\end{pmatrix},\quad
+P_2=\begin{pmatrix}3/4&1/8\\3/2&1/4\end{pmatrix}.
+\tag{15.10}
+$$
+
+Their common fifth-J history is
+$H_{5,1/8}^J=(0,J,24,M,147/5,J,24,M,18,J,24)$.
+Writing $K=\{W_0,W_1,W_2\}$, one has $L_2(K,H_{5,1/8}^J)$.
+
+Proof. Each displayed source is strictly positive, trace one and determinant zero. Use the one polynomial
+$h(s)=-24+(184/5)s-(72/5)s^2+(8/5)s^3$ throughout. The following are exact response functions of these predetermined worlds. The fifth-M continuations are included to distinguish the two actual fifth choices.
+
+| Time word | $y(W_0)$ | $y(W_1)$ | $y(W_2)$ |
+| --- | --- | --- | --- |
+| empty, clock $0$ | $0$ | $0$ | $0$ |
+| $J$ | $24$ | $24$ | $24$ |
+| $JM$ | $147/5$ | $147/5$ | $147/5$ |
+| $JMJ$ | $24$ | $24$ | $24$ |
+| $JMJM$ | $18$ | $18$ | $18$ |
+| $JMJMJ$ | $24$ | $24$ | $24$ |
+| $JMJMJJ$ | $54$ | $54$ | $54$ |
+| $JMJMJM$ | $57$ | $57$ | $57$ |
+| $JMJMJJJ$ | $264$ | $1368/5$ | $264$ |
+| $JMJMJJM$ | $1608/5$ | $1608/5$ | $1512/5$ |
+| $JMJMJMJ$ | $1512/5$ | $1608/5$ | $1608/5$ |
+| $JMJMJMM$ | $1848/5$ | $1896/5$ | $1848/5$ |
+| $JMJMM$ | $24$ | $24$ | $24$ |
+| $JMJMMJ$ | $126$ | $129$ | $126$ |
+| $JMJMMM$ | $147$ | $147$ | $141$ |
+| $JMJMMJJ$ | $1608/5$ | $1608/5$ | $1512/5$ |
+| $JMJMMJM$ | $1896/5$ | $1848/5$ | $1704/5$ |
+| $JMJMMMJ$ | $2952/5$ | $3048/5$ | $2952/5$ |
+| $JMJMMMM$ | $3576/5$ | $3576/5$ | $3384/5$ |
