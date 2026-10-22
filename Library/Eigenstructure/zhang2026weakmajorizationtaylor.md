@@ -21,6 +21,10 @@ coefficients of e^{(A+B)t} versus e^{At}e^{Bt}*, arXiv:2601.07286v1
 
 ## Verified locator
 
+DOI: https://doi.org/10.48550/arXiv.2601.07286
+
+Source version: https://arxiv.org/abs/2601.07286v1
+
 https://arxiv.org/abs/2601.07286
 
 Section 5, Conjecture 5.5; notation in Section 1 and the abstract.
