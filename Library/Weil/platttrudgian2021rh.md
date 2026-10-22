@@ -5,7 +5,7 @@ year: 2021
 title: The Riemann hypothesis is true up to 3·10^12
 doi: 10.1112/blms.12460
 url: https://arxiv.org/abs/2004.09765v1
-claim: Published verification supplies the finite-height RH premise. Exact heat-loss factorization and the complete arithmetic block bound give a whole-source negative allowance of order (log T)^(-4) in the original sixth moment; fixed height still leaves a negative allowance.
+claim: Published verification supplies the finite-height RH premise. Exact heat-loss factorization and the complete arithmetic block bound give a whole-source negative allowance of order (log T)^(-4) in the original sixth moment; fixed height still leaves a negative allowance. A support-independent Gamma-only lower bound for the prime Hankel form fails on all compact half-line tests.
 strata_touched: []
 license: citation-only
 triage: anchor
@@ -338,3 +338,167 @@ VHR1--VHR11 establish neither $e_4=0$, all-source positivity, RH,
 the same-integer signed Robin tail bound nor strict Robin for every
 integer $n>5040$. The application remains a paper derivation, without
 Lean/kernel certification.
+
+## A Gamma-only bound cannot pay the prime Hankel term on all compact tests
+
+The odd loss in VHR3 motivates separating the one-sided translation
+and reflection channels. The corresponding even split is already
+owned by W338--W340, and W284/W313 already retain and bound the
+complete prime Hankel correction. A new copy of those interfaces is
+unnecessary. There is, however, an obstruction to replacing their
+weighted allowance by a uniform Gamma-plus-$L^2$ lower bound on ALL
+compact half-line tests.
+
+This is a repo-derived application of the classical Dirichlet series
+for $-\zeta'/\zeta$, the nonnegative Laplace-transform abscissa theorem
+and the existence of a nonzero critical-line zero. The Laplace supplier
+is the same Landau--Widder theorem already consumed by
+[the fixed-shape detector](tlas2020bump.md#connect-the-average-to-the-existing-sign-detector):
+Widder, *The Laplace Transform*, Chapter II, Theorem 5b, also explicitly
+used in [Suzuki, arXiv:2209.12832v1, section 3](https://arxiv.org/pdf/2209.12832v1),
+printed pp.3--4. These classical results are reused, not reproved or
+claimed as new Hankel theory. The following argument has not been
+Lean/kernel certified and carries no literature-priority claim.
+
+For a real $v\in C_c^\infty((0,\infty))$, let $v^{\rm odd}$ be its
+odd full-line extension and retain EVERY prime power in
+
+$$
+H_p(v)=\sum_{n\ge2}\frac{\Lambda(n)}{\sqrt n}
+       \int_0^{\log n}v(x)v(\log n-x)dx.
+$$
+
+This sum is finite for each such $v$. Set
+
+$$
+\Gamma_+(w)=\int_{\mathbb R}[q(\tau)-q(0)]
+                              |\widehat w(\tau)|^2d\tau\ge0.
+$$
+
+There is NO finite constant $K\ge0$ such that
+
+$$
+H_p(v)\ge-K\bigl(\|v\|_2^2+\Gamma_+(v^{\rm odd})\bigr)
+\qquad\text{for every real }v\in C_c^\infty((0,\infty)).
+\tag{VHO1}
+$$
+
+In particular, no fixed finite coefficients on Gamma and $L^2$ can
+provide the proposed bound without a further source-dependent term
+or a restriction of the source domain.
+
+### Translate a fixed test and retain its exact Laplace transform
+
+Suppose the lower bound in VHO1 held for a fixed $K$. Fix real $f\in C_c^\infty((0,L))$, put
+$v_R(x)=f(x-R)$ for $R\ge0$, and define
+
+$$
+F(z)=\int_{\mathbb R}e^{zx}f(x)dx,\qquad
+\kappa=f*f,\qquad h_f(R)=H_p(v_R).
+$$
+
+Choose $F(1/2)=0$. Reflection invariance, the nonnegative even Gamma
+multiplier and the Fourier triangle inequality give
+
+$$
+\Gamma_+(v_R^{\rm odd})\le4\Gamma_+(f),\qquad
+h_f(R)\ge-K_f,\qquad
+K_f=K\bigl(\|f\|_2^2+4\Gamma_+(f)\bigr).
+\tag{VHO2}
+$$
+
+The bound is uniform in $R$. Chebyshev gives $h_f(R)=O_f(e^R)$.
+For $\Re s>1$, absolute convergence and the substitution
+$t=\log n-2R$ give exactly
+
+$$
+\begin{aligned}
+D_f(s)&:=\int_0^\infty e^{-sR}h_f(R)dR\\
+&=\frac12F(s/2)^2
+    \left(-\frac{\zeta'}{\zeta}\right)((s+1)/2)+E_f(s),\\
+E_f(s)&=-\frac12\sum_{\log n<2L}\Lambda(n)n^{-(s+1)/2}
+              \int_{\log n}^{2L}e^{st/2}\kappa(t)dt.
+\end{aligned}
+\tag{VHO3}
+$$
+
+The endpoint correction is entire because its sum is finite.
+The factor $F(1/2)^2$ cancels the pole at $s=1$.
+The right side is analytic near every positive real $s$ and near
+$s=0$: zeta has no real zero in $[1/2,1)$ or $(1,\infty)$.
+Since $h_f+K_f\ge0$, the cited nonnegative Laplace theorem forces
+its convergence abscissa to be at most zero. Thus its actual integral
+converges and is holomorphic on $\Re s>0$, where it agrees with
+$D_f(s)+K_f/s$.
+
+Already this consequence would exclude any zero with $\Re\rho>1/2$:
+it would give a pole at $s=2\rho-1$ unless $F(\rho-1/2)=0$.
+For any designated such zero, choosing
+$f=(d/dx+1/2)w$ with a sufficiently short nonnegative smooth bump $w$
+gives $F(z)=(1/2-z)\int e^{zx}w(x)dx$ and avoids that cancellation.
+The following boundary argument gives a contradiction even using
+only an already known critical-line zero.
+
+### A known boundary pole contradicts a support-independent constant
+
+Fix a nonzero critical-line zero $\rho_0=1/2+i\gamma_0$ of
+multiplicity $m_0\ge1$. VHO3 has residue
+$-m_0F(i\gamma_0)^2$ at $s=2i\gamma_0$.
+Positivity of the same Laplace integral gives, for $\eta>0$,
+
+$$
+\eta\left|D_f(\eta+2i\gamma_0)
+               +\frac{K_f}{\eta+2i\gamma_0}\right|
+\le\eta D_f(\eta)+K_f.
+$$
+
+Letting $\eta\downarrow0$, analyticity at zero and that exact residue
+therefore imply
+
+$$
+m_0|F(i\gamma_0)|^2\le K_f.
+\tag{VHO4}
+$$
+
+Now choose real $\chi\in C_c^\infty((1,2))$ with
+$\int\chi\ne0$ and, for $a\ge1$, put
+
+$$
+w_a(x)=\chi(x/a)\cos(\gamma_0x),\qquad
+f_a=(d/dx+1/2)w_a.
+$$
+
+Integration by parts gives $F_a(1/2)=0$, while
+Riemann--Lebesgue and the fixed-frequency derivative bounds give
+
+$$
+\begin{aligned}
+|F_a(i\gamma_0)|^2
+&\sim\frac{(1/4+\gamma_0^2)(\int\chi)^2}{4}\,a^2,\\
+\|f_a\|_2^2+\Gamma_+(f_a)&=O_{\gamma_0,\chi}(a).
+\end{aligned}
+\tag{VHO5}
+$$
+
+For the second estimate it suffices to use the owned digamma bound
+$0\le q(\tau)-q(0)\le C(1+\tau^2)$ and
+$\|f_a\|_{H^1}^2=O_{\gamma_0,\chi}(a)$.
+For each fixed $a$, use $L=2a$ in VHO3 and take
+$\eta\downarrow0$ first; only afterwards let $a\to\infty$. No bound
+on $E_{f_a}$ uniform in $a$ is needed.
+VHO4 would bound a positive multiple of $a^2$ by $O_K(a)$,
+a contradiction. No selection of simultaneous phases of all zeros,
+new zero computation or full non-even zero-side form identity is used.
+
+### What this obstruction leaves open
+
+VHO1 concerns ALL compact tests and has no original-moment remainder.
+It does not refute a bound restricted to the actual VHR3 loss family
+with $\mathfrak E(F)\le0$, or one retaining $M(F)\eta(H)$.
+Long supports and translations can have exponentially large weighted
+moments even when their Gamma and unweighted norms have the estimates
+above. Such a remainder cannot be discarded in this argument.
+No negative value of the complete Weil form, RH counterexample or
+improvement of VHR1 follows. A usable improvement still needs a
+joint estimate on the SAME actual loss test, including its original
+moment and a sufficiently small quantified remainder.
