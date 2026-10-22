@@ -1,6 +1,6 @@
-/- GID: D5/S3/Combinatorics/RestrictedPairSumClassification
+/- GID: D5/S3/FiniteGroups/RestrictedPairSumClassification
    generality: G
-   mirror-B: D5/B/S3/Combinatorics/RestrictedPairSumClassification
+   mirror-B: D5/B/S3/FiniteGroups/RestrictedPairSumClassification
    mirror-E: none(waiver:unbounded-symbolic-proof)
    anchors: []
    utility: none
@@ -15,7 +15,7 @@ import Mathlib.Tactic
 noncomputable section
 open scoped Pointwise
 
-namespace D5.S3.Combinatorics.RestrictedPairSumClassification
+namespace D5.S3.FiniteGroups.RestrictedPairSumClassification
 open scoped Classical
 
 theorem restricted_pair_sum_classification
@@ -265,4 +265,4 @@ theorem restricted_pair_sum_classification
   · exact P.zero_mem
   · exact hAperiod x hxA
 
-end D5.S3.Combinatorics.RestrictedPairSumClassification
+end D5.S3.FiniteGroups.RestrictedPairSumClassification

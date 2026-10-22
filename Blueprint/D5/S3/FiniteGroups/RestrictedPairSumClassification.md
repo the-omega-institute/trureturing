@@ -6,9 +6,9 @@ The corrected finite restricted-pair-sum classification for arbitrary abelian gr
 
 **Theorem 1.1 (At least three nonzero elements force a subgroup carrier).**
 
-Lean statement: `D5/S3/Combinatorics/RestrictedPairSumClassification.restricted_pair_sum_classification`
+Lean statement: `D5/S3/FiniteGroups/RestrictedPairSumClassification.restricted_pair_sum_classification`
 
-*Proof.* Machine-checked in Lean as `D5/S3/Combinatorics/RestrictedPairSumClassification.restricted_pair_sum_classification` (`✓ std3`). ∎
+*Proof.* Machine-checked in Lean as `D5/S3/FiniteGroups/RestrictedPairSumClassification.restricted_pair_sum_classification` (`✓ std3`). ∎
 
 *Source.* Repository-derived.
 
@@ -20,4 +20,4 @@ For a finite A in an arbitrary AddCommGroup with 0 outside A and cardinality at 
 
 ## References
 
-- Truth anchor: `D5/S3/Combinatorics/RestrictedPairSumClassification.restricted_pair_sum_classification`
+- Truth anchor: `D5/S3/FiniteGroups/RestrictedPairSumClassification.restricted_pair_sum_classification`

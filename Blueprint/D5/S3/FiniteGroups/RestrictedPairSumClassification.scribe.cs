@@ -1,12 +1,12 @@
 using static StrataLint.Scribe.DefinitionDsl;
 
-namespace StrataLint.Scribe.Blueprint.D5.S3.Combinatorics;
+namespace StrataLint.Scribe.Blueprint.D5.S3.FiniteGroups;
 
 internal sealed class RestrictedPairSumClassificationDocument : IScribeDocumentDefinition
 {
-    private const string Prefix = "D5/S3/Combinatorics/RestrictedPairSumClassification.";
+    private const string Prefix = "D5/S3/FiniteGroups/RestrictedPairSumClassification.";
     private static readonly LibraryNoteRef Source =
-        LibraryNoteRef.Create("D5/L/Combinatorics/costa2026smallabelian");
+        LibraryNoteRef.Create("D5/L/FiniteGroups/costa2026smallabelian");
 
     public DocumentDefinition Create() => DocumentDefinition.Create(ScribeNode.Create(
         "The corrected finite restricted-pair-sum classification for arbitrary abelian groups.",

@@ -7,7 +7,7 @@ doi: 10.48550/arXiv.2603.20961
 url: https://arxiv.org/html/2603.20961v1
 claim: The corrected k>=3 forward implication of Theorem 2.4 forces a subgroup carrier from restricted pair sums; the printed k>=2 boundary is false.
 strata_touched:
-  - D5/S3/Combinatorics/RestrictedPairSumClassification
+  - D5/S3/FiniteGroups/RestrictedPairSumClassification
 license: citation-only
 triage: anchor
 ---
