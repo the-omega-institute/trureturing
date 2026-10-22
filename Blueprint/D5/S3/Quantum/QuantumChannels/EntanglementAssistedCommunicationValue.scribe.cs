@@ -105,7 +105,10 @@ internal sealed class EntanglementAssistedCommunicationValueDocument : IScribeDo
                             + "probability is at most tr M(y). Summing the POVM elements gives "
                             + "cv(N) ≤ b. Therefore v ≤ (b+1)cv(N)−b ≤ b cv(N). "
                             + "Taking the supremum over all assisted protocols proves claim."))),
-                DescribeRole.Theorem)
+                DescribeRole.Theorem,
+                openProblemResolutionClaim: new OpenProblemResolutionClaim(
+                    ProblemSlugRef.Create("chitambar-et-al-2023-entanglement-assisted-communication-value-bound"),
+                    ResolutionKind.Proved))
         )));
 
     private static DocumentBlock Node(string id, string title, string declaration, Formula formula,
