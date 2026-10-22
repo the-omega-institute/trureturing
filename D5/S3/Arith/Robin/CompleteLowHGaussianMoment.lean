@@ -1,23 +1,28 @@
-/-
-  GID: D5/S3/Arith/Robin/CompleteLowHGaussianMoment
-  generality: I
-  mirror-B: none (source-only delivery; native validation outstanding)
-  utility: kind=none
+/- GID: D5/S3/Arith/Robin/CompleteLowHGaussianMoment
+   generality: I
+   mirror-B: D5/B/S3/Arith/Robin/CompleteLowHGaussianMoment
+   mirror-E: none(waiver:analytic identity and bounds have no numeric evidence projection)
+   anchors: []
+   utility: none
+   digest: The exact normalized cubic Gaussian moment for every complex parameter.
 
-  The actual normalized cubic Gaussian moment, for arbitrary complex z.
-  Analytic inputs are Mathlib theorems, not certificate premises:
-    complexMGF_id_gaussianReal;
-    integrableExpSet_id_gaussianReal;
-    iteratedDeriv_complexMGF;
-    integrable_pow_mul_cexp_of_re_mem_interior_integrableExpSet;
-    integral_gaussianReal_eq_integral_smul;
-    integrable_withDensity_iff_integrable_smul'.
+   For every real m > 0, real gamma and complex z, the normalized cubic
+   Gaussian integral has center 16*m and variance 2*m. Its exact value is
+     ((16*m+2*m*z+1)*(z^2+gamma^2+1+1/(2*m))+2*z)*exp(m*z^2+16*m*z).
+   The source retains density transport, monomial integrability, derivatives
+   of the entire complex MGF, and the complete +2*z covariance correction.
+   Analytic inputs include Mathlib complexMGF_id_gaussianReal,
+   integrableExpSet_id_gaussianReal, iteratedDeriv_complexMGF,
+   integrable_pow_mul_cexp_of_re_mem_interior_integrableExpSet,
+   integral_gaussianReal_eq_integral_smul and
+   integrable_withDensity_iff_integrable_smul'.
+   Pinned upstream: Mathlib 56a005855ea17e0b0958f73ec801ae140b0a1679.
+   No strip, height, sign or finite-family hypothesis restricts this identity.
 
-  Pinned upstream: Mathlib 56a005855ea17e0b0958f73ec801ae140b0a1679.
-  This overlay has NOT been elaborated or kernel checked in this source stage.
-  No claim about the complete spectral mean, Robin, QGP, or RH follows here.
+
+
+
 -/
-
 import Mathlib.Analysis.SpecialFunctions.Gaussian.FourierTransform
 import Mathlib.Probability.Distributions.Gaussian.Real
 import Mathlib.Probability.Moments.ComplexMGF
