@@ -228,11 +228,11 @@ private lemma kernel_smooth {a : ℝ} (ha : 0 < a) (M : ℕ) :
     (fun s => by positivity)
 
 private lemma kernel_deriv_bounded (M r : ℕ) {R : ℝ} (hR : 0 ≤ R) :
-    ∃ C : ℝ, 0 ≤ C ∧ ∀ a : ℝ, 1 ≤ a → ∀ s : ℝ, |s| ≤ R →
+    ∃ C : ℝ, ∀ a : ℝ, 1 ≤ a → ∀ s : ℝ, |s| ≤ R →
       ‖iteratedDeriv r (fun x : ℝ => x ^ M / (x ^ 2 + a ^ 2)) s‖ ≤ C / a ^ 2 := by
   let C : ℝ := ∑ i ∈ Finset.range (r + 1),
     (r.choose i : ℝ) * (M.descFactorial i : ℝ) * R ^ (M - i) * ((r - i).factorial : ℝ)
-  refine ⟨C, by dsimp [C]; positivity, ?_⟩
+  refine ⟨C, ?_⟩
   intro a ha s hs
   have ha0 : 0 < a := by linarith
   have hrec : ContDiff ℝ ⊤ (fun x : ℝ => 1 / (x ^ 2 + a ^ 2)) :=
@@ -283,11 +283,11 @@ private lemma weighted_smooth (M n k : ℕ) : ContDiff ℝ ⊤ (weightedKernel M
   exact contDiff_const.mul (kernel_smooth (a := Real.pi * ((k : ℝ) + 1)) (by positivity) M)
 
 private lemma weighted_deriv_bounded (M n r : ℕ) {R : ℝ} (hR : 0 ≤ R) :
-    ∃ C : ℝ, 0 ≤ C ∧ ∀ k : ℕ, ∀ s : ℝ, |s| ≤ R →
+    ∃ C : ℝ, ∀ k : ℕ, ∀ s : ℝ, |s| ≤ R →
       ‖iteratedDeriv r (weightedKernel M n k) s‖ ≤
         C / (Real.pi * ((k : ℝ) + 1)) ^ 2 := by
-  obtain ⟨C, hC0, hC⟩ := kernel_deriv_bounded M r hR
-  refine ⟨C, hC0, ?_⟩
+  obtain ⟨C, hC⟩ := kernel_deriv_bounded M r hR
+  refine ⟨C, ?_⟩
   intro k s hs
   have ha : 1 ≤ Real.pi * ((k : ℝ) + 1) :=
     one_le_mul_of_one_le_of_one_le
@@ -307,7 +307,7 @@ private lemma summable_majorant (C : ℝ) :
 
 private lemma summable_series_deriv (M n r : ℕ) (t : ℝ) :
     Summable (fun k : ℕ => iteratedDeriv r (weightedKernel M n k) t) := by
-  obtain ⟨C, hC0, hC⟩ := weighted_deriv_bounded M n r (abs_nonneg t)
+  obtain ⟨C, hC⟩ := weighted_deriv_bounded M n r (abs_nonneg t)
   exact .of_norm_bounded (summable_majorant C) (fun k => hC k t le_rfl)
 
 private lemma series_iteratedDeriv (M n r : ℕ) (t : ℝ) :
@@ -321,7 +321,7 @@ private lemma series_iteratedDeriv (M n r : ℕ) (t : ℝ) :
     rw [iteratedDeriv_succ, he]
     let R : ℝ := |t| + 1
     have hR : 0 < R := by dsimp [R]; positivity
-    obtain ⟨C, hC0, hC⟩ := weighted_deriv_bounded M n (r + 1) hR.le
+    obtain ⟨C, hC⟩ := weighted_deriv_bounded M n (r + 1) hR.le
     have hd (k : ℕ) (x : ℝ) (_ : x ∈ Set.Ioo (-R) R) :
         HasDerivAt (iteratedDeriv r (weightedKernel M n k))
           (iteratedDeriv (r + 1) (weightedKernel M n k) x) x := by
