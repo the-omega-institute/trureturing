@@ -34,7 +34,8 @@ theorem integrable_resolvent {M : Measure ℝ} [IsProbabilityMeasure M]
   rw [Real.norm_eq_abs, abs_of_pos (one_div_pos.mpr (by linarith))]
   exact one_div_le_one_div_of_le hz (by linarith)
 
-private lemma stieltjes_pos {M : Measure ℝ} [IsProbabilityMeasure M]
+/-- The Stieltjes transform of a positive probability law is strictly positive. -/
+theorem stieltjes_pos {M : Measure ℝ} [IsProbabilityMeasure M]
     (hp : ∀ᵐ v ∂M, 0 < v) {z : ℝ} (hz : 0 < z) : 0 < stieltjes M z := by
   apply integral_pos_of_not_zero (integrable_resolvent hp hz)
   · filter_upwards [hp] with v hv using (one_div_pos.mpr (by linarith)).le
@@ -245,29 +246,5 @@ theorem strictMonoOn_inv_stieltjes_sub {M : Measure ℝ} [IsProbabilityMeasure M
   rw [he] at hh
   change 1/stieltjes M x - x < 1/q-y
   linarith
-
-/-- A positive probability law has a strictly positive, strictly subunit resolvent mass. -/
-theorem stieltjes_bounds {M : Measure ℝ} [IsProbabilityMeasure M]
-    (hp : ∀ᵐ v ∂M, 0 < v) {z : ℝ} (hz : 0 < z) :
-    0 < stieltjes M z ∧ z * stieltjes M z < 1 := by
-  refine ⟨stieltjes_pos hp hz, ?_⟩
-  have hi : Integrable (fun v : ℝ => 1/z-1/(z+v)) M :=
-    (integrable_const (1/z)).sub (integrable_resolvent hp hz)
-  have hh (v : ℝ) (hv : 0 < v) : 0 < 1/z-1/(z+v) := by
-    exact sub_pos.mpr (one_div_lt_one_div_of_lt hz (by linarith))
-  have hpos : 0 < ∫ v, (1/z-1/(z+v)) ∂M := by
-    apply integral_pos_of_not_zero hi
-    · filter_upwards [hp] with v hv using (hh v hv).le
-    · intro he
-      have hf : ∀ᵐ v ∂M, False := by
-        filter_upwards [hp, he] with v hv he using (hh v hv).ne' he
-      have he : M = 0 := by simpa using hf
-      have ht : M Set.univ = 1 := measure_univ
-      simp [he] at ht
-  rw [integral_sub (f := fun _ : ℝ => 1/z) (g := fun v => 1/(z+v))
-    (integrable_const (1/z)) (integrable_resolvent hp hz)] at hpos
-  simp only [integral_const, probReal_univ, one_smul] at hpos
-  have hh := (lt_div_iff₀ hz).mp (sub_pos.mp hpos)
-  simpa [stieltjes, mul_comm] using hh
 
 end D5.S3.Analytic.WallisRemainder.Stieltjes

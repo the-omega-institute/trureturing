@@ -7,6 +7,7 @@
    digest: The Wallis logarithmic remainder is a positive spectral Stieltjes transform with exact moments. -/
 
 import D5.S3.Analytic.WallisRemainder.Laplace
+import D5.S3.Analytic.WallisRemainder.Stieltjes
 import Mathlib.MeasureTheory.Integral.DominatedConvergence
 import Mathlib.NumberTheory.ZetaValues
 import Mathlib.Analysis.SpecialFunctions.Trigonometric.Cotangent
@@ -409,18 +410,10 @@ theorem tanh_div_hasSum {u : ℝ} (hu : 0 < u) :
     <;> ring
 
 
-private lemma integrable_P_resolvent {x : ℝ} (hx : 0 < x) :
-    Integrable (fun v => 1 / (x ^ 2 + v)) P := by
-  apply (integrable_const (1 / x ^ 2) : Integrable (fun _ : ℝ => 1 / x ^ 2) P).mono'
-  · exact (show Measurable (fun v : ℝ => 1 / (x ^ 2 + v)) by fun_prop).aestronglyMeasurable
-  · filter_upwards [P_pos] with v hv
-    rw [Real.norm_eq_abs, abs_of_pos (by positivity)]
-    exact one_div_le_one_div_of_le (sq_pos_of_pos hx) (by linarith)
-
 private lemma integral_P_resolvent {x : ℝ} (hx : 0 < x) :
     (∫ v, 1 / (x ^ 2 + v) ∂P) = ∑' n : ℕ, spectralWeight n *
       ∫ u in Ioi (0 : ℝ), Real.exp (-u) / (x ^ 2 + spectralScale n * u ^ 2) := by
-  rw [P, integral_sum_measure (integrable_P_resolvent hx)]
+  rw [P, integral_sum_measure (Stieltjes.integrable_resolvent P_pos (sq_pos_of_pos hx))]
   apply tsum_congr
   intro n
   rw [integral_smul_measure, ENNReal.toReal_ofReal (spectralWeight_pos n).le, smul_eq_mul,

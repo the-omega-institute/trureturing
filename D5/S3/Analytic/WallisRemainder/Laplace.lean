@@ -2,7 +2,7 @@
    generality: G
    mirror-B: D5/B/S3/Analytic/WallisRemainder/Laplace
    mirror-E: none(waiver:evidence-not-specified-by-formal-manifest)
-   anchors: [mathlib/module/Mathlib.Analysis.SpecialFunctions.Gamma.BohrMollerup, mathlib/module/Mathlib.Analysis.SpecialFunctions.Trigonometric.DerivHyp, mathlib/module/Mathlib.Analysis.SpecialFunctions.Pow.Asymptotics, mathlib/module/Mathlib.Analysis.SpecialFunctions.Integrals.Basic, mathlib/module/Mathlib.MeasureTheory.Integral.Prod, mathlib/module/Mathlib.Analysis.SpecialFunctions.ImproperIntegrals]
+   anchors: [mathlib/module/Mathlib.Analysis.SpecialFunctions.Gamma.BohrMollerup, mathlib/module/Mathlib.Analysis.SpecialFunctions.Trigonometric.DerivHyp, mathlib/module/Mathlib.Analysis.SpecialFunctions.Pow.Asymptotics, mathlib/module/Mathlib.Analysis.SpecialFunctions.Integrals.Basic, mathlib/module/Mathlib.Analysis.SpecialFunctions.FrullaniIntegral, mathlib/module/Mathlib.Analysis.SpecialFunctions.ImproperIntegrals]
    utility: none
    digest: The logarithmic Wallis remainder has a positive convergent hyperbolic Laplace representation. -/
 
@@ -12,7 +12,7 @@ import Mathlib.Analysis.SpecialFunctions.Trigonometric.DerivHyp
 import Mathlib.Analysis.SpecialFunctions.Pow.Asymptotics
 import D5.S3.Observer.Fluctuation.ThermalCoefficientFloor
 import Mathlib.Analysis.SpecialFunctions.Integrals.Basic
-import Mathlib.MeasureTheory.Integral.Prod
+import Mathlib.Analysis.SpecialFunctions.FrullaniIntegral
 import Mathlib.Analysis.SpecialFunctions.ImproperIntegrals
 
 open Set Filter MeasureTheory
@@ -120,48 +120,6 @@ theorem integrableOn_laplaceKernel {x : ℝ} (hx : 0 < x) :
     rw [Real.norm_eq_abs, abs_of_pos (laplaceKernel_bounds ht).1]
     exact (laplaceKernel_bounds ht).2
 
-private lemma frullani {a b : ℝ} (ha : 0 < a) (hab : a ≤ b) :
-    (∫ t in Ioi (0 : ℝ), (Real.exp (-a * t) - Real.exp (-b * t)) / t) =
-      Real.log (b / a) := by
-  have hprod : Integrable (fun p : ℝ × ℝ => Real.exp (-p.1 * p.2))
-      ((volume.restrict (Ioc a b)).prod (volume.restrict (Ioi 0))) := by
-    have hdom := (integrable_const (1 : ℝ) :
-      Integrable (fun _ : ℝ => (1 : ℝ)) (volume.restrict (Ioc a b))).mul_prod
-      (integrableOn_exp_mul_Ioi (show -a < 0 by linarith) 0)
-    apply hdom.mono'
-    · fun_prop
-    · rw [Measure.prod_restrict]
-      filter_upwards [self_mem_ae_restrict (measurableSet_Ioc.prod measurableSet_Ioi)] with p hp
-      simp only [Real.norm_eq_abs, abs_of_pos (Real.exp_pos _), one_mul]
-      apply Real.exp_le_exp.mpr
-      have hs : a ≤ p.1 := hp.1.1.le
-      have ht : 0 ≤ p.2 := hp.2.le
-      nlinarith
-  have hinner {t : ℝ} (ht : 0 < t) :
-      (∫ s in Ioc a b, Real.exp (-s * t)) =
-        (Real.exp (-a * t) - Real.exp (-b * t)) / t := by
-    rw [← intervalIntegral.integral_of_le hab]
-    simp_rw [show ∀ s : ℝ, -s * t = (-t) * s by intro s; ring]
-    rw [intervalIntegral.integral_comp_mul_left Real.exp (neg_ne_zero.mpr ht.ne'),
-      integral_exp, smul_eq_mul]
-    ring
-  calc
-    (∫ t in Ioi (0 : ℝ), (Real.exp (-a * t) - Real.exp (-b * t)) / t) =
-        ∫ t in Ioi (0 : ℝ), ∫ s in Ioc a b, Real.exp (-s * t) := by
-      apply integral_congr_ae
-      filter_upwards [self_mem_ae_restrict measurableSet_Ioi] with t ht
-      exact (hinner ht).symm
-    _ = ∫ s in Ioc a b, ∫ t in Ioi (0 : ℝ), Real.exp (-s * t) :=
-      (integral_integral_swap hprod).symm
-    _ = ∫ s in a..b, s⁻¹ := by
-      rw [intervalIntegral.integral_of_le hab]
-      apply integral_congr_ae
-      filter_upwards [self_mem_ae_restrict measurableSet_Ioc] with s hs
-      have hs0 : 0 < s := ha.trans hs.1
-      rw [integral_exp_mul_Ioi (show -s < 0 by linarith) 0]
-      simp
-    _ = Real.log (b / a) := integral_inv_of_pos ha (ha.trans_le hab)
-
 private lemma tanh_halfstep (t : ℝ) :
     (1 + Real.exp (-t / 2)) * Real.tanh (t / 4) = 1 - Real.exp (-t / 2) := by
   have he : Real.exp (-t / 2) = Real.exp (-(t / 4)) / Real.exp (t / 4) := by
@@ -175,22 +133,49 @@ private lemma tanh_halfstep (t : ℝ) :
 /-- The Laplace integral satisfies the same half-step equation. -/
 private theorem laplace_add_half {x : ℝ} (hx : 0 < x) :
     laplace x + laplace (x + 1/2) = Real.log ((x + 1/2) / x) / 2 := by
+  have hhalf : 0 < x + 1/2 := by linarith
+  have hkernel (t : ℝ) :
+      laplaceKernel x t + laplaceKernel (x + 1/2) t =
+        (Real.exp (-x * t) - Real.exp (-(x + 1/2) * t)) / t / 2 := by
+    have he : Real.exp (-(x + 1/2) * t) = Real.exp (-x * t) * Real.exp (-t / 2) := by
+      rw [← Real.exp_add]
+      congr 1
+      ring
+    rw [laplaceKernel, laplaceKernel, he]
+    have h := tanh_halfstep t
+    convert congrArg (fun a : ℝ => Real.exp (-x * t) * a / (2 * t)) h using 1 <;> ring
+  have hi : IntegrableOn (fun t : ℝ => t⁻¹ •
+      (Real.exp (-(x*t)) - Real.exp (-((x+1/2)*t)))) (Ioi 0) := by
+    apply (((integrableOn_laplaceKernel hx).add
+      (integrableOn_laplaceKernel hhalf)).const_mul 2).congr
+    filter_upwards [] with t
+    change 2 * (laplaceKernel x t + laplaceKernel (x+1/2) t) = _
+    rw [hkernel]
+    simp only [smul_eq_mul, neg_mul]
+    ring
+  have hf : LocallyIntegrableOn (fun t : ℝ => Real.exp (-t)) (Ioi 0) :=
+    (Real.continuous_exp.comp continuous_neg).continuousOn.locallyIntegrableOn measurableSet_Ioi
+  have hzero : Tendsto (fun t : ℝ => Real.exp (-t)) (𝓝[>] 0) (𝓝 1) := by
+    have h : ContinuousAt (fun t : ℝ => Real.exp (-t)) 0 := by fun_prop
+    simpa only [neg_zero, Real.exp_zero] using h.tendsto.mono_left
+      (show 𝓝[>] (0 : ℝ) ≤ 𝓝 0 from inf_le_left)
+  have heval := Frullani.integral_Ioi_eq hf hx hhalf hzero
+    Real.tendsto_exp_neg_atTop_nhds_zero hi
   rw [laplace, laplace, ← integral_add (integrableOn_laplaceKernel hx)
-    (integrableOn_laplaceKernel (show 0 < x + 1/2 by linarith))]
+    (integrableOn_laplaceKernel hhalf)]
   calc
     (∫ t in Ioi (0 : ℝ), laplaceKernel x t + laplaceKernel (x + 1/2) t) =
-        ∫ t in Ioi (0 : ℝ), (Real.exp (-x * t) - Real.exp (-(x + 1/2) * t)) / t / 2 := by
+        (∫ t in Ioi (0 : ℝ), t⁻¹ •
+          (Real.exp (-(x*t)) - Real.exp (-((x+1/2)*t)))) / 2 := by
+      rw [← integral_div]
       apply integral_congr_ae
-      filter_upwards [self_mem_ae_restrict measurableSet_Ioi] with t ht
-      have he : Real.exp (-(x + 1/2) * t) = Real.exp (-x * t) * Real.exp (-t / 2) := by
-        rw [← Real.exp_add]
-        congr 1
-        ring
-      rw [laplaceKernel, laplaceKernel, he]
-      have h := tanh_halfstep t
-      convert congrArg (fun a : ℝ => Real.exp (-x * t) * a / (2 * t)) h using 1 <;> ring
+      filter_upwards [] with t
+      rw [hkernel]
+      simp only [smul_eq_mul, neg_mul]
+      ring
     _ = Real.log ((x + 1/2) / x) / 2 := by
-      rw [integral_div, frullani hx (by linarith)]
+      rw [heval]
+      simp
 
 /-- The Laplace integral is positive and bounded by the elementary exponential integral. -/
 private theorem laplace_bounds {x : ℝ} (hx : 0 < x) :

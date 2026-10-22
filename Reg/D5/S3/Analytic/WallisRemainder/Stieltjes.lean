@@ -121,37 +121,37 @@ def inverseFamily : Registration inverseArena (type_of% @strictMonoOn_inv_stielt
     inverseArena.Law inverseActual inverseRejected inverse_rejected
   dependence := inverse_dependence
 
-abbrev boundsSignature : Signature := inverseSignature
+abbrev positiveSignature : Signature := inverseSignature
 
-def boundsActual : Realization boundsSignature :=
-  realize boundsSignature (fun _ M z => stieltjes M z) (fun e => nomatch e)
+def positiveActual : Realization positiveSignature :=
+  realize positiveSignature (fun _ M z => stieltjes M z) (fun e => nomatch e)
 
-def boundsRejected : Realization boundsSignature :=
-  realize boundsSignature (fun _ _ _ => 0) (fun e => nomatch e)
+def positiveRejected : Realization positiveSignature :=
+  realize positiveSignature (fun _ _ _ => 0) (fun e => nomatch e)
 
-def boundsArena : Arena where
-  signature := boundsSignature
+def positiveArena : Arena where
+  signature := positiveSignature
   Law R := ∀ {M : Measure ℝ} [IsProbabilityMeasure M],
     (∀ᵐ v ∂M, 0 < v) → ∀ {z : ℝ}, 0 < z →
-    0 < R.readout () M z ∧ z * R.readout () M z < 1
+    0 < R.readout () M z
 
-private lemma bounds_rejected : ¬ boundsArena.Law boundsRejected := by
+private lemma positive_rejected : ¬ positiveArena.Law positiveRejected := by
   intro h
   have hh := h (M := Measure.dirac 1) (by simp) (z := 1) (by norm_num)
-  norm_num [boundsRejected, realize] at hh
+  norm_num [positiveRejected, realize] at hh
 
-private lemma bounds_dependence : ObservationalDependence boundsSignature boundsActual := by
+private lemma positive_dependence : ObservationalDependence positiveSignature positiveActual := by
   intro i
   refine ⟨Measure.dirac 1,1,2, ?_⟩
-  norm_num [boundsActual, realize, stieltjes]
+  norm_num [positiveActual, realize, stieltjes]
 
-def boundsFamily : Registration boundsArena (type_of% @stieltjes_bounds) where
-  actual := boundsActual
+def positiveFamily : Registration positiveArena (type_of% @stieltjes_pos) where
+  actual := positiveActual
   bridge := Iff.rfl
-  variation := ⟨@stieltjes_bounds, boundsRejected, bounds_rejected⟩
+  variation := ⟨@stieltjes_pos, positiveRejected, positive_rejected⟩
   sensitivity := _root_.Reg.Support.SingleDependentReadout.sensitivity
-    boundsArena.Law boundsActual boundsRejected bounds_rejected
-  dependence := bounds_dependence
+    positiveArena.Law positiveActual positiveRejected positive_rejected
+  dependence := positive_dependence
 
 def jensenAudit : Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0}
     (@strictMonoOn_jensenRemainder) (Realization jensenSignature) Unit Unit where
@@ -217,20 +217,20 @@ def inverseAudit : Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0}
   familyRecord := none
   options := #[]
 
-def boundsAudit : Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0}
-    (@stieltjes_bounds) (Realization boundsSignature) Unit Unit where
-  unitName := `Reg.D5.S3.Analytic.WallisRemainder.Stieltjes.bounds_unit
-  realizationName := `Reg.D5.S3.Analytic.WallisRemainder.Stieltjes.boundsFamily
+def positiveAudit : Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0}
+    (@stieltjes_pos) (Realization positiveSignature) Unit Unit where
+  unitName := `Reg.D5.S3.Analytic.WallisRemainder.Stieltjes.positive_unit
+  realizationName := `Reg.D5.S3.Analytic.WallisRemainder.Stieltjes.positiveFamily
   realizationSource := none
   generated := false
-  arena := .source ⟨boundsArena⟩
-  objectArena := .source ⟨boundsArena⟩
+  arena := .source ⟨positiveArena⟩
+  objectArena := .source ⟨positiveArena⟩
   catalog := Lean.Name.anonymous
   localNames := false
-  realization := .source boundsArena ⟨boundsFamily⟩
+  realization := .source positiveArena ⟨positiveFamily⟩
   correspondence := { stage := .evidence, objectStage := .evidence }
   bundleNonempty := .absent
-  readout := some (realize boundsSignature (fun _ M z => stieltjes M z) (fun e => nomatch e))
+  readout := some (realize positiveSignature (fun _ M z => stieltjes M z) (fun e => nomatch e))
   variation := .absent
   sensitivity := .absent
   partialSensitivity := none
@@ -240,7 +240,7 @@ def boundsAudit : Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0}
     definition := none
     coordinates := #[0]
     readouts := #[{
-      path := #["body", "body", "body", "body", "body", "fn", "arg", "arg"]
+      path := #["body", "body", "body", "body", "body", "arg"]
       stateBinder := 0
       functionOperand := false
       stateOperand := some #["arg"]

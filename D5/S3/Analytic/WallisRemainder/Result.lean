@@ -116,18 +116,18 @@ private lemma result_of_representation
   have hH := strictMonoOn_inv_stieltjes_sub Q_pos Q_not_const
   refine ⟨?_, ?_, ?_, ?_⟩
   · intro x hx
-    have h := mu_algebra hx (stieltjes_bounds P_pos (sq_pos_of_pos hx)).1
-      (stieltjes_bounds Q_pos (sq_pos_of_pos hx)).1 (hr x hx)
+    have h := mu_algebra hx (stieltjes_pos P_pos (sq_pos_of_pos hx))
+      (stieltjes_pos Q_pos (sq_pos_of_pos hx)) (hr x hx)
       (size_bias_identity (sq_pos_of_pos hx))
     exact ⟨h.1,h.2.1⟩
   · intro x hx y hy hxy
     change 0<x at hx
     change 0<y at hy
-    have hmx := (mu_algebra hx (stieltjes_bounds P_pos (sq_pos_of_pos hx)).1
-      (stieltjes_bounds Q_pos (sq_pos_of_pos hx)).1 (hr x hx)
+    have hmx := (mu_algebra hx (stieltjes_pos P_pos (sq_pos_of_pos hx))
+      (stieltjes_pos Q_pos (sq_pos_of_pos hx)) (hr x hx)
       (size_bias_identity (sq_pos_of_pos hx))).2.2
-    have hmy := (mu_algebra hy (stieltjes_bounds P_pos (sq_pos_of_pos hy)).1
-      (stieltjes_bounds Q_pos (sq_pos_of_pos hy)).1 (hr y hy)
+    have hmy := (mu_algebra hy (stieltjes_pos P_pos (sq_pos_of_pos hy))
+      (stieltjes_pos Q_pos (sq_pos_of_pos hy)) (hr y hy)
       (size_bias_identity (sq_pos_of_pos hy))).2.2
     rw [hmx,hmy]
     exact sub_lt_sub_right (hH (sq_pos_of_pos hx) (sq_pos_of_pos hy)
