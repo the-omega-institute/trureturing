@@ -26,7 +26,7 @@ internal sealed class ChosenMergeExpansionRefutationDocument : IScribeDocumentDe
                 AssessedProvenance.FromRepo(),
                 Blocks(Paragraph(Text(
                     "For every finite A of nonzero group elements with at least three members, "
-                        + "and every distinct legal pair a,b whose sum is outside A and zero, "
+                        + "and every distinct legal pair a,b whose sum is outside A and nonzero, "
                         + "if the compressed alphabet has a Good permutation then some Good "
                         + "compressed permutation has a Good adjacent expansion in one of the "
                         + "two orientations."))),
@@ -45,9 +45,16 @@ internal sealed class ChosenMergeExpansionRefutationDocument : IScribeDocumentDe
                         + "position three and prefix sum b after two entries. Expanding r as a,b "
                         + "creates a proper final zero block of length three; expanding as b,a "
                         + "creates a proper initial zero block of length three. The displayed "
-                        + "Good B-order supplies the guard premise. This refutes only the "
-                        + "uniform chosen-pair lifting route; the original arbitrary-abelian "
-                        + "ordering target remains open."))),
+                        + "Good B-order supplies the guard premise. The model and forced-cut "
+                        + "classification follow the supplied candidate derivation and completed "
+                        + "finite native audit. That audit also checks that A itself has Good "
+                        + "order (p,a,t,q,s,b), and that the alternate legal pair (q,s), with "
+                        + "q+s=r, succeeds: the Good compressed order (p,a,t,r,b) expands in "
+                        + "orientation (q,s) to that A-order. These positive scope facts are "
+                        + "native-audit evidence, not additional Lean theorems of this module. "
+                        + "Only the every-chosen-pair adjacent lifting route is refuted. The "
+                        + "original arbitrary-abelian ordering target and its same-M, "
+                        + "original-coordinate, coefficient-one formulation remain OPEN."))),
                 DescribeRole.Theorem))));
 
     private static DocumentBlock Node(string id, string title, string declaration, string prose,
