@@ -2,7 +2,7 @@
    generality: G
    mirror-B: D5/B/S3/Analytic/CothBernoulliDegree/Kernel
    mirror-E: none(waiver:evidence-not-specified-by-formal-manifest)
-   anchors: [mathlib/module/Mathlib.Analysis.Real.Pi.Bounds, mathlib/module/Mathlib.Analysis.Convex.Deriv, mathlib/module/Mathlib.Analysis.SpecialFunctions.Trigonometric.Bounds, mathlib/module/Mathlib.Analysis.SpecialFunctions.Pow.Real, mathlib/module/Mathlib.Analysis.SpecialFunctions.Log.Deriv, mathlib/module/Mathlib.Analysis.SpecialFunctions.Trigonometric.ArctanDeriv]
+   anchors: [mathlib/module/Mathlib.Tactic, mathlib/module/Mathlib.Topology.Algebra.InfiniteSum.Real, mathlib/module/Mathlib.Analysis.Real.Pi.Bounds, mathlib/module/Mathlib.Analysis.Convex.Deriv, mathlib/module/Mathlib.Analysis.SpecialFunctions.Trigonometric.Bounds, mathlib/module/Mathlib.Analysis.SpecialFunctions.Pow.Real, mathlib/module/Mathlib.Analysis.SpecialFunctions.Log.Deriv, mathlib/module/Mathlib.Analysis.SpecialFunctions.Trigonometric.ArctanDeriv]
    utility: none
    digest: Rational kernel derivative certificates and uniform phase and series estimates. -/
 
@@ -13,9 +13,14 @@ import Mathlib.Analysis.SpecialFunctions.Pow.Real
 import Mathlib.Analysis.SpecialFunctions.Log.Deriv
 import Mathlib.Analysis.SpecialFunctions.Trigonometric.ArctanDeriv
 
+import Mathlib.Topology.Algebra.InfiniteSum.Real
+
+import Mathlib.Tactic
+
 namespace D5.S3.Analytic.CothBernoulliDegree.Kernel
 
 open Set Real
+open scoped BigOperators
 
 private lemma arctan_chord (x : ℝ) (hx : x ∈ Icc (0:ℝ) 1) : Real.pi / 4 * x ≤ Real.arctan x := by
   have hc : ConcaveOn ℝ (Icc (0:ℝ) 1) Real.arctan := by
@@ -109,5 +114,51 @@ lemma phase_bound (M : ℝ) (hM : 5 ≤ M) :
   have h' := mul_le_mul_of_nonpos_right ha (show -Real.sqrt 2 / 2 ≤ 0 by have := Real.sqrt_nonneg (2:ℝ); linarith)
   have hsq : (Real.sqrt 2)^2 = (2:ℝ) := Real.sq_sqrt (by norm_num)
   nlinarith
+
+open scoped BigOperators
+
+private lemma term_bound (k : ℕ) :
+    1 / ((k : ℝ) + 2)^5 ≤
+      (1 / ((k : ℝ) + 1) - 1 / ((k : ℝ) + 2)) / 16 := by
+  have hk : 0 ≤ (k : ℝ) := Nat.cast_nonneg k
+  have h1 : 0 < (k : ℝ) + 1 := by positivity
+  have h2 : 0 < (k : ℝ) + 2 := by positivity
+  have hs : 4 * ((k : ℝ) + 1) ≤ ((k : ℝ) + 2)^2 := by nlinarith [sq_nonneg (k : ℝ)]
+  have hs' : 4 ≤ ((k : ℝ) + 2)^2 := by nlinarith
+  have hp : 16 * ((k : ℝ) + 1) ≤ ((k : ℝ) + 2)^4 := by
+    nlinarith [mul_le_mul hs hs' (by norm_num : (0 : ℝ) ≤ 4) (by positivity : 0 ≤ ((k : ℝ) + 2)^2)]
+  have heq :
+      (1 / ((k : ℝ) + 1) - 1 / ((k : ℝ) + 2)) / 16 =
+        1 / (16 * ((k : ℝ) + 1) * ((k : ℝ) + 2)) := by
+    field_simp [ne_of_gt h1, ne_of_gt h2]
+    ring
+  rw [heq]
+  apply one_div_le_one_div_of_le (by positivity)
+  convert mul_le_mul_of_nonneg_right hp h2.le using 1; ring
+
+lemma tail_bound (n : ℕ) (hn : 2 ≤ n) :
+    (∑' k : ℕ, 1 / ((k : ℝ) + 2)^(2*n+1)) ≤ 1/16 := by
+  apply Real.tsum_le_of_sum_range_le (fun k => by positivity)
+  intro N
+  have hterm (k : ℕ) :
+      1 / ((k : ℝ) + 2)^(2*n+1) ≤
+        (1 / ((k : ℝ) + 1) - 1 / ((k : ℝ) + 2)) / 16 := by
+    apply le_trans _ (term_bound k)
+    apply one_div_le_one_div_of_le (by positivity : 0 < ((k : ℝ) + 2)^5)
+    exact pow_le_pow_right₀ (by have := Nat.cast_nonneg (α := ℝ) k; linarith : (1 : ℝ) ≤ (k : ℝ) + 2) (by omega)
+  calc
+    _ ≤ ∑ k ∈ Finset.range N,
+        (1 / ((k : ℝ) + 1) - 1 / ((k : ℝ) + 2)) / 16 :=
+      Finset.sum_le_sum (fun k _ => hterm k)
+    _ = (1 - 1 / ((N : ℝ) + 1)) / 16 := by
+      rw [← Finset.sum_div]
+      congr 1
+      simpa only [Nat.cast_add, Nat.cast_one, Nat.cast_zero, zero_add, one_div_one,
+        add_assoc, one_add_one_eq_two] using
+        Finset.sum_range_sub' (fun k : ℕ => 1 / ((k : ℝ) + 1)) N
+    _ ≤ 1/16 := by
+      have : 0 ≤ 1 / ((N : ℝ) + 1) := by positivity
+      linarith
+
 
 end D5.S3.Analytic.CothBernoulliDegree.Kernel
