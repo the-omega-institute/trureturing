@@ -1,0 +1,33 @@
+**Definition 12.1 (critical ground transform on the original cylinder).**
+Put
+
+$$
+h(q)=R(q)^{-1}\phi(a(q)).
+\tag{12.1}
+$$
+
+It is smooth and positive on the punctured chart, including its central
+axis. Choose a positive smooth $H$ on $\Omega\setminus\{o\}$ which equals
+$h\circ\Psi$ on a smaller chart and equals one outside a larger chart.
+A smooth convex interpolation gives such an $H$, bounded below by a
+positive constant. Define
+
+$$
+\begin{aligned}
+d\nu&=H^2d\mu,\\
+\mathcal E_H[v]&=\int H^2\sum_{i,j}a^{ij}(X_jv)\overline{X_iv}\,d\mu,\\
+\mathcal W_H&=\overline{C_c^\infty(\Omega\setminus\{o\})}
+ ^{(\|\cdot\|_{L^2(\nu)}^2+\mathcal E_H)^{1/2}},\\
+W&=H^{-1}L_AH-g_{\mathrm c}\Gamma_{A,o}.
+\end{aligned}
+\tag{12.2}
+$$
+
+$L_AH$ in this display is the differential expression off the source.
+The measure $\nu$ is finite near the source, since $H^2\asymp R^{-2}$.
+All functions and closures in (12.2) live on the actual periodic cylinder;
+the outer height killing is encoded by the same compact-core condition.
+These objects describe the closure of the original critical form; they
+do not change the source, the kinetic operator, or its original domain
+$\mathcal F_A$.
+

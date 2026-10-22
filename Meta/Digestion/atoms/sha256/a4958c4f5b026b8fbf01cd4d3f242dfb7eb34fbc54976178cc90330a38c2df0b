@@ -1,0 +1,129 @@
+**Theorem 16.1 (positive source trace, including all angular directions).**
+There are numbers $a_*>0$ and $\gamma\in(0,1)$, depending on the fixed
+model and the normalized ground state, for which
+
+$$
+\frac{f_*(\Psi^{-1}q)}{h(q)}=a_*+O(R(q)^\gamma)
+\quad(R\downarrow0).
+\tag{16.1}
+$$
+
+The error is uniform over the whole gauge sphere, including the central
+axis. On every fixed compact annulus, for each integer $j\ge0$,
+
+$$
+\left\|
+ \frac{f_*(\Psi^{-1}\delta_s\,\cdot)}{h(\delta_s\,\cdot)}-a_*
+\right\|_{C^j}\le C_j s^\gamma.
+\tag{16.2}
+$$
+
+Here $C^j$ is taken in the smooth Cartesian coordinates of the annulus.
+Thus $a_*$ is the scalar limit in the question, rather than just the two
+comparison constants of (13.1).
+
+Proof. Set $v=f_*/h$ on a source ball. By (13.1) it is bounded above
+and below by positive constants. In the weighted local completion it
+solves
+
+$$
+\mathscr B_h v=(E_*-W)v,\qquad
+\mathscr B_h=-\frac1{mh^2}\operatorname{div}_H(mh^2C\nabla_H),
+\qquad |(E_*-W)v|\le K/R.
+\tag{16.3}
+$$
+
+The point has zero capacity for this weighted energy by (12.13).
+The local Dirichlet problem on a sufficiently small source ball is
+coercive by (12.7). These two facts allow weak testing through the point;
+no point value or inner boundary data are prescribed.
+
+Use the function $b_\delta=1+\delta^2w$ constructed in (13.7)–(13.10),
+with one fixed sufficiently small $0<\delta<1$. That computation and
+(11.3) imply, after reducing the ball,
+
+$$
+\mathscr B_h(R^\delta b_\delta)
+ \le-\kappa R^{\delta-2},\qquad \kappa>0.
+\tag{16.4}
+$$
+
+For $R<r$ the nonnegative function
+
+$$
+\psi_r=K_1r^{1-\delta}
+ \{r^\delta\max_{\overline J}b_\delta-R^\delta b_\delta\}
+\tag{16.5}
+$$
+
+has supremum at most $K_2r$, and, with $K_1$ fixed sufficiently large,
+$\mathscr B_h\psi_r\ge K/R$. Indeed
+$r^{1-\delta}R^{\delta-2}\ge R^{-1}$ for $R\le r$.
+Let $z_r$ be the $\mathscr B_h$-harmonic replacement of $v$ in
+$R<r$: $v-z_r$ is in the local zero-boundary weighted completion.
+Existence follows by minimizing the weighted Dirichlet energy.
+Testing the difference equation with its positive and negative parts
+and using (16.5) gives
+
+$$
+\|v-z_r\|_{L^\infty(R<r)}\le K_2r.
+\tag{16.6}
+$$
+
+All comparisons include the point by its zero capacity. For example
+first use the logarithmic cutoffs (12.13) and then pass in the energy
+norm. The barriers in (16.5) belong to that norm, so no source boundary
+term survives.
+
+The harmonic replacement has a scale-uniform oscillation contraction.
+To verify this without asserting a Harnack theorem at the singular
+point, rescale the connected annulus $r/4\le R\le r/2$ to a fixed
+annulus. There $h^2$ is smooth and positive, the Hörmander frame is
+fixed, and all coefficients and horizontal drifts of the rescaled
+$\mathscr B_h$ are uniformly bounded with uniformly positive horizontal
+covariance. The ordinary local Hörmander Harnack inequality, joined by a
+finite chain of balls in a larger punctured annulus, has a constant $C$
+independent of small $r$. Apply it to $z_r-m$ and $M-z_r$, where
+$m=\inf_{R<r}z_r$ and $M=\sup_{R<r}z_r$. Write $d=M-m$.
+Either the infimum of $z_r-m$ on this annulus is at least $d/(2C)$,
+or its supremum is at most $d/2$. The weak maximum principle in the
+inner ball, again using zero capacity at the point, consequently gives
+
+$$
+\operatorname{osc}_{R<r/4}z_r
+ \le\vartheta\operatorname{osc}_{R<r}z_r,
+\qquad \vartheta=1-(2C)^{-1}<1.
+\tag{16.7}
+$$
+
+Combining (16.6)–(16.7) gives
+$\operatorname{osc}_{R<r/4}v\le\vartheta
+\operatorname{osc}_{R<r}v+K_3r$.
+Iteration on $r,r/4,r/16,\ldots$ proves (16.1), with any suitably
+smaller positive exponent than $-\log\vartheta/\log4$ and one.
+The nested essential ranges shrink to one number. The positive bounds
+from (13.1) make that number strictly positive. Smoothness off the source
+makes the resulting estimate pointwise in every direction.
+
+For the derivative assertion, the remainder (11.1) has the following
+annular derivative consequence:
+
+$$
+\|s^2\Gamma(\Psi^{-1}\delta_s\,\cdot)-c_GR^{-2}\|_{C^j(K)}
+ \le C_{K,j}s
+\quad(K\Subset\mathbb R^3\setminus\{0\}).
+\tag{16.8}
+$$
+
+Here is why no derivative of a bare pointwise estimate is being assumed.
+The difference on the left is $O(s)$ in supremum norm by (11.1).
+Its equation on a slightly larger annulus has a smooth right side
+$O(s)$ in every fixed derivative, obtained by applying the rescaled
+operator to $c_GR^{-2}$ and using (11.2)–(11.3). The rescaled smooth
+coefficients converge in every derivative to the frozen ones.
+Interior subelliptic estimates and Sobolev embedding, iterated on nested
+annuli, therefore give (16.8). Apply the same interior estimates to
+(16.3) after rescaling. Its right side is $O(s)$ in smooth annular
+coefficients times $v$, and $v-a_*=O(s^\gamma)$ in supremum norm.
+Iteration proves (16.2), reducing $\gamma$ if necessary. $\square$
+

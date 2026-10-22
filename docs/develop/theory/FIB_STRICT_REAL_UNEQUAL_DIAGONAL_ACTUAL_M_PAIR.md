@@ -1227,3 +1227,824 @@ absence theorem. No sufficiency of a polynomial necessary cover is
 used.
 
 ## 追加锚（本行以下为增补区）
+## 19. The full parent and the two coordinate descriptions
+
+**Definition 19.1 (Boundary coordinates).** Retain the entire original
+world domain and independent pair predicate of Definitions 1.1–1.2.
+The rectangle $\mathcal U$, center $q_c=(p_c,v_c)$ and $h=10^{-34}$
+remain Definition 12.1. In the additions use $\mathcal R=(p,v)$ for
+the regular-source map of Definition 2.1; denote Definition 13.1's
+exceptional quartic $\Phi$ by $\varphi_{\rm sing}$. Thus response-map
+and exceptional-polynomial symbols are distinct. Retain $H=b\widehat D$
+for the circuit denominator. On the full strict source domain put
+
+$$
+\begin{gathered}
+c_{\rm src}=r(1-r)/b,\quad j=b+c_{\rm src},\quad n=j+r,\quad
+T=1+b,\quad U=1+2b,\quad V=U+n,\quad\epsilon=d-24,\\
+\Lambda=1+6/T+1/U-4/j-4/n,\qquad
+B_{\rm par}=6/T-2/U=2(2+5b)/(TU)>0,\\
+F_{\rm par}=\epsilon\Lambda+(24/5)(b-1/8)B_{\rm par}.
+\end{gathered}
+\tag{19.1}
+$$
+
+[Common Parent Geometry](FIB_COMMON_PARENT_GEOMETRY_AND_MIXED_CHILDREN.md),
+Theorem 2.1, gives the bijection between the full five-row parent and
+$0<r<1,b>0,F_{\rm par}=0$. The entire gain is the unique polynomial
+of degree at most three with samples
+
+$$
+(g_0,g_1,g_2,g_3)=(-24-\epsilon,-\epsilon/j,
+                         (27/5-\epsilon)/T,-\epsilon/n).
+\tag{19.2}
+$$
+
+For the boundary calculations use the literal fifth and sixth responses
+
+$$
+\begin{aligned}
+K_5&=V(96-108/T),&A_5&=1+V(4-15/j+20/T-10/n),\\
+K_6&=(2U+n)(240-243/T),&
+A_6&=1+(2U+n)(10-36/j+45/T-20/n),\\
+P_5&=24+K_5+\epsilon A_5,&P_6&=24+K_6+\epsilon A_6.
+\end{aligned}
+\tag{19.3}
+$$
+
+These follow from Lemma 2.2's extrapolation weights. On actual worlds
+$P_5=p,P_6=v$; eliminating $\epsilon$ where $\Lambda\ne0$ gives
+$\mathcal R$. Common Parent Geometry, Lemma 12.2 and Theorem 12.3,
+give $\Lambda^2+A_5^2>0$ on every strict source and unique whole-world
+lifting at fixed source and fifth response, including $\Lambda=0$.
+These premises are reused, together with the complete regular,
+exceptional and singular inventory of Sections 13–16. They impose
+no bound on positive offdiagonals, no nonzero drift or gain sample,
+no exact degree and no simple gain roots. Every world keeps one fixed
+drift and one whole nonzero real gain. The unequal first two readings
+exclude only the identically zero gain.
+
+## 20. Bounded responses bound drift and gain
+
+**Lemma 20.1.** If $P_5$ ranges in a bounded interval over the parent,
+then $d$ and all four coefficients of $g$ are uniformly bounded.
+
+**Proof.** Suppose instead that $|\epsilon|\to\infty$ along a
+sequence with bounded $P_5$. Take subsequences of $r\in[0,1]$ and
+$b\in[0,\infty]$.
+
+If $b\to\infty$, then $j,n\ge b$, $\Lambda\to1$ and
+$(24/5)(b-1/8)B_{\rm par}\to24$. Equation $F_{\rm par}=0$ forces
+$\epsilon\to-24$, a contradiction.
+
+If $b\to b_0\in(0,\infty)$, all source coefficients have finite
+limits. Equations (19.1) and (19.3) would force $\Lambda,A_5\to0$.
+The strict-source inequality in Definition 19.1 excludes an interior limiting $r$. At the endpoints their
+limits are
+$$
+\begin{array}{c|cc}
+r&\Lambda&A_5\\\hline
+0&2(b^3-8b-4)/(b(b+1)(2b+1))
+ &(12b^3+2b^2-75b-25)/(b(b+1))\\
+1&2(b^3-4b-2)/(b(b+1)(2b+1))
+ &2(6b^3+3b^2-23b-15)/(b(b+1)).
+\end{array}
+\tag{20.1}
+$$
+The resultants of these numerator pairs, including their displayed
+constant factors, are $-186152$ and $-8896$. Neither pair vanishes
+simultaneously.
+
+If $b\to0$, pass to a limit of $j$ in $[0,\infty]$. For
+$j\to\infty$, $n/j\to1$ and $\Lambda\to8$, forcing
+$\epsilon\to3/10$. For $j\to0$, $\Lambda\to-\infty$ and
+$\epsilon\to0$. For $j\to z\in(0,\infty)$,
+$r(1-r)=b(j-b)$ implies $r\to0$ or $1$. The limiting pairs are
+$$
+\begin{array}{c|cc}
+r&\Lambda&A_5\\\hline
+0&8(z-1)/z&(24z^2-25)/z\\
+1&4(2z^2-1)/(z(z+1))&2(12z^3+24z^2-8z-15)/(z(z+1)).
+\end{array}
+\tag{20.2}
+$$
+Their numerator resultants are $-64,14336$. Again simultaneous
+vanishing is impossible. These cases exhaust a hypothetical divergent
+drift sequence, so the drift is bounded.
+
+For gain coefficients, let $q$ be the quadratic interpolating
+$$
+q(0)=-d,\qquad q(2)=(147/5-d)/T,\qquad q(4)=(18-d)/U.
+$$
+Its coefficients are bounded because $T,U\ge1$. Write
+$g(s)=q(s)+\kappa s(s-2)(s-4)$. The equal odd readings give
+$jg(1)=ng(3)$, hence
+$$
+\kappa=\frac{nq(3)-jq(1)}{3(j+n)},\qquad
+|\kappa|\le\frac13\max(|q(1)|,|q(3)|).
+\tag{20.3}
+$$
+The strictly positive sum $j+n$ permits this estimate even along
+sequences where both odd traces vanish. Every coefficient of $g$ is
+therefore bounded. ∎
+
+## 21. Exhaustive finite escape responses
+
+Define the following rational curves, omitting poles:
+$$
+\begin{aligned}
+R_0(z)&=\left(\frac{-3(72z^3+746z^2+465z+130)}{5(z^3-8z-4)},
+\frac{-3(375z^3+4431z^2+2486z+344)}{5(z^3-8z-4)}\right),\\
+R_1(z)&=\left(\frac{-6(36z^4+61z^3+221z^2+181z+30)}{5(z+1)(z^3-4z-2)},
+\frac{-3(375z^4+881z^3+2486z^2+1706z+266)}{5(z+1)(z^3-4z-2)}\right),\\
+\mathcal B_0(z)&=\left(\frac{-3(16z^2-80z+65)}{10(z-1)},
+\frac{3(45z^2+125z-172)}{10(z-1)}\right),\\
+\mathcal B_1(z)&=\left(\frac{-6(8z^3-24z^2-2z+15)}{5(2z^2-1)},
+\frac{3(45z^3+215z^2-33z-133)}{5(2z^2-1)}\right).
+\end{aligned}
+\tag{21.1}
+$$
+Use $z>0$ for $R_i$ and $z\ge0$ for $\mathcal B_i$. Also put
+$q_\infty=(-216/5,-225)$.
+
+**Theorem 21.1.** A parent sequence with finite limiting responses and
+no subsequence converging to a strict parent world has, after a
+subsequence, a limiting response on one of (21.1) or at $q_\infty$.
+
+**Proof.** Lemma 20.1 bounds drift and all gain coefficients. If
+$b\to b_0>0$ is finite and $r$ has an interior limit, the source,
+drift and gain have a strict parent limit. Its gain is nonzero by the
+unequal first two readings. The remaining limits with such $b_0$
+have $r\to0$ or $1$. A zero limiting $\Lambda$ would force
+$b_0=1/8$ by $F_{\rm par}=0$, but the cubics in (20.1) are nonzero there.
+Solving for $\epsilon$ and substituting in (19.3) gives exactly
+$R_0(b_0),R_1(b_0)$.
+
+If $b\to\infty$, then $d\to0$. Use the scaled polynomial
+$g_{\rm sc}=Ug$. Its samples at nodes $1,2,3,4$ converge to
+$(48,294/5,48,18)$, since $j/U,n/U,T/U\to1/2$.
+Fixed-node interpolation gives $g_{\rm sc}(5)\to-144/5$,
+$g_{\rm sc}(6)\to-90$. Since $V/U\to3/2$ and $(2U+n)/U\to5/2$,
+the limiting response is $q_\infty$. This argument scales the whole
+gain and does not assume its unscaled coefficients vanish at a rate.
+
+If $b\to0,j\to\infty$, then $d\to243/10$ and the samples
+(19.2) give $g(5)\to-24/5$. Since $V\to\infty$, bounded $P_5$
+is impossible. Otherwise let $j\to z\ge0$; then $r\to0$ or $1$.
+For $z>0$, (20.2) gives respectively
+$$
+\epsilon\to\frac{3z}{10(z-1)},\qquad
+\epsilon\to\frac{3z(z+1)}{5(2z^2-1)}.
+$$
+The poles are excluded by bounded drift. Substitution gives $\mathcal B_0(z)$
+or $\mathcal B_1(z)$.
+
+At $z=0$ one must retain the rates of vanishing traces. If $r\to0$,
+$$
+0\le r/j\le b/(1-r)\to0,\quad n/j\to1,\quad
+\Lambda j\to-8,\quad\epsilon/j\to-3/10.
+$$
+If $r\to1$, then $n\to1$, $\Lambda j\to-4$ and
+$\epsilon/j\to-3/5$. Equation (19.2) and the extrapolation weights of Lemma 2.2, without division by
+a limiting zero, give respectively
+$$
+(39/2,258/5)=\mathcal B_0(0),\qquad(18,399/5)=\mathcal B_1(0).
+$$
+These cases exhaust all escaping source sequences. ∎
+
+## 22. A closed barrier and a proper map
+
+The primitive integer implicit polynomials of (21.1), with positive
+lexicographic leading coefficient in $p,v$, are
+$$
+\begin{aligned}
+E_0={}&51072900p^3-38068700p^2v-1933224270p^2+8423500pv^2
++601454235pv+10167680250p\\
+&-581725v^3-45839880v^2-1393526691v+136430551152,\\
+E_1={}&1055100p^4-1141850p^3v-116130990p^3+416900p^2v^2
++79145580p^2v+273455568p^2\\
+&-63500pv^3-17883810pv^2-175084740pv-9069191838p
++3475v^4+1327830v^3+23513292v^2\\
+&+2292881202v-50360535,\\
+E_2={}&9000p^2-1300pv-175350p-1600v^2+225120v-6050961,\\
+E_3={}&5356125p^3-471600p^2v-197333550p^2-592800pv^2
++93450960pv-635417028p\\
+&+89600v^3-8052480v^2-277806240v+17962000344.
+\end{aligned}
+\tag{22.1}
+$$
+More precisely, write each coordinate in (21.1) as its displayed
+numerator over denominator and take the primitive positive-leading
+part of $\operatorname{Res}_z(N_p-pD_p,N_v-vD_v)$.
+Expanding the Sylvester determinant gives (22.1). Direct substitution
+and clearing denominators also give $E_i(R_i)=0$ or $E_i(\mathcal B_{i-2})=0$.
+These are polynomial identities, not converse realization assertions.
+
+Put
+$$
+\begin{gathered}
+\mathcal E_{\rm esc}=E_0E_1E_2E_3\{(5p+216)^2+(v+225)^2\},\\
+O=\{(p,v)\in\mathbb R^2:p\ne24,\ \mathcal E_{\rm esc}(p,v)\ne0\},\\
+\mathcal S=\{(r,b,\epsilon):0<r<1,b>0,F_{\rm par}=0,P_5\ne24\},
+\quad \mathscr A=(P_5,P_6),\quad\mathcal S_O=\mathscr A^{-1}(O).
+\end{gathered}
+\tag{22.2}
+$$
+
+**Theorem 22.1.** The full-world response map
+$\mathscr A:\mathcal S_O\to O$ is proper.
+
+**Proof.** Take a sequence over a compact subset of $O$ and a
+subsequence whose labels converge in that compact subset. Its fifth
+responses are bounded. If there were no strict parent convergent
+subsequence, Theorem 21.1 would put its limiting label in $\mathcal E_{\rm esc}=0$,
+a contradiction. A strict limit satisfies all rows and still has
+$P_5\ne24,\mathcal E_{\rm esc}\ne0$. It belongs to $\mathcal S_O$. Sequential
+compactness proves compactness of the inverse image. This is
+properness relative to $O$, not properness over the whole plane. ∎
+
+## 23. Source-surface regularity and response critical values
+
+**Theorem 23.1 (The parent surface and its regular response covering).**
+The surface $\mathcal S$ of (22.2) is smooth and real analytic. Define
+
+$$
+H_{\rm reg}=\det\frac{\partial(F_{\rm par},P_5,P_6)}
+ {\partial(r,b,\epsilon)},\qquad
+D_{\rm crit}=\mathscr A(\{s\in\mathcal S_O:H_{\rm reg}(s)=0\}).
+\tag{23.1}
+$$
+
+Then $D_{\rm crit}$ is closed relative to $O$. For every connected
+component $\Omega$ of $O\setminus D_{\rm crit}$ with nonempty inverse
+image, $\mathscr A:\mathscr A^{-1}(\Omega)\to\Omega$ is a finite
+covering with constant positive fiber cardinality. Continuous paths
+lift uniquely from a specified initial world; analytic paths have
+analytic lifts.
+
+**Proof.** Where $\Lambda\ne0$, $(F_{\rm par})_\epsilon\ne0$.
+Where $\Lambda=0$, (19.1) forces $b=1/8$. The exhaustive singular
+roots cited in Section 15 satisfy
+$\Lambda=\varphi_{\rm sing}/(960jn)$ at that width. They are simple:
+at fixed $b$, $j''=n''=-2/b$ gives
+
+$$
+(1/j)''=2(j')^2/j^3+2/(bj^2)>0,\qquad
+(1/n)''=2(n')^2/n^3+2/(bn^2)>0.
+$$
+
+Hence $\Lambda''<0$. The inherited opposite signs at the two root
+isolations put positive values between the roots; concavity forces
+strictly positive derivative at the lower root and strictly negative
+derivative at the upper one. Thus $\Lambda_r\ne0$. At $b=1/8$,
+$K_5=0$, so $P_5\ne24$ implies $\epsilon\ne0$ and
+$(F_{\rm par})_r=\epsilon\Lambda_r\ne0$. This proves smoothness
+including every allowed singular source. Smoothness of this surface
+is distinct from regularity of the response differential: adjoining
+$dF_{\rm par}$ to $dP_5,dP_6$ proves that $H_{\rm reg}\ne0$ is
+exactly invertibility of the response map on the tangent plane.
+
+A convergent sequence of critical labels inside $O$ has a convergent
+subsequence of critical preimages by Theorem 22.1. Its strict limit
+is still critical, proving relative closedness. Apply the classical
+proper local diffeomorphism covering argument to this particular map.
+Each regular fiber is discrete and compact, hence finite. Choose
+disjoint inverse neighborhoods at its finitely many points. Additional
+preimages at arbitrarily nearby labels would, by properness, have a
+subsequential limit in that same fiber, a contradiction. A smaller
+neighborhood is evenly covered. The image is open by local inversion
+and closed by properness, so it is the whole connected component.
+Cardinality is locally constant and therefore constant. Inverse charts
+give unique lifts; properness prevents termination at an interior path
+time. Analytic inverse charts give analytic lifts. ∎
+
+## 24. Two source boxes and the complete-state coordinates
+
+**Definition 24.1 (Local domains, coordinates and norms).** Put
+
+$$
+\begin{gathered}
+\mathcal V=q_c+(-2h,2h)^2,\qquad t_x=10^{-30},\\
+z_1=(0.4,\;0.04078295904882838405264306362514449405106),\\
+z_2=(0.6375033978214738667594335994587431421677,\;
+0.04091698421060610059422739287384503573542),\qquad
+B_i=z_i+[-t_x,t_x]^2.
+\end{gathered}
+\tag{24.1}
+$$
+
+Every terminating decimal in Sections 19 onward denotes an exact
+rational. Vector norms are unweighted infinity norms. Matrix infinity
+norms are induced norms, the largest absolute row sum. Scalar derivative
+row norms are absolute coefficient sums; maximum-entry bounds are
+identified separately. Use Definition 2.1's circuit, and put
+$u_i=\widehat C_i/\widehat D$ for $0\le i\le3$. Its monomial gain
+coefficients and complete state are
+
+$$
+\begin{aligned}
+\alpha_0&=u_0,&\alpha_1&=(-11u_0+18u_1-9u_2+2u_3)/6,\\
+\alpha_2&=(2u_0-5u_1+4u_2-u_3)/2,&
+\alpha_3&=(-u_0+3u_1-3u_2+u_3)/6,\\
+g(s)&=\sum_{k=0}^3\alpha_ks^k,&
+\Theta&=(r,b,c_{\rm src},d,\alpha_0,\alpha_1,\alpha_2,\alpha_3).
+\end{aligned}
+\tag{24.2}
+$$
+
+These are coefficients of the same cardinal interpolant of Lemma 2.2.
+The state norm uses all eight displayed coordinates without weights.
+Only $p,v$ vary; all five earlier rows, literal clocks and actions
+remain exact. The open $\mathcal V$ supplies analytic neighborhoods;
+entire-child and error statements below use the closed $\mathcal U$
+unless explicitly given a different domain.
+
+## 25. Finite rational differential inequalities
+
+**Lemma 25.1.** On each $B_i$, $0<r<1$, $b>0$ and
+
+$$
+1<\widehat D<6/5,\quad .04<H<.05,\quad .23<\mathcal J<.25,\quad .25<\mathcal N<.27.
+$$
+
+With derivative columns $(r,b)$, the entries of $D\mathcal R$ lie strictly
+between the following endpoints, all divided by $10^6$:
+
+| Box | $p_r$ | $p_b$ | $v_r$ | $v_b$ |
+| --- | --- | --- | --- | --- |
+| $B_1$ | $[-17691121,-17691120]$ | $[725498392,725498393]$ | $[103013504,103013505]$ | $[-1673536106,-1673536105]$ |
+| $B_2$ | $[16740247,16740248]$ | $[705190458,705190459]$ | $[-101110471,-101110470]$ | $[-1568667529,-1568667528]$ |
+
+The determinants lie respectively in
+$(-45129404,-45129403)/10^3$ and
+$(45042256,45042257)/10^3$.
+Let
+
+$$
+K_1=\begin{pmatrix}
+.037083053954745515&.016075957923158333\\
+.002282624997885133&.000392008731375771
+\end{pmatrix},\quad
+K_2=\begin{pmatrix}
+-.034826575389614269&-.015656197514671509\\
+.002244791436258976&.000371656511668806
+\end{pmatrix}.
+$$
+
+Then $\|K_i\|_\infty<.054$ and
+$\sup_{B_i}\|(D\mathcal R)^{-1}\|_\infty<.054$. More precisely,
+
+| Box | $\sup\|I-K_iD\mathcal R\|_\infty$ less than | $\|K_i(\mathcal R(z_i)-q_c)\|_\infty$ less than |
+| --- | --- | --- |
+| $B_1$ | $9.101\cdot10^{-16}$ | $2.511\cdot10^{-42}$ |
+| $B_2$ | $2.778\cdot10^{-16}$ | $2.862\cdot10^{-41}$ |
+
+The absolute row sums of $D\Theta(D\mathcal R)^{-1}$ are strictly less
+than the following constants:
+
+| Coordinate | $B_1$ | $B_2$ |
+| --- | ---: | ---: |
+| $r$ | $.053160$ | $.050483$ |
+| $b$ | $.002675$ | $.002617$ |
+| $c_{\rm src}$ | $.169790$ | $.129707$ |
+| $d$ | $.006671$ | $.006985$ |
+| $\alpha_0$ | $.006671$ | $.006985$ |
+| $\alpha_1$ | $.001773$ | $.000856$ |
+| $\alpha_2$ | $.006916$ | $.007510$ |
+| $\alpha_3$ | $.002279$ | $.002353$ |
+
+For $G_a=Da(D\mathcal R)^{-1}$ and $G_m=Dm(D\mathcal R)^{-1}$ the component
+intervals below, divided by $10^{12}$, enclose their values:
+
+| Box | $(G_a)_p$ | $(G_a)_v$ |
+| --- | --- | --- |
+| $B_1$ | $[-3670060067454,-3670060067453]$ | $[8059538465730,8059538465731]$ |
+| $B_2$ | $[-12809349369649,-12809349369648]$ | $[3979838493604,3979838493605]$ |
+
+| Box | $(G_m)_p$ | $(G_m)_v$ |
+| --- | --- | --- |
+| $B_1$ | $[-7215988701689,-7215988701688]$ | $[6191296762938,6191296762939]$ |
+| $B_2$ | $[-7216195354246,-7216195354245]$ | $[6191297749276,6191297749277]$ |
+
+In particular their induced row norms are less than seventeen and
+fourteen, respectively.
+
+**Proof by finite rational inclusions.** Here are exact finite
+arithmetic definitions for the inequalities, including correlations
+needed for the small preconditioned residual. Put $\sigma=10^{110}$.
+Encode $x\in\mathbb Q$ by
+$[\lfloor\sigma x\rfloor,\lceil\sigma x\rceil]/\sigma$.
+Negation and addition use exact endpoint operations. For two grid
+intervals use
+
+$$
+\begin{aligned}
+([L,U]/\sigma)([V,W]/\sigma)&\subseteq
+[\lfloor\min(LV,LW,UV,UW)/\sigma\rfloor,
+\lceil\max(LV,LW,UV,UW)/\sigma\rceil]/\sigma,\\
+([L,U]/\sigma)^{-1}&\subseteq
+[\lfloor\sigma^2/U\rfloor,\lceil\sigma^2/L\rceil]/\sigma
+\quad(LU>0).
+\end{aligned}
+$$
+
+Attach derivatives $(1,0)$ to $r$, $(0,1)$ to $b$, and zero to
+constants. Addition and multiplication use their differentiation
+rules; reciprocal uses $D(f^{-1})=-Df/(ff)$ with interval operations.
+Evaluate Definition 2.1, then (24.2), in
+that order, left to right within sums and products. Squares are
+products. Each operation preserves inclusion, so this gives bounds
+on entire boxes and their derivatives.
+
+Retaining all grid digits, form $A=D\mathcal R$,
+$\delta=A_{11}A_{22}-A_{12}A_{21}$ and
+
+$$
+A^{-1}=\delta^{-1}
+\begin{pmatrix}A_{22}&-A_{12}\\-A_{21}&A_{11}\end{pmatrix}.
+$$
+
+Finite endpoint comparisons give the guard intervals, derivative and
+determinant intervals above. Multiplication by the exact $K_i$, before
+rounding to the printed derivative grid, gives the two strict
+preconditioned bounds. Singleton center evaluation gives the two
+residual bounds. Finally multiply the coordinate and terminal derivative
+rows by this inverse and sum their maximum absolute endpoints. These
+sums are less than the printed coordinate constants; terminal endpoints
+lie within the printed grid intervals. For example the source-$c_{\rm src}$
+row sums are less than $.169789052$ and $.129706357$, and the drift
+row sums less than $.006670211$ and $.006984248$. All comparisons are
+rational integer floor/ceiling comparisons under the formulas above.
+Thus the tables express full-box inclusions, with no sampling or
+floating-point error assumption. ∎
+
+## 26. Actual inverse roots and quantitative recovery
+
+**Theorem 26.1.** Each $q\in\mathcal V$ has exactly one inverse
+$x_i(q)\in B_i$ under $\mathcal R$. It is interior and real analytic, with
+
+$$
+\|x_i(q)-z_i\|_\infty<1.1\cdot10^{-35}.
+$$
+
+The constructed worlds $W_i(q)$ are lawful members of $C(q)$. On the
+closed rectangle the complete statement is
+
+$$
+C(q)=\{W_1(q),W_2(q)\},\quad W_1(q)\ne W_2(q),
+\qquad q\in\mathcal U.
+$$
+
+The labels are the disjoint source boxes, equivalently increasing $r$.
+For $q,q'\in\mathcal U$ and $\varepsilon=\|q-q'\|_\infty$,
+
+$$
+\begin{gathered}
+\|x_i(q)-x_i(q')\|_\infty\le .054\varepsilon,\qquad
+\|\Theta_i(q)-\Theta_i(q')\|_\infty\le .17\varepsilon,\\
+|d_i(q)-d_i(q')|\le .007\varepsilon,\qquad
+\|\alpha_i(q)-\alpha_i(q')\|_\infty\le .008\varepsilon,\\
+\max_{k,l}|(P_i(q)-P_i(q'))_{kl}|\le .17\varepsilon,\qquad
+\|P_i(q)-P_i(q')\|_\infty\le .223\varepsilon,\\
+\sup_{0\le s\le7}|g_i(q;s)-g_i(q';s)|\le3.2\varepsilon,\\
+|a_i(q)-a_i(q')|\le17\varepsilon,\qquad
+|m_i(q)-m_i(q')|\le14\varepsilon.
+\end{gathered}
+$$
+
+**Proof.** Define $T_{i,q}(x)=x-K_i(\mathcal R(x)-q)$.
+Its derivative norm is less than $\kappa=10^{-15}$. On the complete,
+convex box $B_i$ it is therefore a contraction, and
+
+$$
+\|T_{i,q}(x)-z_i\|_\infty
+<3\cdot10^{-41}+.054(2\cdot10^{-34})+10^{-15}10^{-30}
+<10^{-30}.
+$$
+
+The last comparison is strict even with the closed source box and
+all $q$ in the specified open record square. Thus it maps $B_i$ into
+its interior. Banach's theorem gives a unique fixed point. Since
+$\|I-K_iD\mathcal R\|<1$, its geometric series proves $K_iD\mathcal R$
+invertible, hence $K_i$ invertible. A fixed point is exactly a zero
+of $\mathcal R(x)-q$. Its displacement is bounded by
+
+$$
+\frac{3\cdot10^{-41}+.054(2\cdot10^{-34})}{1-10^{-15}}
+<1.1\cdot10^{-35}.
+$$
+
+Lemma 2.2 proves lawful whole-world realization and all acquired rows.
+Disjoint boxes make the two worlds distinct. The entire-child
+bound of Theorem 12.2 and Sections 13–16 then proves equality of the complete sets on
+$\mathcal U$, including every original world stratum.
+
+The analytic inverse theorem applies because the rational circuit is
+pole-free and its Jacobian nonsingular. Local analytic inverses agree
+by uniqueness in $B_i$, defining analytic branches on $\mathcal V$.
+Implicit differentiation gives $Dx_i=(D\mathcal R)^{-1}$ and
+$D\Theta_i=D\Theta(D\mathcal R)^{-1}$. Integrating on the straight segment
+in the convex $\mathcal U$ proves all the coordinate bounds and the
+terminal bounds of Lemma 25.1.
+
+The matrix entries are $r,b,c_{\rm src},1-r$; this proves the stated
+maximum-entry bound. For the induced matrix norm the first row is
+bounded by $(.053160+.002675)\varepsilon$ and the second by
+$(.169790+.053160)\varepsilon<.223\varepsilon$ on branch one.
+The corresponding branch-two sums are $.053100\varepsilon$ and
+$.180190\varepsilon$. This proves the induced norm assertion, without
+confusing it with the maximum-entry estimate. Finally
+$1+7+49+343=400$, so the gain coefficient bound gives
+$.008\cdot400\varepsilon=3.2\varepsilon$. ∎
+
+## 27. A sharper enclosure of the existing exact M seed
+
+**Lemma 27.1 (The displacement of the same algebraic zero).** Let
+$F,c,X$ be exactly Definition 3.1, with $\rho=10^{-38}$ and unique
+zero $x_*$ from Theorem 4.3. Use the grid $\sigma=10^{110}$ and
+arithmetic of Lemma 25.1 to evaluate $[DF(c)]$ at the singleton
+center, carrying derivatives in the order $(b_0,r_1,b_1)$. Let $L_s$
+be its entrywise endpoint-midpoint matrix and put
+$K_s=\operatorname{adj}(L_s)/\det L_s$. Then
+
+$$
+\begin{gathered}
+6827359736/10^6<\det L_s<6827359737/10^6,\\
+\sup_X\|I-K_sDF\|_\infty<5.758\cdot10^{-30},\qquad
+\|K_sF(c)\|_\infty<3.616\cdot10^{-86},\\
+\|x_*-c\|_\infty<3.617\cdot10^{-86},\qquad
+|p_*-p_c|<10^{-65},\quad|v_*-v_c|<10^{-65}.
+\end{gathered}
+\tag{27.1}
+$$
+
+The two worlds are the two branches of Theorem 26.1 at this record,
+and their terminal M readings are exactly equal.
+
+**Proof.** No new seed equations or center are introduced. Each response
+row for $f\in\{p,v,m\}$ in $DF$ is
+
+$$
+(f_b(2/5,b_0),-f_r(r_1,b_1),-f_b(r_1,b_1)).
+$$
+
+Apply Lemma 25.1's arithmetic with three derivative coordinates and
+the displayed circuit order of Definition 2.1. Compute $L_s$ from
+singleton endpoint midpoints, then its exact adjugate quotient. The
+finite determinant comparison is the first line of (27.1). Multiplying
+this exact quotient into the full-grid derivative and center enclosures,
+with matrix dot products in increasing index order, gives the next
+two comparisons. Singleton response evaluation also gives
+
+$$
+|p(2/5,c_1)-p_c|<3.617\cdot10^{-70},\qquad
+|v(2/5,c_1)-v_c|<1.796\cdot10^{-68}.
+\tag{27.2}
+$$
+
+These are finite rational endpoint comparisons under that prescription.
+The center differences from the source centers of (24.1) are less
+than $10^{-38}$, so every endpoint source over $X$ lies in $B_1$ or
+$B_2$, since $2\cdot10^{-38}<t_x$. All denominators are therefore
+separated from zero by Lemma 25.1.
+
+For the already existing zero, put $T_s(x)=x-K_sF(x)$. Integration
+along the segment from $c$ to $x_*$ gives
+
+$$
+\|x_*-c\|_\infty
+\le3.616\cdot10^{-86}
+ +(5.758\cdot10^{-30})\|x_*-c\|_\infty,
+$$
+
+and hence
+
+$$
+\|x_*-c\|_\infty
+<\frac{3.616\cdot10^{-86}}{1-5.758\cdot10^{-30}}
+<3.617\cdot10^{-86}.
+$$
+
+The first-endpoint derivative bounds $|p_b|<726,|v_b|<1674$ on
+the whole intervening segment and (27.2) prove the claimed response
+enclosures. The equalities are the existing $F(x_*)=0$ equalities of
+Sections 4–6. Inverse uniqueness in Theorem 26.1 identifies the two
+worlds with its two branches; no equality follows merely from small
+residuals or overlapping intervals. ∎
+
+## 28. The seed regular component and its entire two-world children
+
+**Theorem 28.1 (The component containing the realized rectangle).**
+Let $q_*=(p_*,v_*)$ be the existing exact seed, and let $\Omega_*$
+be the connected component of $O\setminus D_{\rm crit}$ containing
+it. Then $\mathcal U\subset\Omega_*$. Every entire child over
+$\Omega_*$ has exactly two complete worlds. Transport of both seed
+worlds along any path in $\Omega_*$ exhausts its terminal fiber.
+
+**Proof.** On the entire closed rectangle, the four explicit polynomials
+(22.1) satisfy the finite inequalities
+
+| Polynomial | Enclosure on $\mathcal U$ |
+| --- | --- |
+| $E_0$ | $(-3807159123283,-3807159123282)$ |
+| $E_1$ | $(9406089304480,9406089304481)$ |
+| $E_2$ | $(-15436842,-15436841)$ |
+| $E_3$ | $(184377462718,184377462719)$ |
+
+For these comparisons use Lemma 25.1's grid operations, evaluate
+monomials in descending lexicographic order in $(p,v)$, sum from zero,
+and round endpoints outward to integers. Each comparison is strict.
+Also $p\ne24$ on $\mathcal U$ and $q_\infty\notin\mathcal U$.
+Thus $\mathcal U\subset O$.
+
+Theorem 26.1 supplies both actual worlds at every point and exhausts
+the entire child using Theorem 12.2. Lemma 25.1 gives nonzero response
+determinants on both boxes. Also
+$\Lambda=2\widehat D/(5TU\mathcal J\mathcal N)>0$ there. Eliminating
+$\epsilon$ in the parent equation gives
+$H_{\rm reg}=\Lambda\det D\mathcal R$ at either world. Hence neither
+is critical, and exhaustion excludes all additional critical preimages,
+including singular or exceptional ones. Thus
+$\mathcal U\cap D_{\rm crit}=\varnothing$. Connectedness and seed
+containment from Lemma 17.1 put the rectangle in one component.
+Theorem 23.1 gives constant cardinality on that component, equal to
+two by Corollary 17.2. The two lifts cannot meet: reversing the path
+would violate unique lifting from the meeting world. They exhaust the
+terminal fiber. No path-independent ordering of the sheets is needed. ∎
+
+**Definition 28.2 (Collision functions independent of sheet labels).**
+For any local analytic labels $W^+,W^-$ define
+
+$$
+J_\Delta=(a(W^+)-a(W^-))^2,\qquad
+M_\Delta=(m(W^+)-m(W^-))^2.
+\tag{28.1}
+$$
+
+Sheet permutations leave both expressions unchanged; they are therefore
+global real analytic functions on $\Omega_*$. In this component the
+original independently chosen pair predicate is equivalent to
+$J_\Delta=M_\Delta=0$, because every distinct pair in a two-element
+entire child is that whole unordered child. This deduction imposes no
+new pair restriction on Definition 1.2.
+
+A continuous path leaving this component while preserving $p\ne24$
+must meet $\mathcal E_{\rm esc}=0$ or $D_{\rm crit}$: a path remaining
+in the open complement stays in its initial connected component.
+Critical crossings need not change cardinality, and barrier zeros need
+not be realizable escapes. The barrier is an algebraic overestimate
+of finite escape, not an exact realization assertion. The seed has
+$M_\Delta=0,J_\Delta>0$. Neither $J_\Delta>0$ throughout $\Omega_*$
+nor existence or absence of a common zero of (28.1) is established.
+
+## 29. The entire full-height terminal M graph
+
+On $\mathcal V$ write $f(p,v)=m_2(p,v)-m_1(p,v)$.
+The terminal interval rows in Section 25 give
+
+$$
+\begin{aligned}
+f_p&\in[-206652558,-206652556]/10^{12}
+\subset(-.000206653,-.000206652),\\
+f_v&\in[986337,986339]/10^{12}
+\subset(.0000009863,.0000009864),\\
+\|Df\|_\infty&<.000208,\qquad
+.00477<-f_v/f_p<.00478.
+\end{aligned}
+$$
+
+Here the derivative norm is the induced norm of a row. Both worlds
+are evaluated at the same record. Uniform enclosures can be subtracted
+without any claim that unrelated extreme values occur simultaneously.
+
+**Theorem 29.1.** There is a unique real analytic graph
+$p=\chi(v)$ over the whole closed interval $[v_c-h,v_c+h]$ such that
+
+$$
+f(p,v)=0\quad\Longleftrightarrow\quad p=\chi(v)
+\qquad((p,v)\in\mathcal U).
+$$
+
+It extends analytically to an open interval containing this closed
+interval, and throughout it
+
+$$
+|\chi(v)-p_c|<4.781\cdot10^{-37}<8\cdot10^{-36},\qquad
+.00477<\chi'(v)<.00478.
+$$
+
+For every point of the closed rectangle,
+
+$$
+.000206652\,|p-\chi(v)|
+\le |m_2(p,v)-m_1(p,v)|
+\le .000206653\,|p-\chi(v)|.
+$$
+
+Both inequalities are strict off the graph; both become equalities
+at zero on the graph. In addition,
+
+$$
+|m_2(p,v)-m_1(p,v)|<2.077\cdot10^{-38}<4.16\cdot10^{-38}.
+$$
+
+**Proof.** Lemma 27.1 gives an actual seed with $f(p_*,v_*)=0$.
+Let $k=.00478$, $L=|v-v_*|$ for any specified closed-interval height.
+The test points $p_*\pm kL$ remain in the interior horizontal interval,
+since
+
+$$
+|p_*-p_c|+k(h+|v_*-v_c|)
+<k h+(1+k)10^{-65}<4.781\cdot10^{-37}<h.
+$$
+
+The vertical mean value bound is
+$|f(p_*,v)|\le.0000009864L$.
+Since $f_p<-.000206652$ and
+$.000206652k>.0000009864$, the left test value is nonnegative and
+the right nonpositive. For $L>0$ their signs are strict; for $L=0$
+the test point itself is the seed zero. The intermediate value theorem
+and strict horizontal monotonicity give exactly one root. The displayed
+location bound follows from its bracket. In particular the values at
+the full rectangle's left and right edges have strictly positive and
+strictly negative signs, including the endpoint heights.
+
+The real analytic implicit function theorem applies because $f_p\ne0$;
+local graphs agree by uniqueness, and $\chi'=-f_v/f_p$.
+At the endpoint heights the roots remain interior to the open
+$\mathcal V$, so their analytic neighborhoods extend past both
+endpoints. Shrinking these endpoint neighborhoods preserves the strict
+location and slope bounds by continuity. This proves the claimed open
+extension and slope interval.
+
+For fixed $v$, integrate $f_p$ from $\chi(v)$ to $p$. Its strict sign
+and strict uniform bounds give exactly the weak inequalities shown,
+and strictness whenever the integration interval has positive length.
+The sharper uniform gap follows from
+
+$$
+|f(p,v)|<.000206653(h+4.781\cdot10^{-37})
+=2.07641007993\cdot10^{-38}<2.077\cdot10^{-38}.
+$$
+
+Alternatively the original $4.16\cdot10^{-38}$ bound follows from
+$\|Df\|<.000208$ and the seed-to-record distance less than $2h$.
+All bounds include the closed rectangle's edges. ∎
+
+## 30. Exact-record interpretation and unresolved scope
+
+An exact record in $\mathcal U$ determines exactly the unordered pair
+of complete worlds above. Increasing-$r$ labels give consistent
+correspondence between the pairs at two nearby records. These labels
+do not identify which member generated the acquired record. The terminal
+M reading cannot resolve that ambiguity uniformly: the full-height
+graph gives exact M collisions of the two distinct worlds. The terminal
+J readings lie in the disjoint intervals $(964,965)$ and $(994,995)$,
+so a terminal J value separates the two local alternatives.
+
+The Lipschitz bounds compare two exact records in the specified
+rectangle, varying only $p,v$. They are not estimates for arbitrary
+errors in all seven acquired readings. The $.17$ bound for a source
+matrix is a maximum-entry bound; the induced infinity norm bound
+proved here is $.223$. Full-state, drift and gain-coefficient bounds
+refer to the displayed coordinates, not to an additional unobserved
+raw factorization of the source. Finite-digit input alone does not
+specify an exact real number, and no computability assertion follows
+merely from inverse uniqueness.
+
+The entire-child cardinality conclusion uses Theorem 12.2, on
+$\mathcal U$ only. The analytic constructions on $\mathcal V$ do not
+assert a global upper bound on all children outside $\mathcal U$.
+No unrestricted common-base result, global strategy depth, physical
+realization, or access to both counterfactual terminal actions in one
+experimental history follows. Original singular and exceptional sources
+remain part of the quantified model and were excluded locally only
+by the exhaustive inherited argument in Sections 13–16.
+
+The general contraction argument is Banach's theorem; analyticity uses
+the real analytic inverse and implicit function theorems. The original-row realization is Lemma 2.2. It supplies the whole-world
+meaning of the two-box differential inequalities, recovery constants,
+sharper enclosure of the same seed and transverse collision graph.
+
+
+The source surface is smooth also at its allowed $\Lambda=0$ sources;
+this is distinct from avoidance of response critical values. Properness
+is relative to the explicit $O$ of (22.2), avoiding the algebraic escape
+overestimate and $p=24$. The entire two-world covering applies only to
+$\Omega_*$, not to all bases. Whole-child J injectivity is local to
+$\mathcal U$. The double-zero condition (28.1) on the full component,
+continuation of the M branch to any specified remote base, and the
+original unrestricted independent-pair target remain unresolved.
+
+The full parent, exact seed and whole-domain exceptional inventory
+remain the owning results in Sections 1–18 and Common Parent Geometry,
+as cited in Definition 19.1; no second seed or eliminant inventory is
+introduced. The new boundary argument supplies bounded drift and whole
+gain, finite-escape curves, their explicit barrier and relative
+properness hypotheses. Classical covering, contraction, inverse and
+implicit function tools are reused with these model-specific hypotheses
+and the displayed quantitative bounds; their generic bindings are not
+additional mathematical contributions.
+
+## 追加锚（本行以下为增补区）
+
