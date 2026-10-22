@@ -22,6 +22,10 @@ $$\forall (V : Type), [\operatorname{Fintype}\left(V\right)], [\operatorname{Dec
 
 *Proof.* Machine-checked in Lean as `D5/S3/Combinatorics/SpectralGraph/RegularGraphEnergyQuadraticExclusion.result` (`✓ std3`). ∎
 
+*Resolves.* `Problems/ramane-kitturmath-2023-regular-graph-energy-conjecture-3-11` (proved) by `D5/S3/Combinatorics/SpectralGraph/RegularGraphEnergyQuadraticExclusion.result`.
+
+<!-- scribe-open-problem-resolution-v1 {"problem_slug":"ramane-kitturmath-2023-regular-graph-energy-conjecture-3-11","declaration_gid":"D5/S3/Combinatorics/SpectralGraph/RegularGraphEnergyQuadraticExclusion.result","resolution_kind":"proved"} -->
+
 *Source.* Repository-derived.
 
 *Acknowledgement.* H. S. Ramane; D. V. Kitturmath (2023). *On the conjecture of Sombor energy of a graph*. DOI: [10.1016/j.exco.2023.100115](https://doi.org/10.1016/j.exco.2023.100115). URL: <https://doi.org/10.1016/j.exco.2023.100115>.
