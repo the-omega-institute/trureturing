@@ -28,7 +28,10 @@ internal sealed class MiskaUlasSigmaThreeBoundDocument : IScribeDocumentDefiniti
                 AssessedProvenance.FromRepo(Source),
                 Blocks(Paragraph(Text("For k ≥ 7 put n = k + 4, c = 3 σ₂(1ᵏ) + 8k + 7, and let Y consist of k ones followed by 2, k + 3, c. Put d = σ₃(Y) and append d to Y. The identity σ₂(Y) + 1 = 2(k + 3)c makes the resulting tuple solve σ₃ = σₙ. Its entries are positive and nondecreasing. The difference between its product and the proposed degree-six bound is (27/4) k(k − 1)(k − 2)(k − 3)(k − 4)(k − 5)(k − 6), positive for k ≥ 7. The proof specializes this family to n = 11.")),
                     Paragraph(Text("The last coordinate on this family equals the proposed quartic bound. Thus this family contradicts the first bound while attaining equality in the second. The universal second bound remains open. The source's results about σ₂ = σₙ concern a different equation and are unaffected by this refutation of its final conjecture about σ₃."))),
-                DescribeRole.Theorem)),
+                DescribeRole.Theorem,
+                new OpenProblemResolutionClaim(
+                    ProblemSlugRef.Create("miska-ulas-2022-sigma-three-conjecture-4-8"),
+                    ResolutionKind.Refuted))),
         []));
 
     private static Formula Named(string name) => Seq(Operatorname,
