@@ -33,7 +33,8 @@ internal sealed class SignedWeakStarCompactnessDocument : IScribeDocumentDefinit
             Call("StrictMono", V("phi")), Sp, Land, Sp,
             TV(V("mu")), Sp, Le, Sp, V("C"), Sp, Land, Sp,
             Call("Tendsto",
-                Weak(Call("compose", V("s"), V("phi"))), Call("atTop"),
+                Seq(V("n"), Sp, Mapsto, Sp,
+                    Weak(Call("apply", V("s"), At(V("phi"), "n")))), Call("atTop"),
                 Call("nhds", Weak(V("mu")))))
     ]));
 
@@ -53,6 +54,9 @@ internal sealed class SignedWeakStarCompactnessDocument : IScribeDocumentDefinit
                 AssessedProvenance.FromRepo(),
                 Blocks(
                     Paragraph(Text(
+                        "In the displayed statement, apply(f,x) means f(x). The first Tendsto argument is the pointwise sequence n ↦ toWeakDual(signedFunctional(s(phi(n)))), indexed by n : Nat. "
+                        + "The source filter is atTop on Nat and the limit filter is nhds(toWeakDual(signedFunctional(mu))). totalVariationRealUniv(t) means t.totalVariation.real univ.")),
+                    Paragraph(Text(
                         "The proof writes each signed measure as the difference of its actual Jordan positive and negative finite measures. "
                         + "The pairs with summed mass at most C form a closed subset of the product of two compact finite-measure mass balls, using the pinned Prokhorov compactness theorem and continuity of mass.")),
                     Paragraph(Text(
@@ -66,7 +70,8 @@ internal sealed class SignedWeakStarCompactnessDocument : IScribeDocumentDefinit
                         "This supplier only provides the reference represented weak-star limit for compact metric successor stages. "
                         + "It does not construct norm-preserving lifts, settle the CH scheduler or recursion, extend to the nonmetrizable final layer, or solve Problem 8.2.")),
                     Paragraph(Text(
-                        "The four-slot escape registration for this theorem remains unfinished under linked issue #5214. "
-                        + "The available enrolled templates do not faithfully model this analytic compactness supplier, so no Contract.Registration mirror, compiled registration proof, or current binding evidence is claimed."))),
+                        "The four-slot escape registration for this theorem remains unfinished under linked issue #5214 (https://github.com/the-omega-institute/trureturing/issues/5214#issuecomment-6345688462). "
+                        + "A faithful encoding of the full telescope, the source-owner Contract.Registration mirror, lawful enrolled-template readout/sourceSelection, and the required realization, intervention, sensitivity, observational-dependence and current binding evidence have not been supplied. "
+                        + "Interface inspection did not construct or compile a four-slot candidate and did not establish template inexpressibility."))),
                 DescribeRole.Theorem))));
 }

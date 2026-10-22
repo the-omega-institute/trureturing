@@ -8,13 +8,15 @@ K is an arbitrary compact metric space with its Borel measurable structure. For 
 
 **Theorem 1.1 (Actual signed-measure weak-star subsequence supplier).**
 
-$$\begin{aligned}\forall K: Type_{u}, [\operatorname{MetricSpace}\left(K\right)] [\operatorname{CompactSpace}\left(K\right)] [\operatorname{MeasurableSpace}\left(K\right)] [\operatorname{BorelSpace}\left(K\right)] \\\forall C: \operatorname{Real}\left(\right), \forall s: \operatorname{Nat}\left(\right) \to \operatorname{SignedMeasure}\left(K\right), \\\operatorname{Nonneg}\left(C\right) \Rightarrow {\forall n: \operatorname{Nat}\left(\right), \operatorname{totalVariationRealUniv}\left(\operatorname{apply}\left(s, n\right)\right) \le C} \Rightarrow\\\exists phi:\operatorname{Nat}\left(\right) \to \operatorname{Nat}\left(\right), \exists mu:\operatorname{SignedMeasure}\left(K\right), \operatorname{StrictMono}\left(phi\right) \land \operatorname{totalVariationRealUniv}\left(mu\right) \le C \land \operatorname{Tendsto}\left(\operatorname{toWeakDual}\left(\operatorname{signedFunctional}\left(\operatorname{compose}\left(s, phi\right)\right)\right), \operatorname{atTop}\left(\right), \operatorname{nhds}\left(\operatorname{toWeakDual}\left(\operatorname{signedFunctional}\left(mu\right)\right)\right)\right)\end{aligned}$$
+$$\begin{aligned}\forall K: Type_{u}, [\operatorname{MetricSpace}\left(K\right)] [\operatorname{CompactSpace}\left(K\right)] [\operatorname{MeasurableSpace}\left(K\right)] [\operatorname{BorelSpace}\left(K\right)] \\\forall C: \operatorname{Real}\left(\right), \forall s: \operatorname{Nat}\left(\right) \to \operatorname{SignedMeasure}\left(K\right), \\\operatorname{Nonneg}\left(C\right) \Rightarrow {\forall n: \operatorname{Nat}\left(\right), \operatorname{totalVariationRealUniv}\left(\operatorname{apply}\left(s, n\right)\right) \le C} \Rightarrow\\\exists phi:\operatorname{Nat}\left(\right) \to \operatorname{Nat}\left(\right), \exists mu:\operatorname{SignedMeasure}\left(K\right), \operatorname{StrictMono}\left(phi\right) \land \operatorname{totalVariationRealUniv}\left(mu\right) \le C \land \operatorname{Tendsto}\left(n \mapsto \operatorname{toWeakDual}\left(\operatorname{signedFunctional}\left(\operatorname{apply}\left(s, \operatorname{apply}\left(phi, n\right)\right)\right)\right), \operatorname{atTop}\left(\right), \operatorname{nhds}\left(\operatorname{toWeakDual}\left(\operatorname{signedFunctional}\left(mu\right)\right)\right)\right)\end{aligned}$$
 
 *Proof.* Machine-checked in Lean as `D5/S3/Topology/Measures/SignedWeakStarCompactness.exists_subsequence_tendsto_signedFunctional` (`✓ std3`). ∎
 
 *Source.* Repository-derived.
 
 *Commentary.*
+
+In the displayed statement, apply(f,x) means f(x). The first Tendsto argument is the pointwise sequence n ↦ toWeakDual(signedFunctional(s(phi(n)))), indexed by n : Nat. The source filter is atTop on Nat and the limit filter is nhds(toWeakDual(signedFunctional(mu))). totalVariationRealUniv(t) means t.totalVariation.real univ.
 
 The proof writes each signed measure as the difference of its actual Jordan positive and negative finite measures. The pairs with summed mass at most C form a closed subset of the product of two compact finite-measure mass balls, using the pinned Prokhorov compactness theorem and continuity of mass.
 
@@ -24,7 +26,7 @@ The represented limit is the difference of that pair. Vector-measure variation_s
 
 This supplier only provides the reference represented weak-star limit for compact metric successor stages. It does not construct norm-preserving lifts, settle the CH scheduler or recursion, extend to the nonmetrizable final layer, or solve Problem 8.2.
 
-The four-slot escape registration for this theorem remains unfinished under linked issue #5214. The available enrolled templates do not faithfully model this analytic compactness supplier, so no Contract.Registration mirror, compiled registration proof, or current binding evidence is claimed.
+The four-slot escape registration for this theorem remains unfinished under linked issue #5214 (https://github.com/the-omega-institute/trureturing/issues/5214#issuecomment-6345688462). A faithful encoding of the full telescope, the source-owner Contract.Registration mirror, lawful enrolled-template readout/sourceSelection, and the required realization, intervention, sensitivity, observational-dependence and current binding evidence have not been supplied. Interface inspection did not construct or compile a four-slot candidate and did not establish template inexpressibility.
 
 ## References
 
