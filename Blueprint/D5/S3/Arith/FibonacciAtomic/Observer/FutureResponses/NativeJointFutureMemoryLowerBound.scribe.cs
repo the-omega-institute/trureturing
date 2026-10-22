@@ -30,9 +30,36 @@ internal sealed class NativeJointFutureMemoryLowerBoundDocument : IScribeDocumen
                     Paragraph(Text(
                         "Choosing one source from each memory fibre gives a surjection from W onto "
                             + "the eleven attained joint classes. Finite cardinality then forces "
-                            + "eleven to be at most the number of memory states. The result counts "
-                            + "future-behaviour states only; an executable controller may require "
-                            + "additional phase or action-selection states."))),
+                            + "eleven to be at most the number of memory states.")),
+                    Paragraph(Text(
+                        "More generally, let memory be any map from Source to a finite W, without "
+                            + "requiring it to be surjective, and suppose the same memoryReadout "
+                            + "reproduces futureReplies(u,k) for every source u and every natural k. "
+                            + "Write R = range(memory) for its realized image. The map "
+                            + "Set.rangeFactorization memory sends u to memory(u), regarded as an "
+                            + "element of R, and is surjective onto R. Restrict memoryReadout to R "
+                            + "by composing with the subtype inclusion R to W. The displayed theorem "
+                            + "applied to this finite carrier gives 11 <= card(R). The inclusion "
+                            + "also gives card(R) <= card(W), so unused carrier states do not count "
+                            + "toward the eleven required realized states.")),
+                    Paragraph(Text(
+                        "Equivalently, equality of encoded memory values implies equality of all "
+                            + "future replies and hence equality of jointClass. Applying "
+                            + "realized_image_unique_factorization_iff_reverse_kernel with coarse "
+                            + "readout jointClass and fine readout memory gives a unique map from "
+                            + "R to the realized joint classes that recovers jointClass from the "
+                            + "encoded memory of every source. Since every joint class is attained, "
+                            + "this factor is surjective onto all eleven classes.")),
+                    Paragraph(Text(
+                        "This is static memory for the two-address futureReplies task: both "
+                            + "addresses [true,false] and [true,true] are read in the initial tree "
+                            + ".mul (.of true) u for one common u : Source, after the same supplied "
+                            + "substitution count. A fibre of the replies "
+                            + "at one fixed count can contain different all-future classes: the "
+                            + "alpha and beta right-subtree sources agree at count zero and differ "
+                            + "at count one. An executable adaptive controller must additionally "
+                            + "supply lawful updates and action selection; these memory bounds do "
+                            + "not construct one or determine its full state count."))),
                 DescribeRole.Theorem))));
 
     private static Formula V(string name) => F.Id(name);
