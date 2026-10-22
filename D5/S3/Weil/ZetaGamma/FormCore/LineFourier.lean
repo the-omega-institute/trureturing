@@ -65,7 +65,8 @@ namespace D5.S3.Weil.ZetaGamma.FormCore.LineFourier
 
 theorem continuous_raw_fourier {f : ℝ → ℂ} (hf : Integrable f) :
     Continuous (𝓕 f) := by
-  exact Zeta23.EF.continuous_fourier_of_integrable hf
+  exact VectorFourier.fourierIntegral_continuous
+    Real.continuous_fourierChar continuous_inner hf
 
 private theorem raw_fourier_test {f : ℝ → ℂ} (hf : Integrable f)
     (ψ : SchwartzMap ℝ ℂ) :
