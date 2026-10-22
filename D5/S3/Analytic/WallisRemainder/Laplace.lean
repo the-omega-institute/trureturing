@@ -254,9 +254,4 @@ theorem r_eq_laplace {x : ℝ} (hx : 0 < x) :
   have hd : d x = 0 := tendsto_nhds_unique tendsto_const_nhds hlim
   exact sub_eq_zero.mp hd
 
-/-- The logarithmic Wallis remainder is strictly positive. -/
-theorem r_pos {x : ℝ} (hx : 0 < x) : 0 < -Real.log (wallisB x) := by
-  rw [r_eq_laplace hx]
-  exact (laplace_bounds hx).1
-
 end D5.S3.Analytic.WallisRemainder.Laplace
