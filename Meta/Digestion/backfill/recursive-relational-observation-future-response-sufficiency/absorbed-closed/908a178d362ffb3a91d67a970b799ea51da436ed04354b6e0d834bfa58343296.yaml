@@ -2,6 +2,8 @@ fingerprints:
   raw_sha256: sha256:908a178d362ffb3a91d67a970b799ea51da436ed04354b6e0d834bfa58343296
   normalized_sha256: sha256:908a178d362ffb3a91d67a970b799ea51da436ed04354b6e0d834bfa58343296
 cas_ref: sha256:908a178d362ffb3a91d67a970b799ea51da436ed04354b6e0d834bfa58343296
-coverage_gids: []
+coverage_gids:
+  - gid: D5/S1/Recurrence/FibVajda.fib_vajda
+    target_statement_id: sha256:68cf09f524d730d13c876dd486737247ac0bf595476fa92c2f5a9e5b5b080e65
 receipts:
   unresolved_subitems: []
