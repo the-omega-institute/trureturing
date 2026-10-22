@@ -40,9 +40,48 @@ Lean statement: `D5/S3/Analytic/GaussZeroBalanced/Comparison.certificate`
 
 For positive a, b and 0 < x < 1, the contiguous quotient satisfies (1-f)/(t f^2) < a b/((a+b)(a+b+1)).
 
+**Theorem 1.4 (General contiguous quotient comparison).**
+
+Lean statement: `D5/S3/Analytic/GaussZeroBalanced/Comparison.comparison_iff`
+
+*Proof.* Machine-checked in Lean as `D5/S3/Analytic/GaussZeroBalanced/Comparison.comparison_iff` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+For positive a and 0 < b1 < b2, the contiguous quotient f(a,b1,x) is strictly larger than f(a,b2,x) throughout (0,1) exactly when b1 b2 <= a(a+1).
+
+**Theorem 1.5 (General Gauss quotient comparison).**
+
+Lean statement: `D5/S3/Analytic/GaussZeroBalanced/Comparison.comparison_iff_quot`
+
+*Proof.* Machine-checked in Lean as `D5/S3/Analytic/GaussZeroBalanced/Comparison.comparison_iff_quot` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+The same threshold characterizes strict comparison of the zero-balanced Gauss quotients, using the factor 1-x.
+
+**Theorem 1.6 (Second parameter classification).**
+
+Lean statement: `D5/S3/Analytic/GaussZeroBalanced/Comparison.clause2`
+
+*Proof.* Machine-checked in Lean as `D5/S3/Analytic/GaussZeroBalanced/Comparison.clause2` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+For 0 < a < 1, the two quotients in the second classification are ordered throughout (0,1) exactly when 3/7 <= a.
+
 ## References
 
 - Truth anchor: `D5/S3/Analytic/GaussZeroBalanced/Comparison.certificate`
 - Truth anchor: `D5/S3/Analytic/GaussZeroBalanced/Comparison.certificate_identity`
+- Truth anchor: `D5/S3/Analytic/GaussZeroBalanced/Comparison.clause2`
+- Truth anchor: `D5/S3/Analytic/GaussZeroBalanced/Comparison.comparison_iff`
+- Truth anchor: `D5/S3/Analytic/GaussZeroBalanced/Comparison.comparison_iff_quot`
 - Truth anchor: `D5/S3/Analytic/GaussZeroBalanced/Comparison.singular_comparison`
 - Dependency: [D5/S3/Analytic/GaussZeroBalanced/Series](Series.md)
