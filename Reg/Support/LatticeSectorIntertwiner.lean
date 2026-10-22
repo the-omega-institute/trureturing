@@ -1,5 +1,5 @@
 /- Source-family equality readouts for actual sector mathematics. -/
-import D5.S3.VertexAlgebra.LatticeSectorRankZero
+import D5.S3.VertexAlgebra.Sectors.LatticeSectorRankZero
 import Reg.Support.DependentFamily
 import LeanInformationAuditInterface.Contract.Registration
 
