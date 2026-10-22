@@ -15853,9 +15853,7 @@ T_A d_A(N_x)\le24\sqrt A\,h^2+32h.
 $$
 
 This is a finite bound with an explicit hypothesis on the two actual
-prices. It accounts for every changed prime-power layer. Using a
-coarser bound on the whole pressure slope would instead lose the
-small width of this band.
+prices. It accounts for every changed prime-power layer.
 
 For ACC4's unconditional family, $A\sim x$ and the mean-value theorem
 for $y\log y$ gives $h=O(e^{-a\sqrt{\log x}})$. Consequently (NPC1)
@@ -15868,3 +15866,81 @@ its growth prevents this allowance from paying a root-scale defect
 bound on the whole unconditional family. No lower bound on the
 actual defect is inferred from that growth. The original signed
 Robin integral remains unpaid.
+
+
+### A conditional root-scale transfer for the same actual integers
+
+Let $x$ range over any unbounded family of real prices for which
+
+$$
+\delta_x:=|A_x-x|=o(x^{3/4}).
+\tag{NPC2}
+$$
+
+This condition implies $A_x\sim x$. The mean-value theorem for
+$y\log y$ on the interval with endpoints $x,A_x$ gives
+$h_x=O(\delta_x/x)$, with one common constant once
+$A_x\in[x/2,2x]$. In particular the finite hypotheses of (NPC1)
+hold eventually along the entire specified family, and
+
+$$
+0\le T_{A_x}d_{A_x}(N_x)
+=O\!\left(\frac{\delta_x^2}{x^{3/2}}+
+                 \frac{\delta_x}{x}\right)=o(1).
+\tag{NPC3}
+$$
+
+There is no substitution of $x$ for the source's own clock $A_x$ in
+the defect or its normalization. The exponent $3/4$ here comes from
+the quadratic capacity allowance; it is a sufficient condition, not
+a necessity or an optimal exponent.
+
+Use KTO1's existing complete pressure identity and two-candidate
+reserve at $A=A_x$:
+
+$$
+M(\lambda(A))
+=\gamma+\log\log A-\frac1{\log A}-I_\psi(A)-R(A),
+\qquad
+T_AR(A)=c_R+O(1/\log A),\quad c_R=2(\sqrt2-1).
+$$
+
+Since $\lambda(A)\log N_x=1/\log A$, the same integer has the
+exact margin account
+
+$$
+\Delta(N_x)=d_A(N_x)+I_\psi(A)+R(A),\qquad A=A_x.
+$$
+
+Thus (NPC2), with the cited reserve and capacity inputs, gives
+
+$$
+\boxed{
+T_{A_x}\Delta(N_x)
+=T_{A_x}I_\psi(A_x)+c_R+o(1).
+}
+\tag{NPC4}
+$$
+
+For example, on such a family a lower bound
+$\liminf T_{A_x}I_\psi(A_x)>-c_R$ would imply eventual strict
+Robin there; an upper bound
+$\limsup T_{A_x}I_\psi(A_x)<-c_R$ would imply eventual violations
+there. Neither signed premise is supplied. An asymptotic comparison
+at equality with $-c_R$ does not decide strict Robin.
+
+ACC4's unconditional PNT allowance does not imply (NPC2): its ratio
+to $x^{3/4}$ grows. The existing full-real inventory normal form
+$A_x=\psi(x)+(\sqrt2-1)\sqrt x+o(\sqrt x)$, cited in
+[the workload note](../Analytic/mantovanelli2026primeworkload.md#the-full-real-normal-form-also-controls-strict-inventory-at-events),
+identifies (NPC2) with $\psi(x)-x=o(x^{3/4})$ on this same family.
+This gives a checkable condition on the actual prime error; it does
+not establish that condition at every large price or at the unknown
+counterexample-selected prices.
+
+The finite upper benefit estimate and this conditional transfer reuse
+the classical CA benefit, the already derived thin-layer capacity,
+and the existing reserve and inventory normal form. No new signed
+prime estimate or assumption of RH is introduced. The full original
+same-source signed budget, strict Robin for every integer above 5040,
+and RH remain unresolved; this application has no Lean verification.
