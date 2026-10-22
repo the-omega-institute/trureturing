@@ -34,6 +34,10 @@ $$\neg (\forall (a: \mathbb{R}), (\frac{1}{2} \le a) \Rightarrow ((a \le 1) \Rig
 
 *Proof.* Machine-checked in Lean as `D5/S3/Quantum/Matrix/ZhangJingPowerCaseSettlement.result` (`✓ std3`). ∎
 
+*Resolves.* `Problems/zhang-jing-2025-block-criterion-power-case-theorem-2-3` (refuted) by `D5/S3/Quantum/Matrix/ZhangJingPowerCaseSettlement.result`.
+
+<!-- scribe-open-problem-resolution-v1 {"problem_slug":"zhang-jing-2025-block-criterion-power-case-theorem-2-3","declaration_gid":"D5/S3/Quantum/Matrix/ZhangJingPowerCaseSettlement.result","resolution_kind":"refuted"} -->
+
 *Source.* Repository-derived.
 
 *Acknowledgement.* Feng Zhang; Hefang Jing (2025). *More inequalities for positive semidefinite matrices*. DOI: [10.13001/ela.2025.9201](https://doi.org/10.13001/ela.2025.9201). URL: <https://doi.org/10.13001/ela.2025.9201>.
