@@ -67,7 +67,10 @@ internal sealed class StabilizerBatteryDegreeDifferenceRefutationDocument : IScr
                         + "For (4,8), every Qᵢ passes this test and its phase gives expectation -1. For (2,6), every Qᵢ fails the test and has expectation zero. "
                         + "The work is the sum over i of one plus the real part of this expectation, so the two work values are 0 and 14. "
                         + "Equal degree difference therefore does not suffice, even with both endpoint degrees excluded."))),
-                DescribeRole.Theorem)
+                DescribeRole.Theorem,
+                openProblemResolutionClaim: new OpenProblemResolutionClaim(
+                    ProblemSlugRef.Create("ghosh-konar-francica-pal-sen-de-2025-stabilizer-battery-degree-difference-refutation"),
+                    ResolutionKind.Refuted))
         )));
 
     private static Formula ClaimFormula()
