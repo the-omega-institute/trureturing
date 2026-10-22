@@ -27,3 +27,32 @@ run_cmd liftTermElabM do
       ("attempted", toJson trace.attempted), ("failures", toJson trace.failures),
       ("missing", toJson (trace.missing.map Name.toString))])
   emitLookupRecord s!"LOOKUP_RESUME_SEMANTICS {(Json.arr rows).compress}"
+
+run_cmd do
+  enableInitializersExecution
+  let base ← importModules #[{module := `Lean}] {} 0 (leakEnv := false) (loadExts := true)
+  liftTermElabM do
+    let source ← getEnv
+    let index ← DiskLookup.openIndex "build/lean-inspector/lookup-index/lookup-fixture"
+      "lookup-fixture" "56a005855ea17e0b0958f73ec801ae140b0a1679"
+    let table ← onDemandLookup {environment := base, disk? := some index}
+    let type ← Term.elabType (← `(LeanInformationAudit.Tests.SearchReduction.LookupBaseline.Mark 9))
+    Term.synthesizeSyntheticMVarsNoPostponing
+    let type ← instantiateMVars type
+    let bytes ← withEnv base do
+      let type ← copyStatement source .anonymous type
+      let graph : ProofGraph := {
+        root := 0, vertices := [{id := 0, type}], edges := [{conclusion := 0}], complete := true}
+      let reading ← evaluateGraph graph (some table)
+      let baselineProof? ← assembleZero reading.graph
+      let pairedProof? ← assembleZero reading.graph true
+      let reading := {reading with
+        baselineProof?, pairedProof?, isolated := true, structureChecked := true, structureClean := true, presentationComplete := true}
+      unless reading.baseline == ⟨.finite 0, .finite 0⟩ && reading.baselineProof?.isSome do
+        throwError "resume fixture did not certify its actual lookup graph"
+      let observation : Observation := {
+        target := `checkpointProjection, graph? := some reading,
+        verdict := classifyGraph reading, base := reading.baselineProbe.outcome,
+        paired := reading.pairedProbe.outcome}
+      return (observationJson observation).compress
+    emitLookupRecord s!"LOOKUP_RESUME_GRAPH {bytes}"

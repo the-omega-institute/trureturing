@@ -305,9 +305,9 @@ private def checkpointIdentity : IO String := do
 
 private def ownedCheckpointTrace (t : LookupTrace) : LookupTrace :=
   {t with
-    missing := t.missing.map ownedLookupName,
-    failures := t.failures.map (fun s => String.ofList s.toList),
-    capped := t.capped.map (fun s => String.ofList s.toList),
+    missing := t.missing.foldl (fun out n => out.push (ownedLookupName n)) #[],
+    failures := t.failures.foldl (fun out s => out.push (String.ofList s.toList)) #[],
+    capped := t.capped.foldl (fun out s => out.push (String.ofList s.toList)) #[],
     source? := t.source?.map ownedLookupName}
 
 private unsafe def readLookupCheckpoint (path : System.FilePath) : IO LookupCheckpoint :=
@@ -317,7 +317,7 @@ private unsafe def readLookupCheckpoint (path : System.FilePath) : IO LookupChec
     entry := {r.entry with
       module := String.ofList r.entry.module.toList, name := String.ofList r.entry.name.toList,
       route := String.ofList r.entry.route.toList,
-      parts := r.entry.parts.map (fun (s,n) => (String.ofList s.toList,n))},
+      parts := r.entry.parts.foldl (fun out (s,n) => out.push (String.ofList s.toList,n)) #[]},
     trace := ownedCheckpointTrace r.trace,
     proof? := r.proof?.map detachLookupExpression}
 
@@ -329,7 +329,7 @@ unsafe def boundedLookupCandidate (table : LookupTable) (entry : DiskLookup.Entr
     throwError "lookup.preparation_telemetry_cannot_judge"
   let ordinal ← lookupAttemptOrdinal.get
   lookupAttemptOrdinal.modify (· + 1)
-  let resume? ← IO.getEnv "SEARCH_REDUCTION_RESUME"
+  let resume? := (← IO.getEnv "SEARCH_REDUCTION_RESUME").filter (!·.isEmpty)
   let mut xs := #[]
   for decl in ← getLCtx do
     unless decl.isLet do xs := xs.push decl.toExpr
