@@ -8,10 +8,8 @@ namespace StrataLint.Tests;
 public sealed partial class LeanCacheEnsureCommandTests
 {
     [Fact]
-    public void MissingStampWithEmptyBuildRootReplacesLaneCacheFromWarmMain()
+    public void MissingStampWithEmptyBuildRootAddsBuildAndPackagesWithoutReplacingLake()
     {
-        // An existing empty build root is not eligible for the build-only overlay. The linked
-        // lane is instead replaced from the required warm main-checkout cache.
         using var repository = new TemporaryDirectory();
         using var sharedCache = new MathlibCacheFixture();
         InitializeRepository(repository.Path);
@@ -22,6 +20,7 @@ public sealed partial class LeanCacheEnsureCommandTests
             AddWorktree(repository.Path, "empty-build-root-target"));
         fixture.CreateLake();
         fixture.CreateEmptyBuildRoot();
+        fixture.WriteTargetOwned("retained empty-build lane\n");
         var cloner = new RecordingDirectoryCloner();
 
         var result = WorktreeCommand.Run(
@@ -31,7 +30,9 @@ public sealed partial class LeanCacheEnsureCommandTests
             cloner);
 
         Assert.True(result.Success, result.Error);
-        Assert.Single(cloner.Invocations);
+        Assert.Equal(2, cloner.Invocations.Count);
+        Assert.Equal("retained empty-build lane\n", fixture.TargetOwnedText);
+        Assert.True(fixture.TargetPackagesExist);
         Assert.Empty(fixture.BuildStageDirectories);
         Assert.True(fixture.BuildCacheExists);
         Assert.True(fixture.BuildDirectoryExists);

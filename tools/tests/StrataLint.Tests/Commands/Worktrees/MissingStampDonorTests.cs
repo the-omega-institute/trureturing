@@ -28,7 +28,7 @@ public sealed partial class LeanCacheEnsureCommandTests
     }
 
     [Fact]
-    public void MissingColdClearCacheClonesOnlyWarmDonorBuildWithoutOverwritingLake()
+    public void MissingColdClearCacheClonesWarmBuildAndDependenciesWithoutOverwritingLake()
     {
         using var repository = new TemporaryDirectory();
         InitializeRepository(repository.Path);
@@ -56,7 +56,8 @@ public sealed partial class LeanCacheEnsureCommandTests
 
         Assert.True(result.Success, result.Error);
         Assert.False(concurrentWriterAcquired);
-        var clone = Assert.Single(cloner.Invocations);
+        Assert.Equal(2, cloner.Invocations.Count);
+        var clone = cloner.Invocations[0];
         Assert.Equal(fixture.DonorBuild, clone.Source);
         Assert.StartsWith(
             fixture.BuildStagePrefix,
@@ -64,11 +65,14 @@ public sealed partial class LeanCacheEnsureCommandTests
             StringComparison.Ordinal);
         Assert.Equal("preserve me\n", fixture.TargetOwnedText);
         Assert.True(fixture.HasClonedDonorOlean(donorOlean));
-        Assert.False(fixture.TargetPackagesExist);
+        Assert.True(fixture.TargetPackagesExist);
+        Assert.True(LeanCacheFixtureFile.MathlibProjectionExists(fixture.Target));
         Assert.True(fixture.StampMatches);
         using var receipt = ParseReceipt(result.Output);
         Assert.Equal("seeded", receipt.RootElement.GetProperty("status").GetString());
         Assert.Equal("missing", receipt.RootElement.GetProperty("stamp_miss").GetString());
+        Assert.Equal(0, receipt.RootElement.GetProperty("mathlib_missing_olean_files").GetInt32());
+        Assert.Equal(2, receipt.RootElement.GetProperty("clonefile_attempts").GetInt32());
         Assert.Equal(
             LeanCacheGuard.PhysicalPath(repository.Path),
             receipt.RootElement.GetProperty("donor").GetString());
@@ -453,7 +457,8 @@ public sealed partial class LeanCacheEnsureCommandTests
         Assert.Equal("failed", receipt.RootElement.GetProperty("status").GetString());
         AssertCrossDeviceCloneReceipt(receipt.RootElement);
         var reason = receipt.RootElement.GetProperty("reason").GetString();
-        Assert.EndsWith(LaneReseedRemediation(fixture.Target), reason, StringComparison.Ordinal);
+        Assert.Contains("existing target artifacts were retained", reason, StringComparison.Ordinal);
+        Assert.DoesNotContain("remove", reason, StringComparison.Ordinal);
         Assert.DoesNotContain(MainWarmRemediation(repository.Path), reason, StringComparison.Ordinal);
     }
 

@@ -19,7 +19,8 @@ internal static class LeanMissingBuildProvisioner
         IDirectoryCloner cloner,
         ILeanCacheStateProbe stateProbe,
         Action<TimeSpan>? wait = null,
-        Action<string, LeanPinSet>? writeStamp = null)
+        Action<string, LeanPinSet>? writeStamp = null,
+        bool restoreDependencies = false)
     {
         ArgumentNullException.ThrowIfNull(cloner);
         ArgumentNullException.ThrowIfNull(stateProbe);
@@ -46,6 +47,8 @@ internal static class LeanMissingBuildProvisioner
                 "donor cache guard is busy",
                 ClonefileReceipt.NotRun);
         }
+        if (restoreDependencies)
+            LeanDependencyLayerRestorer.RequireCompatible(selection.Donor, worktreeRoot, pins, runner);
 
         var clone = LeanCacheProvisioner.CloneWithRetry(
             source,
@@ -94,16 +97,14 @@ internal static class LeanMissingBuildProvisioner
             }
 
             LeanCacheProvisioner.VerifyPrivateDirectory(lake);
-            var beforeRename = stateProbe.InspectContentRoot(target);
-            if (!beforeRename.Clear)
+            if (!CanRestoreBuild(target, stateProbe, allowEmpty: restoreDependencies))
             {
                 LeanCacheProvisioner.RemovePartial(staged);
                 return new LeanBuildProvisionAttempt(
                     null,
                     LeanCacheProvisioner.Join(
                         warning,
-                        beforeRename.Error
-                            ?? "target .lake/build changed before publication; discarded staging build"),
+                        "target .lake/build changed before publication; discarded staging build"),
                     cloneReceipt);
             }
             if (PathEntryExists(LeanCacheStamp.PathFor(lake)))
@@ -112,13 +113,40 @@ internal static class LeanMissingBuildProvisioner
                     "target cache stamp changed during staging; refusing to replace it");
             }
 
+            if (restoreDependencies)
+            {
+                try
+                {
+                    var restored = LeanDependencyLayerRestorer.Restore(selection, worktreeRoot, pins,
+                        runner, writerGuard, cloner, wait: wait);
+                    cloneReceipt = LeanDependencyLayerRestorer.Combine(cloneReceipt, restored.Clonefile);
+                    warning = restored.Notice;
+                    LeanDependencyLayerRestorer.PrepareStaging(staged);
+                    if (!CanRestoreBuild(target, stateProbe)
+                        || PathEntryExists(LeanCacheStamp.PathFor(lake)))
+                        throw new InvalidOperationException("target build or stamp changed during dependency staging");
+                }
+                catch (LeanCacheProvisionException exception)
+                {
+                    cloneReceipt = LeanDependencyLayerRestorer.Combine(cloneReceipt, exception.Clonefile);
+                    throw;
+                }
+            }
+
             // Known and accepted check-then-act window: .NET 10.0.11 on Unix LStats the
             // destination before rename(2), so a compatible entry created between those calls
             // can be replaced. This path holds the target .lake writer guard throughout, so a
             // competitor must bypass the lock protocol; this repository has zero such incidents
             // (CLAUDE.md section 20''). Closing it needs a platform-specific no-replace operation
             // such as renameatx_np(RENAME_EXCL), whose cost is disproportionate to that history.
-            Directory.Move(staged, target);
+            if (restoreDependencies && Directory.Exists(target))
+            {
+                var added = 0;
+                var retained = 0;
+                LeanDependencyLayerRestorer.AddMissing(staged, target, ref added, ref retained);
+                LeanCacheProvisioner.RemovePartial(staged);
+            }
+            else Directory.Move(staged, target);
             writeStamp(lake, pins);
             return new LeanBuildProvisionAttempt(
                 new LeanCacheProvisionResult(
@@ -139,6 +167,21 @@ internal static class LeanMissingBuildProvisioner
             exit.TryCleanup(staged, LeanCacheProvisioner.RemovePartial, "staging cleanup");
             throw exit.Wrap(exception);
         }
+    }
+
+    internal static bool CanRestoreBuild(string path, ILeanCacheStateProbe probe, bool allowEmpty = true)
+    {
+        if (probe.InspectContentRoot(path).Clear) return true;
+        if (!allowEmpty) return false;
+        try
+        {
+            var attributes = File.GetAttributes(path);
+            return attributes.HasFlag(FileAttributes.Directory)
+                && !attributes.HasFlag(FileAttributes.ReparsePoint)
+                && !Directory.EnumerateFileSystemEntries(path).Any();
+        }
+        catch (Exception exception) when (exception is FileNotFoundException or DirectoryNotFoundException)
+        { return false; }
     }
 
     private static bool TryVerifyPrivateDirectory(string path, out string? reason)
