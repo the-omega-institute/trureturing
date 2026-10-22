@@ -1465,7 +1465,7 @@ $$
 \tag{FR1}
 $$
 
-The already retained (P6) also gives
+When the equivalent conditions (FR1) hold, the already retained (P6) also gives
 
 $$
 P(t)-P(A)\ge H(t,B(t))\ge0\qquad(t\ge A).
