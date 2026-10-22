@@ -1,0 +1,33 @@
+**Corollary 20.1 (Guarded complete-limit exclusion).** There is no
+sequence of actual distinct equal-$J$ pairs in common entire children
+whose first endpoint converges in complete coordinates to a finite
+tuple with source $(0,0,s)$, $s>0$, and whose second endpoint
+converges in complete coordinates to an actual strict source with
+$j=1$. This exclusion needs no $M$ condition.
+
+Proof. The first five fixed readings pass to both limits. The
+limiting gains cannot be zero polynomials, since then their readings
+at clocks zero and one would both equal their drift, contradicting
+$0\ne24$. Thus the strict-source limit is a complete parent world.
+On the first side, (17.6) excludes $s=1$, and fixed-node uniqueness
+identifies the entire limiting label with (17.7). Shared acquired
+$p,v$ and equality of terminal $J$ also pass to the limits. This
+is exactly the incidence excluded by Theorem 17.1. ∎
+
+For the original joint problem retain, for each index $n$, the exact
+independent-pair quantifiers
+
+$$
+\begin{gathered}
+p_n\ne24,\qquad
+W_{0n},W_{1n},W_{2n},W_{3n}\in C(p_n,v_n),\\
+W_{0n}\ne W_{1n},\qquad W_{2n}\ne W_{3n},\\
+a(W_{0n})=a(W_{1n}),\qquad m(W_{2n})=m(W_{3n}).
+\end{gathered}
+\tag{20.1}
+$$
+
+The pairs may overlap, and their two terminal common values are
+independent and need not agree. Membership is in the entire child,
+including unused companions.
+

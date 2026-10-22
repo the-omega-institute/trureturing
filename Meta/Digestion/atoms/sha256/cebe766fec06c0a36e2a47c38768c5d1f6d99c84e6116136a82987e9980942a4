@@ -1,0 +1,22 @@
+**Definition 13.1 (Second rectangle).** Retain the complete worlds, the original
+left products, the clocks $0,\ldots,7$, and the entire-child quantifiers of
+Section 1.  Put
+
+$$
+\begin{aligned}
+K_2&=\left[\frac{22881}{12500},\frac{183049}{100000}\right]
+      \times\left[\frac{4397801}{25000},\frac{8795603}{50000}\right],\\
+R_2&=\left[\frac{517}{1000},\frac{261}{500}\right]
+      \times\left[\frac{4227}{100000},\frac{423}{10000}\right],\\
+B_2&=\left[\frac{259767971}{500000000},\frac{64941993}{125000000}\right]
+      \times\left[\frac{84567661}{2000000000},\frac{5285479}{125000000}\right].
+\end{aligned}
+\tag{13.1}
+$$
+
+Thus $K_2=[1.83048,1.83049]\times[175.91204,175.91206]$,
+$R_2=[.517,.522]\times[.04227,.04230]$, and
+$B_2=[.519535942,.519535944]\times[.0422838305,.0422838320]$.
+Write $D_J,D_M$ for the entire-child sets in Section 1.  Put $p_{\rm lo}=22881/12500$, $p_{\rm hi}=183049/100000$, $v_{\rm lo}=4397801/25000$, and $v_{\rm hi}=8795603/50000$.  Retain
+independent $J$- and $M$-pairs with arbitrary cross-pair sharing.
+

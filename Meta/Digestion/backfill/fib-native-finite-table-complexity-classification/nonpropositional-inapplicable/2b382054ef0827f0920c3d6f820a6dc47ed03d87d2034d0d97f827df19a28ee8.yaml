@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:2b382054ef0827f0920c3d6f820a6dc47ed03d87d2034d0d97f827df19a28ee8
+  normalized_sha256: sha256:2b382054ef0827f0920c3d6f820a6dc47ed03d87d2034d0d97f827df19a28ee8
+cas_ref: sha256:2b382054ef0827f0920c3d6f820a6dc47ed03d87d2034d0d97f827df19a28ee8
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 'Propositional upstream reuse, not a non-mathematical classification. Mathlib pin 56a005855ea17e0b0958f73ec801ae140b0a1679: Finset.all_card_le_biUnion_card_iff_exists_injective with index Fin 6 supplies the SDR equivalence. For each index subfamily J, either one retained list has cardinal six, and Finset.card_le_card and Finset.card_le_univ give the Hall inequality, or all its lists have cardinal below six. The saturation premise then identifies each such list with its original set; the given original SDR restricts to an injection into their union, using Finset.card_le_card_of_injOn. Reverse SDR inclusion uses L_i subset S_i. Original infinite sets are handled through finite retained lists and the saturation condition (not infinite-set Nat.ncard). The replacement proof is the same finite Hall consequence; no new Lean declaration is introduced. D5 public/private search scope: all D5/**/*.lean for Hall, all_card_le_biUnion_card_iff_exists_injective, SDR, distinct representatives, transversal, list truncation and capped cardinality; inspected NativeIndexedRoleLists and DepthBudgetIidGreedyOptimality. Their source-specialized lists and probability mass theorem do not supply a subgoal for arbitrary six sets. RationalIntervalExpression.checked_expression_encloses concerns real arithmetic enclosure, not the required arbitrary finite-set Hall/cardinality relation; no numeric enclosure premise is used here. No usable frozen project GID was found in this searched scope.'
+    previous_atom_id: 4c15185e3f5ba1a0603a92e9494088de6b3f7ec75a3604a9396bfd3542ea829e
+    next_atom_id: 7789225a3ac933668df662c8804aa4e8b5939c7f4cbac4a520b7fdca3bb8a286

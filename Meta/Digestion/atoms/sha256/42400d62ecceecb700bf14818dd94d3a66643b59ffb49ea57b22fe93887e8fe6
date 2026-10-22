@@ -1,0 +1,64 @@
+**定义 9.3（量子未来的响应空间）。** 对任意指定有限协议菜单 $\mathcal Q$，取每个实际记录事件的效果 $E_{\pi,h}$，令
+
+$$
+\mathcal O_{\mathcal Q}=\operatorname{span}_{\mathbb R}\{I,E_{\pi,h}\}.
+$$
+
+密度态 $\rho,\sigma$ 对全部实际未来响应相同，当且仅当 $\operatorname{tr}((\rho-\sigma)E)=0$ 对每个 $E\in\mathcal O_{\mathcal Q}$ 成立。这是定义 4.1 的迹配对版本，不把效果的实线性组合当成额外可执行的效果。
+
+对定义 1.4 的实际菜单，复用 [《实际等待读出下的近似单份量子边界》Theorem 2.1](RECURSIVE_RELATIONAL_OBSERVATION_MEASUREMENT_RELATIVE_QUANTUM_BOUNDARY.md) 的首读归约，便有
+
+$$
+\sup_{\pi\in\mathcal Q}\operatorname{TV}(P_\rho^\pi,P_\sigma^\pi)
+=\sup_{t\geq0}\frac12\sum_s
+|\operatorname{tr}(Q_s(t)(\rho-\sigma))|.
+\tag{9.1}
+$$
+
+这里给出其在主定理中的实际记录含义。固定首读前的输入无关控制资料，同一生成元的等待合并为一个 $O(t)$。若之前就 Stop，两输入的记录律相同。否则首结果 $s$ 的支态为
+
+$$
+\Pi_sO(t)\rho O(t)^T\Pi_s=p_s\Pi_s.
+$$
+
+给定 $s$ 后，所有有限反馈、再次秩一读及 Stop 构成同一个概率核 $L_s(h)$，与原输入无关，且总质量为一。即使 $p_s=0$，也可从预定态 $\Pi_s$ 定义这个核，乘零即可，不使用零概率条件化。完整记录保留 $s$ 时，两个历史分布是 $p_sL_s(h)$ 与 $p'_sL_s(h)$，其 TV 恰为首分布 TV；遗忘记录是共同后处理，只能减小 TV。输入无关随机控制可先固定再积分，仍受右侧上确界控制。反向以等待 $t$、完整读并立即 Stop 实现任意右侧分布。这覆盖随机控制、Stop 与零概率分支。增添历史门数不必增加对同一个初态的可区分信息。
+
+效果空间与导数证书亦直接引用 [《AURIC FIB 二阶关系完成》65.2–65.3](AURIC_FIB_SECOND_ORDER_RELATION_COMPLETION.md)。其结论在当前实帧为
+
+$$
+\mathcal O_{\mathcal Q}=\operatorname{Sym}_5(\mathbb R),\qquad
+\dim_{\mathbb R}\mathcal O_{\mathcal Q}=15.
+\tag{9.2}
+$$
+
+引用的参数对应是 $\mathcal L(X)=XA-AX$、$Q_s^{(k)}(0)=\mathcal L^k(\Pi_s)$。非负等待效果的有限维实张成闭合，右差商及其极限仍在其中；这只是张成证明，不增加导数仪器。用上三角十五坐标，次数零至四的累计秩为 $5,9,12,14,15$。以零起编号 $5k+s$ 选列
+
+$$
+0,1,2,3,4,5,6,7,8,10,11,12,15,16,20
+$$
+
+的行列式为 $-72$。原来源用 $AX-XA$，本处每个 $k$ 次列多 $(-1)^k$；选列次数之和为二十，故行列式符号不变。这里只用既有精确证书，不另立一个有限秩结果。
+
+写任意 Hermitian 密度态为 $\rho=S+iB$，其中 $S$ 实对称，$B$ 实反对称，则 (9.2) 给
+
+$$
+\rho\sim_{\mathcal Q}\sigma\quad\Longleftrightarrow\quad
+\operatorname{Re}\rho=\operatorname{Re}\sigma.
+$$
+
+归一化使十五维线性空间中的恒等坐标固定，故响应有十四个可变实坐标；二十四维全态空间在满秩处留下十维局部盲纤维。单位向量 $\psi_\pm=(e_N\pm i e_2)/\sqrt2$ 正交，其密度矩阵实部却相同，故由 (9.1) 在全部实际有限协议下不可区分。
+
+候选“删除虚部”说明这种商不等于物理压缩。复线性映射
+
+$$
+\mathscr R(X)=\frac{X+X^T}{2}
+$$
+
+正且保迹，在 Hermitian 上取实部，保留全部实对称效果概率。但在第 6 节的未归一 Choi 约定下
+
+$$
+C_{\mathscr R}=\frac{|\Gamma_d\rangle\langle\Gamma_d|+F_{\mathrm{swap}}}{2}.
+$$
+
+任意单位反对称向量 $\xi$ 与 $\Gamma_d$ 正交，且 $F_{\mathrm{swap}}\xi=-\xi$，故对应特征值为 $-1/2$。若输入 Bell 向量归一化，Choi 态相应特征值是 $-1/(2d)$，在五维为 $-1/10$。因此 $d\geq2$ 时它不是 CP，不能用作合法编码器。观察纤维上目标相同，只证明统计因子化，不证明有全态统一合法的量子删除操作。
+

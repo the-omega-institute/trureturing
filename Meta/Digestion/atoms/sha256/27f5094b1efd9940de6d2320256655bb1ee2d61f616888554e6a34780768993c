@@ -1,0 +1,36 @@
+**Theorem 15.2 (Finite face domain and exact responses).** A finite
+complete C1 tuple with the first five acquired readings exists precisely
+when $q\ne0$, and is then $\widehat W_1(t)$. Its fifth, sixth and
+terminal-$M$ responses are $p_1,v_1,m_1$. For positive $t$ in this
+domain,
+
+$$
+p_1\ne24\quad\Longleftrightarrow\quad t\ne\frac18.
+\tag{15.3}
+$$
+
+Proof. At C1 the positive traces $j,n,T,U$ are
+$t,t+1,t+1,2t+1$. The undivided parent equation of Definition 1.2 is
+
+$$
+\frac{2(t^3-4t-2)}{t(t+1)(2t+1)}(d-24)
+=-\frac{6(5t+2)(8t-1)}{5(t+1)(2t+1)}.
+\tag{15.4}
+$$
+
+The polynomial $t^3-4t-2$ is coprime to $(5t+2)(8t-1)$.
+Consequently its positive zeros cannot satisfy (15.4) with finite $d$.
+The factor $t+1$ of $q$ has no positive zero. Elsewhere (15.4) has
+the unique solution $d=d_1$. The first four original readings then
+give exactly the whole interpolant in (15.2). Substitution at clocks
+$5,6,7$, with respective traces $U+n,2U+n,3U+2n$, gives (15.1)–(15.2).
+Finally multiplication gives
+
+$$
+P_1-24q_d=-6(8t-1)(7t^3+11t^2+19t+10).
+\tag{15.5}
+$$
+
+The last factor is positive for $t>0$, proving (15.3). In particular
+the exclusion of a zero of $q$ removes no finite complete C1 tuple. ∎
+

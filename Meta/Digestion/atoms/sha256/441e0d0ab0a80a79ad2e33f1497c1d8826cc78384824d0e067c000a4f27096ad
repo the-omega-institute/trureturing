@@ -1,0 +1,21 @@
+**Proposition 18.2 (self-encompassing literal image exclusion).** Let an
+image of the complete encompassing endpoint at cut $k$ have $m>0$ wire bits.
+If the image is resident inside that same endpoint with one stored symbol cell
+per wire bit, or if all its bits have already been printed by cut $k$, the
+respective construction is impossible.
+
+**Proof.** A complete literal image has at least eight bits for each of the
+$C(k)$ represented cells, so $m\ge8C(k)$. If it is resident in the endpoint,
+its $m$ distinct payload bits occupy cells counted by $C(k)$, hence
+$C(k)\ge m$, which contradicts $m\ge8C(k)$ for $C(k)>0$. If it has all been
+printed by cut $k$, one output event is required per wire bit, so $k\ge m$;
+then $m\ge8C(k)\ge8(k+2)>k$, again a contradiction. The nested 64-port
+list gives the stronger source codec subtotal $m\ge257+36C(k)$ when that
+list is included: an eight-bit cell list on port $i$ has length $18c_i+1$,
+and the outer list has length
+$1+\sum_{i=0}^{63}(2(18c_i+1)+2)=257+36C(k)$.
+The eight-bit inequality already proves the exclusion.
+A later sender/archive/mailbox/receiver delivery escapes the self-containment
+premise because those cells lie outside the represented older endpoint.
+$\square$
+

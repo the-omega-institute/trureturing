@@ -1,0 +1,10 @@
+**Proposition 8.2 (the strict common-cutoff tie costs another label).** For either source in Proposition 8.1, instead take
+
+$$
+\epsilon=D/2=\frac{512}{60073}.
+$$
+
+Then $N_2=10$, $J=11$, $N_1=12$, and $N_{\mathrm{gen}}=18$. The common-decoder minimum is $16$, and the first candidate size $17$ is impossible.
+
+**Proof (8.2).** Here $2\epsilon=D<1/25$, and strict decrease gives $N_2=10$, $J=11$ at the exact tie. The ratios above show $\delta_{11}/D>2/3>1/2$ and $\delta_{12}/D<40/89<1/2$, so $N_1=12$. Theorem 4.3 requires $6+\min(12,12)=18$, and the source-exact truncation attains $18$. Lemma 4.1 explains why a periodic retained decoder cannot use the diameter tie. The result concerns positive finite histories, not an actual infinite $B$ run. $\square$
+

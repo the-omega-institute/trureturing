@@ -1,0 +1,70 @@
+## 48. What predictions can use, and which response remains unacquired
+
+For any fixed pair in (46.2), let $q_N$ be an arbitrary real-valued
+prediction depending only on $R_7^J$, its common public inputs and $N$.
+No restriction on mathematical computation is imposed. Equality of
+these inputs gives the same $q_N$ for both worlds. The generic
+two-point prediction inequality, reused from retained Clock8
+Corollary 16.3, gives
+
+$$
+\max\{|q_N-Y_N(W)|,|q_N-Y_N(W')|\}
+\ge\tfrac12|Y_N(W)-Y_N(W')|.
+\tag{48.1}
+$$
+
+It follows immediately from the triangle inequality. Its application
+to this exact acquired record and task yields, for every
+$1\le\rho<\varphi$,
+
+$$
+\lim_{N\to\infty}
+\frac{\max\{|q_N-Y_N(W)|,|q_N-Y_N(W')|\}}
+     {\rho^N(1+N)^3}=+\infty.
+\tag{48.2}
+$$
+
+Consequently no such predictor has a finite normalized error bound
+uniform over this two-world record fiber and all $N$. For each fixed
+$\rho$, at least one endpoint has unbounded normalized error: if both
+error sequences were bounded, their maximum would be bounded,
+contradicting (48.2). This does not assert divergence at each endpoint,
+or both endpoints' unboundedness, or one failing endpoint independent
+of $\rho$. An exact autonomous predictor initialized solely from this
+record is also a record-only predictor. Extra lawfully acquired data
+or distinguishing retained inputs change that comparison class.
+
+The seventh-$M$ alternative and a later numerical eighth-$M$ response
+must remain separate:
+
+$$
+\begin{aligned}
+m(W)&=d+g(7)\operatorname{tr}(MQ_6P),&
+MQ_6&=\begin{pmatrix}5&2\\8&3\end{pmatrix},\\
+Y_1(W)&=d+g(8)\operatorname{tr}(MQ_7P),&
+MQ_7&=\begin{pmatrix}3&1\\8&3\end{pmatrix}.
+\end{aligned}
+\tag{48.3}
+$$
+
+Neither $m$ nor $Y_1$ is acquired on the declared seventh-$J$ run.
+They use different products and different absolute gain inputs; there
+is no clock reset or identification between them. IX Theorem 21.1
+also supplies $d_+-d_-=2L_dh+O(h^3)$ and
+$m_+-m_-=2L_mh+O(h^3)$ with $621<L_d<623$, $66<L_m<67$.
+Thus the witnessed exact record also fails to recover geometry, drift,
+whole-gain direction and the alternative $m$. Those terminal
+non-injectivity facts are supplier reuse. The new conclusion (48.2)
+compares one fixed pair under one common numerical continuation,
+rather than comparing unexecuted different terminal actions.
+
+SVII Theorem 25.2 and its §30 proof already give injectivity of $m$ on
+every entire child in an existential neighborhood of this first base.
+An alternative run choosing seventh $M$ would have a different exact
+record and the supplied mathematical source inverse there. That is
+not a new recovery theorem or an installed inverse. Unequal $m$ on
+the selected $J$ pair alone would not exclude some other equal-$M$
+pair. IX §22 invokes the entire-child theorem for that local exclusion;
+the global independent equal-$J$/equal-$M$ pair problem of IX (18.3)
+remains open in its original domain.
+

@@ -1,0 +1,32 @@
+**定理 10.1（FIB 幂读出的精确阶数容量）。** 对整数 $k\ge1$，齐次 $k$ 次关系的标准单项式为
+
+$$
+a^k,a^{k-1}b,\ldots,ab^{k-1},b^k,
+$$
+
+线性空间维数为 $k+1$。实际序列 $F_{n+3}^k$ 在固定有限维实线性合同中的最小精确维数也为 $k+1$。
+
+证明。固定 $b=1$ 时，单项式的线性关系变成一个在所有实 $a$ 上为零的次数至多 $k$ 的多项式，故全部系数为零。这是经典 $\operatorname{Sym}^k(\mathbb R^2)$ 的维数步骤。对实际序列，Binet 公式给
+
+$$
+F_{n+3}=A\phi^n+B\psi^n,\qquad
+A=\frac{\phi^3}{\sqrt5},\quad B=-\frac{\psi^3}{\sqrt5},\quad
+\psi=-\phi^{-1}.
+$$
+
+$A,B$ 非零，因而
+
+$$
+F_{n+3}^k=\sum_{j=0}^k c_j\lambda_j^n,
+\quad c_j=\binom kj A^{k-j}B^j\ne0,\quad
+\lambda_j=\phi^{k-j}\psi^j=(-1)^j\phi^{k-2j}.
+$$
+
+$|\lambda_j|$ 随 $j$ 严格递减，所以这 $k+1$ 个实数两两不同。取 $V_{ij}=\lambda_j^i$，$0\le i,j\le k$，则相应 Hankel 矩阵满足
+
+$$
+H_{ij}=F_{i+j+3}^k,\qquad H=V\operatorname{diag}(c_0,\ldots,c_k)V^T.
+$$
+
+Vandermonde 行列式 $\prod_{i<j}(\lambda_j-\lambda_i)$ 非零，且全部 $c_j$ 非零，故 $\det H\ne0$。任何 $d$ 维线性实现均将它分解为 $(k+1)\times d$ 与 $d\times(k+1)$ 两矩阵之积，所以 $d\ge k+1$。反向取对角状态矩阵 $\operatorname{diag}(\lambda_j)$、初态全一、输出系数 $c_j$，得到 $k+1$ 维上界；也可用对称幂推进。于是 $k=1,2,3,4$ 分别给 $2,3,4,5$ 维。有关幂读出、Bloch 与二次网络步骤的仓内先例见 [FIB 原子递归全息边界几何](FIB_ATOM_RECURSIVE_HOLOGRAPHIC_BOUNDARY_GEOMETRY.md)，本条用于本卷阶数选择的边界。$\square$
+

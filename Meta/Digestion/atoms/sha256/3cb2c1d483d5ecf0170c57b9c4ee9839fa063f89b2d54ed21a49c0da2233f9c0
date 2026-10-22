@@ -1,0 +1,89 @@
+**Theorem 8.3 (Explicit source bounds throughout this base region).**
+Every world in $\mathcal S_K$ has
+
+$$
+b<30,\qquad c<10,\qquad j>1/16.
+\tag{8.6}
+$$
+
+Proof. First consider any strict parent world with $b\ge30$. Since
+$bc=r(1-r)\le1/4$, we have $j<b+1,n<b+2$ and
+$\Lambda>1-8/b>0$. Also
+
+$$
+Q_b<-3-\frac5{b+1}+\frac{40}{b+2}<0.
+$$
+
+Since $F_b>0$, (8.3) gives $g(5)<0$. The right side of its last
+identity is less than
+
+$$
+\frac{972+1854b}{5TU}-\frac{192}{b+2}.
+$$
+
+After multiplication by $5TU(b+2)>0$, its numerator is
+$-66b^2+1800b+984$. This is $-4416$ at $30$ and decreases thereon,
+because its derivative is $-132b+1800<0$. Now that $\Lambda>0$ is
+proved, the parent equation yields
+$d=(24\Lambda-D_b)/\Lambda<0$. Thus
+$p=d+(U+n)g(5)<0$. A world with $p\ge0$ cannot have $b\ge30$.
+
+If instead $c\ge10$, the rank relation gives $b\le1/40$,
+$T\le41/40,U\le21/20$ and $j,n\ge c$. The explicit functions give
+
+$$
+6<\Lambda<8,\quad F_b<0,\quad
+\frac45<|F_b|<\frac65,\quad
+Q_b\ge32-\frac{247}{8c}>28.
+$$
+
+For example the lower bound on $\Lambda$ follows from
+$1+240/41+20/21-8/10>6$; the bounds on $F_b$ follow by clearing
+$5TU$ on $0\le b\le1/40$. It follows that
+
+$$
+g(5)<-14/5,\qquad
+0<e=-\frac{F_b(5b+2)}\Lambda<17/40<1/2.
+$$
+
+Consequently $p<49/2-(14/5)c\le-7/2$. Thus $p\ge0$ forces both
+upper bounds in (8.6).
+
+For the remaining bound suppose $j\le1/16$. Then $b\le1/16$,
+$D_b<0$ and $\Lambda<0$. Put $h_e=-e>0$ and
+$\ell=1+6/T+1/U<8$. The undivided parent gives
+
+$$
+h_e(4/j+4/n-\ell)=|D_b|\le12/5.
+$$
+
+Indeed $|D_b|=6(1-8b)(5b+2)/(5TU)\le12/5$ on this interval.
+Since $4/j-\ell>56$, it follows that
+
+$$
+h_e<3/70,\qquad
+\frac{15h_e}j+\frac{10h_e}n
+\le\frac{15}{4}(h_e\ell+|D_b|)<30h_e+9.
+$$
+
+The original fifth-clock interpolation row, with $e=-h_e$, now gives
+
+$$
+\begin{aligned}
+g(5)&=96-4h_e+15h_e/j-20(27/5+h_e)/T+10h_e/n\\
+&<105-108/T+h_e(26-20/T)\\
+&\le57/17+(3/70)(122/17)=2178/595<4.
+\end{aligned}
+$$
+
+Here $T\le17/16$. Directly from the strict source,
+$n=j+r<j+1$, $U=1+2b\le1+2j$, so
+$U+n<2+3j\le35/16$. Since $d<24$,
+
+$$
+p<24+\frac{35}{16}\max\{g(5),0\}<131/4<33.
+$$
+
+Therefore $p\ge33$ forces $j>1/16$. All bases in (8.1) have
+$p\ge56$, proving (8.6). ∎
+

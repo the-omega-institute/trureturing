@@ -1,0 +1,22 @@
+**Definition 1.2 (original source task).** Let
+$\mathcal T=\alpha\mid\beta\mid\langle\mathcal T,\mathcal T\rangle$ be the
+nonempty ordered binary-tree algebra, retaining brackets and leaf labels.
+Let $\lambda$ count leaves and let $\mathcal T_h=\{t:\lambda(t)\le h\}$ for
+$h\ge1$. The original substitution is
+
+$$
+\rho\alpha=\beta,\qquad \rho\beta=\langle\beta,\alpha\rangle,\qquad
+\rho\langle s,t\rangle=\langle\rho s,\rho t\rangle.
+$$
+
+The fixed-guard task $F_h$ has source $t\in\mathcal T_h$. ReadE returns the
+original Clifford value $E(t)$. TagRead at any finite $L/R$ address returns its
+literal alpha, beta, branch or absent reply. Rho, Left($v$), Right($v$), for
+every actual nonempty finite context $v$, form the whole candidates
+$\rho t,\langle v,t\rangle,\langle t,v\rangle$. They accept exactly when the
+candidate has at most $h$ leaves. Acceptance installs that whole candidate;
+rejection retains $t$ and exposes no candidate value. Rejection is executed
+work with an event, row and successor. Busy second calls and unauthorized
+reads/writes are unexecuted `none`. A completed stop, an absent literal reply,
+a source reject and a paid archive `no-row` have distinct types.
+

@@ -1,0 +1,48 @@
+**Corollary 110.2 (necessary localization and the singular contraction endpoint).** Define the starred localization constants
+
+$$
+\begin{gathered}
+L=4\sqrt2 r=2\sqrt{4+2\sqrt2},\qquad k_*=L-3,\\
+\delta_*=5-k_*^2,\qquad
+\varepsilon_*=1-\left(\frac{L-\sqrt5}{3}\right)^2,\qquad
+p_\pm=\left(\frac{2k_*\pm\sqrt{\delta_*}}5\right)^2.
+\end{gathered}
+\tag{U.13}
+$$
+
+Every feasible point with $\Theta>r$ satisfies
+
+$$
+p_-<p<p_+,\qquad s_2^2<\delta_*,\qquad
+\tau+\zeta<\varepsilon_*,\qquad s_1<1,\qquad p<9/10.
+\tag{U.14}
+$$
+
+In particular the joint inequality
+
+$$
+\sqrt{5-s_2^2}+3\sqrt{1-\tau-\zeta}\leq L
+\tag{U.15}
+$$
+
+is sufficient for $\Theta\leq r$.
+
+Proof. A strict violation and (U.12) imply each of
+
+$$
+2\sqrt p+\sqrt{1-p}>k_*,\qquad
+\sqrt{5-s_2^2}+3>L,\qquad
+\sqrt5+3\sqrt{1-\mu}>L.
+$$
+
+The function $2\sqrt p+\sqrt{1-p}$ increases up to $p=4/5$ and decreases thereafter. Its intersections with $k_*$ on the unit quarter circle $a^2+b^2=1$ solve $2a+b=k_*$, giving $a=(2k_*\pm\sqrt{5-k_*^2})/5$ and hence exactly $p_\pm$. These intersections are in $[1/2,1]$, with the strict superlevel interval between them; this also follows directly from $3/\sqrt2<k_*<\sqrt5$ and $2<k_*$. Squaring the other two positive comparisons gives the stated strict bounds on $s_2^2$ and $\mu$.
+
+If $s_1=1$, then $\eta_1=0$, $R\leq1$, and the first line of (U.12) gives
+
+$$
+\Theta\leq\frac{\sqrt5}{4\sqrt2}+\frac12<\frac9{10}<r.
+\tag{U.16}
+$$
+
+For the first strict comparison, $5<(8\sqrt2/5)^2=128/25$; for the second, $c>81/100$. Thus $I_2-G$ cannot be singular at a strict violation. If $p\geq9/10$, monotonicity on $[4/5,1]$ gives $2\sqrt p+\sqrt{1-p}\leq7/\sqrt{10}<k_*$. One exact verification of the last comparison uses $\sqrt2>7/5$: then $L>1043/200$, while $7/\sqrt{10}<443/200$, as is checked by squaring positive quantities. This excludes that interval. Equation (U.15) is the direct contrapositive of the last bound in (U.12). $\square$
+

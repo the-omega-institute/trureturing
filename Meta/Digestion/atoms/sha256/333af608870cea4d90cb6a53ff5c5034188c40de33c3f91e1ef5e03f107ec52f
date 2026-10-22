@@ -1,0 +1,20 @@
+**Proposition 6.1 (The positive-parameter conic lifts are false worlds).**
+For every real $b>0$ in Lemma 3.2,
+
+$$
+r_-<0,\qquad r_+>1+b>1,\qquad
+y_4-18=-\frac{6(1800b^2+1391b+158)}{175T}<0.
+$$
+
+Thus each displayed raw joint lift fails the strict source conditions
+and the original clock-four reading.
+
+Proof. The root product is $-b^2<0$, so one root is negative and one
+positive; $R_b(1+b)=-b^2<0$ puts the positive root above $1+b$.
+Their slack squares in Lemma 3.1 consequently cannot all be nonnegative
+real numbers. They are valid complex slack lifts. At clock four the
+literal trace is $U$, and substitution into $24+UB_4-18$ gives the
+stated rational expression. All numerator coefficients and $T$ are
+positive for $b>0$. The raw parent nevertheless vanished because its
+multiplier contained $n=0$. ∎
+

@@ -1572,3 +1572,1178 @@ classical tools. No claim of priority in the mathematical literature is
 made for the source-specific conclusions.
 
 ## 追加锚（本行以下为增补区）
+
+## 12. The entire regular inventory on a closed actual negative-J segment
+
+### 12.1. Original worlds, the full base and the inherited interfaces
+
+Retain the complete worlds of (1.1), with their literal chronological
+products:
+
+$$
+\begin{gathered}
+W=(P(r,b),g,d),\qquad
+P(r,b)=\begin{pmatrix}r&b\\r(1-r)/b&1-r\end{pmatrix},\\
+0<r<1,\qquad b>0,\qquad
+0\ne g\in\mathbb R[s],\qquad\deg g\le3,\qquad d\in\mathbb R,\\
+J=\begin{pmatrix}0&1\\1&0\end{pmatrix},\qquad
+M=\begin{pmatrix}0&1\\1&1\end{pmatrix},\qquad
+Q_0=I,\quad Q_i=E_iQ_{i-1},\\
+(E_1,\ldots,E_6)=(J,M,J,M,M,M),\\
+y_i=d+g(i)\operatorname{tr}(Q_iP),\qquad
+(y_0,\ldots,y_6)=(0,24,147/5,24,18,p,v).
+\end{gathered}
+\tag{12.1}
+$$
+
+Both terminal alternatives act at clock seven on this same complete
+world. With
+$j=b+r(1-r)/b$, $n=j+r$, $T=1+b$, $U=1+2b$, their traces and readings are
+
+$$
+\begin{gathered}
+(\operatorname{tr}(Q_iP))_{i=0}^6
+ =(1,j,T,n,U,U+n,2U+n),\\
+a(W)=d+(T+2j+4r)g(7),\qquad
+m(W)=d+(3U+2n)g(7).
+\end{gathered}
+\tag{12.2}
+$$
+
+The entire $C(p,v)$ contains every world satisfying (12.1). The
+independent-pair question (11.4) retains the quantifiers
+
+$$
+\begin{gathered}
+\exists\,p\ne24,\ v,\ a,\ m,\quad W_0,W_1,W_2,W_3\in C(p,v):\\
+W_0\ne W_1,\quad a(W_0)=a(W_1)=a,\qquad
+W_2\ne W_3,\quad m(W_2)=m(W_3)=m.
+\end{gathered}
+\tag{12.3}
+$$
+
+The pairs may overlap or be disjoint, and $a,m$ are unrelated common
+values. Every world has its own fixed drift and one whole polynomial.
+Lower gain degrees, zero samples and repeated gain roots remain allowed.
+There is no shared-drift condition, reset, copy, extra port, clock shift
+or replacement of the original source domain.
+
+Use the exact rational interval and full-base rectangle
+
+$$
+\begin{gathered}
+Q=[999/10^6,1001/10^6],\\
+p_c=-4978573051372107/10^{13},\qquad r_p=17/500,\\
+v_c=-476795440523806079/(5\cdot10^{14}),\qquad r_v=31/500,\\
+\mathcal B=[p_c-r_p,p_c+r_p]\times[v_c-r_v,v_c+r_v].
+\end{gathered}
+\tag{12.4}
+$$
+
+All terminating decimals below are exact rationals. The following
+ordinary mathematical interfaces are reused with their original
+conditions and parameter correspondence.
+
+| Published interface | Correspondence used here |
+| --- | --- |
+| [IX, Section 12, (12.1)–(12.9)](https://github.com/the-omega-institute/trureturing/blob/79635cbec3aca2eaed7f64dcc3ce6ce4ba13a0db/docs/develop/theory/FIB_STRICT_REAL_JOINT_INCIDENCE_SUPPORT_IX.md#12-reused-whole-world-projection-inverse-and-normalized-carrier) | The identical complete world has $x=n/U$, $H=Ug$, the same $d,p,v$, the faithful inverse, and the necessary carrier $R=0$. Its (12.8) covers regular sources even at zeros of the intermediate factors $A$ or $F_0$. |
+| [IX, Sections 24–26, especially (24.5)–(24.8), (25.1)–(25.2), Theorem 26.1](https://github.com/the-omega-institute/trureturing/blob/79635cbec3aca2eaed7f64dcc3ce6ce4ba13a0db/docs/develop/theory/FIB_STRICT_REAL_JOINT_INCIDENCE_SUPPORT_IX.md#24-polynomial-secants-in-the-source-chart) | The exact secant zero $(X,Y,K_{\rm sec})(q)$ is the continued first equal-$J$ germ, within coordinate error $\rho=10^{-12}$ of the specified predictors on every closed cell, including their seams. $K_{\rm sec}$ is IX's secant coordinate $K$. |
+| [IX, Theorem 27.1 and (27.3)](https://github.com/the-omega-institute/trureturing/blob/79635cbec3aca2eaed7f64dcc3ce6ce4ba13a0db/docs/develop/theory/FIB_STRICT_REAL_JOINT_INCIDENCE_SUPPORT_IX.md#27-the-unique-transverse-strict-source-corner) | Its corner satisfies $q_*>0.0022954525$. Consequently the whole closed $Q$ lies strictly in $0<q<q_*$. |
+| [IX, Theorem 28.1, (28.3)–(28.7)](https://github.com/the-omega-institute/trureturing/blob/79635cbec3aca2eaed7f64dcc3ce6ce4ba13a0db/docs/develop/theory/FIB_STRICT_REAL_JOINT_INCIDENCE_SUPPORT_IX.md#28-original-world-lifts-and-the-closed-negative-base-range) | Before that corner, the two endpoints lift to distinct strict regular original worlds with equal $p,v,a$, using their respective whole gains and fixed drifts. |
+
+These interfaces include their ordinary proofs. The full continuation,
+germ attachment, corner proof and faithful-inverse proof are used in
+their published scope. The calculations below supply the particular
+full-base inclusion, exhaustive regular inventory and quantitative
+terminal separation on (12.4).
+
+The class
+$\mathscr R=\{0<b\le1/10,\ 1\le r/b\le107/100\}$
+in [IX, Sections 35–40](https://github.com/the-omega-institute/trureturing/blob/79635cbec3aca2eaed7f64dcc3ce6ce4ba13a0db/docs/develop/theory/FIB_STRICT_REAL_JOINT_INCIDENCE_SUPPORT_IX.md#35-a-source-class-containing-the-negative-continuation)
+has its stated restricted terminal-order theorem. Its containment of the
+selected $J$ endpoints does not place all companions there. Moreover,
+[IX, Proposition 41.1 and Section 42](https://github.com/the-omega-institute/trureturing/blob/79635cbec3aca2eaed7f64dcc3ce6ce4ba13a0db/docs/develop/theory/FIB_STRICT_REAL_JOINT_INCIDENCE_SUPPORT_IX.md#41-strict-rational-failure-of-the-exterior-sign-implication)
+give a strict regular exterior world with $v-2p>0$, equivalently the
+negative product in IX (41.10). Thus that uniform exterior sign
+implication cannot remove companions. The argument here counts all
+regular projections over $\mathcal B$.
+
+### 12.2. The regular source circuit and the exact continued endpoints
+
+To specify the regular denominator and every evaluated response, put
+$t=r/b$ and use the polynomial circuit of IX (12.5) and (24.2):
+
+$$
+\begin{gathered}
+r=tb,\quad j=t+b(1-t^2),\quad n=j+tb,\quad T=1+b,\quad U=1+2b,\\
+D_s=5\{(b^2+8b+4)jn-2TU(j+n)\},\qquad S=(8b-1)(2+5b),\\
+C_0=-24D_s+3Sjn,\qquad C_1=3Sn,\\
+C_2=3(49b+34)jn-54U(j+n),\qquad C_3=3Sj,\\
+B_5=-4C_0+15C_1-20C_2+10C_3,\\
+B_6=-10C_0+36C_1-45C_2+20C_3,\\
+B_7=-20C_0+70C_1-84C_2+35C_3,\\
+N_p=-C_0+(U+n)B_5,\qquad N_v=-C_0+(2U+n)B_6,\\
+N_a=-C_0+(T+2j+4tb)B_7,\qquad N_m=-C_0+(3U+2n)B_7.
+\end{gathered}
+\tag{12.5}
+$$
+
+A world is called regular here exactly when $D_s\ne0$. Denote its
+subset of the entire child by $C_{\rm reg}(p,v)$. The supplied
+regular whole-world lift is
+
+$$
+\begin{gathered}
+d=-C_0/D_s,\qquad
+g(s)=\frac1{D_s}\sum_{i=0}^3 C_i
+ \prod_{\substack{0\le k\le3\\k\ne i}}\frac{s-k}{i-k},\\
+(p,v,a,m)=(N_p,N_v,N_a,N_m)/D_s.
+\end{gathered}
+\tag{12.6}
+$$
+
+The parent identities IX (12.7) and (28.6), with $D=D_s$ there,
+restore all five fixed parent readings in (12.1); $B_5,B_6,B_7$
+evaluate this same interpolant at clocks five, six and seven. Unequal
+readings $0,24$ ensure $g\ne0$ without a nonzero-sample assumption.
+
+Let $(X,Y,K_{\rm sec})(q)$ be precisely the exact zero of IX (24.5)
+identified in Theorem 26.1, rather than its rational predictor. Define
+
+$$
+h=\sqrt q,\qquad
+t_\pm=X\pm K_{\rm sec}h,\qquad b_\pm=Y\pm h,\qquad
+r_\pm=t_\pm b_\pm.
+\tag{12.7}
+$$
+
+IX (24.7), applied separately to $p,v,a$, gives equality of these
+three responses when both $D_{s,\pm}$ are nonzero. Theorems 27.1 and
+28.1 supply that condition and strict original worlds $W_\pm(q)$
+for $0<q<q_*$. Their distinction follows from
+$b_+-b_-=2\sqrt q>0$. In particular this construction applies on
+the entire closed $Q$, whose lower endpoint is positive and whose
+upper endpoint is less than the stated lower bound for $q_*$.
+
+### 12.3. The normalized necessary carrier and the faithful coordinates
+
+For any compatible original world put $x=n/U>0$ and $H=Ug$. Its
+whole polynomial is the unique degree-at-most-three interpolant at
+the original nodes $3,4,5,6$ with values
+
+$$
+h_3=(24-d)/x,\qquad h_4=18-d,\qquad
+h_5=(p-d)/(x+1),\qquad h_6=(v-d)/(x+2).
+\tag{12.8}
+$$
+
+Its other needed values, and the general zero-safe inverse quantities,
+are
+
+$$
+\begin{gathered}
+H_0=20h_3-45h_4+36h_5-10h_6,\\
+H_1=10h_3-20h_4+15h_5-4h_6,\\
+H_2=4h_3-6h_4+4h_5-h_6,\qquad
+H_7=-h_3+4h_4-6h_5+4h_6,\\
+B_0=294/5-2d-H_2,\qquad \chi=d^2+B_0^2,\\
+U=(-dH_0+B_0H_2)/\chi,\qquad b=(U-1)/2,\\
+j=U(24-d)/H_1,\qquad r=xU-j,\qquad
+g=H/U,\qquad m=d+(3+2x)H_7.
+\end{gathered}
+\tag{12.9}
+$$
+
+For actual $p\ne24$ worlds, IX (12.1)–(12.2) prove
+$d\ne24$, $H_1\ne0$, $\chi>0$, $U>1$ and the restored identities
+$dU=-H_0$, $B_0U=H_2$. Together with $0<r<1$ and
+$j=b+r(1-r)/b$, those are the faithful inverse guards. Thus a
+permitted $(x,d)$ determines at most one complete world, including
+its entire gain. No condition $d\ne0$ is needed for this general
+interface.
+
+The following denominator is different from $D_s$:
+
+$$
+\begin{gathered}
+D=x(x+1)(x+2),\\
+z_3=(24-d)(x+1)(x+2),\quad z_4=(18-d)D,\\
+z_5=(p-d)x(x+2),\quad z_6=(v-d)x(x+1),\\
+a_0=20z_3-45z_4+36z_5-10z_6,\\
+a_1=10z_3-20z_4+15z_5-4z_6,\qquad
+a_2=4z_3-6z_4+4z_5-z_6,\qquad
+z_*=xa_1-D(24-d).
+\end{gathered}
+\tag{12.10}
+$$
+
+Here $a_i=DH_i$ for $i=0,1,2$. Define the necessary polynomials
+
+$$
+\begin{aligned}
+f&=5dDa_2+a_0\{(294-10d)D-5a_2\},\\
+\mathcal K&=4a_0^2z_*^2+2a_0(dD-a_0)z_*a_1\\
+&\qquad -(a_0+dD)\{dD+(1-2x)a_0\}a_1^2.
+\end{aligned}
+\tag{12.11}
+$$
+
+$\mathcal K$ is IX (12.3)'s polynomial called $K$; it is unrelated
+to the quartic $K$ of (2.5) or the secant coordinate $K_{\rm sec}$.
+Write $f=Ad^2+B_fd+C_f$ and
+$\mathcal K=\sum_{i=0}^4 k_id^i$. Before any specialization, form
+the following exact polynomial quotients in $\mathbb Q[x,p,v]$:
+
+$$
+\begin{aligned}
+\alpha&=k_4(-B_f^3+2AB_fC_f)+k_3A(B_f^2-AC_f)
+          -k_2A^2B_f+k_1A^3,\\
+\zeta&=k_4(-B_f^2C_f+AC_f^2)+k_3AB_fC_f-k_2A^2C_f+k_0A^3,\\
+F_0&=405x^3+(975-18p+5v)x^2+(90-36p+5v)x-480,\\
+E&=(A\zeta^2-B_f\alpha\zeta+C_f\alpha^2)/A^3,\qquad
+R=E/(256D^8F_0^2).
+\end{aligned}
+\tag{12.12}
+$$
+
+Expansion gives zero remainder in both polynomial divisions.
+The resulting $R$ has coordinate degrees $(18,6,6)$ and total
+$(p,v)$ degree six. In particular $\deg_xR\le18$ under every
+base specialization. These definitions are exactly IX (12.3)–(12.4),
+with the notation change $\mathcal K=K$ just specified.
+
+Necessity at $A=0$ or $F_0=0$ does not follow merely from cancelling
+those factors at a point. Use the supplied source identity IX (12.8):
+if $R=\sum c_{ijk}x^ip^jv^k$, then
+
+$$
+\sum c_{ijk}n^iU^{18-i}N_p^jN_v^kD_s^{6-j-k}=0.
+\tag{12.13}
+$$
+
+For a regular original source, its left side is
+$U^{18}D_s^6R(n/U,N_p/D_s,N_v/D_s)$; $U>0$ and $D_s\ne0$.
+Thus every regular original world satisfies $R=0$, including those
+exceptional intermediate points. Every such world also satisfies
+$f=\mathcal K=0$ by the same published inverse. Neither $A$ nor
+$F_0$ is inverted at a world. No exclusion of the quartic-$K=0$
+layer of Section 4 is made here.
+
+### 12.4. Eighteen uniform disks exhaust the carrier
+
+For a rational complex center $c$, expand the polynomial just defined:
+
+$$
+R(c+z,p_c+u,v_c+w)=\sum_{k,j,\ell}T_{kj\ell}z^ku^jw^\ell.
+\tag{12.14}
+$$
+
+For a complex rational coefficient $a$ put
+$\mathfrak U(a)=|\Re a|+|\Im a|$ and
+$\mathfrak L(a)=\max(|\Re a|,|\Im a|)$. Define
+
+$$
+\begin{gathered}
+E_k=\sum_{j+\ell>0}\mathfrak U(T_{kj\ell})r_p^jr_v^\ell,\qquad
+U_k=\mathfrak U(T_{k00})+E_k,\\
+L_1=\mathfrak L(T_{100})-E_1,\qquad
+\Theta(c,\epsilon)=
+\frac{U_0+\sum_{k=2}^{18}U_k\epsilon^k}{L_1\epsilon}.
+\end{gathered}
+\tag{12.15}
+$$
+
+The exact rational coefficient comparisons give $L_1>0$ and
+the following strict bounds. Each displayed center and radius is
+rational, including the real and imaginary coordinates of the last
+two centers.
+
+| Disk $j$ | $\Re c_j$ | $\Im c_j$ | $\epsilon_j$ | $\Theta(c_j,\epsilon_j)<$ |
+| --- | --- | --- | --- | --- |
+| 0 | -18.1078145193260267 | 0 | $1/10$ | 0.270 |
+| 1 | -6.8548120586969603 | 0 | $1/100$ | 0.440 |
+| 2 | -5.6391380897664973 | 0 | $1/100$ | 0.268 |
+| 3 | -4.6679093711815433 | 0 | $1/100$ | 0.158 |
+| 4 | -3.1887959786467426 | 0 | $1/1000$ | 0.475 |
+| 5 | -3.1799246720608286 | 0 | $1/1000$ | 0.469 |
+| 6 | -2.4835588139286718 | 0 | $1/10000$ | 0.470 |
+| 7 | -0.4110614439347009 | 0 | $1/1000000$ | 0.558 |
+| 8 | 0.3434434654565345 | 0 | $1/100000$ | 0.198 |
+| 9 | 0.4075545729310278 | 0 | $1/100000$ | 0.271 |
+| 10 | 0.9678579505862664 | 0 | $1/1000$ | 0.150 |
+| 11 | 0.9930955345564154 | 0 | $1/1000$ | 0.230 |
+| 12 | 1.9223318809923248 | 0 | $1/1000$ | 0.122 |
+| 13 | 2.5069731622049084 | 0 | $1/1000$ | 0.146 |
+| 14 | 30.3412706951550927 | 0 | $1/100$ | 0.749 |
+| 15 | 30.3902806577818153 | 0 | $1/100$ | 0.756 |
+| 16 | 0.7235008085094468 | -0.1131405572686191 | $1/100000$ | 0.212 |
+| 17 | 0.7235008085094468 | 0.1131405572686191 | $1/100000$ | 0.212 |
+
+These comparisons are finite sums specified by (12.10)–(12.15).
+For a fixed $(u,w)\in[-r_p,r_p]\times[-r_v,r_v]$, the coefficient
+of $z$ in (12.14) has modulus at least $L_1$. On $|z|=\epsilon_j$,
+the modulus of the constant and degree-at-least-two terms together is
+at most $U_0+\sum_{k=2}^{18}U_k\epsilon_j^k<L_1\epsilon_j$.
+Rouché's theorem therefore gives exactly one root, counted with
+multiplicity, in each open disk for every base in $\mathcal B$.
+
+The rational centers also give
+$|c_i-c_j|^2>(\epsilon_i+\epsilon_j)^2$ for every $i\ne j$,
+so the disks are pairwise disjoint. Their eighteen roots exhaust the
+degree-at-most-eighteen polynomial. Hence its degree is exactly
+eighteen, all roots are simple, and no other complex root exists,
+uniformly on the entire closed $\mathcal B$.
+
+Disks 0–7 are wholly in the negative real half-plane. Disks 16–17
+miss the real axis. For real-centered disks the unique root is real,
+because conjugation preserves both the real polynomial and the disk.
+Consequently exactly eight positive real carrier roots remain,
+one in each disk 8–15. This accounts for every possible $x>0$,
+without imposing a source box on the original worlds.
+
+### 12.5. All drift roots and the strict-source filters
+
+For $8\le j\le15$ write
+$I_j=[c_j-\epsilon_j,c_j+\epsilon_j]$ for the full real diameter.
+At a rational drift endpoint $d_e$, expand
+
+$$
+f(c_j+\xi,p_c+u,v_c+w,d_e)
+ =\sum_{\alpha,\beta,\gamma}
+ t_{\alpha\beta\gamma}(d_e)\xi^\alpha u^\beta w^\gamma,
+\qquad
+\tau_j(d_e)=
+\sum_{\alpha+\beta+\gamma>0}
+ |t_{\alpha\beta\gamma}(d_e)|
+ \epsilon_j^\alpha r_p^\beta r_v^\gamma.
+\tag{12.16}
+$$
+
+The interval
+$t_{000}(d_e)+[-\tau_j(d_e),\tau_j(d_e)]$
+encloses $f$ on $I_j\times\mathcal B$ at that endpoint.
+In each row of the table, for each endpoint separately, the printed
+sign times $t_{000}(d_e)$ minus $\tau_j(d_e)$ exceeds the printed
+integer margin. Thus the signs and margins hold on the whole box,
+not just at the center or at a projected root.
+
+| Disk | Branch | Rational drift endpoints $(d_l,d_u)$ | Signs at $(d_l,d_u)$ | Both endpoint absolute margins $>$ | Uniform inverse filter |
+| --- | --- | --- | --- | --- | --- |
+| 8 | 0 | $(-158.819,-158.618)$ | $+,-$ | 6620 | $b<-9.922$ |
+| 8 | 1 | $(-229.274,-229.073)$ | $-,+$ | 5609 | $b<-1.531$ |
+| 9 | 0 | $(-238.519,-238.318)$ | $+,-$ | 3162 | $b<-5.346$ |
+| 9 | 1 | $(-292.909,-292.708)$ | $-,+$ | 3016 | $b<-2.079$ |
+| 10 | 0 | $(585.481,589.482)$ | $+,-$ | 154730 | possible lift retained |
+| 10 | 1 | $(393.466,397.467)$ | $-,+$ | 358795 | $r>3.447$ |
+| 11 | 0 | $(547.055,551.056)$ | $+,-$ | 336313 | possible lift retained |
+| 11 | 1 | $(362.349,366.350)$ | $-,+$ | 619656 | $r>3.915$ |
+| 12 | 0 | $(170.268,172.269)$ | $+,-$ | 12668743 | $b<-0.249$ |
+| 12 | 1 | $(118.501,118.702)$ | $-,+$ | 260469 | $r>19.198$ |
+| 13 | 0 | $(124.805,125.006)$ | $+,-$ | 1190290 | $b<-0.484$ |
+| 13 | 1 | $(90.104,90.305)$ | $-,+$ | 2384863 | $r>25.641$ |
+| 14 | 0 | $(26.046,26.067)$ | $+,-$ | 19567497167 | $b<-1.679$ |
+| 14 | 1 | $(24.447,24.468)$ | $-,+$ | 17615104790 | $b<-0.334$ |
+| 15 | 0 | $(26.038,26.059)$ | $+,-$ | 18976836893 | $b<-1.682$ |
+| 15 | 1 | $(24.436,24.457)$ | $-,+$ | 17043733106 | $b<-0.335$ |
+
+For every fixed $(x,p,v)\in I_j\times\mathcal B$, the two
+disjoint opposite-sign brackets give two distinct drift roots by the
+intermediate value theorem. As $f$ has degree at most two in $d$,
+these are all its roots and each bracket has exactly one. In
+particular the polynomial is genuinely quadratic there: a vanishing
+leading coefficient or an identically zero polynomial cannot have
+the displayed endpoint signs and two distinct roots. All brackets
+avoid $d=0$ and $d=24$. Their exclusion here is a consequence of
+these uniform signs, rather than an assumption on original drifts.
+
+Since $x,x+1,x+2$ are positive on all eight diameters, $D>0$.
+After the drift exhaustion has supplied $d\ne0$, the necessary
+inverse simplifies to
+
+$$
+\begin{gathered}
+U=-H_0/d,\qquad b=(U-1)/2,\qquad
+r=xU-U(24-d)/H_1,\\
+b=\frac{-a_0-dD}{2dD},\qquad
+r=\frac{-a_0\{xa_1-D(24-d)\}}{dDa_1}.
+\end{gathered}
+\tag{12.17}
+$$
+
+To obtain the filter column, keep the rational numerators in
+(12.17). For a proposed rational bound $\mu/\nu$, $\nu>0$,
+compare $\nu$ times the numerator minus $\mu$ times its denominator,
+using the denominator's sign. Translate this polynomial at the
+exact midpoint of
+$I_j\times[p_c-r_p,p_c+r_p]\times[v_c-r_v,v_c+r_v]
+\times[d_l,d_u]$.
+The constant coefficient plus or minus the absolute coefficient tail
+on its four radii gives each displayed strict filter inequality.
+This procedure retains the cancellations in (12.17).
+
+Every branch with $b<0$ is rejected using only $2dD\ne0$;
+no division by $H_1$ is used on such a branch. On every branch
+where $r$ is used, its additional divisor is nonzero, as shown by
+the following direct outward bounds from (12.8)–(12.9):
+
+| Disk | Branch | Enclosure for $H_1$ on the entire drift box |
+| --- | --- | --- |
+| 10 | 0 | $[-718.218,-538.444]$ |
+| 10 | 1 | $[-1366.875,-1192.863]$ |
+| 11 | 0 | $[-625.050,-448.709]$ |
+| 11 | 1 | $[-1313.362,-1142.327]$ |
+| 12 | 1 | $[-555.886,-545.873]$ |
+| 13 | 1 | $[-413.022,-404.704]$ |
+
+In particular $a_1=DH_1<0$ there. The four alternate branches
+with $r>1$ violate strictness. The only remaining possibilities
+are branch 0 in disk 10 and branch 0 in disk 11.
+At any fixed base each disk contains one $x$, each retained bracket
+contains one $d$ for that $x$, and the faithful inverse determines
+at most one complete world from $(x,d)$. It follows that
+
+$$
+|C_{\rm reg}(p,v)|\le2\qquad((p,v)\in\mathcal B).
+\tag{12.18}
+$$
+
+The necessary equation $\mathcal K=0$ and remaining sufficient
+inverse guards can only remove these possibilities. No assertion
+that $f=R=0$ alone creates a world is needed. Carrier degree
+collapse, repeated carrier roots and drift degree drops have been
+excluded by the actual uniform comparisons, without restrictions
+on gain degree, gain roots or sampled gains.
+
+### 12.6. Simultaneous actual-base and terminal enclosures on both closed cells
+
+For completeness, the local calculation uses exactly the following
+part of IX (25.1)–(25.2):
+
+$$
+\begin{gathered}
+I_i=[i/5000,(i+1)/5000],\qquad
+c_i=(2i+1)/10000,\qquad \nu=(q-c_i)/10^{-4},\\
+J_4=Q\cap I_4=[0.000999,0.001],\qquad
+J_5=Q\cap I_5=[0.001,0.001001],\\
+\widehat z_i(q)=(\widehat X_i,\widehat Y_i,\widehat K_i)
+ =10^{-55}\sum_{k=0}^4(a_{iXk},a_{iYk},a_{iKk})\nu^k,\\
+\|(X,Y,K_{\rm sec})(q)-\widehat z_i(q)\|_\infty<\rho,
+\qquad \rho=10^{-12},\qquad q\in J_i.
+\end{gathered}
+\tag{12.19}
+$$
+
+The six inherited coefficient rows are reproduced to specify the
+rational inputs; entries are in ascending powers of $\nu$.
+
+| Cell | Coordinate | $(a_0,a_1,a_2,a_3,a_4)$ |
+| --- | --- | --- |
+| 4 | $X$ | $(10266304321470101811692411698581629650684861357979633160,1464168059434268517957802728410056361961539722211370,1249749957810952072972171246381867236018905314719,1360060041495343970105334044654147009192630299,1667715131504076334026575440091267909161260)$ |
+| 4 | $Y$ | $(469445052819957978196241999967799400899210918868984230,689241728388713650834870768891314603498608970459903,233492581610790092677766532522926169131080883352,90946144816697581586994988618775847722681111,40687472473695203876455940355331944956079)$ |
+| 4 | $K_{\rm sec}$ | $(5806412912111385730905709653498462252826459108491456346,3591872992339961756780770307997397109186639407613368,3700252206500061022800076399827262690632311193313,4414622327194285048954439428847275090784301232,5710798424760826632346012928329040298764148)$ |
+| 5 | $X$ | $(10269237667496016889079942913593471599228244853143181918,1469183433500169934935055135641038067923535825149648,1257950505356164029114165940781842681115503652307,1373490347210155425951125859610098359618209229,1689919690408973248001225615393120505475461)$ |
+| 5 | $Y$ | $(470824470975282436623145928025479471062080870172455502,690176791372122152690871666344753489295520313008065,234039236330706404598955362392854412652001340378,91272382344840755624467433069533976868972127,40872094321925604065005630345813596148986)$ |
+| 5 | $K_{\rm sec}$ | $(5813611494513425476989632049643081846476551547510006011,3606727159900913975802291423436094792496219163984445,3726877573720002708197103826644065246554103469308,4460622394478526947617344363792274350958576378,5789429804548091763516887016912979802413911)$ |
+
+Both cells are closed. At $q=0.001$ the uniqueness join in IX
+Theorem 26.1 identifies their exact solutions; there is no gap or
+choice of a new branch at that seam.
+
+Substitute $q=h^2$ before evaluating the predictors. Their
+coordinates become polynomials of degree eight in the common
+variable $h$, and the predicted sources are
+$(\widehat X_i\pm\widehat K_i h,\widehat Y_i\pm h)$.
+Compose (12.5) polynomially. The composed denominators have degree
+68 and the numerators for $p,v,m$ have degree 86. Translate these
+univariate polynomials at the exact rational
+
+$$
+h_c=0.031622776601683793.
+\tag{12.20}
+$$
+
+Enclose $\sqrt{J_i}-h_c$ by integer square roots. Explicitly,
+with $G=10^{75}$ and rational endpoints $q_l,q_u$ of $J_i$,
+both $G^2q_l,G^2q_u$ are integers, and
+
+$$
+\sqrt{J_i}\subset
+\left[
+\frac{\lfloor\sqrt{G^2q_l}\rfloor}{G},
+\frac{\lfloor\sqrt{G^2q_u}\rfloor+1}{G}
+\right].
+\tag{12.21}
+$$
+
+For $f=p,v,m$ use the centered quotient
+
+$$
+\widehat f_i(h)=f_c+
+\frac{\widehat N_{f,i}(h)-f_c\widehat D_{s,i}(h)}
+     {\widehat D_{s,i}(h)},
+\qquad
+f_c=p_c,\ v_c,\ -1705,\ -1700,
+\tag{12.22}
+$$
+
+respectively for $p,v,m_-,m_+$. Both polynomials in this quotient
+are translated and evaluated in the same $h-h_c$ interval. In
+particular $q$ and $\sqrt q$, and the source coordinates generated
+from them, are not replaced by independent parameters.
+
+Correct predictor values by the mean value bound
+
+$$
+|f_\pm(X,Y,K_{\rm sec},h)
+ -f_\pm(\widehat X_i,\widehat Y_i,\widehat K_i,h)|
+\le \rho\sum_{u=X,Y,K_{\rm sec}}\sup_{Z_{i,\pm}}|\partial_u f_\pm|.
+\tag{12.23}
+$$
+
+Here $f_\pm$ means the original rational response circuit evaluated
+at $(X\pm K_{\rm sec}h,Y\pm h)$. The set $Z_{i,\pm}$ uses the
+interval hull of each predictor coordinate on $J_i$, enlarged by
+$[-\rho,\rho]$, and the same $h\in\sqrt{J_i}$. It contains
+every segment from the predictor to the exact zero at fixed $h$.
+The source denominators exclude zero on these hulls.
+
+Differentiate (12.5) and its quotients with the ordinary product and
+quotient rules, and evaluate the resulting expressions on these
+hulls. Strict integer upper bounds for the gradient sums in
+(12.23) are
+
+| Response and source | Cell 4 | Cell 5 |
+| --- | --- | --- |
+| $p_+$ | 10037371 | 10038834 |
+| $v_+$ | 23309144 | 23312710 |
+| $m_-$ | 10437466 | 10431616 |
+| $m_+$ | 55321673 | 55330519 |
+
+All polynomial constructions and translations in (12.10)–(12.16)
+and (12.19)–(12.22) use exact rational coefficients. For the
+univariate evaluations and derivative enclosures, interval addition,
+multiplication and nonzero-denominator reciprocal enclose exact
+endpoints, rounded outwards on $10^{-75}\mathbb Z$:
+
+$$
+[l,u]\longmapsto
+\left[10^{-75}\lfloor10^{75}l\rfloor,\
+      10^{-75}\lceil10^{75}u\rceil\right].
+\tag{12.24}
+$$
+
+Univariate products are formed before evaluation, translation uses
+the binomial identity, and interval Horner evaluation encloses their
+values. Applying (12.23) after this common-parameter evaluation
+gives the following simultaneous actual-base enclosures:
+
+| Parameter cell | Actual $p(q)$ | Actual $v(q)$ |
+| --- | --- | --- |
+| $J_4$ | $[-497.89083841,-497.85729509]$ | $[-953.65259033,-953.59085773]$ |
+| $J_5$ | $[-497.85731518,-497.82378226]$ | $[-953.59090437,-953.52919087]$ |
+
+The exact secant equalities identify these plus-source readings with
+the minus-source readings at the same $q$. Comparing the four
+rational endpoints with (12.4) proves
+
+$$
+(p(q),v(q))\in\operatorname{int}\mathcal B,\qquad p(q)\ne24
+\qquad(q\in Q).
+\tag{12.25}
+$$
+
+This is simultaneous inclusion of both acquired readings from the
+same exact worlds, rather than a fifth-reading match.
+
+The regularity bounds, including predictor error, are
+
+| Cell | Actual $D_{s,-}$ | Actual $D_{s,+}$ |
+| --- | --- | --- |
+| 4 | $[0.010737202348,0.010738918157]$ | $[0.005493944178,0.005495257262]$ |
+| 5 | $[0.010738918093,0.010740633229]$ | $[0.005492631700,0.005493944253]$ |
+
+Both denominators are positive and exceed $0.0038$. The
+predictor-only plus denominators lie strictly between $0.0054926$
+and $0.0054953$. Direct interval Horner evaluation of (12.19),
+enlargement by $\rho$, and then (12.7) give the explicit strict-source
+guards
+
+| Cell | Source | $t$ enclosure | $b$ enclosure | $r=tb$ enclosure |
+| --- | --- | --- | --- | --- |
+| 4 | $-$ | $[1.008402647,1.008413417]$ | $[0.015389986,0.015406492]$ | $[0.015519303,0.015536113]$ |
+| 4 | $+$ | $[1.045139064,1.045149835]$ | $[0.078619724,0.078636230]$ | $[0.082168545,0.082186643]$ |
+| 5 | $-$ | $[1.008394814,1.008405583]$ | $[0.015374868,0.015391367]$ | $[0.015503937,0.015520740]$ |
+| 5 | $+$ | $[1.045149832,1.045160601]$ | $[0.078636229,0.078652727]$ | $[0.082186641,0.082204732]$ |
+
+Thus $t_\pm>0$, $b_\pm>0$ and $0<r_\pm<1$ hold throughout both
+closed cells, including the seam. The lift (12.6) uses positive
+$D_{s,\pm}$ and constant interpolation divisors; its $g$ is the
+single whole nonzero polynomial already identified. These bounds
+also place both selected sources in IX's $\mathscr R$, without
+assuming this for an arbitrary companion.
+
+The same polynomial composition, centered evaluation and error
+correction gives the terminal bounds
+
+| Parameter cell | Actual $m(W_-(q))$ | Actual $m(W_+(q))$ |
+| --- | --- | --- |
+| $J_4$ | $[-1705.04831638,-1704.94134514]$ | $[-1700.57340993,-1700.46388073]$ |
+| $J_5$ | $[-1704.94138475,-1704.83443702]$ | $[-1700.46421316,-1700.35474402]$ |
+
+In particular the union of the two closed cells yields
+
+$$
+\begin{gathered}
+-1705.04831638\le m(W_-(q))\le-1704.83443702,\\
+-1700.57340993\le m(W_+(q))\le-1700.35474402,\\
+m(W_+(q))-m(W_-(q))
+ \ge4.26102709>4.26102243809>213/50
+\qquad(q\in Q).
+\end{gathered}
+\tag{12.26}
+$$
+
+Each terminal in this comparison belongs to its original complete
+world at the same actual full base $(p(q),v(q))$.
+
+### 12.7. Exact regular inventory and the independent-pair boundary
+
+**Theorem 12.1 (All regular companions at these actual bases).**
+On the rectangle (12.4), the original regular child has at most
+two worlds. On its actual continued bases for every $q\in Q$,
+
+$$
+C_{\rm reg}(p(q),v(q))=\{W_-(q),W_+(q)\},\qquad
+a(W_-(q))=a(W_+(q)),
+\qquad
+m(W_+(q))-m(W_-(q))>213/50.
+\tag{12.27}
+$$
+
+Consequently there is no independently chosen distinct equal-$M$
+pair whose two endpoints are regular in that same entire child.
+
+Proof. The necessary carrier identity (12.13) places every regular
+world above a root of $R$. The uniform disjoint disks exhaust
+those roots, including all degree possibilities. The two strict-sign
+drift brackets at each positive projection exhaust its drift roots.
+The inverse filters and faithful uniqueness give (12.18), on the
+entire rectangle and for every original strict source.
+
+For each $q\in Q$, (12.25) places the exact full base in that
+rectangle. The inherited exact continuation and the explicit
+strictness and denominator bounds above supply two distinct
+regular worlds there. They therefore occupy the bound of two,
+proving the inventory equality. Their equal-$J$ reading is the
+secant equality, and (12.26) supplies their strict $M$ separation.
+Any two regular endpoints chosen independently in this child must
+be these worlds if they are distinct, so cannot have equal $M$.
+This proves the final assertion. ∎
+
+In particular the conclusion excludes regular equal-$M$ alternatives
+with one or both endpoints outside IX's source class, including a
+mixed interior/exterior regular pair or two exterior regular endpoints.
+It follows by an inventory of all original regular worlds at the
+actual full base; no uniform exterior sign implication, source-class
+localization assumption, cap or shared drift is used. The source
+boxes in the inverse calculation arise from exhaustive carrier and
+drift accounting.
+
+The evaluated addition is the whole-rectangle bound (12.18),
+the simultaneous actual-base enclosures on both closed cells, and
+their exact all-regular-companion consequence (12.27) with the
+quantitative terminal gap. The original model and traces, regular
+whole-gain circuit, normalized carrier, exceptional-point necessity,
+faithful inverse, exact first-$J$ continuation and corner are the
+attributed ordinary results of IX specified above. The qualitative
+$M$ order of the two selected endpoints is already IX Theorem 28.1;
+the present terminal table supplies its stated uniform numerical
+margin. Polynomial root counting, distinct-node interpolation,
+Rouché's theorem and the mean value bound are the ordinary tools
+used with these interfaces.
+
+This theorem leaves $D_s=0$ worlds unresolved, including at every
+base in (12.27). It also leaves unresolved every equal-$M$ pair
+with at least one such singular endpoint. Regular incidence on the
+continued branch outside $Q$, other $J$ branches and all other
+entire children remain outside this bounded result. In particular
+it neither proves nor refutes (12.3). The quantifiers there still
+range over all original worlds with their arbitrary own fixed
+drifts, lower gain degrees, zero samples and repeated gain roots.
+There is no whole-child global resolution in the regular inventory.
+
+## 追加锚（本行以下为增补区）
+
+## 13. Singular exclusion on the negative-J continuation and the entire two-world child on Q
+
+### 13.1. Original worlds and the ordinary mathematical inputs
+
+Retain exactly the worlds and terminal alternatives of (12.1)–(12.3):
+
+$$
+\begin{gathered}
+W=(P(r,b),g,d),\qquad
+P(r,b)=\begin{pmatrix}r&b\\r(1-r)/b&1-r\end{pmatrix},\\
+0<r<1,\quad b>0,\quad d\in\mathbb R,\quad
+0\ne g\in\mathbb R[s],\quad\deg g\le3,\\
+(E_1,\ldots,E_6)=(J,M,J,M,M,M),\quad
+Q_0=I,\quad Q_i=E_iQ_{i-1},\\
+y_i=d+g(i)\operatorname{tr}(Q_iP),\qquad
+(y_0,\ldots,y_6)=(0,24,147/5,24,18,p,v).
+\end{gathered}
+\tag{13.1}
+$$
+
+Here $J,M$ are the matrices in (12.1). The entire $C(p,v)$ consists
+of all such complete worlds. Each world has its own arbitrary fixed
+drift and its one whole gain polynomial. At the original clock seven,
+$a(W)$ and $m(W)$ are the alternative readings in (12.2). Lower gain
+degrees, zero gain samples, repeated roots, zero drift and unbounded
+positive offdiagonals remain in the domain. No source box, common
+drift, reset, copy, shifted clock or new port is imposed.
+
+The ordinary inputs have the following precise scope. Write O for
+[FIB common-parent geometry and two exact mixed children](https://github.com/the-omega-institute/trureturing/blob/91bbfd39908a68f6dd967bf645799dd03942130b/docs/develop/theory/FIB_COMMON_PARENT_GEOMETRY_AND_MIXED_CHILDREN.md),
+S for [FIB entire singular-response children and terminal-M injectivity](https://github.com/the-omega-institute/trureturing/blob/91bbfd39908a68f6dd967bf645799dd03942130b/docs/develop/theory/FIB_SINGULAR_RESPONSE_CHILDREN_EXCLUSION.md),
+and F for [FIB all-response finite-fibre geometry](https://github.com/the-omega-institute/trureturing/blob/91bbfd39908a68f6dd967bf645799dd03942130b/docs/develop/theory/FIB_ALL_RESPONSE_FINITE_FIBRE_GEOMETRY.md),
+at the indicated revision. Write IX for
+[FIB strict-real joint incidence: the trace-corrected complex M projection curve](FIB_STRICT_REAL_JOINT_INCIDENCE_SUPPORT_IX.md),
+specifically its completed Sections 24–28 and the coefficient rows of
+(25.2). Section 12 of this volume is used with its ordinary proofs.
+
+| Ordinary input | Exact correspondence and retained condition |
+| --- | --- |
+| O, Theorem 2.1, Lemma 12.2, Theorems 12.3 and 29.2 | O's $\beta=1/8$, $a=24/5$, $\epsilon=d-24$; its fifth response is this $p$, and its sixth-M response is this $v$. The singular classification and unique whole-gain lift hold for every real $p$. |
+| S, Definition 2.3, Definition 3.2 and Lemma 3.3 | The two algebraic root brackets and cubic representative of the actual singular sixth-M response; the response identity holds for every real $p$. No theorem restricted to S's particular $p_J$ is transferred. |
+| F, Definition 30.1 and Lemma 30.2 | The identical entire child has $x=n/U$ and $H=Ug$, with the same $p,v,d$. Its faithful whole-world reconstruction holds for all real $p\ne24$, including negative $p$, without assuming a nonzero drift. These coordinates do not restrict the original sources. |
+| IX, (24.2)–(24.8), (25.1)–(25.2), (25.10)–(25.13), Theorems 26.1, 27.1 and 28.1 | The same exact continued secant zero, the full coordinate radius $10^{-12}$, uniqueness joins, exact germ attachment, strict-source event and whole-gain lifts. |
+| This volume, Theorem 12.1 and (12.25)–(12.27) | The entire regular inventory and terminal gap only on its closed $Q=[999/10^6,1001/10^6]$. |
+
+The conclusions below are ordinary mathematical consequences of these
+interfaces with their stated premises. The inherited classification,
+continuation and regular inventory are reused. Theorem 13.1 establishes the evaluated separation
+from both singular-response lines, and Theorem 13.2 gives its entire-child
+consequence.
+
+### 13.2. The zero-safe singular alternatives and their affine responses
+
+Put
+
+$$
+\begin{gathered}
+j=b+r(1-r)/b,\quad n=j+r,\quad T=1+b,\quad U=1+2b,\\
+\Lambda=1+6/T+1/U-4/j-4/n,\qquad e=d-24,\\
+B_{\rm coef}=6/T-2/U=2(2+5b)/(TU)>0.
+\end{gathered}
+\tag{13.2}
+$$
+
+O's full-parent equation and whole-world converse give
+
+$$
+e\Lambda+\frac{24}{5}(b-1/8)B_{\rm coef}=0.
+\tag{13.3}
+$$
+
+For completeness, the zero-safe fifth-response lift uses
+
+$$
+\begin{gathered}
+V=U+n,\qquad A_5=1+V(4-15/j+20/T-10/n),\\
+K_5=96(b-1/8)V/T,\qquad Z=\Lambda^2+A_5^2>0,\\
+e=\frac{-(24/5)(b-1/8)B_{\rm coef}\Lambda
+             +A_5(p-24-K_5)}{Z}.
+\end{gathered}
+\tag{13.4}
+$$
+
+Its whole $g$ is the degree-at-most-three interpolant at the fixed
+nodes $0,1,2,3$ with values
+
+$$
+(-24-e,\ -e/j,\ (27/5-e)/T,\ -e/n),\qquad d=24+e.
+\tag{13.5}
+$$
+
+The condition $Z>0$ is O, Lemma 12.2 on the full strict domain.
+The gain cannot vanish identically, since readings zero and $24$
+would then coincide. These are complete-world statements, rather than
+an equation for a sampled or substituted gain.
+
+If $\Lambda=0$, positivity in (13.3) forces $b=1/8$. At that width,
+O's identity is
+
+$$
+\Lambda=\frac{\Phi(r)}{960jn},\qquad
+\Phi(t)=438272t^4-931328t^3+540800t^2-50728t-853.
+\tag{13.6}
+$$
+
+O, Theorem 4.2 proves that exactly two roots are strict. Denote them
+by $\varrho_-,\varrho_+$. S's finer brackets are
+
+$$
+\begin{aligned}
+J_-&=[134815875067638653367017716061081265110899687,
+       134815875067638653367017716061081265110899688]/10^{45},\\
+J_+&=[902449681772056265377872651296542856186276499,
+       902449681772056265377872651296542856186276500]/10^{45}.
+\end{aligned}
+\tag{13.7}
+$$
+
+The endpoint signs of $\Phi$ are respectively $(-,+)$ and $(+,-)$.
+The designated roots, rather than the centers of these intervals,
+are used throughout.
+
+To display the whole-gain singular identity, define
+
+$$
+\begin{aligned}
+\mathcal D={}&1731744020342106665,\\
+A_s(t)={}&13656112734222647296t^3-33583101098863014400t^2\\
+&+20502976421172725312t-3401342974535580372,\\
+B_s(t)={}&-327746705621343535104t^3+916826043674607172160t^2\\
+&-616757003572777087368t+31411654798932835643,\\
+s_\sigma(p)={}&\alpha_\sigma p+\beta_\sigma
+=-\frac{3\{pA_s(\varrho_\sigma)+B_s(\varrho_\sigma)\}}{\mathcal D}.
+\end{aligned}
+\tag{13.8}
+$$
+
+Here is an exact verification of the response identity, retaining the
+normalization of the original whole gain. At width $1/8$ put
+
+$$
+\begin{gathered}
+j(t)=1/8+8t(1-t),\quad n(t)=j(t)+t,\\
+F_5=jn+(n+5/4)\{(196/9)jn-15n-10j\},\\
+F_6=jn+(n+5/2)\{50jn-36n-20j\},\qquad F_0=84+24n.
+\end{gathered}
+\tag{13.9}
+$$
+
+At a designated root, $F_5=jnA_5\ne0$ by $Z>0$ and $\Lambda=0$.
+The inherited whole-world response is
+$F_0+(p-24)F_6/F_5$. Reduction by
+
+$$
+t^4\equiv(931328t^3-540800t^2+50728t+853)/438272\pmod\Phi
+\tag{13.10}
+$$
+
+gives both exact remainder vectors, in ascending powers $1,t,t^2,t^3$:
+
+$$
+\begin{aligned}
+\operatorname{rem}(\mathcal D F_6+3A_sF_5,\Phi)&=(0,0,0,0),\\
+\operatorname{rem}(\mathcal D(F_0F_5-24F_6)+3B_sF_5,\Phi)&=(0,0,0,0).
+\end{aligned}
+\tag{13.11}
+$$
+
+They prove (13.8) for every real $p$. In particular the classification
+has no positive-$p$ restriction: every singular world in any $C(p,v)$
+must satisfy $v=s_-(p)$ or $v=s_+(p)$. Conversely O's unique lift
+supplies each singular fifth-response world. No division by $\Lambda$,
+drift, a gain sample, leading gain coefficient or root difference occurs.
+The divisions in this argument use positive source traces, the proved
+positive $Z$, and the proved nonzero $F_5$.
+
+Exact rational Horner evaluation of $-3A_s/\mathcal D$ and
+$-3B_s/\mathcal D$ on (13.7) gives the following enclosures.
+All displayed terminating decimals in this section denote exact rationals.
+
+| $\sigma$ | Enclosure $\mathcal A_\sigma$ for $\alpha_\sigma$ | Enclosure $\mathcal B_\sigma$ for $\beta_\sigma$ |
+| --- | --- | --- |
+| $-$ | $[2.10332127276981,2.10332127276982]$ | $[62.15085699544574,62.15085699544575]$ |
+| $+$ | $[3.83234815291643,3.83234815291644]$ | $[33.58501339171649,33.58501339171650]$ |
+
+For example Horner evaluation means starting from the leading integer
+coefficient, multiplying its interval by $J_\sigma$, and adding the
+next integer, through the constant term, before multiplying by the
+negative rational $-3/\mathcal D$. Thus these are algebraic-root
+interval enclosures, with no root-center substitution.
+
+### 13.3. Common-parameter bounds on all twelve closed cells
+
+Use IX's exact analytic continuation
+$x(q)=(X,Y,K_{\rm sec})(q)$, which is the continuation of its attached
+first equal-$J$ germ. Retain all thirty-six predictor rows of IX
+(25.2), with their ascending coefficient order, by the definition
+
+$$
+\begin{gathered}
+I_i=[i/5000,(i+1)/5000],\quad c_i=(2i+1)/10000,\quad w=1/10000,\\
+\widehat x_{iu}(q)=10^{-55}\sum_{k=0}^4a_{iuk}\nu^k,\quad
+\nu=(q-c_i)/w,\quad u=X,Y,K_{\rm sec},\\
+\|x(q)-\widehat x_i(q)\|_\infty<\rho=10^{-12},\qquad
+q\in I_i,\quad0\le i\le11.
+\end{gathered}
+\tag{13.12}
+$$
+
+These are the named coefficient rows of that ordinary source, not a
+new choice of predictors. At the same parameter put
+
+$$
+h=\sqrt q,\qquad t_+=X+K_{\rm sec}h,\qquad b_+=Y+h.
+\tag{13.13}
+$$
+
+For clarity the polynomial circuit needed for the two readings is
+
+$$
+\begin{gathered}
+r=tb,\quad j=t+b(1-t^2),\quad n=j+tb,\quad T=1+b,\quad U=1+2b,\\
+D_0=5\{(b^2+8b+4)jn-2TU(j+n)\},\quad S_0=(8b-1)(2+5b),\\
+C_0=-24D_0+3S_0jn,\quad C_1=3S_0n,\\
+C_2=3(49b+34)jn-54U(j+n),\quad C_3=3S_0j,\\
+B_5=-4C_0+15C_1-20C_2+10C_3,\\
+B_6=-10C_0+36C_1-45C_2+20C_3,\\
+N_p=-C_0+(U+n)B_5,\qquad N_v=-C_0+(2U+n)B_6.
+\end{gathered}
+\tag{13.14}
+$$
+
+This is IX (24.2), equivalently (12.5) with $D_0=D_s$.
+On the exact secant zero, its plus readings are the common $p(q),v(q)$.
+To retain their dependence, bound the single numerator
+
+$$
+R_\sigma=N_v-\alpha_\sigma N_p-\beta_\sigma D_0,\qquad
+F_\sigma=R_\sigma/D_0=v(q)-s_\sigma(p(q)).
+\tag{13.15}
+$$
+
+The following finite coefficient bounds specify uniform inequalities
+on each cell. They also give a rational reproduction of the numerical
+bounds without replacing the cell by point values.
+
+Set $G_h=10^{40}$ and define integers
+
+$$
+\ell_i=\left\lfloor\sqrt{G_h^2i/5000}\right\rfloor,\qquad
+u_i=\left\lceil\sqrt{G_h^2(i+1)/5000}\right\rceil.
+\tag{13.16}
+$$
+
+The radicands are integers; floor square roots are characterized by
+$k^2\le N<(k+1)^2$, and the ceiling equals $k$ only for a square.
+Put $m_i=(\ell_i+u_i)/(2G_h)$, $d_i=(u_i-\ell_i)/(2G_h)$ and
+$h=m_i+d_i z$, $|z|\le1$. This contains every $h=\sqrt q$ for
+$q\in I_i$. In every predictor substitute $q=h^2$ before composing
+$t=\widehat X_i(h^2)+h\widehat K_i(h^2)$ and
+$b=\widehat Y_i(h^2)+h$. All resulting circuit entries are
+univariate polynomials in this same $z$.
+
+For a fully rational coefficient convention set $G=10^{80}$.
+Enclose a coefficient or interval by
+
+$$
+\mathsf E([l,u])=[\lfloor Gl\rfloor/G,\ \lceil Gu\rceil/G].
+\tag{13.17}
+$$
+
+Interval addition uses endpoint addition; subtraction uses
+$[l,u]-[a,b]=[l-b,u-a]$; multiplication uses the minimum and maximum
+of the four endpoint products. Apply $\mathsf E$ after every operation.
+Construct predictor polynomials by descending Horner evaluation of
+the five inherited coefficients. Polynomial products use coefficient
+convolution, summing in increasing indices. Follow the parentheses
+of (13.14), with each displayed unparenthesized sum added from left
+to right. Complete these polynomial products before taking ranges.
+For $V(z)=\sum_k V_kz^k$ use
+
+$$
+\mathcal C(V)=V_0+[-s,s],\qquad
+s=\sum_{k\ge1}\max(|\inf V_k|,|\sup V_k|).
+\tag{13.18}
+$$
+
+This encloses every value on $[-1,1]$ by the triangle inequality.
+Form $\widehat D_i,\widehat N_{p,i},\widehat N_{v,i}$ this way.
+For the singular coefficients use the full intervals
+$\mathcal A_\sigma,\mathcal B_\sigma$ displayed above, and form
+
+$$
+\widehat R_{i\sigma}=
+\widehat N_{v,i}-\mathcal A_\sigma\widehat N_{p,i}
+                         -\mathcal B_\sigma\widehat D_i
+\tag{13.19}
+$$
+
+as an interval-coefficient polynomial before applying $\mathcal C$.
+Coefficient rounding and the algebraic-root uncertainties are thereby
+included in the central range. In particular separate marginal
+$p,v$ intervals are not subtracted to infer the sign.
+
+It remains to include the entire radius-$\rho$ tube, rather than only
+the rational predictors. Use the mean-value gradient guard of IX
+(25.12). IX (25.10) and $0\le h<1/20$ place every plus-source segment
+between the predictor and the exact zero in
+$1\le t\le11/10$, $0\le b\le1/10$.
+Indeed its full tube has $1.025<X<1.029$, $0.0463<Y<0.048$ and
+$0.577<K_{\rm sec}<0.587$; these imply the stated larger rectangle.
+For any circuit polynomial $L(t,b)=\sum_{a,k}c_{ak}t^ab^k$, put
+
+$$
+\Gamma(L)=\frac{21}{20}\sum_{a\ge1,k\ge0}
+ a|c_{ak}|(11/10)^{a-1}(1/10)^k
+ +\sum_{a\ge0,k\ge1}k|c_{ak}|(11/10)^a(1/10)^{k-1}.
+\tag{13.20}
+$$
+
+At fixed $h$, the three partials are $L_t,L_b,hL_t$ in
+$X,Y,K_{\rm sec}$. Thus (13.20) bounds their absolute sum on the
+whole segment. Expansion of the displayed two-variable circuit gives
+
+| Polynomial | Exact $\Gamma(L)$ | Strict integer upper guard |
+| --- | --- | --- |
+| $D_0$ | $7667254617/20000000$ | $384$ |
+| $N_p$ | $13033889043873/1250000000$ | $10428$ |
+| $N_v$ | $97107509878563/2000000000$ | $48554$ |
+
+This is a monomial derivative bound on a rectangle, not a derivative
+sample. With $a_\sigma^+=\sup\mathcal A_\sigma$ and
+$b_\sigma^+=\sup\mathcal B_\sigma$, set
+
+$$
+\begin{gathered}
+E_D=384\rho,\qquad
+E_\sigma=\rho(48554+10428a_\sigma^++384b_\sigma^+),\\
+D_i^- =\inf\mathcal C(\widehat D_i)-E_D,\quad
+D_i^+ =\sup\mathcal C(\widehat D_i)+E_D,\\
+R_{i\sigma}^- =\inf\mathcal C(\widehat R_{i\sigma})-E_\sigma.
+\end{gathered}
+\tag{13.21}
+$$
+
+These errors use the full $10^{-12}$ coordinate radius. The coefficient
+intervals already contain the root errors; no additional assumption
+that a displayed coefficient equals its center is made. For size,
+$E_-<10^{-7}$ and $E_+<11\cdot10^{-8}$.
+When $D_i^->0$ and $R_{i\sigma}^->0$, ordinary positive division gives
+$F_\sigma\ge R_{i\sigma}^-/D_i^+$. Applying (13.16)–(13.21) gives
+all the following rational inequalities. The denominator intervals
+are enlarged outwards and the separation lower bounds are rounded
+downwards; the latter apply after both tube and root errors.
+
+| Cell $i$ | Full-tube $D_0$ enclosure | Lower bound for $F_-$ | Lower bound for $F_+$ |
+| --- | --- | --- | --- |
+| 0 | $[0.006830389236,0.007894405816]$ | $33.603064$ | $846.533715$ |
+| 1 | $[0.006405716396,0.006842834999]$ | $34.547745$ | $900.877126$ |
+| 2 | $[0.006063603991,0.006408184817]$ | $33.144646$ | $897.169944$ |
+| 3 | $[0.005765858050,0.006066148405]$ | $31.553498$ | $888.052705$ |
+| 4 | $[0.005493943831,0.005768394266]$ | $29.916223$ | $876.977204$ |
+| 5 | $[0.005238496633,0.005496449047]$ | $28.276043$ | $864.998602$ |
+| 6 | $[0.004994030209,0.005240965566]$ | $26.646443$ | $852.554045$ |
+| 7 | $[0.004757015802,0.004996463407]$ | $25.039763$ | $839.852073$ |
+| 8 | $[0.004525031229,0.004759415804]$ | $23.461394$ | $826.997178$ |
+| 9 | $[0.004296331767,0.004527401159]$ | $21.913216$ | $814.038726$ |
+| 10 | $[0.004069612802,0.004298674782]$ | $20.396077$ | $800.992612$ |
+| 11 | $[0.003843869102,0.004071931883]$ | $18.910227$ | $787.851260$ |
+
+As one explicit comparison, (13.18) in cell 11 gives central numerator
+lower bounds $0.077001253663$ and $3.208076768816$ for the minus
+and plus alternatives. Subtracting their respective exact errors in
+(13.21), then dividing by $0.004071931883$, still exceeds
+$18.910227$ and $787.851260$, respectively. All twelve rows use the
+same coefficient construction and inequalities. They are bounds on
+whole closed cells, so their positive minima do not require an
+interpolation or sample-to-uniform inference.
+
+The cells cover exactly $[0,3/1250]$. The eleven adjacent predictor
+seam distances, computed from the named arrays at $\nu=1,-1$, are
+at most $2\cdot10^{-55}<\rho$. IX, Theorem 26.1 identifies the zeros
+in the overlapping uniqueness tubes and identifies the zero at $q=0$
+with the exact germ. Thus both sides of every closed-cell seam concern
+the same analytic continuation.
+
+### 13.4. Singular exclusion and the complete local child
+
+**Theorem 13.1 (No singular alternative anywhere on the selected arc).**
+For the common-response functions of IX's continued zero,
+
+$$
+v(q)-s_\sigma(p(q))>0\qquad
+(0\le q\le3/1250,\quad\sigma\in\{-,+\}).
+\tag{13.22}
+$$
+
+Consequently every actual original world in $C(p(q),v(q))$ is
+nonsingular for $0<q<q_*$, where
+
+$$
+0.002295452521112227202566167277417
+<q_*<0.002295452521112227202566167277419.
+\tag{13.23}
+$$
+
+Proof. The twelve rows of (13.21)'s evaluation give positive
+$D_i^-$ and positive lower bounds for both $R_{i\sigma}^-/D_i^+$.
+They cover the closed interval and the exact tube, proving (13.22).
+For an actual world with $\Lambda=0$, (13.3)–(13.11) force one of
+$v(q)=s_-(p(q))$ or $v(q)=s_+(p(q))$, contradicting (13.22).
+IX gives $p(q)<0$ on this continuation, so in particular $p(q)\ne24$.
+The classification used here is the full strict-source classification,
+including arbitrary own drift and every permitted gain stratum. ∎
+
+The values in (13.22) at zero and at $q_*$ are values of the common
+analytic response functions. They supply no strict distinct-pair
+witness at either endpoint. At $q=0$ the two continued sources
+coalesce; at $q=q_*$ the minus source has $b_-=r_-=0$ and is outside
+the original strict domain. On $0<q<q_*$, IX, Theorem 28.1 supplies
+two distinct complete worlds $W_-(q),W_+(q)$ with equal $p,v,a$;
+their gains and drifts are their respective original whole-world lifts.
+
+For comparison with the word “regular” in Section 12, direct
+multiplication of (13.2) gives, for every original strict source,
+
+$$
+D_s=D_0=\frac52TUjn\Lambda.
+\tag{13.24}
+$$
+
+All four factors $T,U,j,n$ are positive. Hence nonsingularity is
+exactly $D_s\ne0$, not a different exclusion of worlds.
+
+**Theorem 13.2 (The entire original child on Q).** For every
+$q\in Q=[999/10^6,1001/10^6]$,
+
+$$
+\begin{gathered}
+C(p(q),v(q))=\{W_-(q),W_+(q)\},\\
+W_-(q)\ne W_+(q),\qquad a(W_-(q))=a(W_+(q)),\\
+m(W_+(q))-m(W_-(q))>213/50.
+\end{gathered}
+\tag{13.25}
+$$
+
+In particular there is no independently chosen distinct equal-$M$
+pair in that entire child, and the independent-pair predicate (12.3)
+fails at every one of these actual full bases.
+
+Proof. The exact rational comparisons
+$0<999/10^6\le1001/10^6<0.0022954525<q_*$ put the whole closed
+$Q$ in the strict pair interval. Theorem 13.1 and (13.24) identify
+the entire child with its regular subset. Theorem 12.1, applied
+only on this $Q$, identifies that regular subset with the two
+continued worlds and gives the equal-$J$ reading and the strict
+terminal gap. Any two independently chosen distinct worlds of this
+child must therefore be these two worlds, whose $M$ readings differ.
+This excludes every proposed equal-$M$ pair, irrespective of its
+relationship to the selected $J$ pair. ∎
+
+This conclusion uses the entire original $C(p,v)$, including companions
+outside any selected source class. Its scope outside $Q$ is exactly
+the singular exclusion (13.22) along the selected continuation; the
+regular inventory there is unresolved. Other source branches and
+other full bases are unresolved. The original global target (12.3)
+continues to ask for one entire $C(p,v)$, $p\ne24$, containing
+independently selected within-pair distinct equal-$J$ and equal-$M$
+pairs. Their overlap or disjointness and their unrelated common
+terminal values remain allowed. No global existence or nonexistence
+conclusion follows from (13.25).
+
+## 追加锚（本行以下为增补区）

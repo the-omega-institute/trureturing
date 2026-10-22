@@ -1,0 +1,77 @@
+**Definition 19.1 (Exact point and rational enclosing cube).**
+Let $z_0=(r_0,b_0)$ be the source of $\mathcal W_1^J$ in SVII,
+(23.8) and Theorem 24.1. SVII, Lemma 26.1, identifies it as the
+unique common zero of $\det D(p,v)$ and $\det D(p,a)$ in
+
+$$
+K=(\bar r,\bar b)+[-10^{-55},10^{-55}]^2,
+\tag{19.1}
+$$
+
+where the exact rational center is
+
+$$
+\begin{aligned}
+\bar r&=0.0474991739156158648087872696795839340094732632129244067254357987,\\
+\bar b&=0.04632607241297142362371158699116141188135188088603214209272150218.
+\end{aligned}
+\tag{19.2}
+$$
+
+That lemma supplies existence, uniqueness, identification with the
+algebraic source, and its strict regular whole-world lift. The
+differential of $F=(p,v,a)$ at $z_0$ has rank one. The rational center
+is enclosure data; it does not replace $z_0$ in any coefficient or
+response below. Write $(p_0,v_0)=(p(z_0),v(z_0))$.
+
+All derivatives in Sections 19–22 are in the original independent
+coordinates $(r,b)$. Since $p_b(z_0)\ne0$, put
+
+$$
+k_0=-p_r(z_0)/p_b(z_0),\qquad w_0=(1,k_0).
+\tag{19.3}
+$$
+
+Rank one implies $DF(z_0)w_0=0$. Define
+
+$$
+\mathcal A=
+\begin{pmatrix}
+p_{rr}+k_0p_{rb}&p_{rb}+k_0p_{bb}&p_b\\
+v_{rr}+k_0v_{rb}&v_{rb}+k_0v_{bb}&v_b\\
+a_{rr}+k_0a_{rb}&a_{rb}+k_0a_{bb}&a_b
+\end{pmatrix}_{z_0}.
+\tag{19.4}
+$$
+
+Here $w_0$ is held fixed in directional derivatives; $k_0$ is not
+differentiated as a vector field. For $F_1=p,F_2=v,F_3=a$ let
+
+$$
+\begin{gathered}
+\mathcal T_i=\frac16
+\bigl(F_{i,rrr}+3k_0F_{i,rrb}+3k_0^2F_{i,rbb}
+                    +k_0^3F_{i,bbb}\bigr)_{z_0},\\
+\begin{pmatrix}R_2\\B_2\\k_2\end{pmatrix}
+=-\mathcal A^{-1}\mathcal T,
+\end{gathered}
+\tag{19.5}
+$$
+
+and define the exact coefficients
+
+$$
+\begin{aligned}
+P_2&=(p_rR_2+p_bB_2)_{z_0}
+ +\tfrac12(p_{rr}+2k_0p_{rb}+k_0^2p_{bb})_{z_0},\\
+V_2&=(v_rR_2+v_bB_2)_{z_0}
+ +\tfrac12(v_{rr}+2k_0v_{rb}+k_0^2v_{bb})_{z_0},\\
+L_d&=(d_r+k_0d_b)_{z_0},\qquad
+L_m=(m_r+k_0m_b)_{z_0}.
+\end{aligned}
+\tag{19.6}
+$$
+
+The invertibility used in (19.5) is included in the following
+evaluations.
+

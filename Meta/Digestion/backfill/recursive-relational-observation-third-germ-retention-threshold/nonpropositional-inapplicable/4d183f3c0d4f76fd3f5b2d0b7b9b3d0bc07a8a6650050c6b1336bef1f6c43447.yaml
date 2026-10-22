@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:4d183f3c0d4f76fd3f5b2d0b7b9b3d0bc07a8a6650050c6b1336bef1f6c43447
+  normalized_sha256: sha256:4d183f3c0d4f76fd3f5b2d0b7b9b3d0bc07a8a6650050c6b1336bef1f6c43447
+cas_ref: sha256:4d183f3c0d4f76fd3f5b2d0b7b9b3d0bc07a8a6650050c6b1336bef1f6c43447
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: Volume title and append-only reference/digestion policy only; no mathematical assertion.
+    previous_atom_id: null
+    next_atom_id: 2081f012128a510c2f2d9a53b9ce1111f4fef99ae7e3e7619d60f1f57d42f265

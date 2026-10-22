@@ -1,0 +1,10 @@
+**Definition 3.4 (directory records and finite iteration).** Directory port 0
+contains records whose first field is a two-bit tag, followed by the fields
+listed below. Each field is a bit word terminated by sep. Each record ends
+with a single seal symbol. Concatenation adds no invisible cell.
+
+| Tag | Fields after the tag, in order |
+| --- | --- |
+| `00`, initial | $\xi,U(H_0),U(b_0),U(L_0),U(16),U(0)$ |
+| `01`, reservation | $U(J),U(b),U(d),U(r+1),U(m),U(v),U(f_s)$ |
+| `10`, guard raise | $U(J),U(p+1),U(m),U(v),U(f_s)$ |

@@ -1,0 +1,16 @@
+**Definition 7.1 (Whole-companion regions).** Use the actual arc $v_J$
+of III, Theorem 16.4, not an arbitrary function in an output tube.
+With $\ell(p)=(37p+421)/10$ set
+
+$$
+\begin{aligned}
+K_J&=\{W\in\mathcal H:10\le p(W)\le34,\ v(W)=v_J(p(W))\},\\
+K_+&=\{W\in\mathcal H:10\le p(W)\le34,\ v(W)\ge\ell(p(W))-1/25\}.
+\end{aligned}
+\tag{7.1}
+$$
+
+III, Theorems 22.3 and 23.2 give $K_J\subset K_+$ and compactness
+of both sets. Both definitions retain the entire fibre at $p=24$.
+Neither definition selects just the two worlds used to define the arc.
+

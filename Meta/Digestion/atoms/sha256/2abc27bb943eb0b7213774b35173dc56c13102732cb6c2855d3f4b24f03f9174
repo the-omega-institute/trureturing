@@ -1,0 +1,293 @@
+**定理 68.2（全人口单纯形的耦合最优值及同时达到）。** 对每个上述初始人口向量，
+$\mathcal E(z^{\mathrm{ph}})$ 非空紧，(X.2) 的最大值达到，且对物理人口的任意排列协变。
+若 $U=0$，则 $G=0$。若 $U>0$，定义
+
+$$
+\begin{aligned}
+x_*&=\max\left\{\tfrac12,Q,\sqrt P,1-\sqrt U\right\},\\
+y_*&=\max\left\{\tfrac12,\frac{P}{x_*},1-\frac{U}{1-x_*}\right\};\\
+G(z^{\mathrm{ph}})
+ &=\boxed{2\sqrt{x_*(1-x_*)y_*(1-y_*)}}.
+\end{aligned}
+\tag{X.4}
+$$
+
+此时 $1/2\leq y_*\leq x_*<1$。有同一个可行共轭态对同时满足
+
+$$
+a_1=a_2=G(z^{\mathrm{ph}}),\qquad D=2G(z^{\mathrm{ph}}),
+\qquad \operatorname{rank}\rho=\operatorname{rank}\sigma=2.
+\tag{X.5}
+$$
+
+秩二在这里指两个密度矩阵的秩，不是 Kraus 秩、控制群的秩或未知标签数。
+若 $U=0$，可选相同的两态达到平衡零权重；这不表示该域的全部零增益最大化态对都相同。
+精确端点为
+
+$$
+G>0\ \Longleftrightarrow\ \#\{x:z_x>0\}\geq4,
+\qquad
+G=\tfrac12\ \Longleftrightarrow\ \max_xz_x\leq\tfrac14.
+\tag{X.6}
+$$
+
+因此 (X.5) 的平衡见证具有 $D=1$ 当且仅当 $\max_xz_x\leq1/4$。
+本定理优化的是 $a_2$，没有额外固定 $D$。
+
+**证明。** 先将整个态对域精确化为共轭存在域，再在同一个实部谱上优化两个乘积。
+
+(一) 对任意 $(\rho,\sigma)\in\mathcal E(z^{\mathrm{ph}})$，写
+$\rho=R_0+iC_1$、$\sigma=R_0+iC_2$，其中 $R_0$ 实对称，$C_1,C_2$ 实反对称。
+逐项复共轭保正性、迹与对角，故
+
+$$
+\tau=\frac{\rho+\bar\sigma}{2}
+ =R_0+i\frac{C_1-C_2}{2},\qquad
+\bar\tau=\frac{\bar\rho+\sigma}{2},\qquad
+\tau-\bar\tau=\rho-\sigma.
+\tag{X.7}
+$$
+
+两者仍有初始对角 $z^{\mathrm{ph}}$；反之，任意该对角的密度态 $\tau$ 与 $\bar\tau$
+都在 $\mathcal E(z^{\mathrm{ph}})$ 中。这保留的是同一个差矩阵，因而保留全部 $a_j$、$D$
+及任何固定读效果的概率差。它不声称对两个未知输入实施同一个实 CPTP 预处理，
+也不声称实际来源历史纤维对该代数替换封闭。
+
+写 $\tau=R_\tau+iC$。$R_\tau=(\tau+\bar\tau)/2$ 实对称半正、迹一、对角为
+$z^{\mathrm{ph}}$，$C$ 实反对称。这里 $R_\tau$ 专指实部；终端读口另记 $R_{\mathrm{read}}$。
+对实向量 $v\in\ker R_\tau$，有
+$v^\dagger\tau v=v^TR_\tau v=0$。半正性给 $\tau v=0$，所以 $Cv=0$；
+实核的复线性张成也被 $C$ 消去。反对称性又给
+$\operatorname{ran}C\subseteq\mathcal S=\operatorname{ran}R_\tau$，
+只在 $\mathcal S$ 上使用逆平方根，定义并在核上延零：
+
+$$
+K=\left.(R_\tau|_{\mathcal S})^{-1/2}
+           C|_{\mathcal S}(R_\tau|_{\mathcal S})^{-1/2}\right.\oplus0,
+\qquad K^T=-K,\quad K\in M_5(\mathbb R),\qquad
+C=R_\tau^{1/2}KR_\tau^{1/2}.
+\tag{X.8}
+$$
+
+$\tau,\bar\tau\succeq0$ 在支撑上的合同变换给 $I_{\mathcal S}\pm iK|_{\mathcal S}\succeq0$。
+由于 $iK$ 为 Hermitian，全部特征值位于 $[-1,1]$，即 $\|K\|\leq1$。
+反过来，实反对称收缩 $K$ 使 $I\pm iK\succeq0$，故 (X.8) 确实产生正的共轭态。
+这也是正块矩阵收缩分解在 $A=B=R_\tau$、$X=C$ 时的支撑版：
+$\bar\tau=R_\tau-iC$ 的实化为
+$\left(\begin{smallmatrix}R_\tau&C\\-C&R_\tau\end{smallmatrix}\right)$。
+所复用的一般工具见 Moslehian–Kian–Xu，
+[*Positivity of $2\times2$ block matrices of operators*，Theorem 5.11](https://arxiv.org/html/1904.08680)。
+上面的支撑证明同时保证 $K$ 实且反对称，没有假定 $R_\tau$ 可逆。
+
+(二) 令 $s_j$ 为降序奇异值。所需的精确指标不等式为
+
+$$
+s_{i+j-1}(XY)\leq s_i(X)s_j(Y),\qquad i+j-1\leq5.
+\tag{X.9}
+$$
+
+为核对指标，取 $Y$ 的前 $j-1$ 个右奇异方向之正交补 $E_Y$，以及
+$X$ 的前 $i-1$ 个右奇异方向之正交补 $E_X$。
+$E_Y\cap Y^{-1}(E_X)$ 的余维至多 $i+j-2$；在该空间上
+$\|XYv\|\leq s_i(X)\|Yv\|\leq s_i(X)s_j(Y)\|v\|$。
+奇异值极小极大原理给 (X.9)，包括零奇异值和重数。
+
+设 $r_1\geq\cdots\geq r_5\geq0$ 是 $R_\tau$ 的谱，$H=R_\tau^{1/2}$。
+先由 (X.9) 得 $s_i(HK)\leq s_i(H)\|K\|\leq\sqrt{r_i}$，
+再对 $(HK)H$ 分别取 $(i,j)=(1,4),(2,3)$。
+由于 $\Delta=2iC$，$C$ 的奇异值恰为
+$(a_1/2,a_1/2,a_2/2,a_2/2,0)$，故确切使用第四个奇异值：
+
+$$
+\frac{a_2}{2}=s_4(C)
+ \leq\min\{\sqrt{r_1r_4},\sqrt{r_2r_3}\}.
+\tag{X.10}
+$$
+
+两个上界中的 $r$ 必须是同一个可行实部谱，不能分别最大化后拼合。
+反对称标准平面和逐项实、虚部分解复用 Wu 等，
+[*Resource theory of imaginarity: quantification and state conversion*，式 (36)–(37)](https://arxiv.org/html/2103.01805v1#S3.E36)。
+(X.9) 的完整极小极大推导给出了这里实际使用的指标版本。
+
+(三) 实 Schur–Horn 定理给
+
+$$
+\operatorname{diag}(O\operatorname{diag}(r)O^T)=z^{\mathrm{ph}}
+\text{ 对某个 }O\in O(5)
+\quad\Longleftrightarrow\quad z\prec r.
+\tag{X.11}
+$$
+
+这里需要实正交而非仅复酉的版本。精确出处是 Kaftal–Weiss，
+[*An infinite dimensional Schur–Horn theorem and majorization theory with applications to operator ideals*，Theorem 1.1(ii)](https://arxiv.org/html/0710.5566v2)：
+有限维 Horn 定理给 orthostochastic 矩阵 $T_{ij}=O_{ij}^2$，且 $z=Tr$。
+对应参数为 $N=5$、$\xi=z$、$\eta=r$；实正交矩阵的平方条目恰好给 (X.11) 的对角。
+这个标准工具只是下述耦合优化的中间步骤。
+
+对每个 $z\prec r$，在谱坐标的实标准基 $g_1,\ldots,g_5$ 中置
+
+$$
+\begin{aligned}
+u&=\sqrt{r_1}g_1-i\sqrt{r_4}g_4,&
+v&=\sqrt{r_2}g_2-i\sqrt{r_3}g_3,\\
+C_r&=\sqrt{r_1r_4}(g_1g_4^T-g_4g_1^T)
+       +\sqrt{r_2r_3}(g_2g_3^T-g_3g_2^T),\\
+T_r&=\operatorname{diag}(r)+iC_r
+       =uu^\dagger+vv^\dagger+r_5g_5g_5^T,\\
+\tau_r&=OT_rO^T,&\sigma_r&=\bar\tau_r.
+\end{aligned}
+\tag{X.12}
+$$
+
+每项均半正，迹为 $\sum_jr_j=1$；实部由 (X.11) 给指定人口。
+同一个 $O$ 同时作用于这两个完整矩阵。其两个差权重是
+$2\sqrt{r_1r_4}$ 和 $2\sqrt{r_2r_3}$ 的降序排列，故对每个可行 $r$，(X.10)
+中的最小值上界均由同一个态对达到。因而得到精确的共同谱优化：
+
+$$
+G(z^{\mathrm{ph}})
+ =2\max_{\substack{r_1\geq\cdots\geq r_5\geq0\\
+                    \sum_jr_j=1,\ z\prec r}}
+       \sqrt{\min\{r_1r_4,r_2r_3\}}.
+\tag{X.13}
+$$
+
+若先为降序人口构造 $O_\downarrow$，取把物理人口变成降序人口的置换矩阵 $\Pi$，
+令 $O=\Pi^TO_\downarrow$，便逐行、逐列恢复 (X.1)。人口有重数时任选满足该等式的置换，
+结论不依赖其选择。这个正交矩阵是密度态存在构造的参数，没有被计为制备或预处理。
+
+原态对域由半正、迹、实部和对角的闭条件给出，在有限维有界；
+$(\operatorname{diag}z^{\mathrm{ph}},\operatorname{diag}z^{\mathrm{ph}})$ 保证其非空。
+有序奇异值连续，$a_2$ 连续，故原域和 (X.13) 的紧谱域都取得最大值。
+
+(四) 若 $U=0$，则至多三个初始人口非零。
+对任意正密度矩阵 $M$，$|M_{ij}|^2\leq M_{ii}M_{jj}$；
+零人口强制整行、整列为零。因此 $A$ 支撑在至多三维实空间，反对称秩至多二，$a_2=0$。
+
+若 $U>0$，则 $P,Q<1$。取
+
+$$
+0<\varepsilon\leq
+\min\left\{\frac{1-P}{3},\frac{1-Q}{2},U,\frac14\right\},
+\qquad r=(1-3\varepsilon,\varepsilon,\varepsilon,\varepsilon,0).
+\tag{X.14}
+$$
+
+它降序且有迹一；前三个前缀分别为 $1-3\varepsilon$、$1-2\varepsilon$、
+$1-\varepsilon$，至少为 $P,Q,1-U$，第四个为一。因此 $z\prec r$，
+(X.12) 给 $a_2=2\varepsilon>0$。从此可在正最优值上工作。
+
+(五) 对任意可行谱 $r$，把
+$(r_1,r_2,r_3,r_4+r_5,0)$ 重新降序排列为 $r'$。
+原前四个坐标只增加其中一个，故这四个数的每个降序序统计量都不少于原值；
+新的第五坐标为零，前四个前缀不减而总和仍一。
+因此 $r\prec r'$，仍有 $z\prec r'$，且
+$r'_1r'_4\geq r_1r_4$、$r'_2r'_3\geq r_2r_3$。
+在正最优值处，$r'_4>0$；故不损失最优值地只考虑
+$(a,b,c,d,0)$，$a\geq b\geq c\geq d>0$、$a+b+c+d=1$。
+这一步只是移动存在构造的实部谱，不是对源态的非酉操作。
+
+下面把两个乘积平衡，且保留所有主序约束。
+若 $ad>bc$，固定 $a$，先把 $d$ 连续转给 $c$，直到 $c=b$ 或已达到 $ad=bc$。
+此段 $a,a+b$ 不变，$a+b+c=1-d$ 增加，且 $bc$ 严格增加。
+若中间两项相等但乘积仍未平衡，继续从 $d$ 向 $b,c$ 等量转移；
+此段第一前缀不变，第二、第三前缀增加，$bc$ 仍严格增加。
+排序只可能在 $d=0$ 或 $b=c=a$ 处成为终端限制；
+前者给 $ad-bc\leq0$，后者也给 $ad-bc=a(d-a)\leq0$。
+连续性保证在该限制之前或同时遇到 $ad=bc$；初始较小乘积严格正，故相遇处仍正。
+
+若 $ad<bc$，固定 $d$，先把 $b$ 连续转给 $a$，直到 $b=c$ 或已达到相等。
+此段第一前缀增加，第二、第三前缀不变，$ad$ 严格增加。
+若到 $b=c$ 时仍未相等，就同时从 $b,c$ 等量转给 $a$；
+第一、第二前缀增加，第三前缀 $1-d$ 不变。
+在 $c$ 降到 $d$ 之前必相遇，因为该端点为 $b=c=d$，给
+$ad-bc=d(a-d)\geq0$。
+相遇前的较小乘积 $ad$ 严格增加，且全程排序成立。
+初始 $b=c$ 时直接跳过第一段；其他首尾重数不改变前缀比较；
+初始 $ad=bc$ 时无需转移。
+
+两种符号情形都把谱沿连续主序增大路径送到正乘积相等处，且不降低较小乘积。
+因此 (X.13) 可精确限制到 $ad=bc$；没有把两个不同谱的最好值相乘。
+
+(六) 对降序正四元组满足 $ad=bc$，定义 $x=a+b$、$y=a+c$。
+由迹一和 $bc=ad$ 得 $(a+b)(a+c)=a$，从而
+
+$$
+\begin{aligned}
+(a,b,c,d,0)
+ &=(xy,x(1-y),(1-x)y,(1-x)(1-y),0),\\
+\tfrac12&\leq y\leq x<1,\qquad
+ad=bc=x(1-x)y(1-y).
+\end{aligned}
+\tag{X.15}
+$$
+
+反之，该参数区间且 $y<1$ 给正的降序四元组和相等乘积。
+其三个非平凡前缀恰把 $z\prec r$ 化成
+
+$$
+xy\geq P,\qquad x\geq Q,\qquad (1-x)(1-y)\leq U.
+\tag{X.16}
+$$
+
+第四前缀为一，自动满足。
+在固定 $x$ 时，$y(1-y)$ 在 $[1/2,1)$ 上不增，故最优选最小可行 $y$：
+
+$$
+\ell(x)=\max\left\{\tfrac12,\frac P x,1-\frac U{1-x}\right\},
+\qquad y=\ell(x).
+\tag{X.17}
+$$
+
+$\ell(x)\leq x$ 分别等价于 $x\geq1/2$、$x^2\geq P$、$(1-x)^2\leq U$；
+再加 $x\geq Q$，精确可行 $x$ 区间即 $[x_*,1)$。
+$U>0$ 给 $P,Q<1$，故 $x_*<1$；且 $x\geq\sqrt P>P$ 以及 $U>0$
+保证 $\ell(x)<1$。这里 $P>0$ 来自迹一。
+因此边界零人口和人口重数均未被排除。
+
+(七) 令
+
+$$
+F(x,y)=x(1-x)y(1-y),\qquad
+F(x)=F(x,\ell(x)),\qquad
+G(z^{\mathrm{ph}})^2=4\max_{x\in[x_*,1)}F(x).
+\tag{X.18}
+$$
+
+三个可能的活动分支及实际导数为
+
+$$
+\begin{array}{c|c|c}
+\ell(x)&F(x)&F'(x)\\ \hline
+\tfrac12&\dfrac{x(1-x)}4&\dfrac{1-2x}4\\[3pt]
+P/x&P(1+P-x-P/x)&P(-1+P/x^2)\\[3pt]
+1-U/(1-x)&U(1+U-(1-x)-U/(1-x))&U(1-U/(1-x)^2).
+\end{array}
+\tag{X.19}
+$$
+
+对整个 $x\geq x_*$，第一行由 $x\geq1/2$、第二行由 $x\geq\sqrt P$、
+第三行由 $x\geq1-\sqrt U$，分别给非正导数。
+第三行最后一个条件意味着 $(1-x)^2\leq U$，导数方向正是非正。
+$\ell$ 是三个连续函数的最大值，故 $F$ 连续；
+分支两两相等只产生有限个线性或二次方程根，在此 $P,U>0$ 时不存在整段重合。
+把任意紧子区间 $[x_*,b]\subset[x_*,1)$ 按这些根切开，
+每段 $F$ 均不增，切点的左右值相等。因此 $F$ 在整个可行区间全局不增，
+包括每个分支切换和多重相等点。
+最大值为 $F(x_*)$，(X.4) 成立；特别地 $y=1/2$ 分支的值和导数都含因子 $1/4$。
+
+(八) 将 (X.15) 中的 $x,y$ 取为 $x_*,y_*$，用这个同一个谱代入 (X.12)。
+$r_5=0$ 且四个谱值严格正，$u,v$ 非零并处于正交支撑，
+所以 $T_r=uu^\dagger+vv^\dagger$ 的秩恰二，$\bar T_r$ 同样秩二。
+两个乘积相等给 $a_1=a_2=2\sqrt{F(x_*)}=G$，所以 $D=2G$。
+正交变换、恢复人口标签和被动返回物理坐标都保持密度矩阵秩。
+
+已有 $U=0$ 与 $U>0$ 的两种论证给出 (X.6) 第一项。
+由 $x(1-x),y(1-y)\leq1/4$ 得 $G\leq1/2$，
+等号强制 $x_*=y_*=1/2$，再由 $x_*y_*\geq P$ 得 $P\leq1/4$。
+反之，$P\leq1/4$ 给 $Q\leq1/2$，又前三个人口之和至多 $3/4$，
+所以 $U\geq1/4$。于是 (X.4) 中 $x_*=y_*=1/2$，$G=1/2$。
+最后 $D=2G$ 给平衡见证的 $D=1$ 条件。
+任意物理人口置换可同时共轭两态，反向置换也可用，
+故它在两个固定人口域之间给保持 $a_1,a_2$ 的双射，证明排列协变。$\square$
+

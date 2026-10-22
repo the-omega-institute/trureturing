@@ -1,0 +1,155 @@
+**Theorem 6.1 (All-root original-source reconstruction).** Over an algebraic
+closure of $k=\mathbb Q(p,v)$, $R$ has eighteen distinct roots.
+At each root, (5.2) reconstructs a point of $X$ with exactly the
+original acquired readings (1.3). Its gain is $g=H/U$, where $H$
+is the entire polynomial (4.2), and its actual terminal $M$ response
+is $\tau$. Every source over a suitable nonempty base open is
+obtained exactly once in this way.
+
+Consequently the acquired map from the original-source parent has
+generic degree eighteen. This counts complete sources and their
+uniquely determined entire gains and drifts; it does not count
+square-slack signs and does not assert eighteen strict-real worlds.
+
+Proof. Proposition 5.2 proves that $\rho$ and
+$\operatorname{Disc}(\bar R)$ are nonzero in $k$. Thus the carrier
+has degree eighteen and is reduced over an algebraic closure.
+The resultants of $\bar R$ with $D,\alpha,a$ are nonzero, so
+these three polynomials do not vanish at any generic carrier root.
+
+Fix one such root $x$. The fixed resultant (4.7) is zero there.
+Because $a\ne0$, the polynomial $f$ remains quadratic in $d$.
+Writing its roots with multiplicity as $d_1,d_2$, its fixed
+degree-$(2,4)$ resultant equals
+
+$$
+a^4K(d_1)K(d_2).
+\tag{6.1}
+$$
+
+This formula remains valid if $K$ loses degree; relative to its
+actual-degree resultant it merely includes the additional nonzero
+power of $a$. Hence there is a finite common root of $f,K$.
+Equation (4.6) forces every common root to equal
+$\delta=-\beta/\alpha$. Thus
+
+$$
+f(x,\delta)=K(x,\delta)=0
+\tag{6.2}
+$$
+
+at every generic root. In particular these equations hold in the
+reduced algebra $B$. Their validity in characteristic zero follows
+from the resultant and pseudo-remainder, independently of the modular
+zero residues in (5.11).
+
+All eleven norms in (5.7) are nonzero in $k$. Multiplication by
+each element is invertible in $B$; after extending to the splitting
+field, the element is therefore nonzero at every carrier root.
+The definitions in (5.2) give $b,r,1-r,T,U,j,n\ne0$, and
+$J=bj$, $N=bn$ will follow from the rank equation below.
+They also give
+
+$$
+\delta U=-H_0,\qquad
+jH_1=U(24-\delta),\qquad n=xU,\qquad r=n-j.
+\tag{6.3}
+$$
+
+Put $B_0=294/5-2\delta-H_2$. The first equation of (6.2),
+divided by the unit $5D^2$, says
+$\delta H_2+H_0B_0=0$. Thus
+
+$$
+B_0U-H_2
+=-\frac{\delta H_2+H_0B_0}{\delta}=0.
+\tag{6.4}
+$$
+
+This proves clock two, since $T=(U+1)/2$ and
+$B_0=2(147/5-\delta)-H_2$ imply
+$\delta+TH_2/U=147/5$. The other first two readings are
+
+$$
+\delta+H_0/U=0,\qquad
+\delta+jH_1/U=24.
+\tag{6.5}
+$$
+
+For the source rank, put $Z=xH_1-(24-\delta)$.
+The definitions imply $r=UZ/H_1$. A rational identity, valid
+before imposing $f=K=0$, is
+
+$$
+\begin{aligned}
+4\delta^2H_1^2\{r^2-(1+b)r+b(n-b)\}
+={}&4H_0^2Z^2+2H_0(\delta-H_0)ZH_1\\
+&-(H_0+\delta)\bigl(\delta+(1-2x)H_0\bigr)H_1^2.
+\end{aligned}
+\tag{6.6}
+$$
+
+To obtain it, substitute $U=-H_0/\delta$, $b=(U-1)/2$,
+$r=UZ/H_1$, and $n=xU$ and collect terms. Its right side
+is $K/D^4$, hence zero by (6.2). Its multiplier is a unit.
+It follows that
+
+$$
+b(n-r-b)=r(1-r),\qquad
+j=n-r=b+r(1-r)/b.
+\tag{6.7}
+$$
+
+Thus the reconstructed matrix is literally $P(r,b)$, not an
+auxiliary rank-one parameter. In particular $J=bj$ and $N=bn$
+are nonzero.
+
+The interpolating values (4.2), divided by $U$, give the remaining
+original readings:
+
+$$
+\begin{aligned}
+\delta+ng(3)&=24,&\delta+Ug(4)&=18,\\
+\delta+(U+n)g(5)&=p,&\delta+(2U+n)g(6)&=v.
+\end{aligned}
+\tag{6.8}
+$$
+
+All equations use $g=H/U$, one entire polynomial of degree at
+most three. Equations (6.5) exclude its identically zero value.
+By the full source bridge, or directly by (2.3), these original
+readings imply $\mathcal P=0$ with $e=\delta-24$. We have
+therefore reconstructed a point of $X$ at every generic carrier root.
+The trace (2.1) gives
+
+$$
+m=\delta+(3U+2n)g(7)=\delta+(3+2x)H_7=\tau.
+\tag{6.9}
+$$
+
+All preceding identities are rational identities over the generic
+base. There are only finitely many denominators and nonvanishing
+norms, so they hold on a common nonempty Zariski-open subset of
+$\mathbb A^2$. Shrink it by $S_F=0$, $p=24$, and $Z_E$.
+This is still nonempty: (5.8) proves $S_F\not\equiv0$,
+Proposition 3.2 makes $Z_E$ proper, and the base plane is
+irreducible. Separate specializations certifying different nonzero
+functions suffice; they need not be one common specialization.
+
+Over this open, every original source is outside $E$ and so is an
+$R$ root by Proposition 4.3. Equation (4.6) gives its unique drift
+$\delta$. Its clock zero determines $U=-H_0/\delta$, clock one
+determines $j$, and then $b,n,r,g$ are exactly (5.2).
+Conversely each of the eighteen roots has just been lifted. Different
+$x$ give different sources with complete worlds, because $x=n/U$
+is a function of that world. Thus there are exactly eighteen points
+in this generic source fibre.
+
+Theorem 3.1 supplies an irreducible source surface and a dominant
+map. In characteristic zero the degree of its function-field extension
+equals the number of geometric points in a generic reduced finite
+fibre. It is therefore eighteen. The three square roots of (2.9)
+give a separate eightfold sign cover of each source; they are not
+different complete worlds. No ordered real inequality was used in
+the generic reconstruction. ∎
+
