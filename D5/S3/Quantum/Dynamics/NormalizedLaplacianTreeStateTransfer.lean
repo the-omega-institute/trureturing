@@ -7,7 +7,6 @@
    digest: A seventeen-vertex tree has normalized-Laplacian perfect state transfer at three pi. -/
 
 import D5.S3.Quantum.Dynamics.EnergyEigenstateStationarity
-import Mathlib.Combinatorics.SimpleGraph.Acyclic
 
 set_option autoImplicit false
 set_option relaxedAutoImplicit false
@@ -146,7 +145,9 @@ private lemma symmetric_decomposition :
       (1 / 16 : ℂ) • symMode 1 (-3) (Real.sqrt 2) (-1) +
       (7 / 16 : ℂ) • symMode 1 1 (-(Real.sqrt 2 : ℂ) / 7) (-3 / 7) +
       (7 / 16 : ℂ) • symMode 1 (-1) (-(Real.sqrt 2 : ℂ) / 7) (3 / 7) := by
-  sorry
+  ext i
+  fin_cases i <;>
+    norm_num [symMode, Pi.single_apply, Pi.add_apply, Pi.smul_apply] <;> ring
 
 private lemma phases :
     Complex.exp (Complex.I * ((3 * Real.pi : ℝ) : ℂ) * 0) = 1 ∧
