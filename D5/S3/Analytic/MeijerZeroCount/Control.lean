@@ -37,7 +37,7 @@ private lemma h_normalized (n d : ℕ) {x : ℝ} (hx : 0 < x) :
   apply Finset.sum_congr rfl
   intro i hi
   rw [Real.rpow_sub hx, Real.rpow_natCast, Real.rpow_natCast]
-  field_simp [hx.ne'] <;> ring
+  field_simp [hx.ne']
 
 private lemma normalized_strictAnti (n d : ℕ) (hn : 0 < n) :
     StrictAntiOn (normalized n d) (Ioi 0) := by
@@ -77,8 +77,7 @@ private lemma exists_h_zero (n d : ℕ) (hn : 0 < n) (hd : 0 < d) :
 private lemma control_family (n d : ℕ) (c : ℝ) {x : ℝ} (hx : 0 < x) :
     control ![(n : ℝ)+c, (n : ℝ)+c] ![c, ((2*n+d : ℕ) : ℝ)+c] x =
       x ^ c * (2*x^n - 1 - x^(2*n+d)) := by
-  simp only [Defs.control, Fin.sum_univ_two, Matrix.cons_val_zero, Matrix.cons_val_one,
-    Matrix.head_cons]
+  simp only [Defs.control, Fin.sum_univ_two, Matrix.cons_val_zero, Matrix.cons_val_one]
   simp only [Real.rpow_add hx, Real.rpow_natCast]
   ring
 
