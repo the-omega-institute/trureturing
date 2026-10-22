@@ -7,6 +7,7 @@
    digest: Convergence, differentiation, continuity, and the normalized Bessel equation. -/
 
 import D5.S3.Analytic.BesselRedheffer.Defs
+import D5.S3.Analytic.KummerRatio.Series
 import Mathlib.Analysis.SpecificLimits.Normed
 import Mathlib.Analysis.Calculus.SmoothSeries
 import Mathlib.Analysis.Calculus.Deriv.Pow
@@ -162,14 +163,6 @@ theorem nbessel_pos_near_zero {ν : ℝ} (hν : -1 < ν) :
   have h : (0 : ℝ) < nbessel ν 0 := by rw [nbessel_zero]; norm_num
   exact (continuous_nbessel hν).continuousAt.eventually (lt_mem_nhds h)
 
-private lemma pochhammer_shift (b : ℝ) (n : ℕ) :
-    b * (ascPochhammer ℝ n).eval (b + 1) =
-      (b + n) * (ascPochhammer ℝ n).eval b := by
-  calc
-    _ = (ascPochhammer ℝ (n + 1)).eval b := by
-      simp [ascPochhammer_succ_left, Polynomial.eval_comp]
-    _ = _ := by rw [ascPochhammer_succ_eval]; ring
-
 private lemma coeff_lower_shift {b : ℝ} (hb : 0 < b) (n : ℕ) :
     coeff b (n + 1) = coeff (b + 1) (n + 1) +
       1 / (b * (b + 1)) * coeff (b + 2) n := by
@@ -182,7 +175,7 @@ private lemma coeff_lower_shift {b : ℝ} (hb : 0 < b) (n : ℕ) :
   have hn : (n : ℝ) + 1 ≠ 0 := by positivity
   have hbn : b + (n : ℝ) ≠ 0 := by positivity
   have hbn1 : b + 1 + (n : ℝ) ≠ 0 := by positivity
-  have hrel := pochhammer_shift (b + 1) n
+  have hrel := D5.S3.Analytic.KummerRatio.Series.pochhammer_shift (b + 1) n
   have hrepl : (ascPochhammer ℝ n).eval (b + 2) =
       ((b + 1 + n) * (ascPochhammer ℝ n).eval (b + 1)) / (b + 1) := by
     apply (eq_div_iff hb1).mpr

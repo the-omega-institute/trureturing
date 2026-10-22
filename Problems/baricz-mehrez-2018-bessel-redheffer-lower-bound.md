@@ -155,8 +155,8 @@ does not establish exhaustive citation-index coverage or priority.
   sign for sufficiently small nonzero $x$ is the sign of
   $T(\nu)-j_{\nu,1}^2$. Equality at the threshold requires higher terms.
 - **OPEN.** The exact set of $\nu>-1$ for which the lower bound holds
-  on the whole interval remains undetermined. The computations place
-  the transition between $\nu=16$ and $\nu=18$; they do not prove a
+  on the whole interval remains undetermined. The sampled behavior changes
+  between orders 16 and 18. The computations do not prove a
   unique transition or validity at unsampled arguments.
 
 ## ASSUMED-UNVERIFIED
