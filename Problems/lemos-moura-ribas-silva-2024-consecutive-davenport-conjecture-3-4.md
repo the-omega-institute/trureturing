@@ -42,7 +42,7 @@ The imported frozen declaration `D5/S3/FiniteGroups/NikolovSegal/TypeA/Unitriang
 
 ## Falsifier
 
-A finite group and sequence of length at least its order with no nonempty contiguous product-one block would contradict the upper bound. A product-one-free sequence of length one less than the group order would contradict the lower bound. A mismatch between the source's ordered, unweighted conventions and the Lean definitions would invalidate the settlement.
+A finite group and sequence of length at least its order with no nonempty contiguous product-one block would contradict the upper bound. A positive threshold $m<|G|$ such that every word of length at least $m$ contains a nonempty contiguous product-one block would contradict the lower bound. A mismatch between the source's ordered, unweighted conventions and the Lean definitions would invalidate the settlement.
 
 ## Evidence
 
