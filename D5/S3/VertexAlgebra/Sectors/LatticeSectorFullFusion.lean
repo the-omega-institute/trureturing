@@ -169,6 +169,36 @@ theorem fullPost_apply (H : Matrix (Fin D.rank) (Fin D.rank) ℂ)
     (fullPost D H hHG hGH α β g I).val u n v = g.val (I.val u n v) :=
   intertwinerPost_coefficients D H hHG hGH α β g ((fullIOEquiv D α β M).symm I) u v n
 
+/-- Postcomposition by the identity module map is the identity on full IO. -/
+theorem fullPost_identity (H : Matrix (Fin D.rank) (Fin D.rank) ℂ)
+    (hHG : H * gramComplex D = 1) (hGH : gramComplex D * H = 1)
+    (α β : Charge D) (M : FiniteSectorObject D) (I : FullIO D α β M) :
+    fullPost D H hHG hGH α β (identity D M) I = I := by
+  apply Subtype.ext
+  apply LinearMap.ext
+  intro u
+  funext n
+  apply LinearMap.ext
+  intro v
+  rw [fullPost_apply]
+  rfl
+
+/-- Full target postcomposition respects composition of actual module maps. -/
+theorem fullPost_comp (H : Matrix (Fin D.rank) (Fin D.rank) ℂ)
+    (hHG : H * gramComplex D = 1) (hGH : gramComplex D * H = 1)
+    (α β : Charge D) {M N P : FiniteSectorObject D}
+    (g : Hom D M N) (h : Hom D N P) (I : FullIO D α β M) :
+    fullPost D H hHG hGH α β (compose D h g) I =
+      fullPost D H hHG hGH α β h (fullPost D H hHG hGH α β g I) := by
+  apply Subtype.ext
+  apply LinearMap.ext
+  intro u
+  funext n
+  apply LinearMap.ext
+  intro v
+  rw [fullPost_apply, fullPost_apply, fullPost_apply]
+  rfl
+
 /-- Naturality of the full universal linear equivalence. -/
 theorem fullUniversal_natural (H : Matrix (Fin D.rank) (Fin D.rank) ℂ)
     (hHG : H * gramComplex D = 1) (hGH : gramComplex D * H = 1)
