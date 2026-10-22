@@ -51,12 +51,17 @@ internal sealed class CotfasDVGSDocument : IScribeDocumentDefinition
                     + "with twice a periodized Gaussian kernel. Its Gaussian Gram factor is positive semidefinite "
                     + "when det σ ≥ 1. A rank-one lower bound and theta nonvanishing give a strictly positive "
                     + "diagonal entry, hence a nonzero trace. The argument includes det σ = 1 and det σ > 1.",
-                AssessedProvenance.FromRepo(Source), DescribeRole.Theorem))));
+                AssessedProvenance.FromRepo(Source), DescribeRole.Theorem,
+                new OpenProblemResolutionClaim(
+                    ProblemSlugRef.Create("cotfas-2026-uncertainty-condition-conjecture"),
+                    ResolutionKind.Proved)))));
 
     private static DocumentBlock Node(string id, string name, string title, Formula formula,
-        string text, AssessedProvenance provenance, DescribeRole role = DescribeRole.Definition) => Describe.Lean(
+        string text, AssessedProvenance provenance, DescribeRole role = DescribeRole.Definition,
+        OpenProblemResolutionClaim? resolution = null) => Describe.Lean(
             DescribeId.Create(id), DeclarationHandle.Create(Module + name), H(title),
-            StatementSource.FromAuthor(Disp(formula)), provenance, Blocks(Paragraph(Text(text))), role);
+            StatementSource.FromAuthor(Disp(formula)), provenance, Blocks(Paragraph(Text(text))), role,
+            openProblemResolutionClaim: resolution);
 
     private static Formula N(string name) => Seq(Operatorname, Grp(F.Id(name)));
     private static Formula X(string name) => F.Id(name);

@@ -84,6 +84,10 @@ $$\forall (s : \mathbb{N}), (1 \le s) \Rightarrow (\forall (h : \mathbb{R}), (0 
 
 *Proof.* Machine-checked in Lean as `D5/S3/Quantum/CotfasDVGS.result` (`✓ std3`). ∎
 
+*Resolves.* `Problems/cotfas-2026-uncertainty-condition-conjecture` (proved) by `D5/S3/Quantum/CotfasDVGS.result`.
+
+<!-- scribe-open-problem-resolution-v1 {"problem_slug":"cotfas-2026-uncertainty-condition-conjecture","declaration_gid":"D5/S3/Quantum/CotfasDVGS.result","resolution_kind":"proved"} -->
+
 *Source.* Repository-derived.
 
 *Acknowledgement.* Nicolae Cotfas (2026). *Frame-dependent coherence of Gaussian quantum states*. DOI: [10.48550/arXiv.2610.05623](https://doi.org/10.48550/arXiv.2610.05623). URL: <https://arxiv.org/abs/2610.05623v1>.
