@@ -225,13 +225,22 @@ private lemma coords_affine (x y : ℝ)
     coords (rho x y) i = coords (rho 0 0) i +
       x * (coords (rho 1 0) i - coords (rho 0 0) i) +
       y * (coords (rho 0 1) i - coords (rho 0 0) i) := by
-  rw [rho_affine x y]
   rcases i with ⟨p, q, t⟩
-  cases t <;> dsimp only [coords]
-  all_goals
-    simp only [Bool.false_eq_true, eq_self_iff_true, if_true, if_false,
-      Matrix.add_apply, Matrix.smul_apply, Complex.real_smul, Complex.add_re,
-      Complex.add_im, Complex.re_ofReal_mul, Complex.im_ofReal_mul] <;> ring
+  cases t
+  · change (rho x y p q).re = (rho 0 0 p q).re +
+      x * ((rho 1 0 p q).re - (rho 0 0 p q).re) +
+      y * ((rho 0 1 p q).re - (rho 0 0 p q).re)
+    rw [rho_affine x y]
+    simp only [Matrix.add_apply, Matrix.smul_apply, Complex.real_smul,
+      Complex.add_re, Complex.re_ofReal_mul]
+    ring
+  · change (rho x y p q).im = (rho 0 0 p q).im +
+      x * ((rho 1 0 p q).im - (rho 0 0 p q).im) +
+      y * ((rho 0 1 p q).im - (rho 0 0 p q).im)
+    rw [rho_affine x y]
+    simp only [Matrix.add_apply, Matrix.smul_apply, Complex.real_smul,
+      Complex.add_im, Complex.im_ofReal_mul]
+    ring
 
 private def restriction
     (f : MvPolynomial ((Fin 2 × Fin 3) × (Fin 2 × Fin 3) × Bool) ℝ) : Polynomial ℝ :=
