@@ -96,7 +96,10 @@ internal sealed class DeferredInstrumentUniquenessDocument : IScribeDocumentDefi
                         + "complete positivity of Itilde, while its channel sum and "
                         + "trace identity give both required marginals. This proves "
                         + "the biconditional, including both endpoints."))),
-                DescribeRole.Theorem)
+                DescribeRole.Theorem,
+                openProblemResolutionClaim: new OpenProblemResolutionClaim(
+                    ProblemSlugRef.Create("carmeli-heinosaari-toigo-2025-upper-boundary-instrument-uniqueness"),
+                    ResolutionKind.Proved))
         )));
 
     private static DocumentBlock Node(string id, string title, string declaration,
