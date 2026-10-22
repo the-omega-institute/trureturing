@@ -369,3 +369,109 @@ ordinary-zeta constraint
 that does not transport to this system. No such additional estimate,
 ordinary Robin counterexample, RH proof, new zero construction or
 Lean-certified theorem is supplied here.
+
+## The leading Selberg convolution relation is shared by this system
+
+[Tatuzawa–Iseki, *On Selberg's elementary proof of the prime-number
+theorem*, Proc. Japan Acad. 27 (1951), 340–342](https://doi.org/10.3792/pja/1195571353),
+equation (2), p.340, records the ordinary relation
+
+$$
+\psi(x)\log x+\sum_{n\le x}\Lambda(n)\psi(x/n)
+=2x\log x+O(x).
+$$
+
+The three-page [primary PDF](https://www.jstage.jst.go.jp/article/pjab1945/27/7/27_7_340/_pdf)
+and its equation (2) were inspected. This is a classical input, not a
+new prime-number theorem. The application below checks whether adding
+this particular relation distinguishes the already constructed system;
+it does not re-prove the realization or the source selection.
+
+For a generalized integer vector $\mathfrak a$, let
+$\Lambda_{\mathcal P}(\mathfrak a)=\log p$ when $\mathfrak a=p^k$,
+$k\ge1$, and zero otherwise. Keep every prime power, generator label
+and ordered factorization, including coincident norms. Define
+
+$$
+C_{\mathcal P}(x)=
+\sum_{|\mathfrak a\mathfrak b|\le x}
+\Lambda_{\mathcal P}(\mathfrak a)\Lambda_{\mathcal P}(\mathfrak b)
+=\sum_{|\mathfrak a|\le x}
+\Lambda_{\mathcal P}(\mathfrak a)\psi_{\mathcal P}(x/|\mathfrak a|).
+$$
+
+In the fixed normalized system of (RJ1),
+$\psi_{\mathcal P}(x)=x+O(x^\beta)$ with $1/2<\beta<1$.
+The standard partial-summation consequences are
+
+$$
+M(x):=\sum_{|\mathfrak a|\le x}
+\frac{\Lambda_{\mathcal P}(\mathfrak a)}{|\mathfrak a|}
+=\log x+O(1),\qquad
+\sum_{|\mathfrak a|\le x}
+\frac{\Lambda_{\mathcal P}(\mathfrak a)}{|\mathfrak a|^\beta}
+\ll x^{1-\beta}.
+$$
+
+The constants can be enlarged so that the prime-error bound holds for
+all real arguments at least one. Thus the complete convolution gives
+
+$$
+\begin{aligned}
+C_{\mathcal P}(x)
+&=xM(x)+O\!\left(x^\beta
+ \sum_{|\mathfrak a|\le x}
+ \frac{\Lambda_{\mathcal P}(\mathfrak a)}{|\mathfrak a|^\beta}\right)
+=x\log x+O(x),\\
+\psi_{\mathcal P}(x)\log x+C_{\mathcal P}(x)
+&=2x\log x+O(x).
+\end{aligned}
+$$
+
+This retains the mixed convolution; no favorable sign was assigned to
+its error. The same system therefore satisfies the displayed leading
+Selberg relation while the original root-scale floor still fails on the actual sources
+(RJ9), as (RJ12) shows.
+Adding that relation to the already tested joint conditions does not
+supply the original root-scale floor. This tests the stated $O(x)$
+relation, not every stronger weighted or source-dependent Selberg estimate.
+
+The underlying exact convolution identity is also multiplicative rather
+than specific to the ordinary integer lattice. On $\Re s>1$, writing
+$D_{\mathcal P}=-\zeta_{\mathcal P}'/\zeta_{\mathcal P}$ gives
+
+$$
+-D_{\mathcal P}'(s)+D_{\mathcal P}(s)^2
+=\frac{\zeta_{\mathcal P}''(s)}{\zeta_{\mathcal P}(s)}.
+$$
+
+Its coefficients, indexed by generalized integer vectors, are
+$\Lambda_{\mathcal P}(\mathfrak a)\log|\mathfrak a|
+ +(\Lambda_{\mathcal P}*\Lambda_{\mathcal P})(\mathfrak a)$.
+This identity holds in the same free multiplicative system, with no
+factorial or exact ordinary-counting assumption. Its logarithmically
+weighted coefficient sum differs from the first term of the displayed
+leading relation by the exact partial-summation identity
+
+$$
+\psi_{\mathcal P}(x)\log x-
+\sum_{|\mathfrak a|\le x}\Lambda_{\mathcal P}(\mathfrak a)
+ \log|\mathfrak a|
+=\int_1^x\frac{\psi_{\mathcal P}(u)}u\,du=O(x).
+$$
+
+Thus the two first terms are interchangeable at the stated $O(x)$
+precision, not at an arbitrarily smaller error scale. Locally at a zero of
+multiplicity $m$, put $z=s-\rho$. Then
+$D_{\mathcal P}=-m/z+O(1)$ and the double-pole coefficient of
+$-D_{\mathcal P}'+D_{\mathcal P}^2$ is $m(m-1)$.
+At a simple zero it cancels; a remaining simple pole depends on the
+actual numerator, so nonvanishing of $\zeta_{\mathcal P}''(\rho)$ is
+not assumed. These algebraic observations supply no remainder estimate.
+
+The ordinary factorial identity uses additional global counting data;
+it is not identified with the universal convolution identity above.
+Deriving the ordinary floor from these tested conditions requires
+additional information not shared by this Beurling system. This
+application adds no new ordinary-prime estimate, realization theorem,
+RH proof or Lean/kernel certification, and makes no priority claim.
