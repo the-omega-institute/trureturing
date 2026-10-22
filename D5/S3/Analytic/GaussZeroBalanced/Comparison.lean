@@ -13,6 +13,7 @@ import Mathlib.Tactic
 
 noncomputable section
 open Set
+open scoped Topology
 open D5.S3.Analytic.GaussZeroBalanced.Defs
 
 namespace D5.S3.Analytic.GaussZeroBalanced.Comparison
@@ -275,5 +276,301 @@ theorem certificate {a b x : ℝ} (ha : 0 < a) (hb : 0 < b)
   rw [← hq_eq]
   apply (div_lt_iff₀ hden).2
   nlinarith [hEx]
+
+end D5.S3.Analytic.GaussZeroBalanced.Comparison
+
+
+namespace D5.S3.Analytic.GaussZeroBalanced.Comparison
+
+lemma slope_neg_local {a b₁ b₂ : ℝ} (ha : 0 < a) (h1 : 0 < b₁) (h2 : 0 < b₂)
+    (hder : deriv (fun y : ℝ => f a b₁ y - f a b₂ y) 0 < 0) :
+    ∃ x ∈ Ioo (0:ℝ) 1, f a b₁ x < f a b₂ x := by
+  have hw : HasDerivAt (fun y : ℝ => f a b₁ y - f a b₂ y)
+      (deriv (f a b₁) 0 - deriv (f a b₂) 0) 0 := by
+    have h1' := Series.hasDerivAt_f ha h1 (by positivity : (0:ℝ) ≤ 0) (by norm_num : (0:ℝ) < 1)
+    have h2' := Series.hasDerivAt_f ha h2 (by positivity : (0:ℝ) ≤ 0) (by norm_num : (0:ℝ) < 1)
+    have h1'' : HasDerivAt (f a b₁) (deriv (f a b₁) 0) 0 :=
+      h1'.congr_deriv (by symm; exact h1'.deriv)
+    have h2'' : HasDerivAt (f a b₂) (deriv (f a b₂) 0) 0 :=
+      h2'.congr_deriv (by symm; exact h2'.deriv)
+    convert h1''.sub h2'' using 1 <;> rfl
+  have hlim := hw.tendsto_slope
+  have hder' : deriv (fun y : ℝ => f a b₁ y - f a b₂ y) 0 =
+      deriv (f a b₁) 0 - deriv (f a b₂) 0 := by
+    exact (hw.deriv)
+  have hder'' : deriv (f a b₁) 0 - deriv (f a b₂) 0 < 0 := by
+    rw [← hder']
+    exact hder
+  have hev0 : ∀ᶠ y in 𝓝 (deriv (f a b₁) 0 - deriv (f a b₂) 0), y < 0 :=
+    eventually_lt_nhds hder''
+  have hev : ∀ᶠ y in 𝓝[≠] (0:ℝ),
+      slope (fun y : ℝ => f a b₁ y - f a b₂ y) 0 y < 0 := hlim.eventually hev0
+  have hlimpos := hev.filter_mono (nhdsWithin_mono (0:ℝ) (show Ioo (0:ℝ) 1 ⊆ ({0} : Set ℝ)ᶜ by
+    intro y hy hzero
+    have hyzero : y = 0 := by simpa [Set.mem_singleton_iff] using hzero
+    exact (ne_of_gt hy.1) hyzero))
+  have hnebot : (𝓝[Ioo (0:ℝ) 1] (0:ℝ)).NeBot := by
+    rw [nhdsWithin_neBot]
+    intro t ht
+    rcases Metric.mem_nhds_iff.mp ht with ⟨ε, hε, hball⟩
+    let y : ℝ := min (ε / 2) (1 / 2)
+    refine ⟨y, hball ?_, ?_⟩
+    · rw [Metric.mem_ball]
+      have hyabs : |y| < ε := by
+        rw [abs_of_pos (by
+          have hhalf : 0 < (1 / 2 : ℝ) := by norm_num
+          exact lt_min (by linarith [hε]) hhalf)]
+        have hle : y ≤ ε / 2 := min_le_left _ _
+        linarith
+      simpa [Real.dist_eq] using hyabs
+    · constructor
+      · have hhalf : 0 < (1 / 2 : ℝ) := by norm_num
+        exact lt_min (by linarith [hε]) hhalf
+      · exact lt_of_le_of_lt (min_le_right _ _) (by norm_num)
+  letI : (𝓝[Ioo (0:ℝ) 1] (0:ℝ)).NeBot := hnebot
+  have hmem : ∀ᶠ y in 𝓝[Ioo (0:ℝ) 1] (0:ℝ), y ∈ Ioo (0:ℝ) 1 := self_mem_nhdsWithin
+  obtain ⟨y, hy, hys⟩ := (hmem.and hlimpos).exists
+  refine ⟨y, hy, ?_⟩
+  have hwy0 : f a b₁ 0 - f a b₂ 0 = 0 := by simp [Series.f_zero]
+  have hypos : 0 < y := hy.1
+  have hys' : y⁻¹ * (f a b₁ y - f a b₂ y) < 0 := by
+    simpa [slope, hwy0, smul_eq_mul, vsub_eq_sub] using hys
+  have hyinv : 0 < y⁻¹ := inv_pos.mpr hypos
+  rcases (mul_neg_iff.mp hys') with ⟨_, hneg⟩ | ⟨hinv, _⟩
+  · linarith
+  · linarith
+
+
+theorem comparison_iff {a b₁ b₂ : ℝ} (ha : 0 < a) (h1 : 0 < b₁) (h12 : b₁ < b₂) :
+    (∀ x ∈ Ioo (0:ℝ) 1, f a b₂ x < f a b₁ x) ↔ b₁ * b₂ ≤ a * (a + 1) := by
+  constructor
+  · intro hall
+    by_contra hnot
+    have hprod : a * (a + 1) < b₁ * b₂ := lt_of_not_ge hnot
+    obtain ⟨x, hx, hbad⟩ := slope_neg_local ha h1 (lt_trans h1 h12) (by
+      have hw0 : deriv (fun y : ℝ => f a b₁ y - f a b₂ y) 0 =
+          deriv (f a b₁) 0 - deriv (f a b₂) 0 := by
+        have h1' := Series.hasDerivAt_f ha h1 (by norm_num : (0:ℝ) ≤ 0) (by norm_num : (0:ℝ) < 1)
+        have h2' := Series.hasDerivAt_f ha (lt_trans h1 h12) (by norm_num : (0:ℝ) ≤ 0) (by norm_num : (0:ℝ) < 1)
+        have h1'' : HasDerivAt (f a b₁) (deriv (f a b₁) 0) 0 :=
+          h1'.congr_deriv (by symm; exact h1'.deriv)
+        have h2'' : HasDerivAt (f a b₂) (deriv (f a b₂) 0) 0 :=
+          h2'.congr_deriv (by symm; exact h2'.deriv)
+        convert (h1''.sub h2'').deriv using 1 <;> rfl
+      rw [hw0, Series.deriv_f_zero ha h1, Series.deriv_f_zero ha (lt_trans h1 h12)]
+      have hb2 : 0 < b₂ := lt_trans h1 h12
+      have hden : 0 < (a + b₁) * (a + b₁ + 1) * (a + b₂) * (a + b₂ + 1) := by positivity
+      have hnum : a * (b₂ - b₁) * (a * (a + 1) - b₁ * b₂) < 0 := by
+        have hpos : 0 < a * (b₂ - b₁) := mul_pos ha (sub_pos.mpr h12)
+        exact mul_neg_of_pos_of_neg hpos (sub_neg.mpr hprod)
+      have hfrac :
+          -(a * b₁ / ((a + b₁) * (a + b₁ + 1))) -
+              -(a * b₂ / ((a + b₂) * (a + b₂ + 1))) =
+            (a * (b₂ - b₁) * (a * (a + 1) - b₁ * b₂)) /
+              ((a + b₁) * (a + b₁ + 1) * (a + b₂) * (a + b₂ + 1)) := by
+        field_simp [ne_of_gt (show 0 < a + b₁ by linarith),
+          ne_of_gt (show 0 < a + b₁ + 1 by linarith),
+          ne_of_gt (show 0 < a + b₂ by linarith),
+          ne_of_gt (show 0 < a + b₂ + 1 by linarith)]
+        ring
+      rw [hfrac]
+      exact (div_neg_iff).2 (Or.inr ⟨hnum, hden⟩))
+    have hgood := hall x hx
+    linarith
+  · intro hprod x hx
+    let R : ℝ := (x + 1) / 2
+    let w : ℝ → ℝ := fun z => f a b₁ z - f a b₂ z
+    have hRx : x ∈ Ioo (0:ℝ) R := by
+      constructor
+      · exact hx.1
+      · dsimp [R]
+        linarith [hx.2]
+    have hR1 : R < 1 := by
+      dsimp [R]
+      linarith [hx.2]
+    have hcont : ContinuousOn w (Icc (0:ℝ) R) := by
+      have hc1 : ContinuousOn (f a b₁) (Icc (0:ℝ) R) :=
+        (Series.continuousOn_f ha h1).mono (by
+          intro z hz
+          exact ⟨hz.1, lt_of_le_of_lt hz.2 hR1⟩)
+      have hc2 : ContinuousOn (f a b₂) (Icc (0:ℝ) R) :=
+        (Series.continuousOn_f ha (lt_trans h1 h12)).mono (by
+          intro z hz
+          exact ⟨hz.1, lt_of_le_of_lt hz.2 hR1⟩)
+      convert hc1.sub hc2 using 1 <;> rfl
+    have hw0 : w 0 = 0 := by simp [w, Series.f_zero]
+    have hwd : ∀ z ∈ Ioo (0:ℝ) R, HasDerivAt w (deriv w z) z := by
+      intro z hz
+      have h1' := Series.hasDerivAt_f ha h1 hz.1.le (lt_of_lt_of_le hz.2 hR1.le)
+      have h2' := Series.hasDerivAt_f ha (lt_trans h1 h12) hz.1.le (lt_of_lt_of_le hz.2 hR1.le)
+      have h1'' : HasDerivAt (f a b₁) (deriv (f a b₁) z) z :=
+        h1'.congr_deriv (by symm; exact h1'.deriv)
+      have h2'' : HasDerivAt (f a b₂) (deriv (f a b₂) z) z :=
+        h2'.congr_deriv (by symm; exact h2'.deriv)
+      have hh := h1''.sub h2''
+      convert hh.congr_deriv (by symm; exact hh.deriv) using 1 <;> rfl
+    have hqcomp : b₁ * a / ((a + b₁) * (a + b₁ + 1)) ≤
+        a ^ 2 / ((a + b₁) * (a + b₂)) := by
+      have hc1 : 0 < a + b₁ := by linarith
+      have hc2 : 0 < a + b₂ := by linarith
+      have hcp : 0 < a + b₁ + 1 := by linarith
+      have hdiff :
+          a ^ 2 / ((a + b₁) * (a + b₂)) -
+              b₁ * a / ((a + b₁) * (a + b₁ + 1)) =
+            a * (a * (a + 1) - b₁ * b₂) /
+              ((a + b₁) * (a + b₂) * (a + b₁ + 1)) := by
+        field_simp
+        ring
+      have hnum : 0 ≤ a * (a * (a + 1) - b₁ * b₂) :=
+        mul_nonneg ha.le (sub_nonneg.mpr hprod)
+      have hden : 0 < (a + b₁) * (a + b₂) * (a + b₁ + 1) := by positivity
+      have hnon : 0 ≤ a ^ 2 / ((a + b₁) * (a + b₂)) -
+          b₁ * a / ((a + b₁) * (a + b₁ + 1)) := by
+        rw [hdiff]
+        exact div_nonneg hnum hden.le
+      linarith
+    have hEq : ∀ z ∈ Ioo (0:ℝ) R,
+        z * deriv w z + ((a + b₂) + (a * b₂ / (a + b₂)) *
+          (z / (1-z)) * (f a b₁ z + f a b₂ z)) * w z =
+          (b₂ - b₁) * ((a^2 / ((a+b₁)*(a+b₂))) *
+            (z/(1-z)) * (f a b₁ z)^2 - (1 - f a b₁ z)) := by
+      intro z hz
+      have hr1 := Series.riccati ha h1 hz.1 (lt_of_lt_of_le hz.2 hR1.le)
+      have hr2 := Series.riccati ha (lt_trans h1 h12) hz.1 (lt_of_lt_of_le hz.2 hR1.le)
+      have hwder : deriv w z = deriv (f a b₁) z - deriv (f a b₂) z := by
+        have h1' := Series.hasDerivAt_f ha h1 hz.1.le (lt_of_lt_of_le hz.2 hR1.le)
+        have h2' := Series.hasDerivAt_f ha (lt_trans h1 h12) hz.1.le
+          (lt_of_lt_of_le hz.2 hR1.le)
+        have h1'' : HasDerivAt (f a b₁) (deriv (f a b₁) z) z :=
+          h1'.congr_deriv (by symm; exact h1'.deriv)
+        have h2'' : HasDerivAt (f a b₂) (deriv (f a b₂) z) z :=
+          h2'.congr_deriv (by symm; exact h2'.deriv)
+        convert (h1''.sub h2'').deriv using 1 <;> rfl
+      rw [hwder]
+      dsimp [w]
+      have hca1 : a + b₁ ≠ 0 := by linarith
+      have hca2 : a + b₂ ≠ 0 := by linarith
+      have hk : a * b₂ / (a + b₂) - a * b₁ / (a + b₁) =
+          (b₂ - b₁) * a^2 / ((a+b₁)*(a+b₂)) := by
+        field_simp [hca1, hca2]
+        ring
+      have hcalc :
+          z * (deriv (f a b₁) z - deriv (f a b₂) z) +
+              ((a + b₂) + (a * b₂ / (a + b₂)) *
+                (z / (1-z)) * (f a b₁ z + f a b₂ z)) *
+                (f a b₁ z - f a b₂ z) =
+            (a * b₂ / (a + b₂) - a * b₁ / (a + b₁)) *
+                (z / (1-z)) * (f a b₁ z)^2 -
+              (b₂ - b₁) * (1 - f a b₁ z) := by
+        linear_combination hr1 - hr2
+      rw [hcalc, hk]
+      ring
+    have hP : ∀ z ∈ Ioo (0:ℝ) R, 0 <
+        (a + b₂) + (a * b₂ / (a + b₂)) * (z/(1-z)) *
+          (f a b₁ z + f a b₂ z) := by
+      intro z hz
+      have hz1 : z < 1 := lt_of_lt_of_le hz.2 hR1.le
+      have ht : 0 < z/(1-z) := div_pos hz.1 (by linarith)
+      have hf1 := Series.f_pos ha h1 hz.1.le hz1
+      have hf2 := Series.f_pos ha (lt_trans h1 h12) hz.1.le hz1
+      have hc2 : 0 < a + b₂ := by linarith
+      have hk2 : 0 < a * b₂ / (a + b₂) :=
+        div_pos (mul_pos ha (lt_trans h1 h12)) hc2
+      positivity
+    have hineq : ∀ z ∈ Ioo (0:ℝ) R, 0 <
+        z * deriv w z + ((a + b₂) + (a * b₂ / (a + b₂)) *
+          (z/(1-z)) * (f a b₁ z + f a b₂ z)) * w z := by
+      intro z hz
+      rw [hEq z hz]
+      have hz1 : z < 1 := lt_of_lt_of_le hz.2 hR1.le
+      have htden : 0 < (z/(1-z)) * (f a b₁ z)^2 := by
+        have ht : 0 < z/(1-z) := div_pos hz.1 (by linarith)
+        have hf := Series.f_pos ha h1 hz.1.le hz1
+        positivity
+      have hc : 0 ≤ a^2 / ((a+b₁)*(a+b₂)) -
+          b₁*a / ((a+b₁)*(a+b₁+1)) := by linarith [hqcomp]
+      have hmul := mul_nonneg hc htden.le
+      have hcert := certificate ha h1 ⟨hz.1, hz1⟩
+      have hcert' : 1 - f a b₁ z <
+          (b₁*a / ((a+b₁)*(a+b₁+1))) * ((z/(1-z)) * (f a b₁ z)^2) := by
+        have hc' := (div_lt_iff₀ htden).mp hcert
+        convert hc' using 1 <;> ring
+      have hstrict : 0 <
+          (a^2 / ((a+b₁)*(a+b₂))) * ((z/(1-z)) * (f a b₁ z)^2) -
+            (1 - f a b₁ z) := by nlinarith [hcert', hmul]
+      have hdel : 0 < b₂ - b₁ := sub_pos.mpr h12
+      have hstrict' : 0 <
+          a^2 / ((a+b₁)*(a+b₂)) * (z/(1-z)) * (f a b₁ z)^2 -
+            (1 - f a b₁ z) := by simpa [mul_assoc] using hstrict
+      exact mul_pos hdel hstrict'
+    have hwpos := singular_comparison (R := R) (u := w)
+      (P := fun z => (a + b₂) + (a * b₂ / (a + b₂)) *
+          (z/(1-z)) * (f a b₁ z + f a b₂ z))
+      (by dsimp [R]; linarith [hx.1]) hw0 hcont hwd hP hineq
+    have := hwpos x hRx
+    dsimp [w] at this
+    linarith
+
+end D5.S3.Analytic.GaussZeroBalanced.Comparison
+
+
+namespace D5.S3.Analytic.GaussZeroBalanced.Comparison
+
+/-- The same parameter comparison after the contiguous quotient transformation. -/
+theorem comparison_iff_quot {a b₁ b₂ : ℝ} (ha : 0 < a) (h1 : 0 < b₁) (h12 : b₁ < b₂) :
+    (∀ x ∈ Ioo (0 : ℝ) 1, quot a b₂ x < quot a b₁ x) ↔
+      b₁ * b₂ ≤ a * (a + 1) := by
+  constructor
+  · intro hall
+    apply (comparison_iff ha h1 h12).mp
+    intro x hx
+    have h := hall x hx
+    rw [Series.quot_eq ha (lt_trans h1 h12) hx.1.le hx.2,
+      Series.quot_eq ha h1 hx.1.le hx.2] at h
+    have hpos : 0 < 1 - x := by linarith [hx.2]
+    have hh := (div_lt_iff₀ hpos).mp h
+    simpa [hpos.ne'] using hh
+  · intro hbound x hx
+    have h := (comparison_iff ha h1 h12).mpr hbound x hx
+    rw [Series.quot_eq ha (lt_trans h1 h12) hx.1.le hx.2,
+      Series.quot_eq ha h1 hx.1.le hx.2]
+    have hpos : 0 < 1 - x := by linarith [hx.2]
+    apply (div_lt_iff₀ hpos).mpr
+    simpa [hpos.ne'] using h
+
+/-- The second Qiu--Ma--Xiang classification. -/
+theorem clause2 : ∀ a : ℝ, 0 < a → a < 1 →
+    ((∀ r ∈ Ioo (0 : ℝ) 1, ineq17 a r) ↔ 3 / 7 ≤ a) := by
+  intro a ha ha1
+  have hb1 : 0 < 1 - a := by linarith
+  have hb12 : 1 - a < (3 / 2 : ℝ) - a := by norm_num
+  have hcomp := comparison_iff_quot ha hb1 hb12
+  have hshape : ∀ r, ineq17 a r ↔
+      quot a (3 / 2 - a) r < quot a (1 - a) r := by
+    intro r
+    unfold ineq17 quot
+    norm_num
+    ring_nf
+  have hthreshold :
+      ((1 - a) * ((3 / 2 : ℝ) - a) ≤ a * (a + 1)) ↔
+        3 / 7 ≤ a := by
+    constructor
+    · intro h
+      norm_num at h ⊢
+      nlinarith
+    · intro h
+      norm_num at h ⊢
+      nlinarith
+  constructor
+  · intro hall
+    have hq : (1 - a) * ((3 / 2 : ℝ) - a) ≤ a * (a + 1) := by
+      apply hcomp.mp
+      intro r hr
+      exact (hshape r).mp (hall r hr)
+    exact hthreshold.mp hq
+  · intro ha37 r hr
+    apply (hshape r).mpr
+    have hq := hthreshold.mpr ha37
+    exact (hcomp.mpr hq) r hr
 
 end D5.S3.Analytic.GaussZeroBalanced.Comparison

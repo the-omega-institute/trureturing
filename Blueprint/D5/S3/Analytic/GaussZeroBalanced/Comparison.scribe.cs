@@ -17,6 +17,18 @@ internal sealed class ComparisonDocument : IScribeDocumentDefinition
             Describe.Lean(DescribeId.Create("gauss-zero-balanced-certificate"),
                 DeclarationHandle.Create("D5/S3/Analytic/GaussZeroBalanced/Comparison.certificate"),
                 H("Positive Riccati certificate"), StatementSource.WithoutFormula(), AssessedProvenance.FromRepo(),
-                Blocks(Paragraph(Text("For positive a, b and 0 < x < 1, the contiguous quotient satisfies (1-f)/(t f^2) < a b/((a+b)(a+b+1))."))), DescribeRole.Theorem)
+                Blocks(Paragraph(Text("For positive a, b and 0 < x < 1, the contiguous quotient satisfies (1-f)/(t f^2) < a b/((a+b)(a+b+1))."))), DescribeRole.Theorem),
+            Describe.Lean(DescribeId.Create("gauss-zero-balanced-comparison-iff"),
+                DeclarationHandle.Create("D5/S3/Analytic/GaussZeroBalanced/Comparison.comparison_iff"),
+                H("General contiguous quotient comparison"), StatementSource.WithoutFormula(), AssessedProvenance.FromRepo(),
+                Blocks(Paragraph(Text("For positive a and 0 < b1 < b2, the contiguous quotient f(a,b1,x) is strictly larger than f(a,b2,x) throughout (0,1) exactly when b1 b2 <= a(a+1)."))), DescribeRole.Theorem),
+            Describe.Lean(DescribeId.Create("gauss-zero-balanced-comparison-iff-quot"),
+                DeclarationHandle.Create("D5/S3/Analytic/GaussZeroBalanced/Comparison.comparison_iff_quot"),
+                H("General Gauss quotient comparison"), StatementSource.WithoutFormula(), AssessedProvenance.FromRepo(),
+                Blocks(Paragraph(Text("The same threshold characterizes strict comparison of the zero-balanced Gauss quotients, using the factor 1-x."))), DescribeRole.Theorem),
+            Describe.Lean(DescribeId.Create("gauss-zero-balanced-clause-two"),
+                DeclarationHandle.Create("D5/S3/Analytic/GaussZeroBalanced/Comparison.clause2"),
+                H("Second parameter classification"), StatementSource.WithoutFormula(), AssessedProvenance.FromRepo(),
+                Blocks(Paragraph(Text("For 0 < a < 1, the two quotients in the second classification are ordered throughout (0,1) exactly when 3/7 <= a."))), DescribeRole.Theorem)
         )));
 }
