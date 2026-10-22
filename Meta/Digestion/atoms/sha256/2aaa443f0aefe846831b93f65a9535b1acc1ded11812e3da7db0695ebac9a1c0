@@ -1,0 +1,93 @@
+**定理 463.1（大三满部分的原列能量）。** 沿用定理 462.1 的原卷积、行算子、解析输入、固定有限表示及组合成本 $\mathcal P$。定义
+
+$$
+\mathfrak c_3(h)=\prod_{v_{\mathfrak p}(h)\ge3}
+ \mathfrak p^{v_{\mathfrak p}(h)},\qquad
+b_{3,\ge Y}(h)=b(h)\mathbf1_{q_{\mathfrak c_3(h)}\ge Y},
+\qquad 1\le Y\le K.
+\tag{463.1}
+$$
+
+$\mathfrak c_3(h)$ 收集原重数至少为三的完整素因子幂，允许重数四、五及更高的部分；它是三满理想，不限于整立方。则
+
+$$
+\|Ab_{3,\ge Y}\|_2^2
+\ll_\varepsilon (UK)^\varepsilon\mathcal P^2
+ \Psi_6(U,K)K Y^{-2/3}.
+\tag{463.2}
+$$
+
+同一上界允许再乘一个与行无关、绝对值至多为一的列乘子。所有原字符零值及相位保持，组合成本仍按定理 462.1 的乘积合同承担。
+
+**证明。** 直接复用既有六次幂移除 $h=ar^6$，其中 $a$ 为 sixth-power-free，允许 $a,r$ 相交。固定 $r$，仍提取
+
+$$
+e=\prod_{\mathfrak p\mid r}\mathfrak p^{v_{\mathfrak p}(a)},
+\quad e\mid\operatorname{rad}(r)^5,
+\quad a=ea_0,\quad(a_0,r)=1.
+\tag{463.3}
+$$
+
+这时有精确恒等式
+
+$$
+\mathfrak c_3(ar^6)=r^6e\,\mathfrak c_3(a_0).
+\tag{463.4}
+$$
+
+特别地，$e$ 在 $a$ 中重数一、二的素因子，在 $h$ 中也已属于三满部分。
+
+所需计数只用通常的正 Euler 乘积与 Rankin 界。对 $0<\eta<1/6$，三满理想的级数
+
+$$
+\sum_{c\ {\rm three\ full}}q_c^{-1/3-\eta}
+=\prod_{\mathfrak p\notin S}
+ \left(1+\frac{q_{\mathfrak p}^{-1-3\eta}}
+ {1-q_{\mathfrak p}^{-1/3-\eta}}\right)<\infty
+\tag{463.5}
+$$
+
+绝对收敛。将 $a_0$ 分成其三满部分 $c$ 与剩余部分，只在正计数中扩大剩余理想及互素条件，得到对 $M,Z>0$ 的统一界
+
+$$
+\#\{a_0:q_{a_0}\le M,\ q_{\mathfrak c_3(a_0)}\ge Z\}
+\ll_\eta M Z^{-2/3+\eta}.
+\tag{463.6}
+$$
+
+这里 $Z<1$ 时同样成立：在 $q_c\ge Z$ 上使用
+$q_c^{-1}\le Z^{-2/3+\eta}q_c^{-1/3-\eta}$，再复用固定域理想计数。空的短范围保留为零。
+
+固定 $r,e$ 后，原 annulus 给出 $M\ll K/(q_r^6q_e)$，（463.4）给出 $Z=Y/(q_r^6q_e)$。故固定 $r$ 的实际列支撑数至多为
+
+$$
+\begin{aligned}
+&\sum_{e\mid\operatorname{rad}(r)^5}
+ \frac{K}{q_r^6q_e}
+ \left(\frac{Y}{q_r^6q_e}\right)^{-2/3+\eta}\\
+&\qquad\ll_{\eta,\delta}
+ K Y^{-2/3+\eta}q_r^{-2-6\eta+\delta}.
+\end{aligned}
+\tag{463.7}
+$$
+
+最后一步用除数界处理全部 $e$，不遗漏 $a,r$ 的相交素因子。原卷积及所需有限阶 profile 导数的除数型包络于是给出
+
+$$
+\sum_a|b_{3,\ge Y}(ar^6)|^2
+\ll_{\eta,\delta,\delta'}
+ \mathcal P_b^2K^{1+2\delta'}
+ Y^{-2/3+\eta}q_r^{-2-6\eta+\delta}.
+\tag{463.8}
+$$
+
+保留（462.6）的精确行零值，固定 $r$ 后应用同一个六次幂自由筛，再在原行 Hilbert 空间使用 Minkowski。其求和因子为
+
+$$
+\sum_r q_r^{-1-3\eta+\delta/2}<\infty
+\qquad(0<\delta<6\eta).
+\tag{463.9}
+$$
+
+因此不需要把六次幂碰撞当作互不相干的列。先相对于最终 $\varepsilon$ 选择 $\eta,\delta'$ 及筛损失，再取 $0<\delta<6\eta$；由 $Y\le K$ 吸收 $Y^\eta$，得（463.2）。额外的有界列乘子不增加支撑计数或系数包络；同一证明适用。负 orientation、有限物理表示及 smooth/Sobolev 恢复沿用定理 462.1 的同一费用和累计高度合同。证毕。
+
