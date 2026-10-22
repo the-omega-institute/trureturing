@@ -1,0 +1,111 @@
+**Corollary 19.1 (raw-density covariance and the fixed native carrier).**
+Under the constant change $\rho\mapsto c\rho$, $c>0$, with every other
+original datum fixed, the differential operator $L_A$, the products
+$g_{\mathrm c}\Gamma$ and $g_{\mathrm c}\Gamma_\epsilon$, and all the
+energies $E_*,E_\epsilon$ are unchanged. The normalized states and trace
+transform as
+
+$$
+f_*\mapsto c^{-1/2}f_*,\qquad
+f_\epsilon\mapsto c^{-1/2}f_\epsilon,\qquad
+a_*\mapsto c^{-1/2}a_*.
+\tag{19.1}
+$$
+
+Consequently the energy and kinetic coefficients in (17.3) and (17.18)
+are invariant, while each raw or capped attraction coefficient in
+(17.18) and (18.16) is multiplied by $c^{-1}$. The frozen profile $Z$
+and $\kappa_{\rm cap},I_{\rm cap}$ do not change.
+
+All the conclusions in §§14–18 retain the same both-wall periodic
+cylinder, original free domains at finite resolution, unit-source full
+Green field, and covariance $2A\,dt$. The scalar $a_*$ and energy $E_*$
+are those of the globally normalized completed eigenproblem. The common
+frozen problem (18.1), with its proved uniqueness and normalization,
+is the precise local profile shared by these fixed models after the
+source-coordinate and density correspondences have been made.
+The dimension statements remain current-ray dimension three, direct
+rank two, growth $(2,3)$ and homogeneous volume exponent four. They
+supply no additional assertion about a physical Euclidean dimension or
+an acquisition map.
+
+Proof. Multiplication of the density by $c$ cancels in the divergence
+expression (11.2). The inverse kernel for a unit source relative to the
+new measure is $\Gamma/c$. Equations (10.2), (10.6) give
+$m_0\mapsto cm_0$, $c_G\mapsto c_G/c$, and
+$g_{\mathrm c}\mapsto cg_{\mathrm c}$. Therefore the minimum defining
+$\Gamma_\epsilon$ also divides by $c$, and both operator potentials
+are unchanged. The unitary identification of the two Hilbert spaces
+is multiplication by $c^{-1/2}$. It preserves kinetic and completed
+form values, their domains under that identification, and all normalized
+eigenvalues. Equations (16.1) and (18.3) give (19.1).
+In the energy coefficient $a_*^2m_0k_\phi$ the two factors cancel;
+in the kinetic coefficient $g_{\mathrm c}a_*^2M_\phi/12$ they also
+cancel. Each attraction coefficient contains $a_*^2$ with no remaining
+$m_0$, as follows from the raw source factor $m_0c_G=1/(2\pi)$.
+This verifies the resource covariance separately from operator covariance.
+The chart and (18.1) are unchanged, so uniqueness in Theorem 18.1 fixes
+$Z$ and the other inner constants.
+
+The carrier and clock assertions follow from (1.1), Definition 14.1 and
+(2.1), (10.2). In particular (14.2) describes a multiplier's changed set;
+it is not a Dirichlet hole. Equation (18.1) is a limit equation for
+eigenstates, not the equation of a replacement Green source.
+The globally normalized problem is retained throughout (15.5)–(18.8),
+so the proof neither fixes $a_*$ by a local normalization nor identifies
+the energies of different global models.
+
+The full-Green normalization, unweighted angular Hardy constant,
+critical completion and comparability used here are precisely
+Theorems 10.2, 11.1, 12.2 and 13.1 of this volume. The local heat,
+Hörmander regularity, Harnack and horizontal Poincaré tools are used on
+smooth punctured annuli or for bounded potentials; the zero-capacity
+extension through the source is proved with (12.13).
+The compact form representation, bounded-potential product formula and
+min-max tools have the same classical scopes as the Teschl inputs cited
+in §§12–13.
+
+The native temporal family in
+[Critical cutoff spectral limits, Definition 31.1 and Theorems 32.2,
+33.1](FIB_NATIVE_CRITICAL_CUTOFF_SPECTRAL_LIMITS.md) changes moving-time
+multipliers and parameters. The positive-time threshold field on the
+real cover in
+[Long-time phase weak binding, Definition 70.1 and Proposition
+70.2](FIB_NATIVE_LONG_TIME_PHASE_WEAK_BINDING.md) has the changed source
+$SW_\tau=F(\tau;\cdot)$ and a different domain at infinity. Neither is
+used to replace (14.1). The elementary bounded-cap lower bound is already
+in [Continuation III, Specification
+82.7](FIB_ATOM_RECURSIVE_HOLOGRAPHIC_BOUNDARY_GEOMETRY_CONTINUATION_III.md).
+The added kinetic-law endpoint in its Theorem 87.4 and the planar window
+bound in [Continuation II, Proposition
+72.12](FIB_ATOM_RECURSIVE_HOLOGRAPHIC_BOUNDARY_GEOMETRY_CONTINUATION_II.md)
+have their stated different operators and boundaries. Their cap,
+completion and logarithmic-capacity ideas are not new supplies of a
+native spatial eigenstate asymptotic.
+
+For comparison with primary literature, Abatangelo–Felli–Hillairet–Léna,
+[Theorems 1.4, 1.7 and Appendix A](https://arxiv.org/html/1611.06750v1),
+[DOI 10.4171/jst/251](https://doi.org/10.4171/jst/251), give the
+simple-eigenvalue variation by eigenfunction capacity and its planar
+logarithmic specialization for Euclidean Dirichlet holes. Vázquez–
+Zographopoulos, [§§2.1, 2.3–2.4 and
+4.2](https://arxiv.org/html/1102.5661), supply the Euclidean critical
+weighted completion, logarithmic approximation and hidden-energy
+context. Felli–Ferrero, [Theorem 2.1 and Corollaries
+2.2–2.3](https://arxiv.org/html/1209.4852v1), prove critical-Hardy
+cylindrical asymptotics for their Euclidean equation. Abatangelo–
+Bonnaillie-Noël–Léna–Musolino, [Theorems 1.1 and
+6.2](https://arxiv.org/html/1911.06686), exhibit the dependence of
+small-hole eigenvalue changes on the normalized eigenfunction and hole
+profile; their Theorem 6.2 concerns a positive vanishing order.
+Pinchover–Tintarev, [Theorem
+1.4](https://arxiv.org/html/math/0411658v1), is the elliptic
+spectral-gap/null-state alternative. None of these statements directly
+identifies the horizontal soft cap, its raw source density, angular
+flux, or original-domain eigenstates here. The transfer in §§16–18 is
+proved through those exact native objects, including the lower energy
+bound, endpoint angular control and the linear charge (18.6).
+These are source-specific ordinary mathematical deductions; the
+attribution makes no exhaustive literature or priority assertion.
+$\square$
+

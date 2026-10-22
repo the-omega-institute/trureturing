@@ -1,0 +1,28 @@
+### 4.3 Complete records and a concrete full-family filter
+
+For $c=3/10$, $Z=2/5$, $k=1/4$, $l=1/8$, the sharp value is $s_*=2/7$.
+An explicit original-mode instrument is
+
+$$
+K_s=\operatorname{diag}\left(\frac1{\sqrt7},1,\sqrt{\frac27},
+                              1,\frac1{\sqrt7}\right),\qquad
+K_f=\operatorname{diag}\left(\sqrt{\frac67},0,\sqrt{\frac57},
+                              0,\sqrt{\frac67}\right).
+\tag{OC.12a}
+$$
+
+The flags have probabilities $2/7,5/7$ on every full-family input.
+The failure vector is $K_f\Psi_{k,\beta,m}/\sqrt{5/7}$; it has zero modes
+$1$ and $3$ and is independent of parity at each fixed $\beta$.
+It remains a quantum successor together with its retained failure flag.
+It has left the strict positive-support original carrier, so the positive
+original-control future menu cannot simply be continued from it.
+
+Any finite retry protocol acting on the sole original input and any retained
+ancillas, whose accepted final system state is exact on the whole family,
+induces a single trace-nonincreasing CP acceptance operation.  Theorem 4.1
+still bounds its total acceptance probability by $s_*$.  This statement
+allows arbitrary processing on failure under a declared enlarged protocol;
+it supplies no fresh same-history specimen or reset.  An extra correlated
+input would again change its hypothesis.
+

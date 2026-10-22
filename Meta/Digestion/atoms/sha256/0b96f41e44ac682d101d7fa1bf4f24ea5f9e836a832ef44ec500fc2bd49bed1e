@@ -1,0 +1,49 @@
+**Proposition 14.2 (the actual changed set and its anisotropic scale).**
+For some fixed $C,b>0$ and all sufficiently small $\epsilon$,
+
+$$
+\{R<\epsilon(1-C\epsilon)\}
+\subset\Psi(\mathcal C_\epsilon)
+\subset\{R<\epsilon(1+C\epsilon)\}\Subset\{R<b\}.
+\tag{14.2}
+$$
+
+The inclusions concern the entire changed set on the original cylinder.
+Moreover, on each compact subset of the frozen chart,
+
+$$
+\epsilon^2\Gamma_\epsilon(\Psi^{-1}\delta_\epsilon q)
+\longrightarrow c_G\min\{R(q)^{-2},1\}
+\tag{14.3}
+$$
+
+uniformly, including $q=0$ with the capped value. In the original source
+chart (2.3), the corresponding gauge is
+
+$$
+\left(
+ |B(x,y)^{\mathsf T}|^4
+ +16\det(B)^2(z-xy/2)^2
+\right)^{1/4}.
+\tag{14.4}
+$$
+
+Thus horizontal displacement has scale $\epsilon$ and the adapted central
+displacement has scale $\epsilon^2$. In particular the central displacement
+is not the uncorrected increment of the original $\beta$ phase.
+
+Proof. The full Green field is bounded outside each source neighbourhood,
+as used in (12.5). Thus its superlevel set in (14.1) is contained in the
+injective source chart for small $\epsilon$. Equation (11.1), multiplied
+by $c_G^{-1}R^2$, gives $\Gamma/(c_GR^{-2})=1+O(R)$.
+Comparing this with $R^2/\epsilon^2$ proves (14.2); the same inequalities
+for $R\ll\epsilon$ show that a whole source neighbourhood is capped.
+On any annulus bounded away from zero, the error in the rescaled
+uncapped field is $O(\epsilon/R)$. Taking the minimum is a Lipschitz
+operation. On a fixed sufficiently small ball about zero both sides of
+(14.3) are exactly $c_G$ for small $\epsilon$. These observations prove
+uniform convergence on compact sets. Formula (14.4) is precisely (10.1),
+without another coordinate or measure normalization. Since
+$y=2(\alpha-\alpha_o)$ and $z=-r(\beta-\beta_o-c(k_o)y)$, it also gives
+the stated native phase correspondence. $\square$
+
