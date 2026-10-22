@@ -273,6 +273,11 @@ private def intervalRun (graph : ProofGraph) (interval : Interval) : Run :=
       finite interval.lower && finite interval.upper then .exhausted
   else .incomplete .undecided
 
+/-- Checked certificates may share expression storage with their imported
+module even after reconstruction. Keep their backing regions for this compiler
+lifetime, like checkpoint and query-cache certificate regions. -/
+private initialize certificateRegions : IO.Ref (Array CompactedRegion) ← IO.mkRef #[]
+
 /-- Temporary environments are bounded to one module. A failed candidate
 restores its Meta/Core state before another module can replace the source.
 The branch boundary restores all remaining references before close frees it. -/
@@ -280,6 +285,7 @@ unsafe def onDemandLookup (table : LookupTable)
     (sharedImports? : Option ImportState := none) : IO LookupTable := do
   let cache ← IO.mkRef (none : Option (String × Options × Environment))
   let regions ← IO.mkRef (#[] : Array CompactedRegion)
+  let certificateEscaped ← IO.mkRef false
   let memo ← IO.mkRef ({} : LookupQueryMemo)
   let verified ← IO.mkRef false
   let budget ← IO.mkRef ({} : LookupBudgetState)
@@ -291,7 +297,11 @@ unsafe def onDemandLookup (table : LookupTable)
     cache.set none
     let releasing ← regions.get
     regions.set #[]
-    for region in releasing.reverse do region.free
+    if ← certificateEscaped.get then
+      certificateRegions.modify (· ++ releasing)
+    else
+      for region in releasing.reverse do region.free
+    certificateEscaped.set false
   let acquire (module : Name) (options : Options) : IO Environment := withImporting do
     close
     lookupPhase s!"candidate/import-start module={module}"
@@ -321,7 +331,9 @@ unsafe def onDemandLookup (table : LookupTable)
         return .done (← withTransparency .all <| whnf e)
       return .done e)
     let proof ← inlineLookupSupport base proof
-    withLookupPreparation (some budget) <| pure (detachLookupExpression proof)
+    let proof ← withLookupPreparation (some budget) <| pure (detachLookupExpression proof)
+    certificateEscaped.set true
+    return proof
   return {table with
     memo? := some memo, budget? := some budget,
     close? := some close, finish? := some finish,

@@ -53,6 +53,11 @@ run_cmd do
     let mut opaqueCount := 0
     let mut doubled : Option GraphReading := none
     for (name, additions) in fixtures do
+      let delivery := (#[name] ++ additions).filterMap fun n =>
+        (source.getModuleIdxFor? n).map fun i => source.header.moduleNames[i.toNat]!
+      let scope ← targetBaselineImports "b02b98342945a1a724a227db4fa38e376640e573"
+        delivery source name #[]
+      let table : LookupTable := {environment := base, implicationModules? := some scope}
       let graph ← withEnv source <| extractGraph base name additions
       for v in graph.vertices do
         if v.seed then continue
@@ -66,7 +71,7 @@ run_cmd do
       let reading ← withEnv base do
         let vertices ← graph.vertices.mapM fun v => do
           return {v with type := ← copyStatement source (v.origin.constName?.getD .anonymous) v.type}
-        evaluateGraph {graph with vertices}
+        evaluateGraph {graph with vertices} (some table)
       let certified := {reading with
         isolated := true, structureChecked := true,
         structureClean := true, presentationComplete := true}
@@ -98,9 +103,13 @@ run_cmd do
             (reading.graph.vertices.find? (·.id == p)).any fun v =>
               v.origin.constName? == some square && !edge.analytic.contains p
         unless synthetic do throwError "squareFact was not classified synthetic"
-        let predicted := reading.baseline == ⟨.finite 0, .finite 0⟩ &&
-          reading.paired == ⟨.finite 0, .finite 0⟩ && verdict == .bindOnly &&
-          classifyClosure certified == none
+        let some owner := base.getModuleIdxFor? ``Nat.exists_mul_self
+          | throwError "Nat.exists_mul_self owner missing from fixture environment"
+        unless !scope.contains base.header.moduleNames[owner.toNat]! do
+          throwError "incidental Mathlib import enlarged squareVia's B_T"
+        let predicted := reading.baseline == ⟨.finite 1, .finite 1⟩ &&
+          reading.paired == ⟨.finite 0, .finite 0⟩ && verdict == .nonBindOnly &&
+          classifyClosure certified == some .zero
         logInfo s!"DECL_PREDICTION squareVia {predicted}"
         unless predicted do throwError "squareVia prediction failed"
         unless reading.graph.vertices.any (fun v =>
