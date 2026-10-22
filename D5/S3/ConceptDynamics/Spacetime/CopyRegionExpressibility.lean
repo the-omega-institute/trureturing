@@ -1,10 +1,10 @@
 /- GID: D5/S3/ConceptDynamics/Spacetime/CopyRegionExpressibility
    generality: I
-   mirror-B: none
+   mirror-B: D5/B/S3/ConceptDynamics/Spacetime/CopyRegionExpressibility
    mirror-E: none(waiver:stage-a-open)
    anchors: []
    utility: none
-   digest: Proposition 64 is compiled conditionally on the explicit unsupplied profile and saturation laws. -/
+   digest: Positive total native copy expressibility is equivalent to the uniform past-tail criterion. -/
 
 import D5.S3.ConceptDynamics.Spacetime.CopyProfilePolynomial
 
@@ -27,23 +27,19 @@ def Proposition64 (R : Region) : Prop :=
 def Proposition64ThreeWay (R : Region) : Prop :=
   CopyQExpressible R ↔ QExpressible R ∧ Tail R
 
-/-- Conditional Stage-A theorem: only the two explicit missing laws remain open. -/
-theorem proposition64_of_profile_and_saturation
-    (hSlice : CopySliceReadoutLaw) (hSat : CopySaturationLaw) (R : Region) :
-    Proposition64 R := by
-  unfold Proposition64
+/-- Proposition 64 with no profile or saturation assumptions. -/
+theorem proposition64 (R : Region) :
+    CopyQExpressible R ↔ Tail R := by
   constructor
-  · exact copy_q_expressible_implies_tail hSlice hSat R
+  · exact copy_q_expressible_implies_tail R
   · exact tail_implies_copy_q_expressible R
 
-/-- The copy criterion agrees with the existing one-hole criterion under the same laws. -/
-theorem proposition64_three_way_of_profile_and_saturation
-    (hSlice : CopySliceReadoutLaw) (hSat : CopySaturationLaw) (R : Region) :
-    Proposition64ThreeWay R := by
-  unfold Proposition64ThreeWay
+/-- The copy criterion agrees with the existing one-hole criterion and the tail condition. -/
+theorem proposition64_three_way (R : Region) :
+    CopyQExpressible R ↔ QExpressible R ∧ Tail R := by
   constructor
   · intro h
-    have ht : Tail R := copy_q_expressible_implies_tail hSlice hSat R h
+    have ht : Tail R := copy_q_expressible_implies_tail R h
     exact ⟨(q_expressible_iff_tail R).mpr ht, ht⟩
   · rintro ⟨_, ht⟩
     exact tail_implies_copy_q_expressible R ht

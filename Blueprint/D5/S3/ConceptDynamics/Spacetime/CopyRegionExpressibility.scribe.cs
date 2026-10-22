@@ -7,7 +7,7 @@ internal sealed class CopyRegionExpressibilityDocument : IScribeDocumentDefiniti
     private const string Prefix = "D5/S3/ConceptDynamics/Spacetime/CopyRegionExpressibility.";
 
     public DocumentDefinition Create() => DocumentDefinition.Create(ScribeNode.Create(
-        "The copy version of Proposition 64 is conditional on the explicit profile and saturation laws.",
+        "Positive total native copy expressibility is equivalent to the uniform past-tail criterion.",
         H("Copy Region Expressibility"),
         Blocks(
             Describe.Lean(DescribeId.Create("proposition-64"), DeclarationHandle.Create(Prefix + "Proposition64"),
@@ -16,12 +16,12 @@ internal sealed class CopyRegionExpressibilityDocument : IScribeDocumentDefiniti
             Describe.Lean(DescribeId.Create("three-way"), DeclarationHandle.Create(Prefix + "Proposition64ThreeWay"),
                 H("Copy, one-hole and tail forms"), StatementSource.WithoutFormula(), AssessedProvenance.FromRepo(),
                 Blocks(Paragraph(Text("The three-way predicate records agreement of copy expressibility with the existing one-hole QExpressible criterion and Tail."))), DescribeRole.Definition),
-            Describe.Lean(DescribeId.Create("conditional-two-way"), DeclarationHandle.Create(Prefix + "proposition64_of_profile_and_saturation"),
-                H("Conditional Proposition 64"), StatementSource.WithoutFormula(), AssessedProvenance.FromRepo(),
-                Blocks(Paragraph(Text("The exact two-way proposition is proved from the named finite slice-readout and joint-saturation premises."))), DescribeRole.Theorem),
-            Describe.Lean(DescribeId.Create("conditional-three-way"), DeclarationHandle.Create(Prefix + "proposition64_three_way_of_profile_and_saturation"),
-                H("Conditional three-way equivalence"), StatementSource.WithoutFormula(), AssessedProvenance.FromRepo(),
-                Blocks(Paragraph(Text("The exact three-way equivalence follows from the same premises and the frozen one-hole criterion."))), DescribeRole.Theorem)
+            Describe.Lean(DescribeId.Create("two-way"), DeclarationHandle.Create(Prefix + "proposition64"),
+                H("Proposition 64"), StatementSource.WithoutFormula(), AssessedProvenance.FromRepo(),
+                Blocks(Paragraph(Text("For every region, the exact positive-arity all-input copy criterion is equivalent to Tail. Necessity uses the native profile polynomial, its full linear coefficient, and finite joint saturation; sufficiency reuses the frozen one-hole construction. No profile or saturation assumptions remain."))), DescribeRole.Theorem),
+            Describe.Lean(DescribeId.Create("three-way-theorem"), DeclarationHandle.Create(Prefix + "proposition64_three_way"),
+                H("Three-way equivalence"), StatementSource.WithoutFormula(), AssessedProvenance.FromRepo(),
+                Blocks(Paragraph(Text("For every region, copy expressibility is equivalent to the conjunction of the existing one-hole QExpressible criterion and Tail. The copy necessity retains the native polynomial proof on its live dependency path."))), DescribeRole.Theorem)
         ),
         [
             DocumentEdge.Dependency.Create(GidRef.Create("D5/S3/ConceptDynamics/Spacetime/CopyProfilePolynomial")),
