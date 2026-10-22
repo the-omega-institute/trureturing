@@ -973,7 +973,7 @@ L_U(q)=\psi^{-1}(\operatorname{pr}_{f,h}q),\qquad
 \tag{253.3}
 $$
 
-恢复来源和目标。基点由 $q$ 的前两个分量恢复。这个 $L_U$ 的类型是 $\Gamma(U)\to U$，不是原生历史到完整世界的映射；它只在该分支实际像上定义。上述局部逆推导亦是[支持卷 VII §24](FIB_STRICT_REAL_JOINT_INCIDENCE_SUPPORT_VII.md#24-complete-augmented-j-critical-classification-and-the-nonnegative-p-consequence) 明示的用途，不把它重新列为独立的新定理。
+恢复来源和目标。这里 $\operatorname{pr}_{f,h}$ 选取秩判据给出的两个分量；对每个 $q\in\Gamma(U)$，有 $\Gamma(L_U(q))=q$，故由 $\Gamma=(p,v,a)$ 得 $\pi(L_U(q))=\operatorname{pr}_{p,v}(q)$。后一个等式恢复基点，不断言 $(p,v)$ 本身给出局部逆，也不断言 $\operatorname{rank}d(p,v)=2$。这个 $L_U$ 的类型是 $\Gamma(U)\to U$，不是原生历史到完整世界的映射；它只在该分支实际像上定义。上述局部逆推导亦是[支持卷 VII §24](FIB_STRICT_REAL_JOINT_INCIDENCE_SUPPORT_VII.md#24-complete-augmented-j-critical-classification-and-the-nonnegative-p-consequence) 明示的用途，不把它重新列为独立的新定理。
 
 构造扩张
 
