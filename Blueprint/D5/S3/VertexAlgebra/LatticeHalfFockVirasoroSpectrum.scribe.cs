@@ -63,5 +63,13 @@ internal sealed class LatticeHalfFockVirasoroSpectrumDocument : IScribeDocumentD
             Paragraph(Text("The existing flm1988monster library note is associated only as a bibliographic and ordinary-lattice background anchor. It is not proof origin for an uninspected FLM or FHL theorem or for the new half-mode matrix proof. The exact BK and DN locators above supply the literature input.")),
             Paragraph(Text("DN p.13 displays a c_mn integrality assertion conflicting with its displayed logarithmic generating function. For F(x,y)=-log((sqrt(1+x)+sqrt(1+y))/2), write its logarithm argument as 1+(x+y)/4-(x*x+y*y)/16 plus terms of total degree at least three. The expansion -log(1+u)=-u+u*u/2 plus higher terms gives F=-(x+y)/4+3*(x*x+y*y)/32+x*y/16 plus higher terms. Thus c10=c01=-1/4 and c11=1/16 are rational. Ordered m,n coefficients and their derivatives must retain both ordered mixed contributions. This is a derived correction, not a published erratum and not an implemented Delta operator.")),
             Paragraph(Text("Charged theta fields, corrected fractional normal products, all-state twisted locality/Jacobi, Y_theta(omega) identification, twisted intertwiners, holomorphic extension, Leech/Monster, anomaly/fusion, full CFT, string theory and the AdS/CFT bridge remain subsequent obligations.")),
+            Describe.Lean(
+                DescribeId.Create("half-fock-original-inverse-gram-trace"),
+                DeclarationHandle.Create("D5/S3/VertexAlgebra/LatticeHalfFockVirasoroSpectrum.inverse_trace"),
+                H("The original symmetric Gram contraction is the rank"),
+                StatementSource.WithoutFormula(),
+                AssessedProvenance.FromRepo(Architecture),
+                Blocks(Paragraph(Text("The unchanged original proof uses H*gramComplex D=1 and symmetry of the integral Gram to prove sum_(i,l) H(i,l)G(i,l)=rank. The actual corrected conformal-state proof consumes this supplier directly; no second inverse, positivity or rank restriction is introduced."))),
+                DescribeRole.Theorem),
             Paragraph(Ref("D5/L/VertexAlgebra/flm1988monster")))));
 }
