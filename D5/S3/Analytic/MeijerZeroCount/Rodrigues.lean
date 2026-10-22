@@ -175,13 +175,11 @@ private lemma W_interior_upper (n N : ℕ) (hN : n ≤ N) :
   obtain ⟨q, hq⟩ := pow_sub_dvd_iterate_derivative_of_pow_dvd n
     (show (1 - X : ℝ[X]) ^ N ∣ W n N from dvd_mul_left _ _)
   have hqne : q ≠ 0 := by intro h; simp [h] at hq; exact hne hq
-  have hfne : ((1 - X : ℝ[X]) ^ (N - n)) ≠ 0 := by
-    intro h
-    have he := congrArg (fun p : ℝ[X] => p.eval 0) h
-    norm_num at he
+  have hfne : ((1 - X : ℝ[X]) ^ (N - n)) ≠ 0 :=
+    pow_ne_zero _ (sub_ne_zero.mpr (Ne.symm (by simpa using (X_ne_C (1 : ℝ)))))
   have hdegree : (1 - (X : ℝ[X])).natDegree = 1 := by
-    rw [show (1 - (X : ℝ[X])) = -(X - C 1) by simp]
-    rw [natDegree_neg, natDegree_X_sub_C]
+    rw [natDegree_sub]
+    simpa using natDegree_X_sub_C (1 : ℝ)
   have hdW : (W n N).natDegree ≤ n + N := by
     calc
       (W n N).natDegree ≤ (X ^ n : ℝ[X]).natDegree + ((1 - X : ℝ[X]) ^ N).natDegree :=
