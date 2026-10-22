@@ -10,7 +10,7 @@ internal sealed class PositiveDocument : IScribeDocumentDefinition
             Describe.Lean(DescribeId.Create("exp-ratio-first-moment-formula"),
                 DeclarationHandle.Create("D5/S3/Analytic/ExpRatioCM/Positive.F_one"),
                 H("The first signed derivative"), StatementSource.WithoutFormula(), AssessedProvenance.FromRepo(),
-                Blocks(Paragraph(Text("For positive t, F(1,t)=exp(t)/(exp(t)-1)^2. The existing logarithmic derivative formula yields this identity and the audit uses it for quotient normalization."))), DescribeRole.Theorem),
+                Blocks(Paragraph(Text("For positive t, F(1,t)=exp(t)/(exp(t)-1)^2. The existing logarithmic derivative formula yields this identity, which supplies the low-index ratio formulas."))), DescribeRole.Theorem),
             Describe.Lean(DescribeId.Create("exp-ratio-low-ratio-formulas"),
                 DeclarationHandle.Create("D5/S3/Analytic/ExpRatioCM/Positive.ratio_low"),
                 H("Low-index ratio formulas"), StatementSource.WithoutFormula(), AssessedProvenance.FromRepo(),
