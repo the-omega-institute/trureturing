@@ -30,7 +30,7 @@ internal sealed class BinaryStabilizerGraphNormalFormDocument : IScribeDocumentD
                 "Scaling each single-qubit factor scales the tensor product by the product of those scalars.",
                 DescribeRole.Lemma, AssessedProvenance.FromRepo()),
             Entry("tensor-weyl", "tensor_weyl", "The tensor action of binary Weyl factors", TensorWeyl(),
-                "The matrix wmat(a,b) translates the binary coordinate by a and multiplies it by the sign of b times the input coordinate. Its tensor product acts as weyl(v,f)(t) = complexSign(sum_i v.snd(i) (t(i) + v.fst(i))) f(t + v.fst).",
+                "Each single-qubit matrix translates the binary coordinate by v.fst(i) and multiplies it by the sign of v.snd(i) times the input coordinate. The displayed matrix entries and translated function write out both sides of the tensor action. Fin 2 and ZMod 2 have the same binary representatives; id leaves these representatives unchanged.",
                 DescribeRole.Lemma, AssessedProvenance.FromRepo()),
             Entry("gate", "gate", "Binary choices of Hadamard and phase gates", GateDefinition(),
                 "The binary phase choice multiplies the optional Hadamard gate on the left. Zero phase selects the identity and nonzero phase selects the diagonal matrix with entries 1 and i.",
@@ -82,12 +82,24 @@ internal sealed class BinaryStabilizerGraphNormalFormDocument : IScribeDocumentD
     {
         Formula bitVector = Arrow(Fin(V("N")), Binary);
         Formula pair = Parenthesized(Seq(bitVector, Sp, Times, Sp, bitVector));
-        Formula factors = Seq(LambdaLower, Sp, Typed(V("i"), Fin(V("N"))), Sp, Mapsto, Sp,
-            Call("wmat", Apply(Property(V("v"), "fst"), V("i")),
-                Apply(Property(V("v"), "snd"), V("i"))));
+        Formula LambdaOf(string name, Formula type, Formula body) =>
+            Seq(LambdaLower, Sp, Typed(V(name), type), Sp, Mapsto, Sp, body);
+        Formula Add(Formula a, Formula b) => new Formula.Binary(a, FormulaBinaryOperator.Add, b);
+        Formula Mul(Formula a, Formula b) => new Formula.Binary(a, FormulaBinaryOperator.Multiply, b);
+        Formula x = Apply(Property(V("v"), "fst"), V("i"));
+        Formula z = Apply(Property(V("v"), "snd"), V("i"));
+        Formula s = Call("id", Typed(V("s"), Binary)), t = Call("id", Typed(V("t"), Binary));
+        Formula entry = Parenthesized(Seq(V("if"), Sp, Equal(s, Add(t, x)), Sp, V("then"), Sp,
+            Call("complexSign", Mul(z, s)), Sp, V("else"), Sp, D(0)));
+        Formula factors = LambdaOf("i", Fin(V("N")), Qualified("Matrix", "of",
+            LambdaOf("t", Fin(D(2)), LambdaOf("s", Fin(D(2)), entry))));
+        Formula exponent = Seq(Sum, Underscore, Grp(V("i"), Colon, Sp, Fin(V("N"))), Sp,
+            Parenthesized(Mul(z, Parenthesized(Add(Apply(V("t"), V("i")), x)))));
+        Formula translated = LambdaOf("t", bitVector,
+            Mul(Call("complexSign", exponent), Apply(V("f"), Add(V("t"), Property(V("v"), "fst")))));
         return All(V("N"), Nat, All(V("v"), pair, All(V("f"), Arrow(bitVector, Complex),
             Equal(Qualified("Matrix", "mulVec", TensorOperator(factors), V("f")),
-                Call("weyl", V("v"), V("f"))))));
+                translated))));
     }
 
     private static Formula GateDefinition() => All(V("h"), V("Bool"), All(V("d"), Binary,
