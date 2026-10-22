@@ -1,6 +1,7 @@
 import LeanInformationAuditInterface.Contract.Registration
 import D5.S3.Analytic.WallisRemainder.Stieltjes
 import Reg.Support.SingleDependentReadout
+import Mathlib.Probability.Distributions.Bernoulli
 
 /-! Typed observations for positive resolvent transforms and their strict comparisons. -/
 
@@ -13,33 +14,43 @@ noncomputable section
 namespace Reg.D5.S3.Analytic.WallisRemainder.Stieltjes
 
 private def twoPoint : Measure ℝ :=
-  (1/2 : ℝ≥0∞) • Measure.dirac 1 + (1/2 : ℝ≥0∞) • Measure.dirac 2
+  ProbabilityTheory.bernoulliMeasure 1 2 ⟨1/2, by norm_num, by norm_num⟩
 
-private instance : IsProbabilityMeasure twoPoint := ⟨by
-  simp only [twoPoint, Measure.add_apply, Measure.smul_apply, Measure.dirac_apply_of_mem
-    (Set.mem_univ _), smul_eq_mul, mul_one, one_div]
-  apply (ENNReal.toReal_eq_toReal_iff' (by finiteness) (by finiteness)).mp
-  rw [ENNReal.toReal_add (by finiteness) (by finiteness)]
-  norm_num⟩
+private instance : IsProbabilityMeasure twoPoint := inferInstanceAs
+  (IsProbabilityMeasure (ProbabilityTheory.bernoulliMeasure (1 : ℝ) 2
+    ⟨1/2, by norm_num, by norm_num⟩))
 
-private lemma twoPoint_integrable (f : ℝ → ℝ) : Integrable f twoPoint := by
-  rw [twoPoint, integrable_add_measure]
-  constructor <;> exact (integrable_dirac (by finiteness)).smul_measure (by finiteness)
+private lemma twoPoint_integrable (f : ℝ → ℝ) : Integrable f twoPoint :=
+  ProbabilityTheory.integrable_bernoulliMeasure _ _ _ f
 
 private lemma twoPoint_integral (f : ℝ → ℝ) :
     (∫ v, f v ∂twoPoint) = (f 1+f 2)/2 := by
-  rw [twoPoint, integral_add_measure ((integrable_dirac (by finiteness)).smul_measure (by finiteness))
-    ((integrable_dirac (by finiteness)).smul_measure (by finiteness))]
-  simp
+  rw [twoPoint, ProbabilityTheory.integral_bernoulliMeasure]
+  norm_num
   ring
 
+private lemma twoPoint_ae (p : ℝ → Prop) :
+    (∀ᵐ v ∂twoPoint, p v) ↔ p 1 ∧ p 2 := by
+  rw [twoPoint, ProbabilityTheory.bernoulliMeasure_def, ae_add_measure_iff,
+    Measure.ae_smul_measure_iff (by
+      intro h
+      have hh := congrArg (fun a : ℝ≥0 => (a : ℝ)) h
+      change (1/2 : ℝ) = 0 at hh
+      norm_num at hh),
+    Measure.ae_smul_measure_iff (by
+      intro h
+      have hh := congrArg (fun a : ℝ≥0 => (a : ℝ)) h
+      change (1 - (1/2 : ℝ)) = 0 at hh
+      norm_num at hh)]
+  simp
+
 private lemma twoPoint_pos : ∀ᵐ v ∂twoPoint, 0 < v := by
-  simp [twoPoint, ae_add_measure_iff]
+  rw [twoPoint_ae]
+  norm_num
 
 private lemma twoPoint_not_const (a : ℝ) : ¬ ∀ᵐ v ∂twoPoint, v=a := by
-  simp only [twoPoint, ae_add_measure_iff]
-  norm_num
-  intro h1 h2
+  rw [twoPoint_ae]
+  rintro ⟨h1, h2⟩
   linarith
 
 abbrev jensenSignature : Signature :=

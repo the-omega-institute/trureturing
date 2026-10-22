@@ -122,14 +122,18 @@ instance : IsProbabilityMeasure P where
       hasSum_spectralWeight.summable, hasSum_spectralWeight.tsum_eq]
     norm_num
 
+private lemma component_pos (n : ℕ) :
+    ∀ᵐ v ∂exponentialLaw.map (fun u => spectralScale n * u ^ 2), 0 < v := by
+  rw [ae_map_iff (by fun_prop) (by measurability)]
+  filter_upwards [exponentialLaw_pos] with u hu
+  exact mul_pos (spectralScale_pos n) (sq_pos_of_pos hu)
+
 /-- The spectral mixture is concentrated on strictly positive values. -/
 theorem P_pos : ∀ᵐ v ∂P, 0 < v := by
   rw [P, Measure.ae_sum_iff]
   intro n
   apply Measure.ae_smul_measure
-  rw [ae_map_iff (by fun_prop) (by measurability)]
-  filter_upwards [exponentialLaw_pos] with u hu
-  exact mul_pos (spectralScale_pos n) (sq_pos_of_pos hu)
+  exact component_pos n
 
 private lemma exponentialLaw_integrable_pow (k : ℕ) :
     Integrable (fun u : ℝ => u ^ k) exponentialLaw := by
@@ -150,12 +154,6 @@ private lemma exponentialLaw_moment (k : ℕ) :
   congr 1
   ext u
   rw [add_sub_cancel_right, Real.rpow_natCast]
-
-private lemma component_pos (n : ℕ) :
-    ∀ᵐ v ∂exponentialLaw.map (fun u => spectralScale n * u ^ 2), 0 < v := by
-  rw [ae_map_iff (by fun_prop) (by measurability)]
-  filter_upwards [exponentialLaw_pos] with u hu
-  exact mul_pos (spectralScale_pos n) (sq_pos_of_pos hu)
 
 private lemma component_integrable_pow (n k : ℕ) :
     Integrable (fun v : ℝ => v ^ k)

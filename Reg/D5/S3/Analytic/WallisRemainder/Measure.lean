@@ -120,9 +120,8 @@ private theorem fractionNegative : ¬ fractionArena.Law fractionRejected := by
   intro h
   have he := (hasSum_zero : HasSum (fun _ : ℕ => (0 : ℝ)) 0).unique
     (h (u := 1) zero_lt_one)
-  have hp : 0 < Real.tanh 1 := by
-    rw [Real.tanh_eq_sinh_div_cosh]
-    exact div_pos (Real.sinh_pos_iff.mpr zero_lt_one) (Real.cosh_pos _)
+  have hp : 0 < Real.tanh 1 :=
+    (_root_.D5.S3.Entropy.RenyiCombining.HircheArimotoCombining.tanh_mem zero_lt_one).1
   norm_num at he
   linarith
 
