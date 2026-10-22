@@ -4453,3 +4453,174 @@ $$
 本条是 `repo-derived` 的实际观察器联合消费；经典近似函数方程、解析 Stirling、Cauchy、振荡积分与 Legendre 正交性均为复用工具，不单独构成新增结果。该消费独立于第 475 节的四矩输入，控制的是指定归一化质量及次数、窗口预算。逐点全阶 Laguerre 条件和逐整数严格 Robin 估计仍需额外论证；这里没有最优分辨率或文献优先权主张。
 
 ## 追加锚（本行以下为增补区）
+
+## 477. Mertens 累积峰值到实际 lcm Robin 反例的有限位置界
+
+本节复用 Zhao 的线性 Mertens 误差定义与有效振荡引理，给出到实际整数的定量应用。来源是 [arXiv:2411.18903v2](https://arxiv.org/pdf/2411.18903v2)，定义见印刷第 1 页，§5 引理 10、式 (28) 见第 13—14 页；版本与适用边界由 [既有文献条目](../../../Library/Analytic/zhao2025mertensmeans.md) 保存。Zhao 的引理及经典 Mertens、Euler 乘积与切线不等式均为既有结果，不在此重证。下面的承重结论是累积峰值到有界实际 lcm 见证的仓内综合推导，文献状态为 `repo-derived`，不主张研究优先权。
+
+沿用 $Z(n)=\sigma(n)/n$ 与完整 $I_\psi$。令
+
+$$
+\begin{aligned}
+c_2&=\gamma_E-\sum_p\sum_{k\ge2}\frac1{kp^k},&
+E_2(t)&=\sum_{p\le t}\frac1p-\log\log t-c_2,\\
+\Delta_1(x)&=\int_2^xE_2(t)\,dt,&
+D_x&=\operatorname{lcm}(1,\ldots,\lfloor x\rfloor),\qquad a=10000.
+\end{aligned}
+$$
+
+**命题 477.1（累积峰值给出有界实际见证）。** 对每个实数 $x\ge a^2$，若
+
+$$
+\Delta_1(x)>12\sqrt x\log x,
+\tag{477.1}
+$$
+
+则存在实数 $t\in[a,x]$，其实际整数 $N=D_t$ 满足
+
+$$
+5040<N\le\exp(x\log x),\qquad
+Z(N)>e^{\gamma_E}\log\log N.
+\tag{477.2}
+$$
+
+证明。对 $u\ge a$，设 $L=\log u$、$a_p=\lfloor\log u/\log p\rfloor$，保留有限完整 prime-power 和与两个非负量
+
+$$
+P(u)=\sum_{p^k\le u}\frac1{kp^k},\qquad
+Q(u)=\sum_{p\le u}\sum_{k>a_p}\frac1{kp^k},\qquad
+\mathcal L(u)=-\sum_{p\le u}\log(1-p^{-a_p-1}).
+$$
+
+经典完整 Mertens 账本及有限 Euler 乘积给出
+
+$$
+P(u)=\gamma_E+\log\log u+
+\frac{\psi(u)-u}{u\log u}-I_\psi(u),\qquad
+\log Z(D_u)=P(u)+Q(u)-\mathcal L(u).
+\tag{477.3}
+$$
+
+这里 $\log D_u=\psi(u)$；所有上端采用 $\le$，包括 prime-power 端点。函数 $v\mapsto\log\log v$ 在 $v>1$ 上凹，而 $\psi(u)>1$，故其在 $u$ 处的切线给出
+
+$$
+\log\frac{e^{\gamma_E}\log\log D_u}{Z(D_u)}
+\le I_\psi(u)+\mathcal L(u)-Q(u)
+\le I_\psi(u)+\frac4{\sqrt u}.
+\tag{477.4}
+$$
+
+最后一界保留实际指数：当 $p\le\sqrt u$ 时 $p^{-a_p-1}<1/u$；当 $p>\sqrt u$ 时 $a_p=1$。因 $p^{-a_p-1}\le1/4$，有
+
+$$
+\mathcal L(u)\le\frac43\left(
+\frac1{\sqrt u}+\sum_{m>\sqrt u}\frac1{m^2}\right)
+\le\frac43\left(\frac1{\sqrt u}+\frac1{\sqrt u-1}\right)
+\le\frac4{\sqrt u}.
+$$
+
+反设 $[a,x]$ 上每个 $D_u$ 都满足 $Z(D_u)\le e^{\gamma_E}\log\log D_u$。由 (477.4)，整个实区间上有 $I_\psi(u)\ge-4/\sqrt u$。
+
+记 $I_\theta$ 为将完整核中的 $\psi(v)-v$ 换成 $\theta(v)-v$ 所得积分，$H_2=I_\psi-I_\theta\ge0$。逐个保留高次 prime-power，并只用 $\theta(y)\le y\log y$，得到
+
+$$
+\psi(v)-\theta(v)
+\le\frac{\sqrt v\log^2v}{\log2},\qquad
+H_2(u)\le\frac{2\log u+6}{\log2\sqrt u}.
+$$
+
+由 $\log2>1/2$ 与 $\log a>8$，反设因此推出
+
+$$
+I_\theta(u)\ge-\frac{6\log u}{\sqrt u}
+\qquad(a\le u\le x).
+\tag{477.5}
+$$
+
+下一步使用 $E_2$ 的实际累积量，区别于既有文献条目中的 $E_1$ 累积量。令
+
+$$
+q(u)=\frac{u\log u}{1+\log u},\qquad
+h(u)=\frac{\log u}{(1+\log u)^2}.
+$$
+
+经典 partial summation 在相同端点给出
+
+$$
+I_\theta(u)=\frac{\theta(u)-u}{u\log u}-E_2(u),\qquad
+I_\theta'(u)=-\frac{(\theta(u)-u)(1+\log u)}{u^2\log^2u}
+$$
+
+（导数几乎处处成立）。因 $q'-1=-h$，积分后是有限区间上的精确等式
+
+$$
+\Delta_1(x)=C_a-q(x)I_\theta(x)
+-\int_a^xh(u)I_\theta(u)\,du,
+\qquad C_a=\Delta_1(a)+q(a)I_\theta(a).
+\tag{477.6}
+$$
+
+没有丢弃任何未来积分：$I_\theta$ 本身仍是完整无限尾，(477.6) 对它在 $[a,x]$ 上积分。由 $0<\gamma_E<1$ 与 $\sum_p\sum_{k\ge2}1/(kp^k)\le\tfrac12\sum_{m\ge2}1/[m(m-1)]=1/2$，可得 $|c_2|<1$。再用 $\sum_{p\le u}1/p\le\log u$ 与 $|\log\log u|\le\log u$（$u\ge2$），有 $|E_2(u)|\le2\log u+1$。又 $q(a)\le a$、$I_\theta(a)\le2\log a+2$，故
+
+$$
+C_a\le a(4\log a+3)=:K_a.
+$$
+
+把 (477.5) 代入 (477.6)，用 $q(x)\le x$、$h(u)\le1/\log u$，得到
+
+$$
+\Delta_1(x)\le K_a+6\sqrt x\log x+12\sqrt x.
+\tag{477.7}
+$$
+
+当 $x\ge a^2$ 时，$K_a<3\sqrt x\log x$ 且 $12\sqrt x\le2\sqrt x\log x$，所以右端小于 $12\sqrt x\log x$，与 (477.1) 矛盾。最后，$D_t\ge\lfloor t\rfloor\ge a>5040$，而
+
+$$
+\log D_t=\psi(t)
+=\sum_{p\le t}a_p\log p\le t\log t\le x\log x,
+$$
+
+给出 (477.2)。证毕。
+
+**推论 477.2（带原文高度条件的有效零点到整数上界）。** 取 $0<\varepsilon<\beta_0-1/2$。假设已给定实际零点 $\rho_0=\beta_0+i\gamma_0$，其中 $\beta_0<1$，并满足
+
+$$
+\gamma_0>\max\{2,C_1(\varepsilon)\},
+$$
+
+这里 $C_1,C_2$ 是 Zhao 引理 10 中可有效计算的常数，必要时增大到正值。定义
+
+$$
+Y=\max\left\{2\log a,\ \frac{16}{\varepsilon^2},
+\frac2\varepsilon[\log24+(2+\varepsilon)\log\gamma_0],
+[C_2(\varepsilon)+1]\log\gamma_0\right\},\qquad B=e^{(1+\varepsilon)Y}.
+\tag{477.8}
+$$
+
+则存在实际整数 $N$ 严格违反 Robin，且
+
+$$
+5040<N\le\exp(B\log B).
+\tag{477.9}
+$$
+
+证明。取 $X=e^Y>\gamma_0^{C_2(\varepsilon)}$。直接应用 Zhao 引理 10，存在 $x\in[X,X^{1+\varepsilon}]$ 满足
+
+$$
+\Delta_1(x)>\frac{x^{\beta_0}}{\gamma_0^{2+\varepsilon}\log x}.
+$$
+
+令 $y=\log x\ge Y$。因 $y\ge16/\varepsilon^2$，初等界 $\log y\le\sqrt y$ 给出 $y^2\le e^{\varepsilon y/2}$；(477.8) 因此保证
+
+$$
+\frac{x^\varepsilon}{(\log x)^2}
+\ge e^{\varepsilon y/2}\ge24\gamma_0^{2+\varepsilon}.
+$$
+
+由 $\beta_0-1/2>\varepsilon$，该峰值大于 $12\sqrt x\log x$。命题 477.1 给出 $N\le\exp(x\log x)\le\exp(B\log B)$，证毕。
+
+这里的上界有效依赖所引用的 $C_1,C_2$。原文只声明二者可有效计算，证明为对 Pintz 方法的改编提纲，未列二者数值或公式；本节未提取它们，也未给出数值截止。因而这不是只输入零点矩形便已实现的数值算法，也不适用于未满足原文高度条件的任意离线零点。命题 477.1 独立于该引理；推论在其前提下继承有效性。结论是实际 lcm 见证上界，不要求 CA 最优性、右端零点上确界、零点简单性或分离假设。不存在离线零点的证明、RH 与对每个 $n>5040$ 的严格 Robin 仍未给出。
+
+本节是纸面数学应用；没有科学执行、数值扫描、Lean 编译或 kernel 认证。文献检索只承担既有来源与适用范围核对，不承担证明审查。有限峰值到整数的转换由上述推导承担。
+
+## 追加锚（本行以下为增补区）
