@@ -6,7 +6,9 @@ set_option autoImplicit false
 
 namespace Reg.D5.S3.VertexAlgebra.WeightedLocalCorrelator
 open _root_.D5.S3.VertexAlgebra
-open UniformGradedLocalCorrelator WeightedLocalCorrelator FieldNormalProductLocality
+open _root_.D5.S3.VertexAlgebra.UniformGradedLocalCorrelator
+open _root_.D5.S3.VertexAlgebra.WeightedLocalCorrelator
+open _root_.D5.S3.VertexAlgebra.FieldNormalProductLocality
 open _root_.D5.S3.ConceptDynamics.InformationEscape.DependentFamily
 universe u
 noncomputable section
