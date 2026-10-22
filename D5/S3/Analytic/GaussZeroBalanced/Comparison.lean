@@ -282,7 +282,7 @@ end D5.S3.Analytic.GaussZeroBalanced.Comparison
 
 namespace D5.S3.Analytic.GaussZeroBalanced.Comparison
 
-lemma slope_neg_local {a b₁ b₂ : ℝ} (ha : 0 < a) (h1 : 0 < b₁) (h2 : 0 < b₂)
+private lemma slope_neg_local {a b₁ b₂ : ℝ} (ha : 0 < a) (h1 : 0 < b₁) (h2 : 0 < b₂)
     (hder : deriv (fun y : ℝ => f a b₁ y - f a b₂ y) 0 < 0) :
     ∃ x ∈ Ioo (0:ℝ) 1, f a b₁ x < f a b₂ x := by
   have hw : HasDerivAt (fun y : ℝ => f a b₁ y - f a b₂ y)
