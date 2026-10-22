@@ -16,7 +16,7 @@ noncomputable section
 
 abbrev signature : Signature where
   Params := Σ d : ℕ, Matrix.unitaryGroup (Fin d) ℂ × ℝ
-  State _ := Bool
+  State p := Matrix (Fin p.1) (Fin p.1) ℂ
   Role := Unit
   finiteRole := inferInstance
   nonemptyRole := inferInstance
@@ -25,7 +25,8 @@ abbrev signature : Signature where
   finiteAnchor := inferInstance
 
 def actual : Realization signature :=
-  realize signature (fun _ p state => if state then sMax p.1 p.2.2 else 0)
+  realize signature (fun _ p state =>
+    if Matrix.trace state = 0 then sMax p.1 p.2.2 else 0)
     (fun e => nomatch e)
 
 def rejected : Realization signature :=
@@ -41,10 +42,11 @@ abbrev arena : Arena where
         ((∀ x, (J x).IsCompletelyPositive) ∧
           (∑ x, J x = It t) ∧
           (∀ x ρ, Matrix.trace (J x ρ) =
-            Matrix.trace (ρ * Qs U (R.readout () ⟨d, (U, t)⟩ true) x))) ↔
+            Matrix.trace (ρ * Qs U
+              (R.readout () ⟨d, (U, t)⟩ (0 : Matrix (Fin d) (Fin d) ℂ)) x))) ↔
         (∀ x, J x = Itilde U t x)) ∧
     (∀ (d : ℕ) (U : Matrix.unitaryGroup (Fin d) ℂ) (t : ℝ),
-      R.readout () ⟨d, (U, t)⟩ true = sMax d t)
+      R.readout () ⟨d, (U, t)⟩ (0 : Matrix (Fin d) (Fin d) ℂ) = sMax d t)
 
 theorem actual_law : arena.Law actual := by
   constructor
@@ -56,7 +58,7 @@ theorem actual_law : arena.Law actual := by
             Matrix.trace (ρ * Qs U (sMax d t) x))) ↔
         (∀ x, J x = Itilde U t x) from result d hd U t htl htu J)
   · intro d U t
-    rfl
+    simp [actual, realize]
 
 theorem rejected_law : ¬ arena.Law rejected := by
   intro h
@@ -67,9 +69,13 @@ theorem rejected_law : ¬ arena.Law rejected := by
 theorem dependence : ObservationalDependence signature actual := by
   intro i
   let U : Matrix.unitaryGroup (Fin 2) ℂ := 1
-  refine ⟨⟨2, (U, 0)⟩, true, false, ?_⟩
-  change sMax 2 0 ≠ 0
-  norm_num [sMax]
+  refine ⟨⟨2, (U, 0)⟩, 0, 1, ?_⟩
+  have hzero : Matrix.trace (0 : Matrix (Fin 2) (Fin 2) ℂ) = 0 := by
+    simp [Matrix.trace]
+  have hone : Matrix.trace (1 : Matrix (Fin 2) (Fin 2) ℂ) ≠ 0 := by
+    rw [Matrix.trace_one]
+    norm_num
+  simp [actual, realize, hzero, hone, sMax]
 
 def source_registration : Registration arena claim where
   actual := actual
@@ -80,7 +86,7 @@ def source_registration : Registration arena claim where
       · intro d hd U t htl htu J
         simpa [actual, realize] using h d hd U t htl htu J
       · intro d U t
-        rfl
+        simp [actual, realize]
     · intro h
       intro d hd U t htl htu J
       simpa [actual, realize] using (h.1 d hd U t htl htu J)
@@ -110,7 +116,8 @@ def registration :
   correspondence := { stage := .evidence, objectStage := .evidence }
   bundleNonempty := .absent
   readout := some
-    (realize signature (fun _ p state => if state then sMax p.1 p.2.2 else 0)
+    (realize signature (fun _ p state =>
+      if Matrix.trace state = 0 then sMax p.1 p.2.2 else 0)
       (fun e => nomatch e))
   variation := .absent
   sensitivity := .absent
@@ -124,8 +131,10 @@ def registration :
       path := #[] }
     coordinates := #[0, 2, 3]
     readouts := #[{
-      path := #[]
-      stateBinder := 0
+      path := #["body", "body", "body", "body", "body", "body", "body",
+        "fn", "arg", "arg", "arg", "body", "body", "arg", "arg", "arg",
+        "fn", "arg"]
+      stateBinder := 8
       functionOperand := false
       stateOperand := none
       booleanPredicate := false }] }
