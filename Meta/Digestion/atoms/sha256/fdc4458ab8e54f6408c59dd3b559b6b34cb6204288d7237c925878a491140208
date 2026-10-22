@@ -1,0 +1,2 @@
+**定义 1.1（静态相融对象）。** 设事件集 $E$ 有限或可数，偏序为 $\leq$，每个主下集 $\downarrow e$ 有限。设 $\mathcal C$ 是有限事件集组成的族，含空集及全部单点，满足子集封闭及 $A\in\mathcal C\Rightarrow\downarrow A\in\mathcal C$。配置是向下闭的 $C\subseteq E$，且其每个有限子集属于 $\mathcal C$。记全部配置为 $\operatorname{Conf}$，有限配置为 $\operatorname{Conf}_{\mathrm{fin}}$。配置 $C,D$ 相融，意为 $C\cup D$ 仍是配置。符号 $\Omega$ 表示这些配置、因果关系、允许的局部运输与读出的共同数学对象；它不要求所有配置两两相融，也不要求相融关系传递。事件的身份包含其关系位置，同一门标签在两个位置出现是两个事件。此处采用 Winskel 的事件结构与配置域思想；后文只使用上述明确给出的版本。
+

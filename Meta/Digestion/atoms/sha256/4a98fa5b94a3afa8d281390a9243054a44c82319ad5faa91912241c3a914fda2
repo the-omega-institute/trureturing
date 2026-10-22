@@ -1,0 +1,29 @@
+**定义 4.1（任意目标族的响应商）。** 设 $X$ 为共同源，$Q$ 为任意指标集，每个 $q\in Q$ 给一个映射 $R_q:X\to Y_q$。定义
+
+$$
+x\sim_Qx'\quad\Longleftrightarrow\quad\forall q\in Q,\ R_q(x)=R_q(x').
+$$
+
+响应商是 $X/{\sim_Q}$，也可用联合映射 $x\mapsto(R_q(x))_{q\in Q}$ 的像表示。这个定义不要求有限目标族。若 $Q=\varnothing$，非空源只有一个类；空源的商为空。
+
+证明所用的最小性是一般因子化原理。编码 $E:X\to Z$ 能恢复每个 $R_q$，即存在 $d_q$ 使 $R_q=d_q\circ E$，当且仅当每个 $R_q$ 在 $E$ 的纤维上常值；解码器自然定义在达到像 $E(X)$ 上。因此 $E(x)=E(x')\Rightarrow x\sim_Qx'$。反之，响应商上的 $[x]\mapsto R_q(x)$ 良定义。这是既有目标族最小商原理的直接使用，不要求凭空扩大一个有限指标集。
+
+取单个读出 $R:X\to Y$ 与时钟 $\tau:X\to\mathbb N$，便有
+
+$$
+\tau=\bar\tau\circ R\text{ 于 }R(X)
+\quad\Longleftrightarrow\quad
+R(x)=R(x')\Rightarrow\tau(x)=\tau(x').
+$$
+
+串行字 $g\bar g$ 的算子读出可为 $I$，空字 $\varepsilon$ 的读出也是 $I$，但长度分别为二和零。故可逆算子读出不能恢复正历史计数。$(R,\tau)$ 是同时保留这两个目标的最小补全：任何能恢复二者的 $Q$ 均能恢复该有序对；这个有序对仍未必恢复整个历史。
+
+这一遗漏可以指数增长。取 $r\geq2$ 个字面不同、长度均为二的中性块 $c_i=g_i\bar g_i$，各块算子读出均为 $I$。由 $k$ 个块串接得到的字长都是 $2k$，读出都是 $I$。把字依次切成固定长度二的块能唯一读回块指标，故不同指标序列给不同字，共 $r^k$ 个。若附加记忆 $M$ 与 $(R,\tau)$ 能精确恢复这些字，$M$ 在这族上必须单射，于是
+
+$$
+|\operatorname{range}M|\geq r^k,
+\qquad b\geq\lceil k\log_2r\rceil
+$$
+
+对固定宽度二进制编码成立。这个下界来自同一读出—时钟纤维内的不同字，不能用重复块中没有区别的标签凑数。
+
