@@ -34,11 +34,11 @@ def coords {m n : ℕ} (ρ : Matrix (Fin m × Fin n) (Fin m × Fin n) ℂ) :
     (Fin m × Fin n) × (Fin m × Fin n) × Bool → ℝ :=
   fun (p, q, b) => if b then (ρ p q).im else (ρ p q).re
 
-/-- Polynomial invariance under arbitrary local unitary conjugations. -/
+/-- Polynomial invariance on density operators under arbitrary local unitary conjugations. -/
 def IsInvariant {m n : ℕ}
     (f : MvPolynomial ((Fin m × Fin n) × (Fin m × Fin n) × Bool) ℝ) : Prop :=
   ∀ (UA : unitaryGroup (Fin m) ℂ) (UB : unitaryGroup (Fin n) ℂ)
-    (ρ : Matrix (Fin m × Fin n) (Fin m × Fin n) ℂ),
+    (ρ : Matrix (Fin m × Fin n) (Fin m × Fin n) ℂ), IsDensity ρ →
     MvPolynomial.eval (coords
       (((UA : Matrix _ _ ℂ) ⊗ₖ (UB : Matrix _ _ ℂ)) * ρ *
         ((UA : Matrix _ _ ℂ) ⊗ₖ (UB : Matrix _ _ ℂ))ᴴ)) f =
