@@ -10,7 +10,7 @@ internal sealed class DefsDocument : IScribeDocumentDefinition
                 DeclarationHandle.Create("D5/S3/Analytic/EllipticTailExponent/Defs.g6"),
                 H("Coefficient polynomial"), StatementSource.WithoutFormula(), AssessedProvenance.FromRepo(),
                 Blocks(Paragraph(Text("The polynomial g6 k a is a times the product of a+j and the product of 1-a+j, each over 0 <= j < k. Both products are one when k=0."))), DescribeRole.Definition),
-            Describe.Lean(DescribeId.Create("elliptic-tail-exponent-S"),
+            Describe.Lean(DescribeId.Create("elliptic-tail-exponent-s"),
                 DeclarationHandle.Create("D5/S3/Analytic/EllipticTailExponent/Defs.S"),
                 H("Finite truncation"), StatementSource.WithoutFormula(), AssessedProvenance.FromRepo(),
                 Blocks(Paragraph(Text("The polynomial S n a sums g6 k a divided by (k+1)(k!)^2 for 0 <= k <= n. Its derivative is the ordinary real derivative of this finite polynomial."))), DescribeRole.Definition),
