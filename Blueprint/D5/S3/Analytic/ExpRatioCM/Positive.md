@@ -14,7 +14,7 @@ Lean statement: `D5/S3/Analytic/ExpRatioCM/Positive.F_one`
 
 *Commentary.*
 
-For positive t, F(1,t)=exp(t)/(exp(t)-1)^2. The existing logarithmic derivative formula yields this identity and the audit uses it for quotient normalization.
+For positive t, F(1,t)=exp(t)/(exp(t)-1)^2. The existing logarithmic derivative formula yields this identity, which supplies the low-index ratio formulas.
 
 **Theorem 1.2 (Low-index ratio formulas).**
 
