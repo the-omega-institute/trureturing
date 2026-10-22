@@ -228,3 +228,170 @@ $$
 本命题消费原始 $I_\psi$，保留全部未来积分、素数幂、平凡零点修正和下端边界。前卷 §479 经 §478 使用的截止是 $\exp(4(28m_1+20)^2)$；这里直接使用 $X=e^{28m_1}$，免去该对数截止的二次扩大。两份实际整数上界均为双指数，不将此改进称为减少一层指数。这里没有构造实际离线零点、无条件负尾峰或 Robin 反例，也没有证明 RH 或对每个 $n>5040$ 的严格 Robin。
 
 ## 追加锚（本行以下为增补区）
+
+## 481. 原前向价格核的临界零点响应与统一下界障碍
+
+这里继续使用 [QG3、QG7、QG9 与 CW3–CW5](../../../Library/ArithSums/nicolas2025comparison.md) 的实际前向积分，不更换为素数单层、固定相对区间或另一种平滑。它们的整数后继、完整库存和终端凹性成本均直接复用。本节证明这一原核的 Mellin 接口，并区分全实中心下界与实际被选来源上的下界。
+
+令
+
+$$
+\begin{gathered}
+E(x)=\psi(x)-x,\qquad H_x=x^{4/5},\qquad B_x=x+H_x,\\
+\lambda(x)=\frac1{x\log x},\qquad
+w(x)=-\lambda'(x)=\frac{1+\log x}{x^2\log^2x},\qquad
+\rho_x(u)=\frac{w(x+u)}{w(x)}.
+\end{gathered}
+$$
+
+定义同一归一化前向响应
+
+$$
+\begin{aligned}
+\mathcal T(x)
+&=\frac{\sqrt x}{H_x^2}
+\int_0^{H_x}[E(x+u)-E(x)]\rho_x(u)\,du\\
+&=\frac{T_\psi(x,x^{4/5})}{x^{11/10}}.
+\end{aligned}
+\tag{481.1}
+$$
+
+原 QG7 的有限恒等式给出
+
+$$
+\mathcal T(x)=\frac{\sqrt x}{w(x)H_x^2}
+\int_{(x,B_x]}[\lambda(t)-\lambda(B_x)]\,dE(t),
+\qquad dE=\sum_{n\ge1}\Lambda(n)\delta_n-dt.
+\tag{481.2}
+$$
+
+初端原子排除，终端原子的权重为零；每个参考素数幂仍带完整的 $\log p$ 权重。
+
+**命题 481.1（原核的 Mellin 留数）。** 假设 RH，并使用其经典 von Koch 界 $E(t)=O(\sqrt t\log^2t)$。对任意固定 $x_0\ge3$，最初在 $\Re s>1/2$ 定义
+
+$$
+\mathcal F(s)=\int_{x_0}^\infty\mathcal T(x)x^{-s-1}\,dx.
+$$
+
+则存在在 $\Re s>-1/5$ 全纯的 $R_{x_0}(s)$，使
+
+$$
+\mathcal F(s)
+=-\frac12\frac{\zeta'}{\zeta}(s+1/2)
+-\frac1{2(s-1/2)}+R_{x_0}(s).
+\tag{481.3}
+$$
+
+右边在 $s=1/2$ 的奇点可去。它在 $\Re s>0$ 全纯，并在 $s=0$ 全纯。每个重数为 $m$ 的非平凡零点 $1/2+i\gamma$ 在 $s=i\gamma$ 给出留数 $-m/2$。
+
+证明。最初在 $\Re s>1/2$ 对 (481.2) 作绝对 Fubini 交换，所得伴随核为
+
+$$
+q_s(t)=\int_{\substack{x\ge x_0\\x<t\le x+x^{4/5}}}
+\frac{x^{-s-1/2}[\lambda(t)-\lambda(x+x^{4/5})]}
+ {w(x)x^{8/5}}\,dx.
+\tag{481.4}
+$$
+
+写 $a=4/5$。在 $t\ge x_0+x_0^a$ 时，以 $t=x+zx^a$ 定义 $x=x(t,z)$，其中 $0\le z\le1$。这个正解唯一，且
+
+$$
+D=1+azx^{a-1},\qquad x_t=D^{-1},\qquad x_z=-x^aD^{-1}.
+$$
+
+于是 (481.4) 恰为
+
+$$
+q_s(t)=\int_0^1 x(t,z)^{-s-1/2}
+\frac{\displaystyle\int_z^1w(x+ux^a)/w(x)\,du}
+ {1+azx^{a-1}}\,dz.
+\tag{481.5}
+$$
+
+令 $\epsilon_t=t^{-1/5}$。对 $s$ 的每个固定紧集 $K\subset\mathbb C$，一致地有
+
+$$
+\begin{gathered}
+q_s(t)=\tfrac12t^{-s-1/2}+r_s(t),\\
+|r_s(t)|\le C_Kt^{-\Re s-1/2}\epsilon_t,\qquad
+|\partial_t r_s(t)|\le C_Kt^{-\Re s-3/2}\epsilon_t.
+\end{gathered}
+\tag{481.6}
+$$
+
+确切系数来自 $\int_0^1(1-z)\,dz=1/2$。为核对余项与其导数，使用 $x/t=1+O(\epsilon_t)$、$D=1+O(\epsilon_t)$ 以及
+
+$$
+(\log w)'(x)=-\frac2x+rac1{x(1+\log x)}-rac2{x\log x},
+\qquad (\log w)''(x)=O(x^{-2}).
+$$
+
+由此 $w(x+ux^a)/w(x)=1+O(\epsilon_t)$；沿 $t$ 对这个相关比值求导为 $O(\epsilon_t/t)$，同时 $\partial_t(x/t)=O(\epsilon_t/t)$、$\partial_t(x^{a-1})=O(\epsilon_t/t)$。代入 (481.5)，先抽出 $t^{-s-1/2}$ 再求导，给出 (481.6)；不是对未减主项的导数误报较小阶。
+
+RH 下，对 $\int r_s\,dE$ 作分部积分，其无穷端边界为
+
+$$
+O_K(t^{-\Re s-1/5}\log^2t),
+$$
+
+导数积分在 $\Re s>-1/5$ 的每个紧集上一致绝对收敛。因此余项全纯。核在有限区间 $[x_0,x_0+x_0^a]$ 的修正，以及移除 $[1,x_0]$，只产生整函数项。主项最初满足
+
+$$
+\frac12\int_1^\infty t^{-s-1/2}\,dE(t)
+=-\frac12\frac{\zeta'}{\zeta}(s+1/2)-\frac1{2(s-1/2)},
+$$
+
+得 (481.3)。$\zeta$ 在 $1$ 的极点使两个显式项的奇点相消；实区间 $(0,1)$ 无零点，故 $s=0$ 正则。其余临界零点的对数导数留数为 $m$，给出所示 $-m/2$。这里没有先假设原积分在整个 $\Re s>0$ 收敛；直接的 RH 点值界只先保证其在 $\Re s>1/5$ 绝对收敛。证毕。
+
+**命题 481.2（RH 下统一单侧预算的必要系数）。** 在命题 481.1 的前提下，若有限常数 $\kappa$ 满足 $\mathcal T(x)\ge-\kappa$ 对所有充分大的实数 $x$ 成立，则对每个非平凡零点的重数 $m$ 都有
+
+$$
+\kappa\ge\frac m2.
+\qquad\text{特别地，}\quad
+\liminf_{x\to\infty}\mathcal T(x)\le-\frac12.
+\tag{481.7}
+$$
+
+证明。增大 $x_0$，使 $g(y)=\mathcal T(e^y)+\kappa\ge0$ 对 $y\ge\log x_0$ 成立。RH 点值界给 $g(y)=O(e^{y/5}(1+y^2))+O(1)$，故其收敛横坐标至多为 $1/5$。其变换最初为
+
+$$
+G(s)=\mathcal F(s)+\frac{\kappa x_0^{-s}}s.
+$$
+
+由 (481.3)，它能跨过每个正实点全纯延拓。直接使用 [FIB 原卷定理 92.3](FIBONACCI_ATOMIC_RELATION_GENERATION.md) 已明列的 Landau 非负 Laplace 变换定理，收敛横坐标不能为正。因此对每个 $\sigma>0$，实际的非负积分均收敛。该积分与延拓表达式在右半平面由恒等定理一致，故
+
+$$
+|G(\sigma+i\gamma)|\le G(\sigma).
+$$
+
+由 $\mathcal F$ 在零点的留数和在 $0$ 的正则性，
+
+$$
+\lim_{\sigma\downarrow0}\sigma G(\sigma)=\kappa,
+\qquad
+\lim_{\sigma\downarrow0}\sigma G(\sigma+i\gamma)=-\frac m2.
+$$
+
+取极限给 $m/2\le\kappa$。非平凡零点存在，且不在实轴，故 $m\ge1$ 给出 (481.7)。不需要零点简单性、零点纵坐标的线性无关性或数值零点输入。证毕。
+
+**推论 481.3（全实中心版 QGP 不成立）。** 复用 [S5 的 RH 失败时的无界实际正则 GA1/GA2 来源](../../../Library/Arith/caveney2012sacaga.md) 及上述完整 $Q$ 供应。令 $c_Q=(\sqrt2-1)/4$。对每个固定 $\kappa<c_Q$ 和每个有限 $T$，存在实数 $x\ge T$ 使
+
+$$
+T_\psi(x,x^{4/5})<-\kappa x^{11/10}.
+\tag{481.8}
+$$
+
+证明。若 RH 成立，(481.7) 与 $c_Q<1/2$ 直接给出。若 RH 失败，S5 给出无界的同一实际正则来源 $N=N_A^{\rm str}$、$A=\log N$。原 QG9 和该整数的 GA2 比较保留实际终端成本，给出
+
+$$
+w(A)[T_\psi(A,A^{4/5})+S_Q(A,A^{4/5})]
+\le-C_{B_A}(K(B_A))\le0.
+$$
+
+完整供应 $S_Q(A,A^{4/5})/A^{11/10}\to c_Q$ 因来源无界而越过每个共同的未知有限起点，遂得 $\mathcal T(A)\le-c_Q+o(1)<-\kappa$。这里直接消费既有来源与恒等式，不重建其选择或删除／插入桥。证毕。
+
+**范围与文献归属。** von Koch 的 RH 误差界、$-\zeta'/\zeta$ 的 Dirichlet 级数、非平凡零点及 Landau 非负变换原理是经典输入。原前向消费者、完整 $Q$ 漂移和 S5 来源各按上述既有条目归属。本节的 `repo-derived` 内容是 (481.4)–(481.6) 对同一移动价格核的运输，以及它对全实中心下界的限制；不主张一般振荡理论的原创性或最优系数。它是纸面解析推导，未作 Lean 核验。
+
+(481.8) 否定的是一个比原 QGP 更强的统一供应，并不是 Robin 反例。RH 分支中的坏中心不自动属于被选整数族；它也不提供任何好中心落在该族的结论。原任务仍须在同一实际来源、完整约数响应、所有素数幂和实际终端成本下取得独立的有符号估计。RH 与每个 $n>5040$ 的严格 Robin 不等式仍未证明。
+
+## 追加锚（本行以下为增补区）
