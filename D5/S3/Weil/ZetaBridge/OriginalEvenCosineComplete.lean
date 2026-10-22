@@ -157,7 +157,7 @@ def circleTransport (a : ℝ) (ha : 0 < a) (u : WindowL2 a) :
     simpa only [show -a + 2 * a = a by ring, windowMeasure, window] using Lp.memLp u
   exact (Real.sqrt (2 * a) : ℂ) • hu.memLp_liftIoc.haarAddCircle.toLp _
 
-private lemma l2_energy {α : Type*} [MeasurableSpace α] (μ : Measure α) (u : Lp ℂ 2 μ) :
+lemma l2_energy {α : Type*} [MeasurableSpace α] (μ : Measure α) (u : Lp ℂ 2 μ) :
     ‖u‖ ^ 2 = ∫ x, ‖u x‖ ^ 2 ∂μ := by
   rw [@norm_sq_eq_re_inner ℂ, L2.inner_def,
     ← integral_re (L2.integrable_inner u u)]

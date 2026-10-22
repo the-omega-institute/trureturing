@@ -407,4 +407,63 @@ noncomputable def audit : Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0}
   options := #[]
 end Summability
 
+namespace PochhammerShift
+abbrev shiftSignature : Signature :=
+  _root_.Reg.Support.SingleDependentReadout.signature ℝ (fun _ => ℕ) (fun _ => ℝ)
+def shiftActual : Realization shiftSignature :=
+  realize shiftSignature (fun _ c n => (ascPochhammer ℝ n).eval (c + 1)) (fun e => nomatch e)
+def shiftRejected : Realization shiftSignature :=
+  realize shiftSignature (fun _ _ _ => 0) (fun e => nomatch e)
+def arena : Arena where
+  signature := shiftSignature
+  Law R := ∀ (c : ℝ) (n : ℕ),
+    c * R.readout () c n = (c + n) * (ascPochhammer ℝ n).eval c
+private theorem rejected_law : ¬ arena.Law shiftRejected := by
+  intro h
+  have H := h 1 0
+  norm_num [shiftRejected, realize] at H
+private theorem dependence : ObservationalDependence shiftSignature shiftActual := by
+  intro i
+  exact ⟨1, 0, 1, by norm_num [shiftActual, realize, ascPochhammer_succ_eval]⟩
+def family : Registration arena (type_of% (@pochhammer_shift)) where
+  actual := shiftActual
+  bridge := Iff.rfl
+  variation := ⟨@pochhammer_shift, shiftRejected, rejected_law⟩
+  sensitivity := _root_.Reg.Support.SingleDependentReadout.sensitivity
+    arena.Law shiftActual shiftRejected rejected_law
+  dependence := dependence
+noncomputable def audit : Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0}
+    (@pochhammer_shift) (Realization shiftSignature) Unit Unit where
+  unitName := `Reg.D5.S3.Analytic.KummerRatio.Series.PochhammerShift.unit
+  realizationName := `Reg.D5.S3.Analytic.KummerRatio.Series.PochhammerShift.family
+  realizationSource := none
+  generated := false
+  arena := .source ⟨arena⟩
+  objectArena := .source ⟨arena⟩
+  catalog := Lean.Name.anonymous
+  localNames := false
+  realization := .source arena ⟨family⟩
+  correspondence := { stage := .evidence, objectStage := .evidence }
+  bundleNonempty := .absent
+  readout := some (realize shiftSignature
+    (fun _ c n => (ascPochhammer ℝ n).eval (c + 1)) (fun e => nomatch e))
+  variation := .absent
+  sensitivity := .absent
+  partialSensitivity := none
+  escapeFrom := none
+  sourceSelection := some {
+    owner := `D5.S3.Analytic.KummerRatio.Series
+    definition := none
+    coordinates := #[0]
+    readouts := #[{
+      path := #["body", "body", "fn", "arg", "arg"]
+      stateBinder := 1
+      functionOperand := false
+      stateOperand := none
+      booleanPredicate := false }] }
+  continuation := .unknown
+  familyRecord := none
+  options := #[]
+end PochhammerShift
+
 end Reg.D5.S3.Analytic.KummerRatio.Series

@@ -3151,3 +3151,201 @@ The fixed-input complementary recovery identity is specifically [Bény–Oreshko
 Theorems 148.1 and 150.1 and Corollary 151.1 establish the previously missing uniform real assertion (U.4), its full-complex-auxiliary restricted consequence (U.5), and the SPD fixed-input certificate in this exact three-environment branch. They do not provide arbitrary-physical-$\beta$ or arbitrary-physical-$\lambda$ analogues, a weighted/general-environment reduction, or a theorem for every admissible actual rank. In particular [volume I, Definition 47.2, (R.243)](AURIC_OMEGA_FULL_INPUT_RECOVERY_CERTIFICATES.md#47-applicability-and-the-remaining-recovery-problem) still asks for $\delta_N\geq1-\sqrt{1-\beta_{\rm phys}}$ over all stipulated original-real encoders, arbitrary $0<\beta_{\rm phys}\leq1/2$, every admissible third-column list, actual ranks up to nine, all whole-output complex CPTP recoveries, and all finite complex references with the unhalved norm. That whole assertion remains unresolved here, including its other physical-$\lambda$ branches. No physical realization, empirical claim, quantum-field or gravitational derivation follows from these finite-dimensional channel results. The mathematical conclusions do not require a global equality classification, a fixed-encoder diagonal auxiliary, deletion of a third column at fixed data, or a full-output-support assumption for actual rank three.
 
 ## 追加锚（本行以下为增补区）
+
+## 153. Actual closure of the all-class recovery bound
+
+**Definition 153.1 (the actual channel and the threshold).** Fix $0<\beta\leq1/2$, put
+
+$$
+a=1-\beta,\qquad u=\sqrt a,\qquad T=\frac{1+u}{2},\qquad d=\frac{1-u}{2},\qquad v=\sqrt T.
+\tag{U.224}
+$$
+
+Let $N:M_3(\mathbb C)\to M_5(\mathbb C)$ be any encoder in the original real-Kraus class: its prescribed phase-output difference has spectrum $(a,\beta,0,-\beta,-a)$, its third column is any jointly admissible one, and its actual minimal Kraus rank is any attainable $r\leq9$. Choose one minimal real Kraus compression and write its isometry and complement as
+
+$$
+V:\mathbb C^3\longrightarrow\mathbb C^5_B\otimes E,\qquad
+\Gamma(X)=\operatorname{Tr}_B(VXV^\dagger).
+\tag{U.225}
+$$
+
+The environment $E$ is the actual environment of this chosen compression. It is not replaced by a two-dimensional environment, and its dimension is not identified with the rank of a comparison state. The original passive/physical unitary correspondence is transported throughout, so the recovery domain remains all complex CPTP maps $M_5\to M_3$ on the whole output.
+
+**Theorem 153.2 (unconditional original-class lower bound).** For every $N$ of Definition 153.1 and every complex whole-output CPTP recovery $R:M_5(\mathbb C)\to M_3(\mathbb C)$,
+
+$$
+\left\|RN-\operatorname{id}_{M_3}\right\|_\diamond
+\geq 1-\sqrt{1-\beta}.
+\tag{U.226}
+$$
+
+The diamond norm is unhalved and its reference supremum ranges over every finite complex reference. The assertion includes every admissible third column and every actual minimal rank through nine.
+
+**Proof.** The phase states $\chi_\pm=(|0\rangle\pm i|1\rangle)/\sqrt2$ have output density operators with spectra $(a,\beta)$ and trace distance two. Equality in the trace-distance bound for two density operators forces orthogonal supports. Hence the two subspaces containing $V\chi_+$ and $V\chi_-$ on the $B$ factor are orthogonal. In particular,
+
+$$
+\Gamma(|\chi_+\rangle\langle\chi_-|)=0.
+\tag{U.227}
+$$
+
+The two complementary phase marginals therefore have spectra $(a,\beta,0,\ldots)$, and for every complex unit vector $\psi=p\chi_++q\chi_-$,
+
+$$
+\tau_\psi:=\Gamma(|\psi\rangle\langle\psi|)
+=|p|^2\tau_++|q|^2\tau_-\preceq aI_E,
+\qquad \operatorname{Tr}\tau_\psi=1.
+\tag{U.228}
+$$
+
+This is the actual cap. It uses the same $V$ for every direction and retains all third-column data; it does not assume that $\tau_+$ and $\tau_-$ commute or have a common two-dimensional support.
+
+Fix an arbitrary density $\omega$ on $E$, let $S=\operatorname{supp}\omega$ have rank $k$, and diagonalize $\omega$ on $S$. Purify $\omega$ by
+
+$$
+|\omega\rangle_{FE}=\sum_{j=1}^k\sqrt{\lambda_j}|j\rangle_F|j\rangle_E,
+\qquad F=\mathbb C^k,
+\tag{U.229}
+$$
+
+and put $V_\omega|\psi\rangle=|\psi\rangle\otimes|\omega\rangle$. For one arbitrary rectangular contraction
+
+$$
+U:\mathbb C^5_B\longrightarrow\mathbb C^3\otimes F,
+\qquad U^\dagger U\preceq I_5,
+\tag{U.230}
+$$
+
+define
+
+$$
+A_{\omega,U}=V_\omega^\dagger(U\otimes I_E)V,
+\qquad
+r_\psi=\operatorname{Re}\langle\psi|A_{\omega,U}|\psi\rangle.
+\tag{U.231}
+$$
+
+Let $\Pi_S$ be the orthogonal projection onto $S$. For each complex unit vector $\psi$ in the phase plane put $x_\psi=(U\otimes\Pi_S)V\psi$, and let $Q_\psi$ be its environmental marginal on $S$. The contraction condition $U^\dagger U\preceq I$ and (U.228) give
+
+$$
+0\preceq Q_\psi\preceq\Pi_S\tau_\psi\Pi_S\preceq aI_S,
+\qquad \operatorname{Tr}Q_\psi\leq1.
+\tag{U.232}
+$$
+
+The target $V_\omega\psi$ is supported on the environmental factor $S$, so $\langle V_\omega\psi,x_\psi\rangle=\langle V_\omega\psi,(U\otimes I_E)V\psi\rangle$. Thus the support compression preserves the overlap defining $r_\psi$. The isometry $V$ and complement $\Gamma$ retain their full actual environment $E$.
+
+If $k=1$, Cauchy--Schwarz gives $r_\psi\leq\sqrt a<v$ for every phase direction, since $T-a=(1-u)(2u+1)/2>0$. Thus only $k\geq2$ needs the common-projection argument.
+
+For $k\geq2$, complete the range of the single $U$ in $\mathbb C^3\otimes F$ to a five-dimensional subspace and let $P$ be its orthogonal projection. This is possible because $3k\geq6$ and $\operatorname{rank}U\leq5$; $P$ is a range completion and is not asserted to equal $UU^\dagger$. Set $D=I-P$ and $E_0=\overline D$. Then $E_0$ is a projection of rank $3k-5$; factor it as $E_0=ZZ^\dagger$ with $Z^\dagger Z=I$, and write the three $k$-row blocks of $Z$ as $Z_0,Z_1,Z_2$.
+
+The target projection has to be computed in the paired eigenbasis (U.229). Define the directional compression $D_\psi=(\langle\psi|\otimes I_F)D(|\psi\rangle\otimes I_F)$ for the same complex unit vector $\psi$. If $C_\psi=(\psi_0,\psi_1,0)\otimes I_k$, the full-basis transpose identity is
+
+$$
+D_\psi^T=C_\psi E_0C_\psi^\dagger
+=Z_\psi Z_\psi^\dagger,
+\qquad
+Z_\psi=\psi_0Z_0+\psi_1Z_1,
+\tag{U.233}
+$$
+
+and therefore the environmental marginal of $(P\otimes I_E)V_\omega\psi$ is
+
+$$
+M_\psi=\omega-\sqrt\omega\,Z_\psi Z_\psi^\dagger\sqrt\omega.
+\tag{U.234}
+$$
+
+The transpose in (U.233) is the transpose of the complete paired basis. It does not replace $\psi$ by a conjugated input and it is valid for every complex phase direction. Since $PU=U$, projecting the target does not change its overlap with $x_\psi$. The rectangular purification formula and the supported marginal (U.232) give
+
+$$
+r_\psi\leq f(Q_\psi,M_\psi)\leq H_a(M_\psi),
+\qquad
+H_a(M)=\max_{0\preceq Q\preceq aI,\ \operatorname{Tr}Q\leq1}f(Q,M),
+\tag{U.235}
+$$
+
+where $f$ is root fidelity. The same projection supplies the third-input charge
+
+$$
+q_2=\operatorname{Tr}(\omega Z_2Z_2^\dagger),
+\qquad
+\|(P\otimes I_E)V_\omega|2\rangle\|^2=1-q_2.
+\tag{U.236}
+$$
+
+Consequently $r_2>v$ implies $q_2<1-v^2=d$ by Cauchy--Schwarz. Thus, if all phase directions and the third input had overlap greater than $v$, the one actual $V$, one center $\omega$, one contraction $U$, and one common projection $P$ would satisfy exactly the strict system (S.158) of Volume II Definition 76.1. Volume II Theorem 76.2, whose complete trace-band, branch analysis, coefficient certificate and ordered spectral contradiction are Sections 77--79, excludes that system for every positive $\beta\leq1/2$ and every finite positive center rank $k\geq2$.
+
+It follows for this fixed $\omega$ and $U$ that
+
+$$
+\min\left\{
+\min_{\substack{\psi\in\operatorname{span}(\chi_+,\chi_-)\\\|\psi\|=1}}r_\psi,
+\ r_2\right\}\leq v.
+\tag{U.237}
+$$
+
+The witness in (U.237) may depend on $\omega$ and $U$; no common input is being selected before those variables.
+
+Now use the fixed-center Uhlmann identity in its correctly dimensioned form. For input densities $\rho$ and the contraction ball (U.230), both finite-dimensional real convex sets are compact, and $(\rho,U)\mapsto\operatorname{Re}\operatorname{Tr}(\rho A_{\omega,U})$ is continuous and affine in each variable. Hence compact affine minimax gives
+
+$$
+\begin{aligned}
+F(\Gamma,\mathcal C_\omega)
+&=\min_\rho\max_{U^\dagger U\preceq I_5}
+\operatorname{Re}\operatorname{Tr}(\rho A_{\omega,U})\\
+&=\max_{U^\dagger U\preceq I_5}\min_\rho
+\operatorname{Re}\operatorname{Tr}(\rho A_{\omega,U})\\
+&=\max_{U^\dagger U\preceq I_5}
+\lambda_{\min}(\operatorname{Herm}A_{\omega,U})\leq v.
+\end{aligned}
+\tag{U.238}
+$$
+
+The last inequality follows because the minimum over all densities is no larger than the restricted phase and third-input tests in (U.237). The center $\omega$ was held fixed throughout this exchange.
+
+For the identity target, the unrestricted recovery/complement duality of Bény--Oreshkov, *Approximate simulation of quantum channels*, arXiv:1103.0649v3, (54)--(56), Corollary 5, (64)--(66), identifies the optimization over all complex CPTP recoveries with the optimization over all environment densities:
+
+$$
+g_N:=\max_{R:M_5\to M_3\ \mathrm{CPTP}}
+F(RN,\operatorname{id}_{M_3})
+=\max_{\omega\in\mathsf D(E)}F(\Gamma,\mathcal C_\omega)\leq v.
+\tag{U.239}
+$$
+
+The scalar-trace complementary channel has precisely the constant density postprocessings $\mathcal C_\omega$. The cited completion (65)--(66) is why (U.239) ranges over unrestricted whole-output CPTP maps; no Kraus-number restriction is introduced. Equation (U.239) takes the center maximum only after the fixed-center minimax (U.238), so no center/input quantifier is exchanged.
+
+For any one allowed recovery $R$, choose a density $\rho_R$ attaining the worst-case channel fidelity and a purification $|\Psi_R\rangle$ on a reference of dimension at most three. If $\sigma_R=(RN\otimes\operatorname{id})(|\Psi_R\rangle\langle\Psi_R|)$, the two-outcome measurement onto the pure identity target gives
+
+$$
+\begin{aligned}
+\|RN-\operatorname{id}_{M_3}\|_\diamond
+&\geq\|\sigma_R-|\Psi_R\rangle\langle\Psi_R|\|_1\\
+&\geq2\bigl(1-F_e(\rho_R,RN)\bigr)\\
+&=2\bigl(1-F(RN,\operatorname{id}_{M_3})^2\bigr)\\
+&\geq2(1-T)=1-u=1-\sqrt{1-\beta}.
+\end{aligned}
+\tag{U.240}
+$$
+
+This purification is one admissible complex trace-norm-one witness inside the original entire-reference diamond supremum. The witness may depend on $R$; the argument does not claim a recovery-independent input. Taking the infimum over all whole-output complex CPTP $R$ proves (U.226). \qed
+
+**Corollary 153.3 (class optimum and its boundary).** The existing actual family and whole-output recovery in the phase-gain volume, Theorem 4.1 and (P.11)--(P.16), attain $1-\sqrt{1-\beta}$ for every positive $\beta$. Combining that existing upper certificate with Theorem 153.2 gives the exact original-real-class value
+
+$$
+\inf_{N\ \mathrm{in\ the\ original\ real\ class}}\ \inf_{R\ \mathrm{CPTP}}
+\|RN-\operatorname{id}_{M_3}\|_\diamond
+=1-\sqrt{1-\beta}.
+\tag{U.241}
+$$
+
+This is a class statement. It does not assert an individual optimum for every encoder, a result for the broader complex encoder class, or any physical, quantum-field or gravitational consequence.
+
+## 154. Attribution and exact scope of the closure
+
+**Definition 154.1 (reused theorem interfaces).** The strict common-projection exclusion in Theorem 76.2 and Sections 77--79 of Volume II is reused in full; the present addition supplies its actual-channel hypotheses. Equations (U.227)--(U.236) establish, for the same actual $V$, center $\omega$, contraction $U$ and projection $P$, the phase-output support separation, the cap $Q_\psi\preceq aI$, the support-aware range completion, the full paired-basis transpose, and the common third-column charge. The fixed-center minimax in (U.238) uses the finite-dimensional rectangular Uhlmann interface, and (U.239) uses the unrestricted CPTP completion of Bény--Oreshkov. The norm conversion (U.240) is the one-sided pure-target trace-distance estimate. None of these statements restricts the admissible third column, replaces actual rank by center rank, or restricts the complex recovery or reference.
+
+The finite-dimensional fidelity and channel-duality formulas are used under the conventions stated in Volume II Sections 80--81 and the cited Bény--Oreshkov source. The result is an ordinary analytic composition of those interfaces and the existing repository proofs. It makes no literature-priority claim and supplies no formal-kernel or executable certification.
+
+The exact settled consequence is (U.226)--(U.241): all $0<\beta\leq1/2$, every stipulated original-real actual encoder, every jointly admissible third-column list, every attainable actual minimal Kraus rank through nine, every whole-output complex CPTP recovery, every finite complex reference, and the unhalved diamond norm. The individual encoder route, stronger fixed-input witness programmes, broader complex-class optimum, and continuing research programme retain their separate scopes.
+
+## 追加锚（本行以下为增补区）

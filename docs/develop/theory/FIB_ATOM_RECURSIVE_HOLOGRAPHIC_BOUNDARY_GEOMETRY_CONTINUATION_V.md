@@ -2997,3 +2997,413 @@ and its physical obligations unresolved.
 
 ## 117.99 追加锚（本行以下为增补区）
 
+## 119. A grouped cube form on one actual whole-rho source
+
+### 119.1 The ordered seed and its declared amplitude constraint
+
+**Definition 119.1 (the thirteen-occurrence cube map).** Use the original
+ordered source algebra and whole substitution of IV Definition 112.1:
+
+$$
+\begin{aligned}
+u&=\langle\alpha,\langle\beta,\langle\alpha,\langle\beta,
+       \langle\alpha,\langle\beta,\alpha\rangle\rangle\rangle\rangle\rangle\rangle,\\
+\rho\alpha&=\beta,\qquad \rho\beta=\langle\beta,\alpha\rangle,\qquad
+\rho\langle s,t\rangle=\langle\rho s,\rho t\rangle.
+\end{aligned}
+\tag{119.1}
+$$
+
+Write actual addresses with $0$ left and $1$ right, so that $\varepsilon$
+is the empty word. Label the cube vertices $(x,y,z)\in\{0,1\}^3$ by
+$4x+2y+z$. The entire map $q_0:V_u\to\{0,\ldots,7\}$ is the table
+
+| Actual address | Constructor in $u$ | $q_0$ |
+| --- | --- | --- |
+| $\varepsilon$ | branch | 0 |
+| $0$ | $\alpha$ | 1 |
+| $1$ | branch | 2 |
+| $10$ | $\beta$ | 6 |
+| $11$ | branch | 3 |
+| $110$ | $\alpha$ | 1 |
+| $111$ | branch | 7 |
+| $1110$ | $\beta$ | 6 |
+| $1111$ | branch | 5 |
+| $11110$ | $\alpha$ | 1 |
+| $11111$ | branch | 4 |
+| $111110$ | $\beta$ | 0 |
+| $111111$ | $\alpha$ | 6 |
+
+For each finite $n\ge0$ put $V_n=V_{\rho^nu}$. The map $q_n$ fixes
+the table values at original internal addresses and takes the constant
+value $q_0(p)$ on the entire substituted subtree rooted at each
+original leaf $p$. These pieces partition $V_n$. Define
+
+$$
+(U_nf)(p)=f(q_n(p)),\qquad
+\mathcal C_n=\operatorname{ran}U_n\subset\ell^2(V_n),\qquad
+K=L_{Q_3}.
+\tag{119.2}
+$$
+
+Thus $U_n$ is the indicator pullback, with one column per cube vertex;
+$K$ has diagonal $3$ and off-diagonal $-1$ precisely for labels whose
+binary triples differ in one bit. Every actual occurrence has counting
+mass one. Let $L_{\mathrm{closed},n}$ be the closed unit parent-child
+Laplacian on $V_n$. Separately, use exactly the missing-child convention
+of [Continuation Definition 55.2, (55.4)](FIB_ATOM_RECURSIVE_HOLOGRAPHIC_BOUNDARY_GEOMETRY_CONTINUATION.md):
+
+$$
+L_{\mathrm{kill},n}
+ =L_{\mathrm{closed},n}
+    +2\operatorname{diag}(\mathbf1_{\operatorname{Leaf}(\rho^nu)}).
+\tag{119.3}
+$$
+
+The equations $g\in\mathcal C_n$ are added equalities of amplitudes.
+They identify neither source occurrences nor native rooted fringes.
+They add no seam to the source or native operation to IV Contract 112.1a.
+All-$n$ statements below concern these finite mathematical domains, or
+those finite prefixes actually accepted by a specified history. A fixed
+guard or cap is unchanged; refusal changes no domain, and Stop has no
+successor. No event after an infinite prefix is defined. Limits refer to
+the mathematical family, without assuming one execution reaches it all.
+
+### 119.2 Exact closed form, counting mass and inherited killing
+
+**Proposition 119.2 (the cube application at every finite stage).** Put
+$F=F_{n+1}$ and $G=F_{n+2}$, with $F_0=0,F_1=1$. Then
+
+$$
+\begin{aligned}
+U_n^{\mathsf T}L_{\mathrm{closed},n}U_n&=K,\\
+M_n:=U_n^{\mathsf T}U_n
+ &=\operatorname{diag}(2G,6F-3,1,1,1,1,4G+2F-3,1),\\
+N_n:=|V_n|&=8F+6G-1,\\
+D_n&=\operatorname{diag}(2G,6F,0,0,0,0,4G+2F,0),\\
+U_n^{\mathsf T}L_{\mathrm{kill},n}U_n&=K+D_n.
+\end{aligned}
+\tag{119.4}
+$$
+
+In particular $N_0=13$ and, in label order $0,\ldots,7$,
+
+$$
+\operatorname{diag}M_0=(2,3,1,1,1,1,3,1),\qquad
+\operatorname{diag}D_0=(2,6,0,0,0,0,6,0).
+\tag{119.5}
+$$
+
+Proof. The twelve original parent-child edges have unordered label pairs
+
+$$
+01,\ 02,\ 26,\ 23,\ 13,\ 37,\ 67,\ 57,\ 15,\ 45,\ 04,\ 46.
+\tag{119.6}
+$$
+
+Here, for example, $01$ denotes the pair of cube labels $\{0,1\}$,
+not an occurrence address. These are exactly the twelve edges of $Q_3$,
+each once, so $U_0^{\mathsf T}L_{\mathrm{closed},0}U_0=K$.
+With the ancestry extension of Definition 117.1,
+$U_n=E_{0,n}U_0$. Apply the full-horizon ancestry-form identity in
+Lemma 117.2, (117.4): old edge differences persist and every born edge
+has zero difference. Its energy identity and original-leaf block
+decomposition hold also from epoch zero; the $n\ge2$ restriction there
+belongs to its quantitative error bounds, none of which is used here.
+Equivalently, this is the serial application of
+[VI Theorem 115.2, (115.3)](FIB_ATOM_RECURSIVE_HOLOGRAPHIC_BOUNDARY_GEOMETRY_CONTINUATION_VI.md).
+This supplies the first identity in (119.4), including $n=0$.
+
+For mass, directly reuse IV (108.9) and IV Theorem 113.2: an original
+alpha leaf contributes its $T_n$ block, with $2F-1$ nodes and $F$
+leaves; an original beta leaf contributes $T_{n+1}$, with $2G-1$ nodes
+and $G$ leaves. Original internal nodes remain singleton ancestry fibres.
+The table groups one original internal node and one beta block into
+class 0, three alpha blocks into class 1, and two beta blocks and one
+alpha block into class 6. Each other class contains exactly one original
+internal node. This gives $M_n$. There are four original alpha leaves,
+three original beta leaves and six internal nodes, giving $N_n$.
+
+Every current leaf has precisely two missing children in (119.3).
+Its label does not change this exterior contribution. The class leaf
+counts are $G,3F,2G+F$ on classes $0,1,6$, respectively, and zero on
+the others. Twice these counts is $D_n$. This proves the killed identity
+without substituting a different boundary convention. Taking $F=G=1$
+gives (119.5). $\square$
+
+### 119.3 Constrained counting flow and the free-flow witness
+
+**Proposition 119.3 (restriction of energy does not give free descent).**
+The counting-metric gradient flow of the energy
+$\tfrac12g^{\mathsf T}L_{\mathrm{closed},n}g$, constrained to
+$g=U_nf$, is
+
+$$
+M_n\dot f=-Kf.
+\tag{119.7}
+$$
+
+For the inherited killed energy it is instead
+$M_n\dot f=-(K+D_n)f$. At every finite $n$, neither free closed heat
+nor free killed heat preserves $\mathcal C_n$. The constraint has
+algebraic rank $N_n-8$; this number is not a native action count or
+physical maintenance price.
+
+Proof. Testing the constrained velocity against $U_nh$ gives
+$h^{\mathsf T}M_n\dot f=-h^{\mathsf T}Kf$ for every $h$; use (119.4)
+for either boundary choice. In particular $M_n$ cannot be dropped when
+the form is written in class-value coordinates. For an explicit failure
+of free invariance, take $f=\mathbf1_{\{1\}}$ and $g=U_nf$. The two
+actual addresses $\varepsilon$ and $111110$ both lie in class 0, but
+
+$$
+(L_{\mathrm{closed},n}g)(\varepsilon)=-1,\qquad
+(L_{\mathrm{closed},n}g)(111110)=0.
+\tag{119.8}
+$$
+
+The root's children have values $1,0$. The beta-block root $111110$
+has value zero, its parent is in class 4, and any born children remain
+in class 0; every incident difference there is zero. Both tested
+amplitudes are zero, so the diagonal killing term also vanishes at
+these addresses. This proves the same witness for $L_{\mathrm{kill},n}$.
+Differentiating free heat at time zero therefore takes $g$ out of
+$\mathcal C_n$. This is the invariant-range distinction already present
+in VI Theorems 115.2 and 116.2, now witnessed inside these cube fibres.
+
+For precision about equality maintenance, the orthogonal projection is
+$P_n=U_nM_n^{-1}U_n^{\mathsf T}$. Writing $L$ for either stage operator,
+the constrained ambient equation is
+
+$$
+\dot g=-Lg+R_n,\qquad R_n=(I-P_n)LU_nf,\qquad g=U_nf.
+\tag{119.9}
+$$
+
+This defines a mathematical reaction; the native menu supplies neither
+its actuation permission nor its physical price. Choose one actual
+representative of each nonempty fibre. The equations equating each
+other amplitude to its representative are independent, numbering
+$N_n-8$. Independence is linear algebra and assigns no resource tariff.
+
+The use of the induced norm is the ordinary quadratic-form restriction
+principle. For comparison of graph conventions, [Chung, *Spectral Graph
+Theory*, Chapter 1, §§1.2 and 1.4](https://fanchung.ucsd.edu/research/cb/ch1.pdf)
+keeps the vertex weights in the normalized Rayleigh quotient. Here the
+weights are the actual fibre counts $M_n$, rather than cube degrees.
+No normalized graph formula replaces these counts. $\square$
+
+### 119.4 Fixed class observables, probability mass and scalar clocks
+
+**Proposition 119.4 (no uniform scalar cube clock in class values).**
+Let $A_n=M_n^{-1}K$ on the fixed coordinates
+$(f_0,\ldots,f_7)$. There are no positive scalars $c_n$ and $k>0$ with
+
+$$
+c_nA_n\longrightarrow kK.
+\tag{119.10}
+$$
+
+There are likewise no such scalars with the full heat-matrix limit
+$e^{-tc_nA_n}\to e^{-tkK}$ on these same eight class-value coordinates
+for every fixed $t>0$. In these statements matrix convergence can be
+taken in any finite-dimensional operator norm. The normalized mass is
+
+$$
+\overline M_n:=\frac{M_n}{N_n}
+\longrightarrow
+\frac{\operatorname{diag}(\varphi,3,0,0,0,0,1+2\varphi,0)}
+     {4+3\varphi},\qquad \varphi=\frac{1+\sqrt5}{2}.
+\tag{119.11}
+$$
+
+Proof. Class 2 has mass one. Its diagonal in (119.10) would give
+$3c_n\to3k$, hence $c_n\to k$. Class 0 has mass $2G\to\infty$,
+so its corresponding diagonal tends to zero, contradicting $3k>0$.
+
+For the heat statement, the unique stationary row probability of
+$e^{-tA_n}$ is $\pi_n^{\mathsf T}$, where
+$\pi_n=N_n^{-1}M_n\mathbf1$. Indeed
+$\pi_n^{\mathsf T}A_n=N_n^{-1}\mathbf1^{\mathsf T}K=0$,
+and the cube is connected. A positive scalar clock does not change it.
+The Fibonacci ratio $G/F\to\varphi$ gives (119.11) and the limiting
+probability $\pi_*$. Passing to a proposed heat-matrix limit gives
+$\pi_*^{\mathsf T}e^{-tkK}=\pi_*^{\mathsf T}$. For any $t>0$,
+the eigenvalues of $e^{-tkK}$ equal one only on $\ker K$, the constants.
+Its only stationary probability is therefore uniform. But $\pi_*$
+vanishes on five classes, a contradiction. This argument excludes
+the full eight-observable heat limit without deducing generator
+convergence from semigroup convergence.
+
+Normalization must keep the form and metric paired. If only the metric
+is changed to $\overline M_n$ while the form stays $K$, its positive
+generator becomes $N_nA_n$; arbitrary scalar clocks still fall under
+the same obstruction by absorbing $N_n$ into $c_n$. If both the
+counting form and counting inner product are divided by $N_n$, the
+generator remains $A_n$. The closed form (119.4) itself is unchanged
+only in the first convention. A singular limiting probability metric
+does not justify replacing the finite counting dynamics by $K$.
+$\square$
+
+### 119.5 Counting isometries and the actual infinite pullback
+
+**Proposition 119.5 (two matrix limits and their vector boundary).**
+Put $H=\{0,1,6\}$, $S=\{2,3,4,5,7\}$, and
+$W_n=U_nM_n^{-1/2}$. These are counting isometries from Euclidean
+$\mathbb R^8$ into $\ell^2(V_n)$. In the ordering $H\sqcup S$,
+
+$$
+\begin{aligned}
+B_n:=W_n^{\mathsf T}L_{\mathrm{closed},n}W_n
+ &=M_n^{-1/2}KM_n^{-1/2}
+   \longrightarrow 0_H\oplus K_{SS},\\
+B_n^{\mathrm k}:=W_n^{\mathsf T}L_{\mathrm{kill},n}W_n
+ &=M_n^{-1/2}(K+D_n)M_n^{-1/2}
+   \longrightarrow I_H\oplus K_{SS}.
+\end{aligned}
+\tag{119.12}
+$$
+
+The edges induced on $S$ form the path $2-3-7-5-4$. Here $K_{SS}$
+is the principal cube submatrix: in that path order it has diagonal
+$3$ throughout and $-1$ on successive neighbours. It retains grounding
+to $H$ and is not the closed path Laplacian.
+
+The consistent maps $q_n$ define $q_\infty$ on
+$\bigcup_nV_n=\{0,1\}^*$. Its literal counting pullback
+$U_\infty f=f\circ q_\infty$ belongs to $\ell^2$ exactly when
+$f|_H=0$. With all finite-stage vectors zero extended to this common
+address space, $U_nf$ has a strong $\ell^2$ limit exactly under that
+condition. For fixed $x\in\mathbb R^8$, $W_nx$ converges weakly to
+the vector supported at the five original $S$ addresses with values
+$x|_S$, and converges strongly exactly when $x|_H=0$.
+
+Proof. By (119.4), masses on $H$ tend to infinity and masses on $S$
+are exactly one. Every entry of $B_n$ touching $H$ tends to zero;
+the $S$ block remains $K_{SS}$. Moreover
+
+$$
+\frac{(D_n)_{00}}{(M_n)_{00}}=1,\qquad
+\frac{(D_n)_{11}}{(M_n)_{11}}=\frac{6F}{6F-3}\to1,\qquad
+\frac{(D_n)_{66}}{(M_n)_{66}}
+ =\frac{4G+2F}{4G+2F-3}\to1.
+\tag{119.13}
+$$
+
+The other killing ratios are zero. This proves (119.12). Inspection
+of (119.6) gives the asserted path. Equivalently $K_{SS}$ is its
+closed path Laplacian plus the diagonal $(2,1,1,1,2)$ in path order.
+Finite-dimensional continuity also gives the corresponding heat-matrix
+limits $e^{-tB_n}$ and $e^{-tB_n^{\mathrm k}}$ for each fixed $t\ge0$.
+These use isometric coordinates $x=M_n^{1/2}f$, which vary with $n$;
+they are different coordinates from Proposition 119.4's fixed class values.
+
+The domain union is the address exhaustion of Continuation (55.2),
+applied to this seed. Each $H$ fibre has infinitely many occurrences,
+whereas each $S$ fibre is a single original internal address. A nonzero
+constant amplitude on any $H$ fibre has infinite counting norm. This
+proves the exact domain of $U_\infty$. If $f|_H=0$, the zero-extended
+$U_nf$ are already the same finitely supported vector for every $n$;
+otherwise their squared norms $f^{\mathsf T}M_nf$ diverge.
+
+Each $H$ column of $W_n$ has norm one but tends pointwise to zero,
+since its value is the reciprocal square root of its growing fibre
+size. Boundedness and density of finitely supported test vectors give
+weak convergence to zero. The $S$ columns are fixed point masses.
+Thus the weak limit of $W_nx$ has squared norm $\|x|_S\|^2$, while
+$\|W_nx\|^2=\|x\|^2$. A strong limit exists exactly when $x|_H=0$.
+Consequently the zero block in (119.12) does not exhibit nonzero
+strong limiting counting-$\ell^2$ vectors on $H$. On the actual domain
+$f|_H=0$, the infinite edge form is exactly
+$f_S^{\mathsf T}K_{SS}f_S$, since its support and every incident edge
+are already in the original tree. $\square$
+
+### 119.6 Field descent and what selects the cube
+
+**Proposition 119.6 (common field failure and a different persistent form).**
+The common source field of Continuation Theorem 55.3 does not factor
+through $q_n$ at any stage, nor through $q_\infty$. Compressing an
+external force yields a class covector, without supplying field or
+source intertwining. Furthermore the same $u,\rho$ admit the exact
+persistent thirteen-class original-occurrence form
+$L_{\mathrm{closed},0}$, as well as the declared eight-class cube form.
+Thus whole-rho energy persistence alone does not select this cube.
+
+Proof. The common field is $\phi(p)=2^{-|p|}$. The two addresses of
+(119.8) have the same class but
+
+$$
+\phi(\varepsilon)=1,\qquad \phi(111110)=1/64.
+\tag{119.14}
+$$
+
+This violates fibre constancy. It is exactly the obstruction described
+by the existing
+[answerability criterion](../../../D5/S0/Rewriting/Quotients/AnswerabilityCriterion.lean);
+the adjacent
+[dynamics descent criterion](../../../D5/S0/Rewriting/Quotients/DynamicsDescent.lean)
+concerns a self-map preserving quotient fibres. For heat on amplitudes,
+the explicit invariant-range failure is (119.8), not an identification
+of that discrete self-map theorem with a new operator theorem.
+
+For any ambient force $b_n$, testing the constrained equation supplies
+the covector $U_n^{\mathsf T}b_n$ and hence the class velocity contribution
+$M_n^{-1}U_n^{\mathsf T}b_n$. For example
+$U_n^{\mathsf T}\mathbf1_{\{\varepsilon\}}=\mathbf1_{\{0\}}$.
+This equality does not say $\phi|_{V_n}=U_n\psi$ or
+$L_{\mathrm{closed},n}U_n=U_nA_n$. The field in (119.14) is the
+common infinite field restricted to $V_n$, not a newly solved killed
+field. In fact (55.3)--(55.4) give the more precise boundary relation
+
+$$
+L_{\mathrm{kill},n}(\phi|_{V_n})
+ =\mathbf1_{\{\varepsilon\}}
+   +\mathbf1_{\operatorname{Leaf}(\rho^nu)}\,\phi|_{V_n},
+\tag{119.15}
+$$
+
+because the two exterior child values at a leaf sum to its own field
+value. Even the forcing in a finite killed equation therefore retains
+its stated boundary convention.
+
+For the alternative, give each of the thirteen original occurrences
+its own class and copy each original leaf value over its substituted
+block. Its indicator pullback is $\widetilde U_n=E_{0,n}$, and the
+same supplied ancestry identity gives
+
+$$
+\widetilde U_n^{\mathsf T}L_{\mathrm{closed},n}\widetilde U_n
+ =L_{\mathrm{closed},0},\qquad U_n=\widetilde U_nU_0.
+\tag{119.16}
+$$
+
+This is the thirteen-vertex seed-tree form, of rank twelve, whereas
+$K$ is an eight-vertex cube form of rank seven. Both persist under
+the very same source substitution. The additional grouping $q_0$
+supplies the cube. In particular it groups the root with a beta leaf,
+and its class 6 groups beta and alpha leaves. These are not equal
+rooted fringes under
+[ExactSharing's definition of complete labelled ordered subtrees](../../../D5/S3/Arith/FibonacciAtomic/SourceCoordinates/ExactSharing.lean).
+The literal constructors, substitution and address meanings remain
+those of
+[GenealogicalFiberTransport.Source and substitution](../../../D5/S3/Arith/FibonacciAtomic/GenealogicalFiberTransport.lean)
+and
+[ActualTreeReadoutAcquisition.readout and nodes](../../../D5/S3/Arith/FibonacciAtomic/ActualTreeReadoutAcquisition.lean).
+
+The source-specific deductions (119.4), (119.8), (119.11)--(119.16)
+are repo-derived applications of the cited suppliers, without a
+worldwide-priority or exhaustive-literature claim. Form restriction
+is also distinct from static elimination: the latter replaces an
+interior block by its Schur complement, as in
+[Dörfler--Bullo, arXiv:1102.2950v1, §2.1](https://arxiv.org/pdf/1102.2950v1)
+and the [existing Kron-reduction note](../../../Library/GraphInvariants/dorflerbullo2013kron.md).
+Here no interior amplitude is minimized out; the domain is constrained
+and its counting metric is retained. The non-singleton fibres in the table are
+disconnected, so no connected-fibre coarsening hypothesis is asserted.
+These conclusions limit dimension inference from this energy identity.
+They neither establish physical spatial dimension three nor rule out
+other source-to-space bridges with their own additional relations.
+$\square$
+
+## 119.99 追加锚（本行以下为增补区）
+
