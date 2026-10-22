@@ -17,7 +17,6 @@ import Lean.Elab.Tactic.Omega
 import Mathlib.Logic.Function.Iterate
 import Mathlib.Tactic.Ring
 import Mathlib.Tactic.Linarith
-import D5.S3.Arith.FibonacciAtomic.NativeContinuation.JointLaw
 import D5.S0.Computability.Coding.PhysicalSixParser
 import Mathlib.Data.Finset.Card
 import Mathlib.Algebra.BigOperators.Group.Finset.Basic
