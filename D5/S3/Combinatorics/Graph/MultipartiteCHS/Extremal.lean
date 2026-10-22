@@ -6,6 +6,7 @@
    utility: none
    digest: Coefficient comparison and strict extremal partitions for multipartite reciprocal sequences. -/
 
+import D5.S3.Combinatorics.Graph.MultipartiteCHS.Defs
 import D5.S3.Combinatorics.Graph.MultipartiteCHS.Recurrence
 import Mathlib.Data.Set.Equitable
 import Mathlib.Logic.Equiv.Fintype

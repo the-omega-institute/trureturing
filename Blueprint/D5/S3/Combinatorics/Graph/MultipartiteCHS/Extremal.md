@@ -40,4 +40,5 @@ The recurrence comparison reuses recH_eq, recH_nonneg and recH_two_mul_pos. The 
 
 - Truth anchor: `D5/S3/Combinatorics/Graph/MultipartiteCHS/Extremal.esymm_cons`
 - Truth anchor: `D5/S3/Combinatorics/Graph/MultipartiteCHS/Extremal.recH_extremal`
+- Dependency: [D5/S3/Combinatorics/Graph/MultipartiteCHS/Defs](Defs.md)
 - Dependency: [D5/S3/Combinatorics/Graph/MultipartiteCHS/Recurrence](Recurrence.md)
