@@ -164,7 +164,7 @@ private theorem no_vanishing_subsum {n p k : ℕ} [Fact p.Prime]
     rintro A ⟨a, ha, rfl⟩
     obtain ⟨i, hi, rfl⟩ := Finset.mem_image.mp ha
     exact Submonoid.subset_closure ⟨i, rfl⟩
-  have hV := common_fixed_vector_of_scalar_free_closure S
+  have hV := common_fixed_subspace_nontrivial S
     (fun A hA c hc => hS.2 A (hclosure hA) c hc)
   let R : Set (Fin (n + 1)) := (Q.image Fin.castSucc : Finset (Fin (n + 1)))
   have hR : R.Nonempty := by
@@ -187,7 +187,7 @@ private theorem no_vanishing_subsum {n p k : ℕ} [Fact p.Prime]
     obtain ⟨j, hj, rfl⟩ := Finset.mem_image.mp hb
     rw [hsum]
     exact hn _ (Submodule.subset_span ⟨(i, j), rfl⟩)
-  obtain ⟨ψ, hψ, hfix, hprod⟩ := fixed_product_vector_of_restricted_commutation S R
+  obtain ⟨ψ, hψ, hfix, hprod⟩ := product_vector_of_restricted_commuting S R
     (by
       intro a ha b hb
       convert! hcommQ a ha b hb using 1
