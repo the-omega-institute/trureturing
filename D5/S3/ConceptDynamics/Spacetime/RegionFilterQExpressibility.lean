@@ -95,7 +95,7 @@ private def unary_data {X Y : B} (h : CurrentIsoData X Y) (f : Unary) : CurrentI
 
 /-- A correspondence of current events, order and selection without an attribute claim. -/
 
-private structure CurrentPairData (X Y : B) where
+structure CurrentPairData (X Y : B) where
   equiv : ↥X.val.1.current ≃ ↥Y.val.1.current
   causal_iff : ∀ e f, Y.val.1.archive.causal (equiv e).val (equiv f).val ↔ X.val.1.archive.causal e.val f.val
   selected_iff : ∀ e, (equiv e).val ∈ Y.val.2.val ↔ e.val ∈ X.val.2.val
@@ -186,19 +186,19 @@ private def product_data {X X' Y Y' : B} (h : CurrentIsoData X X') (k : CurrentI
 private def refl_data (X : B) : CurrentIsoData X X :=
   ⟨Equiv.refl _, fun _ => rfl, fun _ _ => Iff.rfl, fun _ => Iff.rfl⟩
 
-private inductive Step where
+inductive Step where
   | unary (f : Unary)
   | parallelLeft (Z : B)
   | parallelRight (Z : B)
   | productLeft (Z : B)
   | productRight (Z : B)
-private def applyStep : Step → B → B
+def applyStep : Step → B → B
   | .unary f, X => unary f X
   | .parallelLeft Z, X => parallelBalanced X Z
   | .parallelRight Z, X => parallelBalanced Z X
   | .productLeft Z, X => productBalanced X Z
   | .productRight Z, X => productBalanced Z X
-private def runSteps : List Step → B → B
+def runSteps : List Step → B → B
   | [], X => X
   | s :: w, X => runSteps w (applyStep s X)
 private theorem step_reify (g : Generator nativeSignature) (hg : g.symbol ≠ .inr .temporal) :
@@ -222,7 +222,7 @@ private theorem step_reify (g : Generator nativeSignature) (hg : g.symbol ≠ .i
       rcases hi with rfl | rfl
       · exact ⟨.productLeft (p ⟨1, by decide⟩), fun _ => rfl⟩
       · exact ⟨.productRight (p ⟨0, by decide⟩), fun _ => rfl⟩
-private theorem reify_temporal_free (w : List (Generator nativeSignature)) (hw : WordTemporalFree w) :
+theorem reify_temporal_free (w : List (Generator nativeSignature)) (hw : WordTemporalFree w) :
     ∃ v : List Step, ∀ X, contextDenote nativeSignature w X = some (runSteps v X) := by
   induction w with
   | nil => exact ⟨[], fun _ => rfl⟩
@@ -247,7 +247,7 @@ private theorem temporal_free_readout {X Y : B} (h : CurrentIsoData X Y) (w : Li
   | nil => exact current_readout_eq h
   | cons s w ih => exact ih (step_data h s)
 
-private structure PreVariant (X Y : B) extends CurrentPairData X Y where
+structure PreVariant (X Y : B) extends CurrentPairData X Y where
   exceptional : ↥X.val.1.current
   attributes_other : ∀ e, e ≠ exceptional →
     Y.val.1.archive.attributes (equiv e).val = X.val.1.archive.attributes e.val
@@ -260,7 +260,7 @@ private structure PreVariant (X Y : B) extends CurrentPairData X Y where
   no_incoming : ∀ (e : ↥X.val.1.current), ¬ X.val.1.archive.causal e.val exceptional.val
 private def mask (X : B) (e : ↥X.val.1.current) (Q : Set (Attributes 3)) : Prop :=
   ∃ d : ↥X.val.1.current, X.val.1.archive.attributes d.val ∈ Q ∧ (e = d ∨ X.val.1.archive.causal e.val d.val)
-private def Saturated {X Y : B} (h : PreVariant X Y) (Qs : List (Set (Attributes 3))) : Prop :=
+def Saturated {X Y : B} (h : PreVariant X Y) (Qs : List (Set (Attributes 3))) : Prop :=
   ∀ Q ∈ Qs, Q.Nonempty → mask X h.exceptional Q ∧ mask Y (h.equiv h.exceptional) Q
 private theorem mask_nonempty (X : B) (e : ↥X.val.1.current) (Q : Set (Attributes 3)) : mask X e Q → Q.Nonempty := by
   rintro ⟨d, hd, _⟩; exact ⟨_, hd⟩
@@ -464,7 +464,7 @@ private theorem parallel_variant_right_equiv {X Y : B} (h : PreVariant X Y) (Z :
   rw [Equiv.symm_apply_apply]
 private def shiftAttributes (k : Int) (a : Attributes 3) : Attributes 3 := {a with time := a.time + k}
 
-private def requiredPredicates : List Step → List (Set (Attributes 3))
+def requiredPredicates : List Step → List (Set (Attributes 3))
   | [] => []
   | .unary (.causal Q) :: w => (sourceAttributeEquiv ⁻¹' Q) :: requiredPredicates w
   | .unary (.shift k) :: w => (requiredPredicates w).map (fun Q => shiftAttributes k ⁻¹' Q)
@@ -481,7 +481,7 @@ private theorem current_lower_bound (Z : B) (e : ↥Z.val.1.current) :
     abs_nonneg (Z.val.1.archive.attributes i.val).time) (Finset.mem_univ e)
   have hl := neg_abs_le (Z.val.1.archive.attributes e.val).time; unfold currentLowerBound
   omega
-private def timeThreshold : List Step → Int
+def timeThreshold : List Step → Int
   | [] => 0
   | .unary (.shift k) :: w => timeThreshold w - k
   | .unary _ :: w => timeThreshold w
@@ -531,7 +531,7 @@ private def collapse_right {X Y : B} (h : PreVariant X Y) (Z : B)
     · simp only [generatedAttributes, same_positive h a.2]
     · simp only [generatedAttributes, same_source h a.2]
   · simp only [generatedAttributes, h.attributes_other a.2 ha]
-private theorem saturated_runSteps (w : List Step) {X Y : B} (h : PreVariant X Y)
+theorem saturated_runSteps (w : List Step) {X Y : B} (h : PreVariant X Y)
     (ht : (X.val.1.archive.attributes h.exceptional.val).time < timeThreshold w)
     (ht' : (Y.val.1.archive.attributes (h.equiv h.exceptional).val).time < timeThreshold w)
     (hs : Saturated h (requiredPredicates w)) : q (runSteps w X).val = q (runSteps w Y).val := by
@@ -781,7 +781,7 @@ private theorem star_hit {m : Nat} (v : Fin m → Attributes 3) (p : Fin 3 → I
       Equiv.symm_apply_apply, starExceptional] using
         (show starRelation (starExceptional m) (.inl (some i, true)) from ⟨rfl, i, rfl⟩)
 
-private theorem finite_joint_input (Qs : List (Set (Attributes 3))) (K : Int) :
+theorem finite_joint_input (Qs : List (Set (Attributes 3))) (K : Int) :
     ∃ c : Int, c ≤ K ∧ ∀ (p : Fin 3 → Int) (t t' : Int), t < c → t' < c → ∃ X Y : B, SelectedVariant X Y p t t' ∧
         ∃ h : PreVariant X Y, (X.val.1.archive.attributes h.exceptional.val).time = t ∧
           (Y.val.1.archive.attributes (h.equiv h.exceptional).val).time = t' ∧ Saturated h Qs := by
@@ -814,7 +814,7 @@ private theorem finite_joint_input (Qs : List (Set (Attributes 3))) (K : Int) :
     have hvQ : v i ∈ Q := hiQ ▸ hv i (hiQ ▸ hn)
     exact ⟨star_hit v p lo hi t htv i Q hvQ, star_hit v p lo hi t' ht'v i Q hvQ⟩
 
-private theorem normalize_word (w : Word) (ht : ∀ X : B, ∃ Y, contextDenote nativeSignature w X = some Y) :
+theorem normalize_word (w : Word) (ht : ∀ X : B, ∃ Y, contextDenote nativeSignature w X = some Y) :
     ∃ w' : Word, WordTemporalFree w' ∧
       ∀ X, contextDenote nativeSignature w X = contextDenote nativeSignature w' X := by
   have hc : DiagonalTotal (wordToCopy w) := by
@@ -850,7 +850,7 @@ theorem total_word_saturation (w : Word)
     exact ht'.trans_le hc
   · exact sat
 
-private theorem selected_region_values (R : Region) (X Y : B)
+theorem selected_region_values (R : Region) (X Y : B)
     (p : Fin 3 → Int) (t t' : Int) (pair : SelectedVariant X Y p t t') :
     regionReadout R X = (if (t, p) ∈ R then 1 else 0) ∧ regionReadout R Y = (if (t', p) ∈ R then 1 else 0) := by
   obtain ⟨v, selected, pos, positive, time, time'⟩ := pair
