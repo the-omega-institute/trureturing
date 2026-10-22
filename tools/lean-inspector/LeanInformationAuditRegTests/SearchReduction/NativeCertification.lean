@@ -22,10 +22,15 @@ run_cmd do
       let mut extensions := 0
       for extension in ← persistentEnvExtensionsRef.get do
         let ext := extension.toEnvExtension
-        unless ptrEq (ext.getState (asyncMode := .sync) query)
-            (ext.getState (asyncMode := .sync) (← getEnv)) do
+        unless ptrEq (ext.getState (asyncMode := .sync) query).state
+            (ext.getState (asyncMode := .sync) (← getEnv)).state do
           throwError "query extension state changed: {extension.name}"
+        unless (ext.getState (asyncMode := .sync) (← getEnv)).importedEntries.size ==
+            (← getEnv).header.moduleNames.size do
+          throwError "native module metadata domain mismatch: {extension.name}"
         extensions := extensions + 1
+      discard <| pure <| getReducibilityStatusCore (← getEnv)
+        ``LeanInformationAudit.Tests.SearchReduction.NativeSignatures.nested_impossible
       discard <| synthInstance (← mkAppM ``DecidableEq #[mkConst ``Nat])
       setEnv query
       let goal ← mkFreshExprMVar (mkConst ``False)

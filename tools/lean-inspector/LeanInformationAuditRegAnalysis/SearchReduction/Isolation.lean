@@ -347,10 +347,15 @@ unsafe def onDemandLookup (table : LookupTable)
         let mut native := source
         -- Preserve query tables without any candidate registrations. This
         -- deterministic copy creates no metavariables or choice points.
+        unless source.header.moduleNames.extract 0 query.header.moduleNames.size ==
+            query.header.moduleNames do
+          throwError "lookup.native_module_index_mismatch"
         for extension in ← persistentEnvExtensionsRef.get do
           let ext := extension.toEnvExtension
+          let queryState := ext.getState (asyncMode := .sync) query
+          let importedState := ext.getState (asyncMode := .sync) source
           native := ext.setState (asyncMode := .sync) native
-            (ext.getState (asyncMode := .sync) query)
+            {queryState with importedEntries := importedState.importedEntries}
         return native
       setEnv native
       resetCache

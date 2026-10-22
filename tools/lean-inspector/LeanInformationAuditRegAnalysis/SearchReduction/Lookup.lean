@@ -24,7 +24,7 @@ def timeLookup {α : Type} (label : String) (action : MetaM α) : MetaM α := do
   try action finally
     lookupPhase s!"{label}/end ns={(← IO.monoNanosNow) - start} heartbeats={(← IO.getNumHeartbeats) - heartbeats}"
 
-abbrev lookupVersion : String := "R_lookup/v11/candidate-200000/preparation-8000000/G-340000000/memo-off/N-memo-2000000/checkpoint-v1/external-64/native-signature/query-extensions/views-kappa"
+abbrev lookupVersion : String := "R_lookup/v12/candidate-200000/preparation-8000000/G-340000000/memo-off/N-memo-2000000/checkpoint-v1/external-64/native-signature/query-extensions/module-metadata/views-kappa"
 
 abbrev lookupCandidateBudget : Nat := 200000
 /-- Frozen from verdict-free fallback and fixed-stride candidate telemetry. -/
