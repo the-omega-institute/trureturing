@@ -54,6 +54,8 @@ The public result is the designated refutation result (`basis=refutes`) and is e
 
 The script uses random seed $3$, checks the self-cost formula against the SDP on $20$ random qubit states with tolerance $10^{-5}$, and samples both endpoint signs on $300$ random states and three specified states at $t=1/4$. The largest sampled squared divergence is $1.654607$, below the bound $8t=2$. At the plus state it computes the midpoint squared divergence $2.732051$, agreeing with $1+\sqrt3$ to the script's tolerance $10^{-4}$. It checks those comparisons and reports `bad= 0`. The solver reports possible numerical inaccuracy. These are approximate finite-sample readings, not an exact optimizer, a proof of a uniform bound, or a sweep over $t$.
 
+The published helpers `trace_sqrt_sq_le_two` and `pure_diag_coupling` are consumed by the purify-and-clone refutation. Their four-slot escape audit is unfinished under [#19490](https://github.com/the-omega-institute/trureturing/issues/19490).
+
 ## Triage
 
 Tier 1 published open question; settlement `Refuted`, witnessed by `WassersteinComplexityNonconvex.result`. Each claim below has one evidence kind.

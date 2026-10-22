@@ -142,6 +142,10 @@ $$\neg (\forall d \in \mathbb{N},\; \forall r \in \mathbb{N},\; (1 \le r) \Right
 
 *Proof.* Machine-checked in Lean as `D5/S3/Quantum/Information/LiTheilHarrowChuangPurifyCloneRefutation.result` (`✓ std3`). ∎
 
+*Resolves.* `Problems/li-theil-harrow-chuang-2026-purify-and-clone-optimality` (refuted) by `D5/S3/Quantum/Information/LiTheilHarrowChuangPurifyCloneRefutation.result`.
+
+<!-- scribe-open-problem-resolution-v1 {"problem_slug":"li-theil-harrow-chuang-2026-purify-and-clone-optimality","declaration_gid":"D5/S3/Quantum/Information/LiTheilHarrowChuangPurifyCloneRefutation.result","resolution_kind":"refuted"} -->
+
 *Source.* Repository-derived.
 
 *Acknowledgement.* Z. Li; E. Theil; A. W. Harrow; I. Chuang (2026). *An Exponential Sample-Complexity Advantage for Coherent Quantum Inference*. DOI: [10.48550/arXiv.2605.21457](https://doi.org/10.48550/arXiv.2605.21457). URL: <https://arxiv.org/abs/2605.21457v2>.
