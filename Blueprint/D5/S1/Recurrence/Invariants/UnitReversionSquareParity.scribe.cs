@@ -91,7 +91,13 @@ internal sealed class UnitReversionSquareParityDocument : IScribeDocumentDefinit
                     LibraryNoteRef.Create("D5/L/Arith/hanna2024a373312")),
                 new OpenProblemResolutionClaim(
                     ProblemSlugRef.Create("oeis-a373312-unit-reversion-square-parity"),
-                    ResolutionKind.Proved)))));
+                    ResolutionKind.Proved)),
+            Node("mersenne_zero", "Zero is not a positive Mersenne index",
+                MersenneZeroFormula(),
+                "No positive exponent gives zero after subtracting one from a power of two."),
+            Node("mersenne_step", "Mersenne indices halve at positive indices",
+                MersenneStepFormula(),
+                "At a positive index, being one less than a power of two is equivalent to evenness and the corresponding halved Mersenne condition."))));
 
     private static DocumentBlock Node(string name, string title, Formula formula, string prose,
         DescribeRole role = DescribeRole.Theorem, AssessedProvenance? provenance = null,
@@ -178,6 +184,34 @@ internal sealed class UnitReversionSquareParityDocument : IScribeDocumentDefinit
         Implication(Positive(N()), Parenthesized(Seq(Call("Odd", Call("a", N())), Sp, Iff, Sp,
             Seq(Exists, Sp, K(), Colon, Sp, Naturals(), Comma, Sp,
                 And(Positive(K()), Equal(N(), Subtract(Power(D(2), K()), D(1))))))))));
+
+    private static Formula Divides(Formula left, Formula right) =>
+        Seq(left, Sp, Mid, Sp, right);
+    private static Formula NatDiv(Formula left, Formula right) =>
+        new Formula.Apply(Qualified("Nat", "div"), [left, right]);
+    private static Formula Qualified(string owner, string name) =>
+        Seq(Operatorname, Grp(F.Id(owner)), Dot, F.Id(name));
+
+    private static Formula MersenneZeroFormula() =>
+        Disp(new Formula.Not(Parenthesized(Seq(
+            Exists, Sp, K(), Colon, Sp, Naturals(), Comma, Sp,
+            And(Positive(K()), Equal(D(0), Subtract(Power(D(2), K()), D(1))))))));
+
+    private static Formula MersenneStepFormula()
+    {
+        Formula n = N();
+        Formula k = K();
+        Formula left = Seq(Exists, Sp, k, Colon, Sp, Naturals(), Comma, Sp,
+            And(Positive(k), Equal(Add(n, D(1)), Subtract(Power(D(2), k), D(1)))));
+        Formula right = And(Divides(D(2), n),
+            Seq(Exists, Sp, k, Colon, Sp, Naturals(), Comma, Sp,
+                And(Positive(k), Equal(NatDiv(n, D(2)),
+                    Subtract(Power(D(2), k), D(1))))));
+        return Disp(Seq(Bound("n", Naturals()),
+            Implication(Seq(D(0), Sp, Lt, Sp, n),
+                new Formula.Logic(Parenthesized(left), FormulaLogicOperator.Iff,
+                    Parenthesized(right)))));
+    }
     private static Formula PublishedRing() => F.Id("R");
     private static Formula PublishedSeries() => Call("PowerSeries", PublishedRing());
     private static Formula PublishedBinders() => Seq(Bound("R", Named("Type")),

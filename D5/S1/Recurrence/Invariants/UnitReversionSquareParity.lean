@@ -312,14 +312,14 @@ theorem mod_two_fixed :
   change f = X + X * f.subst (X ^ 2)
   exact hfixed.trans (by rw [hsquare, mul_add, mul_one, square_subst f])
 
-private theorem mersenne_zero : ¬ ∃ k : ℕ, 1 ≤ k ∧ 0 = 2 ^ k - 1 := by
+theorem mersenne_zero : ¬ ∃ k : ℕ, 1 ≤ k ∧ 0 = 2 ^ k - 1 := by
   rintro ⟨k, hk, he⟩
   obtain ⟨j, rfl⟩ := Nat.exists_eq_succ_of_ne_zero (by omega : k ≠ 0)
   have hp : 0 < 2 ^ j := pow_pos (by omega) _
   rw [pow_succ] at he
   omega
 
-private theorem mersenne_step (n : ℕ) (hn : 0 < n) :
+theorem mersenne_step (n : ℕ) (hn : 0 < n) :
     (∃ k : ℕ, 1 ≤ k ∧ n + 1 = 2 ^ k - 1) ↔
       2 ∣ n ∧ ∃ k : ℕ, 1 ≤ k ∧ n / 2 = 2 ^ k - 1 := by
   constructor
