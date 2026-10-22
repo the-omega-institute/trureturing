@@ -29,7 +29,7 @@ Issue [#20049](https://github.com/the-omega-institute/trureturing/issues/20049) 
 
 ## Motivation
 
-The source certifies qubits in prepare-and-measure experiments by comparing quantum values with $L_k(M)$, the best value achievable with $k$-valued classical messages, and relates the resulting constants to the Grothendieck constant of order 3. Lemma III.4 controls how much a larger classical alphabet can gain over binary messages; its tightness decides whether the factor $k$ in the certification thresholds can be improved.
+The source certifies qubits in prepare-and-measure experiments by comparing quantum values with $L_k(M)$, the best value achievable with $k$-valued classical messages, and relates the resulting constants to the Grothendieck constant of order 3. Lemma III.4 bounds $L_k(M)$ by $k$ times the sign-vector bound $L(M)$; its tightness decides whether the factor $k$ in the certification thresholds can be improved.
 
 ## Gap
 
@@ -51,7 +51,7 @@ Put $a_k=2^{-k}\sum_{\varepsilon\in\{\pm1\}^k}|\sum_i\varepsilon_i|$.
 
 The proof would not answer the conjecture if the module's quantities differed from the source's. The module:
 - defines $W_{n,k}$, the Manhattan norm, $L_k$ and $L$ exactly as the source's Methods section;
-- proves a uniform constant below $k$, which excludes both a matrix attaining $L_k=kL$ and a sequence approaching ratio $k$.
+- proves a uniform constant below $k$, which excludes both a matrix with $L(M)>0$ attaining $L_k=kL$ and a sequence approaching ratio $k$.
 
 ## Evidence
 
