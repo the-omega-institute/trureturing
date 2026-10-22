@@ -42,7 +42,7 @@ The literature check before any Lean is recorded in #20040:
 
 Take $S=s=1$, $N=4$, $\gamma=\arccos(4/5)$ (so $q=(4+3i)/5$ and $2\gamma<\pi$), and $a=(1,1,1)$.
 1. **The projector.** $14P^{1,1}$ is an explicit Gaussian-integer $9\times9$ matrix.
-2. **An invariant plane.** An explicit $81\times2$ matrix $W$, supported on ten configurations of total weight $+2$, satisfies $(P_{12}+P_{34})W=WA$ and $P_{23}W=WB$ with $A=\begin{pmatrix}-11/14&1\\-275/196&25/14\end{pmatrix}$ and $B=\begin{pmatrix}1&0\\0&0\end{pmatrix}$.
+2. **An invariant plane.** An explicit $81\times2$ matrix $W$, supported on nine of the ten configurations of total weight $+2$, satisfies $(P_{12}+P_{34})W=WA$ and $P_{23}W=WB$ with $A=\begin{pmatrix}-11/14&1\\-275/196&25/14\end{pmatrix}$ and $B=\begin{pmatrix}1&0\\0&0\end{pmatrix}$.
 3. **A non-real eigenvalue.** $A+B$ has characteristic polynomial $\lambda^2-2\lambda+25/14$, with roots $1\pm i\sqrt{11/14}$. For an eigenvector $y$ of $A+B$, $Wy$ is a nonzero eigenvector of $H$ with a non-real eigenvalue.
 
 ## Falsifier
