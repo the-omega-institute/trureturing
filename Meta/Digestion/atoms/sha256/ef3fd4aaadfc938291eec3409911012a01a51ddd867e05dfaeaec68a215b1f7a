@@ -1,0 +1,111 @@
+**Lemma 117.2 (bounded ancestry and summable mass and restriction errors).**
+Put $c=\varphi^{-1}$, $\Delta_j=2F_{j+1}-1$, and, for $n\ge2$, define
+
+$$
+B=\sqrt6,\qquad
+h_n=\frac{\varphi^{-n/2}}{1-\varphi^{-1/2}},\qquad
+a_n=60h_n,\qquad k_n=Bh_n.
+\tag{117.3}
+$$
+
+For every original $u$, every finite $m\ge n$, and all $f,g\in H_n$,
+with $W_{n,m}=D_{n,m}E_{n,m}$,
+
+$$
+\begin{aligned}
+\|E_{n,m}\|=\|D_{n,m}\|&\le B,\\
+\mathfrak a_m(E_{n,m}f,E_{n,m}g)&=\mathfrak a_n(f,g),\\
+|\langle(W_{n,m}-I)f,g\rangle_{\mu_n}|
+ &\le a_n\|f\|_{1,n}\|g\|_{1,n}.
+\end{aligned}
+\tag{117.4}
+$$
+
+For an arbitrary final field $z\in H_m$, let $z_j=z|_{V_j}$ be its
+literal restriction and $g=z_n$. Then
+
+$$
+\mathfrak a_n(g,g)\le\mathfrak a_m(z,z),\qquad
+\|z-E_{n,m}g\|_{\mu_m}\le k_n\sqrt{\mathfrak a_m(z,z)}.
+\tag{117.5}
+$$
+
+Proof. Let $\ell$ be the number of leaves of the actual $s_n$, and set
+$d=m-n$. Each old internal vertex has a singleton ancestry fibre.
+Each old alpha leaf has its entire actual $T_d$ fibre, with $\Delta_d$
+vertices; each old beta leaf has its actual $T_{d+1}$ fibre. The count
+supply IV (108.9), applied to $s_n$ itself, gives
+
+$$
+N_n=2\ell-1,\qquad N_m\ge\ell\Delta_d,\qquad
+1\le\Delta_d\le\Delta_{d+1}\le3\Delta_d\quad(d\ge0).
+\tag{117.6}
+$$
+
+The last inequality follows either from the Fibonacci recurrence or
+from the adjacent at-most-three birth factor. If $v(x)$ is the final
+fibre size of $x\in V_n$, then
+
+$$
+\|E_{n,m}f\|_{\mu_m}^2
+ =\frac1{N_n}\sum_{x\in V_n}\frac{v(x)}{N_m/N_n}f(x)^2,
+\qquad \frac{v(x)}{N_m/N_n}\le6.
+\tag{117.7}
+$$
+
+This proves the first bound, including $d=0$. New edges have zero
+ancestry-extension gradient, proving the energy identity. In particular
+$\|E_{n,j}f\|_{1,j}\le B\|f\|_{1,n}$ at every intermediate $j$.
+
+Reuse the relative adjacent mass estimate (116.8), with its exact
+$\vartheta_j$ in (116.7). Telescoping the probability inner products
+along this same history gives
+
+$$
+\begin{aligned}
+\langle(W_{n,m}-I)f,g\rangle_{\mu_n}
+ =\sum_{j=n}^{m-1}
+ \langle(D_jE_j-I)E_{n,j}f,E_{n,j}g\rangle_{\mu_j}.
+\end{aligned}
+\tag{117.8}
+$$
+
+Its modulus is at most
+$6\sum_{j=n}^{m-1}\vartheta_j\|f\|_{1,n}\|g\|_{1,n}$.
+For clarity the following geometric bound makes the constants explicit:
+
+$$
+\Delta_j\ge\varphi^{j-1},\qquad
+\vartheta_j\le10\varphi^{-j/2}\quad(j\ge2),\qquad
+\sum_{j=n}^{\infty}\Delta_{j+1}^{-1/2}\le h_n.
+\tag{117.9}
+$$
+
+Indeed $F_{j+1}\ge\varphi^{j-1}$ by induction and
+$\Delta_j\ge F_{j+1}$. In (116.7) the four terms of $\vartheta_j$ are
+bounded, respectively, by
+$3\sqrt{3\varphi/2}\varphi^{-j/2}$,
+$\sqrt2c\varphi^{-j/2}$, $2c\varphi^{-j/2}$ and
+$(1+2c^2)\varphi^{-j/2}$. Here the last term is
+$(c+2c^{j+1})/\Delta_j$, and $j\ge2$ was used.
+Their constants sum to less than ten: $\varphi<5/3$, $c<2/3$ give
+respective upper bounds $5,1,2,2$. This proves (117.9) and then
+the mass bound in (117.4). It is a form bound, not a small raw
+$H_n$-operator norm of $W_{n,m}-I$.
+
+For (117.5), the difference $z_{j+1}-E_jz_j$ vanishes on old vertices
+and has exactly one born-edge difference at each newborn. Consequently
+
+$$
+\|z_{j+1}-E_jz_j\|_{\mu_{j+1}}
+ \le\frac{\sqrt{\mathfrak a_m(z,z)}}{\sqrt{N_{j+1}}},\qquad
+z-E_{n,m}g=\sum_{j=n}^{m-1}
+ E_{j+1,m}(z_{j+1}-E_jz_j).
+\tag{117.10}
+$$
+
+Use $\|E_{j+1,m}\|\le B$, $N_{j+1}\ge\Delta_{j+1}$ from
+IV (108.9), and (117.9). Restriction retains a subset of the actual
+edges, proving the other assertion. No original-size, depth or balance
+bound was imposed. $\square$
+
