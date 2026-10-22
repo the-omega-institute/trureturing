@@ -1,0 +1,29 @@
+**Corollary 232.2 (the critical polynomial window).** At the threshold
+
+$$
+\kappa_*:=\frac{\log\varphi}{q},
+$$
+
+the packing estimate requires
+
+$$
+\delta_n=O\!\left(n e^{-\kappa_* n}\right).
+\tag{232.7}
+$$
+
+Thus a law bounded below by $c n^{1+\epsilon}e^{-\kappa_*n}$ for any
+$\epsilon>0$ is impossible, while the law $n e^{-\kappa_*n}$ is only a
+necessary scale and is not an existence construction.
+
+For the stipulated $K=8$, one has $q=3$ and therefore
+
+$$
+\kappa_*=rac{\log\varphi}{3}.
+\tag{232.8}
+$$
+
+This number is a resolution exponent of the declared occurrence bridge. It
+is not a spatial dimension, a heat-kernel exponent, or a Fock/observation
+rank. A physical three-dimensional conclusion still needs an independent
+realization law and an observable correspondence.
+

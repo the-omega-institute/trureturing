@@ -10,6 +10,7 @@ import Mathlib.NumberTheory.ArithmeticFunction.Misc
 import Mathlib.RingTheory.Radical.NatInt
 
 /- The public result is a general symbolic theorem; the `k = 12` example is non-public. -/
+/- Escape audit unfinished: https://github.com/the-omega-institute/trureturing/issues/19974. -/
 
 /-!
 Library-search audit trail (pinned Mathlib v4.33.0):
@@ -39,7 +40,7 @@ open scoped ArithmeticFunction.Omega
 
 namespace D5.S3.Arith.DivisorCountRadicalCoincidence
 
-private theorem primeFactors_card_le_cardFactors_card_divisors {k : ℕ} (hk : k ≠ 0) :
+theorem primeFactors_card_le_cardFactors_card_divisors {k : ℕ} (hk : k ≠ 0) :
     k.primeFactors.card ≤ ArithmeticFunction.cardFactors k.divisors.card := by
   classical
   rw [Nat.card_divisors hk]
@@ -105,7 +106,5 @@ example :
     rfl
   rw [hcard, Nat.radical_eq_prod_primeFactors, hprimeFactors]
   norm_num
-
-#print axioms radical_eq_card_divisors_of_dvd
 
 end D5.S3.Arith.DivisorCountRadicalCoincidence

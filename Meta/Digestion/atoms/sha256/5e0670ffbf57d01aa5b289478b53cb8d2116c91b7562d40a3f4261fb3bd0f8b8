@@ -1,0 +1,28 @@
+**Definition 233.2 (unconditional accounting).** The source convention is
+the full two-preparation filter of (215.9)–(215.12), not the effective
+spectator-discarding preparation. From (220.5), at the same chosen source,
+
+$$
+P_a=\frac{Z_t(p)}{2(1+t)^4},\qquad
+P_{\mathrm{sp}}=\frac{th_t(p)}{(1+t)^4},\qquad
+P_{\mathrm{full}}=\frac{E_t(p)}{2(1+t)^4},\qquad
+R=P_{\mathrm{full}}s.
+\tag{233.4}
+$$
+
+The complete unconditional law is preparation rejection with probability
+$1-P_{\mathrm{full}}$, followed by the four events (233.2) multiplied by
+$P_{\mathrm{full}}$. In particular the two successful contributions are
+$P_a\alpha$ and $P_{\mathrm{sp}}\gamma$, with sum $R$; each spectator
+reset pair has probability $P_{\mathrm{sp}}\gamma/4$. Thus state,
+preparation probability and prescribed conditional success are realized
+jointly by one source and one instrument. No independent extrema of
+$\lambda$ and $w$, or of $A_t$ and $B_t$, have been combined.
+
+At fixed $s$, maximizing $sF_{t,s}$ is equivalent to maximizing $F_{t,s}$;
+for $s\ge s_1$ the optimum $s\mathcal V_t(s)=B_t(p_c)$ is constant.
+The unconditional success-weighted quantity is instead
+$R\mathcal V_t(s)=P_{\mathrm{full}}s\mathcal V_t(s)$ at an attaining
+source. Both $P_{\mathrm{full}}$ and $R$ vary with source choice; (231.5)
+does not optimize this latter quantity or impose fixed overall success $R$.
+

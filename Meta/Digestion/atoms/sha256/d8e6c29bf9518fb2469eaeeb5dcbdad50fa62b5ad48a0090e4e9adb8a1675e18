@@ -1,0 +1,44 @@
+**Proposition 158.4 (constant-rate and uniformly bounded-exit boundaries).**
+For the same sources, replacing $r>1$ by $r=1$ in (158.3), with $C$ as in
+(158.2), still gives coherent conservative finite Markov generators, but
+
+$$
+H_{u,1}=L_0\mathbin{\oplus}\bigoplus_{e\ge\eta(u)}C I_{2b_e},
+\qquad
+\operatorname{Tr}\!\left(e^{-tH_{u,1}}
+              \mathbf1_{(0,\infty)}(H_{u,1})\right)=\infty
+\quad(t>0).
+\tag{158.14}
+$$
+
+More generally, suppose a coherent family of finite lifts with the
+normalized isometric embeddings of §135 has conservative Markov $Q_e$ and
+a uniform exit bound $-Q_e(p,p)\le M<\infty$ over all its epochs and
+vertices. If its Hilbert inductive limit is infinite-dimensional, the
+compatible normalized operator extends to a bounded nonnegative
+self-adjoint operator with spectrum in $[0,2M]$. Its full heat trace is
+infinite at every positive time.
+
+**Proof.** For $r=1$ every inherited exit is at most $C$, and
+$K_e=C I_{2b_e}\succ0$. The actual-coordinate formula (128.3) has child
+exit $C$ and child-to-parent rate $C-s_e(p)\ge0$, with the other entries
+as in (128.4). Some of these parent rates are zero: this boundary uses
+the displayed sign calculation, rather than asserting the strict
+$\kappa_c>0$ hypothesis of Proposition 128.2. Coherence still follows
+from Proposition 127.2 and Theorem 128.1. Proposition 135.3 gives
+(158.14). Infinitely many positive modes contribute the same positive
+number $e^{-tC}$ to that trace.
+
+For the general comparison, each row of $-Q_e$ has diagonal $s_e(p)$ and
+sum of absolute off-diagonal entries $s_e(p)\le M$. Gershgorin's bound
+puts every real eigenvalue in $[0,2M]$. The eigenvalues are real and
+nonnegative because $-Q_e$ is similar to the symmetric nonnegative $H_e$.
+Thus $0\le H_e\le2MI$ in each normalized Hilbert space. Exact intertwining
+makes these operators consistent on their dense isometric union, where
+they have the same norm bound. Their extension is bounded self-adjoint
+and satisfies $0\le H\le2MI$. Functional calculus gives
+$e^{-tH}\ge e^{-2Mt}I$, whose trace is infinite in infinite dimension.
+This comparison needs the uniform bound and compatible Hilbert structure;
+finite Markov conservation alone does not impose either a heat-trace
+exponent or trace finiteness. $\square$
+

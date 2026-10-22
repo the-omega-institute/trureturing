@@ -1,0 +1,19 @@
+fingerprints:
+  raw_sha256: sha256:ecaa0faa4abcfa39c9da8b5a89d3be2e13bb22235795d7514f4473bf8c95a703
+  normalized_sha256: sha256:ecaa0faa4abcfa39c9da8b5a89d3be2e13bb22235795d7514f4473bf8c95a703
+cas_ref: sha256:ecaa0faa4abcfa39c9da8b5a89d3be2e13bb22235795d7514f4473bf8c95a703
+coverage_gids:
+  - gid: D5/S3/ConceptDynamics/Spacetime/NativeTimeProfile.copy_saturation_law
+    target_statement_id: sha256:954bd1c4029d9a02f610e74027b7ea34815a42bb72a1c0b91820b0e24e6f3a9b
+  - gid: D5/S3/ConceptDynamics/Spacetime/RegionFilterQExpressibility.finite_joint_input
+    target_statement_id: sha256:783de894aa4c9ad3d9628053d826b6aa1890381f39deab3ac49ac0b1ebabd9b5
+  - gid: D5/S3/ConceptDynamics/Spacetime/RegionFilterQExpressibility.normalize_word
+    target_statement_id: sha256:e2ec890e80760e5e2b16c7650e2de36b225513114841448f6f34bc7b540b2709
+  - gid: D5/S3/ConceptDynamics/Spacetime/RegionFilterQExpressibility.reify_temporal_free
+    target_statement_id: sha256:06b2136b6ed13330cea712b45dc967c0d9d615c3399fa18a640ede8558430726
+  - gid: D5/S3/ConceptDynamics/Spacetime/RegionFilterQExpressibility.saturated_runSteps
+    target_statement_id: sha256:d6438d74c10c41a37408729cc877daef648b334ff7f1f7307fe295ede1255467
+  - gid: D5/S3/ConceptDynamics/Spacetime/TotalCopyNormalization.total_copy_normalization
+    target_statement_id: sha256:43351ad0e0abdecef00de613c1c529fcc26436561a6ef7c8a04e51eb6b351f94
+receipts:
+  unresolved_subitems: []

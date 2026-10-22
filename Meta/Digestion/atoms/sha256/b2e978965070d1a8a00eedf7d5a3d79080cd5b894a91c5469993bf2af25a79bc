@@ -1,0 +1,50 @@
+**Proposition 216.2 (fixed-temperature curve and monotonicity).** At fixed
+$0<t<1$ the exact curve is
+
+$$
+\lambda(h)=\frac{(h-t)(1-h)}{2t+(h-t)(1-h)},\qquad
+w(h)=\frac{2t+(h-t)(1-h)}{2t+(h-t)(1-h)+2th},
+\qquad t\le h\le1.
+\tag{216.6}
+$$
+
+Its active singlet parameter obeys
+
+$$
+\lambda\le\frac{(1-t)^2}{1+6t+t^2},
+\tag{216.7}
+$$
+
+with equality at $p=1/2$. The flag weight $w$ strictly decreases from
+$1/(1+t)$ to $1/2$ as $p$ increases from $0$ to $1$.
+
+Proof. The quadratic $u=(1-t)^2p(1-p)$ is maximized at $p=1/2$,
+and $u\mapsto u/(2t+u)$ is increasing. Substituting the maximum
+$u=(1-t)^2/4$ gives the bound. For the second assertion,
+$u(h)=(h-t)(1-h)$ gives
+
+$$
+\frac{dw}{dh}
+=-\frac{2t(t+h^2)}{[2t+u(h)+2th]^2}<0.
+\tag{216.8}
+$$
+
+Because $dh/dp=1-t>0$, this proves the strict monotonicity and the
+endpoint values. At $t=1$ the curve collapses to $(0,1/2)$ rather than
+remaining a nontrivial monotone curve.
+
+The native entanglement threshold can be written in equivalent forms:
+
+$$
+\lambda>1/3
+\ \Longleftrightarrow\ \mu>ad
+\ \Longleftrightarrow\ u>t
+\ \Longleftrightarrow\ 4\sinh^2(\beta/2)p(1-p)>1.
+\tag{216.9}
+$$
+
+For $0<p<1$, this is $\beta>2\operatorname{arsinh}
+(1/[2\sqrt{p(1-p)}])$. Equality is separable. At $\beta=0$ or
+$p\in\{0,1\}$, $u=\mu=0$ and no positive-negativity branch is
+available in the stated one-copy menu.
+

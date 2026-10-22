@@ -1,0 +1,47 @@
+### 159.1 The native cylinder ultrametric
+
+Let
+
+$$
+\Omega=\{L,R\}^{\mathbb N}
+$$
+
+be the complete binary boundary. For a finite word \(p\), put
+
+$$
+s(p)=\#_L(p)+2\#_R(p),
+\qquad
+\delta(p)=\varphi^{-s(p)},
+$$
+
+where \(\varphi^2=\varphi+1\). If \(\omega\ne\eta\), let
+
+$$
+\omega\wedge\eta
+$$
+
+be their longest common prefix and define
+
+$$
+\boxed{
+d_\varphi(\omega,\eta)=\delta(\omega\wedge\eta),
+\qquad d_\varphi(\omega,\omega)=0.
+}
+\tag{159.1}
+$$
+
+Let \(M\) be the cylinder measure determined by
+
+$$
+\boxed{M([p])=\delta(p).}
+\tag{159.2}
+$$
+
+This is consistent because
+
+$$
+\delta(pL)+\delta(pR)
+=\delta(p)(\varphi^{-1}+\varphi^{-2})
+=\delta(p).
+$$
+
