@@ -110,7 +110,7 @@ private theorem lookup_enumeration_exhausted (attempts : List (Option LookupCand
 /-- Completed negative enumeration accounts for every member of the full
 basis, including missing/unloaded entries. Otherwise the result is unknown or
 an independently checked success; no absent candidate silently becomes NoHit. -/
-theorem candidate_complete_or_unknown {Candidate : Type*} (basis : List Candidate)
+theorem total_candidate_complete_or_unknown {Candidate : Type*} (basis : List Candidate)
     (attempt : Candidate → Option LookupCandidateAttempt) (preparation search : Nat) :
     (∃ failure, enumerateLookup preparation search (basis.map attempt) = .incomplete failure) ∨
     enumerateLookup preparation search (basis.map attempt) = .found ∨
@@ -135,7 +135,7 @@ private theorem keepUnknown_settled (failure : Failure) (result : Run)
 /-- Enlarging either allocation preserves every already certified outcome.
 Only unknown results can be resolved by extra resources. The entire ordered
 candidate plan is shared, so this is not a change of R or of the basis. -/
-theorem unknown_monotonicity (attempts : List (Option LookupCandidateAttempt))
+theorem total_unknown_monotonicity (attempts : List (Option LookupCandidateAttempt))
     (preparation search largerPreparation largerSearch : Nat)
     (preparation_le : preparation ≤ largerPreparation) (search_le : search ≤ largerSearch)
     (settled : enumerateLookup preparation search attempts = .found ∨
@@ -222,8 +222,243 @@ theorem scope_acyclic {Declaration : Type*}
   · exact safe beforeTarget
 
 
+#print axioms total_candidate_complete_or_unknown
+#print axioms total_unknown_monotonicity
+#print axioms scope_acyclic
+
+/-- Candidate-local limits reset rather than subtracting the preceding cost. -/
+def candidateOutcome (preparation search : Nat) : Option LookupCandidateAttempt → Run
+  | none => .incomplete .missing
+  | some attempt =>
+    if attempt.preparation ≤ preparation ∧ attempt.search ≤ search then attempt.outcome
+    else .incomplete .heartbeat
+
+/-- Found has priority over every unknown residual. A negative requires every
+member, including unavailable and capped members, to fail normally. -/
+noncomputable def perCandidateLookup {Candidate : Type*} (basis : List Candidate)
+    (attempt : Candidate → Option LookupCandidateAttempt) (preparation search : Nat) : Run := by
+  classical
+  exact if ∃ candidate ∈ basis, candidateOutcome preparation search (attempt candidate) = .found then
+    .found
+  else if ∀ candidate ∈ basis, candidateOutcome preparation search (attempt candidate) = .exhausted then
+    .exhausted
+  else .incomplete .undecided
+
+private theorem perCandidate_found {Candidate : Type*} (basis : List Candidate)
+    (attempt : Candidate → Option LookupCandidateAttempt) (preparation search : Nat) :
+    perCandidateLookup basis attempt preparation search = .found ↔
+      ∃ candidate ∈ basis, candidateOutcome preparation search (attempt candidate) = .found := by
+  classical
+  unfold perCandidateLookup
+  split
+  · rename_i found
+    exact ⟨fun _ => found, fun _ => rfl⟩
+  · rename_i absent
+    split <;> constructor
+    all_goals intro h
+    all_goals first | contradiction | exact False.elim (absent h)
+
+private theorem perCandidate_nohit {Candidate : Type*} (basis : List Candidate)
+    (attempt : Candidate → Option LookupCandidateAttempt) (preparation search : Nat) :
+    perCandidateLookup basis attempt preparation search = .exhausted ↔
+      ∀ candidate ∈ basis, candidateOutcome preparation search (attempt candidate) = .exhausted := by
+  classical
+  constructor
+  · intro h
+    unfold perCandidateLookup at h
+    split at h
+    · contradiction
+    · split at h
+      · assumption
+      · contradiction
+  · intro h
+    have absent : ¬ ∃ candidate ∈ basis,
+        candidateOutcome preparation search (attempt candidate) = .found := by
+      rintro ⟨candidate, member, found⟩
+      rw [h candidate member] at found
+      contradiction
+    rw [perCandidateLookup, if_neg absent, if_pos h]
+
+/-- Arbitrary permutations preserve the full three-valued candidate result. -/
+theorem per_candidate_order_invariant {Candidate : Type*} (basis reordered : List Candidate)
+    (permutation : basis.Perm reordered) (attempt : Candidate → Option LookupCandidateAttempt)
+    (preparation search : Nat) :
+    perCandidateLookup basis attempt preparation search =
+      perCandidateLookup reordered attempt preparation search := by
+  classical
+  simp only [perCandidateLookup, permutation.mem_iff]
+
+/-- Enlarging the basis preserves certified hits; restricting it preserves
+completed negatives. No assumption about declaration order is used. -/
+theorem basis_extension_monotone {Candidate : Type*} (basis larger : List Candidate)
+    (included : ∀ candidate ∈ basis, candidate ∈ larger)
+    (attempt : Candidate → Option LookupCandidateAttempt) (preparation search : Nat) :
+    (perCandidateLookup basis attempt preparation search = .found →
+      perCandidateLookup larger attempt preparation search = .found) ∧
+    (perCandidateLookup larger attempt preparation search = .exhausted →
+      perCandidateLookup basis attempt preparation search = .exhausted) := by
+  constructor
+  · intro h
+    rcases (perCandidate_found _ _ _ _).mp h with ⟨candidate, member, found⟩
+    exact (perCandidate_found _ _ _ _).mpr ⟨candidate, included candidate member, found⟩
+  · intro h
+    exact (perCandidate_nohit _ _ _ _).mpr fun candidate member =>
+      (perCandidate_nohit _ _ _ _).mp h candidate (included candidate member)
+
+/-- A cumulative branch allocation can lose a hit when one normally failing
+heavy candidate is prepended, even though the hit fits on its own. -/
+theorem total_budget_nonmonotone :
+    let hit : LookupCandidateAttempt := ⟨0, 1, .found⟩
+    let heavy : LookupCandidateAttempt := ⟨0, 2, .exhausted⟩
+    enumerateLookup 0 1 [some hit] = .found ∧
+      enumerateLookup 0 1 [some heavy, some hit] = .incomplete .heartbeat := by
+  decide
+
+private theorem candidate_normal_failure (preparation search : Nat)
+    (slot : Option LookupCandidateAttempt)
+    (normal : candidateOutcome preparation search slot = .exhausted) :
+    ∃ checked, slot = some checked ∧ checked.preparation ≤ preparation ∧
+      checked.search ≤ search ∧ checked.outcome = .exhausted := by
+  cases slot with
+  | none => contradiction
+  | some checked =>
+    simp only [candidateOutcome] at normal
+    split at normal
+    · rename_i fits
+      exact ⟨checked, rfl, fits.1, fits.2, normal⟩
+    · contradiction
+
+/-- NoHit requires complete enumeration, a loaded attempt for every member,
+and normal failure inside both candidate-local limits. -/
+theorem nohit_requires_complete_uncapped {Candidate : Type*} (basis : List Candidate)
+    (attempt : Candidate → Option LookupCandidateAttempt) (preparation search : Nat)
+    (nohit : perCandidateLookup basis attempt preparation search = .exhausted) :
+    ∀ candidate ∈ basis, ∃ checked, attempt candidate = some checked ∧
+      checked.preparation ≤ preparation ∧ checked.search ≤ search ∧
+      checked.outcome = .exhausted := by
+  intro candidate member
+  exact candidate_normal_failure _ _ _ ((perCandidate_nohit _ _ _ _).mp nohit candidate member)
+
+theorem cap_overrun_not_nohit {Candidate : Type*} (basis : List Candidate)
+    (attempt : Candidate → Option LookupCandidateAttempt) (preparation search : Nat)
+    (candidate : Candidate) (member : candidate ∈ basis) (checked : LookupCandidateAttempt)
+    (loaded : attempt candidate = some checked)
+    (capped : preparation < checked.preparation ∨ search < checked.search) :
+    perCandidateLookup basis attempt preparation search ≠ .exhausted := by
+  intro nohit
+  rcases nohit_requires_complete_uncapped _ _ _ _ nohit candidate member with
+    ⟨other, equal, hp, hs, _⟩
+  rw [loaded] at equal
+  cases Option.some.inj equal
+  omega
+
+/-- Full candidate accounting in v7: every absent, failed or capped attempt
+blocks NoHit but cannot erase a successful certificate from another candidate. -/
+theorem candidate_complete_or_unknown {Candidate : Type*} (basis : List Candidate)
+    (attempt : Candidate → Option LookupCandidateAttempt) (preparation search : Nat) :
+    (∃ failure, perCandidateLookup basis attempt preparation search = .incomplete failure) ∨
+    perCandidateLookup basis attempt preparation search = .found ∨
+    (perCandidateLookup basis attempt preparation search = .exhausted ∧
+      ∀ candidate ∈ basis, ∃ checked, attempt candidate = some checked ∧
+        checked.preparation ≤ preparation ∧ checked.search ≤ search ∧
+        checked.outcome = .exhausted) := by
+  cases result : perCandidateLookup basis attempt preparation search with
+  | incomplete failure => exact Or.inl ⟨failure, rfl⟩
+  | found => exact Or.inr (Or.inl rfl)
+  | exhausted => exact Or.inr (Or.inr ⟨rfl,
+      nohit_requires_complete_uncapped _ _ _ _ result⟩)
+
+private theorem candidate_settled_monotone (slot : Option LookupCandidateAttempt)
+    (preparation search largerPreparation largerSearch : Nat)
+    (hp : preparation ≤ largerPreparation) (hs : search ≤ largerSearch)
+    (settled : candidateOutcome preparation search slot = .found ∨
+      candidateOutcome preparation search slot = .exhausted) :
+    candidateOutcome largerPreparation largerSearch slot =
+      candidateOutcome preparation search slot := by
+  cases slot with
+  | none => simp [candidateOutcome] at settled
+  | some checked =>
+    by_cases fits : checked.preparation ≤ preparation ∧ checked.search ≤ search
+    · have largerFits := And.intro (fits.1.trans hp) (fits.2.trans hs)
+      simp [candidateOutcome, fits, largerFits]
+    · simp [candidateOutcome, fits] at settled
+
+/-- Only unknown can change when the two per-candidate allocations grow. -/
+theorem unknown_monotonicity {Candidate : Type*} (basis : List Candidate)
+    (attempt : Candidate → Option LookupCandidateAttempt)
+    (preparation search largerPreparation largerSearch : Nat)
+    (hp : preparation ≤ largerPreparation) (hs : search ≤ largerSearch)
+    (settled : perCandidateLookup basis attempt preparation search = .found ∨
+      perCandidateLookup basis attempt preparation search = .exhausted) :
+    perCandidateLookup basis attempt largerPreparation largerSearch =
+      perCandidateLookup basis attempt preparation search := by
+  rcases settled with found | nohit
+  · rw [found]
+    rcases (perCandidate_found _ _ _ _).mp found with ⟨candidate, member, hit⟩
+    apply (perCandidate_found _ _ _ _).mpr
+    exact ⟨candidate, member, (candidate_settled_monotone _ _ _ _ _ hp hs (Or.inl hit)).trans hit⟩
+  · rw [nohit]
+    apply (perCandidate_nohit _ _ _ _).mpr
+    intro candidate member
+    have normal := (perCandidate_nohit _ _ _ _).mp nohit candidate member
+    exact (candidate_settled_monotone _ _ _ _ _ hp hs (Or.inr normal)).trans normal
+
+/-- Coverage thresholds are cumulative heartbeats attached to the fixed
+candidate stream. Candidates beyond G are represented as unavailable, never
+as normal failures. The thresholds are shared when G grows. -/
+def coverageAttempt {Candidate : Type*} (threshold : Candidate → Nat) (G : Nat)
+    (attempt : Candidate → Option LookupCandidateAttempt) (candidate : Candidate) :
+    Option LookupCandidateAttempt :=
+  if threshold candidate ≤ G then attempt candidate else none
+
+theorem coverage_monotone_in_G {Candidate : Type*} (basis : List Candidate)
+    (threshold : Candidate → Nat) (attempt : Candidate → Option LookupCandidateAttempt)
+    (preparation search G largerG : Nat) (hg : G ≤ largerG)
+    (settled : perCandidateLookup basis (coverageAttempt threshold G attempt) preparation search = .found ∨
+      perCandidateLookup basis (coverageAttempt threshold G attempt) preparation search = .exhausted) :
+    perCandidateLookup basis (coverageAttempt threshold largerG attempt) preparation search =
+      perCandidateLookup basis (coverageAttempt threshold G attempt) preparation search := by
+  rcases settled with found | nohit
+  · rw [found]
+    rcases (perCandidate_found _ _ _ _).mp found with ⟨candidate, member, hit⟩
+    have covered : threshold candidate ≤ G := by
+      by_contra h
+      simp [coverageAttempt, h, candidateOutcome] at hit
+    apply (perCandidate_found _ _ _ _).mpr
+    exact ⟨candidate, member, by simpa [coverageAttempt, covered, covered.trans hg] using hit⟩
+  · rw [nohit]
+    apply (perCandidate_nohit _ _ _ _).mpr
+    intro candidate member
+    have normal := (perCandidate_nohit _ _ _ _).mp nohit candidate member
+    have covered : threshold candidate ≤ G := by
+      by_contra h
+      simp [coverageAttempt, h, candidateOutcome] at normal
+    simpa [coverageAttempt, covered, covered.trans hg] using normal
+
+/-- A reset runner admits no incoming mutable-cache influence. Query includes
+(T, Γ, B0, index version, R version); both budgets are explicit arguments.
+The runtime obligation is that its attempt function realizes this reset law. -/
+theorem budget_noninterference {Query Cache Candidate : Type*}
+    (run : Query → Cache → Candidate → Option LookupCandidateAttempt)
+    (reset : Cache → Cache) (initial : Cache) (law : ∀ cache, reset cache = initial)
+    (query : Query) (basis : List Candidate) (cold warm : Cache) (preparation search : Nat) :
+    perCandidateLookup basis (run query (reset cold)) preparation search =
+      perCandidateLookup basis (run query (reset warm)) preparation search ∧
+    (∀ candidate, run query initial candidate = none →
+      candidateOutcome preparation search (run query initial candidate) = .incomplete .missing) := by
+  constructor
+  · rw [law cold, law warm]
+  · intro candidate missing
+    simp [missing, candidateOutcome]
+
+#print axioms per_candidate_order_invariant
+#print axioms basis_extension_monotone
+#print axioms total_budget_nonmonotone
+#print axioms nohit_requires_complete_uncapped
+#print axioms cap_overrun_not_nohit
 #print axioms candidate_complete_or_unknown
 #print axioms unknown_monotonicity
-#print axioms scope_acyclic
+#print axioms coverage_monotone_in_G
+#print axioms budget_noninterference
 
 end LeanInformationAudit.Tests.SearchReduction.GraphModel

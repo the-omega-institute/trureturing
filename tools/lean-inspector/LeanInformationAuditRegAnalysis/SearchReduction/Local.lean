@@ -420,7 +420,7 @@ def boundedRebuildBranch (action : MetaM LocalResult)
   let search := (← IO.getNumHeartbeats) - started
   let elapsed := (← IO.monoNanosNow) - nanos
   let preparation := (← budget?.mapM (·.get)).getD {}
-  IO.eprintln s!"LOOKUP_BUDGET {Json.mkObj [
+  emitLookupRecord s!"LOOKUP_BUDGET {Json.mkObj [
     ("finished_monotonic_ms", toJson (← IO.monoMsNow)),
     ("search_internal_heartbeats", toJson search),
     ("preparation_internal_heartbeats", toJson preparation.preparation),

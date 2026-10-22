@@ -246,3 +246,33 @@ run_cmd do
         else expected := expected.insert name bytes
         IO.eprintln s!"LOOKUP_DETERMINISM case={name} pass={pass} bytes={bytes}"
     logInfo "LOOKUP_DETERMINISM_ACCEPTED cold_warm=true forward_reverse=true per_query_json_bytes=true cases=2 passes=4"
+
+run_cmd liftTermElabM do
+  let budget ← IO.mkRef ({} : LookupBudgetState)
+  let table : LookupTable := {environment := ← getEnv, budget? := some budget}
+  let goal := (← mkFreshExprMVar (mkConst ``True)).mvarId!
+  let entry : DiskLookup.Entry := {module := "Fixture", name := "capped", parts := #[]}
+  let capped ← boundedLookupCandidate table entry goal do
+    IO.addHeartbeats (lookupCandidateBudget * 1000 + 1)
+    checkSystem "lookup.candidate.cap-fixture"
+    return {complete := true}
+  unless !capped.complete && capped.capped.size == 1 do
+    throwError "cap became normal failure"
+  let failed ← boundedLookupCandidate table {entry with name := "unsupported"} goal do
+    throwError "lookup.view_depth_incomplete"
+  unless !failed.complete && failed.failures.size == 1 do
+    throwError "candidate exception escaped or disappeared"
+  let prepared ← boundedLookupCandidate table {entry with name := "preparation"} goal do
+    withLookupPreparation (some budget) do
+      IO.addHeartbeats (lookupPreparationBudget * 1000 + 1)
+      checkSystem "lookup.preparation.cap-fixture"
+    return {complete := true}
+  unless !prepared.complete && prepared.capped.size == 1 do
+    throwError "preparation cap became normal failure"
+  let recovered ← boundedLookupCandidate table {entry with name := "recovered"} goal do
+    unless !(← goal.isAssigned) do throwError "failed state survived"
+    goal.assign (mkConst ``True.intro)
+    return {complete := true, source? := some ``True.intro}
+  unless recovered.complete && recovered.source?.isSome do
+    throwError "earlier failure starved a later checked candidate"
+  logInfo "LOOKUP_V7_REGRESSION cap=unknown exception=local preparation=unknown later_candidate=checked"

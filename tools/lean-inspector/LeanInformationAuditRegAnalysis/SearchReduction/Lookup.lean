@@ -10,6 +10,11 @@ def lookupPhase (label : String) : IO Unit := do
     IO.FS.withFile path .append fun handle => do
       handle.putStrLn s!"{← IO.monoMsNow} {label}"
 
+/-- Resource and residual records are durable even when elaboration is interrupted. -/
+def emitLookupRecord (line : String) : IO Unit := do
+  lookupPhase line
+  IO.eprintln line
+
 /-- Includes exceptional exits; nested spans must not be added to their parent. -/
 def timeLookup {α : Type} (label : String) (action : MetaM α) : MetaM α := do
   if (← IO.getEnv "SEARCH_REDUCTION_PROFILE").isNone then return ← action
@@ -19,11 +24,11 @@ def timeLookup {α : Type} (label : String) (action : MetaM α) : MetaM α := do
   try action finally
     lookupPhase s!"{label}/end ns={(← IO.monoNanosNow) - start} heartbeats={(← IO.getNumHeartbeats) - heartbeats}"
 
-abbrev lookupVersion : String := "R_lookup/v7/candidate-200000/preparation-2000000/G-telemetry/memo-off/N-memo-2000000"
+abbrev lookupVersion : String := "R_lookup/v7/candidate-200000/preparation-2000000/G-340000000/memo-off/N-memo-2000000"
 
 abbrev lookupCandidateBudget : Nat := 200000
-/-- Zero is used only by verdict-free calibration telemetry. -/
-abbrev lookupCoverageBudget : Nat := 0
+/-- Frozen from verdict-free fallback and fixed-stride candidate telemetry. -/
+abbrev lookupCoverageBudget : Nat := 340000000
 
 /-- Bounded, query-local metadata reuse; certificates are always checked anew. -/
 structure LookupQueryMemo where
@@ -176,7 +181,7 @@ private def checkLookupGoal (table : LookupTable) (base : Environment)
     let axioms ← collectAxioms name
     unless axioms.all (#[`propext, `Classical.choice, `Quot.sound].contains ·) do
       throwError "lookup.nonstandard_axioms"
-  IO.eprintln s!"LOOKUP_CERTIFICATE {Json.mkObj [
+  emitLookupRecord s!"LOOKUP_CERTIFICATE {Json.mkObj [
     ("support", toJson (proof.getUsedConstants.map Name.toString)),
     ("query_environment_only", toJson true)] |>.compress}"
 
@@ -212,21 +217,23 @@ def boundedLookupCandidate (table : LookupTable) (entry : DiskLookup.Entry)
   let after := (← table.budget?.mapM (·.get)).getD {}
   let preparation := after.preparation - before.preparation
   if let some budget := table.budget? then
-    budget.modify fun state => {state with coverage := state.coverage + search + preparation}
+    budget.modify fun state => {state with
+      coverage := state.coverage + search + preparation, preparationStart := state.preparation}
   let residual := Json.mkObj [
     ("module", toJson entry.module), ("candidate", toJson entry.name),
     ("search_internal_heartbeats", toJson search),
     ("preparation_internal_heartbeats", toJson preparation),
     ("capped", toJson (!result.capped.isEmpty)), ("reasons", toJson result.failures)]
   if !result.complete || (← IO.getEnv "SEARCH_REDUCTION_TELEMETRY").isSome then
-    IO.eprintln s!"LOOKUP_CANDIDATE {residual.compress}"
+    emitLookupRecord s!"LOOKUP_CANDIDATE {residual.compress}"
   if result.source?.isNone || (← IO.getEnv "SEARCH_REDUCTION_TELEMETRY").isSome then
     original.restore
     set original.meta
     modifyThe Core.State fun state => {state with cache := original.core.cache}
   return {result with
     visited := 1,
-    failures := if result.complete then result.failures else #[residual.compress]}
+    failures := if result.complete then result.failures else
+      result.failures.map (fun reason => s!"{entry.module}:{entry.name}:{reason}")}
 
 private def mergeLookupTrace (a b : LookupTrace) : LookupTrace := {
   visited := a.visited + b.visited, attempted := a.attempted + b.attempted,
@@ -498,7 +505,7 @@ unsafe def lookupLeafPass (fallback : Bool) (table : LookupTable) (goal : MVarId
   let candidates ← queryLookup table index (← goal.getType) none fallback
   if telemetry then
     let afterPreparation := (← table.budget?.mapM (·.get)).getD {}
-    IO.eprintln s!"LOOKUP_TELEMETRY_FLOOR {Json.mkObj [
+    emitLookupRecord s!"LOOKUP_TELEMETRY_FLOOR {Json.mkObj [
       ("fallback_only", toJson fallback), ("entries", toJson candidates.entries.size),
       ("search_internal_heartbeats", toJson ((← IO.getNumHeartbeats) - floorStart)),
       ("preparation_internal_heartbeats", toJson (afterPreparation.preparation - beforePreparation.preparation)),
@@ -551,24 +558,23 @@ unsafe def lookupLeafPass (fallback : Bool) (table : LookupTable) (goal : MVarId
             let dataClosed ← obligations.allM fun next => do
               if ← next.isAssigned then return true
               next.withContext do isProp (← instantiateMVars (← next.getType))
-            if dataClosed && (← propositions.allM fun next => do
-                if ← next.isAssigned then return true else close next) then
-              candidate.certify
-              let proof ← instantiateMVars (mkMVar goal)
-              pure (!proof.hasMVar)
-            else pure false
+            pure (dataClosed && (← propositions.allM fun next => do
+              if ← next.isAssigned then return true else close next))
           catch ex =>
             if ex.isMaxHeartbeat || ex.isInterrupt || ex.isRuntime then throw ex
             pure false
-          if matched then return {
-            complete := true, source? := some name, attempted,
-            unloaded := if candidate.unloaded then 1 else 0}
+          if matched then
+            candidate.certify
+            let proof ← instantiateMVars (mkMVar goal)
+            unless proof.hasMVar do return {
+              complete := true, source? := some name, attempted,
+              unloaded := if candidate.unloaded then 1 else 0}
           saved.restore
       return {complete := true, attempted, unloaded := if candidate.unloaded then 1 else 0}
     trace := mergeLookupTrace trace result
     if fallback then trace := {trace with fallbackVisited := trace.fallbackVisited + 1}
     if trace.source?.isSome && !telemetry then break
-  unless telemetry do IO.eprintln s!"LOOKUP_ENUMERATION {Json.mkObj [
+  unless telemetry do emitLookupRecord s!"LOOKUP_ENUMERATION {Json.mkObj [
     ("fallback", toJson fallback), ("total", toJson candidates.entries.size),
     ("visited", toJson trace.visited), ("complete", toJson trace.complete),
     ("found", toJson trace.source?.isSome), ("capped", toJson trace.capped),
