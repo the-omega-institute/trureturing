@@ -47,7 +47,8 @@ private theorem traceQ_closed (k : ℕ) :
        (∑ p ∈ range (k + 1), (k.choose p : ℂ) * (-1) ^ p * 1 ^ (k-p)) +
        (∑ p ∈ range (k + 1), (k.choose p : ℂ) * 1 ^ p * (-1) ^ (k-p)) +
        (∑ p ∈ range (k + 1), (k.choose p : ℂ) * (-1) ^ p * (-1) ^ (k-p))) := by
-        simp only [taylorQ, trace_sum, trace_smul, trace_moment, smul_eq_mul,
+        delta taylorQ
+        simp only [trace_sum, trace_smul, trace_moment, smul_eq_mul,
           mul_add, mul_sum]
         rw [← sum_add_distrib, ← sum_add_distrib, ← sum_add_distrib]
         apply sum_congr rfl
@@ -94,7 +95,9 @@ theorem defect_odd (m : ℕ) : defect qubitZ qubitX (2 * m + 1) = 0 := by
   simp [hz, hx]
 
 private theorem defect_zero : defect qubitZ qubitX 0 = 0 := by
-  simp [defect, trace_taylorR, taylorQ]
+  rw [defect, trace_taylorR]
+  delta taylorQ
+  simp
 
 /-- Every positive scalar shift to the left makes every odd Pauli defect above three negative. -/
 theorem defect_shift_negative (k : ℕ) (hk : Odd k) (hk5 : 5 ≤ k)

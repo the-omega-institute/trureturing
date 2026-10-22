@@ -19,9 +19,10 @@ variable {n : ℕ}
 private theorem operator_formula (A B : Matrix (Fin n) (Fin n) ℂ) (k : ℕ) :
     ((LinearMap.mulLeft ℂ A + LinearMap.mulRight ℂ B) ^ k) 1 = taylorQ A B k := by
   rw [(LinearMap.commute_mulLeft_right A B).add_pow' k]
+  delta taylorQ
   simp only [LinearMap.sum_apply, LinearMap.smul_apply, Module.End.mul_apply,
     LinearMap.pow_mulLeft, LinearMap.pow_mulRight, LinearMap.mulLeft_apply,
-    LinearMap.mulRight_apply, one_mul, taylorQ,
+    LinearMap.mulRight_apply, one_mul,
     Nat.sum_antidiagonal_eq_sum_range_succ_mk, Nat.cast_smul_eq_nsmul]
 
 /-- Scalar translation acts on the ordered Taylor coefficients by a binomial transform. -/
@@ -44,7 +45,8 @@ theorem taylorQ_shift (A B : Matrix (Fin n) (Fin n) ℂ) (s : ℂ) (k : ℕ) :
 /-- Taking the real trace commutes with Hermitian symmetrization. -/
 theorem trace_taylorR (A B : Matrix (Fin n) (Fin n) ℂ) (k : ℕ) :
     (taylorR A B k).trace.re = (taylorQ A B k).trace.re := by
-  simpa [RHLinalg.rtrace, taylorR, selfAdjointPart_apply_coe, invOf_eq_inv,
+  delta taylorR
+  simpa [RHLinalg.rtrace, selfAdjointPart_apply_coe, invOf_eq_inv,
     Matrix.star_eq_conjTranspose] using
     (D5.S3.Quantum.Measurement.IncoherentCone.trace_hermitianPart
       (G := (1 : Matrix (Fin n) (Fin n) ℂ)) isHermitian_one (taylorQ A B k))
