@@ -273,9 +273,12 @@ private def intervalRun (graph : ProofGraph) (interval : Interval) : Run :=
       finite interval.lower && finite interval.upper then .exhausted
   else .incomplete .undecided
 
+/-- Meta caches can retain imported names, levels and types after a branch
+restores its environment. Their compacted storage lives until process exit. -/
+private initialize candidateRegions : IO.Ref (Array CompactedRegion) ← IO.mkRef #[]
+
 /-- Temporary vocabulary belongs to the candidate branch. Only a successful
-certificate is inlined and checked against the original query environment.
-At most one imported module is retained until branch state is restored. -/
+certificate is inlined and checked against the original query environment. -/
 unsafe def onDemandLookup (table : LookupTable)
     (sharedImports? : Option ImportState := none) : IO LookupTable := do
   let cache ← IO.mkRef (none : Option (String × Environment))
@@ -285,19 +288,16 @@ unsafe def onDemandLookup (table : LookupTable)
         names.insert region.filePath.toString) ({} : Std.HashSet String)
     else {}
   let close : IO Unit := do
-    let previous ← cache.get
     cache.set none
-    if let some (_, env) := previous then
-      let started ← IO.monoMsNow
-      lookupPhase s!"candidate/close-start regions={env.header.regions.size} retained={retained.size}"
-      for region in env.header.regions.reverse do
-        unless retained.contains region.filePath.toString do region.free
-      lookupPhase s!"candidate/close-end ms={(← IO.monoMsNow) - started}"
   let acquire (module : Name) (options : Options) : IO Environment := withImporting do
     lookupPhase s!"candidate/import-start module={module}"
     let imports : Array Import := #[{module}]
     let (_, state) ← (importModulesCore imports).run (sharedImports?.getD default)
     let env ← finalizeImport state imports options 0 (leakEnv := false) (loadExts := false)
+    let regions := env.header.regions.filter fun region =>
+      !retained.contains region.filePath.toString
+    candidateRegions.modify (· ++ regions)
+    lookupPhase s!"candidate/regions-retained count={regions.size} total={(← candidateRegions.get).size}"
     lookupPhase s!"candidate/import-end module={module}"
     return env
   let finish (base : Environment) (proof : Expr) : MetaM Expr := do
