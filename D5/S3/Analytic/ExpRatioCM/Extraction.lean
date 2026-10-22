@@ -109,6 +109,66 @@ private lemma normalized_series_bound {b : ℕ → ℝ} {B : ℝ}
       rw [tsum_mul_left, tsum_geometric_of_lt_one (by norm_num : (0 : ℝ) ≤ 1 / 2) (by norm_num)]
       ring
 
+private lemma normalized_term (n k : ℕ) :
+    (49 / 32 : ℝ) ^ k * ((n : ℝ) ^ k *
+      Real.exp (-(n : ℝ) * ((k : ℝ) * Real.log (7 / 4)))) =
+      extractionWeight n ^ k := by
+  have he : Real.exp (-Real.log (7 / 4)) = (4 / 7 : ℝ) := by
+    rw [Real.exp_neg, Real.exp_log (by norm_num : (0 : ℝ) < 7 / 4)]
+    norm_num
+  have hn : Real.exp (-(n : ℝ) * ((k : ℝ) * Real.log (7 / 4))) =
+      ((4 / 7 : ℝ) ^ n) ^ k := by
+    rw [← he, ← Real.exp_nat_mul, ← Real.exp_nat_mul]
+    congr 1
+    ring
+  rw [hn]
+  simp only [extractionWeight, mul_pow]
+  ring
+
+/-- The actual quotient derivatives extract the second quotient coefficient. -/
+theorem quotient_extraction_limit (i : ℕ) :
+    Tendsto (fun k : ℕ => (49 / 32 : ℝ) ^ k *
+      ((-1 : ℝ) ^ k * iteratedDeriv k (ratioF i) (k * Real.log (7 / 4))))
+      atTop (𝓝 (quotCoeff i 2)) := by
+  let B : ℝ := (2 : ℝ) ^ (i + 2)
+  have hB : 0 < B := by dsimp [B]; positivity
+  have hb : ∀ n, |quotCoeff i n| ≤ B ^ n := abs_quotCoeff_le i
+  have hsmall : ∀ᶠ k : ℕ in atTop, B * (16 / 21 : ℝ) ^ k ≤ 1 / 2 := by
+    have hlim : Tendsto (fun k : ℕ => B * (16 / 21 : ℝ) ^ k) atTop (𝓝 (B * 0)) :=
+      tendsto_const_nhds.mul (tendsto_pow_atTop_nhds_zero_of_lt_one (by norm_num) (by norm_num))
+    exact (hlim.eventually (gt_mem_nhds (by norm_num : B * 0 < (1 / 2 : ℝ)))).mono (fun _ h => h.le)
+  have hr : Tendsto (fun k : ℕ =>
+      (∑' n : ℕ, quotCoeff i n * extractionWeight n ^ k) - quotCoeff i 2)
+      atTop (𝓝 0) := by
+    rw [tendsto_zero_iff_abs_tendsto_zero]
+    apply squeeze_zero' (Eventually.of_forall (fun k => abs_nonneg _))
+    · filter_upwards [eventually_ge_atTop 1, hsmall] with k hk0 hk
+      exact normalized_series_bound hB hb hk0 hk
+    · have h₁ := (tendsto_pow_atTop_nhds_zero_of_lt_one
+        (by norm_num : (0 : ℝ) ≤ 7 / 8) (by norm_num)).const_mul |quotCoeff i 1|
+      have h₂ := (tendsto_pow_atTop_nhds_zero_of_lt_one
+        (by norm_num : (0 : ℝ) ≤ 6 / 7) (by norm_num)).const_mul (2 * B ^ 3)
+      simpa using h₁.add h₂
+  apply extraction_limit (b := quotCoeff i) (r := fun k =>
+    (∑' n : ℕ, quotCoeff i n * extractionWeight n ^ k) - quotCoeff i 2) ?_ hr
+  have ht : ∀ᶠ k : ℕ in atTop, Real.log B < (k : ℝ) * Real.log (7 / 4) :=
+    (Tendsto.atTop_mul_const (Real.log_pos (by norm_num)) tendsto_natCast_atTop_atTop).eventually
+      (eventually_gt_atTop (Real.log B))
+  filter_upwards [ht, eventually_ge_atTop 1] with k hkt hk
+  rw [iteratedDeriv_ratioF i k hk hkt, ← tsum_mul_left]
+  have heq : (∑' n : ℕ, (49 / 32 : ℝ) ^ k *
+      (quotCoeff i n * (n : ℝ) ^ k * Real.exp (-(n : ℝ) * (k * Real.log (7 / 4))))) =
+      ∑' n : ℕ, quotCoeff i n * extractionWeight n ^ k := by
+    apply tsum_congr
+    intro n
+    rw [show (49 / 32 : ℝ) ^ k * (quotCoeff i n * (n : ℝ) ^ k *
+        Real.exp (-(n : ℝ) * (k * Real.log (7 / 4)))) =
+      quotCoeff i n * ((49 / 32 : ℝ) ^ k * ((n : ℝ) ^ k *
+        Real.exp (-(n : ℝ) * (k * Real.log (7 / 4))))) by ring,
+      normalized_term]
+  rw [heq]
+  ring
+
 /-- A negative extracted coefficient rules out complete monotonicity. -/
 theorem not_completelyMonotone_of_extraction
     {h : ℝ → ℝ} {b : ℕ → ℝ}
