@@ -1,5 +1,5 @@
 /- GID: D5/S3/VertexAlgebra/Characters/LatticeThetaCharacter
-   generality: G
+   generality: I
    mirror-B: D5/B/S3/VertexAlgebra/Characters/LatticeThetaCharacter
    mirror-E: none(waiver:evidence-not-specified-by-formal-manifest)
    anchors: []
