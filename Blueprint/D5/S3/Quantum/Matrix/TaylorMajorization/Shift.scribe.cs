@@ -17,7 +17,7 @@ internal sealed class ShiftDocument : IScribeDocumentDefinition
                 DeclarationHandle.Create(Module + ".trace_taylorR"),
                 H("Real trace of Hermitian symmetrization"), StatementSource.WithoutFormula(),
                 AssessedProvenance.FromRepo(),
-                Blocks(Paragraph(Text("For any complex matrices A and B and any order k, the real traces of R and Q agree. Conjugate transpose conjugates the trace, and averaging a complex number with its conjugate preserves its real part."))), DescribeRole.Theorem),
+                Blocks(Paragraph(Text("For any complex matrices A and B and any order k, the real traces of R and Q agree. This directly specializes the existing IncoherentCone.trace_hermitianPart theorem to the identity weight; the explicit Hermitian part is the same symmetrization."))), DescribeRole.Theorem),
             Describe.Lean(DescribeId.Create("taylor-majorization-shift-defect-shift"),
                 DeclarationHandle.Create(Module + ".defect_shift"),
                 H("The binomial transform of the trace defect"), StatementSource.WithoutFormula(),

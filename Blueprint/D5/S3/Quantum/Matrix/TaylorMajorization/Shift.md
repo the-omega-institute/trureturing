@@ -26,7 +26,7 @@ Lean statement: `D5/S3/Quantum/Matrix/TaylorMajorization/Shift.trace_taylorR`
 
 *Commentary.*
 
-For any complex matrices A and B and any order k, the real traces of R and Q agree. Conjugate transpose conjugates the trace, and averaging a complex number with its conjugate preserves its real part.
+For any complex matrices A and B and any order k, the real traces of R and Q agree. This directly specializes the existing IncoherentCone.trace_hermitianPart theorem to the identity weight; the explicit Hermitian part is the same symmetrization.
 
 **Theorem 1.3 (The binomial transform of the trace defect).**
 
@@ -46,3 +46,4 @@ For a real scalar s, the defect at (A+sI,B) and order k is the sum over j from z
 - Truth anchor: `D5/S3/Quantum/Matrix/TaylorMajorization/Shift.taylorQ_shift`
 - Truth anchor: `D5/S3/Quantum/Matrix/TaylorMajorization/Shift.trace_taylorR`
 - Dependency: [D5/S3/Quantum/Matrix/TaylorMajorization/Defs](Defs.md)
+- Dependency: [D5/S3/Quantum/Measurement/IncoherentCone](../../Measurement/IncoherentCone.md)
