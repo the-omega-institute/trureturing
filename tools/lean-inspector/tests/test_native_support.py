@@ -99,6 +99,13 @@ import materials
 
 
 class NativeTestSupport:
+    # Process-table ownership is still sampled while a command runs, but the
+    # old 100 ms cadence made every long native build spend a material share
+    # of its wall budget in repeated `ps` scans.  Timeout enforcement remains
+    # on the waiter thread's absolute deadline; this cadence only bounds the
+    # diagnostic/settlement sampling overhead.
+    COMMAND_SAMPLE_INTERVAL = 0.5
+
     @classmethod
     def setUpClass(cls):
         cls.lake = os.environ.get('STRATALINT_NATIVE_LAKE_BIN') or subprocess.check_output(
@@ -482,7 +489,7 @@ defaultFacets = ["static"]
                 while True:
                     self.owned_processes(command)
                     observe_pending()
-                    if completed.wait(0.1):
+                    if completed.wait(self.COMMAND_SAMPLE_INTERVAL):
                         break
                 if isinstance(outcome.get('error'), subprocess.TimeoutExpired):
                     stdout.seek(0); stderr.seek(0)
