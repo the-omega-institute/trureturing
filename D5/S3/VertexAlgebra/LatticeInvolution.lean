@@ -102,6 +102,37 @@ theorem theta_involutive (D : LatticeData) : Function.Involutive (thetaLinear D)
 def theta (D : LatticeData) : Carrier D ≃ₗ[ℂ] Carrier D :=
   LinearEquiv.ofInvolutive (thetaLinear D) (theta_involutive D)
 
+/-- The reflection is genuinely nontrivial as soon as an oscillator exists. -/
+theorem theta_nontrivial_of_rank_pos (D : LatticeData) (h : 0 < D.rank) :
+    theta D ≠ LinearEquiv.refl ℂ (Carrier D) := by
+  intro htheta
+  let i : Fin D.rank := ⟨0, h⟩
+  let v : Carrier D := Finsupp.single (0 : Charge D) (X (i, 0) : Oscillator D)
+  have hv : v ≠ 0 := by
+    simp [v]
+  have hneg : theta D v = -v := by
+    change thetaLinear D (Finsupp.single 0 (X (i, 0) : Oscillator D)) = _
+    rw [theta_single]
+    simp [v]
+  have hfix : theta D v = v := by
+    simpa using congrArg (fun e : Carrier D ≃ₗ[ℂ] Carrier D => e v) htheta
+  have hminus : -v = v := hneg.symm.trans hfix
+  have htwo : (2 : ℂ) • v = 0 := by
+    rw [two_smul]
+    nth_rewrite 2 [← hminus]
+    exact add_neg_cancel v
+  exact hv ((smul_eq_zero.mp htwo).resolve_left (by norm_num))
+
+/-- The square identity and the preceding nontriviality give exact order two. -/
+theorem theta_orderOf_eq_two_of_rank_pos (D : LatticeData) (h : 0 < D.rank) :
+    orderOf (theta D) = 2 := by
+  apply orderOf_eq_prime (p := 2)
+  · apply LinearEquiv.ext
+    intro v
+    change thetaLinear D (thetaLinear D v) = v
+    exact theta_involutive D v
+  · exact theta_nontrivial_of_rank_pos D h
+
 @[simp] theorem theta_vacuum (D : LatticeData) : theta D (vacuum D) = vacuum D := by
   simp [theta, vacuum]
 
