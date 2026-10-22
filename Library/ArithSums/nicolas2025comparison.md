@@ -15691,23 +15691,19 @@ This retains every growing exponent layer. In particular the actual
 integers $N_x$ are unbounded. It does not assert $A_x=x$ or zero
 defect at their own-size price.
 
-For large $x$, one has $A_x\in[x/2,2x]$. On the price interval
-between $\lambda(x)$ and $\lambda(A_x)$, all pressure slopes have
-absolute value at most $Cx$: even the weak endpoint inventory at
-$2x$ is bounded by the strict inventory at $3x$, which is $O(x)$
-by ACC4. The finite piecewise-affine pressure is therefore
-$Cx$-Lipschitz on that interval, including all ties.
-Use ACC3 and $|\lambda'(y)|=O(1/(x^2\log x))$ for
-$y\in[x/2,2x]$. The full original-price defect of this same integer
-satisfies
+For large $x$, put $A=A_x$, $s_y=y\log y$ and
+$h_x=|s_A/s_x-1|$. ACC4 gives
+$h_x=O(e^{-a\sqrt{\log x}})$ and hence $h_x\le1/4$ eventually.
+The full-layer capacity application (NPC1) below gives the same
+integer's original-price defect bound
 
 $$
 \begin{aligned}
 0\le d_{A_x}(N_x)
 &=M(\lambda(A_x))-M(\lambda(x))
        +(\lambda(A_x)-\lambda(x))A_x\\
-&\le\frac{C|A_x-x|}{x\log x}
-\le\frac{Ce^{-a\sqrt{\log x}}}{\log x}
+&\le\frac{24A_xh_x^2+32\sqrt{A_x}h_x}{A_x\log A_x}\\
+&=O\!\left(\frac{e^{-2a\sqrt{\log x}}}{\log x}\right)
 =o(\widetilde H_{A_x}).
 \end{aligned}
 \tag{ACC5}
@@ -15716,13 +15712,11 @@ $$
 The last comparison uses GMW2--GMW3's
 $\log\widetilde H_A=-\epsilon(\log L)^2+
 O(\log L\log\log L)$; $\sqrt L$ dominates $(\log L)^2$.
-ACC5 is only relative to this larger scale. It does not give
+The capacity input is the existing arbitrary-host CA benefit bound,
+not Proposition 5's additional superabundant localization. All
+higher layers and both strict and weak threshold ties are retained.
+This unconditional allowance still does not give
 $d_{A_x}(N_x)=o(1/T_{A_x})$.
-
-The original-price defect is the classical CA benefit, as recorded in
-[Erdős–Nicolas 1975](erdosnicolas1975repartition.md). ACC5 uses the
-unrestricted pressure slope; it assumes none of Proposition 5's
-additional localization hypotheses.
 
 ### The complete central debit and far credit are jointly realized
 
@@ -15789,3 +15783,88 @@ scale. No sign of $D_A(N_x)$, $\Delta(N_x)$ or a Robin violation is
 inferred. A joint arithmetic estimate preserving the root reserve
 can still succeed; RH and strict Robin for every $n>5040$ remain
 unproved.
+
+
+## A finite upper benefit bound at the same strict inventory's own price
+
+The existing [arbitrary-host benefit and thin-layer capacity
+TC.1](erdosnicolas1975repartition.md#an-explicit-thin-layer-capacity-for-the-same-arbitrary-host)
+can bound the complete own-price defect of ACC's actual $N_x$.
+This applies a classical benefit calculation to two specified prices;
+it introduces no new capacity or prime-distribution theorem. The
+capacity's Yamada and Dusart inputs remain external, and this
+application has no Lean certification or literature-priority claim.
+
+Use the same strict integer $N_x$, $A=\log N_x$, $s_y=y\log y$ and
+$\lambda(y)=1/s_y$. Suppose $x>1$, $A\ge16$, and put
+
+$$
+h=\left|\frac{s_A}{s_x}-1\right|\le\frac14.
+$$
+
+Let $C_A$ be the **maximal** optimizer at $\lambda(A)$, so it includes
+every layer with $r_{p,j}\ge\lambda(A)$. The source $N_x$ includes
+exactly the layers with $r_{p,j}>\lambda(x)$. For each prime, let
+$\mathscr J$ contain exactly the positive layers lying between these
+two actual exponent counts:
+
+$$
+\mathscr J=
+\{(p,j):p\text{ prime},\
+ \min(v_p(C_A),v_p(N_x))<j\le
+ \max(v_p(C_A),v_p(N_x))\}.
+$$
+
+This is finite. If a layer belongs to $\mathscr J$, its marginal
+lies between $\lambda(A)$ and $\lambda(x)$, with the appropriate
+endpoint inclusion. Therefore every crossed layer satisfies
+
+$$
+|s_A r_{p,j}-1|\le h,\qquad
+|r_{p,j}-\lambda(A)|\le h/s_A.
+$$
+
+In particular a layer tied at $\lambda(A)$ has zero benefit cost,
+while a layer tied at $\lambda(x)$ is still inside the same weak band.
+The bound does not require $N_x$ to be superabundant, GA1, GA2,
+or optimal at its own-size price.
+
+The classical layerwise benefit identity at the **own-size** price is
+
+$$
+\begin{aligned}
+d_A(N_x)
+&=M(\lambda(A))-W(N_x)+\lambda(A)A\\
+&=\sum_{(p,j)\in\mathscr J}
+       \log p\,|r_{p,j}-\lambda(A)|.
+\end{aligned}
+$$
+
+TC.1 with parameter $a=A$ bounds the full weak-band resource by
+$24Ah+32\sqrt A$. Since $\mathscr J$ is a subset of that band,
+
+$$
+\boxed{
+0\le d_A(N_x)
+\le\frac{24Ah^2+32\sqrt A\,h}{A\log A},\qquad
+T_A d_A(N_x)\le24\sqrt A\,h^2+32h.
+}
+\tag{NPC1}
+$$
+
+This is a finite bound with an explicit hypothesis on the two actual
+prices. It accounts for every changed prime-power layer. Using a
+coarser bound on the whole pressure slope would instead lose the
+small width of this band.
+
+For ACC4's unconditional family, $A\sim x$ and the mean-value theorem
+for $y\log y$ gives $h=O(e^{-a\sqrt{\log x}})$. Consequently (NPC1)
+gives the estimate used in ACC5: the first term is
+$O(e^{-2a\sqrt{\log x}}/\log x)$, and the second is
+$O(e^{-a\sqrt{\log x}}/(\sqrt x\log x))$, which is smaller.
+The PNT and the constant $a$ are the same as in ACC4. The normalized
+allowance still contains $O(\sqrt x e^{-2a\sqrt{\log x}})$;
+its growth prevents this allowance from paying a root-scale defect
+bound on the whole unconditional family. No lower bound on the
+actual defect is inferred from that growth. The original signed
+Robin integral remains unpaid.
