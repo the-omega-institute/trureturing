@@ -33,6 +33,13 @@ internal sealed class CompleteMertensPeakDocument : IScribeDocumentDefinition
                         + "arXiv:1505.03589v1, the unnumbered identity in the proof of Lemma 4. "
                         + "The finite witness conclusion is derived here.")),
                     Paragraph(Text(
+                        "The Johnston–Yang majorant is integrable after a logarithmic change of "
+                        + "variables. Fubini on the triangle A<s<u gives "
+                        + "integral Q(s)/(s*log(s)^2)=Q(A)/log(A)-integral f(u)/log(u), "
+                        + "where f(u)=(psi(u)-u)/u^2. Substituting Lay's identity into the complete "
+                        + "Mertens formula cancels the Euler constant and proves "
+                        + "E₂Λ(t)=(psi(t)-t)/(t*log(t))-I(t).")),
+                    Paragraph(Text(
                         "The complete weighted Mertens identity relates E₂Λ to I. Completing each "
                         + "prime's positive logarithmic series gives E₂Λ<=-E₃. If E₃ never crosses "
                         + "the actual-lcm response threshold on [A,B], these two facts imply "
