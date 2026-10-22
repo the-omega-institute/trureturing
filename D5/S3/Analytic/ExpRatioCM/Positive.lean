@@ -21,6 +21,48 @@ open D5.S3.Analytic.ExpRatioCM.Series
 
 namespace D5.S3.Analytic.ExpRatioCM.Positive
 
+/-- The zeroth second-family function has one additional constant term. -/
+theorem G_zero_eq {t : ℝ} (ht : 0 < t) : G 0 t = 1 + F 0 t := by
+  simp only [G, F, pow_zero, iteratedDeriv_zero, one_mul]
+  have he : Real.exp t ≠ 0 := (Real.exp_pos t).ne'
+  have h1 : Real.exp t - 1 ≠ 0 := sub_ne_zero.mpr (ne_of_gt (Real.one_lt_exp_iff.mpr ht))
+  rw [Real.exp_neg]
+  field_simp
+  ring
+
+/-- Smoothness of every first-family signed derivative on the positive half-line. -/
+theorem contDiffOn_F (i : ℕ) : ContDiffOn ℝ ⊤ (F i) (Ioi 0) := by
+  have hbase : ContDiffOn ℝ ⊤ (fun s : ℝ => 1 / (Real.exp s - 1)) (Ioi 0) := by
+    apply contDiffOn_const.div (Real.contDiff_exp.contDiffOn.sub contDiffOn_const)
+    intro x hx
+    exact sub_ne_zero.mpr (ne_of_gt (Real.one_lt_exp_iff.mpr hx))
+  have hd (j : ℕ) : ContDiffOn ℝ ⊤
+      (iteratedDeriv j (fun s : ℝ => 1 / (Real.exp s - 1))) (Ioi 0) := by
+    induction j with
+    | zero => simpa using hbase
+    | succ j ih =>
+      rw [iteratedDeriv_succ]
+      exact ih.deriv_of_isOpen isOpen_Ioi (by simp)
+  exact contDiffOn_const.mul (hd i)
+
+/-- All first-family consecutive ratios are smooth on the positive half-line. -/
+theorem contDiffOn_ratioF (i : ℕ) : ContDiffOn ℝ ⊤ (ratioF i) (Ioi 0) := by
+  exact (contDiffOn_F (i + 1)).div (contDiffOn_F i) (fun x hx => (F_pos i hx).ne')
+
+/-- All second-family consecutive ratios are smooth on the positive half-line. -/
+theorem contDiffOn_ratioG (i : ℕ) : ContDiffOn ℝ ⊤ (ratioG i) (Ioi 0) := by
+  have hg (j : ℕ) : ContDiffOn ℝ ⊤ (G j) (Ioi 0) := by
+    cases j with
+    | zero =>
+      exact (contDiffOn_const.add (contDiffOn_F 0)).congr (fun x hx => G_zero_eq hx)
+    | succ j =>
+      exact (contDiffOn_F (j + 1)).congr (fun x hx => G_eq_F (by omega) hx)
+  exact (hg (i + 1)).div (hg i) (by
+    intro x hx
+    cases i with
+    | zero => rw [G_zero_eq hx]; linarith [F_pos 0 hx]
+    | succ i => rw [G_eq_F (by omega : 1 ≤ i + 1) hx]; exact (F_pos _ hx).ne')
+
 /-- Nonnegative exponential moments of all orders imply complete monotonicity. -/
 theorem cm_of_nonnegative_exponential_expansion
     {h : ℝ → ℝ} {c r : ℕ → ℝ}

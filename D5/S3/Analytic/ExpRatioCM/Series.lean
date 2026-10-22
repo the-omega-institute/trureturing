@@ -41,10 +41,6 @@ private lemma reciprocal_eq {t : ℝ} (ht : 0 < t) :
   field_simp
   <;> ring
 
-/-- The zeroth second-family function has one additional constant term. -/
-theorem G_zero_eq {t : ℝ} (ht : 0 < t) : G 0 t = 1 + F 0 t := by
-  simpa [G, F] using reciprocal_eq ht
-
 /-- The positive-order signed derivative families agree on the positive half-line. -/
 theorem G_eq_F {i : ℕ} (hi : 1 ≤ i) {t : ℝ} (ht : 0 < t) : G i t = F i t := by
   have he : (fun s : ℝ => 1 / (1 - Real.exp (-s))) =ᶠ[𝓝 t]
@@ -52,21 +48,6 @@ theorem G_eq_F {i : ℕ} (hi : 1 ≤ i) {t : ℝ} (ht : 0 < t) : G i t = F i t :
     filter_upwards [Ioi_mem_nhds ht] with s hs
     exact reciprocal_eq hs
   rw [G, he.iteratedDeriv_eq i, iteratedDeriv_const_add (by omega : 0 < i), F]
-
-/-- Smoothness of every first-family signed derivative on the positive half-line. -/
-theorem contDiffOn_F (i : ℕ) : ContDiffOn ℝ ⊤ (F i) (Ioi 0) := by
-  have hbase : ContDiffOn ℝ ⊤ (fun s : ℝ => 1 / (Real.exp s - 1)) (Ioi 0) := by
-    apply contDiffOn_const.div (Real.contDiff_exp.contDiffOn.sub contDiffOn_const)
-    intro x hx
-    exact sub_ne_zero.mpr (ne_of_gt (Real.one_lt_exp_iff.mpr hx))
-  have hd (j : ℕ) : ContDiffOn ℝ ⊤
-      (iteratedDeriv j (fun s : ℝ => 1 / (Real.exp s - 1))) (Ioi 0) := by
-    induction j with
-    | zero => simpa using hbase
-    | succ j ih =>
-      rw [iteratedDeriv_succ]
-      exact ih.deriv_of_isOpen isOpen_Ioi (by simp)
-  exact contDiffOn_const.mul (hd i)
 
 private def expMoment (i : ℕ) (t : ℝ) : ℝ :=
   ∑' n : ℕ, ((n + 1 : ℕ) : ℝ) ^ i * Real.exp (-((n + 1 : ℕ) : ℝ) * t)
@@ -144,28 +125,10 @@ theorem F_pos (i : ℕ) {t : ℝ} (ht : 0 < t) : 0 < F i t := by
   rw [F_eq_tsum i ht]
   exact (summable_expMoment i ht).tsum_pos (fun n => by positivity) 0 (by positivity)
 
-/-- All first-family consecutive ratios are smooth on the positive half-line. -/
-theorem contDiffOn_ratioF (i : ℕ) : ContDiffOn ℝ ⊤ (ratioF i) (Ioi 0) := by
-  exact (contDiffOn_F (i + 1)).div (contDiffOn_F i) (fun x hx => (F_pos i hx).ne')
-
 /-- The two consecutive ratios coincide for positive indices. -/
 theorem ratioG_eq_ratioF {i : ℕ} (hi : 1 ≤ i) {t : ℝ} (ht : 0 < t) :
     ratioG i t = ratioF i t := by
   simp only [ratioG, ratioF, G_eq_F hi ht, G_eq_F (by omega : 1 ≤ i + 1) ht]
-
-/-- All second-family consecutive ratios are smooth on the positive half-line. -/
-theorem contDiffOn_ratioG (i : ℕ) : ContDiffOn ℝ ⊤ (ratioG i) (Ioi 0) := by
-  have hg (j : ℕ) : ContDiffOn ℝ ⊤ (G j) (Ioi 0) := by
-    cases j with
-    | zero =>
-      exact (contDiffOn_const.add (contDiffOn_F 0)).congr (fun x hx => G_zero_eq hx)
-    | succ j =>
-      exact (contDiffOn_F (j + 1)).congr (fun x hx => G_eq_F (by omega) hx)
-  exact (hg (i + 1)).div (hg i) (by
-    intro x hx
-    cases i with
-    | zero => rw [G_zero_eq hx]; linarith [F_pos 0 hx]
-    | succ i => rw [G_eq_F (by omega : 1 ≤ i + 1) hx]; exact (F_pos _ hx).ne')
 
 /-- Coefficients of the quotient of consecutive exponential moment series. -/
 def quotCoeff (i : ℕ) (n : ℕ) : ℝ :=

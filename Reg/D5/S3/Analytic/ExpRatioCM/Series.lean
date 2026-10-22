@@ -1,11 +1,11 @@
 import LeanInformationAuditInterface.Contract.Registration
-import D5.S3.Analytic.ExpRatioCM.Series
+import D5.S3.Analytic.ExpRatioCM.Positive
+import D5.S3.Analytic.Interpolation.LogOneSubExpDerivatives
 import Reg.Support.SingleDependentReadout
-import Mathlib.Analysis.Calculus.Deriv.Abs
-import Mathlib.Analysis.Calculus.Deriv.Inv
 
 open _root_.D5.S3.ConceptDynamics.InformationEscape.DependentFamily
 open _root_.D5.S3.Analytic.ExpRatioCM.Series
+open _root_.D5.S3.Analytic.ExpRatioCM.Positive
 open LeanInformationAudit
 
 set_option backward.isDefEq.respectTransparency false
@@ -154,8 +154,6 @@ def zeroMoment : Realization momentSignature :=
   realize momentSignature (fun _ _ _ => 0) (fun e => nomatch e)
 def oneMoment : Realization momentSignature :=
   realize momentSignature (fun _ _ _ => 1) (fun e => nomatch e)
-def nonsmoothMoment : Realization momentSignature :=
-  realize momentSignature (fun _ _ t => |t - 1|) (fun e => nomatch e)
 
 private theorem momentDependence : ObservationalDependence momentSignature momentActual := by
   intro i
@@ -168,16 +166,6 @@ private theorem secondDependence : ObservationalDependence momentSignature secon
   refine ⟨0, 0, Real.log 2, ?_⟩
   change G 0 0 ≠ G 0 (Real.log 2)
   norm_num [G, Real.exp_neg, Real.exp_log (by norm_num : (0 : ℝ) < 2)]
-
-private theorem nonsmoothRejected : ¬ ∀ i : ℕ,
-    ContDiffOn ℝ ⊤ (nonsmoothMoment.readout () i) (Ioi 0) := by
-  intro h
-  have hd : DifferentiableAt ℝ (fun t : ℝ => |t - 1|) 1 :=
-    ((h 0).differentiableOn (by simp) 1 (by norm_num)).differentiableAt
-      (Ioi_mem_nhds (by norm_num : (0 : ℝ) < 1))
-  apply not_differentiableAt_abs_zero
-  simpa only [Function.comp_def, id_eq, add_sub_cancel_right] using
-    (show DifferentiableAt ℝ (fun t : ℝ => |t - 1|) ((fun x : ℝ => x + 1) 0) by simpa using hd).comp (0 : ℝ) ((differentiableAt_id : DifferentiableAt ℝ (fun x : ℝ => x) 0).add_const 1)
 
 namespace Composition
 def arena : Arena where
@@ -329,115 +317,6 @@ def audit : Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0}
 #print axioms audit
 end MomentPositive
 
-namespace MomentSmooth
-def arena : Arena where
-  signature := momentSignature
-  Law R := ∀ i : ℕ, ContDiffOn ℝ ⊤ (R.readout () i) (Ioi 0)
-private theorem rejected : ¬ arena.Law nonsmoothMoment := by
-  exact nonsmoothRejected
-def family : Registration arena (type_of% (@contDiffOn_F)) where
-  actual := momentActual
-  bridge := Iff.rfl
-  variation := ⟨@contDiffOn_F, nonsmoothMoment, rejected⟩
-  sensitivity := _root_.Reg.Support.SingleDependentReadout.sensitivity
-    arena.Law momentActual nonsmoothMoment rejected
-  dependence := momentDependence
-def audit : Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0}
-    (@contDiffOn_F) (Realization momentSignature) Unit Unit where
-  unitName := `Reg.D5.S3.Analytic.ExpRatioCM.Series.MomentSmooth.unit
-  realizationName := `Reg.D5.S3.Analytic.ExpRatioCM.Series.MomentSmooth.family
-  realizationSource := none
-  generated := false
-  arena := .source ⟨arena⟩
-  objectArena := .source ⟨arena⟩
-  catalog := Lean.Name.anonymous
-  localNames := false
-  realization := .source arena ⟨family⟩
-  correspondence := { stage := .evidence, objectStage := .evidence }
-  bundleNonempty := .absent
-  readout := some (realize momentSignature (fun _ i t => F i t) (fun e => nomatch e))
-  variation := .absent
-  sensitivity := .absent
-  partialSensitivity := none
-  escapeFrom := none
-  sourceSelection := some {
-    owner := `D5.S3.Analytic.ExpRatioCM.Series
-    definition := none
-    coordinates := #[0]
-    readouts := #[{
-      path := #["body", "fn", "arg"]
-      stateBinder := 0
-      functionOperand := true
-      stateOperand := none
-      booleanPredicate := false }] }
-  continuation := .unknown
-  familyRecord := none
-  options := #[]
-#print axioms audit
-end MomentSmooth
-
-namespace SecondZero
-abbrev signature : Signature :=
-  _root_.Reg.Support.SingleDependentReadout.signature Unit (fun _ => ℝ) (fun _ => ℝ)
-def actual : Realization signature :=
-  realize signature (fun _ _ t => G 0 t) (fun e => nomatch e)
-def bad : Realization signature :=
-  realize signature (fun _ _ _ => 0) (fun e => nomatch e)
-private theorem dependence : ObservationalDependence signature actual := by
-  intro i
-  refine ⟨(), 0, Real.log 2, ?_⟩
-  change G 0 0 ≠ G 0 (Real.log 2)
-  norm_num [G, Real.exp_neg, Real.exp_log (by norm_num : (0 : ℝ) < 2)]
-def arena : Arena where
-  signature := signature
-  Law R := ∀ {t : ℝ}, 0 < t → R.readout () () t = 1 + F 0 t
-private theorem rejected : ¬ arena.Law bad := by
-  intro h
-  have hh := h (t := 1) (by norm_num)
-  have hp := F_pos 0 (t := 1) (by norm_num)
-  change 0 = 1 + F 0 1 at hh
-  linarith
-def family : Registration arena (type_of% (@G_zero_eq)) where
-  actual := actual
-  bridge := Iff.rfl
-  variation := ⟨@G_zero_eq, bad, rejected⟩
-  sensitivity := _root_.Reg.Support.SingleDependentReadout.sensitivity
-    arena.Law actual bad rejected
-  dependence := dependence
-def audit : Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0}
-    (@G_zero_eq) (Realization signature) Unit Unit where
-  unitName := `Reg.D5.S3.Analytic.ExpRatioCM.Series.SecondZero.unit
-  realizationName := `Reg.D5.S3.Analytic.ExpRatioCM.Series.SecondZero.family
-  realizationSource := none
-  generated := false
-  arena := .source ⟨arena⟩
-  objectArena := .source ⟨arena⟩
-  catalog := Lean.Name.anonymous
-  localNames := false
-  realization := .source arena ⟨family⟩
-  correspondence := { stage := .evidence, objectStage := .evidence }
-  bundleNonempty := .absent
-  readout := some (realize signature (fun _ _ t => G 0 t) (fun e => nomatch e))
-  variation := .absent
-  sensitivity := .absent
-  partialSensitivity := none
-  escapeFrom := none
-  sourceSelection := some {
-    owner := `D5.S3.Analytic.ExpRatioCM.Series
-    definition := none
-    coordinates := #[]
-    readouts := #[{
-      path := #["body", "body", "fn", "arg"]
-      stateBinder := 0
-      functionOperand := false
-      stateOperand := some #["arg"]
-      booleanPredicate := false }] }
-  continuation := .unknown
-  familyRecord := none
-  options := #[]
-#print axioms audit
-end SecondZero
-
 namespace SecondPositiveOrder
 def arena : Arena where
   signature := momentSignature
@@ -497,16 +376,20 @@ def secondRatioActual : Realization momentSignature :=
 private theorem ratioZero {t : ℝ} (ht : 0 < t) :
     ratioF 0 t = Real.exp t / (Real.exp t - 1) := by
   have hn : Real.exp t - 1 ≠ 0 := sub_ne_zero.mpr (ne_of_gt (Real.one_lt_exp_iff.mpr ht))
-  have hd : HasDerivAt (fun x : ℝ => 1 / (Real.exp x - 1))
-      (-(Real.exp t) / (Real.exp t - 1) ^ 2) t := by
-    convert ((Real.hasDerivAt_exp t).sub_const 1).inv hn using 1
-    ext x
-    simp only [Pi.inv_apply, one_div]
+  have he : deriv (fun x : ℝ => Real.log (1 - Real.exp (-x))) =ᶠ[𝓝 t] F 0 := by
+    filter_upwards [Ioi_mem_nhds ht] with x hx
+    simpa only [F, pow_zero, iteratedDeriv_zero, one_mul] using
+      (D5.S3.Analytic.Interpolation.LogOneSubExpDerivatives.log_one_sub_exp_derivatives.2 x hx).1
+  have hd := (D5.S3.Analytic.Interpolation.LogOneSubExpDerivatives.log_one_sub_exp_derivatives.2 t ht).2.1
+  rw [show (2 : ℕ) = 1 + 1 from rfl, iteratedDeriv_succ', he.iteratedDeriv_eq 1,
+    iteratedDeriv_F] at hd
+  norm_num only [zero_add, pow_one, neg_mul, one_mul] at hd
+  rw [neg_div] at hd
+  have hf := neg_injective hd
   change F 1 t / F 0 t = _
-  simp only [F, pow_one, iteratedDeriv_one, pow_zero, iteratedDeriv_zero, one_mul]
-  rw [hd.deriv]
+  rw [hf]
+  simp only [F, pow_zero, iteratedDeriv_zero, one_mul]
   field_simp
-  <;> ring
 
 private theorem ratioDependence : ObservationalDependence momentSignature ratioActual := by
   intro i
@@ -539,100 +422,6 @@ def shiftedRatio : Realization momentSignature :=
   realize momentSignature (fun _ i t => ratioF i t + 1) (fun e => nomatch e)
 def tiltedRatio : Realization momentSignature :=
   realize momentSignature (fun _ i t => ratioF i t + t) (fun e => nomatch e)
-
-namespace FirstRatioSmooth
-def arena : Arena where
-  signature := momentSignature
-  Law R := ∀ i : ℕ, ContDiffOn ℝ ⊤ (R.readout () i) (Ioi 0)
-private theorem rejected : ¬ arena.Law nonsmoothMoment := by
-  exact nonsmoothRejected
-def family : Registration arena (type_of% (@contDiffOn_ratioF)) where
-  actual := ratioActual
-  bridge := Iff.rfl
-  variation := ⟨@contDiffOn_ratioF, nonsmoothMoment, rejected⟩
-  sensitivity := _root_.Reg.Support.SingleDependentReadout.sensitivity
-    arena.Law ratioActual nonsmoothMoment rejected
-  dependence := ratioDependence
-def audit : Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0}
-    (@contDiffOn_ratioF) (Realization momentSignature) Unit Unit where
-  unitName := `Reg.D5.S3.Analytic.ExpRatioCM.Series.FirstRatioSmooth.unit
-  realizationName := `Reg.D5.S3.Analytic.ExpRatioCM.Series.FirstRatioSmooth.family
-  realizationSource := none
-  generated := false
-  arena := .source ⟨arena⟩
-  objectArena := .source ⟨arena⟩
-  catalog := Lean.Name.anonymous
-  localNames := false
-  realization := .source arena ⟨family⟩
-  correspondence := { stage := .evidence, objectStage := .evidence }
-  bundleNonempty := .absent
-  readout := some (realize momentSignature (fun _ i t => ratioF i t) (fun e => nomatch e))
-  variation := .absent
-  sensitivity := .absent
-  partialSensitivity := none
-  escapeFrom := none
-  sourceSelection := some {
-    owner := `D5.S3.Analytic.ExpRatioCM.Series
-    definition := none
-    coordinates := #[0]
-    readouts := #[{
-      path := #["body", "fn", "arg"]
-      stateBinder := 0
-      functionOperand := true
-      stateOperand := none
-      booleanPredicate := false }] }
-  continuation := .unknown
-  familyRecord := none
-  options := #[]
-#print axioms audit
-end FirstRatioSmooth
-
-namespace SecondRatioSmooth
-def arena : Arena where
-  signature := momentSignature
-  Law R := ∀ i : ℕ, ContDiffOn ℝ ⊤ (R.readout () i) (Ioi 0)
-private theorem rejected : ¬ arena.Law nonsmoothMoment := by
-  exact nonsmoothRejected
-def family : Registration arena (type_of% (@contDiffOn_ratioG)) where
-  actual := secondRatioActual
-  bridge := Iff.rfl
-  variation := ⟨@contDiffOn_ratioG, nonsmoothMoment, rejected⟩
-  sensitivity := _root_.Reg.Support.SingleDependentReadout.sensitivity
-    arena.Law secondRatioActual nonsmoothMoment rejected
-  dependence := secondRatioDependence
-def audit : Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0}
-    (@contDiffOn_ratioG) (Realization momentSignature) Unit Unit where
-  unitName := `Reg.D5.S3.Analytic.ExpRatioCM.Series.SecondRatioSmooth.unit
-  realizationName := `Reg.D5.S3.Analytic.ExpRatioCM.Series.SecondRatioSmooth.family
-  realizationSource := none
-  generated := false
-  arena := .source ⟨arena⟩
-  objectArena := .source ⟨arena⟩
-  catalog := Lean.Name.anonymous
-  localNames := false
-  realization := .source arena ⟨family⟩
-  correspondence := { stage := .evidence, objectStage := .evidence }
-  bundleNonempty := .absent
-  readout := some (realize momentSignature (fun _ i t => ratioG i t) (fun e => nomatch e))
-  variation := .absent
-  sensitivity := .absent
-  partialSensitivity := none
-  escapeFrom := none
-  sourceSelection := some {
-    owner := `D5.S3.Analytic.ExpRatioCM.Series
-    definition := none
-    coordinates := #[0]
-    readouts := #[{
-      path := #["body", "fn", "arg"]
-      stateBinder := 0
-      functionOperand := true
-      stateOperand := none
-      booleanPredicate := false }] }
-  continuation := .unknown
-  familyRecord := none
-  options := #[]
-#print axioms audit
-end SecondRatioSmooth
 
 namespace RatioAgreement
 def arena : Arena where

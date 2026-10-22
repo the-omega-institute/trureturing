@@ -16,19 +16,7 @@ Lean statement: `D5/S3/Analytic/ExpRatioCM/Series.iteratedDeriv_F`
 
 For natural i and k and every real t, the k-th derivative of F(i) is (-1)^k F(i+k). The differentiation operation is iterated on globally defined functions.
 
-**Theorem 1.2 (The constant term in the second family).**
-
-Lean statement: `D5/S3/Analytic/ExpRatioCM/Series.G_zero_eq`
-
-*Proof.* Machine-checked in Lean as `D5/S3/Analytic/ExpRatioCM/Series.G_zero_eq` (`✓ std3`). ∎
-
-*Source.* Repository-derived.
-
-*Commentary.*
-
-For positive t, G(0,t) equals 1+F(0,t).
-
-**Theorem 1.3 (Equality at positive orders).**
+**Theorem 1.2 (Equality at positive orders).**
 
 Lean statement: `D5/S3/Analytic/ExpRatioCM/Series.G_eq_F`
 
@@ -40,19 +28,7 @@ Lean statement: `D5/S3/Analytic/ExpRatioCM/Series.G_eq_F`
 
 For i at least one and t positive, G(i,t)=F(i,t). The reciprocal identity holds on a neighborhood of t, so its derivatives agree there.
 
-**Theorem 1.4 (Smooth exponential moments).**
-
-Lean statement: `D5/S3/Analytic/ExpRatioCM/Series.contDiffOn_F`
-
-*Proof.* Machine-checked in Lean as `D5/S3/Analytic/ExpRatioCM/Series.contDiffOn_F` (`✓ std3`). ∎
-
-*Source.* Repository-derived.
-
-*Commentary.*
-
-Every F(i) is smooth on the positive half-line.
-
-**Theorem 1.5 (The exponential moment expansion).**
+**Theorem 1.3 (The exponential moment expansion).**
 
 Lean statement: `D5/S3/Analytic/ExpRatioCM/Series.F_eq_tsum`
 
@@ -64,7 +40,7 @@ Lean statement: `D5/S3/Analytic/ExpRatioCM/Series.F_eq_tsum`
 
 For positive t, F(i,t) is the sum over natural n of (n+1)^i exp(-(n+1)t). Polynomially weighted geometric convergence supplies locally uniform derivative bounds.
 
-**Theorem 1.6 (Strictly positive moments).**
+**Theorem 1.4 (Strictly positive moments).**
 
 Lean statement: `D5/S3/Analytic/ExpRatioCM/Series.F_pos`
 
@@ -76,19 +52,7 @@ Lean statement: `D5/S3/Analytic/ExpRatioCM/Series.F_pos`
 
 Every F(i,t) is strictly positive when t is positive. Each term in its convergent exponential expansion is positive.
 
-**Theorem 1.7 (Smooth first ratios).**
-
-Lean statement: `D5/S3/Analytic/ExpRatioCM/Series.contDiffOn_ratioF`
-
-*Proof.* Machine-checked in Lean as `D5/S3/Analytic/ExpRatioCM/Series.contDiffOn_ratioF` (`✓ std3`). ∎
-
-*Source.* Repository-derived.
-
-*Commentary.*
-
-The quotient F(i+1)/F(i) is smooth on the positive half-line because its denominator is strictly positive.
-
-**Theorem 1.8 (Equality of positive-index ratios).**
+**Theorem 1.5 (Equality of positive-index ratios).**
 
 Lean statement: `D5/S3/Analytic/ExpRatioCM/Series.ratioG_eq_ratioF`
 
@@ -100,19 +64,7 @@ Lean statement: `D5/S3/Analytic/ExpRatioCM/Series.ratioG_eq_ratioF`
 
 For i at least one and t positive, the ratios of the two derivative families agree.
 
-**Theorem 1.9 (Smooth second ratios).**
-
-Lean statement: `D5/S3/Analytic/ExpRatioCM/Series.contDiffOn_ratioG`
-
-*Proof.* Machine-checked in Lean as `D5/S3/Analytic/ExpRatioCM/Series.contDiffOn_ratioG` (`✓ std3`). ∎
-
-*Source.* Repository-derived.
-
-*Commentary.*
-
-The second consecutive ratios are smooth on the positive half-line. The zeroth denominator equals 1+F(0), and the positive-order denominators equal the corresponding F moments.
-
-**Definition 1.10 (The quotient coefficient recurrence).**
+**Definition 1.6 (The quotient coefficient recurrence).**
 
 Lean statement: `D5/S3/Analytic/ExpRatioCM/Series.quotCoeff`
 
@@ -124,7 +76,7 @@ Lean statement: `D5/S3/Analytic/ExpRatioCM/Series.quotCoeff`
 
 The zeroth coefficient is one. At positive n the coefficient is (n+1)^(i+1) minus the sum over j from zero to n-1 of (j+2)^i times the coefficient at n-1-j.
 
-**Theorem 1.11 (The second quotient coefficient).**
+**Theorem 1.7 (The second quotient coefficient).**
 
 Lean statement: `D5/S3/Analytic/ExpRatioCM/Series.quotCoeff_two`
 
@@ -136,7 +88,7 @@ Lean statement: `D5/S3/Analytic/ExpRatioCM/Series.quotCoeff_two`
 
 For every natural i, the coefficient at index two equals 2 times 3^i minus 4^i.
 
-**Theorem 1.12 (A geometric coefficient bound).**
+**Theorem 1.8 (A geometric coefficient bound).**
 
 Lean statement: `D5/S3/Analytic/ExpRatioCM/Series.abs_quotCoeff_le`
 
@@ -148,7 +100,7 @@ Lean statement: `D5/S3/Analytic/ExpRatioCM/Series.abs_quotCoeff_le`
 
 For B=2^(i+2), the absolute value of the n-th quotient coefficient is at most B^n. A weighted geometric convolution bounds the recursive contribution by B^n/3 and the numerator contribution by B^n/2.
 
-**Theorem 1.13 (The quotient expansion).**
+**Theorem 1.9 (The quotient expansion).**
 
 Lean statement: `D5/S3/Analytic/ExpRatioCM/Series.ratioF_eq_tsum`
 
@@ -160,7 +112,7 @@ Lean statement: `D5/S3/Analytic/ExpRatioCM/Series.ratioF_eq_tsum`
 
 For t greater than log(2^(i+2)), the first ratio equals the sum of b(n) exp(-nt). The absolutely convergent Cauchy product reduces this identity to the coefficient recurrence, and the denominator is positive.
 
-**Theorem 1.14 (Signed derivatives of the quotient expansion).**
+**Theorem 1.10 (Signed derivatives of the quotient expansion).**
 
 Lean statement: `D5/S3/Analytic/ExpRatioCM/Series.iteratedDeriv_ratioF`
 
@@ -177,11 +129,7 @@ For positive k and t greater than log(2^(i+2)), the signed k-th derivative of th
 - Truth anchor: `D5/S3/Analytic/ExpRatioCM/Series.F_eq_tsum`
 - Truth anchor: `D5/S3/Analytic/ExpRatioCM/Series.F_pos`
 - Truth anchor: `D5/S3/Analytic/ExpRatioCM/Series.G_eq_F`
-- Truth anchor: `D5/S3/Analytic/ExpRatioCM/Series.G_zero_eq`
 - Truth anchor: `D5/S3/Analytic/ExpRatioCM/Series.abs_quotCoeff_le`
-- Truth anchor: `D5/S3/Analytic/ExpRatioCM/Series.contDiffOn_F`
-- Truth anchor: `D5/S3/Analytic/ExpRatioCM/Series.contDiffOn_ratioF`
-- Truth anchor: `D5/S3/Analytic/ExpRatioCM/Series.contDiffOn_ratioG`
 - Truth anchor: `D5/S3/Analytic/ExpRatioCM/Series.iteratedDeriv_F`
 - Truth anchor: `D5/S3/Analytic/ExpRatioCM/Series.iteratedDeriv_ratioF`
 - Truth anchor: `D5/S3/Analytic/ExpRatioCM/Series.quotCoeff`

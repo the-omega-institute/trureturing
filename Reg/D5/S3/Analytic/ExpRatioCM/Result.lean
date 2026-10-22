@@ -35,7 +35,7 @@ def family : Registration arena (type_of% @failure_on_every_tail) where
   variation := ⟨@failure_on_every_tail, rejectedFamily, rejected⟩
   sensitivity := _root_.Reg.Support.SingleDependentReadout.sensitivity
     arena.Law actual rejectedFamily rejected
-  dependence := _root_.Reg.D5.S3.Analytic.ExpRatioCM.Series.FirstRatioSmooth.family.dependence
+  dependence := _root_.Reg.D5.S3.Analytic.ExpRatioCM.Series.RatioExpansion.family.dependence
 
 def audit : Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0}
     (@failure_on_every_tail) (Realization signature) Unit Unit where
