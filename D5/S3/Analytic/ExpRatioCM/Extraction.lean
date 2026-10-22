@@ -169,26 +169,4 @@ theorem quotient_extraction_limit (i : ℕ) :
   rw [heq]
   ring
 
-/-- A negative extracted coefficient rules out complete monotonicity. -/
-theorem not_completelyMonotone_of_extraction
-    {h : ℝ → ℝ} {b : ℕ → ℝ}
-    (hlim : Tendsto (fun k : ℕ =>
-      (49 / 32 : ℝ) ^ k *
-        ((-1 : ℝ) ^ k * iteratedDeriv k h (k * Real.log (7 / 4))))
-      atTop (𝓝 (b 2)))
-    (hb : b 2 < 0) :
-    ¬ CompletelyMonotoneOn h := by
-  intro hcm
-  have hnonneg : ∀ᶠ k : ℕ in atTop,
-      0 ≤ (49 / 32 : ℝ) ^ k *
-        ((-1 : ℝ) ^ k * iteratedDeriv k h (k * Real.log (7 / 4))) := by
-    filter_upwards [eventually_ge_atTop 1] with k hk
-    have ht : 0 < (k : ℝ) * Real.log (7 / 4) := by
-      have hlog : 0 < Real.log (7 / 4) := Real.log_pos (by norm_num)
-      positivity
-    have hd := hcm.2 k ((k : ℝ) * Real.log (7 / 4)) ht
-    exact mul_nonneg (by positivity) hd
-  have hmem : b 2 ∈ Set.Ici 0 := isClosed_Ici.mem_of_tendsto hlim hnonneg
-  exact (not_le_of_gt hb) hmem
-
 end D5.S3.Analytic.ExpRatioCM.Extraction

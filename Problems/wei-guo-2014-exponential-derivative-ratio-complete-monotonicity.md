@@ -43,7 +43,7 @@ All Lean names below have prefix `D5.S3.Analytic.ExpRatioCM`.
 | $\mathcal G_i$ in (10) | `Defs.ratioG` | Exactly $G_{i+1}/G_i$. The denominator is positive for $t>0$. |
 | Complete monotonicity | `Defs.CompletelyMonotoneOn` | `ContDiffOn` with smoothness index `⊤` on `Set.Ioi 0`, and the sign condition for every natural derivative order at every positive argument. |
 | Conjecture 12 | `Defs.claim` | Both complete-monotonicity assertions for every natural index, including zero. |
-| Exact index sets | `Positive.cm_of_le_two`, `Result.not_cm_of_three_le` | The positive theorem covers $i\le2$, while the failure theorem excludes every $i\ge3$. |
+| Exact index sets | `Positive.cm_of_le_two`, `Result.failure_on_every_tail` | The positive theorem covers $i\le2$, while the failure theorem excludes every $i\ge3$. |
 | Failure on every right half-line | `Result.failure_on_every_tail` | For every $i\ge3$ and real $T$, there are a natural $k$ and $t>\max\{T,0\}$ at which both alternating derivatives are negative. |
 | Universal refutation | `Result.result` | Exactly $\neg\,\texttt{Defs.claim}$. |
 
@@ -53,14 +53,14 @@ No derivative value at zero is used.
 
 ## Motivation
 
-The settling declaration is `D5/S3/Analytic/ExpRatioCM/Result.result`.
+The refutation declaration is `D5/S3/Analytic/ExpRatioCM/Result.result`.
 Decreasingness controls the first derivative; complete monotonicity
 requires simultaneous sign constraints at every order. Exponential
 coefficients provide a way to distinguish these requirements.
 
 ## Gap
 
-Status: **Refuted**. The exact completely monotone indices for each
+Status: **PROVED** (refutation). The exact completely monotone indices for each
 family are $\{0,1,2\}$. At every index $i\ge3$, both families have a
 negative alternating derivative on every interval $(T,\infty)$.
 The smallest order producing any negative value, as a function of the
@@ -116,33 +116,40 @@ $\mathcal F_2=1+4F_0(t)-2F_0(2t)$ has coefficient four at positive
 odd frequencies and coefficient two at positive even frequencies.
 The formal sign argument uses the even-subseries inequality
 $2^kF_k(2t)\le F_k(t)$. The positive-index ratios of the two families
-coincide, completing the positive range; `Result.not_cm_of_three_le` excludes every index at least three.
+coincide, completing the positive range; `Result.failure_on_every_tail` excludes every index at least three.
 
 ## Falsifier
 
 One index and one positive argument with a negative alternating
 derivative refute the universal assertion. Index three supplies such
 values. A completely monotone ratio at any index at least three would
-contradict `Result.not_cm_of_three_le`. The decreasing property alone
+contradict `Result.failure_on_every_tail`. The decreasing property alone
 does not imply the higher-order sign conditions.
 
 ## Evidence
 
 `D5/S3/Analytic/ExpRatioCM/Result.result` proves exactly
-`result : ¬ claim`. Its principal dependencies are
-`Positive.cm_of_le_two`, `Result.not_cm_of_three_le`,
-`Result.failure_on_every_tail`,
-`Extraction.quotient_extraction_limit` and `Positive.cm_of_le_two`.
-The extraction uses `Series.abs_quotCoeff_le`,
-`Series.iteratedDeriv_ratioF` and `Series.quotCoeff_two`.
-The positive cases use the moment expansion and the low-index closed
-forms. The axiom closure of the result is exactly
+`result : ¬ claim`. It specializes `Result.failure_on_every_tail` to
+index three and threshold zero, then contradicts the complete-monotonicity
+sign conditions using both negative alternating derivatives at the
+supplied positive point. The failure theorem uses
+`Extraction.quotient_extraction_limit`, whose limit decomposition uses
+`Extraction.extraction_limit`. The extraction uses `Series.abs_quotCoeff_le`
+and `Series.iteratedDeriv_ratioF`; negativity follows from
+`Series.quotCoeff_two`.
+
+The positive cases are an independently proved component:
+`Positive.cm_of_le_two` uses the moment expansion and the low-index closed
+forms, reusing `Interpolation.LogOneSubExpDerivatives.log_one_sub_exp_derivatives`
+for the first two signed moment identities. This component is not a
+dependency of `Result.result`.
+The axiom closure of the result is exactly
 `{propext, Classical.choice, Quot.sound}`.
 
 The refutation route was derived with the assistance of the ChatGPT Pro model.
 Guo–Qi, arXiv:2201.06970, Section 5, Proposition 5.1, strengthens the
 decreasing property to the range $(1,\infty)$ and does not address
-complete monotonicity of the ratios. No settlement was found in the
+complete monotonicity of the ratios. No proof or refutation was found in the
 searched scope consisting of the title, DOI and conjecture queries;
 Proskurnikov–Runvik–Medvedev, arXiv:2302.01364, Appendix B;
 Formal Conjectures; conjectures.io; and the corresponding repository
@@ -155,7 +162,7 @@ exhaustive citation-index coverage or priority.
 - **PROVED.** $\mathcal F_i$ and $\mathcal G_i$ are completely
   monotonic on $(0,\infty)$ for $i\le2$ by `Positive.cm_of_le_two`,
   and fail complete monotonicity for $i\ge3$ by
-  `Result.not_cm_of_three_le`.
+  `Result.failure_on_every_tail`.
 - **PROVED.** For every $i\ge3$, failure occurs on every interval
   $(T,\infty)$, by `Result.failure_on_every_tail`; the two families
   have negative alternating derivatives at the same order and point.
@@ -178,10 +185,10 @@ exhaustive citation-index coverage or priority.
   $(-1)^k\mathcal F_i^{(k)}$ first takes a negative value somewhere
   on $(0,\infty)$, as a function of $i\ge3$.
 
-## ASSUMED-UNVERIFIED
+## Scope
 
 Exhaustive citation-index coverage and priority are unverified.
 The bounded literature conclusions do not assert the absence of a
-settlement outside that scope. The numerical evaluations have no
+proof or refutation outside that scope. The numerical evaluations have no
 certified rounding bounds; the sign and classification conclusions
 instead follow from the formal derivative and limit arguments.

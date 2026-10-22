@@ -59,19 +59,11 @@ theorem failure_on_every_tail (i : ℕ) (hi : 3 ≤ i) (T : ℝ) :
   rw [he.iteratedDeriv_eq k]
   exact hd
 
-/-- Complete monotonicity fails at every index at least three. -/
-theorem not_cm_of_three_le (i : ℕ) (hi : 3 ≤ i) :
-    ¬ CompletelyMonotoneOn (ratioF i) ∧ ¬ CompletelyMonotoneOn (ratioG i) := by
-  obtain ⟨k, t, _, ht, _hF, hG⟩ := failure_on_every_tail i hi 0
-  have hb : quotCoeff i 2 < 0 := by
-    rw [quotCoeff_two]
-    exact coeff_two_negative hi
-  exact ⟨not_completelyMonotone_of_extraction (quotient_extraction_limit i) hb,
-    fun h => (not_le_of_gt hG) (h.2 k t ht)⟩
-
 /-- The universal assertion about consecutive signed derivative ratios is false. -/
 theorem result : ¬ claim := by
   intro hclaim
-  exact (not_cm_of_three_le 3 le_rfl).1 (hclaim 3).1
+  obtain ⟨k, t, hT, ht, hF, hG⟩ := failure_on_every_tail 3 le_rfl 0
+  have hnonneg := add_nonneg ((hclaim 3).1.2 k t hT) ((hclaim 3).2.2 k t ht)
+  exact (not_le_of_gt (add_neg hF hG)) hnonneg
 
 end D5.S3.Analytic.ExpRatioCM.Result

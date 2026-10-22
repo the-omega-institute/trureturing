@@ -72,60 +72,6 @@ def audit : Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0}
 #print axioms audit
 end EveryTail
 
-namespace Failure
-
-def arena : Arena where
-  signature := signature
-  Law R := ∀ (i : ℕ), 3 ≤ i →
-    ¬ CompletelyMonotoneOn (R.readout () i) ∧ ¬ CompletelyMonotoneOn (ratioG i)
-
-private theorem rejected : ¬ arena.Law rejectedFamily := by
-  intro h
-  exact (h 3 (by norm_num)).1
-    _root_.Reg.D5.S3.Analytic.ExpRatioCM.Extraction.zero_cm
-
-def family : Registration arena (type_of% @not_cm_of_three_le) where
-  actual := actual
-  bridge := Iff.rfl
-  variation := ⟨@not_cm_of_three_le, rejectedFamily, rejected⟩
-  sensitivity := _root_.Reg.Support.SingleDependentReadout.sensitivity
-    arena.Law actual rejectedFamily rejected
-  dependence := _root_.Reg.D5.S3.Analytic.ExpRatioCM.Series.FirstRatioSmooth.family.dependence
-
-def audit : Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0}
-    (@not_cm_of_three_le) (Realization signature) Unit Unit where
-  unitName := `Reg.D5.S3.Analytic.ExpRatioCM.Result.Failure.unit
-  realizationName := `Reg.D5.S3.Analytic.ExpRatioCM.Result.Failure.family
-  realizationSource := none
-  generated := false
-  arena := .source ⟨arena⟩
-  objectArena := .source ⟨arena⟩
-  catalog := Lean.Name.anonymous
-  localNames := false
-  realization := .source arena ⟨family⟩
-  correspondence := { stage := .evidence, objectStage := .evidence }
-  bundleNonempty := .absent
-  readout := some (realize signature (fun _ i t => ratioF i t) (fun e => nomatch e))
-  variation := .absent
-  sensitivity := .absent
-  partialSensitivity := none
-  escapeFrom := none
-  sourceSelection := some {
-    owner := `D5.S3.Analytic.ExpRatioCM.Result
-    definition := none
-    coordinates := #[0]
-    readouts := #[{
-      path := #["body", "body", "fn", "arg", "arg", "arg"]
-      stateBinder := 0
-      functionOperand := true
-      stateOperand := none
-      booleanPredicate := false }] }
-  continuation := .unknown
-  familyRecord := none
-  options := #[]
-
-#print axioms audit
-end Failure
 
 end Reg.D5.S3.Analytic.ExpRatioCM.Result
 end

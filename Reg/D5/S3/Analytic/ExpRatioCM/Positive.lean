@@ -11,8 +11,14 @@ open Set
 noncomputable section
 namespace Reg.D5.S3.Analytic.ExpRatioCM.Positive
 
-abbrev functionSignature := _root_.Reg.D5.S3.Analytic.ExpRatioCM.Extraction.functionSignature
-abbrev functionActual := _root_.Reg.D5.S3.Analytic.ExpRatioCM.Extraction.functionActual
+abbrev functionSignature : Signature :=
+  _root_.Reg.Support.SingleDependentReadout.signature (ℝ → ℝ) (fun _ => ℝ) (fun _ => ℝ)
+def functionActual : Realization functionSignature :=
+  realize functionSignature (fun _ h t => h t) (fun e => nomatch e)
+private theorem functionDependence : ObservationalDependence functionSignature functionActual := by
+  intro i
+  refine ⟨id, 0, 1, ?_⟩
+  norm_num [functionActual, realize]
 
 def negativeFunction : Realization functionSignature :=
   realize functionSignature (fun _ _ _ => (-1 : ℝ)) (fun e => nomatch e)
@@ -46,7 +52,7 @@ def family : Registration arena (type_of% @cm_of_nonnegative_exponential_expansi
   variation := ⟨@cm_of_nonnegative_exponential_expansion, negativeFunction, rejected⟩
   sensitivity := _root_.Reg.Support.SingleDependentReadout.sensitivity
     arena.Law functionActual negativeFunction rejected
-  dependence := _root_.Reg.D5.S3.Analytic.ExpRatioCM.Extraction.Obstruction.family.dependence
+  dependence := functionDependence
 
 def audit : Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0}
     (@cm_of_nonnegative_exponential_expansion) (Realization functionSignature) Unit Unit where
