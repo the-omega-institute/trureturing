@@ -9,6 +9,7 @@ claim: "The paper conjectures that for stabilizer states and q ≥ 4 the q-parti
 strata_touched:
   - D5/S3/Quantum/Entanglement/StabilizerMultiEntropyCollapse
   - D5/S3/Combinatorics/Partitions/TernaryPartitionOrbit
+  - D5/S3/Combinatorics/Partitions/TernaryPartitionCounting
 license: citation-only
 triage: anchor
 ---
@@ -107,4 +108,4 @@ growth for an existing conclusion, with no new unique-solve or global-priority
 claim. The existing closed project resolution #13575 and its resolution slug
 remain the historical project record.
 
-TernaryPartitionOrbit classifies opposite nonzero ternary modes by anchored equality partitions over an arbitrary index type. StabilizerMultiEntropyCollapse now consumes that classification in its original partition_count proof: arbitrary surjective mergers give quotient colourings, subtracting the quotient colouring's value at its chosen target anchor preserves its equality partition, and representative selection gives a bijection that transports arbitrary weighted partition sums. Four anchored labels have thirteen nonconstant ternary patterns; the fifteen-element partition catalogue verifies the coefficients of the full term, six pair mergers, four singleton cuts and three balanced cuts. This supplies a structural counting argument for the four-party, n=3 relation in Eq. (3). It does not identify a Coxeter group, prove a general partition coefficient formula, or settle other party counts, replica indices, mixed states or qudit analogues.
+TernaryPartitionOrbit classifies opposite nonzero ternary modes by anchored equality partitions over an arbitrary index type. TernaryPartitionCounting consumes that classification in its arbitrary-index merger_sum_transport and arbitrary-weight result, which StabilizerMultiEntropyCollapse uses in its original partition_count proof: arbitrary surjective mergers give quotient colourings, subtracting the quotient colouring's value at its chosen target anchor preserves its equality partition, and representative selection gives a bijection that transports arbitrary weighted partition sums. Four anchored labels have thirteen nonconstant ternary patterns; the fifteen-element partition catalogue verifies the coefficients of the full term, six pair mergers, four singleton cuts and three balanced cuts. This supplies a structural counting argument for the four-party, n=3 relation in Eq. (3). It does not identify a Coxeter group, prove a general partition coefficient formula, or settle other party counts, replica indices, mixed states or qudit analogues.
