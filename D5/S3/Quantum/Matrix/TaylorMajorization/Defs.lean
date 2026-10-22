@@ -7,6 +7,7 @@
    digest: Taylor coefficients and sorted spectral weak majorization for Hermitian matrices. -/
 
 import Mathlib
+import D5.S3.Weil.ZetaLinear.PosIndex
 
 noncomputable section
 open Matrix BigOperators
@@ -54,9 +55,8 @@ theorem weakMaj_trace {X Y : Matrix (Fin n) (Fin n) ℂ}
     X.trace.re ≤ Y.trace.re := by
   have hs (M : Matrix (Fin n) (Fin n) ℂ) (hM : M.IsHermitian) :
       M.trace.re = ∑ i, hM.eigenvalues₀ i := by
-    rw [hM.trace_eq_sum_eigenvalues, Complex.re_sum]
-    simp only [Matrix.IsHermitian.eigenvalues]
-    exact (Equiv.sum_comp (Fintype.equivOfCardEq (Fintype.card_fin _)).symm _)
+    exact (RHLinalg.rtrace_eq_sum_eigenvalues hM).trans
+      (RHLinalg.sum_eigenvalues_reindex hM id)
   rw [hs X hX, hs Y hY]
   simpa only [show ∀ i : Fin (Fintype.card (Fin n)), i.val < n from
     fun i => by simpa using i.isLt, ite_true] using h n le_rfl
