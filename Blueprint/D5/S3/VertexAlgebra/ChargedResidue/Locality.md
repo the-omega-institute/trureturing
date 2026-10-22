@@ -23,6 +23,6 @@ Both projections are expanded into their reflected charge components. All four c
 ## References
 
 - Truth anchor: `D5/S3/VertexAlgebra/ChargedResidue/Locality.chargedPhysicalResidueRow_tail`
+- Dependency: [D5/S3/VertexAlgebra/ChargedResidue/LatticeHalfFockChargedResidue](LatticeHalfFockChargedResidue.md)
 - Dependency: [D5/S3/VertexAlgebra/GroundRightCurrentTransport/Residue](../GroundRightCurrentTransport/Residue.md)
-- Dependency: [D5/S3/VertexAlgebra/LatticeHalfFockChargedResidue](../LatticeHalfFockChargedResidue.md)
 - Dependency: [D5/S3/VertexAlgebra/LatticeHalfFockPhysicalWordLocality](../LatticeHalfFockPhysicalWordLocality.md)

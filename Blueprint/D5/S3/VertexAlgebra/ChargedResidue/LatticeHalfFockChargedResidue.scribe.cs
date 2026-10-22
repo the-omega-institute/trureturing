@@ -15,7 +15,7 @@ internal sealed class LatticeHalfFockChargedResidueDocument : IScribeDocumentDef
                 + "integerBinomial convention.")),
             Describe.Lean(
                 DescribeId.Create("charged-residue-ground-source-collision"),
-                DeclarationHandle.Create("D5/S3/VertexAlgebra/LatticeHalfFockChargedResidue.charged_ground_source_collision"),
+                DeclarationHandle.Create("D5/S3/VertexAlgebra/ChargedResidue/LatticeHalfFockChargedResidue.charged_ground_source_collision"),
                 H("The public all-N source comparison is composed on all four projected components"),
                 StatementSource.WithoutFormula(),
                 AssessedProvenance.FromRepo(LibraryNoteRef.Create("D5/L/VertexAlgebra/flm1988monster")),
@@ -26,7 +26,7 @@ internal sealed class LatticeHalfFockChargedResidueDocument : IScribeDocumentDef
                 DescribeRole.Theorem),
             Describe.Lean(
                 DescribeId.Create("charged-residue-source-row-collision-row"),
-                DeclarationHandle.Create("D5/S3/VertexAlgebra/LatticeHalfFockChargedResidue.chargedPhysicalSourceRow_eq_collision"),
+                DeclarationHandle.Create("D5/S3/VertexAlgebra/ChargedResidue/LatticeHalfFockChargedResidue.chargedPhysicalSourceRow_eq_collision"),
                 H("Concrete physical source rows equal the four reflected collision rows"),
                 StatementSource.WithoutFormula(),
                 AssessedProvenance.FromRepo(LibraryNoteRef.Create("D5/L/VertexAlgebra/flm1988monster")),
@@ -36,7 +36,7 @@ internal sealed class LatticeHalfFockChargedResidueDocument : IScribeDocumentDef
                 DescribeRole.Theorem),
             Describe.Lean(
                 DescribeId.Create("charged-residue-projected-slice-expansion"),
-                DeclarationHandle.Create("D5/S3/VertexAlgebra/LatticeHalfFockChargedResidue.projectedGround_slice_mode_expansion"),
+                DeclarationHandle.Create("D5/S3/VertexAlgebra/ChargedResidue/LatticeHalfFockChargedResidue.projectedGround_slice_mode_expansion"),
                 H("Projected physical slices expand into both reflected charged fields"),
                 StatementSource.WithoutFormula(),
                 AssessedProvenance.FromRepo(LibraryNoteRef.Create("D5/L/VertexAlgebra/flm1988monster")),
@@ -46,7 +46,7 @@ internal sealed class LatticeHalfFockChargedResidueDocument : IScribeDocumentDef
                 DescribeRole.Theorem),
             Describe.Lean(
                 DescribeId.Create("charged-residue-collision-tail"),
-                DeclarationHandle.Create("D5/S3/VertexAlgebra/LatticeHalfFockChargedResidue.chargedPhysicalCollisionRow_tail"),
+                DeclarationHandle.Create("D5/S3/VertexAlgebra/ChargedResidue/LatticeHalfFockChargedResidue.chargedPhysicalCollisionRow_tail"),
                 H("The four reflected collision rows have an independent unweighted outer tail"),
                 StatementSource.WithoutFormula(),
                 AssessedProvenance.FromRepo(LibraryNoteRef.Create("D5/L/VertexAlgebra/flm1988monster")),
@@ -56,7 +56,7 @@ internal sealed class LatticeHalfFockChargedResidueDocument : IScribeDocumentDef
                 DescribeRole.Theorem),
             Describe.Lean(
                 DescribeId.Create("charged-residue-ordered-support"),
-                DeclarationHandle.Create("D5/S3/VertexAlgebra/LatticeHalfFockChargedResidue.chargedPhysicalResidueRow_left_finite"),
+                DeclarationHandle.Create("D5/S3/VertexAlgebra/ChargedResidue/LatticeHalfFockChargedResidue.chargedPhysicalResidueRow_left_finite"),
                 H("The left physical branch has pointwise finite support"),
                 StatementSource.WithoutFormula(),
                 AssessedProvenance.FromRepo(LibraryNoteRef.Create("D5/L/VertexAlgebra/flm1988monster")),
@@ -66,7 +66,7 @@ internal sealed class LatticeHalfFockChargedResidueDocument : IScribeDocumentDef
                 DescribeRole.Theorem),
             Describe.Lean(
                 DescribeId.Create("charged-residue-finite-inverse"),
-                DeclarationHandle.Create("D5/S3/VertexAlgebra/LatticeHalfFockChargedResidue.charged_finite_binomial_inverse"),
+                DeclarationHandle.Create("D5/S3/VertexAlgebra/ChargedResidue/LatticeHalfFockChargedResidue.charged_finite_binomial_inverse"),
                 H("Finite binomial inversion is proved with the zero-cutoff case"),
                 StatementSource.WithoutFormula(),
                 AssessedProvenance.FromRepo(LibraryNoteRef.Create("D5/L/VertexAlgebra/flm1988monster")),

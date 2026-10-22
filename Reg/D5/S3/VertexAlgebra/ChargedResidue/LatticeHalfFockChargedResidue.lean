@@ -1,6 +1,6 @@
 import LeanInformationAuditInterface.Contract.Registration
 import Reg.Support.DependentFamily
-import D5.S3.VertexAlgebra.LatticeHalfFockChargedResidue
+import D5.S3.VertexAlgebra.ChargedResidue.LatticeHalfFockChargedResidue
 
 set_option autoImplicit false
 

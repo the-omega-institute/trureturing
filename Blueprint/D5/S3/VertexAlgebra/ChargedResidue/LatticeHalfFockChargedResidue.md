@@ -8,9 +8,9 @@ For D:LatticeData, hu:IsUnit D.G.det, signed charges sigma and tau, Boolean proj
 
 **Theorem 1.1 (The public all-N source comparison is composed on all four projected components).**
 
-Lean statement: `D5/S3/VertexAlgebra/LatticeHalfFockChargedResidue.charged_ground_source_collision`
+Lean statement: `D5/S3/VertexAlgebra/ChargedResidue/LatticeHalfFockChargedResidue.charged_ground_source_collision`
 
-*Proof.* Machine-checked in Lean as `D5/S3/VertexAlgebra/LatticeHalfFockChargedResidue.charged_ground_source_collision` (`✓ std3`). ∎
+*Proof.* Machine-checked in Lean as `D5/S3/VertexAlgebra/ChargedResidue/LatticeHalfFockChargedResidue.charged_ground_source_collision` (`✓ std3`). ∎
 
 *Source.* Repository-derived.
 
@@ -22,9 +22,9 @@ The projected-ground expansion is performed on Carrier D. Each reflected bare so
 
 **Theorem 1.2 (Concrete physical source rows equal the four reflected collision rows).**
 
-Lean statement: `D5/S3/VertexAlgebra/LatticeHalfFockChargedResidue.chargedPhysicalSourceRow_eq_collision`
+Lean statement: `D5/S3/VertexAlgebra/ChargedResidue/LatticeHalfFockChargedResidue.chargedPhysicalSourceRow_eq_collision`
 
-*Proof.* Machine-checked in Lean as `D5/S3/VertexAlgebra/LatticeHalfFockChargedResidue.chargedPhysicalSourceRow_eq_collision` (`✓ std3`). ∎
+*Proof.* Machine-checked in Lean as `D5/S3/VertexAlgebra/ChargedResidue/LatticeHalfFockChargedResidue.chargedPhysicalSourceRow_eq_collision` (`✓ std3`). ∎
 
 *Source.* Repository-derived.
 
@@ -36,9 +36,9 @@ Every signed row index and every actual tensor input is retained. The theorem is
 
 **Theorem 1.3 (Projected physical slices expand into both reflected charged fields).**
 
-Lean statement: `D5/S3/VertexAlgebra/LatticeHalfFockChargedResidue.projectedGround_slice_mode_expansion`
+Lean statement: `D5/S3/VertexAlgebra/ChargedResidue/LatticeHalfFockChargedResidue.projectedGround_slice_mode_expansion`
 
-*Proof.* Machine-checked in Lean as `D5/S3/VertexAlgebra/LatticeHalfFockChargedResidue.projectedGround_slice_mode_expansion` (`✓ std3`). ∎
+*Proof.* Machine-checked in Lean as `D5/S3/VertexAlgebra/ChargedResidue/LatticeHalfFockChargedResidue.projectedGround_slice_mode_expansion` (`✓ std3`). ∎
 
 *Source.* Repository-derived.
 
@@ -50,9 +50,9 @@ The expansion is pointwise on the original ActualTensor carrier and preserves th
 
 **Theorem 1.4 (The four reflected collision rows have an independent unweighted outer tail).**
 
-Lean statement: `D5/S3/VertexAlgebra/LatticeHalfFockChargedResidue.chargedPhysicalCollisionRow_tail`
+Lean statement: `D5/S3/VertexAlgebra/ChargedResidue/LatticeHalfFockChargedResidue.chargedPhysicalCollisionRow_tail`
 
-*Proof.* Machine-checked in Lean as `D5/S3/VertexAlgebra/LatticeHalfFockChargedResidue.chargedPhysicalCollisionRow_tail` (`✓ std3`). ∎
+*Proof.* Machine-checked in Lean as `D5/S3/VertexAlgebra/ChargedResidue/LatticeHalfFockChargedResidue.chargedPhysicalCollisionRow_tail` (`✓ std3`). ∎
 
 *Source.* Repository-derived.
 
@@ -64,9 +64,9 @@ For l at or beyond ((K:Int)-r).toNat, with natAbs(bilinear sigma tau) ≤ K, eve
 
 **Theorem 1.5 (The left physical branch has pointwise finite support).**
 
-Lean statement: `D5/S3/VertexAlgebra/LatticeHalfFockChargedResidue.chargedPhysicalResidueRow_left_finite`
+Lean statement: `D5/S3/VertexAlgebra/ChargedResidue/LatticeHalfFockChargedResidue.chargedPhysicalResidueRow_left_finite`
 
-*Proof.* Machine-checked in Lean as `D5/S3/VertexAlgebra/LatticeHalfFockChargedResidue.chargedPhysicalResidueRow_left_finite` (`✓ std3`). ∎
+*Proof.* Machine-checked in Lean as `D5/S3/VertexAlgebra/ChargedResidue/LatticeHalfFockChargedResidue.chargedPhysicalResidueRow_left_finite` (`✓ std3`). ∎
 
 *Source.* Repository-derived.
 
@@ -78,9 +78,9 @@ The corresponding right branch is recorded by chargedPhysicalResidueRow_right_fi
 
 **Theorem 1.6 (Finite binomial inversion is proved with the zero-cutoff case).**
 
-Lean statement: `D5/S3/VertexAlgebra/LatticeHalfFockChargedResidue.charged_finite_binomial_inverse`
+Lean statement: `D5/S3/VertexAlgebra/ChargedResidue/LatticeHalfFockChargedResidue.charged_finite_binomial_inverse`
 
-*Proof.* Machine-checked in Lean as `D5/S3/VertexAlgebra/LatticeHalfFockChargedResidue.charged_finite_binomial_inverse` (`✓ std3`). ∎
+*Proof.* Machine-checked in Lean as `D5/S3/VertexAlgebra/ChargedResidue/LatticeHalfFockChargedResidue.charged_finite_binomial_inverse` (`✓ std3`). ∎
 
 *Source.* Repository-derived.
 
@@ -94,13 +94,13 @@ The construction uses the public StateFieldResidueReconstruction integerBinomial
 
 ## References
 
-- Truth anchor: `D5/S3/VertexAlgebra/LatticeHalfFockChargedResidue.chargedPhysicalCollisionRow_tail`
-- Truth anchor: `D5/S3/VertexAlgebra/LatticeHalfFockChargedResidue.chargedPhysicalResidueRow_left_finite`
-- Truth anchor: `D5/S3/VertexAlgebra/LatticeHalfFockChargedResidue.chargedPhysicalSourceRow_eq_collision`
-- Truth anchor: `D5/S3/VertexAlgebra/LatticeHalfFockChargedResidue.charged_finite_binomial_inverse`
-- Truth anchor: `D5/S3/VertexAlgebra/LatticeHalfFockChargedResidue.charged_ground_source_collision`
-- Truth anchor: `D5/S3/VertexAlgebra/LatticeHalfFockChargedResidue.projectedGround_slice_mode_expansion`
-- Dependency: [D5/S3/VertexAlgebra/LatticeAllStateLocality](LatticeAllStateLocality.md)
-- Dependency: [D5/S3/VertexAlgebra/LatticeHalfFockChargedCollision](LatticeHalfFockChargedCollision.md)
-- Dependency: [D5/S3/VertexAlgebra/LatticeHalfFockGroundRightCurrentTransport](LatticeHalfFockGroundRightCurrentTransport.md)
-- Dependency: [D5/S3/VertexAlgebra/LatticeHalfFockPhysicalRescaling](LatticeHalfFockPhysicalRescaling.md)
+- Truth anchor: `D5/S3/VertexAlgebra/ChargedResidue/LatticeHalfFockChargedResidue.chargedPhysicalCollisionRow_tail`
+- Truth anchor: `D5/S3/VertexAlgebra/ChargedResidue/LatticeHalfFockChargedResidue.chargedPhysicalResidueRow_left_finite`
+- Truth anchor: `D5/S3/VertexAlgebra/ChargedResidue/LatticeHalfFockChargedResidue.chargedPhysicalSourceRow_eq_collision`
+- Truth anchor: `D5/S3/VertexAlgebra/ChargedResidue/LatticeHalfFockChargedResidue.charged_finite_binomial_inverse`
+- Truth anchor: `D5/S3/VertexAlgebra/ChargedResidue/LatticeHalfFockChargedResidue.charged_ground_source_collision`
+- Truth anchor: `D5/S3/VertexAlgebra/ChargedResidue/LatticeHalfFockChargedResidue.projectedGround_slice_mode_expansion`
+- Dependency: [D5/S3/VertexAlgebra/LatticeAllStateLocality](../LatticeAllStateLocality.md)
+- Dependency: [D5/S3/VertexAlgebra/LatticeHalfFockChargedCollision](../LatticeHalfFockChargedCollision.md)
+- Dependency: [D5/S3/VertexAlgebra/LatticeHalfFockGroundRightCurrentTransport](../LatticeHalfFockGroundRightCurrentTransport.md)
+- Dependency: [D5/S3/VertexAlgebra/LatticeHalfFockPhysicalRescaling](../LatticeHalfFockPhysicalRescaling.md)

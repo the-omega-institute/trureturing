@@ -1,11 +1,12 @@
-/- GID: D5/S3/VertexAlgebra/LatticeHalfFockChargedResidue
+/- GID: D5/S3/VertexAlgebra/ChargedResidue/LatticeHalfFockChargedResidue
    generality: I
    mirror-B: D5/B/S3/VertexAlgebra/LatticeHalfFockChargedResidue
    mirror-E: none(waiver:evidence-not-specified-by-formal-manifest)
    anchors: []
    utility: none
-   digest: Actual charged two-order residue branches and the public all-N source comparison.
-   proof_shape: charged_source_comparison: content
+   digest: Actual charged two-order residue branches and the public all-N source comparison. -/
+
+/- proof_shape: charged_source_comparison: content
    admission_basis: escape-witness
    escape_witness: The four reflected projected-ground components are expanded on the
    original Carrier and each component is transported by the public all-N collision

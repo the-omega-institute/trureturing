@@ -14,7 +14,7 @@
    difference operator, including order zero.
    literature_status: classical locality and residue calculus; no novelty claim. -/
 
-import D5.S3.VertexAlgebra.LatticeHalfFockChargedResidue
+import D5.S3.VertexAlgebra.ChargedResidue.LatticeHalfFockChargedResidue
 import D5.S3.VertexAlgebra.LatticeHalfFockPhysicalWordLocality
 import D5.S3.VertexAlgebra.GroundRightCurrentTransport.Residue
 
