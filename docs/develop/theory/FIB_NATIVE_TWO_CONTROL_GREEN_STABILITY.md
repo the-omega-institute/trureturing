@@ -4879,3 +4879,11 @@ $Q=7$ concern the stated horizontal operators and measures, rather
 than a count of physical spatial axes. $\square$
 
 ## 追加锚（本行以下为增补区）
+
+## 35. Variable-coefficient fixed-model companion
+
+The complete smooth-density/SPD-covariance double-wall extension, its
+fixed-model weak-coupling iff, and its finite large-coupling collapse
+obstruction are proved in [the native variable-coefficient companion](FIB_NATIVE_VARIABLE_COEFFICIENT_GREEN_STABILITY.md).
+
+## 追加锚（本行以下为增补区）
