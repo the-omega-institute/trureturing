@@ -31,14 +31,6 @@ internal sealed class QuantumGroupChainRealSpectrumRefutationDocument : IScribeD
                 "The parameter q=exp(iγ) lies on the unit circle; I denotes the imaginary unit. "
                 + "The defining algebra relations are [E,F]=(K²−K⁻²)/(q−q⁻¹), KE=qEK and "
                 + "KF=q⁻¹FK, as in Eq. (Uq).", AssessedProvenance.FromLiterature(Source)),
-            Describe.Example(
-                DescribeId.Create("bytsko-spectrum-gamma-zero"),
-                H("A particular admissible angle"),
-                Disp(GammaFormula()),
-                AssessedProvenance.FromRepo(),
-                Blocks(Paragraph(Text(
-                    "At γ₀=arccos(4/5), cos(γ₀)=4/5 and sin(γ₀)=3/5, so q(γ₀)=(4+3i)/5. "
-                    + "In particular, 0<γ₀<π/2.")))),
             Node("weight", "Weights in the finite basis", WeightFormula(),
                 "The natural parameter n is twice the spin S. Basis index i has weight "
                 + "val(i)−n/2, so the increasing index order runs from −S to S.",
@@ -117,8 +109,8 @@ internal sealed class QuantumGroupChainRealSpectrumRefutationDocument : IScribeD
 
     private static BlockSequence ResultProse() => Blocks(
         Paragraph(Text(
-            "Take S=s=1, hence n=2, N=4, γ=γ₀=arccos(4/5), q=(4+3i)/5 and "
-            + "a=(1,1,1). These satisfy 0<2|γ|<π, and the two required denominator "
+            "Take S=s=1, hence n=2, N=4, γ=γ₀=arccos(4/5), sin(γ₀)=3/5, "
+            + "q=(4+3i)/5 and a=(1,1,1). These satisfy 0<2|γ|<π, and the two required denominator "
             + "products, for l=0 and l=2, are 8/5 and −112/125.")),
         Paragraph(Text(
             "Order the two-site basis lexicographically by weights −1,0,1. The matrix 14·P^{1,1} is "
@@ -230,9 +222,6 @@ internal sealed class QuantumGroupChainRealSpectrumRefutationDocument : IScribeD
     private static Formula QFormula() => All(GammaLower, Real(),
         Eqn(Call("q", GammaLower), Add(RC(Call("cos", GammaLower)),
             Mul(Named("I"), RC(Call("sin", GammaLower))))));
-
-    private static Formula GammaFormula() => Eqn(new Formula.Subscript(GammaLower, D(0)),
-        Call("arccos", FracOf(D(4), D(5))));
 
     private static Formula WeightFormula() => All(V("n"), Nat(), All(V("i"), Fin(Add(V("n"), D(1))),
         Eqn(Call("weight", V("n"), V("i")),

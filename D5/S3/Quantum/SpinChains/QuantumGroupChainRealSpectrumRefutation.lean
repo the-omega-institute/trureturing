@@ -30,7 +30,7 @@ def qnum (γ t : ℝ) : ℝ := Real.sin (γ * t) / Real.sin γ
 
 def q (γ : ℝ) : ℂ := (Real.cos γ : ℂ) + Complex.I * (Real.sin γ : ℂ)
 
-def γ₀ : ℝ := Real.arccos (4 / 5)
+private def γ₀ : ℝ := Real.arccos (4 / 5)
 
 def weight (n : ℕ) (i : Fin (n + 1)) : ℝ := (i.val : ℝ) - (n : ℝ) / 2
 
