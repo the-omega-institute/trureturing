@@ -1,6 +1,6 @@
 /- GID: D5/S3/Arith/Robin/LcmRobinResponse
    generality: G
-   mirror-B: none(waiver:formal-unit-only)
+   mirror-B: D5/B/S3/Arith/Robin/LcmRobinResponse
    mirror-E: none(waiver:evidence-not-specified-by-formal-manifest)
    anchors: []
    utility: none
@@ -8,9 +8,8 @@
 
 import D5.S3.Arith.Robin.PrimeFiberPropagation
 import D5.S3.Weil.Mertens.Third
-import Mathlib.Analysis.Convex.SpecificFunctions.Basic
-import Mathlib.NumberTheory.Chebyshev
-import Mathlib.NumberTheory.ArithmeticFunction.Misc
+import D5.S3.Arith.GoldenResourceObjectiveFactorization
+import D5.S3.Arith.Robin.LogarithmBounds
 
 /-! The actual prefix lcm has an exact prime-factor Euler product.  The omitted
 prime-power layers are bounded by a square-root tail, which combines with the
@@ -29,99 +28,6 @@ private abbrev primeCutoff (u : ℝ) : Finset ℕ := (Ioc 0 ⌊u⌋₊).filter N
 
 private abbrev tailFactor (u : ℝ) (p : ℕ) : ℝ :=
   1 / (p : ℝ) ^ (p.log ⌊u⌋₊ + 1)
-
-private theorem sigma_lcm_euler_product {u : ℝ} (hu : 2 ≤ u) :
-    (ArithmeticFunction.sigma 1 (Nat.lcmUpto ⌊u⌋₊) : ℝ) /
-        (Nat.lcmUpto ⌊u⌋₊ : ℝ) =
-      ∏ p ∈ primeCutoff u,
-        (1 - tailFactor u p) / (1 - 1 / (p : ℝ)) := by
-  let n := ⌊u⌋₊
-  have hn : n ≠ 0 := by
-    have : 2 ≤ n := by
-      exact Nat.le_floor hu
-    omega
-  have hprod : (ArithmeticFunction.sigma 1 (Nat.lcmUpto n) : ℝ) =
-      ∏ p ∈ (Nat.lcmUpto n).primeFactors,
-        ∑ i ∈ range ((Nat.lcmUpto n).factorization p + 1), (p : ℝ) ^ i := by
-    simpa only [Nat.cast_prod, Nat.cast_sum, Nat.cast_pow, mul_one] using
-      congrArg (fun k : ℕ => (k : ℝ))
-        (ArithmeticFunction.sigma_eq_prod_primeFactors_sum_range_factorization_pow_mul
-          (k := 1) (Nat.lcmUpto_ne_zero n))
-  have hnprod : (Nat.lcmUpto n : ℝ) =
-      ∏ p ∈ (Nat.lcmUpto n).primeFactors,
-        (p : ℝ) ^ (Nat.lcmUpto n).factorization p := by
-    simpa only [Nat.cast_prod, Nat.cast_pow] using
-      congrArg (fun k : ℕ => (k : ℝ))
-        (Nat.prod_primeFactors_pow_factorization (Nat.lcmUpto_ne_zero n))
-  have hfactor (p : ℕ) (hp : p.Prime) (a : ℕ) :
-      ((∑ i ∈ range (a + 1), (p : ℝ) ^ i) / (p : ℝ) ^ a) =
-        (1 - (1 : ℝ) / (p : ℝ) ^ (a + 1)) / (1 - 1 / (p : ℝ)) := by
-    have hp1 : (1 : ℝ) < p := by exact_mod_cast hp.one_lt
-    have hp0 : (0 : ℝ) < p := by exact_mod_cast hp.pos
-    rw [geom_sum_eq hp1.ne']
-    field_simp
-    ring
-  rw [hprod, hnprod, ← prod_div_distrib]
-  rw [Nat.primeFactors_lcmUpto]
-  have hset : Nat.primesLE n = primeCutoff u := by
-    ext p
-    simp only [primeCutoff, mem_filter, Nat.mem_primesLE, mem_Ioc]
-    constructor
-    · rintro ⟨hp, hpn⟩
-      exact ⟨⟨hpn.pos, hp⟩, hpn⟩
-    · rintro ⟨⟨hp0, hpn⟩, hp⟩
-      exact ⟨hpn, hp⟩
-  rw [hset]
-  apply prod_congr rfl
-  intro p hp
-  rw [Nat.factorization_lcmUpto n (mem_filter.mp hp).2]
-  exact hfactor p (mem_filter.mp hp |>.2) _
-
-private theorem loglog_tangent {u v : ℝ} (hu : 1 < u) (hv : 1 < v) :
-    Real.log (Real.log v) ≤ Real.log (Real.log u) + (v - u) / (u * Real.log u) := by
-  have hLu : 0 < Real.log u := Real.log_pos hu
-  have hLv : 0 < Real.log v := Real.log_pos hv
-  have hratio : 0 < Real.log v / Real.log u := div_pos hLv hLu
-  have hlog1 := Real.log_le_sub_one_of_pos hratio
-  have huv : 0 < v / u := div_pos (by linarith) (by linarith)
-  have hlog2 := Real.log_le_sub_one_of_pos huv
-  have hEq1 : Real.log (Real.log v) - Real.log (Real.log u) =
-      Real.log (Real.log v / Real.log u) := by
-    rw [Real.log_div hLv.ne' hLu.ne']
-  have hEq2 : Real.log (v / u) = Real.log v - Real.log u := by
-    rw [Real.log_div (by linarith) (by linarith)]
-  have hlog2' : Real.log (v / u) / Real.log u ≤
-      (v / u - 1) / Real.log u :=
-    div_le_div_of_nonneg_right hlog2 hLu.le
-  have hratio' : Real.log v / Real.log u - 1 =
-      (Real.log v - Real.log u) / Real.log u := by field_simp
-  calc
-    Real.log (Real.log v) = Real.log (Real.log u) +
-        Real.log (Real.log v / Real.log u) := by linarith [hEq1]
-    _ ≤ Real.log (Real.log u) +
-        (Real.log v / Real.log u - 1) := by linarith
-    _ = Real.log (Real.log u) + Real.log (v / u) / Real.log u := by
-      rw [hratio', hEq2]
-    _ ≤ Real.log (Real.log u) + (v / u - 1) / Real.log u :=
-      by simpa [add_comm, add_left_comm, add_assoc] using
-        add_le_add_left hlog2' (Real.log (Real.log u))
-    _ = Real.log (Real.log u) + (v - u) / (u * Real.log u) := by
-      field_simp
-
-private theorem log_tail_le {z : ℝ} (hz0 : 0 < z) (hz4 : z ≤ 1 / 4) :
-    -Real.log (1 - z) ≤ (4 / 3) * z := by
-  have hz1 : z < 1 := by linarith
-  have hpos : 0 < 1 / (1 - z) := by positivity
-  have h := Real.log_le_sub_one_of_pos hpos
-  rw [Real.log_div (by norm_num : (1 : ℝ) ≠ 0) (sub_ne_zero.mpr hz1.ne')] at h
-  simp only [Real.log_one, zero_sub] at h
-  have h' : -Real.log (1 - z) ≤ z / (1 - z) := by
-    convert h using 1 <;> field_simp <;> ring
-  have hfrac : z / (1 - z) ≤ (4 / 3) * z := by
-    have hden : 0 < 1 - z := by linarith
-    apply (div_le_iff₀ hden).2
-    nlinarith
-  exact h'.trans hfrac
 
 private theorem lcm_tail_bound {u : ℝ} (hu : 10000 ≤ u) :
     -∑ p ∈ primeCutoff u, Real.log (1 - tailFactor u p) ≤ 4 / Real.sqrt u := by
@@ -190,10 +96,13 @@ private theorem lcm_tail_bound {u : ℝ} (hu : 10000 ≤ u) :
       change p ∈ (Ioc 0 n).filter Nat.Prime at hp
       have hpp : p.Prime := (mem_filter.mp hp).2
       have hppos : (0 : ℝ) < p := by exact_mod_cast hpp.pos
-      apply log_tail_le
-      · change 0 < 1 / (p : ℝ) ^ (p.log n + 1)
+      have hz0 : 0 ≤ tailFactor u p := by
+        change 0 ≤ 1 / (p : ℝ) ^ (p.log n + 1)
         positivity
-      · exact htailquarter p hp
+      have hz4 := htailquarter p hp
+      have hlog := D5.S3.Arith.Lattices.Klartag.neg_log_one_sub_le hz0
+        (show tailFactor u p ≤ 1 / 2 by linarith)
+      nlinarith
   have hsmallset : S.filter (fun p : ℕ => (p : ℝ) ≤ Real.sqrt u) ⊆
       Ioc 0 ⌊Real.sqrt u⌋₊ := by
     intro p hp
@@ -302,9 +211,7 @@ private theorem lcm_log_identities {u : ℝ} (hu : 10000 ≤ u) :
   let n := ⌊u⌋₊
   have hn : 10000 ≤ n := Nat.le_floor hu
   have hndvd : n ∣ Nat.lcmUpto n := by
-    unfold Nat.lcmUpto
-    have hn0 : n ≠ 0 := by omega
-    exact Finset.dvd_lcm (mem_Icc.mpr ⟨Nat.one_le_iff_ne_zero.mpr hn0, le_rfl⟩)
+    simpa using Chebyshev.choose_dvd_lcmUpto (show 1 ≤ n by omega)
   have hDge : n ≤ Nat.lcmUpto n := Nat.le_of_dvd (Nat.lcmUpto_pos n) hndvd
   have hlog : Real.log (Nat.lcmUpto n : ℝ) = ψ u := by
     rw [← Chebyshev.psi_eq_log_lcmUpto, ← Chebyshev.psi_eq_psi_coe_floor]
@@ -341,7 +248,7 @@ private theorem lcm_log_identities {u : ℝ} (hu : 10000 ≤ u) :
   have hstrict : (5040 : ℕ) < Nat.lcmUpto n := by omega
   exact ⟨hstrict, hlog, hDexp⟩
 
-theorem common_robin_response {u : ℝ} (hu : 10000 ≤ u) :
+private theorem robin_implies_mertens_bound {u : ℝ} (hu : 10000 ≤ u) :
     let D := Nat.lcmUpto ⌊u⌋₊
     divisorRatio D ≤ Real.exp Real.eulerMascheroniConstant * Real.log (Real.log D) →
       Mertens.E₃ u ≥ -4 / Real.sqrt u -
@@ -367,79 +274,52 @@ theorem common_robin_response {u : ℝ} (hu : 10000 ≤ u) :
       _ < (9 : ℝ) := by norm_num
       _ ≤ (D : ℝ) := h9
   have hlogbound : Real.log (Real.log (ψ u)) ≤
-      Real.log (Real.log u) + (ψ u - u) / (u * Real.log u) :=
-    loglog_tangent hu1 hψ1
+      Real.log (Real.log u) + (ψ u - u) / (u * Real.log u) := by
+    by_cases h : u = ψ u
+    · rw [← h]
+      simp
+    · have ht := (D5.S3.Arith.Robin.RestrictedDivisorStrictInventory.loglog_tangent
+        hu1 hψ1 h).le
+      unfold D5.S3.Arith.Robin.ActualRobinClockCovariance.g at ht
+      rw [mul_one_div] at ht
+      linarith
   have htail := lcm_tail_bound hu
-  have hprod := sigma_lcm_euler_product (u := u) (by linarith)
   have hlogratio : Real.log (divisorRatio D) =
       -Mertens.E₃ u + Real.log (Real.log u) + Real.eulerMascheroniConstant -
         (-∑ p ∈ primeCutoff u, Real.log (1 - tailFactor u p)) := by
     unfold divisorRatio
     change Real.log ((ArithmeticFunction.sigma 1 (Nat.lcmUpto n) : ℝ) /
       (Nat.lcmUpto n : ℝ)) = _
-    have hquarter_of_mem (p : ℕ) (hp : p ∈ primeCutoff u) :
-        tailFactor u p ≤ 1 / 4 := by
-      change p ∈ (Ioc 0 n).filter Nat.Prime at hp
-      have hpp := mem_filter.mp hp |>.2
-      have hp2 : (2 : ℝ) ≤ p := by exact_mod_cast hpp.two_le
-      have hp_le_n : p ≤ n := (mem_Ioc.mp (mem_filter.mp hp).1).2
-      have hp_le_nR : (p : ℝ) ≤ n := by exact_mod_cast hp_le_n
-      have hp_le_u : (p : ℝ) ≤ u :=
-        hp_le_nR.trans (Nat.floor_le (by linarith))
-      have hapos : 0 < p.log n := Nat.log_pos hpp.one_lt (Nat.le_floor hp_le_u)
-      have ha : 1 ≤ p.log n := by omega
-      have hpow : (4 : ℝ) ≤ (p : ℝ) ^ (p.log n + 1) := by
-        calc
-          (4 : ℝ) ≤ (p : ℝ) ^ 2 := by nlinarith
-          _ ≤ (p : ℝ) ^ (p.log n + 1) := by
-            apply pow_le_pow_right₀ (by linarith)
-            omega
-      exact (div_le_iff₀ (show 0 < (p : ℝ) ^ (p.log n + 1) by positivity)).2
-        (by linarith)
-    rw [hprod, Real.log_prod]
-    · unfold Mertens.E₃
-      calc
-        (∑ p ∈ primeCutoff u,
-            Real.log ((1 - tailFactor u p) / (1 - 1 / (p : ℝ)))) =
-            ∑ p ∈ primeCutoff u,
-              (Real.log (1 - tailFactor u p) - Real.log (1 - 1 / (p : ℝ))) := by
-          apply Finset.sum_congr rfl
-          intro p hp
-          change p ∈ (Ioc 0 n).filter Nat.Prime at hp
-          have hpp : p.Prime := (mem_filter.mp hp).2
-          have hp1 : (1 : ℝ) < p := by exact_mod_cast hpp.one_lt
-          have hnum : 0 < 1 - tailFactor u p := by
-            linarith [hquarter_of_mem p hp]
-          have hden : 0 < 1 - 1 / (p : ℝ) := by
-            have hpdiv : 1 / (p : ℝ) < 1 :=
-              (div_lt_iff₀ (show 0 < (p : ℝ) by positivity)).2 (by linarith)
-            linarith
-          rw [Real.log_div hnum.ne' hden.ne']
-        _ = (∑ p ∈ primeCutoff u, Real.log (1 - tailFactor u p)) -
-            ∑ p ∈ primeCutoff u, Real.log (1 - 1 / (p : ℝ)) := by
-          rw [Finset.sum_sub_distrib]
-        _ = -(∑ p ∈ primeCutoff u, Real.log (1 - 1 / (p : ℝ)) +
-              Real.log (Real.log u) + Real.eulerMascheroniConstant) +
-            Real.log (Real.log u) + Real.eulerMascheroniConstant -
-            -∑ p ∈ primeCutoff u, Real.log (1 - tailFactor u p) := by ring
-    · intro p hp
-      change p ∈ (Ioc 0 n).filter Nat.Prime at hp
-      have hpp := mem_filter.mp hp |>.2
+    have hnD : 1 ≤ Nat.lcmUpto n := Nat.lcmUpto_pos n
+    have hf := D5.S3.Arith.GoldenResourceObjectiveFactorization.golden_resource_objective_factorization
+      0 hnD
+    rw [D5.S3.Arith.GoldenResourceOptimalInteger.golden_resource_sigma_identity 0 hnD] at hf
+    simp only [zero_mul, sub_zero] at hf
+    rw [hf, Nat.primeFactors_lcmUpto, Nat.primesLE_eq_filter_Ioc_zero]
+    have hlocal : ∀ p ∈ primeCutoff u,
+        D5.S3.Arith.GoldenLocalThreshold.goldenPrimeLocalObjective 0 p
+          ((Nat.lcmUpto n).factorization p) =
+        Real.log (1 - tailFactor u p) - Real.log (1 - 1 / (p : ℝ)) := by
+      intro p hp
+      have hpp : p.Prime := (mem_filter.mp hp).2
       have hp1 : (1 : ℝ) < p := by exact_mod_cast hpp.one_lt
-      have hp_le_n : p ≤ n := (mem_Ioc.mp (mem_filter.mp hp).1).2
-      have hp_le_nR : (p : ℝ) ≤ (n : ℝ) := by exact_mod_cast hp_le_n
-      have hn_le_u : (n : ℝ) ≤ u := Nat.floor_le (by linarith)
-      have hp_le_u : (p : ℝ) ≤ u := hp_le_nR.trans hn_le_u
-      have hapos : 0 < p.log n := Nat.log_pos hpp.one_lt (Nat.le_floor hp_le_u)
-      have ha : 1 ≤ p.log n := by omega
-      have hp2 : (2 : ℝ) ≤ p := by exact_mod_cast hpp.two_le
-      have hquarter : tailFactor u p ≤ 1 / 4 := hquarter_of_mem p hp
-      have hnum : 0 < 1 - tailFactor u p := by linarith
-      have hden : 0 < 1 - 1 / (p : ℝ) := by
-        have hpdiv : 1 / (p : ℝ) < 1 :=
-          (div_lt_iff₀ (show 0 < (p : ℝ) by positivity)).2 (by linarith)
-        linarith
-      exact div_ne_zero hnum.ne' hden.ne'
+      have hp0 : (0 : ℝ) < p := by linarith
+      have hpinv0 : 0 < (p : ℝ)⁻¹ := inv_pos.mpr hp0
+      have hpinv1 : (p : ℝ)⁻¹ < 1 := (inv_lt_one₀ hp0).mpr hp1
+      have hnum : 0 < 1 - (p : ℝ)⁻¹ ^ (p.log n + 1) :=
+        sub_pos.mpr (pow_lt_one₀ hpinv0.le hpinv1 (by omega))
+      have hden : 0 < 1 - (p : ℝ)⁻¹ := sub_pos.mpr hpinv1
+      simp only [D5.S3.Arith.GoldenLocalThreshold.goldenPrimeLocalObjective,
+        zero_mul, sub_zero, Nat.factorization_lcmUpto n hpp]
+      rw [Real.log_div hnum.ne' hden.ne']
+      simp only [tailFactor, n, inv_pow, one_div]
+    change (∑ p ∈ primeCutoff u,
+      D5.S3.Arith.GoldenLocalThreshold.goldenPrimeLocalObjective 0 p
+        ((Nat.lcmUpto n).factorization p)) = _
+    rw [Finset.sum_congr rfl hlocal]
+    unfold Mertens.E₃
+    rw [Finset.sum_sub_distrib]
+    ring
   have hlogRobin : Real.log (divisorRatio D) ≤
       Real.eulerMascheroniConstant + Real.log (Real.log (ψ u)) := by
     have hratioPos : 0 < divisorRatio D :=
@@ -484,7 +364,7 @@ theorem common_robin_response {u : ℝ} (hu : 10000 ≤ u) :
     _ ≤ - -Mertens.E₃ u := hneg
     _ = Mertens.E₃ u := by ring
 
-theorem common_robin_response_contrapositive {u : ℝ} (hu : 10000 ≤ u)
+theorem common_robin_response {u : ℝ} (hu : 10000 ≤ u)
     (hE : Mertens.E₃ u < -4 / Real.sqrt u -
       (Chebyshev.psi u - u) / (u * Real.log u)) :
     let D := Nat.lcmUpto ⌊u⌋₊
@@ -494,7 +374,7 @@ theorem common_robin_response_contrapositive {u : ℝ} (hu : 10000 ≤ u)
   dsimp
   let D := Nat.lcmUpto ⌊u⌋₊
   have hids := lcm_log_identities hu
-  have hweak := common_robin_response hu
+  have hweak := robin_implies_mertens_bound hu
   have hnot : ¬ divisorRatio D ≤ Real.exp Real.eulerMascheroniConstant * Real.log (Real.log D) := by
     intro h
     have := hweak h
