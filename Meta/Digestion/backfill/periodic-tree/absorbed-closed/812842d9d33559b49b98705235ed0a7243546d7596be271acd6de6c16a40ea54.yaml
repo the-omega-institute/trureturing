@@ -1,0 +1,34 @@
+fingerprints:
+  raw_sha256: sha256:812842d9d33559b49b98705235ed0a7243546d7596be271acd6de6c16a40ea54
+  normalized_sha256: sha256:812842d9d33559b49b98705235ed0a7243546d7596be271acd6de6c16a40ea54
+cas_ref: sha256:812842d9d33559b49b98705235ed0a7243546d7596be271acd6de6c16a40ea54
+coverage_gids:
+  - gid: D5/S0/Certificates/BoxCover/RationalIntervalExpression.add
+    target_statement_id: sha256:5de53c0c21af00283b7122bf98d3837ef8ead8e83fc76566c9470310e38b6b50
+  - gid: D5/S0/Certificates/BoxCover/RationalIntervalExpression.bounds
+    target_statement_id: sha256:80b990090589e41d7b17dd2c077f625c7948ccee7ea79be2582db82bd0911139
+  - gid: D5/S0/Certificates/BoxCover/RationalIntervalExpression.check
+    target_statement_id: sha256:c8ae7c793983ac85ff158ba276ee97b9df81d50768609863072c6b2d348ddbc1
+  - gid: D5/S0/Certificates/BoxCover/RationalIntervalExpression.checked_expression_encloses
+    target_statement_id: sha256:55fd549ad21c17edd29bfbda30075f70836c1b8c2023a9cc913348680e05632f
+  - gid: D5/S0/Certificates/BoxCover/RationalIntervalExpression.const
+    target_statement_id: sha256:883830ed15e01b32856f92ae231290e494d5fd04397feef656ceb5c5a7c99beb
+  - gid: D5/S0/Certificates/BoxCover/RationalIntervalExpression.input
+    target_statement_id: sha256:7c1ff706fd917d42fd8bac14c6f0823e57eb66d7d31e76616f7baea58a3ea428
+  - gid: D5/S0/Certificates/BoxCover/RationalIntervalExpression.mul
+    target_statement_id: sha256:b961a54e1cd3f732396a35f036a1063ecddf913e56610486ab178f76030fbd77
+  - gid: D5/S1/Words/AdmissibleWords/AdmissibleCount.admissibleWord_card_eq_fib
+    target_statement_id: sha256:705c7bcc0099280c8ed68bf461eca8cd390b7cba0709b2017097cd718d7e6bba
+  - gid: D5/S1/Words/AdmissibleWords/AdmissibleCount.decAdm
+    target_statement_id: sha256:7fe980437cfe1067f57556a086bd3c27cc05e446128c55012b65b726d864914b
+  - gid: D5/S1/Words/AdmissibleWords/AdmissibleCount.wcount_succ_succ
+    target_statement_id: sha256:41ce30e71dfd9ca99ac6756e0f1bd46988605014c44974a0b28234f40fa7908e
+receipts:
+  unresolved_subitems: []
+  chain_atoms:
+    - d8cbdb77447af5d9e2e26c5404cf9e1d290be9d7434661ee91a7cf0419e73e56
+    - f95dedf1e22d6bea1331273dbb3751eae9c09347396e5aec0caa75b5b8d9496d
+    - e489828d3614ad7579c4905b74bebe8a1c747c04264f9adb57405f2fc2cd8149
+    - 8805b6863fb35882ccb581620b96b5c59dccfcdef56173346b79667461cd991c
+    - fb7f2cea426734a318c6bd602c72088eaaf709375755f8618d76a119201e65bd
+    - ad39b9bfa3c76cb2af9ee39e7c5f6a1c752c16f1aeb2732a61a0070457c5c8d4

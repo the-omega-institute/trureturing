@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:891b512ab17d2f2cba5f5d8457ddbeeefdd36a6520c0e31da778d5940dc696d9
+  normalized_sha256: sha256:891b512ab17d2f2cba5f5d8457ddbeeefdd36a6520c0e31da778d5940dc696d9
+cas_ref: sha256:891b512ab17d2f2cba5f5d8457ddbeeefdd36a6520c0e31da778d5940dc696d9
+coverage_gids:
+  - gid: D5/S3/Factorization/PrimePowers/AlternatingFiveResidualSeparation.pGroupResidual
+    target_statement_id: sha256:4a7ff863be8aee279a09381808de2aaa41774cec84b3952c7aa7d4d1497822ff
+  - gid: D5/S3/Factorization/PrimePowers/FinitePrimePowerQuotientCompleteness.primePowerResidual
+    target_statement_id: sha256:4344212d4df56057317f930b54187162ee3cd5fc6fbf3c0b4dc728da47b37ccf
+receipts:
+  unresolved_subitems: []

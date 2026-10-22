@@ -92,6 +92,7 @@ laguerreH_near: proof_shape: bind-only; escape_witness: none; consumers: D5.S3.Q
 laguerreH_iterated: proof_shape: bind-only; escape_witness: none; consumers: D5.S3.Quantum.Transport.StrongAbsorptionCumulants.baseMoment_models
 laguerreHw_eq: proof_shape: bind-only; escape_witness: none; consumers: D5.S3.Quantum.Transport.StrongAbsorption.LaguerreMoments.laguerreHw_near
 laguerreHw_near: proof_shape: bind-only; escape_witness: none; consumers: D5.S3.Quantum.Transport.StrongAbsorptionCumulants.laguerreHw_analytic, D5.S3.Quantum.Transport.StrongAbsorptionCumulants.modelCorrection_near
+Escape audit for public helper statements unfinished: https://github.com/the-omega-institute/trureturing/issues/19485
 -/
 
 import D5.S3.Quantum.Transport.StrongAbsorption.Foundations
@@ -122,7 +123,7 @@ noncomputable def deltaPoly (M : ℕ) : MvPolynomial (Fin M) ℝ :=
 private noncomputable def squareDeriv (M : ℕ) : Derivation ℝ (MvPolynomial (Fin M) ℝ) (MvPolynomial (Fin M) ℝ) :=
   MvPolynomial.mkDerivation ℝ fun i => (MvPolynomial.X i)^2
 
-private theorem derivation_product_eigen {M : ℕ} {σ : Type*} [DecidableEq σ]
+theorem derivation_product_eigen {M : ℕ} {σ : Type*} [DecidableEq σ]
     (D : Derivation ℝ (MvPolynomial (Fin M) ℝ) (MvPolynomial (Fin M) ℝ))
     (s : Finset σ) (f g : σ → MvPolynomial (Fin M) ℝ)
     (h : ∀ i ∈ s, D (f i) = g i * f i) :
@@ -195,12 +196,12 @@ private theorem deltaDegree_succ (M : ℕ) : deltaDegree (M+1) = 2*M + deltaDegr
 noncomputable def laguerreWeight (M : ℕ) (a : ℝ) (x : Fin M → ℝ) : ℝ :=
   if ∀ i, 0 ≤ x i then Real.exp (-a*∑ i, x i) * deltaSq M x else 0
 
-private theorem orthant_measure (M : ℕ) : (volume : Measure (Fin M → ℝ)).restrict ((Set.Ici (0 : Fin M → ℝ))) = orthantMeasure M := by
+theorem orthant_measure (M : ℕ) : (volume : Measure (Fin M → ℝ)).restrict ((Set.Ici (0 : Fin M → ℝ))) = orthantMeasure M := by
   rw [← Set.pi_univ_Ici (0 : Fin M → ℝ)]
   simp only [volume_pi, Measure.restrict_pi_pi, orthantMeasure]
   rfl
 
-private theorem polynomial_exp_integrable_single {M : ℕ} {a : ℝ} (ha : 0 < a)
+theorem polynomial_exp_integrable_single {M : ℕ} {a : ℝ} (ha : 0 < a)
     (P : MvPolynomial (Fin M) ℝ) :
     Integrable (fun x => Real.exp (-a*∑ i, x i) * MvPolynomial.eval x P) (orthantMeasure M) := by
   simp_rw [exp_sum_prod_single, MvPolynomial.eval_eq', Finset.mul_sum]
@@ -244,7 +245,7 @@ private theorem deltaSq_pos {M : ℕ} {x : Fin M → ℝ} (hx : Function.Injecti
 private theorem squareDeriv_X (M : ℕ) (i : Fin M) : squareDeriv M (X i) = (X i)^2 := by
   simp [squareDeriv, MvPolynomial.mkDerivation_X]
 
-private noncomputable def polyIntegral {M : ℕ} (a : ℝ) (P : MvPolynomial (Fin M) ℝ) : ℝ :=
+noncomputable def polyIntegral {M : ℕ} (a : ℝ) (P : MvPolynomial (Fin M) ℝ) : ℝ :=
   ∫ x, Real.exp (-a*∑ i, x i)*MvPolynomial.eval x P ∂orthantMeasure M
 
 private theorem eulerDeriv_X (M : ℕ) (i : Fin M) : eulerDeriv M (X i) = X i := by
@@ -333,7 +334,7 @@ private theorem squareDeriv_total (M : ℕ) (P : MvPolynomial (Fin M) ℝ) :
   rw [he]
   simp [derivation_sum_apply, Derivation.smul_apply, smul_eq_mul]
 
-private theorem polyIntegral_add {M : ℕ} {a : ℝ} (ha : 0 < a) (P Q : MvPolynomial (Fin M) ℝ) :
+theorem polyIntegral_add {M : ℕ} {a : ℝ} (ha : 0 < a) (P Q : MvPolynomial (Fin M) ℝ) :
     polyIntegral a (P+Q) = polyIntegral a P + polyIntegral a Q := by
   unfold polyIntegral
   simp only [map_add, mul_add]
@@ -366,7 +367,7 @@ private theorem polyIntegral_nsmul {M : ℕ} (a : ℝ) (n : ℕ) (P : MvPolynomi
     (fun x => (n : ℝ)*(Real.exp (-a*∑ i, x i)*MvPolynomial.eval x P)) by funext x; ring]
   exact integral_const_mul _ _
 
-private theorem polyIntegral_sum {M : ℕ} {a : ℝ} (ha : 0 < a) {σ : Type*} (s : Finset σ)
+theorem polyIntegral_sum {M : ℕ} {a : ℝ} (ha : 0 < a) {σ : Type*} (s : Finset σ)
     (P : σ → MvPolynomial (Fin M) ℝ) :
     polyIntegral a (∑ i ∈ s, P i) = ∑ i ∈ s, polyIntegral a (P i) := by
   unfold polyIntegral
@@ -673,7 +674,7 @@ private theorem partition_scale (M : ℕ) {a : ℝ} (ha : 0 < a) :
       rw [← mul_assoc, inv_mul_cancel₀ (pow_ne_zero _ ha.ne'), one_mul]
     _ = _ := congrArg (fun q => (a^(M^2))⁻¹*q) hp
 
-private theorem polyIntegral_X_sq {M : ℕ} {a : ℝ} (ha : 0 < a) (i : Fin M) (P : MvPolynomial (Fin M) ℝ) :
+theorem polyIntegral_X_sq {M : ℕ} {a : ℝ} (ha : 0 < a) (i : Fin M) (P : MvPolynomial (Fin M) ℝ) :
     a*polyIntegral a ((X i)^2*P) = 2*polyIntegral a (X i*P) + polyIntegral a ((X i)^2*MvPolynomial.pderiv i P) := by
   have h := polyIntegral_X ha i (X i*P)
   rw [MvPolynomial.pderiv_mul, MvPolynomial.pderiv_X_self, one_mul] at h
@@ -770,7 +771,7 @@ private theorem laguerre_ibp {M : ℕ} {a : ℝ} (ha : 0 < a) :
   simp only [pow_one]
   rw [← mul_div_assoc, ← mul_div_assoc, h]
 
-private theorem laguerre_p2 {M : ℕ} {a : ℝ} (ha : 0 < a) : laguerreMoment M 2 a = 2*(M : ℝ)^3/a^2 := by
+theorem laguerre_p2 {M : ℕ} {a : ℝ} (ha : 0 < a) : laguerreMoment M 2 a = 2*(M : ℝ)^3/a^2 := by
   have h := laguerre_ibp (M := M) ha
   rw [laguerre_p1 ha] at h
   apply (eq_div_iff (pow_ne_zero _ ha.ne')).mpr

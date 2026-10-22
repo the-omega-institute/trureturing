@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:aaa3dc9c4bd33fa9298ca0c6508cfad4d8c9562df31dbe838d4da603687b7e03
+  normalized_sha256: sha256:aaa3dc9c4bd33fa9298ca0c6508cfad4d8c9562df31dbe838d4da603687b7e03
+cas_ref: sha256:aaa3dc9c4bd33fa9298ca0c6508cfad4d8c9562df31dbe838d4da603687b7e03
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 当前 atom 为类型/映射/谓词的引入、符号释义、目录、提案或方法论说明；没有独立于所引入定义的数学断言。
+    previous_atom_id: c85a3aeea7332e8dc5b3aca76f5be181814ba67f858f7725cda508a510dbe873
+    next_atom_id: 5f4aefefede896670b4d71cef648976b7bc927fef19ce81e564aba02f7ac5c81

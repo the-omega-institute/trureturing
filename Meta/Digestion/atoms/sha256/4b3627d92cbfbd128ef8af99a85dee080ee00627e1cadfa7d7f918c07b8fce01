@@ -1,0 +1,46 @@
+**Lemma 16.2 (Full-parent homeomorphism and b-dependent chart).** Set
+
+$$
+\begin{gathered}
+R_0(b,r,\epsilon)=\epsilon\Lambda+a(b-1/8)B_{\rm coef},\\
+\mathcal X=\{(b,r,\epsilon):b>0,\ 0<r<1,\ R_0=0\}.
+\end{gathered}
+\tag{16.4}
+$$
+
+The reconstruction of Theorem 2.1 is a homeomorphism from
+$\mathcal X$ onto the entire complete parent. Near every $A_r$, all
+parent worlds have a smooth chart $(r,\epsilon)$ with
+$b=b(r,\epsilon)$, including when $\Lambda(r,1/8)=0$. At the exact-$h$
+curve this chart satisfies
+
+$$
+b(r,0)=1/8,\qquad b_r(r,0)=0,\qquad
+b_\epsilon(r,0)=-\frac{25}{448}\Lambda(r,1/8).
+\tag{16.5}
+$$
+
+Proof. Theorem 2.1 gives a bijection by one whole four-node
+interpolant. Its coefficients are continuous rational functions of
+$(b,r,\epsilon)$ with positive $b,j,n,T$ denominators; the source and
+drift are continuous as well. The inverse is continuous coordinate
+extraction $(b,r,\epsilon)=(P_{12},P_{11},d-24)$. This proves the
+homeomorphism in complete-coefficient topology, with no quotient by
+gain direction or omission of the gain.
+
+The function $R_0$ is smooth on the open domain $b>0$, $0<r<1$,
+$\epsilon\in\mathbb R$. At $A_r$, $B_{\rm coef}=56/15$ and
+
+$$
+\partial_bR_0=aB_{\rm coef}=\frac{448}{25}>0.
+\tag{16.6}
+$$
+
+The implicit function theorem with dependent variable $b$ gives
+exactly all nearby zeros, not just a selected parent subfamily. At
+$\epsilon=0$, $a(b-1/8)B_{\rm coef}=0$ and $B_{\rm coef}>0$ force
+$b=1/8$. Differentiation gives (16.5). Its nonzero IFT derivative is
+$\partial_bR_0$, not $\partial_\epsilon R_0=\Lambda$; in particular
+there is no division by $\Lambda$. The legal singular fixed-source
+lines of (2.6) are included in this chart. ∎
+

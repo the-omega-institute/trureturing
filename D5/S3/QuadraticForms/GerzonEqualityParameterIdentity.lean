@@ -85,7 +85,7 @@ private theorem diagonal_apply (mu u v : Fin d → F) :
   simp [Matrix.toBilin'_apply', Matrix.mulVec_diagonal, dotProduct, mul_comm, mul_left_comm]
 
 -- A diagonal Gram matrix with nonzero diagonal entries.
-private noncomputable def symmetricCoordinates (mu : Fin d → F) (hmu : ∀ i, mu i ≠ 0) :
+noncomputable def symmetricCoordinates (mu : Fin d → F) (hmu : ∀ i, mu i ≠ 0) :
     (selfAdjointMatricesSubmodule (Matrix.diagonal mu)) ≃ₗ[F] (Sym2 (Fin d) → F) where
   toFun X := Sym2.lift ⟨fun i j => mu i * X.val i j, (selfAdjoint_mem_iff mu X.val).mp X.property⟩
   invFun f := ⟨fun i j => f s(i,j) / mu i, by

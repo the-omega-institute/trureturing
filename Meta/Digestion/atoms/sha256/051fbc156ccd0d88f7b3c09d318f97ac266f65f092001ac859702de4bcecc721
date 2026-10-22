@@ -1,0 +1,76 @@
+**Theorem 15.2 (Whole-world lift and separated actual images).**
+For each $(r,p)\in R_{\rm loc}\times K$, the complete worlds in
+$\mathcal F(H_4,M,p)$ with source coordinate $r$ are exactly two
+worlds $W_i(r,p)$, with sources $(r,b_i(r,p))$. Both are regular,
+and their actual responses satisfy
+
+$$
+\begin{gathered}
+7058/10<f_{MM}(W_0(r,p))<7059/10,\\
+673<f_{MM}(W_1(r,p))<6731/10,\\
+15145/100<u_M(W_i(r,p))<15147/100\qquad(i=0,1).
+\end{gathered}
+\tag{15.2}
+$$
+
+Proof. On the two full tubes the denominator rows of Proposition
+14.3 and (14.5) give, respectively,
+
+$$
+\frac{1368}{10000}<D_m<\frac{1369}{10000},\qquad
+-\frac{3468}{10000}<D_m<-\frac{3467}{10000}.
+\tag{15.3}
+$$
+
+At a strict source $j=X/b$, $n=N/b$, and $b,T,U,X,N$ are
+positive. The actual identity from $O$ (20.8) is
+
+$$
+\Lambda=\frac{2D}{TUXN}.
+\tag{15.4}
+$$
+
+Thus $D_m=5bD\ne0$ implies regularity. Since
+$\mathsf S_p=2\mathsf A=0$, the hypotheses of $O$, Theorem 12.3,
+hold: the source is strict and satisfies its zero-safe scalar
+criterion. That theorem supplies a unique complete world at each
+source. Explicitly the regular version of its lift is
+
+$$
+\begin{gathered}
+\epsilon=-\frac{3K_\Lambda XN}{5D},\qquad d=24+\epsilon,\\
+(q_0,q_1,q_2,q_3)=
+ \left(-24-\epsilon,-\epsilon/j,(27/5-\epsilon)/T,-\epsilon/n\right),\\
+g(s)=\sum_{k=0}^3q_k
+ \prod_{\substack{0\le j\le3\\j\ne k}}\frac{s-j}{k-j},\qquad
+P=\begin{pmatrix}r&b\\r(1-r)/b&1-r\end{pmatrix}.
+\end{gathered}
+\tag{15.5}
+$$
+
+This is one entire polynomial and one fixed drift in each world.
+The polynomial is nonzero because the original responses at clocks
+zero and one are $0$ and $24$. The converse in $O$, Theorem 12.3,
+puts every complete world at this $r,p$ among the positive roots of
+$\mathsf A$; Theorem 15.1 exhausts those roots. Fixed-source
+uniqueness then gives exactly the two worlds claimed.
+
+For these regular strict lifts, $O$ (20.9), $O$, Theorem 27.2,
+and equivalently $E$, Lemma 3.3, give the actual identities
+$u_M=N_u/D_m$ and $f_{MM}=N_m/D_m$. The positive rows of the
+tube table have the form
+
+$$
+s_i(N_m-m_i^-D_m)>0,\quad s_i(m_i^+D_m-N_m)>0,
+\quad s_i(N_u-v^-D_m)>0,\quad s_i(v^+D_m-N_u)>0.
+\tag{15.6}
+$$
+
+Since $s_iD_m>0$, division gives (15.2). These divisions use no
+gain sample, gain leading coefficient, gain-root difference or
+drift. Lower degrees, sampled zeros, repeated gain roots and zero
+drift retain their original admissibility. The two worlds need not
+have the same gains or drifts. The bounds on the tubes locate the
+roots of the unchanged unbounded source domain; no upper source
+bound is imposed on that domain. ∎
+

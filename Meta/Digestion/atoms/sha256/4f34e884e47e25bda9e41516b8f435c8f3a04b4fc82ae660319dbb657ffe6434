@@ -1,0 +1,24 @@
+**Positive-side optimizer cluster set.** In the Choi-matrix topology,
+define the positive-side cluster set by limits of sequences
+$\mathcal R_n\in\operatorname{Opt}_{q_n}$ with $q_n\downarrow0$.
+It is exactly
+
+$$
+ \left\{\mathcal R_{1,z}:z\in\mathbb C,\ |z|\le1\right\},
+\tag{152.1}
+$$
+
+where $\mathcal R_{1,z}$ is (139.3) evaluated at $r=1$.
+Indeed (149.2) and its bounded $e$ give $r(q)\to1$.
+Every sequence of optimal decoders is of the form
+$\mathcal R_{r(q_n),z_n}$ with $|z_n|\le1$. The closed complex disk
+is compact, so a subsequence of the $z_n$ converges to some $z$ in
+that disk. The matrix coefficients in (139.3), equivalently the Choi
+coefficients in (146.1), depend continuously on $(r,z)$. Thus every
+decoder limit is $\mathcal R_{1,z}$. Conversely, for each fixed
+$|z|\le1$ the optimal curve $q\mapsto\mathcal R_{r(q),z}$ converges
+to $\mathcal R_{1,z}$. The endpoint map is CPTP by (139.4) with
+$r=1$. These two inclusions prove (152.1). This is the cluster set
+of the positive-parameter optimal family; it is not a classification
+of all optimizers at $q=0$.
+

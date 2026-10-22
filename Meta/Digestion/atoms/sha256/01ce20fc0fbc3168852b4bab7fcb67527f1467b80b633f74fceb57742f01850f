@@ -1,0 +1,66 @@
+**Theorem 15.2 (Exactly one legal distinct final-J pair).** In the full
+fiber $\mathcal F(H_4,M,24)$ there is exactly one unordered pair of
+different complete worlds having both a common acquired sixth-J
+response and a common final-J response. It is a mixed pair
+$\{X_0,Y_0\}$, defined as follows. Let $(\alpha,b_0)$ be the unique
+positive-graph solution of $H=G=0$ in mixed-J-0, and put
+
+$$
+\begin{gathered}
+e_0=-\frac{12(8b_0-1)XNW}{D}\bigg|_{(\alpha,b_0)},\qquad
+ t_0=\frac{P_t}{32D}\bigg|_{(\alpha,b_0)},\\
+X_0=(P(\alpha,b_0),h+e_0v_{\alpha,b_0},24+e_0),\qquad
+Y_0=(P(t_0,1/8),h,24).
+\end{gathered}
+\tag{15.1}
+$$
+
+These definitions give actual complete worlds. In particular
+
+$$
+\begin{gathered}
+\frac{11832337873}{10^{12}}<\alpha<\frac{11832337874}{10^{12}},\qquad
+\frac{1215149146}{10^{11}}<b_0<\frac{1215149166}{10^{11}},\\
+\frac{34}{1000}<t_0<\frac{35}{1000},\qquad
+62<u_J(X_0)=u_J(Y_0)<63,\qquad
+f_{JJ}(X_0)=f_{JJ}(Y_0).
+\end{gathered}
+\tag{15.2}
+$$
+
+Proof. By Theorem 15.1 two different worlds in one of the curves cannot
+form such a pair. Choose an $\mathcal H$ member and a $\mathcal K$
+member. If the first has $b=1/8$, it is itself a $\mathcal K$ world by
+Theorem 13.2, and joint injectivity again makes the pair identical.
+Thus a distinct mixed pair necessarily has $b\ne1/8$.
+
+Equality of $u,f$ forces the $\mathcal K$ parameter to be exactly
+$t_J$ by (14.4). With the already nonzero $bD^2$ and now $8b-1\ne0$,
+(14.6) forces $G=0$. Conversely, $G=0$ and $0<t_J<1$ imply
+$u=u_K(t_J)$ by (14.6); the defining affine identity (14.4) then gives
+$f=f_K(t_J)$. This proves equivalence to the actual joint-response
+collision, rather than only to a necessary projection equation.
+
+The first resultant in (14.9) and Lemma 14.4 exhaust the possible
+strict $r$ coordinates: the seven $P_{G,30}$ roots in mixed-J-0,1,2,4,5,6,7
+and the one $C$ root in mixed-J-3. In boxes 1 through 7 the exact bound
+for $G$ is strictly negative at every point of the box. The uniform
+positive-$H$-root bracket therefore excludes each candidate on the
+actual graph. Only mixed-J-0 can remain.
+
+Actual existence follows from the last two boxes of Lemma 14.4.
+At $r=1479/125000=11832/10^6$, $G(r,B_H(r))>0$; at
+$r=11833/10^6$, it is negative. The continuous positive graph gives
+an actual zero between them. This coarse interval contains exactly
+one $P_{G,30}$ root, already isolated in mixed-J-0, and contains no
+$A$ or $C$ root. Thus the actual zero has its $r$ coordinate in that
+fine box and is unique. Uniqueness of $B_H$ fixes its $b$ coordinate.
+The box bounds give $0<t_0<1$, $b_0\ne1/8$ and $62<u<63$.
+
+Theorem 13.2 supplies all six original acquired rows of $X_0$ at
+clocks $0,\ldots,5$, with one nonzero entire gain and fixed drift;
+$Y_0$ has the same rows by (1.3). Their sources differ because
+$b_0\ne1/8$. The exact $H=G=0$ identities give both response
+equalities. No numerical proximity or interval overlap is used to
+establish them. All other distinct pairs have already been excluded. ∎
+

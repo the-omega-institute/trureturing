@@ -1,0 +1,22 @@
+**Lemma 31.3 (No vertical collapse and no base collapse).** For every
+complex $\alpha$, $L_f(\alpha)$ and $L_k(\alpha)$ do not both vanish.
+For every complex pair $(p,v)$, the specialization $R(x,p,v)$ is a
+nonzero polynomial in $x$.
+
+Proof. The first row of the table proves the first assertion: a common
+complex root would force the nonzero integer resultant to vanish.
+Consequently at every fixed $x=\alpha$ and every base $(p,v)$ at
+least one of $f(\alpha,d,p,v),k(\alpha,d,p,v)$ has its full degree
+two or four. In particular they are never both zero polynomials in $d$.
+
+For the second assertion suppose $R(x,p,v)\equiv0$. Then
+$c_0=c_2=c_3=0$. Equation (31.10) forces $A=0$ or $B=0$.
+If $A=0$, then $v=(32p-366)/5$, so $u_2(p)=u_3(p)=0$,
+contrary to the second nonzero resultant in the table. If $B=0$,
+the common finite $v$-root of $B,c_i$ forces
+$\operatorname{Res}_v(B,c_i)(p)=0$ for $i=2,3$.
+This implication holds even if a leading $v$-coefficient specializes
+to zero: its finite-root evaluation vector is in the kernel of the
+fixed Sylvester matrix. Thus $w_2(p)=w_3(p)=0$, contrary to the
+third nonzero resultant. Both alternatives are impossible. ∎
+

@@ -63,8 +63,10 @@ cutoffIntegral_eq_sub: proof_shape: bind-only; escape_witness: none; consumers: 
 crossIntegral_tail_bigO: proof_shape: bind-only; escape_witness: none; consumers: D5.S3.Quantum.Transport.StrongAbsorption.Density.cutoffIntegral_firstOrder
 cutoffIntegral_firstOrder: proof_shape: content; escape_witness: D5.S3.Quantum.Transport.StrongAbsorption.Density.finiteProduct_remainder; consumers: D5.S3.Quantum.Transport.StrongAbsorption.Density.law_polynomial_firstOrder
 law_polynomial_firstOrder: proof_shape: content; escape_witness: D5.S3.Quantum.Transport.StrongAbsorption.Density.finiteProduct_remainder; consumers: D5.S3.Quantum.Transport.StrongAbsorptionCumulants.law_remainder_bigO, D5.S3.Quantum.Transport.StrongAbsorptionCumulants.variable_observable_firstOrder
+Escape audit for public helper statements unfinished: https://github.com/the-omega-institute/trureturing/issues/19485
 -/
 
+import D5.S3.Quantum.Transport.StrongAbsorption.Foundations
 import D5.S3.Quantum.Transport.StrongAbsorption.LaguerreMoments
 import Mathlib.RingTheory.MvPolynomial.Symmetric.Defs
 
@@ -88,14 +90,14 @@ private theorem product_budget {σ : Type*} (s : Finset σ) (a : σ → ℝ) :
 noncomputable def crossProduct (M : ℕ) (ε : ℝ) (x y : Fin M → ℝ) : ℝ :=
   ∏ i, ∏ j, (1+ε*(x i-y j))
 
-private theorem crossProduct_firstOrder (M : ℕ) (x y : Fin M → ℝ) :
+theorem crossProduct_firstOrder (M : ℕ) (x y : Fin M → ℝ) :
     (∑ p : Fin M × Fin M, (x p.1-y p.2)) =
       (M : ℝ)*((∑ i, x i)-(∑ j, y j)) := by
   rw [Fintype.sum_prod_type]
   simp [Finset.sum_sub_distrib, ← Finset.mul_sum]
   ring
 
-private noncomputable def jointSum (M : ℕ) (p : (Fin M → ℝ) × (Fin M → ℝ)) : ℝ :=
+noncomputable def jointSum (M : ℕ) (p : (Fin M → ℝ) × (Fin M → ℝ)) : ℝ :=
   (∑ i, p.1 i)+(∑ j, p.2 j)
 
 def tailSet (M : ℕ) (γ : ℝ) : Set ((Fin M → ℝ) × (Fin M → ℝ)) :=
@@ -162,7 +164,7 @@ private theorem finiteProduct_remainder {σ : Type*} (s : Finset σ) (a : σ →
         · exact mul_le_mul_of_nonneg_left hsum (mul_nonneg (sq_nonneg _) (abs_nonneg _))
       _ = _ := by dsimp [P,A]; ring
 
-private theorem crossProduct_abs_bound {M : ℕ} {ε : ℝ} (hε : 0 ≤ ε) (hε1 : ε ≤ 1)
+theorem crossProduct_abs_bound {M : ℕ} {ε : ℝ} (hε : 0 ≤ ε) (hε1 : ε ≤ 1)
     (x y : Fin M → ℝ) (hx : ∀ i, 0 ≤ x i) (hy : ∀ j, 0 ≤ y j) :
     |crossProduct M ε x y| ≤ (1+(∑ i, x i)+(∑ j, y j))^(M^2) := by
   have hi (i j : Fin M) : |1+ε*(x i-y j)| ≤ 1+(∑ i, x i)+(∑ j, y j) := by
@@ -218,7 +220,7 @@ private theorem tail_sum {M : ℕ} {γ : ℝ} {p : (Fin M → ℝ) × (Fin M →
 private noncomputable def jointDeltaPoly (M : ℕ) : MvPolynomial (Fin M ⊕ Fin M) ℝ :=
   rename Sum.inl (deltaPoly M)*rename Sum.inr (deltaPoly M)
 
-private noncomputable def budgetPoly (M : ℕ) : MvPolynomial (Fin M ⊕ Fin M) ℝ :=
+noncomputable def budgetPoly (M : ℕ) : MvPolynomial (Fin M ⊕ Fin M) ℝ :=
   (1+(MvPolynomial.psum (Fin M ⊕ Fin M) ℝ 1))^(M^2)
 
 private theorem jointSumPoly_eval (M : ℕ) (p : (Fin M → ℝ) × (Fin M → ℝ)) :
@@ -299,7 +301,7 @@ private theorem jointDeltaPoly_eval (M : ℕ) (p : (Fin M → ℝ) × (Fin M →
 noncomputable def baseWeight (M : ℕ) (a : ℝ) (p : (Fin M → ℝ) × (Fin M → ℝ)) : ℝ :=
   laguerreWeight M a p.1*laguerreWeight M a p.2
 
-private theorem budgetPoly_eval (M : ℕ) (p : (Fin M → ℝ) × (Fin M → ℝ)) :
+theorem budgetPoly_eval (M : ℕ) (p : (Fin M → ℝ) × (Fin M → ℝ)) :
     eval (Sum.elim p.1 p.2) (budgetPoly M) = (1+jointSum M p)^(M^2) := by
   simp only [budgetPoly, map_pow, map_add, map_one, jointSumPoly_eval]
 
@@ -344,7 +346,7 @@ private theorem weight_cutoff_factor (M : ℕ) {γ : ℝ} (hγ : γ ≠ 0)
     · simp [weight, forall_and, hx, hy, laguerreWeight]
   · simp [weight, forall_and, hx, laguerreWeight]
 
-private theorem baseWeight_nonneg (M : ℕ) (a : ℝ) (p : (Fin M → ℝ) × (Fin M → ℝ)) :
+theorem baseWeight_nonneg (M : ℕ) (a : ℝ) (p : (Fin M → ℝ) × (Fin M → ℝ)) :
     0 ≤ baseWeight M a p := mul_nonneg (laguerreWeight_nonneg M a p.1) (laguerreWeight_nonneg M a p.2)
 
 private theorem baseWeight_indicator (M : ℕ) (a : ℝ) :
@@ -371,7 +373,7 @@ theorem baseWeight_mass (M : ℕ) (a : ℝ) : (∫ p, baseWeight M a p) = (parti
   unfold baseWeight partition
   rw [Measure.volume_eq_prod, integral_prod_mul, pow_two]
 
-private theorem budgetPoly_nonneg {M : ℕ} (p : (Fin M → ℝ) × (Fin M → ℝ)) (hp : p ∈ (Set.Ici (0 : (Fin M → ℝ) × (Fin M → ℝ)))) :
+theorem budgetPoly_nonneg {M : ℕ} (p : (Fin M → ℝ) × (Fin M → ℝ)) (hp : p ∈ (Set.Ici (0 : (Fin M → ℝ) × (Fin M → ℝ)))) :
     0 ≤ eval (Sum.elim p.1 p.2) (budgetPoly M) := by
   rw [budgetPoly_eval]
   have hs : (∀ i, 0 ≤ p.1 i) ∧ ∀ j, 0 ≤ p.2 j := by
@@ -401,10 +403,10 @@ private theorem FirstOrder.inv {f : ℝ → ℝ} {a b : ℝ} (hf : FirstOrder f 
   field_simp
   <;> ring
 
-private noncomputable def crossIntegral (M : ℕ) (a ε : ℝ) (P : MvPolynomial (Fin M ⊕ Fin M) ℝ) : ℝ :=
+noncomputable def crossIntegral (M : ℕ) (a ε : ℝ) (P : MvPolynomial (Fin M ⊕ Fin M) ℝ) : ℝ :=
   ∫ p, baseWeight M a p*eval (Sum.elim p.1 p.2) P*crossProduct M ε p.1 p.2
 
-private noncomputable def cutoffIntegral (M : ℕ) (a γ : ℝ) (P : MvPolynomial (Fin M ⊕ Fin M) ℝ) : ℝ :=
+noncomputable def cutoffIntegral (M : ℕ) (a γ : ℝ) (P : MvPolynomial (Fin M ⊕ Fin M) ℝ) : ℝ :=
   ∫ p, (tailSet M γ)ᶜ.indicator
     (fun p => baseWeight M a p*eval (Sum.elim p.1 p.2) P*crossProduct M γ⁻¹ p.1 p.2) p
 
@@ -441,7 +443,7 @@ theorem basePolynomial_integrable {M : ℕ} {a : ℝ} (ha : 0 < a)
   rw [he]
   exact (integrable_indicator_iff (measurableSet_orthantProduct M)).mpr h
 
-private theorem baseWeight_eq_zero_off_orthant {M : ℕ} {a : ℝ}
+theorem baseWeight_eq_zero_off_orthant {M : ℕ} {a : ℝ}
     {p : (Fin M → ℝ) × (Fin M → ℝ)} (hp : p ∉ (Set.Ici (0 : (Fin M → ℝ) × (Fin M → ℝ)))) :
     baseWeight M a p = 0 := by
   rw [baseWeight_indicator, Set.indicator_of_notMem hp]
@@ -480,7 +482,7 @@ theorem weight_scaled_cutoff {M : ℕ} {γ : ℝ} (hγ : 0 < γ)
     simp only [Set.mem_compl_iff,tailSet,Set.mem_setOf_eq,not_exists,not_lt]
   by_cases hp : ∀ j, p.2 j ≤ γ <;> simp [hp,Set.indicator,hc,baseWeight,mul_assoc]
 
-private theorem tail_family_exponential_bound {M : ℕ} {a : ℝ} (ha : 0 < a) (γ : ℝ)
+theorem tail_family_exponential_bound {M : ℕ} {a : ℝ} (ha : 0 < a) (γ : ℝ)
     (P : MvPolynomial (Fin M ⊕ Fin M) ℝ)
     (f : (Fin M → ℝ) × (Fin M → ℝ) → ℝ)
     (hf : ∀ p, |f p| ≤ baseWeight M a p*|eval (Sum.elim p.1 p.2) P|) :
@@ -509,7 +511,7 @@ theorem crossIntegrand_integrable {M : ℕ} {a : ℝ} (ha : 0 < a) (ε : ℝ)
     Integrable (fun p => baseWeight M a p*eval (Sum.elim p.1 p.2) P*crossProduct M ε p.1 p.2) := by
   simpa only [map_mul, crossPoly_eval, mul_assoc] using basePolynomial_integrable ha (P*crossPoly M ε)
 
-private theorem law_polynomial_ratio {M : ℕ} (hM : 1 ≤ M) {γ : ℝ} (hγ : 0 < γ)
+theorem law_polynomial_ratio {M : ℕ} (hM : 1 ≤ M) {γ : ℝ} (hγ : 0 < γ)
     (P : MvPolynomial (Fin M ⊕ Fin M) ℝ) :
     (∫ p, eval (Sum.elim p.1 p.2) P ∂law M γ) =
       cutoffIntegral M M γ P/cutoffIntegral M M γ 1 := by
@@ -583,7 +585,7 @@ private theorem crossIntegral_firstOrder {M : ℕ} {a : ℝ} (ha : 0 < a)
     simpa only [jointSum, mul_assoc, mul_left_comm, add_assoc] using hh
   · simp [baseWeight_eq_zero_off_orthant hp,g]
 
-private theorem cutoffIntegral_eq_sub {M : ℕ} {a : ℝ} (ha : 0 < a) (γ : ℝ)
+theorem cutoffIntegral_eq_sub {M : ℕ} {a : ℝ} (ha : 0 < a) (γ : ℝ)
     (P : MvPolynomial (Fin M ⊕ Fin M) ℝ) :
     cutoffIntegral M a γ P = crossIntegral M a γ⁻¹ P-
       ∫ p in tailSet M γ, baseWeight M a p*eval (Sum.elim p.1 p.2) P*crossProduct M γ⁻¹ p.1 p.2 := by
@@ -613,7 +615,7 @@ private theorem crossIntegral_tail_bigO {M : ℕ} {a : ℝ} (ha : 0 < a)
     simpa only [jointSum,mul_assoc,add_assoc] using hh
   · simp [baseWeight_eq_zero_off_orthant hp]
 
-private theorem cutoffIntegral_firstOrder {M : ℕ} {a : ℝ} (ha : 0 < a)
+theorem cutoffIntegral_firstOrder {M : ℕ} {a : ℝ} (ha : 0 < a)
     (P : MvPolynomial (Fin M ⊕ Fin M) ℝ) :
     FirstOrder (cutoffIntegral M a · P)
       (∫ p, baseWeight M a p*eval (Sum.elim p.1 p.2) P)

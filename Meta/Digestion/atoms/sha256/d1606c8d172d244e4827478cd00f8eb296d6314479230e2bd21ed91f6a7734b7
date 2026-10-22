@@ -1,0 +1,8 @@
+**Definition 4.3 (relations to the fixed74-port suppliers).** There are
+three distinct correspondences; they are not an equality of old/new runs.
+
+| Supplier surface | Relation in the changed instance |
+| --- | --- |
+| ARC6.2, GCA2.4/4.1, CYCLE5.1 raw codec | Same tuple/row/effect grammars, with the complete port vector length75, range0–74, catalog/active tables of4.1 and site reservoir of GENERAL21.9. |
+| ARC2/RCA11 bank compiler | At a word boundary, the exact register valuation is represented by the complete $r_B$-field bank, its actual descriptor/parity; interior cuts use the raw partial-bank relation. Old program fields inject by their hygienic names; every added field is also emitted. |
+| GCA/CYCLE code-dependent entries and roles | Symbolic call-path/entry/exit/port/family/role items of the final expanded $G_B$ and earlier fixed graphs, with the actual new PC numbers, finite tags and catalog identities. |

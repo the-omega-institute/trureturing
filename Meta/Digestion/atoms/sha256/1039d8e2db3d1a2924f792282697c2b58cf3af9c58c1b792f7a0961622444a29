@@ -1,0 +1,21 @@
+## 9. 联合实现的来源、适用域与原目标余项
+
+第 7 节新增的是第三个完整世界与第六 M 块对旧第六 J 核的同时接合，及同一精确历史下的最小支撑消费者；八个整数核恒等式与全域二世界分类分别来自前卷定义 19.1、式 (19.11) 及定理 8.2。第 8 节新增的是两支源差都非奇异的四世界同父实现及其局部隐函数实现族。前卷定理 9.2、10.2 的完整逆作为两节共同接口，定理 22.2 的奇异源差障碍仅在其原假设内使用。这些是仓内既有结构上的综合推导，不主张文献原创性，也不将插值、压缩、隐函数或实闭域投影作为新增数学。
+
+文献对应如下。Li–Lee–Bresler，《[A Unified Framework for Identifiability Analysis in Bilinear Inverse Problems](https://arxiv.org/html/1501.06120)》定理 2.8、推论 3.4 的变换群可识别性与复数泛型子空间结论，有助于区分因子与整体世界；它们不提供本模型的任意实漂移、零增益和固定有限时钟上的共同历史。Ling–Strohmer，《[Self-Calibration and Bilinear Inverse Problems via Linear Least Squares](https://arxiv.org/html/1611.04196)》§2.2 的线性化使用可逆对角校准及相应重复设计或快照条件；这里不能假定 $g(i)\ne0$，也不能取得额外实验。Kech–Krahmer，《[Optimal Injectivity Conditions for Bilinear Inverse Problems](https://arxiv.org/html/1603.07316)》命题 IV.3 的提升差集与测量核关系提供割线类比；其复数泛型和稳定单射范围不替代固定 J/M、正源、漂移与自适应量词。
+
+Villaverde–Tsiantis–Banga，《[Full observability and estimation of unknown inputs, states and parameters of nonlinear biological models](https://pmc.ncbi.nlm.nih.gov/articles/PMC6685009/)》定义 2.1–2.2、定理 2.2 是解析 ODE 与轨迹输入下的局部秩工具；Dong–Goodbrake–Harrington–Pogudin，《[Differential elimination for dynamical models via projections with applications to structural identifiability](https://arxiv.org/html/2111.00991)》区分单实验与多实验及泛型纤维，这些对应提醒不能用额外快照或局部秩替代完整离散历史。Alcázar–Caravantes–Díaz-Toca 的《[A new method to compute the singularities of offsets to rational plane curves](https://arxiv.org/abs/1502.04518v3)》仅提供参数对相等及分母检查的类比；没有将本响应纤维认定为其所研究的有理曲线偏移。这些文章均不作为式 (7.11) 或 (8.7) 的外部直接定理。
+
+承重的一般工具是四节点 Lagrange 插值（本卷 §2.1 所引 Berrut–Trefethen §2）、诱导范数与 Neumann 级数、Banach 压缩定理、普通隐函数定理及实闭域的半代数投影。后两项可分别参见 Rudin《Principles of Mathematical Analysis》第 9 章隐函数定理，以及 Bochnak–Coste–Roy《[Real Algebraic Geometry](https://doi.org/10.1007/978-3-662-03718-8)》的 Tarski–Seidenberg 定理。此处隐函数定理的可逆 Jacobian 和投影的有理半代数单点假设已在定理 8.3–8.4 逐项给出；消元工具的继承出处为前卷式 (9.11)–(9.14)。全部新结论是普通数学证明及有限有理证书，不声称 Lean/kernel 验证或任何构建、覆盖、冻结状态。
+
+两个父必须分别使用。第 7 节 $z<14<144/5$，不在前卷定理 4.1 的第四 J 精确对 chamber；第 8 节 $z>9C/10$，也不在该 chamber。它们既不能彼此拼接，也不能附接旧第四 J 对以构造祖先。第 7 节最小支撑为三的结论不迁移到第 8 节。第 8 节虽由前卷定理 8.2 的必要条件 $C=24+(80/7)(1+\beta)>248/7$ 排除两世界 $L_2$，但尚未决定其父上的三世界可行性，因而没有四世界最小性。两节均只证明完整父纤维包含所给见证，不给完整纤维的穷尽或基数上界。
+
+精确保留的原目标余项为：
+
+1. 对字面 $H_4^\star=(0,J,24,M,35,J,26372/875,M,528/35)$，在所有尚未解决的实际第五响应 $p$ 中，是否存在第五 M 的完整同响应 $L_2$ 仍未决定。第 2–3 节只处理 $p_\star$；第 5 节只处理其明确的闭响应窗口及已获子节点。
+2. 对 $H_4^{[3]}$ 与 $H_4^{[4]}$ 各自的第五 J 臂，仍需一个在该父下取得的共同 $p_J$，以及其第六 J、M 两个失败子节点；每个子节点须有一个已获共同第六响应，且在这一响应内同时满足两个最终动作的碰撞与全部非单点停止守卫。两节各只完成式 (1.7) 中 $F=M$ 的两个块，不给任一个 $L_3(H_4)$。
+3. 通往这些父的同历史第四动作替代证明、所有更早祖先及互择动作、原根 $L_7$ 的全部响应与停止守卫仍未解决；旧 chamber 的第四 J 证明不满足当前父的参数对应。
+4. 无限制自适应八读恢复或不可能性、八读与九读比较，以及原完整域的九读充分性仍未解决。策略仍可为任意确定性历史依赖函数，不附连续、可测、可计算或有限描述条件。
+
+上述两个实际第五 M 节点各自给出完整原世界的联合实现；原根与九读任务的完成判据保持定义 1.3 的原范围。
+

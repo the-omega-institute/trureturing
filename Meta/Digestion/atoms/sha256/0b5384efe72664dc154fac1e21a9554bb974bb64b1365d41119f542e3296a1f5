@@ -1,0 +1,95 @@
+**Lemma 22.2 (A reproducible 3072-cell scalar lower bound).** On the
+radius-$\rho$ enclosures of the actual $L$ endpoint in Lemma 16.3,
+$\mathcal R>0$ for every $10\le p\le34$. The following interval
+recipe gives a complete finite certificate.
+
+For each $(lo,hi)=(10,20),(20,30),(30,34)$ use exactly the 1024
+closed cells
+
+$$
+\begin{gathered}
+I_k=[-1+2k/1024,-1+2(k+1)/1024],\quad
+u_k=-1+(2k+1)/1024,\quad 0\le k\le1023,\\
+p(u)=\frac{lo+hi}2+\frac{hi-lo}2u,\qquad
+p_c=p(u_k),\qquad P_k=p(I_k).
+\end{gathered}
+\tag{22.4}
+$$
+
+All interval endpoints are on the grid $h=10^{-30}$. For any rational
+$x$ define $\operatorname{rd}_-(x)=h\lfloor x/h\rfloor$ and
+$\operatorname{rd}_+(x)=h\lceil x/h\rceil$. Enclose every rational
+input by these two endpoints. Addition and subtraction use exact
+interval endpoints; they remain on the grid. For multiplication use
+the minimum and maximum of the four endpoint products and round the
+minimum down, the maximum up. Every multiplication is rounded before
+the next addition. All zero coefficients are retained. No floating
+point operation or division of intervals is used in this certificate.
+
+Let $\widehat t,\widehat b$ be the two exact $L$ centre polynomials
+from (16.7) for this block. Evaluate each by descending Horner from
+zero, with the preceding operations. Write
+
+$$
+\begin{gathered}
+C_t=\operatorname{Horner}(\widehat t,[u_k,u_k]),\qquad
+C_b=\operatorname{Horner}(\widehat b,[u_k,u_k]),\\
+X_t=\operatorname{Horner}(\widehat t,I_k)+[-\rho,\rho],\qquad
+X_b=\operatorname{Horner}(\widehat b,I_k)+[-\rho,\rho].
+\end{gathered}
+\tag{22.5}
+$$
+
+The exact centre is $(\widehat t(u_k),\widehat b(u_k),p_c)$, not a
+rounded midpoint of $C_t,C_b$. The intervals in (22.5) enclose it and
+the whole actual $L$ endpoint over the cell, respectively.
+
+Here is the polynomial evaluation order, including derivatives. For
+any pair of integer coefficient matrices $(A^0,A^1)$ and parameter
+interval $P$, form each coefficient interval as
+$[A^0_{ij},A^0_{ij}]+P[A^1_{ij},A^1_{ij}]$, multiplying first and
+then adding. Pad each matrix to $i=0,\ldots,6$, $j=0,\ldots,4$,
+including after exact differentiation. In each row run Horner from
+zero in $b$, visiting $j=4,3,2,1,0$. Run the outer Horner from zero
+in $t$, visiting $i=6,5,4,3,2,1,0$. Thus $p$ is combined once into
+the coefficients before either spatial Horner loop. Derivatives use
+$\partial_t(t^ib^j)=it^{i-1}b^j$ and
+$\partial_b(t^ib^j)=jt^ib^{j-1}$ before padding.
+
+Evaluate $\mathcal R_c$ with matrices $(P_0,P_1)$, parameter
+$[p_c,p_c]$ and spatial intervals $(C_t,C_b)$. Evaluate
+$\mathcal R_t,\mathcal R_b$ with matrices
+$(\partial_tP_0,\partial_tP_1)$ and
+$(\partial_bP_0,\partial_bP_1)$, parameter $P_k$ and spatial
+intervals $(X_t,X_b)$. Evaluate $\mathcal R_p=P_1$ by the same
+padded rule with matrices $(P_1,0)$. Denote these three derivative
+intervals by $H_t,H_b,H_p$.
+
+For an interval $H=[a,b]$ put $|H|_{\max}=\max(|a|,|b|)$. Define
+nonnegative grid numbers
+
+$$
+\begin{aligned}
+\delta_t&=\max(\sup C_t-\inf X_t,\ \sup X_t-\inf C_t),\\
+\delta_b&=\max(\sup C_b-\inf X_b,\ \sup X_b-\inf C_b),\\
+\delta_p&=\max(p_c-\inf P_k,\ \sup P_k-p_c),\\
+E_i&=\operatorname{rd}_+(|H_i|_{\max}\delta_i)
+\quad (i=t,b,p),\\
+L_k&=\inf\mathcal R_c-E_t-E_b-E_p.
+\end{aligned}
+\tag{22.6}
+$$
+
+The three error products are rounded up separately. The final
+subtractions are exact grid subtractions in the displayed order.
+The centre enclosures contribute to both $\inf\mathcal R_c$ and the
+spatial displacement bounds; replacing them by rounded point centres
+is not this recipe.
+
+The exact results, with a common denominator $10^{30}$, are:
+
+| $[lo,hi]$ | Completed cells | Nonpositive lower bounds | Numerator of $\min_k L_k$ | Minimizing $k$ |
+| --- | --- | --- | --- | --- |
+| $[10,20]$ | $1024$ | $0$ | $173903350897027038369423464062764$ | $1023$ |
+| $[20,30]$ | $1024$ | $0$ | $52901519073726829319802022686438$ | $1023$ |
+| $[30,34]$ | $1024$ | $0$ | $18553152424991317187833579224406$ | $1023$ |

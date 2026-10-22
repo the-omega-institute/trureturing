@@ -1,0 +1,76 @@
+## 96. Proof of Theorem 94.2: all odd horizons and the singular endpoint
+
+For actual odd $n\ge1$ we have $0<s\le1$. The following algebra is
+also valid at $s=0$. Choose $r=z=1$ and $\sigma=+1$. Then
+
+$$
+M=\begin{pmatrix}1&s&0\\s&a&0\\0&0&a\end{pmatrix},\qquad
+p=\frac{(1+s,\ 2(1+s),\ 2(1+2s))^{\mathsf T}}{5+7s},\qquad
+\eta=\frac{(1+s)(1+2s)}{5+7s}.
+\tag{96.1}
+$$
+
+Every entry of $p$ is positive and their numerators sum to $5+7s$.
+For the three rows respectively,
+
+$$
+\begin{aligned}
+p_0+s p_1&=\frac{(1+s)(1+2s)}{5+7s},\\
+s p_0+a p_1&=\frac{s(1+s)+(1+s)^2}{5+7s}
+                         =\frac{(1+s)(1+2s)}{5+7s},\\
+a p_2&=\frac{(1+s)(1+2s)}{5+7s}.
+\end{aligned}
+\tag{96.2}
+$$
+
+Thus $Mp=\eta\mathbf1$. Also $0<\eta<1$: its first-row expression
+is $p_0+s p_1\le p_0+p_1<1$.
+
+For the unrestricted-decoder lower certificate, write $y=u^2$. In
+(95.3), $L_s(p;\sqrt y,v)$ is concave in $y\in[0,1]$, because its
+only non-affine term is $2s p_0p_1\sqrt y$. Its derivative at $y=1$
+and its coefficient of $v$ are
+
+$$
+\begin{aligned}
+d_y&=ap_1^2-bp_2^2+s p_0p_1
+ =p_1^2\frac{s(1+2s)(1+3s)}{2(1+s)^2}\ge0,\\
+d_v&=ap_2^2-bp_1^2
+ =p_1^2\frac{s(4+5s)}{2(1+s)}\ge0.
+\end{aligned}
+\tag{96.3}
+$$
+
+For example these identities follow by substituting
+$p_0/p_1=1/2$ and $p_2/p_1=(1+2s)/(1+s)$; no denominator vanishes
+on $[0,1]$. The tangent inequality for the concave function, including
+$y=0$ by continuity, gives
+
+$$
+L_s(p;\sqrt y,v)-L_s(p;1,1)
+\le d_y(y-1)+d_v(v-1)\le0\qquad(y,v\in[0,1]).
+\tag{96.4}
+$$
+
+Since $L_s(p;1,1)=p^{\mathsf T}Mp=\eta$, this proves the required
+global lower bound. The map $\mathcal R_{1,1}^{+1}$ only pinches
+between $\operatorname{span}\{|0\rangle,|1\rangle\}$ and
+$\mathbb C|2\rangle$. That pinching is redundant after $\Phi_s$ by
+(93.5). Hence the actual decoder $\operatorname{Ad}_{U_0^\dagger}$
+in (94.6) realizes precisely the recovered channel in this certificate.
+Equations (95.4) and (95.10) prove
+
+$$
+\delta_n=1-\frac{(1+s)(1+2s)}{5+7s}
+        =\frac{4+4s-2s^2}{5+7s}\qquad(n\ge1\text{ odd}).
+\tag{96.5}
+$$
+
+At $n=1$, $s=1$, $p=(1,2,3)^{\mathsf T}/6$ and $\eta=1/2$.
+The upper-left block of $M$ is
+$\left(\begin{smallmatrix}1&1\\1&1\end{smallmatrix}\right)$, so $M$
+is singular. All the displayed row identities, the concavity bound and
+the positive-semidefinite Cauchy–Schwarz argument remain valid. This
+recovers the existing one-step value without using $M^{-1}$. At $n=3$,
+$s=1/4$ gives $\eta=5/18$ and $\delta_3=13/18$.
+

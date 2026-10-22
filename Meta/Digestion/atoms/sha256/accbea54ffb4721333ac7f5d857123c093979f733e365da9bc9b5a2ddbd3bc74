@@ -1,0 +1,51 @@
+**Lemma 105.3 (Inputs, metric and continuity).** For each fixed decoder,
+the input maximum in (105.2) equals the maximum over pure states. Moreover
+
+$$
+|e_s(\mathcal R)-e_t(\mathcal R)|\le |s-t|,
+\qquad |\mu(s)-\mu(t)|\le |s-t|
+\quad(s,t\in[-1/2,1]).
+\tag{105.5}
+$$
+
+*Proof.* The error is convex in $\rho$. A spectral decomposition of any
+mixed density matrix bounds its error by a convex combination of pure
+input errors, hence by the largest such error. The reverse inequality
+holds because pure states are among the allowed inputs.
+
+For any Hermitian traceless $3\times3$ matrix $X$,
+
+$$
+\frac12\|X\|_1=\|X\|_{\rm op}.
+\tag{105.6}
+$$
+
+Indeed, unless $X=0$, the sum of its positive eigenvalues equals the sum
+of the absolute values of its negative eigenvalues. In dimension three,
+at least one of these two sums consists of a single eigenvalue, whose
+absolute value is at least that of each other eigenvalue. Every recovery
+error on a density input has this Hermitian traceless form. Equation
+(105.6) does not identify (105.2) with an induced Schatten norm whose
+supremum also includes arbitrary non-Hermitian matrices.
+
+For a density matrix $\rho$, write $z=\rho_{01}$ and
+$h=(\rho_{11}-\rho_{22})/2$. Directly from (93.5),
+
+$$
+(\Phi_s-\Phi_t)(\rho)=(s-t)
+ \begin{pmatrix}0&z&0\\\overline z&h&0\\0&0&-h\end{pmatrix},
+\qquad
+\frac12\|(\Phi_s-\Phi_t)(\rho)\|_1
+ \le |s-t|(|z|+|h|)\le |s-t|.
+\tag{105.7}
+$$
+
+The first bound splits the matrix into its off-diagonal and diagonal
+parts. Positivity gives $|z|\le\sqrt{\rho_{00}\rho_{11}}\le1/2$,
+and $|h|\le1/2$. A CPTP map contracts the trace norm of Hermitian
+matrices: applying it to the positive and negative parts proves this
+from positivity and trace preservation. The reverse triangle inequality
+and (105.7) thus bound the change in each input error by $|s-t|$,
+uniformly in the decoder. Taking input maxima and then decoder minima
+proves (105.5). $\square$
+

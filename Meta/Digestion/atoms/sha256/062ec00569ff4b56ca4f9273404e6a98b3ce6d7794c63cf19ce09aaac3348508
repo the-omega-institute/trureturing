@@ -1,0 +1,99 @@
+**Lemma 16.2 (full native cost depends on length and weight, not payload
+order).** For fixed $P,L,r$, the histories $R_x$ of Definition 16.1
+have equal absolute native receipt counts. At corresponding completed
+word operations and native channel phases they have the same nonmeter
+arena sizes, register lengths, bank parity, descriptor bases/lengths/
+creation counts, positioned heads and current resource slots, allowing
+the retained raw bits and their copies to differ. These assertions
+include every retained old bank, scratch word and descriptor. The same
+native count and size equalities hold at $h_x$ and at $h_x^+$.
+This is equality of total native costs at the stated cuts; individual
+bit-test cuts and the complete receipt contents are not equated.
+
+Proof. Use RCA Definition 11.5's actual cost recurrence, relocated by
+ARC §2 and instantiated with the full $r_{\mathrm{gc}}$ of Definition
+2.1. The following induction describes the quantities on which that
+recurrence depends, including its nonempty-arena entry heads. The word
+"opaque" below describes uses of existing data in this proof; it adds
+no runtime tag, register, field or permission.
+
+First separate two kinds of actual test. RCA Definition 11.3 implements
+a word empty test by Field followed by RD(test sep), and a word
+first-bit test, after nonemptiness, by Field followed by RD(test0).
+Both bit successors of that latter RD have one testing occurrence.
+Native binary import instead uses its finite symbol classifier before
+selecting a literal cons. The displayed FieldRead graph of RCA
+Definition 13.2 tests F, then0, then1. Its scan rows per zero and one
+are respectively
+
+$$
+\begin{array}{c|c|c}
+ &\text{scan rows outside the compiled cons}&\text{count}\\
+0&\mathrm{RD(F)},\mathrm{CTL(0)},\mathrm{MR}&3\\
+1&\mathrm{RD(F)},\mathrm{CTL(0)},\mathrm{CTL(1)},\mathrm{MR}&4.
+\end{array}
+$$
+
+Positioning, accumulator initialization, Reverse and delimiter exits
+are additional work. RCA Lemma 13.2a gives the full-prefix scan subtotal
+$2h+4+3s+3z+4o$, excluding those compiled operations, for entry distance
+$h$, $s$ fields, $z$ zeros and $o$ ones. ARC's binary field import uses
+the same literal-bit selection inside its F-bounded scan. Thus its
+bit-classification contribution is $3z+4o$, with its own actual entry
+and exit rows added. In particular, equal lengths alone do not equate
+import costs.
+
+For one compiled assignment, suppose corresponding source fields have
+the same lengths and actual heads. Expand all five steps of RCA
+Definition 11.3. They give the following exact recurrence comparison.
+
+| Expanded work | Why its cost, constructions and resulting positions agree |
+| --- | --- |
+| Purpose CTL, Tail66 and actual Base of the other bank | Home/Tail visit the same distances. Base tests R and counts every existing ordinary cell, independent of its binary value. Its appended unary base is the same. |
+| Dry emission of all $r_{\mathrm{gc}}$ fields | Field uses LastBank and the fixed preceding field skips. SegmentCount has $5l+1$ rows for a field of length $l$. Literal cons0/cons1 each count one extra cell; tail skips the same first position or takes the common empty case. Every field sep is counted. |
+| Real emission of all fields, F and seal | SegmentCopy also has $5l+1$ rows, using latched-bit WR without a binary classifier. Either literal cons uses EX/WR/MR once. Empty/copy/tail have the same respective emitted lengths as their dry passes. Both bank tapes retain the same number of cells in every old and new version. |
+| Closed descriptor count | Its R/F tests traverse the same retained descriptor prefix and append one unary mark per preceding F. They do not classify payload0 against payload1 or read the meter. |
+| Complete descriptor and parity CTL | Owner/port, actual unary base, payload length, flags10 and creation ordinal agree. LastScratch offsets1/0, unary copies including their terminal zeros, F, seal and parity change therefore have equal costs and equal scratch/descriptor sizes. |
+
+For example, LastBank's $2d+2\ell+5$ and Field's extra
+$2\sum_{j<i}(l_j+1)$ use the actual head distance $d$ and version length
+$\ell$. A changed payload bit affects neither. Tail first establishes
+append positions on retained scratch; LastScratch includes its sep/L
+tests. The proof does not replace these quantities by empty-tape prices.
+The induction retains the lengths of *all* registers, including dead
+macro temporaries, since every assignment copies all fields. Different
+literal bit branches have the same field index and the same following
+head positions and parity; they do not add different-sized bank words.
+Intermediate scans may leave different data in latch4, but every use
+selects its bit before compiler work or performs its own new RD.
+
+Now expand RCA Definition 12.1's macros. Reverse, Cat and Take move or
+copy one bit at a time with one equally sized literal-cons arm for
+either bit and the same cursor-length schedule. Length conses1 per
+bit. Frame emits the actual unary length and copies the word; it does
+not interpret that word as a number. ReadFrame/ReadList and fixed-arity
+tuple operations inspect their framing and unary lengths, retaining
+opaque field contents. On this route every comparison involving $x$
+is Equal between two authentic copies *within the same run*. Both
+cursors therefore tail to joint exhaustion, with successful first-bit
+comparisons throughout. Neither run compares its request with the
+other run's request. There is no mismatch-dependent early exit.
+All other semantic comparisons have identical operands. These facts
+preserve the assignment/test and length/head schedule just proved.
+They cover complete tuple/list serialization and parsing, rather than
+merely a unit price for one macro call.
+
+The application to the actual phases is as follows. Costs in each row
+are evaluated at that phase's actual complete predecessor, using the
+recurrence above.
+
+| Phase | Actual operands and complete cost comparison |
+| --- | --- |
+| Outer1 and separate mode1 | Both native receivers have the same inputs and incoming geometry. Their Bases, literal lengths, descriptors, seals, native imports and mode copy agree. The invocation TOK and reserve CTL are included. |
+| Whole-frame ingress and import | The three tag bodies have four rows each, the $L+1$ unary-length bodies five each, and the tested payload body $6L+1$. Length recovery, Seek, F/seal, construction of $U(2L+4)$, ordinal and descriptor are the RCA native recipes, not this body subtotal. They depend on $L$ and the common pre-import geometry. The frame has $L+r$ ones and $L-r+4$ zeros. Its complete import has the same cons/Reverse length schedule and the same aggregate binary-test cost. |
+| Recover and cover archive | Frozen $M$, manifest, completed-cycle cardinality and Boundary's represented predecessor are those of the one fixed $P_*$. Its represented rows, inputs, events, receipts and $a,b$ are identical. The varying current mode/frame are persistent fields copied by the compiler, never Boundary's reservoir. Thus every represented Step and every actual word operation implementing it has the same length schedule. Cover creation/count, framing, bank-list append and physical71 export are included. |
+| CoverRef and ClientCover | The CoverRef word $(c,a,b)$ with its common service/source prefix is identical. Export, placements, descriptor staging, both copies, completion records, print, check/ACK/mailbox return, positioned73 import and acquired-$c$ checks have the common numeric geometry. Invocation transfers into ClientCover and Bind are actual rows. |
+| Bind and first failure | The acquired cover and all lookup operands agree except the retained raw selector. The fixed mode and tag000 take the same first failing tag test before any $x$ is interpreted as an offset, source index, unary value, program or loop bound. No Issue/Prefix/Call for this selector is executed. The retained reason is0000. |
+| Rejection publication and callback | The serialized raw request is the existing fixed pair $(1,w_x)$. Fixed-arity list/Frame encoding puts $x$ once between bit words depending only on $P_*,L$. The whole Rejection therefore has one common length and a common number of ones plus $r$. All native copies/print transport it without bit-dependent branches. The complete receiver import balances its zero/one tests, and its authentic reason/request equality checks run to exhaustion. |
+| Final checked return | Include the final ACK, mailbox TOK, five-field item with the actually received bindings, its complete $M$ AppendItem, invocation TOK and Ready CTL. The fields have the same lengths; variable request copies remain data. The retained bank/scratch/descriptor induction applies to every assignment in this return. |
+| Next outer01 and original header | The gate has identical supplied bits. Its native metadata, import and bank work have the same geometry and cost. The original source resources and data have survived the history flight; its original header setup is the same computation on those data. Its first IN5(0) and matching EX13 each add exactly one actual receipt. |

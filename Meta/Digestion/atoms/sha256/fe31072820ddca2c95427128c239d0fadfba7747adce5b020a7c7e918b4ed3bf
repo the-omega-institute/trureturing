@@ -1,0 +1,113 @@
+**Theorem 19.1 (Response enclosure retaining the exact parameter).**
+The actual $v_\star$ of (18.8) lies strictly inside
+
+$$
+\mathcal V=\left[\frac{144397245334493}{10^{12}},
+                       \frac{144397245371500}{10^{12}}\right].
+\tag{19.1}
+$$
+
+At the four worlds, the final responses have the enclosures below.
+Among these worlds the only unordered distinct final-J collision
+pair is $\{A,B\}$, and the final-M response is injective.
+
+Proof. First, natural interval evaluation in the full box gives these
+response and gain bounds. Every numerator interval in both tables
+is divided by $10^6$; they are enclosures before imposing $F_p=0$.
+
+| World | $p$ | $u$ | $f_J=f_{MJ}$ | $f_M=f_{MM}$ |
+| --- | --- | --- | --- | --- |
+| $A$ | $[27442122,27442163]$ | $[144397177,144397314]$ | $[489764880,489765207]$ | $[640171212,640171644]$ |
+| $B$ | $[27442140,27442145]$ | $[144397238,144397253]$ | $[489765025,489765062]$ | $[658972311,658972359]$ |
+| $C$ | $[27442037,27442248]$ | $[144396879,144397612]$ | $[403819508,403820934]$ | $[630538939,630541225]$ |
+| $D$ | $[27442138,27442147]$ | $[144397231,144397260]$ | $[569047436,569047516]$ | $[659677392,659677485]$ |
+
+| World | $g(5)$ | $g(6)$ | $g(7)$ |
+| --- | --- | --- | --- |
+| $A$ | $[238913,238926]$ | $[24029771,24029799]$ | $[75183233,75183286]$ |
+| $B$ | $[1131951,1131954]$ | $[26325905,26325909]$ | $[80945379,80945386]$ |
+| $C$ | $[-774637,-774562]$ | $[26399707,26399876]$ | $[83634921,83635239]$ |
+| $D$ | $[1156421,1156425]$ | $[26507980,26507987]$ | $[81463625,81463637]$ |
+
+These bounds follow from exactly the expressions and reciprocal guards
+in the proof of Theorem 18.2. The sharper enclosure (19.1) uses their
+common root, rather than treating the root coordinates independently.
+Let $p_0$ be the exact rational midpoint of $\mathcal P$, let
+$U_B(z)=u(r_B,b_B)$, and put
+
+$$
+\alpha=DU_B(m),\qquad K=\alpha\mathsf C,\qquad
+F_0=F_{p_0}(m),\qquad E=I-\mathsf CDF_p(\mathcal B).
+\tag{19.2}
+$$
+
+Here $\alpha$ is an eight-entry row with zeros outside coordinates
+$r_B,b_B$; $E$ is independent of $p$ because the parameter enters
+(18.6) only as four constant subtractions. For $z=z(p)$ and
+$\delta=z-m$, integrate the derivative along $m+t\delta$ to obtain
+
+$$
+\delta=-\mathsf CF_p(m)+\overline E\delta,\qquad
+ U_B(z)=U_B(m)+\alpha\delta+R_U,
+\tag{19.3}
+$$
+
+where every entry of $\overline E$ lies in its entry of $E$, and
+
+$$
+|R_U|\le\rho\sum_{j=1}^8
+ |DU_B(\mathcal B)_j-\alpha_j|_{\max}.
+\tag{19.4}
+$$
+
+Consequently $U_B(z)$ is enclosed by $\mathcal I+[-e,e]$, where
+
+$$
+\begin{aligned}
+\mathcal I&=U_B(m)-KF_0+
+           (K_1+K_2+K_3+K_4)(\mathcal P-p_0),\\
+e&=\rho\sum_{j=1}^8\left(
+ \left|\sum_{i=1}^8\alpha_iE_{ij}\right|_{\max}
+ +|DU_B(\mathcal B)_j-\alpha_j|_{\max}\right).
+\end{aligned}
+\tag{19.5}
+$$
+
+This retains the shared $p$ dependence before taking an interval.
+The first term uses $F_p(m)=F_0-(p-p_0)(1,1,1,1,0,0,0,0)^{\mathsf T}$.
+In the second term take the interval sum before its absolute bound.
+The exact rational inclusions specified by (18.2)–(18.6), (18.10)
+and (19.2)–(19.5) are
+
+$$
+\begin{gathered}
+\mathcal I\subset
+\frac{[144397245334498362758,144397245371494765773]}{10^{18}},\\
+e<\frac{5134731}{10^{18}}<\frac{5135}{10^{15}},\\
+\mathcal I+[-e,e]\subset
+\frac{[144397245334493228,144397245371499901]}{10^{15}}
+ \subset\operatorname{int}\mathcal V.
+\end{gathered}
+\tag{19.6}
+$$
+
+By (18.9), $v_\star=U_B(z(p_J))$, proving (19.1). The midpoint
+$p_0$ in this estimate is only an expansion point; $p_J$ and the
+entire interval $\mathcal P-p_0$ remain in the estimate.
+
+The final-M intervals are ordered $C,A,B,D$. The successive lower
+endpoint minus preceding upper endpoint differences have positive
+numerators
+
+$$
+9629987,\qquad18800667,\qquad705033
+\quad\text{with denominator }10^6.
+\tag{19.7}
+$$
+
+Thus every two of these worlds have different actual final-M
+responses. For final J, $C$ is strictly below both $A,B$, and $D$
+is strictly above both; $C,D$ are also separated. This excludes all
+five distinct pairs other than $A,B$. Their exact equality is the
+last equation of (18.6). ∎
+

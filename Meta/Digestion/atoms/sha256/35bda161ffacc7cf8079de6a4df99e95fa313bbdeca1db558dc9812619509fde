@@ -1,0 +1,36 @@
+**Theorem 153.1 (Every complex optimizer).** Let
+
+$$
+B=\big[\,|00\rangle-k|11\rangle,\ |20\rangle,\ |21\rangle,
+\ |12\rangle,\ |22\rangle\,\big],
+\tag{153.4}
+$$
+
+and, for $z=(z_1,z_2,z_3,z_4)\in\mathbb C^4$, set
+
+$$
+H(z)=\begin{pmatrix}
+a&0&0&z_1&z_2\\
+0&1-a&0&z_3&0\\
+0&0&1-b&z_4&kz_1\\
+\overline z_1&\overline z_3&\overline z_4&c&0\\
+\overline z_2&0&k\overline z_1&0&1-c
+\end{pmatrix}.
+\tag{153.5}
+$$
+
+A complex CPTP map $\mathcal R$ is optimal if and only if there is a
+unique $z\in\mathbb C^4$ such that
+
+$$
+J_{\mathcal R}=BH(z)B^\dagger,\qquad H(z)\succeq0.
+\tag{153.6}
+$$
+
+The condition is joint and includes every singular boundary tuple.
+Every optimizer has $\mathcal R\Phi=\mathcal C_*$ as linear maps on
+all of $M_3(\mathbb C)$. The optimizer family has real affine
+dimension eight. Its smallest containing CPTP face is the exposed
+support face of dimension sixteen described in §160; the optimizer
+family itself is not a CPTP face. The proof follows in §§154–160.
+

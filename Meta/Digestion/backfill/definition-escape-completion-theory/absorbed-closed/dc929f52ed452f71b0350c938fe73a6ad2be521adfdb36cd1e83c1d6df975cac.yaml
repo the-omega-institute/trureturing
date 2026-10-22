@@ -1,0 +1,9 @@
+fingerprints:
+  raw_sha256: sha256:dc929f52ed452f71b0350c938fe73a6ad2be521adfdb36cd1e83c1d6df975cac
+  normalized_sha256: sha256:dc929f52ed452f71b0350c938fe73a6ad2be521adfdb36cd1e83c1d6df975cac
+cas_ref: sha256:dc929f52ed452f71b0350c938fe73a6ad2be521adfdb36cd1e83c1d6df975cac
+coverage_gids:
+  - gid: D5/S3/ConceptDynamics/DefinitionEscape/FiniteCoverCounting.counting_escape_antitone_law
+    target_statement_id: sha256:9bd76a0e3d5a1ca24ae0d095230849e7d3646a2bc464afd5749d2f62717e98ee
+receipts:
+  unresolved_subitems: []

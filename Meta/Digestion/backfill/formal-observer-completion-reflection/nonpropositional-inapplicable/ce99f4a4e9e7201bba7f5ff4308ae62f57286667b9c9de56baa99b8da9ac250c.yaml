@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:ce99f4a4e9e7201bba7f5ff4308ae62f57286667b9c9de56baa99b8da9ac250c
+  normalized_sha256: sha256:ce99f4a4e9e7201bba7f5ff4308ae62f57286667b9c9de56baa99b8da9ac250c
+cas_ref: sha256:ce99f4a4e9e7201bba7f5ff4308ae62f57286667b9c9de56baa99b8da9ac250c
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: Introduces full-state legal sets and motivates the forthcoming definition of safe actions.
+    previous_atom_id: 112a8eaf6212e06ba59e2bedc6fb7ca8cc428d1d3c6714bc11a5f5d145710e4e
+    next_atom_id: 70dabf252c67b69e38d113a402b3420205b8417956fa006ffcad0503798b8f05

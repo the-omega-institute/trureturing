@@ -1,0 +1,62 @@
+**Theorem 21.5 (Strict nonlinear order and lower-branch joint injectivity).**
+For every real $p\in K$ and every $0<r<1$,
+
+$$
+\frac{\partial H_-}{\partial r}(r,p)>0.
+\tag{21.17}
+$$
+
+Consequently, for every $r,s\in(0,1)$,
+
+$$
+u_-(r,p)=u_-(s,p),\quad m_-(r,p)=m_-(s,p)
+\quad\Longrightarrow\quad r=s.
+\tag{21.18}
+$$
+
+**Proof.** The lower root of $\mathsf A$ is simple and crosses
+from positive to negative as $b$ increases, by Theorem 18.4.
+It therefore has $\mathsf A_b<0$. Since $q>0$, (21.2) gives
+
+$$
+\widetilde A_z=q^{-2}\mathsf A_b<0.
+\tag{21.19}
+$$
+
+Choose a cell containing the given $r$. Lemma 21.4 supplies its
+nonzero chart denominator and the positive polynomial
+$G^{(k_j)}$ at the actual lower root. In this chart,
+implicit differentiation of $\widetilde A=0$ and ordinary
+quotient differentiation give
+
+$$
+\frac{d}{dr}\{m-P_*(u)\}
+ =\frac{\mathcal R(n_{k_j},m_{k_j},d_{k_j})}
+              {16000d_{k_j}^4\widetilde A_z}
+ =\begin{cases}
+ \displaystyle\frac{-15zG^{(0)}}{16000d_0^4\widetilde A_z},&k_j=0,\\
+ \displaystyle\frac{-zG^{(1)}}{16000d_1^4\widetilde A_z},&k_j=1.
+ \end{cases}
+\tag{21.20}
+$$
+
+Indeed
+$16000P_*'(n/d)=104000+420(n-144d)/d-31(n-144d)^2/d^2$,
+which is exactly the factor in (21.6). Each expression in
+(21.20) is strictly positive by $z>0$, (21.19) and Lemma 21.4.
+Both charts describe the same actual responses, so their overlap
+introduces no new response or gain choice. Smoothness at every
+strict source, including $\Lambda=0$, is supplied by Theorem
+19.2. This proves (21.17) everywhere on the entire lower branch.
+
+For $r<s$, the mean value theorem on $[r,s]\subset(0,1)$ gives
+$H_-(r,p)<H_-(s,p)$. Equality of both actual responses would
+give equality of their $H_-$ values and contradict this strict
+inequality. This proves (21.18).
+
+The interval $K$ is used uniformly in Lemma 21.4; $p_c$ enters
+only the rational tube recursion. The particular polynomial
+identities and lower-branch order are repo-derived. The Taylor
+and interval tools cited after Definition 21.3 are intermediate
+results, applied here to the original full source branches. ∎
+

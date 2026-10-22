@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:8d6d7c587ecb5d810479d84be8e7448bb917081dbe63b7df8590a784cd70561b
+  normalized_sha256: sha256:8d6d7c587ecb5d810479d84be8e7448bb917081dbe63b7df8590a784cd70561b
+cas_ref: sha256:8d6d7c587ecb5d810479d84be8e7448bb917081dbe63b7df8590a784cd70561b
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 定义 123 给出经 zeta 与 val 定义的后继、前驱、容量守卫和逐行词求值；精确共轭及成功对应为后续定理的命题。
+    previous_atom_id: 9fabd1fa936bf00bdef85447a309053e01030a60cb6f32cb6f80ac45b748821d
+    next_atom_id: 3ee95bf931c853055f0b834adedca72777b94020fb344a44aa683cdf42db1989

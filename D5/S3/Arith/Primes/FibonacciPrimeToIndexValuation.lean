@@ -80,7 +80,7 @@ private theorem golden_power_valuation (x : GoldenInt) (p m : ℕ) (hp : p.Prime
       rw [hbpow, padicValInt.mul hxb hqne,
         padicValInt.eq_zero_of_not_dvd hqnot, add_zero]
 
-private theorem fibonacci_valuation_stable (p r m : ℕ) (hp : p.Prime)
+theorem fibonacci_valuation_stable (p r m : ℕ) (hp : p.Prime)
     (hr : 0 < r) (hpb : p ∣ Nat.fib r) (hpm : ¬p ∣ m) :
     padicValNat p (Nat.fib (r * m)) = padicValNat p (Nat.fib r) := by
   obtain ⟨k, rfl⟩ := Nat.exists_eq_succ_of_ne_zero (by omega : r ≠ 0)

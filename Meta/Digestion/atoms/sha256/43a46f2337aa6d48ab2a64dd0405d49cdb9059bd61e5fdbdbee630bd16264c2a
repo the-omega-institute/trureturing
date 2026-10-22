@@ -1,0 +1,39 @@
+**Convention 200.3 (Mathematical references and domains).**
+
+- **[N] Native finite quantum application.**
+  [FIB ATOM recursive holographic boundary geometry, continuation VI, §§139--156](https://github.com/the-omega-institute/trureturing/blob/7b9f7a9101eb8492eba6454a034434d3b53fc79d/docs/develop/theory/FIB_ATOM_RECURSIVE_HOLOGRAPHIC_BOUNDARY_GEOMETRY_CONTINUATION_VI.md).
+  §§139--142 give the source, principal-root cut and full Gibbs factorization;
+  §§147--151 give the two-preparation resource, CAR convention and common
+  filter; §§152--155 give the thresholds and fixed-source comparison.
+- **[G] M. Gwóźdź and L. Jakóbczyk.** *Spontaneous emission can locally
+  create quantum discord out of classical correlations*,
+  [arXiv:1306.0130v2](https://arxiv.org/pdf/1306.0130v2),
+  DOI [10.1007/s11128-013-0639-0](https://doi.org/10.1007/s11128-013-0639-0).
+  Eqs. (II.1), (II.9), (II.15) and (II.23) specify the definitions and
+  Bell-diagonal versus numerically expected mixed-state comparison.
+- **[R] Repository two-qubit correlation--discord result.**
+  [Immutable declaration source](https://github.com/the-omega-institute/trureturing/blob/62da326eca057b3195bef4099cd0c6fcccc37c3c/D5/S3/Quantum/Information/GeometricDiscordMutualCorrelationBound.lean)
+  and [matching mathematical exposition](https://github.com/the-omega-institute/trureturing/blob/62da326eca057b3195bef4099cd0c6fcccc37c3c/Blueprint/D5/S3/Quantum/Information/GeometricDiscordMutualCorrelationBound.md).
+  The stated result concerns all two-qubit density matrices with the
+all-complex local covariance domain and the normalized Hilbert–Schmidt
+discord. The E family is within that domain; the F calculation is the
+direct local-block proof of §§192–194.
+- **[M] N. Schuch, F. Verstraete and J. I. Cirac.** *Quantum entanglement
+  theory in the presence of superselection rules*,
+  [quant-ph/0404079v1](https://arxiv.org/pdf/quant-ph/0404079v1),
+  DOI [10.1103/PhysRevA.70.042310](https://doi.org/10.1103/PhysRevA.70.042310).
+  PDF pp. 9--10, §§IV.D.1--IV.D.2, Eqs. (17)--(18), supply the mature
+  mixed-state standard form and two-copy local one-particle projection.
+- **[P] M. Horodecki, P. Horodecki and R. Horodecki.** *Separability of Mixed
+  States: Necessary and Sufficient Conditions*,
+  [quant-ph/9605038v2](https://arxiv.org/pdf/quant-ph/9605038v2),
+  Theorem 3, PDF p. 8. Its PPT sufficiency applies in $2\times2$ and
+  $2\times3$; full-state separability here follows from the explicit local
+  direct sum and product decomposition.
+
+- **[T] Two-qubit trace-norm comparison.**
+  [Trace-norm discord and maximal mutual correlation](https://github.com/the-omega-institute/trureturing/blob/b02b98342945a1a724a227db4fa38e376640e573/Blueprint/D5/S3/Quantum/Information/TraceNormDiscordMutualCorrelationBound.md),
+  Definitions 1.1–1.2 and Theorem 1.3, states $D_1^A\le C_M$
+  on two qubits with the unhalved trace norm and all-complex covariance
+  domain. It concerns the trace-norm functional of Convention 191.2.
+

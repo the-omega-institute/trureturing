@@ -1,0 +1,61 @@
+## 148. The source-dependent mixed state and its mature supplier
+
+Use the B-local alignment of §142 as a proof basis. Denote its active mode
+by $b$ and its spectator by $s$; the letter $s$ here replaces the spectator
+mode label $d$ of §142, while $d$ below denotes a matrix entry.
+For each preparation the aligned state, in creation order $(A,b,s)$, is
+$\sigma_\beta(p)\otimes\tau_\beta$, where
+
+$$
+t=e^{-\beta}>0,\quad D=2(1+t),\quad p=|(V_q)_\ell|^2,\qquad
+\sigma=\begin{pmatrix}
+a&0&0&0\\0&b&z&0\\0&\overline z&c&0\\0&0&0&d
+\end{pmatrix},\qquad \tau=\operatorname{diag}(r_0,r_1).
+\tag{148.1}
+$$
+
+The order for $\sigma$ is $(|00\rangle,|01\rangle,|10\rangle,|11\rangle)$.
+The coefficients inherited from (142.6) are
+
+$$
+a=\frac1D,\quad b=\frac{1-(1-t)p}{D},\quad
+c=\frac{t+(1-t)p}{D},\quad d=\frac tD,\quad
+z=\frac{(1-t)\sqrt{p(1-p)}}D,\quad
+r_0=\frac1{1+t},\quad r_1=\frac t{1+t}.
+\tag{148.2}
+$$
+
+Here $a+b+c+d=1$ and $z$ is real in the chosen source convention.
+Write $\mu=|z|^2$ throughout; it is not an AURIC joint-occupancy $\kappa$.
+The useful source-specific identities are
+
+$$
+ad=\frac{t}{4(1+t)^2},\qquad
+\mu=\frac{(1-t)^2p(1-p)}{4(1+t)^2},\qquad bc=ad+\mu.
+\tag{148.3}
+$$
+
+Schuch--Verstraete--Cirac [M], PDF p. 9, §IV.D.1, Eqs. (17)--(18),
+supply the mature mixed-state number-SSR setting and local-filter standard
+form. Their parameters map as
+
+$$
+(w_{00},w_{01},w_{10},w_{11},\gamma)=(a,b,c,d,z),\qquad
+w=\sqrt{\frac{ad}{bc}},\qquad v=\frac{|z|}{\sqrt{bc}}.
+\tag{148.4}
+$$
+
+For finite $\beta$ all diagonal entries and $bc$ are positive.
+Their §IV.D.2, PDF p. 10, projects two copies onto the local one-particle
+spaces, squares the coherence parameter and retains the original
+entanglement threshold: $v^2>w^2$ is exactly $\mu>ad$.
+The mixed-state two-copy mechanism and threshold preservation are established
+results. The calculations below apply that method to the specified native
+parameters, including CAR ordering and the full B spectator.
+
+The actual probabilities are computed directly from (148.1).
+No preliminary standard-form filter from [M] is performed, and no omitted
+success factor from such a filter is absorbed into these probabilities.
+The pure-state fixed-number formula of Wiseman--Vaccaro [W] is resource
+context; it is not used as a mixed grand-canonical Gibbs formula.
+

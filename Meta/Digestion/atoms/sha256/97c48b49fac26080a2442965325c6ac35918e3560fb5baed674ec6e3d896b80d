@@ -1,0 +1,110 @@
+**Lemma 17.2 (the full cost difference across weights).** For all
+$x,y\in\mathcal X_L$, writing $r=|x|_1$ and $s=|y|_1$, at each of the
+three cut types,
+
+$$
+\begin{aligned}
+n(H_x^\tau)&=n(P_*)+d_{P,L}^\tau+2(r-1),\\
+n(H_x^\tau)-n(H_y^\tau)&=2(r-s).
+\end{aligned}
+$$
+
+At these cuts the nonmeter construction sizes, register lengths and
+nonmeter head geometry, bank parity and numeric placement/descriptor words are
+independent of $r$, as well as of payload order. Retained bit values
+and their copies need not agree. This is a comparison of the complete
+expanded flight, including its returns, not of one import subtotal.
+
+Proof. Extend Lemma 16.2's register-length/head induction while retaining
+its transient clock difference instead of requiring its final value
+to vanish. Correspondence is by actual phase, loop index and completed
+word operation; it is not correspondence by native ordinal.
+
+For a compiled assignment, changing cons0 to cons1 changes one literal
+written bit and neither its number of rows nor its constructed length.
+The source field index and destination field index are the same. Both
+passes copy all $r_{\mathrm{gc}}$ fields, including every dead temporary.
+LastBank and Field scan to F/sep without classifying binary values;
+SegmentCount and SegmentCopy have the same $5l+1$ rows at a given field
+length. Base counts every existing ordinary cell, not its bit value.
+LastScratch's extra L tests, all preceding retained versions, the closed
+descriptor-F count, actual unary bases/lengths/ordinals, flags10, seals
+and parity CTL consequently have the same costs and resulting lengths
+and positions. This includes entry heads on nonempty scratch and banks.
+
+The empty and first-bit word tests in RCA Definition 11.3 each use
+their own Field/RD. Both first-bit successors have that one test;
+they do not use the native binary importer. Reverse, Cat, Frame,
+Length and Take therefore retain their length schedules across
+weights. ReadFrame and ReadList consume framing lengths, not the
+numeric value of an opaque payload. Each equality containing the
+request compares authentic copies within its own run and reaches
+joint exhaustion; all other compared operands are fixed. No comparison
+between different runs is executed. Thus no new mismatch exit or
+data-dependent loop length enters the proof.
+
+The native binary importer is the exception. RCA Definitions 11.2 and
+13.2, relocated by ARC Definition 2.2 and GCA Definitions 2.2 and 3.1,
+use RD testing F, then CTL testing0, and, precisely on1, another CTL
+testing1, before the literal cons and source MR. The rows outside
+that cons are three per0 and four per1. The extra CTL changes no
+nonmeter cell, source head, bank parity or numeric metadata. At each
+corresponding completed cons/MR checkpoint its clock difference is the
+difference of the consumed prefix weights, plus the difference already
+present at entry. Every intervening bank-work summand is paired by
+the preceding induction even when these clocks differ.
+
+Here is the complete application to the flight. A zero in the last
+column means equality of the full expanded costs for that phase, at
+its actual incoming geometry; it does not mean that the phase is free.
+
+| Actual phase | Operand/geometry justification, including the paid work | Difference for weights $r,s$ |
+| --- | --- | --- |
+| Outer1, invocation TOK, reserve and separate mode1 | Actual Base70, receptions, F/seal, literal lengths, descriptor count/write, imports and persistent mode copy have the same bits and incoming lengths. | $0$ |
+| Whole-frame construction and metadata | Tag000, $U(L)$, length recovery, copied payload bound and tested payload reception have the same row/length schedule. F/seal, $U(2L+4)$, ordinal and full descriptor use real measured bases, not the current clock. | $0$ |
+| Whole-frame native import | The whole word $000U(L)x$ has length $2L+4$, with $L+r$ ones and $L-r+4$ zeros. Positioning, accumulator clear, every compiled cons and Reverse have equal costs. Only the finite binary classifier contributes a difference. | $r-s$ |
+| Recover, Boundary and cover archive | The frozen predecessor is exactly the common $P_*$. Manifest, predecessor $M$, represented inputs/events/receipts and tallies $a,b$ are identical. The current frame stays a persistent copied field outside that reservoir. Include every represented Step's physical word implementation, cover serialization and complete archive append. | $0$ |
+| CoverRef publication and ClientCover | CoverRef$(c,a,b)$ and its service/source prefix are identical. Include measured sender export, both separate endpoint allocations, actual descriptors and staged placement records, completion records, copies, print, check/ACK/mailbox return, positioned73 import, acquired-$c$ checks and invocation transfer to Bind. | $0$ |
+| Bind and first failure | The mode is1 and the tag is000. The first required111 test fails before $x$ is used as a target, offset, source index, unary value, program or loop bound. The authentic cover work already occurred; reason0000 is fixed. No Issue, PackageRef, Call/Image or successful view-cycle tail is executed. | $0$ |
+| Rejection serialization, native publication and print | ARC Definition 7.1's result has fields kind0011, fixed service binding, $\xi$, reason0000 and the raw request. GCA Definition 6.3 makes that last field the fixed pair $(1,w_x)$. The list-of-Frames codec contains $x$ once, between words depending only on $P_*,L$; length prefixes also depend only on lengths. Export, allocation, staging, both copies, completion records and mandatory print copy symbols without a binary classifier. | $0$ |
+| ClientImage's received Rejection import | Its length is fixed and its number of ones is a fixed quantity plus $r$. The F-bounded73 importer has the second variable binary classifier; all its compiled work has the common length/head schedule. | $r-s$ |
+| Rejection checks and actual Ready return | Parse the fixed-arity result and raw-request pair; check source/version/reason/request against authentic expected copies. Include full equality scans, final ACK, mailbox TOK, received bindings, five-field item serialization and complete $M$ AppendItem, invocation TOK and actual Ready CTL. These are word/copy operations, not another native import of $x$. | $0$ |
+| Later outer01, original header Base/setup and IN5(0) | The original source and13 material have survived. The gate bits and their complete native metadata/import are fixed. The original prelude does its actual old-port scans/constructions, followed by the same canonical IN. None reads the live meter. | $0$ |
+| Matching original EX13 | One real ordinary-cell construction and one receipt in each run, with current producer authority. | $0$ |
+
+For both publications the channel entries in this table include all
+three real placement descriptors and their staging: dry-count and
+real-copy each descriptor, F/seal its stage, then describe that stage
+once. They do not recursively stage the stage descriptor. Each
+endpoint's actual base and the sender payload length are reloaded
+before its copy. The sealed completion records retain the actual
+origin/placement and flags10 and leave those placement records selected.
+Print repositions its actual receiver and length. Each callback positions
+73 from staging before bank work, then imports to its existing F.
+Thus $17l+7$ for two copy bodies and print is not being used as a full
+channel price. The additional allocation, seeks, descriptor scans,
+staging, seals, checks, ACKs and returns all have equal costs by the
+numeric geometry just established.
+
+Numeric geometry does not acquire a clock dependence at the two
+imports. Bases count cells on their named ordinary ports; descriptor
+ordinals count previous descriptors; list IDs count items; payload
+lengths count bits. None counts live receipts. Completion records use
+these same actual placement/origin words. Boundary's receipt fields
+belong to the fixed predecessor. The completed history item contains
+its specified five fields, without a current-return timestamp.
+RCA Definition 13.2, ARC Definition 5.1 and GCA Definition 3.3 supply
+these different meanings. The asymmetric testing CTLs construct no
+ordinary cell, so differing clocks cannot perturb later numeric
+words, old-bank lengths or positioned heads. Public OUT bits are
+not fed back as new input. A later receiver obtains its own ingress
+bit before writing/testing it; no stale ingress latch licenses a guard.
+
+There are consequently exactly two variable binary imports, each
+contributing $r-s$. The remaining native imports are of identical
+mode, gate, CoverRef or numeric staging words. The $M$ append copies
+word fields and is not a third physical binary import. Adding all
+recurrence summands proves the second equation at $R_x$ and through
+the actual gate/header/IN/EX extension. Taking $y=u$ gives the first.
+The same induction proves the claimed construction geometry. $\square$
+

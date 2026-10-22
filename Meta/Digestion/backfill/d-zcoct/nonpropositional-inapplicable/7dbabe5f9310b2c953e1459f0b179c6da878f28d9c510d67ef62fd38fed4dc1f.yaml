@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:7dbabe5f9310b2c953e1459f0b179c6da878f28d9c510d67ef62fd38fed4dc1f
+  normalized_sha256: sha256:7dbabe5f9310b2c953e1459f0b179c6da878f28d9c510d67ef62fd38fed4dc1f
+cas_ref: sha256:7dbabe5f9310b2c953e1459f0b179c6da878f28d9c510d67ef62fd38fed4dc1f
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: Lists a reflection-odd direction as an optional marker and recommends a reformulation of the question; no existence, counting or parity theorem is asserted.
+    previous_atom_id: 7fa0a94ba53c66f2d906f435927730ff6c81b7abe7970cac514fd1d710f88c19
+    next_atom_id: ace5a91c73b031b0848b86efae064cc71d597d940eaf4490de647d1194cd9b65

@@ -1,0 +1,25 @@
+**Definition 1.4 (domains).** A canonical acquired history here has the
+chosen actual seed, matching original/boot/capture/main code, and the
+actual inputs of §3. It can end at any native atomic cut after the
+acquisition fence $a$, before the first outer choice00. Source inputs are
+extendible prefixes of CAP's seven canonical frame languages. History
+inputs are prefixes of a physically length-delimited frame: three tag
+bits, a terminating unary length, and that many payload bits. Any complete
+tag or payload can subsequently be rejected by its actual parser. Both
+values of the separately supplied mode bit are included. Write
+$\mathcal C_{\mathrm{gc}}$ for this domain, including partial input,
+descriptor, code, bank, source overwrite, loan, copy, checker, ACK and
+return stages that actually occur in these histories. A finite cut does
+not require a future supply or future termination witness.
+
+An **authentic completed predecessor** is GCA Definition 1.5 for this
+graph: a reached outer Ready, frozen completed-cycle list $M$, acquired
+manifest, acquisition tally $a$ and actual Ready tally $b$. It includes
+finite earlier successful conversions and complete typed history
+rejections. An accepted target is an actually supplied name accepted by
+the unchanged GCA binder against that predecessor. Its prefix has length
+$k\in[a,b]$. Write $\mathcal A_{\mathrm{gc}}$ for these targets together
+with their authentic current cover/package bindings. A source frame
+fault, unavailable supply or divergent computation promises no later
+Ready. The current selecting flight is outside its own predecessor.
+

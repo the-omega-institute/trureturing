@@ -1,0 +1,48 @@
+**Theorem 8.1 (Entire-child terminal-M injectivity).** For each
+$\sigma\in\{-,+\}$ and all complete legal worlds
+$W,W'\in\mathcal C_\sigma$,
+
+$$
+f_{MM}(W)=f_{MM}(W')\quad\Longrightarrow\quad W=W'.
+\tag{8.1}
+$$
+
+The statement includes every regular companion of the singular
+world and every legal stratum of the original model (1.1).
+It is source-specific repository-derived mathematics
+(`repo-derived`), using the named ordinary mathematical results
+of O and the standard tools cited at their uses above.
+
+Proof. Theorem 6.1 covers every world of $\mathcal C_-$ by the
+one possible regular category $k=1$ and the one singular world
+$S_-(p_J)$. By Lemma 7.2 the actual terminal-M values of these
+two categories lie in $(487,488)$ and $(510,512)$, respectively.
+The intervals are disjoint. Each category has at most one complete
+world, so equal $f_{MM}$ values force the same category and then
+the identical complete triple.
+
+For $\mathcal C_+$, Theorem 6.1 covers every world by the three
+possible regular categories $k=1,2,4$ and $S_+(p_J)$. Their actual
+terminal-M intervals, in category order, are
+
+$$
+(601,603),\qquad(621,623),\qquad(611,613),\qquad(624,626).
+\tag{8.2}
+$$
+
+These four intervals are pairwise disjoint. Every regular category
+has at most one complete world by the unique projected root,
+guarded linear lift and O, Theorem 12.3. The singular category
+contains exactly its one actual fifth-response lift. Thus equality
+of actual terminal-M values again forces the same category and
+the same complete triple.
+
+The coverage uses both branches of the zero-safe parent, all strict
+base roots and the complete strict $R$ root partitions. It imposes
+no bounded-offdiagonal, common-gain-across-worlds or
+common-drift-across-worlds hypothesis. The exact specialization
+(3.5) identifies the singular projected roots; the root intervals
+alone are not used for that equality. No existence or exact count
+of the possible regular lifts is required. This proves (8.1) on
+each entire acquired child. ∎
+
