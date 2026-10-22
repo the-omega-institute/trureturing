@@ -3551,3 +3551,771 @@ of the strict incidence loci or properness of their projections,
 and no global incidence classification is supplied here.
 
 ## 追加锚（本行以下为增补区）
+
+## 31. Ordered same-drift responses at two unequal widths
+
+**Definition 31.1 (Ordered two-source coefficients).** Retain the entire
+parent $\mathcal H$, complete children $C(p,v)$ and terminal responses
+of Definition 1.1. For a world set
+
+$$
+\begin{gathered}
+c=\frac{r(1-r)}b,\qquad j=b+c,\qquad n=j+r,\\
+T=1+b>1,\qquad U=1+2b=2T-1>0,\qquad x=\frac nU>0.
+\end{gathered}
+\tag{31.1}
+$$
+
+For a fixed real drift $d$ write $e=d-24$, $z=d-147/5$ and define
+
+$$
+\begin{aligned}
+\mathsf A_d(T)&=\frac{dT+429-18d+5z/T}{2},\\
+\mathsf B_d(T)&=2dT+\frac{3456}{5}-28d+\frac{9z}{T},\\
+\mathsf C_d(T)&=5dT+\frac{7749}{5}-62d+\frac{21z}{T}.
+\end{aligned}
+\tag{31.2}
+$$
+
+The letters in (31.2) denote response coefficients, distinct from the
+source polynomials $A,C$ of (2.1), (3.1). For an ordered pair of worlds
+with this same drift and $b_1\ne b_2$ put
+
+$$
+\begin{gathered}
+T_i=1+b_i,\quad U_i=2T_i-1,\quad x_i=n_i/U_i,\\
+h=T_1-T_2\ne0,\quad \sigma=T_1+T_2,\quad \pi=T_1T_2>1,
+\quad k=\frac z\pi,\\
+A_i=\mathsf A_d(T_i),\quad B_i=\mathsf B_d(T_i),
+\quad C_i=\mathsf C_d(T_i),\\
+\Delta=316d^2-\frac{33627}{5}d
+ +\frac{k}{2}(26775-1442d-91d\sigma),\\
+Q=\frac{50d^2-347dk+525k^2}{2},\qquad
+\mathsf H=
+\begin{pmatrix}
+A_1&-A_2&5e\\
+B_1&-B_2&32e\\
+2C_1&-2C_2&105e
+\end{pmatrix}.
+\end{gathered}
+\tag{31.3}
+$$
+
+The order in $\mathsf H$ is the clock-five, clock-six, terminal-$M$
+row order and the $(x_1,x_2,w)$ column order used below. Interchanging
+the two source labels changes $h$ and $\det\mathsf H$ by the same sign.
+The $h$ here is a difference of the two $T$ coordinates; it is not the
+positive-width parameter of (10.2) with that chart's labeling.
+
+**Theorem 31.2 (Exclusion of the compatible ordered response singular
+stratum).** For every real $p\ne24$ and every real $v$, let
+$W_1,W_2\in C(p,v)$ be actual complete worlds with common drift $d$,
+common terminal value $m(W_1)=m(W_2)$ and unequal widths $b_1\ne b_2$.
+Then the coefficients of Definition 31.1 satisfy
+
+$$
+\Delta\ne0,\qquad
+\det\mathsf H=(d-24)(T_1-T_2)\Delta\ne0.
+\tag{31.4}
+$$
+
+This quantifies over all such pairs in the entire child, with no
+condition on unused worlds, the sign of either entire gain, its exact
+degree, its sampled zeros or root multiplicities, the sign of $d$, or
+either individual source value $\Lambda_i$ in (2.1). In particular
+$\det\mathsf H=0$ is an ordered two-source response condition, distinct
+from an individual source condition $\Lambda_i=0$.
+
+The proof is given in Sections 32–35. It uses the full parent and whole
+gain of (2.1)–(2.4), not a restriction to a regular source chart.
+
+## 32. Whole-world lifts and division-free response compatibility
+
+Proof of Theorem 31.2, the correspondence and compatibility steps.
+The original source equations are
+
+$$
+b(j-b)=r(1-r),\qquad n=j+r,
+\tag{32.1}
+$$
+
+equivalently
+
+$$
+r^2-(b+1)r+b(n-b)=0,\qquad j=n-r.
+\tag{32.2}
+$$
+
+An actual source has $0<r<1$, $b>0$ and therefore $n>j>0$.
+These strict inequalities remain part of every use of (32.2).
+The original successive left products at clocks zero through six are
+
+$$
+\begin{gathered}
+I,\quad J,\quad
+\begin{pmatrix}1&0\\1&1\end{pmatrix},\quad
+\begin{pmatrix}1&1\\1&0\end{pmatrix},\quad
+\begin{pmatrix}1&0\\2&1\end{pmatrix},\quad
+\begin{pmatrix}2&1\\3&1\end{pmatrix},\quad
+\begin{pmatrix}3&1\\5&2\end{pmatrix}.
+\end{gathered}
+\tag{32.3}
+$$
+
+Their traces against $P$, followed by the alternative terminal $M$
+trace at clock seven, are
+
+$$
+(1,j,T,n,U,U+n,2U+n,3U+2n).
+\tag{32.4}
+$$
+
+The alternative terminal $J$ trace is $T+2j+4r$. Thus (32.3)–(32.4)
+use the acquired word $J,M,J,M,M,M$ at its original clocks and the
+original two clock-seven alternatives.
+
+Here is the full-parent correspondence of (2.1)–(2.4) in the present
+notation. The first four readings fix the entire polynomial as
+
+$$
+\begin{gathered}
+(q_0,q_1,q_2,q_3)=
+\left(-d,\frac{24-d}{j},\frac{147/5-d}{T},\frac{24-d}{n}\right),\\
+g(s)=\sum_{i=0}^3q_i
+\prod_{\substack{0\le l\le3\\l\ne i}}\frac{s-l}{i-l}.
+\end{gathered}
+\tag{32.5}
+$$
+
+The remaining parent equation is exactly the original clock-four row
+
+$$
+g(4)=d+\frac{4(24-d)}j-\frac{6(147/5-d)}T
+             +\frac{4(24-d)}n=\frac{18-d}{U}.
+\tag{32.6}
+$$
+
+Its undivided form is
+
+$$
+\begin{gathered}
+\Lambda=1+\frac6T+\frac1U-\frac4j-\frac4n,\\
+g(4)-\frac{18-d}{U}
+=e\Lambda+\frac{6(8b-1)(5b+2)}{5TU}=0.
+\end{gathered}
+\tag{32.7}
+$$
+
+For clarity, the sufficiency in this inherited correspondence is
+literal: strict $b,r$ determine $j,n,T,U$, (32.5) supplies the first
+four original readings, and (32.6) supplies the fifth. The interpolant
+has degree at most three and cannot be the zero polynomial, since that
+would make both readings zero and twenty-four equal to $d$. Conversely,
+every complete parent world has these four samples and hence this
+entire polynomial. All divisors used are positive source factors or
+fixed nonzero differences of interpolation nodes. No division by
+$\Lambda$, a gain sample or a gain coefficient is involved.
+
+The inherited off-$24$ drift guard can also be checked within these
+rows. If $d=24$, then $g(1)=g(3)=0$ and $g(0)=-24$. Since
+$\deg g\le3$, including every possible degree drop, there is a real
+$\alpha$ such that
+
+$$
+g(s)=(s-1)(s-3)(\alpha s-8),\qquad
+\alpha=4-\frac{27}{10T}.
+\tag{32.8}
+$$
+
+The value of $\alpha$ follows from clock two. Clock four gives
+
+$$
+0=Ug(4)+6=\frac{6(8T-9)(5T-3)}{5T}.
+\tag{32.9}
+$$
+
+Since $T>1$, this forces $T=9/8$ and
+$g(s)=\frac85(s-1)(s-3)(s-5)$. In particular $g(5)=0$ and $p=24$.
+Thus every world in the theorem has $e\ne0$.
+
+Next evaluate this same entire gain at the late clocks. On the parent
+one may interpolate it at nodes $0,2,3,4$ with values
+
+$$
+\left(-d,-\frac zT,-\frac en,\frac{18-d}{U}\right).
+$$
+
+The cardinal interpolation polynomials at these distinct fixed nodes
+give the rows
+
+$$
+\begin{array}{c|rrrr}
+&0&2&3&4\\ \hline
+5&-1/4&5/2&-5&15/4\\
+6&-1&9&-16&9\\
+7&-5/2&21&-35&35/2
+\end{array}.
+\tag{32.10}
+$$
+
+For example each coefficient is
+$\prod_{l\in\{0,2,3,4\}\setminus\{i\}}(q-l)/(i-l)$ at the row's
+clock $q$ and column's node $i$. This establishes the displayed rows
+without an exact-degree or nonzero-sample assumption. Substitution,
+using $n=xU$ and $U=2T-1$, yields
+
+$$
+\begin{aligned}
+Ug(5)&=\mathsf A_d(T)+5e/x,\\
+Ug(6)&=\mathsf B_d(T)+16e/x,\\
+Ug(7)&=\mathsf C_d(T)+35e/x.
+\end{aligned}
+\tag{32.11}
+$$
+
+Multiplying by the original traces in (32.4), and adding the same
+fixed drift $d$, now gives
+
+$$
+\begin{aligned}
+p-24-6e&=\mathsf A_d(T)(1+x)+5e/x,\\
+v-24-17e&=\mathsf B_d(T)(2+x)+32e/x,\\
+m-24-71e&=\mathsf C_d(T)(3+2x)+105e/x.
+\end{aligned}
+\tag{32.12}
+$$
+
+These are the undivided response reductions of (5.3) in the
+normalization (31.2). The interpolation argument supplies them for the
+whole parent, including $\Lambda=0$. From (31.2) one also has
+
+$$
+\mathsf C_d(T)=4\mathsf B_d(T)-6\mathsf A_d(T)+4(18-d).
+\tag{32.13}
+$$
+
+Because $p,v,m,d$ are shared, subtracting (32.12) in the order first
+world minus second world gives the actual response system
+
+$$
+\mathsf H
+\begin{pmatrix}x_1\\x_2\\w\end{pmatrix}
+=\begin{pmatrix}
+-(A_1-A_2)\\-2(B_1-B_2)\\-3(C_1-C_2)
+\end{pmatrix},\qquad
+w=\frac1{x_1}-\frac1{x_2}.
+\tag{32.14}
+$$
+
+Replace row three by row three plus twelve times row one minus eight
+times row two. By (32.13) the new coefficient row is
+
+$$
+\bigl(8(18-d),-8(18-d),-91e\bigr).
+\tag{32.15}
+$$
+
+Expansion in the fixed row and column order of Definition 31.1 gives
+
+$$
+\begin{aligned}
+\det\mathsf H
+={}&e(T_1-T_2)
+\left(316d^2-\frac{33627}{5}d
+ +\frac{z}{2T_1T_2}(26775-1442d-91d(T_1+T_2))\right)\\
+={}&eh\Delta.
+\end{aligned}
+\tag{32.16}
+$$
+
+To retain all compatible singular strata, set
+
+$$
+\begin{aligned}
+\mathfrak a&=\frac{A_1-A_2}{h}=\frac{d-5k}{2},&
+\mathfrak b&=\frac{B_1-B_2}{h}=2d-9k,\\
+Z&=5\mathfrak b-32\mathfrak a=-6d+35k,&
+D_*&=6\mathfrak a+4\mathfrak b=11d-51k,\\
+L_*&=\frac{x_1-x_2}{h},&R_*&=\frac wh.
+\end{aligned}
+\tag{32.17}
+$$
+
+The starred symbols distinguish these quantities from the unrelated
+$D,L$ in Section 2. Only the known nonzero width difference $h$ has
+been divided out. Dividing the first two rows of (32.14) by $h$ gives
+
+$$
+\begin{aligned}
+A_1L_*+5eR_*&=-\mathfrak a(1+x_2),\\
+B_1L_*+32eR_*&=-\mathfrak b(2+x_2).
+\end{aligned}
+\tag{32.18}
+$$
+
+Multiplying the first by $\mathfrak b$ and subtracting
+$\mathfrak a$ times the second gives
+
+$$
+(\mathfrak bA_1-\mathfrak aB_1)L_*+eZR_*
+=\mathfrak a\mathfrak b.
+\tag{32.19}
+$$
+
+The right side of the row operation (32.15), divided by $h$, is
+
+$$
+-3(4\mathfrak b-6\mathfrak a)-12\mathfrak a+16\mathfrak b
+=D_*.
+$$
+
+Hence its equation is
+
+$$
+8(18-d)L_*-91eR_*=D_*.
+\tag{32.20}
+$$
+
+The two coefficient identities needed to eliminate $R_*$ are
+
+$$
+\begin{aligned}
+91(\mathfrak bA_1-\mathfrak aB_1)+8(18-d)Z&=-\Delta,\\
+91\mathfrak a\mathfrak b+ZD_*&=Q.
+\end{aligned}
+\tag{32.21}
+$$
+
+They follow by expanding the definitions, using
+$z=kT_1T_2$ and $T_1+T_2=\sigma$. Adding ninety-one times
+(32.19) to $Z$ times (32.20) proves the division-free relation
+
+$$
+-\Delta L_*=Q.
+\tag{32.22}
+$$
+
+In particular compatibility on $\Delta=0$ forces $Q=0$.
+No step divided by $e,\mathfrak a,\mathfrak b,Z,D_*,L_*,R_*,Q$
+or $\Delta$. Their zero cases have all been retained.
+
+## 33. The two compatible singular branches and the forced endpoint
+
+**Lemma 33.1 (Singular parameters force an excluded source
+rectangle).** Suppose $T_1,T_2>1$ and $d\in\mathbb R$ give
+$\Delta=Q=0$ in (31.3). Then one of the two widths has
+
+$$
+\frac45<b_i<\frac72,\qquad -10<d<0.
+\tag{33.1}
+$$
+
+Proof. First handle $d=0$ before taking a ratio. Then
+$k=-147/(5T_1T_2)\ne0$ and
+$Q=525k^2/2>0$, a contradiction. Thus $d\ne0$ and the ratio
+$\kappa=k/d$ is defined. The equation $Q=0$ gives both possibilities
+
+$$
+525\kappa^2-347\kappa+50=0,\qquad
+\kappa=\kappa_\pm=\frac{347\pm\sqrt{15409}}{1050}.
+\tag{33.2}
+$$
+
+Both roots are strictly positive. The definition of $k$ implies
+
+$$
+\kappa\pi=1-\frac{147}{5d},\qquad
+d=\frac{147/5}{1-\kappa\pi}.
+\tag{33.3}
+$$
+
+The first equation and finite $d\ne0$ exclude
+$1-\kappa\pi=0$, so the second equation introduces no lost case.
+Define
+
+$$
+A_\kappa=\frac{99912-269325\kappa}{13377},\qquad
+B_\kappa=\frac{67254-133875\kappa}{13377}.
+\tag{33.4}
+$$
+
+Substitution of (33.3) and $k=d\kappa$ gives the exact identity
+
+$$
+\frac{2\Delta}{d^2}
++91\kappa(\sigma-A_\kappa-B_\kappa\pi)
+=\frac{171}{49}(525\kappa^2-347\kappa+50).
+\tag{33.5}
+$$
+
+Since $\Delta=0$, (33.2) and $\kappa>0$ force
+
+$$
+\sigma=A_\kappa+B_\kappa\pi.
+\tag{33.6}
+$$
+
+Consider $\kappa_-$ first. The exact square comparisons
+$15409-124^2=33>0$ and $125^2-15409=216>0$ give
+$124<\sqrt{15409}<125$, hence $0<\kappa_-<1/4$.
+Both affine functions in (33.4) strictly decrease with $\kappa$, and
+
+$$
+A_{1/4}-1=\frac{25605}{17836}>0,\qquad
+B_{1/4}-1=\frac{27211}{17836}>0.
+\tag{33.7}
+$$
+
+Thus (33.6) would imply $\sigma>1+\pi$, contrary to the strict
+source inequality
+
+$$
+\pi-\sigma+1=(T_1-1)(T_2-1)>0.
+\tag{33.8}
+$$
+
+The entire $\kappa_-$ branch is therefore impossible.
+
+For $\kappa_+$ the following exact enclosure suffices:
+
+$$
+\frac{56}{125}<\kappa_+<\frac{449}{1000}.
+\tag{33.9}
+$$
+
+Indeed the corresponding bounds on $\sqrt{15409}$ are $617/5$ and
+$2489/20$, and their exact square gaps are
+
+$$
+15409-(617/5)^2=\frac{4536}{25}>0,\qquad
+(2489/20)^2-15409=\frac{31521}{400}>0.
+\tag{33.10}
+$$
+
+The decreasing affine functions (33.4) consequently obey
+
+$$
+-\frac85<A_\kappa<-\frac32,\qquad
+\frac8{15}<B_\kappa<\frac59,\qquad \kappa>\frac49.
+\tag{33.11}
+$$
+
+For completeness, the endpoint comparisons have the exact positive
+margins
+
+$$
+\begin{aligned}
+A_{449/1000}+8/5&=5177/178360,\\
+-3/2-A_{56/125}&=2267/44590,\\
+B_{449/1000}-8/15&=389/535080,\\
+5/9-B_{56/125}&=461/40131,\\
+56/125-4/9&=4/1125.
+\end{aligned}
+\tag{33.12}
+$$
+
+Equation (33.3) excludes $0<d\le147/5$, since its first right side
+would be nonpositive while $\kappa\pi>0$. If $d>147/5$, then
+$0<\kappa\pi<1$ and so $\pi<1/\kappa<9/4$. Equations (33.6),
+(33.11) would give
+
+$$
+\sigma<-\frac32+\frac59\frac94=-\frac14,
+$$
+
+contrary to $T_1+T_2>2$. Therefore $d<0$.
+
+The arithmetic-geometric mean inequality, (33.6) and (33.11) give
+
+$$
+2\sqrt\pi\le\sigma<B_\kappa\pi<\frac59\pi.
+$$
+
+Dividing by $\sqrt\pi>0$ shows $\pi>324/25>9$. Since
+$\kappa>4/9$, this implies $\kappa\pi>4$. Equation (33.3) now yields
+
+$$
+0<-d=\frac{147/5}{\kappa\pi-1}<\frac{49}{5}<10.
+\tag{33.13}
+$$
+
+Let $t=\min(T_1,T_2)$ and $u=\max(T_1,T_2)$. From (33.6) and
+$A_\kappa<0$,
+
+$$
+\frac1t+\frac1u=\frac\sigma\pi<B_\kappa.
+$$
+
+Thus $t>1/B_\kappa>9/5$. The same equation (33.6) gives the exact
+quadratic relation
+
+$$
+B_\kappa t^2-2t+A_\kappa
+=(u-t)(1-B_\kappa t)\le0,
+\tag{33.14}
+$$
+
+where $u\ge t$ and $B_\kappa t>1$ explain the sign. On
+$t\ge9/2$ this quadratic is strictly increasing: its derivative
+$2B_\kappa t-2$ is positive by $B_\kappa>8/15$. At $9/2$ its value
+is strictly greater than
+
+$$
+\frac8{15}\left(\frac92\right)^2-9-\frac85=\frac15>0.
+$$
+
+This contradicts (33.14). Hence $9/5<t<9/2$, and the source whose
+$T$ equals $t$ has $4/5<b<7/2$. Together with (33.13) this proves
+(33.1). ∎
+
+## 34. A closed source rectangle excluded by the original parent row
+
+**Lemma 34.1 (Strict parent exclusion, including rectangle
+endpoints).** The original complete parent satisfies
+
+$$
+\mathcal H\cap
+\left\{\frac45\le b\le\frac72,\ -10\le d\le0\right\}
+=\varnothing.
+\tag{34.1}
+$$
+
+Proof. Suppose a complete parent world lay in this closed rectangle.
+Put $a_0=-d\in[0,10]$ and $f=1/j+1/n$. The original clock-four
+equation (32.6), divided by the positive $4(24+a_0)$, gives
+
+$$
+f=F(a_0,b):=
+\frac{a_0+6(147/5+a_0)/T+(18+a_0)/U}{4(24+a_0)}.
+\tag{34.2}
+$$
+
+At fixed $b$ its derivative is
+
+$$
+\frac{\partial F}{\partial a_0}
+=\frac{24-162/(5T)+6/U}{4(24+a_0)^2}>0.
+\tag{34.3}
+$$
+
+Indeed $T\ge9/5$, so $24-162/(5T)\ge6$, while $6/U>0$.
+This argument includes both $a_0$ endpoints and gives
+
+$$
+f\le f_{10}:=F(10,b)
+=\frac{10+1182/(5T)+28/U}{136}.
+\tag{34.4}
+$$
+
+The strict source equations (32.1) give
+
+$$
+j+n=2b+r+\frac{2r(1-r)}b,
+\qquad
+f-\frac4{j+n}=\frac{(n-j)^2}{jn(j+n)}>0.
+\tag{34.5}
+$$
+
+Here $n-j=r>0$ and every denominator is positive; no equality case
+of the last inequality belongs to the strict source domain.
+
+First suppose $2\le b\le7/2$. Then $0<r<1$ gives
+
+$$
+U-(j+n)=(1-r)\left(1-\frac{2r}{b}\right)>0.
+\tag{34.6}
+$$
+
+This remains strict at $b=2$. For $3\le T\le9/2$ direct collection
+gives the rational comparison
+
+$$
+\frac4U-f_{10}
+=-\frac{100T^2-266T-1182}{680TU}>0.
+\tag{34.7}
+$$
+
+To see its sign on the entire closed interval, the numerator
+quadratic has derivative $200T-266>0$ there, and its value at
+$T=9/2$ is $-354<0$. The denominator is positive. Consequently
+(34.4)–(34.7) imply
+
+$$
+f\le f_{10}<\frac4U<\frac4{j+n}<f,
+$$
+
+a contradiction throughout this first closed interval, including
+$b=2,7/2$ and $d=-10,0$.
+
+For the remaining interval $4/5\le b\le2$, completion of the square
+in the exact source sum gives
+
+$$
+\frac{17b^2+4b+4}{8b}-(j+n)
+=\frac2b\left(r-\frac{b+2}{4}\right)^2\ge0.
+\tag{34.8}
+$$
+
+Write
+
+$$
+\begin{aligned}
+D_b&=17b^2+4b+4>0,\\
+P_b&=-850b^4-999b^3+15470b^2+2828b-2744.
+\end{aligned}
+$$
+
+The required reciprocal comparison is the exact identity
+
+$$
+\frac{32b}{D_b}-f_{10}=\frac{P_b}{340TU D_b}.
+\tag{34.9}
+$$
+
+For every $b$ in this closed interval one has
+
+$$
+\begin{aligned}
+P_b-(10072b^2+2828b-2744)
+&=850b^2(4-b^2)+999b^2(2-b)\ge0.
+\end{aligned}
+\tag{34.10}
+$$
+
+The lower quadratic $10072b^2+2828b-2744$ is strictly increasing
+for $b\ge4/5$, since its derivative is $20144b+2828>0$.
+At the left endpoint its exact value is
+
+$$
+10072(4/5)^2+2828(4/5)-2744=\frac{149112}{25}>0.
+\tag{34.11}
+$$
+
+Thus (34.9) is strictly positive on all of $[4/5,2]$. The square
+bound (34.8) has positive sides, so taking reciprocals gives
+$32b/D_b\le4/(j+n)$. Equations (34.4), (34.5), (34.9) now yield
+
+$$
+f\le f_{10}<\frac{32b}{D_b}\le\frac4{j+n}<f,
+$$
+
+again a contradiction. This second argument includes $b=4/5,2$
+and both drift endpoints; the two closed width intervals overlap
+at $b=2$. They cover the entire closed rectangle in (34.1).
+The contradiction uses the strict source equations and original
+clock-four row, with no additional observation or gain restriction. ∎
+
+## 35. Completion of the singular exclusion and the regular remainder
+
+Proof of Theorem 31.2, completion. An actual unequal-width pair with
+shared $p,v,m,d$ satisfies (32.22). If $\Delta=0$, then $Q=0$.
+The $d=0$ possibility was explicitly contradicted before taking a
+ratio in Lemma 33.1. For $d\ne0$ that lemma treated both roots
+$\kappa_\pm$, including the impossible denominator
+$1-\kappa\pi=0$, and forced one actual endpoint into the open
+rectangle (33.1). Lemma 34.1 excludes even its closed rectangle.
+Therefore $\Delta\ne0$. The actual off-$24$ guard (32.8)–(32.9)
+gives $e\ne0$, and unequal widths give $h\ne0$. The ordered
+factorization (32.16) now proves (31.4). ∎
+
+The resulting restriction can be expressed without discarding the
+remaining actual-world obligations. In the regular response branch,
+(32.22) and (32.20) necessarily give
+
+$$
+\begin{gathered}
+L_*=-\frac Q\Delta,\\
+\left(8(18-d)+\frac{91(d-24)}{x_1x_2}\right)L_*
+=11d-51k,
+\end{gathered}
+\tag{35.1}
+$$
+
+because the defining reciprocal relation gives
+
+$$
+R_*=-\frac{L_*}{x_1x_2},\qquad
+w x_1x_2=x_2-x_1,\qquad x_1,x_2>0.
+\tag{35.2}
+$$
+
+Invertibility of $\mathsf H$ gives a unique vector solving its
+linear response equations for specified ordered $T_1,T_2,d$.
+An algebraic solution of those equations need not satisfy (35.2),
+and neither condition by itself supplies actual source endpoints.
+For each endpoint the exact lift must still have
+
+$$
+\begin{gathered}
+b_i=T_i-1>0,\qquad n_i=x_i(2T_i-1),\\
+0<r_i<1,\qquad
+r_i^2-(b_i+1)r_i+b_i(n_i-b_i)=0,\\
+j_i=n_i-r_i>0,\qquad
+(d-24)\Lambda_i+
+\frac{6(8b_i-1)(5b_i+2)}{5T_iU_i}=0.
+\end{gathered}
+\tag{35.3}
+$$
+
+The whole polynomial for that endpoint is (32.5), with its one drift
+$d$, and its actual original responses must realize the proposed
+shared $p,v,m$ via (32.4). These conditions are sufficient as well as
+necessary for the proposed actual pair: (32.1)–(32.2) identify the
+strict source, (32.5)–(32.7) supply its complete parent world, and the
+remaining original response equalities place both worlds in the same
+child with the same terminal $M$ value. Unequal widths ensure that
+the two complete triples are distinct. Neither a complex solution, a
+boundary source nor a projected eliminant root can replace these
+requirements. No solution of all these conditions is supplied here,
+and their incompatibility on $\Delta\ne0$ remains unproved.
+
+The fixed-width assertion needed for a distinct-pair conclusion is
+already Theorem 4.1 and is reused directly. Together with Theorem 31.2
+it implies that every distinct equal-$M$ pair in an off-$24$ child
+whose two drifts agree has unequal widths and belongs to this
+regular ordered response branch. Fixed-drift injectivity remains
+open; no assertion that all equal-$M$ pairs have distinct drifts
+follows.
+
+The theorem applies to every entire $C(p,v)$ with $p\ne24$, without
+a source or companion box, a pair-distance floor or a bound on an
+auxiliary chart slope. It therefore applies unchanged to same-drift
+$M$ pairs anywhere in the entire children over any specified actual
+$J$ arc of (10.1), including every parameter of such an arc in
+$[10,34]\setminus\{24\}$. This use of universal quantification does
+not supply $M$ injectivity on that arc: the regular $\Delta\ne0$
+branch remains unresolved there as well.
+
+Neither individual $\Lambda_i$ was divided out. The original model
+continues to admit sampled zeros, gain degree drops, repeated gain
+roots and zero drift; the $d=0$ contradiction concerns only
+compatible ordered response singular pairs. No assumption has been
+added to unused companions. The original problem (1.2) still asks
+for two independently selected distinct pairs in one entire child,
+one with equal terminal $J$ values and the other with equal terminal
+$M$ values. The pairs may overlap or be disjoint, and their two
+common terminal values are independent. Theorem 31.2 supplies no
+actual $M$ pair, no joint witness and no full-domain exclusion.
+The original joint question remains open.
+
+The complete-world semantics and undivided parent correspondence used
+in this proof are those of
+[O, Definitions 1.1–1.3 and Theorems 2.1–2.2](https://github.com/the-omega-institute/trureturing/blob/60119c794ae161036941982f3e8ce39c65024ab2/docs/develop/theory/FIB_COMMON_PARENT_GEOMETRY_AND_MIXED_CHILDREN.md),
+specialized to $\beta=1/8$. The response reductions reuse
+[SIV, Theorem 8.2](https://github.com/the-omega-institute/trureturing/blob/60119c794ae161036941982f3e8ce39c65024ab2/docs/develop/theory/FIB_STRICT_REAL_JOINT_INCIDENCE_SUPPORT_IV.md)
+and this volume's (5.3), without importing SIV's regional estimates
+as global hypotheses. This volume's Theorem 4.1 supplies the separate
+fixed-width injectivity result. These same statements occur at the
+immutable [SVII source](https://github.com/the-omega-institute/trureturing/blob/60119c794ae161036941982f3e8ce39c65024ab2/docs/develop/theory/FIB_STRICT_REAL_JOINT_INCIDENCE_SUPPORT_VII.md).
+Fixed-node interpolation is the classical formula of J.-P. Berrut
+and L. N. Trefethen, *Barycentric Lagrange Interpolation*, SIAM Review
+46, 501–517, §2,
+[doi:10.1137/S0036144502417715](https://doi.org/10.1137/S0036144502417715).
+Only this interpolation tool is attributed to that reference.
+The source-specific contribution is the compatible singular-parameter
+classification, the original-clock closed-rectangle exclusion and
+the resulting ordered determinant nonvanishing. It is a deduction
+from the displayed source and response equations, with no assertion
+of literature priority or a general singular-matrix exclusion theorem.
+
+## 追加锚（本行以下为增补区）
