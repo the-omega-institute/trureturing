@@ -402,7 +402,7 @@ private noncomputable def E : PowerSeries (ZMod 4) :=
 private theorem E_mul_Q : E * Q = 1 := by
   have hp : pentagonalSeries ℤ *
       D5.S1.Recurrence.Bilateral.HannaPentagonalPartitionParity.partitionSeries = 1 := by
-    exact partition_reciprocal
+    exact D5.S1.Recurrence.Bilateral.HannaPentagonalPartitionParity.partition_reciprocal
   have h := congrArg (PowerSeries.map (Int.castRingHom (ZMod 4))) hp
   have h' := congrArg (expand 2 (by decide)) h
   simpa only [E, Q, map_mul, map_one] using h'
