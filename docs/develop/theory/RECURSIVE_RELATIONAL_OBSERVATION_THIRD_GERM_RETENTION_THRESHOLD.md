@@ -834,8 +834,7 @@ $$
 They are responses of the same $W$, with one fixed $g$ and one fixed $d$
 throughout the run.
 
-The earlier enclosure $g(4)\in(-5.789,-5.785)$ is incompatible with this
-source. VI Lemma 13.2 gives
+At $W_3$, VI Lemma 13.2 gives
 
 $$
 27.263115<d<27.263116,\qquad
@@ -850,9 +849,8 @@ $$
 $$
 
 Using the same source intervals in (9.4), with outward rational endpoint
-substitution, gives $139.8<q_8<139.9$ and $111<g(8)<112$. Thus the
-incompatible enclosure is discarded; the response conclusion below uses
-(9.4), not that enclosure.
+substitution, gives $139.8<q_8<139.9$ and $111<g(8)<112$. The response
+conclusion below uses (9.4).
 
 **Lemma 9.2 (nonzero response tangents at $W_3$).** At the exact algebraic
 world $W_3$ of VI Definition 13.1, both $Kf_J$ and $Kf_M$ are nonzero,
@@ -1059,7 +1057,7 @@ If not, choose $y_i\to y_3$ and $W_i\in\Phi^{-1}(y_i)$ outside
 $N\cup N_Z$. Compactness gives a convergent complete-world subsequence.
 Its limit lies in $C(y_3)$, hence is $W_3$ or $Z(y_3)$, both in the open
 union; the complement is relatively closed, a contradiction. Intersect
-$V_0$ with VI Corollary 23.3's at-most-three neighborhood and with the
+$V_0$ with VI Theorem 23.2's at-most-three neighborhood and with the
 off-$p=24$ domain, obtaining $V$.
 
 For $y\in V$, two local worlds with equal $f_e$ have equal $p$ and
@@ -1212,6 +1210,43 @@ native Gibbs preparation. Its source, fixed register, filter, and conversion
 contract are different from the strict-real clock source and its one-step
 scalar port. It supplies no $W_3$ response, no $C(y)$ child, and no
 retention or prediction margin, so it does not absorb this deduction.
+
+At the separate fixed revision `b0bba854178edce6540fb1ad1d8b3461925d5f11`,
+that [Atomic VIII source, Corollary 241.2](https://github.com/the-omega-institute/trureturing/blob/b0bba854178edce6540fb1ad1d8b3461925d5f11/docs/develop/theory/FIB_ATOM_RECURSIVE_HOLOGRAPHIC_BOUNDARY_GEOMETRY_CONTINUATION_VIII.md),
+also proves a positive conditional trace-distance approximation gap over
+nonzero common completely positive trace-nonincreasing maps with positive
+success for every native source, without an imposed success floor. It retains
+the same fixed critical temperature, two full Gibbs preparations, coherent
+filter, spectator populations and success-only record. This conversion
+contract supplies no strict-real child or scalar-retention hypothesis.
+
+The [Gaussian Source Attainer, Theorem 2.1 and §3.2](https://github.com/the-omega-institute/trureturing/blob/b0bba854178edce6540fb1ad1d8b3461925d5f11/docs/develop/theory/RECURSIVE_RELATIONAL_OBSERVATION_GAUSSIAN_SOURCE_ATTAINER.md),
+at that same fixed revision, selects preparations from its historical $K_J$
+with $10\le p\le34$ and proves a five-label Gaussian record law and an
+invertible whole-record relabelling preserving the complete instrument.
+Its source means reuse the original cubic-gain equations, but its supplied
+Gaussian preparation and seven stochastic acquisitions through clock six
+give a different acquisition and retention contract. Its selected sources
+are outside $K_3$; it proves neither the clock-eight entire-child separation
+nor the closed-error prediction condition or one-read identification here.
+
+The [Task–Partition Galois and Whitebox source](https://github.com/the-omega-institute/trureturing/blob/b0bba854178edce6540fb1ad1d8b3461925d5f11/docs/develop/theory/FIB_TASK_PARTITION_GALOIS_AND_WHITEBOX.md),
+also at that fixed revision, gives arbitrary-set static task-kernel
+factorization and coverage criteria in §10. Its §11 fixes finite deterministic
+occurrence forests, root initialization, common legal terminal continuations,
+and explicit initial-label or carried-state contracts. Its root-conflict
+feasibility and state/label counts do not instantiate the continuous
+complete-world source, exact-real record or clock-eight port here. The
+generic kernel/factorization principles are credited reuse in §7.2; these
+results supply no clock-eight response separation or acquisition bridge.
+
+The [Analytic Frontier Interfaces source, §477](https://github.com/the-omega-institute/trureturing/blob/7fabc7c4a11b70908bf64aee4896cb7c38f9ee0d/docs/develop/theory/FIBONACCI_ANALYTIC_FRONTIER_INTERFACES.md),
+at `7fabc7c4a11b70908bf64aee4896cb7c38f9ee0d`, derives bounds on actual lcm
+Robin witnesses from Mertens cumulative peaks, with a conditional zero-height
+application. Its integer and analytic hypotheses contain no strict-real clock
+source, entire child, response map or retention relation. These pinned
+comparison results neither prove nor contradict §§9–10 and add no premise
+to them; this is a bounded source comparison.
 
 The source-specific delta here is only the pair of actual response maps
 (9.5), their nonzero W3 tangents, their disjoint local/remote bands, and the
