@@ -1,0 +1,74 @@
+## 19. Necessary incidence equations and exact coprimality
+
+Suppose an incidence in (17.1) existed. For its branch $i=3$ or $4$
+define the integer polynomials
+
+$$
+\begin{gathered}
+Y_i=10V_i-20P_i-126Q_i,\\
+H_i=48Y_i^2+231(10P_i-240Q_i)Y_i
++231^2(195Q_i-10P_i)Q_i.
+\end{gathered}
+\tag{19.1}
+$$
+
+The first identity of (17.9) forces
+$s=Y_i/(231Q_i)$. The precise clearing identity for the third is
+
+$$
+\begin{aligned}
+&(231Q_i)^2\left[
+48\left(\frac{Y_i}{231Q_i}\right)^2
++\left(\frac{10P_i}{Q_i}-240\right)\frac{Y_i}{231Q_i}
++195-\frac{10P_i}{Q_i}\right]=H_i.
+\end{aligned}
+\tag{19.2}
+$$
+
+It is valid on the actual branches, where $Q_i\ne0$. The plane in
+(17.9) gives the exact factors
+
+$$
+\begin{aligned}
+770A_3+6780P_3-4160V_3+19383Q_3&=-15zF_3,\\
+F_3&=194880z^3+605585z^2+257731z-370,\\
+770A_4+6780P_4-4160V_4+19383Q_4&=45F=45(z+1)F_4,\\
+F&=-176640z^5+1572013z^4+1085901z^3-679526z^2+468z+17242,\\
+F_4&=-176640z^4+1748653z^3-662752z^2-16774z+17242.
+\end{aligned}
+\tag{19.3}
+$$
+
+Since $z>0$, the only removed plane factors are $-15z$ and
+$45(z+1)$. Every actual incidence must consequently satisfy either
+$F_3=H_3=0$ or $F_4=H_4=0$. We remove no factor of $H_i$, $K$
+or $8z-1$. These equations are used only in their necessary direction.
+
+The complete integer expansions of (19.1) are
+
+$$
+\begin{aligned}
+H_3={}&27518400000z^8+177518250000z^7+368996938425z^6\\
+&+267730272000z^5+59654522925z^4-1077954750z^3\\
+&+334970100z^2-415800z,\\
+H_4={}&10238400000z^{10}-166796442000z^9+301746232125z^8\\
+&+2996922767850z^7+4151231372025z^6+924829196400z^5\\
+&-1094584387500z^4-279813538800z^3+109848546900z^2\\
+&+3104870400z-233309700.
+\end{aligned}
+\tag{19.4}
+$$
+
+We now give small coefficient identities proving both coprimality
+claims. Throughout the next calculations a bar means reduction of
+the entire integer polynomial modulo $13$, before normalization.
+Every equality in these calculations is in $\mathbb F_{13}[z]$.
+Reducing the integer coefficients in (19.1) gives the useful rule
+
+$$
+\overline H_i=9\overline Y_i^{\,2}
++(9\overline P_i+5\overline Q_i)\overline Y_i
++\overline P_i\overline Q_i.
+\tag{19.5}
+$$
+

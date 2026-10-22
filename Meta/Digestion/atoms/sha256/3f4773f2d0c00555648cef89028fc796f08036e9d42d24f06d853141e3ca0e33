@@ -1,0 +1,28 @@
+**Theorem 33.2 (Two real common finite drifts, exactly one strict lift).**
+At each projection $(x_i,p_i,v_i)$,
+
+$$
+\alpha=\zeta=0.
+\tag{33.2}
+$$
+
+The common finite roots in $d$ of the literal polynomials $f$ and $K$
+are exactly two distinct real numbers. They are $d_{H,i}$ from
+(33.1) and
+
+$$
+d_{G,i}=-\frac{B_f(x_i,p_i,v_i)}{A(x_i)}-d_{H,i}.
+\tag{33.3}
+$$
+
+Exactly one of these two drifts has an original strict whole-world
+lift at this fixed projection, namely $W_{H,i}$. The second drift
+has the following forced negative-$b$ value. The open rational
+intervals also establish distinctness and finiteness of both drifts.
+
+| $i$ | $d_{H,i}$ | $d_{G,i}$ | Forced $b_{G,i}$ | $H_{1,G,i}$ |
+| --- | --- | --- | --- | --- |
+| 1 | $(32.73827139,32.73827140)$ | $(37.02165251,37.02165252)$ | $(-0.41664288,-0.41664287)$ | $(3,4)$ |
+| 2 | $(29.67423205,29.67423206)$ | $(34.50222779,34.50222780)$ | $(-0.57919713,-0.57919712)$ | $(10,11)$ |
+| 3 | $(24.99557948,24.99557949)$ | $(33.28110767,33.28110768)$ | $(-0.60441407,-0.60441406)$ | $(11,12)$ |
+| 4 | $(24.67345843,24.67345844)$ | $(34.11309262,34.11309263)$ | $(-0.37742775,-0.37742774)$ | $(3,4)$ |
