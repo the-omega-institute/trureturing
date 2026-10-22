@@ -547,7 +547,7 @@ def summable_gCoeffAudit : LeanInformationAudit.Contract.Registration.{_,_,_,0,0
     definition := none
     coordinates := #[0]
     readouts := #[{
-      path := #["body", "body", "body", "body", "body", "body", "body", "body", "arg", "body", "fn", "arg", "fn", "fn", "fn"]
+      path := #["body", "body", "body", "body", "body", "body", "body", "body", "fn", "arg", "body", "fn", "arg", "fn", "fn", "fn"]
       stateBinder := 1
       functionOperand := false
       stateOperand := none
@@ -597,7 +597,7 @@ def summable_kilbasSaigoAudit : LeanInformationAudit.Contract.Registration.{_,_,
     definition := none
     coordinates := #[0]
     readouts := #[{
-      path := #["body", "body", "body", "body", "body", "body", "body", "arg", "body", "fn", "arg", "fn", "fn"]
+      path := #["body", "body", "body", "body", "body", "body", "body", "fn", "arg", "body", "fn", "arg", "fn", "fn"]
       stateBinder := 1
       functionOperand := false
       stateOperand := none
