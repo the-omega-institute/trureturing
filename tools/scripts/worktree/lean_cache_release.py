@@ -32,23 +32,30 @@ REPO = os.environ.get("STRATALINT_CACHE_REPO", "the-omega-institute/trureturing"
 # Issue #6194, run 34119746844: Release assets must be strictly below 2 GiB.
 # Keep dev's 1.5 GiB headroom and two-digit, at-most-100-part inventory.
 CHUNK_BYTES = 1610612736
-# Optional transport policy (#5985): a thirty-minute operation ceiling,
-# configurable downward, leaves headroom over measured multipart Release fetches
+# Optional transport policy (#5985): a thirty-minute default operation ceiling,
+# with an explicitly selected finite extension for large multipart Release fetches
 # of the 4 GB seed on a developer host (5m08s, #2634; 7m09s for one fetch, and
 # over ten minutes when two fetches share the link). This is a policy choice,
 # not a throughput derivation or a copy of the C# ArchiveBudget.
 # Fetch includes all snapshot attempts; publish starts only after the current report succeeds.
 RELEASE_OPERATION_TIMEOUT_SECONDS = 1800
+RELEASE_OPERATION_TIMEOUT_MAX_SECONDS = 21600
 
 
 def operation_deadline():
     variable = "STRATALINT_LEAN_CACHE_RELEASE_TIMEOUT_SECONDS"
-    try:
-        seconds = int(os.environ.get(variable, str(RELEASE_OPERATION_TIMEOUT_SECONDS)))
-        if not 0 < seconds <= RELEASE_OPERATION_TIMEOUT_SECONDS:
-            raise ValueError()
-    except ValueError:
-        raise ValueError(f"{variable} must be 1..{RELEASE_OPERATION_TIMEOUT_SECONDS}") from None
+    raw = os.environ.get(variable)
+    if raw is None:
+        seconds = RELEASE_OPERATION_TIMEOUT_SECONDS
+    elif not re.fullmatch(r"[0-9]+", raw):
+        raise ValueError(f"{variable} must be 1..{RELEASE_OPERATION_TIMEOUT_MAX_SECONDS}")
+    else:
+        try:
+            seconds = int(raw)
+        except ValueError:
+            raise ValueError(f"{variable} must be 1..{RELEASE_OPERATION_TIMEOUT_MAX_SECONDS}") from None
+        if not 0 < seconds <= RELEASE_OPERATION_TIMEOUT_MAX_SECONDS:
+            raise ValueError(f"{variable} must be 1..{RELEASE_OPERATION_TIMEOUT_MAX_SECONDS}")
     return time.monotonic() + seconds
 
 

@@ -1,0 +1,14 @@
+## 20. References used by the new proofs
+
+The boundary exclusion uses the Sylvester resultant criterion and rational
+interval elimination; see Basu--Pollack--Roy, *Algorithms in Real Algebraic
+Geometry*, 2nd ed., Chapters 8--9.  Sequential compactness is the
+Heine--Borel theorem (Rudin, *Principles of Mathematical Analysis*, Theorem 2.41).  The fixed-point step in Theorem 18.1 is
+the Banach contraction theorem, and the analytic continuation step is the
+real implicit-function theorem; see Krantz--Parks, *The Implicit Function
+Theorem*, Chapters 1--2.  The nonproperness terminology is compatible with
+Jelonek, “The set of points at which a polynomial map is not proper,” *Ann.
+Polon. Math.* 58 (1993), 259--266, but that complex-polynomial result is not
+used as a substitute for the strict-real boundary calculation above.
+
+

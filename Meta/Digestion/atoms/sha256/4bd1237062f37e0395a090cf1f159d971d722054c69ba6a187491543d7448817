@@ -1,0 +1,67 @@
+**Proposition 9.3 (Supports of the cleared polynomials).** Impose only
+
+$$
+T=1+b,\quad U=1+2b,\quad j=t+b(1-t^2),\quad n=j+tb,\quad r=tb.
+$$
+
+Let $\widehat P$ be $P^{\rm raw}$ after these substitutions. Define
+$R_p=P^{\rm out},R_v=V^{\rm out},R_a=A^{\rm out},R_m=M^{\rm out}$,
+suppressing the world label from Definition 2.1. For each response substitute
+$q=(-24-e,-e/j,(27/5-e)/T,-e/n)$ and define the polynomial
+$H_x=5TjnR_x$. With an independent output indeterminate $o_x$, put
+$G_x=H_x-5Tjn\,o_x$. Then
+
+| Polynomial | Nonzero monomials | Total degree |
+| --- | ---: | ---: |
+| $\widehat P$ | 39 | 9 |
+| $H_p$ | 53 | 11 |
+| $H_v$ | 54 | 11 |
+| $H_a$ | 54 | 11 |
+| $H_m$ | 54 | 11 |
+| $G_p$ | 67 | 11 |
+| $G_v$ | 68 | 11 |
+| $G_a$ | 68 | 11 |
+| $G_m$ | 68 | 11 |
+
+These are identities of polynomials; no division on a zero-trace locus
+is used to infer the existence of a world.
+
+Proof. In the polynomial ring $\mathbb Q[t,b,e]$ write $D_0=5Tjn$ and
+
+$$
+\begin{aligned}
+K_5={}&480Tjn-540jn
+ +e(20Tjn-75Tn+100jn-50Tj),\\
+K_6={}&1200Tjn-1215jn
+ +e(50Tjn-180Tn+225jn-100Tj),\\
+K_7={}&2400Tjn-2268jn
+ +e(100Tjn-350Tn+420jn-175Tj).
+\end{aligned}
+$$
+
+Multiplying the interpolation rows by $D_0$ gives $D_0B_k=K_k$ in
+$\mathbb Q(t,b,e)$ for $k=5,6,7$, and hence the polynomial formulas
+
+$$
+\begin{aligned}
+H_p&=D_0(24+e)+(U+n)K_5,\\
+H_v&=D_0(24+e)+(2U+n)K_6,\\
+H_a&=D_0(24+e)+(T+2j+4tb)K_7,\\
+H_m&=D_0(24+e)+(3U+2n)K_7,\\
+\widehat P&=5e\{2(b^2+8b+4)jn-4TU(j+n)\}
+ +6(8b-1)(5b+2)jn.
+\end{aligned}
+$$
+
+Here the coefficient lists in ascending powers of $t$ of $j,n$ are
+$(b,1,-b)$ and $(b,1+b,-b)$. Ordinary polynomial multiplication gives
+the following numbers of nonzero $b$ coefficients in each $t$ coefficient.
+Each polynomial has the form $Z_0(t,b)+eZ_1(t,b)$.
+
+| Polynomial | $Z_0$: counts at $t^0,\ldots,t^6$ | $Z_1$: counts at $t^0,\ldots,t^6$ | $\deg Z_0$ | $\deg Z_1$ |
+| --- | --- | --- | ---: | ---: |
+| $\widehat P$ | $(3,4,5,4,3,0,0)$ | $(3,5,5,4,3,0,0)$ | 8 | 8 |
+| $H_p$ | $(3,4,5,5,4,3,2)$ | $(4,5,4,5,4,3,2)$ | 10 | 10 |
+| $H_v$ | $(3,4,5,5,4,3,2)$ | $(4,5,5,5,4,3,2)$ | 10 | 10 |
+| $H_a$ | $(3,4,5,5,4,3,2)$ | $(4,5,5,5,4,3,2)$ | 10 | 10 |
+| $H_m$ | $(3,4,5,5,4,3,2)$ | $(4,5,5,5,4,3,2)$ | 10 | 10 |

@@ -1,0 +1,35 @@
+**Definition 3.4 (The degree-forty-one quotient and its interval coordinates).**
+Define $Q_{41}$ by the exact quotient
+
+$$
+Q_{41}(t)=\frac{\operatorname{Res}_x(F,G)}
+ {544195584Q_4(t)^3Q_7(t)^2Q_8(t)^8}.
+\tag{3.3}
+$$
+
+Polynomial division has zero remainder; the resultant has degree $131$,
+the quotient has degree $41$, and its leading coefficient is
+
+$$
+425040827886114912019469507865702445684112358499105647335920976702592.
+$$
+
+This exact quotient, rather than a numerical interpolation, defines all
+its coefficients. The coefficient gcd of $A_1,B_1$ in $\mathbb Z[t]$
+is $3456Q_8^3$, with positive leading coefficient. Set
+
+$$
+\begin{aligned}
+a^\circ&=\operatorname{rem}_{Q_{41}}\left(A_1/(3456Q_8^3)\right),\\
+b^\circ&=\operatorname{rem}_{Q_{41}}\left(B_1/(3456Q_8^3)\right),\\
+\mathfrak a&=a^\circ/\operatorname{lc}(a^\circ),\qquad
+\mathfrak b=b^\circ/\operatorname{lc}(a^\circ).
+\end{aligned}
+\tag{3.4}
+$$
+
+Both have degree $40$; $\mathfrak a$ is monic. At a $Q_{41}$ root
+where the linear coefficient is nonzero, $x=-\mathfrak b/\mathfrak a$.
+All remainders in this section are over $\mathbb Q$ unless a finite
+field is explicitly indicated.
+

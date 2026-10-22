@@ -1,0 +1,55 @@
+**Theorem 6.1 (No actual terminal-M companion to C0).** For every real
+$t>0$ with $q(t)\ne0$ and $p_0(t)\ne24$, there is no actual world
+$W\in C(p_0(t),v_0(t))$ satisfying $m(W)=m_0(t)$.
+
+Proof. Suppose such a world exists. Its $x>0$ and whole-world guards
+are those of Section 2. We split before dividing the terminal equation.
+
+If $h=0$, then $x=t/(1+2t)$ and direct substitution gives
+
+$$
+\phi\left(\frac{t}{1+2t}\right)
+=-\frac{Q_4(t)}{(1+2t)^4}<0.
+\tag{6.1}
+$$
+
+The undivided terminal equation (2.12) fixes $d=d_0$. The late-node
+interpolant $\mathcal H$ is then exactly that of the complete boundary
+tuple: its four nodes use the same $x,d,p,v$. At fixed $d$ and
+$\mathcal H$, clocks zero and two uniquely fix $U$ through (2.10),
+because $d$ and $B_*$ cannot both vanish. Hence $U=1+2t$.
+By (2.3), $d_0\ne24$, so clock one uniquely fixes $j=t$.
+Consequently $r=xU-j=0$, contrary to strictness. This step divides
+neither by drift nor by a possibly zero second-clock equation.
+
+Now take $h\ne0$. If $\phi=0$, equation (2.12) forces $L=0$;
+Theorem 4.3 excludes the finite drift solution. This includes zero
+drift and the zero-$b_s$ branch.
+
+It remains that $h\phi\ne0$. Here and only here substitute
+$d=3L/(5q\phi)$. The nonzero quantities $q,\phi,D,h$ justify
+all removed factors in (3.1), and (2.9) yields $F=G=0$.
+The resultant (3.5) vanishes. Since $Q_4(t)>0$ and $Q_7$ has no
+positive roots by (5.1), either $Q_8(t)=0$ or $Q_{41}(t)=0$.
+The latter case is impossible by Theorem 5.1.
+
+If $Q_8(t)=0$, the polynomial combination $S_2$ vanishes at the
+common root. The exact characteristic-zero congruence (3.6), together
+with the units $P_A,c_2$, forces $x=-P_B/P_A$. At this $t$,
+$\operatorname{Res}_x(\phi,3L)=0$. Both polynomials retain degree four:
+their leading coefficients are $8$ and $720q$, with $q$ a unit.
+They therefore have a finite common complex root. The polynomial
+combination $T_1=1296(P_Ax+P_B)$ forces that root to be
+$-P_B/P_A$. Thus $\phi(-P_B/P_A)=L(t,-P_B/P_A)=0$, contradicting
+the present $\phi\ne0$ branch.
+
+All finite positive $t$ are covered. No division by drift, $b_s$,
+$\Lambda$, a leading gain coefficient or a root
+separation was used. The division by $\mathcal H_1$ in (2.10)
+is justified by its nonvanishing on every actual off-$24$ world,
+proved immediately after (2.10), and imposes no additional nonzero
+gain-sample assumption. The determinants were defined at fixed degrees
+before specialization, and all actual-world tests were the original
+guards. Thus degree drops and every allowed whole-gain degeneracy remain
+in the theorem. ∎
+

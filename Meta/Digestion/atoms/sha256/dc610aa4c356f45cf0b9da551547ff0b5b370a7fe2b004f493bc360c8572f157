@@ -1,0 +1,52 @@
+## 15. Actual J-collision continuation and relative nonclosedness
+
+Use the analytic chart
+
+$$
+r_A=tz,\quad b_A=z,\quad c_A=t(1-tz),\quad
+j_A=t+z(1-t^2),\quad n_A=j_A+tz.
+\tag{15.1}
+$$
+
+Substitute these polynomial $j_A,n_A$ into (10.1)–(10.2) to define
+$\Psi_A(t,z)=(p_A,v_A,a_A)$ analytically near $(t_*,0)$.
+Its value at zero is $(p_B,v_B,a_B)(t)$. Set
+
+$$
+\begin{gathered}
+\Psi_B(r,b)=(N_p,N_v,N_a)/D,\qquad w=(r_B,b_B,t),\\
+G(w,z)=\Psi_B(r_B,b_B)-\Psi_A(t,z).
+\end{gathered}
+\tag{15.2}
+$$
+
+The exact target solves $G((r_*,b_*,t_*),0)=0$. Write
+$J_*=D_wG$ and $h_*=-\partial_zG$ there. Below a pair $(l,u)$
+means the closed rational interval $[l,u]/10^6$. These enclosures
+are rounded outward from evaluation on the full target cube.
+
+| Quantity | Column 1 | Column 2 | Column 3 |
+| --- | --- | --- | --- |
+| Row 1 of $J_*$ | (411984742,411984743) | (978148952,978148953) | (4541874,4541875) |
+| Row 2 of $J_*$ | (1484873052,1484873053) | (3697853021,3697853022) | (-14016251,-14016250) |
+| Row 3 of $J_*$ | (3599524146,3599524147) | (8784271411,8784271412) | (-115716251,-115716250) |
+| $h_*$ | (145780327,145780328) | (471860159,471860160) | (1162490523,1162490524) |
+| $w\prime(0)$ | (950502,950503) | (-252827,-252826) | (328096,328097) |
+
+For the determinant and Cramer quotients use the original interval
+circuits on $X_*$ before rounding the entries to this coarse table.
+They give
+
+$$
+\begin{gathered}
+J_*w'(0)=h_*,\qquad
+p'(0)=\partial_zp_A+\partial_tp_A\,t'(0),\\
+-8056958<\det J_*<-8056957,\\
+\frac{28858031}{200000}<p'(0)<\frac{36072539}{250000}.
+\end{gathered}
+\tag{15.3}
+$$
+
+In particular $144<p'(0)<145$. These are rational circuit
+evaluations from the printed target and source data.
+

@@ -1,0 +1,35 @@
+**Definition 2.2 (The all-source open surface).** In $\mathbb A^3_{b,r,e}$
+set
+
+$$
+\begin{gathered}
+J=b^2+r-r^2,\qquad N=J+br,\qquad
+L=b^2+8b+4,\qquad A=(8b-1)(5b+2),\\
+C=2LJN-4bTU(J+N),\qquad
+\mathcal P=5eC+6AJN,
+\end{gathered}
+\tag{2.5}
+$$
+
+where $T=1+b,U=1+2b$. Here $J$ is a polynomial, distinct from the
+action matrix $\mathsf J$. Define
+
+$$
+X=V_{\mathbb C}(\mathcal P)\cap
+\{b\,r(1-r)\,T\,U\,J\,N\ne0\}.
+\tag{2.6}
+$$
+
+On $X$ put $j=J/b,n=N/b,d=24+e$. The gain is the one polynomial
+of degree at most three with samples
+
+$$
+(q_0,q_1,q_2,q_3)
+=\left(-24-e,-\frac e j,\frac{27/5-e}{T},-\frac e n\right).
+\tag{2.7}
+$$
+
+Define regular functions $p,v,m$ on $X$ by (1.8)–(1.9), and write
+$\rho_X=(p,v):X\to\mathbb A^2$ for the acquired map. The letter
+$\rho_X$ is distinct from the leading coefficient $\rho$ below.
+

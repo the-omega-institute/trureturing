@@ -1,0 +1,41 @@
+**Definition 21.3 (Fixed elimination determinants).** For $k=1,2$ form
+the $30$-by-$30$ coefficient matrix with rows
+
+$$
+r^{14}E_0,r^{13}E_0,\ldots,E_0,\quad
+r^{14}E_k,r^{13}E_k,\ldots,E_k
+\tag{21.12}
+$$
+
+and columns $r^{29},r^{28},\ldots,1$. Its determinant is $R_k(b)$.
+For the ordered pair $(E_0,E_1)$ form the $28$-by-$29$ matrix with rows
+
+$$
+r^{13}E_0,r^{12}E_0,\ldots,E_0,\quad
+r^{13}E_1,r^{12}E_1,\ldots,E_1
+\tag{21.13}
+$$
+
+and columns $r^{28},r^{27},\ldots,1$. Let $a_0$ be the determinant
+retaining, in order, the first $27$ columns $r^{28},\ldots,r^2$
+and the $r$ column. Let $c_0$ retain those same first $27$ columns
+and the constant column. Thus the ordered linear subresultant is
+$a_0r+c_0$. Every matrix retains its stated size under specialization.
+
+For a nonzero rational polynomial let $\operatorname{pp}_+$ be its
+primitive integer associate with positive leading coefficient. Equivalently,
+clear rational denominators, divide by the positive gcd of the integer
+coefficients, and choose the sign making the leading coefficient positive.
+Put
+
+$$
+G_J=\operatorname{pp}_+(\gcd(R_1,R_2)),\qquad
+h_J=\operatorname{pp}_+(\gcd(a_0,c_0)),\qquad
+ a_J=a_0/h_J,\quad c_J=c_0/h_J.
+\tag{21.14}
+$$
+
+All subsequent gcds, unless $\operatorname{pp}_+$ is explicit, are monic
+gcds in $\mathbb Q[b]$. In particular no sign of $a_0$ or $c_0$ is
+changed separately.
+

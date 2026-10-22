@@ -1,0 +1,17 @@
+fingerprints:
+  raw_sha256: sha256:1976b56cac9a05e9f905c5718f4e28b259acd0ded6150ca72b48e599743d2d73
+  normalized_sha256: sha256:1976b56cac9a05e9f905c5718f4e28b259acd0ded6150ca72b48e599743d2d73
+cas_ref: sha256:1976b56cac9a05e9f905c5718f4e28b259acd0ded6150ca72b48e599743d2d73
+coverage_gids:
+  - gid: D5/S3/Arith/FibonacciAtomic/ActualLeafHistoryRigidity.actual_address_geometry
+    target_statement_id: sha256:335c09bcbedda30876c8cd32e2ecfb6087fca93340948327ff8285877e106da7
+  - gid: D5/S3/Arith/FibonacciAtomic/Observer/NativeClassRootImage.filling_image_iff
+    target_statement_id: sha256:2790189736d18032654930a2fa22a3f110d906daf2fe949cb3390e1e96f6b09a
+  - gid: D5/S3/Arith/FibonacciAtomic/Observer/NativeCutFibers.legal_values_row
+    target_statement_id: sha256:bfd00a4dc5e9fbd7b890e7584f92ee06b9b175750401ca657e4325840a2cf22f
+  - gid: D5/S3/Arith/FibonacciAtomic/Observer/NativeSixSourceCones.prefix_free
+    target_statement_id: sha256:1924f837a75c7a7ac82683eb78004e0a9aab36a4863316497ec91e0959a906f3
+  - gid: D5/S3/Arith/FibonacciAtomic/Observer/NativeSixSourceCones.six_source_realization
+    target_statement_id: sha256:643d19feffe67abae4c7d9c480cabec3d9fed834a71b64e572b47650f3c1ebcb
+receipts:
+  unresolved_subitems: []

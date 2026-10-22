@@ -1,0 +1,45 @@
+**Proposition 2.4 (Strict-real pair distinctness).** In one strict-real
+off-$24$ child, two complete worlds with the same source are equal.
+Consequently (1.10) encodes exactly complete-world distinctness for the
+strict-real $M$ pair.
+
+Proof. This is the source-uniqueness consequence of O, Theorem 4.2,
+with its original fifth response. For completeness put
+
+$$
+\Lambda=1+\frac6T+\frac1U-\frac4j-\frac4n.
+\tag{2.11}
+$$
+
+The undivided parent equation is
+
+$$
+e\Lambda+\frac{24}{5}(b-1/8)(6/T-2/U)=0.
+\tag{2.12}
+$$
+
+If $\Lambda\ne0$, the source determines $e$. If $\Lambda=0$,
+strict positivity gives $6/T-2/U=2(2+5b)/(TU)>0$, so
+$b=1/8$ and $1/j+1/n=107/60$. At this source the coefficient
+of $e$ in the original fifth response is
+
+$$
+A_5=1+(n+5/4)(71/18-5/j).
+\tag{2.13}
+$$
+
+Since $n>j>0$, one has $j<120/107<n$ and
+$71/18-5/j<-37/72$. Therefore
+
+$$
+A_5<1-\frac{37}{72}\left(\frac{120}{107}+\frac54\right)
+=-\frac{6739}{30816}<0.
+\tag{2.14}
+$$
+
+The common $p$ determines $e$ also on this singular stratum. The four
+samples (2.7) now determine the entire gain and the drift. Equal sources
+therefore mean equal complete triples. A real squared source distance is
+positive exactly when the sources differ, so its inverse exists precisely
+for a distinct pair. ∎
+

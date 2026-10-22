@@ -1,0 +1,53 @@
+## 1. Scope, model, and regional conclusion
+
+This volume records an ordinary exact-rational result for the complete-world model of
+[the common-parent volume](FIB_COMMON_PARENT_GEOMETRY_AND_MIXED_CHILDREN.md),
+Definitions 1.1–1.3 and Theorem 2.1. A complete world is
+
+$$
+W=(P(r,b),g,d),\qquad
+P(r,b)=\begin{pmatrix}r&b\\r(1-r)/b&1-r\end{pmatrix},\qquad
+0<r<1,\quad b>0,\quad 0\ne g\in\mathbb R[s],\quad\deg g\le3,\quad d\in\mathbb R.
+$$
+
+The actions are the original $J$ and $M$, the products are left products, and every
+clock $0,\ldots,7$ is read once. The gain $g$, source $P$, and drift $d$ are fixed for
+the entire world. Put
+
+$$
+H_4=(0,J,24,M,147/5,J,24,M,18),\qquad
+C(p,v)=\mathcal F(H_4,M,p,M,v),\qquad p\ne24.
+$$
+
+For $W\in C(p,v)$ write
+
+$$
+a(W)=d+(T+2j+4r)g(7),\qquad
+m(W)=d+(3U+2n)g(7),
+$$
+where
+
+$$
+c=\frac{r(1-r)}b,\qquad j=b+c,\qquad n=j+r,\qquad T=1+b,\qquad U=1+2b.
+$$
+
+The strict same-child sets retain the original quantifiers:
+
+$$
+\begin{aligned}
+(p,v)\in D_J&\iff \exists W_0\ne W_1\in C(p,v),\ a(W_0)=a(W_1),\\
+(p,v)\in D_M&\iff \exists W_2\ne W_3\in C(p,v),\ m(W_2)=m(W_3).
+\end{aligned}
+$$
+
+The two pairs are independently chosen in the same entire child; they may overlap, and
+their two common terminal values need not be equal. The original objective is the
+unsettled global question about $D_J\cap D_M$ over all real off-$24$ bases.
+
+Define
+
+$$
+K=[56,58]\times[304,305],\qquad
+R=[3/10,1]\times[13/20,1].
+$$
+
