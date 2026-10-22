@@ -59,7 +59,36 @@ private lemma tree_degree (i : Fin 17) :
   decide
 
 private lemma tree_isTree : tree.IsTree := by
-  sorry
+  have reach (i : Fin 17) : tree.Reachable 2 i := by
+    fin_cases i
+    · exact (show tree.Adj 2 0 by decide).reachable
+    · exact (show tree.Adj 2 1 by decide).reachable
+    · exact .refl 2
+    · exact (show tree.Adj 2 3 by decide).reachable
+    · exact (show tree.Adj 2 3 by decide).reachable.trans
+        (show tree.Adj 3 4 by decide).reachable
+    · exact (show tree.Adj 2 5 by decide).reachable
+    · exact (show tree.Adj 2 5 by decide).reachable.trans
+        (show tree.Adj 5 6 by decide).reachable
+    · exact (show tree.Adj 2 7 by decide).reachable
+    · exact (show tree.Adj 2 7 by decide).reachable.trans
+        (show tree.Adj 7 8 by decide).reachable
+    · exact (show tree.Adj 2 9 by decide).reachable
+    · exact (show tree.Adj 2 9 by decide).reachable.trans
+        (show tree.Adj 9 10 by decide).reachable
+    · exact (show tree.Adj 2 11 by decide).reachable
+    · exact (show tree.Adj 2 11 by decide).reachable.trans
+        (show tree.Adj 11 12 by decide).reachable
+    · exact (show tree.Adj 2 13 by decide).reachable
+    · exact (show tree.Adj 2 13 by decide).reachable.trans
+        (show tree.Adj 13 14 by decide).reachable
+    · exact (show tree.Adj 2 15 by decide).reachable
+    · exact (show tree.Adj 2 15 by decide).reachable.trans
+        (show tree.Adj 15 16 by decide).reachable
+  apply SimpleGraph.isTree_iff_connected_and_card.mpr
+  refine ⟨⟨fun i j => (reach i).symm.trans (reach j)⟩, ?_⟩
+  rw [Nat.card_eq_fintype_card, Nat.card_eq_fintype_card]
+  decide
 
 private lemma sym_action (u c x y : ℂ) :
     normalizedLaplacian tree *ᵥ symMode u c x y =
