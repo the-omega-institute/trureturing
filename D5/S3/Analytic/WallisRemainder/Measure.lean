@@ -2,7 +2,7 @@
    generality: G
    mirror-B: D5/B/S3/Analytic/WallisRemainder/Measure
    mirror-E: none(waiver:evidence-not-specified-by-formal-manifest)
-   anchors: [mathlib/module/Mathlib.MeasureTheory.Integral.DominatedConvergence, mathlib/module/Mathlib.Analysis.SpecialFunctions.Trigonometric.Cotangent, mathlib/module/Mathlib.Analysis.SpecialFunctions.Trigonometric.DerivHyp, mathlib/module/Mathlib.NumberTheory.ZetaValues, mathlib/module/Mathlib.Analysis.SpecialFunctions.Gamma.Basic, mathlib/module/Mathlib.MeasureTheory.Integral.Bochner.SumMeasure, mathlib/module/Mathlib.MeasureTheory.Integral.Bochner.ContinuousLinearMap, mathlib/module/Mathlib.MeasureTheory.Measure.Map, mathlib/module/Mathlib.Analysis.SpecialFunctions.ImproperIntegrals, mathlib/module/Mathlib.Probability.Moments.Variance]
+   anchors: [mathlib/module/Mathlib.MeasureTheory.Integral.DominatedConvergence, mathlib/module/Mathlib.Analysis.SpecialFunctions.Trigonometric.Cotangent, mathlib/module/Mathlib.Analysis.SpecialFunctions.Trigonometric.DerivHyp, mathlib/module/Mathlib.NumberTheory.ZetaValues, mathlib/module/Mathlib.Analysis.SpecialFunctions.Gamma.Basic, mathlib/module/Mathlib.MeasureTheory.Integral.Bochner.SumMeasure, mathlib/module/Mathlib.MeasureTheory.Integral.Bochner.ContinuousLinearMap, mathlib/module/Mathlib.MeasureTheory.Measure.Map, mathlib/module/Mathlib.Analysis.SpecialFunctions.ImproperIntegrals, mathlib/module/Mathlib.Probability.Moments.Variance, mathlib/module/Mathlib.Probability.Distributions.Exponential]
    utility: none
    digest: The Wallis logarithmic remainder is a positive spectral Stieltjes transform with exact moments. -/
 
@@ -18,6 +18,7 @@ import Mathlib.MeasureTheory.Integral.Bochner.ContinuousLinearMap
 import Mathlib.MeasureTheory.Measure.Map
 import Mathlib.Analysis.SpecialFunctions.ImproperIntegrals
 import Mathlib.Probability.Moments.Variance
+import Mathlib.Probability.Distributions.Exponential
 
 set_option maxHeartbeats 1000000
 
@@ -91,28 +92,38 @@ theorem hasSum_spectralWeight : HasSum spectralWeight 1 := by
     field_simp
   · field_simp
 
-private noncomputable def exponentialLaw : Measure ℝ :=
-  (volume.restrict (Ioi 0)).withDensity (fun u : ℝ => ENNReal.ofReal (Real.exp (-u)))
+private instance : IsProbabilityMeasure (ProbabilityTheory.expMeasure 1) :=
+  ProbabilityTheory.isProbabilityMeasure_expMeasure zero_lt_one
 
-private lemma exponentialLaw_integral (f : ℝ → ℝ) :
-    (∫ u, f u ∂exponentialLaw) = ∫ u in Ioi (0 : ℝ), Real.exp (-u) * f u := by
-  rw [exponentialLaw, integral_withDensity_eq_integral_toReal_smul (by fun_prop)]
+private lemma expMeasure_eq_withDensity :
+    ProbabilityTheory.expMeasure 1 =
+      (volume.restrict (Ioi 0)).withDensity
+        (fun u : ℝ => ENNReal.ofReal (Real.exp (-u))) := by
+  rw [← withDensity_indicator measurableSet_Ioi]
+  change volume.withDensity (ProbabilityTheory.exponentialPDF 1) = _
+  apply withDensity_congr_ae
+  filter_upwards [show ∀ᵐ u : ℝ ∂volume, u ≠ 0 from ae_iff.mpr (by simp)] with u hu
+  rw [ProbabilityTheory.exponentialPDF_eq]
+  by_cases hp : 0 < u
+  · simp [hp, hp.le]
+  · simp [hp, show ¬ 0 ≤ u by intro h; exact hu (le_antisymm (le_of_not_gt hp) h)]
+
+private lemma expMeasure_integral (f : ℝ → ℝ) :
+    (∫ u, f u ∂ProbabilityTheory.expMeasure 1) =
+      ∫ u in Ioi (0 : ℝ), Real.exp (-u) * f u := by
+  rw [expMeasure_eq_withDensity,
+    integral_withDensity_eq_integral_toReal_smul (by fun_prop)]
   · simp only [ENNReal.toReal_ofReal (Real.exp_pos _).le, smul_eq_mul]
   · exact Eventually.of_forall (fun _ => ENNReal.ofReal_lt_top)
 
-private instance : IsProbabilityMeasure exponentialLaw where
-  measure_univ := by
-    rw [exponentialLaw, withDensity_apply _ MeasurableSet.univ, Measure.restrict_univ,
-      ← ofReal_integral_eq_lintegral_ofReal (integrableOn_exp_neg_Ioi 0)
-        (Eventually.of_forall (fun _ => (Real.exp_pos _).le)), integral_exp_neg_Ioi_zero]
-    norm_num
-
-private lemma exponentialLaw_pos : ∀ᵐ u ∂exponentialLaw, 0 < u :=
-  (withDensity_absolutelyContinuous _ _).ae_le (self_mem_ae_restrict measurableSet_Ioi)
+private lemma expMeasure_pos : ∀ᵐ u ∂ProbabilityTheory.expMeasure 1, 0 < u := by
+  rw [expMeasure_eq_withDensity]
+  exact (withDensity_absolutelyContinuous _ _).ae_le
+    (self_mem_ae_restrict measurableSet_Ioi)
 
 /-- A probability law assembled from the odd spectral exponential components. -/
 noncomputable def P : Measure ℝ := Measure.sum (fun n : ℕ =>
-  ENNReal.ofReal (spectralWeight n) • exponentialLaw.map (fun u => spectralScale n * u ^ 2))
+  ENNReal.ofReal (spectralWeight n) • (ProbabilityTheory.expMeasure 1).map (fun u => spectralScale n * u ^ 2))
 
 instance : IsProbabilityMeasure P where
   measure_univ := by
@@ -123,9 +134,9 @@ instance : IsProbabilityMeasure P where
     norm_num
 
 private lemma component_pos (n : ℕ) :
-    ∀ᵐ v ∂exponentialLaw.map (fun u => spectralScale n * u ^ 2), 0 < v := by
+    ∀ᵐ v ∂(ProbabilityTheory.expMeasure 1).map (fun u => spectralScale n * u ^ 2), 0 < v := by
   rw [ae_map_iff (by fun_prop) (by measurability)]
-  filter_upwards [exponentialLaw_pos] with u hu
+  filter_upwards [expMeasure_pos] with u hu
   exact mul_pos (spectralScale_pos n) (sq_pos_of_pos hu)
 
 /-- The spectral mixture is concentrated on strictly positive values. -/
@@ -135,9 +146,9 @@ theorem P_pos : ∀ᵐ v ∂P, 0 < v := by
   apply Measure.ae_smul_measure
   exact component_pos n
 
-private lemma exponentialLaw_integrable_pow (k : ℕ) :
-    Integrable (fun u : ℝ => u ^ k) exponentialLaw := by
-  rw [exponentialLaw, integrable_withDensity_iff_integrable_smul' (by fun_prop)
+private lemma expMeasure_integrable_pow (k : ℕ) :
+    Integrable (fun u : ℝ => u ^ k) (ProbabilityTheory.expMeasure 1) := by
+  rw [expMeasure_eq_withDensity, integrable_withDensity_iff_integrable_smul' (by fun_prop)
     (Eventually.of_forall (fun _ => ENNReal.ofReal_lt_top))]
   simp only [ENNReal.toReal_ofReal (Real.exp_pos _).le, smul_eq_mul]
   have h := Real.GammaIntegral_convergent (show (0 : ℝ) < (k : ℝ) + 1 by positivity)
@@ -145,29 +156,26 @@ private lemma exponentialLaw_integrable_pow (k : ℕ) :
   filter_upwards [self_mem_ae_restrict measurableSet_Ioi] with u hu
   rw [add_sub_cancel_right, Real.rpow_natCast]
 
-private lemma exponentialLaw_moment (k : ℕ) :
-    (∫ u, u ^ k ∂exponentialLaw) = (k.factorial : ℝ) := by
-  rw [exponentialLaw_integral]
-  have h := Real.Gamma_eq_integral (show (0 : ℝ) < (k : ℝ) + 1 by positivity)
-  rw [Real.Gamma_nat_eq_factorial] at h
-  convert h.symm using 1
-  congr 1
-  ext u
-  rw [add_sub_cancel_right, Real.rpow_natCast]
+private lemma expMeasure_moment (k : ℕ) :
+    (∫ u, u ^ k ∂ProbabilityTheory.expMeasure 1) = (k.factorial : ℝ) := by
+  rw [expMeasure_integral]
+  simpa [Real.rpow_natCast, Real.Gamma_nat_eq_factorial, mul_comm] using
+    (Real.integral_rpow_mul_exp_neg_mul_Ioi
+      (a := (k : ℝ) + 1) (r := 1) (by positivity) zero_lt_one)
 
 private lemma component_integrable_pow (n k : ℕ) :
     Integrable (fun v : ℝ => v ^ k)
-      (exponentialLaw.map (fun u => spectralScale n * u ^ 2)) := by
+      ((ProbabilityTheory.expMeasure 1).map (fun u => spectralScale n * u ^ 2)) := by
   rw [integrable_map_measure (by fun_prop) (by fun_prop)]
   simpa only [Function.comp_def, mul_pow, ← pow_mul] using
-    (exponentialLaw_integrable_pow (2 * k)).const_mul (spectralScale n ^ k)
+    (expMeasure_integrable_pow (2 * k)).const_mul (spectralScale n ^ k)
 
 private lemma component_moment (n k : ℕ) :
-    (∫ v : ℝ, v ^ k ∂exponentialLaw.map (fun u => spectralScale n * u ^ 2)) =
+    (∫ v : ℝ, v ^ k ∂(ProbabilityTheory.expMeasure 1).map (fun u => spectralScale n * u ^ 2)) =
       spectralScale n ^ k * ((2 * k).factorial : ℝ) := by
   rw [integral_map (by fun_prop) (by fun_prop)]
   simp_rw [mul_pow, ← pow_mul]
-  rw [integral_const_mul, exponentialLaw_moment]
+  rw [integral_const_mul, expMeasure_moment]
 
 private lemma spectral_moment_hasSum (k : ℕ) {c : ℝ}
     (h : HasSum (fun n : ℕ => 1 / (2 * (n : ℝ) + 1) ^ (2 * k + 2)) c) :
@@ -216,8 +224,8 @@ private lemma P_integrable_pow (k : ℕ)
   convert hs using 1
   ext n
   rw [integral_smul_measure, ENNReal.toReal_ofReal (spectralWeight_pos n).le, smul_eq_mul]
-  have he : (∫ v : ℝ, ‖v ^ k‖ ∂exponentialLaw.map (fun u => spectralScale n * u ^ 2)) =
-      ∫ v : ℝ, v ^ k ∂exponentialLaw.map (fun u => spectralScale n * u ^ 2) := by
+  have he : (∫ v : ℝ, ‖v ^ k‖ ∂(ProbabilityTheory.expMeasure 1).map (fun u => spectralScale n * u ^ 2)) =
+      ∫ v : ℝ, v ^ k ∂(ProbabilityTheory.expMeasure 1).map (fun u => spectralScale n * u ^ 2) := by
     apply integral_congr_ae
     filter_upwards [component_pos n] with v hv
     exact Real.norm_of_nonneg (pow_nonneg hv.le k)
@@ -418,7 +426,7 @@ private lemma integral_P_resolvent {x : ℝ} (hx : 0 < x) :
     integral_map (by fun_prop)
       (show AEStronglyMeasurable (fun v : ℝ => 1 / (x ^ 2 + v)) _ from
         (show Measurable (fun v : ℝ => 1 / (x ^ 2 + v)) by fun_prop).aestronglyMeasurable),
-    exponentialLaw_integral]
+    expMeasure_integral]
   simp only [mul_one_div]
 
 private noncomputable def spectralKernel (x : ℝ) (n : ℕ) (t : ℝ) : ℝ :=
