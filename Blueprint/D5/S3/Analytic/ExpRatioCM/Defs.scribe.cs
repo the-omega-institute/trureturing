@@ -4,6 +4,9 @@ namespace StrataLint.Scribe.Blueprint.D5.S3.Analytic.ExpRatioCM;
 
 internal sealed class DefsDocument : IScribeDocumentDefinition
 {
+    private static readonly LibraryNoteRef Source =
+        LibraryNoteRef.Create("D5/L/Asymptotics/weiguo2014completemonotonicity");
+
     public DocumentDefinition Create() => DocumentDefinition.Create(ScribeNode.Create(
         "Signed derivatives of two exponential reciprocals and their consecutive ratios.",
         H("Exponential derivative ratios"), Blocks(
@@ -23,6 +26,6 @@ internal sealed class DefsDocument : IScribeDocumentDefinition
     private static DocumentBlock Entry(string id, string name, string title, string text) =>
         Describe.Lean(DescribeId.Create(id),
             DeclarationHandle.Create("D5/S3/Analytic/ExpRatioCM/Defs." + name),
-            H(title), StatementSource.WithoutFormula(), AssessedProvenance.FromRepo(),
+            H(title), StatementSource.WithoutFormula(), AssessedProvenance.FromLiterature(Source),
             Blocks(Paragraph(Text(text))), DescribeRole.Definition);
 }

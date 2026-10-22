@@ -12,6 +12,8 @@ Lean statement: `D5/S3/Analytic/ExpRatioCM/Result.failure_on_every_tail`
 
 *Source.* Repository-derived.
 
+*Acknowledgement.* C.-F. Wei and B.-N. Guo (2014). *Complete monotonicity of functions connected with the exponential function and derivatives*. DOI: [10.1155/2014/851213](https://doi.org/10.1155/2014/851213). URL: <https://doi.org/10.1155/2014/851213>.
+
 *Commentary.*
 
 For every i at least three and every real T, there is t greater than both T and zero and an order k for which both signed ratio derivatives are negative. The second coefficient 2 times 3^i minus 4^i is negative. Its extracted limit is therefore eventually negative, while the sampling points tend to infinity. The two ratio families agree on a neighborhood of each positive sampling point.
@@ -23,6 +25,8 @@ Lean statement: `D5/S3/Analytic/ExpRatioCM/Result.not_cm_of_three_le`
 *Proof.* Machine-checked in Lean as `D5/S3/Analytic/ExpRatioCM/Result.not_cm_of_three_le` (`✓ std3`). ∎
 
 *Source.* Repository-derived.
+
+*Acknowledgement.* C.-F. Wei and B.-N. Guo (2014). *Complete monotonicity of functions connected with the exponential function and derivatives*. DOI: [10.1155/2014/851213](https://doi.org/10.1155/2014/851213). URL: <https://doi.org/10.1155/2014/851213>.
 
 *Commentary.*
 
@@ -36,6 +40,8 @@ Lean statement: `D5/S3/Analytic/ExpRatioCM/Result.classification`
 
 *Source.* Repository-derived.
 
+*Acknowledgement.* C.-F. Wei and B.-N. Guo (2014). *Complete monotonicity of functions connected with the exponential function and derivatives*. DOI: [10.1155/2014/851213](https://doi.org/10.1155/2014/851213). URL: <https://doi.org/10.1155/2014/851213>.
+
 *Commentary.*
 
 The first ratio is completely monotone on the positive half-line if and only if its index is at most two. The low-index closed forms give sufficiency; the extracted negative coefficient gives necessity.
@@ -48,6 +54,8 @@ Lean statement: `D5/S3/Analytic/ExpRatioCM/Result.classificationG`
 
 *Source.* Repository-derived.
 
+*Acknowledgement.* C.-F. Wei and B.-N. Guo (2014). *Complete monotonicity of functions connected with the exponential function and derivatives*. DOI: [10.1155/2014/851213](https://doi.org/10.1155/2014/851213). URL: <https://doi.org/10.1155/2014/851213>.
+
 *Commentary.*
 
 The second ratio has exactly the same completely monotone indices: zero, one, and two.
@@ -58,7 +66,13 @@ Lean statement: `D5/S3/Analytic/ExpRatioCM/Result.result`
 
 *Proof.* Machine-checked in Lean as `D5/S3/Analytic/ExpRatioCM/Result.result` (`✓ std3`). ∎
 
+*Resolves.* `Problems/wei-guo-2014-exponential-derivative-ratio-complete-monotonicity` (refuted) by `D5/S3/Analytic/ExpRatioCM/Result.result`.
+
+<!-- scribe-open-problem-resolution-v1 {"problem_slug":"wei-guo-2014-exponential-derivative-ratio-complete-monotonicity","declaration_gid":"D5/S3/Analytic/ExpRatioCM/Result.result","resolution_kind":"refuted"} -->
+
 *Source.* Repository-derived.
+
+*Acknowledgement.* C.-F. Wei and B.-N. Guo (2014). *Complete monotonicity of functions connected with the exponential function and derivatives*. DOI: [10.1155/2014/851213](https://doi.org/10.1155/2014/851213). URL: <https://doi.org/10.1155/2014/851213>.
 
 *Commentary.*
 

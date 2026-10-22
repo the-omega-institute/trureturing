@@ -10,7 +10,7 @@ Lean statement: `D5/S3/Analytic/ExpRatioCM/Defs.F`
 
 *Formalization.* `D5/S3/Analytic/ExpRatioCM/Defs.F` (`✓ std3`).
 
-*Source.* Repository-derived.
+*Citation.* C.-F. Wei and B.-N. Guo (2014). *Complete monotonicity of functions connected with the exponential function and derivatives*. DOI: [10.1155/2014/851213](https://doi.org/10.1155/2014/851213). URL: <https://doi.org/10.1155/2014/851213>.
 
 *Commentary.*
 
@@ -22,7 +22,7 @@ Lean statement: `D5/S3/Analytic/ExpRatioCM/Defs.G`
 
 *Formalization.* `D5/S3/Analytic/ExpRatioCM/Defs.G` (`✓ std3`).
 
-*Source.* Repository-derived.
+*Citation.* C.-F. Wei and B.-N. Guo (2014). *Complete monotonicity of functions connected with the exponential function and derivatives*. DOI: [10.1155/2014/851213](https://doi.org/10.1155/2014/851213). URL: <https://doi.org/10.1155/2014/851213>.
 
 *Commentary.*
 
@@ -34,7 +34,7 @@ Lean statement: `D5/S3/Analytic/ExpRatioCM/Defs.ratioF`
 
 *Formalization.* `D5/S3/Analytic/ExpRatioCM/Defs.ratioF` (`✓ std3`).
 
-*Source.* Repository-derived.
+*Citation.* C.-F. Wei and B.-N. Guo (2014). *Complete monotonicity of functions connected with the exponential function and derivatives*. DOI: [10.1155/2014/851213](https://doi.org/10.1155/2014/851213). URL: <https://doi.org/10.1155/2014/851213>.
 
 *Commentary.*
 
@@ -46,7 +46,7 @@ Lean statement: `D5/S3/Analytic/ExpRatioCM/Defs.ratioG`
 
 *Formalization.* `D5/S3/Analytic/ExpRatioCM/Defs.ratioG` (`✓ std3`).
 
-*Source.* Repository-derived.
+*Citation.* C.-F. Wei and B.-N. Guo (2014). *Complete monotonicity of functions connected with the exponential function and derivatives*. DOI: [10.1155/2014/851213](https://doi.org/10.1155/2014/851213). URL: <https://doi.org/10.1155/2014/851213>.
 
 *Commentary.*
 
@@ -58,7 +58,7 @@ Lean statement: `D5/S3/Analytic/ExpRatioCM/Defs.CompletelyMonotoneOn`
 
 *Formalization.* `D5/S3/Analytic/ExpRatioCM/Defs.CompletelyMonotoneOn` (`✓ std3`).
 
-*Source.* Repository-derived.
+*Citation.* C.-F. Wei and B.-N. Guo (2014). *Complete monotonicity of functions connected with the exponential function and derivatives*. DOI: [10.1155/2014/851213](https://doi.org/10.1155/2014/851213). URL: <https://doi.org/10.1155/2014/851213>.
 
 *Commentary.*
 
@@ -70,7 +70,7 @@ Lean statement: `D5/S3/Analytic/ExpRatioCM/Defs.claim`
 
 *Formalization.* `D5/S3/Analytic/ExpRatioCM/Defs.claim` (`✓ std3`).
 
-*Source.* Repository-derived.
+*Citation.* C.-F. Wei and B.-N. Guo (2014). *Complete monotonicity of functions connected with the exponential function and derivatives*. DOI: [10.1155/2014/851213](https://doi.org/10.1155/2014/851213). URL: <https://doi.org/10.1155/2014/851213>.
 
 *Commentary.*
 
