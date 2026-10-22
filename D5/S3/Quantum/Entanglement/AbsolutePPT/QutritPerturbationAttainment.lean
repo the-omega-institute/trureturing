@@ -22,6 +22,7 @@ conjugate_outer, unitary_vector_norm, pure_outer_square; proof_shape: bind-only;
   escape_witness: none; consumer: pure_attainment, QuadbitMaximumPurity.result
 -/
 
+import D5.S3.Quantum.Entanglement.AbsolutePPT.Bipartite
 import D5.S3.Quantum.Dynamics.KickedIsingNegativityRefutation
 
 set_option autoImplicit false
@@ -35,7 +36,7 @@ open D5.S3.Quantum.Dynamics.KickedIsingNegativityRefutation (partialTranspose)
 
 def APPT {A B : Type*} [Fintype A] [Fintype B] [DecidableEq A] [DecidableEq B]
     (M : Matrix (A × B) (A × B) ℂ) : Prop :=
-  ∀ U : unitaryGroup (A × B) ℂ, partialTranspose ((U : Matrix _ _ ℂ) * M * (U : Matrix _ _ ℂ)ᴴ) |>.PosSemidef
+  D5.S3.Quantum.Entanglement.AbsolutePPT.Bipartite.APPT M
 
 noncomputable def rhoPure (n : ℕ) (v : Fin 3 × Fin n → ℂ) : Matrix (Fin 3 × Fin n) (Fin 3 × Fin n) ℂ :=
   ((1 / (3*(n : ℝ)+2) : ℝ) : ℂ) • (1+(2 : ℂ) • vecMulVec v (star v))
@@ -200,6 +201,8 @@ theorem pure_attainment (n : ℕ) (v : Fin 3 × Fin n → ℂ)
   have appt_smul {A B : Type} [Fintype A] [Fintype B] [DecidableEq A] [DecidableEq B]
       {M : Matrix (A × B) (A × B) ℂ} (h : APPT M) (r : ℝ) (hr : 0 ≤ r) : APPT ((r : ℂ) • M) := by
     intro U
+    change (partialTranspose ((U : Matrix (A × B) (A × B) ℂ) *
+      ((r : ℂ) • M) * (U : Matrix _ _ ℂ)ᴴ)).PosSemidef
     have hp := (h U).smul (Complex.zero_le_real.mpr hr)
     rw [Matrix.mul_smul, Matrix.smul_mul, pt_smul]
     exact hp
@@ -208,6 +211,8 @@ theorem pure_attainment (n : ℕ) (v : Fin 3 × Fin n → ℂ)
       (v : Fin 3 × B → ℂ) (hv : ∑ ij, star (v ij)*v ij=1) :
       APPT (1+(2 : ℂ) • vecMulVec v (star v)) := by
     intro U
+    change (partialTranspose ((U : Matrix (Fin 3 × B) (Fin 3 × B) ℂ) *
+      (1+(2 : ℂ) • vecMulVec v (star v)) * (U : Matrix _ _ ℂ)ᴴ)).PosSemidef
     have hu : (U : Matrix (Fin 3 × B) (Fin 3 × B) ℂ) * (U : Matrix (Fin 3 × B) (Fin 3 × B) ℂ)ᴴ=1 := by
       simpa only [Unitary.coe_star, Matrix.star_eq_conjTranspose] using Unitary.coe_mul_star_self U
     have hv' := unitary_vector_norm U v hv
@@ -284,6 +289,8 @@ theorem projector_attainment (n : ℕ) (hn : 0<n)
   have contraction_appt {B : Type} [Fintype B] [DecidableEq B] {P : Matrix (Fin 3 × B) (Fin 3 × B) ℂ}
       (hP : P.PosSemidef) (hQ : (1-P).PosSemidef) : APPT (1+P) := by
     intro U
+    change (partialTranspose ((U : Matrix (Fin 3 × B) (Fin 3 × B) ℂ) *
+      (1+P) * (U : Matrix _ _ ℂ)ᴴ)).PosSemidef
     have hu : (U : Matrix (Fin 3 × B) (Fin 3 × B) ℂ) * (U : Matrix (Fin 3 × B) (Fin 3 × B) ℂ)ᴴ=1 :=
       by simpa only [Matrix.star_eq_conjTranspose] using (mem_unitaryGroup_iff.mp U.property)
     have hp := hP.mul_mul_conjTranspose_same (U : Matrix (Fin 3 × B) (Fin 3 × B) ℂ)
@@ -298,6 +305,8 @@ theorem projector_attainment (n : ℕ) (hn : 0<n)
   have appt_smul {A B : Type} [Fintype A] [Fintype B] [DecidableEq A] [DecidableEq B]
       {M : Matrix (A × B) (A × B) ℂ} (h : APPT M) (r : ℝ) (hr : 0 ≤ r) : APPT ((r : ℂ) • M) := by
     intro U
+    change (partialTranspose ((U : Matrix (A × B) (A × B) ℂ) *
+      ((r : ℂ) • M) * (U : Matrix _ _ ℂ)ᴴ)).PosSemidef
     have hp := (h U).smul (Complex.zero_le_real.mpr hr)
     rw [Matrix.mul_smul, Matrix.smul_mul, pt_smul]
     exact hp

@@ -1,0 +1,86 @@
+## 156. Exact phase isolation for every optimizer
+
+The public contact populations are $(p_e,0,1-p_e)$ and
+$(p_i,x_i,1-p_i-x_i)$; all their occupied populations are positive.
+At either phase-zero contact set
+$B_r=LI+\mathcal C_*(P_r)-P_r$ as in [TR, (121.6), (123.1)].
+The public contact lemma gives $B_r\succeq0$ of rank two, with
+$T_r=\operatorname{adj}(B_r)/\operatorname{Tr}\operatorname{adj}(B_r)$.
+At the edge the $11$ entry is $L+h_1>0$, whereas the singular $02$
+block has nonzero offdiagonal $-\sqrt{p_e(1-p_e)}$. Its unit kernel
+vector is consequently $f_e=(f_{e0},0,f_{e2})^{\mathsf T}$ with both
+displayed coordinates nonzero.
+
+At the interior let $p=p_i$, $x=x_i$, $y=1-p_i-x_i$,
+$\kappa=1-\eta/2>0$, and $d_j=(B_i)_{jj}\ge0$. The public
+adjugate entries [TR, (123.2)] give
+
+$$
+\begin{aligned}
+(\operatorname{adj}B_i)_{01}&=\sqrt{px}(y+\kappa d_2)>0,\\
+(\operatorname{adj}B_i)_{02}&=\sqrt{py}(d_1+\kappa x)>0,\\
+(\operatorname{adj}B_i)_{12}&=\sqrt{xy}(d_0+\kappa p)>0.
+\end{aligned}
+\tag{156.1}
+$$
+
+Since this adjugate is positive rank one, every coordinate of its
+unit range vector $f_i$ is nonzero. These facts concern the fixed
+effects, not a reality assumption on the unknown decoder.
+
+For $U_{0\ell}=\operatorname{diag}(1,1,\omega^\ell)$, the channel
+erases the varied coherences, so $\Phi(U_{0\ell}P_rU_{0\ell}^\dagger)
+=\Phi(P_r)$. Thus the difference
+$D_r=\mathcal R\Phi(P_r)-\mathcal C_*(P_r)$ is common to these
+three phase contacts. Lemma 154.1 annihilates each $U_{0\ell}f_r$.
+The exact finite character sums are
+
+$$
+\frac13\sum_{\ell=0}^2U_{0\ell}f_r=(f_{r0},f_{r1},0)^{\mathsf T},
+\qquad
+\frac13\sum_{\ell=0}^2\omega^{-\ell}U_{0\ell}f_r=f_{r2}e_2.
+\tag{156.2}
+$$
+
+At the edge these show that $D_e$ annihilates $e_0,e_2$. It is
+Hermitian trace zero; only its $11$ entry could remain, and its trace
+makes that zero too. Hence $D_e=0$. Successive entries of (155.4)
+give
+
+$$
+\begin{aligned}
+p_e(t-a)&=0,&p_eU&=0,\\
+\frac{1-p_e}{4}[3k^2(t-a)+d-c]&=0,&
+\frac{1-p_e}{4}(Q-3kV)&=0.
+\end{aligned}
+\tag{156.3}
+$$
+
+Therefore $t=a$, $U=0$, $d=c$, $Q=3kV$.
+At the interior keep the $01$ phase zero and vary only $\ell$.
+After these edge equalities, the common difference is exactly
+
+$$
+D_i=\begin{pmatrix}
+0&0&-V\sqrt{p_ix_i}/2\\
+0&0&2kx_iV\\
+-\overline V\sqrt{p_ix_i}/2&2kx_i\overline V&0
+\end{pmatrix}.
+\tag{156.4}
+$$
+
+The second sum in (156.2), with $f_{i2}\ne0$, gives $D_ie_2=0$.
+Since $p_i,x_i>0$, (156.4) forces $V=0$, hence $Q=0$. This proves
+for every complex optimizer the eight real conditions
+$t=a,d=c,U=V=Q=0$, without averaging that decoder. Substitution
+in (155.4) proves on all of $M_3(\mathbb C)$ that
+
+$$
+\mathcal R\Phi(X)=\mathcal C_*(X)=\begin{pmatrix}
+ax_{00}&\eta x_{01}/2&0\\
+\eta x_{10}/2&bq_1+cq_2&0\\
+0&0&(1-a)x_{00}+(1-b)q_1+(1-c)q_2
+\end{pmatrix}.
+\tag{156.5}
+$$
+

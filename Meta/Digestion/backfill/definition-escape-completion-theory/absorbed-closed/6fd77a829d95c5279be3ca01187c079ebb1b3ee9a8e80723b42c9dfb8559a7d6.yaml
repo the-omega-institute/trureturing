@@ -1,0 +1,9 @@
+fingerprints:
+  raw_sha256: sha256:6fd77a829d95c5279be3ca01187c079ebb1b3ee9a8e80723b42c9dfb8559a7d6
+  normalized_sha256: sha256:6fd77a829d95c5279be3ca01187c079ebb1b3ee9a8e80723b42c9dfb8559a7d6
+cas_ref: sha256:6fd77a829d95c5279be3ca01187c079ebb1b3ee9a8e80723b42c9dfb8559a7d6
+coverage_gids:
+  - gid: D5/S3/ConceptDynamics/Governance/CommitInterfaceSealPreservation.commit_interface_seal_and_artifact_preservation
+    target_statement_id: sha256:1c955a74afcebd9cfa9da234233d4b3bc4f522b76aebc0dfaa5b7872fa1ef0e1
+receipts:
+  unresolved_subitems: []

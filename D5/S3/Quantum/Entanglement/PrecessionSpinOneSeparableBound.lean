@@ -65,7 +65,7 @@ private def eigenCoeff (n r t : ℕ) : ℂ := (spinEigenPolynomial t (n-t)).coef
 private def R (n : ℕ) : SpinMatrix n := fun i j => (if i.val + 1 = j.val then (j.val : ℂ) / 2 else 0) + (if j.val + 1 = i.val then ((n : ℂ) + 1 - i.val) / 2 else 0)
 private def coeffMatrix (n : ℕ) : SpinMatrix n := fun r t => eigenCoeff n r.val t.val
 private def spinEigenvalue (n : ℕ) (t : SpinIndex n) : ℝ := (n : ℝ) / 2 - t.val
-private def spinRad (n : ℕ) (i : SpinIndex n) : ℝ := Real.sqrt (Nat.choose n i.val : ℝ)
+def spinRad (n : ℕ) (i : SpinIndex n) : ℝ := Real.sqrt (Nat.choose n i.val : ℝ)
 private def spinD (n : ℕ) : SpinMatrix n := diagonal fun i => (spinRad n i : ℂ)
 private def spinDinv (n : ℕ) : SpinMatrix n := diagonal fun i => (spinRad n i : ℂ)⁻¹
 private def spinW (n : ℕ) : SpinMatrix n := spinDinv n * coeffMatrix n

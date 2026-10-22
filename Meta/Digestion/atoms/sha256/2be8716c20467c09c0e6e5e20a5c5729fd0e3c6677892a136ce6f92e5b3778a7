@@ -1,0 +1,35 @@
+**Proposition 135.2 (Lower bound for every complex CPTP decoder).** For
+every complex CPTP map $\mathcal R:M_3\to M_3$, $e(\mathcal R)\ge L_*$.
+
+*Proof.* For a Hermitian trace-zero matrix $H$ the variational formula
+is $\frac12\|H\|_1=\max_{0\preceq E\preceq I}\operatorname{Tr}(EH)$.
+Applying it separately to each of the nine physical inputs and then
+averaging gives, with $J=J_{\mathcal R}$,
+
+$$
+\begin{aligned}
+e(\mathcal R)
+&\ge\frac19\sum_{j,\ell=0}^2
+\operatorname{Tr}\{T_{j\ell}[P_{j\ell}-\mathcal R\Phi(P_{j\ell})]\}\\
+&=b_{\rm test}-\operatorname{Tr}(WJ)\\
+&=b_{\rm test}-\operatorname{Tr}Y+\operatorname{Tr}(SJ)\\
+&=L_*+\operatorname{Tr}(SJ)\ge L_*.
+\end{aligned}
+\tag{135.7}
+$$
+
+The first term in the average is $b_{\rm test}$ by unitary invariance.
+The second is the Choi pairing (134.2). The third line uses
+$\operatorname{Tr}_{\rm out}J=I_3$, and the fourth uses (135.3).
+Finally $S,J\succeq0$ imply
+$\operatorname{Tr}(SJ)=\operatorname{Tr}(S^{1/2}JS^{1/2})\ge0$,
+even when their entries are complex and they do not commute.
+The map $\mathcal R$ is the same in all nine terms and is otherwise
+unrestricted. This proves (128.6), and with Proposition 132.2 proves
+Theorem 128.2. $\square$
+
+The nine pairs support a bound on the full density set. They are not a
+replacement of its upper objective by a finite probe objective. The
+universal input bound is supplied by the whole-simplex argument in
+§132, while the nine pairs give the universal decoder lower bound.
+

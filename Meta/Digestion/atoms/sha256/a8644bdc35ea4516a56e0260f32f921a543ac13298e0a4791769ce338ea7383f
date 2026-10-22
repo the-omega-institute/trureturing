@@ -1,0 +1,114 @@
+**Theorem 28.1 (Closed endpoint mirror isolation).** At every ordered
+pair in (26.13), there is a product neighbourhood in complete-coefficient
+space such that every equal-$\Psi_M$ pair of strict parent worlds in it
+has $p=24$. This includes both orderings of the endpoint pair
+$\{\overline{\mathcal K}(1/8),\overline{\mathcal K}(1)\}$.
+
+Proof. For strict pairs this is O, Theorem 16.5, with $u=v$ and
+$f=m$. To include the endpoints, use the actual analytic circuit,
+not an extension of source legality. At $b=1/8,e=0$ and
+$r\in\{1/8,1\}$, all of $b,j,n,T,U$ stay positive.
+Thus (25.2)–(25.3) extend analytically to an open ambient neighbourhood,
+with $c=r(1-r)/b$. The nonzero derivative $(R_0)_b=448/25$ still
+provides dependent $b=b(r,e)$. The whole-gain interpolation is analytic
+there. Its inverse on tuples is coordinate extraction $(r,e)=(P_{11},d-24)$,
+so every nearby strict parent world is represented in this chart.
+Nonstrict ambient points are used only for local uniqueness.
+
+Put $s=9/8-r$, $n=n(r)=n(s)$, $j_r=n-r$, $j_s=n-s$, and
+
+$$
+R(n)=-8192n^3+119952n^2-12320n-57875.
+\tag{28.1}
+$$
+
+The derivatives of Lemma 27.1 can equivalently be written
+
+$$
+\begin{aligned}
+\alpha&=a_0+a_1/j,&
+a_0&=\frac{-512n^2-218n+475}{42n},&
+a_1&=\frac{85(4n+5)}{84},\\
+\eta&=e_0-c_0/j,&
+e_0&=\frac{10240n^2+33924n-32375}{140n},&
+c_0&=\frac{1672n+7455}{70}.
+\end{aligned}
+\tag{28.2}
+$$
+
+Here $e_0$ is just a rational coefficient, not the drift variable.
+The exact coefficient identity
+
+$$
+\begin{aligned}
+&4(-512n^2-218n+475)(1672n+7455)\\
+&\quad +(340n+425)(10240n^2+33924n-32375)\\
+&=57344n^3-839664n^2+86240n+405125=-7R(n)
+\end{aligned}
+\tag{28.3}
+$$
+
+gives $a_0c_0+a_1e_0=-R(n)/(1680n)$ and hence
+
+$$
+\alpha(r)\eta(s)-\alpha(s)\eta(r)
+=\frac{(s-r)R(n)}{1680n j_rj_s}.
+\tag{28.4}
+$$
+
+On closed mirrors,
+
+$$
+\begin{gathered}
+n=85/32-8(r-9/16)^2,\qquad 9/8\le n\le85/32,\\
+R(9/8)=273661/4,\\
+R'(n)=-24576n^2+239904n-12320\\
+\hphantom{R'(n)}\ge-24576(85/32)^2+239904(9/8)-12320=84172>0.
+\end{gathered}
+\tag{28.5}
+$$
+
+Thus $R(n)>0$ throughout the required closed interval.
+Consider $F=(p-p',k-k',v-v')$ with free variable $r$ and unknowns
+$(e,e',s)$. Writing $\zeta=\partial_ev$, its unknown-variable Jacobian
+at the mirror is
+
+$$
+\begin{pmatrix}
+\alpha(r)&-\alpha(s)&0\\
+\eta(r)&-\eta(s)&0\\
+\zeta(r)&-\zeta(s)&-24n'(s)
+\end{pmatrix}.
+\tag{28.6}
+$$
+
+The entries in the last column follow from (25.6).
+For an explicit whole-gain derivative for the remaining entries one has
+$\zeta=1+(n+5/2)\gamma_6+24\{5-64r(1-r)\}b_e$,
+with $\gamma_6,b_e$ in (27.4)–(27.5).
+Using $n'(s)=-8(s-r)$ and (28.4), the determinant is
+
+$$
+\det D_{(e,e',s)}F
+=-\frac{4(s-r)^2R(n)}{35n(n-r)(n-s)}\ne0.
+\tag{28.7}
+$$
+
+At $(r,s)=(1/8,1)$ this is exactly
+
+$$
+\det D_{(e,e',s)}F=-\frac{1915627}{45}.
+\tag{28.8}
+$$
+
+All denominators are positive at both endpoint orderings; the same
+formula also treats every distinct strict mirror.
+The implicit function theorem on the open ambient chart gives a unique
+nearby zero $(e,e',s)$ for each nearby $r$ and describes all nearby zeros.
+The explicit curve $(e,e',s)=(0,0,9/8-r)$ is already such a zero.
+Therefore it is the entire local matching curve. Restrict back to strict
+parent worlds: all its members have $p=24$. The two base tuples are
+distinct, so their neighbourhoods may also be chosen disjoint.
+This proves endpoint isolation without admitting a boundary tuple as an
+actual world. ∎
+

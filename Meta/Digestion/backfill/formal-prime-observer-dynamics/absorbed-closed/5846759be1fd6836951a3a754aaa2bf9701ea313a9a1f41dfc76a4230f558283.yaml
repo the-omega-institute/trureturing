@@ -1,0 +1,9 @@
+fingerprints:
+  raw_sha256: sha256:5846759be1fd6836951a3a754aaa2bf9701ea313a9a1f41dfc76a4230f558283
+  normalized_sha256: sha256:5846759be1fd6836951a3a754aaa2bf9701ea313a9a1f41dfc76a4230f558283
+cas_ref: sha256:5846759be1fd6836951a3a754aaa2bf9701ea313a9a1f41dfc76a4230f558283
+coverage_gids:
+  - gid: D5/S3/ConceptDynamics/ReadoutBlackwellAdapter.measurable_refinement_blackwell
+    target_statement_id: sha256:1444c488baf9865bebf23830104f07481a03e74b07ea7cd6e4a663ea8583f4a8
+receipts:
+  unresolved_subitems: []

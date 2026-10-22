@@ -1,0 +1,31 @@
+**Definition 11.2 (Bernstein coefficients for $I$).** Write
+$R=\sum_{k=0}^{18}a_k(p,v)r^k$ with zero padding, and put
+
+$$
+\begin{aligned}
+\beta_i(p,v)&=\sum_{k=0}^i
+ \frac{\binom{i}{k}}{\binom{18}{k}}a_k(p,v),\\
+\beta_i(p_0+hx,v_c+\theta/2)
+ &=\sum_{a,d\ge0}\gamma_{iad}x^a\theta^d,\qquad
+ B_i=\sum_{(a,d)\ne(0,0)}|\gamma_{iad}|.
+\end{aligned}
+\tag{11.4}
+$$
+
+In particular $|x|,|\theta|\le1$. If $c_{kj\ell}$ is the
+literal coefficient of $r^kp^jv^\ell$ in the owning table, every
+coefficient in (11.4) is the following finite rational sum:
+
+$$
+\gamma_{iad}=
+\sum_{\substack{k\le i,\ j\ge a,\ \ell\ge d}}
+c_{kj\ell}\frac{\binom{i}{k}}{\binom{18}{k}}
+\binom ja p_0^{j-a}h^a
+\binom\ell d v_c^{\ell-d}2^{-d}.
+\tag{11.5}
+$$
+
+Absent coefficients are zero. The normalized Bernstein parameter
+$\theta=2(v-v_c)$ is distinct from the displacement $t=v-v_c$
+used in the source tubes.
+

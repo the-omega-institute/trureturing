@@ -1,0 +1,159 @@
+**Lemma 120.1 (Unique root and positive domains).** The system
+$F(\theta)=0$ has exactly one real zero in $\mathcal B$. It is in the
+interior of that box and satisfies
+
+$$
+\begin{gathered}
+0<a,b,c,\eta<1,\qquad L,\alpha,\beta,\tau>0,\\
+0<p_e<1,\qquad p_i,x_i>0,\qquad p_i+x_i<1.
+\end{gathered}
+\tag{120.1}
+$$
+
+*Proof.* Here are finite rational formulas for the isolation bounds.
+They also specify how to reproduce the arithmetic without any root
+search. Expand $F_i=\sum_\nu f_{i\nu}\theta^\nu$ using
+(119.2)–(119.6), where $\nu\in\mathbb N^{11}$ and only nonzero
+coefficients are included. The rational Jacobian $J=DF(\bar\theta)$
+has entries
+
+$$
+J_{ij}=\sum_{\nu:\nu_j>0}\nu_j f_{i\nu}
+               \bar\theta^{\nu-e_j}.
+\tag{120.2}
+$$
+
+For a fully integral evaluation of its inverse, let $q$ be the least
+common multiple of the positive reduced denominators of all $J_{ij}$,
+let $H=qJ$, and let
+
+$$
+\begin{aligned}
+d&=\sum_{\pi\in S_{11}}\operatorname{sgn}(\pi)
+                       \prod_{i=0}^{10}H_{i,\pi(i)},\\
+C_{ij}&=(-1)^{i+j}\det H[\widehat i\mid\widehat j].
+\end{aligned}
+\tag{120.3}
+$$
+
+The determinants of the ten-by-ten minors use the same permutation
+formula. Let $m$ be the least common multiple of the positive reduced
+denominators of $F_i(\bar\theta)$ and set $w_i=mF_i(\bar\theta)$.
+Thus $H,C,d,w$ are integers and $q,m$ are positive integers. Direct
+integer substitution gives $d^2\ge1$ and
+
+$$
+\begin{aligned}
+A&=J^{-1}=\frac qd C^{\mathsf T},\qquad AJ=I,\\
+\|A\|_\infty
+ &=\frac q{|d|}\max_i\sum_{j=0}^{10}|C_{ji}|,\\
+\|AF(\bar\theta)\|_\infty
+ &=\frac q{m|d|}\max_i\left|\sum_{j=0}^{10}C_{ji}w_j\right|.
+\end{aligned}
+\tag{120.4}
+$$
+
+In particular the integer inequalities needed below are
+
+$$
+q\max_i\sum_j|C_{ji}|<23|d|,\qquad
+10^{29}q\max_i\left|\sum_j C_{ji}w_j\right|<m|d|.
+\tag{120.5}
+$$
+
+More precise outward rational bounds for these same expressions are
+
+$$
+\begin{aligned}
+22.572405920453996305
+&<\|A\|_\infty<22.572405920453996306<23,\\
+4\cdot10^{-31}
+&<\|AF(\bar\theta)\|_\infty<5\cdot10^{-31}<10^{-29}.
+\end{aligned}
+\tag{120.6}
+$$
+
+Equations (119.2)–(120.4), including the determinant permutation sums,
+are finite formulas for all entries and integers in these inequalities;
+no fitted inverse or floating point tolerance occurs in (120.5).
+
+For the second derivatives use the exact coefficient sums
+
+$$
+H_i=\sum_{|\nu|\ge2}|f_{i\nu}|\,|\nu|(|\nu|-1)2^{|\nu|-2}.
+\tag{120.7}
+$$
+
+In the order $F_0,\ldots,F_{10}$ they are
+
+$$
+(H_i)_{i=0}^{10}=
+(4,2992,2192,8470,4624,2150,2646,10454,10609,4785,1632).
+\tag{120.8}
+$$
+
+Indeed, summing the absolute coefficient bounds for
+$\partial_j\partial_k\theta^\nu$ over $j,k$ gives
+$|\nu|(|\nu|-1)2^{|\nu|-2}$ on the cube $|\theta_j|\le2$.
+Consequently
+
+$$
+\sup_{|\theta_j|\le2}\sum_{j,k}
+|\partial_j\partial_k F_i(\theta)|\le H_i,
+\qquad \max_i H_i=10609.
+\tag{120.9}
+$$
+
+The entire box $\mathcal B$ is in that cube. For
+$G(\theta)=\theta-AF(\theta)$, $DG(\bar\theta)=0$, and the mean-value
+bound along a segment from the centre gives
+
+$$
+\sup_{\mathcal B}\|DG\|_\infty
+\le23\cdot10609\cdot r=244007\cdot10^{-20}<10^{-14}.
+\tag{120.10}
+$$
+
+It follows that for every $\theta\in\mathcal B$,
+
+$$
+\|G(\theta)-\bar\theta\|_\infty
+<10^{-29}+244007\cdot10^{-40}
+=1.00000244007\cdot10^{-29}<r.
+\tag{120.11}
+$$
+
+Thus $G$ maps the closed box strictly into itself and is a contraction.
+The contraction theorem supplies a unique fixed point. Since $A$ is
+invertible, fixed points of $G$ are exactly zeros of $F$.
+
+For clarity, all further interval bounds in this appendix use the
+following rational interval method. Start with the eleven independent
+intervals $[\bar\theta_j-r,\bar\theta_j+r]$. A rational constant is a
+singleton interval. Add and subtract endpoints, multiply by taking the
+minimum and maximum of the four endpoint products, and divide only by
+an interval excluding zero, using its reciprocal interval. Nonnegative
+integer powers can be evaluated by repeated multiplication. Evaluate
+the displayed expressions in their indicated order; repeated variables
+may be treated as independent interval occurrences. Every endpoint
+operation is rational. The decimal endpoints displayed below are
+outward enlargements, so they require no decimal rounding convention
+inside a computation.
+
+For example this method, directly on the initial coordinate intervals,
+gives the strict outer bounds
+
+$$
+\begin{aligned}
+&0.937<a<0.939,\quad 0.337<b<0.339,\quad 0.443<c<0.444,\\
+&0.562<\eta<0.564,\quad 0.606<L<0.607,\\
+&0.388<p_e<0.389,\quad 0.284<p_i<0.285,\quad 0.388<x_i<0.389,\\
+&0.414<\alpha<0.415,\quad 0.811<\beta<0.812,\quad 0.067<\tau<0.069.
+\end{aligned}
+\tag{120.12}
+$$
+
+Hence $p_i+x_i<0.674<1$, and (120.1) follows. Strict interior inclusion
+in (120.11) gives the two strict endpoints in (118.4) by taking the
+$L$-coordinate of (119.7). $\square$
+

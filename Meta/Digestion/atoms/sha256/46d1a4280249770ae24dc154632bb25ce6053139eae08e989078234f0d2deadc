@@ -1,0 +1,53 @@
+**Proposition 125.2 (a Markov extension at every finite stage).** Suppose
+$(M_e,Q_e)$ is a coherent Markov prefix and $B_e\ne\varnothing$. For
+$p\in M_e$ put
+
+$$
+ s_e(p)=-Q_e(p,p)=\sum_{y\ne p}Q_e(p,y),
+$$
+
+and choose numbers $\kappa_c>0$ for $c\in B_e$. In Theorem 124.3 take
+$q_e=0$ in the residual block and
+
+$$
+K_e=\operatorname{diag}(s_e(\operatorname{par}_e(c))+\kappa_c:c\in B_e).
+\tag{125.3}
+$$
+
+The resulting $Q_{e+1}$ is conservative Markov. Its nonzero off-diagonal
+rates are exactly
+
+$$
+\begin{aligned}
+Q_{e+1}(x,y)&=Q_e(x,y)&& (x,y\in V_e, x\ne y),\\
+Q_{e+1}(x,c)&=0&& (x\in V_e, c\in B_e),\\
+Q_{e+1}(c,y)&=Q_e(p,y)&& (y\in V_e\setminus\{p\}),\\
+Q_{e+1}(c,p)&=\kappa_c,\\
+Q_{e+1}(c,d)&=0&& (c\ne d),
+\end{aligned}
+\tag{125.4}
+$$
+
+where $p=\operatorname{par}_e(c)$. Therefore every finite actual history,
+including all singleton and empty-birth endpoints, admits a coherent Markov
+family; its intermediate state metrics may be non-diagonal.
+
+**Proof.** With zero residual cross block, the one-step version of (124.8)
+gives
+
+$$
+Q_{e+1}
+ =-\begin{pmatrix}Q_e&0\\P_eQ_e-K_eP_e&K_e\end{pmatrix}
+\quad\text{in residual coordinates conjugated by }\mathsf W_e.
+$$
+
+For a newborn $c$ over $p$, (125.3) gives rate $\kappa_c$ to $p$, rate
+$Q_e(p,y)$ to every other old destination $y$, and no sibling rate. All
+these rates are nonnegative. The row sum is
+$\kappa_c+s_e(p)-[s_e(p)+\kappa_c]=0$; old rows are unchanged. Thus
+(125.4) holds and the matrix is conservative Markov. Starting with
+$M_0=I$ gives $Q_0=-L_0$, which is Markov on every original tree (and is the
+zero generator on either singleton), so induction gives the existence claim.
+The endpoint statements follow from the empty-block convention in §124.
+$\square$
+

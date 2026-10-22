@@ -1,0 +1,9 @@
+fingerprints:
+  raw_sha256: sha256:cafeccf0485c37f44305bf18986056852775cbcae473b5c591278cd495f9136c
+  normalized_sha256: sha256:cafeccf0485c37f44305bf18986056852775cbcae473b5c591278cd495f9136c
+cas_ref: sha256:cafeccf0485c37f44305bf18986056852775cbcae473b5c591278cd495f9136c
+coverage_gids:
+  - gid: D5/S3/ConceptDynamics/Termination/ClosureMethodStopThreeParameterCompletionReopening.worstFiberDefect
+    target_statement_id: sha256:160e09151237d8cb3ba6f3df0ddf1ed7bb35c2b65fbe1758826625327805cfde
+receipts:
+  unresolved_subitems: []

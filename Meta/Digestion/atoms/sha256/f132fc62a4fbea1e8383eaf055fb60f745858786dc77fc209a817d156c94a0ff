@@ -1,0 +1,46 @@
+**Definition 18.2 (Zero-safe seven-variable parent fallback).**  The
+undivided parent interface uses
+
+$$
+(p,r_2,b_2,e_2,r_3,b_3,e_3),
+$$
+
+with $10\le p\le34$, $p\ne24$, $0<r_i<1$, $b_i>0$, and
+
+$$
+ e_i\Lambda_i+\frac{24}{5}(b_i-1/8)\kappa_i=0.
+\tag{18.4}
+$$
+
+For each triple $(r,b,e)$ let
+
+$$
+G=(-24-e,-e/j,(27/5-e)/T,-e/n)^{\mathsf T},
+$$
+
+and define
+
+$$
+X_0=24+e+(U+n)G_5,\quad
+X_1=24+e+(2U+n)G_6,\quad
+X_3=24+e+(3U+2n)G_7,
+\tag{18.5}
+$$
+
+where $(G_5,G_6,G_7)^{\mathsf T}$ is the matrix in (16.4) applied to
+$G$, and $e_2,e_3$ range over all real numbers.  The five matching
+equations are
+
+$$
+X_0(2)-p=0,\quad X_0(3)-p=0,\quad
+X_1(2)-v_J(p)=0,\quad X_1(3)-v_J(p)=0,\quad X_3(2)-X_3(3)=0.
+\tag{18.6}
+$$
+
+The distinctness guard is
+
+$$
+(r_2-r_3)^2+(b_2-b_3)^2+(e_2-e_3)^2>0.
+\tag{18.7}
+$$
+

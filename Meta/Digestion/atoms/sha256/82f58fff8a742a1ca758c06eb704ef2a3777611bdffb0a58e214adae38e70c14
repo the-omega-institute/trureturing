@@ -1,0 +1,38 @@
+**定理 6.2（占位投影的全部纤维）。** 给 $`(X,Y,Z)\in\mathcal{\text{𝒫}}`$，令 $`r=1-Z`$。其全部相容律恰为
+
+```math
+\begin{aligned}
+p_{\varnothing}&=r-X-Y+\kappa,\\
+p_1&=X-\kappa,\qquad p_2=Z,\\
+p_3&=Y-\kappa,\qquad p_{13}=\kappa,
+\end{aligned}
+```
+
+<table><tbody><tr><td>
+
+```math
+\max(0,X+Y-r)\le\kappa\le\min(X,Y).
+```
+
+</td></tr></tbody></table>
+
+这条纤维的长度为
+
+```math
+w_\kappa=\min\{X,Y,r-X,r-Y\}.
+```
+
+当且仅当点在四张三角侧面 $`X=0`$、$`Y=0`$、$`X+Z=1`$、$`Y+Z=1`$ 的并集上，纤维是单点；其余点的纤维是非退化线段，包括底面正方形的内部。
+
+证明。以 $`p_{13}=\kappa`$ 反解三个均值及归一化，得到五式。五概率非负等价于所列闭区间；$`X,Y\le r`$ 保证区间非空。按 $`X\le Y`$ 或其反向，以及 $`X+Y\le r`$ 或其反向，分别相减上下端即得宽度式。宽度为零恰是所列四个坐标等式之一。$`r=0`$ 时只有顶点，唯一律为 $`p_2=1`$。∎
+
+这里复用基础卷数学引文 4.2 的闭纤维，只按位置重标概率。归一化超平面内两同占位律的差恰沿
+
+<table><tbody><tr><td>
+
+```math
+g_{\square}=(1,-1,0,-1,1).
+```
+
+</td></tr></tbody></table>
+

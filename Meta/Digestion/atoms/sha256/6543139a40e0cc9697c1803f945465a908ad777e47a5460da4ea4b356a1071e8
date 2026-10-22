@@ -1,0 +1,13 @@
+**Lemma 23.3 (Exact full-cover inequalities).** All centres in (23.2)
+have $\mathsf A_b(r_k,B_k,p_c)>0$. Every box (23.3) has
+$9/50<b<2/5$ and $|s_k|<1$. All reciprocal intervals required by
+Definition 23.2 exclude zero. The following bounds hold for every
+$k=0,\ldots,1024$:
+
+| Quantity | Strict rational lower bound |
+| --- | --- |
+| $L_k^2(-\sup M_{k,-})$ | $8320373/10^6$ |
+| $L_k^2\inf M_{k,+}$ | $5821464/10^6$ |
+| $\inf T_k$ | $2116359/10^6$ |
+| $-\sup[\Lambda]^B_{00}$ | $339826/10^6$ |
+| $\inf[a_e]^B_{00}$ | $2044101/10^6$ |

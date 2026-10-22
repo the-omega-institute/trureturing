@@ -1,0 +1,81 @@
+**Definition 22.1 (Corner systems).** Use the two auxiliary complete corner
+tuples $L,R$ of Definition 12.1. Their respective $(p,v,m)$ are
+
+$$
+(39/2,258/5,1977/10),\qquad (18,399/5,366).
+\tag{22.1}
+$$
+
+Their whole gains have samples $(-24,3/10,27/5,3/10)$ and
+$(-24,3/5,27/5,0)$ at $0,1,2,3$, both with drift $24$.
+Neither corner is a legal endpoint. Specialize $F_M,G_M$ of (17.8)
+at the corresponding rational triple and take positive-leading primitive
+integer parts. Denote these polynomial pairs by $(f_-,g_-)$ and
+$(f_+,g_+)$, with complete coefficient lists below.
+
+$$
+\operatorname{coeff}_{\downarrow}(f_-)=\bigl(
+1642320,
+970073,
+2144104,
+-4273136,
+4528846,
+-1555483,
+-492420,
+0
+\bigr).
+$$
+
+$$
+\operatorname{coeff}_{\downarrow}(g_-)=\bigl(
+134006660446032,
+-486765699860232,
+913019068868549,
+-1087813500618794,
+846109262381000,
+-377006767784245,
+24778834503455,
+98037115860966,
+-73209913838814,
+26539280444773,
+-4540844494154,
+-305571117252,
+1464412968,
+0,
+0
+\bigr).
+$$
+
+$$
+\operatorname{coeff}_{\downarrow}(f_+)=\bigl(
+623680,
+-1051168,
+2214651,
+-3646243,
+2736266,
+-1028650,
+105159,
+46305
+\bigr).
+$$
+
+$$
+\operatorname{coeff}_{\downarrow}(g_+)=\bigl(
+11877259874304,
+-78285462466560,
+214781375474048,
+-317070184384128,
+263866056659737,
+-104954811316425,
+-11352297359697,
+35652434925343,
+-19261034697427,
+5697427653797,
+-1076704426475,
+138646493037,
+-14401449810,
+1857103200,
+-162082944
+\bigr).
+$$
+

@@ -1,0 +1,19 @@
+**Corollary 8.2 (A bounded ambient joint region separated from $24$).**
+For the positive $\epsilon$ of SII, Theorem 29.1, every original
+joint base lies in the compact ambient subset of $\mathbb R^2$
+
+$$
+K=\{(p,v):|p|\le P_J,\ |v|\le V_J,\ |p-24|\ge\epsilon\}.
+\tag{8.3}
+$$
+
+All actual companions above these joint bases satisfy Corollary 8.1.
+The constants $P_J,V_J,C_J,\epsilon$ are qualitative.
+
+Proof. Corollary 8.1 bounds both acquired coordinates. The selected
+actual $M$ pair cannot occur in $0<|p-24|<\epsilon$ by the public
+P24-gap. Since the original target has $p\ne24$, its bases obey the
+last inequality in (8.3). This $K$ is closed and bounded in finite
+dimensional Euclidean space and is separated from the excluded line.
+This proves compactness of the ambient enclosure only. ∎
+

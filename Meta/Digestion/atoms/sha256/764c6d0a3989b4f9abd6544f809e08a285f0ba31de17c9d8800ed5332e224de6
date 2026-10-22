@@ -1,0 +1,35 @@
+**Definition 21.5 (one source tree and the complete positive domain).**
+Let $\mathcal R_B$ be the native transition tree of this one initialized
+apparatus from its irreducible entrance. A node is an actual finite
+history, with its real raw/active stores, inputs, receipts, owners and
+successor. At each enabled IN both raw bits give their actual successor;
+all other edges are the installed row with its real guard, operands and
+ordered effects. Disabled attempts have no executed edge or receipt.
+Raw decoded continuations, original00 and terminal/fault successors
+remain in $\mathcal R_B$; they receive no positive theorem by omission.
+
+Let $a_B$ be its actual acquired-seed fence. Define $\mathcal C_B$ as the
+unlabelled prefix domain at or after $a_B$, before the first outer00,
+with the fixed original canonical seed/preparation, first input on the
+prefix tree of $\{w_0,w_1\}$, matching capture and second load, and then
+exactly Definition 1.4's input restrictions: prefixes of all seven CAP
+canonical source languages, both separate HistoryMode values, and
+physically length-delimited history frames, including incomplete frames
+and complete typed parser rejections. Include every actually reached
+loader, code, descriptor, bank, source, loan, channel, checker, ACK,
+return and old converter interior cut. A finite cut assumes neither
+future supply nor future completion. Common prefixes are one history;
+there is no disjoint union tagged by $\sigma$. Illegal attempted calls
+do not manufacture new histories.
+
+An authentic predecessor is a reached outer Ready with its actual frozen
+completed list, manifest, $a_B,b$, and current invocation/read/mailbox
+resources, as in Definition 1.4 on this changed run. Its accepted target
+domain $\mathcal A_B$ is the old binder's legacy arm and AcquisitionOffset
+cuts $[a_B,b]$, plus SourceOffset cuts $[e_{\rm call},f_{\rm call}]$ of
+its completed returning source calls. This includes early first-loader
+cuts and all completed prior converter cuts. The selecting flight is
+not its own predecessor. A promised completed call additionally has the
+actual finite supply and original-local-termination premises of
+Assumption 1.2; withheld input or divergent work promises no Ready.
+

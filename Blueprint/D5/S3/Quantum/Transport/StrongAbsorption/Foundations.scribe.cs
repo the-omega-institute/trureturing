@@ -240,7 +240,12 @@ internal sealed class FoundationsDocument : IScribeDocumentDefinition
                 DeclarationHandle.Create("D5/S3/Quantum/Transport/StrongAbsorption/Foundations.rescaled_moment_cumulant"),
                 H("rescaled_moment_cumulant"), StatementSource.FromAuthor(Disp(F48())),
                 AssessedProvenance.FromRepo(),
-                Blocks(Paragraph(Text("The displayed identity or estimate is used in the moment and density expansions."))), DescribeRole.Theorem)
+                Blocks(Paragraph(Text("The displayed identity or estimate is used in the moment and density expansions."))), DescribeRole.Theorem),
+            Describe.Lean(DescribeId.Create("published-inverseslope-deriv"),
+                DeclarationHandle.Create("D5/S3/Quantum/Transport/StrongAbsorption/Foundations.inverseSlope_deriv"),
+                H("inverseSlope_deriv"), StatementSource.FromAuthor(Disp(Published0())),
+                AssessedProvenance.FromRepo(),
+                Blocks(Paragraph(Text("The displayed formula relates the polynomial integrals and the normalized finite-channel measure."))), DescribeRole.Theorem)
         )));
 
     private static Formula V(string name) => F.Id(name);
@@ -410,4 +415,7 @@ internal sealed class FoundationsDocument : IScribeDocumentDefinition
 
     private static Formula F48() =>
         Seq(Forall, Sp, Parenthesized(Seq(V("M"), Sp, Colon, Sp, Seq(Mathbb, Grp(V("N"))))), Sp, Comma, Sp, Forall, Sp, Parenthesized(Seq(GammaLower, Sp, Colon, Sp, Seq(Mathbb, Grp(V("R"))))), Sp, Comma, Sp, Forall, Sp, Parenthesized(Seq(V("n"), Sp, Colon, Sp, Seq(Mathbb, Grp(V("N"))))), Sp, Comma, Sp, Parenthesized(Seq(D(1), Sp, Le, Sp, V("M"))), Sp, To, Sp, Parenthesized(Seq(D(0), Sp, Lt, Sp, GammaLower)), Sp, To, Sp, V("iteratedDeriv"), Sp, Parenthesized(Seq(V("n"), Sp, Plus, Sp, D(1))), Sp, Parenthesized(Seq(V("cgf"), Sp, Parenthesized(Seq(V("rescaledObservable"), Sp, V("M"), Sp, GammaLower)), Sp, Parenthesized(Seq(V("law"), Sp, V("M"), Sp, GammaLower)))), Sp, D(0), Sp, Eq, Sp, Parenthesized(Seq(Int, Sp, V("p"), Sp, Comma, Sp, Sp, new Formula.Power(Parenthesized(Seq(V("rescaledObservable"), Sp, V("M"), Sp, GammaLower, Sp, V("p"))), Seq(V("n"), Sp, Plus, Sp, D(1))), Sp, V("d"), Sp, V("law"), Sp, V("M"), Sp, GammaLower)), Sp, Minus, Sp, Sum, Sp, V("i"), Sp, InMacro, Sp, V("range"), Sp, V("n"), Sp, Comma, Sp, Parenthesized(Seq(Qualified("n","choose"), Sp, V("i"), Sp, Colon, Sp, Seq(Mathbb, Grp(V("R"))))), Sp, Cdot, Sp, V("iteratedDeriv"), Sp, Parenthesized(Seq(V("i"), Sp, Plus, Sp, D(1))), Sp, Parenthesized(Seq(V("cgf"), Sp, Parenthesized(Seq(V("rescaledObservable"), Sp, V("M"), Sp, GammaLower)), Sp, Parenthesized(Seq(V("law"), Sp, V("M"), Sp, GammaLower)))), Sp, D(0), Sp, Cdot, Sp, Parenthesized(Seq(Int, Sp, V("p"), Sp, Comma, Sp, Sp, new Formula.Power(Parenthesized(Seq(V("rescaledObservable"), Sp, V("M"), Sp, GammaLower, Sp, V("p"))), Seq(V("n"), Sp, Minus, Sp, V("i"))), Sp, V("d"), Sp, V("law"), Sp, V("M"), Sp, GammaLower)));
+
+    private static Formula Published0() =>
+        Seq(Seq(Forall, Sp, Parenthesized(Seq(V("d"), Sp, Colon, Sp, Parenthesized(Seq(Mathbb, Grp(V("R"))))))), Sp, Comma, Sp, Parenthesized(Parenthesized(Seq(V("deriv"), Sp, Parenthesized(Seq(V("inverseSlope"), Sp, V("d"))), Sp, Eq, Sp, V("fun"), Sp, V("t"), Sp, Mapsto, Sp, new Formula.Power(Parenthesized(V("d")), Seq(Minus, D(1))), Sp, Cdot, Sp, new Formula.Power(Parenthesized(Parenthesized(Seq(V("inverseSlope"), Sp, V("d"), Sp, V("t")))), D(2))))));
 }

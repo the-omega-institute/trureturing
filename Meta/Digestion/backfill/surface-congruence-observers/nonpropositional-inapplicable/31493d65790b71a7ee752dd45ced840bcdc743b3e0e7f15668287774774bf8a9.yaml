@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:31493d65790b71a7ee752dd45ced840bcdc743b3e0e7f15668287774774bf8a9
+  normalized_sha256: sha256:31493d65790b71a7ee752dd45ced840bcdc743b3e0e7f15668287774774bf8a9
+cas_ref: sha256:31493d65790b71a7ee752dd45ced840bcdc743b3e0e7f15668287774774bf8a9
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 'Pure setup and definition of the coset graph: the finite covering and separating curve are supplied, A_0, B_0, C_0 and d are named, and the vertex, edge and incidence data specify the graph. Its identification with the geometric dual graph is a separate theorem, not asserted here.'
+    previous_atom_id: 0d6a281f365812c22ea1ec752dbfc2a00d1bafd62fd21bd4d2b648cbd466c36e
+    next_atom_id: c3bfc810462bc2ed84437b69f322449a3c15ca5c5f33655d478dd817d063ed83

@@ -1,0 +1,28 @@
+**数学引文（五窗细化所用的经典必要预算）。** Then $\Delta r_i\ge0$ and
+
+$$
+\sum_i\alpha_i\Delta r_i
+\le\sqrt{\frac{\ln2}{2}\sum_i\alpha_i\Delta I_i}.
+\tag{4.1}
+$$
+
+If two positive-mass states $s_0,s_1$ have the same $Q_A$ but different indicator labels $Y_i(s_0)\ne Y_i(s_1)$, that fibre contributes at least $\min(\Pr(s_0),\Pr(s_1))$ to $r_i(A)$.
+
+Proof. The first inequality follows because every $Q_A$ classifier is also a $Q_B$ classifier. Apply the classical Pinsker inequality in nats,
+
+$$
+D_{\mathrm{KL}}(P\Vert R)\ge2\|P-R\|_{\mathrm{TV}}^2,
+$$
+
+to the conditional Bernoulli laws of $Y_i$ given $Q_B$ and $Q_A$. Its convention here is total variation $\frac12\sum|P-R|$; see M. S. Pinsker, *Information and Information Stability of Random Variables and Processes*, Holden-Day, 1964. The binary risk function $\min(t,1-t)$ is 1-Lipschitz. If $\eta_B=\Pr(Y_i=1\mid Q_B)$ and $\eta_A=\mathbb E(\eta_B\mid Q_A)$, this gives
+
+$$
+\Delta r_i\le\mathbb E|\eta_B-\eta_A|,
+\qquad
+\Delta I_{i,\mathrm{nats}}
+\ge2\mathbb E|\eta_B-\eta_A|^2
+\ge2(\Delta r_i)^2.
+$$
+
+Weighted Cauchy–Schwarz and conversion from nats prove (4.1). The ambiguity assertion is the positive-mass version of the fibre-separation criterion in [the task-partition Galois volume](FIB_TASK_PARTITION_GALOIS_AND_WHITEBOX.md): the smaller of the two total label masses in a fibre is at least the smaller displayed state mass. The same criterion applies to a specified future response $F_w$ after a legal continuation $w$, using $Y_i=F_w$ when that response is binary. $\square$
+

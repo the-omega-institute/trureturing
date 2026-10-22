@@ -101,6 +101,7 @@ internal sealed class QutritPerturbationAttainmentDocument : IScribeDocumentDefi
     public DocumentDefinition Create() => DocumentDefinition.Create(ScribeNode.Create(
         "Explicit rank-one and projector perturbations attain the two candidate qutrit APPT purities.",
         H("Qutrit APPT attaining states"),Blocks(
+            Paragraph(Text("APPT is definitionally equal to Bipartite.APPT over the same finite local types and their Fintype and DecidableEq instances. Both predicates require partial-transpose positivity after every global unitary, including on empty systems.")),
             Desc("QutritPerturbationAttainment","APPT","Literal absolute PPT predicate",ApptDefinition(),
                 "Ahiable–Kothakonda–Winter, page 2: Defined analogously to absolutely separable states, absolute PPT states are those states which remain PPT after global unitary rotations and have been completely characterized across all dimensions [17]. Here unitaryGroup is Mathlib's group of unitary matrices and val displays its matrix coercion. The predicate alone does not include density normalization. The partialTranspose operator is reused from KickedIsingNegativityRefutation and has entry formula M((i,l),(k,j)).",
                 provenance:AssessedProvenance.FromLiterature(LibraryNoteRef.Create("D5/L/QuantumStates/ahiablekothakondawinter2026geometry"))),

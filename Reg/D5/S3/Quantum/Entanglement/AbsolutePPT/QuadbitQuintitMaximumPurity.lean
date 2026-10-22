@@ -327,7 +327,8 @@ private theorem rejected_law (i : Fin 2) : ¬ arena.Law (rejected i) := by
   have ha : APPT (diagonal (fun p => ((0 : Fin (3*3) → ℝ) (e p) : ℂ))) := by
     intro U
     have hzero :
-        partialTranspose (0 : Matrix (Fin 3 × Fin 3) (Fin 3 × Fin 3) ℂ) = 0 := by
+        _root_.D5.S3.Quantum.Entanglement.AbsolutePPT.Bipartite.partialTranspose
+          (0 : Matrix (Fin 3 × Fin 3) (Fin 3 × Fin 3) ℂ) = 0 := by
       ext p q
       rfl
     simpa [hzero, Pi.zero_apply] using

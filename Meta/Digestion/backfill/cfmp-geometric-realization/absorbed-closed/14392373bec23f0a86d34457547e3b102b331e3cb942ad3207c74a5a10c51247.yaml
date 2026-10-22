@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:14392373bec23f0a86d34457547e3b102b331e3cb942ad3207c74a5a10c51247
+  normalized_sha256: sha256:14392373bec23f0a86d34457547e3b102b331e3cb942ad3207c74a5a10c51247
+cas_ref: sha256:14392373bec23f0a86d34457547e3b102b331e3cb942ad3207c74a5a10c51247
+coverage_gids:
+  - gid: D5/S3/Geometry/Hyperideal/EdgeStarTransitions.global_edge_balance
+    target_statement_id: sha256:fa2538b7355f161e385eda37149189783c5794a46ca23baab905534515c48fe2
+  - gid: D5/S3/Geometry/Hyperideal/EdgeStarTransitions.path_end_signature_and_next
+    target_statement_id: sha256:d79140fecdedca02ee9055af24fd515095c61b54a910857bcc365546905d0847
+receipts:
+  unresolved_subitems: []

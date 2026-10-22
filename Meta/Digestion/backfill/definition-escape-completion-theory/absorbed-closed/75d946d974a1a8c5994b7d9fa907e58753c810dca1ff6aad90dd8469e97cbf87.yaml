@@ -1,0 +1,9 @@
+fingerprints:
+  raw_sha256: sha256:75d946d974a1a8c5994b7d9fa907e58753c810dca1ff6aad90dd8469e97cbf87
+  normalized_sha256: sha256:75d946d974a1a8c5994b7d9fa907e58753c810dca1ff6aad90dd8469e97cbf87
+cas_ref: sha256:75d946d974a1a8c5994b7d9fa907e58753c810dca1ff6aad90dd8469e97cbf87
+coverage_gids:
+  - gid: D5/S3/ConceptDynamics/DefinitionEscapeAdjudication/ParetoFrontierStopDivergence.pareto_frontier_requires_sourced_orientation
+    target_statement_id: sha256:51c92a15a25977cce5cbfbac5d22a480ac7f099eddd3c63e9f9c7b6d8f20bc15
+receipts:
+  unresolved_subitems: []

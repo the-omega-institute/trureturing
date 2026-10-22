@@ -4639,3 +4639,133 @@ $$
 这些结论消费 [Observer 第 19、22–23 章](AURIC_FIB_ATOM_OBSERVER_AND_ARITHMETIC_RELATIONS.md) 的实际像、同源余数及未来任务边界。它们把既有范数、周期工具应用于同一守卫读者，不补造任何未给的初始化、输入权、完整历史逆映射或欧氏测量。证毕。
 
 ## 追加锚（本行以下为增补区）
+
+## 37. 五模式可见损失的不变量与关系敏感的学习方向
+
+**定义 37.1（同一正域上的学习合同）。** 沿用 §35 的模式次序 $(0,1,2,3,13)$、负相位振幅及辛尺度，置
+
+$$
+p=(1-X-Y-Z+\kappa,\ X-\kappa,\ Z,\ Y-\kappa,\ \kappa),\qquad
+\nu=(1,-1,0,-1,1).
+$$
+
+以下五个概率均正，$\tau=\log(p_0p_{13}/p_1p_3)$，$\chi=\theta_0-\theta_1-\theta_3+\theta_{13}$，
+
+$$
+\zeta=\frac{\psi_0\psi_{13}}{\psi_1\psi_3}=e^{\tau/2-i\chi},\qquad
+I=\frac1{p_0}+\frac1{p_1}+\frac1{p_3}+\frac1{p_{13}}.
+$$
+
+概率几何取 $g^F(v,w)=\sum_s v_sw_s/p_s$；射影几何取水平向量上的 $g(v,w)=2\operatorname{Re}\langle v,w\rangle$。
+后者为通常 Fubini–Study 度量的两倍，与 §35 及 HiddenRelations 续卷 C-79.1 的尺度一致。
+固定三个均值并除去三个占位相位轨道后的度量是
+
+$$
+g_{\rm red}=\frac I2\,d\kappa^2+\frac2I\,d\chi^2,
+\qquad \omega_{\rm red}=d\chi\wedge d\kappa.
+$$
+
+这些约化公式直接使用 [HiddenRelations 续卷 C-74.2、C-79.1](AURIC_FIB_ATOM_HIDDEN_RELATIONS_STATISTICS_PHASE_AND_SEAMS_CONTINUATION.md)。
+量子态与约化几何是额外供应；概率完成区间不是向量空间，$\mathbb R\nu$ 才是正域上的垂直切线。
+
+**命题 37.2（可见损失对隐藏关系的精确保留）。** 设 $\ell$ 光滑，$L(p)=\ell(X,Y,Z)$。
+完整 Fisher 负梯度流在正域上保持 $\tau$。
+令 $a_s=\ell_Xx_s+\ell_Yy_s+\ell_Zz_s$，每步在当前点计算该分数，则任意有限步长 $\epsilon$ 的更新
+
+$$
+p_s^+=\frac{p_se^{-\epsilon a_s}}{\sum_u p_ue^{-\epsilon a_u}}
+$$
+
+也精确保留 $\tau$。对量子损失 $L([\psi])=\ell(\langle N_x\rangle,\langle N_y\rangle,\langle N_z\rangle)$，
+完整射影负梯度流保持复坐标 $\zeta$。
+
+证明。归一化切向量 $v$ 满足
+
+$$
+d\tau(v)=\sum_s\frac{\nu_sv_s}{p_s}=g^F(\nu,v),\qquad dL(\nu)=0.
+$$
+
+因此 $d\tau(-\operatorname{grad}_{g^F}L)=-dL(\nu)=0$。
+这具体消费 [信息逃逸动力学定理 14.2](AURIC_FIB_PYRAMID_INFORMATION_ESCAPE_DYNAMICS_THERMODYNAMIC_ACTION.md)
+的 Fisher 水平分布；该卷坐标次序 $(X,Z,Y)$ 在此换为 $(X,Y,Z)$，该卷的对数优势比对应这里的 $\tau$，不是相位 $\chi$。
+离散更新的四角对数中归一化常数抵消，而且 $a_0-a_1-a_3+a_{13}=0$，故对数优势比不变。
+
+量子部分令 $K=\ell_XN_x+\ell_YN_y+\ell_ZN_z$。由
+$dL(v)=2\operatorname{Re}\langle v,K\psi\rangle$，所选度量下的水平负梯度是
+
+$$
+\dot\psi=-(K-\langle K\rangle)\psi.
+$$
+
+在四角振幅非零时对 $\zeta$ 取对数导数，四个 $K$ 特征值的混合差分为零，归一化项亦抵消，故 $\dot\zeta=0$。
+概率满足 $\dot p_s=-2p_s(a_s-\sum_up_ua_u)$，即经典 Fisher 流的两倍速度；两种时钟不混用。证毕。
+
+数学引文。自然梯度与量子几何张量的标准定义见 [Stokes 等](../../../Library/QuantumContext/stokes2020naturalgradient.md)。
+这里的新增推导是该流在指定五模式上的 $\tau,\zeta$ 不变量，不是自然梯度方法的提出。
+结论限定于所列完整度量流与指数更新；任意优化器、Euler 步进或参数受限流均须另验。
+
+**命题 37.3（关系缺陷的局部梯度收缩与可读出接口）。** 固定具有全正补全的三个均值，置 $r=1-Z>0$，
+
+$$
+h=|\psi_1\psi_3-\psi_0\psi_{13}|^2,\quad
+\kappa_*=XY/r,\quad u=\kappa-\kappa_*,\quad I_*=I(\kappa_*).
+$$
+
+在 $\chi=0$ 的局部角图与该正约化空间上，负梯度方程为
+
+$$
+\dot\kappa=-\frac2I\,\partial_\kappa h,\qquad
+\dot\chi=-\frac I2\,\partial_\chi h.
+$$
+
+它满足
+
+$$
+\dot h=-\frac2I(\partial_\kappa h)^2-\frac I2(\partial_\chi h)^2\le0,
+\qquad
+\binom{\dot u}{\dot\chi}=-r\binom u\chi+O((|u|+|\chi|)^2).
+$$
+
+所以该平衡点局部渐近稳定；对任意 $0<\gamma<r$，足够近的初态以至多常数倍 $e^{-\gamma t}$ 的距离趋近。
+
+证明。耗散式由链式法则得到。[循环控制卷命题 23.9](AURIC_FIB_ATOM_CIRCULATION_CONTROL_KL_ACTION_AND_TORIC_RELATIONS.md)
+已经给出同一相位、尺度下的展开
+
+$$
+h=\frac r2\left(\frac{I_*}2u^2+\frac2{I_*}\chi^2\right)+O((|u|+|\chi|)^3).
+$$
+
+代入逆度量，线性化恰为 $-rI_2$，光滑余项为二阶。
+在足够小的坐标球中，若 $q=(u,\chi)$，则 $q\cdot\dot q\le-\gamma\|q\|^2$，积分得到所述局部界。
+同一函数的 Hamilton 流则由该卷给出虚特征值 $\pm ir$；这是两种不同的更新规则。证毕。
+
+测量接口直接复用 [HiddenRelations 续卷命题 C-78.3](AURIC_FIB_ATOM_HIDDEN_RELATIONS_STATISTICS_PHASE_AND_SEAMS_CONTINUATION.md)：
+其归一化四项向量 $|\Omega\rangle=(|0,13\rangle+|13,0\rangle-|1,3\rangle-|3,1\rangle)/2$ 满足
+
+$$
+h=\operatorname{Tr}\!\left[|\Omega\rangle\langle\Omega|\,\rho_\psi^{\otimes2}\right].
+$$
+
+这是两次独立制备同一纯态后的一个概率，已有先例、归一化及非选择性总占位守恒由该条目承担。
+它不测出有向 $\chi$；实施投影、重新制备、样本和梯度取得另有成本。
+几何梯度流本身不是已实现的固定量子门；§35.9 的全输入均值保持障碍仍适用。
+这里的局部收缩也不供应任意初态的全局收敛或精度复杂度。
+
+**命题 37.4（联合相位对占位相位模型的新增方向）。** 在定义 37.1 的全正态处，
+旧模型仅允许共同相位与三个占位相位旋转；追加 $e^{-i\alpha N_xN_y}$。
+它增加一个实射影切方向，环境度量长度平方为 $2\kappa(1-\kappa)$。
+去除旧模型相位方向后的残差长度平方为 $2/I>0$。
+
+证明。一般 Hermitian 生成元 $G$ 的射影速度是 $-i(G-\langle G\rangle)\psi$，长度平方为 $2\operatorname{Var}_\psi(G)$；
+这条标准量子几何公式及实切空间判据见 [Stokes 文献注](../../../Library/QuantumContext/stokes2020naturalgradient.md)。
+这里 $G=N_xN_y$ 是联合模式投影，$\langle G\rangle=\kappa$，故方差为 $\kappa(1-\kappa)$。
+它的五点值的混合差分为一，而旧三个占位及常数的混合差分均零；全正支撑保证逐振幅比较合法，故新方向独立。
+追加门使 $\dot\chi=1,\dot\kappa=0$，在相位商上的长度由定义 37.1 的 $g_{\rm red}$ 给出 $2/I$。证毕。
+
+这只是对所指定旧模型的秩增结论；若旧模型已经包含该方向，则无此新增。
+一般门增长用旧参数微分的实像比较，不以参数个数或非零方差代替独立性。
+[Grimsley 等](../../../Library/QuantumContext/grimsley2019adaptive.md)给出按任务响应逐项扩展算子序列的先例；
+此处没有给任意待用生成元一个免费连续控制原语。
+特别地，联合相位虽扩展模型方向，仍保持全部概率，对仅依赖均值的损失没有直接下降信号。
+
+## 追加锚（本行以下为增补区）

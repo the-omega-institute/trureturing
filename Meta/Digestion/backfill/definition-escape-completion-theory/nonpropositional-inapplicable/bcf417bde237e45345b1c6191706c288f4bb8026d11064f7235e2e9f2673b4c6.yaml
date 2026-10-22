@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:bcf417bde237e45345b1c6191706c288f4bb8026d11064f7235e2e9f2673b4c6
+  normalized_sha256: sha256:bcf417bde237e45345b1c6191706c288f4bb8026d11064f7235e2e9f2673b4c6
+cas_ref: sha256:bcf417bde237e45345b1c6191706c288f4bb8026d11064f7235e2e9f2673b4c6
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 寻找最小逃逸见证的研究流程和五个待回答问题；等式列出见证规格，并非存在性断言。
+    previous_atom_id: d20de4e988c3a25ccda0402b9acdc61109e7e3593c24a8cfe4d6db64848fa374
+    next_atom_id: 2876d4ab29fc949b174bfbef6a00999849789cd892fb66e1c7c15f8834a0b6c8

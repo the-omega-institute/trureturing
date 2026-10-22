@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:d751a86194ecd53c26896edf5b1e8cc4debe4b5a0e3d7aef10abd6d2d338f35b
+  normalized_sha256: sha256:d751a86194ecd53c26896edf5b1e8cc4debe4b5a0e3d7aef10abd6d2d338f35b
+cas_ref: sha256:d751a86194ecd53c26896edf5b1e8cc4debe4b5a0e3d7aef10abd6d2d338f35b
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 'Nonpropositional convention table: it only names abbreviations and points to supplied source interfaces; it makes no standalone quantified proposition, equation, existence claim, or conclusion. The mathematical claims of the cited source interfaces are separate atoms.'
+    previous_atom_id: null
+    next_atom_id: 248af357ee7bda73908b3be5f73f3e871d8eb4be19cf8350bef47f037063bd7d

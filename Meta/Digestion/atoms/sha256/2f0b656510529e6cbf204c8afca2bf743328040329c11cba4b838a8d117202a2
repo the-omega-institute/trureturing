@@ -1,0 +1,41 @@
+**Corollary 14.1 (Equivalent remaining original obligation).**
+For the unchanged predicate $\mathcal J$ of (9.1), set
+
+$$
+\begin{aligned}
+\mathcal V_{\rm old}
+ &=\{v\in\mathbb R:Q(p_J,v)=0\}
+   \setminus\bigl([142,150]\cup\{s_-(p_J),s_+(p_J)\}\bigr),\\
+\mathcal V_{\rm rem}
+ &=\{v\in\mathbb R:Q(p_J,v)=0\}
+   \setminus\bigl([125,126]\cup[142,150]
+                  \cup\{s_-(p_J),s_+(p_J)\}\bigr).
+\end{aligned}
+\tag{14.1}
+$$
+
+Then
+
+$$
+\exists v\in\mathbb R\;\mathcal J(v)
+\quad\Longleftrightarrow\quad
+\exists v\in\mathcal V_{\rm rem}\;\mathcal J(v),\qquad
+v_\diamond\in\mathcal V_{\rm old}\setminus\mathcal V_{\rm rem}.
+\tag{14.2}
+$$
+
+Every world in any hypothetical witness child on the right is
+regular. The assertion still requires a distinct terminal-J pair
+and a distinct terminal-M pair in the same entire acquired child;
+labels may coincide across the pairs.
+
+Proof. By $S$, Corollary 9.1, a witness to (9.1) has $Q(p_J,v)=0$,
+misses the two singular responses, and has no singular world in
+its entire child. Theorem 1.3 excludes $[142,150]$ and Theorem
+12.1 excludes $[125,126]$. This proves the forward implication;
+the reverse merely restricts the quantified set of real responses.
+Theorem 13.3 puts the exact $v_\diamond$ in the old necessary set
+and in the newly excluded strip. Thus (14.2) deletes at least this
+specified member of that necessary set, even though a root of $Q$
+alone need not supply a collision. ∎
+

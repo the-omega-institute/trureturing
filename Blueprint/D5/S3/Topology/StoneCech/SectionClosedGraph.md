@@ -16,7 +16,7 @@ $$\forall A: Type, \forall B: Type, \forall q: A \to B, \forall Y: \operatorname
 
 *Source.* Repository-derived.
 
-*Acknowledgement.* David V. Feldman and Alexander Wilce (2026). *A Note on Compactness and Clique Size*. URL: <https://arxiv.org/abs/2608.13320>.
+*Acknowledgement.* David V. Feldman and Alexander Wilce (2026). *A Note on Compactness and Clique Size*. DOI: [10.48550/arXiv.2608.13320](https://doi.org/10.48550/arXiv.2608.13320). URL: <https://arxiv.org/abs/2608.13320>.
 
 *Commentary.*
 
@@ -34,7 +34,7 @@ $$\forall A: Type, \forall B: Type, \forall q: A \to B, \forall Y: \operatorname
 
 *Source.* Repository-derived.
 
-*Acknowledgement.* David V. Feldman and Alexander Wilce (2026). *A Note on Compactness and Clique Size*. URL: <https://arxiv.org/abs/2608.13320>.
+*Acknowledgement.* David V. Feldman and Alexander Wilce (2026). *A Note on Compactness and Clique Size*. DOI: [10.48550/arXiv.2608.13320](https://doi.org/10.48550/arXiv.2608.13320). URL: <https://arxiv.org/abs/2608.13320>.
 
 *Commentary.*
 
@@ -60,9 +60,13 @@ $$\forall A: Type, \forall B: Type, \forall q: A \to B, {{\operatorname{Countabl
 
 *Proof.* Machine-checked in Lean as `D5/S3/Topology/StoneCech/SectionClosedGraph.exists_countablyCompact_closed_fibreGraph` (`✓ std3`). ∎
 
+*Resolves.* `Problems/feldman-wilce-countably-compact-unbounded-cliques` (proved) by `D5/S3/Topology/StoneCech/SectionClosedGraph.exists_countablyCompact_closed_fibreGraph`.
+
+<!-- scribe-open-problem-resolution-v1 {"problem_slug":"feldman-wilce-countably-compact-unbounded-cliques","declaration_gid":"D5/S3/Topology/StoneCech/SectionClosedGraph.exists_countablyCompact_closed_fibreGraph","resolution_kind":"proved"} -->
+
 *Source.* Repository-derived.
 
-*Acknowledgement.* David V. Feldman and Alexander Wilce (2026). *A Note on Compactness and Clique Size*. URL: <https://arxiv.org/abs/2608.13320>.
+*Acknowledgement.* David V. Feldman and Alexander Wilce (2026). *A Note on Compactness and Clique Size*. DOI: [10.48550/arXiv.2608.13320](https://doi.org/10.48550/arXiv.2608.13320). URL: <https://arxiv.org/abs/2608.13320>.
 
 *Acknowledgement.* Zdeněk Frolík (1960). *The topological product of countably compact spaces*. DOI: [10.21136/cmj.1960.100417](https://doi.org/10.21136/cmj.1960.100417). URL: <https://dml.cz/handle/10338.dmlcz/100417>.
 
@@ -76,9 +80,9 @@ The proof consumes SectionDenseSelector.exists_countablyCompact_sectionDense_sel
 
 The primary paper's Question 1, printed page 5, asks for a countably compact T1 or Hausdorff space carrying a closed orthogonality relation with finite yet unbounded cliques. Its page 3 requires closure in X squared, including the diagonal. Page 10 partitions a countable discrete set into finite blocks of size n, calls sets meeting each block at most once partial sections, and proposes X=omega union Y for a dense countably compact Y of free ultrafilters containing partial sections. The paper uses the restriction of the ambient closure of the block relation. Here q labels the blocks and its injectivity sets are precisely partial sections; the additional projection-injectivity condition on Y excludes off-principal edges and allows the principal-only fibre relation itself to be closed. For finite fibres, every infinite set has an infinite partial section, so section density meets every nonempty basic clopen in the free remainder. This explains the correspondence of the constructions without treating the paper's conditional existence of Y as an established supplier.
 
-The exact finite-block parameter map is A = Sigma (fun n : Nat => Fin (n+1)), B=Nat, q=Sigma.fst. The countable sigma of finite types is countable. For each b, q-inverse({b}) equals range(Sigma.mk b): a point in the fibre has first coordinate b, and every Sigma.mk b i lies in it. This range is finite. Injectivity of Sigma.mk b and Set.ncard_range_of_injective identify its ncard with Nat.card(Fin(b+1)); Nat.card_fin gives exactly b+1. For requested n take b=n and use n <= n+1. The endpoint supplies Y and fibreGraph, while T2Space(principalExtension Y) is inherited by the subspace instance. These blocks of sizes 1,2,... merely reindex the nonempty blocks of the paper's size-n partition. This is the parameter mapping of the transient exact application check; the exact compiled original application is still pending. It introduces no retained named application theorem or separate Describe.
+The exact finite-block parameter map is A = Sigma (fun n : Nat => Fin (n+1)), B=Nat, q=Sigma.fst. The countable sigma of finite types is countable. For each b, q-inverse({b}) equals range(Sigma.mk b): a point in the fibre has first coordinate b, and every Sigma.mk b i lies in it. This range is finite. Injectivity of Sigma.mk b and Set.ncard_range_of_injective identify its ncard with Nat.card(Fin(b+1)); Nat.card_fin gives exactly b+1. For requested n take b=n and use n <= n+1. The endpoint supplies Y and fibreGraph, while T2Space(principalExtension Y) is inherited by the subspace instance. These blocks of sizes 1,2,... merely reindex the nonempty blocks of the paper's size-n partition. For any proposed natural bound N, take the supplied clique K of size N+1. Its finiteness and K.ncard=N+1 contradict K.ncard <= N. Thus this actual X is countably compact, Hausdorff and T1, and its symmetric irreflexive relation is closed in the entire product, has every clique finite and has no uniform finite clique bound. These are exactly the clauses of Question 1. The parameter discharge and the explicit no-bound inference passed a transient exact Lean application through the canonical targeted build and scoped statement/axiom report. Its axiom closure contains only Classical.choice, Quot.sound and propext; the existing generic module completed canonical FirstFreeze. This is an application of the existing theorem; it introduces no retained named application theorem or separate Describe.
 
-The classical method sources have narrower statements: Frolik's Lemma 2.8 requires no accumulation point in the separable metrizable base P, and Lemma 2.9 gives avoidance and omega1 closing-off; Ginsburg-Saks Theorem 2.12 concerns one fixed free-ultrafilter D and completely regular spaces. They are not sources for the exact arbitrary-q selector or this endpoint. The canonical notes distinguish these methods from repository-derived proof composition. This owning exposition does not settle compiler, kernel, axiom, source-audit, projection, freeze, admission or required-CI obligations, and does not claim resolution of Q1 or global priority from its open status in version 1.
+The classical method sources have narrower statements: Frolik's Lemma 2.8 requires no accumulation point in the separable metrizable base P, and Lemma 2.9 gives avoidance and omega1 closing-off; Ginsburg-Saks Theorem 2.12 concerns one fixed free-ultrafilter D and completely regular spaces. They are not sources for the exact arbitrary-q selector or this endpoint. The canonical notes distinguish these methods from repository-derived proof composition. The countable finite-block application supplies an affirmative mathematical answer to Question 1; it neither attributes this exact selector construction to the method papers nor addresses Questions 2 and 3. The primary-source status and source-fidelity boundaries are recorded in the Library note and Problems dossier. Open status in the inspected sources does not establish worldwide absence, publication priority or official acceptance.
 
 ## References
 

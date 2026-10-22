@@ -1,0 +1,25 @@
+**Definition 19.3 (Actual images at the original algebraic parameter).**
+Fix exactly the original $p=p_J$ of Definition 14.1. Put
+$\mathcal D=\{-,+\}\times(0,1)$ and $W(i,r)=W_i(r,p_J)$.
+On each branch evaluate the actual responses of $O$ (1.7),
+using the same gain and drift from (19.1):
+
+$$
+\begin{aligned}
+\mathcal U(i,r)&=d+(2U+n)g_i(6;r,p_J),\\
+\mathcal J(i,r)&=d+(T+2j+4r)g_i(7;r,p_J),\\
+\mathcal M(i,r)&=d+(3U+2n)g_i(7;r,p_J).
+\end{aligned}
+\tag{19.3}
+$$
+
+These are respectively $u_M(W)$, $f_{MJ}(W)$ and $f_{MM}(W)$.
+They are smooth on each full $r$ branch, including any
+$\Lambda=0$ point, by Theorem 19.2. For every real acquired
+response $v$, define the entire parameter fibre
+
+$$
+\mathcal D_v=\{x\in\mathcal D:\mathcal U(x)=v\}.
+\tag{19.4}
+$$
+

@@ -1,0 +1,15 @@
+**命题 2.3（联合选择不是下一个 FIB 项）。** 在零层有
+
+<table><tbody><tr><td>
+
+```math
+E_0[1,3]=\langle T_2,T_0\rangle,\qquad
+T_3=\langle T_2,T_1\rangle,\qquad E_0[1,3]\ne T_3.
+```
+
+</td></tr></tbody></table>
+
+两者数量分别为七和八。
+
+证明。右子树分别为 $`\alpha`$ 和 $`\beta`$，自由树的叶标签不同，故来源不同。组成分别为 $`(2,1)^{\mathsf{\text{𝖳}}}`$ 和 $`(1,2)^{\mathsf{\text{𝖳}}}`$，施加 $`q`$ 给七、八。∎
+

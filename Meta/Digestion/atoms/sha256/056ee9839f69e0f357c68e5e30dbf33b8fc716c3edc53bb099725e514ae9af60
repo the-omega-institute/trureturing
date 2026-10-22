@@ -1,0 +1,77 @@
+**Lemma 78.5 (complete free Fock transfer and half-number smoothing).** Choose once and for all
+
+$$
+\begin{gathered}
+\sigma\ge\max(1,c),\qquad \sigma>L_0,\qquad
+s_\sigma=\sup_{j\in\mathbb N_0}
+                 \frac{\sqrt{j+1}}{\sigma+cj},\\
+\theta=\frac{M_0}{\sigma}+2\sqrt2 k_f s_\sigma<1.
+\end{gathered}
+\tag{78.18}
+$$
+
+Such a fixed $\sigma$ exists. Define the complete particle $C_0$ error
+
+$$
+\eta_\varepsilon=
+\left\|\iota_\varepsilon^{\rm p}(B_\varepsilon+\sigma)^{-1}
+          (\iota_\varepsilon^{\rm p})^*
+       -L_\varepsilon^{\rm p}(A+\sigma)^{-1}(L_\varepsilon^{\rm p})^*
+\right\|\longrightarrow0.
+\tag{78.19}
+$$
+
+The reference block of this error is zero. The one- and two-position blocks are the entire72/75 free comparisons, including their spatial complements. Put $w_\varepsilon=\sqrt{2\eta_\varepsilon/c}$ and, on $\mathcal X_\varepsilon$, put
+
+$$
+\begin{aligned}
+R_\varepsilon&=\iota_\varepsilon
+ (B_\varepsilon\otimes I+I\otimes\Omega h+\sigma)^{-1}
+                                      \iota_\varepsilon^*,\\
+S_\varepsilon&=\ell_\varepsilon
+ (A\otimes I+I\otimes\Omega h+\sigma)^{-1}
+                                      \ell_\varepsilon^*.
+\end{aligned}
+\tag{78.20}
+$$
+
+Then
+
+$$
+\begin{aligned}
+\|R_\varepsilon-S_\varepsilon\|&\le\eta_\varepsilon,&
+\|N(R_\varepsilon-S_\varepsilon)\|&\le w_\varepsilon,\\
+\|R_\varepsilon\|,\|S_\varepsilon\|&\le\sigma^{-1},&
+\|NR_\varepsilon\|,\|NS_\varepsilon\|&\le s_\sigma,\\
+\|V_\varepsilon R_\varepsilon\|,
+\|V_\varepsilon S_\varepsilon\|&\le\theta .
+\end{aligned}
+\tag{78.21}
+$$
+
+These bounds hold on the full Fock and auxiliary spaces without a final number cutoff.
+
+**Proof.** The nonnegative particle suppliers72.10,75.4,75.12 and75.13 give(78.19). One may transfer their nonreal comparison to $-\sigma$ directly by the rational resolvent identity: for $t\ge0$ the inverse factor $(t-i)/(t+\sigma)$ has modulus at most $\max(1,\sigma^{-1})$, and the lifted zero complement has inverse factor one. Thus a common negative point requires no additional spatial theorem.
+
+For a nonnegative operator, including a zero-extended resolvent, the change from $\sigma$ to any $b\ge\sigma$ is the bounded function
+$X\mapsto X(I+(b-\sigma)X)^{-1}$. Its difference at two positive $X,Y$ is
+
+$$
+(I+(b-\sigma)X)^{-1}(X-Y)(I+(b-\sigma)Y)^{-1}.
+\tag{78.22}
+$$
+
+Both inverse factors have norm at most one. Consequently the complete particle error at every $-b$, $b\ge\sigma$, is at most $\eta_\varepsilon$.
+
+The finite bank has a simultaneous orthonormal eigenbasis for $h$ and $\mathsf n$. In its $j$-particle sector every eigenvalue $E$ of $\Omega h$ satisfies $E\ge cj$. The corresponding block of(78.20) is the particle comparison at $b=\sigma+E$. Its discrepancy is bounded both by $\eta_\varepsilon$ and by $2/(\sigma+cj)$. Since $\sigma\ge c$,
+
+$$
+\sqrt{j+1}\min\left(\eta_\varepsilon,\frac2{\sigma+cj}\right)
+ \le\sqrt{\frac{2\eta_\varepsilon}{c}}.
+\tag{78.23}
+$$
+
+Taking the supremum of the orthogonal block norms proves the first line of(78.21); the same block calculus gives the second. Auxiliary tensor identities do not change any operator norm. This argument includes arbitrary superpositions and correlations; it does not assume an input supported in finitely many blocks.
+
+Also $s_\sigma\le(c\sigma)^{-1/2}$: $\sigma+cj$ is at least both $\sigma$ and $c(j+1)$, so its square is at least $c\sigma(j+1)$. Hence $\theta\to0$ as $\sigma\to\infty$, proving existence. Applying(78.11) to the ranges of $R_\varepsilon,S_\varepsilon$, which are in $\operatorname{Dom}N$, proves the final line. $\square$
+

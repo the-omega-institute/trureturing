@@ -1,0 +1,58 @@
+**定义 16.2（可重构的整数行及消元式）。** 对非零有理函数 $f$，$\operatorname{pp}(f)$
+表示约去有理函数的共同因子后取分子，清除其系数的有理分母，再除以整数内容，
+并使字典序首项系数正。含漂移的行使用变量序 $r>b>d$；源多项式使用 $r>b$。
+一元最大公因式一律取首一式。另记 $\operatorname{pp}_{\mathbb Z}(h)$ 为一元有理多项式
+$h$ 的同样整数本原化，$\overline h$ 为其系数在 $\mathbb F_{101}$ 的像。
+
+前四读数给整个三次及以下插值的四个值
+
+$$
+\mathbf q=\begin{pmatrix}-d\\(24-d)/j\\(C_0-d)/T\\(z_0-d)/n\end{pmatrix}.
+\tag{16.2}
+$$
+
+其在原时钟四至七的值是 $\mathsf A\mathbf q$，其中
+
+$$
+\mathsf A=\begin{pmatrix}
+-1&4&-6&4\\
+-4&15&-20&10\\
+-10&36&-45&20\\
+-20&70&-84&35
+\end{pmatrix}.
+\tag{16.3}
+$$
+
+行下标从零开始。对固定 $i\in\{1,2\}$、$G\in\{J,M\}$，用定义 16.1 的实际迹
+$\tau_k$ 及 $(y_4,y_5,y_6,y_7)=(Y_0,p_0,v_i,24)$，定义
+
+$$
+F_k=\operatorname{pp}\bigl(d+\tau_k(\mathsf A\mathbf q)_{k-4}-y_k\bigr)
+=\alpha_kd+\beta_k,\qquad k=4,5,6,7.
+\tag{16.4}
+$$
+
+这里 $\alpha_k,\beta_k\in\mathbb Z[r,b]$；特别 $F_7$ 使用相应最终 $G$ 的迹。
+置
+
+$$
+X=b^2+r-r^2=bj,\qquad N=X+br=bn,\qquad K=(b+1)XN,
+\tag{16.5}
+$$
+
+并对 $(k,l)=(4,5),(4,6),(4,7),(5,6)$ 定义
+
+$$
+E_{kl}=\operatorname{pp}\left(\frac{\alpha_k\beta_l-\alpha_l\beta_k}{K}\right),\qquad
+\begin{aligned}
+\mathcal R_1&=\operatorname{pp}\bigl(\operatorname{Res}_r(E_{45},E_{46})\bigr),\\
+\mathcal R_2&=\operatorname{pp}\bigl(\operatorname{Res}_r(E_{45},E_{47})\bigr),\\
+\mathcal R_3&=\operatorname{pp}\bigl(\operatorname{Res}_r(E_{45},E_{56})\bigr).
+\end{aligned}
+\tag{16.6}
+$$
+
+式 (16.6) 中除以 $K$ 后的表达式只有常数分母。
+$\operatorname{Res}_r$ 按定理 9.2 的 Sylvester 行列式约定，不先专化首项次数。
+式 (16.1)–(16.6) 完全指定本章的四组整数多项式，不需要选择代数根或增益方向。
+

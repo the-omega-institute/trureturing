@@ -1,0 +1,81 @@
+**Definition 16.1 (The strict parent and its rational response circuit).**
+A world has one rank-one source
+
+$$
+P(r,b)=\begin{pmatrix}r&b\\r(1-r)/b&1-r\end{pmatrix},
+\qquad 0<r<1,\quad b>0,
+$$
+
+one fixed real drift $d$, and one entire nonzero real polynomial gain of
+degree at most three.  Its original history is
+
+$$
+H_4=(0,J,24,M,147/5,J,24,M,18),
+$$
+
+with clocks $0,\ldots,7$ and acquired actions $J,M,J,M,M,M$.  Put
+
+$$
+\tau=r/b,\quad r=\tau b,\quad c=\tau(1-r),\quad
+j=\tau+b(1-\tau^2),\quad n=j+r,\quad T=1+b,\quad U=1+2b.
+$$
+
+On the regular strict domain $\tau>0$, $b>0$, $\tau b<1$, $\Lambda\ne0$,
+define
+
+$$
+\begin{aligned}
+D&=5\bigl((b^2+8b+4)jn-2TU(j+n)\bigr),\\
+A&=(8b-1)(2+5b),\\
+C_0&=-24D+3Ajn,\\
+C_1&=3An,\\
+C_2&=3(49b+34)jn-54U(j+n),\\
+C_3&=3Aj.
+\end{aligned}
+\tag{16.1}
+$$
+
+Then
+
+$$
+D=\frac52 TUjn\Lambda,
+\qquad
+\Lambda=1+\frac6T+\frac1U-\frac4j-\frac4n.
+\tag{16.2}
+$$
+
+Let
+
+$$
+L_i(s)=\prod_{0\le h\le3,\ h\ne i}\frac{s-h}{i-h},\qquad
+ g(s)=\frac1D\sum_{i=0}^3 C_iL_i(s),\qquad d=-\frac{C_0}{D}.
+\tag{16.3}
+$$
+
+The late gain values are
+
+$$
+\begin{pmatrix}B_5\\B_6\\B_7\end{pmatrix}
+=\begin{pmatrix}-4&15&-20&10\\-10&36&-45&20\\-20&70&-84&35\end{pmatrix}
+\begin{pmatrix}C_0\\C_1\\C_2\\C_3\end{pmatrix},
+\tag{16.4}
+$$
+
+and the four actual response numerators are
+
+$$
+\begin{aligned}
+N_p&=-C_0+(U+n)B_5,\quad
+N_v=-C_0+(2U+n)B_6,\\
+N_a&=-C_0+(T+2j+4r)B_7,\quad
+N_m=-C_0+(3U+2n)B_7.
+\end{aligned}
+\tag{16.5}
+$$
+
+Thus $(p,v,a,m)=(N_p,N_v,N_a,N_m)/D$.  The first four gain values
+in (16.3) give the original readings, and the fifth original reading is
+$18$ exactly when the undivided parent equation of Definition 10.1 holds.  The two different original readings $0,24$ make the gain
+nonzero.  No sign condition, nonzero sample, exact degree, simple-root
+condition or drift condition is used.
+

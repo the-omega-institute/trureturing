@@ -1,0 +1,56 @@
+**Lemma 16.2 (full native cost depends on length and weight, not payload
+order).** For fixed $P,L,r$, the histories $R_x$ of Definition 16.1
+have equal absolute native receipt counts. At corresponding completed
+word operations and native channel phases they have the same nonmeter
+arena sizes, register lengths, bank parity, descriptor bases/lengths/
+creation counts, positioned heads and current resource slots, allowing
+the retained raw bits and their copies to differ. These assertions
+include every retained old bank, scratch word and descriptor. The same
+native count and size equalities hold at $h_x$ and at $h_x^+$.
+This is equality of total native costs at the stated cuts; individual
+bit-test cuts and the complete receipt contents are not equated.
+
+Proof. Use RCA Definition 11.5's actual cost recurrence, relocated by
+ARC §2 and instantiated with the full $r_{\mathrm{gc}}$ of Definition
+2.1. The following induction describes the quantities on which that
+recurrence depends, including its nonempty-arena entry heads. The word
+"opaque" below describes uses of existing data in this proof; it adds
+no runtime tag, register, field or permission.
+
+First separate two kinds of actual test. RCA Definition 11.3 implements
+a word empty test by Field followed by RD(test sep), and a word
+first-bit test, after nonemptiness, by Field followed by RD(test0).
+Both bit successors of that latter RD have one testing occurrence.
+Native binary import instead uses its finite symbol classifier before
+selecting a literal cons. The displayed FieldRead graph of RCA
+Definition 13.2 tests F, then0, then1. Its scan rows per zero and one
+are respectively
+
+$$
+\begin{array}{c|c|c}
+ &\text{scan rows outside the compiled cons}&\text{count}\\
+0&\mathrm{RD(F)},\mathrm{CTL(0)},\mathrm{MR}&3\\
+1&\mathrm{RD(F)},\mathrm{CTL(0)},\mathrm{CTL(1)},\mathrm{MR}&4.
+\end{array}
+$$
+
+Positioning, accumulator initialization, Reverse and delimiter exits
+are additional work. RCA Lemma 13.2a gives the full-prefix scan subtotal
+$2h+4+3s+3z+4o$, excluding those compiled operations, for entry distance
+$h$, $s$ fields, $z$ zeros and $o$ ones. ARC's binary field import uses
+the same literal-bit selection inside its F-bounded scan. Thus its
+bit-classification contribution is $3z+4o$, with its own actual entry
+and exit rows added. In particular, equal lengths alone do not equate
+import costs.
+
+For one compiled assignment, suppose corresponding source fields have
+the same lengths and actual heads. Expand all five steps of RCA
+Definition 11.3. They give the following exact recurrence comparison.
+
+| Expanded work | Why its cost, constructions and resulting positions agree |
+| --- | --- |
+| Purpose CTL, Tail66 and actual Base of the other bank | Home/Tail visit the same distances. Base tests R and counts every existing ordinary cell, independent of its binary value. Its appended unary base is the same. |
+| Dry emission of all $r_{\mathrm{gc}}$ fields | Field uses LastBank and the fixed preceding field skips. SegmentCount has $5l+1$ rows for a field of length $l$. Literal cons0/cons1 each count one extra cell; tail skips the same first position or takes the common empty case. Every field sep is counted. |
+| Real emission of all fields, F and seal | SegmentCopy also has $5l+1$ rows, using latched-bit WR without a binary classifier. Either literal cons uses EX/WR/MR once. Empty/copy/tail have the same respective emitted lengths as their dry passes. Both bank tapes retain the same number of cells in every old and new version. |
+| Closed descriptor count | Its R/F tests traverse the same retained descriptor prefix and append one unary mark per preceding F. They do not classify payload0 against payload1 or read the meter. |
+| Complete descriptor and parity CTL | Owner/port, actual unary base, payload length, flags10 and creation ordinal agree. LastScratch offsets1/0, unary copies including their terminal zeros, F, seal and parity change therefore have equal costs and equal scratch/descriptor sizes. |

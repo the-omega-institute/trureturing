@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:e5e1f92e21f2aa689468c40aac3217cc6ca2873100567aff0343c010032235df
+  normalized_sha256: sha256:e5e1f92e21f2aa689468c40aac3217cc6ca2873100567aff0343c010032235df
+cas_ref: sha256:e5e1f92e21f2aa689468c40aac3217cc6ca2873100567aff0343c010032235df
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 十步均为研究操作和待证明目标，不主张对所有模型均成功；末尾“证明的编译器”是方法论比喻，没有给定算法、输入类、可计算性或复杂度定理，不将其解释为计算不可判定性断言。
+    previous_atom_id: fc5a5ae6c1fc230106d7180cc719e9cb474b2d131d894d2103b5c9e32706b230
+    next_atom_id: 2d2f97108cf3e941e5a1dda29635dd310e33408f3985d8b6d026f68d44ce7a87

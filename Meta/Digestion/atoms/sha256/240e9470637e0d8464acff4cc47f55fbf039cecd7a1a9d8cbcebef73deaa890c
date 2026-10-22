@@ -1,0 +1,55 @@
+**Definition 90.8 (sourcewise chronology).** Write $T_a(t)$ for the exact
+$\operatorname{productionTrace}\ a\ t$. With read tokens carrying epoch,
+physical address and reply, and $\mathsf{Local}$ the real local-step token,
+its recursion is
+
+$$
+\begin{aligned}
+T_a(\alpha)&=[\mathsf{Read}(0,a,\alpha)],&
+T_a(\beta)&=[\mathsf{Read}(0,a,\beta)],\\
+T_a(\langle s,t\rangle)&=[\mathsf{Read}(0,a,\mathsf{branch})]
+ \mathbin{+\!+}T_{aL}(s)\mathbin{+\!+}[\mathsf{Local}]
+ \mathbin{+\!+}T_{aR}(t)\mathbin{+\!+}[\mathsf{Local}],\\
+E_{h,\omega}&=T_\varepsilon(\nu_{h,\omega}).
+\end{aligned}
+\tag{90.12}
+$$
+
+The run starts at the common $\mathsf{Visit}(\varepsilon,[])$ control,
+epoch zero, empty prior trace and the source-specific register
+$\nu_{h,\omega}$. It ends at $\mathsf{Deliver}(\nu_{h,\omega},[])$, whose
+instruction is $\mathsf{Stop}(\nu_{h,\omega})$. Native Stop is terminal:
+it is not an additional event in $E$ and has no outgoing native step.
+The complete chronology object here is $(E,\mathsf{Stop}(\nu))$.
+No original address, local step or terminal control is discarded.
+
+Order $L_h$ lexicographically as $p_1,\ldots,p_m$, the actual preorder
+of its leaf occurrences. Let $e_h(j)$ be the one-based full-event index
+of leaf $p_j$ in the perfect $X$ subtree's own trace. The index is
+independent of the labels. It is specified for all $j$ by
+
+$$
+\begin{aligned}
+e_0(1)&=1,\\
+e_{r+1}(j)&=
+ \begin{cases}
+ 1+e_r(j),&1\le j\le2^r,\\
+ 4\cdot2^r-1+e_r(j-2^r),&2^r<j\le2^{r+1},
+ \end{cases}\\
+n_h(j)&=2+e_h(j).
+\end{aligned}
+\tag{90.13}
+$$
+
+For distinct sources in $\mathcal F_h$, put
+
+$$
+j(u,v)=\min\{j:\omega(p_j)\ne\omega'(p_j)\},\qquad
+ n(u,v)=n_h(j(u,v)),\qquad
+ d^E_h(u,v)=3^{-n(u,v)},\quad d^E_h(u,u)=0.
+\tag{90.14}
+$$
+
+Thus the exponent is an actual **full-event** index, including preceding
+branch reads and local actions, not the rank in a filtered reply list.
+
