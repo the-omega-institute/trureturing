@@ -10,7 +10,7 @@ Lean statement: `D5/S3/Analytic/CothBernoulliDegree/Defs.p`
 
 *Formalization.* `D5/S3/Analytic/CothBernoulliDegree/Defs.p` (`✓ std3`).
 
-*Source.* Repository-derived.
+*Citation.* L. Zhu (2020). *Completely monotonic integer degrees for a class of special functions*. DOI: [10.3934/math.2020224](https://doi.org/10.3934/math.2020224). URL: <https://www.aimspress.com/article/doi/10.3934/math.2020224>.
 
 *Commentary.*
 
@@ -22,7 +22,7 @@ Lean statement: `D5/S3/Analytic/CothBernoulliDegree/Defs.P`
 
 *Formalization.* `D5/S3/Analytic/CothBernoulliDegree/Defs.P` (`✓ std3`).
 
-*Source.* Repository-derived.
+*Citation.* L. Zhu (2020). *Completely monotonic integer degrees for a class of special functions*. DOI: [10.3934/math.2020224](https://doi.org/10.3934/math.2020224). URL: <https://www.aimspress.com/article/doi/10.3934/math.2020224>.
 
 *Commentary.*
 
@@ -34,7 +34,7 @@ Lean statement: `D5/S3/Analytic/CothBernoulliDegree/Defs.claim`
 
 *Formalization.* `D5/S3/Analytic/CothBernoulliDegree/Defs.claim` (`✓ std3`).
 
-*Source.* Repository-derived.
+*Citation.* L. Zhu (2020). *Completely monotonic integer degrees for a class of special functions*. DOI: [10.3934/math.2020224](https://doi.org/10.3934/math.2020224). URL: <https://www.aimspress.com/article/doi/10.3934/math.2020224>.
 
 *Commentary.*
 

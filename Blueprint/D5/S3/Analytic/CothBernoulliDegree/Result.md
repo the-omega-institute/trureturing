@@ -10,11 +10,17 @@ Lean statement: `D5/S3/Analytic/CothBernoulliDegree/Result.result`
 
 *Proof.* Machine-checked in Lean as `D5/S3/Analytic/CothBernoulliDegree/Result.result` (`✓ std3`). ∎
 
+*Resolves.* `Problems/zhu-2020-coth-bernoulli-remainder-derivative-signs` (proved) by `D5/S3/Analytic/CothBernoulliDegree/Result.result`.
+
+<!-- scribe-open-problem-resolution-v1 {"problem_slug":"zhu-2020-coth-bernoulli-remainder-derivative-signs","declaration_gid":"D5/S3/Analytic/CothBernoulliDegree/Result.result","resolution_kind":"proved"} -->
+
 *Source.* Repository-derived.
+
+*Acknowledgement.* L. Zhu (2020). *Completely monotonic integer degrees for a class of special functions*. DOI: [10.3934/math.2020224](https://doi.org/10.3934/math.2020224). URL: <https://www.aimspress.com/article/doi/10.3934/math.2020224>.
 
 *Commentary.*
 
-Let m and n be natural numbers with m at least one and n at least two, and put M=m+2n. The signed remainder P is defined from coth(t)/t by subtracting its Bernoulli terms through index n and multiplying by (-1)^n t^m. Its derivative of order M-2 is strictly positive at every positive t. Its derivative of order M-1 fails to be strictly positive everywhere on the positive ray.
+Let m and n be natural numbers with m at least one and n at least two, and put M=m+2n. The signed remainder P has derivative of order M-2 strictly positive at every positive t. Its derivative of order M-1 fails to be strictly positive everywhere on the positive ray.
 
 The partial-fraction formula and its differentiated series express these derivatives as positive multiples of rational-kernel derivatives. At order M-2 each kernel is strictly positive. The derivative series is summable, so its sum is strictly positive.
 
