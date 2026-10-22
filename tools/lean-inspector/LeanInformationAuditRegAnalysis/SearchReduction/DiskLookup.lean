@@ -27,16 +27,18 @@ def withLookupPreparation {α : Type} (budget? : Option (IO.Ref LookupBudgetStat
   let some budget := budget? | return ← action
   let before ← budget.get
   if before.preparing then return ← action
+  let preparationLimit := (← IO.getEnv "SEARCH_REDUCTION_PREPARATION_TELEMETRY").bind String.toNat?
+    |>.getD lookupPreparationBudget
   let usedBefore := before.preparation - before.preparationStart
-  if usedBefore >= lookupPreparationBudget * 1000 then
-    Core.throwMaxHeartbeat `lookup.preparation `maxHeartbeats (lookupPreparationBudget * 1000)
+  if usedBefore >= preparationLimit * 1000 then
+    Core.throwMaxHeartbeat `lookup.preparation `maxHeartbeats (preparationLimit * 1000)
   let started ← IO.getNumHeartbeats
   let nanos ← IO.monoNanosNow
   budget.modify fun s => {s with preparing := true}
   try
     withTheReader Core.Context (fun ctx => {ctx with
       initHeartbeats := started,
-      maxHeartbeats := lookupPreparationBudget * 1000 - usedBefore}) do
+      maxHeartbeats := preparationLimit * 1000 - usedBefore}) do
       let result ← action
       checkSystem "lookup.preparation"
       return result

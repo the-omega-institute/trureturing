@@ -445,6 +445,7 @@ indexes. Only compiled Lean declarations are read back; JSON is print-only. -/
     let child ← IO.Process.output {
       cmd := "lean", args := #["-j1", "--root=" ++ directory.toString,
         "-o", output.toString, input.toString]}
+    if child.exitCode == 75 then IO.Process.exit 75
     if child.exitCode != 0 then
       if (← IO.getEnv "SEARCH_REDUCTION_VERIFY_INDEX") == some "1" then
         IO.eprintln s!"{child.stdout}\n{child.stderr}"

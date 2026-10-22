@@ -159,11 +159,12 @@ private def coverageAvailable (table : LookupTable) : MetaM Bool := do
 /-- The final certificate is checked in the original query environment, after
 all temporary support is inlined. Its locals are exactly the registered Γ. -/
 private def checkLookupGoal (table : LookupTable) (base : Environment)
-    (goal : MVarId) : MetaM Unit := goal.withContext do
+    (goal : MVarId) : MetaM Expr := goal.withContext do
   let proof ← instantiateMVars (mkMVar goal)
   unless !proof.hasMVar do throwError "lookup.unclosed_certificate"
   let mut xs := #[]
-  for decl in ← getLCtx do xs := xs.push decl.toExpr
+  for decl in ← getLCtx do
+    unless decl.isLet do xs := xs.push decl.toExpr
   let proof ← mkLambdaFVars xs proof
   let proof ← if let some finish := table.finish? then finish base proof else pure proof
   let type ← mkForallFVars xs (← goal.getType)
@@ -184,56 +185,7 @@ private def checkLookupGoal (table : LookupTable) (base : Environment)
   emitLookupRecord s!"LOOKUP_CERTIFICATE {Json.mkObj [
     ("support", toJson (proof.getUsedConstants.map Name.toString)),
     ("query_environment_only", toJson true)] |>.compress}"
-
-/-- Every attempt starts from the same branch state and receives its own κ.
-An exceptional candidate contributes unknown and never stops its successors. -/
-def boundedLookupCandidate (table : LookupTable) (entry : DiskLookup.Entry)
-    (goal : MVarId) (action : MetaM LookupTrace) : MetaM LookupTrace := do
-  let original ← saveState
-  resetCache
-  modifyThe Core.State fun state => {state with cache := {}}
-  let before := (← table.budget?.mapM (·.get)).getD {}
-  if let some budget := table.budget? then
-    budget.modify fun state => {state with preparationStart := state.preparation}
-  let started ← IO.getNumHeartbeats
-  let result ← catchLookupCandidate
-    (withTheReader Core.Context (fun ctx => {ctx with
-      initHeartbeats := started, maxHeartbeats := lookupCandidateBudget * 1000}) do
-      let result ← action
-      if result.source?.isSome then checkLookupGoal table original.core.env goal
-      checkSystem "lookup.candidate"
-      return result)
-    (fun ex => do
-      let after := (← table.budget?.mapM (·.get)).getD {}
-      let reason ← if ex.isMaxHeartbeat then pure <|
-          if after.preparation - before.preparation >= lookupPreparationBudget * 1000 then
-            "preparation-capped" else "capped"
-        else if ex.isInterrupt then pure "interrupted"
-        else pure s!"exception:{← ex.toMessageData.toString}"
-      return {
-        complete := false, missing := #[entry.leanName], failures := #[reason],
-        capped := if ex.isMaxHeartbeat then #[entry.name] else #[]})
-  let search := (← IO.getNumHeartbeats) - started
-  let after := (← table.budget?.mapM (·.get)).getD {}
-  let preparation := after.preparation - before.preparation
-  if let some budget := table.budget? then
-    budget.modify fun state => {state with
-      coverage := state.coverage + search + preparation, preparationStart := state.preparation}
-  let residual := Json.mkObj [
-    ("module", toJson entry.module), ("candidate", toJson entry.name),
-    ("search_internal_heartbeats", toJson search),
-    ("preparation_internal_heartbeats", toJson preparation),
-    ("capped", toJson (!result.capped.isEmpty)), ("reasons", toJson result.failures)]
-  if !result.complete || (← IO.getEnv "SEARCH_REDUCTION_TELEMETRY").isSome then
-    emitLookupRecord s!"LOOKUP_CANDIDATE {residual.compress}"
-  if result.source?.isNone || (← IO.getEnv "SEARCH_REDUCTION_TELEMETRY").isSome then
-    original.restore
-    set original.meta
-    modifyThe Core.State fun state => {state with cache := original.core.cache}
-  return {result with
-    visited := 1,
-    failures := if result.complete then result.failures else
-      result.failures.map (fun reason => s!"{entry.module}:{entry.name}:{reason}")}
+  return proof
 
 private def mergeLookupTrace (a b : LookupTrace) : LookupTrace := {
   visited := a.visited + b.visited, attempted := a.attempted + b.attempted,
@@ -243,32 +195,6 @@ private def mergeLookupTrace (a b : LookupTrace) : LookupTrace := {
   complete := a.complete && b.complete,
   fallbackVisited := a.fallbackVisited + b.fallbackVisited,
   fallbackTotal := a.fallbackTotal + b.fallbackTotal}
-
-/-- Hashes only recall candidates; equality and a final certificate decide. -/
-unsafe def lookupExact (table : LookupTable) (goal : MVarId) : MetaM LookupTrace := goal.withContext do
-  if !table.enabled then return {complete := true}
-  let some index ← tableIndex table | return {}
-  let type ← goal.getType
-  let candidates ← DiskLookup.queryMembership index type table.budget?
-  let mut trace : LookupTrace := {
-    complete := candidates.complete && table.complete,
-    pages := candidates.pages, failures := candidates.missing}
-  for entry in candidates.entries do
-    unless ← coverageAvailable table do
-      return {trace with complete := false, failures := trace.failures.push "G-truncated:membership"}
-    let attempt ← boundedLookupCandidate table entry goal do
-      let candidate ← candidateValue table entry none
-      if let some reason := candidate.failure? then
-        return {complete := false, failures := #[reason], missing := #[entry.leanName]}
-      for value in candidate.values do
-        if ← withReducible <| isDefEq (← inferType value) type then
-          candidate.certify
-          goal.assign (← instantiateMVars value)
-          return {complete := true, source? := some entry.leanName, attempted := 1}
-      return {complete := true}
-    trace := mergeLookupTrace trace attempt
-    if trace.source?.isSome then return trace
-  return trace
 
 def ownedLookupName : Name → Name
   | .anonymous => .anonymous
@@ -349,6 +275,173 @@ def detachLookupConstantInfo (info : ConstantInfo) : ConstantInfo := Id.run do
           ctor := ownedLookupName r.ctor
           rhs := detachLookupExpression r.rhs})}
     | .quotInfo v => .quotInfo {v with toConstantVal := val}
+
+/-- A checkpoint is scoped to one exact attempt in one reading, rather than
+an answer cache shared by queries. JSON is never read as semantic evidence. -/
+structure LookupCheckpoint where
+  identity : String
+  query : Expr
+  entry : DiskLookup.Entry
+  trace : LookupTrace
+  proof? : Option Expr
+  search : Nat
+  preparation : Nat
+
+initialize lookupAttemptOrdinal : IO.Ref Nat ← IO.mkRef 0
+initialize lookupExternalAttempts : IO.Ref Nat ← IO.mkRef 0
+initialize lookupCheckpointIdentity : IO.Ref (Option String) ← IO.mkRef none
+
+private def checkpointIdentity : IO String := do
+  if let some identity ← lookupCheckpointIdentity.get then return identity
+  let head ← IO.Process.output {cmd := "git", args := #["rev-parse", "HEAD"]}
+  let diff ← IO.Process.output {cmd := "git", args := #["diff", "HEAD", "--", "tools", "Makefile"]}
+  unless head.exitCode == 0 && diff.exitCode == 0 do throw <| IO.userError "lookup.checkpoint_identity"
+  let request ← IO.getEnv "SEARCH_REDUCTION_REQUESTS"
+  let requestBytes ← request.mapM IO.FS.readFile
+  let identity := reprStr (lookupVersion, head.stdout, diff.stdout, request, requestBytes,
+    ← IO.getEnv "SEARCH_REDUCTION_SOURCE_LIBRARY", ← IO.getEnv "SEARCH_REDUCTION_RESUME_INPUTS")
+  lookupCheckpointIdentity.set (some identity)
+  return identity
+
+private def ownedCheckpointTrace (t : LookupTrace) : LookupTrace :=
+  {t with
+    missing := t.missing.map ownedLookupName,
+    failures := t.failures.map (fun s => String.ofList s.toList),
+    capped := t.capped.map (fun s => String.ofList s.toList),
+    source? := t.source?.map ownedLookupName}
+
+private unsafe def readLookupCheckpoint (path : System.FilePath) : IO LookupCheckpoint :=
+  withUnpickle path fun (r : LookupCheckpoint) => pure {r with
+    identity := String.ofList r.identity.toList,
+    query := detachLookupExpression r.query,
+    entry := {r.entry with
+      module := String.ofList r.entry.module.toList, name := String.ofList r.entry.name.toList,
+      route := String.ofList r.entry.route.toList,
+      parts := r.entry.parts.map (fun (s,n) => (String.ofList s.toList,n))},
+    trace := ownedCheckpointTrace r.trace,
+    proof? := r.proof?.map detachLookupExpression}
+
+/-- Every attempt starts from the same branch state and receives its own κ.
+An exceptional candidate contributes unknown and never stops its successors. -/
+unsafe def boundedLookupCandidate (table : LookupTable) (entry : DiskLookup.Entry)
+    (goal : MVarId) (action : MetaM LookupTrace) : MetaM LookupTrace := do
+  if (← IO.getEnv "SEARCH_REDUCTION_PREPARATION_TELEMETRY").isSome then
+    throwError "lookup.preparation_telemetry_cannot_judge"
+  let ordinal ← lookupAttemptOrdinal.get
+  lookupAttemptOrdinal.modify (· + 1)
+  let resume? ← IO.getEnv "SEARCH_REDUCTION_RESUME"
+  let mut xs := #[]
+  for decl in ← getLCtx do
+    unless decl.isLet do xs := xs.push decl.toExpr
+  let query ← mkForallFVars xs (← instantiateMVars (← goal.getType))
+  let checkpoint? := resume?.map fun directory =>
+    (System.FilePath.mk directory) / s!"candidate-{ordinal}.pickle"
+  let startedReplay ← IO.getNumHeartbeats
+  if let some path := checkpoint? then
+    if ← path.pathExists then
+      let record ← readLookupCheckpoint path
+      unless record.identity == ((← checkpointIdentity) ++ reprStr (table.disk?.map (fun d => (toJson d.header).compress ++ (toJson d.membership?).compress))) && record.query == query && record.entry == entry do
+        throwError "lookup.checkpoint_input_mismatch:{ordinal}"
+      let beforeReplay := (← table.budget?.mapM (·.get)).getD {}
+      if let some proof := record.proof? then
+        goal.assign (mkAppN proof xs)
+        discard <| checkLookupGoal table (← getEnv) goal
+      if let some budget := table.budget? then
+        budget.set {beforeReplay with
+          coverage := beforeReplay.coverage + record.search + record.preparation,
+          preparation := beforeReplay.preparation + record.preparation,
+          preparationStart := beforeReplay.preparation + record.preparation}
+      lookupPhase s!"lookup/resumed ordinal={ordinal} candidate={entry.name}"
+      IO.setNumHeartbeats (startedReplay + record.search)
+      return record.trace
+  if resume?.isSome && !candidateOwnerMatches table entry then
+    if (← lookupExternalAttempts.get) >= 8 then
+      emitLookupRecord s!"LOOKUP_CHECKPOINT_RESTART next={ordinal} candidate={entry.name}"
+      IO.Process.exit 75
+    lookupExternalAttempts.modify (· + 1)
+  IO.setNumHeartbeats startedReplay
+  let original ← saveState
+  resetCache
+  modifyThe Core.State fun state => {state with cache := {}}
+  let before := (← table.budget?.mapM (·.get)).getD {}
+  if let some budget := table.budget? then
+    budget.modify fun state => {state with preparationStart := state.preparation}
+  let started ← IO.getNumHeartbeats
+  let checkedProof ← IO.mkRef (none : Option Expr)
+  let result ← catchLookupCandidate
+    (withTheReader Core.Context (fun ctx => {ctx with
+      initHeartbeats := started, maxHeartbeats := lookupCandidateBudget * 1000}) do
+      let result ← action
+      if result.source?.isSome then checkedProof.set (some (← checkLookupGoal table original.core.env goal))
+      checkSystem "lookup.candidate"
+      return result)
+    (fun ex => do
+      let after := (← table.budget?.mapM (·.get)).getD {}
+      let reason ← if ex.isMaxHeartbeat then pure <|
+          if after.preparation - before.preparation >= lookupPreparationBudget * 1000 then
+            "preparation-capped" else "capped"
+        else if ex.isInterrupt then pure "interrupted"
+        else pure s!"exception:{← ex.toMessageData.toString}"
+      return {
+        complete := false, missing := #[entry.leanName], failures := #[reason],
+        capped := if ex.isMaxHeartbeat then #[entry.name] else #[]})
+  let search := (← IO.getNumHeartbeats) - started
+  let after := (← table.budget?.mapM (·.get)).getD {}
+  let preparation := after.preparation - before.preparation
+  if let some budget := table.budget? then
+    budget.modify fun state => {state with
+      coverage := state.coverage + search + preparation, preparationStart := state.preparation}
+  let residual := Json.mkObj [
+    ("module", toJson entry.module), ("candidate", toJson entry.name),
+    ("search_internal_heartbeats", toJson search),
+    ("preparation_internal_heartbeats", toJson preparation),
+    ("capped", toJson (!result.capped.isEmpty)), ("reasons", toJson result.failures)]
+  if !result.complete || (← IO.getEnv "SEARCH_REDUCTION_TELEMETRY").isSome then
+    emitLookupRecord s!"LOOKUP_CANDIDATE {residual.compress}"
+  if result.source?.isNone || (← IO.getEnv "SEARCH_REDUCTION_TELEMETRY").isSome then
+    original.restore
+    set original.meta
+    modifyThe Core.State fun state => {state with cache := original.core.cache}
+  let result := {result with
+    visited := 1,
+    failures := if result.complete then result.failures else
+      result.failures.map (fun reason => s!"{entry.module}:{entry.name}:{reason}")}
+  if let some path := checkpoint? then
+    if query.hasMVar then throwError "lookup.checkpoint_open_query:{ordinal}"
+    IO.FS.createDirAll path.parent.get!
+    let temporary := path.addExtension "tmp"
+    let identity := (← checkpointIdentity) ++ reprStr (table.disk?.map (fun d => (toJson d.header).compress ++ (toJson d.membership?).compress))
+    let proof? ← if result.source?.isSome then checkedProof.get else pure none
+    pickle temporary ({
+      identity, query, entry, trace := result, proof?, search, preparation} : LookupCheckpoint)
+    IO.FS.rename temporary path
+  return result
+
+/-- Hashes only recall candidates; equality and a final certificate decide. -/
+unsafe def lookupExact (table : LookupTable) (goal : MVarId) : MetaM LookupTrace := goal.withContext do
+  if !table.enabled then return {complete := true}
+  let some index ← tableIndex table | return {}
+  let type ← goal.getType
+  let candidates ← DiskLookup.queryMembership index type table.budget?
+  let mut trace : LookupTrace := {
+    complete := candidates.complete && table.complete,
+    pages := candidates.pages, failures := candidates.missing}
+  for entry in candidates.entries do
+    unless ← coverageAvailable table do
+      return {trace with complete := false, failures := trace.failures.push "G-truncated:membership"}
+    let attempt ← boundedLookupCandidate table entry goal do
+      let candidate ← candidateValue table entry none
+      if let some reason := candidate.failure? then
+        return {complete := false, failures := #[reason], missing := #[entry.leanName]}
+      for value in candidate.values do
+        if ← withReducible <| isDefEq (← inferType value) type then
+          candidate.certify
+          goal.assign (← instantiateMVars value)
+          return {complete := true, source? := some entry.leanName, attempted := 1}
+      return {complete := true}
+    trace := mergeLookupTrace trace attempt
+    if trace.source?.isSome then return trace
+  return trace
 
 partial def inlineLookupSupport (base : Environment) (proof : Expr)
     (seen : NameSet := {}) : MetaM Expr :=
@@ -524,6 +617,8 @@ unsafe def lookupLeafPass (fallback : Bool) (table : LookupTable) (goal : MVarId
       trace := {trace with
         complete := false, failures := trace.failures.push s!"G-truncated:fallback={fallback}:remaining={candidates.entries.size - trace.visited}"}
       break
+    if position % 128 == 0 then
+      emitLookupRecord s!"LOOKUP_ENUMERATION_PROGRESS fallback={fallback} next={position} total={candidates.entries.size}"
     let result ← boundedLookupCandidate table entry goal do
       let name := entry.leanName
       if let some info := (table.environment.setExporting false).find? name |>.filter (fun _ => candidateOwnerMatches table entry) then
