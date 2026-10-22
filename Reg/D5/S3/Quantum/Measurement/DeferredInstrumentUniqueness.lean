@@ -16,7 +16,7 @@ noncomputable section
 
 abbrev signature : Signature where
   Params := Σ d : ℕ, Matrix.unitaryGroup (Fin d) ℂ × ℝ
-  State p := Matrix (Fin p.1) (Fin p.1) ℂ
+  State p := Fin p.1
   Role := Unit
   finiteRole := inferInstance
   nonemptyRole := inferInstance
@@ -26,7 +26,9 @@ abbrev signature : Signature where
 
 def actual : Realization signature :=
   realize signature (fun _ p state =>
-    if Matrix.trace state = 0 then sMax p.1 p.2.2 else 0)
+    match state.1 with
+    | 0 => sMax p.1 p.2.2
+    | _ => 0)
     (fun e => nomatch e)
 
 def rejected : Realization signature :=
@@ -35,7 +37,7 @@ def rejected : Realization signature :=
 abbrev arena : Arena where
   signature := signature
   Law R :=
-    (∀ (d : ℕ), 2 ≤ d →
+    (∀ (d : ℕ) (hd : 2 ≤ d),
       ∀ (U : Matrix.unitaryGroup (Fin d) ℂ),
       ∀ (t : ℝ), -1 / ((d : ℝ) ^ 2 - 1) ≤ t → t ≤ 1 →
       ∀ (J : Fin d → MatrixMap (Fin d) (Fin d) ℂ),
@@ -43,7 +45,8 @@ abbrev arena : Arena where
           (∑ x, J x = It t) ∧
           (∀ x ρ, Matrix.trace (J x ρ) =
             Matrix.trace (ρ * Qs U
-              (R.readout () ⟨d, (U, t)⟩ (0 : Matrix (Fin d) (Fin d) ℂ)) x))) ↔
+              (R.readout () ⟨d, (U, t)⟩
+                (⟨0, by omega⟩ : Fin d)) x))) ↔
         (∀ x, J x = Itilde U t x))
 
 theorem actual_law : arena.Law actual := by
@@ -67,13 +70,11 @@ theorem rejected_law : ¬ arena.Law rejected := by
 theorem dependence : ObservationalDependence signature actual := by
   intro i
   let U : Matrix.unitaryGroup (Fin 2) ℂ := 1
-  refine ⟨⟨2, (U, 0)⟩, 0, 1, ?_⟩
-  have hzero : Matrix.trace (0 : Matrix (Fin 2) (Fin 2) ℂ) = 0 := by
-    simp [Matrix.trace]
-  have hone : Matrix.trace (1 : Matrix (Fin 2) (Fin 2) ℂ) ≠ 0 := by
-    rw [Matrix.trace_one]
-    norm_num
-  simp [actual, realize, hzero, hone, sMax]
+  let x0 : Fin 2 := ⟨0, by decide⟩
+  let x1 : Fin 2 := ⟨1, by decide⟩
+  refine ⟨⟨2, (U, 0)⟩, x0, x1, ?_⟩
+  change sMax 2 0 ≠ 0
+  norm_num [sMax]
 
 def source_registration : Registration arena claim where
   actual := actual
@@ -112,7 +113,9 @@ def registration :
   bundleNonempty := .absent
   readout := some
     (realize signature (fun _ p state =>
-      if Matrix.trace state = 0 then sMax p.1 p.2.2 else 0)
+      match state.1 with
+      | 0 => sMax p.1 p.2.2
+      | _ => 0)
       (fun e => nomatch e))
   variation := .absent
   sensitivity := .absent
@@ -129,7 +132,7 @@ def registration :
       path := #["body", "body", "body", "body", "body", "body", "body",
         "fn", "arg", "arg", "arg", "body", "body", "arg", "arg", "arg",
         "fn", "arg"]
-      stateBinder := 8
+      stateBinder := 7
       functionOperand := false
       stateOperand := none
       booleanPredicate := false }] }
