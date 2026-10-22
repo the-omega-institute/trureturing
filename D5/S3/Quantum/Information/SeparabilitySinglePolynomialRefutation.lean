@@ -7,6 +7,7 @@
    digest: No single polynomial inequality characterizes all bipartite separable states. -/
 
 import D5.S3.Quantum.Entanglement.AbsolutePPT.QuadbitMaximumPurity
+import D5.S3.Quantum.Entanglement.GHZMeasureBiseparableBound
 
 /-! An affine family of qubit–qutrit states excludes a single polynomial separability criterion. -/
 
@@ -20,14 +21,11 @@ open scoped BigOperators ComplexOrder Kronecker
 open D5.S3.Resource.CompositeCones
 open D5.S3.Resource.EntanglementWitness
 open D5.S3.Quantum.Entanglement.AbsolutePPT.Bipartite (partialTranspose)
+open D5.S3.Quantum.Entanglement.GHZMeasureBiseparableBound (IsDensity)
 
 namespace D5.S3.Quantum.Information.SeparabilitySinglePolynomialRefutation
 
 noncomputable section
-
-/-- A density operator is positive semidefinite with trace one. -/
-def IsDensity {m n : ℕ} (ρ : Matrix (Fin m × Fin n) (Fin m × Fin n) ℂ) : Prop :=
-  ρ.PosSemidef ∧ ρ.trace = 1
 
 /-- Real and imaginary coordinates of the matrix entries. -/
 def coords {m n : ℕ} (ρ : Matrix (Fin m × Fin n) (Fin m × Fin n) ℂ) :
