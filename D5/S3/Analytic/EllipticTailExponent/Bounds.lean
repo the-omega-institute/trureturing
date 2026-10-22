@@ -41,29 +41,16 @@ private lemma P_bounds (m : ℕ) {a : ℝ} (ha : 0 ≤ a) (ha1 : a ≤ 3 / 4) :
     Finset.prod_le_one₀ (fun j _ => (factor_bounds j ha ha1).1.le)
       (fun j _ => (factor_bounds j ha ha1).2)⟩
 
-private lemma sum_inv_sq_le (m : ℕ) :
-    (∑ j ∈ range m, (1 : ℝ) / ((j : ℝ) + 1) ^ 2) ≤ 2 := by
-  have h (m : ℕ) :
-      (∑ j ∈ range m, (1 : ℝ) / ((j : ℝ) + 1) ^ 2) ≤ 2 - 2 / ((m : ℝ) + 1) := by
-    induction m with
-    | zero => norm_num
-    | succ m ih =>
-      rw [sum_range_succ]
-      push_cast
-      have hm : (0 : ℝ) ≤ m := Nat.cast_nonneg m
-      have hstep : (1 : ℝ) / ((m : ℝ) + 1) ^ 2 ≤
-          2 / ((m : ℝ) + 1) - 2 / ((m : ℝ) + 1 + 1) := by
-        field_simp
-        nlinarith
-      linarith
-  exact (h m).trans (sub_le_self _ (by positivity))
-
 private lemma differentiable_P (m : ℕ) : Differentiable ℝ (P m) := by
   unfold P
   fun_prop
 
 private lemma deriv_P_bounds (m : ℕ) {a : ℝ} (ha : 0 ≤ a) (ha1 : a ≤ 3 / 4) :
     -(4 * a) ≤ deriv (P m) a ∧ deriv (P m) a ≤ 0 := by
+  have hsum : (∑ j ∈ range m, (1 : ℝ) / ((j : ℝ) + 1) ^ 2) ≤ 2 := by
+    have h := sum_Ioo_inv_sq_le (α := ℝ) 0 (m + 1)
+    rw [← Finset.Ico_succ_left_eq_Ioo, Finset.sum_Ico_eq_sum_range] at h
+    simpa [one_div, Nat.succ_eq_add_one, Nat.add_comm] using h
   have hdiff (j : ℕ) :
       HasDerivAt (fun x : ℝ => 1 - x ^ 2 / ((j : ℝ) + 1) ^ 2)
         (-(2 * a / ((j : ℝ) + 1) ^ 2)) a := by
@@ -86,7 +73,7 @@ private lemma deriv_P_bounds (m : ℕ) {a : ℝ} (ha : 0 ≤ a) (ha1 : a ≤ 3 /
   constructor
   · calc
       -(4 * a) ≤ -(2 * a * ∑ j ∈ range m, (1 : ℝ) / ((j : ℝ) + 1) ^ 2) := by
-        nlinarith [mul_le_mul_of_nonneg_left (sum_inv_sq_le m) (by positivity : 0 ≤ 2 * a)]
+        nlinarith [mul_le_mul_of_nonneg_left hsum (by positivity : 0 ≤ 2 * a)]
       _ = ∑ j ∈ range m, -(2 * a / ((j : ℝ) + 1) ^ 2) := by
         simp only [mul_sum, sum_neg_distrib, mul_one_div]
       _ ≤ _ := by
