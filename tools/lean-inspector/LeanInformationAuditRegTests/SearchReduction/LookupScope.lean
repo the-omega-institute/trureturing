@@ -42,6 +42,17 @@ run_cmd do
       unless result.cost == .one && result.lookup.complete do
         throwError "incidental imports enlarged the explicit B_T scope"
       emitLookupRecord "LOOKUP_SCOPE incidental_imports_excluded=true"
+      let graph : ProofGraph := {root := 0, vertices := [{id := 0, type}]}
+      let normal ← evaluateGraph graph (some {environment := fixtureBase, disk? := some index})
+      unless normal.baselineProbe.outcome == .found do
+        throwError "normal basis did not supply the fixture implication"
+      let excluded := {index with
+        excluded := #[`LeanInformationAuditRegTests.SearchReduction.LookupBaseline]}
+      let restricted ← evaluateGraph graph
+        (some {environment := fixtureBase, disk? := some excluded})
+      unless restricted.baselineProbe.outcome == .exhausted do
+        throwError "cache ignored changed B0 exclusions"
+      emitLookupRecord "LOOKUP_SCOPE cache_exclusions_bound=true"
     let table ← onDemandLookup {environment := base, disk? := some index}
     let type ← Term.elabType
       (← `(∀ renamed : Nat,

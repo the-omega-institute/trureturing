@@ -540,7 +540,8 @@ private def prepareLocalMemo (table : LookupTable) (graph : ProofGraph) : MetaM 
     for dependency in info.getUsedConstantsAsSet do todo := todo.push dependency
   let root := graph.vertices.find? (·.id == graph.root)
   let identity := reprStr (localConfiguration,
-    table.disk?.map (fun d => ((toJson d.header).compress, (toJson d.membership?).compress)),
+    table.disk?.map (fun d =>
+      ((toJson d.header).compress, (toJson d.membership?).compress, d.excluded)),
     table.complete, table.enabled, table.environment.header.moduleNames, table.implicationModules?,
     root.bind (·.origin.constName?), graph.vertices.map (·.type), vocabulary,
     ← IO.getEnv "SEARCH_REDUCTION_RESUME_INPUTS")
