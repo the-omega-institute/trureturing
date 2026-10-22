@@ -98,7 +98,11 @@ internal sealed class QuantumGroupChainRealSpectrumRefutationDocument : IScribeD
                 StatementSource.FromAuthor(Disp(new Formula.Not(Named("claim")))),
                 AssessedProvenance.FromRepo(Source),
                 ResultProse(),
-                DescribeRole.Theorem))));
+                DescribeRole.Theorem,
+                openProblemResolutionClaim: new OpenProblemResolutionClaim(
+                    ProblemSlugRef.Create(
+                        "bytsko-2009-positive-coupling-real-spectrum-refutation"),
+                    ResolutionKind.Refuted)))));
 
     private static DocumentBlock Node(string name, string title, Formula formula, string prose,
         AssessedProvenance provenance) => Describe.Lean(
