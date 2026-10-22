@@ -516,4 +516,89 @@ theorem stratum_iff (a : ℕ) (ha : 1 ≤ a) (i : Fin 3) (u : Source) :
     exact ⟨(retained_iff a ha _).mpr ⟨x,y,rfl⟩,
       U a x y,rfl,(label_iff a ha i x y).mpr h⟩
 
+
+/-- Exact decomposition on arbitrary independently chosen alternatives. -/
+theorem pair_decomposition (θ : ℝ) (a : ℕ) (s t : Source) :
+    distance θ (U a s s) (U a (substitution^[a] t) t) =
+      θ * distance θ s (substitution^[a] t) +
+      θ * (1 - θ) * distance θ s t +
+      (1 - θ)^2 * distance θ (substitution^[a] s) (substitution^[a] t) := by
+  simp only [U,distance_mul_mul]
+  ring
+
+private theorem pair_lower (θ : ℝ) (hθ : 0 < θ) (hθ1 : θ < 1)
+    (a : ℕ) (ha : 1 ≤ a) (s t : Source) :
+    min θ (1 - θ) ≤ distance θ (U a s s) (U a (substitution^[a] t) t) := by
+  let A := distance θ s (substitution^[a] t)
+  let B := distance θ s t
+  let C := distance θ (substitution^[a] s) (substitution^[a] t)
+  have hab := biased_frontier_triangle θ hθ.le hθ1.le t s (substitution^[a] t)
+  rw [distance_shift θ a ha t, distance_symm θ t s] at hab
+  have hac := biased_frontier_triangle θ hθ.le hθ1.le s
+    (substitution^[a] t) (substitution^[a] s)
+  rw [distance_shift θ a ha s,
+    distance_symm θ (substitution^[a] t) (substitution^[a] s)] at hac
+  have hA := biased_frontier_bounds θ hθ.le hθ1.le s (substitution^[a] t)
+  have hB : 1 - A ≤ B := by dsimp [A,B]; linarith
+  have hC : 1 - A ≤ C := by dsimp [A,C]; linarith
+  have hb := mul_le_mul_of_nonneg_left hB
+    (mul_nonneg hθ.le (sub_nonneg.mpr hθ1.le))
+  have hc := mul_le_mul_of_nonneg_left hC (sq_nonneg (1 - θ))
+  have hm1 := mul_le_mul_of_nonneg_right (min_le_left θ (1 - θ)) hA.1
+  have hm2 := mul_le_mul_of_nonneg_right (min_le_right θ (1 - θ))
+    (sub_nonneg.mpr hA.2)
+  rw [pair_decomposition]
+  change min θ (1 - θ) ≤ θ * A + θ * (1 - θ) * B + (1 - θ)^2 * C
+  change 0 ≤ A ∧ A ≤ 1 at hA
+  change min θ (1 - θ) * A ≤ θ * A at hm1
+  change min θ (1 - θ) * (1 - A) ≤ (1 - θ) * (1 - A) at hm2
+  nlinarith
+
+private theorem in_zero (a : ℕ) (ha : 1 ≤ a) (t : Source) :
+    Stratum a 0 (U a t t) := by
+  apply (stratum_iff a ha 0 _).mpr
+  exact ⟨t,t,rfl,by simp [rowCondition]⟩
+
+private theorem in_one (a : ℕ) (ha : 1 ≤ a) (t : Source) :
+    Stratum a 1 (U a (substitution^[a] t) t) := by
+  apply (stratum_iff a ha 1 _).mpr
+  exact ⟨_,t,rfl,by simp [rowCondition]⟩
+
+/-- The values range over the entire Cartesian product of the first two strata. -/
+def pairValues (θ : ℝ) (a : ℕ) : Set ℝ :=
+  {m | ∃ u v : Source, Stratum a 0 u ∧ Stratum a 1 v ∧ distance θ u v = m}
+
+/-- Both endpoint values are attained by actual originals in their full strata. -/
+private theorem pair_attained (θ : ℝ) (a : ℕ) (ha : 1 ≤ a) (t : Source) :
+    θ ∈ pairValues θ a ∧ (1 - θ) ∈ pairValues θ a := by
+  constructor
+  · refine ⟨U a t t,U a (substitution^[a] t) t,in_zero a ha t,in_one a ha t,?_⟩
+    rw [pair_decomposition, distance_shift θ a ha, distance_self, distance_self]
+    ring
+  · refine ⟨U a (substitution^[a] t) (substitution^[a] t),
+      U a (substitution^[a] t) t,in_zero a ha _,in_one a ha t,?_⟩
+    rw [pair_decomposition,distance_self,distance_symm θ (substitution^[a] t) t,
+      distance_shift θ a ha,distance_symm θ (substitution^[a] (substitution^[a] t))
+        (substitution^[a] t),distance_shift θ a ha]
+    ring
+
+/-- The exact binary-product infimum is attained, uniformly in the supplied shift. -/
+theorem binary_product_minimum (a : ℕ) (ha : 1 ≤ a) (θ : ℝ)
+    (hθ : 0 < θ) (hθ1 : θ < 1) :
+    IsLeast (pairValues θ a) (min θ (1 - θ)) := by
+  refine ⟨?_,?_⟩
+  · have attained := pair_attained θ a ha (.of true)
+    by_cases h : θ ≤ 1 - θ
+    · simpa [min_eq_left h] using attained.1
+    · simpa [min_eq_right (le_of_not_ge h)] using attained.2
+  · rintro m ⟨u,v,hu,hv,hm⟩
+    obtain ⟨x,s,rfl,hs⟩ := (stratum_iff a ha 0 u).mp hu
+    obtain ⟨y,t,rfl,ht⟩ := (stratum_iff a ha 1 v).mp hv
+    have xs : x = s := by simpa [rowCondition] using hs
+    have yt : y = substitution^[a] t := by simpa [rowCondition] using ht
+    subst x
+    subst y
+    rw [← hm]
+    exact pair_lower θ hθ hθ1 a ha s t
+
 end D5.S3.Arith.FibonacciAtomic.Geometry.NativeBiasedFrontierInfima

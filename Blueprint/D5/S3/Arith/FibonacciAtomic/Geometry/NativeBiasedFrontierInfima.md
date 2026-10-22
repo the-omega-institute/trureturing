@@ -268,6 +268,42 @@ $$\forall a: \mathbb{N}, (1 \leq a) \Rightarrow \forall i: \operatorname{Fin}\le
 
 For every positive a and each of the three labels, membership is equivalent to being U(a,x,y) with precisely that label's parameter condition. Both directions use the full retained fiber and the existing equivalence between canonical rows and complete literal records. Parameters of different alternative originals remain independent.
 
+**Theorem 1.23 (Exact Independent-Pair Decomposition).**
+
+$$\forall theta: \mathbb{R}, \forall a: \mathbb{N}, \forall s: \operatorname{Source}\left(\right), \forall t: \operatorname{Source}\left(\right), \operatorname{distance}\left(theta, \operatorname{U}\left(a, s, s\right), \operatorname{U}\left(a, \operatorname{iterate}\left(\operatorname{rho}\left(\right), a, t\right), t\right)\right) = (((theta) \cdot (\operatorname{distance}\left(theta, s, \operatorname{iterate}\left(\operatorname{rho}\left(\right), a, t\right)\right))) + (((theta) \cdot (1 - theta)) \cdot (\operatorname{distance}\left(theta, s, t\right)))) + (((1 - theta)^{2}) \cdot (\operatorname{distance}\left(theta, \operatorname{iterate}\left(\operatorname{rho}\left(\right), a, s\right), \operatorname{iterate}\left(\operatorname{rho}\left(\right), a, t\right)\right)))$$
+
+*Proof.* Machine-checked in Lean as `D5/S3/Arith/FibonacciAtomic/Geometry/NativeBiasedFrontierInfima.pair_decomposition` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+For every real theta, natural a and independent finite s,t, the distance between U(a,s,s) and U(a,S(t),t) equals theta times A plus theta times one minus theta times B plus the square of one minus theta times C, where A is distance(s,S(t)), B is distance(s,t), and C is distance(S(s),S(t)). The three terms use the original-address prefixes L, RL and RR.
+
+**Definition 1.24 (The Entire Binary-Product Value Set).**
+
+Lean statement: `D5/S3/Arith/FibonacciAtomic/Geometry/NativeBiasedFrontierInfima.pairValues`
+
+*Formalization.* `D5/S3/Arith/FibonacciAtomic/Geometry/NativeBiasedFrontierInfima.pairValues` (`✓ std3`).
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+The set contains distance(theta,u,v) for every retained original u in stratum zero and every independently chosen retained original v in stratum one. No parameters are identified across alternative originals.
+
+**Theorem 1.25 (Attained Exact Binary-Product Infimum).**
+
+$$\forall a: \mathbb{N}, (1 \leq a) \Rightarrow \forall theta: \mathbb{R}, (0 < theta) \Rightarrow (theta < 1) \Rightarrow \operatorname{IsLeast}\left(\operatorname{pairValues}\left(theta, a\right), \operatorname{min}\left(theta, 1 - theta\right)\right)$$
+
+*Proof.* Machine-checked in Lean as `D5/S3/Arith/FibonacciAtomic/Geometry/NativeBiasedFrontierInfima.binary_product_minimum` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+For every supplied a at least one and every real zero less than theta less than one, min(theta,one minus theta) is the least element of the entire binary-product value set. Thus it is both the exact infimum and an attained value. The triangle inequality and unit positive-shift distances give A+B at least one and A+C at least one. The exact decomposition and zero at most A at most one give the lower bound for all independent parameters. Taking s=t attains theta; taking s=S(t) attains one minus theta.
+
 ## References
 
 - Truth anchor: `D5/S3/Arith/FibonacciAtomic/Geometry/NativeBiasedFrontierInfima.Q`
@@ -276,6 +312,7 @@ For every positive a and each of the three labels, membership is equivalent to b
 - Truth anchor: `D5/S3/Arith/FibonacciAtomic/Geometry/NativeBiasedFrontierInfima.U`
 - Truth anchor: `D5/S3/Arith/FibonacciAtomic/Geometry/NativeBiasedFrontierInfima.biased_frontier_bounds`
 - Truth anchor: `D5/S3/Arith/FibonacciAtomic/Geometry/NativeBiasedFrontierInfima.biased_frontier_triangle`
+- Truth anchor: `D5/S3/Arith/FibonacciAtomic/Geometry/NativeBiasedFrontierInfima.binary_product_minimum`
 - Truth anchor: `D5/S3/Arith/FibonacciAtomic/Geometry/NativeBiasedFrontierInfima.distance`
 - Truth anchor: `D5/S3/Arith/FibonacciAtomic/Geometry/NativeBiasedFrontierInfima.distance_shift`
 - Truth anchor: `D5/S3/Arith/FibonacciAtomic/Geometry/NativeBiasedFrontierInfima.exterior`
@@ -284,6 +321,8 @@ For every positive a and each of the three labels, membership is equivalent to b
 - Truth anchor: `D5/S3/Arith/FibonacciAtomic/Geometry/NativeBiasedFrontierInfima.labelClass`
 - Truth anchor: `D5/S3/Arith/FibonacciAtomic/Geometry/NativeBiasedFrontierInfima.label_iff`
 - Truth anchor: `D5/S3/Arith/FibonacciAtomic/Geometry/NativeBiasedFrontierInfima.leaf_partition`
+- Truth anchor: `D5/S3/Arith/FibonacciAtomic/Geometry/NativeBiasedFrontierInfima.pairValues`
+- Truth anchor: `D5/S3/Arith/FibonacciAtomic/Geometry/NativeBiasedFrontierInfima.pair_decomposition`
 - Truth anchor: `D5/S3/Arith/FibonacciAtomic/Geometry/NativeBiasedFrontierInfima.position`
 - Truth anchor: `D5/S3/Arith/FibonacciAtomic/Geometry/NativeBiasedFrontierInfima.retained_iff`
 - Truth anchor: `D5/S3/Arith/FibonacciAtomic/Geometry/NativeBiasedFrontierInfima.rowCondition`

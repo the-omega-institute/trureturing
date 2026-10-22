@@ -31,7 +31,10 @@ internal sealed class NativeBiasedFrontierInfimaDocument : IScribeDocumentDefini
             Item("rowCondition", "Parameters for Each Label", "For label zero, x equals y. For label one, x equals S(y). For label two, x differs from both y and S(y). Every finite y differs from S(y) for positive a.", DescribeRole.Definition),
             Item("Stratum", "Entire Canonical Row Strata", "A stratum contains exactly the retained originals whose actual canonical target row agrees with a source having the selected complete literal record. The existing canonical-row equivalence identifies this with equality of the entire exterior and partition; no source payload is inserted into the row label.", DescribeRole.Definition),
             Result("label_iff", "Exact Complete-Label Conditions", LabelFormula(), "For every positive a, each label of U(a,x,y) is equivalent to its displayed row condition. The exterior has all three holes, and the finite partition tests every pair of complete subtree values. Positive-shift separation prevents the last two holes from agreeing."),
-            Result("stratum_iff", "Every Original in Each Entire Stratum", StratumFormula(), "For every positive a and each of the three labels, membership is equivalent to being U(a,x,y) with precisely that label's parameter condition. Both directions use the full retained fiber and the existing equivalence between canonical rows and complete literal records. Parameters of different alternative originals remain independent."))));
+            Result("stratum_iff", "Every Original in Each Entire Stratum", StratumFormula(), "For every positive a and each of the three labels, membership is equivalent to being U(a,x,y) with precisely that label's parameter condition. Both directions use the full retained fiber and the existing equivalence between canonical rows and complete literal records. Parameters of different alternative originals remain independent."),
+            Result("pair_decomposition", "Exact Independent-Pair Decomposition", PairDecomposition(), "For every real theta, natural a and independent finite s,t, the distance between U(a,s,s) and U(a,S(t),t) equals theta times A plus theta times one minus theta times B plus the square of one minus theta times C, where A is distance(s,S(t)), B is distance(s,t), and C is distance(S(s),S(t)). The three terms use the original-address prefixes L, RL and RR."),
+            Item("pairValues", "The Entire Binary-Product Value Set", "The set contains distance(theta,u,v) for every retained original u in stratum zero and every independently chosen retained original v in stratum one. No parameters are identified across alternative originals.", DescribeRole.Definition),
+            Result("binary_product_minimum", "Attained Exact Binary-Product Infimum", MinimumFormula("pairValues"), "For every supplied a at least one and every real zero less than theta less than one, min(theta,one minus theta) is the least element of the entire binary-product value set. Thus it is both the exact infimum and an attained value. The triangle inequality and unit positive-shift distances give A+B at least one and A+C at least one. The exact decomposition and zero at most A at most one give the lower bound for all independent parameters. Taking s=t attains theta; taking s=S(t) attains one minus theta."))));
 
     private static DocumentBlock Item(string name, string title, string text, DescribeRole role) =>
         Describe.Lean(DescribeId.Create("nativebiasedfrontierinfima-" + name.Replace("_", "").ToLowerInvariant()), DeclarationHandle.Create(Prefix + name), H(title), StatementSource.WithoutFormula(), AssessedProvenance.FromRepo(), Blocks(Paragraph(Text(text))), role);
@@ -65,5 +68,17 @@ internal sealed class NativeBiasedFrontierInfimaDocument : IScribeDocumentDefini
     private static Formula Labels(Formula body) => PositiveA(All("i", Call("Fin", D(3)), All("x", Source, All("y", Source, body))));
     private static Formula LabelFormula() => Labels(IffOf(Eq(Call("literalRecord", Call("Q"), U(V("x"), V("y"))), Call("label", V("i"))), Call("rowCondition", V("a"), V("i"), V("x"), V("y"))));
     private static Formula StratumFormula() => PositiveA(All("i", Call("Fin", D(3)), All("u", Source, IffOf(Call("Stratum", V("a"), V("i"), V("u")), Some("x", Source, Some("y", Source, AndOf(Eq(V("u"), U(V("x"), V("y"))), Call("rowCondition", V("a"), V("i"), V("x"), V("y")))))))));
+
+    private static Formula Add(Formula x, Formula y) => Seq(Open, x, Close, Sp, Plus, Sp, Open, y, Close);
+    private static Formula Mul(Formula x, Formula y) => Seq(Open, x, Close, Sp, Cdot, Sp, Open, y, Close);
+    private static Formula Remainder => Seq(D(1), Sp, Minus, Sp, V("theta"));
+    private static Formula PairDecomposition()
+    {
+        Formula s = V("s"), t = V("t"), theta = V("theta");
+        Formula Dist(Formula x, Formula y) => Call("distance", theta, x, y);
+        Formula rhs = Add(Add(Mul(theta, Dist(s, Shift(t))), Mul(Mul(theta, Remainder), Dist(s, t))), Mul(Seq(Open, Remainder, Close, Caret, Grp(D(2))), Dist(Shift(s), Shift(t))));
+        return All("theta", Real, All("a", Nat, All("s", Source, All("t", Source, Eq(Dist(U(s, s), U(Shift(t), t)), rhs)))));
+    }
+    private static Formula MinimumFormula(string values) => PositiveA(All("theta", Real, Imp(Seq(D(0), Sp, F.Lt, Sp, V("theta")), Imp(Seq(V("theta"), Sp, F.Lt, Sp, D(1)), Call("IsLeast", Call(values, V("theta"), V("a")), Call("min", V("theta"), Remainder))))));
 
 }
