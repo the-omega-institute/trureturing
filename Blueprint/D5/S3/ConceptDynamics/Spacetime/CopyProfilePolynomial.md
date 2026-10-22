@@ -6,9 +6,9 @@ Native multilinear time profiles yield the complete copy polynomial and the fini
 
 **Definition 1.1 (Tagged parallel copies).**
 
-Lean statement: `D5/S3/ConceptDynamics/Spacetime/CopyProfilePolynomial.copies`
+Lean statement: `D5/S3/ConceptDynamics/Spacetime/NativeTimeProfile.copies`
 
-*Formalization.* `D5/S3/ConceptDynamics/Spacetime/CopyProfilePolynomial.copies` (`✓ std3`).
+*Formalization.* `D5/S3/ConceptDynamics/Spacetime/NativeTimeProfile.copies` (`✓ std3`).
 
 *Source.* Repository-derived.
 
@@ -18,9 +18,9 @@ copies 0 is the empty balanced history and copies (n+1) appends one tagged paral
 
 **Definition 1.2 (Independent copy evaluation).**
 
-Lean statement: `D5/S3/ConceptDynamics/Spacetime/CopyProfilePolynomial.value`
+Lean statement: `D5/S3/ConceptDynamics/Spacetime/NativeTimeProfile.value`
 
-*Formalization.* `D5/S3/ConceptDynamics/Spacetime/CopyProfilePolynomial.value` (`✓ std3`).
+*Formalization.* `D5/S3/ConceptDynamics/Spacetime/NativeTimeProfile.value` (`✓ std3`).
 
 *Source.* Repository-derived.
 
@@ -30,9 +30,9 @@ value is the total native value of a copy term under an independent leaf assignm
 
 **Definition 1.3 (The 5B/5C polynomial bridge).**
 
-Lean statement: `D5/S3/ConceptDynamics/Spacetime/CopyProfilePolynomial.CopyPolynomialLaw`
+Lean statement: `D5/S3/ConceptDynamics/Spacetime/NativeTimeProfile.CopyPolynomialLaw`
 
-*Formalization.* `D5/S3/ConceptDynamics/Spacetime/CopyProfilePolynomial.CopyPolynomialLaw` (`✓ std3`).
+*Formalization.* `D5/S3/ConceptDynamics/Spacetime/NativeTimeProfile.CopyPolynomialLaw` (`✓ std3`).
 
 *Source.* Repository-derived.
 
@@ -42,9 +42,9 @@ For every positive temporal-free copy term and balanced input, diagonal evaluati
 
 **Definition 1.4 (Squarefree profile coefficients).**
 
-Lean statement: `D5/S3/ConceptDynamics/Spacetime/CopyProfilePolynomial.profileCoefficients`
+Lean statement: `D5/S3/ConceptDynamics/Spacetime/NativeTimeProfile.profileCoefficients`
 
-*Formalization.* `D5/S3/ConceptDynamics/Spacetime/CopyProfilePolynomial.profileCoefficients` (`✓ std3`).
+*Formalization.* `D5/S3/ConceptDynamics/Spacetime/NativeTimeProfile.profileCoefficients` (`✓ std3`).
 
 *Source.* Repository-derived.
 
@@ -54,9 +54,9 @@ A coefficient is the multilinear profile model evaluated with the input profile 
 
 **Theorem 1.5 (Native independent-copy expansion).**
 
-Lean statement: `D5/S3/ConceptDynamics/Spacetime/CopyProfilePolynomial.profile_multiaffine`
+Lean statement: `D5/S3/ConceptDynamics/Spacetime/NativeTimeProfile.profile_multiaffine`
 
-*Proof.* Machine-checked in Lean as `D5/S3/ConceptDynamics/Spacetime/CopyProfilePolynomial.profile_multiaffine` (`✓ std3`). ∎
+*Proof.* Machine-checked in Lean as `D5/S3/ConceptDynamics/Spacetime/NativeTimeProfile.profile_multiaffine` (`✓ std3`). ∎
 
 *Source.* Repository-derived.
 
@@ -66,9 +66,9 @@ For every temporal-free copy term, balanced input and independently chosen natur
 
 **Theorem 1.6 (Lemma 5B and the full 5C coefficient).**
 
-Lean statement: `D5/S3/ConceptDynamics/Spacetime/CopyProfilePolynomial.copy_polynomial_law`
+Lean statement: `D5/S3/ConceptDynamics/Spacetime/NativeTimeProfile.copy_polynomial_law`
 
-*Proof.* Machine-checked in Lean as `D5/S3/ConceptDynamics/Spacetime/CopyProfilePolynomial.copy_polynomial_law` (`✓ std3`). ∎
+*Proof.* Machine-checked in Lean as `D5/S3/ConceptDynamics/Spacetime/NativeTimeProfile.copy_polynomial_law` (`✓ std3`). ∎
 
 *Source.* Repository-derived.
 
@@ -78,9 +78,9 @@ The actual charge of a temporal-free term on m copies at every leaf is an intege
 
 **Definition 1.7 (Region readout under copies).**
 
-Lean statement: `D5/S3/ConceptDynamics/Spacetime/CopyProfilePolynomial.CopiesRegionLinear`
+Lean statement: `D5/S3/ConceptDynamics/Spacetime/NativeTimeProfile.CopiesRegionLinear`
 
-*Formalization.* `D5/S3/ConceptDynamics/Spacetime/CopyProfilePolynomial.CopiesRegionLinear` (`✓ std3`).
+*Formalization.* `D5/S3/ConceptDynamics/Spacetime/NativeTimeProfile.CopiesRegionLinear` (`✓ std3`).
 
 *Source.* Repository-derived.
 
@@ -90,9 +90,9 @@ This predicate specifies integer linearity of every region readout under tagged 
 
 **Definition 1.8 (Scalar readout of a native word).**
 
-Lean statement: `D5/S3/ConceptDynamics/Spacetime/CopyProfilePolynomial.wordReadout`
+Lean statement: `D5/S3/ConceptDynamics/Spacetime/NativeTimeProfile.wordReadout`
 
-*Formalization.* `D5/S3/ConceptDynamics/Spacetime/CopyProfilePolynomial.wordReadout` (`✓ std3`).
+*Formalization.* `D5/S3/ConceptDynamics/Spacetime/NativeTimeProfile.wordReadout` (`✓ std3`).
 
 *Source.* Repository-derived.
 
@@ -102,9 +102,9 @@ wordReadout extracts q from a successful native one-hole word and returns the ne
 
 **Definition 1.9 (Finite one-hole slice family).**
 
-Lean statement: `D5/S3/ConceptDynamics/Spacetime/CopyProfilePolynomial.CopySliceReadoutLaw`
+Lean statement: `D5/S3/ConceptDynamics/Spacetime/NativeTimeProfile.CopySliceReadoutLaw`
 
-*Formalization.* `D5/S3/ConceptDynamics/Spacetime/CopyProfilePolynomial.CopySliceReadoutLaw` (`✓ std3`).
+*Formalization.* `D5/S3/ConceptDynamics/Spacetime/NativeTimeProfile.CopySliceReadoutLaw` (`✓ std3`).
 
 *Source.* Repository-derived.
 
@@ -114,9 +114,9 @@ CopySliceReadoutLaw is the exact finite normalization consequence needed after t
 
 **Definition 1.10 (Joint saturation for finite word families).**
 
-Lean statement: `D5/S3/ConceptDynamics/Spacetime/CopyProfilePolynomial.CopySaturationLaw`
+Lean statement: `D5/S3/ConceptDynamics/Spacetime/NativeTimeProfile.CopySaturationLaw`
 
-*Formalization.* `D5/S3/ConceptDynamics/Spacetime/CopyProfilePolynomial.CopySaturationLaw` (`✓ std3`).
+*Formalization.* `D5/S3/ConceptDynamics/Spacetime/NativeTimeProfile.CopySaturationLaw` (`✓ std3`).
 
 *Source.* Repository-derived.
 
@@ -126,9 +126,9 @@ CopySaturationLaw records the common indistinguishability construction below a n
 
 **Definition 1.11 (Positive finite diagonal copy expression).**
 
-Lean statement: `D5/S3/ConceptDynamics/Spacetime/CopyProfilePolynomial.CopyQExpressible`
+Lean statement: `D5/S3/ConceptDynamics/Spacetime/NativeTimeProfile.CopyQExpressible`
 
-*Formalization.* `D5/S3/ConceptDynamics/Spacetime/CopyProfilePolynomial.CopyQExpressible` (`✓ std3`).
+*Formalization.* `D5/S3/ConceptDynamics/Spacetime/NativeTimeProfile.CopyQExpressible` (`✓ std3`).
 
 *Source.* Repository-derived.
 
@@ -138,9 +138,9 @@ A region is copy-expressible when some positive finite copy term is total on eve
 
 **Theorem 1.12 (Identification from natural evaluations).**
 
-Lean statement: `D5/S3/ConceptDynamics/Spacetime/CopyProfilePolynomial.polynomial_identification`
+Lean statement: `D5/S3/ConceptDynamics/Spacetime/NativeTimeProfile.polynomial_identification`
 
-*Proof.* Machine-checked in Lean as `D5/S3/ConceptDynamics/Spacetime/CopyProfilePolynomial.polynomial_identification` (`✓ std3`). ∎
+*Proof.* Machine-checked in Lean as `D5/S3/ConceptDynamics/Spacetime/NativeTimeProfile.polynomial_identification` (`✓ std3`). ∎
 
 *Source.* Repository-derived.
 
@@ -150,9 +150,9 @@ An integer polynomial whose values at all natural numbers are n times a fixed in
 
 **Theorem 1.13 (Exact regional replication law).**
 
-Lean statement: `D5/S3/ConceptDynamics/Spacetime/CopyProfilePolynomial.copies_region_linear`
+Lean statement: `D5/S3/ConceptDynamics/Spacetime/NativeTimeProfile.copies_region_linear`
 
-*Proof.* Machine-checked in Lean as `D5/S3/ConceptDynamics/Spacetime/CopyProfilePolynomial.copies_region_linear` (`✓ std3`). ∎
+*Proof.* Machine-checked in Lean as `D5/S3/ConceptDynamics/Spacetime/NativeTimeProfile.copies_region_linear` (`✓ std3`). ∎
 
 *Source.* Repository-derived.
 
@@ -162,9 +162,9 @@ Every fixed region readout on n tagged parallel copies equals n times its value 
 
 **Theorem 1.14 (Lemma 6 for a common finite family).**
 
-Lean statement: `D5/S3/ConceptDynamics/Spacetime/CopyProfilePolynomial.copy_saturation_law`
+Lean statement: `D5/S3/ConceptDynamics/Spacetime/NativeTimeProfile.copy_saturation_law`
 
-*Proof.* Machine-checked in Lean as `D5/S3/ConceptDynamics/Spacetime/CopyProfilePolynomial.copy_saturation_law` (`✓ std3`). ∎
+*Proof.* Machine-checked in Lean as `D5/S3/ConceptDynamics/Spacetime/NativeTimeProfile.copy_saturation_law` (`✓ std3`). ∎
 
 *Source.* Repository-derived.
 
@@ -174,9 +174,9 @@ Any finite family of total one-hole words admits a common nonpositive threshold 
 
 **Theorem 1.15 (Polynomial identification recovers the slices).**
 
-Lean statement: `D5/S3/ConceptDynamics/Spacetime/CopyProfilePolynomial.copy_slice_readout_law`
+Lean statement: `D5/S3/ConceptDynamics/Spacetime/NativeTimeProfile.copy_slice_readout_law`
 
-*Proof.* Machine-checked in Lean as `D5/S3/ConceptDynamics/Spacetime/CopyProfilePolynomial.copy_slice_readout_law` (`✓ std3`). ∎
+*Proof.* Machine-checked in Lean as `D5/S3/ConceptDynamics/Spacetime/NativeTimeProfile.copy_slice_readout_law` (`✓ std3`). ∎
 
 *Source.* Repository-derived.
 
@@ -186,9 +186,9 @@ Normalize the total copy term before choosing the input. Identify its polynomial
 
 **Theorem 1.16 (Finite word sums force a uniform tail).**
 
-Lean statement: `D5/S3/ConceptDynamics/Spacetime/CopyProfilePolynomial.sum_word_readouts_implies_tail`
+Lean statement: `D5/S3/ConceptDynamics/Spacetime/NativeTimeProfile.sum_word_readouts_implies_tail`
 
-*Proof.* Machine-checked in Lean as `D5/S3/ConceptDynamics/Spacetime/CopyProfilePolynomial.sum_word_readouts_implies_tail` (`✓ std3`). ∎
+*Proof.* Machine-checked in Lean as `D5/S3/ConceptDynamics/Spacetime/NativeTimeProfile.sum_word_readouts_implies_tail` (`✓ std3`). ∎
 
 *Source.* Repository-derived.
 
@@ -198,9 +198,9 @@ The proved joint saturation shows that a finite sum of total one-hole word reado
 
 **Theorem 1.17 (Copy necessity).**
 
-Lean statement: `D5/S3/ConceptDynamics/Spacetime/CopyProfilePolynomial.copy_q_expressible_implies_tail`
+Lean statement: `D5/S3/ConceptDynamics/Spacetime/NativeTimeProfile.copy_q_expressible_implies_tail`
 
-*Proof.* Machine-checked in Lean as `D5/S3/ConceptDynamics/Spacetime/CopyProfilePolynomial.copy_q_expressible_implies_tail` (`✓ std3`). ∎
+*Proof.* Machine-checked in Lean as `D5/S3/ConceptDynamics/Spacetime/NativeTimeProfile.copy_q_expressible_implies_tail` (`✓ std3`). ∎
 
 *Source.* Repository-derived.
 
@@ -210,9 +210,9 @@ Copy expressibility implies Tail by the proved polynomial, slice-readout and fin
 
 **Theorem 1.18 (Tail supplies a one-copy expression).**
 
-Lean statement: `D5/S3/ConceptDynamics/Spacetime/CopyProfilePolynomial.tail_implies_copy_q_expressible`
+Lean statement: `D5/S3/ConceptDynamics/Spacetime/NativeTimeProfile.tail_implies_copy_q_expressible`
 
-*Proof.* Machine-checked in Lean as `D5/S3/ConceptDynamics/Spacetime/CopyProfilePolynomial.tail_implies_copy_q_expressible` (`✓ std3`). ∎
+*Proof.* Machine-checked in Lean as `D5/S3/ConceptDynamics/Spacetime/NativeTimeProfile.tail_implies_copy_q_expressible` (`✓ std3`). ∎
 
 *Source.* Repository-derived.
 
@@ -222,24 +222,24 @@ The existing one-hole tail construction embeds as a positive one-occurrence copy
 
 ## References
 
-- Truth anchor: `D5/S3/ConceptDynamics/Spacetime/CopyProfilePolynomial.CopiesRegionLinear`
-- Truth anchor: `D5/S3/ConceptDynamics/Spacetime/CopyProfilePolynomial.CopyPolynomialLaw`
-- Truth anchor: `D5/S3/ConceptDynamics/Spacetime/CopyProfilePolynomial.CopyQExpressible`
-- Truth anchor: `D5/S3/ConceptDynamics/Spacetime/CopyProfilePolynomial.CopySaturationLaw`
-- Truth anchor: `D5/S3/ConceptDynamics/Spacetime/CopyProfilePolynomial.CopySliceReadoutLaw`
-- Truth anchor: `D5/S3/ConceptDynamics/Spacetime/CopyProfilePolynomial.copies`
-- Truth anchor: `D5/S3/ConceptDynamics/Spacetime/CopyProfilePolynomial.copies_region_linear`
-- Truth anchor: `D5/S3/ConceptDynamics/Spacetime/CopyProfilePolynomial.copy_polynomial_law`
-- Truth anchor: `D5/S3/ConceptDynamics/Spacetime/CopyProfilePolynomial.copy_q_expressible_implies_tail`
-- Truth anchor: `D5/S3/ConceptDynamics/Spacetime/CopyProfilePolynomial.copy_saturation_law`
-- Truth anchor: `D5/S3/ConceptDynamics/Spacetime/CopyProfilePolynomial.copy_slice_readout_law`
-- Truth anchor: `D5/S3/ConceptDynamics/Spacetime/CopyProfilePolynomial.polynomial_identification`
-- Truth anchor: `D5/S3/ConceptDynamics/Spacetime/CopyProfilePolynomial.profileCoefficients`
-- Truth anchor: `D5/S3/ConceptDynamics/Spacetime/CopyProfilePolynomial.profile_multiaffine`
-- Truth anchor: `D5/S3/ConceptDynamics/Spacetime/CopyProfilePolynomial.sum_word_readouts_implies_tail`
-- Truth anchor: `D5/S3/ConceptDynamics/Spacetime/CopyProfilePolynomial.tail_implies_copy_q_expressible`
-- Truth anchor: `D5/S3/ConceptDynamics/Spacetime/CopyProfilePolynomial.value`
-- Truth anchor: `D5/S3/ConceptDynamics/Spacetime/CopyProfilePolynomial.wordReadout`
+- Truth anchor: `D5/S3/ConceptDynamics/Spacetime/NativeTimeProfile.CopiesRegionLinear`
+- Truth anchor: `D5/S3/ConceptDynamics/Spacetime/NativeTimeProfile.CopyPolynomialLaw`
+- Truth anchor: `D5/S3/ConceptDynamics/Spacetime/NativeTimeProfile.CopyQExpressible`
+- Truth anchor: `D5/S3/ConceptDynamics/Spacetime/NativeTimeProfile.CopySaturationLaw`
+- Truth anchor: `D5/S3/ConceptDynamics/Spacetime/NativeTimeProfile.CopySliceReadoutLaw`
+- Truth anchor: `D5/S3/ConceptDynamics/Spacetime/NativeTimeProfile.copies`
+- Truth anchor: `D5/S3/ConceptDynamics/Spacetime/NativeTimeProfile.copies_region_linear`
+- Truth anchor: `D5/S3/ConceptDynamics/Spacetime/NativeTimeProfile.copy_polynomial_law`
+- Truth anchor: `D5/S3/ConceptDynamics/Spacetime/NativeTimeProfile.copy_q_expressible_implies_tail`
+- Truth anchor: `D5/S3/ConceptDynamics/Spacetime/NativeTimeProfile.copy_saturation_law`
+- Truth anchor: `D5/S3/ConceptDynamics/Spacetime/NativeTimeProfile.copy_slice_readout_law`
+- Truth anchor: `D5/S3/ConceptDynamics/Spacetime/NativeTimeProfile.polynomial_identification`
+- Truth anchor: `D5/S3/ConceptDynamics/Spacetime/NativeTimeProfile.profileCoefficients`
+- Truth anchor: `D5/S3/ConceptDynamics/Spacetime/NativeTimeProfile.profile_multiaffine`
+- Truth anchor: `D5/S3/ConceptDynamics/Spacetime/NativeTimeProfile.sum_word_readouts_implies_tail`
+- Truth anchor: `D5/S3/ConceptDynamics/Spacetime/NativeTimeProfile.tail_implies_copy_q_expressible`
+- Truth anchor: `D5/S3/ConceptDynamics/Spacetime/NativeTimeProfile.value`
+- Truth anchor: `D5/S3/ConceptDynamics/Spacetime/NativeTimeProfile.wordReadout`
 - Dependency: [D5/S3/ConceptDynamics/Spacetime/NativeTimeProfile](NativeTimeProfile.md)
 - Dependency: [D5/S3/ConceptDynamics/Spacetime/RegionFilterQExpressibility](RegionFilterQExpressibility.md)
 - Dependency: [D5/S3/ConceptDynamics/Spacetime/TotalCopyNormalization](TotalCopyNormalization.md)

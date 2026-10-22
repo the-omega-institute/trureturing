@@ -4,18 +4,12 @@ namespace StrataLint.Scribe.Blueprint.D5.S3.ConceptDynamics.Spacetime;
 
 internal sealed class CopyRegionExpressibilityDocument : IScribeDocumentDefinition
 {
-    private const string Prefix = "D5/S3/ConceptDynamics/Spacetime/CopyRegionExpressibility.";
+    private const string Prefix = "D5/S3/ConceptDynamics/Spacetime/NativeTimeProfile.";
 
     public DocumentDefinition Create() => DocumentDefinition.Create(ScribeNode.Create(
         "Positive total native copy expressibility is equivalent to the uniform past-tail criterion.",
         H("Copy Region Expressibility"),
         Blocks(
-            Describe.Lean(DescribeId.Create("proposition-64"), DeclarationHandle.Create(Prefix + "Proposition64"),
-                H("Copy expressibility exactly characterizes Tail"), StatementSource.WithoutFormula(), AssessedProvenance.FromRepo(),
-                Blocks(Paragraph(Text("Proposition64 states the source quantifiers: a positive finite total diagonal copy expression exists exactly when the region has a uniform past tail."))), DescribeRole.Definition),
-            Describe.Lean(DescribeId.Create("three-way"), DeclarationHandle.Create(Prefix + "Proposition64ThreeWay"),
-                H("Copy, one-hole and tail forms"), StatementSource.WithoutFormula(), AssessedProvenance.FromRepo(),
-                Blocks(Paragraph(Text("The three-way predicate records agreement of copy expressibility with the existing one-hole QExpressible criterion and Tail."))), DescribeRole.Definition),
             Describe.Lean(DescribeId.Create("two-way"), DeclarationHandle.Create(Prefix + "proposition64"),
                 H("Proposition 64"), StatementSource.WithoutFormula(), AssessedProvenance.FromRepo(),
                 Blocks(Paragraph(Text("For every region, the exact positive-arity all-input copy criterion is equivalent to Tail. Necessity uses the native profile polynomial, its full linear coefficient, and finite joint saturation; sufficiency reuses the frozen one-hole construction. No profile or saturation assumptions remain."))), DescribeRole.Theorem),

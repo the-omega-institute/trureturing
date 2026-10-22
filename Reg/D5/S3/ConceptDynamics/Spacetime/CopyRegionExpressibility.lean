@@ -6,7 +6,7 @@ set_option backward.isDefEq.respectTransparency false
 namespace Reg.D5.S3.ConceptDynamics.Spacetime.CopyRegionExpressibility
 open _root_.D5.S3.ConceptDynamics.Spacetime
 open _root_.D5.S3.ConceptDynamics.InformationEscape.DependentFamily
-open RegionFilterQExpressibility CopyProfilePolynomial CopyRegionExpressibility
+open RegionFilterQExpressibility NativeTimeProfile
 noncomputable section
 open Classical
 
@@ -82,9 +82,9 @@ def evidence : Registration arena (type_of% (@proposition64)) where
     rcases hi with rfl | rfl <;> simp [actual, realize, he, hn, hq, hnq, empty_tail, alternating_not_tail]
 
 def registration : LeanInformationAudit.Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0}
-    (@_root_.D5.S3.ConceptDynamics.Spacetime.CopyRegionExpressibility.proposition64)
+    (@_root_.D5.S3.ConceptDynamics.Spacetime.NativeTimeProfile.proposition64)
     (Realization signature) Unit Unit := {
-  unitName := `Reg.D5.S3.ConceptDynamics.Spacetime.CopyRegionExpressibility.proposition64
+  unitName := `Reg.D5.S3.ConceptDynamics.Spacetime.NativeTimeProfile.proposition64
   realizationName := `Reg.D5.S3.ConceptDynamics.Spacetime.CopyRegionExpressibility.Classification.evidence
   realizationSource := none
   generated := false
@@ -101,7 +101,7 @@ def registration : LeanInformationAudit.Contract.Registration.{_,_,_,0,0,0,_,_,_
   partialSensitivity := none
   escapeFrom := none
   sourceSelection := some {
-    owner := `D5.S3.ConceptDynamics.Spacetime.CopyRegionExpressibility
+    owner := `D5.S3.ConceptDynamics.Spacetime.NativeTimeProfile
     definition := none
     coordinates := #[]
     readouts := #[{
@@ -197,9 +197,9 @@ def evidence : Registration arena (type_of% (@proposition64_three_way)) where
     rcases hi with rfl | rfl | rfl <;> simp [actual, realize, he, hn, hq, hnq, empty_tail, alternating_not_tail]
 
 def registration : LeanInformationAudit.Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0}
-    (@_root_.D5.S3.ConceptDynamics.Spacetime.CopyRegionExpressibility.proposition64_three_way)
+    (@_root_.D5.S3.ConceptDynamics.Spacetime.NativeTimeProfile.proposition64_three_way)
     (Realization signature) Unit Unit := {
-  unitName := `Reg.D5.S3.ConceptDynamics.Spacetime.CopyRegionExpressibility.proposition64_three_way
+  unitName := `Reg.D5.S3.ConceptDynamics.Spacetime.NativeTimeProfile.proposition64_three_way
   realizationName := `Reg.D5.S3.ConceptDynamics.Spacetime.CopyRegionExpressibility.ThreeWay.evidence
   realizationSource := none
   generated := false
@@ -216,7 +216,7 @@ def registration : LeanInformationAudit.Contract.Registration.{_,_,_,0,0,0,_,_,_
   partialSensitivity := none
   escapeFrom := none
   sourceSelection := some {
-    owner := `D5.S3.ConceptDynamics.Spacetime.CopyRegionExpressibility
+    owner := `D5.S3.ConceptDynamics.Spacetime.NativeTimeProfile
     definition := none
     coordinates := #[]
     readouts := #[{

@@ -228,4 +228,5 @@ For every arity, temporal-free copy term, independent balanced leaf assignment a
 - Truth anchor: `D5/S3/ConceptDynamics/Spacetime/NativeTimeProfile.successors`
 - Truth anchor: `D5/S3/ConceptDynamics/Spacetime/NativeTimeProfile.unaryCell`
 - Dependency: [D5/S3/ConceptDynamics/Spacetime/CoarseObservation](CoarseObservation.md)
+- Dependency: [D5/S3/ConceptDynamics/Spacetime/RegionFilterQExpressibility](RegionFilterQExpressibility.md)
 - Dependency: [D5/S3/ConceptDynamics/Spacetime/TotalCopyNormalization](TotalCopyNormalization.md)

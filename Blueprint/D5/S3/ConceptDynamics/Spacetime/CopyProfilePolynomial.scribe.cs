@@ -4,7 +4,7 @@ namespace StrataLint.Scribe.Blueprint.D5.S3.ConceptDynamics.Spacetime;
 
 internal sealed class CopyProfilePolynomialDocument : IScribeDocumentDefinition
 {
-    private const string Prefix = "D5/S3/ConceptDynamics/Spacetime/CopyProfilePolynomial.";
+    private const string Prefix = "D5/S3/ConceptDynamics/Spacetime/NativeTimeProfile.";
 
     public DocumentDefinition Create() => DocumentDefinition.Create(ScribeNode.Create(
         "Native multilinear time profiles yield the complete copy polynomial and the finite slice argument for tail regions.",
