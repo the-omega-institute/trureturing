@@ -7,7 +7,7 @@
    digest: Sorted limits of the actual infinite three-node tail Gram follow in both branches from the full336 multiplicative squeeze. -/
 
 import D5.S3.Weil.ZetaBridge.ActualThreeNodeFiniteLimits
-import D5.S3.Weil.ZetaBridge.ActualThreeNodeFull336
+import D5.S3.Weil.ZetaBridge.ActualThreeNodeSourceHeadBridge
 import D5.S3.Quantum.Schatten.SingularValueOrder
 
 noncomputable section

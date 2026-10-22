@@ -261,4 +261,4 @@ theorem exceptional_finite_sorted (g mu r : ℝ) (hh : 0 < g ^ 2 + mu)     (hr :
 - Truth anchor: `D5/S3/Weil/ZetaBridge/ActualThreeNodeFiniteSpectrum.rho_order`
 - Truth anchor: `D5/S3/Weil/ZetaBridge/ActualThreeNodeFiniteSpectrum.rho_product`
 - Truth anchor: `D5/S3/Weil/ZetaBridge/ActualThreeNodeFiniteSpectrum.rho_sum`
-- Dependency: [D5/S3/Weil/ZetaBridge/ActualThreeNodeFiniteEnergy](ActualThreeNodeFiniteEnergy.md)
+- Dependency: [D5/S3/Weil/ZetaBridge/ActualThreeNodeSourceHeadBridge](ActualThreeNodeSourceHeadBridge.md)

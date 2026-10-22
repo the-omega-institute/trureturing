@@ -6,7 +6,7 @@
    utility: none
    digest: The physical finite matrix has exactly three roots with multiplicity and the descending spectrum preserves all ties. -/
 
-import D5.S3.Weil.ZetaBridge.ActualThreeNodeFiniteEnergy
+import D5.S3.Weil.ZetaBridge.ActualThreeNodeSourceHeadBridge
 import Mathlib.Analysis.Matrix.Spectrum
 import Mathlib.Data.Multiset.Sort
 import Mathlib.LinearAlgebra.Matrix.Charpoly.Basic

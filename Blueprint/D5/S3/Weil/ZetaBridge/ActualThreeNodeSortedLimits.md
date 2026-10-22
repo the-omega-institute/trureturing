@@ -165,4 +165,4 @@ theorem actual_zero_sorted_limits {c : ℕ} (hc : 3 ≤ c) {n : ℤ} (hn : n ≠
 - Truth anchor: `D5/S3/Weil/ZetaBridge/ActualThreeNodeSortedLimits.relative_factor_limits`
 - Dependency: [D5/S3/Quantum/Schatten/SingularValueOrder](../../Quantum/Schatten/SingularValueOrder.md)
 - Dependency: [D5/S3/Weil/ZetaBridge/ActualThreeNodeFiniteLimits](ActualThreeNodeFiniteLimits.md)
-- Dependency: [D5/S3/Weil/ZetaBridge/ActualThreeNodeFull336](ActualThreeNodeFull336.md)
+- Dependency: [D5/S3/Weil/ZetaBridge/ActualThreeNodeSourceHeadBridge](ActualThreeNodeSourceHeadBridge.md)
