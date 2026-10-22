@@ -56,6 +56,14 @@
 
 **消化系统只是辅助追踪，不承担数学真值。** 其索引、覆盖路由和账目状态的一致性偏差，在相关现有记录中简短注明原因即可；不要求另立案、立即结算、全局对齐或专门派席反复审计，不为账本完美而扩建工具、重跑验证或占用形式化主线。能够随手完成的 canonical 结算照做；其余允许暂存偏差，继续真正缺失的数学内容。若现役机器门实际阻断形式化提交，只做恢复该提交所需的最小处理。不得伪报覆盖、证明或检查通过；Lean 核验、公理边界和冻结真值保护仍须严格执行。本款优先于本文件其他条款对消化记账、结算及修器的投入要求，但不豁免下款。
 
+**纯消化任务不做验证工作。** 纯消化任务指不新增、不首冻 D5 数学声明的交付，包括：用既有冻结声明 `make cover` / `cover-batch`，`make settle` / `settle-batch` / `settle-clear`（非命题与仅由钉版上游闭合的命题），写入账本的 `make decompose`，以及第 4.3 条只去 `private`、由 canonical writer 重钉并登记的公开。这类任务的流程：
+- 不要求逐句探针、证据存档或活路径读数，不派评审三席、补证席或修复席；
+- 现役 writer 命令退出 0、PR 的 required checks 绿，即可合入；第 4.3 条「公开化须验证消费者」由 required checks（含重建受影响模块的 `current`）承担；
+- PR 正文如实写出账目进出与未结条目，仍不得伪报覆盖、证明或检查通过；
+- 账目偏差按上款简注，事后由 writer 修正。
+
+本款优先于第 5.6、5.7 条与第 6.1 条对独立评审的要求。只要交付新增或首冻 D5 声明，就是实质形式化，判形、准入、探针、冻结前判形与三席评审照旧。
+
 **形式化直接写 Lean 与 Scribe。** 形式化交付的必需面是 D5 Lean 与对应的 Blueprint Scribe，不以理论卷或摄入为前置。开工前用 `make show-atom`/`make atom-context` 查所处理内容是否已有 atom：已有就在同一交付中经 `make deposit ATOM_ID=… GID=…` 冻结并覆盖，或对既有冻结声明 `make cover`；尚无 atom 时直接写 D5 Lean 与 Scribe，经 `make deposit-uncovered GID=…` 冻结，不要求先补 `docs/develop/theory/**` 正文或运行 `make ingest`。理论卷可按第 3.8 条另写，用于散文推理、地形图或日后消化，不是形式化的前置。无 atom 不豁免第 3.2 条判形与准入依据、第 3.3 条用途规则及第 3.7 条文献表态。
 **形式化不改判官**(τ=0 owner 2026-09-29,原话「形式化过程中, 不要改判官, 如果信息逃逸无法登记也不要改判官」):形式化 lane 与形式化交付只改内容面(D5、Blueprint、Reg 声明源码与内容模板、消化账本、理论卷),不得修改判官——`tools/**`(含 StrataLint、lean-inspector、报告生成与调度脚本)、判官 Interface/Impl 包、`.github/**` 及其它准入面。判官缺陷或判官阻塞形式化时,新建或复用 issue 写明阻塞判词与读数,继续其余数学工作;判官修复归判官所有者线,不在形式化交付中夹带。本款对形式化 lane 优先于第 5.5 条的当场 hotfix 要求。
 〔守护：**工作优先级与软纪律**；本条不把消化收据升级为证明，也不宣称既有机器检查已随文字修改。〕
@@ -460,7 +468,7 @@ backfill 条目由 residual-open 迁入 absorbed-closed        消化闭合
 ### 5.7 单点错误与独立核验
 
 **再聪明的单点也会错。** 正确性靠机器可判的绿灯与独立收敛,不靠单点自信。
-*成熟锚*:纵深防御、对抗评审、瑞士奶酪模型。〔守护:**流程纪律**·三席+异模型由 sshx 编排,不可 lint〕
+*成熟锚*:纵深防御、对抗评审、瑞士奶酪模型。〔守护:**流程纪律**·三席+异模型由 sshx 编排,不可 lint;纯消化任务不派三席,见第 1.2 条〕
 
 ### 5.8 模型多样性与诚实声明
 
@@ -518,7 +526,7 @@ Commit ordinary working snapshots promptly with `make worktree-checkpoint MESSAG
 
 All registered worktree cleanup follows SPEC A20/A20.1: selected unlocked trees are eligible; locked trees require at least 24 hours since Git lock-file modification. Automatic selection pins and reports origin/dev as an immutable commit, independently of BASE. A clean tree with no unfinished Git operation is eligible when its observed tip is an ancestor of that dev commit and its last Git update was at least 3 hours ago. The last update is the maximum of all HEAD reflog timestamps and the HEAD commit time. Known unmerged trees and merged trees with outstanding work require both 24 hours without a Git update and at least 300 commits behind BASE. Unknown dev/ancestry/update readings retain the tree with a named reason. FORCE reobserves tip, branch, registration, lock and Git directory, then recomputes the selection result before removal; any changed observation or selection result retains with race_changed. Original-selector removal checkpoints ordinary changes, including changes made after selection. Named removal bypasses automatic selectors. Keep whole-batch eligibility preflight, main/nested registration and target identity protection. Before removal, checkpoint outstanding ordinary changes using the real index. Retain the current branch, or for detached HEAD create a new local recovery branch at the resulting commit without replacing an existing ref. Retain that branch through the entire cleanup, including the orphan sweep. An unmerged/unfinished operation, failed commit or failed recovery-branch creation retains the affected tree with a concrete failure; earlier completed removals remain reported. Clean trees need no empty commit. Ignored files and intermediate staged versions are outside snapshot recovery. Activity, cwd, programs, participation and cache use do not govern deletion. Remote confirmation is the separate timely-publication workflow, not a recycling prerequisite. Native branch checkout reconstructs the committed snapshot while its ref and reachable objects remain intact. Non-worktree artifacts and later orphan ref retirement retain independent policies.
 
-Delivery follows push/remote confirmation, PR, required checks, MERGED, then first dev push/affected-entrance verification. CLOSED is not MERGED; CI success, an open PR or integration qualification is not delivery completion. After delivery completes, the task removes the worktrees it created unless a later task has taken one over (see the worktree location and cleanup paragraph above). Independent review follows section 5.6 and integration follows sections 8.12-8.14.
+Delivery follows push/remote confirmation, PR, required checks, MERGED, then first dev push/affected-entrance verification. CLOSED is not MERGED; CI success, an open PR or integration qualification is not delivery completion. After delivery completes, the task removes the worktrees it created unless a later task has taken one over (see the worktree location and cleanup paragraph above). Independent review follows section 5.6, except that a pure digestion delivery has none (section 1.2), and integration follows sections 8.12-8.14.
 
 ### 6.2 PR 层序、delta 门与债务收缩
 

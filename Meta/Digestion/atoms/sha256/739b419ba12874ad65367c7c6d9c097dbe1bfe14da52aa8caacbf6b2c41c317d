@@ -1,0 +1,25 @@
+## 106. Exact Fourier guessing and a lower bound for every decoder
+
+Let $E_{ij}=|i\rangle\langle j|$, $Q_j=E_{jj}$,
+$Q_{01}=Q_0+Q_1$, and $\omega=e^{2\pi i/3}$. Define the Fourier basis
+and its output ensemble by
+
+$$
+|\psi_k\rangle=\frac{|0\rangle+\omega^k|1\rangle+
+                              \omega^{2k}|2\rangle}{\sqrt3},
+\quad P_k=|\psi_k\rangle\langle\psi_k|,
+\quad \sigma_k=\Phi_s(P_k)=\frac{I+sA_k}{3},
+\quad A_k=\omega^{-k}E_{01}+\omega^k E_{10},
+\quad k=0,1,2.
+\tag{106.1}
+$$
+
+The projectors $P_k$ are pairwise orthogonal and sum to $I$, since
+$1+\omega+\omega^2=0$. The outputs form an equiprobable geometrically
+uniform ensemble:
+$\sigma_k=S^k\sigma_0S^{-k}$ with
+$S=\operatorname{diag}(1,\omega,\omega^2)$.
+The primal POVM and dual positive-operator formulations for this setting
+are those of [Assalini–Cariolaro–Pierobon, §§II–III][ACP-FG]. The following
+calculation gives both certificates for the particular ensemble (106.1).
+

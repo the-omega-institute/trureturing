@@ -1,0 +1,9 @@
+fingerprints:
+  raw_sha256: sha256:986f85fc46836d840ce3adf393a87158c38c07d59d61419dcfa87b3f6d0342ac
+  normalized_sha256: sha256:986f85fc46836d840ce3adf393a87158c38c07d59d61419dcfa87b3f6d0342ac
+cas_ref: sha256:986f85fc46836d840ce3adf393a87158c38c07d59d61419dcfa87b3f6d0342ac
+coverage_gids:
+  - gid: D5/S3/ConceptDynamics/DefinitionEscapeMonotonicity/SubfamilyInadequacyPersistence.full_family_inadequacy_persists_to_subfamilies
+    target_statement_id: sha256:9eb8ae1ad8cc9c8aaeca522a3d8e222beea6c1a8cda375e2dbec863a26dfb372
+receipts:
+  unresolved_subitems: []

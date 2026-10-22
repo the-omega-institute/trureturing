@@ -1,0 +1,36 @@
+**定义 10.1（统一平面多项式）。** 保持第 9 章的记号。本章 $D$ 表示正分母，漂移仍记 $d$：
+
+$$
+D=b^3L=bTXN>0,\qquad B_4=Y-k_4,\qquad B_{5,F}=p-k_{5,F}.
+\tag{10.1}
+$$
+
+定义下列全系数已指定的多项式：
+
+$$
+\begin{aligned}
+\mathcal K_F={}&W_F(15AbTN-20CXN+10zbTX)\\
+&-U(4Ab^2TN-6CbXN+4zb^2TX)\\
+&+UW_F\bigl(-AbTN+4CXN-6zbTX\\
+&\hspace{22mm}+10(A-C)bN+20(z-A)b^2T+20(C-z)bX\bigr),\\
+R_F(r,b;C,z,Y,p)={}&YN_{5,F}-bpN_4+\mathcal K_F.
+\end{aligned}
+\tag{10.2}
+$$
+
+式 (9.6)–(9.7) 与式 (10.2) 在整数系数环 $\mathbb Z[A,C,z,Y,p,r,b]$ 中定义所有项，随后取 $A=24$。其与漂移余项的精确关系为
+
+$$
+R_F=D\bigl(a_{5,F}B_4-a_4B_{5,F}\bigr).
+\tag{10.3}
+$$
+
+对每个实数历史，置
+
+$$
+\Gamma_F(C,z,Y,p)=\{(r,b)\in\Omega:R_F(r,b;C,z,Y,p)=0\}.
+\tag{10.4}
+$$
+
+这里 $\Gamma_F$ 是源平面中的零集，不是预先给定的有限世界集。
+

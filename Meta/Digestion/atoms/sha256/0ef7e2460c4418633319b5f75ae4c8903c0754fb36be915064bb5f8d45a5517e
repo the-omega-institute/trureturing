@@ -1,0 +1,90 @@
+**Theorem 120.2 (complete native state-metric class).** Suppose $k>0$.
+All and only the metrics satisfying (120.2) are the following matrices,
+parametrized uniquely by $q\in\mathbb R^k$ and a symmetric $K\succ0$:
+
+$$
+\begin{aligned}
+Z&=K^{-1}+hqq^{\mathsf T},\qquad
+\mathsf W=\begin{pmatrix}I_n&0\\P&I_k\end{pmatrix},\\
+\mathsf M&=\mathsf W^{-\mathsf T}
+ \begin{pmatrix}G&gq^{\mathsf T}\\qg^{\mathsf T}&Z\end{pmatrix}
+ \mathsf W^{-1}\\
+&=\begin{pmatrix}
+G-gq^{\mathsf T}P-P^{\mathsf T}qg^{\mathsf T}+P^{\mathsf T}ZP
+ &gq^{\mathsf T}-P^{\mathsf T}Z\\
+qg^{\mathsf T}-ZP&Z
+\end{pmatrix}.
+\end{aligned}
+\tag{120.3}
+$$
+
+In particular the class is nonempty for every fixed positive diagonal
+$G$, including every nontrivial branch in the full native domain $D$ of
+IV (112.1). With $a=Kq$, $b=P^{\mathsf T}a$ and
+$R=K-\mathbf1_k a^{\mathsf T}$, the full generator is
+
+$$
+\mathcal A=
+\begin{pmatrix}
+A+\mathbf1_n b^{\mathsf T}&-\mathbf1_n a^{\mathsf T}\\
+PA-RP&R
+\end{pmatrix},\qquad \mathcal A\mathbf1_{n+k}=0.
+\tag{120.4}
+$$
+
+**Proof.** Reuse the native identities (120.1), rather than changing
+the birth form. The coordinates $\mathsf W(f,z)=(f,Pf+z)$ give
+
+$$
+\mathsf W^{\mathsf T}L'\mathsf W
+ =\begin{pmatrix}L&0\\0&I_k\end{pmatrix},\qquad
+\mathsf W^{-1}T=\begin{pmatrix}I_n\\0\end{pmatrix}.
+\tag{120.5}
+$$
+
+The norm condition fixes the upper-left block of
+$\widetilde{\mathsf M}=\mathsf W^{\mathsf T}\mathsf M\mathsf W$ to $G$.
+Write its other blocks as $X,X^{\mathsf T},Z$. The full generator
+condition, multiplied by $\widetilde{\mathsf M}$, is exactly
+
+$$
+\begin{pmatrix}G&X\\X^{\mathsf T}&Z\end{pmatrix}
+\begin{pmatrix}G^{-1}L\\0\end{pmatrix}
+=\begin{pmatrix}L\\0\end{pmatrix},
+\qquad X^{\mathsf T}G^{-1}L=0.
+\tag{120.6}
+$$
+
+The old occurrence tree is connected, so
+$\ker L=\mathbb R\mathbf1_n$. Hence each row of
+$X^{\mathsf T}G^{-1}$ is a multiple of $\mathbf1_n^{\mathsf T}$;
+equivalently $X=gq^{\mathsf T}$ for a unique $q$. This includes $n=1$,
+where $L=0$ and every row of a one-column matrix has this form.
+
+The standard positive-definite Schur-complement and block-inverse
+identities are used here as ingredients: Boyd--Vandenberghe,
+[*Convex Optimization*, Appendix A.5.5, printed p. 650](https://web.stanford.edu/~boyd/cvxbook/bv_cvxbook.pdf),
+with the existing [bibliographic entry](../../../Library/QuadraticForms/boydvandenberghe2004convex.md).
+For these particular blocks the Schur complement is
+$Z-X^{\mathsf T}G^{-1}X=Z-hqq^{\mathsf T}$. It is positive definite
+exactly when it equals $K^{-1}$ for a unique $K\succ0$. Congruence by
+the invertible $\mathsf W$ proves both necessity and sufficiency in
+(120.3). Inverting these blocks gives
+
+$$
+\widetilde{\mathsf M}^{-1}
+=\begin{pmatrix}
+G^{-1}+\mathbf1_n(q^{\mathsf T}Kq)\mathbf1_n^{\mathsf T}
+ &-\mathbf1_n q^{\mathsf T}K\\
+-Kq\mathbf1_n^{\mathsf T}&K
+\end{pmatrix}.
+\tag{120.7}
+$$
+
+Since $\mathbf1_n^{\mathsf T}L=0$, its product with the form in
+(120.5) is $\left(\begin{smallmatrix}A&-\mathbf1_n a^{\mathsf T}\\0&K\end{smallmatrix}\right)$.
+Conjugating back by $\mathsf W$ yields (120.4). Finally
+$P\mathbf1_n=\mathbf1_k$ and $A\mathbf1_n=0$ give the displayed
+zero row sums. The proof uses the standard matrix identities only to
+classify this fixed native transport problem. $\square$
+

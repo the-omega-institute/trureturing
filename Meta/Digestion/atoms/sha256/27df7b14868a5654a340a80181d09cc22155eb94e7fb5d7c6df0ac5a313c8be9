@@ -1,0 +1,38 @@
+**Definition 9.2 (Scope of the remaining existence question).**
+The unresolved original question is the existence of one real
+$v$ and complete worlds satisfying (1.8), equivalently O (32.1).
+Corollary 9.1 restricts any such witness to the necessary set
+
+$$
+\{v\in\mathbb R:Q(p_J,v)=0\}
+ \setminus\{s_-(p_J),s_+(p_J)\},
+\tag{9.2}
+$$
+
+with all its actual worlds in the $\Lambda\ne0$ branch. It does
+not assert feasibility or infeasibility at another response, an
+exact number of remaining $Q$ roots, or an exact regular-world
+cardinality. O, Theorem 23.1, concerns its separately defined
+$v_\star$. The uniform statement in
+[FIB exact response strip and exclusion of joint collisions](FIB_EXACT_RESPONSE_STRIP_AND_JOINT_COLLISION_EXCLUSION.md),
+Theorem 1.3, has $v\in[142,150]$; its singular-response
+enclosures are in the
+[rational-certificate companion](FIB_EXACT_RESPONSE_STRIP_RATIONAL_CERTIFICATE.md),
+Proposition 8.1. The present two exact responses lie below that
+strip by Lemma 2.4, and Theorem 8.1 supplies their entire-child
+exclusion with their regular companions included.
+
+The inherited finite necessary polynomial uses separating rational
+images as explained in O, Section 32; the general method has the
+literature background of Rouillier,
+*[Solving Zero-Dimensional Systems Through the Rational Univariate Representation](https://doi.org/10.1007/s002000050114)*.
+The model-specific specialization (3.5), exhaustive coverage in
+Theorem 6.1 and image separation in Theorem 8.1 are the consequences
+proved here, without a global-priority assertion. The original
+all-real-$v$ existence question, other fifth responses, earlier
+ancestors, same-parent $L_3$, root $L_7$, unrestricted cubic
+eight-versus-nine recovery or impossibility and full-domain
+nine-read sufficiency retain their unresolved scope. No physical
+realization or regularity of a strategy is inferred from these
+algebraic consequences.
+

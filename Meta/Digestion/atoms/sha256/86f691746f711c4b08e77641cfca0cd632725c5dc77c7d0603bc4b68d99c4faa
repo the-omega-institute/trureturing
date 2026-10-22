@@ -1,0 +1,67 @@
+**Lemma 5.2 (Six actual regular source solutions).** For every pair
+in that closed rectangle there are six distinct solutions
+$z_i=(r_i,b_i)$ of $\pi=p$, $\upsilon=v$, ordered by increasing $r$.
+They have $0<r_i<1$, $D_m(z_i)\ne0$, $\Lambda(z_i)\ne0$ and
+invertible source Jacobians.
+Their $b$ signs are positive for $i=0,1,2,3$ and negative for $i=4,5$.
+The four positive sources lift to complete legal worlds in
+$\mathcal C(p,v)$.
+
+Proof. The companion gives 190 closed cells partitioning the strip
+and six rational records $(m,C,\rho)$ on each. Write $v_c,h_v$ for
+the cell midpoint and radius, and set
+
+$$
+F=(\pi,\upsilon)^{\mathsf T},\qquad
+H(z)=C\{F(z)-(p_c,v_c)^{\mathsf T}\},\qquad
+L=C(0,1)^{\mathsf T},\quad E_0(z)=I-DH(z).
+\tag{5.1}
+$$
+
+The matrix $E_0$ is distinct from the polynomial $E$. For each record
+the entire rectangle
+
+$$
+\mathcal B=\{z:|z_j-m_j|\le |L_j|h_v+\rho,\ j=0,1\}
+\tag{5.2}
+$$
+
+is free of all response and regular-chart poles. Put
+
+$$
+q=\sup_{\mathcal B}\|E_0\|_\infty,\qquad
+\eta_i=|H_i(m)|+h_v\sup_{\mathcal B}|(E_0L)_i|+|C_{i0}|h_p.
+\tag{5.3}
+$$
+
+The companion's outward rational bounds prove for every record that
+$C$ is invertible, $\rho>0$, and
+
+$$
+q<9/20,\qquad \max_i\eta_i+q\rho<\rho.
+\tag{5.4}
+$$
+
+Fix the actual $t=p-p_c$, $x=v-v_c$. A solution in
+$z=m+Lx+\delta$, $\|\delta\|_\infty\le\rho$, is a fixed point of
+
+$$
+\delta\longmapsto
+\delta-H(m+Lx+\delta)+Lx+C(t,0)^{\mathsf T}.
+\tag{5.5}
+$$
+
+The derivative is $E_0$, and the value at zero has component bounds
+$\eta_i$, by integrating $I-DH$ from $m$ to $m+Lx$.
+Thus (5.4) gives a contraction strictly mapping the closed
+radius-$\rho$ ball into itself. Banach's theorem gives one fixed
+point for each actual $p,v$, equivalent to $F=(p,v)$ because $C$
+is invertible. Also $DH=I-E_0$ and hence $DF$ are invertible.
+
+The six entire rectangles have strictly ordered, disjoint $r$ bounds
+inside $(0,1)$, with the asserted $b$ signs; these are further
+rational table inequalities. Lemma 3.3 gives the four positive
+complete lifts, with all original parent, fifth and sixth readings.
+The two negative sources serve only to exhaust algebraic projections;
+they are not legal worlds. ∎
+

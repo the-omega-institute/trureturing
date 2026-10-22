@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:64abeb9909eac97e678b38d80d7b982c80c41761e15510fd9203763e419408a5
+  normalized_sha256: sha256:64abeb9909eac97e678b38d80d7b982c80c41761e15510fd9203763e419408a5
+cas_ref: sha256:64abeb9909eac97e678b38d80d7b982c80c41761e15510fd9203763e419408a5
+coverage_gids:
+  - gid: D5/S3/Analytic/Interpolation/LogOneSubExpDerivatives.log_one_sub_exp_derivatives
+    target_statement_id: sha256:baf75f495e116a3231c6f4fa767198ed0335aba4c158eb3410ee5b1dc815b89b
+  - gid: D5/S3/Analytic/Knapsack/FractionalKnapsackDual.greedy_attains_duality
+    target_statement_id: sha256:475e472b126c424b48b0e9ddd9f28f95a0319e31c310ca11d9ad25a17847d615
+receipts:
+  unresolved_subitems: []

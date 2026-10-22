@@ -29,6 +29,10 @@ internal sealed class PrimePowerShiftLogDerivativeDocument : IScribeDocumentDefi
                 "Mathlib's nth operator uses a zero-based index, so prime(n) is "
                 + "Nat.nth Nat.Prime (n-1). The subtraction convention also defines prime(0).",
                 DescribeRole.Definition),
+            Node("prime_is_prime", "Every indexed value is prime",
+                Disp(Seq(Bound("n", Naturals()), new Formula.Apply(Seq(Named("Nat"), Dot, Named("Prime")), [Prime(N())]))),
+                "Nat.prime_nth_prime proves primality at every natural index, including zero. "
+                + "The coefficient divisibility and uniqueness arguments use this primality."),
             Node("lt_prime", "The prime exceeds its positive index", PrimeBoundFormula(),
                 "Mathlib's bound k+2 <= Nat.nth Nat.Prime k, with k=n-1, gives the strict inequality."),
             Node("a", "The integral coefficient construction", CoefficientDefinitionFormula(),

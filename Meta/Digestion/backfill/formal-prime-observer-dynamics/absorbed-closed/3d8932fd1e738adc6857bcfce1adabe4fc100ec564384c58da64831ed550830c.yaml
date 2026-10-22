@@ -1,0 +1,13 @@
+fingerprints:
+  raw_sha256: sha256:3d8932fd1e738adc6857bcfce1adabe4fc100ec564384c58da64831ed550830c
+  normalized_sha256: sha256:3d8932fd1e738adc6857bcfce1adabe4fc100ec564384c58da64831ed550830c
+cas_ref: sha256:3d8932fd1e738adc6857bcfce1adabe4fc100ec564384c58da64831ed550830c
+coverage_gids:
+  - gid: D5/S3/Analytic/Zeta/EulerLogBridge.expected_factorization_eq
+    target_statement_id: sha256:f2cce87b3c0d80eb27d2ff76741d3ffbe588ca737a03f40c0bfd7f0204a401ef
+  - gid: D5/S3/Analytic/ZetaObservation/MultiplicativeComplexityActivation.mean_prime_occupancies_summable
+    target_statement_id: sha256:d7899eabd9d944accbef7617086fdb13ecf41f444a5635eeb35dadffb24669d1
+  - gid: D5/S3/Analytic/ZetaObservation/MultiplicativeComplexityActivation.multiplicativeComplexity_eq_factorization_sum
+    target_statement_id: sha256:b7b03894a2e5cdbf68a66dbe82864cefeff124d42d7fbf0402c6bfe75e291734
+receipts:
+  unresolved_subitems: []

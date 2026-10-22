@@ -1,0 +1,62 @@
+**Corollary 129.1 (A single terminal decoder at every even horizon).**
+For every even integer $n\ge2$, put $q_n=2^{1-n}$. The same CPTP map
+
+$$
+D_{\mathrm{fam}}:=\mathcal R_{\mathrm{fam}}\circ\operatorname{Ad}_{U_0^\dagger}
+\tag{129.1}
+$$
+
+has exact whole-input error $2/3-q_n/12$ at horizon $n$, and
+
+$$
+\boxed{\displaystyle
+F(q_n)=\frac{1-q_n+\sqrt{(1-q_n)^2+8}}6
+ \le\mu_n\le\frac23-\frac{q_n}{12}<\frac23
+ \qquad(n\ge2\text{ even}).}
+\tag{129.2}
+$$
+
+At horizon two, Theorem 118.2 identifies the value inside this enclosure:
+
+$$
+\boxed{\displaystyle
+\mu_2=L_*\in\left[\frac{1+\sqrt{33}}{12},\frac58\right].}
+\tag{129.3}
+$$
+
+*Proof.* The transport (105.3) and $s_n=-q_n$ give
+$D_{\mathrm{fam}}F^n=\mathcal R_{\mathrm{fam}}\Phi_{-q_n}$, with $0<q_n\le1/2$.
+This cancels only an output unitary; the target remains the original
+input. Theorem 128.1 gives the error and upper bound. Theorem 113.1
+and Corollary 114.1 give the lower bound
+$\mu(-q_n)\ge\nu(-q_n)=\nu(q_n)=F(q_n)$.
+Here $F(q_n)>2/3-2q_n/9\ge5/9>1/2$, so the orthogonal-pair term in
+(114.1) does not strengthen it. Substituting $q_2=1/2$ proves (129.3).
+The value $5/8$ is the exact error of $D_{\mathrm{fam}}$. Theorem 118.2
+supplies the equality $\mu_2=L_*$, and the strict upper bound in (118.4)
+is less than $5/8$. Thus this decoder is not optimal at horizon two;
+(129.3) is an enclosing inequality, not a sharp minimax certificate.
+$\square$
+
+The enclosing interval in (129.2) has width
+
+$$
+W(q)=\frac{3+q/2-\sqrt{(1-q)^2+8}}6>0
+ \qquad(0<q\le1/2).
+\tag{129.4}
+$$
+
+Indeed $3+q/2>0$ and
+$(3+q/2)^2-[(1-q)^2+8]=q(20-3q)/4>0$.
+At horizon two the width is $(13-2\sqrt{33})/24>0$.
+Relative to the even interval in (114.3), the upper endpoint is reduced
+by $q/12$ while retaining its stronger lower endpoint. By (114.2),
+$W(q)<5q/36$, the width obtained from the earlier linear Fourier lower
+bound and the same upper certificate.
+
+The map $D_{\mathrm{fam}}$ acts only on the terminal qutrit and is common to all
+these horizons and all inputs. Its Kraus realization permits the usual
+internal ancilla and discard of a CPTP map. It adds no history or
+reference access, intermediate intervention, postselection or smaller
+input code.
+

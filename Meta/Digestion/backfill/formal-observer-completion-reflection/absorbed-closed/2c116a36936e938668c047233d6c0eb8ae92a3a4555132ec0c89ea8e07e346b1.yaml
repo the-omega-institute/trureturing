@@ -1,0 +1,15 @@
+fingerprints:
+  raw_sha256: sha256:2c116a36936e938668c047233d6c0eb8ae92a3a4555132ec0c89ea8e07e346b1
+  normalized_sha256: sha256:2c116a36936e938668c047233d6c0eb8ae92a3a4555132ec0c89ea8e07e346b1
+cas_ref: sha256:2c116a36936e938668c047233d6c0eb8ae92a3a4555132ec0c89ea8e07e346b1
+coverage_gids:
+  - gid: D5/S3/ConceptDynamics/Information/EqualEntropyTargetValueContrast.equal_entropy_target_value_contrast
+    target_statement_id: sha256:5f760d8491d93ffbeaaedfc62d204fbede0175b51fb7c6f6e08b2a088cccf44a
+  - gid: D5/S3/ConceptDynamics/Information/MarginalActionEntropyCausalContrast.marginal_action_entropy_causal_contrast
+    target_statement_id: sha256:542764660b5a9aa8a3064f96df65c0fb96065377e9a4d203bd746f0f546976e3
+  - gid: D5/S3/Entropy/Forgetting/DeterministicEntropyEquality.pushforward_entropy_eq_iff_injective_on_support
+    target_statement_id: sha256:f6300d97955623ee9fca65db66d7bbaa622e88c8b534aaa57c1bf6317ac62384
+  - gid: D5/S3/Entropy/MutualInformationEntropy.mutual_information_eq_entropy_sub
+    target_statement_id: sha256:98ab32347056de7fdcca6963b5de51deedc923c1a62a59098952f17fb0f946a5
+receipts:
+  unresolved_subitems: []

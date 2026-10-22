@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:6f3e8c8d594cdcd3515b00c0db3c4c47e85a00bea88a5938599c032b424c1599
+  normalized_sha256: sha256:6f3e8c8d594cdcd3515b00c0db3c4c47e85a00bea88a5938599c032b424c1599
+cas_ref: sha256:6f3e8c8d594cdcd3515b00c0db3c4c47e85a00bea88a5938599c032b424c1599
+coverage_gids:
+  - gid: D5/S1/Scale/Fibonacci.fib_cassini_from_golden_norm
+    target_statement_id: sha256:705efb41c8ed2d7be8efa40e9fd10e4fde55225d9335e386144b0f6c5c0d04d2
+  - gid: D5/S3/Arith/Powerful/PowerfulNumber.Powerful
+    target_statement_id: sha256:dba64bfdd5f80d27757ec49e7428404fa5ebcf2dda9d2cad084599c4afb7ecd4
+receipts:
+  unresolved_subitems: []

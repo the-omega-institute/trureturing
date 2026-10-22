@@ -1,0 +1,35 @@
+**Lemma 133.5 (Uniform input maximum for the moving path).** For the path in
+Lemma 133.4,
+
+$$
+e_{-q}(\mathcal R_q)=\frac23-\frac{\sqrt2}{9}q+o(q).
+\tag{133.11}
+$$
+
+*Proof.* For a pure $P_z=|z\rangle\langle z|$ and any output state $\tau$,
+$P_z-\tau$ has at most one positive eigenvalue, since its quadratic form is
+nonpositive on $z^\perp$. It follows that
+$d(P_z,\tau)=\lambda_{\max}(P_z-\tau)$; convexity reduces the full density
+maximum to the full complex unit sphere. Let
+$F(q,z)=\lambda_{\max}(P_z-\Lambda_q(P_z))$. At $q=0$, the established
+zero analysis in §107 gives $\max F(0,z)=2/3$ and the complete active set
+$A=\{z:\|z\|=1,\ |z_0|^2=1/3\}$. On $A$, the matrix is $P_z-I/3$ with
+simple top eigenvalue $2/3$ and gap one.
+
+Writing $t=|z_0|^2$ and $x=|z_1|^2$, direct differentiation of (133.9) gives
+
+$$
+\langle z|\Lambda'_0(P_z)|z\rangle
+=h\left(\frac{(1-t)^2}{2}+(3t-1)x\right).
+\tag{133.12}
+$$
+
+Hence it equals $2h/9=\sqrt2/9$ on $A$. The simple-eigenvalue derivative
+formula [GLO-EIG] applies there. The gap and compactness of $A$ give a closed
+neighborhood on which the top eigenvalue stays simple and its derivative is
+jointly continuous, so integration gives a uniform first-order expansion
+there. Any sequence of maximizers $z_q$ has accumulation in $A$ (otherwise
+its zero-order value is strictly below $2/3$), and the uniform expansion gives
+$\limsup_{q\downarrow0}(\max_zF(q,z)-2/3)/q\le-\sqrt2/9$.
+A fixed $z\in A$ gives the reverse liminf. This proves (133.11). $\square$
+

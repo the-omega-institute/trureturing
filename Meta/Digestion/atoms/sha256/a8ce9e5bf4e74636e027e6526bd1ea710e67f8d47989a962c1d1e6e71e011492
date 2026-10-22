@@ -1,0 +1,21 @@
+**Lemma 2.6 (same-instance row square).** For each native row of the
+chosen canonical apparatus and its actual local arguments, the rule
+selected by $\Pi_{\mathrm{gc}}$ is enabled exactly when that row is
+enabled and has the same label, raw successor and receipt under
+$\Psi_{\mathrm{gc}}$. A failed guard has no patch. This includes all
+initialization and added phases at native atomic granularity.
+
+Proof. This is the raw local construction of UAS §2, with the actual
+finite catalog just supplied. RD/WR and moves use the existing marked
+cell; EX preserves the old R identity and adds the new R; BF uses its
+literal table; IN uses its designated latch; OUT uses its actual output;
+TOK tests and transfers its named current slots. CTL and boot variants
+apply their actual finite effects in order. Append the same receipt and
+combine overlapping assignments by UAS's alias rule, retaining the new
+meter read mark. GCA's additional finite entry/test labels and CYCLE's
+stage labels are merely additional explicitly enumerated local cases;
+unbounded banks still consist of these cells and rows. Starting from
+the paid foundation, induction on rows gives the square throughout the
+combined run. This is reuse of the local lift, not a new universal raw
+decoder or a realization of the lower Check/Core/Run engine. ∎
+

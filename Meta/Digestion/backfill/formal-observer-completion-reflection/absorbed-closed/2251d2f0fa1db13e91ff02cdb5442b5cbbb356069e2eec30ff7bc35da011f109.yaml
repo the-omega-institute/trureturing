@@ -1,0 +1,9 @@
+fingerprints:
+  raw_sha256: sha256:2251d2f0fa1db13e91ff02cdb5442b5cbbb356069e2eec30ff7bc35da011f109
+  normalized_sha256: sha256:2251d2f0fa1db13e91ff02cdb5442b5cbbb356069e2eec30ff7bc35da011f109
+cas_ref: sha256:2251d2f0fa1db13e91ff02cdb5442b5cbbb356069e2eec30ff7bc35da011f109
+coverage_gids:
+  - gid: D5/S3/Observer/CenterOperational.center_iff_const
+    target_statement_id: sha256:3bc8cd980d02c13522aa6e22f27bbcff97038d18336f08706195242bc0c523e9
+receipts:
+  unresolved_subitems: []

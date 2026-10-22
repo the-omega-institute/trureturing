@@ -1,0 +1,77 @@
+**Theorem 21.2 (All base factors and the six possible b lifts).** On
+$\mathcal P\times\mathcal V$, the following table bounds
+$-\mathcal L_0/\mathcal L_1$ throughout each entire indicated box.
+The $b$ numerator intervals have common denominator $10^6$.
+
+| Projected interval | Sign of $\mathcal L_1$ | $b$ numerator interval | Possible constructed world |
+| --- | --- | --- | --- |
+| $I_1$ | $+$ | $[254495,254496]$ | $C$ |
+| $I_2$ | $-$ | $[159165,159166]$ | $B$ |
+| $I_3$ | $-$ | $[319421,319426]$ | $A$ |
+| $I_4$ | $-$ | $[150424,150425]$ | $D$ |
+| $I_5$ | $-$ | $[-393738,-393737]$ | none with $b>0$ |
+| $I_6$ | $+$ | $[-598255,-596853]$ | none with $b>0$ |
+
+There is one strict root of $\Psi_2$, one of $\Psi_4$ and two of
+$\Phi$. Their boxes and forced lifts are
+
+| Factor | Lower $r$ endpoint | Upper $r$ endpoint | Sign of $\mathcal L_1$ | Forced $b$ |
+| --- | --- | --- | --- | --- |
+| $\Psi_2$ | $416020/514229$ | $1762289/2178309$ | $+$ | $-1/2$ |
+| $\Psi_4$ | $985995/1135192$ | $802168/923549$ | $-$ | $-2/5$ |
+| $\Phi$ | $149383/1108052$ | $182914/1356769$ | $+$ | $1/8$ |
+| $\Phi$ | $1412683/1565387$ | $1774115/1965888$ | $+$ | $1/8$ |
+
+Thus no $\Psi_2$ or $\Psi_4$ source is strict, and a $\Phi$ source
+would have $b=1/8$, $\Lambda=0$. Among the six $R_{18}$ projections,
+only the first four can have positive $b$, each with at most one
+complete nonsingular lift.
+
+Proof. For reproduction of all sign and quotient bounds, use the
+polynomials defined by the exact minors (20.5). For each listed
+$r,p,v$ box, let $(r_c,p_c,v_c)$ be its rational midpoint and
+$(h_r,h_p,h_v)$ its radii. For $Q=\mathcal L_0,\mathcal L_1$, expand
+exactly
+
+$$
+Q(r_c+x,p_c+y,v_c+z)=\sum_{i,j,k}q_{ijk}x^iy^jz^k,
+\quad
+Q\in q_{000}+[-e_Q,e_Q],\quad
+ e_Q=\sum_{i+j+k>0}|q_{ijk}|h_r^ih_p^jh_v^k.
+\tag{21.3}
+$$
+
+The binomial expansion of the determinant polynomials fixes each
+$q_{ijk}$. These finite Taylor enclosures give precisely the
+nonzero signs in both tables; taking the interval quotient only
+after this exclusion of zero gives the six displayed $b$ bounds.
+Thus nonvanishing of $\mathcal L_1$ is checked on every possible
+projected root, rather than assumed generically. The last two
+intervals exclude positive $b$ outright.
+
+The exact polynomial remainder identities for the base factors are
+
+$$
+\begin{aligned}
+\mathcal L_0-\tfrac12\mathcal L_1&\equiv0\pmod{\Psi_2},\\
+\mathcal L_0-\tfrac25\mathcal L_1&\equiv0\pmod{\Psi_4},\\
+\mathcal L_0+\tfrac18\mathcal L_1&\equiv0\pmod\Phi.
+\end{aligned}
+\tag{21.4}
+$$
+
+They follow by polynomial division in $r$ over $\mathbb Q[p,v]$
+using (20.5). In particular their quotients do not require $p$ or
+$v$ to be a midpoint. Together with the nonzero $\mathcal L_1$ in
+the base boxes, (20.10) gives the exact forced $b$ values in the
+second table.
+
+For explicit root coverage of these base boxes, apply the signed
+Sturm convention (14.11) to the three displayed univariate factors.
+The degrees and endpoint sign words are
+
+| Polynomial | Chain degrees | Signs at $0$ | Signs at $1$ | Variation drop |
+| --- | --- | --- | --- | --- |
+| $\Psi_2$ | $2,1,0$ | `--+` | `+++` | $1$ |
+| $\Psi_4$ | $4,3,2,1,0$ | `++--+` | `--+++` | $1$ |
+| $\Phi$ | $4,3,2,1,0$ | `--+-+` | `--+++` | $2$ |

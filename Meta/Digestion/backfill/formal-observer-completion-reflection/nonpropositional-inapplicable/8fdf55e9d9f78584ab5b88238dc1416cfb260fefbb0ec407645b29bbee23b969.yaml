@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:8fdf55e9d9f78584ab5b88238dc1416cfb260fefbb0ec407645b29bbee23b969
+  normalized_sha256: sha256:8fdf55e9d9f78584ab5b88238dc1416cfb260fefbb0ec407645b29bbee23b969
+cas_ref: sha256:8fdf55e9d9f78584ab5b88238dc1416cfb260fefbb0ec407645b29bbee23b969
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 七元组分量的名称和角色说明，没有独立数学断言。
+    previous_atom_id: c176f20cf82c6cb14556fcd60e2df6857571f0e57fb3c97caf2b74eb968523d9
+    next_atom_id: 70acb9dd77004c1c1b9b17ba610cbd116eff2e91025695b96d2ec2e9ab486488

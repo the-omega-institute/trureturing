@@ -1,0 +1,50 @@
+## 151. The full common filter in native normalized coordinates
+
+Define the actual common filter before any source-dependent alignment:
+
+$$
+F=\Pi_{n_{A_1}+n_{A_2}=1}\,
+  \Pi_{n_{r_1}+n_{R_1}+n_{r_2}+n_{R_2}=1}.
+\tag{151.1}
+$$
+
+The factors act on different parties and commute. The second factor counts
+all four Bob modes, not only a selected active direction.
+Thus $F$ is the same operator for $q_a$ and $q_b$ on the common normalized
+axes. A number-preserving rotation of either pair $(r_i,R_i)$ commutes
+with Bob's total number and hence with $F$. No $q$-dependent operation is
+needed to apply this filter.
+
+Let $\Omega_F$ denote its unnormalized output on the full two-preparation
+resource, in party coordinates. Alice's selected space has dimension two;
+Bob's selected one-particle space has dimension four.
+In the aligned proof basis, Bob has the orthogonal local decomposition
+
+$$
+\mathcal H_B^{(1)}=B_{\mathrm{act}}\oplus B_{\mathrm{sp}},\qquad
+B_{\mathrm{act}}=\operatorname{span}\{|b_1\rangle,|b_2\rangle\},\quad
+B_{\mathrm{sp}}=\operatorname{span}\{|s_1\rangle,|s_2\rangle\}.
+\tag{151.2}
+$$
+
+Using (149.2), the exact output in this proof basis is the B-local direct sum
+
+$$
+\Omega_F\simeq_{B\text{-local}}
+ r_0^2 C_-
+ \ \oplus_B\
+ ac\,r_0r_1\bigl(I_A^{(2)}\otimes I_{B_{\mathrm{sp}}}^{(2)}\bigr).
+\tag{151.3}
+$$
+
+The active block has both spectators empty and therefore weight $r_0^2$.
+If a spectator is occupied, Bob's selected total number excludes both
+active Bob occupations. The four surviving spectator configurations have
+weights
+
+| Alice rail | Bob spectator flag | Weight |
+| --- | --- | --- |
+| $A_1$ | $s_1$ | $ac\,r_0r_1$ |
+| $A_1$ | $s_2$ | $ac\,r_0r_1$ |
+| $A_2$ | $s_1$ | $ac\,r_0r_1$ |
+| $A_2$ | $s_2$ | $ac\,r_0r_1$ |

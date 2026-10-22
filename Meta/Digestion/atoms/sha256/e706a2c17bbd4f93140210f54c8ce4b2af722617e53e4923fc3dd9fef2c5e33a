@@ -1,0 +1,39 @@
+**Definition 1.1 (complete world and the fixed history).** A complete world is
+
+$$
+W=(P(r,b),g,d),\qquad
+P(r,b)=\begin{pmatrix}r&b\\ r(1-r)/b&1-r\end{pmatrix},\qquad
+0<r<1,\quad b>0,
+$$
+
+where $g\in\mathbb R[s]$ is one nonzero polynomial of degree at most three and $d\in\mathbb R$ is fixed through the whole run. The actions are
+
+$$
+J=\begin{pmatrix}0&1\\1&0\end{pmatrix},\qquad
+M=\begin{pmatrix}0&1\\1&1\end{pmatrix},\qquad
+Q_i=E_iQ_{i-1},\quad Q_0=I,\qquad
+y_i=d+g(i)\operatorname{tr}(Q_iP).
+$$
+
+The original clocks are $0,\ldots,7$, with the chronological word $(J,M,J,M,M,M,M)$. The literal parent is
+
+$$
+H_4=(0,J,24,M,147/5,J,24,M,18).
+$$
+
+No gain sample, source coordinate, reset, copy, skipped clock, shifted clock or extra observation is added. Lower-degree gains, repeated roots, sampled zeros, zero drift, singular source charts and unbounded legal (b) remain members of the complete domain.
+
+For a strict source define
+
+$$
+ j=b+\frac{r(1-r)}b,\qquad n=j+r,\qquad T=1+b,\qquad U=1+2b,
+$$
+
+and
+
+$$
+ \Lambda=1+\frac6T+\frac1U-\frac4j-\frac4n,\qquad B=\frac6T-\frac2U.
+$$
+
+The parent traces at clocks $0,\ldots,4$ are $(1,j,T,n,U)$. The actual $(M,M,M)$ continuation traces at clocks $(5,6,7)$ are $(U+n,2U+n,3U+2n)$.
+

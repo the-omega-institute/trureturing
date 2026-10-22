@@ -1,0 +1,56 @@
+using static StrataLint.Scribe.DefinitionDsl;
+
+namespace StrataLint.Scribe.Blueprint.D5.S3.Quantum.Entanglement.AbsolutePPT.P1Data.Traversal;
+
+internal sealed class N25APart24Document : IScribeDocumentDefinition
+{
+    public DocumentDefinition Create() => DocumentDefinition.Create(ScribeNode.Create(
+        "Exact structural traversal and local numerical premises of the same full scalar reduction.",
+        H("Exact P1 forest N25APart24"),
+        Blocks(
+            Describe.Lean(DescribeId.Create("traversal-1606"),
+                DeclarationHandle.Create("D5/S3/Quantum/Entanglement/AbsolutePPT/P1Data/Traversal/N25APart24.traversal_1606"),
+                H("Exact forest premise traversal_1606"), StatementSource.WithoutFormula(),
+                AssessedProvenance.FromRepo(), Blocks(Paragraph(Text("The exact rational or structural premise is used in the complete forest check, which supplies the continuous real scalar inequality."))),
+                DescribeRole.Theorem),
+            Describe.Lean(DescribeId.Create("traversal-1607"),
+                DeclarationHandle.Create("D5/S3/Quantum/Entanglement/AbsolutePPT/P1Data/Traversal/N25APart24.traversal_1607"),
+                H("Exact forest premise traversal_1607"), StatementSource.WithoutFormula(),
+                AssessedProvenance.FromRepo(), Blocks(Paragraph(Text("The exact rational or structural premise is used in the complete forest check, which supplies the continuous real scalar inequality."))),
+                DescribeRole.Theorem),
+            Describe.Lean(DescribeId.Create("traversal-1610"),
+                DeclarationHandle.Create("D5/S3/Quantum/Entanglement/AbsolutePPT/P1Data/Traversal/N25APart24.traversal_1610"),
+                H("Exact forest premise traversal_1610"), StatementSource.WithoutFormula(),
+                AssessedProvenance.FromRepo(), Blocks(Paragraph(Text("The exact rational or structural premise is used in the complete forest check, which supplies the continuous real scalar inequality."))),
+                DescribeRole.Theorem),
+            Describe.Lean(DescribeId.Create("traversal-1611"),
+                DeclarationHandle.Create("D5/S3/Quantum/Entanglement/AbsolutePPT/P1Data/Traversal/N25APart24.traversal_1611"),
+                H("Exact forest premise traversal_1611"), StatementSource.WithoutFormula(),
+                AssessedProvenance.FromRepo(), Blocks(Paragraph(Text("The exact rational or structural premise is used in the complete forest check, which supplies the continuous real scalar inequality."))),
+                DescribeRole.Theorem),
+            Describe.Lean(DescribeId.Create("traversal-1642"),
+                DeclarationHandle.Create("D5/S3/Quantum/Entanglement/AbsolutePPT/P1Data/Traversal/N25APart24.traversal_1642"),
+                H("Exact forest premise traversal_1642"), StatementSource.WithoutFormula(),
+                AssessedProvenance.FromRepo(), Blocks(Paragraph(Text("The exact rational or structural premise is used in the complete forest check, which supplies the continuous real scalar inequality."))),
+                DescribeRole.Theorem),
+            Describe.Lean(DescribeId.Create("traversal-1653"),
+                DeclarationHandle.Create("D5/S3/Quantum/Entanglement/AbsolutePPT/P1Data/Traversal/N25APart24.traversal_1653"),
+                H("Exact forest premise traversal_1653"), StatementSource.WithoutFormula(),
+                AssessedProvenance.FromRepo(), Blocks(Paragraph(Text("The exact rational or structural premise is used in the complete forest check, which supplies the continuous real scalar inequality."))),
+                DescribeRole.Theorem),
+            Describe.Lean(DescribeId.Create("traversal-1654"),
+                DeclarationHandle.Create("D5/S3/Quantum/Entanglement/AbsolutePPT/P1Data/Traversal/N25APart24.traversal_1654"),
+                H("Exact forest premise traversal_1654"), StatementSource.WithoutFormula(),
+                AssessedProvenance.FromRepo(), Blocks(Paragraph(Text("The exact rational or structural premise is used in the complete forest check, which supplies the continuous real scalar inequality."))),
+                DescribeRole.Theorem),
+            Describe.Lean(DescribeId.Create("traversal-1667"),
+                DeclarationHandle.Create("D5/S3/Quantum/Entanglement/AbsolutePPT/P1Data/Traversal/N25APart24.traversal_1667"),
+                H("Exact forest premise traversal_1667"), StatementSource.WithoutFormula(),
+                AssessedProvenance.FromRepo(), Blocks(Paragraph(Text("The exact rational or structural premise is used in the complete forest check, which supplies the continuous real scalar inequality."))),
+                DescribeRole.Theorem),
+            Describe.Lean(DescribeId.Create("traversal-1672"),
+                DeclarationHandle.Create("D5/S3/Quantum/Entanglement/AbsolutePPT/P1Data/Traversal/N25APart24.traversal_1672"),
+                H("Exact forest premise traversal_1672"), StatementSource.WithoutFormula(),
+                AssessedProvenance.FromRepo(), Blocks(Paragraph(Text("The exact rational or structural premise is used in the complete forest check, which supplies the continuous real scalar inequality."))),
+                DescribeRole.Theorem))));
+}

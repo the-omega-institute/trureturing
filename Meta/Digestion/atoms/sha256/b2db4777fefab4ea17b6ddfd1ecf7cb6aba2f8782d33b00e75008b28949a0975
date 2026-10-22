@@ -1,0 +1,25 @@
+**Corollary 21.11 (a noncanonical input is actually consumed in recovery).**
+For each completed first load let $b_\sigma$ be its first Ready tally
+and $d_\sigma=b_\sigma-a_B$. Supply gate1, mode1 and the finite history
+frame
+
+$$
+111\,U(d_\sigma+2)\,0\,U(d_\sigma).
+$$
+
+Its payload has length $d_\sigma+2$. It binds that run's first Ready.
+Call's actual raw image and the returned independent bodies recover
+$c_p=w_\sigma[p]$: 0 on the canonical load and 1 on the exchanged load.
+
+Proof. AcquisitionOffset binds $a_B+d_\sigma=b_\sigma$. Theorem 21.10
+uses that run's imported bootWitness at the first input sites; the
+fresh raw-control WRITE therefore constructs the actual $c_p$.
+The body-local rule independently obtains the same value from retained74.
+The differing bit is not an extra request field. No equality of
+$b_0,b_1$, autonomous meter-end reading, or ability to choose this numeral
+without supplying it is claimed. Theorem 12.3's canonical wrong-target
+construction and §13's old continuation closure remain about the old
+unchanged apparatus. Here a lawful call after the exchanged load uses
+the acquired 1; substituting the old canonical reservoir would disagree
+with the authentic raw endpoint and fail the true S/B/M checks. ∎
+

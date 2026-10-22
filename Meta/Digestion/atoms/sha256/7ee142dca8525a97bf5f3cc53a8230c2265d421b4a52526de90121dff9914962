@@ -1,0 +1,50 @@
+**Corollary 140.1 (One recovered channel).** For every optimal decoder,
+the composite on every complex matrix is the same map
+
+$$
+\begin{aligned}
+v_{1,q}(X)&=\frac{(1+q)X_{11}+(1-q)X_{22}}2,\\
+\mathcal C_q(X)&=
+\begin{pmatrix}
+X_{00}&qrX_{01}&0\\
+qrX_{10}&r^2v_{1,q}(X)&0\\
+0&0&X_{11}+X_{22}-r^2v_{1,q}(X)
+\end{pmatrix},\qquad q=1/4.
+\end{aligned}
+\tag{140.1}
+$$
+
+Consequently the complete optimal set is the full CPTP fiber
+
+$$
+\operatorname{Opt}_{1/4}
+=\{\mathcal R\ {\rm CPTP}:\mathcal R\Phi_{1/4}=\mathcal C_{1/4}\}
+=\{\mathcal R_z:|z|\le1\}.
+\tag{140.2}
+$$
+
+*Proof.* Compose (139.3) with (127.3). The image of $\Phi_q$ has zero
+$02$ and $12$ entries and the displayed populations, so the result is
+(140.1), independently of $z$. Theorem 139.1 gives the second equality.
+Any CPTP map with this same composite has the same all-density error,
+which is $L_*$; this proves the first equality in both directions.
+$\square$
+
+The term fiber here means equality of linear maps on the entire
+channel image. For $q\ne0$ the population transformation on
+$\operatorname{span}\{E_{11},E_{22}\}$ has determinant $q$, and the
+$01$ and $10$ multipliers are $q$. Thus
+
+$$
+\operatorname{span}_{\mathbb C}\Phi_q(\mathsf D_3)
+=\operatorname{span}_{\mathbb C}
+ \{E_{00},E_{11},E_{22},E_{01},E_{10}\}.
+\tag{140.3}
+$$
+
+Here densities span $M_3$ over $\mathbb C$, so the density image and
+matrix image have the same complex span. Distinct $z$'s change only
+invisible coherences, with the linked actions
+$E_{02}\mapsto zE_{02}$ and $E_{12}\mapsto rzE_{12}$ and their
+conjugates. They are distinct legal extensions of one restriction.
+

@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:4fcb8736ff0624cd9da92d5c04e6db647ffcb2ee9c173cf5049f3b1d1038e071
+  normalized_sha256: sha256:4fcb8736ff0624cd9da92d5c04e6db647ffcb2ee9c173cf5049f3b1d1038e071
+cas_ref: sha256:4fcb8736ff0624cd9da92d5c04e6db647ffcb2ee9c173cf5049f3b1d1038e071
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: Pure definitions of the fixed probes and baseline-subtracted trace readouts D_i and D_ij, together with the specified order of application and independent reset experiments. The recovery identities are in the following theorem, not this definition.
+    previous_atom_id: 858196528aed32ac9ccc4f867258f536101d65ecc56c427516693e98489b031d
+    next_atom_id: 57527469f9a03747df229b704ee1cdfebd7b684aa446d1eb80bf4d5eb7616700

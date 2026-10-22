@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:1ba8ad15a9eb09c68e40e0646268703797789e67bac5e6725c2318c08c29dd39
+  normalized_sha256: sha256:1ba8ad15a9eb09c68e40e0646268703797789e67bac5e6725c2318c08c29dd39
+cas_ref: sha256:1ba8ad15a9eb09c68e40e0646268703797789e67bac5e6725c2318c08c29dd39
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: Defines the task-comparison contract, possible coordinates and the meaning of exact sufficiency; no new mathematical conclusion.
+    previous_atom_id: 12b2ba90da65fce610dbe6449649bb6ba917273d2b7d9c8572656f9e9bda3771
+    next_atom_id: null

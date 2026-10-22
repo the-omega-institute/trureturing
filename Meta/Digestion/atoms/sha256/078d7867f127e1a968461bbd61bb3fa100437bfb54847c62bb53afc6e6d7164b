@@ -1,0 +1,11 @@
+**Assumption 6.2 (Classical tools and source-specific scopes).** The distinct-node
+interpolation in Definitions 1.1 and 2.1 uses the conditions in the
+Berrut–Trefethen citation above, with no sampled-value or degree-three
+condition. The fixed Sylvester determinants use the cited construction
+over their displayed coefficient rings, with nonzero denominators checked
+before specialization. The rational contractions apply the classical
+contraction theorem on the closed displayed boxes; the nonzero source
+and collision Jacobians are the hypotheses of the implicit-function
+theorem. The sign and multiple-point literature motivates retaining the
+strict guards and exceptions; none supplies a FIB-specific incidence theorem.
+

@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:9e7743041329b2a8d4f2395a786a285837bb2c1069675073a12b2e2e4170ea8d
+  normalized_sha256: sha256:9e7743041329b2a8d4f2395a786a285837bb2c1069675073a12b2e2e4170ea8d
+cas_ref: sha256:9e7743041329b2a8d4f2395a786a285837bb2c1069675073a12b2e2e4170ea8d
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: Defines exact rational and rounding conventions, interval-arithmetic evaluation order and norms. No enclosure soundness, error bound or successful certificate is asserted.
+    previous_atom_id: 26473ce1db52f31762c2716b251c4d84fdbe48b90928930983f2784b2f14cdd3
+    next_atom_id: fc6c5c5260abcce2bc848f16b2ee93e87b0e9c2f7e431053d2b6e9b123e0302b

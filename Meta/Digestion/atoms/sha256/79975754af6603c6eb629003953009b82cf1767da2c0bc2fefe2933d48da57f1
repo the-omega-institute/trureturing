@@ -1,0 +1,90 @@
+**Theorem 15.2 (The parameterized exact regular lift).** For every
+$t\in[0,10^{-80}]$ there is a unique $z(t)\in\mathcal Z$ with
+$\mathcal E(z(t),t)=0$. It varies real analytically and has an analytic
+extension near $t=0$. Its common base $q(t)=(p(t),v(t))$ is in the
+interior of $\mathcal B_0$. For positive $t$ the three labels are
+strict complete worlds in one acquired child, with a distinct
+terminal-$M$ pair $\{A(t),B(t)\}$.
+
+**Proof.** The following specifies the rational interval certificate.
+For a real interval, every elementary operation is enclosed outward
+with endpoints in $10^{-300}\mathbb Z$: the lower endpoint is rounded
+by $10^{-300}\lfloor10^{300}y\rfloor$, the upper by
+$10^{-300}\lceil10^{300}y\rceil$. Addition and subtraction use endpoint
+bounds, multiplication takes the extremal four endpoint products, and
+inversion uses $[1/u,1/l]$ only when zero is excluded. Derivatives are
+propagated by
+
+$$
+D(xy)=y\,Dx+x\,Dy,\qquad
+D(x/y)=\{Dx-(x/y)Dy\}/y.
+$$
+
+All centres below, including inverses of centre matrices, are exact
+rationals before these interval enclosures are taken. Put
+
+$$
+C=(\partial_z\mathcal E(z_c,0))^{-1}\in\mathbb Q^{5\times5}.
+$$
+
+The rational Jacobian is invertible, and evaluation on the complete
+box $\mathcal Z\times[0,10^{-80}]$ gives
+
+$$
+\|I-C\partial_z\mathcal E(z,t)\|_\infty<10^{-55},\qquad
+\|C\mathcal E(z_c,t)\|_\infty<10^{-75}.
+$$
+
+All denominators in these evaluations exclude zero. In particular
+
+$$
+10^{-75}+10^{-55}10^{-70}<10^{-70}.
+$$
+
+The map $z\mapsto z-C\mathcal E(z,t)$ is therefore a strict contraction
+of $\mathcal Z$ into itself for every parameter. The contraction theorem
+on a closed complete box gives its unique fixed point, and invertibility
+of $C$ turns that equation into $\mathcal E=0$. Moreover
+
+$$
+\|z(t)-z_c\|_\infty
+\le\frac{10^{-75}}{1-10^{-55}}<2\cdot10^{-75}.
+$$
+
+The same derivative inequality makes the Jacobian invertible at every
+solution. The analytic implicit-function theorem supplies local analytic
+solutions, which coincide by uniqueness. Evaluation of the response
+functions on this smaller solution box, with $0\le t\le10^{-80}$,
+gives $|p(t)-p_c|<10^{-65}$ and $|v(t)-v_c|<10^{-65}$.
+
+Here are the source and response enclosures for the whole parameter
+interval; the $A$ source is strict only for $t>0$.
+
+| Label | Source restrictions | $\Lambda$ | $d$ | $f_{MJ}$ | $f_{MM}$ |
+|---|---|---|---|---|---|
+| $A(t)$ | $b=t$, $r=1-ut$, $1<u<2$ | $(2,3)$ | $(25,26)$ | $(349,352)$ | $(350,351)$ |
+| $B(t)$ | $r\in(707,708)/1000$, $b\in(308,309)/1000$ | $(-1/4,-6/25)$ | $(35,36)$ | $(268,271)$ | $(350,351)$ |
+| $Q(t)$ | $r\in(61,62)/1000$, $b\in(58,59)/1000$ | $(7/100,8/100)$ | $(40,41)$ | $(221,223)$ | $(338,339)$ |
+
+These are rational interval enclosures of the displayed functions, not
+conditions restricting the original source domain. For $A$, $u>1$ and
+$0<t\le10^{-80}$ prove $0<1-ut<1$ symbolically. All $j,n,T,U$
+are positive. The three disjoint source boxes give distinct worlds;
+$B,Q$ remain strict also at $t=0$. The complete parent converse gives
+one fixed drift and one whole degree-at-most-three polynomial for each
+positive-$t$ label. The unequal clock-zero and clock-one readings make
+each polynomial nonzero. The equations $\mathcal E=0$ impose a single
+common acquired $p,v$ on all three and impose $m_A=m_B$.
+
+The same rational enclosures give, for each of these three labels,
+
+$$
+|\Lambda|>1/100,\qquad
+1000<F_0(n/U,p(t),v(t))<10000
+\quad(0\le t\le10^{-80}).
+$$
+
+Thus all three positive-$t$ worlds lie outside the exceptional union of
+Definition 3.1. Their gains use the original interpolation nodes and
+original clocks throughout. ∎
+

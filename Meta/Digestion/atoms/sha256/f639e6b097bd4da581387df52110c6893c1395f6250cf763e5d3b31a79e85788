@@ -1,0 +1,159 @@
+**Theorem 15.3 (A uniform entire-child certificate on $\mathcal B_0$).**
+Every entire original child above a base in $\mathcal B_0$ has at most
+three legal complete worlds, and $f_{MJ}$ is injective on that entire
+child.
+
+**Proof.** Use exactly the $f,K=4k,D,F_0,R,\alpha,\beta$ of Sections
+2 and 7, with the fixed normalization
+
+$$
+\operatorname{Res}_d(f,K)=256D^8F_0^2R.
+$$
+
+Theorem 4.1 puts every legal world on $R=0$, including singular
+sources, zero drift and $F_0=0$. Let $R_0(x)=R(x,p_c,v_c)$. The
+following eighteen Gaussian-rational seeds are exact finite decimals:
+
+$$
+\begin{gathered}
+(-1.85357241,0),\ (-1.71791792,0),\ (-1.71566920,0),\\
+(-1.53914181,0),\ (-1.45573127,0),\ (-1.40341508,0),\\
+(-0.376163194,0),\ (0.334468126,0),\ (0.531281700,0),\\
+(0.683220700,-0.096682450),\ (0.683220700,0.096682450),\\
+(0.984507130,0),\ (1.04394781,0),\ (1.10873466,0),\\
+(1.19546576,0),\ (2.00428761,0),\ (2.13729919,0),\ (5.58085280,0).
+\end{gathered}
+$$
+
+Define $\operatorname{Round}_{100}(y)=
+10^{-100}\lfloor10^{100}y+1/2\rfloor$ on rational real numbers,
+and componentwise on $\mathbb Q(i)$. For each seed $s_i$ define the
+finite rational sequence
+
+$$
+c_{i,0}=s_i,\qquad
+c_{i,k+1}=\operatorname{Round}_{100}
+ \left(c_{i,k}-\frac{R_0(c_{i,k})}{R'_0(c_{i,k})}\right)
+\quad(0\le k<8),
+\qquad c_i=c_{i,8},\quad\gamma_i=1/R'_0(c_i).
+$$
+
+Every indicated denominator is nonzero. Let $\mathcal R_i$ be the
+closed rectangle
+
+$$
+\max\{|\operatorname{Re}(x-c_i)|,
+          |\operatorname{Im}(x-c_i)|\}\le10^{-50}.
+$$
+
+These eighteen rectangles are pairwise disjoint. For complex interval
+evaluation use a pair of real intervals with the outward rounding of
+Theorem 15.2. Multiplication by $a+ib$ has sup-component operator bound
+$|a|+|b|$. The complete uniform root enclosures, for every
+$(p,v)\in\mathcal B_0$ and $x\in\mathcal R_i$, are
+
+$$
+\begin{aligned}
+&|\operatorname{Re}(1-\gamma_iR_x(x,p,v))|
+ +|\operatorname{Im}(1-\gamma_iR_x(x,p,v))|<10^{-35},\\
+&\max\{|\operatorname{Re}(\gamma_iR(c_i,p,v))|,
+          |\operatorname{Im}(\gamma_iR(c_i,p,v))|\}<10^{-55},\\
+&|[x^{18}]R(x,p,v)|>10^{19}.
+\end{aligned}
+$$
+
+The root maps $x\mapsto x-\gamma_iR(x,p,v)$ are contractions of their
+rectangles into themselves because
+
+$$
+10^{-55}+10^{-35}10^{-50}<10^{-50}.
+$$
+
+They give eighteen distinct roots. The leading-coefficient bound makes
+the degree eighteen throughout the base box, so these exhaust all roots
+and every root is simple. The sixteen real-centred rectangles have real
+roots by conjugation and uniqueness. Seven are negative and nine are
+positive. The two other rectangles stay off the real axis.
+
+It remains to filter all roots by necessary whole-world conditions.
+Write $f=a_fd^2+b_fd+c_f$ and
+$K=A_4d^4+A_3d^3+A_2d^2+A_1d+A_0$. The exact forms in Section 2 are
+
+$$
+\begin{aligned}
+\alpha={}&A_4(-b_f^3+2a_fb_fc_f)
+ +A_3a_f(b_f^2-a_fc_f)-A_2a_f^2b_f+A_1a_f^3,\\
+\beta={}&A_4(-b_f^2c_f+a_fc_f^2)
+ +A_3a_fb_fc_f-A_2a_f^2c_f+A_0a_f^3,
+\end{aligned}
+$$
+
+and $f$ divides $a_f^3K-\alpha d-\beta$ as a polynomial. Hence
+$\alpha d+\beta=0$ at every actual common root even when $a_f=0$.
+Put $d^*=-\beta/\alpha$, evaluate the interpolant $H_i$ of
+Definition 1.1 at $d^*$, and put
+
+$$
+\mathfrak B=294/5-2d^*-H_2,\qquad
+C_0=(d^*)^2+\mathfrak B^2,\qquad
+N_0=-d^*H_0+\mathfrak B H_2.
+$$
+
+On every one of the eighteen rectangles, uniformly over
+$\mathcal B_0$, the interval unit bounds are
+
+$$
+|\alpha|>10^{12},\qquad |H_1|>1/10,\qquad |C_0|>1,\qquad |N_0|>1.
+$$
+
+These modulus inequalities include the nonreal rectangles; no ordering
+of their complex values is intended. The denominators $x,x+1,x+2$
+also exclude zero. For an actual world, F, Lemma 30.2, then forces
+
+$$
+U=N_0/C_0,\quad b=(U-1)/2,\quad
+j=U(24-d^*)/H_1,\quad r=xU-j.
+$$
+
+The same interval evaluation gives the following complete filter for
+positive roots. The seed identifies a rectangle, not a legal label.
+
+| Real seed | Necessary exclusion or candidate range | $f_{MJ}$ range when applicable | $f_{MM}$ range when applicable |
+|---|---|---|---|
+| $0.334468126$ | $r>5$ | — | — |
+| $0.531281700$ | $b<-9$ | — | — |
+| $0.984507130$ | $r\in(61,62)/1000$, $b\in(58,59)/1000$ | $(221,223)$ | $(338,339)$ |
+| $1.04394781$ | $r\in(707,708)/1000$, $b\in(308,309)/1000$ | $(268,271)$ | $(350,351)$ |
+| $1.10873466$ | $b<0$ | — | — |
+| $1.19546576$ | $b<0$ | — | — |
+| $2.00428761$ | $r\in(999,1001)/1000$, $b\in(-10^{-40},10^{-40})$ | $(349,352)$ | $(349,352)$ |
+| $2.13729919$ | $b<0$ | — | — |
+| $5.58085280$ | $b<0$ | — | — |
+
+The terminal expressions used in these enclosures are the zero-safe
+original-clock formulas
+
+$$
+\begin{aligned}
+\tau_J&=d^*+
+ \left(4x+\frac12+\frac{C_0}{2N_0}
+                    -\frac{2(24-d^*)}{H_1}\right)H_7,\\
+\tau_M&=d^*+(2x+3)H_7.
+\end{aligned}
+$$
+
+They agree with the actual $f_{MJ},f_{MM}$ by Definition 1.1.
+Every operation in this certificate has nonzero denominator on the stated
+box. It uses no inverse of $H_0,d,F_0,H_7$ or of a leading gain
+coefficient. The $H_1$ inverse has its explicit unit bound, and its
+nonvanishing for actual off-$24$ worlds is also part of the faithful
+reconstruction. Thus no allowed sampled root has been silently deleted.
+
+Negative and nonreal roots cannot be actual $x=n/U>0$. Six of the nine
+positive branches violate strict source guards. On each of the other
+three, $\alpha$ fixes the only possible drift; F, Lemma 30.2, then
+allows at most one complete world. There are at most three legal worlds,
+and their three possible terminal-$J$ intervals are disjoint. This proves
+injectivity on the entire child, including any unused or exceptional
+worlds. A surviving algebraic branch is still not presumed legal. ∎
+

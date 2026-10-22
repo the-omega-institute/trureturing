@@ -1,0 +1,48 @@
+**Theorem 128.1 (Finite fixed-decoder error).** With the full input set
+of Definition 105.1,
+
+$$
+\boxed{\displaystyle
+ e_{-q}(\mathcal R_{\mathrm{fam}})
+ =\max_{\rho\in\mathsf D(\mathbb C^3)}
+   \frac12\|\mathcal R_{\mathrm{fam}}\Phi_{-q}(\rho)-\rho\|_1
+ =\frac23-\frac q{12}\qquad(0\le q\le1/2).}
+\tag{128.1}
+$$
+
+The same input $P$ in (107.6) attains this error for every such $q$.
+Consequently
+
+$$
+\mu(-q)\le\frac23-\frac q{12}<\frac23
+\qquad(0<q\le1/2).
+\tag{128.2}
+$$
+
+*Proof.* Put $r=q/2\in[0,1/4]$. The channel identity (127.2) and the
+positive-branch identity-decoder equality (107.5) give
+
+$$
+e_{-q}(\mathcal R_{\mathrm{fam}})=e_r(\operatorname{id})
+ =\frac23-\frac r6=\frac23-\frac q{12}.
+\tag{128.3}
+$$
+
+The reused equality (107.5) bounds every complex density input; its
+pure-input reduction and endpoint calculation are those of Lemma 105.3
+and Proposition 107.2. No restriction to real states or selected probes
+is introduced by this substitution. For the matching input, reuse
+$v=(\sqrt{1/3},\sqrt{1/6},\sqrt{1/2})^{\mathsf T}$ and $P=vv^\dagger$
+of (107.6). The same proposition and (127.2) give
+
+$$
+(\mathcal R_{\mathrm{fam}}\Phi_{-q}(P)-P)v
+ =-\left(\frac23-\frac q{12}\right)v.
+\tag{128.4}
+$$
+
+Together with (105.6), this attains the all-input upper bound. Finally,
+$\mathcal R_{\mathrm{fam}}$ is one admissible member of the decoder minimum, which
+gives (128.2) in the upper-bound direction. The decoder is fixed before
+both the unknown input and the choice of $q$. $\square$
+

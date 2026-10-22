@@ -1,0 +1,29 @@
+**Corollary 114.1 (Full-input bound and strict Fourier improvement).**
+For every physical $s$, writing $q=|s|$,
+
+$$
+\boxed{\displaystyle
+\mu(s)\ge\max\left\{\frac12,F(q)\right\}.}
+\tag{114.1}
+$$
+
+For $L(q)=2/3-2q/9$, the exact difference is
+
+$$
+F(q)-L(q)
+ =\frac{4q^2}
+ {27\bigl(\sqrt{(1-q)^2+8}+3-q/3\bigr)}.
+\tag{114.2}
+$$
+
+In particular $\mu(s)>L(|s|)$ at every nonzero physical parameter.
+At zero, $F(0)=L(0)=\mu(0)=2/3$.
+
+*Proof.* The orbit is a subset of the full input set, so Theorem 113.1
+gives $\mu(s)\ge F(q)$. The lost orthogonal pair (106.11) gives the
+other lower bound $1/2$ for every decoder. To obtain (114.2), subtract
+$L(q)$ from (113.1) and rationalize
+$\sqrt{(1-q)^2+8}-(3-q/3)$. The difference of the two squares is
+$8q^2/9$, and the displayed denominator is positive on $[0,1]$.
+Strictness follows for $q>0$. The zero value is (107.4). $\square$
+

@@ -1,0 +1,37 @@
+**Definition 2.1 (The original exact $p_J$).** For a regular parent
+source, let $W(r,b)$ be the complete world of Lemma 3.1. For
+$z=(r_0,b_0,r_1,b_1,r_2,b_2)$ put $W_i^J=W(r_i,b_i)$ and
+
+$$
+F_J(z)=\begin{pmatrix}
+p(W_0^J)-p(W_1^J)\\p(W_0^J)-p(W_2^J)\\
+u_J(W_0^J)-u_J(W_1^J)\\u_J(W_0^J)-u_J(W_2^J)\\
+f_{JJ}(W_0^J)-f_{JJ}(W_1^J)\\
+f_{JM}(W_0^J)-f_{JM}(W_2^J)
+\end{pmatrix}.
+\tag{2.1}
+$$
+
+This is the original owning (8.1), with the original rational box
+
+$$
+\begin{gathered}
+m_J=10^{-18}(371676286016453570,158678203745512165,
+530842632335007806,374463489524972148,\\
+657472562317377937,380228166766336695),\qquad
+\mathcal B_J=\{z:\|z-m_J\|_\infty\le10^{-12}\}.
+\end{gathered}
+\tag{2.2}
+$$
+
+Owning Theorem 8.1 proves that $F_J$ has exactly one zero $z_J$ in
+this box, with algebraic coordinates, and defines
+
+$$
+p_J=p(W_0^J(z_J)).
+\tag{2.3}
+$$
+
+The superscript distinguishes these inherited worlds from the four
+worlds of Theorem 1.3.
+

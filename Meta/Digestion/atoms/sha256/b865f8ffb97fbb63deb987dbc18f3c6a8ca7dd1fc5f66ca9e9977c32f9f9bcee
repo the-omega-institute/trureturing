@@ -1,0 +1,30 @@
+**Lemma 105.2 (Physical parameter interval and attainment).** The map
+$\Phi_s$ is CPTP exactly for real $s\in[-1/2,1]$. Every maximum and minimum
+in (105.1)–(105.2) is attained.
+
+*Proof.* Put $a=(1+s)/2$ and $b=(1-s)/2$. On the stated interval a Kraus
+representation of $\Phi_s$ is
+
+$$
+\operatorname{diag}(1,s,0),\quad
+\sqrt{a-s^2}\,|1\rangle\langle1|,\quad
+\sqrt a\,|2\rangle\langle2|,\quad
+\sqrt b\,|2\rangle\langle1|,\quad
+\sqrt b\,|1\rangle\langle2|.
+\tag{105.4}
+$$
+
+Here $a-s^2=(1-s)(1+2s)/2\ge0$, and the adjoint products sum to $I$.
+Conversely positivity of the output populations requires $a,b\ge0$.
+In the output-first convention (93.9), the Choi principal block on
+$|00\rangle,|11\rangle$ is $\left(\begin{smallmatrix}1&s\\s&a\end{smallmatrix}\right)$.
+Complete positivity therefore requires $a-s^2\ge0$, which together with
+$a,b\ge0$ gives exactly $-1/2\le s\le1$.
+
+The density matrices form a compact set. The Choi matrices of qutrit
+CPTP maps form the compact set
+$\{J\ge0:\operatorname{Tr}_{\rm out}J=I\}$: it is closed and every
+member has trace three. The error is continuous in the channel and input.
+Maximizing over a compact input set preserves continuity, and minimizing
+over the compact decoder set attains the minimum. $\square$
+
