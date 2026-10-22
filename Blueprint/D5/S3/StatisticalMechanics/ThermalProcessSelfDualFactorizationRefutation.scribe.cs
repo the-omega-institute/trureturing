@@ -147,7 +147,7 @@ internal sealed class ThermalProcessSelfDualFactorizationRefutationDocument : IS
 
     private static Formula ClaimFormula()
     {
-        Formula d = F.Id("d"), hd = F.Id("hd"), g = F.Id("g");
+        Formula d = F.Id("d"), g = F.Id("g");
         Formula i = F.Id("i"), A = F.Id("A"), B = F.Id("B"), C = F.Id("C");
         Formula positivity = All("i", Fin(d), Less(D(0), App(g, i)));
         Formula maximal = All("i", Fin(d), Leq(App(g, i), App(g, FinZero(d))));
@@ -160,7 +160,7 @@ internal sealed class ThermalProcessSelfDualFactorizationRefutationDocument : IS
                             Imp(Call("actsOnFewerLevels", A),
                                 Imp(Call("actsOnFewerLevels", B),
                                     Imp(Call("irreducible", C), conclusion)))))));
-        Formula body = All("d", Nat(), All("hd", Leq(D(2), d),
+        Formula body = All("d", Nat(), Imp(Leq(D(2), d),
             All("g", Arrow(Fin(d), Real()),
                 Imp(positivity, Imp(FunctionInjective(g),
                     Imp(maximal, All("A", MatrixType(d), All("B", MatrixType(d),
