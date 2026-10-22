@@ -151,6 +151,7 @@ structure GraphReading where
   structureClean : Bool := false
   lookupEnabled : Bool := true
   lookupBasisComplete : Bool := true
+  queryAnswerMemoization : Bool := false
   deriving Inhabited
 
 def boundLe : Bound → Bound → Prop

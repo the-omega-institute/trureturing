@@ -509,16 +509,104 @@ private unsafe def rebuildRoute (target : Expr) (types : List Expr)
       detail := if let some name := trace.source? then s!"kernel-checked-lookup:{name}"
         else "kernel-checked-statement"}
 
+/-- Typed answers are scoped to exact target vocabulary, protected basis data
+and the explicit R version. JSON projections never enter this cache. -/
+structure LocalMemoAnswer where
+  identity : String
+  result : LocalResult
+
+private initialize localMemoContext : IO.Ref String ← IO.mkRef ""
+private initialize localMemoAnswers : IO.Ref (Std.HashMap String LocalResult) ← IO.mkRef {}
+private initialize localMemoRegions : IO.Ref (Array CompactedRegion) ← IO.mkRef #[]
+
+def localMemoEnabled : IO Bool := do
+  return (← IO.getEnv "SEARCH_REDUCTION_MEMO") != some "0"
+
+private def prepareLocalMemo (table : LookupTable) (graph : ProofGraph) : MetaM Unit := do
+  localMemoAnswers.set {}
+  localMemoContext.set ""
+  unless ← localMemoEnabled do return
+  let env ← getEnv
+  let mut todo := graph.vertices.foldl (fun names v => names ++ v.type.getUsedConstants) #[]
+  let mut seen : NameSet := {}
+  let mut vocabulary : Array (Name × Expr × Option Expr) := #[]
+  while !todo.isEmpty do
+    let name := todo.back!
+    todo := todo.pop
+    if seen.contains name || (table.environment.setExporting false).contains name then continue
+    seen := seen.insert name
+    let some info := (env.setExporting false).find? name | continue
+    vocabulary := vocabulary.push (name, info.type, info.value? (allowOpaque := true))
+    for dependency in info.getUsedConstantsAsSet do todo := todo.push dependency
+  let root := graph.vertices.find? (·.id == graph.root)
+  let identity := reprStr (localConfiguration,
+    table.disk?.map (fun d => ((toJson d.header).compress, (toJson d.membership?).compress)),
+    table.complete, table.enabled, table.environment.header.moduleNames,
+    root.bind (·.origin.constName?), graph.vertices.map (·.type), vocabulary,
+    ← IO.getEnv "SEARCH_REDUCTION_RESUME_INPUTS")
+  localMemoContext.set identity
+
+private def checkMemoProof (target : Expr) (types : List Expr)
+    (result : LocalResult) : MetaM Unit := do
+  if result.cost != .zero then return
+  let some proof := result.proof? | throwError "lookup.memo_missing_certificate"
+  withFacts types fun facts => do
+    let mut selected := #[]
+    for index in result.used do
+      let some fact := facts[index]? | throwError "lookup.memo_premise_mismatch"
+      selected := selected.push fact
+    let expected ← mkForallFVars selected target
+    unless ← withReducible <| isDefEq (← inferType proof) expected do
+      throwError "lookup.memo_certificate_type_mismatch"
+    checkLocalProof expected proof
+
+private unsafe def memoizedLocalRebuild (target : Expr) (types : List Expr)
+    (action : MetaM LocalResult) : MetaM LocalResult := do
+  let context ← localMemoContext.get
+  if context.isEmpty || target.hasFVar || target.hasMVar ||
+      types.any (fun type => type.hasFVar || type.hasMVar) then return ← action
+  let identity := context ++ reprStr (target, types)
+  if let some result := (← localMemoAnswers.get)[identity]? then
+    checkMemoProof target types result
+    lookupPhase s!"lookup/memo hit=round query={hash identity}"
+    return result
+  let directory := (← IO.getEnv "SEARCH_REDUCTION_QUERY_CACHE").getD
+    "build/lean-inspector/search-reduction-query-cache"
+  let path := (System.FilePath.mk directory) / s!"target-{hash context}" / s!"query-{hash identity}.pickle"
+  if !directory.isEmpty && (← path.pathExists) then
+    try
+      let (record, region) ← unpickle LocalMemoAnswer path
+      localMemoRegions.modify (·.push region)
+      unless record.identity == identity do throwError "lookup.memo_input_mismatch"
+      checkMemoProof target types record.result
+      localMemoAnswers.modify (·.insert identity record.result)
+      lookupPhase s!"lookup/memo hit=disk query={hash identity}"
+      return record.result
+    catch ex =>
+      if ex.isMaxHeartbeat || ex.isInterrupt || ex.isRuntime then throw ex
+      emitLookupRecord s!"LOOKUP_MEMO_REJECTED query={hash identity} reason={← ex.toMessageData.toString}"
+  lookupPhase s!"lookup/memo miss query={hash identity}"
+  let result ← action
+  checkMemoProof target types result
+  localMemoAnswers.modify (·.insert identity result)
+  if !directory.isEmpty then
+    IO.FS.createDirAll path.parent.get!
+    let temporary := path.addExtension "tmp"
+    pickle temporary ({identity, result} : LocalMemoAnswer)
+    IO.FS.rename temporary path
+  return result
+
 unsafe def localRebuild (target : Expr) (types : List Expr := [])
     (lookup? : Option LookupTable := none) : MetaM LocalResult := do
-  let localRoute := rebuildRoute target types none
-  if let some table := lookup? then
-    if table.enabled then
-      try
-        return ← independentRebuild localRoute (rebuildRoute target types (some table)) table.budget?
-      finally
-        if let some close := table.close? then close
-  boundedRebuildBranch localRoute
+  memoizedLocalRebuild target types do
+    let localRoute := rebuildRoute target types none
+    if let some table := lookup? then
+      if table.enabled then
+        try
+          return ← independentRebuild localRoute (rebuildRoute target types (some table)) table.budget?
+        finally
+          if let some close := table.close? then close
+    boundedRebuildBranch localRoute
 
 private def vertex (graph : ProofGraph) (id : Nat) : GraphVertex :=
   (graph.vertices.find? (·.id == id)).getD default
@@ -663,81 +751,87 @@ unsafe def evaluateGraph (raw : ProofGraph) (lookup? : Option LookupTable := non
   let mut raw := raw
   let enabled := (← IO.getEnv "SEARCH_REDUCTION_LOOKUP") != some "0"
   let table ← resolveLookupTable (lookup?.getD {environment := ← getEnv, enabled})
-  let lookup? := some table
-  let mut targetPartComplete := true
-  let rootType := (vertex raw raw.root).type
-  let baseIds := armSeeds raw false
-  let baseTypes := baseIds.map (vertex raw · |>.type)
-  let mut vertices := []
-  for v in raw.vertices do
-    let mut v := v
-    if v.structureSeed then
-      let reverse ← localRebuild v.type (rootType :: baseTypes) lookup?
-      let independent ← localRebuild v.type baseTypes lookup?
-      let independentRun := match independent.cost with
-        | .zero => Run.found | .one => .exhausted | .unknown => .incomplete .undecided
-      v := {v with
-        independentLookup := independentRun,
-        independentLookupDetail := independent.detail}
-      if reverse.cost == .unknown || independent.cost == .unknown then targetPartComplete := false
-      let part ← analyticPremise v.type rootType
-      let inverse ← analyticPremise rootType v.type
-      v := {v with targetPart := part || inverse ||
-        (reverse.cost == .zero && independent.cost == .one)}
-    vertices := vertices ++ [v]
-  raw := {raw with vertices}
-  let graph ← annotateGraph {raw with edges := raw.edges ++ k2Frontier raw}
-  lookupPhase "graph/pricing-start"
-  let graph ← priceGraph graph false false lookup?
-  let graph ← priceGraph graph true false lookup?
-  let graph ← priceGraph graph false true lookup?
-  let graph ← priceGraph graph true true lookup?
-  -- Failed optional probes do not become priced shortcuts in either arm.
-  let graph := {graph with edges := graph.edges.filter (fun e =>
-    e.window == 1 || edgeActive e || edgeActive e true ||
-      edgeActive e false true || edgeActive e true true)}
-  lookupPhase "graph/roots-start"
-  let baseProbe ← rootProbe graph false lookup?
-  let pairedProbe ← rootProbe graph true lookup?
-  lookupPhase "graph/dp-start"
-  let mut graph := graph
-  for paired in [false, true] do
-    let probe := if paired then pairedProbe else baseProbe
-    if probe.checked && (!paired || !baseProbe.checked) then
-      let actual := probe.premises
-      graph := {graph with edges := graph.edges ++ [{
-        conclusion := graph.root, premises := actual, window := 0,
-        cost := if paired then ( .unknown) else .zero, pairedCost := .zero,
-        visibleCost := .zero, pairedVisibleCost := .zero,
-        usedPremises := if paired then [] else actual, pairedUsedPremises := actual,
-        givenUsedPremises := if paired then [] else actual, pairedGivenUsedPremises := actual,
-        zeroProof := if paired then none else probe.proof?, pairedZeroProof := probe.proof?,
-        sharedData? := (graph.edges.find? (·.conclusion == graph.root)).bind (·.sharedData?),
-        detail := if paired then "paired-root-probe" else "baseline-root-probe"}]}
-  let baselineGraph := armGraph graph false false
-  let pairedGraph := armGraph graph true false
-  let baseSeeds := armSeeds graph false
-  let pairSeeds := armSeeds graph true
-  let k1 := {graph with edges := graph.edges.filter (·.window != 2)}
-  let selectedSeeds := optimalSeeds pairedGraph costUpper pairSeeds
-  let witnessEdges := graph.edges.zipIdx.filterMap fun (edge, i) =>
-    if isWitnessEdge graph selectedSeeds edge then some i else none
-  let reading := {
-    graph, baseline := graphInterval baselineGraph baseSeeds,
-    paired := graphInterval pairedGraph pairSeeds,
-    baselineK1 := graphInterval (armGraph k1 false false) baseSeeds,
-    pairedK1 := graphInterval (armGraph k1 true false) pairSeeds,
-    baselineVisible := graphInterval (armGraph graph false true) baseSeeds,
-    pairedVisible := graphInterval (armGraph graph true true) pairSeeds,
-    baselineProbe := baseProbe, pairedProbe, selectedSeeds, witnessEdges, targetPartComplete,
-    noAuxiliary := !(raw.vertices.any (·.structureSeed)),
-    selectedSeedDepths := selectedSeeds.map (fun id =>
-      (id, intervalDP baselineGraph baseSeeds id)),
-    proofHardSeeds := selectedSeeds.filter (fun id =>
-      proofHardEligible graph selectedSeeds id (depth baselineGraph costLower baseSeeds id)),
-    pairedUsesSeed := selectedSeeds.any (selectedStructureSeed graph selectedSeeds),
-    lookupEnabled := table.enabled, lookupBasisComplete := table.complete : GraphReading}
-  lookupPhase "graph/dp-end"
-  return reading
+  prepareLocalMemo table raw
+  try
+    let lookup? := some table
+    let mut targetPartComplete := true
+    let rootType := (vertex raw raw.root).type
+    let baseIds := armSeeds raw false
+    let baseTypes := baseIds.map (vertex raw · |>.type)
+    let mut vertices := []
+    for v in raw.vertices do
+      let mut v := v
+      if v.structureSeed then
+        let reverse ← localRebuild v.type (rootType :: baseTypes) lookup?
+        let independent ← localRebuild v.type baseTypes lookup?
+        let independentRun := match independent.cost with
+          | .zero => Run.found | .one => .exhausted | .unknown => .incomplete .undecided
+        v := {v with
+          independentLookup := independentRun,
+          independentLookupDetail := independent.detail}
+        if reverse.cost == .unknown || independent.cost == .unknown then targetPartComplete := false
+        let part ← analyticPremise v.type rootType
+        let inverse ← analyticPremise rootType v.type
+        v := {v with targetPart := part || inverse ||
+          (reverse.cost == .zero && independent.cost == .one)}
+      vertices := vertices ++ [v]
+    raw := {raw with vertices}
+    let graph ← annotateGraph {raw with edges := raw.edges ++ k2Frontier raw}
+    lookupPhase "graph/pricing-start"
+    let graph ← priceGraph graph false false lookup?
+    let graph ← priceGraph graph true false lookup?
+    let graph ← priceGraph graph false true lookup?
+    let graph ← priceGraph graph true true lookup?
+    -- Failed optional probes do not become priced shortcuts in either arm.
+    let graph := {graph with edges := graph.edges.filter (fun e =>
+      e.window == 1 || edgeActive e || edgeActive e true ||
+        edgeActive e false true || edgeActive e true true)}
+    lookupPhase "graph/roots-start"
+    let baseProbe ← rootProbe graph false lookup?
+    let pairedProbe ← rootProbe graph true lookup?
+    lookupPhase "graph/dp-start"
+    let mut graph := graph
+    for paired in [false, true] do
+      let probe := if paired then pairedProbe else baseProbe
+      if probe.checked && (!paired || !baseProbe.checked) then
+        let actual := probe.premises
+        graph := {graph with edges := graph.edges ++ [{
+          conclusion := graph.root, premises := actual, window := 0,
+          cost := if paired then ( .unknown) else .zero, pairedCost := .zero,
+          visibleCost := .zero, pairedVisibleCost := .zero,
+          usedPremises := if paired then [] else actual, pairedUsedPremises := actual,
+          givenUsedPremises := if paired then [] else actual, pairedGivenUsedPremises := actual,
+          zeroProof := if paired then none else probe.proof?, pairedZeroProof := probe.proof?,
+          sharedData? := (graph.edges.find? (·.conclusion == graph.root)).bind (·.sharedData?),
+          detail := if paired then "paired-root-probe" else "baseline-root-probe"}]}
+    let baselineGraph := armGraph graph false false
+    let pairedGraph := armGraph graph true false
+    let baseSeeds := armSeeds graph false
+    let pairSeeds := armSeeds graph true
+    let k1 := {graph with edges := graph.edges.filter (·.window != 2)}
+    let selectedSeeds := optimalSeeds pairedGraph costUpper pairSeeds
+    let witnessEdges := graph.edges.zipIdx.filterMap fun (edge, i) =>
+      if isWitnessEdge graph selectedSeeds edge then some i else none
+    let reading := {
+      graph, baseline := graphInterval baselineGraph baseSeeds,
+      paired := graphInterval pairedGraph pairSeeds,
+      baselineK1 := graphInterval (armGraph k1 false false) baseSeeds,
+      pairedK1 := graphInterval (armGraph k1 true false) pairSeeds,
+      baselineVisible := graphInterval (armGraph graph false true) baseSeeds,
+      pairedVisible := graphInterval (armGraph graph true true) pairSeeds,
+      baselineProbe := baseProbe, pairedProbe, selectedSeeds, witnessEdges, targetPartComplete,
+      noAuxiliary := !(raw.vertices.any (·.structureSeed)),
+      selectedSeedDepths := selectedSeeds.map (fun id =>
+        (id, intervalDP baselineGraph baseSeeds id)),
+      proofHardSeeds := selectedSeeds.filter (fun id =>
+        proofHardEligible graph selectedSeeds id (depth baselineGraph costLower baseSeeds id)),
+      pairedUsesSeed := selectedSeeds.any (selectedStructureSeed graph selectedSeeds),
+      lookupEnabled := table.enabled, lookupBasisComplete := table.complete,
+      queryAnswerMemoization := ← localMemoEnabled : GraphReading}
+    lookupPhase "graph/dp-end"
+    return reading
+  finally
+    localMemoContext.set ""
+    localMemoAnswers.set {}
 
 end LeanInformationAudit.SearchReduction
