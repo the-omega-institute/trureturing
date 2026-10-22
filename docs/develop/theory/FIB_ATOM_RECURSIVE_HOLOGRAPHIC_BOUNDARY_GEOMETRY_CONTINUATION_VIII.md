@@ -2654,3 +2654,719 @@ bound or attainment claim is made. The exposition makes no literature-
 priority, empirical-availability or Lean/kernel-certification claim.
 
 ## 追加锚（本行以下为增补区）
+
+## 248. Finite native uniform approximation and its original yield
+
+**Definition 248.1 (Approximate conversion with the original preparation law).**
+Fix $t=3-2\sqrt2$ and $D=\{(q_1,q_2):q_1>0,\ q_2>0,\ q_1+q_2<1\}$.
+For every actual $q\in D$, retain the positive-principal-root vector
+$V_q$, the jointly generated $p(q),u_q,U_q$, and the matrices
+$\Omega_q,\rho_q$ of Definition 240.1. In particular, with all quantities
+evaluated at that same $q$, write
+
+$$
+\begin{gathered}
+g=(1-t)^2p(1-p),\qquad h=t+(1-t)p,\qquad
+P_q=\operatorname{Tr}\Omega_q,\qquad \rho_q=\Omega_q/P_q,\\
+\lambda=\frac{g}{2t+g},\qquad
+W_v=\frac{1-v}{4}I_4+vP_-,\qquad W_q=W_\lambda.
+\end{gathered}
+\tag{248.1}
+$$
+
+The singlet $P_-$, normalized cut, CAR ordering, compatible phases,
+selected-space identification $J$ and fixed encoded output are those of
+Definitions 240.1 and 244.1. For each finite integer $k\ge2$, let
+$\mathcal H_k$ consist of the reduced success maps
+$\mathcal E:M_{8^k}(\mathbb C)\to M_4(\mathbb C)$ of actual finite
+adaptive local-total-number-preserving LOCC instruments allowed by
+Definition 244.1, fixed independently of $q$, for which
+
+$$
+\begin{gathered}
+s_{\mathcal E}(q)=\operatorname{Tr}\mathcal E(\rho_q^{\otimes k})>0,\\
+e_k(\mathcal E)=\sup_{q\in D}\frac12
+\left\|\frac{\mathcal E(\rho_q^{\otimes k})}{s_{\mathcal E}(q)}-W_q\right\|_1.
+\end{gathered}
+\tag{248.2}
+$$
+
+Here $\|\cdot\|_1$ is the trace norm. The exact-output equation (244.2)
+is replaced by the error requirement; the preparation and operation menu
+are retained. Every attempt uses exactly $2k$ independent compatible
+full-Gibbs preparations at the same unknown $q,t$ and $k$ unchanged
+original filters. Any filter rejection is terminal. All-pass input is
+$\rho_q^{\otimes k}$, and the three original probabilities remain
+
+$$
+1-P_q^k,\qquad P_q^k s_{\mathcal E}(q),\qquad
+P_q^k(1-s_{\mathcal E}(q)).
+\tag{248.3}
+$$
+
+The output in (248.2) is evaluated after summing and erasing all fine
+success histories. Only the stipulated ideal local controls, neutral
+memories, separable auxiliary states, fixed coins and finite communication
+are available. One existing selected particle per party occupies the fixed
+output encoding. In a sector of local auxiliary charge $n_{\mathrm{aux}}$,
+local residual charge before discard is $k+n_{\mathrm{aux}}-1$.
+All residual particles, memories, histories and coin records are erased.
+There is no separately supplied $p,U_q$ or source label, source-aware
+alignment or target coin, entangled ancillary resource, external
+particle-number phase reference, unfiltered access, extra preparation,
+retry or failure recycling. The ideal coherent-control and neutral-memory
+assumptions are those of [VII, §§214,219,235–237](FIB_ATOM_RECURSIVE_HOLOGRAPHIC_BOUNDARY_GEOMETRY_CONTINUATION_VII.md)
+as inherited by Definition 244.1; they are not a passive-optics or finite
+gate-alphabet assumption.
+
+The simultaneous polynomial-original-yield assertion, denoted $\mathsf Q$,
+is
+
+$$
+\begin{gathered}
+\exists A>0\ \exists\gamma>0\ \exists\epsilon_0\in(0,1)\quad
+\forall\epsilon\in(0,\epsilon_0)\quad
+\exists k\in\mathbb N,\ k\ge2\quad
+\exists\mathcal E\in\mathcal H_k:\\
+e_k(\mathcal E)\le\epsilon,\qquad
+P_q^k s_{\mathcal E}(q)\ge A\epsilon^\gamma\quad\text{for every }q\in D.
+\end{gathered}
+\tag{248.4}
+$$
+
+Both $k$ and the single whole-family instrument may depend on $\epsilon$,
+but not on the actual $q$. The constants $A,\gamma,\epsilon_0$ are
+independent of both. No separate positive uniform conditional-success
+floor or attained optimum is assumed.
+The exact finite-$k$ obstruction of Theorem 247.3 and Corollary 247.4
+concerns the exact-output equation (244.2); (248.4) instead allows
+approximation and an $\epsilon$-dependent finite $k$.
+
+**Theorem 248.2 (A finite native approximation with exact original cost).**
+Under Definition 248.1, for every integer $m\ge1$ and integer $b\ge0$
+there is a finite $q$-independent instrument $\mathcal E\in\mathcal H_{3m}$
+using exactly $6m$ original full-Gibbs preparations and $3m$ original
+filters, with
+
+$$
+\begin{gathered}
+s_{\mathcal E}(q)=1\quad(q\in D),\qquad
+e_{3m}(\mathcal E)\le\frac{C}{\sqrt m}+\frac{2^{-b}}4,
+\qquad C=\frac32+\frac{\sqrt2}{4},\\
+r_-^{3m}\le P_q^{3m}\le r_+^{3m},\qquad
+r_-:=\frac{t}{(1+t)^3}>0,\qquad
+r_+:=\frac{5t}{2(1+t)^4}<1.
+\end{gathered}
+\tag{248.5}
+$$
+
+All histories and residuals are erased, the fixed output retains one
+existing selected particle per party, and local residual charge before
+discard is $3m+n_{\mathrm{aux}}-1$. In particular, for $0<\epsilon<1$ the
+sufficient choice
+
+$$
+m=\left\lceil(2C/\epsilon)^2\right\rceil,\qquad
+b=\left\lceil\log_2(1/\epsilon)\right\rceil,\qquad k=3m
+\tag{248.6}
+$$
+
+gives $e_k(\mathcal E)\le3\epsilon/4$ and original success exactly $P_q^k$,
+but uniformly
+
+$$
+P_q^k\le\exp(-c_0/\epsilon^2),\qquad
+c_0=12C^2|\log r_+|>0.
+\tag{248.7}
+$$
+
+Consequently this sufficient schedule does not satisfy (248.4).
+It is not a necessary accuracy cost, a sharp rate, or an obstruction for
+the full class $\mathcal H_k$.
+
+Proof. Put $Q_F=2t+g+2th$, $w=(2t+g)/Q_F$ and $\eta=g/Q_F$.
+The spatial trace of the same supplied $\rho_q$ is $W_\eta$, and
+$\eta=w\lambda$, as in VII (237.2)–(237.4). Its other marginal is
+
+$$
+\sigma_S:=\operatorname{Tr}_{A,C}\rho_q
+=wU_q+(1-w)(I_2-U_q).
+\tag{248.8}
+$$
+
+Indeed the active and spectator traces in (240.4) are respectively
+$4t+2g$ and $4th$, with total $2Q_F$. These two marginals are obtained
+from one and the same native state, not independently selectable inputs.
+Since $0<p<1$ and $t<1$, one has $h<1$ and $2t+g>2th$, so $w>1/2$.
+The native vector is real and has unit norm, hence $U_q$ is a real rank-one
+projector in the fixed spatial basis. Let $\sigma_x,\sigma_y,\sigma_z$
+be the Pauli matrices in each stipulated two-dimensional register, and set
+
+$$
+\beta=(\operatorname{Tr}(\sigma_S\sigma_x),
+       \operatorname{Tr}(\sigma_S\sigma_z)),\qquad
+r=\|\beta\|_2.
+\tag{248.9}
+$$
+
+The Bloch vector of $U_q$ lies in the $x,z$ plane and has norm one.
+Equation (248.8) therefore gives $r=2w-1$, and
+
+$$
+\lambda=\frac{2\eta}{1+r}.
+\tag{248.10}
+$$
+
+This identity removes the unknown spatial direction without aligning to
+it; its denominator is at least one. The critical identity
+$(1-t)^2=4t$ gives $0<g\le t$ and $0<\lambda\le1/3$.
+
+Take $k=3m$, prepare the prescribed $2k$ full-Gibbs states and apply the
+$k$ original filters to their prescribed disjoint pairs. Stop on any
+rejection. Conditional on all passes, divide $\rho_q^{\otimes k}$ into
+three groups of $m$ independent blocks. In the first group Alice measures
+$\sigma_z$ on $A_i$ and Bob measures $\sigma_z$ on $C_i$, with identity
+on $S_i$. Communicate the two signs and let $\widehat\eta$ be minus the
+average of their products. The fixed singlet convention gives
+$\operatorname{Tr}(W_\eta\,\sigma_z\otimes\sigma_z)=-\eta$, so
+$\mathbb E_q\widehat\eta=\eta$. In the second group Bob measures
+$\sigma_x$ on $S_i$, with identity on $C_i$, obtaining average
+$\widehat x$. In the third he measures $\sigma_z$ on $S_i$, obtaining
+$\widehat z$. Thus $\mathbb E_q(\widehat x,\widehat z)=\beta$.
+Here and below $\mathbb E_q$ averages actual measurement and coin histories
+conditional on all original passes. Bob's operators act through $J$ on
+his selected four-dimensional one-particle space. No full-Fock tensor
+factorization is used.
+
+For a real interval $I$, write $\operatorname{clip}_I$ for nearest-point
+projection onto $I$. Define the finite count table
+
+$$
+\widehat r=\min\{1,\sqrt{\widehat x^2+\widehat z^2}\},\qquad
+\widehat\lambda=\operatorname{clip}_{[0,1/3]}
+          \left(\frac{2\widehat\eta}{1+\widehat r}\right).
+\tag{248.11}
+$$
+
+For fixed $m$ all three counts range over finite sets. For each joint
+measurement history $h_0$ put
+
+$$
+a_{h_0}=2^{-b}\left\lfloor2^b\,3\widehat\lambda(h_0)\right\rfloor.
+\tag{248.12}
+$$
+
+Then $0\le a_{h_0}\le1$ and
+$0\le\widehat\lambda(h_0)-a_{h_0}/3\le2^{-b}/3$.
+This is a fixed finite history-to-operation table independent of $q$.
+The distribution of histories depends on $q$; the table itself does not.
+Neither a known source parameter nor an unknown-probability coin is
+supplied by (248.11)–(248.12).
+
+For an explicit fixed-fair-bit realization of the already separable
+endpoint $W_{1/3}$ of VII §194, let
+
+$$
+\begin{gathered}
+n_1=(1,1,1)/\sqrt3,\quad n_2=(1,-1,-1)/\sqrt3,\\
+n_3=(-1,1,-1)/\sqrt3,\quad n_4=(-1,-1,1)/\sqrt3,\qquad
+\tau_n=(I_2+n\cdot\sigma)/2.
+\end{gathered}
+\tag{248.13}
+$$
+
+Two fixed fair bits choose $j\in\{1,2,3,4\}$ uniformly; communicate $j$
+and prepare $\tau_{n_j}$ and $\tau_{-n_j}$ locally in the fixed output
+rails. Each is a fixed pure one-particle state. Since
+$\frac14\sum_j n_j=0$ and $\frac14\sum_jn_jn_j^{\mathsf T}=I_3/3$,
+expansion gives
+
+$$
+\frac14\sum_{j=1}^4\tau_{n_j}\otimes\tau_{-n_j}
+=\frac{I_4}{4}-\frac1{12}\sum_{a=x,y,z}\sigma_a\otimes\sigma_a
+=W_{1/3}.
+\tag{248.14}
+$$
+
+This four-state realization is used as a fixed preparation, not as an
+additional separability assertion. After history $h_0$, use $b$ fixed
+fair bits to choose a uniform integer $L\in\{0,\ldots,2^b-1\}$.
+Prepare (248.14) if $L<2^b a_{h_0}$, and otherwise prepare $I_4/4$
+using local fair-bit choices of basis states. The threshold is an integer
+in the fixed table. This produces
+
+$$
+(1-a_{h_0})I_4/4+a_{h_0}W_{1/3}=W_{a_{h_0}/3}.
+\tag{248.15}
+$$
+
+For $b=0$ the integer $L$ has the single value zero, so the same rule
+still applies. Runtime coins all have the fixed probability $1/2$.
+This finite instrument always succeeds after all original passes.
+
+The measurements have projective dilations recording their basis labels
+in neutral memories. Local fixed-state preparation uses one of each
+party's existing selected particles. The reset dilation VII (219.8)
+maps $|i\rangle|\mathrm{ready}\rangle_M$ to
+$|\mathrm{target}\rangle|i\rangle_M$ on an orthonormal basis of the
+one-particle input sector, with orthogonal neutral memory states.
+It is an isometry, extends to a unitary in that total-number sector,
+and has block-diagonal extensions on other sectors. For Bob it includes
+the old copy and spatial label and places the retained particle in the
+fixed output rails. Thus earlier measurements do not require a fresh
+output particle. The other $k-1$ selected particles at each party remain
+residual. Neutral auxiliaries leave residual charge $k-1$; fixed auxiliary
+charge $n_{\mathrm{aux}}$ remains residual and gives
+$k+n_{\mathrm{aux}}-1$. All residual particles, memory labels and coin
+records are traced out. Relative phases of the prescribed one-particle
+states stay within a fixed-number sector and add no external
+particle-number phase reference. This constructs a finite LOCC tree in
+the stipulated ideal menu directly, without a separable-CP-to-LOCC
+converse.
+
+Independence of the all-pass blocks and the variance bound for a sign
+variable give
+
+$$
+\begin{aligned}
+\mathbb E_q|\widehat\eta-\eta|&\le m^{-1/2},\\
+\mathbb E_q\|(\widehat x,\widehat z)-\beta\|_2
+&\le\left(\mathbb E_q[(\widehat x-\beta_x)^2+
+                          (\widehat z-\beta_z)^2]\right)^{1/2}
+\le\sqrt{2/m}.
+\end{aligned}
+\tag{248.16}
+$$
+
+Because $r\in[0,1]$, clipping the estimated norm cannot increase its
+distance from $r$. The reverse triangle inequality yields
+$\mathbb E_q|\widehat r-r|\le\sqrt{2/m}$. By (248.10), before clipping,
+
+$$
+\left|\frac{2\widehat\eta}{1+\widehat r}-\lambda\right|
+\le2|\widehat\eta-\eta|
+ +\frac{\lambda}{1+\widehat r}|\widehat r-r|
+\le2|\widehat\eta-\eta|+\frac13|\widehat r-r|.
+\tag{248.17}
+$$
+
+Projection onto $[0,1/3]$ cannot increase the distance to $\lambda$.
+Consequently
+$\mathbb E_q|\widehat\lambda-\lambda|\le(2+\sqrt2/3)/\sqrt m$.
+The eigenvalues of $P_--I_4/4$ are $3/4,-1/4,-1/4,-1/4$, so
+
+$$
+\frac12\|W_v-W_z\|_1=\frac34|v-z|.
+\tag{248.18}
+$$
+
+In particular the actual erased output, rather than a state selected by
+an accurate-history flag, is
+
+$$
+\mathcal E(\rho_q^{\otimes k})
+=\sum_{h_0}\Pr_q(h_0)W_{a_{h_0}/3}.
+\tag{248.19}
+$$
+
+Affineness of the Werner line, the triangle inequality and (248.12) give
+
+$$
+\frac12\|\mathcal E(\rho_q^{\otimes k})-W_q\|_1
+\le\frac34\mathbb E_q|\widehat\lambda-\lambda|+\frac{2^{-b}}4
+\le\frac{C}{\sqrt m}+\frac{2^{-b}}4.
+\tag{248.20}
+$$
+
+Every bound holds with the same constants for every actual $q\in D$,
+so it also bounds the supremum in (248.2). No per-history accuracy or
+conditional-accuracy-only replacement is used.
+
+For (248.6), the terms in (248.20) are at most $\epsilon/2$ and
+$\epsilon/4$. Conditional success is one, so the three original
+probabilities are exactly $1-P_q^k,P_q^k,0$. There is no variable stopping,
+retry or recycling. From (240.5), $h\ge t$ and $g\ge0$ give
+$P_q\ge t/(1+t)^3=r_-$. The bounds $g\le t$ and $h\le1$ give
+$P_q\le5t/[2(1+t)^4]=r_+<1$. This proves (248.5). The schedule has
+$3m\ge12C^2/\epsilon^2$, which proves (248.7). For any fixed
+$A,\gamma>0$, $\exp(-c_0/\epsilon^2)/(A\epsilon^\gamma)\to0$ as
+$\epsilon\downarrow0$, so this schedule cannot witness $\mathsf Q$.
+Its sufficient choice of $m$ proves no necessary cost or optimality
+statement for this protocol or for other native instruments. ∎
+
+## 追加锚（本行以下为增补区）
+
+## 249. Positive witness pullback and a necessary channel property
+
+**Definition 249.1 (Fixed witness and positive-pullback class).**
+On the fixed output of Definition 248.1 let
+$|\phi\rangle=(|00\rangle+|11\rangle)/\sqrt2$,
+$\Phi=|\phi\rangle\langle\phi|$, and let $\Gamma$ be the stipulated
+Alice-only transpose of Definition 244.3. Equation (244.7) gives
+
+$$
+H:=\Phi^\Gamma=I_4/2-P_-,\qquad \|H\|_{\mathrm{op}}=1/2.
+\tag{249.1}
+$$
+
+For a common completely positive map
+$\mathcal E:M_{8^k}(\mathbb C)\to M_4(\mathbb C)$ with
+$\operatorname{Tr}\mathcal E(\rho_q^{\otimes k})>0$ for every actual
+$q\in D$, use the same conditional error formula (248.2), whether or not
+the map is physical. Its trace adjoint $\mathcal E^*$ is specified by
+$\operatorname{Tr}(Y\mathcal E(X))=
+\operatorname{Tr}(\mathcal E^*(Y)X)$. The additional positive-pullback
+condition is $\mathcal E^*(H)\succeq0$, where $\succeq$ denotes the
+positive-semidefinite order. It is an extra condition on the map on all
+inputs, not just a condition on its outputs on the native family.
+
+**Theorem 249.2 (A success-scale-independent positive-pullback bound).**
+For the critical native family of Definition 248.1 there is a constant
+$c>0$, independent of $k$, $\mathcal E$ and its success scale, such that
+every finite $k\ge2$ and common CP map of Definition 249.1 satisfying
+$\mathcal E^*(H)\succeq0$ obey
+
+$$
+e_k(\mathcal E)\ge\frac{c}{k^2}.
+\tag{249.2}
+$$
+
+In particular, physical trace-nonincreasing maps with this additional
+condition cannot satisfy $\mathsf Q$. This consequence retains the
+original $2k$ preparations, $k$ filters, terminal rejection and the
+erased-output probability law (248.3). It assumes no positive uniform
+conditional-success floor.
+
+Proof. By [VII, Theorems 228.1 and 229.1](FIB_ATOM_RECURSIVE_HOLOGRAPHIC_BOUNDARY_GEOMETRY_CONTINUATION_VII.md)
+there is an actual interior $q_*$ with $p(q_*)=1/2$. Put
+$z(q)=(V_q)_\ell$. VII Proposition 227.1 gives $z>0$, and
+VII (228.8)–(228.9) give
+$(\partial_{q_1}-\partial_{q_2})z>0$. The corresponding derivative of
+$p=z^2$ is nonzero at $q_*$. Restricting to a sufficiently short interior
+line segment in direction $(1,-1)$, the one-dimensional inverse function
+theorem therefore gives a smooth actual path $q(s)$, $|s|\le s_0$,
+for some $s_0>0$, with
+
+$$
+p(q(s))=1/2+s,\qquad \rho(s):=\rho_{q(s)}.
+\tag{249.3}
+$$
+
+Both $p$ and $U$ on this path remain those of the same actual source.
+The path compares one common map at different actual inputs; it supplies
+no source parameter to the instrument.
+
+The principal root and the source are smooth there. Apart from the common
+positive factor in (240.4), the active eigenvalues are $t+2g$ and $t$,
+and the spectator eigenvalues are $th$. They are strictly positive since
+$t>0$ and $h\ge t$. Normalization preserves positive definiteness.
+On a sufficiently short compact path, the inverse square root and
+derivative of $\rho(s)$ are continuous, so the existence constant
+
+$$
+L=\max\left\{1,\sup_{|s|\le s_0}
+\|\rho(s)^{-1/2}\rho'(s)\rho(s)^{-1/2}\|_{\mathrm{op}}\right\}
+\tag{249.4}
+$$
+
+is finite. It gives $-L\rho(s)\preceq\rho'(s)\preceq L\rho(s)$.
+For every nonzero fixed vector $x$, the scalar
+$\langle x,\rho(s)x\rangle$ is positive. Divide its derivative by that
+scalar and integrate between zero and $s$ to get
+
+$$
+e^{-L|s|}\rho(0)\preceq\rho(s)\preceq e^{L|s|}\rho(0).
+\tag{249.5}
+$$
+
+This quadratic-form argument requires no commutativity. Tensor-order
+monotonicity, applied repeatedly to positive matrices, gives
+
+$$
+e^{-Lk|s|}\rho(0)^{\otimes k}
+\preceq\rho(s)^{\otimes k}
+\preceq e^{Lk|s|}\rho(0)^{\otimes k}.
+\tag{249.6}
+$$
+
+Write
+
+$$
+\begin{gathered}
+F=\mathcal E^*(H)\succeq0,\qquad
+G=\mathcal E^*(I_4)\succeq0,\\
+f(s)=\operatorname{Tr}(F\rho(s)^{\otimes k}),\qquad
+g_{\mathcal E}(s)=\operatorname{Tr}(G\rho(s)^{\otimes k})>0,\qquad
+d_{\mathcal E}(s)=f(s)/g_{\mathcal E}(s).
+\end{gathered}
+\tag{249.7}
+$$
+
+Using positivity in (249.6) gives
+$f(s)\le e^{Lk|s|}f(0)$ and
+$g_{\mathcal E}(s)\ge e^{-Lk|s|}g_{\mathcal E}(0)$, hence
+
+$$
+0\le d_{\mathcal E}(s)\le e^{2Lk|s|}d_{\mathcal E}(0).
+\tag{249.8}
+$$
+
+The absolute success scale cancels. In particular this argument introduces
+no lower bound on that scale.
+
+Directly from (240.6) and (249.1), the target witness value is
+
+$$
+d(s):=\operatorname{Tr}(HW_{q(s)})
+=\frac{t-g}{2(2t+g)}
+=\frac{2s^2}{3-4s^2}\ge\frac{2s^2}{3},\qquad d(0)=0.
+\tag{249.9}
+$$
+
+Here $(1-t)^2=4t$ gives $g=t(1-4s^2)$. If $e=e_k(\mathcal E)$,
+the erased conditional trace error and $\|H\|_{\mathrm{op}}=1/2$
+give $|d_{\mathcal E}(s)-d(s)|\le e$. In particular
+$0\le d_{\mathcal E}(0)\le e$. Choose the fixed positive constants
+
+$$
+a=\min\{s_0,1/(2L),1/4\},\qquad
+c=\frac{2a^2}{3(1+\exp(1))}.
+\tag{249.10}
+$$
+
+They are existence constants, not numerical measurements. Take $s=a/k$.
+This lies on the fixed actual path, with $\exp(2Lks)\le\exp(1)$.
+Equations (249.8)–(249.9) imply
+
+$$
+\frac{2a^2}{3k^2}\le d(a/k)
+\le d_{\mathcal E}(a/k)+e
+\le(1+\exp(1))e,
+\tag{249.11}
+$$
+
+which proves (249.2) for the actual reduced output after erasure.
+
+For the physical consequence, (240.5) and $g\le t$, $h\le1$ give
+$P_q\le r_+<1$ as in (248.5). Suppose a trace-nonincreasing schedule
+had the fixed $A,\gamma>0$ yield bound in (248.4). Since
+$s_{\mathcal E}(q)\le1$, for sufficiently small $\epsilon$ it would
+necessarily have
+
+$$
+k\le\frac{\gamma\log(1/\epsilon)+|\log A|}{|\log r_+|}
+=:K_\epsilon.
+\tag{249.12}
+$$
+
+If also $e_k(\mathcal E)\le\epsilon$, (249.2) would imply
+$\epsilon K_\epsilon^2\ge c$, contradicting
+$\epsilon\log^2(1/\epsilon)\to0$. Equivalently, in this subclass
+error at most $\epsilon$ requires $k\ge\sqrt{c/\epsilon}$ and therefore
+original yield at most
+$\exp(-|\log r_+|\sqrt{c/\epsilon})$. This is a necessary subclass
+bound; it does not assert an optimal exponent or a full-class bound. ∎
+
+**Corollary 249.3 (Measure-and-separable-prepare inclusion).**
+Every finite common trace-nonincreasing map of the form
+
+$$
+\mathcal E(X)=\sum_h\operatorname{Tr}(M_hX)\sigma_h,\qquad
+M_h\succeq0,\quad\sum_hM_h\preceq I,
+\tag{249.13}
+$$
+
+where every $\sigma_h$ is a fixed normalized separable output state,
+has $\mathcal E^*(H)\succeq0$. If such maps are actual native instruments
+with positive success throughout $D$, no schedule of them satisfies
+$\mathsf Q$. The hypothesis is the full map representation (249.13),
+not merely separability of the tested native outputs.
+
+Proof. For a separable $\sigma_h$, Alice transpose preserves positivity
+termwise in a product-state decomposition, so $\sigma_h^\Gamma\succeq0$.
+Consequently
+
+$$
+\operatorname{Tr}(H\sigma_h)
+=\operatorname{Tr}(\Phi\sigma_h^\Gamma)\ge0,\qquad
+\mathcal E^*(H)=\sum_h\operatorname{Tr}(H\sigma_h)M_h\succeq0.
+\tag{249.14}
+$$
+
+Theorem 249.2 applies. Complete histories in (249.13) may include all
+coins and adaptive outcomes; their finite operation table is fixed
+independently of $q$. The construction of Theorem 248.2 has exactly this
+form after its measurements and fixed separable preparations, so the
+obstruction applies to every schedule within this stated map class,
+beyond the sufficient schedule (248.6). Allowing arbitrary collective
+POVM effects $M_h$ enlarges the class for the obstruction; it does not
+implement those POVMs by native LOCC. A classical supplier appearing
+inside a different coherent construction does not alone put that
+construction in (249.13). Only the displayed forward inclusion is used;
+no CP- or separable-map-to-LOCC converse follows. ∎
+
+**Theorem 249.4 (Necessary indefinite pullback and a proper-subclass
+counterexample).** Suppose a schedule of actual native maps satisfies
+$\mathsf Q$ with fixed $A,\gamma$. For every sufficiently small
+$\epsilon$, its map has indefinite $\mathcal E^*(H)$. Each such map
+produces an $H$-detected entangled normalized output on some entangled
+non-native pure input. This is a necessary property of a hypothetical
+schedule, not a supplied input resource or an attaining construction.
+Moreover, the native class $\mathcal H_k$ is not contained in the
+positive-pullback subclass.
+
+Proof. The contradiction (249.12) is uniform over positive-pullback maps
+for fixed $A,\gamma$. Thus $\mathcal E^*(H)$ is not positive semidefinite
+for every sufficiently small $\epsilon$ in a hypothetical schedule.
+At the actual $q_0=(1/3,1/3)$, Lemma 240.2 gives $p=1/3$. Hence
+$g=8t/9$, $\lambda=4/13$ and
+
+$$
+\operatorname{Tr}(HW_{q_0})=1/52.
+\tag{249.15}
+$$
+
+For $\epsilon<1/52$, conditional accuracy makes the witness expectation
+of the normalized output at $q_0$ strictly positive. Multiplication by
+the positive success probability gives
+$\operatorname{Tr}(\mathcal E^*(H)\rho_{q_0}^{\otimes k})>0$.
+The Hermitian pullback therefore has a positive eigenvalue and, since it
+is not positive semidefinite, a negative one.
+
+For a normalized negative eigenvector $x$,
+$\operatorname{Tr}(H\mathcal E(|x\rangle\langle x|))<0$.
+Complete positivity makes the output positive, and its negative witness
+value forces its trace to be nonzero. Its normalized state is entangled:
+(249.14) shows that $H$ is nonnegative on every separable state.
+A native LOCC success map preserves separability, including after all
+residuals and records are erased, by the forward complete-history
+product-Kraus reduction of Corollary 247.4. Thus $x$ is entangled.
+It is not one of the supplied full-rank mixed native inputs, and this
+channel property makes it no available auxiliary preparation.
+
+To show the subclass is proper, consider the fixed marginal decoder
+that retains $A_1,C_1$, traces $S_1$ and discards the other $k-1$ blocks.
+On the native family it always succeeds and outputs the existing
+$W_\eta$ of VII (237.4), with no improved approximation assertion.
+The neutral-memory spatial transfer VII (237.3) implements this local
+trace while retaining Bob's same particle in the fixed rails and its
+copy coherence. The other blocks are retained as residual particles
+until discard. There is one output particle per party, residual charge
+$k+n_{\mathrm{aux}}-1$, and all records and residuals are erased.
+This is a finite $q$-independent native operation. Its adjoint obeys
+
+$$
+\mathcal E^*(H)=H_{A_1,C_1}\otimes I_{S_1}
+                    \otimes I_{\text{other blocks}},
+\tag{249.16}
+$$
+
+which has both $-1/2$ and $+1/2$ eigenvalues. Therefore even this native
+map fails the additional positive-pullback condition. Theorem 249.2
+cannot be transferred to all of $\mathcal H_k$ by assuming that
+condition. ∎
+
+## 追加锚（本行以下为增补区）
+
+## 250. Exact rank-one proximity to the complete common kernel
+
+**Theorem 250.1 (An exponentially close party-product vector).**
+Let $K_k$ be the complete common kernel in (244.12), with the entire
+orthogonal sector decomposition (245.2), and let $\Pi_{K_k}$ denote its
+orthogonal projector. In the fixed selected input space and party cut
+(244.1), for every $n\ge1$ and $k=2n$ there is an explicit normalized
+party-Schmidt-rank-one vector $v_n$ satisfying
+
+$$
+\|(I-\Pi_{K_k})v_n\|^2=(1+n/2)2^{-n}.
+\tag{250.1}
+$$
+
+Consequently no positive inverse-polynomial-in-$k$ lower bound for the
+Euclidean distance of all normalized party-Schmidt-rank-at-most-two
+vectors from $K_k$ can hold uniformly in $k$. This is an algebraic
+statement in the selected input space. It supplies neither a native
+preparation nor an attaining instrument, weighted quadratic-form bound,
+uniform normalized approximation error or success mass.
+
+Proof. Pair Bob's spatial registers $(S_{2j-1},S_{2j})$, $1\le j\le n$,
+and put
+
+$$
+\begin{gathered}
+\zeta_n=\bigotimes_{j=1}^n
+\frac{|0,1\rangle_{S_{2j-1},S_{2j}}
+      -|1,0\rangle_{S_{2j-1},S_{2j}}}{\sqrt2},\\
+v_n=\left(\bigotimes_{i=1}^k|0\rangle_{A_i}\right)
+\otimes\left(\bigotimes_{i=1}^k|0\rangle_{C_i}\right)
+\otimes\zeta_n,
+\end{gathered}
+\tag{250.2}
+$$
+
+where the last two groups are Bob's factors after the fixed regrouping.
+All factors are normalized, and all the spatial singlets are internal
+to Bob, so $v_n$ has Schmidt rank one across the actual Alice/Bob cut.
+
+By Proposition 245.1 and (245.2), in rail sector $S\subseteq\{1,\ldots,k\}$
+the kernel is the spatial complement of
+$\operatorname{Sym}^{|S|}(\mathbb C^2)$ on the selected positions when
+$|S|\ge2$, with no restriction on the other spatial factors. For
+$|S|=0,1$ the common kernel has no contribution. Taking the symmetric
+projector to be identity in those two cases makes the complementary
+projector description uniform over all sectors.
+
+On each rail pair let
+$|\chi\rangle=(|00\rangle-|11\rangle)/\sqrt2$. Then
+$|00\rangle=(|\phi\rangle+|\chi\rangle)/\sqrt2$, where $|\phi\rangle$
+is (244.6) and $|\chi\rangle\in\operatorname{ran}Q$.
+The $k$ rail pairs thus expand into mutually orthogonal $\Phi/Q$ sectors
+$S$ with equal squared weights $2^{-k}$. The spatial vector remains
+$\zeta_n$ in each sector. If $\Pi_{\mathrm{Sym}(S)}$ acts as the symmetric
+projector on the spatial positions in $S$ and identity elsewhere, then
+
+$$
+\|(I-\Pi_{K_k})v_n\|^2
+=2^{-k}\sum_{S\subseteq\{1,\ldots,k\}}
+        \|\Pi_{\mathrm{Sym}(S)}\zeta_n\|^2.
+\tag{250.3}
+$$
+
+If $S$ contains both members of any paired spatial singlet, swapping
+those two positions negates $\zeta_n$ but acts as identity on the
+symmetric subspace over $S$. Its symmetric projection is therefore zero.
+If $S$ contains at most one position of each pair and $r=|S|$, its reduced
+spatial state is $I_{2^r}/2^r$: the chosen halves of the distinct
+independent singlets are independent maximally mixed qubits. The
+symmetric subspace has dimension $r+1$, so in this case
+
+$$
+\|\Pi_{\mathrm{Sym}(S)}\zeta_n\|^2=(r+1)/2^r,
+\tag{250.4}
+$$
+
+including $r=0,1$. There are $\binom nr2^r$ such subsets $S$. Substitution
+into (250.3) gives the exact finite sum
+
+$$
+\begin{aligned}
+\|(I-\Pi_{K_k})v_n\|^2
+&=2^{-2n}\sum_{r=0}^n\binom nr(r+1)\\
+&=2^{-2n}\bigl(2^n+n2^{n-1}\bigr)
+=(1+n/2)2^{-n}.
+\end{aligned}
+\tag{250.5}
+$$
+
+This quantity is positive at every finite $n$ and exponentially small
+along even $k$. Its square root also decays faster than every inverse
+polynomial, proving the stated failure of a uniform Euclidean separation.
+The projection of $v_n$ into $K_k$ is nonzero, but projection need not
+preserve its Schmidt rank. Proposition 247.2 still forces every such
+nonzero kernel vector to have Schmidt rank at least three, so there is
+no conflict with the exact finite-$k$ exclusion. The distance formula
+does not identify the actual source-dependent weights in partial-transpose
+tensor forms, control their normalization by native success, or construct
+a permitted map satisfying (248.4). ∎
+
+## 追加锚（本行以下为增补区）
