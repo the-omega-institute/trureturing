@@ -95,7 +95,18 @@ private lemma sym_action (u c x y : ℂ) :
       symMode (u - c / 3) (c - 2 * u / 3 - 7 * x / (3 * (Real.sqrt 2 : ℂ)))
         (x - c / (3 * (Real.sqrt 2 : ℂ)) - y / (Real.sqrt 2 : ℂ))
         (y - x / (Real.sqrt 2 : ℂ)) := by
-  sorry
+  have hs : (Real.sqrt 2 : ℂ) ≠ 0 := Complex.ofReal_ne_zero.mpr
+    (Real.sqrt_ne_zero'.mpr (by norm_num))
+  have hs2 : (Real.sqrt 2 : ℂ) ^ 2 = 2 := by
+    norm_cast
+    exact Real.sq_sqrt (by norm_num)
+  ext i
+  fin_cases i <;>
+    norm_num [normalizedLaplacian, Matrix.mulVec, dotProduct, Matrix.diagonal_mul,
+      Matrix.mul_diagonal, SimpleGraph.lapMatrix, SimpleGraph.degMatrix,
+      Matrix.diagonal_apply, SimpleGraph.adjMatrix_apply, tree_degree, tree,
+      SimpleGraph.fromRel_adj, symMode, Fin.sum_univ_succ] <;>
+    push_cast <;> field_simp [hs] <;> ring_nf <;> simp [hs2] <;> ring
 
 private lemma symmetric_eigenvectors :
     normalizedLaplacian tree *ᵥ symMode 1 3 (Real.sqrt 2) 1 =
