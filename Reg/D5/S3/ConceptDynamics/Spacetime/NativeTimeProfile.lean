@@ -1,6 +1,7 @@
 import D5.S3.ConceptDynamics.Spacetime.NativeTimeProfile
 import Reg.Support.NativeTimeProfile.PrimitiveEvidence
 import Reg.Support.NativeTimeProfile.CopyEvidence
+import Reg.Support.NativeTimeProfile.LawEvidence
 import LeanInformationAuditInterface.Contract.Registration
 set_option autoImplicit false
 set_option backward.isDefEq.respectTransparency false
