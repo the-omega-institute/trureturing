@@ -7,6 +7,33 @@ open LeanInformationAudit.Tests.SearchReduction.LookupBaseline
 set_option Elab.async false
 set_option maxHeartbeats 0
 
+run_cmd liftTermElabM do
+  let left ← Term.elabType (← `(∀ renamed : Nat, Mark renamed ∧ Side))
+  let right ← Term.elabType (← `(∀ {n : Nat}, (let x := n; Mark x) ∧ Side))
+  Term.synthesizeSyntheticMVarsNoPostponing
+  let left ← instantiateMVars left
+  let right ← instantiateMVars right
+  unless (← DiskLookup.membershipKey left) == (← DiskLookup.membershipKey right) do
+    throwError "membership lost alpha/beta/zeta or binder-annotation invariance"
+  let index ← DiskLookup.openIndex
+    "build/lean-inspector/lookup-index/lookup-fixture" "lookup-fixture"
+    "56a005855ea17e0b0958f73ec801ae140b0a1679"
+  let hits ← DiskLookup.queryMembership index left
+  unless hits.complete && hits.entries.any (·.leanName == ``pair) do
+    throwError "membership failed to recall the complete renamed statement"
+  let some header := index.membership? | throwError "membership header missing"
+  let key ← DiskLookup.membershipKey left
+  let file := index.directory.parent.getD index.directory / header.storage /
+    s!"members-{key.toNat % 256}.pickle"
+  let withheld := file.addExtension "withheld"
+  IO.FS.rename file withheld
+  let missing ← try DiskLookup.queryMembership index left
+    finally IO.FS.rename withheld file
+  unless !missing.complete do throwError "missing membership bucket certified NoHit"
+  let absent ← DiskLookup.queryMembership {index with membership? := none} left
+  unless !absent.complete do throwError "missing membership header certified NoHit"
+  logInfo "LOOKUP_MEMBERSHIP alpha=true normalized=true missing_bucket=unknown missing_header=unknown"
+
 run_cmd do
   enableInitializersExecution
   let base ← importModules #[{module :=

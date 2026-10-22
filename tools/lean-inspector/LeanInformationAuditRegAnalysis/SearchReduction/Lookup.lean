@@ -139,17 +139,14 @@ private unsafe def queryLookup (table : LookupTable) (index : DiskLookup.Index)
 
 /-- The membership page is only a prefilter. Alpha-invariant hashes never
 substitute for definitional equality or the caller's closed kernel check. -/
-private unsafe def lookupExactPass (fallback : Bool) (table : LookupTable) (goal : MVarId) : MetaM LookupTrace := goal.withContext do
+private unsafe def lookupExactPass (table : LookupTable) (goal : MVarId) : MetaM LookupTrace := goal.withContext do
   if !table.enabled then return {complete := true}
   let some index ← tableIndex table | return {}
   let type ← goal.getType
-  let context ← readThe Core.Context
-  let limit := if context.maxHeartbeats == 0 then none
-    else some (context.initHeartbeats + context.maxHeartbeats)
   let indexStart ← IO.monoMsNow
-  let candidates ← queryLookup table index type limit fallback
-  lookupPhase s!"lookup/index ms={(← IO.monoMsNow) - indexStart} fallback={fallback}"
-  profileCandidateSet table type candidates fallback "exact"
+  let candidates ← DiskLookup.queryMembership index type
+  lookupPhase s!"lookup/index ms={(← IO.monoMsNow) - indexStart} membership=true"
+  profileCandidateSet table type candidates false "exact"
   checkSystem "lookup.membership-index"
   let mut trace : LookupTrace := {complete := candidates.complete && table.complete, pages := candidates.pages}
   for entry in candidates.entries do
@@ -175,14 +172,7 @@ private unsafe def lookupExactPass (fallback : Bool) (table : LookupTable) (goal
   return trace
 
 unsafe def lookupExact (table : LookupTable) (goal : MVarId) : MetaM LookupTrace := do
-  let primary ← lookupExactPass false table goal
-  if primary.source?.isSome then return primary
-  let fallback ← lookupExactPass true table goal
-  return {fallback with
-    complete := primary.complete && fallback.complete,
-    visited := primary.visited + fallback.visited, pages := primary.pages + fallback.pages,
-    attempted := primary.attempted + fallback.attempted,
-    missing := primary.missing ++ fallback.missing, failures := primary.failures ++ fallback.failures}
+  lookupExactPass table goal
 
 def ownedLookupName : Name → Name
   | .anonymous => .anonymous

@@ -3,6 +3,14 @@ import LeanInformationAuditRegAnalysis.SearchReduction.DiskLookup
 open Lean LeanInformationAudit.SearchReduction.DiskLookup
 
 unsafe def main (args : List String) : IO UInt32 := do
+  if let ["--membership-shard", storage, plan, result] := args then
+    initSearchPath (← findSysroot)
+    produceMembershipShard storage plan result
+    return 0
+  if let ["--membership", directory] := args then
+    initSearchPath (← findSysroot)
+    let header ← produceMembership directory
+    return if header.complete then 0 else 1
   if let ["--shard", storage, plan, result] := args then
     initSearchPath (← findSysroot)
     produceShard storage plan result
@@ -22,4 +30,6 @@ unsafe def main (args : List String) : IO UInt32 := do
         let name := ((path.drop "Golden/Frozen/state/".length).toString.dropEnd ".lean.json".length).toString
         roots := roots.push (name.replace "/" ".").toName
   let header ← produceMature directory basis "56a005855ea17e0b0958f73ec801ae140b0a1679" roots checkSources
-  return if header.complete then 0 else 1
+  if !header.complete then return 1
+  let membership ← produceMembership directory
+  return if membership.complete then 0 else 1

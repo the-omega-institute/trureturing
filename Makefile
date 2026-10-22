@@ -233,5 +233,8 @@ search-reduction-index:
 	@$(MAKE) lean LEAN_TARGETS="regInspector/searchReductionIndex" && $(MAKE) search-reduction-index-run
 search-reduction-index-run:
 	@lake -d tools/lean-inspector-reg env .lake/build/lean-inspector/reg/bin/searchReductionIndex "$(INDEX_BASIS)" "$(INDEX_DIR)" $(INDEX_MODULES)
+.PHONY: search-reduction-membership-index-run
+search-reduction-membership-index-run:
+	@lake -d tools/lean-inspector-reg env .lake/build/lean-inspector/reg/bin/searchReductionIndex --membership "$(INDEX_DIR)"
 search-reduction-index-fixtures:
 	@$(MAKE) lean LEAN_TARGETS="regInspector/searchReductionIndex LeanInformationAuditRegTests.SearchReduction.LookupBaseline" && $(MAKE) search-reduction-index-run INDEX_BASIS=fixture INDEX_DIR=build/lean-inspector/lookup-index/fixture INDEX_MODULES=Mathlib && $(MAKE) search-reduction-index-run INDEX_BASIS=lookup-fixture INDEX_DIR=build/lean-inspector/lookup-index/lookup-fixture INDEX_MODULES=LeanInformationAuditRegTests.SearchReduction.LookupBaseline

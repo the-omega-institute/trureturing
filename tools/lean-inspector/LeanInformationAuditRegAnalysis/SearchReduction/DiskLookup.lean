@@ -81,11 +81,49 @@ structure Manifest where
   roots : Array (UInt64 × Array String) := #[]
   deriving ToJson, FromJson, Inhabited
 
+abbrev membershipVersion : String := "R_lookup/membership-alpha-reducible-v1"
+
+structure MembershipHeader where
+  format : String := membershipVersion
+  inputs : UInt64
+  storage : String
+  complete : Bool
+  indexed : Nat
+  missing : Array String := #[]
+  deriving ToJson, FromJson
+
+abbrev MembershipPage := Std.HashMap UInt64 (Array Entry)
+
+private partial def alphaExpression (e : Expr) : StateM (Std.HashMap Expr Expr) Expr := do
+  if let some result := (← get)[e]? then return result
+  let result ← match e with
+    | .app f a => return .app (← alphaExpression f) (← alphaExpression a)
+    | .lam _ t b _ => return .lam `_ (← alphaExpression t) (← alphaExpression b) .default
+    | .forallE _ t b _ => return .forallE `_ (← alphaExpression t) (← alphaExpression b) .default
+    | .letE _ t v b nd => return .letE `_ (← alphaExpression t) (← alphaExpression v) (← alphaExpression b) nd
+    | .mdata _ b => alphaExpression b
+    | .proj n i b => return .proj n i (← alphaExpression b)
+    | e => pure e
+  modify (·.insert e result)
+  return result
+
+/-- Full statements retain their telescope. Lean performs beta/zeta/reducible
+normalization; de Bruijn binders and canonical universe parameters supply the
+alpha quotient. Hash collisions are checked by the existing certificate path. -/
+def membershipKey (type : Expr) : MetaM UInt64 := do
+  let type ← instantiateMVars type
+  let type ← withReducible <| reduce type (explicitOnly := false) (skipTypes := false)
+  let params := (collectLevelParams {} type).params.toList
+  let levels := (List.range params.length).map fun i => Level.param (.num `membership i)
+  let type := type.instantiateLevelParams params levels
+  return ((alphaExpression type).run' {}).hash
+
 structure Index where
   directory : System.FilePath
   header : Header
   excluded : Array Name := #[]
   manifest : Array (UInt64 × Array String) := #[]
+  membership? : Option MembershipHeader := none
 
 structure Candidates where
   entries : Array Entry := #[]
@@ -413,6 +451,114 @@ unsafe def produceMature (directory : System.FilePath) (basis mathlib : String)
   IO.println (toJson header).compress
   return header
 
+structure MembershipShardResult where
+  modules : Array String
+  indexed : Nat := 0
+  missing : Array String := #[]
+  deriving ToJson, FromJson
+
+private def membershipFile (bucket : Nat) : String := s!"members-{bucket}.pickle"
+
+unsafe def produceMembershipShard (storage : System.FilePath)
+    (planPath resultPath : System.FilePath) : IO Unit := do
+  let plan : ShardPlan ← readJson planPath
+  let env ← importEnvironment (plan.modules.map String.toName)
+  let mut pages : Std.HashMap Nat MembershipPage := {}
+  let mut result : MembershipShardResult := {modules := plan.modules}
+  for module in plan.modules do
+    let entries ← visitModule module.toName fun parts => do
+      let mut known : NameSet := {}
+      let mut entries : Array Entry := #[]
+      let mut ordinal := 0
+      for part in parts do
+        for info in part.constants do
+          if known.contains info.name then continue
+          known := known.insert info.name
+          ordinal := ordinal + 1
+          if info.isUnsafe || LazyDiscrTree.blacklistInsertion env info.name ||
+              Linter.isDeprecated env info.name || info.name.isMetaprogramming then continue
+          match info with
+          | .thmInfo _ | .defnInfo _ | .opaqueInfo _ => pure ()
+          | _ => continue
+          entries := entries.push {
+            module, name := ownedString info.name.toString,
+            parts := nameParts info.name, ordinal}
+      return entries
+    for entry in entries do
+      let work : CoreM UInt64 := MetaM.run' do
+        membershipKey (← getConstInfo entry.leanName).type
+      let context : Core.Context := {
+        fileName := "<membership-index>", fileMap := default,
+        options := (({} : Options).set `maxHeartbeats 0).set `maxRecDepth 1000,
+        initHeartbeats := ← IO.getNumHeartbeats, maxHeartbeats := 0}
+      match ← (work.run context {env}).toIO' with
+      | .ok (key, state) =>
+        if state.messages.hasErrors then
+          result := {result with missing := result.missing.push s!"{module}:{entry.name}:normalization-errors"}
+        else
+          let bucket := key.toNat % 256
+          let page := pages[bucket]?.getD {}
+          pages := pages.insert bucket (page.insert key ((page[key]?.getD #[]).push entry))
+          result := {result with indexed := result.indexed + 1}
+      | .error ex =>
+        result := {result with missing := result.missing.push s!"{module}:{entry.name}:{← ex.toMessageData.toString}"}
+    if result.indexed % 10000 < entries.size then
+      IO.eprintln s!"lookup.membership_indexed={result.indexed} module={module} missing={result.missing.size}"
+  for bucket in [:256] do
+    pickle (storage / membershipFile bucket) (pages[bucket]?.getD {})
+      (key := .num `membership bucket)
+  writeJson resultPath result
+
+/-- Membership is an independently versioned sidecar. Existing discrimination
+trees, fallback lists and their ordering are reused without regeneration. -/
+unsafe def produceMembership (directory : System.FilePath) : IO MembershipHeader := do
+  let header : Header ← readJson (directory / "header.json")
+  unless header.format == version && header.complete do
+    throw <| IO.userError "lookup.membership_requires_complete_candidate_index"
+  let storage := directory / s!"membership-alpha-v1-{header.inputs}"
+  IO.FS.createDirAll storage
+  let groups : Array (Array String) ← readJson (directory / "import-partitions.json")
+  let mut results : Array MembershipShardResult := #[]
+  for i in [:groups.size] do
+    let part := storage / s!"group-{i}"
+    IO.FS.createDirAll part
+    let plan := part / "plan.json"
+    let resultPath := part / "result.json"
+    let cached ← try
+      let old : MembershipShardResult ← readJson resultPath
+      pure (if old.modules == groups[i]! then some old else none)
+      catch _ => pure none
+    let result ← if let some old := cached then pure old else do
+      writeJson plan ({modules := groups[i]!} : ShardPlan)
+      let output ← IO.Process.output {
+        cmd := (← IO.appPath).toString,
+        args := #["--membership-shard", part.toString, plan.toString, resultPath.toString]}
+      unless output.stderr.isEmpty do IO.eprint output.stderr
+      unless output.exitCode == 0 do
+        throw <| IO.userError s!"lookup.membership_shard_failed:{i}:{output.exitCode}"
+      readJson resultPath
+    results := results.push result
+    IO.eprintln s!"lookup.membership_partition={i + 1}/{groups.size} indexed={result.indexed} missing={result.missing.size}"
+  for bucket in [:256] do
+    let mut page : MembershipPage := {}
+    for i in [:groups.size] do
+      let entries : Array (String × Array Entry) ← withUnpickle
+        (storage / s!"group-{i}" / membershipFile bucket) fun (part : MembershipPage) =>
+          pure (part.toArray.map fun (key, values) => (toString key, values.map copyEntry))
+      for (text, values) in entries do
+        let key := text.toNat!.toUInt64
+        page := page.insert key ((page[key]?.getD #[]) ++ values)
+    pickle (storage / membershipFile bucket) page (key := .num `membership bucket)
+  let missing := results.foldl (fun all result => all ++ result.missing) #[]
+  let result : MembershipHeader := {
+    inputs := header.inputs,
+    storage := storage.fileName.getD storage.toString,
+    indexed := results.foldl (fun n result => n + result.indexed) 0,
+    complete := missing.isEmpty, missing}
+  writeJson (directory / "membership-header.json") result
+  IO.println (toJson result).compress
+  return result
+
 def openIndex (directory : System.FilePath) (basis mathlib : String)
     (excluded : Array Name := #[]) : IO Index := do
   let header : Header ← readJson (directory / "header.json")
@@ -425,7 +571,31 @@ def openIndex (directory : System.FilePath) (basis mathlib : String)
   let text ← IO.FS.readFile (storage / header.root)
   unless hash text == header.digest do throw <| IO.userError "lookup.manifest_checksum"
   let manifest : Manifest ← IO.ofExcept <| fromJson? (← IO.ofExcept <| Json.parse text)
-  return {directory := storage, header, excluded, manifest := manifest.roots}
+  let membership? ← try
+    let member : MembershipHeader ← readJson (directory / "membership-header.json")
+    pure (if member.format == membershipVersion && member.inputs == header.inputs then some member else none)
+    catch _ => pure none
+  return {directory := storage, header, excluded, manifest := manifest.roots, membership?}
+
+/-- One disk hash bucket, followed by an expected constant-time hash lookup.
+No implication candidates or baseline declarations are enumerated here. -/
+unsafe def queryMembership (index : Index) (type : Expr) : MetaM Candidates := do
+  let some header := index.membership? | return {}
+  let key ← membershipKey type
+  let file := index.directory.parent.getD index.directory / header.storage /
+    membershipFile (key.toNat % 256)
+  try
+    let entries ← withUnpickle file fun (page : MembershipPage) =>
+      pure ((page[key]?.getD #[]).map copyEntry)
+    let entries := entries.filter fun entry => !index.excluded.contains entry.module.toName
+    let entries := entries.qsort fun a b =>
+      if a.module != b.module then a.module < b.module else a.ordinal < b.ordinal
+    IO.eprintln s!"LOOKUP_COST backend=membership-alpha key={key} pages=1 candidates={entries.size}"
+    return {entries, complete := header.complete && index.header.complete, pages := 1}
+  catch ex =>
+    if ex.isMaxHeartbeat || ex.isInterrupt || ex.isRuntime then throw ex
+    IO.eprintln s!"lookup.membership_incomplete:{← ex.toMessageData.toString}"
+    return {}
 
 /-- The persisted core tree is queried while its mmap is alive. Only detached
 candidate metadata leaves the callback. Fallback is requested after primary

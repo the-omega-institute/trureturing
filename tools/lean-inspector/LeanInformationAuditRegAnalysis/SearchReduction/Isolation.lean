@@ -281,7 +281,7 @@ private initialize candidateRegions : IO.Ref (Array CompactedRegion) ← IO.mkRe
 certificate is inlined and checked against the original query environment. -/
 unsafe def onDemandLookup (table : LookupTable)
     (sharedImports? : Option ImportState := none) : IO LookupTable := do
-  let cache ← IO.mkRef (#[] : Array (String × Options × Environment))
+  let cache ← IO.mkRef ({} : Std.HashMap String (Array (Options × Environment)))
   let boundary ← IO.mkRef false
   let memo ← IO.mkRef ({} : LookupQueryMemo)
   let verified ← IO.mkRef false
@@ -322,17 +322,15 @@ unsafe def onDemandLookup (table : LookupTable)
       let ready ← cache.get
       let crossed ← boundary.get
       boundary.set false
-      let source ← if let some (_, _, source) := ready.find? (fun (name, options, _) =>
-          name == entry.module && options == context.options) then
-          lookupPhase s!"candidate/import-cache module={entry.module} boundary={crossed} displaced={ready.back?.any (fun row => row.1 != entry.module)}"
+      let source ← if let some (_, source) := (ready[entry.module]?.getD #[]).find? (fun (options, _) =>
+          options == context.options) then
+          lookupPhase s!"candidate/import-cache module={entry.module} boundary={crossed} retained_modules={ready.size}"
           pure source
         else do
-          acquire entry.module.toName context.options
-      cache.modify fun previous =>
-        let remaining := previous.filter fun (name, options, _) =>
-          name != entry.module || options != context.options
-        (remaining.extract (remaining.size - 1) remaining.size).push
-          (entry.module, context.options, source)
+          let source ← acquire entry.module.toName context.options
+          cache.modify fun previous => previous.insert entry.module
+            ((previous[entry.module]?.getD #[]).push (context.options, source))
+          pure source
       let result ← timeLookup s!"candidate/copy name={entry.name}" <| copyLookupCandidateWith (fun source proof =>
         copyCertificateExpression {source, enclosingBudget := true} proof) source entry head
       if (← IO.getEnv "SEARCH_REDUCTION_PROFILE").isSome then
