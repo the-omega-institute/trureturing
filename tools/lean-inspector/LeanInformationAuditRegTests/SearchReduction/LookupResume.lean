@@ -11,12 +11,12 @@ run_cmd liftTermElabM do
   let budget ← IO.mkRef ({} : LookupBudgetState)
   let table : LookupTable := {environment := ← getEnv, budget? := some budget}
   let mut rows := #[]
-  for i in [:12] do
+  for i in [:72] do
     let goal ← mkFreshExprMVar (mkConst ``True)
     let entry : DiskLookup.Entry := {
       module := "checkpoint-fixture", name := s!"attempt-{i}", parts := #[(s!"attempt-{i}",0)]}
     let trace ← boundedLookupCandidate table entry goal.mvarId! do
-      if i == 11 then
+      if i == 71 then
         goal.mvarId!.assign (mkConst ``True.intro)
         return {complete := true, source? := some ``True.intro, attempted := 1}
       else if i == 5 then
@@ -56,3 +56,17 @@ run_cmd do
         paired := reading.pairedProbe.outcome}
       return (observationJson observation).compress
     emitLookupRecord s!"LOOKUP_RESUME_GRAPH {bytes}"
+
+run_cmd liftTermElabM do
+  withLetDecl `checkpointLocal (mkConst ``True) (mkConst ``True.intro) fun value => do
+    let goal ← mkFreshExprMVar (mkConst ``True)
+    let table : LookupTable := {environment := ← getEnv}
+    let entry : DiskLookup.Entry := {module := "checkpoint-fixture", name := "let-hit", parts := #[("let-hit",0)]}
+    let trace ← boundedLookupCandidate table entry goal.mvarId! do
+      goal.mvarId!.assign value
+      return {complete := true, source? := some ``True.intro, attempted := 1}
+    unless trace.complete && trace.source?.isSome && (← goal.mvarId!.isAssigned) do
+      throwError "let-bound checkpoint lost its checked proof"
+    emitLookupRecord s!"LOOKUP_RESUME_LET {Json.mkObj [
+      ("complete", toJson trace.complete), ("source", toJson (trace.source?.map Name.toString)),
+      ("assigned", toJson (← goal.mvarId!.isAssigned))] |>.compress}"

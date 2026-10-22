@@ -9,7 +9,7 @@ namespace LeanInformationAudit.SearchReduction
 open Lean Meta
 
 /-- Independent per-candidate preparation allocation, in public heartbeats. -/
-abbrev lookupPreparationBudget : Nat := 2000000
+abbrev lookupPreparationBudget : Nat := 8000000
 
 structure LookupBudgetState where
   preparation : Nat := 0

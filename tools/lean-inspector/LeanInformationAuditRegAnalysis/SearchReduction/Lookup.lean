@@ -24,7 +24,7 @@ def timeLookup {α : Type} (label : String) (action : MetaM α) : MetaM α := do
   try action finally
     lookupPhase s!"{label}/end ns={(← IO.monoNanosNow) - start} heartbeats={(← IO.getNumHeartbeats) - heartbeats}"
 
-abbrev lookupVersion : String := "R_lookup/v7/candidate-200000/preparation-2000000/G-340000000/memo-off/N-memo-2000000"
+abbrev lookupVersion : String := "R_lookup/v8/candidate-200000/preparation-8000000/G-340000000/memo-off/N-memo-2000000/checkpoint-v1/external-64"
 
 abbrev lookupCandidateBudget : Nat := 200000
 /-- Frozen from verdict-free fallback and fixed-stride candidate telemetry. -/
@@ -163,8 +163,7 @@ private def checkLookupGoal (table : LookupTable) (base : Environment)
   let proof ← instantiateMVars (mkMVar goal)
   unless !proof.hasMVar do throwError "lookup.unclosed_certificate"
   let mut xs := #[]
-  for decl in ← getLCtx do
-    unless decl.isLet do xs := xs.push decl.toExpr
+  for decl in ← getLCtx do xs := xs.push decl.toExpr
   let proof ← mkLambdaFVars xs proof
   let proof ← if let some finish := table.finish? then finish base proof else pure proof
   let type ← mkForallFVars xs (← goal.getType)
@@ -331,8 +330,7 @@ unsafe def boundedLookupCandidate (table : LookupTable) (entry : DiskLookup.Entr
   lookupAttemptOrdinal.modify (· + 1)
   let resume? := (← IO.getEnv "SEARCH_REDUCTION_RESUME").filter (!·.isEmpty)
   let mut xs := #[]
-  for decl in ← getLCtx do
-    unless decl.isLet do xs := xs.push decl.toExpr
+  for decl in ← getLCtx do xs := xs.push decl.toExpr
   let query ← mkForallFVars xs (← instantiateMVars (← goal.getType))
   let checkpoint? := resume?.map fun directory =>
     (System.FilePath.mk directory) / s!"candidate-{ordinal}.pickle"
@@ -344,7 +342,8 @@ unsafe def boundedLookupCandidate (table : LookupTable) (entry : DiskLookup.Entr
         throwError "lookup.checkpoint_input_mismatch:{ordinal}"
       let beforeReplay := (← table.budget?.mapM (·.get)).getD {}
       if let some proof := record.proof? then
-        goal.assign (mkAppN proof xs)
+        let arguments ← xs.filterM fun x => return !(← x.fvarId!.isLetVar)
+        goal.assign (mkAppN proof arguments)
         discard <| checkLookupGoal table (← getEnv) goal
       if let some budget := table.budget? then
         budget.set {beforeReplay with
@@ -355,7 +354,7 @@ unsafe def boundedLookupCandidate (table : LookupTable) (entry : DiskLookup.Entr
       IO.setNumHeartbeats (startedReplay + record.search)
       return record.trace
   if resume?.isSome && !candidateOwnerMatches table entry then
-    if (← lookupExternalAttempts.get) >= 8 then
+    if (← lookupExternalAttempts.get) >= 64 then
       emitLookupRecord s!"LOOKUP_CHECKPOINT_RESTART next={ordinal} candidate={entry.name}"
       IO.Process.exit 75
     lookupExternalAttempts.modify (· + 1)
