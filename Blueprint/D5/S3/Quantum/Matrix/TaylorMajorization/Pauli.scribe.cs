@@ -12,7 +12,7 @@ internal sealed class PauliDocument : IScribeDocumentDefinition
                 DeclarationHandle.Create(Module + ".defect_even"),
                 H("Exact even Pauli defects"), StatementSource.WithoutFormula(),
                 AssessedProvenance.FromRepo(),
-                Blocks(Paragraph(Text("For every natural m at least one, the Pauli pair Z=diag(1,-1) and X with off-diagonal entries one has defect at order 2m equal to 4 to the m minus 2 to the m+1. Order zero has defect zero. The product moments follow from Z squared and X squared equal to I; a scalar binomial expansion computes the trace of Q. Anticommutation gives (Z+X) squared equal to 2I."))), DescribeRole.Theorem),
+                Blocks(Paragraph(Text("For every natural m at least one, the Pauli pair Z=diag(1,-1) and X with off-diagonal entries one has defect at order 2m equal to 4 to the m minus 2 to the m+1. Order zero has defect zero. The product moments follow from Z squared and X squared equal to I; a scalar binomial expansion computes the trace of Q. The real-spin square identity TraceNormDiscordMutualCorrelationBound.spin_square at c=(1,0,1) gives (Z+X) squared equal to 2I."))), DescribeRole.Theorem),
             Describe.Lean(DescribeId.Create("taylor-majorization-pauli-defect-odd"),
                 DeclarationHandle.Create(Module + ".defect_odd"),
                 H("Vanishing odd Pauli defects"), StatementSource.WithoutFormula(),

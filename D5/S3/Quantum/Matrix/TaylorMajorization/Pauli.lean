@@ -63,10 +63,10 @@ private theorem sum_square : (qubitZ + qubitX) ^ 2 = (2 : ℂ) • 1 := by
   rw [D5.S3.Quantum.Entanglement.SteeringEllipsoidCHSH.vlen_sq,
     RCLike.real_smul_eq_coe_smul (K := ℂ)] at h
   norm_num [D5.S3.QuantumChannels.PauliThreeWeightBayesianInverseUniqueness.spin,
-    D5.S3.Quantum.Entanglement.SteeringEllipsoidCHSH.sigma_succ,
-    D5.S3.Quantum.Entanglement.SteeringEllipsoidFullyEntangledFraction.pauli,
-    pauliMatrix, Fin.sum_univ_three, dotProduct, Complex.real_smul] at h
-  simpa [pow_two, add_comm] using h
+    D5.S3.QuantumChannels.PauliThreeWeightBayesianInverseUniqueness.sigma,
+    Fin.sum_univ_three, dotProduct] at h
+  change (qubitX + qubitZ) * (qubitX + qubitZ) = (2 : ℂ) • 1 at h
+  simpa only [pow_two, add_comm] using h
 
 private theorem traceH_even (m : ℕ) :
     (((qubitZ + qubitX) ^ (2 * m)).trace).re = (2 : ℝ) ^ (m + 1) := by
