@@ -7,7 +7,7 @@
    digest: Biased native frontier distances and exact shift-copy product minima. -/
 
 import D5.S3.Arith.FibonacciAtomic.ActualImageAlphaSeparation
-import D5.S3.Arith.FibonacciAtomic.Observer.NativePrefixIdentityReflection
+import D5.S3.Arith.FibonacciAtomic.Observer.NativePayloadHistoryInstallation
 
 set_option maxHeartbeats 1000000
 set_option autoImplicit false
@@ -315,5 +315,205 @@ private theorem triple_mass_shift (θ : ℝ) (a : ℕ) (ha : 1 ≤ a) (t : Sourc
     tripleMass θ t (substitution^[a] t) (substitution^[a] (substitution^[a] t)) = 1 := by
   unfold tripleMass
   rw [triple_frontier_shift a ha,leaf_partition]
+
+
+open Observer.NativeFiveHoleFiber (GuardedEqual Negative rootLabel)
+open ActualTreeReadoutAcquisition (readout)
+open ActualLeafHistoryRigidity (subtree)
+open Observer.ActualCutPartitionRecovery
+  (CutSet CutPrefixFree orderedHoles reachedHoles canonicalRow)
+open Observer.ActualCutPartitionDecoder
+  (HoleExterior cutExterior actualPartition literalRecord)
+
+/-- The same whole finite value fills both the unshifted and shifted right holes. -/
+def U (a : ℕ) (x y : Source) : Source := .mul x (.mul y (substitution^[a] y))
+
+/-- The complete old row, four literal observations, and three guarded relations. -/
+def Retained (a : ℕ) (u : Source) : Prop :=
+  literalRecord {[]} u = rootLabel ∧
+  readout [] u = .branch ∧ readout [true] u = .branch ∧
+  readout [] (substitution^[a] u) = .branch ∧
+  readout [true] (substitution^[a] u) = .branch ∧
+  GuardedEqual a [true,false] 0 [true,true] u ∧
+  Negative (0,[true,false],0,[true,true]) u ∧
+  Negative (0,[],0,[false]) u
+
+private theorem u_ne_left (a : ℕ) (x y : Source) : U a x y ≠ x := by
+  intro h
+  have he := congrArg FreeMagma.length h
+  have hy := y.length_pos
+  have hz := (substitution^[a] y).length_pos
+  change x.length + (y.length + (substitution^[a] y).length) = x.length at he
+  omega
+
+/-- The retained input has exactly the entire two-parameter source fiber. -/
+theorem retained_iff (a : ℕ) (ha : 1 ≤ a) (u : Source) :
+    Retained a u ↔ ∃ x y : Source, u = U a x y := by
+  constructor
+  · rintro ⟨_,root,right,_,_,copy,_,_⟩
+    cases u with
+    | of b => cases b <;> simp [readout] at root
+    | mul x v =>
+      cases v with
+      | of b => cases b <;> simp [readout] at right
+      | mul y z =>
+        have copy' : GuardedEqual 0 [true,true] a [true,false] (.mul x (.mul y z)) :=
+          ⟨copy.2.1,copy.1,copy.2.2.symm⟩
+        have installed := (Observer.NativePayloadHistoryInstallation.payload_history_exact
+          (Observer.NativePrefixIdentityReflection.MixedExpr.residual a ())
+          (fun _ : Unit => [true,false]) [true,true] (.mul x (.mul y z))
+          (fun _ : Unit => y) (by intro i hi; rfl)).mp
+          (by simpa [Observer.NativePayloadHistoryInstallation.Holds,
+            Observer.NativePayloadHistoryInstallation.compile,
+            Observer.NativePayloadHistoryInstallation.Record.Holds] using copy')
+        have hz : z = substitution^[a] y := by
+          simpa [subtree, Observer.NativePrefixIdentityReflection.eval] using installed
+        exact ⟨x,y,by rw [hz]; rfl⟩
+  · rintro ⟨x,y,rfl⟩
+    refine ⟨Observer.NativeFiveHoleFiber.root_record _, ?_⟩
+    have transport := Observer.NativeDepthPatterns.original_present_transport a
+      [true,false] (U a x y) y (by rfl)
+    have neq := shift_ne a ha y
+    have off := u_ne_left a x y
+    simp only [U, iterate_pair] at transport ⊢
+    simp [readout, GuardedEqual, Negative, subtree, neq]
+    exact off
+
+/-- The target cut is ordered left, right-left, right-right. -/
+def position : Fin 3 → Address := ![[false], [true,false], [true,true]]
+def Q : CutSet := {position 0, position 1, position 2}
+
+def exterior : HoleExterior := .mul (.of (.inr (position 0)))
+  (.mul (.of (.inr (position 1))) (.of (.inr (position 2))))
+
+def labelClass (i : Fin 3) (p : Address) : ℕ :=
+  if i = 0 then (if p = position 2 then 1 else 0)
+  else if i = 1 then (if p = position 1 then 1 else 0)
+  else if p = position 0 then 0 else if p = position 1 then 1 else 2
+
+/-- Every label retains the entire exterior and the entire hole partition. -/
+def label (i : Fin 3) : HoleExterior × Finset (Address × Address) :=
+  (exterior, (Q.product Q).filter (fun pq => labelClass i pq.1 = labelClass i pq.2))
+
+def rowCondition (a : ℕ) (i : Fin 3) (x y : Source) : Prop :=
+  if i = 0 then x = y else if i = 1 then x = substitution^[a] y
+  else x ≠ y ∧ x ≠ substitution^[a] y
+
+/-- A stratum includes the entire retained input, with its complete target record. -/
+def Stratum (a : ℕ) (i : Fin 3) (u : Source) : Prop :=
+  Retained a u ∧ ∃ v : Source, canonicalRow Q u = canonicalRow Q v ∧
+    literalRecord Q v = label i
+
+private def hole (a : ℕ) (x y : Source) : Fin 3 → Source :=
+  ![x, y, substitution^[a] y]
+
+@[simp] private theorem exterior_stop (p : Address) (t : Source) (hp : p ∈ Q) :
+    cutExterior Q p t = .of (.inr p) := by
+  cases t <;> simp [cutExterior,hp]
+
+private theorem u_exterior (a : ℕ) (x y : Source) :
+    cutExterior Q [] (U a x y) = exterior := by
+  simp only [U, cutExterior, List.nil_append, List.cons_append,
+    show ([] : Address) ∉ Q by decide, show ([true] : Address) ∉ Q by decide, if_false]
+  rw [exterior_stop _ _ (by decide), exterior_stop _ _ (by decide),
+    exterior_stop _ _ (by decide)]
+  rfl
+
+private theorem u_holes (a : ℕ) (x y : Source) :
+    (orderedHoles Q (U a x y)).toFinset = Q := by
+  have holes := Observer.ActualCutPartitionDecoder.exteriorHoles_cut Q [] (U a x y)
+  rw [u_exterior] at holes
+  have reached : reachedHoles Q [] (U a x y) =
+      [position 0,position 1,position 2] := by
+    simpa [exterior,Observer.ActualCutPartitionDecoder.exteriorHoles,position] using holes.symm
+  unfold orderedHoles
+  rw [reached]
+  simp [Q]
+
+private theorem hole_at (a : ℕ) (x y : Source) (i : Fin 3) :
+    subtree (position i) (U a x y) = some (hole a x y i) := by
+  fin_cases i <;> rfl
+
+private theorem position_exists (p : Address) (hp : p ∈ Q) :
+    ∃ i : Fin 3, p = position i := by
+  simp only [Q, Finset.mem_insert, Finset.mem_singleton] at hp
+  rcases hp with h | h | h
+  · exact ⟨0,h⟩
+  · exact ⟨1,h⟩
+  · exact ⟨2,h⟩
+
+private theorem cut_prefix_free : CutPrefixFree Q := by
+  intro p hp q hq hpre
+  obtain ⟨i,rfl⟩ := position_exists p hp
+  obtain ⟨j,rfl⟩ := position_exists q hq
+  fin_cases i <;> fin_cases j <;> simp_all [position]
+
+/-- The three full row labels are exactly the three displayed parameter conditions. -/
+theorem label_iff (a : ℕ) (ha : 1 ≤ a) (i : Fin 3) (x y : Source) :
+    literalRecord Q (U a x y) = label i ↔ rowCondition a i x y := by
+  have mem (j : Fin 3) : position j ∈ Q := by fin_cases j <;> simp [Q]
+  have pair (j k : Fin 3) :
+      (position j,position k) ∈ actualPartition Q (U a x y) ↔
+        hole a x y j = hole a x y k := by
+    simp [actualPartition, u_holes, hole_at, mem]
+  have lpair (j k : Fin 3) :
+      (position j,position k) ∈ (label i).2 ↔
+        labelClass i (position j) = labelClass i (position k) := by
+    simp [label,mem]
+  constructor
+  · intro h
+    have pairs (j k : Fin 3) : hole a x y j = hole a x y k ↔
+        labelClass i (position j) = labelClass i (position k) := by
+      rw [← pair, ← lpair]
+      exact Finset.ext_iff.mp (congrArg Prod.snd h) _
+    fin_cases i
+    · simpa [rowCondition,hole,labelClass,position] using (pairs 0 1).mpr (by decide)
+    · simpa [rowCondition,hole,labelClass,position] using (pairs 0 2).mpr (by decide)
+    · have h1 := pairs 0 1
+      have h2 := pairs 0 2
+      simp [hole,labelClass,position] at h1 h2
+      simpa [rowCondition] using And.intro h1 h2
+  · intro h
+    have tests (j k : Fin 3) : hole a x y j = hole a x y k ↔
+        labelClass i (position j) = labelClass i (position k) := by
+      have ne := shift_ne a ha y
+      fin_cases i
+      · simp only [rowCondition, if_pos rfl] at h
+        subst x
+        fin_cases j <;> fin_cases k <;> simp [hole,labelClass,position,ne,Ne.symm ne]
+      · have hx : x = substitution^[a] y := by simpa [rowCondition] using h
+        subst x
+        fin_cases j <;> fin_cases k <;> simp [hole,labelClass,position,ne,Ne.symm ne]
+      · have hx : x ≠ y ∧ x ≠ substitution^[a] y := by simpa [rowCondition] using h
+        fin_cases j <;> fin_cases k <;>
+          simp [hole,labelClass,position,ne,Ne.symm ne,hx.1,hx.2,Ne.symm hx.1,Ne.symm hx.2]
+    apply Prod.ext (u_exterior a x y)
+    change actualPartition Q _ = (label i).2
+    ext ⟨p,q⟩
+    simp only [actualPartition,u_holes,label,Finset.mem_filter,
+      Finset.product_eq_sprod,Finset.mem_product]
+    by_cases hp : p ∈ Q
+    · by_cases hq : q ∈ Q
+      · simp only [hp,hq,true_and]
+        obtain ⟨j,rfl⟩ := position_exists p hp
+        obtain ⟨k,rfl⟩ := position_exists q hq
+        rw [hole_at,hole_at,Option.some.injEq]
+        exact tests j k
+      · simp [hq]
+    · simp [hp]
+
+/-- This parametrization ranges over every original in each complete row stratum. -/
+theorem stratum_iff (a : ℕ) (ha : 1 ≤ a) (i : Fin 3) (u : Source) :
+    Stratum a i u ↔ ∃ x y : Source, u = U a x y ∧ rowCondition a i x y := by
+  constructor
+  · rintro ⟨hr,v,hrow,hl⟩
+    have full : literalRecord Q u = label i :=
+      ((Observer.ActualCutPartitionDecoder.canonicalRow_record_iff Q cut_prefix_free u v).mp
+        hrow).trans hl
+    obtain ⟨x,y,rfl⟩ := (retained_iff a ha u).mp hr
+    exact ⟨x,y,rfl,(label_iff a ha i x y).mp full⟩
+  · rintro ⟨x,y,rfl,h⟩
+    exact ⟨(retained_iff a ha _).mpr ⟨x,y,rfl⟩,
+      U a x y,rfl,(label_iff a ha i x y).mpr h⟩
 
 end D5.S3.Arith.FibonacciAtomic.Geometry.NativeBiasedFrontierInfima

@@ -124,17 +124,173 @@ $$\forall a: \mathbb{N}, (1 \leq a) \Rightarrow \forall t: \operatorname{Source}
 
 For every positive a, the three sources t, rho iterated a times on t, and rho iterated twice a times on t have exactly the original leaf set of t as their joint first-disagreement frontier. The first two coordinates already disagree at every original leaf, and all three retain the original branches.
 
+**Definition 1.11 (Whole Shift-Copy Sources).**
+
+Lean statement: `D5/S3/Arith/FibonacciAtomic/Geometry/NativeBiasedFrontierInfima.U`
+
+*Formalization.* `D5/S3/Arith/FibonacciAtomic/Geometry/NativeBiasedFrontierInfima.U` (`✓ std3`).
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+For a supplied natural a, write S for rho iterated a times. U(a,x,y) is the ordered branch (x,(y,S(y))). Both occurrences use the same whole finite native value y.
+
+**Definition 1.12 (The Complete Retained Input).**
+
+Lean statement: `D5/S3/Arith/FibonacciAtomic/Geometry/NativeBiasedFrontierInfima.Retained`
+
+*Formalization.* `D5/S3/Arith/FibonacciAtomic/Geometry/NativeBiasedFrontierInfima.Retained` (`✓ std3`).
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+The old cut consists of the root with its complete one-hole row. The final epoch is a. The four literals say branch at the root and R, at epochs zero and a. The positive relation equates epoch-a RL with epoch-zero RR, retaining both endpoint guards. The two negative relations compare epoch-zero RL with RR and the epoch-zero root with L, retaining both guards of each sign. There are no further observations or image or rank conditions. The paid-source and complete-state premise belongs to the supplied acquisition interpretation; these statements concern all original finite sources satisfying its retained native record.
+
+**Theorem 1.13 (The Entire Reconstructed Fiber).**
+
+$$\forall a: \mathbb{N}, (1 \leq a) \Rightarrow \forall u: \operatorname{Source}\left(\right), (\operatorname{Retained}\left(a, u\right)) \iff (\exists x: \operatorname{Source}\left(\right), \exists y: \operatorname{Source}\left(\right), u = \operatorname{U}\left(a, x, y\right))$$
+
+*Proof.* Machine-checked in Lean as `D5/S3/Arith/FibonacciAtomic/Geometry/NativeBiasedFrontierInfima.retained_iff` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+For every a at least one, a finite native source satisfies the entire retained input exactly when it equals U(a,x,y) for some independent finite x and y. The zero-epoch literals expose both branches. The existing exact payload-history correspondence identifies the last hole with S(y). Positive shifts change right-spine rank, and positive leaf counts establish the two original negative comparisons. Every literal and every endpoint guard is retained in the converse.
+
+**Definition 1.14 (Target Coordinates).**
+
+Lean statement: `D5/S3/Arith/FibonacciAtomic/Geometry/NativeBiasedFrontierInfima.position`
+
+*Formalization.* `D5/S3/Arith/FibonacciAtomic/Geometry/NativeBiasedFrontierInfima.position` (`✓ std3`).
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+The three indices zero, one and two name the original addresses L, RL and RR, in that order.
+
+**Definition 1.15 (The Entire Target Cut).**
+
+Lean statement: `D5/S3/Arith/FibonacciAtomic/Geometry/NativeBiasedFrontierInfima.Q`
+
+*Formalization.* `D5/S3/Arith/FibonacciAtomic/Geometry/NativeBiasedFrontierInfima.Q` (`✓ std3`).
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+The cut contains exactly L, RL and RR. It is prefix free and every one of its addresses is reached by every shift-copy source.
+
+**Definition 1.16 (The Entire Target Exterior).**
+
+Lean statement: `D5/S3/Arith/FibonacciAtomic/Geometry/NativeBiasedFrontierInfima.exterior`
+
+*Formalization.* `D5/S3/Arith/FibonacciAtomic/Geometry/NativeBiasedFrontierInfima.exterior` (`✓ std3`).
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+The literal exterior is the ordered branch (hole L,(hole RL,hole RR)). It retains the whole outer source skeleton.
+
+**Definition 1.17 (The Three Equality Partitions).**
+
+Lean statement: `D5/S3/Arith/FibonacciAtomic/Geometry/NativeBiasedFrontierInfima.labelClass`
+
+*Formalization.* `D5/S3/Arith/FibonacciAtomic/Geometry/NativeBiasedFrontierInfima.labelClass` (`✓ std3`).
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+Label zero identifies L with RL; label one identifies L with RR; label two makes all three holes distinct. The remaining hole in the first two labels is a singleton class.
+
+**Definition 1.18 (Complete Target Records).**
+
+Lean statement: `D5/S3/Arith/FibonacciAtomic/Geometry/NativeBiasedFrontierInfima.label`
+
+*Formalization.* `D5/S3/Arith/FibonacciAtomic/Geometry/NativeBiasedFrontierInfima.label` (`✓ std3`).
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+Each label combines the entire exterior with all ordered pairs of equal-class holes, including the reflexive and reversed pairs. Thus absence of a reached pair records the corresponding whole-value disequality.
+
+**Definition 1.19 (Parameters for Each Label).**
+
+Lean statement: `D5/S3/Arith/FibonacciAtomic/Geometry/NativeBiasedFrontierInfima.rowCondition`
+
+*Formalization.* `D5/S3/Arith/FibonacciAtomic/Geometry/NativeBiasedFrontierInfima.rowCondition` (`✓ std3`).
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+For label zero, x equals y. For label one, x equals S(y). For label two, x differs from both y and S(y). Every finite y differs from S(y) for positive a.
+
+**Definition 1.20 (Entire Canonical Row Strata).**
+
+Lean statement: `D5/S3/Arith/FibonacciAtomic/Geometry/NativeBiasedFrontierInfima.Stratum`
+
+*Formalization.* `D5/S3/Arith/FibonacciAtomic/Geometry/NativeBiasedFrontierInfima.Stratum` (`✓ std3`).
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+A stratum contains exactly the retained originals whose actual canonical target row agrees with a source having the selected complete literal record. The existing canonical-row equivalence identifies this with equality of the entire exterior and partition; no source payload is inserted into the row label.
+
+**Theorem 1.21 (Exact Complete-Label Conditions).**
+
+$$\forall a: \mathbb{N}, (1 \leq a) \Rightarrow \forall i: \operatorname{Fin}\left(3\right), \forall x: \operatorname{Source}\left(\right), \forall y: \operatorname{Source}\left(\right), (\operatorname{literalRecord}\left(\operatorname{Q}\left(\right), \operatorname{U}\left(a, x, y\right)\right) = \operatorname{label}\left(i\right)) \iff (\operatorname{rowCondition}\left(a, i, x, y\right))$$
+
+*Proof.* Machine-checked in Lean as `D5/S3/Arith/FibonacciAtomic/Geometry/NativeBiasedFrontierInfima.label_iff` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+For every positive a, each label of U(a,x,y) is equivalent to its displayed row condition. The exterior has all three holes, and the finite partition tests every pair of complete subtree values. Positive-shift separation prevents the last two holes from agreeing.
+
+**Theorem 1.22 (Every Original in Each Entire Stratum).**
+
+$$\forall a: \mathbb{N}, (1 \leq a) \Rightarrow \forall i: \operatorname{Fin}\left(3\right), \forall u: \operatorname{Source}\left(\right), (\operatorname{Stratum}\left(a, i, u\right)) \iff (\exists x: \operatorname{Source}\left(\right), \exists y: \operatorname{Source}\left(\right), (u = \operatorname{U}\left(a, x, y\right)) \land (\operatorname{rowCondition}\left(a, i, x, y\right)))$$
+
+*Proof.* Machine-checked in Lean as `D5/S3/Arith/FibonacciAtomic/Geometry/NativeBiasedFrontierInfima.stratum_iff` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+For every positive a and each of the three labels, membership is equivalent to being U(a,x,y) with precisely that label's parameter condition. Both directions use the full retained fiber and the existing equivalence between canonical rows and complete literal records. Parameters of different alternative originals remain independent.
+
 ## References
 
+- Truth anchor: `D5/S3/Arith/FibonacciAtomic/Geometry/NativeBiasedFrontierInfima.Q`
+- Truth anchor: `D5/S3/Arith/FibonacciAtomic/Geometry/NativeBiasedFrontierInfima.Retained`
+- Truth anchor: `D5/S3/Arith/FibonacciAtomic/Geometry/NativeBiasedFrontierInfima.Stratum`
+- Truth anchor: `D5/S3/Arith/FibonacciAtomic/Geometry/NativeBiasedFrontierInfima.U`
 - Truth anchor: `D5/S3/Arith/FibonacciAtomic/Geometry/NativeBiasedFrontierInfima.biased_frontier_bounds`
 - Truth anchor: `D5/S3/Arith/FibonacciAtomic/Geometry/NativeBiasedFrontierInfima.biased_frontier_triangle`
 - Truth anchor: `D5/S3/Arith/FibonacciAtomic/Geometry/NativeBiasedFrontierInfima.distance`
 - Truth anchor: `D5/S3/Arith/FibonacciAtomic/Geometry/NativeBiasedFrontierInfima.distance_shift`
+- Truth anchor: `D5/S3/Arith/FibonacciAtomic/Geometry/NativeBiasedFrontierInfima.exterior`
 - Truth anchor: `D5/S3/Arith/FibonacciAtomic/Geometry/NativeBiasedFrontierInfima.frontier_shift`
+- Truth anchor: `D5/S3/Arith/FibonacciAtomic/Geometry/NativeBiasedFrontierInfima.label`
+- Truth anchor: `D5/S3/Arith/FibonacciAtomic/Geometry/NativeBiasedFrontierInfima.labelClass`
+- Truth anchor: `D5/S3/Arith/FibonacciAtomic/Geometry/NativeBiasedFrontierInfima.label_iff`
 - Truth anchor: `D5/S3/Arith/FibonacciAtomic/Geometry/NativeBiasedFrontierInfima.leaf_partition`
+- Truth anchor: `D5/S3/Arith/FibonacciAtomic/Geometry/NativeBiasedFrontierInfima.position`
+- Truth anchor: `D5/S3/Arith/FibonacciAtomic/Geometry/NativeBiasedFrontierInfima.retained_iff`
+- Truth anchor: `D5/S3/Arith/FibonacciAtomic/Geometry/NativeBiasedFrontierInfima.rowCondition`
+- Truth anchor: `D5/S3/Arith/FibonacciAtomic/Geometry/NativeBiasedFrontierInfima.stratum_iff`
 - Truth anchor: `D5/S3/Arith/FibonacciAtomic/Geometry/NativeBiasedFrontierInfima.tripleFrontier`
 - Truth anchor: `D5/S3/Arith/FibonacciAtomic/Geometry/NativeBiasedFrontierInfima.tripleMass`
 - Truth anchor: `D5/S3/Arith/FibonacciAtomic/Geometry/NativeBiasedFrontierInfima.triple_frontier_shift`
 - Truth anchor: `D5/S3/Arith/FibonacciAtomic/Geometry/NativeBiasedFrontierInfima.weight`
 - Dependency: [D5/S3/Arith/FibonacciAtomic/ActualImageAlphaSeparation](../ActualImageAlphaSeparation.md)
-- Dependency: [D5/S3/Arith/FibonacciAtomic/Observer/NativePrefixIdentityReflection](../Observer/NativePrefixIdentityReflection.md)
+- Dependency: [D5/S3/Arith/FibonacciAtomic/Observer/NativePayloadHistoryInstallation](../Observer/NativePayloadHistoryInstallation.md)
