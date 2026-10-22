@@ -25,6 +25,7 @@ abbrev lookupVersion : String := "R_lookup/one-B/discrtree-pickle-v5-independent
 structure LookupQueryMemo where
   primary? : Option (Environment × Expr × DiskLookup.Candidates) := none
   fallback? : Option DiskLookup.Candidates := none
+  profile? : Option (Environment × Array DiskLookup.Entry × Nat × Nat) := none
 
 /-- The table is captured before delivery vocabulary or S is installed. A
 partial basis may supply a hit, but never a completed negative query. -/
@@ -58,16 +59,30 @@ private def candidateOwnerMatches (table : LookupTable) (entry : DiskLookup.Entr
   | some idx => table.environment.header.moduleNames[idx.toNat]?.any (fun n => n.toString == entry.module)
   | none => false
 
-private def profileCandidateSet (table : LookupTable) (type : Expr)
+private unsafe def profileCandidateSet (table : LookupTable) (type : Expr)
     (candidates : DiskLookup.Candidates) (fallback : Bool) (mode : String) : IO Unit := do
   if (← IO.getEnv "SEARCH_REDUCTION_PROFILE").isNone then return
   let started ← IO.monoNanosNow
   let heartbeats ← IO.getNumHeartbeats
-  let loaded := candidates.entries.filter (candidateOwnerMatches table)
-  let modules := candidates.entries.foldl (fun acc entry =>
-    if candidateOwnerMatches table entry then acc else acc.insert entry.module)
-    ({} : Std.HashSet String)
-  lookupPhase s!"lookup/set mode={mode} fallback={fallback} query={type.hash} total={candidates.entries.size} loaded={loaded.size} unloaded={candidates.entries.size - loaded.size} unloaded_modules={modules.size}"
+  let cached ← match table.memo? with
+    | some memo => (·.profile?) <$> memo.get
+    | none => pure none
+  let cached := cached.filter fun (env, entries, _, _) =>
+    ptrEq env table.environment && ptrEq entries candidates.entries
+  let (loaded, modules) ← if let some (_, _, loaded, modules) := cached then
+      pure (loaded, modules)
+    else do
+      let mut loaded := 0
+      let mut modules : Std.HashSet String := {}
+      for entry in candidates.entries do
+        if candidateOwnerMatches table entry then loaded := loaded + 1
+        else modules := modules.insert entry.module
+      unless candidates.entries.isEmpty do
+        if let some memo := table.memo? then
+          memo.modify fun state => {state with
+            profile? := some (table.environment, candidates.entries, loaded, modules.size)}
+      pure (loaded, modules.size)
+  lookupPhase s!"lookup/set mode={mode} fallback={fallback} query={type.hash} total={candidates.entries.size} loaded={loaded} unloaded={candidates.entries.size - loaded} unloaded_modules={modules} profile_cached={cached.isSome}"
   lookupPhase s!"lookup/query mode={mode} fallback={fallback} closed={!type.hasMVar && !type.hasFVar} expression={(toJson (reprStr type)).compress}"
   lookupPhase s!"lookup/recall-profile/end ns={(← IO.monoNanosNow) - started} heartbeats={(← IO.getNumHeartbeats) - heartbeats}"
 
