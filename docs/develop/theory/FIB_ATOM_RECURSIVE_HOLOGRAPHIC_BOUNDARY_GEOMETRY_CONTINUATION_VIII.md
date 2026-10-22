@@ -2284,3 +2284,373 @@ separable; they do not settle approximate conversion, other resources,
 other temperatures or the all-finite-copy question.
 
 ## 追加锚（本行以下为增补区）
+## 247. Uniform finite-copy rank-three kernel and the separable zero-map theorem
+
+Fix $t=3-2\sqrt2$ and retain Definitions 240.1, 244.1 and 244.3.
+Thus $q\in D$ remains the actual jointly generated principal-root
+source, $p=p(q)$ and $U_q=u_qu_q^\dagger$ are linked by that source,
+$\rho_q=\Omega_q/P_q$, and $W_q=W_{\lambda(p(q))}$ is the fixed-register
+target. The CAR singlet, normalized cut, mode order and identification
+$J$ are unchanged. In particular, no independent choice of $p$ and
+$U_q$ is made. The required targets at this temperature are all
+separable by Theorem 240.3.
+
+The following complex rank lemma applies to the complete coherent
+coefficient sum. It imposes no Hermiticity, reality, positivity or
+diagonalizability condition and allows arbitrary cancellation among
+its spanning terms.
+
+**Lemma 247.1 (Full complex span with two identity factors).** For
+$n\ge2$, let $\mathcal L_n$ be the complex linear span of all elementary
+matrix tensors
+
+$$
+X_1\otimes\cdots\otimes X_n,
+\qquad X_i\in M_2(\mathbb C),
+\tag{247.1}
+$$
+
+for which there are two distinct indices $r\ne s$ with
+$X_r=X_s=I_2$ (and possibly more identity factors). Every nonzero
+$X\in\mathcal L_n$ has
+
+$$
+\operatorname{rank}_{\mathbb C}X\ge3.
+\tag{247.2}
+$$
+
+Proof. Write independent complex variables
+$x=(x_1,\ldots,x_n)$ and $y=(y_1,\ldots,y_n)$ and put
+
+$$
+ a(x)=\bigotimes_{i=1}^n(1,x_i),
+ \qquad
+ b(y)=\bigotimes_{i=1}^n(-y_i,1)^{\mathsf T},
+ \qquad
+ F(x,y)=a(x)Xb(y).
+\tag{247.3}
+$$
+
+For an elementary tensor in (247.1), every identity factor contributes
+
+$$
+(1,x_i)I_2(-y_i,1)^{\mathsf T}=x_i-y_i.
+\tag{247.4}
+$$
+
+There are two distinct such factors in every spanning term. Hence the
+complete sum, including all cancellations, satisfies the polynomial
+identities
+
+$$
+F(x,x)=0,
+\qquad
+\frac{\partial F}{\partial y_i}(x,x)=0
+\quad(1\le i\le n).
+\tag{247.5}
+$$
+
+Suppose that $X$ has rank $r=1$ or $r=2$. A rank factorization over
+$\mathbb C$ gives
+
+$$
+X=\sum_{\ell=1}^r u_\ell w_\ell^{\mathsf T},
+\tag{247.6}
+$$
+
+where each of $(u_\ell)_{\ell=1}^r$ and $(w_\ell)_{\ell=1}^r$ is linearly
+independent. Define
+
+$$
+ f_\ell(x)=a(x)u_\ell,
+ \qquad
+ g_\ell(y)=w_\ell^{\mathsf T}b(y).
+\tag{247.7}
+$$
+
+The coefficient maps in (247.7) are injective. Indeed, the coordinates
+of $a(x)u$ are the coefficients of the square-free multi-affine
+polynomial
+$\sum_{\varepsilon\in\{0,1\}^n}u_\varepsilon\prod_i x_i^{\varepsilon_i}$,
+whose monomials form a basis; the coordinates of $w^{\mathsf T}b(y)$
+are the same square-free monomial basis up to the nonzero signs coming
+from the factors $-y_i$. Therefore the $f_\ell$ and the $g_\ell$ are
+nonzero and linearly independent in the corresponding polynomial
+rings.
+
+For $r=1$, the diagonal identity in (247.5) is
+$f_1(x)g_1(x)=0$. The complex polynomial ring is an integral domain,
+so this contradicts the nonvanishing of both factors.
+
+For $r=2$, work in the rational function field
+$K=\mathbb C(x_1,\ldots,x_n)$. The diagonal identity gives
+$f_1g_1+f_2g_2=0$. Since $f_2$ and $g_1$ are nonzero, put
+$h=f_1/f_2\in K$; then $g_2=-hg_1$. The first-derivative identities
+in (247.5) read
+
+$$
+ f_1\,\partial_i g_1+f_2\,\partial_i g_2=0
+ \qquad(1\le i\le n).
+\tag{247.8}
+$$
+
+Substitution of $f_1=hf_2$ and $g_2=-hg_1$ into (247.8) yields
+$-f_2g_1\partial_i h=0$. Thus every coordinate derivation satisfies
+$\partial_i h=0$. In characteristic zero the common constants of
+$\partial_1,\ldots,\partial_n$ on
+$K=\mathbb C(x_1,\ldots,x_n)$ are exactly $\mathbb C$. To see this
+without any analytic assumption, write a nonzero common constant as
+$P/Q$ with coprime $P,Q\in\mathbb C[x_1,\ldots,x_n]$. The equations
+$\partial_i(P/Q)=0$ give $Q\partial_iP=P\partial_iQ$. Coprimality
+implies $P$ divides $\partial_iP$ and $Q$ divides $\partial_iQ$.
+If either polynomial had positive degree in some $x_i$, its derivative
+would have strictly smaller $x_i$-degree in characteristic zero, which
+is incompatible with that divisibility. Thus all coordinate derivatives
+of $P$ and $Q$ vanish, so both are constant and $P/Q\in\mathbb C$.
+Hence $h\in\mathbb C$.
+This makes $f_1=hf_2$, contradicting the linear independence of
+$f_1,f_2$. Ranks one and two are impossible, proving (247.2). ∎
+
+**Proposition 247.2 (Every nonzero vector in the complete $K_k$ has
+Schmidt rank at least three).** Fix any finite $k\ge2$, with the party
+cut and bases of Definition 244.1,
+
+$$
+\mathcal H_A^{(k)}=\bigotimes_{i=1}^k A_i\cong\mathbb C^{2^k},
+\qquad
+\mathcal H_B^{(k)}=\bigotimes_{i=1}^k(C_i\otimes S_i)
+\cong\mathbb C^{4^k}.
+\tag{247.9}
+$$
+
+Let $K_k$ be the full common kernel (244.12), with the complete sector
+sum (245.2). Every nonzero $v\in K_k$ has Schmidt rank at least three
+across this fixed party grouping.
+
+Proof. Regroup Bob's registers only, from
+$(c_1,s_1,\ldots,c_k,s_k)$ to $(c_1,\ldots,c_k,s_1,\ldots,s_k)$,
+and expand
+
+$$
+ v=\sum_{a,c,s\in\{0,1\}^k}
+ V_{a,(c,s)}|a\rangle_A|c,s\rangle_B,
+ \qquad
+ X_s=(V_{a,(c,s)})_{a,c}\in M_{2^k}(\mathbb C).
+\tag{247.10}
+$$
+
+This is a Bob-only column permutation of the coefficient matrix
+$V=(V_{a,(c,s)})$, so $\operatorname{rank}V$ is the Schmidt rank of
+$v$ and $\operatorname{rank}V\ge\operatorname{rank}X_s$ for every
+fixed spatial string $s$.
+
+Use the complex-linear rail coefficient identification
+$|a_i\rangle|c_i\rangle\mapsto|a_i\rangle\langle c_i|$.
+Then $|\phi\rangle_i$ corresponds to $I_2/\sqrt2$, while
+membership in $\operatorname{ran}Q_i$ is exactly the trace-zero
+condition: for any complex $2\times2$ matrix $M$,
+
+$$
+\langle\phi_i|\operatorname{vec}(M)\rangle
+=\frac{\operatorname{tr}M}{\sqrt2}.
+\tag{247.11}
+$$
+
+Now use every sector in the direct sum (245.2), not an isolated rail
+sector. In the summand indexed by $S\subseteq\{1,\ldots,k\}$ with
+$|S|\ge2$, each position in $S$ carries $|\phi_i\rangle$ and every
+other rail position carries a vector in $\operatorname{ran}Q_i$.
+Taking any fixed spatial coefficient of that summand therefore gives a
+linear combination of matrix tensors with $I_2$ at every position in
+$S$ and trace-zero matrices at the remaining positions. The spatial
+orthogonal-complement restriction in (245.2) only constrains the
+coefficients of this combination; it does not remove the stated
+identity factors. Summing all $S$ and all allowed spatial coefficients
+preserves membership in the full span $\mathcal L_k$ of Lemma 247.1.
+Consequently
+
+$$
+X_s\in\mathcal L_k
+\qquad\text{for every }s.
+\tag{247.12}
+$$
+
+This conclusion includes arbitrary coherent sums and their complete
+cancellations across all sectors. If $v\ne0$, at least one $X_s$ is
+nonzero. Lemma 247.1 then gives
+$\operatorname{rank}V\ge\operatorname{rank}X_s\ge3$.
+Thus every nonzero vector of $K_k$ has Schmidt rank at least three.
+This is the only rank bound asserted here for general finite $k$; the
+stronger rank-four statement already proved for $k=3$ in Proposition
+246.2 and Theorem 246.3 remains unchanged. ∎
+
+**Theorem 247.3 (Uniform finite-copy separable zero-map theorem).**
+At $t=3-2\sqrt2$, fix any finite $k\ge2$. Let
+
+$$
+\mathcal E_k:M_{8^k}(\mathbb C)\longrightarrow M_4(\mathbb C)
+\tag{247.13}
+$$
+
+be one $q$-independent separable completely positive map across the
+input cut (247.9), with the fixed output cut
+$\mathbb C^2\otimes\mathbb C^2$. The quantifier ranges over the
+whole separable CP class with arbitrary complex product Kraus factors; no
+restricted ansatz is imposed. If, for every actual $q\in D$, there
+is an arbitrary nonnegative scalar $m_q$ such that
+
+$$
+\mathcal E_k(\rho_q^{\otimes k})=m_qW_q,
+\qquad m_q\ge0,
+\tag{247.14}
+$$
+
+then $\mathcal E_k=0$. No trace bound and no uniform positive lower
+bound on the masses $m_q$ is assumed.
+
+Proof. Choose any finite product-Kraus representation of the separable
+map in the form (244.4), with
+$A_j:\mathbb C^{2^k}\to\mathbb C^2$ and
+$B_j:\mathbb C^{4^k}\to\mathbb C^2$. Lemma 244.4 applies directly to
+(247.14). More explicitly, the actual rectangle of Lemma 240.2 and the
+joint identity $N(p(q),\theta(q))=C\Omega_q$ eliminate the arbitrary
+$m_q$ by the trace and give (244.10) on that rectangle; polynomiality in
+$p$ and finite trigonometric polynomiality in $\theta$ extend it to all
+real $p,\theta$. The same $(p,\theta)$ is used in every tensor factor.
+This is an identity for the one fixed map and does not make $p$ or
+$U_q$ independently controllable.
+
+At $p_*=1/2$, equations (244.7)–(244.8) make
+$R_\theta=N(p_*,\theta)^\Gamma\succeq0$, while
+$T_t(p_*)^\Gamma=tQ$ annihilates the output vector
+$|\phi\rangle$. The Alice-only transpose $\Gamma$ leaves Bob's copy and
+spatial registers unchanged. For each product Kraus factor set
+
+$$
+ v_j=(A_j^{\mathsf T}\otimes B_j^\dagger)|\phi\rangle.
+\tag{247.15}
+$$
+
+The exact transpose/adjoint identity (244.14), with the genuine Bob
+adjoint, gives
+
+$$
+0=\sum_j\langle v_j|R_\theta^{\otimes k}|v_j\rangle
+\qquad(\theta\in\mathbb R).
+\tag{247.16}
+$$
+
+Every summand is nonnegative. Hence each $v_j$ lies in every kernel in
+(244.12), so $v_j\in K_k$. A pullback of the two-term output vector
+has Schmidt rank at most two across the party cut: in the fixed bases
+its coefficient matrix is
+
+$$
+V_j=\frac1{\sqrt2}A_j^{\mathsf T}\overline{B_j},
+\tag{247.17}
+$$
+
+where the bar is entrywise conjugation and the transpose is only on
+Alice. Proposition 247.2 therefore forces $v_j=0$ for every $j$.
+
+For every input matrix $X$, the same formula (244.14) now gives
+
+$$
+\langle\phi|\mathcal E_k(X)^\Gamma|\phi\rangle
+=\sum_j\langle v_j|X^\Gamma|v_j\rangle=0.
+\tag{247.18}
+$$
+
+Take the actual source point $q_0=(1/3,1/3)$. Lemma 240.2 gives
+$p(q_0)=1/3$, and the source identity (245.10) gives
+
+$$
+\langle\phi|W_{q_0}^\Gamma|\phi\rangle
+=\frac{t(2/3-1)^2}{2(2t+g(1/3))}>0.
+\tag{247.19}
+$$
+
+Equations (247.14), (247.18) and (247.19) force $m_{q_0}=0$ and hence
+$\mathcal E_k(\rho_{q_0}^{\otimes k})=0$. The actual input is full rank:
+its unnormalized active block is
+$tI_4+2g(1/3)P_-\succeq tI_4\succ0$ and its spectator block is
+$th(1/3)I_4\succ0$ on the orthogonal spatial rays. The positive
+normalization preserves this, so for some $\delta>0$,
+
+$$
+\rho_{q_0}^{\otimes k}\succeq\delta I_{8^k}.
+\tag{247.20}
+$$
+
+Positivity gives
+
+$$
+0=\mathcal E_k(\rho_{q_0}^{\otimes k})
+\succeq\delta\mathcal E_k(I_{8^k})\succeq0.
+\tag{247.21}
+$$
+
+Thus $\mathcal E_k(I_{8^k})=0$. Every positive semidefinite input
+$Z$ is bounded by a scalar multiple of $I_{8^k}$, so positivity gives
+$\mathcal E_k(Z)=0$. Positive matrices span the Hermitian matrices, and
+complex linearity then gives $\mathcal E_k=0$. ∎
+
+**Corollary 247.4 (Forward operational implication and the exact
+finite-copy obstruction).** Under the finite-copy operation contract of
+Definition 244.1, no finite $k\ge2$ can satisfy the exact positive-
+success requirement (244.2).
+
+Proof. Use only the forward complete-history reduction established in
+Corollary 245.3. Resolve every separable auxiliary state into product
+components and condition on each complete adaptive classical history.
+The local maps along a history compose into one Alice factor and one
+Bob factor. Taking matrix elements of local memories and residual modes
+refines each history to product Kraus operators of the form (244.4);
+fixed coins contribute nonnegative weights, and erasing every fine
+success record sums the CP leaves. The resulting reduced success map is
+therefore separable, completely positive and trace-nonincreasing. No
+converse from separable operations to finite LOCC is used or claimed.
+
+The resource accounting is exactly the original one: $2k$ independent
+compatible full-Gibbs preparations at the same unknown $q$ and $t$ feed
+$k$ unchanged original filters. Every filter rejection is terminal, and
+conditional on all $k$ passes the supplied state is
+$\rho_q^{\otimes k}$. The fixed CAR sign, normalized cut, identification
+$J$, party grouping, phases and Alice-only transpose are those of
+Definitions 240.1 and 244.1--244.3. Local total number is conserved
+before discard: if the local auxiliary charge is $n_{\mathrm{aux}}$, the
+success output has charge one and the local residual charge is
+$k+n_{\mathrm{aux}}-1$. All residual particles, memories, histories and
+coin records are then discarded or erased as prescribed. There is no
+source-aware alignment, source-dependent target coin, entangled ancillary
+resource, external phase reference, unfiltered input access, failure
+recycling, free retry or extra preparation.
+
+If the required instrument existed, its reduced map would obey (247.14)
+with $m_q=s_q>0$ for every actual $q$, contradicting Theorem 247.3.
+The exhaustive original probability law is retained exactly:
+
+$$
+\begin{aligned}
+\Pr(\text{original-filter rejection})&=1-P_q^k,\\
+\Pr(\text{all filters pass, success})&=P_q^ks_q,\\
+\Pr(\text{all filters pass, postfilter failure})&=P_q^k(1-s_q).
+\end{aligned}
+\tag{247.22}
+$$
+
+These three events sum to one. The contradiction uses only the individual
+condition $s_q>0$ and introduces neither a trace bound nor a uniform
+success floor. ∎
+
+The statement proved here is exactly the uniform rank-three consequence
+for the complete complex span and the resulting separable CP zero-map
+obstruction for every finite $k\ge2$. It does not silently replace the
+existing $k=3$ rank-four theorem, and it does not claim a result for
+arbitrary nonseparable completely positive maps. All critical-temperature
+targets remain separable. No claim is made about approximate conversion,
+other temperatures, other resources, or infinite-copy limits; no sharp
+bound or attainment claim is made. The exposition makes no literature-
+priority, empirical-availability or Lean/kernel-certification claim.
+
+## 追加锚（本行以下为增补区）
