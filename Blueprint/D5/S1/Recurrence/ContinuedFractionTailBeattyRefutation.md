@@ -56,7 +56,37 @@ $$\neg (\forall u \in \mathbb{N},\; (1 \le u) \Rightarrow (\forall v \in \mathbb
 
 *Commentary.*
 
-For u = 2 and v = 1, the slope is 1 + Real.sqrt 2 and beta 2 1 = 1/2. A contraction on a closed set of bounded continuous functions constructs positive tails whose error lies strictly between 1/(8n) and metallicValue 2/(4n). At n = 1 the Beatty line has floor 2, while the recurrence gives s 1 = 3 + 1/(s 2) > 3. Thus their floors differ. The assertion quantified over Pell indices, uniqueness of positive tails, and convergence of finite continued-fraction truncations are not proved here.
+For u = 2 and v = 1, the slope is 1 + Real.sqrt 2 and beta 2 1 = 1/2. A contraction on a closed set of bounded continuous functions constructs positive tails whose error lies strictly between 1/(8n) and metallicValue 2/(4n). At n = 1 the Beatty line has floor 2, while the recurrence gives s 1 = 3 + 1/(s 2) > 3. Thus their floors differ. The kernel-checked settlement is this index-one case. The Pell-index derivation below is mathematical exposition, not a separately kernel-checked declaration. Uniqueness of positive tails and convergence of finite continued-fraction truncations remain open.
+
+For the Pell-index comparison, let r range over the natural numbers and define integer sequences p and n by the following initial values and recurrences. Write alpha for one plus the square root of two and x for the asymptotic line.
+
+$$
+p_{0} = 3, n_{0} = 1,\quad p_{r + 1} = 3 \cdot p_{r} + 8 \cdot n_{r},\quad n_{r + 1} = p_{r} + 3 \cdot n_{r}
+$$
+
+Induction gives odd p, positive n and p squared minus eight n squared equal to one: substitution of the recurrences preserves this difference. Both sequences strictly increase. Eliminating p gives the second-order recurrence for n. The integer m and the line x are defined by:
+
+$$
+\left(p_{r}\right)^{2} - 8 \cdot \left(n_{r}\right)^{2} = 1,\quad n_{r + 2} = 6 \cdot n_{r + 1} - n_{r},\quad m_{r} = n_{r} + \frac{p_{r} + 1}{2},\quad x_{r} = \alpha \cdot n_{r} + \frac{1}{2}
+$$
+
+The positive Pell identity gives p greater than 2n sqrt(2). Rationalizing the difference yields the exact gap below; its denominator exceeds 8n because p + 2n sqrt(2) exceeds 4n.
+
+$$
+0 < m_{r} - x_{r} = \frac{p_{r} - 2 \cdot n_{r} \cdot \sqrt{2}}{2} = \frac{1}{2 \cdot (p_{r} + 2 \cdot n_{r} \cdot \sqrt{2})} < \frac{1}{8 \cdot n_{r}}
+$$
+
+The sharp bounds on the constructed tail error give the following comparison. The last inequality uses alpha/(4n) < 1 for n at least one.
+
+$$
+m_{r} - 1 < x_{r} < m_{r} < x_{r} + \frac{1}{8 \cdot n_{r}} < s_{n_{r}} < x_{r} + \frac{\alpha}{4 \cdot n_{r}} < m_{r} + 1
+$$
+
+Since m is integral, these inequalities determine both floors at every Pell index. This is a consequence proved in prose for the constructed tails; its quantified Lean formalization remains open.
+
+$$
+\lfloor s_{n_{r}} \rfloor = m_{r},\quad \lfloor x_{r} \rfloor = m_{r} - 1
+$$
 
 ## References
 

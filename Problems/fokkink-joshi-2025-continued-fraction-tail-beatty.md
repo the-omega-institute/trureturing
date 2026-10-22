@@ -43,6 +43,48 @@ $$\frac1{8n}<s_n-(\alpha n+1/2)<\frac{\alpha}{4n}.$$
 
 At $n=1$, the Beatty line has floor $2$, while the recurrence gives $s_1=3+1/s_2>3$. Therefore the universal rounding assertion is false. The module uses the existing frozen `metallicValue` owner for the metallic mean while keeping the source radical literal in `claim`.
 
+### Pell-index comparison
+
+The following derivation is mathematical exposition, proved in prose. The kernel-checked settlement is the index-one case; the quantified Pell-index conclusion is not a Lean declaration in this delivery.
+
+For $r\in\mathbb N$, define integer sequences by
+
+$$p_0=3,\qquad n_0=1,\qquad
+p_{r+1}=3p_r+8n_r,\qquad n_{r+1}=p_r+3n_r.$$
+
+Induction shows that $p_r$ is odd and $p_r,n_r\ge1$. The Pell invariant is preserved because
+
+$$p_{r+1}^2-8n_{r+1}^2
+=(3p_r+8n_r)^2-8(p_r+3n_r)^2
+=p_r^2-8n_r^2=1.$$
+
+Both sequences strictly increase, since $p_{r+1}-p_r=2p_r+8n_r>0$ and $n_{r+1}-n_r=p_r+2n_r>0$. Eliminating $p_r$ gives
+
+$$n_{r+2}=p_{r+1}+3n_{r+1}=6p_r+17n_r
+=6n_{r+1}-n_r.$$
+
+Define the integer $m_r$ and the asymptotic line value $x_r$ by
+
+$$m_r=n_r+\frac{p_r+1}{2},\qquad x_r=\alpha n_r+\frac12,
+\qquad \alpha=1+\sqrt2.$$
+
+The positive Pell invariant implies $p_r>2n_r\sqrt2$, and rationalization gives the exact gap
+
+$$0<m_r-x_r=\frac{p_r-2n_r\sqrt2}{2}
+=\frac{1}{2(p_r+2n_r\sqrt2)}<\frac{1}{8n_r}.$$
+
+The final inequality uses $p_r+2n_r\sqrt2>4n_r\sqrt2>4n_r$. Combining this gap with the sharp error bounds for the constructed tails gives
+
+$$m_r-1<x_r<m_r<x_r+\frac{1}{8n_r}
+<s_{n_r}<x_r+\frac{\alpha}{4n_r}<m_r+1.$$
+
+Here $m_r-x_r<1$ gives the left endpoint, and $\alpha/(4n_r)<1$ gives the right endpoint because $n_r\ge1$ and $\alpha<4$. Thus
+
+$$\lfloor s_{n_r}\rfloor=m_r,\qquad
+\lfloor\alpha n_r+1/2\rfloor=m_r-1.$$
+
+This proves the Pell-index floor comparison in prose for the constructed tails. Formalizing that quantified corollary remains open; this argument assumes neither uniqueness of positive tails nor their identification with finite truncations.
+
 ## Falsifier
 
 A positive tail for $u=2$, $v=1$ satisfying the stated error bound and having $\lfloor s_1\rfloor=2$ would falsify the refutation. The formal result uses the exact index-one contradiction. Positive-tail uniqueness, ordinary finite-truncation identification and the quantified Pell-index family are outside the kernel-checked declaration.
@@ -57,16 +99,17 @@ A positive tail for $u=2$, $v=1$ satisfying the stated error bound and having $\
 
 ### Experiment
 
-The pinned numerical check is [`check.py`](https://github.com/the-omega-institute/trureturing-experiments/tree/cd9d66a5f5ff37b01ef63b93f24d14b8ca3278c3/docs/reports/fokkink-joshi-2025-continued-fraction-tail-beatty/check.py), from commit `cd9d66a5f5ff37b01ef63b93f24d14b8ca3278c3`; its SHA-256 is `4b86cbed203000b36f11ff68c34641aae75a3c1b172ee05d539477002567ee9b`. Command `python3 docs/reports/fokkink-joshi-2025-continued-fraction-tail-beatty/check.py` exits 0 with `RESULT PASS`. It checks $u=2,v=1$ through $n\le1300$, the Theorem 24 control through $n\le3000$, and the $v=-1$, $u\in\{1,2,3\}$ control through $n\le3000$.
+The pinned numerical check is in [the experiment directory](https://github.com/the-omega-institute/trureturing-experiments/tree/cd9d66a5f5ff37b01ef63b93f24d14b8ca3278c3/docs/reports/fokkink-joshi-2025-continued-fraction-tail-beatty), from commit `cd9d66a5f5ff37b01ef63b93f24d14b8ca3278c3`; `check.py` has SHA-256 `4b86cbed203000b36f11ff68c34641aae75a3c1b172ee05d539477002567ee9b`. Command `python3 docs/reports/fokkink-joshi-2025-continued-fraction-tail-beatty/check.py` in that repository exits 0 with `RESULT PASS`. It checks $u=2,v=1$ through $1\le n\le1300$, the Theorem 24 control through $1\le n\le3000$, and the $v=-1$, $u\in\{1,2,3\}$ control through $1\le n\le3000$.
 
 ## Triage
 
 | item | status | evidence and scope |
 | --- | --- | --- |
-| Pell family definition $(p_0,n_0)=(3,1)$ with the stated recurrences | open | The supplied derivation was checked against the route, but no declaration encodes it. |
-| Pell invariants, monotonicity and $n_{r+2}=6n_{r+1}-n_r$ | open | Mathematical derivation only; no kernel-checked declaration in this delivery. |
-| Pell gap $0<m_r-(\alpha n_r+1/2)<1/(8n_r)$ | open | The supplied derivation is outside the module's formal statement. |
-| Pell-index floor comparison | open | It would follow from the sharp tail bounds plus the Pell gap, but the quantified conclusion is not declared. |
+| Pell family definition $(p_0,n_0)=(3,1)$, $p_{r+1}=3p_r+8n_r$, $n_{r+1}=p_r+3n_r$ | proved in prose | Recursive construction in the Pell-index comparison above; not a kernel-checked declaration. |
+| Pell invariants, monotonicity and $n_{r+2}=6n_{r+1}-n_r$ | proved in prose | Induction, invariant expansion and elimination in the Pell-index comparison above. |
+| Pell gap $0<m_r-(\alpha n_r+1/2)=1/(2(p_r+2n_r\sqrt2))<1/(8n_r)$ | proved in prose | Rationalization of the Pell invariant above, with $m_r=n_r+(p_r+1)/2$. |
+| Pell-index floor comparison | proved in prose | The displayed comparison chain gives $\lfloor s_{n_r}\rfloor=m_r$ and $\lfloor\alpha n_r+1/2\rfloor=m_r-1$ for the constructed tails. |
+| Lean formalization of the Pell-family corollary | open | No declaration states the quantified Pell-index comparison. |
 | Numerical failures at indices $1,6,35,204,1189$ | computed | Pinned experiment above, exact tested scope $n\le1300$, exit 0, script SHA-256 above. |
 | Theorem 24 control failures through $n\le3000$ | computed | Pinned experiment above, exact tested scope $n\le3000$, exit 0, script SHA-256 above; zero failures. |
 | Original Conjecture 20 with $v=-1$, $u=1,2,3$ | computed | Pinned experiment above, exact tested scope $n\le3000$, exit 0, script SHA-256 above; no failures. |
@@ -79,11 +122,11 @@ The pinned numerical check is [`check.py`](https://github.com/the-omega-institut
 
 **Refuted by `result`:** the universal two-parameter rounding assertion after Equation (14), because a positive tail at $u=2$, $v=1$ satisfies the required $O(1/n)$ bound but fails the floor equality at $n=1$.
 
-**Mechanism:** the fixed-point error is strictly positive and of order $1/n$, while the index-one Beatty line lies below the next integer. This settles the named generalization without identifying all positive tails or proving the Pell-index extension.
+**Mechanism:** the fixed-point error is strictly positive and of order $1/n$, while the index-one Beatty line lies below the next integer. The Pell-index comparison above proves the extension in prose for the constructed tails. The kernel-checked settlement is the index-one case and does not identify all positive tails.
 
 **Nearest statements that survive:** the source's Theorem 24 case $u=1$, $v=\varphi-1$ and the original Conjecture 20 specialization $v=-1$ are outside the refuted parameter choice. Their finite numerical controls are computed only over the scopes recorded above.
 
-**Follow-up questions:** the Pell-family corollary, positive-tail uniqueness, finite-truncation convergence, the Equation (11) family and the set of valid $(u,v)$ remain open.
+**Follow-up questions:** Lean formalization of the Pell-family corollary, positive-tail uniqueness, finite-truncation convergence, the Equation (11) family and the set of valid $(u,v)$ remain open.
 
 ## ASSUMED-UNVERIFIED
 

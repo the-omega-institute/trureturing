@@ -43,12 +43,93 @@ internal sealed class ContinuedFractionTailBeattyRefutationDocument : IScribeDoc
                 + "A contraction on a closed set of bounded continuous functions constructs positive tails "
                 + "whose error lies strictly between 1/(8n) and metallicValue 2/(4n). "
                 + "At n = 1 the Beatty line has floor 2, while the recurrence gives s 1 = 3 + 1/(s 2) > 3. "
-                + "Thus their floors differ. The assertion quantified over Pell indices, uniqueness of "
-                + "positive tails, and convergence of finite continued-fraction truncations are not proved here.",
+                + "Thus their floors differ. The kernel-checked settlement is this index-one case. "
+                + "The Pell-index derivation below is mathematical exposition, not a separately "
+                + "kernel-checked declaration. Uniqueness of positive tails and convergence of finite "
+                + "continued-fraction truncations remain open.",
                 DescribeRole.Theorem, AssessedProvenance.FromRepo(Source),
                 new OpenProblemResolutionClaim(
                     ProblemSlugRef.Create("fokkink-joshi-2025-continued-fraction-tail-beatty"),
-                    ResolutionKind.Refuted)))));
+                    ResolutionKind.Refuted)),
+            Paragraph(Text(
+                "For the Pell-index comparison, let r range over the natural numbers and define "
+                + "integer sequences p and n by the following initial values and recurrences. "
+                + "Write alpha for one plus the square root of two and x for the asymptotic line.")),
+            new DocumentBlock.DisplayFormula(PellRecurrenceFormula()),
+            Paragraph(Text(
+                "Induction gives odd p, positive n and p squared minus eight n squared equal to one: "
+                + "substitution of the recurrences preserves this difference. Both sequences strictly "
+                + "increase. Eliminating p gives the second-order recurrence for n. "
+                + "The integer m and the line x are defined by:")),
+            new DocumentBlock.DisplayFormula(PellDefinitionsFormula()),
+            Paragraph(Text(
+                "The positive Pell identity gives p greater than 2n sqrt(2). Rationalizing the "
+                + "difference yields the exact gap below; its denominator exceeds 8n because "
+                + "p + 2n sqrt(2) exceeds 4n.")),
+            new DocumentBlock.DisplayFormula(PellGapFormula()),
+            Paragraph(Text(
+                "The sharp bounds on the constructed tail error give the following comparison. "
+                + "The last inequality uses alpha/(4n) < 1 for n at least one.")),
+            new DocumentBlock.DisplayFormula(PellComparisonFormula()),
+            Paragraph(Text(
+                "Since m is integral, these inequalities determine both floors at every Pell index. "
+                + "This is a consequence proved in prose for the constructed tails; its quantified "
+                + "Lean formalization remains open.")),
+            new DocumentBlock.DisplayFormula(PellFloorsFormula()))));
+
+    private static Formula PellRecurrenceFormula()
+    {
+        var r = F.Id("r");
+        var p = Sub("p", r);
+        var n = Sub("n", r);
+        return Disp(Seq(Equal(Sub("p", D(0)), D(3)), Comma, Sp,
+            Equal(Sub("n", D(0)), D(1)), Comma, Quad, Sp,
+            Equal(Sub("p", Add(r, D(1))), Add(Multiply(D(3), p), Multiply(D(8), n))), Comma, Quad, Sp,
+            Equal(Sub("n", Add(r, D(1))), Add(p, Multiply(D(3), n)))));
+    }
+
+    private static Formula PellDefinitionsFormula()
+    {
+        var r = F.Id("r");
+        var n = Sub("n", r);
+        return Disp(Seq(Equal(Subtract(Square(Sub("p", r)), Multiply(D(8), Square(n))), D(1)),
+            Comma, Quad, Sp, Equal(Sub("n", Add(r, D(2))),
+                Subtract(Multiply(D(6), Sub("n", Add(r, D(1)))), n)), Comma, Quad, Sp,
+            Equal(Sub("m", r), Add(n, Fraction(Add(Sub("p", r), D(1)), D(2)))), Comma, Quad, Sp,
+            Equal(Sub("x", r), Add(Multiply(Alpha, n), Fraction(D(1), D(2))))));
+    }
+
+    private static Formula PellGapFormula()
+    {
+        var r = F.Id("r");
+        var p = Sub("p", r);
+        var n = Sub("n", r);
+        var root = Seq(Sqrt, Grp(D(2)));
+        return Disp(Seq(D(0), Sp, Lt, Sp, Subtract(Sub("m", r), Sub("x", r)), Sp, Eq, Sp,
+            Fraction(Subtract(p, Multiply(Multiply(D(2), n), root)), D(2)), Sp, Eq, Sp,
+            Fraction(D(1), Multiply(D(2), Parenthesized(Add(p, Multiply(Multiply(D(2), n), root))))),
+            Sp, Lt, Sp, Fraction(D(1), Multiply(D(8), n))));
+    }
+
+    private static Formula PellComparisonFormula()
+    {
+        var r = F.Id("r");
+        var n = Sub("n", r);
+        var m = Sub("m", r);
+        var x = Sub("x", r);
+        return Disp(Seq(Subtract(m, D(1)), Sp, Lt, Sp, x, Sp, Lt, Sp, m, Sp, Lt, Sp,
+            Add(x, Fraction(D(1), Multiply(D(8), n))), Sp, Lt, Sp, Sub("s", n), Sp, Lt, Sp,
+            Add(x, Fraction(Alpha, Multiply(D(4), n))), Sp, Lt, Sp, Add(m, D(1))));
+    }
+
+    private static Formula PellFloorsFormula()
+    {
+        var r = F.Id("r");
+        return Disp(Seq(Equal(Floor(Sub("s", Sub("n", r))), Sub("m", r)), Comma, Quad, Sp,
+            Equal(Floor(Sub("x", r)), Subtract(Sub("m", r), D(1)))));
+    }
+
+    private static Formula Sub(string name, Formula index) => new Formula.Subscript(F.Id(name), index);
 
     private static DocumentBlock Node(string id, string title, string name, Formula formula,
         string prose, DescribeRole role, AssessedProvenance provenance,
