@@ -6,7 +6,6 @@
    utility: kind=certified-instance; basis=refutes=gid:D5/S3/Quantum/Dynamics/StabilizerBatteryDegreeDifferenceRefutation.claim; result=D5/S3/Quantum/Dynamics/StabilizerBatteryDegreeDifferenceRefutation.result; claim=D5/S3/Quantum/Dynamics/StabilizerBatteryDegreeDifferenceRefutation.claim
    digest: Equal degree gaps give different stored work for fourteen-qubit stabilizer batteries. -/
 
-import Mathlib.Algebra.Group.AddChar
 
 import D5.S3.Quantum.Measurement.StabilizerPovmMaximalEntanglementRefutation
 import D5.S3.Quantum.Information.BinaryStabilizerGraphNormalForm
