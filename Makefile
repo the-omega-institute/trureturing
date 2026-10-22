@@ -8,6 +8,9 @@ ALLOW_LOW_DISK ?= 0
 WORKTREE_DEST = $(if $(DEST),$(DEST),../trureturing-$(NAME))
 LEAN_REPORT ?= .lake/build/stratalint/raw-lean-report.json
 INDEX_DIR ?= build/lean-inspector/lookup-index/$(INDEX_BASIS)
+
+# Release Lake's loaded build graph before the memory-bounded native process.
+INSPECTOR_NATIVE_RUN = python3 -c 'import json, os, subprocess, sys; native_env = json.loads(subprocess.check_output(["lake", "-d", "tools/lean-inspector-reg", "env", "python3", "-c", "import json, os; print(json.dumps(dict(os.environ)))"], text=True)); os.execvpe(sys.argv[1], sys.argv[1:], native_env)'
 LEAN_REPORT_CACHE_MISS_POLICY ?= fetch-or-fail
 REBUILD_REPORT_CACHE ?= 0
 REGENERATE_REPORT_ARTIFACTS ?= 0
@@ -208,7 +211,7 @@ search-reduction-run:
 	test -f "$$lookup_lib" || { echo 'Build SearchReduction.Commands before replaying requests' >&2; exit 2; }; \
 	lookup_pickle_lib=".lake/packages/batteries/.lake/build/lib/libbatteries_Batteries.$$lookup_ext"; \
 	test -f "$$lookup_pickle_lib" || { echo 'Build the Batteries native dependency before replaying requests' >&2; exit 2; }; \
-	lake -d tools/lean-inspector-reg env lean --load-dynlib="$$lookup_pickle_lib" --load-dynlib="$$lookup_lib" -j1 "$$SEARCH_REDUCTION_REQUESTS"
+	$(INSPECTOR_NATIVE_RUN) lean --load-dynlib="$$lookup_pickle_lib" --load-dynlib="$$lookup_lib" -j1 "$$SEARCH_REDUCTION_REQUESTS"
 search-reduction search-reduction-run: export SEARCH_REDUCTION_REQUESTS := $(value REQUESTS)
 
 search-reduction-test: search-reduction-index-fixtures
@@ -232,9 +235,9 @@ search-reduction-replay-vocabulary:
 search-reduction-index:
 	@$(MAKE) lean LEAN_TARGETS="regInspector/searchReductionIndex" && $(MAKE) search-reduction-index-run
 search-reduction-index-run:
-	@lake -d tools/lean-inspector-reg env .lake/build/lean-inspector/reg/bin/searchReductionIndex "$(INDEX_BASIS)" "$(INDEX_DIR)" $(INDEX_MODULES)
+	@$(INSPECTOR_NATIVE_RUN) .lake/build/lean-inspector/reg/bin/searchReductionIndex "$(INDEX_BASIS)" "$(INDEX_DIR)" $(INDEX_MODULES)
 .PHONY: search-reduction-membership-index-run
 search-reduction-membership-index-run:
-	@lake -d tools/lean-inspector-reg env .lake/build/lean-inspector/reg/bin/searchReductionIndex --membership "$(INDEX_DIR)"
+	@$(INSPECTOR_NATIVE_RUN) .lake/build/lean-inspector/reg/bin/searchReductionIndex --membership "$(INDEX_DIR)"
 search-reduction-index-fixtures:
 	@$(MAKE) lean LEAN_TARGETS="regInspector/searchReductionIndex LeanInformationAuditRegTests.SearchReduction.LookupBaseline" && $(MAKE) search-reduction-index-run INDEX_BASIS=fixture INDEX_DIR=build/lean-inspector/lookup-index/fixture INDEX_MODULES=Mathlib && $(MAKE) search-reduction-index-run INDEX_BASIS=lookup-fixture INDEX_DIR=build/lean-inspector/lookup-index/lookup-fixture INDEX_MODULES=LeanInformationAuditRegTests.SearchReduction.LookupBaseline
