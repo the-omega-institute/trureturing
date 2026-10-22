@@ -161,7 +161,12 @@ private lemma witness_scale_pos : 0 < scale witnessRate witnessJump := by
 private lemma witness_eigenvalue :
     generator witnessRate witnessJump matrixUnit01 =
       (-2 + (2 / 3 : ℂ) * I) • matrixUnit01 := by
-  sorry
+  ext i j
+  fin_cases i <;> fin_cases j <;>
+    norm_num [matrixUnit01, witnessRate, witnessJump, witnessV, generator, dissipator,
+      Matrix.mul_apply, Matrix.mulVec, dotProduct, Matrix.conjTranspose_apply,
+      Matrix.diagonal, Fin.sum_univ_three, Matrix.single, smul_eq_mul,
+      Complex.star_def, Complex.normSq_apply, pow_two, map_ofNat] <;> ring
 
 private lemma outside_disk (ν : ℝ) (hν : 0 < ν) (hν1 : ν ≤ 1) :
     ‖1 + (-2 + (2 / 3 : ℂ) * I) / (ν : ℂ)‖ > 1 := by
