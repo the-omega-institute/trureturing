@@ -1,0 +1,51 @@
+using static StrataLint.Scribe.DefinitionDsl;
+using static StrataLint.Scribe.FormulaDsl;
+namespace StrataLint.Scribe.Blueprint.D5.S3.Quantum.Entanglement.AbsolutePPT;
+internal sealed class GenericAPPTDocument : IScribeDocumentDefinition
+{
+    public DocumentDefinition Create() => DocumentDefinition.Create(ScribeNode.Create(
+        "Unitary transport and positivity over arbitrary finite product systems.", H("Generic APPT transport"), Blocks(
+            Paragraph(Text("These existing consumed helpers retain their full Lean names. Bipartite supplies the shared partial transpose and literal all-unitary APPT predicate. The qutrit and arbitrary-dimension Schmidt proofs share the same transport declarations. No fixed dimension, density normalization, or restricted unitary family is added. The relocation supplies no new theorem or escape-audit validation; unfinished audit evidence is tracked in issue #19818.")),
+            Describe.Lean(DescribeId.Create("generic-appt-partial-transpose"),
+                DeclarationHandle.Create("D5/S3/Quantum/Entanglement/AbsolutePPT/GenericAPPT.partialTranspose"),
+                H("Partial transposition"), StatementSource.WithoutFormula(),
+                AssessedProvenance.FromLiterature(LibraryNoteRef.Create("D5/L/QuantumStates/pathak2026mixedstate")),
+                Blocks(Paragraph(Text("On arbitrary local types, the entry at ((a,b),(c,d)) equals the input entry at ((a,d),(c,b)). This original delegate is definitionally equal to Bipartite.partialTranspose on the same complex matrix domain."))), DescribeRole.Definition),
+            Describe.Lean(DescribeId.Create("generic-appt-literal-appt"),
+                DeclarationHandle.Create("D5/S3/Quantum/Entanglement/AbsolutePPT/GenericAPPT.APPT"),
+                H("Literal absolute PPT"), StatementSource.WithoutFormula(),
+                AssessedProvenance.FromLiterature(LibraryNoteRef.Create("D5/L/QuantumStates/ahiablekothakondawinter2026geometry")),
+                Blocks(Paragraph(Text("For arbitrary finite local types with their original Fintype and DecidableEq instances, every global unitary conjugation has positive semidefinite partial transpose. This original delegate equals Bipartite.APPT, including on empty systems. It adds no trace normalization."))), DescribeRole.Definition),
+            Describe.Lean(DescribeId.Create("generic-appt-extendunitaryalong"),
+                DeclarationHandle.Create("D5/S3/Quantum/Entanglement/AbsolutePPT/GenericAPPT.extendUnitaryAlong"),
+                H("extendUnitaryAlong"), StatementSource.WithoutFormula(), AssessedProvenance.FromRepo(),
+                Blocks(Paragraph(Text("Extend an arbitrary finite unitary by an identity block and transport it through a coordinate equivalence."))), DescribeRole.Definition),
+            Describe.Lean(DescribeId.Create("generic-appt-extendunitaryalong-diagonal"),
+                DeclarationHandle.Create("D5/S3/Quantum/Entanglement/AbsolutePPT/GenericAPPT.extendUnitaryAlong_diagonal"),
+                H("extendUnitaryAlong diagonal"), StatementSource.WithoutFormula(), AssessedProvenance.FromRepo(),
+                Blocks(Paragraph(Text("Conjugation by the extended unitary acts on the selected diagonal block and preserves the complement."))), DescribeRole.Theorem),
+            Describe.Lean(DescribeId.Create("generic-appt-permutationu"),
+                DeclarationHandle.Create("D5/S3/Quantum/Entanglement/AbsolutePPT/GenericAPPT.permutationU"),
+                H("permutationU"), StatementSource.WithoutFormula(), AssessedProvenance.FromRepo(),
+                Blocks(Paragraph(Text("The unitary matrix associated with an arbitrary finite permutation."))), DescribeRole.Definition),
+            Describe.Lean(DescribeId.Create("generic-appt-c-square"),
+                DeclarationHandle.Create("D5/S3/Quantum/Entanglement/AbsolutePPT/GenericAPPT.c_square"),
+                H("c square"), StatementSource.WithoutFormula(), AssessedProvenance.FromRepo(),
+                Blocks(Paragraph(Text("The reciprocal square root of two has square one half over the complex numbers; Bell block consumers use this coefficient."))), DescribeRole.Theorem),
+            Describe.Lean(DescribeId.Create("generic-appt-c-star"),
+                DeclarationHandle.Create("D5/S3/Quantum/Entanglement/AbsolutePPT/GenericAPPT.c_star"),
+                H("c star"), StatementSource.WithoutFormula(), AssessedProvenance.FromRepo(),
+                Blocks(Paragraph(Text("Complex conjugation fixes the real Bell coefficient."))), DescribeRole.Theorem),
+            Describe.Lean(DescribeId.Create("generic-appt-appt-conjugate"),
+                DeclarationHandle.Create("D5/S3/Quantum/Entanglement/AbsolutePPT/GenericAPPT.appt_conjugate"),
+                H("appt conjugate"), StatementSource.WithoutFormula(), AssessedProvenance.FromRepo(),
+                Blocks(Paragraph(Text("Literal APPT on arbitrary finite product types is preserved by global unitary conjugation."))), DescribeRole.Theorem),
+            Describe.Lean(DescribeId.Create("generic-appt-real-psd-of-complex"),
+                DeclarationHandle.Create("D5/S3/Quantum/Entanglement/AbsolutePPT/GenericAPPT.real_psd_of_complex"),
+                H("real psd of complex"), StatementSource.WithoutFormula(), AssessedProvenance.FromRepo(),
+                Blocks(Paragraph(Text("Positivity of the complex cast of a finite real matrix implies real positive semidefiniteness."))), DescribeRole.Theorem),
+            Describe.Lean(DescribeId.Create("generic-appt-permutation-conjugate"),
+                DeclarationHandle.Create("D5/S3/Quantum/Entanglement/AbsolutePPT/GenericAPPT.permutation_conjugate"),
+                H("permutation conjugate"), StatementSource.WithoutFormula(), AssessedProvenance.FromRepo(),
+                Blocks(Paragraph(Text("Conjugation by a permutation unitary equals simultaneous row and column reindexing."))), DescribeRole.Theorem))));
+}

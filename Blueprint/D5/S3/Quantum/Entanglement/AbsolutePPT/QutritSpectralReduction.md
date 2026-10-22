@@ -208,67 +208,7 @@ $$bell\in unitaryGroup\left((Fin\left(3\right)\times Fin\left(3\right)), \mathbb
 
 The Bell basis matrix is unitary. Its diagonal entries fix the diagonal basis vectors, while each off-diagonal pair is rotated by the reciprocal square root of two. Spectral reduction and the diagonalization of a pure state's partial transpose use this change of basis.
 
-**Definition 1.18 (Permutation unitary).**
-
-$$\forall (I:Type), [Fintype\left(I\right)] [DecidableEq\left(I\right)] \forall (e:Equiv.Perm\left(I\right)), (permutationU\left(e\right):Matrix\left(I, I, \mathbb{C}\right))=Equiv.permMatrix\left(e, \mathbb{C}\right)$$
-
-*Formalization.* `D5/S3/Quantum/Entanglement/AbsolutePPT/QutritSpectralReduction.permutationU` (`✓ std3`).
-
-*Source.* Repository-derived.
-
-*Commentary.*
-
-The unitary associated with a permutation has its permutation matrix as its underlying complex matrix. It reorders the diagonal coordinates in spectral decompositions.
-
-**Definition 1.19 (Extension by an identity block).**
-
-$$\forall (I:Type), [Fintype\left(I\right)] [DecidableEq\left(I\right)] \forall (J:Type), [Fintype\left(J\right)] [DecidableEq\left(J\right)] \forall (C:Type), [Fintype\left(C\right)] [DecidableEq\left(C\right)] \forall (e:Equiv\left((J+C), I\right)), \forall (V:unitaryGroup\left(J, \mathbb{C}\right)), (extendUnitaryAlong\left(e, V\right):Matrix\left(I, I, \mathbb{C}\right))=Matrix.submatrix\left(Matrix.fromBlocks\left((V:Matrix\left(J, J, \mathbb{C}\right)), 0, 0, (1:Matrix\left(C, C, \mathbb{C}\right))\right), Equiv.symm\left(e\right), Equiv.symm\left(e\right)\right)$$
-
-*Formalization.* `D5/S3/Quantum/Entanglement/AbsolutePPT/QutritSpectralReduction.extendUnitaryAlong` (`✓ std3`).
-
-*Source.* Repository-derived.
-
-*Commentary.*
-
-Given an equivalence from a finite disjoint union to the ambient coordinates, extend a unitary on the first summand by the identity on the complement, then transport its matrix along the inverse equivalence. The old qutrit extension and the four-by-four local corner use this same construction.
-
-**Theorem 1.20 (Conjugation of an extended diagonal).**
-
-$$\forall (I:Type), [Fintype\left(I\right)] [DecidableEq\left(I\right)] \forall (J:Type), [Fintype\left(J\right)] [DecidableEq\left(J\right)] \forall (C:Type), [Fintype\left(C\right)] [DecidableEq\left(C\right)] \forall (e:Equiv\left((J+C), I\right)), \forall (V:unitaryGroup\left(J, \mathbb{C}\right)), \forall (x:J\to \mathbb{C}), \forall (y:C\to \mathbb{C}), (extendUnitaryAlong\left(e, V\right):Matrix\left(I, I, \mathbb{C}\right))\cdot Matrix.diagonal\left((fun i \mapsto Sum.elim\left(x, y, Equiv.symm\left(e\right)\left(i\right)\right))\right)\cdot ((extendUnitaryAlong\left(e, V\right):Matrix\left(I, I, \mathbb{C}\right)))^{H}=Matrix.submatrix\left(Matrix.fromBlocks\left((V:Matrix\left(J, J, \mathbb{C}\right))\cdot Matrix.diagonal\left(x\right)\cdot ((V:Matrix\left(J, J, \mathbb{C}\right)))^{H}, 0, 0, Matrix.diagonal\left(y\right)\right), Equiv.symm\left(e\right), Equiv.symm\left(e\right)\right)$$
-
-*Proof.* Machine-checked in Lean as `D5/S3/Quantum/Entanglement/AbsolutePPT/QutritSpectralReduction.extendUnitaryAlong_diagonal` (`✓ std3`). ∎
-
-*Source.* Repository-derived.
-
-*Commentary.*
-
-Conjugating a packed diagonal by the extended unitary conjugates its first block and leaves its complementary diagonal block fixed. This identity transports matrices; it does not assert that a general coordinate equivalence commutes with partial transpose.
-
-**Theorem 1.21 (The Bell coefficient square).**
-
-$$(Real.sqrt\left(2\right):\mathbb{C})^{-1}\cdot (Real.sqrt\left(2\right):\mathbb{C})^{-1}=\frac{1}{2}$$
-
-*Proof.* Machine-checked in Lean as `D5/S3/Quantum/Entanglement/AbsolutePPT/QutritSpectralReduction.c_square` (`✓ std3`). ∎
-
-*Source.* Repository-derived.
-
-*Commentary.*
-
-The reciprocal square root of two has square one half over the complex numbers. This is the existing scalar calculation used by the Bell principal-compression computation.
-
-**Theorem 1.22 (The Bell coefficient is real).**
-
-$$star\left((Real.sqrt\left(2\right):\mathbb{C})^{-1}\right)=(Real.sqrt\left(2\right):\mathbb{C})^{-1}$$
-
-*Proof.* Machine-checked in Lean as `D5/S3/Quantum/Entanglement/AbsolutePPT/QutritSpectralReduction.c_star` (`✓ std3`). ∎
-
-*Source.* Repository-derived.
-
-*Commentary.*
-
-Complex conjugation fixes the real Bell coefficient. The Bell principal-compression computation uses this identity.
-
-**Definition 1.23 (Packing nine spectral coordinates).**
+**Definition 1.18 (Packing nine spectral coordinates).**
 
 $$\forall (l:Fin\left(9\right)\to \mathbb{R}), \forall (i:Fin\left(3\right)), \forall (j:Fin\left(3\right)), pack\left(l, (i,j)\right)=(if i=0 then if j=0 then l\left(8\right) else if j=1 then l\left(7\right) else l\left(5\right) else if i=1 then if j=0 then l\left(0\right) else if j=1 then l\left(6\right) else l\left(4\right) else if j=0 then l\left(1\right) else if j=1 then l\left(2\right) else l\left(3\right):\mathbb{C})$$
 
@@ -280,7 +220,7 @@ $$\forall (l:Fin\left(9\right)\to \mathbb{R}), \forall (i:Fin\left(3\right)), \f
 
 The nine real values are packed into the local product corner with rows (l8,l7,l5), (l0,l6,l4), (l1,l2,l3), and then cast to complex numbers. This arrangement is chosen for its Bell partial transpose.
 
-**Definition 1.24 (Complex first boundary matrix).**
+**Definition 1.19 (Complex first boundary matrix).**
 
 $$\forall (l:Fin\left(9\right)\to \mathbb{R}), KC1\left(l\right)=Matrix.map\left(Complex.ofReal, K1\left(l\right)\right)$$
 
@@ -292,7 +232,7 @@ $$\forall (l:Fin\left(9\right)\to \mathbb{R}), KC1\left(l\right)=Matrix.map\left
 
 The complex matrix is the entrywise real-to-complex cast of K1. Its concrete entries are also used by the Bell computation; KC1_map proves the displayed identification.
 
-**Theorem 1.25 (Bell partial-transpose compression).**
+**Theorem 1.20 (Bell partial-transpose compression).**
 
 $$\forall (l:Fin\left(9\right)\to \mathbb{R}), Matrix.submatrix\left(partialTranspose\left(bell\cdot Matrix.diagonal\left(pack\left(l\right)\right)\cdot (bell)^{H}\right), (fun i \mapsto (i,i)), (fun i \mapsto (i,i))\right)=(\frac{1}{2}:\mathbb{C})\cdot KC1\left(l\right)$$
 
@@ -304,19 +244,7 @@ $$\forall (l:Fin\left(9\right)\to \mathbb{R}), Matrix.submatrix\left(partialTran
 
 The principal submatrix on the three diagonal product coordinates of the Bell-conjugated packed diagonal is one half of KC1. The four-by-four bridge reuses this exact calculation on a genuine local product corner.
 
-**Theorem 1.26 (APPT survives global unitary conjugation).**
-
-$$\forall (A:Type), [Fintype\left(A\right)] [DecidableEq\left(A\right)] \forall (B:Type), [Fintype\left(B\right)] [DecidableEq\left(B\right)] \forall (M:Matrix\left((A\times B), (A\times B), \mathbb{C}\right)), \forall (V:unitaryGroup\left((A\times B), \mathbb{C}\right)), (APPT\left(M\right))\Rightarrow APPT\left((V:Matrix\left((A\times B), (A\times B), \mathbb{C}\right))\cdot M\cdot ((V:Matrix\left((A\times B), (A\times B), \mathbb{C}\right)))^{H}\right)$$
-
-*Proof.* Machine-checked in Lean as `D5/S3/Quantum/Entanglement/AbsolutePPT/QutritSpectralReduction.appt_conjugate` (`✓ std3`). ∎
-
-*Source.* Repository-derived.
-
-*Commentary.*
-
-For finite local index types, absolute positivity under partial transpose is preserved by global unitary conjugation. This follows by composing the tested unitaries, rather than transporting partial transpose through an arbitrary coordinate map.
-
-**Definition 1.27 (The two middle corner positions are swapped).**
+**Definition 1.21 (The two middle corner positions are swapped).**
 
 $$swap56=Equiv.swap\left((1,1), (0,2)\right)$$
 
@@ -328,7 +256,7 @@ $$swap56=Equiv.swap\left((1,1), (0,2)\right)$$
 
 The corner permutation exchanges product positions (1,1) and (0,2), fixing every other position. Its permutation unitary implements the swap needed for the second spectral matrix.
 
-**Definition 1.28 (Swapping spectral values five and six).**
+**Definition 1.22 (Swapping spectral values five and six).**
 
 $$\forall (l:Fin\left(9\right)\to \mathbb{R}), \forall (q:Fin\left(9\right)), flip56\left(l, q\right)=l\left(Equiv.swap\left(5, 6, q\right)\right)$$
 
@@ -340,7 +268,7 @@ $$\forall (l:Fin\left(9\right)\to \mathbb{R}), \forall (q:Fin\left(9\right)), fl
 
 The function precomposes the nine-coordinate spectrum with the transposition of indices 5 and 6. All other boundary coordinates remain fixed.
 
-**Theorem 1.29 (The corner permutation realizes the spectral swap).**
+**Theorem 1.23 (The corner permutation realizes the spectral swap).**
 
 $$\forall (l:Fin\left(9\right)\to \mathbb{R}), permutationU\left(swap56\right)\cdot Matrix.diagonal\left(pack\left(l\right)\right)\cdot (permutationU\left(swap56\right))^{H}=Matrix.diagonal\left(pack\left(flip56\left(l\right)\right)\right)$$
 
@@ -352,7 +280,7 @@ $$\forall (l:Fin\left(9\right)\to \mathbb{R}), permutationU\left(swap56\right)\c
 
 Conjugating the packed diagonal by the specified corner permutation unitary gives the packed diagonal for flip56. This is the common computation used to derive the second boundary constraint.
 
-**Definition 1.30 (Complex second boundary matrix).**
+**Definition 1.24 (Complex second boundary matrix).**
 
 $$\forall (l:Fin\left(9\right)\to \mathbb{R}), KC2\left(l\right)=KC1\left(flip56\left(l\right)\right)$$
 
@@ -364,19 +292,7 @@ $$\forall (l:Fin\left(9\right)\to \mathbb{R}), KC2\left(l\right)=KC1\left(flip56
 
 The second complex boundary matrix is KC1 after exchanging spectral indices 5 and 6. KC2_map identifies it with the complex cast of K2.
 
-**Theorem 1.31 (Real positivity descends from the complex cast).**
-
-$$\forall (I:Type), [Fintype\left(I\right)] [DecidableEq\left(I\right)] \forall (M:Matrix\left(I, I, \mathbb{R}\right)), (Matrix.PosSemidef\left(Matrix.map\left(Complex.ofReal, M\right)\right))\Rightarrow Matrix.PosSemidef\left(M\right)$$
-
-*Proof.* Machine-checked in Lean as `D5/S3/Quantum/Entanglement/AbsolutePPT/QutritSpectralReduction.real_psd_of_complex` (`✓ std3`). ∎
-
-*Source.* Repository-derived.
-
-*Commentary.*
-
-A positive semidefinite complex cast of a finite real matrix forces the real matrix to be positive semidefinite. The proof restricts the complex quadratic form to real vectors and recovers real symmetry.
-
-**Theorem 1.32 (The first complex-to-real identification).**
+**Theorem 1.25 (The first complex-to-real identification).**
 
 $$\forall (l:Fin\left(9\right)\to \mathbb{R}), KC1\left(l\right)=Matrix.map\left(Complex.ofReal, K1\left(l\right)\right)$$
 
@@ -388,7 +304,7 @@ $$\forall (l:Fin\left(9\right)\to \mathbb{R}), KC1\left(l\right)=Matrix.map\left
 
 The first concrete complex Bell matrix is the entrywise cast of the real first boundary matrix. This allows positive semidefiniteness to descend to the certificate coordinates.
 
-**Theorem 1.33 (The second complex-to-real identification).**
+**Theorem 1.26 (The second complex-to-real identification).**
 
 $$\forall (l:Fin\left(9\right)\to \mathbb{R}), KC2\left(l\right)=Matrix.map\left(Complex.ofReal, K2\left(l\right)\right)$$
 
@@ -400,7 +316,7 @@ $$\forall (l:Fin\left(9\right)\to \mathbb{R}), KC2\left(l\right)=Matrix.map\left
 
 The swapped complex Bell matrix is the entrywise cast of the real second boundary matrix. The identity is checked on all three-by-three entries.
 
-**Theorem 1.34 (APPT descends through unitary conjugation).**
+**Theorem 1.27 (APPT descends through unitary conjugation).**
 
 $$\forall (A:Type), [Fintype\left(A\right)] [DecidableEq\left(A\right)] \forall (B:Type), [Fintype\left(B\right)] [DecidableEq\left(B\right)] \forall (M:Matrix\left((A\times B), (A\times B), \mathbb{C}\right)), \forall (V:unitaryGroup\left((A\times B), \mathbb{C}\right)), (APPT\left((V:Matrix\left((A\times B), (A\times B), \mathbb{C}\right))\cdot M\cdot ((V:Matrix\left((A\times B), (A\times B), \mathbb{C}\right)))^{H}\right))\Rightarrow APPT\left(M\right)$$
 
@@ -412,7 +328,7 @@ $$\forall (A:Type), [Fintype\left(A\right)] [DecidableEq\left(A\right)] \forall 
 
 If a unitary conjugate is APPT, the original matrix is APPT. The inverse unitary cancels the conjugation and the already proved conjugation invariance applies.
 
-**Theorem 1.35 (Unitary conjugation preserves trace-square).**
+**Theorem 1.28 (Unitary conjugation preserves trace-square).**
 
 $$\forall (I:Type), [Fintype\left(I\right)] [DecidableEq\left(I\right)] \forall (M:Matrix\left(I, I, \mathbb{C}\right)), \forall (V:unitaryGroup\left(I, \mathbb{C}\right)), Matrix.trace\left((V:Matrix\left(I, I, \mathbb{C}\right))\cdot M\cdot ((V:Matrix\left(I, I, \mathbb{C}\right)))^{H}\cdot (V:Matrix\left(I, I, \mathbb{C}\right))\cdot M\cdot ((V:Matrix\left(I, I, \mathbb{C}\right)))^{H}\right)=Matrix.trace\left(M\cdot M\right)$$
 
@@ -424,19 +340,7 @@ $$\forall (I:Type), [Fintype\left(I\right)] [DecidableEq\left(I\right)] \forall 
 
 The trace of the square is unchanged by unitary conjugation over any finite index type. This is an algebraic statement; no positivity or trace normalization is assumed.
 
-**Theorem 1.36 (Permutation conjugation is coordinate reindexing).**
-
-$$\forall (I:Type), [Fintype\left(I\right)] [DecidableEq\left(I\right)] \forall (e:Equiv.Perm\left(I\right)), \forall (M:Matrix\left(I, I, \mathbb{C}\right)), (permutationU\left(e\right):Matrix\left(I, I, \mathbb{C}\right))\cdot M\cdot ((permutationU\left(e\right):Matrix\left(I, I, \mathbb{C}\right)))^{H}=Matrix.submatrix\left(M, e, e\right)$$
-
-*Proof.* Machine-checked in Lean as `D5/S3/Quantum/Entanglement/AbsolutePPT/QutritSpectralReduction.permutation_conjugate` (`✓ std3`). ∎
-
-*Source.* Repository-derived.
-
-*Commentary.*
-
-Conjugation by the permutation unitary gives the simultaneous row-and-column submatrix reindexing. The spectral packing argument uses this identity before testing APPT.
-
-**Theorem 1.37 (Unitary conjugation preserves trace).**
+**Theorem 1.29 (Unitary conjugation preserves trace).**
 
 $$\forall (I:Type), [Fintype\left(I\right)] [DecidableEq\left(I\right)] \forall (M:Matrix\left(I, I, \mathbb{C}\right)), \forall (V:unitaryGroup\left(I, \mathbb{C}\right)), Matrix.trace\left((V:Matrix\left(I, I, \mathbb{C}\right))\cdot M\cdot ((V:Matrix\left(I, I, \mathbb{C}\right)))^{H}\right)=Matrix.trace\left(M\right)$$
 
@@ -448,7 +352,7 @@ $$\forall (I:Type), [Fintype\left(I\right)] [DecidableEq\left(I\right)] \forall 
 
 The trace is unchanged by unitary conjugation over any finite index type. The cyclic trace identity and the unitary inverse establish the equality.
 
-**Definition 1.38 (The corner packing index map).**
+**Definition 1.30 (The corner packing index map).**
 
 $$\forall (i:Fin\left(3\right)), \forall (j:Fin\left(3\right)), packIndex\left((i,j)\right)=if i=0 then if j=0 then 8 else if j=1 then 7 else 5 else if i=1 then if j=0 then 0 else if j=1 then 6 else 4 else if j=0 then 1 else if j=1 then 2 else 3$$
 
@@ -460,7 +364,7 @@ $$\forall (i:Fin\left(3\right)), \forall (j:Fin\left(3\right)), packIndex\left((
 
 The finite index map has rows (8,7,5), (0,6,4), (1,2,3). It specifies which of the nine boundary coordinates occupies each product position.
 
-**Definition 1.39 (The corner packing equivalence).**
+**Definition 1.31 (The corner packing equivalence).**
 
 $$\forall (p:(Fin\left(3\right)\times Fin\left(3\right))), packEquiv\left(p\right)=packIndex\left(p\right)$$
 
@@ -472,7 +376,7 @@ $$\forall (p:(Fin\left(3\right)\times Fin\left(3\right))), packEquiv\left(p\righ
 
 The packing index map is a bijection from the three-by-three corner to the nine boundary indices. Its underlying map is packIndex, so it can be composed with the complement packing for the complete ordered spectrum.
 
-**Theorem 1.40 (Density-to-spectral-certificate reduction).**
+**Theorem 1.32 (Density-to-spectral-certificate reduction).**
 
 $$\forall (k:\mathbb{N}), \forall (rho:Matrix\left((Fin\left(3\right)\times Fin\left(3+k\right)), (Fin\left(3\right)\times Fin\left(3+k\right)), \mathbb{C}\right)), ((Matrix.PosSemidef\left(rho\right))\land (Matrix.trace\left(rho\right)=1)\land (APPT\left(rho\right)))\Rightarrow \exists (l:Fin\left(3\cdot (3+k)\right)\to \mathbb{R}), (Antitone\left(l\right))\land (\forall (i:Fin\left(3\cdot (3+k)\right)), 0\leq l\left(i\right))\land (\sum_{i:Fin\left(3\cdot (3+k)\right)} l\left(i\right)=1)\land (Matrix.PosSemidef\left(K1\left(boundaryValues\left(k, l\right)\right)\right))\land (Matrix.PosSemidef\left(K2\left(boundaryValues\left(k, l\right)\right)\right))\land (Complex.re\left(Matrix.trace\left(rho\cdot rho\right)\right)=\sum_{i:Fin\left(3\cdot (3+k)\right)} (l\left(i\right))^{2})$$
 
@@ -492,14 +396,11 @@ For every k and every positive semidefinite trace-one Matrix on Fin 3 × Fin (3+
 - Truth anchor: `D5/S3/Quantum/Entanglement/AbsolutePPT/QutritSpectralReduction.KC1_map`
 - Truth anchor: `D5/S3/Quantum/Entanglement/AbsolutePPT/QutritSpectralReduction.KC2`
 - Truth anchor: `D5/S3/Quantum/Entanglement/AbsolutePPT/QutritSpectralReduction.KC2_map`
-- Truth anchor: `D5/S3/Quantum/Entanglement/AbsolutePPT/QutritSpectralReduction.appt_conjugate`
 - Truth anchor: `D5/S3/Quantum/Entanglement/AbsolutePPT/QutritSpectralReduction.appt_unconjugate`
 - Truth anchor: `D5/S3/Quantum/Entanglement/AbsolutePPT/QutritSpectralReduction.bell`
 - Truth anchor: `D5/S3/Quantum/Entanglement/AbsolutePPT/QutritSpectralReduction.bell_mem_unitaryGroup`
 - Truth anchor: `D5/S3/Quantum/Entanglement/AbsolutePPT/QutritSpectralReduction.bell_pt_principal`
 - Truth anchor: `D5/S3/Quantum/Entanglement/AbsolutePPT/QutritSpectralReduction.boundaryValues`
-- Truth anchor: `D5/S3/Quantum/Entanglement/AbsolutePPT/QutritSpectralReduction.c_square`
-- Truth anchor: `D5/S3/Quantum/Entanglement/AbsolutePPT/QutritSpectralReduction.c_star`
 - Truth anchor: `D5/S3/Quantum/Entanglement/AbsolutePPT/QutritSpectralReduction.castIntMat`
 - Truth anchor: `D5/S3/Quantum/Entanglement/AbsolutePPT/QutritSpectralReduction.castIntMat_diagonal`
 - Truth anchor: `D5/S3/Quantum/Entanglement/AbsolutePPT/QutritSpectralReduction.castIntMat_mul`
@@ -510,20 +411,16 @@ For every k and every positive semidefinite trace-one Matrix on Fin 3 × Fin (3+
 - Truth anchor: `D5/S3/Quantum/Entanglement/AbsolutePPT/QutritSpectralReduction.castMat_transpose`
 - Truth anchor: `D5/S3/Quantum/Entanglement/AbsolutePPT/QutritSpectralReduction.cast_vec_cons`
 - Truth anchor: `D5/S3/Quantum/Entanglement/AbsolutePPT/QutritSpectralReduction.cast_vec_empty`
-- Truth anchor: `D5/S3/Quantum/Entanglement/AbsolutePPT/QutritSpectralReduction.extendUnitaryAlong`
-- Truth anchor: `D5/S3/Quantum/Entanglement/AbsolutePPT/QutritSpectralReduction.extendUnitaryAlong_diagonal`
 - Truth anchor: `D5/S3/Quantum/Entanglement/AbsolutePPT/QutritSpectralReduction.flip56`
 - Truth anchor: `D5/S3/Quantum/Entanglement/AbsolutePPT/QutritSpectralReduction.pack`
 - Truth anchor: `D5/S3/Quantum/Entanglement/AbsolutePPT/QutritSpectralReduction.packEquiv`
 - Truth anchor: `D5/S3/Quantum/Entanglement/AbsolutePPT/QutritSpectralReduction.packIndex`
-- Truth anchor: `D5/S3/Quantum/Entanglement/AbsolutePPT/QutritSpectralReduction.permutationU`
-- Truth anchor: `D5/S3/Quantum/Entanglement/AbsolutePPT/QutritSpectralReduction.permutation_conjugate`
 - Truth anchor: `D5/S3/Quantum/Entanglement/AbsolutePPT/QutritSpectralReduction.psd_of_int_scaled_ldl`
 - Truth anchor: `D5/S3/Quantum/Entanglement/AbsolutePPT/QutritSpectralReduction.psd_of_rat_ldl`
-- Truth anchor: `D5/S3/Quantum/Entanglement/AbsolutePPT/QutritSpectralReduction.real_psd_of_complex`
 - Truth anchor: `D5/S3/Quantum/Entanglement/AbsolutePPT/QutritSpectralReduction.spectral_reduction`
 - Truth anchor: `D5/S3/Quantum/Entanglement/AbsolutePPT/QutritSpectralReduction.swap56`
 - Truth anchor: `D5/S3/Quantum/Entanglement/AbsolutePPT/QutritSpectralReduction.swap_pack`
 - Truth anchor: `D5/S3/Quantum/Entanglement/AbsolutePPT/QutritSpectralReduction.unitary_purity_trace`
 - Truth anchor: `D5/S3/Quantum/Entanglement/AbsolutePPT/QutritSpectralReduction.unitary_trace`
+- Dependency: [D5/S3/Quantum/Entanglement/AbsolutePPT/GenericAPPT](GenericAPPT.md)
 - Dependency: [D5/S3/Quantum/Entanglement/AbsolutePPT/QutritPerturbationAttainment](QutritPerturbationAttainment.md)

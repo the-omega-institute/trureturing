@@ -29,7 +29,7 @@ Direct frozen dependencies:
 Information-escape registration is paused under CLAUDE.md §3.9.
 -/
 
-import D5.S3.Quantum.Entanglement.AbsolutePPT.Bipartite
+import D5.S3.Quantum.Entanglement.AbsolutePPT.GenericAPPT
 import D5.S3.Quantum.Entanglement.FourQubitResidualSumMonotoneRefutation
 import D5.S3.Quantum.Entanglement.StructuredNegativityCoincidenceRefutation
 import D5.S3.Quantum.Foundation.FiniteTraceDistance
@@ -103,11 +103,6 @@ noncomputable def reducedAB {L : ℕ} (A B : Finset (Fin L))
       ψ (joinParts A B p.1.1 p.1.2 p.2))
     (star (fun p : ((A → Fin 2) × (B → Fin 2)) × (Outside (A ∪ B) → Fin 2) =>
       ψ (joinParts A B p.1.1 p.1.2 p.2))))
-
-/-- Partial transposition on the B factor, allowing unequal factor dimensions. -/
-def partialTranspose {A B : Type*} (ρ : Matrix (A × B) (A × B) ℂ) :
-    Matrix (A × B) (A × B) ℂ :=
-  D5.S3.Quantum.Entanglement.AbsolutePPT.Bipartite.partialTranspose ρ
 
 /-- The state after integer Floquet time t. -/
 noncomputable def evolved {L : ℕ} (h θ φ : Fin L → ℝ) (t : ℤ) :

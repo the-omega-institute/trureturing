@@ -19,7 +19,7 @@ certified-instance as their primary delivered content. Utility semantics
 remain subject to independent review; the header does not prove acceptance.
 -/
 
-import D5.S3.Quantum.Entanglement.AbsolutePPT.QutritSpectralReduction
+import D5.S3.Quantum.Entanglement.AbsolutePPT.GenericAPPT
 import Mathlib.Logic.Equiv.Fintype
 
 set_option autoImplicit false
