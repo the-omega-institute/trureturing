@@ -239,6 +239,13 @@ search-reduction-replay-vocabulary:
 	@$(MAKE) search-reduction-run REQUESTS=tools/lean-inspector/LeanInformationAuditRegTests/SearchReduction/VocabularyTransport.lean && $(MAKE) search-reduction-run REQUESTS=tools/lean-inspector/LeanInformationAuditRegTests/SearchReduction/VocabularyTests.lean
 
 
+# Compile recovered source modules against this tree's pinned dependencies.
+.PHONY: search-reduction-source-module
+search-reduction-source-module:
+	@test -n "$(SOURCE_ROOT)" -a -n "$(SOURCE_LIBRARY)" -a -n "$(SOURCE_MODULE)" || { echo 'SOURCE_ROOT, SOURCE_LIBRARY and SOURCE_MODULE are required' >&2; exit 2; }
+	@$(INSPECTOR_NATIVE_RUN) python3 -c 'import os,pathlib,sys; root,library,module=sys.argv[1:]; relative=module.replace(".","/"); output=pathlib.Path(library)/(relative+".olean"); output.parent.mkdir(parents=True,exist_ok=True); os.environ["LEAN_PATH"]=library+os.pathsep+os.environ.get("LEAN_PATH",""); os.execvp("lean",["lean","-j1","--root="+root,"-o",str(output),str(pathlib.Path(root)/(relative+".lean"))])' "$(SOURCE_ROOT)" "$(SOURCE_LIBRARY)" "$(SOURCE_MODULE)"
+
+
 search-reduction-index:
 	@$(MAKE) lean LEAN_TARGETS="regInspector/searchReductionIndex" && $(MAKE) search-reduction-index-run
 search-reduction-index-run:
