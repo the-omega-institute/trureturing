@@ -67,7 +67,7 @@ private theorem centered_congr {N x y : ℤ} (h : x % N = y % N) :
 def doubleStep (N s : ℤ) : ℤ :=
   if N < 4 * s then 2 * s - N else if 4 * s < -N then 2 * s + N else 2 * s
 
-private theorem centered_double {N : ℤ} (hN : 0 < N) (hodd : N % 2 = 1) (x : ℤ) :
+theorem centered_double {N : ℤ} (hN : 0 < N) (hodd : N % 2 = 1) (x : ℤ) :
     centered N (2 * x) = doubleStep N (centered N x) := by
   let s := centered N x
   have hs : -(N / 2) ≤ s ∧ s ≤ N / 2 := centered_bounds hN hodd x
@@ -95,7 +95,7 @@ def InStrip {α : Type*} (f : α → ℤ) (B h : ℤ) : List α → Prop
   | [] => 0 ≤ h ∧ h ≤ B
   | x :: xs => 0 ≤ h ∧ h ≤ B ∧ InStrip f B (h + f x) xs
 
-private theorem inStrip_prefix {α : Type*} {f : α → ℤ} {B h : ℤ} {l : List α}
+theorem inStrip_prefix {α : Type*} {f : α → ℤ} {B h : ℤ} {l : List α}
     (hl : InStrip f B h l) (n : ℕ) :
     0 ≤ h + ((l.take n).map f).sum ∧ h + ((l.take n).map f).sum ≤ B := by
   induction l generalizing h n with
@@ -107,7 +107,7 @@ private theorem inStrip_prefix {α : Type*} {f : α → ℤ} {B h : ℤ} {l : Li
       have hn := ih hl.2.2 n
       simpa [List.take_succ_cons, add_assoc] using hn
 
-private theorem inStrip_append {α : Type*} {f : α → ℤ} {B h : ℤ} {l r : List α}
+theorem inStrip_append {α : Type*} {f : α → ℤ} {B h : ℤ} {l r : List α}
     (hl : InStrip f B h l) (hr : InStrip f B (h + (l.map f).sum) r) :
     InStrip f B h (l ++ r) := by
   induction l generalizing h with
@@ -116,7 +116,7 @@ private theorem inStrip_append {α : Type*} {f : α → ℤ} {B h : ℤ} {l r : 
     refine ⟨hl.1, hl.2.1, ih hl.2.2 ?_⟩
     simpa [List.map_cons, List.sum_cons, add_assoc] using hr
 
-private theorem inStrip_nonpos {α : Type*} {f : α → ℤ} {B h : ℤ} {l : List α}
+theorem inStrip_nonpos {α : Type*} {f : α → ℤ} {B h : ℤ} {l : List α}
     (hf : ∀ x ∈ l, f x ≤ 0) (hh : h ≤ B) (hend : 0 ≤ h + (l.map f).sum) :
     InStrip f B h l := by
   induction l generalizing h with
@@ -143,7 +143,7 @@ def Dyadic {α : Type*} (f : α → ℤ) : ℤ → List α → Prop
   | _, [] => True
   | b, x :: xs => f x = b ∧ Dyadic f (2 * b) xs
 
-private theorem dyadic_sum {α : Type*} {f : α → ℤ} {b : ℤ} {l : List α}
+theorem dyadic_sum {α : Type*} {f : α → ℤ} {b : ℤ} {l : List α}
     (hl : Dyadic f b l) : (l.map f).sum = ((2 : ℤ) ^ l.length - 1) * b := by
   induction l generalizing b with
   | nil => simp
@@ -162,7 +162,7 @@ private theorem dyadic_nonneg {α : Type*} {f : α → ℤ} {b : ℤ} {l : List 
     · exact ih (by omega) hl.2 y hy
 
 /-- Binary digit selection on physical occurrences, retaining the complementary occurrences. -/
-private theorem dyadic_select {α : Type*} {f : α → ℤ} {b : ℤ} {l : List α}
+theorem dyadic_select {α : Type*} {f : α → ℤ} {b : ℤ} {l : List α}
     (hl : Dyadic f b l) (n : ℕ) (hn : n < 2 ^ l.length) :
     ∃ before after : List α, (before ++ after).Perm l ∧
       (before.map f).sum = (n : ℤ) * b := by
@@ -189,7 +189,7 @@ private theorem dyadic_select {α : Type*} {f : α → ℤ} {b : ℤ} {l : List 
         rw [hn']; ring
 
 
-private theorem sum_neg_map {α : Type*} (f : α → ℤ) (l : List α) :
+theorem sum_neg_map {α : Type*} (f : α → ℤ) (l : List α) :
     (l.map (fun x => -f x)).sum = -(l.map f).sum := by
   simpa [List.map_map, Function.comp_def, negAddMonoidHom] using
     (map_list_sum (negAddMonoidHom : ℤ →+ ℤ) (l.map f)).symm
