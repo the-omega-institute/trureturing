@@ -14,6 +14,6 @@ internal sealed class ResultDocument : IScribeDocumentDefinition
                 Blocks(Paragraph(Text("The constant unit sequence is nontrivial, nonnegative, log concave and has no internal zeros. The interior existence theorem supplies admissible parameters with a strictly negative second coefficient. Universal positivity at degree two would give the opposite strict inequality. This refutes the coefficient assertion while leaving the assertion concerning log concavity in the positive parameter range untouched."))),
                 DescribeRole.Theorem,
                 openProblemResolutionClaim: new OpenProblemResolutionClaim(
-                    ProblemSlugRef.Create("kalmykov-karp-2012-reciprocal-gamma-coefficient-positivity"),
+                    ProblemSlugRef.Create("kalmykov-karp-2013-reciprocal-gamma-turanian-coefficients"),
                     ResolutionKind.Refuted)))));
 }

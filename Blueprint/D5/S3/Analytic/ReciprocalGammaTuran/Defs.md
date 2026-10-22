@@ -10,7 +10,7 @@ Lean statement: `D5/S3/Analytic/ReciprocalGammaTuran/Defs.rgamma`
 
 *Formalization.* `D5/S3/Analytic/ReciprocalGammaTuran/Defs.rgamma` (`✓ std3`).
 
-*Source.* Repository-derived.
+*Citation.* S. I. Kalmykov and D. B. Karp (2013). *Log-concavity for series in reciprocal gamma functions and applications*. DOI: [10.1080/10652469.2013.764874](https://doi.org/10.1080/10652469.2013.764874). URL: <https://arxiv.org/abs/1206.4814>.
 
 *Commentary.*
 
@@ -22,7 +22,7 @@ Lean statement: `D5/S3/Analytic/ReciprocalGammaTuran/Defs.AdmissibleSeq`
 
 *Formalization.* `D5/S3/Analytic/ReciprocalGammaTuran/Defs.AdmissibleSeq` (`✓ std3`).
 
-*Source.* Repository-derived.
+*Citation.* S. I. Kalmykov and D. B. Karp (2013). *Log-concavity for series in reciprocal gamma functions and applications*. DOI: [10.1080/10652469.2013.764874](https://doi.org/10.1080/10652469.2013.764874). URL: <https://arxiv.org/abs/1206.4814>.
 
 *Commentary.*
 
@@ -34,7 +34,7 @@ Lean statement: `D5/S3/Analytic/ReciprocalGammaTuran/Defs.turanCoeff`
 
 *Formalization.* `D5/S3/Analytic/ReciprocalGammaTuran/Defs.turanCoeff` (`✓ std3`).
 
-*Source.* Repository-derived.
+*Citation.* S. I. Kalmykov and D. B. Karp (2013). *Log-concavity for series in reciprocal gamma functions and applications*. DOI: [10.1080/10652469.2013.764874](https://doi.org/10.1080/10652469.2013.764874). URL: <https://arxiv.org/abs/1206.4814>.
 
 *Commentary.*
 
@@ -46,31 +46,21 @@ Lean statement: `D5/S3/Analytic/ReciprocalGammaTuran/Defs.claim`
 
 *Formalization.* `D5/S3/Analytic/ReciprocalGammaTuran/Defs.claim` (`✓ std3`).
 
-*Source.* Repository-derived.
+*Citation.* S. I. Kalmykov and D. B. Karp (2013). *Log-concavity for series in reciprocal gamma functions and applications*. DOI: [10.1080/10652469.2013.764874](https://doi.org/10.1080/10652469.2013.764874). URL: <https://arxiv.org/abs/1206.4814>.
 
 *Commentary.*
 
 For every admissible sequence g and every real mu, alpha and beta with alpha and beta positive, mu at least minus one, and mu+alpha and mu+beta nonnegative, the Turanian coefficient is positive at every natural degree m.
 
-**Theorem 1.5 (Values at the poles).**
-
-Lean statement: `D5/S3/Analytic/ReciprocalGammaTuran/Defs.rgamma_neg_nat`
-
-*Proof.* Machine-checked in Lean as `D5/S3/Analytic/ReciprocalGammaTuran/Defs.rgamma_neg_nat` (`✓ std3`). ∎
-
-*Source.* Repository-derived.
-
-*Commentary.*
-
-For every natural n, rgamma(-n) is zero. This follows directly from the real Gamma convention at nonpositive integers.
-
-**Theorem 1.6 (The constant unit sequence).**
+**Theorem 1.5 (The constant unit sequence).**
 
 Lean statement: `D5/S3/Analytic/ReciprocalGammaTuran/Defs.admissible_one`
 
 *Proof.* Machine-checked in Lean as `D5/S3/Analytic/ReciprocalGammaTuran/Defs.admissible_one` (`✓ std3`). ∎
 
 *Source.* Repository-derived.
+
+*Acknowledgement.* S. I. Kalmykov and D. B. Karp (2013). *Log-concavity for series in reciprocal gamma functions and applications*. DOI: [10.1080/10652469.2013.764874](https://doi.org/10.1080/10652469.2013.764874). URL: <https://arxiv.org/abs/1206.4814>.
 
 *Commentary.*
 
@@ -82,5 +72,4 @@ The sequence with value one at every natural index satisfies all four admissibil
 - Truth anchor: `D5/S3/Analytic/ReciprocalGammaTuran/Defs.admissible_one`
 - Truth anchor: `D5/S3/Analytic/ReciprocalGammaTuran/Defs.claim`
 - Truth anchor: `D5/S3/Analytic/ReciprocalGammaTuran/Defs.rgamma`
-- Truth anchor: `D5/S3/Analytic/ReciprocalGammaTuran/Defs.rgamma_neg_nat`
 - Truth anchor: `D5/S3/Analytic/ReciprocalGammaTuran/Defs.turanCoeff`
