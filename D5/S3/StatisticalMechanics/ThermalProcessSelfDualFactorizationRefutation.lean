@@ -9,7 +9,6 @@
 import Mathlib.Analysis.Convex.Extreme
 import Mathlib.LinearAlgebra.Matrix.Stochastic
 import Mathlib.LinearAlgebra.Matrix.Notation
-import Mathlib.Data.Real.Basic
 import Mathlib.Tactic.FinCases
 import Mathlib.Tactic.Linarith
 
