@@ -19,7 +19,11 @@ def timeLookup {α : Type} (label : String) (action : MetaM α) : MetaM α := do
   try action finally
     lookupPhase s!"{label}/end ns={(← IO.monoNanosNow) - start} heartbeats={(← IO.getNumHeartbeats) - heartbeats}"
 
-abbrev lookupVersion : String := "R_lookup/v6/signature-first/search-200000/preparation-2000000/N-memo-2000000"
+abbrev lookupVersion : String := "R_lookup/v7/candidate-200000/preparation-2000000/G-telemetry/memo-off/N-memo-2000000"
+
+abbrev lookupCandidateBudget : Nat := 200000
+/-- Zero is used only by verdict-free calibration telemetry. -/
+abbrev lookupCoverageBudget : Nat := 0
 
 /-- Bounded, query-local metadata reuse; certificates are always checked anew. -/
 structure LookupQueryMemo where
@@ -55,6 +59,9 @@ structure LookupTrace where
   unloaded : Nat := 0
   source? : Option Name := none
   complete : Bool := false
+  capped : Array String := #[]
+  fallbackVisited : Nat := 0
+  fallbackTotal : Nat := 0
   deriving Inhabited
 
 private def eligible : ConstantInfo → Bool
@@ -133,52 +140,128 @@ private unsafe def queryLookup (table : LookupTable) (index : DiskLookup.Index)
     let (loaded, external) := candidates.entries.partition (candidateOwnerMatches table)
     return {candidates with entries := loaded ++ external}
 
-/-- The membership page is only a prefilter. Alpha-invariant hashes never
-substitute for definitional equality or the caller's closed kernel check. -/
-private unsafe def lookupExactPass (table : LookupTable) (goal : MVarId) : MetaM LookupTrace := goal.withContext do
+/-- Catch resource exceptions below Core's rethrowing exception layer. -/
+def catchLookupCandidate {α : Type} (action : MetaM α)
+    (handler : Exception → MetaM α) : MetaM α :=
+  controlAt CoreM fun runInBase => fun ctx state => do
+    try runInBase action ctx state
+    catch ex => runInBase (handler ex) ctx state
+
+private def coverageAvailable (table : LookupTable) : MetaM Bool := do
+  if lookupCoverageBudget == 0 then return true
+  return (← table.budget?.mapM (·.get)).all (·.coverage < lookupCoverageBudget * 1000)
+
+/-- The final certificate is checked in the original query environment, after
+all temporary support is inlined. Its locals are exactly the registered Γ. -/
+private def checkLookupGoal (table : LookupTable) (base : Environment)
+    (goal : MVarId) : MetaM Unit := goal.withContext do
+  let proof ← instantiateMVars (mkMVar goal)
+  unless !proof.hasMVar do throwError "lookup.unclosed_certificate"
+  let mut xs := #[]
+  for decl in ← getLCtx do xs := xs.push decl.toExpr
+  let proof ← mkLambdaFVars xs proof
+  let proof ← if let some finish := table.finish? then finish base proof else pure proof
+  let type ← mkForallFVars xs (← goal.getType)
+  unless !proof.hasFVar && !proof.hasMVar && !proof.hasSorry && !type.hasMVar do
+    throwError "lookup.unclosed_certificate"
+  withEnv base do
+    let name ← mkFreshUserName `_lookupChecked
+    let levels := (collectLevelParams {} type).params.toList
+    if ← isProp type then
+      addDecl (.thmDecl {name, levelParams := levels, type, value := proof})
+    else
+      addDecl (.defnDecl {
+        name, levelParams := levels, type, value := proof,
+        hints := .abbrev, safety := .safe})
+    let axioms ← collectAxioms name
+    unless axioms.all (#[`propext, `Classical.choice, `Quot.sound].contains ·) do
+      throwError "lookup.nonstandard_axioms"
+  IO.eprintln s!"LOOKUP_CERTIFICATE {Json.mkObj [
+    ("support", toJson (proof.getUsedConstants.map Name.toString)),
+    ("query_environment_only", toJson true)] |>.compress}"
+
+/-- Every attempt starts from the same branch state and receives its own κ.
+An exceptional candidate contributes unknown and never stops its successors. -/
+def boundedLookupCandidate (table : LookupTable) (entry : DiskLookup.Entry)
+    (goal : MVarId) (action : MetaM LookupTrace) : MetaM LookupTrace := do
+  let original ← saveState
+  resetCache
+  modifyThe Core.State fun state => {state with cache := {}}
+  let before := (← table.budget?.mapM (·.get)).getD {}
+  if let some budget := table.budget? then
+    budget.modify fun state => {state with preparationStart := state.preparation}
+  let started ← IO.getNumHeartbeats
+  let result ← catchLookupCandidate
+    (withTheReader Core.Context (fun ctx => {ctx with
+      initHeartbeats := started, maxHeartbeats := lookupCandidateBudget * 1000}) do
+      let result ← action
+      if result.source?.isSome then checkLookupGoal table original.core.env goal
+      checkSystem "lookup.candidate"
+      return result)
+    (fun ex => do
+      let after := (← table.budget?.mapM (·.get)).getD {}
+      let reason ← if ex.isMaxHeartbeat then pure <|
+          if after.preparation - before.preparation >= lookupPreparationBudget * 1000 then
+            "preparation-capped" else "capped"
+        else if ex.isInterrupt then pure "interrupted"
+        else pure s!"exception:{← ex.toMessageData.toString}"
+      return {
+        complete := false, missing := #[entry.leanName], failures := #[reason],
+        capped := if ex.isMaxHeartbeat then #[entry.name] else #[]})
+  let search := (← IO.getNumHeartbeats) - started
+  let after := (← table.budget?.mapM (·.get)).getD {}
+  let preparation := after.preparation - before.preparation
+  if let some budget := table.budget? then
+    budget.modify fun state => {state with coverage := state.coverage + search + preparation}
+  let residual := Json.mkObj [
+    ("module", toJson entry.module), ("candidate", toJson entry.name),
+    ("search_internal_heartbeats", toJson search),
+    ("preparation_internal_heartbeats", toJson preparation),
+    ("capped", toJson (!result.capped.isEmpty)), ("reasons", toJson result.failures)]
+  if !result.complete || (← IO.getEnv "SEARCH_REDUCTION_TELEMETRY").isSome then
+    IO.eprintln s!"LOOKUP_CANDIDATE {residual.compress}"
+  if result.source?.isNone || (← IO.getEnv "SEARCH_REDUCTION_TELEMETRY").isSome then
+    original.restore
+    set original.meta
+    modifyThe Core.State fun state => {state with cache := original.core.cache}
+  return {result with
+    visited := 1,
+    failures := if result.complete then result.failures else #[residual.compress]}
+
+private def mergeLookupTrace (a b : LookupTrace) : LookupTrace := {
+  visited := a.visited + b.visited, attempted := a.attempted + b.attempted,
+  pages := a.pages + b.pages, missing := a.missing ++ b.missing,
+  failures := a.failures ++ b.failures, capped := a.capped ++ b.capped,
+  unloaded := a.unloaded + b.unloaded, source? := a.source?.or b.source?,
+  complete := a.complete && b.complete,
+  fallbackVisited := a.fallbackVisited + b.fallbackVisited,
+  fallbackTotal := a.fallbackTotal + b.fallbackTotal}
+
+/-- Hashes only recall candidates; equality and a final certificate decide. -/
+unsafe def lookupExact (table : LookupTable) (goal : MVarId) : MetaM LookupTrace := goal.withContext do
   if !table.enabled then return {complete := true}
   let some index ← tableIndex table | return {}
   let type ← goal.getType
-  let indexStart ← IO.monoMsNow
   let candidates ← DiskLookup.queryMembership index type table.budget?
-  let candidates ← withLookupPreparation table.budget? do
-    let (loaded, external) := candidates.entries.partition (candidateOwnerMatches table)
-    return {candidates with entries := loaded ++ external}
-  lookupPhase s!"lookup/index ms={(← IO.monoMsNow) - indexStart} membership=true"
-  profileCandidateSet table type candidates false "exact"
-  checkSystem "lookup.membership-index"
   let mut trace : LookupTrace := {
-    complete := candidates.complete && table.complete
-    pages := candidates.pages
-    failures := candidates.missing}
+    complete := candidates.complete && table.complete,
+    pages := candidates.pages, failures := candidates.missing}
   for entry in candidates.entries do
-    checkSystem "lookup.membership"
-    let name := entry.leanName
-    let saved ← saveState
-    lookupPhase s!"lookup/visit mode=exact name={name} module={entry.module}"
-    let candidate ← timeLookup "lookup/load" <| candidateValue table entry none
-    let values := candidate.values
-    let failure? := candidate.failure?
-    let unloaded := candidate.unloaded
-    trace := {trace with unloaded := trace.unloaded + (if unloaded then 1 else 0)}
-    if let some failure := failure? then
-      trace := {trace with
-        complete := false
-        missing := trace.missing.push name
-        failures := trace.failures.push s!"{name}:{failure}"}
-    trace := {trace with visited := trace.visited + 1}
-    for value in values do
-      if ← timeLookup "lookup/isDefEq" (withReducible <| isDefEq (← inferType value) type) then
-        timeLookup "candidate/certificate" candidate.certify
-        goal.assign (← instantiateMVars value)
-        return {trace with source? := some name, attempted := trace.attempted + 1}
-    saved.restore
-    set saved.meta
-    modifyThe Core.State fun state => {state with cache := saved.core.cache}
+    unless ← coverageAvailable table do
+      return {trace with complete := false, failures := trace.failures.push "G-truncated:membership"}
+    let attempt ← boundedLookupCandidate table entry goal do
+      let candidate ← candidateValue table entry none
+      if let some reason := candidate.failure? then
+        return {complete := false, failures := #[reason], missing := #[entry.leanName]}
+      for value in candidate.values do
+        if ← withReducible <| isDefEq (← inferType value) type then
+          candidate.certify
+          goal.assign (← instantiateMVars value)
+          return {complete := true, source? := some entry.leanName, attempted := 1}
+      return {complete := true}
+    trace := mergeLookupTrace trace attempt
+    if trace.source?.isSome then return trace
   return trace
-
-unsafe def lookupExact (table : LookupTable) (goal : MVarId) : MetaM LookupTrace := do
-  lookupExactPass table goal
 
 def ownedLookupName : Name → Name
   | .anonymous => .anonymous
@@ -401,107 +484,102 @@ placeholder never leaves the branch: success materializes it before checking. -/
     let proof ← withLookupPreparation budget? <| pure (detachLookupExpression proof)
     placeholder.mvarId!.assign proof}
 
-/-- The closure callback is the frozen local table, with lookup disabled.
-All unresolved data and universe metavariables are rejected by the caller's
-closed kernel certificate check. An exception aborts enumeration. -/
-private unsafe def lookupLeafPass (fallback : Bool) (table : LookupTable) (goal : MVarId)
+/-- The frozen closure table has lookup disabled. Every candidate exception
+is accounted for locally; only the coverage guard truncates enumeration. -/
+unsafe def lookupLeafPass (fallback : Bool) (table : LookupTable) (goal : MVarId)
     (unify close : MVarId → MetaM Bool) : MetaM LookupTrace := goal.withContext do
   if !table.enabled then return {complete := true}
-  let detailed := (← IO.getEnv "SEARCH_REDUCTION_PROFILE_DETAIL").isSome
   let head := rigidHead (← getEnv) (← goal.getType)
   let some index ← tableIndex table | return {}
-  let context ← readThe Core.Context
-  let limit := if context.maxHeartbeats == 0 then none
-    else some (context.initHeartbeats + context.maxHeartbeats)
-  let indexStart ← IO.monoMsNow
-  let candidates ← queryLookup table index (← goal.getType) limit fallback
-  lookupPhase s!"lookup/index ms={(← IO.monoMsNow) - indexStart} fallback={fallback}"
-  profileCandidateSet table (← goal.getType) candidates fallback "leaf"
-  checkSystem "lookup.candidate-index"
-  let trace ← candidates.entries.foldlM (init := ({complete := candidates.complete && table.complete, pages := candidates.pages} : LookupTrace)) fun (trace : LookupTrace) entry => do
-    if trace.source?.isSome then return trace
-    checkSystem "lookup.page_candidate"
-    let name := entry.leanName
-    if let some info := (table.environment.setExporting false).find? name |>.filter (fun _ => candidateOwnerMatches table entry) then
-      if !eligible info || info.isUnsafe || !possibleView table.environment head info.type then
-        return {trace with visited := trace.visited + 1}
-    let initial ← get
-    let cache := (← getThe Core.State).cache
-    let original ← saveState
-    lookupPhase s!"lookup/visit mode=leaf name={name} module={entry.module}"
-    let candidate ← timeLookup "lookup/load" <| candidateValue table entry head
-    let values := candidate.values
-    let failure? := candidate.failure?
-    let unloaded := candidate.unloaded
-    let trace := {trace with unloaded := trace.unloaded + (if unloaded then 1 else 0)}
-    let trace := if let some failure := failure? then
-        {trace with
-          complete := false
-          missing := trace.missing.push name
-          failures := trace.failures.push s!"{name}:{failure}"}
-      else trace
-    if values.isEmpty then
-      original.restore
-      set initial
-      modifyThe Core.State fun state => {state with cache}
-      return trace
-    let trace := {trace with visited := trace.visited + 1}
-    let alternatives : Array Expr ← (do
-      let value := values[0]!
-      let type ← inferType value
-      unless possibleView (← getEnv) head type do return #[]
-      let suitable : Bool ← (do
-        if ← isProp type then return true
-        forallTelescopeReducing type fun _ body => do
-          return (← withReducible <| whnf body).isAppOfArity ``Subtype 2 : MetaM Bool)
-      if suitable then views value else pure #[] : MetaM (Array Expr))
-    let mut attempted := trace.attempted
-    for view in alternatives do
-      let saved ← saveState
-      attempted := attempted + 1
-      if detailed then
-        lookupPhase s!"lookup/candidate-start name={name} visited={trace.visited} attempted={attempted}"
-      try
-        let obligations ← timeLookup "lookup/apply" <| withReducible <| goal.apply view {approx := false}
-        -- Meta.apply includes the signature placeholder among its metavariable
-        -- obligations. Its certificate is deliberately supplied only below.
-        let obligations := obligations.filter fun next =>
-          !values.any (fun value => value.isMVar && value.mvarId! == next)
-        let (propositions, dataClosed) ← timeLookup "lookup/instantiate" do
-          let propositions ← obligations.filterM fun g => g.withContext do isProp (← g.getType)
-          -- Only visible facts may recover data absent from the conclusion.
-          for next in propositions do
-            if (← instantiateMVars (← next.getType)).hasMVar then discard <| unify next
-          let dataClosed ← obligations.allM fun next => do
-            if ← next.isAssigned then return true
-            next.withContext do isProp (← instantiateMVars (← next.getType))
-          return (propositions, dataClosed)
-        if dataClosed && (← timeLookup "lookup/closure" <| propositions.allM fun next => do
-            if ← next.isAssigned then return true else close next) then
-          -- Materialize only after the signature and all side conditions match.
-          -- Any remaining data metavariable still fails the closed proof check.
-          timeLookup "candidate/certificate" candidate.certify
-          let proof ← instantiateMVars (mkMVar goal)
-          unless proof.hasMVar do return {trace with attempted, source? := some name}
-      catch ex =>
-        if ex.isMaxHeartbeat || ex.isInterrupt || ex.isRuntime then throw ex
-      if detailed then lookupPhase s!"lookup/candidate-end name={name} attempted={attempted}"
-      saved.restore
-    original.restore
-    set initial
-    modifyThe Core.State fun s => {s with cache}
-    return {trace with attempted}
-  return {trace with complete := trace.source?.isNone && trace.complete}
+  let telemetry := (← IO.getEnv "SEARCH_REDUCTION_TELEMETRY").isSome
+  let floorStart ← IO.getNumHeartbeats
+  let floorNs ← IO.monoNanosNow
+  let beforePreparation := (← table.budget?.mapM (·.get)).getD {}
+  let candidates ← queryLookup table index (← goal.getType) none fallback
+  if telemetry then
+    let afterPreparation := (← table.budget?.mapM (·.get)).getD {}
+    IO.eprintln s!"LOOKUP_TELEMETRY_FLOOR {Json.mkObj [
+      ("fallback_only", toJson fallback), ("entries", toJson candidates.entries.size),
+      ("search_internal_heartbeats", toJson ((← IO.getNumHeartbeats) - floorStart)),
+      ("preparation_internal_heartbeats", toJson (afterPreparation.preparation - beforePreparation.preparation)),
+      ("ns", toJson ((← IO.monoNanosNow) - floorNs))] |>.compress}"
+  let stride := (candidates.entries.size + 63) / 64
+  let mut ordinal := 0
+  let mut trace : LookupTrace := {
+    complete := candidates.complete && table.complete,
+    pages := candidates.pages,
+    fallbackTotal := if fallback then candidates.entries.size else 0}
+  for entry in candidates.entries do
+    let position := ordinal
+    ordinal := ordinal + 1
+    if telemetry && position % (max 1 stride) != 0 then continue
+    unless ← coverageAvailable table do
+      trace := {trace with
+        complete := false, failures := trace.failures.push s!"G-truncated:fallback={fallback}:remaining={candidates.entries.size - trace.visited}"}
+      break
+    let result ← boundedLookupCandidate table entry goal do
+      let name := entry.leanName
+      if let some info := (table.environment.setExporting false).find? name |>.filter (fun _ => candidateOwnerMatches table entry) then
+        if !eligible info || info.isUnsafe || !possibleView table.environment head info.type then
+          return {complete := true}
+      let candidate ← candidateValue table entry head
+      if let some reason := candidate.failure? then
+        return {
+          complete := false, failures := #[reason], missing := #[name],
+          unloaded := if candidate.unloaded then 1 else 0}
+      let mut attempted := 0
+      for value in candidate.values do
+        let type ← inferType value
+        unless possibleView (← getEnv) head type do continue
+        let suitable ← if ← isProp type then pure true else
+          forallTelescopeReducing type fun _ body => do
+            return (← withReducible <| whnf body).isAppOfArity ``Subtype 2
+        unless suitable do continue
+        let alternatives ← views value
+        for view in alternatives do
+          let saved ← saveState
+          attempted := attempted + 1
+          -- Ordinary apply failure tries the next view. Resource failure and
+          -- unsupported views escape to the candidate-local boundary.
+          let matched ← try
+            let obligations ← withReducible <| goal.apply view {approx := false}
+            let obligations := obligations.filter fun next =>
+              !candidate.values.any (fun value => value.isMVar && value.mvarId! == next)
+            let propositions ← obligations.filterM fun g => g.withContext do isProp (← g.getType)
+            for next in propositions do
+              if (← instantiateMVars (← next.getType)).hasMVar then discard <| unify next
+            let dataClosed ← obligations.allM fun next => do
+              if ← next.isAssigned then return true
+              next.withContext do isProp (← instantiateMVars (← next.getType))
+            if dataClosed && (← propositions.allM fun next => do
+                if ← next.isAssigned then return true else close next) then
+              candidate.certify
+              let proof ← instantiateMVars (mkMVar goal)
+              pure (!proof.hasMVar)
+            else pure false
+          catch ex =>
+            if ex.isMaxHeartbeat || ex.isInterrupt || ex.isRuntime then throw ex
+            pure false
+          if matched then return {
+            complete := true, source? := some name, attempted,
+            unloaded := if candidate.unloaded then 1 else 0}
+          saved.restore
+      return {complete := true, attempted, unloaded := if candidate.unloaded then 1 else 0}
+    trace := mergeLookupTrace trace result
+    if fallback then trace := {trace with fallbackVisited := trace.fallbackVisited + 1}
+    if trace.source?.isSome && !telemetry then break
+  unless telemetry do IO.eprintln s!"LOOKUP_ENUMERATION {Json.mkObj [
+    ("fallback", toJson fallback), ("total", toJson candidates.entries.size),
+    ("visited", toJson trace.visited), ("complete", toJson trace.complete),
+    ("found", toJson trace.source?.isSome), ("capped", toJson trace.capped),
+    ("unknown", toJson trace.failures)] |>.compress}"
+  return trace
 
 unsafe def lookupLeaf (table : LookupTable) (goal : MVarId)
     (unify close : MVarId → MetaM Bool) : MetaM LookupTrace := do
   let primary ← lookupLeafPass false table goal unify close
   if primary.source?.isSome then return primary
   let fallback ← lookupLeafPass true table goal unify close
-  return {fallback with
-    complete := primary.complete && fallback.complete,
-    visited := primary.visited + fallback.visited, pages := primary.pages + fallback.pages,
-    attempted := primary.attempted + fallback.attempted,
-    missing := primary.missing ++ fallback.missing, failures := primary.failures ++ fallback.failures}
+  return mergeLookupTrace primary fallback
 
 end LeanInformationAudit.SearchReduction

@@ -342,8 +342,10 @@ unsafe def onDemandLookup (table : LookupTable)
         withLookupPreparation (some budget) <| acquire entry.module.toName context.options
       timeLookup s!"candidate/signature-copy name={entry.name}" <|
         copyLookupCandidateWith (fun source proof =>
-          copyCertificateExpression {source, enclosingBudget := true, lookupPreparation? := some budget}
-            proof) source entry head (some budget)}
+          withLookupPreparation (some budget) <|
+            copyCertificateExpression {
+              source, enclosingBudget := true, certifiedBasis := true,
+              lookupPreparation? := some budget} proof) source entry head (some budget)}
 
 private unsafe def runCore (source base : Environment) (request : Request)
     (lookupComplete : Bool) (disk? : Option DiskLookup.Index := none)

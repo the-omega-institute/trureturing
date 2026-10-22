@@ -8,29 +8,35 @@ Only candidate certificates carry semantic authority. -/
 namespace LeanInformationAudit.SearchReduction
 open Lean Meta
 
-/-- Independent per-branch preparation allocation, in user-facing heartbeats. -/
+/-- Independent per-candidate preparation allocation, in public heartbeats. -/
 abbrev lookupPreparationBudget : Nat := 2000000
 
 structure LookupBudgetState where
   preparation : Nat := 0
   preparationNs : Nat := 0
+  preparationStart : Nat := 0
+  preparing : Bool := false
+  coverage : Nat := 0
   deriving Inhabited
 
-/-- Only immutable I/O and deterministic byte transport belong here. Semantic
-normalization, matching, synthesis and kernel checks keep the search clock.
+/-- Deterministic materialization, including vocabulary reconstruction, belongs
+here. Matching, synthesis and final certificate checks keep the search clock.
 Lean's thread-local heartbeat counter is restored after charging preparation. -/
 def withLookupPreparation {α : Type} (budget? : Option (IO.Ref LookupBudgetState))
     (action : MetaM α) : MetaM α := do
   let some budget := budget? | return ← action
   let before ← budget.get
-  if before.preparation >= lookupPreparationBudget * 1000 then
+  if before.preparing then return ← action
+  let usedBefore := before.preparation - before.preparationStart
+  if usedBefore >= lookupPreparationBudget * 1000 then
     Core.throwMaxHeartbeat `lookup.preparation `maxHeartbeats (lookupPreparationBudget * 1000)
   let started ← IO.getNumHeartbeats
   let nanos ← IO.monoNanosNow
+  budget.modify fun s => {s with preparing := true}
   try
     withTheReader Core.Context (fun ctx => {ctx with
       initHeartbeats := started,
-      maxHeartbeats := lookupPreparationBudget * 1000 - before.preparation}) do
+      maxHeartbeats := lookupPreparationBudget * 1000 - usedBefore}) do
       let result ← action
       checkSystem "lookup.preparation"
       return result
@@ -38,7 +44,7 @@ def withLookupPreparation {α : Type} (budget? : Option (IO.Ref LookupBudgetStat
     let used := (← IO.getNumHeartbeats) - started
     let elapsed := (← IO.monoNanosNow) - nanos
     budget.modify fun s => {s with
-      preparation := s.preparation + used, preparationNs := s.preparationNs + elapsed}
+      preparation := s.preparation + used, preparationNs := s.preparationNs + elapsed, preparing := false}
     IO.setNumHeartbeats started
 
 namespace DiskLookup

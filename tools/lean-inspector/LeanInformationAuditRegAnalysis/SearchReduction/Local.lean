@@ -355,6 +355,28 @@ private unsafe def solveLookupGoal (table : LookupTable) (goal : MVarId)
   lookupLeaf table goal (fun next => exactLocal next projected)
     (fun next => solveLocalGoal next facts)
 
+/-- Verdict-free fixed-stride cost sampling, plus complete fallback page
+materialization. This entry is unavailable without the telemetry flag. -/
+unsafe def telemetryLookupCosts (table : LookupTable) (type : Expr) : MetaM Unit := do
+  unless (← IO.getEnv "SEARCH_REDUCTION_TELEMETRY").isSome do
+    throwError "lookup.telemetry_flag_required"
+  for fallback in [true, false] do
+    let original ← saveState
+    if let some budget := table.budget? then budget.set {}
+    let root ← mkFreshExprMVar type
+    let mut goal := root.mvarId!
+    let mut facts := #[]
+    while (← goal.withContext <| withReducible <| whnf (← goal.getType)).isForall do
+      let (fvar, next) ← goal.intro1
+      facts := facts.push (mkFVar fvar)
+      goal := next
+    discard <| goal.withContext <| lookupLeafPass fallback table goal
+      (fun next => exactLocal next facts) (fun next => solveLocalGoal next facts)
+    original.restore
+    set original.meta
+    modifyThe Core.State fun state => {state with cache := original.core.cache}
+  if let some close := table.close? then close
+
 private def withFacts {α : Type} (types : List Expr)
     (action : Array Expr → MetaM α) : MetaM α := do
   let rec go (remaining : List Expr) (facts : Array Expr) : MetaM α := do
@@ -383,7 +405,7 @@ def boundedRebuildBranch (action : MetaM LocalResult)
   let nanos ← IO.monoNanosNow
   let result ← catchBranch
     (withTheReader Core.Context (fun ctx =>
-      {ctx with initHeartbeats := started, maxHeartbeats := localBudget * 1000}) do
+      {ctx with initHeartbeats := started, maxHeartbeats := if budget?.isSome then 0 else localBudget * 1000}) do
         let result ← action
         checkSystem "lookup.search-branch"
         return result)
@@ -403,6 +425,8 @@ def boundedRebuildBranch (action : MetaM LocalResult)
     ("search_internal_heartbeats", toJson search),
     ("preparation_internal_heartbeats", toJson preparation.preparation),
     ("search_limit", toJson localBudget), ("preparation_limit", toJson lookupPreparationBudget),
+    ("coverage_internal_heartbeats", toJson preparation.coverage),
+    ("coverage_limit", toJson lookupCoverageBudget),
     ("preparation_ns", toJson preparation.preparationNs),
     ("search_ns", toJson (elapsed - preparation.preparationNs)),
     ("cost", toJson (reprStr result.cost)), ("detail", toJson result.detail)] |>.compress}"
@@ -471,7 +495,7 @@ private unsafe def rebuildRoute (target : Expr) (types : List Expr)
           if lookup?.isSome then
             s!"normal-exhaustion/lookup-complete:pages={trace.pages},visited={trace.visited},attempted={trace.attempted},unloaded_checked={trace.unloaded}"
           else "normal-exhaustion/local-only"
-          else s!"lookup-incomplete-basis:pages={trace.pages},missing={trace.missing.take 8},missing_count={trace.missing.size},reasons={trace.failures.take 8}"}
+          else s!"lookup-incomplete-basis:pages={trace.pages},missing={trace.missing.take 8},missing_count={trace.missing.size},reasons={trace.failures}"}
     let proof ← instantiateMVars root
     unless !proof.hasMVar do return {detail := "unclosed-reconstruction"}
     let used := facts.toList.zipIdx.filterMap fun (fact, i) =>

@@ -35,6 +35,7 @@ structure TransportContext where
   budgetStart : Nat := 0
   /-- Query copies keep the enclosing frozen allocation, without declaration units. -/
   enclosingBudget : Bool := false
+  certifiedBasis : Bool := false
   lookupPreparation? : Option (IO.Ref LookupBudgetState) := none
   searchHeartbeats? : Option (IO.Ref Nat) := none
   budgetExcludedStart : Nat := 0
@@ -270,13 +271,13 @@ mutual
           throwError "search.vocabulary_certificate_unclosed: {owner}: group-local type {closed}"
         let proof ← copyCertificateExpression ctx
           (← mkLambdaFVars xs part (generalizeNondepLet := false))
-        let levels := (collectLevelParams (collectLevelParams {} closed) proof).params.toList
-        let beforeCheck ← getEnv
-        let checked ← checkProof (← mkFreshUserName `_prefixCertificate) levels closed proof
-        setEnv beforeCheck
-        unless standardAxioms checked do
-          throwError "search.vocabulary_certificate_axioms: {owner}"
-        IO.eprintln s!"vocabulary certificate checked: owner={owner}, strategy=inline-author-copy, axioms={checked}"
+        unless ctx.certifiedBasis do
+          let levels := (collectLevelParams (collectLevelParams {} closed) proof).params.toList
+          let beforeCheck ← getEnv
+          let checked ← checkProof (← mkFreshUserName `_prefixCertificate) levels closed proof
+          setEnv beforeCheck
+          unless standardAxioms checked do
+            throwError "search.vocabulary_certificate_axioms: {owner}"
         -- This proof is payload, never a free premise for a local probe.
         let args ← xs.filterM fun x => return !(← getFVarLocalDecl x).isLet
         return .done (mkAppN proof args)
