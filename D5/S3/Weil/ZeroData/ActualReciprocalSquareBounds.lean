@@ -3,7 +3,7 @@
    mirror-B: none(waiver:source-only-implementation-not-frozen)
    mirror-E: none(waiver:source-only-implementation-not-frozen)
    anchors: []
-   utility: none
+   utility: kind=numeric-reduction; basis=consumer=D5/S3/Weil/ZeroData/ActualReciprocalSquareBounds.actual_height_gt_ten; premises=D5/S3/Weil/ZeroData/ActualReciprocalSquareBounds.firstLiMass_lt_one,D5/S3/Weil/ZeroData/ActualReciprocalSquareBounds.firstLiMass_lt_third,D5/S3/Weil/ZeroData/ActualReciprocalSquareBounds.gamma_upper_r6,D5/S3/Weil/ZeroData/ActualReciprocalSquareBounds.log_pi_lower_r6,D5/S3/Weil/ZeroData/ActualReciprocalSquareBounds.sixQ_upper,D5/S3/Weil/ZeroData/ActualReciprocalSquareBounds.sixDefect_upper
    digest: Derive all actual zeta inverse-ordinate-square mass and indexed counting from the xi resolvent and distinct conjugate pairs. -/
 
 import D5.S3.Zeros.Resolvent.XiSquareExteriorRemainder

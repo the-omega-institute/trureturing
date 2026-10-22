@@ -61,24 +61,21 @@ internal sealed class ActualReciprocalSquareBoundsDocument : IScribeDocumentDefi
             H("Actual Zeta Mass and Height"),
             Blocks(
                 Paragraph(Text(
-                    "This owning document records the exact source family actualData = zetaZeroData, " +
+                    "The exact source family is actualData = zetaZeroData, with " +
                     "the real kernel pairWeight rho = Re(1/(rho*(1-rho))), and " +
                     "firstLiMass = 2 + EulerGamma - 2*log(2*sqrt(pi)). " +
-                    "The source retains the normalized reflection and resolvent-positive R(6) chain, " +
-                    "including sixWeight, sixDefect, the digamma-at-3 and H512 reductions, " +
+                    "The normalized reflection and resolvent-positive R(6) chain uses " +
+                    "sixWeight, sixDefect, the digamma-at-3 and H512 reductions, " +
                     "log(pi) and log(2) bounds, the complete von Mangoldt prime-power series, " +
                     "and the tail integral 1/648. The complex HasSum at six is consumed by the " +
                     "real HasSum for sixWeight; the positive kernel estimate and the evaluated defect " +
-                    "are then consumed by the height contradiction. The companion " +
-                    "XiSquareExteriorRemainder.lean is part of the exact checked source and remains " +
-                    "unchanged (sealed SHA-256 540ac7144177a040a07dec7a58b33a97ab26efd19dd6d1545124f397faf70a9c).")),
+                    "are then consumed by the height contradiction.")),
                 Paragraph(Text(
-                    "Every natural index is the sigma family of Fin (actualData.multiplicity n) over " +
+                    "The natural-index enumeration is equivalent to the sigma family of Fin (actualData.multiplicity n) over " +
                     "the exhaustive actual family. ActualZeroOccurrence, its infinite instance, " +
                     "actualOccurrenceEquiv : N ≃ ActualZeroOccurrence, actualZero, the exact fiber " +
-                    "identity and fiber cardinality, and the finite inclusive cutoff transports are all " +
-                    "retained. The sealed six-module retention record covers 467 module-qualified " +
-                    "types and is unchanged. The resulting family includes both imaginary signs and every positive " +
+                    "identity and fiber cardinality give exact transports of the infinite mass and " +
+                    "the finite inclusive cutoffs. The resulting family includes both imaginary signs and every positive " +
                     "analytic multiplicity. The reciprocal-square summability and strict total bound " +
                     "are transported through those fibers; actual_count_both applies them to the " +
                     "literal cutoff |Im(actualZero k)| ≤ T and gives ncard ≤ floor(2*T^2) for " +
@@ -119,33 +116,41 @@ internal sealed class ActualReciprocalSquareBoundsDocument : IScribeDocumentDefi
                         "prime powers, and the integrable tail 1/648 give " +
                         "T6 < 329/15000, a strict contradiction. Exhaustivity then transfers " +
                         "100 < (Im(zero n))^2 to the arbitrary rho. No height, mass, numerical, " +
-                        "critical-line, or RH premise is introduced."))),
+                        "critical-line, or RH premise is introduced. " +
+                        "These numerical reductions bound the same complete analytic quantities: " +
+                        "firstLiMass_lt_one proves firstLiMass < 1, excluding real zeros and making " +
+                        "conjugate indices distinct; firstLiMass_lt_third proves firstLiMass < 1/3 " +
+                        "for the bootstrap u > 5. At the resolvent parameter 6, gamma_upper_r6 proves " +
+                        "EulerGamma < 5787/10000, log_pi_lower_r6 proves 11447/10000 < log(pi), " +
+                        "and Real.log_two_gt_d9 implies 6931/10000 < log(2). " +
+                        "These upper, lower, and lower bounds have the directions required by " +
+                        "the coefficients +6, -5, and -11. The gamma bound uses the exact harmonic " +
+                        "sum H512 and log(512) = 9*log(2). The bound sixQ_upper proves Q6 < 7/500 " +
+                        "for the actual Re(-zeta'(6)/zeta(6)), using its complete von Mangoldt " +
+                        "series and every term with n >= 4 in the tail comparison. The bound " +
+                        "sixDefect_upper combines these estimates to give T6 < 329/15000 for " +
+                        "the same defect. The proof actual_ordinate_sq_gt_hundred consumes this " +
+                        "bound with the low-zero lower bound, and actual_height_gt_ten transfers " +
+                        "the contradiction to every actual nontrivial zero."))),
                     DescribeRole.Theorem),
                 Paragraph(Text(
-                    "The unchanged original application is the existing owner narrative. For every " +
-                    "m ≥ 1, its CompleteZeroFamily fields are supplied by the exact zero, strip, " +
+                    "For every m ≥ 1, the CompleteZeroFamily fields are supplied by the exact zero, strip, " +
                     "height, reciprocal-square summability, reciprocal-square mass < 2, finite " +
                     "count shell, and count bound above. For an actual rho, it sets " +
-                    "gamma = |Im rho|, so the retained actual_height_gt_ten supplies gamma > 10. " +
-                    "The existing checked4361 complete_low_h_weighted_mean_bound is then applied with " +
-                    "the unchanged scalar hypothesis m ≥ 1 and the unchanged bound " +
+                    "gamma = |Im rho|, so actual_height_gt_ten supplies gamma > 10. " +
+                    "The application of complete_low_h_weighted_mean_bound uses " +
+                    "the scalar hypothesis m ≥ 1 and the bound " +
                     "m*(gamma+10)^2*(2400000*exp(-83*m) + 2400 + 384*exp(-28*m)). " +
                     "Here the inner h-domain is the full Icc 0 2 with weight 1+h, whose integral is 4; " +
                     "the Gaussian center is 16*m with variance denominator 4*m; the physical envelope " +
-                    "has coefficient 3; and the original shell route keeps core coefficient 20, " +
+                    "has coefficient 3; and the shell estimate has core coefficient 20, " +
                     "giving 3*4*20 = 240 and the 2400000*exp(-83*m) term. The positive and negative " +
-                    "extensions remain 2400 and 384*exp(-28*m). The exact preserved transient " +
-                    "ActualOriginalFieldConsumer.lean has SHA-256 " +
-                    "40271c899298c1d268b7976241dd3fedd5b66004756ad901591434e9787ce3db; it is cited " +
-                    "as sealed evidence and is not copied into this overlay. No final-height wrapper " +
-                    "or tracked mean specialization is introduced.")),
+                    "extensions are 2400 and 384*exp(-28*m).")),
                 Paragraph(Text(
-                    "Consumed helpers remain private or source-internal exactly as authored: endpoint " +
+                    "The proof uses endpoint " +
                     "normalization, strip and conjugation algebra, occurrence and fiber transports, " +
                     "finite cutoff membership, the real-part HasSum, kernel positivity, and the " +
-                    "von Mangoldt tail comparison. This Scribe source is a proposed faithful " +
-                    "overlay; native Lean, Scribe emission, DTR, CI, freezing, issue submission, and " +
-                    "official acceptance remain caller-owned checks.")))));
+                    "von Mangoldt tail comparison.")))));
     }
 }
 
