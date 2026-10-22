@@ -424,7 +424,6 @@ For c>=3, signed n!=0, N>=9 and |n|<N, the finite physical energy is strictly po
 - Truth anchor: `D5/S3/Weil/ZetaBridge/ActualThreeNodeSourceHeadBridge.tailSpace`
 - Truth anchor: `D5/S3/Weil/ZetaBridge/ActualThreeNodeSourceHeadBridge.threeNodes`
 - Dependency: [D5/S3/Weil/ZetaBridge/ActualExplicit336](ActualExplicit336.md)
-- Dependency: [D5/S3/Weil/ZetaBridge/ActualFiniteHeadTailKernel](ActualFiniteHeadTailKernel.md)
 - Dependency: [D5/S3/Weil/ZetaBridge/ActualNodalCoercivity](ActualNodalCoercivity.md)
 - Dependency: [D5/S3/Weil/ZetaBridge/ActualNodalTailEnclosure](ActualNodalTailEnclosure.md)
 - Dependency: [D5/S3/Weil/ZetaBridge/ActualPairedReciprocal](ActualPairedReciprocal.md)

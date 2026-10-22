@@ -583,7 +583,7 @@ noncomputable def registration : Contract.Registration.{_, _, _, 0, 0, 0, 0, 0, 
   partialSensitivity := none
   escapeFrom := none
   sourceSelection := some {
-    owner := `D5.S3.Weil.ZetaBridge.ActualThreeNodeSourceHeadBridge
+    owner := `D5.S3.Weil.ZetaBridge.ActualUniformFiniteHeadTail
     definition := none
     coordinates := #[]
     readouts := #[{
@@ -651,7 +651,7 @@ noncomputable def registration : Contract.Registration.{_, _, _, 0, 0, 0, 0, 0, 
   partialSensitivity := none
   escapeFrom := none
   sourceSelection := some {
-    owner := `D5.S3.Weil.ZetaBridge.ActualThreeNodeSourceHeadBridge
+    owner := `D5.S3.Weil.ZetaBridge.ActualUniformFiniteHeadTail
     definition := none
     coordinates := #[]
     readouts := #[{
@@ -718,7 +718,7 @@ noncomputable def registration : Contract.Registration.{_, _, _, 0, 0, 0, 0, 0, 
   partialSensitivity := none
   escapeFrom := none
   sourceSelection := some {
-    owner := `D5.S3.Weil.ZetaBridge.ActualThreeNodeSourceHeadBridge
+    owner := `D5.S3.Weil.ZetaBridge.ActualUniformFiniteHeadTail
     definition := none
     coordinates := #[]
     readouts := #[{

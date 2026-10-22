@@ -6,7 +6,7 @@
    utility: none
    digest: The literal signed three-node arithmetic columns form a linear Hilbert-sum map with the original coefficient metric. -/
 
-import D5.S3.Weil.ZetaBridge.ActualFiniteHeadTailKernel
+
 import D5.S3.Weil.ZetaBridge.ActualUniformFiniteHeadTail
 import D5.S3.Weil.ZetaBridge.ActualNodalTailEnclosure
 import Mathlib.Topology.Algebra.InfiniteSum.NatInt
