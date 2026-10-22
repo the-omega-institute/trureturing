@@ -82,7 +82,7 @@ internal sealed class HeisenbergChannelCompressionEquivalenceDocument : IScribeD
     private static Formula DepArrow(string name, Formula domain, Formula range) =>
         Parenthesized(Seq(Typed(V(name), domain), Sp, To, Sp, range));
     private static Formula Family(Formula d, Formula index, Formula outcomes) =>
-        DepArrow("x", index, DepArrow("b", At(outcomes, V("x")), Matrix(d, d)));
+        DepArrow("x", index, Arrow(At(outcomes, V("x")), Matrix(d, d)));
     private static Formula ParentIndex(Formula index, Formula outcomes) =>
         DepArrow("x", index, At(outcomes, V("x")));
     private static Formula All(string name, Formula type, Formula body) =>
