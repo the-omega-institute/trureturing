@@ -52,6 +52,14 @@ internal sealed class HircheArimotoCombiningDocument : IScribeDocumentDefinition
                 "The two inputs use the same specified inverse branch."),
             Node("claim", "Complete threshold claim", Equal(N("claim"), ClaimBody()), DescribeRole.Definition,
                 "The claim quantifies over all real orders in both ranges and every y in the closed range I(alpha)."),
+            Node("ratio_tanh", "Hyperbolic bias ratio", All("s",
+                Equal(Frac(Subtract(D(1), Call("tanh", N("s"))),
+                    Add(D(1), Call("tanh", N("s")))),
+                    Call("exp", Multiply(Subtract(D(0), D(2)), N("s"))))), DescribeRole.Theorem,
+                "For every real s, the Cachin ratio (1-tanh(s))/(1+tanh(s)) equals exp(-2s)."),
+            Node("tanh_mem", "Positive hyperbolic bias", All("s", Imp(Lt(D(0), N("s")),
+                And(Lt(D(0), Call("tanh", N("s"))), Lt(Call("tanh", N("s")), D(1))))),
+                DescribeRole.Theorem, "For every positive s, tanh(s) lies strictly between zero and one."),
             Node("result", "Conjecture IV.6 with witness three halves", ClaimBody(), DescribeRole.Theorem,
                 "The witness is alphaHat=3/2, strictly between one and 15783/10000. "
                     + "The result proves closed-interval separate convexity for all 0<alpha<1 "
