@@ -10,7 +10,7 @@ Lean statement: `D5/S3/Analytic/MeijerZeroCount/Defs.gammaQuot`
 
 *Formalization.* `D5/S3/Analytic/MeijerZeroCount/Defs.gammaQuot` (`✓ std3`).
 
-*Source.* Repository-derived.
+*Citation.* D. B. Karp and E. G. Prilepkina (2016). *Completely monotonic gamma ratio and infinitely divisible H-function of Fox*. DOI: [10.1007/s40315-015-0128-9](https://doi.org/10.1007/s40315-015-0128-9). URL: <https://arxiv.org/abs/1501.05388>.
 
 *Commentary.*
 
@@ -22,7 +22,7 @@ Lean statement: `D5/S3/Analytic/MeijerZeroCount/Defs.meijerG`
 
 *Formalization.* `D5/S3/Analytic/MeijerZeroCount/Defs.meijerG` (`✓ std3`).
 
-*Source.* Repository-derived.
+*Citation.* D. B. Karp and E. G. Prilepkina (2016). *Completely monotonic gamma ratio and infinitely divisible H-function of Fox*. DOI: [10.1007/s40315-015-0128-9](https://doi.org/10.1007/s40315-015-0128-9). URL: <https://arxiv.org/abs/1501.05388>.
 
 *Commentary.*
 
@@ -34,7 +34,7 @@ Lean statement: `D5/S3/Analytic/MeijerZeroCount/Defs.control`
 
 *Formalization.* `D5/S3/Analytic/MeijerZeroCount/Defs.control` (`✓ std3`).
 
-*Source.* Repository-derived.
+*Citation.* D. B. Karp and E. G. Prilepkina (2016). *Completely monotonic gamma ratio and infinitely divisible H-function of Fox*. DOI: [10.1007/s40315-015-0128-9](https://doi.org/10.1007/s40315-015-0128-9). URL: <https://arxiv.org/abs/1501.05388>.
 
 *Commentary.*
 
@@ -46,7 +46,7 @@ Lean statement: `D5/S3/Analytic/MeijerZeroCount/Defs.claim`
 
 *Formalization.* `D5/S3/Analytic/MeijerZeroCount/Defs.claim` (`✓ std3`).
 
-*Source.* Repository-derived.
+*Citation.* D. B. Karp and E. G. Prilepkina (2016). *Completely monotonic gamma ratio and infinitely divisible H-function of Fox*. DOI: [10.1007/s40315-015-0128-9](https://doi.org/10.1007/s40315-015-0128-9). URL: <https://arxiv.org/abs/1501.05388>.
 
 *Commentary.*
 

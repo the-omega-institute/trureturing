@@ -12,6 +12,8 @@ Lean statement: `D5/S3/Analytic/MeijerZeroCount/Result.family`
 
 *Source.* Repository-derived.
 
+*Acknowledgement.* D. B. Karp and E. G. Prilepkina (2016). *Completely monotonic gamma ratio and infinitely divisible H-function of Fox*. DOI: [10.1007/s40315-015-0128-9](https://doi.org/10.1007/s40315-015-0128-9). URL: <https://arxiv.org/abs/1501.05388>.
+
 *Commentary.*
 
 For every natural n and d at least two and every positive real c, set a=(n+c,n+c) and b=(c,2n+d+c). In the unit interval with endpoints excluded, Meijer's G has exactly n distinct zeros and the control function has exactly one zero. Mellin inversion identifies G with the Rodrigues kernel, whose zero count follows from Rolle's theorem and the polynomial degree. The control zero count follows from strict monotonicity of its normalized factor.
@@ -22,7 +24,13 @@ Lean statement: `D5/S3/Analytic/MeijerZeroCount/Result.result`
 
 *Proof.* Machine-checked in Lean as `D5/S3/Analytic/MeijerZeroCount/Result.result` (`✓ std3`). ∎
 
+*Resolves.* `Problems/karp-prilepkina-2015-meijer-zero-count` (refuted) by `D5/S3/Analytic/MeijerZeroCount/Result.result`.
+
+<!-- scribe-open-problem-resolution-v1 {"problem_slug":"karp-prilepkina-2015-meijer-zero-count","declaration_gid":"D5/S3/Analytic/MeijerZeroCount/Result.result","resolution_kind":"refuted"} -->
+
 *Source.* Repository-derived.
+
+*Acknowledgement.* D. B. Karp and E. G. Prilepkina (2016). *Completely monotonic gamma ratio and infinitely divisible H-function of Fox*. DOI: [10.1007/s40315-015-0128-9](https://doi.org/10.1007/s40315-015-0128-9). URL: <https://arxiv.org/abs/1501.05388>.
 
 *Commentary.*
 
