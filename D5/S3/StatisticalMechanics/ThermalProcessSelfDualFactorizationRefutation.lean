@@ -8,7 +8,6 @@
 
 import Mathlib.Analysis.Convex.Extreme
 import Mathlib.LinearAlgebra.Matrix.Stochastic
-import Mathlib.Tactic.Linarith
 
 /-! An exact five-level factorization satisfying detailed balance. -/
 
