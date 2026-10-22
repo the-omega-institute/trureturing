@@ -309,12 +309,13 @@ private def ownedCheckpointTrace (t : LookupTrace) : LookupTrace :=
     capped := t.capped.foldl (fun out s => out.push (String.ofList s.toList)) #[],
     source? := t.source?.map ownedLookupName}
 
-/-- Positive checkpoint regions live until process exit: Meta may retain
-realization keys beyond rollback even when returned expressions are copied. -/
-initialize lookupPositiveCheckpointRegions : IO.Ref (Array CompactedRegion) ← IO.mkRef #[]
+/-- Checkpoint regions live until process exit. Expression sharing can retain
+mapped query storage even when returned expressions are reconstructed. -/
+initialize lookupCheckpointRegions : IO.Ref (Array CompactedRegion) ← IO.mkRef #[]
 
 private unsafe def readLookupCheckpoint (path : System.FilePath) : IO LookupCheckpoint := do
   let (r, region) ← unpickle LookupCheckpoint path
+  lookupCheckpointRegions.modify (·.push region)
   let result : LookupCheckpoint := {r with
     identity := String.ofList r.identity.toList,
     query := detachLookupExpression r.query,
@@ -324,9 +325,6 @@ private unsafe def readLookupCheckpoint (path : System.FilePath) : IO LookupChec
       parts := r.entry.parts.foldl (fun out (s,n) => out.push (String.ofList s.toList,n)) #[]},
     trace := ownedCheckpointTrace r.trace,
     proof? := r.proof?.map detachLookupExpression}
-  if r.proof?.isSome then
-    lookupPositiveCheckpointRegions.modify (·.push region)
-  else region.free
   return result
 
 /-- Every attempt starts from the same branch state and receives its own κ.
