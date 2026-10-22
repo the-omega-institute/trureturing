@@ -343,13 +343,15 @@ unsafe def onDemandLookup (table : LookupTable)
       let query ← getEnv
       -- Native imports carry nested inductives, recursors and generated
       -- declarations intact. Only query vocabulary is reconstructed here.
-      let mut native := source
-      -- Preserve the exact query-side attribute, instance and tactic tables.
-      -- Imported candidate extensions stay unavailable to the fixed closers.
-      for extension in ← persistentEnvExtensionsRef.get do
-        let ext := extension.toEnvExtension
-        native := ext.setState (asyncMode := .sync) native
-          (ext.getState (asyncMode := .sync) query)
+      let native ← withLookupPreparation (some budget) do
+        let mut native := source
+        -- Preserve query tables without any candidate registrations. This
+        -- deterministic copy creates no metavariables or choice points.
+        for extension in ← persistentEnvExtensionsRef.get do
+          let ext := extension.toEnvExtension
+          native := ext.setState (asyncMode := .sync) native
+            (ext.getState (asyncMode := .sync) query)
+        return native
       setEnv native
       resetCache
       modifyThe Core.State fun state => {state with cache := {}}
