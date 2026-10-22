@@ -7,6 +7,7 @@
    digest: Positive normalized elliptic coefficients and summably bounded negative derivatives. -/
 
 import D5.S3.Analytic.EllipticTailExponent.Defs
+import D5.S3.ArithSums.A400361PillaiMean
 import D5.S3.Analytic.SeriesInequalities.NormalizedPochhammerBounds
 import Mathlib.Analysis.Calculus.SmoothSeries
 import Mathlib.Analysis.PSeries
@@ -158,16 +159,11 @@ private def w (n k : ℕ) : ℝ :=
   1 / (((k + n + 1 : ℕ) : ℝ) * (((k + n + 1 : ℕ) : ℝ) + 1))
 
 private lemma summable_w (n : ℕ) : Summable (w n) := by
-  have h := (summable_nat_add_iff (n + 1)).2
-    (Real.summable_one_div_nat_pow.mpr (by norm_num : 1 < (2 : ℕ)))
-  apply Summable.of_nonneg_of_le (fun k => by dsimp [w]; positivity) _ h
-  intro k
-  have hk : (0 : ℝ) < (k + n + 1 : ℕ) := by positivity
-  dsimp [w]
-  simpa only [Nat.add_assoc] using
-    (one_div_le_one_div_of_le (sq_pos_of_pos hk)
-      (show (((k + n + 1 : ℕ) : ℝ)) ^ 2 ≤
-        ((k + n + 1 : ℕ) : ℝ) * (((k + n + 1 : ℕ) : ℝ) + 1) by nlinarith))
+  have h := ((hasSum_nat_add_iff' n).2
+    D5.S3.ArithSums.A400361PillaiMean.hasSum_kernel_one).summable
+  change Summable (fun k => w n k)
+  simpa only [w, Nat.cast_add, Nat.cast_one, show (2 : ℝ) = 1 + 1 by norm_num,
+    add_assoc] using h
 
 private lemma summable_b (n : ℕ) {a : ℝ} (ha : 0 ≤ a) (ha1 : a ≤ 3 / 4) :
     Summable (fun k => b (k + n + 1) a) := by
@@ -221,29 +217,12 @@ theorem continuousOn_U (n : ℕ) : ContinuousOn (U n) (Icc 0 (3 / 4)) := by
 
 /-- The exact value of the normalized tail at zero. -/
 theorem U_zero (n : ℕ) : U n 0 = 1 / ((n : ℝ) + 1) := by
-  have hsum (N : ℕ) : ∑ k ∈ range N, w n k =
-      1 / ((n : ℝ) + 1) - 1 / ((N : ℝ) + n + 1) := by
-    have ht := sum_range_sub' (fun k : ℕ => (1 : ℝ) / ((k : ℝ) + n + 1)) N
-    convert ht using 1
-    apply sum_congr rfl
-    intro k hk
-    dsimp [w]
-    push_cast
-    have h0 : (k : ℝ) + n + 1 ≠ 0 := by positivity
-    have h1 : (k : ℝ) + n + 1 + 1 ≠ 0 := by positivity
-    field_simp
-    ring
-    all_goals simp
-  have hlim : Tendsto (fun N : ℕ => ∑ k ∈ range N, w n k) atTop
-      (𝓝 (1 / ((n : ℝ) + 1))) := by
-    simp_rw [hsum]
-    have hz : Tendsto (fun N : ℕ => (1 : ℝ) / (((N + n : ℕ) : ℝ) + 1)) atTop (𝓝 0) :=
-      tendsto_one_div_add_atTop_nhds_zero_nat.comp (tendsto_add_atTop_nat n)
-    have hz' : Tendsto (fun N : ℕ => (1 : ℝ) / ((N : ℝ) + n + 1)) atTop (𝓝 0) := by
-      simpa only [Nat.cast_add] using hz
-    simpa using tendsto_const_nhds.sub hz'
-  have ht := tendsto_nhds_unique (summable_w n).hasSum.tendsto_sum_nat hlim
-  simpa only [U, b_zero, w] using ht
+  have h := (hasSum_nat_add_iff' n).2
+    D5.S3.ArithSums.A400361PillaiMean.hasSum_kernel_one
+  rw [D5.S3.ArithSums.A400361PillaiMean.kernel_one_prefix] at h
+  have he := h.tsum_eq
+  simpa only [U, b_zero, Nat.cast_add, Nat.cast_one,
+    show (2 : ℝ) = 1 + 1 by norm_num, add_assoc, sub_sub_cancel] using he
 
 /-- A parameter-independent summable bound for the tail derivative. -/
 theorem norm_deriv_U_le (n : ℕ) {a : ℝ} (ha : 0 < a) (ha1 : a < 3 / 4) :
