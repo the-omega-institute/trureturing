@@ -30,6 +30,18 @@ internal sealed class RationalZeroRealizationDocument : IScribeDocumentDefinitio
                 "The partition function sums the marginal over every visible assignment. Equivalently it sums the weight over all visible and hidden assignments.", DescribeRole.Definition),
             Node("rational-law", "Final normalization", "law", StatementSource.WithoutFormula(),
                 "The law at a is the marginal at a divided by the partition function. The representation theorem proves that the partition function is strictly positive.", DescribeRole.Definition),
+            Node("rational-pin-raw", "The indicator potential", "pinRaw", StatementSource.WithoutFormula(),
+                "The raw pin potential is one on each of the five tuples of A and zero on the remaining three tuples.", DescribeRole.Definition),
+            Node("rational-pin-table", "The normalized exclusion table", "pinTable", StatementSource.WithoutFormula(),
+                "Divide the raw pin potential by five. On (o,o,o) this forces the actual variable o to zero. On (u,u,w) it enforces that u and w are not simultaneously one, including a loop when u=w.", DescribeRole.Definition),
+            Node("rational-unary-raw", "The full activity potential", "unaryRaw", StatementSource.WithoutFormula(),
+                "For rational r, the raw activity potential has value r at 110, value one at the four other tuples of A, and zero outside A. All eight entries are specified.", DescribeRole.Definition),
+            Node("rational-unary-table", "The normalized activity table", "unaryTable", StatementSource.WithoutFormula(),
+                "For r nonnegative, divide the raw activity potential by four plus r. With an internally zero pin o, scope (u,u,o) has activities one and r, times the common normalization factor. When r is positive, every tuple of A has positive value.", DescribeRole.Definition),
+            Node("rational-numbering", "Numbering finite hidden and factor types", "numberedNetwork", StatementSource.WithoutFormula(),
+                "Given finite types H and J, a decidable equality on H and a family f indexed by J of actual factors on Fin n plus H, finite equivalences produce a Network n card(H) card(J). Visible names stay fixed. Hidden names and factor indices are renamed bijectively. Every Table is retained without alteration.", DescribeRole.Definition),
+            Node("rational-numbered-marginal", "Marginals are unchanged by finite numbering", "numbered_marginal", StatementSource.FromAuthor(NumberedFormula()),
+                "For every natural n, finite types H and J, a decidable equality on H, every factor family f on Fin n plus H and every visible assignment a, the canonical numbered Network marginal equals the sum over all h from H to Bool of the product over all j in J of the actual factor values in combined(a,h), the assignment Sum.elim a h. Empty types and empty products are included.", DescribeRole.Theorem),
             Node("rational-zero-realization", "Every rational law, including arbitrary zeros", "result", StatementSource.FromAuthor(ResultFormula()),
                 "Let n be any natural number at least one. Let P be any rational function on the entire n-dimensional Boolean cube with nonnegative entries summing to one. There exist finite natural m and k and a Network n m k whose partition function is positive and whose normalized marginal equals P at every visible assignment. Arbitrary zero entries are included. No bound on the finite network size is asserted.", DescribeRole.Theorem),
             Paragraph(Text("For each visible word s, build a NOR expression testing equality with s. A positive target bit uses the visible input; a negative target bit uses NOR of that input with itself. Conjunction is NOR of the two NOR-computed negations. A fold joins all n literals, seeded by the first literal; duplicating that literal preserves the indicator and requires no constant. The finite union of the expressions' gate subterms gives hidden wires. A shared subexpression denotes one actual wire. Structural induction proves that gate equations determine every hidden gate wire uniquely for each visible assignment.")),
@@ -38,6 +50,25 @@ internal sealed class RationalZeroRealizationDocument : IScribeDocumentDefinitio
             Paragraph(Text("Exactly one indicator is true at a, namely the one indexed by a. The unique gate-consistent hidden assignment therefore has weight C times P(a), where C is one fifth times one fourth for each gate times the product over s of one divided by the quantity four plus P(s). Every factor of C is positive rational. Every other hidden assignment violates the pin or a gate and contributes zero. The hidden marginal is exactly C times P(a); its total is C because P sums to one. Final normalization gives P exactly, with no limit. Finite equivalences number the hidden and factor sets without changing any sums or products.")),
             Paragraph(Text("This is an elementary constructive consequence of the five-mode relation and NOR computation. It concerns globally normalized potentials, not a supplied causal sampling kernel or an efficiency bound. The existing unweighted primitive-positive support theorem alone does not specify the rational masses."))
         ), []));
+
+    private static Formula NumberedFormula()
+    {
+        Formula n = F.Id("n"), hType = F.Id("H"), jType = F.Id("J"), f = F.Id("f"), a = F.Id("a"), h = F.Id("h"), j = F.Id("j");
+        Formula cube = Arrow(Call("Fin", n), Named("Bool"));
+        Formula variables = Seq(Call("Fin", n), Sp, F.Plus, Sp, hType);
+        Formula value = Call("value", Call("f", j), Call("combined", a, h));
+        Formula product = Seq(F.Prod, Underscore, Grp(j, Sp, InMacro, Sp, jType), Sp, value);
+        Formula sum = Seq(F.Sum, Underscore, Grp(h, Sp, InMacro, Sp, Arrow(hType, Named("Bool"))), Sp, product);
+        Formula statement = All("a", cube,
+            Rel(Call("marginal", Call("numberedNetwork", f), a), FormulaRelationOperator.Equal, sum));
+        statement = All("f", Arrow(jType, Call("Factor", variables)), statement);
+        statement = Seq(OpenBracket, Call("Fintype", hType), CloseBracket, Sp,
+            OpenBracket, Call("DecidableEq", hType), CloseBracket, Sp,
+            OpenBracket, Call("Fintype", jType), CloseBracket, Sp, statement);
+        statement = All("J", Named("Type"), statement);
+        statement = All("H", Named("Type"), statement);
+        return Disp(All("n", Named("Nat"), statement));
+    }
 
     private static Formula ResultFormula()
     {
