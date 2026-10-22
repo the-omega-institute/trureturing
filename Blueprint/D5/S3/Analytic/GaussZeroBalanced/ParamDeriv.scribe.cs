@@ -45,7 +45,7 @@ internal sealed class ParamDerivDocument : IScribeDocumentDefinition
             Describe.Lean(DescribeId.Create("gauss-zero-balanced-param-hasderivat-f-param-zero"),
                 DeclarationHandle.Create("D5/S3/Analytic/GaussZeroBalanced/ParamDeriv.hasDerivAt_f_param_zero"),
                 H("The initial mixed derivative"), StatementSource.WithoutFormula(), AssessedProvenance.FromRepo(),
-                Blocks(Paragraph(Text("For positive a and b, the argument derivative at zero of the parameter derivative of f is a times (b squared-a(a+1)) divided by (a+b) squared times (a+b+1) squared. This follows from the proved mixed derivative identity and parameter differentiation of the initial slope -ab/((a+b)(a+b+1))."))), DescribeRole.Theorem),
+                Blocks(Paragraph(Text("For positive a and b, the argument derivative at zero of the parameter derivative of f is a times (b squared-a(a+1)) divided by the product of (a+b) squared and (a+b+1) squared. This follows from the proved mixed derivative identity and parameter differentiation of the initial slope -ab/((a+b)(a+b+1))."))), DescribeRole.Theorem),
             Describe.Lean(DescribeId.Create("gauss-zero-balanced-param-parameter-equation"),
                 DeclarationHandle.Create("D5/S3/Analytic/GaussZeroBalanced/ParamDeriv.parameter_equation"),
                 H("The parameter variational equation"), StatementSource.WithoutFormula(), AssessedProvenance.FromRepo(),
