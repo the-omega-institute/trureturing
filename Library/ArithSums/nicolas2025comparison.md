@@ -15691,19 +15691,23 @@ This retains every growing exponent layer. In particular the actual
 integers $N_x$ are unbounded. It does not assert $A_x=x$ or zero
 defect at their own-size price.
 
-For large $x$, put $A=A_x$, $s_y=y\log y$ and
-$h_x=|s_A/s_x-1|$. ACC4 gives
-$h_x=O(e^{-a\sqrt{\log x}})$ and hence $h_x\le1/4$ eventually.
-The full-layer capacity application (NPC1) below gives the same
-integer's original-price defect bound
+For large $x$, one has $A_x\in[x/2,2x]$. On the price interval
+between $\lambda(x)$ and $\lambda(A_x)$, all pressure slopes have
+absolute value at most $Cx$: even the weak endpoint inventory at
+$2x$ is bounded by the strict inventory at $3x$, which is $O(x)$
+by ACC4. The finite piecewise-affine pressure is therefore
+$Cx$-Lipschitz on that interval, including all ties.
+Use ACC3 and $|\lambda'(y)|=O(1/(x^2\log x))$ for
+$y\in[x/2,2x]$. The full original-price defect of this same integer
+satisfies
 
 $$
 \begin{aligned}
 0\le d_{A_x}(N_x)
 &=M(\lambda(A_x))-M(\lambda(x))
        +(\lambda(A_x)-\lambda(x))A_x\\
-&\le\frac{24A_xh_x^2+32\sqrt{A_x}h_x}{A_x\log A_x}\\
-&=O\!\left(\frac{e^{-2a\sqrt{\log x}}}{\log x}\right)
+&\le\frac{C|A_x-x|}{x\log x}
+\le\frac{Ce^{-a\sqrt{\log x}}}{\log x}
 =o(\widetilde H_{A_x}).
 \end{aligned}
 \tag{ACC5}
@@ -15712,11 +15716,13 @@ $$
 The last comparison uses GMW2--GMW3's
 $\log\widetilde H_A=-\epsilon(\log L)^2+
 O(\log L\log\log L)$; $\sqrt L$ dominates $(\log L)^2$.
-The capacity input is the existing arbitrary-host CA benefit bound,
-not Proposition 5's additional superabundant localization. All
-higher layers and both strict and weak threshold ties are retained.
-This unconditional allowance still does not give
+ACC5 is only relative to this larger scale. It does not give
 $d_{A_x}(N_x)=o(1/T_{A_x})$.
+
+The original-price defect is the classical CA benefit, as recorded in
+[Erdős–Nicolas 1975](erdosnicolas1975repartition.md). ACC5 uses the
+unrestricted pressure slope; it assumes none of Proposition 5's
+additional localization hypotheses.
 
 ### The complete central debit and far credit are jointly realized
 
@@ -15783,164 +15789,3 @@ scale. No sign of $D_A(N_x)$, $\Delta(N_x)$ or a Robin violation is
 inferred. A joint arithmetic estimate preserving the root reserve
 can still succeed; RH and strict Robin for every $n>5040$ remain
 unproved.
-
-
-## A finite upper benefit bound at the same strict inventory's own price
-
-The existing [arbitrary-host benefit and thin-layer capacity
-TC.1](erdosnicolas1975repartition.md#an-explicit-thin-layer-capacity-for-the-same-arbitrary-host)
-can bound the complete own-price defect of ACC's actual $N_x$.
-This applies a classical benefit calculation to two specified prices;
-it introduces no new capacity or prime-distribution theorem. The
-capacity's Yamada and Dusart inputs remain external, and this
-application has no Lean certification or literature-priority claim.
-
-Use the same strict integer $N_x$, $A=\log N_x$, $s_y=y\log y$ and
-$\lambda(y)=1/s_y$. Suppose $x>1$, $A\ge16$, and put
-
-$$
-h=\left|\frac{s_A}{s_x}-1\right|\le\frac14.
-$$
-
-Let $C_A$ be the **maximal** optimizer at $\lambda(A)$, so it includes
-every layer with $r_{p,j}\ge\lambda(A)$. The source $N_x$ includes
-exactly the layers with $r_{p,j}>\lambda(x)$. For each prime, let
-$\mathscr J$ contain exactly the positive layers lying between these
-two actual exponent counts:
-
-$$
-\mathscr J=
-\{(p,j):p\text{ prime},\
- \min(v_p(C_A),v_p(N_x))<j\le
- \max(v_p(C_A),v_p(N_x))\}.
-$$
-
-This is finite. If a layer belongs to $\mathscr J$, its marginal
-lies between $\lambda(A)$ and $\lambda(x)$, with the appropriate
-endpoint inclusion. Therefore every crossed layer satisfies
-
-$$
-|s_A r_{p,j}-1|\le h,\qquad
-|r_{p,j}-\lambda(A)|\le h/s_A.
-$$
-
-In particular a layer tied at $\lambda(A)$ has zero benefit cost,
-while a layer tied at $\lambda(x)$ is still inside the same weak band.
-The bound does not require $N_x$ to be superabundant, GA1, GA2,
-or optimal at its own-size price.
-
-The classical layerwise benefit identity at the **own-size** price is
-
-$$
-\begin{aligned}
-d_A(N_x)
-&=M(\lambda(A))-W(N_x)+\lambda(A)A\\
-&=\sum_{(p,j)\in\mathscr J}
-       \log p\,|r_{p,j}-\lambda(A)|.
-\end{aligned}
-$$
-
-TC.1 with parameter $a=A$ bounds the full weak-band resource by
-$24Ah+32\sqrt A$. Since $\mathscr J$ is a subset of that band,
-
-$$
-\boxed{
-0\le d_A(N_x)
-\le\frac{24Ah^2+32\sqrt A\,h}{A\log A},\qquad
-T_A d_A(N_x)\le24\sqrt A\,h^2+32h.
-}
-\tag{NPC1}
-$$
-
-This is a finite bound with an explicit hypothesis on the two actual
-prices. It accounts for every changed prime-power layer.
-
-For ACC4's unconditional family, $A\sim x$ and the mean-value theorem
-for $y\log y$ gives $h=O(e^{-a\sqrt{\log x}})$. Consequently (NPC1)
-gives the estimate used in ACC5: the first term is
-$O(e^{-2a\sqrt{\log x}}/\log x)$, and the second is
-$O(e^{-a\sqrt{\log x}}/(\sqrt x\log x))$, which is smaller.
-The PNT and the constant $a$ are the same as in ACC4. The normalized
-allowance still contains $O(\sqrt x e^{-2a\sqrt{\log x}})$;
-its growth prevents this allowance from paying a root-scale defect
-bound on the whole unconditional family. No lower bound on the
-actual defect is inferred from that growth. The original signed
-Robin integral remains unpaid.
-
-
-### A conditional root-scale transfer for the same actual integers
-
-Let $x$ range over any unbounded family of real prices for which
-
-$$
-\delta_x:=|A_x-x|=o(x^{3/4}).
-\tag{NPC2}
-$$
-
-This condition implies $A_x\sim x$. The mean-value theorem for
-$y\log y$ on the interval with endpoints $x,A_x$ gives
-$h_x=O(\delta_x/x)$, with one common constant once
-$A_x\in[x/2,2x]$. In particular the finite hypotheses of (NPC1)
-hold eventually along the entire specified family, and
-
-$$
-0\le T_{A_x}d_{A_x}(N_x)
-=O\!\left(\frac{\delta_x^2}{x^{3/2}}+
-                 \frac{\delta_x}{x}\right)=o(1).
-\tag{NPC3}
-$$
-
-There is no substitution of $x$ for the source's own clock $A_x$ in
-the defect or its normalization. The exponent $3/4$ here comes from
-the quadratic capacity allowance; it is a sufficient condition, not
-a necessity or an optimal exponent.
-
-Use KTO1's existing complete pressure identity and two-candidate
-reserve at $A=A_x$:
-
-$$
-M(\lambda(A))
-=\gamma+\log\log A-\frac1{\log A}-I_\psi(A)-R(A),
-\qquad
-T_AR(A)=c_R+O(1/\log A),\quad c_R=2(\sqrt2-1).
-$$
-
-Since $\lambda(A)\log N_x=1/\log A$, the same integer has the
-exact margin account
-
-$$
-\Delta(N_x)=d_A(N_x)+I_\psi(A)+R(A),\qquad A=A_x.
-$$
-
-Thus (NPC2), with the cited reserve and capacity inputs, gives
-
-$$
-\boxed{
-T_{A_x}\Delta(N_x)
-=T_{A_x}I_\psi(A_x)+c_R+o(1).
-}
-\tag{NPC4}
-$$
-
-For example, on such a family a lower bound
-$\liminf T_{A_x}I_\psi(A_x)>-c_R$ would imply eventual strict
-Robin there; an upper bound
-$\limsup T_{A_x}I_\psi(A_x)<-c_R$ would imply eventual violations
-there. Neither signed premise is supplied. An asymptotic comparison
-at equality with $-c_R$ does not decide strict Robin.
-
-ACC4's unconditional PNT allowance does not imply (NPC2): its ratio
-to $x^{3/4}$ grows. The existing full-real inventory normal form
-$A_x=\psi(x)+(\sqrt2-1)\sqrt x+o(\sqrt x)$, cited in
-[the workload note](../Analytic/mantovanelli2026primeworkload.md#the-full-real-normal-form-also-controls-strict-inventory-at-events),
-identifies (NPC2) with $\psi(x)-x=o(x^{3/4})$ on this same family.
-This gives a checkable condition on the actual prime error; it does
-not establish that condition at every large price or at the unknown
-counterexample-selected prices.
-
-The finite upper benefit estimate and this conditional transfer reuse
-the classical CA benefit, the already derived thin-layer capacity,
-and the existing reserve and inventory normal form. No new signed
-prime estimate or assumption of RH is introduced. The full original
-same-source signed budget, strict Robin for every integer above 5040,
-and RH remain unresolved; this application has no Lean verification.
