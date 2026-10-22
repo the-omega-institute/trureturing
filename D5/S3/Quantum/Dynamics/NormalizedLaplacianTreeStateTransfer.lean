@@ -12,6 +12,8 @@ import Mathlib.Combinatorics.SimpleGraph.Acyclic
 
 set_option autoImplicit false
 set_option relaxedAutoImplicit false
+set_option maxRecDepth 3000
+set_option maxHeartbeats 800000
 
 noncomputable section
 namespace D5.S3.Quantum.Dynamics.NormalizedLaplacianTreeStateTransfer
@@ -46,14 +48,15 @@ private def tree : SimpleGraph (Fin 17) :=
     (3 ≤ a.val ∧ a.val % 2 = 1 ∧ b.val = a.val + 1)
 
 private instance tree_decidable : DecidableRel tree.Adj :=
-  inferInstanceAs (DecidableRel (SimpleGraph.fromRel _).Adj)
+  fun a b => by unfold tree; infer_instance
 
 private def symMode (u c x y : ℂ) : Fin 17 → ℂ :=
   fun i => if i.val < 2 then u else if i = 2 then c else if i.val % 2 = 1 then x else y
 
 private lemma tree_degree (i : Fin 17) :
     tree.degree i = if i = 2 then 9 else if 3 ≤ i.val ∧ i.val % 2 = 1 then 2 else 1 := by
-  sorry
+  revert i
+  decide
 
 private lemma tree_isTree : tree.IsTree := by
   sorry
