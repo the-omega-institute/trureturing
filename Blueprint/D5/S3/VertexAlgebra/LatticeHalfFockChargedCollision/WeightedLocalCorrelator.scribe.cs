@@ -1,10 +1,10 @@
 using static StrataLint.Scribe.DefinitionDsl;
 
-namespace StrataLint.Scribe.Blueprint.D5.S3.VertexAlgebra;
+namespace StrataLint.Scribe.Blueprint.D5.S3.VertexAlgebra.LatticeHalfFockChargedCollision;
 
 internal sealed class WeightedLocalCorrelatorDocument : IScribeDocumentDefinition
 {
-    private const string Prefix = "D5/S3/VertexAlgebra/WeightedLocalCorrelator.";
+    private const string Prefix = "D5/S3/VertexAlgebra/LatticeHalfFockChargedCollision/WeightedLocalCorrelator.";
     private static readonly LibraryNoteRef LocalityBackground =
         LibraryNoteRef.Create("D5/L/VertexAlgebra/matsuo1997locality");
 

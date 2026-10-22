@@ -1,13 +1,13 @@
-import D5.S3.VertexAlgebra.WeightedLocalCorrelator
+import D5.S3.VertexAlgebra.LatticeHalfFockChargedCollision.WeightedLocalCorrelator
 import Reg.Support.DependentFamily
 import Mathlib.Algebra.Module.ULift
 
 set_option autoImplicit false
 
-namespace Reg.D5.S3.VertexAlgebra.WeightedLocalCorrelator
+namespace Reg.D5.S3.VertexAlgebra.LatticeHalfFockChargedCollision.WeightedLocalCorrelator
 open _root_.D5.S3.VertexAlgebra
 open _root_.D5.S3.VertexAlgebra.UniformGradedLocalCorrelator
-open _root_.D5.S3.VertexAlgebra.WeightedLocalCorrelator
+open _root_.D5.S3.VertexAlgebra.LatticeHalfFockChargedCollision.WeightedLocalCorrelator
 open _root_.D5.S3.VertexAlgebra.FieldNormalProductLocality
 open _root_.D5.S3.ConceptDynamics.InformationEscape.DependentFamily
 universe u
@@ -144,8 +144,8 @@ def familyRegistration : Registration arena.{u} (type_of% (@common_cleared_field
 /-- The source selectors are unresolved; the compiled family proofs do not supply them. -/
 def registration : LeanInformationAudit.Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0}
     (@common_cleared_fields.{u}) (Realization signature.{u}) (Type u) Unit where
-  unitName := `D5.S3.VertexAlgebra.WeightedLocalCorrelator.common_cleared_fields.__information_unit
-  realizationName := `Reg.D5.S3.VertexAlgebra.WeightedLocalCorrelator.familyRegistration
+  unitName := `D5.S3.VertexAlgebra.LatticeHalfFockChargedCollision.WeightedLocalCorrelator.common_cleared_fields.__information_unit
+  realizationName := `Reg.D5.S3.VertexAlgebra.LatticeHalfFockChargedCollision.WeightedLocalCorrelator.familyRegistration
   realizationSource := none
   generated := false
   arena := .source ⟨arena⟩
@@ -166,4 +166,4 @@ def registration : LeanInformationAudit.Contract.Registration.{_,_,_,0,0,0,_,_,_
   options := #[{ name := `autoImplicit, value := .bool false }]
 
 end
-end Reg.D5.S3.VertexAlgebra.WeightedLocalCorrelator
+end Reg.D5.S3.VertexAlgebra.LatticeHalfFockChargedCollision.WeightedLocalCorrelator

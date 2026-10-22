@@ -1,6 +1,6 @@
-/- GID: D5/S3/VertexAlgebra/WeightedLocalCorrelator
+/- GID: D5/S3/VertexAlgebra/LatticeHalfFockChargedCollision/WeightedLocalCorrelator
    generality: G
-   mirror-B: D5/B/S3/VertexAlgebra/WeightedLocalCorrelator
+   mirror-B: D5/B/S3/VertexAlgebra/LatticeHalfFockChargedCollision/WeightedLocalCorrelator
    mirror-E: none(waiver:evidence-not-specified-by-formal-manifest)
    anchors: []
    utility: none
@@ -31,7 +31,7 @@ import D5.S3.VertexAlgebra.SupportedWordRationalCollision
 
 set_option autoImplicit false
 
-namespace D5.S3.VertexAlgebra.WeightedLocalCorrelator
+namespace D5.S3.VertexAlgebra.LatticeHalfFockChargedCollision.WeightedLocalCorrelator
 
 open scoped BigOperators VertexOperator
 open D5.S3.VertexAlgebra.UniformGradedLocalCorrelator
@@ -224,4 +224,4 @@ theorem common_cleared_fields (A : Fin N → VertexOperator ℂ V)
 
 end
 
-end D5.S3.VertexAlgebra.WeightedLocalCorrelator
+end D5.S3.VertexAlgebra.LatticeHalfFockChargedCollision.WeightedLocalCorrelator
