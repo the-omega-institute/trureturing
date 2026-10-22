@@ -12,6 +12,7 @@
    Attribution and full license: Library/QuadraticForms/klartag2025packing.md. -/
 
 import D5.S3.Arith.Robin.ActualRobinClockCovariance
+import D5.S3.Arith.Robin.MellinWeightedVariation
 
 namespace D5.S3.Arith.Robin.RestrictedDivisorStrictInventory
 
@@ -130,3 +131,41 @@ theorem buffer_log_size {x z : ℝ}
   exact ⟨hlow, (Real.log_le_log hz0 hzu).trans hup⟩
 
 end D5.S3.Arith.Robin.OriginalFirstClockBufferEstimates
+
+namespace D5.S3.Arith.Robin.OriginalMovingWindowMoment
+
+open Set
+open D5.S3.Arith.Robin.MellinWeightedVariation (weight)
+
+lemma weight_continuous {a b : ℝ} (ha : 1 < a) :
+    ContinuousOn weight (Icc a b) := by
+  intro x hx
+  have hx1 := ha.trans_le hx.1
+  have hx0 : 0 < x := by linarith
+  have hl := Real.log_pos hx1
+  exact ((Real.continuousAt_log hx0.ne').add continuousAt_const).div
+    ((continuousAt_id.pow 2).mul ((Real.continuousAt_log hx0.ne').pow 2))
+    (mul_ne_zero (pow_ne_zero 2 hx0.ne') (pow_ne_zero 2 hl.ne'))
+    |>.continuousWithinAt
+
+end D5.S3.Arith.Robin.OriginalMovingWindowMoment
+
+namespace D5.S3.Arith.Robin.PrimorialGlobalLaplaceEnvelope
+
+noncomputable section
+
+def primeCutoff (z : ℝ) : Finset ℕ :=
+  (Finset.Ioc 0 ⌊z⌋₊).filter Nat.Prime
+
+theorem prime_filter_Icc (t : ℝ) :
+    (Finset.Icc 0 ⌊t⌋₊).filter Nat.Prime = primeCutoff t := by
+  ext n
+  simp only [primeCutoff, Finset.mem_filter, Finset.mem_Icc, Finset.mem_Ioc]
+  constructor
+  · rintro ⟨⟨_, hn⟩, hp⟩
+    exact ⟨⟨hp.pos, hn⟩, hp⟩
+  · rintro ⟨⟨_, hn⟩, hp⟩
+    exact ⟨⟨Nat.zero_le n, hn⟩, hp⟩
+
+end
+end D5.S3.Arith.Robin.PrimorialGlobalLaplaceEnvelope

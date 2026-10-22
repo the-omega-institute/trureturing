@@ -7,9 +7,7 @@
    digest: A cumulative second-Mertens peak yields a bounded actual lcm Robin witness. -/
 
 import D5.S3.Arith.Robin.LcmRobinResponse
-import D5.S3.Arith.Robin.ActualRobinClockCovariance
 import Mathlib.MeasureTheory.Integral.IntervalIntegral.AbsolutelyContinuousFun
-import Mathlib.Analysis.SpecialFunctions.Integrals.Basic
 
 /-! A finite cumulative Mertens peak forces a strict Robin violation at a prefix lcm. -/
 
@@ -19,6 +17,8 @@ open Set Finset Real MeasureTheory Filter
 open scoped BigOperators Interval Topology
 
 namespace D5.S3.Arith.Robin.ThetaTailPartialSummation
+
+open OriginalMovingWindowMoment (weight_continuous)
 
 private abbrev I (u : ℝ) : ℝ :=
   (Chebyshev.theta u - u) / (u * log u) - Mertens.E₂p u
@@ -31,15 +31,6 @@ private abbrev w := ActualRobinClockCovariance.activationDensity
 private abbrev reciprocal := ActualRobinClockCovariance.g
 private abbrev g (u : ℝ) : ℝ := (Chebyshev.theta u - u) * w u
 
-private theorem w_continuousOn {a b : ℝ} (ha : 2 ≤ a) :
-    ContinuousOn w (Icc a b) := by
-  intro t ht
-  have ht0 : t ≠ 0 := by linarith [ht.1]
-  have hl0 : log t ≠ 0 := (log_pos (by linarith [ht.1] : 1 < t)).ne'
-  have hd0 : t^2 * log t^2 ≠ 0 := mul_ne_zero (pow_ne_zero _ ht0) (pow_ne_zero _ hl0)
-  change ContinuousWithinAt (fun u : ℝ => (log u + 1) / (u^2 * log u^2)) (Icc a b) t
-  fun_prop (disch := assumption)
-
 private theorem theta_mul_integrable {a b : ℝ} (ha : 2 ≤ a)
     {f : ℝ → ℝ} (hf : IntegrableOn f (Icc a b)) :
     IntegrableOn (fun t => f t * Chebyshev.theta t) (Icc a b) := by
@@ -50,9 +41,10 @@ private theorem theta_mul_integrable {a b : ℝ} (ha : 2 ≤ a)
 private theorem g_integrable {a b : ℝ} (ha : 2 ≤ a) (hab : a ≤ b) :
     IntervalIntegrable g volume a b := by
   rw [intervalIntegrable_iff_integrableOn_Icc_of_le hab]
-  have hw := (w_continuousOn (b := b) ha).integrableOn_Icc (μ := volume)
+  have hw : IntegrableOn w (Icc a b) :=
+    (weight_continuous (b := b) (by linarith : 1 < a)).integrableOn_Icc
   have hid : IntegrableOn (fun t : ℝ => w t * t) (Icc a b) :=
-    ((w_continuousOn ha).mul continuousOn_id).integrableOn_Icc (μ := volume)
+    ((weight_continuous (by linarith : 1 < a)).mul continuousOn_id).integrableOn_Icc (μ := volume)
   convert (theta_mul_integrable ha hw).sub hid using 1
   ext t
   dsimp [g]
@@ -71,15 +63,7 @@ private theorem theta_tail_representation {u : ℝ} (hu : 2 ≤ u) :
       ∑ p ∈ Ioc 0 ⌊u⌋₊ with p.Prime, (1 : ℝ) / p := by
     simp only [c, mul_ite, mul_zero]
     rw [← sum_filter]
-    have hsets : (Finset.Icc 0 ⌊u⌋₊).filter Nat.Prime = (Finset.Ioc 0 ⌊u⌋₊).filter Nat.Prime := by
-      ext n
-      simp only [Finset.mem_filter, Finset.mem_Icc, Finset.mem_Ioc]
-      constructor
-      · rintro ⟨⟨_, hn⟩, hp⟩
-        exact ⟨⟨hp.pos, hn⟩, hp⟩
-      · rintro ⟨⟨_, hn⟩, hp⟩
-        exact ⟨⟨Nat.zero_le _, hn⟩, hp⟩
-    rw [hsets]
+    rw [PrimorialGlobalLaplaceEnvelope.prime_filter_Icc]
     apply sum_congr rfl
     intro p hp
     have hpp := (mem_filter.mp hp).2
@@ -89,7 +73,7 @@ private theorem theta_tail_representation {u : ℝ} (hu : 2 ≤ u) :
     dsimp [reciprocal, ActualRobinClockCovariance.g]
     field_simp
   have hfi : IntegrableOn (deriv reciprocal) (Icc (2 : ℝ) u) := by
-    refine ((w_continuousOn (by norm_num : (2 : ℝ) ≤ 2)).neg.integrableOn_Icc (μ := volume)).congr_fun
+    refine ((weight_continuous (by norm_num : (1 : ℝ) < 2)).neg.integrableOn_Icc (μ := volume)).congr_fun
       (fun t ht => (reciprocal_deriv ht.1).symm) measurableSet_Icc
   have ha := sum_mul_eq_sub_integral_mul₁ c (by simp [c]) (by simp [c]) u
     (fun t ht => (ActualRobinClockCovariance.g_has_deriv_at
@@ -132,11 +116,13 @@ private theorem theta_tail_finite {a u : ℝ} (ha : 2 ≤ a) (hau : a ≤ u) :
     · intro t ht
       rw [uIcc_of_le hau] at ht
       exact k_hasDerivAt (ha.trans ht.1)
-    · exact (continuousOn_id.mul (w_continuousOn ha)).intervalIntegrable_of_Icc hau
+    · exact (continuousOn_id.mul (weight_continuous (by linarith : 1 < a))).intervalIntegrable_of_Icc hau
   have htheta : IntervalIntegrable (fun t => Chebyshev.theta t * w t) volume (2 : ℝ) u := by
     rw [intervalIntegrable_iff_integrableOn_Icc_of_le hu]
-    simpa only [mul_comm] using theta_mul_integrable (by norm_num : (2 : ℝ) ≤ 2)
-      ((w_continuousOn (by norm_num : (2 : ℝ) ≤ 2)).integrableOn_Icc (μ := volume))
+    simpa only [mul_comm, MellinWeightedVariation.weight, w,
+      ActualRobinClockCovariance.activationDensity] using
+      theta_mul_integrable (by norm_num : (2 : ℝ) ≤ 2)
+      ((weight_continuous (by norm_num : (1 : ℝ) < 2)).integrableOn_Icc (μ := volume))
   have htheta_a : IntervalIntegrable (fun t => Chebyshev.theta t * w t) volume (2 : ℝ) a := htheta.mono_set (by rw [uIcc_of_le hu, uIcc_of_le ha]; exact Icc_subset_Icc_right hau)
   have htheta_au : IntervalIntegrable (fun t => Chebyshev.theta t * w t) volume a u := htheta.mono_set
     (by rw [uIcc_of_le hu, uIcc_of_le hau]; exact Icc_subset_Icc_left ha)
@@ -146,7 +132,7 @@ private theorem theta_tail_finite {a u : ℝ} (ha : 2 ≤ a) (hau : a ≤ u) :
     have hiu : IntervalIntegrable (fun t : ℝ => t * w t) volume a u := by
       apply ContinuousOn.intervalIntegrable_of_Icc hau
       intro t ht
-      exact continuousWithinAt_id.mul (w_continuousOn ha t ht)
+      exact continuousWithinAt_id.mul (weight_continuous (by linarith : 1 < a) t ht)
     rw [← hkw, ← intervalIntegral.integral_sub htheta_au hiu]
     apply intervalIntegral.integral_congr
     intro t ht
@@ -409,11 +395,19 @@ private theorem weighted_integral_bound {a x : ℝ} (ha : 10000 ≤ a) (hax : a 
   simp only [Pi.neg_apply] at hm
   rw [intervalIntegral.integral_neg] at hm
   have hprimitive : (∫ u in a..x, 6 / sqrt u) = 12 * sqrt x - 12 * sqrt a := by
-    apply intervalIntegral.integral_eq_sub_of_hasDerivAt _ hIntR
-    intro u hu
-    rw [Set.uIcc_of_le hax] at hu
-    have hu0 : u ≠ 0 := by linarith [hu.1]
-    convert (Real.hasDerivAt_sqrt hu0).const_mul 12 using 1 <;> ring
+    calc
+      _ = 6 * ∫ u in a..x, u ^ (-(1 / 2) : ℝ) := by
+        rw [← intervalIntegral.integral_const_mul]
+        apply intervalIntegral.integral_congr
+        intro u hu
+        rw [Set.uIcc_of_le hax] at hu
+        change 6 / sqrt u = 6 * u ^ (-(1 / 2) : ℝ)
+        rw [Real.rpow_neg (by linarith [hu.1] : 0 ≤ u)]
+        simp [Real.sqrt_eq_rpow, div_eq_mul_inv]
+      _ = 12 * sqrt x - 12 * sqrt a := by
+        rw [integral_rpow (r := -(1 / 2 : ℝ)) (Or.inl (by norm_num))]
+        norm_num [← Real.sqrt_eq_rpow]
+        <;> ring
   rw [hprimitive] at hm
   linarith [sqrt_nonneg a]
 

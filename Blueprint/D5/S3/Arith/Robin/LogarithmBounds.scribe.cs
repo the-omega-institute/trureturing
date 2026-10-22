@@ -7,7 +7,7 @@ internal sealed class LogarithmBoundsDocument : IScribeDocumentDefinition
     private const string Prefix = "D5/S3/Arith/Robin/LogarithmBounds.";
 
     public DocumentDefinition Create() => DocumentDefinition.Create(ScribeNode.Create(
-        "Logarithmic bounds for Robin response comparisons and contact estimates.",
+        "Logarithmic bounds, reciprocal-logarithmic continuity and prime cutoffs for Robin estimates.",
         H("Logarithmic bounds"),
         Blocks(
             Describe.Lean(
@@ -42,5 +42,26 @@ internal sealed class LogarithmBoundsDocument : IScribeDocumentDefinition
                     "For real x>=256 and x-2<=z<=x+1, one has 5<log(z)<=x/20. "
                     + "The estimate controls original endpoint windows and gives the lower logarithm "
                     + "bound used for cumulative Mertens peaks at cutoffs at least 10000."))),
+                DescribeRole.Lemma),
+            Describe.Lean(
+                DescribeId.Create("reciprocal-logarithmic-weight-continuity"),
+                DeclarationHandle.Create(Prefix + "weight_continuous"),
+                H("Continuity of the reciprocal-logarithmic weight"),
+                StatementSource.WithoutFormula(),
+                AssessedProvenance.FromRepo(),
+                Blocks(Paragraph(Text(
+                    "For a>1, w(t)=(log(t)+1)/(t^2*log(t)^2) is continuous on [a,b]. "
+                    + "Its denominator stays nonzero on the interval."))),
+                DescribeRole.Lemma),
+            Describe.Lean(
+                DescribeId.Create("natural-prime-cutoff-intervals"),
+                DeclarationHandle.Create(Prefix + "prime_filter_Icc"),
+                H("Equivalent natural prime cutoffs"),
+                StatementSource.WithoutFormula(),
+                AssessedProvenance.FromRepo(),
+                Blocks(Paragraph(Text(
+                    "For every real t, filtering [0,floor(t)] by primality gives primeCutoff(t), "
+                    + "the prime filter over (0,floor(t)]. A prime is positive, so the extra zero "
+                    + "endpoint contributes nothing."))),
                 DescribeRole.Lemma))));
 }
