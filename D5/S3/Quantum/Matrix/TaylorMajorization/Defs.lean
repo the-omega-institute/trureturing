@@ -2,7 +2,7 @@
    generality: G
    mirror-B: D5/B/S3/Quantum/Matrix/TaylorMajorization/Defs
    mirror-E: none(waiver:evidence-not-specified-by-formal-manifest)
-   anchors: [mathlib/module/Mathlib]
+   anchors: []
    utility: none
    digest: Taylor coefficients and sorted spectral weak majorization for Hermitian matrices. -/
 
