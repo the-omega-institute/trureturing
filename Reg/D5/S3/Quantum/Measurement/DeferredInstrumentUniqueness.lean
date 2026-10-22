@@ -15,8 +15,8 @@ set_option relaxedAutoImplicit false
 noncomputable section
 
 abbrev signature : Signature where
-  Params := Σ d : ℕ, Matrix.unitaryGroup (Fin d) ℂ × ℝ
-  State p := Fin p.1
+  Params := Σ d : ℕ, Matrix.unitaryGroup (Fin d) ℂ
+  State _ := ℝ
   Role := Unit
   finiteRole := inferInstance
   nonemptyRole := inferInstance
@@ -25,10 +25,7 @@ abbrev signature : Signature where
   finiteAnchor := inferInstance
 
 def actual : Realization signature :=
-  realize signature (fun _ p state =>
-    match state.1 with
-    | 0 => sMax p.1 p.2.2
-    | _ => 0)
+  realize signature (fun _ p state => sMax p.1 state)
     (fun e => nomatch e)
 
 def rejected : Realization signature :=
@@ -45,8 +42,7 @@ abbrev arena : Arena where
           (∑ x, J x = It t) ∧
           (∀ x ρ, Matrix.trace (J x ρ) =
             Matrix.trace (ρ * Qs U
-              (R.readout () ⟨d, (U, t)⟩
-                (⟨0, by omega⟩ : Fin d)) x))) ↔
+              (R.readout () ⟨d, U⟩ t) x))) ↔
         (∀ x, J x = Itilde U t x))
 
 theorem actual_law : arena.Law actual := by
@@ -70,10 +66,8 @@ theorem rejected_law : ¬ arena.Law rejected := by
 theorem dependence : ObservationalDependence signature actual := by
   intro i
   let U : Matrix.unitaryGroup (Fin 2) ℂ := 1
-  let x0 : Fin 2 := ⟨0, by decide⟩
-  let x1 : Fin 2 := ⟨1, by decide⟩
-  refine ⟨⟨2, (U, 0)⟩, x0, x1, ?_⟩
-  change sMax 2 0 ≠ 0
+  refine ⟨⟨2, U⟩, 0, 1, ?_⟩
+  change sMax 2 0 ≠ sMax 2 1
   norm_num [sMax]
 
 def source_registration : Registration arena claim where
@@ -112,10 +106,7 @@ def registration :
   correspondence := { stage := .evidence, objectStage := .evidence }
   bundleNonempty := .absent
   readout := some
-    (realize signature (fun _ p state =>
-      match state.1 with
-      | 0 => sMax p.1 p.2.2
-      | _ => 0)
+    (realize signature (fun _ p state => sMax p.1 state)
       (fun e => nomatch e))
   variation := .absent
   sensitivity := .absent
@@ -127,12 +118,12 @@ def registration :
       owner := `D5.S3.Quantum.Measurement.DeferredInstrumentUniqueness
       name := `D5.S3.Quantum.Measurement.DeferredInstrumentUniqueness.claim
       path := #[] }
-    coordinates := #[0, 2, 3]
+    coordinates := #[0, 2]
     readouts := #[{
       path := #["body", "body", "body", "body", "body", "body", "body",
         "fn", "arg", "arg", "arg", "body", "body", "arg", "arg", "arg",
         "fn", "arg"]
-      stateBinder := 7
+      stateBinder := 3
       functionOperand := false
       stateOperand := none
       booleanPredicate := false }] }
