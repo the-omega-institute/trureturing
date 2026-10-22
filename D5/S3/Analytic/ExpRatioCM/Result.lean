@@ -7,15 +7,13 @@
    digest: Refutation and exact low-index classification of exponential derivative ratios. -/
 
 import D5.S3.Analytic.ExpRatioCM.Extraction
-import D5.S3.Analytic.ExpRatioCM.Positive
 
-/-! Refutation and low-index classification assembly. -/
+/-! Refutation assembly. -/
 
 open scoped Topology
 open Filter
 open D5.S3.Analytic.ExpRatioCM.Defs
 open D5.S3.Analytic.ExpRatioCM.Extraction
-open D5.S3.Analytic.ExpRatioCM.Positive
 open D5.S3.Analytic.ExpRatioCM.Series
 
 namespace D5.S3.Analytic.ExpRatioCM.Result
@@ -71,29 +69,9 @@ theorem not_cm_of_three_le (i : ℕ) (hi : 3 ≤ i) :
   exact ⟨not_completelyMonotone_of_extraction (quotient_extraction_limit i) hb,
     fun h => (not_le_of_gt hG) (h.2 k t ht)⟩
 
-/-- The first ratio family is completely monotone exactly at indices zero, one, and two. -/
-theorem classification (i : ℕ) : CompletelyMonotoneOn (ratioF i) ↔ i ≤ 2 := by
-  constructor
-  · intro h
-    by_contra hn
-    exact (not_cm_of_three_le i (by omega)).1 h
-  · intro hi
-    exact (cm_of_le_two i hi).1
-
-/-- The second ratio family has the same exact set of completely monotone indices. -/
-theorem classificationG (i : ℕ) : CompletelyMonotoneOn (ratioG i) ↔ i ≤ 2 := by
-  constructor
-  · intro h
-    by_contra hn
-    exact (not_cm_of_three_le i (by omega)).2 h
-  · intro hi
-    exact (cm_of_le_two i hi).2
-
 /-- The universal assertion about consecutive signed derivative ratios is false. -/
 theorem result : ¬ claim := by
   intro hclaim
-  have h : 3 + 3 ≤ 2 + 2 := Nat.add_le_add
-    ((classification 3).mp (hclaim 3).1) ((classificationG 3).mp (hclaim 3).2)
-  omega
+  exact (not_cm_of_three_le 3 le_rfl).1 (hclaim 3).1
 
 end D5.S3.Analytic.ExpRatioCM.Result

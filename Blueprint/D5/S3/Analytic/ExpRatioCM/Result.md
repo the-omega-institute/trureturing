@@ -32,35 +32,7 @@ Lean statement: `D5/S3/Analytic/ExpRatioCM/Result.not_cm_of_three_le`
 
 Both ratio families fail complete monotonicity whenever the index is at least three.
 
-**Theorem 1.3 (Classification of the first family).**
-
-Lean statement: `D5/S3/Analytic/ExpRatioCM/Result.classification`
-
-*Proof.* Machine-checked in Lean as `D5/S3/Analytic/ExpRatioCM/Result.classification` (`✓ std3`). ∎
-
-*Source.* Repository-derived.
-
-*Acknowledgement.* C.-F. Wei and B.-N. Guo (2014). *Complete monotonicity of functions connected with the exponential function and derivatives*. DOI: [10.1155/2014/851213](https://doi.org/10.1155/2014/851213). URL: <https://doi.org/10.1155/2014/851213>.
-
-*Commentary.*
-
-The first ratio is completely monotone on the positive half-line if and only if its index is at most two. The low-index closed forms give sufficiency; the extracted negative coefficient gives necessity.
-
-**Theorem 1.4 (Classification of the second family).**
-
-Lean statement: `D5/S3/Analytic/ExpRatioCM/Result.classificationG`
-
-*Proof.* Machine-checked in Lean as `D5/S3/Analytic/ExpRatioCM/Result.classificationG` (`✓ std3`). ∎
-
-*Source.* Repository-derived.
-
-*Acknowledgement.* C.-F. Wei and B.-N. Guo (2014). *Complete monotonicity of functions connected with the exponential function and derivatives*. DOI: [10.1155/2014/851213](https://doi.org/10.1155/2014/851213). URL: <https://doi.org/10.1155/2014/851213>.
-
-*Commentary.*
-
-The second ratio has exactly the same completely monotone indices: zero, one, and two.
-
-**Theorem 1.5 (Refutation of the universal assertion).**
+**Theorem 1.3 (Refutation of the universal assertion).**
 
 Lean statement: `D5/S3/Analytic/ExpRatioCM/Result.result`
 
@@ -76,14 +48,11 @@ Lean statement: `D5/S3/Analytic/ExpRatioCM/Result.result`
 
 *Commentary.*
 
-The universal assertion about both ratio families is false. Its specialization to index three contradicts the exact classification.
+The universal assertion about both ratio families is false. Its specialization to index three contradicts Result.not_cm_of_three_le, while the low-index positive cases are supplied by Positive.cm_of_le_two.
 
 ## References
 
-- Truth anchor: `D5/S3/Analytic/ExpRatioCM/Result.classification`
-- Truth anchor: `D5/S3/Analytic/ExpRatioCM/Result.classificationG`
 - Truth anchor: `D5/S3/Analytic/ExpRatioCM/Result.failure_on_every_tail`
 - Truth anchor: `D5/S3/Analytic/ExpRatioCM/Result.not_cm_of_three_le`
 - Truth anchor: `D5/S3/Analytic/ExpRatioCM/Result.result`
 - Dependency: [D5/S3/Analytic/ExpRatioCM/Extraction](Extraction.md)
-- Dependency: [D5/S3/Analytic/ExpRatioCM/Positive](Positive.md)

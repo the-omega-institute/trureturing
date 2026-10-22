@@ -46,10 +46,10 @@ including derivative order zero. Globally defined iterated derivatives
 are compared by neighborhood equality at positive arguments.
 
 `D5/S3/Analytic/ExpRatioCM/Result.result` refutes the universal
-assertion. The two classification theorems give precisely the indices
-zero, one and two, and `Result.failure_on_every_tail` gives simultaneous
-negative alternating derivatives of both ratios arbitrarily far to
-the right at every index at least three.
+assertion. `Positive.cm_of_le_two` gives the positive range through index
+two, while `Result.not_cm_of_three_le` excludes every index at least
+three; `Result.failure_on_every_tail` supplies simultaneous negative
+alternating derivatives of both ratios arbitrarily far to the right.
 
 ## Literature scope
 
