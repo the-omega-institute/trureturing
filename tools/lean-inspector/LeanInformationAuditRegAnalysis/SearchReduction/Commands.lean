@@ -48,8 +48,8 @@ private def runJson : Run → Json
   | .incomplete failure => Json.mkObj [("incomplete", toJson (reprStr failure))]
 
 private def verdictName : Verdict → String
-  | .bindOnly => "bind-only[G,R_lookup,k,B_used]"
-  | .nonBindOnly => "non-bind-only[G,R_lookup,k,B_used]"
+  | .bindOnly => "bind-only[G,R_lookup,k; scope=B_T]"
+  | .nonBindOnly => "non-bind-only[G,R_lookup,k; scope=B_T]"
   | .insufficient => "insufficient-evidence"
 
 private def attemptJson (a : Attempt) : Json := Json.mkObj [
@@ -65,7 +65,7 @@ private def intervalJson (i : Interval) : Json := Json.mkObj [
   ("lower", boundJson i.lower), ("upper", boundJson i.upper)]
 
 private def graphJson (r : GraphReading) : Json := Json.mkObj [
-  ("lookup_backend", toJson "disk pages; on-demand module certification; unfinished candidates remain unknown"),
+  ("lookup_backend", toJson "B_T implication without imports; full B0 alpha membership; unfinished candidates remain unknown"),
   ("lookup_enabled", toJson r.lookupEnabled),
   ("lookup_basis_complete", toJson r.lookupBasisComplete),
   ("sharing_configuration", toJson sharingConfiguration),
@@ -131,7 +131,7 @@ def computationalJson (r : Observation) (baselineCommit : String := "") : Json :
   ("reference", toJson "R_lookup"),
   ("configuration", toJson (if r.graph?.any (fun g => !g.lookupEnabled) then
     "R_loc-decl/analytic-cut-k2/200000;lookup-ablation" else r.configuration)),
-  ("scope", toJson r.scope), ("B_load_count", toJson r.loadedModules.size),
+  ("scope", toJson "B_T"), ("B_load_count", toJson r.loadedModules.size),
   ("B0_count", toJson r.catalogCount), ("B_load_subset_B0", toJson r.catalogVerified),
   ("B_load", toJson (r.loadedModules.map Name.toString)),
   ("B0_excluded", toJson (r.catalogExcluded.map Name.toString)),
@@ -142,7 +142,7 @@ def computationalJson (r : Observation) (baselineCommit : String := "") : Json :
     ("coverageMaxHeartbeats", toJson lookupCoverageBudget),
     ("queryAnswerMemoization", toJson false),
   ("membershipNormalizationFuel", toJson DiskLookup.membershipNormalizationFuel),
-  ("target", toJson r.target.toString), ("verdict", toJson (if r.verdict == .nonBindOnly then s!"non-bind-only[G,R_lookup,k; {r.scope}]" else verdictName r.verdict)),
+  ("target", toJson r.target.toString), ("verdict", toJson (if r.verdict == .nonBindOnly then s!"non-bind-only[G,R_lookup,k; scope=B_T]" else verdictName r.verdict)),
   ("baseline", runJson r.base), ("paired", runJson r.paired),
   ("presentation", runJson r.presentation),
   ("presentation_source", toJson (r.presentationEvidence?.map (·.source.toString))),

@@ -24,7 +24,7 @@ def timeLookup {α : Type} (label : String) (action : MetaM α) : MetaM α := do
   try action finally
     lookupPhase s!"{label}/end ns={(← IO.monoNanosNow) - start} heartbeats={(← IO.getNumHeartbeats) - heartbeats}"
 
-abbrev lookupVersion : String := "R_lookup/v12/candidate-200000/preparation-8000000/G-340000000/memo-off/N-memo-2000000/checkpoint-v1/external-64/native-signature/query-extensions/module-metadata/views-kappa"
+abbrev lookupVersion : String := "R_lookup/v13/scope-B_T/candidate-200000/preparation-8000000/G-340000000/memo-off/N-memo-2000000/checkpoint-v1/views-kappa"
 
 abbrev lookupCandidateBudget : Nat := 200000
 /-- Frozen from verdict-free fallback and fixed-stride candidate telemetry. -/
@@ -142,8 +142,9 @@ private unsafe def queryLookup (table : LookupTable) (index : DiskLookup.Index)
   -- Recompute matching in every reset search branch; only module bytes cache.
   let candidates ← DiskLookup.queryMature index type limit fallback table.budget?
   withLookupPreparation table.budget? do
-    let (loaded, external) := candidates.entries.partition (candidateOwnerMatches table)
-    return {candidates with entries := loaded ++ external}
+    let entries := candidates.entries.filter (candidateOwnerMatches table)
+    lookupPhase s!"lookup/scope=B_T retained={entries.size} excluded={candidates.entries.size - entries.size}"
+    return {candidates with entries}
 
 /-- Catch resource exceptions below Core's rethrowing exception layer. -/
 def catchLookupCandidate {α : Type} (action : MetaM α)

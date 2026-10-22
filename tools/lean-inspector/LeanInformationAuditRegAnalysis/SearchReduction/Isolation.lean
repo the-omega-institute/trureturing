@@ -485,18 +485,20 @@ unsafe def run (source : Environment) (request : Request)
       paired := .incomplete .missing, reason := "search.missing_target"}
   try
     enableInitializersExecution
-    let imports : Array Import := #[{module := `Mathlib}] ++
-      request.baseline.map (fun n => {module := n})
+    let mut delivery := #[]
+    for n in #[request.target] ++ request.additions do
+      if let some index := source.getModuleIdxFor? n then
+        delivery := delivery.push source.header.moduleNames[index.toNat]!
+    let ancestors ← targetBaselineImports request.baselineCommit delivery source request.target
+    let modules := (ancestors ++ request.baseline).foldl
+      (fun out n => if out.contains n then out else out.push n) (#[] : Array Name)
+    let imports : Array Import := #[{module := `Mathlib}] ++ modules.map (fun n => {module := n})
     profilePhase "query/base-import-start"
     let (base, baseImports) ← withImporting do
       let (_, state) ← (importModulesCore imports).run sharedImports
       let base ← finalizeImport state imports options 0 (leakEnv := false) (loadExts := true)
       pure (base, state)
     profilePhase "query/base-import-end"
-    let mut delivery := #[]
-    for n in #[request.target] ++ request.additions do
-      if let some index := source.getModuleIdxFor? n then
-        delivery := delivery.push source.header.moduleNames[index.toNat]!
     let catalog ← baselineCatalog request.baselineCommit delivery base
     let directory := (← IO.getEnv "SEARCH_REDUCTION_INDEX").getD
       s!"build/lean-inspector/lookup-index/{request.baselineCommit}"
@@ -510,7 +512,7 @@ unsafe def run (source : Environment) (request : Request)
           vertex.structureProof?.any (fun proof => proof.getUsedConstants.contains name)
     return {result with
       catalogCount := catalog.eligible.size, loadedModules := catalog.loaded,
-      catalogExcluded := catalog.excluded, scope := "B_used/" ++ catalog.scope,
+      catalogExcluded := catalog.excluded, scope := "B_T",
       catalogVerified := true, pairedStructureUse := used}
   catch ex =>
     return {

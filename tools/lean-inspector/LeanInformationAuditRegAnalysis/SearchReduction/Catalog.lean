@@ -94,4 +94,31 @@ def baselineCatalog (commit : String) (delivery : Array Name) (base : Environmen
     n.toString.startsWith "LeanInformationAuditRegTests.SearchReduction."
   return {commit, frozen, excluded := frozen.filter polluted.contains, eligible, loaded, fixtures}
 
+/-- Protected ancestors of the target owner, excluding the delivery pollution
+closure. Only these already registered modules enter the implication table. -/
+def targetBaselineImports (commit : String) (delivery : Array Name)
+    (source : Environment) (target : Name) : IO (Array Name) := do
+  let (frozen, graph) ← protectedCatalog commit
+  let mut polluted := delivery.foldl (fun names n => names.insert n) ({} : NameSet)
+  let mut changed := true
+  while changed do
+    changed := false
+    for (name, imports) in graph do
+      if !polluted.contains name && imports.any polluted.contains then
+        polluted := polluted.insert name
+        changed := true
+  let some owner := source.getModuleIdxFor? target | return #[]
+  let ownerName := source.header.moduleNames[owner.toNat]!
+  let mut closure := ({} : NameSet).insert ownerName
+  changed := true
+  while changed do
+    changed := false
+    for i in [:source.header.moduleNames.size] do
+      if !closure.contains source.header.moduleNames[i]! then continue
+      for imported in source.header.moduleData[i]!.imports do
+        unless closure.contains imported.module do
+          closure := closure.insert imported.module
+          changed := true
+  return frozen.filter fun name => closure.contains name && !polluted.contains name
+
 end LeanInformationAudit.SearchReduction
