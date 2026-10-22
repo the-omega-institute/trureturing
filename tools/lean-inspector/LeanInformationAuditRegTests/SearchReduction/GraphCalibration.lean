@@ -98,8 +98,9 @@ run_cmd do
             (reading.graph.vertices.find? (·.id == p)).any fun v =>
               v.origin.constName? == some square && !edge.analytic.contains p
         unless synthetic do throwError "squareFact was not classified synthetic"
-        let predicted := reading.baseline == ⟨.finite 1, .finite 1⟩ &&
-          reading.paired == ⟨.finite 0, .finite 0⟩ && classifyClosure certified == some .zero
+        let predicted := reading.baseline == ⟨.finite 0, .finite 0⟩ &&
+          reading.paired == ⟨.finite 0, .finite 0⟩ && verdict == .bindOnly &&
+          classifyClosure certified == none
         logInfo s!"DECL_PREDICTION squareVia {predicted}"
         unless predicted do throwError "squareVia prediction failed"
         unless reading.graph.vertices.any (fun v =>

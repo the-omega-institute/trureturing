@@ -459,6 +459,7 @@ private unsafe def runCore (source base : Environment) (request : Request)
         {strategy := "graph/assembled-zero", outcome := .found, proof? := some proof : Attempt}
       let pairAttempts := pairedProof?.toArray.map fun proof =>
         {strategy := "graph/assembled-zero", outcome := .found, proof? := some proof : Attempt}
+      profilePhase "query/assembly-end"
       return {
         target := request.target, base := baseRun, paired := pairRun,
         verdict := classifyGraph reading, attempts, pairAttempts,

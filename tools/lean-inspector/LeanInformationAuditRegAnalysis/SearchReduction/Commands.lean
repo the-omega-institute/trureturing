@@ -318,15 +318,52 @@ private def writeRequest (path : System.FilePath) (request : Request)
     getEnv
   writeModule env path (writeIR := false)
 
+/-- Optional diagnostics inspect the certificates already produced by the
+production run, without repeating graph evaluation or certificate assembly. -/
+private def auditProbeCertificates (source : Environment) (request : Request)
+    (result : Observation) : CommandElabM Unit := do
+  unless (← IO.getEnv "SEARCH_REDUCTION_SOURCE_AUDIT") == some "1" do return
+  let some reading := result.graph? | return
+  let baselineProofs := reading.graph.edges.toArray.filterMap (·.zeroProof) ++
+    reading.baselineProbe.proof?.toArray ++ reading.baselineProof?.toArray
+  let paired := reading.graph.edges.toArray.filterMap (·.pairedZeroProof) ++
+    reading.pairedProbe.proof?.toArray ++ reading.pairedProof?.toArray
+  for (arm, proofs, forbidden) in #[("baseline", baselineProofs, #[request.target] ++ request.additions),
+      ("paired", paired, #[request.target])] do
+    let mut todo := proofs.foldl (fun names proof => names ++ proof.getUsedConstants) #[]
+    let mut seen : NameSet := {}
+    while !todo.isEmpty do
+      let constant := todo.back!
+      todo := todo.pop
+      if seen.contains constant then continue
+      seen := seen.insert constant
+      if forbidden.contains constant then
+        throwError "search.source_certificate_leak: {arm}: {constant}"
+      let some info := (source.setExporting false).find? constant
+        | throwError "search.source_certificate_unresolved: {constant}"
+      for dependency in info.getUsedConstantsAsSet do todo := todo.push dependency
+    emitLookupRecord s!"PRODUCTION_SOURCE_AUDIT {Json.mkObj [
+      ("target", toJson request.target.toString), ("arm", toJson arm),
+      ("certificates", toJson proofs.size), ("transitive_constants", toJson seen.size),
+      ("forbidden", toJson (forbidden.map Name.toString)),
+      ("no_forbidden_dependency", toJson true),
+      ("assembled_zero", toJson (if arm == "baseline" then reading.baselineProof?.isSome
+        else reading.pairedProof?.isSome))] |>.compress}"
+
 unsafe def executeProbe (request : Request) (owners : Array Name) (name : Name) : CommandElabM Unit := do
+  profilePhase "probe/source-import-start"
   let imports := owners.map fun n => {module := n : Import}
   let (source, shared, _) ← importSource imports
+  profilePhase "probe/source-import-end"
   -- Exported proof expressions retain source module storage; transient
   -- environment maps and extension states need not be made persistent.
   probeRegions.modify (· ++ source.header.regions)
   let computational ← run source request shared
+  profilePhase "probe/information-start"
   let information ← acquireInformation source request.target request.additions request.informationApplication
+  profilePhase "probe/information-end"
   let result := withInformation computational information
+  profilePhase "probe/negative-guard-start"
   let guardProof? ← if result.verdict == .nonBindOnly then
     liftTermElabM <| withTheReader Core.Context (fun ctx => {ctx with maxHeartbeats := 0}) do
       -- Replay precedes publication, so author extension initializers cannot
@@ -341,14 +378,20 @@ unsafe def executeProbe (request : Request) (owners : Array Name) (name : Name) 
             (fail_if_success (reference_baseline $target at $sha baseline [$bs,*] from [$os,*]))
             <;> exact True.intro)))
     else pure none
+  profilePhase "probe/negative-guard-end"
+  profilePhase "probe/source-audit-start"
+  auditProbeCertificates source request result
+  profilePhase "probe/source-audit-end"
   -- Source metadata belongs to its own environment. R has already used a
   -- separately imported baseline, without source attributes or instances.
   let mainModule := (← getEnv).header.mainModule
   modifyEnv fun _ => source.setMainModule mainModule
+  profilePhase "probe/publication-start"
   liftTermElabM <| withTheReader Core.Context (fun ctx => {ctx with maxHeartbeats := 0}) do
     if let some guardProof := guardProof? then
       discard <| checkProof (name ++ `baselineFailureGuard) [] (mkConst ``True) guardProof
     publish name result (some source)
+  profilePhase "probe/publication-end"
   logInfo (observationJson result request.baselineCommit).compress
 
 /-- Only closed, kernel-checked Name/array/string expression values are read.
