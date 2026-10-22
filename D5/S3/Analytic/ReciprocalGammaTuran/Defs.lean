@@ -35,10 +35,6 @@ def claim : Prop :=
     0 < α → 0 < β → -1 ≤ μ → 0 ≤ μ + α → 0 ≤ μ + β →
       ∀ m : ℕ, 0 < turanCoeff g μ α β m
 
-/-- The pole convention agrees with Mathlib's Gamma function. -/
-theorem rgamma_neg_nat (n : ℕ) : rgamma (-(n : ℝ)) = 0 := by
-  simp [rgamma, Real.Gamma_neg_nat_eq_zero]
-
 /-- The constant unit sequence satisfies all four sequence conditions. -/
 theorem admissible_one : AdmissibleSeq (fun _ => 1) := by
   refine ⟨⟨0, by norm_num⟩, ?_, ?_, ?_⟩
