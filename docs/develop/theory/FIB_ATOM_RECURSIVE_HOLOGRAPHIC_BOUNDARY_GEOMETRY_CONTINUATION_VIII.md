@@ -1044,7 +1044,7 @@ why-three-dimensions question open.
 
 ## 243. Fixed overall success over the native source family
 
-All references numbered 214–234 below are to [Continuation VII](FIB_ATOM_RECURSIVE_HOLOGRAPHIC_BOUNDARY_GEOMETRY_CONTINUATION_VII.md); references numbered 242 belong to this section. The source-choice question is the fixed-overall-success question of VII §234, with its original preparation and operation menu.
+All references numbered 214–234 below are to [Continuation VII](FIB_ATOM_RECURSIVE_HOLOGRAPHIC_BOUNDARY_GEOMETRY_CONTINUATION_VII.md); references numbered 243 belong to this section. The source-choice question is the fixed-overall-success question of VII §234, with its original preparation and operation menu.
 
 **Convention 243.0 (native source and operation contract).** Retain the stopped singleton history and actual coordinate order $(r,\ell,R)$ of VII Definition 226.1. Explicitly, with $q=(u,v)$,
 
