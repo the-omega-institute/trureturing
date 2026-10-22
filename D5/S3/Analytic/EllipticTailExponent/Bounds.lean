@@ -7,6 +7,7 @@
    digest: Positive normalized elliptic coefficients and summably bounded negative derivatives. -/
 
 import D5.S3.Analytic.EllipticTailExponent.Defs
+import D5.S3.Analytic.SeriesInequalities.NormalizedPochhammerBounds
 import Mathlib.Analysis.Calculus.SmoothSeries
 import Mathlib.Analysis.PSeries
 import Mathlib.Tactic
@@ -48,9 +49,8 @@ private lemma differentiable_P (m : ℕ) : Differentiable ℝ (P m) := by
 private lemma deriv_P_bounds (m : ℕ) {a : ℝ} (ha : 0 ≤ a) (ha1 : a ≤ 3 / 4) :
     -(4 * a) ≤ deriv (P m) a ∧ deriv (P m) a ≤ 0 := by
   have hsum : (∑ j ∈ range m, (1 : ℝ) / ((j : ℝ) + 1) ^ 2) ≤ 2 := by
-    have h := sum_Ioo_inv_sq_le (α := ℝ) 0 (m + 1)
-    rw [← Finset.Ico_succ_left_eq_Ioo, Finset.sum_Ico_eq_sum_range] at h
-    simpa [one_div, Nat.succ_eq_add_one, Nat.add_comm] using h
+    simpa only [Nat.cast_add, Nat.cast_one, one_div] using
+      D5.S3.Analytic.SeriesInequalities.NormalizedPochhammerBounds.inverse_square_sum m
   have hdiff (j : ℕ) :
       HasDerivAt (fun x : ℝ => 1 - x ^ 2 / ((j : ℝ) + 1) ^ 2)
         (-(2 * a / ((j : ℝ) + 1) ^ 2)) a := by
