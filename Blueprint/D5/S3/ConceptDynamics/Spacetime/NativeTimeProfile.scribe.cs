@@ -51,7 +51,16 @@ internal sealed class NativeTimeProfileDocument : IScribeDocumentDefinition
                 Blocks(Paragraph(Text("Extend the generated cell operation by integer bilinearity in the two finitely supported profiles."))), DescribeRole.Definition),
             Describe.Lean(DescribeId.Create("gamma-product"), DeclarationHandle.Create(Prefix + "gamma_product"),
                 H("Native product equals the bilinear push"), StatementSource.WithoutFormula(), AssessedProvenance.FromRepo(),
-                Blocks(Paragraph(Text("For every pair of balanced histories, the actual generated-product profile equals the bilinear push of the two parent profiles. The proof uses the exact parent-pair current equivalence and absence of paths out of generated nodes."))), DescribeRole.Theorem)
+                Blocks(Paragraph(Text("For every pair of balanced histories, the actual generated-product profile equals the bilinear push of the two parent profiles. The proof uses the exact parent-pair current equivalence and absence of paths out of generated nodes."))), DescribeRole.Theorem),
+            Describe.Lean(DescribeId.Create("pack"), DeclarationHandle.Create(Prefix + "pack"),
+                H("Homogenized native profile"), StatementSource.WithoutFormula(), AssessedProvenance.FromRepo(),
+                Blocks(Paragraph(Text("A balanced native history is embedded as the pair consisting of the integer one and its complete time profile. The extra coordinate represents constants in the multilinear syntax interpretation."))), DescribeRole.Definition),
+            Describe.Lean(DescribeId.Create("model"), DeclarationHandle.Create(Prefix + "model"),
+                H("Multilinear interpretation of the copy syntax"), StatementSource.WithoutFormula(), AssessedProvenance.FromRepo(),
+                Blocks(Paragraph(Text("Each input occurrence occupies a distinct multilinear coordinate. Constants use the empty coordinate family. Unary nodes use linear profile pushes. Binary nodes combine disjoint leaf families using bilinear homogenized parallel or product maps. Temporal nodes are assigned parallel semantics here; the correctness theorem explicitly requires temporal freedom."))), DescribeRole.Definition),
+            Describe.Lean(DescribeId.Create("model-eval"), DeclarationHandle.Create(Prefix + "model_eval"),
+                H("The multilinear model computes native evaluation"), StatementSource.WithoutFormula(), AssessedProvenance.FromRepo(),
+                Blocks(Paragraph(Text("For every arity, temporal-free copy term, independent balanced leaf assignment and successful native result, applying the multilinear model to the packed leaves gives exactly the packed result. Structural induction consumes the native unary, parallel and product profile updates. This connects the formal multilinear interpretation to the actual finite native histories."))), DescribeRole.Theorem)
         ),
         [
             DocumentEdge.Dependency.Create(GidRef.Create("D5/S3/ConceptDynamics/Spacetime/CoarseObservation")),

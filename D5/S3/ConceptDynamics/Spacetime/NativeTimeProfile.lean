@@ -9,6 +9,8 @@
 import D5.S3.ConceptDynamics.Spacetime.CoarseObservation
 import D5.S3.ConceptDynamics.Spacetime.TotalCopyNormalization
 import Mathlib.LinearAlgebra.Finsupp.LinearCombination
+import Mathlib.LinearAlgebra.Multilinear.TensorProduct
+import Mathlib.LinearAlgebra.BilinearMap
 
 set_option autoImplicit false
 set_option backward.isDefEq.respectTransparency false
@@ -241,6 +243,91 @@ theorem gamma_product (X Y : B) :
     (GeneratedProduct.generatedMap _ _ (e, f))).positive then (1 : Int) else -1) = _
   rw [GeneratedProduct.attributes_generated]
   exact generated_contribution _ _ (e, f)
+
+/-- The extra coordinate homogenizes constants and parallel addition. -/
+abbrev Augmented := Int × Profile
+
+def pack (X : B) : Augmented := (1, gamma X.val)
+
+private def unaryAugmented (f : Unary) : Augmented →ₗ[Int] Augmented :=
+  (LinearMap.fst Int Int Profile).prod
+    ((push (unaryCell f)).comp (LinearMap.snd Int Int Profile))
+
+private def parallelAugmented : Augmented →ₗ[Int] Augmented →ₗ[Int] Augmented :=
+  LinearMap.mk₂ Int (fun x y => (x.1 * y.1, y.1 • x.2 + x.1 • y.2))
+    (by intros; apply Prod.ext (by dsimp; ring); simp [add_smul, smul_add]; abel)
+    (by intros; apply Prod.ext (by simp [smul_eq_mul, mul_assoc]);
+        simp [smul_add, smul_smul, mul_comm, mul_left_comm])
+    (by intros; apply Prod.ext (by dsimp; ring); simp [add_smul, smul_add]; abel)
+    (by intros; apply Prod.ext (by simp [smul_eq_mul, mul_left_comm, mul_assoc]);
+        simp [smul_add, smul_smul, mul_comm, mul_left_comm])
+
+private def productAugmented : Augmented →ₗ[Int] Augmented →ₗ[Int] Augmented :=
+  LinearMap.mk₂ Int (fun x y => (x.1 * y.1, productPush x.2 y.2))
+    (by intros; apply Prod.ext (by dsimp; ring); simp [map_add, LinearMap.add_apply])
+    (by intros; apply Prod.ext (by simp [smul_eq_mul, mul_assoc]); simp)
+    (by intros; apply Prod.ext (by dsimp; ring); simp)
+    (by intros; apply Prod.ext (by simp [smul_eq_mul, mul_left_comm, mul_assoc]); simp)
+
+private def join {n m : Nat} (b : Augmented →ₗ[Int] Augmented →ₗ[Int] Augmented)
+    (f : MultilinearMap Int (fun _ : Fin n => Augmented) Augmented)
+    (g : MultilinearMap Int (fun _ : Fin m => Augmented) Augmented) :
+    MultilinearMap Int (fun _ : Fin (n + m) => Augmented) Augmented :=
+  ((TensorProduct.lift b).compMultilinearMap (f.domCoprod g)).domDomCongr finSumFinEquiv
+
+private theorem join_apply {n m : Nat}
+    (b : Augmented →ₗ[Int] Augmented →ₗ[Int] Augmented)
+    (f : MultilinearMap Int (fun _ : Fin n => Augmented) Augmented)
+    (g : MultilinearMap Int (fun _ : Fin m => Augmented) Augmented)
+    (v : Fin (n + m) → Augmented) :
+    join b f g v = b (f (fun i => v (i.castAdd m))) (g (fun i => v (i.natAdd n))) := by
+  simp [join, MultilinearMap.domDomCongr, MultilinearMap.domCoprod_apply]
+
+/-- A syntax interpretation on homogenized profiles, with one distinct coordinate per leaf. -/
+def model : {n : Nat} → CopyTerm n →
+    MultilinearMap Int (fun _ : Fin n => Augmented) Augmented
+  | _, .input => MultilinearMap.ofSubsingleton Int Augmented Augmented (0 : Fin 1) LinearMap.id
+  | _, .param X => MultilinearMap.constOfIsEmpty Int _ (pack X)
+  | _, .unary f a => (unaryAugmented f).compMultilinearMap (model a)
+  | _, .binary .product a b => join productAugmented (model a) (model b)
+  | _, .binary _ a b => join parallelAugmented (model a) (model b)
+
+/-- The abstract multilinear interpretation computes the actual native finite time profile. -/
+theorem model_eval {n : Nat} (N : CopyTerm n) (h : TemporalFree N)
+    (v : Fin n → B) (Y : B) (he : eval N v = some Y) :
+    model N (fun i => pack (v i)) = pack Y := by
+  induction N generalizing Y with
+  | input => cases Option.some.inj he; rfl
+  | param X => cases Option.some.inj he; rfl
+  | unary f a ih =>
+    change (eval a v).map (unary f) = some Y at he
+    obtain ⟨X, hx, rfl⟩ := Option.map_eq_some_iff.mp he
+    change unaryAugmented f (model a (fun i => pack (v i))) = _
+    rw [ih h v X hx]
+    change (1, push (unaryCell f) (gamma X.val)) = (1, gamma (unary f X).val)
+    exact congrArg (fun z : Profile => ((1 : Int), z)) (gamma_unary f X).symm
+  | @binary n m f a b iha ihb =>
+    change (eval a (fun i => v (i.castAdd m))).bind
+      (fun x => (eval b (fun i => v (i.natAdd n))).bind (binary f x)) = some Y at he
+    obtain ⟨X, hx, he⟩ := Option.bind_eq_some_iff.mp he
+    obtain ⟨Z, hz, he⟩ := Option.bind_eq_some_iff.mp he
+    have ha := iha h.2.1 (fun i => v (i.castAdd m)) X hx
+    have hb := ihb h.2.2 (fun i => v (i.natAdd n)) Z hz
+    cases f with
+    | parallel =>
+      cases Option.some.inj he
+      change join parallelAugmented (model a) (model b) _ = _
+      rw [join_apply, ha, hb]
+      apply Prod.ext (by simp [pack, parallelAugmented])
+      simpa [parallelAugmented, pack] using (gamma_parallel X Z).symm
+    | product =>
+      cases Option.some.inj he
+      change join productAugmented (model a) (model b) _ = _
+      rw [join_apply, ha, hb]
+      apply Prod.ext (by simp [pack, productAugmented])
+      exact (gamma_product X Z).symm
+    | temporal => exact (h.1 rfl).elim
+
 
 end
 end D5.S3.ConceptDynamics.Spacetime.NativeTimeProfile
