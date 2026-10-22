@@ -5,3 +5,7 @@ cas_ref: sha256:fe745390c13ecbac886c199c5b3d499ba571e3f7c6e64b92e90b29b97c09b49e
 coverage_gids: []
 receipts:
   unresolved_subitems: []
+  nonpropositional:
+    justification: 'Nonpropositional: 声明允许的相位探针、支撑和共同制备条件；未给探针概率或恢复定理。'
+    previous_atom_id: e892122b35b8c45cd93fe4c76d7174ba91ed139bb990fc6798be241c3c3dd947
+    next_atom_id: ce83daf19be224ae7e84bcddb6ddacdfaa40fb07fe31c0d2edbb5de21237cadf

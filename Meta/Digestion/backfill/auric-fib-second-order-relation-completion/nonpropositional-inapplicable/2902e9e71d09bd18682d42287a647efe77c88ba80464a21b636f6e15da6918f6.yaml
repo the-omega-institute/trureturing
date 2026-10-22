@@ -5,3 +5,7 @@ cas_ref: sha256:2902e9e71d09bd18682d42287a647efe77c88ba80464a21b636f6e15da6918f6
 coverage_gids: []
 receipts:
   unresolved_subitems: []
+  nonpropositional:
+    justification: 'Nonpropositional: 仅以已有模式投影定义三个占位算子；无乘积、谱或概率结论。'
+    previous_atom_id: 9c4c1d7ec00092590e97501ccca02abdfab1101979bee62c2aa342a8d793489e
+    next_atom_id: a8ee31f7c0d67a29b9a6761ecf61d122099dd9ba7c855984a34072ecf8b0e1df
