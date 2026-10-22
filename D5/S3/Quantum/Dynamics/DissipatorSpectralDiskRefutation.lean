@@ -170,7 +170,14 @@ private lemma witness_eigenvalue :
 
 private lemma outside_disk (ν : ℝ) (hν : 0 < ν) (hν1 : ν ≤ 1) :
     ‖1 + (-2 + (2 / 3 : ℂ) * I) / (ν : ℂ)‖ > 1 := by
-  sorry
+  have hsq : (1 : ℝ) <
+      ‖1 + (-2 + (2 / 3 : ℂ) * I) / (ν : ℂ)‖ ^ 2 := by
+    rw [Complex.sq_norm]
+    norm_num [Complex.normSq_apply, Complex.div_re, Complex.div_im,
+      Complex.add_re, Complex.add_im]
+    field_simp
+    nlinarith
+  nlinarith [norm_nonneg (1 + (-2 + (2 / 3 : ℂ) * I) / (ν : ℂ))]
 
 theorem result : ¬ claim := by
   intro hclaim
