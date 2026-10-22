@@ -56,14 +56,22 @@ $$
 \ge\mu\int_{\mathbb R}|\Phi_1(\phi,z)|^2\,dz.
 $$
 
-The norm on the right is the transform norm of the primitive, as used
-in its proof on p.16; it is not a lower bound by $\mu\|\phi\|_2^2$.
+The squared transform norm on the right is that of the primitive, as
+used in its proof on p.16; it is not a lower bound by $\mu\|\phi\|_2^2$.
 The cutoff depends on the support ceiling and requested margin. The
 source statement does not supply the explicit cutoff and coupling
 budget required by the project's quantitative section estimates.
 Suzuki explicitly follows Yoshida's Lemma 3 in proving the leakage
 estimate (4.13). Generic high-complement existence is therefore a
 result to reuse, rather than a new research target.
+
+The theorem is quoted in its transform normalization. With the source
+convention $\widehat\psi(z)=\int e^{izt}\psi(t)\,dt$ and
+$\psi=I_0^{(a)}\phi$, Plancherel gives
+$\int_{\mathbb R}|\Phi_1(\phi,z)|^2\,dz=2\pi\|\psi\|_2^2$.
+The displayed Parseval equality on p.16 omits this factor. Its fixed
+factor can be absorbed in the arbitrary requested $\mu$, but numerical
+constants must retain it; no numerical constant is transferred here.
 
 ## The finite form retains the correction from its complement
 
