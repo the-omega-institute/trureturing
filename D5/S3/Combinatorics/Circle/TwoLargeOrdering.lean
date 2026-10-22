@@ -1,8 +1,8 @@
 /- GID: D5/S3/Combinatorics/Circle/TwoLargeOrdering
-   generality: G
+   generality: I
    mirror-B: D5/B/S3/Combinatorics/Circle/TwoLargeOrdering
    mirror-E: none(waiver:no-escape-mirror-specified)
-   anchors: [D5/S3/Combinatorics/Circle/SourceWidth]
+   anchors: [mathlib/module/Mathlib.Data.List.FinRange]
    utility: none
    digest: Conservation completes zero-sum rows with one large occurrence per sign. -/
 import D5.S3.Combinatorics.Circle.SourceWidth
