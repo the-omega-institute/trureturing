@@ -5,3 +5,7 @@ cas_ref: sha256:11a39cc39feb90a45db14beb1de08caf04abd7cf75bdc163ef092a9960cbd0cd
 coverage_gids: []
 receipts:
   unresolved_subitems: []
+  nonpropositional:
+    justification: Volume title, reference-input status and continuation convention only.
+    previous_atom_id: null
+    next_atom_id: f30d12d97d8ee7fed8654d20c921988b9f794709a920778ae0084f98b3e39ab2
