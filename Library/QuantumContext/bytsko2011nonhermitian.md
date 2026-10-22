@@ -18,28 +18,28 @@ A. G. Bytsko, arXiv:0911.4476v3 (2010-02-10); Algebra i Analiz 22(3), 80–106 (
 
 The coproduct:
 
-> \Delta(E) = E \ot K^{-1} + K \ot E \,, \quad
-> \Delta(F) = F \ot K^{-1} + K \ot F \,,
-> \quad \Delta(K) = K \ot K \,.
+> \Delta(E) = E \otimes K^{-1} + K \otimes E \,, \quad
+> \Delta(F) = F \otimes K^{-1} + K \otimes F \,,
+> \quad \Delta(K) = K \otimes K \,.
 
 The representation:
 
-> \pis(E)\,\om_k &= \sqrt{[S{-}k][S{+}k{+}1]} \, \om_{k+1} , \\
-> \pis(F)\,\om_k &= \sqrt{[S{+}k][S{-}k{+}1]} \, \om_{k-1} ,
+> \pi_S(E)\,\omega_k &= \sqrt{[S{-}k][S{+}k{+}1]} \, \omega_{k+1} , \\
+> \pi_S(F)\,\omega_k &= \sqrt{[S{+}k][S{-}k{+}1]} \, \omega_{k-1} ,
 
-> \pis(K)\,\om_k = q^k \, \om_{k} ,
+> \pi_S(K)\,\omega_k = q^k \, \omega_{k} ,
 
 > where $[t] \equiv \frac{\sin \gamma t}{\sin \gamma}$.
 
 The projectors:
 
-> Let $\SP^{S,s}$ denote the projector onto the irreducible
+> Let $\mathsf P^{S,s}$ denote the projector onto the irreducible
 > submodule $V^s$ in $V^S \,{\otimes}\,V^S$.
 
 The Hamiltonian:
 
-> \SH^{S,s}_{\{a_1,\ldots,a_{N-1}\}} =
->     \sum_{n=1}^{N-1} a_n \, \SP^{S,s}_{n,n+1} \,,
+> \mathsf H^{S,s}_{\{a_1,\ldots,a_{N-1}\}} =
+>     \sum_{n=1}^{N-1} a_n \, \mathsf P^{S,s}_{n,n+1} \,,
 >     \qquad  a_n \in \mathbb R \,,
 
 The evidence and Conjecture 3:
@@ -50,7 +50,7 @@ The evidence and Conjecture 3:
 > is supported by numerical checks in a number of other cases.
 > It is thus tempting to suggest the following.
 
-> For $|\gamma| < \frac{\pi}{2S}$, the Hamiltonian \rf{Hal}
+> For $|\gamma| < \frac{\pi}{2S}$, the Hamiltonian (Hal)
 > of a spin chain with inhomogeneous
 > coupling has a real spectrum if all $a_n >0$.
 
