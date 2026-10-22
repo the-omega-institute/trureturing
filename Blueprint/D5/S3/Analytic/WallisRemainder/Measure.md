@@ -50,7 +50,7 @@ Lean statement: `D5/S3/Analytic/WallisRemainder/Measure.P_pos`
 
 *Commentary.*
 
-The law P is the mixture, with the normalized odd spectral weights, of a(n)U squared, where U has density exp(-u) on the positive ray and a(n)=1/(4 pi squared times (2n+1) squared). It assigns full measure to strictly positive values.
+The law P is the mixture, with the normalized odd spectral weights, of a(n)U squared, where U follows Mathlib ProbabilityTheory.expMeasure 1 and a(n)=1/(4 pi squared times (2n+1) squared). Mathlib supplies its probability normalization. The density equal to exp(-u) for u>0 and zero otherwise agrees almost everywhere with the exponential PDF; their values differ only at the null singleton zero. The law P assigns full measure to strictly positive values.
 
 **Theorem 1.5 (Finite first moment).**
 
@@ -122,7 +122,7 @@ Lean statement: `D5/S3/Analytic/WallisRemainder/Measure.integral_P_cube`
 
 *Commentary.*
 
-The third moment of P is 17/1792. Gamma integrals evaluate each exponential component; the odd sums of reciprocal even powers give the exact mixture moments.
+The third moment of P is 17/1792. Mathlib Real.integral_rpow_mul_exp_neg_mul_Ioi and Real.Gamma_nat_eq_factorial evaluate each exponential component; the odd sums of reciprocal even powers give the exact mixture moments.
 
 **Theorem 1.11 (Positive support after size biasing).**
 
