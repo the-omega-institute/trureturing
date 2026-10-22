@@ -26,6 +26,10 @@ $$\neg (\forall n: \mathbb{N}, (4 \le n) \Rightarrow (\forall X: \operatorname{F
 
 *Proof.* Machine-checked in Lean as `D5/S3/Arith/MiskaUlasSigmaThreeBound.result` (`✓ std3`). ∎
 
+*Resolves.* `Problems/miska-ulas-2022-sigma-three-conjecture-4-8` (refuted) by `D5/S3/Arith/MiskaUlasSigmaThreeBound.result`.
+
+<!-- scribe-open-problem-resolution-v1 {"problem_slug":"miska-ulas-2022-sigma-three-conjecture-4-8","declaration_gid":"D5/S3/Arith/MiskaUlasSigmaThreeBound.result","resolution_kind":"refuted"} -->
+
 *Source.* Repository-derived.
 
 *Acknowledgement.* Piotr Miska; Maciej Ulas (2022). *On the Diophantine equation σ₂(X̄ₙ) = σₙ(X̄ₙ)*. DOI: [10.1142/S1793042124500635](https://doi.org/10.1142/S1793042124500635). URL: <https://arxiv.org/abs/2203.03942v1>.
