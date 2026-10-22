@@ -60,6 +60,10 @@ $$\forall m \in \mathbb{N},\; (1 \le m) \Rightarrow (\exists z \in \mathbb{Z},\;
 
 *Proof.* Machine-checked in Lean as `D5/S3/Combinatorics/Partitions/OverpartitionSquareLogDerivativeModFour.result` (`✓ std3`). ∎
 
+*Resolves.* `Problems/oeis-a219431-hanna-overpartition-log-derivative-mod-four` (proved) by `D5/S3/Combinatorics/Partitions/OverpartitionSquareLogDerivativeModFour.result`.
+
+<!-- scribe-open-problem-resolution-v1 {"problem_slug":"oeis-a219431-hanna-overpartition-log-derivative-mod-four","declaration_gid":"D5/S3/Combinatorics/Partitions/OverpartitionSquareLogDerivativeModFour.result","resolution_kind":"proved"} -->
+
 *Source.* Repository-derived.
 
 *Acknowledgement.* Paul D. Hanna (2012). *OEIS A219431: logarithmic derivative of square-indexed overpartitions*. URL: <https://oeis.org/A219431>.
