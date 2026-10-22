@@ -305,11 +305,12 @@ theorem basis_extension_monotone {Candidate : Type*} (basis larger : List Candid
     exact (perCandidate_nohit _ _ _ _).mpr fun candidate member =>
       (perCandidate_nohit _ _ _ _).mp h candidate (included candidate member)
 
-/-- A cumulative branch allocation can lose a hit when one normally failing
-heavy candidate is prepended, even though the hit fits on its own. -/
+/-- A normally failing prefix consumes the complete shared allocation before
+the hit is attempted; both candidates individually fit the allocation. -/
 theorem total_budget_nonmonotone :
     let hit : LookupCandidateAttempt := ⟨0, 1, .found⟩
-    let heavy : LookupCandidateAttempt := ⟨0, 2, .exhausted⟩
+    let heavy : LookupCandidateAttempt := ⟨0, 1, .exhausted⟩
+    enumerateLookup 0 1 [some heavy] = .exhausted ∧
     enumerateLookup 0 1 [some hit] = .found ∧
       enumerateLookup 0 1 [some heavy, some hit] = .incomplete .heartbeat := by
   decide
