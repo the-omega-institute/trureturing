@@ -7,6 +7,7 @@
    digest: Nonnegative exponential coefficients imply complete monotonicity. -/
 
 import D5.S3.Analytic.ExpRatioCM.Series
+import D5.S3.Analytic.Interpolation.LogOneSubExpDerivatives
 import Mathlib.Analysis.Calculus.Deriv.Inv
 import Mathlib.Analysis.Calculus.Deriv.Pow
 import Mathlib.Topology.Algebra.InfiniteSum.ENNReal
@@ -42,34 +43,28 @@ private lemma F_zero (t : ℝ) : F 0 t = 1 / (Real.exp t - 1) := by
 
 private lemma F_one {t : ℝ} (ht : 0 < t) :
     F 1 t = Real.exp t / (Real.exp t - 1)^2 := by
-  have hn : Real.exp t - 1 ≠ 0 := sub_ne_zero.mpr (ne_of_gt (Real.one_lt_exp_iff.mpr ht))
-  have hd := (hasDerivAt_const t (1 : ℝ)).fun_div ((Real.hasDerivAt_exp t).sub_const 1) hn
-  have hf := iteratedDeriv_F 0 1 t
-  simp only [iteratedDeriv_one, pow_one, zero_add, neg_mul, one_mul] at hf
-  have hbase : F 0 = (fun x : ℝ => 1 / (Real.exp x - 1)) := funext F_zero
-  rw [hbase] at hf
-  rw [hd.deriv] at hf
-  simp only [zero_mul, one_mul, zero_sub, neg_div] at hf
-  exact neg_injective hf.symm
+  have he : deriv (fun x : ℝ => Real.log (1 - Real.exp (-x))) =ᶠ[𝓝 t] F 0 := by
+    filter_upwards [Ioi_mem_nhds ht] with x hx
+    simpa only [F_zero] using
+      (D5.S3.Analytic.Interpolation.LogOneSubExpDerivatives.log_one_sub_exp_derivatives.2 x hx).1
+  have hd := (D5.S3.Analytic.Interpolation.LogOneSubExpDerivatives.log_one_sub_exp_derivatives.2 t ht).2.1
+  rw [show (2 : ℕ) = 1 + 1 from rfl, iteratedDeriv_succ', he.iteratedDeriv_eq 1,
+    iteratedDeriv_F] at hd
+  norm_num only [zero_add, pow_one, neg_mul, one_mul] at hd
+  rw [neg_div] at hd
+  exact neg_injective hd
 
 private lemma F_two {t : ℝ} (ht : 0 < t) :
     F 2 t = Real.exp t * (Real.exp t + 1) / (Real.exp t - 1)^3 := by
-  have hn : Real.exp t - 1 ≠ 0 := sub_ne_zero.mpr (ne_of_gt (Real.one_lt_exp_iff.mpr ht))
-  have he : F 1 =ᶠ[𝓝 t] (fun x : ℝ => Real.exp x / (Real.exp x - 1)^2) := by
+  have he : deriv (fun x : ℝ => Real.log (1 - Real.exp (-x))) =ᶠ[𝓝 t] F 0 := by
     filter_upwards [Ioi_mem_nhds ht] with x hx
-    exact F_one hx
-  have hd := (Real.hasDerivAt_exp t).fun_div
-    (((Real.hasDerivAt_exp t).sub_const 1).fun_pow 2) (pow_ne_zero 2 hn)
-  have hf := iteratedDeriv_F 1 1 t
-  simp only [iteratedDeriv_one, pow_one, neg_mul, one_mul] at hf
-  rw [he.deriv_eq, hd.deriv] at hf
-  have hh : (Real.exp t * (Real.exp t - 1)^2 - Real.exp t *
-      (2 * (Real.exp t - 1) * Real.exp t)) / ((Real.exp t - 1)^2)^2 =
-      -(Real.exp t * (Real.exp t + 1) / (Real.exp t - 1)^3) := by
-    field_simp; ring
-  norm_num only [Nat.cast_ofNat, Nat.reduceSub, pow_one, Nat.reduceAdd] at hf
-  rw [hh] at hf
-  linarith
+    simpa only [F_zero] using
+      (D5.S3.Analytic.Interpolation.LogOneSubExpDerivatives.log_one_sub_exp_derivatives.2 x hx).1
+  have hd := (D5.S3.Analytic.Interpolation.LogOneSubExpDerivatives.log_one_sub_exp_derivatives.2 t ht).2.2.1
+  rw [show (3 : ℕ) = 2 + 1 from rfl, iteratedDeriv_succ', he.iteratedDeriv_eq 2,
+    iteratedDeriv_F] at hd
+  norm_num at hd
+  exact hd
 
 private lemma F_three {t : ℝ} (ht : 0 < t) :
     F 3 t = Real.exp t * (Real.exp t^2 + 4*Real.exp t + 1) / (Real.exp t - 1)^4 := by
