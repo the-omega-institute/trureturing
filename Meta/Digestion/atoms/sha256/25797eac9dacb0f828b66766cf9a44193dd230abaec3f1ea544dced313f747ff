@@ -1,0 +1,16 @@
+**定理 49.2（共同二阶骨架的角度特例）。** 任意维实内积空间中，
+
+$$
+\|u\pm v\|^2=\|u\|^2+\|v\|^2\pm2\langle u,v\rangle.
+$$
+
+当两向量非零时，$\|u-v\|^2=a^2+b^2-2ab\cos\theta$。$\theta=\pi/2,2\pi/3,\pi/3$ 分别给 $a^2+b^2,a^2+ab+b^2,a^2-ab+b^2$。
+
+证明（49.2）。将 $\langle u\pm v,u\pm v\rangle$ 按双线性展开，实内积的对称性使两个交叉项合并。非零时代入角的定义，再代三个余弦值即得。复平面中对实 $a,b$ 同样有
+
+$$
+Q_\theta(a,b)=|a-be^{i\theta}|^2=a^2+b^2-2ab\cos\theta;
+$$
+
+这是乘共轭后的展开。交叉项的符号可来自夹角，不是关系存在与否的判据。$\theta=0,\pi$ 分别为 $(a-b)^2,(a+b)^2$，二次型退化；零向量情形直接使用内积母式，不赋予未定义角。第 30、31 章的 $Q$ 因而有一个明确的 $120^\circ$ 平面读法，但三角、正方与圆使用同一二阶骨架并不选择物理空间维数。余弦定律的经典背景为钉版 Mathlib [Geometry/Euclidean/Triangle.lean](https://github.com/leanprover-community/mathlib4/blob/db584cd6d46c92f209a44c0f1c829460d327499d/Mathlib/Geometry/Euclidean/Triangle.lean)，其中 `norm_sub_sq_eq_norm_sq_add_norm_sq_sub_two_mul_norm_mul_norm_mul_cos_angle` 具有实内积空间条件。$\square$
+

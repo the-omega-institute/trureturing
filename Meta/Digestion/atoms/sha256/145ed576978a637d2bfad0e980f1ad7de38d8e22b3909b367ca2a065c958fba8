@@ -1,0 +1,17 @@
+**定理 69.2（qubit 球反演不是未知输入的确定信道）。** 在二级系统，$\varrho\mapsto I_2-\varrho$ 将密度态送到密度态、反演 Bloch 球，但其线性扩展
+
+$$
+\mathcal N(B)=\operatorname{tr}(B)I_2-B
+$$
+
+为正而非完全正，因此不是确定 CPTP 未知态操作。
+
+证明（69.2）。对正 $B$ 的两个特征值 $\lambda_1,\lambda_2$，$\mathcal N(B)$ 的对应特征值为 $\lambda_2,\lambda_1$，故为正；其迹等于 $\operatorname{tr}B$。然而令归一化 Bell 态 $|\Phi^+\rangle=(|00\rangle+|11\rangle)/\sqrt2$，则
+
+$$
+(\mathcal N\otimes\mathrm{id})(|\Phi^+\rangle\langle\Phi^+|)
+=\frac{I_4}{2}-|\Phi^+\rangle\langle\Phi^+|.
+$$
+
+因为 Bell 的另一侧约化态为 $I_2/2$，第一项由偏迹直接得到。结果在 Bell 方向特征值为 $-1/2$，在其正交补三方向为 $1/2$，非正。故联合参考扩展失败，排除完全正性。二级的理想 spin flip 可写 $Y\varrho^TY$，含转置或反酉步骤；近似 universal NOT 是另一种可实现任务，不能与精确反演混称。经典范围见 Bužek–Hillery–Werner，[*Optimal Manipulations with Qubits: Universal NOT Gate*, arXiv:quant-ph/9901053v1](https://arxiv.org/abs/quant-ph/9901053v1)，讨论未知态理想补态不可作为局部完全正门及其近似。几何距离对称若要成为量子信道，还必须在联合参考上保持正性。$\square$
+

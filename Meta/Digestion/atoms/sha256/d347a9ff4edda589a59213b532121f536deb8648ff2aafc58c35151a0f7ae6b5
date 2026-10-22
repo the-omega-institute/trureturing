@@ -1,0 +1,13 @@
+**定义 33.1（两种递归读出及其值域载体）。** 在第二十一章的完整自由有序树上取 $\phi=(1+\sqrt5)/2$，定义
+
+$$
+\begin{aligned}
+g(\alpha)&=1,& g(\beta)&=\phi,&
+g(\langle s,t\rangle)&=g(s)+g(t),\\
+h(\alpha)&=1,& h(\beta)&=\omega,&
+h(\langle s,t\rangle)&=-h(s)-h(t).
+\end{aligned}
+$$
+
+这里 $g:T\to\mathbb Z[\phi]\subset\mathbb R$，$h:T\to\mathbb Z[\omega]\subset\mathbb C$。所用原生树、替换与组成仍为 [FIB 关系延拓几何，钉版定义 1.1、1.3](https://github.com/the-omega-institute/trureturing/blob/61dcb1249a11ddc6745686bc6bc9cbc85d0e7936/docs/develop/theory/FIB_RELATIONAL_CONTINUATION_GEOMETRY.md)。写“取值于”这两个环只指定余域，不断言树像填满环。$g$ 是增长观察，不是原生数量 $2a+3b$；$h$ 是新增的节点负加法合同，不是原始树语法本身的改写。
+

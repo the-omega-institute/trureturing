@@ -1,0 +1,20 @@
+**定理 67.2（三角、正方及圆探针的同一盲方向）。** 有
+
+$$
+p_\theta=\langle+_\theta|\varrho|+_\theta\rangle
+=\frac{1+x\cos\theta+y\sin\theta}{2}.
+$$
+
+三相 $0,2\pi/3,4\pi/3$ 满足 $\sum p=3/2$，
+
+$$
+x=\frac43\sum_jp_j\cos\theta_j,\qquad
+y=\frac43\sum_jp_j\sin\theta_j.
+$$
+
+四相给 $x=p_0-p_\pi,y=p_{\pi/2}-p_{3\pi/2}$、相反角概率和一；连续圆仍不能读 $z$。
+
+证明（67.2）。展开投影与第 66.1 条矩阵，给第一式及标准 $y$ 符号。第 54.3 条根单位和及紧框架在 $m=3$ 时给三式；四角直接代入。全部效果仅张成 $I,X,Y$，所以两态 $\Pi_2,\Pi_5$ 对每个角都为 $1/2$，却 $z=\pm1$。增加同类读数预算不能补此盲方向。第 54 章未知未归一化 $(S,X,Y)$ 的三个线性参数与这里已知迹一的两个参数不同。
+
+三个二元实验不是一个三结果 POVM；若声明 trine POVM，应取 $E_j=(2/3)|+_{\theta_j}\rangle\langle+_{\theta_j}|$，三效果和为 $I_V$，相应概率是二元探针概率的 $2/3$。不假设 $V$ 支撑时，局部投影块质量为 $t=\operatorname{tr}(P_V\varrho)$，公式的常数一须改成 $t$：$p_\theta=(t+x_V\cos\theta+y_V\sin\theta)/2$。整个五维态迹一不使 $t=1$。$\square$
+

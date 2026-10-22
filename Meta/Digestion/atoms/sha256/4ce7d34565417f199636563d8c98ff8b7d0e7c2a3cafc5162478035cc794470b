@@ -1,0 +1,2 @@
+**定义 46.1（全域对合及合法压缩）。** 在八模式正交基空间 $\mathcal H_8$ 上令 $C|w\rangle=|1-w\rangle$，$P$ 为合法五基的正交投影，$T=PCP|_{\operatorname{Ran}P}$。$C=C^\dagger$、$C^2=I$，而 $N$ 基向量与零向量不同。
+
