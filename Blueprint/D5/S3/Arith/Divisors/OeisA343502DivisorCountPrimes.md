@@ -34,6 +34,10 @@ $$\forall k \in \mathrm{Nat},\; (\operatorname{InA343502}\left(k\right)) \Righta
 
 *Proof.* Machine-checked in Lean as `D5/S3/Arith/Divisors/OeisA343502DivisorCountPrimes.result` (`✓ std3`). ∎
 
+*Resolves.* `Problems/oeis-a343502-divisor-count-primes-dequatre` (proved) by `D5/S3/Arith/Divisors/OeisA343502DivisorCountPrimes.result`.
+
+<!-- scribe-open-problem-resolution-v1 {"problem_slug":"oeis-a343502-divisor-count-primes-dequatre","declaration_gid":"D5/S3/Arith/Divisors/OeisA343502DivisorCountPrimes.result","resolution_kind":"proved"} -->
+
 *Source.* Repository-derived.
 
 *Acknowledgement.* C. H. R. Dequatre (2021). *OEIS A343502, Numbers k such that tau(tau(k)) and tau(k+1) are both prime*. URL: <https://oeis.org/A343502>.

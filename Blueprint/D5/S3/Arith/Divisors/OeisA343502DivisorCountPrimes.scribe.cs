@@ -58,7 +58,10 @@ internal sealed class OeisA343502DivisorCountPrimesDocument : IScribeDocumentDef
                         "The proof therefore establishes 1 < k and not Nat.Prime k for every "
                             + "remaining member. The separate OEIS question about whether A343502 "
                             + "has finitely many odd terms is not asserted here."))),
-                DescribeRole.Theorem))));
+                DescribeRole.Theorem,
+                openProblemResolutionClaim: new OpenProblemResolutionClaim(
+                    ProblemSlugRef.Create("oeis-a343502-divisor-count-primes-dequatre"),
+                    ResolutionKind.Proved)))));
 
     private static Formula InA343502Formula()
     {
