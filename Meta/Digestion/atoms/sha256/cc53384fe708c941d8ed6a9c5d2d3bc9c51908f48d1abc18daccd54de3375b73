@@ -1,0 +1,52 @@
+**Definition 4.1 (complete new raw codec and Step75).** A physical word
+encodes exactly75 port lists in order0–74, each cell with eight literal
+tracks, followed by the ordered finite-slot vector, active/raw versions,
+PC, latches, heads/cursor/token fields and fixed source binding in the
+RCA/ARC physical tuple grammar. Duplicate representations of a shared
+physical finite bit use one catalog identity. The finite catalog is the
+union of the actual earlier boot, paid $H_B$, first raw store, $L$,
+second raw store, $G_B$ and their fields, in GENERAL2.5's order.
+Absent,0,1 remain separate values; partial target bits remain separate
+from the last completed active table. Tally, represented event lists,
+input cursors and completed annotations are simulator words, not extra
+old physical coordinates.
+
+Earlier versions keep their own literal $E$ and archival codecs. Decode
+each by that fixed version's codec and translate its finite variant tags
+to Definition 1.2's cases by the owning row's local meaning. This finite
+catalog translation preserves every operand/effect and never rewrites
+raw first-store bits. In particular it leaves $w_0,w_1,c_p$ unchanged.
+Shared owner/read/phase fields are catalog identities preserved by
+second-version installation; only that version's absent local fields
+are fresh constructors. Its initial-control word does not reconstruct
+or regrant the already present74 rights.
+
+Step75 is the following finite word program. Parse and exhaust this
+tuple, requiring75 lists, eight tracks per cell and the declared finite
+ranges. Find the active row: before first DONE select Definition 2.2's
+fixed table; in capture select the actual decoded first store; during
+second boot select its fixed five-state table; after second DONE select
+the actual decoded second store. Lookup traverses its complete framed
+list by unique state key. Validate ports0–74, latches0–7, symbols0–7,
+Boolean tables0–255, successor/entry indices, variant/effect tags and
+finite-slot bounds; absent, duplicate or malformed main rows have no
+enabled successor. Preserve their actual already executed history.
+There is no canonical replacement on a raw DONE.
+
+Copy the prestate; locate marked cells by Nth and a full finite mark
+scan; preserve old-value operands while applying core and ordered
+effects. Finite port cases have75 branches, with74 last. Replace and
+AppendItem have ARC2.1's expansions. The transformations are:
+
+| Core/variant | Complete represented change before receipt |
+| --- | --- |
+| RD | With its read right select the actual marked symbol's three bits into its latch and take its literal equality successor. |
+| Ordinary WR | Require the actual writer, writable marked cell and literal/latched variant; replace its three symbol bits only. |
+| ML/MR | Check owner/right and existing neighbor/boundary; clear old and set adjacent head mark. |
+| Ordinary EX | Require writer and marked R; retain old R identity/head as blank and append one unmarked R. |
+| BF | Apply its eight-bit truth table to the actual operand subfields, changing only result subfield3. |
+| IN | Use the actual version/PC/site kind; consume its next actual bit and change only the designated latch. |
+| OUT | Record the actual permitted output bit, with no live OUT from a represented bit. |
+| TOK | Require named source=1,destination=0 and perform their two finite updates. |
+| CTL | Perform its literal ordered finite effects and its actual test/successor, with the fixed cursor/end variants of §2 when selected. |
+| Boundary/fresh-control WR | Construct its one named boundary cell or one absent finite location, with its literal/latched value and specified cursor effect. |

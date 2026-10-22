@@ -44,6 +44,24 @@ The same multiplicities give q=sum_i(2w_i+1)=sum over j=0,...,m of (2j+1)d_j. Fo
 
 In particular |det G_standard(T)/T^q-det M_L|≤K_det T. With r(T)=det H(T)-det M_L, the same actual Gramian satisfies det G_standard(T)=T^q(det M_L+r(T)), |r(T)|≤K_det T, so det G_standard(T)=T^q(det M_L+O(T)). The leading coefficient is the positive determinant of the literal integral of P_L(s)ᵀ P_L(s) in the fixed subordinate orthonormal basis. Orthogonal invariance also identifies it with the determinant of the polynomial-limit operator in standard coordinates.
 
+Two-oscillator modal application. In the energy coordinates x=(q1,p1,q2,p2), take B=diag(J2,2 J2), with J2=[[0,1],[-1,0]], and energy ||x||²/2. This is the constant coordinate change x=L z, L=diag(1,1,2,1), from Poisson matrix diag(J2,J2) and positive energy matrix diag(1,1,4,1): LᵀL is that energy matrix and L diag(J2,J2) Lᵀ=B. The transformed generator is the same B, since L diag(J2,J2) diag(1,1,4,1) L⁻¹=B.
+
+For C_sum, the ordered orthonormal layer vectors are (1,0,1,0)/sqrt(2), (0,1,0,2)/sqrt(5), (1,0,-1,0)/sqrt(2), and (0,2,0,-1)/sqrt(5), with weights (0,1,2,3). For C_sep they are the coordinate vectors in the order (q1,q2,p1,p2), with weights (0,0,1,1). For every natural j, the actual derivative kernel N(j) is the span of vectors whose weight is at least j, and E(j) is the span of vectors whose weight equals j. Thus the cumulative ranks are (0,1,2,3,4) and (0,2,4), the last layer indices are 3 and 1, and the nonzero layer dimensions are (1,1,1,1) and (2,2), respectively. Both finite jets are injective.
+
+In these actual layer coordinates, P_sum(s)=(2/sqrt(2),5s/sqrt(5),3s²/(2sqrt(2)),s³/sqrt(5)) and P_sep(s)=[[1,0,s,0],[0,1,0,2s]]. These are obtained from the orthogonal projections onto the derivative layers, with coefficients C B^j/j!. Entrywise application of the scalar monomial integral identifies the integrals of P(s)ᵀP(s). For the sum sensor the integral is R diag(a) H3 diag(a) R, where R=diag(1/sqrt(2),1/sqrt(5),1/sqrt(2),1/sqrt(5)), a=(2,5,3/2,1), and H3 has entries 1/(i+j+1), for i,j=0,...,3. For the split sensor it is [[1,0,1/2,0],[0,1,0,1],[1/2,0,1/3,0],[0,1,0,4/3]].
+
+The determinant of the four-row Taylor matrix with rows C_sum B^j/j! is 3/2, det H3=1/6048000, and the determinants of the two actual polynomial integrals above are 1/2688000 and 1/36. For every T>0 the same physical Gramian satisfies det G_sum(T)/T^16=det H_sum(T) and det G_sep(T)/T^8=det H_sep(T), where H(T)=D(T)^(-1)SᵀG(T)S D(T)^(-1) in the corresponding fixed basis. The sum-side physical determinant limit and all sorted eigenvalue bounds additionally require transporting the generic normalized-operator estimate through these explicit coordinates.
+
+For nonzero real frequency omega, put B_omega=[[0,omega],[-omega,0]] and C_omega=(1,0). The real regular representation of complex multiplication transports the complex exponential to exp(t B_omega)=[[cos(omega t),sin(omega t)],[-sin(omega t),cos(omega t)]]. Thus the literal sensor Gramian is the integral of the outer product (cos(omega t),sin(omega t)) with itself; this identifies it with the physical exponential-integral definition. The exponential transport applies Mathlib’s NormedSpace.map_exp and Algebra.leftMulMatrix_complex.
+
+Entrywise integration gives G_omega(T)=[[T/2+sin(2 omega T)/(4 omega),(1-cos(2 omega T))/(4 omega)],[(1-cos(2 omega T))/(4 omega),T/2-sin(2 omega T)/(4 omega)]]. Its determinant is (T²-sin²(omega T)/omega²)/4. These identities hold for every real T whenever omega is nonzero. The entries use the existing integral_cos_sq, integral_sin_sq and integral_sin_mul_cos₂ formulas.
+
+The limits sin(u)/u→1, (1-cos(u))/u²→1/2 and (u-sin(u))/u³→1/6 give det G_omega(T)/T⁴→omega²/12 as T decreases to zero through positive values. For example, factor u²-sin²(u)=(u-sin(u))(u+sin(u)), with u=omega T; this preserves the frequency factor in the coefficient. The two residual limits follow by applying HasDerivAt.lhopital_zero_nhdsNE to the existing trigonometric derivatives and sin(u)/u limit.
+
+For the actual split sensor C_sep=[[1,0,0,0],[0,0,1,0]], the same physical exponential and integral give G_sep(T)=diag(G_1(T),G_2(T)) in the ordered coordinates (q1,p1,q2,p2). Determinants therefore multiply, and det G_sep(T)/T⁸→(1/12)(4/12)=1/36. Both C_sep and C_sum=(1,0,1,0) have Tr(CᵀC)=2.
+
+This modal computation establishes the physical split-sensor determinant and its leading coefficient. Information, Bayes risk over all measurable estimators, arbitrary positive noise schedules, and the optional finite-moment experiment also require their corresponding Gaussian and asymptotic interfaces; the modal calculation alone does not establish those conclusions.
+
 The finite derivative filtration supplies orthogonal geometry, while the exponential power series and Bochner integral supply the analytic operations.
 
 ## References

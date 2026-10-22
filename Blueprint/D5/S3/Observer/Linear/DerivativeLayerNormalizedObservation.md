@@ -26,6 +26,12 @@ Orthogonal differences resolve the descending kernel filtration. Every L(j)(b^k)
 
 The finite derivative filtration supplies orthogonal geometry, while the exponential power series and Bochner integral supply the analytic operations.
 
+The stronger derivative_layer_normalized_observation_facts API supplies the same estimate together with nesting of N(j), N(0)=V, orthogonality of the actual E(j), and N(n) plus the supremum of all E(j) equal to V. Its n indices are the original dimension indices, including zero layers and n=0. The preserved theorem above projects the decomposition and estimate from these facts; the stronger API is proof organization for its consumers, with no separate novelty claim.
+
+For the observable trajectory application, finite observability gives N(d)=0 and therefore U=R^d. Restricting the actual derivative-layer projections to U then gives the projections on the original state space, rather than introducing a different state or a supplied Gramian. The normalized maps act by the inverse powers T^j on these same layers; the uniform linear bound supplies the limiting polynomial map used in the positive Gramian and spectral estimates. The information and risk consequences, including their noise regimes and limits, are recorded in the existing SpectralNoiseAsymptotics narrative.
+
+Same-delivery information-escape audits for the newly exposed API theorems remain unfinished; see https://github.com/the-omega-institute/trureturing/issues/20111. Existing audit sources are preserved. Neither compilation of candidate registrations nor this issue is declared_validated evidence.
+
 ## References
 
 - Truth anchor: `D5/S3/Observer/Linear/DerivativeLayerNormalizedObservation.derivative_layer_normalized_observation`

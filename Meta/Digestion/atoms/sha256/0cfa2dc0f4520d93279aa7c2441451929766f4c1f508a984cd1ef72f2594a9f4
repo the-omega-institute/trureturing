@@ -1,0 +1,125 @@
+**Theorem 115.5 (injective comparison across every accepted step).**
+For an actual accepted step $s_n\mapsto s_{n+1}$, let
+$I_n^E:\mathscr E_n\to\mathscr E_{n+1}$ be inclusion of the actual
+old edges at their unchanged addresses, as in IV (112.7). Define the
+static real-linear comparison map
+
+$$
+T_n f=\langle e_n,f\rangle e_{n+1}
+            +U_{n+1}^*I_n^EU_nf,
+\qquad r_n=N_{n+1}/N_n.
+\tag{115.23}
+$$
+
+This map is defined on the entire old signed-state space, not a root
+response quotient. For every original $u$ and every $n\ge0$,
+
+$$
+T_n^*T_n=I,\qquad
+T_n^*e_{n+1}=e_n,\qquad
+T_nT_n^*=P_{\operatorname{ran}T_n},\qquad 1\le r_n\le3.
+\tag{115.24}
+$$
+
+All adjoints here use counting inner products. Thus every old signed
+direction has singular value one, the reverse $T_n^*$ has norm one,
+and recovery on the attained range is exact with condition number one.
+For $0<\varepsilon\le S<\infty$ the complete operator comparison is
+
+$$
+\sup_{u\in\mathcal T}\sup_{s\in[\varepsilon,S]}
+ \|S_{n+1}(s)T_n-T_nS_n(s)\|
+ \le\eta_{n+1}+\eta_n\longrightarrow0.
+\tag{115.25}
+$$
+
+In particular
+$\|T_n^*S_{n+1}(s)T_n-S_n(s)\|\le\eta_{n+1}+\eta_n$.
+For every old readout vector $g$, the complete transferred readout is
+$h\mapsto\langle T_ng,h\rangle$ on the successor. It has exactly
+the old norm $\|g\|$, agrees on every transported old state, and obeys
+
+$$
+\begin{aligned}
+\langle T_ng,T_nf\rangle&=\langle g,f\rangle,\\
+|\langle T_ng,S_{n+1}(s)T_nf\rangle-
+              \langle g,S_n(s)f\rangle|
+ &\le(\eta_{n+1}+\eta_n)\|g\|\|f\|.
+\end{aligned}
+\tag{115.26}
+$$
+
+This includes every literal old coordinate readout $g=\delta_p$,
+and every root-invisible signed mode. The transferred readout need
+not equal the successor's own coordinate evaluation at $p$.
+
+There are three distinct useful normalizations. Put
+$A_n=\sqrt{r_n}T_n$ and $B_n=r_n^{-1/2}T_n$. For every old field $f$,
+their exact contracts are
+
+| Map | Constant input $\mathbf1$ | Successor counting sum | Counting norm | Counting left inverse |
+| --- | --- | --- | --- | --- |
+| $T_n$ | $r_n^{-1/2}\mathbf1$ | $\sqrt{r_n}\sum f$ | $\|f\|$ | $T_n^*$ |
+| $A_n$ | $\mathbf1$ | $r_n\sum f$ | $\sqrt{r_n}\|f\|$ | $r_n^{-1/2}T_n^*$ |
+| $B_n$ | $r_n^{-1}\mathbf1$ | $\sum f$ | $r_n^{-1/2}\|f\|$ | $\sqrt{r_n}T_n^*$ |
+
+In counting norm all three have condition number one on their attained
+ranges. Their lower singular values are respectively $1$, $\sqrt{r_n}$
+and $r_n^{-1/2}\ge1/\sqrt3$. In counting-probability norm $A_n$ is
+an isometry and preserves the mean; its probability adjoint is exactly
+$r_n^{-1/2}T_n^*$ and is its norm-one reverse. The other probability
+norms are $\|T_nf\|_{\mu_{n+1}}=r_n^{-1/2}\|f\|_{\mu_n}$ and
+$\|B_nf\|_{\mu_{n+1}}=r_n^{-1}\|f\|_{\mu_n}$.
+The estimate (115.25) is unchanged for $A_n$ in probability operator
+norm; for $B_n$ in counting operator norm its right side is multiplied
+by $r_n^{-1/2}$.
+
+Proof. Actual rho births add two children at each current beta leaf,
+leaving every old edge at its literal address. Hence $I_n^E$ is an
+isometry, including when no edge is born. The two summands in (115.23)
+are orthogonal. The complete polar isometries (115.18) prove
+(115.24) and both projection identities. Actual node counts give
+$r_n=1+2b(s_n)/N_n$, and $b(s_n)\le N_n$, proving the stated uniform
+bounds without a shape hypothesis. IV Theorem 108.2 supplies the
+stronger $\sup_u|r_n-\varphi|\to0$; no new clock theorem is required.
+
+Under the coordinates $(c,z)$ of (115.18), $T_n$ is exactly
+$(c,z)\mapsto(c,I_n^Ez)$. The centered defect in (115.25) is therefore
+the restriction to $\mathscr E_n$ of
+
+$$
+F_s(\Sigma_{n+1})z-F_s(\Sigma_n)z.
+\tag{115.27}
+$$
+
+The common comparison covariance is $\Sigma_u$ at both epochs by
+$\nu_{\rho u}=\nu_u$. The triangle inequality in (115.19) proves
+(115.25); constants contribute zero. Applying the reverse and pairing
+with arbitrary $g$ proves (115.26). These are simultaneous operator
+bounds, not separate scalar estimates at different inputs.
+
+Since $T_n\mathbf1=\sqrt{N_n/N_{n+1}}\mathbf1$, its constant and sum
+contracts follow; the other rows follow by their stated scalar factors.
+For probability adjoints, multiplying the counting adjoint by
+$N_n/N_{n+1}$ is necessary. This gives the reverse of $A_n$ and all
+probability norms in the statement. Dividing both input and output
+counting norms by their actual square roots of node counts proves
+the probability version of (115.25).
+
+Every real-linear old readout is covered: if $\ell(f)=\langle g,f\rangle$
+in counting norm, use $\ell'(h)=\langle T_ng,h\rangle$ for $T_n$,
+$r_n^{-1/2}\langle T_ng,h\rangle$ for $A_n$, or
+$\sqrt{r_n}\langle T_ng,h\rangle$ for $B_n$.
+Their counting functional norms are respectively $\|g\|$,
+$r_n^{-1/2}\|g\|$ and $\sqrt{r_n}\|g\|$, and each composition with
+its transfer is exactly $\ell$. In probability norm the analogous
+Riesz readout $\langle g,f\rangle_{\mu_n}$ for $A_n$ is transferred
+as $\langle A_ng,h\rangle_{\mu_{n+1}}$, with identical norm.
+A literal evaluation has probability functional norm $\sqrt{N_n}$;
+its corresponding error bound has that factor. No source-uniform
+absolute error for unnormalized point readouts on unit probability
+fields is inferred. Counting-unit states and readouts do have the
+uniform bound (115.26). None of these maps is asserted positive,
+local, or identical to ancestry or literal old-coordinate retention.
+$\square$
+

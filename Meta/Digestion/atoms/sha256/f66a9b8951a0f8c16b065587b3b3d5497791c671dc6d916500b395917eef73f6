@@ -1,0 +1,21 @@
+## 104. A uniform three-task obstruction
+
+For the later actual horizons
+
+$$
+\mathcal S_{\rm late}
+=\{(-1/2)^{n-1}:n\ge2\}\cup\{0\},
+\tag{104.1}
+$$
+
+define the triple regret
+
+$$
+\Gamma_T(s)=\inf_{\mathcal R\ {\rm CPTP}}
+ \max\left\{e_{P_0}(\mathcal R;s),
+ e_{P_2}(\mathcal R;s)-B,
+ e_Q(\mathcal R;s)-\frac12\right\},
+\qquad T=\{P_0,P_2,Q\}.
+\tag{104.2}
+$$
+

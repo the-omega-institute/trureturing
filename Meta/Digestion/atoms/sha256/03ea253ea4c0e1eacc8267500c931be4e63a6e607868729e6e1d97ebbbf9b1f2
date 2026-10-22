@@ -1,0 +1,75 @@
+**Theorem 114.4 (root-readout sufficiency and its exact missing direction).**
+For each of the three real roots $\mu$ of $q$ in (114.10), define
+
+$$
+\begin{aligned}
+w_\mu&=(2,\ \mu^2-6\mu+7,\ -\mu^2+4\mu-3,\ \mu-3,\ \mu-3),\\
+m(f)&=\frac{f(\varepsilon)+f(L)+f(R)}3,\\
+d(f)&=\frac{2f(\varepsilon)-f(L)-f(R)}6,\\
+T_\mu f&=m(f)\mathbf1_5+d(f)w_\mu,\qquad
+\theta_\mu(t)=\frac{3a}{b\mu}\,t.
+\end{aligned}
+\tag{114.12}
+$$
+
+This is a compatible pair of rank two, with
+
+$$
+\ker T_\mu=\mathbb R(0,1,-1),\qquad
+T_\mu\mathbf1_3=\mathbf1_5,\qquad
+\mathsf c_{\rho u}T_\mu=\mathsf c_u.
+\tag{114.13}
+$$
+
+It preserves the complete root output for every signed old input and
+every comparison time:
+
+$$
+\mathsf c_{\rho u}e^{-b\theta_\mu(t)B}T_\mu f
+=\mathsf c_u e^{-atA}f
+=m(f)+2d(f)e^{-3at}.
+\tag{114.14}
+$$
+
+Conversely, every compatible pair satisfying this complete root-output
+identity for all $f,t$ is one of (114.12). Thus root-output sufficiency
+can hold at the sharp rank ceiling while full-state sufficiency fails.
+
+Proof. Direct multiplication in the actual five coordinates gives
+
+$$
+Bw_\mu-\mu w_\mu=(0,-q(\mu),q(\mu),0,0)=0,
+\qquad \sum_{p\in V_{\rho u}}w_\mu(p)=0,
+\qquad w_\mu(\varepsilon)=2.
+\tag{114.15}
+$$
+
+Every old signed field has the exact decomposition
+
+$$
+f=m(f)v_0+\frac{f(L)-f(R)}2v_1+d(f)v_3.
+\tag{114.16}
+$$
+
+Formula (114.12) sends $v_0$ to $\mathbf1_5$, $v_1$ to zero and
+$v_3$ to $w_\mu$. The two nonzero images are independent because one
+is constant and the other has positive eigenvalue and nonzero root
+coordinate. Hence the rank and kernel in (114.13) are exact. The
+successor exponential is constant on the first image and multiplies the
+second by $e^{-b\mu\theta_\mu(t)}=e^{-3at}$, proving (114.2).
+At the root $m(f)+2d(f)=f(\varepsilon)$, proving (114.13)--(114.14).
+The entire killed direction is mean-zero and root-invisible under every
+old heat time, rather than a constant-mode discrepancy.
+
+For the converse, the root-output identity at $t=0$ requires
+$\mathsf c_{\rho u}T=\mathsf c_u$. In particular $Tv_3$ and $Tv_0$
+are nonzero. Theorem 114.3 forces $Tv_1=0$, the linear clock
+$\theta(t)=3at/(b\mu)$, and $Tv_0\in\mathbb R\mathbf1_5$.
+The root constraint fixes $Tv_0=\mathbf1_5$ and $(Tv_3)(\varepsilon)=2$.
+The successor eigenvalue one has eigenspace
+$\mathbb R(0,0,0,1,-1)$ and is root-invisible, so it cannot be this
+$\mu$. Each other positive eigenspace is simple by (114.10)--(114.11),
+and its root-normalized vector is exactly $w_\mu$ of (114.15).
+This fixes all three old basis images and proves the converse.
+$\square$
+

@@ -1,0 +1,12 @@
+**Theorem 22.3 (C1: both corner mixed-M systems are empty).** No actual
+strict world in $C(39/2,258/5)$ has $m=1977/10$, and no actual
+strict world in $C(18,399/5)$ has $m=366$.
+
+Proof. At either corner the nonzero resultant of $\lambda,N$ excludes
+$\lambda=0$ for an actual terminal-equal world. For $\lambda\ne0$
+the equations force the common roots of $f_\pm,g_\pm$. Lemma 22.2
+leaves only $x=0$ in the lower case and $x=1$ in the upper case.
+The former violates $x>0$. For the latter the affine terminal equation
+gives $d=24$, excluded for the actual off-$24$ child by F, Lemma 30.2.
+Thus no strict complete world survives either system. ∎
+

@@ -1,0 +1,37 @@
+**Definition 12.1 (Polynomial source coordinates).** In addition to
+$j,n,T,U,V$ in (1.6), set
+
+$$
+\begin{gathered}
+X=b^2+r-r^2=bj,\qquad N=X+br=bn,\qquad W=N+bU=bV,\\
+N_4=2(b^2+8b+4)XN-4bTU(X+N),\\
+N_5=bTXN+W\{4(b+6)XN-5bT(3N+2X)\},\\
+A_5=1+V(4-15/j+20/T-10/n),\qquad
+B_{\rm coef}=6/T-2/U=\frac{2(2+5b)}{TU}>0.
+\end{gathered}
+\tag{12.1}
+$$
+
+The sextic used below is
+
+$$
+\begin{aligned}
+H(r,b)={}&14b^6+(95-73r)b^5+(47r^2-39r+30)b^4\\
+&+r(147r^2-232r+105)b^3
+ +2r(1-r)(44r^2-55r+15)b^2\\
+&-64r^3(1-r)^2b-32r^3(1-r)^3.
+\end{aligned}
+\tag{12.2}
+$$
+
+Here $H(r,b)$ is a polynomial, whereas $H_4$ is the acquired history.
+For a real fifth response $p$, define the scalar polynomial
+
+$$
+\mathsf S_p(r,b)=5b(p-24)N_4+6(8b-1)H(r,b).
+\tag{12.3}
+$$
+
+This notation distinguishes the source equation $\mathsf S_p=0$ from
+the fixed-width set $S_p$ of (4.3).
+

@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:33b8921a9e5551b0fa369cec978d8cb4412f32acd5fb3366101e150b08783663
+  normalized_sha256: sha256:33b8921a9e5551b0fa369cec978d8cb4412f32acd5fb3366101e150b08783663
+cas_ref: sha256:33b8921a9e5551b0fa369cec978d8cb4412f32acd5fb3366101e150b08783663
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: Names the internal strategy-state variable.
+    previous_atom_id: a2d18516a38491fbc611e2674740896dd2039e3bc4e3e5f6ab34f18f35dd2b44
+    next_atom_id: f4fc2d420187867e6dd0e7be0b72f00b99eead046a645424c8058d1a16293796

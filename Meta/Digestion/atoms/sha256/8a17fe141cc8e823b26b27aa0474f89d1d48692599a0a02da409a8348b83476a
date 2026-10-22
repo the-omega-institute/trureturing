@@ -1,0 +1,24 @@
+**Definition 19.1 (Whole-world lift along the global branches).**
+For $i\in\{-,+\}$, $0<r<1$ and $p\in I$, put $b=b_i(r,p)$,
+$c=r(1-r)/b$, $j=b+c$, $n=j+r$, $T=1+b$, $U=1+2b$ and $V=U+n$.
+Use the zero-safe expressions of $O$, (12.1), (12.4)–(12.6):
+
+$$
+\begin{gathered}
+a=24/5,\qquad \Delta=b-1/8,\qquad
+B_{\rm coef}=6/T-2/U,\\
+\Lambda=1+6/T+1/U-4/j-4/n,\\
+A_5=1+V(4-15/j+20/T-10/n),\qquad K_5=20a\Delta V/T,\\
+Z=\Lambda^2+A_5^2,\qquad
+\epsilon=\frac{-a\Delta B_{\rm coef}\Lambda+A_5(p-24-K_5)}{Z},\\
+(\eta_0,\eta_1,\eta_2,\eta_3)=
+ \left(-24-\epsilon,-\epsilon/j,(27/5-\epsilon)/T,-\epsilon/n\right),\\
+g_i(s;r,p)=\sum_{k=0}^3\eta_k
+ \prod_{\substack{0\le \ell\le3\\\ell\ne k}}
+ \frac{s-\ell}{k-\ell},\qquad
+W_i(r,p)=\left(\begin{pmatrix}r&b\\c&1-r\end{pmatrix},
+ g_i,24+\epsilon\right).
+\end{gathered}
+\tag{19.1}
+$$
+

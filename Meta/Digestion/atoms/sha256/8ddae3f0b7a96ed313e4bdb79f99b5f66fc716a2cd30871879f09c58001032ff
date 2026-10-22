@@ -1,0 +1,46 @@
+**Lemma 9.9 (All-world faithful terminal bridge on each chart).** At
+$p\ne24$, off $E_0$ every actual world is represented by the old chart
+$\delta$. At a base on $Q_{24}=0$ off $e_{24}$, every actual world is
+represented by $\widehat\delta$. In each case distinct worlds have
+distinct $x$, and each terminal collision forces the corresponding
+power determinant to vanish.
+
+**Proof.** The old-chart assertion is the all-world argument of Theorem
+4.3, using Theorem 4.1 and the linear pseudo-remainder. On the second
+chart $\rho\ne0$ and the subresultant conditions specialize $G$ to
+the complete common factor of $\bar R,F_0$, of degree one. Its
+complement $T$ is coprime to it. Every actual world is an $R$ root by
+Theorem 4.1. If its $x$ is a $T$ root, the retained
+$\operatorname{Norm}_T\alpha$ gives $d=-\beta/\alpha=\delta_T(x)$.
+If its $x$ is a $G$ root, then $F_0=0$. Since $Q_{10}\ne0$,
+Theorem 4.3 excludes every actual zero-drift world at this base.
+At $G$, $c_f=0$ and $f=d(a_fd+b_f)$. The retained $a_f$ norm and
+$d\ne0$ force $d=-b_f/a_f=d_F(x)$. The CRT expression gives the
+actual drift in both cases. This includes all actual worlds, with no
+requirement that they be chosen endpoints or that their sources be regular.
+
+F, Lemma 30.2, makes $W\mapsto(x,d)$ injective; a unique assigned drift
+at each $x$ therefore makes different worlds have different $x$.
+The $D,H_1,C_0,N_0$ norm factors and the coefficient denominators make
+the displayed functions defined at every $R$ root. On an actual root
+$N_0=UC_0$, and
+
+$$
+\frac{T+2j+4r}{U}
+=4x+\frac12+\frac{C_0}{2N_0}-\frac{2(24-d)}{H_1}.
+$$
+
+Thus $\tau_J$ or $\widehat\tau_J$ equals exactly the original
+$f_{MJ}$; the corresponding $M$ function equals $f_{MM}$.
+No final read has been added to the acquired history.
+
+Finally the nonzero discriminant gives eighteen distinct complex roots
+$x_i$. Their Vandermonde evaluation matrix is invertible. Multiplying
+it by the coefficient matrix of $1,\tau_E,\ldots,\tau_E^{17}$ gives
+rows $(1,\tau_E(x_i),\ldots,\tau_E(x_i)^{17})$. If two actual distinct
+worlds have equal terminal values, two of these rows coincide. Therefore
+its determinant, and hence the coefficient determinant, is zero.
+Equivalently it is the Vandermonde quotient of Section 2. This is only
+a necessary implication; complex roots and determinant zeros do not
+supply actual worlds. ∎
+

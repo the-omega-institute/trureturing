@@ -1,0 +1,25 @@
+**Definition 2.2 (Rational inclusion operations).** For intervals with
+rational endpoints use
+
+$$
+\begin{aligned}
+[a,b]+[c,d]&=[a+c,b+d],&-[a,b]&=[-b,-a],\\
+[a,b][c,d]&=[\min(ac,ad,bc,bd),\max(ac,ad,bc,bd)],\\
+1/[c,d]&=[1/d,1/c]&&\text{only when }cd>0.
+\end{aligned}
+\tag{2.2}
+$$
+
+Every operation is rational and exact. Polynomial expressions are
+expanded before evaluation. For $Q(r,p,v)$ use descending-power
+Horner evaluation in $v$ inside $p$ inside $r$; for $Q(r,b)$ use
+$b$ inside $r$; and for $Q(t,p)$ use $p$ inside $t$. Insert every
+missing zero coefficient. These orders mean, for example, evaluating
+$\sum_a r^a\sum_b p^b\sum_c q_{abc}v^c$ from the innermost sum
+outwards. Exact polynomial divisions in a definition precede interval
+evaluation. For displayed factored rational expressions use their
+displayed parentheses and sum unparenthesized terms from left to
+right. A coarser displayed denominator guard establishes
+nonvanishing; subsequent division uses the interval of the original
+expression unless a coarsened input box is explicitly prescribed.
+

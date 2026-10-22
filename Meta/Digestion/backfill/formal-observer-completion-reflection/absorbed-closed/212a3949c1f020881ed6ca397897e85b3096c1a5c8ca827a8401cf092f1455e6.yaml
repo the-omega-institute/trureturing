@@ -1,0 +1,9 @@
+fingerprints:
+  raw_sha256: sha256:212a3949c1f020881ed6ca397897e85b3096c1a5c8ca827a8401cf092f1455e6
+  normalized_sha256: sha256:212a3949c1f020881ed6ca397897e85b3096c1a5c8ca827a8401cf092f1455e6
+cas_ref: sha256:212a3949c1f020881ed6ca397897e85b3096c1a5c8ca827a8401cf092f1455e6
+coverage_gids:
+  - gid: D5/S3/Observer/Approximation/IntertwiningDefectPropagation.intertwining_defect_telescope
+    target_statement_id: sha256:7ab337ce26ce3df4408ccb251764974c6680174cdb68e0a6a14207e160c5b233
+receipts:
+  unresolved_subitems: []

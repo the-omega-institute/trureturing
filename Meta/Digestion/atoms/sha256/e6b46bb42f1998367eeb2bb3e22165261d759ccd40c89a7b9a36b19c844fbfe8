@@ -1,0 +1,105 @@
+**Theorem 117.5 (literal serial ingress with one final positive dwell).**
+Fix $0<\varepsilon\le T<\infty$, and set
+
+$$
+\begin{aligned}
+K_{\varepsilon,T}&=\frac{e^T}{e\varepsilon},\\
+M_{\varepsilon,T}&=e^T\left(\frac4{e^2\varepsilon^2}
+                       +\frac{27T}{e^3\varepsilon^3}\right),\\
+\eta_n(\varepsilon,T)
+ &=\inf_{J\in\mathbb N_{\ge1}}\left\{
+ \frac{3M_{\varepsilon,T}}{\sqrt J}
+ +2K_{\varepsilon,T}(J+1)3^J\rho_n\right\}
+ \quad(n\ge n_*).
+\end{aligned}
+\tag{117.20}
+$$
+
+Then $\eta_n(\varepsilon,T)\to0$, and
+
+$$
+\sup_{u\in\mathcal T}\ \sup_{m\ge n,\ m<\infty}\ \sup_{t\in[\varepsilon,T]}
+\|S_m(t)P_{n,m}-E_{n,m}S_n(t)\|_{H_n\to H_m}
+ \le\eta_n(\varepsilon,T)
+ \qquad(n\ge n_*).
+\tag{117.21}
+$$
+
+Every original source, finite horizon, time, unit signed initial field
+and unit signed final linear test may move jointly in this supremum.
+
+Proof. Reuse the finite continuous functional calculus and Bernstein
+approximation method of §§115.3 and 116.4. The required scalar function
+is different because $P$ has no uniform raw norm. Put
+
+$$
+G_t(x)=e^{-t(1-x)/x},\qquad
+H_t(x)=x^{-1}G_t(x)\quad(0<x\le1),\qquad
+G_t(0)=H_t(0)=0.
+\tag{117.22}
+$$
+
+For every actual resolvent, $S_j(t)=H_t(R_j)R_j$.
+Uniformly in $t\in[\varepsilon,T]$, the scalar bounds are
+
+$$
+\|H_t\|_\infty\le K_{\varepsilon,T},\qquad
+|H_t'(x)|
+ \le e^T(x^{-2}+Tx^{-3})e^{-\varepsilon/x}
+ \le M_{\varepsilon,T}.
+\tag{117.23}
+$$
+
+They follow by maximizing $y^re^{-\varepsilon y}$ for $r=1,2,3$;
+the extension at zero is continuous and satisfies the same Lipschitz
+bound. Let $p_{J,t}$ be its degree-$J$ Bernstein polynomial on $[0,1]$.
+The already used binomial variance estimate and monomial expansion give
+
+$$
+\|H_t-p_{J,t}\|_\infty\le\frac{M_{\varepsilon,T}}{2\sqrt J},
+\qquad
+\sum_{i=0}^J|[x^i]p_{J,t}|\le K_{\varepsilon,T}3^J.
+\tag{117.24}
+$$
+
+Now apply the polynomial to the already smoothed product $R_mP$:
+
+$$
+\begin{aligned}
+\|S_m(t)P-ES_n(t)\|
+\le{}&\|(H_t-p_{J,t})(R_m)R_mP\|\\
+ &+\|E(H_t-p_{J,t})(R_n)R_n\|\\
+ &+\|p_{J,t}(R_m)R_mP-Ep_{J,t}(R_n)R_n\|\\
+\le{}&\frac{(2B+1)M_{\varepsilon,T}}{2\sqrt J}
+       +2K_{\varepsilon,T}(J+1)3^J\rho_n\\
+\le{}&\frac{3M_{\varepsilon,T}}{\sqrt J}
+       +2K_{\varepsilon,T}(J+1)3^J\rho_n.
+\end{aligned}
+\tag{117.25}
+$$
+
+The first two terms use $\|R_mP\|\le B+1$, $\|E\|\le B$ and
+$\|R_n\|\le1$. Every monomial in the last term is a coefficient times
+$U_{i+1}$ of (117.14), so (117.24) bounds it as displayed.
+The inequality $2B+1<6$ gives the last line. In particular no
+approximation error is multiplied by the raw norm of $P$.
+Taking the infimum proves (117.21). First fix $J$ and let $n$ tend
+to infinity, and then let $J$ tend to infinity; this proves the limit.
+
+A completely scalar accuracy threshold is available. Given $\delta>0$,
+choose an integer
+
+$$
+J>(6M_{\varepsilon,T}/\delta)^2,
+\qquad
+n_0\ge n_*\text{ such that }
+\rho_{n_0}<\frac{\delta}{4K_{\varepsilon,T}(J+1)3^J}.
+\tag{117.26}
+$$
+
+The closed decreasing formulae (117.3), (117.13) make this a specified
+finite threshold, independent of the original and horizon. For all
+$n\ge n_0$, (117.25) is less than $\delta$. The proof uses only finite
+actual carriers; no completed endpoint or source-history splicing is
+involved. $\square$
+

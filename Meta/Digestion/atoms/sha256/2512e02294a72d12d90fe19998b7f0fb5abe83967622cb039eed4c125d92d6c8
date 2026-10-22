@@ -1,0 +1,41 @@
+**Definition 1.1 (pre-supplement target and old record).** Fix one allowed
+$W\in\mathcal W$, one finite pointer width $\sigma\in(0,\infty)$, and put
+$r=(4\sigma^2)^{-1}$. For $\boldsymbol\eta=(\eta_A,\eta_B)\in[0,\infty)^2$,
+use the preparation and the three chronological operations
+
+$$
+\mathrm{read}_0,\ J,\ \mathrm{read}_1,\ M,\ \mathrm{read}_2
+$$
+
+from [FIB shared Gaussian instruments and indexed record-law fibres,
+Definition 26.1](FIB_SHARED_GAUSSIAN_RECORD_LAWS.md). The retained old record
+is $Z=(Z_0,Z_1,Z_2)$, including the labels of the fixed $J,M$ controls. The
+state whose status is reported is exactly the record-averaged marginal
+
+$$
+\widetilde\rho_{AB;\boldsymbol\eta}^{W,\sigma}
+ =\operatorname{Tr}_{\rm rest}
+ (\mathcal D_2\circ\mathcal U_M\circ\mathcal D_1
+ \circ\mathcal U_J\circ\mathcal D_0)
+ (\widetilde\rho_{W;\boldsymbol\eta}),
+\tag{1.1}
+$$
+
+before any supplementary coupling. Its status is
+
+$$
+\mathsf s_r(\boldsymbol\eta)=
+\begin{cases}
+\mathsf S,&F_r(\boldsymbol\eta)\ge0,\\
+\mathsf E,&F_r(\boldsymbol\eta)<0,
+\end{cases}
+\qquad
+F_r(\eta_A,\eta_B)=(\eta_A+64r-2)(\eta_B+r)-1.
+\tag{1.2}
+$$
+
+Here $\mathsf S$ means separable and $\mathsf E$ means NPT-entangled for
+(1.1). Equality belongs to $\mathsf S$, as in Proposition 27.1 of the source.
+The supplements may disturb the specimen, but they do not change the target
+time in (1.1).
+

@@ -1,0 +1,9 @@
+fingerprints:
+  raw_sha256: sha256:6337f5c9c859b0d476d29f613665be46fda4ee1c5578e48b2a8ae1352ac299b2
+  normalized_sha256: sha256:6337f5c9c859b0d476d29f613665be46fda4ee1c5578e48b2a8ae1352ac299b2
+cas_ref: sha256:6337f5c9c859b0d476d29f613665be46fda4ee1c5578e48b2a8ae1352ac299b2
+coverage_gids:
+  - gid: D5/S3/Observer/BornReduction.rank_one_pure_state_modulus_square_reduction
+    target_statement_id: sha256:b7155f94bd432210b5cbf71d0d3184450ca73a997dcd978a493c907ee4fc45e0
+receipts:
+  unresolved_subitems: []

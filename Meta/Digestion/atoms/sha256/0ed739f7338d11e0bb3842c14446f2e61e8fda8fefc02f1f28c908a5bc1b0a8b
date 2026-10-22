@@ -1,0 +1,11 @@
+- **[F] Finite Fock and passive covariance.** The finite fermionic
+  Fock/exterior-power and second-quantization ingredients are the
+  supplied source used in §§141--142.  Equations (162.1)--(162.3) apply
+  that existing structure to the full $H_V=I_3-VV^*$ family.
+
+The source-dependent content here is the spectrum substitution, the
+fixed-cut placement (161.1)--(161.8), the passive-orbit threshold, and the
+native $q_a,q_b$ comparison.  The cited results are reused within their
+stated quantifiers and dimensions.  No independent literature-priority
+claim is attached to this application.
+

@@ -1,0 +1,13 @@
+**Theorem 21.2 (All base factors and the six possible b lifts).** On
+$\mathcal P\times\mathcal V$, the following table bounds
+$-\mathcal L_0/\mathcal L_1$ throughout each entire indicated box.
+The $b$ numerator intervals have common denominator $10^6$.
+
+| Projected interval | Sign of $\mathcal L_1$ | $b$ numerator interval | Possible constructed world |
+| --- | --- | --- | --- |
+| $I_1$ | $+$ | $[254495,254496]$ | $C$ |
+| $I_2$ | $-$ | $[159165,159166]$ | $B$ |
+| $I_3$ | $-$ | $[319421,319426]$ | $A$ |
+| $I_4$ | $-$ | $[150424,150425]$ | $D$ |
+| $I_5$ | $-$ | $[-393738,-393737]$ | none with $b>0$ |
+| $I_6$ | $+$ | $[-598255,-596853]$ | none with $b>0$ |

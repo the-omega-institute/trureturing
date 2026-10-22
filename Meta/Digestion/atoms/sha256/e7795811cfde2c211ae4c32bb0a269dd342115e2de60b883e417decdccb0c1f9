@@ -1,0 +1,95 @@
+**Theorem 3.2 (Direction injectivity at the target parent).** At $H_4$ of
+(1.4), every direction other than $[h]$ contains at most one complete
+world. The only nonsingleton direction fiber is $K_{1/8}$.
+
+Proof. Suppose two worlds outside $K_{1/8}$ have proportional gains. If
+the gains are identical, clock zero gives a common drift. Their samples
+at one and three are nonzero by Theorem 2.2, so the odd rows fix $j,n$ and
+$r=n-j$. At least one of the samples at two and four is nonzero, since
+$C=147/5\ne Y=18$. That even row fixes $b$ and then $c$, giving the same
+complete world.
+
+For different scales write $g_2=\lambda g_1$, $\lambda\ne0,1$. Clock zero
+gives $d_2=\lambda d_1$. If $d_1=0$, both drifts are zero, and the nonzero
+responses $C,Y$ imply nonzero samples at two and four. Their equations
+then give $T_1=\lambda T_2$, $U_1=\lambda U_2$. Since $U_i=2T_i-1$,
+these force $\lambda=1$, a contradiction.
+
+We may therefore normalize by the two nonzero drifts:
+$f=g_1/d_1=g_2/d_2$, so $f_0=-1$. The even equations are
+
+$$
+C=(1+f_2)d+f_2(db),\qquad
+Y=(1+f_4)d+2f_4(db).
+\tag{3.7}
+$$
+
+Two different drifts give two different solutions $(d,db)$, forcing
+coefficient rank one. Consistency gives
+$2Cf_4=Yf_2$ and $C(1+f_4)=Y(1+f_2)$, whence
+
+$$
+f_2=\frac{19}{15},\qquad f_4=\frac{19}{49}.
+\tag{3.8}
+$$
+
+At every legal solution in this direction,
+
+$$
+d=\frac{C}{1+(19/15)(1+b)}>0,\qquad
+ d\{2(C-Y)(1+b)+Y\}=CY,\qquad d<Y<24.
+\tag{3.9}
+$$
+
+Thus $f_1,f_3>0$ and $k=f_1/f_3-1=r/j>0$. The cubic
+fourth-difference identity yields
+
+$$
+f_1+f_3=\frac{-1+6f_2+f_4}{4}=\frac{428}{245}=:K,
+\quad f_1=K\frac{k+1}{k+2},\quad f_3=\frac K{k+2}.
+\tag{3.10}
+$$
+
+The original first and second rows now give
+
+$$
+\begin{gathered}
+j=\frac{125+152b}{147f_1}=a_0+qb,\qquad
+q=\frac{190}{321}\frac{k+2}{k+1}>0,\qquad a_0=\frac{125}{152}q>0,\\
+r=kj,\qquad c=j-b.
+\end{gathered}
+\tag{3.11}
+$$
+
+Source rank one is exactly the quadratic equation
+
+$$
+F_k(b)=k(a_0+qb)\{1-k(a_0+qb)\}-b\{a_0+(q-1)b\}=0.
+\tag{3.12}
+$$
+
+Its leading coefficient is $-A$, where
+
+$$
+\begin{aligned}
+A&=k^2q^2+q-1\\
+&=\frac{36100k^4+144400k^3+102349k^2-23112k+18939}
+{103041(k+1)^2}>0.
+\end{aligned}
+\tag{3.13}
+$$
+
+For the strict sign, the quadratic
+$102349k^2-23112k+18939$ has discriminant $-7219386300<0$ and positive
+leading coefficient. The remaining fourth and third degree terms are
+positive for $k>0$.
+
+If any legal $b>0$ exists, (3.11) gives $0<ka_0<r(b)<1$, hence
+$F_k(0)=ka_0(1-ka_0)>0$. A quadratic with negative leading coefficient and
+positive constant term has exactly one positive root. Consequently there
+is at most one legal $b$, fixing $j,r,c,d$ and $g=df$. The two worlds
+coincide, proving the theorem. The positive-drift conclusion (3.9) was
+derived only under the hypothetical different-scale pair; it imposes no
+restriction on individual worlds elsewhere in the full parent. In
+particular no zero-drift or singular parent branch has been deleted. ∎
+

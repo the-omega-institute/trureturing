@@ -1,0 +1,49 @@
+**Lemma 13.4 (One analytic neighbourhood at the lower corner).** Put
+$j=b+c$, $\theta=b/j$ and $u=\theta(1-\theta)$. On the lower
+rank-one branch define
+
+$$
+\begin{gathered}
+r=\frac{2u j^2}{1+\sqrt{1-4u j^2}},\qquad
+\rho=\frac rj=\frac{2u j}{1+\sqrt{1-4u j^2}},\qquad
+T=1+\theta j,\quad U=1+2\theta j,\\
+L_-=j(1+6/T+1/U)-4-4/(1+\rho),\\
+N=-\frac{24}{5}(\theta j-1/8)(6/T-2/U),\qquad h=N/L_-.
+\end{gathered}
+\tag{13.3}
+$$
+
+Use the analytic expressions at $j=0$ in these formulas. The entire
+response circuit extends analytically to one open neighbourhood of
+
+$$
+\mathcal R=\{(j,\theta):|j|\le1/64,\ -1/4\le\theta\le5/4\}.
+\tag{13.4}
+$$
+
+On this rectangle the whole gain samples and drift are
+
+$$
+e=jh,\quad d=24+jh,\qquad
+(g_0,g_1,g_2,g_3)=
+\left(-24-jh,-h,\frac{27/5-jh}{T},-\frac h{1+\rho}\right).
+\tag{13.5}
+$$
+
+Proof. Here $|u|\le1$, $1-4uj^2\ge1-1/1024$,
+$|\rho|<1/32$, $T\ge251/256$, $U\ge123/128$ and
+$|j(1+6/T+1/U)|<1/4$. In particular
+
+$$
+L_-<-4-128/33+1/4<-7.
+\tag{13.6}
+$$
+
+Every square root has positive radicand and every denominator is
+separated from zero on the whole compact rectangle. These strict
+bounds persist on an open neighbourhood of it. Since
+$j\Lambda=L_-$, the parent equation gives $e=jh$, and cancellation
+within these analytic formulas gives exactly (13.5). Interpolation
+and multiplication by the original traces are analytic operations
+there, proving the common extension. ∎
+

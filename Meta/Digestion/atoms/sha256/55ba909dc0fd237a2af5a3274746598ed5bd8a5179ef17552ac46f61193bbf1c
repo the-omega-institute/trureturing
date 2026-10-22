@@ -1,0 +1,49 @@
+**Theorem 146.1 (Global positive continuation).** Conditional on the
+root, value, boundary and support premises of Lemmas 129.2 and 131.1
+and Theorems 128.2 and 137.1, and the general-parameter implications proved in
+§§139–145, there is a real analytic branch
+$u(q)=(r(q),L(q),p(q),x(q))$, $0<q\le1/4$, satisfying (141.3),
+anchored at $u(1/4)=u_*$ and specified uniquely in the tubes below.
+For every such $q$,
+
+$$
+\begin{aligned}
+\mu(q)&=\min_{\mathcal R\ {\rm complex\ CPTP}}
+ \max_{\rho\in\mathsf D_3}\tfrac12
+ \|\rho-\mathcal R\Phi_q(\rho)\|_1=L(q),\\
+\operatorname{Opt}_q
+ &=\{\mathcal R_{r(q),z}:z\in\mathbb C,\ |z|\le1\}\\
+ &=\{\mathcal R\ {\rm complex\ CPTP}:
+       \mathcal R\Phi_q=\mathcal C_q\},\\
+J_{\mathcal R_{r,z}}&=B_r
+ \begin{pmatrix}1&0&z\\0&1-r^2&0\\\overline z&0&1\end{pmatrix}
+ B_r^\dagger,\qquad
+B_r=[\,|00\rangle+r|11\rangle,|21\rangle,|22\rangle\,],\\
+\mathcal C_q(X)&=
+\begin{pmatrix}
+X_{00}&qr(q)X_{01}&0\\
+qr(q)X_{10}&r(q)^2v_{1,q}(X)&0\\
+0&0&X_{11}+X_{22}-r(q)^2v_{1,q}(X)
+\end{pmatrix},\\
+v_{1,q}(X)&=\{(1+q)X_{11}+(1-q)X_{22}\}/2.
+\end{aligned}
+\tag{146.1}
+$$
+
+The decoder action is exactly (139.3); the circle $|z|=1$ is included.
+One map is fixed before the unknown input, which ranges over every
+complex mixed qutrit density as well as every pure density. The
+identity target and half trace metric are retained. The decoder has
+no input reference, history or environment. Analyticity at a positive
+endpoint means local analytic extension of the contact root there.
+No assertion about an optimizer fiber at $q=0$ is made.
+
+For use below write $J=D_uF$ and retain exactly (141.3) and (141.9),
+including substitution of $y=1-p-x$ before differentiation. The
+pointwise implication already proved in §§142–144 requires $F=0$,
+the strict scalar signs (141.10), and strict separation on the whole
+closed population boundary. Its determinant, cubic chord, nine-contact
+Choi slack, exact kernel, individual phase and mixed-density arguments
+are used with these hypotheses; they do not require that the parameter
+remain in the original existential neighborhood. The following finite data supply these hypotheses and their connection.
+

@@ -1,0 +1,54 @@
+**Lemma 22.2 (A global upper-root bracket).** For every $p\in I$ and
+$0<r<1$,
+
+$$
+ b_-(r,p)<\frac16<b_+(r,p)<\frac12.
+\tag{22.2}
+$$
+
+Every complete world on the upper branch has $\Lambda\ne0$.
+
+Proof. For $k=0,1,2,3$, substitute $r=(k+x)/4$, $0\le x\le1$,
+into $-\mathsf A(r,1/6,p)$ and $\mathsf A(r,1/2,p)$.
+Their degrees in $x$ are at most six. Apply (14.4) with degree six
+at each of the two endpoints of $I$. The exact minima among the
+$4\cdot2\cdot7=56$ coefficients of each polynomial are
+
+$$
+ \min\beta^6_j\bigl(-\mathsf A((k+x)/4,1/6,p)\bigr)
+       =\frac{259}{27648},\qquad
+ \min\beta^6_j\bigl(\mathsf A((k+x)/4,1/2,p)\bigr)
+       =\frac{1577691}{81920}.
+\tag{22.3}
+$$
+
+Here the minimum includes $k$, the endpoint $p$, and $j$.
+The first minimum occurs at $(p,k,j)=(549/20,0,5)$ and the
+second at $(549/20,2,3)$. For an explicit rational specification
+of all 112 comparisons, let $c_i(b,p)=[r^i]\mathsf A(r,b,p)$,
+using the literal polynomial (14.2). The coefficient indexed by
+$(k,j)$ before the sign change in the first family is
+
+$$
+ \sum_{a=0}^j\frac{\binom ja}{\binom6a}
+    \sum_{i=a}^6 c_i(b,p)\binom ia
+                   (k/4)^{i-a}4^{-a}.
+\tag{22.4}
+$$
+
+Thus (22.3) is a finite rational comparison, including zero padding
+through degree six. The nonnegative partition-of-unity identity
+(14.5) makes both polynomials strictly positive on each quarter.
+Affinity in $p$ extends these signs from the two endpoints to all
+of $I$. Hence $\mathsf A(r,1/6,p)<0<\mathsf A(r,1/2,p)$.
+Theorem 18.4 supplies exactly two positive roots, with
+$\mathsf A(r,0,p)>0$. The intermediate value theorem gives one
+root below $1/6$ and one between $1/6$ and $1/2$; exhaustiveness
+and their order identify them as $b_-$ and $b_+$.
+
+For any actual parent world, $\Lambda=0$ forces $b=1/8$ by
+(12.7) of $O$, as explained in Theorem 19.2. Equation (22.2)
+excludes that value on the upper branch. This restriction is a
+consequence of the original source equation for all positive $b$,
+rather than an assumption bounding the original source domain. ∎
+

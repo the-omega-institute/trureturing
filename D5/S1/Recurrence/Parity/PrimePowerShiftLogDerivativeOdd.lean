@@ -148,7 +148,5 @@ theorem a393867_odd (n : ℕ) (hn : 1 ≤ n) : Odd (a393867 n) := by
       exact add_right_cancel (h.trans (CharTwo.add_self_eq_zero (1 : ZMod 2)).symm)
   exact hall j
 
-#print axioms generating_coeff_pair
-#print axioms a393867_odd
 
 end D5.S1.Recurrence.Parity.PrimePowerShiftLogDerivativeOdd

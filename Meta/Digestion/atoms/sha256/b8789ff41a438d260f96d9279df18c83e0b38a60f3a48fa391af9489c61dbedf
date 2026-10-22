@@ -1,0 +1,28 @@
+**Lemma 129.1 (range forcing without a diagonal-old hypothesis).** Fix any
+$u\in\mathcal T$ and a compatible conservative Markov step with
+$B_e\ne\varnothing$. Its old and successor metrics may be arbitrary
+SPD matrices satisfying (128.2), including any inherited non-diagonal
+ones. Suppose $\operatorname{jr}(Q_e)\le R$ and every
+$p\in\mathcal P_e$ has an $x\in V_e$ with $d_e(x,p)>R$.
+Then the uniquely defined cross vector of (127.3) is $q_e=0$.
+In particular this holds under the two-epoch range bound in Lemma 126.1;
+no successor range bound beyond its Markov signs is needed here.
+
+**Proof.** From (127.7), with $a_e=K_eq_e$ and
+$b_e=P_e^{\mathsf T}a_e$,
+
+$$
+Q_{e+1}(x,c)=a_e(c)\ge0,\qquad
+Q_{e+1}(x,p)=Q_e(x,p)-b_e(p)\quad(x\ne p),\qquad
+b_e(p)=\sum_{c:\operatorname{par}_e(c)=p}a_e(c).
+\tag{129.1}
+$$
+
+The old-to-child entry is off-diagonal for every old $x$, hence every
+$a_e(c)$ is nonnegative. For the specified distant $x$, the old range
+bound gives $Q_e(x,p)=0$ and the successor Markov sign gives
+$b_e(p)\le0$. Its two summands in (129.1) are nonnegative, so both
+vanish. This applies to every actual beta parent, accounting for every
+child, and therefore $a_e=0$. Since $K_e$ is invertible, $q_e=0$.
+No rate formula for a diagonal old metric enters this argument. $\square$
+

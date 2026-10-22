@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:1a70499baec86187c66e75ca6152117bd1697fc44a83af324a19c08783da5b68
+  normalized_sha256: sha256:1a70499baec86187c66e75ca6152117bd1697fc44a83af324a19c08783da5b68
+cas_ref: sha256:1a70499baec86187c66e75ca6152117bd1697fc44a83af324a19c08783da5b68
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: Defines the configuration analysis operator and calls its kernel the blind kernel; no injectivity assertion.
+    previous_atom_id: c67c72e916543e82a054a9c442c0b7098cc4f93220ab4c880edfc36e8d2c18b1
+    next_atom_id: 5949206841600ab5ea72c5bac30619cf8454bfedf5104c13ae8bbe0abbdbc76e

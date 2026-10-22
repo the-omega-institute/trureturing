@@ -1,0 +1,22 @@
+**Lemma 12.2 (The nonzero drift-coefficient vector).** At every strict
+source $0<r<1$, $b>0$,
+
+$$
+\Lambda=\frac{N_4}{TU XN},\qquad
+A_5=\frac{N_5}{bTXN},\qquad
+\Lambda^2+A_5^2>0.
+\tag{12.4}
+$$
+
+Proof. All of $b,j,n,T,U,V,X,N,W$ are strictly positive before any
+division. The first two identities follow by multiplication of these
+positive denominators. For the last assertion use the full strict-source
+M case of the terminal-zero-plane volume, Theorem 9.2. Its parameters
+are $(A,C,z,Y)=(24,147/5,24,18)$, its fifth action is $F=M$, and its
+$(X,N,W_M,N_4,N_{5,M})$ are exactly $(X,N,W,N_4,N_5)$ here. Its drift
+coefficients are $a_4=U\Lambda$ and $a_{5,M}=A_5$. The supplier proves
+$(a_4,a_{5,M})\ne(0,0)$ for all $0<r<1,b>0$, without a chamber, degree,
+gain or drift restriction. Since $U>0$, (12.4) follows. Thus this use
+includes the five-row singular stratum $\Lambda=0$; it is not a use of
+a chamber-only inverse. ∎
+

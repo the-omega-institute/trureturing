@@ -1,0 +1,9 @@
+fingerprints:
+  raw_sha256: sha256:7cfe405549e47cd933e3be622efad9d9559999d918c3dfe60c93c5d9dcc3b35e
+  normalized_sha256: sha256:7cfe405549e47cd933e3be622efad9d9559999d918c3dfe60c93c5d9dcc3b35e
+cas_ref: sha256:7cfe405549e47cd933e3be622efad9d9559999d918c3dfe60c93c5d9dcc3b35e
+coverage_gids:
+  - gid: D5/S3/Observer/Linear/GramianBehaviorQuotientMetric.gramian_behavior_quotient_metric
+    target_statement_id: sha256:f771801134ffe331d071a8dff80e27684220cc663348a253d3f59138993cc61c
+receipts:
+  unresolved_subitems: []

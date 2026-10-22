@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:d813eeb19356ac23d61dd03997ada7800796cc04000928f6dcaf55fa7dca263d
+  normalized_sha256: sha256:d813eeb19356ac23d61dd03997ada7800796cc04000928f6dcaf55fa7dca263d
+cas_ref: sha256:d813eeb19356ac23d61dd03997ada7800796cc04000928f6dcaf55fa7dca263d
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 'nonpropositional: 文献归属及前瞻裁决的流程纪律；箭头规定允许的工作顺序，不主张新的图论或概率结论。'
+    previous_atom_id: 1d8442dbb8efda175c7cffb315087bc264bb142080395bc7331f196d9320e567
+    next_atom_id: 8de7536dd86451ca67503b03c7a181547c1b19d4b909a43e3926e831b1543386

@@ -1,0 +1,45 @@
+**Definition 112.1 (Orbit and simultaneous approximation).** In the
+ordered basis (93.1), let
+
+$$
+|z_{\theta,\varphi}\rangle
+ =\frac{|0\rangle+e^{i\theta}|1\rangle+e^{i\varphi}|2\rangle}{\sqrt3},
+\qquad
+P_{\theta,\varphi}=|z_{\theta,\varphi}\rangle
+                         \langle z_{\theta,\varphi}|,
+\qquad
+\mathcal O=\{P_{\theta,\varphi}:\theta,\varphi\in\mathbb R\}.
+\tag{112.1}
+$$
+
+Thus $\mathcal O$ is the whole two-phase orbit, including every relative
+complex phase. For each physical $s\in[-1/2,1]$ put
+
+$$
+h_s(\mathcal R)=\max_{P\in\mathcal O}
+ d(\mathcal R\Phi_s(P),P),\qquad
+\nu(s)=\min_{\mathcal R\ {\rm CPTP}}h_s(\mathcal R),\qquad
+q=|s|.
+\tag{112.2}
+$$
+
+The decoder is one common terminal CPTP map, with exactly the permissions
+in Definition 105.1. Compactness of $\mathcal O$ and of the decoder Choi
+set gives attainment, by the same continuity argument as Lemma 105.2.
+The full-input objective remains $e_s$ in (105.2), so
+$h_s(\mathcal R)\le e_s(\mathcal R)$ and $\nu(s)\le\mu(s)$.
+
+These objectives are simultaneous approximation problems for quantum
+statistical experiments. In [Keiji Matsumoto, §5, Theorem 5][MAT-EXP],
+take the source experiment to be $\rho_\alpha=\Phi_s(P_\alpha)$, the
+target experiment to be $\sigma_\alpha=P_\alpha$, and the common map to
+be $\mathcal R$. Its unhalved trace-norm tolerance $e_\alpha=2\epsilon$
+then expresses $h_s(\mathcal R)\le\epsilon$. The same substitution in
+[Anna Jenčová, §4, Theorem 4][JC-EXP] uses its tolerance $2\epsilon$.
+For the full objective, instead index both experiments by all
+$\rho\in\mathsf D(\mathbb C^3)$, with source $\Phi_s(\rho)$ and target
+$\rho$; feasibility is exactly $e_s(\mathcal R)\le\epsilon$.
+Auxiliary systems in decision tests do not enter $\mathcal R$'s input.
+This correspondence uses the density-input half trace distance, not the
+diamond objective (93.8) or an induced norm over arbitrary matrices.
+

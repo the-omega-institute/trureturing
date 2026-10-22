@@ -1,0 +1,61 @@
+## 145. The single-copy local number and parity SSR limit
+
+Ordinary tensor entanglement and local SSR-accessible entanglement are
+different questions for (142.1). On the single A mode, both number- and
+parity-preserving observables form $\operatorname{span}\{I,n_A\}$.
+Put $P_a=|a\rangle\langle a|$ for $a=0,1$.
+The number twirl and parity twirl on A consequently coincide:
+
+$$
+\mathcal D_A(\rho)=\sum_{a=0}^1(P_a\otimes I_B)\rho(P_a\otimes I_B)
+ =\sum_{a=0}^1|a\rangle\langle a|\otimes R_a,
+\quad R_a=\langle a|\rho|a\rangle\ge0,\quad
+\sum_a\operatorname{Tr}R_a=1.
+\tag{145.1}
+$$
+
+This is explicitly separable: whenever $w_a=\operatorname{Tr}R_a>0$,
+its term is $w_a|a\rangle\langle a|\otimes(R_a/w_a)$.
+In the aligned B basis of (142.5), the unnormalized conditional blocks are
+
+$$
+R_0=\frac{\operatorname{diag}(1,1-(1-t)p)}{2(1+t)}\otimes\tau_\beta,
+\qquad
+R_1=\frac{\operatorname{diag}(t+(1-t)p,t)}{2(1+t)}\otimes\tau_\beta.
+\tag{145.2}
+$$
+
+Both commute with B number. Undoing the number-preserving B rotation
+preserves this fact, so an additional local B number or parity twirl leaves
+(145.1) unchanged. In particular at $t=1/7$ these blocks are
+$\operatorname{diag}(7,7-6p)\otimes\tau/16$ and
+$\operatorname{diag}(1+6p,1)\otimes\tau/16$.
+
+For allowed local product observables $X_A,Y_B$ one has
+$\operatorname{Tr}[\rho(X_A\otimes Y_B)]
+=\operatorname{Tr}[\mathcal D_A(\rho)(X_A\otimes Y_B)]$.
+The effective coherence $|10\rangle\langle01|$ changes A occupation and
+is removed. Thus single-copy protocols restricted to these local SSR
+resources have the separable representative (145.1). In this resource
+model the ordinary NPT of $\rho_b$ supplies no locally accessible
+single-copy entanglement. Local forbidden coherences are not assumed
+available as operations or measurements.
+
+SSR restriction does not make the two models statistically identical.
+The allowed occupation measurement already gives, at $\beta=\log7$,
+
+$$
+\langle n_A\rangle_a=\frac18+\frac38\frac{49}{198}
+ =\frac{115}{528},\qquad
+\langle n_A\rangle_b=\frac18+\frac38\frac13=\frac14.
+\tag{145.3}
+$$
+
+Accordingly equal $Z,E,N,P_{111}$ do not imply equality of all statistics,
+even within the allowed local observable algebra. Shared coherence
+references, multiple copies, and unrestricted spin-qubit realizations
+specify additional resource models. Their availability or benefit is not
+derived here. Wiseman--Vaccaro [S], Eqs. (12)--(14) and Table I, supply
+resource context; the mixed-state statement here follows from the explicit
+twirl, without importing a pure-state formula as a mixed-state criterion.
+

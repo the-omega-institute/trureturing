@@ -1,0 +1,84 @@
+**Theorem 13.2 (A cross-chart acquired-base coincidence with separated
+terminals).** The two charts of Theorem 13.1 have a positive algebraic
+acquired-base crossing that lifts to two strict complete worlds in the
+same $C(p,v)$ for every sufficiently small common $b>0$. These two
+worlds form neither a terminal-$J$ nor a terminal-$M$ pair.
+
+**Proof.** Write $t$ for the left parameter and $s$ for the right
+parameter. Define
+
+$$
+\begin{aligned}
+P={}&32t^2s^2-16t^2-32ts^3-64ts^2+8ts+20t
+       +32s^3+34s^2-8s-5,\\
+V={}&90t^2s^2-45t^2-90ts^3-180ts^2+66ts+141t
+       +90s^3+86s^2-66s-94.
+\end{aligned}
+$$
+
+The response differences are exactly
+
+$$
+p_L(t)-p_R(s)=\frac{-3P}{10(t-1)(2s^2-1)},\qquad
+v_L(t)-v_R(s)=\frac{3V}{10(t-1)(2s^2-1)}.
+$$
+
+Thus the numerator resultant has the fixed normalization
+
+$$
+\operatorname{Res}_s(-3P,3V)=5832(t-1)^3q(t),
+$$
+
+$$
+q(t)=865318176t^4-1266956640t^3-1221999600t^2
+                      +2785386204t-1161858481.
+$$
+
+Equivalently $\operatorname{Res}_s(P,V)=-8(t-1)^3q(t)$.
+There is a unique root $t_*$ in
+
+$$
+I=(1019013955,1019013956)/10^9,
+$$
+
+since $q$ is negative at the left endpoint, positive at the right
+endpoint, and $q'>0$ throughout $I$. The degree-one subresultant gives
+
+$$
+s_*=-\frac{367476t_*^2-708156t_*+338601}
+              {188616t_*^2-272820t_*+83819},\qquad
+\frac{8610543}{10^7}<s_*<\frac{8610545}{10^7}.
+$$
+
+The denominator excludes zero on $I$. Substitution, or division by
+$q$, gives $P(t_*,s_*)=V(t_*,s_*)=0$.
+The Jacobian determinant of the actual difference functions is
+
+$$
+\frac{9\{696t^2s^2+2712t^2s+348t^2-1392ts^2-5424ts-696t
+                 -154s^4+845s^2+2658s+307\}}
+     {50(t-1)^2(2s^2-1)^2}.
+$$
+
+On the isolating box its absolute value is in $(129000,130000)$,
+so it is nonzero. The exact finite-$b$ charts
+$r_L=tb$, $r_R=1-sb$ extend analytically near $(0,t_*,s_*)$;
+their limiting $\Lambda$ values are nonzero. The implicit-function
+theorem supplies $t(b),s(b)$ with identical actual acquired responses
+for small positive $b$. Both sources are strict, they lie near different
+ends of the $r$ interval, and the parent converse supplies their complete
+gains and drifts. The limiting $p$ is in $(-2,-1)$, so the common
+base stays off $24$.
+
+The same rational isolating box gives
+
+$$
+a_L(t_*)\in(167,168),\qquad m_L(t_*)\in(250,251),\qquad
+a_R(s_*)=m_R(s_*)\in(255,256).
+$$
+
+These strict separation margins persist on the lifted branches. Thus
+the crossing is a genuine same-child coincidence of acquired bases,
+but neither terminal equality holds between these two labels. No
+assertion about other labels in that entire child is needed. ∎
+

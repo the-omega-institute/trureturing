@@ -4344,3 +4344,650 @@ mixed, raw, fault, unfinished, changed-return and terminal domains remain
 those of Definitions 1.3--1.4 and §§7--10.
 
 ## 追加锚（本行以下为增补区）
+
+
+## 21. Acquired first-bootstrap retention on a changed two-load initialization
+
+**本批导航。** This section constructs the changed initialization
+$G_B$: the first-bootstrap distinction of §§11–13 is acquired by its
+actual owner, retained, and used by an installed general-target service.
+The four views retain separate meanings. Their inverses cover partial
+initialization as well as later converter cuts. The old initialization
+and every conclusion about its canonical service remain unchanged.
+
+**Definition 21.1 (fixed source and changed authority).** Keep Assumption
+1.2's single beta preparation, prior $\{\alpha,\beta\}$, growing source16,
+parked Stop proposal $(0,B,1)$, verifier32–39, INITIAL consumer40–47,
+original channels and absorbing halt. Keep ports0–73 and their roles.
+Add ordinary tape74 with its own paid L/R constructors, head, origin
+$\omega_{74}$, A read right, bootstrap write right and finite phase fields.
+These are installed by the extended original boot, alongside the ten
+old annex pairs; they are not obtained by reading an encoded permission.
+Here $\omega_{74}$ is the acquired original boot origin paired with
+this fixed extra-pair constructor ordinal. Frame/Cat on that acquired
+binding and the literal ordinal constructs its source reference.
+The first loader's authority is explicitly changed to the program below,
+with authority to enable the same capture table $L$ and then $G_B$.
+There is no later Install entry.
+
+Use the ten native operations and local finite effects of ARC Assumption
+1.2 and Definition 6.2, including its paid boundary/fresh-control variants.
+Use UAS's separately priced atomic incidence model, not a claimed tape
+implementation of its patches. Native time counts actual rows. The new
+origin, boot bits and extra rows change this run's clocks and references;
+no equality with an old run's absolute clocks or origins is assumed.
+
+Keep exactly Definition 11.1's $L,w_0=E(L),w_1,e,p,c_0,\ldots,c_{e-1}$.
+In particular $L$ and these two words are not recomputed from a modified
+capture graph. Only the external loader which installs $L$ changes.
+The two words have the same length and state-indexed active map but
+$w_0[p]=0,w_1[p]=1$. A subscript $\sigma$ below abbreviates which word
+was actually consumed after a completed load; it is not a native field,
+selector input, branch oracle or label on a partial history.
+
+**Definition 21.2 (native mirror loader).** Begin with phase Mirror and
+head74 at R. The complete paid active table, finite row encodings,
+guards, owner/right fields and raw-store separation are
+[BRN Definitions 2.1–2.2](RECURSIVE_RELATIONAL_OBSERVATION_BOOTSTRAP_RETENTION_NATIVE_REFINEMENT.md#2-the-active-first-loader-and-its-ordinary-authority).
+Its input latch is $\ell=6$. Its seven rows per fixed cursor position are:
+
+$$
+\mathrm{NEXT};\quad \mathrm{IN}(\ell);\quad
+\mathrm{EX}(74);\quad \mathrm{WR}(74,\ell);\quad
+\mathrm{MR}(74);\quad \mathrm{WRITE}_L(\ell);\quad
+\mathrm{ADVANCE}.
+$$
+
+NEXT, WRITE and ADVANCE have the old fixed cursor/end, absent raw-slot,
+installation-owner and fresh-version tests. EX requires the marked R
+and the current tape74 write right. WR also requires that live write
+right and Mirror phase, at the resulting writable blank old R rather
+than a still-marked R. It writes the unchanged binary latch.
+EX, WR and MR do not overwrite $\ell$, consume an input or move the raw
+control cursor. At the end execute these six rows:
+
+$$
+\mathrm{NEXT};\quad \mathrm{EX}(74);\quad \mathrm{WR}(74,\mathsf F);
+\quad \mathrm{CTL}_{\rm seal};\quad \mathrm{MR}(74);
+\quad \mathrm{DONE}.
+$$
+
+The seal CTL marks this actual F cell using the existing local marker
+effect and sets the finite sealed flag. DONE performs the old activation
+effects, sets Retained and withdraws the tape74 write right. It preserves
+A's read right. There is no transition granting that write right again.
+The seal row runs while the head is on F. No bank or whole-word operation
+occurs in this loader, and no ordinary WR is substituted for WRITE's
+fresh-control-bit constructor.
+
+**Definition 21.3 (finite main graph and ordered acquisition).** Construct
+$G_B$ from Definitions 2.1–2.3 and 7.1–7.4 with the substitutions below.
+Its persistent service words include bootWitness and bootRef; include
+all importer, parser, descriptor, comparison and body-decoder temporaries
+before hygienic expansion and register numbering. Use the original
+textual/false-before-true/symbol/port order with port74 last, and the same
+finite parity product. Let $r_B$ be the resulting complete field count.
+Every assignment emits all $r_B$ fields by ARC's two-pass construction;
+it preserves all unchanged service words. No old register count is reused.
+
+After the $r_B$-field empty bank, execute ARC's closed owned importer
+(Definition 3.1)'s method through the new source74 instance of BRN
+Definition 3.1 and Theorem 3.2, not outside ARC's stated source domain.
+Its Save/Scan/Reverse/Home/restore loops touch compiler64–68 and restore
+source74 before parsing its exact $e$ binary symbols, F and exhaustion.
+Retained, the actual A read token and the physical seal are invariants
+proved by BRN Lemma 2.4; RD imports symbol bits only, with no seal-read
+operation. Retain the actual binary word in bootWitness. Equal compares it with
+the two fixed earlier words $w_0,w_1$, accepting their disjunction.
+The comparisons certify the admitted family; neither selects an input
+nor replaces the imported word. A failing initialization test executes
+a CTL to absorbing InitializationFault, retaining all constructed material
+and releasing no unheld resource; it promises no original consumer result.
+
+Complete the original ordered initial69 fields without changing their
+order or field zero. Append two new fields before ManifestPrefix: first
+a fixed-kind tuple containing bootWitness and its complete source record
+$(A,74,\omega_{74},0,e+1,\text{first-loader version},\text{sealed})$;
+then a staged copy of that field's actual complete68 descriptor/placement.
+The base0 is the verified empty ordinary prefix before the first EX.
+Native field export measures the actual destination base and length,
+writes its F/seal, counts and writes its descriptor. Immediately copy
+that completed descriptor to the second field by ARC Definition 7.1's
+dry-count/positioned staging schema. Give the stage its own descriptor
+once; do not stage that descriptor recursively. These are two specified
+initial fields, not later scratch accidentally imported as initialization.
+
+ManifestPrefix imports the entire frozen initial prefix before any later
+staging. Parse the two new fields with exact arity/exhaustion, compare
+the word with the already imported bootWitness, and check the complete
+source and measured placement fields against this reached export/stage
+lineage. bootRef retains both full references, including origins,
+port/base/length, descriptor ordinal, version and seals. Immutable
+manifests, covers and packages copy the acquired word and these references;
+printed reference equality alone is never payload acquisition.
+Only then initialize completed lists and hand over invocation for Ready.
+Source74 is unchanged during and after its import. Its read permission,
+the seals and this immutable lineage remain current service invariants.
+
+Earlier code constants include the paid active loader and its fixed effects.
+The capture is the actual $101U(\delta_B)\Delta(G_B)$, followed by the
+matching second-bootstrap $E(G_B)$. Regenerate all raw-state codecs,
+Step port tests over0–74, finite locations/effects, GCA entry/exit tables
+and ConstructionDirectory by BRN Definition 4.1 and Proposition 4.4's
+explicit construction and correspondence proof. Keep $L$'s
+unchanged literal capture algorithm: it has no main-description or
+main-length constant. Generate $\Delta(G_B)$ only after expansion.
+The self-description is acquired from field zero, never inserted as an
+executable literal. The two comparison words concern the fixed earlier
+$L$, so introduce no description equation.
+
+**Lemma 21.4 (lawful acquisition, preservation and finite installation).**
+For each actually supplied first word in $\{w_0,w_1\}$ and the matching
+finite subsequent supplies, this initialization reaches its actual first
+Ready. The active $L$ map is the old one, tape74 is exactly $w_\sigma
+\mathsf F$, bootWitness is exactly $w_\sigma$, and bootRef resolves its
+actual sealed backing and its immutable initial69 copy.
+
+Proof. BRN Lemmas 2.3–2.4 prove every active-loader guard, partial cut,
+raw/active separation and retained74 invariant on both actual words.
+BRN Theorem 3.2 proves the source74-specific symbol import, finite parser,
+head restoration and actual read-right join. Its Proposition 3.3 states
+the exact correspondence without extending ARC3.2's old domain.
+No physical seal observation is needed. BRN Proposition 4.4 and Theorem
+5.1 prove complete-bank preservation, measured export/staging and frozen
+ManifestPrefix lineage, including every new persistent field. Thus the
+acquired word is retained and resolved, rather than replaced by a code
+constant, and all ordinary current rights are supplied by the actual boot.
+
+All helper dependencies have Definition 2.1's order. Import/parsing use
+word primitives; literal Step uses row lookup, never a semantic decoder;
+bounded recovery and the role fold use Step; bindings, body decoders and
+channel stages follow. Static expansion therefore gives finite $r_B$ and
+finite control before metadata generation. The empty bank precedes every
+assignment; the complete prefix precedes its import. This proves finite
+construction and installation, not an instruction for a future compiler
+or an authorization still to be supplied. ∎
+
+**Definition 21.5 (one source tree and the complete positive domain).**
+Let $\mathcal R_B$ be the native transition tree of this one initialized
+apparatus from its irreducible entrance. A node is an actual finite
+history, with its real raw/active stores, inputs, receipts, owners and
+successor. At each enabled IN both raw bits give their actual successor;
+all other edges are the installed row with its real guard, operands and
+ordered effects. Disabled attempts have no executed edge or receipt.
+Raw decoded continuations, original00 and terminal/fault successors
+remain in $\mathcal R_B$; they receive no positive theorem by omission.
+
+Let $a_B$ be its actual acquired-seed fence. Define $\mathcal C_B$ as the
+unlabelled prefix domain at or after $a_B$, before the first outer00,
+with the fixed original canonical seed/preparation, first input on the
+prefix tree of $\{w_0,w_1\}$, matching capture and second load, and then
+exactly Definition 1.4's input restrictions: prefixes of all seven CAP
+canonical source languages, both separate HistoryMode values, and
+physically length-delimited history frames, including incomplete frames
+and complete typed parser rejections. Include every actually reached
+loader, code, descriptor, bank, source, loan, channel, checker, ACK,
+return and old converter interior cut. A finite cut assumes neither
+future supply nor future completion. Common prefixes are one history;
+there is no disjoint union tagged by $\sigma$. Illegal attempted calls
+do not manufacture new histories.
+
+An authentic predecessor is a reached outer Ready with its actual frozen
+completed list, manifest, $a_B,b$, and current invocation/read/mailbox
+resources, as in Definition 1.4 on this changed run. Its accepted target
+domain $\mathcal A_B$ is the old binder's legacy arm and AcquisitionOffset
+cuts $[a_B,b]$, plus SourceOffset cuts $[e_{\rm call},f_{\rm call}]$ of
+its completed returning source calls. This includes early first-loader
+cuts and all completed prior converter cuts. The selecting flight is
+not its own predecessor. A promised completed call additionally has the
+actual finite supply and original-local-termination premises of
+Assumption 1.2; withheld input or divergent work promises no Ready.
+
+**Definition 21.6 (four independent objects).** Form UAS's sole carrier
+with 75 tape components and the finite-location catalog $q_B$, hence
+outer $F_{76}$. Enumerate its finite local table $\Pi_B$ by Definition
+2.5's absent/bit/symbol/alias/IN alternatives, now including the actual
+loader, tape74, authority and seal effects. Preserve ordered inspections
+even for aliases. Shared physical finite bits are included once; raw
+and active stores remain distinct. The rule charge is $\rho_B$.
+The local row square of Lemma 2.6 holds by the same case construction.
+Its explicit75-port instance and exact stencil are BRN Proposition 7.4
+and Definition 7.3, using the raw Step square of its Lemma 4.2.
+
+For $h\in\mathcal C_B$, define $S_B$ as root-relative child support,
+$B_B$ as actual terminal paths/contour, $T_B$ as ordered $\Pi_B$
+occurrences, and $M_B$ as the seven retained physical families of
+Definitions 3.1–3.2. Use their same mask, contour, eleven-field event
+and selected-cell/slot/relation codecs. Family1 now also selects the
+actually constructed74 cells/tracks and the loader/version/authority
+fields. Add its mirror construction role to the directory. Family4
+records the designated $\ell$ site/bit precisely after first-loader IN
+and before its mirror WR; all other pending sites retain Lemma 4.1.
+An EX adds blank constructed backing immediately, not a consumed bit.
+Do not invent F, a seal, a descriptor or an unconsumed suffix at an early
+cut. Family5 retains only its original callable meaning; no whole
+history or service bootWitness is added as a special recovery field.
+These meanings concern support, terminality, occurrence and retained
+resources respectively; none is defined by a desired inverse or by $Q$.
+
+**Definition 21.7 (body-local input rule).** PublicCode$_B$ consists of
+this fixed apparatus's original/prior/client, changed loader, $L$ and
+$G_B$ descriptions and layout conventions. It contains neither a chosen
+$\sigma$ nor a source-dependent word, seed content, package/Image or
+completed list. Knowing the two possible earlier code constants is not
+knowing which bits were consumed.
+
+Use Definition 4.2's counted reconstruction on a body's own basic
+families0–4 and6, with this one additional matching-write row:
+
+| Actual reader | Destination derived before IN | Post-WR ordinal | Pending |
+| --- | --- | --- | --- |
+| First loader at pre-IN ordinal $j$ | The then-marked tape74 R, made backing by EX | $j+3$ | $\ell$ |
+
+For target tally $n$, if $j+3\le n$ read that body's retained binary
+symbol at the derived74 identity. Otherwise read its own matching
+occupied latch. Do not require a completed length-$e$ word at the target.
+All other fixed input sites use their stipulated original/seed or matching
+capture/second-load words; all later variable sites use Lemma 4.1's13/70
+durable/pending rule. Those sites and destinations are determined by
+the already reconstructed prestate, not by a later role annotation.
+At every step use the complete changed raw Step, including first-store
+bits, ordinary74 operations, actual service/importer rows and receipts.
+
+For S/B first invert the finite unary layout to raw $W$ and select these
+basic data. Require full reconstructed raw endpoint equality and exact
+re-encoding. For M use only its basic families to reconstruct, then fold
+ConstructionDirectory over the derived history and compare the entire
+reselected seven-family body. For T start the paid foundation and use
+only each occurrence's own optional IN bit, checking all eleven fields
+against the literal local step, then exact re-encoding. Require the
+actual tally and the binding past predicates. A service bootWitness,
+another view, package payload or saved Image is never an input that
+repairs any of these four bodies.
+
+**Theorem 21.8 (union-domain inverses and native compatibility).**
+For each $V\in\{S_B,B_B,T_B,M_B\}$ and every $h\in\mathcal C_B$,
+the corresponding decoder terminates and returns the actual consumed
+typed input, complete native history $h$ and raw endpoint $W(h)$.
+Consequently, on the entire unlabelled domain,
+
+$$
+V(h)=V(h')\ \Longleftrightarrow\ h=h'.
+$$
+
+For transport write $D_V$ for its recovered-history component.
+On actual images let $F_{VW}=W\circ D_V$. Then $F_{VV}=\mathrm{id}$,
+$F_{WV}\circ F_{VW}=\mathrm{id}$ and
+$F_{WU}\circ F_{VW}=F_{VU}$. For each allowed labelled native edge
+$h\xrightarrow{\lambda}h'$ with both endpoints in $\mathcal C_B$,
+transport has exactly the same enabled action/input domain and commutes
+with its successor and label.
+
+Proof. Unary masks and maximal terminal contours independently recover
+raw records for any finite $q_B$; no canonical-input premise enters that
+geometric inverse. The seed and actual meter give the true entrance
+packet and row count $n$. At a first-loader IN already included in $n$,
+its mirror WR is either included, or the endpoint lies between that IN
+and WR. In the first case its bit persists at the derived74 identity.
+In the second case no intervening input or latch overwrite exists, so
+the actual occupied $\ell$ supplies exactly that bit. This covers the
+cut after IN, after EX, after WR, and all later cuts; a blank allocated
+cell is not mistaken for input. Before this IN no bit is requested.
+
+Induct on row ordinal up to $n$. The preceding equality gives identical
+PC, raw version, marked cells, rights, cursor and latches. It determines
+the true next fixed or variable input site and its true bit by the rule
+above or Lemma 4.1. Non-IN rows then have identical guards, effects,
+event and receipt. This proves equality of the next complete state,
+including literal execution of any older recovery code. No simulated
+historical Call is invoked as a semantic subroutine. Countdown decreases
+once per represented row. All list lookups and Step emissions are finite.
+BRN Lemma 4.2 supplies that complete75-port Step at every partial cut;
+its Theorem 6.1 proves the independent codec/role joins on this domain.
+Only afterwards does the role fold classify actually constructed spans.
+Full raw equality checks S/B, and full reselection checks M. T instead
+supplies its own bits and uses the same local row square at each record.
+
+The induction never selects a future completion of the first word. It
+therefore applies before its first differing bit, on both continuations
+afterwards, and at partial initialization without a future manifest.
+Equal bodies give equal recovered histories across the whole union,
+not merely within each completed load. Conversely equal histories give
+the same independent objects. Encoding the recovered history in another
+view proves every stated transport identity. Define the view action at
+$V(h)$ by its actual native guard and input at the uniquely recovered
+$h$; all views then have the same domain and successor. This proves
+the commuting square for all claimed edges, with no extra original
+experiment or global $Q$ conclusion. ∎
+
+**Definition 21.9 (service input, immutable bindings and received checks).**
+For Boundary, Prefix, source locator, Issue, Call and Image-value checking,
+replace only the represented first-loader input reservoir by the complete
+bootWitness acquired in Definition 21.3. Simulate the changed loader rows
+and all regenerated code literally. These routines can compute the true
+target before any view body exists. They do not call a body's decoder to
+obtain their own reservoir. No branch falls back to $w_0$.
+
+Retain Definition 5.1's current/past split. The service/capture binding
+now identifies this 75-port version and the complete bootRef; immutable
+cover/package manifests carry its full acquired word, not just its name.
+The target's ten-field binding keeps the seed/source/capture references,
+selector arithmetic and actual raw version/phase, with the boot reference
+nested in its boot-reference field. A body decoder receives this binding
+and PublicCode$_B$, but no bootWitness payload.
+
+Current callbacks check the authentic manifest and immutable backing,
+full source/export references, acquired word equality throughout copied
+manifests, expected cover/package/selector/tally, current invocation,
+copy/seal/read lineage and mailbox state. References from different
+histories need not have different printed names; actual immutable
+resolution and sealed copies establish their contents. Body checks use
+only their own derived history: compare the boot source facts, fields
+and construction spans only as far as present by $k$. At a pre-seal or
+pre-manifest target require no future F, full word, completed descriptor
+or later Ready. Future export/Ready/source-exit authenticity remains a
+current-service check, as in Definition 5.2. Historical right fields
+never grant a live right.
+
+Keep the eight actual publications: CoverRef, PackageRef, Image and
+$S_B,B_B,M_B,T_B,S_B$. Each callback performs the pre-bank positioning
+of73 from the latest native stage, F-bounded import, exact kind/source/
+version/binding, current-token guards and encoded seal fields; actual
+backing seals follow their writer/preservation invariants. Clear each arrow's derived
+work. Its only view operand is its own received body, decoded by 21.7.
+Equal compares the final S body with the first received S. The final
+body's independently decoded HistoricalImage separately passes the
+acquired target's Image-value checker.
+Only then perform the sole final Image ACK, mailbox return, one completed
+five-field history item with receivedBindings, invocation return and
+Ready. Earlier Cover/Package/stage ACKs keep their separate meanings.
+Retain first-detecting typed rejection and held-resource cleanup.
+
+**Theorem 21.10 (installed acquisition and four-view use).** At every
+authentic predecessor of $G_B$, every actually supplied accepted target
+in $\mathcal A_B$ completes this received-body cycle and checked return
+under the stated supply/termination premises. Each publication concerns
+the same actual initialized process and its unique selected prefix,
+including partial first-bootstrap targets.
+
+Proof. The base predecessor is Lemma 21.4. Induct on completed outer
+cycles. Freeze the actual shorter predecessor list before the selecting
+flight. Its own manifest supplies the actual first word; its retained
+source/history reservoirs and frozen items supply all later inputs.
+Boundary/Prefix/locator interpret their finite earlier prefixes one
+literal native row at a time with this reservoir and the changed codec.
+At the first boot site it is the bit actually mirrored from IN, by
+Lemma 21.4. Thus their target, Image and binder arithmetic are exact.
+The GCA stop tests and physical entry/exit tests use the regenerated
+outer PCs, not occurrences of their numerals inside represented data.
+BRN Proposition 4.4 and Lemma 5.3 prove these exact new metadata, binding
+and completed-predecessor correspondences without equating old/new runs.
+
+Theorem 21.8 supplies every independent body decoder, including early
+targets not containing the service's later export. The current/past
+split therefore checks the same unique target without adding future
+input to its body. ARC's two positioned copies give actual
+sender=mailbox=receiver bits with distinct retained origins. Current
+TOKs and the proved sealed lineage establish read authority; the pre-bank importer uses exactly
+that receiver. Induction along the five view stages gives their actual
+successors, final S equality and exact Image value. The specified final
+ACK/item/resource return establishes the next Ready.
+
+Each loop consumes a finite source word, actual bank/list/path, countdown,
+or predecessor record. Role predecessor references decrease in creation
+order. Represented older converter rows are Step data, not recursive
+semantic conversion calls. The finite completed-list induction and
+these local decreasing measures are well-founded, so this proves actual
+finite completion. Typed rejected history frames retain their finite
+parser and return paths; incomplete/unavailable inputs retain their
+actual raw successors without a promised completion. No self-authentication
+claim for arbitrary forged bodies is inferred from this authentic
+sealed-channel theorem. ∎
+
+**Corollary 21.11 (a noncanonical input is actually consumed in recovery).**
+For each completed first load let $b_\sigma$ be its first Ready tally
+and $d_\sigma=b_\sigma-a_B$. Supply gate1, mode1 and the finite history
+frame
+
+$$
+111\,U(d_\sigma+2)\,0\,U(d_\sigma).
+$$
+
+Its payload has length $d_\sigma+2$. It binds that run's first Ready.
+Call's actual raw image and the returned independent bodies recover
+$c_p=w_\sigma[p]$: 0 on the canonical load and 1 on the exchanged load.
+
+Proof. AcquisitionOffset binds $a_B+d_\sigma=b_\sigma$. Theorem 21.10
+uses that run's imported bootWitness at the first input sites; the
+fresh raw-control WRITE therefore constructs the actual $c_p$.
+The body-local rule independently obtains the same value from retained74.
+The differing bit is not an extra request field. No equality of
+$b_0,b_1$, autonomous meter-end reading, or ability to choose this numeral
+without supplying it is claimed. Theorem 12.3's canonical wrong-target
+construction and §13's old continuation closure remain about the old
+unchanged apparatus. Here a lawful call after the exchanged load uses
+the acquired 1; substituting the old canonical reservoir would disagree
+with the authentic raw endpoint and fail the true S/B/M checks. ∎
+
+**Proposition 21.12 (original verifier and INITIAL route).** On this
+changed run, original source calls keep their full original reader,
+current guards, successors and routes. At each separately fixed actual
+$F^A$ entry, the source-entry task chart of §9 has its same restricted
+domain. If followed by00 under the original termination premises, the
+parked client reaches the original verifier and INITIAL consumer and
+then the absorbing halt.
+
+Proof. BRN Theorem 6.2 proves the row/channel joins. Tape74 acquisition/import and the history suffix use no producer
+workspace1–12, private source16, producer13/17, verifier32–39 or consumer
+40–47 writes. No added row lies inside $F^A$ or the final00 suffix.
+The full actual entry, including the longer past and receipts, is fixed
+separately for each chart. The old matching-write/complete-successor
+proof therefore applies to its unchanged original rows, excluding the
+changed final idle CTL and its successor exactly as in §9.
+
+On00 the twelve original loans/returns and parked state are preserved:
+output31 travels through49 to21, SEG-P1 through50 to verifier32–39,
+SEG-R1 through51 to consumer40–47, with target43 copy, OUT, ACK,
+token return and halt. INITIAL is the original beta proposal $(0,B,1)$,
+even after source growth; it is not replaced by the current source tree.
+All origins and receipt coordinates are this changed run's actual ones.
+The new boot authority is an explicit model assumption, not old
+task-admissibility of the exchanged raw word or an identification of
+old/new global $Q$. ∎
+
+**Definition 21.13 (native recurrence on that same run).** Refine ARC
+Definition 10.1's disjoint opcode/purpose classes for mirror boot,
+import/parse/export, service, each view and each callback. Let $N_{o,p}$,
+$A,b_{\rm ctl},C_\tau$ count actual rows, nonmeter cells, constructed
+finite bits and consumed typed input bits from the irreducible entrance.
+For each enabled row $i$ at its actual prestate $x_i$, set
+
+$$
+\begin{aligned}
+N_{o,p}(i+1)&=N_{o,p}(i)+[(o,p)=(o_i,p_i)],\\
+A(i+1)&=A(i)+a(o_i,x_i),&
+b_{\rm ctl}(i+1)&=b_{\rm ctl}(i)+c(o_i,x_i),\\
+C_\tau(i+1)&=C_\tau(i)+[o_i=\mathrm{IN}_\tau],\\
+T(i+1)&=T(i)+1,&\mathrm{Fee}(i+1)&=\mathrm{Fee}(i)+2,\\
+\mathrm{Bits}(i+1)&=\mathrm{Bits}(i)+8a(o_i,x_i)+c(o_i,x_i)+8 .
+\end{aligned}
+$$
+
+Here $a=1$ for an ordinary EX or one boundary constructor and zero
+otherwise; $c=1$ for a newly constructed finite bit and zero otherwise.
+Existing WR/erasure reduces neither count. Sequence evaluates its second
+fragment on the first's complete successor; a test adds its actual
+native test leaves and selected branch; a loop adds its actually reached
+iterations. Disabled attempts add nothing. Every assignment has its
+$r_B$-field Base/dry/real emission/F/seal/descriptor/parity leaves.
+
+For the new importer use BRN Definition 7.1's complete leaf list:
+Save RD/ML/compiled distance cons, Scan RD/finite-symbol branch/three
+cons/MR, Reverse, Home and restored distance tests/tails/MRs, then all
+triple/length/exhaustion/Equal tests. Actual read/token guards and the
+seal-preservation invariant add no physical seal-read leaf. Export/staging include dry counts, actual
+descriptor copies and their one new descriptor each. The remaining
+leaves are exactly ARC Definition 10.2's table, with the changed code,
+all 75-port lookups, regenerated metadata, both new initial fields and
+all decoder/re-encoding/received comparison work. There is no unknown
+constant for a selector, compiler, importer, decoder, return or channel.
+
+**Proposition 21.14 (local subtotal, full bill and structural foundation).**
+The changed first loader has
+
+$$
+n_{\rm first}=7e+6,\qquad
+n_{\rm first}-(4e+2)=3e+4,\qquad A_{74,\rm payload}=e+1 .
+$$
+
+This replaces the old first loader; it is not added to its $4e+2$ rows.
+The two new boundaries and all active $H_B$, rights/phase/cursor bits
+and their bitwise installation are additional paid boot work as specified
+in BRN Proposition 7.2. All import/export/retention and later use are outside
+this local subtotal. For any finite actual prefix with
+$n=\sum_{o,p}N_{o,p}$ the complete native bill is
+
+$$
+(n,2n,S_{\rm irreducible,B}+b_{\rm ctl}+8A+8n).
+$$
+
+For the sole incidence carrier put $C=2+A+n$ and let $c$ count currently
+present finite slots. Its vertex and terminal counts are
+
+$$
+V_B=149+2q_B+c+24C,\qquad L_B=75+q_B+8C .
+$$
+
+For each row use UAS Definition 4.1's actual ordered root/finite-component,
+cell-role, head-slot, append-site and fresh-socket lists, now on 75 ports:
+
+$$
+\begin{aligned}
+p_i^{\rm st}&=d_r+6q_B+3c_{i-1}-4
++\sum_{x\in\mathcal D_i}(|\pi_x|+68)
++\sum_{z\in\mathcal A_i}(|\pi_z|+2)\\
+&\quad+\sum_{w\in\mathcal J_{i,\rm old}}|w|
++\sum_{z\in\mathcal Z_i}(|\pi_z|+2),\\
+v_i&=24e_i+s_i,\qquad
+w_i=3t_i+2e_i+2s_i+3r_i+2a_i+7v_i,\qquad
+g_i=1+p_i^{\rm st}+w_i+v_i .
+\end{aligned}
+$$
+
+The local counts have UAS's exact meanings: core-plus-receipt cell
+births, fresh finite bits, alias-combined old-bit targets, head retargets
+and activations. Repeated inspections and prescribed no-op targets
+remain charged. Including its finite rule apparatus, the structural bill is
+
+$$
+\rho_B+1+8(197+2q_B+c_0)+\sum_{i=1}^{n}g_i .
+$$
+
+Proof. BRN Proposition 7.2 counts the full paid boot separately from
+the seven-row iterations and six-row end block. Its native equations telescope Definition 21.13,
+including dead banks, partial fields, raw/active stores, source growth,
+three distinct channel payload copies and actual/represented receipts.
+All later word lengths are measured on this run. For its eight actual
+publication lengths the existing $17(L_C+L_P+L_I+\sum_{s=0}^4L_s)+56$
+is still only the two-copy-plus-print subtotal, not the full flight.
+
+Each unary tape contributes $24k+1$ vertices and $8k+1$ terminals;
+75 tapes, $F_{q_B}$ and outer $F_{76}$ give the displayed constants.
+At entrance $C=2$, so $V_{B,0}=197+2q_B+c_0$. BRN Definition 7.3 and
+Proposition 7.4 enumerate and prove the new local stencils using UAS §4's
+cell and finite-component templates with the new actual root routes;
+they give the stated foundation and sum.
+The native and structural tariffs are distinct declared coordinates.
+Pointwise finite completion in 21.4/21.10 gives no bound uniform in
+future inputs/calls, no bounded-memory conclusion and no optimality. ∎
+
+**Proposition 21.15 (scope of parsimony).** A route producing the two
+different raw target values must depend on some acquired fact which
+differs between the two actual loads. A source-independent canonical
+reservoir cannot do so. This construction supplies that dependency
+without adding a source oracle or a whole-history view.
+
+Proof. Equal acquired arguments to the same deterministic procedure give
+equal results; Corollary 21.11 requires distinct results. Thus the
+distinction must survive somewhere in its actual dependency chain.
+Tape74 and its copied word exhibit one such chain. This is only the
+stated two-input dependency condition. On the two-word family, the
+single differing bit already distinguishes the words mathematically;
+the full $e$-bit mirror is a sufficient implementation, not a minimal
+one. No minimum port count, optimal storage, universal alpha/beta
+reduction or representation-independent lower bound follows. ∎
+
+## 22. Source correspondence and remaining boundaries
+
+**Exact reused suppliers.** The mathematical increment is the changed
+first loader's actual mirror, closed owner-held acquisition, immutable
+binding and installed use, together with its partial-cut body-local
+matching-write proof. GENERAL §§11–13 already supply the two words,
+retained mathematical inverse and old canonical failure/closure.
+ARC §§2–4,6–7 supply the native word expansion, the closed importer on
+ports26/28/29, initial prefix, 74-port Step, placement/staging and current
+channel route. [BRN](RECURSIVE_RELATIONAL_OBSERVATION_BOOTSTRAP_RETENTION_NATIVE_REFINEMENT.md)
+§§2–3 define and prove the paid active $H_B$ and the separate source74
+importer. Its seal is a retained invariant, not an extra observation.
+GCA §§1–6 supply authentic completed predecessors, both general names,
+physical source locator and immutable Issue/Call. CYCLE §§2–8 and10
+supply the independent codecs, direct arrows and publication subtotals;
+UAS §§1–4 supply the explicit primitive incidence carrier and stencil
+method. BRN §§4–7 prove the complete 75-port Step, compiler/metadata,
+binding, received-cycle, original-consumer and resource joins. Their
+local footprint, word-boundary/interior and actual-entry relations do
+not identify whole old/new traces or transfer old clocks. SOURCECALL §§2–7 and GENERAL §9 supply only the fixed-entry
+original-task correspondence used in 21.12. GENERAL §§14–20's later
+response/linking and fresh-recovery results are existing scoped results,
+not acquisition of this earlier first word.
+
+The owning volumes above are the fixed-b12 sources. Their historical
+supplier bindings are distinct from identities of those entire files:
+GCA Convention1.2 uses c19ea77ebcde44b27d1c90d423f488730c9e50ff;
+CYCLE Definition1.1 uses 53ec26edbed43dc4f4862d2db303ad80cb3dbd92;
+CAP Convention1.1 uses a31331d631db225e94b3a650a67498d812228d33,
+with AIF separately at346647b9c5e41ec76f0ea19d5796323dc813f750;
+PVC's supplier convention uses82c9eb9c1462af91333b7038a93488c8b9b8bdc7;
+RCA Convention2.1 binds AIF at346647b9c5e41ec76f0ea19d5796323dc813f750.
+GENERAL13's source scope is8711c854eb102a2b6aeab11cc065bfc481afac50;
+SOURCECALL11 uses db2225af354815a069ce1daa607706f3a9ded2fa.
+Use their numbered interfaces with the explicit substitutions above;
+whole-file versions and transitive imports are not silently identified.
+
+**Library and literature correspondence.** The direct D5/owning-Scribe
+interfaces are NativeSerialMachine's operational/reached replay
+and actual register execution; NativeFullSourceProducer's finite producer
+with its private traverse, production_reads and stationary helpers;
+NativeSerialEffective's OriginalCodeRealization, code-service simulation
+and private evaluator/erasure helpers; TypedFiniteViewKernel,
+PredictiveMemoryMinimalQuotient and RealizedImageKernelFactorization.
+Their hypotheses supply runs, realizations or readout/update factors.
+They neither grant the tape74 right nor install this loader or receiver.
+The historical mathlib StateTransition/Encoding at
+db584cd6d46c92f209a44c0f1c829460d327499d and the separately pinned
+56a005855ea17e0b0958f73ec801ae140b0a1679 copies supply only their stated
+simulation and encode/decode laws; no cross-version identification or
+compilation is asserted.
+
+Rushby's [Noninterference, Transitivity, and Channel-Control Security
+Policies](https://www.csl.sri.com/papers/csl-92-2/csl-92-2.pdf),
+Chapter2's machine/run and local-consistency development, is
+literature-attested background for proving trace claims by individual
+actions. Its noninterference theorem is not instantiated here: these
+views and acquisition rights require the separate proofs above.
+The construction in §21 is repo-derived, not a world's-first claim or
+a conclusion that a bounded source search exhausts alternative methods.
+
+**Boundary.** This is ordinary mathematical source prose, without new
+Lean verification. The result is for the named changed initialization,
+two admitted loads and the declared acquired finite-prefix/completed-call
+domains.
+The source/inverse/authority premises are explicit model conditions,
+not an implementation below the native primitive layer. Old fixed-$G$
+and original-$Q$ results, CAP-perp and its busy-cut requirement, arbitrary
+raw/nonmatching loads, universal busy hooks, final00/post-Halt task
+charts, global four-kernel equivalence, uniform resource bounds and the
+full programme retain their original unresolved scopes. New acquired
+distinction and installed use do not complete that programme.
+
+## 追加锚（本行以下为增补区）

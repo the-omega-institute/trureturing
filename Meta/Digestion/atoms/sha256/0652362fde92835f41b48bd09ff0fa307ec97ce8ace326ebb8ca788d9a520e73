@@ -1,0 +1,14 @@
+**Definition 1.2 (Exact inherited parameter).** Let $z_J$ be the
+unique zero of the six-coordinate system $F_J$ of O (8.1) in its
+original rational box $\mathcal B_J$. Set
+
+$$
+p_J=p(W_0(z_J)),
+\tag{1.5}
+$$
+
+exactly as in O (8.4). Its existence and uniqueness are the premises
+of O, Theorem 8.1. The interval transport of O, Theorem 26.2, concerns
+this same number. No rational center or interval is substituted
+for (1.5).
+

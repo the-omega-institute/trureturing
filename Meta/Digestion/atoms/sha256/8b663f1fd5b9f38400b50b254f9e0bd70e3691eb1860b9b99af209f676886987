@@ -1,0 +1,13 @@
+**Assumption 6.1 (Scoped supplier interpretation).** In the theorems above,
+O and F have the meanings and transferred scopes in the following table.
+
+| Source | Exact use and boundary |
+|---|---|
+| O, *FIB common-parent geometry and two exact mixed children*, Definitions 1.1–1.3, Sections 2, 4, 9, 17, 29 | `repo-derived`: parent, literal history, strict source domain, singular-source classification, and ancestor meanings. Its $p=24$ child is not used as an off-$24$ witness. |
+| F, *FIB all-response finite-fibre geometry*, Sections 30–33 | `repo-derived`: faithful $(x,d)$ reconstruction, $f,k,F_0,R$, the fixed determinant normalization, and the uniform 24-world bound. The present results add the three scoped arguments and do not reprove that bound. |
+| Berrut and Trefethen, “Barycentric Lagrange Interpolation”, §2, [PDF](https://people.maths.ox.ac.uk/trefethen/barycentric.pdf) | `literature-attested`: uniqueness of interpolation at distinct nodes. No nonzero-sample or exact-degree premise is imported. |
+| Moreno Maza, “The resultant”, Definitions 4 and Propositions 5–7, [notes](https://www.csd.uwo.ca/~mmorenom/AM583/Lectures/ResultantGcd.html/node3.html) | `literature-attested`: Sylvester determinant and specialization use. It supplies no FIB-specific converse. |
+| Lazard and Rouillier, “Solving Parametric Polynomial Systems”, Definition 1, Theorem 1 and real-case Remark 1, [report](https://inria.hal.science/inria-00070678/document) | `literature-attested`: separation of critical, nonproper and inequation boundaries; exceptional real sheets must still be treated explicitly. |
+| Gaillard and Safey El Din, “Solving parameter-dependent semi-algebraic systems”, Problem 1 and Theorem 2.4, [arXiv](https://arxiv.org/html/2402.07782v2); Le and Safey El Din, Corollary 11, [arXiv](https://arxiv.org/html/2011.14136v2) | `literature-attested`: finite-algebra sign filtering and dense-parameter specialization. Their hypotheses do not decide this joint incidence or cover exceptional strata automatically. |
+| Nuno-Ballesteros and Penafort-Sanchis, “Multiple point spaces of finite holomorphic maps”, Definition 2.1 and Example 2.2, [arXiv](https://arxiv.org/html/1509.04990v2) | `literature-attested`: a diagonal limit is not a distinct multiple point. Their holomorphic stability assumptions are not transferred. |
+| The three scoped strict-real statements in Sections 2–4 | `repo-derived`: the source-specific deductions proved here; the classical tools remain attributed to their sources. |

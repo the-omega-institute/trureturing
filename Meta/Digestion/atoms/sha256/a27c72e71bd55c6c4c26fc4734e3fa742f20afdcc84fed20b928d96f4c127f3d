@@ -1,0 +1,52 @@
+**Definition 114.2 (the actual branching witness and full matrices).**
+Take the actual original values
+
+$$
+u=\langle\alpha,\beta\rangle,\qquad
+\rho u=\langle\beta,\langle\beta,\alpha\rangle\rangle.
+\tag{114.3}
+$$
+
+They are connected by one legal accepted Apply under the uncapped native
+contract, and under any declared guard that actually accepts this attempt.
+Their full addressed labels, masses and edges are
+
+$$
+\begin{aligned}
+V_u&=(\varepsilon,L,R),&
+\lambda_u&=(\mathsf{branch},\alpha,\beta),&N_u&=3,\\
+V_{\rho u}&=(\varepsilon,L,R,RL,RR),&
+\lambda_{\rho u}&=(\mathsf{branch},\beta,\mathsf{branch},\beta,\alpha),&
+N_{\rho u}&=5,\\
+E_u&=\{\{\varepsilon,L\},\{\varepsilon,R\}\},\\
+E_{\rho u}&=E_u\sqcup\{\{R,RL\},\{R,RR\}\}.
+\end{aligned}
+\tag{114.4}
+$$
+
+In precisely these coordinate orders write $A=L_u$, $B=L_{\rho u}$:
+
+$$
+A=\begin{pmatrix}
+2&-1&-1\\-1&1&0\\-1&0&1
+\end{pmatrix},\qquad
+B=\begin{pmatrix}
+2&-1&-1&0&0\\
+-1&1&0&0&0\\
+-1&0&3&-1&-1\\
+0&0&-1&1&0\\
+0&0&-1&0&1
+\end{pmatrix}.
+\tag{114.5}
+$$
+
+These are the actual birth blocks of (112.9), with beta-parent mask
+$H=\operatorname{diag}(0,0,1)$ and child-parent incidence
+$C=\begin{pmatrix}0&0\\0&0\\1&1\end{pmatrix}$, a $3\times2$ matrix.
+Thus the old principal block is $A+2H$, the two new diagonal entries
+are one, and the full zero-parameter old-set Schur complement is $A$.
+The degrees are $(2,1,1)$ and $(2,1,3,1,1)$; no incident edge is removed.
+Labels remain part of the source even where the old operator alone does
+not distinguish them. In particular the reversed labelled source has the
+same old matrix but births at $L$, not at $R$, as Proposition 112.4a shows.
+

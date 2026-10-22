@@ -1,0 +1,51 @@
+**Lemma 16.3 (actual original admission and selected successors).** At
+each $h_x$, the matching header EX13 is currently enabled and has
+SOURCECALL Lemma 2.3's unchanged original Advance correspondence.
+The original13 byte record is the same for all $x$, both at $h_x$
+and at $h_x^+$, and latch5 is0 at both cuts. If their common pre-EX
+count is $N_{P,L,r}$, their post-EX count is $N_{P,L,r}+1$.
+
+Proof. The common ReadE already returned through its original ACK,
+source TOK, normalization and CaptureCAP. The later history computation
+uses the authorized annex64–73 and its represented old-state data;
+it does not execute a current producer13 write or private-source
+operation. GCA Theorem 6.4 and ARC Definitions 5.1–5.5 preserve the
+parked original client and restore the actual outer relation after
+the rejection: twelve producer workspace tokens, identity roles,
+source/directory/journal/counter resources, heads13/17 at R, source
+availability at its dispatcher, completed original ACKs, and distinct
+idle mailbox/outer invocation slots. Verifier and INITIAL consumer
+remain occupied in their original roles. Serialized historical token
+bits do not perform any of these current transfers.
+
+The subsequent gate01 uses its own current resources and then its
+installed CTL enters the original header Base/setup. That prelude
+has current producer work/ingress authority and actual finite tapes;
+source-service admission still occurs later, after full frame parsing,
+as CAP Definition 4.6 specifies. The prelude's reads, moves and work
+constructions use the same original data and positions on every branch.
+In particular its actual Base and all older original work material are
+retained and paid; no source-entry allocation is suppressed. History
+work and gate work have changed no13 byte. The original header prelude
+positions13 at its actual append R. Hence the complete original13 byte
+record, including its actual marks and port/creation-position identities,
+is common before the first header IN and afterward.
+
+SOURCECALL Lemma 2.3 applies at each such *actually returned* entry.
+It does not require that the preceding completed cycles were source-only.
+At the first header IN both bits are canonical-extending; Supply0 is
+therefore a lawful original experiment. Its one actual IN overwrites
+latch5 with0 without writing or moving13, then enters the original
+EX13 successor. The producer still holds that port's current write/
+construction authority and its marked R exists. Thus the next prescribed
+EX is enabled by these actual resources. It replaces that same R by
+blank, constructs the next R, retains the old cell's identity and adds
+one receipt. It does not change latch5 and releases no OUT bit. The
+original EX label and operands correspond in both runs, with the same
+retained bank-parity alternative. The two selected13 records therefore
+also
+agree after this EX. Lemma 16.2 gives equality of the absolute counts
+before it; one actual row gives equality at $N+1$.
+Neither a PC-label coincidence nor a new entry or scheduler supplies
+this enabledness. $\square$
+

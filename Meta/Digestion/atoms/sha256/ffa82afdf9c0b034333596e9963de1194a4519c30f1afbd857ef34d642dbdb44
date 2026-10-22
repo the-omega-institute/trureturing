@@ -1,0 +1,34 @@
+**Lemma 133.1 (An exact rank-one effect).** Let $B=LI_3-A$. Then
+
+$$
+\operatorname{adj}B=
+\begin{pmatrix}
+a_0&\sqrt{px}\,\beta&\sqrt{py}(L-d+kx)\\
+\sqrt{px}\,\beta&a_1&\sqrt{xy}(L+kp)\\
+\sqrt{py}(L-d+kx)&\sqrt{xy}(L+kp)&a_2
+\end{pmatrix},\qquad
+T=\frac{\operatorname{adj}B}{\tau}.
+\tag{133.1}
+$$
+
+The operator $T$ is a rank-one orthogonal projector, hence an effect
+$0\preceq T\preceq I_3$, with $AT=LT$ and $T_{ii}>0$ for all $i$.
+
+*Proof.* Cofactor expansion gives the displayed adjugate and
+
+$$
+B\operatorname{adj}B=NI_3,\qquad
+\operatorname{Tr}\operatorname{adj}B=\tau=N_L.
+\tag{133.2}
+$$
+
+These are polynomial identities before the contact equations are
+imposed. Proposition 132.2 and (130.5) give $B\succeq0$. At the
+contact its determinant is zero, whereas $\tau>0$ by §129. Thus $B$
+has rank exactly two. Its adjugate is positive semidefinite of rank
+one, and division by its positive trace makes it an orthogonal
+projector. Its range is the kernel of $B$, giving $AT=LT$.
+The three positive cofactor bounds in §129 imply $T_{ii}>0$.
+All denominators and all nonzero-amplitude claims are therefore
+justified by the root-box inequalities. $\square$
+

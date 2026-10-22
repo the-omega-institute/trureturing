@@ -1,0 +1,13 @@
+fingerprints:
+  raw_sha256: sha256:7ee28a10b22ed3dab951deb23db9a4764e92ac043983315f77ac3e93a5e143b8
+  normalized_sha256: sha256:7ee28a10b22ed3dab951deb23db9a4764e92ac043983315f77ac3e93a5e143b8
+cas_ref: sha256:7ee28a10b22ed3dab951deb23db9a4764e92ac043983315f77ac3e93a5e143b8
+coverage_gids:
+  - gid: D5/S3/Observer/ObserverMetric.perturbationSeminorm_eq_zero_iff
+    target_statement_id: sha256:a010683c1ec60b327e57c8295734bbcdd95d5b0644f6fa8e3dd878ead7659f7c
+  - gid: D5/S3/Observer/ObserverMetric.updateDefect_eq_zero_iff_invariant
+    target_statement_id: sha256:4b8ea362b2298d5fced83b73a2a7f27a5c06448a2c0f39e09fbb4edaa7f9dfb9
+  - gid: D5/S3/Quantum/ObserverCommutator.observer_read_update_commutator_formula
+    target_statement_id: sha256:6f0180e088e545c318d5f80e305aed87dce27ae6b325b11e43f59cd885cb0d16
+receipts:
+  unresolved_subitems: []

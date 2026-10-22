@@ -1,0 +1,86 @@
+**Lemma 131.1 (Uniform boundary bound).** If $9/10<r<93/100$, then
+for every population on the boundary of
+$\mathcal T=\{(p,x):p,x\ge0,\ p+x\le1\}$,
+
+$$
+\lambda_{\max}(A)\le3/5.
+\tag{131.1}
+$$
+
+*Proof.* Set $a=1-5r^2/8$ and $b=3r^2/8$, so $d=ax-by$.
+Evaluation on the larger closed interval $r\in[9/10,93/100]$ gives
+
+$$
+\frac{7351}{16000}\le a\le\frac{79}{160},\qquad
+\frac{243}{800}\le b\le\frac{25947}{80000},\qquad
+\frac{307}{400}\le k\le\frac{31}{40}.
+\tag{131.2}
+$$
+
+In particular $0<a<1/2$, $0<b<1/3$, $3/4<k<4/5$ and $a<k$.
+There are three edges, and their endpoints are included in the
+following calculations.
+
+On $x=0$, the $02$ block of $A$ is
+$\left(\begin{smallmatrix}0&\sqrt{y(1-y)}\\
+\sqrt{y(1-y)}&by\end{smallmatrix}\right)$ and the remaining
+eigenvalue is $-by$. For $m=1/(2-b)$ the block determinant at $m$ is
+
+$$
+m^2-mby-y(1-y)=(y-m)^2.
+\tag{131.3}
+$$
+
+Since $m>0$ and the block has at most one positive eigenvalue, its
+largest eigenvalue is at most $m$. Equality holds at $y=m\in(0,1)$.
+Therefore the exact closed-edge maximum is $1/(2-b)<3/5$.
+
+On $y=0$, the $01$ block is
+$\left(\begin{smallmatrix}0&k\sqrt{x(1-x)}\\
+k\sqrt{x(1-x)}&ax\end{smallmatrix}\right)$ and the other
+eigenvalue is $-ax$. Put $m=k^2/(2k-a)$; its denominator is positive
+because $0<a<k$. Then
+
+$$
+m^2-ma x-k^2x(1-x)=k^2(x-m/k)^2.
+\tag{131.4}
+$$
+
+The exact maximum on this closed edge is $m$, attained at
+$x=m/k=k/(2k-a)\in(0,1)$. The derivatives
+
+$$
+\partial_a\frac{k^2}{2k-a}=\frac{k^2}{(2k-a)^2}>0,\qquad
+\partial_k\frac{k^2}{2k-a}=\frac{2k(k-a)}{(2k-a)^2}>0
+\tag{131.5}
+$$
+
+hold on $0<a<k$. Increasing first $k$ to $4/5$ and then $a$ to $1/2$
+stays in that domain. Consequently
+$m\le(4/5)^2/(8/5-1/2)=32/55<3/5$.
+
+On $p=0$ the eigenvalues are $0$ and
+$\pm\sqrt{(ax-by)^2+xy}$. For $x,y\ge0$,
+
+$$
+\begin{aligned}
+\frac{x^2}{4}+\frac{y^2}{9}-(ax-by)^2
+&=(1/4-a^2)x^2+(1/9-b^2)y^2+2abxy\ge0,\\
+\frac{x^2}{4}+\frac{(1-x)^2}{9}+x(1-x)
+&=\frac8{23}-\frac{23}{36}(x-14/23)^2.
+\end{aligned}
+\tag{131.6}
+$$
+
+Thus this edge has largest eigenvalue at most $\sqrt{8/23}<3/5$;
+the final comparison is $8/23<9/25$. All three estimates include
+the vertices, and prove (131.1). $\square$
+
+At $r=r_*$ and $L=L_*>3/5$ all eigenvalues of $A$ on the boundary
+are strictly below $L$. Hence
+
+$$
+N(r_*,L_*;p,x)>0\qquad((p,x)\in\partial\mathcal T).
+\tag{131.7}
+$$
+

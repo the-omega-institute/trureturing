@@ -1,0 +1,34 @@
+**Lemma 20.2 (Bounded-$p$ extraction before a finite output limit).**
+Every sequence $W_i\in\mathcal H$ with $10\le p(W_i)\le34$ has
+bounded $b,c,d$, all four padded gain coefficients and all four late
+responses. If a subsequential source limit is nonstrict, its finite
+response limit is one of the four face fractions or their two corner
+extensions in SII, Definition 12.1 and Lemma 12.2. This statement
+retains a limiting $p=24$ and assumes no bound on $v$.
+
+*Proof.* If $b$ is unbounded, take a subsequence with $b\to\infty$.
+The uniform limit in S, Definition 7.1 gives $p\to-216/5$, contradicting
+$p\ge10$. Uniformity is essential: with $(s,w)=(1/b,r/b)$ one has
+$0<w<s$, and the rational response extension is analytic near $(0,0)$
+with all scaled denominators nonzero there. Thus the same limit applies
+even while $r$ varies through its whole strict interval.
+
+Consequently some finite $L$ bounds $b$ along the sequence. Apply S,
+Theorem 12.1 with that $L$ and $P=34$. It bounds $c,d$, all gain
+coefficients and $v,a,m$ before taking any finite $(p,v)$ limit. In
+particular an attempted $|v|\to\infty$ subsequence is impossible.
+The coercivity theorem uses the undivided parent: if bounded $b$ were
+accompanied by $j\to\infty$, then $b\to0$, $\Lambda\to8$,
+$e\to3/10$, $G_5\to-24/5$ and $p\to-\infty$. Interior drift escape
+is excluded by (20.4); the finite faces and corners are covered by that
+theorem's pole and sample bounds. It makes no regular-source assumption.
+
+The resulting bounded complete tuple has a convergent subsequence.
+If its source is nonstrict, SII, Lemma 14.2 applies and gives exactly
+the four nonpole faces or the two corners, with their finite full-world
+response limits. Its statement includes $p\to24$, unlike an assertion
+restricted to the relative off-$24$ target. The pole exclusions and
+corner extensions are the existing ones in S, Theorem 12.1 and
+Definition 12.2. Hence no unbounded-$v$ branch has been omitted before
+boundary extraction. ∎
+

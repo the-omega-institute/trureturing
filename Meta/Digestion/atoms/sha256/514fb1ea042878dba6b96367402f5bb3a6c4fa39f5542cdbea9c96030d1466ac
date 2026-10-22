@@ -1,0 +1,17 @@
+## 138. Boundary ledger for the native lift
+
+The construction is defined for every finite accepted prefix in the source
+quantifier of Definition 127.1. Empty births have $k=0$ and preserve the old
+one-particle and Fock factors by the identity. The alpha singleton has its
+initial empty step before its first nonempty birth; the beta singleton has the
+nonempty $n=1$ step directly, with arbitrary $q$ and SPD $K$. A stopped or
+capped history requires no later epoch. The bosonic domain above retains all
+particle sectors, while the phrase “finite mode” refers only to the dimension
+of the one-particle space.
+
+No assertion here concerns an infinite-epoch or quantum-field limit, locality,
+physical propagation, a physical Hamiltonian, charge, priority, resource
+equivalence, or an observable/gauge identification of different $q$. The
+mathematical claims are the native finite-dimensional unitary normal form, its
+standard full-Fock lift, and the stated finite trace boundaries.
+

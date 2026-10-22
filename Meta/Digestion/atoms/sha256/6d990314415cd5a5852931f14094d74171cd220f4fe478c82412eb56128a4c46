@@ -1,0 +1,47 @@
+**Definition 118.1 (Objective and coordinate convention).** Work on
+$M_3=\mathcal B(\mathbb C^3)$ in the ordered basis of (93.1). For every
+complex matrix $X=(x_{jk})$, the reduced channel is
+
+$$
+\Phi_s(X)=
+\begin{pmatrix}
+x_{00}&sx_{01}&0\\
+sx_{10}&\frac{1+s}{2}x_{11}+\frac{1-s}{2}x_{22}&0\\
+0&0&\frac{1-s}{2}x_{11}+\frac{1+s}{2}x_{22}
+\end{pmatrix},\qquad -\frac12\le s\le1.
+\tag{118.1}
+$$
+
+Use the original density-input objective
+
+$$
+e_s(\mathcal R)=
+\max_{\rho\succeq0,\ \operatorname{Tr}\rho=1}
+\frac12\|\mathcal R\Phi_s(\rho)-\rho\|_1,
+\qquad
+\mu(s)=\min_{\mathcal R:M_3\to M_3\ {\rm CPTP}}e_s(\mathcal R).
+\tag{118.2}
+$$
+
+There is one common terminal CPTP map, fixed before the unknown input.
+The maximum includes complex pure states and all mixed densities. The
+target is the original input, without a target rotation. Neither the
+input test nor the decoder has a reference or a history register.
+The actual horizons and their decoder transport are
+
+$$
+\begin{aligned}
+s_n&=(-1/2)^{n-1},\qquad
+\mathcal N_n=\operatorname{Ad}_{U_0}\circ\Phi_{s_n}\quad(n\ge1),\\
+\mathcal R&=D\circ\operatorname{Ad}_{U_0},\qquad
+D=\mathcal R\circ\operatorname{Ad}_{U_0^\dagger},\qquad
+\mu_n=\mu(s_n),\\
+U_0&=1\oplus
+\begin{pmatrix}-1/2&\sqrt3/2\\\sqrt3/2&1/2\end{pmatrix}.
+\end{aligned}
+\tag{118.3}
+$$
+
+In particular $n=2$ means $s=-1/2$. The empty identity horizon
+$\mathcal N_0=\operatorname{id}$ is distinct from $s=0$.
+

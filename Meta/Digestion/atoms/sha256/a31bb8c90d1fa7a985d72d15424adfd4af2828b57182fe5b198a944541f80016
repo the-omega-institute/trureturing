@@ -1,0 +1,16 @@
+**Lemma 2.4 (Actual response enclosures).** Each $r_\sigma$ lies in
+the interior of $J_\sigma$, and
+
+$$
+s_\sigma(p_J)\in\operatorname{int}V_\sigma.
+\tag{2.5}
+$$
+
+More generally (2.2) applied to (2.4) on the full $J_\sigma\times K$
+gives positive $j,n$, the following $A_5$ guards, and an interval
+strictly inside $V_\sigma$ for $s$.
+
+| $\sigma$ | Strict enclosing interval for $A_5$ | Enclosure for $s$ |
+| --- | --- | --- |
+| $-$ | $(-908/1000,-907/1000)$ | $\operatorname{int}V_-$ |
+| $+$ | $(-5217/1000,-5216/1000)$ | $\operatorname{int}V_+$ |

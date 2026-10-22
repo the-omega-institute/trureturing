@@ -1,0 +1,26 @@
+**Corollary 5.3 (uniform positive-TV static representation).** The
+decoder (5.7) satisfies, simultaneously for every start and every
+finite $T\ge0$,
+
+$$
+\begin{aligned}
+\|\mathsf L_p^T-D_h^T(S_h(p))\|_{\mathrm{TV}}
+ &\le\min\{b_h(T),2^{-h}\},\\
+\|\mathsf L_p^\infty-D_h^\infty(S_h(p))\|_{\mathrm{TV}}
+ &\le2^{-h}.
+\end{aligned}
+\tag{5.8}
+$$
+
+For $0<\epsilon<1$, choosing
+$h=\lceil\log_2(1/\epsilon)\rceil$ gives whole-future error at
+most $\epsilon$ using the finite auxiliary alphabet (3.1)
+and the supplied current $O$. It does not make the total
+decoder input finite, since its depth coordinate is unbounded.
+
+**Proof.** The representative and the true start lie in the same
+signature cell. Apply Theorem 5.1 and the direct bound (4.3).
+The chosen integer $h$ has $2^{-h}\le\epsilon$. Theorem 3.2
+encodes its signature. No inference about the exact lower
+bound (3.2) at positive tolerance is used. $\square$
+
