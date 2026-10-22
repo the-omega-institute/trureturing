@@ -1,6 +1,6 @@
-/- GID: D5/S3/ConceptDynamics/Coding/ActualResponseCounting
+/- GID: D5/S3/ConceptDynamics/Coding/ResponseGraphs/ActualResponseCounting
    generality: G
-   mirror-B: D5/B/S3/ConceptDynamics/Coding/ActualResponseCounting
+   mirror-B: D5/B/S3/ConceptDynamics/Coding/ResponseGraphs/ActualResponseCounting
    mirror-E: none(waiver:evidence-not-specified-by-formal-manifest)
    anchors: []
    utility: none
@@ -15,7 +15,7 @@ import D5.S3.ConceptDynamics.Coding.FirstResponseDiamond
 set_option autoImplicit false
 set_option relaxedAutoImplicit false
 
-namespace D5.S3.ConceptDynamics.Coding.ActualResponseCounting
+namespace D5.S3.ConceptDynamics.Coding.ResponseGraphs.ActualResponseCounting
 
 open D5.S3.ConceptDynamics.Coding.CountedMatrixOverlap
 open D5.S3.ConceptDynamics.Coding.ResponseQuotientKernel
@@ -153,4 +153,4 @@ theorem first_response_columns (I : ActualIncoming C A) {u v : Fin q}
 #print axioms response_matrix_reindexed
 #print axioms first_response_columns
 
-end D5.S3.ConceptDynamics.Coding.ActualResponseCounting
+end D5.S3.ConceptDynamics.Coding.ResponseGraphs.ActualResponseCounting
