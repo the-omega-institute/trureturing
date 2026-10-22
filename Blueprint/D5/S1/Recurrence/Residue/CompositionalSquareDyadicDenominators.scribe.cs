@@ -47,6 +47,9 @@ internal sealed class CompositionalSquareDyadicDenominatorsDocument : IScribeDoc
             Node("residual_four", "An even displacement gives a residual divisible by four", PublishedFour(),
                 "Over the integers, a zero-constant series differing from X by a multiple of C(2) has residual divisible by C(4).",
                 DescribeRole.Theorem, AssessedProvenance.FromRepo()),
+            Node("coeff_subst_sum", "Coefficients of a substitution with zero inner constant", PublishedCoefficientSubstitution(),
+                "When p has zero constant coefficient, the degree-n coefficient of f(p) is the sum over k less than n+1 of the degree-k coefficient of f times the degree-n coefficient of p to the power k.",
+                DescribeRole.Theorem, AssessedProvenance.FromRepo()),
             Node("generatingSeries", "Construction by compatible integral approximations",
                 ConstructionFormula(),
                 "Set E(P)=P(P(X))-X-4XP. Starting with P_0=X, correct degree n+2 "
@@ -147,6 +150,17 @@ internal sealed class CompositionalSquareDyadicDenominatorsDocument : IScribeDoc
             Seq(Parenthesized(PublishedDvd(Call("C", F.Id("a")), F.Id("p"))), Sp, Iff, Sp,
                 Parenthesized(PublishedAll("n", Blackboard("N"),
                     PublishedDvd(F.Id("a"), Call("coeff", F.Id("n"), F.Id("p"))))))))));
+    private static Formula PublishedCoefficientSubstitution()
+    {
+        var p = F.Id("p"); var f = F.Id("f"); var n = F.Id("n"); var k = F.Id("k");
+        var range = new Formula.Apply(Seq(Named("Finset"), Dot, Named("range")), [Add(n, D(1))]);
+        var sum = Seq(new Formula.Subscript(Seq(Sum), Seq(k, Sp, InMacro, Sp, range)), Sp,
+            Mul(Call("coeff", k, f), Call("coeff", n, Power(p, k))));
+        return Disp(PublishedRing(PublishedAll("p", PublishedSeries(),
+            PublishedArrow(Equal(Call("constantCoeff", p), D(0)),
+                PublishedAll("f", PublishedSeries(), PublishedAll("n", Blackboard("N"),
+                    Equal(Call("coeff", n, PublishedSubstitution(p, f)), sum)))))));
+    }
     private static Formula PublishedFour() => Disp(PublishedAll("p", Call("PowerSeries", Blackboard("Z")),
         PublishedArrow(Equal(Call("constantCoeff", F.Id("p")), D(0)),
             PublishedArrow(PublishedDvd(Call("C", Parenthesized(Seq(D(2), Colon, Sp, Blackboard("Z")))),

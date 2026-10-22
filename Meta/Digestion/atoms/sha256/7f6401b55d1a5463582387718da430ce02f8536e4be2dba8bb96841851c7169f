@@ -1,0 +1,106 @@
+**Proposition 227.1 (native root reduction and uniform bounds).** For every
+$q\in\Delta$, define
+
+$$
+\begin{gathered}
+\sigma=\operatorname{tr}S_q,\qquad
+\tau=\operatorname{tr}(S_q^{-1}),\qquad H=\sigma\tau-1,\\
+A=5+2u^2+2uv-2u+2v^2-2v,\qquad
+B=5+3u^2-2u+3v^2-2v.
+\tag{227.1}
+\end{gathered}
+$$
+
+Then
+
+$$
+\begin{gathered}
+G_q\succ0,\quad \det G_q=1,\quad \|V_q\|^2=1,\\
+\sigma^2=A+2\tau,\qquad \tau^2=B+2\sigma,\\
+\frac{13}{4}<\sigma<\frac72,\qquad
+\frac{13}{4}<\tau<\frac{15}{4},\qquad H>\frac{153}{16},\\
+V_q=\frac{(\tau+4)\pi_q-L\pi_q+\sigma T}{H}.
+\tag{227.2}
+\end{gathered}
+$$
+
+In particular, all three coordinates of $V_q$ are positive, and
+
+$$
+\begin{aligned}
+(V_q)_r&=\frac{\sigma+1+(\tau+1)(1-u-v)}{H},\\
+(V_q)_\ell&=\frac{\sigma+(1-u-v)+(\tau+3)u}{H},\\
+(V_q)_R&=\frac{\sigma+(1-u-v)+(\tau+3)v}{H}.
+\tag{227.3}
+\end{aligned}
+$$
+
+The value of $\sigma$ is equivalently the unique root in $(13/4,7/2)$ of
+
+$$
+(\sigma^2-A)^2-8\sigma-4B=0,\qquad
+\tau=\frac{\sigma^2-A}{2}.
+\tag{227.4}
+$$
+
+Proof. For $x=(x_r,x_\ell,x_R)^\top$,
+
+$$
+x^\top G_qx=(\pi_q^\top x)^2+(x_\ell-x_r)^2+(x_R-x_r)^2.
+\tag{227.5}
+$$
+
+Its vanishing forces $x=aT$ and then $a=0$, since $\pi_q^\top T=1$.
+The matrix with rows $\pi_q^\top$, $(-1,1,0)$, $(-1,0,1)$ has determinant
+$1$, and its Gram matrix is $G_q$. Hence $\det G_q=1$.
+Also $G_qT=\pi_q$ and $T^\top G_qT=1$, proving the normalization.
+The finite real spectral theorem supplies the unique positive principal
+root. All subsequent polynomial identities concern this root.
+
+Let its eigenvalues be $a\ge b\ge c>0$. Their product is $1$,
+so $\tau=e_2(S_q)$. Direct expansion gives $A=\operatorname{tr}G_q$
+and $B=e_2(G_q)$; the displayed trace identities follow. Since
+$G_q\succeq L$ and the eigenvalues of $L$ are $3,1,0$, eigenvalue
+monotonicity gives $a\ge\sqrt3$ and $b\ge1$. Both
+$a+b+1/(ab)$ and $ab+1/a+1/b$ increase in $a,b$ on that region. Thus
+
+$$
+\sigma,\tau\ge1+\frac4{\sqrt3}>\frac{13}{4}.
+\tag{227.6}
+$$
+
+On $\Delta$ one has $A=4+\|\pi_q\|^2\le5$ and
+$B\le5+u+v\le6$. Therefore
+
+$$
+(\sigma^2-5)^2\le4\tau^2\le24+8\sigma.
+\tag{227.7}
+$$
+
+The polynomial $P(x)=x^4-10x^2-8x+1$ is strictly increasing on
+$[7/2,\infty)$, while $P(7/2)=9/16>0$. Inequality (227.7) yields
+$\sigma<7/2$. Now $\tau^2=B+2\sigma<13$, so $\tau<15/4$,
+and the bound on $H$ follows.
+
+Cayley–Hamilton for $S_q$ gives
+
+$$
+S_q=\frac{-G_q^2+(\sigma^2-\tau)G_q+\sigma I}{H}.
+\tag{227.8}
+$$
+
+Indeed its characteristic polynomial is
+$x^3-\sigma x^2+\tau x-1$; reduction of the numerator modulo this
+polynomial gives $HS_q$. Applying (227.8) to $T$ and using
+$G_q\pi_q=L\pi_q+\|\pi_q\|^2\pi_q$ proves (227.2), hence
+(227.3). The positive coordinates and normalization imply
+$0<(V_q)_i<1$ for every coordinate.
+Finally, eliminating $\tau$ gives (227.4). Its derivative in $\sigma$ is
+$4\sigma(\sigma^2-A)-8>0$ throughout $(13/4,7/2)$ when $A\le5$.
+Existence follows from the actual principal root just constructed, proving
+uniqueness without selecting another algebraic branch.
+
+The spectral theorem, eigenvalue monotonicity and Cayley–Hamilton used
+inside this proof are standard matrix results. The reduction (227.3) is a
+source-specific consequence for (226.1).
+

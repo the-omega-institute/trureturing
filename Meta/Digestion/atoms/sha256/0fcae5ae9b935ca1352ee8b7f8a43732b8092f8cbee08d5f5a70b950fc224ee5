@@ -1,0 +1,11 @@
+**约定 250.0（来源与任务）。** 本卷接续[卷 VII](FIB_ATOM_RECURSIVE_HOLOGRAPHIC_BOUNDARY_GEOMETRY_CONTINUATION_VII.md) 至 §238，并收录原拟 §§239–249 的边界几何结果，随后继续 §§250–253。原生窗口合同取自[关系延拓几何](FIB_RELATIONAL_CONTINUATION_GEOMETRY.md) 定义 7.1，亦见[内生三轴与预测接口](AURIC_FIB_OBSERVER_INTERNAL_THREE_AXIS_GEOMETRY_AND_PREDICTIVE_INTERFACE.md) 定义 6.4；静态完整世界取自 [strict-real 支持卷 VII](https://github.com/the-omega-institute/trureturing/blob/50c4fcacf296ffa60e50806a835d49e383ae7b3d/docs/develop/theory/FIB_STRICT_REAL_JOINT_INCIDENCE_SUPPORT_VII.md) 定义 1.1、§§21–24，以下记为 [SJ]。不同来源之间的对应均须显式给出。有限维递推和逆函数定理是经典中间工具；本卷的承重内容是它们与这两份来源合同的接合及失败见证，属 `repo-derived`，不作文献优先权主张。
+
+## 239. Measure-free packing and the resolution budget
+
+### 239.1 A metric-doubling replacement for the volume hypothesis
+
+The Ahlfors measure in §160 is one sufficient way to turn a resolved
+occurrence set into a packing bound. The measure is not essential to that
+counting step. The following version uses only a uniform metric covering
+property and therefore has a different scope.
+

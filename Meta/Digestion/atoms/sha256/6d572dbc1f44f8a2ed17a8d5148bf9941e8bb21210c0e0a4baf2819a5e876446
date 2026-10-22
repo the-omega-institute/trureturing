@@ -1,0 +1,70 @@
+**Theorem 160.2 (conditional no-go for a uniformly resolved bridge).**
+For any prefix satisfying (160.3)--(160.6),
+
+$$
+\boxed{
+N_n c_-(c/3)^d
+\le c_+\bigl(A(n-1)+B+c/3\bigr)^d.
+}
+\tag{160.7}
+$$
+
+There is no candidate satisfying Definition 160.1 for every $n\ge1$ with
+one fixed finite $d$ and the same constants. In particular this excludes
+$d=3$ under these uniform bridge assumptions.
+
+Proof. For distinct $x,y\in V_n$, an intersection of the two open balls
+$B_\rho(\iota_n(x),c/3)$ and $B_\rho(\iota_n(y),c/3)$ would give
+
+$$
+\rho(\iota_n(x),\iota_n(y))<2c/3<c,
+$$
+
+contradicting (160.3). These $N_n$ balls are therefore pairwise disjoint.
+Since $d_n(r_n,x)\le n-1$, every point $z$ in the ball about
+$\iota_n(x)$ satisfies
+
+$$
+\rho(o,z)
+\le\rho(o,\iota_n(x))+\rho(\iota_n(x),z)
+<A(n-1)+B+c/3=R_n.
+$$
+
+Their union lies in $B_\rho(o,R_n)$. Finite additivity on disjoint Borel
+sets, monotonicity of $\mu$, and the two required sides of (160.6) give
+
+$$
+\begin{aligned}
+N_n c_-(c/3)^d
+&\le\sum_{x\in V_n}\mu(B_\rho(\iota_n(x),c/3))\\
+&=\mu\!\left(\bigcup_{x\in V_n}B_\rho(\iota_n(x),c/3)\right)\\
+&\le\mu(B_\rho(o,R_n))
+\le c_+R_n^d,
+\end{aligned}
+$$
+
+which is (160.7). Put $\varphi=(1+\sqrt5)/2$. The Fibonacci recurrence
+and its initial values give
+
+$$
+F_{n+1}=\frac{\varphi^{n+1}-(-\varphi^{-1})^{n+1}}{\sqrt5},
+\qquad
+\log N_n=n\log\varphi+O(1).
+\tag{160.8}
+$$
+
+For fixed positive $A,B,c$,
+$\log R_n=\log n+O(1)$. Taking logarithms in (160.7) would therefore
+require
+
+$$
+n\log\varphi+O(1)\le d\log n+O(1)
+\qquad\text{for every }n.
+\tag{160.9}
+$$
+
+Dividing by $n$ and letting $n\to\infty$ gives
+$\log\varphi\le0$, a contradiction. Coherence (160.2) states that these
+are prefixes of the same bridge; the packing contradiction already applies
+to each prefix and does not require coherence. $\square$
+

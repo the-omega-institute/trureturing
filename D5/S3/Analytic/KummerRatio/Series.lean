@@ -138,7 +138,7 @@ theorem hasDerivAt_kummer (s : ℝ) {c : ℝ} (hc : 0 < c) (x : ℝ) :
 theorem continuous_kummer (s : ℝ) {c : ℝ} (hc : 0 < c) : Continuous (kummer s c) :=
   continuous_iff_continuousAt.mpr (fun x => (hasDerivAt_kummer s hc x).continuousAt)
 
-private lemma pochhammer_shift (c : ℝ) (n : ℕ) :
+lemma pochhammer_shift (c : ℝ) (n : ℕ) :
     c * (ascPochhammer ℝ n).eval (c + 1) =
       (c + n) * (ascPochhammer ℝ n).eval c := by
   calc

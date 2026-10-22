@@ -1,0 +1,32 @@
+**Assumption 201.2 (Compatible preparations and local operations).**
+The resource consists of two disjoint, independently prepared instances
+of this same untwirled $\rho(t,v,w)$, with compatible labelled modes,
+creation order and coupling-phase conventions, as in VI §147. One common local-number twirl is applied across
+the two copies. Bob has all four modes, and local filters may be arbitrary
+coherent contractions inside a fixed total local-number space. Independent
+pre-twirling of the two inputs is a different resource. No cloning, external
+reference, or additional physical access is included.
+
+The original creation order is
+
+$$
+ (\ell _1,r_1,R_1,\ell _2,r_2,R_2),
+$$
+
+and the fixed ordinary tensor cut is
+
+$$
+ (\ell _1,\ell _2)\mid(r_1,R_1,r_2,R_2).
+$$
+
+Partial transpose below is the ordinary transpose on this Alice tensor factor
+once the CAR coordinate convention has been fixed; it is not fermionic
+partial time reversal. An encoded $2\times2$ branch has a two-dimensional
+Alice rail space and a two-dimensional Bob space, each at fixed local
+total number. For a normalized output $\sigma$, write
+
+$$
+ \mathcal N(\sigma)=\frac{\|\sigma^{T_A}\|_1-1}{2},
+ \qquad [r]_+=\max\{r,0\}.
+$$
+
