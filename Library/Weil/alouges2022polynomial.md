@@ -81,7 +81,7 @@ at the same hypothetical zero.
 
 Theorem 4, PDF pp.7--8, supplies unconditional gNB approximation for
 its specified inverse-Gamma construction. That is the unscaled
-approximation property defined in Section 1.2, not a proof that (A2)
+approximation property of Section 1.1, Definition 1.1 (PDF p.3), not a proof that (A2)
 and (A3) hold jointly. Section 4.3.2, PDF p.13, observes that a common
 compact seed support makes (A3) automatic for sufficiently large
 $M_n$. It then discusses the loss of the stated polynomial-density
