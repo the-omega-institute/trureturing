@@ -106,6 +106,10 @@ $$\forall F:\operatorname{Type}, ([\operatorname{Field}\left(F\right)] [\operato
 
 *Proof.* Machine-checked in Lean as `D5/S3/StatisticalMechanics/VertexModels/PonciniRasmussenTransferExpansion.result` (`✓ std3`). ∎
 
+*Resolves.* `Problems/poncini-rasmussen-2022-transfer-expansion-conjecture-c12` (proved) by `D5/S3/StatisticalMechanics/VertexModels/PonciniRasmussenTransferExpansion.result`.
+
+<!-- scribe-open-problem-resolution-v1 {"problem_slug":"poncini-rasmussen-2022-transfer-expansion-conjecture-c12","declaration_gid":"D5/S3/StatisticalMechanics/VertexModels/PonciniRasmussenTransferExpansion.result","resolution_kind":"proved"} -->
+
 *Source.* Repository-derived.
 
 *Acknowledgement.* Xavier Poncini and Jørgen Rasmussen (2023). *Integrability of planar-algebraic models*. DOI: [10.1088/1742-5468/acdce7](https://doi.org/10.1088/1742-5468/acdce7). URL: <https://arxiv.org/abs/2206.14462v2>.

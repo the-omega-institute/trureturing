@@ -18,13 +18,13 @@ internal sealed class PonciniRasmussenTransferExpansionDocument : IScribeDocumen
         Node("transfer", "The auxiliary partial trace", TransferBody(), "Page 42, (C.13): \u201c\u0164_n(u) = Tr_{n+1}(L_{n+1}(u))\u201d. Fin.snoc appends the same auxiliary bit to the row and column, and the sum ranges over its two values.", DescribeRole.Definition, AssessedProvenance.FromLiterature(Source)),
         Node("hamiltonian", "The principal Hamiltonian", HamiltonianBody(), "Page 45, (C.40): \u201ch_n = \u03a3_{i=1}^{n\u22121} \u03c3^x_{n,i} \u03c3^x_{n,i+1}\u201d. Each term flips the adjacent pair and fixes every other coordinate. The proof h certifies that the next Fin index belongs to the chain.", DescribeRole.Definition, AssessedProvenance.FromLiterature(Source)),
         Node("claim", "Conjecture C.12", ClaimDefinition(), "Page 47, Conjecture C.12: \u201cFor every n \u2208 \u2115 and all u \u2208 F, we have \u0164_n(u) = 2 \u03a3_{k=0}^{n\u22121} (1 + u\u00b2)^{n\u2212k} (2u)^k \u03a3_{j=0}^{\u230ak/2\u230b} [n \u2212 k \u2212 2 + 2j over 2j]!! (\u22121)^j m_{k\u22122j}(h_n)/(k \u2212 2j)!\u201d. Here n \u2265 1, F is an algebraically closed field of characteristic zero, and the basis of its n-fold tensor power is Fin n \u2192 Fin 2. Nat.div denotes natural-number division; natural subtraction is truncated.", DescribeRole.Definition, AssessedProvenance.FromLiterature(Source)),
-        Node("result", "The transfer expansion", ClaimBody(), "Conjecture C.12 holds. The ordered product reduces to commuting adjacent flips, whose Walsh eigenvectors have Hamiltonian eigenvalue n \u2212 1 \u2212 2l. The scalar central factorial identity then gives the matrix equality.", DescribeRole.Theorem, AssessedProvenance.FromRepo(Source))
+        Node("result", "The transfer expansion", ClaimBody(), "Conjecture C.12 holds. The ordered product reduces to commuting adjacent flips, whose Walsh eigenvectors have Hamiltonian eigenvalue n \u2212 1 \u2212 2l. The scalar central factorial identity then gives the matrix equality.", DescribeRole.Theorem, AssessedProvenance.FromRepo(Source), new OpenProblemResolutionClaim(ProblemSlugRef.Create("poncini-rasmussen-2022-transfer-expansion-conjecture-c12"), ResolutionKind.Proved))
     ), []));
     private static DocumentBlock Node(string name, string title, Formula formula, string prose,
-        DescribeRole role, AssessedProvenance provenance) => Describe.Lean(
+        DescribeRole role, AssessedProvenance provenance, OpenProblemResolutionClaim? resolution = null) => Describe.Lean(
             DescribeId.Create("poncinirasmussentransferexpansiondocument-"+name.Replace('_','-').ToLowerInvariant()),
             DeclarationHandle.Create(Prefix+name), H(title), StatementSource.FromAuthor(Disp(formula)),
-            provenance, Blocks(Paragraph(Text(prose))), role);
+            provenance, Blocks(Paragraph(Text(prose))), role, openProblemResolutionClaim: resolution);
 
     private static Formula RBody() => Field(All("u",X("F"),All("j",Fin(D(2)),All("k",Fin(D(2)),All("l",Fin(D(2)),All("m",Fin(D(2)),
         Eq(Call("Rcoef",X("u"),X("j"),X("k"),X("l"),X("m")),
