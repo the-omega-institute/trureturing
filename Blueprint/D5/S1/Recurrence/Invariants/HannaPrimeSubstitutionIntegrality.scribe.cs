@@ -39,7 +39,9 @@ internal sealed class HannaPrimeSubstitutionIntegralityDocument : IScribeDocumen
         DescribeRole role, AssessedProvenance provenance) => Describe.Lean(
             DescribeId.Create("hanna2016a271931-" + name.Replace('_', '-').Replace('.', '-').ToLowerInvariant()),
             DeclarationHandle.Create(Prefix + name.Split('.')[^1]), H(title), StatementSource.FromAuthor(formula),
-            provenance, Blocks(Paragraph(Text(prose))), role);
+            provenance, Blocks(Paragraph(Text(prose))), role,
+            name == "result" ? new OpenProblemResolutionClaim(
+                ProblemSlugRef.Create("oeis-a271931-hanna-prime-substitution-integrality"), ResolutionKind.Proved) : null);
 
     private static Formula N() => Seq(Mathbb, Grp(F.Id("N")));
     private static Formula Z() => Seq(Mathbb, Grp(F.Id("Z")));

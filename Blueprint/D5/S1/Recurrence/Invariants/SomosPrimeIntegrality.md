@@ -36,6 +36,10 @@ $$\forall p: \mathbb{N}, (2 \le p) \implies ((\exists A: \operatorname{PowerSeri
 
 *Proof.* Machine-checked in Lean as `D5/S1/Recurrence/Invariants/SomosPrimeIntegrality.result` (`✓ std3`). ∎
 
+*Resolves.* `Problems/oeis-a091190-somos-prime-integrality` (proved) by `D5/S1/Recurrence/Invariants/SomosPrimeIntegrality.result`.
+
+<!-- scribe-open-problem-resolution-v1 {"problem_slug":"oeis-a091190-somos-prime-integrality","declaration_gid":"D5/S1/Recurrence/Invariants/SomosPrimeIntegrality.result","resolution_kind":"proved"} -->
+
 *Source.* Repository-derived.
 
 *Acknowledgement.* Paul D. Hanna (2004). *OEIS A091190 and A091200: the Somos prime integrality family*. URL: <https://oeis.org/A091190>.

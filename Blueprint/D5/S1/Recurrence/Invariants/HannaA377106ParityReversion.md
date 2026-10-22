@@ -36,6 +36,10 @@ $$(\exists A: \operatorname{PowerSeries}\left(\mathbb{Q}\right), \operatorname{I
 
 *Proof.* Machine-checked in Lean as `D5/S1/Recurrence/Invariants/HannaA377106ParityReversion.result` (`✓ std3`). ∎
 
+*Resolves.* `Problems/oeis-a377106-hanna-parity-reversion` (proved) by `D5/S1/Recurrence/Invariants/HannaA377106ParityReversion.result`.
+
+<!-- scribe-open-problem-resolution-v1 {"problem_slug":"oeis-a377106-hanna-parity-reversion","declaration_gid":"D5/S1/Recurrence/Invariants/HannaA377106ParityReversion.result","resolution_kind":"proved"} -->
+
 *Source.* Repository-derived.
 
 *Acknowledgement.* Paul D. Hanna (2024). *OEIS A377106: cubic substitution and power-of-two parity*. URL: <https://oeis.org/A377106>.

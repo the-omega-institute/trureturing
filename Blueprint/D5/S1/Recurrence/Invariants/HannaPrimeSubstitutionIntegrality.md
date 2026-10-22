@@ -94,6 +94,10 @@ $$\forall p: \mathbb{N}, (\operatorname{Nat}.\operatorname{Prime}\left(p\right))
 
 *Proof.* Machine-checked in Lean as `D5/S1/Recurrence/Invariants/HannaPrimeSubstitutionIntegrality.result` (`✓ std3`). ∎
 
+*Resolves.* `Problems/oeis-a271931-hanna-prime-substitution-integrality` (proved) by `D5/S1/Recurrence/Invariants/HannaPrimeSubstitutionIntegrality.result`.
+
+<!-- scribe-open-problem-resolution-v1 {"problem_slug":"oeis-a271931-hanna-prime-substitution-integrality","declaration_gid":"D5/S1/Recurrence/Invariants/HannaPrimeSubstitutionIntegrality.result","resolution_kind":"proved"} -->
+
 *Source.* Repository-derived.
 
 *Acknowledgement.* Paul D. Hanna (2016). *OEIS A271931, A271932 and A271933: prime substitution integrality*. URL: <https://oeis.org/A271931>.
