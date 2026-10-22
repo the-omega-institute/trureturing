@@ -62,7 +62,7 @@ Lean statement: `D5/S3/Analytic/EllipticTailExponent/Bounds.U`
 
 *Commentary.*
 
-U(n,a) is the sum of b(k+n+1,a) over natural k. The rational coefficient majorant is summable for each fixed n.
+U(n,a) is the sum of b(k+n+1,a) over natural k. The rational coefficient majorant is summable for each fixed n by shifting A400361PillaiMean.hasSum_kernel_one.
 
 **Theorem 1.6 (Termwise differentiation).**
 
@@ -122,7 +122,7 @@ Lean statement: `D5/S3/Analytic/EllipticTailExponent/Bounds.U_zero`
 
 *Commentary.*
 
-For every natural n, U(n,0)=1/(n+1). The rational summands at zero telescope as 1/k-1/(k+1).
+For every natural n, U(n,0)=1/(n+1). Shift A400361PillaiMean.hasSum_kernel_one by n and subtract its kernel_one_prefix n; normalization gives 1/(n+1).
 
 **Theorem 1.11 (A uniform tail derivative bound).**
 
@@ -151,3 +151,4 @@ For 0<a<3/4, the norm of the derivative of U(n,a) is at most four times the sum 
 - Truth anchor: `D5/S3/Analytic/EllipticTailExponent/Bounds.norm_deriv_U_le`
 - Dependency: [D5/S3/Analytic/EllipticTailExponent/Defs](Defs.md)
 - Dependency: [D5/S3/Analytic/SeriesInequalities/NormalizedPochhammerBounds](../SeriesInequalities/NormalizedPochhammerBounds.md)
+- Dependency: [D5/S3/ArithSums/A400361PillaiMean](../../ArithSums/A400361PillaiMean.md)

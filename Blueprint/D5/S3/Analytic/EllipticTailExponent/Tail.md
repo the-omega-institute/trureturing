@@ -26,7 +26,7 @@ Lean statement: `D5/S3/Analytic/EllipticTailExponent/Tail.t`
 
 *Commentary.*
 
-The summand t k a is a d k a/(k+1). It is nonnegative for 0<a<=1/2. The finite truncation S n a sums these terms for 0<=k<=n.
+The summand t k a is a d k a/(k+1). GaussZeroBalanced.Series.coefficient_pos makes it nonnegative for 0<a<=1/2. The finite truncation S n a sums these terms for 0<=k<=n.
 
 **Theorem 1.3 (Finite Euler product).**
 
@@ -38,7 +38,7 @@ Lean statement: `D5/S3/Analytic/EllipticTailExponent/Tail.d_product`
 
 *Commentary.*
 
-For every natural N and every real a, (N+1)d(N+1,a) equals a(1-a/(N+1)) times the product of 1-a^2/(j+1)^2 over 0<=j<N. The normalized coefficient recurrence gives the identity by induction.
+For every natural N and every real a, (N+1)d(N+1,a) equals a(1-a/(N+1)) times the product of 1-a^2/(j+1)^2 over 0<=j<N. The normalized coefficients equal ordinaryHypergeometricCoefficient(a,1-a,1,k) by the Pochhammer product identities. Specializing GaussZeroBalanced.Series.coefficient_recurrence gives their recurrence; induction gives the finite Euler product.
 
 **Theorem 1.4 (The analytic remainder as a coefficient tail).**
 
@@ -59,3 +59,4 @@ For every natural n and every real a with 0<a<=1/2, sin(pi a)/(pi(1-a))-S n a eq
 - Truth anchor: `D5/S3/Analytic/EllipticTailExponent/Tail.t`
 - Truth anchor: `D5/S3/Analytic/EllipticTailExponent/Tail.tail_eq_tsum`
 - Dependency: [D5/S3/Analytic/EllipticTailExponent/Defs](Defs.md)
+- Dependency: [D5/S3/Analytic/GaussZeroBalanced/Series](../GaussZeroBalanced/Series.md)
