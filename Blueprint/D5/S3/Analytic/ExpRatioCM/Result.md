@@ -28,9 +28,22 @@ Lean statement: `D5/S3/Analytic/ExpRatioCM/Result.classification_of_limits`
 
 Combining complete monotonicity of the low-index coefficient cases with the failure family gives the exact index classification for each ratio family.
 
+**Theorem 1.3 (Refutation from the extracted limits).**
+
+Lean statement: `D5/S3/Analytic/ExpRatioCM/Result.result_of_limits`
+
+*Proof.* Machine-checked in Lean as `D5/S3/Analytic/ExpRatioCM/Result.result_of_limits` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+The universal conjecture is contradicted by the failure at index three once the two extracted limits and the positive low-index cases have been established.
+
 ## References
 
 - Truth anchor: `D5/S3/Analytic/ExpRatioCM/Result.classification_of_limits`
 - Truth anchor: `D5/S3/Analytic/ExpRatioCM/Result.not_cm_of_three_le`
+- Truth anchor: `D5/S3/Analytic/ExpRatioCM/Result.result_of_limits`
 - Dependency: [D5/S3/Analytic/ExpRatioCM/Extraction](Extraction.md)
 - Dependency: [D5/S3/Analytic/ExpRatioCM/Positive](Positive.md)

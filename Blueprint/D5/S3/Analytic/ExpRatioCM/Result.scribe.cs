@@ -18,5 +18,11 @@ internal sealed class ResultDocument : IScribeDocumentDefinition
                 H("Classification from positive cases and limits"), StatementSource.WithoutFormula(),
                 AssessedProvenance.FromRepo(),
                 Blocks(Paragraph(Text("Combining complete monotonicity of the low-index coefficient cases with the failure family gives the exact index classification for each ratio family."))),
+                DescribeRole.Theorem),
+            Describe.Lean(DescribeId.Create("exp-ratio-cm-result-of-limits"),
+                DeclarationHandle.Create("D5/S3/Analytic/ExpRatioCM/Result.result_of_limits"),
+                H("Refutation from the extracted limits"), StatementSource.WithoutFormula(),
+                AssessedProvenance.FromRepo(),
+                Blocks(Paragraph(Text("The universal conjecture is contradicted by the failure at index three once the two extracted limits and the positive low-index cases have been established."))),
                 DescribeRole.Theorem))));
 }

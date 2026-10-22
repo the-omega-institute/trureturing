@@ -97,4 +97,27 @@ theorem classification_of_limits
     · intro hi
       exact (hpositive i hi).2
 
+/-- The conjecture is refuted once the extracted limits and positive cases are supplied. -/
+theorem result_of_limits
+    (hlimF : ∀ i : ℕ, 3 ≤ i →
+      Tendsto (fun k : ℕ =>
+        (49 / 32 : ℝ) ^ k *
+          ((-1 : ℝ) ^ k * iteratedDeriv k (ratioF i)
+            (k * Real.log (7 / 4))))
+        atTop (𝓝 (quotCoeff i 2)))
+    (hlimG : ∀ i : ℕ, 3 ≤ i →
+      Tendsto (fun k : ℕ =>
+        (49 / 32 : ℝ) ^ k *
+          ((-1 : ℝ) ^ k * iteratedDeriv k (ratioG i)
+            (k * Real.log (7 / 4))))
+        atTop (𝓝 (quotCoeff i 2)))
+    (hpositive : ∀ i : ℕ, i ≤ 2 →
+      CompletelyMonotoneOn (ratioF i) ∧
+      CompletelyMonotoneOn (ratioG i)) :
+    ¬ claim := by
+  intro hclaim
+  obtain ⟨hF, _hG⟩ := hclaim 3
+  have hfail := not_cm_of_three_le hlimF hlimG
+  exact (hfail 3 (by norm_num)).1 hF
+
 end D5.S3.Analytic.ExpRatioCM.Result
