@@ -47,6 +47,8 @@ Utility is none: all statements concern unbounded symbolic constructions,
 uniqueness, integrality and support, without certified finite computation.
 -/
 
+-- Escape audit unfinished: https://github.com/the-omega-institute/trureturing/issues/19870.
+
 import D5.S1.Recurrence.Residue.CompositionalSquareDyadicDenominators
 import D5.S1.Recurrence.Invariants.CubicFifteenSubstitutionParity
 
@@ -76,7 +78,7 @@ set_option maxHeartbeats 800000
 section Triangular
 variable {R : Type*} [CommRing R]
 
-private theorem half_unique [NoZeroDivisors R] (h2 : (2 : R) ≠ 0)
+theorem half_unique [NoZeroDivisors R] (h2 : (2 : R) ≠ 0)
     {f g t : PowerSeries R}
     (hf0 : constantCoeff f = 0) (hg0 : constantCoeff g = 0)
     (hf1 : coeff 1 f = 1) (hg1 : coeff 1 g = 1)
