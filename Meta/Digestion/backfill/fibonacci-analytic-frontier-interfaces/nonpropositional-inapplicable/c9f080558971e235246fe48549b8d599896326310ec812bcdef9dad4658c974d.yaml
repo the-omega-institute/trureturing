@@ -5,3 +5,7 @@ cas_ref: sha256:c9f080558971e235246fe48549b8d599896326310ec812bcdef9dad4658c974d
 coverage_gids: []
 receipts:
   unresolved_subitems: []
+  nonpropositional:
+    justification: Section heading, source references and novelty attribution; no new estimate is stated.
+    previous_atom_id: 5290a247c37be2265b83f443fe95b185aa988635ee6e426bcfc610ed3f743ea6
+    next_atom_id: e031fda7a58f75ae3f890f01e2fbbfc1701799fa1570ba8f00b58e2f04c50e07

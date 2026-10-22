@@ -5,3 +5,7 @@ cas_ref: sha256:fda73bfae48550a4f4bcb314013e1b28b6a4eb46e91cea03c56b58020a835a25
 coverage_gids: []
 receipts:
   unresolved_subitems: []
+  nonpropositional:
+    justification: Section heading only; no mathematical assertion.
+    previous_atom_id: 84af154adaf50183290d419c139217bfa7dff2aed391c1f56b8f09cf3ba7354d
+    next_atom_id: c9c8d6eff00fc0ebe1a23477fc0e9686661b56f6c303b48c33a7547e1893534d

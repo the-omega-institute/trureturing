@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:5066a99548f5bd8b605041caa2a8cd1b579a4ddf3c4011e4d90ef4ed2c6137ab
+  normalized_sha256: sha256:5066a99548f5bd8b605041caa2a8cd1b579a4ddf3c4011e4d90ef4ed2c6137ab
+cas_ref: sha256:5066a99548f5bd8b605041caa2a8cd1b579a4ddf3c4011e4d90ef4ed2c6137ab
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: Source attribution and definitions of c2, E2, Delta1, Dx and a; the finite-witness conclusions belong to subsequent atoms.
+    previous_atom_id: 7d2a4dbf0cd6a58560810f1798ec5b9438ab128d32acb0d24236aa9ef62ca29a
+    next_atom_id: b3778a285ea44e220ba3fb665908e2c92509ea83e2bdcec42782b0dcf133a875
