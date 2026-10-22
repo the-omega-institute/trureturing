@@ -56,12 +56,27 @@ private lemma witness_trace : witnessV.trace = 0 := by
   simp [witnessV, Matrix.trace, Fin.sum_univ_three]
   apply Complex.ext <;> norm_num <;> ring
 
-private lemma witness_expectation (ψ : Fin 3 → ℂ)
-    (hψ : ∑ i, ‖ψ i‖ ^ 2 = 1) :
+private lemma witness_expectation (ψ : Fin 3 → ℂ) :
     star ψ ⬝ᵥ
         (generator witnessRate witnessJump (vecMulVec ψ (star ψ)) *ᵥ ψ) =
-      (((‖ψ 0‖ ^ 2 - ‖ψ 1‖ ^ 2) ^ 2 + ‖ψ 2‖ ^ 4 - 1 : ℝ) : ℂ) := by
-  sorry
+      (((‖ψ 0‖ ^ 2 - ‖ψ 1‖ ^ 2) ^ 2 + ‖ψ 2‖ ^ 4 -
+        (‖ψ 0‖ ^ 2 + ‖ψ 1‖ ^ 2 + ‖ψ 2‖ ^ 2) ^ 2 : ℝ) : ℂ) := by
+  have h0 : ‖ψ 0‖ ^ 2 = (ψ 0).re ^ 2 + (ψ 0).im ^ 2 := by
+    simpa [Complex.normSq_apply, pow_two] using (Complex.sq_norm (ψ 0))
+  have h1 : ‖ψ 1‖ ^ 2 = (ψ 1).re ^ 2 + (ψ 1).im ^ 2 := by
+    simpa [Complex.normSq_apply, pow_two] using (Complex.sq_norm (ψ 1))
+  have h2 : ‖ψ 2‖ ^ 2 = (ψ 2).re ^ 2 + (ψ 2).im ^ 2 := by
+    simpa [Complex.normSq_apply, pow_two] using (Complex.sq_norm (ψ 2))
+  have h2pow : ‖ψ 2‖ ^ 4 = ((ψ 2).re ^ 2 + (ψ 2).im ^ 2) ^ 2 := by
+    rw [show ‖ψ 2‖ ^ 4 = (‖ψ 2‖ ^ 2) ^ 2 by ring, h2]
+  rw [h0, h1, h2, h2pow]
+  norm_num [Complex.ext_iff, witnessRate, witnessJump, witnessV, generator, dissipator,
+      Matrix.mul_apply, Matrix.mulVec, dotProduct, Matrix.conjTranspose_apply,
+      Matrix.diagonal, Fin.sum_univ_three, Matrix.vecMulVec_apply,
+      Pi.star_apply, Complex.star_def, Complex.sq_norm, Complex.normSq_apply,
+      Complex.ofReal_re, Complex.ofReal_im, Complex.add_re, Complex.add_im,
+      Complex.sub_re, Complex.sub_im, Complex.mul_re, Complex.mul_im,
+      pow_two, map_ofNat] <;> ring_nf <;> simp
 
 private lemma witness_scale_upper : scale witnessRate witnessJump ≤ 1 := by
   sorry
