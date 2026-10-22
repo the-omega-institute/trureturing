@@ -126,49 +126,7 @@ The even, odd and second-difference heads have respective normalization factors 
 
 Finite-head zero-energy reconstruction and this original metric imply positive definiteness of the actual three-column Gram at every cutoff. For exterior cutoffs the sharp two-sign denominator comparison also controls the finite physical energy.
 
-For every natural c>=3, finite integer head S, natural cutoff N and complex coefficient function v, the complete paired tail energy vanishes exactly when v vanishes on S. The empty head and zero vector are included.
-
-ActualUniformFiniteHeadTail.actual_finite_head_uniform_tail_lower provides the coefficient-uniform lower bound for c>=2: positive C and a cutoff N0 are chosen before all coefficient functions and all later cutoffs. Its summability at N+N0, reindexing of both signed columns and Summable.comp_nat_add give summability at every N.
-
-A retained nonzero coefficient gives strictly positive original coefficient mass. The uniform lower bound gives a positive complete tail at max(N,N0), and nonnegative tail cropping transfers positivity to N. This is a consequence of the uniform estimate; the source realization below uses that consequence on the literal three-node head.
-
-**Theorem 1.10 (actual tail summable all).**
-
-Lean statement: `D5/S3/Weil/ZetaBridge/ActualThreeNodeSourceHeadBridge.actual_tail_summable_all`
-
-*Proof.* Machine-checked in Lean as `D5/S3/Weil/ZetaBridge/ActualThreeNodeSourceHeadBridge.actual_tail_summable_all` (`✓ std3`). ∎
-
-*Source.* Repository-derived.
-
-*Commentary.*
-
-lemma actual_tail_summable_all {c : ℕ} (hc : 3 ≤ c) (S : Finset ℤ) (hS : S.Nonempty) (N : ℕ) (v : ℤ → ℂ) : Summable (pairedColumnTerm c N S v)
-
-**Theorem 1.11 (actual finite head tail pos).**
-
-Lean statement: `D5/S3/Weil/ZetaBridge/ActualThreeNodeSourceHeadBridge.actual_finite_head_tail_pos`
-
-*Proof.* Machine-checked in Lean as `D5/S3/Weil/ZetaBridge/ActualThreeNodeSourceHeadBridge.actual_finite_head_tail_pos` (`✓ std3`). ∎
-
-*Source.* Repository-derived.
-
-*Commentary.*
-
-theorem actual_finite_head_tail_pos {c : ℕ} (hc : 3 ≤ c) (S : Finset ℤ) (N : ℕ) (v : ℤ → ℂ) (hv : ∃ k ∈ S, v k ≠ 0) : 0 < ∑' j : ℕ, pairedColumnTerm c N S v j
-
-**Theorem 1.12 (actual finite head tail zero iff).**
-
-Lean statement: `D5/S3/Weil/ZetaBridge/ActualThreeNodeSourceHeadBridge.actual_finite_head_tail_zero_iff`
-
-*Proof.* Machine-checked in Lean as `D5/S3/Weil/ZetaBridge/ActualThreeNodeSourceHeadBridge.actual_finite_head_tail_zero_iff` (`✓ std3`). ∎
-
-*Source.* Repository-derived.
-
-*Commentary.*
-
-theorem actual_finite_head_tail_zero_iff {c : ℕ} (hc : 3 ≤ c) (S : Finset ℤ) (N : ℕ) (v : ℤ → ℂ) : (∑' j : ℕ, pairedColumnTerm c N S v j) = 0 ↔ ∀ k ∈ S, v k = 0
-
-**Definition 1.13 (threeNodes).**
+**Definition 1.10 (threeNodes).**
 
 Lean statement: `D5/S3/Weil/ZetaBridge/ActualThreeNodeSourceHeadBridge.threeNodes`
 
@@ -180,7 +138,7 @@ Lean statement: `D5/S3/Weil/ZetaBridge/ActualThreeNodeSourceHeadBridge.threeNode
 
 threeNodes(n) is the finite integer set {-n,0,n}. When n is nonzero, these are three distinct nodes.
 
-**Definition 1.14 (pairSpace).**
+**Definition 1.11 (pairSpace).**
 
 Lean statement: `D5/S3/Weil/ZetaBridge/ActualThreeNodeSourceHeadBridge.pairSpace`
 
@@ -192,7 +150,7 @@ Lean statement: `D5/S3/Weil/ZetaBridge/ActualThreeNodeSourceHeadBridge.pairSpace
 
 The paired space is EuclideanSpace Complex (Fin 2), with the Hermitian norm on the two exterior signs.
 
-**Definition 1.15 (tailSpace).**
+**Definition 1.12 (tailSpace).**
 
 Lean statement: `D5/S3/Weil/ZetaBridge/ActualThreeNodeSourceHeadBridge.tailSpace`
 
@@ -204,7 +162,7 @@ Lean statement: `D5/S3/Weil/ZetaBridge/ActualThreeNodeSourceHeadBridge.tailSpace
 
 The tail space is lp (fun _ : Nat => pairSpace) 2, the complex Hilbert sum of the paired spaces over all natural sample indices.
 
-**Definition 1.16 (pairedColumnVector).**
+**Definition 1.13 (pairedColumnVector).**
 
 Lean statement: `D5/S3/Weil/ZetaBridge/ActualThreeNodeSourceHeadBridge.pairedColumnVector`
 
@@ -216,7 +174,7 @@ Lean statement: `D5/S3/Weil/ZetaBridge/ActualThreeNodeSourceHeadBridge.pairedCol
 
 def pairedColumnVector (c N : ℕ) (S : Finset ℤ) (v : ℤ → ℂ) (j : ℕ) : pairSpace
 
-**Definition 1.17 (pairedColumnLp).**
+**Definition 1.14 (pairedColumnLp).**
 
 Lean statement: `D5/S3/Weil/ZetaBridge/ActualThreeNodeSourceHeadBridge.pairedColumnLp`
 
@@ -228,7 +186,7 @@ Lean statement: `D5/S3/Weil/ZetaBridge/ActualThreeNodeSourceHeadBridge.pairedCol
 
 def pairedColumnLp {c : ℕ} (hc : 3 ≤ c) (n : ℤ) (N : ℕ) (v : ℤ → ℂ) : tailSpace
 
-**Definition 1.18 (sourceColumnMap).**
+**Definition 1.15 (sourceColumnMap).**
 
 Lean statement: `D5/S3/Weil/ZetaBridge/ActualThreeNodeSourceHeadBridge.sourceColumnMap`
 
@@ -240,7 +198,7 @@ Lean statement: `D5/S3/Weil/ZetaBridge/ActualThreeNodeSourceHeadBridge.sourceCol
 
 def sourceColumnMap {c : ℕ} (hc : 3 ≤ c) (n : ℤ) (N : ℕ) : (ℤ → ℂ) →ₗ[ℂ] tailSpace
 
-**Definition 1.19 (singletonHead).**
+**Definition 1.16 (singletonHead).**
 
 Lean statement: `D5/S3/Weil/ZetaBridge/ActualThreeNodeSourceHeadBridge.singletonHead`
 
@@ -252,7 +210,7 @@ Lean statement: `D5/S3/Weil/ZetaBridge/ActualThreeNodeSourceHeadBridge.singleton
 
 singletonHead(k) is the complex coefficient function equal to one at k and zero elsewhere.
 
-**Definition 1.20 (headE).**
+**Definition 1.17 (headE).**
 
 Lean statement: `D5/S3/Weil/ZetaBridge/ActualThreeNodeSourceHeadBridge.headE`
 
@@ -264,7 +222,7 @@ Lean statement: `D5/S3/Weil/ZetaBridge/ActualThreeNodeSourceHeadBridge.headE`
 
 headE(n) is (single(-n)+single(0)+single(n))/sqrt(3).
 
-**Definition 1.21 (headO).**
+**Definition 1.18 (headO).**
 
 Lean statement: `D5/S3/Weil/ZetaBridge/ActualThreeNodeSourceHeadBridge.headO`
 
@@ -276,7 +234,7 @@ Lean statement: `D5/S3/Weil/ZetaBridge/ActualThreeNodeSourceHeadBridge.headO`
 
 headO(n) is (-single(-n)+single(n))/sqrt(2).
 
-**Definition 1.22 (headS).**
+**Definition 1.19 (headS).**
 
 Lean statement: `D5/S3/Weil/ZetaBridge/ActualThreeNodeSourceHeadBridge.headS`
 
@@ -288,7 +246,7 @@ Lean statement: `D5/S3/Weil/ZetaBridge/ActualThreeNodeSourceHeadBridge.headS`
 
 headS(n) is (single(-n)-2*single(0)+single(n))/sqrt(6).
 
-**Definition 1.23 (normalizedHead).**
+**Definition 1.20 (normalizedHead).**
 
 Lean statement: `D5/S3/Weil/ZetaBridge/ActualThreeNodeSourceHeadBridge.normalizedHead`
 
@@ -300,7 +258,7 @@ Lean statement: `D5/S3/Weil/ZetaBridge/ActualThreeNodeSourceHeadBridge.normalize
 
 normalizedHead(n) lists headE(n), headO(n) and headS(n) in that order.
 
-**Definition 1.24 (sourceHead).**
+**Definition 1.21 (sourceHead).**
 
 Lean statement: `D5/S3/Weil/ZetaBridge/ActualThreeNodeSourceHeadBridge.sourceHead`
 
@@ -312,7 +270,7 @@ Lean statement: `D5/S3/Weil/ZetaBridge/ActualThreeNodeSourceHeadBridge.sourceHea
 
 sourceHead(n,x) is the finite sum over i in Fin 3 of x(i) times normalizedHead(n,i).
 
-**Definition 1.25 (sourceTailFamily).**
+**Definition 1.22 (sourceTailFamily).**
 
 Lean statement: `D5/S3/Weil/ZetaBridge/ActualThreeNodeSourceHeadBridge.sourceTailFamily`
 
@@ -324,7 +282,7 @@ Lean statement: `D5/S3/Weil/ZetaBridge/ActualThreeNodeSourceHeadBridge.sourceTai
 
 def sourceTailFamily {c : ℕ} (hc : 3 ≤ c) (N : ℕ) (n : ℤ) : Fin 3 → tailSpace
 
-**Theorem 1.26 (source linear combination).**
+**Theorem 1.23 (source linear combination).**
 
 Lean statement: `D5/S3/Weil/ZetaBridge/ActualThreeNodeSourceHeadBridge.source_linear_combination`
 
@@ -336,7 +294,7 @@ Lean statement: `D5/S3/Weil/ZetaBridge/ActualThreeNodeSourceHeadBridge.source_li
 
 theorem source_linear_combination {c : ℕ} (hc : 3 ≤ c) (n : ℤ) (N : ℕ) (x : Fin 3 → ℂ) : ∑ i, x i • sourceTailFamily hc N n i = sourceColumnMap hc n N (sourceHead n x)
 
-**Theorem 1.27 (actual source gram tsum).**
+**Theorem 1.24 (actual source gram tsum).**
 
 Lean statement: `D5/S3/Weil/ZetaBridge/ActualThreeNodeSourceHeadBridge.actual_source_gram_tsum`
 
@@ -348,7 +306,7 @@ Lean statement: `D5/S3/Weil/ZetaBridge/ActualThreeNodeSourceHeadBridge.actual_so
 
 For every c>=3, integer n, natural cutoff N and x : Fin 3 -> Complex, let G=Matrix.gram Complex (sourceTailFamily hc N n). Then star(x) dot (G mulVec x) equals the complex cast of the complete sum over j : Nat of pairedColumnTerm c N (threeNodes n) (sourceHead n x) j. No finite truncation is made.
 
-**Definition 1.28 (nodeVector).**
+**Definition 1.25 (nodeVector).**
 
 Lean statement: `D5/S3/Weil/ZetaBridge/ActualThreeNodeSourceHeadBridge.nodeVector`
 
@@ -360,7 +318,7 @@ Lean statement: `D5/S3/Weil/ZetaBridge/ActualThreeNodeSourceHeadBridge.nodeVecto
 
 nodeVector(n,v) is the Euclidean vector [v(-n),v(0),v(n)] in the original signed node order.
 
-**Definition 1.29 (coefficientInner).**
+**Definition 1.26 (coefficientInner).**
 
 Lean statement: `D5/S3/Weil/ZetaBridge/ActualThreeNodeSourceHeadBridge.coefficientInner`
 
@@ -372,7 +330,7 @@ Lean statement: `D5/S3/Weil/ZetaBridge/ActualThreeNodeSourceHeadBridge.coefficie
 
 coefficientInner(n,v,w) is the Hermitian inner product of nodeVector(n,v) and nodeVector(n,w), conjugate linear in v.
 
-**Definition 1.30 (coefficientGram).**
+**Definition 1.27 (coefficientGram).**
 
 Lean statement: `D5/S3/Weil/ZetaBridge/ActualThreeNodeSourceHeadBridge.coefficientGram`
 
@@ -384,7 +342,7 @@ Lean statement: `D5/S3/Weil/ZetaBridge/ActualThreeNodeSourceHeadBridge.coefficie
 
 coefficientGram(n,b) has entry coefficientInner(n,b(i),b(j)) in row i and column j.
 
-**Theorem 1.31 (normalizedHead coefficient gram).**
+**Theorem 1.28 (normalizedHead coefficient gram).**
 
 Lean statement: `D5/S3/Weil/ZetaBridge/ActualThreeNodeSourceHeadBridge.normalizedHead_coefficient_gram`
 
@@ -396,7 +354,7 @@ Lean statement: `D5/S3/Weil/ZetaBridge/ActualThreeNodeSourceHeadBridge.normalize
 
 theorem normalizedHead_coefficient_gram {n : ℤ} (hn : n ≠ 0) : coefficientGram n (normalizedHead n) = 1
 
-**Theorem 1.32 (sourceHead original norm).**
+**Theorem 1.29 (sourceHead original norm).**
 
 Lean statement: `D5/S3/Weil/ZetaBridge/ActualThreeNodeSourceHeadBridge.sourceHead_original_norm`
 
@@ -408,7 +366,7 @@ Lean statement: `D5/S3/Weil/ZetaBridge/ActualThreeNodeSourceHeadBridge.sourceHea
 
 lemma sourceHead_original_norm {n : ℤ} (hn : n ≠ 0) (x : Fin 3 → ℂ) : (∑ k ∈ threeNodes n, ‖sourceHead n x k‖ ^ 2) = ∑ i : Fin 3, ‖x i‖ ^ 2
 
-**Theorem 1.33 (actual gram posDef).**
+**Theorem 1.30 (actual gram posDef).**
 
 Lean statement: `D5/S3/Weil/ZetaBridge/ActualThreeNodeSourceHeadBridge.actual_gram_posDef`
 
@@ -420,7 +378,7 @@ Lean statement: `D5/S3/Weil/ZetaBridge/ActualThreeNodeSourceHeadBridge.actual_gr
 
 theorem actual_gram_posDef {c : ℕ} (hc : 3 ≤ c) {n : ℤ} (hn : n ≠ 0) (N : ℕ) : (Matrix.gram ℂ (sourceTailFamily hc N n)).PosDef
 
-**Theorem 1.34 (Strict finite physical energy).**
+**Theorem 1.31 (Strict finite physical energy).**
 
 Lean statement: `D5/S3/Weil/ZetaBridge/ActualThreeNodeSourceHeadBridge.actual_finite_energy_pos`
 
@@ -439,11 +397,8 @@ For c>=3, signed n!=0, N>=9 and |n|<N, the finite physical energy is strictly po
 - Truth anchor: `D5/S3/Weil/ZetaBridge/ActualThreeNodeSourceHeadBridge.T`
 - Truth anchor: `D5/S3/Weil/ZetaBridge/ActualThreeNodeSourceHeadBridge.U`
 - Truth anchor: `D5/S3/Weil/ZetaBridge/ActualThreeNodeSourceHeadBridge.actual_finite_energy_pos`
-- Truth anchor: `D5/S3/Weil/ZetaBridge/ActualThreeNodeSourceHeadBridge.actual_finite_head_tail_pos`
-- Truth anchor: `D5/S3/Weil/ZetaBridge/ActualThreeNodeSourceHeadBridge.actual_finite_head_tail_zero_iff`
 - Truth anchor: `D5/S3/Weil/ZetaBridge/ActualThreeNodeSourceHeadBridge.actual_gram_posDef`
 - Truth anchor: `D5/S3/Weil/ZetaBridge/ActualThreeNodeSourceHeadBridge.actual_source_gram_tsum`
-- Truth anchor: `D5/S3/Weil/ZetaBridge/ActualThreeNodeSourceHeadBridge.actual_tail_summable_all`
 - Truth anchor: `D5/S3/Weil/ZetaBridge/ActualThreeNodeSourceHeadBridge.coefficientGram`
 - Truth anchor: `D5/S3/Weil/ZetaBridge/ActualThreeNodeSourceHeadBridge.coefficientInner`
 - Truth anchor: `D5/S3/Weil/ZetaBridge/ActualThreeNodeSourceHeadBridge.evenDet`
@@ -469,6 +424,7 @@ For c>=3, signed n!=0, N>=9 and |n|<N, the finite physical energy is strictly po
 - Truth anchor: `D5/S3/Weil/ZetaBridge/ActualThreeNodeSourceHeadBridge.tailSpace`
 - Truth anchor: `D5/S3/Weil/ZetaBridge/ActualThreeNodeSourceHeadBridge.threeNodes`
 - Dependency: [D5/S3/Weil/ZetaBridge/ActualExplicit336](ActualExplicit336.md)
+- Dependency: [D5/S3/Weil/ZetaBridge/ActualFiniteHeadTailKernel](ActualFiniteHeadTailKernel.md)
 - Dependency: [D5/S3/Weil/ZetaBridge/ActualNodalCoercivity](ActualNodalCoercivity.md)
 - Dependency: [D5/S3/Weil/ZetaBridge/ActualNodalTailEnclosure](ActualNodalTailEnclosure.md)
 - Dependency: [D5/S3/Weil/ZetaBridge/ActualPairedReciprocal](ActualPairedReciprocal.md)
