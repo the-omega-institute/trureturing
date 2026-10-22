@@ -4741,8 +4741,8 @@ v-2p=\frac{50760763887}{1664238400}>0.
 \tag{41.10}
 $$
 
-All $b,j,n,T,U$ in (35.3) are positive, and every denominator in
-(41.2)--(41.10) is a positive integer.  Thus the world is strict,
+All $b,j,n,T,U$ in (35.3) are positive, and every denominator of a displayed rational value in
+(41.2)--(41.10) is a positive integer; $5Ab$ in (41.8) is positive.  Thus the world is strict,
 regular, and has no pole or non-strict endpoint.  The calculation uses
 one fixed $d$ and the entire polynomial $g$ at every clock; it does
 not divide by a sampled gain, a gain coefficient, a drift, or a root
