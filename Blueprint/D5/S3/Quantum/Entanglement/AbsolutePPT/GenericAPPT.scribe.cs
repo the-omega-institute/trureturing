@@ -5,7 +5,7 @@ internal sealed class GenericAPPTDocument : IScribeDocumentDefinition
 {
     public DocumentDefinition Create() => DocumentDefinition.Create(ScribeNode.Create(
         "Unitary transport and positivity over arbitrary finite product systems.", H("Generic APPT transport"), Blocks(
-            Paragraph(Text("These existing consumed helpers retain their full Lean names. Bipartite supplies the shared partial transpose and literal all-unitary APPT predicate. The qutrit and arbitrary-dimension Schmidt proofs share the same transport declarations. No fixed dimension, density normalization, or restricted unitary family is added. The relocation supplies no new theorem or escape-audit validation; unfinished audit evidence is tracked in issue #19818.")),
+            Paragraph(Text("These existing consumed helpers retain their full Lean names. Bipartite supplies the shared partial transpose and literal all-unitary APPT predicate. The qutrit and arbitrary-dimension Schmidt proofs share the same transport declarations. No fixed dimension, density normalization, or restricted unitary family is added. The relocation supplies no new theorem or escape-audit validation. The linked audit record remains unfinished; it supplies neither mathematical proof nor validated registration status: https://github.com/the-omega-institute/trureturing/issues/19818.")),
             Describe.Lean(DescribeId.Create("generic-appt-partial-transpose"),
                 DeclarationHandle.Create("D5/S3/Quantum/Entanglement/AbsolutePPT/GenericAPPT.partialTranspose"),
                 H("Partial transposition"), StatementSource.WithoutFormula(),

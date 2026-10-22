@@ -4,7 +4,7 @@
 
 Unitary transport and positivity over arbitrary finite product systems.
 
-These existing consumed helpers retain their full Lean names. Bipartite supplies the shared partial transpose and literal all-unitary APPT predicate. The qutrit and arbitrary-dimension Schmidt proofs share the same transport declarations. No fixed dimension, density normalization, or restricted unitary family is added. The relocation supplies no new theorem or escape-audit validation; unfinished audit evidence is tracked in issue #19818.
+These existing consumed helpers retain their full Lean names. Bipartite supplies the shared partial transpose and literal all-unitary APPT predicate. The qutrit and arbitrary-dimension Schmidt proofs share the same transport declarations. No fixed dimension, density normalization, or restricted unitary family is added. The relocation supplies no new theorem or escape-audit validation. The linked audit record remains unfinished; it supplies neither mathematical proof nor validated registration status: https://github.com/the-omega-institute/trureturing/issues/19818.
 
 **Definition 1.1 (Partial transposition).**
 
