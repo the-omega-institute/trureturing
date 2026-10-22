@@ -281,22 +281,22 @@ private lemma zero_set_closed {ν : ℝ} (hν : -1 < ν) :
   exact (isClosed_le continuous_const continuous_id).inter
     (isClosed_eq (continuous_nbessel hν) continuous_const)
 
-/-- The first positive zero is positive for every order at least thirty. -/
-theorem firstZero_pos {ν : ℝ} (hν : 30 ≤ ν) : 0 < firstZero ν := by
-  obtain ⟨a, b, ⟨ha, hb⟩, hab⟩ := (nbessel_pos_near_zero (by linarith : -1 < ν)).exists_Ioo_subset
-  have hlb : ∀ x ∈ {x : ℝ | 0 < x ∧ nbessel ν x = 0}, b ≤ x := by
-    intro x hx
-    by_contra hn
-    have hp := hab ⟨lt_trans ha hx.1, lt_of_not_ge hn⟩
-    change 0 < nbessel ν x at hp
-    rw [hx.2] at hp
-    exact lt_irrefl _ hp
-  exact lt_of_lt_of_le hb (le_csInf (zero_set_nonempty hν) hlb)
-
 /-- The infimum defining the first positive zero is itself a zero. -/
 theorem nbessel_firstZero {ν : ℝ} (hν : 30 ≤ ν) : nbessel ν (firstZero ν) = 0 := by
   have hbelow : BddBelow {x : ℝ | 0 < x ∧ nbessel ν x = 0} := ⟨0, fun x hx => hx.1.le⟩
   exact ((zero_set_closed (by linarith : -1 < ν)).csInf_mem (zero_set_nonempty hν) hbelow).2
+
+/-- The first positive zero is positive for every order at least thirty. -/
+theorem firstZero_pos {ν : ℝ} (hν : 30 ≤ ν) : 0 < firstZero ν := by
+  have hz := nbessel_firstZero hν
+  have hj0 : 0 ≤ firstZero ν := le_csInf (zero_set_nonempty hν) (fun x hx => hx.1.le)
+  have hjne : firstZero ν ≠ 0 := by
+    intro he
+    have hp := (nbessel_pos_near_zero (by linarith : -1 < ν)).self_of_nhds
+    rw [he] at hz
+    rw [hz] at hp
+    exact lt_irrefl _ hp
+  exact lt_of_le_of_ne hj0 hjne.symm
 
 /-- The cubic radial trial function bounds the square of the first zero. -/
 theorem firstZero_sq_le {ν : ℝ} (hν : 30 ≤ ν) :
