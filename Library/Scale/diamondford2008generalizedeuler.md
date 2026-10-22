@@ -169,6 +169,10 @@ cut; the DF constant still retains no prime-exponent data.
 An eventual fixed lower bound on the right side is still an unpaid
 joint estimate at that same source. Neither (DF2) nor the positive
 term in (DF4) supplies it; invoking (DF3) or Lemma 4.3 assumes RH.
+The [unconditional von Mangoldt positive-kernel bound](alexeev2026mangoldtchains.md)
+controls a full-domain smoothed upper average of $R_{\rm DF}$;
+localization to the original $A$ and the needed signed comparison
+remain separate obligations.
 The full CA reserve remains in the existing relation
 $I_\psi(A)=-h_N-R_{\rm CA}(A)$, with
 $h_N=\log G(N)-\gamma$. It is not $R_{\rm DF}(A)$.
