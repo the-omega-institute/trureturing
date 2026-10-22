@@ -88,13 +88,18 @@ internal sealed class AyyerMisraHalfDensityModeDocument : IScribeDocumentDefinit
                 + "3*Nat.choose (2r−1) (r−2) configurations favouring k. Its positivity determines the sign "
                 + "near zero. Particle-hole symmetry gives the comparison above half filling and the exact tie. "
                 + "Every marginal is unchanged by replacing t by its reciprocal, so the same comparisons "
-                + "hold for large t. The classification for intermediate positive t remains open."))));
+                + "hold for large t. The classification for intermediate positive t remains open.",
+                openProblemResolutionClaim: new OpenProblemResolutionClaim(
+                    ProblemSlugRef.Create("ayyer-misra-2023-half-density-most-likely-occupation"),
+                    ResolutionKind.Proved)))));
 
     private static DocumentBlock Node(string name, string title, Formula formula,
-        DescribeRole role, AssessedProvenance provenance, string prose) =>
+        DescribeRole role, AssessedProvenance provenance, string prose,
+        OpenProblemResolutionClaim? openProblemResolutionClaim = null) =>
         Describe.Lean(DescribeId.Create("ayyer-misra-" + name.ToLowerInvariant()),
             DeclarationHandle.Create(Prefix + name), H(title), StatementSource.FromAuthor(Disp(formula)),
-            provenance, Blocks(Paragraph(Text(prose))), role);
+            provenance, Blocks(Paragraph(Text(prose))), role,
+            openProblemResolutionClaim: openProblemResolutionClaim);
 
     private static Formula X(string name) => F.Id(name);
     private static Formula Word(string name) => Seq(Operatorname, Grp(X(name)));
