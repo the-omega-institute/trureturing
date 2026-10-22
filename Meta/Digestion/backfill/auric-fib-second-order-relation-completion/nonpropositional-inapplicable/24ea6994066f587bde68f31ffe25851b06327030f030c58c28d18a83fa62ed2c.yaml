@@ -5,3 +5,7 @@ cas_ref: sha256:24ea6994066f587bde68f31ffe25851b06327030f030c58c28d18a83fa62ed2c
 coverage_gids: []
 receipts:
   unresolved_subitems: []
+  nonpropositional:
+    justification: 'nonpropositional: Defines the mixed difference of a chosen response and distinguishes its type from a configuration.'
+    previous_atom_id: 47f32cfba7483fcff4ef0b5fcee87120f060c6adecc71f4b13e51835c7ed64ce
+    next_atom_id: 556595f214af08cd9d26d2c2bba683b3411c330b01cdb2ed7d97a9de87a173bd
