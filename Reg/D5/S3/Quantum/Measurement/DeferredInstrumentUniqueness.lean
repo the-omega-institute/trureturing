@@ -44,27 +44,25 @@ abbrev arena : Arena where
           (∀ x ρ, Matrix.trace (J x ρ) =
             Matrix.trace (ρ * Qs U
               (R.readout () ⟨d, (U, t)⟩ (0 : Matrix (Fin d) (Fin d) ℂ)) x))) ↔
-        (∀ x, J x = Itilde U t x)) ∧
-    (∀ (d : ℕ) (U : Matrix.unitaryGroup (Fin d) ℂ) (t : ℝ),
-      R.readout () ⟨d, (U, t)⟩ (0 : Matrix (Fin d) (Fin d) ℂ) = sMax d t)
+        (∀ x, J x = Itilde U t x))
 
 theorem actual_law : arena.Law actual := by
-  constructor
-  · intro d hd U t htl htu J
-    simpa [actual, realize] using
-      (show ((∀ x, (J x).IsCompletelyPositive) ∧
-          (∑ x, J x = It t) ∧
-          (∀ x ρ, Matrix.trace (J x ρ) =
-            Matrix.trace (ρ * Qs U (sMax d t) x))) ↔
-        (∀ x, J x = Itilde U t x) from result d hd U t htl htu J)
-  · intro d U t
-    simp [actual, realize]
+  intro d hd U t htl htu J
+  simpa [actual, realize] using
+    (show ((∀ x, (J x).IsCompletelyPositive) ∧
+        (∑ x, J x = It t) ∧
+        (∀ x ρ, Matrix.trace (J x ρ) =
+          Matrix.trace (ρ * Qs U (sMax d t) x))) ↔
+      (∀ x, J x = Itilde U t x) from result d hd U t htl htu J)
 
 theorem rejected_law : ¬ arena.Law rejected := by
   intro h
-  have hbad := h.2 2 (1 : Matrix.unitaryGroup (Fin 2) ℂ) 0
-  change (0 : ℝ) = sMax 2 0 at hbad
-  norm_num [sMax] at hbad
+  have hiff := h 2 (by norm_num) (1 : Matrix.unitaryGroup (Fin 2) ℂ) 0
+    (by norm_num) (by norm_num) (Itilde (1 : Matrix.unitaryGroup (Fin 2) ℂ) 0)
+  have htrace := (hiff.mpr (by intro x; rfl)).2.2 0
+    (Q (1 : Matrix.unitaryGroup (Fin 2) ℂ) 0)
+  norm_num [rejected, realize, Q, Qs, Itilde, a2, b, sMax, Matrix.trace,
+    Matrix.one_apply] at htrace
 
 theorem dependence : ObservationalDependence signature actual := by
   intro i
@@ -82,14 +80,11 @@ def source_registration : Registration arena claim where
   bridge := by
     constructor
     · intro h
-      refine ⟨?_, ?_⟩
-      · intro d hd U t htl htu J
-        simpa [actual, realize] using h d hd U t htl htu J
-      · intro d U t
-        simp [actual, realize]
+      intro d hd U t htl htu J
+      simpa [actual, realize] using h d hd U t htl htu J
     · intro h
       intro d hd U t htl htu J
-      simpa [actual, realize] using (h.1 d hd U t htl htu J)
+      simpa [actual, realize] using h d hd U t htl htu J
   variation := ⟨actual_law, rejected, rejected_law⟩
   sensitivity := by
     constructor
