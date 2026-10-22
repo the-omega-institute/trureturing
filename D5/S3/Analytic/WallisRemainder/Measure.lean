@@ -183,7 +183,7 @@ private lemma spectral_moment_hasSum (k : ℕ) {c : ℝ}
     omega
   rw [spectralWeight, spectralScale]
   simp only [hpow, div_pow, mul_pow]
-  field_simp [Real.pi_ne_zero, show (2 * (n : ℝ) + 1) ≠ 0 by positivity]
+  field_simp (disch := positivity)
   ring
 
 private lemma spectral_moment_one :
@@ -346,27 +346,27 @@ private lemma coth_hasSum {u : ℝ} (hu : 0 < u) :
   have harg : (Real.pi : ℂ) * z = (u : ℂ) * Complex.I := by
     dsimp [z]
     push_cast
-    field_simp
+    field_simp (disch := first | assumption | positivity | norm_num [Real.pi_ne_zero])
   have hL : ((Real.pi : ℂ) * Complex.cot (Real.pi * z) - 1 / z).im =
       -Real.pi * (Real.cosh u / Real.sinh u - 1 / u) := by
     rw [harg, Complex.cot, Complex.cos_mul_I, Complex.sin_mul_I,
       ← Complex.ofReal_cosh, ← Complex.ofReal_sinh]
     simp [z, Complex.div_im, Complex.normSq_apply]
     simp only [← Complex.ofReal_sinh, Complex.ofReal_re]
-    field_simp [(Real.sinh_pos_iff.mpr hu).ne']
+    field_simp (disch := first | assumption | positivity | norm_num [Real.pi_ne_zero])
     <;> ring
   have hterm (n : ℕ) : (cotTerm z n).im =
       (-2 * u * Real.pi) * (1 / (u ^ 2 + Real.pi ^ 2 * ((n : ℝ) + 1) ^ 2)) := by
     simp [cotTerm, z, one_div, Complex.inv_im, Complex.normSq_apply]
-    field_simp
+    field_simp (disch := first | assumption | positivity | norm_num [Real.pi_ne_zero])
     <;> ring
   have hh := (Complex.hasSum_im hc).div_const (-2 * u * Real.pi)
   rw [hL] at hh
   convert hh using 1
   · ext n
     rw [hterm]
-    field_simp
-  · field_simp
+    field_simp (disch := first | assumption | positivity | norm_num [Real.pi_ne_zero])
+  · field_simp (disch := first | assumption | positivity | norm_num [Real.pi_ne_zero])
     <;> ring
 
 private lemma coth_full_hasSum {u : ℝ} (hu : 0 < u) :
@@ -469,10 +469,10 @@ private lemma spectralKernel_hasSum {x t : ℝ} (ht : 0 < t) :
   · ext n
     unfold spectralKernel spectralWeight spectralScale
     have hn : (2 * (n : ℝ) + 1) ≠ 0 := by positivity
-    field_simp
+    field_simp (disch := first | assumption | positivity | norm_num [Real.pi_ne_zero])
     <;> ring
   · unfold D5.S3.Analytic.WallisRemainder.Laplace.laplaceKernel
-    field_simp
+    field_simp (disch := first | assumption | positivity | norm_num [Real.pi_ne_zero])
     <;> ring
 
 private lemma component_resolvent_scale {x : ℝ} (hx : 0 < x) (n : ℕ) :
@@ -489,7 +489,7 @@ private lemma component_resolvent_scale {x : ℝ} (hx : 0 < x) (n : ℕ) :
     have hden : 1 + spectralScale n * t ^ 2 ≠ 0 := by
       have := spectralScale_pos n
       positivity
-    field_simp
+    field_simp (disch := first | assumption | positivity | norm_num [Real.pi_ne_zero])
     <;> ring)
 
 /-- The Wallis remainder is a Stieltjes transform of the positive spectral law. -/

@@ -70,7 +70,7 @@ private lemma remainder_identity {M : Measure ℝ} [IsProbabilityMeasure M]
       (fun v => (z+a)^2 * (1/(z+v) - 1/(z+a)) + (v-a)) := by
     filter_upwards [hp] with v hv
     have hzv : z+v ≠ 0 := ne_of_gt (by linarith)
-    field_simp
+    field_simp (disch := first | assumption | positivity)
     <;> ring
   have hi1 : Integrable (fun v => (z+a)^2 * (1/(z+v)-1/(z+a))) M :=
     ((integrable_resolvent hp hz).sub (integrable_const (1/(z+a)))).const_mul _
@@ -81,7 +81,7 @@ private lemma remainder_identity {M : Measure ℝ} [IsProbabilityMeasure M]
     integral_sub (f := fun v : ℝ => v) (g := fun _ => a) hfirst (integrable_const a)]
   simp only [integral_const, probReal_univ, one_smul, hmean, sub_self, add_zero]
   dsimp [stieltjes]
-  field_simp
+  field_simp (disch := first | assumption | positivity)
 
 private lemma ratio_strict {x y a : ℝ} (hx : 0 < x) (hxy : x < y) (ha : 0 < a) :
     x / (x+a) < y / (y+a) := by
@@ -91,6 +91,7 @@ private lemma ratio_strict {x y a : ℝ} (hx : 0 < x) (hxy : x < y) (ha : 0 < a)
 private lemma kernel_strict {x y a v : ℝ} (hx : 0 < x) (hxy : x < y)
     (ha : 0 < a) (hv : 0 < v) :
     x^3 / ((x+a)^2 * (x+v)) < y^3 / ((y+a)^2 * (y+v)) := by
+  have hy : 0 < y := hx.trans hxy
   have hr := ratio_strict hx hxy ha
   have hs := ratio_strict hx hxy hv
   have hxa : 0 < x/(x+a) := div_pos hx (by linarith)
@@ -99,7 +100,7 @@ private lemma kernel_strict {x y a v : ℝ} (hx : 0 < x) (hxy : x < y)
   have hyv : 0 < y/(y+v) := div_pos (by linarith) (by linarith)
   have hsq : (x/(x+a))^2 < (y/(y+a))^2 := by nlinarith
   have hmul := mul_lt_mul hsq hs.le hxv (sq_nonneg (y/(y+a)))
-  convert hmul using 1 <;> field_simp
+  convert hmul using 1 <;> field_simp (disch := first | assumption | positivity)
 
 /-- Strict increase of the normalized Jensen remainder of a Stieltjes transform. -/
 theorem strictMonoOn_jensenRemainder {M : Measure ℝ} [IsProbabilityMeasure M]

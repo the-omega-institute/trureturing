@@ -127,8 +127,7 @@ private lemma tanh_halfstep (t : ℝ) :
     congr 1
     ring
   rw [he, Real.tanh_eq]
-  field_simp [(Real.exp_pos (t / 4)).ne',
-    (add_pos (Real.exp_pos (t / 4)) (Real.exp_pos (-(t / 4)))).ne']
+  field_simp (disch := first | assumption | positivity)
 
 /-- The Laplace integral satisfies the same half-step equation. -/
 private theorem laplace_add_half {x : ℝ} (hx : 0 < x) :
