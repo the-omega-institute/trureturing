@@ -1,0 +1,38 @@
+## 210. Exact equivalence and a single compatible instrument
+
+**Proof of Theorem 201.3 and its compatible flagged instrument.**
+Equations (208.1)--(208.6) prove sufficiency whenever $q_0>1$ or $q_3>1$.
+Equations (206.8) and (207.1) prove necessity for every allowed filter.
+Therefore
+
+$$
+ \boxed{
+ \Omega\text{ is PPT}\iff(q_0\leq1\ \land\ q_3\leq1),\qquad
+ \Omega\text{ admits encoded NPT}\iff(q_0>1\ \lor\ q_3>1).
+ }\tag{210.1}
+$$
+
+The three displayed Bob projectors occupy mutually exclusive total-number
+sectors. For a fixed $t,v,w$, one instrument may measure $N_B$ and retain
+flags $j\in\{0,2,3\}$ for the selected branches. Alice first
+projects coherently onto $N_A=1$. Within that Alice outcome, Bob
+uses the mutually orthogonal projectors from §§208–209 for a chosen
+subset $J$ of defined branches and their orthogonal complement
+as a failure outcome. Together with Alice’s failure outcome these
+operators define one number-preserving instrument. Its accepted probability is
+
+$$
+ P_{\mathrm{acc}}=\sum_{j\in J}P_j,
+$$
+
+and its flag-retaining success-weighted negativity is
+
+$$
+ \sum_{j\in J}P_j\mathcal N_j.
+$$
+
+Only branches using the same source parameters are added. Full 64-dimensional
+negativity, one selected conditional negativity, and this flagged sum are
+separate quantities; no equality between them is asserted. No global
+optimality or maximal-rate statement is made.
+

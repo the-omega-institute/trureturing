@@ -1,0 +1,31 @@
+**定理 118.2（混合循环的精确秩）。** 令
+
+$$
+F_r=\operatorname{span}(f_1,\ldots,f_r),
+\qquad W_r=E\oplus F_r.
+$$
+
+则
+
+$$
+\boxed{
+\mathcal R_r=W_r,
+\qquad
+\operatorname{rank}\mathcal R_r=3+r.
+}
+$$
+
+**证明。** $W_r$ 同时受 $H$ 与 $C_r$ 保持，因此 $g^{-1}E\subseteq W_r$ 对所有 $g\in G_r$ 成立，给出
+
+$$
+\mathcal R_r\subseteq W_r.
+$$
+
+另一方面，恒等元给出 $E\subseteq\mathcal R_r$。循环的轨道
+
+$$
+e_1,C_r^{-1}e_1,\ldots,C_r^{-r}e_1
+$$
+
+正好遍历 $e_1,f_1,\ldots,f_r$（循环方向取反只改变遍历次序），所以 $f_1,\ldots,f_r$ 也都属于 $\mathcal R_r$。于是 $W_r\subseteq\mathcal R_r$。两边相等，维数公式随即成立。$\square$
+
