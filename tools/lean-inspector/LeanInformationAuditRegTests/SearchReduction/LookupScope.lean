@@ -71,3 +71,19 @@ run_cmd do
         throwError "membership did not isolate its one external candidate"
       checkLocalProof type result.proof?.get!
       emitLookupRecord "LOOKUP_SCOPE membership_B0=true external_candidates=1 kernel=true std3=true"
+    let privateType ← Term.elabType
+      (← `(∀ n : Nat,
+        LeanInformationAudit.Tests.SearchReduction.LookupBaseline.PrivateMark n))
+    Term.synthesizeSyntheticMVarsNoPostponing
+    let privateType ← instantiateMVars privateType
+    withEnv base do
+      let privateType ← copyStatement source .anonymous privateType
+      let result ← localRebuild privateType [] (some table)
+      unless result.cost == .zero && result.proof?.isSome &&
+          result.lookup.source?.any (·.toString.endsWith ".hiddenMember") do
+        throwError "author-written private membership was lost: {result.detail}"
+      -- localRebuild has already closed its temporary environment. Consumers
+      -- must still be able to traverse and kernel-check the exported term.
+      unless !result.proof?.get!.hasSorry do throwError "private certificate contains sorry"
+      checkLocalProof privateType result.proof?.get!
+      emitLookupRecord "LOOKUP_SCOPE private_membership_B0=true after_close_kernel=true std3=true"

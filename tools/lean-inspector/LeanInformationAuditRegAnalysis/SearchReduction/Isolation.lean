@@ -280,7 +280,8 @@ private initialize certificateRegions : IO.Ref (Array CompactedRegion) ← IO.mk
 
 /-- Temporary environments are bounded to one module. A failed candidate
 restores its Meta/Core state before another module can replace the source.
-The branch boundary restores all remaining references before close frees it. -/
+The branch boundary restores state before close releases unsuccessful storage;
+exported certificates retain their backing regions through compiler exit. -/
 unsafe def onDemandLookup (table : LookupTable)
     (sharedImports? : Option ImportState := none) : IO LookupTable := do
   let cache ← IO.mkRef (none : Option (String × Options × Environment))

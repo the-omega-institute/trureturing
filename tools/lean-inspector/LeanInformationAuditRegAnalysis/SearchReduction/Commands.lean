@@ -515,7 +515,14 @@ indexes. Only compiled Lean declarations are read back; JSON is print-only. -/
           name.getId ++ `baselineFailureGuard] do
         match projected.constants.find? (·.name == n) with
         | some (.defnInfo info) => addAndCompile (.defnDecl info)
-        | some (.thmInfo info) => discard <| checkProof n info.levelParams info.type info.value
+        | some (.thmInfo info) =>
+          -- The child may use baseline vocabulary loaded for fixed tactics
+          -- that the request module itself does not import. Reconstruct that
+          -- support before rechecking the exported proof in the parent.
+          let source ← referenceEnvironment
+          for dependency in info.type.getUsedConstants ++ info.value.getUsedConstants do
+            exportConstant source target.getId dependency
+          discard <| checkProof n info.levelParams info.type info.value
         | _ => pure ()
   | _ => throwUnsupportedSyntax
 
