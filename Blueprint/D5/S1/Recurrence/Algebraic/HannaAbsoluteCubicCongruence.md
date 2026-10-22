@@ -60,6 +60,10 @@ $$(\exists A: \operatorname{PowerSeries}\left(\mathbb{Q}\right), (\operatorname{
 
 *Proof.* Machine-checked in Lean as `D5/S1/Recurrence/Algebraic/HannaAbsoluteCubicCongruence.result` (`✓ std3`). ∎
 
+*Resolves.* `Problems/oeis-a380711-hanna-absolute-cubic-congruence` (proved) by `D5/S1/Recurrence/Algebraic/HannaAbsoluteCubicCongruence.result`.
+
+<!-- scribe-open-problem-resolution-v1 {"problem_slug":"oeis-a380711-hanna-absolute-cubic-congruence","declaration_gid":"D5/S1/Recurrence/Algebraic/HannaAbsoluteCubicCongruence.result","resolution_kind":"proved"} -->
+
 *Source.* Repository-derived.
 
 *Acknowledgement.* Paul D. Hanna (2025). *OEIS A380711: generating function and parity conjecture*. URL: <https://oeis.org/A380711>.

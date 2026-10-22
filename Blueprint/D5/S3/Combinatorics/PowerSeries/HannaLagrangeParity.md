@@ -36,6 +36,10 @@ $$(\exists A: \operatorname{PowerSeries}\left(\mathbb{Q}\right), (\operatorname{
 
 *Proof.* Machine-checked in Lean as `D5/S3/Combinatorics/PowerSeries/HannaLagrangeParity.result` (`✓ std3`). ∎
 
+*Resolves.* `Problems/oeis-a365574-hanna-lagrange-parity-conjecture-1` (proved) by `D5/S3/Combinatorics/PowerSeries/HannaLagrangeParity.result`.
+
+<!-- scribe-open-problem-resolution-v1 {"problem_slug":"oeis-a365574-hanna-lagrange-parity-conjecture-1","declaration_gid":"D5/S3/Combinatorics/PowerSeries/HannaLagrangeParity.result","resolution_kind":"proved"} -->
+
 *Source.* Repository-derived.
 
 *Acknowledgement.* Paul D. Hanna (2023). *OEIS A365574: generating function and parity conjecture*. URL: <https://oeis.org/A365574>.
