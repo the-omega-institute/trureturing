@@ -241,3 +241,4 @@ The variance of the identity function under Q is 771/5600.
 - Truth anchor: `D5/S3/Analytic/WallisRemainder/Measure.variance_P`
 - Truth anchor: `D5/S3/Analytic/WallisRemainder/Measure.variance_Q`
 - Dependency: [D5/S3/Analytic/WallisRemainder/Laplace](Laplace.md)
+- Dependency: [D5/S3/Analytic/WallisRemainder/Stieltjes](Stieltjes.md)

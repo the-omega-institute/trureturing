@@ -44,21 +44,21 @@ For every probability measure M concentrated on positive reals and not concentra
 
 For 0<x<y put q=S(y), d=y-x, and t=1-dq. Positivity of the support gives q>0 and t>0. The pointwise identity 1/(x+v)-q/t-(1/(y+v)-q)/t^2 = d(1/(y+v)-q)^2(y+v)/((x+v)t^2) has a nonnegative right hand side. Its integral is strictly positive: equality would force 1/(y+v)=q almost everywhere and hence concentration at the single value 1/q-y. Integration cancels the centered linear term and yields S(x)>q/t, which is equivalent to the stated strict inequality.
 
-**Theorem 1.4 (Strict positive support bounds).**
+**Theorem 1.4 (Positive Stieltjes transform).**
 
-Lean statement: `D5/S3/Analytic/WallisRemainder/Stieltjes.stieltjes_bounds`
+Lean statement: `D5/S3/Analytic/WallisRemainder/Stieltjes.stieltjes_pos`
 
-*Proof.* Machine-checked in Lean as `D5/S3/Analytic/WallisRemainder/Stieltjes.stieltjes_bounds` (`✓ std3`). ∎
+*Proof.* Machine-checked in Lean as `D5/S3/Analytic/WallisRemainder/Stieltjes.stieltjes_pos` (`✓ std3`). ∎
 
 *Source.* Repository-derived.
 
 *Commentary.*
 
-For a probability measure concentrated on strictly positive values and z>0, its transform satisfies 0<S(z) and zS(z)<1. Both inequalities follow from the corresponding strict pointwise bounds on 1/(z+v); they ensure that the inverse expressions in the remainder formulas have nonzero denominators.
+For a probability measure concentrated on strictly positive values and z>0, its transform satisfies 0<S(z). The strictly positive integrand is integrable and the measure has mass one; the resulting positivity ensures that the inverse transform expressions have nonzero denominators.
 
 ## References
 
 - Truth anchor: `D5/S3/Analytic/WallisRemainder/Stieltjes.integrable_resolvent`
-- Truth anchor: `D5/S3/Analytic/WallisRemainder/Stieltjes.stieltjes_bounds`
+- Truth anchor: `D5/S3/Analytic/WallisRemainder/Stieltjes.stieltjes_pos`
 - Truth anchor: `D5/S3/Analytic/WallisRemainder/Stieltjes.strictMonoOn_inv_stieltjes_sub`
 - Truth anchor: `D5/S3/Analytic/WallisRemainder/Stieltjes.strictMonoOn_jensenRemainder`

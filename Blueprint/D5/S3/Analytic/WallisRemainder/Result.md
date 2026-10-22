@@ -10,7 +10,13 @@ Lean statement: `D5/S3/Analytic/WallisRemainder/Result.result`
 
 *Proof.* Machine-checked in Lean as `D5/S3/Analytic/WallisRemainder/Result.result` (`✓ std3`). ∎
 
+*Resolves.* `Problems/mahmoud-mortici-2026-wallis-remainder-monotonicity` (proved) by `D5/S3/Analytic/WallisRemainder/Result.result`.
+
+<!-- scribe-open-problem-resolution-v1 {"problem_slug":"mahmoud-mortici-2026-wallis-remainder-monotonicity","declaration_gid":"D5/S3/Analytic/WallisRemainder/Result.result","resolution_kind":"proved"} -->
+
 *Source.* Repository-derived.
+
+*Acknowledgement.* M. Mahmoud and C. Mortici (2026). *Structural Properties, Complete Monotonicity, Bounds, and Analytic Approximations with Bounded Remainders for a Wallis-Type Gamma Ratio*. DOI: [10.1007/s00025-026-02697-2](https://doi.org/10.1007/s00025-026-02697-2). URL: <https://link.springer.com/article/10.1007/s00025-026-02697-2>.
 
 *Commentary.*
 

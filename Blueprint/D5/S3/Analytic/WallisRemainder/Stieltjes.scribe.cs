@@ -27,10 +27,10 @@ internal sealed class StieltjesDocument : IScribeDocumentDefinition
                 Blocks(Paragraph(Text("For every probability measure M concentrated on positive reals and not concentrated at any single point, the function 1/S(z)-z is strictly increasing for z>0. No moment assumption is required.")),
                     Paragraph(Text("For 0<x<y put q=S(y), d=y-x, and t=1-dq. Positivity of the support gives q>0 and t>0. The pointwise identity 1/(x+v)-q/t-(1/(y+v)-q)/t^2 = d(1/(y+v)-q)^2(y+v)/((x+v)t^2) has a nonnegative right hand side. Its integral is strictly positive: equality would force 1/(y+v)=q almost everywhere and hence concentration at the single value 1/q-y. Integration cancels the centered linear term and yields S(x)>q/t, which is equivalent to the stated strict inequality."))),
                 DescribeRole.Theorem),
-            Describe.Lean(DescribeId.Create("stieltjes-positive-subunit-mass"),
-                DeclarationHandle.Create("D5/S3/Analytic/WallisRemainder/Stieltjes.stieltjes_bounds"),
-                H("Strict positive support bounds"),
+            Describe.Lean(DescribeId.Create("stieltjes-positive-transform"),
+                DeclarationHandle.Create("D5/S3/Analytic/WallisRemainder/Stieltjes.stieltjes_pos"),
+                H("Positive Stieltjes transform"),
                 StatementSource.WithoutFormula(), AssessedProvenance.FromRepo(),
-                Blocks(Paragraph(Text("For a probability measure concentrated on strictly positive values and z>0, its transform satisfies 0<S(z) and zS(z)<1. Both inequalities follow from the corresponding strict pointwise bounds on 1/(z+v); they ensure that the inverse expressions in the remainder formulas have nonzero denominators."))),
+                Blocks(Paragraph(Text("For a probability measure concentrated on strictly positive values and z>0, its transform satisfies 0<S(z). The strictly positive integrand is integrable and the measure has mass one; the resulting positivity ensures that the inverse transform expressions have nonzero denominators."))),
                 DescribeRole.Theorem))));
 }

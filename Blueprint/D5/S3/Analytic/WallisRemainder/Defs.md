@@ -10,7 +10,7 @@ Lean statement: `D5/S3/Analytic/WallisRemainder/Defs.wallisB`
 
 *Formalization.* `D5/S3/Analytic/WallisRemainder/Defs.wallisB` (`✓ std3`).
 
-*Source.* Repository-derived.
+*Citation.* M. Mahmoud and C. Mortici (2026). *Structural Properties, Complete Monotonicity, Bounds, and Analytic Approximations with Bounded Remainders for a Wallis-Type Gamma Ratio*. DOI: [10.1007/s00025-026-02697-2](https://doi.org/10.1007/s00025-026-02697-2). URL: <https://link.springer.com/article/10.1007/s00025-026-02697-2>.
 
 *Commentary.*
 
@@ -22,11 +22,11 @@ Lean statement: `D5/S3/Analytic/WallisRemainder/Defs.mu`
 
 *Formalization.* `D5/S3/Analytic/WallisRemainder/Defs.mu` (`✓ std3`).
 
-*Source.* Repository-derived.
+*Citation.* M. Mahmoud and C. Mortici (2026). *Structural Properties, Complete Monotonicity, Bounds, and Analytic Approximations with Bounded Remainders for a Wallis-Type Gamma Ratio*. DOI: [10.1007/s00025-026-02697-2](https://doi.org/10.1007/s00025-026-02697-2). URL: <https://link.springer.com/article/10.1007/s00025-026-02697-2>.
 
 *Commentary.*
 
-For real x, mu(x) is minus x squared minus the reciprocal of 24 plus (3/x) times the reciprocal of log B(x).
+For real x, mu(x) is minus x squared minus the reciprocal of the whole expression 24+(3/x)/log B(x).
 
 **Definition 1.3 (The first normalized difference).**
 
@@ -34,7 +34,7 @@ Lean statement: `D5/S3/Analytic/WallisRemainder/Defs.theta`
 
 *Formalization.* `D5/S3/Analytic/WallisRemainder/Defs.theta` (`✓ std3`).
 
-*Source.* Repository-derived.
+*Citation.* M. Mahmoud and C. Mortici (2026). *Structural Properties, Complete Monotonicity, Bounds, and Analytic Approximations with Bounded Remainders for a Wallis-Type Gamma Ratio*. DOI: [10.1007/s00025-026-02697-2](https://doi.org/10.1007/s00025-026-02697-2). URL: <https://link.springer.com/article/10.1007/s00025-026-02697-2>.
 
 *Commentary.*
 
@@ -46,7 +46,7 @@ Lean statement: `D5/S3/Analytic/WallisRemainder/Defs.chi`
 
 *Formalization.* `D5/S3/Analytic/WallisRemainder/Defs.chi` (`✓ std3`).
 
-*Source.* Repository-derived.
+*Citation.* M. Mahmoud and C. Mortici (2026). *Structural Properties, Complete Monotonicity, Bounds, and Analytic Approximations with Bounded Remainders for a Wallis-Type Gamma Ratio*. DOI: [10.1007/s00025-026-02697-2](https://doi.org/10.1007/s00025-026-02697-2). URL: <https://link.springer.com/article/10.1007/s00025-026-02697-2>.
 
 *Commentary.*
 
@@ -58,7 +58,7 @@ Lean statement: `D5/S3/Analytic/WallisRemainder/Defs.claim`
 
 *Formalization.* `D5/S3/Analytic/WallisRemainder/Defs.claim` (`✓ std3`).
 
-*Source.* Repository-derived.
+*Citation.* M. Mahmoud and C. Mortici (2026). *Structural Properties, Complete Monotonicity, Bounds, and Analytic Approximations with Bounded Remainders for a Wallis-Type Gamma Ratio*. DOI: [10.1007/s00025-026-02697-2](https://doi.org/10.1007/s00025-026-02697-2). URL: <https://link.springer.com/article/10.1007/s00025-026-02697-2>.
 
 *Commentary.*
 

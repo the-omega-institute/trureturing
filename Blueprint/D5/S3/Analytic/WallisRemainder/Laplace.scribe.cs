@@ -10,7 +10,7 @@ internal sealed class LaplaceDocument : IScribeDocumentDefinition
             Entry("wallis-laplace-integrable", "integrableOn_laplaceKernel", "Absolute convergence",
                 "For positive x, the function exp(-xt) tanh(t/4)/(2t) is integrable over positive t. The hyperbolic sine bound gives an upper bound exp(-xt)/8."),
             Entry("wallis-laplace-representation", "r_eq_laplace", "The integral representation",
-                "For every positive x, minus log B(x) equals the integral of exp(-xt) tanh(t/4)/(2t) over positive t. Gamma recurrence gives a half-step equation, and log convexity gives a nonnegative remainder tending to zero. Fubini's theorem evaluates the corresponding exponential difference integral. The proposed integral obeys the same half-step equation and tends to zero; their difference is periodic with period one, so the difference vanishes."))));
+                "For every positive x, minus log B(x) equals the integral of exp(-xt) tanh(t/4)/(2t) over positive t. Gamma recurrence gives a half-step equation, and log convexity gives a nonnegative remainder tending to zero. The exponential case of Frullani's integral evaluates the corresponding difference integral. The proposed integral obeys the same half-step equation and tends to zero; their difference is periodic with period one, so the difference vanishes."))));
 
     private static DocumentBlock Entry(string id, string name, string title, string text) =>
         Describe.Lean(DescribeId.Create(id),
