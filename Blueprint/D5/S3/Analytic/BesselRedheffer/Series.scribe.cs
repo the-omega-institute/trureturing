@@ -20,7 +20,7 @@ internal sealed class SeriesDocument : IScribeDocumentDefinition
             Entry("bessel-contiguous", "nbessel_contiguous", "Three consecutive orders",
                 "For nu greater than -1, the series of order nu equals the series of order nu+1 minus x squared divided by 4(nu+1)(nu+2) times the series of order nu+2. The rising factorial recurrence gives the coefficient identity and absolute convergence permits summation."),
             Entry("bessel-second-derivative", "hasDerivAt_nbessel_deriv", "A second derivative",
-                "The derivative of -x/(2(nu+1)) times the series of order nu+1 is -1/(2(nu+1)) times that series plus x squared divided by 4(nu+1)(nu+2) times the series of order nu+2."),
+                "For nu greater than -1, the derivative of -x/(2(nu+1)) times the series of order nu+1 is -1/(2(nu+1)) times that series plus x squared divided by 4(nu+1)(nu+2) times the series of order nu+2."),
             Entry("bessel-equation", "nbessel_ode", "The normalized Bessel equation",
                 "The second derivative multiplied by x, plus the first derivative multiplied by 2nu+1, plus x times the normalized series, vanishes for every real x and every nu greater than -1. Substituting the shifted-series derivative formulas reduces the identity to the relation between three consecutive orders."))));
 
