@@ -94,6 +94,10 @@ $$\forall q: \mathbb{C}, \forall x: \mathbb{C}, \forall w: \mathbb{C}, \forall e
 
 *Proof.* Machine-checked in Lean as `D5/S3/Quantum/Algebra/PeriodicTemperleyLiebSeedProduct.result` (`✓ std3`). ∎
 
+*Resolves.* `Problems/ikhlef-morin-duchesne-2023-conjectures-c1-c2` (proved) by `D5/S3/Quantum/Algebra/PeriodicTemperleyLiebSeedProduct.result`.
+
+<!-- scribe-open-problem-resolution-v1 {"problem_slug":"ikhlef-morin-duchesne-2023-conjectures-c1-c2","declaration_gid":"D5/S3/Quantum/Algebra/PeriodicTemperleyLiebSeedProduct.result","resolution_kind":"proved"} -->
+
 *Source.* Repository-derived.
 
 *Acknowledgement.* Yacine Ikhlef and Alexi Morin-Duchesne (2024). *Fusion of irreducible modules in the periodic Temperley–Lieb algebra*. DOI: [10.21468/SciPostPhys.17.5.132](https://doi.org/10.21468/SciPostPhys.17.5.132). URL: <https://arxiv.org/abs/2312.14837v2>.

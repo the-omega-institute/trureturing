@@ -40,12 +40,17 @@ internal sealed class PeriodicTemperleyLiebSeedProductDocument : IScribeDocument
                 DescribeRole.Definition, AssessedProvenance.FromLiterature(Source)),
             Node("seed-product-result", "Both product formulas hold", "result", Disp(ClaimBody()),
                 "The seed recurrence equals a monic Askey–Wilson recurrence after Q=q², h=q^(p+1), a=h/(yw), b=hw/y, c=hyw, d=hy/w, and T=−al(x). A coupled Darboux identity shifts a to aQ. At the terminal degree the coefficient A vanishes because abQ^(N−1)=1. Induction then gives one linear factor at each shift. Symmetric exponents sum to zero, producing seedProduct. The separately defined sigma recurrence equals the p=0 seedX recurrence. The formulas hold uniformly in m and p; intermediate values at a fixed specialization are not asserted to factor.",
-                DescribeRole.Theorem, AssessedProvenance.FromRepo(Source)))));
+                DescribeRole.Theorem, AssessedProvenance.FromRepo(Source),
+                new OpenProblemResolutionClaim(
+                    ProblemSlugRef.Create("ikhlef-morin-duchesne-2023-conjectures-c1-c2"),
+                    ResolutionKind.Proved)))));
 
     private static DocumentBlock Node(string id, string title, string name, Formula formula,
-        string prose, DescribeRole role, AssessedProvenance provenance) => Describe.Lean(
+        string prose, DescribeRole role, AssessedProvenance provenance,
+        OpenProblemResolutionClaim? resolution = null) => Describe.Lean(
             DescribeId.Create(id), DeclarationHandle.Create(Prefix + name), H(title),
-            StatementSource.FromAuthor(formula), provenance, Blocks(Paragraph(Text(prose))), role);
+            StatementSource.FromAuthor(formula), provenance, Blocks(Paragraph(Text(prose))), role,
+            openProblemResolutionClaim: resolution);
 
     private static Formula V(string name) => F.Id(name);
     private static Formula Nat() => Seq(Mathbb, Grp(V("N")));
