@@ -2,7 +2,7 @@
    generality: I
    mirror-B: D5/B/S0/Computability/WindowAcquisitionCore
    mirror-E: none(waiver:unbounded-operational-correspondence)
-   anchors: [mathlib/module/Mathlib.Data.Nat.Fib.Zeckendorf]
+   anchors: [mathlib/module/Mathlib.Logic.Function.Iterate]
    utility: none
    digest: Finite-control local window arithmetic with an attained scan and rewind. -/
 

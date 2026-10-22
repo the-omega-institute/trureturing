@@ -1,6 +1,6 @@
 using static StrataLint.Scribe.DefinitionDsl;
 
-namespace StrataLint.Scribe.Blueprint.D5.S0.Computability;
+namespace StrataLint.Scribe.Blueprint.D5.S3.Arith.FibonacciAtomic.NativeContinuation.Acquisition;
 
 internal sealed class WindowRegisterTrimDocument : IScribeDocumentDefinition
 {
