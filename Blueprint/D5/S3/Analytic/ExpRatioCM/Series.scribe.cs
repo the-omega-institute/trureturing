@@ -50,5 +50,17 @@ internal sealed class SeriesDocument : IScribeDocumentDefinition
             Describe.Lean(DescribeId.Create("exp-ratio-quotCoeff-two"),
                 DeclarationHandle.Create("D5/S3/Analytic/ExpRatioCM/Series.quotCoeff_two"),
                 H("The second quotient coefficient"), StatementSource.WithoutFormula(), AssessedProvenance.FromRepo(),
-                Blocks(Paragraph(Text("For every natural i, the coefficient at index two equals 2 times 3^i minus 4^i."))), DescribeRole.Theorem)))));
+                Blocks(Paragraph(Text("For every natural i, the coefficient at index two equals 2 times 3^i minus 4^i."))), DescribeRole.Theorem),
+            Describe.Lean(DescribeId.Create("exp-ratio-coefficient-bound"),
+                DeclarationHandle.Create("D5/S3/Analytic/ExpRatioCM/Series.abs_quotCoeff_le"),
+                H("A geometric coefficient bound"), StatementSource.WithoutFormula(), AssessedProvenance.FromRepo(),
+                Blocks(Paragraph(Text("For B=2^(i+2), the absolute value of the n-th quotient coefficient is at most B^n. A weighted geometric convolution bounds the recursive contribution by B^n/3 and the numerator contribution by B^n/2."))), DescribeRole.Theorem),
+            Describe.Lean(DescribeId.Create("exp-ratio-quotient-expansion"),
+                DeclarationHandle.Create("D5/S3/Analytic/ExpRatioCM/Series.ratioF_eq_tsum"),
+                H("The quotient expansion"), StatementSource.WithoutFormula(), AssessedProvenance.FromRepo(),
+                Blocks(Paragraph(Text("For t greater than log(2^(i+2)), the first ratio equals the sum of b(n) exp(-nt). The absolutely convergent Cauchy product reduces this identity to the coefficient recurrence, and the denominator is positive."))), DescribeRole.Theorem),
+            Describe.Lean(DescribeId.Create("exp-ratio-quotient-derivatives"),
+                DeclarationHandle.Create("D5/S3/Analytic/ExpRatioCM/Series.iteratedDeriv_ratioF"),
+                H("Signed derivatives of the quotient expansion"), StatementSource.WithoutFormula(), AssessedProvenance.FromRepo(),
+                Blocks(Paragraph(Text("For positive k and t greater than log(2^(i+2)), the signed k-th derivative of the first ratio equals the sum of b(n) n^k exp(-nt). Exponential coefficient bounds provide a summable local majorant at every derivative order."))), DescribeRole.Theorem)))));
 }
