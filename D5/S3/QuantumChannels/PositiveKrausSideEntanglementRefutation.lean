@@ -96,6 +96,13 @@ not used. The frozen FiniteKrausChannel.of_kraus owner suffices here.
 import Batteries.Tactic.OpenPrivate
 import D5.S3.Quantum.Measurements.BroadcastingChannelExtremaRefutation
 import D5.S3.Quantum.Entanglement.BellPureStateMixedMarginal
+import D5.S3.Quantum.Entanglement.GHZMeasureBiseparableBound
+import D5.S3.Quantum.EnvironmentRecords
+import D5.S3.Quantum.FiniteDimensional
+import D5.S3.Quantum.Foundation.FiniteKrausChannel
+import D5.S3.Quantum.QubitWitnesses
+import D5.S3.QuantumBounds.CHSHWitness
+import D5.S3.Weil.ZetaLinear.RankTrace
 
 set_option autoImplicit false
 set_option relaxedAutoImplicit false
@@ -110,8 +117,7 @@ open D5.S3.QuantumBounds.CHSHWitness (bellDensity bellVector bell_density_is_sta
 open D5.S3.Quantum.Entanglement.BellPureStateMixedMarginal
   (bell_pure_state_has_maximally_mixed_marginal)
 open D5.S3.Quantum.Foundation.FiniteKrausChannel.PhyslibLeaf.MatrixMap (of_kraus)
-open private density_le_one from
-  D5.S3.Quantum.Measurements.BroadcastingChannelExtremaRefutation
+open D5.S3.Quantum.Measurements.BroadcastingChannelExtremaRefutation (density_le_one)
 
 private theorem kraus_action {m k : Type*} [Fintype m] [Fintype k] [DecidableEq m]
     (Ks : k → Matrix m m ℂ) (A : Matrix m m ℂ) :

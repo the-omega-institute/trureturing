@@ -1,0 +1,44 @@
+### 241.1 仿射边运输
+
+设 $G=(V,E)$ 是连通的有向关系图。每条有向边 $e:x\to y$ 携带一个仿射运输
+
+$$
+T_e(z)=A_ez+b_e,
+\qquad A_e\in\mathrm{GL}(d,\mathbb R),
+\quad b_e\in\mathbb R^d.
+\tag{241.1}
+$$
+
+反向边的运输声明为逆映射：
+
+$$
+T_{\bar e}=T_e^{-1}.
+\tag{241.2}
+$$
+
+若 $p=e_k\cdots e_1$ 是一条路径，规定
+
+$$
+T_p=T_{e_k}\circ\cdots\circ T_{e_1}.
+\tag{241.3}
+$$
+
+对闭路 $\gamma$，$T_\gamma$ 是该闭路的仿射 holonomy。这里有两个容易混淆的条件。
+
+**位置无歧义**只要求某个选定的 $z_0$ 满足
+
+$$
+T_\gamma(z_0)=z_0
+\qquad\text{for every closed }\gamma.
+\tag{241.4}
+$$
+
+**完整标架无歧义**要求
+
+$$
+\boxed{T_\gamma=\mathrm{id}\quad\text{for every closed }\gamma.}
+\tag{241.5}
+$$
+
+前者可以让一个特殊点路径无关，后者才让所有局部向量和仿射原点都能无歧义地运输。
+

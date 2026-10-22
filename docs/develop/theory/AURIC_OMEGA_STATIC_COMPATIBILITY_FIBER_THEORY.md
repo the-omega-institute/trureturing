@@ -4777,3 +4777,99 @@ $$
 局部关系的存在、非加性与精确通用控制均不单独给出全局证书搜索算法。已有[选择演算 §§15、18](AURIC_FIB_ATOM_SELECTION_CALCULUS.md) 分别处理任意共享网络与原生两接缝链；前者的基数目标需保留优化信息，后者的完成计数可由小接缝递推取得。[固定顺序边界优化](../../../Library/ConceptDynamics/dechter1996bucket.md#6-cardinality-objectives-on-an-explicit-graph-frontier) 给出图网络的一条充分算法路线；取得该顺序仍须计入成本。来源词的[非周期与高效指定位置读取](../../../Library/Computability/lohrey2012slp.md#fibonacci-source-word-and-indexed-reading) 也不与指定端点任务的周期短编译冲突。上述对应均为条件数学叙述，不声称新增 Lean kernel 核验或一般 P/NP 结算。
 
 ## 追加锚（本行以下为增补区）
+
+## 63. 保码通用性不能识别隐藏环境维数
+
+**定义 82.1（保码合同与直和扩张）。** 令 $\mathcal H$ 是第 62 节所用的五模式空间，$\mathcal C\subset\mathcal H$ 为 (XVII.1) 的编码子空间，$\iota:\mathbb C^4\to\mathcal C$ 为编码等距。把第 62 节的原语统称为 $m\in\mathscr M$，其有限字和每个前缀都保持 $\mathcal C$；辅助态 $|010\rangle$ 也按该节的合同处理。对任意有限维空间 $K$，定义
+
+$$
+\widetilde{\mathcal H}=\mathcal H\oplus K,
+\qquad
+\widetilde\iota(v)=(\iota(v),0).
+\tag{XVIII.1}
+$$
+
+对每个原语任选一个酉块 $V_m\in U(K)$，并令
+
+$$
+\widetilde m=m\oplus V_m.
+\tag{XVIII.2}
+$$
+
+这是一项新的环境合同：它保留原块上的全部第 62 节数据，在补空间上另给操作。$K$ 不被当作额外欧氏坐标；它只是未由该合同指定的环境自由度。
+
+**定理 82.2（直和隐藏环境定理）。** 假设第 62 节的某个有限字 $W=m_s\cdots m_1$ 满足
+
+$$
+W\iota=e^{i\gamma}\iota U
+$$
+
+且每个执行前缀保码。对 (XVIII.2) 的任意扩张，有
+
+$$
+\widetilde W=W\oplus V_{m_s}\cdots V_{m_1},
+\qquad
+\widetilde W\widetilde\iota=e^{i\gamma}\widetilde\iota U.
+\tag{XVIII.3}
+$$
+
+同一等式对每个前缀及脉冲中途成立。因此，对任意有限被动参考 $R$ 和任意 $\rho\in\mathsf D(\mathbb C^4\otimes R)$，嵌入第一块以后，扩张字与原字诱导完全相同的逻辑联合通道。若 $\widetilde M$ 是扩张系统上的任意读出效果，令
+
+$$
+M=J^\dagger\widetilde M J,
+\qquad J:\mathcal H\hookrightarrow\widetilde{\mathcal H},
+$$
+
+则对所有支撑在第一块的输入，读出概率满足
+
+$$
+\operatorname{Tr}\!\left[\widetilde M\,J\sigma J^\dagger\right]
+=
+\operatorname{Tr}[M\sigma].
+\tag{XVIII.4}
+$$
+
+**证明。** 直和乘法给出
+
+$$
+(m_s\oplus V_{m_s})\cdots(m_1\oplus V_{m_1})
+=
+W\oplus V_{m_s}\cdots V_{m_1}.
+$$
+
+归纳同样适用于删去最后一个因子的任意前缀以及连续脉冲的中途参数。由于 $\widetilde\iota=J\iota$，将 (XVII.8) 左乘 $J$ 即得 (XVIII.3)。参考系统只张量单位算子，因而第一块限制上的共轭通道与原通道相同。最后，$J^\dagger\widetilde M J$ 的迹恒等式是有限维迹的循环性。□
+
+**推论 82.3（逻辑响应不选择环境总维数）。** 对每个 $r\ge1$，取 $K=\mathbb C^r$，并任选补空间上的原语块，即得到
+
+$$
+\dim\widetilde{\mathcal H}=5+r,
+$$
+
+而第 62 节的全部有限逻辑字、前缀保码性质、被动参考通道和第一块读出完全不变。故这些响应不能推出环境维数为 $5$，更不能推出物理空间维数为 $3$。$r=1$ 已给出最小的额外环境方向；它仍不是第四根空间轴。
+
+**例 82.4（隐藏补空间可以有非平凡运输）。** 为使反例不依赖一个静止的补空间，取 $K=\mathbb C^2$，在补空间中令
+
+$$
+V_1(t)=e^{-itX},
+\qquad
+V_3(t)=e^{-itZ},
+\qquad
+V_S=\operatorname{diag}(1,i).
+$$
+
+则 $V_S^4=I$，而
+
+$$
+V_1(\pi/2)V_3(\pi/2)=iY,
+\qquad
+V_3(\pi/2)V_1(\pi/2)=-iY.
+\tag{XVIII.5}
+$$
+
+所以隐藏环境可携带非交换的路径顺序信息；但由于所有扩张原语仍为直和块，(XVIII.3)–(XVIII.4) 对第 62 节合同中的输入和任务完全不变。这个例子说明“没有被当前逻辑读出看到”不等于“补空间内部没有动力学”。
+
+**命题 82.5（相对相位与任务范围）。** 定理 82.2 对编码输入和被动参考通道消除了逻辑整体相位；若另行允许制备编码子空间与辅助态 $|010\rangle$ 的相干叠加，并进行跨块干涉，则相位 $e^{i\gamma}$ 可能成为相对相位读出。该任务超出第 62 节的 (XVII.8) 合同，不能由定理 82.2 代替证明。
+
+**结论 82.6（继续推出三维所需的桥）。** 从第 62 节的逻辑通用性推出环境维数，至少还需加入一种忠实性条件：所有环境方向必须可达并可观测，禁止上述不变隐藏补空间；或者直接假设完整环境上的全 $SO(V)$ 作用与非零交替三形式。后一组条件才可接到前卷定理 117.4 的 $\dim V=3$ 结论。原生 FIB 操作是否满足这样的全环境运输、度量和共同来源接缝，仍未由第 62 节解决。
+
+本节是普通有限维线性代数的条件反例与接口分析；没有把 $\dim\mathcal H$、编码容量或合法配置数认作欧氏空间维数，也没有给出 FIB 原生操作已经实现忠实运输的结论。

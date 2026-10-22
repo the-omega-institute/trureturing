@@ -1273,3 +1273,850 @@ midpoint steps are used only in the source hypotheses and the retained
 whole-child lemma of §§3–6; no stronger global source theorem is inferred.
 
 ## 追加锚（本行以下为增补区）
+
+## 12. One additional acquired reply and two different retention channels
+
+**Convention 12.1 (unchanged world and changed last retention field).**
+Throughout §§12–17, $\mathcal H$, $\Phi=(p,v)$, $a$, $f_J$, $f_M$,
+$W_3$, $y_3$ and $Z$ have exactly their meanings in §§2–3 and 9.
+The supplier for §§9–11 is the published volume at
+`b2670c974a4d5042331fa7027fc722d0669ead1f`; the VI supplier remains
+`4442fb66c4d7017bb7b932cc63f058b46c83b71c`, including its complete
+original-world topology and exhaustion results. In particular $a$ is
+acquired at clock seven by $J$. The alternative seventh response $m$
+is never acquired. No calibration of the drift is supplied.
+
+The old record is precisely
+
+$$
+ R_7=(p,v,z_7,\varepsilon_7),\qquad
+ \varepsilon_7\ge0,\qquad |z_7-a(W)|\le\varepsilon_7.
+\tag{12.1}
+$$
+
+A public fixed eighth choice $e\in\{J,M\}$ invokes the same-source
+exact acquisition of Definition 10.3. Only its final retention field
+is changed here: the exact acquired $f_e(W)$ is discarded after producing
+its retained substitute. In the additive version, the complete variable
+record after this event is
+
+$$
+ R_{8,e}^{\rm add}=(p,v,z_7,\varepsilon_7,z_8,\varepsilon_8),
+ \qquad \varepsilon_8\ge0,
+\tag{12.2}
+$$
+
+and the jointly allowed output relation on each one $W$ is exactly
+
+$$
+ |z_7-a(W)|\le\varepsilon_7,\qquad
+ |z_8-f_e(W)|\le\varepsilon_8.
+\tag{12.3}
+$$
+
+Every pair $(z_7,z_8)$ satisfying these inequalities is permitted.
+The alternative positive logarithmic version has record
+
+$$
+ R_{8,e}^{\log}=(p,v,z_7,\varepsilon_7,z_8,\eta_8),\qquad
+ \eta_8\ge0,\quad z_8>0,
+\tag{12.4}
+$$
+
+and its full joint relation is
+
+$$
+ |z_7-a(W)|\le\varepsilon_7,\qquad
+ |\log z_8-\log f_e(W)|\le\eta_8.
+\tag{12.5}
+$$
+
+This version is used only where $f_e(W)>0$. All radii are finite,
+public and common to the worlds being compared. The fixed history,
+model, channel type, chronological labels $(7,J),(8,e)$, references and
+current rights are the same public metadata in every comparison.
+The relation is a specification of permitted outputs, with no probability
+law or probabilistic independence premise.
+
+Neither record retains an exact $a$ or $f_e$, an error residue, $m$,
+a branch or germ sign, a source parameter, an acquired list of possible
+worlds or a response oracle. In particular (12.2) is a different retention
+contract from the exact appended event in (10.6); it does not retain that
+exact event alongside its substitute. The public constant $e$ needs no
+world-dependent selector. In §§15–16 it is always $M$.
+
+**Definition 12.2 (one actual old-record-compatible set).** For an actual
+old record $R=R_7$ let
+
+$$
+ S_R=\{W\in C(p,v):|z_7-a(W)|\le\varepsilon_7\}.
+\tag{12.6}
+$$
+
+This is the same set for both possible eighth laws and both last-retention
+models. It is nonempty because the record is actual. In the neighborhoods
+below it is finite, of cardinality at most three. This set specifies a
+mathematical compatibility relation; it is not an additional observer
+input or a claim that its elements have been enumerated internally.
+
+## 13. Strict additive and logarithmic advantages on the entire child
+
+**Theorem 13.1 (whole-child eighth-response gap comparison).** There is
+an open neighborhood $V_*\subset\operatorname{int}K_3$ of $y_3$, contained
+in the neighborhood of Theorem 9.4 and Convention 3.3, such that every
+$f_J,f_M$ value on $\Phi^{-1}(V_*)$ is positive. For every $y\in V_*$ and
+every two distinct complete worlds $W,W'\in C(y)$,
+
+$$
+\begin{aligned}
+ |f_M(W)-f_M(W')|&>3|f_J(W)-f_J(W')|,\\
+ |\log f_M(W)-\log f_M(W')|
+   &>2|\log f_J(W)-\log f_J(W')|.
+\end{aligned}
+\tag{13.1}
+$$
+
+The quantifiers include the remote companion and every original permitted
+source stratum; they impose no common drift or common gain between
+possible worlds.
+
+**Proof.** Use $K$ only for the tangent of (3.2) in this proof. Lemma 9.2
+proves $K\theta\ne0$ and $p_b(W_3)\ne0$. Consequently
+
+$$
+ \det D(p,\theta)(W_3)=-p_b(W_3)K\theta(W_3)\ne0.
+\tag{13.2}
+$$
+
+Thus $(p,\theta)$ are genuine local coordinates on the original complete
+parent near $W_3$. They come with the regular whole-world lift, including
+all padded gain coefficients, from VI, Lemma 2.2. At the center,
+$d/d\theta$ while holding $p$ fixed equals $K/(K\theta)$. Equations
+(9.13)–(9.15) therefore give
+
+$$
+ \partial_\theta f_J<0,\quad \partial_\theta f_M<0,\quad
+ \frac{|\partial_\theta f_M|}{|\partial_\theta f_J|}>
+ \frac{120}{38}>3,
+\tag{13.3}
+$$
+
+and
+
+$$
+ \frac{|\partial_\theta\log f_M|}
+      {|\partial_\theta\log f_J|}>
+ \frac{120\cdot499.5}{38\cdot557}>2.
+\tag{13.4}
+$$
+
+All the quantities are analytic where these positive responses occur.
+Continuity gives a product rectangle in $(p,\theta)$ about the center
+on which both derivatives in (13.3) remain negative, the two strict
+factor inequalities remain true, and the local response bands
+$499.5<f_J<500$, $551<f_M<557$ hold. Denote its lifted neighborhood by
+$N$. For two different points of $N$ with the same $p$, their $\theta$
+coordinates differ. The interval between them at this fixed $p$ stays
+inside the rectangle. Integrating the derivatives with their common
+negative sign proves both strict inequalities in (13.1). This covers
+all local/local pairs with the same base, without requiring the two
+points to be a distinguished equal-$m$ pair.
+
+For a local/remote pair, Lemma 9.3 and the local bands give
+
+$$
+ |f_M(W)-f_M(Z(y))|>89,
+ \qquad |f_J(W)-f_J(Z(y))|<61/10.
+\tag{13.5}
+$$
+
+Since $89>3(61/10)$, the additive assertion holds. Integrating $1/s$
+between the positive response endpoints also gives
+
+$$
+ |\log f_M(W)-\log f_M(Z(y))|>\frac{89}{648},\qquad
+ |\log f_J(W)-\log f_J(Z(y))|<\frac{61}{4939}.
+\tag{13.6}
+$$
+
+The rational inequality $89/648>2(61/4939)$ proves the logarithmic
+assertion. The reversed order of a pair changes none of these absolute
+values. There is at most one remote world at any one base, by VI,
+Theorem 18.1.
+
+Finally choose a relatively open remote neighborhood $N_Z$ of $Z(y_3)$
+inside that theorem's source square. VI, Theorems 17.2 and 23.1, imply
+that the entire inverse image of some open neighborhood of $y_3$ is
+contained in $N\cup N_Z$: otherwise a sequence of omitted worlds with
+bases tending to $y_3$ would have a strict complete-world limit in
+$C(y_3)=\{W_3,Z(y_3)\}$ outside that open union. This is the compactness
+argument of (9.18), with the present smaller $N$.
+Intersect this base neighborhood with the neighborhoods in Theorem 9.4
+and Convention 3.3 to obtain $V_*$. Local/local, local/remote and the
+unique-remote case exhaust every pair in every entire child there.
+All values lie in the positive bands just used. No stratum is removed
+by declaring a local chart: exhaustion is proved in the original world
+space before the pair comparison is made. $\square$
+
+**Definition 13.2 (last-retention gaps on the same set).** For an actual
+$R$ with $(p,v)\in V_*$ and $|S_R|\ge2$, put
+
+$$
+\begin{aligned}
+ \gamma_e(R)&=\min_{\substack{W,W'\in S_R\\W\ne W'}}|f_e(W)-f_e(W')|,\\
+ \lambda_e(R)&=\min_{\substack{W,W'\in S_R\\W\ne W'}}
+                   |\log f_e(W)-\log f_e(W')|.
+\end{aligned}
+\tag{13.7}
+$$
+
+For $|S_R|=1$ set both quantities to $+\infty$. For nonsingletons they
+are positive attained minima, by Theorem 9.4 and finiteness. Theorem
+13.1 gives, on exactly this same nonsingleton set,
+
+$$
+ \gamma_M(R)>3\gamma_J(R),\qquad
+ \lambda_M(R)>2\lambda_J(R).
+\tag{13.8}
+$$
+
+Indeed take a pair attaining the $M$ minimum and apply (13.1), then
+bound the $J$ gap of that pair below by its own minimum. The two
+minimizing pairs need not be equal. No comparison of two separately
+chosen old-record sets occurs here.
+
+## 14. The resulting complete closed-channel retention conditions
+
+**Proposition 14.1 (new-retention thresholds at an actual old record).**
+Fix an actual $R$ with base in $V_*$ and a public $e\in\{J,M\}$.
+Recovery of every complete $W\in S_R$ from every allowed new retained
+value is possible precisely under the following conditions:
+
+$$
+\begin{array}{c|c|c}
+\text{last retention}&\text{condition}&\text{admissible finite radii}\\ \hline
+\text{additive}&2\varepsilon_8<\gamma_e(R)&[0,\gamma_e(R)/2)\\
+\text{positive logarithmic}&2\eta_8<\lambda_e(R)&[0,\lambda_e(R)/2).
+\end{array}
+\tag{14.1}
+$$
+
+For a singleton every finite nonnegative radius is admissible. For a
+nonsingleton the finite upper endpoint is inadmissible, including
+at equality. Thus the additive critical supremum for $M$ is strictly
+more than three times that for $J$, and the logarithmic critical
+supremum is strictly more than twice as large, whenever $S_R$ is a
+nonsingleton. These are consequences of the source-specific gaps;
+the interval recovery principle itself is the reused Lemma 5.3.
+
+**Proof.** With the old record fixed, the compatible set after an
+additive retained value is exactly
+
+$$
+ \{W\in S_R:|z_8-f_e(W)|\le\varepsilon_8\}.
+\tag{14.2}
+$$
+
+Under the strict inequality in (14.1), two different elements cannot
+both satisfy this constraint, by the triangle inequality and (13.7).
+An actual allowed value has at least its generating world compatible.
+Selecting the unique element defines one mathematical partial inverse
+on all singleton compatibility sets, using only the displayed record
+and public model. It therefore works simultaneously for all actual
+records in the stated safe domain; neither an acquired enumeration
+nor the parameter $h$ is needed as an extra input to its definition.
+
+If the inequality fails, a pair attaining $\gamma_e(R)$ and the
+midpoint of its two $f_e$ values give the same new retained value
+for both worlds. Both worlds already admit this very same old $R$.
+The full joint relation (12.3) therefore permits the same complete
+record for both, including at equality. No single-valued inverse can
+return both distinct worlds.
+
+For the logarithmic channel apply the same interval principle to
+$\log f_e$. A midpoint in logarithmic coordinates is the positive
+value
+
+$$
+ z_8=\exp\!\left(\frac{\log f_e(W)+\log f_e(W')}{2}\right),
+\tag{14.3}
+$$
+
+which is permitted for both at equality and above it. For a singleton,
+compatibility with the old record alone has already fixed the target,
+so every allowed new value leaves that target unique. The comparisons
+of suprema are exactly (13.8) divided by two. $\square$
+
+**Proposition 14.2 (joint-channel condition and coalescing pairs).**
+For a fixed $y\in V_*$ and common radii, uniform exact recovery for all
+old and new records on the entire $C(y)$ holds in the additive model
+if and only if there is no distinct pair $W,W'\in C(y)$ satisfying
+both
+
+$$
+ |a(W)-a(W')|\le2\varepsilon_7,\qquad
+ |f_e(W)-f_e(W')|\le2\varepsilon_8.
+\tag{14.4}
+$$
+
+In the logarithmic model replace the second inequality by
+$|\log f_e(W)-\log f_e(W')|\le2\eta_8$. The same pair must satisfy
+both inequalities. In particular the separate minima of the two
+coordinate gaps cannot be combined unless their common-pair
+compatibility has been checked.
+
+For the actual pair $W_\pm(h)$ of (3.5), both eighth additive gaps
+and both eighth logarithmic gaps tend to zero. Hence no positive
+lower bound for these gaps holds uniformly over the punctured germ.
+For any fixed $\varepsilon_7>0$, old midpoint records exist on every
+sufficiently small nontrivial germ child for which these new-retention
+critical suprema tend to zero as well.
+
+**Proof.** Two closed equal-radius intervals intersect precisely when
+the distance of their centers is at most twice the radius. Applying
+this separately to the two coordinates for one fixed pair, and then
+using the full joint output relation, proves necessity and sufficiency
+of (14.4). The common base is exact and already equal. The intersection
+can use the midpoint in each coordinate, so equality is included.
+For the log version use logarithmic coordinates and exponentiate
+their midpoint. If no pair is jointly compatible, every actual
+complete record has a unique world, which proves sufficiency.
+
+Both germ worlds converge in original complete-source coordinates to
+$W_3$. Continuity of the positive responses and their logarithms proves
+the asserted zero limits. Their seventh gap also tends to zero by
+(3.6). For fixed $\varepsilon_7>0$, take
+$z_7=(a(W_+(h))+a(W_-(h)))/2$. This is allowed for both for all
+sufficiently small $h\ne0$. Then $S_R$ contains that pair, so each
+minimum in (13.7) is at most its corresponding pair gap and tends to
+zero. This assertion concerns these ambiguous old records, not every
+old record or the exact-old-retention endpoint. $\square$
+
+Theorem 10.2 remains the separate old-$a$ prediction theorem:
+its old-record-only criterion uses seventh-$a$ distances. Equations
+(13.7)–(14.1) concern the newly retained eighth scalar after the actual
+additional read. They do not rename the old-$a$ margin or change its
+equality case.
+
+## 15. Full-preimage source stability and common-word future responses
+
+**Definition 15.1 (original complete-source coordinates and future task).**
+For $g(s)=\sum_{j=0}^3k_js^j$, padded through degree three, use
+
+$$
+ \omega(W)=(r,b,c,d,k_0,k_1,k_2,k_3)\in\mathbb R^8,
+ \qquad \|\cdot\|_\infty,
+ \qquad B_M(W)=(p(W),v(W),f_M(W)).
+\tag{15.1}
+$$
+
+These are the original coefficients and source entries, without a
+normal-form change of metric. The tuple is injective on complete
+worlds. From now on the eighth action is the public constant $M$, and
+
+$$
+ Q_8=MQ_7=\begin{pmatrix}3&1\\8&3\end{pmatrix}.
+\tag{15.2}
+$$
+
+For a chronological word $u=(E_1,\ldots,E_n)\in\{J,M\}^n$ put
+$T_u=E_n\cdots E_1$, with $T_\varnothing=I$, and define its terminal
+numerical response at the absolute clock by
+
+$$
+ Y_u(W)=d+g(8+n)\operatorname{tr}(T_uQ_8P).
+\tag{15.3}
+$$
+
+This is a task of mathematical response evaluation from the frozen
+clock-eight boundary. It does not grant execution of $u$, a new read,
+access to a discarded value or a future invocation right.
+
+**Theorem 15.2 (inverse Lipschitz bound on an entire original preimage).**
+There exist a compact base rectangle $\mathcal K$ and a finite $L>0$,
+with $y_3\in\operatorname{int}\mathcal K$ and
+$\mathcal K\subset V_*$, such that, for
+$\mathcal D=\Phi^{-1}(\mathcal K)$ taken in the original $\mathcal H$,
+
+$$
+ \|\omega(W)-\omega(W')\|_\infty
+ \le L\|B_M(W)-B_M(W')\|_\infty
+ \qquad(W,W'\in\mathcal D).
+\tag{15.4}
+$$
+
+All pairs are covered, including different acquired bases, the remote
+companion and every permitted stratum in this full preimage. Neither
+$\mathcal K$ nor $L$ is supplied effectively.
+
+**Proof.** At $W_3$, (9.17) gives an invertible differential for
+$(p,f_M)$ in the genuine $(t,b)$ coordinates. The inverse-function
+theorem gives a local inverse. Choose a convex open rectangle $A$ in
+its $(p,f_M)$ image, containing the center image, whose compact closure
+is inside the inverse domain. Composing this inverse with VI's
+analytic whole-world lift gives an analytic map
+$H:A\to\mathbb R^8$ returning exactly $\omega(W)$.
+Its derivative is bounded on $\overline A$, because it extends
+analytically to a neighborhood of that closure. The mean value
+inequality on the convex rectangle supplies a finite $L_N$ with
+
+$$
+ \|H(q)-H(q')\|_\infty\le L_N\|q-q'\|_\infty
+ \qquad(q,q'\in A).
+\tag{15.5}
+$$
+
+Choose a complete-world neighborhood $N$ of $W_3$ lying in this lifted
+rectangle and in the local neighborhood used in Theorem 13.1.
+Equation (15.5) bounds every local/local pair in $N$ by its
+$(p,f_M)$ difference, hence by its $B_M$ difference. This explicitly
+uses derivative regularity of the inverse on a convex image; compact
+injectivity alone would not justify (15.5).
+
+The remote branch $Z(y)$ is analytic over the open rectangle
+$\widehat K_3$ of VI, Theorem 18.1. On a compact rectangle about $y_3$
+inside that open rectangle, the derivative of $\omega\circ Z$ is
+bounded. The same convex mean value inequality gives a finite $L_Z$
+bounding every remote/remote source difference by $\|y-y'\|_\infty$,
+and therefore by the full $B_M$ difference.
+
+Using the full compact set $\Phi^{-1}(K_3)$ and its exact two-world
+fiber over $y_3$, shrink the base as in the exhaustion argument of
+Theorem 13.1 until every world belongs either to $N$ or to the remote
+branch. Choose $\mathcal K$ to be a compact rectangle about $y_3$
+inside this base neighborhood, $V_*$ and the remote derivative domain.
+The set $\mathcal D$ is compact by VI, Theorem 17.2, since it is the
+inverse image of the closed subset $\mathcal K\subset K_3$.
+Let $D_\omega$ be its finite diameter in the norm of (15.1).
+
+For a local world and a remote world, even at different bases in
+$\mathcal K$, the uniform bands (9.15)–(9.16) give
+$|f_M(W)-f_M(W')|>89$. Thus
+
+$$
+ \|\omega(W)-\omega(W')\|_\infty
+ \le D_\omega\le\frac{D_\omega}{89}
+                         \|B_M(W)-B_M(W')\|_\infty.
+\tag{15.6}
+$$
+
+Taking $L=\max\{1,L_N,L_Z,D_\omega/89\}$ proves (15.4) in all
+three cases. The full-preimage exhaustion, rather than a restriction
+of the model to two selected parametrizations, is what makes these
+cases exhaustive. $\square$
+
+**Theorem 15.3 (uniform numerical sensitivity for every common word).**
+For the same $\mathcal D$, there is a finite $C>0$ such that, for all
+$W,W'\in\mathcal D$, every $n\ge0$ and every common chronological
+$u\in\{J,M\}^n$,
+
+$$
+ |Y_u(W)-Y_u(W')|
+ \le C\varphi^n(1+n)^3\|B_M(W)-B_M(W')\|_\infty,
+ \qquad \varphi=\frac{1+\sqrt5}{2}.
+\tag{15.7}
+$$
+
+The same right-hand side bounds the maximum difference over all prefix
+responses $Y_{u_{\le k}}$, $0\le k\le n$, so every intermediate
+immediate read is included in the numerical statement.
+
+**Proof.** Use the Euclidean operator norm for matrices and the maximum
+norm (15.1) for sources. Since $J$ is orthogonal and $M$ is symmetric
+with eigenvalues $\varphi$ and $-\varphi^{-1}$,
+
+$$
+ \|J\|_2=1,\qquad\|M\|_2=\varphi,
+ \qquad \|T_uQ_8\|_2\le\varphi^n\|Q_8\|_2.
+\tag{15.8}
+$$
+
+Choose $H\ge1$ bounding both $\|P\|_2$ and each $|k_j|$ on the compact
+$\mathcal D$. Put $\delta_\omega=\|\omega(W)-\omega(W')\|_\infty$
+and $A_0=4\cdot8^3$. Since $8+n\le8(1+n)$,
+
+$$
+\begin{aligned}
+ |g(8+n)|&\le A_0H(1+n)^3,\\
+ |g(8+n)-g'(8+n)|&\le A_0\delta_\omega(1+n)^3,\\
+ \|P-P'\|_2&\le2\delta_\omega,\qquad |d-d'|\le\delta_\omega.
+\end{aligned}
+\tag{15.9}
+$$
+
+Here primes label the second world, not derivatives. The coefficient
+bounds cover lower-degree polynomials without changing this padded
+coordinate system. For two-by-two real matrices,
+$|\operatorname{tr}(AB)|\le2\|A\|_2\|B\|_2$. Splitting the difference
+in (15.3) into its drift, gain and source terms now gives
+
+$$
+ |Y_u(W)-Y_u(W')|
+ \le\{1+6A_0H\|Q_8\|_2\}
+             \varphi^n(1+n)^3\delta_\omega.
+\tag{15.10}
+$$
+
+For the drift term we used $\varphi^n(1+n)^3\ge1$.
+Apply (15.4) and absorb its constant $L$ to obtain (15.7).
+The estimate uses the one entire polynomial of each world at the
+absolute clock $8+n$, and the same future word in both worlds. It
+fits no new polynomial to a later prefix and supplies no later
+measurement. Applying the estimate to every prefix and using the
+monotonicity of $\varphi^k(1+k)^3$ proves the prefix maximum assertion.
+$\square$
+
+## 16. Actual frozen-record witnesses with an uncancelled growing mode
+
+**Lemma 16.1 (growing polynomial changes along the original third germ).**
+Put $\psi=-\varphi^{-1}$ and use the spectral projectors
+
+$$
+ \Pi_+=\frac{M-\psi I}{\varphi-\psi},\qquad
+ \Pi_-=I-\Pi_+,\qquad
+ A_\pm(W)=\operatorname{tr}(\Pi_\pm Q_8P).
+\tag{16.1}
+$$
+
+For every sufficiently small nonzero $h$, the actual pair $W_\pm(h)$
+of (3.5) has a nonzero polynomial
+
+$$
+ D_{+,h}(s)=A_+(W_+(h))g_+(s)-A_+(W_-(h))g_-(s).
+\tag{16.2}
+$$
+
+Its nonvanishing concerns the actual original-source lift, not merely
+an eighth-response tangent.
+
+**Proof.** Every entry of $\Pi_+=(M+\varphi^{-1}I)/\sqrt5$ is positive.
+Both $Q_8$ and $P$ have positive entries. Hence $A_+(W)>0$ on the
+entire original world domain. The projector is an algebraic proof
+tool, not an extra allowed acquisition action.
+
+At $W_3$ use the tangent $K$ of (3.2), and write
+$D_\theta=K/(K\theta)$ at this point. Lemma 9.2 gives
+$K\theta\ne0$, $Kp=Kv=0$, and
+
+$$
+ d_\theta:=D_\theta d\in[-8.75,-8.69]<0.
+\tag{16.3}
+$$
+
+The source bands give $p<d<v$ at this exact world. The genuine
+same-source samples (9.3) imply
+
+$$
+ \frac{g(5)}{g(6)}=
+ \frac{p-d}{v-d}\frac{2+\theta}{1+\theta},
+ \qquad g(5)g(6)\ne0.
+\tag{16.4}
+$$
+
+Differentiating while $D_\theta p=D_\theta v=0$ yields
+
+$$
+ D_\theta\log\left|\frac{g(5)}{g(6)}\right|
+ =-d_\theta\left(\frac1{p-d}-\frac1{v-d}\right)
+   -\frac1{(1+\theta)(2+\theta)}<0.
+\tag{16.5}
+$$
+
+The first parenthesis is negative, $-d_\theta>0$, and the last
+term is strictly negative. This proves the sign without a new
+numerical approximation or a separate gain fit.
+
+If both $K(A_+g(5))$ and $K(A_+g(6))$ were zero at $W_3$, their
+nonzero values would give
+
+$$
+ K\log|A_+g(5)|=K\log|A_+g(6)|=0,
+$$
+
+and hence $K\log|g(5)/g(6)|=0$. This contradicts (16.5) and
+$K\theta\ne0$. Choose $s_0\in\{5,6\}$ for which
+$K(A_+g(s_0))\ne0$.
+
+VI, Theorem 15.1, gives analytic complete-world branches with derivatives
+$+K,-K$ at zero and $W_-(h)=W_+(-h)$. The same whole gain coefficients
+are part of that lift. The odd analytic difference at this fixed sample
+therefore satisfies
+
+$$
+ D_{+,h}(s_0)=2hK(A_+g(s_0))(W_3)+O(h^3).
+\tag{16.6}
+$$
+
+Its nonzero linear coefficient makes it nonzero for every sufficiently
+small nonzero $h$. Thus the polynomial (16.2) is nonzero for each
+such pair, proving actual growing-mode noncancellation. $\square$
+
+**Theorem 16.2 (arbitrarily close worlds, one complete frozen record,
+and unbounded all-$M$ response difference).** Fix any
+$\varepsilon_7>0$ and $\varepsilon_8>0$ in the full additive joint
+relation (12.3), with eighth choice $M$. In every complete-source
+neighborhood of $W_3$ there are distinct actual $W_+(h),W_-(h)\in
+\mathcal D$ and one complete record $R_{8,M}^{\rm add}$ allowed for
+both, such that for every real $1\le\rho<\varphi$,
+
+$$
+ \lim_{n\to\infty}
+ \frac{|Y_{M^n}(W_+(h))-Y_{M^n}(W_-(h))|}
+      {\rho^n(1+n)^3}=+\infty.
+\tag{16.7}
+$$
+
+In particular their unweighted future difference is unbounded. The
+same chosen pair works for every $\rho$ in the displayed range.
+
+**Proof.** The actual germ worlds have the same exact $p,v$ and converge
+to $W_3$ in every coordinate (15.1). Their bases tend to the interior
+point $y_3$ of $\mathcal K$, so both belong to $\mathcal D$ for every
+sufficiently small $h$. Both $a$ and $f_M$ differences tend to zero.
+Choose an arbitrarily small nonzero $h$ for which Lemma 16.1 applies
+and both half-differences are strictly below the stipulated positive
+radii. Set
+
+$$
+ z_7=\frac{a(W_+(h))+a(W_-(h))}{2},\qquad
+ z_8=\frac{f_M(W_+(h))+f_M(W_-(h))}{2}.
+\tag{16.8}
+$$
+
+The common exact base, these two real substitutes, the same public
+radii and the fixed event metadata constitute one complete frozen
+record permitted by (12.3) on each of these two actual worlds.
+No coupling of two separately chosen pairs is involved. Each witness
+has its own one source, its original whole $g_\pm$ and its fixed
+$d_\pm$ on every clock, including the original $H_4$ and actual
+$M,M,J,M$ extension. The values in (16.8) witness allowed channel
+outputs, not an observer's access to the two exact replies.
+
+The elementary spectral identity
+$M^n=\varphi^n\Pi_++\psi^n\Pi_-$ gives exactly
+
+$$
+\begin{aligned}
+ Y_{M^n}(W_+(h))-Y_{M^n}(W_-(h))
+  ={}&d_+-d_-+\varphi^nD_{+,h}(8+n)\\
+    &+\psi^nD_{-,h}(8+n),
+\end{aligned}
+\tag{16.9}
+$$
+
+where $D_{-,h}(s)=A_-(W_+(h))g_+(s)-A_-(W_-(h))g_-(s)$ also has
+degree at most three. The original same-source clock is $8+n$;
+there is no clock reset or newly fitted polynomial in (16.9).
+
+By Lemma 16.1, $D_{+,h}$ is a nonzero polynomial. If its degree is
+$k\in\{0,1,2,3\}$, its nonzero leading coefficient supplies $c_h>0$
+and $N_h$ with $|D_{+,h}(8+n)|\ge c_h n^k$ for $n\ge N_h$.
+The other polynomial times $\psi^n$ tends to zero because
+$|\psi|<1$, while $d_+-d_-$ is constant. The reverse triangle
+inequality in (16.9), after enlarging $N_h$, therefore gives
+
+$$
+ |Y_{M^n}(W_+(h))-Y_{M^n}(W_-(h))|
+ \ge\frac{c_h}{2}\varphi^n n^k.
+\tag{16.10}
+$$
+
+For every fixed $1\le\rho<\varphi$, an exponential with ratio
+$\varphi/\rho>1$ dominates the factor $(1+n)^3/n^k$.
+Dividing (16.10) proves (16.7). The unweighted assertion follows
+as well, for example from the case $\rho=1$. Arbitrarily small
+$h$ were available under all the preceding strict requirements.
+$\square$
+
+**Corollary 16.3 (reused two-point prediction inequality on the witness).**
+For the common record in Theorem 16.2, any sequence of numerical
+predictions $q_n$ depending only on that record and public data obeys
+
+$$
+ \max_{\sigma\in\{+,-\}}
+ |q_n-Y_{M^n}(W_\sigma(h))|
+ \ge\frac12|Y_{M^n}(W_+(h))-Y_{M^n}(W_-(h))|.
+\tag{16.11}
+$$
+
+Consequently it has no uniform finite error bound on that record
+fiber, even after the smaller-exponential normalization in (16.7).
+For each such normalization at least one of the two worlds has
+unbounded normalized error.
+
+**Proof.** Apply the triangle inequality to the two errors and their
+common $q_n$, then use (16.7). If both individual normalized errors
+were bounded, their maximum would be bounded, a contradiction.
+$\square$
+
+Both positive radii and the full joint allowed relation are essential
+to this witness. Nothing here extends it to exact retention endpoints,
+a restricted channel omitting the common outputs, adaptive later
+observations, or an observer with additional lawful acquired data.
+Theorem 15.3 uses the larger weight $\varphi^n(1+n)^3$ and an exact
+boundary-coordinate distance; it is consistent with (16.7). The lower
+bound establishes no impossibility for every physical observer and
+no universal memory or acquisition lower bound.
+
+## 17. Geometry, ordered clocks, readout and memory on the same process
+
+**Definition 17.1 (four independently specified expressions).** The
+source geometry is the positive rank-one projector $P(r,b)$ on
+$\mathbb R^2$, or equivalently its image line and complementary kernel
+line with its trace-one normalization. At a clocked event its transported
+relation is $H_i=Q_iP$. These definitions use linear incidence and the
+actual left action, not an inverse of a desired observation.
+
+The ordered action/clock expression consists of the absolute clock $i$
+and the chronological action word actually executed, with its ordered
+product $Q_i$. The boundary expression at that event is the single
+actual read $d+g(i)\operatorname{tr}H_i$. The retained expression is
+exactly (12.1) before the eighth event and (12.2), or (12.4), after
+its declared retention relation. It contains its specified references
+and event labels; it does not contain the rest of the history as
+unrestricted variable data. The stipulated $H_4$, already acquired
+exact $p,v$, and the conditional one-step port are premises of this
+process. No procedure acquiring this initialization from an unknown
+source is asserted.
+
+**Proposition 17.2 (source, readout and clock correspondence).** On
+$\mathcal D$, the exact acquired boundary subrecord $B_M=(p,v,f_M)$
+mathematically determines one complete original $W$. Reconstructing
+that world, forming its transported geometry and then evaluating its
+readout agrees with the original forward route at every stipulated
+clock, and with (15.3) for every mathematical common continuation
+word. The same route agreement holds from a retained record on each
+of the singleton compatibility domains of Proposition 14.1.
+
+The original clock-seven run uses exactly seven actions and eight
+scalar readings including clock zero. Its eighth-event extension
+uses exactly eight actions and nine scalar readings. The extension
+acquires only its one chosen eighth scalar.
+
+**Proof.** The original $P$ has trace one and determinant zero, hence
+$P^2=P$ by the two-by-two characteristic identity. Its rank is one,
+so its image and kernel are complementary lines. Conversely the
+projection onto a line along its specified complementary line is
+unique: it fixes every vector in the image and annihilates every
+vector in the kernel, which together span $\mathbb R^2$. This
+justifies the independent geometric description.
+
+For an actual state write
+
+$$
+ \mathsf S_i=(i,H_i,g,d),\qquad
+ F_E(\mathsf S_i)=(i+1,EH_i,g,d),\qquad
+ q(\mathsf S_i)=d+g(i)\operatorname{tr}H_i.
+\tag{17.1}
+$$
+
+The initial state is $(0,P,g,d)$. Induction using $Q_i=E_iQ_{i-1}$
+proves $H_i=Q_iP$ after each actual action and therefore reproduces
+exactly every stipulated original reading, including $H_4$, the
+fifth/sixth $p,v$, seventh $a$, and chosen eighth $f_M$. The state
+recursion preserves the whole $g$ and fixed $d$; it does not replace
+them by samples. It is an equation for the actual process and a
+mathematical continuation law, not an extra retained register.
+
+If two worlds of $\mathcal D$ have the same $B_M$, (15.4) makes their
+complete-source coordinates equal, hence the worlds equal. Thus on
+the actual image the recovered world is exactly the generating one.
+Reapplying (17.1) to this same world reproduces the original prefix.
+For a future word $u$ the induction gives state
+$(8+n,T_uQ_8P,g,d)$, whose readout is (15.3). For chronological words
+$u,w$, $T_{uw}=T_wT_u$; therefore direct evaluation of their
+concatenation and successive state updates agree, using the same
+absolute gain argument $8+|u|+|w|$. This proves the claimed dynamics
+compatibility and route agreement without changing the source.
+
+For a record in a safe domain of Proposition 14.1, its unique
+compatible world is likewise the actual one. Applying the preceding
+construction to it gives identical geometry and numerical responses.
+Its reconstructed exact $a$ and $f_e$ satisfy the reported retention
+inequalities; they are computed mathematical consequences of the
+unique world, not additional surviving error residues. In the $J$
+version the same induction uses $Q_{8,J}$ of (9.1).
+
+Finally the chronological prefix is $J,M,J,M,M,M,J$ after clock zero,
+with readings $(0,24,147/5,24,18,p,v,a)$. Appending its single chosen
+$e$ adds exactly one action and one immediate read. There is no second
+specimen, reset, skipped read, alternative seventh $m$ acquisition
+or simultaneous acquisition of both eighth laws. $\square$
+
+**Convention 17.3 (resources, suppliers and remaining scope).** The
+retained variable numerical fields are four reals before the extension
+and six after it, with their displayed constraints; action/channel
+labels and the fixed model are public. Exact $p,v$ remain potentially
+infinite-precision references, as do the declared real substitutes
+and radii. These field and action/read counts are not bounded-bit
+memory, arithmetic, execution-time or optimality claims. In particular
+a compatible set is not an acquired list, a partial mathematical
+inverse is not a finite-input decoder, and response evaluation in
+(15.3) is not an authorized future call. Neither the inverse Lipschitz
+estimate nor the noise relation installs source acquisition, selection,
+retained accessibility or continued callable use. No future rights
+are added to the original one-step port.
+
+The new quantitative deductions are (13.1), their last-retention
+consequences on the same $S_R$, the full-preimage estimate (15.4),
+the uniform clocked response estimate (15.7), and the actual
+noncancelling common-record witnesses (16.2)–(16.10). They are
+`repo-derived` ordinary mathematics. The exact germ and its derivatives,
+compact exhaustion, center inventory, remote analytic branch, original
+eighth responses and their tangent/response bands are reused from
+§§3 and 9 and the pinned VI. Closed intervals and their midpoint
+criterion are reused from Lemma 5.3. The inverse-function theorem,
+convex mean value inequality, polynomial interpolation, spectral
+decomposition and domination of polynomials by exponentials are
+classical tools, not additional source-specific discoveries.
+
+For the calculus suppliers, the repository's pinned mathlib revision
+`56a005855ea17e0b0958f73ec801ae140b0a1679` contains
+`HasStrictFDerivAt.to_localInverse` in
+`Mathlib/Analysis/Calculus/InverseFunctionTheorem/FDeriv.lean`,
+`ApproximatesLinearOn.antilipschitzWith` in its
+`ApproximatesLinearOn.lean` companion, and
+`Convex.norm_image_sub_le_of_norm_fderiv_le` in
+`Mathlib/Analysis/Calculus/MeanValue.lean`. Their inverse-derivative and
+convex derivative-bound hypotheses are met here by the displayed
+nonzero Jacobians and the analytic lifts on neighborhoods of compact
+rectangles. The kernel/effective-image and predictive-memory
+suppliers of Convention 7.2 remain general factorization tools;
+they supply neither these source-specific estimates nor an acquisition
+or update implementation. The distinct-node interpolation attribution
+in §11 is unchanged, as are the unavailable book contexts in §8.3.
+These deductions assert no literature-wide priority.
+
+The later VII, §§36–39, and VIII, §§30–34, at
+`c8ae6f747aeb40c61f9d135f171011de99a12c99` retain their own exact
+source contracts. VII's fixed-drift exclusion does not identify the
+clock-eight response or impose a calibrated drift on this domain.
+VIII's distinguished H/L arc has $10\le p\le34$, whereas this domain
+has $p$ near $7.283036$. Its endpoint classification does not restrict
+the entire children here to that arc or remove the remote companion.
+The moving-trace recovery and polynomial-gain shear-calibration
+volumes at `e1a5759d74d7b8f1b6faad61f47a85859b385fd1` likewise
+have their stated calibration histories and, for the latter, a different
+read-clock/compound-word contract. Their recovery constructions are
+not a retention or future-sensitivity theorem for this fixed prefix.
+The finite-start predictive-memory volume at that revision uses a
+passive five-mode stochastic source and future-law distance; its
+exact ambiguous-branch metric is not the numerical-response metric
+of (15.3).
+
+The precise gain over NCR/PVC/PR57/PG/Atlas in Convention 7.3 is this
+source-specific quantitative boundary/retention/dynamics bridge under
+the original clock law, not an additional installation or serialization
+service. A clock word alone is not a source identifier. Under positive
+retention errors the common record of Theorem 16.2 does not determine
+the future responses; at a safe record the proved reconstruction is
+only the stated conditional mathematical one. Thus no four isolated
+view kernels are asserted equal, and no four-way mutual recovery or
+universal alpha/beta generation of this process follows. All earlier
+fixed-$G_{gc}$, original-$Q$, parked-consumer, initialization-specific
+and global incidence questions keep their original scopes and
+settlements. Unknown-source acquisition, finite-input recovery,
+installed lawful continuation and the full four-expression objective
+remain unresolved.
+
+## 追加锚（本行以下为增补区）
