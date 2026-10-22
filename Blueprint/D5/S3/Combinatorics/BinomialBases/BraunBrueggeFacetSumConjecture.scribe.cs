@@ -33,7 +33,10 @@ internal sealed class BraunBrueggeFacetSumConjectureDocument : IScribeDocumentDe
                 H("The four assertions hold"), StatementSource.FromAuthor(Disp(ClaimBody())),
                 AssessedProvenance.FromRepo(Source),
                 Blocks(Paragraph(Text("The proof writes each facet sum as a weighted sum of centered binomial rows. A Vandermonde identity preserves the paired mass under each two-unit transfer. The transfer difference has one sign crossing, and the third centered row is antitone with distance from the center, so the weighted difference is nonnegative. Strong induction then reaches the endpoint triples in both parity classes. Finite computation checks 58,088 admissible triples for 4≤n≤200; the centered-row argument proves the inequalities for arbitrary admissible triples."))),
-                DescribeRole.Theorem))));
+                DescribeRole.Theorem,
+                openProblemResolutionClaim: new OpenProblemResolutionClaim(
+                    ProblemSlugRef.Create("braun-bruegge-2022-symmetric-edge-polytope-facet-sum-conjecture-5-1"),
+                    ResolutionKind.Proved)))));
 
     private static Formula V(string name) => F.Id(name);
     private static Formula Qualified(params string[] names)

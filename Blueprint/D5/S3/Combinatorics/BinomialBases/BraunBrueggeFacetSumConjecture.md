@@ -46,6 +46,10 @@ $$(\forall k \in \mathbb{N},\; (2 \le k) \Rightarrow (\forall a \in \mathbb{N},\
 
 *Proof.* Machine-checked in Lean as `D5/S3/Combinatorics/BinomialBases/BraunBrueggeFacetSumConjecture.result` (`✓ std3`). ∎
 
+*Resolves.* `Problems/braun-bruegge-2022-symmetric-edge-polytope-facet-sum-conjecture-5-1` (proved) by `D5/S3/Combinatorics/BinomialBases/BraunBrueggeFacetSumConjecture.result`.
+
+<!-- scribe-open-problem-resolution-v1 {"problem_slug":"braun-bruegge-2022-symmetric-edge-polytope-facet-sum-conjecture-5-1","declaration_gid":"D5/S3/Combinatorics/BinomialBases/BraunBrueggeFacetSumConjecture.result","resolution_kind":"proved"} -->
+
 *Source.* Repository-derived.
 
 *Acknowledgement.* B. Braun, K. Bruegge (2023). *Facets of Symmetric Edge Polytopes for Graphs with Few Edges*. URL: <https://arxiv.org/abs/2201.13303v4>.
