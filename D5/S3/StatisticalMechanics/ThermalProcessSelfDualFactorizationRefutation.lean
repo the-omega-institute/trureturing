@@ -303,5 +303,7 @@ theorem result : ¬ claim := by
     A_extreme B_extreme C_extreme product fewer_levels.1 fewer_levels.2
     C_irreducible C_selfDual
 
+#print axioms result
+
 end
 end D5.S3.StatisticalMechanics.ThermalProcessSelfDualFactorizationRefutation
