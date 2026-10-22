@@ -10,6 +10,7 @@ internal sealed class OriginalSignedPrimeFourierDocument : IScribeDocumentDefini
         "The negative actual symmetric von Mangoldt action is expanded on arbitrary finite signed mode sets with arbitrary complex coefficients. Both translations and all prime powers remain. The inclusive q=c row is zero only after compression, including c=5041=71 squared. This component supplies no full Weil positivity or numerical five-mode certificate.",
         H("Original Signed Prime Fourier"),
         Blocks(
+                Paragraph(Text("The full-complex original_prime80 estimate is provided by OriginalSignedPrimeBound. The variable arithmetic and closed-cell bounds combine with the continuous weighted Young estimate on the original Ioc window.")),
                 Paragraph(Text("The negative actual symmetric von Mangoldt action is expanded on arbitrary finite signed mode sets with arbitrary complex coefficients. Both translations and all prime powers remain. The inclusive q=c row is zero only after compression, including c=5041=71 squared. This component supplies no full Weil positivity or numerical five-mode certificate.")),
                 Describe.Lean(DescribeId.Create("head"),
                     DeclarationHandle.Create(Owner + "head"), H("head"),

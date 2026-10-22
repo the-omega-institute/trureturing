@@ -7,6 +7,7 @@
    digest: The actual signed finite prime action on arbitrary finite signed complex Fourier heads. -/
 
 import D5.S3.Weil.ZetaBridge.OriginalSignedCompressedFourier
+import D5.S3.Weil.ZetaBridge.OriginalSignedPrimeBound
 import Mathlib.Tactic
 
 set_option autoImplicit false
@@ -54,29 +55,6 @@ def primeMatrix (L : ℝ) (M : ℕ) (m n : ℤ) : ℂ :=
   -∑ q ∈ Finset.Icc 1 M, (primeWeight q : ℂ) *
     (matrix L m n (Real.log (q : ℝ)) + matrix L m n (-Real.log (q : ℝ)))
 
-private lemma prime_bilinear (a : ℝ) (M : ℕ) (f : ℝ → ℂ) (hf : Continuous f) :
-    primeQuadratic a M f =
-      ∑ q ∈ Finset.Icc 1 M, (primeWeight q : ℂ) *
-        (pairing a (Real.log (q : ℝ)) (fun x => conj (f x)) f +
-          pairing a (-Real.log (q : ℝ)) (fun x => conj (f x)) f) := by
-  have hi (s : ℝ) : Integrable (fun x => conj (f x) * compression a s f x) :=
-    integrable_compression_product a s (by fun_prop) hf
-  have he : (fun x => conj (f x) * primeAction a M f x) =
-      (fun x => ∑ q ∈ Finset.Icc 1 M, (primeWeight q : ℂ) *
-        (conj (f x) * compression a (Real.log (q : ℝ)) f x +
-          conj (f x) * compression a (-Real.log (q : ℝ)) f x)) := by
-    funext x
-    unfold primeAction
-    rw [Finset.mul_sum]
-    apply Finset.sum_congr rfl
-    intro q _
-    ring
-  rw [primeQuadratic, he, integral_finsetSum _ (by
-    intro q _; exact ((hi _).add (hi _)).const_mul _)]
-  apply Finset.sum_congr rfl
-  intro q _
-  rw [integral_const_mul, integral_add (hi _) (hi _)]
-  rfl
 
 /-- Full original signed complex quadratic identity, before any parity or
 reality restriction. The literal cutoff and endpoint compression are reused
@@ -105,7 +83,9 @@ theorem finite_signed_prime_identity (L : ℝ) (hL : 0 < L) (M : ℕ)
       primeQuadratic (L / 2) (primeCutoff (L / 2)) (head L S v) := by
     unfold primeQuadratic
     rw [primeAction_cutoff _ M hM]
-  rw [hcut, prime_bilinear _ _ _ (head_continuous L S v)]
+  rw [hcut, prime_bilinear _ _ _ (fun s =>
+    integrable_compression_product _ s
+      (Complex.continuous_conj.comp (head_continuous L S v)) (head_continuous L S v))]
   simp_rw [head_pairing, neg_neg, entry_eq_matrix L hL]
   have hrow (q : ℕ) :
       (primeWeight q : ℂ) *
