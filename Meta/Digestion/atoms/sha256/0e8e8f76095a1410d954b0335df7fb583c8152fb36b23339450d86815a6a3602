@@ -1,0 +1,17 @@
+**Definition 6.3 (the entire original child).** For $p,v\in\mathbb R$, let $C(p,v)$ be all original worlds with chronological acquired word $(J,M,J,M,M,M)$ and all seven readings
+
+$$
+(y_0,y_1,y_2,y_3,y_4,y_5,y_6)=(0,24,147/5,24,18,p,v).
+$$
+
+This is [An exact unequal-diagonal pair for the original terminal M response, Definition 1.2](FIB_STRICT_REAL_UNEQUAL_DIAGONAL_ACTUAL_M_PAIR.md), without any restriction to a local source chart or regular stratum. For a world $W$, set $q=r(1-r)/b$ and write $g_i=g(i)$. Its seven acquired matrices and traces are
+
+| $i$ | chronological word | $Q_i$ | $\operatorname{tr}(Q_iP)$ |
+|---:|:---|:---|:---|
+| 0 | empty | $I$ | $1$ |
+| 1 | $J$ | $\left(\begin{smallmatrix}0&1\\1&0\end{smallmatrix}\right)$ | $b+q$ |
+| 2 | $JM$ | $\left(\begin{smallmatrix}1&0\\1&1\end{smallmatrix}\right)$ | $1+b$ |
+| 3 | $JMJ$ | $\left(\begin{smallmatrix}1&1\\1&0\end{smallmatrix}\right)$ | $r+b+q$ |
+| 4 | $JMJM$ | $\left(\begin{smallmatrix}1&0\\2&1\end{smallmatrix}\right)$ | $1+2b$ |
+| 5 | $JMJMM$ | $\left(\begin{smallmatrix}2&1\\3&1\end{smallmatrix}\right)$ | $1+r+3b+q$ |
+| 6 | $JMJMMM$ | $\left(\begin{smallmatrix}3&1\\5&2\end{smallmatrix}\right)$ | $2+r+5b+q$ |
