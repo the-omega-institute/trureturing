@@ -124,7 +124,21 @@ $$\forall n:\mathbb{N}, \forall d:\mathbb{N}, \operatorname{gramWordEquiv}\left(
 
 Equiv.piCongrLeft' transports the first half through Fin.revPerm; Fin.appendEquiv then joins the two halves.
 
-**Theorem 1.11 (Reversal preserves occupations).**
+**Theorem 1.11 (Reversal of a finite word).**
+
+$$\forall n:\mathbb{N}, \forall k:\mathbb{N}, \forall w:\operatorname{Fin}\left(k\right) \to \operatorname{Fin}\left(n\right), \operatorname{List.ofFn}\left(\operatorname{Equiv.piCongrLeft'}\left(\operatorname{Function.const}\left(\operatorname{Fin}\left(k\right), \operatorname{Fin}\left(n\right)\right), \operatorname{Fin.revPerm}\right)\left(w\right)\right) = \operatorname{List.reverse}\left(\operatorname{List.ofFn}\left(w\right)\right)$$
+
+*Proof.* Machine-checked in Lean as `D5/S3/Analytic/Hunter/NCHunterPositivity.reverse_word_list` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Acknowledgement.* S. R. Garcia and J. Volčič (2025). *A noncommutative generalization of Hunter's positivity theorem*. DOI: [10.1090/proc/17480](https://doi.org/10.1090/proc/17480). URL: <https://arxiv.org/abs/2503.12376v2>.
+
+*Commentary.*
+
+Reindexing a finite word by Fin.revPerm reverses its List.ofFn list.
+
+**Theorem 1.12 (Reversal preserves occupations).**
 
 $$\forall n:\mathbb{N}, \forall k:\mathbb{N}, \forall w:\operatorname{Fin}\left(k\right) \to \operatorname{Fin}\left(n\right), \forall i:\operatorname{Fin}\left(n\right), \operatorname{Multiset.count}\left(i, \operatorname{occupation}\left(\operatorname{Equiv.piCongrLeft'}\left(\operatorname{Function.const}\left(\operatorname{Fin}\left(k\right), \operatorname{Fin}\left(n\right)\right), \operatorname{Fin.revPerm}\right)\left(w\right)\right)\right) = \operatorname{Multiset.count}\left(i, \operatorname{occupation}\left(w\right)\right)$$
 
@@ -136,7 +150,7 @@ $$\forall n:\mathbb{N}, \forall k:\mathbb{N}, \forall w:\operatorname{Fin}\left(
 
 Reversal permutes positions without changing any letter multiplicity.
 
-**Theorem 1.12 (The head contribution).**
+**Theorem 1.13 (The head contribution).**
 
 $$\forall n:\mathbb{N}, \forall k:\mathbb{N}, \forall i:\operatorname{Fin}\left(n\right), \forall j:\operatorname{Fin}\left(n\right), \forall w:\operatorname{Fin}\left(k\right) \to \operatorname{Fin}\left(n\right), \operatorname{Multiset.count}\left(j, \operatorname{occupation}\left(\operatorname{Fin.cons}\left(i, w\right)\right)\right) = \operatorname{ite}\left(j = i, 1, 0\right) + \operatorname{Multiset.count}\left(j, \operatorname{occupation}\left(w\right)\right)$$
 
@@ -148,7 +162,7 @@ $$\forall n:\mathbb{N}, \forall k:\mathbb{N}, \forall i:\operatorname{Fin}\left(
 
 Fin.cons adds one occurrence of its head letter.
 
-**Theorem 1.13 (A constant word count).**
+**Theorem 1.14 (A constant word count).**
 
 $$\forall n:\mathbb{N}, \forall m:\mathbb{N}, \forall i:\operatorname{Fin}\left(n\right), \operatorname{Multiset.count}\left(i, \operatorname{occupation}\left(\operatorname{Function.const}\left(\operatorname{Fin}\left(m\right), i\right)\right)\right) = m$$
 
@@ -160,7 +174,7 @@ $$\forall n:\mathbb{N}, \forall m:\mathbb{N}, \forall i:\operatorname{Fin}\left(
 
 A constant word of length m has m occurrences of its letter.
 
-**Theorem 1.14 (Concatenation adds counts).**
+**Theorem 1.15 (Concatenation adds counts).**
 
 $$\forall n:\mathbb{N}, \forall a:\mathbb{N}, \forall b:\mathbb{N}, \forall u:\operatorname{Fin}\left(a\right) \to \operatorname{Fin}\left(n\right), \forall v:\operatorname{Fin}\left(b\right) \to \operatorname{Fin}\left(n\right), \forall i:\operatorname{Fin}\left(n\right), \operatorname{Multiset.count}\left(i, \operatorname{occupation}\left(\operatorname{Fin.append}\left(u, v\right)\right)\right) = \operatorname{Multiset.count}\left(i, \operatorname{occupation}\left(u\right)\right) + \operatorname{Multiset.count}\left(i, \operatorname{occupation}\left(v\right)\right)$$
 
@@ -172,7 +186,7 @@ $$\forall n:\mathbb{N}, \forall a:\mathbb{N}, \forall b:\mathbb{N}, \forall u:\o
 
 The occupation_append identity gives addition of letter counts.
 
-**Theorem 1.15 (Evaluation of concatenation).**
+**Theorem 1.16 (Evaluation of concatenation).**
 
 $$\forall n:\mathbb{N}, \forall a:\mathbb{N}, \forall b:\mathbb{N}, \forall A:\operatorname{Type}, [\operatorname{Monoid}\left(A\right)] \forall X:\operatorname{Fin}\left(n\right) \to A, \forall u:\operatorname{Fin}\left(a\right) \to \operatorname{Fin}\left(n\right), \forall v:\operatorname{Fin}\left(b\right) \to \operatorname{Fin}\left(n\right), \operatorname{wordEval}\left(X, \operatorname{Fin.append}\left(u, v\right)\right) = \operatorname{wordEval}\left(X, u\right) \cdot \operatorname{wordEval}\left(X, v\right)$$
 
@@ -184,7 +198,7 @@ $$\forall n:\mathbb{N}, \forall a:\mathbb{N}, \forall b:\mathbb{N}, \forall A:\o
 
 The ordered product of a concatenation is the product of the two ordered products.
 
-**Theorem 1.16 (Reversal and adjoints).**
+**Theorem 1.17 (Reversal and adjoints).**
 
 $$\forall n:\mathbb{N}, \forall k:\mathbb{N}, \forall A:\operatorname{Type}, [\operatorname{Monoid}\left(A\right)] [\operatorname{StarMul}\left(A\right)] \forall X:\operatorname{Fin}\left(n\right) \to A, (\forall i:\operatorname{Fin}\left(n\right), \operatorname{IsSelfAdjoint}\left(X\left(i\right)\right)) \Rightarrow (\forall w:\operatorname{Fin}\left(k\right) \to \operatorname{Fin}\left(n\right), \operatorname{wordEval}\left(X, \operatorname{Equiv.piCongrLeft'}\left(\operatorname{Function.const}\left(\operatorname{Fin}\left(k\right), \operatorname{Fin}\left(n\right)\right), \operatorname{Fin.revPerm}\right)\left(w\right)\right) = \operatorname{star}\left(\operatorname{wordEval}\left(X, w\right)\right))$$
 
@@ -196,7 +210,7 @@ $$\forall n:\mathbb{N}, \forall k:\mathbb{N}, \forall A:\operatorname{Type}, [\o
 
 For self-adjoint letters, reversing the word gives the star of its evaluation.
 
-**Definition 1.17 (The multidegree of a word).**
+**Definition 1.18 (The multidegree of a word).**
 
 $$\forall n:\mathbb{N}, \forall m:\mathbb{N}, \forall w:\operatorname{Fin}\left(m\right) \to \operatorname{Fin}\left(n\right), \forall i:\operatorname{Fin}\left(n\right), \operatorname{val}\left(\operatorname{val}\left(\operatorname{wordDegree}\left(w\right)\right)\left(i\right)\right) = \operatorname{Multiset.count}\left(i, \operatorname{occupation}\left(w\right)\right)$$
 
@@ -208,7 +222,7 @@ $$\forall n:\mathbb{N}, \forall m:\mathbb{N}, \forall w:\operatorname{Fin}\left(
 
 The value belongs to the subtype of a : Fin n -> Fin(m+1) with sum_i (a i : Nat) = m. Each displayed val is the actual subtype or Fin projection; these coordinates determine the constructor completely.
 
-**Definition 1.18 (Shifted factorial moments).**
+**Definition 1.19 (Shifted factorial moments).**
 
 $$\forall n:\mathbb{N}, \forall B:\mathbb{N}, \forall g:\operatorname{Fin}\left(n\right) \to \mathbb{N}, \forall a:\operatorname{Fin}\left(n\right) \to \operatorname{Fin}\left(B + 1\right), \forall b:\operatorname{Fin}\left(n\right) \to \operatorname{Fin}\left(B + 1\right), \operatorname{factorialMoment}\left(g, a, b\right) = \prod_{i:\operatorname{Fin}\left(n\right)} ((\operatorname{Nat.factorial}\left((a\left(i\right):\mathbb{N}) + (b\left(i\right):\mathbb{N}) + g\left(i\right)\right):\mathbb{R}))$$
 
@@ -220,7 +234,7 @@ $$\forall n:\mathbb{N}, \forall B:\mathbb{N}, \forall g:\operatorname{Fin}\left(
 
 This finite kernel is the product of shifted factorials.
 
-**Definition 1.19 (Binomial factorial features).**
+**Definition 1.20 (Binomial factorial features).**
 
 $$\forall n:\mathbb{N}, \forall B:\mathbb{N}, \forall g:\operatorname{Fin}\left(n\right) \to \mathbb{N}, \forall a:\operatorname{Fin}\left(n\right) \to \operatorname{Fin}\left(B + 1\right), \forall k:\operatorname{Fin}\left(n\right) \to \operatorname{Fin}\left(B + 1\right), \operatorname{factorialFeature}\left(g, a, k\right) = \prod_{i:\operatorname{Fin}\left(n\right)} ((\operatorname{Nat.factorial}\left((a\left(i\right):\mathbb{N}) + g\left(i\right)\right):\mathbb{R}) \cdot (\operatorname{Nat.choose}\left((a\left(i\right):\mathbb{N}), (k\left(i\right):\mathbb{N})\right):\mathbb{R}))$$
 
@@ -232,7 +246,7 @@ $$\forall n:\mathbb{N}, \forall B:\mathbb{N}, \forall g:\operatorname{Fin}\left(
 
 The feature is the product of factorials and natural binomial coefficients.
 
-**Definition 1.20 (Positive Gram weights).**
+**Definition 1.21 (Positive Gram weights).**
 
 $$\forall n:\mathbb{N}, \forall B:\mathbb{N}, \forall g:\operatorname{Fin}\left(n\right) \to \mathbb{N}, \forall k:\operatorname{Fin}\left(n\right) \to \operatorname{Fin}\left(B + 1\right), \operatorname{factorialWeight}\left(g, k\right) = \prod_{i:\operatorname{Fin}\left(n\right)} (\frac{(\operatorname{Nat.factorial}\left((k\left(i\right):\mathbb{N})\right):\mathbb{R})}{(\operatorname{Nat.factorial}\left(g\left(i\right) + (k\left(i\right):\mathbb{N})\right):\mathbb{R})})$$
 
@@ -244,7 +258,7 @@ $$\forall n:\mathbb{N}, \forall B:\mathbb{N}, \forall g:\operatorname{Fin}\left(
 
 The weights are products of positive real factorial ratios.
 
-**Theorem 1.21 (Diagonal degree features).**
+**Theorem 1.22 (Diagonal degree features).**
 
 $$\forall n:\mathbb{N}, \forall B:\mathbb{N}, \forall d:\mathbb{N}, \forall g:\operatorname{Fin}\left(n\right) \to \mathbb{N}, \forall a:\{a:\operatorname{Fin}\left(n\right) \to \operatorname{Fin}\left(B + 1\right) \mid \sum_{i:\operatorname{Fin}\left(n\right)} ((a\left(i\right):\mathbb{N})) = d\}, \forall b:\{a:\operatorname{Fin}\left(n\right) \to \operatorname{Fin}\left(B + 1\right) \mid \sum_{i:\operatorname{Fin}\left(n\right)} ((a\left(i\right):\mathbb{N})) = d\}, (a \ne b) \Rightarrow (\operatorname{factorialFeature}\left(g, \operatorname{val}\left(b\right), \operatorname{val}\left(a\right)\right) = 0)$$
 
@@ -256,7 +270,7 @@ $$\forall n:\mathbb{N}, \forall B:\mathbb{N}, \forall d:\mathbb{N}, \forall g:\o
 
 Distinct multidegrees of equal total degree have a coordinate exceeding the other; the corresponding binomial coefficient vanishes.
 
-**Theorem 1.22 (Strictly positive diagonal features).**
+**Theorem 1.23 (Strictly positive diagonal features).**
 
 $$\forall n:\mathbb{N}, \forall B:\mathbb{N}, \forall g:\operatorname{Fin}\left(n\right) \to \mathbb{N}, \forall a:\operatorname{Fin}\left(n\right) \to \operatorname{Fin}\left(B + 1\right), 0 < \operatorname{factorialFeature}\left(g, a, a\right)$$
 
@@ -268,7 +282,7 @@ $$\forall n:\mathbb{N}, \forall B:\mathbb{N}, \forall g:\operatorname{Fin}\left(
 
 Every diagonal binomial coefficient is one and every factorial is positive.
 
-**Theorem 1.23 (Strictly positive weights).**
+**Theorem 1.24 (Strictly positive weights).**
 
 $$\forall n:\mathbb{N}, \forall B:\mathbb{N}, \forall g:\operatorname{Fin}\left(n\right) \to \mathbb{N}, \forall k:\operatorname{Fin}\left(n\right) \to \operatorname{Fin}\left(B + 1\right), 0 < \operatorname{factorialWeight}\left(g, k\right)$$
 
@@ -280,7 +294,7 @@ $$\forall n:\mathbb{N}, \forall B:\mathbb{N}, \forall g:\operatorname{Fin}\left(
 
 Every numerator and denominator factorial is positive.
 
-**Theorem 1.24 (The finite factorial Gram identity).**
+**Theorem 1.25 (The finite factorial Gram identity).**
 
 $$\forall n:\mathbb{N}, \forall B:\mathbb{N}, \forall g:\operatorname{Fin}\left(n\right) \to \mathbb{N}, \forall a:\operatorname{Fin}\left(n\right) \to \operatorname{Fin}\left(B + 1\right), \forall b:\operatorname{Fin}\left(n\right) \to \operatorname{Fin}\left(B + 1\right), \operatorname{factorialMoment}\left(g, a, b\right) = \sum_{k:\operatorname{Fin}\left(n\right) \to \operatorname{Fin}\left(B + 1\right)} (\operatorname{factorialWeight}\left(g, k\right) \cdot \operatorname{factorialFeature}\left(g, a, k\right) \cdot \operatorname{factorialFeature}\left(g, b, k\right))$$
 
@@ -292,7 +306,7 @@ $$\forall n:\mathbb{N}, \forall B:\mathbb{N}, \forall g:\operatorname{Fin}\left(
 
 Vandermonde convolution gives the one-coordinate identity. Taking products gives this finite Gram factorization. No originality claim is made for the scalar identity.
 
-**Definition 1.25 (The Hilbert-valued matrix form).**
+**Definition 1.26 (The Hilbert-valued matrix form).**
 
 $$\forall H:\operatorname{Type}, [\operatorname{NormedAddCommGroup}\left(H\right)] [\operatorname{InnerProductSpace}\left(\mathbb{C}, H\right)] \forall I:\operatorname{Type}, [\operatorname{Fintype}\left(I\right)] \forall D:\operatorname{Matrix}\left(I, I, \mathbb{C}\right), \forall v:I \to H, \operatorname{matrixForm}\left(D, v\right) = \sum_{i:I} (\operatorname{inner}\left(\mathbb{C}, v\left(i\right), ((D) \cdot (v))\left(i\right)\right))$$
 
@@ -304,7 +318,7 @@ $$\forall H:\operatorname{Type}, [\operatorname{NormedAddCommGroup}\left(H\right
 
 The action D dot v is Mathlib Matrix.Module scalar multiplication, not entrywise scalar multiplication. The form uses the complex inner product, conjugate-linear in its first entry.
 
-**Theorem 1.26 (Zero form implies zero rows).**
+**Theorem 1.27 (Zero form implies zero rows).**
 
 $$\forall H:\operatorname{Type}, [\operatorname{NormedAddCommGroup}\left(H\right)] [\operatorname{InnerProductSpace}\left(\mathbb{C}, H\right)] \forall I:\operatorname{Type}, [\operatorname{Fintype}\left(I\right)] \forall D:\operatorname{Matrix}\left(I, I, \mathbb{C}\right), \forall v:I \to H, (\operatorname{Matrix.PosSemidef}\left(D\right)) \Rightarrow ((\operatorname{matrixForm}\left(D, v\right) = 0) \Rightarrow (\forall i:I, ((D) \cdot (v))\left(i\right) = 0))$$
 
@@ -316,7 +330,7 @@ $$\forall H:\operatorname{Type}, [\operatorname{NormedAddCommGroup}\left(H\right
 
 A positive semidefinite matrix factors as B-star times B. The form is a sum of squared Hilbert norms, forcing every row to vanish.
 
-**Theorem 1.27 (Strict positivity gives zero coefficients).**
+**Theorem 1.28 (Strict positivity gives zero coefficients).**
 
 $$\forall H:\operatorname{Type}, [\operatorname{NormedAddCommGroup}\left(H\right)] [\operatorname{InnerProductSpace}\left(\mathbb{C}, H\right)] \forall I:\operatorname{Type}, [\operatorname{Fintype}\left(I\right)] \forall D:\operatorname{Matrix}\left(I, I, \mathbb{C}\right), \forall v:I \to H, (\operatorname{Matrix.PosDef}\left(D\right)) \Rightarrow ((\operatorname{matrixForm}\left(D, v\right) = 0) \Rightarrow (\forall i:I, v\left(i\right) = 0))$$
 
@@ -328,7 +342,7 @@ $$\forall H:\operatorname{Type}, [\operatorname{NormedAddCommGroup}\left(H\right
 
 After the rows vanish, invertibility of the positive definite matrix forces every coefficient vector to vanish.
 
-**Theorem 1.28 (Splitting the leading letter).**
+**Theorem 1.29 (Splitting the leading letter).**
 
 $$\forall n:\mathbb{N}, \forall k:\mathbb{N}, \forall A:\operatorname{Type}, [\operatorname{AddCommMonoid}\left(A\right)] \forall f:\left(\operatorname{Fin}\left(k + 1\right) \to \operatorname{Fin}\left(n\right)\right) \to A, \sum_{w:\operatorname{Fin}\left(k + 1\right) \to \operatorname{Fin}\left(n\right)} (f\left(w\right)) = \sum_{i:\operatorname{Fin}\left(n\right)} (\sum_{w:\operatorname{Fin}\left(k\right) \to \operatorname{Fin}\left(n\right)} (f\left(\operatorname{Fin.cons}\left(i, w\right)\right)))$$
 
@@ -340,7 +354,7 @@ $$\forall n:\mathbb{N}, \forall k:\mathbb{N}, \forall A:\operatorname{Type}, [\o
 
 Fin.consEquiv partitions all words of positive length by their leading letter.
 
-**Theorem 1.29 (The operator form equals the Gram form).**
+**Theorem 1.30 (The operator form equals the Gram form).**
 
 $$\forall n:\mathbb{N}, \forall d:\mathbb{N}, (0 < d) \Rightarrow (\forall H:\operatorname{Type}, [\operatorname{NormedAddCommGroup}\left(H\right)] [\operatorname{InnerProductSpace}\left(\mathbb{C}, H\right)] [\operatorname{CompleteSpace}\left(H\right)] \forall X:\operatorname{Fin}\left(n\right) \to \operatorname{ContinuousLinearMap}\left(\mathbb{C}, H, H\right), (\forall i:\operatorname{Fin}\left(n\right), \operatorname{IsSelfAdjoint}\left(X\left(i\right)\right)) \Rightarrow (\forall h:H, \operatorname{inner}\left(\mathbb{C}, h, \operatorname{residual}\left(n, d, X\right)\left(h\right)\right) = \operatorname{matrixForm}\left(\operatorname{sharpGram}\left(n, d\right), (w:\operatorname{Fin}\left(d\right) \to \operatorname{Fin}\left(n\right)) \mapsto \operatorname{wordEval}\left(X, w\right)\left(h\right)\right)))$$
 
@@ -352,7 +366,7 @@ $$\forall n:\mathbb{N}, \forall d:\mathbb{N}, (0 < d) \Rightarrow (\forall H:\op
 
 The reversed-word pairing converts the operator form into the word Gram form; the pure diagonal extracts the even powers.
 
-**Theorem 1.30 (Positivity at the sharp constant).**
+**Theorem 1.31 (Positivity at the sharp constant).**
 
 $$\forall n:\mathbb{N}, \forall d:\mathbb{N}, (2 \le n) \Rightarrow ((0 < d) \Rightarrow (\operatorname{Matrix.PosSemidef}\left(\operatorname{sharpGram}\left(n, d\right)\right)))$$
 
@@ -364,7 +378,7 @@ $$\forall n:\mathbb{N}, \forall d:\mathbb{N}, (2 \le n) \Rightarrow ((0 < d) \Ri
 
 Garcia--Volcic, Proposition 3.3, pages 8--9. Explicit inverse columns satisfy G R = E. The positive decomposition uses P = I - mu R E-transpose and the nonnegative pure block.
 
-**Theorem 1.31 (The sharp operator inequality).**
+**Theorem 1.32 (The sharp operator inequality).**
 
 $$\forall n:\mathbb{N}, \forall d:\mathbb{N}, (0 < n) \Rightarrow ((0 < d) \Rightarrow (\forall H:\operatorname{Type}, [\operatorname{NormedAddCommGroup}\left(H\right)] [\operatorname{InnerProductSpace}\left(\mathbb{C}, H\right)] [\operatorname{CompleteSpace}\left(H\right)] \forall X:\operatorname{Fin}\left(n\right) \to \operatorname{ContinuousLinearMap}\left(\mathbb{C}, H, H\right), (\forall i:\operatorname{Fin}\left(n\right), \operatorname{IsSelfAdjoint}\left(X\left(i\right)\right)) \Rightarrow (((\operatorname{mu}\left(n, d\right):\mathbb{C})) \cdot (\sum_{i:\operatorname{Fin}\left(n\right)} (X\left(i\right)^{2 \cdot d})) \le \operatorname{nchs}\left(n, 2 \cdot d, X\right))))$$
 
@@ -403,6 +417,7 @@ The Lean carrier is a complete complex inner-product space and bounded complex-l
 - Truth anchor: `D5/S3/Analytic/Hunter/NCHunterPositivity.pureProjection`
 - Truth anchor: `D5/S3/Analytic/Hunter/NCHunterPositivity.residual`
 - Truth anchor: `D5/S3/Analytic/Hunter/NCHunterPositivity.residual_inner_gram`
+- Truth anchor: `D5/S3/Analytic/Hunter/NCHunterPositivity.reverse_word_list`
 - Truth anchor: `D5/S3/Analytic/Hunter/NCHunterPositivity.sharpGram`
 - Truth anchor: `D5/S3/Analytic/Hunter/NCHunterPositivity.sharp_gram_posSemidef`
 - Truth anchor: `D5/S3/Analytic/Hunter/NCHunterPositivity.sharp_positivity`
