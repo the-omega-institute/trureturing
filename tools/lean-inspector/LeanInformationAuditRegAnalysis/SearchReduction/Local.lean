@@ -433,7 +433,10 @@ def boundedRebuildBranch (action : MetaM LocalResult)
   original.restore
   set original.meta
   modifyThe Core.State fun s => {s with cache := original.core.cache}
-  return result
+  -- Kernel checking can return structurally equal expressions from the
+  -- attempt's Meta caches. Detach only after those caches are discarded and
+  -- while the candidate's mapped module storage is still alive.
+  return {result with proof? := result.proof?.map detachLookupExpression}
 
 /-- A success in either route wins. Negative evidence requires both routes to
 finish normally; timeout in one route never becomes a one-price edge. -/
