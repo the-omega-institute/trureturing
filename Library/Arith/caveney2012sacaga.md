@@ -1431,3 +1431,62 @@ $$
 The complete original improper integral and all its prime-power and
 endpoint terms are retained. The independent signed lower bound (S4),
 strict Robin for every integer $n>5040$, and RH remain unproved.
+
+## The future-record condition is an all-real pressure minimum
+
+Use the full pressure $P$, inventory $B$, tangent gap $H$ and actual
+values $X(b)$ already used in (P1)--(P6). In particular the existing
+[complete pressure account](../ArithSums/nicolas2025comparison.md#keep-the-two-response-kernels-distinct)
+is
+
+$$
+P(t)=\gamma+\log\log t-g(t)t-M(g(t))=I_\psi(t)+R(t),
+\qquad P'(t)=k(t)[t-B(t)]\quad\text{a.e.}
+$$
+
+Start with an actual event-free own-price integer $N=C_A$,
+$A=\log N>1$, before assuming its future-record property. Thus
+$B(A)=A$, $d_A(N)=0$ and $P(A)=\Delta(N)$. The following three
+conditions on this same integer are equivalent:
+
+$$
+\begin{aligned}
+&G(m)\le G(N)\quad\text{for every integer }m\ge N;\\
+&P(t)\ge P(A)\quad\text{for every real }t\ge A;\\
+&\int_A^t[B(u)-u]k(u)\,du\le0
+       \quad\text{for every real }t\ge A.
+\end{aligned}
+\tag{FR1}
+$$
+
+For the forward direction, reuse (P6)'s exact identity
+$X_N-X(t)=P(t)-P(A)-H(t,B(t))$. The actual layer rule gives
+$N\mid C_t$ for $t\ge A$, including every tied activation layer.
+The first condition can therefore be applied to $C_t$ and gives the
+already retained stronger comparison
+
+$$
+P(t)-P(A)\ge H(t,B(t))\ge0.
+\tag{FR2}
+$$
+
+The converse uses every comparator's own price. For an arbitrary
+integer $m\ge N$, put $a=\log m\ge A$. The existing nonnegative
+defect and unrestricted integer identity give
+
+$$
+\Delta(m)=P(a)+d_a(m)\ge P(A)=\Delta(N).
+$$
+
+This is exactly the first condition. Finally, the pressure is locally
+absolutely continuous: on each compact price interval only finitely
+many layers activate, and their pressure terms are continuous at ties.
+Its almost-everywhere derivative above makes the second and third
+conditions equivalent. There is no missing atom at a tied event.
+
+The forward identity and tangent mechanism are reused from (P6); the
+converse records their exact all-integer/all-real interface. No later
+$C_t$ has been assumed to satisfy $B(t)=t$, GA1, or its own future-record
+property. Every prime-power layer stays in $B$ and $M$. This is a paper
+application of the existing source comparisons, not an independently
+established sign for $I_\psi$, a priority claim, or Lean certification.
