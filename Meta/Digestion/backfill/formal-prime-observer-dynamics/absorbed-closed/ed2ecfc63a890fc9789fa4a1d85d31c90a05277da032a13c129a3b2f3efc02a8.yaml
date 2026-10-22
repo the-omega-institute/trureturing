@@ -1,0 +1,9 @@
+fingerprints:
+  raw_sha256: sha256:ed2ecfc63a890fc9789fa4a1d85d31c90a05277da032a13c129a3b2f3efc02a8
+  normalized_sha256: sha256:ed2ecfc63a890fc9789fa4a1d85d31c90a05277da032a13c129a3b2f3efc02a8
+cas_ref: sha256:ed2ecfc63a890fc9789fa4a1d85d31c90a05277da032a13c129a3b2f3efc02a8
+coverage_gids:
+  - gid: D5/S3/Observer/Completion/ThreeCompletionOrthogonality.prime_valuation_identity_without_global_generator
+    target_statement_id: sha256:230cb7da61dc58cd332dbd4a10e32753017912c25fe6f622e6a45e8bf3fccebd
+receipts:
+  unresolved_subitems: []

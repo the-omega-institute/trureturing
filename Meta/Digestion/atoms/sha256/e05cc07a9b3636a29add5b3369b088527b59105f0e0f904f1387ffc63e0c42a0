@@ -1,0 +1,23 @@
+**Corollary 11.3 (Every actual-arc companion is covered).** For every $p\in[10,34]$, every complete world in $C(p,v_J(p))$ satisfies (11.2).
+
+*Proof.* SIII, Theorem 22.3 gives $v_J(p)>(37p+426)/10$. To check the remaining output bound use precisely the $\tau_L,b_L$ descending coefficient rows of SIII, (16.7), with denominator $10^{20}$ and radius $\rho=10^{-5}$. For each of the three parameter blocks $[L,H]$, put
+
+$$
+I_k=[-1+2k/1024,-1+2(k+1)/1024],\quad
+p(u)=(L+H)/2+(H-L)u/2,\quad 0\le k\le1023,
+$$
+
+and let $X_t=\widehat\tau_L(I_k)+[-\rho,\rho]$, $X_b=\widehat b_L(I_k)+[-\rho,\rho]$. Evaluate the integer $D,N_v$ arrays in SIII, Lemma 16.3 by descending $b$ Horner inside descending $t$ Horner, retaining all seven rows and five columns. The exact interval rules above give the following strict rational enclosures over all $1024$ cells of each block:
+
+$$
+\begin{array}{c|c|c}
+[L,H]&D&N_v/D\\ \hline
+[10,20]&(4728407/125000,44307113/10^6)&(16368057/200000,117541097/10^6)\\
+[20,30]&(23208057/10^6,9490353/250000)&(29153959/250000,31126333/200000)\\
+[30,34]&(7678107/500000,14607/625)&(76502951/500000,85080543/500000).
+\end{array}
+\tag{11.14}
+$$
+
+In particular the denominators are positive, and the three response ranges lie respectively in $(81,118)$, $(116,156)$ and $(153,171)$. SIII, Lemma 16.3 places the actual endpoint in these boxes; its response is $v_J$. Thus $0<v_J<200$ and the actual arc lies in $\mathcal Q$. Theorem 11.2 applies to all its companions, regardless of whether they are among the two endpoints defining the arc. Arc existence, analyticity, the scalar barrier and the parameter-to-world correspondence are reused from SIII, Sections 16 and 22, rather than inferred from the response enclosures. ∎
+

@@ -1,0 +1,26 @@
+## 12. Exact coefficient data for the small-b exclusion
+
+For a polynomial $P$ write $[P]_i=[b^i]P$, with $[P]_i=0$ outside its
+coefficient range. Addition and multiplication of coefficient arrays mean
+
+$$
+[P+Q]_i=[P]_i+[Q]_i,\qquad
+[PQ]_i=\sum_{k=0}^i[P]_k[Q]_{i-k}.
+\tag{12.1}
+$$
+
+Together with the arrays (7.3), these finite sums specify every integer in
+(7.7)–(8.2). In particular expansion of (7.7) gives, writing $a=a_b$,
+$c=c_b$, $h=h_b$,
+
+$$
+\begin{aligned}
+Q_0&=-b^2c^2,\\
+Q_1&=Thc-c^2-2b^2ac,\\
+Q_2&=h^2+Tha-2hc+c^2-2ac-b^2a^2,\\
+Q_3&=-2ha+2ac-a^2,\\
+Q_4&=a^2.
+\end{aligned}
+\tag{12.2}
+$$
+

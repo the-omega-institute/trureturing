@@ -1,0 +1,44 @@
+**Theorem 15.1 (T4: compact strict anchors).** For every $P>0$ there
+is a compact subset $\mathcal A_P\subset\mathcal H$ with the
+following property. Every original joint configuration
+
+$$
+W_0\ne W_1,\quad W_2\ne W_3,\quad
+W_i\in C(p,v),\quad p\ne24,\quad |p|\le P,\qquad
+a(W_0)=a(W_1),\quad m(W_2)=m(W_3)
+\tag{15.1}
+$$
+
+can be relabelled within its two selected pairs so that
+$W_0,W_2\in\mathcal A_P$ and
+$\delta(W_0),\delta(W_2)\ge\varepsilon(P)$.
+If the common base is restricted to a compact
+$K\subset\{(p,v):p\ne24\}$, the two anchors lie in a compact
+subset $\mathcal A_{P,K}\subset X$.
+
+The anchors may coincide. Cross-pair reuse, different terminal common
+values, all nonanchor endpoints and all unused companions retain the
+guards of Definition 1.2.
+
+Proof. Apply Theorem 14.3 independently to the selected $J$ pair and
+selected $M$ pair. Choose the endpoint with $\delta\ge\varepsilon(P)$
+in each. Assumption 14.1 bounds their $b,c,d$ and every padded gain
+coefficient by a common finite constant, enlarged if necessary.
+In the resulting closed bounded coordinate box impose
+
+$$
+bc=r(1-r),\qquad \delta\ge\varepsilon(P),\qquad |p|\le P,
+\qquad\text{all five original }H_4\text{ reading equations}.
+\tag{15.2}
+$$
+
+This defines a closed bounded set in finite-dimensional real space.
+Its source is strict by the positive $\delta$ bound. Its gain is
+nonzero because a zero gain would make the original readings $0$ and
+$24$ equal to the same drift. It is therefore a compact subset
+$\mathcal A_P$ of the full parent, containing both chosen endpoints.
+It may contain $p=24$ worlds. Intersecting with the closed inverse
+image of $K$ under the continuous acquired-base map gives the compact
+$\mathcal A_{P,K}$ inside $X$. The endpoint choices do not change
+any world, clock, action or acquired observation. ∎
+

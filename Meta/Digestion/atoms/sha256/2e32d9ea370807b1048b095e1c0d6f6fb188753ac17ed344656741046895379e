@@ -1,0 +1,134 @@
+**Theorem 24.1 (Global selected-M upper-face floor).** There is one
+$0<\rho_1\le1/4$ such that
+
+$$
+\forall Q\in\mathscr Q\quad\forall i\in\{2,3\},\qquad
+1-r(W_i)\ge\rho_1.
+\tag{24.1}
+$$
+
+Proof. If $\mathscr Q$ is empty choose $\rho_1=1/4$. Otherwise suppose
+there is no common positive lower bound. For each positive integer
+$k$ choose an original tuple $Q_k$ and one of its selected $M$
+endpoints with $1-r<1/k$. Call this endpoint $X_k$ and its selected
+$M$ mate $Y_k$. This merely relabels within that pair; it preserves
+both within-pair distinctness conditions in (22.4), the independently
+chosen $J$ pair and all allowed cross-pair overlap.
+
+Lemma 22.2 bounds the bases and both complete coordinate vectors
+
+$$
+\xi(W)=(r,b,c,d,\gamma_0,\gamma_1,\gamma_2,\gamma_3).
+\tag{24.2}
+$$
+
+Finite-dimensional bounded-sequence extraction gives simultaneous
+subsequences with
+
+$$
+(p_k,v_k)\longrightarrow(p_\infty,v_\infty),\qquad
+\xi(X_k)\longrightarrow\xi(X),\qquad
+\xi(Y_k)\longrightarrow\xi(Y).
+\tag{24.3}
+$$
+
+Here the limits include $c$, each fixed drift and all four padded
+coefficients of each original whole gain. This is the classical
+Bolzano–Weierstrass theorem in a finite Euclidean product, applied
+to these bounded coordinates, not to an assumed closed joint locus.
+The source relations and the closed inequalities (22.6) pass to the
+limit. In particular
+
+$$
+\begin{gathered}
+p_\infty\ne24,\qquad |p_\infty-24|\ge\epsilon,\qquad r(X)=1,\\
+b(X)c(X)=0,\qquad
+b(X)+c(X)\ge\eta,\qquad 0\le b(X),c(X)\le C_J.
+\end{gathered}
+\tag{24.4}
+$$
+
+Consequently exactly one of $b(X),c(X)$ is positive. Its value
+$t$ satisfies $\eta\le t\le C_J$. Thus $X$ has precisely source
+$B_1(t)$ or $C_1(t)$, with finite $t>0$. The corner $b=c=0$,
+a zero face parameter and an infinite face parameter are excluded
+by these derived inequalities.
+
+Since $\delta(X_k)\le1-r(X_k)\longrightarrow0$, the maximum bound
+in (22.8) forces $\delta(Y_k)\ge\alpha$ for all sufficiently large
+$k$. Its limiting source is therefore strict. For each original
+clock, matrix multiplication, trace and evaluation of a padded
+polynomial are polynomial functions of (24.2). The seven original
+acquired equations and the terminal-$M$ equality pass continuously
+to the limits. Neither limiting gain is zero, because that would
+make its clock-zero and clock-one readings equal to the same drift.
+It follows that
+
+$$
+Y\in C(p_\infty,v_\infty),\qquad m(Y)=m(X),
+\tag{24.5}
+$$
+
+where $Y$ is an actual strict complete world. At $X$ all four traces
+$j,n,T,U$ have positive limits. Thus (23.4) identifies the limiting
+whole gain from the same four original samples, without any
+late-clock refitting.
+
+If $X$ has source $B_1(t)$, Lemma 23.2 first excludes $q_B(t)=0$
+by the undivided equation (23.5), and then identifies $X=R(t)$.
+The bases converge to a finite off-$24$ point, the first endpoint
+converges entrywise in its entire source including $c$ and
+coefficientwise in its whole gain, and the other endpoint converges
+to the strict complete $Y$. These are exactly the hypotheses of S,
+Corollary 21.3. That corollary excludes this sequence of original
+joint configurations.
+
+If $X$ has source $C_1(t)$, Lemma 23.2 first excludes $q_C(t)=0$
+using the undivided equation (23.7), and then identifies
+
+$$
+X=\widehat W_1(t),\qquad
+(p_\infty,v_\infty)=(p_1(t),v_1(t)).
+\tag{24.6}
+$$
+
+The off-$24$ gap supplies $p_1(t)\ne24$ and, by (23.3), excludes
+the $t=1/8$ branch. The two complete convergences (24.3) now satisfy
+every hypothesis of Theorem 21.2, which excludes this sequence.
+In particular its classification premise is exactly Theorem 20.2
+on all finite positive nonpole off-$24$ C1 parameters and all
+actual strict companions in the entire child. Equation (24.5)
+is such a companion relation; no regularity or gain-sample condition
+has been inserted.
+
+The open-neighbourhood implication in this C1 exclusion can also
+be read directly from the classification. Theorem 20.2 forces
+$t=t_*$ and $Y=W_*$, and Corollary 21.1 puts the limiting base in
+the closed rectangle
+
+$$
+\mathcal R_*=
+\frac{[56979139,56979140]}{10^6}
+\times\frac{[304497370,304497371]}{10^6}
+\subset\operatorname{int}\mathcal K,
+\qquad \mathcal K=[56,58]\times[304,305].
+\tag{24.7}
+$$
+
+Its four margins to the boundary of $\mathcal K$ are all greater
+than $1/4$. Hence the open sup-norm ball of radius $1/4$ about
+each point of $\mathcal R_*$ is contained in
+$\operatorname{int}\mathcal K$. All sufficiently late actual
+bases $(p_k,v_k)$ therefore lie in $\mathcal K$.
+[SV](FIB_STRICT_REAL_JOINT_INCIDENCE_SUPPORT_V.md), Theorem 1.1,
+makes $J$ injective on each entire actual child above those bases.
+This contradicts its selected distinct equal-$a$ pair in (22.4).
+The contradiction occurs at the actual bases and does not require
+limits of the $J$ endpoints or distinctness of any such limits.
+
+Both exhaustive upper-face alternatives are impossible. If the
+infimum of $1-r$ on $\mathscr E_M$ were zero, the sequence just
+excluded would exist. That infimum is therefore positive. Reducing
+a positive lower bound to at most $1/4$ proves (24.1) for both
+selected labels simultaneously. ∎
+

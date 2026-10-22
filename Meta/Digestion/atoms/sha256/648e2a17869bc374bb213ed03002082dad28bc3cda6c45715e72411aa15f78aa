@@ -1,0 +1,22 @@
+**Corollary 134.3 (Necessary effective accumulation data).** Let
+$q_j>0$ tend to zero and let $\mathcal R_j$ be exact minimizers of
+$e_{-q_j}$. Every Choi accumulation point of their phase averages
+$\overline{\mathcal R}_j$ has
+
+$$
+C=\begin{pmatrix}1&0&0\\0&1/2&1/2\\0&1/2&1/2\end{pmatrix},
+\qquad \xi_{01}=-\frac1{\sqrt2}.
+\tag{134.4}
+$$
+
+*Proof.* Averaging preserves exact optimality, and Lemma 133.3 plus
+Theorem 133.6 place every limit in $\mathcal Z_0$. From (133.5),
+$L(\overline{\mathcal R}_j)\ge9(2/3-\mu(-q_j))/q_j\to\sqrt2$.
+Lemma 133.2 bounds the limit by $\sqrt2$, so equality holds throughout its
+proof: $v=1$, $y=z=1/2$, and $a=1/\sqrt2$. Row and column sums then give the
+population matrix in (134.4). The principal CP minor and
+$\operatorname{Re}\xi_{01}=-a$ force $\operatorname{Im}\xi_{01}=0$.
+This is necessary effective phase-averaged data only; unused coherences and
+untwirled finite minimizers are not classified. No positive-q finite value,
+finite-path optimality, or H4 bridge is asserted. $\square$
+

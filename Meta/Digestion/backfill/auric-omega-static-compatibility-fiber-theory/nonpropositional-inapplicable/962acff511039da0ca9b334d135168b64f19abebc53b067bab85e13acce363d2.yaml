@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:962acff511039da0ca9b334d135168b64f19abebc53b067bab85e13acce363d2
+  normalized_sha256: sha256:962acff511039da0ca9b334d135168b64f19abebc53b067bab85e13acce363d2
+cas_ref: sha256:962acff511039da0ca9b334d135168b64f19abebc53b067bab85e13acce363d2
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 'nonpropositional: 仅定位 CHSH、语境性、量子恢复与 GNS 的文献及适用范围；未重述定量不等式或恢复等价命题。'
+    previous_atom_id: 914482111fff1f29655e9bb99dcde80bfb345962a84a5512cad2219e8635162d
+    next_atom_id: 3ce35eb164cb37771832b5d3d6e0215e8779e8859bd020e1717ea11c1f8db64d

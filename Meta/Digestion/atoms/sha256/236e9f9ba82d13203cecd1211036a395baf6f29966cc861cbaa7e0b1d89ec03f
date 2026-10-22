@@ -1,0 +1,59 @@
+**命题 71.1（同一 $z$、同一 $\kappa$ 的一次与两次见证）。** 在固定物理顺序 (X.1) 下，取
+
+$$
+\begin{aligned}
+\psi&=\tfrac12(e_0+ie_1-e_3-ie_4),&
+\alpha&=(e_0+ie_1)/\sqrt2,&\beta&=(e_3+ie_4)/\sqrt2,\\
+\rho_{\mathrm p}&=|\psi\rangle\langle\psi|,&
+\rho_{\mathrm m}&=\tfrac12\bigl(|\alpha\rangle\langle\alpha|
+                                   +|\beta\rangle\langle\beta|\bigr),&
+\sigma_{\mathrm p}&=\bar\rho_{\mathrm p},\qquad
+\sigma_{\mathrm m}=\bar\rho_{\mathrm m}.
+\end{aligned}
+\tag{X.28}
+$$
+
+它们均为被动实帧态；物理态分别是 $D_3\rho D_3^\dagger$ 及 $D_3\sigma D_3^\dagger$。
+两对共享完全相同的初始人口
+$z^{\mathrm{ph}}=(1/4,1/4,0,1/4,1/4)$，故都有
+$\langle n_1\rangle=\langle n_3\rangle=1/2$、$\langle n_2\rangle=0$、$\kappa=1/4$。
+每对内部均有共同实部及 $D=1$，但差权重分别为 $(1,0)$ 与 $(1/2,1/2)$。
+前者一次相位即完美区分；后者一次的最佳对比仅 $1/2$，两次达到一。
+
+**证明。** $\psi=(\alpha-\beta)/\sqrt2$ 归一化，且 $\psi^T\psi=0$，
+所以 $\psi\perp\bar\psi$，纯态对正交且差谱为 $(1,-1,0,0,0)$。
+$\alpha,\beta,\bar\alpha,\bar\beta$ 两两正交；
+混态对各在两个方向上有本征值 $1/2$，因此差谱为 $(1/2,1/2,0,-1/2,-1/2)$。
+直接对角计算给所述 $z^{\mathrm{ph}}$ 和占据。
+
+还可在同一菜单中明确读出概率。令 $J_0,J_1$ 分别把实平面
+$\operatorname{span}\{e_0,e_1\}$、$\operatorname{span}\{e_3,e_4\}$ 上的
+$e_0,e_3$ 乘以 $i$，其余方向不动。
+每个 $J_j$ 都是同一个秩一 $S_{13}$ 的 $SO(5)$ 共轭，只计一次正向调用。
+取实秩二投影
+
+$$
+T=|(e_0+e_1)/\sqrt2\rangle\langle(e_0+e_1)/\sqrt2|
+       +|(e_3+e_4)/\sqrt2\rangle\langle(e_3+e_4)/\sqrt2|.
+\tag{X.29}
+$$
+
+$J_0^\dagger TJ_0$ 在第一平面投到 $\alpha$，在第二平面为实方向。
+故它在纯态对上给概率 $(3/4,1/4)$，在混态对上也给 $(3/4,1/4)$。
+对混态再用 $J_1$，效果
+$(J_1J_0)^\dagger T(J_1J_0)$ 投到 $\alpha,\beta$ 的张成，给 $(1,0)$。
+纯态的一次完美设置则取实正交
+$e=(e_0-e_3)/\sqrt2$、$f=(e_1-e_4)/\sqrt2$，
+使 $\psi=(e+if)/\sqrt2$；一次相位把 $e$ 乘 $i$，
+随后实读投影包含 $(e+f)/\sqrt2$ 并以 $e_2$ 补秩二，即给 $(1,0)$。
+每个实秩二投影均可由 $SO(5)$ 共轭回固定的 $R_{\mathrm{read}}$，
+再用 (IX.1) 实现有限纯翻转字。
+这些是相同安装的不同已知候选对设置；同一候选对的两个未知标签始终使用相同字。
+
+控制顺序不可删去：实效果直接作用于原旧盲对时没有对比；
+对角相位紧接对角人口读口也没有对比，因为两者对易。
+但先相位、再实混合可以读出相干。
+例如 $(e_1\pm ie_4)/\sqrt2$ 经原安装的 $S_{13}$ 变成
+$(e_1\mp e_4)/\sqrt2$，随后实秩二投影可以完美区分。
+因此不存在“初始一次相位后接任意实控制仍一律盲”的推论。$\square$
+

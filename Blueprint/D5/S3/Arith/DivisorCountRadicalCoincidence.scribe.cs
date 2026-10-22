@@ -11,6 +11,19 @@ internal sealed class DivisorCountRadicalCoincidenceDocument : IScribeDocumentDe
         H("Divisor Count and Radical Rigidity"),
         Blocks(
             Describe.Lean(
+                DescribeId.Create("prime-factors-bound-for-divisor-count"),
+                DeclarationHandle.Create(
+                    "D5/S3/Arith/DivisorCountRadicalCoincidence.primeFactors_card_le_cardFactors_card_divisors"),
+                H("Distinct prime factors bound the prime factors of the divisor count"),
+                StatementSource.FromAuthor(PrimeFactorsBoundFormula()),
+                AssessedProvenance.FromRepo(),
+                Blocks(Paragraph(Text(
+                    "For a nonzero natural number k, the number of its distinct prime factors "
+                        + "is at most the number of prime factors of its divisor count, counted "
+                        + "with multiplicity. Each positive exponent contributes a factor "
+                        + "greater than one to the prime-exponent product for the divisor count."))),
+                DescribeRole.Theorem),
+            Describe.Lean(
                 DescribeId.Create("divisor-count-equals-radical-under-divisibility"),
                 DeclarationHandle.Create(
                     "D5/S3/Arith/DivisorCountRadicalCoincidence.radical_eq_card_divisors_of_dvd"),
@@ -27,6 +40,19 @@ internal sealed class DivisorCountRadicalCoincidenceDocument : IScribeDocumentDe
                             + "give the stated equality."))),
                 DescribeRole.Theorem))));
 
+    private static Formula PrimeFactorsBoundFormula()
+    {
+        Formula k = F.Id("k");
+        Formula divisorCount = Call("card", Call("divisors", k));
+        Formula countFactors = Seq(
+            Operatorname, Grp(F.Id("ArithmeticFunction")), Dot,
+            Operatorname, Grp(F.Id("cardFactors")), Parenthesized(divisorCount));
+        return Disp(Seq(
+            Forall, Sp, k, Sp, InMacro, Sp, Mathbb, Grp(F.Id("N")), Comma, Esc,
+            k, Sp, Neq, Sp, D(0), Sp, Rightarrow, Sp,
+            Call("card", Call("primeFactors", k)), Sp, Le, Sp, countFactors));
+    }
+
     private static Formula TheoremFormula()
     {
         Formula k = F.Id("k");
@@ -39,4 +65,6 @@ internal sealed class DivisorCountRadicalCoincidenceDocument : IScribeDocumentDe
             divisorCount, Sp, Mid, Sp, radical, Sp, Rightarrow, Sp,
             radical, Sp, Eq, Sp, divisorCount));
     }
+
+    private static Formula Parenthesized(Formula value) => Seq(Open, value, Close);
 }

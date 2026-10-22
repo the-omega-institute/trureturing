@@ -1,0 +1,43 @@
+**Corollary 109.2 (Explicit strict tail).** Set
+
+$$
+u_* =\frac{\sqrt{33}-1}{16},\qquad
+\eta_*=2u_*,\qquad
+\kappa_* =\frac{\sqrt{33}-1}{72}>0.
+\tag{109.9}
+$$
+
+Then $0<u_*<1$, and $8u_*^2+u_*-1=0$ gives
+$\eta_*^2=(1-u_*)/2$. Thus the decoder is CPTP even at the saturated
+constraint. Equation (108.9) becomes
+$g(x)=2u_*x^2+2u_*/9$, so its minimum is $\kappa_*=2u_*/9$.
+There exists $q_0\in(0,1/2]$ such that
+
+$$
+\mu(-q)\le e_{-q}(\mathcal R_{u_*,\eta_*})
+ \le\frac23-\frac{\kappa_*}{2}q
+ =\frac23-\frac{\sqrt{33}-1}{144}q<\frac23
+\quad(0<q<q_0).
+\tag{109.10}
+$$
+
+*Proof.* Divide the remainder in (109.1) by $q$ and choose a positive
+neighborhood on which its absolute value is at most $\kappa_*/2$.
+The minimax is at most the error of this particular decoder. $\square$
+
+Since $q_n=2^{1-n}\to0$, every sufficiently large even actual horizon
+satisfies
+
+$$
+\mu_n\le\frac23-\frac{\sqrt{33}-1}{144}\,2^{1-n}<\frac23.
+\tag{109.11}
+$$
+
+In the original coordinates the legal decoder is
+$D=\mathcal R_{u_*,\eta_*}\circ\operatorname{Ad}_{U_0^\dagger}$.
+It is a single CPTP map for all inputs, with the permissions in
+Definition 105.1. Equation (109.1) is the asymptotic error of a fixed
+decoder; it is not an asymptotic equality for $\mu(-q)$. The existence
+of $q_0$ supplies no numerical threshold and makes no assertion about
+every individual even horizon.
+

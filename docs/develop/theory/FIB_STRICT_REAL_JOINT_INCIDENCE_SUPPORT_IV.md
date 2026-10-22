@@ -1771,3 +1771,1574 @@ condition implies (14.9) by forgetting the condition. ∎
 
 ## 追加锚（本行以下为增补区）
 
+## 15. The finite positive C1 face and its complete lift
+
+**Definition 15.1 (C1 notation and boundary tuples).** Retain the complete
+worlds, left products, entire children and terminal responses of
+Definitions 1.1–1.2, equivalently
+[III](FIB_STRICT_REAL_JOINT_INCIDENCE_SUPPORT_III.md), Definitions 1.1–1.2.
+The symbols introduced in Sections 15–21 are local to the C1 face; in
+particular its polynomials $Q_4,F,G$ below are different from the C0
+polynomials of Sections 2–5. For a finite real $t>0$ put
+
+$$
+\begin{gathered}
+C_1(t)=(r,b,c)=(1,t,0),\qquad
+q=(t+1)(t^3-4t-2),\qquad q_d=5q,\\
+P_1=-6(36t^4+61t^3+221t^2+181t+30),\\
+V_1=-3(375t^4+881t^3+2486t^2+1706t+266),\\
+T_1=-3(1088t^4+3483t^3+9978t^2+7102t+1220).
+\end{gathered}
+\tag{15.1}
+$$
+
+When $q\ne0$ define
+
+$$
+\begin{gathered}
+d_1=-\frac{3(11t^2+158t+80)}{5(t^3-4t-2)},\qquad
+(p_1,v_1,m_1)=\frac{(P_1,V_1,T_1)}{q_d},\\
+g_1=\operatorname{Interp}_{0,1,2,3}
+\left(-d_1,\frac{24-d_1}{t},
+\frac{147/5-d_1}{1+t},\frac{24-d_1}{1+t}\right).
+\end{gathered}
+\tag{15.2}
+$$
+
+Here interpolation means the unique polynomial of degree at most three
+at the four displayed distinct nodes, using the Lagrange formula of
+Berrut–Trefethen, [§2](https://doi.org/10.1137/S0036144502417715).
+Write $\widehat W_1(t)=(P(1,t,0),g_1,d_1)$ for this complete auxiliary
+tuple. Its source is nonstrict, so $\widehat W_1(t)$ is not an actual
+world. Its gains are whole polynomials, not independently variable
+samples. These are the C1 tuples of
+[SII](FIB_STRICT_REAL_JOINT_INCIDENCE_SUPPORT_II.md), Definition 12.1
+and Lemma 12.2, with the same original clocks.
+
+**Theorem 15.2 (Finite face domain and exact responses).** A finite
+complete C1 tuple with the first five acquired readings exists precisely
+when $q\ne0$, and is then $\widehat W_1(t)$. Its fifth, sixth and
+terminal-$M$ responses are $p_1,v_1,m_1$. For positive $t$ in this
+domain,
+
+$$
+p_1\ne24\quad\Longleftrightarrow\quad t\ne\frac18.
+\tag{15.3}
+$$
+
+Proof. At C1 the positive traces $j,n,T,U$ are
+$t,t+1,t+1,2t+1$. The undivided parent equation of Definition 1.2 is
+
+$$
+\frac{2(t^3-4t-2)}{t(t+1)(2t+1)}(d-24)
+=-\frac{6(5t+2)(8t-1)}{5(t+1)(2t+1)}.
+\tag{15.4}
+$$
+
+The polynomial $t^3-4t-2$ is coprime to $(5t+2)(8t-1)$.
+Consequently its positive zeros cannot satisfy (15.4) with finite $d$.
+The factor $t+1$ of $q$ has no positive zero. Elsewhere (15.4) has
+the unique solution $d=d_1$. The first four original readings then
+give exactly the whole interpolant in (15.2). Substitution at clocks
+$5,6,7$, with respective traces $U+n,2U+n,3U+2n$, gives (15.1)–(15.2).
+Finally multiplication gives
+
+$$
+P_1-24q_d=-6(8t-1)(7t^3+11t^2+19t+10).
+\tag{15.5}
+$$
+
+The last factor is positive for $t>0$, proving (15.3). In particular
+the exclusion of a zero of $q$ removes no finite complete C1 tuple. ∎
+
+**Definition 15.3 (Late interpolation and full-world coordinates).**
+For real $x,d,p,v$ with $D=x(x+1)(x+2)\ne0$, let $H$ interpolate
+
+$$
+\begin{aligned}
+h_3&=(24-d)/x,& h_4&=18-d,\\
+h_5&=(p-d)/(x+1),& h_6&=(v-d)/(x+2)
+\end{aligned}
+\tag{15.6}
+$$
+
+at $3,4,5,6$. Thus, writing $H_i=H(i)$,
+
+$$
+\begin{pmatrix}H_0\\H_1\\H_2\\H_7\end{pmatrix}
+=R\begin{pmatrix}h_3\\h_4\\h_5\\h_6\end{pmatrix},\qquad
+R=\begin{pmatrix}
+20&-45&36&-10\\
+10&-20&15&-4\\
+4&-6&4&-1\\
+-1&4&-6&4
+\end{pmatrix}.
+\tag{15.7}
+$$
+
+Put
+
+$$
+\begin{gathered}
+B_0=294/5-2d-H_2,\qquad C_0=d^2+B_0^2,\\
+U=\frac{-dH_0+B_0H_2}{C_0},\qquad
+b=(U-1)/2,\qquad j=\frac{U(24-d)}{H_1},\qquad r=xU-j.
+\end{gathered}
+\tag{15.8}
+$$
+
+The domain of these last formulas requires $H_1\ne0,C_0>0$.
+The faithful inverse of [F](FIB_ALL_RESPONSE_FINITE_FIBRE_GEOMETRY.md),
+Lemma 30.2, applies with $x=n/U$ and $H=Ug$. Its additional actual-world
+conditions are
+
+$$
+\begin{gathered}
+x>0,\quad d\ne24,\quad U>1,\quad0<r<1,\\
+j=b+\frac{r(1-r)}b,\qquad
+dU=-H_0,\qquad B_0U=H_2.
+\end{gathered}
+\tag{15.9}
+$$
+
+When they hold, $c=r(1-r)/b$ and $g=H/U$ give the unique complete
+world for $(x,d,p,v)$. The formula for $U$ in (15.8) is used even at
+$d=0$; the inverse is not defined by division by drift.
+
+## 16. Zero-safe source equations and the C1 self branch
+
+**Definition 16.1 (Undivided source forms).** In (15.6)–(15.7) put
+
+$$
+\begin{gathered}
+z_3=(24-d)(x+1)(x+2),\qquad z_4=(18-d)D,\\
+z_5=(p-d)x(x+2),\qquad z_6=(v-d)x(x+1),\\
+(a_0,a_1,a_2,a_7)^{\mathsf T}=R(z_3,z_4,z_5,z_6)^{\mathsf T},\\
+z=xa_1-D(24-d),\qquad b_s=(294-10d)D-5a_2,\\
+A_s=4z^2-2za_1+(2x-1)a_1^2,\qquad
+E_s=-2za_1+2(1-x)a_1^2,\\
+\mathcal Q(u,w)=A_su^2+E_suw-a_1^2w^2,\\
+f_0=5dDa_2+a_0b_s,\qquad
+K_0=\mathcal Q(-a_0,dD),\qquad
+K_s=25K_0+\mathcal Q(5a_2,b_s).
+\end{gathered}
+\tag{16.1}
+$$
+
+These are polynomial expressions before any terminal equation is solved.
+In particular $a_i=DH_i$.
+
+**Assumption 16.2 (Owning whole-world necessity interface).** Every actual
+$W\in C(p,v)$ with $p\ne24$ satisfies (15.8)–(15.9), $H_1\ne0,C_0>0$,
+and
+
+$$
+f_0=K_0=K_s=0.
+\tag{16.2}
+$$
+
+This is the existing interface of Definition 2.2, equations (2.7)–(2.9),
+Definition 2.3 and F, Lemma 30.2, with the correspondence
+$\mathcal H=H$, $a_i=DH_i$, and the same $x=n/U$, drift $d$ and
+acquired $p,v$. It includes zero drift, vanishing gain samples, degree
+drops and singular sources of the undivided parent. Its source identities,
+in the present notation, are
+
+$$
+dDU=-a_0,\qquad b_sU=5a_2.
+\tag{16.3}
+$$
+
+$$
+\mathcal Q(U,1)
+=4a_1^2\{b(j-b)-r(1-r)\}=0.
+\tag{16.4}
+$$
+
+The correspondence uses $j=U(24-d)D/a_1$ and $r=Uz/a_1$.
+In particular these supplied identities divide by neither $d$ nor
+$b_s$, a gain value, a leading gain coefficient or $\Lambda$.
+
+**Definition 16.3 (C1 terminal polynomials).** From now on set
+$(p,v)=(p_1(t),v_1(t))$. Define integer polynomials
+
+$$
+\begin{gathered}
+K=8x^4+29x^3+18x^2-15x-6,\qquad B=q_dK,\\
+v_3=24q_d(x+1)(x+2),\quad v_4=18q_dD,\\
+v_5=P_1x(x+2),\quad v_6=V_1x(x+1),\\
+N=(2x+3)(-v_3+4v_4-6v_5+4v_6)-T_1D,\\
+h=(2t+1)x-t-1.
+\end{gathered}
+\tag{16.5}
+$$
+
+The source polynomial $K$ is distinct from the rectangle
+$[56,58]\times[304,305]$, denoted $\mathcal K$ below.
+
+**Theorem 16.4 (Terminal equation and self-branch exclusion).** On the
+domain of Definition 15.3,
+
+$$
+q_dD\{d+(2x+3)H_7-m_1\}=N-Bd.
+\tag{16.6}
+$$
+
+An actual terminal-$M$ companion must satisfy $N-Bd=0$. If $h=0$ and
+$K\ne0$, no such companion is strict.
+
+Proof. Substitute the last row of (15.7) into the left side of (16.6)
+and collect its drift coefficient; it is $-q_dK$. The remaining term
+is the definition of $N$. For an actual world the terminal trace is
+$3U+2n$, so its reading is $d+(2x+3)H_7$.
+
+At $h=0$ one has $x=(t+1)/(2t+1)$, and multiplication gives
+
+$$
+\begin{gathered}
+K=-\frac{Q_4(t)}{(2t+1)^4},\qquad
+N=\frac{3(t+1)(11t^2+158t+80)Q_4(t)}{(2t+1)^4},\\
+Q_4=78t^4+41t^3-129t^2-132t-34.
+\end{gathered}
+\tag{16.7}
+$$
+
+If $K\ne0$, (16.6) fixes $d=N/B=d_1$. The four tail values in
+(15.6) now fix $H=(2t+1)g_1$. Substitution in the zero-safe projection
+(15.8) gives $U=2t+1$, $j=t$ and $r=xU-j=1$. This violates strictness.
+The part $h=K=0$ is retained in the exceptional-pole analysis below. ∎
+
+## 17. The C1 integer elimination and its exact algebraic factors
+
+**Definition 17.1 (Ordinary elimination circuit).** Apply the first
+three rows of $R$ to the column
+
+$$
+\begin{pmatrix}
+(24B-N)(x+1)(x+2)\\
+(18B-N)D\\
+(P_1K-N)x(x+2)\\
+(V_1K-N)x(x+1)
+\end{pmatrix}
+\tag{17.1}
+$$
+
+and call the outputs $A_0,A_1,A_2$. Put
+
+$$
+\begin{gathered}
+Z=xA_1-D(24B-N),\qquad \mathfrak b=(294B-10N)D-5A_2,\\
+A_q=4Z^2-2ZA_1+(2x-1)A_1^2,\qquad
+E_q=-2ZA_1+2(1-x)A_1^2,\\
+F=-\frac{5NDA_2+A_0\mathfrak b}{90D^2h},\\
+G=\frac{A_qA_0^2-E_qA_0ND-A_1^2N^2D^2}{324D^4h}.
+\end{gathered}
+\tag{17.2}
+$$
+
+These exact polynomial quotients, with the signs and scalar divisors
+shown, define $F,G\in\mathbb Z[t,x]$. Their coordinate degrees
+$(\deg_x,\deg_t)$ are $(6,7)$ and $(13,15)$.
+
+**Definition 17.2 (Determinants, fixed factors and linear coordinate).**
+Use the fixed coefficient-minor convention of Definition 3.2 for
+$\operatorname{Subres}_k(G,F)$ with nominal degrees $(13,6)$, and for
+$\operatorname{Subres}_k(K,N)$ with nominal degrees $(4,4)$. In particular
+the index-zero member is the fixed Sylvester determinant, without
+specializing or trimming degrees first. Define $Q_9,Q_{12}$ by their
+descending coefficient lists:
+
+$$
+\begin{aligned}
+\operatorname{coeff}_{\downarrow}(Q_9)=(&2248108288,
+12765068132,-8911595079,55889179310,\\
+&-127755649252,367729251274,709892709460,\\
+&482515359696,207188455720,32969082600),\\[2mm]
+\operatorname{coeff}_{\downarrow}(Q_{12})=(&3523306032,
+14115530736,35825657643,-25329237978,\\
+&-354487843712,-1131571865850,-2280936182284,\\
+&-2531589902408,-2219920526928,-344577128440,\\
+&71276236896,9034745760,-782114304).
+\end{aligned}
+\tag{17.3}
+$$
+
+Here $Q_4$ is (16.7). Define the degree-fifty-five polynomial by the
+exact quotient
+
+$$
+Q_{55}=\frac{\operatorname{Res}_x(G,F)}
+ {331776Q_4^3Q_9^2Q_{12}^8}.
+\tag{17.4}
+$$
+
+This is an integer polynomial, with its normalization and sign fixed
+by the displayed quotient. Define
+
+$$
+\begin{gathered}
+S_1=\operatorname{Subres}_1(G,F)=\alpha(t)x+\beta(t),\\
+S_2=\operatorname{Subres}_2(G,F)=c_2x^2+c_1x+c_0,\\
+\ell=\operatorname{Subres}_1(K,N)=\pi_a(t)x+\pi_b(t).
+\end{gathered}
+\tag{17.5}
+$$
+
+Divide $S_1$ by the monic gcd of $\alpha,\beta$ in $\mathbb Q[t]$;
+clear coefficient denominators by their positive least common multiple;
+then divide by the positive integer coefficient gcd. The resulting
+polynomial is
+
+$$
+L=A(t)x+C(t),\qquad \deg_t L=123.
+\tag{17.6}
+$$
+
+Thus no sign is changed merely to make a leading coefficient positive.
+All these polynomials are specified by integer arithmetic from
+(15.1), (16.5), (17.1)–(17.5), without a supplementary coefficient table.
+
+**Theorem 17.3 (C1 factor identities and specialization units).**
+The exact quotient and subresultants above satisfy
+
+$$
+\begin{gathered}
+\operatorname{Res}_x(F,G)=331776Q_4^3Q_9^2Q_{12}^8Q_{55},\\
+\operatorname{Res}_x(K,N)=-93312Q_4Q_{12}.
+\end{gathered}
+\tag{17.7}
+$$
+
+For each $Q$ in the following table, every entry in its second column
+has monic gcd $1$ with $Q$ in $\mathbb Q[t]$.
+
+| $Q$ | Polynomials coprime to $Q$ |
+| --- | --- |
+| $Q_4$ | $q_d,\ [x^6]F,\ [x^{13}]G,\ \pi_a,\ \alpha,\ A$ |
+| $Q_9$ | $q_d,\ [x^6]F,\ [x^{13}]G,\ \pi_a$ |
+| $Q_{12}$ | $q_d,\ [x^6]F,\ [x^{13}]G,\ \pi_a,\ c_2$ |
+| $Q_{55}$ | $q_d,\ [x^6]F,\ [x^{13}]G,\ \pi_a,\ \alpha,\ A$ |
+
+The following coefficient congruences also hold:
+
+$$
+\begin{aligned}
+(t+1)\alpha+(2t+1)\beta&\equiv0\pmod{Q_4},\\
+\pi_ac_1-2\pi_bc_2&\equiv0\pmod{Q_{12}},\\
+\pi_a^2c_0-\pi_b^2c_2&\equiv0\pmod{Q_{12}},\\
+\operatorname{prem}_x(K,\ell)&\equiv0\pmod{Q_e}\quad(e=4,12),\\
+\operatorname{prem}_x(N,\ell)&\equiv0\pmod{Q_e}\quad(e=4,12).
+\end{aligned}
+\tag{17.8}
+$$
+
+In the last two lines congruence is coefficientwise in $x$. The
+integer polynomial gcd of $\pi_a,\pi_b$ in $\mathbb Z[t]$, with
+positive normalization, is the constant $1296$.
+
+Proof. The finite polynomial operations determining the identities can
+be written explicitly. For $P,Q\in\mathbb Z[t][x]$ of degrees $m\ge n$
+put
+
+$$
+\operatorname{prem}_x(P,Q)
+=\operatorname{lc}_x(Q)^{m-n+1}
+  \operatorname{rem}_{\mathbb Q(t)[x]}(P,Q).
+\tag{17.9}
+$$
+
+For the pair $(G,F)$ set $R_0=G,R_1=F$, $m=6$,
+$a=\operatorname{lc}_x(F)$ and $c=-a^7$, and start with
+$R_2=\operatorname{prem}_x(G,F)$. For each subsequent nonzero $R_i$,
+let $k=\deg_xR_i$, $\delta=m-k$, and form
+
+$$
+\begin{gathered}
+R_{i+1}=\frac{\operatorname{prem}_x(R_{i-1},R_i)}{-ac^\delta},\\
+a_{\rm new}=\operatorname{lc}_x(R_i),\qquad
+c_{\rm new}=
+\begin{cases}
+(-a_{\rm new})^\delta/c^{\delta-1},&\delta>1,\\
+-a_{\rm new},&\delta=1,
+\end{cases}\qquad m_{\rm new}=k.
+\end{gathered}
+\tag{17.10}
+$$
+
+The values of $(m,a,c)$ on the right are the preceding values; the
+three new values replace them after the quotient is taken. Polynomial
+multiplication in (17.2) cancels exactly $90D^2h$ and $324D^4h$,
+giving the stated integer degrees. The divisions in (17.10) have
+zero remainder. Their successive $x$ degrees are
+
+$$
+13,6,5,4,3,2,1,0.
+\tag{17.11}
+$$
+
+The last three members are $S_2,S_1$ and
+$331776Q_4^3Q_9^2Q_{12}^8Q_{55}$, respectively; the remainder after
+the constant member is zero. These are the subresultants with the
+fixed minor convention in Definition 17.2. Thus (17.10), or equivalently
+those finite minors, specifies the exact quotient (17.4). The symmetry
+sign for the resultant is $(-1)^{6\cdot13}=1$.
+
+For the smaller pair use the same coefficient minors with degrees
+$(4,4)$; its constant member is $-93312Q_4Q_{12}$. Reducing the two
+coefficients of its linear member gives their integer scalar content
+$1296$. Reducing the coefficients of $S_1,S_2$ and the two
+pseudo-remainders by the explicitly listed $Q$'s gives (17.8).
+Euclidean division in $\mathbb Q[t]$ gives the gcd table. These are
+finite rational polynomial identities: (17.9)–(17.10), the coefficient
+lists and the specified monic reductions determine each entry.
+
+The algebraic tools here are the classical subresultant and resultant
+identities of Basu–Pollack–Roy,
+[*Algorithms in Real Algebraic Geometry*, second edition](https://doi.org/10.1007/3-540-33099-2),
+and Cox–Little–O'Shea,
+[*Ideals, Varieties, and Algorithms*, fourth edition](https://doi.org/10.1007/978-3-319-16721-3).
+They are used on these particular C1 circuits. In particular a finite
+common root annihilates every fixed subresultant even when a specialized
+degree drops, by the coefficient-minor argument of Definition 3.2.
+The gcd table additionally preserves degrees $6,13$ at every root of
+the four displayed factors. ∎
+
+## 18. Exceptional terminal poles with the original drift retained
+
+**Definition 18.1 (Scaled original pole equations).** Keep $d$ as an
+indeterminate, and multiply the four $z_i$ of (16.1) by $q_d$ before
+applying $R$. Denote the outputs by $\widetilde a_i=q_da_i$, and put
+$\Delta=q_dD$. Define
+
+$$
+\begin{gathered}
+\widetilde z=x\widetilde a_1-\Delta(24-d),\qquad
+\widetilde b_s=(294-10d)\Delta-5\widetilde a_2,\\
+\widetilde A_s=4\widetilde z^2-2\widetilde z\widetilde a_1
+ +(2x-1)\widetilde a_1^2,\\
+\widetilde E_s=-2\widetilde z\widetilde a_1
+ +2(1-x)\widetilde a_1^2,\\
+\widetilde{\mathcal Q}(u,w)=
+\widetilde A_su^2+\widetilde E_suw-\widetilde a_1^2w^2,\\
+\widetilde f=5d\Delta\widetilde a_2+
+ \widetilde a_0\widetilde b_s=q_d^2f_0,\\
+\widetilde K_s=25\widetilde{\mathcal Q}(-\widetilde a_0,d\Delta)
+ +\widetilde{\mathcal Q}(5\widetilde a_2,\widetilde b_s)=q_d^4K_s.
+\end{gathered}
+\tag{18.1}
+$$
+
+All terms are polynomials in $t,x,d$. For $e\in\{4,12\}$ work in
+$\mathcal A_e=\mathbb Q[t]/(Q_e)$ and substitute
+$x=-\pi_b/\pi_a$. This inverse exists by Theorem 17.3. The same
+theorem gives $K=N=0$ there. Write
+
+$$
+\widetilde f=f_2d^2+f_1d+f_0^{\flat}
+\quad\hbox{in }\mathcal A_e[d].
+\tag{18.2}
+$$
+
+The superscript distinguishes its constant coefficient from the source
+polynomial $f_0$ of (16.1). For an element $u$ of a finite free algebra,
+its norm means the determinant of multiplication by $u$ on its stated
+power basis.
+
+**Theorem 18.2 (Q4 pole exclusion).** At a positive $Q_4$ root the only
+possible drift satisfying both original pole source equations
+$\widetilde f=\widetilde K_s=0$ is $d=d_1$. Its source reconstruction
+has $r=1$, so it gives no strict companion.
+
+Proof. In $\mathcal A_4$, the pole coordinate is
+$x=(t+1)/(2t+1)$ and the quadratic has the exact factorization
+
+$$
+\begin{gathered}
+\widetilde f=f_2(d-d_1)(d-d_o),\\
+d_o=\frac{-3286744321946172282t^3+4749234502781385t^2
+ +5146526094595587693t+3318426590487962019}
+ {27062287663495765},\\
+\widetilde K_s(d_1)=0.
+\end{gathered}
+\tag{18.3}
+$$
+
+These identities use the unreduced circuits (18.1), followed by monic
+reduction in $t$. For completeness, the following norms give exact
+nonvanishing data. Use the monic $Q_4$ over $\mathbb Z_{(103)}$ and
+reduce the multiplication determinants modulo $103$:
+
+| Element | $q_d$ | $2t+1$ | $f_2$ | $d_o-d_1$ | $\widetilde K_s(d_o)$ |
+| --- | --- | --- | --- | --- | --- |
+| Norm modulo $103$ | $87$ | $58$ | $78$ | $49$ | $75$ |
+
+All denominators in (18.1)–(18.3) are units in this localization;
+the leading coefficient $78$ of $Q_4$ is also a unit. The table is
+determined by reducing each product $ut^i$ in the basis $1,t,t^2,t^3$
+and taking the resulting $4$ by $4$ determinant. Its nonzero residues
+imply that the rational norms are nonzero, hence the five elements are
+units in $\mathcal A_4$. In particular (18.3) has distinct roots and
+the second root cannot satisfy the other original source equation.
+
+At the remaining drift $d_1$, the tail interpolant is again
+$H=(2t+1)g_1$. Its projection gives $U=2t+1,j=t,r=1$, as in
+Theorem 16.4. The off-$24$ guard ensures that the projection is defined.
+This treats the self pole as well as every other possible actual
+specialization over $Q_4$. ∎
+
+**Theorem 18.3 (Q12 pole exclusion).** No complex specialization over
+a $Q_{12}$ root satisfies the two original pole source equations.
+In particular no finite real drift, including zero, gives an actual
+companion there.
+
+Proof. Use the monic polynomial $\overline Q_{12}$ over
+$\mathbb Z_{(101)}$. Its leading coefficient before normalization is
+$14$ modulo $101$. Norms in its rank-twelve algebra are
+
+| Element | $\pi_a$ | $q_d$ | $D$ | $f_2$ |
+| --- | --- | --- | --- | --- |
+| Norm modulo $101$ | $81$ | $70$ | $4$ | $21$ |
+
+Thus all inverses defining the pole coordinate and the monic quadratic
+$d^2+(f_1/f_2)d+f_0^{\flat}/f_2$ exist over this local base. In the
+rank-twenty-four algebra
+
+$$
+\mathcal B=
+\mathbb Z_{(101)}[t,d]\big/
+\left(\overline Q_{12},\ d^2+(f_1/f_2)d+f_0^{\flat}/f_2\right)
+\tag{18.4}
+$$
+
+use the ordered basis
+$(1,t,\ldots,t^{11},d,dt,\ldots,dt^{11})$.
+Multiplication by $\widetilde K_s$ has determinant congruent to $5$
+modulo $101$. The following smaller description specifies its entire
+reduced matrix, including column order. Over $\mathbb F_{101}$ let
+$T$ be multiplication by $t$ in the power basis of the monic reduction
+of $Q_{12}$, and put $\mathcal T=\operatorname{diag}(T,T)$. The matrix is
+
+$$
+\mathcal M=(u,\mathcal Tu,\ldots,\mathcal T^{11}u,
+             w,\mathcal Tw,\ldots,\mathcal T^{11}w),
+\qquad \det\mathcal M=5\ \text{in }\mathbb F_{101},
+\tag{18.5}
+$$
+
+where the columns $u,w$ are specified by their upper and lower halves:
+
+$$
+\begin{aligned}
+u_{0:11}&=(100,33,77,31,64,11,16,34,89,76,79,21)^{\mathsf T},\\
+u_{12:23}&=(35,68,22,57,83,56,23,18,55,30,28,43)^{\mathsf T},\\
+w_{0:11}&=(80,62,79,69,16,36,10,20,10,23,77,19)^{\mathsf T},\\
+w_{12:23}&=(43,68,85,16,3,72,80,55,94,4,2,85)^{\mathsf T}.
+\end{aligned}
+\tag{18.6}
+$$
+
+For direct polynomial reduction, the ascending coefficients of the
+pole coordinate modulo $101$ are
+
+$$
+x=(89,69,78,37,13,28,56,10,63,2,14,1)_{\uparrow}.
+\tag{18.7}
+$$
+
+Equations (18.1)–(18.2), reduction of $d^2$ by (18.4), and this power
+basis give the columns (18.6). Multiplication by $t$ gives all remaining
+columns, so (18.5) is a determinant of an explicitly specified finite
+matrix. The norm of the primitive pole slope is $88$ modulo $101$;
+the raw slope $\pi_a$ used here retains scalar content $1296$, and
+$1296^{12}\cdot88=81$ in $\mathbb F_{101}$. This accounts for both
+normalizations without changing the pole root.
+
+Since its reduction is nonzero, the characteristic-zero determinant
+of multiplication by $\widetilde K_s$ is nonzero. This element is
+therefore a unit in $\mathcal B\otimes\mathbb Q$. A simultaneous root
+of $Q_{12},\widetilde f,\widetilde K_s$ would define an evaluation of
+this algebra into $\mathbb C$ sending a unit to zero, which is
+impossible. The finite field is used only to prove rational
+nonvanishing; no ordering or positivity assertion is transferred from
+it. ∎
+
+**Corollary 18.4 (Exhaustion of terminal poles).** There is no strict
+terminal-$M$ companion at any $t>0,q\ne0,p_1\ne24$ for which its
+coordinate satisfies $K=0$.
+
+Proof. The undivided terminal equation then gives $N=0$.
+The second resultant in (17.7) forces $Q_4Q_{12}=0$.
+The unit slope $\pi_a$ forces $x=-\pi_b/\pi_a$ in either case.
+Theorems 18.2 and 18.3 apply to the original source equations, which
+are necessary by the owning interface in Assumption 16.2. ∎
+
+## 19. All positive ordinary roots and the strict-world filter
+
+**Definition 19.1 (Exact root intervals).** Use the sign-preserving
+primitive Sturm chain of (5.1) for the C1 polynomials $Q_9,Q_{55}$.
+Equivalently, start with the primitive polynomial and its derivative,
+then take the negative rational remainder at every step, clearing
+denominators by a positive multiplier and dividing by the positive
+integer coefficient gcd. Let $V_Q$ delete zero signs and count sign
+changes. Define $I_i=[n_i,n_i+1]/10^{100}$ by the following integers:
+
+$$
+n_1=331870885647581929578614662915535274627868308379774186451433773199910925757925405068055394263716320.
+$$
+
+$$
+n_2=592871025766250080129037854655456855516932898909293518832115892542554220181550964887860129081740667.
+$$
+
+$$
+n_3=1169282097378496760713331273949662713954637119564189174284877330075796164866942628660929045301821974.
+$$
+
+$$
+n_4=8987958556003912054324118136694659655357123575765489192788689281953416191283400770034988723262128126.
+$$
+
+$$
+n_5=11548090705409620030003314835248813519914394588703630543117437290841128378573523374544086557791888306.
+$$
+
+$$
+n_6=15591356173773691330841311300703417302600643714552045485796096233616031468101479653830193596467972446.
+$$
+
+$$
+n_7=21278854472701899683249315606910112840090662363569897315270046510110507873777556532008976233389443732.
+$$
+
+$$
+n_8=26394748321178503158178113041026686437960387687932084605809141439086335171102877686435207724799660984.
+$$
+
+**Theorem 19.2 (Positive-root exhaustion).** The polynomial $Q_9$ has
+no positive real roots. The polynomial $Q_{55}$ has exactly eight
+positive real roots, all simple, with exactly one in the interior of
+each $I_i$.
+
+Proof. The chains have respectively $10,56$ entries and end in
+nonzero constants. Their signs and variations are
+
+| Polynomial | Chain signs at $0$ | Chain signs at $+\infty$ | $V(0)$ | $V(+\infty)$ |
+| --- | --- | --- | --- | --- |
+| $Q_9$ | `++--+++---` | `+++-+++---` | $3$ | $3$ |
+| $Q_{55}$ | `++-++-++++-++--+-++---++--+---++--++--+----+-++-+++-----` | `++----++--+++---+++--+++---++++--++++-++++--+++--++-----` | $27$ | $19$ |
+
+The endpoint variations on the eight intervals are
+
+| $i$ | $V_{Q_{55}}(n_i/10^{100})$ | $V_{Q_{55}}((n_i+1)/10^{100})$ |
+| --- | --- | --- |
+| $1$ | $27$ | $26$ |
+| $2$ | $26$ | $25$ |
+| $3$ | $25$ | $24$ |
+| $4$ | $24$ | $23$ |
+| $5$ | $23$ | $22$ |
+| $6$ | $22$ | $21$ |
+| $7$ | $21$ | $20$ |
+| $8$ | $20$ | $19$ |
+
+None of the endpoints is a root, and the two endpoint signs of
+$Q_{55}$ in every row are opposite. All signs in these tables are
+integer signs determined by the chain recurrence. More explicitly,
+for an integer coefficient polynomial $\sum_{j=0}^mc_jt^j$ at $n/B$,
+initialize $v=c_m$, then successively replace $v$ by
+$nv+c_{m-k}B^k$ for $k=1,\ldots,m$. The result is
+$B^mQ(n/B)$, with the same sign. At $+\infty$ the sign is the
+leading coefficient sign. This determines the tables directly from
+the exact quotient (17.4), including its normalization.
+
+Sturm's theorem, in the classical form cited in Theorem 17.3,
+now gives zero positive roots for $Q_9$ and eight for $Q_{55}$.
+The intervals are disjoint, each has variation drop one, and the
+constant last chain member makes $Q_{55}$ squarefree. Hence these
+intervals exhaust its positive roots. ∎
+
+**Theorem 19.3 (Exact all-root guard intervals).** At the $Q_{55}$ root
+in $I_i$ define
+
+$$
+x=-C/A,\qquad d=N/(q_dK),\qquad p=P_1/q_d,\quad v=V_1/q_d,
+\tag{19.1}
+$$
+
+and then use (15.6)–(15.8). All these inverses are defined. The
+following pairs $(l,u)$ denote closed enclosures $[l,u]/10^6$ of the
+indicated values:
+
+| $i$ | $x$ | $d$ | $U$ | $r$ | Sign of $A$ |
+| --- | --- | --- | --- | --- | --- |
+| $1$ | $(337088,337089)$ | $(22264146,22264147)$ | $(2553625,2553626)$ | $(1739303,1739304)$ | $-$ |
+| $2$ | $(-275769,-275768)$ | $(25794799,25794800)$ | $(6153645,6153646)$ | $(-1981371,-1981370)$ | $-$ |
+| $3$ | $(623082,623083)$ | $(2589088,2589089)$ | $(-21167671,-21167670)$ | $(-6485979,-6485978)$ | $-$ |
+| $4$ | $(684103,684104)$ | $(28981230,28981231)$ | $(2741528,2741529)$ | $(927577,927578)$ | $+$ |
+| $5$ | $(884506,884507)$ | $(39535195,39535196)$ | $(-221154,-221153)$ | $(-344993,-344992)$ | $-$ |
+| $6$ | $(791099,791100)$ | $(59633693,59633694)$ | $(246669,246670)$ | $(870698,870699)$ | $+$ |
+| $7$ | $(619987,619988)$ | $(72429881,72429882)$ | $(-708228,-708227)$ | $(-526888,-526887)$ | $+$ |
+| $8$ | $(619308,619309)$ | $(-21954173,-21954172)$ | $(338347,338348)$ | $(873767,873768)$ | $+$ |
+
+| $i$ | $q$ | $K$ | $H_1$ | $C_0$ |
+| --- | --- | --- | --- | --- |
+| $1$ | $(-2203491,-2203490)$ | $(-7796937,-7796936)$ | $(-5045747,-5045746)$ | $(511821278,511821279)$ |
+| $2$ | $(-2369562,-2369561)$ | $(-1056511,-1056510)$ | $(-38836358,-38836357)$ | $(666387605,666387606)$ |
+| $3$ | $(-2754473,-2754472)$ | $(-137151,-137150)$ | $(67612034,67612035)$ | $(13772601,13772602)$ |
+| $4$ | $(-9245438,-9245437)$ | $(3199189,3199190)$ | $(-14406591,-14406590)$ | $(839961823,839961824)$ |
+| $5$ | $(-10944710,-10944709)$ | $(19779203,19779204)$ | $(22999402,22999403)$ | $(2240393536,2240393537)$ |
+| $6$ | $(-11379027,-11379026)$ | $(10889881,10889882)$ | $(13011052,13011053)$ | $(5908733735,5908733736)$ |
+| $7$ | $(-2742208,-2742207)$ | $(-287806,-287805)$ | $(390674033,390674034)$ | $(92244580080,92244580081)$ |
+| $8$ | $(21221290,21221291)$ | $(-320618,-320617)$ | $(-23408366,-23408365)$ | $(6371424697,6371424698)$ |
+
+| $i$ | $p_1$ | $v_1$ | $m_1$ |
+| --- | --- | --- | --- |
+| $1$ | $(19742791,19742792)$ | $(88601579,88601580)$ | $(399406232,399406233)$ |
+| $2$ | $(21027143,21027144)$ | $(95225259,95225260)$ | $(424602206,424602207)$ |
+| $3$ | $(23651633,23651634)$ | $(109120092,109120093)$ | $(477612384,477612385)$ |
+| $4$ | $(56979139,56979140)$ | $(304497370,304497371)$ | $(1226730635,1226730636)$ |
+| $5$ | $(75840336,75840337)$ | $(415273644,415273645)$ | $(1646101990,1646101991)$ |
+| $6$ | $(136394565,136394566)$ | $(765839664,765839665)$ | $(2962228760,2962228761)$ |
+| $7$ | $(1199736273,1199736274)$ | $(6854846482,6854846483)$ | $(25682035998,25682035999)$ |
+| $8$ | $(-278010371,-278010370)$ | $(-1597176238,-1597176237)$ | $(-5833854433,-5833854432)$ |
+
+In every row $h\ne0$, $d\ne0,24$, $p_1\ne24$ and
+$x(x+1)(x+2)q_dKH_1\ne0$, with $C_0>0$. Exactly row $4$ has
+all of $x>0,U>1,0<r<1$. At that row,
+
+$$
+\begin{gathered}
+\frac{870764}{10^6}\le b\le\frac{870765}{10^6},\qquad
+\frac{77148}{10^6}\le c\le\frac{77149}{10^6},\\
+\frac{898795}{10^6}<t<\frac{898796}{10^6}.
+\end{gathered}
+\tag{19.2}
+$$
+
+Proof. The enclosures have a purely rational specification. For
+$S=10^{220}$ enclose a rational interval $[a,b]$ after an addition
+or multiplication by
+$[\lfloor Sa\rfloor/S,\lceil Sb\rceil/S]$.
+Negation exchanges and negates endpoints. Multiplication first takes
+the minimum and maximum of its four endpoint products. An inverse
+is $[1/b,1/a]$ and is used only when $ab>0$. Repeated multiplication
+defines positive integer powers. Evaluate a polynomial by descending
+Horner, enclosing exact rational coefficients as singleton intervals;
+for a polynomial in $(x,t)$ first evaluate each $x$ coefficient in $t$.
+
+Starting from $I_i$, evaluate $A,C$ from (17.6), then $x=-C/A$,
+$q,K,N$, and $d=N/(q_dK)$. Evaluate $P_1,V_1,T_1$ in $t$, and then
+$p_1,v_1,m_1$. Apply (15.6), (15.7), and finally (15.8) in that order.
+Rounding the resulting rational endpoints outward to $10^{-6}$ gives
+the three tables. Every inverse in this order has a denominator
+interval excluding zero. This includes the slope $A$, whose signs
+are displayed, and $C_0$, whose positive enclosures are displayed.
+For $h$ use (16.5), retaining the original $I_i$ and the enclosed $x$;
+its interval excludes zero. The other stated nonvanishing conditions
+follow from the same enclosures, or directly from the displayed coarse
+intervals. For $c$ in row $4$ evaluate $r(1-r)/b$ after $b=(U-1)/2$;
+this gives (19.2).
+
+These are exact rational containments for the functions on $I_i$,
+not substitutions of approximate roots. Row $1$ has $r>1$, row $2$
+has $x<0$, and rows $3,5,6,7,8$ have $U<1$. Each violates a necessary
+actual-world condition from (15.9). Row $4$ satisfies all three strict
+inequalities. The remaining source equality and the original readings
+for that row are proved next; they do not follow from inequalities
+alone. ∎
+
+## 20. The unique strict companion in the full finite C1 problem
+
+**Definition 20.1 (The surviving complete world).** Let $t_*$ be the
+fourth positive root of the exact polynomial $Q_{55}$, equivalently
+the unique root in the interior of $I_4$. Put
+
+$$
+\begin{gathered}
+x_*=-C(t_*)/A(t_*),\qquad
+d_*=N(t_*,x_*)/(q_d(t_*)K(x_*)),\\
+p_*=p_1(t_*),\quad v_*=v_1(t_*),\quad m_*=m_1(t_*).
+\end{gathered}
+\tag{20.1}
+$$
+
+Use (15.6)–(15.8) at these values to define $H_*,U_*,b_*,j_*,r_*$,
+and put
+
+$$
+c_*=r_*(1-r_*)/b_*,\qquad
+W_*=\left(
+\begin{pmatrix}r_*&b_*\\c_*&1-r_*\end{pmatrix},
+H_*/U_*,d_*\right).
+\tag{20.2}
+$$
+
+**Theorem 20.2 (Complete finite-positive C1 classification).** For
+every finite $t>0$ with $q(t)\ne0$ and $p_1(t)\ne24$, and for every
+actual strict complete world in the entire child,
+
+$$
+W\in C(p_1(t),v_1(t)),\qquad
+m(W)=m_1(t)\quad\Longleftrightarrow\quad
+t=t_*\ \hbox{and}\ W=W_*.
+\tag{20.3}
+$$
+
+The tuple $W_*$ is an actual world. Its gain is one nonzero polynomial
+of degree at most three, and all of its original readings, including
+the terminal $M$ reading, are
+
+$$
+(0,24,147/5,24,18,p_*,v_*,m_*).
+\tag{20.4}
+$$
+
+Proof. First take any actual companion in the stated domain. The owning
+interface in Assumption 16.2 and Theorem 16.4 give the zero-safe source
+equations and $N-Bd=0$.
+Corollary 18.4 excludes $K=0$, and Theorem 16.4 excludes $h=0$ when
+$K\ne0$. Hence $B,D,h\ne0$ and $d=N/B$ is now justified. Under this
+substitution $A_i=Ba_i$, and (17.2) gives
+
+$$
+F=-\frac{B^2f_0}{90D^2h},\qquad
+G=\frac{B^4K_0}{324D^4h}.
+\tag{20.5}
+$$
+
+Thus $F=G=0$ at the actual coordinate. The fixed resultant vanishes
+even under any specialization or degree drop. Its factorization
+leaves $Q_4,Q_9,Q_{12},Q_{55}$.
+
+The first congruence in (17.8), with the unit slope $\alpha$, implies
+that any common root over $Q_4$ has $h=0$. It is already excluded.
+Over $Q_{12}$ the next two congruences and the units $c_2,\pi_a$ give
+
+$$
+S_2=c_2\left(x+\frac{\pi_b}{\pi_a}\right)^2.
+\tag{20.6}
+$$
+
+A common root of $F,G$ annihilates $S_2$, so it has
+$x=-\pi_b/\pi_a$. The last two congruences in (17.8) then give
+$K=N=0$, again already excluded. Theorem 19.2 excludes positive
+$Q_9$ roots. It follows that $Q_{55}(t)=0$.
+
+The preserved degrees and the unit slope of $S_1$ force
+$x=-\beta/\alpha=-C/A$. Theorem 19.2 puts $t$ in one of the eight
+intervals, and Theorem 19.3 excludes all but row $4$ by necessary
+strict guards. Hence $t=t_*$ and $x=x_*,d=d_*$. The faithful
+projection (15.8) then fixes the source and the entire gain uniquely,
+so $W=W_*$.
+
+For existence, at $t_*$ the resultant is zero and the leading
+coefficients of $F,G$ are nonzero. The classical resultant criterion
+therefore gives a finite common complex root. Its linear subresultant
+has nonzero slope, so every common root is the real number $x_*$.
+In particular $F(t_*,x_*)=G(t_*,x_*)=0$. Theorem 19.3 gives
+$B,D,h\ne0$, so (20.5) reverses to $f_0=K_0=0$.
+
+In this row $d_*\ne0$ is a consequence of the rational bounds, not
+a restriction imposed on the original domain. From (16.1),
+
+$$
+f_0=5D^2(dH_2+B_0H_0)=0.
+\tag{20.7}
+$$
+
+Consequently $H_2=-B_0H_0/d$ and the projection gives
+$U=-H_0/d$, hence $dU=-H_0$ and $B_0U=H_2$. Now
+
+$$
+K_0=(dD)^2\mathcal Q(U,1)=0.
+\tag{20.8}
+$$
+
+The nonzero $a_1=DH_1$ and identity (16.4), used with the projected
+$j,r,b$, imply $b(j-b)=r(1-r)$. The bounds $U>1$ and $0<r<1$
+give $b>0$ and $c=r(1-r)/b>0$, as well as $j=b+c$. Thus the
+constructed source is strict and has determinant zero.
+
+The retained source equations can also be expressed without replacing
+the original form $K_s$. Their universal polynomial identity is
+
+$$
+\begin{aligned}
+d^2D^2K_s-(25d^2D^2+b_s^2)K_0
+=f_0\{A_s(5dDa_2-a_0b_s)+E_sdDb_s\}.
+\end{aligned}
+\tag{20.9}
+$$
+
+It follows by expansion of (16.1). Since $dD\ne0$ in this row,
+(20.7)–(20.8) imply the original $K_s=0$ as well.
+
+Set $g=H/U$, $T=(U+1)/2$ and $n=xU=j+r$.
+The clock-zero reading is zero because $dU=-H_0$, and clock one is
+$24$ by $jH_1/U=24-d$. The clock-two reading is
+
+$$
+d+\frac{TH_2}{U}
+=d+\frac{H_2+B_0}{2}=\frac{147}{5}.
+\tag{20.10}
+$$
+
+The four interpolation samples give successively
+$d+xH_3=24$, $d+H_4=18$, $d+(x+1)H_5=p_*$ and
+$d+(x+2)H_6=v_*$. Finally $d=N/B$ in (16.6) gives
+$d+(2x+3)H_7=m_*$. These are exactly the original trace readings,
+not a changed set of nodes. The polynomial $g$ has degree at most
+three and cannot be zero because its first two readings differ.
+This proves (20.4) and actual existence. The preceding necessity
+proves uniqueness in the entire original child and the equivalence
+(20.3). ∎
+
+## 21. The original-joint finite-end consequence
+
+**Corollary 21.1 (C1 companions and the whole-child J rectangle).**
+The unique companion base satisfies
+
+$$
+\begin{gathered}
+(p_*,v_*)\in\operatorname{int}\mathcal K,\qquad
+\mathcal K=[56,58]\times[304,305],\\
+p_*\in[56979139,56979140]/10^6,\qquad
+v_*\in[304497370,304497371]/10^6.
+\end{gathered}
+\tag{21.1}
+$$
+
+No distinct equal-$J$ pair exists anywhere in $C(p_*,v_*)$.
+In particular a C1 terminal-$M$ companion relation cannot coexist
+with an independently selected actual equal-$J$ pair in its child,
+even when cross-pair overlap is permitted.
+
+Proof. The bounds are row $4$ of Theorem 19.3 and are strictly
+inside $\mathcal K$. Apply
+[SV](FIB_STRICT_REAL_JOINT_INCIDENCE_SUPPORT_V.md), Theorem 1.1,
+which gives terminal-$J$ injectivity on every entire actual child
+above $\mathcal K$. Theorem 20.2 says that this is the only base
+where the C1 mixed companion relation occurs. The cited theorem
+concerns all actual companions, so the selection and overlap of
+the four original labels do not affect the conclusion.
+The auxiliary tuple $\widehat W_1(t_*)$ has $r=1$ and is outside
+$C(p_*,v_*)$; its relation to $W_*$ is consequently not itself a
+distinct strict equal-$M$ pair. ∎
+
+**Theorem 21.2 (Exclusion of a finite C1 end with a strict other end).**
+There is no sequence of original joint configurations (1.1) with
+selected terminal-$M$ endpoints $Z_k,Z'_k$ such that, in complete
+source, drift and padded polynomial-coefficient coordinates,
+
+$$
+Z_k\longrightarrow\widehat W_1(t),\qquad
+Z'_k\longrightarrow W_\infty,
+\tag{21.2}
+$$
+
+where $t$ is finite, $t>0$, $q(t)\ne0$, $p_1(t)\ne24$, and
+$W_\infty$ is a strict complete world. The same statement holds
+after interchanging the two selected $M$ endpoints.
+
+Proof. Matrix products and evaluation of a degree-at-most-three
+polynomial at each fixed original clock are polynomial in the
+complete coordinates. The common acquired bases therefore converge
+to $(p_1(t),v_1(t))$, and the terminal equality passes to the limit.
+The strict complete limit satisfies
+
+$$
+W_\infty\in C(p_1(t),v_1(t)),\qquad
+m(W_\infty)=m_1(t).
+\tag{21.3}
+$$
+
+Theorem 20.2 forces $t=t_*$ and $W_\infty=W_*$. The limiting
+base is in the interior of $\mathcal K$ by (21.1), so sufficiently
+late bases lie in $\mathcal K$. At each such base the original
+joint configuration includes a distinct actual equal-$J$ pair,
+contradicting the whole-child injectivity of SV, Theorem 1.1.
+This argument uses exactly the two complete convergences (21.2);
+it does not infer their existence from boundedness. ∎
+
+**Definition 21.3 (Remaining global incidence question).** The global
+question is whether $D_J\cap D_M$ is empty over all real $p\ne24,v$,
+with independently distinct pairs as in (14.9). It remains open.
+The finite-positive C1 classification and Theorem 21.2 concern only
+the face domain (15.1)–(15.3) and the complete limits (21.2);
+they impose no global compactness hypothesis, no uniform bound away
+from $r=1$, and no relation between the two common terminal values
+of an original joint configuration.
+
+## 追加锚（本行以下为增补区）
+## 22. The original joint domain and its uniform suppliers
+
+**Definition 22.1 (The selected-endpoint domain).** Retain the complete
+worlds of Definition 1.1, the entire children of Definitions 1.1 and
+14.1, and the original left products of
+[O](FIB_COMMON_PARENT_GEOMETRY_AND_MIXED_CHILDREN.md), Definitions
+1.1–1.3. Thus
+
+$$
+\begin{gathered}
+W=(P,g,d),\qquad
+P=\begin{pmatrix}r&b\\c&1-r\end{pmatrix},\qquad
+0<r<1,\quad b,c>0,\quad bc=r(1-r),\\
+g(s)=\sum_{\ell=0}^3\gamma_\ell s^\ell\ne0,\qquad d\in\mathbb R.
+\end{gathered}
+\tag{22.1}
+$$
+
+The coefficient vector is padded by zeros when the degree is below
+three. Each world has this one whole gain and this fixed drift. With
+$J,M,Q_i$ as in Definition 1.1, its acquired equations are
+
+$$
+\bigl(d+g(i)\operatorname{tr}(Q_iP)\bigr)_{i=0}^6
+=(0,24,147/5,24,18,p,v),
+\qquad (E_1,\ldots,E_6)=(J,M,J,M,M,M).
+\tag{22.2}
+$$
+
+At the same original clock seven, the alternatives are
+
+$$
+a(W)=d+(T+2j+4r)g(7),\qquad
+m(W)=d+(3U+2n)g(7),
+\tag{22.3}
+$$
+
+where $j=b+c$, $n=j+r$, $T=1+b$, $U=1+2b$. In O's notation these
+are $f_{MJ},f_{MM}$, respectively. Write $\mathscr Q$ for the set of
+all tuples $Q=(p,v,W_0,W_1,W_2,W_3)$ satisfying
+
+$$
+\begin{gathered}
+p,v\in\mathbb R,\quad p\ne24,\quad W_i\in C(p,v)\quad(0\le i\le3),\\
+W_0\ne W_1,\quad a(W_0)=a(W_1),\qquad
+W_2\ne W_3,\quad m(W_2)=m(W_3).
+\end{gathered}
+\tag{22.4}
+$$
+
+Distinctness is distinctness of complete worlds. The two pairs are
+independent, cross-pair overlap is allowed, and their common terminal
+values are independent. Put
+
+$$
+\delta(W)=\min\{r(W),1-r(W),b(W),c(W)\},\qquad
+\mathscr E_M=\{W_i:Q\in\mathscr Q,\ i\in\{2,3\}\}.
+\tag{22.5}
+$$
+
+The second set records occurrence at a selected $M$ label. Zero drift,
+vanishing gain samples, degree drops, repeated roots and singular
+parent strata retain the domain (22.1)–(22.4).
+
+**Lemma 22.2 (Uniform data on the original domain).** There are finite
+$P_J,V_J>0$, $C_J\ge1$ and positive $\epsilon,\eta,\alpha$, independent
+of $Q\in\mathscr Q$ and of its labels, such that
+
+$$
+|p|\le P_J,\qquad |v|\le V_J,\qquad |p-24|\ge\epsilon,
+\tag{22.6}
+$$
+
+and every actual companion $W\in C(p,v)$ of such a base satisfies
+
+$$
+0<b(W),c(W)\le C_J,\qquad |d(W)|\le C_J,\qquad
+\max_{0\le\ell\le3}|\gamma_\ell(W)|\le C_J.
+\tag{22.7}
+$$
+
+The selected $M$ endpoints satisfy
+
+$$
+\begin{gathered}
+j(W_i)\ge\eta\quad(i=2,3),\qquad
+\max\{\delta(W_2),\delta(W_3)\}\ge\alpha,\\
+r(W_i)\ge\rho_0\quad(i=2,3)
+\end{gathered}
+\tag{22.8}
+$$
+
+for a choice $0<\rho_0\le1/4$ independent of the configuration.
+
+Proof. The pair $W_0,W_1$ in (22.4) places the base in $D_J$.
+[III](FIB_STRICT_REAL_JOINT_INCIDENCE_SUPPORT_III.md), Theorem 7.1,
+therefore gives $P_J$, uniformly in $v$. III, Corollary 8.1, gives
+$V_J$ and (22.7) for every companion of that entire child; enlarge
+$C_J$ to at least one. These bounds control $c$ and every padded
+coefficient, as well as $b$ and drift.
+
+The independently selected distinct $M$ pair permits application of
+[SII](FIB_STRICT_REAL_JOINT_INCIDENCE_SUPPORT_II.md), Theorem 29.1.
+Since $p\ne24$, its gap gives $|p-24|\ge\epsilon$. Thus the bases lie
+in III, Corollary 8.2's closed bounded ambient base set. SII, Theorem
+23.1, applies to this same $M$ pair for every real $v$ and gives both
+$j$ bounds, without a further bound on $p$.
+
+At $|p|\le P_J$, SII, Theorem 14.3, gives the maximum bound in
+(22.8) with $\alpha=\varepsilon(P_J)>0$. It chooses at least one
+endpoint of this pair. SII, Theorem 15.1, places such an endpoint in
+a compact strict-parent set, refined to the off-$24$ parent over
+the base enclosure (22.6). These are precisely the anchor suppliers
+used in Assumption 7.1; they do not assert two strict anchors in the
+selected $M$ pair.
+
+For its lower-face supplier, SII, Theorem 21.2, concerns exactly
+sequences of (22.4) with a finite off-$24$ base limit. Its label
+$L(t)$ is $B_0(t)=(0,0,t)$ of Definition 1.3. At this face the
+undivided original parent is
+
+$$
+e\,\frac{8(t-1)}t=\frac{12}{5}.
+\tag{22.9}
+$$
+
+Thus a finite drift excludes $t=1$ before any division, and SII,
+Theorem 21.2, supplies exactly the remaining $t>0,t\ne1$ exclusion.
+The bounds (22.7) give the required finite complete limits whenever
+subsequences are taken. The other possible lower face is the $C_0$
+face of Definition 2.1, excluded with a strict $M$ mate by Theorem
+6.1. All six suppliers of Assumption 7.1 consequently hold on
+(22.4), with their original quantifiers. Theorem 7.2 gives a common
+positive lower bound for both selected $r$ coordinates; reduce it to
+at most $1/4$ and call it $\rho_0$. When $\mathscr Q$ is empty one
+may instead choose $\rho_0=1/4$. This proves (22.6)–(22.8) without an
+additional condition on the joint locus. ∎
+
+## 23. Finite whole-world limits at the upper source faces
+
+**Definition 23.1 (Upper-face notation).** For finite $t>0$ write
+
+$$
+\begin{gathered}
+B_1(t)=(1,0,t),\qquad C_1(t)=(1,t,0),\\
+q_B(t)=5(2t^2-1),\qquad f_C(t)=t^3-4t-2,\qquad
+q_C(t)=(t+1)f_C(t).
+\end{gathered}
+\tag{23.1}
+$$
+
+Here $q_C=q$ of Definition 15.1 and $q_d=5q_C$ there. The complete
+$B_1$ label $R(t)$ means exactly
+[S](FIB_STRICT_REAL_JOINT_INCIDENCE_SUPPORT.md), Definition 19.1,
+with denominator $q_B$. The complete $C_1$ label
+$\widehat W_1(t)$ means (15.1)–(15.2). Both labels are nonstrict
+auxiliary tuples. Their drifts and gains are part of the labels;
+their source triples alone do not specify a different gain fit.
+
+**Lemma 23.2 (Undivided finite upper-face identification).** Suppose a
+finite tuple $(P,g,d)$, with a degree-at-most-three whole polynomial,
+satisfies the original acquired equations and has source
+
+$$
+r=1,\qquad b,c\ge0,\qquad bc=0,\qquad b+c>0.
+\tag{23.2}
+$$
+
+Then exactly one of the following holds:
+
+1. Its source is $B_1(t)$ for a finite $t>0$, $q_B(t)\ne0$, and
+   the complete tuple is $R(t)$.
+2. Its source is $C_1(t)$ for a finite $t>0$, $q_C(t)\ne0$, and
+   the complete tuple is $\widehat W_1(t)$.
+
+In the second case its acquired base and terminal-$M$ response are
+$(p_1(t),v_1(t),m_1(t))$ of Definition 15.1, and
+
+$$
+p_1(t)=24\quad\Longleftrightarrow\quad t=1/8.
+\tag{23.3}
+$$
+
+Proof. In (23.2), exactly one of $b,c$ is positive. Denote it by
+$t$. The original traces $j,n,T,U$ are positive on either resulting
+face, so the undivided parent and first four samples of Definition
+1.2 apply. With $e=d-24$, they are
+
+$$
+\begin{gathered}
+e\Lambda=-\frac{24}{5}(b-1/8)\kappa,\qquad
+\kappa=\frac{2(2+5b)}{(1+b)(1+2b)},\\
+(g(0),g(1),g(2),g(3))
+=\left(-24-e,-\frac ej,\frac{27/5-e}{T},-\frac en\right).
+\end{gathered}
+\tag{23.4}
+$$
+
+These are necessary identities before division by $\Lambda$. They
+also hold at finite limits of actual worlds, since $j,n,T,U$ have
+positive limits there.
+
+At $B_1(t)$ the traces are $j=t,n=t+1,T=U=1$. The first equation
+of (23.4) is
+
+$$
+e\,\frac{4(2t^2-1)}{t(t+1)}=\frac{12}{5}.
+\tag{23.5}
+$$
+
+If $2t^2-1=0$ this is impossible for finite $e$. Otherwise it forces
+
+$$
+e=\frac{3t(t+1)}{q_B},\qquad
+(g(0),g(1),g(2),g(3))
+=\left(-24-e,-\frac{3(t+1)}{q_B},
+\frac{27}{5}-e,-\frac{3t}{q_B}\right).
+\tag{23.6}
+$$
+
+These are precisely the drift and four original samples of S,
+Definition 19.1. Uniqueness of degree-at-most-three interpolation at
+$0,1,2,3$ identifies the entire polynomial with $g_R$, hence the
+complete tuple with $R(t)$. All late responses are consequently
+the responses of that same label.
+
+At $C_1(t)$ the traces are $j=t,n=T=t+1,U=2t+1$, and the undivided
+parent instead reads
+
+$$
+e\,\frac{2f_C(t)}{t(t+1)(2t+1)}
+=-\frac{6(8t-1)(5t+2)}{5(t+1)(2t+1)}.
+\tag{23.7}
+$$
+
+All displayed denominators are positive. If $q_C(t)=0$, then
+$f_C(t)=0$. A finite $e$ would require $(8t-1)(5t+2)=0$.
+For $t>0$ this requires $t=1/8$, whereas
+
+$$
+f_C(1/8)=-1279/512\ne0.
+\tag{23.8}
+$$
+
+Thus no finite tuple occurs at the pole. Away from it (23.7) forces
+
+$$
+e_C=-\frac{3t(8t-1)(5t+2)}{5f_C(t)},\qquad d=24+e_C=d_1,
+\tag{23.9}
+$$
+
+and the four original samples are
+
+$$
+\left(-24-e_C,-e_C/t,
+\frac{27/5-e_C}{t+1},-\frac{e_C}{t+1}\right).
+\tag{23.10}
+$$
+
+They determine exactly $g_1$ of (15.2). In particular the late
+readings do not introduce independent samples. For these four fixed
+nodes the evaluation rows at clocks $5,6,7$ are respectively
+
+$$
+(-4,15,-20,10),\qquad
+(-10,36,-45,20),\qquad
+(-20,70,-84,35).
+\tag{23.11}
+$$
+
+Multiplying them by (23.10) and using the original trace factors
+$3t+2,5t+3,8t+5$ gives exactly $p_1,v_1,m_1$ of (15.1)–(15.2).
+This is the fixed-node Lagrange interpolation formula; see
+Berrut–Trefethen, [§2](https://doi.org/10.1137/S0036144502417715).
+
+The identity (15.5), in the present notation, is
+
+$$
+p_1(t)-24
+=-\frac{6(8t-1)(7t^3+11t^2+19t+10)}{5q_C(t)}.
+\tag{23.12}
+$$
+
+Its cubic factor is positive for $t>0$. At $t=1/8$ the parent has
+$\Lambda\ne0$ and forces $e_C=0$, giving the original samples
+$(-24,0,24/5,0)$. The first row of (23.11) then gives $g_1(5)=0$
+and hence $p_1=24$. This includes the zero-$e$ and sampled-zero
+branch rather than dividing it away, and proves (23.3).
+
+The interpolating gain in either case is nonzero: an identically
+zero gain would make the original readings at clocks zero and one
+both equal to $d$, contrary to $0\ne24$. The argument divides by
+neither drift, $e$, a gain value, a leading gain coefficient nor a
+degree condition. It therefore identifies whole gains even at degree
+drops and all allowed sampled zeros. ∎
+
+## 24. A uniform upper-face floor for both selected M labels
+
+**Theorem 24.1 (Global selected-M upper-face floor).** There is one
+$0<\rho_1\le1/4$ such that
+
+$$
+\forall Q\in\mathscr Q\quad\forall i\in\{2,3\},\qquad
+1-r(W_i)\ge\rho_1.
+\tag{24.1}
+$$
+
+Proof. If $\mathscr Q$ is empty choose $\rho_1=1/4$. Otherwise suppose
+there is no common positive lower bound. For each positive integer
+$k$ choose an original tuple $Q_k$ and one of its selected $M$
+endpoints with $1-r<1/k$. Call this endpoint $X_k$ and its selected
+$M$ mate $Y_k$. This merely relabels within that pair; it preserves
+both within-pair distinctness conditions in (22.4), the independently
+chosen $J$ pair and all allowed cross-pair overlap.
+
+Lemma 22.2 bounds the bases and both complete coordinate vectors
+
+$$
+\xi(W)=(r,b,c,d,\gamma_0,\gamma_1,\gamma_2,\gamma_3).
+\tag{24.2}
+$$
+
+Finite-dimensional bounded-sequence extraction gives simultaneous
+subsequences with
+
+$$
+(p_k,v_k)\longrightarrow(p_\infty,v_\infty),\qquad
+\xi(X_k)\longrightarrow\xi(X),\qquad
+\xi(Y_k)\longrightarrow\xi(Y).
+\tag{24.3}
+$$
+
+Here the limits include $c$, each fixed drift and all four padded
+coefficients of each original whole gain. This is the classical
+Bolzano–Weierstrass theorem in a finite Euclidean product, applied
+to these bounded coordinates, not to an assumed closed joint locus.
+The source relations and the closed inequalities (22.6) pass to the
+limit. In particular
+
+$$
+\begin{gathered}
+p_\infty\ne24,\qquad |p_\infty-24|\ge\epsilon,\qquad r(X)=1,\\
+b(X)c(X)=0,\qquad
+b(X)+c(X)\ge\eta,\qquad 0\le b(X),c(X)\le C_J.
+\end{gathered}
+\tag{24.4}
+$$
+
+Consequently exactly one of $b(X),c(X)$ is positive. Its value
+$t$ satisfies $\eta\le t\le C_J$. Thus $X$ has precisely source
+$B_1(t)$ or $C_1(t)$, with finite $t>0$. The corner $b=c=0$,
+a zero face parameter and an infinite face parameter are excluded
+by these derived inequalities.
+
+Since $\delta(X_k)\le1-r(X_k)\longrightarrow0$, the maximum bound
+in (22.8) forces $\delta(Y_k)\ge\alpha$ for all sufficiently large
+$k$. Its limiting source is therefore strict. For each original
+clock, matrix multiplication, trace and evaluation of a padded
+polynomial are polynomial functions of (24.2). The seven original
+acquired equations and the terminal-$M$ equality pass continuously
+to the limits. Neither limiting gain is zero, because that would
+make its clock-zero and clock-one readings equal to the same drift.
+It follows that
+
+$$
+Y\in C(p_\infty,v_\infty),\qquad m(Y)=m(X),
+\tag{24.5}
+$$
+
+where $Y$ is an actual strict complete world. At $X$ all four traces
+$j,n,T,U$ have positive limits. Thus (23.4) identifies the limiting
+whole gain from the same four original samples, without any
+late-clock refitting.
+
+If $X$ has source $B_1(t)$, Lemma 23.2 first excludes $q_B(t)=0$
+by the undivided equation (23.5), and then identifies $X=R(t)$.
+The bases converge to a finite off-$24$ point, the first endpoint
+converges entrywise in its entire source including $c$ and
+coefficientwise in its whole gain, and the other endpoint converges
+to the strict complete $Y$. These are exactly the hypotheses of S,
+Corollary 21.3. That corollary excludes this sequence of original
+joint configurations.
+
+If $X$ has source $C_1(t)$, Lemma 23.2 first excludes $q_C(t)=0$
+using the undivided equation (23.7), and then identifies
+
+$$
+X=\widehat W_1(t),\qquad
+(p_\infty,v_\infty)=(p_1(t),v_1(t)).
+\tag{24.6}
+$$
+
+The off-$24$ gap supplies $p_1(t)\ne24$ and, by (23.3), excludes
+the $t=1/8$ branch. The two complete convergences (24.3) now satisfy
+every hypothesis of Theorem 21.2, which excludes this sequence.
+In particular its classification premise is exactly Theorem 20.2
+on all finite positive nonpole off-$24$ C1 parameters and all
+actual strict companions in the entire child. Equation (24.5)
+is such a companion relation; no regularity or gain-sample condition
+has been inserted.
+
+The open-neighbourhood implication in this C1 exclusion can also
+be read directly from the classification. Theorem 20.2 forces
+$t=t_*$ and $Y=W_*$, and Corollary 21.1 puts the limiting base in
+the closed rectangle
+
+$$
+\mathcal R_*=
+\frac{[56979139,56979140]}{10^6}
+\times\frac{[304497370,304497371]}{10^6}
+\subset\operatorname{int}\mathcal K,
+\qquad \mathcal K=[56,58]\times[304,305].
+\tag{24.7}
+$$
+
+Its four margins to the boundary of $\mathcal K$ are all greater
+than $1/4$. Hence the open sup-norm ball of radius $1/4$ about
+each point of $\mathcal R_*$ is contained in
+$\operatorname{int}\mathcal K$. All sufficiently late actual
+bases $(p_k,v_k)$ therefore lie in $\mathcal K$.
+[SV](FIB_STRICT_REAL_JOINT_INCIDENCE_SUPPORT_V.md), Theorem 1.1,
+makes $J$ injective on each entire actual child above those bases.
+This contradicts its selected distinct equal-$a$ pair in (22.4).
+The contradiction occurs at the actual bases and does not require
+limits of the $J$ endpoints or distinctness of any such limits.
+
+Both exhaustive upper-face alternatives are impossible. If the
+infimum of $1-r$ on $\mathscr E_M$ were zero, the sequence just
+excluded would exist. That infimum is therefore positive. Reducing
+a positive lower bound to at most $1/4$ proves (24.1) for both
+selected labels simultaneously. ∎
+
+**Definition 24.2 (A qualitative choice of the upper floor).** For
+$\mathscr Q\ne\varnothing$ put
+
+$$
+h_M=\inf\{1-r(W_i):Q\in\mathscr Q,\ i\in\{2,3\}\},\qquad
+\rho_1=\min\{1/4,h_M\}.
+\tag{24.8}
+$$
+
+Theorem 24.1 gives $h_M>0$. This choice depends only on the original
+joint domain, and not on a configuration or an endpoint label. The
+proof establishes existence from the uniform complete-coordinate
+bounds, the off-$24$ gap, the selected-pair sum floor and maximum
+anchor, S's B1 end exclusion, and Theorems 20.2–21.2 with SV,
+Theorem 1.1. It supplies no numerical value or computable modulus
+for $h_M$ or $\rho_1$. For $\mathscr Q=\varnothing$ define
+$\rho_1=1/4$.
+
+## 25. The full source collar and a strict endpoint enclosure
+
+**Theorem 25.1 (Global source collar at both selected M endpoints).**
+Choose $C_J\ge1$ and $0<\rho_0,\rho_1\le1/4$ as in Lemma 22.2
+and Theorem 24.1, and set
+
+$$
+\beta=\frac{\rho_0\rho_1}{C_J}>0.
+\tag{25.1}
+$$
+
+For every $Q\in\mathscr Q$ and each $i\in\{2,3\}$,
+
+$$
+\begin{gathered}
+r(W_i)\ge\rho_0,\qquad 1-r(W_i)\ge\rho_1,\\
+\beta\le b(W_i),c(W_i)\le C_J,\qquad
+\delta(W_i)\ge\beta.
+\end{gathered}
+\tag{25.2}
+$$
+
+If $\mathscr Q=\varnothing$, valid choices are
+$\rho_0=\rho_1=1/4$ and $\beta=1/(16C_J)$.
+
+Proof. The two diagonal floors follow from Lemma 22.2 and Theorem
+24.1. The original source relation gives
+
+$$
+bc=r(1-r)\ge\rho_0\rho_1.
+\tag{25.3}
+$$
+
+Divide this inequality by the positive upper bound $C_J$ for the
+other off-diagonal entry to obtain $b,c\ge\beta$. Their upper
+bounds are (22.7). Since $C_J\ge1$ and both diagonal floors are
+at most $1/4$, $\beta\le\rho_0,\rho_1$. This proves the $\delta$
+bound. On an empty domain the displayed universal statements hold
+for the stated choices. The dependence (25.1) is explicit in these
+qualitative constants and asserts no computed modulus. ∎
+
+**Corollary 25.2 (Compact enclosures of individual selected endpoints).**
+The source of each $W\in\mathscr E_M$ lies in the compact set
+
+$$
+\mathcal S_M=\left\{(r,b,c):
+\rho_0\le r\le1-\rho_1,\quad
+\beta\le b,c\le C_J,\quad bc=r(1-r)\right\}.
+\tag{25.4}
+$$
+
+There is also a compact enclosure of these individual endpoints
+in the strict off-$24$ complete parent, including each fixed drift
+and each whole gain.
+
+Proof. The set (25.4) is closed and bounded in $\mathbb R^3$ and is
+contained in the strict source domain. Let
+
+$$
+\mathcal K_{\rm base}=
+\{(p,v):|p|\le P_J,\ |v|\le V_J,\ |p-24|\ge\epsilon\}.
+\tag{25.5}
+$$
+
+In the finite coordinate space of $(p,v,\xi(W))$, impose
+$(p,v)\in\mathcal K_{\rm base}$, $(r,b,c)\in\mathcal S_M$,
+$|d|\le C_J$, $|\gamma_\ell|\le C_J$ for $0\le\ell\le3$, and
+all seven original acquired equations (22.2). Denote the resulting
+set by $\mathcal B_M$. All of these are closed conditions in a
+bounded Euclidean box: the acquired equations are polynomial in
+these complete coordinates. Hence $\mathcal B_M$ is compact by the
+finite-dimensional closed-and-bounded criterion.
+
+Every point of $\mathcal B_M$ has a strict source, degree at most
+three, and a fixed drift. Its gain cannot be identically zero,
+because the first two acquired equations would then give $d=0$
+and $d=24$. It is therefore an actual complete world, with its
+base separated from $p=24$. Projection to $\xi(W)$ is continuous,
+so its image is a compact subset of the strict off-$24$ full
+parent. Lemma 22.2 and Theorem 25.1 put every member of
+$\mathscr E_M$ in this image. The construction uses only the
+original polynomial equations and finite-dimensional compactness;
+it imposes no inequality on a sampled gain, no exact-degree
+condition and no regular-source condition. ∎
+
+## 26. The remaining original interior incidence problem
+
+**Definition 26.1 (Incidence inside the endpoint enclosure).** The
+remaining existence question is whether there are real $p\ne24,v$
+and four actual complete worlds satisfying (22.4), with the two
+selected $M$ endpoints in the enclosure of Corollary 25.2. By
+Theorem 25.1 this is equivalent to the original question
+$\mathscr Q\ne\varnothing$, or $D_J\cap D_M\ne\varnothing$.
+Its existence or nonexistence remains open.
+
+The collar is quantified by occurrence at a selected $M$ label.
+A world occupying both an $M$ and a $J$ label inherits it through
+its $M$ role. No lower collar for a world in only a $J$ role or
+for an unused companion is asserted. The all-companion upper
+bounds (22.7) have their separate entire-child quantifier.
+
+The set $\mathcal B_M$ encloses individual endpoints. It does not
+impose the condition that an endpoint has a distinct equal-$m$
+mate or that the same base has a distinct equal-$a$ pair. Those
+distinctness conditions are not closed conditions in the complete
+coordinates. The enclosure thus proves neither closedness nor
+compactness of the selected-pair or joint relation. It gives no
+uniform pair separation, no global augmented-$M$ immersion and
+no construction or exclusion of the remaining strict interior
+incidence.
+
+The separate compact regions of III, Theorem 23.2, concern its
+specified $10\le p\le34$ output region and actual $J$ arc.
+[SVI](FIB_STRICT_REAL_JOINT_INCIDENCE_SUPPORT_VI.md), Theorem 11.2,
+gives an all-companion collar only over its region
+$10\le p\le34$, $0\le v\le200$,
+$v\ge(37p+426)/10$. SVI, Theorem 6.2, concerns regular worlds with
+$10\le p\le34$. None of these restricted domains is substituted
+for the arbitrary bounded ambient joint base set (25.5). The
+global conclusion here is precisely (24.1) and its source
+consequence (25.2), with the unchanged joint quantifiers (22.4).
+
+## 追加锚（本行以下为增补区）

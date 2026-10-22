@@ -1,0 +1,74 @@
+**Lemma 22.2 (Uniform data on the original domain).** There are finite
+$P_J,V_J>0$, $C_J\ge1$ and positive $\epsilon,\eta,\alpha$, independent
+of $Q\in\mathscr Q$ and of its labels, such that
+
+$$
+|p|\le P_J,\qquad |v|\le V_J,\qquad |p-24|\ge\epsilon,
+\tag{22.6}
+$$
+
+and every actual companion $W\in C(p,v)$ of such a base satisfies
+
+$$
+0<b(W),c(W)\le C_J,\qquad |d(W)|\le C_J,\qquad
+\max_{0\le\ell\le3}|\gamma_\ell(W)|\le C_J.
+\tag{22.7}
+$$
+
+The selected $M$ endpoints satisfy
+
+$$
+\begin{gathered}
+j(W_i)\ge\eta\quad(i=2,3),\qquad
+\max\{\delta(W_2),\delta(W_3)\}\ge\alpha,\\
+r(W_i)\ge\rho_0\quad(i=2,3)
+\end{gathered}
+\tag{22.8}
+$$
+
+for a choice $0<\rho_0\le1/4$ independent of the configuration.
+
+Proof. The pair $W_0,W_1$ in (22.4) places the base in $D_J$.
+[III](FIB_STRICT_REAL_JOINT_INCIDENCE_SUPPORT_III.md), Theorem 7.1,
+therefore gives $P_J$, uniformly in $v$. III, Corollary 8.1, gives
+$V_J$ and (22.7) for every companion of that entire child; enlarge
+$C_J$ to at least one. These bounds control $c$ and every padded
+coefficient, as well as $b$ and drift.
+
+The independently selected distinct $M$ pair permits application of
+[SII](FIB_STRICT_REAL_JOINT_INCIDENCE_SUPPORT_II.md), Theorem 29.1.
+Since $p\ne24$, its gap gives $|p-24|\ge\epsilon$. Thus the bases lie
+in III, Corollary 8.2's closed bounded ambient base set. SII, Theorem
+23.1, applies to this same $M$ pair for every real $v$ and gives both
+$j$ bounds, without a further bound on $p$.
+
+At $|p|\le P_J$, SII, Theorem 14.3, gives the maximum bound in
+(22.8) with $\alpha=\varepsilon(P_J)>0$. It chooses at least one
+endpoint of this pair. SII, Theorem 15.1, places such an endpoint in
+a compact strict-parent set, refined to the off-$24$ parent over
+the base enclosure (22.6). These are precisely the anchor suppliers
+used in Assumption 7.1; they do not assert two strict anchors in the
+selected $M$ pair.
+
+For its lower-face supplier, SII, Theorem 21.2, concerns exactly
+sequences of (22.4) with a finite off-$24$ base limit. Its label
+$L(t)$ is $B_0(t)=(0,0,t)$ of Definition 1.3. At this face the
+undivided original parent is
+
+$$
+e\,\frac{8(t-1)}t=\frac{12}{5}.
+\tag{22.9}
+$$
+
+Thus a finite drift excludes $t=1$ before any division, and SII,
+Theorem 21.2, supplies exactly the remaining $t>0,t\ne1$ exclusion.
+The bounds (22.7) give the required finite complete limits whenever
+subsequences are taken. The other possible lower face is the $C_0$
+face of Definition 2.1, excluded with a strict $M$ mate by Theorem
+6.1. All six suppliers of Assumption 7.1 consequently hold on
+(22.4), with their original quantifiers. Theorem 7.2 gives a common
+positive lower bound for both selected $r$ coordinates; reduce it to
+at most $1/4$ and call it $\rho_0$. When $\mathscr Q$ is empty one
+may instead choose $\rho_0=1/4$. This proves (22.6)–(22.8) without an
+additional condition on the joint locus. ∎
+

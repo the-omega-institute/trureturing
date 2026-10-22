@@ -1,0 +1,29 @@
+**Proposition 3.3 (full-path equivalence, not a finite-prefix inference).**
+For every finite $\boldsymbol\eta$, the matrix $P_{\boldsymbol\eta}$ is positive
+definite. Hence all the base laws (2.2) are mutually absolutely continuous,
+and the complete countable transcript laws (3.2) are mutually absolutely
+continuous for one fixed policy $\pi$.
+
+**Proof.** Use the independent coordinates
+
+$$
+U=p_A+p_B,\qquad B=p_B.
+$$
+
+From (1.6), $\operatorname{Cov}(U,B)=0$ and
+
+$$
+\operatorname{Var}(U)=\frac12+\eta_A+64r,\qquad
+\operatorname{Var}(B)=\frac12+\eta_B+r.
+\tag{3.3}
+$$
+
+Both variances are strictly positive, so $P_{\boldsymbol\eta}>0$. The Gaussian
+densities in (1.5) are therefore mutually absolutely continuous, as are the
+products with the common $G_W$ and $\lambda$. If $QK_{\pi,\infty}(A)=0$,
+nonnegativity gives $K_{\pi,\infty}(u,A)=0$ for $Q$-almost every $u$;
+$P\ll Q$ then gives $PK_{\pi,\infty}(A)=0$. Applying this in both directions
+proves equivalence of the full path laws. The common countable kernel is the
+reason this conclusion does not follow merely by collecting equivalence of
+each finite prefix. $\square$
+

@@ -1,0 +1,31 @@
+## 161. Source correspondence and scope of the second-horizon fiber
+
+The exact root, value, contact effects and positive slack are the
+public results [TR, §§118–125]. The passage from these premises to
+the full optimizer fiber is the supported TP calculation and the
+individual equality argument of §§154–160. The Choi criterion is
+the one attributed to [Choi][CHOI] in §145; TP is imposed separately
+by (155.2). The supporting-functional interpretation uses the same
+finite-dimensional setting of [Coutts, Girard and Watrous, Theorem
+3][CGW] already explained in [TR, §126]. The argument here proves
+the required equality and face facts directly. These references
+support the general methods, not a literature assertion of this
+particular classification; priority is unclaimed.
+
+The result concerns the original $n=2$, $s=-1/2$ all-density
+half-trace-distance problem. Original terminal decoders are obtained
+by $D=\mathcal R\circ\operatorname{Ad}_{U_0^\dagger}$ from [TR,
+(118.3)], preserving the identity target. It does not identify this
+value or fiber with the $n=3$, $q=1/4$ disk, its positive continuation,
+the zero-parameter optimizer set, or another horizon. The paired
+experiment-comparison convention in [TR, §126] uses full trace
+tolerance $2L$; it does not add a reference, history or environment
+to (153.1). No stabilized or diamond metric is substituted.
+The complete joint domain and its singular boundaries have been
+specified, without an extreme-point or full rank-stratum
+classification or a minimal supporting-witness assertion. All
+dependencies of the ordinary proof are the displayed mathematics
+and the cited public source premises; no runtime computation is a
+mathematical dependency. No physical or formal-kernel conclusion is
+asserted.
+

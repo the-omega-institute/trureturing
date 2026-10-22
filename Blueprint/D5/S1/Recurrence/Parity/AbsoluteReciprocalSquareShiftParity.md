@@ -8,7 +8,19 @@ The entry cited in hanna2025a384267 defines a(n) as the absolute value of the co
 
 Indices and binomial coefficients are natural numbers; index subtraction is natural subtraction. The function div is natural integer division, int is the natural-to-integer cast, and mod is integer remainder. The coefficients a(n) are integers. A denotes generatingSeries, P(n) denotes its local approximations, and mk constructs a series from a coefficient function. The imported absSeries from AbsoluteReciprocalSquareParity takes absolute values coefficientwise. The expression invOfUnit(B,1) is the formal unit inverse with prescribed constant coefficient one. T denotes the integer generatingSeries from StripThreeTernaryCatalanParity. The map pi is Int.castRingHom(ZMod(2)); map(pi,B) applies it to each coefficient. The operator expand(2,B) substitutes X^2 for X.
 
-**Definition 1.1 (The stabilized coefficient sequence).**
+**Theorem 1.1 (The cubic equation modulo two).**
+
+$$(\operatorname{map}\left(\operatorname{Int}.\operatorname{castRingHom}\left(\operatorname{ZMod}\left(2\right)\right), \operatorname{generatingSeries}\right))^{3} = (\operatorname{map}\left(\operatorname{Int}.\operatorname{castRingHom}\left(\operatorname{ZMod}\left(2\right)\right), \operatorname{generatingSeries}\right))^{2} + X$$
+
+*Proof.* Machine-checked in Lean as `D5/S1/Recurrence/Parity/AbsoluteReciprocalSquareShiftParity.reduced_cubic` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+The reduction of generatingSeries modulo two satisfies its cubic equation.
+
+**Definition 1.2 (The stabilized coefficient sequence).**
 
 $$\begin{aligned}\operatorname{P}\left(0\right) = 1\\\forall n: \mathbb{N}, \operatorname{P}\left(n + 1\right) = \operatorname{absSeries}\left(1 + X \cdot \operatorname{invOfUnit}\left(\operatorname{P}\left(n\right)^{2}, 1\right)\right)\\\forall n: \mathbb{N}, \operatorname{a}\left(n\right) = \operatorname{coeff}\left(n, \operatorname{P}\left(n + 1\right)\right)\end{aligned}$$
 
@@ -20,7 +32,7 @@ $$\begin{aligned}\operatorname{P}\left(0\right) = 1\\\forall n: \mathbb{N}, \ope
 
 Multiplication by X makes the reciprocal-square step increase coefficient agreement by one degree. The diagonal coefficients therefore stabilize under the displayed iteration.
 
-**Definition 1.2 (The integer generating series).**
+**Definition 1.3 (The integer generating series).**
 
 $$A = \operatorname{mk}\left(a\right)$$
 
@@ -32,7 +44,7 @@ $$A = \operatorname{mk}\left(a\right)$$
 
 The series has coefficient a(n) at degree n.
 
-**Theorem 1.3 (The defining equation and normalization).**
+**Theorem 1.4 (The defining equation and normalization).**
 
 $$(\operatorname{constantCoeff}\left(A\right) = 1) \land (A = \operatorname{absSeries}\left(1 + X \cdot \operatorname{invOfUnit}\left(A^{2}, 1\right)\right))$$
 
@@ -44,7 +56,7 @@ $$(\operatorname{constantCoeff}\left(A\right) = 1) \land (A = \operatorname{absS
 
 Agreement with every finite approximation gives the fixed-point equation. Every approximation has constant coefficient one.
 
-**Theorem 1.4 (Uniqueness of the normalized solution).**
+**Theorem 1.5 (Uniqueness of the normalized solution).**
 
 $$\forall B: \operatorname{PowerSeries}\left(\mathbb{Z}\right), (\operatorname{constantCoeff}\left(B\right) = 1) \implies ((B = \operatorname{absSeries}\left(1 + X \cdot \operatorname{invOfUnit}\left(B^{2}, 1\right)\right)) \implies (B = A))$$
 
@@ -56,7 +68,7 @@ $$\forall B: \operatorname{PowerSeries}\left(\mathbb{Z}\right), (\operatorname{c
 
 The difference of two unit inverses is controlled by the difference of their original series. Induction on the degree of coefficient agreement then identifies any normalized solution with A.
 
-**Theorem 1.5 (The shifted ternary Catalan series).**
+**Theorem 1.6 (The shifted ternary Catalan series).**
 
 $$\operatorname{map}\left(pi, A\right) = 1 + X \cdot \operatorname{expand}\left(2, \operatorname{map}\left(pi, T\right)\right)$$
 
@@ -68,7 +80,7 @@ $$\operatorname{map}\left(pi, A\right) = 1 + X \cdot \operatorname{expand}\left(
 
 Absolute values disappear modulo two. Multiplying the reduced equation by A^2 gives F^3=F^2+X for F=map(pi,A). Thus U=F+1 satisfies U=X+U^3 with zero constant coefficient. The imported strip3_mod_two and generating_equation show that map(pi,T) satisfies the ternary Catalan equation, so V=X expand(2,map(pi,T)) also satisfies V=X+V^3. The factor 1-U^2-UV-V^2 has constant coefficient one; cancellation in the difference of the two cubic equations proves U=V.
 
-**Theorem 1.6 (The constant coefficient).**
+**Theorem 1.7 (The constant coefficient).**
 
 $$\operatorname{a}\left(0\right) = 1$$
 
@@ -80,7 +92,7 @@ $$\operatorname{a}\left(0\right) = 1$$
 
 The normalization of A gives a(0)=1.
 
-**Theorem 1.7 (Exact binomial division).**
+**Theorem 1.8 (Exact binomial division).**
 
 $$\forall n: \mathbb{N}, (0 < n) \implies (3 \cdot n - 1 \mid \operatorname{choose}\left(3 \cdot n - 1, n\right))$$
 
@@ -92,7 +104,7 @@ $$\forall n: \mathbb{N}, (0 < n) \implies (3 \cdot n - 1 \mid \operatorname{choo
 
 The integers n and 3n-1 are coprime. The standard identity (3n-1) choose(3n-2,n-1)=n choose(3n-1,n) therefore proves the asserted divisibility.
 
-**Theorem 1.8 (The quotient at odd indices).**
+**Theorem 1.9 (The quotient at odd indices).**
 
 $$\forall r: \mathbb{N}, \operatorname{div}\left(\operatorname{choose}\left(6 \cdot r + 2, 2 \cdot r + 1\right), 6 \cdot r + 2\right) = \operatorname{div}\left(\operatorname{choose}\left(6 \cdot r + 1, 2 \cdot r\right), 2 \cdot r + 1\right)$$
 
@@ -104,7 +116,7 @@ $$\forall r: \mathbb{N}, \operatorname{div}\left(\operatorname{choose}\left(6 \c
 
 Exact division and cancellation give n times the quotient equal to choose(3n-2,n-1). Substituting n=2r+1 gives the displayed equality.
 
-**Theorem 1.9 (The quotient at positive even indices).**
+**Theorem 1.10 (The quotient at positive even indices).**
 
 $$\forall r: \mathbb{N}, (0 < r) \implies (2 \mid \operatorname{div}\left(\operatorname{choose}\left(6 \cdot r - 1, 2 \cdot r\right), 6 \cdot r - 1\right))$$
 
@@ -116,7 +128,7 @@ $$\forall r: \mathbb{N}, (0 < r) \implies (2 \mid \operatorname{div}\left(\opera
 
 Since 6r-1 is odd, exact division preserves parity. Lucas reduction sends choose(6r-1,2r) to choose(3r-1,r) modulo two. The identity 3 choose(3r-1,r)=2 choose(3r,r), valid for r positive, makes this last coefficient even.
 
-**Theorem 1.10 (Hanna's conjecture C.1).**
+**Theorem 1.11 (Hanna's conjecture C.1).**
 
 $$\forall n: \mathbb{N}, (1 \le n) \implies (\operatorname{a}\left(n\right) \bmod 2 = \operatorname{int}\left(\operatorname{div}\left(\operatorname{choose}\left(3 \cdot n - 1, n\right), 3 \cdot n - 1\right)\right) \bmod 2)$$
 
@@ -141,6 +153,7 @@ The series identity gives zero at positive even indices and choose(3r,r) modulo 
 - Truth anchor: `D5/S1/Recurrence/Parity/AbsoluteReciprocalSquareShiftParity.generating_unique`
 - Truth anchor: `D5/S1/Recurrence/Parity/AbsoluteReciprocalSquareShiftParity.hanna_conjecture`
 - Truth anchor: `D5/S1/Recurrence/Parity/AbsoluteReciprocalSquareShiftParity.mod_two_identity`
+- Truth anchor: `D5/S1/Recurrence/Parity/AbsoluteReciprocalSquareShiftParity.reduced_cubic`
 - Truth anchor: `D5/S1/Recurrence/Parity/AbsoluteReciprocalSquareShiftParity.ternary_div_even`
 - Truth anchor: `D5/S1/Recurrence/Parity/AbsoluteReciprocalSquareShiftParity.ternary_div_odd`
 - Truth anchor: `D5/S1/Recurrence/Parity/AbsoluteReciprocalSquareShiftParity.ternary_dvd`

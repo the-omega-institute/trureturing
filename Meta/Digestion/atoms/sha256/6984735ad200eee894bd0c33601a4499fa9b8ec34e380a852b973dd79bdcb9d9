@@ -1,0 +1,94 @@
+**Theorem 121.3 (literal addresses are the joint path-law classes).**
+Let $a_j(p)=\operatorname{par}^j(p)$ for $0\le j\le d(p)$, with
+$a_0(p)=p$. The depth and complete rootward ancestor-colour list
+$(q(a_j(p)))_{0\le j\le d(p)}$ determine the literal address $p$.
+For every fixed $T>0$,
+
+$$
+\mathsf L_p^T=\mathsf L_{p'}^T\quad\Longleftrightarrow\quad p=p'.
+\tag{121.6}
+$$
+
+If $p\ne p'$ and $O(p)=O(p')$ with common depth $n$, there is a first
+unequal rootward ancestor colour at an index $1\le k\le n-1$.
+There is a measurable specified-colour, all-parent, exactly-$k$-jump
+event on $[0,T]$ whose probabilities from these starts are
+
+$$
+e^{-3T}\frac{T^k}{k!}\quad\hbox{and}\quad0.
+\tag{121.7}
+$$
+
+Moreover, every transition-stable quotient recovering $O$ is injective.
+Here transition-stable means a map $f:\mathcal P\to S=f(\mathcal P)$
+such that the rows $(f_*R_\infty)(p,\cdot)$ agree whenever
+$f(p)=f(p')$; recovering $O$ means $O=h\circ f$ for some $h:S\to E$.
+
+Proof. Read the ancestral list in root-to-leaf order. The difference
+of consecutive colours determines the integer incoming increment:
+the three candidates $-1,0,+1$ are distinct modulo $m\ge3$.
+Starting with $\delta(o)=0$, each row of (120.12) assigns different
+increments to its two literal children. Thus the known parent
+increment and recovered child increment determine whether the next
+letter was $L$ or $R$. Induction recovers every letter. This is a
+decoding statement about a supplied complete ancestral list.
+
+Different initial $O$ values already give different path laws by
+evaluation at zero. Suppose instead that the starts are distinct
+in the same $O$ cell. The preceding decoding shows that their full
+ancestor-colour lists differ. Their zeroth colours agree, and their
+$n$th ancestors are both $o$ with colour zero. Consequently the first
+difference occurs at some $1\le k\le n-1$; this also excludes any
+distinct same-$O$ pair at depth zero or one.
+
+Let $E_{p,k,T}$ require exactly $k$ observed jumps in $(0,T]$, depth
+decreasing by one at each, and the successive post-jump colours
+$q(a_1(p)),\ldots,q(a_k(p))$. These are conditions on the observed
+path alone. Under $\mathbf P_p$ they prescribe the unique sequence
+of $k$ parent seams, followed by no further jump before $T$. All
+visited depths are at least $n-k\ge1$, so all holding rates are
+three. On the ordered simplex $0<t_1<\cdots<t_k<T$ the density is
+$e^{-3T}$: each specified seam has rate one. The simplex volume is
+$T^k/k!$, proving the first probability in (121.7). Under
+$\mathbf P_{p'}$ the same depth sequence forces its own unique
+parent route, whose colour at jump $k$ is different. Its probability
+is zero. This proves (121.6); identical starts trivially have
+identical laws.
+
+For the quotient assertion, the image $S$ is countable. The stipulated
+row condition is exactly the strong lumpability condition for
+$R_\infty$. Conditional on any finite observed $f$-history its next
+row depends only on the current $f$ value, by averaging identical
+rows over source representatives. Induction and the common rate-three
+Poisson construction therefore give equal complete $f$-path laws
+from any two starts in the same $f$ fibre. Composing with $h$ gives
+equal $O$-path laws. Equation (121.6) forces the starts to coincide.
+Thus no proper transition-stable quotient can retain this readout.
+
+This uses the existing observed-row and predictive-equivalence tools,
+not a new general quotient theorem. For the row criterion see
+[Wolfer--Watanabe, *Geometric Aspects of Data-Processing of Markov
+Chains*, arXiv:2203.04575v3, §3.4, Theorem 3.1](https://arxiv.org/pdf/2203.04575v3),
+with the countable-source bounded-rate use justified above and in
+Proposition 120.4. Equality of complete future laws is also the
+equivalence used in [Predictive Quotient, Definition 2.1 and Lemma
+2.2](FIB_LEGAL_EDGE_LOAD_PREDICTIVE_QUOTIENT_UNIFILAR_ERASURE_TAIL_AND_STRICT_SCOPE.md).
+That supplier's stationary finite edge-emission model is different
+from the deterministic-start chain here; its class count and
+synchronization conclusions are not transferred. Similarly,
+[Shalizi--Crutchfield, *Computational Mechanics: Pattern and Prediction,
+Structure and Simplicity*, cond-mat/9907176v2, Theorems 2--3](https://arxiv.org/pdf/cond-mat/9907176v2)
+concern entropy minimality and almost-sure uniqueness for stationary
+discrete-time histories. They do not identify every literal address
+in this experiment; that identification is supplied by (120.12) and
+(121.7). These are repo-derived source-specific deductions using
+literature-attested intermediate tools, without a global priority claim.
+
+Equality classes of probability laws are not recovery guarantees for
+one observed path. In particular, for a distinct same-$O$ pair the
+constant path has probability $e^{-3T}>0$ from either start. No
+decoder of that single finite trace can return both different
+addresses correctly with probability one. The supplied ancestral
+list, equality testing of full probability laws, and observing one
+random trace are distinct inputs. $\square$
+

@@ -1,0 +1,48 @@
+## 152. Finite temperature and the two irreducible native models
+
+Substituting (148.3) into the shared activation condition gives
+
+$$
+\mu>ad
+\quad\Longleftrightarrow\quad
+(1-t)^2p(1-p)>t
+\quad\Longleftrightarrow\quad
+4\sinh^2(\beta/2)p(1-p)>1.
+\tag{152.1}
+$$
+
+For $0<p<1$ the critical inverse temperature is exactly that of §144:
+
+$$
+\beta_c(p)=2\operatorname{arsinh}\frac1{2\sqrt{p(1-p)}},\qquad
+\beta_{c,a}=2\operatorname{arsinh}\frac{99}{\sqrt{7301}},\quad
+\beta_{c,b}=2\operatorname{arsinh}\frac3{2\sqrt2}.
+\tag{152.2}
+$$
+
+Here $p_a=49/198$, $p_b=1/3$, and $\beta_{c,b}<\beta_{c,a}$.
+Either filtered output is entangled precisely for $\beta>\beta_c(p)$;
+equality is separable. The full finite-temperature classification is
+
+| Inverse temperature | Common-filter output for $q_a$ | Common-filter output for $q_b$ |
+| --- | --- | --- |
+| $0\le\beta\le\beta_{c,b}$ | separable | separable |
+| $\beta_{c,b}<\beta\le\beta_{c,a}$ | separable | NPT |
+| $\beta>\beta_{c,a}$, finite | NPT | NPT |
+
+At $\beta=\log7$ for $q_b$, the exact entries are
+
+$$
+(a,b,c,d,z)=\left(\frac7{16},\frac5{16},\frac3{16},\frac1{16},
+\frac{\sqrt2}{8}\right),\quad
+ad=\frac7{256},\quad \mu=\frac8{256},\quad bc=\frac{15}{256},\quad
+(r_0,r_1)=\left(\frac78,\frac18\right).
+\tag{152.3}
+$$
+
+The effective and full procedures therefore give distinct exact probabilities:
+
+| Procedure at $q_b,\beta=\log7$ | Success probability | Conditional PT minimum | Success-weighted negativity |
+| --- | --- | --- | --- |
+| Effective filter after alignment and spectator discard | $11/64$ | $-1/44$ | $1/256$ |
+| Full common filter (151.1) | $343/2048$ | $-1/56$ | $49/16384$ |

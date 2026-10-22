@@ -1,0 +1,17 @@
+fingerprints:
+  raw_sha256: sha256:946b5a8a90c3850ea9413139214a7806245219e9c11968c6593fbb9e8b680959
+  normalized_sha256: sha256:946b5a8a90c3850ea9413139214a7806245219e9c11968c6593fbb9e8b680959
+cas_ref: sha256:946b5a8a90c3850ea9413139214a7806245219e9c11968c6593fbb9e8b680959
+coverage_gids:
+  - gid: D5/S3/PrimeForms/Crossing/WindingOrbitZero.sandwich_orbit_has_unique_winding_zero
+    target_statement_id: sha256:c81f3a539a6bbd2498a33feec0426113493a4aeadc1765fc2d67b95ad5761393
+  - gid: D5/S3/PrimeForms/CrossingPeriodicity/PhaseObserverMinimalPeriod.phase_period_eq
+    target_statement_id: sha256:70e4269df18f655a15fe1317ed482a3cb0d8c989d4bcd89edacdfdaa1d0eef89
+  - gid: D5/S3/PrimeForms/CrossingPeriodicity/PhaseObserverMinimalPeriod.phase_period_twelve
+    target_statement_id: sha256:5f87b98626efbb93631789dfc9e84310e360936b38505e1d7be06a8f658a98d4
+  - gid: D5/S3/PrimeForms/CrossingPeriodicity/PhaseObserverTranslation.phase_observer_descends_to_translation
+    target_statement_id: sha256:abf61b61f3b46bd267b482ca26ae09f9b81747ed9c80982108ac24158da0c0e6
+  - gid: D5/S3/PrimeForms/CrossingPeriodicity/SandwichPhasePeriod.sandwich_phase_period_package
+    target_statement_id: sha256:99ff6f16577353b1772788a643df843dd75aeb75702ad714f7b09d1298cf0b1e
+receipts:
+  unresolved_subitems: []

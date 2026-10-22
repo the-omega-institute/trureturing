@@ -1,0 +1,22 @@
+**Definition 11.1 (Sources and scope of the consequences).** The
+model-specific results of this volume are ordinary repository-derived
+mathematics (`repo-derived`). The full parent relation and its converse,
+drift and proportional saturation, direction bounds, fixed-width
+exceptional classification, explicit offslice support and its exclusion,
+and the two exact child constructions are consequences proved at the
+specified model and literal histories. They carry no priority or
+exhaustive novelty assertion. Their reusable tools and exact predecessor
+hypotheses are as follows.
+
+| Mathematical source | Use at its stated hypotheses |
+| --- | --- |
+| [Entire-response volume](FIB_C35_ENTIRE_JM_RESPONSE_INJECTIVITY.md), Definitions 1.1, 1.3 and Table 6.1 | Complete triples, original clocks, guards and actual M continuation products. |
+| Entire-response volume, Theorems 15.2–15.4 | The inherited exact-$h$ family, accepted rational J arm and entire exact-$h$ M obstruction; none is asserted as a new construction here. |
+| Entire-response volume, Theorem 16.5 | The same-child finite-slot reasoning; its stated atlas is for fifth J, so the present M equations are written explicitly from the recursion. |
+| [Terminal-zero-plane volume](FIB_TERMINAL_ZERO_PLANE_INVERSE_AND_J_PAIR_CHAMBER.md), Theorem 8.2 | The unrestricted exactly-two-world fifth-M classification, used only through $A=D$, $z=D+(4D/7)n$; no chamber-only corollary is applied. |
+| Terminal-zero-plane volume, Theorems 9.2–9.3, equations (9.5)–(9.19) | No common zero of the fourth and fifth-M drift coefficients on all strict sources, and already known six-row same-source uniqueness. |
+| Terminal-zero-plane volume, Theorem 11.2 | Predecessor joint terminal-slot association at its chamber parents; it is not a chamber membership claim for $H_4$. |
+| [Promised-fiber volume](FIB_JMJM_PROMISED_FIBERS_AND_JOINT_EXCEPTION_GEOMETRY.md), Theorem 4.1 | Prior affine lifting and determinant-line method at $C=48$, $24<z<48$; Theorem 3.1 supplies the distinct equal-odd-read proof needed here. |
+| Berrut–Trefethen, *[Barycentric Lagrange Interpolation](https://doi.org/10.1137/S0036144502417715)*, §2 | `literature-attested` fixed distinct-node interpolation, used inside the parent reconstruction; it does not supply a common-history collision. |
+| Banach contraction principle and the Neumann-series criterion | Standard complete-box existence and zero equivalence, with their hypotheses supplied by (8.3) and (9.2). |
+| Bochnak–Coste–Roy, *[Real Algebraic Geometry](https://doi.org/10.1007/978-3-662-03718-8)*, semialgebraic projection | The rational semialgebraic singleton implies algebraic coordinates, after contraction uniqueness and nonzero denominators have been established. |

@@ -1,0 +1,113 @@
+**命题 477.1（累积峰值给出有界实际见证）。** 对每个实数 $x\ge a^2$，若
+
+$$
+\Delta_1(x)>12\sqrt x\log x,
+\tag{477.1}
+$$
+
+则存在实数 $t\in[a,x]$，其实际整数 $N=D_t$ 满足
+
+$$
+5040<N\le\exp(x\log x),\qquad
+Z(N)>e^{\gamma_E}\log\log N.
+\tag{477.2}
+$$
+
+证明。对 $u\ge a$，设 $L=\log u$、$a_p=\lfloor\log u/\log p\rfloor$，保留有限完整 prime-power 和与两个非负量
+
+$$
+P(u)=\sum_{p^k\le u}\frac1{kp^k},\qquad
+Q(u)=\sum_{p\le u}\sum_{k>a_p}\frac1{kp^k},\qquad
+\mathcal L(u)=-\sum_{p\le u}\log(1-p^{-a_p-1}).
+$$
+
+经典完整 Mertens 账本及有限 Euler 乘积给出
+
+$$
+P(u)=\gamma_E+\log\log u+
+\frac{\psi(u)-u}{u\log u}-I_\psi(u),\qquad
+\log Z(D_u)=P(u)+Q(u)-\mathcal L(u).
+\tag{477.3}
+$$
+
+这里 $\log D_u=\psi(u)$；所有上端采用 $\le$，包括 prime-power 端点。函数 $v\mapsto\log\log v$ 在 $v>1$ 上凹，而 $\psi(u)>1$，故其在 $u$ 处的切线给出
+
+$$
+\log\frac{e^{\gamma_E}\log\log D_u}{Z(D_u)}
+\le I_\psi(u)+\mathcal L(u)-Q(u)
+\le I_\psi(u)+\frac4{\sqrt u}.
+\tag{477.4}
+$$
+
+最后一界保留实际指数：当 $p\le\sqrt u$ 时 $p^{-a_p-1}<1/u$；当 $p>\sqrt u$ 时 $a_p=1$。因 $p^{-a_p-1}\le1/4$，有
+
+$$
+\mathcal L(u)\le\frac43\left(
+\frac1{\sqrt u}+\sum_{m>\sqrt u}\frac1{m^2}\right)
+\le\frac43\left(\frac1{\sqrt u}+\frac1{\sqrt u-1}\right)
+\le\frac4{\sqrt u}.
+$$
+
+反设 $[a,x]$ 上每个 $D_u$ 都满足 $Z(D_u)\le e^{\gamma_E}\log\log D_u$。由 (477.4)，整个实区间上有 $I_\psi(u)\ge-4/\sqrt u$。
+
+记 $I_\theta$ 为将完整核中的 $\psi(v)-v$ 换成 $\theta(v)-v$ 所得积分，$H_2=I_\psi-I_\theta\ge0$。逐个保留高次 prime-power，并只用 $\theta(y)\le y\log y$，得到
+
+$$
+\psi(v)-\theta(v)
+\le\frac{\sqrt v\log^2v}{\log2},\qquad
+H_2(u)\le\frac{2\log u+6}{\log2\sqrt u}.
+$$
+
+由 $\log2>1/2$ 与 $\log a>8$，反设因此推出
+
+$$
+I_\theta(u)\ge-\frac{6\log u}{\sqrt u}
+\qquad(a\le u\le x).
+\tag{477.5}
+$$
+
+下一步使用 $E_2$ 的实际累积量，区别于既有文献条目中的 $E_1$ 累积量。令
+
+$$
+q(u)=\frac{u\log u}{1+\log u},\qquad
+h(u)=\frac{\log u}{(1+\log u)^2}.
+$$
+
+经典 partial summation 在相同端点给出
+
+$$
+I_\theta(u)=\frac{\theta(u)-u}{u\log u}-E_2(u),\qquad
+I_\theta'(u)=-\frac{(\theta(u)-u)(1+\log u)}{u^2\log^2u}
+$$
+
+（导数几乎处处成立）。因 $q'-1=-h$，积分后是有限区间上的精确等式
+
+$$
+\Delta_1(x)=C_a-q(x)I_\theta(x)
+-\int_a^xh(u)I_\theta(u)\,du,
+\qquad C_a=\Delta_1(a)+q(a)I_\theta(a).
+\tag{477.6}
+$$
+
+没有丢弃任何未来积分：$I_\theta$ 本身仍是完整无限尾，(477.6) 对它在 $[a,x]$ 上积分。由 $0<\gamma_E<1$ 与 $\sum_p\sum_{k\ge2}1/(kp^k)\le\tfrac12\sum_{m\ge2}1/[m(m-1)]=1/2$，可得 $|c_2|<1$。再用 $\sum_{p\le u}1/p\le\log u$ 与 $|\log\log u|\le\log u$（$u\ge2$），有 $|E_2(u)|\le2\log u+1$。又 $q(a)\le a$、$I_\theta(a)\le2\log a+2$，故
+
+$$
+C_a\le a(4\log a+3)=:K_a.
+$$
+
+把 (477.5) 代入 (477.6)，用 $q(x)\le x$、$h(u)\le1/\log u$，得到
+
+$$
+\Delta_1(x)\le K_a+6\sqrt x\log x+12\sqrt x.
+\tag{477.7}
+$$
+
+当 $x\ge a^2$ 时，$K_a<3\sqrt x\log x$ 且 $12\sqrt x\le2\sqrt x\log x$，所以右端小于 $12\sqrt x\log x$，与 (477.1) 矛盾。最后，$D_t\ge\lfloor t\rfloor\ge a>5040$，而
+
+$$
+\log D_t=\psi(t)
+=\sum_{p\le t}a_p\log p\le t\log t\le x\log x,
+$$
+
+给出 (477.2)。证毕。
+

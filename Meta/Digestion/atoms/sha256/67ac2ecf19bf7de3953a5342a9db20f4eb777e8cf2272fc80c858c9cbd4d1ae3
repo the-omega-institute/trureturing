@@ -1,0 +1,21 @@
+**Convention 10.1 (literature correspondence).** The segmented directory,
+resident admission, real source-reference compiler, metadata consumer and
+their joint ordinary proofs are `repo-derived` compositions of the specified
+suppliers. No research-originality claim is made. Primary literature supports
+the following exact external structures, rather than providing this source
+instrument, its paid clock or its archive identities.
+
+| Primary source | Exact correspondence and boundary |
+| --- | --- |
+| Nancy Lynch and Frits Vaandrager, *Forward and Backward Simulations, Part I: Untimed Systems*, Information and Computation 121(2), 1995, 214–233; [author manuscript](https://groups.csail.mit.edu/tds/papers/Lynch/IC95.pdf), §3.2, Lemma 3.8 and Theorem 3.10, manuscript pp. 11–12 | An initial-state relation and a finite matching fragment from every related state establish trace inclusion. Theorem 4.5 supplies the particular gate correspondence here, and Theorems 5.2/8.3 supply actual continuing fragments. The cited theorem does not give an inverse decoder, installed owner authority or equal clocks. |
+| Xavier Leroy and Sandrine Blazy, *Formal Verification of a C-like Memory Model and Its Uses for Verifying Program Transformations*, Journal of Automated Reasoning 41(1), 2008, 1–31, DOI [10.1007/s10817-008-9099-0](https://doi.org/10.1007/s10817-008-9099-0); [author manuscript](https://xavierleroy.org/publi/memory-model-journal.pdf), §5.1, Lemma 38, and §5.4, Lemmas 65–69, manuscript pp. 13, 22–23 | Mapped loads, disjoint intervals and compatible extensions motivate the explicit $\phi_K$ relation. Compatible extension preserves every old mapped block at the same image; it is not permission to rebind a previously mapped block. Lemma 4.3 proves that property for this representation, with actual paid unary resolution. The paper does not include $\xi$, guards or PR57 receipts. |
+| David Monniaux, *Memory Simulations, Security and Optimization in a Verified Compiler*, [arXiv:2312.08117v1](https://arxiv.org/html/2312.08117v1), §4.2; CPP 2024, DOI [10.1145/3636501.3636952](https://doi.org/10.1145/3636501.3636952) | Pointer operations and external calls must commute with their injection; testing particular offset bits can fail to commute. This corresponds to requiring source operands *and destinations* to resolve through the same map and to excluding arbitrary pointer-bit observations. It supplies no source-growth dispatcher or historical-guard equivalence. |
+| Nick Wanninger, Tommy McMichen, Simone Campanoni and Peter Dinda, *Getting a Handle on Unmanaged Memory*, [arXiv:2405.00038v1](https://arxiv.org/html/2405.00038v1), §§3.2, 4.1.3–4.1.4; ASPLOS 2024, DOI [10.1145/3620666.3651326](https://doi.org/10.1145/3620666.3651326) | Translated handles pin backing while raw pointers exist; compiler StackMaps, safepoints and barriers locate valid pin sets. Its external-library/allocation/alias assumptions are substantive. The present sequential instrument instead has an explicit exclusive source token and gives the actor no raw source pointer. Its old-handle theorem is proved for that smaller declared interface, not imported from Alaska or extended to its concurrent setting. |
+| Samson Abramsky and Achim Jung, *Domain Theory*, Handbook of Logic in Computer Science, volume 3, 1994; [corrected author version](https://www.cs.ox.ac.uk/files/298/handbook.pdf), Definitions 2.2.20–2.2.21 and Proposition 2.2.22 | Ideal completion requires an abstract approximation basis with finite interpolation and constructs a continuous semantic domain. It is a semantic-completion reference for the already supplied infinite-domain discussion, not a paid source entrance, local observation or growth mechanism. |
+
+The assumptions of these references do not identify mathematical completion,
+trace refinement, memory injection, acquired payload and actual installed
+authority. Those are separate relations above. Every new finite recipe is
+specified in terms of the declared primitive model; none of these literature
+names is used as a missing implementation step.
+

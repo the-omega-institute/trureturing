@@ -1,0 +1,34 @@
+**Lemma 11.5 (Comparator on every source stratum).** At every strict parent world,
+
+$$
+\begin{aligned}
+(5b+2)jn(p-24)&=eS(r/b,b),\\
+(5b+2)jn(5m-32v+1128)&=eC(r/b,b).
+\end{aligned}
+\tag{11.19}
+$$
+
+Consequently $p\ne24$ implies $eS\ne0$, and at fixed off-$24$ readings $(p,v)$ two companions have equal $m$ if and only if $F=0$.
+
+*Proof.* Use the whole-gain samples (2.2) and the three interpolation rows of Lemma 2.2 before solving the parent for $e$. Denote these ambient readings by $\widetilde p,\widetilde v,\widetilde m$, and put $R_0=e\Lambda+d_b$, with $d_b$ as in (11.10). Direct multiplication gives the stronger ambient identities
+
+$$
+\begin{aligned}
+(5b+2)jn(\widetilde p-24)-eS(r/b,b)
+ &=10Ujn(U+n)R_0,\\
+(5b+2)jn(5\widetilde m-32\widetilde v+1128)-eC(r/b,b)
+ &=-10Ujn(170b+30n+89)R_0.
+\end{aligned}
+\tag{11.20}
+$$
+
+One can reproduce these identities by keeping $b,j,n,e$ independent in the interpolated readings, subtracting the displayed multiples of $R_0$, and then substituting $j=t+b(1-t^2)$, $n=j+tb$. The remaining coefficients of $e$ are exactly the two polynomial quotients (11.15). Thus the identities use no division by $\Lambda$, $e$, $8b-1$ or a gain value. On the parent $R_0=0$, proving (11.19), including singular worlds. Since $(5b+2)jn>0$, the first identity gives $eS\ne0$ when $p\ne24$. Dividing the two identities and using (11.17) gives
+
+$$
+m=\frac{32}{5}v-\frac{1128}{5}
++\frac{p-24}{5}\frac{C_*(r,b)}{\mathscr H(r,b)}.
+\tag{11.21}
+$$
+
+The two nonzero sextic denominators allow cross multiplication, yielding exactly (11.18). This last equivalence is restricted to $p\ne24$. ∎
+

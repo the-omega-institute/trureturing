@@ -1,0 +1,35 @@
+**Lemma 12.3 (Sufficiency of the algebraic lift).** For every complex
+root $\beta$ of $F$, the specialized polynomials
+$E_0(r,\beta),E_1(r,\beta),E_2(r,\beta)$ have the unique common root
+
+$$
+\rho=-\frac{c(\beta)}{a(\beta)}.
+\tag{12.6}
+$$
+
+Each of the pairs $(E_0,E_1)$ and $(E_0,E_2)$ has specialized gcd
+of degree exactly one. In particular the lift (12.6) is real whenever
+$\beta$ is real.
+
+*Proof.* Use the classical subresultant gcd criterion over
+$\mathbb C$: for two polynomials whose initial degrees are preserved,
+vanishing of the resultant and nonvanishing of the degree-one
+subresultant imply that the gcd has degree exactly one, and that
+subresultant is a nonzero scalar multiple of the gcd. The criterion
+uses the fixed determinantal subresultants of Definitions 4.1 and
+12.1; a common nonzero normalization scalar does not change its root.
+A reference for this algebraic criterion is Basu, Pollack and Roy,
+*Algorithms in Real Algebraic Geometry*, second edition, Chapter 8,
+[DOI 10.1007/3-540-33099-2](https://doi.org/10.1007/3-540-33099-2).
+
+Lemma 12.2 supplies every specialization hypothesis. For $(E_0,E_1)$
+the linear gcd has root $-c_0(\beta)/a_0(\beta)$; cancellation of
+$h(\beta)\ne0$ gives (12.6). For $(E_0,E_2)$ its root is
+$-c_2(\beta)/a_2(\beta)$. The third remainder identity of (12.3)
+and $a(\beta)a_2(\beta)\ne0$ make these two roots equal. Hence the
+same $\rho$ is a zero of all three $E_k$, and uniqueness follows
+from either linear gcd. This also explains why two vanishing
+resultants alone would not have supplied sufficiency: their common
+roots with $E_0$ would still have to be identified. All coefficients
+in (12.6) are real at a real $\beta$, with nonzero denominator. ∎
+

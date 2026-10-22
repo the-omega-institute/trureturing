@@ -1,0 +1,66 @@
+## 150. Endpoint inclusions and completion of the positive theorem
+
+All endpoint statements here are exact rational comparisons of the
+displayed data. Write $c^*$ for the rational center in Definition
+128.1. The anchor inclusions are, for each coordinate $i$,
+
+$$
+ |c_{1,i}(1)-c_i^*|+10^{-20}<2^{-30}.
+\tag{150.1}
+$$
+
+Thus the entire root box of Definition 128.1, including its radius, belongs
+to the first endpoint tube. The interpolation node table also gives
+
+$$
+ c_j(-1)=c_{j+1}(1),\qquad1\le j<16.
+\tag{150.2}
+$$
+
+The radii of these boxes are identical, so their unique roots agree
+at every shared endpoint.
+
+At the lower joint endpoint, $\delta^9R=2^{-26}$. Put
+
+$$
+ G_i=2^{-26}-\big(|P_i(1/16)-c_{16,i}(-1)|+2^{-30}\big).
+\tag{150.3}
+$$
+
+The following exact positive gaps certify containment of the entire
+old endpoint box inside the new one. Every gap exceeds $10^{-8}$.
+
+| Coordinate | $G_i$ |
+| --- | --- |
+| $r$ | $84897030931841799122329994464899456884058677/7191684181896040534750782140588649668971930060849152$ |
+| $L$ | $299388174467480593349651798796358102391400731/21575052545688121604252346421765949006915790182547456$ |
+| $p$ | $590587824558783040011326350042008480888481229/43150105091376243208504692843531898013831580365094912$ |
+| $x$ | $1204479505161049966086488499063839917652378587/86300210182752486417009385687063796027663160730189824$ |
+
+For $q=1/16>0$, an $F$-zero in the upper endpoint box is an $H$-zero
+in the scaled box, and uniqueness identifies the roots. Nonsingular
+analytic IFT glues the charts at the joints. Consequently they form
+one branch connected to the specified $q=1/4$ root and cover every
+$0<q\le1/4$; uniqueness is asserted in these chart boxes.
+
+*Proof of Theorem 146.1.* The contractions, inclusions and analytic
+IFT just described give the anchored branch and nonsingularity.
+The complete 31-row table gives its admissibility and all strict
+cofactor, phase and nonzero slack signs; Lemma 147.1 supplies the
+entire closed population boundary. Apply the already proved
+pointwise argument of Proposition 142.2 and Proposition 143.2 with
+these hypotheses. The former supplies the bound for all complex
+pure inputs and all mixed densities; the latter supplies the matching
+lower bound for every complex CPTP map and forces exactly the closed
+disk by the individual phase scores. Its exact identities preserve
+the singular kernel and matching value. This proves (146.1), including
+the full CPTP fiber and common composite. No new restriction on the
+competing maps or input densities has entered. $\square$
+
+The input equality conclusion of Corollary 144.1 applies pointwise
+on this same interval, by its existing proof and the signs above.
+Likewise the rank, covariance, nonunitality and support-face statements
+of §§139–140 retain exactly their stated hypotheses. These are
+consequences of the reused classification, not additional independent
+parameter-range theorems.
+

@@ -1,0 +1,9 @@
+fingerprints:
+  raw_sha256: sha256:9d6aedf1d04deb4b0362ac56911c1a37419fb68b1c112ef2b4921bc2484a13d1
+  normalized_sha256: sha256:9d6aedf1d04deb4b0362ac56911c1a37419fb68b1c112ef2b4921bc2484a13d1
+cas_ref: sha256:9d6aedf1d04deb4b0362ac56911c1a37419fb68b1c112ef2b4921bc2484a13d1
+coverage_gids:
+  - gid: D5/S3/Observer/MeasurementMarginal.copied_record_partial_trace_eq_address_blocks
+    target_statement_id: sha256:ed1277ea6dbf8903211f8def0accb6d4736022a79aec370b4f457f6fb3791fac
+receipts:
+  unresolved_subitems: []

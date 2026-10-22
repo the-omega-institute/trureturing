@@ -1,0 +1,29 @@
+**Definition 5.4 (arbitrary-holding geometric feasibility).** For nonnegative $A,B$ and $x,y\in[0,1)$ define
+
+$$
+\mathcal O(A,x;B,y)=\sum_{n\ge0}\min(Ah_x(n),Bh_y(n)).
+$$
+
+For $D\in[0,1/2]$, $t\in[0,1)$, $\beta\in[0,1]$, put
+
+$$
+\begin{aligned}
+\Delta_0(t,\beta)&=1-\mathcal O(1,v;1-\beta,t),\\
+\Delta_D(t,\beta)&=1-\mathcal O(1-D,v;1-\beta,t)
+-\mathcal O(D,u;\beta,t).
+\end{aligned}
+$$
+
+Say $D$ is geometrically feasible when there exist such $t,\beta$ with both $\Delta_0(t,\beta)\le\epsilon$ and $\Delta_D(t,\beta)\le\epsilon$. Define
+
+$$
+\begin{aligned}
+K_{\mathrm{geo}}&=\min\{k\ge0:\delta_k\text{ is geometrically feasible}\},\\
+K_{\mathrm{tail}}&=\min\{k\ge0:\alpha_{\mathrm{tail}}\delta_k\le\epsilon\}
+=\min\{k\ge0:\delta_k\le C_{\mathrm{tail}}\epsilon\},\\
+K_{\mathrm{ov}}&=\min\{k\ge0:\delta_k\le C_{\mathrm{ov}}\epsilon\}.
+\end{aligned}
+$$
+
+The endpoint feasibility inequalities and the last two cutoffs are non-strict, including their exact ties. The existential definition of $K_{\mathrm{geo}}$ is a mathematical criterion, not an arbitrary-real comparison algorithm.
+

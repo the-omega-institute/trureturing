@@ -1,0 +1,27 @@
+**Lemma 6.7 (complete caller and returned-boundary composition).** Every
+valid finite complete canonical request at a reached acknowledged idle state
+has the selected finite paid continuation through its complete row ACK to
+its saved return edge, or through its terminal ACK and requested stop work to halt. This includes
+source acceptance/rejection, Reserve greater/equal/less and all Raise
+comparison branches, every finite valid context and finite literal address.
+Reached local/controller computations and required external supplies must
+terminate. During this continuation the actual finite partial phases are
+not callable extra services and are not projected out of the actual state.
+
+The complete producer/consumer map is:
+
+| Material and writer | Actual reader and endpoint |
+| --- | --- |
+| Boot source ingress/validation, initial native directory and six counters | ReadState/Resolve and LoadCounter by ReadField/SkipField; boot CloseFence and boot-binding copy finish before acquired-controller use |
+| Native directory/counter append | Complete-record scan; the matching and skipping branches both reach the following seal, and only a seal permits selection |
+| Producer native block descriptors on 17; local copy descriptors on 29 and verifier/consumer work | Origin/ordinal native scan, full field equality, actual local availability/At reads; remote references use acquired origin matches |
+| Source S/W fields and generated code | Resolve for every S operand **and destination**; Copy/Add for W; unchanged raw-unary interpreter after complete code construction |
+| Every source response, NativeLocal and Halt commitment | Inherited $q,g,e,j$ cases, complete `SEG-J1` row/index and its unified mate; Lemma 6.2b's two predecessor chains |
+| Semantic/unified indices and GetSemantic/GetUnified/source-only/prefix scans | Paid ordinal/rank/select scan, descriptor/origin resolution, actual acquired payload or typed `no-row`; no new semantic event |
+| Start, successful publication and response CloseFence | Already constructed typed closed reference blocks, reloaded through their native descriptors into the row fields; no publication call on no-change branches |
+| Retained ingress/header/length/payload/context blocks | Complete parser and row request references; missing actor copies arrive through the positioned channel before final row ACK |
+| BuildManifest and complete semantic/unified bit-row writers | Bounded joined-row/manifest decoder at actor and verifier; full $M_v$, $j$ transitions and both predecessors checked before final ACK |
+| Sender/mailbox/receiver and local origin descriptors | Both length-bounded copy stages, actual status WR/CTL/TOK; only complete receiver material can be parsed |
+| Frozen semantic/unified rows, all dependencies and two journal ends | `SEG-P1` verifier snapshot, full ordinal/guard/manifest checks and finite initial-candidate enumeration |
+| Accepted SEG-R1 INITIAL-q_H0 receipt and completed delivery descriptor | Consumer compares both journal counts/ends and all other acquired expected binding fields before writing/sealing/OUT of the target; refusal has no task output |
+| Final row parser | Final row ACK TOK, source-service-token TOK, idle CTL, fixed retained caller return edge; a terminal route instead completes its requested snapshot/verification/consumer work before halt CTL |

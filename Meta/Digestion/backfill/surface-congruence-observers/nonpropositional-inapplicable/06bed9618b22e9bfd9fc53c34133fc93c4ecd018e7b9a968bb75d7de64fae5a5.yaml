@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:06bed9618b22e9bfd9fc53c34133fc93c4ecd018e7b9a968bb75d7de64fae5a5
+  normalized_sha256: sha256:06bed9618b22e9bfd9fc53c34133fc93c4ecd018e7b9a968bb75d7de64fae5a5
+cas_ref: sha256:06bed9618b22e9bfd9fc53c34133fc93c4ecd018e7b9a968bb75d7de64fae5a5
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 'Nonpropositional: this atom is solely a section heading that labels the subject of the following separately atomized clauses. It contains no independent quantified assertion, definition-with-an-extra-conclusion, table entry, or theorem body. The enclosing section atom and its mathematical child atoms are not settled by this receipt.'
+    previous_atom_id: e856adc0ed3fd87f764804b3ebfb6f9cf91b6f6cc117fc018ddec3a8673997d6
+    next_atom_id: 68a95a7be77c7b3e6c0d7c6c1f8ae4d5b378c853fefbd44e2d88f55f33e3655f

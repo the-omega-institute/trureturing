@@ -1,0 +1,13 @@
+fingerprints:
+  raw_sha256: sha256:7c2095a3c9d2fa36ac4d869f97c3095a8df9327a27f7a38ff3b975b8c0ab8c9e
+  normalized_sha256: sha256:7c2095a3c9d2fa36ac4d869f97c3095a8df9327a27f7a38ff3b975b8c0ab8c9e
+cas_ref: sha256:7c2095a3c9d2fa36ac4d869f97c3095a8df9327a27f7a38ff3b975b8c0ab8c9e
+coverage_gids:
+  - gid: D5/S3/Quantum/FiniteDimensional.born_probability_skeleton
+    target_statement_id: sha256:23ce2a1f8e999242868864e28a8bf0653ddac0dbc9455b6bf5795fa62fd1e2cc
+  - gid: D5/S3/Quantum/FiniteDimensional.qubit_matrix_algebra_has_no_character
+    target_statement_id: sha256:a64a7db140cf1b62437069ce3e400c326debb1675456048955a50730edd170ef
+  - gid: D5/S3/Quantum/FiniteDimensional.qubit_weyl_star
+    target_statement_id: sha256:be07b0533dfdb8741136a43d8272fd7a664770fb9b4a851805c5db573532362d
+receipts:
+  unresolved_subitems: []

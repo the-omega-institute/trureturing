@@ -1,0 +1,45 @@
+## 134. Prefixes, drifting constants, and logical boundaries
+
+The uncapped quantifier in Theorem 132.1 is essential. Every finite stopped
+or capped prefix has finitely many finite state spaces and therefore a finite
+maximum occurrence range. It may satisfy prefix-dependent locality and
+comparison constants without contradiction. For affine controls that vary
+by layer or epoch, with $\ell_e\ge0$, $b_e\ge0$, and $a_e>0$, the relevant
+bound is explicitly
+
+$$
+R_e=\frac{\ell_e+b_e}{a_e},
+\qquad \ell_e\ge0,\quad b_e\ge0,\quad a_e>0.
+\tag{134.1}
+$$
+
+A bounded supremum of this ratio over all accepted epochs still contradicts
+Theorem 129.3. If the ratio is unbounded, this argument has no contradiction
+left; it removes this proof of incompatibility and leaves compatibility open.
+
+Upper compression alone cannot transfer occurrence range. For the two-point
+abstract family $V_N=\{0,1\}$, set
+
+$$
+ d_N(0,1)=N,\qquad \rho_N(\iota_N(0),\iota_N(1))=1,
+ \qquad
+ Q_N=\begin{pmatrix}-1&1\\[2pt]1&-1\end{pmatrix}.
+\tag{134.2}
+$$
+
+The positive support is local at physical radius $1$ for every $N$, while
+its occurrence jump is $N$. Thus an upper-only compression or locality
+statement cannot imply (132.1). This two-point family is only a logical
+boundary example; it is not a §129-compatible FIB family and is not offered
+as a counterexample to Theorem 129.3.
+
+The conclusion is a conditional realization obstruction. The target sets
+$X_e$ may have any dimension and may vary with $e$. No Euclidean dimension,
+physical clock, continuum operator, finite propagation statement for
+$\exp(tQ_e)$, global (all-epoch) irreducibility, native-edge support, or physical
+three-dimensional conclusion follows. The next test is therefore concrete:
+for the proposed realization, verify whether direct positive generator
+support really has a uniform finite-radius bounded preimage (or a stated
+sufficient lower control). If that bridge fails, Theorem 129.3 alone does
+not decide physical locality.
+

@@ -1,0 +1,27 @@
+**Definition 13.2 (last-retention gaps on the same set).** For an actual
+$R$ with $(p,v)\in V_*$ and $|S_R|\ge2$, put
+
+$$
+\begin{aligned}
+ \gamma_e(R)&=\min_{\substack{W,W'\in S_R\\W\ne W'}}|f_e(W)-f_e(W')|,\\
+ \lambda_e(R)&=\min_{\substack{W,W'\in S_R\\W\ne W'}}
+                   |\log f_e(W)-\log f_e(W')|.
+\end{aligned}
+\tag{13.7}
+$$
+
+For $|S_R|=1$ set both quantities to $+\infty$. For nonsingletons they
+are positive attained minima, by Theorem 9.4 and finiteness. Theorem
+13.1 gives, on exactly this same nonsingleton set,
+
+$$
+ \gamma_M(R)>3\gamma_J(R),\qquad
+ \lambda_M(R)>2\lambda_J(R).
+\tag{13.8}
+$$
+
+Indeed take a pair attaining the $M$ minimum and apply (13.1), then
+bound the $J$ gap of that pair below by its own minimum. The two
+minimizing pairs need not be equal. No comparison of two separately
+chosen old-record sets occurs here.
+

@@ -1,0 +1,24 @@
+**定义 6.1（共用动作表与完整世界逆）。** 记
+
+$$
+H_4(C,z,Y)=(0,J,24,M,C,J,z,M,Y),\qquad
+H_5(C,z,Y,p)=(H_4(C,z,Y),M,p).
+\tag{6.1}
+$$
+
+这里 $H_5$ 已实际读取原时钟 $0,\ldots,5$ 的六行。下表（表 6.1）中的词按时间从左到右排列，矩阵仍按式 (1.2) 左乘；$c=r(1-r)/b$。互择续行不是额外观测。
+
+| 标签 | 原时钟 | 时间词 | 实际左乘积 $Q$ | $\operatorname{tr}(QP)$ |
+| --- | --- | --- | --- | --- |
+| $0$ | $0$ | 空词 | $I$ | $1$ |
+| $1$ | $1$ | $J$ | $\left(\begin{smallmatrix}0&1\\1&0\end{smallmatrix}\right)$ | $b+c$ |
+| $2$ | $2$ | $JM$ | $\left(\begin{smallmatrix}1&0\\1&1\end{smallmatrix}\right)$ | $1+b$ |
+| $3$ | $3$ | $JMJ$ | $\left(\begin{smallmatrix}1&1\\1&0\end{smallmatrix}\right)$ | $r+b+c$ |
+| $4$ | $4$ | $JMJM$ | $\left(\begin{smallmatrix}1&0\\2&1\end{smallmatrix}\right)$ | $1+2b$ |
+| $5$ | $5$ | $JMJMM$ | $\left(\begin{smallmatrix}2&1\\3&1\end{smallmatrix}\right)$ | $1+r+3b+c$ |
+| $6J$ | $6$ | $JMJMMJ$ | $\left(\begin{smallmatrix}3&1\\2&1\end{smallmatrix}\right)$ | $1+2r+2b+c$ |
+| $7JJ$ | $7$ | $JMJMMJJ$ | $\left(\begin{smallmatrix}2&1\\3&1\end{smallmatrix}\right)$ | $1+r+3b+c$ |
+| $7JM$ | $7$ | $JMJMMJM$ | $\left(\begin{smallmatrix}2&1\\5&2\end{smallmatrix}\right)$ | $2+5b+c$ |
+| $6M$ | $6$ | $JMJMMM$ | $\left(\begin{smallmatrix}3&1\\5&2\end{smallmatrix}\right)$ | $2+r+5b+c$ |
+| $7MJ$ | $7$ | $JMJMMMJ$ | $\left(\begin{smallmatrix}5&2\\3&1\end{smallmatrix}\right)$ | $1+4r+3b+2c$ |
+| $7MM$ | $7$ | $JMJMMMM$ | $\left(\begin{smallmatrix}5&2\\8&3\end{smallmatrix}\right)$ | $3+2r+8b+2c$ |

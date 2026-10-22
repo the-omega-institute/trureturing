@@ -1,0 +1,12 @@
+**Theorem 30.3 (Exhaustive endpoint inventory).** The function
+$\alpha_H$ has exactly four zeros on the whole closed interval $[10,34]$.
+They are simple and are the unique points $p_i$ in the following open
+rational intervals $I_i=(l_i,h_i)$, respectively. Every decimal denotes
+its exact terminating rational value.
+
+| $i$ | $l_i$ | $h_i$ |
+| --- | --- | --- |
+| 1 | $13.1377186191279091547601$ | $13.1377186191279091547602$ |
+| 2 | $19.5319320737263986033004$ | $19.5319320737263986033005$ |
+| 3 | $32.8725952384491631141317$ | $32.8725952384491631141318$ |
+| 4 | $33.9742535335153124186754$ | $33.9742535335153124186755$ |

@@ -1,0 +1,45 @@
+**Theorem 18.2 (Necessary scale-changing relation and a direction-child bound).** Under $C>Y>0$, any scale-changing proportional pair sharing $H_{5J}^A$ and its acquired sixth-J response must satisfy
+
+$$
+\mathcal P(Y/C)=0,\qquad
+\mathcal P(q)=18q^3-62q^2+75q-30.
+\tag{18.9}
+$$
+
+It has $0<d_i<Y$, $u_J=Y$, the normalized samples (18.6), and different final-J responses. This is a necessary relation, not a source-existence certificate.
+
+If also $z\ne A$ and $0<Y/C\le4/5$, every one-direction actual sixth-J child contains at most two complete worlds, for every $p,u$. No global bound on the unrestricted child is asserted.
+
+Proof. The scale-changing branch of Theorem 18.1 used only $C>Y>0$ and the shared rows, so it gives (18.4)–(18.8). All of $\varphi(1),\varphi(3),\varphi(5)$ must be nonzero: otherwise the corresponding common odd response would equal two distinct drifts. The trace identity gives, for each drift,
+
+$$
+\frac{p-d_i}{\varphi(5)}
+=2\frac{z-d_i}{\varphi(3)}-\frac{A-d_i}{\varphi(1)}.
+\tag{18.10}
+$$
+
+Subtract for the two distinct drifts and multiply only nonzero samples. The result is
+
+$$
+\varphi(5)(2\varphi(1)-\varphi(3))-\varphi(1)\varphi(3)
+=\frac{(2-q)\mathcal P(q)}{16q^2}=0,
+\tag{18.11}
+$$
+
+which proves (18.9). For $q=4/5-t$, $t\ge0$, exact expansion gives
+
+$$
+\mathcal P(4/5-t)
+=-\frac{58}{125}-\frac{259}{25}t-\frac{94}{5}t^2-18t^3<0.
+\tag{18.12}
+$$
+
+Thus a one-direction child in the stated ratio range has no two different gain scales. All of its gains and drifts are common, and an active even row fixes $b$. The condition $z\ne A$ guarantees at least one active odd sample. Two active odd samples fix the source; if just one trace $j+mr=\ell$ is fixed, the sources satisfy
+
+$$
+r^2-(1+mb)r+b(\ell-b)=0.
+\tag{18.13}
+$$
+
+This monic quadratic gives at most two complete worlds. Strict legality, all remaining rows and repeated roots are still filtered. Neither (18.9) nor the source quadratic alone supplies two legal worlds. ∎
+

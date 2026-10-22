@@ -1,0 +1,38 @@
+**Theorem 125.1 (weighted common-direction interval).** For every real common contraction in (U.1) with
+
+$$
+\frac{17}{20}\leq p\leq\frac78,
+$$
+
+and its actual $\tau$, $A$, $B$, $\lambda$, $N$ and $R$, one has
+
+$$
+\Theta^2\leq c,\qquad\Theta\leq r.
+\tag{U.94}
+$$
+
+This includes every rank $0,1,2$ of $V$, without commutation or alignment assumptions. More precisely,
+
+$$
+\lambda\geq q/2\ \Longrightarrow\ S\leq c/2,
+\qquad
+\lambda\leq q/2\ \Longrightarrow\ \Theta<r.
+\tag{U.95}
+$$
+
+Proof. The low branch is Theorem 123.2. For the high branch choose a real unit minimum eigenvector $u$ of this actual $B$. If $a(\lambda)\leq0$, then $Z\geq0\geq a(\lambda)$, so Proposition 123.1 gives $S\leq c/2$.
+
+If $a(\lambda)>0$, Theorem 124.2 and $q/2\leq\lambda\leq q$ yield
+
+$$
+a(\lambda)M_u\preceq(m-\lambda)I_2,
+\qquad
+m-\lambda\leq\lambda_{\max}(M_u)Z
+\leq\frac{m-\lambda}{a(\lambda)}Z.
+\tag{U.96}
+$$
+
+Here $m-\lambda>0$. In fact $m\geq q\geq\lambda$; equality would force $m=\lambda=q$, incompatible with $a(q)\leq0$ in (U.93). Thus division in (U.96) is only by positive numbers and gives $Z\geq a(\lambda)$. Proposition 123.1 again gives $S\leq c/2$. Finally the exact identity (U.27), valid since $N,R\geq0$, yields $\Theta^2\leq2S\leq c$.
+
+Every step has kept the original actual trace penalty: its coefficient $4/h$ entered $Z$, and no substitution $\tau=0$ was made. The proof requires neither a small second singular value nor a constant-rank hypothesis. In particular it proves no universal $S\leq c/2$ assertion in the low branch or outside the stated interval. $\square$
+

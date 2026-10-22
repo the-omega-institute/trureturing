@@ -1,0 +1,30 @@
+**Corollary 16.3 (reused two-point prediction inequality on the witness).**
+For the common record in Theorem 16.2, any sequence of numerical
+predictions $q_n$ depending only on that record and public data obeys
+
+$$
+ \max_{\sigma\in\{+,-\}}
+ |q_n-Y_{M^n}(W_\sigma(h))|
+ \ge\frac12|Y_{M^n}(W_+(h))-Y_{M^n}(W_-(h))|.
+\tag{16.11}
+$$
+
+Consequently it has no uniform finite error bound on that record
+fiber, even after the smaller-exponential normalization in (16.7).
+For each such normalization at least one of the two worlds has
+unbounded normalized error.
+
+**Proof.** Apply the triangle inequality to the two errors and their
+common $q_n$, then use (16.7). If both individual normalized errors
+were bounded, their maximum would be bounded, a contradiction.
+$\square$
+
+Both positive radii and the full joint allowed relation are essential
+to this witness. Nothing here extends it to exact retention endpoints,
+a restricted channel omitting the common outputs, adaptive later
+observations, or an observer with additional lawful acquired data.
+Theorem 15.3 uses the larger weight $\varphi^n(1+n)^3$ and an exact
+boundary-coordinate distance; it is consistent with (16.7). The lower
+bound establishes no impossibility for every physical observer and
+no universal memory or acquisition lower bound.
+

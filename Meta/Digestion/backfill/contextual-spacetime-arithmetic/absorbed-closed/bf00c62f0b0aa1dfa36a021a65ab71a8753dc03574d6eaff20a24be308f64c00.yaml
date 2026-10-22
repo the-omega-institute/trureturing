@@ -1,0 +1,9 @@
+fingerprints:
+  raw_sha256: sha256:bf00c62f0b0aa1dfa36a021a65ab71a8753dc03574d6eaff20a24be308f64c00
+  normalized_sha256: sha256:bf00c62f0b0aa1dfa36a021a65ab71a8753dc03574d6eaff20a24be308f64c00
+cas_ref: sha256:bf00c62f0b0aa1dfa36a021a65ab71a8753dc03574d6eaff20a24be308f64c00
+coverage_gids:
+  - gid: D5/S3/ConceptDynamics/Spacetime/RegionFilterQExpressibility.total_word_saturation
+    target_statement_id: sha256:e1d098e38215c610fcdd282ccc2db2ca129288c8e5415722605e79c66ebeeb28
+receipts:
+  unresolved_subitems: []

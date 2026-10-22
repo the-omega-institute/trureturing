@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:b071ecad59e4fd39420e5ba3e012fd189b127a0cad9c578e0cea81e19f49819c
+  normalized_sha256: sha256:b071ecad59e4fd39420e5ba3e012fd189b127a0cad9c578e0cea81e19f49819c
+cas_ref: sha256:b071ecad59e4fd39420e5ba3e012fd189b127a0cad9c578e0cea81e19f49819c
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: Scope convention fixing the previously specified root and unrestricted competitor domain; does not establish root isolation, the optimum, or a support theorem.
+    previous_atom_id: fcab45c1ff685e54106c3df65ef8979330a5b99ed5e0f9983a48983abcca2a67
+    next_atom_id: 2113b69066afcd706e61d0b1388d530796309dd3d15e19d0941240aca73abca0

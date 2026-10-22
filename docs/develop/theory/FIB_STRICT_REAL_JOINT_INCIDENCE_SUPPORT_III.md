@@ -3514,3 +3514,434 @@ originality, formal-kernel certification or physical realization is a
 conclusion of these results.
 
 ## 追加锚（本行以下为增补区）
+
+## 25. Singular-line coordinates for the terminal-J separation
+
+**Definition 25.1 (Ambient children and the inherited singular lines).**
+For every real $p,v$, including $p=24$, write
+
+$$
+\widehat C(p,v)=\{W\in\mathcal H:p(W)=p,\ v(W)=v\}.
+\tag{25.1}
+$$
+
+For $p\ne24$ this is exactly the entire child $C(p,v)$ of Definition
+1.1. Retain the actual singular locus $\mathcal S$ of Definition 14.1.
+Use the two simple roots $r_-,r_+$ of Proposition 11.1, without a new
+source-classification hypothesis. For $\rho\in\{r_-,r_+\}$ put
+
+$$
+\begin{gathered}
+j_\rho=\frac18+8\rho(1-\rho),\qquad n_\rho=j_\rho+\rho,
+\qquad q_\rho=\frac98+2j_\rho+4\rho,\\
+P(\rho)=\begin{pmatrix}\rho&1/8\\8\rho(1-\rho)&1-\rho\end{pmatrix},\\
+G_{\rho,e}=\left(-24-e,-\frac e{j_\rho},
+                   \frac{24}{5}-\frac{8e}{9},-\frac e{n_\rho}\right),\\
+g_{\rho,e}(s)=\sum_{i=0}^3(G_{\rho,e})_i
+ \prod_{\substack{0\le k\le3\\k\ne i}}\frac{s-k}{i-k},
+\qquad W_\rho(e)=(P(\rho),g_{\rho,e},24+e).
+\end{gathered}
+\tag{25.2}
+$$
+
+O, Theorem 2.1, and Proposition 11.1 identify $\mathcal S$ with
+precisely these worlds for every $e\in\mathbb R$. The matrix has
+strictly positive entries, trace one and determinant zero. The gain
+in (25.2) is the one entire polynomial, with zero leading coefficients
+allowed. Its first five responses are the original
+$(0,24,147/5,24,18)$; it cannot be identically zero because the first
+two responses differ. These are the reused whole-world lift and
+classification, rather than additional results about the source set.
+
+For compact response notation put
+
+$$
+\begin{aligned}
+h_{5,\rho}&=\frac{71}{18}-\frac5{j_\rho},&
+h_{6,\rho}&=\frac{43}{3}-\frac{16}{j_\rho},&
+h_{7,\rho}&=\frac{129}{4}-\frac{35}{j_\rho},\\
+P_\rho&=1+(5/4+n_\rho)h_{5,\rho},&
+V_\rho&=1+(5/2+n_\rho)h_{6,\rho},\\
+M_\rho&=1+(15/4+2n_\rho)h_{7,\rho},&
+A_\rho&=1+q_\rho h_{7,\rho}.
+\end{aligned}
+\tag{25.3}
+$$
+
+Here $P_\rho$ is a scalar coefficient, distinct from the source matrix
+$P(\rho)$. Subscripts $-$ and $+$ on these scalars mean evaluation at
+$r_-$ and $r_+$. The same sign convention applies to the worlds
+and response functions in (25.2) and (25.4).
+
+The response interface of Lemma 14.2, with the terminal-$J$ trace of
+(1.10), gives
+
+$$
+\begin{aligned}
+p_\rho(e)&=24+P_\rho e,\\
+v_\rho(e)&=84+24n_\rho+V_\rho e,\\
+m_\rho(e)&=312+\frac{768}{5}n_\rho+M_\rho e,\\
+a_\rho(e)&=24+\frac{384}{5}q_\rho+A_\rho e.
+\end{aligned}
+\tag{25.4}
+$$
+
+To spell out the correspondence, at $b=1/8$ the singular equation is
+
+$$
+\frac1{j_\rho}+\frac1{n_\rho}=\frac{107}{60}.
+\tag{25.5}
+$$
+
+Thus the three $h$ coefficients in (25.3) are respectively
+$5/n_\rho-179/36$, $16/n_\rho-71/5$ and
+$35/n_\rho-181/6$. They are exactly the gain slopes in (14.4), so
+$P_\rho=A(n_\rho)$, $V_\rho=B(n_\rho)$ and
+$M_\rho=C(n_\rho)$ in (14.3). In particular
+
+$$
+g_{\rho,e}(5)=e h_{5,\rho},\qquad
+ g_{\rho,e}(6)=24+e h_{6,\rho},\qquad
+ g_{\rho,e}(7)=\frac{384}{5}+e h_{7,\rho}.
+\tag{25.6}
+$$
+
+The original left products have traces $U+n_\rho$, $2U+n_\rho$,
+$q_\rho$ and $3U+2n_\rho$ for $p,v,a,m$, respectively, with
+$U=5/4$. Substitution of (25.6) proves all four expressions (25.4),
+including the constant terms of both clock-seven alternatives.
+Only $j_\rho,n_\rho,T=9/8,U=5/4$ and fixed interpolation-node
+differences occur as divisors. No drift, gain sample, leading
+coefficient or difference of gain roots is cancelled.
+
+## 26. The unique common acquired history of the two singular lines
+
+**Lemma 26.1 (Exact refinement and rational interval bounds).** Put
+$q=10^{18}$ and
+
+$$
+k_-=134815875067638653,\qquad k_+=902449681772056265,
+\qquad I_\pm=[k_\pm/q,(k_\pm+1)/q].
+\tag{26.1}
+$$
+
+Then $r_\pm$ lies in the interior of $I_\pm$. Define
+
+$$
+\begin{gathered}
+\delta n=n_+-n_-,\qquad
+\Delta=P_+V_--P_-V_+,\\
+e_-^*=\frac{24\delta n P_+}{\Delta},\qquad
+e_+^*=\frac{24\delta n P_-}{\Delta},\qquad
+W_\pm^*=W_{r_\pm}(e_\pm^*).
+\end{gathered}
+\tag{26.2}
+$$
+
+These expressions are well-defined. Every entry $z$ of the following
+table satisfies its displayed strict rational inequalities $L<z<R$:
+
+| $z$ | $L$ | $R$ |
+| --- | --- | --- |
+| $P_-$ | $-227/250$ | $-907/1000$ |
+| $P_+$ | $-5217/1000$ | $-652/125$ |
+| $\Delta$ | $-41/5$ | $-81/10$ |
+| $p_-(e_-^*)$ and $p_+(e_+^*)$ | $826067/50000$ | $330427/20000$ |
+| $v_-(e_-^*)$ and $v_+(e_+^*)$ | $4845027/50000$ | $1211257/12500$ |
+| $24+e_-^*$ | $128957/4000$ | $1611963/50000$ |
+| $24+e_+^*$ | $15896/625$ | $1271681/50000$ |
+| $m_-(e_-^*)$ | $2308229/5000$ | $230823/500$ |
+| $m_+(e_+^*)$ | $476473/1000$ | $4764733/10000$ |
+| $a_-(e_-^*)$ | $2968103/10000$ | $1484053/5000$ |
+| $a_+(e_+^*)$ | $212597/500$ | $850389/2000$ |
+| $m_+(e_+^*)-m_-(e_-^*)$ | $9267/625$ | $148273/10000$ |
+| $a_+(e_+^*)-a_-(e_-^*)$ | $1283837/10000$ | $1283839/10000$ |
+
+*Proof.* Write $S$ for the quartic of (11.1), and define the integer
+polynomial
+
+$$
+N(k)=438272k^4-931328k^3q+540800k^2q^2-50728kq^3-853q^4.
+\tag{26.3}
+$$
+
+Since $q^4S(k/q)=N(k)$, the exact evaluations below give opposite
+endpoint signs in each interval:
+
+$$
+\begin{aligned}
+N(k_-)&=-17838134996954211531422327095735626915094241356898701037568,\\
+N(k_-+1)&=30764791282455917421090534653063668386495135773775454994432,\\
+N(k_+)&=23290885118885097788421262912838626831916532827618987520000,\\
+N(k_++1)&=-38345978620711463093335455465648306161854810425249946206208.
+\end{aligned}
+\tag{26.4}
+$$
+
+The two intervals are contained respectively in the disjoint intervals
+(11.2). The intermediate value theorem and the already proved unique
+root in each interval (11.2) refine precisely $r_-,r_+$; no new root
+exhaustion is inferred from this table.
+
+Here are the finite rational operations determining all bounds above.
+For closed rational intervals $X=[x_0,x_1]$, $Y=[y_0,y_1]$, define
+
+$$
+\begin{aligned}
+X+Y&=[x_0+y_0,x_1+y_1],& -X&=[-x_1,-x_0],\\
+X-Y&=X+(-Y),&
+XY&=[\min E,\max E],\\
+E&=\{x_0y_0,x_0y_1,x_1y_0,x_1y_1\},&
+X^{-1}&=[1/x_1,1/x_0]\quad(0\notin X),\\
+X/Y&=XY^{-1}\quad(0\notin Y),&
+[c]&=[c,c]\quad(c\in\mathbb Q).
+\end{aligned}
+\tag{26.5}
+$$
+
+Every constant in an interval expression means its singleton interval;
+products and differences always use (26.5), including repeated
+occurrences of the same interval. Thus no independence assumption is
+made and no squaring operation is left unspecified. These operations
+contain the corresponding operations on any represented real numbers.
+
+For each sign $\sigma\in\{-,+\}$ form, in the displayed order,
+
+$$
+\begin{aligned}
+\mathcal J_\sigma&=[1/8]+[8]I_\sigma([1]-I_\sigma),&
+\mathcal N_\sigma&=\mathcal J_\sigma+I_\sigma,\\
+\mathcal Q_\sigma&=[9/8]+[2]\mathcal J_\sigma+[4]I_\sigma,\\
+\mathcal H_{5,\sigma}&=[71/18]-[5]/\mathcal J_\sigma,&
+\mathcal H_{6,\sigma}&=[43/3]-[16]/\mathcal J_\sigma,\\
+\mathcal H_{7,\sigma}&=[129/4]-[35]/\mathcal J_\sigma,\\
+\mathcal P_\sigma&=[1]+([5/4]+\mathcal N_\sigma)\mathcal H_{5,\sigma},&
+\mathcal V_\sigma&=[1]+([5/2]+\mathcal N_\sigma)\mathcal H_{6,\sigma},\\
+\mathcal M_\sigma&=[1]+([15/4]+[2]\mathcal N_\sigma)\mathcal H_{7,\sigma},&
+\mathcal A_\sigma&=[1]+\mathcal Q_\sigma\mathcal H_{7,\sigma},\\
+\mathcal D&=\mathcal P_+\mathcal V_--\mathcal P_-\mathcal V_+,\\
+\mathcal E_-&=([24](\mathcal N_+-\mathcal N_-)\mathcal P_+)/\mathcal D,&
+\mathcal E_+&=([24](\mathcal N_+-\mathcal N_-)\mathcal P_-)/\mathcal D.
+\end{aligned}
+\tag{26.6}
+$$
+
+All divisions in (26.6) have the following rational guards. For an
+interval $X$, write $\inf X$ and $\sup X$ for its two endpoints.
+The first line of (26.6) gives
+
+$$
+\begin{gathered}
+1<\inf\mathcal J_-\le\sup\mathcal J_-<11/10,\qquad
+4/5<\inf\mathcal J_+\le\sup\mathcal J_+<9/10,\\
+23/20<\inf\mathcal N_-\le\sup\mathcal N_-<5/4,\qquad
+5/3<\inf\mathcal N_+\le\sup\mathcal N_+<7/4.
+\end{gathered}
+\tag{26.7}
+$$
+
+After the reciprocal $\mathcal J_\sigma^{-1}$ operations, the same
+endpoint rules give
+
+$$
+\begin{gathered}
+-227/250<\inf\mathcal P_-\le\sup\mathcal P_-<-907/1000,\\
+-5217/1000<\inf\mathcal P_+\le\sup\mathcal P_+<-652/125,\\
+-41/5<\inf\mathcal D\le\sup\mathcal D<-81/10.
+\end{gathered}
+\tag{26.8}
+$$
+
+In particular $0\notin\mathcal D$, so the last line of (26.6) is
+legal. The nonzero scalar $P_\pm$ needed below is certified separately
+by the first two inequalities of (26.8); no inverse of these scalar
+coefficients is needed in the interval expressions.
+
+Finally form
+
+$$
+\begin{aligned}
+\mathcal X_\sigma&=[24]+\mathcal P_\sigma\mathcal E_\sigma,\\
+\mathcal Y_\sigma&=[84]+[24]\mathcal N_\sigma
+                       +\mathcal V_\sigma\mathcal E_\sigma,\\
+\mathcal B_\sigma&=[24]+\mathcal E_\sigma,\\
+\mathcal Z_\sigma&=[312]+[768/5]\mathcal N_\sigma
+                       +\mathcal M_\sigma\mathcal E_\sigma,\\
+\mathcal T_\sigma&=[24]+[384/5]\mathcal Q_\sigma
+                       +\mathcal A_\sigma\mathcal E_\sigma.
+\end{aligned}
+\tag{26.9}
+$$
+
+The interval for a row of the table is, respectively,
+$\mathcal P_-$, $\mathcal P_+$, $\mathcal D$,
+$\mathcal X_\pm$, $\mathcal Y_\pm$, $\mathcal B_\pm$,
+$\mathcal Z_\pm$, $\mathcal T_\pm$,
+$\mathcal Z_+-\mathcal Z_-$ or $\mathcal T_+-\mathcal T_-$.
+For each row its two rational endpoints satisfy
+$L<\inf X\le\sup X<R$. These inequalities are obtained solely by
+(26.1) and (26.5)–(26.9): for example, the last one is exactly
+
+$$
+\frac{1283837}{10000}
+ <\inf\mathcal T_+-\sup\mathcal T_-
+ \le\sup\mathcal T_+-\inf\mathcal T_-
+ <\frac{1283839}{10000}.
+\tag{26.10}
+$$
+
+Every comparison is a rational endpoint comparison, equivalently an
+integer comparison after multiplying by its positive denominators.
+This specifies the two initial intervals, every arithmetic operation,
+each reciprocal guard and the strict outer bounds, without rounded
+root substitutions. Interval containment and (25.3)–(25.4) now prove
+all stated strict bounds. ∎
+
+**Theorem 26.2 (Unique actual common-history pair and terminal gaps).**
+The two complete singular lines have exactly one common acquired base.
+More precisely, if $e_-,e_+\in\mathbb R$, then
+
+$$
+\bigl(p_-(e_-),v_-(e_-)\bigr)
+ =\bigl(p_+(e_+),v_+(e_+)\bigr)
+\quad\Longleftrightarrow\quad
+(e_-,e_+)=(e_-^*,e_+^*).
+\tag{26.11}
+$$
+
+Its exact base is
+
+$$
+\begin{aligned}
+p_*&=24+\frac{24\delta n P_-P_+}{\Delta},\\
+v_*&=84+24n_-+\frac{24\delta n P_+V_-}{\Delta}.
+\end{aligned}
+\tag{26.12}
+$$
+
+The worlds $W_-^*,W_+^*$ are actual strict complete worlds, are
+distinct, and satisfy the positive terminal gaps in Lemma 26.1.
+In particular $p_*\ne24$, $a(W_+^*)>a(W_-^*)$ and
+$m(W_+^*)>m(W_-^*)$.
+
+*Proof.* Equality of the acquired histories in (25.4) is exactly
+
+$$
+P_-e_--P_+e_+=0,\qquad
+V_-e_--V_+e_+=24\delta n.
+\tag{26.13}
+$$
+
+The determinant of this two-by-two system is $\Delta\ne0$ by
+(26.8), so Cramer's rule gives precisely (26.2). Conversely those
+values satisfy the first equation because both products are
+$24\delta n P_-P_+/\Delta$, and satisfy the second because
+
+$$
+V_-e_-^*-V_+e_+^*
+ =\frac{24\delta n(P_+V_--P_-V_+)}{\Delta}=24\delta n.
+\tag{26.14}
+$$
+
+Substitution gives (26.12). The reused lift (25.2) makes both worlds
+actual for these real drifts; their sources differ since $r_-<r_+$.
+Lemma 26.1 puts $p_*$ strictly between $826067/50000$ and
+$330427/20000$, both less than $24$, and supplies both positive gaps.
+Thus this is a common history of two actual whole worlds, rather than
+only an intersection of projected source equations. The positive
+$m$ gap records the response of this particular pair; injectivity of
+$(p,v,m)$ on all of $\mathcal S$ is already Theorem 14.3. ∎
+
+## 27. Entire-singular-source terminal-J injectivity
+
+**Theorem 27.1 (Terminal-J separation on the entire singular locus).**
+The map
+
+$$
+\Psi_J:\mathcal S\longrightarrow\mathbb R^3,\qquad
+\Psi_J(W)=(p(W),v(W),a(W))
+\tag{27.1}
+$$
+
+is injective. Equivalently, for every real $p,v$, including $p=24$,
+terminal $a$ is injective on $\widehat C(p,v)\cap\mathcal S$.
+The domain contains all real drifts, all permitted lower degrees and
+all repeated or sampled gain roots; no sign condition is imposed on
+the entire gain or its samples.
+
+*Proof.* Reuse Proposition 11.1 and the lift of O, Theorem 2.1,
+to write any two singular worlds as $W_\rho(e),W_{\rho'}(e')$.
+If $\rho=\rho'$, equality of $p$ and (25.4) give
+$P_\rho(e-e')=0$. By (26.8), $P_\rho\ne0$, so $e=e'$.
+The fixed-node interpolant (25.2) then gives the same entire gain,
+the same fixed drift and the same matrix, hence the identical world.
+
+If $\rho\ne\rho'$, interchange the labels to put them on the minus
+and plus lines. Equal $p,v$ force precisely $W_-^*,W_+^*$ by
+Theorem 26.2. Their terminal-$J$ difference is strictly greater than
+$1283837/10000>0$, contradicting equality of $a$. This exhausts the
+singular-source alternatives, with no restriction on $e$ or $e'$.
+At $p=24$, the nonzero $P_\pm$ additionally force $e=e'=0$;
+the two cross-line $v$ values differ by $24(n_+-n_-)>0$ using
+(26.7), so this ambient fibre is included as well.
+
+All original rows are retained through the reused lift. The proof uses
+no division by $e,d,g(i)$ or a leading coefficient. In particular
+$e=0$ and $e=-24$, degree drops and every legal gain-zero stratum
+remain in the theorem's domain. ∎
+
+**Corollary 27.2 (Necessary selected endpoints in the original joint
+relation).** Suppose the four actual labels satisfy exactly (1.6) with
+$p\ne24$. Put $\chi_i=n(W_i)/U(W_i)$. Then
+
+$$
+\begin{gathered}
+\Lambda(W_0)\ne0\ \hbox{or}\ \Lambda(W_1)\ne0,\\
+\Lambda(W_2)\ne0,\qquad\Lambda(W_3)\ne0,\\
+\chi_2\ne\chi_3,\qquad b(W_2)\ne b(W_3).
+\end{gathered}
+\tag{27.2}
+$$
+
+*Proof.* If both selected $J$ endpoints were singular, their common
+$p,v,a$ would contradict Theorem 27.1 and $W_0\ne W_1$.
+The two regular selected $M$ endpoints are the already established
+conclusion of S, Corollary 18.2, based on S, Theorem 18.1, with the
+independent actual $J$ pair in the same entire child. The earlier
+singular-$M$ injectivity Theorem 14.3 and Corollary 14.4 are reused;
+they alone would only exclude two singular $M$ endpoints.
+
+For equal $\chi_2,\chi_3$, F, Theorem 26.4, using its entire
+exceptional-source Theorem 26.3, would give identical worlds or one of
+its reflected pairs at $p=24$. Here F's $u$ is the present $v$,
+its $\chi=n/U$ is unchanged, and it uses the same original clocks,
+whole cubic gain bound and fixed real drift. The reflected alternative
+is excluded by $p\ne24$, and equality by $W_2\ne W_3$.
+Finally [SVII](FIB_STRICT_REAL_JOINT_INCIDENCE_SUPPORT_VII.md),
+Theorem 4.1, already excludes equal $b$ for such an off-$24$ actual
+$M$ pair. These three $M$ restrictions are applications of those
+existing exclusions. No additional equal-ratio or singular-$M$
+classification is required. ∎
+
+**Definition 27.3 (Unrestricted residual incidence question).** The
+remaining existence question is still (19.1), over all real off-$24$
+bases and independently chosen actual pairs in the entire child.
+Corollary 27.2 restricts only the selected labels: the $J$ pair has
+at least one regular endpoint, and the $M$ pair has two regular
+endpoints with different $\chi$ and different $b$. Regular–singular
+and regular–regular $J$ pairs remain admissible endpoint types.
+Cross-pair overlaps remain free; the two common terminal values are
+independent. There is no sign condition on gains, exact-degree
+condition, extra reading, pair-separation floor or deletion of any
+unused companion.
+
+At the base (26.12), Theorem 26.2 determines only the cross-line
+singular pair. It neither determines the regular members of
+$C(p_*,v_*)$ nor asserts that this entire child consists of those two
+worlds. The remaining joint question retains distant source
+components, other $J$ branches, unused singular companions and all
+strict-boundary and nonproper-base alternatives not excluded by the
+specific cited results. Existence or exhaustive absence in (19.1)
+is not decided by the singular separation (27.1).
+
+## 追加锚（本行以下为增补区）

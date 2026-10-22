@@ -1,0 +1,19 @@
+The assumptions identify the following ways a proposed realization can
+fall outside the theorem; none alone constructs such a realization:
+
+- Collapse or a hidden quotient that identifies task-distinct occurrences,
+  or retains their distinctions only outside $X$, violates (160.3) as a
+  resolved occurrence carrier in $X$.
+- Scale-dependent constants can remove the contradiction: resolution may
+  shrink, root-distance constants may grow, or Ahlfors constants may drift
+  with $n$. The resulting prefix bounds must be evaluated with those
+  varying constants.
+- A non-Ahlfors carrier, bounds confined to a local radius window, or
+  varying carriers can change (160.6). Varying the carrier alone does not
+  evade the proof if the same separation, root-radius, exponent and volume
+  constants still hold uniformly on every prefix.
+- A nonuniform or nonlocal bridge can violate the linear root-distance
+  control (160.4), or abandon the common coherent carrier. Abandoning
+  coherence alone leaves the prefix packing contradiction intact if the
+  other bounds remain uniform.
+

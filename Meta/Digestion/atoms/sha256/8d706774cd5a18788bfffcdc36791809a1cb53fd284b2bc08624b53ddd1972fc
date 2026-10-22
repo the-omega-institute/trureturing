@@ -1,0 +1,74 @@
+**Theorem 32.1 (Uniform full-domain off-twenty-four finite fibre).**
+For every real $p\ne24$ and every real $v$,
+
+$$
+\left|C(p,v)\right|
+=\left|\mathcal F(H_4,M,p,M,v)\right|\le24.
+\tag{32.1}
+$$
+
+This counts distinct complete worlds over the entire strict domain
+(30.1), including the singular parent sources.
+
+Proof. Fix the actual base $(p,v)$. Lemma 30.2 injects its complete
+worlds into the real solutions $(x,d)$ of $f=k=0$ with $x>0$.
+Lemma 31.3 implies that over any fixed complex $x=\alpha$ at
+least one of these two polynomials in $d$ is nonzero of degree two
+or four. There are therefore at most four distinct common finite
+$d$-roots above $\alpha$.
+
+Let $n_\alpha$ count these distinct common roots. Each root $t$
+gives the null vector
+
+$$
+(t^5,t^4,t^3,t^2,t,1)^{\mathsf T}
+\tag{32.2}
+$$
+
+of $\mathsf S(\alpha,p,v)$. Since $n_\alpha\le4<6$, the
+Vandermonde determinant shows that these vectors are independent.
+Hence the corank is at least $n_\alpha$. Constant invertible row
+and column operations put $\mathsf S(\alpha,p,v)$ in rank normal
+form. In the transformed polynomial matrix at least $n_\alpha$
+columns have every entry divisible by $x-\alpha$. Multilinearity
+of the determinant gives
+
+$$
+n_\alpha\le\operatorname{ord}_{x=\alpha}\det\mathsf S(x,p,v).
+\tag{32.3}
+$$
+
+This is the same classical determinant-order argument used in the
+proof of Theorem 10.2; its application here uses (31.8) and the
+global noncollapse of Lemma 31.3, rather than that theorem's
+restricted-$p$ hypotheses.
+
+For $D(\alpha)\ne0$, (31.8) turns (32.3) into
+
+$$
+n_\alpha\le
+\operatorname{ord}_{x=\alpha}\bigl(F_0(x,p,v)^2R(x,p,v)\bigr).
+\tag{32.4}
+$$
+
+The polynomial on the right is nonzero: $F_0$ has leading
+coefficient $405$ and $R$ is nonzero by Lemma 31.3. Its degree
+is at most $2\cdot3+18=24$. Every common root with $D\ne0$
+projects to a root of that polynomial, and summing (32.4) over its
+finitely many roots bounds the number of distinct common pairs
+$(x,d)$ with $D\ne0$ by $24$. Legal worlds have $x>0$, hence
+$D>0$, and the injection proves (32.1). ∎
+
+This proof retains every specialization of the acquired base. A drop
+in either $d$-degree is harmless because the matrix (31.6) keeps
+its fixed size and Lemma 31.3 prevents a whole vertical line of
+solutions. Multiple projected roots and several distinct drifts over
+one projected root are counted by (32.3). No division by $d$ or
+$\Lambda$ occurs in the reconstruction, and the necessary equation
+$k=0$ at $d=0$ was proved separately. No simplicity of a gain root,
+nonzero gain sample, exact gain degree, bounded source coordinate
+or regular source chart is assumed. The zeros of $F_0R$ are only
+necessary projections; their reality, strictness and whole-world
+lifting still require (30.7). Determinant multiplicity is used to
+bound distinct points, not to manufacture additional worlds.
+

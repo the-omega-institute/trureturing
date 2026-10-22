@@ -1,0 +1,32 @@
+**Proposition 16.2 (Scope of the boundary support reduction).** On a
+bounded-$p$ region every selected joint configuration has two compact
+strict anchors. At an off-$24$ finite-base limit, each selected pair
+has one of the three alternatives of Theorem 16.1. In particular a
+strict equal-world limit requires criticality of the augmented map
+$\Psi_E$, a stronger necessary condition than criticality of the
+acquired-base projection alone.
+
+Proof. The first assertion is Theorem 15.1. The alternatives and
+augmented criticality are Theorem 16.1. Since $(p,v)$ is a coordinate
+projection of $\Psi_E$, rank two for $d(p,v)$ would imply rank two
+for $d\Psi_E$. The converse implication need not hold. ∎
+
+Case 2 is an equal-world limit of distinct pairs, not itself a strict
+pair. Its criticality is necessary and supplies no sufficient condition
+for a strict pair nearby. Case 3 retains a boundary label only as an
+auxiliary limit, not as a legal endpoint of the original joint relation.
+The trichotomy assumes $p_*\ne24$; Sections 12–14 retain the
+$p\to24$ boundary limits without asserting this trichotomy there.
+
+The original alternative (11.1) remains unresolved. Compact anchors do
+not give a point of $D_J\cap D_M$, an exhaustive exclusion of that
+set, closedness or properness of a collision projection, or a constant
+$\varepsilon$ independent of $P$. Mixed boundary/interior incidence,
+the augmented interior critical loci and their actual strict-pair
+limits, unbounded real $p$, and all exceptional real-lift and
+within-pair-distinctness obligations remain. No singular $J$ endpoint,
+unused singular companion, zero drift, lower degree, sampled or repeated
+root, or nonsingular exceptional reconstruction stratum is removed.
+The same-fifth-response sixth-$J$ child and all ancestor conjunctions
+of O, Theorem 17.1, also remain as stated in Definition 11.2.
+

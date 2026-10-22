@@ -1,0 +1,39 @@
+**Theorem 25.1 (Global source collar at both selected M endpoints).**
+Choose $C_J\ge1$ and $0<\rho_0,\rho_1\le1/4$ as in Lemma 22.2
+and Theorem 24.1, and set
+
+$$
+\beta=\frac{\rho_0\rho_1}{C_J}>0.
+\tag{25.1}
+$$
+
+For every $Q\in\mathscr Q$ and each $i\in\{2,3\}$,
+
+$$
+\begin{gathered}
+r(W_i)\ge\rho_0,\qquad 1-r(W_i)\ge\rho_1,\\
+\beta\le b(W_i),c(W_i)\le C_J,\qquad
+\delta(W_i)\ge\beta.
+\end{gathered}
+\tag{25.2}
+$$
+
+If $\mathscr Q=\varnothing$, valid choices are
+$\rho_0=\rho_1=1/4$ and $\beta=1/(16C_J)$.
+
+Proof. The two diagonal floors follow from Lemma 22.2 and Theorem
+24.1. The original source relation gives
+
+$$
+bc=r(1-r)\ge\rho_0\rho_1.
+\tag{25.3}
+$$
+
+Divide this inequality by the positive upper bound $C_J$ for the
+other off-diagonal entry to obtain $b,c\ge\beta$. Their upper
+bounds are (22.7). Since $C_J\ge1$ and both diagonal floors are
+at most $1/4$, $\beta\le\rho_0,\rho_1$. This proves the $\delta$
+bound. On an empty domain the displayed universal statements hold
+for the stated choices. The dependence (25.1) is explicit in these
+qualitative constants and asserts no computed modulus. ∎
+

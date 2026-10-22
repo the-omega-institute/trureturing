@@ -4620,3 +4620,256 @@ Son–Stykel，[arXiv:2208.05291v1，Proposition 2.2、Theorem 3.1](https://arxi
 时钟、经验本体或物理资源结论也不由这个输入存在定理取得。
 
 ## 追加锚（本行以下为增补区）
+
+## 61. FIB 实际菜单的精确脉冲维数界
+
+**定义 80.1（原菜单上的可调脉冲计数）。** 固定链长 $\ell\ge3$，仅采用定义 55.1、假设 55.2 的整个合法空间 $\mathcal K_\ell$、逐位脉冲 $P_j(t)=e^{-itH_j^{(\ell)}}$ 和同址固定门 $S_{\star,\ell}$。记
+
+$$
+d=F_{\ell+2},\qquad D=d^2-1=\dim_{\mathbb R}PU(d).
+\tag{XVI.1}
+$$
+
+以 $PU(d)=U(d)/U(1)$ 表示忽略整体相位的酉通道。令 $c_\ell([U])$ 为精确实现 $[U]$ 所需的最少可调脉冲次数；允许任意有限次固定门穿插，固定门次数不计入 $c_\ell$。若不可达则取 $\infty$。这是只保留一个资源坐标的宽松计数，实际总门数至少为可调脉冲数；不供应参数取得、数字精度、脉冲持续时间、测量、旁路或额外控制。
+
+**定理 80.2（精确可达与几乎处处的长字）。** 在定理 64.1 的同一合同下，$PU(d)$ 上 Haar 几乎处处满足
+
+$$
+F_{\ell+2}^{\,2}-1\le c_\ell([U])<\infty.
+\tag{XVI.2}
+$$
+
+特别地，给每个任意实参数脉冲统一记一个 tick，也不能使一般全链精确目标获得关于 $\ell$ 的多项式门数界。
+
+**证明。** 复用 [Shende–Markov–Bullock，Lemma II.2 的参数计数方法](../../../Library/Computability/shendemarkovbullock2004minimal.md)，只核对本菜单的代入及可达性。固定 $0\le m<D$。由于 $S_{\star,\ell}^4=I$，含 $m$ 个可调脉冲的每个字均可合并相邻固定门为
+
+$$
+S_{\star,\ell}^{a_0}P_{j_1}(t_1)S_{\star,\ell}^{a_1}
+\cdots P_{j_m}(t_m)S_{\star,\ell}^{a_m},
+\quad a_i\in\{0,1,2,3\},\quad j_i\in\{1,\ldots,\ell\}.
+\tag{XVI.3}
+$$
+
+固定 $m,\ell$ 后仅有有限个离散模板，至多 $4^{m+1}\ell^m$ 个。假设 55.2 已给 $\operatorname{spec}(H_j^{(\ell)})\subseteq\{-1,0,1\}$，因此 $P_j(t+2\pi)=P_j(t)$；每个模板诱导光滑映射
+
+$$
+f:\mathbb T^m\longrightarrow PU(d).
+\tag{XVI.4}
+$$
+
+这是紧的 $m$ 维参数域到 $D$ 维紧 Lie 群的低维光滑像；上述标准方法使其 Haar 测度为零。也可直接使用来源卡所述覆盖估计：固定 Riemann 度量后 $f$ 为 Lipschitz，$O(\delta^{-m})$ 个参数块的像可由同样数量、半径 $O(\delta)$ 的目标球覆盖，总体积为 $O(\delta^{D-m})\to0$。$m=0$ 的像是单点，同样为零测。
+
+对 $m=0,\ldots,D-1$ 的有限多个模板取并，得到 $\{[U]:c_\ell([U])<D\}$ 为零测。另一方面，定理 64.1 已给 $SU(d)\subseteq\mathcal W_\ell$；每个 $PU(d)$ 类都有行列式为一的代表，因此所有目标均有实际有限字，$c_\ell([U])<\infty$。两侧合并得到 (XVI.2)。这里既不把稠密性冒充精确达到，也不把一般参数计数方法认领为新的数学内容。$\square$
+
+**推论 80.3（链长与控制参数维数）。** 当 $\ell=3,5,8$ 时，合法维数分别为 $5,13,55$，几乎处处的可调脉冲下界分别为 $24,168,3024$。随链长增长，$F_{\ell+2}^{\,2}-1=\Theta(\varphi^{2\ell})$，其中 $\varphi=(1+\sqrt5)/2$。
+
+**证明。** 将 Fibonacci 数值代入 (XVI.1)–(XVI.2)，并复用 Fibonacci 闭式的增长阶。$\square$
+
+**约定 80.4（当前应用的归属与任务边界）。** 本节的项目特定内容是将既有低维光滑像方法接到假设 55.2 的实际逐位置、周期脉冲和四阶相位菜单，再与定理 64.1 的精确有限字可达性在同一目标空间中组合。一般门维数计数是文献结果。这里没有新增测量、整体门原语或免费辅助系统，也没有把任意 $SO(d)$ 控制作为零成本操作。连续参数、固定门、接线和数字编译是不同成本坐标。
+
+本下界只针对一般全链酉通道的精确综合，不是固定误差下的近似综合定理，不是某个特殊可有效描述门族的下界，也不是 SAT 下界。一般目标的完整矩阵描述本身就有 $d^2$ 个条目；不能把链长 $\ell$ 自动当作该目标的全部输入长度。给定一条多项式长的局部门轨迹时，有限离散门的有效近似编译适用的是 [Dawson–Nielsen 来源卡](../../../Library/Computability/dawsonnielsen2006solovaykitaev.md) 的固定局部维数和有效参数合同，不能把本节增长的整个 $d$ 藏入其常数。
+
+与 [原生容量 §21](RECURSIVE_RELATIONAL_OBSERVATION_NATIVE_CAPACITY_COHERENCE_AND_GROWTH.md) 的对应是：一条基础作用可以定义一个内生 tick；有限可达、已展开记录大小、相对于任务起点的门数界、可靠答案概率仍须分别给出。以上为条件符号推导，不声称已经过 Lean kernel 核验。
+
+## 追加锚（本行以下为增补区）
+
+## 62. 五模式交互系数与保码端点控制
+
+**定义 81.1（端点相位读出）。** 沿用定义 55.1 的三位空间与编码，令
+
+$$
+\mathcal C=\operatorname{ran}\iota_2
+=\operatorname{span}\{|000\rangle,|001\rangle,|100\rangle,|101\rangle\},
+\qquad \iota_2|ab\rangle=|a0b\rangle.
+\tag{XVII.1}
+$$
+
+五模式的代数坐标为 $(x,y,z)$，物理位序为 $(x,z,y)$，合法关系为 $xz=yz=0$。复用[基础公式卷 §2](AURIC_FIB_ATOM_PYRAMID_FOUNDATIONAL_FORMULAS_AND_RELATIONS.md) 的唯一展开
+
+$$
+f(x,y,z)=c_0+c_xx+c_yy+c_zz+J_fxy,\qquad
+J_f=f(1,1,0)-f(1,0,0)-f(0,1,0)+f(0,0,0).
+\tag{XVII.2}
+$$
+
+若另行供应端点相位编码，定义其逻辑限制为
+
+$$
+U_{\theta,f}|ab\rangle=e^{i\theta f(a,b,0)}|ab\rangle.
+\tag{XVII.3}
+$$
+
+这里的可调用性是显式前提；任意实读出 $f$ 的存在不供应相应物理门。假设 55.2 只安装其中固定的一例 $f=xy,\theta=\pi/2$。
+
+**命题 81.2（五模式混合差分的相位像）。** 在 (XVII.3) 的合同下，编码后的端点门可分解为两个单逻辑位门的张量积，当且仅当
+
+$$
+\theta J_f\equiv0\pmod{2\pi}.
+\tag{XVII.4}
+$$
+
+否则它将 $|++\rangle$ 变为 Schmidt 秩二的态。特别地，假设 55.2 的固定门在本编码上为
+
+$$
+S=\iota_2^\dagger S_{\star,3}\iota_2
+=\operatorname{diag}(1,1,1,i),\qquad S^2=CZ.
+\tag{XVII.5}
+$$
+
+**证明。** 将 (XVII.2) 在 $z=0$ 的四点值代入，得到混合相位 $\Theta=\theta J_f$。单独的常数项与两个一次项只给整体及单体相位；剩余因子为 $e^{i\Theta n_1n_2}$。复用 [Brylinski–Brylinski，命题 2.1 的相位矩形判据](../../../Library/Computability/brylinski2001universal.md)：其 $|++\rangle$ 输出系数矩阵的行列式为 $e^{i(\phi_{01}+\phi_{10})}(e^{i\Theta}-1)/4$，故恰在 (XVII.4) 时可分。固定 $f=xy,\theta=\pi/2$ 给 (XVII.5)。这是五模式读出与已知判据的参数对应；一般纠缠判据归属于该文献。$\square$
+
+**命题 81.3（非加性与占位读出的边界）。** 非零 $J_f$ 不单独蕴含编码门产生纠缠；占位金字塔读出也不能区分全部编码态。
+
+**证明。** 取 $f=4xy,\theta=\pi/2$，则 $J_f=4$，但 (XVII.3) 是恒等门。又取 $\psi_\pm=(|000\rangle\pm|101\rangle)/\sqrt2$。两态内积为零，五模式概率却都在 $000,101$ 上各为 $1/2$，其占位均值均为 $(1/2,1/2,0)$。因此非加性还需经过相位编码的模关系，而概率凸体还需补足未来操作消费的相干信息。$\square$
+
+**定义 81.4（三位保码子菜单）。** 只取假设 55.2 在 $n=3$ 的 $R_1(t)=e^{-itH_1^{(3)}}$、$R_3(t)=e^{-itH_3^{(3)}}$ 与 $S_{\star,3}$，不调用中位控制。逻辑 Pauli 算子记为 $X_1=X\otimes I$、$X_2=I\otimes X$；$Y_i$ 类似。矩阵字均为右因子先作用。每个原语调用计一门，反向 $S_{\star,3}^{-1}$ 须用三个正向调用实现。
+
+**命题 81.5（固定联合相位的四调用单体提取）。** 上述子菜单中的每个原语都保持 $\mathcal C$，并固定其在 $\mathcal K_3$ 内的正交补 $\mathbb C|010\rangle$。端点脉冲的逻辑限制为
+
+$$
+\iota_2^\dagger R_1(t)\iota_2=e^{-itX_1},\qquad
+\iota_2^\dagger R_3(t)\iota_2=e^{-itX_2}.
+\tag{XVII.6}
+$$
+
+两个四调用字的逻辑限制分别为
+
+$$
+\begin{aligned}
+R_3(-\pi/2)S_{\star,3}R_3(\pi/2)S_{\star,3}
+&\longmapsto D_1=\operatorname{diag}(1,1,i,i),\\
+R_1(-\pi/2)S_{\star,3}R_1(\pi/2)S_{\star,3}
+&\longmapsto D_2=\operatorname{diag}(1,i,1,i).
+\end{aligned}
+\tag{XVII.7}
+$$
+
+**证明。** 在 $\mathcal C$ 内中位为零，故端点的相邻投影恒为一，直接给 (XVII.6)；对 $010$，两个投影都阻止翻转，固定相位的 $n_1n_3$ 也为零。此论证适用于每个脉冲的全部中间参数，故每个执行前缀都保持编码。
+
+在逻辑限制上，$R_3(\pi/2)=-iX_2$、$R_3(-\pi/2)=iX_2$，两标量相消，因而第一字为 $X_2SX_2S$。复用 [Garion–Cross，式 (12)](../../../Library/Computability/garioncross2020cnotdihedral.md) 的既有关系，或逐基态计算：对 $a=0$ 的两个基态相位为一，对 $a=1$ 的两个基态相位均为 $i$，给出 $D_1$。交换端点得到 $D_2$。每个物理因子还固定 $010$，所以没有把逻辑整体标量误当作整个五维空间的整体标量。$\square$
+
+**定理 81.6（每个前缀保码的精确双逻辑位通道）。** 对任意 $U\in U(4)$，上述子菜单存在一个与未知输入无关的有限字 $W$ 及 $\gamma\in\mathbb R$，使
+
+$$
+W\iota_2=e^{i\gamma}\iota_2U.
+\tag{XVII.8}
+$$
+
+每个原语前缀及脉冲中途都保持 $\mathcal C$。因此，对任意有限维被动参考 $R$ 和任意 $\rho\in\mathsf D(\mathbb C^4\otimes R)$，该字在编码后实现与 $U\otimes I_R$ 完全相同的通道。
+
+**证明。** 由 (XVII.7)，两个逻辑位分别取得 $D_i=\operatorname{diag}(1,i)$ 的单体作用。其共轭满足 $D_iX_iD_i^\dagger=Y_i$，因此 $D_ie^{-itX_i}D_i^\dagger=e^{-itY_i}$ 可执行。复用 [Barenco 等的单体 Euler 分解与局部门加 CNOT 精确分解](../../../Library/Computability/brylinski2001universal.md#exact-elementary-decompositions-and-scalar-scope)，每个单逻辑位 $SU(2)$ 门可由 $X$–$Y$–$X$ 三旋转取得。又由 (XVII.5) 得到 $CZ$。取 Hadamard 矩阵 $H$ 及 $V=iH\in SU(2)$，有
+
+$$
+(I\otimes V)CZ(I\otimes V^\dagger)=CNOT.
+\tag{XVII.9}
+$$
+
+故全部单逻辑位 $SU(2)$ 与 CNOT 都可执行。在标准有限分解中将每个 $U(2)$ 单体因子的标量提出，所有标量合并为逻辑整体相位，即得 (XVII.8)。所有构件均来自命题 81.5 的保码子菜单，保持性在组合下仍成立。对编码态及参考取共轭时 $e^{i\gamma}$ 消去，得到所述通道恒等。$\square$
+
+**命题 81.7（局部综合的调用账）。** 按定义 81.4 的理想调用计数，$D_i$ 至多四门，$D_i^\dagger$ 至多八门，单体 $Y$ 旋转至多十三门，任意单体 $SU(2)$ 门至多十五门，(XVII.9) 的 CNOT 至多三十二门。
+
+**证明。** (XVII.7) 含两脉冲、两固定门。其逆字仍含两脉冲，而两次固定门逆各用 $S_{\star,3}^3$，共八次。共轭 $D_iR_X(t)D_i^\dagger$ 至多 $4+1+8=13$ 次；Euler 的另外两个 $X$ 旋转各一次，共十五次。$V,V^\dagger$ 各至多十五次，中间 $CZ$ 用两次固定门，合计三十二次。$\square$
+
+**约定 81.8（对应范围与成本边界）。** (XVII.4)、(XVII.7) 的抽象双位相位提取关系及局部门加 CNOT 的一般分解均为 `literature-attested`，来源见对应文献条目；将这些关系接到假设 55.2 的同址四阶相位、连续受约束端点脉冲、保码子空间与辅助方向上的共同实现，属于 `repo-derived` 的模型接口。命题 30.3 已在另一零分隔编码中给出纠缠作用，定义 55.1 已给本编码，命题 55.3 已给经五维空间的近似逻辑控制，定理 64.1 已给全链精确有限字可达；本节增加的是无中位控制、每个前缀保码的直接字及其局部调用计数，不替换这些合同。
+
+通道结论忽略逻辑整体相位；全部字固定 $010$，故并未供应逻辑子空间相对于该辅助方向的任意标量。(XVII.8) 不断言任意五维酉算子都由此子菜单实现。计数只覆盖已给理想实参数原语，不供应输入编码、参数取得、数字精度、持续时间、硬件或容错，也不是增长链上的多项式综合界；§61 的一般全链下界与此局部常数维数结论针对不同目标。
+
+局部关系的存在、非加性与精确通用控制均不单独给出全局证书搜索算法。已有[选择演算 §§15、18](AURIC_FIB_ATOM_SELECTION_CALCULUS.md) 分别处理任意共享网络与原生两接缝链；前者的基数目标需保留优化信息，后者的完成计数可由小接缝递推取得。[固定顺序边界优化](../../../Library/ConceptDynamics/dechter1996bucket.md#6-cardinality-objectives-on-an-explicit-graph-frontier) 给出图网络的一条充分算法路线；取得该顺序仍须计入成本。来源词的[非周期与高效指定位置读取](../../../Library/Computability/lohrey2012slp.md#fibonacci-source-word-and-indexed-reading) 也不与指定端点任务的周期短编译冲突。上述对应均为条件数学叙述，不声称新增 Lean kernel 核验或一般 P/NP 结算。
+
+## 追加锚（本行以下为增补区）
+
+## 63. 保码通用性不能识别隐藏环境维数
+
+**定义 82.1（保码合同与直和扩张）。** 令 $\mathcal H$ 是第 62 节所用的五模式空间，$\mathcal C\subset\mathcal H$ 为 (XVII.1) 的编码子空间，$\iota:\mathbb C^4\to\mathcal C$ 为编码等距。把第 62 节的原语统称为 $m\in\mathscr M$，其有限字和每个前缀都保持 $\mathcal C$；辅助态 $|010\rangle$ 也按该节的合同处理。对任意有限维空间 $K$，定义
+
+$$
+\widetilde{\mathcal H}=\mathcal H\oplus K,
+\qquad
+\widetilde\iota(v)=(\iota(v),0).
+\tag{XVIII.1}
+$$
+
+对每个原语任选一个酉块 $V_m\in U(K)$，并令
+
+$$
+\widetilde m=m\oplus V_m.
+\tag{XVIII.2}
+$$
+
+这是一项新的环境合同：它保留原块上的全部第 62 节数据，在补空间上另给操作。$K$ 不被当作额外欧氏坐标；它只是未由该合同指定的环境自由度。
+
+**定理 82.2（直和隐藏环境定理）。** 假设第 62 节的某个有限字 $W=m_s\cdots m_1$ 满足
+
+$$
+W\iota=e^{i\gamma}\iota U
+$$
+
+且每个执行前缀保码。对 (XVIII.2) 的任意扩张，有
+
+$$
+\widetilde W=W\oplus V_{m_s}\cdots V_{m_1},
+\qquad
+\widetilde W\widetilde\iota=e^{i\gamma}\widetilde\iota U.
+\tag{XVIII.3}
+$$
+
+同一等式对每个前缀及脉冲中途成立。因此，对任意有限被动参考 $R$ 和任意 $\rho\in\mathsf D(\mathbb C^4\otimes R)$，嵌入第一块以后，扩张字与原字诱导完全相同的逻辑联合通道。若 $\widetilde M$ 是扩张系统上的任意读出效果，令
+
+$$
+M=J^\dagger\widetilde M J,
+\qquad J:\mathcal H\hookrightarrow\widetilde{\mathcal H},
+$$
+
+则对所有支撑在第一块的输入，读出概率满足
+
+$$
+\operatorname{Tr}\!\left[\widetilde M\,J\sigma J^\dagger\right]
+=
+\operatorname{Tr}[M\sigma].
+\tag{XVIII.4}
+$$
+
+**证明。** 直和乘法给出
+
+$$
+(m_s\oplus V_{m_s})\cdots(m_1\oplus V_{m_1})
+=
+W\oplus V_{m_s}\cdots V_{m_1}.
+$$
+
+归纳同样适用于删去最后一个因子的任意前缀以及连续脉冲的中途参数。由于 $\widetilde\iota=J\iota$，将 (XVII.8) 左乘 $J$ 即得 (XVIII.3)。参考系统只张量单位算子，因而第一块限制上的共轭通道与原通道相同。最后，$J^\dagger\widetilde M J$ 的迹恒等式是有限维迹的循环性。□
+
+**推论 82.3（逻辑响应不选择环境总维数）。** 对每个 $r\ge1$，取 $K=\mathbb C^r$，并任选补空间上的原语块，即得到
+
+$$
+\dim\widetilde{\mathcal H}=5+r,
+$$
+
+而第 62 节的全部有限逻辑字、前缀保码性质、被动参考通道和第一块读出完全不变。故这些响应不能推出环境维数为 $5$，更不能推出物理空间维数为 $3$。$r=1$ 已给出最小的额外环境方向；它仍不是第四根空间轴。
+
+**例 82.4（隐藏补空间可以有非平凡运输）。** 为使反例不依赖一个静止的补空间，取 $K=\mathbb C^2$，在补空间中令
+
+$$
+V_1(t)=e^{-itX},
+\qquad
+V_3(t)=e^{-itZ},
+\qquad
+V_S=\operatorname{diag}(1,i).
+$$
+
+则 $V_S^4=I$，而
+
+$$
+V_1(\pi/2)V_3(\pi/2)=iY,
+\qquad
+V_3(\pi/2)V_1(\pi/2)=-iY.
+\tag{XVIII.5}
+$$
+
+所以隐藏环境可携带非交换的路径顺序信息；但由于所有扩张原语仍为直和块，(XVIII.3)–(XVIII.4) 对第 62 节合同中的输入和任务完全不变。这个例子说明“没有被当前逻辑读出看到”不等于“补空间内部没有动力学”。
+
+**命题 82.5（相对相位与任务范围）。** 定理 82.2 对编码输入和被动参考通道消除了逻辑整体相位；若另行允许制备编码子空间与辅助态 $|010\rangle$ 的相干叠加，并进行跨块干涉，则相位 $e^{i\gamma}$ 可能成为相对相位读出。该任务超出第 62 节的 (XVII.8) 合同，不能由定理 82.2 代替证明。
+
+**结论 82.6（继续推出三维所需的桥）。** 从第 62 节的逻辑通用性推出环境维数，至少还需加入一种忠实性条件：所有环境方向必须可达并可观测，禁止上述不变隐藏补空间；或者直接假设完整环境上的全 $SO(V)$ 作用与非零交替三形式。后一组条件才可接到前卷定理 117.4 的 $\dim V=3$ 结论。原生 FIB 操作是否满足这样的全环境运输、度量和共同来源接缝，仍未由第 62 节解决。
+
+本节是普通有限维线性代数的条件反例与接口分析；没有把 $\dim\mathcal H$、编码容量或合法配置数认作欧氏空间维数，也没有给出 FIB 原生操作已经实现忠实运输的结论。

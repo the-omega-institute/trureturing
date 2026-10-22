@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:cc2a1487d838b22bd6da78c14ebb7f6ab992cde86668bfef0bf127f7534edc1d
+  normalized_sha256: sha256:cc2a1487d838b22bd6da78c14ebb7f6ab992cde86668bfef0bf127f7534edc1d
+cas_ref: sha256:cc2a1487d838b22bd6da78c14ebb7f6ab992cde86668bfef0bf127f7534edc1d
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: Defines the finite transverse Casimir under stated positive-weight parameters, without asserting positivity or a zero criterion.
+    previous_atom_id: 7969adcc0e0c949bcb438066aecaa3f1b9e470c040b306eb2e9f45d2d2c90f49
+    next_atom_id: ebe66323199c0de199d57c352220b14176a0479879bb259ff27c4830281f0156
