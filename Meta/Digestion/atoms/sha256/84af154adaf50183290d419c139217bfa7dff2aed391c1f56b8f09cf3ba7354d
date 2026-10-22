@@ -1,0 +1,24 @@
+**Reuse 14.3 (the all-scale Green boundary).** For every nonzero
+$\kappa$ here, $X=Y$ but $X+Y\ne r$: this is exactly the single $E_+$
+wall. Definition 1.2 and [N, Theorem 10.3] already give current-ray
+dimension $4$, direct rank $2$, growth $(2,3,4)$ and $Q_{\rm vol}=7$.
+Theorem 3.1 already makes its point-Green quadratic energy unbounded
+below for every positive coupling, under the smooth positive
+common-operator hypotheses of Definition 1.3. At $\kappa=0$ the
+published strict stability regime is Theorem 5.1: the constant-density
+family $A_\varepsilon=\operatorname{diag}(\varepsilon^2,1)$ and
+$g=\gamma\varepsilon^2$, with
+$0<\gamma<(2rC_H)^{-1}$. Theorem 6.2 supplies its attained-negative
+subfamily. This is not a classification of all double-wall coefficients
+or couplings.
+
+These are reused all-scale results, not consequences newly proved by
+Theorem 13.1. A budget on executed two-control histories is not a spectral
+resource restriction on all analytic amplitudes in $L^2(\Omega,\mu)$.
+No map from those histories to a restricted analytic test domain has
+been supplied. In particular (14.1) neither rules out the concentrating
+tests in Theorem 3.1 nor repairs nearby all-scale Green stability.
+The operational robustness and exact all-scale nonrobustness have
+different quantified objects and coexist without a changed source,
+period, guard or analytic clock.
+

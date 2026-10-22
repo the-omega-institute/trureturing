@@ -115,6 +115,34 @@ class ScopedContracts(unittest.TestCase):
         self.assertEqual(rejected.returncode, 2, rejected.stdout + rejected.stderr)
         self.assertFalse((self.root / 'empty.json').exists(), '[FAIL] empty_scope_has_no_artifact')
 
+    def test_cache_replacement_preserves_scoped_discovery_logs(self):
+        producer = api(self)
+        report = self.root / '.lake/build/stratalint/scoped.json'
+        report.parent.mkdir(parents=True)
+        phase = producer.Entry.phase
+        def discover(entry, roots):
+            entry.phase('scope', [sys.executable, '-c',
+                'import shutil; shutil.rmtree(".lake"); print("scope discovered")'])
+            (entry.temporary / 'selected-modules.json').write_bytes(materials.canonical_json(self.scope))
+            return self.scope, []
+        def fail_report(entry, name, command):
+            if name == 'report':
+                command = [sys.executable, '-c', 'raise SystemExit(23)']
+            return phase(entry, name, command)
+        with patch.object(producer.Entry, 'provision'), \
+                patch.object(producer.Entry, 'discover', discover), \
+                patch.object(producer.Entry, 'phase', fail_report), \
+                patch.object(sys, 'argv', ['scoped.py', 'produce', '--repository', str(self.root),
+                                         '--report', str(report), '--targets', 'D5.A']), \
+                self.assertRaises(subprocess.CalledProcessError) as failure:
+            producer.main()
+        self.assertEqual(failure.exception.returncode, 23)
+        logs = Path(str(report) + '.logs')
+        self.assertEqual((logs / 'scope.exit.log').read_text(), '0\n')
+        self.assertEqual((logs / 'scope.stdout.log').read_text(), 'scope discovered\n')
+        self.assertEqual((logs / 'report.exit.log').read_text(), '23\n')
+        self.assertFalse(publication.member(report, '.input.attestation').exists())
+
     def test_scoped_bundle_checks_independent_membership_sources_and_materials(self):
         producer = api(self)
         report = self.bundle(producer)
@@ -315,6 +343,28 @@ class NativeScopedContracts(NativeDependencyTestSupport, unittest.TestCase):
         self.verify('Fixture')
         self.write('ClaimSupport.lean', 'def claimSupport : Prop := True\n')
         self.verify('Fixture', success=False)
+
+    def test_native_aged_warm_scope_reuses_cache_without_archive_refresh(self):
+        self.scoped('D5.A')
+        marker = self.root / '.lake/build/.release-refreshed-at'
+        marker.write_text('2000-01-01T00:00:00+00:00\n')
+        before = marker.read_bytes()
+        attempted = self.root / 'archive-attempted'
+        self.write('tools/scripts/worktree/lean-cache-publish.sh',
+                   '#!/bin/bash\ntouch archive-attempted\nexit 79\n')
+
+        self.scoped('D5.A')
+        self.verify('D5.A')
+        self.assertFalse(attempted.exists(), '[FAIL] warm_scope_needs_no_archive_transport')
+        self.assertEqual(marker.read_bytes(), before, '[FAIL] scope_does_not_rejuvenate_archive_age')
+        self.assertEqual(json.loads((self.logs / 'work.json').read_text())['extracted_modules'], 0)
+        receipt = next(line.removeprefix('LEAN_CACHE ') for line in
+                       (self.logs / 'scope.stdout.log').read_text().splitlines() if line.startswith('LEAN_CACHE '))
+        self.assertEqual(json.loads(receipt)['archive_status'], 'not_attempted')
+
+        # Explicit cache maintenance keeps its refresh behavior on the same cache.
+        self.ensure()
+        self.assertTrue(attempted.exists(), '[FAIL] standalone_ensure_still_refreshes_aged_cache')
 
     def test_native_cached_scope_still_builds_program_and_clears_failure_seal(self):
         self.ensure()

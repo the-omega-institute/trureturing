@@ -1,0 +1,69 @@
+**定理 7.7（矩形相位 holonomy 与有参考的干涉读出）。**
+取内部参数 $\kappa_0<\kappa_1$，并在局部相位提升中依次走
+
+$$
+(\kappa_0,\chi_0)\to(\kappa_0,\chi_0+\eta)
+ \to(\kappa_1,\chi_0+\eta)
+ \to(\kappa_1,\chi_0)\to(\kappa_0,\chi_0).
+$$
+
+按定理 [7.6](#thm-minimal-phase) 水平提升后，端点相位增量恰为
+
+$$
+h_s=\eta\bigl(a_s(\kappa_0)-a_s(\kappa_1)\bigr).
+ \tag{R1}
+$$
+
+它满足 $h_2=0$、$\nu^{\mathsf T}h=0$，
+所以闭路保持全部 $p_s$ 和约化相位 $\chi$。
+
+若 $\eta\neq0$ 充分小，则 $h$ 在相位环面中非零。
+在保留固定五模相位参考、允许二模相干读出的实验模型中，
+存在算符范数为 $1$ 的 Hermitian 读出区分闭路前后状态。
+具体地，对某一对满足 $h_s-h_t\notin2\pi\mathbb Z$ 的模式，
+可选择
+
+$$
+O_{st}(\alpha)=e^{i\alpha}|s\rangle\langle t|
+                 +e^{-i\alpha}|t\rangle\langle s|
+$$
+
+使两态期望值之差的绝对值等于
+
+$$
+4\sqrt{p_sp_t}\,
+       \left|\sin\frac{h_s-h_t}{2}\right|>0.
+ \tag{R2}
+$$
+
+**证明。**
+
+沿两条 $\kappa$ 边有 $d\theta=0$；
+沿两条 $\chi$ 边分别积分
+$a(\kappa_0)\,d\chi$ 和 $a(\kappa_1)\,d\chi$，
+即得 (R1)。$h_2=0$ 与 $\nu^{\mathsf T}h=0$ 来自
+$a_2=0$、$\nu^{\mathsf T}a=1$。
+
+还需验证 $a(\kappa_0)\neq a(\kappa_1)$。
+若相等，则对 $\nu_s\neq0$ 的四个模式，
+$p_s(\kappa_0)I(\kappa_0)=p_s(\kappa_1)I(\kappa_1)$，
+故四个概率向量成比例。它们的总和均为 $r>0$，
+比例只能为 $1$，进而 $\kappa_0=\kappa_1$，矛盾。
+取足够小的非零 $\eta$，可避免非零 $h$ 落入周期格点。
+由于 $h_2=0$ 且 $p_2>0$，总能找到所需模式对。
+
+记 $\Delta=\theta_s-\theta_t$、$\delta=h_s-h_t$。
+闭路前后对 $O_{st}(\alpha)$ 的期望值分别为
+$2\sqrt{p_sp_t}\cos(\alpha+\Delta)$ 和
+$2\sqrt{p_sp_t}\cos(\alpha+\Delta+\delta)$。
+取 $\alpha=\pi/2-\Delta-\delta/2$ 即得 (R2)。
+该算符在所选二维子空间的本征值为 $\pm1$，
+在其正交补上为零，故算符范数为 $1$。
+
+证毕。
+
+(R2) 使用相位参考，其算符通常不下降为 $T^3$ 商空间上的函数。
+若把整个 $T^3$ 当作不可观测的纯规范冗余，
+就不能同时把这种非不变二模读出列为允许的实验。
+因此，(R1) 是主丛输运结论；(R2) 是附加参考装置后的操作性结论。
+

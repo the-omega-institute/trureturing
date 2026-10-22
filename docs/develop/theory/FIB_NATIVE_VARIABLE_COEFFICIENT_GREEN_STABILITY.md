@@ -1432,3 +1432,1067 @@ literature or priority assertion is needed for these conclusions.
 $\square$
 
 ## 追加锚（本行以下为增补区）
+
+## 14. Spatial saturation of the original unit-source multiplier
+
+**Definition 14.1 (the fixed spatial family).** Assume the both-wall row
+of §1, with every preparation mean, grouped phase, guard, height face,
+periodic coordinate, density, covariance, source and clock fixed as in
+(1.1), (2.1) and (10.2). Write $\Gamma=\Gamma_{A,o}$,
+$c_G=(2\pi m_0)^{-1}$, and set, for $\epsilon>0$,
+
+$$
+\begin{aligned}
+\Gamma_\epsilon&=\min\{\Gamma,c_G\epsilon^{-2}\},
+&\Gamma_\epsilon(o)&=c_G\epsilon^{-2},\\
+q_\epsilon[f]&=T_A[f]-g_{\mathrm c}\int\Gamma_\epsilon|f|^2d\mu,
+&D(q_\epsilon)&=\mathcal F_A,\\
+D_\epsilon&=g_{\mathrm c}(\Gamma-\Gamma_\epsilon)\ge0,
+&\mathcal C_\epsilon&=\{\Gamma>c_G\epsilon^{-2}\}.
+\end{aligned}
+\tag{14.1}
+$$
+
+The value at the measure-zero source fixes a representative. This is
+bounded multiplication on the original free domain. Its operator is
+$K_\epsilon=L_A-g_{\mathrm c}\Gamma_\epsilon$ on $D(L_A)$.
+Let $K_*$ be the operator of the completed form (12.3), and let
+$E_\epsilon=\inf\sigma(K_\epsilon)$ and $E_*=\inf\sigma(K_*)$.
+Throughout §§14–19 every limit is $\epsilon\downarrow0$ for one fixed
+smooth model. Constants need not be uniform over different models.
+
+**Proposition 14.2 (the actual changed set and its anisotropic scale).**
+For some fixed $C,b>0$ and all sufficiently small $\epsilon$,
+
+$$
+\{R<\epsilon(1-C\epsilon)\}
+\subset\Psi(\mathcal C_\epsilon)
+\subset\{R<\epsilon(1+C\epsilon)\}\Subset\{R<b\}.
+\tag{14.2}
+$$
+
+The inclusions concern the entire changed set on the original cylinder.
+Moreover, on each compact subset of the frozen chart,
+
+$$
+\epsilon^2\Gamma_\epsilon(\Psi^{-1}\delta_\epsilon q)
+\longrightarrow c_G\min\{R(q)^{-2},1\}
+\tag{14.3}
+$$
+
+uniformly, including $q=0$ with the capped value. In the original source
+chart (2.3), the corresponding gauge is
+
+$$
+\left(
+ |B(x,y)^{\mathsf T}|^4
+ +16\det(B)^2(z-xy/2)^2
+\right)^{1/4}.
+\tag{14.4}
+$$
+
+Thus horizontal displacement has scale $\epsilon$ and the adapted central
+displacement has scale $\epsilon^2$. In particular the central displacement
+is not the uncorrected increment of the original $\beta$ phase.
+
+Proof. The full Green field is bounded outside each source neighbourhood,
+as used in (12.5). Thus its superlevel set in (14.1) is contained in the
+injective source chart for small $\epsilon$. Equation (11.1), multiplied
+by $c_G^{-1}R^2$, gives $\Gamma/(c_GR^{-2})=1+O(R)$.
+Comparing this with $R^2/\epsilon^2$ proves (14.2); the same inequalities
+for $R\ll\epsilon$ show that a whole source neighbourhood is capped.
+On any annulus bounded away from zero, the error in the rescaled
+uncapped field is $O(\epsilon/R)$. Taking the minimum is a Lipschitz
+operation. On a fixed sufficiently small ball about zero both sides of
+(14.3) are exactly $c_G$ for small $\epsilon$. These observations prove
+uniform convergence on compact sets. Formula (14.4) is precisely (10.1),
+without another coordinate or measure normalization. Since
+$y=2(\alpha-\alpha_o)$ and $z=-r(\beta-\beta_o-c(k_o)y)$, it also gives
+the stated native phase correspondence. $\square$
+
+## 15. Selection of the completed operator and of its normalized ground state
+
+**Theorem 15.1 (the realization selected by spatial saturation).** There
+is a common $\beta>0$ such that
+
+$$
+\|(K_\epsilon+\beta)^{-1}-(K_*+\beta)^{-1}\|_{2\to2}
+\longrightarrow0.
+\tag{15.1}
+$$
+
+The lowest eigenvalues are simple, their normalized ground states can be
+chosen strictly positive, and these choices are unique. Write them as
+$f_\epsilon$ and $f_*$. Then
+
+$$
+\begin{aligned}
+E_\epsilon&\downarrow E_*,& E_\epsilon&>E_*,\\
+\|f_\epsilon-f_*\|_{L^2(\mu)}&\longrightarrow0,&
+\overline q_{\mathrm c}[f_\epsilon-f_*]
+ +\beta\|f_\epsilon-f_*\|_2^2&\longrightarrow0.
+\end{aligned}
+\tag{15.2}
+$$
+
+The associated rank-one orthogonal spectral projections converge in
+operator norm. On every compact subset of $\Omega\setminus\{o\}$,
+$f_\epsilon\to f_*$ with every ordinary smooth derivative, hence with
+every horizontal derivative. Norm and source mass are retained in these
+limits. The limiting form domain is exactly $H\mathcal W_H$ in (12.3).
+
+Proof. Put $\mathcal Q=D(\overline q_{\mathrm c})$. Theorem 12.2 gives a
+common lower bound $-B$ and a compact embedding $\mathcal Q\hookrightarrow
+L^2(\mu)$. For $f\in\mathcal F_A$ the exact identity is
+
+$$
+q_\epsilon[f]=\overline q_{\mathrm c}[f]
+ +\int D_\epsilon|f|^2d\mu.
+\tag{15.3}
+$$
+
+The second term is finite by (13.2). Choose $\beta>B+1$.
+If $f_n\rightharpoonup f$ in $L^2$ and $\epsilon_n\downarrow0$, a bounded
+sequence of shifted $q_{\epsilon_n}$ values is bounded in the Hilbert
+space $\mathcal Q$ with shifted norm. Weak lower semicontinuity there
+proves
+
+$$
+\overline q_{\mathrm c}[f]+\beta\|f\|_2^2
+\le\liminf_n\{q_{\epsilon_n}[f_n]+\beta\|f_n\|_2^2\}.
+\tag{15.4}
+$$
+
+For the opposite approximation use the punctured core dense in
+$\mathcal Q$. For each one of its elements $v$, the Green field is
+bounded on its support, so $q_\epsilon[v]=\overline q_{\mathrm c}[v]$
+for all sufficiently small $\epsilon$. A diagonal choice of core
+approximations gives recovery for every $f\in\mathcal Q$.
+Minimizing the strictly convex shifted resolvent functional with these
+two inequalities proves strong resolvent convergence: each weak
+accumulation point is the unique minimizer of the limiting functional,
+and the quadratic identity at its minimum gives strong $L^2$
+convergence. This is the usual variational proof of the monotone-form
+convergence principle, with the actual closure and recovery core
+identified here.
+
+More is available because of compactness. For $\|x\|_2\le1$, the vectors
+$(K_\epsilon+\beta)^{-1}x$ are uniformly bounded in $\mathcal Q$ by
+(15.3) and their resolvent equation. Their union is therefore relatively
+compact in $L^2$. To see that strong convergence upgrades to (15.1), take
+unit vectors $x_n\rightharpoonup x$ and any $\epsilon_n\downarrow0$.
+Every strong accumulation point $y$ of
+$(K_{\epsilon_n}+\beta)^{-1}(x_n-x)$ satisfies
+
+$$
+\langle y,z\rangle
+ =\lim_n\langle x_n-x,(K_{\epsilon_n}+\beta)^{-1}z\rangle=0
+\quad(z\in L^2).
+$$
+
+It is zero. The limiting resolvent is compact as well, which proves
+operator norm convergence by contradiction. The continuous spectral
+calculus, or a contour separating its largest eigenvalue, then gives
+convergence of the lowest spectral projection, once simplicity is checked.
+
+Each finite-resolution form is a bounded attractive perturbation of the
+free form. Its compactness is that of $\mathcal F_A$. The positive free
+heat kernel and the bounded-potential product formula make its semigroup
+positivity improving: for a nonzero nonnegative datum it dominates the
+strictly positive free evolution. Its lowest eigenspace is therefore
+simple, with a strictly positive normalized eigenfunction. These are
+standard compact spectral and positivity arguments, applied on the actual
+periodic cylinder, without an inner boundary. For the completed form,
+Theorem 13.1 supplies a positive ground state. Its simplicity also follows
+from the following exact ground transform, which will be needed below.
+Define
+
+$$
+d\nu_*=f_*^2d\mu,\qquad
+\mathscr A[u]=\int f_*^2\langle A Xu,Xu\rangle d\mu.
+\tag{15.5}
+$$
+
+For a punctured-core $f$, integration against the equation for $f_*$ gives
+
+$$
+\overline q_{\mathrm c}[f]-E_*\|f\|_2^2
+ =\mathscr A[f/f_*].
+\tag{15.6}
+$$
+
+Taking the closure in the norm on either side extends (15.6) to all of
+$\mathcal Q$. In this statement the domain on the right is the closure
+of the quotients of punctured-core functions in
+$\mathscr A+\|\cdot\|_{L^2(\nu_*)}^2$; it is not an imposed larger
+weighted domain. Local testing away from $o$ identifies its derivatives
+with the usual weak horizontal derivatives. A second ground state has
+zero energy in (15.6). Its quotient has zero horizontal derivatives,
+and the bracket-generating frame on the connected punctured cylinder
+makes that quotient constant. This proves simplicity.
+
+The positive normalization fixes the sign in projection convergence.
+Min-max, (15.3), and the recovery core give $E_\epsilon\downarrow E_*$.
+Moreover $E_*\le\overline q_{\mathrm c}[f_\epsilon]\le E_\epsilon$.
+Together with $L^2$ convergence and weak compactness in $\mathcal Q$,
+this gives convergence of the shifted Hilbert norms, hence strong
+convergence in that space. Equality $E_\epsilon=E_*$ would force
+$f_\epsilon=f_*$ in (15.6), contrary to
+$f_*\notin\mathcal F_A$ in Theorem 13.1. This proves all assertions in
+(15.2). The compactness proof in Theorem 12.2 gives uniformly vanishing
+mass in shrinking source balls for these states; their limiting norm is
+one, so no source or exterior mass is missing. Finally the capped
+potential equals the smooth full potential on each fixed compact set
+away from $o$ for all small $\epsilon$. Interior estimates for the fixed
+smooth Hörmander operator, followed by iteration of the eigenvalue
+equation, upgrade $L^2$ convergence there to smooth convergence. $\square$
+
+## 16. The scalar trace of the globally normalized critical ground state
+
+**Theorem 16.1 (positive source trace, including all angular directions).**
+There are numbers $a_*>0$ and $\gamma\in(0,1)$, depending on the fixed
+model and the normalized ground state, for which
+
+$$
+\frac{f_*(\Psi^{-1}q)}{h(q)}=a_*+O(R(q)^\gamma)
+\quad(R\downarrow0).
+\tag{16.1}
+$$
+
+The error is uniform over the whole gauge sphere, including the central
+axis. On every fixed compact annulus, for each integer $j\ge0$,
+
+$$
+\left\|
+ \frac{f_*(\Psi^{-1}\delta_s\,\cdot)}{h(\delta_s\,\cdot)}-a_*
+\right\|_{C^j}\le C_j s^\gamma.
+\tag{16.2}
+$$
+
+Here $C^j$ is taken in the smooth Cartesian coordinates of the annulus.
+Thus $a_*$ is the scalar limit in the question, rather than just the two
+comparison constants of (13.1).
+
+Proof. Set $v=f_*/h$ on a source ball. By (13.1) it is bounded above
+and below by positive constants. In the weighted local completion it
+solves
+
+$$
+\mathscr B_h v=(E_*-W)v,\qquad
+\mathscr B_h=-\frac1{mh^2}\operatorname{div}_H(mh^2C\nabla_H),
+\qquad |(E_*-W)v|\le K/R.
+\tag{16.3}
+$$
+
+The point has zero capacity for this weighted energy by (12.13).
+The local Dirichlet problem on a sufficiently small source ball is
+coercive by (12.7). These two facts allow weak testing through the point;
+no point value or inner boundary data are prescribed.
+
+Use the function $b_\delta=1+\delta^2w$ constructed in (13.7)–(13.10),
+with one fixed sufficiently small $0<\delta<1$. That computation and
+(11.3) imply, after reducing the ball,
+
+$$
+\mathscr B_h(R^\delta b_\delta)
+ \le-\kappa R^{\delta-2},\qquad \kappa>0.
+\tag{16.4}
+$$
+
+For $R<r$ the nonnegative function
+
+$$
+\psi_r=K_1r^{1-\delta}
+ \{r^\delta\max_{\overline J}b_\delta-R^\delta b_\delta\}
+\tag{16.5}
+$$
+
+has supremum at most $K_2r$, and, with $K_1$ fixed sufficiently large,
+$\mathscr B_h\psi_r\ge K/R$. Indeed
+$r^{1-\delta}R^{\delta-2}\ge R^{-1}$ for $R\le r$.
+Let $z_r$ be the $\mathscr B_h$-harmonic replacement of $v$ in
+$R<r$: $v-z_r$ is in the local zero-boundary weighted completion.
+Existence follows by minimizing the weighted Dirichlet energy.
+Testing the difference equation with its positive and negative parts
+and using (16.5) gives
+
+$$
+\|v-z_r\|_{L^\infty(R<r)}\le K_2r.
+\tag{16.6}
+$$
+
+All comparisons include the point by its zero capacity. For example
+first use the logarithmic cutoffs (12.13) and then pass in the energy
+norm. The barriers in (16.5) belong to that norm, so no source boundary
+term survives.
+
+The harmonic replacement has a scale-uniform oscillation contraction.
+To verify this without asserting a Harnack theorem at the singular
+point, rescale the connected annulus $r/4\le R\le r/2$ to a fixed
+annulus. There $h^2$ is smooth and positive, the Hörmander frame is
+fixed, and all coefficients and horizontal drifts of the rescaled
+$\mathscr B_h$ are uniformly bounded with uniformly positive horizontal
+covariance. The ordinary local Hörmander Harnack inequality, joined by a
+finite chain of balls in a larger punctured annulus, has a constant $C$
+independent of small $r$. Apply it to $z_r-m$ and $M-z_r$, where
+$m=\inf_{R<r}z_r$ and $M=\sup_{R<r}z_r$. Write $d=M-m$.
+Either the infimum of $z_r-m$ on this annulus is at least $d/(2C)$,
+or its supremum is at most $d/2$. The weak maximum principle in the
+inner ball, again using zero capacity at the point, consequently gives
+
+$$
+\operatorname{osc}_{R<r/4}z_r
+ \le\vartheta\operatorname{osc}_{R<r}z_r,
+\qquad \vartheta=1-(2C)^{-1}<1.
+\tag{16.7}
+$$
+
+Combining (16.6)–(16.7) gives
+$\operatorname{osc}_{R<r/4}v\le\vartheta
+\operatorname{osc}_{R<r}v+K_3r$.
+Iteration on $r,r/4,r/16,\ldots$ proves (16.1), with any suitably
+smaller positive exponent than $-\log\vartheta/\log4$ and one.
+The nested essential ranges shrink to one number. The positive bounds
+from (13.1) make that number strictly positive. Smoothness off the source
+makes the resulting estimate pointwise in every direction.
+
+For the derivative assertion, the remainder (11.1) has the following
+annular derivative consequence:
+
+$$
+\|s^2\Gamma(\Psi^{-1}\delta_s\,\cdot)-c_GR^{-2}\|_{C^j(K)}
+ \le C_{K,j}s
+\quad(K\Subset\mathbb R^3\setminus\{0\}).
+\tag{16.8}
+$$
+
+Here is why no derivative of a bare pointwise estimate is being assumed.
+The difference on the left is $O(s)$ in supremum norm by (11.1).
+Its equation on a slightly larger annulus has a smooth right side
+$O(s)$ in every fixed derivative, obtained by applying the rescaled
+operator to $c_GR^{-2}$ and using (11.2)–(11.3). The rescaled smooth
+coefficients converge in every derivative to the frozen ones.
+Interior subelliptic estimates and Sobolev embedding, iterated on nested
+annuli, therefore give (16.8). Apply the same interior estimates to
+(16.3) after rescaling. Its right side is $O(s)$ in smooth annular
+coefficients times $v$, and $v-a_*=O(s^\gamma)$ in supremum norm.
+Iteration proves (16.2), reducing $\gamma$ if necessary. $\square$
+
+## 17. Sharp energy transfer and the entire logarithmic transition
+
+**Definition 17.1 (angular constants and the logarithmic mean).** Put
+
+$$
+M_\phi=\int_J\phi^2da,\qquad
+C_\phi=\int_Jc\phi^2da,\qquad
+k_\phi=\frac\pi2 C_\phi,\qquad
+\mathsf K=a_*^2m_0k_\phi.
+\tag{17.1}
+$$
+
+Fix $b>0$ sufficiently small for (16.1), set $L=\log(b/\epsilon)$,
+and write
+
+$$
+u_\epsilon=f_\epsilon/f_*,\qquad
+p_\epsilon(t)=\frac1{2\pi C_\phi}
+ \int_J\int_0^{2\pi}c\phi^2u_\epsilon(R,a,\theta)\,d\theta da,
+\quad R=e^t.
+\tag{17.2}
+$$
+
+Here and below a quotient on the cylinder is pulled back by $\Psi^{-1}$
+when it is evaluated at chart coordinates. The global measure $\nu_*$
+in (15.5) has total mass one.
+
+**Theorem 17.2 (the sharp gap and all-mode logarithmic profile).** For
+every fixed model in Definition 14.1,
+
+$$
+L(E_\epsilon-E_*)\longrightarrow
+\mathsf K=a_*^2\frac{\pi m_0}{2}C_\phi.
+\tag{17.3}
+$$
+
+The mean has strong endpoint control:
+
+$$
+p_\epsilon(\log\epsilon+sL)\longrightarrow s
+\quad\hbox{in }H^1(0,1).
+\tag{17.4}
+$$
+
+For the full, unrestricted angular state,
+
+$$
+\frac{f_\epsilon(\Psi^{-1}(\epsilon e^{sL},a,\theta))}
+ {h(\epsilon e^{sL},a,\theta)}
+\longrightarrow a_*s
+\quad\hbox{in }L^2((0,1)\times J\times\mathbb T,
+                         \phi^2\,ds\,da\,d\theta).
+\tag{17.5}
+$$
+
+For $0<\eta<1/2$, a fixed compact Cartesian annulus $K$, and each fixed
+$j$, the convergence on intermediate scales also satisfies
+
+$$
+\sup_{\eta\le s\le1-\eta}
+\left\|
+ \frac{f_\epsilon(\Psi^{-1}\delta_{\epsilon e^{sL}}\,\cdot)}
+ {h(\delta_{\epsilon e^{sL}}\,\cdot)}-a_*s
+\right\|_{C^j(K)}\longrightarrow0.
+\tag{17.6}
+$$
+
+These assertions include every angular mode, without imposing symmetry
+on the actual coefficients or ground states.
+
+Proof. Write $d_\epsilon=E_\epsilon-E_*$ and use the exact transform
+(15.6). The normalized eigenstate obeys
+
+$$
+\mathscr A[u_\epsilon]
+ +\int D_\epsilon u_\epsilon^2d\nu_*=d_\epsilon,
+\qquad \|u_\epsilon\|_{L^2(\nu_*)}=1,
+\qquad u_\epsilon\to1\text{ in }L^2(\nu_*).
+\tag{17.7}
+$$
+
+Locally away from the source the last convergence is smooth. From
+(10.2), (16.1) and (16.2), the local density and matrix of $\mathscr A$
+are
+
+$$
+f_*^2mC=a_*^2m_0h^2\{I+O(R^\gamma)\}.
+\tag{17.8}
+$$
+
+The exponent may be decreased to be below one. This is a matrix estimate,
+so it controls arbitrary angular derivatives and cross terms.
+
+Here are the two elementary angular facts used in the proof. For a real
+chart function $u$, let $p$ be its mean (17.2) and $w=u-p(\log R)$.
+Formula (12.8) gives the exact orthogonal decomposition on any logarithmic
+interval $I_t$:
+
+$$
+\mathcal E_0[u;I_t]
+ =k_\phi\int_{I_t}|p'(t)|^2dt+\mathcal E_0[w;I_t].
+\tag{17.9}
+$$
+
+Indeed $\int c\phi^2w=0$ on each slice, and the integral of the
+$\theta$ derivative in the cross term is zero. No estimate discards a
+mode. There is also a constant independent of $t$ such that
+
+$$
+\int_t^{t+1}\int_{J\times\mathbb T}\phi^2|w|^2
+ \le C\mathcal E_0[w;(t-1,t+2)].
+\tag{17.10}
+$$
+
+To justify (17.10), dilate to the fixed compact annulus
+$1\le R\le e$ inside $e^{-1}<R<e^2$. Cover it by a finite connected
+chain of horizontal metric balls compactly contained in the larger
+annulus. The usual local horizontal Poincaré inequality on those balls,
+and comparison of their smooth positive weights with $h^2$, bound the
+squared norm on the middle annulus modulo a constant by the energy on
+the larger annulus. The zero $c\phi^2$ mean on every slice removes that
+constant: integrate that mean over the middle annulus and apply
+Cauchy–Schwarz to $w$ minus the constant. On this fixed annulus the
+polar integral in (17.10) is comparable with the Cartesian volume
+integral. Dilation gives the same constant at every $t$. This argument
+covers the central axis in ordinary Cartesian balls; it uses neither
+a boundary condition at $a=\pm\pi/2$ nor a zeroth-mode restriction.
+The local Poincaré inequality here is the standard smooth Hörmander
+one; the source singularity is outside every ball where it is applied.
+
+For an upper bound choose a trial quotient which is zero for $R\le2\epsilon$,
+is $\log(R/(2\epsilon))/\log(b/(2\epsilon))$ between $2\epsilon$ and $b$,
+and equals one outside $R<b$. Its product with $f_*$ belongs to
+$\mathcal F_A$, by localization of (12.3), and its deficit term vanishes
+by (14.2). Corners may be approximated in the free norm. For a radial
+quotient the exact frozen energy is $k_\phi\int|u_t|^2dt$.
+In (17.8), the integral of the error along this interval is bounded by
+$C\int_0^bR^\gamma dR/R<\infty$. Its actual energy is consequently
+$\mathsf K/L+O(L^{-2})$. Its squared norm is $1+O(L^{-1})$, because
+
+$$
+\int_{R<b}\log(b/R)\,d\nu_*<\infty,
+\qquad \nu_*(R<2\epsilon)=O(\epsilon^2).
+$$
+
+The ground transform and normalization give
+
+$$
+0<d_\epsilon\le\mathsf K/L+O(L^{-2}).
+\tag{17.11}
+$$
+
+For the converse bound note first that, on $R<\epsilon/2$,
+$D_\epsilon\ge c_1R^{-2}$ for all small $\epsilon$, by (11.1).
+Equations (17.7)–(17.8) therefore imply
+
+$$
+\int_{\log(\epsilon/4)}^{\log(\epsilon/2)}
+ \int\phi^2u_\epsilon^2\le C d_\epsilon,
+\qquad
+\int_{\log(\epsilon/4)}^{\log\epsilon}
+ |p_\epsilon'|^2\le C d_\epsilon.
+\tag{17.12}
+$$
+
+Cauchy–Schwarz, first for the mean and then along this interval, gives
+$|p_\epsilon(\log\epsilon)|\le C\sqrt{d_\epsilon}=o(1)$.
+For every fixed small $d>0$,
+$p_\epsilon(\log d)\to1$ by Theorem 15.1. If
+$\eta_d\downarrow0$ bounds the relative matrix error in (17.8) on
+$R<d$, then (17.7), (17.9), and the one-dimensional Cauchy–Schwarz
+inequality give
+
+$$
+d_\epsilon\ge a_*^2m_0(1-\eta_d)k_\phi
+ \frac{(p_\epsilon(\log d)-p_\epsilon(\log\epsilon))^2}
+ {\log(d/\epsilon)}.
+\tag{17.13}
+$$
+
+Let $\epsilon\downarrow0$, then $d\downarrow0$. Together with (17.11)
+this proves (17.3). The trial function alone was only its upper half;
+(17.12)–(17.13) supply the lower half for the actual eigenstates.
+
+The same inequalities imply saturation and localization of their energy.
+For every fixed source radius $d$, the $\mathscr A$ energy outside that
+ball is $o(L^{-1})$. Indeed apply (17.13) at any smaller fixed radius
+$d'<d$; its liminf consumes at least
+$(1-\eta_{d'})\mathsf K$ of the total rescaled energy, and then let
+$d'\downarrow0$. The identical argument gives
+
+$$
+L\mathscr A[u_\epsilon;R<\epsilon]\to0,
+\qquad
+L\int D_\epsilon u_\epsilon^2d\nu_*\to0.
+\tag{17.14}
+$$
+
+To compare the remaining annular energy with its frozen value, split
+(17.8) at $R=d$. On the inner part its error is at most $\eta_d$ times
+the energy; on the outer part the energy is $o(L^{-1})$. Thus
+
+$$
+L\mathcal E_0[u_\epsilon;
+                 \log\epsilon<t<\log b]\longrightarrow k_\phi.
+\tag{17.15}
+$$
+
+Set $P_\epsilon(s)=p_\epsilon(\log\epsilon+sL)$. Its endpoint values
+tend to zero and one by (17.12) and smooth convergence at $R=b$.
+Equations (17.9) and (17.15) give
+$\limsup\int_0^1|P_\epsilon'|^2\le1$. The endpoint difference tends to
+one, so the reverse bound and equality case of Cauchy–Schwarz imply
+$P_\epsilon'\to1$ in $L^2$ and $P_\epsilon\to s$ in $H^1$.
+This proves (17.4).
+
+Sum (17.10) over the interval from $\log\epsilon$ to $\log b$.
+Only boundedly overlapping enlarged intervals occur. On the slightly
+larger chart interval the energy is $O(L^{-1})$, by (17.7)–(17.8), and
+(17.9) bounds the energy of $w$ by that of $u$. Consequently
+
+$$
+\frac1L\int_{\log\epsilon}^{\log b}
+ \int\phi^2|u_\epsilon-p_\epsilon|^2
+ =O(L^{-2}).
+\tag{17.16}
+$$
+
+Together with (17.4) this proves full-angular $L^2$ convergence of the
+quotient $u_\epsilon$ to $s$. Multiplication by
+$f_*/h=a_*+O(R^\gamma)$ proves (17.5): the error tends to zero at every
+$s<1$, is uniformly bounded, and $P_\epsilon$ is uniformly bounded by
+its $H^1$ norm. The nonconstant remainder is controlled by (17.16).
+Thus the integration includes both ends of the growing annulus.
+
+For (17.6), any unit-sized logarithmic annulus about
+$R=\epsilon e^{sL}$, $\eta\le s\le1-\eta$, stays away from the changed
+set and shrinks to the source. Its quotient solves
+$\mathscr B_*u_\epsilon=d_\epsilon u_\epsilon$, with
+$\mathscr B_*=-(mf_*^2)^{-1}\operatorname{div}_H(mf_*^2C\nabla_H)$.
+After dilation its smooth coefficients are uniformly controlled by
+(16.2), and the right side has the extra factor $R^2$.
+The local version of (17.10), (17.16), and the uniform convergence of
+$P_\epsilon$ show $L^2$ convergence to the constant $s$ on every such
+rescaled annulus. Interior subelliptic estimates upgrade it to each
+$C^j$ norm on a smaller annulus. If uniformity in $s$ failed, the same
+argument along a failing sequence of scales would give a contradiction.
+This proves (17.6). $\square$
+
+**Theorem 17.3 (separate resources of the actual finite-resolution states).**
+With
+
+$$
+V_{\rm raw}[f]=\int\Gamma|f|^2d\mu,\qquad
+V_{\rm cap}[f]=\int\Gamma_\epsilon|f|^2d\mu,
+\tag{17.17}
+$$
+
+where the second notation is evaluated at its indicated resolution,
+all three finite-resolution resources satisfy
+
+$$
+\begin{aligned}
+\frac{V_{\rm raw}[f_\epsilon]}L&\longrightarrow
+                    \frac{a_*^2M_\phi}{12},\\
+\frac{V_{\rm cap}[f_\epsilon]}L&\longrightarrow
+                    \frac{a_*^2M_\phi}{12},\\
+\frac{T_A[f_\epsilon]}L&\longrightarrow
+                    \frac{g_{\mathrm c}a_*^2M_\phi}{12}.
+\end{aligned}
+\tag{17.18}
+$$
+
+In particular the selected completed state is approached with divergent
+separate kinetic and attraction costs, although its energy is finite.
+
+Proof. On $R<\epsilon/2$ the deficit is at least a fixed positive
+multiple of $\Gamma$, so (17.7) bounds the raw attraction there by
+$C d_\epsilon$. On $\epsilon/2<R<\epsilon$, the mean is
+$O(\sqrt{d_\epsilon})$ by (17.12) and the derivative bound. Applying
+(17.10) on this fixed-width logarithmic collar bounds the angular
+remainder in squared norm by $C d_\epsilon$. Hence
+
+$$
+V_{\rm raw}[f_\epsilon;R<\epsilon]=O(L^{-1}).
+\tag{17.19}
+$$
+
+Outside $R<b$ the full Green multiplier is bounded, so its contribution
+is $O(1)$. On the middle annulus use its exact raw volume and density:
+if $v_\epsilon=f_\epsilon/h$, then
+
+$$
+\Gamma f_\epsilon^2d\mu
+ =\left\{\frac1{8\pi}+O(R)\right\}
+       \phi^2v_\epsilon^2\,dt\,da\,d\theta.
+\tag{17.20}
+$$
+
+The coefficient $1/(8\pi)$ is $m_0c_G/4$; it retains both the raw
+Jacobian $1/4$ and the full $2\pi$ angular period. Divide the annular
+integral by $L$ and use (17.5). The error in (17.20) vanishes: below a
+fixed $d$ it is bounded by $Cd$ times a uniformly bounded rescaled
+squared norm; above $d$ the interval has fixed logarithmic length and
+the eigenfunctions converge smoothly. The main term is
+
+$$
+\frac1{8\pi}\,a_*^2
+ \int_0^1s^2ds\int_J\int_0^{2\pi}\phi^2d\theta da
+ =\frac{a_*^2M_\phi}{12}.
+\tag{17.21}
+$$
+
+This proves the raw law. The nonnegative difference of raw and capped
+attraction is bounded by $d_\epsilon/g_{\mathrm c}$ in (17.7), so the
+capped law has the same leading coefficient. Finally the exact
+finite-domain identity
+$T_A[f_\epsilon]=E_\epsilon+g_{\mathrm c}V_{\rm cap}[f_\epsilon]$
+and boundedness of $E_\epsilon$ prove the kinetic law. No subtraction of
+infinities is used for any finite $\epsilon$. $\square$
+
+## 18. The source-regular capped core and its matched normalization
+
+**Theorem 18.1 (unique inner profile and the actual source amplitude).**
+There is exactly one positive real function $Z$ on the frozen group which
+is a weak solution of
+
+$$
+(-\Delta_H-\lambda_0\min\{R^{-2},1\})Z=0
+\quad\hbox{on }\mathbb R^3,
+\tag{18.1}
+$$
+
+is smooth at the source, and has logarithmic coefficient one at infinity.
+More precisely, it is smooth on $R<1$ and on $R>1$, belongs to
+$W^{1,2}_{H,\mathrm{loc}}(\mathbb R^3)$, is continuous and positive
+everywhere, and for one real $\kappa_{\rm cap}$ satisfies
+
+$$
+\frac{Z(q)}{h(q)}=\log R(q)+\kappa_{\rm cap}+o(1)
+\quad(R\to\infty).
+\tag{18.2}
+$$
+
+The error is uniform over all angular directions. On compact rescaled
+annuli it tends to zero with every smooth derivative after subtracting
+$\log R+\kappa_{\rm cap}$. The function $Z$ is invariant under rotations
+of $(\xi,\eta)$; this invariance is a conclusion about the frozen core,
+not a restriction on the original model.
+
+For the actual normalized eigenstates,
+
+$$
+F_\epsilon(q):=\epsilon L
+ f_\epsilon(\Psi^{-1}\delta_\epsilon q)
+ \longrightarrow a_*Z(q).
+\tag{18.3}
+$$
+
+Convergence holds locally uniformly and strongly in
+$W^{1,2}_{H,\mathrm{loc}}$, and in every $C^j$ norm on compact subsets
+of $R<1$ or $R>1$. In particular it includes the source:
+
+$$
+\epsilon L f_\epsilon(o)\longrightarrow a_*Z(0)>0.
+\tag{18.4}
+$$
+
+The normalization of $Z$ is equivalently the exact flux condition
+
+$$
+\lambda_0\int_{R<1}(R^{-2}-1)hZ\,dq=k_\phi.
+\tag{18.5}
+$$
+
+Proof. A linear charge identity fixes the inner amplitude more strongly
+than the quadratic energy estimate (17.7). The finite-resolution
+quotient satisfies, weakly on its actual transformed domain,
+
+$$
+\mathscr B_*u_\epsilon+D_\epsilon u_\epsilon
+ =d_\epsilon u_\epsilon.
+$$
+
+Test it with the logarithmic source cutoffs approaching the constant one.
+Their products with $f_*$ belong to $\mathcal F_A$; outside the source
+chart this follows directly from (12.3). The $\mathscr A$ energy of
+these cutoffs tends to zero by (13.1) and (12.13). The kinetic pairing
+therefore vanishes in the limit. The potential pairing is absolutely
+integrable: near zero $f_\epsilon$ is smooth, because its potential is
+constant on an entire source neighbourhood, whereas $f_*=O(R^{-1})$;
+thus $D_\epsilon f_\epsilon f_*d\mu=O(R^{-3})dq$ for each fixed
+$\epsilon$. Dominated convergence gives the exact identity
+
+$$
+Q_\epsilon:=\int D_\epsilon u_\epsilon d\nu_*
+ =d_\epsilon\int u_\epsilon d\nu_*.
+\tag{18.6}
+$$
+
+Since $\nu_*$ is a probability measure and $u_\epsilon\to1$ in its
+$L^2$ norm, (17.3) implies
+
+$$
+LQ_\epsilon\longrightarrow a_*^2m_0k_\phi.
+\tag{18.7}
+$$
+
+This identity tests the original eigenproblem; it adds no counterterm or
+source condition to the approximating operators.
+
+Rescale (18.6) in the source chart, using (14.2), (16.1), and
+$g_{\mathrm c}c_G=\lambda_0$. On $R<2$ its expression is
+
+$$
+LQ_\epsilon
+ =a_*m_0\lambda_0\int
+ \big(R^{-2}-1+e_\epsilon(q)\big)_+
+ h(q)F_\epsilon(q)\{1+O(\epsilon^\gamma R^\gamma)+O(\epsilon R)\}\,dq,
+\quad |e_\epsilon(q)|\le C\epsilon/R.
+\tag{18.8}
+$$
+
+The integral vanishes outside $R<1+C\epsilon$. On the fixed annulus
+$1/4<R<1/2$ its kernel has a uniform strictly positive lower bound.
+The rescaled equation for $F_\epsilon$ has smooth uniformly converging
+horizontal coefficients and bounded potential, converging locally
+uniformly to that in (18.1). This includes zero by (14.3). Uniform local
+Hörmander Harnack inequalities connect that annulus to every fixed
+compact set. Hence the bounded charge (18.7) bounds $F_\epsilon$ on
+every such set. Local Hölder and energy estimates give compactness
+locally uniformly and weakly in $W_H^{1,2}$. On $R<1$ and $R>1$,
+(16.8) and the rescaled equation give smooth compactness. Differences
+of the weak equations, tested with a compactly supported cutoff times
+the difference of the functions, upgrade local horizontal energy
+convergence to strong convergence: the coefficients converge smoothly,
+the potentials converge uniformly, and the functions converge uniformly.
+This last argument works across $R=1$ as well and asserts only the
+stated weak and first-derivative regularity there.
+
+Let $F$ be any subsequential limit. It is smooth at zero, solves (18.1),
+and is nonnegative. The kernel in (18.8) is bounded by a constant times
+$(R^{-2}+1)h=O(R^{-3}+R^{-1})$, integrable on $R<2$. Compact uniform
+bounds thus allow passage to the limit, including zero and the moving
+cap boundary. Equations (18.7)–(18.8) give
+
+$$
+\lambda_0\int_{R<1}(R^{-2}-1)hF\,dq=a_*k_\phi.
+\tag{18.9}
+$$
+
+It is positive. The strong maximum principle makes $F$ positive
+everywhere. It remains to prove that this charge selects a unique
+positive entire profile, and that its coefficient at infinity is the
+one claimed. This is an all-angular assertion.
+
+For any positive entire source-regular solution $F$ of (18.1), set
+$v=F/h$ and $P_0=\lambda_0(R^{-2}-1)_+$. The frozen ground transform
+says
+
+$$
+\mathscr B_0v+P_0v=0,\qquad
+\mathscr B_0=-h^{-2}\operatorname{div}_H(h^2\nabla_H).
+\tag{18.10}
+$$
+
+Near zero $v=O(R)$ and its transformed energy is finite. Integrating
+(18.10) over a ball, or first testing with radial cutoffs, gives for
+$R>1$ the constant outward flux
+
+$$
+k_\phi p'(\log R)
+ =\int_{R<1}P_0hF\,dq,
+\qquad
+p(t)=\frac1{2\pi C_\phi}\int c\phi^2v(t,a,\theta)\,da d\theta.
+\tag{18.11}
+$$
+
+There is no inner flux: source regularity makes it tend to zero like
+$O(R)$ as the inner radius tends to zero. Consequently
+$p(t)=\beta t+\alpha$ for $t>0$, with
+$\beta=k_\phi^{-1}\int P_0hF>0$. Uniform Harnack on a fixed rescaled
+annulus gives $\sup_{R=e^t}v\le C p(t)$ for $t\ge1$, so $v=O(1+t)$.
+
+The angular decay needed here has a direct energy proof. Put
+$w=v-(\beta t+\alpha)$; it has zero $c\phi^2$ mean on every slice
+and solves $\mathscr B_0w=0$ for $t>0$. Define
+
+$$
+\begin{aligned}
+H_w(t)&=\int c\phi^2w^2\,da d\theta,\\
+e_w(t)&=\frac14\int\phi^2
+ \{c|w_t+\tan a\,w_\theta|^2
+          +4c|w_a+\tfrac12w_\theta|^2\}\,da d\theta.
+\end{aligned}
+\tag{18.12}
+$$
+
+Differentiating twice and using the divergence equation gives
+
+$$
+H_w''(t)=8e_w(t)\ge0,
+\qquad
+\int_t^{t+1}H_w\le C\int_{t-1}^{t+2}e_w.
+\tag{18.13}
+$$
+
+The second inequality follows from (17.10). In the first calculation,
+solving the divergence equation for $cw_{tt}$ and integrating its
+$w_{t\theta}$ term by parts gives the cross term
+$4\int c\phi^2\tan a\,w_\theta w_t$ in $H_w''$.
+The remaining terms are
+$2\int c\phi^2(w_t^2+\tan^2a\,w_\theta^2)
+ +8\int c\phi^2(w_a+w_\theta/2)^2$, which give exactly $8e_w$.
+One may perform the integrations on Cartesian annuli and then use
+(10.9); the collapsed angular coordinates create no axis boundary terms.
+
+Here $H_w(t)=O((1+t)^2)$. A convex nonnegative function with this growth
+and (18.13) must decrease to zero. Indeed, if its derivative is ever
+positive, it stays positive. For all later $t$, (18.13) and convexity
+then give
+
+$$
+H_w(t)\le C_1\{H_w'(t+2)-H_w'(t-1)\}
+ \le C_1\{H_w(t+3)-H_w(t)\}.
+$$
+
+Iteration forces exponential growth, a contradiction. Thus its
+derivative is nonpositive and tends to zero. Integrating (18.13) to
+infinity now gives $\int_T^\infty H_w<\infty$; its decreasing limit is
+zero. Also $\int_{t-1}^{t+2}e_w\to0$. The full weighted squared norm
+of $w$ on each middle annulus tends to zero by (17.10), and interior
+estimates for $\mathscr B_0$ turn this into smooth convergence on
+rescaled compact annuli. It follows that
+
+$$
+F/h=\beta\log R+\alpha+o(1)
+\tag{18.14}
+$$
+
+in the asserted all-angular sense.
+
+Two positive source-regular solutions with the same $\beta$ have a
+difference whose quotient by $h$ is bounded at infinity by (18.14) and
+is $O(R)$ at zero. Test its equation (18.10) with its quotient times
+the square of a cutoff equal to one on $R<e^T$, zero on $R>e^{2T}$,
+and affine in $\log R$ between. Cauchy–Schwarz bounds the cutoff error
+by $C/T$, since the quotient is bounded and the frozen energy of that
+cutoff is $k_\phi/T$. Inner cutoffs have vanishing error by the $O(R)$
+source behavior. Let $T\to\infty$. The nonnegative transformed energy
+and $\int P_0h^2v^2$ both vanish. The quotient is constant, and the
+latter integral forces that constant to be zero. This proves uniqueness
+for each positive logarithmic coefficient.
+
+Applied to (18.9), this proves $F=a_*Z$, with (18.2) and (18.5).
+It also proves existence of $Z$ without assuming an exterior scattering
+theorem. Every subsequence has that same limit, so (18.3) holds for the
+whole family. Rotating $Z$ in the horizontal plane preserves (18.1),
+source regularity, positivity, and coefficient one. Uniqueness proves
+its rotational invariance. The common logarithmic coefficient in
+(17.5) and (18.2) is fixed by the exact charge (18.6). This completes
+the matching and proves (18.4). $\square$
+
+**Theorem 18.2 (the actual cap deficit and the two core attractions).**
+Define the finite strictly positive constant
+
+$$
+I_{\rm cap}=\int_{R<1}(R^{-2}-1)Z^2dq.
+\tag{18.15}
+$$
+
+For the changed set $\mathcal C_\epsilon$ of (14.1),
+
+$$
+\begin{aligned}
+L^2\{V_{\rm raw}[f_\epsilon]-V_{\rm cap}[f_\epsilon]\}
+ &\longrightarrow\frac{a_*^2}{2\pi}I_{\rm cap},\\
+L^2\int_{\mathcal C_\epsilon}\Gamma f_\epsilon^2d\mu
+ &\longrightarrow\frac{a_*^2}{2\pi}\int_{R<1}R^{-2}Z^2dq,\\
+L^2\int_{\mathcal C_\epsilon}\Gamma_\epsilon f_\epsilon^2d\mu
+ &\longrightarrow\frac{a_*^2}{2\pi}\int_{R<1}Z^2dq.
+\end{aligned}
+\tag{18.16}
+$$
+
+Thus the deficit is of order $L^{-2}$, while both total attractions in
+(17.18) are of order $L$.
+
+Proof. Substitute $F_\epsilon$ from (18.3) and
+$d\mu(\delta_\epsilon q)=\epsilon^4m(\delta_\epsilon q)dq$ in the
+three actual integrals. The factors from the multiplier and squared
+state are respectively $\epsilon^{-2}$ and
+$\epsilon^{-2}L^{-2}$, so all powers of $\epsilon$ cancel.
+The coefficient is $m_0c_G=1/(2\pi)$. The domains in the last two
+integrals lie between $R<1-C\epsilon$ and $R<1+C\epsilon$ by (14.2).
+The rescaled uncapped multiplier is $c_G(R^{-2}+O(\epsilon/R))$;
+the capped multiplier on that set is exactly $c_G$.
+The rescaled eigenfunctions are uniformly bounded on $R<2$ and converge
+uniformly, including zero, by Theorem 18.1. The dominating function
+$C(R^{-2}+1)$ is integrable there, with the raw four-dimensional
+homogeneous volume $R^3dR\,da\,d\theta/4$. Dominated convergence and
+the vanishing shell at $R=1$ prove (18.16). Positivity and finiteness of
+(18.15) follow from source regularity and $Z>0$. $\square$
+
+## 19. Density covariance, source correspondence and the scope of the limit
+
+**Corollary 19.1 (raw-density covariance and the fixed native carrier).**
+Under the constant change $\rho\mapsto c\rho$, $c>0$, with every other
+original datum fixed, the differential operator $L_A$, the products
+$g_{\mathrm c}\Gamma$ and $g_{\mathrm c}\Gamma_\epsilon$, and all the
+energies $E_*,E_\epsilon$ are unchanged. The normalized states and trace
+transform as
+
+$$
+f_*\mapsto c^{-1/2}f_*,\qquad
+f_\epsilon\mapsto c^{-1/2}f_\epsilon,\qquad
+a_*\mapsto c^{-1/2}a_*.
+\tag{19.1}
+$$
+
+Consequently the energy and kinetic coefficients in (17.3) and (17.18)
+are invariant, while each raw or capped attraction coefficient in
+(17.18) and (18.16) is multiplied by $c^{-1}$. The frozen profile $Z$
+and $\kappa_{\rm cap},I_{\rm cap}$ do not change.
+
+All the conclusions in §§14–18 retain the same both-wall periodic
+cylinder, original free domains at finite resolution, unit-source full
+Green field, and covariance $2A\,dt$. The scalar $a_*$ and energy $E_*$
+are those of the globally normalized completed eigenproblem. The common
+frozen problem (18.1), with its proved uniqueness and normalization,
+is the precise local profile shared by these fixed models after the
+source-coordinate and density correspondences have been made.
+The dimension statements remain current-ray dimension three, direct
+rank two, growth $(2,3)$ and homogeneous volume exponent four. They
+supply no additional assertion about a physical Euclidean dimension or
+an acquisition map.
+
+Proof. Multiplication of the density by $c$ cancels in the divergence
+expression (11.2). The inverse kernel for a unit source relative to the
+new measure is $\Gamma/c$. Equations (10.2), (10.6) give
+$m_0\mapsto cm_0$, $c_G\mapsto c_G/c$, and
+$g_{\mathrm c}\mapsto cg_{\mathrm c}$. Therefore the minimum defining
+$\Gamma_\epsilon$ also divides by $c$, and both operator potentials
+are unchanged. The unitary identification of the two Hilbert spaces
+is multiplication by $c^{-1/2}$. It preserves kinetic and completed
+form values, their domains under that identification, and all normalized
+eigenvalues. Equations (16.1) and (18.3) give (19.1).
+In the energy coefficient $a_*^2m_0k_\phi$ the two factors cancel;
+in the kinetic coefficient $g_{\mathrm c}a_*^2M_\phi/12$ they also
+cancel. Each attraction coefficient contains $a_*^2$ with no remaining
+$m_0$, as follows from the raw source factor $m_0c_G=1/(2\pi)$.
+This verifies the resource covariance separately from operator covariance.
+The chart and (18.1) are unchanged, so uniqueness in Theorem 18.1 fixes
+$Z$ and the other inner constants.
+
+The carrier and clock assertions follow from (1.1), Definition 14.1 and
+(2.1), (10.2). In particular (14.2) describes a multiplier's changed set;
+it is not a Dirichlet hole. Equation (18.1) is a limit equation for
+eigenstates, not the equation of a replacement Green source.
+The globally normalized problem is retained throughout (15.5)–(18.8),
+so the proof neither fixes $a_*$ by a local normalization nor identifies
+the energies of different global models.
+
+The full-Green normalization, unweighted angular Hardy constant,
+critical completion and comparability used here are precisely
+Theorems 10.2, 11.1, 12.2 and 13.1 of this volume. The local heat,
+Hörmander regularity, Harnack and horizontal Poincaré tools are used on
+smooth punctured annuli or for bounded potentials; the zero-capacity
+extension through the source is proved with (12.13).
+The compact form representation, bounded-potential product formula and
+min-max tools have the same classical scopes as the Teschl inputs cited
+in §§12–13.
+
+The native temporal family in
+[Critical cutoff spectral limits, Definition 31.1 and Theorems 32.2,
+33.1](FIB_NATIVE_CRITICAL_CUTOFF_SPECTRAL_LIMITS.md) changes moving-time
+multipliers and parameters. The positive-time threshold field on the
+real cover in
+[Long-time phase weak binding, Definition 70.1 and Proposition
+70.2](FIB_NATIVE_LONG_TIME_PHASE_WEAK_BINDING.md) has the changed source
+$SW_\tau=F(\tau;\cdot)$ and a different domain at infinity. Neither is
+used to replace (14.1). The elementary bounded-cap lower bound is already
+in [Continuation III, Specification
+82.7](FIB_ATOM_RECURSIVE_HOLOGRAPHIC_BOUNDARY_GEOMETRY_CONTINUATION_III.md).
+The added kinetic-law endpoint in its Theorem 87.4 and the planar window
+bound in [Continuation II, Proposition
+72.12](FIB_ATOM_RECURSIVE_HOLOGRAPHIC_BOUNDARY_GEOMETRY_CONTINUATION_II.md)
+have their stated different operators and boundaries. Their cap,
+completion and logarithmic-capacity ideas are not new supplies of a
+native spatial eigenstate asymptotic.
+
+For comparison with primary literature, Abatangelo–Felli–Hillairet–Léna,
+[Theorems 1.4, 1.7 and Appendix A](https://arxiv.org/html/1611.06750v1),
+[DOI 10.4171/jst/251](https://doi.org/10.4171/jst/251), give the
+simple-eigenvalue variation by eigenfunction capacity and its planar
+logarithmic specialization for Euclidean Dirichlet holes. Vázquez–
+Zographopoulos, [§§2.1, 2.3–2.4 and
+4.2](https://arxiv.org/html/1102.5661), supply the Euclidean critical
+weighted completion, logarithmic approximation and hidden-energy
+context. Felli–Ferrero, [Theorem 2.1 and Corollaries
+2.2–2.3](https://arxiv.org/html/1209.4852v1), prove critical-Hardy
+cylindrical asymptotics for their Euclidean equation. Abatangelo–
+Bonnaillie-Noël–Léna–Musolino, [Theorems 1.1 and
+6.2](https://arxiv.org/html/1911.06686), exhibit the dependence of
+small-hole eigenvalue changes on the normalized eigenfunction and hole
+profile; their Theorem 6.2 concerns a positive vanishing order.
+Pinchover–Tintarev, [Theorem
+1.4](https://arxiv.org/html/math/0411658v1), is the elliptic
+spectral-gap/null-state alternative. None of these statements directly
+identifies the horizontal soft cap, its raw source density, angular
+flux, or original-domain eigenstates here. The transfer in §§16–18 is
+proved through those exact native objects, including the lower energy
+bound, endpoint angular control and the linear charge (18.6).
+These are source-specific ordinary mathematical deductions; the
+attribution makes no exhaustive literature or priority assertion.
+$\square$
+
+## 追加锚（本行以下为增补区）
