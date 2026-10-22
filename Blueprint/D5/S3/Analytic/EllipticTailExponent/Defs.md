@@ -10,7 +10,7 @@ Lean statement: `D5/S3/Analytic/EllipticTailExponent/Defs.g6`
 
 *Formalization.* `D5/S3/Analytic/EllipticTailExponent/Defs.g6` (`✓ std3`).
 
-*Source.* Repository-derived.
+*Citation.* Q. Bao, M.-K. Wang and S.-L. Qiu (2022). *Monotonicity properties of the generalized elliptic integrals with respect to the parameter*. DOI: [10.7153/mia-2022-25-64](https://doi.org/10.7153/mia-2022-25-64). URL: <https://arxiv.org/abs/2112.13993>.
 
 *Commentary.*
 
@@ -22,7 +22,7 @@ Lean statement: `D5/S3/Analytic/EllipticTailExponent/Defs.S`
 
 *Formalization.* `D5/S3/Analytic/EllipticTailExponent/Defs.S` (`✓ std3`).
 
-*Source.* Repository-derived.
+*Citation.* Q. Bao, M.-K. Wang and S.-L. Qiu (2022). *Monotonicity properties of the generalized elliptic integrals with respect to the parameter*. DOI: [10.7153/mia-2022-25-64](https://doi.org/10.7153/mia-2022-25-64). URL: <https://arxiv.org/abs/2112.13993>.
 
 *Commentary.*
 
@@ -34,7 +34,7 @@ Lean statement: `D5/S3/Analytic/EllipticTailExponent/Defs.lambda10`
 
 *Formalization.* `D5/S3/Analytic/EllipticTailExponent/Defs.lambda10` (`✓ std3`).
 
-*Source.* Repository-derived.
+*Citation.* Q. Bao, M.-K. Wang and S.-L. Qiu (2022). *Monotonicity properties of the generalized elliptic integrals with respect to the parameter*. DOI: [10.7153/mia-2022-25-64](https://doi.org/10.7153/mia-2022-25-64). URL: <https://arxiv.org/abs/2112.13993>.
 
 *Commentary.*
 
@@ -46,7 +46,7 @@ Lean statement: `D5/S3/Analytic/EllipticTailExponent/Defs.claim`
 
 *Formalization.* `D5/S3/Analytic/EllipticTailExponent/Defs.claim` (`✓ std3`).
 
-*Source.* Repository-derived.
+*Citation.* Q. Bao, M.-K. Wang and S.-L. Qiu (2022). *Monotonicity properties of the generalized elliptic integrals with respect to the parameter*. DOI: [10.7153/mia-2022-25-64](https://doi.org/10.7153/mia-2022-25-64). URL: <https://arxiv.org/abs/2112.13993>.
 
 *Commentary.*
 

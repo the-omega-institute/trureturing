@@ -12,6 +12,8 @@ Lean statement: `D5/S3/Analytic/EllipticTailExponent/Result.denominator_pos`
 
 *Source.* Repository-derived.
 
+*Acknowledgement.* Q. Bao, M.-K. Wang and S.-L. Qiu (2022). *Monotonicity properties of the generalized elliptic integrals with respect to the parameter*. DOI: [10.7153/mia-2022-25-64](https://doi.org/10.7153/mia-2022-25-64). URL: <https://arxiv.org/abs/2112.13993>.
+
 *Commentary.*
 
 For every natural n and 0<a<=1/2, sin(pi a)-pi(1-a)S(n,a) is strictly positive. The coefficient-tail identity factors the remainder as a^2 U(n,a), whose factors are positive.
@@ -23,6 +25,8 @@ Lean statement: `D5/S3/Analytic/EllipticTailExponent/Result.lambda10_eq`
 *Proof.* Machine-checked in Lean as `D5/S3/Analytic/EllipticTailExponent/Result.lambda10_eq` (`✓ std3`). ∎
 
 *Source.* Repository-derived.
+
+*Acknowledgement.* Q. Bao, M.-K. Wang and S.-L. Qiu (2022). *Monotonicity properties of the generalized elliptic integrals with respect to the parameter*. DOI: [10.7153/mia-2022-25-64](https://doi.org/10.7153/mia-2022-25-64). URL: <https://arxiv.org/abs/2112.13993>.
 
 *Commentary.*
 
@@ -36,6 +40,8 @@ Lean statement: `D5/S3/Analytic/EllipticTailExponent/Result.lambda10_lt_two`
 
 *Source.* Repository-derived.
 
+*Acknowledgement.* Q. Bao, M.-K. Wang and S.-L. Qiu (2022). *Monotonicity properties of the generalized elliptic integrals with respect to the parameter*. DOI: [10.7153/mia-2022-25-64](https://doi.org/10.7153/mia-2022-25-64). URL: <https://arxiv.org/abs/2112.13993>.
+
 *Commentary.*
 
 For every natural n and 0<a<=1/2, the parameter exponent is strictly below two. The correction a U'(n,a)/U(n,a) is strictly negative because U is positive and its derivative is negative.
@@ -48,6 +54,8 @@ Lean statement: `D5/S3/Analytic/EllipticTailExponent/Result.tendsto_lambda10`
 
 *Source.* Repository-derived.
 
+*Acknowledgement.* Q. Bao, M.-K. Wang and S.-L. Qiu (2022). *Monotonicity properties of the generalized elliptic integrals with respect to the parameter*. DOI: [10.7153/mia-2022-25-64](https://doi.org/10.7153/mia-2022-25-64). URL: <https://arxiv.org/abs/2112.13993>.
+
 *Commentary.*
 
 For every natural n, the parameter exponent tends to two as a decreases to zero through positive values. The uniform derivative bound gives a U'(n,a) tending to zero, while continuity and U(n,0)=1/(n+1) give a positive denominator limit.
@@ -58,7 +66,13 @@ Lean statement: `D5/S3/Analytic/EllipticTailExponent/Result.result`
 
 *Proof.* Machine-checked in Lean as `D5/S3/Analytic/EllipticTailExponent/Result.result` (`✓ std3`). ∎
 
+*Resolves.* `Problems/bao-wang-qiu-2022-elliptic-tail-exponent` (proved) by `D5/S3/Analytic/EllipticTailExponent/Result.result`.
+
+<!-- scribe-open-problem-resolution-v1 {"problem_slug":"bao-wang-qiu-2022-elliptic-tail-exponent","declaration_gid":"D5/S3/Analytic/EllipticTailExponent/Result.result","resolution_kind":"proved"} -->
+
 *Source.* Repository-derived.
+
+*Acknowledgement.* Q. Bao, M.-K. Wang and S.-L. Qiu (2022). *Monotonicity properties of the generalized elliptic integrals with respect to the parameter*. DOI: [10.7153/mia-2022-25-64](https://doi.org/10.7153/mia-2022-25-64). URL: <https://arxiv.org/abs/2112.13993>.
 
 *Commentary.*
 
