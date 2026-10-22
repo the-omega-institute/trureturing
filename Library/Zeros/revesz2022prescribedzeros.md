@@ -42,6 +42,11 @@ $$
 \tag{RJ1}
 $$
 
+Here $\kappa>0$. The source's intermediate error
+$\sqrt x\exp(O((\log x)^{2/3}))$ is
+$O_\varepsilon(x^{1/2+\varepsilon})$, because
+$(\log x)^{2/3}=o(\log x)$.
+
 Its construction also supplies
 $\theta_{\mathcal P}(x)=f_0(x)+O(\log x)$, with $f_0'(x)=1+o(1)$.
 This local information is read from (50)–(51) and the p.17 calculation;
@@ -73,7 +78,10 @@ claim.
 
 Fix any $D\ge2$. Replace the finitely many prime generators of norm at
 most $D$ by exactly one generator for each ordinary prime at most $D$.
-The remaining prime harmonic sum still diverges. Delete finitely many
+Partial summation of $\theta_{\mathcal P}(x)\sim x$ gives
+$\pi_{\mathcal P}(x)\sim x/\log x$, so
+$\sum_{p>D}p^{-1}=\infty$ even after this finite replacement.
+Delete finitely many
 further generators of norm greater than $D$ so that the residue
 $\kappa'$ lies in $(0,1)$. Choose an integer $m\ge1$ large enough that
 
@@ -185,8 +193,10 @@ $$
 =-\log z+C-\gamma+o(1).
 $$
 
-The normalized residue is one, so $C=\gamma$. Stieltjes integration
-by parts now gives the exact full-tail identities
+The normalized residue is one, so $C=\gamma$. The prime-power
+sums include atoms at their upper endpoint; at equality their
+auxiliary gain is zero. Stieltjes integration by parts with this
+convention gives the exact full-tail identities
 
 $$
 \begin{aligned}
@@ -268,6 +278,9 @@ K=\frac2{|\rho(1-\rho)|},\quad
 \phi=\arg\frac1{\rho(1-\rho)}.
 $$
 
+For each fixed source and parameters, the little-$o$ estimate holds
+on the whole tail: for every $\epsilon>0$ its absolute remainder is
+at most $\epsilon t^{\beta-1}/\log t$ for all sufficiently large $t$.
 Choose $x_j=\exp(((2j+1)\pi-\phi)/\tau)$,
 $d=e^{\pi/(3\tau)}$ and $y_j=e^{\pi/\tau}x_j$.
 Eventually $P>0$ on $[x_j,dx_j]$, whereas
