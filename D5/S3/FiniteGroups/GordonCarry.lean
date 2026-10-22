@@ -122,13 +122,6 @@ private theorem rank_zero (ds : List OddRadix) : rank ds 0 = 0 := by
   | nil => rfl
   | cons d ds ih => simp [rank, ih]
 
-private theorem rank_eq_zero (ds : List OddRadix) (x : Box ds) : rank ds x = 0 ↔ x = 0 := by
-  constructor
-  · intro h
-    apply (rankEquiv ds).injective
-    exact Fin.ext (h.trans (rank_zero ds).symm)
-  · rintro rfl; exact rank_zero ds
-
 private theorem radix_two_injective (d : OddRadix) :
     Function.Injective (fun x : ZMod d.val => x + x) := by
   have h : IsUnit (2 : ZMod d.val) := (ZMod.isUnit_iff_coprime 2 d.val).2
