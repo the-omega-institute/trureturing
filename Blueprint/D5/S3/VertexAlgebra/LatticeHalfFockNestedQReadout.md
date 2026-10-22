@@ -4,9 +4,27 @@
 
 The three nested fractional products retain one actual labelled Laurent numerator.
 
-Each of the three inner pair collisions is also identified with the genuine local rational residue in both spectator positions. The unrestricted weighted Laurent collision theorem derives this identification without a nonnegative eliminated coordinate or a uniform denominator. Each complete difference remains inside the supported outer fibers; conversion to the final outer Taylor readout is still open.
+Each of the three inner pair collisions is also identified with the genuine local rational residue in both spectator positions. The unrestricted weighted Laurent collision theorem derives this identification without a nonnegative eliminated coordinate or a uniform denominator. Each complete difference remains inside the supported outer fibers. Actual complete-field locality also bounds the outer fractional-offset support and permits arbitrary larger cutoffs; conversion to the final outer Taylor readout is still open.
 
-**Theorem 1.1 (The actual common numerator supports all three complete nested residues).**
+**Theorem 1.1 (Actual locality bounds complete outer mode residues before Taylor expansion).**
+
+Lean statement: `D5/S3/VertexAlgebra/LatticeHalfFockNestedQReadout.actual_nested_outer_completion`
+
+*Proof.* Machine-checked in Lean as `D5/S3/VertexAlgebra/LatticeHalfFockNestedQReadout.actual_nested_outer_completion` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Acknowledgement.* Bojko Bakalov and Victor G. Kac (2004). *Twisted Modules over Lattice Vertex Algebras*. DOI: [10.1142/9789812702562_0001](https://doi.org/10.1142/9789812702562_0001). URL: <https://arxiv.org/abs/math/0402315v1>.
+
+*Commentary.*
+
+The same existential K and actual numerator slice work for arbitrary original a,b, i:Fin rank, signed gamma,delta,d,r,n,j, arbitrary actual x and linear phi. For each of the three inner local collisions, an actual locality order H for the two complete outer fields bounds the support of their complete ordinary residue at fractional offset ell by 0<=ell<max(0,H-r_outer). No individual ordered contribution is asserted to vanish. The three locality orders and all larger padding cutoffs are independent.
+
+For a large outer offset, shift r to r+ell and n to n-ell in the first family, or d to d+ell and n to n-ell in the second and third. These shifts preserve d+r+n and hence the actual numerator slice T=L+M+K-d-r-n-3. The genuine actual_supported_nested_extraction supplier at the shifted indices identifies the complete residue using a singleton fractional cutoff. The original-owner ordinaryResidue_tail theorem then annihilates it by complete-field locality. This proves finite support before replacing the original outer sum by its unrestricted finsum, and every cutoff at least H computes the same sum.
+
+completeOuterResidue retains the complete forward-minus-epsilon-times-reverse mode sums. OuterQCompletion includes its support bound and equality of all larger fractional cutoffs with completeOuterQReadout. The homogeneous Laurent evaluation of those three unrestricted readouts, and their finite signed Taylor and Vandermonde reindexing, remain unproved. The three sameNumeratorCollisionBridge equations, actual interchange, Lambda_tar=0, residual-free arbitrary-first DE-L and universal all-charge negative-first-word induction therefore remain open. GroundFirst stays an independent final lifting base.
+
+**Theorem 1.2 (The actual common numerator supports all three complete nested residues).**
 
 Lean statement: `D5/S3/VertexAlgebra/LatticeHalfFockNestedQReadout.actual_supported_nested_extraction`
 
@@ -24,7 +42,7 @@ QReadoutSupported asserts finiteness of each ordinary residue fiber within the f
 
 The theorem also identifies the three coefficients with literal supported Hahn fiber residues. leftPairFiberQ and rightPairFiberQ use the first and second residue embeddings for adjacent pairs, keeping the spectator on its original side; contextual_kernel_extraction supplies their finite-support coefficient formulas. nestedLeftFiberReadout and nestedRightFiberReadout keep each complete inner Hahn difference inside the outer supported mode sum. Current/source relabeling permutes the six carriers without changing their word positions. These expressions remove intermediate mode cutoff choices. They retain signed lifts, both complete orders, all actual inputs, and the original source/actual tensor distinction. Their identification with the finite collisionTaylor sums in sameNumeratorCollisionBridge still requires the outer local-coordinate coefficient argument for all three inner pairs; no one of its three Taylor equalities is asserted here. Actual interchange, Lambda_tar=0, arbitrary-first DE-L, negative first-word induction, all-charge transport and the independent GroundFirst base remain open.
 
-**Theorem 1.2 (All three nested coefficients are extracted from the same actual ternary numerator).**
+**Theorem 1.3 (All three nested coefficients are extracted from the same actual ternary numerator).**
 
 Lean statement: `D5/S3/VertexAlgebra/LatticeHalfFockNestedQReadout.actual_nested_ordered_readouts`
 
@@ -48,7 +66,7 @@ nestedLeftReadout and nestedRightReadout retain all four resulting triple words 
 
 This theorem identifies nested ordered rational coefficients. The separate collision-Taylor theorem below proves the finite fractional coordinate cocycle and the signed two-residue balance of the same actual numerator. Identification of these chart residues with the three complete nested Q readouts remains unproved. Consequently Lambda_tar=0, residual-free DE-L, universal negative first-word transport and all-charge induction remain open. GroundFirst is an independent final lifting base. No target vacuum, positive definiteness, energy eigenstate, or compatibility law is assumed.
 
-**Theorem 1.3 (The same actual numerator satisfies the finite coordinate cocycle and signed collision balance).**
+**Theorem 1.4 (The same actual numerator satisfies the finite coordinate cocycle and signed collision balance).**
 
 Lean statement: `D5/S3/VertexAlgebra/LatticeHalfFockNestedQReadout.actual_collision_taylor_balance`
 
@@ -74,5 +92,6 @@ These are finite chart identities for the actual numerator. sameNumeratorCollisi
 
 - Truth anchor: `D5/S3/VertexAlgebra/LatticeHalfFockNestedQReadout.actual_collision_taylor_balance`
 - Truth anchor: `D5/S3/VertexAlgebra/LatticeHalfFockNestedQReadout.actual_nested_ordered_readouts`
+- Truth anchor: `D5/S3/VertexAlgebra/LatticeHalfFockNestedQReadout.actual_nested_outer_completion`
 - Truth anchor: `D5/S3/VertexAlgebra/LatticeHalfFockNestedQReadout.actual_supported_nested_extraction`
 - Dependency: [D5/S3/VertexAlgebra/LatticeHalfFockClearedTaylorReadout](LatticeHalfFockClearedTaylorReadout.md)

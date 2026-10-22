@@ -133,7 +133,7 @@ theorem qField_mode (s r : ℤ) (K : ℕ) (A B : VertexOperator ℂ M)
     Finset.sum_apply, Pi.smul_apply, modeShift_mode, ordinaryResidue,
     (fieldResidue _ A B).coefficient]
 
-private theorem ordinaryResidue_tail (A B : VertexOperator ℂ M) (K : ℕ)
+theorem ordinaryResidue_tail (A B : VertexOperator ℂ M) (K : ℕ)
     (locality : (deltaEnd ^ K) (FieldNormalProductLocality.commutator A B) = 0)
     (r : ℤ) (high : (K : ℤ) ≤ r) : ordinaryResidue r A B = 0 := by
   obtain ⟨degree, rfl⟩ := Int.eq_ofNat_of_zero_le (show 0 ≤ r by omega)

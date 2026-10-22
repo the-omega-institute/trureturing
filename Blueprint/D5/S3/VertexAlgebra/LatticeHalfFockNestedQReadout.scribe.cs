@@ -13,8 +13,19 @@ internal sealed class LatticeHalfFockNestedQReadoutDocument : IScribeDocumentDef
             Paragraph(Text("Each of the three inner pair collisions is also identified with the genuine local rational residue "
                 + "in both spectator positions. The unrestricted weighted Laurent collision theorem derives this "
                 + "identification without a nonnegative eliminated coordinate or a uniform denominator. Each "
-                + "complete difference remains inside the supported outer fibers; conversion to the final "
+                + "complete difference remains inside the supported outer fibers. Actual complete-field locality also bounds the outer fractional-offset support and permits arbitrary larger cutoffs; conversion to the final "
                 + "outer Taylor readout is still open.")),
+            Describe.Lean(
+                DescribeId.Create("actual-nested-outer-completion"),
+                DeclarationHandle.Create("D5/S3/VertexAlgebra/LatticeHalfFockNestedQReadout.actual_nested_outer_completion"),
+                H("Actual locality bounds complete outer mode residues before Taylor expansion"),
+                StatementSource.WithoutFormula(),
+                AssessedProvenance.FromRepo(LibraryNoteRef.Create("D5/L/VertexAlgebra/bakalovkac2004lattice")),
+                Blocks(
+                    Paragraph(Text("The same existential K and actual numerator slice work for arbitrary original a,b, i:Fin rank, signed gamma,delta,d,r,n,j, arbitrary actual x and linear phi. For each of the three inner local collisions, an actual locality order H for the two complete outer fields bounds the support of their complete ordinary residue at fractional offset ell by 0<=ell<max(0,H-r_outer). No individual ordered contribution is asserted to vanish. The three locality orders and all larger padding cutoffs are independent.")),
+                    Paragraph(Text("For a large outer offset, shift r to r+ell and n to n-ell in the first family, or d to d+ell and n to n-ell in the second and third. These shifts preserve d+r+n and hence the actual numerator slice T=L+M+K-d-r-n-3. The genuine actual_supported_nested_extraction supplier at the shifted indices identifies the complete residue using a singleton fractional cutoff. The original-owner ordinaryResidue_tail theorem then annihilates it by complete-field locality. This proves finite support before replacing the original outer sum by its unrestricted finsum, and every cutoff at least H computes the same sum.")),
+                    Paragraph(Text("completeOuterResidue retains the complete forward-minus-epsilon-times-reverse mode sums. OuterQCompletion includes its support bound and equality of all larger fractional cutoffs with completeOuterQReadout. The homogeneous Laurent evaluation of those three unrestricted readouts, and their finite signed Taylor and Vandermonde reindexing, remain unproved. The three sameNumeratorCollisionBridge equations, actual interchange, Lambda_tar=0, residual-free arbitrary-first DE-L and universal all-charge negative-first-word induction therefore remain open. GroundFirst stays an independent final lifting base."))),
+                DescribeRole.Theorem),
             Describe.Lean(
                 DescribeId.Create("actual-supported-nested-extraction"),
                 DeclarationHandle.Create("D5/S3/VertexAlgebra/LatticeHalfFockNestedQReadout.actual_supported_nested_extraction"),

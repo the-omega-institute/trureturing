@@ -487,5 +487,165 @@ theorem sensitivity : Sensitivity arena actual :=
 
 end SupportedExtraction
 
+namespace OuterCompletion
+
+structure Input (p : Parameters) extends
+    Reg.D5.S3.VertexAlgebra.LatticeHalfFockNestedQReadout.Input p where
+  padded : ℕ
+
+abbrev signature : Signature := Reg.Support.SingleDependentReadout.signature
+  Parameters Input (fun _ => ℂ × ℂ × ℂ)
+
+def rational (p : Parameters) (u : Input p) : CommonRational ℂ 3 :=
+  algebraMap _ (CommonRational ℂ 3) u.P /
+    algebraMap _ (CommonRational ℂ 3) (weightedClearingPolynomial (threeOrders p.D p.a p.b u.K))
+
+def firstForward (p : Parameters) (u : Input p) (k l : ℤ) : ℂ :=
+  currentSourceLocalQ false 1 u.d (vectorFrequencyBound p.D p.a + 1) k l (rational p u)
+def firstBackward (p : Parameters) (u : Input p) (k l : ℤ) : ℂ :=
+  currentSourceLocalQ true 1 u.d (vectorFrequencyBound p.D p.a + 1) l k (rational p u)
+def secondForward (p : Parameters) (u : Input p) (k l : ℤ) : ℂ :=
+  lastSourceLocalQ 1 true u.gamma (u.r + u.j) u.K l k (rational p u)
+def secondBackward (p : Parameters) (u : Input p) (k l : ℤ) : ℂ :=
+  lastSourceLocalQ 1 false u.gamma (u.r + u.j) u.K k l (rational p u)
+def thirdForward (p : Parameters) (u : Input p) (k l : ℤ) : ℂ :=
+  lastSourceLocalQ 0 true 1 u.j (vectorFrequencyBound p.D p.b + 1) l k (rational p u)
+def thirdBackward (p : Parameters) (u : Input p) (k l : ℤ) : ℂ :=
+  lastSourceLocalQ 0 false 1 u.j (vectorFrequencyBound p.D p.b + 1) k l (rational p u)
+
+def observed (p : Parameters) (u : Input p) : ℂ × ℂ × ℂ :=
+  (nestedLeftLocalReadout (u.gamma + 1) 1 u.d u.r u.n
+      (vectorFrequencyBound p.D p.a + 1) u.padded (rational p u),
+   nestedRightLocalReadout 1 1 u.gamma (u.r + u.j) (u.d - u.j) u.n u.K u.padded (rational p u),
+   nestedRightLocalReadout 0 u.gamma 1 u.j (u.d + u.r - u.j) u.n
+      (vectorFrequencyBound p.D p.b + 1) u.padded (rational p u))
+
+def actual : Realization signature := realize signature (fun _ p u =>
+  (completeOuterQReadout (u.gamma + 1) u.r u.n (firstForward p u) (firstBackward p u),
+   completeOuterQReadout 1 (u.d - u.j) u.n (secondForward p u) (secondBackward p u),
+   completeOuterQReadout u.gamma (u.d + u.r - u.j) u.n
+      (thirdForward p u) (thirdBackward p u))) (fun empty => nomatch empty)
+
+set_option maxHeartbeats 2000000 in
+def arena : Arena where
+  signature := signature
+  Law R := ∀ p, ∃ K : ℕ, ∀ (gamma delta d r n : ℤ) (x : ActualTensor p.D p.hu)
+      (phi : ActualTensor p.D p.hu →ₗ[ℂ] ℂ),
+      ∃ P : LabelledPolynomial ℂ 3,
+        (∀ e : Exponent 3, P.coeff e =
+          if totalExponent e =
+              (∑ q ∈ labelledPairs 3, (threeOrders p.D p.a p.b K q : ℤ)) - d - r - n - 3
+          then phi (actualNumerator p.D p.hu p.i p.a p.b gamma delta K x e) else 0) ∧
+        (∀ (H₁ H₂ H₃ : ℕ) (j : ℤ),
+          NestedLeftSupported 1 d r n (vectorFrequencyBound p.D p.a + 1) H₁
+            (rationalTripleReadout p.D p.a p.b K P) ∧
+          NestedRightSupported gamma (r + j) (d - j) n K H₂
+            (rationalTripleReadout p.D p.a p.b K P) ∧
+          NestedRightSupported 1 j (d + r - j) n (vectorFrequencyBound p.D p.b + 1) H₃
+            (swapCurrentSourceReadout (rationalTripleReadout p.D p.a p.b K P)) ∧
+          phi (((qField (gamma + 1) r H₁
+            (targetSlice p.D p.hu (neutralMode p.D p.i d p.a) (gamma + 1))
+            (targetSlice p.D p.hu p.b delta))[[n]]) x) =
+            supportedNestedLeftReadout (gamma + 1) 1 d r n
+              (vectorFrequencyBound p.D p.a + 1) H₁ (rationalTripleReadout p.D p.a p.b K P) ∧
+          phi (((qField 1 (d - j) H₂ (targetCurrent p.D p.hu p.i)
+            (qField gamma (r + j) K (targetSlice p.D p.hu p.a gamma)
+              (targetSlice p.D p.hu p.b delta)))[[n]]) x) =
+            supportedNestedRightReadout 1 gamma (r + j) (d - j) n K H₂
+              (rationalTripleReadout p.D p.a p.b K P) ∧
+          phi (((qField gamma (d + r - j) H₃ (targetSlice p.D p.hu p.a gamma)
+            (targetSlice p.D p.hu (neutralMode p.D p.i j p.b) (delta + 1)))[[n]]) x) =
+            supportedNestedRightReadout gamma 1 j (d + r - j) n
+              (vectorFrequencyBound p.D p.b + 1) H₃
+              (swapCurrentSourceReadout (rationalTripleReadout p.D p.a p.b K P)) ∧
+          phi (((qField (gamma + 1) r H₁
+            (targetSlice p.D p.hu (neutralMode p.D p.i d p.a) (gamma + 1))
+            (targetSlice p.D p.hu p.b delta))[[n]]) x) =
+            nestedLeftFiberReadout (gamma + 1) 1 d r n
+              (vectorFrequencyBound p.D p.a + 1) H₁ (rationalTripleCarriers p.D p.a p.b K P) ∧
+          phi (((qField 1 (d - j) H₂ (targetCurrent p.D p.hu p.i)
+            (qField gamma (r + j) K (targetSlice p.D p.hu p.a gamma)
+              (targetSlice p.D p.hu p.b delta)))[[n]]) x) =
+            nestedRightFiberReadout 1 gamma (r + j) (d - j) n K H₂
+              (rationalTripleCarriers p.D p.a p.b K P) ∧
+          phi (((qField gamma (d + r - j) H₃ (targetSlice p.D p.hu p.a gamma)
+            (targetSlice p.D p.hu (neutralMode p.D p.i j p.b) (delta + 1)))[[n]]) x) =
+            nestedRightFiberReadout gamma 1 j (d + r - j) n
+              (vectorFrequencyBound p.D p.b + 1) H₃
+              (swapCurrentSourceCarriers (rationalTripleCarriers p.D p.a p.b K P)) ∧
+          phi (((qField (gamma + 1) r H₁
+            (targetSlice p.D p.hu (neutralMode p.D p.i d p.a) (gamma + 1))
+            (targetSlice p.D p.hu p.b delta))[[n]]) x) =
+            nestedLeftLocalReadout (gamma + 1) 1 d r n
+              (vectorFrequencyBound p.D p.a + 1) H₁
+              (algebraMap _ (CommonRational ℂ 3) P /
+                algebraMap _ (CommonRational ℂ 3)
+                  (weightedClearingPolynomial (threeOrders p.D p.a p.b K))) ∧
+          phi (((qField 1 (d - j) H₂ (targetCurrent p.D p.hu p.i)
+            (qField gamma (r + j) K (targetSlice p.D p.hu p.a gamma)
+              (targetSlice p.D p.hu p.b delta)))[[n]]) x) =
+            nestedRightLocalReadout 1 1 gamma (r + j) (d - j) n K H₂
+              (algebraMap _ (CommonRational ℂ 3) P /
+                algebraMap _ (CommonRational ℂ 3)
+                  (weightedClearingPolynomial (threeOrders p.D p.a p.b K))) ∧
+          phi (((qField gamma (d + r - j) H₃ (targetSlice p.D p.hu p.a gamma)
+            (targetSlice p.D p.hu (neutralMode p.D p.i j p.b) (delta + 1)))[[n]]) x) =
+            nestedRightLocalReadout 0 gamma 1 j (d + r - j) n
+              (vectorFrequencyBound p.D p.b + 1) H₃
+              (algebraMap _ (CommonRational ℂ 3) P /
+                algebraMap _ (CommonRational ℂ 3)
+                  (weightedClearingPolynomial (threeOrders p.D p.a p.b K)))) ∧
+        ∀ (H₁ H₂ H₃ : ℕ) (j : ℤ),
+          let input (H' : ℕ) : Input p := ⟨⟨K, gamma, delta, d, r, n, x, phi, P, H₁, H₂, H₃, j⟩, H'⟩
+          ((FieldNormalProductLocality.deltaEnd ^ H₁)
+            (FieldNormalProductLocality.commutator
+              (targetSlice p.D p.hu (neutralMode p.D p.i d p.a) (gamma + 1))
+              (targetSlice p.D p.hu p.b delta)) = 0 →
+            (Function.support (completeOuterResidue r n (firstForward p (input 0))
+                (firstBackward p (input 0))) ⊆
+              (Finset.range ((H₁ : ℤ) - r).toNat : Set ℕ)) ∧
+            ∀ H', H₁ ≤ H' → (observed p (input H')).1 = (R.readout () p (input H')).1) ∧
+          ((FieldNormalProductLocality.deltaEnd ^ H₂)
+            (FieldNormalProductLocality.commutator (targetCurrent p.D p.hu p.i)
+              (qField gamma (r + j) K (targetSlice p.D p.hu p.a gamma)
+                (targetSlice p.D p.hu p.b delta))) = 0 →
+            (Function.support (completeOuterResidue (d - j) n (secondForward p (input 0))
+                (secondBackward p (input 0))) ⊆
+              (Finset.range ((H₂ : ℤ) - (d - j)).toNat : Set ℕ)) ∧
+            ∀ H', H₂ ≤ H' → (observed p (input H')).2.1 = (R.readout () p (input H')).2.1) ∧
+          ((FieldNormalProductLocality.deltaEnd ^ H₃)
+            (FieldNormalProductLocality.commutator (targetSlice p.D p.hu p.a gamma)
+              (targetSlice p.D p.hu (neutralMode p.D p.i j p.b) (delta + 1))) = 0 →
+            (Function.support (completeOuterResidue (d + r - j) n (thirdForward p (input 0))
+                (thirdBackward p (input 0))) ⊆
+              (Finset.range ((H₃ : ℤ) - (d + r - j)).toNat : Set ℕ)) ∧
+            ∀ H', H₃ ≤ H' → (observed p (input H')).2.2 = (R.readout () p (input H')).2.2)
+
+theorem source_bridge :
+    (type_of% (@actual_nested_outer_completion)) ↔ arena.Law actual := by
+  constructor
+  · intro source p
+    obtain ⟨K, hK⟩ := source p.D p.hu p.i p.a p.b
+    refine ⟨K, ?_⟩
+    intro gamma delta d r n x phi
+    obtain ⟨P, coefficients, readouts, completions⟩ := hK gamma delta d r n x phi
+    refine ⟨P, coefficients, readouts, ?_⟩
+    dsimp only
+    intro H₁ H₂ H₃ j
+    exact completions H₁ H₂ H₃ j
+  · intro law D hu i a b
+    obtain ⟨K, hK⟩ := law ⟨D, hu, i, a, b⟩
+    refine ⟨K, ?_⟩
+    intro gamma delta d r n x phi
+    obtain ⟨P, coefficients, readouts, completions⟩ := hK gamma delta d r n x phi
+    refine ⟨P, coefficients, readouts, ?_⟩
+    dsimp only
+    intro H₁ H₂ H₃ j
+    exact completions H₁ H₂ H₃ j
+
+theorem actual_law : arena.Law actual := source_bridge.mp (@actual_nested_outer_completion)
+
+end OuterCompletion
+
 end
 end Reg.D5.S3.VertexAlgebra.LatticeHalfFockNestedQReadout

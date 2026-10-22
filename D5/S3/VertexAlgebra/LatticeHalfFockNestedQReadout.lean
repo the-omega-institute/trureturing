@@ -109,6 +109,91 @@ private theorem supportedQReadout_eq (s r : ℤ) (K : ℕ)
   simp only [map_smul, smul_eq_mul, BinomialKernelDelta.chooseSign, integerBinomial,
     show r + (ell : ℤ) + (n - ell) = r + n by omega]
 
+/-- The complete ordinary outer residue at fractional offset ell. The two
+ordered contributions are combined before any outer support assertion. -/
+def completeOuterResidue (r n : ℤ) (f g : ℤ → ℤ → ℂ) (ell : ℕ) : ℂ :=
+  (∑ᶠ u : ℕ, BinomialKernelDelta.chooseSign (r + ell) u *
+    f (r + ell - u) (n - ell + u)) -
+  epsilon (r + ell) * ∑ᶠ u : ℕ,
+    BinomialKernelDelta.chooseSign (r + ell) u * g (r + n - u) u
+
+/-- The fractional series is summed only after forming each complete residue. -/
+def completeOuterQReadout (s r n : ℤ) (f g : ℤ → ℤ → ℂ) : ℂ :=
+  ∑ᶠ ell : ℕ, Ring.choose (-(s : ℂ) / 2) ell * completeOuterResidue r n f g ell
+
+/-- A locality order bounds the support of the complete residue, and every
+larger fractional cutoff computes its unrestricted, finitely supported sum. -/
+def OuterQCompletion (s r n : ℤ) (H : ℕ) (f g : ℤ → ℤ → ℂ) : Prop :=
+  Function.support (completeOuterResidue r n f g) ⊆
+    (Finset.range ((H : ℤ) - r).toNat : Set ℕ) ∧
+  ∀ H' : ℕ, H ≤ H' →
+    supportedQReadout s r H' n f g = completeOuterQReadout s r n f g
+
+private theorem qField_high (s r : ℤ) (A B : VertexOperator ℂ V) (H H' : ℕ)
+    (locality : (FieldNormalProductLocality.deltaEnd ^ H)
+      (FieldNormalProductLocality.commutator A B) = 0)
+    (high : (H : ℤ) ≤ r) : qField s r H' A B = 0 := by
+  classical
+  unfold qField
+  apply Finset.sum_eq_zero
+  intro ell member
+  rw [ordinaryResidue_tail A B H locality (r + ell) (by omega)]
+  suffices modeShift (ell : ℤ) (0 : VertexOperator ℂ V) = 0 by simp [this]
+  apply HVertexOperator.coeff_inj
+  funext e
+  apply LinearMap.ext
+  intro x
+  rw [VertexOperator.coeff_eq_ncoeff, VertexOperator.coeff_eq_ncoeff]
+  rfl
+
+private theorem completeOuterResidue_single (s r n : ℤ)
+    (f g : ℤ → ℤ → ℂ) (ell : ℕ) (nonnegative : 0 ≤ r + ell) :
+    completeOuterResidue r n f g ell =
+      supportedQReadout s (r + ell) ((r + ell).toNat + 1) (n - ell) f g := by
+  have cutoff : (((r + ell).toNat + 1 : ℕ) : ℤ) - (r + ell) = 1 := by omega
+  simp only [supportedQReadout, cutoff, Int.toNat_one, Finset.sum_range_one,
+    Ring.choose_zero_right, one_mul]
+  unfold completeOuterResidue
+  simp only [Nat.cast_zero, add_zero, sub_zero,
+    show r + (ell : ℤ) + (n - ell) = r + n by omega]
+
+private theorem completeOuterQReadout_of_support (s r n : ℤ) (H : ℕ)
+    (f g : ℤ → ℤ → ℂ)
+    (support : Function.support (completeOuterResidue r n f g) ⊆
+      (Finset.range ((H : ℤ) - r).toNat : Set ℕ)) :
+    OuterQCompletion s r n H f g := by
+  classical
+  refine ⟨support, ?_⟩
+  intro H' larger
+  unfold completeOuterQReadout
+  rw [finsum_eq_sum_of_support_subset _ (s := Finset.range ((H' : ℤ) - r).toNat) (by
+    intro ell nonzero
+    have original : ell ∈ Finset.range ((H : ℤ) - r).toNat :=
+      support (Function.mem_support.mpr (fun zero => nonzero (by simp [zero])))
+    apply Finset.mem_range.mpr
+    have bound := Finset.mem_range.mp original
+    omega)]
+  rfl
+
+private theorem completeOuterQReadout_of_locality (s r n : ℤ) (H : ℕ)
+    (A B : VertexOperator ℂ V) (x : V) (phi : V →ₗ[ℂ] ℂ)
+    (f g : ℤ → ℤ → ℂ)
+    (locality : (FieldNormalProductLocality.deltaEnd ^ H)
+      (FieldNormalProductLocality.commutator A B) = 0)
+    (matched : ∀ ell : ℕ, (H : ℤ) ≤ r + ell →
+      supportedQReadout s (r + ell) ((r + ell).toNat + 1) (n - ell) f g =
+        phi (((qField s (r + ell) ((r + ell).toNat + 1) A B)[[n - ell]]) x)) :
+    OuterQCompletion s r n H f g := by
+  apply completeOuterQReadout_of_support
+  intro ell nonzero
+  apply Finset.mem_range.mpr
+  by_contra outside
+  have high : (H : ℤ) ≤ r + ell := by omega
+  apply nonzero
+  rw [completeOuterResidue_single s r n f g ell (by omega), matched ell high,
+    qField_high s (r + ell) A B H _ locality high]
+  simp
+
 private theorem supportedQReadout_congr (s r : ℤ) (K : ℕ) (n : ℤ)
     (f g f' g' : ℤ → ℤ → ℂ)
     (hf : ∀ m k, m + k = r + n → f m k = f' m k)
@@ -1265,6 +1350,158 @@ theorem actual_supported_nested_extraction (D : LatticeData) (hu : IsUnit D.G.de
       D5.S3.VertexAlgebra.LatticeHalfFockLeftCurrentTransport.current_q D hu i b delta j,
       supportedNestedRightReadout_eq, nestedRightFiberReadout_eq, hahnTripleScalar_swap]
     exact supportedNestedRightReadout_congr _ _ _ _ _ _ _ _ _ (swapped j)
+
+/- proof_shape: actual_nested_outer_completion: content
+   admission_basis: escape-witness
+   escape_witness: The actual intermediate-field locality annihilates the
+   COMPLETE two-order residue for every sufficiently large outer offset.
+   A degree-preserving shift of the actual supported supplier identifies each
+   such residue before any expansion into numerator monomials. -/
+/-- Complete outer mode support and cutoff padding for all three actual local
+nested residues, on the same actual homogeneous numerator and common K. -/
+theorem actual_nested_outer_completion (D : LatticeData) (hu : IsUnit D.G.det)
+    (i : Fin D.rank) (a b : Carrier D) :
+    ∃ K : ℕ, ∀ (gamma delta d r n : ℤ) (x : ActualTensor D hu)
+      (phi : ActualTensor D hu →ₗ[ℂ] ℂ),
+      ∃ P : LabelledPolynomial ℂ 3,
+        (∀ e : Exponent 3, P.coeff e =
+          if totalExponent e =
+              (∑ p ∈ labelledPairs 3, (threeOrders D a b K p : ℤ)) - d - r - n - 3
+          then phi (actualNumerator D hu i a b gamma delta K x e) else 0) ∧
+        (∀ (H₁ H₂ H₃ : ℕ) (j : ℤ),
+          NestedLeftSupported 1 d r n (vectorFrequencyBound D a + 1) H₁
+            (rationalTripleReadout D a b K P) ∧
+          NestedRightSupported gamma (r + j) (d - j) n K H₂
+            (rationalTripleReadout D a b K P) ∧
+          NestedRightSupported 1 j (d + r - j) n (vectorFrequencyBound D b + 1) H₃
+            (swapCurrentSourceReadout (rationalTripleReadout D a b K P)) ∧
+          phi (((qField (gamma + 1) r H₁
+            (targetSlice D hu (neutralMode D i d a) (gamma + 1))
+            (targetSlice D hu b delta))[[n]]) x) =
+            supportedNestedLeftReadout (gamma + 1) 1 d r n
+              (vectorFrequencyBound D a + 1) H₁ (rationalTripleReadout D a b K P) ∧
+          phi (((qField 1 (d - j) H₂ (targetCurrent D hu i)
+            (qField gamma (r + j) K (targetSlice D hu a gamma)
+              (targetSlice D hu b delta)))[[n]]) x) =
+            supportedNestedRightReadout 1 gamma (r + j) (d - j) n K H₂
+              (rationalTripleReadout D a b K P) ∧
+          phi (((qField gamma (d + r - j) H₃ (targetSlice D hu a gamma)
+            (targetSlice D hu (neutralMode D i j b) (delta + 1)))[[n]]) x) =
+            supportedNestedRightReadout gamma 1 j (d + r - j) n
+              (vectorFrequencyBound D b + 1) H₃
+              (swapCurrentSourceReadout (rationalTripleReadout D a b K P)) ∧
+          phi (((qField (gamma + 1) r H₁
+            (targetSlice D hu (neutralMode D i d a) (gamma + 1))
+            (targetSlice D hu b delta))[[n]]) x) =
+            nestedLeftFiberReadout (gamma + 1) 1 d r n
+              (vectorFrequencyBound D a + 1) H₁ (rationalTripleCarriers D a b K P) ∧
+          phi (((qField 1 (d - j) H₂ (targetCurrent D hu i)
+            (qField gamma (r + j) K (targetSlice D hu a gamma)
+              (targetSlice D hu b delta)))[[n]]) x) =
+            nestedRightFiberReadout 1 gamma (r + j) (d - j) n K H₂
+              (rationalTripleCarriers D a b K P) ∧
+          phi (((qField gamma (d + r - j) H₃ (targetSlice D hu a gamma)
+            (targetSlice D hu (neutralMode D i j b) (delta + 1)))[[n]]) x) =
+            nestedRightFiberReadout gamma 1 j (d + r - j) n
+              (vectorFrequencyBound D b + 1) H₃
+              (swapCurrentSourceCarriers (rationalTripleCarriers D a b K P)) ∧
+          phi (((qField (gamma + 1) r H₁
+            (targetSlice D hu (neutralMode D i d a) (gamma + 1))
+            (targetSlice D hu b delta))[[n]]) x) =
+            nestedLeftLocalReadout (gamma + 1) 1 d r n
+              (vectorFrequencyBound D a + 1) H₁
+              (algebraMap _ (CommonRational ℂ 3) P /
+                algebraMap _ (CommonRational ℂ 3)
+                  (weightedClearingPolynomial (threeOrders D a b K))) ∧
+          phi (((qField 1 (d - j) H₂ (targetCurrent D hu i)
+            (qField gamma (r + j) K (targetSlice D hu a gamma)
+              (targetSlice D hu b delta)))[[n]]) x) =
+            nestedRightLocalReadout 1 1 gamma (r + j) (d - j) n K H₂
+              (algebraMap _ (CommonRational ℂ 3) P /
+                algebraMap _ (CommonRational ℂ 3)
+                  (weightedClearingPolynomial (threeOrders D a b K))) ∧
+          phi (((qField gamma (d + r - j) H₃ (targetSlice D hu a gamma)
+            (targetSlice D hu (neutralMode D i j b) (delta + 1)))[[n]]) x) =
+            nestedRightLocalReadout 0 gamma 1 j (d + r - j) n
+              (vectorFrequencyBound D b + 1) H₃
+              (algebraMap _ (CommonRational ℂ 3) P /
+                algebraMap _ (CommonRational ℂ 3)
+                  (weightedClearingPolynomial (threeOrders D a b K)))) ∧
+        let R := algebraMap _ (CommonRational ℂ 3) P /
+          algebraMap _ (CommonRational ℂ 3) (weightedClearingPolynomial (threeOrders D a b K))
+        ∀ (H₁ H₂ H₃ : ℕ) (j : ℤ),
+          ((FieldNormalProductLocality.deltaEnd ^ H₁)
+            (FieldNormalProductLocality.commutator
+              (targetSlice D hu (neutralMode D i d a) (gamma + 1))
+              (targetSlice D hu b delta)) = 0 →
+            OuterQCompletion (gamma + 1) r n H₁
+              (fun k l => currentSourceLocalQ false 1 d (vectorFrequencyBound D a + 1) k l R)
+              (fun k l => currentSourceLocalQ true 1 d (vectorFrequencyBound D a + 1) l k R)) ∧
+          ((FieldNormalProductLocality.deltaEnd ^ H₂)
+            (FieldNormalProductLocality.commutator (targetCurrent D hu i)
+              (qField gamma (r + j) K (targetSlice D hu a gamma)
+                (targetSlice D hu b delta))) = 0 →
+            OuterQCompletion 1 (d - j) n H₂
+              (fun k l => lastSourceLocalQ 1 true gamma (r + j) K l k R)
+              (fun k l => lastSourceLocalQ 1 false gamma (r + j) K k l R)) ∧
+          ((FieldNormalProductLocality.deltaEnd ^ H₃)
+            (FieldNormalProductLocality.commutator (targetSlice D hu a gamma)
+              (targetSlice D hu (neutralMode D i j b) (delta + 1))) = 0 →
+            OuterQCompletion gamma (d + r - j) n H₃
+              (fun k l => lastSourceLocalQ 0 true 1 j (vectorFrequencyBound D b + 1) l k R)
+              (fun k l => lastSourceLocalQ 0 false 1 j (vectorFrequencyBound D b + 1) k l R)) := by
+  classical
+  obtain ⟨K, actual⟩ := actual_supported_nested_extraction D hu i a b
+  refine ⟨K, ?_⟩
+  intro gamma delta d r n x phi
+  obtain ⟨P, coefficients, readouts⟩ := actual gamma delta d r n x phi
+  refine ⟨P, coefficients, readouts, ?_⟩
+  dsimp only
+  intro H₁ H₂ H₃ j
+  have identify (d' r' n' : ℤ) (degree : d' + r' + n' = d + r + n)
+      (P' : LabelledPolynomial ℂ 3)
+      (coefficients' : ∀ e : Exponent 3, P'.coeff e =
+        if totalExponent e =
+            (∑ p ∈ labelledPairs 3, (threeOrders D a b K p : ℤ)) - d' - r' - n' - 3
+        then phi (actualNumerator D hu i a b gamma delta K x e) else 0) : P' = P := by
+    apply AddMonoidAlgebra.coeff_injective
+    ext e
+    rw [coefficients', coefficients,
+      show (∑ p ∈ labelledPairs 3, (threeOrders D a b K p : ℤ)) - d' - r' - n' - 3 =
+        (∑ p ∈ labelledPairs 3, (threeOrders D a b K p : ℤ)) - d - r - n - 3 by omega]
+  refine ⟨?_, ?_, ?_⟩
+  · intro locality
+    apply completeOuterQReadout_of_locality (gamma + 1) r n H₁
+      (targetSlice D hu (neutralMode D i d a) (gamma + 1))
+      (targetSlice D hu b delta) x phi _ _ locality
+    intro ell high
+    obtain ⟨P', coefficients', readouts⟩ := actual gamma delta d (r + ell) (n - ell) x phi
+    have identical := identify d (r + ell) (n - ell) (by omega) P' coefficients'
+    subst P'
+    exact (readouts ((r + ell).toNat + 1) 0 0 0).2.2.2.2.2.2.2.2.2.1.symm
+  · intro locality
+    apply completeOuterQReadout_of_locality 1 (d - j) n H₂
+      (targetCurrent D hu i)
+      (qField gamma (r + j) K (targetSlice D hu a gamma) (targetSlice D hu b delta))
+      x phi _ _ locality
+    intro ell high
+    obtain ⟨P', coefficients', readouts⟩ := actual gamma delta (d + ell) r (n - ell) x phi
+    have identical := identify (d + ell) r (n - ell) (by omega) P' coefficients'
+    subst P'
+    have equation := (readouts 0 ((d - j + ell).toNat + 1) 0 j).2.2.2.2.2.2.2.2.2.2.1.symm
+    simpa only [show d + (ell : ℤ) - j = d - j + ell by omega,
+      nestedRightLocalReadout] using equation
+  · intro locality
+    apply completeOuterQReadout_of_locality gamma (d + r - j) n H₃
+      (targetSlice D hu a gamma)
+      (targetSlice D hu (neutralMode D i j b) (delta + 1)) x phi _ _ locality
+    intro ell high
+    obtain ⟨P', coefficients', readouts⟩ := actual gamma delta (d + ell) r (n - ell) x phi
+    have identical := identify (d + ell) r (n - ell) (by omega) P' coefficients'
+    subst P'
+    have equation := (readouts 0 0 ((d + r - j + ell).toNat + 1) j).2.2.2.2.2.2.2.2.2.2.2.symm
+    simpa only [show d + (ell : ℤ) + r - j = d + r - j + ell by omega,
+      nestedRightLocalReadout] using equation
 
 section CollisionTaylor
 open CollisionLaurentKernels.LaurentCollision
