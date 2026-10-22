@@ -19,7 +19,7 @@ set_option backward.isDefEq.respectTransparency false
 namespace D5.S3.VertexAlgebra.LatticeHalfFockNestedQReadout
 open LatticeHalfFockLeftCurrentTransport LatticeHalfFockClearedTaylorReadout
 open UniformGradedLocalCorrelator
-open SupportedFieldWords.OrderedWords
+open SupportedFieldWords.OrderedWords SupportedFieldWords.OrderedDistribution
 open CollisionRationalExpansions.OrderedRationalExpansion
 open LatticeGeneratingFieldLocality LatticeHalfFockChargedTensorCoefficients
 open LatticeFiniteNegativeGeneration LatticeSugawaraCurrents
@@ -43,6 +43,108 @@ def finiteQReadout (s r : ℤ) (K : ℕ) (A B : VertexOperator ℂ V)
        epsilon (r + ell) *
         ∑ u ∈ Finset.range (-((HahnModule.of ℂ).symm (A x)).order).toNat,
           BinomialKernelDelta.chooseSign (r + ell) u * backward (r + n - u) u)
+
+/-- Residue extraction over the supported mode fibers. Each complete inner
+residue is formed before it enters an outer residue. -/
+def supportedQReadout (s r : ℤ) (K : ℕ) (n : ℤ)
+    (forward backward : ℤ → ℤ → ℂ) : ℂ :=
+  ∑ ell ∈ Finset.range ((K : ℤ) - r).toNat,
+    Ring.choose (-(s : ℂ) / 2) ell *
+      ((∑ᶠ u : ℕ, BinomialKernelDelta.chooseSign (r + ell) u *
+          forward (r + ell - u) (n - ell + u)) -
+       epsilon (r + ell) *
+        ∑ᶠ u : ℕ, BinomialKernelDelta.chooseSign (r + ell) u *
+          backward (r + n - u) u)
+
+/-- Finiteness is asserted for each complete residue fiber, rather than for
+the individual words obtained by expanding an intermediate field. -/
+def QReadoutSupported (r : ℤ) (K : ℕ) (n : ℤ)
+    (forward backward : ℤ → ℤ → ℂ) : Prop :=
+  ∀ ell ∈ Finset.range ((K : ℤ) - r).toNat,
+    Function.HasFiniteSupport (fun u : ℕ =>
+      BinomialKernelDelta.chooseSign (r + ell) u *
+        forward (r + ell - u) (n - ell + u)) ∧
+    Function.HasFiniteSupport (fun u : ℕ =>
+      BinomialKernelDelta.chooseSign (r + ell) u * backward (r + n - u) u)
+
+private theorem actual_q_support (r : ℤ) (K : ℕ)
+    (A B : VertexOperator ℂ V) (x : V) (n : ℤ) (phi : V →ₗ[ℂ] ℂ) :
+    QReadoutSupported r K n
+      (fun m k => phi ((A[[m]]) ((B[[k]]) x)))
+      (fun m k => phi ((B[[m]]) ((A[[k]]) x))) := by
+  intro ell hell
+  constructor
+  · apply (Finset.range
+      (-((HahnModule.of ℂ).symm (B x)).order - (n - ell)).toNat).finite_toSet.subset
+    intro u hu
+    apply Finset.mem_range.mpr
+    by_contra outside
+    have hz : (B[[n - ell + u]]) x = 0 := by
+      apply VertexOperator.ncoeff_eq_zero_of_lt_order
+      omega
+    exact hu (by simp [hz])
+  · apply (Finset.range (-((HahnModule.of ℂ).symm (A x)).order).toNat).finite_toSet.subset
+    intro u hu
+    apply Finset.mem_range.mpr
+    by_contra outside
+    have hz : (A[[(u : ℤ)]]) x = 0 := by
+      apply VertexOperator.ncoeff_eq_zero_of_lt_order
+      omega
+    exact hu (by simp [hz])
+
+private theorem supportedQReadout_eq (s r : ℤ) (K : ℕ)
+    (A B : VertexOperator ℂ V) (x : V) (n : ℤ) (phi : V →ₗ[ℂ] ℂ) :
+    phi (((qField s r K A B)[[n]]) x) = supportedQReadout s r K n
+      (fun m k => phi ((A[[m]]) ((B[[k]]) x)))
+      (fun m k => phi ((B[[m]]) ((A[[k]]) x))) := by
+  rw [D5.S3.VertexAlgebra.LatticeHalfFockLeftCurrentTransport.qField_mode, map_sum]
+  apply Finset.sum_congr rfl
+  intro ell hell
+  rw [map_smul]
+  congr 1
+  unfold fieldResidueCoefficient fieldResidueLeft fieldResidueRight
+  rw [map_sub, map_smul,
+    map_finsum phi ((fieldResidue (r + ell) A B).left_finite (n - ell) x),
+    map_finsum phi ((fieldResidue (r + ell) A B).right_finite (n - ell) x)]
+  simp only [map_smul, smul_eq_mul, BinomialKernelDelta.chooseSign, integerBinomial,
+    show r + (ell : ℤ) + (n - ell) = r + n by omega]
+
+private theorem supportedQReadout_congr (s r : ℤ) (K : ℕ) (n : ℤ)
+    (f g f' g' : ℤ → ℤ → ℂ)
+    (hf : ∀ m k, m + k = r + n → f m k = f' m k)
+    (hg : ∀ m k, m + k = r + n → g m k = g' m k) :
+    supportedQReadout s r K n f g = supportedQReadout s r K n f' g' := by
+  unfold supportedQReadout
+  apply Finset.sum_congr rfl
+  intro ell hell
+  congr 2
+  · apply finsum_congr
+    intro u
+    rw [hf _ _ (by omega)]
+  · congr 1
+    apply finsum_congr
+    intro u
+    rw [hg _ _ (by omega)]
+
+private theorem QReadoutSupported_congr (r : ℤ) (K : ℕ) (n : ℤ)
+    (f g f' g' : ℤ → ℤ → ℂ)
+    (hf : ∀ m k, m + k = r + n → f m k = f' m k)
+    (hg : ∀ m k, m + k = r + n → g m k = g' m k) :
+    QReadoutSupported r K n f g ↔ QReadoutSupported r K n f' g' := by
+  unfold QReadoutSupported
+  have forward (ell : ℕ) :
+      (fun u : ℕ => BinomialKernelDelta.chooseSign (r + ell) u *
+        f (r + ell - u) (n - ell + u)) =
+      (fun u : ℕ => BinomialKernelDelta.chooseSign (r + ell) u *
+        f' (r + ell - u) (n - ell + u)) := by
+    funext u
+    rw [hf _ _ (by omega)]
+  have backward (ell : ℕ) :
+      (fun u : ℕ => BinomialKernelDelta.chooseSign (r + ell) u * g (r + n - u) u) =
+      (fun u : ℕ => BinomialKernelDelta.chooseSign (r + ell) u * g' (r + n - u) u) := by
+    funext u
+    rw [hg _ _ (by omega)]
+  simp only [forward, backward]
 
 private theorem finiteQReadout_eq (s r : ℤ) (K : ℕ)
     (A B : VertexOperator ℂ V) (x : V) (n : ℤ) (phi : V →ₗ[ℂ] ℂ) :
@@ -129,6 +231,410 @@ def nestedRightReadout (outerLift innerLift d r n : ℤ) (K H : ℕ)
     (fun k l => finiteQReadout innerLift d K B C ((A[[l]]) x) k
       (fun m p => R 3 ![l, m, p]) (fun m p => R 5 ![l, p, m]))
 
+/-- The left nesting has no chosen intermediate mode bounds. The complete
+inner differences remain inside the supported outer fibers. -/
+def supportedNestedLeftReadout (outerLift innerLift d r n : ℤ) (K H : ℕ)
+    (R : Fin 6 → Exponent 3 → ℂ) : ℂ :=
+  supportedQReadout outerLift r H n
+    (fun k l => supportedQReadout innerLift d K k
+      (fun m p => R 0 ![m, p, l]) (fun m p => R 2 ![p, m, l]))
+    (fun k l => supportedQReadout innerLift d K l
+      (fun m p => R 4 ![m, p, k]) (fun m p => R 5 ![p, m, k]))
+
+/-- The right nesting retains both complete inner differences before taking
+the outer supported residue. -/
+def supportedNestedRightReadout (outerLift innerLift d r n : ℤ) (K H : ℕ)
+    (R : Fin 6 → Exponent 3 → ℂ) : ℂ :=
+  supportedQReadout outerLift r H n
+    (fun k l => supportedQReadout innerLift d K l
+      (fun m p => R 0 ![k, m, p]) (fun m p => R 1 ![k, p, m]))
+    (fun k l => supportedQReadout innerLift d K k
+      (fun m p => R 3 ![l, m, p]) (fun m p => R 5 ![l, p, m]))
+
+/-- Support of the complete outer fibers in the left nesting. -/
+def NestedLeftSupported (innerLift d r n : ℤ) (K H : ℕ)
+    (R : Fin 6 → Exponent 3 → ℂ) : Prop :=
+  QReadoutSupported r H n
+    (fun k l => supportedQReadout innerLift d K k
+      (fun m p => R 0 ![m, p, l]) (fun m p => R 2 ![p, m, l]))
+    (fun k l => supportedQReadout innerLift d K l
+      (fun m p => R 4 ![m, p, k]) (fun m p => R 5 ![p, m, k])) ∧
+  ∀ k l : ℤ, k + l = r + n →
+    QReadoutSupported d K k (fun m p => R 0 ![m, p, l]) (fun m p => R 2 ![p, m, l]) ∧
+    QReadoutSupported d K l (fun m p => R 4 ![m, p, k]) (fun m p => R 5 ![p, m, k])
+
+/-- Support of the complete outer fibers in the right nesting. -/
+def NestedRightSupported (innerLift d r n : ℤ) (K H : ℕ)
+    (R : Fin 6 → Exponent 3 → ℂ) : Prop :=
+  QReadoutSupported r H n
+    (fun k l => supportedQReadout innerLift d K l
+      (fun m p => R 0 ![k, m, p]) (fun m p => R 1 ![k, p, m]))
+    (fun k l => supportedQReadout innerLift d K k
+      (fun m p => R 3 ![l, m, p]) (fun m p => R 5 ![l, p, m])) ∧
+  ∀ k l : ℤ, k + l = r + n →
+    QReadoutSupported d K l (fun m p => R 0 ![k, m, p]) (fun m p => R 1 ![k, p, m]) ∧
+    QReadoutSupported d K k (fun m p => R 3 ![l, m, p]) (fun m p => R 5 ![l, p, m])
+
+open CollisionLaurentKernels.LaurentCollision
+open OrderedCollisionCoordinates.ContextualLaurentKernel
+open CollisionRationalExpansions.HahnFiberResidue
+open CollisionRationalExpansions.FullOrderSpectatorPole
+
+/-- An adjacent fractional residue in a ternary word, with the spectator on
+the right. Both complete orders are extracted in their own Hahn carrier. -/
+def leftPairFiberQ (s d : ℤ) (K : ℕ) (k l : ℤ)
+    (F G : HahnSeries (Indices 3) ℂ) : ℂ :=
+  ∑ ell ∈ Finset.range ((K : ℤ) - d).toNat,
+    Ring.choose (-(s : ℂ) / 2) ell *
+      ((pullFiber (firstEmbedding 0 1 (-1))
+        (contextPair ℂ 0 1 (kernelZX ℂ (d + ell)) * F)).coeff
+          (exponents 2 ![-k + ell - 1, -l - 1]) -
+       (residue 1 1 (contextPair ℂ 0 1 (kernelXZ ℂ (d + ell)) * G)).coeff
+          (exponents 2 ![-k + ell - 1, -l - 1]))
+
+/-- The adjacent fractional residue with the spectator on the left. -/
+def rightPairFiberQ (s d : ℤ) (K : ℕ) (k l : ℤ)
+    (F G : HahnSeries (Indices 3) ℂ) : ℂ :=
+  ∑ ell ∈ Finset.range ((K : ℤ) - d).toNat,
+    Ring.choose (-(s : ℂ) / 2) ell *
+      ((pullFiber (firstEmbedding 1 0 (-1))
+        (contextPair ℂ 1 0 (kernelZX ℂ (d + ell)) * F)).coeff
+          (exponents 2 ![-l - 1, -k + ell - 1]) -
+       (residue 2 0 (contextPair ℂ 1 0 (kernelXZ ℂ (d + ell)) * G)).coeff
+          (exponents 2 ![-l - 1, -k + ell - 1]))
+
+private theorem leftPairFiberQ_eq (s d : ℤ) (K : ℕ) (k l : ℤ)
+    (F G : HahnSeries (Indices 3) ℂ) :
+    leftPairFiberQ s d K k l F G = supportedQReadout s d K k
+      (fun m p => F.coeff (exponents 3 ![-m - 1, -p - 1, -l - 1]))
+      (fun m p => G.coeff (exponents 3 ![-m - 1, -p - 1, -l - 1])) := by
+  unfold leftPairFiberQ supportedQReadout
+  apply Finset.sum_congr rfl
+  intro ell hell
+  congr 2
+  · change (contextPair ℂ 0 1 (kernelZX ℂ (d + ell)) * F).coeff _ = _
+    rw [(contextual_kernel_extraction ℂ 0 1 (d + ell) F _).2]
+    apply finsum_congr
+    intro u
+    congr 1
+    congr 1
+    have kernelIndex : pairIndex 0 1 (toLex ((u : ℤ), d + ell - u)) =
+        (exponentAddEquiv 3) ![d + ell - u, (u : ℤ), 0] := by
+      have base : (0 : Indices 0) = () := by
+        change (0 : Unit) = ()
+        exact Subsingleton.elim _ _
+      change toLex ((0 : ℤ), toLex ((u : ℤ), toLex (d + ell - u, (0 : Indices 0)))) =
+        toLex ((0 : ℤ), toLex ((u : ℤ), toLex (d + ell - u, ())))
+      rw [base]
+      rfl
+    rw [kernelIndex]
+    change (exponentAddEquiv 3) ![-1, -k + ell - 1, -l - 1] - (exponentAddEquiv 3) ![d + ell - u, (u : ℤ), 0] =
+      (exponentAddEquiv 3) ![-(d + ell - u) - 1, -(k - ell + u) - 1, -l - 1]
+    rw [← map_sub]
+    congr 1
+    funext j
+    fin_cases j <;> simp <;> omega
+  · have constant : contextPair ℂ 0 1
+        (HahnSeries.C (HahnSeries.C (epsilon (d + ell)))) =
+        HahnSeries.C (epsilon (d + ell)) := by
+      simp only [StateFieldResidueReconstruction.epsilon, map_zpow₀, map_neg, map_one]
+    change (contextPair ℂ 0 1 (kernelXZ ℂ (d + ell)) * G).coeff _ = _
+    rw [D5.S3.VertexAlgebra.LatticeHalfFockLeftCurrentTransport.reverse_kernel,
+      map_mul, constant, mul_assoc, HahnSeries.C_apply,
+      HahnSeries.coeff_single_zero_mul,
+      (contextual_kernel_extraction ℂ 0 1 (d + ell) G _).2]
+    congr 1
+    apply finsum_congr
+    intro u
+    congr 1
+    congr 1
+    have kernelIndex : pairIndex 0 1 (toLex ((u : ℤ), d + ell - u)) =
+        (exponentAddEquiv 3) ![d + ell - u, (u : ℤ), 0] := by
+      have base : (0 : Indices 0) = () := by
+        change (0 : Unit) = ()
+        exact Subsingleton.elim _ _
+      change toLex ((0 : ℤ), toLex ((u : ℤ), toLex (d + ell - u, (0 : Indices 0)))) =
+        toLex ((0 : ℤ), toLex ((u : ℤ), toLex (d + ell - u, ())))
+      rw [base]
+      rfl
+    rw [kernelIndex]
+    change (exponentAddEquiv 3) ![-k + ell - 1, -1, -l - 1] - (exponentAddEquiv 3) ![d + ell - u, (u : ℤ), 0] =
+      (exponentAddEquiv 3) ![-(d + k - u) - 1, -(u : ℤ) - 1, -l - 1]
+    rw [← map_sub]
+    congr 1
+    funext j
+    fin_cases j <;> simp <;> omega
+
+private theorem rightPairFiberQ_eq (s d : ℤ) (K : ℕ) (k l : ℤ)
+    (F G : HahnSeries (Indices 3) ℂ) :
+    rightPairFiberQ s d K k l F G = supportedQReadout s d K k
+      (fun m p => F.coeff (exponents 3 ![-l - 1, -m - 1, -p - 1]))
+      (fun m p => G.coeff (exponents 3 ![-l - 1, -m - 1, -p - 1])) := by
+  unfold rightPairFiberQ supportedQReadout
+  apply Finset.sum_congr rfl
+  intro ell hell
+  congr 2
+  · change (contextPair ℂ 1 0 (kernelZX ℂ (d + ell)) * F).coeff _ = _
+    rw [(contextual_kernel_extraction ℂ 1 0 (d + ell) F _).2]
+    apply finsum_congr
+    intro u
+    congr 1
+    congr 1
+    have kernelIndex : pairIndex 1 0 (toLex ((u : ℤ), d + ell - u)) =
+        (exponentAddEquiv 3) ![0, d + ell - u, (u : ℤ)] := by
+      have base : (0 : Indices 0) = () := by
+        change (0 : Unit) = ()
+        exact Subsingleton.elim _ _
+      change toLex ((u : ℤ), toLex (d + ell - u, toLex ((0 : ℤ), (0 : Indices 0)))) =
+        toLex ((u : ℤ), toLex (d + ell - u, toLex ((0 : ℤ), ())))
+      rw [base]
+      rfl
+    rw [kernelIndex]
+    change (exponentAddEquiv 3) ![-l - 1, -1, -k + ell - 1] - (exponentAddEquiv 3) ![0, d + ell - u, (u : ℤ)] =
+      (exponentAddEquiv 3) ![-l - 1, -(d + ell - u) - 1, -(k - ell + u) - 1]
+    rw [← map_sub]
+    congr 1
+    funext j
+    fin_cases j <;> simp <;> omega
+  · have constant : contextPair ℂ 1 0
+        (HahnSeries.C (HahnSeries.C (epsilon (d + ell)))) =
+        HahnSeries.C (epsilon (d + ell)) := by
+      simp only [StateFieldResidueReconstruction.epsilon, map_zpow₀, map_neg, map_one]
+    change (contextPair ℂ 1 0 (kernelXZ ℂ (d + ell)) * G).coeff _ = _
+    rw [D5.S3.VertexAlgebra.LatticeHalfFockLeftCurrentTransport.reverse_kernel,
+      map_mul, constant, mul_assoc, HahnSeries.C_apply,
+      HahnSeries.coeff_single_zero_mul,
+      (contextual_kernel_extraction ℂ 1 0 (d + ell) G _).2]
+    congr 1
+    apply finsum_congr
+    intro u
+    congr 1
+    congr 1
+    have kernelIndex : pairIndex 1 0 (toLex ((u : ℤ), d + ell - u)) =
+        (exponentAddEquiv 3) ![0, d + ell - u, (u : ℤ)] := by
+      have base : (0 : Indices 0) = () := by
+        change (0 : Unit) = ()
+        exact Subsingleton.elim _ _
+      change toLex ((u : ℤ), toLex (d + ell - u, toLex ((0 : ℤ), (0 : Indices 0)))) =
+        toLex ((u : ℤ), toLex (d + ell - u, toLex ((0 : ℤ), ())))
+      rw [base]
+      rfl
+    rw [kernelIndex]
+    change (exponentAddEquiv 3) ![-l - 1, -k + ell - 1, -1] - (exponentAddEquiv 3) ![0, d + ell - u, (u : ℤ)] =
+      (exponentAddEquiv 3) ![-l - 1, -(d + k - u) - 1, -(u : ℤ) - 1]
+    rw [← map_sub]
+    congr 1
+    funext j
+    fin_cases j <;> simp <;> omega
+
+/-- Scalar readouts from six genuinely supported, globally labelled carriers. -/
+def hahnTripleScalar (W : Fin 6 → HahnSeries (Indices 3) ℂ)
+    (order : Fin 6) (modes : Exponent 3) : ℂ :=
+  (W order).coeff (orderExponents 3 (triplePermutation order) (fun j => -modes j - 1))
+
+/-- Left nested supported fibers. The complete inner difference is kept
+inside each of the two outer residue fibers. -/
+def nestedLeftFiberReadout (outerLift innerLift d r n : ℤ) (K H : ℕ)
+    (W : Fin 6 → HahnSeries (Indices 3) ℂ) : ℂ :=
+  supportedQReadout outerLift r H n
+    (fun k l => leftPairFiberQ innerLift d K k l (W 0) (W 2))
+    (fun k l => rightPairFiberQ innerLift d K l k (W 4) (W 5))
+
+/-- Right nested supported fibers, with the actual left and right spectator
+positions retained in the respective complete orders. -/
+def nestedRightFiberReadout (outerLift innerLift d r n : ℤ) (K H : ℕ)
+    (W : Fin 6 → HahnSeries (Indices 3) ℂ) : ℂ :=
+  supportedQReadout outerLift r H n
+    (fun k l => rightPairFiberQ innerLift d K l k (W 0) (W 1))
+    (fun k l => leftPairFiberQ innerLift d K k l (W 3) (W 5))
+
+private theorem nestedLeftFiberReadout_eq (outerLift innerLift d r n : ℤ) (K H : ℕ)
+    (W : Fin 6 → HahnSeries (Indices 3) ℂ) :
+    nestedLeftFiberReadout outerLift innerLift d r n K H W =
+      supportedNestedLeftReadout outerLift innerLift d r n K H (hahnTripleScalar W) := by
+  unfold nestedLeftFiberReadout supportedNestedLeftReadout
+  apply supportedQReadout_congr
+  · intro k l hkl
+    rw [leftPairFiberQ_eq]
+    rfl
+  · intro k l hkl
+    rw [rightPairFiberQ_eq]
+    rfl
+
+private theorem nestedRightFiberReadout_eq (outerLift innerLift d r n : ℤ) (K H : ℕ)
+    (W : Fin 6 → HahnSeries (Indices 3) ℂ) :
+    nestedRightFiberReadout outerLift innerLift d r n K H W =
+      supportedNestedRightReadout outerLift innerLift d r n K H (hahnTripleScalar W) := by
+  unfold nestedRightFiberReadout supportedNestedRightReadout
+  apply supportedQReadout_congr
+  · intro k l hkl
+    rw [rightPairFiberQ_eq]
+    rfl
+  · intro k l hkl
+    rw [leftPairFiberQ_eq]
+    rfl
+
+
+private theorem supportedNestedLeftReadout_congr (outerLift innerLift d r n : ℤ) (K H : ℕ)
+    (R S : Fin 6 → Exponent 3 → ℂ)
+    (same : ∀ order modes, (∑ j, modes j) = d + r + n → R order modes = S order modes) :
+    supportedNestedLeftReadout outerLift innerLift d r n K H R =
+      supportedNestedLeftReadout outerLift innerLift d r n K H S := by
+  unfold supportedNestedLeftReadout
+  apply supportedQReadout_congr <;> intro k l hkl <;> apply supportedQReadout_congr <;>
+    intro m p hmp <;> apply same <;> simp [Fin.sum_univ_three] <;> omega
+
+private theorem supportedNestedRightReadout_congr (outerLift innerLift d r n : ℤ) (K H : ℕ)
+    (R S : Fin 6 → Exponent 3 → ℂ)
+    (same : ∀ order modes, (∑ j, modes j) = d + r + n → R order modes = S order modes) :
+    supportedNestedRightReadout outerLift innerLift d r n K H R =
+      supportedNestedRightReadout outerLift innerLift d r n K H S := by
+  unfold supportedNestedRightReadout
+  apply supportedQReadout_congr <;> intro k l hkl <;> apply supportedQReadout_congr <;>
+    intro m p hmp <;> apply same <;> simp [Fin.sum_univ_three] <;> omega
+
+private theorem supportedNestedLeftReadout_eq (outerLift innerLift d r n : ℤ) (K H : ℕ)
+    (A B C : VertexOperator ℂ V) (x : V) (phi : V →ₗ[ℂ] ℂ) :
+    phi (((qField outerLift r H (qField innerLift d K A B) C)[[n]]) x) =
+      supportedNestedLeftReadout outerLift innerLift d r n K H (tripleScalar A B C x phi) := by
+  rw [supportedQReadout_eq]
+  unfold supportedNestedLeftReadout
+  apply supportedQReadout_congr
+  · intro k l hkl
+    rw [supportedQReadout_eq]
+    congr 1 <;> funext m p <;>
+      simp [tripleScalar, triplePermutation, coefficientDistribution, word,
+        Module.End.mul_apply, Equiv.swap_apply_def]
+  · intro k l hkl
+    change (phi.comp (C[[k]])) (((qField innerLift d K A B)[[l]]) x) = _
+    rw [supportedQReadout_eq]
+    congr 1 <;> funext m p <;>
+      simp [tripleScalar, triplePermutation, coefficientDistribution, word,
+        Module.End.mul_apply, LinearMap.comp_apply, Equiv.swap_apply_def]
+
+private theorem supportedNestedRightReadout_eq (outerLift innerLift d r n : ℤ) (K H : ℕ)
+    (A B C : VertexOperator ℂ V) (x : V) (phi : V →ₗ[ℂ] ℂ) :
+    phi (((qField outerLift r H A (qField innerLift d K B C))[[n]]) x) =
+      supportedNestedRightReadout outerLift innerLift d r n K H (tripleScalar A B C x phi) := by
+  rw [supportedQReadout_eq]
+  unfold supportedNestedRightReadout
+  apply supportedQReadout_congr
+  · intro k l hkl
+    change (phi.comp (A[[k]])) (((qField innerLift d K B C)[[l]]) x) = _
+    rw [supportedQReadout_eq]
+    congr 1 <;> funext m p <;>
+      simp [tripleScalar, triplePermutation, coefficientDistribution, word,
+        Module.End.mul_apply, LinearMap.comp_apply, Equiv.swap_apply_def]
+  · intro k l hkl
+    rw [supportedQReadout_eq]
+    congr 1 <;> funext m p <;>
+      simp [tripleScalar, triplePermutation, coefficientDistribution, word,
+        Module.End.mul_apply, Equiv.swap_apply_def]
+
+private theorem NestedLeftSupported_congr (innerLift d r n : ℤ) (K H : ℕ)
+    (R S : Fin 6 → Exponent 3 → ℂ)
+    (same : ∀ order modes, (∑ j, modes j) = d + r + n → R order modes = S order modes) :
+    NestedLeftSupported innerLift d r n K H R ↔ NestedLeftSupported innerLift d r n K H S := by
+  unfold NestedLeftSupported
+  apply and_congr
+  · apply QReadoutSupported_congr <;> intro k l hkl <;> apply supportedQReadout_congr <;>
+      intro m p hmp <;> apply same <;> simp [Fin.sum_univ_three] <;> omega
+  · apply forall_congr'
+    intro k
+    apply forall_congr'
+    intro l
+    apply imp_congr_right
+    intro hkl
+    apply and_congr <;> apply QReadoutSupported_congr <;>
+      intro m p hmp <;> apply same <;> simp [Fin.sum_univ_three] <;> omega
+
+private theorem NestedRightSupported_congr (innerLift d r n : ℤ) (K H : ℕ)
+    (R S : Fin 6 → Exponent 3 → ℂ)
+    (same : ∀ order modes, (∑ j, modes j) = d + r + n → R order modes = S order modes) :
+    NestedRightSupported innerLift d r n K H R ↔ NestedRightSupported innerLift d r n K H S := by
+  unfold NestedRightSupported
+  apply and_congr
+  · apply QReadoutSupported_congr <;> intro k l hkl <;> apply supportedQReadout_congr <;>
+      intro m p hmp <;> apply same <;> simp [Fin.sum_univ_three] <;> omega
+  · apply forall_congr'
+    intro k
+    apply forall_congr'
+    intro l
+    apply imp_congr_right
+    intro hkl
+    apply and_congr <;> apply QReadoutSupported_congr <;>
+      intro m p hmp <;> apply same <;> simp [Fin.sum_univ_three] <;> omega
+
+private theorem actual_nested_left_support (innerLift d r n : ℤ) (K H : ℕ)
+    (A B C : VertexOperator ℂ V) (x : V) (phi : V →ₗ[ℂ] ℂ) :
+    NestedLeftSupported innerLift d r n K H (tripleScalar A B C x phi) := by
+  have forward (k l : ℤ) :
+      phi (((qField innerLift d K A B)[[k]]) ((C[[l]]) x)) =
+        supportedQReadout innerLift d K k
+          (fun m p => tripleScalar A B C x phi 0 ![m, p, l])
+          (fun m p => tripleScalar A B C x phi 2 ![p, m, l]) := by
+    rw [supportedQReadout_eq]
+    congr 1 <;> funext m p <;>
+      simp [tripleScalar, triplePermutation, coefficientDistribution, word,
+        Module.End.mul_apply, Equiv.swap_apply_def]
+  have backward (k l : ℤ) :
+      phi ((C[[k]]) (((qField innerLift d K A B)[[l]]) x)) =
+        supportedQReadout innerLift d K l
+          (fun m p => tripleScalar A B C x phi 4 ![m, p, k])
+          (fun m p => tripleScalar A B C x phi 5 ![p, m, k]) := by
+    change (phi.comp (C[[k]])) (((qField innerLift d K A B)[[l]]) x) = _
+    rw [supportedQReadout_eq]
+    congr 1 <;> funext m p <;>
+      simp [tripleScalar, triplePermutation, coefficientDistribution, word,
+        Module.End.mul_apply, LinearMap.comp_apply, Equiv.swap_apply_def]
+  constructor
+  · exact (QReadoutSupported_congr r H n _ _ _ _
+      (fun k l _ => forward k l) (fun k l _ => backward k l)).mp
+        (actual_q_support r H (qField innerLift d K A B) C x n phi)
+  · intro k l hkl
+    constructor
+    · simpa [tripleScalar, triplePermutation, coefficientDistribution, word,
+        Module.End.mul_apply, Equiv.swap_apply_def] using
+        actual_q_support d K A B ((C[[l]]) x) k phi
+    · simpa [tripleScalar, triplePermutation, coefficientDistribution, word,
+        Module.End.mul_apply, LinearMap.comp_apply, Equiv.swap_apply_def] using
+        actual_q_support d K A B x l (phi.comp (C[[k]]))
+
+private theorem actual_nested_right_support (innerLift d r n : ℤ) (K H : ℕ)
+    (A B C : VertexOperator ℂ V) (x : V) (phi : V →ₗ[ℂ] ℂ) :
+    NestedRightSupported innerLift d r n K H (tripleScalar A B C x phi) := by
+  have forward (k l : ℤ) :
+      phi ((A[[k]]) (((qField innerLift d K B C)[[l]]) x)) =
+        supportedQReadout innerLift d K l
+          (fun m p => tripleScalar A B C x phi 0 ![k, m, p])
+          (fun m p => tripleScalar A B C x phi 1 ![k, p, m]) := by
+    change (phi.comp (A[[k]])) (((qField innerLift d K B C)[[l]]) x) = _
+    rw [supportedQReadout_eq]
+    congr 1 <;> funext m p <;>
+      simp [tripleScalar, triplePermutation, coefficientDistribution, word,
+        Module.End.mul_apply, LinearMap.comp_apply, Equiv.swap_apply_def]
+  have backward (k l : ℤ) :
+      phi (((qField innerLift d K B C)[[k]]) ((A[[l]]) x)) =
+        supportedQReadout innerLift d K k
+          (fun m p => tripleScalar A B C x phi 3 ![l, m, p])
+          (fun m p => tripleScalar A B C x phi 5 ![l, p, m]) := by
+    rw [supportedQReadout_eq]
+    congr 1 <;> funext m p <;>
+      simp [tripleScalar, triplePermutation, coefficientDistribution, word,
+        Module.End.mul_apply, Equiv.swap_apply_def]
+  constructor
+  · exact (QReadoutSupported_congr r H n _ _ _ _
+      (fun k l _ => forward k l) (fun k l _ => backward k l)).mp
+        (actual_q_support r H A (qField innerLift d K B C) x n phi)
+  · intro k l hkl
+    constructor
+    · simpa [tripleScalar, triplePermutation, coefficientDistribution, word,
+        Module.End.mul_apply, LinearMap.comp_apply, Equiv.swap_apply_def] using
+        actual_q_support d K B C x l (phi.comp (A[[k]]))
+    · simpa [tripleScalar, triplePermutation, coefficientDistribution, word,
+        Module.End.mul_apply, Equiv.swap_apply_def] using
+        actual_q_support d K B C ((A[[l]]) x) k phi
+
 private theorem nestedLeftReadout_eq (outerLift innerLift d r n : ℤ) (K H : ℕ)
     (A B C : VertexOperator ℂ V) (x : V) (phi : V →ₗ[ℂ] ℂ) :
     phi (((qField outerLift r H (qField innerLift d K A B) C)[[n]]) x) =
@@ -202,6 +708,30 @@ numerator, its clearing factors, or the six supported orders. -/
 def swapCurrentSourceReadout (R : Fin 6 → Exponent 3 → ℂ)
     (order : Fin 6) (modes : Exponent 3) : ℂ :=
   R (![2, 3, 0, 1, 5, 4] order) ![modes 1, modes 0, modes 2]
+
+/-- The six supported Hahn expansions of the unchanged common rational. -/
+def rationalTripleCarriers (D : LatticeData) (a b : Carrier D) (K : ℕ)
+    (P : LabelledPolynomial ℂ 3) (order : Fin 6) : HahnSeries (Indices 3) ℂ :=
+  orderedRationalFor ℂ 3 (triplePermutation order)
+    (algebraMap _ (CommonRational ℂ 3) P /
+      algebraMap _ (CommonRational ℂ 3)
+        (weightedClearingPolynomial (threeOrders D a b K)))
+
+/-- Relabel the current and first source while retaining the actual word
+positions of every supported coefficient. -/
+def swapCurrentSourceCarriers (W : Fin 6 → HahnSeries (Indices 3) ℂ)
+    (order : Fin 6) : HahnSeries (Indices 3) ℂ :=
+  W (![2, 3, 0, 1, 5, 4] order)
+
+private theorem hahnTripleScalar_swap (W : Fin 6 → HahnSeries (Indices 3) ℂ) :
+    hahnTripleScalar (swapCurrentSourceCarriers W) =
+      swapCurrentSourceReadout (hahnTripleScalar W) := by
+  funext order modes
+  fin_cases order <;>
+    simp [hahnTripleScalar, swapCurrentSourceCarriers, swapCurrentSourceReadout,
+      triplePermutation, orderExponents, labelPermutation, Equiv.swap_apply_def] <;>
+    congr 1 <;> congr 1 <;> funext j <;> fin_cases j <;>
+    simp [Equiv.swap_apply_def]
 
 private theorem tripleScalar_swap {V : Type*} [AddCommGroup V] [Module ℂ V]
     (A B C : VertexOperator ℂ V) (x : V) (phi : V →ₗ[ℂ] ℂ) :
@@ -283,6 +813,458 @@ theorem actual_nested_ordered_readouts (D : LatticeData) (hu : IsUnit D.G.det)
     apply same
     simp [Fin.sum_univ_three] at degree ⊢
     omega
+
+
+open CollisionLaurentKernels.LaurentCollision
+open OrderedCollisionCoordinates.ContextualLaurentKernel
+open CollisionRationalExpansions.HahnFiberResidue
+open CollisionRationalExpansions.FullOrderSpectatorPole
+
+private def currentSourceTau (reverse : Bool) :
+    Fin 2 ≃ LabelledRationalClearing.GlobalRationalCurry.Remaining (0 : Fin 3) :=
+  if reverse then (Equiv.swap 0 1).trans (finSuccAboveEquiv (0 : Fin 3))
+  else finSuccAboveEquiv (0 : Fin 3)
+
+/-- The complete current/source local residue, with the spectator retained
+on its actual side of the pair. All diagonal weights are signed. -/
+def currentSourceLocalQ (reverse : Bool) (s d : ℤ) (K : ℕ) (k l : ℤ)
+    (R : CommonRational ℂ 3) : ℂ :=
+  ∑ ell ∈ Finset.range ((K : ℤ) - d).toNat,
+    Ring.choose (-(s : ℂ) / 2) ell *
+      (if reverse then
+        ((OrderedCollisionCoordinates.LocalResidueCurrying.fusedLocalSeries ℂ 2 0
+          (0 : Fin 3) ⟨1, by decide⟩ (currentSourceTau true)
+          (LabelledRationalClearing.WeightedActualQ.globalDiagonal ℂ (0 : Fin 3)
+            ⟨1, by decide⟩ ^ (d + ell) * R)).coeff (-1)).coeff
+          (exponents 2 ![-l - 1, -k + ell - 1])
+      else
+        ((OrderedCollisionCoordinates.LocalResidueCurrying.fusedLocalSeries ℂ 1 1
+          (0 : Fin 3) ⟨1, by decide⟩ (currentSourceTau false)
+          (LabelledRationalClearing.WeightedActualQ.globalDiagonal ℂ (0 : Fin 3)
+            ⟨1, by decide⟩ ^ (d + ell) * R)).coeff (-1)).coeff
+          (exponents 2 ![-k + ell - 1, -l - 1]))
+
+private theorem weighted_local_fiber (pre post : ℕ)
+    (z : Fin ((pre + 2) + post))
+    (tau : Fin ((pre + 1) + post) ≃ LabelledRationalClearing.GlobalRationalCurry.Remaining z)
+    (x : LabelledRationalClearing.GlobalRationalCurry.Remaining z)
+    (hx : tau (OrderedCollisionResidues.AdjacentLabelledCoordinates.boundarySlot pre post) = x)
+    (P : LabelledPolynomial ℂ ((pre + 2) + post))
+    (orders : Fin ((pre + 2) + post) × Fin ((pre + 2) + post) → ℕ)
+    (r : ℤ) (g : Indices ((pre + 1) + post)) :
+    let R := algebraMap _ (CommonRational ℂ ((pre + 2) + post)) P /
+      algebraMap _ (CommonRational ℂ ((pre + 2) + post))
+        (∏ p ∈ LabelledRationalClearing.PairDifferenceLocalization.labelledPairs ((pre + 2) + post),
+          LabelledRationalClearing.PairDifferenceLocalization.pairPolynomial ℂ p.1 p.2 ^ orders p)
+    (pullFiber (firstEmbedding pre post (-1))
+      (contextPair ℂ pre post (kernelZX ℂ r) *
+        OrderedCollisionCoordinates.AdjacentFullOrders.firstRational ℂ pre post z tau R)).coeff g -
+    (residue (pre + 1) post
+      (contextPair ℂ pre post (kernelXZ ℂ r) *
+        OrderedCollisionCoordinates.AdjacentFullOrders.secondRational ℂ pre post z tau R)).coeff g =
+    ((OrderedCollisionCoordinates.LocalResidueCurrying.fusedLocalSeries ℂ (pre + 1) post z x tau
+      (LabelledRationalClearing.WeightedActualQ.globalDiagonal ℂ z x ^ r * R)).coeff (-1)).coeff g := by
+  dsimp only
+  have equality := RationalCollision.LaurentNumerator.weighted_laurent_collision
+    ℂ pre post z tau x hx P orders r
+  have first : ∀ R : CommonRational ℂ ((pre + 2) + post),
+      OrderedCollisionCoordinates.AdjacentFullOrders.firstRational ℂ pre post z tau
+        (LabelledRationalClearing.WeightedActualQ.globalDiagonal ℂ z x ^ r * R) =
+      contextPair ℂ pre post (kernelZX ℂ r) *
+        OrderedCollisionCoordinates.AdjacentFullOrders.firstRational ℂ pre post z tau R := by
+    intro R
+    simp only [LabelledRationalClearing.WeightedActualQ.globalDiagonal, map_mul, map_zpow₀,
+      OrderedCollisionResidues.LabelledDiagonalResidue.first_diagonal ℂ pre post z tau x hx,
+      iotaZX_diagonal, kernelZX_zpow]
+  have second : ∀ R : CommonRational ℂ ((pre + 2) + post),
+      OrderedCollisionCoordinates.AdjacentFullOrders.secondRational ℂ pre post z tau
+        (LabelledRationalClearing.WeightedActualQ.globalDiagonal ℂ z x ^ r * R) =
+      contextPair ℂ pre post (kernelXZ ℂ r) *
+        OrderedCollisionCoordinates.AdjacentFullOrders.secondRational ℂ pre post z tau R := by
+    intro R
+    simp only [LabelledRationalClearing.WeightedActualQ.globalDiagonal, map_mul, map_zpow₀,
+      OrderedCollisionResidues.LabelledDiagonalResidue.second_diagonal ℂ pre post z tau x hx,
+      iotaXZ_diagonal, kernelXZ_zpow]
+  dsimp only at equality
+  rw [first, second] at equality
+  exact congrArg (fun F : HahnSeries (Indices ((pre + 1) + post)) ℂ => F.coeff g) equality.symm
+
+private theorem currentSourceLocalQ_eq (D : LatticeData) (a b : Carrier D) (K : ℕ)
+    (P : LabelledPolynomial ℂ 3) (s d k l : ℤ) :
+    let W := rationalTripleCarriers D a b K P
+    let R := algebraMap _ (CommonRational ℂ 3) P /
+      algebraMap _ (CommonRational ℂ 3) (weightedClearingPolynomial (threeOrders D a b K))
+    leftPairFiberQ s d (vectorFrequencyBound D a + 1) k l (W 0) (W 2) =
+      currentSourceLocalQ false s d (vectorFrequencyBound D a + 1) k l R ∧
+    rightPairFiberQ s d (vectorFrequencyBound D a + 1) k l (W 4) (W 5) =
+      currentSourceLocalQ true s d (vectorFrequencyBound D a + 1) k l R := by
+  dsimp only
+  have f₀ : SupportedWordRationalCollision.ActualOrderedCoordinates.firstOrder
+      0 1 (0 : Fin 3) (currentSourceTau false) = triplePermutation 0 := by
+    ext j; fin_cases j <;> rfl
+  have g₀ : SupportedWordRationalCollision.ActualOrderedCoordinates.secondOrder
+      0 1 (0 : Fin 3) (currentSourceTau false) = triplePermutation 2 := by
+    ext j; fin_cases j <;> rfl
+  have f₁ : SupportedWordRationalCollision.ActualOrderedCoordinates.firstOrder
+      1 0 (0 : Fin 3) (currentSourceTau true) = triplePermutation 4 := by
+    ext j; fin_cases j <;> rfl
+  have g₁ : SupportedWordRationalCollision.ActualOrderedCoordinates.secondOrder
+      1 0 (0 : Fin 3) (currentSourceTau true) = triplePermutation 5 := by
+    ext j; fin_cases j <;> rfl
+  constructor
+  · unfold leftPairFiberQ currentSourceLocalQ
+    simp only [Bool.false_eq_true, ite_false]
+    apply Finset.sum_congr rfl
+    intro ell hell
+    congr 1
+    have eq := weighted_local_fiber 0 1 (0 : Fin 3) (currentSourceTau false)
+      ⟨1, by decide⟩ (by rfl) P (threeOrders D a b K) (d + ell)
+      (exponents 2 ![-k + ell - 1, -l - 1])
+    rw [← SupportedWordRationalCollision.ActualOrderedCoordinates.firstOrder_rational,
+      ← SupportedWordRationalCollision.ActualOrderedCoordinates.secondOrder_rational,
+      f₀, g₀] at eq
+    exact eq
+  · unfold rightPairFiberQ currentSourceLocalQ
+    simp only [Bool.true_eq, ite_true]
+    apply Finset.sum_congr rfl
+    intro ell hell
+    congr 1
+    have eq := weighted_local_fiber 1 0 (0 : Fin 3) (currentSourceTau true)
+      ⟨1, by decide⟩ (by rfl) P (threeOrders D a b K) (d + ell)
+      (exponents 2 ![-l - 1, -k + ell - 1])
+    rw [← SupportedWordRationalCollision.ActualOrderedCoordinates.firstOrder_rational,
+      ← SupportedWordRationalCollision.ActualOrderedCoordinates.secondOrder_rational,
+      f₁, g₁] at eq
+    exact eq
+
+/-- The current/source pair is collided locally inside each supported outer
+fiber; its two spectator positions retain their respective complete orders. -/
+def nestedLeftLocalReadout (outerLift innerLift d r n : ℤ) (K H : ℕ)
+    (R : CommonRational ℂ 3) : ℂ :=
+  supportedQReadout outerLift r H n
+    (fun k l => currentSourceLocalQ false innerLift d K k l R)
+    (fun k l => currentSourceLocalQ true innerLift d K l k R)
+
+private theorem nestedLeftLocalReadout_eq (D : LatticeData) (a b : Carrier D) (K : ℕ)
+    (P : LabelledPolynomial ℂ 3) (outerLift innerLift d r n : ℤ) (H : ℕ) :
+    nestedLeftFiberReadout outerLift innerLift d r n (vectorFrequencyBound D a + 1) H
+      (rationalTripleCarriers D a b K P) =
+    nestedLeftLocalReadout outerLift innerLift d r n (vectorFrequencyBound D a + 1) H
+      (algebraMap _ (CommonRational ℂ 3) P /
+        algebraMap _ (CommonRational ℂ 3) (weightedClearingPolynomial (threeOrders D a b K))) := by
+  unfold nestedLeftFiberReadout nestedLeftLocalReadout
+  apply supportedQReadout_congr
+  · intro k l _
+    exact (currentSourceLocalQ_eq D a b K P innerLift d k l).1
+  · intro k l _
+    exact (currentSourceLocalQ_eq D a b K P innerLift d l k).2
+
+private def lastSourceTau (z : Fin 2) (spectatorLeft : Bool) :
+    Fin 2 ≃ LabelledRationalClearing.GlobalRationalCurry.Remaining z.castSucc :=
+  if spectatorLeft then finSuccAboveEquiv z.castSucc
+  else (Equiv.swap 0 1).trans (finSuccAboveEquiv z.castSucc)
+
+/-- A complete inner collision with the second source, retaining the actual
+spectator side and the original current/source labels. -/
+def lastSourceLocalQ (z : Fin 2) (spectatorLeft : Bool) (s d : ℤ) (K : ℕ) (k l : ℤ)
+    (R : CommonRational ℂ 3) : ℂ :=
+  let x : LabelledRationalClearing.GlobalRationalCurry.Remaining z.castSucc :=
+    ⟨2, by fin_cases z <;> decide⟩
+  ∑ ell ∈ Finset.range ((K : ℤ) - d).toNat,
+    Ring.choose (-(s : ℂ) / 2) ell *
+      (if spectatorLeft then
+        ((OrderedCollisionCoordinates.LocalResidueCurrying.fusedLocalSeries ℂ 2 0
+          z.castSucc x (lastSourceTau z true)
+          (LabelledRationalClearing.WeightedActualQ.globalDiagonal ℂ z.castSucc x ^
+            (d + ell) * R)).coeff (-1)).coeff
+          (exponents 2 ![-l - 1, -k + ell - 1])
+      else
+        ((OrderedCollisionCoordinates.LocalResidueCurrying.fusedLocalSeries ℂ 1 1
+          z.castSucc x (lastSourceTau z false)
+          (LabelledRationalClearing.WeightedActualQ.globalDiagonal ℂ z.castSucc x ^
+            (d + ell) * R)).coeff (-1)).coeff
+          (exponents 2 ![-k + ell - 1, -l - 1]))
+
+private theorem sourceSourceLocalQ_eq (D : LatticeData) (a b : Carrier D) (K I : ℕ)
+    (P : LabelledPolynomial ℂ 3) (s d k l : ℤ) :
+    let W := rationalTripleCarriers D a b K P
+    let R := algebraMap _ (CommonRational ℂ 3) P /
+      algebraMap _ (CommonRational ℂ 3) (weightedClearingPolynomial (threeOrders D a b K))
+    rightPairFiberQ s d I k l (W 0) (W 1) =
+      lastSourceLocalQ 1 true s d I k l R ∧
+    leftPairFiberQ s d I k l (W 3) (W 5) =
+      lastSourceLocalQ 1 false s d I k l R := by
+  dsimp only
+  have f_left : SupportedWordRationalCollision.ActualOrderedCoordinates.firstOrder
+      1 0 (1 : Fin 3) (lastSourceTau 1 true) = triplePermutation 0 := by
+    ext j; fin_cases j <;> rfl
+  have g_left : SupportedWordRationalCollision.ActualOrderedCoordinates.secondOrder
+      1 0 (1 : Fin 3) (lastSourceTau 1 true) = triplePermutation 1 := by
+    ext j; fin_cases j <;> rfl
+  have f_right : SupportedWordRationalCollision.ActualOrderedCoordinates.firstOrder
+      0 1 (1 : Fin 3) (lastSourceTau 1 false) = triplePermutation 3 := by
+    ext j; fin_cases j <;> rfl
+  have g_right : SupportedWordRationalCollision.ActualOrderedCoordinates.secondOrder
+      0 1 (1 : Fin 3) (lastSourceTau 1 false) = triplePermutation 5 := by
+    ext j; fin_cases j <;> rfl
+  constructor
+  · unfold rightPairFiberQ lastSourceLocalQ
+    simp only [Bool.true_eq, Bool.false_eq_true, ite_true, ite_false]
+    apply Finset.sum_congr rfl
+    intro ell hell
+    congr 1
+    have eq := weighted_local_fiber 1 0 (1 : Fin 3) (lastSourceTau 1 true)
+      ⟨2, by decide⟩ (by rfl) P (threeOrders D a b K) (d + ell)
+      (exponents 2 ![-l - 1, -k + ell - 1])
+    rw [← SupportedWordRationalCollision.ActualOrderedCoordinates.firstOrder_rational,
+      ← SupportedWordRationalCollision.ActualOrderedCoordinates.secondOrder_rational,
+      f_left, g_left] at eq
+    exact eq
+  · unfold leftPairFiberQ lastSourceLocalQ
+    simp only [Bool.true_eq, Bool.false_eq_true, ite_true, ite_false]
+    apply Finset.sum_congr rfl
+    intro ell hell
+    congr 1
+    have eq := weighted_local_fiber 0 1 (1 : Fin 3) (lastSourceTau 1 false)
+      ⟨2, by decide⟩ (by rfl) P (threeOrders D a b K) (d + ell)
+      (exponents 2 ![-k + ell - 1, -l - 1])
+    rw [← SupportedWordRationalCollision.ActualOrderedCoordinates.firstOrder_rational,
+      ← SupportedWordRationalCollision.ActualOrderedCoordinates.secondOrder_rational,
+      f_right, g_right] at eq
+    exact eq
+
+private theorem currentSecondSourceLocalQ_eq (D : LatticeData) (a b : Carrier D) (K I : ℕ)
+    (P : LabelledPolynomial ℂ 3) (s d k l : ℤ) :
+    let W := swapCurrentSourceCarriers (rationalTripleCarriers D a b K P)
+    let R := algebraMap _ (CommonRational ℂ 3) P /
+      algebraMap _ (CommonRational ℂ 3) (weightedClearingPolynomial (threeOrders D a b K))
+    rightPairFiberQ s d I k l (W 0) (W 1) =
+      lastSourceLocalQ 0 true s d I k l R ∧
+    leftPairFiberQ s d I k l (W 3) (W 5) =
+      lastSourceLocalQ 0 false s d I k l R := by
+  dsimp only
+  have f_left : SupportedWordRationalCollision.ActualOrderedCoordinates.firstOrder
+      1 0 (0 : Fin 3) (lastSourceTau 0 true) = triplePermutation 2 := by
+    ext j; fin_cases j <;> rfl
+  have g_left : SupportedWordRationalCollision.ActualOrderedCoordinates.secondOrder
+      1 0 (0 : Fin 3) (lastSourceTau 0 true) = triplePermutation 3 := by
+    ext j; fin_cases j <;> rfl
+  have f_right : SupportedWordRationalCollision.ActualOrderedCoordinates.firstOrder
+      0 1 (0 : Fin 3) (lastSourceTau 0 false) = triplePermutation 1 := by
+    ext j; fin_cases j <;> rfl
+  have g_right : SupportedWordRationalCollision.ActualOrderedCoordinates.secondOrder
+      0 1 (0 : Fin 3) (lastSourceTau 0 false) = triplePermutation 4 := by
+    ext j; fin_cases j <;> rfl
+  constructor
+  · unfold rightPairFiberQ lastSourceLocalQ
+    simp only [Bool.true_eq, Bool.false_eq_true, ite_true, ite_false]
+    apply Finset.sum_congr rfl
+    intro ell hell
+    congr 1
+    have eq := weighted_local_fiber 1 0 (0 : Fin 3) (lastSourceTau 0 true)
+      ⟨2, by decide⟩ (by rfl) P (threeOrders D a b K) (d + ell)
+      (exponents 2 ![-l - 1, -k + ell - 1])
+    rw [← SupportedWordRationalCollision.ActualOrderedCoordinates.firstOrder_rational,
+      ← SupportedWordRationalCollision.ActualOrderedCoordinates.secondOrder_rational,
+      f_left, g_left] at eq
+    exact eq
+  · unfold leftPairFiberQ lastSourceLocalQ
+    simp only [Bool.true_eq, Bool.false_eq_true, ite_true, ite_false]
+    apply Finset.sum_congr rfl
+    intro ell hell
+    congr 1
+    have eq := weighted_local_fiber 0 1 (0 : Fin 3) (lastSourceTau 0 false)
+      ⟨2, by decide⟩ (by rfl) P (threeOrders D a b K) (d + ell)
+      (exponents 2 ![-k + ell - 1, -l - 1])
+    rw [← SupportedWordRationalCollision.ActualOrderedCoordinates.firstOrder_rational,
+      ← SupportedWordRationalCollision.ActualOrderedCoordinates.secondOrder_rational,
+      f_right, g_right] at eq
+    exact eq
+
+/-- A supported outer Q readout whose complete inner collision is local.
+The eliminated label distinguishes A/B from J/B, without relabelling the numerator. -/
+def nestedRightLocalReadout (z : Fin 2) (outerLift innerLift d r n : ℤ) (K H : ℕ)
+    (R : CommonRational ℂ 3) : ℂ :=
+  supportedQReadout outerLift r H n
+    (fun k l => lastSourceLocalQ z true innerLift d K l k R)
+    (fun k l => lastSourceLocalQ z false innerLift d K k l R)
+
+private theorem nestedRightLocalReadout_sourceSource (D : LatticeData) (a b : Carrier D) (K I : ℕ)
+    (P : LabelledPolynomial ℂ 3) (outerLift innerLift d r n : ℤ) (H : ℕ) :
+    nestedRightFiberReadout outerLift innerLift d r n I H
+      (rationalTripleCarriers D a b K P) =
+    nestedRightLocalReadout 1 outerLift innerLift d r n I H
+      (algebraMap _ (CommonRational ℂ 3) P /
+        algebraMap _ (CommonRational ℂ 3) (weightedClearingPolynomial (threeOrders D a b K))) := by
+  unfold nestedRightFiberReadout nestedRightLocalReadout
+  apply supportedQReadout_congr
+  · intro k l _
+    exact (sourceSourceLocalQ_eq D a b K I P innerLift d l k).1
+  · intro k l _
+    exact (sourceSourceLocalQ_eq D a b K I P innerLift d k l).2
+
+private theorem nestedRightLocalReadout_currentSecondSource (D : LatticeData) (a b : Carrier D) (K I : ℕ)
+    (P : LabelledPolynomial ℂ 3) (outerLift innerLift d r n : ℤ) (H : ℕ) :
+    nestedRightFiberReadout outerLift innerLift d r n I H
+      (swapCurrentSourceCarriers (rationalTripleCarriers D a b K P)) =
+    nestedRightLocalReadout 0 outerLift innerLift d r n I H
+      (algebraMap _ (CommonRational ℂ 3) P /
+        algebraMap _ (CommonRational ℂ 3) (weightedClearingPolynomial (threeOrders D a b K))) := by
+  unfold nestedRightFiberReadout nestedRightLocalReadout
+  apply supportedQReadout_congr
+  · intro k l _
+    exact (currentSecondSourceLocalQ_eq D a b K I P innerLift d l k).1
+  · intro k l _
+    exact (currentSecondSourceLocalQ_eq D a b K I P innerLift d k l).2
+
+/- proof_shape: actual_supported_nested_extraction: content
+   admission_basis: escape-witness
+   escape_witness: complete intermediate-field support bounds the outer fibers
+   after cancellation; actual rightmost-vector support bounds every inner
+   fiber. The common actual Laurent slice transports these bounds and all
+   three complete extractions without retaining chosen mode cutoffs. -/
+/-- The actual common numerator has supported nested residue fibers. All
+three complete Q products are extracted without intermediate mode cutoffs;
+outer support bounds the complete inner difference, with both orders intact. -/
+theorem actual_supported_nested_extraction (D : LatticeData) (hu : IsUnit D.G.det)
+    (i : Fin D.rank) (a b : Carrier D) :
+    ∃ K : ℕ, ∀ (gamma delta d r n : ℤ) (x : ActualTensor D hu)
+      (phi : ActualTensor D hu →ₗ[ℂ] ℂ),
+      ∃ P : LabelledPolynomial ℂ 3,
+        (∀ e : Exponent 3, P.coeff e =
+          if totalExponent e =
+              (∑ p ∈ labelledPairs 3, (threeOrders D a b K p : ℤ)) - d - r - n - 3
+          then phi (actualNumerator D hu i a b gamma delta K x e) else 0) ∧
+        ∀ (H₁ H₂ H₃ : ℕ) (j : ℤ),
+          NestedLeftSupported 1 d r n (vectorFrequencyBound D a + 1) H₁
+            (rationalTripleReadout D a b K P) ∧
+          NestedRightSupported gamma (r + j) (d - j) n K H₂
+            (rationalTripleReadout D a b K P) ∧
+          NestedRightSupported 1 j (d + r - j) n (vectorFrequencyBound D b + 1) H₃
+            (swapCurrentSourceReadout (rationalTripleReadout D a b K P)) ∧
+          phi (((qField (gamma + 1) r H₁
+            (targetSlice D hu (neutralMode D i d a) (gamma + 1))
+            (targetSlice D hu b delta))[[n]]) x) =
+            supportedNestedLeftReadout (gamma + 1) 1 d r n
+              (vectorFrequencyBound D a + 1) H₁ (rationalTripleReadout D a b K P) ∧
+          phi (((qField 1 (d - j) H₂ (targetCurrent D hu i)
+            (qField gamma (r + j) K (targetSlice D hu a gamma)
+              (targetSlice D hu b delta)))[[n]]) x) =
+            supportedNestedRightReadout 1 gamma (r + j) (d - j) n K H₂
+              (rationalTripleReadout D a b K P) ∧
+          phi (((qField gamma (d + r - j) H₃ (targetSlice D hu a gamma)
+            (targetSlice D hu (neutralMode D i j b) (delta + 1)))[[n]]) x) =
+            supportedNestedRightReadout gamma 1 j (d + r - j) n
+              (vectorFrequencyBound D b + 1) H₃
+              (swapCurrentSourceReadout (rationalTripleReadout D a b K P)) ∧
+          phi (((qField (gamma + 1) r H₁
+            (targetSlice D hu (neutralMode D i d a) (gamma + 1))
+            (targetSlice D hu b delta))[[n]]) x) =
+            nestedLeftFiberReadout (gamma + 1) 1 d r n
+              (vectorFrequencyBound D a + 1) H₁ (rationalTripleCarriers D a b K P) ∧
+          phi (((qField 1 (d - j) H₂ (targetCurrent D hu i)
+            (qField gamma (r + j) K (targetSlice D hu a gamma)
+              (targetSlice D hu b delta)))[[n]]) x) =
+            nestedRightFiberReadout 1 gamma (r + j) (d - j) n K H₂
+              (rationalTripleCarriers D a b K P) ∧
+          phi (((qField gamma (d + r - j) H₃ (targetSlice D hu a gamma)
+            (targetSlice D hu (neutralMode D i j b) (delta + 1)))[[n]]) x) =
+            nestedRightFiberReadout gamma 1 j (d + r - j) n
+              (vectorFrequencyBound D b + 1) H₃
+              (swapCurrentSourceCarriers (rationalTripleCarriers D a b K P)) ∧
+          phi (((qField (gamma + 1) r H₁
+            (targetSlice D hu (neutralMode D i d a) (gamma + 1))
+            (targetSlice D hu b delta))[[n]]) x) =
+            nestedLeftLocalReadout (gamma + 1) 1 d r n
+              (vectorFrequencyBound D a + 1) H₁
+              (algebraMap _ (CommonRational ℂ 3) P /
+                algebraMap _ (CommonRational ℂ 3)
+                  (weightedClearingPolynomial (threeOrders D a b K))) ∧
+          phi (((qField 1 (d - j) H₂ (targetCurrent D hu i)
+            (qField gamma (r + j) K (targetSlice D hu a gamma)
+              (targetSlice D hu b delta)))[[n]]) x) =
+            nestedRightLocalReadout 1 1 gamma (r + j) (d - j) n K H₂
+              (algebraMap _ (CommonRational ℂ 3) P /
+                algebraMap _ (CommonRational ℂ 3)
+                  (weightedClearingPolynomial (threeOrders D a b K))) ∧
+          phi (((qField gamma (d + r - j) H₃ (targetSlice D hu a gamma)
+            (targetSlice D hu (neutralMode D i j b) (delta + 1)))[[n]]) x) =
+            nestedRightLocalReadout 0 gamma 1 j (d + r - j) n
+              (vectorFrequencyBound D b + 1) H₃
+              (algebraMap _ (CommonRational ℂ 3) P /
+                algebraMap _ (CommonRational ℂ 3)
+                  (weightedClearingPolynomial (threeOrders D a b K))) := by
+  obtain ⟨K, carriers⟩ := actual_finite_laurent_carriers D hu i a b
+  refine ⟨K, ?_⟩
+  intro gamma delta d r n x phi
+  let total := (∑ p ∈ labelledPairs 3, (threeOrders D a b K p : ℤ)) - d - r - n - 3
+  obtain ⟨P, coefficients, words⟩ := carriers gamma delta x phi total
+  refine ⟨P, coefficients, ?_⟩
+  let J := targetCurrent D hu i
+  let A := targetSlice D hu a gamma
+  let B := targetSlice D hu b delta
+  have same (order : Fin 6) (modes : Exponent 3)
+      (degree : (∑ k, modes k) = d + r + n) :
+      tripleScalar J A B x phi order modes = rationalTripleReadout D a b K P order modes := by
+    have index : totalExponent (fun k => -modes k - 1) =
+        total - ∑ p ∈ labelledPairs 3, (threeOrders D a b K p : ℤ) := by
+      simp only [totalExponent, Fin.sum_univ_three] at degree ⊢
+      dsimp [total]
+      omega
+    have readout := words (triplePermutation order) (fun k => -modes k - 1)
+    rw [if_pos index] at readout
+    exact readout.symm
+  have swapped (j : ℤ) (order : Fin 6) (modes : Exponent 3)
+      (degree : (∑ k, modes k) = j + (d + r - j) + n) :
+      tripleScalar A J B x phi order modes =
+        swapCurrentSourceReadout (rationalTripleReadout D a b K P) order modes := by
+    rw [tripleScalar_swap]
+    apply same
+    simp [Fin.sum_univ_three] at degree ⊢
+    omega
+  intro H₁ H₂ H₃ j
+  refine ⟨?_, ?_, ?_, ?_, ?_, ?_, ?_, ?_, ?_, ?_, ?_, ?_⟩
+  · exact (NestedLeftSupported_congr 1 d r n _ H₁ _ _ same).mp
+      (actual_nested_left_support 1 d r n _ H₁ J A B x phi)
+  · exact (NestedRightSupported_congr gamma (r + j) (d - j) n K H₂ _ _
+      (fun order modes degree => same order modes (by omega))).mp
+      (actual_nested_right_support gamma (r + j) (d - j) n K H₂ J A B x phi)
+  · exact (NestedRightSupported_congr 1 j (d + r - j) n _ H₃ _ _ (swapped j)).mp
+      (actual_nested_right_support 1 j (d + r - j) n _ H₃ A J B x phi)
+  · rw [D5.S3.VertexAlgebra.LatticeHalfFockLeftCurrentTransport.current_q D hu i a gamma d,
+      supportedNestedLeftReadout_eq]
+    exact supportedNestedLeftReadout_congr _ _ _ _ _ _ _ _ _ same
+  · rw [supportedNestedRightReadout_eq]
+    exact supportedNestedRightReadout_congr _ _ _ _ _ _ _ _ _
+      (fun order modes degree => same order modes (by omega))
+  · rw [D5.S3.VertexAlgebra.LatticeHalfFockLeftCurrentTransport.current_q D hu i b delta j,
+      supportedNestedRightReadout_eq]
+    exact supportedNestedRightReadout_congr _ _ _ _ _ _ _ _ _ (swapped j)
+
+  · rw [D5.S3.VertexAlgebra.LatticeHalfFockLeftCurrentTransport.current_q D hu i a gamma d,
+      supportedNestedLeftReadout_eq, nestedLeftFiberReadout_eq]
+    exact supportedNestedLeftReadout_congr _ _ _ _ _ _ _ _ _ same
+  · rw [supportedNestedRightReadout_eq, nestedRightFiberReadout_eq]
+    exact supportedNestedRightReadout_congr _ _ _ _ _ _ _ _ _
+      (fun order modes degree => same order modes (by omega))
+  · rw [D5.S3.VertexAlgebra.LatticeHalfFockLeftCurrentTransport.current_q D hu i b delta j,
+      supportedNestedRightReadout_eq, nestedRightFiberReadout_eq, hahnTripleScalar_swap]
+    exact supportedNestedRightReadout_congr _ _ _ _ _ _ _ _ _ (swapped j)
+
+  · rw [← nestedLeftLocalReadout_eq D a b K P (gamma + 1) 1 d r n H₁,
+      D5.S3.VertexAlgebra.LatticeHalfFockLeftCurrentTransport.current_q D hu i a gamma d,
+      supportedNestedLeftReadout_eq, nestedLeftFiberReadout_eq]
+    exact supportedNestedLeftReadout_congr _ _ _ _ _ _ _ _ _ same
+
+  · rw [← nestedRightLocalReadout_sourceSource D a b K K P 1 gamma (r + j) (d - j) n H₂,
+      supportedNestedRightReadout_eq, nestedRightFiberReadout_eq]
+    exact supportedNestedRightReadout_congr _ _ _ _ _ _ _ _ _
+      (fun order modes degree => same order modes (by omega))
+  · rw [← nestedRightLocalReadout_currentSecondSource D a b K
+      (vectorFrequencyBound D b + 1) P gamma 1 j (d + r - j) n H₃,
+      D5.S3.VertexAlgebra.LatticeHalfFockLeftCurrentTransport.current_q D hu i b delta j,
+      supportedNestedRightReadout_eq, nestedRightFiberReadout_eq, hahnTripleScalar_swap]
+    exact supportedNestedRightReadout_congr _ _ _ _ _ _ _ _ _ (swapped j)
 
 section CollisionTaylor
 open CollisionLaurentKernels.LaurentCollision

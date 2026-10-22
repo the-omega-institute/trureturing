@@ -6,7 +6,23 @@ The complete rational collision holds for every integer weight and every remaini
 
 Over any field K, take arbitrary finite pre/post blocks, z, tau, x with tau(pre)=x, a finite labelled Laurent numerator P whose z exponents are nonnegative, and the exact fixed-label Q of order k. Divide P by Q in the common rational field. Expand in the two complete orders before selecting the supported z=-1 fibres.
 
-**Theorem 1.1 (Assemble the collision without a decomposition premise).**
+**Theorem 1.1 (Independent pair orders and arbitrary Laurent numerator powers).**
+
+Lean statement: `D5/S3/VertexAlgebra/RationalCollision.weighted_laurent_collision`
+
+*Proof.* Machine-checked in Lean as `D5/S3/VertexAlgebra/RationalCollision.weighted_laurent_collision` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Acknowledgement.* Atsushi Matsuo; Kiyokazu Nagatomo (1997). *On axioms for a vertex algebra and the locality of quantum fields*. URL: <https://arxiv.org/abs/hep-th/9706118v1>.
+
+*Commentary.*
+
+A finite Laurent numerator may have negative powers of the eliminated label. Its finite support supplies an explicit common lower bound. Clearing that bound adds an origin pole to the actual pair poles in the derived partial-fraction expansion. Every signed diagonal weight is retained, and each pair keeps its own natural denominator order; no uniform-order premise is used.
+
+The origin pole has equal residues in both complete adjacent orders. Its local residue at the retained nonzero labelled variable vanishes. Together with the existing diagonal, spectator and polynomial residue proofs, this gives equality of entire remaining Hahn series with the fused local residue for unrestricted Laurent numerators. Fractional nested Q extraction and the three actual Taylor identifications still require their own finite padding, coordinate and coefficient arguments.
+
+**Theorem 1.2 (Assemble the collision without a decomposition premise).**
 
 Lean statement: `D5/S3/VertexAlgebra/RationalCollision.full_collision_series`
 
@@ -20,7 +36,7 @@ Lean statement: `D5/S3/VertexAlgebra/RationalCollision.full_collision_series`
 
 The oriented finite partial-fraction normal form is derived from the actual weighted P/Q. Polynomial residue zero, the all-integer diagonal kernel and spectator cancellation prove each term. Additive residue maps assemble equality of entire supported Hahn series on every remaining label.
 
-**Theorem 1.2 (All integer weights and all remaining labelled coefficients).**
+**Theorem 1.3 (All integer weights and all remaining labelled coefficients).**
 
 Lean statement: `D5/S3/VertexAlgebra/RationalCollision.required_proved`
 
@@ -34,7 +50,7 @@ Lean statement: `D5/S3/VertexAlgebra/RationalCollision.required_proved`
 
 The theorem discharges the full CollisionStatement with no assumed collision, support certificate or compatibility law. It quantifies r in Int and every function from Remaining z to Int. Negative remaining exponents and arbitrary spectators are retained.
 
-**Theorem 1.3 (Expand the fused local rational before taking residue).**
+**Theorem 1.4 (Expand the fused local rational before taking residue).**
 
 Lean statement: `D5/S3/VertexAlgebra/RationalCollision.complete_expansion_collision`
 
@@ -57,6 +73,7 @@ Matsuo and Nagatomo, hep-th/9706118v1, Proposition 1.5.5 and Theorem 5.4.1 provi
 - Truth anchor: `D5/S3/VertexAlgebra/RationalCollision.complete_expansion_collision`
 - Truth anchor: `D5/S3/VertexAlgebra/RationalCollision.full_collision_series`
 - Truth anchor: `D5/S3/VertexAlgebra/RationalCollision.required_proved`
+- Truth anchor: `D5/S3/VertexAlgebra/RationalCollision.weighted_laurent_collision`
 - Dependency: [D5/S3/VertexAlgebra/LabelledRationalClearing](LabelledRationalClearing.md)
 - Dependency: [D5/S3/VertexAlgebra/OrderedCollisionCoordinates](OrderedCollisionCoordinates.md)
 - Dependency: [D5/S3/VertexAlgebra/OrderedCollisionResidues](OrderedCollisionResidues.md)

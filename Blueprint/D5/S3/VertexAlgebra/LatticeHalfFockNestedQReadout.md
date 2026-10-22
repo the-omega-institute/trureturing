@@ -4,7 +4,27 @@
 
 The three nested fractional products retain one actual labelled Laurent numerator.
 
-**Theorem 1.1 (All three nested coefficients are extracted from the same actual ternary numerator).**
+Each of the three inner pair collisions is also identified with the genuine local rational residue in both spectator positions. The unrestricted weighted Laurent collision theorem derives this identification without a nonnegative eliminated coordinate or a uniform denominator. Each complete difference remains inside the supported outer fibers; conversion to the final outer Taylor readout is still open.
+
+**Theorem 1.1 (The actual common numerator supports all three complete nested residues).**
+
+Lean statement: `D5/S3/VertexAlgebra/LatticeHalfFockNestedQReadout.actual_supported_nested_extraction`
+
+*Proof.* Machine-checked in Lean as `D5/S3/VertexAlgebra/LatticeHalfFockNestedQReadout.actual_supported_nested_extraction` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Acknowledgement.* Bojko Bakalov and Victor G. Kac (2004). *Twisted Modules over Lattice Vertex Algebras*. DOI: [10.1142/9789812702562_0001](https://doi.org/10.1142/9789812702562_0001). URL: <https://arxiv.org/abs/math/0402315v1>.
+
+*Commentary.*
+
+Choose K from the actual finite Laurent carriers for arbitrary original sources a,b and current label i. For every signed gamma,delta,d,r,n, actual input x and complex linear functional phi, take the same numerator slice of degree T=L+M+K-d-r-n-3. The theorem proves finite support of every inner residue fiber and of the outer fibers of the complete inner differences, and identifies all three actual nested Q coefficients with these supported extractions. The word degree is T-(L+M+K). All outer fractional cutoffs are independent.
+
+QReadoutSupported asserts finiteness of each ordinary residue fiber within the finite fractional sum. NestedLeftSupported and NestedRightSupported additionally assert outer support after combining each complete inner forward-minus-reverse residue. Actual support follows from the rightmost field on its actual input and, at the outer level, from the complete intermediate Q field on its actual input. Equality on the fixed total-mode fiber transports the support to the common rational numerator. No cutoff of a complete intermediate field is imposed on either individual expanded word.
+
+The theorem also identifies the three coefficients with literal supported Hahn fiber residues. leftPairFiberQ and rightPairFiberQ use the first and second residue embeddings for adjacent pairs, keeping the spectator on its original side; contextual_kernel_extraction supplies their finite-support coefficient formulas. nestedLeftFiberReadout and nestedRightFiberReadout keep each complete inner Hahn difference inside the outer supported mode sum. Current/source relabeling permutes the six carriers without changing their word positions. These expressions remove intermediate mode cutoff choices. They retain signed lifts, both complete orders, all actual inputs, and the original source/actual tensor distinction. Their identification with the finite collisionTaylor sums in sameNumeratorCollisionBridge still requires the outer local-coordinate coefficient argument for all three inner pairs; no one of its three Taylor equalities is asserted here. Actual interchange, Lambda_tar=0, arbitrary-first DE-L, negative first-word induction, all-charge transport and the independent GroundFirst base remain open.
+
+**Theorem 1.2 (All three nested coefficients are extracted from the same actual ternary numerator).**
 
 Lean statement: `D5/S3/VertexAlgebra/LatticeHalfFockNestedQReadout.actual_nested_ordered_readouts`
 
@@ -28,7 +48,7 @@ nestedLeftReadout and nestedRightReadout retain all four resulting triple words 
 
 This theorem identifies nested ordered rational coefficients. The separate collision-Taylor theorem below proves the finite fractional coordinate cocycle and the signed two-residue balance of the same actual numerator. Identification of these chart residues with the three complete nested Q readouts remains unproved. Consequently Lambda_tar=0, residual-free DE-L, universal negative first-word transport and all-charge induction remain open. GroundFirst is an independent final lifting base. No target vacuum, positive definiteness, energy eigenstate, or compatibility law is assumed.
 
-**Theorem 1.2 (The same actual numerator satisfies the finite coordinate cocycle and signed collision balance).**
+**Theorem 1.3 (The same actual numerator satisfies the finite coordinate cocycle and signed collision balance).**
 
 Lean statement: `D5/S3/VertexAlgebra/LatticeHalfFockNestedQReadout.actual_collision_taylor_balance`
 
@@ -54,4 +74,5 @@ These are finite chart identities for the actual numerator. sameNumeratorCollisi
 
 - Truth anchor: `D5/S3/VertexAlgebra/LatticeHalfFockNestedQReadout.actual_collision_taylor_balance`
 - Truth anchor: `D5/S3/VertexAlgebra/LatticeHalfFockNestedQReadout.actual_nested_ordered_readouts`
+- Truth anchor: `D5/S3/VertexAlgebra/LatticeHalfFockNestedQReadout.actual_supported_nested_extraction`
 - Dependency: [D5/S3/VertexAlgebra/LatticeHalfFockClearedTaylorReadout](LatticeHalfFockClearedTaylorReadout.md)

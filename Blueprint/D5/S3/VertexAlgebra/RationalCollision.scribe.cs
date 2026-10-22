@@ -17,6 +17,24 @@ internal sealed class RationalCollisionDocument : IScribeDocumentDefinition
                 + "of order k. Divide P by Q in the common rational field. Expand in the two complete orders "
                 + "before selecting the supported z=-1 fibres.")),
             Describe.Lean(
+                DescribeId.Create("rationalcollision-weighted-laurent-collision"),
+                DeclarationHandle.Create(Prefix + "weighted_laurent_collision"),
+                H("Independent pair orders and arbitrary Laurent numerator powers"),
+                StatementSource.WithoutFormula(),
+                AssessedProvenance.FromRepo(LocalityBackground),
+                Blocks(
+                    Paragraph(Text("A finite Laurent numerator may have negative powers of the eliminated label. "
+                        + "Its finite support supplies an explicit common lower bound. Clearing that bound adds "
+                        + "an origin pole to the actual pair poles in the derived partial-fraction expansion. "
+                        + "Every signed diagonal weight is retained, and each pair keeps its own natural denominator order; no uniform-order premise is used.")),
+                    Paragraph(Text("The origin pole has equal residues in both complete adjacent orders. Its local "
+                        + "residue at the retained nonzero labelled variable vanishes. Together with the existing "
+                        + "diagonal, spectator and polynomial residue proofs, this gives equality of entire remaining "
+                        + "Hahn series with the fused local residue for unrestricted Laurent numerators. Fractional "
+                        + "nested Q extraction and the three actual Taylor identifications still require their own "
+                        + "finite padding, coordinate and coefficient arguments."))),
+                DescribeRole.Theorem),
+            Describe.Lean(
                 DescribeId.Create("rationalcollision-full-collision-series"),
                 DeclarationHandle.Create(Prefix + "full_collision_series"),
                 H("Assemble the collision without a decomposition premise"),

@@ -387,5 +387,105 @@ def registration : LeanInformationAudit.Contract.Registration.{_,_,_,0,0,0,_,_,_
 
 end CollisionTaylor
 
+namespace SupportedExtraction
+
+abbrev Input := Reg.D5.S3.VertexAlgebra.LatticeHalfFockNestedQReadout.Input
+abbrev signature : Signature := Reg.Support.SingleDependentReadout.signature
+  Parameters Input (fun _ => ℂ × ℂ × ℂ)
+
+def actual : Realization signature := realize signature (fun _ p u =>
+  (supportedNestedLeftReadout (u.gamma + 1) 1 u.d u.r u.n
+      (vectorFrequencyBound p.D p.a + 1) u.H₁ (rationalTripleReadout p.D p.a p.b u.K u.P),
+   supportedNestedRightReadout 1 u.gamma (u.r + u.j) (u.d - u.j) u.n u.K u.H₂
+      (rationalTripleReadout p.D p.a p.b u.K u.P),
+   supportedNestedRightReadout u.gamma 1 u.j (u.d + u.r - u.j) u.n
+      (vectorFrequencyBound p.D p.b + 1) u.H₃
+      (swapCurrentSourceReadout (rationalTripleReadout p.D p.a p.b u.K u.P))))
+  (fun empty => nomatch empty)
+
+def supported (p : Parameters) (u : Input p) : Prop :=
+  NestedLeftSupported 1 u.d u.r u.n (vectorFrequencyBound p.D p.a + 1) u.H₁
+    (rationalTripleReadout p.D p.a p.b u.K u.P) ∧
+  NestedRightSupported u.gamma (u.r + u.j) (u.d - u.j) u.n u.K u.H₂
+    (rationalTripleReadout p.D p.a p.b u.K u.P) ∧
+  NestedRightSupported 1 u.j (u.d + u.r - u.j) u.n
+    (vectorFrequencyBound p.D p.b + 1) u.H₃
+    (swapCurrentSourceReadout (rationalTripleReadout p.D p.a p.b u.K u.P))
+
+def fibers (p : Parameters) (u : Input p) : ℂ × ℂ × ℂ :=
+  (nestedLeftFiberReadout (u.gamma + 1) 1 u.d u.r u.n
+      (vectorFrequencyBound p.D p.a + 1) u.H₁ (rationalTripleCarriers p.D p.a p.b u.K u.P),
+   nestedRightFiberReadout 1 u.gamma (u.r + u.j) (u.d - u.j) u.n u.K u.H₂
+      (rationalTripleCarriers p.D p.a p.b u.K u.P),
+   nestedRightFiberReadout u.gamma 1 u.j (u.d + u.r - u.j) u.n
+      (vectorFrequencyBound p.D p.b + 1) u.H₃
+      (swapCurrentSourceCarriers (rationalTripleCarriers p.D p.a p.b u.K u.P)))
+
+def arena : Arena where
+  signature := signature
+  Law R := ∀ p, ∃ K : ℕ, ∀ (gamma delta d r n : ℤ) (x : ActualTensor p.D p.hu)
+      (phi : ActualTensor p.D p.hu →ₗ[ℂ] ℂ),
+      ∃ P : LabelledPolynomial ℂ 3,
+        (∀ e : Exponent 3, P.coeff e =
+          if totalExponent e =
+              (∑ q ∈ labelledPairs 3, (threeOrders p.D p.a p.b K q : ℤ)) - d - r - n - 3
+          then phi (actualNumerator p.D p.hu p.i p.a p.b gamma delta K x e) else 0) ∧
+        ∀ (H₁ H₂ H₃ : ℕ) (j : ℤ),
+          let u : Input p := ⟨K, gamma, delta, d, r, n, x, phi, P, H₁, H₂, H₃, j⟩
+          supported p u ∧ observed p u = R.readout () p u ∧ observed p u = fibers p u ∧
+          (observed p u).1 = nestedLeftLocalReadout (gamma + 1) 1 d r n
+            (vectorFrequencyBound p.D p.a + 1) H₁
+            (algebraMap _ (CommonRational ℂ 3) P /
+              algebraMap _ (CommonRational ℂ 3) (weightedClearingPolynomial (threeOrders p.D p.a p.b K))) ∧
+          (observed p u).2.1 = nestedRightLocalReadout 1 1 gamma (r + j) (d - j) n K H₂
+            (algebraMap _ (CommonRational ℂ 3) P /
+              algebraMap _ (CommonRational ℂ 3) (weightedClearingPolynomial (threeOrders p.D p.a p.b K))) ∧
+          (observed p u).2.2 = nestedRightLocalReadout 0 gamma 1 j (d + r - j) n
+            (vectorFrequencyBound p.D p.b + 1) H₃
+            (algebraMap _ (CommonRational ℂ 3) P /
+              algebraMap _ (CommonRational ℂ 3) (weightedClearingPolynomial (threeOrders p.D p.a p.b K)))
+
+theorem source_bridge :
+    (type_of% (@actual_supported_nested_extraction)) ↔ arena.Law actual := by
+  constructor
+  · intro h p
+    obtain ⟨K, hp⟩ := h p.D p.hu p.i p.a p.b
+    refine ⟨K, ?_⟩
+    intro gamma delta d r n x phi
+    obtain ⟨P, coefficients, observations⟩ := hp gamma delta d r n x phi
+    refine ⟨P, coefficients, ?_⟩
+    intro H₁ H₂ H₃ j
+    obtain ⟨s₁, s₂, s₃, e₁, e₂, e₃, f₁, f₂, f₃, localValue, localForward, localReverse⟩ := observations H₁ H₂ H₃ j
+    exact ⟨⟨s₁, s₂, s₃⟩, Prod.ext e₁ (Prod.ext e₂ e₃), Prod.ext f₁ (Prod.ext f₂ f₃), localValue, localForward, localReverse⟩
+  · intro h D hu i a b
+    obtain ⟨K, hp⟩ := h ⟨D, hu, i, a, b⟩
+    refine ⟨K, ?_⟩
+    intro gamma delta d r n x phi
+    obtain ⟨P, coefficients, observations⟩ := hp gamma delta d r n x phi
+    refine ⟨P, coefficients, ?_⟩
+    intro H₁ H₂ H₃ j
+    obtain ⟨⟨s₁, s₂, s₃⟩, e, f, localValue, localForward, localReverse⟩ := observations H₁ H₂ H₃ j
+    exact ⟨s₁, s₂, s₃, congrArg Prod.fst e, congrArg (fun z => z.2.1) e,
+      congrArg (fun z => z.2.2) e, congrArg Prod.fst f,
+      congrArg (fun z => z.2.1) f, congrArg (fun z => z.2.2) f, localValue, localForward, localReverse⟩
+
+theorem actual_law : arena.Law actual := source_bridge.mp (@actual_supported_nested_extraction)
+
+def rejected : Realization signature := realize signature (fun _ _ _ => (1, 1, 1))
+  (fun empty => nomatch empty)
+
+theorem rejected_law : ¬ arena.Law rejected := by
+  intro law
+  obtain ⟨K, hp⟩ := law witness
+  obtain ⟨P, coefficients, observations⟩ := hp 0 0 0 0 0 0 0
+  have bad := congrArg Prod.fst (observations 0 0 0 0).2.1
+  have impossible : (0 : ℂ) = 1 := by simpa [observed, rejected, realize] using bad
+  exact zero_ne_one impossible
+
+theorem sensitivity : Sensitivity arena actual :=
+  Reg.Support.SingleDependentReadout.sensitivity arena.Law actual rejected rejected_law
+
+end SupportedExtraction
+
 end
 end Reg.D5.S3.VertexAlgebra.LatticeHalfFockNestedQReadout
