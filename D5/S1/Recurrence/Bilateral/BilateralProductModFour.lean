@@ -8,11 +8,15 @@
 
 /-
 ofSeries_inverse: proof_shape: bind-only; consumer: HannaBilateralReversionParity.coe_inverse
+window_split: proof_shape: bind-only; consumers: HannaBilateralReversionParity.normalized_sum,
+  HannaPrimeBilateralIntegrality.symmetric_sum
+Escape audit unfinished for window_split: https://github.com/the-omega-institute/trureturing/issues/19820
 Escape audit unfinished: https://github.com/the-omega-institute/trureturing/issues/19114
 -/
 
 import Mathlib.RingTheory.LaurentSeries
 import Mathlib.RingTheory.PowerSeries.WellKnown
+import Mathlib.Algebra.BigOperators.Group.Finset.Interval
 
 open PowerSeries
 namespace D5.S1.Recurrence.Bilateral.BilateralProductModFour
@@ -64,6 +68,26 @@ theorem finite_window (c : ℕ) (hc : 2 ≤ c) (A : PowerSeries ℤ)
     apply outside_zero c hc A N j
     simp only [Finset.mem_Icc] at hnot
     omega
+
+theorem window_split {M : Type*} [AddCommGroup M] (f : ℤ → M) (r : ℕ) :
+    (∑ n ∈ Finset.Icc (-((r + 1 : ℕ) : ℤ)) ((r + 1 : ℕ) : ℤ), f n) =
+      f (-1) + (∑ k ∈ Finset.range (r + 2), f (k : ℤ)) +
+        ∑ k ∈ Finset.range r, f (-((k + 2 : ℕ) : ℤ)) := by
+  induction r with
+  | zero =>
+    have he : Finset.Icc (-1 : ℤ) 1 = {-1, 0, 1} := Finset.val_inj.mp rfl
+    simp [he, Finset.sum_range_succ]
+  | succ r ih =>
+    rw [show ((r + 1 + 1 : ℕ) : ℤ) = ((r + 1 : ℕ) : ℤ) + 1 by omega,
+      Finset.sum_Icc_succ_eq_add_endpoints, ih]
+    have hp : (∑ k ∈ Finset.range (r + 1 + 2), f (k : ℤ)) =
+        (∑ k ∈ Finset.range (r + 2), f (k : ℤ)) + f ((r + 2 : ℕ) : ℤ) := by
+      exact Finset.sum_range_succ (fun k => f (k : ℤ)) (r + 2)
+    have hn : (∑ k ∈ Finset.range (r + 1), f (-((k + 2 : ℕ) : ℤ))) =
+        (∑ k ∈ Finset.range r, f (-((k + 2 : ℕ) : ℤ))) + f (-((r + 2 : ℕ) : ℤ)) :=
+      Finset.sum_range_succ _ _
+    rw [hp, hn, show ((r + 1 : ℕ) : ℤ) + 1 = ((r + 2 : ℕ) : ℤ) by omega]
+    abel
 
 private theorem sum_zero (c : ℕ) (hc : 2 ≤ c) (A : PowerSeries ℤ) :
     constantCoeff (nonzeroSum c A) = 0 := by

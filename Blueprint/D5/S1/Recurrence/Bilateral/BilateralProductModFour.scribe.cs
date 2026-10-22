@@ -47,6 +47,11 @@ internal sealed class BilateralProductModFourDocument : IScribeDocumentDefinitio
                 + "X^(c*k^2). For c at least two, either factor has degree at least k. "
                 + "Thus every index outside [-N,N] vanishes at degree N. Extending "
                 + "the finite sum only adds these zero coefficients."),
+            Node("window_split", "Symmetric finite-window decomposition", WindowSplitFormula(),
+                "The interval from -(r+1) through r+1 is the disjoint union of -1, the "
+                + "nonnegative indices through r+1, and the negative indices -(k+2) for "
+                + "k<r. The displayed sum identity follows by induction on r.",
+                DescribeRole.Theorem, AssessedProvenance.FromRepo(SourceTwo)),
             Node("a", "Stabilized integral coefficients", SequenceFormula(),
                 "Here P is the private approximation sequence and G is the inverse "
                 + "of 1+X. Differences of products, powers, and unit inverses preserve "
@@ -119,6 +124,10 @@ internal sealed class BilateralProductModFourDocument : IScribeDocumentDefinitio
     private static Formula LT(Formula c, Formula b, Formula j) => Call("laurentTerm", c, b, j);
     private static Formula Named(string name) => Seq(Operatorname, Grp(F.Id(name)));
     private static Formula Call(string name, params Formula[] args) => new Formula.Apply(Named(name), [.. args]);
+    private static Formula Qualified(string prefix, string name) =>
+        Seq(Operatorname, Grp(F.Id(prefix)), Dot, Operatorname, Grp(F.Id(name)));
+    private static Formula QualifiedCall(string prefix, string name, params Formula[] args) =>
+        new Formula.Apply(Qualified(prefix, name), [.. args]);
     private static Formula Parenthesized(Formula value) => Seq(Open, value, Close);
     private static Formula Equal(Formula a, Formula b) => Seq(a, Sp, Eq, Sp, b);
     private static Formula Less(Formula a, Formula b) => Seq(a, Sp, Lt, Sp, b);
@@ -197,6 +206,28 @@ internal sealed class BilateralProductModFourDocument : IScribeDocumentDefinitio
                 Implication(AtMost(n, k), Conjunction(
                     Seq(Bound("j", Integers()), Implication(outside, Equal(Coeff(n, Term(C(), b, j)), D(0)))),
                     Equal(Coeff(n, Rem(C(), b)), SumOver("j", Window(k), Coeff(n, Term(C(), b, j))))))))));
+    }
+
+    private static Formula WindowSplitFormula()
+    {
+        Formula m = F.Id("M"), f = F.Id("f"), r = F.Id("r"), n = F.Id("n"), k = F.Id("k");
+        Formula ints = Integers();
+        Formula fn(Formula x) => new Formula.Apply(f, [x]);
+        Formula cast(Formula x) => Parenthesized(Seq(x, Colon, Sp, Integers()));
+        Formula interval = QualifiedCall("Finset", "Icc",
+            Negative(cast(Add(r, D(1)))), cast(Add(r, D(1))));
+        Formula left = SumOver("n", interval, fn(n));
+        Formula middle = SumOver("k", QualifiedCall("Finset", "range", Add(r, D(2))), fn(cast(k)));
+        Formula right = SumOver("k", QualifiedCall("Finset", "range", r),
+            fn(Negative(cast(Add(k, D(2))))));
+        Formula functionType = Parenthesized(Seq(ints, Sp, To, Sp, m));
+        return Disp(Seq(
+            Forall, Sp, m, Colon, Sp, Operatorname, Grp(F.Id("Type")), Comma, Esc,
+            OpenBracket, Operatorname, Grp(F.Id("AddCommGroup")), Parenthesized(m), CloseBracket,
+            Comma, Esc,
+            Forall, Sp, f, Colon, Sp, functionType, Comma, Esc,
+            Forall, Sp, r, Colon, Sp, Naturals(), Comma, Esc,
+            Equal(left, Add(Add(fn(Negative(D(1))), middle), right)), Dot));
     }
 
     private static Formula SequenceFormula()

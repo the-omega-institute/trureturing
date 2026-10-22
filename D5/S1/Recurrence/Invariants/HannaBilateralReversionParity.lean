@@ -28,7 +28,6 @@ integralA_one: proof_shape: bind-only; consumers: rationalA_one
 reversion: proof_shape: bind-only; consumers: integralA_mod_two, rational_reversion
 B_mod_two: proof_shape: bind-only; consumers: integralA_mod_two
 integralA_mod_two: proof_shape: bind-only; consumers: integralA_even
-window_split: proof_shape: bind-only; consumers: normalized_sum
 coe_inverse: proof_shape: bind-only; consumers: literal_negative
 coe_negative_coeff: proof_shape: bind-only; consumers: outside_window, normalized_sum
 literal_positive: proof_shape: bind-only; consumers: outside_window, normalized_sum
@@ -60,6 +59,7 @@ Direct frozen dependencies:
   D5/S1/Recurrence/Invariants/CompositionalIterateCongruence.agree_subst;
   D5/S1/Recurrence/Residue/QuotientThetaCompositionModFour.map_inverse;
   D5/S1/Recurrence/Bilateral/BilateralProductModFour.ofSeries_inverse;
+  D5/S1/Recurrence/Bilateral/BilateralProductModFour.window_split;
   D5/S1/Recurrence/Residue/ContinuedFractionOddSquare.inverse_one
     (existing dev owner; escape audit: https://github.com/the-omega-institute/trureturing/issues/19167).
 Escape audit unfinished: https://github.com/the-omega-institute/trureturing/issues/19114
@@ -280,28 +280,6 @@ private theorem integralA_mod_two : integralA.map (Int.castRingHom (ZMod 2)) = X
       integralA_zero, map_zero]
   rwa [subst_X (.of_constantCoeff_zero hz)] at he
 
-private theorem window_split {M : Type*} [AddCommGroup M] (f : ℤ → M) (r : ℕ) :
-    (∑ n ∈ Finset.Icc (-((r + 1 : ℕ) : ℤ)) ((r + 1 : ℕ) : ℤ), f n) =
-      f (-1) + (∑ k ∈ Finset.range (r + 2), f (k : ℤ)) +
-        ∑ k ∈ Finset.range r, f (-((k + 2 : ℕ) : ℤ)) := by
-  induction r with
-  | zero =>
-    have he : Finset.Icc (-1 : ℤ) 1 = {-1, 0, 1} := Finset.val_inj.mp rfl
-    simp [he, Finset.sum_range_succ]
-  | succ r ih =>
-    rw [show ((r + 1 + 1 : ℕ) : ℤ) = ((r + 1 : ℕ) : ℤ) + 1 by omega,
-      Finset.sum_Icc_succ_eq_add_endpoints, ih]
-    have hp : (∑ k ∈ Finset.range (r + 1 + 2), f (k : ℤ)) =
-        (∑ k ∈ Finset.range (r + 2), f (k : ℤ)) + f ((r + 2 : ℕ) : ℤ) := by
-      exact Finset.sum_range_succ (fun k => f (k : ℤ)) (r + 2)
-    have hn : (∑ k ∈ Finset.range (r + 1), f (-((k + 2 : ℕ) : ℤ))) =
-        (∑ k ∈ Finset.range r, f (-((k + 2 : ℕ) : ℤ))) + f (-((r + 2 : ℕ) : ℤ)) :=
-      Finset.sum_range_succ _ _
-    rw [hp, hn, show ((r + 1 : ℕ) : ℤ) + 1 = ((r + 2 : ℕ) : ℤ) by omega]
-    abel
-
-
-
 end General
 
 private theorem coe_inverse (F : PowerSeries ℚ) (hF : constantCoeff F = 1) :
@@ -425,7 +403,8 @@ private theorem normalized_sum (u : PowerSeries ℚ) (hu : constantCoeff u = 1) 
     (term A n).coeff ((j : ℤ) - 1)) = _
   rw [literal_finite_window u hu j (j + 3) (by omega),
     show j + 3 = j + 2 + 1 by omega,
-    window_split (fun n => (term A n).coeff ((j : ℤ) - 1)) (j + 2), hi]
+    D5.S1.Recurrence.Bilateral.BilateralProductModFour.window_split
+      (fun n => (term A n).coeff ((j : ℤ) - 1)) (j + 2), hi]
   simp_rw [literal_positive, literal_negative A hA ha]
   cases j with
   | zero =>
