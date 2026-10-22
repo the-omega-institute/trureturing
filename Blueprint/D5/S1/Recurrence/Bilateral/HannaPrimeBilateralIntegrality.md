@@ -48,6 +48,10 @@ $$\forall p: \mathbb{N}, (2 \le p) \implies ((\exists F: \operatorname{PowerSeri
 
 *Proof.* Machine-checked in Lean as `D5/S1/Recurrence/Bilateral/HannaPrimeBilateralIntegrality.result` (`✓ std3`). ∎
 
+*Resolves.* `Problems/oeis-a380681-hanna-prime-bilateral-integrality` (proved) by `D5/S1/Recurrence/Bilateral/HannaPrimeBilateralIntegrality.result`.
+
+<!-- scribe-open-problem-resolution-v1 {"problem_slug":"oeis-a380681-hanna-prime-bilateral-integrality","declaration_gid":"D5/S1/Recurrence/Bilateral/HannaPrimeBilateralIntegrality.result","resolution_kind":"proved"} -->
+
 *Source.* Repository-derived.
 
 *Acknowledgement.* Paul D. Hanna (2025). *OEIS A380681–A380686, prime parameters and integral bilateral series*. URL: <https://oeis.org/A380681>.
