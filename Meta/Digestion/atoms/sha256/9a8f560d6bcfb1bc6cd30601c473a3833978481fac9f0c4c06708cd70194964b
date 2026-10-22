@@ -1,0 +1,21 @@
+**Proposition 13.5 (a later common archive does not select an intention).**
+Fix one of these invocations and a later reached acquired frontier covering
+all its $c_z$. Consider the $d+1$ possible recovery requests whose intended
+targets are those cuts, with the actual execution and later acquired data
+held fixed. Any successful target-selection interface must distinguish
+these intentions by an actually bound/acquired relation with at least
+$d+1$ values. Supplying more identical copies of that common later history
+does not remove this requirement.
+
+Proof. The later acquired object is identical for all these requests;
+only their intended target varies. The requested outputs are pairwise
+distinct by Theorem 13.2. A deterministic selector with identical acquired
+arguments returns the same output, so it cannot satisfy two distinct
+intentions without an additional distinguishing argument or previously
+bound selector state. The same counting argument gives the bound. An
+already acquired authentically indexed frontier can provide such a
+relation; it is not ruled out. This proposition requires no Freeze at the
+older busy cut and proves no impossibility for a later authorized paid
+recovery. It identifies information that a recovery interface must really
+receive. $\square$
+
