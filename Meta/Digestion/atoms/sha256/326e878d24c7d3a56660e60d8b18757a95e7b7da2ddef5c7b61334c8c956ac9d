@@ -1,0 +1,9 @@
+**Theorem 6.1 (whole-child exact terminal-world recovery).** Choose $h_0$
+as in Theorem 4.3. For every $h$ with $0<|h|<h_0$ and every common
+known $\varepsilon\ge0$, the following are equivalent:
+
+1. There exists a single-valued decoder of (5.2) which returns $W$
+   for every complete world $W\in C(y(h))$ and every real $z$ with
+   $|z-a(W)|\le\varepsilon$.
+2. $2\varepsilon<\delta(h)$.
+

@@ -1,0 +1,24 @@
+**Definition 5.2 (one source-independent decoder).** For any $y=(p,v)$,
+$z\in\mathbb R$ and $\varepsilon\ge0$, define mathematically
+
+$$
+\operatorname{Comp}(y,z,\varepsilon)
+=\{W\in C(y):|z-a(W)|\le\varepsilon\}.
+\tag{5.3}
+$$
+
+On the domain
+
+$$
+\mathscr D=\{(y,z,\varepsilon):\varepsilon\ge0,
+                         |\operatorname{Comp}(y,z,\varepsilon)|=1\},
+$$
+
+let $D(y,z,\varepsilon)$ be that unique compatible complete world.
+This is one mathematical partial function, defined using the fixed
+original model on its actual compatible domain. Its input contains
+neither $h$ nor an enumeration of $C(y)$; the set in (5.3) specifies
+the function, not a newly supplied reply oracle. Correctness means it
+is defined and returns $W$ for every actual $W$ and every allowed $z$
+in the declared domain. No algorithm for evaluating (5.3) is asserted.
+

@@ -1,0 +1,77 @@
+**Theorem 16.2 (arbitrarily close worlds, one complete frozen record,
+and unbounded all-$M$ response difference).** Fix any
+$\varepsilon_7>0$ and $\varepsilon_8>0$ in the full additive joint
+relation (12.3), with eighth choice $M$. In every complete-source
+neighborhood of $W_3$ there are distinct actual $W_+(h),W_-(h)\in
+\mathcal D$ and one complete record $R_{8,M}^{\rm add}$ allowed for
+both, such that for every real $1\le\rho<\varphi$,
+
+$$
+ \lim_{n\to\infty}
+ \frac{|Y_{M^n}(W_+(h))-Y_{M^n}(W_-(h))|}
+      {\rho^n(1+n)^3}=+\infty.
+\tag{16.7}
+$$
+
+In particular their unweighted future difference is unbounded. The
+same chosen pair works for every $\rho$ in the displayed range.
+
+**Proof.** The actual germ worlds have the same exact $p,v$ and converge
+to $W_3$ in every coordinate (15.1). Their bases tend to the interior
+point $y_3$ of $\mathcal K$, so both belong to $\mathcal D$ for every
+sufficiently small $h$. Both $a$ and $f_M$ differences tend to zero.
+Choose an arbitrarily small nonzero $h$ for which Lemma 16.1 applies
+and both half-differences are strictly below the stipulated positive
+radii. Set
+
+$$
+ z_7=\frac{a(W_+(h))+a(W_-(h))}{2},\qquad
+ z_8=\frac{f_M(W_+(h))+f_M(W_-(h))}{2}.
+\tag{16.8}
+$$
+
+The common exact base, these two real substitutes, the same public
+radii and the fixed event metadata constitute one complete frozen
+record permitted by (12.3) on each of these two actual worlds.
+No coupling of two separately chosen pairs is involved. Each witness
+has its own one source, its original whole $g_\pm$ and its fixed
+$d_\pm$ on every clock, including the original $H_4$ and actual
+$M,M,J,M$ extension. The values in (16.8) witness allowed channel
+outputs, not an observer's access to the two exact replies.
+
+The elementary spectral identity
+$M^n=\varphi^n\Pi_++\psi^n\Pi_-$ gives exactly
+
+$$
+\begin{aligned}
+ Y_{M^n}(W_+(h))-Y_{M^n}(W_-(h))
+  ={}&d_+-d_-+\varphi^nD_{+,h}(8+n)\\
+    &+\psi^nD_{-,h}(8+n),
+\end{aligned}
+\tag{16.9}
+$$
+
+where $D_{-,h}(s)=A_-(W_+(h))g_+(s)-A_-(W_-(h))g_-(s)$ also has
+degree at most three. The original same-source clock is $8+n$;
+there is no clock reset or newly fitted polynomial in (16.9).
+
+By Lemma 16.1, $D_{+,h}$ is a nonzero polynomial. If its degree is
+$k\in\{0,1,2,3\}$, its nonzero leading coefficient supplies $c_h>0$
+and $N_h$ with $|D_{+,h}(8+n)|\ge c_h n^k$ for $n\ge N_h$.
+The other polynomial times $\psi^n$ tends to zero because
+$|\psi|<1$, while $d_+-d_-$ is constant. The reverse triangle
+inequality in (16.9), after enlarging $N_h$, therefore gives
+
+$$
+ |Y_{M^n}(W_+(h))-Y_{M^n}(W_-(h))|
+ \ge\frac{c_h}{2}\varphi^n n^k.
+\tag{16.10}
+$$
+
+For every fixed $1\le\rho<\varphi$, an exponential with ratio
+$\varphi/\rho>1$ dominates the factor $(1+n)^3/n^k$.
+Dividing (16.10) proves (16.7). The unweighted assertion follows
+as well, for example from the case $\rho=1$. Arbitrarily small
+$h$ were available under all the preceding strict requirements.
+$\square$
+

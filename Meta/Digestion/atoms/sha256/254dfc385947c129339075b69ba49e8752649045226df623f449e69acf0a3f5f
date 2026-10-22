@@ -1,0 +1,45 @@
+**Lemma 9.3 (local and remote response bands).** At $W_3$,
+
+$$
+499.5<f_J(W_3)<500,\qquad 551<f_M(W_3)<557.
+\tag{9.15}
+$$
+
+For every $y\in K_3$, the remote branch $Z(y)$ of VI Theorem 18.1
+satisfies
+
+$$
+493.9<f_J(Z(y))<494.4,\qquad 646<f_M(Z(y))<648.
+\tag{9.16}
+$$
+
+**Proof.** The local bounds follow from
+$27.2631+3.3785(139.8)>499.5$,
+$27.2632+3.3787(139.9)<500$,
+$27.2631+4.722(111)>551$, and
+$27.2632+4.724(112)<557$.
+For the remote square, VI Theorem 18.1 gives the complete source bounds
+that imply
+
+$$
+\theta\in[.9959,.9961],\quad U\in[1.0928431,1.0928433],
+$$
+
+$$
+q_5\in[-14.153,-14.149],\quad q_6\in[8.665,8.668],
+\quad q_7\in[61.027,61.042],\quad q_8\in[153.01,153.12],
+$$
+
+and hence $g_8\in[139.99,140.12]$ and
+$3+8b+c\in[4.3649,4.3650]$. The endpoint sums
+
+$$
+17.527142-4(14.153)-6(8.668)+4(61.027)>153.01,
+$$
+
+$$
+17.529885-4(14.149)-6(8.665)+4(61.042)<153.12
+$$
+
+then give (9.16) by (9.5). $\square$
+
