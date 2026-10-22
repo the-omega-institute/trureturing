@@ -131,34 +131,9 @@ def source_registration : Registration arena (type_of% (@merger_sum_transport.{u
       exact nomatch e
   dependence := dependence
 
-def registration :
-    Contract.Registration.{_, _, _, 0, 0, 0, _, _, _, _, _, 0}
-      (@_root_.D5.S3.Combinatorics.Partitions.TernaryPartitionCounting.merger_sum_transport.{u,v,w})
-      (Realization signature) Unit Unit := {
-  unitName := `Reg.D5.S3.Combinatorics.Partitions.TernaryPartitionCounting.Transport.unit
-  realizationName :=
-    `Reg.D5.S3.Combinatorics.Partitions.TernaryPartitionCounting.Transport.source_registration
-  realizationSource := none
-  generated := false
-  arena := .source ⟨arena⟩
-  objectArena := .source ⟨arena⟩
-  catalog := Lean.Name.anonymous
-  localNames := false
-  realization := .source arena ⟨source_registration⟩
-  correspondence := { stage := .evidence, objectStage := .evidence }
-  bundleNonempty := .absent
-  readout := some (realize signature (fun _ _ f => f) (fun e => nomatch e))
-  variation := .absent
-  sensitivity := .absent
-  partialSensitivity := none
-  escapeFrom := none
-  sourceSelection := none
-  continuation := .unknown
-  familyRecord := none
-  options := #[] }
-
+-- Full-telescope proof retained; Contract discovery is unsupported at rigid_universes.
+-- Unfinished audit: https://github.com/the-omega-institute/trureturing/issues/20310.
 #print axioms source_registration
-#print axioms registration
 
 end Transport
 
