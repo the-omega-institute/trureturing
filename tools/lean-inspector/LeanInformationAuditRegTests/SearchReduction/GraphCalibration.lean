@@ -57,7 +57,7 @@ run_cmd do
         (source.getModuleIdxFor? n).map fun i => source.header.moduleNames[i.toNat]!
       let scope ← targetBaselineImports "b02b98342945a1a724a227db4fa38e376640e573"
         delivery source name #[]
-      let table : LookupTable := {environment := base, implicationModules? := some scope}
+      let table ← onDemandLookup {environment := base, implicationModules? := some scope}
       let graph ← withEnv source <| extractGraph base name additions
       for v in graph.vertices do
         if v.seed then continue
