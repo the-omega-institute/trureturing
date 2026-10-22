@@ -132,6 +132,10 @@ $$\neg (\forall (stat: (\forall (n: \mathbb{N}), ((\operatorname{Fin}\left(n\rig
 
 *Proof.* Machine-checked in Lean as `D5/S3/Divergence/ModelLevelEnsembleEquivalenceConverseRefutation.result` (`✓ std3`). ∎
 
+*Resolves.* `Problems/giuffrida-squartini-grunwald-garlaschelli-2023-ensemble-equivalence-converse` (refuted) by `D5/S3/Divergence/ModelLevelEnsembleEquivalenceConverseRefutation.result`.
+
+<!-- scribe-open-problem-resolution-v1 {"problem_slug":"giuffrida-squartini-grunwald-garlaschelli-2023-ensemble-equivalence-converse","declaration_gid":"D5/S3/Divergence/ModelLevelEnsembleEquivalenceConverseRefutation.result","resolution_kind":"refuted"} -->
+
 *Source.* Repository-derived.
 
 *Acknowledgement.* F. Giuffrida, T. Squartini, P. Grünwald and D. Garlaschelli (2025). *Description length of canonical and microcanonical models*. DOI: [10.1103/1sd2-rxmy](https://doi.org/10.1103/1sd2-rxmy). URL: <https://arxiv.org/abs/2307.05645v4>.

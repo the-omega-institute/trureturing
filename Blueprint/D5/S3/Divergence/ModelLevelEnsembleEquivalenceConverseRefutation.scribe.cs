@@ -77,7 +77,10 @@ internal sealed class ModelLevelEnsembleEquivalenceConverseRefutationDocument : 
                     + "therefore at least Real.log(2)/2. Continuity and the two extreme-energy limits supply a finite "
                     + "expectation-matching theta for every n at least two. This contradicts the proposed converse. "
                     + "The result leaves the source's one-sided local-constraint equivalence intact."))),
-                DescribeRole.Theorem))));
+                DescribeRole.Theorem,
+                openProblemResolutionClaim: new OpenProblemResolutionClaim(
+                    ProblemSlugRef.Create("giuffrida-squartini-grunwald-garlaschelli-2023-ensemble-equivalence-converse"),
+                    ResolutionKind.Refuted)))));
 
     private static DocumentBlock Node(string name, string title, Formula formula, string prose, AssessedProvenance provenance) =>
         Describe.Lean(DescribeId.Create("model-equivalence-" + name.ToLowerInvariant()),
