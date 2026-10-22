@@ -1,0 +1,105 @@
+**Theorem 17.3 (C1 factor identities and specialization units).**
+The exact quotient and subresultants above satisfy
+
+$$
+\begin{gathered}
+\operatorname{Res}_x(F,G)=331776Q_4^3Q_9^2Q_{12}^8Q_{55},\\
+\operatorname{Res}_x(K,N)=-93312Q_4Q_{12}.
+\end{gathered}
+\tag{17.7}
+$$
+
+For each $Q$ in the following table, every entry in its second column
+has monic gcd $1$ with $Q$ in $\mathbb Q[t]$.
+
+| $Q$ | Polynomials coprime to $Q$ |
+| --- | --- |
+| $Q_4$ | $q_d,\ [x^6]F,\ [x^{13}]G,\ \pi_a,\ \alpha,\ A$ |
+| $Q_9$ | $q_d,\ [x^6]F,\ [x^{13}]G,\ \pi_a$ |
+| $Q_{12}$ | $q_d,\ [x^6]F,\ [x^{13}]G,\ \pi_a,\ c_2$ |
+| $Q_{55}$ | $q_d,\ [x^6]F,\ [x^{13}]G,\ \pi_a,\ \alpha,\ A$ |
+
+The following coefficient congruences also hold:
+
+$$
+\begin{aligned}
+(t+1)\alpha+(2t+1)\beta&\equiv0\pmod{Q_4},\\
+\pi_ac_1-2\pi_bc_2&\equiv0\pmod{Q_{12}},\\
+\pi_a^2c_0-\pi_b^2c_2&\equiv0\pmod{Q_{12}},\\
+\operatorname{prem}_x(K,\ell)&\equiv0\pmod{Q_e}\quad(e=4,12),\\
+\operatorname{prem}_x(N,\ell)&\equiv0\pmod{Q_e}\quad(e=4,12).
+\end{aligned}
+\tag{17.8}
+$$
+
+In the last two lines congruence is coefficientwise in $x$. The
+integer polynomial gcd of $\pi_a,\pi_b$ in $\mathbb Z[t]$, with
+positive normalization, is the constant $1296$.
+
+Proof. The finite polynomial operations determining the identities can
+be written explicitly. For $P,Q\in\mathbb Z[t][x]$ of degrees $m\ge n$
+put
+
+$$
+\operatorname{prem}_x(P,Q)
+=\operatorname{lc}_x(Q)^{m-n+1}
+  \operatorname{rem}_{\mathbb Q(t)[x]}(P,Q).
+\tag{17.9}
+$$
+
+For the pair $(G,F)$ set $R_0=G,R_1=F$, $m=6$,
+$a=\operatorname{lc}_x(F)$ and $c=-a^7$, and start with
+$R_2=\operatorname{prem}_x(G,F)$. For each subsequent nonzero $R_i$,
+let $k=\deg_xR_i$, $\delta=m-k$, and form
+
+$$
+\begin{gathered}
+R_{i+1}=\frac{\operatorname{prem}_x(R_{i-1},R_i)}{-ac^\delta},\\
+a_{\rm new}=\operatorname{lc}_x(R_i),\qquad
+c_{\rm new}=
+\begin{cases}
+(-a_{\rm new})^\delta/c^{\delta-1},&\delta>1,\\
+-a_{\rm new},&\delta=1,
+\end{cases}\qquad m_{\rm new}=k.
+\end{gathered}
+\tag{17.10}
+$$
+
+The values of $(m,a,c)$ on the right are the preceding values; the
+three new values replace them after the quotient is taken. Polynomial
+multiplication in (17.2) cancels exactly $90D^2h$ and $324D^4h$,
+giving the stated integer degrees. The divisions in (17.10) have
+zero remainder. Their successive $x$ degrees are
+
+$$
+13,6,5,4,3,2,1,0.
+\tag{17.11}
+$$
+
+The last three members are $S_2,S_1$ and
+$331776Q_4^3Q_9^2Q_{12}^8Q_{55}$, respectively; the remainder after
+the constant member is zero. These are the subresultants with the
+fixed minor convention in Definition 17.2. Thus (17.10), or equivalently
+those finite minors, specifies the exact quotient (17.4). The symmetry
+sign for the resultant is $(-1)^{6\cdot13}=1$.
+
+For the smaller pair use the same coefficient minors with degrees
+$(4,4)$; its constant member is $-93312Q_4Q_{12}$. Reducing the two
+coefficients of its linear member gives their integer scalar content
+$1296$. Reducing the coefficients of $S_1,S_2$ and the two
+pseudo-remainders by the explicitly listed $Q$'s gives (17.8).
+Euclidean division in $\mathbb Q[t]$ gives the gcd table. These are
+finite rational polynomial identities: (17.9)–(17.10), the coefficient
+lists and the specified monic reductions determine each entry.
+
+The algebraic tools here are the classical subresultant and resultant
+identities of Basu–Pollack–Roy,
+[*Algorithms in Real Algebraic Geometry*, second edition](https://doi.org/10.1007/3-540-33099-2),
+and Cox–Little–O'Shea,
+[*Ideals, Varieties, and Algorithms*, fourth edition](https://doi.org/10.1007/978-3-319-16721-3).
+They are used on these particular C1 circuits. In particular a finite
+common root annihilates every fixed subresultant even when a specialized
+degree drops, by the coefficient-minor argument of Definition 3.2.
+The gcd table additionally preserves degrees $6,13$ at every root of
+the four displayed factors. ∎
+
