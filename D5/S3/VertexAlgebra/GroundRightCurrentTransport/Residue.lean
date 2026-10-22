@@ -137,7 +137,7 @@ def Q (A B : VertexOperator ℂ M) (s r : ℤ) (K : ℕ) :
   ∑ ell ∈ Finset.range ((K : ℤ) - r).toNat,
     Ring.choose (-(s : ℂ) / 2) ell • Z ell (R A B (r + ell))
 
-private theorem Q_mode (A B : VertexOperator ℂ M) (s r n : ℤ) (K : ℕ) (x : M) :
+theorem Q_mode (A B : VertexOperator ℂ M) (s r n : ℤ) (K : ℕ) (x : M) :
     ((Q A B s r K) [[n]]) x =
       ∑ ell ∈ Finset.range ((K : ℤ) - r).toNat,
         Ring.choose (-(s : ℂ) / 2) ell • ((R A B (r + ell)) [[n - ell]]) x := by

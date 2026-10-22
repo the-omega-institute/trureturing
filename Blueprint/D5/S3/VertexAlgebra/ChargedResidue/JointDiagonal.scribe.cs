@@ -31,8 +31,16 @@ internal sealed class JointDiagonalDocument : IScribeDocumentDefinition
                         + "two variables of pairTranslation. The finite bijections discard only terms with a negative "
                         + "creation index, and preserve arbitrary inhomogeneous oscillator inputs and every signed lift. "
                         + "The tensor factor is the actual ordered ground-action product and the original product of "
-                        + "chargeScalar values. The scalar two-chamber change of variables to the four transformed "
-                        + "collision kernels remains a separate obligation; this diagonal identity does not supply "
-                        + "the forward binomial law, its actual inverse, source-to-Q equality or SectorGroundPair."))),
+                        + "chargeScalar values. The scalar two-chamber change of variables evaluates this diagonal. Its combination with all four "
+                        + "reflected collision kernels gives the physical forward law, while independent tails and the "
+                        + "finite inverse identify the original source with the actual Q field."))),
+                DescribeRole.Theorem),
+            Describe.Lean(
+                DescribeId.Create("charged-residue-joint-supported-diagonal"),
+                DeclarationHandle.Create("D5/S3/VertexAlgebra/ChargedResidue/JointDiagonal.chargedPhysicalResidueRow_joint_supported"),
+                H("Whole-sum enlargement preserves both ordered supports"),
+                StatementSource.WithoutFormula(),
+                AssessedProvenance.FromRepo(LibraryNoteRef.Create("D5/L/VertexAlgebra/flm1988monster")),
+                Blocks(Paragraph(Text("Each actual ordered range can be enlarged independently beyond its own intermediate field-order cutoff. The added whole tensor terms vanish before expansion into translated monomials. This permits finite coefficient convolution on a range adapted to the translated support without asserting that a monomial term vanishes at the original outer cutoff."))),
                 DescribeRole.Theorem))));
 }

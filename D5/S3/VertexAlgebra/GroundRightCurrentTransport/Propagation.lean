@@ -32,9 +32,6 @@ local macro "nativeCutoff" : term => pure (Lean.mkIdent
 local macro "native_valid" : term => pure (Lean.mkIdent
   ((Lean.Name.num `_private.D5.S3.VertexAlgebra.GroundRightCurrentTransport.NativeDefect 0) ++
     `D5.S3.VertexAlgebra.LatticeHalfFockGroundRightCurrentTransport.native_valid))
-local macro "native_valid_exists" : term => pure (Lean.mkIdent
-  ((Lean.Name.num `_private.D5.S3.VertexAlgebra.GroundRightCurrentTransport.NativeDefect 0) ++
-    `D5.S3.VertexAlgebra.LatticeHalfFockGroundRightCurrentTransport.native_valid_exists))
 local macro "nativeCurrent" : term => pure (Lean.mkIdent
   ((Lean.Name.num `_private.D5.S3.VertexAlgebra.GroundRightCurrentTransport.NativeDefect 0) ++
     `D5.S3.VertexAlgebra.LatticeHalfFockGroundRightCurrentTransport.nativeCurrent))
@@ -47,9 +44,6 @@ local macro "high" : term => pure (Lean.mkIdent
 local macro "upper" : term => pure (Lean.mkIdent
   ((Lean.Name.num `_private.D5.S3.VertexAlgebra.GroundRightCurrentTransport.Residue 0) ++
     `D5.S3.VertexAlgebra.LatticeHalfFockGroundRightCurrentTransport.Calculus.upper))
-local macro "recover_full" : term => pure (Lean.mkIdent
-  ((Lean.Name.num `_private.D5.S3.VertexAlgebra.GroundRightCurrentTransport.Compatibility 0) ++
-    `D5.S3.VertexAlgebra.LatticeHalfFockGroundRightCurrentTransport.Calculus.recover_full))
 local macro "inverse_of_full" : term => pure (Lean.mkIdent
   ((Lean.Name.num `_private.D5.S3.VertexAlgebra.GroundRightCurrentTransport.Compatibility 0) ++
     `D5.S3.VertexAlgebra.LatticeHalfFockGroundRightCurrentTransport.Calculus.inverse_of_full))

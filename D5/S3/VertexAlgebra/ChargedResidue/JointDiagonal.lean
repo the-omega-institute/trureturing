@@ -16,7 +16,7 @@ set_option maxRecDepth 4096
 namespace D5.S3.VertexAlgebra.LatticeHalfFockChargedResidue
 open LatticeGeneratingFieldLocality LatticeHalfFockChargedTensorCoefficients
 open LatticeHalfFockChargedCoefficients LatticeHalfFockProductKernel
-open scoped BigOperators TensorProduct
+open scoped BigOperators TensorProduct VertexOperator
 noncomputable section
 
 /-- Extend a contraction series by zero to the signed creation diagonal. -/
@@ -164,7 +164,7 @@ private theorem translation_swap (D : LatticeData) (left right : Charge D)
       Equiv.swap_apply_right]
     ring
 
-private theorem reverse_support_bound (D : LatticeData) (left right : Charge D)
+theorem reverse_support_bound (D : LatticeData) (left right : Charge D)
     (first : ℤ) (p : Oscillator D) (d : Fin 2 →₀ ℕ)
     (member : d ∈ (pairTranslation D left right p).support) :
     first+chargeNorm D left+d 0 < nativeContractionCutoff D right left first p := by
@@ -454,6 +454,97 @@ theorem chargedPhysicalResidueRow_joint_native (D : LatticeData) (hu : IsUnit D.
           groundAction D hu sigma (groundAction D hu tau g)))) -
     (-1 : ℂ) ^ (r+l) •
       (∑ j ∈ Finset.range _, physicalResidueWeight (r+l) j •
+        ((paritySign (bilinear D sigma tau) * (chargeScalar D sigma * chargeScalar D tau)) •
+          (reverseOscillator D sigma tau gamma delta (r+l) (n-l) p j ⊗ₜ[ℂ]
+            groundAction D hu sigma (groundAction D hu tau g)))) = _
+  rw [tensor_sum, tensor_sum, ← joint_oscillator]
+  simp only [TensorProduct.sub_tmul, TensorProduct.smul_tmul', smul_sub, smul_smul]
+  rw [show (-1 : ℂ) ^ (r+(l : ℤ)) *
+      (paritySign (bilinear D sigma tau) * (chargeScalar D sigma * chargeScalar D tau)) =
+      (chargeScalar D sigma * chargeScalar D tau) *
+        ((-1 : ℂ) ^ (r+(l : ℤ)) * paritySign (bilinear D sigma tau)) by ring]
+
+/- proof_shape: chargedPhysicalResidueRow_joint_supported: content
+   admission_basis: escape-witness
+   escape_witness: Both actual ordered tensor sums are enlarged separately
+   before any expansion into translated monomials. The added terms vanish
+   by their own actual intermediate field order, with no termwise padding
+   claim about individual pairTranslation monomials.
+   literature_status: finite native charged residue regrouping. -/
+theorem chargedPhysicalResidueRow_joint_supported (D : LatticeData) (hu : IsUnit D.G.det)
+    (sigma tau : Charge D) (epsilon eta : Bool) (gamma delta r n : ℤ)
+    (hgamma : (-1 : ℂ)^gamma = projectedSign epsilon)
+    (hdelta : (-1 : ℂ)^delta = projectedSign eta)
+    (l : ℕ) (p : Oscillator D) (g : ActualGround D hu) (F R : ℕ)
+    (hF : (-(n-l)-((HahnModule.of ℂ).symm
+      ((LatticeHalfFockPhysicalRescaling.physicalSlice D hu (chargedField D hu tau) delta)
+        (p ⊗ₜ[ℂ] g))).order).toNat ≤ F)
+    (hR : (-((HahnModule.of ℂ).symm
+      ((LatticeHalfFockPhysicalRescaling.physicalSlice D hu (chargedField D hu sigma) gamma)
+        (p ⊗ₜ[ℂ] g))).order).toNat ≤ R) :
+    chargedPhysicalResidueRow D hu sigma tau epsilon eta gamma delta r n l (p ⊗ₜ[ℂ] g) =
+      (chargeScalar D sigma * chargeScalar D tau) •
+        ((∑ d ∈ (pairTranslation D sigma tau p).support,
+          (pairTranslation D sigma tau p).coeff d *
+            nativeJointDiagonal D sigma tau gamma delta (r+l) (n-l) F R d)
+              ⊗ₜ[ℂ] groundAction D hu sigma (groundAction D hu tau g)) := by
+  classical
+  rw [chargedPhysicalResidueRow_native D hu sigma tau epsilon eta gamma delta r n
+    hgamma hdelta l p g]
+  have left_enlarge :
+      (∑ j ∈ Finset.range (-(n-l)-((HahnModule.of ℂ).symm
+        ((LatticeHalfFockPhysicalRescaling.physicalSlice D hu (chargedField D hu tau) delta)
+          (p ⊗ₜ[ℂ] g))).order).toNat,
+        physicalResidueWeight (r+l) j • nativeOrderedKernel D hu sigma tau
+          (-2*((r+l)-j)-gamma-2) (-2*((n-l)+j)-delta-2) p g) =
+      ∑ j ∈ Finset.range F,
+        physicalResidueWeight (r+l) j • nativeOrderedKernel D hu sigma tau
+          (-2*((r+l)-j)-gamma-2) (-2*((n-l)+j)-delta-2) p g := by
+    apply Finset.sum_subset (Finset.range_mono hF)
+    intro j member outside
+    have lower : (-(n-l)-((HahnModule.of ℂ).symm
+        ((LatticeHalfFockPhysicalRescaling.physicalSlice D hu (chargedField D hu tau) delta)
+          (p ⊗ₜ[ℂ] g))).order).toNat ≤ j := by simpa using outside
+    have zero : ((LatticeHalfFockPhysicalRescaling.physicalSlice D hu
+        (chargedField D hu tau) delta)[[(n-l)+j]]) (p ⊗ₜ[ℂ] g) = 0 := by
+      apply VertexOperator.ncoeff_eq_zero_of_lt_order
+      omega
+    have coefficient : chargedCoefficient D hu tau (-2*((n-l)+j)-delta-2)
+        (p ⊗ₜ[ℂ] g) = 0 := by
+      simpa only [LatticeHalfFockPhysicalRescaling.physicalSlice_mode,
+        chargedField, HVertexOperator.coeff_of_coeff] using zero
+    rw [← native_ordered_range, coefficient, map_zero, smul_zero]
+  have right_enlarge :
+      (∑ j ∈ Finset.range (-((HahnModule.of ℂ).symm
+        ((LatticeHalfFockPhysicalRescaling.physicalSlice D hu (chargedField D hu sigma) gamma)
+          (p ⊗ₜ[ℂ] g))).order).toNat,
+        physicalResidueWeight (r+l) j • nativeReversedKernel D hu sigma tau
+          (-2*(j : ℤ)-gamma-2) (-2*((r+l)+(n-l)-j)-delta-2) p g) =
+      ∑ j ∈ Finset.range R,
+        physicalResidueWeight (r+l) j • nativeReversedKernel D hu sigma tau
+          (-2*(j : ℤ)-gamma-2) (-2*((r+l)+(n-l)-j)-delta-2) p g := by
+    apply Finset.sum_subset (Finset.range_mono hR)
+    intro j member outside
+    have lower : (-((HahnModule.of ℂ).symm
+        ((LatticeHalfFockPhysicalRescaling.physicalSlice D hu (chargedField D hu sigma) gamma)
+          (p ⊗ₜ[ℂ] g))).order).toNat ≤ j := by simpa using outside
+    have zero : ((LatticeHalfFockPhysicalRescaling.physicalSlice D hu
+        (chargedField D hu sigma) gamma)[[(j : ℤ)]]) (p ⊗ₜ[ℂ] g) = 0 := by
+      apply VertexOperator.ncoeff_eq_zero_of_lt_order
+      omega
+    have coefficient : chargedCoefficient D hu sigma (-2*(j : ℤ)-gamma-2)
+        (p ⊗ₜ[ℂ] g) = 0 := by
+      simpa only [LatticeHalfFockPhysicalRescaling.physicalSlice_mode,
+        chargedField, HVertexOperator.coeff_of_coeff] using zero
+    rw [← native_kernel_reverse, ← native_ordered_range, coefficient, map_zero, smul_zero]
+  rw [left_enlarge, right_enlarge]
+  simp only [nativeOrderedKernel, nativeReversedKernel]
+  change (∑ j ∈ Finset.range F, physicalResidueWeight (r+l) j •
+      ((chargeScalar D sigma * chargeScalar D tau) •
+        (forwardOscillator D sigma tau gamma delta (r+l) (n-l) p j ⊗ₜ[ℂ]
+          groundAction D hu sigma (groundAction D hu tau g)))) -
+    (-1 : ℂ) ^ (r+l) •
+      (∑ j ∈ Finset.range R, physicalResidueWeight (r+l) j •
         ((paritySign (bilinear D sigma tau) * (chargeScalar D sigma * chargeScalar D tau)) •
           (reverseOscillator D sigma tau gamma delta (r+l) (n-l) p j ⊗ₜ[ℂ]
             groundAction D hu sigma (groundAction D hu tau g)))) = _

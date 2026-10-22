@@ -58,7 +58,7 @@ def nativeReversedKernel (D : LatticeData) (hu : IsUnit D.G.det)
           (second + chargeNorm D right + k) p) ⊗ₜ[ℂ]
       groundAction D hu left (groundAction D hu right g))
 
-private theorem native_kernel_reverse (D : LatticeData) (hu : IsUnit D.G.det)
+theorem native_kernel_reverse (D : LatticeData) (hu : IsUnit D.G.det)
     (left right : Charge D) (first second : ℤ) (p : Oscillator D)
     (g : ActualGround D hu) :
     nativeOrderedKernel D hu right left second first p g =
@@ -75,7 +75,7 @@ private theorem native_kernel_reverse (D : LatticeData) (hu : IsUnit D.G.det)
   congr 1
   ring
 
-private theorem native_ordered_range (D : LatticeData) (hu : IsUnit D.G.det)
+theorem native_ordered_range (D : LatticeData) (hu : IsUnit D.G.det)
     (left right : Charge D) (first second : ℤ) (p : Oscillator D)
     (g : ActualGround D hu) :
     chargedCoefficient D hu left first

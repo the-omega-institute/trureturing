@@ -85,7 +85,7 @@ private theorem projected_locality (D : LatticeData) (hu : IsUnit D.G.det)
 
 /- The adapter consumes the actual ordered residue constructor; it does not
    posit a source-to-residue law. -/
-private theorem physicalResidueCoefficient_eq_R
+theorem physicalResidueCoefficient_eq_R
     {M : Type*} [AddCommGroup M] [Module ℂ M]
     (A B : VertexOperator ℂ M) (r n : ℤ) (x : M) :
     physicalResidueCoefficient A B r n x = ((Calculus.R A B r)[[n]]) x := by

@@ -36,9 +36,6 @@ local macro "R_mode" : term => pure (Lean.mkIdent
 local macro "Z_mode" : term => pure (Lean.mkIdent
   ((Lean.Name.num `_private.D5.S3.VertexAlgebra.GroundRightCurrentTransport.Residue 0) ++
     `D5.S3.VertexAlgebra.LatticeHalfFockGroundRightCurrentTransport.Calculus.Z_mode))
-local macro "Q_mode" : term => pure (Lean.mkIdent
-  ((Lean.Name.num `_private.D5.S3.VertexAlgebra.GroundRightCurrentTransport.Residue 0) ++
-    `D5.S3.VertexAlgebra.LatticeHalfFockGroundRightCurrentTransport.Calculus.Q_mode))
 local macro "Q_cutoff" : term => pure (Lean.mkIdent
   ((Lean.Name.num `_private.D5.S3.VertexAlgebra.GroundRightCurrentTransport.Residue 0) ++
     `D5.S3.VertexAlgebra.LatticeHalfFockGroundRightCurrentTransport.Calculus.Q_cutoff))
@@ -77,7 +74,7 @@ private theorem nativeSlice_mode (D : LatticeData) (hu : IsUnit D.G.det)
     (nativeSlice D hu a gamma)[[n]] = slice D hu a gamma n :=
   physicalSlice_mode D hu (correctedField D hu a) gamma n
 
-private theorem native_valid_exists (D : LatticeData) (hu : IsUnit D.G.det)
+theorem native_valid_exists (D : LatticeData) (hu : IsUnit D.G.det)
     (a b : Carrier D) (gamma delta : ℤ) :
     ∃ K : ℕ, ∀ shift : ℤ,
       Valid (Z (-shift) (nativeSlice D hu a gamma)) (nativeSlice D hu b delta) K := by
