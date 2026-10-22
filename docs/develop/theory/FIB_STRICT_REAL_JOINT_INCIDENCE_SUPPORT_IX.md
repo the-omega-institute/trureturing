@@ -2776,3 +2776,804 @@ ordinary mathematical evaluation; no literature-priority assertion
 or formal-verification claim is made.
 
 ## 追加锚（本行以下为增补区）
+## 24. Polynomial secants in the source chart
+
+The following continuation uses the first exact source and equal-$J$
+germ of Sections 18–23. It extends that germ to an evaluated parameter
+interval and locates its first strict-source boundary. It does not
+change the entire-child independent-pair question (18.3).
+
+Write $t=r/b$ and use the polynomial extension of the source matrix
+
+$$
+\widehat P(t,b)=
+\begin{pmatrix}tb&b\\t(1-tb)&1-tb\end{pmatrix}.
+\tag{24.1}
+$$
+
+When $t>0$, $b>0$ and $tb<1$, this is exactly the original strict
+source $P(r,b)$ with $r=tb$. The extension to $b=0$ is used only for
+limits, not to add worlds to the original domain.
+For explicit polynomial inputs put
+
+$$
+\begin{gathered}
+r=tb,\quad j=t+b(1-t^2),\quad n=j+tb,\quad T=1+b,\quad U=1+2b,\\
+D=5\{(b^2+8b+4)jn-2TU(j+n)\},\quad S=(8b-1)(2+5b),\\
+C_0=-24D+3Sjn,\quad C_1=3Sn,\\
+C_2=3(49b+34)jn-54U(j+n),\quad C_3=3Sj,\\
+B_5=-4C_0+15C_1-20C_2+10C_3,\\
+B_6=-10C_0+36C_1-45C_2+20C_3,\\
+B_7=-20C_0+70C_1-84C_2+35C_3,\\
+N_p=-C_0+(U+n)B_5,\quad N_v=-C_0+(2U+n)B_6,\\
+N_a=-C_0+(T+2j+4r)B_7,\quad N_d=-C_0,\\
+N_m=-C_0+(3U+2n)B_7.
+\end{gathered}
+\tag{24.2}
+$$
+
+These are the supplied circuit (18.4)–(18.5), after the regular change
+of coordinates. In particular $f=N_f/D$ for $f=p,v,a,d,m$.
+No new gain or response convention is introduced.
+
+For any polynomial $L(t,b)$ define polynomials $L_e,L_o$ by reduction
+in the ring with $h^2=q$:
+
+$$
+L(X+Kh,Y+h)=L_e(X,Y,K,q)+hL_o(X,Y,K,q).
+\tag{24.3}
+$$
+
+This definition requires no square root or division by $q$. Explicitly,
+a monomial $c_{ij}t^ib^j$ contributes
+
+$$
+c_{ij}\binom{i}{a}\binom{j}{c}
+X^{i-a}Y^{j-c}K^a
+\begin{cases}
+q^{(a+c)/2}&\text{to }L_e,\quad a+c\text{ even},\\
+q^{(a+c-1)/2}&\text{to }L_o,\quad a+c\text{ odd},
+\end{cases}
+\tag{24.4}
+$$
+
+summed over $0\le a\le i$, $0\le c\le j$.
+Apply this to $D,N_p,N_v,N_a,N_d,N_m$ and set
+
+$$
+\begin{gathered}
+H_f=(N_f)_oD_e-(N_f)_eD_o,\\
+H=\tfrac1{15}(H_p,H_v,H_a)^{\mathsf T},\qquad
+\Delta=D_e^2-qD_o^2.
+\end{gathered}
+\tag{24.5}
+$$
+
+The three entries of $H$ have integer coefficients, total degree $22$,
+and respectively $1144,1145,1145$ nonzero monomials in $(X,Y,K,q)$.
+The numerical factor $15$ is constant and has no effect on their zeros.
+
+For $q=h^2\ge0$ use the ordered endpoints
+
+$$
+t_\pm=X\pm Kh,\quad b_\pm=Y\pm h,\quad
+r_\pm=t_\pm b_\pm,\qquad h=\sqrt q\ge0.
+\tag{24.6}
+$$
+
+Whenever $D_\pm=D_e\pm hD_o\ne0$, direct multiplication gives
+
+$$
+\frac{N_f(t_+,b_+)}{D_+}-\frac{N_f(t_-,b_-)}{D_-}
+=\frac{2hH_f}{\Delta}.
+\tag{24.7}
+$$
+
+Consequently $H=0$ implies equal $p,v,a$. Their common values are
+
+$$
+\bar f(X,Y,K,q)=
+\frac{(N_f)_eD_e-q(N_f)_oD_o}{\Delta},\qquad f=p,v,a.
+\tag{24.8}
+$$
+
+Formula (24.8) is analytic also at $q=0$ when $\Delta\ne0$.
+The divided drift and alternative-$M$ differences are $H_d/\Delta$
+and $H_m/\Delta$, respectively. The equality equations impose no
+common drift.
+
+## 25. Fixed rational data and the twelve whole parameter cells
+
+Let
+
+$$
+I_i=[i/5000,(i+1)/5000],\quad
+c_i=(2i+1)/10000,\quad w=1/10000,\quad
+\nu=(q-c_i)/w,\quad 0\le i\le11.
+\tag{25.1}
+$$
+
+Thus the union of the twelve closed cells is $[0,3/1250]$.
+The following arrays specify the rational predictors
+
+$$
+\widehat x_i(q)=(\widehat X_i,\widehat Y_i,\widehat K_i),\qquad
+\widehat x_{ij}(q)=10^{-55}\sum_{k=0}^4 a_{ijk}\nu^k.
+\tag{25.2}
+$$
+
+Entries are in **ascending** powers of $\nu$. They are rational
+predictors, not exact solutions. In every cell use the same error
+radius $\rho=10^{-12}$.
+
+| $i$ | Coordinate | $(a_{ij0},a_{ij1},a_{ij2},a_{ij3},a_{ij4})$ |
+| --- | --- | --- |
+| 0 | $X$ | `(10254670271402023482002213982464133170316616441117479987,1444429820196401687019246606145664233821765361110355,1217737887824820112063303084142299972613616233384,1308071648778489778042438342513495982391880569,1582497015728453299878490671689130091521453)` |
+| 0 | $Y$ | `(463946016119711010902039832242980611148820336762027884,685523225785892440813629845498470137252316019695120,231325404981638292653553711145028078182236507677,89655824485447214941385004940650709656162025,39960623044228901805837714523315537643004)` |
+| 0 | $K$ | `(5777912507170463605689283788875243898271021631551932700,3533505024687001144193784651450629180028881085830211,3596455173557670673315765916492323831311484607541,4236755010693755120652321962742819810521086665,5409300655224184917413045064477751717470498)` |
+| 1 | $X$ | `(10257564012483908945120401824402184540032154821505534578,1449316519385219590018747077004581615475770092083291,1225624449377573802531372457554673237671244182936,1320814524637063352244101578605492044574477191,1603275836441267262143875551171254495068716)` |
+| 1 | $Y$ | `(465317988590789107251182572780169459616822957957937956,686449604555650289014068471024811486296602748278080,231864300301192605268549144609602477546474124564,89976228668328221752728964390353248026521737,40140603192008379820775626674206554773006)` |
+| 1 | $K$ | `(5784993937021291209905084931128905450060002874700423699,3547941860026281318843311939041074821870914850836849,3622006063301827164438639790674514387379339879098,4280322528101217967193268453118408659129027823,5482773540942104225959430948068706300489490)` |
+| 2 | $X$ | `(10260467558612694524531268902937054843481021105572750133,1454234918401972265182773102473196821073152834732219,1233587969399906998788855621398688784886302701887,1333725009858844069340295097978577322894563158,1624400443486873007984183107376045765190069)` |
+| 2 | $Y$ | `(466691815977554113337963158624171842074871187084419866,687378142757303568114774585769659722380853819750409,232405122373789964860060622507244365838107620705,90298077289090601179743265081760954257654640,40321733599497013607196207529344646999821)` |
+| 2 | $K$ | `(5792104343096074954612854707599658400538971847242372923,3562481424094164269840857454339721326554251891143326,3647820130621987720758740422792999983489962338778,4324482814546244267971683638119283163212321185,5557496908762412212907249369620612219409769)` |
+| 3 | $X$ | `(10263380973497216391760047790403811900732008350120080040,1459185327102961798728226299745406708151688633180886,1241629461897800179547545733486881766584308302079,1346805898579724557205119486741472102621484116,1645877824006852798748225912681370196220349)` |
+| 3 | $Y$ | `(468067502606588406119622308402616805344307800267597370,688308848115234559018967036631818124412116129849669,232947879893714270372165915057512266982742460277,90621379577252547522571984981864257512768935,40504021111725454586410580609768549006397)` |
+| 3 | $K$ | `(5799243931909744568838767396295758691525101144731376957,3577124776754367841195596748309393638304927536627987,3673900962331106702853431719835643346978120859794,4369245976216306631734570338714996915654328627,5633496437454982734413007539267084866305843)` |
+| 4 | $X$ | `(10266304321470101811692411698581629650684861357979633160,1464168059434268517957802728410056361961539722211370,1249749957810952072972171246381867236018905314719,1360060041495343970105334044654147009192630299,1667715131504076334026575440091267909161260)` |
+| 4 | $Y$ | `(469445052819957978196241999967799400899210918868984230,689241728388713650834870768891314603498608970459903,233492581610790092677766532522926169131080883352,90946144816697581586994988618775847722681111,40687472473695203876455940355331944956079)` |
+| 4 | $K$ | `(5806412912111385730905709653498462252826459108491456346,3591872992339961756780770307997397109186639407613368,3700252206500061022800076399827262690632311193313,4414622327194285048954439428847275090784301232,5710798424760826632346012928329040298764148)` |
+| 5 | $X$ | `(10269237667496016889079942913593471599228244853143181918,1469183433500169934935055135641038067923535825149648,1257950505356164029114165940781842681115503652307,1373490347210155425951125859610098359618209229,1689919690408973248001225615393120505475461)` |
+| 5 | $Y$ | `(470824470975282436623145928025479471062080870172455502,690176791372122152690871666344753489295520313008065,234039236330706404598955362392854412652001340378,91272382344840755624467433069533976868972127,40872094321925604065005630345813596148986)` |
+| 5 | $K$ | `(5813611494513425476989632049643081846476551547510006011,3606727159900913975802291423436094792496219163984445,3726877573720002708197103826644065246554103469308,4460622394478526947617344363792274350958576378,5789429804548091763516887016912979802413911)` |
+| 6 | $X$ | `(10272181077180052537336368758407031625762207524870700770,1474231771632949563516648937082963335370855613966149,1266232170378929420447556513440502785641483035175,1387099783623588985379448756096414532755308390,1712499000787910447167157531133206611207158)` |
+| 6 | $Y$ | `(472205761445805448635043810355394416990433476130776715,691114044895176390192044200148491004114602464012912,234587852915335102339775587712967762971215345542,91600101551725620717172363406321550356580170,41057893175594662057780557908538426395883)` |
+| 6 | $K$ | `(5820839892121317792233311684945792599883259842814347437,3621688383456747251786172323776277315860184321068551,3753780838395247482061438198285739442539690233203,4507256923142296214297971904956183548670631496,5869418164506217788963132792823002025569459)` |
+| 7 | $X$ | `(10275134616776251482490441293641741255793433593587667900,1479313400464128879580690581738717338507455854057866,1274596036713454090214059480698384471685243216840,1400891379354466689673799427632907459065294716,1735460743198623281560134021421397422685484)` |
+| 7 | $Y$ | `(473588928620465636829807496897103403724650039063051534,692053496823153064839733905942120379457378510271846,235138440283043893026276603286321975749925196016,91929311879048635092087201819107573348644334,41244875427255534683397078480301463779851)` |
+| 7 | $K$ | `(5828098320163739728092392689048765578012944411744389388,3636757782254429729161123597301637932574198738096486,3780965840067548745103763300578773516479950495555,4554536881636991429690941463479331349817559438,5950791764397111270879145313013774382621128)` |
+| 8 | $X$ | `(10278098353196279182614425312156495746240149679225487721,1484428650997156612406663418948907481379065053137244,1283043206551340927547010633022848319105685601393,1414868225204866524905975920415774866138919164,1758812783697840396116291979426737453890101)` |
+| 8 | $Y$ | `(474973976903967926314682114915849353395298298945737635,692995155057115852994211318321299855259787267696112,235691007409003102677644885058568123540073818590,92260022819107543217728928324806078835061235,41433047333109681735225540315069394144704)` |
+| 8 | $K$ | `(5835386996123308640689615650421253413395359078423233535,3651936491031626862230190703244861784911415924298990,3808436484772633086458747841399182207963061081902,4602473467243667399293924959226914568182940418,6033579554882938199263411945639157256085965)` |
+| 9 | $X$ | `(10281072354018241612365043766023651113339921535558014480,1489577858681590502006577829725997565247419222030420,1291574800819178954347643643277830375160239408848,1429033475664674088992254131655786154294140998,1782563179006441042855627015786331275783713)` |
+| 9 | $Y$ | `(476360910716855346269084744746955477392281491023333290,693939027534143219135453803232693302011903090403069,236245563325485937649144512056137924709842897982,92592243913670100134419218137641276667321390,41622415002816824704243593249753407951463)` |
+| 9 | $K$ | `(5842706139767831403063827011816054279317378028981022019,3667225660285445500870696056583060626091032497802949,3836196746429901129295486894591380207927846803909,4651078111677553867642574224963601515352588340,6117811196950893761736460427138773870206171)` |
+| 10 | $X$ | `(10284056687495652933514864983313727858460962601725078875,1494761363488807633784362747895418633808700865284007,1300191959565284871182650005346344352651701039597,1443390350458104272704673985470435193820699491,1806720181837691020966346706045241849243485)` |
+| 10 | $Y$ | `(477749734495581288325756072170619434428331588464598967,694885122227557416265126535853847143348899091471781,236802117122161710351047740546927569034488970514,92925984752759352970296920982739792527424256,41812984388820941614475333297202697233750)` |
+| 10 | $K$ | `(5850055973182096709542142400036539327792851707289110175,3682626456546804659510864997120331249912628273112993,3864250668266226175468340784125441608960193523139,4700362486850431343036034754105586684891556104,6203517081956104419674248835455924230459171)` |
+| 11 | $X$ | `(10287051422566556145577006886615374334515659875224360644,1499979509989280469256234408377240856617887834568186,1308895842355852838014828062947605226650557616992,1457942136133520494239728541147683674676529872,1831292246394319641937455499019426690465877)` |
+| 11 | $Y$ | `(479140452692582224115729183804846234725327923751902159,695833447147154644289923141280192263355320930457852,237360677946381516814086799735452654335358198490,93261254973351521661258739481224676132972458,42004761275170577018186381884255223028930)` |
+| 11 | $K$ | `(5857436720800221863265811060192775554794967922711445595,3698140062660571274789697937787729348610733489391196,3892602364274812786667439241988258572795520813699,4750338510795896495539572000606156168355433350,6290728352304646675494974326642088490326832)` |
+
+
+Here and below all terminating decimals denote exact rationals.
+The finite comparisons supporting the continuation are given next,
+together with a prescription for reproducing them.
+
+For an interval polynomial $V(\nu)=\sum_k V_k\nu^k$, put
+
+$$
+\mathcal B(V)=V_0+[-s,s],\qquad
+s=\sum_{k\ge1}\sup|V_k|.
+\tag{25.3}
+$$
+
+It encloses its values for $|\nu|\le1$. Form the exact univariate
+polynomial matrix and its adjugate
+
+$$
+J_i(\nu)=H_x(\widehat x_i(q),q),\quad
+A_i(\nu)=\operatorname{adj}J_i(\nu),\quad
+\delta_i(\nu)=\det J_i(\nu),\quad
+V_i(\nu)=H(\widehat x_i(q),q).
+\tag{25.4}
+$$
+
+The adjugate is the transposed cofactor matrix; each two-by-two minor
+is its first diagonal product minus its second diagonal product.
+Use $\delta_i=\sum_{k=1}^3(J_i)_{1k}(A_i)_{k1}$.
+The comparisons give $\inf\mathcal B(\delta_i)>0$. Define
+
+$$
+\mathcal C_{ilj}=\frac{\mathcal B((A_i)_{lj})}
+                         {\mathcal B(\delta_i)},\qquad
+c_{ilj}=\sup|\mathcal C_{ilj}|,\qquad
+\eta_i=\max_l\sup\left|
+ \frac{\mathcal B((A_iV_i)_l)}{\mathcal B(\delta_i)}\right|.
+\tag{25.5}
+$$
+
+Products such as $A_iV_i$ are formed as polynomials **before** applying
+$\mathcal B$. In particular the dependence on $q$ is retained in the
+preconditioner $J_i(\nu)^{-1}$. Independent interval boxes for
+$\widehat x_i$ and $q$ are not substituted for (25.4)–(25.5).
+
+For Hessian bounds, expand each entry of $H$ around
+
+$$
+z_i=(a_{i10},a_{i20},a_{i30})/10^{55},\quad q=c_i.
+$$
+
+Use deviation radii
+
+$$
+R_{ij}=10^{-55}\sum_{k=1}^4|a_{ijk}|+2\rho\quad(1\le j\le3),
+\qquad R_{i4}=w.
+\tag{25.6}
+$$
+
+If $\widetilde H_l$ is the translated polynomial, define
+
+$$
+M_{iljk}=\sum_\alpha
+\left|[z^\alpha]\,\partial_j\partial_k\widetilde H_l(z)\right|
+\prod_{s=1}^4 R_{is}^{\alpha_s},\qquad 1\le j,k\le4.
+\tag{25.7}
+$$
+
+Indices $1,2,3,4$ mean $X,Y,K,q$.
+For interval coefficients use their absolute suprema in this formula.
+It bounds the indicated derivative on the entire rectangular hull
+containing every radius-$2\rho$ tube over $I_i$. Set
+
+$$
+\lambda_i=2\rho\max_l\sum_{j,k,s=1}^3c_{ils}M_{isjk}.
+\tag{25.8}
+$$
+
+The following upper bounds have strict inequalities. The two numeric
+columns are divided by $10^{17}$ and $10^6$, respectively.
+
+| $i$ | Upper numerator for $\eta_i$ | Upper numerator for $\lambda_i$ |
+| --- | --- | --- |
+| 0 | 169 | 152 |
+| 1 | 173 | 156 |
+| 2 | 176 | 161 |
+| 3 | 180 | 166 |
+| 4 | 184 | 171 |
+| 5 | 188 | 177 |
+| 6 | 192 | 184 |
+| 7 | 196 | 191 |
+| 8 | 201 | 200 |
+| 9 | 205 | 209 |
+| 10 | 210 | 220 |
+| 11 | 215 | 232 |
+
+
+In particular, uniformly over all twelve **whole** cells,
+
+$$
+\eta_i<\frac{220}{10^{17}},\qquad
+\lambda_i<\frac{232}{10^6},\qquad
+\eta_i+\lambda_i\rho<\rho.
+\tag{25.9}
+$$
+
+The eleven seam distances between the two rational predictors at
+their shared parameter are at most $2/10^{55}$ in the infinity norm.
+The following additional comparisons hold over every radius-$\rho$
+tube, at the same parameter, with $h=\sqrt q$:
+
+$$
+\begin{gathered}
+1.025<X<1.029,\quad0.0463<Y<0.048,\quad0.577<K<0.587,\\
+t_->0.99,\quad t_+<1.06,\quad b_+>0,\quad0<r_+<0.11,\\
+D_e+hD_o>0.0038,\qquad D_e-hD_o>0.0038,\\
+H_d>0,\quad H_m>0,\quad (N_p)_e+h(N_p)_o<0.
+\end{gathered}
+\tag{25.10}
+$$
+
+Only the eventual zero of $H$ is needed for the signs of the two
+response differences; these polynomial inequalities hold on its
+whole stated tube. No positivity is asserted here for $b_-$ after
+its boundary event.
+
+Here is a fully finite arithmetic prescription for the tables and
+signs. Expand (24.2) and (24.4) as rational polynomials; generate
+all derivatives by differentiating their monomials. All interval
+operations enclose exact endpoint addition, subtraction,
+multiplication and, when zero is excluded, reciprocal. Round each
+operation outwards on the grid $10^{-70}\mathbb Z$:
+
+$$
+[l,u]\longmapsto
+[10^{-70}\lfloor10^{70}l\rfloor,
+ 10^{-70}\lceil10^{70}u\rceil].
+\tag{25.11}
+$$
+
+Coefficients are enclosed before first use. Addition and multiplication
+of interval polynomials use coefficient addition and convolution,
+respectively, in increasing coefficient indices. Multivariate input
+monomials are ordered in descending lexicographic order $X,Y,K,q$.
+For substitution into a univariate polynomial, group by the exponent
+of the first variable, use descending Horner evaluation, and recurse
+through $X,Y,K,q$ in that order. The substituted polynomials are the
+three arrays (25.2) and $c_i+w\nu$. All polynomial products are completed
+before using (25.3). This computes (25.4)–(25.5).
+
+For (25.7), translate one variable at a time in the order $X,Y,K,q$.
+A coefficient $a_\alpha$ contributes
+$a_\alpha\binom{\alpha_j}{k}z_{ij}^{\alpha_j-k}$ at exponent $k$,
+for $k=0,\ldots,\alpha_j$. Start with the descending monomial list,
+retain each new monomial's first insertion position, and traverse the
+resulting list at the next variable. Powers are repeated multiplication.
+Differentiate this interval coefficient list and apply the absolute
+coefficient bound (25.7). Matrix sums use increasing indices. These
+rules specify the Hessian and contraction bounds without derivative
+samples.
+
+For completeness, signs of a polynomial $L(X,Y,K,q)$ on a
+radius-$\rho$ tube can be checked by
+
+$$
+\mathcal R_i(L)=
+\mathcal B(L(\widehat x_i(q),q))+
+[-\rho S_i(L),\rho S_i(L)],\quad
+S_i(L)=\sum_{j=1}^3\sup_{Z_i}|\partial_jL|,
+\tag{25.12}
+$$
+
+where
+
+$$
+Z_i=\prod_{j=1}^3
+ \left(\mathcal B(\widehat x_{ij})+[-2\rho,2\rho]\right)
+ \times I_i.
+$$
+
+Use direct monomial interval evaluation for the derivative suprema,
+with powers formed successively. Apply (25.12) to
+$D_e,D_o,(N_p)_e,(N_p)_o,H_d,H_m$. Combine the first four with
+$h\in\sqrt{I_i}$ by the formulas in (25.10). Square roots require
+only integer square-root bounds: for $G=10^{70}$ and a nonnegative
+grid interval $[L/G,U/G]$, enclose its square root by
+
+$$
+[\lfloor\sqrt{LG}\rfloor/G,\ \lceil\sqrt{UG}\rceil/G].
+\tag{25.13}
+$$
+
+The remaining source inequalities follow from (25.2), (25.3) and
+(24.6). All variable divisors in this prescription are
+$\mathcal B(\delta_i)$, the guarded endpoint denominators, and the
+positive fixed constants. In particular $q$ and $b_-$ are never inverted.
+
+The derivative bound needed for the event is
+
+$$
+\frac{d}{dq}\{Y(q)^2-q\}<-0.93.
+\tag{25.14}
+$$
+
+It is another whole-cell comparison, obtained as follows. Form
+$T_i=A_iH_q(\widehat x_i(q),q)$ as a polynomial vector, and put
+
+$$
+\begin{aligned}
+U_{il}&=-\mathcal B((T_i)_l)/\mathcal B(\delta_i),\\
+e_{il}&=\rho\sum_{s,k=1}^3c_{ils}M_{is4k},\\
+W_{il}&=U_{il}+[-e_{il},e_{il}],\\
+e_i&=\frac{\lambda_i}{1-\lambda_i}\max_l\sup|W_{il}|.
+\end{aligned}
+\tag{25.15}
+$$
+
+At an actual zero, implicit differentiation and the Neumann-series
+bound give $x_l'\in W_{il}+[-e_i,e_i]$.
+For the sharper sign retain the parameter dependence before division:
+form the polynomial
+
+$$
+L_i=-2\widehat Y_i(T_i)_2-\frac7{100}\delta_i.
+\tag{25.16}
+$$
+
+Write $Y_i^*=\mathcal B(\widehat Y_i)+[-\rho,\rho]$.
+Each of the twelve comparisons is
+
+$$
+\sup\frac{\mathcal B(L_i)}{\mathcal B(\delta_i)}
++2\sup|Y_i^*|(e_{i2}+e_i)+2\rho\sup|U_{i2}|<0.
+\tag{25.17}
+$$
+
+Indeed $-2\widehat Y_i(T_i)_2/\delta_i$ is the predictor value
+of $2Y Y'$. The last two terms bound its change to the actual zero.
+Thus (25.17) proves (25.14). It is stronger than separately enclosing
+$Y$ and $Y'$ and then multiplying their coarse enclosures.
+Equations (24.2)–(25.17), including the fixed arrays, are a finite
+rational reproduction prescription for every whole-cell comparison.
+
+## 26. Analytic continuation, uniqueness joins and exact germ attachment
+
+**Theorem 26.1 (The evaluated polynomial-secant continuation).**
+There is a real analytic map
+
+$$
+x(q)=(X(q),Y(q),K(q)),\qquad0\le q\le3/1250,
+\tag{26.1}
+$$
+
+with $H(x(q),q)=0$, lying within infinity distance $\rho$ of
+$\widehat x_i(q)$ for $q\in I_i$. It is unique in each corresponding
+radius-$2\rho$ tube. Analyticity on the closed interval means
+analyticity on a neighborhood of each of its points. This is a
+uniqueness assertion in the specified tubes, not an inventory of all
+zeros of the polynomial equations.
+
+The continuation is exactly the germ in Theorem 21.1 after changing
+its parameter to the squared half-separation of the two $b$ coordinates.
+
+*Proof.* For fixed $q\in I_i$ put $C(q)=J_i(\nu)^{-1}$.
+The determinant bound in (25.4) makes this inverse legitimate.
+Consider $T_q(x)=x-C(q)H(x,q)$ on the radius-$2\rho$ ball about
+$\widehat x_i(q)$. Its derivative at the center is zero. On the
+whole ball the fundamental theorem of calculus, (25.5), (25.7) and
+(25.8) give
+
+$$
+\|I-C(q)H_x(x,q)\|_\infty\le\lambda_i<1.
+\tag{26.2}
+$$
+
+The center displacement is at most $\eta_i$. By (25.9), $T_q$
+maps the closed radius-$\rho$ ball strictly inside itself. The Banach
+fixed-point theorem supplies a zero in its interior. Invertibility of
+$C(q)$ makes fixed points exactly zeros of $H$.
+The same derivative estimate implies uniqueness in the larger convex
+radius-$2\rho$ ball. It also makes $C(q)H_x$ invertible by the Neumann
+series, so the analytic implicit-function theorem applies at every zero.
+
+Within a cell, continuity of the predictor and local uniqueness identify
+these local analytic solutions. At a seam the predictor centers differ
+by at most $2\cdot10^{-55}<\rho$. A root in one radius-$\rho$ ball
+therefore lies in the other radius-$2\rho$ uniqueness ball. The two
+roots agree; the same local implicit-function theorem identifies their
+analytic extensions. This proves (26.1) on all twelve cells.
+
+It remains to identify the zero at $q=0$ with the supplied source,
+rather than merely a nearby rational point. Let $K_0$ be the exact
+source cube (19.1)–(19.2) and use the exact tangent coefficient $k_0$
+of (19.3). The interval $0.950504247445018<k_0<0.950504247445019$
+in (19.7) suffices. Direct interval substitution on this **whole** cube
+and tangent interval gives
+
+$$
+\left\|
+\left(\frac{r_0}{b_0},\ b_0,
+ \frac{b_0-r_0k_0}{b_0^2k_0}\right)
+ -\widehat x_0(0)\right\|_\infty<2\cdot10^{-14}<\rho.
+\tag{26.3}
+$$
+
+The only divisors here are the positive $b_0,k_0$ intervals.
+The rank-one differential in Section 19 gives $H=0$ at this exact
+triple and $q=0$. Uniqueness therefore identifies it with $x(0)$.
+The exact point is not replaced by the center of $K_0$.
+
+To identify the entire germ, let $s$ denote the old parameter $h$ in
+(21.1). Its signed $b$ half-separation is $h=s\,k(s)$, an odd analytic
+function with derivative $k_0>0$. It has a local odd analytic inverse.
+In the new $h$ parameter, take the midpoint of the two $t=r/b$
+coordinates as $X$, their $b$ midpoint as $Y$, and their $t$
+half-separation divided by $h$ as $K$. The last quotient has a removable
+analytic extension at zero. All three functions are even in $h$,
+hence analytic in $q=h^2$, and their initial values are exactly the
+triple in (26.3). Equal $p,v,a$ gives $H=0$. Local uniqueness now
+identifies this reparameterized supplied germ with (26.1). ∎
+
+## 27. The unique transverse strict-source corner
+
+Put $E(q)=Y(q)^2-q$. The following rational cube independently encloses
+the four-equation event. In the next table every center entry is divided
+by $10^{65}$; its coordinates are ordered $X,Y,K,q$.
+
+| Coordinate | Integer center numerator |
+| --- | --- |
+| $X$ | `102869832140216209209092689670665190791340142744995433124836749574` |
+| $Y$ | `4791088103043219140178249909350393572326818318610215355809217733` |
+| $K$ | `58572685567109174314161463780680974914585120509217795839398079844` |
+| $q$ | `229545252111222720256616727741767454210915555161701418701897253` |
+
+
+Let $z_*$ denote this rational center and $\sigma=10^{-35}$. Define
+
+$$
+\mathcal F(X,Y,K,q)=(H_1,H_2,H_3,Y^2-q),\quad
+C_* =10^{-50}\operatorname{round}
+ \bigl(10^{50}D\mathcal F(z_*)^{-1}\bigr),
+\tag{27.1}
+$$
+
+entrywise, with $\operatorname{round}(u)=\lfloor u+1/2\rfloor$.
+The singleton rational determinant of $D\mathcal F(z_*)$ is nonzero,
+and $C_*$ is invertible. Expanding the polynomials before interval
+evaluation on $z_*+[-\sigma,\sigma]^4$, the same grid (25.11) gives
+
+$$
+\begin{aligned}
+\|C_*\mathcal F(z_*)\|_\infty&<2\cdot10^{-60},\\
+\sup_{z\in z_*+[-\sigma,\sigma]^4}
+ \|I-C_*D\mathcal F(z)\|_\infty&<2\cdot10^{-25},\\
+\sup_{z\in z_*+[-\sigma,\sigma]^4}
+ \|(X,Y,K)-\widehat x_{11}(q)\|_\infty&<10^{-17}.
+\end{aligned}
+\tag{27.2}
+$$
+
+These comparisons require no unlisted constants. Compute the rational
+Jacobian at the table center, invert by exact rational elimination,
+round as in (27.1), and expand each entry of $I-C_*D\mathcal F$
+coefficientwise. Direct monomial interval evaluation on the displayed
+cube gives the second comparison. For the first use the singleton
+center, and for the third substitute the interval $q$ into (25.2).
+Invertibility of both singleton matrices is a rational determinant
+comparison. All event divisions are thus guarded.
+
+**Theorem 27.1 (Unique boundary and its orientation).** There is exactly
+one $q_*\in[0,3/1250]$ with $E(q_*)=0$. Its strict rational enclosure is
+
+$$
+0.002295452521112227202566167277417
+<q_*<
+0.002295452521112227202566167277419.
+\tag{27.3}
+$$
+
+It is transverse, with $E'(q_*)<-0.93$. The minus endpoint reaches
+$r_-=b_-=0$, while the plus endpoint remains strict. For
+$q_*<q\le3/1250$, the same analytic branch has $b_-<0$ and $r_-<0$.
+The event is unique on this continued branch.
+
+*Proof.* The first two comparisons in (27.2) are the contraction
+estimates on the four-dimensional radius-$\sigma$ cube. Their sum,
+with the second multiplied by $\sigma$, is less than $\sigma$.
+They give an interior zero of $\mathcal F$ in that cube. The last
+comparison places its first three coordinates in the continuation's
+uniqueness ball at its own parameter. It is therefore a point of
+(26.1). The cube's $q$ projection is strictly inside (27.3).
+
+The endpoint evaluations from (25.2) give $E(0)>0$ and
+$E(3/1250)<0$. The whole-cell derivative bound (25.14) makes $E$
+strictly decreasing throughout the interval. Thus its displayed zero
+is its unique zero, with the asserted derivative.
+Since $Y>0$,
+
+$$
+\operatorname{sgn}(b_-)=\operatorname{sgn}(Y-\sqrt q)
+=\operatorname{sgn}E(q).
+\tag{27.4}
+$$
+
+The uniform inequalities (25.10) make $t_->0$, so $r_-$ has the
+same sign as $b_-$. For $0\le q<q_*$, both $b_\pm>0$ and
+$0<r_-\le r_+<0.11<1$. At the event $b_-=r_-=0$ and the plus
+endpoint is still strict. Its own parameter derivative obeys
+
+$$
+b_-'(q_*)=Y'(q_*)-\frac1{2Y(q_*)}
+=\frac{E'(q_*)}{2Y(q_*)}<0,\qquad
+r_-'(q_*)=t_-(q_*)b_-'(q_*)<0.
+\tag{27.5}
+$$
+
+This proves transversality in the original source coordinates as well
+as the loss of strictness after the event. ∎
+
+At the exact event, $h=Y$ and hence the two sources can be evaluated
+without square roots as
+
+$$
+(t_-,b_-)=(X-KY,0),\qquad(t_+,b_+)=(X+KY,2Y).
+\tag{27.6}
+$$
+
+Substitution of the entire event cube in (24.2), with these formulas,
+gives the strict rational enclosures
+
+$$
+\begin{gathered}
+1.0006<t_-<1.0007,\qquad
+1.0567<t_+<1.0568,\\
+0.0958<b_+<0.0959,\qquad0.1012<r_+<0.1013,\\
+-457.574475<p_*<-457.574474,\\
+-879.434266<v_*<-879.434265.
+\end{gathered}
+\tag{27.7}
+$$
+
+In particular the limiting minus matrix is
+
+$$
+\widehat P(t_-,0)=\begin{pmatrix}0&0\\t_-&1\end{pmatrix},
+\qquad1.0006<t_-<1.0007.
+\tag{27.8}
+$$
+
+It is a boundary limit, not an original strict world. Both endpoint
+$D$ values remain positive at the event. The finite limits $p_*,v_*$
+are evaluations of the same common functions (24.8); the boundary
+extension is not used to supply a strict pair at $q=q_*$.
+
+## 28. Original-world lifts and the closed negative-base range
+
+**Theorem 28.1 (Strict actual pairs and their base coverage).** For
+every $0<q<q_*$ the endpoints (24.6) lift to two distinct original
+complete worlds $W_\pm(q)$, with their respective single fixed drifts
+and whole nonzero degree-at-most-three real polynomials, such that
+
+$$
+W_\pm(q)\in C(p(q),v(q)),\quad p(q)<0,\quad
+ a(W_+(q))=a(W_-(q)).
+\tag{28.1}
+$$
+
+Their own drifts and terminal-$M$ readings are distinct, with
+
+$$
+d(W_+(q))>d(W_-(q)),\qquad
+m(W_+(q))>m(W_-(q)).
+\tag{28.2}
+$$
+
+Every real $p\in[-533,-458]$, including both endpoints, occurs for
+some such strict pair and some real $v$. Neither monotonicity nor
+uniqueness of the projection $q\mapsto p(q)$ is required.
+
+*Proof.* For each strict endpoint use precisely
+
+$$
+ d=-C_0/D,\qquad
+ g(s)=\frac1D\sum_{i=0}^3 C_i
+ \prod_{\substack{0\le l\le3\\l\ne i}}\frac{s-l}{i-l}.
+\tag{28.3}
+$$
+
+Theorem 27.1 gives $0<r<1$, $b>0$ before the event, and (25.10)
+gives $D>0$. Thus this is the supplied regular original-world lift.
+For clarity, every clock can be checked directly. With left products
+$Q_0=I$, $Q_i=E_iQ_{i-1}$, acquired actions $J,M,J,M,M,M$, and the
+two alternative seventh actions on the same world, the nine traces are
+
+$$
+1,j,T,n,U,U+n,2U+n,T+2j+4r,3U+2n.
+\tag{28.4}
+$$
+
+The fixed interpolant has
+
+$$
+\begin{gathered}
+Dg(i)=C_i\ (0\le i\le3),\qquad
+Dg(4)=-C_0+4C_1-6C_2+4C_3,\\
+Dg(5)=B_5,\qquad Dg(6)=B_6,\qquad Dg(7)=B_7.
+\end{gathered}
+\tag{28.5}
+$$
+
+Substitution of (24.2) gives, as polynomial identities,
+
+$$
+\begin{gathered}
+-C_0+C_0=0,\quad -C_0+jC_1=24D,\\
+-C_0+TC_2=(147/5)D,\quad -C_0+nC_3=24D,\\
+-C_0+U(-C_0+4C_1-6C_2+4C_3)=18D.
+\end{gathered}
+\tag{28.6}
+$$
+
+Together (24.2) and (28.4)–(28.6) give exactly the readings
+
+$$
+(0,24,147/5,24,18,p,v),\qquad a,\quad m
+\tag{28.7}
+$$
+
+at clocks $0,\ldots,6$ and the two clock-seven alternatives. There is
+one polynomial at all these clocks and one fixed drift per world.
+If the whole polynomial were zero, the first two readings would both
+be $d$, contradicting $0\ne24$. Thus its nonzero requirement is
+verified without any condition on a sampled gain or on its exact degree.
+
+Since $q>0$, the two $b$ coordinates differ by $2\sqrt q>0$.
+The matrices, hence the complete triples, are distinct. Equations
+(24.5)–(24.8) give equal $p,v,a$, and the last sign in (25.10)
+gives $p<0$, in particular $p\ne24$. They therefore belong to the same
+entire original child. The positivity of $H_d,H_m$ and of $\Delta$
+in (24.7) proves (28.2).
+
+The common functions (24.8) are analytic throughout the closed
+polynomial continuation, including its two relevant limits $0,q_*$.
+The exact germ attachment gives the original initial value $p_0$,
+whose supplied enclosure (19.7) is
+
+$$
+-533.512131<p_0<-533.512130.
+$$
+
+By (27.7), $-457.574475<p(q_*)<-457.574474$. Therefore for every
+$p\in[-533,-458]$ one has the strict inequalities
+
+$$
+p(0)<p<p(q_*).
+\tag{28.8}
+$$
+
+The intermediate value theorem supplies some $q\in[0,q_*]$ with
+$p(q)=p$. Neither endpoint of this parameter interval can be that $q$,
+by (28.8). Hence $0<q<q_*$ and the actual strict pair just constructed
+applies, with $v=v(q)$. This argument includes $p=-533,-458$ and
+requires no assertion about the sign of $p'$ or the number of its
+preimages. ∎
+
+At $q=0$ the endpoints coalesce, so they are not a distinct pair.
+At $q=q_*$ the minus endpoint is not strict. At larger $q$ in the
+certified polynomial interval the minus endpoint has negative $b$.
+Thus the interval of actual strict pairs asserted here is exactly
+$0<q<q_*$ for this selected continuation, with these endpoint exclusions.
+
+## 29. Sources, evaluated addition and the unchanged global question
+
+The source chart, exact first critical world and germ are reused inputs:
+
+- Sections 18.1–18.8 and 19–23 of this volume supply the original-world
+  domain, regular response circuit, exact source cube, tangent,
+  nondegeneracy, local equal-$J$ germ and its initial base bounds.
+- [Common-parent geometry, Definitions 1.1–1.3 and Theorem 2.1](https://github.com/the-omega-institute/trureturing/blob/7bcb8485ed1daaa7b2a859c57e0ba8ccedc4991c/docs/develop/theory/FIB_COMMON_PARENT_GEOMETRY_AND_MIXED_CHILDREN.md)
+  supplies the complete original-world interpretation and the zero-safe
+  parent equation, including singular alternatives and arbitrary drifts.
+- [Support III, Definition 16.1](https://github.com/the-omega-institute/trureturing/blob/7bcb8485ed1daaa7b2a859c57e0ba8ccedc4991c/docs/develop/theory/FIB_STRICT_REAL_JOINT_INCIDENCE_SUPPORT_III.md)
+  supplies the rational polynomial circuit and the whole-gain lift.
+- [Support VI, Definition 14.1 and Theorem 15.1](https://github.com/the-omega-institute/trureturing/blob/7bcb8485ed1daaa7b2a859c57e0ba8ccedc4991c/docs/develop/theory/FIB_STRICT_REAL_JOINT_INCIDENCE_SUPPORT_VI.md)
+  supplies the related symmetric-secant method; this volume's
+  Theorem 21.1 supplies the particular first-$J$ germ attached here.
+- [Support VII, Sections 23–26 and 30](https://github.com/the-omega-institute/trureturing/blob/7bcb8485ed1daaa7b2a859c57e0ba8ccedc4991c/docs/develop/theory/FIB_STRICT_REAL_JOINT_INCIDENCE_SUPPORT_VII.md)
+  supplies the exact critical source, singleton limiting child and
+  local entire-child $M$ injectivity used in Corollary 22.1.
+
+Fixed-node interpolation is the classical formula in
+Berrut–Trefethen, *Barycentric Lagrange Interpolation*, Section 2,
+[DOI 10.1137/S0036144502417715](https://doi.org/10.1137/S0036144502417715).
+The analytic implicit-function theorem is the analytic theorem cited in
+Section 23, Lebl, *Tasty Bits of Several Complex Variables*,
+Theorem 1.3.8. The contraction argument, adjugate identity, Taylor
+coefficient translation and intermediate value theorem are classical.
+Their hypotheses are supplied explicitly by the positive denominator,
+contraction and derivative comparisons above.
+
+The additional evaluated result is the twelve-cell continuation on
+$[0,3/1250]$, its exact attachment, its unique transverse corner
+(27.3), the strict-pair interval $0<q<q_*$, and the actual base
+coverage $[-533,-458]$. The existence of the original germ, its
+critical source, negative-base $J$ existence, the general secant
+method and the inherited local $M$ exclusion are not new claims.
+The rational calculations are ordinary mathematical evidence;
+no formal-verification or literature-priority assertion is made.
+
+The unchanged global target is still the existence of an **entire**
+$C(p,v)$ containing independently selected distinct equal-$J$ worlds
+and independently selected distinct equal-$M$ worlds. The pairs may
+overlap or be disjoint, and their common answers need not agree.
+Each original world retains its own arbitrary fixed real drift and
+one whole nonzero polynomial of degree at most three.
+No common-drift, positive-gain, exact-degree, nonzero-sample,
+simple-root or source-box restriction is imposed on that problem.
+
+For sufficiently small $q>0$, exact germ attachment retains
+Corollary 22.1's inherited entire-child $M$ exclusion. That theorem's
+unspecified neighborhood has no radius assigned here. In particular
+nothing here proves that the evaluated arc exits every such
+neighborhood. The unequal $M$ readings of the two selected endpoints
+in (28.2) exclude only their equality with each other; they do not
+exclude another independently selected $M$ pair elsewhere in the
+same entire child.
+
+Existence or absence of such an independent $M$ pair on the newly
+continued arc remains unresolved. There is no all-companion inventory
+or bound for that arc here. Singular and remote parent alternatives,
+all gain strata, other source branches and unexamined bases remain
+in the global domain. The corner limits only this selected strict
+pair continuation. It is neither a joint witness nor a global negative
+theorem for (18.3).
