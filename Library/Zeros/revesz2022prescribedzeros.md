@@ -348,10 +348,11 @@ It is stronger source matching than an arbitrary pulse function or a
 first-prime-mass model, while reusing the classical realization machinery.
 
 The conclusion does not establish insufficiency for ordinary integers:
-(RJ2) agrees with $\lfloor x\rfloor$ only on the prescribed finite
-window and does not give that equality globally. This system does
-not carry the ordinary zeta functional equation. A proof for the
-original source must use an ordinary-integer or ordinary-zeta constraint
+the finite-prefix matching and (RJ2) do not identify this system with
+ordinary arithmetic. Neither the exact global count $\lfloor x\rfloor$
+nor the ordinary zeta functional equation is supplied by the construction.
+A proof for the original source must use an ordinary-integer or
+ordinary-zeta constraint
 that does not transport to this system. No such additional estimate,
 ordinary Robin counterexample, RH proof, new zero construction or
 Lean-certified theorem is supplied here.
