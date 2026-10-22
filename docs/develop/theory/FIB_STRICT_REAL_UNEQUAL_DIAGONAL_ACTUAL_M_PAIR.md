@@ -427,9 +427,10 @@ The inequality for $a(W_2)-a(W_3)$ eliminates only the use of these two selected
 
 **Definition 9.1 (The reused analytic family).** Write
 $\Phi(r,b)=(p(r,b),v(r,b))$ for the two acquired responses in
-Definition 2.1 and put $\lambda _0=2/5$. Theorem 7.2 of
-*AURIC–Langlands 语境与谱重构理论*, Section 7, “真实碰撞对的一参数延拓”,
-supplies a real analytic family through the exact zero of Theorem 4.3:
+Definition 2.1 and put $\lambda _0=2/5$. Theorem 7.2 in
+[AURIC–Langlands 语境与谱重构理论](AURIC_LANGLANDS_CONTEXT_AND_SPECTRAL_RECONSTRUCTION_THEORY.md),
+Section 7, “真实碰撞对的一参数延拓”, supplies a real analytic family
+through the exact zero of Theorem 4.3:
 
 $$
 \begin{aligned}
@@ -476,6 +477,13 @@ $$
 
 Consequently $(2/5,b_{0*})\in S_0$, by Theorem 4.3.
 
+The derivative enclosures and strict determinant bound in Lemma 9.3,
+and the resulting quantitative motion and local injectivity in Theorem
+10.1, are model-specific ordinary derivations in this repository
+(`repo-derived`), with no claim of literature priority. The chain
+rule, local monotonicity and real analytic identity principle used
+below are classical intermediate inputs.
+
 **Lemma 9.3 (Whole-segment derivative separation).** The response
 circuit is pole-free on $S_0$. With columns ordered as $(r,b)$, its
 ambient partial derivatives have the following rational enclosures
@@ -496,9 +504,8 @@ $$
 \qquad ((r,b)\in S_0).
 $$
 
-Proof. The rational certificate is the one stated in *Motion of the
-actual terminal-M collision base*, Lemma 2.2. The enclosing-segment
-comparisons in Definition 9.2 are exact rational comparisons using
+Proof. The enclosing-segment comparisons in Definition 9.2 are
+exact rational comparisons using
 the printed value of $c_1$ and $\rho=10^{-38}$. The following finite
 integer prescription gives the derivative table directly from
 Definition 2.1.
@@ -689,7 +696,8 @@ cover gives $(B\circ\beta)(P_M\circ\beta)\equiv0$. If the first
 factor is not identically zero, it is nonzero on some open subinterval.
 The second factor vanishes there and hence identically on $I$.
 This implication is also the exceptional-layer constraint in
-*AURIC–Langlands 语境与谱重构理论*, Corollary 7.3.
+[AURIC–Langlands 语境与谱重构理论](AURIC_LANGLANDS_CONTEXT_AND_SPECTRAL_RECONSTRUCTION_THEORY.md),
+Section 7, Corollary 7.3.
 
 Nonconstancy of $\beta$ does not imply $h\not\equiv0$: the nonconstant
 arc $t\mapsto(t,0)$ lies wholly in the zero set of the nonzero
