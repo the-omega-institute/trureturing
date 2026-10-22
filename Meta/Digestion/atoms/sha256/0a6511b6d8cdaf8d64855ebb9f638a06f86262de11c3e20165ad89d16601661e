@@ -1,0 +1,11 @@
+**Corollary 8.3 (The source-union restriction cannot be enlarged).**
+The implication $E(p,v)\ne\varnothing\Rightarrow f_{MM}|_{C(p,v)}$
+is injective is false. Theorem 3.2 remains an injectivity theorem on
+$E(p,v)$ itself.
+
+**Proof.** The child in Theorem 8.2 meets $E$ but contains the distinct
+mixed $M$ pair $\{O_1,S_1\}$. This pair has only one endpoint in $E$,
+so it does not contradict Theorem 3.2. At this child $M$ fails to
+identify the complete world and $J$ identifies it; its $J$-pair count
+is zero, so the child supplies no $L_1$ witness. ∎
+

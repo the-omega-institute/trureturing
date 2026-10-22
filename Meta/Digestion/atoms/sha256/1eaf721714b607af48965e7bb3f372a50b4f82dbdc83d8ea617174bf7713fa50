@@ -1,0 +1,83 @@
+**Notation 202.1 (Reused one-copy matrix data).** Retain (178.1)–(178.6)
+and the criterion of VI §170, with $d=t^2$. Put
+$H=\operatorname{span}\{R,r\}\cong\mathbb C^2$,
+in the ordered basis $(R,r)$, and write
+
+$$
+ |0\rangle=|b_0\rangle,\qquad |2\rangle=|b_{12}\rangle=|r\wedge R\rangle.
+$$
+
+In the Bob order $(|0\rangle,H,|2\rangle)$, define
+
+$$
+\begin{aligned}
+ D&=tI_2+suu^*,& E&=tI_2-ts\,hh^*,\\
+ f&=s\overline{\alpha}\,u,& g&=-ts\overline{\gamma}\,h,\\
+ c&=t+sx,& b&=t(1-sy),& d&=t^2.
+\end{aligned}
+$$
+
+The Alice blocks of $R$ are
+
+$$
+ A_0=1\oplus D\oplus b,\qquad A_1=c\oplus E\oplus d,\qquad
+ C=|f\rangle\langle0|+|2\rangle\langle g|,
+$$
+
+so that
+
+$$
+ R=\begin{pmatrix}A_0&C\\ C^*&A_1\end{pmatrix}.
+ \tag{202.1}
+$$
+
+The number-block spectra are
+
+$$
+ \operatorname{spec}(R)=\{1,1,t,t,t,t,t^2,t^2\},\qquad
+ \operatorname{tr}R=Z.
+ \tag{202.2}
+$$
+
+Thus $R>0$ for $t>0$, while $D\geq tI_2$ and $E\geq t^2I_2$.
+The original positive blocks give the strict Schur inequalities
+
+$$
+ cD-ff^*>0,\qquad bE-gg^*>0. \tag{202.3}
+$$
+
+Define
+
+$$
+ q_0=f^*E^{-1}f,\qquad q_3={g^*D^{-1}g\over d}. \tag{202.4}
+$$
+
+The inverse rank-one formulas are
+
+$$
+ E^{-1}={1\over t}\left(I_2+{s\,hh^*\over t+sy}\right),\qquad
+ D^{-1}={1\over t}\left(I_2-{s\,uu^*\over t+s(1-x)}\right),
+$$
+
+so
+
+$$
+ q_0={s^2x\over t}\left((1-x)+{sz\over t+sy}\right),\qquad
+ q_3={s^2y\over t}\left((1-y)-{sz\over t+s(1-x)}\right). \tag{202.5}
+$$
+
+The published ordinary one-copy partial-transpose reduction
+(178.4)–(178.5), equivalently VI (170.1)–(170.5), has positive singleton
+blocks $c,b$, and nontrivial blocks
+
+$$
+ \begin{pmatrix}1&f^*\\f&E\end{pmatrix},\qquad
+ \begin{pmatrix}d&g^*\\g&D\end{pmatrix}.
+$$
+
+Its Schur criterion is
+
+$$
+ \rho^{T_A}\geq0\iff q_0\leq1\text{ and }q_3\leq1. \tag{202.6}
+$$
+

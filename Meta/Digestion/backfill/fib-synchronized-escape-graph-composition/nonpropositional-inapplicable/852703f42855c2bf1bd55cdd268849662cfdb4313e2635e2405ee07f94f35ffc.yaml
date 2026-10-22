@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:852703f42855c2bf1bd55cdd268849662cfdb4313e2635e2405ee07f94f35ffc
+  normalized_sha256: sha256:852703f42855c2bf1bd55cdd268849662cfdb4313e2635e2405ee07f94f35ffc
+cas_ref: sha256:852703f42855c2bf1bd55cdd268849662cfdb4313e2635e2405ee07f94f35ffc
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 'Unfold the support-gated product relation. The witness-lifting premise supplies the missing support conjunct at exactly the marginal witness length; both inclusions follow by existential introduction/elimination and graph extensionality. The later discussion of failure of the converse is a separate unsettled child. Pinned mathlib revision: 56a005855ea17e0b0958f73ec801ae140b0a1679. Upstream declarations: Prod.ext_iff, not_and_or, exists_or, Set.ext, Set.mem_setOf_eq. D5 searched scope: D5/**/*.lean, including private declarations; shape scan: lowerPolar/upperPolar/Galois/closure, chromaticNumber/coloring/products, convex intersection/Helly/Radon, numerical checker checked_expression_encloses and cutoff_first_nonstrict; inspected the graph-coloring, generic closure, formal-concept adapter, and quantum Foundation/Subentropy hits.'
+    previous_atom_id: 1bd1afa190cf69e7c03943af27348a8b1004ed7f3c9bfef992e96ff1a218f0b9
+    next_atom_id: db8054f201faa345098a4a4ce90d6afed968dc10eef149e38aa2ba0b9a21c502

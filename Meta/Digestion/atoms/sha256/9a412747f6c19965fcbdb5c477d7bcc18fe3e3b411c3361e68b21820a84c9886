@@ -1,0 +1,51 @@
+**Definition 16.1 (The remaining guarded joint problem).** On the
+complete original world space define, for $E\in\{J,M\}$,
+
+$$
+\mathcal P_E=\{(q,W_0,W_1):q\in Y,\ W_0,W_1\in C(q),\
+ W_0\ne W_1,\ f_{ME}(W_0)=f_{ME}(W_1)\}.
+$$
+
+The original joint relation is the fibre product
+$\mathcal P_J\times_Y\mathcal P_M$. Only distinctness within each
+pair is required. Cross-pair reuse and unequal common terminal values
+are allowed. By Corollary 11.4, bounding $b,c$ above for every world
+in a collision child does not change this relation; it retains companions
+unused by either pair. Theorems 12.1–12.3 give finite-$p$ bounds and
+the explicit individual-world nonproper values relative to $Y$, not a
+uniform bound as $|p|\to\infty$. The two-sheet example of Proposition
+11.5 prevents replacing a legal child by a singleton, and Corollary
+15.5 prevents using a positive lower endpoint-$b$ bound for $D_M$.
+
+Theorem 9.10 still places every joint base whose entire child merely
+meets $E$ in the finite outer union $Z_E$ on $Q_{10},S_4,Q_{24}$.
+Every divisor intersection remains included, and its exceptional world
+may be unused by both pairs. This outer restriction does not isolate,
+strictly lift or classify its points. The drift chart on $Q_{24}$ is
+the Chinese-remainder chart of Section 9; the old $\alpha$ inverse is
+not an assumption there. The fixed F31 normalization, in particular
+$S=S_\star$ and the residues $41,46$ used in that section, remains
+unchanged.
+
+For children avoiding $E$, the ordinary common components, isolated
+carrier intersections, strict-real lifts, and relevant $E_0=0$ strata
+outside the covered image curves still require a decision. On a region
+satisfying Theorem 14.2 this decision is exactly the simultaneous zero
+condition for the two products of legal sections. Neither that condition,
+the boundary classification, nor the local $J$ exclusion in
+$\mathcal B_0$ decides its truth on the remaining base domain.
+Source-boundary losses, critical diagonal coalescences and unbounded
+acquired-base limits retain their original strict guards. Boundary sources,
+complex roots and unfiltered interval labels are never legal whole worlds.
+
+The positive criterion remains four complete labels at one common real
+$p\ne24,v$, with the two within-pair squared distances
+$\,(x_0-x_1)^2+(d_0-d_1)^2>0$ and its $M$ analogue. The negative
+criterion remains exclusion of all such labels over the entire $Y$.
+These supporting statements supply neither criterion. Even a positive
+sixth-$M$ child would still leave the sixth-$J$ condition at that same
+fifth response $p$, the fifth-$J$ and common-parent conditions, and the
+ancestor obligations of O, Theorem 17.1. No fifth-$M$ $L_2$, $H_4$
+$L_3$, root $L_7$ or eight-versus-nine conclusion is imposed by these
+reductions.
+

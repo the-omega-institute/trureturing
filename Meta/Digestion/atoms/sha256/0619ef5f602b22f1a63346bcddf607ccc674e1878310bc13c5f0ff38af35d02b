@@ -1,0 +1,11 @@
+**Definition 6.1 (decoders).** Each decoder takes only its indicated
+body, $b_*$ and PublicCode, with fresh work words. Each checks §5's
+past predicates; its current caller has already performed the actual
+current checks of Definition 5.1.
+
+| Decoder | Actual finite word procedure |
+| --- | --- |
+| $D_S$ | Parse CYCLE masks and the exact unary layout; recover $W$; apply Definition 4.2; require $n=k$ and full derived raw endpoint equality; check binding and exact S re-encoding. |
+| $D_B$ | Parse CYCLE contour, reconstruct terminal paths and their prefix closure, require maximality/exact contour re-encoding; invert layout; perform the same endpoint recovery/raw equality/binding checks and re-emit B. |
+| $D_M$ | Parse exact seven-family schemas and canonical order; apply Definition 4.2 using basic families only; require $n=k$; fold roles over derived history and compare the entire reselected M-body; check binding. |
+| $D_T$ | Start the paid foundation; for each eleven-field record take its own optional bit exactly at IN, execute one literal Step and local patch check, compare every record field, update identities/roles/tally; require exhaustion and $k$, then binding and exact T re-encoding. |

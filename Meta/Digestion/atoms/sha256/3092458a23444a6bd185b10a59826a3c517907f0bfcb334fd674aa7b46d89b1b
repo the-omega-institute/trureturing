@@ -1,0 +1,47 @@
+**Lemma 15.3 (No third world and unequal actual final-M responses).**
+At $u_0=u_J(X_0)$ the entire acquired child is exactly
+
+$$
+\mathcal F(H_4,M,24,J,u_0)=\{X_0,Y_0\},
+\qquad f_{JM}(X_0)\ne f_{JM}(Y_0).
+\tag{15.3}
+$$
+
+Proof. A point on the positive $H$ graph with $u=63$ must satisfy
+$L_{63}=0$. Its resultant in (14.9) permits only the two roots of
+$P_{63,18}$ and the one root of $C$. The first $P_{63,18}$ root is
+in level-63-0, strictly below $1/50$. At the two remaining projected
+coordinates, level-63-1 and level-63-2 have $L_{63}<0$ throughout the
+uniform positive-root boxes, excluding actual level-63 points. Thus
+$u$ never equals $63$ on $[1/50,1)$. At $1/50$ the u-above-63 box gives
+$63<u<64$. Continuity on that connected interval proves $u>63$
+everywhere on $[1/50,1)$.
+
+On $(0,1/50)$ the $D_u$ resultant cannot vanish: the endpoint factors
+are absent, $A,C$ have no roots there, and $P_{u,42}$ has variation
+difference zero. Therefore $D_u$ has no zero on this graph portion.
+The u-positive-derivative box at $r=1/100$ gives $D_u>0$. Equation
+(14.8) proves strict increase of $u$ there. Consequently every $u<63$
+has at most one $\mathcal H$ world on the entire graph.
+
+On $\mathcal K$, $u_K$ is strictly increasing on $(0,1/4)$ since
+$u_K'=240-384t>0$ there. On $[1/4,1)$ its concavity and the values
+$u_K(1/4)=u_K(1)=102$ give $u_K\ge102$. Hence a response in $(62,63)$
+has at most one $\mathcal K$ world. Theorem 15.2 already supplies one
+world from each curve at $u_0$. The complete-fiber set union (13.5),
+with intersections counted once, leaves no third world.
+
+The actual seventh-M response of $X_0$ is $m=M_n/(5bD)$, not a
+refitted gain value; mixed-J-0 gives $221<m(X_0)<223$. From (14.5)
+and $34/1000<t_0<35/1000$,
+
+$$
+m_K(t_0)>
+\frac{1128}{5}+\frac{3072}{5}\frac{34}{1000}\frac{965}{1000}>245.
+\tag{15.4}
+$$
+
+More precisely the same interval operations give
+$3839976/15625<m_K(t_0)<3849576/15625$, both in $(245,247)$.
+The two actual final-M responses are therefore different. ∎
+

@@ -1,0 +1,21 @@
+命题 55 的判定对象只取定义 16 的 $\Sigma_{{\rm cau},t}$ 单孔上下文：
+
+$$
+E_q(B)\ \Longleftrightarrow\
+\exists\,\text{固定有限 }C\in\operatorname{Ctx}_{\Sigma_{{\rm cau},t}}
+\ \forall X\in\mathcal B:\quad
+C(X)\text{ 有定义且 }q(C(X))=q(F_BX).
+\tag{O-QEXPR}
+$$
+
+所有旁参数、谓词、平移量与槽位在 $X$ 之前固定；实际孔恰有一个。允许在有限项中重复同一输入的 $\operatorname{Ctx}^{\rm dup}$（如 $X\boxtimes X$）**不是定义 16 的上下文**，其 q 表达问题另列于 §36.7。
+
+定义
+
+$$
+\operatorname{Tail}(B)\ \Longleftrightarrow\
+\exists c\in\mathbb Z\ \forall p\in\mathbb Z^3\
+\forall t,t'<c:\quad \mathbf1_B(t,p)=\mathbf1_B(t',p).
+\tag{O-TAIL}
+$$
+

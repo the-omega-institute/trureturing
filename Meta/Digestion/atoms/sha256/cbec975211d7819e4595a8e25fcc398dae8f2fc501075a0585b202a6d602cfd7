@@ -1,0 +1,39 @@
+**Assumption 9.11 (Sources, tools and transferred scope).** The owning
+ordinary source results remain O, Definitions 1.1–1.3 and Theorems 2.1,
+4.2, 17.1, 29.2, and F, Sections 30–33. Fixed public references are
+[O at the common source snapshot](https://github.com/the-omega-institute/trureturing/blob/033c1b370f2447aa20e191a6a3da609aba697e50/docs/develop/theory/FIB_COMMON_PARENT_GEOMETRY_AND_MIXED_CHILDREN.md)
+and [F at that snapshot](https://github.com/the-omega-institute/trureturing/blob/033c1b370f2447aa20e191a6a3da609aba697e50/docs/develop/theory/FIB_ALL_RESPONSE_FINITE_FIBRE_GEOMETRY.md).
+The reconstruction, the 24-world bound and Sections 1–5 are reused;
+these results are not new proofs of that bound or repetitions of the
+published B collision. The different history of R supplies no theorem
+about this $H_4$ merely by analogy.
+
+Distinct-node interpolation, the contraction theorem, the implicit- and
+inverse-function theorems, Sturm isolation, Sylvester resultants,
+finite-field irreducibility, the Chinese remainder theorem and the
+Vandermonde determinant are standard tools. The interpolation,
+contraction, resultant and finite-field references in Sections 1–6 apply
+with exactly their stated hypotheses. For the algebraic tools, see
+Atiyah–Macdonald, *Introduction to Commutative Algebra*, Proposition 1.10
+for the Chinese remainder theorem, and Fulton, *Algebraic Curves*,
+[primary text](https://dept.math.lsa.umich.edu/~wfulton/CurveBook.pdf),
+the resultant and plane-curve intersection arguments. For the analytic
+tools, see Rudin, *Principles of Mathematical Analysis*, Theorems 9.24
+and 9.28; the displayed nonzero Jacobians supply their hypotheses.
+The Vandermonde identity is applied only to distinct roots; its
+specialization failures are retained in the discriminant factors.
+
+The bounded new deductions here are source-specific: the whole-child
+singleton neighbourhood and both-endpoint bound, the exactly lifted mixed
+pair with its entire-child enumeration and finite singular-endpoint
+incidence, and the exceptional-inclusive finite outer reduction with
+its component-specific CRT chart. The older $S$ carrier, standard
+algebraic tools and bounded source-overlap evidence do not establish
+worldwide novelty. All statements concern ordinary mathematics in the
+specified model. They make no kernel-certification, physical-realization,
+algorithmic-complexity or total-resource claim. Lower gain degrees,
+sampled and repeated gain roots, zero drift and singular sources retain
+their original meanings. Every original clock $0,\ldots,7$ and immediate
+read remains; there is no reset, copy, skip, new port or acquired hidden
+label. The two final actions remain counterfactual alternatives.
+

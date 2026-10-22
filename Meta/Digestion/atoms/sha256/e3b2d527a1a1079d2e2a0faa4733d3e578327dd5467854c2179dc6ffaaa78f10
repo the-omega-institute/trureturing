@@ -1,0 +1,41 @@
+**Assumption 21.4 (Correspondence, attribution and residual scope).**
+The mathematical premises and their exact roles are as follows.
+
+| Owning result or method | Instantiation and consequence |
+| --- | --- |
+| O, Definitions 1.1–1.3 and Theorems 2.1–2.2 | The same $H_4$, original clocks, strict sources, one whole nonzero degree-at-most-three gain and fixed drift; off-$24$ implies $d\ne24$. |
+| F, Lemma 30.2; Definition 1.1; Lemma 19.2 | Faithful entire-world reconstruction at $p=P/q\ne24,v=V/q$, with $x>0,d\ne24,H_1\ne0,C_0>0,U>1,0<r<1$ and no regular-source assumption. |
+| F, Section 31; the fixed minors of Definition 20.1 | Sylvester and subresultant necessary identities under specialization; leading units on $Q_8,Q_{41}$ are supplied explicitly. |
+| Theorems 15.2, 15.4 | At $\varepsilon=0$, $A(u_0,0)=R(u_0)$ and $B(0)$ is an actual strict companion; exhaustion identifies $u_0=t_*$ and $B(0)=W_*$. |
+| Definition 15.1, Theorems 15.3–15.4, Corollary 15.5 | The same entire child at $q(0)$ has exactly two worlds with separated $J$ values, and the same open base neighbourhood excludes every actual $J$ pair. |
+| Classical interpolation, fixed Sylvester/subresultant determinants and signed Sturm theory | Distinct-node interpolation, polynomial-combination identities, coprimality and exhaustive real-root counting; compare F, Sections 30–31 and the resultant reference in Assumption 6.1. |
+
+The exact source-specific deductions are the all-positive-parameter
+elimination, pole and self-label exclusions, removal of $Q_8$, seven-root
+exhaustion, complete strict-world filtering, and their actual same-base
+$J$ consumer. The local mixed-$M$ example, strict lift and uniform
+whole-child $J$ separation are precisely the owning Section 15 results.
+The determinant and Sturm methods are classical; no broader literature
+novelty claim is part of these deductions.
+
+No inverse of $d,\Lambda,F_0,H_0,H_7$, a leading gain coefficient,
+a discriminant or an unguarded sampled gain value is taken.
+The inverse of $H_1$ has the exact off-$24$ and interval unit guards;
+$D>0$, $q\ne0$, $\ell\ne0$, the excluded self factor, the $h_2$
+and $\alpha,A$ units, $C_0>0$, $U>1$ and $b>0$ justify every
+remaining reconstruction division. Singular sources, zero drift,
+lower degrees, nonsingular $F_0=0$ and repeated or sampled roots
+are included in the necessary interface before the exhaustive filter.
+
+The original all-real strict joint relation of Definitions 1.2 and 18.3
+remains unresolved. Other finite faces and corners, both-boundary losses,
+interior critical diagonal limits, unbounded bases or sources,
+excluded-pole approaches, and limits with $p_n\ne24$ but $p=24$
+are outside Corollary 21.3. Convergence only of $r,b$ does not specify
+$c\to t$ or whole-gain convergence. No global positive lower bound
+on $b$, global properness or global joint exclusion follows.
+The same-$p$ sixth-$J$ child, other fifth-$J$/common-parent conditions
+and all eight-slot/ancestor obligations of O, Theorem 17.1, remain
+separate; no fifth-$M$ $L_2$, $H_4$ $L_3$, root $L_7$ or
+eight-versus-nine conclusion is supplied.
+

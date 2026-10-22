@@ -1,0 +1,46 @@
+**Definition 114.1 (the finite-depth candidate bridge).** Let
+
+$$
+\mathcal S_n=\{\alpha,\beta\}
+  \cup\{t=\langle s,u\rangle:\operatorname{height}(t)\le n\}
+$$
+
+be the finite ordered source family of height at most $n$. For $t\in
+\mathcal S_n$, use its occurrence vertices $V_t$, oriented edge set $E_t$,
+and the closed unit-edge operator $L_t=D_t^*D_t$. Define
+
+$$
+\begin{aligned}
+d_t(x,y)&=\text{the shortest-path length in }(V_t,E_t),\\
+\mu_t(x)&=1,\\
+\widehat\mu_t(x)&=N_t^{-1},\\
+U_t&=-D_tL_t^{+1/2}:P_t\ell^2(V_t)\longrightarrow\ell^2(E_t),
+\end{aligned}
+\tag{114.1}
+$$
+
+where $P_t$ removes constants. The tagged carrier is
+
+$$
+\mathscr C_n
+  =\bigsqcup_{t\in\mathcal S_n}
+     \bigl(\{t\}\times V_t,\{t\}\times E_t,d_t,\mu_t,U_t\bigr).
+\tag{114.2}
+$$
+
+The tag is part of the mathematical carrier in (114.2); it is not declared to
+be a freely available observation. A coarse port projection instead retains
+only the entry data
+
+$$
+\pi^{\rm port}_t
+  =\bigl(N_t,\ |B_t|,\ K_t\bigr),
+\qquad K_t=R_tL_tR_t^*,
+\tag{114.3}
+$$
+
+with the three literal ports $(\varepsilon,L,R)$ whenever they are reached.
+For the port projection and its matrix, restrict to the branch-root subfamily
+where these three ports are present; the full tagged carrier continues to
+include singleton sources and sources with other root labels.
+

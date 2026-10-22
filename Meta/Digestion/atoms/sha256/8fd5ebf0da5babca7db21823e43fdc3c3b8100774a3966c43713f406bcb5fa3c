@@ -1,0 +1,135 @@
+**Theorem 26.3 (Entire exceptional source fibre and strict invariant).**
+At $x=\alpha$, the formulas
+
+$$
+ b=B_*/D,\qquad r=R_*/D,\qquad0<z<1
+\tag{26.8}
+$$
+
+parametrize exactly all strict positive sources with $n/U=x$,
+once each. Every such source has $\Lambda<0$, so has exactly
+one complete parent world, with drift $d_x(z)$ and the single
+gain reconstructed by O, Theorem 2.1. On the whole interval,
+
+$$
+\partial_zK_\alpha(z)<0.
+\tag{26.9}
+$$
+
+Proof. Rational evaluation of the quartic at (26.3) gives
+$\mathfrak p(\ell)<0<\mathfrak p(h_\alpha)$, locating its unique
+positive root. These same rational endpoints give
+
+$$
+1/2<\ell<\alpha<h_\alpha<2/3,\qquad
+\ell^2+\ell-1>0.
+\tag{26.10}
+$$
+
+In particular all three coefficients of $D$ in (26.4) are positive
+at $x=\alpha$. Direct polynomial identities give
+
+$$
+\begin{gathered}
+D-R_*=(1-x)^2(1-z),\qquad
+(J_*-B_*)B_*=R_*(D-R_*),\\
+\frac{db}{dz}
+ =\frac{(1-x)\{(1-x)^2-c_xz^2\}}{D^2}>0,
+\qquad (1-x)^2-c_x=2-3x>0.
+\end{gathered}
+\tag{26.11}
+$$
+
+For $0<z<1$, these identities give $0<r<1$, $b>0$ and
+$c=(J_*-B_*)/D=r(1-r)/b>0$, with $j=J_*/D$,
+$U=U_*/D$ and $n=N_*/D=xU$. The coordinate $b$ increases
+from zero to
+
+$$
+b_{\max}=\frac{1-x}{2x-1}>1.
+\tag{26.12}
+$$
+
+To prove exhaustion, every source of this ratio satisfies
+
+$$
+F_b(r)=r^2-(1+b)r+b\{x+(2x-1)b\}=0.
+\tag{26.13}
+$$
+
+For $0<b<b_{\max}$, $F_b(0)>0$ and $F_b(1)<0$, so this
+quadratic has exactly one root in $(0,1)$; its other root is
+larger than one. For $b\ge b_{\max}>1$, its derivative is
+negative on $[0,1]$ and $F_b(1)\ge0$, so it has no strict
+root there. The strictly increasing $b(z)$ and (26.11) therefore
+supply every legal source exactly once. The closed chart endpoints
+are auxiliary points, not worlds.
+
+Here is a finite rational sign certificate on the full closed
+rectangle $I_\alpha\times[0,1]$. Apply (26.6)–(26.7) to the
+polynomials defined in (26.4)–(26.5). The resulting strict
+comparisons, in increasing $k$, are
+
+$$
+\begin{aligned}
+\operatorname{up}(\beta_{k,6}(L))&<-a_{L,k}/10^6,\\
+\operatorname{up}(\beta_{k,10}(\mathcal M))&<-a_{M,k}/10^6,
+\end{aligned}
+\tag{26.14}
+$$
+
+where the exact integer vectors are
+
+$$
+\begin{aligned}
+(a_{L,k})={}&(2568,5336,9737,15554,23008,32865,46551),\\
+(a_{M,k})={}&(12697,21923,36249,59040,97503,164302,\\
+&\qquad278586,466328,759734,1195254,1809568).
+\end{aligned}
+\tag{26.15}
+$$
+
+These comparisons are specified entirely by rational operations:
+expand the divisions in (26.4)–(26.5), extract the $z^i$
+coefficients, sum them with the binomial fractions (26.6), and
+apply the descending recursion (26.7) with (26.3). For example
+the right bound in row $k$ is the displayed integer divided by
+$10^6$ with a minus sign; no floating-point root or sampled
+value enters a comparison. Equations (26.3)–(26.7), (26.14)–(26.15)
+are a finite reproducible certificate for all 18 inequalities.
+The Bernstein weights are nonnegative and sum to one on $[0,1]$.
+Thus (26.14) gives $L<0$ and $\mathcal M<0$ on the entire
+closed rectangle.
+
+On every strict source of (26.8), substitution in the original
+parent coefficient gives
+
+$$
+\Lambda=\frac{L_{\rm num}}{T_*U_*J_*N_*}<0.
+\tag{26.16}
+$$
+
+Indeed $T_*,U_*,J_*,N_*$ are positive there and
+$L_{\rm num}=2U_*L$. Substitution also gives the rational identity
+
+$$
+(d_x-24)\Lambda+
+ \frac{24}{5}(b-1/8)
+ \left(\frac6{1+b}-\frac2{1+2b}\right)=0.
+\tag{26.17}
+$$
+
+It follows either by clearing the stated positive denominators
+in (26.4)–(26.5), or by inserting $L_{\rm num}=2U_*L$.
+O, Theorem 2.1, now reconstructs exactly one complete parent
+world at each source. In particular the gain is nonzero because
+the original responses at clocks zero and one differ.
+Finally (26.5) and the strict sign of $\mathcal M$ imply
+
+$$
+\partial_zK_x=\frac{\mathcal M}{5(x+1)(x+2)L^2}<0
+\quad(x=\alpha),
+$$
+
+with a strictly positive denominator. This proves (26.9). ∎
+

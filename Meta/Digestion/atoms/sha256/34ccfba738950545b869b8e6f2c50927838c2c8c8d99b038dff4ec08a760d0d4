@@ -1,0 +1,33 @@
+**Assumption 30.1 (Exact supplier correspondence).** The symbols O, F
+and S in Sections 25–29 have the following public meanings and uses.
+The statements are used as ordinary mathematical premises at the listed
+scopes. The source-specific conclusions here are repository-derived;
+no literature-priority assertion accompanies them.
+
+| Public mathematical supplier | Parameter correspondence and scope used |
+| --- | --- |
+| [O, Definitions 1.1–1.3 and Theorem 2.1](https://github.com/the-omega-institute/trureturing/blob/3350fc26dcbaf210d8ab035c7e25ab99c76e8447/docs/develop/theory/FIB_COMMON_PARENT_GEOMETRY_AND_MIXED_CHILDREN.md) | Exactly the original $P(r,b)$, one whole nonzero degree-at-most-three gain, fixed drift, left products and clocks $0,\ldots,7$. Its $\epsilon$ is $e$ here; its sixth-M $u$ and terminal $f$ are $v,m$. The parent equation and whole-gain reconstruction include singular sources. |
+| O, Definition 12.1, Theorem 12.3, (12.8), Definition 13.1 and Theorem 13.2 | The same $X=bj,N=bn,W=bV,N_4,H$ give (25.7), (25.8), (27.10). The strict $p=24$ fibre is exactly the K/H union, with $H_b>0,E_2\ne0$ on the strict H graph. Boundary filters and endpoint lifts are established in Section 26 rather than assumed from the strict theorem. |
+| O, Lemmas 16.2–16.4 and Theorem 16.5 | Full-parent $(r,e)$ chart and the whole-gain derivatives. The mirror isolation premise itself has strict endpoint scope; (28.1)–(28.8) and the ambient uniqueness argument supply the closed endpoint extension. |
+| [F, Theorem 25.2](https://github.com/the-omega-institute/trureturing/blob/3350fc26dcbaf210d8ab035c7e25ab99c76e8447/docs/develop/theory/FIB_ALL_RESPONSE_FINITE_FIBRE_GEOMETRY.md) | The strict separator is $e(k-k_0)<0$ outside K. Both additional boundary signs are (26.6)–(26.7). |
+| F, Theorem 27.2 | Central saturation is on the full complete parent near $\mathcal K(9/16)$; every distinct equal-$(p,v,m)$ pair there is a K mirror pair at $p=24$. This supplies the central diagonal case, not an immersion assertion at that point. |
+| F, Lemma 28.2, Theorem 28.5, (28.19) and Theorem 29.1 | Derived $1<t<2$ for H, and positive derivative of $\ell=m-(24/5)v$ on every strict H point. The strict matching classification is extended to the entire finite closed fibre in Theorem 26.3. |
+| [S, Theorem 7.3](https://github.com/the-omega-institute/trureturing/blob/517e0e3f0472caff3dce0352f386789faa7407cf/docs/develop/theory/FIB_STRICT_REAL_JOINT_INCIDENCE_SUPPORT.md) | One finite $B_*$ bounds $b$ at both endpoints of every actual distinct equal-terminal pair for every real off-$24$ base. It is applied to actual selected $M$ pairs, including all exceptional worlds. |
+| S, Theorem 12.1, Definition 12.2 and the finite-exhaustion argument of Theorem 12.3 | For $b\le B_*$ and bounded $|p|$, $c,d$, all four padded gain coefficients and remaining responses are bounded, including $p=24$. The four finite faces and two corners are considered before intersecting with the relative off-$24$ target. |
+| This volume, Lemma 14.2 and Theorem 14.3 | Finite exhaustion permits $p_i\to24$. For a bounded-$p$ distinct pair, $\max(\delta,\delta')\ge\eta(P)>0$. Precisely one endpoint is selected as strict anchor; this is not a bound for each endpoint. |
+
+Fixed-node interpolation is used only at the displayed distinct original
+nodes; its uniqueness is the classical Lagrange interpolation theorem
+([Berrut–Trefethen, §2, (2.1)–(2.2)](https://doi.org/10.1137/S0036144502417715)).
+The implicit and inverse function theorems apply on open Euclidean chart
+domains with the displayed nonzero dependent-variable determinants
+([Lebl, *Basic Analysis II*, Theorem 8.5.6](https://www.jirka.org/ra/realanal2.pdf)).
+For the two degree-six polynomials, the Sylvester criterion says that a
+common complex root forces a zero resultant; the fixed integer matrix and
+its nonzero modular determinant are (27.8)
+([Moreno Maza, *The resultant*, Definition 4 and Proposition 5](https://www.csd.uwo.ca/~mmorenom/AM583/Lectures/ResultantGcd.html/node3.html)).
+Compactness in Theorem 29.1 is the classical bounded-subsequence theorem
+in the finite-dimensional complete-tuple coordinates, after the actual-pair
+bounds have been obtained. None of these classical tools by itself asserts
+a collision classification or compactness of the original world domain.
+

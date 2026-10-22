@@ -1,0 +1,79 @@
+**Lemma 20.3 (Actual separator signs over the exceptional projections).**
+For every $p\in I$ and $r\in\bigcup_{k=1}^5J_k$,
+
+$$
+F_-(r,p)>0,\qquad F_+(r,p)<0.
+\tag{20.11}
+$$
+
+**Proof.** For the row labelled $(k,i)$ below, set
+$B_{ki}=[\ell,h]/10^4$ and use the displayed sign $\chi$.
+The roots $b_i(r,p)$ lie strictly in $B_{ki}$ for every
+$(r,p)\in J_k\times I$. The four last columns are positive lower
+bounds, in units of $10^{-6}$, for the following Bernstein minima:
+
+$$
+\begin{array}{c|c|c}
+\text{column}&\text{polynomial and box}&\text{degrees}\\ \hline
+a_\ell&\theta_i\mathsf A(r,\ell/10^4,p),\quad J_k\times I&(6,1)\\
+a_h&-\theta_i\mathsf A(r,h/10^4,p),\quad J_k\times I&(6,1)\\
+c&\chi C_5(r,b),\quad J_k\times B_{ki}&(6,7)\\
+q&\theta_i\chi Q_{\rm sep}(r,b,p),\quad J_k\times B_{ki}\times I&(8,8,1),
+\end{array}
+\qquad \theta_-=1,\quad\theta_+=-1.
+\tag{20.12}
+$$
+
+| $k$ | $i$ | $\ell$ | $h$ | $\chi$ | $a_\ell$ | $a_h$ | $c$ | $q$ |
+| --- | --- | --- | --- | --- | --- | --- | --- | --- |
+| $1$ | $-$ | $1249$ | $1251$ | $-1$ | $136$ | $54$ | $2346$ | $11591$ |
+| $1$ | $+$ | $1859$ | $1863$ | $-1$ | $216$ | $369$ | $104809$ | $1088563$ |
+| $2$ | $-$ | $1513$ | $1516$ | $1$ | $538$ | $962$ | $116104$ | $835618$ |
+| $2$ | $+$ | $3113$ | $3117$ | $-1$ | $1695$ | $2713$ | $869515$ | $12702390$ |
+| $3$ | $-$ | $1435$ | $1462$ | $1$ | $670$ | $788$ | $16582$ | $87556$ |
+| $3$ | $+$ | $2689$ | $2781$ | $-1$ | $2102$ | $2532$ | $583642$ | $4334862$ |
+| $4$ | $-$ | $1411$ | $1414$ | $1$ | $354$ | $486$ | $9114$ | $51412$ |
+| $4$ | $+$ | $2615$ | $2621$ | $-1$ | $1826$ | $1471$ | $586149$ | $4081916$ |
+| $5$ | $-$ | $1249$ | $1251$ | $-1$ | $148$ | $149$ | $16247$ | $82453$ |
+| $5$ | $+$ | $2349$ | $2355$ | $-1$ | $1025$ | $980$ | $470037$ | $2115789$ |
+
+All entries follow by substitution in (20.2), (14.2) and (14.4).
+For example the first row asserts
+$\underline\beta_{(6,1),J_1\times I}
+(\mathsf A(r,1249/10^4,p))\ge136/10^6$ and
+$\underline\beta_{(8,8,1),J_1\times B_{1-}\times I}
+(-Q_{\rm sep})\ge11591/10^6$.
+Thus (20.12) fixes every coefficient, box and degree used in the
+table. There are no parameter subdivisions beyond the displayed
+$J_k$, $B_{ki}$ and the whole $I$.
+
+The first two columns of bounds and (14.5) give opposite strict
+signs of $\mathsf A$ at the two $b$ endpoints. For each row with
+$i=-$, direct rational comparison gives
+$4(h/10^4)^2<r(1-r)$ on $J_k$; for each row with $i=+$ it gives
+$4(\ell/10^4)^2>r(1-r)$ there. The intermediate value theorem
+therefore gives a root in the indicated tube on the required side
+of $\sigma(r)$. Theorem 18.4 identifies it with the unique
+$b_i(r,p)$ on that side. This proves the tube assertions for both
+branches on all five cells.
+
+The column $c$ proves that $C_5$ has sign $\chi$ throughout that
+tube. In particular $C_5\ne0$ and hence $A_5\ne0$ there, since
+$bTXN>0$. The other zero-safe parent equation, $O$ (12.7), is
+$\epsilon A_5=p-24-K_5$. It and (20.2), (20.5) give the actual
+response identity
+
+$$
+F=F_0+\epsilon F_1
+ =\frac{Q_{\rm sep}}{5bC_5}.
+\tag{20.13}
+$$
+
+This division is justified by the strict column-$c$ bounds; it
+requires neither $\Lambda\ne0$ nor a nonzero gain sample or drift.
+The column $q$ says that $Q_{\rm sep}$ has sign $\theta_i\chi$.
+As $b>0$, (20.13) has sign $\theta_i$, proving (20.11).
+In particular this establishes actual nonzero separator values
+also over the two $\Phi$ intervals, where (20.6) alone could have
+a zero right side without a zero actual response. ∎
+

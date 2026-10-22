@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:f66a9b8951a0f8c16b065587b3b3d5497791c671dc6d916500b395917eef73f6
+  normalized_sha256: sha256:f66a9b8951a0f8c16b065587b3b3d5497791c671dc6d916500b395917eef73f6
+cas_ref: sha256:f66a9b8951a0f8c16b065587b3b3d5497791c671dc6d916500b395917eef73f6
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: Introduces the late-horizon index set and defines an infimum-based triple-regret objective; contains no bound, attained minimum, or incompatibility assertion.
+    previous_atom_id: d172d31a031595375145c9429cda9cd9cd9013805c5685f3dc5baaee4bb2d28a
+    next_atom_id: 44e5b6e92457a57c8464338d098c7023dfd7edbd911e8300ceb9301ef2f75822

@@ -1,0 +1,9 @@
+## 159. Native boundary dimension, scale bridges, and task-level escape
+
+The spectral freedom in §158 does not by itself select a geometric
+dimension. The original infinite source boundary gives a sharper negative
+test: its native cylinder scale has dimension one. A three-dimensional
+carrier therefore requires a changed metric, extra coordinates, or a
+transport bridge; replacing \(M\) by an equivalent measure alone does not
+change this Hausdorff dimension.
+

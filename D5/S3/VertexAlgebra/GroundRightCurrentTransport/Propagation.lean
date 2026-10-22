@@ -80,7 +80,7 @@ private theorem source_tail (D : LatticeData) (hu : IsUnit D.G.det)
   intro x
   simp only [nativeSlice_mode, slice, map_zero, Pi.zero_apply]
 
-private theorem compatible_defect (D : LatticeData) (hu : IsUnit D.G.det)
+theorem compatible_defect (D : LatticeData) (hu : IsUnit D.G.det)
     (a b : Carrier D) (gamma delta : ℤ)
     (law : OriginalCompatible D hu a b gamma delta) (r : ℤ) :
     defect D hu a b gamma delta r = 0 := by
@@ -91,7 +91,7 @@ private theorem compatible_defect (D : LatticeData) (hu : IsUnit D.G.det)
     gamma KU (nativeCutoff D hu a b gamma delta) tail
     (native_valid D hu a b gamma delta) law r)
 
-private theorem defect_compatible (D : LatticeData) (hu : IsUnit D.G.det)
+theorem defect_compatible (D : LatticeData) (hu : IsUnit D.G.det)
     (a b : Carrier D) (gamma delta : ℤ)
     (zero : ∀ r : ℤ, defect D hu a b gamma delta r = 0) :
     OriginalCompatible D hu a b gamma delta := by
@@ -102,7 +102,7 @@ private theorem defect_compatible (D : LatticeData) (hu : IsUnit D.G.det)
     (Classical.choose_spec (native_valid_exists D hu a b gamma delta))
     (native_valid D hu a b gamma delta) (fun r => sub_eq_zero.mp (zero r))
 
-private theorem compatible_smul_left (D : LatticeData) (hu : IsUnit D.G.det)
+theorem compatible_smul_left (D : LatticeData) (hu : IsUnit D.G.det)
     (a b : Carrier D) (gamma delta : ℤ) (c : ℂ)
     (law : OriginalCompatible D hu a b gamma delta) :
     OriginalCompatible D hu (c • a) b gamma delta := by
@@ -142,7 +142,7 @@ private theorem compatible_smul_left (D : LatticeData) (hu : IsUnit D.G.det)
   · simpa only [Pi.smul_def'] using hs.smul_right (fun _ : ℕ => c)
   rw [← smul_finsum, ← smul_finsum, ← smul_finsum, h, smul_sub]
 
-private theorem ground_zero_mode (D : LatticeData) (i : Fin D.rank)
+theorem ground_zero_mode (D : LatticeData) (i : Fin D.rank)
     (alpha : Charge D) (epsilon : Bool) :
     neutralMode D i 0 (projectedGround D alpha epsilon) =
       (bilinear D (unitCharge D i) alpha : ℂ) • projectedGround D alpha (!epsilon) := by

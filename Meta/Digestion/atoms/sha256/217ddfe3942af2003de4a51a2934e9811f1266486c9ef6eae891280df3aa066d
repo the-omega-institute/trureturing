@@ -1,0 +1,27 @@
+**Corollary 140.4 (The specified original decoder coordinates).** With
+the actual $U_0$ of (127.2), or equivalently [TR, (93.2)], all optimal
+decoders for $\mathcal N_3$ are exactly
+
+$$
+D_z=\mathcal R_z\circ\operatorname{Ad}_{U_0^\dagger},\qquad
+|z|\le1,\qquad D_z\mathcal N_3=\mathcal C_{1/4}.
+\tag{140.7}
+$$
+
+Their Choi ranks and nonunitality are unchanged. Their transported
+covariance identity, for every diagonal unitary $U$, is
+
+$$
+D_z\operatorname{Ad}_{U_0UU_0^\dagger}
+=\operatorname{Ad}_U D_z.
+\tag{140.8}
+$$
+
+*Proof.* Apply the bijection (127.6), which is [TR, (93.10)] with the
+unchanged original identity target. Precomposition by a unitary
+channel gives an invertible unitary congruence of Choi matrices and
+preserves Choi rank. It also sends $I_3$ to $I_3$, so
+$D_z(I_3)=\mathcal R_z(I_3)$. Equation (140.8) follows from (140.5)
+by substitution. These are coordinate identities for the explicitly
+specified model; they do not assert a physical realization. $\square$
+

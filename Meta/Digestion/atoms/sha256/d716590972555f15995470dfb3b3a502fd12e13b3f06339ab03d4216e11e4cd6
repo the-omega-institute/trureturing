@@ -1,0 +1,26 @@
+**Definition 2.5 (incidence apparatus for this graph).** Form the finite
+physical-location union of UAS Definition 1.3 from this graph, earlier
+original/capture/boot control, raw and active code stores, latches,
+owners and phase/token bits. Shared physical bits occur once; distinct
+raw/active stores stay distinct. Let its size be $q_{\mathrm{gc}}$.
+Dynamic tape positions are not members of this finite slot catalog.
+
+Apply UAS Definition 2.3's finite pattern construction with this catalog
+and these actual native row/effect alternatives. Enumerate their local
+absent/0/1, symbol, alias and IN alternatives; preserve each actual guard,
+ordered probe, core update, finite effect and receipt. Call the resulting
+finite table $\Pi_{\mathrm{gc}}$, and its charged finite apparatus size
+$\rho_{\mathrm{gc}}$. Derive the same catalog and table descriptions
+when needed from the actually acquired code by CYCLE Definition 2.4's
+union/Find/pattern loops and the fixed earlier code conventions. It is
+not an extra acquired oracle.
+
+Store the sole physical representation as UAS's outer $F_{75}$ with 74
+right-spine tape components and $F_{q_{\mathrm{gc}}}$ optional finite-bit
+sockets. Each cell is its $F_8$ track scaffold; present bit0 has a left
+terminal child, present bit1 a right terminal child, absence has neither.
+Actual head tracks induce access links; the two meter lanes and possible
+aliases retain UAS's rule. There is no second live byte store alongside
+this incidence representation. Denote its raw-record isomorphism by
+$\Psi_{\mathrm{gc}}$.
+

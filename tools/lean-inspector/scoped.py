@@ -147,6 +147,7 @@ def validate_bundle(report, repository, scope, *, utilities=(), expected=None):
     materials.require_keys(origins, set(wanted), 'scoped production origins')
     obligations = {entry['modulePath']: entry for entry in current['utilities']}
     seen = set()
+    template_inputs = public.selection.Selection(repository)
     for row in public.validated_rows(report, public.member(report, '.materials.zip'), schema=SCHEMA):
         name = row['module']
         source = wanted.get(name)
@@ -155,7 +156,7 @@ def validate_bundle(report, repository, scope, *, utilities=(), expected=None):
                 or row['imports'] != source['imports']):
             raise ValueError('scoped source/import membership mismatch')
         public.check_origin(origins[name], row)
-        public.validate_template_sources([row], repository)
+        public.validate_template_sources([row], repository, inputs=template_inputs)
         obligation = obligations.get(row['source_path'])
         evidence = row.get('utility_refutation')
         if obligation is None:

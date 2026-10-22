@@ -9,6 +9,7 @@ import shutil
 import subprocess
 import sys
 import unittest
+from unittest.mock import patch
 import zipfile
 
 ROOT = Path(__file__).resolve().parents[4]
@@ -39,18 +40,21 @@ class ScopedContracts(unittest.TestCase):
         self.scope = dict(roots=['D5.A'], modules=[dict(module='D5.A', source_path='D5/A.lean', imports=[])],
                           dependencies=[dict(module='D5.A', source_path='D5/A.lean', imports=[])])
 
-    def bundle(self, producer):
-        row = dict(module='D5.A', source_path='D5/A.lean', imports=[], declarations=[],
-                   source_sha256='sha256:' + publication.digest(self.root / 'D5/A.lean'))
+    def bundle(self, producer, rows=None):
+        if rows is None:
+            rows = [dict(module=source['module'], source_path=source['source_path'],
+                         imports=source['imports'], declarations=[],
+                         source_sha256='sha256:' + publication.digest(self.root / source['source_path']))
+                    for source in self.scope['modules']]
         report = self.root / 'scoped.json'
-        report.write_bytes(materials.canonical_json(dict(schema='stratalint-scoped-lean-report-v1', modules=[row])))
+        report.write_bytes(materials.canonical_json(dict(schema='stratalint-scoped-lean-report-v1', modules=rows)))
         with zipfile.ZipFile(publication.member(report, '.materials.zip'), 'w'):
             pass
-        origin = dict(module='D5.A', report_sha256=hashlib.sha256(materials.canonical_json(
+        origins = {row['module']: dict(module=row['module'], report_sha256=hashlib.sha256(materials.canonical_json(
             dict(schema=materials.REPORT_SCHEMA, modules=[row]))).hexdigest(),
-            input_projection=dict(schema='stratalint-judge-input-projection-v1', module='D5.A', inputs=[]),
-            producer_sources_sha256='a' * 64, inspector_executable_sha256='b' * 64)
-        producer.write_sidecars(report, producer.capture(self.root, self.scope), {'D5.A': origin})
+            input_projection=dict(schema='stratalint-judge-input-projection-v1', module=row['module'], inputs=[]),
+            producer_sources_sha256='a' * 64, inspector_executable_sha256='b' * 64) for row in rows}
+        producer.write_sidecars(report, producer.capture(self.root, self.scope), origins)
         return report
 
     def test_selected_utility_discovery_uses_production_reader(self):
@@ -131,6 +135,24 @@ class ScopedContracts(unittest.TestCase):
         self.fixture.write('D5/A.lean', 'def a := 1\n')
         publication.member(report, '.materials.zip').write_bytes(b'corrupt')
         with self.assertRaises((ValueError, zipfile.BadZipFile), msg='[FAIL] scoped_materials_are_validated'):
+            producer.validate_bundle(report, self.root, self.scope)
+
+    def test_scoped_bundle_reuses_registered_source_inventory_across_modules(self):
+        producer = api(self)
+        self.scope['roots'] = ['D5.A', 'D5.B']
+        self.scope['modules'].append(dict(module='D5.B', source_path='D5/B.lean', imports=[]))
+        self.scope['dependencies'] = copy.deepcopy(self.scope['modules'])
+        report = self.bundle(producer)
+        with patch.object(publication.selection, 'Selection', wraps=publication.selection.Selection) as selected:
+            producer.validate_bundle(report, self.root, self.scope)
+            self.assertLessEqual(selected.call_count, 2,
+                                 '[FAIL] scoped_validation_must_not_rescan_registered_sources_per_module')
+
+        rows = publication.read_json(report.read_bytes())['modules']
+        rows[-1]['information_templates'] = dict(schema_version=True, inventory=[], registered=[], records=[])
+        report = self.bundle(producer, rows)
+        with self.assertRaisesRegex(ValueError, 'declared-template evidence',
+                                    msg='[FAIL] scoped_validation_still_checks_later_module_templates'):
             producer.validate_bundle(report, self.root, self.scope)
 
     def test_scoped_inputs_exclude_siblings_and_program_bytes(self):

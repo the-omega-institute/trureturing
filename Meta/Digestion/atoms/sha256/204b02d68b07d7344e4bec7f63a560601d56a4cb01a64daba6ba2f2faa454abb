@@ -1,0 +1,43 @@
+### 95.3. Diagonal covariance and the range of the reduction
+
+For a diagonal unitary $V$ in (93.1), direct substitution in (93.5) gives
+
+$$
+\Phi_s\circ\operatorname{Ad}_V=\operatorname{Ad}_V\circ\Phi_s.
+\tag{95.12}
+$$
+
+The normalized Haar average over the diagonal unitary group,
+
+$$
+\overline{\mathcal R}
+=\int\operatorname{Ad}_{V^\dagger}\circ\mathcal R
+                         \circ\operatorname{Ad}_V\,dV,
+\tag{95.13}
+$$
+
+is CPTP and diagonal covariant. Moreover
+$\overline{\mathcal R}\Phi_s-\operatorname{id}$ is the average of
+$\operatorname{Ad}_{V^\dagger}\circ(\mathcal R\Phi_s-\operatorname{id})
+\circ\operatorname{Ad}_V$. Convexity and unitary invariance of the
+diamond norm therefore give
+
+$$
+\tfrac12\|\overline{\mathcal R}\Phi_s-\operatorname{id}\|_\diamond
+\le\tfrac12\|\mathcal R\Phi_s-\operatorname{id}\|_\diamond.
+\tag{95.14}
+$$
+
+This symmetry is CDUC in [S. Singh and I. Nechita, Diagonal unitary and
+orthogonal symmetries in quantum theory, Quantum 5, 519 (2021),
+Definition 6.3, p.28][SN]. Their (37), p.30, and Lemmas 6.11 and 6.13,
+p.33, describe the common
+diagonal population/coherence representation: the population matrix is
+entrywise nonnegative and column stochastic, and the coherence matrix
+is positive semidefinite. These are intermediate channel constraints
+in this proof. The symmetry statement here concerns $\Phi_s$, the
+twirled decoder, and their composition. The output conjugation by
+$U_0$ in (93.5) is retained; no such assertion about $F^n$ follows
+automatically. The lower bound (95.4) already covers decoders before
+twirling.
+

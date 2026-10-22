@@ -1,0 +1,36 @@
+**Theorem 26.3 (Every distinct matched pair in the closed fibre).**
+For $X,Y\in\mathcal L_{24}$, $X\ne Y$, equality of $(v,m)$ holds if
+and only if
+
+$$
+X=\overline{\mathcal K}(r),\qquad
+Y=\overline{\mathcal K}(s),\qquad
+r+s=9/8,\quad r\ne s,\quad r,s\in[1/8,1].
+\tag{26.13}
+$$
+
+Proof. On strict H outside K, F, Theorem 25.2, gives
+$e(k-k_0)<0$, and Lemma 26.1 gives the same strict separator at both
+added H endpoints. All K labels have $k=k_0$. A matched pair cannot
+therefore have one label in K and the other outside K.
+
+On the entire strict H graph, F, Theorem 28.5 and (28.19), give
+$d\ell(\mathcal H_H(r))/dr>0$. Theorem 26.2 supplies continuity at
+both endpoints. This implies strict order on the closed interval as
+well: if $0\le r<s\le1$, choose $r<a<b<s$ in $(0,1)$.
+Continuity and strict interior order give
+$\ell(r)\le\ell(a)<\ell(b)\le\ell(s)$.
+Consequently two H labels with equal $(v,m)$ have the same parameter
+and the same complete tuple. These comparisons include the K/H meetings.
+
+The only remaining distinct pairs are both in K. By (25.6), their
+response equality is exactly $n(r)=n(s)$, and
+
+$$
+n(r)-n(s)=(r-s)\{9-8(r+s)\}.
+\tag{26.14}
+$$
+
+With $r,s\in[0,1]$ and $r\ne s$, this is equivalent to (26.13).
+Conversely (26.13) gives equal responses by (25.6). ∎
+

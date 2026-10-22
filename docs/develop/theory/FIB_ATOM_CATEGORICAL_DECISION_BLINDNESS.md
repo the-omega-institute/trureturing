@@ -1156,3 +1156,1202 @@ Taking $v\to\rho$ proves (10.11), including both endpoints; at $\rho=1/2$ it equ
 This retention statement assumes the stated inward threshold bound. A two-symbol output alphabet by itself establishes neither finite physical threshold precision nor a cheap implementation, and the law-dependent choice of $u$ supplies no guarantee for an arbitrary fixed quantizer. The conditional source substitution remains exactly Theorem 9.5, using [the Gaussian record volume, Theorem 5.1 and Proposition 14.2](FIB_SHARED_GAUSSIAN_RECORD_LAWS.md): no preparation realizing these symmetric means is asserted, and Gaussianity of the original law supplies no Gaussianity for a projected-input law. The Gaussian experiment, existence of a finite readout and physical precision of that readout are separate claims. These known-law conclusions establish no native atom encoding, adaptive-word result, empirical or out-of-distribution performance, or training gain. $\square$
 
 ## 追加锚（本行以下为增补区）
+## 11. Off-axis Gaussian escape is exponentially faint
+
+**假设 11.1（uniform five-original-label Gaussian experiment）。** Let the five original labels have prior $1/5$, covariance $I_2$, and means
+
+$$
+\mu_1=\mu_2=(-q,0),\qquad \mu_3=(0,b),\qquad
+\mu_4=\mu_5=(q,0),
+$$
+
+where $q$ is fixed with $0<q<\sqrt{2\ln4}$ and $b>0$. Write $r_0(q,b)$ for the infimum binary zero--one risk for deciding whether the label is the singleton $3$ from one complete observation, and put
+
+$$
+B(q,b)=\frac15-r_0(q,b),\qquad
+c(q)=\ln4-\frac{q^2}{2}>0.
+$$
+
+This is a continuous two-dimensional observation law; no preparation, quantizer, training, or physical-realization assertion is part of the assumption.
+
+**定理 11.2（exact pointwise logarithmic gain）。** Under Assumption 11.1,
+
+$$
+\boxed{\displaystyle
+\lim_{b\downarrow0} b^2\ln B(q,b)
+=-\frac12\left(\ln4-\frac{q^2}{2}\right)^2.}
+\tag{11.1}
+$$
+
+The conclusion is pointwise in the fixed $q$ and supplies neither a prefactor nor a statement at the critical value $q=\sqrt{2\ln4}$.
+
+Proof. Let $x=(u,v)$ and let $\phi$ be the standard normal density. The singleton density and the two duplicated endpoint densities are
+
+$$
+ f_0(u,v)=\phi(u)\phi(v-b),\qquad
+ f_\pm(u,v)=\phi(u\mp q)\phi(v).
+$$
+
+The signed Bayes gain is the positive part of the singleton prior density minus the aggregate competing prior density, hence the binary Bayes identity used in Proposition 2.1 gives
+
+$$
+ B(q,b)=\frac15\int_{\mathbb R^2}
+ \bigl(f_0-2f_- -2f_+\bigr)_+\,du\,dv.
+\tag{11.2}
+$$
+
+Factoring the common density gives the signed integrand
+
+$$
+ D_b(u,v):=f_0-2f_- -2f_+
+ =\phi(u)\phi(v)
+ \left[e^{bv-b^2/2}-4e^{-q^2/2}\cosh(qu)\right].
+\tag{11.3}
+$$
+
+Set $A(u)=4e^{-q^2/2}\cosh(qu)$. Since $A(u)\ge A(0)=e^{c(q)}$, the positive region of $D_b$ is contained in
+
+$$
+ v>\frac{\ln A(u)+b^2/2}{b}
+ \quad\Longrightarrow\quad
+ v>\frac{c(q)}b+\frac b2.
+\tag{11.4}
+$$
+
+As $D_b\le f_0$ pointwise, (11.2), (11.4), and the standard Gaussian-tail logarithmic asymptotic
+$\lim_{x\to\infty}x^{-2}\ln\overline\Phi(x)=-1/2$ imply
+
+$$
+\limsup_{b\downarrow0} b^2\ln B(q,b)
+\le -\frac{c(q)^2}{2}.
+\tag{11.5}
+$$
+
+For the reverse inequality, fix $\varepsilon>0$. By continuity of $\ln\cosh(qu)$ at $u=0$, choose $\delta>0$ such that
+$\ln A(u)\le c(q)+\varepsilon/2$ whenever $|u|\le\delta$. For all sufficiently small $b$, on the slab
+
+$$
+R_b=\left\{|u|\le\delta,\quad v\ge\frac{c(q)+\varepsilon}{b}\right\}
+$$
+
+we have $e^{bv-b^2/2}\ge e^{c(q)+\varepsilon-b^2/2}$ and therefore, for a constant $\kappa_\varepsilon>0$ independent of $b$,
+
+$$
+D_b(u,v)\ge \kappa_\varepsilon\,f_0(u,v)\qquad ((u,v)\in R_b).
+\tag{11.6}
+$$
+
+This signed lower bound is essential: the probability of the positive region alone would not lower-bound the positive-part integral. Integrating (11.6) in (11.2) yields
+
+$$
+ B(q,b)\ge \frac{\kappa_\varepsilon}{5}
+ \Pr\{|U|\le\delta\}\,
+ \overline\Phi\!\left(\frac{c(q)+\varepsilon}{b}-b\right),
+\tag{11.7}
+$$
+
+where $U\sim\mathcal N(0,1)$. Consequently,
+
+$$
+\liminf_{b\downarrow0} b^2\ln B(q,b)
+\ge -\frac{(c(q)+\varepsilon)^2}{2}.
+\tag{11.8}
+$$
+
+Letting $\varepsilon\downarrow0$ and combining (11.5) with (11.8) proves (11.1). $\square$
+
+**推论 11.3（approximate blindness and the finite-law TV bridge）。** For every fixed $q$ in the range of Theorem 11.2,
+
+$$
+ B(q,b)=\exp\!\left[-\frac{c(q)^2}{2b^2}+o(b^{-2})\right],
+\qquad b\downarrow0,
+\tag{11.9}
+$$
+
+so the singleton binary risk remains within this exponentially small gain of its blind value $1/5$. This quantifies the approach to the $b=0$ plateau without asserting a derivative, a prefactor, or a uniform estimate in $q$.
+
+If a finite common Borel quantizer is subsequently supplied for the same-prior experiment, its singleton gain $B_Q=1/5-r_0(Q)$ satisfies $0\le B_Q\le B(q,b)$ by conditioning. For two finite joint laws on that common alphabet, Proposition 7.5 gives $|B_Q-B'_Q|\le\operatorname{TV}(J,J')$; under the original/projected-input hypotheses of Proposition 7.7 this becomes $|B_Q-B'_{Q}|\le e_N$. Relative retention from these additive certificates requires a positive $B_Q$ and an error bound small relative to $B_Q$. An explicitly supplied lower bound making $B_Q$ comparable to $B(q,b)$, together with an error bound small relative to $B(q,b)$, also suffices. A constant quantizer has $B_Q=0$, so $\operatorname{TV}(J,J')=o(B(q,b))$ alone gives no relative-retention guarantee for an arbitrary quantizer. These are the existing same-prior soft-risk certificates applied to this gain; they do not transfer (11.1) to a projected law, imply a hard-support impossibility, or provide a native preparation attainer. $\square$
+
+## 追加锚（本行以下为增补区）
+
+## 12. Exact off-axis prefactor and a gain-preserving binary readout
+
+**定义 12.1（fixed-law notation）。** Retain exactly Assumption 11.1: one complete two-dimensional observation, uniform prior on the five original labels, covariance $I_2$, means $(-q,0),(-q,0),(0,b),(q,0),(q,0)$, and fixed $0<q<\sqrt{2\ln4}$ while $b\downarrow0$. Write
+
+$$
+\begin{aligned}
+ c&=c(q)=\ln4-q^2/2>0,\\
+ L(u)&=c+\ln\cosh(qu),\\
+ \phi(x)&=(2\pi)^{-1/2}e^{-x^2/2},\qquad
+ \overline\Phi(x)=\int_x^\infty\phi(v)\,dv,\\
+ E_b&=\exp\!\left(-\frac{c^2}{2b^2}\right),\qquad
+ B(q,b)=\frac15-r_0(q,b).
+\end{aligned}
+\tag{12.1}
+$$
+
+The quantities $r_0$ and $B$ concern the known-law binary decision of label $3$ versus its complement. The five Gaussian labels here are the labels of this observation experiment; their specification does not construct a native recursive FIB classification or its preparations.
+
+**定理 12.2（pointwise exact prefactor）。** Under Definition 12.1,
+
+$$
+ \boxed{B(q,b)\sim C(q)b^4E_b,\qquad
+ C(q)=\frac{e^{c(q)/2}}{5\sqrt{2\pi}\,q\,c(q)^{5/2}}>0.}
+\tag{12.2}
+$$
+
+Thus the power $\alpha=4$ is common to every fixed $q$ in the stated open interval. The equivalence is pointwise in $q$; it asserts no endpoint, joint-$q$ limit, uniform remainder or explicit finite-$b$ cutoff.
+
+Proof. Reuse the signed density $D_b$ of (11.3) and its positive-part Bayes identity (11.2). For a scalar $\ell>0$, put
+
+$$
+\begin{aligned}
+ t_b(\ell)&=\frac{\ell+b^2/2}{b},\\
+ J_b(\ell)&=\int_{\mathbb R}\phi(v)
+       [e^{bv-b^2/2}-e^\ell]_+\,dv\\
+ &=\overline\Phi(t_b(\ell)-b)
+       -e^\ell\overline\Phi(t_b(\ell)),\\
+ B(q,b)&=\frac15\int_{\mathbb R}\phi(u)J_b(L(u))\,du.
+\end{aligned}
+\tag{12.3}
+$$
+
+Indeed, the bracket is positive exactly when $v>t_b(\ell)$, and $\phi(v)e^{bv-b^2/2}=\phi(v-b)$. Tonelli's theorem applies to the nonnegative integrand. This integrates the signed excess itself, including the cancellation between its two tails; the probability of the positive region would not determine its prefactor.
+
+For $x>0$, let $R(x)=\overline\Phi(x)/\phi(x)$. The complementary-error-function expansion and real-positive remainder bound in [NIST DLMF §7.12(i), equation (7.12.1)](https://dlmf.nist.gov/7.12#i), with $\overline\Phi(x)=\tfrac12\operatorname{erfc}(x/\sqrt2)$, give
+
+$$
+ R(x)=x^{-1}-x^{-3}+O(x^{-5}).
+$$
+
+Its exact derivative identity, obtained by differentiating the defining quotient, gives
+
+$$
+ R'(x)=xR(x)-1=-x^{-2}+O(x^{-4}).
+\tag{12.4}
+$$
+
+No differentiation of an asymptotic remainder is used. Fix $0<a<A<\infty$. Uniformly for $\ell\in[a,A]$ and $x\in[t_b(\ell)-b,t_b(\ell)]$, we have $x=\ell/b+O(b)$ and $x\ge a/(2b)$ for all sufficiently small $b$. The real-positive remainder estimate in (12.4) therefore gives, uniformly on these intervals,
+
+$$
+ -R'(x)=\frac{b^2}{\ell^2}(1+O(b^2)),\qquad
+ R(t_b(\ell)-b)-R(t_b(\ell))
+ =\int_{t_b(\ell)-b}^{t_b(\ell)}-R'(x)\,dx
+ =\frac{b^3}{\ell^2}(1+O(b^2)).
+\tag{12.5}
+$$
+
+The constants may depend on $a,A$, not on $\ell$ or $b$. Since
+
+$$
+ \phi(t_b(\ell)-b)=e^\ell\phi(t_b(\ell)),\qquad
+ e^\ell\phi(t_b(\ell))
+ =\frac1{\sqrt{2\pi}}
+   \exp\!\left(-\frac{\ell^2}{2b^2}+\frac\ell2-\frac{b^2}{8}\right),
+$$
+
+(12.3) and (12.5) imply the compact-uniform estimate
+
+$$
+ J_b(\ell)=\frac{b^3}{\sqrt{2\pi}\,\ell^2}
+       \exp\!\left(-\frac{\ell^2}{2b^2}+\frac\ell2\right)
+       (1+O(b^2)),\qquad \ell\in[a,A].
+\tag{12.6}
+$$
+
+In particular, the displacement $b/2$ in the threshold contributes the factor $e^{\ell/2}$.
+
+To control the noncompact $u$-integral, choose a sufficiently small fixed $\delta>0$. The function $L$ is even, has its unique minimum $c$ at zero and is strictly increasing on $(0,\infty)$. Thus, with $m=L(\delta)>c$, we have $L(u)\ge m$ for $|u|\ge\delta$. The integral definition of $J_b$ shows it is nonincreasing in $\ell$. Consequently
+
+$$
+ 0\le\int_{|u|\ge\delta}\phi(u)J_b(L(u))\,du
+ \le J_b(m)
+ \le\overline\Phi(m/b-b/2)
+ =O\!\left(b\exp\!\left[-\frac{m^2}{2b^2}\right]\right).
+\tag{12.7}
+$$
+
+For the last bound, $m/b-b/2>0$ for small $b$, and
+$\overline\Phi(x)\le\phi(x)/x$ for $x>0$; this inequality follows by bounding $1\le v/x$ inside the tail integral. The factor $\exp(m/2-b^2/8)$ is bounded with $m$ fixed. Dividing (12.7) by $b^4E_b$ gives an upper bound of order $b^{-3}\exp(-(m^2-c^2)/(2b^2))$, which tends to zero. No compact-uniform Mills estimate is being applied to unbounded $L(u)$.
+
+On $|u|\le\delta$, Taylor expansion gives
+
+$$
+ L(u)=c+\frac{q^2u^2}{2}+O(u^4).
+\tag{12.8}
+$$
+
+Because $q>0$, shrink $\delta$ so that $L(u)-c\ge\kappa u^2$ there for some $\kappa>0$. On this interval $L$ lies in the compact positive interval $[c,L(\delta)]$, so (12.6) applies uniformly. After extracting $E_b$, its remaining local integral is
+
+$$
+ H_b=\int_{|u|\le\delta}\phi(u)L(u)^{-2}
+       \exp\!\left(-\frac{L(u)^2-c^2}{2b^2}+\frac{L(u)}2\right)du.
+$$
+
+Set $u=by$, and extend the resulting integrand by zero outside $|y|\le\delta/b$. For each fixed $y$, (12.8) gives
+
+$$
+ \frac{L(by)^2-c^2}{2b^2}\longrightarrow\frac{cq^2y^2}{2}.
+$$
+
+The other factors converge to $\phi(0)c^{-2}e^{c/2}$. Moreover,
+
+$$
+ \frac{L(u)^2-c^2}{2b^2}
+ =\frac{(L(u)-c)(L(u)+c)}{2b^2}
+ \ge\frac{c\kappa u^2}{b^2}.
+$$
+
+The prefactor $\phi(u)L(u)^{-2}e^{L(u)/2}$ is bounded on $[-\delta,\delta]$. Hence a fixed constant times $e^{-c\kappa y^2}$ dominates the scaled integrand. Dominated convergence now yields
+
+$$
+\begin{aligned}
+ \frac{H_b}{b}
+ &\longrightarrow\phi(0)c^{-2}e^{c/2}
+      \int_{\mathbb R}e^{-cq^2y^2/2}\,dy\\
+ &=\frac{e^{c/2}}{q\,c^{5/2}}.
+\end{aligned}
+\tag{12.9}
+$$
+
+This is the local Gaussian scaling underlying the mature Watson and Laplace methods in [NIST DLMF §2.3(ii)](https://dlmf.nist.gov/2.3#ii) and [§2.3(iii)](https://dlmf.nist.gov/2.3#iii); the domination above supplies the needed integral justification in this experiment. By positivity and the uniform relative error in (12.6), the local contribution to (12.3) equals $b^3E_bH_b(1+O(b^2))/(5\sqrt{2\pi})$. Combining (12.7) and (12.9) proves (12.2), including the prior factor $1/5$. The factors $b^3$ from the signed tail difference and $b$ from localization in $u$ give the power four. These classical asymptotic tools are mature intermediates; their explicit prefactor for the specified five-label law is repo-derived application exposition, with no global-priority assertion. $\square$
+
+**定理 12.3（an explicit common binary readout attains the raw singleton gain）。** Under Definition 12.1, for every $b>0$ use the same Borel function for all five labels,
+
+$$
+ A_b=\left\{(u,v):v>\frac{L(u)+b^2/2}{b}\right\},\qquad
+ Q_b(u,v)=\mathbf1_{A_b}(u,v).
+\tag{12.10}
+$$
+
+Let $\mathcal J_b$ denote the joint law of the original label and this binary output, and let $B_{Q_b}=1/5-r_0(Q_b)$. Then
+
+$$
+ B_{Q_b}=B(q,b)>0.
+\tag{12.11}
+$$
+
+For any comparison law $\mathcal J'_b$ on the same label-output alphabet with the same uniform label prior, put $B'_{Q_b}=1/5-r_0(\mathcal J'_b)$. Then
+
+$$
+ \operatorname{TV}(\mathcal J_b,\mathcal J'_b)\le e_b
+ \quad\Longrightarrow\quad
+ |B'_{Q_b}-B(q,b)|\le e_b.
+\tag{12.12}
+$$
+
+Proof. Continuity of $L$ makes $A_b$ Borel. By (11.3), it is exactly the positive set of $D_b$. The set is nonempty and open, and $D_b$ is strictly positive on it, so (11.2) gives $B(q,b)>0$. Since $f_0,f_-,f_+$ are probability densities, $\int D_b=1-2-2=-3$. The two unweighted signed bin masses and their prior-weighted counterparts are therefore
+
+$$
+\begin{aligned}
+ \int_{A_b}D_b&=5B(q,b),&
+ \int_{A_b^c}D_b&=-3-5B(q,b),\\
+ \mathcal J_b(3,1)-\sum_{i\ne3}\mathcal J_b(i,1)&=B(q,b),&
+ \mathcal J_b(3,0)-\sum_{i\ne3}\mathcal J_b(i,0)&=-\frac35-B(q,b).
+\end{aligned}
+\tag{12.13}
+$$
+
+For each bin the Bayes action chooses singleton exactly when its signed joint mass is positive. Equivalently, relative to always choosing nonsingleton, the optimal improvement is the sum of the positive signed bin masses. Thus bin $1$ contributes $B(q,b)$ and bin $0$ contributes zero, proving (12.11) for the quantized Bayes optimum. This uses the classical Bayes decision partition already underlying Proposition 2.1, inside this explicit observation law. The boundary graph has zero Gaussian probability, so its inclusion convention changes neither mass. Apply Proposition 7.5 to the two finite laws: their singleton risks differ by at most TV, and subtracting each from the common prior $1/5$ proves (12.12). If $\mathcal J'_b$ is supplied by a complete-record approximation, it must use the very same readout (12.10); data processing and the hypotheses of Proposition 7.7, when supplied, give one way to furnish such an $e_b$.
+
+The readout depends on the known $q,b$ and an exact curved threshold. Its two-symbol output proves this decision's information retention, without establishing preparation availability, finite physical precision or low acquisition or computation cost. It supplies no retention claim for an arbitrary quantizer and no claim about the other four singleton decisions or the categorical optimum. $\square$
+
+**推论 12.4（same-exponential-scale error budgets with their leading constants）。** Fix $q$ as in Definition 12.1, and suppose the comparison laws of Theorem 12.3 are supplied for small $b>0$ with
+
+$$
+ \operatorname{TV}(\mathcal J_b,\mathcal J'_b)\le e_b,
+ \qquad e_b=d\,b^\beta E_b,\qquad d>0,\quad\beta\in\mathbb R,
+\tag{12.14}
+$$
+
+where $d,\beta$ are fixed independently of $b$. With $C=C(q)$ from (12.2),
+
+$$
+ \frac{e_b}{B(q,b)}=\frac dC b^{\beta-4}(1+o(1)),\qquad
+ \left|\frac{B'_{Q_b}}{B(q,b)}-1\right|
+ \le\frac{e_b}{B(q,b)}.
+\tag{12.15}
+$$
+
+If $\beta>4$, this certificate tends to zero, so $B'_{Q_b}/B(q,b)\to1$. If $\beta=4$, the certificate tends to $d/C$, and
+
+$$
+ \limsup_{b\downarrow0}
+ \left|\frac{B'_{Q_b}}{B(q,b)}-1\right|\le\frac dC,
+ \qquad
+ \liminf_{b\downarrow0}\frac{B'_{Q_b}}{B(q,b)}
+ \ge\max\!\left\{0,1-\frac dC\right\}.
+\tag{12.16}
+$$
+
+In particular, $d<C$ certifies a positive limiting lower fraction; every fixed $0<\theta<1-d/C$ is retained for all sufficiently small $b$. If $\beta<4$, the right-hand certificate in (12.15) diverges and gives neither a vanishing relative-error certificate nor a positive retained fraction. A nonvanishing or diverging upper budget does not prove any actual degradation, and $d\ge C$ at $\beta=4$ does not imply that the gain is lost.
+
+Proof. Divide (12.14)'s budget by the positive asymptotic (12.2) to obtain the first equality in (12.15); its second inequality is (12.12) divided by $B(q,b)>0$. A constant nonsingleton decision remains available for every $\mathcal J'_b$ with this prior, so $B'_{Q_b}\ge0$. Thus the additive certificate gives
+
+$$
+ \frac{B'_{Q_b}}{B(q,b)}
+ \ge\max\!\left\{0,1-\frac{e_b}{B(q,b)}\right\}.
+\tag{12.17}
+$$
+
+For $\beta>4$, the budget ratio tends to zero; for $\beta=4$, it tends to $d/C$, proving (12.16) and the eventual bound for each strictly smaller $\theta$. For $\beta<4$, it tends to infinity, leaving (12.17) with only zero as a lower certificate. In all regimes the choice $\mathcal J'_b=\mathcal J_b$ satisfies the budget while its actual risk discrepancy is zero. Hence the size of an upper bound alone cannot establish approximation failure or an attained loss. The pointwise asymptotic supplies no numerical finite-$b$ cutoff for any of these eventual statements without a quantitative remainder estimate.
+
+These are consequences for the explicit known-law readout and supplied comparison laws. They neither identify a projected-input law with a Gaussian law nor assert a native preparation realizing these means. There is no endpoint or $q$-uniform estimate, physical-cost model, unknown-law training guarantee, empirical gain or out-of-distribution conclusion. $\square$
+
+## 追加锚（本行以下为增补区）
+## 13. Critical crossover for the five-label Gaussian singleton experiment
+
+**定义 13.1（全参数已知律与临界量）。** Let $C$ be uniform on the five original labels $\{1,2,3,4,5\}$. For every $q>0$ and $b>0$, and each label $i$, the full class-conditional law is $X\mid(C=i)\sim\mathcal N_2(\mu_i,I_2)$, where the complete observation $X=(U,V)\in\mathbb R^2$ has means
+
+$$
+ \mu_1=\mu_2=(-q,0),\qquad \mu_3=(0,b),\qquad
+ \mu_4=\mu_5=(q,0).
+\tag{13.1}
+$$
+
+A measurable binary rule decides whether $C=3$ and incurs zero--one loss. Let $r_0(q,b)$ be the infimum of its expected loss and put
+
+$$
+ B(q,b)=\frac15-r_0(q,b),\qquad
+ c(q)=\ln4-\frac{q^2}{2},\qquad q_c=\sqrt{2\ln4},\qquad
+ \phi(v)=\frac{e^{-v^2/2}}{\sqrt{2\pi}}.
+\tag{13.2}
+$$
+
+The family in (13.1) is defined for all $q>0$ and $b>0$; no one-sided restriction relative to $q_c$, rate assumption, smoothness assumption, or finite-$b$ remainder is part of this definition.
+
+**定理 13.2（临界交叉的全路径极限）。** Define, for $\tau\in\mathbb R$,
+
+$$
+ H(\tau)=\frac{4}{15q_c\sqrt\pi}
+       \int_{\tau}^{\infty}(v-\tau)^{3/2}\phi(v)\,dv.
+\tag{13.3}
+$$
+
+Then $H(\tau)$ is finite and strictly positive for every real $\tau$. For every $\tau\in\mathbb R$ and every pair of sequences $b_n>0$, $q_n>0$ satisfying
+
+$$
+ b_n\longrightarrow0,\qquad \frac{c(q_n)}{b_n}\longrightarrow\tau,
+\tag{13.4}
+$$
+
+one has
+
+$$
+ \frac{B(q_n,b_n)}{b_n^{3/2}}\longrightarrow H(\tau).
+\tag{13.5}
+$$
+
+Thus the same $H$ covers paths approaching $q_c$ from either side. No uniform-in-$\tau$ estimate, quantitative finite-$b$ remainder, or matching theorem with the neighboring regimes is asserted.
+
+**Proof.** Write
+
+$$
+ f_0(u,v)=\phi(u)\phi(v-b),\qquad
+ f_-(u,v)=\phi(u+q)\phi(v),\qquad
+ f_+(u,v)=\phi(u-q)\phi(v).
+$$
+
+The singleton joint density is $f_0/5$ and the complement joint density is $(2f_-+2f_+)/5$. The signed-density Bayes identity used in Proposition 2.1 therefore gives, for every $q,b>0$,
+
+$$
+ \begin{aligned}
+ B(q,b)
+ &=\frac15\int_{\mathbb R^2}(f_0-2f_--2f_+)_+\,du\,dv\\
+ &=\frac15\int_{\mathbb R^2}\phi(u)\phi(v)
+ \left[e^{bv-b^2/2}-e^{c(q)}\cosh(qu)\right]_+\,du\,dv.
+ \end{aligned}
+\tag{13.6}
+$$
+
+The positive set is Borel because the bracket is continuous, so the measurable Bayes rule used by this identity is available without any sign restriction on $c(q)$.
+
+Fix an arbitrary pair of sequences satisfying (13.4), and write
+
+$$
+ \tau_n=\frac{c(q_n)}{b_n}.
+$$
+
+Since $c(q_n)=b_n\tau_n\to0$ and $q_n>0$, we have $q_n\to q_c$. In (13.6) make the exact substitution $u=\sqrt{b_n}\,y/q_n$. Then
+
+$$
+ \frac{B(q_n,b_n)}{b_n^{3/2}}
+ =\frac1{5q_n}\int_{\mathbb R^2}F_n(y,v)\,dy\,dv,
+\tag{13.7}
+$$
+
+where
+
+$$
+ F_n(y,v)=\phi\!\left(\frac{\sqrt{b_n}\,y}{q_n}\right)\phi(v)
+ \frac{\left[e^{b_nv-b_n^2/2}-e^{b_n\tau_n}\cosh(\sqrt{b_n}\,y)\right]_+}{b_n}.
+\tag{13.8}
+$$
+
+For fixed $y,v$, Taylor expansion and $\tau_n\to\tau$ give
+
+$$
+ F_n(y,v)\longrightarrow
+ \phi(0)\phi(v)\left(v-\tau-\frac{y^2}{2}\right)_+.
+\tag{13.9}
+$$
+
+We next give a single integrable bound on the whole $(y,v)$-plane. Choose $M\ge1$ so that $|\tau_n|\le M$ for all sufficiently large $n$, and also take $b_n\le1$. At a point where the positive part in (13.8) is nonzero, set
+
+$$
+ t=v-\frac{b_n}{2}-\tau_n,\qquad s=(v+M)_+.
+$$
+
+Positivity implies $e^{b_nt}>\cosh(\sqrt{b_n}y)\ge1$, hence $0<t\le s$. Using $\cosh z\ge1+z^2/2$ and $e^x-1\le xe^x$ for $x\ge0$ gives
+
+$$
+ \frac{y^2}{2}<\frac{e^{b_nt}-1}{b_n}\le t e^{b_nt}\le s e^s,
+\tag{13.10}
+$$
+
+and
+
+$$
+ \frac{\left[e^{b_nv-b_n^2/2}-e^{b_n\tau_n}\cosh(\sqrt{b_n}y)\right]_+}{b_n}
+ \le e^{M}\,s e^s.
+\tag{13.11}
+$$
+
+Since $\phi(x)\le\phi(0)$, (13.10)--(13.11) imply $0\le F_n\le D$, where
+
+$$
+ D(y,v)=\phi(0)\phi(v)e^M s e^s
+ \mathbf 1_{\{|y|\le\sqrt{2s}\,e^{s/2}\}},\qquad s=(v+M)_+.
+\tag{13.12}
+$$
+
+Integrating first in $y$ shows
+
+$$
+ \int_{\mathbb R^2}D(y,v)\,dy\,dv
+ =2\sqrt2\,\phi(0)e^M
+   \int_{\mathbb R}\phi(v)s^{3/2}e^{3s/2}\,dv<\infty.
+\tag{13.13}
+$$
+
+Indeed, the integrand vanishes for $v<-M$, and for $v\ge-M$ its exponential factor is bounded by a constant times $\exp(-v^2/2+3v/2)$, a Gaussian-integrable function. This is also explicit tail control for arbitrary expanding rectangles; no far-$u$ or far-$v$ contribution is discarded.
+
+Dominated convergence in (13.7), together with $q_n\to q_c$, now yields
+
+$$
+ \lim_{n\to\infty}\frac{B(q_n,b_n)}{b_n^{3/2}}
+ =\frac{\phi(0)}{5q_c}
+   \int_{\mathbb R}\phi(v)
+   \left[\int_{\mathbb R}\left(v-\tau-\frac{y^2}{2}\right)_+dy\right]dv.
+\tag{13.14}
+$$
+
+For $a=v-\tau>0$,
+
+$$
+ \int_{\mathbb R}\left(a-\frac{y^2}{2}\right)_+dy
+ =\int_{-\sqrt{2a}}^{\sqrt{2a}}\left(a-\frac{y^2}{2}\right)dy
+ =\frac{4\sqrt2}{3}a^{3/2},
+\tag{13.15}
+$$
+
+and the integral is zero for $a\le0$. Since $\phi(0)=1/\sqrt{2\pi}$, (13.14)--(13.15) are exactly (13.3)--(13.5). Gaussian moment integrability proves finiteness of (13.3), while the integrand is positive on $\tau+1<v<\tau+2$, proving strict positivity. The argument began with an arbitrary admissible sequence, so it establishes the full sequential assertion. $\square$
+
+Dominated convergence and Gaussian moments are mature intermediate tools here. The particular coefficient and all-path statement for (13.1) are this repository's application derivation; they are not presented as a global originality or priority claim.
+
+**定理 13.3（全参数的共同 Borel 二元读出）。** For every $q,b>0$, define
+
+$$
+ A_{q,b}=\left\{(u,v):v>
+ \frac{c(q)+\ln\cosh(qu)+b^2/2}{b}\right\},\qquad
+ Q_{q,b}(u,v)=\mathbf 1_{A_{q,b}}(u,v).
+\tag{13.16}
+$$
+
+This is a Borel readout applied identically for all five labels, and its singleton Bayes gain satisfies
+
+$$
+ B_{Q_{q,b}}=B(q,b)>0.
+\tag{13.17}
+$$
+
+If $\mathcal J_{q,b}'$ is any supplied comparison law on the same label--output alphabet, with the same uniform original-label prior, and $B_{Q_{q,b}}'$ denotes its singleton gain, then
+
+$$
+ \operatorname{TV}(\mathcal J_{q,b},\mathcal J_{q,b}')\le e_{q,b}
+ \quad\Longrightarrow\quad
+ \left|B_{Q_{q,b}}'-B(q,b)\right|\le e_{q,b}.
+\tag{13.18}
+$$
+
+**Proof.** The threshold in (13.16) is continuous, hence $A_{q,b}$ is Borel, and (13.6) shows it is exactly the positive set of the signed density. It is nonempty and open, so (13.17)'s strict positivity follows from the positive Gaussian density on a nonempty open subset. Since the three component densities integrate to one,
+
+$$
+ \int_{\mathbb R^2}(f_0-2f_--2f_+)\,du\,dv=-3.
+$$
+
+Consequently the two unweighted signed bin masses and their prior-weighted versions are
+
+$$
+ \begin{aligned}
+ \int_{A_{q,b}}(f_0-2f_--2f_+)&=5B(q,b),
+ &\int_{A_{q,b}^c}(f_0-2f_--2f_+)&=-3-5B(q,b),\\
+ \mathcal J_{q,b}(3,1)-\sum_{i\ne3}\mathcal J_{q,b}(i,1)&=B(q,b),
+ &\mathcal J_{q,b}(3,0)-\sum_{i\ne3}\mathcal J_{q,b}(i,0)&=-\frac35-B(q,b).
+ \end{aligned}
+\tag{13.19}
+$$
+
+The binary Bayes action chooses the singleton exactly on bins with positive signed joint mass. Thus bin $1$ contributes $B(q,b)$ and bin $0$ contributes zero, proving (13.17) by the existing decision-partition argument. Proposition 7.5, applied to the two finite joint laws on $\{1,\ldots,5\}\times\{0,1\}$, gives (13.18). The boundary graph has zero Gaussian probability, so its inclusion convention does not alter either bin mass. This readout is parameter-dependent and exact; it supplies no retention statement for an arbitrary quantizer.
+
+**推论 13.4（临界尺度的条件 TV 保留证书）。** Let $(q_n,b_n)$ satisfy (13.4), and apply the same parameter-dependent readout $Q_{q_n,b_n}$ to a supplied comparison law with the same original-label prior and binary output alphabet. Write its singleton gain as $B_n'$, and suppose the resulting joint laws obey
+
+$$
+ \operatorname{TV}(\mathcal J_{q_n,b_n},\mathcal J_{q_n,b_n}')\le e_n.
+\tag{13.20}
+$$
+
+If $e_n=o(b_n^{3/2})$, then
+
+$$
+ \frac{B_n'}{B(q_n,b_n)}\longrightarrow1.
+\tag{13.21}
+$$
+
+More generally, if $e_n\le d\,b_n^{3/2}$ eventually for a fixed $d\ge0$, then
+
+$$
+ \limsup_{n\to\infty}
+ \left|\frac{B_n'}{B(q_n,b_n)}-1\right|\le\frac d{H(\tau)},\qquad
+ \liminf_{n\to\infty}\frac{B_n'}{B(q_n,b_n)}
+ \ge\max\left\{0,1-\frac d{H(\tau)}\right\}.
+\tag{13.22}
+$$
+
+In particular, $d<H(\tau)$ gives a positive eventual retained fraction, and every fixed $0<\theta<1-d/H(\tau)$ is eventually certified. These are sufficient certificates for the respective Bayes optima under the supplied TV bound; they are neither necessary conditions nor an achieved approximation rate. They do not assert a comparison-law construction, training guarantee, or actual loss when an upper budget is loose.
+
+**Proof.** Equation (13.18) gives $|B_n'-B(q_n,b_n)|\le e_n$. Divide by the positive quantity $B(q_n,b_n)$ and use (13.5), with $H(\tau)>0$. The little-$o$ case gives (13.21); the eventual bound gives the first inequality in (13.22). A constant nonsingleton action is always available under the common prior, so $B_n'\ge0$, which gives the second inequality. The stated fraction follows when $d<H(\tau)$. $\square$
+
+The source correspondences are Proposition 2.1 and (11.2)--(11.3) for the signed Bayes identity, Theorem 10.2 for the on-axis onset context, Theorem 12.2 for the fixed-$q$ off-axis context, and Proposition 7.5 for the same-prior finite-law TV bound. The proof of Theorem 13.2 is direct and does not substitute a varying $q_n$ into the fixed-$q$ theorem. No native recursive-FIB realization, physical-cost claim, unknown-law learning, empirical benefit, formal certification, comparison-law approximation rate, or global originality claim follows.
+
+## 追加锚（本行以下为增补区）
+
+## 14. Relative crossover along unrestricted normalized offsets
+
+**假设 14.1（全标签高斯族与相对尺度）。** Use the known-law binary singleton experiment of Definition 13.1: $C$ is uniform on the five original labels, and one complete observation $X=(U,V)$ conditional on $C=i$ has law $\mathcal N_2(\mu_i,I_2)$, with means $(-q,0),(-q,0),(0,b),(q,0),(q,0)$ in label order, for $q,b>0$. The target is $C=3$ versus its complement under measurable binary zero--one decision rules. Retain $r_0(q,b)$, $B(q,b)=1/5-r_0(q,b)$, $c(q)=\ln4-q^2/2$, $q_c=\sqrt{2\ln4}$, the standard normal density $\phi$, and $H$ from (13.2)--(13.3). For positive sequences $q_n\to q_c$ and $b_n\to0$, put
+
+$$
+ \tau_n=\frac{c(q_n)}{b_n},\qquad
+ S_n=b_n^{3/2}H(\tau_n)>0.
+\tag{14.1}
+$$
+
+No boundedness, convergence, monotonicity or additional rate restriction is imposed on $\tau_n$.
+
+**定理 14.2（不受限归一化偏移的相对极限）。** Under Assumption 14.1, for every such pair of positive sequences,
+
+$$
+ \frac{B(q_n,b_n)}{S_n}\longrightarrow1.
+\tag{14.2}
+$$
+
+**Proof.** Suppress sequence indices when proving estimates along a path. Write $c=b\tau$ and define, for all real $d$,
+
+$$
+ J_q(d)=\int_{\mathbb R}\phi(u)[e^d-\cosh(qu)]_+\,du,
+ \qquad d_b(v)=b(v-\tau)-\frac{b^2}{2}.
+\tag{14.3}
+$$
+
+For $d\le0$, $e^d\le1\le\cosh(qu)$, so $J_q(d)=0$. Factoring $e^c$ in the exact all-parameter signed Bayes identity (13.6) gives
+
+$$
+ B(q,b)=\frac{e^c}{5}\int_{\mathbb R}\phi(v)J_q(d_b(v))\,dv.
+\tag{14.4}
+$$
+
+Restrict $q$ to a fixed compact neighborhood of $q_c$ contained in $(0,\infty)$, as is legitimate eventually along every path in Assumption 14.1. Uniformly for these $q$, put
+
+$$
+ A_q=\frac{4\sqrt2\,\phi(0)}{3q}.
+$$
+
+There are $\delta_0>0$ and $C<\infty$ such that
+
+$$
+ \left|J_q(d)-A_qd^{3/2}\right|\le C d^{5/2}
+ \qquad(0<d\le\delta_0).
+\tag{14.5}
+$$
+
+Indeed, with $w=qu$, the positive interval has endpoint
+$a(d)=\operatorname{arcosh}(e^d)=\sqrt{2d}(1+O(d))$. On $|w|\le a(d)$,
+
+$$
+ e^d-\cosh w=d-\frac{w^2}{2}+O(d^2),\qquad
+ \phi(w/q)=\phi(0)(1+O(d)),
+$$
+
+with uniform remainders. Integrating the leading parabola gives
+
+$$
+ \frac{\phi(0)}q
+ \int_{-\sqrt{2d}}^{\sqrt{2d}}\left(d-\frac{w^2}{2}\right)dw
+ =A_qd^{3/2}.
+$$
+
+The integrated Taylor errors are $O(d^{5/2})$; replacing $a(d)$ by $\sqrt{2d}$ contributes an error of that order or smaller. Also $A_q$ is bounded above and below by positive constants. In particular, $J_q(d)\le C d^{3/2}$ for sufficiently small positive $d$. For all $d\ge0$, the elementary bounds
+
+$$
+ 0\le J_q(d)\le e^d,\qquad d^{3/2}\le M e^d,
+ \qquad M=\sup_{d\ge0}d^{3/2}e^{-d}<\infty
+\tag{14.6}
+$$
+
+will control the nonlocal part.
+
+Define the positive quantities
+
+$$
+ I(\tau)=\int_\tau^\infty(v-\tau)^{3/2}\phi(v)\,dv,
+ \qquad
+ K_b(\tau)=\int_{\mathbb R}\phi(v)[d_b(v)]_+^{3/2}\,dv.
+\tag{14.7}
+$$
+
+We first prove
+
+$$
+ K_b(\tau)=b^{3/2}I(\tau)(1+o(1))
+\tag{14.8}
+$$
+
+along either $\tau\to+\infty$ or $\tau\to-\infty$, with $b\to0$ and $|b\tau|=|c|\to0$.
+
+For $\tau\to+\infty$, set $x=v-\tau$ and $z=\tau x$. Then exactly
+
+$$
+ \begin{aligned}
+ I(\tau)
+ &=\phi(\tau)\tau^{-5/2}
+   \int_0^\infty z^{3/2}e^{-z}e^{-z^2/(2\tau^2)}\,dz,\\
+ b^{-3/2}K_b(\tau)
+ &=\phi(\tau)\tau^{-5/2}
+   \int_0^\infty(z-b\tau/2)_+^{3/2}e^{-z}e^{-z^2/(2\tau^2)}\,dz.
+ \end{aligned}
+\tag{14.9}
+$$
+
+Since $b\tau\to0$, both last integrals converge to the same strictly positive finite integral $\int_0^\infty z^{3/2}e^{-z}\,dz$, by domination with $z^{3/2}e^{-z}$. This proves the relative comparison (14.8). It also controls the positive tail after rescaling: the part $x>R/\tau$ is uniformly small in the normalized integrals as $R\to\infty$.
+
+For $\tau=-L\to-\infty$, with $V\sim\mathcal N(0,1)$,
+
+$$
+ b^{-3/2}K_b(-L)=\mathbb E[(V+L-b/2)_+^{3/2}],
+ \qquad I(-L)=\mathbb E[(V+L)_+^{3/2}].
+\tag{14.10}
+$$
+
+After division by $L^{3/2}$, both integrands converge pointwise to $1$, since $b/L\to0$. For $L\ge1$ and $b\le1$ they are bounded by a fixed constant times $(1+|V|)^{3/2}$, which is integrable. Gaussian moment domination, controlling both tails of $V$, therefore gives
+
+$$
+ I(-L)\sim L^{3/2},\qquad K_b(-L)\sim(bL)^{3/2},
+\tag{14.11}
+$$
+
+and proves (14.8) on this side as well.
+
+We next justify replacing $J_q$ by (14.5) with an error relative to $K_b(\tau)$. For fixed $\delta>0$, define
+
+$$
+ T_\delta=\int_{\{d_b(v)>\delta\}}\phi(v)e^{d_b(v)}\,dv.
+$$
+
+Let $\overline\Phi(s)=\int_s^\infty\phi(v)\,dv$. Completing the Gaussian square gives the exact formula
+
+$$
+ T_\delta=e^{-b\tau}\overline\Phi\!\left(\tau+\frac\delta b-\frac b2\right).
+\tag{14.12}
+$$
+
+By (14.6), this envelope bounds the nonlocal $J_q$ contribution and, up to the constant $M$, the nonlocal $d_b^{3/2}$ contribution. It suffices to show $T_\delta=o(K_b(\tau))$.
+
+If $\tau\to+\infty$, (14.9) yields, eventually for a fixed $c_0>0$,
+
+$$
+ K_b(\tau)\ge c_0 b^{3/2}\phi(\tau)\tau^{-5/2}.
+\tag{14.13}
+$$
+
+Put $h=\delta/b-b/2$. Eventually $h\ge\delta/(2b)$ and $\tau\ge1$. The Gaussian bound $\overline\Phi(s)\le\phi(s)/s$ for $s>0$, the identity
+$\phi(\tau+h)/\phi(\tau)=\exp(-\tau h-h^2/2)$, and $e^{-b\tau}\le1$ give
+
+$$
+ T_\delta\le C\phi(\tau)
+       \exp\!\left(-\frac{\delta^2}{8b^2}\right).
+$$
+
+Moreover $b\tau\to0$ implies $\tau\le1/b$ eventually. Hence
+
+$$
+ \frac{T_\delta}{K_b(\tau)}
+ \le C b^{-3/2}\tau^{5/2}
+       \exp\!\left(-\frac{\delta^2}{8b^2}\right)
+ \le C b^{-4}\exp\!\left(-\frac{\delta^2}{8b^2}\right)
+ \longrightarrow0.
+\tag{14.14}
+$$
+
+The exponentially small factor $\phi(\tau)$ cancels before the remainder is estimated; the rare-tail denominator is explicitly controlled.
+
+If $\tau=-L\to-\infty$, $bL\to0$ implies eventually
+
+$$
+ \frac\delta b-L-\frac b2\ge\frac\delta{2b},\qquad e^{bL}\le2.
+$$
+
+Equations (14.11)--(14.12) and the same Gaussian bound imply
+
+$$
+ T_\delta\le C\exp\!\left(-\frac{\delta^2}{8b^2}\right),\qquad
+ \frac{T_\delta}{K_b(-L)}
+ \le C b^{-3/2}\exp\!\left(-\frac{\delta^2}{8b^2}\right)
+ \longrightarrow0,
+\tag{14.15}
+$$
+
+where $L\ge1$ was used in the second inequality.
+
+For fixed $0<\delta\le\delta_0$, apply (14.5) on $0<d_b(v)\le\delta$. Its integrated error is at most $C\delta K_b(\tau)$. On $d_b(v)>\delta$, (14.14) or (14.15) bounds both contributions by $o(K_b(\tau))$. The portion $d_b(v)\le0$ is zero. Dividing by $A_qK_b(\tau)$, taking the limit superior, and then sending $\delta\downarrow0$ proves
+
+$$
+ \int_{\mathbb R}\phi(v)J_q(d_b(v))\,dv
+ =A_qK_b(\tau)(1+o(1))
+\tag{14.16}
+$$
+
+with a relative error in both unbounded-offset regimes. Combining (14.4), (14.8) and (14.16), and using $e^c\to1$, $q\to q_c$ and $\phi(0)=1/\sqrt{2\pi}$, gives
+
+$$
+ \begin{aligned}
+ \frac{B(q,b)}{b^{3/2}}
+ &=\frac{e^c}{5}\frac{4\sqrt2\phi(0)}{3q}I(\tau)(1+o(1))\\
+ &=\frac4{15q_c\sqrt\pi}I(\tau)(1+o(1))
+ =H(\tau)(1+o(1)).
+ \end{aligned}
+\tag{14.17}
+$$
+
+The displacement $b^2/2$ is retained throughout: it produces the shift $b/2$ in (14.9)--(14.12). On the positive side its rescaled size is $b\tau/2=c/2\to0$; on the negative side its relative size is $b/(2L)\to0$. The coefficient includes the original singleton prior $1/5$, with both duplicate complement means counted twice in (13.6). The proof integrates the positive signed excess, so it preserves the cancellation in the Bayes identity.
+
+It remains to cover bounded and oscillatory offsets. Gaussian moment domination makes $H$ continuous on every compact interval; its strict positivity gives a positive minimum there. If $\tau_n\to\tau_0\in\mathbb R$, Theorem 13.2 and its global bound (13.12) give $B(q_n,b_n)/b_n^{3/2}\to H(\tau_0)$, while $H(\tau_n)\to H(\tau_0)>0$. Thus (14.2) holds on each such subsequence. A compactness contradiction consequently gives the relative assertion on any bounded offset sequence. Every subsequence of an arbitrary real sequence $\tau_n$ has a further subsequence tending to a finite real number, $+\infty$, or $-\infty$. The preceding arguments give ratio limit $1$ in every case, proving (14.2) for the entire sequence, including paths oscillating between the regimes.
+
+The reused inputs are the full model of Definition 13.1, the exact all-parameter identity (13.6), and Theorem 13.2 only for finite normalized offsets. The fixed-$q$ asymptotic of Section 12 is not used as a varying-$q$ theorem. The local $d^{3/2}$ kernel and the relative Gaussian-tail estimates supply the unrestricted-offset step. Taylor expansion, Gaussian moment domination and Laplace-type tail comparison are classical mechanisms; related standard methods are described in [DLMF §2.3](https://dlmf.nist.gov/2.3), [§2.4](https://dlmf.nist.gov/2.4) and [§7.12](https://dlmf.nist.gov/7.12). Equation (14.2) is a repo-derived application for the specified family, with no global priority assertion. It is a qualitative sequential limit: it supplies neither a numerical finite-$b$ cutoff nor a uniform quantitative remainder rate. $\square$
+
+**推论 14.3（相对尺度下的条件联合 TV 保留）。** Under Assumption 14.1, use the actual parameter-dependent Borel sign readout $Q_{q_n,b_n}$ of (13.16), applied identically for all five original labels. Let $\mathcal J_n$ be its label--output joint law for the stated Gaussian experiment. Supply comparison joint laws $\mathcal J_n'$ on the same $\{1,\ldots,5\}\times\{0,1\}$ alphabet with the same uniform original-label prior, obtained using the same actual readout, and write their optimal binary singleton gains as $B_n'$. Suppose
+
+$$
+ \operatorname{TV}(\mathcal J_n,\mathcal J_n')\le e_n.
+\tag{14.18}
+$$
+
+If $e_n=o(S_n)$, then $B_n'/B(q_n,b_n)\to1$. More generally, if $e_n\le dS_n$ eventually for a fixed $0\le d<1$, then
+
+$$
+ \limsup_{n\to\infty}
+ \left|\frac{B_n'}{B(q_n,b_n)}-1\right|\le d,
+ \qquad
+ \liminf_{n\to\infty}\frac{B_n'}{B(q_n,b_n)}\ge1-d.
+\tag{14.19}
+$$
+
+Every fixed fraction $0<\theta<1-d$ is therefore eventually retained. The limiting lower bound does not assert an eventual pointwise bound of exactly $1-d$.
+
+**Proof.** Reuse (13.17)--(13.18): $B_{Q_{q_n,b_n}}=B(q_n,b_n)>0$ and $|B_n'-B(q_n,b_n)|\le e_n$. Divide by $B(q_n,b_n)$ and apply (14.2). The first error budget gives a vanishing relative discrepancy; the second gives the limsup bound in (14.19), which implies its liminf bound and every strictly smaller eventual fraction. This is the existing same-prior joint-TV algebra applied to the scale $S_n$ for unrestricted offsets. The comparison laws and their error bounds are supplied hypotheses; no approximation-law construction or achieved rate is established. In particular the conclusion concerns the common actual sign readout, not an arbitrary quantizer, and entails no native-FIB realization, training, empirical, physical-cost or formal-certification claim. $\square$
+
+## 追加锚（本行以下为增补区）
+
+## 15. Exact rational factor representations of the positive-noise decision law
+
+**定义 15.1（有限有理五模式因子语言）。** In the coordinate order of [the foundational volume, Definition 2.1](AURIC_FIB_ATOM_PYRAMID_FOUNDATIONAL_FORMULAS_AND_RELATIONS.md), put
+
+$$
+ A=\{(x,y,z)\in\{0,1\}^3:xz=yz=0\}
+   =\{000,100,010,110,001\}.
+\tag{15.1}
+$$
+
+For each integer $n\ge1$, a network consists of labelled visible Boolean variables $v_1,\ldots,v_n$, any finite number $m\ge0$ of hidden Boolean variables, and finitely many factors $f_j:\{0,1\}^3\to\mathbb Q_{\ge0}$. Every factor sums to one over its complete three-bit table and vanishes outside $A$. Its scope is an ordered triple of actual visible or hidden variables; repetition and identification are permitted. If $a$ and $h$ are the visible and hidden assignments, its law is
+
+$$
+ P(a)=Z^{-1}\sum_{h\in\{0,1\}^m}\prod_j f_j((a,h)|_{\mathrm{scope}(j)}),
+ \qquad
+ Z=\sum_{a,h}\prod_j f_j((a,h)|_{\mathrm{scope}(j)})>0.
+\tag{15.2}
+$$
+
+An empty product is one. In regime $W_+$ every factor is strictly positive on all five tuples of $A$; in regime $W_0$ additional zeros within $A$ are permitted. The only operations are the ordered scopes, factor multiplication, finite hidden summation and final normalization in (15.2). Constants, complemented literals, extra equality or disequality primitives, externally supplied unary or multivariate factors, and limits are absent. Network size may depend on the entire target law and is unbounded finite. Locally normalized tables are potentials in a globally normalized product; they have no supplied conditional-kernel or causal sampling interpretation.
+
+For a labelled undirected graph $K$ with loops, write
+
+$$
+ \operatorname{Ind}(K)=\{a\in\{0,1\}^n:
+ a_i a_j=0\text{ for every edge }\{i,j\}\text{ of }K\}.
+\tag{15.3}
+$$
+
+A loop at $i$ thus forces $a_i=0$. Vertices here are Boolean coordinates, not the five labels that are vertices of the legal-toggle graph $G$ in (1.2).
+
+**定理 15.2（严格正局部表的支撑与全部有理权重）。** For every $n\ge1$, a rational probability law on $\{0,1\}^n$ is representable in $W_+$ if and only if its support is $\operatorname{Ind}(K)$ for some labelled undirected graph $K$ with loops allowed. Every choice of positive rational masses on that support is included.
+
+**Proof.** First record how the constructions use only the permitted tables. An unnormalized rational table $F$ with support contained in $A$ and positive table sum $N_F$ denotes the actual factor $F/N_F$. Normalizing all such tables multiplies the full assignment weight by the positive rational constant $\prod_F N_F^{-1}$, independent of the assignments; this constant cancels in (15.2).
+
+Let $H=\mathbf1_A$, of table sum five. A fresh hidden variable $o$ with $H/5$ on scope $(o,o,o)$ is forced to zero, since $000\in A$ and $111\notin A$. This generates a zero internally. Scope $(u,u,w)$ for $H/5$ enforces $uw=0$ and has constant value $1/5$ on allowed pairs. Taking $u=w$ implements a loop.
+
+For any positive rational binary table $B$, use the full ternary table
+
+$$
+ F_B(x,y,0)=B(x,y),\qquad F_B(0,0,1)=1,
+ \qquad F_B=0\text{ outside }A.
+\tag{15.4}
+$$
+
+Its five entries on $A$ are positive, and its table sum is positive rational. On scope $(u,w,o)$ it gives $B(u,w)$ before the constant normalization. Thus binary weights below are abbreviations for legal ternary factors. Likewise define
+
+$$
+ U_t(000)=U_t(100)=U_t(010)=U_t(001)=1,
+ \qquad U_t(110)=t,
+ \qquad U_t=0\text{ outside }A.
+\tag{15.5}
+$$
+
+Its sum is $4+t$. Scope $(u,u,o)$ gives weight $1$ at $u=0$ and $t$ at $u=1$, before normalization. It is legal in $W_+$ for rational $t>0$, and in $W_0$ for rational $t\ge0$. These definitions specify even the table entries a repeated scope never visits.
+
+For necessity, a factor on $(u,w,t)$ contributes edges $\{u,t\}$ and $\{w,t\}$ to a graph on all variables, retaining loops from repetitions. A complete assignment has positive weight exactly when its occupied variables form an independent set: these are precisely the two exclusions defining $A$. Let $K$ be the visible induced graph. A visible assignment violating an edge or loop of $K$ has no positive extension. Conversely, any assignment in $\operatorname{Ind}(K)$ extends positively by setting every hidden variable to zero. All edges with a hidden endpoint, including hidden loops, are then satisfied. A finite nonnegative hidden sum is positive exactly when some summand is positive, proving the support assertion. The complete all-zero assignment also proves $Z>0$. All masses are rational. This includes an empty factor set and duplicated scopes.
+
+For sufficiency, first realize an arbitrary positive rational table $w$ on the full visible cube, up to a constant multiplier. We need the following finite identity, with $d$ the Hamming distance:
+
+$$
+ Lw(a)=1+\sum_{s\in\{0,1\}^n}c_s\varepsilon^{d(a,s)},
+ \qquad L,c_s\in\mathbb Q_{>0},\quad
+ \varepsilon\in\mathbb Q,\quad 0<\varepsilon<1.
+\tag{15.6}
+$$
+
+Here is an explicit proof. Set $L=2/\min_a w(a)$, $r(a)=Lw(a)-1$, $\alpha=\min_a r(a)>0$, $\beta=\max_a r(a)$ and $\varepsilon=\alpha/(4n\beta)$. Then $0<\varepsilon\le1/(4n)$. The matrix $M_{a,s}=\varepsilon^{d(a,s)}$ is the $n$-fold tensor product of $\left(\begin{smallmatrix}1&\varepsilon\\\varepsilon&1\end{smallmatrix}\right)$, so its rational inverse is
+
+$$
+ (M^{-1})_{a,s}=\frac{(-\varepsilon)^{d(a,s)}}{(1-\varepsilon^2)^n}.
+\tag{15.7}
+$$
+
+This follows by multiplying the two-by-two inverses coordinate by coordinate. Its absolute row sum is $(1-\varepsilon)^{-n}$ and its diagonal entry is $(1-\varepsilon^2)^{-n}\ge1$. Hence, for the maximum absolute row-sum norm,
+
+$$
+ \|M^{-1}-I\|_\infty=(1-\varepsilon)^{-n}-1
+ \le\frac{n\varepsilon}{1-n\varepsilon}.
+\tag{15.8}
+$$
+
+The inequality uses $(1-\varepsilon)^n\ge1-n\varepsilon>0$, the Bernoulli inequality obtained by induction. Put $c=M^{-1}r$. Since $n\varepsilon=\alpha/(4\beta)\le1/4$,
+
+$$
+ \|c-r\|_\infty
+ \le\frac{n\varepsilon}{1-n\varepsilon}\beta
+ \le\alpha/3,
+ \qquad c_s\ge2\alpha/3>0.
+\tag{15.9}
+$$
+
+Thus $c$ is rational and positive, and $Mc=r$ gives (15.6) exactly. No limiting operation is used.
+
+Take the internally pinned $o=0$ and one fresh hidden selector $h_s$ for each word $s$. For every distinct selector pair impose the NAND constraint $H/5$ on $(h_s,h_s,h_t)$, taking each unordered pair once. Allowed selector assignments are precisely the all-zero assignment and assignments with one selector equal to one. Give selector $h_s$ the unary weight $c_s$ through (15.5) on $(h_s,h_s,o)$. For each coordinate $i$ use the positive binary table
+
+$$
+ B_{s,i}(h,a_i)=
+ \begin{cases}
+ 1,&h=0,\\
+ 1,&h=1\text{ and }a_i=s_i,\\
+ \varepsilon,&h=1\text{ and }a_i\ne s_i,
+ \end{cases}
+\tag{15.10}
+$$
+
+implemented by (15.4) on $(h_s,v_i,o)$. Selecting entries of a table using the fixed index $s_i$ does not complement a scope variable. Apart from the common positive scalar from the pin, NAND factors and local normalizations, the all-zero selector contributes $1$, and the assignment with only $h_s=1$ contributes $c_s\varepsilon^{d(a,s)}$. The hidden sum is therefore a positive rational constant times $Lw(a)$. All factors are positive on every tuple of $A$, and there are finitely many variables and factors.
+
+Finally let $P$ have support $S=\operatorname{Ind}(K)$, and extend it to a positive rational full-cube table by $w(a)=P(a)$ on $S$ and $w(a)=1$ outside $S$. Construct the preceding network. Append $H/5$ on $(v_i,v_i,v_j)$ for every ordinary edge $\{i,j\}$, and on $(v_i,v_i,v_i)$ for every loop. Their product is a positive constant times $\mathbf1_S$. The visible marginal becomes $CLw(a)\mathbf1_S(a)=CLP(a)$ for a fixed positive rational $C$, with total mass $CL>0$. Global normalization gives $P$. This also covers $n=1$ and the singleton support consisting only of the all-zero word. $\square$
+
+**定理 15.3（允许内部零点时的有限精确表示）。** For every $n\ge1$, every rational probability law on $\{0,1\}^n$, including laws with arbitrary zero entries, is representable in $W_0$ with the same operations as Definition 15.1.
+
+**Proof.** Reuse the null-deleted Boolean relation from [the Boolean null-boundary source](../../../D5/S3/Combinatorics/ConstraintRelations/BooleanNullBoundary.lean):
+
+$$
+ \mathbf1_{A\setminus\{000\}}(x,y,z)>0
+ \quad\Longleftrightarrow\quad z=\neg(x\lor y).
+\tag{15.11}
+$$
+
+Indeed its four tuples are $100,010,110,001$, precisely the truth table of NOR. Dividing this indicator by four gives a legal rational $W_0$ factor. The support identity is reused; the weight construction below supplies the probability masses and normalizations.
+
+For every word $s$, compute the indicator $e_s(a)=\mathbf1_{\{a=s\}}$ by an acyclic NOR circuit. Explicitly,
+
+$$
+ \operatorname{NOT}(x)=\operatorname{NOR}(x,x),\qquad
+ \operatorname{AND}(x,y)=
+ \operatorname{NOR}(\operatorname{NOR}(x,x),\operatorname{NOR}(y,y)).
+\tag{15.12}
+$$
+
+Use literal $a_i$ for $s_i=1$ and the computed NOT of $a_i$ for $s_i=0$; join the $n\ge1$ literals by successive AND gates. Each gate has a fresh hidden output and uses (15.11) on its two actual input wires and output wire. Repeated inputs implement NOT; fanout is reuse of an actual variable. Thus no complemented literal or equality primitive is supplied. For $n=1$ the final indicator may already be a visible wire. For every visible assignment there is exactly one assignment of all gate-output variables satisfying all NOR factors, by evaluation in acyclic order.
+
+Introduce the internally pinned $o=0$ from the proof of Theorem 15.2. For each $s$ append the normalized table $U_{P(s)}/(4+P(s))$ of (15.5) on $(e_s,e_s,o)$. On the unique gate-consistent hidden assignment the product, before the common local-normalization scalar, is
+
+$$
+ \prod_s\begin{cases}
+ 1,&e_s(a)=0,\\
+ P(s),&e_s(a)=1
+ \end{cases}=P(a),
+\tag{15.13}
+$$
+
+because exactly one indicator is one. This includes $P(a)=0$, when the corresponding factor vanishes. Every other hidden assignment violates the pin or some NOR factor and contributes zero. All local sums are positive rational, including $4+P(s)$ when $P(s)=0$. Hence the visible marginal is $CP(a)$ with fixed rational $C>0$, its total is $C$, and normalization proves the claim. $\square$
+
+**推论 15.4（正噪声平台律的同一联合分布表示）。** For each rational $0<\eta\le1$, the law $J_{H,\eta}$ of Proposition 7.4 and (7.8) has an exact finite rational $W_+$ representation, and also a $W_0$ representation, on five visible Boolean coordinates. These representations preserve its joint distribution and consequently its already established posteriors and decision risks.
+
+**Proof.** The printed words in Definition 1.1 are ordered low--middle--high. Swapping the final two positions gives the foundational low--high--middle coordinates $(x,y,z)$, while a two-bit record encodes the four outputs:
+
+$$
+ \begin{aligned}
+ (a,b,c,d,e)&\longmapsto(000,100,001,110,010),\\
+ (ac,bd,de,be)&\longmapsto(00,01,10,11).
+ \end{aligned}
+\tag{15.14}
+$$
+
+These are bijections onto $A$ and $\{0,1\}^2$. In (6.3) each posterior is uniform on its displayed pair, and the output masses are $(2/5,1/5,1/5,1/5)$. Thus
+
+$$
+ J_{H,\eta}(i,q)=(1-\eta)J_H(i,q)+\eta\lambda_q/5>0
+\tag{15.15}
+$$
+
+at all twenty label--record pairs, with rational entries. Transport the law by (15.14) to $(x,y,z,r_1,r_2)$ and set its mass to zero at every remaining five-bit word. Its support is exactly
+
+$$
+ A\times\{0,1\}^2=\operatorname{Ind}(K_*),\qquad
+ E(K_*)=\{\{x,z\},\{y,z\}\},
+\tag{15.16}
+$$
+
+where the two record vertices are isolated. Positivity is relative to these twenty points, not all thirty-two ambient words. Theorem 15.2 supplies the same normalized joint law in $W_+$, and Theorem 15.3 supplies it in $W_0$. The coordinate exclusion graph $K_*$ has coordinate vertices; it is not the five-label legal-toggle graph $G$. In particular the two-bit name of output $be$ neither adds a coordinate exclusion nor makes $be$ a legal edge of $G$.
+
+The finite splitting construction of Definition 1.1, common-source coupling (4.7), and the Bayes and plateau calculations in Proposition 7.4 are reused. Exact equality of the joint laws preserves those conclusions without a new risk or approximation argument. Each rational $\eta$ may use its own finite network. Irrational $\eta$ and a single finite network for the parameter continuum are outside the rational assertion.
+
+The construction is an abstract weighted-factor representation. It supplies no native recursive-FIB preparation, acquisition or learnability result, training mechanism, efficient inference or sampling, parameter compression, physical-cost bound, or achieved approximation. Local normalization does not turn the factors into directed conditional distributions.
+
+The unweighted support operations are those of [the existing primitive-positive preservation framework](../../../D5/S3/Combinatorics/ConstraintRelations/PrimitivePositive.lean); the null-deleted NOR relation is the supplier in (15.11). Neither support result alone specifies arbitrary rational masses. The finite common-source sum-product eliminations of [the hidden-relations volume, C-59.2--C-59.5](AURIC_FIB_ATOM_HIDDEN_RELATIONS_STATISTICS_PHASE_AND_SEAMS.md) and [its continuation, C-60.1--C-60.2](AURIC_FIB_ATOM_HIDDEN_RELATIONS_STATISTICS_PHASE_AND_SEAMS_CONTINUATION.md) likewise distinguish support from chosen product activities; a restricted positive-activity family does not supply the unrestricted weight statement of Theorem 15.2.
+
+As a primary exact-representation comparison, Gleb Smirnov, *Deep belief networks are exact*, [arXiv:2609.05572v1, Theorem 1.1 and Section 1](https://arxiv.org/html/2609.05572v1), represents strictly positive Boolean laws by finite sigmoid belief networks with real parameters. That directed conditional interface, its real weights and biases, and its strictly positive visible laws differ from (15.2), rational local tables and the structural zeros in (15.16); it supplies no step of these proofs. Likewise an exact finite pps construction must be distinguished from an omega closure or a language granted extra equality and unary factors: none of those extra operations is implicit in Definition 15.1. Theorems 15.2--15.3 and this correspondence are elementary repository-derived constructions, without a claim of global priority or exhaustive literature absence. Their proofs are ordinary mathematics and make no formal proof-shape or kernel-verification assertion. $\square$
+
+## 追加锚（本行以下为增补区）
+
+## 16. Exact local simulation by factors with a multiplicative face equality
+
+**定义 16.1（底面乘法相等的严格正子语言）。** Retain the complete rational tables, ordered actual-variable scopes, permitted repetitions, finite hidden sums and global normalization of Definition 15.1. Let $W_{\mathrm{res}}$ be the sublanguage of $W_+$ in which every factor additionally satisfies
+
+$$
+ f(000)f(110)=f(100)f(010).
+\tag{16.1}
+$$
+
+Thus every local table is normalized, strictly positive at each of the five tuples of $A$ in (15.1), and zero at the other three tuples. Equation (16.1) concerns the complete table even when its scope identifies variables and never visits some entries. All operations and the rational coefficient field remain those of Definition 15.1.
+
+**命题 16.2（完整受限表与内部零钉）。** Define the normalized table $\mathsf H=\mathbf1_A/5$. For each $t\in\mathbb Q_{>0}$ define the complete normalized activity table $\mathsf V_t$ by
+
+$$
+ \begin{aligned}
+ (\mathsf H(000),\mathsf H(100),\mathsf H(010),\mathsf H(110),\mathsf H(001))
+ &=\frac{(1,1,1,1,1)}5,\\
+ (\mathsf V_t(000),\mathsf V_t(100),\mathsf V_t(010),\mathsf V_t(110),\mathsf V_t(001))
+ &=\frac{(1,t,1,t,1)}{3+2t},\\
+ \mathsf H(101)=\mathsf H(011)=\mathsf H(111)
+ &=\mathsf V_t(101)=\mathsf V_t(011)=\mathsf V_t(111)=0.
+ \end{aligned}
+\tag{16.2}
+$$
+
+Both belong to $W_{\mathrm{res}}$. A fresh hidden variable $o$ with the factor $\mathsf H$ on $(o,o,o)$ generates the pin $o=0$. On assignments obeying this pin, a factor $\mathsf V_t$ on $(u,o,o)$ implements the vertex activity $t^u$ up to its local normalization. For any two actual variables $a,b$, a factor $\mathsf H$ on $(a,a,b)$ implements the exclusion $ab=0$, also with its local normalization.
+
+**Proof.** The table sums in (16.2) are $5/5=1$ and $(3+2t)/(3+2t)=1$. Each of their five allowed entries is positive rational. The two sides of (16.1) are $1/25$ for $\mathsf H$ and $t/(3+2t)^2$ for $\mathsf V_t$. These statements check every table entry independently of its later scope. Direct evaluation gives
+
+$$
+ \mathsf H(o,o,o)=\frac15\mathbf1_{\{o=0\}},\qquad
+ \left.\mathsf V_t(u,o,o)\right|_{o=0}=\frac{t^u}{3+2t},\qquad
+ \mathsf H(a,a,b)=\frac15\mathbf1_{\{ab=0\}}.
+\tag{16.3}
+$$
+
+Indeed the diagonal triples are $000,111$, of which only $000$ lies in $A$, and $(a,a,b)\in A$ exactly when $ab=0$. The zero in the middle evaluation of (16.3) is the value of the actual variable $o$ under its pin; the scope itself remains $(u,o,o)$. Thus neither the activity nor the exclusion is an additional primitive. $\square$
+
+**命题 16.3（任意正有理二元表的精确局部实现）。** Let $B=(b_{uv})_{u,v\in\{0,1\}}$ have four strictly positive rational entries. There is a finite product $\mathcal G_B(u,v,o,\xi)$ of tables from (16.2), with terminals $u,v$, one fresh zero variable $o$, and fresh hidden variables $\xi$, such that
+
+$$
+ \left.\sum_{\xi}\mathcal G_B(u,v,o,\xi)\right|_{o=0}
+ =c_B b_{uv},\qquad c_B\in\mathbb Q_{>0}.
+\tag{16.4}
+$$
+
+The pin for $o$ is counted separately. Every terminal assignment has a positive extension. The identity also holds after identifying the two terminals with the same actual variable.
+
+**Proof.** Put
+
+$$
+ r=\frac{b_{00}b_{11}}{b_{10}b_{01}}>0.
+\tag{16.5}
+$$
+
+In the following graphs, an edge $\{a,b\}$ denotes exactly the factor $\mathsf H$ on $(a,a,b)$, and an activity $t$ at a vertex $w$ denotes exactly a factor $\mathsf V_t$ on $(w,o,o)$. All internal vertices are fresh hidden variables. First calculate the terminal table $M$ of the finite hidden sum with the assignment-independent local normalization constants removed. Rows are indexed by $u=0,1$ and columns by $v=0,1$.
+
+If $r=1$, take no edge and no internal vertex. Then
+
+$$
+ M=\begin{pmatrix}1&1\\1&1\end{pmatrix}.
+\tag{16.6}
+$$
+
+If $r>1$, use the path $u-p-v$, giving its hidden vertex $p$ activity $r-1\in\mathbb Q_{>0}$. At terminals $00$, summing over $p$ gives $1+(r-1)=r$. If either terminal is one, $p$ is forced to zero. Hence
+
+$$
+ M=\begin{pmatrix}r&1\\1&1\end{pmatrix}.
+\tag{16.7}
+$$
+
+If $0<r<1$, set
+
+$$
+ \alpha=\frac2r-1>0,\qquad
+ \beta=\frac{2(1-r)}r>0,
+\tag{16.8}
+$$
+
+and use the path $u-p-q-v$ with hidden activities $\alpha$ at $p$ and $\beta$ at $q$. At terminals $00$, the permitted hidden words $(p,q)$ are $00,10,01$, contributing $1,\alpha,\beta$. At $10$, $p=0$ and $q$ is free; at $01$, $q=0$ and $p$ is free; at $11$, both are zero. Therefore
+
+$$
+ M=\begin{pmatrix}1+\alpha+\beta&1+\alpha\\1+\beta&1\end{pmatrix}
+  =\begin{pmatrix}2(2-r)/r&2/r\\(2-r)/r&1\end{pmatrix}.
+\tag{16.9}
+$$
+
+All three cases give positive rational entries, $M_{11}=1$, and $M_{00}M_{11}/(M_{10}M_{01})=r$. For (16.9) the ratio is exactly $[2(2-r)/r]/[2(2-r)/r^2]=r$. The strict cases use only strictly positive activities; the case $r=1$ uses neither a zero activity nor a limit of the other cases.
+
+Put $s=M_{00}$ and append the two terminal activities
+
+$$
+ \lambda_u=\frac{b_{10}s}{b_{00}M_{10}},\qquad
+ \lambda_v=\frac{b_{01}s}{b_{00}M_{01}},\qquad
+ E_{uv}=\lambda_u^u\lambda_v^v M_{uv}.
+\tag{16.10}
+$$
+
+Both activities are positive rational. Direct substitution at $00,10,01$ gives $E_{uv}=(s/b_{00})b_{uv}$. At $11$ the cross-ratio identity gives
+
+$$
+ E_{11}
+ =\frac{b_{10}b_{01}s^2M_{11}}{b_{00}^2M_{10}M_{01}}
+ =\frac{s}{b_{00}}\frac{b_{10}b_{01}r}{b_{00}}
+ =\frac{s}{b_{00}}b_{11}.
+\tag{16.11}
+$$
+
+Implement every listed activity, including both terminal activities, by (16.3). If the graph has $e$ edges and its complete list of activity parameters is $t_1,\ldots,t_k$, restoring every local normalization gives (16.4) with
+
+$$
+ c_B=\frac{s}{b_{00}}\,5^{-e}
+       \prod_{i=1}^k(3+2t_i)^{-1}\in\mathbb Q_{>0}.
+\tag{16.12}
+$$
+
+The edge counts are respectively $0,2,3$ in the three cases; their activity lists are respectively $(\lambda_u,\lambda_v)$, $(r-1,\lambda_u,\lambda_v)$ and $(\alpha,\beta,\lambda_u,\lambda_v)$. The common pin contributes no factor to $c_B$. All internal vertices zero give a positive summand for every terminal assignment, including $11$.
+
+The equations are identities for the formal terminal bits before any scope substitution. Substituting the same actual variable for $u$ and $v$ preserves each identity pointwise. Terminal activities or edge scopes that then coincide remain separate permitted factors in the product. No equality factor is needed. In particular (16.4) is an implementation by normalized restricted ternary tables, rather than permission to supply $B$ as a binary factor. $\square$
+
+**定理 16.4（逐因子模拟与有限网络的同律替换）。** Every individual $W_+$ factor on any ordered actual-variable scope has a finite $W_{\mathrm{res}}$ replacement whose effective table, conditional on one internally generated zero pin and after summing its fresh hidden variables, is a positive rational constant times the original factor. The constant is independent of all assignments to the original variables. Every finite $W_+$ network consequently has a finite $W_{\mathrm{res}}$ network with exactly the same normalized visible law, retaining its original variables and their identifications.
+
+**Proof.** Let $f$ be any normalized rational table strictly positive on $A$ and zero outside $A$, without assuming (16.1). Define
+
+$$
+ b_{00}=f(000),\quad b_{10}=f(100),\quad
+ b_{01}=f(010),\quad b_{11}=f(110),\qquad
+ \tau=\frac{f(001)}{f(000)}\in\mathbb Q_{>0}.
+\tag{16.13}
+$$
+
+This is a positive rational binary table $B$. On all eight formal triples,
+
+$$
+ f(x,y,z)=\mathbf1_A(x,y,z)\,b_{xy}\tau^z.
+\tag{16.14}
+$$
+
+For $z=0$ this is the definition of $B$ on the four permitted triples. For $z=1$, the only permitted triple is $001$, where $b_{00}\tau=f(001)$. Off $A$ both sides vanish.
+
+On the original scope $(x,y,z)$, replace $f$ by the product
+
+$$
+ \mathcal R_f(x,y,z,o,\xi)
+ =\mathsf H(x,y,z)\,
+   \mathcal G_B(x,y,o,\xi)\,
+   \mathsf V_\tau(z,o,o).
+\tag{16.15}
+$$
+
+Here $\mathcal G_B$ is the ternary-factor product of Proposition 16.3, with fresh internal variables $\xi$. Its notation introduces no binary primitive. By (16.3), (16.4) and (16.14),
+
+$$
+ \left.\sum_\xi\mathcal R_f(x,y,z,o,\xi)\right|_{o=0}
+ =c_f f(x,y,z),\qquad
+ c_f=\frac{c_B}{5(3+2\tau)}\in\mathbb Q_{>0}.
+\tag{16.16}
+$$
+
+Each actual complete ternary table in (16.15) is $\mathsf H$ or some $\mathsf V_t$ and obeys (16.1). The unrestricted table $f$ is removed. Equation (16.16) holds pointwise on the complete three-bit cube, so it survives any identification among $x,y,z$, including all three equal. None of the unvisited entries of any replacement table is altered.
+
+For a network with factors $f_1,\ldots,f_N$, introduce one common fresh $o$ and its single pin $\mathsf H(o,o,o)$. Use (16.15) for each factor, choosing pairwise disjoint sets $\xi_j$ of new internal variables, all disjoint from the original variables and $o$. The replacements may share any of their original terminals. Fix an assignment $b$ of all original visible and hidden variables, and let $b_j$ be its ordered triple at the $j$th original scope. On $o=0$ the only remaining variables shared between different replacements have already been fixed. Finite distributivity therefore gives
+
+$$
+ \begin{aligned}
+ &\sum_{o,\xi_1,\ldots,\xi_N}
+   \mathsf H(o,o,o)\prod_{j=1}^N\mathcal R_{f_j}(b_j,o,\xi_j)\\
+ &\qquad=\frac15\prod_{j=1}^N
+       \left(\left.\sum_{\xi_j}\mathcal R_{f_j}(b_j,o,\xi_j)\right|_{o=0}\right)
+   =C\prod_{j=1}^N f_j(b_j),\qquad
+ C=\frac15\prod_{j=1}^N c_{f_j}\in\mathbb Q_{>0}.
+ \end{aligned}
+\tag{16.17}
+$$
+
+The pin eliminates $o=1$ before the separate hidden sums are factored. Thus the common zero is counted once, while (16.12) and (16.16) count all edge, activity and original-scope normalization factors.
+
+Now sum (16.17) over the original hidden variables. If $W(a)$ and $Z$ are the original unnormalized visible weights and their total, the replacement has
+
+$$
+ W'(a)=CW(a),\qquad Z'=CZ>0,\qquad
+ P'(a)=\frac{W'(a)}{Z'}=\frac{W(a)}Z=P(a).
+\tag{16.18}
+$$
+
+Every sum and product is finite and rational. In particular $Z'$ is finite, positive and rational. For $N=0$, all products over factors are empty and $C=1/5$; the additional pin alone multiplies the original weights by $1/5$, so (16.18) still holds. All repetitions, coincident scopes and original hidden-variable identifications have remained intact. The construction uses only the actual-variable scopes of (16.2), multiplication, finite hidden summation and final normalization; every parameter in it is positive rational. $\square$
+
+**推论 16.5（受限语言不改变有理可见律分类）。** For every integer $n\ge1$, a rational probability law on $\{0,1\}^n$ is representable in $W_{\mathrm{res}}$ if and only if its support is $\operatorname{Ind}(K)$ for some labelled undirected graph $K$ with loops allowed. Every assignment of positive rational masses summing to one on that support is included, exactly as in Theorem 15.2.
+
+**Proof.** A $W_{\mathrm{res}}$ network is a $W_+$ network, so necessity is the support assertion of Theorem 15.2. For sufficiency, use that theorem to obtain a finite rational $W_+$ network for the specified law and use Theorem 16.4 to replace it without changing its normalized visible law. This includes $n=1$, visible loops, the singleton all-zero support and empty original factor sets. The support proof and the arbitrary-weight construction of Theorem 15.2 are suppliers, rather than additional assertions proved here.
+
+The local activity model is already given in [the hidden-relations volume, C-59.2--C-59.5](AURIC_FIB_ATOM_HIDDEN_RELATIONS_STATISTICS_PHASE_AND_SEAMS.md#59-带标号正活动环与局部四角问题), and its two-terminal finite path elimination is [the continuation, C-60.1--C-60.2](AURIC_FIB_ATOM_HIDDEN_RELATIONS_STATISTICS_PHASE_AND_SEAMS_CONTINUATION.md#60-外部路径的完整响应与五律). Those specified activity and path formulas supply the existing mechanism. Equations (16.6)--(16.12) choose positive rational path activities and terminal scalings for every positive rational binary table; (16.14)--(16.18) give the complete local simulation under the restricted normalized ternary interface.
+
+For primary comparison, Bulatov--Dyer--Goldberg--Jerrum--McQuillan, [*The expressibility of functions on the Boolean domain, with applications to Counting CSPs*, arXiv:1108.5288v4, §2, equations (1)--(4) and Lemma 1](https://arxiv.org/pdf/1108.5288v4), define finite primitive product summation formulas with repeated scope variables and composition by disjoint bound variables. Their generated functional clone includes equality, and their separately defined $\mathrm{pps}_\omega$ closure permits limits. Bulatov--Goldberg--Jerrum--Richerby--Živný, [*Functional Clones and Expressibility of Partition Functions*, arXiv:1609.07377v2, §1.1, including footnote 2](https://arxiv.org/pdf/1609.07377v2), likewise distinguish finite functional clones from $\omega$-clones, over nonnegative real-valued functions with equality included. These cited interfaces do not themselves supply (16.15) using only the normalized rational ternary tables satisfying (16.1); no equality, unary factor or limit is imported from them. The real-parameter directed representation in Smirnov, [*Deep belief networks are exact*, arXiv:2609.05572v1, Theorem 1.1 and §1](https://arxiv.org/html/2609.05572v1), remains the different interface identified in Corollary 15.4. This is an elementary repository-derived exact-interface construction, without a claim of global originality or exhaustive literature absence. $\square$
+
+**推论 16.6（既有正噪声平台律的受限同律表示）。** For every rational $0<\eta\le1$, the five-visible-bit encoding (15.14) of $J_{H,\eta}$ has a finite rational $W_{\mathrm{res}}$ representation with exactly the same joint distribution. Consequently its posteriors and decision risks already established in Corollary 15.4 are unchanged.
+
+**Proof.** Corollary 15.4 supplies the finite rational $W_+$ representation of precisely this encoded joint law. Apply Theorem 16.4 to that network. Equation (16.18) preserves the entire visible distribution, and decoding by the same bijections (15.14) gives exactly $J_{H,\eta}$. Equality of these joint laws preserves their posteriors at positive-mass outputs and their decision risks; the posterior and risk calculations are those already used in Corollary 15.4. Each rational $\eta$ may use its own finite network, with the operations and interpretation of Definition 15.1 and the boundaries of Corollary 15.4. $\square$
+
+## 追加锚（本行以下为增补区）

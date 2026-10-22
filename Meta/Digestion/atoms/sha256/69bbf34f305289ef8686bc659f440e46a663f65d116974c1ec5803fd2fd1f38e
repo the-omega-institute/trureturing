@@ -1,0 +1,19 @@
+**Definition 94.1 (Terminal Kraus family).** For $r,z\in[0,1]$ and
+$\sigma\in\{+1,-1\}$ let $\mathcal R_{r,z}^{\sigma}$ have Kraus operators
+
+$$
+\begin{aligned}
+K_0&=|0\rangle\langle0|+\sigma r|1\rangle\langle1|,\\
+K_1&=\sqrt{1-r^2}\,|2\rangle\langle1|,\\
+K_2&=\sqrt{1-z}\,|1\rangle\langle2|,\\
+K_3&=\sqrt z\,|2\rangle\langle2|.
+\end{aligned}
+\tag{94.1}
+$$
+
+Their adjoint products sum to
+$|0\rangle\langle0|+[r^2+(1-r^2)]|1\rangle\langle1|
++[(1-z)+z]|2\rangle\langle2|=I_3$, so the family is CPTP on the full
+qutrit. The superscript $-1$ in $\mathcal R_{r,z}^{-1}$ denotes
+$\sigma=-1$, never an inverse map.
+

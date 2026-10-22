@@ -1,0 +1,9 @@
+fingerprints:
+  raw_sha256: sha256:a254e76dab192694568b94380bcb979e21ab15a3c8e32b15d4f99590f2710f80
+  normalized_sha256: sha256:a254e76dab192694568b94380bcb979e21ab15a3c8e32b15d4f99590f2710f80
+cas_ref: sha256:a254e76dab192694568b94380bcb979e21ab15a3c8e32b15d4f99590f2710f80
+coverage_gids:
+  - gid: D5/S3/Analytic/Zeta/PrimeMarginalEntropy.primeExponent_entropy_eq
+    target_statement_id: sha256:8ca2eb3b957eff6c0c525144e78906712488246413708f9c8f2707369635ca98
+receipts:
+  unresolved_subitems: []

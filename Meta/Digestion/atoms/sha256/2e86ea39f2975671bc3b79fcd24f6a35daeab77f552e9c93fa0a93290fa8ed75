@@ -1,0 +1,80 @@
+**Proposition 142.2 (Global upper certificate on the interval).**
+For every $q\in I$,
+
+$$
+e_q(\mathcal R_0(q))=L(q),\qquad\mu(q)\le L(q).
+\tag{142.5}
+$$
+
+*Proof.* Fix $q$, and hold its $r(q),L(q)$ fixed. For arbitrary
+nonnegative populations $(s,t,1-s-t)$, composing the explicit maps
+gives (130.3)–(130.4) with $r/4$ replaced by $qr$, and with $v_1,k,d$
+from (141.3). Thus
+
+$$
+\begin{aligned}
+Q_q(s,t)&=\mathcal R_0(q)\Phi_q(P(s,t)),\\
+A_q(s,t)&=P(s,t)-Q_q(s,t),\\
+\det(L(q)I_3-A_q(s,t))&=N(q;r(q),L(q),s,t).
+\end{aligned}
+\tag{142.6}
+$$
+
+The determinant identity follows by the same three-by-three
+expansion as Lemma 130.2, now with $k=1-qr$ and
+$d=t-r^2\{(1+q)t+(1-q)(1-s-t)\}/2$. No specialization of $q$
+is used in that expansion. The polynomial in $(s,t)$ has degree
+at most three: $d$ is affine in the populations, the terms multiplying
+$L$ have degree at most two, and the remaining terms have degree at
+most three.
+
+The matrix $Q_q(s,t)$ is a density for every point of $\Delta$,
+because both maps are CPTP. Hence the pure-target criterion (130.5)
+applies, including at all vertices:
+
+$$
+\frac12\|A_q(s,t)\|_1=\lambda_{\max}(A_q(s,t)),\qquad
+N(q;r,L,s,t)\ge0
+\ \Longleftrightarrow\ \lambda_{\max}(A_q(s,t))\le L.
+\tag{142.7}
+$$
+
+Here $L=L(q)>0$. To see directly why the determinant sign is
+sufficient, $P-Q$ is nonpositive on the two-dimensional orthogonal
+complement of the pure input vector and has trace zero. Its other
+two eigenvalues are nonpositive, so the other two factors of
+$\det(LI-A)$ are strictly positive. This is a pure-target argument,
+not a sign criterion for arbitrary Hermitian matrices.
+
+Lemma 142.1 now gives strict positivity of $N$ on the entire
+boundary of $\Delta$. At its interior point $(p(q),x(q))$ the branch
+equations give $N=N_p=N_x=0$. Apply the already proved cubic chord
+Lemma 132.1: on every line through that point the polynomial is
+$t^2(\alpha+\beta t)$, whose affine factor is positive at the two
+boundary endpoints and hence on the whole segment. Consequently
+
+$$
+N(q;r(q),L(q),s,t)\ge0,\qquad
+N=0\ \Longleftrightarrow\ (s,t)=(p(q),x(q)).
+\tag{142.8}
+$$
+
+The distance is therefore at most $L(q)$ for all nonnegative-amplitude
+pure inputs and equals it at the contact. The maps $\Phi_q$ and
+$\mathcal R_0(q)$ commute with all diagonal unitary conjugations,
+as their displayed actions show. Every complex pure state is a
+diagonal phase conjugate of such a nonnegative-amplitude state,
+including those with zero populations. Unitary invariance of the
+trace norm proves the same bound for every complex pure input.
+For a mixed density $\rho=\sum_i t_iP_i$, convexity gives
+
+$$
+\frac12\|\rho-\mathcal R_0(q)\Phi_q(\rho)\|_1
+\le\sum_i t_i\frac12\|P_i-\mathcal R_0(q)\Phi_q(P_i)\|_1
+\le L(q).
+\tag{142.9}
+$$
+
+This uses a single decoder for every term. The contact attains
+$L(q)$, proving (142.5). $\square$
+

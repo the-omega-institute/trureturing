@@ -1,0 +1,33 @@
+## 100. Attainment by the same probe and failure of an unweighted proxy
+
+**Proof of the probe-attainment assertion in Theorem 94.2.** For every
+finite $n\ge1$ and for $n=\infty$, the corresponding $p$ in (96.1),
+(97.2), (98.2) or (99.1) is a strictly positive probability vector.
+Equations (95.11) and $Mp=\eta\mathbf1$ give recovered overlap
+exactly $\eta$ for the proposed attainer. Let
+$P_p=|\psi_p\rangle\langle\psi_p|$. In (95.9) put
+$\tau=(\mathcal E\otimes\operatorname{id})(P_p)$. Then
+
+$$
+\langle\psi_p|[\eta P_p+(1-\eta)\tau]|\psi_p\rangle=\eta
+\quad\Longrightarrow\quad
+\langle\psi_p|\tau|\psi_p\rangle=0.
+\tag{100.1}
+$$
+
+Positivity gives $\|\sqrt\tau\,|\psi_p\rangle\|^2=0$, so $\tau$ has
+support orthogonal to $|\psi_p\rangle$. Both $\tau$ and $P_p$ have
+trace one, and thus $\|\tau-P_p\|_1=2$. Consequently
+
+$$
+\frac12\|(\mathcal C\otimes\operatorname{id})(P_p)-P_p\|_1
+=1-\eta.
+\tag{100.2}
+$$
+
+For every competing decoder, (95.4) gives at least $1-\eta$ on this
+same probe. The original-channel equality follows from (93.10), and
+at infinity from (93.7). At $n=0$ the identity decoder has zero error
+on every joint input, including every $P_p$; nonnegativity is its
+matching lower bound. This completes the proof of Theorem 94.2.
+

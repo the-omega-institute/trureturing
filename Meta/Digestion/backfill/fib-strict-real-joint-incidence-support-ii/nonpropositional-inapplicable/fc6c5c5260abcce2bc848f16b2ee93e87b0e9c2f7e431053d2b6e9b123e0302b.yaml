@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:fc6c5c5260abcce2bc848f16b2ee93e87b0e9c2f7e431053d2b6e9b123e0302b
+  normalized_sha256: sha256:fc6c5c5260abcce2bc848f16b2ee93e87b0e9c2f7e431053d2b6e9b123e0302b
+cas_ref: sha256:fc6c5c5260abcce2bc848f16b2ee93e87b0e9c2f7e431053d2b6e9b123e0302b
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: Defines six exact rational coordinates, their coordinate pairs and two closed boxes. No root, lift, enclosure or source-existence claim is asserted.
+    previous_atom_id: 9e7743041329b2a8d4f2395a786a285837bb2c1069675073a12b2e2e4170ea8d
+    next_atom_id: 4d3571a40236f77c21f95d791c421f3ce8966cb07c8865e9eb1a5ba4fbbc2c44

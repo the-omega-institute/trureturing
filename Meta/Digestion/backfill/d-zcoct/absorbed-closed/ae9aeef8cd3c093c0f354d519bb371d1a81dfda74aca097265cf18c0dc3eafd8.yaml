@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:ae9aeef8cd3c093c0f354d519bb371d1a81dfda74aca097265cf18c0dc3eafd8
+  normalized_sha256: sha256:ae9aeef8cd3c093c0f354d519bb371d1a81dfda74aca097265cf18c0dc3eafd8
+cas_ref: sha256:ae9aeef8cd3c093c0f354d519bb371d1a81dfda74aca097265cf18c0dc3eafd8
+coverage_gids:
+  - gid: D5/S3/Observer/Chronology/PrimeGoldenBigradedChronologicalSignature.factor_degree_eq_card_factors
+    target_statement_id: sha256:1fe9def691b68694f7a725ce3b56c9e0d6a0bd51d91d93b13e7a755ddaaff53f
+  - gid: D5/S3/Observer/Chronology/PrimeWordAntipodeParityStepBridge.liouville_prime_word_product
+    target_statement_id: sha256:bc852c419f7e8344aec7d3c1ebe2947dad8ed0e138f8b4b21dc6a32b0b5a6a63
+receipts:
+  unresolved_subitems: []
