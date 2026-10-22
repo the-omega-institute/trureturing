@@ -1,0 +1,42 @@
+**定义 6.2（完全正性与仪器）。** 复线性 $\Phi:M_d\to M_e$ 完全正，意为 $\Phi\otimes\operatorname{id}_{M_n}$ 对每个 $n$ 都保持正性。仪器是一族完全正分支 $\mathcal J_a$，其和保迹；只有 $a$ 是输出记录，分支内部的 Kraus 指标一般不是输出。
+
+这里使用 Choi–Kraus–Stinespring 表示（Watrous，Theorems 2.22、2.26 及 Corollary 2.27）。为固定约定，令 $\Gamma_d=\sum_i e_i\otimes e_i$，$\Phi$ 作用于第一因子，则
+
+$$
+C_\Phi=(\Phi\otimes\operatorname{id})(|\Gamma_d\rangle\langle\Gamma_d|)
+=\sum_{i,j}\Phi(|i\rangle\langle j|)\otimes|i\rangle\langle j|.
+$$
+
+完全正性给 $C_\Phi\geq0$。谱分解写成 $C_\Phi=\sum_\mu|K_\mu\rangle\!\rangle\langle\!\langle K_\mu|$，其中 $|K\rangle\!\rangle=\sum_i Ke_i\otimes e_i$，逐矩阵单位比较得
+
+$$
+\Phi(X)=\sum_\mu K_\mu X K_\mu^\dagger.
+$$
+
+反过来每项在任意辅助因子上都是共轭，故完全正。迹保留等价于 $\sum_\mu K_\mu^\dagger K_\mu=I$，因为对每个 $X$ 的迹差等于 $\operatorname{tr}(X(\sum K_\mu^\dagger K_\mu-I))$。一般正性不够：转置保持正矩阵，但归一 Bell 投影在部分转置下变为交换算子的一半，谱为 $1/2,1/2,1/2,-1/2$，故转置不是完全正。
+
+允许噪声与记录反馈时，对每个已得记录 $h$ 给
+
+$$
+\mathcal J_{a|h}(X)=\sum_\mu K_{a\mu|h}XK_{a\mu|h}^\dagger,
+\qquad\sum_{a,\mu}K_{a\mu|h}^\dagger K_{a\mu|h}=I.
+$$
+
+置 $\sigma_\varnothing=\rho_0$、$\sigma_{ha}=\mathcal J_{a|h}(\sigma_h)$。逐层有
+
+$$
+p(h)=\operatorname{tr}\sigma_h\geq0,
+\qquad\sum_a p(ha)=p(h).
+$$
+
+有限深度且每条分支完结的协议，反复应用此等式得全部叶概率之和为一。只有 $p(h)>0$ 时才定义条件态 $\rho_h=\sigma_h/p(h)$；零概率分支仍有未归一化态零，不需要除法。若环境以后重新参与相互作用，就把它留在接口内；把它先迹掉再假定系统闭合，会改变模型。
+
+对终端效果 $E$，复合仪器 $\mathcal J_h$ 满足
+
+$$
+\Pr(h,E)=\operatorname{tr}(E\mathcal J_h(\rho_0))
+=\operatorname{tr}(\rho_0\mathcal J_h^\dagger(E)).
+$$
+
+这把未来目标拉回指定参考边界；该边界不必是宇宙最早时刻。它是第 4 节目标族在量子表示中的实现：目标是每个合法协议及其实际记录事件的概率，而不是没有指定仪器的形式路径标签。
+

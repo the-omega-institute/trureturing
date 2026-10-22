@@ -1,0 +1,56 @@
+**Definition 1.1 (Original complete world).** A world is a triple
+
+$$
+W=(P(r,b),g,d),\qquad
+P(r,b)=\begin{pmatrix}r&b\\r(1-r)/b&1-r\end{pmatrix},
+\qquad 0<r<1,\quad b>0,
+$$
+
+where $0\ne g\in\mathbb R[s]$, $\deg g\le3$, and $d\in\mathbb R$.
+Put
+
+$$
+J=\begin{pmatrix}0&1\\1&0\end{pmatrix},\qquad
+M=\begin{pmatrix}0&1\\1&1\end{pmatrix},\qquad
+Q_0=I,\quad Q_i=E_iQ_{i-1},\quad
+y_i=d+g(i)\operatorname{tr}(Q_iP).
+$$
+
+The acquired actions are $J,M,J,M,M,M$, and the original clocks $0,\ldots,6$
+have readings
+
+$$
+(0,24,147/5,24,18,p,v).
+\tag{1.1}
+$$
+
+Let $\mathcal H$ be the entire parent with the first five readings, and let
+$C(p,v)$ contain every world realizing (1.1). At clock seven set
+
+$$
+a(W)=d+g(7)\operatorname{tr}(JQ_6P),\qquad
+m(W)=d+g(7)\operatorname{tr}(MQ_6P).
+$$
+
+Each world uses one fixed source, one entire polynomial and one fixed drift in
+all these expressions. Lower degrees, sampled zeros, repeated gain roots, zero
+drift and singular parent sources are retained. Distinctness is distinctness of
+complete triples. No source boundary is an actual world.
+
+The original question is whether there exist real $p\ne24,v$ and
+
+$$
+\begin{gathered}
+W_{J0}\ne W_{J1},\quad W_{M0}\ne W_{M1},\qquad
+W_{J0},W_{J1},W_{M0},W_{M1}\in C(p,v),\\
+a(W_{J0})=a(W_{J1}),\qquad m(W_{M0})=m(W_{M1}).
+\end{gathered}
+\tag{1.2}
+$$
+
+The two pairs are independently chosen in the same entire child. They may
+share endpoints, and their two common terminal values may differ. Equivalently,
+with $D_J,D_M$ the actual pair images defined by these separate equalities,
+the question is whether $D_J\cap D_M$ is nonempty. The results below leave this
+question open.
+

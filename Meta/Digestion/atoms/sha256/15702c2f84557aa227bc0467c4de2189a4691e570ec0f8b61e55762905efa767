@@ -1,0 +1,59 @@
+**Corollary 39.1 (A necessary exterior endpoint for an independent M pair).**
+For every $q\in Q_R$, any distinct equal-$M$ pair in the entire
+$C(p(q),v(q))$ has at least one endpoint satisfying
+
+$$
+b>1/10\quad\text{or}\quad r/b<1\quad\text{or}\quad r/b>107/100.
+\tag{39.2}
+$$
+
+The pair is still permitted to overlap the selected $J$ pair or to
+be disjoint from it. For every $P\in[-533,-458]$ there is at least
+one strict continued $J$ pair with fifth reading $P$ to which this
+necessary condition applies.
+
+*Proof.* If both $M$ endpoints were in $\mathscr R$, Theorem 37.1
+would make them equal, contradicting within-pair distinctness.
+Since every original source has $b>0$, failure to lie in
+$\mathscr R$ is exactly (39.2). The supplied Theorem 28.1 gives
+some strict $q$ with $p(q)=P$ for every $P\in[-533,-458]$;
+this $q$ belongs to $Q_R$. Lemma 38.1 places both of its selected
+$J$ endpoints in $\mathscr R$, while imposing no restriction on the
+independent $M$ endpoints. ∎
+
+For example, the following is a precise sufficient localization bridge
+for excluding an independent $M$ pair at any chosen $q\in Q_R$:
+
+$$
+\boxed{\quad
+\text{Every }W\in C(p(q),v(q))\text{ satisfies }
+ b(W)\le1/10,\quad1\le r(W)/b(W)\le107/100.
+\quad}
+\tag{39.3}
+$$
+
+If (39.3) holds, Theorem 37.1 gives injectivity of $m$ on that
+entire original child, and the independently known $J$ pair puts
+its base in $D_J\setminus D_M$. Proving (39.3) simultaneously for
+all $q\in Q_R$ would extend this exclusion across that part of
+the evaluated continuation. A single actual compatible world
+satisfying (39.2) disproves (39.3) at its base; that alone is not an
+$M$ pair or a joint witness.
+
+The bridge (39.3) is not established here. In particular the containment
+of the two selected $J$ worlds in Lemma 38.1 does not establish it.
+The zero-safe faithful $(x,d)$ inverse of Section 12, or the equivalent
+whole-parent inverse in the finite-fibre volume, Lemma 30.2, remains
+available to test every companion, including zero drift and singular
+sources. No regular formula for the two selected endpoints replaces
+that whole-child obligation.
+
+There is no exact positive joint witness in these results, and the
+unchanged global independent-$J/M$ problem remains unresolved.
+The class theorem does not exclude a mixed interior/exterior $M$
+pair, two exterior endpoints, other continued $J$ branches or any
+unexamined base. All original gain strata, arbitrary fixed drifts,
+singular worlds and unbounded positive offdiagonals remain in the
+global problem. Neither the source corner $q_*$ nor this source-class
+order is a global negative theorem.
+

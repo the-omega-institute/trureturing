@@ -1,0 +1,30 @@
+**Definition 1.2 (Mathematical suppliers).** Use the following source
+abbreviations. The statements and parameter correspondences in this
+table are the premises used from those sources.
+
+| Source | Exact interface used here |
+| --- | --- |
+| [O](FIB_COMMON_PARENT_GEOMETRY_AND_MIXED_CHILDREN.md), Definitions 1.1–1.3 and Theorem 2.1 | The original worlds, clocks, left products, zero-safe full-parent equation and whole-gain reconstruction. O's $\epsilon$ is $e=d-24$ here; its $u_M,f_{MM},f_{MJ}$ are $v,m,a$. |
+| [F](FIB_ALL_RESPONSE_FINITE_FIBRE_GEOMETRY.md), Definition 27.1 and Theorem 27.2 | The central world and its output; local central saturation is a matching-pair statement, not immersion at the centre. F's $u$ is $v$. |
+| [SII](FIB_STRICT_REAL_JOINT_INCIDENCE_SUPPORT_II.md), Theorem 27.2 | On the full parent, every strict $p=24$ world except the central world has rank-two $\Psi_M$ and a neighbourhood of local injectivity. Singular sources and K/H meetings are included. |
+| SII, Theorem 29.1 | There is one $\epsilon>0$, uniform for every real $v$, such that $0<|p-24|<\epsilon$ excludes every within-pair-distinct equal-$m$ pair in the entire actual $C(p,v)$. |
+| [III](FIB_STRICT_REAL_JOINT_INCIDENCE_SUPPORT_III.md), Definition 10.1, Lemma 10.2 and Lemma 11.2 | The analytic parent in $(r,b,e)$ is the complete-world parent, including padded gain coefficients. It is a smooth surface also at every singular-source world, for every real drift. |
+| III, Theorem 13.1 | At every strict singular-source world, $\Psi_M$ has full-parent rank two and is locally injective, for every real drift and every allowed gain stratum. |
+| III, Lemma 16.3 and Theorem 16.4 | The actual analytic distinct $J$-pair arc $z_J(p)$ for $10\le p\le34$, with the rational centre arrays of (16.7) and radius $\rho=1/100000$ pointwise tubes. Its common sixth response is $v_J(p)$. |
+| III, Definition 23.1 and Theorem 23.2 | The sets $K_+$ and $K_J$ of Definition 7.1 below are compact in complete-world and $(r,b,e)$ coordinates, including the entire $p=24$ fibre and every unused or singular companion. |
+| [S](FIB_STRICT_REAL_JOINT_INCIDENCE_SUPPORT.md), Corollary 18.2 | In the presence of an actual distinct $J$ pair, every endpoint of an actual distinct off-$24$ equal-$m$ pair is regular. This does not restrict unused companions. |
+
+The III arc and compactness statements mean the source version containing
+Sections 16 and 20–23, with SHA256
+`3d179efcb5d63392cd6db0d0c8e374fb2222bab90b1dc6ab164fb2913d6f3a40`.
+Those statements are an integration dependency. The results below using
+$v_J$ and $K_J$ use that precise arc and whole-companion compactness;
+they do not replace them by a numerical source box.
+
+The substantive calculation here is the regular critical-locus
+elimination in Sections 3–6. The all-companion immersion and compact
+separated collision relation are its consequences with the stated
+suppliers. They do not assert global injectivity or settle the original
+independent-pair problem. All proofs are ordinary mathematical proofs
+with exact finite certificates.
+

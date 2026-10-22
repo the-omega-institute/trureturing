@@ -1,0 +1,76 @@
+**Theorem 117.1 (comparison with the zero-penalty core).** With the actual SVD data of Theorem 116.1, define
+
+$$
+\begin{gathered}
+N_0=\frac{a+b+\sqrt{1-s^2pq/m+2ab\eta}}{4\sqrt2},\qquad
+R_0=1-\lambda_{\mathrm{top}}=1-q\eta^2-\zeta-\delta,\\
+E=\frac{a(1-\eta)\alpha}{2\sqrt2}.
+\end{gathered}
+\tag{U.53}
+$$
+
+Then $R_0\geq p>0$, and
+
+$$
+\begin{aligned}
+\Theta(P,V)
+&\leq N_0+E+\frac12\sqrt{1-q\eta^2-\zeta-\tau},\\
+\Theta(P,V)
+&\leq\sqrt{c-\frac{s^2}{1440}}+E\\
+&\hspace{8mm}+\frac12\left[
+\sqrt{1-q\eta^2-\zeta-\tau}
+-\sqrt{1-q\eta^2-\zeta-\delta}\right].
+\end{aligned}
+\tag{U.54}
+$$
+
+In particular the sufficient certificate
+
+$$
+E+\frac12\left[
+\sqrt{1-q\eta^2-\zeta-\tau}
+-\sqrt{1-q\eta^2-\zeta-\delta}\right]
+\leq r-\sqrt{c-\frac{s^2}{1440}}
+\tag{U.55}
+$$
+
+implies the target $\Theta(P,V)\leq r$. If $\delta<\tau$, the difference of roots in this certificate is negative.
+
+Proof. Project $\ell$ in each copy onto $g^\perp$. The combined projection has squared norm $1-\alpha^2$. If $\alpha<1$, normalize this projection to obtain $\widehat\ell$. If $\alpha=1$, take any unit vector in the two-dimensional space $g^\perp\oplus g^\perp$; it is orthogonal to $\ell$. Thus in all cases
+
+$$
+\ell^T\widehat\ell=\sqrt{1-\alpha^2},\qquad
+g^T\widehat\ell_i=0.
+$$
+
+The comparison matrix $U=s\widehat\ell u^T$ is a contraction with $\tau(U)=0$ and $U^TU=s^2uu^T=W^TW$. Theorems 113.1–113.2 give $N(U)=N_0$ and $R(U)=R_0$. Since $B(W)\preceq P$, $\lambda_{\mathrm{top}}\leq\lambda_{\min}(P)=q$, so $R_0\geq p$.
+
+The equality $VV^T=WW^T+\sigma^2kk^T$ implies $F(V)\preceq F(W)$, hence $N(V)\leq N(W)$ by eigenvalue monotonicity and the increasing scalar square root. For a unit vector $v\in\mathbb R^4$ put
+
+$$
+Q_v=I_4-(1-\eta)vv^T,\qquad Q_v^2=I_4-s^2vv^T.
+$$
+
+Then, with the nuclear norm throughout,
+
+$$
+4\sqrt2 N(svu^T)=\|Q_vD\|_*.
+$$
+
+Indeed $D Q_v^2 D$ is the right Gram of $Q_vD$. The triangle inequality yields
+
+$$
+\begin{aligned}
+4\sqrt2\,[N(W)-N(U)]
+&\leq(1-\eta)\|[\ell\ell^T-\widehat\ell\widehat\ell^T]D\|_*\\
+&\leq2a(1-\eta)\alpha.
+\end{aligned}
+\tag{U.56}
+$$
+
+For the last step, two unit-vector projections with inner product $\sqrt{1-\alpha^2}$ have difference with nonzero eigenvalues $\alpha,-\alpha$. This follows by restricting to their at-most-two-dimensional span, where its trace is zero and its squared trace is $2\alpha^2$. Its trace norm is therefore $2\alpha$, including $\alpha=0,1$. Apply $\|HD\|_*\leq\|H\|_*\|D\|_{\mathrm{op}}$ and $\|D\|_{\mathrm{op}}=a$.
+
+Thus $N(V)\leq N_0+E$. Combining this with the actual identity for $R(V)$ in (U.51) gives the first inequality of (U.54). The core theorem applied to $U$ gives $N_0+\sqrt{R_0}/2\leq\sqrt{c-s^2/1440}$. Subtract and add precisely this $\sqrt{R_0}/2$ to obtain the second inequality. Both root arguments are their actual nonnegative residuals; $R_0$ is even bounded below by $p$. Their difference has sign equal to that of $R-R_0=\delta-\tau$, proving the final statement and the sufficient implication.
+
+Only the code term was bounded after removing the second singular component, and an explicit angle error was paid in comparing $W$ with $U$. The actual $P,V,\tau,\zeta,R$ remain the inputs to the target. The construction is not removal of trace parts from the original channel and does not assert feasibility or objective monotonicity of such a removal. $\square$
+

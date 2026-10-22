@@ -1,0 +1,69 @@
+**Proposition 13.1 (Uniform exhaustive simple root cover).** For
+every real base in $\mathcal B$ the eighteen disjoint boxes contain
+exactly one root each and exhaust all roots with multiplicity.
+Labels $0,\ldots,6$ are negative real, $9,10$ are nonreal, and
+precisely $7,8,11,12,13,14,15,16,17$ are positive real.
+
+Proof. Section 11's rational rule, applied to (12.4)–(12.5) and the
+literal table, gives uniformly on every listed box and all $\mathcal B$
+
+$$
+\begin{gathered}
+\eta_i:=\|\gamma_iR(c_i;p,v)\|_\infty<10^{-24},\\
+q_i:=\sup|\Re(1-\gamma_iR_x)|
++\sup|\Im(1-\gamma_iR_x)|<10^{-8}.
+\end{gathered}
+\tag{13.2}
+$$
+
+The real $2\times2$ derivative has row-sum norm bounded by $q_i$.
+Since $\eta_i+q_i\rho<\rho$, each is a self-map and strict
+contraction for each fixed base. The leading and constant
+coefficients are units throughout $\mathcal B$, with the following
+exact uniform enclosures:
+
+| Coefficient | Enclosure |
+| --- | --- |
+| $[x^{18}]R$ | $[\frac{-233365484215914889761319312526642595262848183579120807688925128709663275563413030169646688783418529923873357164255839135}{10^{100}},\frac{-233365484215914889761319312526642591222552921896891561463449864989738432406212771663140619924446995473115344640460757286}{10^{100}}]$ |
+| $[x^0]R$ | $[\frac{2798584262059794233174571427534223342406993557583249952035775615319908859882477526370899738370795336861653398401220809506}{10^{100}},\frac{2798584262059794233174571427534223742912596315300368337657237180621557485838333026936829794780976176285521545943770299188}{10^{100}}]$ |
+
+There are eighteen distinct roots of an exactly degree-eighteen
+polynomial. The fundamental theorem of algebra with multiplicities
+leaves no additional or repeated root. At each root (13.2) also gives
+$R_x\ne0$. Conjugation and uniqueness make the real-centered roots
+real; the other two boxes miss the real axis. Endpoint signs give
+the stated negative and positive lists. ∎
+
+At all nine positive boxes, uniformly over $\mathcal B$, the exact
+forced reconstruction has the unit bounds
+
+$$
+|\alpha|>10^{15},\qquad |H_1|>1/4,\qquad \chi_0>7.
+\tag{13.3}
+$$
+
+Thus an actual world must have $d=-\zeta/\alpha$ and the single
+source, whole gain and responses in (12.1)–(12.3). Division is made
+only after these nonvanishing bounds. The complete positive-root filter is
+below; all intervals are closed and uniform on $\mathcal B$. The
+last column identifies an original strict guard that fails, or keeps
+the location as a necessary candidate without asserting existence.
+
+| Label | Forced $d$ | Forced $b$ | Forced $r$ | Forced $m$ | Status |
+| --- | --- | --- | --- | --- | --- |
+| 7 | $[\frac{17689728}{10^{6}},\frac{17689729}{10^{6}}]$ | $[\frac{3335008}{10^{6}},\frac{3335009}{10^{6}}]$ | $[\frac{484723}{10^{5}},\frac{4847231}{10^{6}}]$ | $[\frac{480121768}{10^{6}},\frac{480121769}{10^{6}}]$ | Reject: violates $r<1$ |
+| 8 | $[\frac{-875828}{10^{6}},\frac{-875827}{10^{6}}]$ | $[\frac{-13126141}{10^{6}},\frac{-1312614}{10^{5}}]$ | $[\frac{-780704}{10^{6}},\frac{-780703}{10^{6}}]$ | $[\frac{476186188}{10^{6}},\frac{476186189}{10^{6}}]$ | Reject: violates $b>0$ |
+| 11 | $[\frac{39514627}{10^{6}},\frac{39514628}{10^{6}}]$ | $[\frac{11189}{10^{5}},\frac{111891}{10^{6}}]$ | $[\frac{119856}{10^{6}},\frac{119857}{10^{6}}]$ | $[\frac{415244008}{10^{6}},\frac{415244009}{10^{6}}]$ | Possible location; all guards required |
+| 12 | $[\frac{35225287}{10^{6}},\frac{35225288}{10^{6}}]$ | $[\frac{323668}{10^{6}},\frac{323669}{10^{6}}]$ | $[\frac{683998}{10^{6}},\frac{683999}{10^{6}}]$ | $[\frac{426241555}{10^{6}},\frac{426241556}{10^{6}}]$ | Possible location; all guards required |
+| 13 | $[\frac{37561958}{10^{6}},\frac{37561959}{10^{6}}]$ | $[\frac{-421753}{10^{6}},\frac{-421752}{10^{6}}]$ | $[\frac{865212}{10^{6}},\frac{865213}{10^{6}}]$ | $[\frac{401676516}{10^{6}},\frac{401676517}{10^{6}}]$ | Reject: violates $b>0$ |
+| 14 | $[\frac{3537385}{10^{5}},\frac{35373851}{10^{6}}]$ | $[\frac{-566737}{10^{6}},\frac{-566736}{10^{6}}]$ | $[\frac{-313568}{10^{6}},\frac{-313567}{10^{6}}]$ | $[\frac{400523021}{10^{6}},\frac{400523022}{10^{6}}]$ | Reject: violates $b>0$ |
+| 15 | $[\frac{24815713}{10^{6}},\frac{24815714}{10^{6}}]$ | $[\frac{2404}{10^{5}},\frac{24041}{10^{6}}]$ | $[\frac{972815}{10^{6}},\frac{972816}{10^{6}}]$ | $[\frac{434727993}{10^{6}},\frac{434727994}{10^{6}}]$ | Possible location; all guards required |
+| 16 | $[\frac{24578275}{10^{6}},\frac{24578276}{10^{6}}]$ | $[\frac{-1}{10^{6}},\frac{1}{10^{6}}]$ | $[\frac{-1}{10^{6}},\frac{1}{10^{6}}]$ | $[\frac{434780144}{10^{6}},\frac{434780145}{10^{6}}]$ | Possible location; all guards required |
+| 17 | $[\frac{19658967}{10^{6}},\frac{19658968}{10^{6}}]$ | $[\frac{-420468}{10^{6}},\frac{-420467}{10^{6}}]$ | $[\frac{1241367}{10^{6}},\frac{1241368}{10^{6}}]$ | $[\frac{446841701}{10^{6}},\frac{446841702}{10^{6}}]$ | Reject: violates $b>0$ |
+
+These nine rows and their unit checks account for every positive-root
+possibility, including the root close to the B0 face. The other nine
+roots fail $x>0$. Only $11,12,15,16$ can support actual worlds over
+$\mathcal B$, with at most one world per label. No assertion that
+all four locations lift at an arbitrary base is used.
+

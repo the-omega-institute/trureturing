@@ -1,0 +1,20 @@
+## 18. Every actual strict unit-j mate, including singular guards
+
+The condition $j=1$ gives $c=1-b>0$, so write $z=b$ with
+$0<z<1$. The source equation factors as
+
+$$
+r(1-r)-z(1-z)=(r-z)(1-r-z)=0.
+\tag{18.1}
+$$
+
+Thus there are exactly two source branches, $r=z$ and $r=1-z$.
+Their intersection $z=1/2$ remains in both descriptions. The following
+response polynomials use scalar symbols $P_i,V_i,A_i,R_i,Q_i$;
+they are not the chronological product matrices. The convention is
+
+$$
+(p,v,a,m)=(P_i,V_i,A_i,R_i)/Q_i.
+\tag{18.2}
+$$
+

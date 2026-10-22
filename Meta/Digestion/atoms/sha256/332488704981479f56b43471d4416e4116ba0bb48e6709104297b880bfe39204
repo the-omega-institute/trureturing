@@ -1,0 +1,11 @@
+**Definition 11.3 (growth embeddings and static propagation).**
+For an actually supplied ancillary register and unitary, a dimension-changing step is the isometry
+$V_t\psi=U_t(\psi\otimes|0\rangle)$ from $\mathcal H_t$ to $\mathcal H_{t+1}$.
+Its pure conditional histories may be placed on a path of the propagation construction in
+[Static Compatibility Fiber §7](AURIC_OMEGA_STATIC_COMPATIBILITY_FIBER_THEORY.md).
+The zero-defect condition there specifies the same transported history; it does not construct the summary in Definition 11.1.
+For a connected graph with reversible unitary edges, a full parallel orthonormal frame requires identity holonomy on all loops,
+whereas one parallel vector requires only a common fixed vector for rooted loop transports.
+These are the existing propagation/holonomy conditions, not consequences of the five probabilities alone.
+A classical gate program and record do not supply a second copy of an arbitrary unknown quantum state.
+

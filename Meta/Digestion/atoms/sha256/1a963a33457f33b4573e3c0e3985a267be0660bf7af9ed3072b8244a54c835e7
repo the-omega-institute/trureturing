@@ -1,0 +1,69 @@
+**Corollary 24.2 (Full-parent rank at every nonnegative fifth response).**
+For every actual strict world $W\in\mathcal H$ with $p(W)\ge0$,
+
+$$
+\operatorname{rank}d(p,v,a)_W=2.
+\tag{24.6}
+$$
+
+This includes every complete world, selected or unused, in every
+entire child $C(p,v)$ with $p\ge0$.
+
+Proof. The two worlds in (24.3) have strictly negative $p$ by
+(24.4), so neither can be $W$. The differential has two-dimensional
+domain and therefore rank at most two. The theorem excludes rank
+less than two, proving (24.6). ∎
+
+In particular, let $W_1$ be the exact first $M$-critical world of
+SVI, Definition 13.1 and Theorem 13.3, and put
+$y_1=(p(W_1),v(W_1))$. Its exact algebraic source has
+
+$$
+\begin{gathered}
+0.0084901253<r(W_1)<0.0084901254,\qquad
+0.0084574469<b(W_1)<0.0084574470,\qquad D(W_1)\ne0,\\
+690.595905<p(W_1)<690.595906
+\end{gathered}
+\tag{24.7}
+$$
+
+by SVI, Lemma 13.2. These finite decimals denote exact rational
+endpoints; $W_1$ and $y_1$ retain their algebraic definitions there.
+Every $W\in C(y_1)$ has the same positive $p(W_1)$, so (24.6) applies
+to every such world. In particular there is no different regular
+rank-drop companion of the kind in SVI, Theorem 19.3(b), at this
+base. This includes every unused or singular companion in that entire
+child.
+
+The regular proof divides only by $b>0$, $D\ne0$, fixed nonzero
+interpolation-node differences, and the guarded algebraic units in
+(22.4), (23.6). It divides by no drift, $d-24$, gain sample, leading
+gain coefficient, gain-root difference or auxiliary response. Zero
+drift, lower gain degrees, sampled zeros, repeated roots, arbitrary
+gain signs and all unused strata therefore remain in its domain.
+The singular part is covered separately on the full parent by SIII.
+
+Rank two yields a locally injective two-coordinate submap near each
+world, by the inverse-function theorem. It does not identify worlds
+in different such neighborhoods. In particular (24.6) alone does not
+decide whether a child contains distinct worlds with equal $a$.
+The independently selected $J$ and $M$ pairs in (1.2) still use the
+same entire child, may share endpoints, and may have different common
+terminal values. The global existence-or-exclusion question (1.2)
+remains unresolved.
+
+The model correspondence in (21.3)–(21.5) is O, Definitions 1.1–1.3
+and Theorem 2.1, with O's sixth-$M$ response identified with $v$.
+The regular circuit and whole-gain reconstruction are (2.5)–(2.7);
+the full singular supplier is SIII, Theorem 13.1. Fixed-node
+interpolation is the classical distinct-node formula cited in
+Section 11, Berrut–Trefethen, §2. The fixed Sylvester construction
+and subresultant gcd criterion are classical; see Basu, Pollack and
+Roy, *Algorithms in Real Algebraic Geometry*, second edition,
+Chapter 8, [DOI 10.1007/3-540-33099-2](https://doi.org/10.1007/3-540-33099-2),
+and the same criterion in SVI, Lemma 12.3. Sturm's real-root theorem
+and sign variation are used with the full chain (23.2); see the
+same book, Chapters 2 and 8. The source-specific factor (22.1),
+its guarded lifts and the five-root filtering give the complete
+original-model critical locus (24.3).
+

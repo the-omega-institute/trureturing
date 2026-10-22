@@ -1,0 +1,32 @@
+**Definition 15.1 (original complete-source coordinates and future task).**
+For $g(s)=\sum_{j=0}^3k_js^j$, padded through degree three, use
+
+$$
+ \omega(W)=(r,b,c,d,k_0,k_1,k_2,k_3)\in\mathbb R^8,
+ \qquad \|\cdot\|_\infty,
+ \qquad B_M(W)=(p(W),v(W),f_M(W)).
+\tag{15.1}
+$$
+
+These are the original coefficients and source entries, without a
+normal-form change of metric. The tuple is injective on complete
+worlds. From now on the eighth action is the public constant $M$, and
+
+$$
+ Q_8=MQ_7=\begin{pmatrix}3&1\\8&3\end{pmatrix}.
+\tag{15.2}
+$$
+
+For a chronological word $u=(E_1,\ldots,E_n)\in\{J,M\}^n$ put
+$T_u=E_n\cdots E_1$, with $T_\varnothing=I$, and define its terminal
+numerical response at the absolute clock by
+
+$$
+ Y_u(W)=d+g(8+n)\operatorname{tr}(T_uQ_8P).
+\tag{15.3}
+$$
+
+This is a task of mathematical response evaluation from the frozen
+clock-eight boundary. It does not grant execution of $u$, a new read,
+access to a discarded value or a future invocation right.
+

@@ -1,0 +1,70 @@
+**Definition 16.3 (A polynomial whole-world relation).** For
+$w=(r,b,c,d,k_0,k_1,k_2,k_3)\in\mathbb R^8$ put
+$g_w(s)=\sum_{l=0}^3k_ls^l$ and
+
+$$
+\begin{aligned}
+(Z_0,\ldots,Z_6)&=
+(1,b+c,1+b,b+c+r,1+2b,1+2b+b+c+r,2(1+2b)+b+c+r),\\
+\mathfrak a(w)&=d+g_w(7)(1+b+2(b+c)+4r),\\
+\mathfrak m(w)&=d+g_w(7)(3(1+2b)+2(b+c+r)).
+\end{aligned}
+\tag{16.4}
+$$
+
+Let $\mathscr W(p,v;w)$ be the conjunction
+
+$$
+\begin{gathered}
+0<r<1,\qquad b>0,\qquad c>0,\qquad bc=r(1-r),
+\qquad\sum_{l=0}^3 k_l^2>0,\\
+d+g_w(l)Z_l=(0,24,147/5,24,18,p,v)_l
+\quad(0\le l\le6).
+\end{gathered}
+\tag{16.5}
+$$
+
+Define the original independent-pair relation by
+
+$$
+\begin{aligned}
+\mathscr I(p,v;w_0,w_1,w_2,w_3)\quad\Longleftrightarrow\quad
+& p\ne24\ \land\ \bigwedge_{l=0}^3\mathscr W(p,v;w_l)\\
+&\land\ \mathfrak a(w_0)=\mathfrak a(w_1)
+          \ \land\ \|w_0-w_1\|^2>0\\
+&\land\ \mathfrak m(w_2)=\mathfrak m(w_3)
+          \ \land\ \|w_2-w_3\|^2>0.
+\end{aligned}
+\tag{16.6}
+$$
+
+The norm is the Euclidean norm in the full eight-coordinate tuple.
+There are no inequalities between cross-pair labels and no equality
+between the two common terminal values.
+
+For the exact constants of Definition 13.1 let $\mathsf J_i$ denote
+the sentence
+
+$$
+\exists w_0,w_1:\quad
+\mathscr W(p_i,v_i;w_0)\land\mathscr W(p_i,v_i;w_1)
+\land\mathfrak a(w_0)=\mathfrak a(w_1)
+\land\|w_0-w_1\|^2>0.
+\tag{16.7}
+$$
+
+Put $z(w)=(r,b,d)$ and $z_i=(r_i,b_i,d_i)$. Let $\mathsf Q_i$
+denote
+
+$$
+\begin{aligned}
+\forall\epsilon>0\ \exists p,v,w_0,w_1,w_2,w_3:\quad
+&\mathscr I(p,v;w_0,w_1,w_2,w_3)\\
+&\land\ \|z(w_2)-z_i\|^2+\|z(w_3)-z_i\|^2<\epsilon^2.
+\end{aligned}
+\tag{16.8}
+$$
+
+Finally write $\mathsf I$ for the original global sentence
+$\exists p,v,w_0,w_1,w_2,w_3:\mathscr I(p,v;w_0,w_1,w_2,w_3)$.
+

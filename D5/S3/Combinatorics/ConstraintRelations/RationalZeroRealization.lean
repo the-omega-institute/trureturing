@@ -383,9 +383,6 @@ private def renameFactor {V W : Type} (r : V → W) (f : Factor V) : Factor W wh
   scope := (r f.scope.1, r f.scope.2.1, r f.scope.2.2)
   table := f.table
 
-private theorem value_rename {V W : Type} (r : V → W) (f : Factor V) (a : W → Bool) :
-    (renameFactor r f).value a = f.value (a ∘ r) := rfl
-
 def numberedNetwork {n : Nat} {H J : Type} [Fintype H] [DecidableEq H] [Fintype J]
     (f : J → Factor (Fin n ⊕ H)) : Network n (Fintype.card H) (Fintype.card J) where
   factor j := renameFactor (Sum.map id (Fintype.equivFin H))
@@ -402,9 +399,9 @@ theorem numbered_marginal {n : Nat} {H J : Type} [Fintype H] [DecidableEq H] [Fi
       Sum.elim a h ∘ Sum.map id eh = Sum.elim a (E h) := by
     funext v; cases v <;> rfl
   unfold Network.marginal Network.weight
-  change (∑ h, ∏ j, (renameFactor (Sum.map id eh) (f (ej.symm j))).value
-    (Sum.elim a h)) = _
-  simp only [value_rename, hv]
+  change (∑ h, ∏ j, (f (ej.symm j)).value
+    (Sum.elim a h ∘ Sum.map id eh)) = _
+  simp only [hv]
   calc
     _ = ∑ h : Fin (Fintype.card H) → Bool, ∏ j : J, (f j).value (Sum.elim a (E h)) := by
       apply Finset.sum_congr rfl

@@ -1,0 +1,80 @@
+**Theorem 26.1 (Actual off-twenty-four companions).** Let
+$W_1,W_2\in C(p,v)$ be original complete worlds of Definition 1.1,
+with $p\ne24$, and write their source geometries as $(r,b_1)$ and
+$(s,b_2)$. If
+
+$$
+(r,s,b_1,b_2)\in
+\mathcal T_\delta\cup\mathcal T_\delta^{\leftarrow},
+\tag{26.1}
+$$
+
+then $m(W_1)\ne m(W_2)$. No regularity or nonzero gain-sample
+hypothesis is imposed.
+
+*Proof.* At either world put $e=d-24$, $t=r/b$ in its own source
+coordinates and retain $j=b+r(1-r)/b$, $n=j+r$, $T=1+b$, $U=1+2b$.
+Strictness gives
+
+$$
+b>0,\quad r(1-r)/b>0,\quad j>0,\quad n>0,\quad T>0,\quad U>0,
+\qquad K=(5b+2)jn>0.
+\tag{26.2}
+$$
+
+Use the original undivided response identities (11.19), together with
+the polynomial identities (11.17). They read exactly
+
+$$
+\begin{aligned}
+K(p-24)&=eS(t,b)=\frac{e\mathscr H(r,b)}{b^3},\\
+K(5m-32v+1128)&=eC(t,b)=\frac{eC_*(r,b)}{b^3},\\
+\mathscr H(r,b)&=b^3S(r/b,b).
+\end{aligned}
+\tag{26.3}
+$$
+
+These are identities on the zero-safe full parent $H(r,b,e)=0$ of
+Definition 2.1. Their ambient verification is (11.20), using the
+original interpolation samples (2.2) and the fixed clock-five,
+clock-six and clock-seven rows in Lemma 2.2. It divides by none of
+$\Lambda,e,8b-1$ or the sampled gain values. The quotients $S,C$
+mean polynomial division, so (26.3) also applies at $b=1/8$ and to
+singular-source worlds.
+
+Since $K>0$ and $p-24\ne0$, the first identity gives $eS(t,b)\ne0$.
+It follows that $e\ne0$, $S(t,b)\ne0$ and
+$\mathscr H(r,b)=b^3S(t,b)\ne0$ at each of the two actual worlds.
+Only now divide the second response equation by the first. This is
+precisely the ratio used in (11.21):
+
+$$
+\frac{5m-32v+1128}{p-24}
+=\frac{C(t,b)}{S(t,b)}
+=\frac{C_*(r,b)}{\mathscr H(r,b)}.
+\tag{26.4}
+$$
+
+Let $m_i=m(W_i)$ and abbreviate
+$H_1=\mathscr H(r,b_1)$, $H_2=\mathscr H(s,b_2)$ only for this
+pointwise calculation. Both are nonzero by the preceding argument.
+The two actual worlds have the same $p,v$, so subtracting (26.4) yields
+
+$$
+\begin{aligned}
+m_2-m_1
+&=\frac{p-24}{5}
+  \left(\frac{C_*(s,b_2)}{H_2}-\frac{C_*(r,b_1)}{H_1}\right)\\
+&=\frac{(p-24)F(r,s,b_1,b_2)}{5H_1H_2}\ne0.
+\end{aligned}
+\tag{26.5}
+$$
+
+The last inequality follows from Theorem 25.3, in either orientation.
+It uses nonvanishing, with no assertion about the sign of $H_1H_2$.
+The complete-world reconstruction retains every real drift, every
+nonzero entire real gain of degree at most three, degree drops,
+repeated roots and zero samples. The unequal original readings already
+exclude an identically zero gain. No additional sample or coefficient
+has been divided out. $\square$
+

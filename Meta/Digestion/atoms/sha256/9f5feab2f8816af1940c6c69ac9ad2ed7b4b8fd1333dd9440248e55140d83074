@@ -1,0 +1,50 @@
+**Proposition 119.4 (no uniform scalar cube clock in class values).**
+Let $A_n=M_n^{-1}K$ on the fixed coordinates
+$(f_0,\ldots,f_7)$. There are no positive scalars $c_n$ and $k>0$ with
+
+$$
+c_nA_n\longrightarrow kK.
+\tag{119.10}
+$$
+
+There are likewise no such scalars with the full heat-matrix limit
+$e^{-tc_nA_n}\to e^{-tkK}$ on these same eight class-value coordinates
+for every fixed $t>0$. In these statements matrix convergence can be
+taken in any finite-dimensional operator norm. The normalized mass is
+
+$$
+\overline M_n:=\frac{M_n}{N_n}
+\longrightarrow
+\frac{\operatorname{diag}(\varphi,3,0,0,0,0,1+2\varphi,0)}
+     {4+3\varphi},\qquad \varphi=\frac{1+\sqrt5}{2}.
+\tag{119.11}
+$$
+
+Proof. Class 2 has mass one. Its diagonal in (119.10) would give
+$3c_n\to3k$, hence $c_n\to k$. Class 0 has mass $2G\to\infty$,
+so its corresponding diagonal tends to zero, contradicting $3k>0$.
+
+For the heat statement, the unique stationary row probability of
+$e^{-tA_n}$ is $\pi_n^{\mathsf T}$, where
+$\pi_n=N_n^{-1}M_n\mathbf1$. Indeed
+$\pi_n^{\mathsf T}A_n=N_n^{-1}\mathbf1^{\mathsf T}K=0$,
+and the cube is connected. A positive scalar clock does not change it.
+The Fibonacci ratio $G/F\to\varphi$ gives (119.11) and the limiting
+probability $\pi_*$. Passing to a proposed heat-matrix limit gives
+$\pi_*^{\mathsf T}e^{-tkK}=\pi_*^{\mathsf T}$. For any $t>0$,
+the eigenvalues of $e^{-tkK}$ equal one only on $\ker K$, the constants.
+Its only stationary probability is therefore uniform. But $\pi_*$
+vanishes on five classes, a contradiction. This argument excludes
+the full eight-observable heat limit without deducing generator
+convergence from semigroup convergence.
+
+Normalization must keep the form and metric paired. If only the metric
+is changed to $\overline M_n$ while the form stays $K$, its positive
+generator becomes $N_nA_n$; arbitrary scalar clocks still fall under
+the same obstruction by absorbing $N_n$ into $c_n$. If both the
+counting form and counting inner product are divided by $N_n$, the
+generator remains $A_n$. The closed form (119.4) itself is unchanged
+only in the first convention. A singular limiting probability metric
+does not justify replacing the finite counting dynamics by $K$.
+$\square$
+

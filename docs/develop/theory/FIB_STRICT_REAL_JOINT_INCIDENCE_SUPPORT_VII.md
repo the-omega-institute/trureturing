@@ -4319,3 +4319,366 @@ from the displayed source and response equations, with no assertion
 of literature priority or a general singular-matrix exclusion theorem.
 
 ## 追加锚（本行以下为增补区）
+
+## 36. Normalized source secants and an exact drift threshold
+
+**Definition 36.1 (Inherited coordinates and the drift constant).**
+Use the complete worlds, entire parent $\mathcal H$, entire children
+$C(p,v)$ and original terminal responses of Definition 1.1. Retain
+$e,z,j,n,T,U,x$ and the ordered two-source coefficients
+$h,\sigma,\pi,k,\Delta,Q$ of Definition 31.1. Thus
+$e=d-24$, $z=d-147/5$, $T=1+b$, $U=2T-1$ and $x=n/U$.
+For unequal widths put
+
+$$
+\ell=L_* =\frac{x_1-x_2}{T_1-T_2},\qquad
+R=R_* =\frac{1/x_1-1/x_2}{T_1-T_2},\qquad
+D_*=11d-51k.
+\tag{36.1}
+$$
+
+Here $D_*,L_*,R_*$ are precisely the quantities of (32.17);
+$\Delta$ is the ordered response coefficient of (31.3), distinct
+from either individual source coefficient $\Lambda_i$.
+The parameter map to the full-parent correspondence of
+[O, Theorem 2.1](https://github.com/the-omega-institute/trureturing/blob/60119c794ae161036941982f3e8ce39c65024ab2/docs/develop/theory/FIB_COMMON_PARENT_GEOMETRY_AND_MIXED_CHILDREN.md)
+is $\beta=1/8$, $\epsilon=e$ and $u_M=v$.
+In the notation of Section 32, the source is (32.1)–(32.2), its
+whole polynomial is (32.5), and its original parent row is (32.6).
+The late responses are exactly (32.12), with coefficients
+$\mathsf A_d,\mathsf B_d,\mathsf C_d$ from (31.2).
+Their division-free compatibility equations (32.20), (32.22) read
+
+$$
+8(18-d)\ell-91eR=D_*,\qquad -\Delta\ell=Q.
+\tag{36.2}
+$$
+
+These are reused identities for the entire parent, including
+individual $\Lambda=0$ sources. Their validity does not require
+$\ell,D_*,Q$ or $\Delta$ to be nonzero.
+
+Define
+
+$$
+q_\delta(t)=4960t^2-305349t+3935925,\qquad
+\delta=\frac{305349-3\sqrt{1683251089}}{9920}.
+\tag{36.3}
+$$
+
+Theorem 38.1 identifies $\delta$ as the unique zero of $q_\delta$
+in $(18,19)$.
+
+## 37. A whole-parent trace bound and a signed secant inequality
+
+**Lemma 37.1 (Intrinsic normalized trace bound).** Every actual
+world in the entire $\mathcal H$ with $d\le47/2$ satisfies
+
+$$
+0<x<2.
+\tag{37.1}
+$$
+
+The drift has no lower bound, and $b$ has no upper bound.
+
+Proof. By the strict source identities (31.1), (32.1),
+$j=b+r(1-r)/b$, $n=j+r$, $0<r<1$ and $j,n>0$.
+If $b\ge1/6$, then
+
+$$
+n<b+1+\frac1{4b}\le2+4b=2U.
+\tag{37.2}
+$$
+
+The first inequality uses $r<1$ and $r(1-r)\le1/4$.
+The second is equivalent to $(6b-1)(2b+1)\ge0$, so includes
+$b=1/6$.
+
+For $0<b<1/6$ set $f=1/j+1/n$. Rearranging the original
+clock-four row (32.6) gives
+
+$$
+4(24-d)f=-d+\frac{6(147/5-d)}T+\frac{18-d}U.
+\tag{37.3}
+$$
+
+Since $d\le47/2<24$, division by $24-d$ is legitimate. With
+$T=1+b$, $U=1+2b$, direct collection gives
+
+$$
+Uf-\frac32
+=\frac{252/5+(1134/5)b-d(2+10b+2b^2)}{4(24-d)(1+b)}.
+\tag{37.4}
+$$
+
+The coefficient $2+10b+2b^2$ is positive. Its numerator is
+therefore at least
+
+$$
+\frac{17}{5}-\frac{41}{5}b-47b^2
+>\frac{17}{5}-\frac{41}{30}-\frac{47}{36}
+=\frac{131}{180}>0.
+\tag{37.5}
+$$
+
+Thus $Uf>3/2$. If $n\ge2U$, the strict inequality
+$j=n-r>n-1>0$ and $U>1$ would instead imply
+
+$$
+Uf<\frac{U}{n-1}+\frac Un
+\le\frac{U}{2U-1}+\frac12<\frac32.
+\tag{37.6}
+$$
+
+The last step follows from $U/(2U-1)<1$. This contradiction
+proves $n<2U$ also for $0<b<1/6$. Positivity of $n,U$ proves
+(37.1). Only the strict source equations and the original parent
+row were used, so the argument includes every fixed negative drift
+and every individual $\Lambda=0$ source in the stated range. ∎
+
+**Lemma 37.2 (Quantitative signed secant restriction).** Let two
+actual worlds in the same entire $C(p,v)$, $p\ne24$, have common
+drift $d\le47/2$, common terminal $M$ value and unequal widths.
+Then
+
+$$
+D_*\ell<-\frac{443}{8}\ell^2<0.
+\tag{37.7}
+$$
+
+In particular $D_*$ and $\ell$ have opposite nonzero signs. On the
+response branch $\Delta\ne0$ one also has
+
+$$
+\Delta D_*Q>0.
+\tag{37.8}
+$$
+
+Proof. The defining reciprocal difference gives
+$R=-\ell/(x_1x_2)$. Substitution in the inherited compatibility
+identity (36.2) gives
+
+$$
+D_*=K\ell,\qquad
+K=8(18-d)+\frac{91(d-24)}{x_1x_2}.
+\tag{37.9}
+$$
+
+Lemma 37.1 applies to each actual endpoint, so $0<x_1x_2<4$.
+Because $d-24<0$, one has the uniform strict estimate
+
+$$
+K<8(18-d)+\frac{91(d-24)}4
+=\frac{59d-1608}{4}\le-\frac{443}{8}.
+\tag{37.10}
+$$
+
+It remains to exclude $\ell=0$ before multiplying by $\ell^2$.
+Equations (36.2), (37.9) would then give $Q=D_*=0$.
+The latter gives $k=11d/51$, and the definition of $Q$ in (31.3)
+then gives
+
+$$
+Q=-\frac{182}{867}d^2.
+\tag{37.11}
+$$
+
+Consequently $d=k=0$, contrary to
+$k=(d-147/5)/(T_1T_2)$ with finite positive $T_1T_2$.
+Thus $\ell\ne0$. Multiplying (37.10) by $\ell^2$ proves
+(37.7). Finally $Q=-\Delta\ell$ from (36.2) gives
+$\Delta D_*Q=-\Delta^2D_*\ell>0$ whenever $\Delta\ne0$,
+proving (37.8). No vanishing secant or response coefficient was
+divided out. By Theorem 31.2, every actual pair under consideration
+indeed has $\Delta\ne0$. ∎
+
+## 38. Exact positive-drift exclusion for terminal M collisions
+
+**Theorem 38.1 (Necessary drift gap for every same-drift M pair).**
+For every real $p\ne24,v$ and every two distinct complete worlds
+$W_1,W_2\in C(p,v)$ with
+
+$$
+m(W_1)=m(W_2),\qquad d(W_1)=d(W_2)=d,
+$$
+
+one necessarily has
+
+$$
+d<0\qquad\hbox{or}\qquad d>\delta,
+\tag{38.1}
+$$
+
+where $\delta$ is (36.3). Equivalently, for each fixed
+$d\in[0,\delta]$, the map $m$ is injective on the intersection
+of the entire $C(p,v)$ with that drift slice.
+The domain retains all sampled zeros, lower gain degrees, repeated
+gain roots, individual $\Lambda=0$ sources and unused companions
+of Definition 1.1.
+
+Proof. Reuse the zero-drift exclusion of
+[S, Theorem 3.2](https://github.com/the-omega-institute/trureturing/blob/60119c794ae161036941982f3e8ce39c65024ab2/docs/develop/theory/FIB_STRICT_REAL_JOINT_INCIDENCE_SUPPORT.md).
+For $d=0$, its original clock-zero identity gives $F_0=0$, so every
+zero-drift world belongs to its exceptional union. Thus two such worlds
+in one off-$24$ child cannot form a distinct equal-$M$ pair.
+Reuse also Theorem 4.1 of this volume: two worlds in the same
+off-$24$ child with equal $m$ and equal widths are the same complete
+world. It therefore suffices to exclude an unequal-width pair with
+$0<d\le\delta$.
+
+The exact endpoint and derivative signs are
+
+$$
+\begin{gathered}
+q_\delta(18)=46683>0,\qquad q_\delta(19)=-75146<0,\\
+q_\delta'(t)=9920t-305349\le-116869<0
+\quad(0\le t\le19).
+\end{gathered}
+\tag{38.2}
+$$
+
+Thus $q_\delta$ has exactly one zero in $(18,19)$ and is
+nonnegative throughout $[0,\delta]$. Its discriminant is
+$15149259801=9\cdot1683251089$, so the smaller quadratic root is
+exactly (36.3). In particular $0<d\le\delta<19<47/2$.
+
+For arbitrary positive widths put $t_i=1/T_i\in(0,1)$.
+Substitution in the existing coefficient (31.3) gives
+
+$$
+\Delta=316d^2-\frac{33627}{5}d
+ +\frac z2(26775-1442d)t_1t_2
+ -\frac{91}{2}dz(t_1+t_2).
+\tag{38.3}
+$$
+
+This is affine in each variable separately. Its corner values on
+the auxiliary square $[0,1]^2$ are
+
+$$
+\begin{aligned}
+c_{00}&=d(316d-33627/5),\\
+c_{10}=c_{01}&=d((541/2)d-53877/10),\\
+c_{11}&=-q_\delta(d)/10.
+\end{aligned}
+\tag{38.4}
+$$
+
+For $0<d\le\delta<19$, the first three corners are strictly
+negative: the increasing linear factors have values $-3607/5$ and
+$-1241/5$ at $d=19$. The last corner is nonpositive by (38.2).
+The exact affine interpolation identity
+
+$$
+\begin{aligned}
+\Delta={}&(1-t_1)(1-t_2)c_{00}\\
+&+\{t_1(1-t_2)+(1-t_1)t_2\}c_{10}+t_1t_2c_{11}
+\end{aligned}
+\tag{38.5}
+$$
+
+therefore proves $\Delta<0$ for every actual $T_1,T_2>1$.
+Strictness holds also at $d=\delta$, where $c_{11}=0$, because
+$(1-t_1)(1-t_2)>0$ and $c_{00}<0$. No corner of the auxiliary
+square is asserted to be an actual source; finite positive widths
+place both reciprocal coordinates strictly inside the square.
+
+Since $0<d<147/5$, one has $k<0$, and hence
+
+$$
+D_*=11d-51k>0,\qquad
+Q=(50d^2-347dk+525k^2)/2>0.
+\tag{38.6}
+$$
+
+The reused relation $-\Delta\ell=Q$ and $\Delta<0$ force
+$\ell>0$. This contradicts $D_*\ell<0$ from Lemma 37.2.
+There is no such unequal-width pair. Together with the two reused
+exclusions this proves the theorem. ∎
+
+## 39. An inhabited positive-drift slice and the remaining joint question
+
+**Proposition 39.1 (An actual off-24 child in the excluded drift
+range).** There is an actual complete world with
+
+$$
+r=\frac12,\qquad b=\frac3{10},\qquad
+ d=\frac{299826}{22697}\in(0,\delta),
+\tag{39.1}
+$$
+
+in the child
+
+$$
+p=\frac{6134663}{113485}\ne24,\qquad
+v=\frac{5405421}{22697}.
+\tag{39.2}
+$$
+
+Proof. For these strict source coordinates, the inherited definitions
+give
+
+$$
+\begin{gathered}
+j=\frac{17}{15},\quad n=\frac{49}{30},\quad
+T=\frac{13}{10},\quad U=\frac85,\quad x=\frac{49}{48},\\
+e=-\frac{244902}{22697},\quad
+\Lambda=\frac{22697}{86632},\quad
+\frac{6(8b-1)(5b+2)}{5TU}=\frac{147}{52}.
+\end{gathered}
+\tag{39.3}
+$$
+
+These values satisfy the undivided parent equation (32.7), because
+$e\Lambda=-147/52$. Let $g$ be exactly the whole interpolant
+(32.5), whose four samples here are
+
+$$
+(g(0),g(1),g(2),g(3))
+=\frac1{22697}(-299826,216090,282666,149940).
+\tag{39.4}
+$$
+
+The full-parent converse in Section 32 gives one nonzero real
+polynomial of degree at most three and the five original parent
+readings; explicitly $g(4)=67950/22697$ gives $d+Ug(4)=18$.
+The original late responses (32.11)–(32.12) give (39.2), so this
+same complete world lies in the asserted child. Also
+$p-24=3411023/113485>0$ and $0<d<14<18<\delta$.
+This proves the stated existence. ∎
+
+Theorem 38.1 is an injectivity statement on each fixed drift slice
+of every entire child. Proposition 39.1 supplies an inhabited slice;
+it supplies neither a distinct pair nor a joint witness. Lemma 37.1
+includes arbitrary negative drifts, whereas Theorem 38.1 leaves
+same-drift pairs with $d<0$ or $d>\delta$ unresolved. The constant
+$\delta$ is a sufficient exclusion endpoint; no optimality is
+asserted. Unequal-drift $M$ pairs are outside that theorem's
+same-drift hypothesis.
+
+The source, whole polynomial and zero-safe response identities are
+reused from Sections 31–32, available at the immutable
+[ordinary mathematical source](https://github.com/the-omega-institute/trureturing/blob/3a45d8515fbe1097f850fb35df3c823308cf1b08/docs/develop/theory/FIB_STRICT_REAL_JOINT_INCIDENCE_SUPPORT_VII.md).
+Their distinct-node interpolation is the classical formula of
+J.-P. Berrut and L. N. Trefethen, *Barycentric Lagrange Interpolation*,
+SIAM Review 46, 501–517, §2,
+[doi:10.1137/S0036144502417715](https://doi.org/10.1137/S0036144502417715);
+only that interpolation tool is attributed to this reference.
+The source-specific deductions here are the whole-parent trace bound,
+its quantitative secant consequence and the exact drift exclusion.
+They make no assertion of literature priority.
+
+The original question (1.2) still requires two independently selected
+distinct pairs in the same entire $C(p,v)$: one equal-$J$ pair and
+one equal-$M$ pair. The pairs may overlap or be disjoint, and their
+two common terminal values are independent. All worlds retain one
+fixed source, one whole nonzero polynomial of degree at most three
+and one fixed drift at the original clocks. No restriction is placed
+on unused companions. The acquired word remains $J,M,J,M,M,M$;
+clock seven remains the two original alternatives on the same world,
+with no reset, copy, skipped read, shifted clock, new port or longer
+protocol. Neither a joint witness nor a full-domain exclusion has
+been established here. The global question $D_J\cap D_M\ne\varnothing$
+remains open.
+
+## 追加锚（本行以下为增补区）

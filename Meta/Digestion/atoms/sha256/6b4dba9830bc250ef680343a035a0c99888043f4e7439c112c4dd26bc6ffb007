@@ -1,0 +1,31 @@
+**Assumption 1.2 (The original shared apparatus).** Use exactly G, Assumptions 2.1 and 4.1, with $\sigma=1$. In particular, the system is $\mathcal H=L^2(\mathbb R^{17};\mathbb C)$, column vectorization is $\operatorname{vec}(X)=(X_{11},X_{21},X_{12},X_{22})^T$, and the supplied preparation for a complete world is
+
+$$
+\begin{gathered}
+m_W=(d,\operatorname{vec}(a_0P),\operatorname{vec}(a_1P),
+\operatorname{vec}(a_2P),\operatorname{vec}(a_3P)),\\
+\psi_W(x)=\pi^{-17/4}\exp(-\|x-m_W\|^2/2),\qquad
+\rho_W=|\psi_W\rangle\langle\psi_W|.
+\end{gathered}
+\tag{1.6}
+$$
+
+Supply eight independent probes in $k_1(z)=(2\pi)^{-1/4}e^{-z^2/4}$, independent of the system and the controller. The original controls are
+
+$$
+J=\begin{pmatrix}0&1\\1&0\end{pmatrix},\quad
+M=\begin{pmatrix}0&1\\1&1\end{pmatrix},\quad
+A_E=\operatorname{diag}(1,I_2\otimes E,I_2\otimes E,I_2\otimes E,I_2\otimes E),
+\tag{1.7}
+$$
+
+with the fixed half-density pullback $(U_A\psi)(x)=|\det A|^{-1/2}\psi(A^{-1}x)$. At each acquired clock use G's coupling $\exp(-iF_j(q)\otimes\pi_j^{\rm pr})$ and probe-position meter, where
+
+$$
+\ell_j^T=(1,t_0^T,jt_0^T,j^2t_0^T,j^3t_0^T),\qquad
+t_0=\operatorname{vec}(I_2),\qquad F_j(q)=\ell_j^Tq.
+\tag{1.8}
+$$
+
+The first matrix-block coefficient is one also at clock zero. There is no intervening free evolution that changes system positions, no reset and no postselection. All meter values are retained. Preparation availability is an explicit premise for (1.6); it supplies neither an encoder from an unknown original carrier nor a preparation algorithm or physical installation theorem.
+

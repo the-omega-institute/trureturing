@@ -1,0 +1,17 @@
+**命题 37（五模式的两个固定设置）。** 对定义 1.4 的同一个 $A,K,D$ 及实际等待—模式读出，成立
+
+$$
+\kappa(2/3)<\frac23,\qquad \kappa(1)<\frac{23}{50}.
+\tag{37.1}
+$$
+
+因此对 $1\leq q\leq5$，
+
+$$
+\varepsilon_{0,2/3}(q)\geq\frac{5-q}{30},\qquad
+\varepsilon_{0,1}(q)\geq\frac{27(5-q)}{500}\geq\frac{5-q}{20}.
+\tag{37.2}
+$$
+
+**证明。** 先将已有的谱过程验证方法接到共同端口，再给出这两个实际设置的有限证书。一般过程验证的归属是 Zhu–Zhang，*Efficient Verification of Quantum Gates with Local Operations*，[arXiv:1910.14032v2](https://arxiv.org/html/1910.14032v2)，式 (7)、(9)、(28)–(31) 及 Proposition 3；这里只使用单通道的谱不等式，不使用重复试验的样本量结论。
+

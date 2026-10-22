@@ -1,0 +1,9 @@
+**Assumption 200.2 (Applicability).** The principal-root normalization and common cut are specified model data.
+The compatible preparations, coherent joint local handling, filter
+instruments and aligned analyzers are the specified mathematical resources.
+Their physical availability is an additional premise. A common unknown-$q$ decoder remains unsupplied. The conclusions apply to these actual $2\times2$ and block-diagonal
+$2\times4$ conditional states with finite $\beta\ge0$. They are
+finite state diagnostics, with no extension here to a generic
+$2\times4$ discord bound, general PPT sufficiency, deterministic
+extraction, asymptotic rates, arbitrary copy counts or a physical clock.
+

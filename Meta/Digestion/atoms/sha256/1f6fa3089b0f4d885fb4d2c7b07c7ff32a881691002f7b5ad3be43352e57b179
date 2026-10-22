@@ -1,0 +1,58 @@
+## 214. Exact postfilter negativity at prescribed success
+
+The subject is a fixed,
+known-parameter, already-filtered native quantum state and its subsequent
+one-copy processing. The result is an ordinary conditional analytic application
+of established two-qubit entanglement tools, with an explicit native parameter
+bridge and a finite attaining instrument.
+
+Let
+
+$$
+\begin{gathered}
+\mathcal H_A=\mathbb C^2,\qquad
+\mathcal H_B=B_{\mathrm{act}}\oplus B_{\mathrm{sp}},\qquad
+B_{\mathrm{act}}\cong B_{\mathrm{sp}}\cong\mathbb C^2,\\
+|\psi^-\rangle=(|01\rangle-|10\rangle)/\sqrt2,\qquad
+P_-=|\psi^-\rangle\langle\psi^-|,\\
+W_\lambda=\frac{1-\lambda}{4}I_4+\lambda P_-,\qquad
+\rho_{w,\lambda}=wW_\lambda\oplus_B(1-w)\frac{I_4}{4}.
+\end{gathered}
+\tag{214.1}
+$$
+
+The direct sum is on Bob alone. The second normalized block means
+$I_A/2\otimes I_{B_{\mathrm{sp}}}/2$, supported on Bob's spectator
+subspace. The active/spectator distinction is a local orthogonal flag, not
+an extra copy of the entangled block. Initially take $0<w<1$ and
+$0\le\lambda<1$; the exact finite-native subset is derived in §216.
+
+The allowed processing uses one copy of $\rho_{w,\lambda}$, a known source
+$q$ and its known active/spectator basis, finite adaptive LOCC, local neutral
+memories, separable auxiliaries, classical communication, and arbitrary biased
+classical coins. Every local quantum operation preserves local total number.
+There is no additional input copy, entangled ancillary resource, or external
+phase reference. Arbitrary allowed logical channels and exact real-valued coin
+probabilities belong to this mathematical operation menu. Finite gate synthesis
+and noisy implementation are separate questions.
+
+Success has an exact prescribed probability $s\in(0,1]$, conditional on
+preparation of $\rho_{w,\lambda}$. The successful quantum output must be
+one common encoded $\mathbb C^2\otimes\mathbb C^2$ state. Only a common
+classical success flag is retained; all active/spectator, rail, instrument,
+coin, and environmental records are discarded. This output requirement rules
+out treating a retained $2\times4$ flagged quantum state as the requested
+answer.
+
+For normalized states use ordinary occupation-tensor negativity,
+
+$$
+N(\sigma)=\frac{\|\sigma^{T_A}\|_1-1}{2},\qquad
+N_0=N(W_\lambda)=\frac{(3\lambda-1)_+}{4},\qquad
+(y)_+=\max\{0,y\}.
+\tag{214.2}
+$$
+
+Partial transpose refers to the declared Alice tensor factor. It is not a
+fermionic partial-time-reversal operation.
+

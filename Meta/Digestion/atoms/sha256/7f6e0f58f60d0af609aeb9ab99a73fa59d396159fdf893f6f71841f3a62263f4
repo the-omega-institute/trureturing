@@ -1,0 +1,17 @@
+**假设 30.2（逐位置独立控制与一个固定块相位）。** 在 $\mathcal K_n$ 上，令 $P_j^0=|0\rangle\langle0|_j$、$n_j=I-P_j^0$，边界 $P_0^0=P_{n+1}^0=I$，并提供
+
+$$
+T_j=P_{j-1}^0X_jP_{j+1}^0,\qquad e^{-i\theta T_j}\quad(1\leq j\leq n,\ \theta\geq0).
+\tag{30.3}
+$$
+
+位置可以独立寻址，每次仅打开所选的一项，未选项和漂移均为零。对每个数据块另外提供同一个固定相位门
+
+$$
+F_a=\exp(i\phi P_{13}^{(a)}),\qquad
+P_{13}^{(a)}=n_{4a-3}n_{4a-1},\qquad \phi\in\mathbb R,\quad \sin\phi\ne0.
+\tag{30.4}
+$$
+
+只要求可重复调用 $F_a$，不提供任意可调相位或其精确逆。$P_{13}$ 指块内第一、第三位置共同激活的投影；在五模式上它是 $|101\rangle\langle101|=|25\rangle\langle25|$，不同于假设 45.1 的 $|N\rangle\langle N|$。门参数是无量纲数学参数；这些独立控制、零漂移、固定相位及初始化均不由原固定总和 $K$ 菜单推出。PXP 生成元及无 $11$ 合法域沿用命题 43；其一般背景为 Turner 等，[arXiv:1806.10933v2](https://arxiv.org/html/1806.10933v2)，§§II.1–II.2。
+

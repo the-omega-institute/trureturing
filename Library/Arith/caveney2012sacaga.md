@@ -1431,3 +1431,166 @@ $$
 The complete original improper integral and all its prime-power and
 endpoint terms are retained. The independent signed lower bound (S4),
 strict Robin for every integer $n>5040$, and RH remain unproved.
+
+## Reuse the cone-envelope minimum at the selected source
+
+Use the full pressure $P$, inventory $B$ and kernel $k$ from (P1)--(P6):
+
+$$
+P(t)=\gamma+\log\log t-g(t)t-M(g(t))=I_\psi(t)+R(t),
+\qquad P'(t)=k(t)[t-B(t)]\quad\text{a.e.}
+$$
+
+The [archived cone-envelope theorem](../Analytic/mantovanelli2026primeworkload.md#existing-completeness-and-cone-reduction),
+Theorem 10.4 (`thm:cone-envelope`), already supplies the following
+minimum condition at a regular self-tangent source. Its notation maps
+by $\widehat{\mathcal F}=-P$, $D_{\rm CA}(t)=t-B(t)$ and $K=k$.
+The adjacent `lem:legendre-majorant` applies to every integer $m>e$,
+so its comparison at $t=\log m$ also gives the all-integer form below.
+These source statements and proofs were read in the primary TeX
+`paper/colossally_abundant_prime_layer_workload.tex` in the linked archive.
+The extremal interface is reused, not a new converse theorem.
+
+For an actual event-free own-price integer $N=C_A$, $A=\log N>1$,
+we have $B(A)=A$ and $P(A)=\Delta(N)$. The cited theorem and majorant
+make the following three conditions equivalent:
+
+$$
+\begin{aligned}
+&G(m)\le G(N)\quad\text{for every integer }m\ge N;\\
+&P(t)\ge P(A)\quad\text{for every real }t\ge A;\\
+&\int_A^t[B(u)-u]k(u)\,du\le0
+       \quad\text{for every real }t\ge A.
+\end{aligned}
+\tag{FR1}
+$$
+
+When the equivalent conditions (FR1) hold, the already retained (P6) also gives
+
+$$
+P(t)-P(A)\ge H(t,B(t))\ge0\qquad(t\ge A).
+\tag{FR2}
+$$
+
+All activation ties and prime-power layers remain in the cited inventory.
+No later $C_t$ is assumed to be self-tangent or a future record. The
+application below uses this existing minimum without repeating its proof.
+
+## Centering at the selected minimum leaves a positive transform offset
+
+Keep the same source in (FR1), now with its equivalent future-record
+conditions. Write $L=\log A$ and
+
+$$
+h_N=\log G(N)-\gamma=-P(A).
+$$
+
+Gronwall's existing limsup gives $h_N\ge0$. On the conditional
+RH-failure family (S5), $h_N>0$ and, after reducing a fixed positive
+constant if necessary, $h_N\ge c_\eta A^{-\eta}$.
+For each fixed such source define its actual future profile
+
+$$
+Q_A(y)=\sqrt A\,e^{y/2}(L+y)[P(Ae^y)-P(A)],\qquad y\ge0.
+\tag{FR3}
+$$
+
+The nonnegativity $Q_A\ge0$ follows from (FR1). It concerns the
+complete $P=I_\psi+R$, including the original reserve and every
+prime-power layer. Since $P(t)\to0$, when $h_N>0$,
+
+$$
+Q_A(y)\sim h_N\sqrt A\,e^{y/2}(L+y)\qquad(y\to\infty).
+\tag{FR4}
+$$
+
+Its Laplace integral therefore has convergence abscissa exactly
+$1/2$. On $\Re s>1/2$, elementary Laplace integration gives the
+complete identity
+
+$$
+\begin{aligned}
+\widehat Q_A(s)
+&=h_N\sqrt A\left(\frac{L}{s-1/2}
+                       +\frac1{(s-1/2)^2}\right)+\mathcal H_A(s),\\
+\mathcal H_A(s)
+&=\sqrt A\int_0^\infty e^{-(s-1/2)y}(L+y)P(Ae^y)\,dy.
+\end{aligned}
+\tag{FR5}
+$$
+
+The remainder has not been replaced by a truncated zero sum or an
+independently chosen source. To control its endpoint, reuse the
+[effective-PNT allowance for the original signed integral](../ArithSums/nicolas2025comparison.md#the-2026-signed-formula-and-the-available-absolute-error-scale)
+and the complete reserve in (KTO1). With some fixed $a>0$ they give
+
+$$
+P(t)=O\!\left(\frac{e^{-a\sqrt{\log t}}}{\sqrt{\log t}}\right)
+     +O\!\left(\frac1{\sqrt t\log t}\right).
+\tag{FR6}
+$$
+
+Indeed, the classical bound $|\psi(u)-u|\ll ue^{-a\sqrt{\log u}}$
+puts its absolute tail inside a constant times
+$\int_{\log t}^\infty e^{-a\sqrt v}(1+v)v^{-2}\,dv$;
+the substitution $z=\sqrt v$ gives the first allowance in (FR6).
+This is an absolute bound, with no favorable sign asserted.
+It implies
+$\int_0^\infty(L+y)|P(Ae^y)|\,dy<\infty$ for every fixed $A>1$.
+Thus $\mathcal H_A$ converges absolutely on $\Re s=1/2$ and stays
+bounded as real $s\downarrow1/2$. The resulting right-hand expansion is
+
+$$
+\boxed{\widehat Q_A(s)
+=\frac{h_N\sqrt A}{(s-1/2)^2}
+ +\frac{h_N\sqrt A L}{s-1/2}+O_A(1).}
+\tag{FR7}
+$$
+
+Unconditionally this is a one-sided asymptotic, not a claim of
+meromorphic continuation through $1/2$. If $\Theta<1$, choose
+$\max\{\Theta,1/2\}<\nu<1$. The classical bound
+$|\psi(t)-t|=O(t^\nu)$ and the complete reserve make
+$\mathcal H_A$ holomorphic for $\Re s>\nu-1/2$, so (FR5) then has a
+genuine double pole at $1/2$. No such strip is assumed when
+$\Theta=1$. The exact abscissa and nonzero double term in (FR4)--(FR7)
+require $h_N>0$; they do not follow in the $h_N=0$ case.
+
+### Why this nonnegative profile does not supply the original floor
+
+The classical Landau nonnegative-transform principle, already used in
+[the original signed-tail criterion](../Analytic/guthmaynard2024largevalues.md#the-sampling-implication-and-its-quantifiers),
+requires a real singularity at the convergence abscissa. For (FR3)
+that requirement is already met by (FR7). Its positive coefficients
+are supplied by $h_N$, the original violation height itself.
+Applying that principle to this centered future profile alone yields
+no contradiction or bound on $h_N$.
+
+Subtracting the explicit term in (FR5) leaves the transform of
+$\sqrt A e^{y/2}(L+y)P(Ae^y)$. When $h_N>0$, this unshifted profile
+is strictly negative at $y=0$ and nearby, since its initial value is
+$-h_N\sqrt A L<0$. Eventual nonnegativity, which could suffice for a
+Landau argument after a finite initial truncation, still needs an
+independent estimate; it is not supplied by (FR1).
+
+These statements take the transform limit for one fixed source.
+They do not interchange it with the cofinal source limit. In fact (S5)
+gives on the same actual family
+
+$$
+h_N\sqrt A\ge c_\eta A^{1/2-\eta}\longrightarrow\infty.
+\tag{FR8}
+$$
+
+Source centering has therefore supplied no uniformly bounded offset
+at the original root scale. At that source the complete original
+account remains $I_\psi(A)=-h_N-R(A)$.
+
+The cone-envelope minimum, optimization and pressure identities above
+are reused. The explicit selected-source offset in (FR5)--(FR8) records
+their application to this particular positivity route. They do
+not assume an actual off-critical zero, supply the missing directed
+signed estimate, or prove RH or strict Robin for every integer above
+5040. The Laplace integration and Landau principle are classical,
+not new project theorems. This paper application has no Lean/kernel
+certification or claim of literature priority.

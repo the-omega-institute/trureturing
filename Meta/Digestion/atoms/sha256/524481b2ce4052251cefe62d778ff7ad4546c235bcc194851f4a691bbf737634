@@ -1,0 +1,12 @@
+**Theorem 18.3 (Q12 pole exclusion).** No complex specialization over
+a $Q_{12}$ root satisfies the two original pole source equations.
+In particular no finite real drift, including zero, gives an actual
+companion there.
+
+Proof. Use the monic polynomial $\overline Q_{12}$ over
+$\mathbb Z_{(101)}$. Its leading coefficient before normalization is
+$14$ modulo $101$. Norms in its rank-twelve algebra are
+
+| Element | $\pi_a$ | $q_d$ | $D$ | $f_2$ |
+| --- | --- | --- | --- | --- |
+| Norm modulo $101$ | $81$ | $70$ | $4$ | $21$ |

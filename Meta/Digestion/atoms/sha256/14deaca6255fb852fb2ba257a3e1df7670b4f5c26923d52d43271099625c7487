@@ -1,0 +1,62 @@
+**Definition 4.1 (Interpolation from clocks three through six).** In
+$\mathbb Z[x,d,p,v]$ put
+
+$$
+\begin{gathered}
+D=x(x+1)(x+2),\\
+z_3=(24-d)(x+1)(x+2),\qquad z_4=(18-d)D,\\
+z_5=(p-d)x(x+2),\qquad z_6=(v-d)x(x+1),\\
+a_0=20z_3-45z_4+36z_5-10z_6,\\
+a_1=10z_3-20z_4+15z_5-4z_6,\\
+a_2=4z_3-6z_4+4z_5-z_6,\\
+a_7=-z_3+4z_4-6z_5+4z_6,\qquad
+z_*=xa_1-D(24-d).
+\end{gathered}
+\tag{4.1}
+$$
+
+For $D\ne0$, $H$ denotes the degree-at-most-three interpolant at
+$3,4,5,6$ with samples
+
+$$
+\left(\frac{24-d}{x},\ 18-d,\
+\frac{p-d}{x+1},\ \frac{v-d}{x+2}\right).
+\tag{4.2}
+$$
+
+Its values $H_i=H(i)$, for $i=0,1,2,7$, equal $a_i/D$.
+Define the integer polynomials
+
+$$
+\begin{aligned}
+f={}&5dDa_2+a_0\bigl((294-10d)D-5a_2\bigr),\\
+K={}&4a_0^2z_*^2+2a_0(dD-a_0)z_*a_1\\
+&-(a_0+dD)\bigl(dD+(1-2x)a_0\bigr)a_1^2,\\
+F_0={}&405x^3+(975-18p+5v)x^2+(90-36p+5v)x-480.
+\end{aligned}
+\tag{4.3}
+$$
+
+These are exactly the F, Definition 31.1, forms, with the normalization
+$K=4k$. The $d$-degrees are two and four. Write
+
+$$
+f=ad^2+b_fd+c_f,\qquad K=A_4d^4+A_3d^3+A_2d^2+A_1d+A_0
+\tag{4.4}
+$$
+
+and define
+
+$$
+\begin{aligned}
+\alpha={}&A_4(-b_f^3+2ab_fc_f)
++A_3a(b_f^2-ac_f)-A_2a^2b_f+A_1a^3,\\
+\beta={}&A_4(-b_f^2c_f+ac_f^2)
++A_3ab_fc_f-A_2a^2c_f+A_0a^3.
+\end{aligned}
+\tag{4.5}
+$$
+
+The symbols $\alpha,\beta$ in (4.5) are polynomials on this chart,
+not the source square slacks of Section 1.
+

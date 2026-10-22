@@ -1,0 +1,51 @@
+**Proposition 14.2 (joint-channel condition and coalescing pairs).**
+For a fixed $y\in V_*$ and common radii, uniform exact recovery for all
+old and new records on the entire $C(y)$ holds in the additive model
+if and only if there is no distinct pair $W,W'\in C(y)$ satisfying
+both
+
+$$
+ |a(W)-a(W')|\le2\varepsilon_7,\qquad
+ |f_e(W)-f_e(W')|\le2\varepsilon_8.
+\tag{14.4}
+$$
+
+In the logarithmic model replace the second inequality by
+$|\log f_e(W)-\log f_e(W')|\le2\eta_8$. The same pair must satisfy
+both inequalities. In particular the separate minima of the two
+coordinate gaps cannot be combined unless their common-pair
+compatibility has been checked.
+
+For the actual pair $W_\pm(h)$ of (3.5), both eighth additive gaps
+and both eighth logarithmic gaps tend to zero. Hence no positive
+lower bound for these gaps holds uniformly over the punctured germ.
+For any fixed $\varepsilon_7>0$, old midpoint records exist on every
+sufficiently small nontrivial germ child for which these new-retention
+critical suprema tend to zero as well.
+
+**Proof.** Two closed equal-radius intervals intersect precisely when
+the distance of their centers is at most twice the radius. Applying
+this separately to the two coordinates for one fixed pair, and then
+using the full joint output relation, proves necessity and sufficiency
+of (14.4). The common base is exact and already equal. The intersection
+can use the midpoint in each coordinate, so equality is included.
+For the log version use logarithmic coordinates and exponentiate
+their midpoint. If no pair is jointly compatible, every actual
+complete record has a unique world, which proves sufficiency.
+
+Both germ worlds converge in original complete-source coordinates to
+$W_3$. Continuity of the positive responses and their logarithms proves
+the asserted zero limits. Their seventh gap also tends to zero by
+(3.6). For fixed $\varepsilon_7>0$, take
+$z_7=(a(W_+(h))+a(W_-(h)))/2$. This is allowed for both for all
+sufficiently small $h\ne0$. Then $S_R$ contains that pair, so each
+minimum in (13.7) is at most its corresponding pair gap and tends to
+zero. This assertion concerns these ambiguous old records, not every
+old record or the exact-old-retention endpoint. $\square$
+
+Theorem 10.2 remains the separate old-$a$ prediction theorem:
+its old-record-only criterion uses seventh-$a$ distances. Equations
+(13.7)–(14.1) concern the newly retained eighth scalar after the actual
+additional read. They do not rename the old-$a$ margin or change its
+equality case.
+

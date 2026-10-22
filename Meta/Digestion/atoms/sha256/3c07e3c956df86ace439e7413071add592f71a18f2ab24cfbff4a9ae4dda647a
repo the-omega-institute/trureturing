@@ -1,0 +1,14 @@
+**Lemma 23.2 (All guarded lift bounds).** Every refinement (23.5) is
+well defined, retains its unique root, and has final width
+$1/(10^8 2^{400})$. In (23.6), $0\notin A_i$, $0\notin\mathcal D_i$
+and $0\notin I_i$ for all five labels. The following are strict
+rational enclosures. An entry $(u,v)/10^k$ means that the entire
+corresponding interval is contained in the indicated open interval.
+
+| $i$ | $q_i$ | $\mathcal R_i$ | Sign of every element of $\mathcal D_i$ | $\mathcal P_i$ |
+| --- | --- | --- | --- | --- |
+| 1 | 4632607 | $(4749917,4749918)/10^8$ | $+$ | $(-533512131,-533512130)/10^6$ |
+| 2 | 12856673 | $(89953167,89953168)/10^8$ | $-$ | $(-10890382,-10890381)/10^6$ |
+| 3 | 64878432 | $(121975351,121975352)/10^8$ | $-$ | unrestricted |
+| 4 | 90481370 | $(-39521073,-39521072)/10^8$ | $-$ | unrestricted |
+| 5 | 2515351400 | $(-2094185026,-2094185025)/10^8$ | $-$ | unrestricted |

@@ -1,0 +1,82 @@
+**Lemma 27.2 (Evaluated first-target certificate).**
+Write $\mathcal E(b;p,v)=\sum_{k=0}^{22}c_k(p,v)b^k$, and put
+
+$$
+\bar y=(690.5959055,1416.4346645),\qquad
+\rho=0.0000005,\qquad
+C_k=c_k(\bar y),\quad H_k=H_{(\rho,\rho)}(c_k;\bar y),
+\tag{27.3}
+$$
+
+where the finite Taylor rule, including every mixed term, is
+
+$$
+\begin{aligned}
+Q(z)&=\sum_\nu q_\nu z^\nu,\\
+q_\alpha(Q;z^0)
+ &=\sum_{\nu\ge\alpha}q_\nu
+       \prod_i\binom{\nu_i}{\alpha_i}(z_i^0)^{\nu_i-\alpha_i},\\
+H_h(Q;z^0)&=\sum_{\alpha\ne0}|q_\alpha(Q;z^0)|
+                            \prod_i h_i^{\alpha_i},\\
+\mathcal T_{z^0,h}(Q)&=[q_0(Q;z^0)-H_h(Q;z^0),
+                         q_0(Q;z^0)+H_h(Q;z^0)].
+\end{aligned}
+\tag{27.4}
+$$
+
+All sums are finite, $\nu\ge\alpha$ is coordinatewise, and $0^0=1$.
+The interval encloses $Q$ on $\prod_i[z_i^0-h_i,z_i^0+h_i]$.
+The signs and exact integer ceilings
+$u_k=\lceil10^{12}H_k/|C_k|\rceil$ are as follows.
+
+| $k$ | $\operatorname{sign}C_k$ | $u_k$ |
+| --- | --- | --- |
+| $0$ | $-$ | $3361646$ |
+| $1$ | $+$ | $425646$ |
+| $2$ | $-$ | $150935$ |
+| $3$ | $-$ | $33571$ |
+| $4$ | $-$ | $16458$ |
+| $5$ | $-$ | $11339$ |
+| $6$ | $-$ | $9423$ |
+| $7$ | $-$ | $8666$ |
+| $8$ | $-$ | $8397$ |
+| $9$ | $-$ | $8348$ |
+| $10$ | $-$ | $8398$ |
+| $11$ | $-$ | $8484$ |
+| $12$ | $-$ | $8572$ |
+| $13$ | $-$ | $8645$ |
+| $14$ | $-$ | $8689$ |
+| $15$ | $-$ | $8693$ |
+| $16$ | $-$ | $8635$ |
+| $17$ | $-$ | $8484$ |
+| $18$ | $-$ | $8199$ |
+| $19$ | $-$ | $7743$ |
+| $20$ | $-$ | $7072$ |
+| $21$ | $-$ | $5399$ |
+| $22$ | $+$ | $6767$ |
+
+Consequently, throughout $K_1$,
+
+$$
+\begin{gathered}
+\frac{H_k}{|C_k|}\le\frac{3361646}{10^{12}}<\frac1{250000}
+\quad(0\le k\le22),\\
+c_0<0,\quad c_1>0,\quad c_2,\ldots,c_{21}<0,\quad c_{22}>0.
+\end{gathered}
+\tag{27.5}
+$$
+
+In particular the degree is exactly $22$, the constant term is nonzero,
+and the coefficient string has exactly three sign variations.
+The following are rational outward enclosures from the same rule.
+The domain column specifies the variables being enclosed.
+
+| expression | domain | enclosure |
+| --- | --- | --- |
+| $10^{-60}\mathcal E(30;p,v)$ | $(p,v)\in K_1$ | $[-48263,-48262]$ |
+| $10^{-60}\mathcal E(34;p,v)$ | $(p,v)\in K_1$ | $[183153,183154]$ |
+| $10^{-34}T_s(p,v)$ | $(p,v)\in K_1$ | $(-10,-9)$ |
+| $10^{-24}\lambda_1(b;p,v)$ | $(b,p,v)\in I_{b,1}\times K_1$ | $(-1.474,-1.473)$ |
+| $L(r,b)$ | $(r,b)\in\mathcal R_1$ | $(-0.000000005137,-0.000000005136)$ |
+| $Q_r(r,b)$ | $(r,b)\in\mathcal R_1$ | $(0.0000000050236002,0.0000000050236006)$ |
+| $p_r(r,b)$ | $(r,b)\in\mathcal R_1$ | $(190386674,190408244)$ |

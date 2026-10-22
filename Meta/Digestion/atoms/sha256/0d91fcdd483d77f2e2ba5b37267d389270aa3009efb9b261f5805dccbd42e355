@@ -1,0 +1,57 @@
+**Theorem 24.1 (Entire strict augmented-J critical locus).** For every
+actual strict complete world $W\in\mathcal H$,
+
+$$
+\operatorname{rank}d\Psi_J(W)<2
+\quad\Longleftrightarrow\quad
+ W\in\{\mathcal W_1^J,\mathcal W_2^J\}.
+\tag{24.3}
+$$
+
+Both worlds are regular and have negative $p$; more precisely
+
+$$
+\begin{aligned}
+-533512131/10^6&<p(\mathcal W_1^J)<-533512130/10^6,\\
+-10890382/10^6&<p(\mathcal W_2^J)<-10890381/10^6.
+\end{aligned}
+\tag{24.4}
+$$
+
+Proof. Suppose first that $D(W)\ne0$ and the rank is less than two.
+Lemma 21.2 makes its source a common zero of $E_0,E_1,E_2$.
+Each fixed matrix (21.12), specialized at this source, annihilates
+
+$$
+(r^{29},r^{28},\ldots,r,1)^{\mathsf T}.
+\tag{24.5}
+$$
+
+The column is nonzero, and the row evaluations are the corresponding
+shifted $E_0,E_k$, all zero. Thus $R_1(b)=R_2(b)=0$, including any
+specialized leading-degree drop. The univariate gcd identity (22.1)
+then forces one of its displayed factors to vanish. For $b>0$ the
+factors $b$, $5b+2$ and $b^2+8b+4$ are positive. The sole remaining
+positive exceptional branch $b=1/8$ has already been excluded for
+regular worlds by (24.2). Hence $F_J(b)=0$.
+
+Lemma 23.1 gives exactly the five possibilities $b=\beta_i$.
+All specialization guards in (22.4) hold at every such root, so
+Lemma 22.2 forces $r=\rho_i$. Three violate $0<r<1$ by Lemma 23.2.
+The two surviving strict sources have $D\ne0$ and their unique
+whole-world lifts are exactly (23.8), by the original correspondence
+(21.4). This proves necessity on the regular parent.
+
+Conversely Lemma 22.2 makes all three $E_i$ vanish at each surviving
+source. Its $D\ne0$, strictness and actual complete-world lift were
+proved after (23.8). Lemma 21.2 therefore gives rank less than two
+at both $\mathcal W_i^J$. Lemma 23.2 gives (24.4).
+
+Finally $D=0$ is equivalent to $\Lambda=0$ at a strict source by
+(2.6). At every such actual world [SIII], Theorem 13.1, gives rank
+two for the same $\Psi_J$ on the full analytic parent. This includes
+both entire singular lines and every real drift; it is not obtained
+by continuing the regular quotient through its zero denominator.
+It rules out any further singular critical world and completes
+(24.3). ∎
+

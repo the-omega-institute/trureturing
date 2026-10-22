@@ -1,0 +1,6 @@
+;而 $\nu$ 对 $m$ 个顶点的路为 $\lfloor m/2\rfloor$,对长度 $L$ 的奇圈为 $(L-1)/2$。
+
+(iii) 长度 $L$ 的偶圈恰有两个完美匹配 $Z^{(1)}$、$Z^{(2)}$:完美匹配含圈上某一条边 $e$ 时,与 $e$ 相邻的两条边被排除,依次推下去,它被唯一确定为 $e$ 所在的那组相间边。故由约定 2.4,$\operatorname{Pf}(A)=\prod_{Z^{(1)}}A_{uv}+\prod_{Z^{(2)}}A_{uv}$,它在特征 $2$ 中非零当且仅当两积不同,此时 $\operatorname{rank}A=L$。对真子集 $S\subsetneq[m]$,$H(A)[S]$ 是若干条路的不交并,不含偶圈,故由 (2.4) 与定理 3.3 证明的第一段,$A[S]$ 的 Pfaffian 非零当且仅当 $H(A)[S]$ 有完美匹配。$|S|=L-1$ 为奇数时没有完美匹配;删去两个相邻顶点所得的 $L-2$ 个顶点的路有完美匹配。因此 $\operatorname{Pf}(A)=0$ 时 $\operatorname{rank}A=L-2$。
+
+$\mathbb F_2$ 上邻接矩阵的两积都为 $1$,故秩为 $L-2$。最后一句:$M_t[C]$ 以 $Z$ 为支撑图,其两组完美匹配的权积相等当且仅当 $\alpha_t(Z)=1$(约定 2.3),于是 $\operatorname{rank}_FM_t[C]\in\{L,L-2\}$ 按此分情形,而 $\operatorname{rank}_{\mathbb F_2}\Gamma^{\pi_t}[C]=L-2$。∎
+

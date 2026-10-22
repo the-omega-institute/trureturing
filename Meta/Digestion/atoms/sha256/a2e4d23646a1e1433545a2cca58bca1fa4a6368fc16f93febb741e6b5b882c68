@@ -1,0 +1,11 @@
+**Corollary 15.2 (All independent joint routes into this target are
+excluded).** No sequence of original joint configurations can have
+bases tending to $y_*$. In particular the actual $J$ pairs above
+eventually lie in entire children with no distinct equal-$M$ pair.
+
+Proof. The target is in the interior of $\mathcal B$, so any such
+base sequence is eventually in $\mathcal B$. Theorem 13.2 excludes
+an equal-$M$ pair anywhere in its entire child. This covers arbitrary
+$M$ endpoints, unused companions, overlapping or disjoint pairs,
+and independent common terminal values. ∎
+
