@@ -29,9 +29,10 @@ $\mathcal S$ with $r<\Re\rho<1$. At $r=1/2$, choose once and for all
 
 $$
 \mathcal S=\{\rho,\bar\rho\},\qquad
-\rho=\beta+i,\qquad 1/2<\beta<1.
+\rho=\beta+i\tau,\qquad 1/2<\beta<1,\quad \tau>0.
 $$
 
+The frequency $\tau$ is fixed; it may exceed any specified finite height.
 It supplies one discrete Beurling system, with prime generators of norms
 $p>1$, for which, for every fixed $\varepsilon>0$,
 
@@ -68,19 +69,28 @@ the prescribed oscillation to their joint extremal sources. This is a
 paper application, without a literature-priority or formal-certification
 claim.
 
-## Normalize the same system once
+## Normalize once while preserving any finite ordinary prefix
 
-The prime number theorem gives $\sum_p p^{-1}=\infty$. Delete finitely
-many generators so that the resulting zeta residue
-$\kappa'=\kappa\prod_{p\ \mathrm{deleted}}(1-p^{-1})$ lies in $(0,1)$.
-Add one generator with norm $q=(1-\kappa')^{-1}>1$. The new residue is
-exactly $\kappa'/(1-q^{-1})=1$.
+Fix any $D\ge2$. Replace the finitely many prime generators of norm at
+most $D$ by exactly one generator for each ordinary prime at most $D$.
+The remaining prime harmonic sum still diverges. Delete finitely many
+further generators of norm greater than $D$ so that the residue
+$\kappa'$ lies in $(0,1)$. Choose an integer $m\ge1$ large enough that
+
+$$
+q=(1-(\kappa')^{1/m})^{-1}>D,
+$$
+
+and add $m$ distinct generators, each of norm $q$. The new residue is
+exactly $\kappa'/(1-q^{-1})^m=1$. No generator of norm at most $D$
+is changed by these last two steps.
 
 A finite change of generators changes $\psi_{\mathcal P}(x)$ by
 $O(\log x)$ and eventually changes $\theta_{\mathcal P}(x)$ by a
-constant. Finite inclusion–exclusion handles deletion. For insertion,
+constant. Finite inclusion–exclusion handles deletion. For each insertion,
 $\mathcal N_{\rm new}(x)=\sum_{q^k\le x}\mathcal N_{\rm old}(x/q^k)$
-and its error is a convergent geometric sum, giving
+and its error is a convergent geometric sum. Iterating this finite
+number of times gives
 
 $$
 \mathcal N(x)=x+O_\varepsilon(x^{1/2+\varepsilon}).
@@ -89,7 +99,18 @@ $$
 
 Thus (RJ1) and the local $\theta$ property survive. All following
 sources belong to this one fixed normalized system. Added generators
-are distinct labels if their norms collide with existing generators.
+remain distinct labels when their norms coincide. Its prime prefix,
+generalized integers, and divisor weights up to $D$ now agree exactly
+with the ordinary ones; in particular $\mathcal N(x)=\lfloor x\rfloor$
+for $1\le x\le D$.
+
+The finite Euler factors have zeros and poles only on $\Re s=0$.
+Thus the prescribed right-half-plane zeros are unchanged. Choosing
+$\tau>H$ for any fixed $H$ also preserves absence of zeros in
+$\Re s>1/2$, $|\Im s|\le H$. This does not prescribe the ordinary
+critical-line zero table. All constants may depend on the fixed
+$D,H,\beta,\tau$ and finite modifications; no uniformity as these grow
+is asserted.
 
 ## Keep the actual CA pressure and its complete reserve
 
@@ -241,13 +262,14 @@ $\int_{\log t}^\infty e^{-(1-\beta)v}v^{-2}\,dv$.
 Together with (RJ4)–(RJ5), this yields, with fixed $K>0$ and $\phi$,
 
 $$
-P(t)=-K\frac{t^{\beta-1}}{\log t}\cos(\log t+\phi)
+P(t)=-K\frac{t^{\beta-1}}{\log t}\cos(\tau\log t+\phi)
 +o(t^{\beta-1}/\log t),\quad
 K=\frac2{|\rho(1-\rho)|},\quad
 \phi=\arg\frac1{\rho(1-\rho)}.
 $$
 
-Choose $x_j=\exp((2j+1)\pi-\phi)$, $d=e^{\pi/3}$ and $y_j=e^\pi x_j$.
+Choose $x_j=\exp(((2j+1)\pi-\phi)/\tau)$,
+$d=e^{\pi/(3\tau)}$ and $y_j=e^{\pi/\tau}x_j$.
 Eventually $P>0$ on $[x_j,dx_j]$, whereas
 $P(y_j)\le-(K/2)y_j^{\beta-1}/\log y_j<0$.
 Since $P$ is continuous and tends to zero, it attains a negative minimum
@@ -326,7 +348,8 @@ It is stronger source matching than an arbitrary pulse function or a
 first-prime-mass model, while reusing the classical realization machinery.
 
 The conclusion does not establish insufficiency for ordinary integers:
-(RJ2) is not the exact count $\lfloor x\rfloor$, and this system does
+(RJ2) agrees with $\lfloor x\rfloor$ only on the prescribed finite
+window and does not give that equality globally. This system does
 not carry the ordinary zeta functional equation. A proof for the
 original source must use an ordinary-integer or ordinary-zeta constraint
 that does not transport to this system. No such additional estimate,
