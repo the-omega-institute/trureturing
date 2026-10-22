@@ -764,3 +764,477 @@ ordinary conditional proofs above establish their displayed deduction
 from those inputs, not a new certification of the inputs themselves.
 
 ## 追加锚（本行以下为增补区）
+
+## 9. Clock-eight response separation on the complete third child
+
+**Convention 9.1 (source and action correspondence).** Retain the complete
+worlds, the history $H_4$, the actual continuation $M,M,J$ after $H_4$, followed by the
+entire-child definition $C(y)$ of §§2–3. The seventh action remains the
+actual $J$; $m(W)$ is the unacquired alternative seventh-$M$ value. In
+VI at the pinned revision 4442fb66c4d7017bb7b932cc63f058b46c83b71c, direct
+multiplication of the chronological products gives
+
+$$
+ Q_6=\begin{pmatrix}3&1\\5&2\end{pmatrix},\qquad
+ Q_7=JQ_6=\begin{pmatrix}5&2\\3&1\end{pmatrix},
+$$
+
+and therefore
+
+$$
+ JQ_7=\begin{pmatrix}3&1\\5&2\end{pmatrix},\qquad
+ MQ_7=\begin{pmatrix}3&1\\8&3\end{pmatrix}.
+\tag{9.1}
+$$
+
+Put
+
+$$
+ c=\frac{r(1-r)}b,\qquad U=1+2b,\qquad n=b+c+r,
+ \qquad \theta=\frac nU.
+\tag{9.2}
+$$
+
+For a complete world define $q_k=Ug(k)$. The unchanged readings at
+clocks $3,4,5,6$ and the source-determined alternative $m$ give
+
+$$
+ q_3=\frac{24-d}{\theta},\quad q_4=18-d,
+ \quad q_5=\frac{p-d}{1+\theta},\quad
+ q_6=\frac{v-d}{2+\theta},\quad
+ q_7=\frac{m-d}{3+2\theta}.
+\tag{9.3}
+$$
+
+The alternative $m$ occurs only in this source identity. It is not an
+observer input. The four values in (9.3) are samples of one whole polynomial
+of degree at most three, so fixed-node interpolation gives
+
+$$
+\begin{aligned}
+ F&:=q_3-4q_4+6q_5-4q_6+q_7=0,\\
+ q_0&:=35q_4-84q_5+70q_6-20q_7=-Ud,\\
+ q_8&:=-q_4+4q_5-6q_6+4q_7=Ug(8).
+\end{aligned}
+\tag{9.4}
+$$
+
+The identities follow by checking the weights on $1,s,s^2,s^3$, hence
+remain valid for every lower degree, zero sample, repeated root and other
+allowed gain specialization. From (9.1), the two possible actual clock-eight
+scalars are
+
+$$
+ f_J=d+(2U+n)g(8)=d+(2+\theta)q_8,
+ \qquad
+ f_M=d+(3+8b+c)g(8).
+\tag{9.5}
+$$
+
+They are responses of the same $W$, with one fixed $g$ and one fixed $d$
+throughout the run.
+
+The earlier enclosure $g(4)\in(-5.789,-5.785)$ is incompatible with this
+source. VI Lemma 13.2 gives
+
+$$
+27.263115<d<27.263116,\qquad
+1.2551610794<U<1.2551610796,
+$$
+
+and $g(4)=(18-d)/U$, hence
+
+$$
+-7.381<g(4)<-7.379.
+\tag{9.6}
+$$
+
+Using the same source intervals in (9.4), with outward rational endpoint
+substitution, gives $139.8<q_8<139.9$ and $111<g(8)<112$. Thus the
+incompatible enclosure is discarded; the response conclusion below uses
+(9.4), not that enclosure.
+
+**Lemma 9.2 (nonzero response tangents at $W_3$).** At the exact algebraic
+world $W_3$ of VI Definition 13.1, both $Kf_J$ and $Kf_M$ are nonzero,
+where $K$ is the VI tangent in the independent $(t,b)$ chart with
+$t=r/b$, $Kp=Kv=Km=0$, $Kt=1$, and $p_b(W_3)\ne0$.
+
+**Proof.** All partial derivatives below hold $p,v,m$ fixed. Differentiating
+(9.4) gives
+
+$$
+\begin{aligned}
+F_d&=-\frac1\theta+4-\frac6{1+\theta}+\frac4{2+\theta}-\frac1{3+2\theta},\\
+F_\theta&=-\frac{24-d}{\theta^2}-\frac{6(p-d)}{(1+\theta)^2}
+ +\frac{4(v-d)}{(2+\theta)^2}-\frac{2(m-d)}{(3+2\theta)^2},\\
+(q_8)_d&=1-\frac4{1+\theta}+\frac6{2+\theta}-\frac4{3+2\theta},\\
+(q_8)_\theta&=-\frac{4(p-d)}{(1+\theta)^2}+\frac{6(v-d)}{(2+\theta)^2}
+ -\frac{8(m-d)}{(3+2\theta)^2},\\
+(q_0)_d&=-35+\frac{84}{1+\theta}-\frac{70}{2+\theta}+\frac{20}{3+2\theta},\\
+(q_0)_\theta&=\frac{84(p-d)}{(1+\theta)^2}-\frac{70(v-d)}{(2+\theta)^2}
+ +\frac{40(m-d)}{(3+2\theta)^2}.
+\end{aligned}
+\tag{9.7}
+$$
+
+The exact VI boxes imply the following weaker rational box:
+
+$$
+\begin{gathered}
+1.3785\le\theta\le1.3787,\quad 1.25516\le U\le1.25517,
+\quad27.2631\le d\le27.2632,\\
+7.2830\le p\le7.2831,\quad61.4943\le v\le61.4944,
+\quad351.0575\le m\le351.0576.
+\end{gathered}
+\tag{9.8}
+$$
+
+Every terminating decimal in (9.8) and below denotes the corresponding
+exact rational. Since all denominators in (9.7) are positive, signed
+endpoint products give
+
+$$
+\begin{array}{c|c@{\qquad}c|c}
+F_d&[1.761,1.764]&F_\theta&[15.34,15.39]\\
+(q_8)_d&[.399,.400]&(q_8)_\theta&[-46.1,-45.9]\\
+(q_0)_d&[-16.94,-16.91]&(q_0)_\theta&[-116.1,-115.4]\\
+q_8&[139.8,139.9]&&
+\end{array}
+\tag{9.9}
+$$
+
+For example, the two $q_8$ endpoint inequalities are
+
+$$
+9.2631-\frac{4(19.9802)}{2.3785}-\frac{6(34.2313)}{3.3785}
+ +\frac{4(323.7943)}{5.7574}>139.8,
+$$
+
+and
+
+$$
+9.2632-\frac{4(19.9800)}{2.3787}-\frac{6(34.2311)}{3.3787}
+ +\frac{4(323.7945)}{5.7570}<139.9.
+$$
+
+The analogous signed endpoint expressions in (9.7) give (9.9); no floating
+point evaluation is used. In particular
+
+$$
+ d':=\frac{Kd}{K\theta}=-\frac{F_\theta}{F_d}\in[-8.75,-8.69].
+\tag{9.10}
+$$
+
+Here $K\theta\ne0$. Indeed, if $K\theta=0$, then $F_d>0$ and
+$KF=0$ give $Kd=0$. Differentiating $q_0=-Ud$, using $d>0$, gives
+$KU=0$, hence $Kb=0$. Differentiating $n=b+c+r$ then gives $Kn=0$;
+with $n_r=1+(1-2r)/b\in[-5.29,-5.27]$, this forces $Kr=0$, contradicting
+$Kt=1$.
+
+Set $q_8'=(q_8)_\theta+(q_8)_d d'$. From (9.9)–(9.10),
+
+$$
+q_8'\in[-49.7,-49.3],\qquad
+U':=\frac{KU}{K\theta}\in[-.81,-.72].
+\tag{9.11}
+$$
+
+The second bound follows by differentiating $q_0=-Ud$. Further source
+identities give
+
+$$
+\begin{gathered}
+ n_r\in[-5.29,-5.27],\quad n_b=1-c/b\in[-4.51,-4.50],
+ \quad r'\in[.25,.33],\\
+ H:=3+8b+c\in[4.722,4.724],\quad H'\in[-3.04,-2.50],\\
+ g_8:=q_8/U\in[111,112],\quad g_8'\in[24,34].
+\end{gathered}
+\tag{9.12}
+$$
+
+For clarity, $n'=U+\theta U'$, $b'=U'/2$,
+$r'=(n'-n_b b')/n_r$, and
+$H=(7/2+\theta)U-r-1/2$. These formulas, together with the signed
+endpoint convention, prove (9.12).
+
+Finally, (9.5), (9.11), and (9.12) give
+
+$$
+-38<\frac{Kf_J}{K\theta}=d'+q_8+(2+\theta)q_8'<-34,
+\tag{9.13}
+$$
+
+and
+
+$$
+-240<\frac{Kf_M}{K\theta}=d'+Hg_8'+g_8H'<-120.
+\tag{9.14}
+$$
+
+For instance the $J$ bounds use
+$-8.75+139.8-3.3787(49.7)>-38$ and
+$-8.69+139.9-3.3785(49.3)<-34$; the $M$ bounds use
+$-8.75+4.722(24)-112(3.04)>-240$ and
+$-8.69+4.724(34)-111(2.50)<-120$.
+Since $K\theta\ne0$, both response tangents are nonzero. $\square$
+
+**Lemma 9.3 (local and remote response bands).** At $W_3$,
+
+$$
+499.5<f_J(W_3)<500,\qquad 551<f_M(W_3)<557.
+\tag{9.15}
+$$
+
+For every $y\in K_3$, the remote branch $Z(y)$ of VI Theorem 18.1
+satisfies
+
+$$
+493.9<f_J(Z(y))<494.4,\qquad 646<f_M(Z(y))<648.
+\tag{9.16}
+$$
+
+**Proof.** The local bounds follow from
+$27.2631+3.3785(139.8)>499.5$,
+$27.2632+3.3787(139.9)<500$,
+$27.2631+4.722(111)>551$, and
+$27.2632+4.724(112)<557$.
+For the remote square, VI Theorem 18.1 gives the complete source bounds
+that imply
+
+$$
+\theta\in[.9959,.9961],\quad U\in[1.0928431,1.0928433],
+$$
+
+$$
+q_5\in[-14.153,-14.149],\quad q_6\in[8.665,8.668],
+\quad q_7\in[61.027,61.042],\quad q_8\in[153.01,153.12],
+$$
+
+and hence $g_8\in[139.99,140.12]$ and
+$3+8b+c\in[4.3649,4.3650]$. The endpoint sums
+
+$$
+17.527142-4(14.153)-6(8.668)+4(61.027)>153.01,
+$$
+
+$$
+17.529885-4(14.149)-6(8.665)+4(61.042)<153.12
+$$
+
+then give (9.16) by (9.5). $\square$
+
+**Theorem 9.4 (open-base entire-child separation).** There is an open set
+$V\subset\operatorname{int}K_3$, containing $y_3$, such that for every
+$y\in V$ each of $f_J$ and $f_M$ is injective on the entire child
+$C(y)$. The set $V$ is existential; no numerical radius or effective
+membership recognizer is asserted.
+
+**Proof.** By Lemma 9.2 and $p_b(W_3)\ne0$, the Jacobian of
+$(p,f_e)$ in $(t,b)$ coordinates is
+
+$$
+\det D(p,f_e)=-p_b(W_3)Kf_e(W_3)\ne0,
+\qquad e\in\{J,M\}.
+\tag{9.17}
+$$
+
+The inverse-function theorem supplies neighborhoods $N_J,N_M$ of $W_3$
+on which $(p,f_J)$ and $(p,f_M)$ are injective. Let $N=N_J\cap N_M$,
+and shrink it so that its two response images remain in the local bands
+(9.15). Let $N_Z$ be a relatively open complete-world neighborhood of
+$Z(y_3)$ inside VI's remote source square. VI Theorem 18.1 supplies one
+and only one remote world over each base in $K_3$, and (9.16) holds on it.
+
+By VI Theorem 17.2, the complete strict-world inverse image of $K_3$ is
+compact. VI Theorem 23.1 gives $C(y_3)=\{W_3,Z(y_3)\}$. Hence there is an
+open neighborhood $V_0$ of $y_3$, inside $\operatorname{int}K_3$, for
+which
+
+$$
+\Phi^{-1}(V_0)\subset N\cup N_Z.
+\tag{9.18}
+$$
+
+If not, choose $y_i\to y_3$ and $W_i\in\Phi^{-1}(y_i)$ outside
+$N\cup N_Z$. Compactness gives a convergent complete-world subsequence.
+Its limit lies in $C(y_3)$, hence is $W_3$ or $Z(y_3)$, both in the open
+union; the complement is relatively closed, a contradiction. Intersect
+$V_0$ with VI Corollary 23.3's at-most-three neighborhood and with the
+off-$p=24$ domain, obtaining $V$.
+
+For $y\in V$, two local worlds with equal $f_e$ have equal $p$ and
+therefore coincide by the injectivity of $(p,f_e)$ on $N$. Two remote
+worlds coincide by VI's uniqueness, and a local and remote response cannot
+agree by the disjoint bands (9.15)–(9.16). Since (9.18) exhausts the entire
+child, $f_e$ is injective on $C(y)$. This includes all unused companions
+and all singular, lower-degree, zero-sample and repeated-root strata in the
+original definition of $C(y)$. $\square$
+
+**Corollary 9.5 (germ and center cardinalities).** After shrinking the
+original germ radius so that its bases lie in $V$, for every sufficiently
+small $0<|h|$,
+
+$$
+C(y(h))=\{W_+(h),W_-(h),Z(y(h))\},
+$$
+
+and both $f_J$ and $f_M$ have three singleton response classes. At the
+center,
+
+$$
+C(y_3)=\{W_3,Z(y_3)\}
+$$
+
+and each response has two singleton classes. There is no assertion of three
+worlds, or constant cardinality, at every base in $V$. $\square$
+
+## 10. Old-record prediction, actual execution and acquired identification
+
+**Definition 10.1 (response separation margin).** For $e\in\{J,M\}$, define
+
+$$
+\Delta_e(y)=\min_{\substack{W,W'\in C(y)\\ f_e(W)\ne f_e(W')}}
+ |a(W)-a(W')|,
+\tag{10.1}
+$$
+
+with value $+\infty$ when the indexing set is empty. The $a$ in this
+margin is exactly the original seventh-$J$ source response from (2.5).
+
+On a punctured germ child, Corollary 9.5 gives
+
+$$
+\Delta_J(y(h))=\Delta_M(y(h))=\delta(h),
+\tag{10.2}
+$$
+
+because every distinct-world pair has a different new response. In the
+original germ coordinates, this is the attained quantity $\delta(h)=2A|h|+O(|h|^3)$
+from (4.5). At the center both margins equal
+
+$$
+\Delta_J(y_3)=\Delta_M(y_3)=\delta_{\rm c}
+ =|a(W_3)-a(Z(y_3))|>L>92.02.
+\tag{10.3}
+$$
+
+**Theorem 10.2 (exact old-record prediction condition).** Let
+$R=(p,v,z,\varepsilon)$ be precisely the pre-action record of Definition
+5.1, with every real $z$ satisfying $|z-a(W)|\le\varepsilon$ permitted.
+For either fixed $e\in\{J,M\}$, an $R$-only predictor can return the exact
+$f_e(W)$ for every complete world and every permitted $z$ in a punctured
+germ child if and only if
+
+$$
+2\varepsilon<\delta(h).
+\tag{10.4}
+$$
+
+At the center, the corresponding condition is exactly
+
+$$
+2\varepsilon<\delta_{\rm c}.
+\tag{10.5}
+$$
+
+Equality fails in both statements.
+
+**Proof.** This is Lemma 5.3 applied to the newly computed response
+partition. If $2\varepsilon<\Delta_e$, two worlds compatible with one
+record have $a$-distance at most $2\varepsilon$, hence cannot have
+different $f_e$; the common response is the predictor. If
+$2\varepsilon\ge\Delta_e$, an attaining pair and the midpoint of its two
+$a$-values give the same permitted record for two different responses.
+On the punctured germ (10.2) applies, and at the center (10.3) applies.
+Closed endpoints give failure at equality. The accessible input contains only
+$p,v,z,\varepsilon$; $h$, the sign, branch, $m$, source coordinates and
+unacquired alternatives remain absent. A record-only selector choosing $e$
+sees the same midpoint record for both worlds and therefore chooses the same
+action, so the same necessity argument applies. $\square$
+
+**Definition 10.3 (legitimate one-step same-source port).** For a fixed public
+action $e\in\{J,M\}$, or for an action selected only from $R$, grant the
+following conditional interface on the actual run:
+
+$$
+\operatorname{Clock8Read}_e(W,7,Q_7,R)
+ =\bigl(W,8,eQ_7,R\mathbin{\|}(8,e,f_e(W))\bigr),
+\tag{10.6}
+$$
+
+and let the returned scalar be the exact $f_e(W)$. The port preserves the
+same $W,g,d$, grants no reset, second source, simultaneous counterfactual
+reply, unknown seed, decoder oracle or future-call right. It is an action/read/
+retention premise, not a record-only computation of $f_e$.
+
+**Theorem 10.4 (one actual read identifies the complete world).** Under the
+port (10.6), for every allowed old $\varepsilon$ the extension adds exactly
+one action and one exact scalar. The original run has seven actions and eight
+readings, including the initial zero; the extended run has eight actions and
+nine scalar readings, with one appended event record $(8,e,f_e)$. The old
+record remains $R$, and no simultaneous $J/M$ reply is acquired.
+
+For $y\in V$, if two actual worlds produce the same new subrecord
+$(p,v,e,f_e)$, then they are equal. Consequently the exact newly acquired
+response identifies $W$ on the entire child over $V$, including any old
+retention error. This is a mathematical inverse on the actual image; it is
+not an installed, effective, finite-bit or cost-optimal decoder.
+
+**Proof.** Equality of the subrecords places both worlds in the same $C(y)$
+and gives equal $f_e$. Theorem 9.4 makes $f_e$ injective there, so the
+worlds coincide. The port supplies an actual source response even when the
+old midpoint condition fails; it does not manufacture that response from
+$R$. Conversely, with no new read and $2\varepsilon\ge\delta(h)$ (or
+$\delta_{\rm c}$ at the center), Theorem 10.2's midpoint gives two worlds
+with the same old record, so uniform identification cannot hold. $\square$
+
+## 11. Source overlap and exact scope
+
+**Convention 11.1 (later published sources).** The later StrictRealVIII source
+at commit 359d2aae09512cbeb61749f99d5589f2f494e2f8, §§21–27, evaluates a
+closed rectangle centered at $p=20$, $v\approx117.0985$. It proves exactly
+four complete worlds there and separates all original clock-seven $M$ replies
+by more than $1/3$, while locating an existing clock-seven $J$ pair. That
+rectangle, its carrier roots, and its $J/M$ question are distinct from the
+third target $K_3$, the exact $W_3$, and the clock-eight responses (9.5).
+Its §§17–20 lower-face/unit-$j$ exclusion is likewise a separate boundary
+incidence statement. It neither proves nor contradicts Theorem 9.4.
+
+The historical StrictRealVI source at 4442fb66c4d7017bb7b932cc63f058b46c83b71c
+and the c88 Third-Germ source at c88f466a3ad621f86b563d5179675ace7505b8a3 remain the suppliers for $W_3$, $K_3$, the
+remote branch, the complete-child compactness argument, and $\delta(h)$ and
+$\delta_{\rm c}$. The later 359d source is not substituted for either pin.
+
+The independently published Atomic Holographic Boundary Geometry Continuation
+VIII source at commit 4b07e9740ce998ee7cf899f4b1897bf61a3bf713 proves a
+critical-temperature obstruction for a common completely positive map on a
+native Gibbs preparation. Its source, fixed register, filter, and conversion
+contract are different from the strict-real clock source and its one-step
+scalar port. It supplies no $W_3$ response, no $C(y)$ child, and no
+retention or prediction margin, so it does not absorb this deduction.
+
+The source-specific delta here is only the pair of actual response maps
+(9.5), their nonzero W3 tangents, their disjoint local/remote bands, and the
+resulting entire-child injectivity and one-read consequence. Fixed-node
+interpolation, the VI/c88 child inventory, the old $a$-margin and midpoint
+criterion are reused. The checked source correspondence supports no
+literature-wide priority claim.
+
+**Convention 11.2 (remaining scope).** The result preserves all original
+fixed-$G_{gc}$, original-$Q$, parked-consumer and unchanged-initialization
+questions. It does not settle the global independent equal-$J$/equal-$M$
+incidence problem, any base outside $V$, or any all-depth continuation. It
+does not construct unknown-source preparation, an effective neighborhood
+recognizer, an installed inverse, finite-precision storage, a resource optimum,
+or a universal alpha/beta reduction. Independently meaningful space, time,
+boundary and memory views, mutual recovery, route agreement, dynamics
+compatibility, actual continued callable use and the alpha/beta foundation
+therefore remain open in their original scopes.
+
+The interpolation weights used in (9.4) are the distinct-node Lagrange
+formula; see Berrut and Trefethen, “Barycentric Lagrange Interpolation”,
+§2, DOI 10.1137/S0036144502417715. The inverse-function, compactness and
+midpoint steps are used only in the source hypotheses and the retained
+whole-child lemma of §§3–6; no stronger global source theorem is inferred.
+
+## 追加锚（本行以下为增补区）
