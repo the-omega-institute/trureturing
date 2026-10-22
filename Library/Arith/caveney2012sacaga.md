@@ -1432,22 +1432,28 @@ The complete original improper integral and all its prime-power and
 endpoint terms are retained. The independent signed lower bound (S4),
 strict Robin for every integer $n>5040$, and RH remain unproved.
 
-## The future-record condition is an all-real pressure minimum
+## Reuse the cone-envelope minimum at the selected source
 
-Use the full pressure $P$, inventory $B$, tangent gap $H$ and actual
-values $X(b)$ already used in (P1)--(P6). In particular the existing
-[complete pressure account](../ArithSums/nicolas2025comparison.md#keep-the-two-response-kernels-distinct)
-is
+Use the full pressure $P$, inventory $B$ and kernel $k$ from (P1)--(P6):
 
 $$
 P(t)=\gamma+\log\log t-g(t)t-M(g(t))=I_\psi(t)+R(t),
 \qquad P'(t)=k(t)[t-B(t)]\quad\text{a.e.}
 $$
 
-Start with an actual event-free own-price integer $N=C_A$,
-$A=\log N>1$, before assuming its future-record property. Thus
-$B(A)=A$, $d_A(N)=0$ and $P(A)=\Delta(N)$. The following three
-conditions on this same integer are equivalent:
+The [archived cone-envelope theorem](../Analytic/mantovanelli2026primeworkload.md#existing-completeness-and-cone-reduction),
+Theorem 10.4 (`thm:cone-envelope`), already supplies the following
+minimum condition at a regular self-tangent source. Its notation maps
+by $\widehat{\mathcal F}=-P$, $D_{\rm CA}(t)=t-B(t)$ and $K=k$.
+The adjacent `lem:legendre-majorant` applies to every integer $m>e$,
+so its comparison at $t=\log m$ also gives the all-integer form below.
+These source statements and proofs were read in the primary TeX
+`paper/colossally_abundant_prime_layer_workload.tex` in the linked archive.
+The extremal interface is reused, not a new converse theorem.
+
+For an actual event-free own-price integer $N=C_A$, $A=\log N>1$,
+we have $B(A)=A$ and $P(A)=\Delta(N)$. The cited theorem and majorant
+make the following three conditions equivalent:
 
 $$
 \begin{aligned}
@@ -1459,37 +1465,16 @@ $$
 \tag{FR1}
 $$
 
-For the forward direction, reuse (P6)'s exact identity
-$X_N-X(t)=P(t)-P(A)-H(t,B(t))$. The actual layer rule gives
-$N\mid C_t$ for $t\ge A$, including every tied activation layer.
-The first condition can therefore be applied to $C_t$ and gives the
-already retained stronger comparison
+The already retained (P6) also gives
 
 $$
-P(t)-P(A)\ge H(t,B(t))\ge0.
+P(t)-P(A)\ge H(t,B(t))\ge0\qquad(t\ge A).
 \tag{FR2}
 $$
 
-The converse uses every comparator's own price. For an arbitrary
-integer $m\ge N$, put $a=\log m\ge A$. The existing nonnegative
-defect and unrestricted integer identity give
-
-$$
-\Delta(m)=P(a)+d_a(m)\ge P(A)=\Delta(N).
-$$
-
-This is exactly the first condition. Finally, the pressure is locally
-absolutely continuous: on each compact price interval only finitely
-many layers activate, and their pressure terms are continuous at ties.
-Its almost-everywhere derivative above makes the second and third
-conditions equivalent. There is no missing atom at a tied event.
-
-The forward identity and tangent mechanism are reused from (P6); the
-converse records their exact all-integer/all-real interface. No later
-$C_t$ has been assumed to satisfy $B(t)=t$, GA1, or its own future-record
-property. Every prime-power layer stays in $B$ and $M$. This is a paper
-application of the existing source comparisons, not an independently
-established sign for $I_\psi$, a priority claim, or Lean certification.
+All activation ties and prime-power layers remain in the cited inventory.
+No later $C_t$ is assumed to be self-tangent or a future record. The
+application below uses this existing minimum without repeating its proof.
 
 ## Centering at the selected minimum leaves a positive transform offset
 
@@ -1601,9 +1586,9 @@ Source centering has therefore supplied no uniformly bounded offset
 at the original root scale. At that source the complete original
 account remains $I_\psi(A)=-h_N-R(A)$.
 
-The optimization and pressure identities above are reused; the
-converse in (FR1) and the explicit selected-source offset in (FR5)--(FR8)
-record their application to this particular positivity route. They do
+The cone-envelope minimum, optimization and pressure identities above
+are reused. The explicit selected-source offset in (FR5)--(FR8) records
+their application to this particular positivity route. They do
 not assume an actual off-critical zero, supply the missing directed
 signed estimate, or prove RH or strict Robin for every integer above
 5040. The Laplace integration and Landau principle are classical,
