@@ -27,9 +27,6 @@ internal sealed class StabilizerPairLocalUnitaryInequivalenceDocument : IScribeD
             Node("word", "Pauli words", WordFormula(),
                 "The operator of a word g of Pauli labels is the product operator of the Pauli matrices of its letters.",
                 "wordOp", DescribeRole.Definition, AssessedProvenance.FromLiterature(Source)),
-            Node("flip-bit", "The flipped computational-basis bit", FlipBitFormula(),
-                "X and Y flip the basis bit, while I and Z preserve it.",
-                "flipBit", DescribeRole.Definition, AssessedProvenance.FromRepo()),
             Node("local", "Single-qubit operators", LocalFormula(),
                 "The operator A acting on qubit j alone is the product operator of the family update(const(1), j, A): the constant family of identity matrices with its factor at qubit j replaced by the two-by-two matrix A.",
                 "localOp", DescribeRole.Definition, AssessedProvenance.FromLiterature(Source)),
@@ -110,13 +107,6 @@ internal sealed class StabilizerPairLocalUnitaryInequivalenceDocument : IScribeD
         Formula product = Seq(Sub(Prod, Seq(i, Sp, InMacro, Sp, Call("Fin", n))), Sp, entry);
         return Disp(All("x", Bits(n), All("y", Bits(n),
             Equal(new Formula.Apply(Call("tensorOp", m), [x, y]), product))));
-    }
-
-    private static Formula FlipBitFormula()
-    {
-        Formula Image(string label) => Call("flipBit", Named(label));
-        return Disp(And(And(Equal(Image("I"), D(0)), Equal(Image("X"), D(1))),
-            And(Equal(Image("Y"), D(1)), Equal(Image("Z"), D(0)))));
     }
 
     private static Formula LocalFormula()

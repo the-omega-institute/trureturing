@@ -6,7 +6,6 @@
    utility: kind=certified-instance; basis=refutes=gid:D5/S3/Quantum/Dynamics/StabilizerBatteryDegreeDifferenceRefutation.claim; result=D5/S3/Quantum/Dynamics/StabilizerBatteryDegreeDifferenceRefutation.result; claim=D5/S3/Quantum/Dynamics/StabilizerBatteryDegreeDifferenceRefutation.claim
    digest: Equal degree gaps give different stored work for fourteen-qubit stabilizer batteries. -/
 
-
 import D5.S3.Quantum.Measurement.StabilizerPovmMaximalEntanglementRefutation
 import D5.S3.Quantum.Information.BinaryStabilizerGraphNormalForm
 
@@ -30,34 +29,34 @@ open D5.S3.VertexAlgebra.LatticeTwistedGroundRealization.SignQuotient
 open D5.S3.Quantum.Information.BinaryStabilizerGraphNormalForm (complex_sign_val tensor_smul tensor_weyl)
 
 /-- The undirected circulant graph with neighbours at distances one through `K / 2`. -/
-def adjacent (N K : ℕ) (i j : Fin N) : Prop :=
+private def adjacent (N K : ℕ) (i j : Fin N) : Prop :=
   i ≠ j ∧ ∃ d ∈ Finset.range (K / 2),
     j.val = (i.val + (d + 1)) % N ∨ i.val = (j.val + (d + 1)) % N
 
-instance (N K : ℕ) (i j : Fin N) : Decidable (adjacent N K i j) :=
+private instance (N K : ℕ) (i j : Fin N) : Decidable (adjacent N K i j) :=
   inferInstanceAs (Decidable (_ ∧ ∃ d ∈ Finset.range (K / 2), _))
 
 /-- One `X` at the centre and `Z` at each graph neighbour. -/
-def gen (N K : ℕ) (i : Fin N) : Fin N → Pauli :=
+private def gen (N K : ℕ) (i : Fin N) : Fin N → Pauli :=
   fun j => if j = i then .X else if adjacent N K i j then .Z else .I
 
 /-- The battery or charger Hamiltonian, with unit stabilizer couplings. -/
-def hamiltonian (N K : ℕ) : Operator N := ∑ i, wordOp (gen N K i)
+private def hamiltonian (N K : ℕ) : Operator N := ∑ i, wordOp (gen N K i)
 
 /-- The largest even degree permitted by the periodic model. -/
-def maxDegree (N : ℕ) : ℕ := if Even N then N - 2 else N - 1
+private def maxDegree (N : ℕ) : ℕ := if Even N then N - 2 else N - 1
 
 /-- Positive interior degrees exclude both endpoint Hamiltonians. -/
-def admissible (N K : ℕ) : Prop := Even K ∧ 2 ≤ K ∧ K + 2 ≤ maxDegree N
+private def admissible (N K : ℕ) : Prop := Even K ∧ 2 ≤ K ∧ K + 2 ≤ maxDegree N
 
 /-- A unit vector attaining the minimum energy among all unit vectors. -/
-def IsGroundState {N : ℕ} (H : Operator N) (g : State N) : Prop :=
+private def IsGroundState {N : ℕ} (H : Operator N) (g : State N) : Prop :=
   (∑ b, ‖g b‖ ^ 2) = 1 ∧
     ∀ v : State N, (∑ b, ‖v b‖ ^ 2) = 1 →
       (star g ⬝ᵥ (H *ᵥ g)).re ≤ (star v ⬝ᵥ (H *ᵥ v)).re
 
 /-- Stored work from the source's unitary evolution and rank-one initial density. -/
-def work (N Kb Kc : ℕ) (g : State N) (t : ℝ) : ℝ :=
+private def work (N Kb Kc : ℕ) (g : State N) (t : ℝ) : ℝ :=
   let ρ₀ := vecMulVec g (star g)
   let U := NormedSpace.exp (-(Complex.I * (t : ℂ)) • hamiltonian N Kc)
   (trace ((U * ρ₀ * Uᴴ - ρ₀) * hamiltonian N Kb)).re
@@ -78,15 +77,15 @@ private def graphExponent (N K : ℕ) (b : Fin N → ZMod 2) : ℕ :=
       (b i).val * (b j).val
 
 /-- The negative-eigenvalue graph state, including its normalization factor. -/
-def graphVec (N K : ℕ) : State N :=
+private def graphVec (N K : ℕ) : State N :=
   fun b => ((Real.sqrt (2 ^ N : ℝ))⁻¹ : ℂ) * (-1 : ℂ) ^ graphExponent N K b
 
 private def residualMask (N K : ℕ) (w : Fin N → Pauli) : Fin N → ZMod 2 :=
-  fun j => (id (α := Fin N → ZMod 2) (Prod.fst ∘ bellInput ∘ w)) j + ∑ i, if adjacent N K i j then (id (α := Fin N → ZMod 2) (flipBit ∘ w)) i else 0
+  fun j => (id (α := Fin N → ZMod 2) (Prod.fst ∘ bellInput ∘ w)) j + ∑ i, if adjacent N K i j then (id (α := Fin N → ZMod 2) (Prod.snd ∘ bellInput ∘ w)) i else 0
 
 private def wordPhase (N K : ℕ) (w : Fin N → Pauli) : GaussianInt :=
   (⟨0, 1⟩ : GaussianInt) ^ (Finset.univ.filter (fun i => w i = .Y)).card *
-    (-1) ^ (graphExponent N K ((id (α := Fin N → ZMod 2) (flipBit ∘ w))) + ∑ i, ((id (α := Fin N → ZMod 2) (flipBit ∘ w)) i).val * ((id (α := Fin N → ZMod 2) (Prod.fst ∘ bellInput ∘ w)) i).val)
+    (-1) ^ (graphExponent N K ((id (α := Fin N → ZMod 2) (Prod.snd ∘ bellInput ∘ w))) + ∑ i, ((id (α := Fin N → ZMod 2) (Prod.snd ∘ bellInput ∘ w)) i).val * ((id (α := Fin N → ZMod 2) (Prod.fst ∘ bellInput ∘ w)) i).val)
 
 private def phaseCode : Pauli → Pauli → GaussianInt
   | .X, .Y | .Y, .Z | .Z, .X => ⟨0, 1⟩
@@ -229,28 +228,28 @@ private lemma word_action {N : ℕ} (w : Fin N → Pauli) (ψ : State N)
     (b : Fin N → ZMod 2) :
     (wordOp w *ᵥ ψ) b =
       Complex.I ^ (Finset.univ.filter (fun i => w i = .Y)).card *
-        complexSign (∑ i, ((id (α := Fin N → ZMod 2) (Prod.fst ∘ bellInput ∘ w)) i : ZMod 2) * (b + (id (α := Fin N → ZMod 2) (flipBit ∘ w))) i) * ψ (b + (id (α := Fin N → ZMod 2) (flipBit ∘ w))) := by
+        complexSign (∑ i, ((id (α := Fin N → ZMod 2) (Prod.fst ∘ bellInput ∘ w)) i : ZMod 2) * (b + (id (α := Fin N → ZMod 2) (Prod.snd ∘ bellInput ∘ w))) i) * ψ (b + (id (α := Fin N → ZMod 2) (Prod.snd ∘ bellInput ∘ w))) := by
   have hm (i : Fin N) : pauliMatrix (w i) =
       (if w i = .Y then Complex.I else 1) •
         (Matrix.of fun r c : Fin 2 =>
-          if id (α := ZMod 2) c = id (α := ZMod 2) r + (id (α := Fin N → ZMod 2) (flipBit ∘ w)) i then
+          if id (α := ZMod 2) c = id (α := ZMod 2) r + (id (α := Fin N → ZMod 2) (Prod.snd ∘ bellInput ∘ w)) i then
             complexSign ((id (α := Fin N → ZMod 2) (Prod.fst ∘ bellInput ∘ w)) i * id (α := ZMod 2) c) else 0) := by
     have hzero : id (α := ZMod 2) (0 : Fin 2) = 0 := rfl
     have hone : id (α := ZMod 2) (1 : Fin 2) = 1 := rfl
     cases hi : w i <;> ext r c <;> fin_cases r <;> fin_cases c <;>
-      norm_num [flipBit, id, Function.comp_def, bellInput, hi, pauliMatrix, complexSign, Matrix.of_apply,
+      norm_num [id, Function.comp_def, bellInput, hi, pauliMatrix, complexSign, Matrix.of_apply,
         Matrix.smul_apply, smul_eq_mul, hzero, hone, CharTwo.add_self_eq_zero, F₂,
         show (2 : ZMod 2) = 0 by decide,
         D5.S3.Quantum.FiniteDimensional.qubitX, D5.S3.Quantum.FiniteDimensional.qubitZ]
-  have hw := congrFun (tensor_weyl ((id (α := Fin N → ZMod 2) (flipBit ∘ w)), (id (α := Fin N → ZMod 2) (Prod.fst ∘ bellInput ∘ w))) ψ) b
+  have hw := congrFun (tensor_weyl ((id (α := Fin N → ZMod 2) (Prod.snd ∘ bellInput ∘ w)), (id (α := Fin N → ZMod 2) (Prod.fst ∘ bellInput ∘ w))) ψ) b
   change (tensorOp (fun i => Matrix.of fun r c : Fin 2 =>
-      if id (α := ZMod 2) c = id (α := ZMod 2) r + (id (α := Fin N → ZMod 2) (flipBit ∘ w)) i then
+      if id (α := ZMod 2) c = id (α := ZMod 2) r + (id (α := Fin N → ZMod 2) (Prod.snd ∘ bellInput ∘ w)) i then
         complexSign ((id (α := Fin N → ZMod 2) (Prod.fst ∘ bellInput ∘ w)) i * id (α := ZMod 2) c) else 0) *ᵥ ψ) b =
-    complexSign (∑ i, (id (α := Fin N → ZMod 2) (Prod.fst ∘ bellInput ∘ w)) i * (b i + (id (α := Fin N → ZMod 2) (flipBit ∘ w)) i)) * ψ (b + (id (α := Fin N → ZMod 2) (flipBit ∘ w))) at hw
+    complexSign (∑ i, (id (α := Fin N → ZMod 2) (Prod.fst ∘ bellInput ∘ w)) i * (b i + (id (α := Fin N → ZMod 2) (Prod.snd ∘ bellInput ∘ w)) i)) * ψ (b + (id (α := Fin N → ZMod 2) (Prod.snd ∘ bellInput ∘ w))) at hw
   have he : (fun i => pauliMatrix (w i)) = fun i =>
       (if w i = .Y then Complex.I else 1) •
         (Matrix.of fun r c : Fin 2 =>
-          if id (α := ZMod 2) c = id (α := ZMod 2) r + (id (α := Fin N → ZMod 2) (flipBit ∘ w)) i then
+          if id (α := ZMod 2) c = id (α := ZMod 2) r + (id (α := Fin N → ZMod 2) (Prod.snd ∘ bellInput ∘ w)) i then
             complexSign ((id (α := Fin N → ZMod 2) (Prod.fst ∘ bellInput ∘ w)) i * id (α := ZMod 2) c) else 0) := funext hm
   rw [wordOp, he, tensor_smul, smul_mulVec]
   change (∏ i, if w i = .Y then Complex.I else 1) * _ = _
@@ -264,16 +263,16 @@ private lemma graph_word_action (N K : ℕ) (w : Fin N → Pauli) (b : Fin N →
   rw [word_action]
   have hphase : (wordPhase N K w : ℂ) =
       Complex.I ^ (Finset.univ.filter (fun i => w i = .Y)).card *
-        complexSign ((graphExponent N K ((id (α := Fin N → ZMod 2) (flipBit ∘ w))) : ZMod 2) +
-          ∑ i, ((id (α := Fin N → ZMod 2) (flipBit ∘ w)) i : ZMod 2) * (id (α := Fin N → ZMod 2) (Prod.fst ∘ bellInput ∘ w)) i) := by
+        complexSign ((graphExponent N K ((id (α := Fin N → ZMod 2) (Prod.snd ∘ bellInput ∘ w))) : ZMod 2) +
+          ∑ i, ((id (α := Fin N → ZMod 2) (Prod.snd ∘ bellInput ∘ w)) i : ZMod 2) * (id (α := Fin N → ZMod 2) (Prod.fst ∘ bellInput ∘ w)) i) := by
     simp only [wordPhase, map_mul, map_pow, map_neg, map_one, sign_nat,
       Nat.cast_add, Nat.cast_sum, Nat.cast_mul, ZMod.natCast_zmod_val]
     norm_num [GaussianInt.toComplex_def]
-  have hp := graph_polarization N K b ((id (α := Fin N → ZMod 2) (flipBit ∘ w)))
-  have hexp : (∑ i, ((id (α := Fin N → ZMod 2) (Prod.fst ∘ bellInput ∘ w)) i : ZMod 2) * (b + (id (α := Fin N → ZMod 2) (flipBit ∘ w))) i) +
-        (graphExponent N K (b + (id (α := Fin N → ZMod 2) (flipBit ∘ w))) : ZMod 2) =
-      ((graphExponent N K ((id (α := Fin N → ZMod 2) (flipBit ∘ w))) : ZMod 2) +
-        ∑ i, ((id (α := Fin N → ZMod 2) (flipBit ∘ w)) i : ZMod 2) * (id (α := Fin N → ZMod 2) (Prod.fst ∘ bellInput ∘ w)) i) +
+  have hp := graph_polarization N K b ((id (α := Fin N → ZMod 2) (Prod.snd ∘ bellInput ∘ w)))
+  have hexp : (∑ i, ((id (α := Fin N → ZMod 2) (Prod.fst ∘ bellInput ∘ w)) i : ZMod 2) * (b + (id (α := Fin N → ZMod 2) (Prod.snd ∘ bellInput ∘ w))) i) +
+        (graphExponent N K (b + (id (α := Fin N → ZMod 2) (Prod.snd ∘ bellInput ∘ w))) : ZMod 2) =
+      ((graphExponent N K ((id (α := Fin N → ZMod 2) (Prod.snd ∘ bellInput ∘ w))) : ZMod 2) +
+        ∑ i, ((id (α := Fin N → ZMod 2) (Prod.snd ∘ bellInput ∘ w)) i : ZMod 2) * (id (α := Fin N → ZMod 2) (Prod.fst ∘ bellInput ∘ w)) i) +
         (∑ j, (residualMask N K w j : ZMod 2) * b j) +
         (graphExponent N K b : ZMod 2) := by
     simp only [residualMask, Pi.add_apply, mul_add, add_mul, Finset.sum_add_distrib]
@@ -282,24 +281,24 @@ private lemma graph_word_action (N K : ℕ) (w : Fin N → Pauli) (b : Fin N →
   rw [hphase]
   simp only [graphVec, sign_nat]
   rw [show Complex.I ^ (Finset.univ.filter (fun i => w i = .Y)).card *
-        complexSign (∑ i, ((id (α := Fin N → ZMod 2) (Prod.fst ∘ bellInput ∘ w)) i : ZMod 2) * (b + (id (α := Fin N → ZMod 2) (flipBit ∘ w))) i) *
+        complexSign (∑ i, ((id (α := Fin N → ZMod 2) (Prod.fst ∘ bellInput ∘ w)) i : ZMod 2) * (b + (id (α := Fin N → ZMod 2) (Prod.snd ∘ bellInput ∘ w))) i) *
         (((Real.sqrt (2 ^ N : ℝ))⁻¹ : ℂ) *
-          complexSign (graphExponent N K (b + (id (α := Fin N → ZMod 2) (flipBit ∘ w))))) =
+          complexSign (graphExponent N K (b + (id (α := Fin N → ZMod 2) (Prod.snd ∘ bellInput ∘ w))))) =
       Complex.I ^ (Finset.univ.filter (fun i => w i = .Y)).card *
         ((Real.sqrt (2 ^ N : ℝ))⁻¹ : ℂ) *
-          (complexSign (∑ i, ((id (α := Fin N → ZMod 2) (Prod.fst ∘ bellInput ∘ w)) i : ZMod 2) * (b + (id (α := Fin N → ZMod 2) (flipBit ∘ w))) i) *
-            complexSign (graphExponent N K (b + (id (α := Fin N → ZMod 2) (flipBit ∘ w))))) by ring]
+          (complexSign (∑ i, ((id (α := Fin N → ZMod 2) (Prod.fst ∘ bellInput ∘ w)) i : ZMod 2) * (b + (id (α := Fin N → ZMod 2) (Prod.snd ∘ bellInput ∘ w))) i) *
+            complexSign (graphExponent N K (b + (id (α := Fin N → ZMod 2) (Prod.snd ∘ bellInput ∘ w))))) by ring]
   rw [← complexSign_add, hexp, complexSign_add, complexSign_add]
   ring
 
 private lemma graph_generator_eigen (N K : ℕ) (i : Fin N) :
     wordOp (gen N K i) *ᵥ graphVec N K = -graphVec N K := by
-  have hx : (id (α := Fin N → ZMod 2) (flipBit ∘ gen N K i)) = Pi.single i 1 := by
+  have hx : (id (α := Fin N → ZMod 2) (Prod.snd ∘ bellInput ∘ gen N K i)) = Pi.single i 1 := by
     funext j
     by_cases hji : j = i
     · subst j
-      simp [flipBit, id, Function.comp_def, gen]
-    · simp only [flipBit, id, Function.comp_def, gen, if_neg hji, Pi.single_eq_of_ne hji]
+      simp [bellInput, id, Function.comp_def, gen]
+    · simp only [bellInput, id, Function.comp_def, gen, if_neg hji, Pi.single_eq_of_ne hji]
       split_ifs <;> rfl
   have hz (j : Fin N) : (id (α := Fin N → ZMod 2) (Prod.fst ∘ bellInput ∘ gen N K i)) j =
       if adjacent N K i j then 1 else 0 := by
@@ -345,7 +344,7 @@ private lemma graph_generator_eigen (N K : ℕ) (i : Fin N) :
     simp only [gen]
     split_ifs <;> decide
   have hp : wordPhase N K (gen N K i) = -1 := by
-    have hsum : (∑ j, ((id (α := Fin N → ZMod 2) (flipBit ∘ gen N K i)) j).val * ((id (α := Fin N → ZMod 2) (Prod.fst ∘ bellInput ∘ gen N K i)) j).val) = 0 := by
+    have hsum : (∑ j, ((id (α := Fin N → ZMod 2) (Prod.snd ∘ bellInput ∘ gen N K i)) j).val * ((id (α := Fin N → ZMod 2) (Prod.fst ∘ bellInput ∘ gen N K i)) j).val) = 0 := by
       rw [hx, Finset.sum_eq_single i]
       · simp [hz, adjacent]
       · intro j _ hji
