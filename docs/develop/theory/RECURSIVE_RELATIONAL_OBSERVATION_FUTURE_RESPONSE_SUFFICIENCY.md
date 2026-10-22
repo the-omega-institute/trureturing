@@ -2285,7 +2285,7 @@ $$
 
 This follows by bounding each fixed polynomial by a constant times
 $(1+N)^3$, using $|\psi|<1<\varphi$, and absorbing the fixed drift.
-Neither the lower-bound constant nor its onset is uniform over nearby
+No uniform lower-bound constants or onsets are claimed over nearby
 pairs or as a germ coalesces.
 
 ## 47. Supplied actual first-J worlds make the exact-record obstruction nonempty
