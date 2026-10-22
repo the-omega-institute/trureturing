@@ -559,7 +559,7 @@ $$
 \tag{5.6.3}
 $$
 
-**Proof.** The two distinct J endpoints either have equal $x$ or they do not, so their projection lies in exactly one of $D_J^=$ and $D_J^{\ne}$. The independently chosen distinct M pair lies in $D_M$ by the full inverse in `FIB_STRICT_REAL_JOINT_INCIDENCE_SUPPORT_X.md`; the overlap strata and unrelated terminal values are those of `FIB_STRICT_REAL_JOINT_INCIDENCE_SUPPORT_XI.md`. Conversely, a point in either intersection supplies the two J endpoints and the two M endpoints in the same entire $C(p,v)$ with the required within-pair inequalities. ∎
+**Proof.** The two distinct J endpoints either have equal $x$ or they do not, so their projection lies in at least one of $D_J^=$ and $D_J^{\ne}$. The independently chosen distinct M pair lies in $D_M$ by the full inverse in `FIB_STRICT_REAL_JOINT_INCIDENCE_SUPPORT_X.md`; the overlap strata and unrelated terminal values are those of `FIB_STRICT_REAL_JOINT_INCIDENCE_SUPPORT_XI.md`. Conversely, a point in either intersection supplies the two J endpoints and the two M endpoints in the same entire $C(p,v)$ with the required within-pair inequalities. ∎
 
 The first term now has the explicit cubic law (5.6.1), with no J endpoint source or drift left free once $(p,v,x)$ is fixed. X supplies the M endpoints at the same $p$ and $v$. Cross-pair overlap is not prohibited. The second term remains fully present: it requires two independent $x$ values for the J endpoints and is not excluded by the cubic law. The four-endpoint meaning and overlap alternatives remain those of XI.
 
