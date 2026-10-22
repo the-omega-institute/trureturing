@@ -99,7 +99,7 @@ private lemma tanh_quarter_bounds {t : ℝ} (ht : 0 < t) :
       (D5.S3.Observer.Fluctuation.ThermalCoefficientFloor.sinh_le_self_mul_cosh_of_nonneg
         (by linarith))
 
-private lemma laplaceKernel_bounds {x t : ℝ} (ht : 0 < t) :
+lemma laplaceKernel_bounds {x t : ℝ} (ht : 0 < t) :
     0 < laplaceKernel x t ∧ laplaceKernel x t ≤ Real.exp (-x * t) / 8 := by
   obtain ⟨hp, hb⟩ := tanh_quarter_bounds ht
   constructor
@@ -177,7 +177,7 @@ private theorem laplace_add_half {x : ℝ} (hx : 0 < x) :
       simp
 
 /-- The Laplace integral is positive and bounded by the elementary exponential integral. -/
-private theorem laplace_bounds {x : ℝ} (hx : 0 < x) :
+theorem laplace_bounds {x : ℝ} (hx : 0 < x) :
     0 < laplace x ∧ laplace x ≤ 1 / (8 * x) := by
   have hnonneg : ∀ᵐ t ∂volume.restrict (Ioi (0 : ℝ)), 0 ≤ laplaceKernel x t := by
     filter_upwards [self_mem_ae_restrict measurableSet_Ioi] with t ht

@@ -21,26 +21,8 @@ def logarithmRejected : Realization logarithmSignature :=
 
 /-- A positive evaluation used by the rejected-realization certificates. -/
 theorem logarithmPositive {x : ℝ} (hx : 0 < x) : 0 < -Real.log (wallisB x) := by
-  have hp : ∀ t ∈ Ioi (0 : ℝ), 0 < laplaceKernel x t := by
-    intro t ht
-    change 0 < t at ht
-    unfold laplaceKernel
-    apply div_pos
-    · apply mul_pos (Real.exp_pos _)
-      rw [Real.tanh_eq_sinh_div_cosh]
-      exact div_pos (Real.sinh_pos_iff.mpr (by linarith)) (Real.cosh_pos _)
-    · linarith
-  have hn : ∀ᵐ t ∂volume.restrict (Ioi (0 : ℝ)), 0 ≤ laplaceKernel x t := by
-    filter_upwards [self_mem_ae_restrict measurableSet_Ioi] with t ht
-    exact (hp t ht).le
   rw [r_eq_laplace hx]
-  change 0 < ∫ t in Ioi (0 : ℝ), laplaceKernel x t
-  rw [setIntegral_pos_iff_support_of_nonneg_ae hn (integrableOn_laplaceKernel hx)]
-  have hs : Function.support (laplaceKernel x) ∩ Ioi 0 = Ioi 0 := by
-    ext t
-    exact ⟨And.right, fun ht => ⟨(hp t ht).ne', ht⟩⟩
-  rw [hs]
-  simp
+  exact (laplace_bounds hx).1
 
 theorem logarithmDependence : ObservationalDependence logarithmSignature logarithmActual := by
   intro i
@@ -96,12 +78,7 @@ private theorem kernelDependence : ObservationalDependence kernelSignature kerne
   change laplaceKernel 1 0 ≠ laplaceKernel 1 1
   rw [show laplaceKernel 1 0 = 0 by simp [laplaceKernel]]
   apply ne_of_lt
-  unfold laplaceKernel
-  apply div_pos
-  · apply mul_pos (Real.exp_pos _)
-    rw [Real.tanh_eq_sinh_div_cosh]
-    exact div_pos (Real.sinh_pos_iff.mpr (by norm_num)) (Real.cosh_pos _)
-  · norm_num
+  exact (laplaceKernel_bounds (x := 1) (t := 1) (by norm_num)).1
 
 def integrabilityFamily : Registration integrabilityArena (type_of% @integrableOn_laplaceKernel) where
   actual := kernelActual
@@ -109,6 +86,26 @@ def integrabilityFamily : Registration integrabilityArena (type_of% @integrableO
   variation := ⟨integrableOn_laplaceKernel, kernelRejected, integrabilityRejected⟩
   sensitivity := _root_.Reg.Support.SingleDependentReadout.sensitivity
     integrabilityArena.Law kernelActual kernelRejected integrabilityRejected
+  dependence := kernelDependence
+
+abbrev kernelBoundsArena : Arena where
+  signature := kernelSignature
+  Law R := ∀ {x t : ℝ}, 0 < t →
+    0 < R.readout () x t ∧ R.readout () x t ≤ Real.exp (-x * t) / 8
+
+private theorem kernelBoundsRejected : ¬ kernelBoundsArena.Law kernelRejected := by
+  intro h
+  have hh := h (x := 0) (t := 1) (by norm_num)
+  have hbad : (1 : ℝ) ≤ 1 / 8 := by
+    simpa [kernelRejected, realize] using hh.2
+  norm_num at hbad
+
+def kernelBoundsFamily : Registration kernelBoundsArena (type_of% @laplaceKernel_bounds) where
+  actual := kernelActual
+  bridge := Iff.rfl
+  variation := ⟨laplaceKernel_bounds, kernelRejected, kernelBoundsRejected⟩
+  sensitivity := _root_.Reg.Support.SingleDependentReadout.sensitivity
+    kernelBoundsArena.Law kernelActual kernelRejected kernelBoundsRejected
   dependence := kernelDependence
 
 def representationAudit : LeanInformationAudit.Contract.Registration.{_, _, _, 0, 0, 0, _, _, _, _, _, 0}
@@ -178,6 +175,40 @@ def integrabilityAudit : LeanInformationAudit.Contract.Registration.{_, _, _, 0,
   options := #[]
 
 #print axioms integrabilityAudit
+
+def kernelBoundsAudit : LeanInformationAudit.Contract.Registration.{_, _, _, 0, 0, 0, _, _, _, _, _, 0}
+    (@laplaceKernel_bounds) (Realization kernelSignature) Unit Unit where
+  unitName := `Reg.D5.S3.Analytic.WallisRemainder.Laplace.kernelBoundsUnit
+  realizationName := `Reg.D5.S3.Analytic.WallisRemainder.Laplace.kernelBoundsFamily
+  realizationSource := none
+  generated := false
+  arena := .source ⟨kernelBoundsArena⟩
+  objectArena := .source ⟨kernelBoundsArena⟩
+  catalog := Lean.Name.anonymous
+  localNames := false
+  realization := .source kernelBoundsArena ⟨kernelBoundsFamily⟩
+  correspondence := { stage := .evidence, objectStage := .evidence }
+  bundleNonempty := .absent
+  readout := some (realize kernelSignature (fun _ x t => laplaceKernel x t) (fun e => nomatch e))
+  variation := .absent
+  sensitivity := .absent
+  partialSensitivity := none
+  escapeFrom := none
+  sourceSelection := some {
+    owner := `D5.S3.Analytic.WallisRemainder.Laplace
+    definition := none
+    coordinates := #[0]
+    readouts := #[{
+      path := #["body", "body", "body", "fn", "arg", "arg"]
+      stateBinder := 1
+      functionOperand := false
+      stateOperand := none
+      booleanPredicate := false }] }
+  continuation := .unknown
+  familyRecord := none
+  options := #[]
+
+#print axioms kernelBoundsAudit
 
 end
 end Reg.D5.S3.Analytic.WallisRemainder.Laplace
