@@ -1,0 +1,52 @@
+## 15. Original terminal-M separation and actual-J-arc containment
+
+The exact worlds are specified without approximate substitutions:
+in each of the three count-one $W$ disks take its unique real root
+of $R$, take $d_+$ in (14.1), and apply (12.1) to obtain the entire
+$g=H/U$ and fixed $d$. The fourth world is the unique source zero in
+$Z_i$ lifted by (12.5). These definitions construct every complete
+member at every target in $B_i$.
+
+The following are outward rational intervals for their M readings,
+ordered increasingly. They are valid uniformly throughout each $B_i$.
+
+| $i$ | World | Projected disk | Original clock-seven M interval |
+| --- | --- | --- | --- |
+| 1 | 1 | 11 | (461.053267, 461.05327) |
+| 1 | 2 | 12 | (471.636883, 471.636886) |
+| 1 | 3 | 14 | (483.635493, 483.635496) |
+| 1 | 4 | 15 | (483.970774, 483.970777) |
+| 2 | 1 | 12 | (535.623285, 535.623288) |
+| 2 | 2 | 14 | (545.763618, 545.763621) |
+| 2 | 3 | 15 | (561.869869, 561.869872) |
+| 2 | 4 | 16 | (562.273855, 562.273858) |
+| 3 | 1 | 12 | (691.754144, 691.754147) |
+| 3 | 2 | 14 | (699.212728, 699.212731) |
+| 3 | 3 | 15 | (722.120171, 722.120174) |
+| 3 | 4 | 16 | (724.937601, 724.937604) |
+| 4 | 1 | 12 | (702.270481, 702.270484) |
+| 4 | 2 | 13 | (708.090751, 708.090754) |
+| 4 | 3 | 15 | (734.071544, 734.071547) |
+| 4 | 4 | 16 | (737.597307, 737.59731) |
+
+The three adjacent gaps in each row-group exceed $\gamma_i$.
+Every nonadjacent gap is larger still; hence all six comparisons are
+strict. These are the original M readings $d+(3+2x)H_7$ of the same
+whole polynomials used for the acquired readings.
+
+To verify that the boxes actually contain the distinguished J-arc
+bases, use the four-variable equation
+
+$$
+ F(z,p)=(p_H-p,p_L-p,v_H-v_L,a_H-a_L)=0, \tag{15.1}
+$$
+
+with the source response circuit (12.5). The following are rational
+centers $c_i^J$ for its actual source quadruples.
+
+| $i$ | $t_H$ | $b_H$ | $t_L$ | $b_L$ |
+| --- | --- | --- | --- | --- |
+| 1 | 2.23709404789870600450853736077696285100853401 | 0.316996807862832568666827357637117692388288443 | 2.09572250841281231155116097152373370856598065 | 0.030670968273865710765770878567501131275264787 |
+| 2 | 2.38626868474504787748053112777024085724361662 | 0.311142863287913131183831943465815147454344938 | 2.14507893657345687667719887488794486382676552 | 0.083585370279782011921914080429331315210201236 |
+| 3 | 2.53845819903390537493103894105574347702660865 | 0.361337845413327284255324368493776120684284123 | 2.20515187149591811518299290787927067641496662 | 0.213221919274143431722478675022439467969616105 |
+| 4 | 2.54430651454626183562763291725371575749872418 | 0.383583247698287221868545156968893243654195901 | 2.17206877788049255366723015465060756918393248 | 0.223263310602576914746239854030821296728413085 |

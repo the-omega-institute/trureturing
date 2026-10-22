@@ -1,0 +1,106 @@
+## 24. Polynomial secants in the source chart
+
+The following continuation uses the first exact source and equal-$J$
+germ of Sections 18–23. It extends that germ to an evaluated parameter
+interval and locates its first strict-source boundary. It does not
+change the entire-child independent-pair question (18.3).
+
+Write $t=r/b$ and use the polynomial extension of the source matrix
+
+$$
+\widehat P(t,b)=
+\begin{pmatrix}tb&b\\t(1-tb)&1-tb\end{pmatrix}.
+\tag{24.1}
+$$
+
+When $t>0$, $b>0$ and $tb<1$, this is exactly the original strict
+source $P(r,b)$ with $r=tb$. The extension to $b=0$ is used only for
+limits, not to add worlds to the original domain.
+For explicit polynomial inputs put
+
+$$
+\begin{gathered}
+r=tb,\quad j=t+b(1-t^2),\quad n=j+tb,\quad T=1+b,\quad U=1+2b,\\
+D=5\{(b^2+8b+4)jn-2TU(j+n)\},\quad S=(8b-1)(2+5b),\\
+C_0=-24D+3Sjn,\quad C_1=3Sn,\\
+C_2=3(49b+34)jn-54U(j+n),\quad C_3=3Sj,\\
+B_5=-4C_0+15C_1-20C_2+10C_3,\\
+B_6=-10C_0+36C_1-45C_2+20C_3,\\
+B_7=-20C_0+70C_1-84C_2+35C_3,\\
+N_p=-C_0+(U+n)B_5,\quad N_v=-C_0+(2U+n)B_6,\\
+N_a=-C_0+(T+2j+4r)B_7,\quad N_d=-C_0,\\
+N_m=-C_0+(3U+2n)B_7.
+\end{gathered}
+\tag{24.2}
+$$
+
+These are the supplied circuit (18.4)–(18.5), after the regular change
+of coordinates. In particular $f=N_f/D$ for $f=p,v,a,d,m$.
+No new gain or response convention is introduced.
+
+For any polynomial $L(t,b)$ define polynomials $L_e,L_o$ by reduction
+in the ring with $h^2=q$:
+
+$$
+L(X+Kh,Y+h)=L_e(X,Y,K,q)+hL_o(X,Y,K,q).
+\tag{24.3}
+$$
+
+This definition requires no square root or division by $q$. Explicitly,
+a monomial $c_{ij}t^ib^j$ contributes
+
+$$
+c_{ij}\binom{i}{a}\binom{j}{c}
+X^{i-a}Y^{j-c}K^a
+\begin{cases}
+q^{(a+c)/2}&\text{to }L_e,\quad a+c\text{ even},\\
+q^{(a+c-1)/2}&\text{to }L_o,\quad a+c\text{ odd},
+\end{cases}
+\tag{24.4}
+$$
+
+summed over $0\le a\le i$, $0\le c\le j$.
+Apply this to $D,N_p,N_v,N_a,N_d,N_m$ and set
+
+$$
+\begin{gathered}
+H_f=(N_f)_oD_e-(N_f)_eD_o,\\
+H=\tfrac1{15}(H_p,H_v,H_a)^{\mathsf T},\qquad
+\Delta=D_e^2-qD_o^2.
+\end{gathered}
+\tag{24.5}
+$$
+
+The three entries of $H$ have integer coefficients, total degree $22$,
+and respectively $1144,1145,1145$ nonzero monomials in $(X,Y,K,q)$.
+The numerical factor $15$ is constant and has no effect on their zeros.
+
+For $q=h^2\ge0$ use the ordered endpoints
+
+$$
+t_\pm=X\pm Kh,\quad b_\pm=Y\pm h,\quad
+r_\pm=t_\pm b_\pm,\qquad h=\sqrt q\ge0.
+\tag{24.6}
+$$
+
+Whenever $D_\pm=D_e\pm hD_o\ne0$, direct multiplication gives
+
+$$
+\frac{N_f(t_+,b_+)}{D_+}-\frac{N_f(t_-,b_-)}{D_-}
+=\frac{2hH_f}{\Delta}.
+\tag{24.7}
+$$
+
+Consequently $H=0$ implies equal $p,v,a$. Their common values are
+
+$$
+\bar f(X,Y,K,q)=
+\frac{(N_f)_eD_e-q(N_f)_oD_o}{\Delta},\qquad f=p,v,a.
+\tag{24.8}
+$$
+
+Formula (24.8) is analytic also at $q=0$ when $\Delta\ne0$.
+The divided drift and alternative-$M$ differences are $H_d/\Delta$
+and $H_m/\Delta$, respectively. The equality equations impose no
+common drift.
+

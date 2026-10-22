@@ -1,0 +1,8 @@
+## 13. All eighteen projected roots on each closed rectangle
+
+For each $B_i$ the following table gives 17 disjoint complex disks.
+Rows have radius $10^{-15}$ and root count 1, except the row marked 2,
+which has radius $10^{-16}$ and root count 2. Indices are local to each
+base. Centers are exact complex rationals. These disks account for all
+18 roots with multiplicity, for every real $(p,v)\in B_i$.
+
