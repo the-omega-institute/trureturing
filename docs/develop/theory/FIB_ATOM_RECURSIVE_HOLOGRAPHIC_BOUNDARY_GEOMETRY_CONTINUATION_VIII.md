@@ -1532,10 +1532,8 @@ They sum to one. These are premises and probability requirements for an
 attaining instrument within the stated ideal preparation and operation
 model.
 
-**Proposition 244.2 (Product Kraus reduction with local residuals).**
-Every success map allowed by Definition 244.1 is a separable
-trace-nonincreasing completely positive map across (244.1), with a
-representation
+For the separable-map argument below, write product Kraus representations
+across the selected spaces (244.1) in the form
 
 $$
 \begin{gathered}
@@ -1545,27 +1543,6 @@ B_j:\mathbb C^{4^k}\longrightarrow\mathbb C^2.
 \end{gathered}
 \tag{244.4}
 $$
-
-Proof. Apply the complete-history reduction of VII §218 to the selected
-spaces (244.1). Resolve separable auxiliary preparations into product
-components. Along a complete adaptive history, each local linear map is
-composed only with earlier maps at that party; conditioning on exchanged
-classical messages fixes the choices. The resulting map before local
-traces is a product of an Alice map and a Bob map. Taking matrix elements
-against local residual and memory bases refines it into product Kraus
-operators with exactly the domains and codomains in (244.4).
-This includes the residual particles counted in Definition 244.1.
-Fixed classical randomization contributes nonnegative scalar weights,
-absorbed into the factors. Erasing success records sums the CP leaves,
-rather than replacing their sum by a single product operator.
-
-If a refinement uses countably many or measurable outcomes, its
-finite-dimensional separable Choi operator has a finite product
-decomposition, as in VII §218; decomposing the positive local factors
-into rank-one terms gives a representation of the form (244.4).
-Finally the success effect is bounded by the identity because it is one
-outcome of an instrument. This proves the assertion. The converse that
-every separable map has such a finite LOCC implementation is not used. ∎
 
 **Definition 244.3 (Algebraic family and fixed transpose).**
 Use the fixed bases of Definition 240.1 and put
@@ -1905,8 +1882,34 @@ original filters cannot supply the required positive-success common
 finite LOCC instrument. This includes all allowed local residual
 traces, surplus-particle discards and erased success records.
 
-Proof. Proposition 244.2 puts its reduced success map in the
-separable class of Theorem 245.2. Exactness with $s_q>0$ would
+Proof. Apply the complete-history reduction of VII §218 to the selected
+spaces (244.1), using the adaptive product-history antecedent of
+N. Linden, S. Massar and S. Popescu, *Purifying noisy entanglement requires
+collective measurements*, Phys. Rev. Lett. 81, 3279,
+[quant-ph/9805001v1](https://arxiv.org/abs/quant-ph/9805001v1),
+as identified in VII §224. Resolve separable auxiliary preparations into product
+components. Along a complete adaptive history, each local linear map is
+composed only with earlier maps at that party; conditioning on exchanged
+classical messages fixes the choices. The resulting map before local
+traces is a product of an Alice map and a Bob map. Taking matrix elements
+against local residual and memory bases refines it into product Kraus
+operators with exactly the domains and codomains in (244.4).
+This includes the residual particles counted in Definition 244.1.
+Fixed classical randomization contributes nonnegative scalar weights,
+absorbed into the factors. Erasing success records sums the CP leaves,
+rather than replacing their sum by a single product operator.
+
+If a refinement uses countably many or measurable outcomes, its
+finite-dimensional separable Choi operator has a finite product
+decomposition, as in VII §218; decomposing the positive local factors
+into rank-one terms gives a representation of the form (244.4).
+Finally the success effect is bounded by the identity because it is one
+outcome of an instrument. Thus the reduced success map is separable, completely positive and
+trace-nonincreasing, with representation (244.4). The converse that
+every separable map has such a finite LOCC implementation is not used.
+
+The reduced success map therefore lies in the separable class of
+Theorem 245.2. Exactness with $s_q>0$ would
 contradict the zero-map conclusion. The conditional and unconditional
 probability requirements remain (244.2)–(244.3); the obstruction
 does not provide an attaining instrument. ∎
