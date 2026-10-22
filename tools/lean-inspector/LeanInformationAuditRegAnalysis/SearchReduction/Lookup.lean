@@ -338,8 +338,8 @@ partial def views (value : Expr) (fuel : Nat := 32) : MetaM (Array Expr) := do
 body is read until application and the frozen closure table both succeed. The
 placeholder never leaves the branch: success materializes it before checking. -/
 @[noinline] def copyLookupCandidateWith (copy : Environment → Expr → MetaM Expr)
-    (source : Environment) (entry : DiskLookup.Entry) (head : Option Name) :
-    MetaM LookupCandidate := do
+    (source : Environment) (entry : DiskLookup.Entry) (head : Option Name)
+    (budget? : Option (IO.Ref LookupBudgetState) := none) : MetaM LookupCandidate := do
   let some info := (source.setExporting false).find? entry.leanName
     | throwError "lookup.module_candidate_missing"
   if info.isUnsafe then return {}
@@ -351,7 +351,7 @@ placeholder never leaves the branch: success materializes it before checking. -/
   let levels ← params.mapM fun _ => mkFreshLevelMVar
   let type ← timeLookup "candidate/signature" <| copy source
     (info.type.instantiateLevelParams info.levelParams levels)
-  let type := detachLookupExpression type
+  let type ← withLookupPreparation budget? <| pure (detachLookupExpression type)
   let placeholder ← mkFreshExprMVar type
   return {values := #[placeholder], certify := do
     lookupPhase s!"candidate/signature-matched name={entry.name} module={entry.module}"
@@ -359,7 +359,7 @@ placeholder never leaves the branch: success materializes it before checking. -/
       | throwError "lookup.candidate_value_missing"
     let proof ← timeLookup "candidate/transport" <| copy source
       (body.instantiateLevelParams info.levelParams levels)
-    let proof ← withLookupPreparation none <| pure (detachLookupExpression proof)
+    let proof ← withLookupPreparation budget? <| pure (detachLookupExpression proof)
     placeholder.mvarId!.assign proof}
 
 /-- The closure callback is the frozen local table, with lookup disabled.

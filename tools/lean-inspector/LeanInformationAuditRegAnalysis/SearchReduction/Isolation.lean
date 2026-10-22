@@ -309,13 +309,19 @@ unsafe def onDemandLookup (table : LookupTable)
     -- Reduce the selected view before inspecting its support. Discarded
     -- conjunction/subtype fields need not belong to the query vocabulary.
     let proof ← Meta.transform proof (post := fun e => do
+      if let some name := e.getAppFn.constName? then
+        if let some info := (← getEnv).getProjectionFnInfo? name then
+          let args := e.getAppArgs
+          if info.numParams < args.size then
+            if let some value ← project? args[info.numParams]! info.i then
+              return .visit (mkAppN value (args.extract (info.numParams + 1) args.size))
       let projection := e.getAppFn.constName?.any (#[``And.left, ``And.right,
         ``Iff.mp, ``Iff.mpr, ``Subtype.property, ``Eq.mp, ``Eq.mpr, ``Eq.symm].contains ·)
       if projection || e.isProj || e.getAppFn.isLambda then
         return .done (← withTransparency .all <| whnf e)
       return .done e)
     let proof ← inlineLookupSupport base proof
-    return detachLookupExpression proof
+    withLookupPreparation (some budget) <| pure (detachLookupExpression proof)
   return {table with
     memo? := some memo, budget? := some budget,
     close? := some close, finish? := some finish,
@@ -336,7 +342,7 @@ unsafe def onDemandLookup (table : LookupTable)
         withLookupPreparation (some budget) <| acquire entry.module.toName context.options
       timeLookup s!"candidate/signature-copy name={entry.name}" <|
         copyLookupCandidateWith (fun source proof =>
-          copyCertificateExpression {source, enclosingBudget := true} proof) source entry head}
+          copyCertificateExpression {source, enclosingBudget := true} proof) source entry head (some budget)}
 
 private unsafe def runCore (source base : Environment) (request : Request)
     (lookupComplete : Bool) (disk? : Option DiskLookup.Index := none)
