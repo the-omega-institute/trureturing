@@ -10,7 +10,7 @@ LEAN_REPORT ?= .lake/build/stratalint/raw-lean-report.json
 INDEX_DIR ?= build/lean-inspector/lookup-index/$(INDEX_BASIS)
 
 # Release Lake's loaded build graph before the memory-bounded native process.
-INSPECTOR_NATIVE_RUN = python3 -c 'import json, os, subprocess, sys; native_env = json.loads(subprocess.check_output(["lake", "-d", "tools/lean-inspector-reg", "env", "python3", "-c", "import json, os; print(json.dumps(dict(os.environ)))"], text=True)); os.execvpe(sys.argv[1], sys.argv[1:], native_env)'
+INSPECTOR_NATIVE_RUN = /bin/bash tools/scripts/search-reduction-runner.sh native
 LEAN_REPORT_CACHE_MISS_POLICY ?= fetch-or-fail
 REBUILD_REPORT_CACHE ?= 0
 REGENERATE_REPORT_ARTIFACTS ?= 0

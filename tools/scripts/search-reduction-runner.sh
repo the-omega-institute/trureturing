@@ -7,6 +7,10 @@ native_run() {
 }
 
 case "${1:-}" in
+  native)
+    shift
+    native_run "$@"
+    ;;
   run)
     test -f "${SEARCH_REDUCTION_REQUESTS:-}" || {
       echo 'REQUESTS must name a Lean declaration list' >&2; exit 2;
@@ -36,5 +40,5 @@ case "${1:-}" in
     }
     native_run python3 -c 'import os,pathlib,sys; root,library,module=sys.argv[1:]; relative=module.replace(".","/"); output=pathlib.Path(library)/(relative+".olean"); output.parent.mkdir(parents=True,exist_ok=True); os.environ["LEAN_PATH"]=library+os.pathsep+os.environ.get("LEAN_PATH",""); os.execvp("lean",["lean","-j1","--root="+root,"-o",str(output),str(pathlib.Path(root)/(relative+".lean"))])' "$2" "$3" "$4"
     ;;
-  *) echo 'Expected run or source-module' >&2; exit 2 ;;
+  *) echo 'Expected native, run or source-module' >&2; exit 2 ;;
 esac
