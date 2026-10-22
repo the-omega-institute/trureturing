@@ -3249,3 +3249,530 @@ incidences in that bounded global region remain unresolved. No
 literature-wide novelty, model-diversity or kernel-proof claim is made.
 
 ## 追加锚（本行以下为增补区）
+
+## 28. An exact exceptional point on the actual J arc
+
+Retain the complete worlds, literal traces and independent-pair
+quantifiers of [Definitions 1.1–1.2 and Lemma 1.3](#1-complete-worlds-and-the-unchanged-joint-question).
+Thus a world has $0<r<1$, $b>0$, one nonzero real polynomial gain of
+degree at most three, and one fixed real drift. The acquired word remains
+$J,M,J,M,M,M$, with readings
+$(0,24,147/5,24,18,p,v)$ at clocks $0,\ldots,6$; clock seven has the
+original $J$ or $M$ alternative on that same world. Zero drift, sample
+zeros, lower degrees, repeated gain roots, singular sources and every
+unused companion remain in the original domain.
+
+Write $z_J(p)$ and $v_J(p)$ for the actual analytic arc of
+[SIII, Lemma 16.3 and Theorem 16.4](FIB_STRICT_REAL_JOINT_INCIDENCE_SUPPORT_III.md),
+on the whole interval $[10,34]$, with $p=24$ omitted only in the original
+joint question. The point below is on this actual arc. Its defining
+rational centres are not substituted for the arc.
+
+**Definition 28.1 (Seven equations and an exact rational box).** For a
+source pair $(t,b)$ put
+
+$$
+\begin{gathered}
+r=tb,\qquad j=t+b(1-t^2),\qquad n=j+r,\qquad
+T=1+b,\qquad U=1+2b,\\
+\mathcal D=5\{(b^2+8b+4)jn-2TU(j+n)\},\qquad
+A_s=(8b-1)(2+5b),\\
+C_0=-24\mathcal D+3A_sjn,\qquad C_1=3A_sn,\\
+C_2=3(49b+34)jn-54U(j+n),\qquad C_3=3A_sj,\\
+B_5=-4C_0+15C_1-20C_2+10C_3,\\
+B_6=-10C_0+36C_1-45C_2+20C_3,\\
+B_7=-20C_0+70C_1-84C_2+35C_3.
+\end{gathered}
+\tag{28.1}
+$$
+
+Where the displayed denominators are nonzero define
+
+$$
+\begin{aligned}
+p_s&=\frac{-C_0+(U+n)B_5}{\mathcal D},&
+v_s&=\frac{-C_0+(2U+n)B_6}{\mathcal D},\\
+a_s&=\frac{-C_0+(T+2j+4r)B_7}{\mathcal D},&
+m_s&=\frac{-C_0+(3U+2n)B_7}{\mathcal D},\\
+d_s&=-\frac{C_0}{\mathcal D},&x_s&=\frac nU.
+\end{aligned}
+\tag{28.2}
+$$
+
+These are exactly the rational functions of SIII (16.1)–(16.5), with
+$t=\tau=r/b$ and its denominator renamed $\mathcal D$. In particular
+$\mathcal D$ is distinct from $D=x(x+1)(x+2)$ in (22.2).
+
+Use coordinates $z=(t_H,b_H,t_L,b_L,t_G,b_G,p)$ and the exact rational
+vector
+
+$$
+\begin{aligned}
+c={}&(2.2370940478987060045085363750558034267468,\\
+&0.3169968078628325686668274079165338900579,\\
+&2.0957225084128123115511607571336586558593,\\
+&0.0306709682738657107657705994335984762705,\\
+&-2.0787332127658314313751707162468341877283,\\
+&-0.4166428794531794513317775898703661812074,\\
+&13.1377186191279091547601137468519685572483).
+\end{aligned}
+\tag{28.3}
+$$
+
+Every terminating decimal here and below denotes its exact rational
+value. Set $\rho_*=10^{-30}$ and
+
+$$
+\begin{gathered}
+\mathcal B_*=c+[-\rho_*,\rho_*]^7,\\
+\Phi(z)=\bigl(p_H-p,\ p_L-p,\ v_H-v_L,\ a_H-a_L,
+\ p_G-p,\ v_G-v_H,\ x_G-x_H\bigr).
+\end{gathered}
+\tag{28.4}
+$$
+
+A subscript in (28.4) means evaluation at that source pair in $z$.
+
+**Theorem 28.2 (Evaluated point and its complete lifts).** There is a
+unique zero $z_*$ of $\Phi$ in $\mathcal B_*$. Write $p_*$ for its last
+coordinate and $v_*=v_H(z_*)$. Then
+
+$$
+\begin{gathered}
+13.13771861912<p_*<13.13771861914,\\
+92.7068988914<v_*<92.7068988915,\\
+(t_H,b_H,t_L,b_L)(z_*)=z_J(p_*),\qquad v_*=v_J(p_*).
+\end{gathered}
+\tag{28.5}
+$$
+
+For each $s\in\{H,L,G\}$ the formulas
+
+$$
+\begin{gathered}
+P_s=P(t_sb_s,b_s),\qquad
+ g_s(q)=\sum_{i=0}^3\frac{C_i(t_s,b_s)}{\mathcal D(t_s,b_s)}
+ \prod_{\substack{0\le h\le3\\h\ne i}}\frac{q-h}{i-h},\qquad
+ d_s=-\frac{C_0(t_s,b_s)}{\mathcal D(t_s,b_s)}
+\end{gathered}
+\tag{28.6}
+$$
+
+are evaluated at $z_*$. They specify one whole gain polynomial and one
+fixed drift for each source. The two worlds $W_H=(P_H,g_H,d_H)$ and
+$W_L=(P_L,g_L,d_L)$ are distinct original strict worlds in the entire
+$C(p_*,v_*)$ and satisfy $a_H=a_L$. The lift $G$ satisfies the same
+algebraic acquisition equations and has $p_G=p_*$, $v_G=v_*$ and
+$x_G=x_H$, but $b_G<0$, so it is not an original admissible world.
+Their values obey
+
+| Quantity | Exact rational enclosure |
+| --- | --- |
+| $r_H$ | $(0.70,0.72)$ |
+| $r_L$ | $(0.06,0.07)$ |
+| $d_H$ | $(32.7382713922,32.7382713923)$ |
+| $d_L$ | $(24.4,24.5)$ |
+| $d_G$ | $(37.0216525196,37.0216525198)$ |
+| $x_H=x_G$ | $(1.0261995683,1.0261995685)$ |
+| $a_H=a_L$ | $(356,357)$ |
+| $m_H$ | $(471.63688484,471.63688486)$ |
+| $m_L$ | $(483,485)$ |
+| $m_G$ | $(445.92293460,445.92293463)$ |
+
+In particular the algebraic lift $G$ has a different terminal-$M$ value
+from $H$.
+
+Proof. First, interval evaluation of the polynomial factors in (28.1)
+on $\mathcal B_*$ gives the following open rational enclosures.
+
+| Factor | $H$ | $L$ | $G$ |
+| --- | --- | --- | --- |
+| $b$ | $(0.316,0.317)$ | $(0.030,0.031)$ | $(-0.417,-0.416)$ |
+| $T$ | $(1.316,1.317)$ | $(1.030,1.031)$ | $(0.583,0.584)$ |
+| $U$ | $(1.633,1.634)$ | $(1.061,1.062)$ | $(0.166,0.167)$ |
+| $j$ | $(0.967,0.968)$ | $(1.991,1.992)$ | $(-0.696,-0.695)$ |
+| $n$ | $(1.676,1.677)$ | $(2.055,2.056)$ | $(0.171,0.172)$ |
+| $\mathcal D$ | $(-3.068,-3.067)$ | $(42.66,42.67)$ | $(0.0098,0.01)$ |
+
+Thus all divisions in (28.2) are defined on the whole box, and all of
+$b,T,U,j,n$ are nonzero there. The factors $T,U,j,n$ are positive
+for $H,L$. Consequently it is legitimate to define
+
+$$
+\Lambda=1+\frac6T+\frac1U-\frac4j-\frac4n,
+\qquad \mathcal D=\frac52 TUjn\Lambda.
+\tag{28.7}
+$$
+
+The identity is SIII (16.2); the same rational evaluation gives
+
+$$
+-0.352<\Lambda_H<-0.351,\qquad
+3.809<\Lambda_L<3.810,\qquad
+-0.342<\Lambda_G<-0.341.
+\tag{28.8}
+$$
+
+Here is an exact interval construction for the remaining finite
+inequalities. It also specifies the preconditioner without decimal
+matrix approximations. Put $h_*=10^{-80}$ and, for rational $u$, set
+
+$$
+\operatorname{rd}_-(u)=h_*\lfloor u/h_*\rfloor,\qquad
+\operatorname{rd}_+(u)=h_*\lceil u/h_*\rceil,\qquad
+\langle[a,b]\rangle=[\operatorname{rd}_-(a),\operatorname{rd}_+(b)].
+\tag{28.9}
+$$
+
+For interval addition, subtraction and multiplication use
+
+$$
+\begin{aligned}
+[a,b]+[e,f]&=\langle[a+e,b+f]\rangle,\\
+[a,b]-[e,f]&=\langle[a-f,b-e]\rangle,\\
+[a,b][e,f]&=\langle[\min(ae,af,be,bf),\max(ae,af,be,bf)]\rangle.
+\end{aligned}
+\tag{28.10}
+$$
+
+For $0\notin[a,b]$, use
+$[a,b]^{-1}=\langle[1/b,1/a]\rangle$; division means multiplication
+by this reciprocal. Enclose each rational input by (28.9). Evaluate
+(28.1)–(28.4) in their displayed order, associating sums and products
+from the left. Use $t^2=tt$ and $b^2=bb$.
+
+To enclose derivatives, attach to every interval value $V$ its seven
+interval derivatives $(V_1,\ldots,V_7)$. The input coordinates have
+unit coordinate derivatives and constants have zero derivatives. For a
+product $VW$ use $V_iW+VW_i$. For a reciprocal first form $Q=V^{-1}$
+and use $(-V_i)QQ$, with the products in that order. Addition and
+subtraction act componentwise. These formulas give an interval
+Jacobian $J(\mathcal X)$ of $\Phi$ on each box $\mathcal X$ used here.
+The point box $\{c\}$ has exactly represented rational coordinates.
+Let
+
+$$
+\mathsf M_{ij}=\frac{\inf J(\{c\})_{ij}+\sup J(\{c\})_{ij}}2,
+\qquad
+C_{ij}=10^{-40}\left\lfloor10^{40}(\mathsf M^{-1})_{ij}\right\rfloor.
+\tag{28.11}
+$$
+
+Let $P$ be the permutation matrix with
+$P(y_1,\ldots,y_7)^{\mathsf T}=(y_1,y_3,y_2,y_4,y_5,y_6,y_7)^{\mathsf T}$.
+Start exact rational Gauss–Jordan elimination with the augmented matrix
+$[P\mathsf M\mid P]$. For $k=1,\ldots,7$, take as pivot the current
+$(k,k)$ entry of the left block, divide the entire row $k$ by that
+pivot, and then, in increasing order of $i\ne k$, subtract from row $i$
+its current column-$k$ entry times the normalized row $k$. All these
+operations act on both blocks; use no further row permutations and no
+column permutations. The seven successive pivots lie respectively in
+
+$$
+\begin{gathered}
+(110.639,110.640),\quad(126.232,126.233),\quad(-2.875,-2.874),\\
+(-5875.445,-5875.444),\quad(-10931.139,-10931.138),\\
+(-3072.116,-3072.115),\quad(-0.012,-0.011).
+\end{gathered}
+\tag{28.12}
+$$
+
+Thus every pivot is nonzero. The final augmented matrix is
+$[I\mid\mathsf M^{-1}]$: if $E$ is the product of the row-operation
+matrices, then $EP\mathsf M=I$ and $EP=\mathsf M^{-1}$.
+This is the inverse used in (28.11).
+
+For an interval $I$ write $|I|_{\max}=\max(|\inf I|,|\sup I|)$.
+Form $N=I-CJ(\mathcal B_*)$ and $w=C\Phi(c)$ with interval
+operations (28.9)–(28.10); matrix scalar products sum from index one
+to seven, enclosing each product before adding it. The finite rational
+bounds, in the coordinate order of $z$, are
+
+| $i$ | $10^{24}\sum_{j=1}^7|N_{ij}|_{\max}\le$ | $10^{44}|w_i|_{\max}\le$ |
+| --- | --- | --- |
+| $1$ | $201$ | $2481$ |
+| $2$ | $11$ | $1046$ |
+| $3$ | $45$ | $2021$ |
+| $4$ | $55$ | $3475$ |
+| $5$ | $7$ | $4077$ |
+| $6$ | $2$ | $4337$ |
+| $7$ | $7134$ | $4307$ |
+
+All entries of these tables are obtained by rational endpoint
+operations on the seven coordinates (28.3); no unknown zero is used in
+their construction. The pivot intervals follow by taking exact rational
+midpoints in (28.11) and performing the stated rational elimination.
+The derivative and displacement bounds are, in particular,
+
+$$
+\begin{aligned}
+q_*:=\sup_{z\in\mathcal B_*}\|I-C\Phi'(z)\|_\infty
+ &\le\frac{7134}{10^{24}}<10^{-20},\\
+\eta_*:=\|C\Phi(c)\|_\infty
+ &\le\frac{4337}{10^{44}}<10^{-37},\\
+\eta_*+q_*\rho_*&\le
+\frac{4337}{10^{44}}+\frac{7134}{10^{54}}<\rho_*.
+\end{aligned}
+\tag{28.13}
+$$
+
+The rational functions are analytic on a neighbourhood of the box by
+the nonzero denominator bounds. The map $z\mapsto z-C\Phi(z)$ is
+therefore a contraction of the complete closed box into its interior.
+Moreover $\|I-C\Phi'(c)\|_\infty<1$ makes $C\Phi'(c)$ invertible,
+and hence makes $C$ invertible. Banach's theorem now gives exactly one
+zero $z_*$ of $\Phi$ in $\mathcal B_*$. Evaluation of (28.2) by the
+same interval rules gives all the numerical enclosures in the statement.
+
+For the whole-world assertion, substitution in (28.1) gives the
+polynomial identities
+
+$$
+\begin{gathered}
+-C_0+jC_1=24\mathcal D,\qquad
+5(-C_0+TC_2)=147\mathcal D,\qquad
+-C_0+nC_3=24\mathcal D,\\
+-C_0+U(-C_0+4C_1-6C_2+4C_3)=18\mathcal D.
+\end{gathered}
+\tag{28.14}
+$$
+
+Together with $d+g(0)=0$, these are the literal readings at clocks
+zero through four for (28.6). In particular the original clock-four
+reading $18$ is retained. The interpolation rows $B_5,B_6,B_7$ in
+(28.1) give the literal clocks five, six and seven of Lemma 1.3.
+Distinct-node interpolation specifies the entire polynomial, including
+any lower-degree or zero-sample case. The gain cannot be identically
+zero, since the first two readings are $0$ and $24$.
+
+The bounds $b_H,b_L>0$ and $0<r_H,r_L<1$ prove original strictness of
+$H,L$; their disjoint $r$ intervals prove distinctness. Equations
+$\Phi(z_*)=0$ prove that they share $(p_*,v_*)$ and their terminal-$J$
+value. The same identities apply algebraically to $G$, since its
+$b$ and $\mathcal D$ are nonzero; its negative $b$ excludes it from
+$C(p_*,v_*)$.
+
+It remains to identify the strict pair with the specified actual arc.
+Let $I_*=[13.13771861912,13.13771861914]$, let
+$\mathcal B_{HL}$ be the projection of $\mathcal B_*$ onto its first
+four coordinates, and let $\widehat z_{[10,20]}$ be the polynomial
+centre map of SIII (16.7). Evaluate its four displayed coefficient
+arrays by descending Horner evaluation at $(I_*-15)/5$, dividing each
+integer coefficient by $10^{20}$. The rules (28.9)–(28.10) give
+
+| Coordinate $i$ | $10^{16}\sup\{|z_i-\widehat z_{[10,20],i}((p-15)/5)|:z\in\mathcal B_{HL},\ p\in I_*\}\le$ |
+| --- | --- |
+| $t_H$ | $3354$ |
+| $b_H$ | $206$ |
+| $t_L$ | $807$ |
+| $b_L$ | $963$ |
+
+Consequently
+
+$$
+\|(t_H,b_H,t_L,b_L)(z_*)-
+\widehat z_{[10,20]}((p_*-15)/5)\|_\infty
+\le\frac{3354}{10^{16}}<10^{-10}<10^{-5}.
+\tag{28.15}
+$$
+
+The first four equations of $\Phi=0$ are precisely SIII (16.6).
+SIII, Lemma 16.3, gives uniqueness of its zero in this radius-$10^{-5}$
+ball at each fixed $p\in[10,20]$. Thus these exact sources are
+$z_J(p_*)$, and their common response is $v_J(p_*)$, as asserted. ∎
+
+## 29. A vanishing drift coefficient and a multiple carrier root
+
+Use exactly the integer polynomials $f,K,F_0,\alpha,\zeta,R$ and the
+fixed Sylvester matrix of [(22.1)–(22.5)](#22-exact-coefficient-circuit-and-its-original-world-interpretation).
+In particular $f=Ad^2+B_fd+C_f$ uses the literal coefficient
+extractions of Definition 22.1 and $K=4k$ in the normalization of
+[F, Sections 31–32](FIB_ALL_RESPONSE_FINITE_FIBRE_GEOMETRY.md).
+Put $x_*=x_H(z_*)=x_G(z_*)$ and $v_*=v_J(p_*)$, with the exact point
+of Theorem 28.2.
+
+**Theorem 29.1 (Evaluated failure of the nonzero linear drift chart).**
+At this actual point,
+
+$$
+\begin{gathered}
+\alpha(x_*,p_*,v_*)=\zeta(x_*,p_*,v_*)=0,\\
+1306<F_0(x_*,p_*,v_*)<1307,\qquad
+-5287<A(x_*,p_*,v_*)<-5285.
+\end{gathered}
+\tag{29.1}
+$$
+
+The specialized polynomial $R_*(X)=R(X,p_*,v_*)$ is nonzero and
+
+$$
+\operatorname{ord}_{X=x_*}R_*(X)\ge2.
+\tag{29.2}
+$$
+
+The common finite drift roots of
+$f(x_*,d,p_*,v_*)=K(x_*,d,p_*,v_*)=0$ are exactly the two distinct
+real numbers $d_H$ and $d_G$ of Theorem 28.2. The first belongs to an
+actual strict endpoint of the specified $J$ arc, has $d_H\ne0$ and
+$\Lambda_H\ne0$, and lies outside $F_0=0$. The second belongs to the
+negative-$b$ algebraic lift $G$ and supplies no original admissible
+endpoint.
+
+Proof. All nonzero source factors used below were established on the
+whole box before the divisions in (28.7). The drift intervals in
+Theorem 28.2 show $d_H,d_G\notin\{0,24\}$ and $d_H\ne d_G$.
+They also give $x_*>0$, so
+$D(x_*)=x_*(x_*+1)(x_*+2)>0$.
+
+For $s\in\{H,G\}$ put $\mathcal H_s(q)=U_sg_s(q)$. The two lifts
+have the same $p_*,v_*,x_*$, and their literal clocks three through
+six give
+
+$$
+\mathcal H_s(3)=\frac{24-d_s}{x_*},\qquad
+\mathcal H_s(4)=18-d_s,\qquad
+\mathcal H_s(5)=\frac{p_*-d_s}{x_*+1},\qquad
+\mathcal H_s(6)=\frac{v_*-d_s}{x_*+2}.
+\tag{29.3}
+$$
+
+Thus the interpolant (22.1) at drift $d_s$ is exactly this whole
+scaled gain. Clock zero gives $H_0=-d_sU_s$. Clock two gives
+$T_sH_2=U_s(147/5-d_s)$. Since $2T_s=U_s+1$, the definition
+$B_0=294/5-2d_s-H_2$ gives $B_0U_s=H_2$. Identity (22.10) now
+yields
+
+$$
+f(x_*,d_s,p_*,v_*)=5D(x_*)^2(d_sH_2+H_0B_0)=0.
+\tag{29.4}
+$$
+
+Also $H_1=U_s(24-d_s)/j_s\ne0$, using the already established
+nonzero $U_s,j_s$ and $d_s\ne24$. The source relation
+
+$$
+r_s^2-(1+b_s)r_s+b_s(n_s-b_s)=0
+\tag{29.5}
+$$
+
+is a polynomial identity after $r_s=t_sb_s$ and
+$n_s=t_s+b_s(1-t_s^2)+t_sb_s$. Substitution of $H_0=-d_sU_s$,
+$b_s=(U_s-1)/2$ and $r_s=x_*U_s-j_s$ into (22.2), exactly as in
+(24.4), therefore gives
+
+$$
+\begin{aligned}
+K(x_*,d_s,p_*,v_*)&=
+4D(x_*)^4d_s^2H_1^2
+\{r_s^2-(1+b_s)r_s+b_s(x_*U_s-b_s)\}\\
+&=0.
+\end{aligned}
+\tag{29.6}
+$$
+
+These algebraic equalities use the nonzero factors just listed, not
+positivity of $b_s$. They consequently apply to $G$ as well as $H$.
+
+Apply the first identity of (22.4) to both common drift roots. It gives
+
+$$
+\alpha(x_*,p_*,v_*)d_H+\zeta(x_*,p_*,v_*)=0,
+\qquad
+\alpha(x_*,p_*,v_*)d_G+\zeta(x_*,p_*,v_*)=0.
+\tag{29.7}
+$$
+
+Subtracting and using $d_H\ne d_G$ proves $\alpha=0$, and either
+equality then proves $\zeta=0$.
+
+For the remaining coefficient bounds, evaluate (22.2) on the rational
+intervals $x=x_H(\mathcal B_*)$, $p=\mathcal B_{*,7}$ and
+$v=v_H(\mathcal B_*)$, using (28.9)–(28.10). The coefficient $A$
+can equivalently be evaluated as
+$(f(x,1,p,v)+f(x,-1,p,v)-2f(x,0,p,v))/2$.
+This gives the two bounds in (29.1). In particular $f$ has degree
+exactly two in $d$ at $(x_*,p_*,v_*)$. The two distinct drifts
+already found exhaust all its roots and hence all finite common drift
+roots with $K$. At the second drift the interpolant fixes $H_0$, and
+$d_G\ne0$ forces $U=-H_0/d_G=U_G<1$ in any whole-world lift.
+Consequently $b=(U-1)/2<0$ there; this drift cannot supply an
+alternative strict lift.
+
+Before using root-order notation, the same interval evaluation at the
+base gives
+
+$$
+\begin{gathered}
+-410<32p_*-5v_*-366<-409,\\
+27575<120p_*^2-38p_*v_*-3360p_*+3v_*^2+522v_*+23112<27576.
+\end{gathered}
+\tag{29.8}
+$$
+
+Both factors in the exact constant-coefficient formula (22.6) are
+nonzero. Thus $[X^0]R_*(X)>0$, and $R_*$ is not the zero
+polynomial.
+
+Finally specialize the fixed matrix (22.5) at $(p_*,v_*)$, retaining
+its rows $d^3f,d^2f,df,f,dK,K$ and columns $d^5,\ldots,1$.
+At $X=x_*$, its nullspace contains the two independent columns
+
+$$
+(d_H^5,d_H^4,d_H^3,d_H^2,d_H,1)^{\mathsf T},\qquad
+(d_G^5,d_G^4,d_G^3,d_G^2,d_G,1)^{\mathsf T}.
+\tag{29.9}
+$$
+
+Their independence follows already from their last two coordinates.
+Extend them to a constant invertible change of columns. The resulting
+polynomial matrix has two columns vanishing at $X=x_*$, so each of
+those columns is divisible by $X-x_*$. Its determinant, and hence
+$\det\mathsf S(X,p_*,v_*)$, is divisible by $(X-x_*)^2$.
+This is the determinant-multiplicity argument of
+[F, Theorem 32.1](FIB_ALL_RESPONSE_FINITE_FIBRE_GEOMETRY.md), applied
+here to the two explicitly supplied common finite drifts.
+
+By (22.5),
+
+$$
+\det\mathsf S(X,p_*,v_*)=
+256\{X(X+1)(X+2)\}^{8}F_0(X,p_*,v_*)^2R_*(X).
+\tag{29.10}
+$$
+
+The factors preceding $R_*$ are nonzero at $x_*$, by $x_*>0$ and
+(29.1). The nonzero-polynomial assertion just proved therefore makes
+its order at $x_*$ well defined, and (29.10) proves (29.2). ∎
+
+**Remark 29.2 (Scope of the evaluated obstruction).** The point of
+Theorems 28.2 and 29.1 disproves the assertion that every actual
+endpoint on the whole specified arc has $\alpha\ne0$, even after
+excluding $F_0=0$ and $\Lambda=0$. It also disproves the assertion
+that every positive projected carrier root arising from such an actual
+endpoint is simple. At this point the equation $\alpha d+\zeta=0$
+is $0=0$ and cannot determine drift by division. The two common drifts
+are retained by the undivided equations $f=K=0$; only $d_H$ among
+these two lifts is admissible, since $b_G<0$.
+
+The evaluated point and its inequalities use the actual arc and its
+uniqueness balls from
+[SIII, Lemma 16.3 and Theorem 16.4](FIB_STRICT_REAL_JOINT_INCIDENCE_SUPPORT_III.md),
+the normalized identities [(22.1)–(22.6)](#22-exact-coefficient-circuit-and-its-original-world-interpretation),
+and the determinant-order argument of
+[F, Theorem 32.1](FIB_ALL_RESPONSE_FINITE_FIBRE_GEOMETRY.md).
+Contraction, fixed-node interpolation and the general determinant
+argument are reused proof ingredients; the evaluated specialization is
+the assertion here.
+
+These results leave the entire child $C(p_*,v_J(p_*))$ unrestricted
+apart from the exhibited members. They do not enumerate that child or
+supply an actual terminal-$M$ pair in it. The $J$ arc remains the whole
+$[10,34]\setminus\{24\}$ arc, with arbitrary original companions.
+Existence of an independent actual $M$ pair somewhere above this arc,
+or its exclusion over the entire arc, remains open. The original joint
+question of Definition 1.2 still ranges over every original base and
+every strict complete world, with overlapping or disjoint pairs and
+independent common terminal values; an exclusion confined to this arc
+would not settle that global question.
+
+## 追加锚（本行以下为增补区）
