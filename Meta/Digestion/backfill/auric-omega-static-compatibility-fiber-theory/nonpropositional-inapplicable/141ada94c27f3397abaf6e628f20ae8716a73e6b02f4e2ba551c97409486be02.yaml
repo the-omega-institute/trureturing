@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:141ada94c27f3397abaf6e628f20ae8716a73e6b02f4e2ba551c97409486be02
+  normalized_sha256: sha256:141ada94c27f3397abaf6e628f20ae8716a73e6b02f4e2ba551c97409486be02
+cas_ref: sha256:141ada94c27f3397abaf6e628f20ae8716a73e6b02f4e2ba551c97409486be02
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 'nonpropositional: 列出有效有界综合接口必须供应的菜单、枚举、判定与代表完备性证明，未断言这些供应已成立。'
+    previous_atom_id: cab25b38de3e99c1d9e43f48d0cc2dc0bfe727fbcf4bdf7d9be3ac43bf1a52cc
+    next_atom_id: 0aaa5a8e40b53aee498e6e12fa37f2e26efa26eee95b03dcab723a7b95f725ea
