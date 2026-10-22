@@ -35,89 +35,65 @@ private lemma coeff_two_negative {i : ℕ} (hi : 3 ≤ i) :
         nlinarith [h₁, h₂]
   linarith [hp i hi]
 
-/-- The coefficient-extraction contradiction for either ratio family. -/
-theorem not_cm_of_three_le
-    (hlimF : ∀ i : ℕ, 3 ≤ i →
-      Tendsto (fun k : ℕ =>
-        (49 / 32 : ℝ) ^ k *
-          ((-1 : ℝ) ^ k * iteratedDeriv k (ratioF i)
-            (k * Real.log (7 / 4))))
-        atTop (𝓝 (quotCoeff i 2)))
-    (hlimG : ∀ i : ℕ, 3 ≤ i →
-      Tendsto (fun k : ℕ =>
-        (49 / 32 : ℝ) ^ k *
-          ((-1 : ℝ) ^ k * iteratedDeriv k (ratioG i)
-            (k * Real.log (7 / 4))))
-        atTop (𝓝 (quotCoeff i 2))) :
-    ∀ i : ℕ, 3 ≤ i →
-      ¬ CompletelyMonotoneOn (ratioF i) ∧
-      ¬ CompletelyMonotoneOn (ratioG i) := by
-  intro i hi
+/-- Both ratio families have a negative alternating derivative arbitrarily far to the right. -/
+theorem failure_on_every_tail (i : ℕ) (hi : 3 ≤ i) (T : ℝ) :
+    ∃ (k : ℕ) (t : ℝ), T < t ∧ 0 < t ∧
+      (-1 : ℝ) ^ k * iteratedDeriv k (ratioF i) t < 0 ∧
+      (-1 : ℝ) ^ k * iteratedDeriv k (ratioG i) t < 0 := by
   have hb : quotCoeff i 2 < 0 := by
     rw [quotCoeff_two]
     exact coeff_two_negative hi
-  exact ⟨not_completelyMonotone_of_extraction (hlimF i hi) hb,
-    not_completelyMonotone_of_extraction (hlimG i hi) hb⟩
+  have hneg : ∀ᶠ k : ℕ in atTop, (49 / 32 : ℝ) ^ k *
+      ((-1 : ℝ) ^ k * iteratedDeriv k (ratioF i) (k * Real.log (7 / 4))) < 0 :=
+    (quotient_extraction_limit i).eventually (gt_mem_nhds hb)
+  have ht : Tendsto (fun k : ℕ => (k : ℝ) * Real.log (7 / 4)) atTop atTop :=
+    Tendsto.atTop_mul_const (Real.log_pos (by norm_num)) tendsto_natCast_atTop_atTop
+  obtain ⟨k, hk, hkT, hk0⟩ := (hneg.and ((ht.eventually (eventually_gt_atTop T)).and
+    (ht.eventually (eventually_gt_atTop 0)))).exists
+  have hd : (-1 : ℝ) ^ k * iteratedDeriv k (ratioF i) (k * Real.log (7 / 4)) < 0 := by
+    have hp : 0 < (49 / 32 : ℝ) ^ k := by positivity
+    by_contra hn
+    exact (not_le_of_gt hk) (mul_nonneg hp.le (le_of_not_gt hn))
+  refine ⟨k, k * Real.log (7 / 4), hkT, hk0, hd, ?_⟩
+  have he : ratioG i =ᶠ[𝓝 ((k : ℝ) * Real.log (7 / 4))] ratioF i := by
+    filter_upwards [Ioi_mem_nhds hk0] with t ht
+    exact ratioG_eq_ratioF (by omega) ht
+  rw [he.iteratedDeriv_eq k]
+  exact hd
 
-/-- Combining positive low-index coefficient data with the failure family. -/
-theorem classification_of_limits
-    (hlimF : ∀ i : ℕ, 3 ≤ i →
-      Tendsto (fun k : ℕ =>
-        (49 / 32 : ℝ) ^ k *
-          ((-1 : ℝ) ^ k * iteratedDeriv k (ratioF i)
-            (k * Real.log (7 / 4))))
-        atTop (𝓝 (quotCoeff i 2)))
-    (hlimG : ∀ i : ℕ, 3 ≤ i →
-      Tendsto (fun k : ℕ =>
-        (49 / 32 : ℝ) ^ k *
-          ((-1 : ℝ) ^ k * iteratedDeriv k (ratioG i)
-            (k * Real.log (7 / 4))))
-        atTop (𝓝 (quotCoeff i 2)))
-    (hpositive : ∀ i : ℕ, i ≤ 2 →
-      CompletelyMonotoneOn (ratioF i) ∧
-      CompletelyMonotoneOn (ratioG i)) :
-    (∀ i : ℕ, CompletelyMonotoneOn (ratioF i) ↔ i ≤ 2) ∧
-      (∀ i : ℕ, CompletelyMonotoneOn (ratioG i) ↔ i ≤ 2) := by
-  have hfail := not_cm_of_three_le hlimF hlimG
+/-- Complete monotonicity fails at every index at least three. -/
+theorem not_cm_of_three_le (i : ℕ) (hi : 3 ≤ i) :
+    ¬ CompletelyMonotoneOn (ratioF i) ∧ ¬ CompletelyMonotoneOn (ratioG i) := by
+  obtain ⟨k, t, _, ht, _hF, hG⟩ := failure_on_every_tail i hi 0
+  have hb : quotCoeff i 2 < 0 := by
+    rw [quotCoeff_two]
+    exact coeff_two_negative hi
+  exact ⟨not_completelyMonotone_of_extraction (quotient_extraction_limit i) hb,
+    fun h => (not_le_of_gt hG) (h.2 k t ht)⟩
+
+/-- The first ratio family is completely monotone exactly at indices zero, one, and two. -/
+theorem classification (i : ℕ) : CompletelyMonotoneOn (ratioF i) ↔ i ≤ 2 := by
   constructor
-  · intro i
-    constructor
-    · intro h
-      by_contra hnot
-      have hi : 3 ≤ i := by omega
-      exact hfail i hi |>.1 h
-    · intro hi
-      exact (hpositive i hi).1
-  · intro i
-    constructor
-    · intro h
-      by_contra hnot
-      have hi : 3 ≤ i := by omega
-      exact hfail i hi |>.2 h
-    · intro hi
-      exact (hpositive i hi).2
+  · intro h
+    by_contra hn
+    exact (not_cm_of_three_le i (by omega)).1 h
+  · intro hi
+    exact (cm_of_le_two i hi).1
 
-/-- The conjecture is refuted once the extracted limits and positive cases are supplied. -/
-theorem result_of_limits
-    (hlimF : ∀ i : ℕ, 3 ≤ i →
-      Tendsto (fun k : ℕ =>
-        (49 / 32 : ℝ) ^ k *
-          ((-1 : ℝ) ^ k * iteratedDeriv k (ratioF i)
-            (k * Real.log (7 / 4))))
-        atTop (𝓝 (quotCoeff i 2)))
-    (hlimG : ∀ i : ℕ, 3 ≤ i →
-      Tendsto (fun k : ℕ =>
-        (49 / 32 : ℝ) ^ k *
-          ((-1 : ℝ) ^ k * iteratedDeriv k (ratioG i)
-            (k * Real.log (7 / 4))))
-        atTop (𝓝 (quotCoeff i 2)))
-    (hpositive : ∀ i : ℕ, i ≤ 2 →
-      CompletelyMonotoneOn (ratioF i) ∧
-      CompletelyMonotoneOn (ratioG i)) :
-    ¬ claim := by
+/-- The second ratio family has the same exact set of completely monotone indices. -/
+theorem classificationG (i : ℕ) : CompletelyMonotoneOn (ratioG i) ↔ i ≤ 2 := by
+  constructor
+  · intro h
+    by_contra hn
+    exact (not_cm_of_three_le i (by omega)).2 h
+  · intro hi
+    exact (cm_of_le_two i hi).2
+
+/-- The universal assertion about consecutive signed derivative ratios is false. -/
+theorem result : ¬ claim := by
   intro hclaim
-  obtain ⟨hF, _hG⟩ := hclaim 3
-  have hfail := not_cm_of_three_le hlimF hlimG
-  exact (hfail 3 (by norm_num)).1 hF
+  have h : 3 + 3 ≤ 2 + 2 := Nat.add_le_add
+    ((classification 3).mp (hclaim 3).1) ((classificationG 3).mp (hclaim 3).2)
+  omega
 
 end D5.S3.Analytic.ExpRatioCM.Result
