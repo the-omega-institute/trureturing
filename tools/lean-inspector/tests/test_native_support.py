@@ -537,8 +537,8 @@ defaultFacets = ["static"]
         self.write('utility.json', json.dumps([dict(modulePath='Fixture.lean', claimGid='claim-gid', claimModule='External',
             claimSelector=claim, claimSourcePath='External.lean', claimSourceSha256='sha256:' + publication.digest(self.root / 'External.lean'),
             resultGid='result-gid', resultModule='Fixture', resultSelector='result')]))
-    def run_lake(self, *args, success=True):
-        self.ensure()
+    def restore_compiler(self):
+        """Restore supplied compiler material after dependency preparation."""
         if self.compiler_seed is not None:
             # The collection owns this read-only stage. Lake copies only its
             # registered producer outputs into this fixture's private cache;
@@ -547,6 +547,10 @@ defaultFacets = ["static"]
                 cwd=self.root, env=self.env, text=True, capture_output=True, timeout=120)
             self.assertEqual(restored.returncode, 0, restored.stdout + restored.stderr)
             self.compiler_seed = None
+
+    def run_lake(self, *args, success=True):
+        self.ensure()
+        self.restore_compiler()
         result = self.guarded_command([self.lake, *args], cwd=self.root, env=self.env, text=True, capture_output=True, timeout=120)
         if success:
             self.assertEqual(result.returncode, 0, result.stdout + result.stderr)
