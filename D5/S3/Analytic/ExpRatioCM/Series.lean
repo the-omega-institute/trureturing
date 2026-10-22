@@ -7,6 +7,7 @@
    digest: Exponential moment expansions and consecutive signed derivative quotient coefficients. -/
 
 import D5.S3.Analytic.ExpRatioCM.Defs
+import D5.S3.Analytic.Fourier.SinhLogIntegral
 import Mathlib.Analysis.Calculus.SmoothSeries
 import Mathlib.Analysis.SpecificLimits.Normed
 import Mathlib.Tactic
@@ -33,7 +34,7 @@ theorem iteratedDeriv_F (i k : ℕ) (t : ℝ) :
   linear_combination (-( (-1 : ℝ) ^ i *
     (deriv^[i + k]) (fun s : ℝ => 1 / (Real.exp s - 1)) t)) * h
 
-private lemma reciprocal_eq {t : ℝ} (ht : 0 < t) :
+lemma reciprocal_eq {t : ℝ} (ht : 0 < t) :
     1 / (1 - Real.exp (-t)) = 1 + 1 / (Real.exp t - 1) := by
   have he : Real.exp t ≠ 0 := (Real.exp_pos t).ne'
   have h1 : Real.exp t - 1 ≠ 0 := sub_ne_zero.mpr (ne_of_gt (Real.one_lt_exp_iff.mpr ht))
@@ -52,7 +53,7 @@ theorem G_eq_F {i : ℕ} (hi : 1 ≤ i) {t : ℝ} (ht : 0 < t) : G i t = F i t :
 private def expMoment (i : ℕ) (t : ℝ) : ℝ :=
   ∑' n : ℕ, ((n + 1 : ℕ) : ℝ) ^ i * Real.exp (-((n + 1 : ℕ) : ℝ) * t)
 
-private lemma summable_expMoment (i : ℕ) {t : ℝ} (ht : 0 < t) :
+lemma summable_expMoment (i : ℕ) {t : ℝ} (ht : 0 < t) :
     Summable (fun n : ℕ => ((n + 1 : ℕ) : ℝ) ^ i *
       Real.exp (-((n + 1 : ℕ) : ℝ) * t)) := by
   have h := (Real.summable_pow_mul_exp_neg_nat_mul i ht).comp_injective
@@ -88,21 +89,10 @@ private lemma hasDerivAt_expMoment (i : ℕ) {t : ℝ} (ht : 0 < t) :
 
 private lemma expMoment_zero {t : ℝ} (ht : 0 < t) :
     expMoment 0 t = 1 / (Real.exp t - 1) := by
-  have he : Real.exp (-t) < 1 := Real.exp_lt_one_iff.mpr (by linarith)
-  have hs := (hasSum_geometric_of_lt_one (Real.exp_nonneg (-t)) he).mul_left
-    (Real.exp (-t))
-  have hexp (n : ℕ) : Real.exp (-((n + 1 : ℕ) : ℝ) * t) =
-      Real.exp (-t) * Real.exp (-t) ^ n := by
-    rw [← Real.exp_nat_mul, ← Real.exp_add]
-    congr 1
-    push_cast
-    ring
-  simp only [expMoment, pow_zero, one_mul, hexp]
-  rw [hs.tsum_eq, Real.exp_neg]
-  have hne : Real.exp t - 1 ≠ 0 := sub_ne_zero.mpr
-    (ne_of_gt (Real.one_lt_exp_iff.mpr ht))
-  field_simp
-  <;> ring
+  have hs := D5.S3.Analytic.Fourier.SinhLogIntegral.hasSum_h Real.pi_pos ht
+  simpa [expMoment, D5.S3.Analytic.Fourier.SinhLogIntegral.rate,
+    D5.S3.Analytic.Fourier.SinhLogIntegral.h, Nat.cast_add, Nat.cast_one,
+    mul_div_cancel_left₀ _ Real.pi_ne_zero] using hs.tsum_eq
 
 /-- The signed derivatives are polynomially weighted exponential sums. -/
 theorem F_eq_tsum (i : ℕ) {t : ℝ} (ht : 0 < t) :
