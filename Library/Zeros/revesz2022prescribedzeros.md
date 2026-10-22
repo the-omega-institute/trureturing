@@ -45,7 +45,7 @@ Its construction also supplies
 $\theta_{\mathcal P}(x)=f_0(x)+O(\log x)$, with $f_0'(x)=1+o(1)$.
 This local information is read from (50)–(51) and the p.17 calculation;
 it is stronger than the $O(\sqrt x)$ error alone. The source explicitly
-uses the published [Broucke–Vindas realization](brouckevindas2024discretization.md).
+uses the published [Broucke–Vindas realization](../Analytic/brouckevindas2024discretization.md).
 Neither that construction nor the prescribed-zero theorem is re-proved.
 
 A generalized integer here is a finite exponent vector in the free
