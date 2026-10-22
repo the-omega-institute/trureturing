@@ -65,7 +65,7 @@ Source: https://arxiv.org/abs/0911.4476v3
   - the coproduct, l. 666–670;
   - the Casimir (C), l. 1531–1535;
   - the representation, l. 683–691;
-  - the projectors, l. 776–777;
+  - the projectors, l. 779–780;
   - the Hamiltonian, l. 808–812;
   - the subsection on $N=4$ and $N=5$, l. 994;
   - the evidence and Conjecture 3, l. 1435–1446.
