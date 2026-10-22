@@ -4,7 +4,7 @@ namespace StrataLint.EngineeringScope;
 
 internal sealed record LeanDependencyRestoreResult(ClonefileReceipt Clonefile, int Added, int Retained)
 {
-    internal string Notice => $"additive dependency restore moved {Added} missing entries; "
+    internal string Notice => $"additive dependency restore added {Added} missing entries; "
         + $"retained {Retained} existing entries; existing bytes remain authoritative; "
         + "native Lake must validate traces and artifacts; no kernel or report validation performed";
 }
@@ -162,10 +162,17 @@ internal static class LeanDependencyLayerRestorer
         var existing = Attributes(target);
         if (existing is null)
         {
-            if (incoming.HasFlag(FileAttributes.Directory)) Directory.Move(staged, target);
-            else File.Move(staged, target, overwrite: false);
+            if (!incoming.HasFlag(FileAttributes.Directory))
+            {
+                File.Move(staged, target, overwrite: false);
+                added++;
+                return;
+            }
+            // Keep descendant links in staging for target-topology admission after
+            // all nonlink material, including their referents, has been restored.
+            Directory.CreateDirectory(target);
             added++;
-            return;
+            existing = File.GetAttributes(target);
         }
         if (existing.Value.HasFlag(FileAttributes.ReparsePoint))
         {
@@ -187,7 +194,7 @@ internal static class LeanDependencyLayerRestorer
         string packageRoot)
     {
         var incoming = Attributes(staged);
-        if (incoming is null) return; // The material pass moved this subtree.
+        if (incoming is null) return; // The material pass moved this file.
         if (incoming.Value.HasFlag(FileAttributes.ReparsePoint))
         {
             AddMissing(staged, target, ref added, ref retained, packageRoot);
