@@ -1,0 +1,30 @@
+### 7.3. FIB 五模的最小相位输运
+
+本节沿用模式顺序 $\Sigma=(0,1,2,3,13)$，设
+
+$$
+\nu=(1,-1,0,-1,1),\qquad r=1-Z,
+$$
+
+并固定
+
+$$
+0<Z<1,\quad 0<X,Y<r,\quad
+ L_0=\max(0,X+Y-r),\quad U_0=\min(X,Y).
+$$
+
+在开区间 $L_0<\kappa<U_0$ 内定义
+
+$$
+p(\kappa)=(r-X-Y+\kappa,\ X-\kappa,\ Z,\
+                         Y-\kappa,\ \kappa),\qquad
+ \psi_s=\sqrt{p_s}\,e^{-i\theta_s}.
+$$
+
+所有 $p_s$ 均正，且 $p'_s=\nu_s$。
+固定中间分量相位 $\theta_2=0$，令
+$\chi=\nu^{\mathsf T}\theta$。相位变量按模 $2\pi$ 理解；
+微分与矩形计算先在一个实值提升的局部相位图中进行。
+
+<a id="thm-minimal-phase"></a>
+
