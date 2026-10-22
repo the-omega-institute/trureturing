@@ -40,9 +40,22 @@ Lean statement: `D5/S3/Combinatorics/Partitions/AnalyticIntegerOccupation.hasPro
 
 The public occupation HasProd theorem is applied to z(i,k) = -q^(k+1). The product retains complex phases and occurrence parity; no energy-parity replacement is made.
 
+**Theorem 1.4 (Eta normalization).**
+
+Lean statement: `D5/S3/Combinatorics/Partitions/AnalyticIntegerOccupation.normalized_signed_integer_eq_eta`
+
+*Proof.* Machine-checked in Lean as `D5/S3/Combinatorics/Partitions/AnalyticIntegerOccupation.normalized_signed_integer_eq_eta` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+For q = exp(2 pi I tau) in the unit disk, the signed occupation product is the rank-th power of the quotient of the Euler products at q and q squared. The identity (1-q^n)(1+q^n)=1-q^(2n), public eta nonvanishing, and the exact vacuum exponential give exp(-2 pi I tau r/24) times the occupation sum equal to (eta(tau)/eta(2 tau))^r, including rank zero.
+
 ## References
 
 - Truth anchor: `D5/S3/Combinatorics/Partitions/AnalyticIntegerOccupation.hasProd_signed_integer_occupations`
+- Truth anchor: `D5/S3/Combinatorics/Partitions/AnalyticIntegerOccupation.normalized_signed_integer_eq_eta`
 - Truth anchor: `D5/S3/Combinatorics/Partitions/AnalyticIntegerOccupation.sqrt_norm_majorant`
 - Truth anchor: `D5/S3/Combinatorics/Partitions/AnalyticIntegerOccupation.summable_norm_signed_integer_occupations`
 - Dependency: [D5/S3/Combinatorics/Partitions/AnalyticOddOccupation](AnalyticOddOccupation.md)

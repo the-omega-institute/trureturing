@@ -35,6 +35,8 @@ open D5.S3.VertexAlgebra.LatticeTwistedGroundRealization
 open D5.S3.VertexAlgebra.LatticeTwistedGroundRealization.SignQuotient
 open D5.S3.VertexAlgebra.LatticeHalfFockCharacter
 open D5.S3.VertexAlgebra.LatticeHalfFockGradedTrace
+open D5.S3.VertexAlgebra.HalfFockSpectralFiberSource
+open D5.S3.VertexAlgebra.LatticeHalfFockChargedTensorCoefficients
 open D5.S3.Combinatorics.Partitions.AnalyticIntegerOccupation
 open D5.S3.Combinatorics.Partitions.EtaOddOccupation
 
@@ -103,10 +105,6 @@ private theorem carrierCoeff_theta (D : LatticeData) :
   rw [coeff_basis a, coefficientTheta_single]
   simp [occurrenceSign, reflectedLabel, smul_eq_mul]
 
-private theorem reflected_involutive (D : LatticeData) (a : Label D) :
-    reflectedLabel D (reflectedLabel D a) = a := by
-  simp [reflectedLabel]
-
 private theorem reflected_energy (D : LatticeData) (a : Label D) :
     energy D (reflectedLabel D a) = energy D a := by
   simp [reflectedLabel, energy, chargeEnergy, bilinear]
@@ -167,25 +165,6 @@ noncomputable instance integerFiber_fintype (D : LatticeData) (N : ℕ) :
     Fintype (IntegerFiber D N) := by
   letI : Finite (IntegerFiber D N) := integerFiber_finite D N
   exact Fintype.ofFinite _
-
-private def neutralCutoffEquiv (D : LatticeData) (N : ℕ) :
-    CutoffIndex D ({0} : Finset (Charge D)) (N : ℤ) ≃ IntegerFiber D N :=
-  { toFun := fun a => ⟨a.1.2, by
-      have ha : a.1.1 = 0 := by simpa using a.2.1
-      have he := a.2.2
-      simpa [energy, ha, chargeEnergy_zero] using he⟩
-    invFun := fun d => ⟨(0, d.1), by simp [energy, d.2]⟩
-    left_inv := by
-      intro a
-      apply Subtype.ext
-      apply Prod.ext
-      · have ha : a.1.1 = 0 := by simpa using a.2.1
-        exact ha.symm
-      · rfl
-    right_inv := by
-      intro d
-      apply Subtype.ext
-      rfl }
 
 private theorem chargeSupported_mem_iff (D : LatticeData)
     (C : Finset (Charge D)) (v : Carrier D) :
@@ -625,8 +604,336 @@ theorem actual_theta_trace_series (D : LatticeData)
   · exact hnormCoeff
   · exact hcoeff
 
-/- The eta/S endpoint remains open until its proof terms are available. The
-restriction above is the actual operator on the actual finite cutoff, with no
-scalar or regularized proxy. -/
+/-- The vacuum-normalized series of literal neutral Sugawara traces. -/
+def actualThetaCharacter (D : LatticeData)
+    (H : Matrix (Fin D.rank) (Fin D.rank) ℂ)
+    (hHG : H * gramComplex D = 1) (hGH : gramComplex D * H = 1)
+    (τ : ℂ) : ℂ :=
+  exp (-2 * Real.pi * I * τ * D.rank / 24) *
+    ∑' N : ℕ, neutralThetaTrace D H hHG hGH N * exp (2 * Real.pi * I * τ) ^ N
+
+private theorem full_q_norm (τ : ℂ) (hτ : 0 < τ.im) :
+    ‖exp (2 * Real.pi * I * τ)‖ < 1 := by
+  rw [norm_exp, Real.exp_lt_one_iff]
+  simpa [mul_re, mul_im] using
+    neg_lt_zero.mpr (mul_pos (mul_pos (by norm_num : (0 : ℝ) < 2) Real.pi_pos) hτ)
+
+/-- Absolute convergence and eta evaluation of these actual traces. -/
+theorem actual_theta_character_eta (D : LatticeData)
+    (H : Matrix (Fin D.rank) (Fin D.rank) ℂ)
+    (hHG : H * gramComplex D = 1) (hGH : gramComplex D * H = 1)
+    (τ : ℂ) (hτ : 0 < τ.im) :
+    Summable (fun N : ℕ => ‖exp (-2 * Real.pi * I * τ * D.rank / 24) *
+      (neutralThetaTrace D H hHG hGH N * exp (2 * Real.pi * I * τ) ^ N)‖) ∧
+    HasSum (fun N : ℕ => exp (-2 * Real.pi * I * τ * D.rank / 24) *
+      (neutralThetaTrace D H hHG hGH N * exp (2 * Real.pi * I * τ) ^ N))
+      ((ModularForm.eta τ / ModularForm.eta (2 * τ)) ^ D.rank) ∧
+    actualThetaCharacter D H hHG hGH τ =
+      (ModularForm.eta τ / ModularForm.eta (2 * τ)) ^ D.rank := by
+  have hs := actual_theta_trace_series D H hHG hGH (full_q_norm τ hτ)
+  have he := normalized_signed_integer_eq_eta D.rank τ hτ
+  have hsum := hs.2.2.mul_left (exp (-2 * Real.pi * I * τ * D.rank / 24))
+  rw [he] at hsum
+  have hsum' : HasSum (fun N : ℕ => exp (-2 * Real.pi * I * τ * D.rank / 24) *
+      (neutralThetaTrace D H hHG hGH N * exp (2 * Real.pi * I * τ) ^ N))
+      ((ModularForm.eta τ / ModularForm.eta (2 * τ)) ^ D.rank) := by
+    simpa only [neutral_actual_theta_trace] using hsum
+  refine ⟨?_, hsum', ?_⟩
+  · simpa only [neutral_actual_theta_trace, norm_mul] using
+      hs.2.1.mul_left ‖exp (-2 * Real.pi * I * τ * D.rank / 24)‖
+  · rw [actualThetaCharacter, ← tsum_mul_left]
+    exact hsum'.tsum_eq
+
+private theorem sqrt_positive_scale (a : ℝ) (ha : 0 < a) (z : ℂ) (hz : z ≠ 0) :
+    sqrt ((a : ℂ) * z) = sqrt (a : ℂ) * sqrt z := by
+  rw [sqrt_eq_exp (mul_ne_zero (by exact_mod_cast ha.ne') hz),
+    sqrt_eq_exp (by exact_mod_cast ha.ne'), sqrt_eq_exp hz,
+    log_ofReal_mul ha hz]
+  rw [show log (a : ℂ) = (Real.log a : ℂ) by
+    simp [Complex.log, abs_of_pos ha, arg_ofReal_of_nonneg ha.le]]
+  rw [← exp_add]
+  congr 1
+  ring
+
+private theorem eta_S_principal (τ : ℂ) (hτ : 0 < τ.im) :
+    ModularForm.eta (-1 / τ) = sqrt (-I * τ) * ModularForm.eta τ := by
+  have ht : τ ≠ 0 := by intro h; simp [h] at hτ
+  have hlog : log (-I * τ) = log (-I) + log τ := by
+    apply Complex.log_mul (neg_ne_zero.mpr I_ne_zero) ht
+    rw [arg_neg_I]
+    have hlo := (arg_nonneg_iff.mpr hτ.le)
+    have hhi := arg_le_pi τ
+    constructor <;> linarith [Real.pi_pos]
+  have hs : sqrt (-I * τ) = (sqrt I)⁻¹ * sqrt τ := by
+    rw [sqrt_eq_exp (mul_ne_zero (neg_ne_zero.mpr I_ne_zero) ht),
+      sqrt_eq_exp I_ne_zero, sqrt_eq_exp ht, ← exp_neg, ← exp_add,
+      hlog, log_I, log_neg_I]
+    congr 1
+    ring
+  rw [hs]
+  simpa only [Function.comp_apply, Pi.smul_apply, Pi.mul_apply, smul_eq_mul,
+    mul_assoc] using ModularForm.eta_comp_eq_csqrt_I_inv hτ
+
+private theorem eta_reflecting_S_ratio (τ : ℂ) (hτ : 0 < τ.im) :
+    ModularForm.eta (-1 / τ) / ModularForm.eta (2 * (-1 / τ)) =
+      sqrt (2 : ℂ) * (ModularForm.eta τ / ModularForm.eta (τ / 2)) := by
+  have ht : τ ≠ 0 := by intro h; simp [h] at hτ
+  have hh : 0 < (τ / 2).im := by simpa using half_pos hτ
+  have hs : sqrt (-I * τ) = sqrt (2 : ℂ) * sqrt (-I * (τ / 2)) := by
+    have hscale := sqrt_positive_scale 2 (by norm_num) (-I * (τ / 2))
+      (mul_ne_zero (neg_ne_zero.mpr I_ne_zero) (div_ne_zero ht (by norm_num)))
+    norm_num only [Complex.ofReal_ofNat] at hscale
+    rw [← hscale]
+    congr 1
+    ring
+  have hn : sqrt (-I * (τ / 2)) ≠ 0 := by
+    exact Complex.cpow_ne_zero_iff.mpr (Or.inl
+      (mul_ne_zero (neg_ne_zero.mpr I_ne_zero) (div_ne_zero ht (by norm_num))))
+  rw [show 2 * (-1 / τ) = -1 / (τ / 2) by field_simp,
+    eta_S_principal τ hτ, eta_S_principal (τ / 2) hh, hs]
+  rw [mul_assoc, mul_div_assoc, mul_div_mul_left _ _ hn]
+
+/-- Principal-branch modular S of the trace-defined ordinary character, and
+both identity-ground interchanges with the actual half-Fock character. -/
+theorem actual_theta_character_S (D : LatticeData)
+    (H : Matrix (Fin D.rank) (Fin D.rank) ℂ)
+    (hHG : H * gramComplex D = 1) (hGH : gramComplex D * H = 1)
+    (τ : ℂ) (hτ : 0 < τ.im) :
+    actualThetaCharacter D H hHG hGH (-1 / τ) =
+      (2 : ℂ) ^ ((D.rank : ℂ) / 2) *
+        (ModularForm.eta τ / ModularForm.eta (τ / 2)) ^ D.rank ∧
+    (∀ hu : IsUnit D.G.det,
+      actualInsertedCharacter D hu (LinearMap.id : Module.End ℂ (ActualGround D hu))
+        (-1 / τ) = actualThetaCharacter D H hHG hGH τ ∧
+      actualThetaCharacter D H hHG hGH (-1 / τ) =
+        actualInsertedCharacter D hu (LinearMap.id : Module.End ℂ (ActualGround D hu)) τ) := by
+  have hS : 0 < (-1 / τ).im := by
+    simpa using UpperHalfPlane.im_pnat_div_pos 1 (⟨τ, hτ⟩ : UpperHalfPlane)
+  have he := (actual_theta_character_eta D H hHG hGH (-1 / τ) hS).2.2
+  rw [eta_reflecting_S_ratio τ hτ, mul_pow] at he
+  have hfactor : sqrt (2 : ℂ) ^ D.rank = (2 : ℂ) ^ ((D.rank : ℂ) / 2) := by
+    rw [sqrt, ← cpow_nat_mul]
+    rfl
+  refine ⟨by rw [← hfactor]; exact he, ?_⟩
+  intro hu
+  obtain ⟨m, e, hr, he'⟩ := symplectic_coordinates D hu
+  have hr' : D.rank = 2 * m := by omega
+  have htr : LinearMap.trace ℂ (ActualGround D hu) LinearMap.id = (2 : ℂ) ^ m := by
+    rw [LinearMap.trace_id, actual_ground_finrank D hu, hr']
+    simp
+  have hm := actual_character_modular D hu LinearMap.id τ hτ
+  constructor
+  · rw [hm.2.2.2.1 m hr', htr, mul_inv_cancel₀ (pow_ne_zero _ (by norm_num)), one_mul]
+    rw [(actual_theta_character_eta D H hHG hGH τ hτ).2.2, hr']
+  · rw [he, hm.2.2.1, htr, hr', pow_mul,
+      show sqrt (2 : ℂ) ^ 2 = 2 by exact cpow_nat_inv_pow _ (by decide)]
+
+/-- The finite charge ellipsoid containing every label of energy n. -/
+def positiveChargeCutoff (D : LatticeData)
+    (hD : Matrix.PosDef (D.G.map (Int.cast : ℤ → ℝ))) (n : ℤ) : Finset (Charge D) :=
+  (chargeSublevel_finite D hD n.toNat).toFinset
+
+private theorem positiveChargeCutoff_symmetric (D : LatticeData)
+    (hD : Matrix.PosDef (D.G.map (Int.cast : ℤ → ℝ))) (n : ℤ) :
+    ∀ a, a ∈ positiveChargeCutoff D hD n → -a ∈ positiveChargeCutoff D hD n := by
+  classical
+  intro a ha
+  simpa [positiveChargeCutoff, chargeEnergy, bilinear] using ha
+
+/-- The ellipsoid and oscillator sublevel bounds identify a finite cutoff
+with the literal full Sugawara kernel, for every signed energy. -/
+theorem positive_full_grade_eq_cutoff (D : LatticeData)
+    (H : Matrix (Fin D.rank) (Fin D.rank) ℂ)
+    (hHG : H * gramComplex D = 1) (hGH : gramComplex D * H = 1)
+    (hD : Matrix.PosDef (D.G.map (Int.cast : ℤ → ℝ))) (n : ℤ) :
+    (sugawaraMode D H 0).eigenspace (n : ℂ) =
+      cutoffActualGrade D H (positiveChargeCutoff D hD n) n := by
+  rw [actualL0_eigenspace_eq_grade D H hHG hGH n,
+    cutoffActualGrade_eq_supported D H hHG hGH]
+  ext v
+  rw [mem_grade_iff]
+  change (∀ a : Label D, energy D a ≠ n → (v a.1).coeff a.2 = 0) ↔
+    carrierCoeffEquiv D v ∈ Finsupp.supported ℂ ℂ _
+  rw [Finsupp.mem_supported']
+  constructor
+  · intro hv a ha
+    apply hv a
+    intro he
+    apply ha
+    refine ⟨?_, he⟩
+    simp only [positiveChargeCutoff, Set.Finite.mem_toFinset, Set.mem_ofPred_eq]
+    dsimp [energy] at he
+    omega
+  · intro hv a ha
+    exact hv a (by intro h; exact ha h.2)
+
+private theorem theta_mem_full_grade (D : LatticeData)
+    (H : Matrix (Fin D.rank) (Fin D.rank) ℂ)
+    (hHG : H * gramComplex D = 1) (hGH : gramComplex D * H = 1)
+    (n : ℤ) (v : Carrier D)
+    (hv : v ∈ (sugawaraMode D H 0).eigenspace (n : ℂ)) :
+    thetaLinear D v ∈ (sugawaraMode D H 0).eigenspace (n : ℂ) := by
+  rw [actualL0_eigenspace_eq_grade D H hHG hGH] at hv ⊢
+  change carrierCoeffEquiv D (thetaLinear D v) ∈ Finsupp.supported ℂ ℂ _
+  rw [show carrierCoeffEquiv D (thetaLinear D v) =
+      coefficientTheta D (carrierCoeffEquiv D v) from
+        LinearMap.congr_fun (carrierCoeff_theta D) v]
+  exact coefficientTheta_supported D _ (fun a ha => by
+    change energy D (reflectedLabel D a) = n
+    rw [reflected_energy]; exact ha) _ hv
+
+/-- Literal theta restriction on the full kernel. No ambient trace is taken. -/
+def fullThetaRestriction (D : LatticeData)
+    (H : Matrix (Fin D.rank) (Fin D.rank) ℂ)
+    (hHG : H * gramComplex D = 1) (hGH : gramComplex D * H = 1) (n : ℤ) :
+    Module.End ℂ ((sugawaraMode D H 0).eigenspace (n : ℂ)) :=
+  ((thetaLinear D).domRestrict _).codRestrict _
+    (fun v => theta_mem_full_grade D H hHG hGH n v.1 v.2)
+
+/-- This trace is defined only after positive definiteness supplies finiteness. -/
+def positiveFullThetaTrace (D : LatticeData)
+    (H : Matrix (Fin D.rank) (Fin D.rank) ℂ)
+    (hHG : H * gramComplex D = 1) (hGH : gramComplex D * H = 1)
+    (hD : Matrix.PosDef (D.G.map (Int.cast : ℤ → ℝ))) (n : ℤ) : ℂ := by
+  letI : FiniteDimensional ℂ ((sugawaraMode D H 0).eigenspace (n : ℂ)) := by
+    rw [positive_full_grade_eq_cutoff D H hHG hGH hD n]
+    exact cutoffActualGrade_finiteDimensional D H hHG hGH _ n
+  exact LinearMap.trace ℂ _ (fullThetaRestriction D H hHG hGH n)
+
+private theorem positive_full_trace_cutoff (D : LatticeData)
+    (H : Matrix (Fin D.rank) (Fin D.rank) ℂ)
+    (hHG : H * gramComplex D = 1) (hGH : gramComplex D * H = 1)
+    (hD : Matrix.PosDef (D.G.map (Int.cast : ℤ → ℝ))) (n : ℤ) :
+    positiveFullThetaTrace D H hHG hGH hD n =
+      cutoffThetaTrace D H hHG hGH (positiveChargeCutoff D hD n) n
+        (positiveChargeCutoff_symmetric D hD n) := by
+  unfold positiveFullThetaTrace cutoffThetaTrace
+  let e := LinearEquiv.ofEq _ _ (positive_full_grade_eq_cutoff D H hHG hGH hD n)
+  have hc : e.conj (fullThetaRestriction D H hHG hGH n) =
+      thetaRestriction D H hHG hGH (positiveChargeCutoff D hD n) n
+        (positiveChargeCutoff_symmetric D hD n) := by
+    ext v
+    rfl
+  rw [← hc, LinearMap.trace_conj']
+
+def positiveFullThetaCharacter (D : LatticeData)
+    (H : Matrix (Fin D.rank) (Fin D.rank) ℂ)
+    (hHG : H * gramComplex D = 1) (hGH : gramComplex D * H = 1)
+    (hD : Matrix.PosDef (D.G.map (Int.cast : ℤ → ℝ))) (τ : ℂ) : ℂ :=
+  exp (-2 * Real.pi * I * τ * D.rank / 24) *
+    ∑' N : ℕ, positiveFullThetaTrace D H hHG hGH hD N * exp (2 * Real.pi * I * τ) ^ N
+
+/-- Full positive-definite grade traces, their absolute series and eta value.
+Every trace here acts on the literal finite Sugawara eigenspace. -/
+theorem positive_full_theta_character (D : LatticeData)
+    (H : Matrix (Fin D.rank) (Fin D.rank) ℂ)
+    (hHG : H * gramComplex D = 1) (hGH : gramComplex D * H = 1)
+    (hD : Matrix.PosDef (D.G.map (Int.cast : ℤ → ℝ)))
+    {q : ℂ} (hq : ‖q‖ < 1) :
+    (∀ n : ℤ, positiveFullThetaTrace D H hHG hGH hD n =
+      if 0 ≤ n then signedThetaCoefficient D n.toNat else 0) ∧
+    Summable (fun N : ℕ => ‖positiveFullThetaTrace D H hHG hGH hD N * q ^ N‖) ∧
+    HasSum (fun N : ℕ => positiveFullThetaTrace D H hHG hGH hD N * q ^ N)
+      (∑' d : Exponent D, signedIntegerMonomial q d) ∧
+    (∀ (τ : ℂ) (_ : 0 < τ.im),
+      Summable (fun N : ℕ => ‖exp (-2 * Real.pi * I * τ * D.rank / 24) *
+        (positiveFullThetaTrace D H hHG hGH hD N * exp (2 * Real.pi * I * τ) ^ N)‖) ∧
+      HasSum (fun N : ℕ => exp (-2 * Real.pi * I * τ * D.rank / 24) *
+        (positiveFullThetaTrace D H hHG hGH hD N * exp (2 * Real.pi * I * τ) ^ N))
+        ((ModularForm.eta τ / ModularForm.eta (2 * τ)) ^ D.rank) ∧
+      positiveFullThetaCharacter D H hHG hGH hD τ = actualThetaCharacter D H hHG hGH τ ∧
+      positiveFullThetaCharacter D H hHG hGH hD (-1 / τ) =
+        (2 : ℂ) ^ ((D.rank : ℂ) / 2) *
+          (ModularForm.eta τ / ModularForm.eta (τ / 2)) ^ D.rank) := by
+  have htrace (n : ℤ) : positiveFullThetaTrace D H hHG hGH hD n =
+      if 0 ≤ n then signedThetaCoefficient D n.toNat else 0 := by
+    rw [positive_full_trace_cutoff, cutoff_actual_theta_trace]
+    have hz : (0 : Charge D) ∈ positiveChargeCutoff D hD n := by
+      simp [positiveChargeCutoff]
+    simp only [hz, ↓reduceIte, dite_eq_ite]
+  have hnat (N : ℕ) : positiveFullThetaTrace D H hHG hGH hD N =
+      signedThetaCoefficient D N := by simpa using htrace N
+  have hs := actual_theta_trace_series D H hHG hGH hq
+  have hchar (τ : ℂ) : positiveFullThetaCharacter D H hHG hGH hD τ =
+      actualThetaCharacter D H hHG hGH τ := by
+    simp only [positiveFullThetaCharacter, actualThetaCharacter, hnat,
+      neutral_actual_theta_trace]
+  refine ⟨htrace, by simpa only [hnat] using hs.2.1,
+    by simpa only [hnat] using hs.2.2, ?_⟩
+  intro τ hτ
+  have hη := actual_theta_character_eta D H hHG hGH τ hτ
+  exact ⟨by simpa only [hnat, neutral_actual_theta_trace] using hη.1,
+    by simpa only [hnat, neutral_actual_theta_trace] using hη.2.1,
+    hchar τ, by rw [hchar]; exact (actual_theta_character_S D H hHG hGH τ hτ).1⟩
+
+/-- Symmetrizing an arbitrary finite charge set gives a directed cofinal
+exhaustion. It does not make an indefinite full energy grade finite. -/
+def symmetricChargeCutoff (D : LatticeData) (s : Finset (Charge D)) : Finset (Charge D) := by
+  classical
+  exact s ∪ s.image (fun a => -a)
+
+private theorem symmetricChargeCutoff_symmetric (D : LatticeData) (s : Finset (Charge D)) :
+    ∀ a, a ∈ symmetricChargeCutoff D s → -a ∈ symmetricChargeCutoff D s := by
+  classical
+  intro a ha
+  rcases Finset.mem_union.mp ha with h | h
+  · exact Finset.mem_union_right _ (Finset.mem_image.mpr ⟨a, h, rfl⟩)
+  · obtain ⟨b, hb, rfl⟩ := Finset.mem_image.mp h
+    exact Finset.mem_union_left _ (by simpa using hb)
+
+def cutoffThetaCharacter (D : LatticeData)
+    (H : Matrix (Fin D.rank) (Fin D.rank) ℂ)
+    (hHG : H * gramComplex D = 1) (hGH : gramComplex D * H = 1)
+    (C : Finset (Charge D)) (hC : ∀ a, a ∈ C → -a ∈ C) (τ : ℂ) : ℂ :=
+  exp (-2 * Real.pi * I * τ * D.rank / 24) *
+    ∑' N : ℕ, cutoffThetaTrace D H hHG hGH C N hC * exp (2 * Real.pi * I * τ) ^ N
+
+/-- Named symmetric-charge-cutoff regularization, valid also for indefinite D.
+Both limits are eventually exactly constant after the neutral charge appears. -/
+theorem symmetric_charge_cutoff_limit (D : LatticeData)
+    (H : Matrix (Fin D.rank) (Fin D.rank) ℂ)
+    (hHG : H * gramComplex D = 1) (hGH : gramComplex D * H = 1)
+    (n : ℤ) (τ : ℂ) :
+    Directed (· ⊆ ·) (symmetricChargeCutoff D) ∧
+    (∀ C : Finset (Charge D), ∃ s, C ⊆ symmetricChargeCutoff D s) ∧
+    Tendsto (fun s : Finset (Charge D) =>
+      cutoffThetaTrace D H hHG hGH (symmetricChargeCutoff D s) n
+        (symmetricChargeCutoff_symmetric D s)) atTop
+      (𝓝 (if 0 ≤ n then signedThetaCoefficient D n.toNat else 0)) ∧
+    Tendsto (fun s : Finset (Charge D) =>
+      cutoffThetaCharacter D H hHG hGH (symmetricChargeCutoff D s)
+        (symmetricChargeCutoff_symmetric D s) τ) atTop
+      (𝓝 (actualThetaCharacter D H hHG hGH τ)) := by
+  classical
+  have hmono : Monotone (symmetricChargeCutoff D) := by
+    intro s t hst
+    exact Finset.union_subset_union hst (Finset.image_subset_image hst)
+  have hz : ∀ᶠ s : Finset (Charge D) in atTop,
+      (0 : Charge D) ∈ symmetricChargeCutoff D s := by
+    filter_upwards [eventually_ge_atTop ({0} : Finset (Charge D))] with s hs
+    exact Finset.mem_union_left _ (hs (by simp))
+  refine ⟨?_, ?_, ?_, ?_⟩
+  · intro s t
+    exact ⟨s ∪ t, hmono Finset.subset_union_left, hmono Finset.subset_union_right⟩
+  · intro C
+    exact ⟨C, Finset.subset_union_left⟩
+  · apply tendsto_const_nhds.congr'
+    filter_upwards [hz] with s hs
+    rw [cutoff_actual_theta_trace, if_pos hs]
+    simp only [dite_eq_ite]
+  · apply tendsto_const_nhds.congr'
+    filter_upwards [hz] with s hs
+    unfold cutoffThetaCharacter actualThetaCharacter
+    congr 1
+    apply tsum_congr
+    intro N
+    rw [cutoff_actual_theta_trace, if_pos hs, neutral_actual_theta_trace]
+    simp
 
 end D5.S3.VertexAlgebra.LatticeThetaCharacter
+
+#print axioms D5.S3.VertexAlgebra.LatticeThetaCharacter.actual_theta_character_eta
+#print axioms D5.S3.VertexAlgebra.LatticeThetaCharacter.actual_theta_character_S
+#print axioms D5.S3.VertexAlgebra.LatticeThetaCharacter.positive_full_grade_eq_cutoff
+#print axioms D5.S3.VertexAlgebra.LatticeThetaCharacter.positive_full_theta_character
+#print axioms D5.S3.VertexAlgebra.LatticeThetaCharacter.symmetric_charge_cutoff_limit

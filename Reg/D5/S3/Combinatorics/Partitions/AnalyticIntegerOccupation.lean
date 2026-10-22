@@ -3,73 +3,82 @@ import Reg.Support.DependentFamily
 import D5.S3.Combinatorics.Partitions.AnalyticIntegerOccupation
 
 set_option autoImplicit false
+set_option backward.isDefEq.respectTransparency false
 
 noncomputable section
-open LeanInformationAudit
+open LeanInformationAudit Complex
 open _root_.D5.S3.ConceptDynamics.InformationEscape.DependentFamily
 open _root_.D5.S3.Combinatorics.Partitions.AnalyticIntegerOccupation
+open _root_.D5.S3.Combinatorics.Partitions.ColouredOddOccupation
+open scoped BigOperators
 
 namespace Reg.D5.S3.Combinatorics.Partitions.AnalyticIntegerOccupation
 
+namespace Normalization
+
 abbrev signature : Signature where
-  Params := Type
-  State ι := (ι × ℕ) →₀ ℕ
+  Params := Unit
+  State _ := ℂ
+  Output _ _ := ℂ → Prop
   Role := Unit
   finiteRole := inferInstance
   nonemptyRole := inferInstance
-  Output ι _ := Prop
   Anchor := Empty
   finiteAnchor := inferInstance
 
 def actual : Realization signature := realize signature
-  (fun _ ι d => colouredEnergy ι d ≤ 2 * integerEnergy ι d) (fun e => nomatch e)
-
+  (fun _ _ x y => x = y) (fun e => nomatch e)
 def rejected : Realization signature := realize signature
-  (fun _ _ _ => False) (fun e => nomatch e)
+  (fun _ _ _ => fun _ => False) (fun e => nomatch e)
+
+private theorem dependence : ObservationalDependence signature actual := by
+  intro i
+  refine ⟨(), 0, 1, ?_⟩
+  intro h
+  have hh : (1 : ℂ) = 0 := Eq.mp (congrFun h 0) rfl
+  exact one_ne_zero hh
 
 abbrev arena : Arena where
   signature := signature
-  Law a := ∀ (ι : Type) (d : (ι × ℕ) →₀ ℕ),
-    a.readout () ι d ↔ colouredEnergy ι d ≤ 2 * integerEnergy ι d
+  Law a := ∀ (r : ℕ) (τ : ℂ) (_ : 0 < τ.im),
+    a.readout () ()
+      (exp (-2 * Real.pi * I * τ * r / 24) *
+        (∑' d : (Fin r × ℕ) →₀ ℕ,
+          signedIntegerMonomial (exp (2 * Real.pi * I * τ)) d))
+      ((ModularForm.eta τ / ModularForm.eta (2 * τ)) ^ r)
 
 private theorem source_bridge :
-    (type_of% (@oddEnergy_le_twice_integerEnergy)) ↔ arena.Law actual := Iff.rfl
+    (type_of% (@D5.S3.Combinatorics.Partitions.AnalyticIntegerOccupation.normalized_signed_integer_eq_eta)) ↔ arena.Law actual := Iff.rfl
 
 private theorem rejected_law : ¬ arena.Law rejected := by
   intro h
-  have hh := (h Empty (0 : (Empty × ℕ) →₀ ℕ)).mp
-  exact Nat.not_succ_le_zero 1 (by simpa [integerEnergy, colouredEnergy] using hh)
+  exact h 0 I (by norm_num)
 
-def familyRegistration : Registration arena (type_of% (@oddEnergy_le_twice_integerEnergy)) where
+def family : Registration arena (type_of% (@D5.S3.Combinatorics.Partitions.AnalyticIntegerOccupation.normalized_signed_integer_eq_eta)) where
   actual := actual
   bridge := source_bridge
-  variation := ⟨source_bridge.mp oddEnergy_le_twice_integerEnergy, rejected, rejected_law⟩
+  variation := ⟨source_bridge.mp normalized_signed_integer_eq_eta, rejected, rejected_law⟩
   sensitivity := by
     constructor
     · intro i
       refine ⟨rejected, ?_, rfl, rejected_law⟩
       intro j hj
       exact (hj (Subsingleton.elim _ _)).elim
-    · intro e
-      cases e
-  dependence := by
-    intro ι
-    refine ⟨ι, 0, ?_⟩
-    intro h
-    exact (h.mp (by simp [actual])).elim
+    · intro i
+      cases i
+  dependence := dependence
 
-def registration : Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0}
-    (@oddEnergy_le_twice_integerEnergy)
-    (type_of% (realize signature actual.readout actual.anchor)) Type Unit where
-  unitName := `Reg.D5.S3.Combinatorics.Partitions.AnalyticIntegerOccupation.unit
-  realizationName := `Reg.D5.S3.Combinatorics.Partitions.AnalyticIntegerOccupation.familyRegistration
+def audit : Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0}
+    (@D5.S3.Combinatorics.Partitions.AnalyticIntegerOccupation.normalized_signed_integer_eq_eta) (Realization signature) Unit Unit where
+  unitName := `Reg.D5.S3.Combinatorics.Partitions.AnalyticIntegerOccupation.Normalization.unit
+  realizationName := `Reg.D5.S3.Combinatorics.Partitions.AnalyticIntegerOccupation.Normalization.family
   realizationSource := none
   generated := false
   arena := .source ⟨arena⟩
   objectArena := .source ⟨arena⟩
   catalog := Lean.Name.anonymous
   localNames := false
-  realization := .source arena ⟨familyRegistration⟩
+  realization := .source arena ⟨family⟩
   correspondence := { stage := .evidence, objectStage := .evidence }
   bundleNonempty := .absent
   readout := some (realize signature actual.readout actual.anchor)
@@ -77,9 +86,20 @@ def registration : Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0}
   sensitivity := .absent
   partialSensitivity := none
   escapeFrom := none
-  sourceSelection := none
+  sourceSelection := some {
+    owner := `D5.S3.Combinatorics.Partitions.AnalyticIntegerOccupation
+    definition := none
+    coordinates := #[]
+    readouts := #[{
+      path := #["body", "body", "body", "fn", "fn"]
+      stateBinder := 0
+      functionOperand := true
+      stateOperand := none
+      booleanPredicate := false }] }
   continuation := .unknown
   familyRecord := none
   options := #[]
+
+end Normalization
 
 end Reg.D5.S3.Combinatorics.Partitions.AnalyticIntegerOccupation
