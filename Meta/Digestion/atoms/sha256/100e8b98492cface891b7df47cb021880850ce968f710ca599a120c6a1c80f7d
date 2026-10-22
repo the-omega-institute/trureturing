@@ -1,0 +1,60 @@
+## 49. The four expressions and the missing observer bridges
+
+For each one complete world, the independently specified expressions
+in this experiment are:
+
+| Expression | Exposed mathematical object |
+| --- | --- |
+| Space | The positive trace-one rank-one projector $P$, equivalently its image line and complementary kernel line; its transport is $H_i=Q_iP$. This is linear-incidence geometry. |
+| Time | The original absolute clock $i$ and the ordered executed word. Their labels are public premises, not recovered from scalar boundary values. |
+| Boundary | The actual immediate scalar $d+g(i)\operatorname{tr}(H_i)$ at each acquired event, on that same world's source. Unexecuted alternatives are not observations. |
+| Memory | Exactly the retained acquired scalars and common chronological metadata in (45.6), under the declared accessible retention contract. |
+
+The source-side numerical evolution is
+
+$$
+\begin{aligned}
+F_E(i,H,g,d)&=(i+1,EH,g,d),\\
+q(i,H,g,d)&=d+g(i)\operatorname{tr}(H).
+\end{aligned}
+\tag{49.1}
+$$
+
+Starting at $(0,P,g,d)$, induction gives $H_i=Q_iP$ and every original
+boundary reading. Starting at $(7,Q_7P,g,d)$, $N$ iterations of $F_M$
+give exactly (46.1). For consecutive numerical words, applying the
+first word and then the second multiplies their left products in the
+same order as concatenation and adds their lengths to the same clock.
+This is source-side route agreement, already used in retained Clock8
+§17. It does not put $(H,g,d)$ in the retained observer's memory or
+install the update (49.1) as an available operation.
+
+The new obstruction says that even an exact complete acquired record
+through this seventh $J$ is insufficient for bounded prediction of the
+declared all-$M$ numerical future. It therefore rules out identifying
+this particular memory relation with that future-task relation.
+Improving the precision of these same three fields cannot separate
+the actual equal-record witnesses. This adds a concrete constraint on
+candidate memory/boundary/dynamics identifications in the common
+four-expression programme.
+
+It supplies no four-way mutual recovery, no recovery of time from
+boundary, no equality of complete action-behavior kernels, and no
+adaptive operational equivalence. Such claims must also preserve
+actual initialization, current legality, complete outputs, successors
+and selector inputs on one common actual process. Unknown-source
+initialization, a lawful additional relation separating the witnessed
+fiber, an installed decoder, finite-input arithmetic, retained callable
+backing, continued authorized use and resource-optimal storage remain
+unproved. The exact-field count is not a memory or cost optimum.
+
+NCR's actually acquired seed and installed clocked controller, PVC's
+explicit Install and paid conversions, PR57's packet/tape/token runtime,
+PG's joint partial-action transport and selector descent, and Atlas's
+retained backing and invocation rights retain their separate contracts;
+see retained Clock8 Convention 7.3. No such service is transferred to
+this real-source experiment. The original fixed-$G_{gc}$, original-$Q$,
+parked-consumer and unchanged-initialization outcomes keep their exact
+scopes. No physical or universal observer impossibility, universal
+alpha/beta reduction, or completion of the sustained programme follows.
+
