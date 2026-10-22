@@ -10,6 +10,9 @@ inductive Side : Prop where | intro : Side
 inductive Finish : Prop where | intro : Finish
 inductive Combined (m n : Nat) : Prop where | intro : Combined m n
 
+inductive PrivateMark (n : Nat) : Prop where | intro : PrivateMark n
+private theorem hiddenMember (n : Nat) : PrivateMark n := .intro
+
 theorem pair (n : Nat) : Mark n ∧ Side := ⟨.intro, .intro⟩
 theorem direction : Left ↔ Right := ⟨fun _ => .intro, fun _ => .intro⟩
 theorem reordered (m n : Nat) (h : Mark m) : Combined m n := .intro

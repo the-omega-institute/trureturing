@@ -36,7 +36,9 @@ run_cmd do
     let index ← DiskLookup.openIndex "build/lean-inspector/lookup-index/lookup-fixture"
       "lookup-fixture" "56a005855ea17e0b0958f73ec801ae140b0a1679"
     let table ← onDemandLookup {environment := base, disk? := some index}
-    let type ← Term.elabType (← `(LeanInformationAudit.Tests.SearchReduction.LookupBaseline.Mark 9))
+    let type ← Term.elabType (← `(∀ n : Nat,
+      LeanInformationAudit.Tests.SearchReduction.LookupBaseline.Mark n ∧
+      LeanInformationAudit.Tests.SearchReduction.LookupBaseline.Side))
     Term.synthesizeSyntheticMVarsNoPostponing
     let type ← instantiateMVars type
     let bytes ← withEnv base do

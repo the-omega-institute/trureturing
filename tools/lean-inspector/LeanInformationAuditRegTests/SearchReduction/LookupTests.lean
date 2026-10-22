@@ -32,6 +32,18 @@ run_cmd liftTermElabM do
   unless !missing.complete do throwError "missing membership bucket certified NoHit"
   let absent ← DiskLookup.queryMembership {index with membership? := none} left
   unless !absent.complete do throwError "missing membership header certified NoHit"
+  let privateType ← Term.elabType (← `(∀ n : Nat, PrivateMark n))
+  Term.synthesizeSyntheticMVarsNoPostponing
+  let privateType ← instantiateMVars privateType
+  let privateHits ← DiskLookup.queryMembership index privateType
+  let privateEntry := privateHits.entries.find? (·.name.endsWith ".hiddenMember")
+  unless privateHits.complete && privateEntry.isSome do
+    throwError "complete membership omitted a private theorem"
+  let privateInfo ← getConstInfo privateEntry.get!.leanName
+  unless DiskLookup.membershipEligible privateInfo &&
+      LazyDiscrTree.blacklistInsertion (← getEnv) privateInfo.name do
+    throwError "private regression no longer distinguishes membership from suggestions"
+  logInfo "LOOKUP_MEMBERSHIP private=true suggestion_blacklist_ignored=true"
   logInfo "LOOKUP_MEMBERSHIP alpha=true normalized=true missing_bucket=unknown missing_header=unknown"
 
 run_cmd do
@@ -133,21 +145,20 @@ run_cmd do
       "build/lean-inspector/lookup-index/lookup-fixture" "lookup-fixture"
       "56a005855ea17e0b0958f73ec801ae140b0a1679"
     let table ← onDemandLookup {environment := base, disk? := some index}
-    let positive ← Term.elabType (← `(∀ second first : Nat,
-      Mark first → Combined first second))
-    let negative ← Term.elabType (← `(First → Last))
+    let positive ← Term.elabType (← `(∀ n : Nat, Mark n ∧ Side))
+    let negative ← Term.elabType (← `(Mark 9))
     Term.synthesizeSyntheticMVarsNoPostponing
     for (type, expected) in #[(← instantiateMVars positive, EdgeCost.zero),
-        (← instantiateMVars negative, EdgeCost.unknown)] do
+        (← instantiateMVars negative, EdgeCost.one)] do
       withEnv base do
         let type ← copyStatement source .anonymous type
         for _ in [:2] do
           let result ← localRebuild type [] (some table)
           unless result.cost == expected do
             throwError "cold candidate certification: {result.detail}"
-          if expected == .unknown then
-            unless (result.detail.splitOn "candidate-name-owned-by-another-module").length > 1 do
-              throwError "cold owner collision lost its incomplete-enumeration reason"
+          if expected == .one then
+            unless result.lookup.complete && result.lookup.unloaded == 0 do
+              throwError "external implication was loaded or exclusion became incomplete"
           logInfo s!"LOOKUP_COLD cost={reprStr result.cost} {result.detail}"
 
 run_cmd liftTermElabM do
@@ -211,7 +222,7 @@ run_cmd do
     let source ← getEnv
     let index ← DiskLookup.openIndex "build/lean-inspector/lookup-index/lookup-fixture"
       "lookup-fixture" "56a005855ea17e0b0958f73ec801ae140b0a1679"
-    let cases ← #[("projection", ← `(Mark 9)), ("nonrecursive", ← `(First → Last))].mapM fun (name, stx) => do
+    let cases ← #[("membership", ← `(∀ n : Nat, Mark n ∧ Side)), ("nonrecursive", ← `(First → Last))].mapM fun (name, stx) => do
       let type ← Term.elabType stx
       Term.synthesizeSyntheticMVarsNoPostponing
       return (name, ← instantiateMVars type)
@@ -231,10 +242,10 @@ run_cmd do
             baselineProof?, pairedProof?,
             isolated := true, structureChecked := true,
             structureClean := true, presentationComplete := true}
-          if name == "projection" then
+          if name == "membership" then
             unless reading.baseline == ⟨.finite 0, .finite 0⟩ &&
                 reading.baselineProof?.isSome do
-              throwError "projection determinism case did not certify a positive hit"
+              throwError "external membership determinism case did not certify a positive hit"
           let observation : Observation := {
             target := name.toName, graph? := some reading,
             verdict := classifyGraph reading, base := reading.baselineProbe.outcome,

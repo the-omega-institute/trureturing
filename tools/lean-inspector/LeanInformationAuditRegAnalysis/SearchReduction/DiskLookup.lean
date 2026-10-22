@@ -208,7 +208,7 @@ def normalizeStatementSyntax (env : Environment) (e : Expr)
     (fuel : Nat := membershipNormalizationFuel) : Except String Expr :=
   (normalizeStatementAux env e []).run' {remaining := fuel}
 
-abbrev membershipVersion : String := "R_lookup/membership-alpha-syntax-v3-memo-2000000"
+abbrev membershipVersion : String := "R_lookup/membership-alpha-syntax-v4-all-safe-memo-2000000"
 
 structure MembershipHeader where
   format : String := membershipVersion
@@ -591,6 +591,14 @@ structure MembershipShardResult where
   missing : Array String := #[]
   deriving ToJson, FromJson
 
+/-- Full B0 membership covers every safe theorem, definition and opaque
+constant, including private, deprecated and metaprogramming names. Suggestion
+blacklists apply only to implication retrieval. -/
+def membershipEligible (info : ConstantInfo) : Bool :=
+  !info.isUnsafe && match info with
+    | .thmInfo _ | .defnInfo _ | .opaqueInfo _ => true
+    | _ => false
+
 private def membershipFile (bucket : Nat) : String := s!"members-{bucket}.pickle"
 
 unsafe def produceMembershipShard (storage : System.FilePath)
@@ -598,7 +606,7 @@ unsafe def produceMembershipShard (storage : System.FilePath)
   let plan : ShardPlan ← readJson planPath
   let progress := resultPath.addExtension "progress"
   IO.FS.writeFile progress "importing"
-  let env ← importEnvironment (plan.modules.map String.toName)
+  let env := (← importEnvironment (plan.modules.map String.toName)).setExporting false
   IO.FS.writeFile progress "imported"
   let mut pages : Std.HashMap Nat MembershipPage := {}
   let mut result : MembershipShardResult := {modules := plan.modules}
@@ -613,11 +621,7 @@ unsafe def produceMembershipShard (storage : System.FilePath)
           if known.contains info.name then continue
           known := known.insert info.name
           ordinal := ordinal + 1
-          if info.isUnsafe || LazyDiscrTree.blacklistInsertion env info.name ||
-              Linter.isDeprecated env info.name || info.name.isMetaprogramming then continue
-          match info with
-          | .thmInfo _ | .defnInfo _ | .opaqueInfo _ => pure ()
-          | _ => continue
+          unless membershipEligible info do continue
           entries := entries.push {
             module, name := ownedString info.name.toString,
             parts := nameParts info.name, ordinal}
@@ -655,7 +659,7 @@ unsafe def produceMembership (directory : System.FilePath) : IO MembershipHeader
   let header : Header ← readJson (directory / "header.json")
   unless header.format == version && header.complete do
     throw <| IO.userError "lookup.membership_requires_complete_candidate_index"
-  let storage := directory / s!"membership-alpha-syntax-v3-memo-2000000-{header.inputs}"
+  let storage := directory / s!"membership-alpha-syntax-v4-all-safe-memo-2000000-{header.inputs}"
   IO.FS.createDirAll storage
   let partitions : Array (Array String) ← readJson (directory / "import-partitions.json")
   let groups := partitions.mapIdx fun i modules => (s!"group-{i}", modules)
