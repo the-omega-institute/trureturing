@@ -150,9 +150,98 @@ theorem hasDerivAt_nbessel {ν : ℝ} (hν : -1 < ν) (x : ℝ) :
   rw [nbessel_eq_entire (ν + 1)]
   have hν0 : ν + 1 ≠ 0 := by linarith
   field_simp
+  <;> ring
 
 /-- The normalized Bessel function is continuous on the real line. -/
 theorem continuous_nbessel {ν : ℝ} (hν : -1 < ν) : Continuous (nbessel ν) :=
   continuous_iff_continuousAt.mpr (fun x => (hasDerivAt_nbessel hν x).continuousAt)
+
+/-- Positivity holds throughout a neighbourhood of the origin. -/
+theorem nbessel_pos_near_zero {ν : ℝ} (hν : -1 < ν) :
+    ∀ᶠ x in 𝓝 (0 : ℝ), 0 < nbessel ν x := by
+  have h : (0 : ℝ) < nbessel ν 0 := by rw [nbessel_zero]; norm_num
+  exact (continuous_nbessel hν).continuousAt.eventually (lt_mem_nhds h)
+
+private lemma pochhammer_shift (b : ℝ) (n : ℕ) :
+    b * (ascPochhammer ℝ n).eval (b + 1) =
+      (b + n) * (ascPochhammer ℝ n).eval b := by
+  calc
+    _ = (ascPochhammer ℝ (n + 1)).eval b := by
+      simp [ascPochhammer_succ_left, Polynomial.eval_comp]
+    _ = _ := by rw [ascPochhammer_succ_eval]; ring
+
+private lemma coeff_lower_shift {b : ℝ} (hb : 0 < b) (n : ℕ) :
+    coeff b (n + 1) = coeff (b + 1) (n + 1) +
+      1 / (b * (b + 1)) * coeff (b + 2) n := by
+  have hb0 := hb.ne'
+  have hb1 : b + 1 ≠ 0 := by positivity
+  have hp := (ascPochhammer_pos n b hb).ne'
+  have hp1 := (ascPochhammer_pos n (b + 1) (by linarith)).ne'
+  have hp2 := (ascPochhammer_pos n (b + 2) (by linarith)).ne'
+  have hf : (n.factorial : ℝ) ≠ 0 := by positivity
+  have hn : (n : ℝ) + 1 ≠ 0 := by positivity
+  have hbn : b + (n : ℝ) ≠ 0 := by positivity
+  have hbn1 : b + 1 + (n : ℝ) ≠ 0 := by positivity
+  have hrel := pochhammer_shift (b + 1) n
+  have hrepl : (ascPochhammer ℝ n).eval (b + 2) =
+      ((b + 1 + n) * (ascPochhammer ℝ n).eval (b + 1)) / (b + 1) := by
+    apply (eq_div_iff hb1).mpr
+    simpa only [show b + 1 + 1 = b + 2 by ring, mul_comm] using hrel
+  simp only [coeff, ascPochhammer_succ_left, Polynomial.eval_mul,
+    Polynomial.eval_comp, Polynomial.eval_X, Polynomial.eval_add, Polynomial.eval_one,
+    Nat.factorial_succ, Nat.cast_mul, Nat.cast_add, Nat.cast_one]
+  rw [show b + 1 + 1 = b + 2 by ring, hrepl]
+  field_simp
+  ring
+
+private lemma entire_contiguous {b : ℝ} (hb : 0 < b) (t : ℝ) :
+    entire b t = entire (b + 1) t + t / (b * (b + 1)) * entire (b + 2) t := by
+  rw [entire_tail hb, entire_tail (by linarith : 0 < b + 1)]
+  have he : (fun n : ℕ => coeff b (n + 1) * t ^ (n + 1)) =
+      (fun n => coeff (b + 1) (n + 1) * t ^ (n + 1) +
+        t / (b * (b + 1)) * (coeff (b + 2) n * t ^ n)) := by
+    ext n
+    rw [coeff_lower_shift hb, pow_succ]
+    ring
+  have hs1 := (summable_nat_add_iff 1).mpr (summable_norm_series (by linarith : 0 < b + 1) t).of_norm
+  have hs2 := (summable_norm_series (by linarith : 0 < b + 2) t).of_norm.mul_left
+    (t / (b * (b + 1)))
+  rw [he, hs1.tsum_add hs2, tsum_mul_left]
+  dsimp only [entire]
+  ring
+
+/-- A contiguous relation for three consecutive orders. -/
+theorem nbessel_contiguous {ν : ℝ} (hν : -1 < ν) (x : ℝ) :
+    nbessel ν x = nbessel (ν + 1) x -
+      x ^ 2 / (4 * (ν + 1) * (ν + 2)) * nbessel (ν + 2) x := by
+  simp_rw [nbessel_eq_entire]
+  have he := entire_contiguous (by linarith : 0 < ν + 1) (-(x ^ 2) / 4)
+  rw [show ν + 1 + 1 = ν + 2 by ring, show ν + 1 + 2 = ν + 2 + 1 by ring] at he
+  convert he using 1 <;> field_simp <;> ring
+
+/-- The derivative of the first derivative, in shifted-series form. -/
+theorem hasDerivAt_nbessel_deriv {ν : ℝ} (hν : -1 < ν) (x : ℝ) :
+    HasDerivAt (fun y => -y / (2 * (ν + 1)) * nbessel (ν + 1) y)
+      (-1 / (2 * (ν + 1)) * nbessel (ν + 1) x +
+        x ^ 2 / (4 * (ν + 1) * (ν + 2)) * nbessel (ν + 2) x) x := by
+  have hd := (((hasDerivAt_id x).neg.div_const (2 * (ν + 1))).mul
+    (hasDerivAt_nbessel (by linarith : -1 < ν + 1) x))
+  convert hd using 1
+  · rfl
+  · simp only [Pi.neg_apply, id_eq]
+    rw [show ν + 1 + 1 = ν + 2 by ring]
+    field_simp
+    <;> ring
+
+/-- The Bessel differential equation, multiplied by its argument. -/
+theorem nbessel_ode {ν : ℝ} (hν : -1 < ν) (x : ℝ) :
+    x * (-1 / (2 * (ν + 1)) * nbessel (ν + 1) x +
+      x ^ 2 / (4 * (ν + 1) * (ν + 2)) * nbessel (ν + 2) x) +
+    (2 * ν + 1) * (-x / (2 * (ν + 1)) * nbessel (ν + 1) x) +
+    x * nbessel ν x = 0 := by
+  rw [nbessel_contiguous hν x]
+  have hν0 : ν + 1 ≠ 0 := by linarith
+  field_simp
+  <;> ring
 
 end D5.S3.Analytic.BesselRedheffer.Series
