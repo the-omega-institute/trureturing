@@ -112,6 +112,9 @@ def familyRegistration : Registration arena.{u} (type_of% (@contextual_kernel_ex
   sensitivity := sensitivity
   dependence := dependence
 
+/- The packed state preserves the entire source telescope and both conclusions.
+The original source occurrence and its escape origin still need a lawful
+source-selection binding; the proof record alone supplies no such binding. -/
 def registration : LeanInformationAudit.Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0}
     (@contextual_kernel_extraction.{u}) (type_of% (realize signature.{u} actual.{u}.readout actual.{u}.anchor))
     Type Unit where
