@@ -2,6 +2,8 @@ fingerprints:
   raw_sha256: sha256:6da86de96d9837c118869e1f7721ce0d57712adfe74e04c766bf68bdb759de75
   normalized_sha256: sha256:6da86de96d9837c118869e1f7721ce0d57712adfe74e04c766bf68bdb759de75
 cas_ref: sha256:6da86de96d9837c118869e1f7721ce0d57712adfe74e04c766bf68bdb759de75
-coverage_gids: []
+coverage_gids:
+  - gid: D5/S3/PrimeForms/Crossing/CrossingNormalForm.crossing_normal_form_unique_minimum
+    target_statement_id: sha256:14f5a0bb44bb281698b55052d3a959093ff6f364ffdc4dfd85614eb728660a14
 receipts:
   unresolved_subitems: []

@@ -5,3 +5,7 @@ cas_ref: sha256:9d08e38e47c7806490dae3cece8f107fd80e7253a34899243056b8d0b977bef6
 coverage_gids: []
 receipts:
   unresolved_subitems: []
+  nonpropositional:
+    justification: 'nonpropositional: Fixes one initial probability law and defines its propagated squared response expectations.'
+    previous_atom_id: 713779e24f1619b881e8f05a28fa432eb15bc3b6afd37fa7d35f3b5fbcff9945
+    next_atom_id: 4dec4f9cdb978e7fa4292fbed5f16c36967a9fc9df5107c32e4688db7b10754b

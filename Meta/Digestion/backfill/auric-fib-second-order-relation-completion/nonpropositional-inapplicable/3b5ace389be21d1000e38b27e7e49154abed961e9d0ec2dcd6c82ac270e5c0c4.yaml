@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:3b5ace389be21d1000e38b27e7e49154abed961e9d0ec2dcd6c82ac270e5c0c4
+  normalized_sha256: sha256:3b5ace389be21d1000e38b27e7e49154abed961e9d0ec2dcd6c82ac270e5c0c4
+cas_ref: sha256:3b5ace389be21d1000e38b27e7e49154abed961e9d0ec2dcd6c82ac270e5c0c4
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 'nonpropositional: Specifies the old-seam, guard, new-seam and printing-direction conventions of the fixed reader; these are operational definitions, not an inferred sufficiency or reachability theorem.'
+    previous_atom_id: 15f391d591ef02ead8585b5ace1fd8312f89a6d92d21c03987986675832e30cd
+    next_atom_id: e377c57ead8e5e51ca45a55cd66e163496e0b291e0c0d34445124ba7f0bbf6bf
