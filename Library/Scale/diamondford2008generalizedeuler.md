@@ -154,12 +154,17 @@ $$
 \tag{DF6}
 $$
 
-When this source has support index $k>4$, reuse the
-[existing $U_1$ endpoint conditions](../Analytic/kalyabin2026maximalgronwall.md#reusing-the-signed-tail-clock-comparison):
-with $P=P^+(N)=p_k$ and $P^+$ the next prime, they give
-$P<A<P^+$. Thus $\pi(A)=k$, and the prime set in $\gamma_{\pi(A)}$
-is precisely the support of the same $N$. This identifies the finite
-prime cut; the DF constant still retains no prime-exponent data.
+The prime cut matches this same source without a support-index
+restriction. Reuse the
+[proper-GA1 prime envelope](../Arith/caveney2012sacaga.md#directly-reusable-prime-and-stack-envelopes)
+from CNS Theorem 9: every $p\mid N$ satisfies $p\le A$. Conversely,
+the [existing GA2 support argument](../Analytic/polak2026finiterobinca.md#application-to-arbitrary-ga2-sources-including-extra-prime-support)
+gives $p\mid N$ for every prime $p\le A$; its support argument only
+requires $A>1$, as holds here. Therefore
+$\operatorname{supp}N=\{p:p\le A\}$ and
+$\gamma_{\pi(A)}=\gamma(\operatorname{supp}N)$, including the endpoint
+if $A$ is prime. These two existing results identify the finite prime
+cut; the DF constant still retains no prime-exponent data.
 
 An eventual fixed lower bound on the right side is still an unpaid
 joint estimate at that same source. Neither (DF2) nor the positive
