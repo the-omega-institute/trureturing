@@ -7,6 +7,7 @@
    digest: The elliptic remainder is a positive coefficient tail through Euler's sine product. -/
 
 import D5.S3.Analytic.EllipticTailExponent.Defs
+import D5.S3.Analytic.GaussZeroBalanced.Series
 import Mathlib.Analysis.SpecialFunctions.Trigonometric.EulerSineProd
 import Mathlib.Topology.Algebra.InfiniteSum.ENNReal
 
@@ -24,13 +25,28 @@ noncomputable def d (k : ℕ) (a : ℝ) : ℝ :=
 /-- The summand of the elliptic truncation. -/
 noncomputable def t (k : ℕ) (a : ℝ) : ℝ := a * d k a / (k + 1)
 
+private lemma d_eq_coefficient (k : ℕ) (a : ℝ) :
+    d k a = ordinaryHypergeometricCoefficient a (1 - a) 1 k := by
+  have hp (x : ℝ) : (ascPochhammer ℝ k).eval x = ∏ j ∈ range k, (x + j) := by
+    have he := ascPochhammer_eval_neg_eq_descPochhammer ℝ (-x) k
+    rw [neg_neg, descPochhammer_eval_eq_prod_range] at he
+    rw [he, show (-1 : ℝ) ^ k = ∏ _j ∈ range k, (-1 : ℝ) by simp,
+      ← prod_mul_distrib]
+    apply prod_congr rfl
+    intro j _
+    ring
+  simp only [d, ordinaryHypergeometricCoefficient, ascPochhammer_eval_one]
+  rw [hp a, hp (1 - a)]
+  ring
+
 private lemma d_succ (k : ℕ) (a : ℝ) :
     d (k + 1) a = d k a * (a + k) * (1 - a + k) / (k + 1) ^ 2 := by
-  have hf : (Nat.factorial k : ℝ) ≠ 0 := by positivity
-  have hk : (k : ℝ) + 1 ≠ 0 := by positivity
-  simp only [d, prod_range_succ, Nat.factorial_succ, Nat.cast_mul, Nat.cast_add,
-    Nat.cast_one]
-  field_simp
+  have h := D5.S3.Analytic.GaussZeroBalanced.Series.coefficient_recurrence
+    (a := a) (b := 1 - a) (c := 1) zero_lt_one k
+  rw [← d_eq_coefficient, ← d_eq_coefficient] at h
+  apply (eq_div_iff (by positivity : ((k : ℝ) + 1) ^ 2 ≠ 0)).2
+  simpa only [Nat.cast_add, Nat.cast_one, pow_two, mul_comm, mul_left_comm,
+    mul_assoc, add_comm] using h
 
 private lemma d_step (k : ℕ) (a : ℝ) :
     (k + 1 : ℝ) * d (k + 1) a - k * d k a = (1 - a) * t k a := by
@@ -78,12 +94,11 @@ private lemma S_eq_sum_t (n : ℕ) (a : ℝ) :
 
 private lemma t_nonneg (k : ℕ) {a : ℝ} (ha : 0 < a) (ha1 : a ≤ 1 / 2) :
     0 ≤ t k a := by
-  have hp : 0 ≤ ∏ j ∈ range k, (a + j) :=
-    prod_nonneg (fun j _ => by positivity)
-  have hq : 0 ≤ ∏ j ∈ range k, (1 - a + j) :=
-    prod_nonneg (fun j _ => by have := Nat.cast_nonneg (α := ℝ) j; linarith)
-  exact div_nonneg (mul_nonneg ha.le (div_nonneg (mul_nonneg hp hq) (sq_nonneg _)))
-    (by positivity)
+  unfold t
+  rw [d_eq_coefficient]
+  exact div_nonneg (mul_nonneg ha.le
+    (D5.S3.Analytic.GaussZeroBalanced.Series.coefficient_pos ha
+      (by linarith : 0 < 1 - a) zero_lt_one k).le) (by positivity)
 
 private lemma tendsto_weighted_d (a : ℝ) :
     Tendsto (fun N : ℕ => (N + 1 : ℝ) * d (N + 1) a) atTop
