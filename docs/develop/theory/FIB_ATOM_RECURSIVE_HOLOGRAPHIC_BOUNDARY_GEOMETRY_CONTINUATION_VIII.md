@@ -622,3 +622,422 @@ conversion protocol, or optimization on the unfiltered $64$-dimensional input
 is part of this statement.
 
 ## 追加锚（本行以下为增补区）
+
+## 242. An explicit fifteen-source certificate for the native conditional gap
+
+**Definition 242.1 (Fixed source and output coordinates).** Fix the native
+family, the positive principal-root convention, the normalized cut, the
+compatible same-$q$ full Gibbs preparations, the coherent filter, and the
+CAR sign and register ordering of Definitions 240.1 and 240.4 and
+§§235--236. Fix
+
+$$
+t=3-2\sqrt2,\qquad C=4(1+t)^4,
+$$
+
+and write $P_i$ for the singlet projector on the input Alice--copy register
+and $P_o$ for the singlet projector on the fixed output register. They are
+the same real matrix in their respective fixed ordered bases. For
+$p\in(0,1)$ put
+
+$$
+\begin{aligned}
+g(p)&=(1-t)^2p(1-p),& b(p)&=2g(p)=8tp(1-p),\\
+h(p)&=t+(1-t)p,& a(p)&=t(1+h(p))
+       =t(1+t)+t(1-t)p,\\
+w(p)&=\frac{t+b(p)}{4t+b(p)}.
+\end{aligned}
+$$
+
+For an actual source $q$ with $p=p(q)$, let $\Omega_q$ be the unnormalized
+selected state in (240.4), let $W_q=W_{\lambda(p(q))}$ be the target in
+(240.6), and define the fixed-coordinate Choi row
+
+$$
+B_q=(P_o-w(p(q))I_4)\otimes\Omega_q^{\mathsf T},
+$$
+
+where the transpose is in the original Alice--copy--space coordinates. The
+transpose records the output-first Choi convention; it does not alter the
+native source or introduce a spatial operation.
+
+Since $\lambda(p)=b(p)/(4t+b(p))$, the target in (240.6) satisfies
+$\operatorname{Tr}(P_oW_q)=w(p(q))$.
+
+**Lemma 242.2 (Principal-root inverse).** Let
+
+$$
+n=\frac{1}{\sqrt3}(1,1,1)^{\mathsf T},\qquad
+Q=I_3-nn^{\mathsf T},\qquad L=L_\star,\qquad T=\sqrt3\,n.
+$$
+
+For a real unit vector $V$ with $z=n^{\mathsf T}V>0$, set
+$v=QV$ and $R=Q-vv^{\mathsf T}$. Define
+
+$$
+k=\sqrt{4-v^{\mathsf T}Lv+2\sqrt3z},\qquad
+D=\frac{L+\sqrt3zQ+(\sqrt3/z)vv^{\mathsf T}}{k},
+$$
+
+and
+
+$$
+\begin{aligned}
+\pi(V)&=\frac{1}{3}(1,1,1)^{\mathsf T}+Dv+\frac{v}{\sqrt3z},\\
+q(V)&=\bigl(\pi(V)_\ell,\pi(V)_R\bigr).
+\end{aligned}
+$$
+
+If $\lVert V-n\rVert_2\le1/20$, then $q(V)\in D$ and the native
+principal-root construction at $q(V)$ has $V_{q(V)}=V$ and
+$p(q(V))=V_\ell^2$.
+
+Proof. On $n^\perp$, $L$ is positive with trace $4$ and determinant $3$.
+The restriction of $R$ is positive, with determinant $z^2$. The
+two-dimensional Cayley--Hamilton square-root identity, applied to
+$R^{1/2}LR^{1/2}$ and conjugated by $R^{-1/2}$, gives
+
+$$
+D R D=L.
+$$
+
+Indeed, $R^{-1}=Q+vv^{\mathsf T}/z^2$, so the numerator displayed above is
+$L+(\sqrt3z)R^{-1}$, while the square of the denominator is
+$\operatorname{Tr}(LR)+2\sqrt{\det(L)\det(R)}$. This also proves that
+$D$ is positive on $n^\perp$ and kills $n$. Since the upper-left block below
+is $z/\sqrt3>0$ and its Schur complement is $D$, the symmetric matrix
+
+$$
+S=\frac{z}{\sqrt3}nn^{\mathsf T}
+ +\frac{nv^{\mathsf T}+vn^{\mathsf T}}{\sqrt3}
+ +D+\frac{vv^{\mathsf T}}{\sqrt3z}
+$$
+
+is positive definite. Direct multiplication gives
+
+$$
+ST=V,\qquad SV=\pi(V),\qquad
+S(I_3-VV^{\mathsf T})S=L.
+$$
+
+The last identity is the block identity $DRD=L$ together with
+$z^2+\lVert v\rVert^2=1$. Hence
+$S^2=L+\pi(V)\pi(V)^{\mathsf T}$, so $S$ is the positive principal square
+root of the native Gram matrix for $\pi(V)$. Also
+
+$$
+T^{\mathsf T}\pi(V)=1.
+$$
+
+For the stated neighborhood, $z\ge19/20$ and
+$\lVert v\rVert\le1/20$. Since $R\ge z^2Q$ and $DRD=L$,
+$\lVert D\rVert\le\sqrt3/z$. Therefore
+
+$$
+\left\lVert\pi(V)-\frac{T}{3}\right\rVert_2
+ \le \frac{4\lVert v\rVert_2}{\sqrt3z}
+ \le \frac{4}{19\sqrt3}<\frac13.
+$$
+
+All three coordinates of $\pi(V)$ are positive. The identity
+$T^{\mathsf T}\pi(V)=1$ then puts $q(V)$ in $D$. Positivity of the
+principal root and uniqueness of the positive square root prove the claimed
+reconstruction of $V$, and the definition of $p$ gives
+$p(q(V))=V_\ell^2$. ∎
+
+**Lemma 242.3 (Fifteen actual algebraic sources).** Let
+$\varepsilon=1/100$, let $j\in\{-2,-1,0,1,2\}$, and put
+
+$$
+p_j=\frac13+j\varepsilon.
+$$
+
+In the fixed $(r,R)$ order define
+
+$$
+u_0=\frac{(1,1)^{\mathsf T}}{\sqrt2},\qquad
+u_+=\frac{(1-\varepsilon,1+\varepsilon)^{\mathsf T}}
+ {\sqrt{2(1+\varepsilon^2)}},\qquad
+u_- =\frac{(1+\varepsilon,1-\varepsilon)^{\mathsf T}}
+ {\sqrt{2(1+\varepsilon^2)}}.
+$$
+
+For $k\in\{-,0,+\}$ set, in $(r,\ell,R)$ order,
+
+$$
+V_{jk}=\bigl(\sqrt{1-p_j}(u_k)_r,\sqrt{p_j},
+                 \sqrt{1-p_j}(u_k)_R\bigr)^{\mathsf T},
+\qquad q_{jk}=q(V_{jk}).
+$$
+
+Then all fifteen $q_{jk}$ are interior actual native sources. Their native
+parameters are $p(q_{jk})=p_j$ and
+$U_{q_{jk}}=u_ku_k^{\mathsf T}$.
+
+Proof. The vectors $V_{jk}$ are unit vectors. For fixed $u_k$,
+
+$$
+\left\lVert\frac{d}{dp}
+ \bigl(\sqrt{1-p}(u_k)_r,\sqrt p,\sqrt{1-p}(u_k)_R\bigr)\right\rVert_2
+ =\frac1{2\sqrt{p(1-p)}}<2
+$$
+
+on $[1/4,1/2]$. Also
+$\lVert u_\pm-u_0\rVert_2\le\varepsilon$. Thus
+
+$$
+\lVert V_{jk}-n\rVert_2
+ \le 2|p_j-1/3|+\varepsilon
+ \le \frac1{20}.
+$$
+
+Lemma 242.2 applies. Its reconstruction has positive coordinates, so the
+source is interior, and its displayed vector has the declared middle
+coordinate and normalized $(r,R)$ direction. Consequently its native
+principal-root data are exactly $(p_j,u_k)$. ∎
+
+**Lemma 242.4 (Angular and polynomial certificates).** Define
+
+$$
+r_+=r_- =\frac{1+\varepsilon^2}{4\varepsilon^2},\qquad
+r_0=-\frac{1-\varepsilon^2}{2\varepsilon^2}.
+$$
+
+Then
+
+$$
+\sum_k r_k=1,\qquad
+\sum_k r_ku_ku_k^{\mathsf T}=\frac12I_2,\qquad
+\sum_k|r_k|=\varepsilon^{-2}.
+$$
+
+For $j$ put
+
+$$
+\Delta_j=\prod_{\substack{\ell=-2\\\ell\ne j}}^2(p_j-p_\ell),
+$$
+
+and
+
+$$
+d_j=\frac{\displaystyle
+ \frac{\prod_{\ell\ne j}p_\ell}{t(1+t)}
+ +\frac{2/3+j\varepsilon}{2t(1-t)}}{\Delta_j}.
+$$
+
+For every polynomial $f$ of degree at most four, writing
+$f(x)=\sum_{r=0}^4f_rx^r$, one has
+
+$$
+\sum_{j=-2}^2d_jf(p_j)
+ =\frac{f_0}{t(1+t)}+\frac{f_3+2f_4}{2t(1-t)}.
+\tag{242.1}
+$$
+
+In particular,
+
+$$
+\sum_jd_ja(p_j)=1,\qquad
+\sum_jd_jb(p_j)=0,\qquad
+\sum_jd_ja(p_j)b(p_j)=-4t,\qquad
+\sum_jd_jb(p_j)^2=0.
+\tag{242.2}
+$$
+
+Proof. The angular identities follow by adding the two reflected rays and
+then the middle ray; the off-diagonal entries cancel and the diagonal
+entries are $1/2$. For the polynomial identity, let $L_j$ be the degree
+four Lagrange basis polynomial at $p_j$. Its constant coefficient is
+$\prod_{\ell\ne j}p_\ell/\Delta_j$, and
+
+$$
+[x^3]L_j+2[x^4]L_j
+ =\frac{2-\sum_{\ell\ne j}p_\ell}{\Delta_j}
+ =\frac{2/3+j\varepsilon}{\Delta_j}.
+$$
+
+Thus $d_j$ is exactly the functional on the right side of (242.1) applied
+to $L_j$, and Lagrange interpolation proves (242.1). Applying it to
+$a$, $b$, $ab$, and $b^2$ gives (242.2): the only relevant coefficients
+are respectively the constant coefficient of $a$, the degree-three
+coefficient of $ab$, and the combination $[x^3]b^2+2[x^4]b^2=0$.
+The positive numerator in $d_j$ and
+
+$$
+\Delta_j=\varepsilon^4(-1)^{2-j}(j+2)!(2-j)!
+$$
+
+show that the signs of $d_j$ alternate $+,-,+,-,+$. ∎
+
+**Theorem 242.5 (Exact signed fifteen-source identity).** For the sources of
+Lemma 242.3 define
+
+$$
+c_{jk}=d_jr_k\,[4t+b(p_j)].
+$$
+
+Then, in the output-first Choi space
+$\mathbb C^4\otimes\mathbb C^8\cong\mathbb C^{32}$,
+
+$$
+\sum_{j=-2}^2\sum_{k\in\{-,0,+\}}c_{jk}B_{q_{jk}}
+ =\frac{3t}{2C}I_{32}.
+\tag{242.3}
+$$
+
+All coefficients are explicit signed real algebraic numbers. They form a
+dual certificate and are not probabilities, a physical mixture, a flag
+erasure, or an additional operation.
+
+Proof. The native formula (240.4), the angular identity in Lemma 242.4,
+and the fixed real coordinates give
+
+$$
+\sum_kr_k\Omega_{q_{jk}}^{\mathsf T}
+ =\frac{(a(p_j)I_4+b(p_j)P_i)\otimes I_2}{2C}.
+\tag{242.4}
+$$
+
+Moreover,
+
+$$
+(4t+b)(P_o-wI_4)=3tP_o-(t+b)(I_4-P_o).
+$$
+
+The four scalar coefficients of the orthogonal sectors determined by
+$P_o$ and $P_i$ in the sum (242.3), after the common factor $1/(2C)$ is
+removed, are
+
+$$
+\begin{aligned}
+\Lambda(3t(a+b)),&\quad \Lambda(3ta),\\
+\Lambda(-(t+b)(a+b)),&\quad \Lambda(-(t+b)a),
+\end{aligned}
+$$
+
+where $\Lambda$ is the functional in (242.1). By (242.2), these are all
+$3t$: the third uses
+$\Lambda(ta+tb+ab+b^2)=t-4t=-3t$, and the fourth uses
+$\Lambda(ta+ab)=t-4t=-3t$. Each of the four sectors is therefore
+$3tI_2$, with multiplicities $1,3,3,9$ in the two four-dimensional
+registers. This proves (242.3). ∎
+
+**Lemma 242.6 (Coefficient norm).** Put
+
+$$
+H=\sum_{j=-2}^2|d_j|[4t+b(p_j)].
+$$
+
+Then
+
+$$
+H=\frac{4(67605215221t+72785064779)}{2187(1-t^2)},\qquad
+\sum_{j,k}|c_{jk}|=\frac{H}{\varepsilon^2}.
+\tag{242.5}
+$$
+
+Proof. The alternating signs in Lemma 242.4 replace $|d_j|$ by
+$(-1)^{2-j}d_j$. Substituting
+$p_j=1/3+j/100$, using the displayed product for $\Delta_j$, and reducing
+with $t^2-6t+1=0$ gives
+
+$$
+\sum_j(-1)^{2-j}d_j[4t+8tp_j(1-p_j)]
+ =\frac{4(67605215221t+72785064779)}{2187(1-t^2)}.
+$$
+
+The second identity in (242.5) follows from
+$\sum_k|r_k|=\varepsilon^{-2}$. Every denominator is positive, so the
+displayed value is positive. ∎
+
+**Corollary 242.7 (Closed finite conditional error bound).** Let
+$\mathcal E:M_8(\mathbb C)\to M_4(\mathbb C)$ be one nonzero common
+complex-linear completely positive trace-nonincreasing map, independent of
+the fifteen source settings. Write
+
+$$
+a_{jk}=\operatorname{Tr}\mathcal E(\Omega_{q_{jk}}),\qquad
+\sigma_{jk}=\frac{\mathcal E(\Omega_{q_{jk}})}{a_{jk}}.
+$$
+
+Then every $a_{jk}>0$, and
+
+$$
+\max_{j,k}\frac12\lVert\sigma_{jk}-W_{q_{jk}}\rVert_1\ge G,
+\qquad
+\max_{j,k}\left|\operatorname{Tr}(P_o\sigma_{jk})-w(p_j)\right|\ge G,
+$$
+
+where
+
+$$
+G=\frac{2187(1-t^2)}
+ {80000(67605215221t+72785064779)}>0.
+\tag{242.6}
+$$
+
+Proof. The bounds in §241 give
+$\Omega_{q_{jk}}\ge mI_8$ and $\Omega_{q_{jk}}\le MI_8$, with
+$m=t^2/C$ and $M=3t/C$. Positivity of a nonzero CP map implies
+$A=\operatorname{Tr}\mathcal E(I_8)>0$; otherwise
+$0\le\mathcal E(X)\le\lVert X\rVert\mathcal E(I_8)=0$ for every positive
+$X$, forcing $\mathcal E=0$. Hence $a_{jk}\ge mA>0$ and
+$a_{jk}\le MA$.
+
+Pair (242.3) with the output-first Choi matrix $J(\mathcal E)$. The
+Choi/effect pairing in the convention already fixed in §241 gives
+
+$$
+\frac{3t}{2C}A
+ =\sum_{j,k}c_{jk}a_{jk}
+ \left(\operatorname{Tr}(P_o\sigma_{jk})-w(p_j)\right).
+\tag{242.7}
+$$
+
+For states $\sigma,W$, the effect bound
+$|\operatorname{Tr}P_o(\sigma-W)|\le\frac12\lVert\sigma-W\rVert_1$
+holds, and $\operatorname{Tr}(P_oW_{q_{jk}})=w(p_j)$. Taking absolute
+values in (242.7), using $a_{jk}\le MA$, and cancelling $A$ yields
+
+$$
+\max_{j,k}\frac12\lVert\sigma_{jk}-W_{q_{jk}}\rVert_1
+ \ge \frac{3t/(2C)}{M\sum_{j,k}|c_{jk}|}
+ =\frac1{2\sum_{j,k}|c_{jk}|}.
+$$
+
+The same calculation without the trace-norm effect bound gives the second
+inequality. Substitute (242.5) and $\varepsilon=1/100$ to obtain (242.6).
+Since the fifteen sources are actual members of $D$, the comparison gap of
+Definition 241.1 also satisfies $\delta_{\mathrm{CP}}\ge G$. This is a finite
+source-specific lower bound and does not optimize the gap. ∎
+
+**Proposition 242.8 (Conditional versus attempted sampling).** The finite
+bound in Corollary 242.7 is conditional on the successful outputs of one
+common map. It implies no uniform attempted-trial count or success floor
+over the comparison class.
+
+Proof. For a fixed nonzero map, the full-rank lower bound in the preceding
+proof makes every fifteen-source success probability positive. If
+$0<\alpha<1$, the source-independent rejection coin produces the map
+$\alpha\mathcal E$. It remains completely positive and trace-nonincreasing,
+its conditional outputs are unchanged, and all attempted-trial success
+probabilities are multiplied by $\alpha$. Letting $\alpha$ range over
+positive values therefore defeats any map-independent lower success bound.
+The signed coefficients in (242.3) do not describe this coin or any other
+operation. ∎
+
+The certificate uses exactly the native two-preparation full Gibbs source,
+the fixed coherent filter and all spectator populations. The inverse
+formula specifies algebraic source parameters; it does not prove preparation,
+calibration, precision, thermodynamic availability, or synthesis. The CP
+map is one source-independent map applied to all fifteen settings. The
+trace-nonincreasing condition is retained for the physical interpretation,
+while the dual identity itself only uses complete positivity. No source-aware
+control, operation-menu enlargement, extra copy, external phase reference,
+support minimization, rounded tuple, gap optimization, or attempted-trial
+promise is part of the result. The construction is a finite certificate
+inside the already specified three-mode native model; it makes no claim that
+physical spatial dimension three is selected, and it leaves the broader
+why-three-dimensions question open.
+
+## 242.99 追加锚（本行以下为增补区）
