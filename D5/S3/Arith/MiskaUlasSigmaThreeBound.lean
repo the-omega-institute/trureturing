@@ -1,16 +1,16 @@
-/- GID: D5/S0/Certificates/Polynomials/MiskaUlasSigmaThreeBound
+/- GID: D5/S3/Arith/MiskaUlasSigmaThreeBound
    generality: I
-   mirror-B: D5/B/S0/Certificates/Polynomials/MiskaUlasSigmaThreeBound
+   mirror-B: D5/B/S3/Arith/MiskaUlasSigmaThreeBound
    mirror-E: none(waiver:kernel-checked-refutation)
    anchors: []
-   utility: kind=certified-instance; basis=refutes=gid:D5/S0/Certificates/Polynomials/MiskaUlasSigmaThreeBound.claim; result=D5/S0/Certificates/Polynomials/MiskaUlasSigmaThreeBound.result; claim=D5/S0/Certificates/Polynomials/MiskaUlasSigmaThreeBound.claim
+   utility: kind=certified-instance; basis=refutes=gid:D5/S3/Arith/MiskaUlasSigmaThreeBound.claim; result=D5/S3/Arith/MiskaUlasSigmaThreeBound.result; claim=D5/S3/Arith/MiskaUlasSigmaThreeBound.claim
    digest: A positive integer family refutes the degree-six symmetric-product bound. -/
 
 /-
 result: proof_shape: bind-only; escape_witness: none;
 admission_basis: open-problem-resolution (#19678; Refuted).
-Direct frozen dependencies: none.
-The public `esymm_cons` helper has an unfinished escape audit under https://github.com/the-omega-institute/trureturing/issues/20171.
+Direct frozen dependencies: D5/S3/Combinatorics/Graph/MultipartiteCHS/Extremal (D5.S3.Combinatorics.Graph.MultipartiteCHS.Extremal.esymm_cons).
+The newly public `D5.S3.Combinatorics.Graph.MultipartiteCHS.Extremal.esymm_cons` theorem has an unfinished escape audit under https://github.com/the-omega-institute/trureturing/issues/20171.
 The public result is the designated refutation result (`basis=refutes`) and is exempt from
 four-slot escape registration (CLAUDE.md §3.9).
 The elementary symmetric expression in claim is written out as in #19678;
@@ -22,7 +22,7 @@ yvals → defect_one, dval_expand, appended_solution, xvals;
 pval → defect_one, dval_expand, appended_solution, xvals_solution, product_gap;
 xvals → xvals_multiset, xvals_domain, xvals_solution; qbound → product_gap, result.
 For every row, escape_witness: none; the module basis is the settling result.
-Consumers: sigma_multiset → xvals_solution; esymm_cons → defect_one, dval_expand,
+Consumers: sigma_multiset → xvals_solution; D5.S3.Combinatorics.Graph.MultipartiteCHS.Extremal.esymm_cons → defect_one, dval_expand,
 appended_solution; esymm_replicate → defect_one, dval_expand, cval_cast, dval_cast;
 defect_one → appended_solution; dval_expand → dval_ge, dval_cast;
 dval_ge → xvals_domain; cval_cast → dval_cast, product_gap; dval_cast → product_gap;
@@ -31,10 +31,11 @@ xvals_domain → family; xvals_solution → family; product_gap → product_exce
 product_exceeds → family; family → result.
 The utility record names the certified instance at n = 11 used to refute claim.
 -/
+import D5.S3.Combinatorics.Graph.MultipartiteCHS.Extremal
 import Mathlib.RingTheory.MvPolynomial.Symmetric.Defs
 import Mathlib.Tactic.Linarith
 
-namespace D5.S0.Certificates.Polynomials.MiskaUlasSigmaThreeBound
+namespace D5.S3.Arith.MiskaUlasSigmaThreeBound
 
 /-- Conjecture 4.8. A solution is a nondecreasing tuple `Xₙ = (x₁, …, xₙ)` of positive integers; `xₙ` is its last
 entry `X ⟨n - 1, _⟩`. -/
@@ -51,10 +52,6 @@ private theorem sigma_multiset {n : ℕ} (X : Fin n → ℕ) (j : ℕ) :
     MvPolynomial.eval X (MvPolynomial.esymm (Fin n) ℕ j) = (Finset.univ.val.map X).esymm j := by
   simpa [MvPolynomial.aeval_def] using
     (MvPolynomial.aeval_esymm_eq_multiset_esymm (Fin n) ℕ j X)
-
-theorem esymm_cons (a : ℕ) (s : Multiset ℕ) (j : ℕ) :
-    (a ::ₘ s).esymm (j+1) = s.esymm (j+1) + a * s.esymm j := by
-  simp [Multiset.esymm, Multiset.sum_map_mul_left]
 
 private theorem esymm_replicate (k : ℕ) :
     (Multiset.replicate k (1 : ℕ)).esymm 1 = k ∧
@@ -83,7 +80,7 @@ private theorem defect_one (k : ℕ) : (yvals k).esymm 2 + 1 = pval k := by
   have h2 := (esymm_replicate k).2.1
   change (Multiset.replicate k (1 : ℕ)).esymm 1 = k at h1
   change 2*(Multiset.replicate k (1 : ℕ)).esymm 2+k=k^2 at h2
-  simp only [yvals, esymm_cons, Multiset.esymm_zero]
+  simp only [yvals, D5.S3.Combinatorics.Graph.MultipartiteCHS.Extremal.esymm_cons, Multiset.esymm_zero]
   rw [h1]
   dsimp [pval, cval]
   nlinarith
@@ -93,7 +90,7 @@ private theorem dval_expand (k : ℕ) : (yvals k).esymm 3 =
     (2*(k+3)+2*cval k+(k+3)*cval k)*k + pval k := by
   have h1 := (esymm_replicate k).1
   change (Multiset.replicate k (1 : ℕ)).esymm 1 = k at h1
-  simp only [yvals, esymm_cons, Multiset.esymm_zero]
+  simp only [yvals, D5.S3.Combinatorics.Graph.MultipartiteCHS.Extremal.esymm_cons, Multiset.esymm_zero]
   rw [h1]
   dsimp [pval]
   ring
@@ -129,7 +126,7 @@ private theorem dval_cast (k : ℕ) : ((yvals k).esymm 3 : ℚ) =
 private theorem appended_solution (k : ℕ) :
     ((yvals k).esymm 3 ::ₘ yvals k).esymm 3 = ((yvals k).esymm 3 ::ₘ yvals k).prod := by
   have hd := defect_one k
-  rw [show 3=2+1 from rfl, esymm_cons, Multiset.prod_cons]
+  rw [show 3=2+1 from rfl, D5.S3.Combinatorics.Graph.MultipartiteCHS.Extremal.esymm_cons, Multiset.prod_cons]
   change (yvals k).esymm 3 + (yvals k).esymm 3 * (yvals k).esymm 2 = _
   have hp : (yvals k).prod = pval k := by simp [yvals, pval, mul_assoc]
   rw [hp]
@@ -228,4 +225,4 @@ theorem result : ¬ claim := by
     (MvPolynomial.eval (xvals 7) (MvPolynomial.esymm (Fin 11) ℕ 11)) hf.2.2.1.symm rfl
   exact (not_le_of_gt hf.2.2.2) hc.1
 
-end D5.S0.Certificates.Polynomials.MiskaUlasSigmaThreeBound
+end D5.S3.Arith.MiskaUlasSigmaThreeBound

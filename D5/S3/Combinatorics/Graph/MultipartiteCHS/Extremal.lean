@@ -7,7 +7,6 @@
    digest: Coefficient comparison and strict extremal partitions for multipartite reciprocal sequences. -/
 
 import D5.S3.Combinatorics.Graph.MultipartiteCHS.Recurrence
-import D5.S0.Certificates.Polynomials.MiskaUlasSigmaThreeBound
 import Mathlib.Data.Set.Equitable
 import Mathlib.Logic.Equiv.Fintype
 import Mathlib.Data.Fintype.Pi
@@ -92,13 +91,14 @@ private lemma recH_sameParts {r : ℕ} {a b : Fin r → ℕ}
   · exact recH_mono _ _ (fun j _ => (esymmParts_perm b σ j).le) d
   · exact recH_mono _ _ (fun j _ => (esymmParts_perm b σ j).ge) d
 
+lemma esymm_cons (x : ℕ) (s : Multiset ℕ) (k : ℕ) :
+    (x ::ₘ s).esymm (k + 1) = s.esymm (k + 1) + x * s.esymm k := by
+  simp [Multiset.esymm, Multiset.sum_map_mul_left]
+
 private lemma esymm_pair (x y : ℕ) (s : Multiset ℕ) (k : ℕ) :
     (x ::ₘ y ::ₘ s).esymm (k + 2) =
       s.esymm (k + 2) + (x + y) * s.esymm (k + 1) + x * y * s.esymm k := by
-  rw [show k + 2 = (k + 1) + 1 by omega,
-    D5.S0.Certificates.Polynomials.MiskaUlasSigmaThreeBound.esymm_cons,
-    D5.S0.Certificates.Polynomials.MiskaUlasSigmaThreeBound.esymm_cons,
-    D5.S0.Certificates.Polynomials.MiskaUlasSigmaThreeBound.esymm_cons]
+  rw [show k + 2 = (k + 1) + 1 by omega, esymm_cons, esymm_cons, esymm_cons]
   ring
 
 private lemma partMultiset_split {r : ℕ} (a : Fin r → ℕ)

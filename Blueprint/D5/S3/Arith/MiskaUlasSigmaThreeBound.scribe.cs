@@ -2,11 +2,11 @@ using static StrataLint.Scribe.DefinitionDsl;
 using static StrataLint.Scribe.FormulaDsl;
 using F = StrataLint.Scribe.FormulaDsl;
 
-namespace StrataLint.Scribe.Blueprint.D5.S0.Certificates.Polynomials;
+namespace StrataLint.Scribe.Blueprint.D5.S3.Arith;
 
 internal sealed class MiskaUlasSigmaThreeBoundDocument : IScribeDocumentDefinition
 {
-    private const string Prefix = "D5/S0/Certificates/Polynomials/MiskaUlasSigmaThreeBound.";
+    private const string Prefix = "D5/S3/Arith/MiskaUlasSigmaThreeBound.";
     private static readonly LibraryNoteRef Source = LibraryNoteRef.Create("D5/L/ArithUnits/miskaulas2022sigma");
 
     public DocumentDefinition Create() => DocumentDefinition.Create(ScribeNode.Create(
@@ -22,12 +22,6 @@ internal sealed class MiskaUlasSigmaThreeBoundDocument : IScribeDocumentDefiniti
                     Paragraph(Text("Page 1: “Let n ∈ N≥3 and for given k ≤ n consider the k-th symmetric polynomial σ_k(x_1, . . . , x_n) = Σ_{i_1<i_2<...<i_k} x_{i_1} · · · x_{i_k}.” Page 2: “By a solution of (1) we mean a sequence X_n = (x_1, . . . , x_n) satisfying the condition x_i ≤ x_{i+1} for i = 1, . . . , n − 1”, in positive integers.")),
                     Paragraph(Text("The tuple is indexed by Fin n, starting at zero. MvPolynomial.eval X (MvPolynomial.esymm (Fin n) ℕ k) is the sum of products over k-element subsets. Monotone X expresses the source's nondecreasing order. The last index is the element of Fin n with value n − 1; its proof of being less than n is omitted in the display and follows from 4 ≤ n. The polynomial arithmetic and all displayed casts use ℚ."))),
                 DescribeRole.Definition),
-            Describe.Lean(DescribeId.Create("miska-ulas-esymm-cons"),
-                DeclarationHandle.Create(Prefix + "esymm_cons"), H("Elementary symmetric sums after adjoining one entry"),
-                StatementSource.FromAuthor(Disp(ConsIdentity())),
-                AssessedProvenance.FromRepo(Source),
-                Blocks(Paragraph(Text("Adjoining a natural-number entry to a multiset splits the next elementary symmetric sum into the old next sum and the new entry times the old preceding sum. The identity is used by the family arithmetic that constructs the refutation."))),
-                DescribeRole.Theorem),
             Describe.Lean(DescribeId.Create("miska-ulas-sigma-result"),
                 DeclarationHandle.Create(Prefix + "result"), H("Refutation"),
                 StatementSource.FromAuthor(Disp(Seq(Neg, Sp, Parenthesized(ClaimBody())))),
@@ -58,18 +52,6 @@ internal sealed class MiskaUlasSigmaThreeBoundDocument : IScribeDocumentDefiniti
     private static Formula Pow(Formula value, byte exponent) => new Formula.Power(value, D(exponent));
     private static Formula Elementary(Formula n, Formula x, Formula degree) =>
         Call("MvPolynomial.eval", x, Call("MvPolynomial.esymm", Call("Fin", n), Nats(), degree));
-
-    private static Formula ConsIdentity()
-    {
-        Formula a = F.Id("a"), s = F.Id("s"), j = F.Id("j");
-        Formula multiset = Call("Multiset", Nats());
-        Formula cons = Call("Multiset.cons", a, s);
-        Formula next = Add(j, D(1));
-        Formula left = Call("Multiset.esymm", cons, next);
-        Formula right = Add(Call("Multiset.esymm", s, next),
-            Mul(a, Call("Multiset.esymm", s, j)));
-        return All(a, Nats(), All(s, multiset, All(j, Nats(), Equal(left, right))));
-    }
 
     private static Formula ClaimBody()
     {

@@ -7,7 +7,7 @@ doi: 10.1142/S1793042124500635
 url: https://arxiv.org/abs/2203.03942v1
 claim: "Conjecture 4.8 proposes simultaneous bounds on the common value of σ₃ and σₙ and on the last coordinate of a nondecreasing positive integer solution."
 strata_touched:
-  - D5/S0/Certificates/Polynomials/MiskaUlasSigmaThreeBound
+  - D5/S3/Arith/MiskaUlasSigmaThreeBound
 license: citation-only
 triage: anchor
 ---

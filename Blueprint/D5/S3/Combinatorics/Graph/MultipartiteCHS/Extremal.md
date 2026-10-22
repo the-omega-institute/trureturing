@@ -4,7 +4,19 @@
 
 Strict extrema of multipartite reciprocal coefficients at fixed order and size.
 
-**Theorem 1.1 (Unique extremal part multisets).**
+**Theorem 1.1 (Elementary symmetric sums after adjoining one entry).**
+
+$$\forall x: \mathbb{N}, \forall s: \operatorname{Multiset}\left(\mathbb{N}\right), \forall k: \mathbb{N}, \operatorname{Multiset.esymm}\left(\operatorname{Multiset.cons}\left(x, s\right), k + 1\right) = \operatorname{Multiset.esymm}\left(s, k + 1\right) + x \cdot \operatorname{Multiset.esymm}\left(s, k\right)$$
+
+*Proof.* Machine-checked in Lean as `D5/S3/Combinatorics/Graph/MultipartiteCHS/Extremal.esymm_cons` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+Adjoining a natural-number entry to a multiset splits the next elementary symmetric sum into the old next sum and the new entry times the old preceding sum. The identity gives the two-entry coefficient expansion and the arithmetic of a positive integer family satisfying σ₃ = σₙ.
+
+**Theorem 1.2 (Unique extremal part multisets).**
 
 Lean statement: `D5/S3/Combinatorics/Graph/MultipartiteCHS/Extremal.recH_extremal`
 
@@ -26,5 +38,6 @@ The recurrence comparison reuses recH_eq, recH_nonneg and recH_two_mul_pos. The 
 
 ## References
 
+- Truth anchor: `D5/S3/Combinatorics/Graph/MultipartiteCHS/Extremal.esymm_cons`
 - Truth anchor: `D5/S3/Combinatorics/Graph/MultipartiteCHS/Extremal.recH_extremal`
 - Dependency: [D5/S3/Combinatorics/Graph/MultipartiteCHS/Recurrence](Recurrence.md)

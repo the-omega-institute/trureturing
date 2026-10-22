@@ -8,7 +8,7 @@ A positive integer family refutes the degree-six symmetric-product bound.
 
 $$\operatorname{claim} \Leftrightarrow (\forall n: \mathbb{N}, (4 \le n) \Rightarrow (\forall X: \operatorname{Fin}\left(n\right) \to \mathbb{N}, (\forall i: \operatorname{Fin}\left(n\right), 0 < X\left(i\right)) \Rightarrow ((\operatorname{Monotone}\left(X\right)) \Rightarrow (\forall m: \mathbb{N}, (m = \operatorname{MvPolynomial.eval}\left(X, \operatorname{MvPolynomial.esymm}\left(\operatorname{Fin}\left(n\right), \mathbb{N}, 3\right)\right)) \Rightarrow ((m = \operatorname{MvPolynomial.eval}\left(X, \operatorname{MvPolynomial.esymm}\left(\operatorname{Fin}\left(n\right), \mathbb{N}, n\right)\right)) \Rightarrow (((m: \mathbb{Q}) \le \frac{1}{12} \cdot (3021 \cdot (n: \mathbb{Q})^{6} - 77575 \cdot (n: \mathbb{Q})^{5} + 920361 \cdot (n: \mathbb{Q})^{4} - 6235705 \cdot (n: \mathbb{Q})^{3} + 24764202 \cdot (n: \mathbb{Q})^{2} - 53664304 \cdot (n: \mathbb{Q}) + 48986640)) \land ((X\left(\langle n - 1\rangle\right): \mathbb{Q}) \le \frac{1}{12} \cdot (27 \cdot (n: \mathbb{Q})^{4} - 190 \cdot (n: \mathbb{Q})^{3} + 471 \cdot (n: \mathbb{Q})^{2} - 500 \cdot (n: \mathbb{Q}) + 216))))))))$$
 
-*Formalization.* `D5/S0/Certificates/Polynomials/MiskaUlasSigmaThreeBound.claim` (`✓ std3`).
+*Formalization.* `D5/S3/Arith/MiskaUlasSigmaThreeBound.claim` (`✓ std3`).
 
 *Citation.* Piotr Miska; Maciej Ulas (2022). *On the Diophantine equation σ₂(X̄ₙ) = σₙ(X̄ₙ)*. DOI: [10.1142/S1793042124500635](https://doi.org/10.1142/S1793042124500635). URL: <https://arxiv.org/abs/2203.03942v1>.
 
@@ -20,25 +20,11 @@ Page 1: “Let n ∈ N≥3 and for given k ≤ n consider the k-th symmetric pol
 
 The tuple is indexed by Fin n, starting at zero. MvPolynomial.eval X (MvPolynomial.esymm (Fin n) ℕ k) is the sum of products over k-element subsets. Monotone X expresses the source's nondecreasing order. The last index is the element of Fin n with value n − 1; its proof of being less than n is omitted in the display and follows from 4 ≤ n. The polynomial arithmetic and all displayed casts use ℚ.
 
-**Theorem 1.2 (Elementary symmetric sums after adjoining one entry).**
-
-$$\forall a: \mathbb{N}, \forall s: \operatorname{Multiset}\left(\mathbb{N}\right), \forall j: \mathbb{N}, \operatorname{Multiset.esymm}\left(\operatorname{Multiset.cons}\left(a, s\right), j + 1\right) = \operatorname{Multiset.esymm}\left(s, j + 1\right) + a \cdot \operatorname{Multiset.esymm}\left(s, j\right)$$
-
-*Proof.* Machine-checked in Lean as `D5/S0/Certificates/Polynomials/MiskaUlasSigmaThreeBound.esymm_cons` (`✓ std3`). ∎
-
-*Source.* Repository-derived.
-
-*Acknowledgement.* Piotr Miska; Maciej Ulas (2022). *On the Diophantine equation σ₂(X̄ₙ) = σₙ(X̄ₙ)*. DOI: [10.1142/S1793042124500635](https://doi.org/10.1142/S1793042124500635). URL: <https://arxiv.org/abs/2203.03942v1>.
-
-*Commentary.*
-
-Adjoining a natural-number entry to a multiset splits the next elementary symmetric sum into the old next sum and the new entry times the old preceding sum. The identity is used by the family arithmetic that constructs the refutation.
-
-**Theorem 1.3 (Refutation).**
+**Theorem 1.2 (Refutation).**
 
 $$\neg (\forall n: \mathbb{N}, (4 \le n) \Rightarrow (\forall X: \operatorname{Fin}\left(n\right) \to \mathbb{N}, (\forall i: \operatorname{Fin}\left(n\right), 0 < X\left(i\right)) \Rightarrow ((\operatorname{Monotone}\left(X\right)) \Rightarrow (\forall m: \mathbb{N}, (m = \operatorname{MvPolynomial.eval}\left(X, \operatorname{MvPolynomial.esymm}\left(\operatorname{Fin}\left(n\right), \mathbb{N}, 3\right)\right)) \Rightarrow ((m = \operatorname{MvPolynomial.eval}\left(X, \operatorname{MvPolynomial.esymm}\left(\operatorname{Fin}\left(n\right), \mathbb{N}, n\right)\right)) \Rightarrow (((m: \mathbb{Q}) \le \frac{1}{12} \cdot (3021 \cdot (n: \mathbb{Q})^{6} - 77575 \cdot (n: \mathbb{Q})^{5} + 920361 \cdot (n: \mathbb{Q})^{4} - 6235705 \cdot (n: \mathbb{Q})^{3} + 24764202 \cdot (n: \mathbb{Q})^{2} - 53664304 \cdot (n: \mathbb{Q}) + 48986640)) \land ((X\left(\langle n - 1\rangle\right): \mathbb{Q}) \le \frac{1}{12} \cdot (27 \cdot (n: \mathbb{Q})^{4} - 190 \cdot (n: \mathbb{Q})^{3} + 471 \cdot (n: \mathbb{Q})^{2} - 500 \cdot (n: \mathbb{Q}) + 216))))))))$$
 
-*Proof.* Machine-checked in Lean as `D5/S0/Certificates/Polynomials/MiskaUlasSigmaThreeBound.result` (`✓ std3`). ∎
+*Proof.* Machine-checked in Lean as `D5/S3/Arith/MiskaUlasSigmaThreeBound.result` (`✓ std3`). ∎
 
 *Source.* Repository-derived.
 
@@ -52,6 +38,6 @@ The last coordinate on this family equals the proposed quartic bound. Thus this 
 
 ## References
 
-- Truth anchor: `D5/S0/Certificates/Polynomials/MiskaUlasSigmaThreeBound.claim`
-- Truth anchor: `D5/S0/Certificates/Polynomials/MiskaUlasSigmaThreeBound.esymm_cons`
-- Truth anchor: `D5/S0/Certificates/Polynomials/MiskaUlasSigmaThreeBound.result`
+- Truth anchor: `D5/S3/Arith/MiskaUlasSigmaThreeBound.claim`
+- Truth anchor: `D5/S3/Arith/MiskaUlasSigmaThreeBound.result`
+- Dependency: [D5/S3/Combinatorics/Graph/MultipartiteCHS/Extremal](../Combinatorics/Graph/MultipartiteCHS/Extremal.md)
