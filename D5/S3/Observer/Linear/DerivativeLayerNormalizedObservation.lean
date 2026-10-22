@@ -30,12 +30,14 @@ namespace D5.S3.Observer.Linear.DerivativeLayerNormalizedObservation
 open ContinuousLinearMap Finset
 open scoped Function InnerProductSpace RealInnerProductSpace ENNReal NNReal
 
+-- Scope the existing finite-dimensional completeness proof before the local maps
+-- in theorem statements are elaborated. This adds no hypothesis.
 local instance {V : Type*} [NormedAddCommGroup V] [InnerProductSpace ℝ V]
     [FiniteDimensional ℝ V] : CompleteSpace V := FiniteDimensional.complete ℝ V
 
 /-- The actual derivative layers resolve the observable complement, and the
 normalized exponential observation converges there at a uniform linear rate. -/
-theorem derivative_layer_normalized_observation
+theorem derivative_layer_normalized_observation_facts
     {V W : Type*}
     [NormedAddCommGroup V] [InnerProductSpace ℝ V] [FiniteDimensional ℝ V]
     [NormedAddCommGroup W] [InnerProductSpace ℝ W] [CompleteSpace W]
@@ -55,6 +57,9 @@ theorem derivative_layer_normalized_observation
       ∑ j : Fin n, (T ^ (j : ℕ))⁻¹ • L j (NormedSpace.exp ((T * s) • b))
     let F₀ : ℝ → U →L[ℝ] W := fun s =>
       ∑ j : Fin n, (s ^ (j : ℕ) / (Nat.factorial (j : ℕ) : ℝ)) • L j (b ^ (j : ℕ))
+    (∀ {j k : ℕ}, j ≤ k → N k ≤ N j) ∧ N 0 = ⊤ ∧
+    OrthogonalFamily ℝ (fun j => E j) (fun j => (E j).subtypeₗᵢ) ∧
+    (N n ⊔ (⨆ j : Fin n, E j) = ⊤) ∧
     (∀ x : U, (∑ j : Fin n, (E j).starProjection (x : V)) = (x : V)) ∧
       ∃ Ksum : ℝ, 0 ≤ Ksum ∧
         ∀ T : ℝ, 0 < T → T * ‖b‖ < 1 →
@@ -264,7 +269,8 @@ theorem derivative_layer_normalized_observation
         field_simp [hp, ne_of_gt hT]
         <;> ring
   choose K hK hbound using hall
-  refine ⟨hresolve, ∑ j : Fin n, K j, Finset.sum_nonneg (fun j _ => hK j), ?_⟩
+  refine ⟨(fun {j k} hjk => hNnest hjk), hNzero, horth, htop,
+    hresolve, ∑ j : Fin n, K j, Finset.sum_nonneg (fun j _ => hK j), ?_⟩
   intro T hT hTb s hs
   have hsum : F T s - F₀ s =
       ∑ j : Fin n,
@@ -284,5 +290,33 @@ theorem derivative_layer_normalized_observation
       Finset.sum_le_sum (fun j _ => hbound j T hT hTb s hs)
     _ = (∑ j : Fin n, K j) * T := by rw [Finset.sum_mul]
 
+
+/-- Original public telescope and conclusions are preserved literally. -/
+theorem derivative_layer_normalized_observation
+    {V W : Type*}
+    [NormedAddCommGroup V] [InnerProductSpace ℝ V] [FiniteDimensional ℝ V]
+    [NormedAddCommGroup W] [InnerProductSpace ℝ W] [CompleteSpace W]
+    (B : V →ₗ[ℝ] V) (C : V →ₗ[ℝ] W) :
+    let n := Module.finrank ℝ V
+    let N : ℕ → Submodule ℝ V := fun j =>
+      ⨅ k : Fin j, LinearMap.ker (C.comp (B ^ (k : ℕ)))
+    let U : Submodule ℝ V := (N n)ᗮ
+    let E : Fin n → Submodule ℝ V := fun j => N j ⊓ (N (j + 1))ᗮ
+    let b : V →L[ℝ] V := B.toContinuousLinearMap
+    let c : V →L[ℝ] W := C.toContinuousLinearMap
+    let L : Fin n → (V →L[ℝ] V) →L[ℝ] (U →L[ℝ] W) := fun j =>
+      ((ContinuousLinearMap.compL ℝ U V W) c).comp
+        ((ContinuousLinearMap.compL ℝ U V V).flip
+          ((E j).starProjection.comp U.subtypeL))
+    let F : ℝ → ℝ → U →L[ℝ] W := fun T s =>
+      ∑ j : Fin n, (T ^ (j : ℕ))⁻¹ • L j (NormedSpace.exp ((T * s) • b))
+    let F₀ : ℝ → U →L[ℝ] W := fun s =>
+      ∑ j : Fin n, (s ^ (j : ℕ) / (Nat.factorial (j : ℕ) : ℝ)) • L j (b ^ (j : ℕ))
+    (∀ x : U, (∑ j : Fin n, (E j).starProjection (x : V)) = (x : V)) ∧
+      ∃ Ksum : ℝ, 0 ≤ Ksum ∧
+        ∀ T : ℝ, 0 < T → T * ‖b‖ < 1 →
+          ∀ s ∈ Set.Icc (0 : ℝ) 1, ‖F T s - F₀ s‖ ≤ Ksum * T := by
+  have h := derivative_layer_normalized_observation_facts B C
+  exact h.2.2.2.2
 
 end D5.S3.Observer.Linear.DerivativeLayerNormalizedObservation
