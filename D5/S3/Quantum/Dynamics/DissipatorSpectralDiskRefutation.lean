@@ -78,8 +78,50 @@ private lemma witness_expectation (ψ : Fin 3 → ℂ) :
       Complex.sub_re, Complex.sub_im, Complex.mul_re, Complex.mul_im,
       pow_two, map_ofNat] <;> ring_nf <;> simp
 
+private lemma witness_value_le_one (ψ : Fin 3 → ℂ)
+    (hψ : ∑ i, ‖ψ i‖ ^ 2 = 1) :
+    ‖star ψ ⬝ᵥ
+        (generator witnessRate witnessJump (vecMulVec ψ (star ψ)) *ᵥ ψ)‖ ≤ 1 := by
+    have hsum : ‖ψ 0‖ ^ 2 + ‖ψ 1‖ ^ 2 + ‖ψ 2‖ ^ 2 = 1 := by
+      simpa [Fin.sum_univ_three] using hψ
+    have hp0 : 0 ≤ ‖ψ 0‖ ^ 2 := sq_nonneg _
+    have hp1 : 0 ≤ ‖ψ 1‖ ^ 2 := sq_nonneg _
+    have hp2 : 0 ≤ ‖ψ 2‖ ^ 2 := sq_nonneg _
+    have hprod01 : 0 ≤ ‖ψ 0‖ ^ 2 * ‖ψ 1‖ ^ 2 :=
+      mul_nonneg hp0 hp1
+    have hprod2 : 0 ≤ ‖ψ 2‖ ^ 2 * (‖ψ 0‖ ^ 2 + ‖ψ 1‖ ^ 2) :=
+      mul_nonneg hp2 (add_nonneg hp0 hp1)
+    have hq : 0 ≤ 1 -
+        (‖ψ 0‖ ^ 2 - ‖ψ 1‖ ^ 2) ^ 2 - ‖ψ 2‖ ^ 4 := by
+      nlinarith [sq_nonneg (‖ψ 0‖ ^ 2 - ‖ψ 1‖ ^ 2), sq_nonneg (‖ψ 2‖ ^ 2),
+        hprod01, hprod2]
+    have hq' : 1 -
+        (‖ψ 0‖ ^ 2 - ‖ψ 1‖ ^ 2) ^ 2 - ‖ψ 2‖ ^ 4 ≤ 1 := by
+      nlinarith [sq_nonneg (‖ψ 0‖ ^ 2 - ‖ψ 1‖ ^ 2), sq_nonneg (‖ψ 2‖ ^ 2)]
+    rw [witness_expectation]
+    have hrewrite :
+        (‖ψ 0‖ ^ 2 - ‖ψ 1‖ ^ 2) ^ 2 + ‖ψ 2‖ ^ 4 -
+            (‖ψ 0‖ ^ 2 + ‖ψ 1‖ ^ 2 + ‖ψ 2‖ ^ 2) ^ 2 =
+          -(1 - (‖ψ 0‖ ^ 2 - ‖ψ 1‖ ^ 2) ^ 2 - ‖ψ 2‖ ^ 4) := by
+      rw [hsum]
+      ring
+    rw [hrewrite, Complex.norm_real, Real.norm_eq_abs, abs_neg,
+      abs_of_nonneg hq]
+    exact hq'
 private lemma witness_scale_upper : scale witnessRate witnessJump ≤ 1 := by
-  sorry
+  let S : Set ℝ := {r | ∃ ψ : Fin 3 → ℂ,
+    (∑ i, ‖ψ i‖ ^ 2) = 1 ∧
+      r = ‖star ψ ⬝ᵥ
+        (generator witnessRate witnessJump (vecMulVec ψ (star ψ)) *ᵥ ψ)‖}
+  change sSup S ≤ 1
+  refine csSup_le ?_ ?_
+  · refine ⟨0, ?_⟩
+    refine ⟨![1, 0, 0], ?_, ?_⟩
+    · norm_num [Fin.sum_univ_three]
+    · rw [witness_expectation]
+      norm_num
+  · rintro r ⟨ψ, hψ, rfl⟩
+    exact witness_value_le_one ψ hψ
 
 private lemma witness_scale_pos : 0 < scale witnessRate witnessJump := by
   sorry
