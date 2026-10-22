@@ -1,0 +1,26 @@
+**Definition 188.2 (Effective and full coherent filters).** Procedure E
+aligns Bob's modes, discards each spectator and projects onto
+$N_A^{\mathrm{tot}}=N_b^{\mathrm{tot}}=1$. Procedure F instead acts on the
+full native normalized modes with the common projector
+
+$$
+F=\Pi_{n_{A_1}+n_{A_2}=1}
+ \Pi_{n_{r_1}+n_{R_1}+n_{r_2}+n_{R_2}=1}.
+$$
+
+It counts all four Bob modes and is $q$ independent. Bob's number-preserving
+alignments commute with it. Alice's selected space has dimension two; Bob's
+full selected space has dimension four. Local matrices inside these spaces
+have number-preserving extensions, and Hermitian rail witnesses are legal
+within this resource menu. The analyzer for the active direction can depend
+on $q$; a common unknown-$q$ active decoder is not supplied.
+
+Both success projectors select fixed total number on each party. The phase
+conjugations in $\mathcal G_N$ are therefore scalar on their selected
+spaces, so $F\mathcal G_N(X)F=FXF$, and likewise for E's projector.
+The common SSR does not remove the selected middle coherence.
+
+All these filters and rotations also preserve local parity, but a full
+total-parity twirl is a different state map from $\mathcal G_N$. The
+conditional outcomes considered here do not identify those two total states.
+
