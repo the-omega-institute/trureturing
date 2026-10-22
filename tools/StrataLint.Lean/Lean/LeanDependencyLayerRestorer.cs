@@ -57,7 +57,7 @@ internal static class LeanDependencyLayerRestorer
             {
                 var path = Path.Combine(staged, package);
                 RequireDirectory(path);
-                PrepareStaging(path);
+                PrepareStaging(path, packageRoot: path);
             }
             RequireCompatible(donor, root, pins, runner);
             if (LeanCacheStamp.Inspect(lake, pins).State != targetStamp)
@@ -67,8 +67,12 @@ internal static class LeanDependencyLayerRestorer
             var added = 0;
             var retained = 0;
             foreach (var package in packages)
+            {
+                var packageRoot = Path.Combine(target, package);
+                if (Attributes(packageRoot) is not null) RequireDirectory(packageRoot);
                 AddMissing(Path.Combine(staged, package), Path.Combine(target, package),
-                    ref added, ref retained);
+                    ref added, ref retained, packageRoot);
+            }
             removePartial(staged);
             return new LeanDependencyRestoreResult(receipt, added, retained);
         }
@@ -121,41 +125,83 @@ internal static class LeanDependencyLayerRestorer
         return names;
     }
 
-    internal static void PrepareStaging(string path)
+    internal static void PrepareStaging(string path, string? packageRoot = null)
     {
         RequireDirectory(path);
         foreach (var entry in Directory.EnumerateFileSystemEntries(path))
         {
             var attributes = File.GetAttributes(entry);
             if (attributes.HasFlag(FileAttributes.ReparsePoint))
-                throw new InvalidOperationException($"dependency staging contains a forbidden symlink: {entry}");
+            {
+                RequirePackageFileLink(entry, packageRoot);
+                continue;
+            }
             var name = Path.GetFileName(entry);
             if (name is ".release" or "staging" or ".staging" or "reports" or "stratalint"
                 || name.Contains(".stage-", StringComparison.Ordinal))
                 LeanCacheProvisioner.RemovePartial(entry);
-            else if (attributes.HasFlag(FileAttributes.Directory)) PrepareStaging(entry);
+            else if (attributes.HasFlag(FileAttributes.Directory)) PrepareStaging(entry, packageRoot);
         }
     }
 
-    internal static void AddMissing(string staged, string target, ref int added, ref int retained)
+    internal static void AddMissing(string staged, string target, ref int added, ref int retained,
+        string? packageRoot = null)
     {
+        var incoming = File.GetAttributes(staged);
+        var incomingLink = incoming.HasFlag(FileAttributes.ReparsePoint);
+        // Package staging has already validated its links. Build recovery passes no package
+        // root and keeps its original link prohibition, including file/directory conflicts.
+        if (incomingLink && packageRoot is null)
+            throw new InvalidOperationException($"dependency staging contains a forbidden symlink: {staged}");
         var existing = Attributes(target);
         if (existing is null)
         {
-            if (File.GetAttributes(staged).HasFlag(FileAttributes.Directory)) Directory.Move(staged, target);
+            if (!incomingLink && incoming.HasFlag(FileAttributes.Directory)) Directory.Move(staged, target);
             else File.Move(staged, target, overwrite: false);
             added++;
             return;
         }
         if (existing.Value.HasFlag(FileAttributes.ReparsePoint))
-            throw new InvalidOperationException($"dependency target contains a forbidden symlink: {target}");
-        if (existing.Value.HasFlag(FileAttributes.Directory)
-            && File.GetAttributes(staged).HasFlag(FileAttributes.Directory))
+        {
+            RequirePackageFileLink(target, packageRoot);
+            retained++;
+            return; // Retain the link itself; never merge through it.
+        }
+        if (!incomingLink && existing.Value.HasFlag(FileAttributes.Directory)
+            && incoming.HasFlag(FileAttributes.Directory))
         {
             foreach (var entry in Directory.EnumerateFileSystemEntries(staged))
-                AddMissing(entry, Path.Combine(target, Path.GetFileName(entry)), ref added, ref retained);
+                AddMissing(entry, Path.Combine(target, Path.GetFileName(entry)), ref added, ref retained, packageRoot);
         }
         else retained++; // Includes incomplete files and file/directory conflicts; Lake owns validity.
+    }
+
+    private static void RequirePackageFileLink(string path, string? packageRoot)
+    {
+        var link = packageRoot is null ? null : new FileInfo(path).LinkTarget;
+        void Refuse() => throw new InvalidOperationException($"dependency cache contains a forbidden symlink: {path}");
+        if (string.IsNullOrEmpty(link) || Path.IsPathRooted(link)) Refuse();
+        var current = Path.GetDirectoryName(path)!;
+        var parts = link!.Split(Path.DirectorySeparatorChar, Path.AltDirectorySeparatorChar);
+        for (var index = 0; index < parts.Length; index++)
+        {
+            var part = parts[index];
+            if (part is "" or ".") continue;
+            if (part == "..")
+            {
+                if (current == packageRoot) Refuse();
+                current = Path.GetDirectoryName(current)!;
+                continue;
+            }
+            current = Path.Combine(current, part);
+            var attributes = File.GetAttributes(current);
+            // Inspect each original component before any '..' normalization. Link chains,
+            // loops and directory links are refused without resolving or traversing them.
+            if (attributes.HasFlag(FileAttributes.ReparsePoint)
+                || (index < parts.Length - 1 && !attributes.HasFlag(FileAttributes.Directory))) Refuse();
+        }
+        var resolved = File.GetAttributes(current);
+        if (resolved.HasFlag(FileAttributes.Directory) || resolved.HasFlag(FileAttributes.ReparsePoint)) Refuse();
     }
 
     private static void RequireDirectory(string path)
