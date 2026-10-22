@@ -1,0 +1,41 @@
+## 16. A linear drift constraint without a quadratic-degree assumption
+
+Write polynomially $f=A_fd^2+B_fd+C_f$ and $K=\sum_{i=0}^4K_id^i$.
+Define exactly the coefficients of SII, Definition 5.2,
+
+$$
+\begin{aligned}
+\alpha={}&K_4(-B_f^3+2A_fB_fC_f)
+ +K_3A_f(B_f^2-A_fC_f)-K_2A_f^2B_f+K_1A_f^3,\\
+\zeta={}&K_4(-B_f^2C_f+A_fC_f^2)
+ +K_3A_fB_fC_f-K_2A_f^2C_f+K_0A_f^3.
+\end{aligned}
+\tag{16.1}
+$$
+
+Their expansions have $280$ and $405$ nonzero monomials. With
+
+$$
+Q=K_4(A_f^2d^2-A_fB_fd+B_f^2-A_fC_f)
+  +K_3A_f(A_fd-B_f)+K_2A_f^2
+$$
+
+exact polynomial expansion gives
+
+$$
+A_f^3K-\alpha d-\zeta=fQ.
+\tag{16.2}
+$$
+
+Every actual world therefore satisfies $\alpha d+\zeta=0$, even if
+$A_f=0$. Wherever $\alpha\ne0$ its drift is forced:
+
+$$
+d=-\zeta/\alpha.
+\tag{16.3}
+$$
+
+This is necessity at actual common roots, without a converse. No quadratic
+formula or division by $A_f$ is used, and the specialized degrees of
+$f,K$ are not assumed to stay two and four.
+

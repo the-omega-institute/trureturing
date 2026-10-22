@@ -1,0 +1,87 @@
+**Lemma 23.2 (All guarded lift bounds).** Every refinement (23.5) is
+well defined, retains its unique root, and has final width
+$1/(10^8 2^{400})$. In (23.6), $0\notin A_i$, $0\notin\mathcal D_i$
+and $0\notin I_i$ for all five labels. The following are strict
+rational enclosures. An entry $(u,v)/10^k$ means that the entire
+corresponding interval is contained in the indicated open interval.
+
+| $i$ | $q_i$ | $\mathcal R_i$ | Sign of every element of $\mathcal D_i$ | $\mathcal P_i$ |
+| --- | --- | --- | --- | --- |
+| 1 | 4632607 | $(4749917,4749918)/10^8$ | $+$ | $(-533512131,-533512130)/10^6$ |
+| 2 | 12856673 | $(89953167,89953168)/10^8$ | $-$ | $(-10890382,-10890381)/10^6$ |
+| 3 | 64878432 | $(121975351,121975352)/10^8$ | $-$ | unrestricted |
+| 4 | 90481370 | $(-39521073,-39521072)/10^8$ | $-$ | unrestricted |
+| 5 | 2515351400 | $(-2094185026,-2094185025)/10^8$ | $-$ | unrestricted |
+
+Here unrestricted means only that no numerical bound for
+$\mathcal P_i$ is asserted in that table entry.
+
+Proof. Evaluate $F_J$ by rational Horner at the midpoints defined in
+(23.5). At each of the $400$ refinements for each label its value is
+nonzero; exactly one of the two displayed products is negative.
+These are finite rational inequalities determined by the Section 22
+coefficient array and (23.3), (23.5). The unique root is in the selected
+half by the intermediate-value theorem and Lemma 23.1. The width is
+halved each time.
+
+For completeness the rational comparisons defining the second table
+can be expressed without approximate algebraic arguments. If the
+$r$ entry is $(u_i,v_i)/10^8$, the exact endpoint relations are
+
+$$
+\begin{gathered}
+0\notin A_i,\qquad
+u_i/10^8<\inf\mathcal R_i\le\sup\mathcal R_i<v_i/10^8,\\
+\inf\mathcal D_1>0,\qquad
+\sup\mathcal D_i<0\quad(2\le i\le5),\\
+-533512131/10^6<\inf\mathcal P_1
+ \le\sup\mathcal P_1<-533512130/10^6,\\
+-10890382/10^6<\inf\mathcal P_2
+ \le\sup\mathcal P_2<-10890381/10^6.
+\end{gathered}
+\tag{23.7}
+$$
+
+Substitution of (22.3), (21.14) in the finite descending Horner
+recurrences, with products and quotients as in (23.4), gives these
+relations by rational endpoint arithmetic. In particular the quotient
+by $A_i$ is guarded before forming $\mathcal R_i$, and the displayed
+$\mathcal D_i$ signs guard the last quotients; all $I_i$ are positive.
+These formulas determine every rational endpoint even though their
+large numerators and denominators need not be expanded. The
+containment induction for (23.4) consequently places the exact
+$\rho_i=-c_J(\beta_i)/a_J(\beta_i)$, $\overline D(\rho_i,\beta_i)$
+and the lifted response
+$\overline N_p(\rho_i,\beta_i)/(\beta_i\overline D(\rho_i,\beta_i))$
+in the displayed enclosures. ∎
+
+For $i=1,2$ define the complete triples
+
+$$
+\begin{gathered}
+\rho_i=-c_J(\beta_i)/a_J(\beta_i),\qquad \tau_i=\rho_i/\beta_i,\\
+P_i^J=\begin{pmatrix}
+\rho_i&\beta_i\\
+\rho_i(1-\rho_i)/\beta_i&1-\rho_i
+\end{pmatrix},\qquad
+ d_i^J=-C_0(\tau_i,\beta_i)/D(\tau_i,\beta_i),\\
+g_i^J(s)=\sum_{k=0}^3
+ \frac{C_k(\tau_i,\beta_i)}{D(\tau_i,\beta_i)}
+ \prod_{\substack{0\le l\le3\\l\ne k}}\frac{s-l}{k-l},\qquad
+\mathcal W_i^J=(P_i^J,g_i^J,d_i^J).
+\end{gathered}
+\tag{23.8}
+$$
+
+These definitions specify each entire real gain and its own real drift,
+rather than only projected coordinates or selected samples. The two
+$\rho_i$ intervals lie in $(0,1)$ and the $\beta_i$ intervals are
+positive. Their $D$ signs are respectively $+$ and $-$, because
+$D(\tau_i,\beta_i)=\overline D(\rho_i,\beta_i)/\beta_i^2$.
+Equations (21.4)–(21.5) therefore make both triples actual strict
+regular complete worlds. Their gains are nonzero by their unequal
+clock-zero and clock-one readings. The two disjoint source boxes give
+distinct complete worlds. For the remaining three roots, Lemma 23.2
+gives respectively $\rho_3>1$, $\rho_4<0$, $\rho_5<0$; each violates
+the original strict source condition.
+
