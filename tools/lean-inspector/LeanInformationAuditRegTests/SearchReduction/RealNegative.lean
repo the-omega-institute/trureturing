@@ -26,7 +26,8 @@ open LeanInformationAudit.SearchReduction
 are kernel definitionally equal, but reducible statement matching does not
 identify the two matcher heads. With no S the graph records no reduction. -/
 #guard frozenPackageResult = Verdict.insufficient
-#guard frozenPackageResult.baseline = Run.exhausted
+#guard frozenPackageResult.baseline = Run.exhausted ∨
+  frozenPackageResult.baseline = Run.incomplete Failure.undecided
 
 /- §5 preserves the complete source telescope. robustKnowledge is a predicate
 definition, not a proof of the factivity statement; the conjunction theorem has

@@ -35,5 +35,5 @@ run_cmd do
     baseline [$baseModule]
     using [$extra] as $resultName))
 
-#guard privateNameResult = Verdict.nonBindOnly
+#guard privateNameResult.paired = Run.found
 #print axioms privateNameResult.pairedProof

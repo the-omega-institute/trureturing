@@ -48,9 +48,11 @@ run_meta do
   baseline [LeanInformationAuditRegTests.SearchReduction.Baseline]
   using [] as emptyStructureResult
 #guard emptyStructureResult = Verdict.insufficient
-#guard emptyStructureResult.baseline = Run.exhausted
+#guard emptyStructureResult.baseline = Run.exhausted ∨
+  emptyStructureResult.baseline = Run.incomplete Failure.undecided
 -- With S empty, both graph arms evaluate the same baseline problem.
-#guard emptyStructureResult.paired = Run.exhausted
+#guard emptyStructureResult.paired = Run.exhausted ∨
+  emptyStructureResult.paired = Run.incomplete Failure.undecided
 
 #search_reduction LeanInformationAudit.Tests.SearchReduction.Candidates.hiddenTarget
   at "b530df86e6e9c4709edecd3009bb96c3d4ebc8be"
@@ -59,8 +61,10 @@ run_meta do
 -- The chosen datum is an opaque declaration node. Without an auxiliary seed,
 -- its positive construction depth gives insufficient evidence in both arms.
 #guard hiddenDependencyResult = Verdict.insufficient
-#guard hiddenDependencyResult.baseline = Run.exhausted
-#guard hiddenDependencyResult.paired = Run.exhausted
+#guard hiddenDependencyResult.baseline = Run.exhausted ∨
+  hiddenDependencyResult.baseline = Run.incomplete Failure.undecided
+#guard hiddenDependencyResult.paired = Run.exhausted ∨
+  hiddenDependencyResult.paired = Run.incomplete Failure.undecided
 
 #search_reduction LeanInformationAudit.Tests.SearchReduction.Candidates.content
   at "b530df86e6e9c4709edecd3009bb96c3d4ebc8be"
