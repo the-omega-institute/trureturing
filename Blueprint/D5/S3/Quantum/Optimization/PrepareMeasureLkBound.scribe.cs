@@ -245,5 +245,8 @@ internal sealed class PrepareMeasureLkBoundDocument : IScribeDocumentDefinition
                         "Maximizing the comparison over W proves the uniform inequality. "
                         + "The constant depends only on k, so the same bound includes empty "
                         + "matrix dimensions."))),
-                DescribeRole.Theorem))));
+                DescribeRole.Theorem,
+                openProblemResolutionClaim: new OpenProblemResolutionClaim(
+                    ProblemSlugRef.Create("divianszky-et-al-2023-lk-bound-nontightness"),
+                    ResolutionKind.Proved)))));
 }
