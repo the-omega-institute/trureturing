@@ -28,7 +28,7 @@ internal sealed class StabilizerBatteryDegreeDifferenceRefutationDocument : IScr
                         "Equations (1) and (2) define the periodic circulant generators and their Hamiltonian sum. "
                         + "The mathematical symbols A, S and H denote the neighbourhood relation, its Pauli generators and that sum. "
                         + "The centre carries X, each neighbour carries Z, and every other site carries the identity. "
-                        + "The maximum even degree is M(N). All arithmetic on natural degrees, including subtraction, is natural arithmetic; K/2 is the integer quotient.")),
+                        + "The maximum even degree is M(N). All arithmetic on natural degrees, including subtraction, is natural arithmetic; Nat.div is the integer quotient and Nat.mod is the remainder.")),
                     Paragraph(Text(
                         "A State N is a complex vector on binary functions on Fin N, and an Operator N is a matrix on those indices. "
                         + "G(N,H,g) says that g has squared norm one and minimizes the real energy among all vectors v of squared norm one. "
@@ -93,7 +93,7 @@ internal sealed class StabilizerBatteryDegreeDifferenceRefutationDocument : IScr
     {
         Formula d = F.Id("d");
         Formula neighbours = And(NotEqual(i, j), Some("d", Nat,
-            And(Mem(d, Qualified("Finset", "range", Quotient(K, D(2)))),
+            And(Mem(d, Qualified("Finset", "range", Qualified("Nat", "div", K, D(2)))),
                 Or(Equal(Property(j, "val"), Mod(Add(Property(i, "val"), Parenthesized(Add(d, D(1)))), N)),
                     Equal(Property(i, "val"), Mod(Add(Property(j, "val"), Parenthesized(Add(d, D(1)))), N))))));
         Formula relation = LambdaOf("N", Nat, LambdaOf("K", Nat,
@@ -228,6 +228,6 @@ internal sealed class StabilizerBatteryDegreeDifferenceRefutationDocument : IScr
     private static Formula SumOf(string name, Formula type, Formula body) =>
         Seq(Sum, Underscore, Grp(F.Id(name), Colon, Sp, type), Sp, Parenthesized(body));
     private static Formula SumOverSet(string name, Formula set, Formula body) =>
-        Seq(Sum, Underscore, Grp(F.Id(name), Sp, InMacro, Sp, set), Sp, Parenthesized(body));
+        Qualified("Finset", "sum", set, LambdaOf(name, Fin(N), body));
     private static DocumentBlock Display(Formula formula) => new DocumentBlock.DisplayFormula(formula);
 }

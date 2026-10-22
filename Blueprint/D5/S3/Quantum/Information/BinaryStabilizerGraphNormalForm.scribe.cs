@@ -158,6 +158,6 @@ internal sealed class BinaryStabilizerGraphNormalFormDocument : IScribeDocumentD
     private static Formula Call(string name, params Formula[] args) =>
         new Formula.FunctionCall(FormulaIdentifier.Create(name), [.. args]);
     private static Formula Qualified(string owner, string name, params Formula[] args) => Seq(V(owner), Dot, Call(name, args));
-    private static Formula Apply(Formula f, params Formula[] args) => Seq(f, Open, Arguments(args), Close);
+    private static Formula Apply(Formula f, params Formula[] args) => Seq(f, Parenthesized(Arguments(args)));
     private static Formula Arguments(Formula[] args) => Seq([.. args.SelectMany((x, i) => i == 0 ? new[] { x } : new[] { Comma, Sp, x })]);
 }
