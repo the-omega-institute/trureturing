@@ -82,7 +82,19 @@ $$\forall p: \operatorname{PowerSeries}\left(\mathbb{Z}\right), (\operatorname{c
 
 Over the integers, a zero-constant series differing from X by a multiple of C(2) has residual divisible by C(4).
 
-**Definition 1.7 (Construction by compatible integral approximations).**
+**Theorem 1.7 (Coefficients of a substitution with zero inner constant).**
+
+$$\forall R: \operatorname{Type}, [\operatorname{CommRing}\left(R\right)], \forall p: \operatorname{PowerSeries}\left(R\right), (\operatorname{constantCoeff}\left(p\right) = 0) \implies (\forall f: \operatorname{PowerSeries}\left(R\right), \forall n: \mathbb{N}, \operatorname{coeff}\left(n, \operatorname{PowerSeries}.\operatorname{subst}\left(p, f\right)\right) = \sum_{k \in \operatorname{Finset}.\operatorname{range}\left(n + 1\right)} \operatorname{coeff}\left(k, f\right) \cdot \operatorname{coeff}\left(n, p^{k}\right))$$
+
+*Proof.* Machine-checked in Lean as `D5/S1/Recurrence/Residue/CompositionalSquareDyadicDenominators.coeff_subst_sum` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+When p has zero constant coefficient, the degree-n coefficient of f(p) is the sum over k less than n+1 of the degree-k coefficient of f times the degree-n coefficient of p to the power k.
+
+**Definition 1.8 (Construction by compatible integral approximations).**
 
 $$\begin{aligned}A = \operatorname{C}\left(4\right) \cdot \operatorname{rescale}\left(\frac{1}{4}, \operatorname{map}\left(\operatorname{iota}, I\right)\right)\\I = \operatorname{mk}\left(n \mapsto \operatorname{coeff}\left(n, \operatorname{P}\left(n\right)\right)\right)\\\operatorname{P}\left(0\right) = X\\\forall n \in \mathbb{N}, \operatorname{P}\left(n + 1\right) = \operatorname{P}\left(n\right) + \operatorname{C}\left(-\operatorname{div}\left(\operatorname{coeff}\left(n + 2, \operatorname{E}\left(\operatorname{P}\left(n\right)\right)\right), 2\right)\right) \cdot X^{n + 2}\\\forall P \in \mathbb{Z}[[X]], \operatorname{E}\left(P\right) = \operatorname{subst}\left(P, P\right) - X - 4 \cdot X \cdot P\end{aligned}$$
 
@@ -94,7 +106,7 @@ $$\begin{aligned}A = \operatorname{C}\left(4\right) \cdot \operatorname{rescale}
 
 Set E(P)=P(P(X))-X-4XP. Starting with P_0=X, correct degree n+2 by subtracting half its residual. The triangular composition identity gives multiplier two in that degree and preserves every lower degree. If P-X=2Q, then Q(P)-Q(X) is divisible by two, because P^j-X^j is divisible by P-X. Therefore E(P) is divisible by four and each correction is even. The stable coefficients define I. Scaling back gives A=4I(X/4), with the integer coefficients embedded in the rationals.
 
-**Definition 1.8 (The rational coefficient sequence).**
+**Definition 1.9 (The rational coefficient sequence).**
 
 $$\forall n \in \mathbb{N}, \operatorname{f}\left(n\right) = \operatorname{coeff}\left(n, A\right)$$
 
@@ -106,7 +118,7 @@ $$\forall n \in \mathbb{N}, \operatorname{f}\left(n\right) = \operatorname{coeff
 
 The sequence f is extracted from the constructed formal series. Its reduced denominators are the terms of A381670, with denominator one for any zero coefficient.
 
-**Theorem 1.9 (The defining functional equation).**
+**Theorem 1.10 (The defining functional equation).**
 
 $$(\operatorname{constantCoeff}\left(A\right) = 0) \land ((\operatorname{coeff}\left(1, A\right) = 1) \land (X \cdot (A + 1) = \operatorname{subst}\left(A, A\right)))$$
 
@@ -118,7 +130,7 @@ $$(\operatorname{constantCoeff}\left(A\right) = 0) \land ((\operatorname{coeff}\
 
 The limit of the corrected approximations satisfies I(I(X))=X+4XI(X). Mapping to rational coefficients and conjugating by the linear scaling gives exactly X(A+1)=A(A(X)), with the stated constant and linear terms.
 
-**Theorem 1.10 (Uniqueness with the specified normalization).**
+**Theorem 1.11 (Uniqueness with the specified normalization).**
 
 $$\forall B \in \mathbb{Q}[[X]], (\operatorname{constantCoeff}\left(B\right) = 0) \implies ((\operatorname{coeff}\left(1, B\right) = 1) \implies ((X \cdot (B + 1) = \operatorname{subst}\left(B, B\right)) \implies (B = A)))$$
 
@@ -130,7 +142,7 @@ $$\forall B \in \mathbb{Q}[[X]], (\operatorname{constantCoeff}\left(B\right) = 0
 
 If two normalized series agree below degree n, their compositional squares differ there by twice their coefficient difference. The right side X+XB depends only on the preceding coefficient. Induction therefore forces equality at every degree over the rationals.
 
-**Theorem 1.11 (The rescaled coefficients are even integers).**
+**Theorem 1.12 (The rescaled coefficients are even integers).**
 
 $$\forall n \in \mathbb{N}, (2 \le n) \implies (\exists z \in \mathbb{Z}, 4^{n - 1} \cdot \operatorname{f}\left(n\right) = \operatorname{iota}\left(2 \cdot z\right))$$
 
@@ -142,7 +154,7 @@ $$\forall n \in \mathbb{N}, (2 \le n) \implies (\exists z \in \mathbb{Z}, 4^{n -
 
 Every integral approximation differs from X by twice an integer series. This persists in the compatible limit I. Undoing the scaling identifies its degree-n coefficient with 4^(n-1)f(n) for n at least two.
 
-**Theorem 1.12 (Every denominator is a power of two).**
+**Theorem 1.13 (Every denominator is a power of two).**
 
 $$\forall k \in \mathbb{N}, \exists e \in \mathbb{N}, \operatorname{den}\left(\operatorname{f}\left(k\right)\right) = 2^{e}$$
 
@@ -163,6 +175,7 @@ For n at least two the even-integer invariant writes f(n) as an integer divided 
 - Truth anchor: `D5/S1/Recurrence/Residue/CompositionalSquareDyadicDenominators.Agree`
 - Truth anchor: `D5/S1/Recurrence/Residue/CompositionalSquareDyadicDenominators.C_dvd_iff_coeff`
 - Truth anchor: `D5/S1/Recurrence/Residue/CompositionalSquareDyadicDenominators.agree_subst`
+- Truth anchor: `D5/S1/Recurrence/Residue/CompositionalSquareDyadicDenominators.coeff_subst_sum`
 - Truth anchor: `D5/S1/Recurrence/Residue/CompositionalSquareDyadicDenominators.composition_top`
 - Truth anchor: `D5/S1/Recurrence/Residue/CompositionalSquareDyadicDenominators.f`
 - Truth anchor: `D5/S1/Recurrence/Residue/CompositionalSquareDyadicDenominators.functional_equation`

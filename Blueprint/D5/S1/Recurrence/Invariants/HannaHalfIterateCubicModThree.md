@@ -30,7 +30,21 @@ $$claim = ((\exists A: \operatorname{PowerSeries}\left(\mathbb{Q}\right), \opera
 
 The unpaginated OEIS A107099 Comments state: "Coefficients [x^n] A(x) = 0 (mod 3) except at n = 3^k (conjecture)." Existence is asserted, and every IsGF series has integer coefficients. The exponent n ranges over all natural numbers. No nonvanishing assertion at powers of three is included.
 
-**Theorem 1.3 (Integrality and the congruence at every degree).**
+**Theorem 1.3 (Uniqueness of normalized compositional square roots).**
+
+$$\forall R: \operatorname{Type}, [\operatorname{CommRing}\left(R\right)] [\operatorname{NoZeroDivisors}\left(R\right)], ((2: R) \neq 0) \implies (\forall f: \operatorname{PowerSeries}\left(R\right), \forall g: \operatorname{PowerSeries}\left(R\right), \forall t: \operatorname{PowerSeries}\left(R\right), (\operatorname{constantCoeff}\left(f\right) = 0) \implies ((\operatorname{constantCoeff}\left(g\right) = 0) \implies ((\operatorname{coeff}\left(1, f\right) = 1) \implies ((\operatorname{coeff}\left(1, g\right) = 1) \implies ((\operatorname{PowerSeries}.\operatorname{subst}\left(f, f\right) = t) \implies ((\operatorname{PowerSeries}.\operatorname{subst}\left(g, g\right) = t) \implies (f = g)))))))$$
+
+*Proof.* Machine-checked in Lean as `D5/S1/Recurrence/Invariants/HannaHalfIterateCubicModThree.half_unique` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Acknowledgement.* Paul D. Hanna (2005). *OEIS A107099, compositional half-iterate of x + 4*x^3*. URL: <https://oeis.org/A107099>.
+
+*Commentary.*
+
+Over a commutative ring with no zero divisors in which two is nonzero, two series with zero constant coefficient and linear coefficient one are equal whenever their compositional squares equal the same series.
+
+**Theorem 1.4 (Integrality and the congruence at every degree).**
 
 $$(\exists A: \operatorname{PowerSeries}\left(\mathbb{Q}\right), \operatorname{IsGF}\left(A\right)) \land (\forall A: \operatorname{PowerSeries}\left(\mathbb{Q}\right), (\operatorname{IsGF}\left(A\right)) \implies (\forall n: \mathbb{N}, \exists m: \mathbb{Z}, (\operatorname{coeff}\left(n, A\right) = (m: \mathbb{Q})) \land ((\neg(\exists k: \mathbb{N}, n = 3^{k})) \implies (\operatorname{Int}.\operatorname{ModEq}\left(3, m, 0\right)))))$$
 
@@ -52,6 +66,7 @@ Correct successive degrees of an integer series beginning with X. A series of th
 
 - Truth anchor: `D5/S1/Recurrence/Invariants/HannaHalfIterateCubicModThree.IsGF`
 - Truth anchor: `D5/S1/Recurrence/Invariants/HannaHalfIterateCubicModThree.claim`
+- Truth anchor: `D5/S1/Recurrence/Invariants/HannaHalfIterateCubicModThree.half_unique`
 - Truth anchor: `D5/S1/Recurrence/Invariants/HannaHalfIterateCubicModThree.result`
 - Dependency: [D5/S1/Recurrence/Invariants/CubicFifteenSubstitutionParity](CubicFifteenSubstitutionParity.md)
 - Dependency: [D5/S1/Recurrence/Residue/CompositionalSquareDyadicDenominators](../Residue/CompositionalSquareDyadicDenominators.md)

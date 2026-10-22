@@ -1378,3 +1378,1401 @@ joint witness, a full-domain real absence theorem, or a global curve
 equation.
 
 ## 追加锚（本行以下为增补区）
+## 11. Four exceptional neighborhoods and the entire-child theorem
+
+A complete world is one triple
+
+$$
+ W=(P(r,b),g,d),\qquad P(r,b)=\begin{pmatrix}r&b\\r(1-r)/b&1-r\end{pmatrix},
+ \quad 0<r<1,\ b>0,\ 0\ne g\in\mathbb R[s],\ \deg g\le3,\ d\in\mathbb R.
+$$
+
+Put $J=\left(\begin{smallmatrix}0&1\\1&0\end{smallmatrix}\right)$,
+$M=\left(\begin{smallmatrix}0&1\\1&1\end{smallmatrix}\right)$,
+$Q_0=I$, $Q_i=E_iQ_{i-1}$, and $y_i=d+g(i)\operatorname{tr}(P Q_i)$.
+The acquired actions are exactly $J,M,J,M,M,M$ at clocks 1 through 6;
+the acquired readings are $(0,24,147/5,24,18,p,v)$ at clocks 0 through 6.
+Write $C(p,v)$ for the entire set of these worlds. The alternative
+clock-seven readings are $a(W)$ for J and $m(W)$ for M, on that same world.
+There is no change of polynomial, drift, source, clock, or protocol.
+
+The original joint question asks whether some $p\ne24,v$ admit two distinct
+members of $C(p,v)$ with equal $a$, and independently two distinct members
+of that same entire $C(p,v)$ with equal $m$. The two pairs can overlap or
+be disjoint and the two common terminal values are independent.
+
+Sections 11–17 use precisely the complete-world domain of
+[Definition 1.1](#1-complete-worlds-and-the-corrected-complex-incidence)
+and the independent-pair predicate of
+[Definition 10.2](#10-real-liftability-and-the-independent-pair-boundary).
+They classify strict-real lifts over four particular rectangles. The
+complex incidence and generic conclusions of Sections 1–8, and the
+actual terminal-$M$ arc of Section 9, retain their stated scopes.
+
+In these sections F, SIII and SVIII denote, respectively, the
+[finite-fibre volume](https://github.com/the-omega-institute/trureturing/blob/c8ae6f747aeb40c61f9d135f171011de99a12c99/docs/develop/theory/FIB_ALL_RESPONSE_FINITE_FIBRE_GEOMETRY.md),
+[support III](https://github.com/the-omega-institute/trureturing/blob/c8ae6f747aeb40c61f9d135f171011de99a12c99/docs/develop/theory/FIB_STRICT_REAL_JOINT_INCIDENCE_SUPPORT_III.md)
+and [support VIII](https://github.com/the-omega-institute/trureturing/blob/c8ae6f747aeb40c61f9d135f171011de99a12c99/docs/develop/theory/FIB_STRICT_REAL_JOINT_INCIDENCE_SUPPORT_VIII.md).
+Their reconstruction, carrier, actual-arc and exceptional-inventory
+results are supplied ordinary mathematical results. The full-domain
+bound $|C(p,v)|\le24$ is F, Theorem 32.1; the sharper count below
+is proved only on the four stated rectangles.
+
+Let $z_J(p)=(t_H,b_H,t_L,b_L)$ and $v_J(p)$ be the actual J-pair arc of
+SIII, Lemma 16.3 and Theorem 16.4, for $10\le p\le34$.
+The following are four explicit closed intervals $P_i=[l_i,h_i]$ and
+rational numbers $\bar v_i$. Every displayed terminating decimal is exact.
+Set $V_i=[\bar v_i-10^{-21},\bar v_i+10^{-21}]$ and $B_i=P_i\times V_i$.
+
+| $i$ | $l_i$ | $h_i$ | $\bar v_i$ |
+| --- | --- | --- | --- |
+| 1 | 13.1377186191279091547601 | 13.1377186191279091547602 | 92.7068988914092058205585586128838848015453776 |
+| 2 | 19.5319320737263986033004 | 19.5319320737263986033005 | 115.404275403438360975737925631949540742443718 |
+| 3 | 32.8725952384491631141317 | 32.8725952384491631141318 | 164.46195269706239448434692054285891728048265 |
+| 4 | 33.9742535335153124186754 | 33.9742535335153124186755 | 168.449607978859386441633184643642612890222935 |
+
+**Theorem 11.1 (Entire-child classification and M injectivity).** For every
+$i\in\{1,2,3,4\}$ and every real $(p,v)\in B_i$, the entire original
+$C(p,v)$ consists of exactly four distinct complete strict worlds.
+Its M reading is injective. If these worlds are ordered by increasing M
+reading, every successive gap exceeds, respectively,
+
+$$
+ \gamma_1=\frac13,\qquad\gamma_2=\frac25,\qquad
+ \gamma_3=\frac{14}5,\qquad\gamma_4=\frac72.
+$$
+
+Moreover $v_J(p)\in V_i$ for every $p\in P_i$. Hence this excludes an
+unrestricted M pair in the entire actual J-arc child throughout each
+$P_i$, including the enclosed exceptional parameter $p_i$ of SVIII,
+Theorem 30.3. No common drift or any other equality between the M
+endpoints is assumed.
+
+The exhaustive four-H/no-L inventory is SVIII, Theorem 30.3; the two
+finite drifts and unique strict lift at each fixed exceptional H
+projection are SVIII, Theorem 33.2. Exact projected multiplicity two
+at those four projections is SVIII, Theorem 34.1. The source-specific
+conclusion here counts every actual companion in the child, constructs all four worlds,
+and separates every pair of their M readings. In particular it does not
+identify a double projected root with two actual worlds. Sections 12–15
+give the proof of Theorem 11.1, using the finite rational specifications
+of Section 16.
+
+## 12. Reused whole-world projection, inverse and normalized carrier
+
+The whole-world inverse is reused from F, Lemma 30.2, and SVIII,
+Section 12; the normalized carrier is the one in
+[Proposition 4.2](#4-the-fixed-finite-carrier-and-its-drift-equation)
+and SVIII, Section 22. Its formulas and ordinary proofs are recorded
+here to specify all rational calculations.
+
+Write $c=r(1-r)/b$, $j=b+c$, $n=j+r$, $T=1+b$, $U=1+2b$.
+The chronological traces are $1,j,T,n,U,U+n,2U+n$ at clocks 0 through 6,
+and $T+2j+4r$, $3U+2n$ at the two clock-seven alternatives.
+Thus $x=n/U>0$ and $H=Ug$ have the four samples
+
+$$
+ h_3=(24-d)/x,\quad h_4=18-d,\quad
+ h_5=(p-d)/(x+1),\quad h_6=(v-d)/(x+2).
+$$
+
+$H(s)$ denotes their unique polynomial interpolant of degree at most
+three at the original nodes $3,4,5,6$. Define
+
+$$
+\begin{aligned}
+ H_0&=20h_3-45h_4+36h_5-10h_6,\\
+ H_1&=10h_3-20h_4+15h_5-4h_6,\\
+ H_2&=4h_3-6h_4+4h_5-h_6,\\
+ H_7&=-h_3+4h_4-6h_5+4h_6,\\
+ B_0&=294/5-2d-H_2,\qquad \chi=d^2+B_0^2,\\
+ U&=(-dH_0+B_0H_2)/\chi,\quad b=(U-1)/2,\\
+ j&=U(24-d)/H_1,\quad r=xU-j,\quad g=H/U,\\
+ m&=d+(3+2x)H_7.
+\end{aligned} \tag{12.1}
+$$
+
+For an actual off-24 world these are necessary identities, with
+$d\ne24$, $H_1\ne0$, $\chi>0$. The complete faithful inverse guards,
+including the restored clock equations, are
+
+$$
+\begin{gathered}
+x>0,\quad d\ne24,\quad H_1\ne0,\quad\chi>0,\quad
+U>1,\quad b=(U-1)/2>0,\quad0<r<1,\\
+j=b+r(1-r)/b,\qquad dU=-H_0,\qquad B_0U=H_2.
+\end{gathered} \tag{12.2}
+$$
+
+These are the necessary and sufficient guards of F, Lemma 30.2;
+$x=n/U$, $H=Ug$ and the drift $d$ are unchanged. To see the
+$d\ne24$ guard directly, $d=24$
+makes $g(1)=g(3)=0$; the clock-zero, clock-two, clock-four equations then
+force $b=1/8$ and $g(s)=\frac85(s-1)(s-3)(s-5)$, whence $p=24$.
+The $H_1\ne0$ guard follows from $H_1=U(24-d)/j$.
+The pair $(d,B_0)$ cannot vanish: the necessary equation $B_0U=H_2$
+would then give both $H_2=0$ and $H_2=294/5$.
+
+For the carrier, in $\mathbb Z[x,p,v,d]$ put
+
+$$
+\begin{gathered}
+ D=x(x+1)(x+2),\quad z_3=(24-d)(x+1)(x+2),\quad z_4=(18-d)D,\\
+ z_5=(p-d)x(x+2),\quad z_6=(v-d)x(x+1),\\
+ a_0=20z_3-45z_4+36z_5-10z_6,\\
+ a_1=10z_3-20z_4+15z_5-4z_6,\quad a_2=4z_3-6z_4+4z_5-z_6,\\
+ z_*=xa_1-D(24-d),\\
+ f=5dDa_2+a_0\{(294-10d)D-5a_2\},\\
+ K=4a_0^2z_*^2+2a_0(dD-a_0)z_*a_1
+ -(a_0+dD)\{dD+(1-2x)a_0\}a_1^2,\\
+ F_0=405x^3+(975-18p+5v)x^2+(90-36p+5v)x-480.
+\end{gathered} \tag{12.3}
+$$
+
+Write $f=Ad^2+B_fd+C_f$, $K=\sum_{k=0}^4 k_kd^k$, and set
+
+$$
+\begin{aligned}
+ \alpha&=k_4(-B_f^3+2AB_fC_f)+k_3A(B_f^2-AC_f)
+          -k_2A^2B_f+k_1A^3,\\
+ \zeta&=k_4(-B_f^2C_f+AC_f^2)+k_3AB_fC_f-k_2A^2C_f+k_0A^3.
+\end{aligned}
+$$
+
+The exact polynomial quotients
+
+$$
+ E=(A\zeta^2-B_f\alpha\zeta+C_f\alpha^2)/A^3,\qquad
+ R=E/(256D^8F_0^2) \tag{12.4}
+$$
+
+specify $R$ before any specialization. Both divisions have zero
+polynomial remainder. In particular (12.4) is not division at an
+individual zero of $A$ or $F_0$. This is precisely the normalization
+of SVIII, Section 22: $R$ has 512 terms and degrees $(18,6,6)$,
+with total $(p,v)$ degree 6. Polynomial reduction gives
+$A^3K\equiv\alpha d+\zeta\pmod f$ and the identity in (12.4).
+Every actual world satisfies $f=K=R=0$. These necessity statements
+reuse SVIII, Sections 12 and 22; in particular they apply before any
+local nonvanishing test or strict-source filter.
+
+The following direct ordinary polynomial identity also gives this
+necessity, including its singular-source extension. For source
+coordinates $t=r/b,b$ put
+
+$$
+\begin{gathered}
+ r=tb,\quad j=t+b(1-t^2),\quad n=j+tb,\quad T=1+b,\quad U=1+2b,\\
+ D_s=5\{(b^2+8b+4)jn-2TU(j+n)\},\quad A_s=(8b-1)(2+5b),\\
+ C_0=-24D_s+3A_sjn,\ C_1=3A_sn,\
+ C_2=3(49b+34)jn-54U(j+n),\ C_3=3A_sj,\\
+ B_5=-4C_0+15C_1-20C_2+10C_3,\\
+ B_6=-10C_0+36C_1-45C_2+20C_3,\\
+ B_7=-20C_0+70C_1-84C_2+35C_3,\\
+ N_p=-C_0+(U+n)B_5,\quad N_v=-C_0+(2U+n)B_6,\\
+ N_a=-C_0+(T+2j+4r)B_7,\quad N_m=-C_0+(3U+2n)B_7.
+\end{gathered} \tag{12.5}
+$$
+
+On the regular parent,
+
+$$
+d=-C_0/D_s,\qquad
+g(s)=\frac1{D_s}\sum_{k=0}^3 C_k
+\prod_{\substack{0\le l\le3\\l\ne k}}\frac{s-l}{k-l},\qquad
+(p,v,a,m)=(N_p,N_v,N_a,N_m)/D_s.
+\tag{12.6}
+$$
+
+This is the SIII, Definition 16.1, source circuit, with $t=r/b$;
+$D_s$ is distinct from $D=x(x+1)(x+2)$.
+The four exact polynomial identities
+
+$$
+\begin{gathered}
+ -C_0+jC_1=24D_s,\quad5(-C_0+TC_2)=147D_s,\\
+ -C_0+nC_3=24D_s,\quad
+ -C_0+U(-C_0+4C_1-6C_2+4C_3)=18D_s
+\end{gathered} \tag{12.7}
+$$
+
+verify the literal original readings; clock zero is $d+g(0)=0$.
+If $R=\sum c_{ijk}x^ip^jv^k$, the exact two-variable identity
+
+$$
+ \sum c_{ijk}n^iU^{18-i}N_p^jN_v^kD_s^{6-j-k}=0 \tag{12.8}
+$$
+
+establishes $R=0$ directly on every regular source. Its terms are fully
+specified by (12.3)–(12.5); expansion has zero remainder.
+For completeness put $e=d-24$,
+$\Lambda=1+6/T+1/U-4/j-4/n$, $B=6/T-2/U$.
+The undivided original parent is
+$e\Lambda+(24/5)(b-1/8)B=0$.
+A singular off-24 world must have $b=1/8$, $e\ne0$, and
+
+$$
+ \Lambda=\frac{\Phi(r)}{960jn},\qquad
+ \Phi=438272r^4-931328r^3+540800r^2-50728r-853.
+$$
+
+The exact identity $\gcd(\Phi,\Phi')=1$ gives
+$e\Lambda_r\ne0$ there. The implicit function theorem, with $e$ fixed
+and $b$ varying through $1/8$, supplies nearby strict regular parent
+worlds. Their whole interpolated gains and responses converge to this
+singular world. Consequently (12.8) passes to it by continuity. Thus no
+singular original world was removed before the carrier was used.
+
+The inverse is also a sufficiency test where its displayed guards hold.
+Indeed $f=5D^2(dH_2+H_0B_0)$. If $d\ne0$ and $f=0$, (12.1) gives
+$U=-H_0/d$ and $B_0U=H_2$. Substituting into (12.3) gives
+
+$$
+ K=4D^4d^2H_1^2\{r^2-(1+b)r+b(xU-b)\}. \tag{12.9}
+$$
+
+Hence $K=0$, $b>0$ imply $j=b+r(1-r)/b$.
+The definitions restore clock one; $dU=-H_0$ restores clock zero;
+$(U+1)B_0=294/5-2d$ restores clock two. The four interpolation
+samples restore clocks three through six. Thus $0<r<1,U>1$
+produce exactly one whole original world, and $0,24$ ensure $g\ne0$.
+Every surviving drift interval below avoids zero, as a conclusion of
+exhaustive testing rather than a domain restriction.
+
+## 13. All eighteen projected roots on each closed rectangle
+
+For each $B_i$ the following table gives 17 disjoint complex disks.
+Rows have radius $10^{-15}$ and root count 1, except the row marked 2,
+which has radius $10^{-16}$ and root count 2. Indices are local to each
+base. Centers are exact complex rationals. These disks account for all
+18 roots with multiplicity, for every real $(p,v)\in B_i$.
+
+### 13.1. Base 1
+
+| Index | Real center | Imaginary center | Count |
+| --- | --- | --- | --- |
+| 0 | -1.51916123138638073877564288507657361327474858 | 0 | 1 |
+| 1 | -1.39341322065924012168430527895379656804234723 | 0 | 1 |
+| 2 | -1.38941212682947537467824155639433854930792168 | 0 | 1 |
+| 3 | -1.19049949711356806264496653989429957148696347 | 0 | 1 |
+| 4 | -1.10610077540578194563435937201465889469760518 | 0 | 1 |
+| 5 | -1.06088473831212896810448393431701338148692261 | 0 | 1 |
+| 6 | -0.361894198967119423677078979514851378405825378 | 0 | 1 |
+| 7 | 0.340067542491920312209509509480282783922284833 | 0 | 1 |
+| 8 | 0.564022594683177134157620445209849694714961107 | 0 | 1 |
+| 9 | 0.67778950312666657767503854243631787728338324 | -0.0904909357311101523660743944501096742414293273 | 1 |
+| 10 | 0.67778950312666657767503854243631787728338324 | 0.0904909357311101523660743944501096742414293273 | 1 |
+| 11 | 0.947871194423492294545922538387218317824114402 | 0 | 1 |
+| 12 | 1.02619956837355527968368539426082860331116452 | 0 | 2 |
+| 13 | 1.10180120247097763259159915667181394696696338 | 0 | 1 |
+| 14 | 1.87632144306154737573443857546860872589539135 | 0 | 1 |
+| 15 | 1.93713517894610659851650909807181552888978126 | 0 | 1 |
+| 16 | 14.1411710110512647483401053083664632374007282 | 0 | 1 |
+
+### 13.2. Base 2
+
+| Index | Real center | Imaginary center | Count |
+| --- | --- | --- | --- |
+| 0 | -346.646131358479526996653023754656544884145358 | 0 | 1 |
+| 1 | -1.21521595494676110396809377972924923892531155 | 0 | 1 |
+| 2 | -1.15282709432646234672115360769124375721690804 | 0 | 1 |
+| 3 | -1.14814013942039292340678622477791064999322469 | 0 | 1 |
+| 4 | -0.980649776263053474730002248887945079231998298 | 0 | 1 |
+| 5 | -0.912110998866328585971004004323869014494763527 | 0 | 1 |
+| 6 | -0.879446068024206956967841679579445146558389085 | 0 | 1 |
+| 7 | -0.341529953172393788702481506844852606861855991 | 0 | 1 |
+| 8 | 0.346553953924675226488293345743334348018117112 | 0 | 1 |
+| 9 | 0.592188941379014680522384872260545889417182233 | 0 | 1 |
+| 10 | 0.673737789124222767037115710441905146520824616 | -0.0828940846152794262491218943681645575023480573 | 1 |
+| 11 | 0.673737789124222767037115710441905146520824616 | 0.0828940846152794262491218943681645575023480573 | 1 |
+| 12 | 0.92584146371148430753508030461474881462375733 | 0 | 1 |
+| 13 | 0.963334076658690644338323519877043837982544958 | 0 | 1 |
+| 14 | 1.02827014822877955206171569553987026851416349 | 0 | 2 |
+| 15 | 1.70571706702654785270863661774389870380765984 | 0 | 1 |
+| 16 | 1.73355514300284041340241310051306458723230541 | 0 | 1 |
+
+### 13.3. Base 3
+
+| Index | Real center | Imaginary center | Count |
+| --- | --- | --- | --- |
+| 0 | -6.25984783820345205913113137358255133146398861 | 0 | 1 |
+| 1 | -0.618955723607928393942237129717058205533908371 | 0 | 1 |
+| 2 | -0.569526028876846502063627303655636135149257338 | 0 | 1 |
+| 3 | -0.567237890602352824955286221579974192105373664 | 0 | 1 |
+| 4 | -0.557417703112733527743319858292441412617529582 | 0 | 1 |
+| 5 | -0.485636815555340171946901319665743738116933651 | 0 | 1 |
+| 6 | -0.474356346267658462997947857038957743670905186 | 0 | 1 |
+| 7 | -0.205096763894983691810338846393149747574797149 | 0 | 1 |
+| 8 | 0.41551697347569987989024328875147566558295539 | 0 | 1 |
+| 9 | 0.62537351589752743902115720302525362954731032 | 0 | 1 |
+| 10 | 0.675316093337428838399058563151933355465060782 | -0.0525962338811198264159248278335977492094398156 | 1 |
+| 11 | 0.675316093337428838399058563151933355465060782 | 0.0525962338811198264159248278335977492094398156 | 1 |
+| 12 | 0.799258990587892235150383372745963012042892891 | 0 | 1 |
+| 13 | 0.818285689156131031242278817621823002504859766 | 0 | 1 |
+| 14 | 0.864155157201687990774041228787961841956209687 | 0 | 2 |
+| 15 | 1.29814251497323187047744049274266665815931689 | 0 | 1 |
+| 16 | 1.36745763360114849213855465558238410232863282 | 0 | 1 |
+
+### 13.4. Base 4
+
+| Index | Real center | Imaginary center | Count |
+| --- | --- | --- | --- |
+| 0 | -5.92393984929327313510580758220986534910090492 | 0 | 1 |
+| 1 | -0.593051688072298677917576990948013295749241967 | 0 | 1 |
+| 2 | -0.546852036382429091770193296391893787483684758 | 0 | 1 |
+| 3 | -0.54152755869458476009202134380422182031113161 | 0 | 1 |
+| 4 | -0.521439939924993862369587865969797012291103161 | 0 | 1 |
+| 5 | -0.411599185797877354886417699224065049868148021 | 0 | 1 |
+| 6 | -0.3908762328342339708013695439120099581880202 | 0 | 1 |
+| 7 | -0.18762914512465132457955814187510737431942709 | 0 | 1 |
+| 8 | 0.442131135560463663370432019196467393756573695 | 0 | 1 |
+| 9 | 0.621635109092651969265360510104129952366616724 | 0 | 1 |
+| 10 | 0.67797442334890121839285264582214316410840363 | -0.0494752098840556226398522887914015989871831126 | 1 |
+| 11 | 0.67797442334890121839285264582214316410840363 | 0.0494752098840556226398522887914015989871831126 | 1 |
+| 12 | 0.767097362040387305381142598171206524067328485 | 0 | 1 |
+| 13 | 0.803952904492878766266645753228188310084516187 | 0 | 2 |
+| 14 | 0.848522733021127813915849530821592537676751978 | 0 | 1 |
+| 15 | 1.26298762866695561517799136612971352118323781 | 0 | 1 |
+| 16 | 1.34487630553253978088037127179451494902073145 | 0 | 1 |
+
+Here is the complete finite inequality used for every disk. Let
+$p_c=(l_i+h_i)/2$, $v_c=\bar v_i$, $r_p=(h_i-l_i)/2$, $r_v=10^{-21}$.
+For the disk center $c$ expand exactly over Gaussian rationals
+
+$$
+ R(c+z,p_c+u,v_c+w)=\sum a_{\ell jk}z^\ell u^jw^k.
+$$
+
+Put $c_\ell=a_{\ell00}$,
+$e_\ell=\sum_{j+k>0}(|\Re a_{\ell jk}|+|\Im a_{\ell jk}|)r_p^jr_v^k$,
+$L_k=\max(|\Re c_k|,|\Im c_k|)-e_k$, and
+$U_\ell=|\Re c_\ell|+|\Im c_\ell|+e_\ell$.
+For each row of count $k\in\{1,2\}$ and radius $\rho$, exact rational
+arithmetic gives
+
+$$
+ L_k>0,\qquad
+ \sum_{\ell\ne k}U_\ell\rho^\ell<\frac1{10}L_k\rho^k,
+ \qquad \max(|\Re c_{18}|,|\Im c_{18}|)-e_{18}>0. \tag{13.1}
+$$
+
+For each fixed $(u,w)\in[-r_p,r_p]\times[-r_v,r_v]$, the
+coefficient of $z^k$ has modulus at least $L_k$, and the other
+coefficients have modulus at most their respective $U_\ell$.
+On $|z|=\rho$, Rouché's theorem applied to this $z^k$ monomial
+therefore gives exactly $k$ roots inside. For any two distinct rows
+with centers $c,c'$ and radii $\rho,\rho'$, the exact rational
+comparison is
+
+$$
+(\Re(c-c'))^2+(\Im(c-c'))^2>(\rho+\rho')^2.
+\tag{13.2}
+$$
+
+Thus the disks are pairwise disjoint. The last inequality
+in (13.1) keeps degree 18 throughout each closed base rectangle. The
+counts sum to 18, so there are no further projected roots anywhere in
+the complex plane. This argument verifies noncollapse directly; it
+does not infer a finite complex algebra from a finite set of actual worlds.
+
+## 14. Every finite drift branch and the complete strict-world count
+
+Disks strictly outside the positive real axis cannot contain an actual
+$x$. For every remaining real disk use its entire real diameter $X$.
+On $X\times B_i$, direct rational interval evaluation of (12.3) gives
+$A<0$ and $B_f^2-4AC_f>0$. Both real roots
+
+$$
+ d_- =\frac{-B_f-\sqrt{B_f^2-4AC_f}}{2A},\qquad
+ d_+ =\frac{-B_f+\sqrt{B_f^2-4AC_f}}{2A} \tag{14.1}
+$$
+
+are tested in (12.1). The symbols order the displayed signs; since
+$A<0$, $d_-$ is the larger drift. The exhaustive outcome table uses
+$B$ for $b<0$, $R_-$ for $r<0$, $R_+$ for $r>1$, $Q$ for a nonzero
+rank residual $j-b-r(1-r)/b$, and $W$ for a remaining strict candidate.
+All stated exclusions are strict interval inequalities over the whole
+closed rectangle and whole projected diameter. Every reciprocal is used
+only after its interval excludes zero. In particular the inverse tests
+retain the $H_1$ and $\chi$ guards in (12.2); every $W$ entry has
+$U>1$, $0<r<1$ and $d\notin\{0,24\}$ on its entire tested range.
+
+| Base | Disk | $d_-$ outcome | $d_+$ outcome |
+| --- | --- | --- | --- |
+| 1 | 7 | R_+ | B |
+| 1 | 8 | R_- | B |
+| 1 | 11 | B | W |
+| 1 | 12 | B | W |
+| 1 | 13 | B | Q |
+| 1 | 14 | B | W |
+| 1 | 15 | B | W |
+| 1 | 16 | B | B |
+| 2 | 8 | R_+ | B |
+| 2 | 9 | R_- | R_+ |
+| 2 | 12 | B | W |
+| 2 | 13 | B | Q |
+| 2 | 14 | B | W |
+| 2 | 15 | B | W |
+| 2 | 16 | B | W |
+| 3 | 8 | R_+ | B |
+| 3 | 9 | R_+ | B |
+| 3 | 12 | B | W |
+| 3 | 13 | B | Q |
+| 3 | 14 | B | W |
+| 3 | 15 | B | W |
+| 3 | 16 | B | W |
+| 4 | 8 | R_+ | B |
+| 4 | 9 | R_+ | B |
+| 4 | 12 | B | W |
+| 4 | 13 | B | W |
+| 4 | 14 | B | R_+ |
+| 4 | 15 | B | W |
+| 4 | 16 | B | W |
+
+No division by $\alpha$ or $\zeta$ occurs in this enumeration. In
+particular the count-two disk at each exceptional H projection retains
+both finite drift lifts. Its larger-drift candidate has $b<0$; its
+smaller-drift strict candidate is retained. Every other positive
+projection, including companions unrelated to H or L, is also tested.
+
+For each count-one disk with a $W$ entry, its other quadratic root has
+$K\ne0$ throughout the same interval computation. Since the disk has
+real center and coefficients are real, its unique root is real. The
+quadratic norm identity (12.4), with $A\ne0$, ensures at least one finite
+root of $f$ has $K=0$ there. Thus the $W$ entry is that common root.
+Its strict guards and (12.9) construct a world. There is at most one
+world at this root, by (12.1). This argument remains valid if $K$ drops
+degree, and uses neither a simple gain root nor a gain-degree condition.
+
+The count-two disk requires a separate source uniqueness check; its two
+projected roots must not be counted as two strict worlds. All its
+possible strict inverse images lie in the following real source box
+$Z_i=c_i+[-10^{-9},10^{-9}]^2$, in coordinates $(t,b)$.
+
+| $i$ | $t$ center | $b$ center |
+| --- | --- | --- |
+| 1 | 2.237094047898706004509299 | 0.3169968078628325686668279 |
+| 2 | 2.386268684745047877481215 | 0.3111428632879131311838321 |
+| 3 | 2.538458199033905374929073 | 0.3613378454133272842553356 |
+| 4 | 2.544306514546261835618193 | 0.3835832476982872218685900 |
+
+Let $G_i(t,b;p,v)=(N_p/D_s-p,N_v/D_s-v)$, and let
+$C_i=(D_{t,b}G_i(c_i;p,v))^{-1}$, the exact rational inverse; this
+Jacobian is independent of the target $p,v$. The boxes have $t,b>0$,
+$tb<1$, $D_s\ne0$, and direct rational interval arithmetic gives
+
+$$
+ \sup_{B_i}\|C_iG_i(c_i;p,v)\|_\infty<10^{-18},\qquad
+ \sup_{Z_i}\|I-C_iD_{t,b}G_i\|_\infty<1/50. \tag{14.2}
+$$
+
+The map $z\mapsto z-C_iG_i(z;p,v)$ is a contraction taking $Z_i$
+strictly into itself, because $10^{-18}+10^{-9}/50<10^{-9}$.
+It has exactly one zero there for each target in $B_i$. The possible
+strict inverse images of the count-two disk are contained in $Z_i$;
+therefore it contributes at most one strict world. Conversely this
+zero gives a complete strict world by (12.5)–(12.7). The interval image
+of $x=n/U$ on $Z_i$ is disjoint from every other real disk. Every
+constructed strict world is a carrier root by the necessity already
+proved, so that world belongs to the count-two disk. It is distinct
+from the three count-one worlds. This proves the exact count four.
+
+All source boxes here are conclusions of the exhaustive projected and
+drift accounting. No source box, companion box, distance floor, source
+regularity, or drift condition was imposed on the original domain.
+Every original world entered through $x>0,f=K=R=0$, before these tests.
+Nonzero leading carrier coefficients and nonzero $A$ have been checked
+on every relevant rectangle; no exceptional parameter or positive-
+dimensional algebra is discarded by a genericity assumption.
+
+## 15. Original terminal-M separation and actual-J-arc containment
+
+The exact worlds are specified without approximate substitutions:
+in each of the three count-one $W$ disks take its unique real root
+of $R$, take $d_+$ in (14.1), and apply (12.1) to obtain the entire
+$g=H/U$ and fixed $d$. The fourth world is the unique source zero in
+$Z_i$ lifted by (12.5). These definitions construct every complete
+member at every target in $B_i$.
+
+The following are outward rational intervals for their M readings,
+ordered increasingly. They are valid uniformly throughout each $B_i$.
+
+| $i$ | World | Projected disk | Original clock-seven M interval |
+| --- | --- | --- | --- |
+| 1 | 1 | 11 | (461.053267, 461.05327) |
+| 1 | 2 | 12 | (471.636883, 471.636886) |
+| 1 | 3 | 14 | (483.635493, 483.635496) |
+| 1 | 4 | 15 | (483.970774, 483.970777) |
+| 2 | 1 | 12 | (535.623285, 535.623288) |
+| 2 | 2 | 14 | (545.763618, 545.763621) |
+| 2 | 3 | 15 | (561.869869, 561.869872) |
+| 2 | 4 | 16 | (562.273855, 562.273858) |
+| 3 | 1 | 12 | (691.754144, 691.754147) |
+| 3 | 2 | 14 | (699.212728, 699.212731) |
+| 3 | 3 | 15 | (722.120171, 722.120174) |
+| 3 | 4 | 16 | (724.937601, 724.937604) |
+| 4 | 1 | 12 | (702.270481, 702.270484) |
+| 4 | 2 | 13 | (708.090751, 708.090754) |
+| 4 | 3 | 15 | (734.071544, 734.071547) |
+| 4 | 4 | 16 | (737.597307, 737.59731) |
+
+The three adjacent gaps in each row-group exceed $\gamma_i$.
+Every nonadjacent gap is larger still; hence all six comparisons are
+strict. These are the original M readings $d+(3+2x)H_7$ of the same
+whole polynomials used for the acquired readings.
+
+To verify that the boxes actually contain the distinguished J-arc
+bases, use the four-variable equation
+
+$$
+ F(z,p)=(p_H-p,p_L-p,v_H-v_L,a_H-a_L)=0, \tag{15.1}
+$$
+
+with the source response circuit (12.5). The following are rational
+centers $c_i^J$ for its actual source quadruples.
+
+| $i$ | $t_H$ | $b_H$ | $t_L$ | $b_L$ |
+| --- | --- | --- | --- | --- |
+| 1 | 2.23709404789870600450853736077696285100853401 | 0.316996807862832568666827357637117692388288443 | 2.09572250841281231155116097152373370856598065 | 0.030670968273865710765770878567501131275264787 |
+| 2 | 2.38626868474504787748053112777024085724361662 | 0.311142863287913131183831943465815147454344938 | 2.14507893657345687667719887488794486382676552 | 0.083585370279782011921914080429331315210201236 |
+| 3 | 2.53845819903390537493103894105574347702660865 | 0.361337845413327284255324368493776120684284123 | 2.20515187149591811518299290787927067641496662 | 0.213221919274143431722478675022439467969616105 |
+| 4 | 2.54430651454626183562763291725371575749872418 | 0.383583247698287221868545156968893243654195901 | 2.17206877788049255366723015465060756918393248 | 0.223263310602576914746239854030821296728413085 |
+
+With $C=(D_zF(c_i^J,p_c))^{-1}$, exact interval checks over
+$c_i^J+[-10^{-22},10^{-22}]^4$ and $p\in P_i$ give
+$\|I-CD_zF\|_\infty<10^{-10}$ and
+$\|CF(c_i^J,p)\|_\infty<4\cdot10^{-23}$.
+At $p=p_c$, the radius-$10^{-38}$ box has the same derivative bound
+and center displacement below $10^{-40}$. Both are strict contraction
+inclusions. Interval evaluation of the rational polynomial centers of
+SIII (16.7) puts the larger box inside that theorem's radius-$10^{-5}$
+uniqueness tube for every $p\in P_i$. Thus pointwise uniqueness
+identifies these zeros with the actual arc. The rational centers are used only to enclose its exact sources.
+
+For the derivative use the implicit identity
+
+$$
+ z_J'(p)=(D_zF)^{-1}(1,1,0,0)^{\mathsf T},\qquad
+ v_J'(p)=(\nabla v_H,0,0)z_J'(p).
+$$
+
+For an explicit interval bound put $E=I-CD_zF$, $w=C(1,1,0,0)^\mathsf T$,
+and $q=\|E\|_\infty$. Then
+$z_J'\in w+[-q\|w\|_\infty/(1-q),q\|w\|_\infty/(1-q)]^4$.
+The resulting interval for $v_J'$ is contained in $(-5,5)$.
+The radius-$10^{-38}$ point enclosure at $p_c$, plus this derivative
+interval multiplied by $[-r_p,r_p]$, lies inside $V_i$.
+This proves $v_J(P_i)\subset V_i$ and the actual-arc assertion in
+Theorem 11.1. In particular the exceptional parameters in SVIII's
+four listed intervals all have exactly four actual companions and
+no distinct equal-terminal-M pair.
+
+## 16. Finite rational arithmetic and the unchanged global boundary
+
+The displayed integer circuits, rational centers, radii and finite
+inequalities specify all arithmetic inputs. In particular, if
+$R(x,p,v)=\sum r_{abc}x^ap^bv^c$, the coefficient in Section 13 is
+
+$$
+a_{\ell jk}=\sum_{a\ge\ell,\ b\ge j,\ c\ge k}
+r_{abc}\binom a\ell\binom bj\binom ck
+c_x^{a-\ell}p_c^{b-j}v_c^{c-k},
+\tag{16.1}
+$$
+
+where $c_x$ is that disk's Gaussian-rational center. This is an exact
+finite binomial expansion, including every parameter term. Polynomial
+shifts and (13.1) are evaluated exactly over Gaussian rationals. For real interval
+calculations one may use the following wholly rational directed grid:
+$h=10^{-70}$; enclose each rational input by $[h\lfloor x/h\rfloor,
+ h\lceil x/h\rceil]$. After each addition, subtraction, multiplication
+or reciprocal take exact endpoint bounds and round outwards to this
+grid. For $0\le a\le b$, bound the square root by $[hL,hU]$,
+where $L$ is the greatest nonnegative integer with $h^2L^2\le a$
+and $U$ is the least nonnegative integer with $h^2U^2\ge b$.
+After clearing rational denominators these are integer comparisons.
+Matrix
+products use their exact finite sums with these outward operations.
+Derivatives of the source responses are determined by ordinary
+polynomial differentiation and the quotient rules. For $N/D_s$, with
+subscripts denoting source coordinates, these are
+
+$$
+\begin{aligned}
+(N/D_s)_j&=N_j/D_s-N(D_s)_j/D_s^2,\\
+(N/D_s)_{jk}&=N_{jk}/D_s
+-\{N_j(D_s)_k+N_k(D_s)_j+N(D_s)_{jk}\}/D_s^2\\
+&\qquad+2N(D_s)_j(D_s)_k/D_s^3.
+\end{aligned} \tag{16.2}
+$$
+
+Exact rational matrix inversion at the displayed centers defines the
+preconditioners. Matrix infinity norms mean maximum absolute row sums.
+The finite comparisons include all inequalities (13.1), both drift
+roots on every positive disk, all exclusion tags, the wrong-branch $K\ne0$ tests,
+(14.2), source-image separation, every displayed M interval, and the
+arc identification and containment checks in Section 15. The exact
+polynomial identities (12.4), (12.7)–(12.8) are finite coefficient
+identities. Their coefficients are specified by (12.3)–(12.5), so
+coefficient convolution and exact polynomial division suffice to
+establish them. The strict
+inequalities are ordinary rational comparisons under the stated
+outward operations; their meaning is independent of an implementation.
+
+Sampled zeros, lower-degree gains, repeated gain roots, zero drift,
+singular sources, unbounded positive source offdiagonals, and unused
+companions all belong to the source domain at the start of the proof.
+The interpolation argument does not remove any of them. Strict inverse
+and exclusion inequalities characterize what is actually present in
+these four children; they are conclusions, not replacement hypotheses.
+The global complex zero set of the raw undivided system is not asserted
+to be finite. Finiteness of the relevant projected roots on these four
+rectangles was proved first by the explicit degree and disk checks.
+
+The original joint problem remains **OPEN**. This theorem excludes
+only the four displayed parameter windows of the actual J arc. It
+neither covers the remainder of $[10,34]\setminus\{24\}$ nor every
+other possible J pair in the original domain. The remaining actual-arc
+obligation is to find or exclude independently selected distinct worlds
+$W_2,W_3\in C(p,v_J(p))$ with $m(W_2)=m(W_3)$ at parameters outside
+these windows. A global solution still requires an actual original
+joint witness or an all-original-world exclusion. No numerical absence
+or common-drift restriction substitutes for either obligation.
+
+## 17. Mathematical dependencies and attribution
+
+The original domain and literal clock formulas are
+[Definition 1.1](#1-complete-worlds-and-the-corrected-complex-incidence)
+and [Proposition 2.1](#2-the-original-source-bridge-and-the-restored-clock)
+of this volume and O, Definitions 1.1–1.3 and Theorems 2.1–2.2:
+[common-parent geometry](https://github.com/the-omega-institute/trureturing/blob/c8ae6f747aeb40c61f9d135f171011de99a12c99/docs/develop/theory/FIB_COMMON_PARENT_GEOMETRY_AND_MIXED_CHILDREN.md).
+The precise supplied correspondences for Sections 11–16 are:
+
+| Supplied ordinary result | Reused mathematical role |
+| --- | --- |
+| F, Lemma 30.2 and (30.9) | Injective whole-world inverse (12.1), (12.2), with $x=n/U$, $H=Ug$, original $d$, and original terminal reading $m=d+(3+2x)H_7$. |
+| F, Definition 31.1 and Lemma 31.2; this volume, Proposition 4.2; SVIII, Sections 12 and 22 | Fixed normalized integer carrier, pseudo-remainder and quadratic norm identities. The normalization is $K=4k$, giving the factor $256D^8F_0^2$; no pointwise cancellation is used. |
+| F, Theorem 32.1 | The existing $24$-world bound for every entire off-$24$ child, with determinant multiplicity counting distinct finite drift lifts. It is not a four-world classification or a finite list of bases. |
+| SIII, Definition 16.1, Lemma 16.3 and Theorem 16.4 | Source circuit (12.5), whole gain (12.6), original-source response equations and the actual analytic $J$ arc with pointwise radius-$10^{-5}$ uniqueness tubes. Its polynomial center arrays (16.7) are rational enclosure data, not exact arc points. |
+| SVIII, Theorem 30.3 and Sections 31–32 | Exactly four simple H-endpoint drift-division exceptions and no L-endpoint exception on the whole actual arc, with their exact parameter intervals. |
+| SVIII, Theorem 33.2 | Both distinct common finite drift roots at each exceptional H projection, and exactly one strict lift there; the other has negative $b$. This does not enumerate unused companions elsewhere in the child. |
+| SVIII, Theorem 34.1 | Exact multiplicity two of the unmodified carrier at each exceptional fixed projection, distinguished from strict-world multiplicity. |
+
+The ordinary classical tools are used with their stated hypotheses:
+
+- Distinct-node interpolation at $0,1,2,3$ or $3,4,5,6$: Berrut and
+  Trefethen, *Barycentric Lagrange Interpolation*, §2, equations
+  (2.1)–(2.2),
+  [DOI 10.1137/S0036144502417715](https://doi.org/10.1137/S0036144502417715).
+  No sampled-value or exact-degree condition is required.
+- Fixed Sylvester resultants and polynomial division: Cox, Little and
+  O'Shea, *Ideals, Varieties, and Algorithms*, fourth edition, Chapter 3,
+  [DOI 10.1007/978-3-319-16721-3](https://doi.org/10.1007/978-3-319-16721-3).
+  The fixed degree-$(2,4)$ determinant retains its size at specialization.
+- Rouché's theorem: Ahlfors, *Complex Analysis*, third edition,
+  Chapter 4, §5.2, the argument principle and Rouché's theorem.
+  For each fixed real base, both compared functions are polynomials
+  holomorphic on a neighborhood of the closed disk, and (13.1) is the
+  strict boundary modulus inequality.
+- Banach's contraction principle: Lebl, *Basic Analysis II*,
+  [§8.5](https://www.jirka.org/ra/realanal2.pdf). The displayed closed
+  boxes are complete, the maps take them strictly into themselves, and
+  their derivative row-sum norms are strictly below one.
+- The analytic implicit-function theorem: Lebl, *Tasty Bits of Several
+  Complex Variables*, version 4.4,
+  [Theorem 1.3.8, p. 32](https://www.jirka.org/scv/scv.pdf).
+  The rational source functions have nonzero denominators in the
+  displayed boxes, and the preconditioned derivative bounds give
+  invertible Jacobians. They extend holomorphically to neighborhoods
+  of the relevant real sources. Real coefficients and local uniqueness
+  identify the real analytic branches. The derivative and mean value
+  estimates in Section 15 apply to these actual branches.
+
+The carrier, inverse, $24$-world bound, actual arc and exceptional
+inventory are reused. The source-specific additional conclusion is the
+classification of every entire original child as exactly four strict
+complete worlds, with unrestricted original terminal-$M$ separation,
+on the four explicit closed rectangles in Section 11, together with
+containment of the corresponding actual-$J$-arc windows. The result is
+repo-derived and makes no literature-priority assertion. It neither
+changes the generic complex conclusions of Sections 6–8 nor extends or
+replaces the actual-$M$-arc theorem of Section 9. The full-domain
+independent-pair problem of Definition 10.2 remains **OPEN**.
+
+## 追加锚（本行以下为增补区）
+## 18. The original-world chart for the first J-critical opening
+
+The result in Sections 18–23 evaluates the local equal-$J$ incidence at
+the first exact $J$-critical world. Its additional content is the
+quadratic motion of the actual common base and the quantitative
+first-order drift and terminal-$M$ differences. The complete-world
+domain, rational response circuit, critical source and local
+entire-child $M$ exclusion are supplied results.
+
+Here O, SIII, SVI and SVII mean, respectively,
+[common-parent geometry](https://github.com/the-omega-institute/trureturing/blob/da6aaf648e7e7c38d6020abe845eda950ef30ae8/docs/develop/theory/FIB_COMMON_PARENT_GEOMETRY_AND_MIXED_CHILDREN.md),
+[support III](https://github.com/the-omega-institute/trureturing/blob/da6aaf648e7e7c38d6020abe845eda950ef30ae8/docs/develop/theory/FIB_STRICT_REAL_JOINT_INCIDENCE_SUPPORT_III.md),
+[support VI](https://github.com/the-omega-institute/trureturing/blob/da6aaf648e7e7c38d6020abe845eda950ef30ae8/docs/develop/theory/FIB_STRICT_REAL_JOINT_INCIDENCE_SUPPORT_VI.md)
+and
+[support VII](https://github.com/the-omega-institute/trureturing/blob/da6aaf648e7e7c38d6020abe845eda950ef30ae8/docs/develop/theory/FIB_STRICT_REAL_JOINT_INCIDENCE_SUPPORT_VII.md).
+These citations fix the ordinary mathematical versions used below.
+
+**Definition 18.1 (Complete worlds and the independent-pair target).**
+Retain Definition 1.1: a world is the complete triple
+
+$$
+W=(P(r,b),g,d),\qquad
+P(r,b)=\begin{pmatrix}r&b\\r(1-r)/b&1-r\end{pmatrix},
+\quad 0<r<1,\quad b>0,\quad
+0\ne g\in\mathbb R[s],\quad\deg g\le3,\quad d\in\mathbb R.
+\tag{18.1}
+$$
+
+Use the actions $\mathsf J,\mathsf M$ and left products of (1.2).
+At each clock $y_i=d+g(i)\operatorname{tr}(Q_iP)$, with $Q_0=I$.
+The acquired actions are exactly $\mathsf J,\mathsf M,\mathsf J,
+\mathsf M,\mathsf M,\mathsf M$, and
+
+$$
+(y_0,\ldots,y_6)=(0,24,147/5,24,18,p,v),\qquad p\ne24.
+\tag{18.2}
+$$
+
+The entire original child is $C(p,v)$. Its alternatives $a(W)$ and
+$m(W)$ are the clock-seven $J$ and $M$ readings on this same world.
+The global target remains
+
+$$
+\begin{gathered}
+\exists p\ne24,\ v,\ W_0,W_1,W_2,W_3\in C(p,v):\\
+W_0\ne W_1,\quad a(W_0)=a(W_1),\qquad
+W_2\ne W_3,\quad m(W_2)=m(W_3).
+\end{gathered}
+\tag{18.3}
+$$
+
+The two pairs are selected independently, may overlap or be disjoint,
+and need not have the same terminal common value. Each world has its
+own arbitrary fixed drift and one whole polynomial. Gain positivity,
+exact degree, nonzero sampled gains, simple roots, common drift and
+source-box membership are not hypotheses of (18.3). The clocks do not
+permit a reset, copy, skip, shift, new port or longer protocol.
+
+**Definition 18.2 (Supplied regular chart in original source coordinates).**
+For $z=(r,b)$ with $0<r<1$, $b>0$, put
+
+$$
+\begin{gathered}
+j=b+r(1-r)/b,\qquad n=j+r,\qquad T=1+b,\qquad U=1+2b,\\
+D=5\{(b^2+8b+4)jn-2TU(j+n)\},\qquad
+A_s=(8b-1)(2+5b),\\
+C_0=-24D+3A_sjn,\qquad C_1=3A_sn,\\
+C_2=3(49b+34)jn-54U(j+n),\qquad C_3=3A_sj,\\
+B_5=-4C_0+15C_1-20C_2+10C_3,\\
+B_6=-10C_0+36C_1-45C_2+20C_3,\\
+B_7=-20C_0+70C_1-84C_2+35C_3.
+\end{gathered}
+\tag{18.4}
+$$
+
+On $D\ne0$ the whole-world lift and responses are
+
+$$
+\begin{aligned}
+d(z)&=-C_0/D,\\
+g_z(s)&=\frac1D\sum_{i=0}^3 C_i
+ \prod_{\substack{0\le l\le3\\l\ne i}}\frac{s-l}{i-l},\\
+p(z)&=\{-C_0+(U+n)B_5\}/D,\\
+v(z)&=\{-C_0+(2U+n)B_6\}/D,\\
+a(z)&=\{-C_0+(T+2j+4r)B_7\}/D,\\
+m(z)&=\{-C_0+(3U+2n)B_7\}/D,\qquad
+W(z)=(P(r,b),g_z,d(z)).
+\end{aligned}
+\tag{18.5}
+$$
+
+These are SIII, Definition 16.1, with $\tau=r/b$ substituted; they
+are not new response functions. O, Definitions 1.1–1.3 and Theorem 2.1,
+and this volume's Proposition 2.1 supply their original-world bridge.
+In particular the chronological traces are
+
+$$
+(1,j,T,n,U,U+n,2U+n),\qquad T+2j+4r,\qquad3U+2n.
+\tag{18.6}
+$$
+
+For clarity, the clock identities needed for this lift can also be
+written directly. Let $C_4=-C_0+4C_1-6C_2+4C_3$. Substitution in
+(18.4) gives
+
+$$
+\begin{gathered}
+-C_0+C_0=0,\qquad -C_0+jC_1=24D,\\
+-C_0+TC_2=(147/5)D,\qquad -C_0+nC_3=24D,\\
+-C_0+UC_4=18D,\qquad
+Dg_z(i)=B_i\quad(i=5,6,7).
+\end{gathered}
+\tag{18.7}
+$$
+
+The last identities are evaluations of the same degree-at-most-three
+interpolant, not independent gain choices. Equations (18.6)–(18.7)
+give every reading in (18.2), with the last two readings defined by
+(18.5), and both clock-seven alternatives. If $g_z$ were the zero
+polynomial then clocks zero and one would both read $d(z)$,
+contradicting $0\ne24$. Thus the lift has one whole nonzero gain and
+one fixed drift at all clocks.
+
+The chart is used only for the worlds constructed below. To retain
+the boundary of the global problem, O, Theorem 2.1, describes the full
+parent without dividing by its potentially zero factor:
+
+$$
+\begin{gathered}
+e=d-24,\qquad
+\Lambda=1+6/T+1/U-4/j-4/n,\qquad
+\kappa=6/T-2/U=2(2+5b)/(TU)>0,\\
+e\Lambda+(24/5)(b-1/8)\kappa=0,\\
+\bigl(g(0),g(1),g(2),g(3)\bigr)
+=\bigl(-24-e,-e/j,(27/5-e)/T,-e/n\bigr).
+\end{gathered}
+\tag{18.8}
+$$
+
+On the regular chart $D=(5/2)TUjn\Lambda$ and
+$e=-3A_sjn/D$, so (18.8) follows there from (18.4).
+The undivided equation also retains singular sources and arbitrary
+drifts on their allowed branches. No exhaustive assertion about those
+branches follows from a calculation in (18.5).
+
+## 19. The exact first J-critical source and its secant coefficients
+
+**Definition 19.1 (Exact point and rational enclosing cube).**
+Let $z_0=(r_0,b_0)$ be the source of $\mathcal W_1^J$ in SVII,
+(23.8) and Theorem 24.1. SVII, Lemma 26.1, identifies it as the
+unique common zero of $\det D(p,v)$ and $\det D(p,a)$ in
+
+$$
+K=(\bar r,\bar b)+[-10^{-55},10^{-55}]^2,
+\tag{19.1}
+$$
+
+where the exact rational center is
+
+$$
+\begin{aligned}
+\bar r&=0.0474991739156158648087872696795839340094732632129244067254357987,\\
+\bar b&=0.04632607241297142362371158699116141188135188088603214209272150218.
+\end{aligned}
+\tag{19.2}
+$$
+
+That lemma supplies existence, uniqueness, identification with the
+algebraic source, and its strict regular whole-world lift. The
+differential of $F=(p,v,a)$ at $z_0$ has rank one. The rational center
+is enclosure data; it does not replace $z_0$ in any coefficient or
+response below. Write $(p_0,v_0)=(p(z_0),v(z_0))$.
+
+All derivatives in Sections 19–22 are in the original independent
+coordinates $(r,b)$. Since $p_b(z_0)\ne0$, put
+
+$$
+k_0=-p_r(z_0)/p_b(z_0),\qquad w_0=(1,k_0).
+\tag{19.3}
+$$
+
+Rank one implies $DF(z_0)w_0=0$. Define
+
+$$
+\mathcal A=
+\begin{pmatrix}
+p_{rr}+k_0p_{rb}&p_{rb}+k_0p_{bb}&p_b\\
+v_{rr}+k_0v_{rb}&v_{rb}+k_0v_{bb}&v_b\\
+a_{rr}+k_0a_{rb}&a_{rb}+k_0a_{bb}&a_b
+\end{pmatrix}_{z_0}.
+\tag{19.4}
+$$
+
+Here $w_0$ is held fixed in directional derivatives; $k_0$ is not
+differentiated as a vector field. For $F_1=p,F_2=v,F_3=a$ let
+
+$$
+\begin{gathered}
+\mathcal T_i=\frac16
+\bigl(F_{i,rrr}+3k_0F_{i,rrb}+3k_0^2F_{i,rbb}
+                    +k_0^3F_{i,bbb}\bigr)_{z_0},\\
+\begin{pmatrix}R_2\\B_2\\k_2\end{pmatrix}
+=-\mathcal A^{-1}\mathcal T,
+\end{gathered}
+\tag{19.5}
+$$
+
+and define the exact coefficients
+
+$$
+\begin{aligned}
+P_2&=(p_rR_2+p_bB_2)_{z_0}
+ +\tfrac12(p_{rr}+2k_0p_{rb}+k_0^2p_{bb})_{z_0},\\
+V_2&=(v_rR_2+v_bB_2)_{z_0}
+ +\tfrac12(v_{rr}+2k_0v_{rb}+k_0^2v_{bb})_{z_0},\\
+L_d&=(d_r+k_0d_b)_{z_0},\qquad
+L_m=(m_r+k_0m_b)_{z_0}.
+\end{aligned}
+\tag{19.6}
+$$
+
+The invertibility used in (19.5) is included in the following
+evaluations.
+
+**Lemma 19.2 (Evaluated first-source bounds).** The following are
+strict inequalities at the exact point $z_0$:
+
+$$
+\begin{gathered}
+-533.512131<p_0<-533.512130,\qquad
+-1019.177215<v_0<-1019.177214,\\
+0.007894<D(z_0)<0.007895,\qquad
+-33680913<p_b(z_0)<-33680912,\\
+0.950504247445018<k_0<0.950504247445019,\\
+-968000000000000000<\det\mathcal A<-967000000000000000,\\
+34271<P_2<34272,\qquad63022<V_2<63023,\\
+621<L_d<623,\qquad66<L_m<67.
+\end{gathered}
+\tag{19.7}
+$$
+
+Proof. Section 20 gives a finite rational prescription for the
+enclosing intervals and the corresponding endpoint comparisons.
+It evaluates the whole cube $K$, contains the actual derivatives at
+each point of that cube, and excludes zero from every denominator
+before inversion. SVII, Lemma 26.1, puts the exact point $z_0$ in
+$K$, so those comparisons give (19.7). The base enclosures also
+agree with the supplied ones in SVII, Section 26. ∎
+
+Qualitative nondegeneracy is already present in the supplied critical
+equations. More precisely, put
+$G=(\det D(p,v),\det D(p,a))$. At the rank-one point with $p_b\ne0$,
+
+$$
+\det DG=p_b\det\mathcal A.
+\tag{19.8}
+$$
+
+Indeed, for $f=v,a$ and $t=r,b$, differentiation of
+$p_rf_b-p_bf_r$ and $f_r=-k_0f_b$ gives
+$G_{f,t}=f_b\mathcal A_{p,t}-p_b\mathcal A_{f,t}$.
+Subtract $(f_b/p_b)$ times the first row from each of the other
+rows of $\mathcal A$ and expand along its third column. The
+two-by-two determinant of these displayed $G$ rows is exactly
+$p_b\det\mathcal A$. SVII, Section 26, supplies nondegenerate
+critical equations; their polynomial versions differ from $G$ by
+nonzero factors at this zero. Thus (19.7) is a quantitative evaluation,
+not a new general nondegeneracy principle.
+
+## 20. Finite rational reproduction of the differential bounds
+
+All finite decimals in (19.2) and (19.7) denote rational numbers.
+The following operations specify the finite calculation without
+needing external numerical roots or a source of derivative data.
+
+For $H=10^{110}$, an interval $X=[l,u]$ is outward rounded by
+
+$$
+\mathcal E(X)=[\lfloor Hl\rfloor/H,\lceil Hu\rceil/H].
+\tag{20.1}
+$$
+
+Enclose a rational input $t$ by $\mathcal E([t,t])$. Interval
+addition uses endpoint sums; negation reverses the endpoints and
+their signs; subtraction means addition of the negation.
+Multiplication takes the minimum and maximum of the four endpoint
+products. Apply $\mathcal E$ after each operation. For $0\notin[l,u]$,
+reciprocal means $\mathcal E([1/u,1/l])$ and division means
+multiplication by that reciprocal. An interval not excluding zero
+cannot be inverted. Each operation contains the corresponding exact
+real operation.
+
+Use the index set
+
+$$
+\mathcal I=\{(i,j)\in\mathbb N^2:i+j\le3\}
+\tag{20.2}
+$$
+
+in increasing lexicographic order, and jets in
+$\mathbb R[\xi,\zeta]/(\xi,\zeta)^4$. A jet coefficient is an
+interval. Missing coefficients are $[0,0]$. Addition is coefficientwise.
+For the coefficient of $\xi^i\zeta^j$ in a product, start at zero
+and add
+
+$$
+X_{kl}Y_{i-k,j-l}\qquad
+((k,l)\in\mathcal I,\ k\le i,\ l\le j)
+\tag{20.3}
+$$
+
+in that order, rounding each product and sum. For a jet $X=c+X_+$
+with $0\notin c$ and exactly zero constant coefficient in $X_+$,
+set $q=X_+/c$ coefficientwise and use
+
+$$
+X^{-1}=(1-q+q^2-q^3)/c.
+\tag{20.4}
+$$
+
+Use $(q q)q$ for $q^3$ and discard degrees above three at each
+product. The constant coefficient of $q$ is assigned $[0,0]$,
+and the reciprocal of $c$ is formed once and reused. The geometric
+identity proves (20.4) in the truncated ring. Containment follows
+coefficientwise by induction on operations.
+
+Initialize the variable jets by
+
+$$
+r=K_r+\xi,\qquad b=K_b+\zeta.
+\tag{20.5}
+$$
+
+Evaluate (18.4) and then the five rational scalar functions
+$d,p,v,a,m$ in (18.5), with the displayed factorization.
+Within a sum use its written order from left to right, and within a
+product use its written order from left to right; powers use repeated
+multiplication. For $(b^2+8b+4)jn$ use $(b b+8b+4)j n$, and for
+$r(1-r)/b$ first form $r(1-r)$ and then divide by $b$.
+Each integer is an exact singleton jet. These rules fix the
+expression order as well as the rounding grid.
+
+Write $f_{ij}$ for the coefficient of $\xi^i\zeta^j$ in the resulting
+jet for any $f=p,v,a,m,d$. At each actual $z\in K$ it encloses
+
+$$
+\frac1{i!j!}\partial_r^i\partial_b^j f(z).
+\tag{20.6}
+$$
+
+Thus no finite difference or pointwise numerical derivative is used.
+To finish the interval evaluation form, in the indicated order,
+
+$$
+\begin{gathered}
+k=-p_{10}/p_{01},\qquad k^{[2]}=k k,\qquad k^{[3]}=k^{[2]}k,\\
+A_f=(2f_{20}+k f_{11},\ f_{11}+2(k f_{02}),\ f_{01})
+\quad(f=p,v,a),\\
+T_f=f_{30}+k f_{21}+k^{[2]}f_{12}+k^{[3]}f_{03}.
+\end{gathered}
+\tag{20.7}
+$$
+
+The symbols $k^{[2]},k^{[3]}$ here denote interval powers, not
+coefficients of the analytic function $k(h)$. Let $A$ have the three
+rows $A_p,A_v,A_a$. For every three-by-three interval matrix use
+
+$$
+\begin{aligned}
+\det A={}&A_{11}(A_{22}A_{33}-A_{23}A_{32})\\
+&-A_{12}(A_{21}A_{33}-A_{23}A_{31})
++A_{13}(A_{21}A_{32}-A_{22}A_{31}).
+\end{aligned}
+\tag{20.8}
+$$
+
+For each column $j=1,2,3$, replace that column by
+$-(T_p,T_v,T_a)^{\mathsf T}$ and divide its determinant by $\det A$.
+Call the three resulting intervals $Z_R,Z_B,Z_k$. Cramer's rule
+encloses the three entries of (19.5). Finally form
+
+$$
+\begin{aligned}
+I_P&=p_{10}Z_R+p_{01}Z_B+p_{20}+k p_{11}+k^{[2]}p_{02},\\
+I_V&=v_{10}Z_R+v_{01}Z_B+v_{20}+k v_{11}+k^{[2]}v_{02},\\
+I_d&=d_{10}+k d_{01},\qquad I_m=m_{10}+k m_{01}.
+\end{aligned}
+\tag{20.9}
+$$
+
+The complete endpoint comparisons are as follows; each row means
+that the interval expression is strictly inside the open rational
+interval in the second column.
+
+| Interval expression | Strict containing interval |
+| --- | --- |
+| $p_{00}$ | $(-533.512131,-533.512130)$ |
+| $v_{00}$ | $(-1019.177215,-1019.177214)$ |
+| $D_{00}$ | $(0.007894,0.007895)$ |
+| $p_{01}$ | $(-33680913,-33680912)$ |
+| $k$ | $(0.950504247445018,0.950504247445019)$ |
+| $\det A$ | $(-968000000000000000,-967000000000000000)$ |
+| $I_P$ | $(34271,34272)$ |
+| $I_V$ | $(63022,63023)$ |
+| $I_d$ | $(621,623)$ |
+| $I_m$ | $(66,67)$ |
+
+These are finite rational inequalities: if $[l,u]$ is the result of
+one row and $(a,b)$ is its right-hand interval, the assertion is
+$a<l\le u<b$. Formulas (18.4)–(18.5) and (20.1)–(20.9) specify
+every endpoint from the two rational numbers in (19.2). After clearing
+positive powers of $10$ each assertion is an integer comparison.
+The input interval for $b$ is positive, the third row guards the
+inverse jet for $D$, the fourth row guards $k$, and the sixth guards
+Cramer's rule. These are all the variable inverses. The fixed-node
+interpolation denominators in (18.5) are nonzero integers.
+
+For each actual point of $K$, Taylor expansion of the rational
+circuit agrees with its truncated-ring evaluation: the input jets
+are the coordinate Taylor jets, the product rule is (20.3), and
+the inverse rule is (20.4). Hence the intervals contain the exact
+normalized derivatives (20.6). Substitution in (20.7)–(20.9)
+recovers exactly (19.3)–(19.6), including all factorial factors.
+This proves the whole-cube enclosures used in Lemma 19.2. The
+calculation does not assert that the rational center is a critical
+point; the exact-point existence and identification are the supplied
+SVII result.
+
+## 21. The actual equal-J germ and its right-opening base graph
+
+**Theorem 21.1 (Evaluated opening at the first exact J-critical world).**
+There is $\varepsilon>0$ and even real analytic functions
+$R(h),B(h),k(h)$ on $|h|<\varepsilon$ such that
+
+$$
+\begin{gathered}
+(R(0),B(0),k(0))=(r_0,b_0,k_0),\\
+z_\pm(h)=(R(h)\pm h,\ B(h)\pm k(h)h),\qquad
+W_\pm(h)=W(z_\pm(h)).
+\end{gathered}
+\tag{21.1}
+$$
+
+For $0<|h|<\varepsilon$, these are distinct complete original worlds
+in the same entire child $C(p(h),v(h))$, and
+$a(W_+(h))=a(W_-(h))$. Their common base is even real analytic and
+satisfies
+
+$$
+\begin{aligned}
+p(h)&=p_0+P_2h^2+O(h^4),\\
+v(h)&=v_0+V_2h^2+O(h^4),
+\end{aligned}
+\qquad
+34271<P_2<34272,\quad63022<V_2<63023.
+\tag{21.2}
+$$
+
+Their own drifts and alternative $M$ values obey
+
+$$
+\begin{aligned}
+d(W_+(h))-d(W_-(h))&=2L_dh+O(h^3),\quad621<L_d<623,\\
+m(W_+(h))-m(W_-(h))&=2L_mh+O(h^3),\quad66<L_m<67.
+\end{aligned}
+\tag{21.3}
+$$
+
+In particular both differences are positive for sufficiently small
+positive $h$. The base may be chosen with $p(h)<-533$ and
+$v(h)<-1018$, so it remains off $24$.
+
+There is $\eta>0$ and a real analytic function $\gamma$ on a
+neighborhood of $p_0$ such that every $p\in(p_0,p_0+\eta)$ is the
+base coordinate of one of these actual $J$ pairs, with
+$v=\gamma(p)$, and
+
+$$
+\gamma(p_0)=v_0,\qquad
+\frac{63022}{34272}<\gamma'(p_0)=\frac{V_2}{P_2}
+                       <\frac{63023}{34271}.
+\tag{21.4}
+$$
+
+No explicit positive value of $\varepsilon$ or $\eta$ is asserted.
+
+Proof. For $x=(R,B)$ and $w(k)=(1,k)$ define the symmetric secant
+
+$$
+\Phi(R,B,k,h)=
+\frac{F(R+h,B+kh)-F(R-h,B-kh)}{2h}\quad(h\ne0).
+\tag{21.5}
+$$
+
+It has the removable extension
+
+$$
+\Phi(R,B,k,0)=F_r(R,B)+kF_b(R,B).
+\tag{21.6}
+$$
+
+To justify analyticity at the removed value, the fundamental theorem
+of calculus gives
+
+$$
+\Phi(R,B,k,h)=\frac12\int_{-1}^{1}
+ DF(x+thw(k))w(k)\,dt.
+\tag{21.7}
+$$
+
+On a sufficiently small neighborhood $b$ and $D$ are nonzero, so
+$F$ is rational analytic. Its convergent Taylor series can be
+integrated termwise on a smaller neighborhood, uniformly for
+$-1\le t\le1$. Odd powers of $t$ integrate to zero. This gives
+an analytic function even in $h$, with value (21.6), and expansion
+
+$$
+\Phi(R,B,k,h)=DF(x)w(k)
+ +\frac{h^2}{6}D^3F(x)[w(k),w(k),w(k)]+O(h^4).
+\tag{21.8}
+$$
+
+At $(R,B,k,h)=(r_0,b_0,k_0,0)$, (19.3) gives $\Phi=0$.
+Differentiation of (21.6) in $(R,B,k)$ gives precisely
+$\mathcal A$ in (19.4), invertible by (19.7). The analytic
+implicit-function theorem therefore gives unique analytic
+$R(h),B(h),k(h)$ near their initial values with $\Phi=0$.
+Evenness of $\Phi$ and this local uniqueness imply
+$(R(-h),B(-h),k(-h))=(R(h),B(h),k(h))$.
+
+Write their expansions as
+
+$$
+\begin{pmatrix}R(h)\\B(h)\\k(h)\end{pmatrix}
+=\begin{pmatrix}r_0\\b_0\\k_0\end{pmatrix}
++h^2\begin{pmatrix}R_2\\B_2\\k_2\end{pmatrix}+O(h^4).
+\tag{21.9}
+$$
+
+Substituting in (21.8), the $h^2$ coefficient of $\Phi=0$ is
+$\mathcal A(R_2,B_2,k_2)^{\mathsf T}+\mathcal T=0$.
+This proves exactly (19.5). The term involving $k_2$ in the
+endpoint $b$ coordinate first appears as $\pm k_2h^3$; it has
+no contribution to the quadratic common-base coefficient.
+
+For any scalar component $f=p,v$ expansion of (21.1) at $z_0$
+has quadratic coefficient
+
+$$
+Df(z_0)(R_2,B_2)
+ +\tfrac12D^2f(z_0)[w_0,w_0].
+\tag{21.10}
+$$
+
+The linear term vanishes because $DF(z_0)w_0=0$.
+For $h\ne0$, $\Phi=0$ is exact equality of the endpoint values
+of all three components $p,v,a$. Changing $h$ to $-h$ exchanges
+the endpoints, so these common functions are even analytic.
+Thus the remainder after (21.10) is $O(h^4)$, and (19.6)–(19.7)
+give (21.2).
+
+The exact source $z_0$ is in the strict source cube $K$, and
+$D(z_0)>0$. Continuity, after shrinking $\varepsilon$, gives
+$0<r_\pm(h)<1$, $b_\pm(h)>0$, and $D(z_\pm(h))>0$.
+The lift (18.5) and identities (18.6)–(18.7) then give every
+original acquired reading and a single whole nonzero gain with a
+fixed drift for each endpoint. Their $r$ coordinates differ by
+exactly $2h$. Consequently their source matrices, and hence their
+complete worlds, are distinct when $h\ne0$. Exact equality of
+$p,v,a$ puts both worlds in the same entire $C(p(h),v(h))$ and
+makes them an actual equal-$J$ pair. The cube is a construction
+neighborhood, not a restriction on the definition of that child.
+
+For $f=d,m$, the analytic function
+$f(z_+(h))-f(z_-(h))$ is odd. Its derivative at zero is
+$2Df(z_0)w_0$, giving (21.3) with an $O(h^3)$ remainder.
+The positive lower bounds in (19.7) make both differences positive
+for sufficiently small positive $h$. No equality of drifts was
+imposed. The base bounds in (19.7) and continuity also preserve
+$p(h)<-533$ and $v(h)<-1018$ on a smaller interval.
+
+Finally an even analytic power series in $h$ is a convergent
+analytic power series in $q=h^2$ near zero. Write the common base
+as $(\widetilde p(q),\widetilde v(q))$ there. Its derivatives at
+zero are $P_2,V_2$. Since $P_2>0$, the analytic inverse-function
+theorem gives an analytic inverse $q=q(p)$ near $p_0$, with
+$q(p)>0$ for $p>p_0$ sufficiently close to $p_0$. Setting
+$h=\sqrt{q(p)}$ supplies the asserted actual pair for every
+$p$ in a right interval. The analytic function
+$\gamma(p)=\widetilde v(q(p))$ has derivative $V_2/P_2$.
+Both coefficients are positive, so their strict bounds in (19.7)
+give exactly (21.4). ∎
+
+## 22. Entire-child M exclusion along the sufficiently small germ
+
+**Corollary 22.1 (Inherited local boundary for the independent-pair problem).**
+After possibly reducing $\eta$ in Theorem 21.1, every
+$p\in(p_0,p_0+\eta)$ has
+
+$$
+(p,\gamma(p))\in D_J\setminus D_M.
+\tag{22.1}
+$$
+
+This uses the existing complete-child exclusion and supplies no new
+global exclusion.
+
+Proof. SVII, Theorem 25.2 and its proof in Section 30, give an open
+neighborhood $V_1$ of $(p_0,v_0)$, off $24$, such that $m$ is
+injective on every entire original child over $V_1$. The germ base
+tends to $(p_0,v_0)$ and therefore lies in $V_1$ after reducing its
+interval. Theorem 21.1 supplies a distinct equal-$J$ pair there,
+whereas injectivity excludes every distinct equal-$M$ pair anywhere
+in that child. This proves (22.1). ∎
+
+Unequal $M$ values for the two selected $J$ endpoints in (21.3)
+alone would not exclude a separately chosen $M$ pair. The exclusion
+in Corollary 22.1 concerns all worlds of the entire child, by the
+attributed SVII theorem. Its neighborhood contains the sufficiently
+small germ even when potential $M$ endpoints are not chosen near
+the displayed $J$ endpoints.
+
+The full target (18.3) remains **OPEN**. A positive solution needs
+one actual off-$24$ common base supporting both independently
+selected within-pair-distinct pairs, with their unrelated common
+terminal values and their separate original drifts and whole gains.
+A negative solution needs an exclusion on the whole original
+domain, including singular parent alternatives, all gain strata
+and unbounded source coordinates. Neither maximal continuation of
+this germ, a later crossing with $D_M$, a distinct $M$ pair, nor
+an exhaustive exclusion outside the inherited neighborhood is
+established here.
+
+## 23. Attribution and the evaluated mathematical addition
+
+The supplied results and the additional evaluated conclusion have
+the following distinct roles.
+
+| Ordinary source | Role in Sections 18–22 |
+| --- | --- |
+| O, Definitions 1.1–1.3 and Theorem 2.1; this volume, Definition 1.1 and Proposition 2.1 | Complete original worlds, literal chronological products, whole-gain interpolation and the zero-safe undivided parent, retaining all allowed drifts and singular branches. |
+| SIII, Definition 16.1, equations (16.1)–(16.5) | The rational circuit, regular whole-world lift and original-clock responses (18.4)–(18.7). |
+| SVII, Theorem 9.1 | An already existing actual negative-$p$ $J$ pair at $p=-11$ and a local analytic $J$ branch there. Negative-base $J$ existence is already known. |
+| SVI, Definition 14.1, Theorem 14.3 and Theorem 15.1, especially (15.7)–(15.10) | Related evaluated $M$ critical germs and the analogous even symmetric-secant/analytic-implicit-function construction at different critical worlds. The general construction is reused. |
+| SVII, (23.8), Theorem 24.1 and Lemma 26.1 | The exact first algebraic $J$-critical world, its strict regular source cube, rank drop, nondegenerate critical equations, original gain and drift. |
+| SVII, Theorems 25.1–25.3 and Section 30 | The singleton limiting child, existing local entire-child $M$ injectivity and strict-diagonal joint exclusion. Corollary 22.1 is an application of this local exclusion. |
+
+Distinct-node polynomial interpolation, analytic symmetric secants,
+the analytic implicit- and inverse-function theorems, Taylor expansion,
+Cramer's rule and rational interval containment are classical tools.
+For interpolation, the fixed-node formula is Berrut and Trefethen,
+*Barycentric Lagrange Interpolation*, Section 2, equations (2.1)–(2.2),
+[DOI 10.1137/S0036144502417715](https://doi.org/10.1137/S0036144502417715).
+For the analytic implicit-function theorem, the analytic version is
+also the one cited in Section 17: Lebl, *Tasty Bits of Several Complex
+Variables*, Theorem 1.3.8. Here the rational maps extend analytically
+across the relevant real neighborhood because their denominators are
+nonzero; the displayed Jacobian is invertible. These are precisely
+the hypotheses needed for the application. The even-secant argument
+is explicitly proved in (21.7)–(21.8), and the inverse-function step
+uses the strict inequality $P_2>0$.
+
+The additional source-specific result is the evaluated third-order
+calculation (19.5)–(19.7) at this exact first $J$ source. In particular
+it determines the actual base opening
+$34271<P_2<34272$, $63022<V_2<63023$, the orientation and slope
+(21.4), and the quantitative original-coordinate coefficients
+$621<L_d<623$, $66<L_m<67$. These coefficients determine more than
+the qualitative existence given by a generic implicit-function
+argument. The critical-point existence, negative limiting base,
+qualitative nondegeneracy, general secant method and complete-child
+$M$ exclusion remain attributed inputs. This is a repository-derived
+ordinary mathematical evaluation; no literature-priority assertion
+or formal-verification claim is made.
+
+## 追加锚（本行以下为增补区）
