@@ -1,0 +1,8 @@
+### 5.1 Finite checkpoints
+
+Let $k_0,k_1,\ldots,k_n\in(0,c)$ be a prescribed finite sequence of double-wall
+heights.  The same specimen is required to be in the exact state
+(OC.10) at every successful checkpoint.  Past successful flags may be used,
+but there is no fresh history-bearing input, copy, reset, or replay of the
+unknown past.
+
