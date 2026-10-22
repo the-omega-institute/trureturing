@@ -10,7 +10,7 @@ Lean statement: `D5/S3/Analytic/BesselRedheffer/Defs.nbessel`
 
 *Formalization.* `D5/S3/Analytic/BesselRedheffer/Defs.nbessel` (`✓ std3`).
 
-*Source.* Repository-derived.
+*Citation.* Á. Baricz and K. Mehrez (2018). *Redheffer type bounds for Bessel and modified Bessel functions of the first kind*. DOI: [10.1007/s00010-018-0545-8](https://doi.org/10.1007/s00010-018-0545-8). URL: <https://arxiv.org/abs/1701.08446>.
 
 *Commentary.*
 
@@ -22,7 +22,7 @@ Lean statement: `D5/S3/Analytic/BesselRedheffer/Defs.firstZero`
 
 *Formalization.* `D5/S3/Analytic/BesselRedheffer/Defs.firstZero` (`✓ std3`).
 
-*Source.* Repository-derived.
+*Citation.* Á. Baricz and K. Mehrez (2018). *Redheffer type bounds for Bessel and modified Bessel functions of the first kind*. DOI: [10.1007/s00010-018-0545-8](https://doi.org/10.1007/s00010-018-0545-8). URL: <https://arxiv.org/abs/1701.08446>.
 
 *Commentary.*
 
@@ -34,7 +34,7 @@ Lean statement: `D5/S3/Analytic/BesselRedheffer/Defs.claim`
 
 *Formalization.* `D5/S3/Analytic/BesselRedheffer/Defs.claim` (`✓ std3`).
 
-*Source.* Repository-derived.
+*Citation.* Á. Baricz and K. Mehrez (2018). *Redheffer type bounds for Bessel and modified Bessel functions of the first kind*. DOI: [10.1007/s00010-018-0545-8](https://doi.org/10.1007/s00010-018-0545-8). URL: <https://arxiv.org/abs/1701.08446>.
 
 *Commentary.*
 
