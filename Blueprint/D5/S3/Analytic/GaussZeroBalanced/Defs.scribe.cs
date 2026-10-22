@@ -25,5 +25,5 @@ internal sealed class DefsDocument : IScribeDocumentDefinition
             Describe.Lean(DescribeId.Create("gauss-zero-balanced-claim"),
                 DeclarationHandle.Create("D5/S3/Analytic/GaussZeroBalanced/Defs.claim"),
                 H("The two parameter classifications"), StatementSource.WithoutFormula(), AssessedProvenance.FromRepo(),
-                Blocks(Paragraph(Text("The first clause quantifies over all positive real a and b: the derivative in b of quot a b x is strictly negative at every real x in (0,1) if and only if b is at most sqrt(a(a+1)). The second clause quantifies over every real a in (0,1): ineq17 a r holds at every real r in (0,1) if and only if a is at least 3/7."))), DescribeRole.Definition)))));
+                Blocks(Paragraph(Text("The first clause quantifies over all positive real a and b: the derivative in b of quot a b x is strictly negative at every real x in (0,1) if and only if b is at most sqrt(a(a+1)). The second clause quantifies over every real a in (0,1): ineq17 a r holds at every real r in (0,1) if and only if a is at least 3/7."))), DescribeRole.Definition))));
 }
