@@ -64,16 +64,16 @@ noncomputable section
 
 attribute [local instance] Classical.propDecidable
 
-private def pinRaw (t : Triple) : ℚ :=
+def pinRaw (t : Triple) : ℚ :=
   if A ![t.1, t.2.1, t.2.2] then 1 else 0
 
 private def norRaw (t : Triple) : ℚ :=
   if N ![t.1, t.2.1, t.2.2] then 1 else 0
 
-private def unaryRaw (r : ℚ) (t : Triple) : ℚ :=
+def unaryRaw (r : ℚ) (t : Triple) : ℚ :=
   if A ![t.1, t.2.1, t.2.2] then if t.1 && t.2.1 then r else 1 else 0
 
-private def pinTable : Table where
+def pinTable : Table where
   val t := pinRaw t / 5
   nonneg t := by unfold pinRaw; split <;> norm_num
   normalized := by
@@ -89,7 +89,7 @@ private def norTable : Table where
     have hn : ¬ N ![t.1, t.2.1, t.2.2] := fun h => ht h.1
     simp [norRaw, hn]
 
-private def unaryTable (r : ℚ) (hr : 0 ≤ r) : Table where
+def unaryTable (r : ℚ) (hr : 0 ≤ r) : Table where
   val t := unaryRaw r t / (4 + r)
   nonneg t := by
     apply div_nonneg _ (by positivity)
@@ -383,12 +383,12 @@ private def renameFactor {V W : Type} (r : V → W) (f : Factor V) : Factor W wh
   scope := (r f.scope.1, r f.scope.2.1, r f.scope.2.2)
   table := f.table
 
-private def numberedNetwork {n : Nat} {H J : Type} [Fintype H] [DecidableEq H] [Fintype J]
+def numberedNetwork {n : Nat} {H J : Type} [Fintype H] [DecidableEq H] [Fintype J]
     (f : J → Factor (Fin n ⊕ H)) : Network n (Fintype.card H) (Fintype.card J) where
   factor j := renameFactor (Sum.map id (Fintype.equivFin H))
     (f ((Fintype.equivFin J).symm j))
 
-private theorem numbered_marginal {n : Nat} {H J : Type} [Fintype H] [DecidableEq H] [Fintype J]
+theorem numbered_marginal {n : Nat} {H J : Type} [Fintype H] [DecidableEq H] [Fintype J]
     (f : J → Factor (Fin n ⊕ H)) (a : Fin n → Bool) :
     (numberedNetwork f).marginal a = ∑ h, ∏ j, (f j).value (Sum.elim a h) := by
   let eh := Fintype.equivFin H
