@@ -664,7 +664,13 @@ The constant $C_B$ is fixed for sufficiently large $c$. The last estimate is the
 
 ### A logarithmic partition has a small full localization error
 
-Fix an integer $J\ge5$ and $\delta=1/J$. Choose a finite real Lipschitz quadratic partition $\sum_{j=0}^{J+2}\chi_j(u)^2=1$ on $u\ge0$. One explicit construction uses a sine and a cosine on each consecutive interval of length $\delta$. The first member decreases from $1$ to $0$ on $[0,\delta]$. For $1\le j\le J+1$, member $j$ rises from $0$ to $1$ on $[(j-1)\delta,j\delta]$ and falls from $1$ to $0$ on $[j\delta,(j+1)\delta]$. The final member rises on $[(J+1)\delta,(J+2)\delta]$ and is $1$ thereafter. Use zero outside the described supports. Their Lipschitz constants depend only on $J$.
+Fix $0<\delta<1/4$. Choose three real Lipschitz cutoffs $\chi_{lo},\chi_{mid},\chi_{hi}$ whose squared sum is $1$ on $u\ge0$. On $[\delta,2\delta]$, take $\chi_{lo}=\cos(\pi(u-\delta)/(2\delta))$, $\chi_{mid}=\sin(\pi(u-\delta)/(2\delta))$ and $\chi_{hi}=0$. Between the transitions take $\chi_{mid}=1$. On $[1+\delta,1+2\delta]$, take the analogous cosine--sine transition from $\chi_{mid}$ to $\chi_{hi}$. Outside them the low or high cutoff equals $1$, respectively. The supports satisfy
+$$
+ \operatorname{supp}\chi_{lo}\subset[0,2\delta],\quad
+ \operatorname{supp}\chi_{mid}\subset[\delta,1+2\delta],\quad
+ \operatorname{supp}\chi_{hi}\subset[1+\delta,\infty).
+$$
+Their Lipschitz constants depend only on $\delta$.
 
 Pull this partition back to Fourier coordinates by $u_m=\log(1+|m|)/a$. The diagonal multipliers preserve the form domain and commute with $D_L$. Set
 $$
@@ -690,32 +696,32 @@ In the middle block, $|\log(y/x)|\le2|y-x|/x$, so its sum is bounded uniformly. 
 
 The Lipschitz estimate, FLI3 and this Schur bound give
 $$
- e_c:=\|\mathcal E_c\|\le C_J W/a^2=O_J(a^{-1}).
+ e_c:=\|\mathcal E_c\|\le C_\delta W/a^2=O_\delta(a^{-1}).
  \tag{FLI5}
 $$
 This is localization in logarithmic Fourier frequency. It makes no assertion that narrow physical FIB windows lose no prime edges.
 
-### Count each finite band by scalar trace Jensen
+### Count the middle band by scalar trace Jensen
 
-Let $P_j$ project onto the containing Fourier interval specified by each cutoff, so $P_j\chi_j=\chi_j$. For $2\le j\le J+1$, use the full band with endpoints
+Let $P_j$, for $j\in\{lo,mid,hi\}$, project onto the full containing Fourier intervals just specified, so $P_j\chi_j=\chi_j$. For the middle band write
 $$
- u=(j-1)\delta>0,\qquad v=(j+1)\delta,
+ u=\delta>0,\qquad v=1+2\delta,
  \qquad u\le u_m\le v.
 $$
-Its dimension $M_j$ and positive-mode interval length are $\exp((v+o(1))a)$. Put $r=\lfloor j\delta a/d\rfloor$, which is eventually positive. In FLI2,
+Its dimension $M_{mid}$ and positive-mode interval length are $\exp((v+o(1))a)$. Put $r=\lfloor(v-\delta)a/d\rfloor$, which is eventually positive. In FLI2,
 $$
- \frac{D_r}{M_j}\le\exp((-\delta+o(1))a),
+ \frac{D_r}{M_{mid}}\le\exp((-\delta+o(1))a),
 $$
 so the trace on this band satisfies
 $$
- \operatorname{Tr}(P_j\mathsf P_L^{2r}P_j)
- \le M_j(Crd^2)^r(1+o(1)).
+ \operatorname{Tr}(P_{mid}\mathsf P_L^{2r}P_{mid})
+ \le M_{mid}(Crd^2)^r(1+o(1)).
  \tag{FLI6}
 $$
-For the finite-dimensional selfadjoint compression $A_j=P_j\mathsf P_LP_j$, scalar Jensen in an orthonormal eigenbasis of $A_j$ gives
+For the finite-dimensional selfadjoint compression $A_{mid}=P_{mid}\mathsf P_LP_{mid}$, scalar Jensen in an orthonormal eigenbasis of $A_{mid}$ gives
 $$
- \operatorname{Tr}A_j^{2r}
- \le\operatorname{Tr}(P_j\mathsf P_L^{2r}P_j).
+ \operatorname{Tr}A_{mid}^{2r}
+ \le\operatorname{Tr}(P_{mid}\mathsf P_L^{2r}P_{mid}).
 $$
 Indeed for each such eigenvector $v_\ell$, convexity of $t\mapsto t^{2r}$ in its spectral measure for the bounded selfadjoint $\mathsf P_L$ bounds
 $\langle v_\ell,\mathsf P_Lv_\ell\rangle^{2r}$ by
@@ -724,32 +730,32 @@ This proves the trace comparison without an operator ordering of compressed powe
 
 On the same band,
 $$
- P_jH_0P_j-e_cI\succeq t_jI-A_j,
- \qquad t_j=ua-O(\log d)-C_B-e_c>0.
+ P_{mid}H_0P_{mid}-e_cI\succeq t_{mid}I-A_{mid},
+ \qquad t_{mid}=ua-O(\log d)-C_B-e_c>0.
 $$
 Min--max followed by the even-moment bound yields
 $$
- n_-(P_jH_0P_j-e_cI)
- \le t_j^{-2r}\operatorname{Tr}A_j^{2r}.
+ n_-(P_{mid}H_0P_{mid}-e_cI)
+ \le t_{mid}^{-2r}\operatorname{Tr}A_{mid}^{2r}.
 $$
 Since $\log a=d/2$, the logarithm of this allowance is at most
 $$
- va+r\log\frac{Crd^2}{t_j^2}+o(a)
- =\left(v-\frac{j\delta}{2}+o(1)\right)a
+ va+r\log\frac{Crd^2}{t_{mid}^2}+o(a)
+ =\left(v-\frac{v-\delta}{2}+o(1)\right)a
  =\left(\frac{v+\delta}{2}+o(1)\right)a.
  \tag{FLI7}
 $$
 All parameters remain fixed while $c$ grows. The equality uses
-$\log(Crd^2/t_j^2)=-d/2+O_J(\log d)$; integer rounding contributes $o(a)$.
+$\log(Crd^2/t_{mid}^2)=-d/2+O_\delta(\log d)$; integer rounding contributes $o(a)$.
 
 ### Glue the bands and pay the complete pole and boundary terms
 
 The map $f\mapsto(\chi_jf)_j$ is an isometry into the direct sum of the sharp band spaces. FLI4--FLI5 and min--max therefore give
 $$
- n_-(H_0)\le\sum_{j=0}^{J+2}n_-(P_jH_0P_j-e_cI).
+ n_-(H_0)\le\sum_{j\in\{lo,mid,hi\}}n_-(P_jH_0P_j-e_cI).
  \tag{FLI8}
 $$
-To see the direction, a strictly negative subspace for $H_0$ maps injectively to a strictly negative subspace for this direct-sum form, because its value there is at most the original value. The exterior member is supported at $u_m\ge1+\delta$, where FLI3 gives the positive floor $\delta a+o(a)$ after the bounded shifts. The first two members have total dimension $\exp((2\delta+o(1))a)$. The remaining finitely many bands use FLI7, with $v\le1+2\delta$. Hence
+To see the direction, a strictly negative subspace for $H_0$ maps injectively to a strictly negative subspace for this direct-sum form, because its value there is at most the original value. The high member is supported at $u_m\ge1+\delta$, where FLI3 gives the positive floor $\delta a+o(a)$ after the bounded shifts. The low member has dimension $\exp((2\delta+o(1))a)$. The middle member uses FLI7 with $v=1+2\delta$. Hence
 $$
  \limsup_{c\to\infty}\frac{\log(1+n_-(H_0))}{a}
  \le\max\left(2\delta,\frac{1+3\delta}{2}\right).
@@ -758,7 +764,7 @@ Finally, the actual $B_L$ is bounded below by $-C_BI$, and intersecting any full
 $$
  n_-(\mathcal H_c)\le n_-(H_0)+2.
 $$
-Let $c\to\infty$ at each fixed $J$, then $J\to\infty$. This proves the paper estimate FLI1. The starting scale depends on $J$; no effective or uniform finite-start bound is claimed.
+Let $c\to\infty$ at each fixed $\delta$, then $\delta\downarrow0$. This proves the paper estimate FLI1. The starting scale depends on $\delta$; no effective or uniform finite-start bound is claimed.
 
 For every fixed $\alpha>1$, the positive full exterior in JPP5 gives the original retained Schur matrix $S_\alpha$. Its exact inertia identity in NPC6 therefore consumes the same estimate:
 $$
