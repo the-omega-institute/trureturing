@@ -8,10 +8,18 @@
 
 import D5.S3.Quantum.Dynamics.EnergyEigenstateStationarity
 
+/-!
+# Normalized-Laplacian state transfer on a tree
+
+Coutinho and Baptista's conjecture in "Quantum walks in the normalized Laplacian"
+(arXiv:2209.04668, Discussion) excludes every tree except the paths on two and three vertices.
+The tree with two pendant leaves and seven length-two arms has transfer between the
+pendant leaves at time `3 * Real.pi`.
+-/
+
 set_option autoImplicit false
 set_option relaxedAutoImplicit false
 set_option maxRecDepth 3000
-set_option maxHeartbeats 800000
 
 noncomputable section
 namespace D5.S3.Quantum.Dynamics.NormalizedLaplacianTreeStateTransfer
@@ -51,11 +59,15 @@ private instance tree_decidable : DecidableRel tree.Adj :=
 private def symMode (u c x y : ℂ) : Fin 17 → ℂ :=
   fun i => if i.val < 2 then u else if i = 2 then c else if i.val % 2 = 1 then x else y
 
+set_option maxHeartbeats 800000 in
+-- Finite reduction checks the degree at each of the seventeen vertices.
 private lemma tree_degree (i : Fin 17) :
     tree.degree i = if i = 2 then 9 else if 3 ≤ i.val ∧ i.val % 2 = 1 then 2 else 1 := by
   revert i
   decide
 
+set_option maxHeartbeats 800000 in
+-- The edge-count certificate enumerates all unordered vertex pairs.
 private lemma tree_isTree : tree.IsTree := by
   have reach (i : Fin 17) : tree.Reachable 2 i := by
     fin_cases i
@@ -88,6 +100,8 @@ private lemma tree_isTree : tree.IsTree := by
   rw [Nat.card_eq_fintype_card, Nat.card_eq_fintype_card]
   decide
 
+set_option maxHeartbeats 800000 in
+-- Expand the seventeen finite row sums before exact field normalization.
 private lemma sym_action (u c x y : ℂ) :
     normalizedLaplacian tree *ᵥ symMode u c x y =
       symMode (u - c / 3) (c - 2 * u / 3 - 7 * x / (3 * (Real.sqrt 2 : ℂ)))
@@ -104,8 +118,10 @@ private lemma sym_action (u c x y : ℂ) :
       Matrix.mul_diagonal, SimpleGraph.lapMatrix, SimpleGraph.degMatrix,
       Matrix.diagonal_apply, SimpleGraph.adjMatrix_apply, tree_degree, tree,
       SimpleGraph.fromRel_adj, symMode, Fin.sum_univ_succ] <;>
-    push_cast <;> field_simp [hs] <;> ring_nf <;> simp [hs2] <;> ring
+    field_simp [hs] <;> ring_nf <;> simp [hs2] <;> ring
 
+set_option maxHeartbeats 800000 in
+-- Normalize all four modes with the exact square-root identity.
 private lemma symmetric_eigenvectors :
     normalizedLaplacian tree *ᵥ symMode 1 3 (Real.sqrt 2) 1 =
         (0 : ℂ) • symMode 1 3 (Real.sqrt 2) 1 ∧
@@ -128,6 +144,8 @@ private lemma symmetric_eigenvectors :
     split_ifs <;>
       field_simp [hs] <;> ring_nf <;> simp [hs2] <;> ring
 
+set_option maxHeartbeats 800000 in
+-- Normalize both endpoint columns at each of the seventeen vertices.
 private lemma antisymmetric_eigenvector :
     normalizedLaplacian tree *ᵥ (Pi.single 0 1 - Pi.single 1 1 : Fin 17 → ℂ) =
       Pi.single 0 1 - Pi.single 1 1 := by
@@ -139,6 +157,8 @@ private lemma antisymmetric_eigenvector :
       SimpleGraph.lapMatrix, SimpleGraph.degMatrix, Matrix.diagonal_apply,
       SimpleGraph.adjMatrix, tree_degree, tree, SimpleGraph.fromRel_adj, Pi.single_apply]
 
+set_option maxHeartbeats 800000 in
+-- Check the four rational coefficients at each of the seventeen vertices.
 private lemma symmetric_decomposition :
     (Pi.single 0 1 + Pi.single 1 1 : Fin 17 → ℂ) =
       (1 / 16 : ℂ) • symMode 1 3 (Real.sqrt 2) 1 +
@@ -149,6 +169,8 @@ private lemma symmetric_decomposition :
   fin_cases i <;>
     norm_num [symMode, Pi.single_apply, Pi.add_apply, Pi.smul_apply] <;> ring
 
+set_option maxHeartbeats 800000 in
+-- Normalize the five exact exponential phases.
 private lemma phases :
     Complex.exp (Complex.I * ((3 * Real.pi : ℝ) : ℂ) * 0) = 1 ∧
     Complex.exp (Complex.I * ((3 * Real.pi : ℝ) : ℂ) * 2) = 1 ∧
@@ -193,9 +215,47 @@ private lemma phases :
         ring
       _ = -1 := h3
 
+set_option maxHeartbeats 800000 in
+-- Combine the five mode equations with the endpoint-vector decomposition.
 private lemma transfer :
     walk tree (3 * Real.pi) *ᵥ (Pi.single 0 1 : Fin 17 → ℂ) = Pi.single 1 1 := by
-  sorry
+  have evolve (z : Fin 17 → ℂ) (θ : ℂ)
+      (hz : normalizedLaplacian tree *ᵥ z = θ • z) :
+      walk tree (3 * Real.pi) *ᵥ z =
+        Complex.exp (Complex.I * ((3 * Real.pi : ℝ) : ℂ) * θ) • z := by
+    unfold walk
+    apply exp_mulVec_of_eigenvector
+    rw [smul_mulVec, hz, smul_smul]
+  obtain ⟨e0, e2, e23, e43⟩ := symmetric_eigenvectors
+  obtain ⟨p0, p2, p23, p43, p1⟩ := phases
+  have h0 := evolve _ 0 e0
+  have h2 := evolve _ 2 e2
+  have h23 := evolve _ (2 / 3) e23
+  have h43 := evolve _ (4 / 3) e43
+  rw [p0, one_smul] at h0
+  rw [p2, one_smul] at h2
+  rw [p23, one_smul] at h23
+  rw [p43, one_smul] at h43
+  have hp : walk tree (3 * Real.pi) *ᵥ
+      (Pi.single 0 1 + Pi.single 1 1 : Fin 17 → ℂ) = Pi.single 0 1 + Pi.single 1 1 := by
+    conv_lhs => rw [symmetric_decomposition]
+    simpa only [mulVec_add, mulVec_smul, h0, h2, h23, h43] using
+      symmetric_decomposition.symm
+  have hm : walk tree (3 * Real.pi) *ᵥ
+      (Pi.single 0 1 - Pi.single 1 1 : Fin 17 → ℂ) = -(Pi.single 0 1 - Pi.single 1 1) := by
+    have h := evolve (Pi.single 0 1 - Pi.single 1 1) 1
+      (by simpa using antisymmetric_eigenvector)
+    rw [mul_one, p1, neg_one_smul] at h
+    exact h
+  have split : (Pi.single 0 1 : Fin 17 → ℂ) = (1 / 2 : ℂ) •
+      ((Pi.single 0 1 + Pi.single 1 1) + (Pi.single 0 1 - Pi.single 1 1)) := by
+    ext i
+    simp only [Pi.smul_apply, Pi.add_apply, Pi.sub_apply, smul_eq_mul]
+    ring
+  rw [split, mulVec_smul, mulVec_add, hp, hm]
+  ext i
+  simp only [Pi.smul_apply, Pi.add_apply, Pi.sub_apply, Pi.neg_apply, smul_eq_mul]
+  ring
 
 /-- The seventeen-vertex tree refutes the conjecture. -/
 theorem result : ¬ claim := by
