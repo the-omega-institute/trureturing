@@ -1,0 +1,26 @@
+## 224. Sources, conventions, and the exact scope of reuse
+
+The native source is
+[FIB ATOM recursive holographic boundary geometry, Continuation VI](https://github.com/the-omega-institute/trureturing/blob/2cc0f1a8c9795a708bf251234763243ee241e3b1/docs/develop/theory/FIB_ATOM_RECURSIVE_HOLOGRAPHIC_BOUNDARY_GEOMETRY_CONTINUATION_VI.md),
+at immutable revision `2cc0f1a8c9795a708bf251234763243ee241e3b1`.
+Its content SHA256 is
+`80280f488da57e8a1d80d8c861083bf2759814507189d33657c2da271515e682`.
+The source correspondence uses §§139–142 for the metric, principal root,
+cut, full fermionic Gibbs state, and even Bob-local alignment; §§148–152 for
+the scalar weights, CAR singlet block, filter, spectator direct sum, probability
+normalization, and benchmark; and §§155–156 for application and supplier
+boundaries.
+The mature mathematical suppliers are listed by exact arXiv versions and
+the result used.
+
+| Reference | Primary source | Scope used here |
+| --- | --- | --- |
+| [LMP] | N. Linden, S. Massar, S. Popescu, *Purifying noisy entanglement requires collective measurements*, Phys. Rev. Lett. 81, 3279, [quant-ph/9805001v1](https://arxiv.org/src/quant-ph/9805001v1), DOI 10.1103/PhysRevLett.81.3279 | One-pair Werner concurrence/entanglement-of-formation no-concentration and adaptive product-history reduction. Its fidelity convention is $F=(1+3\lambda)/4$. It is close prior one-copy work, not the complete flagged exact-success output calculation. |
+| [VDM] | F. Verstraete, J. Dehaene, B. De Moor, *Local filtering operations on two qubits*, Phys. Rev. A 64, 010101(R), [quant-ph/0011111v1](https://arxiv.org/src/quant-ph/0011111v1), DOI 10.1103/PhysRevA.64.010101 | Theorem 1, Eq. (2), gives $C'=C\lvert\det A\det B\rvert/q$ for normalized two-qubit filtering with nonsingular filters. Singular leaves are handled directly in §217. |
+| [W] | W. K. Wootters, *Entanglement of Formation of an Arbitrary State of Two Qubits*, Phys. Rev. Lett. 80, 2245, [quant-ph/9709029v1](https://arxiv.org/src/quant-ph/9709029v1), DOI 10.1103/PhysRevLett.80.2245 | Spin-flip formula $C=\max(0,l_1-l_2-l_3-l_4)$ and minimum-average pure-state concurrence. The actual spin-flip-invariant $W_\lambda$ has $C=2N_0$. |
+| [AVBDM] | K. Audenaert, F. Verstraete, T. De Bie, B. De Moor, *Negativity and Concurrence of mixed 2-by-2 states*, [quant-ph/0012074v1](https://arxiv.org/src/quant-ph/0012074v1) | Its convention $E_N=\max(0,-2\lambda_{\min}(\rho^{T_B}))$ and its convex-roof concurrence comparison imply $C\ge2N$ here. Transposing the other party does not change the relevant spectrum. |
+| [VADDM] | F. Verstraete, K. Audenaert, J. Dehaene, B. De Moor, *A comparison of the entanglement measures negativity and concurrence*, [quant-ph/0108021v1](https://arxiv.org/src/quant-ph/0108021v1) | A distinct comparison paper. Its Theorem 1 bounds its doubled negativity by concurrence, again giving $2N\le C$ in the present convention. No lower-bound classification is used. |
+| [VW] | G. Vidal, R. F. Werner, *A computable measure of entanglement*, Phys. Rev. A 65, 032314, [quant-ph/0102117v1](https://arxiv.org/src/quant-ph/0102117v1), DOI 10.1103/PhysRevA.65.032314 | Eq. (1) uses the present ordinary negativity; Proposition 1 gives convexity and Proposition 3 average LOCC monotonicity. Average monotonicity alone does not supply the conditional ceiling. |
+| [SVC] | N. Schuch, F. Verstraete, J. I. Cirac, *Quantum entanglement theory in the presence of superselection rules*, Phys. Rev. A 70, 042310, [quant-ph/0404079v1](https://arxiv.org/src/quant-ph/0404079v1), DOI 10.1103/PhysRevA.70.042310 | Local operations commute with local number. Section IV.D supplies the mixed-state standard-form and two-copy local-one-particle projection context underlying the already-prepared native input. No extra copy of $\rho_{w,\lambda}$ is used in its subsequent processing. |
+| [HI] | T. Hiroshima, S. Ishizaka, *Local and Nonlocal Properties of Werner States*, Phys. Rev. A 62, 044302, [quant-ph/0003058v1](https://arxiv.org/src/quant-ph/0003058v1) | Eq. (2) uses Werner singlet fidelity $F=(1+3\lambda)/4$; Eq. (13) and its Bell-diagonal discussion give unit concurrence enhancement for the relevant Bell-diagonal inputs. This concerns concurrence/entanglement of formation, not the present flagged negativity objective. |
+| [KLM] | A. Kent, N. Linden, S. Massar, *Optimal Entanglement Enhancement for Mixed States*, Phys. Rev. Lett. 83, 2656, [quant-ph/9902022v3](https://arxiv.org/src/quant-ph/9902022v3), DOI 10.1103/PhysRevLett.83.2656 | Related one-copy orbit and Bell-diagonal normal-form background. No blanket finite normal-form attainability theorem for rank-deficient states, or unrestricted negativity optimum, is inferred. |

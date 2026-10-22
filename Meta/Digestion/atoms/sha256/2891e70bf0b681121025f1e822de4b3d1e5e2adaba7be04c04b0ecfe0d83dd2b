@@ -1,0 +1,30 @@
+**Notation 177.1 (Independent sector-orbit family of VI (169.2)).** Let
+$v=(\alpha,u)$ and $w=(\gamma,h)$ be independent unit vectors in
+$\mathbb C\oplus\mathbb C^2$. In the stated sector orders define
+
+$$
+R(v,w)=1\oplus(tI_3+s vv^*)\oplus(tI_3-ts ww^*)\oplus t^2,
+\qquad \rho(v,w)=\frac{R(v,w)}Z.
+\tag{177.2}
+$$
+
+By Continuation VI §169, (177.2) is the complete orbit with spectra
+(177.1) under independent global $U(3)$ actions in the $N=1$ and $N=2$
+sectors. This number-preserving orbit enlarges passive one-particle
+operations. Its actions are not assumed to be local at $A|B$ or physically
+available. The native model supplies the spectra and cut; independence of
+the two rays remains the enlarged mathematical premise of VI (169.2).
+
+The eigenvalues of $R$ are $1,1,t,t,t,t,t^2,t^2$. Hence $R\succ0$ and
+$\operatorname{tr}R=Z$ throughout the stated range. Define
+
+$$
+x=|\alpha|^2,\qquad y=|\gamma|^2,\qquad z=|u^*h|^2,
+\qquad \|u\|^2=1-x,\quad \|h\|^2=1-y.
+\tag{177.3}
+$$
+
+Here $x,y,z$ are scalar data of the specified rays. Their use in a
+separability test does not assert that they classify entire states under
+local unitaries.
+

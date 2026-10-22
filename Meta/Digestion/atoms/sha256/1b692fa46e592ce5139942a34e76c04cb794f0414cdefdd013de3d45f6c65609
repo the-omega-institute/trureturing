@@ -1,0 +1,20 @@
+**Example 233.3 (three exact branches at one temperature).** At $t=1/14$,
+
+$$
+p_c=6/13,\qquad s_0=281/341,\qquad s_1=5/6,\qquad
+\mathcal V_t(s)=
+\begin{cases}
+113/562,&0<s\le281/341,\\
+A_t(p_s),&281/341<s<5/6,\\
+1/(6s),&5/6\le s\le1.
+\end{cases}
+\tag{233.5}
+$$
+
+For a strict middle point, $s=1123/1355$ gives $p_s=25/52$ and
+$\mathcal V_t(s)=451/2246$. Indeed $w_t(25/52)=1123/1355$ and
+$A_t(25/52)=451/2246$, with $281/341<1123/1355<5/6$.
+At the upper threshold the value is $1/5$; at $s=1$ it is $1/6$.
+Every displayed optimizer has an interior inverse (232.6), and (233.1)–(233.4)
+provide its simultaneous preparation and success law.
+

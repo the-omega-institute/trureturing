@@ -303,6 +303,7 @@ result: proof_shape: bind-only; escape_witness: none;
     | `D5/S3/Quantum/QuantumChannels/ConcealmentKernelNecessityRefutation` | `D5.S3.Quantum.QuantumChannels.ConcealmentKernelNecessityRefutation.diagonal_povm` | `sha256:de0639eb7d2cc0e2744e5c02a6801acaa920144435fb7dd8831281ad678d7430` |  |
     | `D5/S3/Quantum/QuantumChannels/ConcealmentKernelNecessityRefutation` | `D5.S3.Quantum.QuantumChannels.ConcealmentKernelNecessityRefutation.dual_kraus` | `sha256:dd9f5f1ce4725296d08145a6066f3ee325b93def4f274543427b5520e5234de5` |  |
     | `D5/S3/Quantum/Recovery/KrausCompletion` | `D5.S3.Quantum.Recovery.KrausCompletion.rowReset` | `sha256:63b0c2d244c2f26eaa46ef36429ea4c9ccb72f7db37882de172d0e5045f79e31` |  |
+Escape audit for published helper theorems unfinished: https://github.com/the-omega-institute/trureturing/issues/19490.
 -/
 
 import D5.S3.Quantum.QuantumChannels.ConcealmentKernelNecessityRefutation
@@ -311,6 +312,9 @@ import D5.S3.Quantum.PureState.PureStateHandshake
 import D5.S3.Quantum.Recovery.KrausCompletion
 import D5.S3.Quantum.Information.ActualQubitChordObstruction
 import D5.S3.Quantum.Measurements.FiniteMemoryHistoryCapacity
+import D5.S3.Quantum.Foundation.FiniteKrausChannel
+import D5.S3.Quantum.Foundation.FiniteStateChannel
+import D5.S3.Quantum.QuantumChannels.PositiveFilterTransposeRefutation
 
 namespace D5.S3.Quantum.Measurements.BroadcastingChannelExtremaRefutation
 
@@ -326,7 +330,7 @@ noncomputable section
 set_option autoImplicit false
 set_option relaxedAutoImplicit false
 
-private theorem density_le_one {n : Type*} [Fintype n] [DecidableEq n]
+theorem density_le_one {n : Type*} [Fintype n] [DecidableEq n]
     {T : Matrix n n ℂ} (hT : T.PosSemidef) (htr : T.trace = 1) :
     (1 - T).PosSemidef := by
   let hH := hT.1

@@ -2997,3 +2997,1061 @@ and its physical obligations unresolved.
 
 ## 117.99 追加锚（本行以下为增补区）
 
+## 119. A grouped cube form on one actual whole-rho source
+
+### 119.1 The ordered seed and its declared amplitude constraint
+
+**Definition 119.1 (the thirteen-occurrence cube map).** Use the original
+ordered source algebra and whole substitution of IV Definition 112.1:
+
+$$
+\begin{aligned}
+u&=\langle\alpha,\langle\beta,\langle\alpha,\langle\beta,
+       \langle\alpha,\langle\beta,\alpha\rangle\rangle\rangle\rangle\rangle\rangle,\\
+\rho\alpha&=\beta,\qquad \rho\beta=\langle\beta,\alpha\rangle,\qquad
+\rho\langle s,t\rangle=\langle\rho s,\rho t\rangle.
+\end{aligned}
+\tag{119.1}
+$$
+
+Write actual addresses with $0$ left and $1$ right, so that $\varepsilon$
+is the empty word. Label the cube vertices $(x,y,z)\in\{0,1\}^3$ by
+$4x+2y+z$. The entire map $q_0:V_u\to\{0,\ldots,7\}$ is the table
+
+| Actual address | Constructor in $u$ | $q_0$ |
+| --- | --- | --- |
+| $\varepsilon$ | branch | 0 |
+| $0$ | $\alpha$ | 1 |
+| $1$ | branch | 2 |
+| $10$ | $\beta$ | 6 |
+| $11$ | branch | 3 |
+| $110$ | $\alpha$ | 1 |
+| $111$ | branch | 7 |
+| $1110$ | $\beta$ | 6 |
+| $1111$ | branch | 5 |
+| $11110$ | $\alpha$ | 1 |
+| $11111$ | branch | 4 |
+| $111110$ | $\beta$ | 0 |
+| $111111$ | $\alpha$ | 6 |
+
+For each finite $n\ge0$ put $V_n=V_{\rho^nu}$. The map $q_n$ fixes
+the table values at original internal addresses and takes the constant
+value $q_0(p)$ on the entire substituted subtree rooted at each
+original leaf $p$. These pieces partition $V_n$. Define
+
+$$
+(U_nf)(p)=f(q_n(p)),\qquad
+\mathcal C_n=\operatorname{ran}U_n\subset\ell^2(V_n),\qquad
+K=L_{Q_3}.
+\tag{119.2}
+$$
+
+Thus $U_n$ is the indicator pullback, with one column per cube vertex;
+$K$ has diagonal $3$ and off-diagonal $-1$ precisely for labels whose
+binary triples differ in one bit. Every actual occurrence has counting
+mass one. Let $L_{\mathrm{closed},n}$ be the closed unit parent-child
+Laplacian on $V_n$. Separately, use exactly the missing-child convention
+of [Continuation Definition 55.2, (55.4)](FIB_ATOM_RECURSIVE_HOLOGRAPHIC_BOUNDARY_GEOMETRY_CONTINUATION.md):
+
+$$
+L_{\mathrm{kill},n}
+ =L_{\mathrm{closed},n}
+    +2\operatorname{diag}(\mathbf1_{\operatorname{Leaf}(\rho^nu)}).
+\tag{119.3}
+$$
+
+The equations $g\in\mathcal C_n$ are added equalities of amplitudes.
+They identify neither source occurrences nor native rooted fringes.
+They add no seam to the source or native operation to IV Contract 112.1a.
+All-$n$ statements below concern these finite mathematical domains, or
+those finite prefixes actually accepted by a specified history. A fixed
+guard or cap is unchanged; refusal changes no domain, and Stop has no
+successor. No event after an infinite prefix is defined. Limits refer to
+the mathematical family, without assuming one execution reaches it all.
+
+### 119.2 Exact closed form, counting mass and inherited killing
+
+**Proposition 119.2 (the cube application at every finite stage).** Put
+$F=F_{n+1}$ and $G=F_{n+2}$, with $F_0=0,F_1=1$. Then
+
+$$
+\begin{aligned}
+U_n^{\mathsf T}L_{\mathrm{closed},n}U_n&=K,\\
+M_n:=U_n^{\mathsf T}U_n
+ &=\operatorname{diag}(2G,6F-3,1,1,1,1,4G+2F-3,1),\\
+N_n:=|V_n|&=8F+6G-1,\\
+D_n&=\operatorname{diag}(2G,6F,0,0,0,0,4G+2F,0),\\
+U_n^{\mathsf T}L_{\mathrm{kill},n}U_n&=K+D_n.
+\end{aligned}
+\tag{119.4}
+$$
+
+In particular $N_0=13$ and, in label order $0,\ldots,7$,
+
+$$
+\operatorname{diag}M_0=(2,3,1,1,1,1,3,1),\qquad
+\operatorname{diag}D_0=(2,6,0,0,0,0,6,0).
+\tag{119.5}
+$$
+
+Proof. The twelve original parent-child edges have unordered label pairs
+
+$$
+01,\ 02,\ 26,\ 23,\ 13,\ 37,\ 67,\ 57,\ 15,\ 45,\ 04,\ 46.
+\tag{119.6}
+$$
+
+Here, for example, $01$ denotes the pair of cube labels $\{0,1\}$,
+not an occurrence address. These are exactly the twelve edges of $Q_3$,
+each once, so $U_0^{\mathsf T}L_{\mathrm{closed},0}U_0=K$.
+With the ancestry extension of Definition 117.1,
+$U_n=E_{0,n}U_0$. Apply the full-horizon ancestry-form identity in
+Lemma 117.2, (117.4): old edge differences persist and every born edge
+has zero difference. Its energy identity and original-leaf block
+decomposition hold also from epoch zero; the $n\ge2$ restriction there
+belongs to its quantitative error bounds, none of which is used here.
+Equivalently, this is the serial application of
+[VI Theorem 115.2, (115.3)](FIB_ATOM_RECURSIVE_HOLOGRAPHIC_BOUNDARY_GEOMETRY_CONTINUATION_VI.md).
+This supplies the first identity in (119.4), including $n=0$.
+
+For mass, directly reuse IV (108.9) and IV Theorem 113.2: an original
+alpha leaf contributes its $T_n$ block, with $2F-1$ nodes and $F$
+leaves; an original beta leaf contributes $T_{n+1}$, with $2G-1$ nodes
+and $G$ leaves. Original internal nodes remain singleton ancestry fibres.
+The table groups one original internal node and one beta block into
+class 0, three alpha blocks into class 1, and two beta blocks and one
+alpha block into class 6. Each other class contains exactly one original
+internal node. This gives $M_n$. There are four original alpha leaves,
+three original beta leaves and six internal nodes, giving $N_n$.
+
+Every current leaf has precisely two missing children in (119.3).
+Its label does not change this exterior contribution. The class leaf
+counts are $G,3F,2G+F$ on classes $0,1,6$, respectively, and zero on
+the others. Twice these counts is $D_n$. This proves the killed identity
+without substituting a different boundary convention. Taking $F=G=1$
+gives (119.5). $\square$
+
+### 119.3 Constrained counting flow and the free-flow witness
+
+**Proposition 119.3 (restriction of energy does not give free descent).**
+The counting-metric gradient flow of the energy
+$\tfrac12g^{\mathsf T}L_{\mathrm{closed},n}g$, constrained to
+$g=U_nf$, is
+
+$$
+M_n\dot f=-Kf.
+\tag{119.7}
+$$
+
+For the inherited killed energy it is instead
+$M_n\dot f=-(K+D_n)f$. At every finite $n$, neither free closed heat
+nor free killed heat preserves $\mathcal C_n$. The constraint has
+algebraic rank $N_n-8$; this number is not a native action count or
+physical maintenance price.
+
+Proof. Testing the constrained velocity against $U_nh$ gives
+$h^{\mathsf T}M_n\dot f=-h^{\mathsf T}Kf$ for every $h$; use (119.4)
+for either boundary choice. In particular $M_n$ cannot be dropped when
+the form is written in class-value coordinates. For an explicit failure
+of free invariance, take $f=\mathbf1_{\{1\}}$ and $g=U_nf$. The two
+actual addresses $\varepsilon$ and $111110$ both lie in class 0, but
+
+$$
+(L_{\mathrm{closed},n}g)(\varepsilon)=-1,\qquad
+(L_{\mathrm{closed},n}g)(111110)=0.
+\tag{119.8}
+$$
+
+The root's children have values $1,0$. The beta-block root $111110$
+has value zero, its parent is in class 4, and any born children remain
+in class 0; every incident difference there is zero. Both tested
+amplitudes are zero, so the diagonal killing term also vanishes at
+these addresses. This proves the same witness for $L_{\mathrm{kill},n}$.
+Differentiating free heat at time zero therefore takes $g$ out of
+$\mathcal C_n$. This is the invariant-range distinction already present
+in VI Theorems 115.2 and 116.2, now witnessed inside these cube fibres.
+
+For precision about equality maintenance, the orthogonal projection is
+$P_n=U_nM_n^{-1}U_n^{\mathsf T}$. Writing $L$ for either stage operator,
+the constrained ambient equation is
+
+$$
+\dot g=-Lg+R_n,\qquad R_n=(I-P_n)LU_nf,\qquad g=U_nf.
+\tag{119.9}
+$$
+
+This defines a mathematical reaction; the native menu supplies neither
+its actuation permission nor its physical price. Choose one actual
+representative of each nonempty fibre. The equations equating each
+other amplitude to its representative are independent, numbering
+$N_n-8$. Independence is linear algebra and assigns no resource tariff.
+
+The use of the induced norm is the ordinary quadratic-form restriction
+principle. For comparison of graph conventions, [Chung, *Spectral Graph
+Theory*, Chapter 1, §§1.2 and 1.4](https://fanchung.ucsd.edu/research/cb/ch1.pdf)
+keeps the vertex weights in the normalized Rayleigh quotient. Here the
+weights are the actual fibre counts $M_n$, rather than cube degrees.
+No normalized graph formula replaces these counts. $\square$
+
+### 119.4 Fixed class observables, probability mass and scalar clocks
+
+**Proposition 119.4 (no uniform scalar cube clock in class values).**
+Let $A_n=M_n^{-1}K$ on the fixed coordinates
+$(f_0,\ldots,f_7)$. There are no positive scalars $c_n$ and $k>0$ with
+
+$$
+c_nA_n\longrightarrow kK.
+\tag{119.10}
+$$
+
+There are likewise no such scalars with the full heat-matrix limit
+$e^{-tc_nA_n}\to e^{-tkK}$ on these same eight class-value coordinates
+for every fixed $t>0$. In these statements matrix convergence can be
+taken in any finite-dimensional operator norm. The normalized mass is
+
+$$
+\overline M_n:=\frac{M_n}{N_n}
+\longrightarrow
+\frac{\operatorname{diag}(\varphi,3,0,0,0,0,1+2\varphi,0)}
+     {4+3\varphi},\qquad \varphi=\frac{1+\sqrt5}{2}.
+\tag{119.11}
+$$
+
+Proof. Class 2 has mass one. Its diagonal in (119.10) would give
+$3c_n\to3k$, hence $c_n\to k$. Class 0 has mass $2G\to\infty$,
+so its corresponding diagonal tends to zero, contradicting $3k>0$.
+
+For the heat statement, the unique stationary row probability of
+$e^{-tA_n}$ is $\pi_n^{\mathsf T}$, where
+$\pi_n=N_n^{-1}M_n\mathbf1$. Indeed
+$\pi_n^{\mathsf T}A_n=N_n^{-1}\mathbf1^{\mathsf T}K=0$,
+and the cube is connected. A positive scalar clock does not change it.
+The Fibonacci ratio $G/F\to\varphi$ gives (119.11) and the limiting
+probability $\pi_*$. Passing to a proposed heat-matrix limit gives
+$\pi_*^{\mathsf T}e^{-tkK}=\pi_*^{\mathsf T}$. For any $t>0$,
+the eigenvalues of $e^{-tkK}$ equal one only on $\ker K$, the constants.
+Its only stationary probability is therefore uniform. But $\pi_*$
+vanishes on five classes, a contradiction. This argument excludes
+the full eight-observable heat limit without deducing generator
+convergence from semigroup convergence.
+
+Normalization must keep the form and metric paired. If only the metric
+is changed to $\overline M_n$ while the form stays $K$, its positive
+generator becomes $N_nA_n$; arbitrary scalar clocks still fall under
+the same obstruction by absorbing $N_n$ into $c_n$. If both the
+counting form and counting inner product are divided by $N_n$, the
+generator remains $A_n$. The closed form (119.4) itself is unchanged
+only in the first convention. A singular limiting probability metric
+does not justify replacing the finite counting dynamics by $K$.
+$\square$
+
+### 119.5 Counting isometries and the actual infinite pullback
+
+**Proposition 119.5 (two matrix limits and their vector boundary).**
+Put $H=\{0,1,6\}$, $S=\{2,3,4,5,7\}$, and
+$W_n=U_nM_n^{-1/2}$. These are counting isometries from Euclidean
+$\mathbb R^8$ into $\ell^2(V_n)$. In the ordering $H\sqcup S$,
+
+$$
+\begin{aligned}
+B_n:=W_n^{\mathsf T}L_{\mathrm{closed},n}W_n
+ &=M_n^{-1/2}KM_n^{-1/2}
+   \longrightarrow 0_H\oplus K_{SS},\\
+B_n^{\mathrm k}:=W_n^{\mathsf T}L_{\mathrm{kill},n}W_n
+ &=M_n^{-1/2}(K+D_n)M_n^{-1/2}
+   \longrightarrow I_H\oplus K_{SS}.
+\end{aligned}
+\tag{119.12}
+$$
+
+The edges induced on $S$ form the path $2-3-7-5-4$. Here $K_{SS}$
+is the principal cube submatrix: in that path order it has diagonal
+$3$ throughout and $-1$ on successive neighbours. It retains grounding
+to $H$ and is not the closed path Laplacian.
+
+The consistent maps $q_n$ define $q_\infty$ on
+$\bigcup_nV_n=\{0,1\}^*$. Its literal counting pullback
+$U_\infty f=f\circ q_\infty$ belongs to $\ell^2$ exactly when
+$f|_H=0$. With all finite-stage vectors zero extended to this common
+address space, $U_nf$ has a strong $\ell^2$ limit exactly under that
+condition. For fixed $x\in\mathbb R^8$, $W_nx$ converges weakly to
+the vector supported at the five original $S$ addresses with values
+$x|_S$, and converges strongly exactly when $x|_H=0$.
+
+Proof. By (119.4), masses on $H$ tend to infinity and masses on $S$
+are exactly one. Every entry of $B_n$ touching $H$ tends to zero;
+the $S$ block remains $K_{SS}$. Moreover
+
+$$
+\frac{(D_n)_{00}}{(M_n)_{00}}=1,\qquad
+\frac{(D_n)_{11}}{(M_n)_{11}}=\frac{6F}{6F-3}\to1,\qquad
+\frac{(D_n)_{66}}{(M_n)_{66}}
+ =\frac{4G+2F}{4G+2F-3}\to1.
+\tag{119.13}
+$$
+
+The other killing ratios are zero. This proves (119.12). Inspection
+of (119.6) gives the asserted path. Equivalently $K_{SS}$ is its
+closed path Laplacian plus the diagonal $(2,1,1,1,2)$ in path order.
+Finite-dimensional continuity also gives the corresponding heat-matrix
+limits $e^{-tB_n}$ and $e^{-tB_n^{\mathrm k}}$ for each fixed $t\ge0$.
+These use isometric coordinates $x=M_n^{1/2}f$, which vary with $n$;
+they are different coordinates from Proposition 119.4's fixed class values.
+
+The domain union is the address exhaustion of Continuation (55.2),
+applied to this seed. Each $H$ fibre has infinitely many occurrences,
+whereas each $S$ fibre is a single original internal address. A nonzero
+constant amplitude on any $H$ fibre has infinite counting norm. This
+proves the exact domain of $U_\infty$. If $f|_H=0$, the zero-extended
+$U_nf$ are already the same finitely supported vector for every $n$;
+otherwise their squared norms $f^{\mathsf T}M_nf$ diverge.
+
+Each $H$ column of $W_n$ has norm one but tends pointwise to zero,
+since its value is the reciprocal square root of its growing fibre
+size. Boundedness and density of finitely supported test vectors give
+weak convergence to zero. The $S$ columns are fixed point masses.
+Thus the weak limit of $W_nx$ has squared norm $\|x|_S\|^2$, while
+$\|W_nx\|^2=\|x\|^2$. A strong limit exists exactly when $x|_H=0$.
+Consequently the zero block in (119.12) does not exhibit nonzero
+strong limiting counting-$\ell^2$ vectors on $H$. On the actual domain
+$f|_H=0$, the infinite edge form is exactly
+$f_S^{\mathsf T}K_{SS}f_S$, since its support and every incident edge
+are already in the original tree. $\square$
+
+### 119.6 Field descent and what selects the cube
+
+**Proposition 119.6 (common field failure and a different persistent form).**
+The common source field of Continuation Theorem 55.3 does not factor
+through $q_n$ at any stage, nor through $q_\infty$. Compressing an
+external force yields a class covector, without supplying field or
+source intertwining. Furthermore the same $u,\rho$ admit the exact
+persistent thirteen-class original-occurrence form
+$L_{\mathrm{closed},0}$, as well as the declared eight-class cube form.
+Thus whole-rho energy persistence alone does not select this cube.
+
+Proof. The common field is $\phi(p)=2^{-|p|}$. The two addresses of
+(119.8) have the same class but
+
+$$
+\phi(\varepsilon)=1,\qquad \phi(111110)=1/64.
+\tag{119.14}
+$$
+
+This violates fibre constancy. It is exactly the obstruction described
+by the existing
+[answerability criterion](../../../D5/S0/Rewriting/Quotients/AnswerabilityCriterion.lean);
+the adjacent
+[dynamics descent criterion](../../../D5/S0/Rewriting/Quotients/DynamicsDescent.lean)
+concerns a self-map preserving quotient fibres. For heat on amplitudes,
+the explicit invariant-range failure is (119.8), not an identification
+of that discrete self-map theorem with a new operator theorem.
+
+For any ambient force $b_n$, testing the constrained equation supplies
+the covector $U_n^{\mathsf T}b_n$ and hence the class velocity contribution
+$M_n^{-1}U_n^{\mathsf T}b_n$. For example
+$U_n^{\mathsf T}\mathbf1_{\{\varepsilon\}}=\mathbf1_{\{0\}}$.
+This equality does not say $\phi|_{V_n}=U_n\psi$ or
+$L_{\mathrm{closed},n}U_n=U_nA_n$. The field in (119.14) is the
+common infinite field restricted to $V_n$, not a newly solved killed
+field. In fact (55.3)--(55.4) give the more precise boundary relation
+
+$$
+L_{\mathrm{kill},n}(\phi|_{V_n})
+ =\mathbf1_{\{\varepsilon\}}
+   +\mathbf1_{\operatorname{Leaf}(\rho^nu)}\,\phi|_{V_n},
+\tag{119.15}
+$$
+
+because the two exterior child values at a leaf sum to its own field
+value. Even the forcing in a finite killed equation therefore retains
+its stated boundary convention.
+
+For the alternative, give each of the thirteen original occurrences
+its own class and copy each original leaf value over its substituted
+block. Its indicator pullback is $\widetilde U_n=E_{0,n}$, and the
+same supplied ancestry identity gives
+
+$$
+\widetilde U_n^{\mathsf T}L_{\mathrm{closed},n}\widetilde U_n
+ =L_{\mathrm{closed},0},\qquad U_n=\widetilde U_nU_0.
+\tag{119.16}
+$$
+
+This is the thirteen-vertex seed-tree form, of rank twelve, whereas
+$K$ is an eight-vertex cube form of rank seven. Both persist under
+the very same source substitution. The additional grouping $q_0$
+supplies the cube. In particular it groups the root with a beta leaf,
+and its class 6 groups beta and alpha leaves. These are not equal
+rooted fringes under
+[ExactSharing's definition of complete labelled ordered subtrees](../../../D5/S3/Arith/FibonacciAtomic/SourceCoordinates/ExactSharing.lean).
+The literal constructors, substitution and address meanings remain
+those of
+[GenealogicalFiberTransport.Source and substitution](../../../D5/S3/Arith/FibonacciAtomic/GenealogicalFiberTransport.lean)
+and
+[ActualTreeReadoutAcquisition.readout and nodes](../../../D5/S3/Arith/FibonacciAtomic/ActualTreeReadoutAcquisition.lean).
+
+The source-specific deductions (119.4), (119.8), (119.11)--(119.16)
+are repo-derived applications of the cited suppliers, without a
+worldwide-priority or exhaustive-literature claim. Form restriction
+is also distinct from static elimination: the latter replaces an
+interior block by its Schur complement, as in
+[Dörfler--Bullo, arXiv:1102.2950v1, §2.1](https://arxiv.org/pdf/1102.2950v1)
+and the [existing Kron-reduction note](../../../Library/GraphInvariants/dorflerbullo2013kron.md).
+Here no interior amplitude is minimized out; the domain is constrained
+and its counting metric is retained. The non-singleton fibres in the table are
+disconnected, so no connected-fibre coarsening hypothesis is asserted.
+These conclusions limit dimension inference from this energy identity.
+They neither establish physical spatial dimension three nor rule out
+other source-to-space bridges with their own additional relations.
+$\square$
+
+## 119.99 追加锚（本行以下为增补区）
+
+## 120. Unit-clock cube approximation and native cyclic heat factors
+
+### 120.1 Actual occurrences, boundaries and the comparison norm
+
+**Definition 120.1 (the source and kinetic comparison contract).** Use the
+nonempty finite ordered source algebra of IV Definition 112.1 and the
+all-original convention of Definition 115.1:
+
+$$
+\mathcal T::=\alpha\mid\beta\mid\langle\mathcal T,\mathcal T\rangle,
+\qquad
+\rho\alpha=\beta,\quad \rho\beta=\langle\beta,\alpha\rangle,
+\quad \rho\langle s,v\rangle=\langle\rho s,\rho v\rangle.
+\tag{120.1}
+$$
+
+For $s\in\mathcal T$, let $V=\operatorname{Pos}(s)$ contain all literal
+occurrence addresses, including the root $o=\varepsilon$. Distinct
+addresses remain distinct even when their complete ordered subtrees are
+equal. The edges are exactly the existing parent--child seams. Thus $V$
+is a nonempty finite full binary tree, with $N=|V|$. In the source
+[GenealogicalFiberTransport.Source and substitution](../../../D5/S3/Arith/FibonacciAtomic/GenealogicalFiberTransport.lean),
+$\mathcal T$ is `FreeMagma Bool`, with true for alpha and false for beta;
+in [ActualTreeReadoutAcquisition.readout and nodes](../../../D5/S3/Arith/FibonacciAtomic/ActualTreeReadoutAcquisition.lean),
+false and true in an address mean left and right, respectively. Here they
+are written $L,R$. These are two different uses of the Boolean alphabet.
+The all-original domain includes alpha and beta singletons; it is larger
+than the branch-root acquired fibre in IV (112.1).
+
+Give each vertex counting mass one and each seam symmetric conductance
+one. On functions on $V$, define
+
+$$
+\begin{aligned}
+(L_Vh)(x)&=\sum_{y\sim_V x}(h(x)-h(y)),\\
+L_V^{\mathrm k}&=L_V+
+       2\operatorname{diag}(\mathbf1_{\operatorname{Leaf}(s)}),
+& A_V&\in\{L_V,L_V^{\mathrm k}\},\\
+\mu_V&=N^{-1}\sum_{x\in V}\delta_x,
+& \|h\|_{\mu_V}^2&=N^{-1}\sum_{x\in V}|h(x)|^2.
+\end{aligned}
+\tag{120.2}
+$$
+
+The killed choice is exactly Continuation Definition 55.2, (55.4), and
+(119.3): both missing children contribute at every current leaf. It is
+the compression of the infinite kinetic Laplacian to zero exterior
+values. Its diagonal is two at the root and three at every nonroot
+vertex. There is no artificial parent seam at the root. A singleton has
+$L_V=[0]$ and $L_V^{\mathrm k}=[2]$. For $N>1$, the closed degrees are
+two at the root, three at nonroot internal vertices and one at leaves.
+
+The infinite carrier and its kinetic law are those of
+[Continuation Definitions 55.1--55.2](FIB_ATOM_RECURSIVE_HOLOGRAPHIC_BOUNDARY_GEOMETRY_CONTINUATION.md):
+
+$$
+\begin{aligned}
+\mathcal P&=\{L,R\}^{*},&p&\sim pL,quad p\sim pR,\\
+(L_\infty h)(p)&=\sum_{z\sim p}(h(p)-h(z)),\\
+D_n(u)&=\operatorname{Pos}(\rho^nu),&
+\{p:|p|\le\lfloor n/2\rfloor\}&\subseteq D_n(u),
+\qquad \bigcup_{n\ge0}D_n(u)=\mathcal P.
+\end{aligned}
+\tag{120.3}
+$$
+
+The domains $D_n(u)$ are the actual, generally irregular domains of that
+source; contained balls in (120.3) are only comparison subsets. Root
+degree in $\mathcal P$ is two and all other degrees are three.
+
+For the cube take $B=Q_3=\{0,1\}^3$ and $K=L_{Q_3}$, with one unit edge
+when exactly one coordinate changes. For a fixed integer $m\ge3$ take
+$B=C_m=\mathbb Z/m\mathbb Z$ and
+$K_m f(b)=2f(b)-f(b+1)-f(b-1)$, the simple unit cycle Laplacian.
+For either target, write $e_c=\mathbf1_{\{c\}}$. Every map
+$\pi:V\to B$ defines the observable pullback $U_\pi f=f\circ\pi$ and
+the discrepancy
+
+$$
+E_{\pi,c}^{A_V,K_B}(t)
+ =e^{-tA_V}U_\pi e_c-U_\pi e^{-tK_B}e_c,
+\qquad c\in B,\quad t\ge0.
+\tag{120.4}
+$$
+
+All target indicators are tested, including those of unattained labels.
+If $\pi$ is not onto, this pullback is still defined but is not injective;
+the map is not called an onto quotient. No inverse fibre-mass matrix is
+used, and error is measured over all actual source vertices, rather than
+uniformly over attained classes.
+
+The same $t$ in (120.4) is the unit counting heat clock. Using
+$\|\cdot\|_{\mu_V}$ does not change $A_V$: its paired energy is the
+counting energy divided by $N$, with the analogous division of the
+killing energy. Pairing the unscaled edge energy with this probability
+inner product instead gives $NL_V$, as in (116.1)--(116.2). That is a
+different clock. The operators here are kinetic; $A_V$ does not denote
+the potential-bearing $aL-gM_\phi$ of §55.
+
+The source/history projection remains the one in IV Contract 112.1a and
+Continuation Definition 55.1: immutable INITIAL, labels, brackets,
+left/right order, distinct occurrences, actual versions, original Reads,
+acquisition and copy permissions, chronological acceptances and refusals,
+and absorbing Stop are retained. An uncapped native menu and a separately
+declared guarded menu keep their respective scopes; a refusal changes no
+source or epoch. Quantification over $n$ means the mathematical family
+or separately legal finite prefixes, without raising a fixed guard or
+resuming a stopped history. Neither a limit Read nor an event after an
+infinite prefix is defined. Scalar observables, unit conductances and
+this heat clock are added mathematical contracts. Their heat laws and
+the address readout below grant no native preparation, equality
+maintenance, reset, clone, seam alteration or resource tariff.
+
+### 120.2 A uniform finite-time obstruction for every cube map
+
+**Proposition 120.2 (all-map cube-indicator floor).** For every
+$s\in\mathcal T$, every map $\pi:\operatorname{Pos}(s)\to Q_3$, either
+choice $A_V$ in (120.2), and $0\le t\le2/15$, put
+$g_3(t)=t-15t^2/2$. Then
+
+$$
+\max_{c\in Q_3}\|E_{\pi,c}^{A_V,K}(t)\|_{\mu_V}
+ \ge g_3(t)\sqrt{\frac{N+2}{8N}}.
+\tag{120.5}
+$$
+
+In particular, simultaneously for every such tree and map,
+
+$$
+\max_{c\in Q_3}
+ \|e^{-A_V/15}U_\pi e_c-U_\pi e^{-K/15}e_c\|_{\mu_V}
+ \ge\frac1{30}\sqrt{\frac{N+2}{8N}}
+ \ge\frac1{60\sqrt2}.
+\tag{120.6}
+$$
+
+This includes every actual $D_n(u)$ and every surjective eight-class
+partition when one exists. No graph-homomorphism, connected-fibre or
+exact-lumpability hypothesis is imposed.
+
+Proof. The common degree bound gives the nonnegative substochastic
+matrix $R_V=I-A_V/3$. It is stochastic for the closed choice. In the
+killed case, send each missing row mass to an absorbing cemetery, with
+every test function zero there. The standard uniformization identity,
+already used in Continuation (55.9), becomes
+
+$$
+e^{-tA_V}
+ =e^{-3t}\sum_{k=0}^\infty\frac{(3t)^k}{k!}R_V^k.
+\tag{120.7}
+$$
+
+This is the mature Poisson construction of
+[Rao--Teh, *Fast MCMC Sampling for Markov Jump Processes and Extensions*,
+arXiv:1208.4818v3, §3.1 and Proposition 1](https://arxiv.org/pdf/1208.4818v3).
+Their column-distribution convention is transposed to rows acting on
+observables here: the rate matrix is $-A_V$, the dominating rate is
+$\Omega=3$, and the discrete matrix is $I-A_V/3$. Cemetery augmentation
+handles killing. Formula (120.7) also follows directly from the
+convergent exponential series, since $A_V=3(I-R_V)$.
+
+Fix $x\in V$, write $b=\pi(x)$, and let $c$ be a cube neighbour of $b$
+that is absent among $\{\pi(y):y\sim_V x\}$. Such a pair $(x,c)$ will be
+called a missing pair within this proof. Since $c\ne b$, both
+$(U_\pi e_c)(x)$ and $(R_VU_\pi e_c)(x)$ are zero. All later iterates
+of this indicator lie between zero and one. Consequently
+
+$$
+\begin{aligned}
+0\le(e^{-tA_V}U_\pi e_c)(x)
+ &\le\mathbb P\{Z\ge2\}
+ \le\tfrac12\mathbb E[Z(Z-1)]
+ =\tfrac92t^2,\qquad Z\sim\operatorname{Poisson}(3t).
+\end{aligned}
+\tag{120.8}
+$$
+
+In the unit cube chain, the event of exactly one jump, along the
+specified edge $b\to c$, has probability $te^{-3t}$. Thus
+
+$$
+\begin{aligned}
+(e^{-tK}e_c)(b)&\ge te^{-3t}\ge t-3t^2,\\
+(U_\pi e^{-tK}e_c)(x)-(e^{-tA_V}U_\pi e_c)(x)
+ &\ge t-\tfrac{15}{2}t^2=g_3(t).
+\end{aligned}
+\tag{120.9}
+$$
+
+The last quantity is nonnegative on the stated interval, so its square
+is a lower bound for the squared discrepancy at every missing pair.
+At $x$, at most $\deg_V(x)$ of the three distinct cube-neighbour labels
+can be represented by actual neighbours. The number $M$ of missing
+pairs therefore satisfies
+
+$$
+M\ge\sum_{x\in V}(3-\deg_V(x))
+ =3N-2|E_V|=3N-2(N-1)=N+2.
+\tag{120.10}
+$$
+
+All these are distinct vertex/test pairs, even when several use the
+same target label. Hence
+
+$$
+\sum_{c\in Q_3}\|E_{\pi,c}^{A_V,K}(t)\|_{\mu_V}^2
+ =\frac1N\sum_{x\in V}\sum_{c\in Q_3}|E_{\pi,c}^{A_V,K}(t)(x)|^2
+ \ge\frac{N+2}{N}g_3(t)^2.
+\tag{120.11}
+$$
+
+The largest of the eight squared norms is at least one eighth of their
+sum. This proves (120.5); $g_3(1/15)=1/30$ gives (120.6).
+
+The root is included in (120.10): for $N>1$ its degree is two, so it
+contributes at least one missing pair. A singleton has degree zero and
+exactly three missing cube-neighbour labels, agreeing with $N+2=3$.
+For each of those labels its pullback is identically zero, under either
+$[0]$ or $[2]$, and the target one-jump estimate still applies. No onto
+map exists when $N<8$; the stronger arbitrary-map statement remains
+nonvacuous there. In fact full-tree sizes are odd. Empty fibres never
+invalidate a test in (120.4).
+
+The finite set of eight indicators is fixed; a maximizing indicator may
+depend on the source and map. Thus no sequence of these finite maps can
+make all eight errors tend to zero at $t=1/15$ in this norm and clock.
+The argument does not say that every individual observable fails.
+It strengthens the chosen-map free-flow failure (119.8) by a whole-vertex
+quantitative obstruction independent of the choice of map. The
+constrained form and mass identities of §119 are not hypotheses here.
+$\square$
+
+### 120.3 A fixed incoming-increment colouring of the actual infinite carrier
+
+**Definition 120.3 (cycle residue and increment memory).** Fix an integer
+$m\ge3$. Define $q:\mathcal P\to C_m$ and an auxiliary integer-valued
+state $\delta:\mathcal P\to\{-1,0,+1\}$ by
+$q(o)=0$, $\delta(o)=0$, and the ordered recursion
+
+$$
+\begin{array}{c|cc}
+\delta(p)&\delta(pL)&\delta(pR)\\ \hline
+0&+1&-1\\
++1&0&+1\\
+-1&-1&0
+\end{array}
+\qquad
+q(p\sigma)=q(p)+\delta(p\sigma)\pmod m,
+\quad \sigma\in\{L,R\}.
+\tag{120.12}
+$$
+
+For a nonroot vertex, $\delta(p)$ records its incoming increment, with
+the displayed root convention. It is distinct from the retained colour
+residue $q(p)$. The recursion retains the pair $(q,\delta)$, with at most
+$3m$ possible pairs, rather than computing the colour with only three
+states. Both are fixed functions of the literal finite address,
+independent of source leaf labels or substitution stage. This $q$ is a
+different map from the seed-dependent cube maps of Definition 119.1.
+Write $Uf=f\circ q$ on bounded complex observables.
+
+**Proposition 120.4 (native bounded-observable cycle heat and path laws).**
+For every fixed $m\ge3$, the map (120.12) is onto with all fibres infinite.
+On the displayed supremum-norm spaces it satisfies
+
+$$
+\begin{aligned}
+U&:\ell^\infty(C_m)\longrightarrow\ell^\infty(\mathcal P),
+&\|Uf\|_\infty&=\|f\|_\infty,\\
+L_\infty U&=UK_m,
+&e^{-tL_\infty}U&=Ue^{-tK_m}\qquad(t\ge0).
+\end{aligned}
+\tag{120.13}
+$$
+
+For every initial probability law on $\mathcal P$, the image under $q$
+of the unit-seam continuous-time source chain has exactly the unit
+cycle path law, with rate one to each adjacent residue and initial law
+the pushforward under $q$. The full-graph colouring is external
+equitable, rather than a cover of the full loopless graph. Independently,
+no map from this actual rooted $\mathcal P$ into $Q_3$ intertwines all
+cube-indicator generators, or their heat laws for all $t\ge0$.
+
+Proof. At the root the children have colours $b+1,b-1$, where $b=q(o)$,
+and there is no parent. At a nonroot vertex of colour $b$, its parent
+has colour $b-\delta(p)$. The three possibilities in (120.12) give
+
+$$
+\begin{array}{c|c|cc}
+\delta(p)&q(\operatorname{par}(p))&q(pL)&q(pR)\\ \hline
+0&b&b+1&b-1\\
++1&b-1&b&b+1\\
+-1&b+1&b-1&b
+\end{array}
+\tag{120.14}
+$$
+
+The residues $b,b+1,b-1$ are distinct for $m\ge3$, including $m=3$.
+Every actual vertex therefore has exactly one neighbour in each of
+the two adjacent cycle fibres. Each nonroot has one further neighbour
+in its own fibre, whereas the root has no such neighbour. In
+$L_\infty Uf$ the internal-fibre seam contributes zero, and the two
+external seams give
+
+$$
+(L_\infty Uf)(p)
+ =(f(b)-f(b+1))+(f(b)-f(b-1))=(UK_mf)(p).
+\tag{120.15}
+$$
+
+For $p_k=LR^{k-1}$, $k\ge1$, the recursion gives
+$\delta(p_k)=+1$ and $q(p_k)=k\pmod m$. Each residue occurs infinitely
+often along these distinct addresses. This proves surjectivity, the
+infinite-fibre assertion and the supremum-norm isometry. On the spaces
+in (120.13), $\|L_\infty\|\le6$ and $\|K_m\|\le4$. Iterating (120.15)
+and using norm-convergent exponential series proves the heat identity
+on every bounded observable, without a counting-$\ell^2$ assumption.
+
+For the full path law set $R_\infty=I-L_\infty/3$. The root has a
+virtual holding probability $1/3$; at nonroots each of the three actual
+seams has probability $1/3$. In both cases the observed row is
+
+$$
+\sum_{q(z)=c}R_\infty(p,z)
+ =\overline R(q(p),c),\qquad
+\overline R=I-K_m/3,
+\tag{120.16}
+$$
+
+with probabilities $1/3$ to $b+1$, $b-1$ and $b$. At a nonroot the last
+probability is an actual same-fibre transition. Conditional on any
+observed past, averaging (120.16) over the possible current source
+representatives leaves this same row. Thus the observed discrete chain
+is Markov with matrix $\overline R$ for every initial law, not merely
+one special or stationary law. Use an independent rate-three Poisson
+process for its event times. The source process so constructed has
+generator $-L_\infty$ by (120.7)'s bounded-operator version, and its
+observed process uses the same event times with matrix $\overline R$.
+Its generator is $3(\overline R-I)=-K_m$. Ignoring repeated observed
+states gives exactly the unit-cycle jump path. A finite number of
+Poisson events on every bounded time interval proves nonexplosion.
+
+Here (120.15) is the source-specific external equitable condition. Its
+standard finite-graph formulation is $LH=HL_\pi$ in
+[Schaub et al., *Graph partitions and cluster synchronization in networks
+of oscillators*, arXiv:1608.04283, §II (1)--(6), Remark 1 and
+§III.A (9)--(11)](https://arxiv.org/pdf/1608.04283): their indicator
+matrix $H$ corresponds to $U$, and their quotient Laplacian to $K_m$.
+The internal-cell cancellation is the same one as in (120.15). Their
+finite inverse fibre-count formula is not used for the infinite fibres.
+Likewise (120.16) is the observed-row criterion for strong lumpability,
+as in [Wolfer--Watanabe, *Geometric Aspects of Data-Processing of Markov
+Chains*, arXiv:2203.04575v3, §3.4, Theorem 3.1](https://arxiv.org/pdf/2203.04575v3),
+which attributes that criterion to Kemeny--Snell. Their finite source
+$Y$, target $X$, map $\kappa$ and kernel $P$ correspond here to
+$\mathcal P,C_m,q,R_\infty$; the countable-source extension used here
+is justified by the explicit conditional-row and bounded-rate argument
+above, not by applying a finite-only assertion without proof. Existing
+repository row-factorization suppliers are
+[StochasticDescentLumpability.StronglyLumpable and ExactQuotientKernel](../../../D5/S3/Estimation/DecisionRisk/StochasticDescentLumpability.lean)
+and [StrongLumpabilityDescent.strong_lumpability_descent_tfae](../../../D5/S3/Observer/ProbabilisticClosure/StrongLumpabilityDescent.lean).
+The local calculation supplies their representative-independence
+condition; it is not a new general lumpability theorem.
+
+Some actual seams have both endpoints in the same fibre, so $q$ is not
+a homomorphism of the full simple source graph into the loopless cycle,
+and in particular is not a locally bijective cover of that full graph.
+For comparison only, deleting the internal-fibre seams leaves exactly
+two edges at every vertex, one to each adjacent colour. On each connected
+component the restriction is locally bijective, and its nonempty image
+is closed under both target neighbours, hence is all of $C_m$. This is
+the standard cycle-cover picture; see
+[Fiala, *Structure and Complexity of Locally Constrained Graph
+Homomorphisms*, §3.1, Definition 3.12](https://kam.mff.cuni.cz/~fiala/papers/habl.pdf)
+for the locally bijective universal-cover convention. This comparison
+deletes no seam in the actual source or in $L_\infty$. Full adjacency
+equitability also fails: the fibre of colour zero contains the root
+with zero same-colour neighbours and $p_m$ with one.
+
+Finally, let $\pi:\mathcal P\to Q_3$ be any map. Its root image $b$ has
+three distinct target neighbours, and at most two can appear at the two
+actual root neighbours. For an absent target-neighbour label $c$,
+
+$$
+(L_\infty U_\pi e_c)(o)=0,
+\qquad (U_\pi K e_c)(o)=-1.
+\tag{120.17}
+$$
+
+This excludes generator intertwining. Since both operators on bounded
+observables are bounded, differentiating any proposed all-time heat
+identity at zero would give that impossible generator identity. The
+degree-two root is retained throughout; a different, degree-three root
+from a cube universal cover cannot replace it. $\square$
+
+### 120.4 Local convergence and a persistent whole-vertex cycle error
+
+**Proposition 120.5 (actual-domain heat convergence with a Poisson tail).**
+Fix $u\in\mathcal T$ and $m\ge3$, and use exactly $D_n(u)$ in (120.3).
+Let $q_n=q|_{D_n(u)}$, $U_nf=f\circ q_n$, $N_n=|D_n(u)|$,
+$\mu_n=\mu_{D_n(u)}$, and let $A_n$ be either boundary choice in
+(120.2). If $R$ is a nonnegative integer and the infinite-graph ball
+$B_R(x)$ is contained in $D_n(u)$, then for every bounded complex
+$f:C_m\to\mathbb C$ and every $0\le T<\infty$,
+
+$$
+\sup_{0\le t\le T}
+ \left|(e^{-tA_n}U_nf)(x)-(Ue^{-tK_m}f)(x)\right|
+ \le 2\|f\|_\infty\,
+       \mathbb P\{\operatorname{Poisson}(3T)>R\}.
+\tag{120.18}
+$$
+
+In particular heat converges at every fixed address, uniformly on each
+bounded time interval and uniformly over any fixed finite set of
+addresses, for either finite boundary convention.
+
+Proof. Set $R_n=I-A_n/3$ and retain $R_\infty$ of (120.16).
+For the killed choice $R_n$ is the compression of $R_\infty$; the two
+omitted child transitions at each leaf go to the zero-valued cemetery.
+For the closed choice those transitions become holds at the leaf.
+At a singleton the resulting rows are respectively holding $1/3$
+with cemetery probability $2/3$, and holding one. Away from the finite
+boundary every row agrees with the infinite row, including the actual
+root convention.
+
+Put $F=Uf$. For $k\le R$, every transition start in a $k$-step path
+from $x$ has distance at most $k-1<R$ from $x$; each neighbour it can
+use lies in $B_R(x)$. Thus no changed boundary row is needed, and
+
+$$
+(R_n^k(F|_{D_n}))(x)=(R_\infty^kF)(x)
+\qquad(0\le k\le R).
+\tag{120.19}
+$$
+
+For $R=0$ this simply asserts equality of the initial values.
+All later evaluations have magnitude at most $\|F\|_\infty$, since
+both the stochastic and substochastic matrices are contractions on
+bounded functions. Subtracting their common rate-three Poisson series
+therefore bounds the difference by
+$2\|F\|_\infty\mathbb P\{\operatorname{Poisson}(3t)>R\}$.
+Use (120.13), $\|F\|_\infty=\|f\|_\infty$ and monotonicity of the
+Poisson tail for $t\le T$ to obtain (120.18).
+
+For a fixed address $x$, (120.3) permits
+
+$$
+R=R_n(x):=\lfloor n/2\rfloor-|x|\ge0,
+\tag{120.20}
+$$
+
+because $B_R(x)\subseteq B_{R+|x|}(o)\subseteq D_n(u)$.
+This radius tends to infinity. For fixed $T$ the tail in (120.18) is
+explicitly $e^{-3T}\sum_{k>R}(3T)^k/k!$ and tends to zero. For a finite
+address set $S$, take $R=\lfloor n/2\rfloor-\max_{x\in S}|x|$ once
+nonnegative. The same estimate holds simultaneously at every $x\in S$
+and for all $\|f\|_\infty\le1$, in particular all $m$ indicators.
+Only the contained-ball inclusion is used: the finite domains remain
+the actual $D_n(u)$, not replacement balls. This is a bounded-time,
+fixed-address statement, without a claim of convergence uniformly over
+the whole growing domain or on time windows growing with $n$.
+$\square$
+
+**Proposition 120.6 (cycle-indicator whole-volume floor on every actual cut).**
+For the same fixed $u,m$ and every $n\ge0$, either choice $A_n$, and
+$0\le t\le2/13$, put $g_2(t)=t-13t^2/2$. Then
+
+$$
+\max_{c\in C_m}
+ \|e^{-tA_n}U_ne_c-U_ne^{-tK_m}e_c\|_{\mu_n}
+ \ge g_2(t)\sqrt{\frac{N_n+1}{2mN_n}}.
+\tag{120.21}
+$$
+
+In particular
+
+$$
+\max_{c\in C_m}
+ \|e^{-A_n/13}U_ne_c-U_ne^{-K_m/13}e_c\|_{\mu_n}
+ \ge\frac1{26}\sqrt{\frac{N_n+1}{2mN_n}}
+ \ge\frac1{26\sqrt{2m}}.
+\tag{120.22}
+$$
+
+No onto hypothesis on the finite restriction $q_n$ is required.
+
+Proof. Write $N=N_n$ and let $I$ and $\ell$ be the numbers of internal
+vertices and leaves. Every internal vertex has two children, so
+$N-1=2I$ and $\ell=N-I=(N+1)/2$, including a singleton. At every leaf
+$x$, its at-most-one actual neighbour in the finite domain cannot
+represent both distinct cycle neighbours of $q_n(x)$. Choose one
+absent adjacent colour $c_x$. The pair $(x,c_x)$ satisfies the zero-
+and one-event condition of (120.8). Both finite boundary choices
+therefore give source heat at most $9t^2/2$. On the cycle, the event
+of exactly one jump along the specified edge has probability
+$te^{-2t}\ge t-2t^2$. Hence target minus source is at least
+$g_2(t)$ at each selected pair. It is nonnegative on the stated
+interval. Summing one squared error per leaf yields
+
+$$
+\sum_{c\in C_m}
+ \|e^{-tA_n}U_ne_c-U_ne^{-tK_m}e_c\|_{\mu_n}^2
+ \ge\frac{N+1}{2N}g_2(t)^2.
+\tag{120.23}
+$$
+
+The largest of the $m$ squared norms is at least $1/m$ of this sum,
+proving (120.21). At $t=1/13$, $g_2(t)=1/26$, giving (120.22).
+For a singleton $q_n(o)=0$, either adjacent colour is unattained and
+its pullback is identically zero. Its source heat is exactly zero for
+both $[0]$ and $[2]$, while the same target one-jump bound applies.
+Thus the leaf argument includes this case without asserting a
+surjection from a singleton.
+
+Initially a cut can omit colours. Nevertheless all tests in (120.21)
+are defined on the full fixed $C_m$. The restriction eventually becomes
+onto: the addresses $o,p_1,\ldots,p_{m-1}$ have all $m$ residues, and
+belong to $B_{m-1}(o)$. By (120.3), $n\ge2(m-1)$ is a sufficient
+threshold. This is not an optimized threshold or a claim that any
+particular capped or stopped history reaches it.
+
+There is no conflict with Proposition 120.5. For every fixed finite
+address set, sufficiently advanced cuts put it strictly inside the
+domain, so its vertices are no longer leaves. Meanwhile
+
+$$
+N_n\longrightarrow\infty,\qquad
+\mu_n(\operatorname{Leaf}(\rho^nu))
+ =\frac{N_n+1}{2N_n}\longrightarrow\frac12,
+\qquad \mu_n(\{x\})=\frac1{N_n}\longrightarrow0
+\tag{120.24}
+$$
+
+for each eventually present fixed $x$. The lower-bound witnesses
+escape every fixed finite address set but retain a positive part of
+the changing whole-vertex probability. Pointwise dominated convergence
+with respect to one fixed measure does not establish convergence in
+these varying norms. For each $n$ at least one of the same $m$ fixed
+indicator tests has the floor (120.22). Finite pigeonhole gives one
+fixed colour $c$ and an infinite subsequence of stages with error at
+least $1/(26\sqrt{2m})$; neither the maximizing colour at every stage
+nor failure of every colour is asserted. The conclusion fixes $m$
+before taking $n\to\infty$, and gives no positive floor uniform in
+growing $m$. $\square$
+
+### 120.5 Counting vectors, the common field and the separate ray law
+
+**Proposition 120.7 (literal pullback domain and field non-descent).**
+For the infinite colouring of Definition 120.3,
+
+$$
+\{f:C_m\to\mathbb C:Uf\in\ell^2(\mathcal P,\mathrm{count})\}
+ =\{0\}.
+\tag{120.25}
+$$
+
+The common radial field $\phi(p)=2^{-|p|}$ of Continuation Theorem 55.3
+is not $\psi\circ q$ for any function $\psi$ on $C_m$. In particular
+the kinetic intertwining (120.13) does not extend, through this same
+pullback, to the potential multiplier of that common field. Moreover,
+prefix-colour limits do not define a readout on every infinite ray.
+
+Proof. For any nonzero $f$, choose $c$ with $f(c)\ne0$. There are
+infinitely many $k\ge1$ with $q(p_k)=c$, so
+
+$$
+\sum_{p\in\mathcal P}|f(q(p))|^2
+ \ge\sum_{\substack{k\ge1\\k\equiv c\ (\mathrm{mod}\ m)}}|f(c)|^2
+ =\infty.
+\tag{120.26}
+$$
+
+The zero function has zero pullback, proving (120.25). Although
+$L_\infty$ separately acts on counting $\ell^2$, no nonzero $Uf$ in
+(120.13) lies in that space. This is the fibre-counting distinction
+already stated in III Specification 81.5 and Proposition 119.5,
+here with every cycle fibre infinite rather than only selected cube
+fibres. It is not a general impossibility assertion about other Hilbert
+spaces or other correspondences.
+
+For field descent, $q(o)=q(p_m)=0$ but
+
+$$
+\phi(o)=1,\qquad \phi(p_m)=2^{-m}.
+\tag{120.27}
+$$
+
+This violates constancy on a fibre. It also witnesses non-descent on
+every finite cut containing these two addresses, in particular for
+$n\ge2m$. If $M_\phi U=UM_\psi$ were true on bounded observables,
+applying it to the constant one would give $\phi=U\psi$, contradicting
+(120.27). Since the kinetic identity already holds, an identity
+$(aL_\infty-gM_\phi)U=U(aK_m-gM_\psi)$ with $g>0$ would imply that
+same impossible multiplier identity. The source term
+$\mathbf1_{\{o\}}$ likewise differs at $o,p_m$ and is not a literal
+pullback. A projected force covector, as in §119.6, is a different
+relation. Finally, the prefixes of the ray $LRR\cdots$ have colours
+$k\pmod m$, $k\ge1$, and are not eventually constant. A convergent
+sequence in the finite discrete cycle must be eventually constant,
+so this ray has no prefix-colour limit. This neither rules out separately
+supplied measurable ray readouts nor asserts positive ray probability
+for this single example. $\square$
+
+**Definition 120.8 (ray carrier and the scope of the added laws).** Retain
+exactly the original probability $\nu_u$ of (115.3) on infinite rays
+$\partial\mathcal P=\{L,R\}^{\mathbb N}$, with its cylinder sigma algebra.
+It is not counting measure on occurrence vertices. A ray observable
+readout would be a separately specified measurable function on
+$\partial\mathcal P$; a ray heat or path quotient would additionally
+specify its source law, induced fibre probabilities, generator or
+semigroup, domains and a same-map correspondence. These data are not
+part of Definition 120.3's finite-address readout.
+
+Neither (120.18) nor vertex normalization constructs an autonomous
+ray-boundary law or changes (120.25).
+
+All numerical floors above refer to unit symmetric seam rates and
+the unit counting clock, measured in normalized whole-vertex $L^2$.
+No transfer of these constants or witness times is made to $NL$,
+degree-normalized Laplacians, altered vertex masses, arbitrary
+reweightings, other scalar clocks, conditional subvolume norms or
+different targets. The exact infinite positive law
+concerns bounded observables and the stipulated kinetic heat/path law,
+without an operational conversion from heat time to source events or
+to physical time. It grants neither field preparation nor an infinite
+source execution.
+
+The form/norm/generator distinction of
+[VI Theorems 115.2 and 116.2](FIB_ATOM_RECURSIVE_HOLOGRAPHIC_BOUNDARY_GEOMETRY_CONTINUATION_VI.md)
+and the correspondence obligations of
+[III Specification 81.5](FIB_ATOM_RECURSIVE_HOLOGRAPHIC_BOUNDARY_GEOMETRY_CONTINUATION_III.md)
+retain their scopes. In particular the recurrence theorem III 81.4
+concerns its different one-spine graph $\Gamma_{52}$, not $\mathcal P$.
+The grouped cube form, constrained flow, chosen free-flow witness and
+counting-coordinate limits of §119 remain their existing results.
+Propositions 120.2 and 120.4--120.7 are repo-derived source-specific
+deductions using the attributed uniformization, external equitable and
+lumpability suppliers, without a worldwide-priority claim or a new
+generic covering or lumpability theory. The common source admits the
+displayed cycle law for every fixed $m\ge3$; neither that choice, the
+cube comparison target, nor the three values of increment memory
+select a physical spatial dimension. Metric placement and its measure,
+field, boundary, operation and physical-clock correspondences remain
+additional mathematical data for any such interpretation.
+
+## 120.99 追加锚（本行以下为增补区）
+
