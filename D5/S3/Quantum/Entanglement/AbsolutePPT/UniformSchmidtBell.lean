@@ -100,7 +100,7 @@ theorem bell_conjugate {r : ℕ} (t : Edge r → ℝ) (b : BottomSlot r → ℝ)
   push_cast <;> rfl
 
 /-- Entrywise principal compression; the proof splits i=j, i<j, j<i,
-never enumerates Fin r. This is the central uncompiled elaboration target. -/
+never enumerates Fin r. -/
 theorem bell_pt_principal {r : ℕ} (t : Edge r → ℝ) (b : BottomSlot r → ℝ) :
     (partialTranspose ((bellUnitary r : Matrix _ _ ℂ) * diagonal (pack t b) *
       (bellUnitary r : Matrix _ _ ℂ)ᴴ)).submatrix

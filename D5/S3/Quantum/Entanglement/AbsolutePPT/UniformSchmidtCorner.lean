@@ -85,7 +85,7 @@ theorem conjugate_corner {r m n : ℕ} (hm : r ≤ m) (hn : r ≤ n)
 /-- Literal APPT realizes ANY injectively labelled product corner after ANY
 corner unitary. The complement permutation and identity unitary extension
 are constructed here; there is no supplied assignment-PSD premise.
-The Bell-specific instantiation is still to be translated from the content source. -/
+-/
 theorem selected_corner_psd {r m n : ℕ} (hm : r ≤ m) (hn : r ≤ n)
     (e : (Fin m × Fin n) ≃ Fin (m * n)) (l : Fin (m * n) → ℝ)
     (label : Fin r × Fin r → Fin (m * n)) (hl : Function.Injective label)
