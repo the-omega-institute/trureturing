@@ -7,7 +7,7 @@ internal sealed class IntegerStrongOrderingDocument : IScribeDocumentDefinition
 {
     private const string Prefix = "D5/S1/Words/Sequenceability/IntegerStrongOrdering.";
     private static readonly LibraryNoteRef Source =
-        LibraryNoteRef.Create("D5/L/Words/kravitz2024rearranging");
+        LibraryNoteRef.Create("D5/L/FiniteGroups/kravitz2024rearranging");
 
     public DocumentDefinition Create() => DocumentDefinition.Create(ScribeNode.Create(
         "Integer orderings with no proper nonempty zero-sum interval.",
