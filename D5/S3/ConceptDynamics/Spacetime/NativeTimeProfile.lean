@@ -332,9 +332,6 @@ theorem model_eval {n : Nat} (N : CopyTerm n) (h : TemporalFree N)
 
 
 
-/- The copy polynomial and expressibility consequences share this module's native
-   evaluation witness.  Keeping the content here makes the admission path local. -/
-
 open D5.S0.History.Spacetime.ArchiveCarrier
 open D5.S3.ConceptDynamics.Observation.StrictOneHoleContexts
 open ComplementCharge TotalCopyNormalization RegionFilterQExpressibility

@@ -1,9 +1,9 @@
-import D5.S3.ConceptDynamics.Spacetime.CopyProfilePolynomial
+import D5.S3.ConceptDynamics.Spacetime.NativeTimeProfile
 import Reg.Support.DependentFamily
 import LeanInformationAuditInterface.Contract.Registration
 set_option autoImplicit false
 set_option backward.isDefEq.respectTransparency false
-namespace Reg.D5.S3.ConceptDynamics.Spacetime.CopyProfilePolynomial
+namespace Reg.Support.NativeTimeProfile.CopyEvidence
 open _root_.D5.S0.History.Spacetime.ArchiveCarrier
 open _root_.D5.S3.ConceptDynamics.Spacetime
 open _root_.D5.S3.ConceptDynamics.InformationEscape.DependentFamily
@@ -103,7 +103,7 @@ def registration : LeanInformationAudit.Contract.Registration.{_,_,_,0,0,0,_,_,_
     (@_root_.D5.S3.ConceptDynamics.Spacetime.NativeTimeProfile.profile_multiaffine)
     (Realization signature) Unit Unit := {
   unitName := `Reg.D5.S3.ConceptDynamics.Spacetime.NativeTimeProfile.profile_multiaffine
-  realizationName := `Reg.D5.S3.ConceptDynamics.Spacetime.CopyProfilePolynomial.evidence
+  realizationName := `Reg.Support.NativeTimeProfile.CopyEvidence.evidence
   realizationSource := none
   generated := false
   arena := .source ⟨arena⟩
@@ -211,7 +211,7 @@ def registration : LeanInformationAudit.Contract.Registration.{_,_,_,0,0,0,_,_,_
     (@_root_.D5.S3.ConceptDynamics.Spacetime.NativeTimeProfile.copy_q_expressible_implies_tail)
     (Realization signature) Unit Unit := {
   unitName := `Reg.D5.S3.ConceptDynamics.Spacetime.NativeTimeProfile.copy_q_expressible_implies_tail
-  realizationName := `Reg.D5.S3.ConceptDynamics.Spacetime.CopyProfilePolynomial.Necessity.evidence
+  realizationName := `Reg.Support.NativeTimeProfile.CopyEvidence.Necessity.evidence
   realizationSource := none
   generated := false
   arena := .source ⟨arena⟩
@@ -322,7 +322,7 @@ def registration : LeanInformationAudit.Contract.Registration.{_,_,_,0,0,0,_,_,_
     (@_root_.D5.S3.ConceptDynamics.Spacetime.NativeTimeProfile.tail_implies_copy_q_expressible)
     (Realization signature) Unit Unit := {
   unitName := `Reg.D5.S3.ConceptDynamics.Spacetime.NativeTimeProfile.tail_implies_copy_q_expressible
-  realizationName := `Reg.D5.S3.ConceptDynamics.Spacetime.CopyProfilePolynomial.Sufficiency.evidence
+  realizationName := `Reg.Support.NativeTimeProfile.CopyEvidence.Sufficiency.evidence
   realizationSource := none
   generated := false
   arena := .source ⟨arena⟩
@@ -442,7 +442,7 @@ def registration : LeanInformationAudit.Contract.Registration.{_,_,_,0,0,0,_,_,_
     (@_root_.D5.S3.ConceptDynamics.Spacetime.NativeTimeProfile.copies_region_linear)
     (Realization signature) Unit Unit := {
   unitName := `Reg.D5.S3.ConceptDynamics.Spacetime.NativeTimeProfile.copies_region_linear
-  realizationName := `Reg.D5.S3.ConceptDynamics.Spacetime.CopyProfilePolynomial.RegionalLinearity.evidence
+  realizationName := `Reg.Support.NativeTimeProfile.CopyEvidence.RegionalLinearity.evidence
   realizationSource := none
   generated := false
   arena := .source ⟨arena⟩
@@ -529,7 +529,7 @@ def evidence : Registration arena (type_of% (@polynomial_identification)) where
 def registration : LeanInformationAudit.Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0}
     (@_root_.D5.S3.ConceptDynamics.Spacetime.NativeTimeProfile.polynomial_identification) (Realization signature) Unit Unit := {
   unitName := `Reg.D5.S3.ConceptDynamics.Spacetime.NativeTimeProfile.polynomial_identification
-  realizationName := `Reg.D5.S3.ConceptDynamics.Spacetime.CopyProfilePolynomial.PolynomialIdentification.evidence
+  realizationName := `Reg.Support.NativeTimeProfile.CopyEvidence.PolynomialIdentification.evidence
   realizationSource := none
   generated := false
   arena := .source ⟨arena⟩
@@ -562,4 +562,4 @@ def registration : LeanInformationAudit.Contract.Registration.{_,_,_,0,0,0,_,_,_
 end PolynomialIdentification
 
 end
-end Reg.D5.S3.ConceptDynamics.Spacetime.CopyProfilePolynomial
+end Reg.Support.NativeTimeProfile.CopyEvidence
