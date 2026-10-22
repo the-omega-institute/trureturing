@@ -1,0 +1,121 @@
+**Theorem 116.4 (full successor resolvent and compositional bounds).**
+Define
+
+$$
+R=(I+A)^{-1},\qquad R'=(I+A')^{-1},\qquad
+a_n=3\vartheta_n+\frac{1+\sqrt6}{2\sqrt{\Delta_n}},
+\qquad d_n=3(a_n+\vartheta_n).
+\tag{116.13}
+$$
+
+For every original, every accepted pair at $n\ge2$, and every integer
+$j\ge1$,
+
+$$
+\|R'-ERD\|_{H'\to H'}\le a_n,\qquad
+\|R'^j-ER^jD\|_{H'\to H'}\le j d_n.
+\tag{116.14}
+$$
+
+Both estimates are on the whole successor space.
+
+Proof. Finite self-adjoint nonnegative spectral calculus gives
+
+$$
+\|R\|_{H\to H_1}\le1,\qquad
+\sqrt{\mathfrak a(Rf,Rf)}\le\tfrac12\|f\|_\mu,
+\tag{116.15}
+$$
+
+and the corresponding two statements for $R'$.
+Indeed the scalar multipliers are $(1+\lambda)^{-1/2}\le1$
+and $\sqrt\lambda/(1+\lambda)\le1/2$ for every $\lambda\ge0$.
+These facts include the zero eigenvalue.
+
+Take arbitrary $h,k\in H'$, and put
+$z=R'k$, $f=RDh$, and $g=z|_V$, the literal old restriction.
+The actual born-edge energy gives
+
+$$
+\|z-Eg\|_{\mu'}\le\frac{\sqrt{\mathfrak a'(z,z)}}{\sqrt{N'}},
+\qquad
+\mathfrak a(g,g)\le\mathfrak a'(z,z),\qquad
+\|g\|_\mu\le\sqrt r\,\|z\|_{\mu'}.
+\tag{116.16}
+$$
+
+In particular $\|g\|_1\le\sqrt3\|k\|_{\mu'}$ and
+$\|f\|_1\le\sqrt3\|h\|_{\mu'}$.
+
+There is an exact cross-form identity
+$\mathfrak a'(Ef,z)=\mathfrak a(f,g)$: $Ef$ has zero born-edge
+gradient and its old-edge gradient is precisely that of $f$.
+The two resolvent equations and $D=E^{*_\mu}$ therefore give
+
+$$
+\begin{aligned}
+\langle k,Ef\rangle_{\mu'}
+ &=\mathfrak a'(z,Ef)+\langle z,Ef\rangle_{\mu'}\\
+ &=\mathfrak a(g,f)+\langle Dz,f\rangle_\mu\\
+ &=\langle h,Eg\rangle_{\mu'}+\langle Dz-g,f\rangle_\mu,\\
+\langle k,(R'-ERD)h\rangle_{\mu'}
+ &=\langle h,z-Eg\rangle_{\mu'}
+       -\langle Dz-g,f\rangle_\mu.
+\end{aligned}
+\tag{116.17}
+$$
+
+This equality uses arbitrary inputs and tests, with no ancestry-range
+restriction. Summing the actual fibre in $Dz$ gives
+
+$$
+Dz-g=(W-I)g+b,\qquad
+b(x)=\frac1r\sum_{\substack{y\in\mathcal Z\\\pi(y)=x}}
+                        (z(y)-g(x)).
+\tag{116.18}
+$$
+
+Lemma 116.3 bounds the $(W-I)g$ term in (116.17) by
+$3\vartheta_n\|h\|_{\mu'}\|k\|_{\mu'}$. For the remaining term,
+
+$$
+\begin{aligned}
+|\langle f,b\rangle_\mu|
+&=\left|\frac1{N'}\sum_{y\in\mathcal Z}
+              f(\pi(y))(z(y)-g(\pi(y)))\right|\\
+&\le\sqrt{\frac2r}\,\|f\|_\mu
+          \frac{\sqrt{\mathfrak a'(z,z)}}{\sqrt{N'}}\\
+&\le\frac{\sqrt6}{2\sqrt{N'}}\|h\|_{\mu'}\|k\|_{\mu'}.
+\end{aligned}
+\tag{116.19}
+$$
+
+The factor two is the actual number of children per beta parent.
+The first term of the last line in (116.17) is at most
+$\|h\|_{\mu'}\|k\|_{\mu'}/(2\sqrt{N'})$ by (116.15)--(116.16).
+Since $N'\ge N\ge\Delta_n$, this proves the first bound in (116.14).
+
+For the powers, (116.15) also gives
+$\|R^j\|_{H\to H_1}\le1$ for every $j\ge1$. Applying (116.8) to
+$R f$ and $R^j g$ proves the sandwiched discrepancy estimate
+
+$$
+\|R(W-I)R^j\|_{H\to H}\le\vartheta_n\qquad(j\ge1).
+\tag{116.20}
+$$
+
+Let $T_j=R'^j-ER^jD$. Because $DE=W$, there is the exact identity
+
+$$
+T_{j+1}
+ =R'T_j+(R'-ERD)ER^jD+ER(W-I)R^jD.
+\tag{116.21}
+$$
+
+The three bounds $\|R'\|\le1$, $\|E\|\|D\|\le3$ and (116.20)
+give $\|T_{j+1}\|\le\|T_j\|+3a_n+3\vartheta_n$.
+Starting from $\|T_1\|\le a_n$ proves
+$\|T_j\|\le a_n+3(j-1)(a_n+\vartheta_n)\le j d_n$.
+Thus the nonidentity factor $DE$ has been accounted for explicitly;
+the identification maps were not treated as a unitary pair. $\square$
+

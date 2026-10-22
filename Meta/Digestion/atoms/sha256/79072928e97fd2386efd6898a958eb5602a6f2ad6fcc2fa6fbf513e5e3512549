@@ -1,0 +1,34 @@
+**Theorem 10.2 (exact old-record prediction condition).** Let
+$R=(p,v,z,\varepsilon)$ be precisely the pre-action record of Definition
+5.1, with every real $z$ satisfying $|z-a(W)|\le\varepsilon$ permitted.
+For either fixed $e\in\{J,M\}$, an $R$-only predictor can return the exact
+$f_e(W)$ for every complete world and every permitted $z$ in a punctured
+germ child if and only if
+
+$$
+2\varepsilon<\delta(h).
+\tag{10.4}
+$$
+
+At the center, the corresponding condition is exactly
+
+$$
+2\varepsilon<\delta_{\rm c}.
+\tag{10.5}
+$$
+
+Equality fails in both statements.
+
+**Proof.** This is Lemma 5.3 applied to the newly computed response
+partition. If $2\varepsilon<\Delta_e$, two worlds compatible with one
+record have $a$-distance at most $2\varepsilon$, hence cannot have
+different $f_e$; the common response is the predictor. If
+$2\varepsilon\ge\Delta_e$, an attaining pair and the midpoint of its two
+$a$-values give the same permitted record for two different responses.
+On the punctured germ (10.2) applies, and at the center (10.3) applies.
+Closed endpoints give failure at equality. The accessible input contains only
+$p,v,z,\varepsilon$; $h$, the sign, branch, $m$, source coordinates and
+unacquired alternatives remain absent. A record-only selector choosing $e$
+sees the same midpoint record for both worlds and therefore chooses the same
+action, so the same necessity argument applies. $\square$
+

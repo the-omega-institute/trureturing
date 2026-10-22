@@ -1,0 +1,20 @@
+**Definition 5.2 (static full-law representative decoder).** For every
+realized signature $s$, choose $r_h(s)$ to be the first address
+in lexicographic order $L<R$ among its realizations. This exists
+because the signature specifies a finite depth and hence has a
+nonempty finite realizing level. Define
+
+$$
+D_h^\infty(s)=\mathsf L_{r_h(s)}^\infty,\qquad
+D_h^T(s)=\mathsf L_{r_h(s)}^T.
+\tag{5.7}
+$$
+
+The side information and auxiliary alphabet of Theorem 3.2 first
+decode $s=S_h(p)$ and then apply (5.7). Unrealized inputs may be
+assigned any fixed probability law. This decoder returns a full
+infinite-source law, rather than a frozen law; its finite-window
+answers are restrictions of the same chosen full law. Its
+definition places no finite resource bound on representative
+selection, law storage, computation or law evaluation.
+

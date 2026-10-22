@@ -1,0 +1,80 @@
+**Proposition 6.1 (declining budget and failure of fixed-budget
+transition closure).** For each $h\ge1$, the pushed-forward
+one-step true-jump row
+
+$$
+(S_{h-1})_*J(p,\cdot)
+\tag{6.1}
+$$
+
+depends only on $S_h(p)$. The waiting-time parameter likewise
+depends only on the depth within this signature. Nevertheless,
+for every finite $h\ge0$, the map $S_h$ is not transition-stable:
+there are $p,p'$ with equal $S_h$ but unequal pushed-forward
+rows $(S_h)_*R_\infty(p,\cdot)$ and
+$(S_h)_*R_\infty(p',\cdot)$. The same failure holds for the
+true-jump rows and for aggregate continuous-time transition
+rates.
+
+**Proof.** Equation (2.2), with its degree-two root case, matches
+all destinations in (6.1) with their correct probabilities.
+Depth determines the escape rate. Iterating gives an exact
+remaining-budget description $S_{h-j}(Y_j)$ through $j=h$,
+with the exact waiting times. This description spends one
+unit of its initial budget per actual jump.
+
+For $h=0$, use V Proposition 121.2's addresses $LLR,RRL$.
+Their $S_0=O$ values agree, but only the first has a parent
+with observation $(1,2)$; the corresponding row probabilities
+are $1/3$ and zero, and the corresponding seam rates are one
+and zero.
+
+For $h\ge1$, take exactly the supplied V Theorem 121.6 pair
+$p_{h-1},p'_{h-1}$. Its first unequal ancestor colour is at
+$h+1$, and its common depth is $2m+h-1>h$. Therefore its
+$S_h$ values agree while
+
+$$
+S_h(\operatorname{par}p_{h-1})
+ \ne S_h(\operatorname{par}p'_{h-1}).
+\tag{6.2}
+$$
+
+Let $s$ be the first signature in (6.2). Its depth is one
+less than the initial common depth. The first start moves
+to that signature only by its unique parent seam. The
+second start cannot reach it in one move: its only
+lower-depth neighbour has the other signature, and both
+children have larger depth. Thus the two rows give mass
+$1/3$ and zero to $\{s\}$ under either $J$ or $R_\infty$.
+Both starts are nonroots. Their aggregate generator rates
+to this different-depth cell are one and zero. This
+establishes every asserted failure without a new anchor
+construction.
+
+This is the source-specific row test of
+[StrongLumpabilityDescent.strong_lumpability_descent_tfae](../../../D5/S3/Observer/ProbabilisticClosure/StrongLumpabilityDescent.lean),
+which allows arbitrary types and probability mass functions:
+take the readout to be $S_h$ and the source row to be
+$R_\infty$. Its fibre-constant pushed-forward-law condition
+fails at the exhibited pair. The algebraic factorization
+[StochasticDescentLumpability.strongly_lumpable_iff_exact_quotient_kernel](../../../D5/S3/Estimation/DecisionRisk/StochasticDescentLumpability.lean)
+also has no finite-type hypothesis; its finite supremum
+and uniform-defect theorems do have such hypotheses and
+are not applied to $\mathcal P$. The familiar finite-state
+matrix criterion is
+[Wolfer--Watanabe, Geometric Aspects of Data-Processing of Markov
+Chains, arXiv:2203.04575v3, §3.4, Theorem 3.1](https://arxiv.org/pdf/2203.04575v3).
+Its $\kappa$ is here $S_h$, and its aggregated row
+$P(y,S_{x'})$ is the pushforward just tested. No stationary
+measure or finite-state conclusion from that paper is
+needed for this explicit countable-source counterexample.
+
+A budget that decreases is therefore compatible with exact
+finite prediction, but does not keep a fresh horizon $h$
+after each jump. Freezing at exhausted budget, returning a
+static approximate full law, and maintaining an indefinitely
+updateable exact quotient are different constructions.
+The injectivity statement for the last of these, when it
+recovers $O$, is already V Theorem 121.3. $\square$
+

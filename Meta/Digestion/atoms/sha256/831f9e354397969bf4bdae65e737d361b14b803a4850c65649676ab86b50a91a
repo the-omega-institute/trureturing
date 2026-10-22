@@ -1,0 +1,109 @@
+**Definition 120.1 (the source and kinetic comparison contract).** Use the
+nonempty finite ordered source algebra of IV Definition 112.1 and the
+all-original convention of Definition 115.1:
+
+$$
+\mathcal T::=\alpha\mid\beta\mid\langle\mathcal T,\mathcal T\rangle,
+\qquad
+\rho\alpha=\beta,\quad \rho\beta=\langle\beta,\alpha\rangle,
+\quad \rho\langle s,v\rangle=\langle\rho s,\rho v\rangle.
+\tag{120.1}
+$$
+
+For $s\in\mathcal T$, let $V=\operatorname{Pos}(s)$ contain all literal
+occurrence addresses, including the root $o=\varepsilon$. Distinct
+addresses remain distinct even when their complete ordered subtrees are
+equal. The edges are exactly the existing parent--child seams. Thus $V$
+is a nonempty finite full binary tree, with $N=|V|$. In the source
+[GenealogicalFiberTransport.Source and substitution](../../../D5/S3/Arith/FibonacciAtomic/GenealogicalFiberTransport.lean),
+$\mathcal T$ is `FreeMagma Bool`, with true for alpha and false for beta;
+in [ActualTreeReadoutAcquisition.readout and nodes](../../../D5/S3/Arith/FibonacciAtomic/ActualTreeReadoutAcquisition.lean),
+false and true in an address mean left and right, respectively. Here they
+are written $L,R$. These are two different uses of the Boolean alphabet.
+The all-original domain includes alpha and beta singletons; it is larger
+than the branch-root acquired fibre in IV (112.1).
+
+Give each vertex counting mass one and each seam symmetric conductance
+one. On functions on $V$, define
+
+$$
+\begin{aligned}
+(L_Vh)(x)&=\sum_{y\sim_V x}(h(x)-h(y)),\\
+L_V^{\mathrm k}&=L_V+
+       2\operatorname{diag}(\mathbf1_{\operatorname{Leaf}(s)}),
+& A_V&\in\{L_V,L_V^{\mathrm k}\},\\
+\mu_V&=N^{-1}\sum_{x\in V}\delta_x,
+& \|h\|_{\mu_V}^2&=N^{-1}\sum_{x\in V}|h(x)|^2.
+\end{aligned}
+\tag{120.2}
+$$
+
+The killed choice is exactly Continuation Definition 55.2, (55.4), and
+(119.3): both missing children contribute at every current leaf. It is
+the compression of the infinite kinetic Laplacian to zero exterior
+values. Its diagonal is two at the root and three at every nonroot
+vertex. There is no artificial parent seam at the root. A singleton has
+$L_V=[0]$ and $L_V^{\mathrm k}=[2]$. For $N>1$, the closed degrees are
+two at the root, three at nonroot internal vertices and one at leaves.
+
+The infinite carrier and its kinetic law are those of
+[Continuation Definitions 55.1--55.2](FIB_ATOM_RECURSIVE_HOLOGRAPHIC_BOUNDARY_GEOMETRY_CONTINUATION.md):
+
+$$
+\begin{aligned}
+\mathcal P&=\{L,R\}^{*},&p&\sim pL,quad p\sim pR,\\
+(L_\infty h)(p)&=\sum_{z\sim p}(h(p)-h(z)),\\
+D_n(u)&=\operatorname{Pos}(\rho^nu),&
+\{p:|p|\le\lfloor n/2\rfloor\}&\subseteq D_n(u),
+\qquad \bigcup_{n\ge0}D_n(u)=\mathcal P.
+\end{aligned}
+\tag{120.3}
+$$
+
+The domains $D_n(u)$ are the actual, generally irregular domains of that
+source; contained balls in (120.3) are only comparison subsets. Root
+degree in $\mathcal P$ is two and all other degrees are three.
+
+For the cube take $B=Q_3=\{0,1\}^3$ and $K=L_{Q_3}$, with one unit edge
+when exactly one coordinate changes. For a fixed integer $m\ge3$ take
+$B=C_m=\mathbb Z/m\mathbb Z$ and
+$K_m f(b)=2f(b)-f(b+1)-f(b-1)$, the simple unit cycle Laplacian.
+For either target, write $e_c=\mathbf1_{\{c\}}$. Every map
+$\pi:V\to B$ defines the observable pullback $U_\pi f=f\circ\pi$ and
+the discrepancy
+
+$$
+E_{\pi,c}^{A_V,K_B}(t)
+ =e^{-tA_V}U_\pi e_c-U_\pi e^{-tK_B}e_c,
+\qquad c\in B,\quad t\ge0.
+\tag{120.4}
+$$
+
+All target indicators are tested, including those of unattained labels.
+If $\pi$ is not onto, this pullback is still defined but is not injective;
+the map is not called an onto quotient. No inverse fibre-mass matrix is
+used, and error is measured over all actual source vertices, rather than
+uniformly over attained classes.
+
+The same $t$ in (120.4) is the unit counting heat clock. Using
+$\|\cdot\|_{\mu_V}$ does not change $A_V$: its paired energy is the
+counting energy divided by $N$, with the analogous division of the
+killing energy. Pairing the unscaled edge energy with this probability
+inner product instead gives $NL_V$, as in (116.1)--(116.2). That is a
+different clock. The operators here are kinetic; $A_V$ does not denote
+the potential-bearing $aL-gM_\phi$ of §55.
+
+The source/history projection remains the one in IV Contract 112.1a and
+Continuation Definition 55.1: immutable INITIAL, labels, brackets,
+left/right order, distinct occurrences, actual versions, original Reads,
+acquisition and copy permissions, chronological acceptances and refusals,
+and absorbing Stop are retained. An uncapped native menu and a separately
+declared guarded menu keep their respective scopes; a refusal changes no
+source or epoch. Quantification over $n$ means the mathematical family
+or separately legal finite prefixes, without raising a fixed guard or
+resuming a stopped history. Neither a limit Read nor an event after an
+infinite prefix is defined. Scalar observables, unit conductances and
+this heat clock are added mathematical contracts. Their heat laws and
+the address readout below grant no native preparation, equality
+maintenance, reset, clone, seam alteration or resource tariff.
+

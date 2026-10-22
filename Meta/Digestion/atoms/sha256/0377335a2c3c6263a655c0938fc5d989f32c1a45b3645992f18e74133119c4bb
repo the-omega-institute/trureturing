@@ -1,0 +1,44 @@
+**Theorem 6.1 (whole-child exact terminal-world recovery).** Choose $h_0$
+as in Theorem 4.3. For every $h$ with $0<|h|<h_0$ and every common
+known $\varepsilon\ge0$, the following are equivalent:
+
+1. There exists a single-valued decoder of (5.2) which returns $W$
+   for every complete world $W\in C(y(h))$ and every real $z$ with
+   $|z-a(W)|\le\varepsilon$.
+2. $2\varepsilon<\delta(h)$.
+
+The **same** function $D$ of Definition 5.2 realizes recovery for all
+such safe children and radii simultaneously. The admissible radii
+for the fixed child are exactly
+
+$$
+[0,r_*(h)),\qquad
+r_*(h)=\frac{\delta(h)}2
+      =A|h|+O(|h|^3),
+\tag{6.1}
+$$
+
+where the supremum is not admissible. Moreover
+
+$$
+\lim_{h\to0,\ h\ne0}
+\frac{r_*(h)}{\sqrt{\|y(h)-y_3\|_\infty}}
+=\frac A{\sqrt B}>0.
+\tag{6.2}
+$$
+
+**Proof.** The entire child is exactly the three-world set (3.8).
+Theorem 4.3 supplies its positive attained minimum. Lemma 5.3 proves
+the equivalence, including a midpoint counterexample whenever
+$2\varepsilon\ge\delta(h)$. All compatible sets in that argument
+are formed from the **entire** $C(y(h))$, including the remote
+companion, so the sufficient decoder is precisely $D$.
+
+The definition of $D$ is independent of $h$, the branch and the
+generating world. Different bases occupy different input fibers
+because both $p$ and $v$ are retained. Thus its simultaneous use
+does not require distinguishing children from $z$ alone. Equation
+(6.1) follows from (4.5), and (6.2) from (4.6). At zero radius this
+recovers the already supplied noiseless inverse; it is not a new
+noiseless inversion theorem. $\square$
+
