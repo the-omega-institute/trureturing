@@ -6,21 +6,22 @@
    utility: none
    digest: Uniform qudit Pauli words, their commutation form, and the product-vector obstruction. -/
 
-module
+import D5.S3.Observer.WindowRegister
+import D5.S3.Quantum.Algebra.WeylDisplacementTrace
+import D5.S3.Quantum.Algebra.WeylPhaseArithmetic
+import Mathlib.LinearAlgebra.Matrix.Trace
+import Mathlib.LinearAlgebra.Matrix.ToLin
+import Mathlib.Tactic
 
-public import D5.S3.Observer.WindowRegister
-public import D5.S3.Quantum.Algebra.WeylDisplacementTrace
-public import Mathlib.LinearAlgebra.Matrix.Trace
-public import Mathlib.LinearAlgebra.Matrix.ToLin
-public import Mathlib.Tactic
-
-public section
+section
 
 set_option autoImplicit false
 set_option relaxedAutoImplicit false
 
 open scoped BigOperators
 open D5.S3.Observer.WindowRegister
+open D5.S3.Quantum.Algebra.WeylDisplacement
+open D5.S3.Quantum.Algebra.WeylPhaseArithmetic
 
 namespace D5.S3.Quantum.Codes.QuditStabilizerProductVector
 
@@ -56,7 +57,11 @@ theorem local_pauli_commutation {p : ℕ} [NeZero p]
     localPauli p x z * localPauli p x' z' =
       windowRoot p ^ (localSymplectic x z x' z').val •
         (localPauli p x' z' * localPauli p x z) := by
-  sorry
+  change displacement p x z * displacement p x' z' =
+    windowRoot p ^ (z * x' - x * z').val •
+      (displacement p x' z' * displacement p x z)
+  rw [displacement_mul, displacement_mul, smul_smul, ← windowRoot_pow_val_add]
+  congr 2 <;> ring
 
 theorem pauli_word_mul {N p : ℕ} [NeZero p]
     (a b : PauliWord N p) :
@@ -75,7 +80,17 @@ theorem pauli_word_commutation {N p : ℕ} [NeZero p]
 theorem pauli_word_trace_zero {N p : ℕ} [NeZero p]
     (w : PauliWord N p) (h : ∃ n, w.x n ≠ 0 ∨ w.z n ≠ 0) :
     Matrix.trace (pauliWordOperator w) = 0 := by
-  sorry
+  obtain ⟨n, hn⟩ := h
+  rw [pauliWordOperator, Matrix.trace_smul]
+  suffices Matrix.trace (Matrix.of (fun u v : Fin N → ZMod p =>
+      ∏ j, localPauli p (w.x j) (w.z j) (u j) (v j))) = 0 by simp [this]
+  change (∑ u : Fin N → ZMod p, ∏ j,
+    localPauli p (w.x j) (w.z j) (u j) (u j)) = 0
+  rw [← Fintype.prod_sum (fun (j : Fin N) (a : ZMod p) =>
+    localPauli p (w.x j) (w.z j) a a)]
+  apply Finset.prod_eq_zero (Finset.mem_univ n)
+  exact D5.S3.Quantum.Algebra.WeylDisplacementTrace.displacement_trace_eq_zero
+    (w.x n) (w.z n) (by tauto)
 
 theorem common_fixed_subspace_nontrivial {N p : ℕ} [NeZero p]
     (S : Finset (PauliWord N p))
@@ -86,6 +101,7 @@ theorem common_fixed_subspace_nontrivial {N p : ℕ} [NeZero p]
       ∀ a ∈ S, (pauliWordOperator a).mulVec ψ = ψ := by
   sorry
 
+open Classical in
 theorem product_vector_of_restricted_commuting {N p : ℕ} [NeZero p]
     (S : Finset (PauliWord N p)) (Q : Set (Fin N))
     (hQ : Q.Nonempty) (hQc : Qᶜ.Nonempty)
@@ -94,7 +110,7 @@ theorem product_vector_of_restricted_commuting {N p : ℕ} [NeZero p]
     (hV : ∃ ψ : (Fin N → ZMod p) → ℂ, ψ ≠ 0 ∧
       ∀ a ∈ S, (pauliWordOperator a).mulVec ψ = ψ) :
     ∃ ψ : (Fin N → ZMod p) → ℂ, ψ ≠ 0 ∧
-      (∃ u : (Q → ZMod p) → ℂ, ∃ v : (Qᶜ → ZMod p) → ℂ,
+      (∃ u : (Q → ZMod p) → ℂ, ∃ v : ((Qᶜ : Set (Fin N)) → ZMod p) → ℂ,
         ∀ x, ψ x = u (fun q => x q.1) * v (fun q => x q.1)) := by
   sorry
 
