@@ -422,3 +422,291 @@ No equality between $m(W_0)$ and $m(W_1)$ is required, and their M readings need
 The inequality for $a(W_2)-a(W_3)$ eliminates only the use of these two selected worlds as that J pair. It supplies no exclusion concerning independently chosen companions. In particular there is no inventory of the entire child, no uniqueness statement outside the defining local box, and no global exclusion. Singular and exceptional sources, zero drift, vanishing gain samples, repeated gain roots and lower-degree gains remain in the unrestricted question. The result is an actual M pair and partial progress toward the independent-pair target; it does not settle the independent J obligation.
 
 ## 追加锚（本行以下为增补区）
+
+## 9. The analytic M family and an exact response determinant
+
+**Definition 9.1 (The reused analytic family).** Write
+$\Phi(r,b)=(p(r,b),v(r,b))$ for the two acquired responses in
+Definition 2.1 and put $\lambda _0=2/5$. Theorem 7.2 in
+[AURIC–Langlands 语境与谱重构理论](AURIC_LANGLANDS_CONTEXT_AND_SPECTRAL_RECONSTRUCTION_THEORY.md),
+Section 7, “真实碰撞对的一参数延拓”, supplies a real analytic family
+through the exact zero of Theorem 4.3:
+
+$$
+\begin{aligned}
+x(\lambda)&=(b_0(\lambda),r_1(\lambda),b_1(\lambda)),&
+x(\lambda _0)&=(b_{0*},r_{1*},b_{1*}),\\
+W_2(\lambda)&=W(\lambda,b_0(\lambda)),&
+W_3(\lambda)&=W(r_1(\lambda),b_1(\lambda)),\\
+\beta(\lambda)&=(p(\lambda),v(\lambda))
+=\Phi(\lambda,b_0(\lambda)).
+\end{aligned}
+$$
+
+On a connected open interval $I$ containing $\lambda _0$, that theorem
+ensures
+
+$$
+\begin{gathered}
+W_2(\lambda),W_3(\lambda)\in C(\beta(\lambda)),\qquad
+W_2(\lambda)\ne W_3(\lambda),\qquad p(\lambda)\ne24,\\
+m(W_2(\lambda))=m(W_3(\lambda)),\qquad
+a(W_2(\lambda))<a(W_3(\lambda)).
+\end{gathered}
+$$
+
+The family is the branch of the three equations equating $p,v,m$,
+with $r(W_2)=\lambda$; it is not a new interpolation of readings.
+The gains and fixed drifts are exactly those of Definition 2.1.
+The domain of every entire child remains Definition 1.2.
+
+**Definition 9.2 (An enclosing rational segment).** Define
+
+$$
+I_b=\left[\frac{40782959048828}{10^{15}},
+             \frac{40782959048829}{10^{15}}\right],\qquad
+S_0=\{2/5\}\times I_b.
+$$
+
+The rational center and radius of Definition 3.1 satisfy
+
+$$
+\frac{40782959048828}{10^{15}}<c_1-\rho
+<c_1+\rho<\frac{40782959048829}{10^{15}}.
+$$
+
+Consequently $(2/5,b_{0*})\in S_0$, by Theorem 4.3.
+
+The derivative enclosures and strict determinant bound in Lemma 9.3,
+and the resulting quantitative motion and local injectivity in Theorem
+10.1, are model-specific ordinary derivations in this repository
+(`repo-derived`), with no claim of literature priority. The chain
+rule, local monotonicity and real analytic identity principle used
+below are classical intermediate inputs.
+
+**Lemma 9.3 (Whole-segment derivative separation).** The response
+circuit is pole-free on $S_0$. With columns ordered as $(r,b)$, its
+ambient partial derivatives have the following rational enclosures
+throughout $S_0$. Every endpoint numerator in the table is divided
+by $10^6$.
+
+| Derivative | Lower endpoint numerator | Upper endpoint numerator |
+| --- | ---: | ---: |
+| $p_r$ | $-17691121$ | $-17691120$ |
+| $p_b$ | $725498392$ | $725498393$ |
+| $v_r$ | $103013504$ | $103013505$ |
+| $v_b$ | $-1673536106$ | $-1673536105$ |
+
+In particular
+
+$$
+-45130<\Delta(r,b):=\det D\Phi(r,b)<-45129
+\qquad ((r,b)\in S_0).
+$$
+
+Proof. The enclosing-segment comparisons in Definition 9.2 are
+exact rational comparisons using
+the printed value of $c_1$ and $\rho=10^{-38}$. The following finite
+integer prescription gives the derivative table directly from
+Definition 2.1.
+
+Put $\sigma=10^{80}$ and enclose a rational $t$ by
+$[\lfloor\sigma t\rfloor,\lceil\sigma t\rceil]/\sigma$.
+Addition and negation use exact integer endpoints. Use the outward
+operations
+
+$$
+\begin{aligned}
+([L,U]/\sigma)([V,W]/\sigma)
+&\subseteq\frac1\sigma\left[
+\left\lfloor\frac{\min(LV,LW,UV,UW)}\sigma\right\rfloor,
+\left\lceil\frac{\max(LV,LW,UV,UW)}\sigma\right\rceil\right],\\
+([L,U]/\sigma)^{-1}
+&\subseteq\frac1\sigma\left[
+\left\lfloor\frac{\sigma^2}{U}\right\rfloor,
+\left\lceil\frac{\sigma^2}{L}\right\rceil\right]
+\qquad(LU>0).
+\end{aligned}
+$$
+
+Attach derivatives $(1,0)$ to the value interval $[2/5,2/5]$ for
+$r$, derivatives $(0,1)$ to $I_b$ for $b$, and zero derivatives to
+constants. Propagate values and both derivative components by these
+interval operations and
+
+$$
+D(f+h)=Df+Dh,\qquad D(fh)=hDf+fDh,\qquad
+D(f^{-1})=-Df/(ff).
+$$
+
+Evaluate Definition 2.1 in its displayed factored order, from left to
+right in unparenthesized sums and products. In $\mathcal J$ use
+$b^2=bb$ and $r(1-r)$, and evaluate $p=P_pH^{-1}$ and $v=P_vH^{-1}$.
+The value interval for $r$ is a singleton, but its derivative vector
+still computes both ambient partial derivatives.
+
+The denominator value enclosures, rounded outward to the
+$10^{-6}$ grid, are
+
+$$
+\widehat D(S_0)\subseteq[1119712,1119713]/10^6,\qquad
+H(S_0)\subseteq[45665,45666]/10^6.
+$$
+
+They are positive, as is $b$. Also $r(1-r)=6/25>0$, so
+$\mathcal J,\mathcal N,T,U$ are positive there. Thus the displayed
+circuit and the world lift have no pole on this segment. Rounding
+the four derivative intervals outward to the same grid gives the
+table. The value and derivative inclusions follow inductively from
+the interval operations and the differentiation rules. They cover
+the whole segment, including the exact algebraic root, rather than
+just a rational approximation to that root.
+
+Finally the derivative signs give the integer bounds
+
+$$
+\begin{aligned}
+10^{12}\Delta
+&\ge17691120\cdot1673536105-725498393\cdot103013505\\
+&=-45129404276909865>-45130\cdot10^{12},\\
+10^{12}\Delta
+&\le17691121\cdot1673536106-725498392\cdot103013504\\
+&=-45129401757170742<-45129\cdot10^{12}.
+\end{aligned}
+$$
+
+This proves the strict determinant separation. ∎
+
+## 10. Local injectivity of the acquired base
+
+**Theorem 10.1 (Motion of the actual M-collision base).** For the
+analytic family in Definition 9.1,
+
+$$
+\|\beta'(2/5)\|_\infty>18.
+$$
+
+After restricting $I$ to a smaller connected open interval about
+$2/5$, the map $\beta$ is injective. It therefore gives an analytic
+arc of pairwise different acquired children. Every child on this arc
+contains the two distinct complete worlds $W_2(\lambda),W_3(\lambda)$
+with equal actual terminal-M readings at clock $7$.
+
+Proof. The parameter is the first world's diagonal coordinate, so
+its derivative is exactly $1$. At $\lambda _0$, the chain rule gives
+
+$$
+\begin{pmatrix}p'\\v'\end{pmatrix}
+=D\Phi(2/5,b_{0*})\begin{pmatrix}1\\b_0'\end{pmatrix},
+\qquad
+v_b p'-p_b v'=p_rv_b-p_bv_r=\Delta.
+$$
+
+Lemma 9.3 implies $|\Delta|>45129$ and
+
+$$
+|v_b|+|p_b|\le\frac{1673536106+725498393}{10^6}<2400.
+$$
+
+Consequently
+
+$$
+45129<|\Delta|
+\le(|v_b|+|p_b|)\max(|p'|,|v'|)
+<2400\|\beta'(2/5)\|_\infty.
+$$
+
+Since $45129/2400=15043/800>18$, the asserted bound follows.
+At least one component of $\beta'$ is nonzero at $2/5$. Its derivative
+is continuous, so it keeps a strict sign on a smaller interval.
+That component is strictly monotone there, proving injectivity of
+$\beta$. The strict guards and exact equalities in Definition 9.1
+hold on this restriction. Distinct base labels give different
+acquired readings and hence different children by Definition 1.2.
+Every constructed world continues to use its own entire nonzero
+polynomial gain and its own fixed drift at all acquired and terminal
+clocks. ∎
+
+## 11. The independent J requirement along the arc
+
+**Definition 11.1 (The unchanged independent-pair target).** The target
+is the predicate in Definition 1.2: there exist $p\ne24,v$ and
+independently selected distinct pairs of complete worlds in the
+entire $C(p,v)$, one pair with equal $a$ and one pair with equal $m$.
+Overlap between the pairs is allowed. Their two common terminal
+values need not agree. Every world's own drift is fixed, and every
+world has one nonzero whole real polynomial gain of degree at most
+three. Acquired clocks are $0,\ldots,6$ and both terminal alternatives
+use clock $7$. Gain zeros, lower degrees, repeated roots, zero drift
+and singular companions remain in this domain.
+
+For the arc of Theorem 10.1, the additional sufficient requirement is
+
+$$
+\exists\lambda\in I\ \exists W_0,W_1\in C(\beta(\lambda)):
+\quad W_0\ne W_1,\quad a(W_0)=a(W_1).
+$$
+
+**Proposition 11.2 (Same-base sufficiency and its extent).** Satisfaction
+of the additional requirement in Definition 11.1 implies the unchanged
+independent-pair target. The inequality
+$a(W_2(\lambda))<a(W_3(\lambda))$ rules out just these two selected
+worlds as the J pair; it supplies no exclusion of independently
+selected J companions.
+
+Proof. At the selected parameter, Theorem 10.1 supplies the distinct
+M pair at precisely the base of $W_0,W_1$, and $p(\lambda)\ne24$.
+Thus all four complete worlds satisfy Definition 1.2. No relation
+between the two common values is needed. An inequality for the two
+selected M worlds is not a statement about any other pair. Searching
+this arc is a sufficient route; no assertion that every possible
+joint witness lies on it is required or established. ∎
+
+**Proposition 11.3 (Necessary analytic candidate condition).** Let
+$B,P_J,P_M\in\mathbb Q[p,v]$ be the exceptional and collision
+polynomials of [Singular Response Children Exclusion](FIB_SINGULAR_RESPONSE_CHILDREN_EXCLUSION.md),
+Definition 11.4, with the whole-child necessary cover of its
+Theorem 11.5. Put
+
+$$
+h(\lambda)=B(\beta(\lambda))P_J(\beta(\lambda)).
+$$
+
+Every actual J collision at a base on this arc satisfies $h(\lambda)=0$.
+Either $h\equiv0$ on $I$, or its zeros are isolated and there are
+finitely many in every compact subinterval contained in $I$.
+Furthermore
+
+$$
+B\circ\beta\not\equiv0\quad\Longrightarrow\quad
+P_M\circ\beta\equiv0.
+$$
+
+Proof. The cited Theorem 11.5 concerns the entire original child,
+including its exceptional strata. Its J-collision inclusion gives
+$B=0$ or $P_J=0$, which proves the first assertion. The polynomial
+compositions are real analytic. The identity theorem on the connected
+open interval $I$ says that a nonidentically-zero analytic function
+has isolated zeros. Infinitely many zeros in a compact subinterval
+would have an accumulation point inside $I$, contradicting that
+theorem.
+
+The actual M pair exists at every parameter, so the same necessary
+cover gives $(B\circ\beta)(P_M\circ\beta)\equiv0$. If the first
+factor is not identically zero, it is nonzero on some open subinterval.
+The second factor vanishes there and hence identically on $I$.
+This implication is also the exceptional-layer constraint in
+[AURIC–Langlands 语境与谱重构理论](AURIC_LANGLANDS_CONTEXT_AND_SPECTRAL_RECONSTRUCTION_THEORY.md),
+Section 7, Corollary 7.3.
+
+Nonconstancy of $\beta$ does not imply $h\not\equiv0$: the nonconstant
+arc $t\mapsto(t,0)$ lies wholly in the zero set of the nonzero
+polynomial $Y$. No value of $B\circ\beta$ or $P_J\circ\beta$ is
+established by the determinant bound. Thus this proposition does not
+assert a finite global candidate set or actual J feasibility. The
+necessary cover gives no converse realization. In particular its
+$B=0$ layer retains every exceptional or singular companion; it is
+not removed by the regular construction of the selected M pair. The
+independent same-base J requirement in Definition 11.1 remains open. ∎
+
+## 追加锚（本行以下为增补区）
