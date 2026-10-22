@@ -36,13 +36,18 @@ internal sealed class OeisA344695GcdSigmaPsiPrimesDocument : IScribeDocumentDefi
                 + "For an odd prime q, choose a prime r greater than q² + q + 1 and congruent "
                 + "to 1 modulo q(q + 1)(q² + q + 1). At n = q²r^(q−1), geometric-sum "
                 + "congruences and coprimality give a n = q.",
-                DescribeRole.Theorem, AssessedProvenance.FromRepo(Source)))));
+                DescribeRole.Theorem, AssessedProvenance.FromRepo(Source),
+                new OpenProblemResolutionClaim(
+                    ProblemSlugRef.Create("oeis-a344695-gcd-sigma-psi-odd-primes"),
+                    ResolutionKind.Proved)))));
 
     private static DocumentBlock Node(string name, string title, Formula formula, string prose,
-        DescribeRole role, AssessedProvenance provenance) =>
+        DescribeRole role, AssessedProvenance provenance,
+        OpenProblemResolutionClaim? resolution = null) =>
         Describe.Lean(DescribeId.Create("a344695-" + name),
             DeclarationHandle.Create(Prefix + name), H(title), StatementSource.FromAuthor(formula),
-            provenance, Blocks(Paragraph(Text(prose))), role);
+            provenance, Blocks(Paragraph(Text(prose))), role,
+            openProblemResolutionClaim: resolution);
 
     private static Formula PsiFormula()
     {

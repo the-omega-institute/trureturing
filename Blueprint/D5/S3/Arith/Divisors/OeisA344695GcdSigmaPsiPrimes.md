@@ -46,6 +46,10 @@ $$\forall q \in \mathbb{N},\; \operatorname{Nat}.\operatorname{Prime}\left(q\rig
 
 *Proof.* Machine-checked in Lean as `D5/S3/Arith/Divisors/OeisA344695GcdSigmaPsiPrimes.result` (`✓ std3`). ∎
 
+*Resolves.* `Problems/oeis-a344695-gcd-sigma-psi-odd-primes` (proved) by `D5/S3/Arith/Divisors/OeisA344695GcdSigmaPsiPrimes.result`.
+
+<!-- scribe-open-problem-resolution-v1 {"problem_slug":"oeis-a344695-gcd-sigma-psi-odd-primes","declaration_gid":"D5/S3/Arith/Divisors/OeisA344695GcdSigmaPsiPrimes.result","resolution_kind":"proved"} -->
+
 *Source.* Repository-derived.
 
 *Acknowledgement.* Antti Karttunen; Peter Munn (2021). *OEIS A344695: gcd of the divisor sum and Dedekind psi*. URL: <https://oeis.org/A344695>.
