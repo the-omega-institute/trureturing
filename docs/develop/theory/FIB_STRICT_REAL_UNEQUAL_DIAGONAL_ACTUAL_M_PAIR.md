@@ -710,3 +710,520 @@ not removed by the regular construction of the selected M pair. The
 independent same-base J requirement in Definition 11.1 remains open. ∎
 
 ## 追加锚（本行以下为增补区）
+
+## 12. A response rectangle and its entire acquired children
+
+**Definition 12.1 (Exact local rectangle).** Retain every world and
+response in Definitions 1.1–1.2. Set $h=10^{-34}$ and
+
+$$
+\begin{aligned}
+p_c&=1.8057126623901333037270156505198680057908325822025720781026746024314,\\
+v_c&=172.2471680963226343182328451692107608678057809948093894185154845004338,\\
+\mathcal U&=[p_c-h,p_c+h]\times[v_c-h,v_c+h].
+\end{aligned}
+$$
+
+Every terminating decimal in Sections 12–18 denotes its exact rational
+value. In particular this definition specifies a closed rectangle,
+not a rounded algebraic base.
+
+**Theorem 12.2 (Entire-child local J injectivity).** For every
+$(p,v)\in\mathcal U$, the entire acquired child $C(p,v)$ contains at
+most two complete worlds, and its terminal map $a$ is injective.
+The exact base $(p_*,v_*)$ of Theorem 1.3 lies in the interior of
+$\mathcal U$. Its child consists exactly of the two M worlds of that
+theorem. On a sufficiently small connected open interval about $2/5$,
+the analytic arc of Theorem 10.1 also lies in this interior, and each
+entire child on the arc consists exactly of its two supplied M worlds.
+Thus no distinct J-collision pair exists in any of these children.
+
+The proof occupies Sections 13–17. The complete-world quantifiers
+include arbitrary constant real drift, all legal gain zeros, gains
+of lower degree, repeated gain roots, and singular or exceptional
+sources. No bound on an original positive offdiagonal is assumed.
+
+## 13. Polynomial projection and five regular root intervals
+
+**Definition 13.1 (Inherited elimination interface).** Use exactly
+[Common Parent Geometry](FIB_COMMON_PARENT_GEOMETRY_AND_MIXED_CHILDREN.md),
+Definitions 12.1, 20.1 and 24.1. In that notation
+
+$$
+\begin{gathered}
+X=b^2+r-r^2,\quad N=X+br,\quad T=1+b,\quad U=1+2b,\\
+D_\Lambda=(b^2+8b+4)XN-2bTU(X+N),\\
+\mathsf A=5b(p-24)D_\Lambda+3(8b-1)H(r,b),\qquad
+\mathsf B=5bD_\Lambda v-\mathsf N_u(r,b).
+\end{gathered}
+$$
+
+Here $H$ is precisely that source's sextic (12.2), and
+$\mathsf N_u$ is its polynomial (20.1), including the exact division
+by $1+b$. Retain the fixed ordered Sylvester identity
+
+$$
+\operatorname{Res}_b(\mathsf A,\mathsf B)
+=52488000r^{11}(r-1)^9\Psi_2\Psi_4\Phi R(r,p,v),
+$$
+
+where
+
+$$
+\begin{aligned}
+\Psi_2&=4r^2-2r-1,\\
+\Psi_4&=625r^4-1000r^3+50r^2+260r+36,\\
+\Phi&=438272r^4-931328r^3+540800r^2-50728r-853.
+\end{aligned}
+$$
+
+The symbol $R$ denotes exactly the degree-eighteen polynomial with
+the 668 integer coefficients of that source's Definition 24.1.
+Neither its scale nor its sign is changed. Theorem 20.2 there implies
+that every actual regular world projects to a zero of
+$R\Psi_2\Psi_4\Phi$. This is a necessary implication only. Its fixed
+determinant form remains necessary at degree drops; furthermore the
+leading $b$ coefficients $5p+216$ and $5v+1125$ are positive on
+$\mathcal U$.
+
+**Lemma 13.2 (Uniform finite root inventory).** Put $e=10^{-22}$ and
+$I_i=[c_i-e,c_i+e]$ with the following centers. For every
+$(p,v)\in\mathcal U$, $R(r,p,v)$ has exactly one simple root in each
+$I_i$ and has no other root in $(0,1)$.
+
+| $i$ | $c_i$ | Uniform Bernstein signs |
+| --- | --- | --- |
+| 1 | $0.4$ | `+++++++++?---------` |
+| 2 | $0.6375033978214738667594335994587431421677$ | `---------?+++++++++` |
+| 3 | $0.6761493960676857788415044796582458167041$ | `+++++++++?---------` |
+| 4 | $0.8634273078193894254581303621214043355746$ | `---------?+++++++++` |
+| 5 | $0.9092947326986637649117323875453000752997$ | `+++++++++?---------` |
+
+Proof. Expand the specified integer polynomial at the rational
+parameter center:
+
+$$
+R(r,p_c+x,v_c+y)=\sum_{i,j,k}A_{ijk}r^ix^jy^k,\qquad
+E=\sum_i\sum_{j+k>0}|A_{ijk}|h^{j+k}.
+$$
+
+In terms of its integer coefficients $c_{iuv}$, every coefficient is
+explicitly
+
+$$
+A_{ijk}=\sum_{u\ge j,\,v\ge k}
+ c_{iuv}\binom uj\binom vk p_c^{u-j}v_c^{v-k}.
+$$
+
+For $[a,b]\subseteq[0,1]$, define
+
+$$
+\begin{aligned}
+t_\ell&=\sum_{i=\ell}^{18}A_{i00}\binom i\ell
+                 a^{i-\ell}(b-a)^\ell,\\
+\beta_k&=\sum_{\ell=0}^k t_\ell
+                 \frac{\binom k\ell}{\binom{18}\ell},
+                 \qquad 0\le k\le18.
+\end{aligned}
+$$
+
+The degree-eighteen Bernstein coefficients of $r^i$ on such an
+interval lie in $[0,1]$: under $r=a+(b-a)t$, the coefficients can
+also be written as the averages of products of $i$ entries chosen
+from $18-k$ copies of $a$ and $k$ copies of $b$. Hence the full
+parameter-dependent coefficient lies in $[\beta_k-E,\beta_k+E]$.
+This bound retains all mixed parameter terms.
+
+The finite rational comparisons from these formulas give
+
+$$
+\frac{10098}{10^8}<E<\frac{10099}{10^8}.
+$$
+
+For additional explicit margins, the following integers $m$ satisfy
+$|\beta_k|>mE$ for every indicated sign in the corresponding row.
+The coefficient with index nine is omitted only in the five root
+rows. The other eighteen coefficients have exactly the displayed
+signs.
+
+| Interval | $m$ | Signs |
+| --- | ---: | --- |
+| $I_1$ | $43180449$ | `+++++++++?---------` |
+| $I_2$ | $5746247$ | `---------?+++++++++` |
+| $I_3$ | $5696077$ | `+++++++++?---------` |
+| $I_4$ | $22570264$ | `---------?+++++++++` |
+| $I_5$ | $42371792$ | `+++++++++?---------` |
+| $[0,c_1-e]$ | $388624041$ | $+^{19}$ |
+| $[c_1+e,c_2-e]$ | $51716227$ | $-^{19}$ |
+| $[c_2+e,c_3-e]$ | $51264701$ | $+^{19}$ |
+| $[c_3+e,c_4-e]$ | $51264701$ | $-^{19}$ |
+| $[c_4+e,c_5-e]$ | $203132376$ | $+^{19}$ |
+| $[c_5+e,1]$ | $381346130$ | $-^{19}$ |
+
+These are comparisons of the rational numbers defined above; in
+particular every listed margin exceeds $10^4E$. In each root row,
+any sign or zero for the middle coefficient leaves variation one.
+The endpoint signs are opposite. Substitution
+$r=(a+bt)/(1+t)$ and multiplication by $(1+t)^{18}$ turn the
+Bernstein coefficients into ordinary coefficients multiplied by
+positive binomial factors. Descartes' rule therefore bounds the
+number of roots, counting multiplicity, by one. The intermediate
+value theorem supplies a root, which is consequently unique and
+simple. Every gap row has variation zero and nonzero endpoints.
+The five intervals and six gaps cover $[0,1]$. This proves the
+inventory uniformly on the entire closed response rectangle. ∎
+
+## 14. Exact lift bounds and terminal J separation
+
+**Definition 14.1 (Coefficient matrix and rational enclosures).** Form
+the $12\times13$ matrix $\mathcal M=(L\mid z)$ with ordered rows
+$b^5\mathsf A,\ldots,\mathsf A,b^5\mathsf B,\ldots,\mathsf B$ and
+ordered columns $b^{12},\ldots,1$. Its first twelve columns form
+$L$. For any one of the projection centers $c$ used here or in
+Section 15, put $L_0=L(c,p_c,v_c)$ and $C=L_0^{-1}$.
+
+The following explicit centered bounds fix the rational evaluation
+of these matrices. For an entry polynomial $f(r,p,v)$, expand
+
+$$
+f(c+x,p_c+y,v_c+z)=\sum_{i,j,k}f_{ijk}x^iy^jz^k,
+\qquad
+\varepsilon_f=\sum_{i+j+k>0}|f_{ijk}|e^ih^{j+k}.
+$$
+
+Its value lies in $f_{000}+[-\varepsilon_f,\varepsilon_f]$ on the
+whole box. Denote the nonnegative entrywise error matrix by
+$\mathcal E_L$ and the analogous last-column vector by
+$\mathcal E_z$. Thus a rational upper bound for
+$\|I-CL\|_\infty$ is
+
+$$
+Q=\max_i\sum_{j=1}^{12}\sum_{k=1}^{12}
+                   |C_{ij}|(\mathcal E_L)_{jk}.
+$$
+
+For a fixed rational $\bar b$ put
+$w=(\bar b^{12},\ldots,\bar b)^t$ and $z_0=z(c,p_c,v_c)$. A rational
+residual bound is
+
+$$
+\eta=\max_i\left(
+ |(C(L_0w+z_0))_i|
+ +\sum_{j=1}^{12}|C_{ij}|
+       \left\{(\mathcal E_z)_j+
+          \sum_{k=1}^{12}(\mathcal E_L)_{jk}|w_k|\right\}\right).
+$$
+
+All coefficient expansions in this definition are finite binomial
+expansions of the polynomials of Definition 13.1. The inverse is
+exactly $\operatorname{adj}(L_0)/\det L_0$, not a rounded inverse.
+
+**Lemma 14.2 (Five necessary lifts).** Each center matrix in the
+following table is nonsingular. With $Q,\eta$ as just defined, the
+table gives strict rational upper bounds on $Q$ and
+$\eta/(1-Q)$ throughout $I_i\times\mathcal U$.
+
+| $i$ | Exact $\bar b$ | $Q$ upper bound | $\eta/(1-Q)$ upper bound |
+| --- | --- | --- | --- |
+| 1 | $0.04078295904882838405264306362514449405106$ | $4\cdot10^{-18}$ | $12\cdot10^{-23}$ |
+| 2 | $0.04091698421060610059422739287384503573542$ | $2\cdot10^{-18}$ | $43\cdot10^{-24}$ |
+| 3 | $-3.176868004886463132107916325401810483894$ | $25\cdot10^{-10}$ | $309\cdot10^{-6}$ |
+| 4 | $-0.4358328034096036222134460606876310285942$ | $2\cdot10^{-15}$ | $43\cdot10^{-19}$ |
+| 5 | $-0.5819863165350697596394747517356607978584$ | $8\cdot10^{-15}$ | $128\cdot10^{-18}$ |
+
+Every actual finite common root in the corresponding box therefore
+has respectively the following necessary $b$ enclosure:
+
+$$
+\begin{array}{c|c}
+i&b\\\hline
+1&(0.0407829590488283,0.0407829590488285)\\
+2&(0.0409169842106060,0.0409169842106062)\\
+3&(-3.178,-3.176)\\
+4&(-0.436,-0.435)\\
+5&(-0.583,-0.581).
+\end{array}
+$$
+
+Proof. The exact determinant comparisons at the five rational
+centers are
+
+$$
+10^{k_i}\le-\det L_0<10^{k_i+1},\qquad
+(k_1,k_2,k_3,k_4,k_5)=(32,31,20,26,23).
+$$
+
+They follow by expansion of the coefficient matrix, and the
+adjugate identity gives $CL_0=I$. Substitution into Definition 14.1
+then gives the table's rational inequalities. In particular $Q<1$
+on each whole box, so $CL$ and $L$ are invertible there.
+
+For a common root $b$, evaluation of every matrix row gives
+
+$$
+L u+z=0,\qquad u=(b^{12},\ldots,b)^t.
+$$
+
+Subtract the fixed vector $w$ and multiply by $C$. The geometric
+series inverse estimate yields
+
+$$
+\|u-w\|_\infty
+\le\frac{\|C(Lw+z)\|_\infty}{1-\|I-CL\|_\infty}
+\le\frac{\eta}{1-Q}.
+$$
+
+The last coordinate gives the displayed enclosures. Rows three
+through five violate $b>0$. In each remaining row, Lemma 13.2
+permits only one $r$, and invertibility of $L$ permits at most one
+$b$. Common Parent Geometry, Theorem 12.3, then gives at most one
+complete world at that source. No projected root is being asserted
+to have a legal lift. ∎
+
+**Lemma 14.3 (Disjoint terminal J images).** Any actual worlds from
+rows one and two respectively satisfy
+
+$$
+\begin{array}{c|cc}
+ &1&2\\\hline
+\widehat D/b^2&(673,674)&(643,644)\\
+a&(964,965)&(994,995).
+\end{array}
+$$
+
+Proof. Evaluate the polynomial circuit of Definition 2.1 on
+$I_i$ times the corresponding positive $b$ interval of Lemma 14.2.
+Exact interval addition, negation, endpoint multiplication and
+reciprocal yield the sharper rational outer bounds
+
+$$
+\begin{array}{c|cc}
+&1&2\\\hline
+\widehat D/b^2&(6732076478185,6732076478186)/10^{10}
+ &(6436744834752,6436744834754)/10^{10}\\
+a&(9640512711405,9640512711406)/10^{10}
+ &(9948201599656,9948201599658)/10^{10}.
+\end{array}
+$$
+
+The expressions are evaluated in the displayed factored order of
+Definition 2.1. Both $b$ and $\widehat D$ are positive throughout
+these boxes, so the quotients have no pole. Lemma 2.2 identifies
+these values with the literal terminal readings of the same entire
+gains and fixed drifts. The two J intervals are disjoint. ∎
+
+## 15. Exceptional projections and the exhaustive singular branch
+
+**Lemma 15.1 (All exceptional projected roots).** The following
+centers, with radius $e=10^{-22}$, isolate all the roots of the
+indicated factors in $(0,1)$. At any actual common root their forced
+$b$ values are as listed.
+
+| Factor | Center | Forced $b$ |
+| --- | --- | --- |
+| $\Psi_2$ | $0.8090169943749474241022934171828190588602$ | $-1/2$ |
+| $\Psi_4$ | $0.8685711315796832210935933386297551290576$ | $-2/5$ |
+| $\Phi$ | $0.1348158750676386533670177160610812651109$ | $1/8$ |
+| $\Phi$ | $0.9024496817720562653778726512965428561863$ | $1/8$ |
+
+Proof. Use the Sturm sequence $f,f',-\operatorname{rem}(f,f'),\ldots$.
+Its exact endpoint sign words are
+
+| Factor or root | At $0$ | At $1$ | At center minus $e$ | At center plus $e$ |
+| --- | --- | --- | --- | --- |
+| $\Psi_2$ | `--+` | `+++` | `-++` | `+++` |
+| $\Psi_4$ | `++--+` | `--+++` | `+--++` | `---++` |
+| lower $\Phi$ | `--+-+` | `--+++` | `-+--+` | `++--+` |
+| upper $\Phi$ | `--+-+` | `--+++` | `+--++` | `---++` |
+
+The total variation drops are respectively one, one and two, with
+one root in each displayed interval. This proves exhaustiveness.
+For the four center matrices of Definition 14.1, in the same order,
+the determinant comparisons are
+
+$$
+10^{k_i}\le-\det L_0<10^{k_i+1},\qquad
+(k_1,k_2,k_3,k_4)=(27,26,29,26).
+$$
+
+The same centered matrix bounds give $Q<2\cdot10^{-15}$ on each
+interval times $\mathcal U$. Thus $L$ is invertible on every
+exceptional projection box.
+
+In the notation of Common Parent Geometry, (20.5),
+$\det L=\Delta_1=72900r^6(r-1)^4\mathcal L_1$.
+Consequently $\mathcal L_1\ne0$ there. Its polynomial identities
+(21.4) and the necessary common-root relation (20.10) are
+
+$$
+\begin{gathered}
+\mathcal L_1b+\mathcal L_0=0,\\
+\mathcal L_0-\tfrac12\mathcal L_1\equiv0\pmod{\Psi_2},\qquad
+\mathcal L_0-\tfrac25\mathcal L_1\equiv0\pmod{\Psi_4},\\
+\mathcal L_0+\tfrac18\mathcal L_1\equiv0\pmod\Phi.
+\end{gathered}
+$$
+
+They force exactly the listed values. The first two are illegal
+because $b>0$. The last two have $b=1/8$ and $\Lambda=0$, by that
+source's (4.9), and hence contribute no regular world. ∎
+
+**Lemma 15.2 (No singular world over the rectangle).** No world in
+$C(p,v)$ over $\mathcal U$ has $\Lambda=0$.
+
+Proof. The zero-safe parent equation, Common Parent Geometry,
+Theorem 12.3, forces $b=1/8$ for every actual singular source.
+Its Theorems 4.2 and 29.2 exhaust this branch by the two strict roots
+$r_-,r_+$ of $\Phi$. They include every legal fifth-response lift,
+with no gain or drift nonvanishing condition. At either root put
+
+$$
+\begin{aligned}
+j&=1/8+8r(1-r),\qquad n=j+r,\qquad T=9/8,\\
+A_5&=1+(n+5/4)(4-15/j+20/T-10/n),\\
+a_6&=10-36/j+45/T-20/n,\\
+s_r(p)&=24+24(5/2+n)
+       +\frac{p-24}{A_5}\{1+(5/2+n)a_6\}.
+\end{aligned}
+$$
+
+Theorem 29.2 identifies $s_r(p)$ with the actual acquired sixth-M
+response of that unique singular fifth-response lift. Exact interval
+evaluation on the two $\Phi$ intervals of Lemma 15.1 and the full
+$p$ interval gives
+
+$$
+\begin{array}{c|cc}
+&r_-&r_+\\\hline
+A_5&(-908,-907)/10^3&(-5217,-5216)/10^3\\
+s_r(p)&(65,67)&(40,42).
+\end{array}
+$$
+
+All divisions are legitimate; in particular $A_5$ is separated from
+zero. Neither sixth-response interval meets
+$[v_c-h,v_c+h]\subset(172,173)$. This excludes the exhaustive
+singular branch without deleting its world strata. ∎
+
+## 16. The whole-child implication
+
+Proof of the uniform assertion in Theorem 12.2. Let $W$ be any
+complete world in any child over $\mathcal U$. If $\Lambda=0$,
+Lemma 15.2 excludes it. Otherwise the necessary resultant projection
+of Definition 13.1 applies. Since $0<r<1$, its projection is a root
+of $R$ or one of the three exceptional factors. Lemma 15.1 excludes
+all regular exceptional lifts. Lemmas 13.2 and 14.2 leave only the
+first two $R$ projections, with at most one complete world at each.
+Thus there are at most two worlds in the entire child.
+
+If two distinct worlds remain, they occupy different rows, and
+Lemma 14.3 places their terminal J readings in disjoint intervals.
+Thus $a$ is injective. The argument divides by no drift or gain
+sample. The only chart division for regular sources is justified by
+$\Lambda\ne0$, and the complementary singular case was evaluated
+separately. Gain degree drops, repeated gain roots, sampled zeros
+and zero drift were never excluded. ∎
+
+## 17. The actual seed and a small analytic M arc
+
+**Lemma 17.1 (Containment of the algebraic seed).** The exact base
+$(p_*,v_*)$ of Theorem 1.3 belongs to $\operatorname{int}\mathcal U$.
+
+Proof. Let $c_b=c_1$ be the first rational coordinate of Definition
+3.1; it is distinct from the root-interval centers of Lemma 13.2.
+Exact rational evaluation of Definition 2.1 at $(2/5,c_b)$ gives
+
+$$
+|p(2/5,c_b)-p_c|<10^{-65},\qquad
+|v(2/5,c_b)-v_c|<10^{-65}.
+$$
+
+Theorem 4.3 supplies $|b_{0*}-c_b|\le10^{-38}$.
+The whole segment between them lies in Definition 9.2's $I_b$,
+since its printed rational endpoints strictly enclose
+$[c_b-10^{-38},c_b+10^{-38}]$. Lemma 9.3 gives on that entire
+segment
+
+$$
+|p_b|<726,\qquad |v_b|<1674.
+$$
+
+These bounds can also be obtained directly by interval
+differentiation of Definition 2.1 on $S_0$: the resulting intervals
+lie strictly inside
+$[725498392,725498393]/10^6$ and
+$[-1673536106,-1673536105]/10^6$, respectively. The mean value
+theorem therefore yields
+
+$$
+\begin{aligned}
+|p_*-p_c|&<726\cdot10^{-38}+10^{-65}<10^{-34},\\
+|v_*-v_c|&<1674\cdot10^{-38}+10^{-65}<10^{-34}.
+\end{aligned}
+$$
+
+This proves strict containment for the actual algebraic base,
+rather than for its rational approximation. ∎
+
+**Corollary 17.2 (Exact child and locally exhaustive M arc).** The
+child $C(p_*,v_*)$ is exactly the two-world set from Theorem 1.3.
+There is a connected open interval $I_0$ about $2/5$ on which the
+analytic base map $\beta$ of Theorem 10.1 is injective, takes values
+in $\operatorname{int}\mathcal U$, and every $C(\beta(\lambda))$
+consists exactly of $W_2(\lambda),W_3(\lambda)$. No distinct J pair
+exists in any of those entire children.
+
+Proof. Theorem 1.3 supplies two actual distinct worlds at the seed;
+Theorem 12.2 bounds the entire child by two. Lemma 17.1 and
+continuity of $\beta$ place a sufficiently small open parameter
+interval inside the rectangle. Intersect it with the injectivity
+interval supplied by Theorem 10.1. The two actual distinct M worlds
+persist there and exhaust each child by the same uniform bound.
+J injectivity excludes any independently selected J pair there.
+This completes all assertions of Theorem 12.2. ∎
+
+## 18. Mathematical sources and the remaining independent-pair question
+
+Sections 12–17 are ordinary model-specific repository-derived
+mathematics (`repo-derived`). They add the full-rectangle source
+inventory, its entire-child J injectivity, and the exhaustion of the
+small M arc. The algebraic seed and its analytic motion are reused
+from Sections 2–10. The real analytic family agrees with
+[AURIC–Langlands Context and Spectral Reconstruction](AURIC_LANGLANDS_CONTEXT_AND_SPECTRAL_RECONSTRUCTION_THEORY.md),
+Section 7; the present conclusion uses only its local branch.
+
+[Common Parent Geometry](FIB_COMMON_PARENT_GEOMETRY_AND_MIXED_CHILDREN.md),
+Theorem 12.3, supplies zero-safe fixed-source uniqueness; Sections
+20–21 supply the ordered elimination identity, linear minors and
+exceptional remainder identities; Definition 24.1 supplies the exact
+668-term polynomial; Theorems 4.2 and 29.2 supply the exhaustive
+singular branch. The response circuit is Definition 2.1 here, with
+the same original-world interpretation established in Lemma 2.2.
+
+Descartes' sign rule, the Bernstein change of basis, Sturm's root
+count, the adjugate identity, the geometric-series inverse estimate,
+and the intermediate and mean value theorems are classical tools.
+For the univariate algebraic methods, see Basu, Pollack and Roy,
+*Algorithms in Real Algebraic Geometry*; for ordinary resultant and
+subresultant elimination, see Cox, Little and O'Shea, *Ideals,
+Varieties, and Algorithms*, Chapter 3. Their use here is the stated
+finite rational specialization, not an additional general principle.
+
+The independent J obligation at the particular seed and on this
+small arc has a negative answer by Corollary 17.2. The original
+existence question remains Definition 1.2 over arbitrary
+$p\ne24,v$: the two distinct equal-J worlds and the two distinct
+equal-M worlds are independently selected in one entire child,
+may overlap, and may have unrelated common terminal values. Each
+world retains its own constant real drift and one nonzero whole
+real polynomial gain of degree at most three, with acquired clocks
+$0,\ldots,6$ and terminal clock $7$.
+
+Any joint witness on a further continuation of this M branch must
+have base outside $\mathcal U$. No continuation to such a base is
+established here. Neither existence of an unrestricted joint witness
+nor its exclusion outside this rectangle follows from this local
+absence theorem. No sufficiency of a polynomial necessary cover is
+used.
+
+## 追加锚（本行以下为增补区）
