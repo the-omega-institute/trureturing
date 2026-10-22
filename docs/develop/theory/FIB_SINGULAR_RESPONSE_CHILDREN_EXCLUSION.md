@@ -973,3 +973,817 @@ realization or regularity of a strategy is inferred from these
 algebraic consequences.
 
 ## 追加锚（本行以下为增补区）
+## 10. Finite exceptional parameters on both entire singular-response lines
+
+**Definition 10.1 (The full common-base problem).** For arbitrary real
+$p,v$ define the two-parameter child
+
+$$
+C(p,v)=\mathcal F(H_4,M,p,M,v).
+\tag{10.1}
+$$
+
+Its worlds are exactly the complete triples
+
+$$
+\begin{gathered}
+W=(P(r,b),g,d),\qquad
+P(r,b)=\begin{pmatrix}r&b\\r(1-r)/b&1-r\end{pmatrix},\\
+0<r<1,\quad b>0,\quad d\in\mathbb R,\quad
+0\ne g\in\mathbb R[s],\quad\deg g\le3.
+\end{gathered}
+\tag{10.2}
+$$
+
+Each world has its own arbitrary fixed real drift and one entire gain
+polynomial. With the matrices $J,M$ of (1.2), set $Q_0=I$ and
+$Q_i=E_iQ_{i-1}$. The literal acquired word and readings are
+
+$$
+(E_1,\ldots,E_6)=(J,M,J,M,M,M),\qquad
+(y_0,\ldots,y_6)=(0,24,147/5,24,18,p,v),\qquad
+y_i=d+g(i)\operatorname{tr}(Q_iP).
+\tag{10.3}
+$$
+
+Put
+
+$$
+j=b+r(1-r)/b,\quad n=j+r,\quad T=1+b,\quad U=1+2b.
+\tag{10.4}
+$$
+
+The traces at clocks zero through six are respectively
+$1,j,T,n,U,U+n,2U+n$. The two actual clock-seven alternatives on
+this same complete world are
+
+$$
+a(W)=d+(T+2j+4r)g(7),\qquad
+m(W)=d+(3U+2n)g(7).
+\tag{10.5}
+$$
+
+Define $\mathfrak I(p,v)$ by
+
+$$
+\begin{gathered}
+\exists W_0,W_1,W_2,W_3\in C(p,v):\quad
+W_0\ne W_1,\quad W_2\ne W_3,\\
+a(W_0)=a(W_1),\qquad m(W_2)=m(W_3).
+\end{gathered}
+\tag{10.6}
+$$
+
+The full original target is $\exists p,v\in\mathbb R$ with $p\ne24$
+and $\mathfrak I(p,v)$. The two pairs are independently chosen; they
+may overlap or be disjoint, and their two common terminal answers need
+not agree. All of $C(p,v)$ is used. The symbols $\mathcal C_v$,
+$\mathcal C_\sigma$ and $\mathfrak W(v)$ in Sections 1–9 retain their
+fixed inherited $p_J$ meanings; in particular
+$\mathcal C_v=C(p_J,v)$ and $\mathfrak W(v)=\mathfrak I(p_J,v)$.
+
+**Definition 10.2 (The exact affine singular-response lines).** Write
+$\phi=\Phi$ from (1.6), and $\rho_\sigma=r_\sigma$ for its two
+designated roots in $(0,1)$. Thus
+
+$$
+\phi(t)=438272t^4-931328t^3+540800t^2-50728t-853.
+\tag{10.7}
+$$
+
+With the integer $D_s$ and polynomials below, define
+
+$$
+\begin{aligned}
+D_s={}&1731744020342106665,\\
+A_s(t)={}&13656112734222647296t^3-33583101098863014400t^2\\
+&+20502976421172725312t-3401342974535580372,\\
+B_s(t)={}&-327746705621343535104t^3+916826043674607172160t^2\\
+&-616757003572777087368t+31411654798932835643,\\
+s_t(p)={}&-3\{pA_s(t)+B_s(t)\}/D_s,\qquad
+s_\sigma(p)=s_{\rho_\sigma}(p).
+\end{aligned}
+\tag{10.8}
+$$
+
+These are exactly the functions of (3.4)–(3.5), now with arbitrary
+real fifth response as their explicit variable. A source is singular
+when $\Lambda=1+6/T+1/U-4/j-4/n=0$.
+
+**Lemma 10.3 (Whole-world singular coverage).** For every real $p$,
+the singular worlds of $\mathcal F(H_4,M,p)$ are exactly the unique
+whole-world lifts at $(\rho_-,1/8)$ and $(\rho_+,1/8)$. Their
+sixth responses are $s_-(p),s_+(p)$ respectively. Consequently
+$C(p,v)$ contains a singular source if and only if
+$v=s_-(p)$ or $v=s_+(p)$.
+
+Proof. O, Theorem 29.2, applies to every real fifth response. Its
+zero-safe parent equation forces $b=1/8$ whenever $\Lambda=0$;
+at that width $\Lambda=\phi(r)/(960jn)$. The two strict roots
+are exactly $\rho_-,\rho_+$, and O, Theorem 12.3, gives the unique
+entire gain and fixed drift at each source for every $p$.
+For the explicit response, put
+
+$$
+\begin{aligned}
+j(t)&=1/8+8t(1-t),&n(t)&=j(t)+t,\\
+F_5(t)&=j(t)n(t)+(n(t)+5/4)
+ \{(196/9)j(t)n(t)-15n(t)-10j(t)\},\\
+F_6(t)&=j(t)n(t)+(n(t)+5/2)
+ \{50j(t)n(t)-36n(t)-20j(t)\},\\
+F_0(t)&=84+24n(t).
+\end{aligned}
+\tag{10.9}
+$$
+
+The original response is $F_0+(p-24)F_6/F_5$, with $F_5\ne0$ at
+both designated roots. Reduction by
+$t^4=(931328t^3-540800t^2+50728t+853)/438272$ gives
+
+$$
+\operatorname{rem}_\phi(D_sF_6+3A_sF_5)=0,\qquad
+\operatorname{rem}_\phi\{D_s(F_0F_5-24F_6)+3B_sF_5\}=0.
+\tag{10.10}
+$$
+
+These are respectively the coefficient of $p$ and the constant
+coefficient needed for (10.8), as in Lemma 3.3 and X, Section 13.2.
+They prove the identity for every real $p$. The converse follows by
+taking the actual unique lift and its actual sixth response.
+No property of regular companions follows from this classification
+alone. ∎
+
+**Definition 10.4 (Fixed-node numerators).** For $x>0$ put
+$D(x)=x(x+1)(x+2)$. This polynomial denominator is distinct from
+the integer $D$ in (3.4), here denoted $D_s$. Define
+
+$$
+\begin{aligned}
+h_3&=(24-d)(x+1)(x+2),&h_4&=(18-d)D,\\
+h_5&=(p-d)x(x+2),&h_6&=(v-d)x(x+1),\\
+N_0&=20h_3-45h_4+36h_5-10h_6,\\
+N_1&=10h_3-20h_4+15h_5-4h_6,\\
+N_2&=4h_3-6h_4+4h_5-h_6,\\
+N_7&=-h_3+4h_4-6h_5+4h_6.
+\end{aligned}
+\tag{10.11}
+$$
+
+Let $\mathcal H(s)$ be the single degree-at-most-three interpolant
+
+$$
+\mathcal H(s)=\frac1D\sum_{i=3}^6 h_i
+ \prod_{\substack{3\le k\le6\\k\ne i}}\frac{s-k}{i-k}.
+\tag{10.12}
+$$
+
+Then $\mathcal H(i)=N_i/D$ for $i=0,1,2,7$. This is the
+fixed-node interpolation of F, (30.4)–(30.6), with the numerator
+convention $h_i=D\mathcal H(i)$ for $i=3,4,5,6$.
+Distinct-node interpolation is used in precisely its classical scope:
+Berrut–Trefethen, *Barycentric Lagrange Interpolation*, §2,
+[(2.1)–(2.2)](https://people.maths.ox.ac.uk/trefethen/barycentric.pdf).
+
+**Lemma 10.5 (Exact correspondence with the entire off-24 child).**
+Fix arbitrary real $p\ne24,v$. The map
+
+$$
+C(p,v)\longrightarrow\mathbb R^2,\qquad W\longmapsto(x,d),
+\qquad x=n/U,
+\tag{10.13}
+$$
+
+is injective. Its image is exactly the following guarded set. Require
+$x>0$, $d\ne24$, $N_1\ne0$, and, with
+
+$$
+\begin{aligned}
+\beta&=2(147/5-d)-N_2/D,\\
+U&=\frac{-d(N_0/D)+\beta(N_2/D)}{d^2+\beta^2},\\
+b&=(U-1)/2,\qquad j=U(24-d)D/N_1,\qquad r=xU-j,
+\end{aligned}
+\tag{10.14}
+$$
+
+require all of
+
+$$
+\begin{gathered}
+d^2+\beta^2>0,\qquad U>1,\qquad 0<r<1,\qquad
+j=b+r(1-r)/b,\\
+dDU=-N_0,\qquad
+\{2(147/5-d)D-N_2\}U=N_2.
+\end{gathered}
+\tag{10.15}
+$$
+
+The corresponding world is exactly $W=(P(r,b),\mathcal H/U,d)$.
+For every such world, including zero drift,
+
+$$
+a=d+\frac{T+2j+4r}{U}\frac{N_7}{D},\qquad
+m=d+(3+2x)\frac{N_7}{D}.
+\tag{10.16}
+$$
+
+Proof. This is F, Lemma 30.2, with its parameters unchanged; the
+following verification makes the correspondence explicit. For an
+actual world, the trace list following (10.4) gives $x>0$ and the
+four samples of $Ug$ in (10.12). Hence $Ug=\mathcal H$ as entire
+polynomials. O, Theorems 2.1–2.2, show that $d=24$ in this parent
+would force $b=1/8$ and
+$g(s)=\frac85(s-1)(s-3)(s-5)$, whose fifth-M response is $24$.
+Thus $p\ne24$ gives $d\ne24$. Clock one gives
+$N_1/D=U(24-d)/j\ne0$.
+
+Clocks zero and two give $dU=-N_0/D$ and $\beta U=N_2/D$.
+The pair $(d,\beta)$ cannot vanish: otherwise $N_2/D=0$ but
+$\beta=2(147/5)\ne0$. Their scalar product with $(d,\beta)$
+therefore gives (10.14). All coordinates, and then the entire gain,
+are forced, proving injectivity without dividing by $d$.
+
+Conversely the guards construct a strict source with $n=xU$ and
+$T=(U+1)/2$. Equations (10.15) give the original readings at zero
+and two. The definition of $j$ gives reading $24$ at clock one.
+The four interpolated samples give readings $24,18,p,v$ at clocks
+three through six. The polynomial $\mathcal H/U$ is entire and
+has degree at most three. It is nonzero because the first two
+readings differ. Thus all seven original rows hold on the constructed
+complete world. The actual seventh-action traces in (10.5) give
+(10.16). No assertion that arbitrary roots of later necessary
+polynomial equations are legal worlds is used. ∎
+
+**Definition 10.6 (Necessary equations and the zero-drift constraint).**
+Use the polynomials
+
+$$
+\begin{aligned}
+A={}&2(24-d)DN_1-N_1^2+4\{xN_1-(24-d)D\}^2,\\
+B={}&-2(24-d)DN_1+2N_1^2
+ -4N_1\{xN_1-(24-d)D\},\\
+F={}&5dN_2D+\{2(147-5d)D-5N_2\}N_0,\\
+G={}&N_0^2A-dDN_0B-d^2D^2N_1^2,\qquad H=N_0|_{d=0},\\
+B_0={}&2(147/5)D-N_2|_{d=0},\\
+Z_0={}&\left.(N_2^2A+B_0N_2B-B_0^2N_1^2)\right|_{d=0}.
+\end{aligned}
+\tag{10.17}
+$$
+
+Here $H$ is a polynomial in $x,p,v$ and is distinct from the whole
+interpolant $\mathcal H(s)$. All these formulas are polynomial over
+$\mathbb Q$; the only displayed numerical denominator in $Z_0$ is
+a power of $5$.
+
+**Lemma 10.7 (Necessity without loss of the zero-drift layer).** Every
+world of $C(p,v)$ with $p\ne24$ satisfies $F=G=0$. Every actual
+zero-drift world also satisfies $H=Z_0=0$.
+
+Proof. Cross multiplication of the two clock equations (10.15) gives
+$F=0$. Set $\alpha=(24-d)D/N_1$ and $\gamma=x-\alpha$.
+Then $j=U\alpha$, $r=U\gamma$, and $b=(U-1)/2$.
+Multiplying the source identity by $4b$ gives
+
+$$
+U^2(2\alpha-1+4\gamma^2)
+ +U(-2\alpha+2-4\gamma)-1=0.
+\tag{10.18}
+$$
+
+Multiplication by $N_1^2$ is legitimate and yields
+$U^2A+UB-N_1^2=0$. Multiplying by $d^2D^2$ and using
+$dDU=-N_0$ gives $G=0$. This multiplication proves a necessary
+identity even when $d=0$; it does not justify discarding that layer.
+
+At zero drift, clock zero gives $H=0$. The other clock equation is
+$B_0U=N_2|_{d=0}$. If $B_0=0$, it would also give $N_2|_{d=0}=0$,
+in contradiction with $B_0=2(147/5)D-N_2|_{d=0}$ and $D>0$.
+Thus substitution $U=N_2/B_0$ into $U^2A+UB-N_1^2=0$ gives
+$Z_0=0$. This argument divides by neither the terminal gain nor
+any leading gain coefficient or gain-root difference. ∎
+
+**Lemma 10.8 (Coefficient field and legitimate reduction).** The algebra
+
+$$
+\mathbb K=\mathbb Q[t]/(\phi(t))
+\tag{10.19}
+$$
+
+is a number field. It has the two real embeddings used here,
+$t\mapsto\rho_-$ and $t\mapsto\rho_+$. The substitution
+$p=1,t=7$ modulo $179$, together with $v=s_t(p)$, is a well-defined
+specialization on a coefficient ring containing (10.11) and (10.17).
+
+Proof. The polynomial $\phi$ is primitive. Its reduction modulo $7$
+is $2t^4+t^3+t^2+t+1$. Its monic associate is
+$f=t^4-3t^3-3t^2-3t-3$ in $\mathbb F_7[t]$. Division gives
+
+$$
+\operatorname{rem}_f(t^{49}-t)=t^3+t^2-2,\qquad
+\gcd(f,t^3+t^2-2)=1,\qquad
+\operatorname{rem}_f(t^{2401}-t)=0.
+\tag{10.20}
+$$
+
+The finite-field degree-four irreducibility criterion now proves that
+$f$ is irreducible: its roots lie in $\mathbb F_{7^4}$ and none
+has degree dividing $2$. Gauss's lemma proves irreducibility of
+$\phi$ over $\mathbb Q$. Each designated real root therefore
+induces an injective field homomorphism from $\mathbb K$.
+
+For the reduction, let $\mathbb Z_{(179)}$ be the rationals whose
+reduced denominators are prime to $179$, and use the subring
+
+$$
+\mathcal A=\mathbb Z_{(179)}[t]/(\phi/438272)\ \subset\ \mathbb K.
+\tag{10.21}
+$$
+
+The defining polynomial is monic, so this quotient embeds in
+$\mathbb K$. The integers $5,438272,D_s$ are units in
+$\mathbb Z_{(179)}$; the last two have residues $80,98$.
+Direct substitution gives
+
+$$
+\phi(7)=0\pmod{179},\qquad s_7(1)=123\pmod{179}.
+\tag{10.22}
+$$
+
+Thus $\mathcal A[p]\to\mathbb F_{179}$ with $t\mapsto7$,
+$p\mapsto1$ is a ring map, and all displayed input formulas admit
+this reduction. Any later fraction is reduced only after its
+specified denominator is shown to have nonzero image. No map
+from the field $\mathbb Q$ to $\mathbb F_{179}$ is asserted. ∎
+
+**Lemma 10.9 (Universal carrier division and the infinity branch).**
+Use (10.17) first with independent $p,v$ and fixed degree bounds
+$\deg_dF=2$, $\deg_dG=4$. Let
+
+$$
+T_0=\operatorname{Res}_d(F,G),\qquad
+\mathscr R=\frac{T_0}{D^8H^2}.
+\tag{10.23}
+$$
+
+The division is exact over $\mathbb Q[p,v,x]$, and
+$\deg_xT_0\le48$, $\deg_x\mathscr R\le18$. After
+$v=s_t(p)$ it remains an exact polynomial division in
+$\mathbb K[p,x]$. The carrier $\mathscr R$ is distinct from the
+inherited eliminant $R(r,p,v)$ of Section 3.
+
+Proof. For $c=0,-1,-2$ put $u=x-c$ and substitute, respectively,
+
+$$
+d=24+uz,\qquad d=p+uz,\qquad d=v+uz.
+\tag{10.24}
+$$
+
+Each $N_i$ and $D$ is divisible by $u$ after its corresponding
+substitution. Therefore the substituted $F,G$ are divisible by
+$u^2,u^4$ respectively. Translation and scaling of the eliminated
+variable in a fixed degree-$(2,4)$ resultant multiply it by $u^8$.
+Factoring $u^2$ from the first input and $u^4$ from the second
+multiplies their resultant by $u^{2\cdot4+4\cdot2}=u^{16}$.
+Cancelling in the polynomial domain proves $u^8\mid T_0$.
+The three distinct linear factors yield $D^8\mid T_0$.
+
+For $H^2$, the constant coefficient of $F$ in $d$ is divisible
+by $H$; the constant and linear coefficients of $G$ are divisible
+by $H^2$ and $H$. The following universal coefficient argument
+makes this sufficient. For independent coefficients consider
+
+$$
+\begin{aligned}
+f_h(d)&=f_2d^2+f_1d+hf_0,\\
+g_h(d)&=g_4d^4+g_3d^3+g_2d^2+hg_1d+h^2g_0.
+\end{aligned}
+\tag{10.25}
+$$
+
+Over the generic coefficient field, $f_1,f_2$ are nonzero. One
+formal root of $f_h$ is of order $h$ and the other is finite.
+At the first root $g_h$ has order at least two in $h$; at the
+second it has nonnegative order. The resultant product formula
+therefore gives $h^2\mid\operatorname{Res}_d(f_h,g_h)$.
+Its coefficients are polynomials in the independent coefficients,
+so this divisibility is a polynomial identity and specializes even
+when $f_1$ or $f_2$ vanishes. Apply it to the coefficients of
+$F,G$, with $h=H$, to obtain $H^2\mid T_0$.
+
+The polynomial $H$ has degree three in $x$ with constant leading
+coefficient $-810$. Also
+
+$$
+H(0)=960,\qquad H(-1)=-36p,\qquad H(-2)=-20v.
+\tag{10.26}
+$$
+
+Thus $H$ and $D$ are relatively prime over $\mathbb Q(p,v)$,
+and the two factors combine there. Division by their product,
+whose leading coefficient in $x$ is the nonzero constant $810^2$,
+is polynomial division over $\mathbb Q[p,v]$; the zero remainder
+over its fraction field is therefore identically zero. The result
+specializes polynomially to $v=s_t(p)$, including parameter values
+where some values in (10.26) vanish.
+
+For the degree, $\deg_xF\le6$, $\deg_xG\le14$ give the initial
+Sylvester bound $4\cdot6+2\cdot14=52$. The coefficient of $x^6$
+in $F$ is
+
+$$
+-30(d-18)(59d-1251).
+\tag{10.27}
+$$
+
+Set $z=1/x$. The polynomial $z^6F(z^{-1},d)$ has at $z=0$ the
+two simple roots $18$ and $1251/59$. Both extend to formal power
+series in $z$ over $\mathbb Q(p,v)$. On the branch
+$d(z)=18+O(z)$, each of $z^3N_0,z^3N_1,z^3N_2$ has order at
+least one, because its value at $z=0,d=18$ vanishes.
+Also $z^3D=1+O(z)$ and
+
+$$
+z^4\{xN_1-(24-d)D\}
+=z^3N_1-z(24-d)(z^3D)=O(z).
+\tag{10.28}
+$$
+
+It follows term by term that $z^8A=O(z^2)$ and
+$z^7B=O(z^2)$. In $z^{14}G$, the orders of the three terms
+$N_0^2A$, $-dDN_0B$, $-d^2D^2N_1^2$ are therefore at least
+$4,4,4$ respectively. In particular $G(z^{-1},d(z))=O(z^{-10})$.
+On the other finite branch the unsharpened bound is $O(z^{-14})$.
+The leading coefficient of $F$ as a polynomial in $d$ is
+$O(z^{-6})$ and has nonzero leading term. The resultant product
+formula, with its fourth power, consequently bounds $T_0$ by
+$O(z^{-24-10-14})=O(z^{-48})$. This proves
+$\deg_xT_0\le48$. Subtracting the degrees $24+6$ of $D^8H^2$
+gives $\deg_x\mathscr R\le18$.
+All arguments are polynomial identities, so degree drops under
+specialization cause no exception to the stated bounds. The
+resultant product formula used here is the classical Sylvester
+elimination formula; see Cox–Little–O'Shea,
+*[Ideals, Varieties, and Algorithms](https://doi.org/10.1007/978-3-319-16721-3)*,
+Chapter 3. ∎
+
+**Definition 10.10 (A polynomial linear subresultant).** Write
+$F=f_2d^2+f_1d+f_0$ and $G=g_4d^4+g_3d^3+g_2d^2+g_1d+g_0$.
+Let $C$ be the four-by-five matrix whose rows are the coefficient
+vectors of $d^2F,dF,F,G$, with columns in descending degrees
+$4,3,2,1,0$. Set
+
+$$
+\ell_1=\det C_{4,3,2,1},\qquad
+\ell_0=\det C_{4,3,2,0},\qquad
+L(d)=\ell_1d+\ell_0.
+\tag{10.29}
+$$
+
+This fixes the degree-one subresultant up to an irrelevant common
+constant sign relative to other Sylvester conventions. In particular
+it fixes the ratio $-\ell_0/\ell_1$ used below.
+
+**Lemma 10.11 (Common finite roots under every specialization).**
+If $F(d)=G(d)=0$ at a finite value $d$ under any coefficient
+specialization, then $L(d)=0$. This remains true if the leading
+coefficient of either input vanishes or its degree drops.
+
+Proof. For row $i$ let $c_i$ be the signed maximal minor obtained
+from the first three columns of $C$ by deleting that row, with
+sign $(-1)^{i+4}$. Cofactor expansion gives
+
+$$
+\sum_{i=1}^4c_i C_{i,k}=0\quad(k=4,3,2),\qquad
+\sum_{i=1}^4c_i C_{i,1}=\ell_1,\qquad
+\sum_{i=1}^4c_i C_{i,0}=\ell_0.
+\tag{10.30}
+$$
+
+Consequently $L$ is the polynomial combination
+$c_1d^2F+c_2dF+c_3F+c_4G$. Every common finite root annihilates
+it. This identity divides by no leading coefficient and is preserved
+by every specialization. It is the elementary determinant form of
+the classical subresultant construction, as in Brown–Traub,
+*[On Euclid's Algorithm and the Theory of Subresultants](https://doi.org/10.1145/321662.321665)*,
+*J. ACM* 18, 505–514. ∎
+
+**Lemma 10.12 (Exact finite specialization).** In the coefficient
+ring of Lemma 10.8, specialize modulo $179$ at $t=7,p=1$, so
+$v=123$. The monic image of $\mathscr R$ is
+
+$$
+\begin{aligned}
+R_*={}&x^{18}+88x^{17}+31x^{16}+80x^{15}+33x^{14}+57x^{13}\\
+&+74x^{12}-37x^{11}-85x^{10}-19x^9+60x^8-20x^7\\
+&-61x^6+42x^5-81x^4+39x^3+44x^2+57x-24.
+\end{aligned}
+\tag{10.31}
+$$
+
+Using the specialized $H,Z_0,\ell_i,D$, the following five monic
+gcds in $\mathbb F_{179}[x]$ are one:
+
+$$
+\begin{aligned}
+\gcd(R_*,R_*')&=1,&\gcd(\ell_1,R_*H)&=1,\\
+\gcd(R_*,HD)&=1,&\gcd(H,Z_0)&=1,&\gcd(H,D)&=1.
+\end{aligned}
+\tag{10.32}
+$$
+
+In $\mathbb F_{179}[x]/(R_*)$ define
+
+$$
+d_*=-\ell_0/\ell_1,\qquad
+M_*=d_*+(3+2x)N_7(x,d_*)/D.
+\tag{10.33}
+$$
+
+The characteristic polynomial of multiplication by $M_*$ is
+
+$$
+\begin{aligned}
+Q_*={}&Y^{18}+84Y^{17}-9Y^{16}+38Y^{15}+28Y^{14}+18Y^{13}\\
+&+33Y^{12}+40Y^{11}+57Y^{10}+53Y^9-29Y^8-30Y^7\\
+&-33Y^6-33Y^5-71Y^4-32Y^3+29Y^2-44Y+7,
+\end{aligned}
+\tag{10.34}
+$$
+
+and $\gcd(Q_*,Q_*')=1$.
+
+Proof. Substitute $p=1,v=123$ directly in (10.11) and (10.17),
+reduce coefficients modulo $179$, and form the fixed degree-$(2,4)$
+Sylvester determinant. Exact division by $D^8H^2$ and division
+by its nonzero leading coefficient give the eighteen-degree polynomial
+(10.31), coefficient by coefficient. The same substitution in the
+four-by-five matrix (10.29) specifies $\ell_0,\ell_1$ without
+any unspecified choice of subresultant normalization.
+For clarity the specialized polynomial $H$ is
+
+$$
+H_*=85x^3+78x^2-85x+65.
+\tag{10.35}
+$$
+
+Polynomial Euclidean division of the five pairs in (10.32), with
+these definitions, gives constant final nonzero remainders; taking
+their monic associates gives the five displayed ones. In particular
+$H_*(0),H_*(-1),H_*(-2)$ are the reductions of
+$960,-36,-2460$, namely $65,143,46$, so the last gcd also follows
+immediately from the three distinct roots of $D$.
+These are identities in a finite polynomial ring, not claims that
+any finite-field root lifts to a strict real world.
+
+The second and third gcds justify both inverses in (10.33). An
+explicit matrix definition supplies all the arithmetic for (10.34):
+in the basis $1,x,\ldots,x^{17}$, column $k+1$, for $0\le k\le17$,
+is the coefficient vector of the remainder of $x^kM_*$ on division
+by $R_*$. Its determinant $\det(YI-\mu_{M_*})$ is precisely
+(10.34). Euclidean division of $Q_*$ and its formal derivative
+gives gcd one. The displayed input formulas, the two full coefficient
+lists, the determinant definitions and the polynomial divisions
+specify the finite algebra entirely. No external certificate is a
+hypothesis of these equalities. ∎
+
+**Lemma 10.13 (Nonzero exceptional polynomial and both embeddings).**
+After substituting $v=s_t(p)$ there is a nonzero
+$e(p)\in\mathbb K[p]$ such that, whenever $e(p)\ne0$, all of the
+following conclusions survive specialization: $\mathscr R$ has
+degree eighteen and is squarefree;
+
+$$
+\gcd(\ell_1,\mathscr R H)=\gcd(\mathscr R,HD)
+=\gcd(H,Z_0)=\gcd(H,D)=1;
+\tag{10.36}
+$$
+
+and the characteristic polynomial of multiplication by the actual
+terminal expression in the eighteen-dimensional carrier algebra
+has nonzero discriminant. For each sign the set
+
+$$
+E_\sigma=\{p\in\mathbb R:\iota_\sigma(e)(p)=0\},\qquad
+\iota_\sigma:t\mapsto\rho_\sigma,
+\tag{10.37}
+$$
+
+is finite and consists of real algebraic numbers.
+
+Proof. Work first over $\mathbb K(p)$. Lemma 10.12 proves that
+the coefficient of $x^{18}$ in $\mathscr R$ is nonzero and that
+the resultants expressing every gcd in (10.32) are nonzero.
+Indeed their defining determinant expressions live in the ring
+$\mathcal A[p]$ of (10.21), or in a localization by elements
+with nonzero image at $(179,t=7,p=1)$. A zero element of this
+ring would have zero image. Thus the nonzero reductions establish
+the corresponding characteristic-zero nonvanishings. The degree
+bound in Lemma 10.9 then makes the degree exactly eighteen.
+
+Write $\widehat R$ for the monic associate of $\mathscr R$ and use
+
+$$
+\mathcal B=\mathbb K(p)[x]/(\widehat R),\qquad
+d_R=-\ell_0/\ell_1,\qquad
+M_R=d_R+(3+2x)N_7(x,d_R)/D.
+\tag{10.38}
+$$
+
+The gcds give the inverses of $\ell_1$ and $D$ in $\mathcal B$.
+Define its multiplication matrix by the same remainder-column rule
+as in Lemma 10.12. Its entries are in $\mathbb K(p)$, and its
+characteristic polynomial $Q_{\rm term}(Y)$ specializes to $Q_*$.
+This specialization is legitimate: monic division uses the leading
+coefficient of $\mathscr R$, and the inverse computations use
+Bezout identities whose determinant denominators have nonzero
+reductions in (10.32). Localize $\mathcal A[p]$ at these finitely
+many nonzero-image elements before reducing. The squarefreeness of
+$Q_*$ then gives a nonzero discriminant of $Q_{\rm term}$ over
+$\mathbb K(p)$.
+
+Here is a precise construction of a sufficient $e$. Take the finite
+list consisting of the leading coefficient of $\mathscr R$, its
+squarefreeness resultant, the resultants in (10.36), and the
+discriminant of $Q_{\rm term}$. Include every denominator of the
+coefficients of the monic $\widehat R$, $d_R$, $M_R$, their
+multiplication matrix, and the Bezout identities for
+$(\ell_1,\mathscr R)$, $(\ell_1,H)$, $(\mathscr R,H)$,
+$(\mathscr R,D)$, $(H,Z_0)$ and $(H,D)$. The fixed numerical
+and coefficient-field denominators in (10.8), (10.17), (10.21)
+and (10.29) can be included as nonzero constant factors.
+Express each required nonzero rational function as a quotient of
+nonzero polynomials in $\mathbb K[p]$, and take the product of
+all their numerators and denominators, along with those coefficient
+and Bezout denominators. Only denominators of defined rational
+functions are included; zero coefficients introduce no zero factors.
+This product is a nonzero polynomial $e(p)$. All nonconstant
+inversions, all required leading coefficients, all Bezout identities
+and all nonvanishings are valid wherever $e(p)\ne0$.
+The localization argument above shows that these choices may all be
+made with nonzero reductions at the displayed specialization.
+
+Each $\iota_\sigma$ is injective by Lemma 10.8. It therefore maps
+$e$ to a nonzero polynomial over the real algebraic field
+$\mathbb Q(\rho_\sigma)$. Its real zero set is finite. Every such
+zero is algebraic over this number field and hence over $\mathbb Q$.
+This proves (10.37) for both real embeddings without requiring
+either finite-field point to be a real lift. The sets are sufficient
+supersets; neither minimality nor feasibility of their members is
+part of their definition. ∎
+
+**Theorem 10.14 (Uniform entire-child separation on the two singular lines).**
+For each $\sigma\in\{-,+\}$ and every real
+$p\notin E_\sigma\cup\{24\}$, the map
+
+$$
+m:C(p,s_\sigma(p))\longrightarrow\mathbb R
+\tag{10.39}
+$$
+
+is injective on the entire child. Consequently, at any off-24 base
+containing a singular source, the full independent-pair predicate
+$\mathfrak I(p,v)$ can hold only in the finite algebraic set
+
+$$
+\begin{aligned}
+&\{(p,s_-(p)):p\in E_-\setminus\{24\}\}\\
+&\hspace{12mm}\cup\{(p,s_+(p)):p\in E_+\setminus\{24\}\}.
+\end{aligned}
+\tag{10.40}
+$$
+
+Neither selected pair is required to contain a singular source.
+All regular companions, whether or not used by either selected pair,
+are included in (10.39).
+
+Proof. Fix a sign and a real $p$ outside its displayed exceptional
+set, and specialize all coefficient-field quantities through
+$\iota_\sigma$. Every conclusion of Lemma 10.13 holds at this
+parameter. If an actual world had $d=0$, Lemma 10.7 would give
+$H(x)=Z_0(x)=0$, contradicting their Bezout identity. Thus there
+is no actual zero-drift world at this parameter.
+
+Now take any actual world of the entire child, and use its faithful
+coordinates $(x,d)$ from Lemma 10.5. In particular $D(x)>0$,
+$N_1\ne0$ and $F(x,d)=G(x,d)=0$. Suppose first that $H(x)=0$.
+The formulas (10.17) show that $(x,0)$ is also a common zero of
+$F,G$: at $d=0$, $F$ is a multiple of $H$ and $G=H^2A$.
+Lemma 10.11 applied to this common zero gives $\ell_0(x)=0$.
+The gcd $\gcd(\ell_1,H)=1$ gives $\ell_1(x)\ne0$.
+Applying the same common-root identity to the actual $(x,d)$ gives
+$\ell_1(x)d+\ell_0(x)=0$, and hence $d=0$, already excluded.
+Therefore every actual world has $H(x)\ne0$.
+
+A common root of $F,G$ makes their fixed Sylvester resultant zero,
+even if a leading coefficient drops. Since $D(x)H(x)\ne0$,
+the polynomial identity $T_0=D^8H^2\mathscr R$ now gives
+$\mathscr R(x)=0$. The gcd $\gcd(\ell_1,\mathscr R)=1$
+and Lemma 10.11 force
+
+$$
+d=-\ell_0(x)/\ell_1(x)=d_R(x).
+\tag{10.41}
+$$
+
+Thus every actual world is carried by a root of the specialized
+$\widehat R$, and its actual terminal-M answer from (10.16) is
+exactly $M_R(x)$. This establishes coverage of the original worlds,
+not merely coverage of roots in a chosen source chart.
+
+Over an algebraic closure the squarefree degree-eighteen algebra
+$\mathcal B$ becomes the product of eighteen copies of that
+algebraically closed field, indexed by the distinct roots $\xi$
+of $\widehat R$. Multiplication by $M_R$ is diagonal on this
+product. Consequently
+
+$$
+Q_{\rm term}(Y)=\prod_{\widehat R(\xi)=0}\bigl(Y-M_R(\xi)\bigr).
+\tag{10.42}
+$$
+
+Its nonzero discriminant from Lemma 10.13 says that these eighteen
+values are pairwise distinct. This is the elementary finite
+separable-algebra separation principle; the standard decomposition
+into finite separable factors is also stated in the Stacks Project,
+[Lemma 10.143.4, Tag 00U3](https://stacks.math.columbia.edu/tag/00U3).
+Here squarefreeness gives the decomposition directly by the Chinese
+remainder theorem, with no realizability premise.
+
+If two actual worlds have the same $m$, equation (10.42) gives the
+same $x$ for both. Equation (10.41) then gives the same $d$.
+Lemma 10.5 reconstructs the identical strict source and identical
+entire gain, so the complete worlds coincide. This proves (10.39).
+Finally Lemma 10.3 puts every base containing a singular source on
+at least one of the two lines. Away from (10.40), (10.39) rules out
+the distinct M pair required in (10.6), regardless of the J pair.
+This proves the necessary finite restriction. ∎
+
+**Corollary 10.15 (Strata and the remaining full-domain target).**
+The exceptional sets in Theorem 10.14 do not assert an independent
+M pair, a joint witness or feasibility at any listed base. The
+undecided part of the original target includes its finite exceptional
+singular-line bases and all other off-24 bases not settled by a
+separately stated result.
+
+Proof. Lemma 10.5 begins with every complete original world.
+Its only source guards are the original strict inequalities, and its
+off-24 guards are proved consequences of the original readings.
+In particular neither a golden coordinate nor a singular source
+was removed. The necessary equations of Lemma 10.7 hold at zero
+drift before any multiplication is used to eliminate it; the extra
+constraint $H=Z_0=0$ treats that layer. In Theorem 10.14 the
+$H=0$ base locus is treated before the quotient carrier is used.
+All failures of the finite nonvanishing conditions are retained in
+$E_\sigma$ rather than declared impossible.
+
+The terminal expression never divides by $N_7$, so a zero terminal
+gain is included. Fixed-node interpolation requires degree at most
+three and permits lower degree, sampled gain zeros and repeated
+gain roots. The polynomial common-root identity does not require
+the leading coefficients of the specialized $F,G$ to be nonzero.
+The two real embeddings are treated separately without choosing an
+arc or bounded source box. Thus all the original strata, including
+regular companions and unbounded positive offdiagonals, are within
+the scope of the theorem.
+
+The finite restriction (10.40) is only a necessary condition. It
+neither constructs the independently selected terminal pairs nor
+decides the real zeros of $e$ or their feasibility. Its complement
+away from the two lines is not covered by (10.39). A separately
+isolated negative-$p$ J pair supplies no M pair and no asserted
+continuation into a singular-response line. Theorem 8.1 retains
+its fixed inherited $p_J$ scope, and remains applicable there
+without an assertion that $e(p_J)\ne0$. Hence none of the earlier
+fixed-parameter conclusions is silently generalized. ∎
+
+**Definition 10.16 (Reused results and scope of the new content).**
+O denotes *FIB common-parent geometry and two exact mixed children*,
+[Definitions 1.1–1.3 and Theorems 2.1–2.2, 12.3, 29.2](FIB_COMMON_PARENT_GEOMETRY_AND_MIXED_CHILDREN.md).
+They supply the original model, zero-safe parent and unique singular
+whole-world lifts. F denotes *FIB all-response finite-fibre geometry*,
+[Definition 30.1 and Lemma 30.2](FIB_ALL_RESPONSE_FINITE_FIBRE_GEOMETRY.md).
+They supply exactly the faithful $(x,d)$ reconstruction used here.
+Its Theorems 29.1 and 32.1 retain their respective $p=24$ and
+finite-child scopes; neither is used as an already uniform
+singular-line separation theorem. X denotes *FIB strict-real joint
+incidence: the full seven-world inverse*,
+[Section 13.2](FIB_STRICT_REAL_JOINT_INCIDENCE_SUPPORT_X.md),
+which supplies the exact affine singular-response coefficients for
+all real $p$ with the original gain normalization.
+Sections 1–9 of the present volume, particularly Theorem 8.1,
+retain their fixed inherited parameter scope.
+
+The interpolation formula, Sylvester elimination, determinant
+subresultants, finite-field irreducibility criterion and separable
+finite-algebra separation are classical tools, used with their
+explicit parameter correspondences in Lemmas 10.5, 10.8–10.13 and
+Theorem 10.14. The additional model-specific content is the evaluated
+uniform two-line result: the exact carrier division and degree bound,
+the full coefficients and coprimalities in Lemma 10.12, and the
+whole-world coverage and terminal separation in Theorem 10.14.
+This content is an ordinary mathematical deduction from the stated
+model and displayed algebra. It makes no literature-priority,
+physical-realization or kernel-validation claim, and leaves the
+original independent-pair existence problem with exactly the
+undecided boundaries stated in Corollary 10.15.
+
+## 追加锚（本行以下为增补区）
