@@ -52,7 +52,10 @@ internal sealed class BourinQuestionOneRefutationDocument : IScribeDocumentDefin
                         + "to reflect positive contractions, whereas the square root increases the second "
                         + "weight from 1/4 to 1/2. This argument concerns Question 1; it makes no assertion "
                         + "about Question 2 or a restriction to the operator norm."))),
-                DescribeRole.Theorem))));
+                DescribeRole.Theorem,
+                openProblemResolutionClaim: new OpenProblemResolutionClaim(
+                    ProblemSlugRef.Create("bourin-2008-matrix-subadditivity-question-1"),
+                    ResolutionKind.Refuted)))));
 
     private static Formula ClaimBody()
     {

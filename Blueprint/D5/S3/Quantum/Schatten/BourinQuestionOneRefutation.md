@@ -24,6 +24,10 @@ $$\neg (\forall (n: \mathbb{N}), (\forall (k: \mathbb{N}), (\forall (Phi: \opera
 
 *Proof.* Machine-checked in Lean as `D5/S3/Quantum/Schatten/BourinQuestionOneRefutation.result` (`✓ std3`). ∎
 
+*Resolves.* `Problems/bourin-2008-matrix-subadditivity-question-1` (refuted) by `D5/S3/Quantum/Schatten/BourinQuestionOneRefutation.result`.
+
+<!-- scribe-open-problem-resolution-v1 {"problem_slug":"bourin-2008-matrix-subadditivity-question-1","declaration_gid":"D5/S3/Quantum/Schatten/BourinQuestionOneRefutation.result","resolution_kind":"refuted"} -->
+
 *Source.* Repository-derived.
 
 *Acknowledgement.* Jean-Christophe Bourin (2008). *Matrix subadditivity inequalities and block-matrices*. DOI: [10.1142/S0129167X09005509](https://doi.org/10.1142/S0129167X09005509). URL: <https://arxiv.org/abs/0805.1954v1>.
