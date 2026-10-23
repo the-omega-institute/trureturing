@@ -5,6 +5,10 @@ cas_ref: sha256:ccba8acf8b1409ddb94ca5fd391064c57460d2db12524f26ecf1291b812970d5
 coverage_gids: []
 receipts:
   unresolved_subitems: []
+  nonpropositional:
+    justification: 'Nonpropositional: Defines support, realization-interface data and the direct-generator locality assumption, followed by applicability limits. It does not assert a model realizes these assumptions.'
+    previous_atom_id: dee1fc774e9a81f2d79296ebcb22c3ee6cf3302d05a909839d1126c6b5e31efb
+    next_atom_id: 11b25590eac4f745c5880ec4ee7b26e807927746d309166407b916df73968f24
   chain_atoms:
     - a437db0f25a82e143fd904d381f1da4b95a1023dfb2b010b7d1820f3a7b12682
     - 266c514d93c42e6127b03e051e448efcaef6c916310e787df463567fb8326312
