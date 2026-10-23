@@ -11,7 +11,7 @@ admission_basis: open-problem-resolution (#18831; Proved)
 escape_witness: none
 Direct frozen dependencies (declaration statement_id, not module pins):
 D5/S1/Recurrence/Bilateral/BilateralProductModFour.symmetric_pair
-  sha256:ec2ce3acb9c693250b8c1744ab57b32dfa6f8e22a0268b5edce1f5d12206504e
+  sha256:6e111b7fbd06d0b50059d3eb349e9c05ca27c61da00b8e77333ab6a1ce5bb8a4
 D5/S1/Recurrence/Residue/NegativePowerDiagonalModPrime.inverse_difference
   sha256:de95009be8a3f6b4675b86334f6afe96cbcfe4cc07412482ab82bb4431065824
 D5/S1/Recurrence/Bilateral/BilateralProductModFour.ofSeries_inverse
