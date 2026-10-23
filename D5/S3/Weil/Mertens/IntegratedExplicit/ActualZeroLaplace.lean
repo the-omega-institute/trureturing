@@ -442,7 +442,7 @@ theorem actualH_laplace {s : ℂ} (hs : 1 < s.re) :
         linarith [(actual_zero_strip k).2])]
     simp only [Complex.ofReal_zero, mul_zero, Complex.exp_zero]
     rw [show actualZero k - s = -(s - actualZero k) by ring, div_neg]
-    simp only [neg_neg]
+    simp only [neg_neg, neg_div, one_div]
   have htotal : (∫ y : ℝ, actualH y * w y) =
       ∫ y : ℝ in Set.Ioi 0, Complex.exp (-s * y) * actualH y := by
     have he : (fun y : ℝ => actualH y * w y) =

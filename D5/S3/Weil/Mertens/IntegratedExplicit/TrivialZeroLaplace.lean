@@ -44,8 +44,7 @@ The series is absolutely convergent; no conditionally convergent regrouping occu
 theorem trivialCoeff_hasSum : HasSum trivialCoeff (1 - Real.log 2) := by
   have hc : HasSum (fun n : ℕ => (trivialCoeff n : ℂ))
       ((1 - Real.log 2 : ℝ) : ℂ) := by
-    convert (Zeta23.DigammaSeries.hasSum_digamma_series half_integerComplement)
-      .mul_right (1 / 2 : ℂ) using 1
+    convert (Zeta23.DigammaSeries.hasSum_digamma_series half_integerComplement).mul_right (1 / 2 : ℂ) using 1
     · funext n
       have hn : ((n : ℂ) + 1) ≠ 0 := Nat.cast_add_one_ne_zero n
       have hn' : (1 / 2 : ℂ) + n + 1 ≠ 0 := by
@@ -70,7 +69,7 @@ theorem trivialT_summable {y : ℝ} (hy : 0 ≤ y) :
   rw [Real.norm_eq_abs, abs_of_nonneg (mul_nonneg (trivialCoeff_nonneg n)
     (Real.exp_nonneg _))]
   exact mul_le_of_le_one_right (trivialCoeff_nonneg n)
-    (Real.exp_le_one_iff.mpr (mul_nonpos_of_nonpos_of_nonneg (by positivity) hy))
+    (Real.exp_le_one_iff.mpr (mul_nonpos_of_nonpos_of_nonneg (neg_nonpos.mpr (by positivity)) hy))
 
 theorem trivialT_nonneg {y : ℝ} (hy : 0 ≤ y) : 0 ≤ trivialT y := by
   exact tsum_nonneg (fun n => mul_nonneg (trivialCoeff_nonneg n) (Real.exp_nonneg _))
@@ -80,7 +79,7 @@ theorem trivialT_le_mass {y : ℝ} (hy : 0 ≤ y) : trivialT y ≤ 1 - Real.log 
   apply (trivialT_summable hy).tsum_le_tsum _ trivialCoeff_hasSum.summable
   intro n
   exact mul_le_of_le_one_right (trivialCoeff_nonneg n)
-    (Real.exp_le_one_iff.mpr (mul_nonpos_of_nonpos_of_nonneg (by positivity) hy))
+    (Real.exp_le_one_iff.mpr (mul_nonpos_of_nonpos_of_nonneg (neg_nonpos.mpr (by positivity)) hy))
 
 /-- Uniform absolute convergence includes the endpoint y=0. -/
 theorem trivialT_continuousOn : ContinuousOn trivialT (Ici 0) := by
@@ -91,7 +90,7 @@ theorem trivialT_continuousOn : ContinuousOn trivialT (Ici 0) := by
   rw [Real.norm_eq_abs, abs_of_nonneg (mul_nonneg (trivialCoeff_nonneg n)
     (Real.exp_nonneg _))]
   exact mul_le_of_le_one_right (trivialCoeff_nonneg n)
-    (Real.exp_le_one_iff.mpr (mul_nonpos_of_nonpos_of_nonneg (by positivity) hy))
+    (Real.exp_le_one_iff.mpr (mul_nonpos_of_nonpos_of_nonneg (neg_nonpos.mpr (by positivity)) hy))
 
 theorem trivialT_continuousAt {y : ℝ} (hy : 0 < y) : ContinuousAt trivialT y :=
   trivialT_continuousOn.continuousAt (Ici_mem_nhds hy)
@@ -100,8 +99,7 @@ theorem trivialT_continuousAt {y : ℝ} (hy : 0 < y) : ContinuousAt trivialT y :
 majorant is the proved exact positive coefficient mass. -/
 theorem trivialT_laplace_integrable {s : ℂ} (hs : 0 < s.re) :
     IntegrableOn (fun y : ℝ => Complex.exp (-s * y) * (trivialT y : ℂ)) (Ioi 0) := by
-  have hb := (integrableOn_exp_mul_Ioi (by linarith : -s.re < 0) 0)
-    .const_mul (1 - Real.log 2)
+  have hb := (integrableOn_exp_mul_Ioi (by linarith : -s.re < 0) 0).const_mul (1 - Real.log 2)
   refine hb.mono' ?_ ?_
   · have hc : ContinuousOn (fun y : ℝ => Complex.exp (-s * y) * (trivialT y : ℂ))
         (Ioi 0) := by
@@ -139,7 +137,9 @@ theorem trivialT_laplace_hasSum {s : ℂ} (hs : 0 < s.re) :
     simp only [Complex.mul_re, Complex.neg_re, Complex.add_re, Complex.ofReal_re,
       Complex.ofReal_im, mul_zero, sub_zero, Complex.natCast_re, Complex.re_ofNat,
       Complex.one_re]
-    nlinarith [Nat.cast_nonneg (α := ℝ) n]
+    simp only [Complex.im_ofNat, Complex.add_im, Complex.natCast_im,
+      Complex.one_im, zero_add, add_zero, zero_mul, sub_zero]
+    nlinarith [Nat.cast_nonneg (α := ℝ) n, (show 0 < y from hy)]
   have hb : ∀ᵐ y : ℝ ∂volume.restrict (Ioi 0), Summable (fun n => b n y) :=
     ae_of_all _ (fun y => trivialCoeff_hasSum.summable.mul_right _)
   have hbi : Integrable (fun y => ∑' n, b n y) (volume.restrict (Ioi 0)) := by
@@ -169,7 +169,8 @@ theorem trivialT_laplace_hasSum {s : ℂ} (hs : 0 < s.re) :
       Complex.natCast_re, Complex.one_re, Complex.im_ofNat, Complex.natCast_im,
       Complex.one_im, add_zero, mul_zero, sub_zero]
     linarith [Nat.cast_nonneg (α := ℝ) n])]
-  simp only [mul_zero, Complex.exp_zero, div_neg, neg_neg, div_eq_mul_inv, one_mul]
+  simp only [Complex.ofReal_zero, mul_zero, Complex.exp_zero, div_neg, neg_neg,
+    div_eq_mul_inv, one_mul, inv_neg, neg_mul_neg]
 
 /-- The per-term cancellation paying the complete trivial-zero transform. -/
 theorem trivial_partial_fraction (j s : ℂ) (hj : j ≠ 0)
