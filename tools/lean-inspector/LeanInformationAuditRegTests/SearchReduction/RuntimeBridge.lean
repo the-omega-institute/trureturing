@@ -169,6 +169,25 @@ theorem runtime_positive_completion_drop (reading : GraphReading)
   · simpa [pairRead, armInterval] using pb.2
   · exact nonBindOnly_requires_strictDrop reading positive
 
+/- The classifier's positive branch is sound for every pair of compatible
+   completed arms.  The named NoHit premise is the exact production guard;
+   it is supplied as data rather than hidden in the conclusion. -/
+theorem positive_classifier_sound_all_completions (reading : GraphReading)
+    (baseCompleted pairCompleted : ProofGraph) (baseValue pairValue : Nat)
+    (baseCompletion : ArmCompletion reading.graph baseCompleted false)
+    (pairCompletion : ArmCompletion reading.graph pairCompleted true)
+    (valid : reading.graph.root < reading.graph.vertices.length)
+    (baseRead : reading.baseline = armInterval reading.graph false)
+    (pairRead : reading.paired = armInterval reading.graph true)
+    (baseExact : depth baseCompleted costUpper (armSeeds reading.graph false)
+      reading.graph.root = .finite baseValue)
+    (pairExact : depth pairCompleted costUpper (armSeeds reading.graph true)
+      reading.graph.root = .finite pairValue)
+    (baseNoHit : NoHit reading.baselineProbe.outcome)
+    (positive : classifyGraph reading = .nonBindOnly) : pairValue < baseValue := by
+  exact runtime_positive_completion_drop reading baseCompleted pairCompleted baseValue pairValue
+    baseCompletion pairCompletion valid baseRead pairRead baseExact pairExact positive
+
 #print axioms replay_boundary
 #print axioms attached_certificate_arm_support
 #print axioms unknown_author_lower_support
@@ -177,4 +196,5 @@ theorem runtime_positive_completion_drop (reading : GraphReading)
 #print axioms production_depth_simulation
 #print axioms runtime_dp_completion_envelope
 #print axioms runtime_positive_completion_drop
+#print axioms positive_classifier_sound_all_completions
 end LeanInformationAudit.Tests.SearchReduction.RuntimeBridge

@@ -25,7 +25,7 @@ def timeLookup {α : Type} (label : String) (action : MetaM α) : MetaM α := do
   try action finally
     lookupPhase s!"{label}/end ns={(← IO.monoNanosNow) - start} heartbeats={(← IO.getNumHeartbeats) - heartbeats}"
 
-abbrev lookupVersion : String := "R_lookup/v17/obvious-v1/lazy-interval/scope-B_T/primary-index-only/candidate-200000/preparation-8000000/G-340000000/memo-target-basis-R-v1/N-memo-2000000/checkpoint-v3/views-kappa"
+abbrev lookupVersion : String := "R_lookup/v18/obvious-v1/lazy-interval/scope-B_T/primary-index-only/candidate-200000/preparation-8000000/G-340000000/memo-target-basis-R-v1/N-memo-2000000/checkpoint-v4/views-kappa"
 
 abbrev lookupCandidateBudget : Nat := 200000
 /-- Frozen from verdict-free fallback and fixed-stride candidate telemetry. -/
@@ -804,7 +804,10 @@ unsafe def lookupLeafPass (table : LookupTable) (goal : MVarId)
   for entry in candidates.entries do
     let position := ordinal
     ordinal := ordinal + 1
-    if telemetry && position % (max 1 stride) != 0 then continue
+    -- Telemetry observes the same enumeration.  It may change logging and
+    -- scheduling, but never drops candidates from the semantic result.
+    if telemetry && position % (max 1 stride) != 0 then
+      pure ()
     unless ← coverageAvailable table do
       trace := {trace with
         complete := false, failures := trace.failures.push s!"G-truncated:primary-index:remaining={candidates.entries.size - trace.visited}"}

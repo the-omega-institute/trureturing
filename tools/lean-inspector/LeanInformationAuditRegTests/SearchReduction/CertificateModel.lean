@@ -78,9 +78,46 @@ theorem paired_negative_irrelevant (reading : GraphReading) (probe : ProbeResult
 
 /-- Holding the paired distance fixed, a new base certificate can only lower
 the base distance and cannot create a strict drop that was absent before. -/
-theorem base_cert_never_creates_nonBindOnly (before after paired : Nat)
+theorem base_exact_distance_never_creates_nonBindOnly (before after paired : Nat)
     (baseImproves : after ≤ before) (noOldDrop : before ≤ paired) : ¬ paired < after := by
   omega
+
+theorem interval_refinement_preserves_strict_drop
+    (base paired base' paired' : Interval)
+    (baseRefines : base.lower ≤ base'.lower)
+    (pairedRefines : paired'.upper ≤ paired.upper)
+    (baseRefinedFinite : ∃ value, base'.lower = .finite value)
+    (oldDrop : strictDrop base paired = true) :
+    strictDrop base' paired' = true := by
+  rcases baseRefinedFinite with ⟨baseValue, hbaseValue⟩
+  rcases base with ⟨baseLower, baseUpper⟩
+  rcases paired with ⟨pairedLower, pairedUpper⟩
+  rcases base' with ⟨baseLower', baseUpper'⟩
+  rcases paired' with ⟨pairedLower', pairedUpper'⟩
+  change baseLower' = .finite baseValue at hbaseValue
+  subst baseLower'
+  cases hbase : baseLower with
+  | top => simp [strictDrop, hbase] at oldDrop
+  | finite baseLowerValue =>
+    cases hpaired : pairedUpper with
+    | top => simp [strictDrop, hpaired] at oldDrop
+    | finite pairedUpperValue =>
+      cases hpaired' : pairedUpper' with
+      | top =>
+        rw [hpaired', hpaired] at pairedRefines
+        exact False.elim pairedRefines
+      | finite pairedUpperValue' =>
+        simp only [strictDrop, hbase, hpaired, hpaired'] at oldDrop ⊢
+        simp only [boundLe, hbase, hpaired] at baseRefines
+        simp only [boundLe, hpaired, hpaired'] at pairedRefines
+        have hOld : pairedUpperValue < baseLowerValue := by
+          simpa [decide_eq_true_eq] using oldDrop
+        have hPair : pairedUpperValue' ≤ pairedUpperValue := pairedRefines
+        have hBase : baseLowerValue ≤ baseValue := baseRefines
+        simpa [decide_eq_true_eq] using (Nat.lt_of_le_of_lt hPair hOld).trans_le hBase
+
+theorem nohit_is_named_exhaustion (run : Run) :
+    NoHit run ↔ run = .exhausted := Iff.rfl
 
 /-- The actual production normalization of positive evidence has no one-price
 branch, regardless of any producer's proposed price. -/
@@ -164,7 +201,9 @@ theorem unresolved_final_seed_blocks (graph : ProofGraph) (selected : List Nat)
 #print axioms interval_strictDrop_sound
 #print axioms interval_lazy_exit_conservative
 #print axioms paired_negative_irrelevant
-#print axioms base_cert_never_creates_nonBindOnly
+#print axioms base_exact_distance_never_creates_nonBindOnly
+#print axioms interval_refinement_preserves_strict_drop
+#print axioms nohit_is_named_exhaustion
 #print axioms attack_failure_not_cost_one
 #print axioms no_certificate_not_imp_not_obvious
 #print axioms certificate_to_GraphEdge

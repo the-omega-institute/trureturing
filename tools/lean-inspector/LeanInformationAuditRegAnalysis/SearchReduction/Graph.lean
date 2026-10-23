@@ -175,6 +175,8 @@ structure GraphReading where
   queryAnswerMemoization : Bool := false
   deriving Inhabited
 
+def NoHit (run : Run) : Prop := run = .exhausted
+
 def boundLe : Bound → Bound → Prop
   | .finite a, .finite b => a ≤ b
   | .finite _, .top => True
@@ -398,6 +400,48 @@ def proofHardEligible (graph : ProofGraph) (selected : List Nat) (id : Nat)
 def usesStructureSeed (reading : GraphReading) : Bool :=
   reading.selectedSeeds.any (selectedStructureSeed reading.graph reading.selectedSeeds)
 
+structure DecisionState where
+  graphComplete : Bool
+  targetPartComplete : Bool
+  noAuxiliary : Bool
+  presentationCertified : Bool
+  priorReferenceSuccess : Bool
+  baseline : Interval
+  presentationComplete : Bool
+  isolated : Bool
+  structureChecked : Bool
+  structureClean : Bool
+  baselineProbe : Run
+  paired : Interval
+  usesSeed : Bool
+
+def decisionState (reading : GraphReading) : DecisionState := {
+  graphComplete := reading.graph.complete
+  targetPartComplete := reading.targetPartComplete
+  noAuxiliary := reading.noAuxiliary
+  presentationCertified := reading.presentationCertified
+  priorReferenceSuccess := reading.priorReferenceSuccess
+  baseline := reading.baseline
+  presentationComplete := reading.presentationComplete
+  isolated := reading.isolated
+  structureChecked := reading.structureChecked
+  structureClean := reading.structureClean
+  baselineProbe := reading.baselineProbe.outcome
+  paired := reading.paired
+  usesSeed := usesStructureSeed reading }
+
+def classifyState (state : DecisionState) : Verdict :=
+  if state.presentationCertified || state.priorReferenceSuccess ||
+      upperIsZero state.baseline then .bindOnly
+  else if state.graphComplete && state.targetPartComplete &&
+      !state.noAuxiliary && state.presentationComplete && state.isolated &&
+      state.structureChecked && state.structureClean &&
+      finite state.baseline.lower && state.baselineProbe == .exhausted &&
+      finite state.baseline.upper && finite state.paired.upper &&
+      strictDrop state.baseline state.paired && state.usesSeed then
+    .nonBindOnly
+  else .insufficient
+
 /-- An actual price change consumes a selected synthetic structure seed. -/
 def isWitnessEdge (graph : ProofGraph) (selected : List Nat) (edge : GraphEdge) : Bool :=
   edge.cost == .one && edge.pairedCost == .zero &&
@@ -444,6 +488,15 @@ def classifyGraph (reading : GraphReading) : Verdict :=
       finite reading.paired.upper && strictDrop reading.baseline reading.paired &&
       usesStructureSeed reading then .nonBindOnly
   else .insufficient
+
+theorem classifyGraph_eq_classifyState (reading : GraphReading) :
+    classifyGraph reading = classifyState (decisionState reading) := by
+  simp [classifyGraph, classifyState, decisionState]
+
+theorem early_stop_verdict_eq (early full : GraphReading)
+    (same : decisionState early = decisionState full) :
+    classifyGraph early = classifyGraph full := by
+  rw [classifyGraph_eq_classifyState, classifyGraph_eq_classifyState, same]
 
 def classifyClosure (reading : GraphReading) : Option Closure :=
   if classifyGraph reading == .nonBindOnly then some (closureOf reading.paired) else none

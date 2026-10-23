@@ -783,6 +783,14 @@ theorem graph_nondegeneracy :
     classifyClosure (nondegenerateReading .one) = some .zero := by
   decide +kernel
 
+/- A concrete audit payload is a Lean value; the verdict is recomputed by the
+   classifier, rather than copied from a JSON projection. -/
+def auditedGraphReading : GraphReading := nondegenerateReading .one
+
+theorem auditedGraphReading_verdict :
+    classifyGraph auditedGraphReading = .nonBindOnly := by
+  simpa [auditedGraphReading] using graph_nondegeneracy.2.1
+
 /-- Assumption-monotone repricing alone does not make zero seeds redundant:
 the newly available statement can turn another local edge from one to zero. -/
 theorem zero_seed_repricing_counterexample :
@@ -950,6 +958,7 @@ theorem two_point_strict_family :
 #print axioms nonBindOnly_uses_seed
 #print axioms all_target_part_not_nonBindOnly
 #print axioms graph_nondegeneracy
+#print axioms auditedGraphReading_verdict
 #print axioms zero_seed_repricing_counterexample
 #print axioms granularity_unordered
 #print axioms boolean_features_five_mode

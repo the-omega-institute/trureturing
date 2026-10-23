@@ -359,6 +359,10 @@ private unsafe def solveLookupGoal (table : LookupTable) (goal : MVarId)
         complete := trace.complete && leaf.complete}
       unless ← next.isAssigned do solved := false
     if solved then return trace
+    -- A split query is part of the same R success space as its parent.
+    -- Once one child enumeration is incomplete, falling back to the parent
+    -- query would erase that residual and could turn unknown into NoHit.
+    if !trace.complete then return {trace with source? := none}
     saved.restore
   let projected ← eliminateLocal facts
   if let some name := name? then

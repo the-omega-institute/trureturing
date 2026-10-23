@@ -7,6 +7,28 @@ native_run() {
 }
 
 case "${1:-}" in
+  test)
+    shift
+    test "$#" -eq 0 || { echo 'search-reduction-runner test takes no arguments' >&2; exit 2; }
+    modules=(GraphModel LookupModel CertificateModel CertificateTests CertificateScope
+      LookupPruningTests LookupTests LookupScope NativeCertification GraphCalibration
+      Calibration FaultPaths SingleSourceModel VocabularyModel PresentationCoverage
+      SingleSourceTests RawOriginsTests Faults RealNegative VocabularyTransport
+      VocabularyTests InformationTests)
+    for module in "${modules[@]}"; do
+      search_test_start=$(date +%s)
+      if make lean LEAN_SKIP_LOCK="${LEAN_SKIP_LOCK:-0}" \
+          LEAN_TARGETS="LeanInformationAuditRegTests.SearchReduction.${module}"; then
+        search_test_exit=0
+      else
+        search_test_exit=$?
+      fi
+      search_test_seconds=$(( $(date +%s) - search_test_start ))
+      printf 'SEARCH_REDUCTION_TEST_TIMING module=%s seconds=%s exit=%s\n' \
+        "$module" "$search_test_seconds" "$search_test_exit"
+      test "$search_test_exit" -eq 0 || exit "$search_test_exit"
+    done
+    ;;
   native)
     shift
     native_run "$@"
@@ -26,7 +48,7 @@ case "${1:-}" in
     }
     if test -z "${SEARCH_REDUCTION_RESUME+x}"; then
       lookup_request_hash=$(shasum -a 256 "$SEARCH_REDUCTION_REQUESTS")
-      export SEARCH_REDUCTION_RESUME="build/lean-inspector/search-reduction-checkpoints/R_lookup-v17-checkpoint-v3/${lookup_request_hash%% *}"
+      export SEARCH_REDUCTION_RESUME="build/lean-inspector/search-reduction-checkpoints/R_lookup-v18-checkpoint-v4/${lookup_request_hash%% *}"
     fi
     while :; do
       lookup_exit=0

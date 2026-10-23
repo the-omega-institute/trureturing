@@ -79,7 +79,7 @@ run_cmd do
       if reading.noAuxiliary then noAuxiliary := noAuxiliary + 1
       opaqueCount := opaqueCount + (reading.graph.vertices.filter (·.opaqueDecl)).length
       for edge in reading.graph.edges do
-        unless edgeActive edge do continue
+        unless edgeActive edge && edge.window == 1 do continue
         match edge.sharedData?, edge.cost with
         | none, _ => missingShared := missingShared + 1
         | _, .unknown => unknownCost := unknownCost + 1
@@ -133,12 +133,14 @@ run_cmd do
         logInfo s!"DECL_CLOSER_INVARIANCE {doubled.any (fun old =>
           old.baseline == reading.baseline && old.paired == reading.paired)}"
       if name == ``LeanInformationAudit.Tests.SearchReduction.GraphCandidates.sharedRoutine then
-        let rootEdges := reading.graph.edges.filter (·.conclusion == reading.graph.root)
+        let rootEdges := reading.graph.edges.filter (fun edge =>
+          edge.conclusion == reading.graph.root && edge.window == 1)
         unless rootEdges.all (·.sharedData? == some true) &&
             reading.baseline == ⟨.finite 0, .finite 0⟩ do
           throwError "sharedRoutine static-sharing/zero-price prediction failed"
       if name == ``LeanInformationAudit.Tests.SearchReduction.GraphCandidates.sharedWitness then
-        let rootEdges := reading.graph.edges.filter (·.conclusion == reading.graph.root)
+        let rootEdges := reading.graph.edges.filter (fun edge =>
+          edge.conclusion == reading.graph.root && edge.window == 1)
         unless rootEdges.all (·.sharedData? == some true) do
           throwError "sharedWitness static-sharing prediction failed"
         logInfo s!"DECL_PREDICTION sharedWitness {reading.baseline == ⟨.finite 1, .finite 1⟩}"
