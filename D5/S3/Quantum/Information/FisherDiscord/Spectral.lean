@@ -1,5 +1,5 @@
 /- GID: D5/S3/Quantum/Information/FisherDiscord/Spectral
-   generality: G
+   generality: I
    mirror-B: D5/B/S3/Quantum/Information/FisherDiscord/Spectral
    mirror-E: none(waiver:evidence-not-specified-by-formal-manifest)
    anchors: [mathlib/module/Mathlib.Tactic]
@@ -7,7 +7,7 @@
    digest: Fisher discord has a nonnegative pair kernel for every Hermitian SLD solution. -/
 
 import D5.S3.Quantum.Information.FisherDiscord.Defs
-import D5.S3.Quantum.Dynamics.EntropyProductionCoherenceDeletionIdentity
+import D5.S3.Quantum.Information.NMLWMeasuredFidelitySeparation
 import Mathlib.Tactic
 
 /-! Spectral identities for the two information quantities and their difference. -/
@@ -93,13 +93,7 @@ theorem skewWY_diag (w : n → ℝ) (hw : ∀ i, 0 ≤ w i) (H : Matrix n n ℂ)
     skewWY (diagonal (fun i => (w i : ℂ))) H =
       (1 / 2) * ∑ i, ∑ j, (Real.sqrt (w i) - Real.sqrt (w j)) ^ 2 *
         Complex.normSq (H i j) := by
-  have hp : (diagonal (fun i => (w i : ℂ))).PosSemidef :=
-    .diagonal (fun i => Complex.zero_le_real.mpr (hw i))
-  have hs : CFC.sqrt (diagonal (fun i => (w i : ℂ))) =
-      diagonal (fun i => (Real.sqrt (w i) : ℂ)) := by
-    rw [CFC.sqrt_eq_real_sqrt _ hp.nonneg, cfcₙ_eq_cfc]
-    exact D5.S3.Quantum.Dynamics.EntropyProductionCoherenceDeletionIdentity.cfc_diagonal
-      Real.sqrt w
+  have hs := D5.S3.Quantum.Information.NMLWMeasuredFidelitySeparation.sqrt_diagonal w hw
   unfold skewWY
   rw [hs]
   have ht : ((diagonal (fun i => (Real.sqrt (w i) : ℂ)) * H -

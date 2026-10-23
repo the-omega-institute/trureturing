@@ -6,6 +6,7 @@
    utility: none
    digest: Density matrices, symmetric logarithmic derivatives and partial trace for Fisher discord. -/
 
+import D5.S3.Quantum.Information.PartialTraceMutualInformation
 import Mathlib.Analysis.Matrix.Order
 import Mathlib.Analysis.SpecialFunctions.ContinuousFunctionalCalculus.Rpow.Basic
 import Mathlib.LinearAlgebra.Matrix.Kronecker
@@ -23,7 +24,8 @@ def IsDensity (ρ : Matrix n n ℂ) : Prop := ρ.PosSemidef ∧ ρ.trace = 1
 /-- Trace over the second tensor factor, in product coordinates. -/
 def partialTrace₂ {d₁ d₂ : ℕ}
     (ρ : Matrix (Fin d₁ × Fin d₂) (Fin d₁ × Fin d₂) ℂ) :
-    Matrix (Fin d₁) (Fin d₁) ℂ := fun i j => ∑ b, ρ (i, b) (j, b)
+    Matrix (Fin d₁) (Fin d₁) ℂ :=
+  D5.S3.Quantum.Information.PartialTraceMutualInformation.partialTraceRight ρ
 
 /-- The local observable tensored with the identity. -/
 def liftLeft {d₁ d₂ : ℕ} (H : Matrix (Fin d₁) (Fin d₁) ℂ) :

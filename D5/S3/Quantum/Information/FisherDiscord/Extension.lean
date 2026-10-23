@@ -1,5 +1,5 @@
 /- GID: D5/S3/Quantum/Information/FisherDiscord/Extension
-   generality: G
+   generality: I
    mirror-B: D5/B/S3/Quantum/Information/FisherDiscord/Extension
    mirror-E: none(waiver:evidence-not-specified-by-formal-manifest)
    anchors: []
@@ -20,16 +20,6 @@ set_option maxHeartbeats 800000
 
 variable {n : ℕ}
 
-private theorem liftLeft_isHermitian (H : Matrix (Fin n) (Fin n) ℂ)
-    (hH : H.IsHermitian) (d₂ : ℕ) :
-    (liftLeft (d₂ := d₂) H).IsHermitian := by
-  apply Matrix.IsHermitian.ext
-  intro x y
-  by_cases hxy : x.2 = y.2
-  · simp [liftLeft, Matrix.kroneckerMap_apply, Matrix.one_apply, hxy, hH.apply]
-  · have hyx : y.2 ≠ x.2 := Ne.symm hxy
-    simp [liftLeft, Matrix.kroneckerMap_apply, hxy, hyx]
-
 /-- The classical flag extension of a diagonal state. -/
 def flagExtension (w : Fin n → ℝ) :
     Matrix (Fin n × Fin n) (Fin n × Fin n) ℂ :=
@@ -42,10 +32,12 @@ theorem flag_partialTrace (w : Fin n → ℝ) :
   ext i j
   by_cases hij : i = j
   · subst j
-    simp [partialTrace₂, flagExtension, Matrix.diagonal_apply_eq]
+    simp [partialTrace₂,
+      D5.S3.Quantum.Information.PartialTraceMutualInformation.partialTraceRight, flagExtension, Matrix.diagonal_apply_eq]
     norm_cast
     simp [Finset.sum_ite_eq']
-  · simp [partialTrace₂, flagExtension, Matrix.diagonal_apply_ne, hij]
+  · simp [partialTrace₂,
+      D5.S3.Quantum.Information.PartialTraceMutualInformation.partialTraceRight, flagExtension, Matrix.diagonal_apply_ne, hij]
 
 private theorem flag_term_zero (w : Fin n → ℝ) (H : Matrix (Fin n) (Fin n) ℂ)
     (x y : Fin n × Fin n) :
@@ -84,7 +76,8 @@ theorem flag_discord_zero (w : Fin n → ℝ) (hw : ∀ i, 0 ≤ w i)
     (w := fun x : Fin n × Fin n => if x.2 = x.1 then w x.1 else 0)
     (hw := by intro x; split_ifs with hx; exact hw x.1; positivity)
     (H := liftLeft (d₂ := n) H) (L := L)
-    (liftLeft_isHermitian H hH n) hL'
+    (D5.S3.Quantum.Information.PartialTraceMutualInformation.isHermitian_kronecker
+      hH (Matrix.isHermitian_one)) hL'
   change fisherSLD
       (diagonal (fun x : Fin n × Fin n =>
         ((if x.2 = x.1 then w x.1 else 0 : ℝ) : ℂ))) L -
@@ -114,7 +107,7 @@ def extensionIneq (w : Fin n → ℝ) (H : Matrix (Fin n) (Fin n) ℂ) (L : Matr
       fisherSLD σ Lσ - skewWY σ (liftLeft (d₂ := d₂) H)
 
 /-- For a diagonal marginal, the inequality against every extension is equivalent to zero discord.
-The flag extension supplies the converse direction, while spectral nonnegativity supplies the forward direction. -/
+The flag extension forces zero marginal discord, while spectral nonnegativity gives the reverse implication. -/
 theorem monotone_iff_discord_zero (w : Fin n → ℝ) (hw : ∀ i, 0 ≤ w i)
     (htrace : ∑ i, w i = 1)
     (H L : Matrix (Fin n) (Fin n) ℂ) (hH : H.IsHermitian)
@@ -133,9 +126,7 @@ theorem monotone_iff_discord_zero (w : Fin n → ℝ) (hw : ∀ i, 0 ≤ w i)
           split_ifs
           · exact Complex.zero_le_real.mpr (hw x.1)
           · exact le_rfl)
-      · rw [Matrix.trace]
-        simp only [flagExtension, Matrix.diag, Matrix.diagonal_apply_eq]
-        rw [Fintype.sum_prod_type]
+      · rw [flagExtension, Matrix.trace_diagonal, Fintype.sum_prod_type]
         norm_cast
         have hinner : ∀ i : Fin n, (∑ b, if b = i then w i else 0) = w i := by
           intro i
@@ -156,7 +147,9 @@ theorem monotone_iff_discord_zero (w : Fin n → ℝ) (hw : ∀ i, 0 ≤ w i)
     linarith [hineq']
   · intro hzero d₂ σ Lσ hσ hMarg hLσ
     rw [hzero]
-    have hHL := liftLeft_isHermitian H hH d₂
+    have hHL : (liftLeft (d₂ := d₂) H).IsHermitian :=
+      D5.S3.Quantum.Information.PartialTraceMutualInformation.isHermitian_kronecker
+        hH Matrix.isHermitian_one
     exact discord_nonneg σ (liftLeft (d₂ := d₂) H) Lσ hσ.1 hHL hLσ
 
 end D5.S3.Quantum.Information.FisherDiscord.Extension
