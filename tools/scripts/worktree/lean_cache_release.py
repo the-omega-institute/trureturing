@@ -590,6 +590,10 @@ def publish(root, partition, verification=None, *, build_report=True):
                str(stage / MANIFEST), "--repo", REPO)
             gh(deadline, "release", "edit", tag, "--repo", REPO, "--draft=false")
             if verification is not None:
+                # Uploaded transport copies must not share the empty restore
+                # target's disk budget with the independently downloaded bytes.
+                for name in {ASSET, *(part["name"] for part in metadata["parts"])}:
+                    (stage / name).unlink(missing_ok=True)
                 # Verify this exact inventory through restore into an empty target.
                 target, downloaded = stage / "verified-target", stage / "downloaded"
                 target.mkdir()

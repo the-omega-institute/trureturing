@@ -1,0 +1,53 @@
+**Theorem 51.2 (Uniform singular half-plane exclusion).**
+Every actual singular parent world in Definition 51.1 satisfies
+
+$$
+p\le-497\quad\Longrightarrow\quad v<-23942/25.
+\tag{51.6}
+$$
+
+The quantifier includes both entire singular lines and every real
+$e$, including $e=0$ and $e=-24$, before imposing the displayed
+antecedent.
+
+Proof. The lower root bound in (51.4) gives
+$\rho_->337/2500$. Since $n'(r)=9-16r>0$ between this rational
+point and $\rho_-$,
+
+$$
+n(\rho_-)>\frac{3727599}{3125000}>\frac{625}{524},\qquad
+3727599\cdot524-625\cdot3125000=136876>0.
+\tag{51.7}
+$$
+
+For the upper line, $n(\rho_+)>5/3>625/524$. Both lines have
+$n<7/4$. The polynomial $D(n)=716n^2+31n-900$ is increasing for
+$n>0$ and $D(23/20)=2064/25>0$. Consequently $A(n)<0$ on
+both lines. Subtracting the supplied response coefficients gives
+
+$$
+B(n)-\frac{52}{25}A(n)
+=\frac{24300-16247n-3472n^2}{900n}.
+\tag{51.8}
+$$
+
+The numerator is strictly decreasing on $n>0$, and its value at
+$625/524$ is $-4945700/524^2<0$. Equations (51.7)–(51.8)
+therefore give $B-(52/25)A<0$. Division by the negative $A$
+reverses the inequality, so $B/A>52/25$.
+If $p\le-497$, then $p-24\le-521<0$. Eliminating $e$ only by
+this now justified nonzero $A$ yields
+
+$$
+\begin{aligned}
+v&=84+24n+(p-24)B/A\\
+ &<126-521\cdot52/25=-23942/25.
+\end{aligned}
+\tag{51.9}
+$$
+
+No gain coefficient, sampled gain or drift has been cancelled. The
+classification and (51.5) include all of their exceptional strata;
+the antecedent, rather than an extra hypothesis, decides which points
+on those full lines enter (51.9). ∎
+

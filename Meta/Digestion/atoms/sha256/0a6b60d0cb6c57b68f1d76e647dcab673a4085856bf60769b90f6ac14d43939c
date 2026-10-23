@@ -1,0 +1,51 @@
+**Lemma 242.3 (Fifteen actual algebraic sources).** Let
+$\varepsilon=1/100$, let $j\in\{-2,-1,0,1,2\}$, and put
+
+$$
+p_j=\frac13+j\varepsilon.
+$$
+
+In the fixed $(r,R)$ order define
+
+$$
+u_0=\frac{(1,1)^{\mathsf T}}{\sqrt2},\qquad
+u_+=\frac{(1-\varepsilon,1+\varepsilon)^{\mathsf T}}
+ {\sqrt{2(1+\varepsilon^2)}},\qquad
+u_- =\frac{(1+\varepsilon,1-\varepsilon)^{\mathsf T}}
+ {\sqrt{2(1+\varepsilon^2)}}.
+$$
+
+For $k\in\{-,0,+\}$ set, in $(r,\ell,R)$ order,
+
+$$
+V_{jk}=\bigl(\sqrt{1-p_j}(u_k)_r,\sqrt{p_j},
+                 \sqrt{1-p_j}(u_k)_R\bigr)^{\mathsf T},
+\qquad q_{jk}=q(V_{jk}).
+$$
+
+Then all fifteen $q_{jk}$ are interior actual native sources. Their native
+parameters are $p(q_{jk})=p_j$ and
+$U_{q_{jk}}=u_ku_k^{\mathsf T}$.
+
+Proof. The vectors $V_{jk}$ are unit vectors. For fixed $u_k$,
+
+$$
+\left\lVert\frac{d}{dp}
+ \bigl(\sqrt{1-p}(u_k)_r,\sqrt p,\sqrt{1-p}(u_k)_R\bigr)\right\rVert_2
+ =\frac1{2\sqrt{p(1-p)}}<2
+$$
+
+on $[1/4,1/2]$. Also
+$\lVert u_\pm-u_0\rVert_2\le\varepsilon$. Thus
+
+$$
+\lVert V_{jk}-n\rVert_2
+ \le 2|p_j-1/3|+\varepsilon
+ \le \frac1{20}.
+$$
+
+Lemma 242.2 applies. Its reconstruction has positive coordinates, so the
+source is interior, and its displayed vector has the declared middle
+coordinate and normalized $(r,R)$ direction. Consequently its native
+principal-root data are exactly $(p_j,u_k)$. ∎
+

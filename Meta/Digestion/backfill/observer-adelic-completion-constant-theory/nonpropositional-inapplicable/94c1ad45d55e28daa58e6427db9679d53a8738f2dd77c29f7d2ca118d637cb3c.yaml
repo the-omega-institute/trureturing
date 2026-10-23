@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:94c1ad45d55e28daa58e6427db9679d53a8738f2dd77c29f7d2ca118d637cb3c
+  normalized_sha256: sha256:94c1ad45d55e28daa58e6427db9679d53a8738f2dd77c29f7d2ca118d637cb3c
+cas_ref: sha256:94c1ad45d55e28daa58e6427db9679d53a8738f2dd77c29f7d2ca118d637cb3c
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 动态变量命名约定 P=E_2 及其连接角色标签；没有导数恒等式或高阶 cumulant 闭合断言。
+    previous_atom_id: ca4bb7bd14ef77a5d7e37fd057f65b22e558496f0ecc893c1a1894ae6c8b5f47
+    next_atom_id: 4f4ee4dac1ba8237d974debc03de694f34ae61bdd22f56c59509e5d4f7263de9

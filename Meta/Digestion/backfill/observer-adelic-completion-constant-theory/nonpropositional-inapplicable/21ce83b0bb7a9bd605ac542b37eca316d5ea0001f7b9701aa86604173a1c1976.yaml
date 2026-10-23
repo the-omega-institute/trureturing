@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:21ce83b0bb7a9bd605ac542b37eca316d5ea0001f7b9701aa86604173a1c1976
+  normalized_sha256: sha256:21ce83b0bb7a9bd605ac542b37eca316d5ea0001f7b9701aa86604173a1c1976
+cas_ref: sha256:21ce83b0bb7a9bd605ac542b37eca316d5ea0001f7b9701aa86604173a1c1976
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 该 atom 只是方法论协议或列表续项，不含独立可结算的数学断言。
+    previous_atom_id: 0307dca20ab035ea2daa0e57a9e90b81004db7c15733282eb17722a6b2688d06
+    next_atom_id: 061d9b1d5a2135b74a4492359310f2258e141db11db86bf270f3f9536409171e
