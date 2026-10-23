@@ -7,6 +7,7 @@
    digest: Symmetric sliding beta kernels and their strict midpoint monotonicity. -/
 
 import D5.S3.Analytic.KummerRatio.BetaIntegral
+import D5.S3.Analytic.KilbasSaigo.Bounds
 import Mathlib.MeasureTheory.Integral.IntervalIntegral.FundThmCalculus
 
 /-! Sliding averages of a symmetric beta weight. -/
@@ -43,17 +44,26 @@ private lemma w_symm (b y : ℝ) : w b (1-y) = w b y := by
 
 private lemma w_integrable {b : ℝ} (hb : 0 < b) :
     IntervalIntegrable (w b) volume 0 1 := by
-  apply (D5.S3.Analytic.KummerRatio.BetaIntegral.intervalIntegrable_beta hb hb).congr
+  have hi := D5.S3.Analytic.KilbasSaigo.Bounds.FractionalCertificate.weight_integrable
+    (α := 1-b) (a := 2*b-1) (by linarith) (by linarith)
+  apply hi.congr
   intro y hy
   rw [Set.uIoc_of_le zero_le_one] at hy
+  dsimp [D5.S3.Analytic.KilbasSaigo.Bounds.FractionalCertificate.weight]
+  rw [show 2*b-1+(1-b)-1 = b-1 by ring, show -(1-b) = b-1 by ring]
   exact (Real.mul_rpow hy.1.le (sub_nonneg.mpr hy.2)).symm
 
 private lemma integral_w {b : ℝ} (hb : 0 < b) :
     (∫ y in (0:ℝ)..1, w b y) = Real.Gamma b * Real.Gamma b / Real.Gamma (2*b) := by
-  rw [show 2*b = b+b by ring,
-    ← D5.S3.Analytic.KummerRatio.BetaIntegral.integral_beta hb hb]
+  have hi := D5.S3.Analytic.KilbasSaigo.Bounds.FractionalCertificate.integral_weight
+    (α := 1-b) (a := 2*b-1) (by linarith) (by linarith)
+  rw [show 2*b-1+(1-b) = b by ring, show 1-(1-b) = b by ring,
+    show 2*b-1+1 = 2*b by ring] at hi
+  rw [← hi]
   apply intervalIntegral.integral_congr_Ioo_of_le zero_le_one
   intro y hy
+  dsimp [D5.S3.Analytic.KilbasSaigo.Bounds.FractionalCertificate.weight]
+  rw [show 2*b-1+(1-b)-1 = b-1 by ring, show -(1-b) = b-1 by ring]
   exact Real.mul_rpow hy.1.le (sub_nonneg.mpr hy.2.le)
 
 private lemma F_eq_window (b s v : ℝ) (hs : s ≠ 1) :

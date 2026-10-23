@@ -1,5 +1,5 @@
 /- GID: D5/S3/Analytic/IncompleteBetaShape/Result
-   generality: G
+   generality: I
    mirror-B: D5/B/S3/Analytic/IncompleteBetaShape/Result
    mirror-E: none(waiver:evidence-not-specified-by-formal-manifest)
    anchors: [mathlib/module/Mathlib.Algebra.BigOperators.NatAntidiagonal]

@@ -1,8 +1,8 @@
 /- GID: D5/S3/Analytic/IncompleteBetaShape/Mixture
-   generality: G
+   generality: I
    mirror-B: D5/B/S3/Analytic/IncompleteBetaShape/Mixture
    mirror-E: none(waiver:evidence-not-specified-by-formal-manifest)
-   anchors: [mathlib/module/Mathlib.MeasureTheory.Function.JacobianOneDim, mathlib/module/Mathlib.Analysis.Calculus.FDeriv.Prod, mathlib/module/Mathlib.LinearAlgebra.Matrix.ToLinearEquiv]
+   anchors: [mathlib/module/Mathlib.MeasureTheory.Function.JacobianOneDim]
    utility: none
    digest: Beta mixture representation of the first parameter coefficient convolution. -/
 
@@ -12,8 +12,7 @@ import D5.S3.Analytic.KummerRatio.BetaIntegral
 import D5.S3.Analytic.IncompleteBetaShape.Kernel
 import D5.S3.Analytic.IncompleteBeta.Comparison
 import Mathlib.MeasureTheory.Function.JacobianOneDim
-import Mathlib.Analysis.Calculus.FDeriv.Prod
-import Mathlib.LinearAlgebra.Matrix.ToLinearEquiv
+import D5.S3.Quantum.Measurement.QubitIncompatibilityProbability
 
 set_option backward.isDefEq.respectTransparency false
 set_option backward.isDefEq.respectTransparency.types false
@@ -150,67 +149,58 @@ private def affineDomain (y : ℝ) : Set (ℝ × ℝ) :=
 private def rectangleMap (t : ℝ × ℝ) : ℝ × ℝ :=
   (t.2 * t.1, t.2 * (1 - t.1))
 
-private def rectangleDerivative (t : ℝ × ℝ) : ℝ × ℝ →L[ℝ] ℝ × ℝ :=
-  (Matrix.toLin (.finTwoProd ℝ) (.finTwoProd ℝ)
-    !![t.2, t.1; -t.2, 1 - t.1]).toContinuousLinearMap
-
-private lemma rectangle_deriv (t : ℝ × ℝ) :
-    HasFDerivAt rectangleMap (rectangleDerivative t) t := by
-  unfold rectangleDerivative
-  rw [Matrix.toLin_finTwoProd_toContinuousLinearMap]
-  convert! ((hasFDerivAt_snd (𝕜 := ℝ) (p := t)).mul hasFDerivAt_fst).prodMk
-    ((hasFDerivAt_snd (𝕜 := ℝ) (p := t)).mul
-      ((hasFDerivAt_const (1 : ℝ) t).sub hasFDerivAt_fst)) using 1
-  all_goals ext q <;> simp [ContinuousLinearMap.prod_apply, smul_eq_mul]
-
-private lemma rectangle_det (t : ℝ × ℝ) :
-    (rectangleDerivative t).det = t.2 := by
-  simp only [rectangleDerivative, LinearMap.det_toContinuousLinearMap,
-    LinearMap.det_toLin, Matrix.det_fin_two_of]
-  ring
-
-private lemma rectangle_image (y : ℝ) :
-    rectangleMap '' affineDomain y = Ioo 0 y ×ˢ Ioo 0 (1 - y) := by
-  apply Subset.antisymm
-  · rintro _ ⟨t, ht, rfl⟩
-    exact ⟨⟨mul_pos ht.2.1.1 ht.1.1, ht.2.2.1⟩,
-      ⟨mul_pos ht.2.1.1 (sub_pos.mpr ht.1.2), ht.2.2.2⟩⟩
-  · intro z hz
-    have hs : 0 < z.1 + z.2 := add_pos hz.1.1 hz.2.1
-    have hs1 : z.1 + z.2 < 1 := by linarith [hz.1.2, hz.2.2]
-    refine ⟨(z.1 / (z.1 + z.2), z.1 + z.2), ?_, ?_⟩
-    · have hfirst : (z.1 + z.2) * (z.1 / (z.1 + z.2)) = z.1 := by field_simp
-      have hsecond : (z.1 + z.2) * (1 - z.1 / (z.1 + z.2)) = z.2 := by field_simp; ring
-      refine ⟨⟨div_pos hz.1.1 hs, (div_lt_one hs).mpr (by linarith [hz.2.1])⟩,
-        ⟨hs, hs1⟩, ?_, ?_⟩
-      · simpa only [hfirst] using hz.1.2
-      · simpa only [hsecond] using hz.2.2
-    · apply Prod.ext <;> dsimp [rectangleMap] <;> field_simp <;> ring
-
-private lemma rectangle_inj (y : ℝ) : InjOn rectangleMap (affineDomain y) := by
-  intro t ht r hr he
-  have hx : t.2 * t.1 = r.2 * r.1 := congrArg Prod.fst he
-  have hz : t.2 * (1 - t.1) = r.2 * (1 - r.1) := congrArg Prod.snd he
-  have hs : t.2 = r.2 := by linarith
-  apply Prod.ext _ hs
-  rw [← hs] at hx
-  exact mul_left_cancel₀ ht.2.1.1.ne' hx
-
 private lemma rectangle_change (y : ℝ)
     (f : ℝ × ℝ → ℝ≥0∞) :
     (∫⁻ z in Ioo 0 y ×ˢ Ioo 0 (1 - y), f z) =
       ∫⁻ t in affineDomain y, ENNReal.ofReal t.2 * f (rectangleMap t) := by
+  let R : Set (ℝ × ℝ) := Ioo 0 y ×ˢ Ioo 0 (1-y)
+  have hR : MeasurableSet R := measurableSet_Ioo.prod measurableSet_Ioo
+  have hsub : R ⊆ D5.S3.Quantum.Measurement.OrderedRootCoordinates.radialBody := by
+    intro z hz
+    exact ⟨hz.1.1, hz.2.1, by linarith [hz.1.2, hz.2.2]⟩
+  have h := D5.S3.Quantum.Measurement.QubitIncompatibilityProbability.triangle_change_lintegral
+    (R.indicator f)
+  rw [setLIntegral_indicator hR, inter_eq_left.mpr hsub] at h
+  have hswap (g : ℝ × ℝ → ℝ≥0∞) :
+      (∫⁻ t in D5.S3.Quantum.Measurement.QubitIncompatibilityProbability.squareDomain, g t) =
+      ∫⁻ t in D5.S3.Quantum.Measurement.QubitIncompatibilityProbability.squareDomain,
+        g t.swap := by
+    rw [D5.S3.Quantum.Measurement.QubitIncompatibilityProbability.squareDomain,
+      Measure.volume_eq_prod, ← Measure.prod_restrict]
+    exact (lintegral_prod_swap
+      (μ := volume.restrict (Ioo (0 : ℝ) 1))
+      (ν := volume.restrict (Ioo (0 : ℝ) 1)) g).symm
+  rw [hswap] at h
   have hd : MeasurableSet (affineDomain y) := by
     dsimp only [affineDomain]
-    measurability
-  rw [← rectangle_image y,
-    lintegral_image_eq_lintegral_abs_det_fderiv_mul volume hd
-      (fun t _ => (rectangle_deriv t).hasFDerivWithinAt) (rectangle_inj y)]
-  apply setLIntegral_congr_fun hd
-  intro t ht
-  dsimp only
-  rw [rectangle_det, abs_of_pos ht.2.1.1]
-
+    exact (measurable_fst measurableSet_Ioo).inter
+      ((measurable_snd measurableSet_Ioo).inter
+        ((measurableSet_lt (measurable_snd.mul measurable_fst) measurable_const).inter
+          (measurableSet_lt
+            (measurable_snd.mul (measurable_const.sub measurable_fst)) measurable_const)))
+  have hds : affineDomain y ⊆
+      D5.S3.Quantum.Measurement.QubitIncompatibilityProbability.squareDomain :=
+    fun t ht => ⟨ht.1, ht.2.1⟩
+  change (∫⁻ z in R, f z) = _
+  calc
+    _ = ∫⁻ t in D5.S3.Quantum.Measurement.QubitIncompatibilityProbability.squareDomain,
+        ENNReal.ofReal t.2 * R.indicator f (rectangleMap t) := h
+    _ = ∫⁻ t in D5.S3.Quantum.Measurement.QubitIncompatibilityProbability.squareDomain,
+        (affineDomain y).indicator (fun t => ENNReal.ofReal t.2 * f (rectangleMap t)) t := by
+      apply setLIntegral_congr_fun (measurableSet_Ioo.prod measurableSet_Ioo)
+      intro t ht
+      change t.1 ∈ Ioo 0 1 ∧ t.2 ∈ Ioo 0 1 at ht
+      dsimp only
+      by_cases hr : rectangleMap t ∈ R
+      · have htD : t ∈ affineDomain y := ⟨ht.1, ht.2, hr.1.2, hr.2.2⟩
+        rw [Set.indicator_of_mem hr, Set.indicator_of_mem htD]
+      · have htD : t ∉ affineDomain y := by
+          intro hD
+          apply hr
+          exact ⟨⟨mul_pos ht.2.1 ht.1.1, hD.2.2.1⟩,
+            ⟨mul_pos ht.2.1 (sub_pos.mpr ht.1.2), hD.2.2.2⟩⟩
+        rw [Set.indicator_of_notMem hr, Set.indicator_of_notMem htD, mul_zero]
+    _ = _ := by rw [setLIntegral_indicator hd, inter_eq_left.mpr hds]
 
 
 private lemma rectangle_beta_sum {p q : ℝ} (hp : 0 < p) (hq : 0 < q)

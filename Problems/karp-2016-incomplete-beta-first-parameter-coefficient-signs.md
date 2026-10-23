@@ -127,6 +127,9 @@ The comparison is reused from
 `D5.S3.Analytic.IncompleteBeta.Comparison.betaMean_strictAntiOn`.
 Beta integration is reused from `D5.S3.Analytic.KummerRatio.BetaIntegral`
 and `D5.S3.Analytic.KilbasSaigo.Bounds.FractionalCertificate`.
+The geometric integral identity is reused from
+`D5.S3.Quantum.Measurement.QubitIncompatibilityProbability.triangle_change_lintegral`,
+restricted to a rectangle and with the two input coordinates exchanged.
 The axiom closure of `Result.result` is
 `{propext, Classical.choice, Quot.sound}`.
 
