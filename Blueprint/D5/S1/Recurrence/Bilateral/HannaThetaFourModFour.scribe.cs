@@ -14,6 +14,9 @@ internal sealed class HannaThetaFourModFourDocument : IScribeDocumentDefinition
         "Hanna's A379764 theta-four coefficient conjectures.",
         H("Hanna's theta-four congruences"),
         Blocks(
+            Describe.Lean(DescribeId.Create("a379764-symmetric-pair"), DeclarationHandle.Create(Prefix + "symmetric_pair"),
+                H("Pairing a symmetric finite sum"), StatementSource.FromAuthor(SymmetricPairFormula()),
+                AssessedProvenance.FromRepo(), Blocks(Paragraph(Text("For any additive commutative monoid, the sum over the integer interval from -K to K consists of the zero term and K pairs of opposite nonzero indices. This identity applies to the coefficient sums of both bilateral families."))), DescribeRole.Theorem),
             Paragraph(Text("Paul D. Hanna's OEIS A379764 states: \"G.f. A(x) satisfies Sum_{n=-oo..+oo} (4^n*A(x)^n - 4*A(x))^(n+1) = 2*theta_4(x) = 2*Sum_{n=-oo..+oo} (-x)^(n^2).\" The same entry states: \"Conjecture: for n > 0, a(n) is odd iff n is a square.\" It also states: \"Conjecture: for n > 0, a(n) == (-1)^(n-1) (mod 4) iff n is a square, otherwise a(n) is divisible by 4 if n is nonsquare.\"")),
             Paragraph(Text("PowerSeries and LaurentSeries are formal series over the displayed coefficient rings. The bilateral sum is coefficientwise over the finite interval Icc(-(K:Z), K) with N+1 <= K. The coefficient of theta4 is defined by the same finite symmetric window. Int.ModEq is congruence modulo its first argument; divisibility is in Z.")),
             Describe.Lean(DescribeId.Create("a379764-theta4"), DeclarationHandle.Create(Prefix + "theta4"),
@@ -34,6 +37,20 @@ internal sealed class HannaThetaFourModFourDocument : IScribeDocumentDefinition
                 new OpenProblemResolutionClaim(
                     ProblemSlugRef.Create("oeis-a379764-hanna-theta-mod-four"),
                     ResolutionKind.Proved)))));
+
+    private static Formula SymmetricPairFormula()
+    {
+        var t = F.Id("T");
+        var k = F.Id("K");
+        var i = F.Id("k");
+        var j = F.Id("j");
+        var pair = Add(Call("f", Add(Cast(i, Integers()), D(1))),
+            Call("f", Sub(Negative(Cast(i, Integers())), D(1))));
+        var equality = Eqn(SumOver("j", Integers(), Window(k), Call("f", j)),
+            Add(Call("f", D(0)), SumOver("k", Naturals(), QCall("Finset", "range", k), pair)));
+        return Disp(All("T", Named("Type"), All("inst", Call("AddCommMonoid", t),
+            All("f", Seq(Integers(), Sp, To, Sp, t), All("K", Naturals(), equality)))));
+    }
 
     private static Formula Named(string name) => Seq(Operatorname, Grp(F.Id(name)));
     private static Formula Qualified(string owner, string name) => Seq(Operatorname, Grp(F.Id(owner)), Dot, Operatorname, Grp(F.Id(name)));

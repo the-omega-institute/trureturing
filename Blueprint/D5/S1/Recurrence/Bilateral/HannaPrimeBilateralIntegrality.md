@@ -67,7 +67,9 @@ Factoring the negative Laurent powers gives finite coefficient sums. At paramete
 - Truth anchor: `D5/S1/Recurrence/Bilateral/HannaPrimeBilateralIntegrality.result`
 - Truth anchor: `D5/S1/Recurrence/Bilateral/HannaPrimeBilateralIntegrality.term`
 - Dependency: [D5/S1/Recurrence/Bilateral/BilateralProductModFour](BilateralProductModFour.md)
+- Dependency: [D5/S1/Recurrence/Bilateral/HannaThetaFourModFour](HannaThetaFourModFour.md)
 - Dependency: [D5/S1/Recurrence/Invariants/CubicFifteenSubstitutionParity](../Invariants/CubicFifteenSubstitutionParity.md)
 - Dependency: [D5/S1/Recurrence/Invariants/PowerSeriesNormalizedContraction](../Invariants/PowerSeriesNormalizedContraction.md)
 - Dependency: [D5/S1/Recurrence/Invariants/UnitReversionSquareParity](../Invariants/UnitReversionSquareParity.md)
 - Dependency: [D5/S1/Recurrence/Residue/ContinuedFractionOddSquare](../Residue/ContinuedFractionOddSquare.md)
+- Dependency: [D5/S1/Recurrence/Residue/NegativePowerDiagonalModPrime](../Residue/NegativePowerDiagonalModPrime.md)

@@ -70,9 +70,10 @@ one degree. Compatible iterates construct the rational solution and retain
 integer coefficients. The proof applies the imported
 `CubicFifteenSubstitutionParity.prime_power_subst` and
 `PowerSeriesNormalizedContraction.exists_unique_fixed`.
-The shared `BilateralProductModFour.window_split` separates the symmetric
-window, and `BilateralProductModFour.ofSeries_inverse` identifies inverses
-under the Laurent embedding.
+`HannaThetaFourModFour.symmetric_pair` separates the symmetric window.
+`NegativePowerDiagonalModPrime.inverse_difference` supplies the inverse-difference
+identity, and `BilateralProductModFour.ofSeries_inverse` identifies inverses
+under the Laurent embedding. Each shared theorem is used directly from its owner.
 
 Below degree $p$, the equation yields
 $r!\,[X^r](1+XF)=\prod_{j<r}(1+jp)$ for $r<p$.
@@ -97,7 +98,9 @@ and coefficient obstruction are on its derivation path. The module has
 
 The four-slot escape audit is unfinished under
 [issue #19820](https://github.com/the-omega-institute/trureturing/issues/19820)
-for this `result` and the shared `BilateralProductModFour.window_split`.
+for this `result`, the shared `BilateralProductModFour.window_split`, and the
+exposed suppliers `HannaThetaFourModFour.symmetric_pair` and
+`NegativePowerDiagonalModPrime.inverse_difference`.
 The missing evidence is complete source reconstruction and lawful variation,
 sensitivity and observational dependence for their quantified series and
 group-valued function families. No `declared_validated` registration is claimed.
@@ -117,10 +120,8 @@ group-valued function families. No `declared_validated` registration is claimed.
 | `D5.S1.Recurrence.Bilateral.HannaPrimeBilateralIntegrality.shifted_subst_coeff` | bind-only | none | `D5.S1.Recurrence.Bilateral.HannaPrimeBilateralIntegrality.negative_expansion` |
 | `D5.S1.Recurrence.Bilateral.HannaPrimeBilateralIntegrality.negative_expansion` | bind-only | none | `D5.S1.Recurrence.Bilateral.HannaPrimeBilateralIntegrality.psi_one_zero` |
 | `D5.S1.Recurrence.Bilateral.HannaPrimeBilateralIntegrality.positive_expansion` | bind-only | none | `D5.S1.Recurrence.Bilateral.HannaPrimeBilateralIntegrality.psi_one_zero` |
-| `D5.S1.Recurrence.Bilateral.HannaPrimeBilateralIntegrality.symmetric_sum` | bind-only | none | `D5.S1.Recurrence.Bilateral.HannaPrimeBilateralIntegrality.psi_one_zero` |
 | `D5.S1.Recurrence.Bilateral.HannaPrimeBilateralIntegrality.psi_one_zero` | content | `D5.S1.Recurrence.Bilateral.HannaPrimeBilateralIntegrality.psi_one_zero` | `D5.S1.Recurrence.Bilateral.HannaPrimeBilateralIntegrality.result` |
 | `D5.S1.Recurrence.Bilateral.HannaPrimeBilateralIntegrality.contracting_series_fixedpoint` | bind-only | none | `D5.S1.Recurrence.Bilateral.HannaPrimeBilateralIntegrality.exists_solution` |
-| `D5.S1.Recurrence.Bilateral.HannaPrimeBilateralIntegrality.inverse_difference` | bind-only | none | `D5.S1.Recurrence.Bilateral.HannaPrimeBilateralIntegrality.exceptional_difference_dvd` |
 | `D5.S1.Recurrence.Bilateral.HannaPrimeBilateralIntegrality.inverse_difference_dvd` | bind-only | none | `D5.S1.Recurrence.Bilateral.HannaPrimeBilateralIntegrality.normalized_difference_dvd` |
 | `D5.S1.Recurrence.Bilateral.HannaPrimeBilateralIntegrality.shifted_difference_dvd` | bind-only | none | `D5.S1.Recurrence.Bilateral.HannaPrimeBilateralIntegrality.normalized_difference_dvd` |
 | `D5.S1.Recurrence.Bilateral.HannaPrimeBilateralIntegrality.normalized_difference_dvd` | bind-only | none | `D5.S1.Recurrence.Bilateral.HannaPrimeBilateralIntegrality.psi_difference_dvd` |

@@ -355,7 +355,8 @@ end D5.S1.Recurrence.Bilateral.HannaThetaFourModFour
 namespace D5.S1.Recurrence.Bilateral.HannaThetaFourModFour
 variable {R : Type*} [CommRing R]
 
-private theorem symmetric_pair {T : Type*} [AddCommMonoid T] (f : ℤ → T) (K : ℕ) :
+/- Escape audit unfinished for symmetric_pair: https://github.com/the-omega-institute/trureturing/issues/19820 -/
+theorem symmetric_pair {T : Type*} [AddCommMonoid T] (f : ℤ → T) (K : ℕ) :
     (∑ j ∈ Finset.Icc (-(K : ℤ)) K, f j) =
       f 0 + ∑ k ∈ Finset.range K, (f (k + 1) + f (-(k : ℤ) - 1)) := by
   induction K with

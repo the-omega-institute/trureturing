@@ -8,8 +8,7 @@
 
 /-
 ofSeries_inverse: proof_shape: bind-only; consumer: HannaBilateralReversionParity.coe_inverse
-window_split: proof_shape: bind-only; consumers: HannaBilateralReversionParity.normalized_sum,
-  HannaPrimeBilateralIntegrality.symmetric_sum
+window_split: proof_shape: bind-only; consumer: HannaBilateralReversionParity.normalized_sum
 Escape audit unfinished for window_split: https://github.com/the-omega-institute/trureturing/issues/19820
 Escape audit unfinished: https://github.com/the-omega-institute/trureturing/issues/19114
 -/

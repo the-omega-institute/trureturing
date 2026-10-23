@@ -49,7 +49,8 @@ private theorem agree_pow {n : ℕ} {A B : PowerSeries R}
     (h : Agree n A B) (m : ℕ) : Agree n (A ^ m) (B ^ m) :=
   (agree_iff _ _ _).mpr (((agree_iff _ _ _).mp h).trans (sub_dvd_pow_sub_pow A B m))
 
-private theorem inverse_difference (A B : PowerSeries R)
+/- Escape audit unfinished for inverse_difference: https://github.com/the-omega-institute/trureturing/issues/19820 -/
+theorem inverse_difference (A B : PowerSeries R)
     (hA : constantCoeff A = 1) (hB : constantCoeff B = 1) :
     invOfUnit A 1 - invOfUnit B 1 =
       (A - B) * (-(invOfUnit A 1 * invOfUnit B 1)) := by

@@ -10,10 +10,12 @@
 admission_basis: open-problem-resolution (#18831; Proved)
 escape_witness: none
 Direct frozen dependencies (declaration statement_id, not module pins):
+D5/S1/Recurrence/Bilateral/HannaThetaFourModFour.symmetric_pair
+  sha256:ec2ce3acb9c693250b8c1744ab57b32dfa6f8e22a0268b5edce1f5d12206504e
+D5/S1/Recurrence/Residue/NegativePowerDiagonalModPrime.inverse_difference
+  sha256:de95009be8a3f6b4675b86334f6afe96cbcfe4cc07412482ab82bb4431065824
 D5/S1/Recurrence/Bilateral/BilateralProductModFour.ofSeries_inverse
   sha256:6c9f94677b0c4cdb1baddca0a042a6a268121bc80d543b562f3b0b0d63f3a0de
-D5/S1/Recurrence/Bilateral/BilateralProductModFour.window_split
-  sha256:c5825b2d20cbef177fe9f5d9ba41479013e8ada3eb8d1be61dc81f0d9926e8de
 D5/S1/Recurrence/Invariants/CubicFifteenSubstitutionParity.prime_power_subst
   sha256:4b665513911f58443c7679757dc619d66730344174351ea1f23cedc92766f795
 D5/S1/Recurrence/Residue/ContinuedFractionOddSquare.inverse_one
@@ -45,10 +47,8 @@ inverse_power_subst: proof_shape: bind-only; consumers: negative_expansion
 shifted_subst_coeff: proof_shape: bind-only; consumers: negative_expansion
 negative_expansion: proof_shape: bind-only; consumers: psi_one_zero
 positive_expansion: proof_shape: bind-only; consumers: psi_one_zero
-symmetric_sum: proof_shape: bind-only; consumers: psi_one_zero
 psi_one_zero: proof_shape: content; consumers: result
 contracting_series_fixedpoint: proof_shape: bind-only; consumers: exists_solution
-inverse_difference: proof_shape: bind-only; consumers: exceptional_difference_dvd
 inverse_difference_dvd: proof_shape: bind-only; consumers: normalized_difference_dvd
 shifted_difference_dvd: proof_shape: bind-only; consumers: normalized_difference_dvd
 normalized_difference_dvd: proof_shape: bind-only; consumers: psi_difference_dvd
@@ -87,6 +87,8 @@ import D5.S1.Recurrence.Invariants.PowerSeriesNormalizedContraction
 import D5.S1.Recurrence.Invariants.UnitReversionSquareParity
 import Mathlib.RingTheory.PowerSeries.Binomial
 import D5.S1.Recurrence.Residue.ContinuedFractionOddSquare
+import D5.S1.Recurrence.Bilateral.HannaThetaFourModFour
+import D5.S1.Recurrence.Residue.NegativePowerDiagonalModPrime
 set_option autoImplicit false
 namespace D5.S1.Recurrence.Bilateral.HannaPrimeBilateralIntegrality
 open PowerSeries
@@ -360,20 +362,6 @@ private theorem positive_expansion (F : PowerSeries R) (N m : ℕ) (hm : 1 ≤ m
     rw [← he]
     ring
   rw [ht, mul_assoc, coeff_C_mul]
-private theorem symmetric_sum {A : Type*} [AddCommGroup A] (f : ℤ → A) (K : ℕ) :
-    (∑ j ∈ Icc (-(K : ℤ)) K, f j) =
-      f 0 + ∑ m ∈ range K, (f (m+1) + f (-(m+1 : ℤ))) := by
-  cases K with
-  | zero => simp
-  | succ r =>
-    rw [D5.S1.Recurrence.Bilateral.BilateralProductModFour.window_split f r]
-    rw [sum_add_distrib]
-    have hpos := sum_range_succ' (fun k : ℕ => f (k : ℤ)) (r+1)
-    have hneg := sum_range_succ' (fun k : ℕ => f (-(k+1 : ℤ))) r
-    simp only [Nat.cast_add, Nat.cast_one, add_assoc] at hpos hneg
-    norm_num only at hpos hneg
-    rw [hpos, hneg]
-    abel
 end Pairing
 open PowerSeries Finset
 private theorem psi_one_zero {R : Type*} [CommRing R] (F : PowerSeries R) : psi 1 F = 0 := by
@@ -438,7 +426,7 @@ private theorem psi_one_zero {R : Type*} [CommRing R] (F : PowerSeries R) : psi 
   have he : coeff N (psi 1 F) =
       (∑ m ∈ range (N+1), ∑ b ∈ range (m+1), P m b) +
       (∑ i ∈ range (N+1), ∑ b ∈ range (N+1-i), Q i b) := by
-    rw [finite_window 1 (by decide) F N (N+1) le_rfl, symmetric_sum, sum_add_distrib]
+    rw [finite_window 1 (by decide) F N (N+1) le_rfl, D5.S1.Recurrence.Bilateral.HannaThetaFourModFour.symmetric_pair, sum_add_distrib]
     have hpos : coeff N (normalizedTerm 1 F 0) +
         ∑ m ∈ range (N+1), coeff N (normalizedTerm 1 F (m+1)) =
         ∑ m ∈ range (N+1), coeff N (normalizedTerm 1 F (m : ℤ)) := by
@@ -451,6 +439,7 @@ private theorem psi_one_zero {R : Type*} [CommRing R] (F : PowerSeries R) : psi 
     · exact sum_congr rfl fun m _ => hP m
     · apply sum_congr rfl
       intro i hi
+      rw [show -(i : ℤ) - 1 = -(i + 1 : ℤ) by omega]
       simpa only [Nat.cast_add, Nat.cast_one] using hQ i (mem_range.mp hi)
   rw [he, hpair]
   simp
@@ -493,15 +482,6 @@ private theorem contracting_series_fixedpoint {R : Type*} [CommRing R]
 open PowerSeries Finset
 section Linearization
 variable {R : Type*} [CommRing R]
-private theorem inverse_difference (A B : PowerSeries R)
-    (hA : constantCoeff A = 1) (hB : constantCoeff B = 1) :
-    invOfUnit A 1 - invOfUnit B 1 =
-      -(invOfUnit A 1 * invOfUnit B 1) * (A-B) := by
-  letI : Invertible A := ⟨invOfUnit A 1, invOfUnit_mul A 1 hA, mul_invOfUnit A 1 hA⟩
-  letI : Invertible B := ⟨invOfUnit B 1, invOfUnit_mul B 1 hB, mul_invOfUnit B 1 hB⟩
-  calc
-    _ = ⅟ A * (B-A) * ⅟ B := invOf_sub_invOf A B
-    _ = _ := by change invOfUnit A 1 * (B-A) * invOfUnit B 1 = _; ring
 private theorem inverse_difference_dvd (A B : PowerSeries R) (d : ℕ)
     (hA : constantCoeff A = 1) (hB : constantCoeff B = 1)
     (hd : (X : PowerSeries R)^d ∣ A-B) :
@@ -561,7 +541,7 @@ private theorem exceptional_difference_dvd (p d : ℕ) (F G : PowerSeries R)
     exact (Commute.all U V).mul_geom_sum₂ p
   have hinv : U-V = -X*(F-G)*U*V := by
     dsimp only [U,V]
-    rw [inverse_difference _ _ (by simp) (by simp)]
+    rw [D5.S1.Recurrence.Residue.NegativePowerDiagonalModPrime.inverse_difference _ _ (by simp) (by simp)]
     ring
   have hS : constantCoeff (U*V*S-(p : PowerSeries R)) = 0 := by
     simp [S, hU, hV]

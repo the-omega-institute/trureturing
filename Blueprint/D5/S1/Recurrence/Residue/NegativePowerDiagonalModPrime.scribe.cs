@@ -17,6 +17,9 @@ internal sealed class NegativePowerDiagonalModPrimeDocument : IScribeDocumentDef
         "One general theorem proves a congruence clause for each of two negative-power diagonal sequences.",
         H("Negative-Power Diagonals Modulo a Prime"),
         Blocks(
+            Describe.Lean(DescribeId.Create("negative-diagonal-inverse-difference"), DeclarationHandle.Create(Prefix + "inverse_difference"),
+                H("Difference of normalized series inverses"), StatementSource.FromAuthor(InverseDifferenceFormula()),
+                AssessedProvenance.FromRepo(), Blocks(Paragraph(Text("Over any commutative ring, two series with constant coefficient one have unit inverses. Their inverse difference factors as the series difference times the negative product of the inverses. Consequently agreement below a given degree is preserved by inversion."))), DescribeRole.Theorem),
             Paragraph(Text("The notes hanna2016a266489 and hanna2026a395833 record Hanna's "
                 + "two generating equations and their respective mod-two and mod-three "
                 + "conjectures. One general theorem implies one clause of each entry. "
@@ -167,6 +170,21 @@ internal sealed class NegativePowerDiagonalModPrimeDocument : IScribeDocumentDef
         Seq(Forall, Sp, F.Id(name), Colon, Sp, type, Comma, Sp, Parenthesized(body));
     private static Formula PubImp(Formula premise, Formula conclusion) =>
         Seq(Parenthesized(premise), Sp, Implies, Sp, Parenthesized(conclusion));
+
+    private static Formula InverseDifferenceFormula()
+    {
+        var r = F.Id("R");
+        var a = F.Id("A");
+        var b = F.Id("B");
+        var inverseA = Call("invOfUnit", a, D(1));
+        var inverseB = Call("invOfUnit", b, D(1));
+        var identity = Equal(Subtract(inverseA, inverseB),
+            Mul(Subtract(a, b), Seq(Minus, Parenthesized(Mul(inverseA, inverseB)))));
+        return Disp(Seq(Bound("R", Named("Type")), OpenBracket, Call("CommRing", r), CloseBracket, Sp,
+            PubAll("A", Call("PowerSeries", r), PubAll("B", Call("PowerSeries", r),
+                PubImp(Equal(Call("constantCoeff", a), D(1)),
+                    PubImp(Equal(Call("constantCoeff", b), D(1)), identity))))));
+    }
 
     private static Formula PublishedMapInverse()
     {
