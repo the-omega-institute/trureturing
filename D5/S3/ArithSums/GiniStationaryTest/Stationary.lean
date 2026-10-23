@@ -2,15 +2,17 @@
    generality: I
    mirror-B: D5/B/S3/ArithSums/GiniStationaryTest/Stationary
    mirror-E: none(waiver:evidence-not-specified-by-formal-manifest)
-   anchors: [mathlib/module/Mathlib.Analysis.Calculus.Deriv.Add, mathlib/module/Mathlib.Analysis.Calculus.Deriv.Inv, mathlib/module/Mathlib.Analysis.Calculus.Deriv.Mul, mathlib/module/Mathlib.Analysis.Calculus.Deriv.Pow]
+   anchors: [mathlib/module/Mathlib.Analysis.Calculus.Deriv.Add, mathlib/module/Mathlib.Analysis.Calculus.Deriv.Inv, mathlib/module/Mathlib.Analysis.Calculus.Deriv.Mul, mathlib/module/Mathlib.Analysis.Calculus.Deriv.Pow, mathlib/module/Mathlib.Analysis.Convex.SpecificFunctions.Deriv]
    utility: none
    digest: Normalized stationary tuples pass the comparison test for two fixed Gini parameters. -/
 
 import D5.S3.ArithSums.GiniStationaryTest.Defs
+import D5.S3.Quantum.Matrix.AlternativeMeanLinearization
 import Mathlib.Analysis.Calculus.Deriv.Add
 import Mathlib.Analysis.Calculus.Deriv.Inv
 import Mathlib.Analysis.Calculus.Deriv.Mul
 import Mathlib.Analysis.Calculus.Deriv.Pow
+import Mathlib.Analysis.Convex.SpecificFunctions.Deriv
 
 /-! Positive stationary levels and their normalized moments. -/
 
@@ -52,17 +54,38 @@ private lemma level_two_values {a b z : ℝ} (ha : 0 < a) (hb : 0 < b) (hz : 0 <
     (hba : 2 * a + (a ^ 2)⁻¹ = 2 * b + (b ^ 2)⁻¹)
     (hza : 2 * a + (a ^ 2)⁻¹ = 2 * z + (z ^ 2)⁻¹) :
     z = a ∨ z = b := by
-  rcases level_pair ha hz hza with h | haz
-  · exact Or.inl h.symm
-  have hab' := (level_pair ha hb hba).resolve_left hab
-  have hf : (b - z) * (2 * a ^ 2 * (b + z) - 1) = 0 := by
-    nlinarith [hab', haz]
-  rcases mul_eq_zero.mp hf with h | h
-  · exact Or.inr (sub_eq_zero.mp h).symm
-  · have he : a + 2 * a ^ 2 * b * z = 0 := by
-      nlinarith [congrArg (fun x : ℝ => x * b) h, hab']
-    have hp : 0 < 2 * a ^ 2 * b * z := by positivity
-    linarith
+  by_contra hnot
+  have hza' : (z⁻¹) ^ 3 = -2 + (2 * a + (a ^ 2)⁻¹) * z⁻¹ := by
+    field_simp [ha.ne', hz.ne'] at hza ⊢
+    nlinarith [hza]
+  have hba' : (b⁻¹) ^ 3 = -2 + (2 * a + (a ^ 2)⁻¹) * b⁻¹ := by
+    field_simp [ha.ne', hb.ne'] at hba ⊢
+    nlinarith [hba]
+  have haa' : (a⁻¹) ^ 3 = -2 + (2 * a + (a ^ 2)⁻¹) * a⁻¹ := by
+    field_simp [ha.ne']
+    ring
+  have hne_za : z⁻¹ ≠ a⁻¹ := by
+    intro h
+    apply hnot
+    left
+    exact inv_inj.mp h
+  have hne_zb : z⁻¹ ≠ b⁻¹ := by
+    intro h
+    apply hnot
+    right
+    exact inv_inj.mp h
+  have hne_ab : a⁻¹ ≠ b⁻¹ := by
+    intro h
+    exact hab (inv_inj.mp h)
+  have hfalse :=
+    D5.S3.Quantum.Matrix.AlternativeMeanLinearization.affine_three
+      (fun x : ℝ => x ^ (3 : ℕ))
+      (Or.inl ((strictConvexOn_pow (by norm_num : 2 ≤ (3 : ℕ))).subset
+        Set.Ioi_subset_Ici_self (convex_Ioi 0)))
+      (-(2 : ℝ)) (2 * a + (a ^ 2)⁻¹) (a⁻¹) (b⁻¹) (z⁻¹)
+      (inv_pos.mpr ha) (inv_pos.mpr hb) (inv_pos.mpr hz)
+      hne_ab hne_za.symm hne_zb.symm haa' hba' hza'
+  exact hfalse.elim
 
 private lemma stationary_sum_strict {n : ℕ} (u : Fin n → ℝ)
     (hu : ∀ i, 0 < u i) (hs : ∑ i, u i = n)

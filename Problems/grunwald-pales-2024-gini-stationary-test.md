@@ -39,7 +39,7 @@ The proposed criterion would certify global comparison on intervals with arbitra
 
 ## Gap
 
-The source proves the bounded-interval characterization in Theorem 7 and states Conjectures 1 and 2. Conjecture 1 is refuted in [the endpoint comparison dossier](grunwald-pales-2024-gini-mean-comparison.md). No settlement of Conjecture 2 was found in the supplied literature review; this is a bounded literature result, not an exhaustive priority assertion. Interior stationarity alone does not control escape toward the boundary of the positive normalized simplex.
+The source proves the bounded-interval characterization in Theorem 7 and states Conjectures 1 and 2. Searches for the title, arXiv identifier 2408.07658, DOI 10.1007/s00025-025-02370-0, and the authors with “Conjecture 2”, “counterexample”, or “proof” found no settlement. Grünwald's 2025 Debrecen–Katowice seminar report (Ann. Math. Sil. 39(2) (2025), 381–394) restates the question. Conjecture 1 of the same paper is refuted in [the endpoint comparison dossier](grunwald-pales-2024-gini-mean-comparison.md). Citation indexes were not checked exhaustively. Interior stationarity alone does not control escape toward the boundary of the positive normalized simplex.
 
 ## Route
 
