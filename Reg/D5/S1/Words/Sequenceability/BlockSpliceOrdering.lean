@@ -119,17 +119,17 @@ def audit : Contract.Registration.{_,_,_,0,0,0,u+1,u,0,u,0,0}
   variation := .absent
   sensitivity := .absent
   partialSensitivity := none
-  escapeFrom := some List
+  escapeFrom := none
   sourceSelection := some {
     owner := `D5.S1.Words.Sequenceability.BlockSpliceOrdering
     definition := none
-    coordinates := #[0, 1, 16, 17]
+    coordinates := #[0, 16, 17]
     readouts := #[{
       path := #["body", "body", "body", "body", "body", "body", "body",
         "body", "body", "body", "body", "body", "body", "body",
         "arg", "body", "arg", "body",
         "arg", "arg", "arg", "arg", "arg", "arg", "arg", "arg", "fn", "arg",
-        "body", "body", "body", "body", "arg", "fn", "arg"]
+        "body", "body", "body", "body", "fn", "arg"]
       stateBinder := 0
       functionOperand := false
       stateOperand := some #["arg", "arg", "arg"]
