@@ -69,17 +69,17 @@ The settlement would not answer the preregistered reading if the matrices or the
 
 ## Evidence
 
-The canonical source is `D5/S3/Quantum/QuantumChannels/AmplitudeDampingMeasurePrepareCloning.lean` (253 lines).
+The canonical source is `D5/S3/Quantum/QuantumChannels/AmplitudeDampingMeasurePrepareCloning.lean` (258 lines).
 
 - **Proof.** It proves `result : claim`.
 - **Axioms.** It uses only the standard axioms `propext`, `Classical.choice` and `Quot.sound`; no `sorry`, `native_decide`, or new axiom.
 
-Frozen state: `Golden/Frozen/state/D5/S3/Quantum/QuantumChannels/AmplitudeDampingMeasurePrepareCloning.lean.json`, statement `sha256:8d5e3bfcbea4b7ee48eb8357c72cbd20b8462fb1a199d85e0b5d58fae10763e1`.
+Frozen state: `Golden/Frozen/state/D5/S3/Quantum/QuantumChannels/AmplitudeDampingMeasurePrepareCloning.lean.json`, statement `sha256:7e7bdea6c385b54c5bc13eeb1bfd75c72c021137e234c6b70c839654d65982bd`.
 
 Declaration statements:
 
 - `result`: `sha256:37c62e80be4817f0ea53a2bf11fe854fd1b42cca1ffb84c29ffe807c2c542658`;
-- `claim`: `sha256:099146d9051e3f7262cdfa9e2d724dc5c92e35b8685114d5773073b48745a267`.
+- `claim`: `sha256:7cc9162707ea84842faf01e9ec6a62dac85b70369dc7650876f52d6164ad3f96`.
 
 ## Triage
 
