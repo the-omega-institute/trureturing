@@ -24,7 +24,10 @@ internal sealed class RegularGraphEnergyQuadraticExclusionDocument : IScribeDocu
                 "The characteristic polynomial has rational coefficients. Its real splitting field is normal, and an algebra automorphism sends a square root of 2 to its negative. "
                     + "The root multiset is invariant under this automorphism. A positive regular degree is a root, while the zero-sum root multiset and the positive-part estimate force the assumed energy identity to imply r ≤ 0. "
                     + "This contradicts the positive degree. The formula displays the complete proposition proved by result.",
-                DescribeRole.Theorem, AssessedProvenance.FromRepo(Source))),
+                DescribeRole.Theorem, AssessedProvenance.FromRepo(Source),
+                new OpenProblemResolutionClaim(
+                    ProblemSlugRef.Create("ramane-kitturmath-2023-regular-graph-energy-conjecture-3-11"),
+                    ResolutionKind.Proved))),
         []));
 
     private static Formula ClaimFormula() => Disp(new Formula.Logic(
