@@ -69,7 +69,69 @@ private lemma classical_overlap {N : ℕ} (p : (Fin N → Fin 4) → ℝ)
     (hp : ∀ x, 0 ≤ p x) (hs : ∑ x, p x = 1) :
     (1 / 4 ^ N : ℝ) ≤
       ∑ x, p x * ∏ k, ∑ y, if y k = x k then p y else 0 := by
-  sorry
+  classical
+  let q (k : Fin N) (j : Fin 4) : ℝ := ∑ y, if y k = j then p y else 0
+  have hq (k : Fin N) (j : Fin 4) : 0 ≤ q k j := by
+    exact Finset.sum_nonneg fun y _ => by split_ifs <;> simp_all
+  have hqs (k : Fin N) : ∑ j, q k j = 1 := by
+    dsimp [q]
+    rw [Finset.sum_comm]
+    simpa using hs
+  have hlocal (k : Fin N) : (1 / 4 : ℝ) ≤ ∏ j, (q k j) ^ (q k j) := by
+    have hpos : 0 < ∏ j, (q k j) ^ (q k j) := by
+      apply Finset.prod_pos
+      intro j _
+      by_cases hj : q k j = 0
+      · simp [hj]
+      · exact Real.rpow_pos_of_pos (lt_of_le_of_ne (hq k j) (Ne.symm hj)) _
+    have ham := Real.geom_mean_le_arith_mean_weighted Finset.univ (q k)
+      (fun j => (q k j)⁻¹) (fun j _ => hq k j) (hqs k)
+      (fun j _ => inv_nonneg.mpr (hq k j))
+    have hsum : (∑ j, q k j * (q k j)⁻¹) ≤ 4 := by
+      calc
+        _ ≤ ∑ _j : Fin 4, (1 : ℝ) := by
+          apply Finset.sum_le_sum
+          intro j _
+          by_cases hj : q k j = 0 <;> simp [hj]
+        _ = 4 := by norm_num
+    simp_rw [Real.inv_rpow (hq k _)] at ham
+    rw [Finset.prod_inv_distrib] at ham
+    have hmul := (inv_le_iff_one_le_mul₀ hpos).mp (ham.trans hsum)
+    linarith
+  have hfactor : (∏ x, (∏ k, q k (x k)) ^ p x) =
+      ∏ k, ∏ j, (q k j) ^ (q k j) := by
+    calc
+      _ = ∏ x, ∏ k, (q k (x k)) ^ p x := by
+        apply Finset.prod_congr rfl
+        intro x _
+        exact (Real.finsetProd_rpow Finset.univ (fun k => q k (x k))
+          (fun k _ => hq k (x k)) (p x)).symm
+      _ = ∏ k, ∏ x, (q k (x k)) ^ p x := Finset.prod_comm
+      _ = _ := by
+        apply Finset.prod_congr rfl
+        intro k _
+        rw [← Finset.prod_fiberwise Finset.univ (fun x : Fin N → Fin 4 => x k)]
+        apply Finset.prod_congr rfl
+        intro j _
+        have he : q k j = ∑ x ∈ Finset.univ.filter (fun x => x k = j), p x := by
+          simp [q, Finset.sum_filter]
+        calc
+          _ = ∏ x ∈ Finset.univ.filter (fun x => x k = j), (q k j) ^ p x := by
+            apply Finset.prod_congr rfl
+            intro x hx
+            rw [(Finset.mem_filter.mp hx).2]
+          _ = (q k j) ^ (∑ x ∈ Finset.univ.filter (fun x => x k = j), p x) :=
+            (Real.rpow_sum_of_nonneg (hq k j) (fun x _ => hp x)).symm
+          _ = _ := by rw [← he]
+  have ham := Real.geom_mean_le_arith_mean_weighted Finset.univ p
+    (fun x => ∏ k, q k (x k)) (fun x _ => hp x) hs
+    (fun x _ => Finset.prod_nonneg fun k _ => hq k (x k))
+  rw [hfactor] at ham
+  calc
+    (1 / 4 ^ N : ℝ) = ∏ _k : Fin N, (1 / 4 : ℝ) := by simp [div_pow]
+    _ ≤ ∏ k, ∏ j, (q k j) ^ (q k j) := by
+      exact Finset.prod_le_prod₀ (fun _ _ => by norm_num) (fun k _ => hlocal k)
+    _ ≤ _ := ham
 
 private lemma process_trace {N : ℕ}
     (χ : Matrix (Fin N → Fin 4) (Fin N → Fin 4) ℂ) (hχ : IsProcessCPTP χ) :
@@ -117,7 +179,7 @@ private lemma shift_fidelity (N : ℕ)
     fidelity (shiftProcess N) (marginalApprox (shiftProcess N)) = 1 / 4 ^ N := by
   sorry
 
-/-- Every process matrix satisfies the bound, and cyclic shifts attain it for at least two qubits. -/
+/-- The bound holds for every process matrix; cyclic shifts attain it for at least two qubits. -/
 theorem result : claim := by
   constructor
   · intro N _ χ hχ
