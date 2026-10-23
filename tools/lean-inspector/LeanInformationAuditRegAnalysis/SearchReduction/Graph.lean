@@ -81,6 +81,8 @@ structure GraphVertex where
   targetPart : Bool := false
   independentLookup : Run := .incomplete .undecided
   independentLookupDetail : String := "not-queried"
+  reverseLookup : Run := .incomplete .undecided
+  reverseLookupDetail : String := "not-queried"
   deriving Inhabited
 
 structure GraphEdge where
@@ -167,6 +169,7 @@ structure GraphReading where
   lookupEnabled : Bool := true
   lookupBasisComplete : Bool := true
   negativeCalls : Nat := 0
+  reverseNegativeCalls : Nat := 0
   certificatePool : Array CertificateNomination := #[]
   certificateBindings : Array (Name × CertificateNomination) := #[]
   queryAnswerMemoization : Bool := false
@@ -402,6 +405,21 @@ def isWitnessEdge (graph : ProofGraph) (selected : List Nat) (edge : GraphEdge) 
       (graph.vertices.find? (·.id == p)).any fun v =>
         v.structureSeed && !v.seed && !v.targetPart &&
           !edge.analytic.contains p && selected.contains p)
+
+/-- A reverse NoHit discharges only the target-part exclusion. It is never
+an edge price. Independent success already prevents this exclusion. -/
+def targetPartDecision (independent reverse : Run) : Run :=
+  match independent, reverse with
+  | .found, _ => .exhausted
+  | .exhausted, .found => .found
+  | _, .exhausted => .exhausted
+  | _, _ => .incomplete .undecided
+
+/-- Reverse negatives belong to the lazy decision set only after the numeric
+and root guards can grant a positive and independent R has completed NoHit. -/
+def needsReverseNegative (decisive : Bool) (independent reverse : Run) : Bool :=
+  decisive && independent == .exhausted &&
+    match reverse with | .incomplete _ => true | _ => false
 
 def classifyGraph (reading : GraphReading) : Verdict :=
   if reading.presentationCertified || reading.priorReferenceSuccess ||

@@ -115,6 +115,45 @@ theorem certificate_to_GraphEdge (edge : GraphEdge) (certificate : ObviousCertif
     (attachCertificate edge true certificate proof used).pairedUsedPremises = used := by
   simp [attachCertificate]
 
+/-- A completed reverse negative is sufficient to clear the target-part
+exclusion even though no positive reverse certificate was nominated. -/
+theorem reverse_nohit_clears_target_part (independent : Run) :
+    targetPartDecision independent .exhausted = .exhausted := by
+  cases independent <;> rfl
+
+/-- Neither an incomplete reverse attack nor an incomplete independent attack
+with a reverse hit can silently clear the exclusion guard. -/
+theorem unresolved_target_part_blocks (reason : Failure) :
+    targetPartDecision .exhausted (.incomplete reason) = .incomplete .undecided ∧
+    targetPartDecision (.incomplete reason) .found = .incomplete .undecided := by
+  exact ⟨rfl, rfl⟩
+
+/-- The decision set contains the missing reverse query, and omits it after a
+hit, after NoHit, without a decisive gap, or with unresolved independence. -/
+theorem reverse_lazy_decision_set (reason : Failure) :
+    needsReverseNegative true .exhausted (.incomplete reason) = true ∧
+    needsReverseNegative true .exhausted .found = false ∧
+    needsReverseNegative true .exhausted .exhausted = false ∧
+    needsReverseNegative false .exhausted (.incomplete reason) = false ∧
+    needsReverseNegative true (.incomplete reason) (.incomplete reason) = false := by
+  simp [needsReverseNegative]
+
+/-- Reverse evidence cannot change prices, intervals, or paired negative
+probes; it only changes the vertex exclusion bookkeeping. -/
+theorem reverse_evidence_price_irrelevant (reading : GraphReading)
+    (vertices : List GraphVertex) :
+    ({reading with graph := {reading.graph with vertices}} : GraphReading).baseline =
+        reading.baseline ∧
+    ({reading with graph := {reading.graph with vertices}} : GraphReading).paired =
+        reading.paired ∧
+    ({reading.graph with vertices} : ProofGraph).edges = reading.graph.edges := by
+  exact ⟨rfl, rfl, rfl⟩
+
+#print axioms reverse_nohit_clears_target_part
+#print axioms unresolved_target_part_blocks
+#print axioms reverse_lazy_decision_set
+#print axioms reverse_evidence_price_irrelevant
+
 #print axioms cert_iff_candidate_success
 #print axioms nohit_excludes_cert
 #print axioms scope_symmetry

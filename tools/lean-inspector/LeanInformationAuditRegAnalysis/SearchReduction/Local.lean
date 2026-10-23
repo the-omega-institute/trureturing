@@ -981,6 +981,9 @@ unsafe def evaluateGraph (raw : ProofGraph) (lookup? : Option LookupTable := non
     let mut graph := graph
     let mut targetPartComplete := true
     let mut independentCalls := 0
+    let mut reverseCalls := 0
+    let decisive := graph.complete && strictDrop (armInterval graph) (armInterval graph true) &&
+      baseProbe.outcome == .exhausted
     if better (armInterval graph true).upper (armInterval graph).upper then
       let selected := optimalSeeds (armGraph graph true false) costUpper (armSeeds graph true)
       let mut checkedVertices := []
@@ -995,12 +998,20 @@ unsafe def evaluateGraph (raw : ProofGraph) (lookup? : Option LookupTable := non
             independentLookup := independentRun,
             independentLookupDetail := independent.detail}
           if independent.cost != .zero then
-            let reverse ← certifyLocal v.type (rootType :: baseTypes) lookup? v.origin.constName?
-            if reverse.cost == .zero && independent.cost == .one then
-              v := {v with targetPart := true}
-            else
-              -- Failure of a positive-only reverse query is not a NoHit.
-              targetPartComplete := false
+            let mut reverse ← certifyLocal v.type (rootType :: baseTypes) lookup? v.origin.constName?
+            let toRun (result : LocalResult) := match result.cost with
+              | .zero => Run.found | .one => .exhausted | .unknown => .incomplete .undecided
+            if needsReverseNegative decisive independentRun (toRun reverse) then
+              -- This R query certifies only S not being recognized from T.
+              -- Its negative result is never attached to a paired graph edge.
+              reverse ← localRebuild v.type (rootType :: baseTypes) lookup?
+              reverseCalls := reverseCalls + 1
+            let reverseRun := toRun reverse
+            v := {v with reverseLookup := reverseRun, reverseLookupDetail := reverse.detail}
+            match targetPartDecision independentRun reverseRun with
+            | .found => v := {v with targetPart := true}
+            | .exhausted => pure ()
+            | .incomplete _ => targetPartComplete := false
         checkedVertices := checkedVertices ++ [v]
       graph := {graph with vertices := checkedVertices}
       let edges := graph.edges.map fun edge =>
@@ -1026,7 +1037,8 @@ unsafe def evaluateGraph (raw : ProofGraph) (lookup? : Option LookupTable := non
         proofHardEligible graph selectedSeeds id
           (depth (armGraph graph false false true) costLower baseSeeds id)),
       pairedUsesSeed := selectedSeeds.any (selectedStructureSeed graph selectedSeeds),
-      negativeCalls := negativeCalls + independentCalls,
+      negativeCalls := negativeCalls + independentCalls + reverseCalls,
+      reverseNegativeCalls := reverseCalls,
       certificatePool := ← certificateNominations.get,
       certificateBindings := bindings,
       lookupEnabled := table.enabled, lookupBasisComplete := table.complete,
