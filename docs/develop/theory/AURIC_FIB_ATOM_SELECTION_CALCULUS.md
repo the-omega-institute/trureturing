@@ -1909,3 +1909,301 @@ $p(1-p)^N/4$ 精确识别风险及合法真标签查询的权限。它们不提�
 的统一性条件；定理 18.2 的局部链算法不供应任意 SAT 的这些条件。
 
 ## 追加锚（本行以下为增补区）
+
+## 十九、共享端口删减、二元分类与有限任务适配
+
+本节只固定共享变量的有限关系合同。它把第十五节的端口解释成一个
+可删行的关系模板，并把可满足性、取得和量子接口分开；不改写第十五至
+十八节的原生接缝语义。
+
+**定义 19.1（代数次序、印刷次序和五个命名模式）。** 代数坐标固定为
+低端、 高端、 中间的 $(x,y,z)$，而任何三位印刷词仍按 $(x,z,y)$
+写出。令
+
+$$
+\begin{array}{c|ccccc}
+\text{名称}&o&a&b&c&d\\ \hline
+(x,y,z)&000&100&001&010&110\\
+\text{印刷 }(x,z,y)&000&100&010&001&101
+\end{array}
+$$
+
+于是
+
+$$
+\Sigma=\{o,a,b,c,d\}
+ =\{(x,y,z)\in\{0,1\}^3:xz=yz=0\},
+\quad E=\{a,b,c\},\quad N=\{a,b,c,d\}=\Sigma\setminus\{o\}.
+$$
+
+$E$ 是三个恰有一个坐标为一的模式；$N$ 满足
+$z=(1-x)(1-y)=\neg(x\lor y)$，即本卷的 NOR 端口关系。已有
+`D5/S3/Combinatorics/ConstraintRelations/BooleanNullBoundary.lean`
+在这一次序上核验了五点关系、非空关系和 NOR 等式；本节的删减分类是其
+上的有限关系适配。
+
+**定义 19.2（保留掩码和删减掩码）。** 位序固定为
+$(o,a,b,c,d)$。对 $R\subseteq\Sigma$ 定义
+
+$$
+r(R)=\sum_{i=0}^{4}2^i\mathbf 1[v_i\in R],\qquad
+\delta(R)=31-r(R),\qquad R=R_{r(R)}.
+$$
+
+这里 $R_r=\{v_i: \text{第 }i\text{ 位的 }r\text{ 为一}\}$，因此每个
+$0\le r<32$ 恰好代表一个关系。
+
+$\delta$ 是从五模式表中删除的行；$r$ 是保留行。这里的删减是关系模板
+的变更，不是把一条实际执行路径中的不可达分支事后擦掉。
+
+**定义 19.3（有限共享变量的 pp 语义）。** 一个有限实例给出有限变量集
+$V$、自由变量集 $X\subseteq V$、辅助变量 $Y=V\setminus X$，以及有限约束
+
+$$
+(s_j,R_j),\qquad s_j=(v_{j1},\ldots,v_{jk_j})\in V^{k_j},
+\quad R_j\subseteq\{0,1\}^{k_j}.
+$$
+
+它在自由赋值 $u\in\{0,1\}^{X}$ 上的关系是
+
+$$
+\operatorname{Sol}_{\mathcal I}(u)\;\Longleftrightarrow\;
+\exists\alpha:V\to\{0,1\},
+\bigl(\alpha|_X=u\;\land\;\forall j,\ (\alpha(v_{j1}),\ldots,\alpha(v_{jk_j}))\in R_j\bigr).
+$$
+
+量词只遍历这一个有限的 $Y$；同一个变量名在不同约束、同一约束的
+不同端口出现时都读取同一个 $\alpha(v)$。这就是共享端口和有限存在辅助
+变量的语义，不能把局部见证拼成同名变量的不同取值。
+
+若把基关系 $R$ 删除一行 $t$，得到的是新的模板族
+$\operatorname{CSP}(R\setminus\{t\})$。通常它改变实例族，因为一个约束
+可能恰好需要 $t$。对某个已固定实例，若没有任何满足赋值在该约束位置
+使用 $t$，则该删除在此实例上不可达，解集不变；若该位置从未出现或该行
+由其它声明约束排除，则是冗余删除，也只保证这个实例的行为不变。实例级
+不可达/冗余不等于模板族等价。
+
+**定义 19.4（二元子句分隔器）。** 令 $\mathsf{Lit}_3$ 是三个布尔变量的
+六个文字，$\mathsf{Cl}_2$ 是至多含两个文字的析取式（允许一个文字作为
+单位子句，并允许重复文字）。对 $R\subseteq\{0,1\}^3$ 定义规范二 CNF
+
+$$
+\operatorname{Sep}(R)=
+\bigwedge_{C\in\mathsf{Cl}_2:\;\forall v\in R,\ C(v)=1} C.
+$$
+
+这是一个有限、可枚举的构造；$R=\varnothing$ 时，所有子句 vacuously
+有效，因而同时包含 $x$ 和 $\neg x$ 并定义空关系。对一个关系逐个枚举
+八个布尔三元组，检查
+
+$$
+\forall u\notin R\;\exists C\in\mathsf{Cl}_2,
+\quad(\forall v\in R,\ C(v)=1)\land C(u)=0
+\tag{39}
+$$
+
+就是该关系的机器可检查二 CNF 见证；(39) 成立时
+$\operatorname{Mod}(\operatorname{Sep}(R))=R$。它是“规范分隔器”，不需
+为每个掩码另写一个手工公式。
+
+**定理 19.5（五模式的完整三十二掩码分类）。** 逐坐标多数记为
+$\operatorname{maj}$. 关系在布尔域上二元可定义（bijunctive）当且仅当它
+对多数封闭。对本节的五点域，保留掩码的精确分类为
+
+| 保留掩码 $r$ | 删减掩码 $\delta=31-r$ | 关系 | 结论 |
+| --- | --- | --- | --- |
+| $0,1,2,3,4,5,6,7,8,9,10,11,12,13$ | $31,30,29,28,27,26,25,24,23,22,21,20,19,18$ | $R_r$ | bijunctive，且由 $\operatorname{Sep}(R_r)$ 定义 |
+| $14$ | $17$ | $E=\{a,b,c\}$ | 唯一的 exact-one 例外 |
+| $15,16,17,18,19,20,21,22,23,24,25,26,27,28,29$ | $16,15,14,13,12,11,10,9,8,7,6,5,4,3,2$ | $R_r$ | bijunctive，且由 $\operatorname{Sep}(R_r)$ 定义 |
+| $30$ | $1$ | $N=\{a,b,c,d\}$ | 唯一的 NOR 例外 |
+| $31$ | $0$ | $\Sigma$ | bijunctive，且由 $\operatorname{Sep}(\Sigma)$ 定义 |
+
+这些行互不相交并覆盖 $0\le r<32$。有限检查的核心只需十个不同三元组
+的多数值：
+
+$$
+\begin{array}{c|cccccccccc}
+T& oab& oac& oad& obc& obd& ocd& abc& abd& acd& bcd\\ \hline
+\operatorname{maj}(T)&o&o&a&o&o&c&o&a&d&c
+\end{array}
+$$
+
+含重复项的多数值就是所重复的点。表中除 $abc\mapsto o$ 外，输出若不在
+三元组内的情形只有这一项；其余九项的输出都属于各自的三元组。
+若一个关系含 $o$，这不会造成缺失。
+因此多数封闭失败当且仅当它含 $a,b,c$ 而不含 $o$，只有
+$E$ 与 $E\cup\{d\}=N$ 两种。两者确实失败，因为
+$\operatorname{maj}(a,b,c)=o\notin E,N$。对其余三十个掩码，枚举八个
+输入点验证 (39)，于是给出相应的规范二 CNF。由二元关系的多数闭包刻画，
+这也证明了“恰有三十个 bijunctive、两个例外”，而不是只列出若干代表。
+
+**命题 19.6（$E$ 到 NOR 的显式 pp 小工具）。** 对布尔自由变量
+$x,y,z$，有
+
+$$
+N(x,y,z)\;\Longleftrightarrow\;
+\exists u,v,w\;\bigl(E(x,z,u)\land E(y,z,v)\land E(u,v,w)\bigr).
+\tag{40}
+$$
+
+证明。把三个 exact-one 约束写成
+$x+z+u=1$、$y+z+v=1$、$u+v+w=1$。若 $z=1$，前两式强制
+$x=y=u=v=0$，第三式给 $w=1$。若 $z=0$，则
+$u=1-x$、$v=1-y$，第三式有解恰当在 $x\lor y=1$ 时成立；在
+$(x,y)=(1,0),(0,1),(1,1)$ 时分别取
+$(u,v,w)=(0,1,0),(1,0,0),(0,0,1)$。故投影恰为
+$z=\neg(x\lor y)$。每个门只新增三个辅助变量和三个约束，共享输入仍由
+同一个全局变量承载，故 (40) 可按门独立拼接成多项式大小的网络。
+
+**定义 19.7（可扩展的 $E/N$ 有限可满足族）。**
+
+* $E$-FEAS 的输入是显式变量表、三元作用域列表
+  $(i_j,k_j,\ell_j)$、可选的有限钉值和目标输出钉值；问题是是否存在
+  使每个作用域属于 $E$ 的布尔赋值。赋值本身是线性长度证书，逐约束
+  检查在作用域列表长度上线性。单调 exact-one-3-SAT 给出其 NP-hard
+  （从而在此显式编码下 NP-complete）的标准子族。若需要原生块实现，
+  变量共享和唯一 native lift 已由
+  [Overlap Closure §3, Theorem 3.3](RECURSIVE_RELATIONAL_OBSERVATION_NATIVE_OVERLAP_CLOSURE_BOUNDARIES.md#3-actual-native-failure-of-rectangular-projection-closure)
+  负责；这里不重复其构造。
+* $N$-COMP 的输入是有向无环 NOR 门表、共享信号名、命名主输入集 $W$、
+  部分钉值 $p:P\to\{0,1\}$（$P\subseteq W$）、常量端口及指定输出值
+  （NP-hard 子族要求输出为一）。问题是是否存在未钉住的主输入
+  $W\setminus P$ 与全部内部线的共同补全，满足门表、钉值、常量和输出
+  要求；这些未钉主输入是存在见证变量。它是第十五节及 Cook 文献注
+  §§6–8 所用的显式完成语言：证书可正向求值检查，边界补全属于 NP，
+  其标准 3-SAT 归约给出 NP-hard 子族。若 $P=W$，则拓扑求值唯一决定
+  内部线并在确定性多项式时间内判定输出要求；这个全钉值子族不承担
+  上述 NP-hard 结论。
+
+用 (40) 替换 $N$-COMP 的每个门，得到 $N$-COMP $\le_p$ $E$-FEAS，
+新增大小为每门常数，且同名信号仍共享。上述 NP-completeness 只针对这些
+明确的有限输入编码和验证器；它不宣称普通 $P\ne NP$，也不把原生链的
+两活态上界变成任意共享网络的算法下界。
+
+**定义 19.8（有限残余三子句和自取得适配）。** 固定显式整数 $b,m$、
+预算 $0\le k\le b$、有限变量表 $V\supseteq[b]$ 及一个完整显式输入
+
+$$
+F=B\land\bigwedge_{j=1}^m D_j,\qquad
+\mathcal C=(C_1,\ldots,C_m),\quad
+C_j=\operatorname{var}(D_j)\subseteq[b],\quad 1\le|C_j|\le3.
+$$
+
+其中 $B$ 是 $V$ 上的二 CNF，$D_j$ 是带符号的析取子句，每个变量在
+其中至多出现一次，且不同时出现正负文字；$C_j$ 只记录其变量支撑。
+源合同要求 $V,B,(D_j)_{j=1}^m$ 在整个取得与恢复期间固定、完整且可逐项
+读取，令其编码长度为 $N$。缺失子句或源改变时不适用下面的完整性结论。
+其 hitting-set 关系仍为
+$\operatorname{Hit}(\mathcal C)=\{H\subseteq[b]:H\cap C_j\ne\varnothing
+\text{ 对所有 }j\}$，取得目标是返回其中一个 $|H|\le k$ 的集合及命中证书。
+
+取得状态携带 $(H,j,L,\rho)$：当前 $H$、首个未命中子句的索引 $j$
+（全命中时取 $m+1$）、已命中各子句的见证表
+$L=((i,h_i):h_i\in H\cap C_i)$，以及待定或终端结果 $\rho$。
+查询 $Q(H)$ 扫描同一显式列表，返回首个未命中的 $(j,D_j,C_j)$ 与 $L$，
+或返回 $\mathrm{DONE}$ 与覆盖全部 $m$ 项的 $L$；回复须按源逐条检查。
+这提供实际子句和见证，不是假设一个免费的可满足性答复。
+
+从 $H=\varnothing$ 递归发现：收到 $\mathrm{DONE}$ 时返回
+$(H,\pi_{\rm hit})$，其中 $\pi_{\rm hit}=L$ 经全部命中检查；若仍有未命中
+子句且 $|H|=k$，此分支返回 $\mathrm{NO\_HIT}$；否则对
+$h\in C_j$ 分别转到 $H\cup\{h\}$，更新见证表并继续。至多三个分支，
+且 $C_j\cap H=\varnothing$ 保证每步增加一个变量。所有子分支都失败时
+才返回 $\mathrm{NO\_HIT}$。深度至多 $k$，叶数至多 $3^k\le3^b$，
+节点总数至多 $(3^{k+1}-1)/2=O(3^b)$。若有预算内命中集 $H^*$，
+每个尚未命中的 $C_j$ 都含一个
+$H^*\setminus H$ 中的变量，所以有一条分支保持 $H\subseteq H^*$ 并在
+预算内成功；反向成功结果的证书直接给出命中性。因此
+$\mathrm{NO\_HIT}$ 只否定预算内命中集，不否定 $F$ 可满足。
+
+恢复映射 $\operatorname{Recover}(H,\pi_{\rm hit};F)$ 先验证命中证书，
+再枚举全部 $2^{|H|}\le2^b$ 个布尔赋值 $\beta:H\to\{0,1\}$。
+对每个 $\beta$，删除已为真的子句、删去已为假的文字，保留空子句为矛盾。
+每个残余 $D_j$ 至少有一个变量属于 $H$，故简化后至多剩两个文字；
+$B$ 的简化仍是二 CNF。调用完整的二 CNF 求解器；若取得剩余变量赋值
+$\gamma:V\setminus H\to\{0,1\}$，返回全赋值 $\alpha=\beta\cup\gamma$
+及证书 $\pi_{\rm sat}$，后者为 $B$ 与 $(D_j)$ 的每个子句指定一个在
+$\alpha$ 下为真的文字，并逐项检查原输入 $F(\alpha)=1$。
+若每个 $\beta$ 的二 CNF 都不可满足，则返回
+$\mathrm{NO}$，可附各分支的二 CNF 不可满足证书（空子句，或某变量与其
+否定之间的双向蕴含路径）。若 $F$ 有满足赋值，其在 $H$ 上的限制必被枚举，
+其余部分满足对应简化式；反向任何返回的全赋值都满足原式。因此有效命中
+证书下 $\operatorname{Recover}$ 返回满足赋值当且仅当 $F$ 可满足。
+
+扫描源和建立 incidence 列表需 $O(N)$ 编码读取，列表操作数为
+$O(b+m+\sum_j|C_j|)$；位集另按实际字长计。发现和恢复的局部计算分别有
+$O(3^b\operatorname{poly}(N))$ 与 $O(2^{|H|}\operatorname{poly}(N))$ 上界。
+源调用、每次查询的扫描与回复、结果序列化、存储、命中证书及最终证书的
+核验均另按实际长度收费。这些是显式有界参数下的算法上界，不是一般输入
+规模下的下界；未供应完整源或二 CNF 求解能力时，不提供此取得保证。
+关系覆盖和有限证书的已有边界见
+[FIB_ATOM_CERTIFICATE_PRESERVING_QUOTIENT.md](FIB_ATOM_CERTIFICATE_PRESERVING_QUOTIENT.md)
+及 [RECURSIVE_RELATIONAL_OBSERVATION_NATIVE_JOINT_TARGET_CERTIFICATES.md](RECURSIVE_RELATIONAL_OBSERVATION_NATIVE_JOINT_TARGET_CERTIFICATES.md)。
+
+**命题 19.9（四种有限读出不能互相冒领）。** 对有限状态集分别定义：
+
+1. 摘要覆盖是目标/未来映射在摘要纤维上恒定，即目标映射因子化通过摘要；
+2. 数值精度是一个明确的误差或有理区间约束，如
+   $|\widehat q-q|\le\varepsilon$；
+3. 根存在是有限声明域上的命题 $\exists t\,f(t)=0$（或给定压缩域上
+   的对应精确存在命题）；
+4. 证书恢复是输出有限 $\pi$ 且验证器 $V(I,\pi)=1$，并把取得、输出和
+   核验成本分别计入。
+
+摘要覆盖不推出给定精度，精度不推出根存在，根存在不推出可取得或可验证的
+证书，证书验证也不推出摘要在另一个未来菜单上仍覆盖。未来商、有限菜单和
+动态记忆的已有条件见
+[AURIC_FIB_ATOM_DYNAMIC_FUTURE_QUOTIENT_AND_FUTURE_CLOSED_MEMORY.md](AURIC_FIB_ATOM_DYNAMIC_FUTURE_QUOTIENT_AND_FUTURE_CLOSED_MEMORY.md)；
+矩恢复和精度边界见
+[AURIC_FIB_ATOM_MOMENT_TRIANGLES_AND_INVERSE_PRECISION.md](AURIC_FIB_ATOM_MOMENT_TRIANGLES_AND_INVERSE_PRECISION.md)。
+本命题只提供这些对象的有限接口，不把一个对象的结论转写成另一个对象的
+全局结论。
+
+**定义 19.10（固定未来菜单的细化）。** 给定有限菜单 $M$（每个元素已经
+包含其允许的动作词、观察点和时间标签），定义
+
+$$
+s\equiv_M t\quad\Longleftrightarrow\quad
+\forall q\in M,\;Y(s,q)=Y(t,q).
+$$
+
+若 $M\subseteq M'$，则 $\equiv_{M'}$ 细化 $\equiv_M$；新增查询只会拆分
+原有纤维，删去查询只会合并纤维。若新查询在声明的可达域上是冗余的，商
+可能保持不变。所有“未来等价”“最小记忆”和“可恢复”均只相对于给定
+菜单、动作权限、观察域和时间索引成立；它们不自动量化到未声明的未来。
+这正是有限菜单源
+[FIB_NATIVE_FINITE_MENU_MINIMAL_MEMORY.md](FIB_NATIVE_FINITE_MENU_MINIMAL_MEMORY.md)
+与动态 future quotient 源的交接口。
+
+**条件性量子旁支（来源和 PSD 接口固定）。** 当前树没有
+`Blueprint/D5/S3/QuantumChannels/DalySuperchannelMinimalExtension.md`。
+可引用的历史来源是 [固定修订
+9f20f4efdb4c90cc1e07fa7e481ffc0dc86234c3](https://github.com/the-omega-institute/trureturing/blob/9f20f4efdb4c90cc1e07fa7e481ffc0dc86234c3/Blueprint/D5/S3/QuantumChannels/DalySuperchannelMinimalExtension.md)，
+其中的 `SCPTP`、`IsQSC`、`extensions`、`induced` 和 $e$ 采用该来源的
+复数 Choi 矩阵、规定的部分迹和复数矩阵秩。固定
+$d_1=r_1=d_2=r_2=2$，该快照给出的特定族为
+
+$$
+F_s(X)=\frac X2+\frac{I_2\otimes\operatorname{Tr}_A X}{8}
++\frac{\operatorname{Tr}(X)I_4}{16}
++\frac{s\operatorname{Tr}((Z\otimes I_2)X)(Z\otimes I_2)}{32},
+\qquad Z=\operatorname{diag}(1,-1),\quad -1\le s\le1.
+$$
+
+令 $S_s=\operatorname{choiEquiv}^{-1}\circ F_s\circ\operatorname{choiEquiv}$
+为相应全映射空间上的映射，令 $\Gamma$ 为 $S_0$ 在
+$\operatorname{SCPTP}(2,2)$ 上的限制所得的那个 QSC。仅对这个 $\Gamma$
+及该快照的接口，来源的条件性结论是
+
+$$
+\forall S\in\operatorname{extensions}(\Gamma),\quad e(S)=4;
+\qquad S_0=\tfrac12(S_{-1}+S_1),\quad S_{-1}\ne S_1,
+\quad S_{-1},S_0,S_1\in\operatorname{extensions}(\Gamma).
+$$
+
+因此 $s=0$ 的全空间扩展在该扩展集中是非极值的最小秩扩展。
+这段历史来源在当前树上未取得现行 Lean 绑定，故在本节标为
+`ASSUMED-UNVERIFIED`、只作 source-scoped corollary；它不推出任意 PSD
+模型、任意 $\Gamma$、任意维数或任意 Choi/部分迹约定下的普遍结论，
+更不推出唯一的最小秩扩展。改变来源、PSD 锥、秩定义或接口时，必须重新
+给出精确来源和证明。
