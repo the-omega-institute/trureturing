@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:347ef7695aac0225b7afbabcbbc175ddd7021a5a4f553fef71d2e75a8b87211c
+  normalized_sha256: sha256:347ef7695aac0225b7afbabcbbc175ddd7021a5a4f553fef71d2e75a8b87211c
+cas_ref: sha256:347ef7695aac0225b7afbabcbbc175ddd7021a5a4f553fef71d2e75a8b87211c
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: Definition 1.1 defines element-conjugacy and projective irreducibility, and assigns notation T to the diagonal torus and mu_3 to the scalar kernel. These clauses name objects and predicates; they assert neither that a pair is conjugate nor that a homomorphism is irreducible, and state no independent theorem about the kernel.
+    previous_atom_id: null
+    next_atom_id: f1844c0a7b7d5ac908ff00c2636eca5f704bc1f5fc3964cc64a5a7f69c747a77
