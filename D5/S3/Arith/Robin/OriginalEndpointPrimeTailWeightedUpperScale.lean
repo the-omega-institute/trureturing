@@ -330,4 +330,243 @@ theorem endpoint_tail_le_nine_log4_sqrt_log {q : ℝ} (hq : 0 < q) {N : ℕ}
       add_le_add hsmall hlarge
     _ = (9 * Real.log 4) / (s * Real.log u) := by ring
 
+/-- The complete contribution of actual exponent-at-least-two primes at
+either original positive-price endpoint has the inverse-two-thirds scale.
+All original support primes in the subset and all activation ties remain. -/
+theorem endpoint_higher_tail_le_eight_log4_rpow {q : ℝ} (hq : 0 < q) {N : ℕ}
+    (hN : N = strictInteger q ∨ N = maximalInteger q)
+    (hu : 4 ≤ largestPrime N) :
+    (∑ p ∈ N.primeFactors.filter (fun p => 2 ≤ N.factorization p), layerTail N p) ≤
+      (8 * Real.log 4) /
+        (((largestPrime N : ℝ) ^ ((2 : ℝ) / 3)) * Real.log (largestPrime N : ℝ)) := by
+  classical
+  have hpositive : 1 ≤ N := by
+    rcases hN with rfl | rfl
+    · exact strictInteger_pos hq
+    · exact (maximalInteger_spec hq).1
+  let S := N.primeFactors
+  let H := S.filter (fun p => 2 ≤ N.factorization p)
+  let u : ℝ := largestPrime N
+  let b : ℝ := u ^ ((1 : ℝ) / 3)
+  let r : ℝ := 2 * b
+  have huR : (4 : ℝ) ≤ u := by
+    change (4 : ℝ) ≤ (largestPrime N : ℝ)
+    exact_mod_cast hu
+  have hu0 : 0 < u := by linarith
+  have huOne : 1 < u := by linarith
+  have hb0 : 0 < b := Real.rpow_pos_of_pos hu0 _
+  have hbOne : 1 < b := Real.one_lt_rpow huOne (by norm_num)
+  have hb3 : b ^ 3 = u := by
+    calc
+      b ^ 3 = (u ^ ((1 : ℝ) / 3)) ^ 3 := rfl
+      _ = u ^ (((1 : ℝ) / 3) * 3) :=
+        (Real.rpow_mul_natCast hu0.le ((1 : ℝ) / 3) 3).symm
+      _ = u := by norm_num
+  have hb2 : b ^ 2 = u ^ ((2 : ℝ) / 3) := by
+    calc
+      b ^ 2 = u ^ (((1 : ℝ) / 3) * 2) :=
+        (Real.rpow_mul_natCast hu0.le ((1 : ℝ) / 3) 2).symm
+      _ = u ^ ((2 : ℝ) / 3) := by norm_num
+  have hr0 : 0 < r := by dsimp only [r]; positivity
+  have hrOne : 1 < r := by dsimp only [r]; linarith
+  have hlogu : 0 < Real.log u := Real.log_pos huOne
+  have hlogr : 0 < Real.log r := Real.log_pos hrOne
+  have hlogb : Real.log b = Real.log u / 3 := by
+    dsimp only [b]
+    rw [Real.log_rpow hu0]
+    ring
+  have hlogbr : Real.log b ≤ Real.log r :=
+    Real.log_le_log hb0 (by dsimp only [r]; linarith)
+  have hclock : Real.log u ≤ 3 * Real.log r := by
+    rw [hlogb] at hlogbr
+    linarith
+  have hclockDiv : 1 / Real.log r ≤ 3 / Real.log u := by
+    apply (div_le_div_iff₀ hlogr hlogu).2
+    simpa only [one_mul] using hclock
+  have hrus : r / u = 2 / b ^ 2 := by
+    dsimp only [r]
+    rw [← hb3]
+    field_simp [hb0.ne']
+    <;> ring
+  have hne : S.Nonempty := by
+    by_contra h
+    have hempty : N.primeFactors = ∅ := Finset.not_nonempty_iff_eq_empty.mp h
+    have hz : largestPrime N = 0 := by simp [largestPrime, hempty]
+    omega
+  obtain ⟨v, hv, hvu⟩ := exists_mem_eq_sup S hne id
+  have huMem : largestPrime N ∈ S := by
+    have heq : largestPrime N = v := hvu
+    exact heq.symm ▸ hv
+  have huPrime : (largestPrime N).Prime := Nat.prime_of_mem_primeFactors huMem
+  have hactive (p : ℕ) (hp : p ∈ S) : 1 ≤ N.factorization p :=
+    (Nat.prime_of_mem_primeFactors hp).factorization_pos_of_dvd
+      (by omega) (Nat.dvd_of_mem_primeFactors hp)
+  have hmax (p : ℕ) (hp : p ∈ S) : (p : ℝ) ≤ u := by
+    change (p : ℝ) ≤ (largestPrime N : ℝ)
+    exact_mod_cast (le_sup (f := id) hp : p ≤ largestPrime N)
+  have hselected : q ≤ goldenLayerMarginal (largestPrime N) 1 := by
+    have ha := hactive (largestPrime N) huMem
+    rcases hN with rfl | rfl
+    · exact ((strict_layer_iff hq huPrime (by omega : 1 ≤ (1 : ℕ))).mp ha).le
+    · exact (weak_layer_iff hq huPrime (by omega : 1 ≤ (1 : ℕ))).mp ha
+  have hprice : q * Real.log u ≤ Real.log (1 + 1 / u) := by
+    rw [golden_layer_marginal_one_eq_log_one_add_inv huPrime] at hselected
+    exact (le_div_iff₀ hlogu).mp hselected
+  have hloginc : Real.log (1 + 1 / u) ≤ 1 / u := by
+    have h := Real.log_le_sub_one_of_pos (show 0 < 1 + 1 / u by positivity)
+    linarith
+  have hqBound : q ≤ 1 / (u * Real.log u) := by
+    calc
+      q ≤ (1 / u) / Real.log u := (le_div_iff₀ hlogu).2 (hprice.trans hloginc)
+      _ = 1 / (u * Real.log u) := by
+        field_simp [hu0.ne', hlogu.ne']
+        <;> ring
+  let small := H.filter (fun p : ℕ => (p : ℝ) ≤ r)
+  let large := H.filter (fun p : ℕ => r < (p : ℝ))
+  have hsmallSub : small ⊆ Nat.primesLE ⌊r⌋₊ := by
+    intro p hp
+    obtain ⟨hpH, hpr⟩ := mem_filter.mp hp
+    have hpS := (mem_filter.mp hpH).1
+    exact Nat.mem_primesLE.mpr ⟨Nat.le_floor hpr, Nat.prime_of_mem_primeFactors hpS⟩
+  have hsmallLog : (∑ p ∈ small, Real.log p) ≤ Chebyshev.theta r := by
+    rw [Chebyshev.theta_eq_sum_primesLE]
+    apply sum_le_sum_of_subset_of_nonneg hsmallSub
+    intro p hp hnot
+    exact Real.log_nonneg (by exact_mod_cast (Nat.mem_primesLE.mp hp).2.one_le)
+  have hsmall : (∑ p ∈ small, layerTail N p) ≤
+      4 * Real.log 4 / (b ^ 2 * Real.log u) := by
+    calc
+      (∑ p ∈ small, layerTail N p) ≤ ∑ p ∈ small, 2 * q * Real.log p := by
+        apply sum_le_sum
+        intro p hp
+        have hpS := (mem_filter.mp (mem_filter.mp hp).1).1
+        have hlocal := (endpoint_local hq hN (Nat.prime_of_mem_primeFactors hpS)
+          (hactive p hpS)).2.2.1
+        exact hlocal.trans (by simpa only [mul_assoc] using
+          upperPrice_le_two_mul_price hq (Nat.prime_of_mem_primeFactors hpS))
+      _ = 2 * q * (∑ p ∈ small, Real.log p) := by rw [mul_sum]
+      _ ≤ 2 * q * Chebyshev.theta r :=
+        mul_le_mul_of_nonneg_left hsmallLog (by positivity)
+      _ ≤ 2 * q * (Real.log 4 * r) :=
+        mul_le_mul_of_nonneg_left (Chebyshev.theta_le_log4_mul_x hr0.le) (by positivity)
+      _ = q * (2 * (Real.log 4 * r)) := by ring
+      _ ≤ (1 / (u * Real.log u)) * (2 * (Real.log 4 * r)) :=
+        mul_le_mul_of_nonneg_right hqBound (by positivity)
+      _ = (2 * Real.log 4) * (r / u) / Real.log u := by
+        field_simp [hu0.ne', hlogu.ne']
+        <;> ring
+      _ = 4 * Real.log 4 / (b ^ 2 * Real.log u) := by
+        rw [hrus]
+        field_simp [hb0.ne', hlogu.ne']
+        <;> ring
+  have hhigher (p : ℕ) (hpH : p ∈ H) :
+      layerTail N p ≤ (9 / 8 : ℝ) / (p : ℝ) ^ 3 := by
+    obtain ⟨hpS, ha⟩ := mem_filter.mp hpH
+    have hp := Nat.prime_of_mem_primeFactors hpS
+    have hp2 : (2 : ℝ) ≤ p := by exact_mod_cast hp.two_le
+    have hp0 : (0 : ℝ) < p := by exact_mod_cast hp.pos
+    have hp1 : (1 : ℝ) < p := by exact_mod_cast hp.one_lt
+    let v : ℝ := (p : ℝ)⁻¹
+    let y : ℝ := v ^ (N.factorization p + 1)
+    have hv0 : 0 < v := inv_pos.mpr hp0
+    have hv1 : v < 1 := (inv_lt_one₀ hp0).mpr hp1
+    have hy0 : 0 ≤ y := (pow_pos hv0 _).le
+    have hy3 : y ≤ 1 / (p : ℝ) ^ 3 := by
+      have h := pow_le_pow_of_le_one hv0.le hv1.le
+        (show 3 ≤ N.factorization p + 1 by omega)
+      simpa only [y, v, inv_pow, one_div] using h
+    have hpp : (8 : ℝ) ≤ (p : ℝ) ^ 3 := by
+      calc
+        (8 : ℝ) = (2 : ℝ) ^ 3 := by norm_num
+        _ ≤ (p : ℝ) ^ 3 := pow_le_pow_left₀ (by norm_num) hp2 3
+    have hy8 : y ≤ 1 / 8 :=
+      hy3.trans (one_div_le_one_div_of_le (by norm_num : (0 : ℝ) < 8) hpp)
+    have hlog := D5.S3.Arith.Lattices.Klartag.neg_log_one_sub_le hy0
+      (show y ≤ 1 / 2 by linarith)
+    have hySq : y ^ 2 ≤ y / 8 := by
+      have h := mul_nonneg hy0 (show 0 ≤ 1 / 8 - y by linarith)
+      nlinarith
+    calc
+      layerTail N p = -Real.log (1 - y) := rfl
+      _ ≤ y + y ^ 2 := hlog
+      _ ≤ (9 / 8 : ℝ) * y := by linarith
+      _ ≤ (9 / 8 : ℝ) * (1 / (p : ℝ) ^ 3) :=
+        mul_le_mul_of_nonneg_left hy3 (by norm_num)
+      _ = (9 / 8 : ℝ) / (p : ℝ) ^ 3 := by ring
+  have hlargePoint (p : ℕ) (hp : p ∈ large) :
+      layerTail N p ≤ ((9 / 8 : ℝ) * (1 / r)) * (1 / (p : ℝ) ^ 2) := by
+    obtain ⟨hpH, hpr⟩ := mem_filter.mp hp
+    have hpS := (mem_filter.mp hpH).1
+    have hp0 : (0 : ℝ) < p := by
+      exact_mod_cast (Nat.prime_of_mem_primeFactors hpS).pos
+    have hip : 1 / (p : ℝ) ≤ 1 / r := one_div_le_one_div_of_le hr0 hpr.le
+    have hcube : 1 / (p : ℝ) ^ 3 ≤ (1 / r) * (1 / (p : ℝ) ^ 2) := by
+      calc
+        1 / (p : ℝ) ^ 3 = (1 / (p : ℝ)) * (1 / (p : ℝ) ^ 2) := by
+          field_simp [hp0.ne']
+          <;> ring
+        _ ≤ (1 / r) * (1 / (p : ℝ) ^ 2) :=
+          mul_le_mul_of_nonneg_right hip (by positivity)
+    calc
+      layerTail N p ≤ (9 / 8 : ℝ) / (p : ℝ) ^ 3 := hhigher p hpH
+      _ ≤ (9 / 8 : ℝ) * ((1 / r) * (1 / (p : ℝ) ^ 2)) := by
+        simpa only [div_eq_mul_inv, one_div, one_mul] using
+          mul_le_mul_of_nonneg_left hcube (by norm_num : (0 : ℝ) ≤ 9 / 8)
+      _ = ((9 / 8 : ℝ) * (1 / r)) * (1 / (p : ℝ) ^ 2) := by ring
+  have hcover : u ≤ (2 : ℝ) ^ (largestPrime N) * r := by
+    have hpow : u ≤ (2 : ℝ) ^ (largestPrime N) := by
+      change (largestPrime N : ℝ) ≤ (2 : ℝ) ^ (largestPrime N)
+      exact_mod_cast (largestPrime N).lt_two_pow_self.le
+    have hmul : (2 : ℝ) ^ (largestPrime N) ≤ (2 : ℝ) ^ (largestPrime N) * r := by
+      simpa only [mul_one] using mul_le_mul_of_nonneg_left hrOne.le
+        (pow_nonneg (by norm_num : (0 : ℝ) ≤ 2) (largestPrime N))
+    exact hpow.trans hmul
+  have hlargeSq : (∑ p ∈ large, 1 / (p : ℝ) ^ 2) ≤
+      4 * Real.log 4 / (r * Real.log r) := by
+    have hd := prime_inverse_sq_dyadic hrOne (largestPrime N) large (by
+      intro p hp
+      obtain ⟨hpH, hpr⟩ := mem_filter.mp hp
+      have hpS := (mem_filter.mp hpH).1
+      exact ⟨Nat.prime_of_mem_primeFactors hpS, hpr, (hmax p hpS).trans hcover⟩)
+    calc
+      (∑ p ∈ large, 1 / (p : ℝ) ^ 2) ≤
+          (2 * Real.log 4 / (r * Real.log r)) *
+            ∑ j ∈ range (largestPrime N), (1 / (2 : ℝ)) ^ j := hd
+      _ ≤ (2 * Real.log 4 / (r * Real.log r)) * 2 :=
+        mul_le_mul_of_nonneg_left (sum_geometric_two_le (largestPrime N)) (by positivity)
+      _ = 4 * Real.log 4 / (r * Real.log r) := by ring
+  have hlarge : (∑ p ∈ large, layerTail N p) ≤
+      ((27 / 8 : ℝ) * Real.log 4) / (b ^ 2 * Real.log u) := by
+    calc
+      (∑ p ∈ large, layerTail N p) ≤
+          ∑ p ∈ large, ((9 / 8 : ℝ) * (1 / r)) * (1 / (p : ℝ) ^ 2) :=
+        sum_le_sum hlargePoint
+      _ = ((9 / 8 : ℝ) * (1 / r)) * (∑ p ∈ large, 1 / (p : ℝ) ^ 2) := by
+        rw [mul_sum]
+      _ ≤ ((9 / 8 : ℝ) * (1 / r)) * (4 * Real.log 4 / (r * Real.log r)) :=
+        mul_le_mul_of_nonneg_left hlargeSq (by positivity)
+      _ = (((9 / 8 : ℝ) * Real.log 4) / b ^ 2) * (1 / Real.log r) := by
+        dsimp only [r]
+        field_simp [hb0.ne', hlogr.ne']
+        <;> ring
+      _ ≤ (((9 / 8 : ℝ) * Real.log 4) / b ^ 2) * (3 / Real.log u) :=
+        mul_le_mul_of_nonneg_left hclockDiv (by positivity)
+      _ = ((27 / 8 : ℝ) * Real.log 4) / (b ^ 2 * Real.log u) := by ring
+  have hsplit : (∑ p ∈ H, layerTail N p) =
+      (∑ p ∈ small, layerTail N p) + ∑ p ∈ large, layerTail N p := by
+    have h := sum_filter_add_sum_filter_not H (fun p : ℕ => (p : ℝ) ≤ r) (layerTail N)
+    simpa only [small, large, not_le] using h.symm
+  change (∑ p ∈ H, layerTail N p) ≤ (8 * Real.log 4) / (u ^ ((2 : ℝ) / 3) * Real.log u)
+  rw [← hb2]
+  calc
+    (∑ p ∈ H, layerTail N p) =
+        (∑ p ∈ small, layerTail N p) + ∑ p ∈ large, layerTail N p := hsplit
+    _ ≤ 4 * Real.log 4 / (b ^ 2 * Real.log u) +
+        ((27 / 8 : ℝ) * Real.log 4) / (b ^ 2 * Real.log u) := add_le_add hsmall hlarge
+    _ = ((59 / 8 : ℝ) * Real.log 4) / (b ^ 2 * Real.log u) := by ring
+    _ ≤ (8 * Real.log 4) / (b ^ 2 * Real.log u) := by
+      apply (div_le_div_iff_of_pos_right (mul_pos (pow_pos hb0 _) hlogu)).2
+      have hA : 0 ≤ Real.log 4 := by positivity
+      nlinarith
+
 end D5.S3.Arith.Robin.OriginalEndpointPrimeTailWeightedUpperScale
