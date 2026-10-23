@@ -8,6 +8,23 @@ open Lean Meta Elab Command LeanInformationAudit.SearchReduction
 
 set_option Elab.async false
 
+private instance (a b : Bound) : Decidable (a ≤ b) := by
+  change Decidable (boundLe a b)
+  cases a <;> cases b <;> dsimp [boundLe] <;> infer_instance
+
+private def assertDeclPrediction (name : String) (predicted : Bool) : TermElabM Unit := do
+  logInfo s!"DECL_PREDICTION {name} {predicted}"
+  unless predicted do throwError "declaration prediction failed: {name}"
+
+/--
+info: DECL_PREDICTION false-regression false
+---
+error: declaration prediction failed: false-regression
+-/
+#guard_msgs in
+run_cmd liftTermElabM do
+  assertDeclPrediction "false-regression" false
+
 run_cmd liftTermElabM do
   let target ← Term.elabType (← `(∀ (α : Type) (P : α → Prop),
     (∃ x, P x) → ∃ x, P x ∧ P x))
@@ -110,25 +127,27 @@ run_cmd do
         let predicted := reading.baseline == ⟨.finite 1, .finite 1⟩ &&
           reading.paired == ⟨.finite 0, .finite 0⟩ && verdict == .nonBindOnly &&
           classifyClosure certified == some .zero
-        logInfo s!"DECL_PREDICTION squareVia {predicted}"
-        unless predicted do throwError "squareVia prediction failed"
+        assertDeclPrediction "squareVia" predicted
         unless reading.graph.vertices.any (fun v =>
             v.origin.constName? == some square && !v.targetPart) do
           throwError "independently routine squareFact excluded as target-part"
       if name == ``LeanInformationAudit.Tests.SearchReduction.GraphCandidates.twoLayerVia then
-        let predicted := reading.baseline == ⟨.finite 2, .finite 2⟩ &&
-          reading.paired == ⟨.finite 1, .finite 1⟩ && classifyClosure certified == some .partial_
-        logInfo s!"DECL_PREDICTION twoLayerVia {predicted}"
+        let predicted := decide (reading.baseline.lower ≤ .finite 2 ∧
+          .finite 2 ≤ reading.baseline.upper ∧ reading.paired.lower ≤ .finite 1 ∧
+          .finite 1 ≤ reading.paired.upper) && strictDrop reading.baseline reading.paired &&
+          verdict == .nonBindOnly && classifyClosure certified == some .partial_
+        assertDeclPrediction "twoLayerVia" predicted
       if name == ``LeanInformationAudit.Tests.SearchReduction.GraphCandidates.squaredWitness then
         let predicted := strictDrop reading.baseline reading.paired &&
           verdict == .nonBindOnly && !reading.proofHardSeeds.isEmpty
-        logInfo s!"DECL_PREDICTION proof_hard {predicted}"
+        assertDeclPrediction "proof_hard" predicted
       if name == ``LeanInformationAudit.Tests.SearchReduction.Candidates.doubledContent then
         doubled := some reading
-        let predicted := (reading.baseline == ⟨.finite 1, .finite 1⟩ ||
-          reading.baseline == ⟨.finite 2, .finite 2⟩) && strictDrop reading.baseline reading.paired &&
-          classifyClosure certified == some .zero
-        logInfo s!"DECL_PREDICTION doubledContent {predicted}"
+        let predicted := decide (.finite 1 ≤ reading.baseline.lower ∧
+          reading.baseline.lower ≤ reading.baseline.upper ∧ reading.baseline.upper ≤ .finite 4) &&
+          reading.paired == ⟨.finite 0, .finite 0⟩ && strictDrop reading.baseline reading.paired &&
+          verdict == .nonBindOnly && classifyClosure certified == some .zero
+        assertDeclPrediction "doubledContent" predicted
       if name == ``LeanInformationAudit.Tests.SearchReduction.Candidates.doubledContentWithoutOmega then
         logInfo s!"DECL_CLOSER_INVARIANCE {doubled.any (fun old =>
           old.baseline == reading.baseline && old.paired == reading.paired)}"
@@ -143,7 +162,12 @@ run_cmd do
           edge.conclusion == reading.graph.root)
         unless rootEdges.all (·.sharedData? == some true) do
           throwError "sharedWitness static-sharing prediction failed"
-        logInfo s!"DECL_PREDICTION sharedWitness {reading.baseline == ⟨.finite 1, .finite 1⟩}"
+        let predicted := decide (reading.baseline.lower ≤ .finite 1 ∧
+          .finite 1 ≤ reading.baseline.upper ∧ reading.baseline.upper ≤ .finite 1 ∧
+          reading.paired.lower ≤ .finite 1 ∧ .finite 1 ≤ reading.paired.upper ∧
+          reading.paired.upper ≤ .finite 1) && verdict == .insufficient &&
+          (classifyClosure certified).isNone
+        assertDeclPrediction "sharedWitness" predicted
     logInfo s!"DECL_CALIBRATION non_bind_only={positives} bind_only={bindings}"
     let table := Json.mkObj [
       ("configuration", toJson localConfiguration),

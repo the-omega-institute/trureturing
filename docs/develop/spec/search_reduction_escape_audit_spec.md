@@ -251,8 +251,9 @@ FIB 五模式单元刻画两个选择的耦合，不刻画是否存在选择。�
 验收在真实编译声明提取图上进行，不手填边权。冻结 R 配置后先跑现有校准夹具与真实负例，再跑受益单元；预测不成立时照实报告，不调整允许表、顺序或预算。
 
 - 校准与登记单元应同时出现 bind-only 和 non-bind-only；否则报告校准失败，不能用手造模型图替代实际提取的非退化检验。
-- `doubledContent ← addition` 的预测为 `d_B∈{1,2}`、正约化、`closure=zero`，`Lean.Omega.*` 只作叶或不出现；替换 `addition` 内部闭合器不改变该声明图读数。若根探针直接闭合 `T`，如实判 bind-only。
-- `squareVia := ⟨42,squareFact⟩` 的预测为一到零、zero，`squareFact` 是合成前提且自身不被误记为难；真实依赖它的两层链预测为二到一、partial。`S` 必须出现在作者证明的活依赖中，只有作用域可见不算。
+- `doubledContent ← addition` 的预测为基底区间包含于 `[1,4]`、配对区间 `[0,0]`、严格区间下降、non-bind-only、`closure=zero`；四是完整作者路线的上界，不要求惰性否定将基底区间压成单点。`Lean.Omega.*` 只作叶或不出现；替换 `addition` 内部闭合器不改变该声明图读数。若根探针直接闭合 `T`，如实判 bind-only。
+- `squareVia := ⟨42,squareFact⟩` 的预测为一到零、zero，`squareFact` 是合成前提且自身不被误记为难；真实依赖它的两层链预测为基底区间包含二、配对区间包含一、严格区间下降、non-bind-only、partial。按 §3.5、§4，配对边不运行完整否定，不能要求配对下界精确为一。`sharedWitness` 的两臂区间均包含一且包含于 `[0,1]`，判 insufficient、无 closure；两臂上界相等时不要求基底完整否定。`S` 必须出现在作者证明的活依赖中，只有作用域可见不算。
+- 每条 `DECL_PREDICTION` 都是编译断言；值为 false 时抛出 Lean 错误，标准测试门非零退出。固定 false 用例核对该拒绝行为。
 - unwrapped、splitHelper、specialized、package、dead、等价泛化及目标本身例行的 `routineVia` 夹具均不得判非 bind-only；单独知道某个合成辅助陈述例行可证不构成排除理由。单源呈现、宽 `S` 排除、全中性 `S`、私有名与词汇传输回归保留；判词变化逐项说明适用规则。
 - 登记声明逐条报告是否越过词汇阶段、顶点和边数、合成前提数、两臂区间、判词、closure、unknown 原因、见证边、耗时与整棵进程树的物理 footprint 峰值。
 - 同时报告 `d_cut/d_given`、`shared_data × c` 交叉表、“无辅助声明”数量与 opaque 声明数量。切式消融全等时如实报告无可观测效应。
