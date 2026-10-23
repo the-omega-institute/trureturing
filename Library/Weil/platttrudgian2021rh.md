@@ -2890,3 +2890,12 @@ exactly $\mu=\lambda>0$, preserving both original metrics. Its unit-norm
 cap is finite and depends on $\lambda$; it is not asserted to be the
 old cap-four minimizer. This paper application adds no sign theorem
 or Lean certification.
+
+The [selected matched branch](hernandezsantamaria2025optimal.md#regularity-and-actual-dilation-on-the-selected-matched-branch)
+pays the critical joint defect through its CONTINUOUS combined metric
+$(1-e^{-6t})P_+$. For fixed $\lambda>0$ and its actual finite moment
+ratio, it yields every fixed order $s<3/2$ and, at $s=1$, a physical
+dilation generator in the original $M+\mathcal P$ norm. The resulting
+complete-energy derivative is $6\lambda\mathcal H(F)>0$; this is no
+contradiction to negative energy and supplies no uniform allowance
+improvement. Both statements remain paper applications.

@@ -5,7 +5,7 @@ year: 2025
 title: Optimal boundary regularity and a Hopf-type lemma for Dirichlet problems involving the logarithmic Laplacian
 doi: 10.3934/dcds.2024084
 url: https://arxiv.org/abs/2401.18033v2
-claim: The published boundary theorem requires an exterior-zero equation with bounded solution and forcing. Actual cap-four features can have uniformly bounded logarithmic Fourier moments of every fixed order while their profile values at zero diverge. Smooth actual sources also give opposite unbounded full-prime dilation difference quotients with controlled origin data. A fixed actual source also has a signed critical metric defect quadratic in log log log N, while its regularized original moment and actual Gamma form, including a fixed spatial weight, remain uniformly bounded. These paper-level interface counterexamples supply neither a negative minimizer nor an RH or Robin bound.
+claim: The published boundary theorem requires an exterior-zero equation with bounded solution and forcing. Actual cap-four features can have uniformly bounded logarithmic Fourier moments of every fixed order while their profile values at zero diverge. Smooth actual sources also give opposite unbounded full-prime dilation difference quotients with controlled origin data. A fixed actual source also has a signed critical metric defect quadratic in log log log N, while its regularized original moment and actual Gamma form, including a fixed spatial weight, remain uniformly bounded. The separate excess-quotient selection and exactly matched global-null branch give conditional Sobolev regularity and an actual physical-dilation derivative. None of these paper-level applications proves an RH or Robin bound.
 strata_touched: []
 license: bibliographic-reference-only
 triage: anchor
@@ -854,3 +854,590 @@ normalization, including the parameter-dependent original cap.
 The negative quotient is still a premise, not a contradiction or a
 sign theorem. RH and strict Robin for all integers above 5040 remain
 unproved.
+
+
+## Regularity and actual dilation on the selected matched branch
+
+The preceding selection supplies the exact hypotheses below whenever
+a negative actual source exists. It changes the representative and
+retains its true moment ratio; it does not impose matched multipliers
+on an arbitrary vector or on the previous cap-four minimum.
+
+### Exact assumptions and consequences
+
+Keep the SAME selected nonzero ACTUAL source F in V, with its GLOBAL
+matching supporting form
+
+$$
+ Q_\lambda(G)=\mathfrak E(G)+\lambda M(G)-\mu\mathcal H(G)\ge0
+ \quad(G\in\mathcal V),\qquad Q_\lambda(F)=0.
+$$
+
+Assume exactly
+
+$$
+ \lambda=\mu>0.                                           \tag{JC1}
+$$
+
+Normalize $\mathcal H(F)=1$ by a scalar, which preserves the GLOBAL
+null equation, and put $K_F=M(F)<\infty$. More generally the
+scale-invariant parameter is $K_F=M(F)/\mathcal H(F)$. Since
+$(x/\pi)^6>1$ almost everywhere on the source domain, $K_F>1$.
+The exact null identity gives
+
+$$
+ \mathfrak E(F)=-\lambda(K_F-1)<0.
+$$
+
+No cap-four hypothesis, VHP7 multiplier upper bound, or uniformity
+as $\lambda\to0$ is assumed. The complete energy, actual theta
+source, all prime powers, both poles and both original metrics are
+retained. The independent selection of such a matching representative
+is an input to this manuscript, not proved here.
+
+Under these hypotheses the consequences are:
+
+* For EVERY fixed 0<s<3/2, the actual arithmetic profile g_F belongs
+  to H^{s,log}(R), with norm defined by the Fourier weight
+  (1+tau^2)^s log(2+|tau|). The same original full-line moment
+  reconstruction X belongs to H^s(R).
+* These have explicit inverse-multiplier costs of the existing form
+  K_F Lambda_lambda exp(C_s Lambda_lambda), where
+  Lambda_lambda=1+(1+lambda)^{1/theta}lambda^{-kappa},
+  theta=(4-2eta)/5 and kappa=(1-theta)/theta>1/4.
+  The moment-coordinate bound has an additional lambda^{-1}.
+* In particular s=1 produces an ACTUAL source-space dilation
+  generator A=(7/2)F+xF' in V. For the original physical dilation
+  D_aF(x)=exp(7a/2)F(exp(a)x),
+
+$$
+ (D_aF-F)/a\longrightarrow A\quad\hbox{in }\mathcal V
+ \quad(a\downarrow0),                                   \tag{JC2}
+$$
+
+  where the V norm is M+P, not an unweighted profile norm. Therefore
+
+$$
+ Q_\lambda(D_aF)=a^2Q_\lambda(A)+o(a^2),\qquad
+ \left.\frac d{da}\mathfrak E(D_aF)\right|_{0+}
+       =6\lambda\mathcal H(F)=6\lambda.                  \tag{JC3}
+$$
+
+This is a genuine consumed regularity conclusion. The positive
+energy derivative in (JC3) is not a negative-energy contradiction.
+No H^{3/2} endpoint or uniform lambda->0 estimate is supplied.
+
+Classical weighted Schur, analytic multipliers, Fourier translation and
+closed-form arguments are used within the actual-source application.
+The existing full inverse, Gamma comparison and bounded-regularizer
+range statements are reused. The additional source-relative composition
+is `repo-derived` paper mathematics, without a literature-priority claim
+or Lean/kernel certification.
+
+### 1. Actual bounded regularizers and the exact mixed account
+
+Write q=5/4. For a fixed order 0<s<3/2 choose a base c>q, to be
+made sufficiently large depending only on s and the fixed original
+reconstruction constants. Set
+
+$$
+ j_{s,N}(\xi)=
+ \left(\frac{c^2+\xi^2}{c^2+\xi^2/N^2}\right)^{s/2},
+ \quad J=j_{s,N}(D),\quad L=e^{qt}Je^{-qt},\quad N\ge2.
+                                                               \tag{JC4}
+$$
+
+These are even and Schwarz-real on |Im z|<c, with the branch positive
+on the real line. The range argument is not restricted to s<1/2.
+For EVERY fixed finite N,
+
+$$
+ j_{s,N}-N^s=O(|\xi|^{-2}),\qquad
+ j_{s,N}^2-N^{2s}=O(|\xi|^{-2})
+$$
+
+on each smaller closed strip, with the same property for derivatives.
+Their convolution terms map the actual exponentially weighted L2
+profile into weighted H1. The original beta(t)=g_F(t/2) has its
+weight-q L2 bound from M(F). Since c>q, the smoothed terms can be
+reconstructed by the SAME actual half-line Volterra and Mobius
+inverse as VHS1/VHP1. Their half-line Gamma coordinate is H1;
+zero extension introduces at most a bounded jump, which belongs to
+the logarithmic form. Add N^s F or N^{2s}F for the scalar terms.
+Thus there are ACTUAL F_J,F_{J^2} in V with
+
+$$
+ \beta_{F_J}=J\beta,\quad \beta_{F_{J^2}}=J^2\beta,
+ \quad X_{F_J}=LX,\quad X_{F_{J^2}}=L^2X.                 \tag{JC5}
+$$
+
+Membership constants at this preliminary step may depend on N.
+The subsequent estimates will not. This uses no unbounded-order
+profile as an admissible test before its domain has been proved.
+
+The entire energy commutation identity VHS2 still holds:
+
+$$
+ \mathfrak E(F_J)=\Re\mathfrak E(F,F_{J^2}).                \tag{JC6}
+$$
+
+The full Gamma multiplier and every prime-power translation commute
+with J. The TWO pole frequencies in the beta coordinate are +/-i/4,
+where j has the same real value. The strip margin preserves the
+exponential profile weight for each fixed N. Thus the complete prime
+sums and both pole functionals converge, and no term is deleted or
+given a separate favorable sign in (JC6).
+
+Let B=C_6=(1-exp(-6t))P_+, a bounded real multiplication operator,
+0<=B<=1. By JC1, VHS3 becomes exactly
+
+$$
+ 0\le Q_\lambda(F_J)=\lambda\pi^{-7/2}D_B^L(X),
+ \quad
+ D_B^L(X)=\langle LX,BLX\rangle
+                    -\Re\langle BX,L^2X\rangle.           \tag{JC7}
+$$
+
+The hard-cut coefficients have canceled in their ORIGINAL joint
+metric. No individual P_+ endpoint commutator is claimed bounded.
+
+### 2. A small relative C6 commutator at every fixed s<3/2
+
+Put a_xi=(c^2+xi^2)^{1/2}. Differentiation gives
+
+$$
+ 0\le\frac{d\log j_{s,N}}{d\log a}\le s.
+$$
+
+Therefore, whenever a_xi>=a_eta,
+
+$$
+ 1\le j(\xi)/j(\eta)\le(a_\xi/a_\eta)^s;
+$$
+
+when the a ordering is reversed the corresponding ratio lies between
+(a_xi/a_eta)^s and 1. These statements are uniform in N.
+
+The non-diagonal Fourier kernel of B is
+
+$$
+ b(\xi,\eta)=\frac6{2\pi i(\xi-\eta)[6+i(\xi-\eta)]}.
+                                                               \tag{JC8}
+$$
+
+Its diagonal delta part cancels from [J,B]. Thus the relative
+commutator T=JBJ^{-1}-B has kernel bounded by
+
+$$
+ |T(\xi,\eta)|\le C
+ \frac{|j(\xi)/j(\eta)-1|}
+ {|\xi-\eta|\sqrt{36+(\xi-\eta)^2}}.                     \tag{JC9}
+$$
+
+Use weighted Schur with p(xi)=a_xi^{-1/2}. Here are BOTH row and
+column payments; in particular a far column is not silently omitted.
+We take c>=12.
+
+#### Comparable frequencies
+
+On 1/2<=a_xi/a_eta<=2, the derivative bound and the one-Lipschitz
+function a(xi) give, with a any comparable a value,
+
+$$
+ |j(\xi)/j(\eta)-1|
+   \le C_s\min\{|\xi-\eta|/a,1\}.
+$$
+
+The Schur weight ratios are bounded there. Each row and column is
+therefore at most
+
+$$
+ C_s\int_{\mathbb R}
+ \frac{\min(a^{-1},|h|^{-1})}{\sqrt{36+h^2}}dh
+ \le C_s\frac{\log(2+a)}a
+ \le C_s\frac{\log(2+c)}c.                               \tag{JC10}
+$$
+
+The integrand has no diagonal singularity: near zero it is O(1/a).
+
+#### Region a_xi>=2 a_eta
+
+Here |xi-eta| is comparable to a_xi, and the kernel in (JC9) is at
+most C_s a_xi^{s-2} a_eta^{-s}. The WEIGHTED row integral is bounded by
+
+$$
+ C_s a_\xi^{s-3/2}
+       \int_{a_\eta\le a_\xi/2}a_\eta^{-s-1/2}d\eta.
+                                                               \tag{JC11}
+$$
+
+For s>1/2 the integral is O_s(c^{1/2-s}); for s=1/2 it is
+O(log(2+a_xi/c)); for s<1/2 it is O_s(a_xi^{1/2-s}). Each case is
+O_s(1/c) after its displayed prefactor, because s<3/2.
+The WEIGHTED column integral is bounded by
+
+$$
+ C_s a_\eta^{1/2-s}
+       \int_{a_\xi\ge2a_\eta}a_\xi^{s-5/2}d\xi
+ \le\frac{C_s}{(3/2-s)a_\eta}\le C_s/c.                  \tag{JC12}
+$$
+
+This is the exact place where the strict s<3/2 range is used.
+
+#### Region a_eta>=2 a_xi
+
+The ratio j(xi)/j(eta) is at most 1, so the kernel is bounded by
+C a_eta^{-2}. Its weighted row and column bounds are respectively
+
+$$
+ C a_\xi^{1/2}\int_{a_\eta\ge2a_\xi}a_\eta^{-5/2}d\eta
+       \le C/a_\xi,
+$$
+
+$$
+ C a_\eta^{-3/2}\int_{a_\xi\le a_\eta/2}a_\xi^{-1/2}d\xi
+       \le C/a_\eta.
+$$
+
+Both are at most C/c. The elementary a-integrals can be estimated
+directly in the original xi/eta variables; near zero a>=c, and in
+the far regions a is comparable to the absolute frequency.
+
+Weighted Schur consequently proves the UNIFORM operator estimate
+
+$$
+ \boxed{\quad
+ \|[J,B]J^{-1}\|_{2\to2}
+ \le K_s(c):=C_s\frac{\log(2+c)}c\longrightarrow0.
+ \quad}                                                    \tag{JC13}
+$$
+
+This does not assert an endpoint half-space projection bound. The
+extra factor 6/(6+i(xi-eta)) from the CONTINUOUS C6 metric is retained
+in the entire kernel. The divergence of JC12 at s=3/2 is a limitation
+of this absolute Schur argument, not a refutation of every endpoint
+estimate.
+
+### 3. Pay the actual exponential tilt with relative, not absolute, symbols
+
+For c>=2q and |Im z|<=q,
+
+$$
+ (\log j_{s,N})'(z)
+   =s z\left[(c^2+z^2)^{-1}-(N^2c^2+z^2)^{-1}\right],
+$$
+
+and its modulus is at most C_s/c, uniformly in N. Integrating along
+the vertical segment gives
+
+$$
+ L=(I+R)J,\qquad
+ \rho:=\|R\|=\sup_\xi|j(\xi+iq)/j(\xi)-1|
+ \le C_s q/c.                                            \tag{JC14}
+$$
+
+Choose c large enough that rho<=1/2. No uniform estimate for the
+ABSOLUTE derivative of j, or absolute L-J, is needed at s>1.
+
+Write Y=JX and T=JBJ^{-1}-B. Moving the self-adjoint J in the
+un-tilted defect gives
+
+$$
+ |D_B^J(X)|\le\|T\|\|Y\|_2^2.
+$$
+
+The first tilted term differs by at most
+(2rho+rho^2)||B|| ||Y||_2^2. In the second tilted term,
+L^2-J^2=(2R+R^2)J^2, and moving one J gives JBX=(B+T)Y.
+Hence
+
+$$
+ |D_B^L(X)-D_B^J(X)|
+ \le(2\rho+\rho^2)(2\|B\|+\|T\|)\|Y\|_2^2.
+$$
+
+Together with JC13--JC14,
+
+$$
+ \boxed{\quad
+ |D_B^L(X)|\le\varepsilon_s(c)\|JX\|_2^2,
+ \quad
+ \varepsilon_s(c)\le C_s\left[
+ \frac{\log(2+c)}c+\frac qc\left(1+\frac{\log(2+c)}c\right)\right]
+ \longrightarrow0.
+ \quad}                                                    \tag{JC15}
+$$
+
+The second tilted term is paid using the SAME relative commutator;
+it is not bounded by an unjustified absolute-symbol estimate.
+
+VHP3's actual full-line reconstruction inequality has a constant
+C_rec independent of c,N, since the original K,S,q are fixed:
+
+$$
+ \|X_{F_J}\|_2^2\le C_{\rm rec}M(F_J).
+$$
+
+JC5 and JC14 therefore give
+
+$$
+ \|JX\|_2^2\le(1-\rho)^{-2}C_{\rm rec}M(F_J).              \tag{JC16}
+$$
+
+Fix c=c_s once and for all, sufficiently large that
+
+$$
+ \pi^{-7/2}(1-\rho)^{-2}C_{\rm rec}\varepsilon_s(c)\le1/4.
+                                                               \tag{JC17}
+$$
+
+This choice depends only on the fixed order s and the owned original
+constants, not on N,lambda,K_F or F. JC7 now gives the required
+actual-source absorption
+
+$$
+ 0\le Q_\lambda(F_J)\le\frac\lambda4M(F_J).                \tag{JC18}
+$$
+
+### 4. Retain all multiplier costs in the regularity limit
+
+Fix eta in (0,2) as in VHB16, with
+
+$$
+ \theta=(4-2\eta)/5,\qquad
+ \kappa=(1-\theta)/\theta>1/4,\qquad
+ \Lambda_\lambda=1+(1+\lambda)^{1/\theta}\lambda^{-\kappa}.
+$$
+
+A bounded-multiplier premise from VHP7 is NOT used. For every ACTUAL
+G in V, write s_G=||g_G||_2^2 and m_G=M(G). W317's complete debit,
+H(G)<=C N(G)^2, and VHB16 give
+
+$$
+ \begin{aligned}
+ \mathcal P(G)+\lambda M(G)
+ &=Q_\lambda(G)+\mathfrak J(G,G)+\lambda\mathcal H(G)\\
+ &\le Q_\lambda(G)+C(1+\lambda)\mathcal N(G)^2\\
+ &\le Q_\lambda(G)+C_\eta(1+\lambda)
+                         s_G^\theta m_G^{1-\theta}.
+ \end{aligned}
+$$
+
+Young absorption into lambda m_G/2 yields the exact cost
+
+$$
+ \mathcal P(G)+\frac\lambda2M(G)
+ \le Q_\lambda(G)+C_\eta(1+\lambda)^{1/\theta}
+                            \lambda^{-\kappa}s_G.
+$$
+
+Using JC18 on the SAME F_J consequently gives
+
+$$
+ \mathcal P(F_J)+\frac\lambda4M(F_J)
+ \le C_\eta\Lambda_\lambda\|g_{F_J}\|_2^2.                \tag{JC19}
+$$
+
+W338 and $S(F_J)\le\mathcal P(F_J)$, since $p\ge1$, give
+
+$$
+ \mathcal L_1(g_{F_J})+c_1\lambda M(F_J)
+ \le C_\eta\Lambda_\lambda\|g_{F_J}\|_2^2,
+ \qquad
+ \mathcal L_1(g)=\int\log(2+|\tau|)|\widehat g(\tau)|^2d\tau.
+                                                               \tag{JC20}
+$$
+
+Choose log R=C_eta Lambda_lambda with a sufficiently large fixed coefficient.
+The |tau|>R portion of the right side of JC20 is absorbed by its
+logarithmic left side. On |tau|<=R,
+
+$$
+ j_{s,N}(\tau/2)^2
+ \le(1+\tau^2/(4c_s^2))^s\le C_s\exp(C_{s,\eta}\Lambda_\lambda).
+$$
+
+The original normalized finite moment gives ||g_F||_2^2<=C K_F by
+W338 and W324. Thus, uniformly in N,
+
+$$
+ \begin{aligned}
+ \|g_{F_J}\|_2^2&\le C_{s,\eta}K_F\exp(C_{s,\eta}\Lambda_\lambda),\\
+ \mathcal P(F_J)+\mathcal L_1(g_{F_J})+\lambda M(F_J)
+ &\le C_{s,\eta}K_F\Lambda_\lambda\exp(C_{s,\eta}\Lambda_\lambda).
+ \end{aligned}                                             \tag{JC21}
+$$
+
+No inverse multiplier has disappeared. Every fixed lambda>0 and
+fixed K_F<infinity has finite displayed costs. Their small-lambda
+behavior still includes exp(C_s lambda^{-kappa}); no uniformity in
+lambda or K_F is claimed.
+
+For fixed frequency, j_{s,N}^2 increases with N to
+
+$$
+ j_{s,\infty}(\xi)^2=(1+\xi^2/c_s^2)^s.
+$$
+
+Monotone convergence in JC21 proves the EXACT endpoint-weighted
+statement, valid for every fixed s<3/2:
+
+$$
+ \boxed{\quad
+ \int_{\mathbb R}\log(2+|\tau|)
+        (1+\tau^2/(4c_s^2))^s|\widehat g_F(\tau)|^2d\tau
+ \le C_{s,\eta}K_F\Lambda_\lambda\exp(C_{s,\eta}\Lambda_\lambda).
+ \quad}                                                    \tag{JC22}
+$$
+
+Since c_s is now fixed, this is equivalent to the H^{s,log} norm
+claimed above. In particular s=1/2 is an ACTUAL arithmetic-profile
+half-derivative plus its logarithmic Gamma weight, not merely an
+unweighted H^{1/2} assertion. This endpoint alone is not used to
+claim a trace or a physical derivative.
+
+JC16 and the actual moment bound in JC21 also give
+
+$$
+ \boxed{\quad
+ \|X\|_{H^s}^2
+ \le C_{s,\eta}K_F\lambda^{-1}\Lambda_\lambda
+                         \exp(C_{s,\eta}\Lambda_\lambda).
+ \quad}                                                    \tag{JC23}
+$$
+
+One may identify an actual unbounded-multiplier source AFTER this
+estimate: JC21 bounds F_J in the Hilbert form norm M+P for fixed
+lambda>0. A weakly convergent subsequence has a limit F^(s) in V.
+The bounded linear actual profile map H6->L2 sends that weak limit
+to the strong L2 limit j_{s,infinity}(D/2)g_F, identified by JC22.
+Thus F^(s) is actual and has this profile, with the same P and moment
+bounds by weak lower semicontinuity. No unbounded source was used in
+JC6 or JC7 before this domain conclusion, and no nullity of F^(s)
+is asserted.
+
+### 5. Consume s=1 in the ORIGINAL physical dilation
+
+Choose s=1 in the preceding result. Then X is H1 on the full line
+and beta(t)=g_F(t/2) satisfies
+
+$$
+ \int (1+\xi^2)\log(2+|\xi|)|\widehat\beta(\xi)|^2d\xi
+       <\infty.                                          \tag{JC24}
+$$
+
+Let h(t)=sqrt(pi)exp(7t/2)F(pi exp t) for t>=0. The original source
+identity is h=pi^{-7/4}X on that half-line, so h belongs to
+H1(0,infinity). Its positive-half-line trace h(0) therefore exists.
+We do NOT multiply X by P_+ in H1 or H^{1/2}.
+
+For G_a=D_aF-F the exact VHD1 formula gives
+
+$$
+ h_{G_a}/a=[h(\cdot+a)-h]/a\longrightarrow h'
+       \quad\hbox{in }L^2(0,\infty).                     \tag{JC25}
+$$
+
+This is the forward-translation derivative on the half-line; it
+requires no zero boundary trace. The actual folded arithmetic action
+is
+
+$$
+ \beta_{D_aF}(t)=e^{qa}\beta(|t|+a).
+$$
+
+By JC24, ordinary Fourier difference quotients converge to beta'
+in the full LOGARITHMIC form. Restrict those quotients with P_+ or
+P_- ONLY in that logarithmic form, where the owned cross-half-line
+Carleman argument bounds both projections. It follows that
+
+$$
+ \beta_{G_a}/a\longrightarrow
+       q\beta+\operatorname{sgn}(t)\beta'(t)
+       \quad\hbox{in the logarithmic form}.              \tag{JC26}
+$$
+
+No derivative of a half-space indicator is inserted: the fixed cuts
+combine the two translation quotients before taking their limits.
+The expression on the right is even, as required by the actual
+arithmetic profile convention.
+
+Each G_a/a is ACTUAL and in V by the existing VHD1 membership result.
+Apply W338's UPPER comparison to the difference of two such actual
+quotients. It gives the bound
+
+$$
+ \mathcal P(H)\le C[\|\beta_H\|_{\log}^2+M(H)]
+ \quad(H\in\mathcal V),                                 \tag{JC27}
+$$
+
+with all scale constants fixed; the bounded S(H) remainder is paid
+by the original moment. By JC25--JC26 the quotients are Cauchy in
+M+P. Closedness of the ORIGINAL positive form gives a limit A in V.
+The M-coordinate limit h' identifies it uniquely with
+
+$$
+ A(x)=\frac72F(x)+xF'(x),                                 \tag{JC28}
+$$
+
+where the derivative is the actual weak derivative on (pi,infinity).
+This proves JC2 in the original source norm, including its full
+Gamma coordinate. W317 then pays every complete debit and both
+metrics on the SAME quotient differences. For example the bounds
+above give
+
+$$
+ M(A)+\mathcal P(A)
+ \le C_\eta K_F(1+\lambda^{-1})\Lambda_\lambda\exp(C_\eta\Lambda_\lambda).
+$$
+
+The generator exists for this restricted branch, with its explicit
+nonuniform multiplier cost.
+
+### 6. Exact metric and complete-energy derivatives
+
+Since h is H1 on the positive half-line, VHD1 implies
+
+$$
+ \left.\frac d{da}M(D_aF)\right|_{0+}=-|h(0)|^2,
+$$
+
+$$
+ \left.\frac d{da}\mathcal H(D_aF)\right|_{0+}
+     =6\mathcal H(F)-|h(0)|^2.                            \tag{JC29}
+$$
+
+The boundary terms come from the true moving original-domain
+endpoint; none is suppressed. The complete quadratic form is
+continuous in the V norm. JC2 consequently gives its derivative
+2 Re E(F,A). GLOBAL mixed nullity gives
+
+$$
+ \left.\frac d{da}\mathfrak E(D_aF)\right|_{0+}
+ =-\lambda M'(0+)+\mu\mathcal H'(0+)
+ =6\lambda\mathcal H(F),                                \tag{JC30}
+$$
+
+because lambda=mu. Thus it is 6lambda on the unit source. The
+boundary charges cancel in this SAME joint account, consistent with
+the continuous multiplier C6 used in the regularity proof.
+
+Finally Q_lambda(F,A)=0 and JC2 imply
+
+$$
+ 0\le Q_\lambda(D_aF)=Q_\lambda(G_a)
+     =a^2Q_\lambda(A)+o(a^2)=o(a).                       \tag{JC31}
+$$
+
+This consumes the stronger regularity in an original-source
+variation and includes its full Gamma energy, original moment,
+every prime power and both poles. It does not renormalize the
+varied source or assert that the normalized dilation stays inside
+the original moment ratio K_F.
+
+This manuscript takes the selected matching GLOBAL-null representative
+as an input; it does not assert the equality for every negative
+minimum. Its dilation derivative is positive, not a contradiction
+to its negative energy. The inverse-multiplier and K_F constants
+remain nonuniform. Hence no improvement of VHR1, RH, or strict Robin
+for all integers above 5040 is claimed by this branch result.
