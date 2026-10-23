@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:4282c7205b9a906fdb3c3781a639be1ae851162b36a7388c8042ff5c2ff4cb98
+  normalized_sha256: sha256:4282c7205b9a906fdb3c3781a639be1ae851162b36a7388c8042ff5c2ff4cb98
+cas_ref: sha256:4282c7205b9a906fdb3c3781a639be1ae851162b36a7388c8042ff5c2ff4cb98
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 在 theta>0 时“求解”接触系统、再由约束“求出”权重的计算任务规格；没有给出解或主张存在唯一解。
+    previous_atom_id: ec3545a65b399fc4f9cdc18cd8441e0abac4b266d5c9b4d12175833b2f56dc3a
+    next_atom_id: 9783aead86bdcc68baee6546d2b6ead01e6908d073d726f8296c72844ab9bc8d

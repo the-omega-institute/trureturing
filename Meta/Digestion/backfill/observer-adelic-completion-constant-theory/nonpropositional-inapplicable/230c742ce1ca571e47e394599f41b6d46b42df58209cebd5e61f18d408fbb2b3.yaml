@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:230c742ce1ca571e47e394599f41b6d46b42df58209cebd5e61f18d408fbb2b3
+  normalized_sha256: sha256:230c742ce1ca571e47e394599f41b6d46b42df58209cebd5e61f18d408fbb2b3
+cas_ref: sha256:230c742ce1ca571e47e394599f41b6d46b42df58209cebd5e61f18d408fbb2b3
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 不同高度使用不同 Cayley lens 的定性策略建议，没有误差或恢复能力断言。
+    previous_atom_id: 51a45d36397c8162060a58ab271f9285a804952760ce346dcfe136806363945a
+    next_atom_id: c5377a11888e8225b38501ff2e6d8986d4d8bf354e933076ebff335b6e210e63

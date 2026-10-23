@@ -1,5 +1,5 @@
 /- GID: D5/S3/Arith/Robin/OriginalEndpointPrimeTail
-   generality: G
+   generality: I
    mirror-B: D5/B/S3/Arith/Robin/OriginalEndpointPrimeTail
    mirror-E: none(waiver:general-analytic-results-no-numerical-evidence-artifact)
    anchors: []
