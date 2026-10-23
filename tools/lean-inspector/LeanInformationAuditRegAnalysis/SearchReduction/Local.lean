@@ -788,10 +788,10 @@ unsafe def priceGraph (graph : ProofGraph) (paired := false) (allGiven := false)
     edges := edges ++ [edge]
   return {graph with edges}
 
-private def armSeeds (graph : ProofGraph) (paired : Bool) : List Nat :=
+def armSeeds (graph : ProofGraph) (paired : Bool) : List Nat :=
   (graph.vertices.filter (fun v => v.seed || (paired && v.structureSeed && !v.targetPart))).map (·.id)
 
-private def armGraph (graph : ProofGraph) (paired allGiven : Bool) (lower := false) : ProofGraph :=
+def armGraph (graph : ProofGraph) (paired allGiven : Bool) (lower := false) : ProofGraph :=
   {graph with edges := (graph.edges.filter (fun edge => edgeActive edge paired allGiven)).map fun edge =>
     let cost := if allGiven then (if paired then edge.pairedVisibleCost else edge.visibleCost)
       else if paired then edge.pairedCost else edge.cost
@@ -843,7 +843,7 @@ def assembleZero (graph : ProofGraph) (paired := false) : MetaM (Option Expr) :=
 
 /-- Lower bounds allow an unknown successful certificate to discard any
 premises. Upper bounds retain the author's known route. -/
-private def armInterval (graph : ProofGraph) (paired := false) (allGiven := false)
+def armInterval (graph : ProofGraph) (paired := false) (allGiven := false)
     (id? : Option Nat := none) : Interval :=
   let seeds := armSeeds graph paired
   let id := id?.getD graph.root
