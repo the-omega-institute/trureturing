@@ -5,3 +5,7 @@ cas_ref: sha256:ae8e9c66292d791b792ec72a9ce8b2bf8129023ca54f302a1e40eb2218b41d7e
 coverage_gids: []
 receipts:
   unresolved_subitems: []
+  nonpropositional:
+    justification: Introduction to four terminology categories of cloning strength; no mathematical conclusion.
+    previous_atom_id: fe69dd08bf88732e6ff2b805fc1e7122be0cb50ec08607ede20124f8168fa0c2
+    next_atom_id: 45acc053ffe99a120483a41cee07552a5485859752edfc06000a2d744258291b
