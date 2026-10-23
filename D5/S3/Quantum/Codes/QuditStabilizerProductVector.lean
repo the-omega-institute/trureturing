@@ -1,6 +1,6 @@
 /- GID: D5/S3/Quantum/Codes/QuditStabilizerProductVector
    generality: G
-   mirror-B: none(waiver:formal-unit-only)
+   mirror-B: D5/B/S3/Quantum/Codes/QuditStabilizerProductVector
    mirror-E: none(waiver:external-open-problem-resolution)
    anchors: []
    utility: none
@@ -8,7 +8,7 @@
 
 import D5.S3.Quantum.Algebra.WeylDisplacementTrace
 import D5.S3.Quantum.Algebra.WeylPhaseArithmetic
-import Mathlib.LinearAlgebra.Eigenspace.Triangularizable
+import Mathlib.Algebra.Lie.LieTheorem
 
 /-!
 # Pauli words and product vectors
@@ -39,14 +39,10 @@ structure PauliWord (N p : ℕ) where
 private def localSymplectic {p : ℕ} (x z x' z' : ZMod p) : ZMod p :=
   z * x' - x * z'
 
-private def localPauli (p : ℕ) [NeZero p] (x z : ZMod p) :
-    Matrix (ZMod p) (ZMod p) ℂ :=
-  shiftMatrix p ^ x.val * clockMatrix p ^ z.val
-
 def pauliWordOperator {N p : ℕ} [NeZero p] (w : PauliWord N p) :
     Matrix (Fin N → ZMod p) (Fin N → ZMod p) ℂ :=
   (windowRoot p ^ w.phase.val) • Matrix.of (fun u v =>
-    ∏ n, localPauli p (w.x n) (w.z n) (u n) (v n))
+    ∏ n, displacement p (w.x n) (w.z n) (u n) (v n))
 
 private def wordMul {N p : ℕ} (a b : PauliWord N p) : PauliWord N p :=
   { phase := a.phase + b.phase
@@ -72,11 +68,10 @@ private theorem coordinate_product_mul {ι α : Type*} [Fintype ι] [DecidableEq
 private theorem phase_sum {ι : Type*} {p : ℕ} [NeZero p]
     (s : Finset ι) (f : ι → ZMod p) :
     windowRoot p ^ (∑ i ∈ s, f i).val = ∏ i ∈ s, windowRoot p ^ (f i).val := by
-  classical
-  induction s using Finset.induction_on with
-  | empty => simp
-  | @insert i s hi ih =>
-    rw [Finset.sum_insert hi, Finset.prod_insert hi, windowRoot_pow_val_add, ih]
+  simpa only [AddChar.toMonoidHom_apply, toAdd_prod,
+    toAdd_ofAdd, AddChar.zmodChar_apply] using
+    map_prod (AddChar.zmodChar p (windowRoot_isPrimitiveRoot p).pow_eq_one).toMonoidHom
+      (fun i => Multiplicative.ofAdd (f i)) s
 
 private theorem coordinate_product_one {ι α : Type*} [Fintype ι]
     [DecidableEq α] :
@@ -90,7 +85,7 @@ private theorem scalar_word_operator {N p : ℕ} [NeZero p] (r : ZMod p) :
       Matrix.scalar (Fin N → ZMod p) (windowRoot p ^ r.val) := by
   classical
   dsimp only [pauliWordOperator]
-  simp only [Pi.zero_apply, localPauli, ZMod.val_zero, pow_zero, mul_one]
+  simp only [Pi.zero_apply, displacement_zero]
   rw [coordinate_product_one]
   ext u v
   by_cases huv : u = v <;>
@@ -106,9 +101,9 @@ private theorem pauli_word_mul {N p : ℕ} [NeZero p] (a b : PauliWord N p) :
   simp only [Matrix.smul_apply, Matrix.of_apply, smul_eq_mul,
     windowRoot_pow_val_add, Pi.add_apply]
   have hprod :
-      (∏ n, (localPauli p (a.x n) (a.z n) * localPauli p (b.x n) (b.z n)) (u n) (v n)) =
+      (∏ n, (displacement p (a.x n) (a.z n) * displacement p (b.x n) (b.z n)) (u n) (v n)) =
         (∏ n, windowRoot p ^ (a.z n * b.x n).val) *
-          ∏ n, localPauli p (a.x n + b.x n) (a.z n + b.z n) (u n) (v n) := by
+          ∏ n, displacement p (a.x n + b.x n) (a.z n + b.z n) (u n) (v n) := by
     rw [← Finset.prod_mul_distrib]
     apply Finset.prod_congr rfl
     intro n hn
@@ -141,7 +136,7 @@ private theorem pauli_word_isUnit {N p : ℕ} [NeZero p] (w : PauliWord N p) :
     isUnit_iff_exists_inv'.mpr ⟨star (shiftMatrix p), (window_unitary (M := p)).1⟩
   have hZ : IsUnit (clockMatrix p) :=
     isUnit_iff_exists_inv'.mpr ⟨star (clockMatrix p), (window_unitary (M := p)).2⟩
-  have hlocal (n : Fin N) : IsUnit (localPauli p (w.x n) (w.z n)) :=
+  have hlocal (n : Fin N) : IsUnit (displacement p (w.x n) (w.z n)) :=
     (hX.pow _).mul (hZ.pow _)
   let U (n : Fin N) := (hlocal n).unit
   apply isUnit_iff_exists_inv'.mpr
@@ -153,7 +148,7 @@ private theorem pauli_word_isUnit {N p : ℕ} [NeZero p] (w : PauliWord N p) :
     one_smul, coordinate_product_mul]
   have hinv (n : Fin N) :
       (↑((U n)⁻¹) : Matrix (ZMod p) (ZMod p) ℂ) *
-        localPauli p (w.x n) (w.z n) = 1 := (hlocal n).val_inv_mul
+        displacement p (w.x n) (w.z n) = 1 := (hlocal n).val_inv_mul
   simp_rw [hinv]
   exact coordinate_product_one
 
@@ -162,31 +157,18 @@ private theorem exists_common_eigenvector {ι V : Type*}
     (s : Finset ι) (f : ι → Module.End ℂ V) (hcomm : ∀ i j, Commute (f i) (f j)) :
     ∃ χ : ι → ℂ, ∃ v : V, v ≠ 0 ∧ ∀ i ∈ s, f i v = χ i • v := by
   classical
-  induction s using Finset.induction_on generalizing V with
-  | empty =>
-    obtain ⟨v, hv⟩ := exists_ne (0 : V)
-    exact ⟨0, v, hv, by simp⟩
-  | @insert i s hi ih =>
-    obtain ⟨μ, hμ⟩ := (f i).exists_eigenvalue
-    let : Nontrivial ((f i).eigenspace μ) := Submodule.nontrivial_iff_ne_bot.mpr hμ
-    have hpres (j : ι) : ∀ v ∈ (f i).eigenspace μ, f j v ∈ (f i).eigenspace μ :=
-      Module.End.mapsTo_genEigenspace_of_comm (hcomm i j) μ 1
-    let g (j : ι) : Module.End ℂ ((f i).eigenspace μ) := (f j).restrict (hpres j)
-    have hg : ∀ j l, Commute (g j) (g l) := by
-      intro j l
-      apply LinearMap.ext
-      intro v
-      apply Subtype.ext
-      exact congrArg (fun T : Module.End ℂ V => T v.1) (hcomm j l).eq
-    obtain ⟨χ, v, hv, hχ⟩ := ih g hg
-    refine ⟨fun j => if j = i then μ else χ j, v.1,
-      fun hz => hv (Subtype.ext hz), ?_⟩
-    intro j hj
-    by_cases hji : j = i
-    · subst j
-      simpa using Module.End.mem_eigenspace_iff.mp v.2
-    · have hjs := Finset.mem_of_mem_insert_of_ne hj hji
-      simpa [hji, g] using congrArg Subtype.val (hχ j hjs)
+  let : LieRing (Module.End ℂ V) := LieRing.ofAssociativeRing
+  let L := LieSubalgebra.lieSpan ℂ (Module.End ℂ V) (Set.range f)
+  let : IsLieAbelian L := LieSubalgebra.isLieAbelian_lieSpan_iff.mpr (by
+    rintro _ ⟨i, rfl⟩ _ ⟨j, rfl⟩
+    exact sub_eq_zero.mpr (hcomm i j).eq)
+  obtain ⟨χ, hχ⟩ := LieModule.exists_nontrivial_weightSpace_of_isSolvable ℂ L V
+  let := hχ
+  obtain ⟨v, hv⟩ := exists_ne (0 : LieModule.weightSpace V χ)
+  let g (i : ι) : L := ⟨f i, LieSubalgebra.subset_lieSpan ⟨i, rfl⟩⟩
+  refine ⟨fun i => χ (g i), v.1, fun hz => hv (Subtype.ext hz), ?_⟩
+  intro i _
+  exact (LieModule.mem_weightSpace χ v.1).mp v.2 (g i)
 
 private theorem product_fixed_vector {ι α β : Type*} [Finite ι] [Fintype α] [Fintype β]
     (A : ι → Matrix α α ℂ) (B : ι → Matrix β β ℂ) (c : ι → ℂ)
@@ -296,9 +278,9 @@ private theorem product_fixed_vector {ι α β : Type*} [Finite ι] [Fintype α]
 
 private theorem local_pauli_commutation {p : ℕ} [NeZero p]
     (x z x' z' : ZMod p) :
-    localPauli p x z * localPauli p x' z' =
+    displacement p x z * displacement p x' z' =
       windowRoot p ^ (localSymplectic x z x' z').val •
-        (localPauli p x' z' * localPauli p x z) := by
+        (displacement p x' z' * displacement p x z) := by
   change displacement p x z * displacement p x' z' =
     windowRoot p ^ (z * x' - x * z').val •
       (displacement p x' z' * displacement p x z)
@@ -312,13 +294,13 @@ private theorem local_pauli_commutation {p : ℕ} [NeZero p]
 
 private theorem coordinate_product_commutation {ι : Type*} {p : ℕ}
     [Fintype ι] [DecidableEq ι] [NeZero p] (x z x' z' : ι → ZMod p) :
-    Matrix.of (fun u v : ι → ZMod p => ∏ n, localPauli p (x n) (z n) (u n) (v n)) *
-        Matrix.of (fun u v : ι → ZMod p => ∏ n, localPauli p (x' n) (z' n) (u n) (v n)) =
+    Matrix.of (fun u v : ι → ZMod p => ∏ n, displacement p (x n) (z n) (u n) (v n)) *
+        Matrix.of (fun u v : ι → ZMod p => ∏ n, displacement p (x' n) (z' n) (u n) (v n)) =
       windowRoot p ^ (∑ n, localSymplectic (x n) (z n) (x' n) (z' n)).val •
         (Matrix.of (fun u v : ι → ZMod p =>
-            ∏ n, localPauli p (x' n) (z' n) (u n) (v n)) *
+            ∏ n, displacement p (x' n) (z' n) (u n) (v n)) *
           Matrix.of (fun u v : ι → ZMod p =>
-            ∏ n, localPauli p (x n) (z n) (u n) (v n))) := by
+            ∏ n, displacement p (x n) (z n) (u n) (v n))) := by
   rw [coordinate_product_mul, coordinate_product_mul]
   ext u v
   simp only [Matrix.of_apply, Matrix.smul_apply, smul_eq_mul]
@@ -334,21 +316,10 @@ private theorem pauli_word_commutation {N p : ℕ} [NeZero p]
       windowRoot p ^ (∑ n, commutationVector a b n).val •
         (pauliWordOperator b * pauliWordOperator a) := by
   simp only [pauliWordOperator, Matrix.smul_mul, Matrix.mul_smul,
-    coordinate_product_mul, smul_smul]
-  ext u v
-  simp only [Matrix.smul_apply, Matrix.of_apply, smul_eq_mul]
-  have hprod :
-      (∏ n, (localPauli p (a.x n) (a.z n) * localPauli p (b.x n) (b.z n)) (u n) (v n)) =
-        (∏ n, windowRoot p ^ (commutationVector a b n).val) *
-          ∏ n, (localPauli p (b.x n) (b.z n) * localPauli p (a.x n) (a.z n))
-            (u n) (v n) := by
-    rw [← Finset.prod_mul_distrib]
-    apply Finset.prod_congr rfl
-    intro n hn
-    exact congrArg (fun A : Matrix (ZMod p) (ZMod p) ℂ => A (u n) (v n))
-      (local_pauli_commutation (a.x n) (a.z n) (b.x n) (b.z n))
-  rw [hprod, ← phase_sum]
-  dsimp only [commutationVector]
+    smul_smul]
+  rw [coordinate_product_commutation]
+  simp only [smul_smul, commutationVector]
+  congr 1
   ring
 
 private theorem pauli_word_trace_zero {N p : ℕ} [NeZero p]
@@ -357,11 +328,11 @@ private theorem pauli_word_trace_zero {N p : ℕ} [NeZero p]
   obtain ⟨n, hn⟩ := h
   rw [pauliWordOperator, Matrix.trace_smul]
   suffices Matrix.trace (Matrix.of (fun u v : Fin N → ZMod p =>
-      ∏ j, localPauli p (w.x j) (w.z j) (u j) (v j))) = 0 by simp [this]
+      ∏ j, displacement p (w.x j) (w.z j) (u j) (v j))) = 0 by simp [this]
   change (∑ u : Fin N → ZMod p, ∏ j,
-    localPauli p (w.x j) (w.z j) (u j) (u j)) = 0
+    displacement p (w.x j) (w.z j) (u j) (u j)) = 0
   rw [← Fintype.prod_sum (fun (j : Fin N) (a : ZMod p) =>
-    localPauli p (w.x j) (w.z j) a a)]
+    displacement p (w.x j) (w.z j) a a)]
   apply Finset.prod_eq_zero (Finset.mem_univ n)
   exact D5.S3.Quantum.Algebra.WeylDisplacementTrace.displacement_trace_eq_zero
     (w.x n) (w.z n) (by tauto)
@@ -455,11 +426,11 @@ theorem product_vector_of_restricted_commuting {N p : ℕ} [NeZero p]
         ∀ x, ψ x = u (fun q => x q.1) * v (fun q => x q.1) := by
   let e := Equiv.piEquivPiSubtypeProd (fun n : Fin N => n ∈ Q) (fun _ => ZMod p)
   let A (i : S) : Matrix (Q → ZMod p) (Q → ZMod p) ℂ :=
-    Matrix.of (fun u v => ∏ n : Q, localPauli p (i.1.x n.1) (i.1.z n.1) (u n) (v n))
+    Matrix.of (fun u v => ∏ n : Q, displacement p (i.1.x n.1) (i.1.z n.1) (u n) (v n))
   let B (i : S) : Matrix ((Qᶜ : Set (Fin N)) → ZMod p)
       ((Qᶜ : Set (Fin N)) → ZMod p) ℂ :=
     Matrix.of (fun u v => ∏ n : (Qᶜ : Set (Fin N)),
-      localPauli p (i.1.x n.1) (i.1.z n.1) (u n) (v n))
+      displacement p (i.1.x n.1) (i.1.z n.1) (u n) (v n))
   let c (i : S) := windowRoot p ^ i.1.phase.val
   obtain ⟨ψ, hψ, hψfix⟩ := hV
   have htotal (a : PauliWord N p) (ha : a ∈ S) (b : PauliWord N p) (hb : b ∈ S) :
@@ -492,14 +463,14 @@ theorem product_vector_of_restricted_commuting {N p : ℕ} [NeZero p]
       pauliWordOperator i.1 x y =
         (c i • Matrix.kronecker (A i) (B i)) (e x) (e y) := by
     change windowRoot p ^ i.1.phase.val *
-        (∏ n, localPauli p (i.1.x n) (i.1.z n) (x n) (y n)) =
+        (∏ n, displacement p (i.1.x n) (i.1.z n) (x n) (y n)) =
       windowRoot p ^ i.1.phase.val *
-        ((∏ n : Q, localPauli p (i.1.x n.1) (i.1.z n.1) (x n.1) (y n.1)) *
+        ((∏ n : Q, displacement p (i.1.x n.1) (i.1.z n.1) (x n.1) (y n.1)) *
           ∏ n : (Qᶜ : Set (Fin N)),
-            localPauli p (i.1.x n.1) (i.1.z n.1) (x n.1) (y n.1))
+            displacement p (i.1.x n.1) (i.1.z n.1) (x n.1) (y n.1))
     congr 1
     exact (Fintype.prod_subtype_mul_prod_subtype (fun n : Fin N => n ∈ Q)
-      (fun n => localPauli p (i.1.x n) (i.1.z n) (x n) (y n))).symm
+      (fun n => displacement p (i.1.x n) (i.1.z n) (x n) (y n))).symm
   have haction (i : S) (ψ : (Fin N → ZMod p) → ℂ) (xy) :
       (c i • Matrix.kronecker (A i) (B i)).mulVec (fun y => ψ (e.symm y)) xy =
         (pauliWordOperator i.1).mulVec ψ (e.symm xy) := by

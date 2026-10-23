@@ -1,6 +1,6 @@
 /- GID: D5/S3/Quantum/Codes/StabilizerGenuineEntanglementCommutationRank
    generality: G
-   mirror-B: none(waiver:formal-unit-only)
+   mirror-B: D5/B/S3/Quantum/Codes/StabilizerGenuineEntanglementCommutationRank
    mirror-E: none(waiver:external-open-problem-resolution)
    anchors: []
    utility: none
