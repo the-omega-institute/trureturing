@@ -1,0 +1,53 @@
+**Example 20.3 (a finite feasible first request and infeasible continuation).**
+Take the public pair $c=1/4$, $x_1=1/8$, $x_2=3/16$ and a pure
+programme pair of overlap $\mu=1/2$. Set $\varepsilon=1/1024$.
+The first common shift is $D=63/1024$, over duration one. Its terminal
+squared attenuations are
+
+$$
+(a_1^2,a_2^2)=(128/191,64/85),\qquad
+(b_1^2,b_2^2)=(65/191,1/85).
+$$
+
+Here $H=\sqrt6\log(191/170)$ and $G=4\sqrt3\log(191/170)$.
+The positive logarithm series gives $\log(191/170)>42/361$.
+Since $a_1a_2>2/3$, the middle candidate in (OC.59) exceeds
+$126\sqrt6/361>4/5$. The minus candidate exceeds
+$G>168\sqrt3/361>4/5$. The last two strict comparisons follow by
+squaring positive quantities. Thus $\mu_{\rm time}>4/5$, and the
+first complete timed instrument admits this supplied programme pair,
+even with unchanged return on success.
+
+At its live cut the heights are $q_1=191/1024$, $q_2=255/1024$.
+Request the common shift $1/2048$, again over duration one. Its squared
+minus attenuations are
+
+$$
+u=24639/24895,\qquad w=255/511.
+$$
+
+Direct rational comparison gives
+$(1-u)(1-w)<(29/400)^2$ and $uw<(71/100)^2$.
+Hence its necessary coarse candidate satisfies
+
+$$
+\frac{\sqrt{(1-u)(1-w)}}{1-\sqrt{uw}}<\frac14<\mu.
+$$
+
+Every implementation of the first request has successful residual
+overlap $1/2$, so no update can make the second complete instrument
+possible without fresh assistance. Both requests are strictly lawful;
+their smallest upper-wall distances are $1/1024$ and $1/2048$.
+All height, duration and request parameters here have finite rational
+descriptions. This is an exact conditional programming example, with
+the calibrated gates and recorders of Definition 17.3 still supplied.
+
+A common positive support margin would remove the particular near-wall
+sequence used in this proof. No necessity or sufficiency theorem for that
+restricted reusable menu is inferred. Nor does exact orthogonality imply
+a finite-noise distinguishability bound. Approximate outputs, finite time
+precision, bounded horizons and disturbed acquisitions require their own
+metrics and quantitative proofs. The degenerate $d=0$ request is an
+identity and imposes no such threshold. Zero duration permits this
+matching identity, not a nonzero instantaneous displacement.
+

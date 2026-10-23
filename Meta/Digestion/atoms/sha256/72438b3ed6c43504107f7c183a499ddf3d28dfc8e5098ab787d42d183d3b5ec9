@@ -1,0 +1,13 @@
+**Proposition 5.3 (Selective history and the classical latent representation).** For a fixed word prefix with row matrix $L_A$ and an acquired vector $r$, the continuous conditional density of its initial latent position is Gaussian with
+
+$$
+B_A=(2I_{17}+\sigma^{-2}L_A^TL_A)^{-1},\qquad
+\mu_A(W,r)=m_W+B_A\sigma^{-2}L_A^T(r-L_Am_W).
+$$
+
+This is also the initial-coordinate position density of the selective quantum branch. Every recorded joint law in Theorem 5.1 has an exact classical latent-Gaussian realization. It implies no nonclassicality or quantum advantage.
+
+Proof. Multiply the initial density by every likelihood factor in the density of Theorem 5.1 and complete the square in $x$. The quadratic coefficient is $B_A^{-1}$ and the linear coefficient is $2m_W+\sigma^{-2}L_A^Tr$. This yields the stated covariance and mean. Pulling the selective Kraus density back by its final $U_{T_t}$ gives those same factors multiplying $\psi_W$, whose squared modulus is the density just computed. The world label, including its fixed $d$ and whole $g$, is unchanged; conditioning changes the internal position density rather than those original parameters.
+
+Equivalently, in the common system-and-probe dilation the final pointers, expressed in initial observables, are $L_iq+Z_i^{\rm pr}$. Each control uses only $q$ in its position action; every probe coupling fixes $q$ and kicks only momentum. With no intervening position-changing free evolution, none of those kicks returns to a later system position. The pointers consequently commute, and their product-state position distribution is precisely that of $(X,\epsilon)$. This constructs the classical representation of all recorded outcomes, without asserting that every observable on the full quantum system is commutative. $\square$
+

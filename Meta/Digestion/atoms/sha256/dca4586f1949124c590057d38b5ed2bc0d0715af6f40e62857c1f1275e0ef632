@@ -1,0 +1,30 @@
+**Definition 35.1 (The algebra carrying Lemma 30.2).** Fix real
+$p\ne24,v$ and let
+$\mathcal A^{\mathbb R}_{p,v}=\mathbb R[x,d,D^{-1}]/(f,K)$.
+In this algebra use the entire interpolant $H$ of (30.4)–(30.5),
+with $H_i=H(i)$, and put
+
+$$
+B_0=294/5-2d-H_2,\qquad q=d^2+B_0^2,\qquad
+\mathcal A'=\mathcal A^{\mathbb R}_{p,v}[((d-24)H_1q)^{-1}].
+\tag{35.1}
+$$
+
+In $\mathcal A'$ define
+
+$$
+U=\frac{-dH_0+B_0H_2}{q},\qquad
+b=\frac{U-1}{2},\qquad
+j=\frac{U(24-d)}{H_1},\qquad r=xU-j,
+\tag{35.2}
+$$
+
+and form the localization and quotient
+
+$$
+\mathcal B_{p,v}=
+\mathcal A'[(Ub)^{-1}]
+\big/\bigl(dU+H_0,\ B_0U-H_2,\ bj-b^2-r(1-r)\bigr).
+\tag{35.3}
+$$
+

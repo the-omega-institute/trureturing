@@ -1,0 +1,37 @@
+**推论 15.4（正噪声平台律的同一联合分布表示）。** For each rational $0<\eta\le1$, the law $J_{H,\eta}$ of Proposition 7.4 and (7.8) has an exact finite rational $W_+$ representation, and also a $W_0$ representation, on five visible Boolean coordinates. These representations preserve its joint distribution and consequently its already established posteriors and decision risks.
+
+**Proof.** The printed words in Definition 1.1 are ordered low--middle--high. Swapping the final two positions gives the foundational low--high--middle coordinates $(x,y,z)$, while a two-bit record encodes the four outputs:
+
+$$
+ \begin{aligned}
+ (a,b,c,d,e)&\longmapsto(000,100,001,110,010),\\
+ (ac,bd,de,be)&\longmapsto(00,01,10,11).
+ \end{aligned}
+\tag{15.14}
+$$
+
+These are bijections onto $A$ and $\{0,1\}^2$. In (6.3) each posterior is uniform on its displayed pair, and the output masses are $(2/5,1/5,1/5,1/5)$. Thus
+
+$$
+ J_{H,\eta}(i,q)=(1-\eta)J_H(i,q)+\eta\lambda_q/5>0
+\tag{15.15}
+$$
+
+at all twenty label--record pairs, with rational entries. Transport the law by (15.14) to $(x,y,z,r_1,r_2)$ and set its mass to zero at every remaining five-bit word. Its support is exactly
+
+$$
+ A\times\{0,1\}^2=\operatorname{Ind}(K_*),\qquad
+ E(K_*)=\{\{x,z\},\{y,z\}\},
+\tag{15.16}
+$$
+
+where the two record vertices are isolated. Positivity is relative to these twenty points, not all thirty-two ambient words. Theorem 15.2 supplies the same normalized joint law in $W_+$, and Theorem 15.3 supplies it in $W_0$. The coordinate exclusion graph $K_*$ has coordinate vertices; it is not the five-label legal-toggle graph $G$. In particular the two-bit name of output $be$ neither adds a coordinate exclusion nor makes $be$ a legal edge of $G$.
+
+The finite splitting construction of Definition 1.1, common-source coupling (4.7), and the Bayes and plateau calculations in Proposition 7.4 are reused. Exact equality of the joint laws preserves those conclusions without a new risk or approximation argument. Each rational $\eta$ may use its own finite network. Irrational $\eta$ and a single finite network for the parameter continuum are outside the rational assertion.
+
+The construction is an abstract weighted-factor representation. It supplies no native recursive-FIB preparation, acquisition or learnability result, training mechanism, efficient inference or sampling, parameter compression, physical-cost bound, or achieved approximation. Local normalization does not turn the factors into directed conditional distributions.
+
+The unweighted support operations are those of [the existing primitive-positive preservation framework](../../../D5/S3/Combinatorics/ConstraintRelations/PrimitivePositive.lean); the null-deleted NOR relation is the supplier in (15.11). Neither support result alone specifies arbitrary rational masses. The finite common-source sum-product eliminations of [the hidden-relations volume, C-59.2--C-59.5](AURIC_FIB_ATOM_HIDDEN_RELATIONS_STATISTICS_PHASE_AND_SEAMS.md) and [its continuation, C-60.1--C-60.2](AURIC_FIB_ATOM_HIDDEN_RELATIONS_STATISTICS_PHASE_AND_SEAMS_CONTINUATION.md) likewise distinguish support from chosen product activities; a restricted positive-activity family does not supply the unrestricted weight statement of Theorem 15.2.
+
+As a primary exact-representation comparison, Gleb Smirnov, *Deep belief networks are exact*, [arXiv:2609.05572v1, Theorem 1.1 and Section 1](https://arxiv.org/html/2609.05572v1), represents strictly positive Boolean laws by finite sigmoid belief networks with real parameters. That directed conditional interface, its real weights and biases, and its strictly positive visible laws differ from (15.2), rational local tables and the structural zeros in (15.16); it supplies no step of these proofs. Likewise an exact finite pps construction must be distinguished from an omega closure or a language granted extra equality and unary factors: none of those extra operations is implicit in Definition 15.1. Theorems 15.2--15.3 and this correspondence are elementary repository-derived constructions, without a claim of global priority or exhaustive literature absence. Their proofs are ordinary mathematics and make no formal proof-shape or kernel-verification assertion. $\square$
+

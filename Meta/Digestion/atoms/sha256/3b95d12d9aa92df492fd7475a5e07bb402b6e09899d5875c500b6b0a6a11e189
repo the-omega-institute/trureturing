@@ -1,0 +1,41 @@
+**Proposition 23.3 (cap dilation and actual core kinetic cost).** The
+accepted profile also satisfies
+
+$$
+\lambda_0\int_{R<1}Z^2dq=N=k/2,
+\qquad
+\frac{T_A[f_\epsilon;\mathcal C_\epsilon]}{m_0A_\epsilon^2}
+ \longrightarrow\int_{R<1}|\nabla_HZ|^2dq.
+\tag{23.8}
+$$
+
+The second statement has the compact-real-$\lambda$ uniformity of
+Theorem 23.2. These are identities for the same soft cap, not for a
+Dirichlet hole.
+
+Proof. For $a_2>0$ put
+$Z_{a_2}(q)=a_2^{-1}Z(\delta_{1/a_2}q)$ and
+$V_{a_2}=\min(R^{-2},a_2^{-2})$.
+The quotient at infinity is $\log R+\kappa_{\rm cap}-\log a_2$.
+Green's identity gives the exact compactly supported integral
+
+$$
+\lambda_0\int(V_{a_2}-V_{b_2})Z_{a_2}Z_{b_2}\,dq
+                              =k\log(b_2/a_2).
+\tag{23.9}
+$$
+
+Source regularity removes the inner boundary. At infinity the weighted
+means of the angular remainders are exactly zero, so their cross terms
+with the affine mean vanish. The remainder-remainder flux tends to zero
+by its annular energy decay from §22. Thus (23.9) does not differentiate
+an unspecified asymptotic remainder. Divide by $b_2-a_2$ and let
+$b_2\to a_2$. Local dilation continuity and bounded compactly supported
+potential difference quotients give
+$2\lambda_0a_2^{-3}\int_{R<a_2}Z_{a_2}^2=k/a_2$.
+Dilation proves the first identity in (23.8).
+The strong local horizontal convergence in (23.6), smooth coefficient
+convergence and the changed-set sandwich (14.2) prove the second.
+Strong energy convergence also controls the moving collar at $R=1$.
+$\square$
+

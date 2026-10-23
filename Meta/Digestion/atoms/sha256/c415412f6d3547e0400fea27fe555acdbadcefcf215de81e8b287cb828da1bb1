@@ -1,0 +1,11 @@
+**定义 5.1（相对目标的局部可实现深度）。** 以下取 $\mathbb N_0=\{0,1,2,\ldots\}$。设 $D$ 有限、候选族 $\mathfrak M$ 非空且 $V(D)=\varnothing$，令
+
+$$
+\lambda(D,t;\mathfrak M)
+=
+\max\{r\in\mathbb N_0:
+\forall C\subseteq D,\ |C|<r\Rightarrow V(C)\ne\varnothing\}.
+$$
+
+这表示任何少于 $r$ 条观察都还不能排空版本空间。
+

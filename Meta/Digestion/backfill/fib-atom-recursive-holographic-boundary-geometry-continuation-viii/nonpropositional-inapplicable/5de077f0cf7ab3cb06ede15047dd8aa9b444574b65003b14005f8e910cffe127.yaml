@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:5de077f0cf7ab3cb06ede15047dd8aa9b444574b65003b14005f8e910cffe127
+  normalized_sha256: sha256:5de077f0cf7ab3cb06ede15047dd8aa9b444574b65003b14005f8e910cffe127
+cas_ref: sha256:5de077f0cf7ab3cb06ede15047dd8aa9b444574b65003b14005f8e910cffe127
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 'Nonpropositional definition: fixes the existing native family, defines the common nonzero CP/TNI comparison class and the infimum-supremum conditional error functional. Positivity of success is a membership condition, not an existence assertion; no positive approximation gap is asserted here (that is Corollary 241.2).'
+    previous_atom_id: 361e14841ad73d9f8f241cc2f023fd7bc5b1dacd61f11a8b3be483a71917d2f6
+    next_atom_id: 53b19afe634784ff9a8fe6a2f29d7fdfa56c273216566168f43024ae3899e46d

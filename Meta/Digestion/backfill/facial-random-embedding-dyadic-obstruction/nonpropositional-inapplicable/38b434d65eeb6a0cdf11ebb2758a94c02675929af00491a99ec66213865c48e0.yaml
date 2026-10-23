@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:38b434d65eeb6a0cdf11ebb2758a94c02675929af00491a99ec66213865c48e0
+  normalized_sha256: sha256:38b434d65eeb6a0cdf11ebb2758a94c02675929af00491a99ec66213865c48e0
+cas_ref: sha256:38b434d65eeb6a0cdf11ebb2758a94c02675929af00491a99ec66213865c48e0
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: Source provenance, the attributed conjecture and notebook probability-law specification, plus explicit limits of the present claim; the conjecture is quoted rather than asserted true.
+    previous_atom_id: null
+    next_atom_id: f40275a0e82045fc772df7cd04701c4996bacab159aa1b7e72b9b7f6c4a96f3e

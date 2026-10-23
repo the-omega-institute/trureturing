@@ -1,0 +1,83 @@
+## 48. Whole-world equations before any elimination
+
+Set
+
+$$
+\begin{gathered}
+e=d-24,\quad \delta=b-1/8,\quad
+j=b+r(1-r)/b,\quad n=j+r,\quad T=1+b,\quad U=1+2b,\\
+Z=T+2j+4r,\qquad R=3U+2n,\\
+\Lambda=1+6/T+1/U-4/j-4/n,\qquad
+D_0=\frac{24}{5}\delta(6/T-2/U).
+\end{gathered}
+\tag{48.1}
+$$
+
+The traces at clocks zero through six, and at the two terminal
+alternatives, are
+
+$$
+(1,j,T,n,U,U+n,2U+n;Z,R).
+\tag{48.2}
+$$
+
+Let $\ell_i(s)=\prod_{0\le k\le3,\,k\ne i}(s-k)/(i-k)$.
+The unique candidate whole gain is
+
+$$
+g(s)=(-24-e)\ell_0(s)-\frac e j\ell_1(s)
+ +\frac{27/5-e}{T}\ell_2(s)-\frac e n\ell_3(s).
+\tag{48.3}
+$$
+
+Its first four readings are identically $0,24,147/5,24$.
+The clock-four reading is
+
+$$
+18+U(e\Lambda+D_0).
+\tag{48.4}
+$$
+
+Thus the complete parent equation is exactly $e\Lambda+D_0=0$.
+For the later readings define
+
+$$
+\begin{aligned}
+q_5&=4-15/j+20/T-10/n,\\
+q_6&=10-36/j+45/T-20/n,\\
+q_7&=20-70/j+84/T-35/n,\\
+k_5&=1+(U+n)q_5,&c_5&=96\delta(U+n)/T,\\
+k_6&=1+(2U+n)q_6,&c_6&=(2U+n)(24+216\delta/T),\\
+k_J&=1+Zq_7,&c_J&=Z(384/5+(2016/5)\delta/T),\\
+k_M&=1+Rq_7,&c_M&=R(384/5+(2016/5)\delta/T).
+\end{aligned}
+\tag{48.5}
+$$
+
+The original readings, without using the parent equation, are
+
+$$
+(p,v,a,m)=24+(c_5,c_6,c_J,c_M)+e(k_5,k_6,k_J,k_M).
+\tag{48.6}
+$$
+
+The nonzero vector $(\Lambda,k_5)$ on the strict source domain gives the
+zero-safe drift reconstruction at a prescribed $p$:
+
+$$
+e=\frac{-D_0\Lambda+k_5(p-24-c_5)}{\Lambda^2+k_5^2}.
+\tag{48.7}
+$$
+
+This is the reconstruction in the external volume
+*FIB common-parent geometry and two exact mixed children*, Section 12,
+Lemma 12.2 and Theorem 12.3, with $A_5=k_5$, $\epsilon=e$,
+$K_5=c_5$ and $a\Delta B_{\rm coef}=D_0$. That Section 12 is not
+Section 12 of the present volume. Only its nonzero-vector fact is needed
+here; on the two surviving source boxes the same fact also follows
+directly from the interval bounds in Section 51.
+All $j,n,T,U$ are strictly positive. No gain sample, leading coefficient,
+root difference, drift, or $e$ is divided out in (48.1)–(48.7).
+A zero polynomial gain would make clocks zero and one equal to the same
+drift, so the gains reconstructed from these rows are nonzero.
+

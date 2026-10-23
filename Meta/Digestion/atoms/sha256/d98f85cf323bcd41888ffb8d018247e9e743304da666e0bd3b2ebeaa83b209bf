@@ -1,0 +1,123 @@
+**Lemma 20.2 (the full angular pencil and the relevant detuning).** Put
+$t=\log R$. In the frozen inverse-square region the expression on
+$R^{-1}e^{in\theta-ina/2}w(t,a)$ is described by
+
+$$
+\begin{aligned}
+P_{\gamma,n}(s)b
+ &=-4(cb')'+\left(c+\frac{n^2\sin^2a}{c}
+       -\gamma-cs^2-2ins\sin a\right)b,\\
+P_{\gamma,n}(\partial_t)w&=E e^{2t}w,
+\qquad \gamma=\frac{g}{2\pi m_0}.
+\end{aligned}
+\tag{20.3}
+$$
+
+At $\gamma=\lambda_0$ the only indicial root in the closed strip
+$|\operatorname{Re}s|\le1$ is the double root $s=0$ in the $n=0$
+sector; its solutions are $\phi$ and $t\phi$. Every other admissible
+$L^2$ branch at the puncture has $\operatorname{Re}s>1$.
+This separation persists near $\lambda_0$, except for the moving pair
+
+$$
+s_0(\gamma)^2=(\lambda_0-\gamma)M/C
+                 +O((\gamma-\lambda_0)^2).
+\tag{20.4}
+$$
+
+Let $\Lambda(z)$ be the simple lowest eigenvalue of $S+zc$ near zero,
+with eigenfunction $\phi_z$ normalized by
+$\langle\phi_z,\phi\rangle=M$. Then
+$\Lambda(0)=\lambda_0$, $\Lambda'(0)=C/M>0$ and
+$(S-\Lambda(z))\phi_z=-zc\phi_z$.
+For positive fixed $\lambda$ the small positive solution of
+$\Lambda(q_\epsilon^2)=\lambda_0(1+\lambda/L^2)$ satisfies
+
+$$
+q_\epsilon=\frac{\sqrt{\alpha\lambda}}L+O(L^{-3}).
+\tag{20.5}
+$$
+
+This expansion is uniform on compact subsets of $(0,\infty)$.
+The analytic expansion for $s_0^2$ is uniform on compact real $\lambda$
+sets; no square-root expansion through zero is asserted.
+
+Proof. Polarize (10.10), Fourier transform in $t$, and use the exact
+phase $e^{-ina/2}$ from (10.11). This gives (20.3), retaining the factor
+$c$ in front of $w_{tt}$. Admissible angular branches are those inherited
+from smooth Cartesian annuli: the bounded natural branch for $n=0$,
+and $c^{|n|/2}$ times its regular branch for $n\ne0$. A logarithm or a
+negative branch on the axis creates a singularity away from the source;
+hypoellipticity excludes it from a homogeneous distributional solution.
+
+Here is an estimate covering complex frequencies in every nonzero
+sector. Write $s=x+iy$, $|x|\le1$, and set
+$C_b=\int c|b|^2$, $M_b=\int|b|^2$. The real part of its pairing is
+
+$$
+I_{n,y}+(1-x^2)C_b-\gamma M_b,
+\quad
+I_{n,y}=\int_J\{4c|b'|^2+c(y+n\tan a)^2|b|^2\}da.
+\tag{20.6}
+$$
+
+Set $z_1=\operatorname{artanh}(\sin a)$. Then
+$I_{n,y}=\int_{\mathbb R}\{4|b_{z_1}|^2+
+(n\tanh z_1+y\operatorname{sech}z_1)^2|b|^2\}dz_1$.
+Let $d>0$ have square equal to the positive root of
+$X^2-(1+n^2-y^2)X-n^2y^2=0$; thus
+$n^2\le d^2\le n^2+1$. With
+$W_1=(d-1)\tanh z_1+(ny/d)\operatorname{sech}z_1$, multiplication gives
+
+$$
+-4\partial_{z_1}^2+(n\tanh z_1+y\operatorname{sech}z_1)^2
+=(-2\partial_{z_1}+W_1)(2\partial_{z_1}+W_1)
+                 +n^2-(d-1)^2.
+\tag{20.7}
+$$
+
+Natural-domain approximation justifies this factorization. Hence
+$I_{n,y}\ge2(\sqrt{n^2+1}-1)\int|b|^2dz_1
+\ge2(\sqrt{n^2+1}-1)M_b$.
+For $|n|\ge1$ this exceeds $\lambda_0M_b$, since
+$2(\sqrt2-1)>2/\pi>\lambda_0$.
+The adjoint pencil has $s$ replaced by $-\overline s$, so the same
+estimate excludes cokernel as well as kernel and gives an
+$O(|n|^{-1})$ inverse bound, uniformly in $y$ and $|x|\le1$.
+A fixed small neighbourhood of $\gamma=\lambda_0$ preserves the gap.
+
+For $n=0$, $(S-\gamma)b=s^2cb$ is a generalized selfadjoint compact
+problem in $L^2(c\,da)$. At criticality its nonnegative form plus
+$\int c|b|^2$ controls the original $S$ form: decompose along the simple
+kernel $\phi$ and use its spectral gap. The embedding is compact by
+the endpoint argument in §10. On the codimension-one space $b(0)=0$,
+weighted Cauchy–Schwarz and
+$c(a)\ge(2/\pi)(\pi/2-|a|)$ give
+$M_b\le(\pi^2/4)\int c|b'|^2$. Thus
+
+$$
+\langle(S-\gamma)b,b\rangle-C_b
+ \ge(16/\pi^2-\gamma)M_b.
+\tag{20.8}
+$$
+
+Min-max puts the next generalized eigenvalue above
+$1+16/\pi^2-\gamma>1$. At criticality the root zero has precisely the
+two solutions stated: a further chain element would require
+$(S-\lambda_0)b=c\phi$, contradicted by pairing with $\phi$.
+With the stipulated scalar product the leading Laurent operator is
+
+$$
+f\longmapsto-\frac{\phi\langle f,\phi\rangle}{Cs^2}.
+\tag{20.9}
+$$
+
+A branch $R^{-1+s}b$ is physically $L^2$ at zero exactly when
+$\operatorname{Re}s>-1$. All remaining $L^2$ branches therefore have
+real part greater than one. A reduced-inverse solution near $\phi$
+gives (20.4). Bounded multiplication by $c$ similarly gives the analytic
+eigenpair of $S+zc$; differentiating and pairing gives $\Lambda'(0)$.
+Inverting its power series proves (20.5). These are frozen indicial
+facts, not a finite-energy separation or a selected boundary condition.
+$\square$
+

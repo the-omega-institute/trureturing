@@ -1,0 +1,9 @@
+fingerprints:
+  raw_sha256: sha256:2cb9b07a53d3985acfd43ff83d4582b5de086349ae1e09129161a0c633904501
+  normalized_sha256: sha256:2cb9b07a53d3985acfd43ff83d4582b5de086349ae1e09129161a0c633904501
+cas_ref: sha256:2cb9b07a53d3985acfd43ff83d4582b5de086349ae1e09129161a0c633904501
+coverage_gids:
+  - gid: D5/S3/ConceptDynamics/RefinementFactorization/SufficiencyEscapeEquivalence.sufficiency_escape_equivalence_tfae
+    target_statement_id: sha256:99bb4a2706dfd9a112dfc0dd3a452050f6200870e9f648756362d6b8ab7b1411
+receipts:
+  unresolved_subitems: []

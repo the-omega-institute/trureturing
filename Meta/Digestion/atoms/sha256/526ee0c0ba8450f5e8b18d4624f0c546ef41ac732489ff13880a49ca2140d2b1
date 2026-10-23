@@ -1,0 +1,36 @@
+**Theorem 1.1.** For every $(p,v)\in\mathcal Q$, the entire $C(p,v)$
+consists of exactly three worlds. In increasing order of source width,
+their widths lie in
+
+$$
+\begin{aligned}
+I_1&=(0.04644285937,0.04644285939),\\
+I_2&=(0.1199999998,0.1200000002),\\
+I_3&=(0.1353256377,0.1353256382).
+\end{aligned}
+\tag{1.2}
+$$
+
+Their respective terminal-J readings satisfy
+
+$$
+a(W_1)\in(220.965,220.971),\quad
+a(W_2)\in(315.408,315.725),\quad
+a(W_3)\in(311.432,311.632).
+\tag{1.3}
+$$
+
+Consequently $a$ is injective on every entire child over $\mathcal Q$.
+Their terminal-M readings satisfy
+
+$$
+m(W_1)\in(340.209,340.217),\quad
+m(W_2)\in(350.881,351.236),\quad
+m(W_3)\in(350.945,351.173).
+\tag{1.4}
+$$
+
+Any M collision in such a child must therefore use precisely $W_2,W_3$.
+The three worlds, including their whole gains and fixed drifts, depend
+real analytically on $(p,v)$ in the interior of $\mathcal Q$.
+

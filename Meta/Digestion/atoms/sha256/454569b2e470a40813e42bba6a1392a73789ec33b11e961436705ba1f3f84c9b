@@ -1,0 +1,16 @@
+### 1.2. The diagonal kernel
+
+Set $D=\ker\pi$. Faithfulness identifies $D$ with a finite subgroup of $T$, so $D$ is abelian. Also $P\subset D$. Since $\pi(I)$ is a normal cyclic odd-order subgroup of a transitive subgroup of $S_3$, it is either trivial or $C_3$.
+
+If $\pi(I)=1$, cyclicity of $G/I$ forces $\pi(G)=C_3$. The Frobenius lift has three-cycle permutation, hence projective order three, so $F^3=1$ by faithfulness. Its image generates $G/I$, which therefore has order three, and $D=I$. Squaring on $I/P$ gives $|I/P|\mid7$. In particular $3\nmid|D|$.
+
+If $\pi(I)=C_3$, choose $\tau\in I$ lifting a generator of $I/P$. Its three-cycle permutation gives $\tau^3=1$, so $|I/P|=3$. Frobenius inverts this quotient; hence $\pi(F)$ is a transposition, $\pi(G)=S_3$, and $D\cap I=P$. The group $D/P$ embeds in cyclic $G/I$, so all conjugation on it is trivial. Write $\sigma$ for the action of $\tau$ on $T$. Directly from the three cyclic coordinate equations,
+
+$$
+T^\sigma=\{[\operatorname{diag}(1,z,z^2)]:z^3=1\}.
+$$
+
+Let $D_2$ be the $2$-primary subgroup of $D$. The map $d\mapsto\sigma(d)d^{-1}$ is an endomorphism of $D_2$ with trivial kernel, hence is surjective. Its image lies in $P$, because conjugation is trivial modulo $P$. Since $P\subset D_2$, this proves $D_2=P$. The odd-primary subgroup $O$ of $D$ injects into $D/P$. Thus $\sigma$ fixes $O$, putting it inside $T^\sigma$. A transposition acts on this order-three subgroup by inversion. Frobenius also acts trivially on $O$ because it acts trivially modulo $P$. Therefore every element of $O$ equals its inverse, forcing $O=1$. This branch gives $D=P$.
+
+In both branches $3\nmid|D|$, and the restriction of $\rho_1$ to $D$ has three distinct weight lines: those of $P$ if $P\ne1$, and those of $I=C_7$ otherwise.
+

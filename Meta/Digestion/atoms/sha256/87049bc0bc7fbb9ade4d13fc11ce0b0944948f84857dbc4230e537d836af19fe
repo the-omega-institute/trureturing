@@ -1,0 +1,21 @@
+**命题 7.4（严格正后验的不可达边界）。** Every finite full-support law satisfies
+
+$$
+ \ell_G>0,\qquad \epsilon>\ell_G,\qquad
+ \epsilon-\ell_G<2/5.
+\tag{7.7}
+$$
+
+If it is on the full indicator plateau, then $\ell_G>1/10$. Over arbitrary finite full-support plateau laws the infimum of $\ell_G$ is exactly $1/10$, and is not attained.
+
+Proof. At any full-support posterior each edge omits positive mass, so $s_G<1$. A neighbour of a maximizer has positive mass, so $s_G>m$. Finally, for every edge $ij$ with $i\in L$, one has $v_i<v_L$ and $v_j\le m$, yielding $s_G<v_L+m$. Finite positive-weight averaging proves (7.7). On the plateau (2.3) gives $m\le1/2$, so $\epsilon\ge1/2$ and the last strict inequality forces $\ell_G>1/10$.
+
+For the infimum, write $J_H(i,q)=\lambda_qv_i(q)$ for (6.3) and, for $0<\eta\le1$, set
+
+$$
+ J_{H,\eta}(i,q)=(1-\eta)J_H(i,q)+\eta\lambda_q/5.
+\tag{7.8}
+$$
+
+This preserves both the prior and the output masses. Every posterior is $(1-\eta)v(q)+\eta p$, has full support and has maximum at most $(1-\eta)/2+\eta/5\le1/2$. It therefore remains on the plateau. Continuity of a maximum of finitely many linear functions gives $\ell_G(J_{H,\eta})\to\ell_G(H)=1/10$ as $\eta\downarrow0$. These laws share the same finite alphabet, and any finite subfamily has a common finite source by (4.7). This infimum concerns arbitrary finite joint laws; it is not an infimum or attainability claim for a restricted Gaussian preparation family. $\square$
+

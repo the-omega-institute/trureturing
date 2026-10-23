@@ -1,0 +1,65 @@
+## 8. Suppliers, quantitative resources, and proof boundary
+
+Repository citations here use the immutable revision
+`df12d01189bdf8196457773d7f9e8eda168cb3cc`.  Source geometry and the
+additional instrument interpretation have distinct ownership.
+
+| Supplier | Exact role and boundary |
+| --- | --- |
+| [FiniteRectangleTransport Lean](https://github.com/the-omega-institute/trureturing/blob/df12d01189bdf8196457773d7f9e8eda168cb3cc/D5/S3/Quantum/Fibers/FiniteRectangleTransport.lean) and [Blueprint](https://github.com/the-omega-institute/trureturing/blob/df12d01189bdf8196457773d7f9e8eda168cb3cc/Blueprint/D5/S3/Quantum/Fibers/FiniteRectangleTransport.md) | `ValidBase`, `probability`, `phaseWeight`, `weight_compatible`, and `finite_rectangles_realize` supply the strict carrier, signed law, gauge/charge, and actual rectangles. The Blueprint's interpolation and all-sector applications supply the particular lifts used here. Those applications are credited ordinary synthesis; the rectangle declaration alone is not attributed the whole classification. |
+| [OriginalControlComposition Lean](https://github.com/the-omega-institute/trureturing/blob/df12d01189bdf8196457773d7f9e8eda168cb3cc/D5/S3/Quantum/Fibers/OriginalControlComposition.lean) and [Blueprint](https://github.com/the-omega-institute/trureturing/blob/df12d01189bdf8196457773d7f9e8eda168cb3cc/Blueprint/D5/S3/Quantum/Fibers/OriginalControlComposition.md) | `OriginalControl`, `FiniteC1Control` and `concatenate_original` fix finite real durations, regularity, unchanged prefixes, shifted tails, real phase increments and all continuous scalar integral additions. They supply no CPTP actuator or history acquisition. |
+| [Probability-phase source](https://github.com/the-omega-institute/trureturing/blob/df12d01189bdf8196457773d7f9e8eda168cb3cc/docs/develop/theory/AURIC_FIB_ATOM_PROBABILITY_PHASE_TRANSPORT_AND_HOLONOMY.md), §§3.1–3.3, 3.7, 3.12, 4, 8–9 | Fixed preparation, all signed winding sectors, actual current rays, connected ideal coherence reads, prescribed later loops and relative-command domains. Their source/action identities remain credited; an ideal expectation is not an obtained finite sample. |
+| [Transport-Memory Completion](https://github.com/the-omega-institute/trureturing/blob/df12d01189bdf8196457773d7f9e8eda168cb3cc/docs/develop/theory/RECURSIVE_RELATIONAL_OBSERVATION_TRANSPORT_MEMORY_COMPLETION.md), §§1–2 | Same coherent source, actual common port, known nonzero amplitudes and record overlap, calibration, time alignment, acquisition, future menu and closed-predictor assumptions remain required. Blind successful flags do not close those requirements. |
+| [Process Geometry](https://github.com/the-omega-institute/trureturing/blob/df12d01189bdf8196457773d7f9e8eda168cb3cc/docs/develop/theory/RECURSIVE_RELATIONAL_OBSERVATION_PROCESS_GEOMETRY.md), §34, and [Atlas Stable Core Holonomy](https://github.com/the-omega-institute/trureturing/blob/df12d01189bdf8196457773d7f9e8eda168cb3cc/docs/develop/theory/RECURSIVE_RELATIONAL_OBSERVATION_ATLAS_STABLE_CORE_HOLONOMY.md), §§1–8 | One actual joint source, domains, complete events, failure successors, record updates and actual routes are necessary. The present stochastic instrument does not instantiate the entire deterministic four-view recovery contract. |
+| [Joint Relations and Clocks](https://github.com/the-omega-institute/trureturing/blob/df12d01189bdf8196457773d7f9e8eda168cb3cc/docs/develop/theory/RECURSIVE_RELATIONAL_OBSERVATION_JOINT_RELATIONS_CLOCKS.md), Proposition 1.14 | The existing nearest-point repair obstruction already distinguishes mathematical repair from a common CPTP action on all qubit inputs. Its input family and map differ from the actual five-mode family here. |
+| Chefles, Jozsa and Winter, [*On the existence of physical transformations between sets of quantum states*](https://arxiv.org/html/quant-ph/0307227v1), §2, Theorems 2–3 and Eq. (9) | `literature-attested`: finite pure-state conversion uses an environment Gram matrix that is positive semidefinite with unit diagonal; instruments retain outcome-dependent positive Gram contributions. Used for the finite certificates and pair constructions. The continuous-family rigidity is proved in §4. |
+| Chiribella and Yang, [*Optimal quantum operations at zero energy cost*](https://arxiv.org/html/1502.00259v5), Proposition 5, Eqs. (52)–(54) | `literature-attested`: matching-support perfect-fidelity conversion under their energy-preserving constraint has a minimum probability-ratio bound and an amplitude filter. That energy constraint is not imported here; §4 proves necessity against all CP successes on the stated unknown family. |
+| Koashi and Imoto, [*What is Possible Without Disturbing Partially Known Quantum States?*](https://arxiv.org/html/quant-ph/0101144v2), Theorem 5 and §VIII.2 | `literature-attested`: finite-dimensional faithful transfer and no-imprinting framework. Successful-record blindness here follows directly from (OC.11a). The paper supplies no original-control actuator or archive. |
+
+The specified-state conversion problem in [*Pure State Transformations under
+Block Coherence*](https://arxiv.org/html/2605.30588v1), §III, Theorem 3,
+assumes PBIO and an explicit active-branch independence condition; its
+SBIO/BDCO conversion statements concern those prescribed operation classes.
+Those premises are not supplied for a common unknown-family actuator here.
+The [multimode Fock-projection postselection
+study](https://arxiv.org/html/2603.22122v1) declares phase-encoded linearly
+independent coherent-state alphabets, which are a different source from
+(OC.10).  Neither supplies the chronological full-family conclusion used in
+this volume, and no theorem from either is transferred.  These are bounded
+scope comparisons, without an exhaustive literature or priority claim.
+
+The source-specific deductions are `repo-derived`: actual-history
+containment in Theorem 3.1; full-family Kraus and record rigidity in Theorem
+4.1; finite-cut and ideal all-prefix optima in Theorems 5.1–5.2; exact
+zero-holonomy chronological witnesses in §5.3; and the promised-pair
+comparison in Propositions 6.1–6.2.  Gram/isometry conversion, amplitude
+filtering, Stinespring dilation, integration and total variation remain
+credited mature ingredients.  No worldwide priority is asserted.
+
+The finite instruments use one live five-mode specimen, supplied blank
+ancillas, calibrated contractions or unitaries, and retained flags.
+A two-outcome endpoint filter has a binary flag.  The stopped completion
+(OC.19a) uses a six-dimensional live-plus-stopped carrier and at most six
+Kraus operators per interval.  A protocol stopping at its first failure has
+$n+1$ possible first-failure-or-all-success indices; an optional mode label
+adds at most five choices per failure cut.  These are record-alphabet
+counts, not minimum hardware memory or physical-storage bounds.
+The exact failure time in (OC.19b) is an ideal real-valued record and has no
+supplied fixed finite-bit representation.
+
+All square roots, matrix entries and phase integrals in the construction are
+exact.  A fixed original path has a positive compact support margin, with no
+uniform margin over the original class.  A continuous real control need not
+have a finite effective description; existence of (OC.19) neither compiles
+an arbitrary waveform nor acquires it from the unknown specimen.
+Gate precision, construction work, sampling, calibrated clocks, phase
+references, coherent recombination, another same-history copy, archive
+access and their costs remain separate obligations.
+The active span has dimension three, but its continuum of exact states is
+not a finite classical memory.
+
+The ordinary proofs carry the universal conclusions; the rational
+certificates are finite arithmetic witnesses.  No new Lean/kernel
+verification or physical realization is asserted.  The actual joint observer
+interface and all-view recovery remain open.
+

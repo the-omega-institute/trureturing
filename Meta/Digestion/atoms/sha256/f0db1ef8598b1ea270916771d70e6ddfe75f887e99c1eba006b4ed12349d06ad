@@ -1,0 +1,18 @@
+**Proposition 5.0 (positive factor realization).** Every original source has the positive factorization
+
+$$
+P=c\ell,\qquad c=\begin{pmatrix}b\\1-r\end{pmatrix},\qquad
+\ell=(r/b,1),\qquad \operatorname{tr}(QP)=\ell Qc.
+$$
+
+Every legal prefix and continuation acts on the same positive object column and keeps the same instrument row. All positive factorizations of $P$ differ by $(c,\ell)\mapsto(\lambda c,\ell/\lambda)$ with $\lambda>0$.
+
+**Proof.** Multiplication gives the displayed $P$, and expanding the diagonal gives the trace identity. The atom actions are
+
+$$
+J\begin{pmatrix}c_1\\c_2\end{pmatrix}=\begin{pmatrix}c_2\\c_1\end{pmatrix},\qquad
+M\begin{pmatrix}c_1\\c_2\end{pmatrix}=\begin{pmatrix}c_2\\c_1+c_2\end{pmatrix}.
+$$
+
+They preserve strict positivity. Both atoms are nonnegative integer matrices with determinant $-1$, so every legal prefix is nonnegative and invertible. Gain signs and zeros do not alter the object column. If $P=c'\ell'$ is another positive factorization, its second column gives $c'\ell'_2=c$ because the displayed $\ell_2=1$. Thus $c'=\lambda c$ for $\lambda=1/\ell'_2>0$, and the first column then forces $\ell'=\ell/\lambda$. These are the trace and factor interfaces of [Common polynomial-gain shear calibration and erasure recovery, Lemma 1.2](FIB_POLYNOMIAL_GAIN_SHEAR_CALIBRATION_AND_ERASURE_RECOVERY.md). ∎
+

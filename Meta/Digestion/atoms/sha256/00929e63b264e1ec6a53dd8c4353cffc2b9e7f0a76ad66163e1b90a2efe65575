@@ -1,0 +1,25 @@
+**定理 5.3（一个相位量子位的精确实化）。** 令
+
+$$
+J=\begin{pmatrix}0&1\\-1&0\end{pmatrix},\qquad
+r=(1,i)^{\mathsf T}/\sqrt2,qquad Jr=ir.
+$$
+
+若 $U=X+iY\in U(d)$，定义
+
+$$
+\mathcal R(U)=X\otimes I_2+Y\otimes J,
+$$
+
+则 $\mathcal R(U)\in SO(2d)$，且
+$\mathcal R(U)(\psi\otimes r)=U\psi\otimes r$。参考 $r$ 被原样返回。
+
+**证明。** $U^\dagger U=I$ 给出
+$X^{\mathsf T}X+Y^{\mathsf T}Y=I$ 和
+$X^{\mathsf T}Y-Y^{\mathsf T}X=0$。结合 $J^{\mathsf T}=-J,J^2=-I$ 得
+正交性。$\mathbb C r$ 和 $\mathbb C\bar r$ 上分别作用为 $U$ 与 $\bar U$，行列式
+为 $\det U\det\bar U=1$。最后由 $Jr=ir$ 得作用式；张量线性保证对外部纠缠
+也成立。$□$
+
+该构造需要更大的联合控制菜单；不能把单系统 $SO(5)$ 菜单擅自替换为 $SO(10)$。
+

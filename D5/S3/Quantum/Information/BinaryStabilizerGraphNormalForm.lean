@@ -494,7 +494,7 @@ lemma tensor_smul {N : ℕ} (r : Fin N → ℂ)
   ext x y
   simp [tensorOp, Finset.prod_mul_distrib]
 
-private lemma tensor_weyl {N : ℕ} (v : ((Fin N → ZMod 2) × (Fin N → ZMod 2))) (f : (Fin N → ZMod 2)
+lemma tensor_weyl {N : ℕ} (v : ((Fin N → ZMod 2) × (Fin N → ZMod 2))) (f : (Fin N → ZMod 2)
   → ℂ) :
     tensorOp (fun i => wmat (v.1 i) (v.2 i)) *ᵥ f = weyl v f := by
   classical

@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:431f5e38dd85a8a79399f64b795ecf8a693d0757ea31c662fd3a6f6fa664708d
+  normalized_sha256: sha256:431f5e38dd85a8a79399f64b795ecf8a693d0757ea31c662fd3a6f6fa664708d
+cas_ref: sha256:431f5e38dd85a8a79399f64b795ecf8a693d0757ea31c662fd3a6f6fa664708d
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 'Nonpropositional: 规定有限历史块态及其正性、归一化、伴随一致性条件和未来环境保留范围；不声称递归闭合。'
+    previous_atom_id: 60940d2decb5444c4aaa65b12b6a4e784a8588472d5d33de1593e54873858be4
+    next_atom_id: 1f9ccb30462dad39fff2f34c9f25d197a96f33df5a37269571dc997e0de2ee5d

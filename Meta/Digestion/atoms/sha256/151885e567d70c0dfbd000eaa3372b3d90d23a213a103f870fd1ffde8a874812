@@ -1,0 +1,225 @@
+**Theorem 13.1 (the sharp full-Green coupling for every smooth native
+model).** Retain the entire original both-wall model and (10.6). Then:
+
+1. For $0<g<g_{\mathrm c}$, $q_{A,g}$ is closed and semibounded on exactly
+   $\mathcal F_A$. Its sufficiently shifted norm is equivalent to the
+   original free form norm; its represented operator has compact resolvent;
+   and its normalized lowest energy is finite and attained in that domain.
+2. For $g>g_{\mathrm c}$, normalized members of the original punctured
+   core have energies tending to $-\infty$.
+3. At $g=g_{\mathrm c}$ the original form is semibounded and closable,
+   but not closed and not norm equivalent to the free form on
+   $\mathcal F_A$. Its finite normalized infimum equals the lowest energy
+   of (12.3), but is not attained by any member of $\mathcal F_A$.
+   The completed form does attain it. Every nonnegative completed ground
+   state $f$ satisfies, on a sufficiently small source neighbourhood,
+
+$$
+0<d_f h(q)\le f(\Psi^{-1}q)\le D_f h(q),
+\qquad 0<R(q)<b_f,
+\tag{13.1}
+$$
+
+   for finite $d_f,D_f>0$. In particular every such state is outside
+   $\mathcal F_A$.
+
+The optimal boundary is therefore $g_{\mathrm c}$ for global
+semiboundedness, with equality included, and also the supremum of the
+strict closed-form range on the original domain, with equality excluded.
+These are two different endpoint assertions.
+
+**Proof.** Theorem 12.2 gives a finite $B$ such that
+
+$$
+q_{A,g_{\mathrm c}}[f]\ge-B\|f\|_2^2,
+\qquad
+V_{A,o}[f]\le g_{\mathrm c}^{-1}T_A[f]
+ +(B/g_{\mathrm c})\|f\|_2^2
+\quad(f\in\mathcal F_A).
+\tag{13.2}
+$$
+
+For $g<g_{\mathrm c}$ the relative bound is $g/g_{\mathrm c}<1$.
+KLMN applies on exactly $\mathcal F_A$, and directly
+
+$$
+q_{A,g}[f]\ge(1-g/g_{\mathrm c})T_A[f]
+ -(g/g_{\mathrm c})B\|f\|_2^2,
+\qquad q_{A,g}[f]\le T_A[f].
+\tag{13.3}
+$$
+
+These inequalities prove shifted norm equivalence. Compactness and
+attainment follow from the original free compact embedding and weak
+lower semicontinuity, as in the proof of Theorem 5.1. They do not require
+positivity of the attained energy.
+
+For $g>g_{\mathrm c}$ choose one finite $L$ in (10.12)--(10.13) so that
+
+$$
+m_0\int|\nabla_Hu_L|^2dq
+ -\frac{g}{2\pi}\int R^{-2}|u_L|^2dq<0.
+\tag{13.4}
+$$
+
+Use this single compact annular function $v=u_L$ in the actual chart:
+$f_s(\Psi^{-1}(\delta_s q))=s^{-2}a_sv(q)$, with $a_s>0$ chosen for
+unit $L^2(\mu)$ norm. Then
+$a_s\to(m_0\int|v|^2dq)^{-1/2}$, and exact field homogeneity, smooth
+coefficients and (11.1) give
+
+$$
+\begin{aligned}
+T_A[f_s]&=a_s^2s^{-2}
+ \left(m_0\int|\nabla_Hv|^2dq+O(s)\right),\\
+V_{A,o}[f_s]&=a_s^2s^{-2}
+ \left(\frac1{2\pi}\int R^{-2}|v|^2dq+O(s)\right).
+\end{aligned}
+\tag{13.5}
+$$
+
+All error estimates are uniform on this fixed annulus. Its small dilates
+lie inside an injective chart of the actual torus cylinder; hence
+$f_s\in C_c^\infty(\Omega\setminus\{o\})$ for small $s$. Equations
+(13.4)--(13.5) prove normalized collapse. They also show why the exact
+source density, rather than a normalized or averaged density, occurs in
+the sharp boundary.
+
+It remains to prove the critical attainment assertion, which does not
+follow just from nonclosedness. The completed critical form is
+semibounded with compact domain embedding by Theorem 12.2. The direct
+method therefore gives a normalized completed minimizer of energy $E$.
+Taking its absolute value cannot increase (12.3), so there is a
+nonnegative minimizer. It solves
+
+$$
+(L_A-g_{\mathrm c}\Gamma_{A,o})f=Ef
+\quad\hbox{on }\Omega\setminus\{o\}.
+\tag{13.6}
+$$
+
+Local hypoellipticity makes it smooth there. It is strictly positive.
+For example choose $C\ge\max(0,-E)$; then
+$(L_A+C)f=(g_{\mathrm c}\Gamma_{A,o}+E+C)f\ge0$ off the source.
+On any relatively compact connected subdomain avoiding $o$, comparison
+with its positive killed heat semigroup makes a nonzero nonnegative
+supersolution strictly positive. Propagation through overlapping
+subdomains gives positivity on the connected punctured cylinder. This
+uses the same smooth Hörmander positivity as the original free heat
+input, only on sets where the attractive coefficient is smooth.
+
+Here is a local barrier argument sufficient for the lower and upper
+bounds in (13.1), without importing a singular-endpoint regularity or
+attainment theorem. Write
+
+$$
+\overline c=\frac{\int_Jc\phi^2da}{\int_J\phi^2da}>0,
+\qquad
+\mathcal A b=-\frac4{\phi^2}(c\phi^2b')'.
+\tag{13.7}
+$$
+
+There is a smooth real bounded $w$ on $\overline J$ satisfying
+$\mathcal Aw=c-\overline c$, with bounded derivatives and zero endpoint
+flux. Indeed define
+
+$$
+c(a)\phi(a)^2w'(a)
+=-\frac14\int_{-\pi/2}^{a}\phi(s)^2(c(s)-\overline c)ds
+\tag{13.8}
+$$
+
+and fix its additive constant arbitrarily. The numerator vanishes at
+both endpoints and to first order there, so division by the simple zero
+of $c$ leaves a smooth derivative. Choose $0<\delta<1$ sufficiently
+small that $b_\delta=1+\delta^2w$ is positive and
+$\delta^2|cw|\le\overline c/2$. Put
+
+$$
+k_\delta=R^{-1+\delta}\phi(a)b_\delta(a)>0.
+\tag{13.9}
+$$
+
+For a $\theta$-independent homogeneous function $R^p b(a)$,
+$\Delta_H(R^pb)=R^{p-2}\{p(p+2)cb+4(cb')'\}$.
+Using (13.7)--(13.8) therefore gives the uniform strict sign
+
+$$
+\begin{aligned}
+(-\Delta_H-\lambda_0R^{-2})k_\delta
+&=R^{-3+\delta}\phi
+  (\mathcal A-\delta^2c)b_\delta\\
+&=R^{-3+\delta}\phi
+ (-\delta^2\overline c-\delta^4cw)\\
+&\le-\tfrac12\delta^2\overline c\,
+ R^{-3+\delta}\phi.
+\end{aligned}
+\tag{13.10}
+$$
+
+Let $\mathcal P_E=L_A-g_{\mathrm c}\Gamma_{A,o}-E$, in the chart.
+Equations (11.1)--(11.3) and homogeneity imply
+
+$$
+\mathcal P_Eh=O(R^{-2}),\qquad
+\mathcal P_Ek_\delta
+=(-\Delta_H-\lambda_0R^{-2})k_\delta+O(R^{-2+\delta}).
+\tag{13.11}
+$$
+
+Since $\delta<1$, the negative term in (13.10) dominates both errors
+near zero. Thus, after reducing $b$,
+
+$$
+\mathcal P_E(h+k_\delta)\le0,
+\qquad
+\mathcal P_E(h-k_\delta)\ge0,
+\qquad h-k_\delta>0
+\quad(0<R<b).
+\tag{13.12}
+$$
+
+Both barriers, after an outer cutoff, belong to the completed domain:
+$k_\delta/h=R^\delta b_\delta$, whose transformed energy near zero is
+$O(\int_0^bR^{2\delta-1}dR)<\infty$; the constant transformed part is
+approximated by (12.13).
+
+The weak comparison principle needed in this ball has a coercive form
+proof. From (12.6)--(12.7), for $u$ in the completed domain supported in
+$R<b$,
+
+$$
+\overline q_{\mathrm c}[u]-E\|u\|_2^2
+\ge(1-Kb-K|E|b^2)\mathcal E_H[u/H].
+\tag{13.13}
+$$
+
+Choose $b$ so the coefficient is positive. On the compact collar
+$b/2\le R\le b$, positivity and smoothness of $f$ allow constants
+$d,D>0$ with
+$d(h+k_\delta)\le f\le D(h-k_\delta)$.
+For the lower comparison test (13.12) and (13.6) with
+$u=(d(h+k_\delta)-f)_+$, which vanishes on this collar. In the ground
+transform the positive-part chain rule makes the resulting left side
+exactly $\overline q_{\mathrm c}[u]-E\|u\|_2^2$, and it is nonpositive.
+The right side of (13.13) forces $u=0$. The test is legitimate in the
+completed local domain; logarithmic cutoffs (12.13) approximate at the
+source, and positive-part approximation preserves nonnegativity. Hence
+the punctured smooth subsolution inequalities extend to this test.
+Applying the same reasoning to $(f-D(h-k_\delta))_+$ proves the upper
+comparison. Since $k_\delta/h=O(R^\delta)$, these two comparisons give
+(13.1).
+
+A positive completed ground state consequently satisfies
+$\int R^{-2}|f|^2d\mu=\infty$. Every member of $\mathcal F_A$ has that
+integral finite by (4.2) and localization, so no such state belongs to
+$\mathcal F_A$. The original punctured core is dense in the completed
+form norm; normalization of its approximants shows that its normalized
+infimum, that over $\mathcal F_A$, and the completed lowest energy are
+all equal. If an original-domain minimizer existed, taking its absolute
+value would give a nonnegative completed ground state in
+$\mathcal F_A$, a contradiction. This proves nonattainment there and
+attainment only in the completion. Norm equivalence at equality is
+excluded because the free domain is complete whereas the original
+critical form is not closed. $\square$
+

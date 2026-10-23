@@ -1,0 +1,116 @@
+## 21. Exact positive-strip certificates
+
+For a polynomial $F(r,b)$ of $r$-degree $n$ and $b$-degree $m$, write
+$$
+ F(r,3/4+u)=\sum_{k=0}^m\sum_{i=0}^n a_{ki}r^iu^k,\qquad
+ c_{kj}(F)=\sum_{i=0}^j\frac{\binom ji}{\binom ni}a_{ki}.
+$$
+Then the exact Bernstein conversion is
+$$
+ F(r,3/4+u)=\sum_{k=0}^m u^k
+ \sum_{j=0}^n c_{kj}(F)\binom njr^j(1-r)^{n-j}.
+\tag{21.1}
+$$
+The inner weights are nonnegative and sum to one for $0\le r\le1$.
+
+Define, using the aliases (20.6),
+$$
+\begin{aligned}
+ \mathscr B&=(P_p)_bH-P_pH_b,\\
+ \mathscr K&=\{(P_p)_r(P_a)_b-(P_p)_b(P_a)_r\}H\\
+ &\quad-\{(P_p)_rP_a-P_p(P_a)_r\}H_b
+ +\{(P_p)_bP_a-P_p(P_a)_b\}H_r.
+\end{aligned}\tag{21.2}
+$$
+Their degrees in $(r,b)$ are $(10,12)$ and $(15,18)$; $P_p$ has degrees
+$(6,7)$. Substitution of the displayed integer polynomials gives the
+following exact row extrema. A listed maximum for $P_p$ is negative, and a
+listed minimum for either derivative numerator is positive.
+
+$$
+\begin{array}{c|r|r|r}
+ k&\max_j c_{kj}(P_p)&\min_j c_{kj}(\mathscr B)&\min_j c_{kj}(\mathscr K)\\ \hline
+0&-512631/1024&455741690697/58720256&61954938577212579/3758096384\\
+1&-1949589/512&361644750129/3670016&74588951490183225/234881024\\
+2&-357721/32&1041884523313/1835008&674899196461312509/234881024\\
+3&-517859/32&127071800897/65536&8340467566855923/524288\\
+4&-12336&141781839535/32768&32125431211803477/524288\\
+5&-11049/2&13810343235/2048&5621654643785235/32768\\
+6&-1500&11400085841/1536&12090582746511435/32768\\
+7&-216&186634661/32&1285263013924755/2048\\
+8&\text{--}&408957381/128&3514403850475455/4096\\
+9&\text{--}&9318405/8&121786481138445/128\\
+10&\text{--}&1032795/4&219753083040525/256\\
+11&\text{--}&28650&5031618926805/8\\
+12&\text{--}&750&2975563894185/8\\
+13&\text{--}&\text{--}&175630926690\\
+14&\text{--}&\text{--}&65076080670\\
+15&\text{--}&\text{--}&18366965280\\
+16&\text{--}&\text{--}&3736317960\\
+17&\text{--}&\text{--}&488908800\\
+18&\text{--}&\text{--}&30729600
+\end{array}\tag{21.3}
+$$
+These are finite rational sums from (21.1), so they are exact coefficient
+certificates rather than sampled evaluations. Consequently
+$$
+ P_p<0,\qquad \mathscr B>0,\qquad \mathscr K>0
+ \quad(0\le r\le1, b\ge3/4).\tag{21.4}
+$$
+
+For the remaining denominator sign on $3/4\le b\le2$, put
+$b=3/4+5x/4$. The tensor Bernstein coefficients of $D$ are
+$$
+ q_{j\ell}=\sum_{i=0}^j\sum_{k=0}^{\ell}
+ \frac{\binom ji\binom\ell k}{\binom4i\binom6k}d_{ik},
+$$
+where $D(r,3/4+5x/4)=\sum d_{ik}r^ix^k$. Direct integer expansion gives
+$$
+ \min_{j,\ell}q_{j\ell}=-480,\qquad
+ \max_{j,\ell}q_{j\ell}=-98735/12288<0.
+\tag{21.5}
+$$
+The tensor basis is nonnegative and sums to one, hence $D<0$ on this
+rectangle. This also records the exact two-dimensional coefficient extrema.
+
+The quotient rule gives, wherever $H\ne0$,
+$$
+ p_b=\mathscr B/H^2,\qquad
+ p_ra_b-p_ba_r=\mathscr K/H^3.\tag{21.6}
+$$
+On the positive regular sheet with $b\ge3/4$, where (21.4) applies and $H<0$,
+we have $p_b>0$ and $p_ra_b-p_ba_r<0$.
+
+The cutoff $p_0=1587/25$ is exact. For the explicit specialization
+$F_{3/4}(r):=(P_p-p_0H)(r,3/4)$, the degree-six Bernstein vectors after
+$r=x/2$ and $r=(1+x)/2$, respectively, are
+$$
+\begin{aligned}
+ &(6579711/81920,2539737/40960,2904477/81920,3848199/204800,\\
+ &\qquad6025359/409600,890637/40960,3112737/81920),\\
+ &(3112737/81920,111105/2048,32654619/409600,11522199/102400,\\
+ &\qquad61574937/409600,198819/1024,20037699/81920).
+\end{aligned}\tag{21.7}
+$$
+Every entry is positive, so $F_{3/4}(r)>0$ for $0<r<1$. At $b=1$,
+exact factorization gives
+$$
+(25P_p-1587H)(r,1)=105(1-r)
+(160r^5-640r^4+651r^3+63r^2-434r-178).\tag{21.8}
+$$
+Define the quotient carrying the full scale in (21.8) by
+$$
+Q_+(r):=\frac{(25P_p-1587H)(r,1)}{1-r}
+=105(160r^5-640r^4+651r^3+63r^2-434r-178).
+$$
+Its degree-five Bernstein vector is
+$$
+(-18690,-27804,-72513/2,-37212,-37275,-39690),
+\tag{21.9}
+$$
+so $Q_+(r)<0$ and the right side of (21.8) is negative for $r<1$. Because $H<0$ on
+$3/4\le b\le2$, (21.7)--(21.9) imply
+$$
+ p(r,3/4)<p_0<p(r,1),\qquad0<r<1.\tag{21.10}
+$$
+

@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:43874ca0fd568abd2b0796f7ea27ea5ef30a621bbc86723c7d88606336a456d4
+  normalized_sha256: sha256:43874ca0fd568abd2b0796f7ea27ea5ef30a621bbc86723c7d88606336a456d4
+cas_ref: sha256:43874ca0fd568abd2b0796f7ea27ea5ef30a621bbc86723c7d88606336a456d4
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 'Nonpropositional: 定义有限复网络的开放振幅，并把同接缝、保权一一对应和因子只计一次作为前提。'
+    previous_atom_id: 649ce384a71df83733527f92d290034128ea8697aadfe39b1b37297ca236e0ee
+    next_atom_id: c9bb2ff1b399ced9c227007b44bd857eafefea83fd3a5b4e8cdd05a154296958

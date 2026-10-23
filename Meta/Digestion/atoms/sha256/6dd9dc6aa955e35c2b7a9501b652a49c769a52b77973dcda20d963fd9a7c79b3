@@ -1,0 +1,17 @@
+**定义 3.1。** 对有限来源集合 $X$，$|X|=n\ge2$，固定读口目录
+$f_j:X\to Y_j$，置
+
+$$
+P=\{(x,y):x\ne y\},\qquad
+D_j=\{(x,y)\in P:f_j(x)\ne f_j(y)\},
+$$
+
+并定义
+
+$$
+C(S)=\left|\bigcup_{j\in S}D_j\right|,qquad
+ e(S)=1-\frac{C(S)}{n(n-1)}.
+$$
+
+目录项是具体出现的读口；相同函数若以不同标签出现仍保留两个索引。
+

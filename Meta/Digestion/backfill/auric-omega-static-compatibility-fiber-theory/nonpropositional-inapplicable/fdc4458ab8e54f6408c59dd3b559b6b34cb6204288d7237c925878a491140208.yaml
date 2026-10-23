@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:fdc4458ab8e54f6408c59dd3b559b6b34cb6204288d7237c925878a491140208
+  normalized_sha256: sha256:fdc4458ab8e54f6408c59dd3b559b6b34cb6204288d7237c925878a491140208
+cas_ref: sha256:fdc4458ab8e54f6408c59dd3b559b6b34cb6204288d7237c925878a491140208
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 'nonpropositional: 规定事件结构、配置、相融和事件身份；各封闭性条件均为输入假设，未断言配置域定理。'
+    previous_atom_id: 758b7401050acd310e456195fe62e4718820b3f7bb4dcb7bebb158a482e1f944
+    next_atom_id: f4c522462adb62c7659da4fd1c59dd4ab29d2224f643bc5d70ac6b9fb5c6abe2

@@ -1,0 +1,53 @@
+**推论 461.2（原始短核心包的较大标记投影）。** 沿用定理 461.1、原 F4 包 $b_{j;c,a,\vartheta}$、G8–G11 的同一原算子与 [primitive-mean v2，Corollary 5、§§7–8](https://rstation.ai/api/v1/papers/riemann_hypothesis_10/versions/2/download) 的解析输入。固定
+
+$$
+\frac13<\ell<\frac12,\qquad
+0<\nu<1-\frac32\ell,\qquad
+L=U^\ell,\qquad \alpha=1-\frac32\ell-\nu>0.
+\tag{461.9}
+$$
+
+令 $P_L=VG^{-1}V^*$ 为同一个实际投影，$W_{U,X,L}$ 是原 adjoint 的完整 primitive residue 矩阵。对全部 $1\ll X\le U^\alpha$，有
+
+$$
+\|A_{U,X}^*P_LA_{U,X}
+ -W_{U,X,L}G^{-1}W_{U,X,L}^*\|
+\ll U^{1-\nu/2+\varepsilon}\mathcal N^2.
+\tag{461.10}
+$$
+
+共同包络 $\mathcal N\ge1$ 一次包含原 profiles、固定有限 ray、实际 Mellin/Sobolev 及解析输入费用，不按核心或标记重选。它包含（461.4）为当前 $\kappa,\varepsilon$ 所需有限阶行权 seminorms 及 $C_\Omega^{-1}$；不据此扩张原有增长高度范围。具体地，若 $C_A,C_E,C_G,C_{G^{-1}}$ 分别为 G8、G9、（461.2）两项剥去所示小幂后的常数，取 $\mathcal N^2\ge C_A+C_E+C_{G^{-1}}(2\sqrt{C_AC_GC_E}+C_E)$；这些乘积也在同一包络内。原 F4 的正权 $w_{c,a,\vartheta}=q_c^{1/2+\eta}\tau(\operatorname{rad}c)$ 与完整实际系数均保留。仅对满足 $K_c=K/q_c\le U^\alpha$ 的实际包求和，得到
+
+$$
+\begin{aligned}
+&\sum_{K_c\le U^\alpha}w_{c,a,\vartheta}
+ \left|Q_{P_L}(b_{j;c,a,\vartheta})
+       -Q_{\rho,L}(b_{j;c,a,\vartheta})\right|\\
+&\hspace{15mm}\ll(UK)^\varepsilon\mathcal N^2
+  UK\,U^{-\nu/2}\mathcal P^2.
+\end{aligned}
+\tag{461.11}
+$$
+
+和式包含原 $a\mid\operatorname{rad}c$ 与全部有限 $\vartheta$。在 $U\asymp K$、$\mathcal N^2\mathcal P^2$ 有界或至多 polylog 增长及 $0<\varepsilon<\nu/4$ 下，（461.11）除以 $K^2$ 为 $O(K^{2\varepsilon-\nu/2}\mathcal N^2\mathcal P^2)=o(1)$。其中 $L>U^{1/3}$ 的整个标记范围由（461.2）提供。本结论只估计这些短包中的投影与 residue 二次型之差；它没有分别给出 residue 二次型、长包或完整正交补的上界，也没有推出 signed Robin restoration。
+
+证明。取固定 $\kappa<1/2-\ell$，应用（461.2）于原实际全部标记 Gram。Corollary 5 对所有 good $R$、$U,X\ge1$ 一致成立，不带 $L\le U^{1/3}$ 的前提。其误差列在同一标记集上给出
+
+$$
+\|E\|_{\rm HS}^2\ll(UXL)^\varepsilon\mathcal N^2XL^{3/2}
+\ll U^{1-\nu+\varepsilon}\mathcal N^2.
+\tag{461.12}
+$$
+
+因为 $\alpha<1/2$，原 G8 直接给出 $\|A_{U,X}\|^2\ll U^{1+\varepsilon}\mathcal N^2$。G10 的有限矩阵比较保留实际 $T=A^*V=W+E$、全部交叉标记及同一个 $G^{-1}$；其两项分别为 $U^{1-\nu/2+\varepsilon}\mathcal N^2$ 和 $U^{1-\nu+\varepsilon}\mathcal N^2$，给出（461.10）。
+
+对每个原包乘 $\|b_{j;c,a,\vartheta}\|_2^2$。原零掩码 $(x,c)=1$ 与全部相位仍在这个实际向量中。复用 G11 的已付系数质量
+
+$$
+\sum_{c,a,\vartheta}w_{c,a,\vartheta}
+ \|b_{j;c,a,\vartheta}\|_2^2
+\ll K^{1+\varepsilon}\mathcal P^2.
+$$
+
+只在此正和内限制到短包，得到（461.11）。原 F4 的 $\eta$ 及全部内部除数损失依同一最终 $\varepsilon$ 分配，共同累计高度没有重新分配。证毕。
+

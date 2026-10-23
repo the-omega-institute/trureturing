@@ -1,0 +1,4 @@
+**Theorem 4.1 (K4 refutes exact thirds under the author-implemented model).** Under the signed-rotation law specified above, the three equalities in Ghanbari–Šámal Conjecture 1 all fail for $K_4$.
+
+Proof. The graph $K_4$ has four vertices, six edges, and degree three at every vertex. It is simple and connected, and every edge lies in a triangle, so no edge is a bridge. Its automorphism group is the full symmetric group on four vertices and is transitive on edges: any bijection between the endpoints of two edges extends to a permutation of all four vertices. Theorem 3.2 applies. More explicitly, each type marginal is $k/1024$ and its expected count is $6k/1024$. Equality with two would imply $3k=1024$, impossible modulo three. ∎
+
