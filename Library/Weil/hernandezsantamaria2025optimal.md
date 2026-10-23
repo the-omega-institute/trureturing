@@ -45,6 +45,13 @@ of its restatement, Theorem 5.4, uses that boundedness on printed p.29.
 Neither result is a theorem for an arbitrary nonnegative form with a
 comparable logarithmic multiplier.
 
+The related preprint [arXiv:2411.15985v2](https://arxiv.org/abs/2411.15985v2),
+*Nonlocal elliptic equations involving logarithmic Laplacian: Existence,
+non-existence and uniqueness results*, is explicitly withdrawn by its
+authors, citing "a crucial error in Proof of Pohozaev identity".
+Its claimed Pohozaev identity is therefore not used as a proved supplier
+here. This withdrawal does not decide the actual minimizing-source estimate.
+
 ## Keep the actual two profiles distinct
 
 Use the [owned actual physical source and complete form](suzuki2026screw.md),
