@@ -15,8 +15,8 @@ internal sealed class ActualFirstTerminationMemoryDocument : IScribeDocumentDefi
         Blocks(
             new DocumentBlock.Section(H("The fixed program and its operational clock"), Blocks(
                 Paragraph(Text(
-                    "The source uses one fixed code u and places the program index e in the literal "
-                        + "input [e]. The code is the standard Nat.Partrec numbering transported through "
+                    "The source uses one fixed code u and places the natural number e in the literal "
+                        + "input [e] at index e+1. The code is the standard Nat.Partrec numbering transported through "
                         + "decodeCode and encodeCode; no family of codes is selected as e varies. The "
                         + "finite-data machine has Data = List Nat, a typed continuation Stack, and "
                         + "Cfg = Data + (Stack x Data). The normal and returning interpreters implement "
@@ -24,10 +24,14 @@ internal sealed class ActualFirstTerminationMemoryDocument : IScribeDocumentDefi
                 Paragraph(Text(
                     "step is exactly one effective ToPartrec.step: a terminal Data configuration maps "
                         + "to none, while a live continuation performs one returning transition. The "
-                        + "initial clock is 0 -> halt [] and encode(c)+1 -> normal u [] [c]; run u e n "
-                        + "is the n-fold Option transition from that initial state. pulse u e n is true "
-                        + "exactly when run u e n is live and the next native step is terminal. Thus the "
-                        + "clock counts native transitions, and t=0 is an actual first-termination case.")),
+                        + "initial clock is 0 -> halt [] and e+1 -> normal u [] [e], hence "
+                        + "encode(c)+1 -> normal u [] [encode(c)] for c : Nat.Partrec.Code. run u e n "
+                        + "is the n-fold Option transition from that initial state. pulse u e t is true "
+                        + "exactly when run u e t = some q for a present terminal configuration q whose "
+                        + "next native step returns Option.none. A transition entering Cfg.halt still "
+                        + "returns Option.some; the pulse occurs at the terminal configuration itself. "
+                        + "Thus the clock counts native transitions. At index 0 the initial configuration "
+                        + "is already halt [], so t=0 is an actual first-termination case.")),
                 Paragraph(Text(
                     "step_decode and run_decode identify this clock pointwise and at every index with "
                         + "the effective ToPartrec.step. first_terminal adds the exact first-terminal "
