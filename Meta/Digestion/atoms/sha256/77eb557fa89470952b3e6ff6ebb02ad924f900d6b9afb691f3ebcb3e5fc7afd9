@@ -1,0 +1,51 @@
+**Proposition 4.2 (Exact normalization and pseudo-remainder).** One has
+
+$$
+f\mid a^3K-(\alpha d+\beta)
+\quad\hbox{in }\mathbb Z[x,p,v,d],
+\tag{4.6}
+$$
+
+and the fixed degree-$(2,4)$ resultant satisfies
+
+$$
+\operatorname{Res}_d(f,K)
+=\frac{a\beta^2-b_f\alpha\beta+c_f\alpha^2}{a^3}
+=256D^8F_0^2R.
+\tag{4.7}
+$$
+
+Here $R\in\mathbb Z[x,p,v]$ is the uniquely normalized F carrier:
+it has $512$ nonzero monomials and coordinate degrees
+$(\deg_xR,\deg_pR,\deg_vR)=(18,6,6)$. Both quotients in (4.7)
+are exact polynomial quotients. Thus (4.1), (4.3)–(4.5), and (4.7)
+specify every integer coefficient of $R$ without a coefficient list.
+Furthermore
+
+$$
+a_0(x,0)=-2F_0,
+\qquad F_0\mid\beta,\quad
+F_0\mid f(x,0),\quad F_0\mid K(x,0).
+\tag{4.8}
+$$
+
+Proof. Reduction of $d^2,d^3,d^4$ using
+$ad^2=-b_fd-c_f$ gives (4.5) after multiplication by $a^3$.
+This proves (4.6) as a polynomial identity, including where $a=0$.
+Over $\mathbb Q(x,p,v)$, evaluation at the two roots of $f$ gives
+the first equality of (4.7). Equivalently the resultant of the linear
+remainder is $a\beta^2-b_f\alpha\beta+c_f\alpha^2$, and retaining
+degree four for the second polynomial introduces the factor $a^3$.
+This also derives the formula if a particular $K$ loses degree.
+
+For the second equality, F, Lemma 31.2, gives
+$\operatorname{Res}_d(f,k)=16D^8F_0^2R$. Scaling the second
+polynomial by $4$ scales the resultant by $4^{\deg_df}=16$.
+Thus $K=4k$ gives the factor $256$, not $16$. The exact F
+division fixes the degrees and normalization asserted here. Direct
+substitution of $d=0$ in (4.1) proves the first identity of (4.8).
+Then $f(x,0)$ and $K(x,0)$ are divisible by $F_0$, while
+the expression for $\beta$ shows the same divisibility for $\beta$.
+These are existing carrier identities used in the source reconstruction,
+not a new interpretation of their roots as actual worlds. ∎
+

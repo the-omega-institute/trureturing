@@ -1,0 +1,50 @@
+**Proposition 41.1 (failure of the exterior sign implication).** For
+complete worlds with these chronological readings, the implication
+below is false:
+
+$$
+\begin{aligned}
+&0<r<1,\quad b>0,\quad 0\ne g\in\mathbb R[s],\quad \deg g\le3,\quad d\in\mathbb R,\\
+&\bigl(b>1/10\ \text{or}\ r/b<1\ \text{or}\ r/b>107/100\bigr),\qquad b<20,\qquad c<2,\\
+&-533\le p\le-458,\qquad p\le-425,\qquad v<0
+\quad\Longrightarrow\quad v<2p.
+\end{aligned}
+\tag{41.1}
+$$
+
+Here the readings $p,v$ are required to arise from the complete
+chronological products and the five fixed parent readings above.  The
+implication is false even when the regular denominator $D$ of (35.3)
+is nonzero.  A single strict world witnessing the failure is
+
+$$
+r=\frac{17}{154},\qquad b=\frac8{77},\qquad
+c=\frac{2329}{2464},\qquad
+P=\begin{pmatrix}17/154&8/77\\2329/2464&137/154\end{pmatrix},
+\tag{41.2}
+$$
+
+with one fixed drift and one whole gain polynomial
+
+$$
+d=\frac{530671617}{945590},\qquad
+g(s)=\frac{5497681s^3-61028667s^2+287890127s-2653358085}{4727950}.
+\tag{41.3}
+$$
+
+The leading coefficient $5497681/4727950$ is positive, so this is a
+nonzero cubic.  Literal left multiplication by the chronological
+actions gives the following complete trace and reading table; the last
+two rows are alternatives, not two successive seventh actions.
+
+| clock and action | trace | reading |
+| --- | ---: | ---: |
+| $0$ | $1$ | $0$ |
+| $1,J$ | $235/224$ | $24$ |
+| $2,M$ | $85/77$ | $147/5$ |
+| $3,J$ | $2857/2464$ | $24$ |
+| $4,M$ | $93/77$ | $18$ |
+| $5,M$ | $5833/2464$ | $p=-9703315251/20802980$ |
+| $6,M$ | $8809/2464$ | $v=-1501769676273/1664238400$ |
+| $7,J$ | $4489/1232$ | $a=-40666201527/52007450$ |
+| $7,M$ | $7321/1232$ | $m=-84734834583/52007450$ |

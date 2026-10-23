@@ -1,0 +1,17 @@
+**定理 110.2（给定相位保持等距的精确递归）。** 另供实际等距实现
+
+$$
+V_n=\sum_{h,a}|h,a\rangle\langle h|\otimes K_{a|h},
+\qquad \sum_aK_{a|h}^\dagger K_{a|h}=I\quad(\text{每个 }h).
+$$
+
+则 $\Omega_{n+1}=V_n\Omega_nV_n^\dagger$ 保持正性与迹一，且
+
+$$
+\Xi^{(n+1)}_{ha,kb}=K_{a|h}\Xi^{(n)}_{hk}K_{b|k}^\dagger.
+$$
+
+经典历史概率满足 $p(h)=\operatorname{tr}\Xi^{(n)}_{hh}$、$p(ha)=\operatorname{tr}(K_{a|h}\Xi^{(n)}_{hh}K_{a|h}^\dagger)$。
+
+证明（110.2）。输出基 $|h,a\rangle$ 两两正交，使 $V_n^\dagger V_n=\sum_h|h\rangle\langle h|\otimes\sum_aK_{a|h}^\dagger K_{a|h}=I$。正算子经 $V_n$ 左右共轭仍正，循环取迹给迹保持。展开每个 $|h\rangle\langle k|$ 块，左右标签与 Kraus 乘法恰给所列递归；取对角块的迹即为经典概率。整个证明使用同一个已给等距实现，不是分别对各历史选择不相容的实现。$\square$
+

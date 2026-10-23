@@ -1,0 +1,46 @@
+**Lemma 4.2 (Exact elimination identities).** Let $F(b)$ be the degree
+$67$ polynomial whose $68$ descending integer coefficients are `FC` in
+Section 10. It is primitive and has positive leading coefficient. Then
+
+$$
+\begin{aligned}
+\deg R_1=\deg R_2&=285,\\
+\operatorname{pp}_+(\gcd(R_1,R_2))
+&=b^{110}(2b+1)^8(5b+2)^{17}(8b-1)^{17}\\
+&\quad\cdot(5b^2+2b+1)(b^2+8b+4)^2F(b),\\
+h&=b^{90}(2b+1)^5(5b+2)^{14}(8b-1)^{20}(b^2+8b+4)^2,\\
+(\deg a_0,\deg c_0,\deg h,\deg a,\deg c)&=(252,253,133,119,120),\\
+\gcd(F,h)=\gcd(F,a)=\gcd(F,F')&=1
+\quad\hbox{up to nonzero constants.}
+\end{aligned}
+\tag{4.3}
+$$
+
+The two resultant quotients by their common primitive factor have degree
+$60$ each and are coprime. The reduced $a,c$ are also coprime.
+
+Proof. These are finite integer polynomial identities, reproducible by
+the exact prescription in Section 10. For completeness that prescription
+also checks the computed subresultants against the fixed determinants,
+rather than relying on specialization of an implementation convention.
+Here is why its finite determinant checks establish polynomial equality.
+
+Every coefficient of $r^j$ in an $E_i$ has $b$ degree at most $17-j$.
+In a Sylvester determinant term the sum of coefficient $r$ exponents is
+
+$$
+\sum_{j=0}^{29}j-2\sum_{j=0}^{14}j=225.
+$$
+
+Its $b$ degree is therefore at most $30\cdot17-225=285$.
+For (4.2) the row-shift sum is $2\sum_{j=0}^{13}j=182$.
+The first $27$ column exponents sum to $\sum_{j=2}^{28}j=405$.
+Appending the $r$ column gives bound $28\cdot17-(406-182)=252$;
+appending the constant column gives bound $253$.
+The certificate computes both Sylvester determinants at all integers
+$0,\ldots,285$, and both linear minors at $0,\ldots,253$.
+Agreement at those distinct integers proves their full polynomial
+identities by these degree bounds. Exact Euclidean gcd and exact
+division then give (4.3), with the explicitly listed coefficients of
+$F$. This includes every exceptional factor, with multiplicity. ∎
+

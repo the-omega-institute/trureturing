@@ -1,0 +1,11 @@
+**Definition 20.1 (one actual serial image protocol).** On the same native run
+and with the literal codec, copy, handoff and Ready conventions of
+Propositions 18.2–18.3, let $s_0<s_1<\cdots<s_j$ be absolute native ordinals.
+Round $i$ starts at $s_i$, targets the cut $k_i=s_i$, and returns a literal
+encompassing image of that cut before round $i+1$ begins at $s_{i+1}$.
+Extra work and gaps between completed calls are allowed. Put
+$W_j=s_j-s_0$, counting every intervening native primitive, rather than
+counting one completed image as a unit-cost step. A statement for $j$ rounds
+is conditional on all those calls actually completing; their existence is
+not supplied by this definition.
+

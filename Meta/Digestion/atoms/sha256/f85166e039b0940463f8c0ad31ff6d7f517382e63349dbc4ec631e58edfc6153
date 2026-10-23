@@ -1,0 +1,130 @@
+## 450. 全局 PNT 误差可以支付 theta 前提，但支付不了平方根级 signed 预算
+
+上一节的缺口还可以与
+`D5.S3.Arith.Robin.ActualVonMangoldtBandCompensation` 的实际前提逐项对照。
+令
+
+$$
+L=\log A,
+\qquad
+w(L)=\frac{L^{3/5}}{(\log L)^{1/5}}.
+$$
+
+Fiori--Jaskari 的全局估计，在固定紧比例区间
+
+$$
+0.99A\le t\le1.98A
+$$
+
+上取任意略小于其指数常数的 $d>0$ 后，给出一个充分大的起点以后的一致形式
+
+$$
+|\psi(t)-t|\le C A e^{-d w(L)}.
+$$
+
+这里把比例区间的常数吸收到 $C$ 和较小的 $d$ 中；这一步只是在已有
+Fiori--Jaskari 估计上作紧比例区间的单调化，不是新的 PNT 供应。
+由于
+
+$$
+0\le\psi(t)-\vartheta(t)
+ =\sum_{k\ge2}\vartheta(t^{1/k})
+ \ll\sqrt t\log t,
+$$
+
+且 $w(L)=o(L)$，同一范围内也有
+
+$$
+|\vartheta(t)-t|\le C' A e^{-d' w(L)}
+$$
+
+对某个 $0<d'<d$ 成立。于是可取
+
+$$
+\varepsilon_A=e^{-d'w(L)/2},
+\qquad
+H_A=2C'Ae^{-d'w(L)/2}.
+$$
+
+对任意 $u<v$ 满足
+
+$$
+0.99A\le u<v\le1.98A,
+\qquad v-u\ge H_A,
+$$
+
+有
+
+$$
+\begin{aligned}
+\vartheta(v)-\vartheta(u)
+&\ge(v-u)-2C'Ae^{-d'w(L)}\\
+&\ge(1-\varepsilon_A)(v-u).
+\end{aligned}
+$$
+
+因此，Fiori--Jaskari 确实可以在未知但有限的起点以后供应
+
+$$
+\operatorname{ThetaIncrementLower}(0.99A,H_A,\varepsilon_A).
+$$
+
+这澄清了一个此前容易混淆的事实：`ThetaIncrementLower` 本身不是当前的真正障碍，
+而是可以由全局 PNT 误差支付的中间接口。
+
+若固定 $c=1+\delta$，其中 $0<\delta\le1/100$，则
+
+$$
+\operatorname{bandVolume}(A,c)\asymp\frac{\delta^2}{L},
+$$
+
+而 $H_A/(\delta A)\to0$，所以 `shortAllowance` 的实际尺度为
+
+$$
+O\left(\frac{e^{-d'w(L)}}{L}\right),
+$$
+
+并且
+
+$$
+\varepsilon_A\operatorname{bandVolume}(A,c)
+=O\left(\frac{e^{-d'w(L)/2}}{L}\right).
+$$
+
+代入已有的有限补偿定理，得到的确是“几乎全部 band volume 都由实际
+$\Lambda$ 原子支付”的渐近补偿。这一结论保留了 prime powers 和右闭端点，
+所以比只用普通素数人口计数更强；但它仍只控制该有限 centered kernel。
+
+它不能支付当前 Robin 比较所要求的平方根级 signed 余项。所需尺度为
+
+$$
+\frac1{\sqrt A\log A},
+$$
+
+而上述供应器能给出的统一误差尺度至多落在
+
+$$
+\frac{e^{-d'w(L)}}{\log A}.
+$$
+
+两者的上界比为
+
+$$
+\sqrt A\,e^{-d'w(L)}\longrightarrow\infty,
+$$
+
+因为 $w(L)=o(L)$。这是“可支付的 theta 前提”和“不可支付的 signed Robin
+预算”之间的严格尺度分界：前者已由现有文献覆盖，后者仍需要同一实际
+FIB/CA 来源上的平方根级有符号估计。
+
+所以继续改进普通 PNT 或重复建立 `ThetaIncrementLower` 不会推进 RH 主线。
+下一项真正新增的结果必须是以下之一：把该 centered kernel 证明地映射到
+原始 $I_\psi(\log N)$ 并取得平方根级下界，或者直接对同一实际候选给出
+
+$$
+I_\psi(\log N)\ge-
+\frac{D_{\rm lb}(\log N)}{\sqrt{\log N}\log\log N}.
+$$
+
+本节是接口尺度分析，不是 RH 或 Robin 的新证明。
+

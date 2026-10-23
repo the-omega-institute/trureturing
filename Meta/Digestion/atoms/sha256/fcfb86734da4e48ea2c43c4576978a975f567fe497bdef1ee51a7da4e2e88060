@@ -1,0 +1,76 @@
+**定理 3.5（整周期相位坐标、矩映射及 tautological 曲率）。**
+在全正概率图上定义
+
+$$
+\vartheta_X=\theta_1-\theta_0,\quad
+\vartheta_Y=\theta_3-\theta_0,\quad
+\vartheta_Z=\theta_2-\theta_0,\quad
+\chi=\nu^{\mathsf T}\theta
+=\theta_0-\theta_1-\theta_3+\theta_{13}.
+$$
+
+这些角及共同角 $\theta_0$ 给出整个周期环面的整数可逆坐标变换。因此模去共同相位后，
+
+<a id="eq-geom-symplectic"></a>
+
+$$
+\omega_{\rm FS}
+=d\vartheta_X\wedge dX+d\vartheta_Y\wedge dY
++d\vartheta_Z\wedge dZ+d\chi\wedge d\kappa.\tag{3.4}
+$$
+
+相位作用
+
+$$
+\theta_s\longmapsto\theta_s+x_st_X+y_st_Y+z_st_Z,
+\qquad t\in T^3=(\mathbb R/2\pi\mathbb Z)^3,
+$$
+
+是有效 Hamilton 作用，其矩映射为 $\mu([\psi])=(X,Y,Z)$，像恰为 $\mathcal P$。
+
+对 $\mathcal L_{\rm taut}$ 的正交投影连接 $\nabla=P\,d$，局部 unitary connection form 为 $A=-i\lambda$，曲率及第一 Chern 类为
+
+$$
+F=i\omega_{\rm FS},\qquad
+c_1(\mathcal L_{\rm taut})
+=\left[\frac{iF}{2\pi}\right]
+=-\left[\frac{\omega_{\rm FS}}{2\pi}\right].
+$$
+
+特别地，$\lambda$ 不能成为整个 $\mathbb{CP}^4$ 上的全局一形式。
+
+**证明。**
+
+逆变换为
+
+$$
+\theta_1=\theta_0+\vartheta_X,\quad
+\theta_3=\theta_0+\vartheta_Y,\quad
+\theta_2=\theta_0+\vartheta_Z,\quad
+\theta_{13}=\theta_0+\vartheta_X+\vartheta_Y+\chi.
+$$
+
+正逆变换的矩阵均为整数，所以在所有角模 $2\pi$ 的意义下互逆，不留下额外有限覆盖。将逆式及概率反演代入 $\lambda$，得到
+
+$$
+\lambda=d\theta_0+X\,d\vartheta_X+Y\,d\vartheta_Y
++Z\,d\vartheta_Z+\kappa\,d\chi.
+$$
+
+取 $-d$ 即得式 [(3.4)](#eq-geom-symplectic)。三个作用场分别为 $\partial_{\vartheta_X},\partial_{\vartheta_Y},\partial_{\vartheta_Z}$，与该式收缩得到 $dX,dY,dZ$，故 $\mu$ 为矩映射。若群元在全部射线上恒等，模式 $0$ 固定共同相位，而分别与模式 $1,3,2$ 的叠加强制 $t_X,t_Y,t_Z$ 全部为零模 $2\pi$，故作用有效。像的结论来自定理 [3.3](#thm-geom-fiber)，因为任意概率律都可以取非负平方根振幅实现。
+
+对局部归一化代表，直接微分给
+
+$$
+\langle\psi,d\psi\rangle
+=\frac12\sum_s dp_s-i\sum_s p_s\,d\theta_s=-i\lambda.
+$$
+
+这正是 $\nabla=P\,d$ 的局部连接形式。因此 $F=dA=-i\,d\lambda=i\omega_{\rm FS}$。采用 $c_1=iF/(2\pi)$ 的规范，即得 Chern 类公式。上述曲率和 Chern 规范使用标准 Hermitian 线丛构造[11](#ref-hatcher)、[12](#ref-cannas)，也可由两图过渡函数直接验证。
+
+只保留任意两个模式得到一条复射影直线，其内部相对坐标满足 $\omega=d\theta\wedge dp$，面积为 $2\pi$。若有全局 $\lambda$ 且 $\omega=-d\lambda$，Stokes 定理会使该闭曲面上的积分为零，矛盾。局部势的不存在全局版本，不妨碍曲率二形式本身全局良定。
+
+证毕。
+
+<a id="sec-geometry-reduction"></a>
+

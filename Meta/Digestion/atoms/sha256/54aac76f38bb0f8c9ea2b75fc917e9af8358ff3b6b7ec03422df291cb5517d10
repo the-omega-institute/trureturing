@@ -1,0 +1,16 @@
+### 定义 1.3（两侧闭包）
+
+在固定任务语言 $\mathcal T$ 下，定义
+
+$$
+\operatorname{cl}_{\mathcal T}(\Gamma)=\mathcal T_{R_\Gamma},
+$$
+
+以及
+
+$$
+\operatorname{cl}_{\mathrm{rel}}(R)=R_{\mathcal T_R}.
+$$
+
+第一者补全由 $\Gamma$ 的状态纤维已经决定的全部允许任务；第二者补全在当前任务语言中可被区分的全部关系。
+

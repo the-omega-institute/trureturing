@@ -1,0 +1,47 @@
+**Theorem 5.4.1 (Positivity of the drift coefficient).** $\Pi(x)>0$ for every $x\ge0$.
+
+**Proof.** On the four successive intervals in the following table, the entries are the seven degree-six Bernstein coefficients after the affine substitution $x=a+(b-a)y$, $0\le y\le1$. Every entry is positive. Bernstein basis functions are nonnegative and sum to one, proving positivity on each interval.
+
+| $[a,b]$ | Bernstein coefficients, in increasing index |
+|---|---|
+| $[0,1/2]$ | $160,529/3,10931/60,13833/80,17537/120,5065/48,4305/64$ |
+| $[1/2,5/8]$ | $4305/64,44315/768,741671/15360,804273/20480,7608751/245760,4661699/196608,4703705/262144$ |
+| $[5/8,3/4]$ | $4703705/262144,4787717/393216,2585533/327680,180471/32768,451389/81920,207685/24576,61273/4096$ |
+| $[3/4,1]$ | $61273/4096,85943/3072,70739/1280,65193/640,3481/20,3355/12,428$ |
+
+For $x=1+y$, $y\ge0$, the polynomial is
+
+$$
+177y^6+1786y^5+6817y^4+12206y^3+10292y^2+3562y+428>0.
+$$
+
+This covers the remaining interval. ∎
+
+Consequently every fixed $(p,v,x)$ admits at most two original worlds, counted as distinct worlds rather than multiplicities. Define
+
+$$
+\delta=f_1^2-4f_0f_2,\qquad
+d_\pm=\frac{-f_1\pm\sqrt\delta}{2f_2}
+\quad(\delta>0).
+\tag{5.4.3}
+$$
+
+Two distinct worlds with the same $(p,v,x)$ must have these two different drifts. A double root $\delta=0$ represents at most one whole world. The leading coefficient has no positive denominator-zero stratum.
+
+Define the response line
+
+$$
+L=(36x^2+4x-128)p+(-15x^2+9x+20)v
+       -738x^2-1050x+1872.
+\tag{5.4.4}
+$$
+
+We also need the explicit quadratic-in-responses polynomial
+
+$$
+\begin{aligned}
+B={}&(41650 x^{4} + 119000 x^{3} - 3750 x^{2} - 124800 x + 51200)p^{2}\\ &+(- 26600 x^{4} - 47700 x^{3} + 28300 x^{2} + 29100 x - 16000)pv\\ &+(476910 x^{5} + 446070 x^{4} - 3364050 x^{3} - 2076690 x^{2} + 4533120 x - 1305600)p\\ &+(4250 x^{4} + 3100 x^{3} - 3850 x^{2} - 1500 x + 1250)v^{2}\\ &+(- 159210 x^{5} + 2910 x^{4} + 914280 x^{3} - 136530 x^{2} - 577170 x + 204000)v\\ &+(5434857 x^{6} + 14774994 x^{5} - 4247514 x^{4} - 5389542 x^{3} + 22161789 x^{2} - 32267016 x + 11744928).
+\end{aligned}
+\tag{5.4.5}
+$$
+

@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:d41c4ba6c89c22910f530dee48fb2cd898501c8297f0a88917f9cf44cea7cfa0
+  normalized_sha256: sha256:d41c4ba6c89c22910f530dee48fb2cd898501c8297f0a88917f9cf44cea7cfa0
+cas_ref: sha256:d41c4ba6c89c22910f530dee48fb2cd898501c8297f0a88917f9cf44cea7cfa0
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 'nonpropositional: 只规定有限终止、可测性、允许控制资料和通道相位等价的菜单合同。'
+    previous_atom_id: 2993bc6a037fa9217a2febe12ec4f90e66e88d01f3c3c144857b622bc7b9dfd5
+    next_atom_id: e5932689dfc6fd740d0e5e236d2990746fd4546b527940772f913310136130dd

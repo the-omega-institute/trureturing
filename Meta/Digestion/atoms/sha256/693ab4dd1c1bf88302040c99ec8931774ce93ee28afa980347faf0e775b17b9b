@@ -1,0 +1,36 @@
+**Proposition 36.2 (Artin-block bound).** The multiplicity-sensitive
+length satisfies
+
+$$
+\dim_{\mathbb R}\mathcal P_M\le552.
+\tag{36.2}
+$$
+
+Proof. Extend scalars to $\mathbb C$ and decompose
+$\mathcal B_{\mathbb C}=\prod_i B_i$ into Artin local factors.
+Write $e_i=\dim_{\mathbb C}B_i$ and
+$n=\sum_i e_i=\dim_{\mathbb R}\mathcal B\le\ell(p,v)\le24$.
+The tensor square splits into blocks $B_i\otimes B_j$ of lengths
+$e_ie_j$. Each is Artin local with residue field $\mathbb C$.
+On a diagonal block $i=j$, both coordinate differences in (36.1)
+have zero residue. Thus $\Delta$ is nilpotent there, and inverting
+it deletes the entire block, including its nilpotents. The equality
+$m_1=m_2$ is a further quotient. Consequently
+
+$$
+\dim_{\mathbb R}\mathcal P_M
+\le n^2-\sum_i e_i^2\le n^2-n\le24\cdot23=552.
+\tag{36.3}
+$$
+
+Some complex off-diagonal blocks can also be deleted by $\Delta$:
+nonzero complex coordinate differences can have sum of squares zero.
+This is harmless for the stated real-point correspondence, since real
+sums of squares vanish only when both differences vanish. ∎
+
+Thus the numerical candidate-pair bound of Section 33 also bounds
+this algebra length; a multiple root of a terminal characteristic
+polynomial is not being interpreted as two distinct worlds. This is
+a consumer of the exact length refinement and of the already faithful
+reconstruction, not a new independent-pair criterion.
+

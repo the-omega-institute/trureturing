@@ -1,0 +1,6 @@
+## 11. 初始化根纤维、逃逸冲突与因果白盒状态
+
+> 本增补把初始化根纤维分析接入任务—分割卷：它研究在有限、确定性、部分可行的观察协议中，隐藏历史是否已在寄存器初始化时被同一初值合并。它不修改 [Fibonacci 原子关系生成卷](FIBONACCI_ATOMIC_RELATION_GENERATION.md)，也不把 Boundary Dynamics continuation §116 的中点冲突团簇搬到更早的边界。现有的无根 promise-coloring 与 DFAO 等价、任务—分割商和逃逸探针覆盖分别见 [`PromiseColoringTotalization`](../../../D5/S0/Automata/PromiseColoringTotalization.lean) 与本卷前文。
+>
+> `PromiseColoringTotalization` 的相关构造只有一个可见空词起点 `start := c.color(root seed)`；它不允许每个前缀类独立选择起始颜色。本增补所区分的是多个隐藏 occurrence 根共享一个空的可见轨迹，和该来源的单一可见前缀根。全文只作声明的有限模型内的数学推导，不声称真实神经网络满足这些前提，也不把普通 Markdown 文字当作 Lean 真值；机器学习段落的验证边界仍是纸面上的协议推理。
+

@@ -1,0 +1,30 @@
+## 6. Guards and the original problem
+
+The guards in (2.3) have exact source meaning. $u>1$ is precisely $b>0$, and $0<N/L<1$ is precisely $0<r<1$. For $d\ne24$, the two nonzero odd readings force $A\ne0$ and $B\ne0$, so $AB\ne0$ removes no legal world. Equation (3.4) divides by the odd samples of the factor polynomial in (3.3), equivalently by the corresponding nonzero gain samples; their nonvanishing is already forced by the acquired readings in this drift range, and the exceptional drift is excluded separately in Section 5. Beyond the explicitly fixed $g(7)=0$, no extra condition is imposed on sampled gain values, and no extra nonvanishing assumption is imposed on a gain leading coefficient, root difference, direction coordinate, singularity coordinate, or companion denominator. Lower gain degrees, repeated roots, arbitrary signs, zero drift before the separate exclusion, and singular companions remain whenever the original source conditions hold. The only added condition is $g(7)=0$, together with the common-drift route used in the classification.
+
+**Corollary 6.1.** The restricted route succeeds exactly when
+
+$$
+\exists p,v\in\mathbb R:\quad p\ne24\ \land\ \exists d\in\mathbb R\setminus\{0,24\}\ \exists u_0,u_1\in S(d,p,v):
+\quad u_0\ne u_1.
+$$
+
+The criterion follows from Theorem 3.1 and the empty drift layers, with $p\ne24$ inherited from the original target. The two reconstructed worlds are distinct because their $b$-coordinates differ. Their terminal $J$ and $M$ responses both equal the common drift $d$, so the same pair can serve both terminal actions in this restricted route. Theorem 3.1 remains the universal classification for every $p,v\in\mathbb R$; only this route criterion carries the $p\ne24$ restriction.
+
+The original independent-pair problem remains the following mathematical problem, with its full child and all original guards unchanged:
+
+**Problem 6.2.** Determine whether there exist $p,v\in\mathbb R$ with $p\ne24$ and worlds
+$W_0,W_1,W_2,W_3\in C(p,v)$ such that
+
+$$
+W_0\ne W_1,\quad W_2\ne W_3,
+$$
+
+and
+
+$$
+a(W_0)=a(W_1),\qquad m(W_2)=m(W_3).
+$$
+
+No equality between the two common terminal values is required, and the pairs may overlap. The classification above neither proves nor disproves this unrestricted problem.
+

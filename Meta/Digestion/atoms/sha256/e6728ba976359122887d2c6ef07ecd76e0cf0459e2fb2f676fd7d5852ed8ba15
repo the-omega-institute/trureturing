@@ -1,0 +1,8 @@
+## 36. Quantitative terminal information escape
+
+The equality criterion in Theorem 6.2 can be sharpened for the continuous
+terminal kernel of Proposition 7.2. This gives a pairwise statistical
+divergence on a response fibre, and the normalized mean separation is a
+pseudometric after quotienting equal terminal means, while retaining the
+fact that the exact child history is a null event.
+

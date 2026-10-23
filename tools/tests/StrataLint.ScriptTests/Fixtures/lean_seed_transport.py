@@ -244,7 +244,7 @@ make -C "$2" lean
 ''', "optional-fetch", str(self.publisher), str(self.root)], text=True, capture_output=True,
             env=self.transport_environment(**{"GITHUB_ACTIONS": "false", **extra}))
 
-    def deadline_probe(self, seconds, step=0):
+    def deadline_probe(self, seconds=None, step=0):
         # Keep subprocess's own wait clock real. Only the operation's monotonic
         # clock advances at completed gh calls, independently of machine speed.
         write(self.bin / "sitecustomize.py", '''
@@ -274,10 +274,13 @@ def run(args, *rest, **kwargs):
         if args[1] != "api" or "/releases/" in args[2]:
             clock += int(os.environ["FAKE_CLOCK_STEP"])
 subprocess.run = run
-''')
+''' + ('os.environ.pop("STRATALINT_LEAN_CACHE_RELEASE_TIMEOUT_SECONDS", None)\n'
+       if seconds is None else ""))
         (self.root / "gh-budgets").unlink(missing_ok=True)
-        return {"PYTHONPATH": str(self.bin), "FAKE_CLOCK_STEP": str(step),
-                "STRATALINT_LEAN_CACHE_RELEASE_TIMEOUT_SECONDS": str(seconds)}
+        environment = {"PYTHONPATH": str(self.bin), "FAKE_CLOCK_STEP": str(step)}
+        if seconds is not None:
+            environment["STRATALINT_LEAN_CACHE_RELEASE_TIMEOUT_SECONDS"] = str(seconds)
+        return environment
 
     def gh_budgets(self):
         return [json.loads(line) for line in (self.root / "gh-budgets").read_text().splitlines()]
@@ -557,6 +560,20 @@ pathlib.Path.open, tarfile.copyfileobj = open_path, copy
         self.assertIn("502-1", snapshots[0]["args"][1])
         self.assertFalse((self.root / ".lake/build").exists())
 
+    def test_default_and_extended_release_budgets_forward_and_share_expiry(self):
+        for run in (503, 504):
+            self.assertEqual(0, self.transport("publish", str(run)).returncode)
+        shutil.rmtree(self.root / ".lake/build")
+        for configured, step, expected in ((None, 1000, [1800, 800]),
+                                           (21600, 10000, [21600, 11600, 1600])):
+            with self.subTest(configured=configured):
+                (self.root / "gh-budgets").unlink(missing_ok=True)
+                result = self.fetch_then_build(**self.deadline_probe(configured, step=step),
+                    FAKE_FAIL="download")
+                self.assertEqual(0, result.returncode, result.stdout + result.stderr)
+                self.assertIn("deadline exhausted", result.stdout)
+                self.assertEqual(expected, [call["timeout"] for call in self.gh_budgets()])
+
     def test_hanging_publication_and_prune_are_optional_after_real_build(self):
         for run, operation in enumerate(("create", "upload", "edit"), 501):
             with self.subTest(operation=operation):
@@ -593,7 +610,7 @@ pathlib.Path.open, tarfile.copyfileobj = open_path, copy
         self.assertEqual(6, len(list(self.remote.glob("*/release.json"))))
 
     def test_invalid_release_budget_rejects_publication_but_optional_fetch_preserves_build_exit(self):
-        for value in ("0", "-1", "nan", "1801"):
+        for value in ("0", "-1", "nan", "1.5", "21601", "999999999999999999999"):
             with self.subTest(budget=value):
                 environment = {"STRATALINT_LEAN_CACHE_RELEASE_TIMEOUT_SECONDS": value}
                 fetched = self.fetch_then_build(**environment)
@@ -606,7 +623,7 @@ pathlib.Path.open, tarfile.copyfileobj = open_path, copy
                 self.assertEqual([], list(self.remote.iterdir()))
 
     def test_release_budget_accepts_values_up_to_the_ceiling(self):
-        for value in ("1", "600", "1800"):
+        for value in ("1", "600", "1800", "1801", "21600"):
             with self.subTest(budget=value):
                 fetched = self.fetch_then_build(STRATALINT_LEAN_CACHE_RELEASE_TIMEOUT_SECONDS=value)
                 self.assertEqual(0, fetched.returncode, fetched.stdout + fetched.stderr)

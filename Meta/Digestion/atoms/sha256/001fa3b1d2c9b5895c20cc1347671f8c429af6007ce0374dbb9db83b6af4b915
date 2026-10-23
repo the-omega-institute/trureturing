@@ -1,0 +1,85 @@
+**Proposition 119.6 (common field failure and a different persistent form).**
+The common source field of Continuation Theorem 55.3 does not factor
+through $q_n$ at any stage, nor through $q_\infty$. Compressing an
+external force yields a class covector, without supplying field or
+source intertwining. Furthermore the same $u,\rho$ admit the exact
+persistent thirteen-class original-occurrence form
+$L_{\mathrm{closed},0}$, as well as the declared eight-class cube form.
+Thus whole-rho energy persistence alone does not select this cube.
+
+Proof. The common field is $\phi(p)=2^{-|p|}$. The two addresses of
+(119.8) have the same class but
+
+$$
+\phi(\varepsilon)=1,\qquad \phi(111110)=1/64.
+\tag{119.14}
+$$
+
+This violates fibre constancy. It is exactly the obstruction described
+by the existing
+[answerability criterion](../../../D5/S0/Rewriting/Quotients/AnswerabilityCriterion.lean);
+the adjacent
+[dynamics descent criterion](../../../D5/S0/Rewriting/Quotients/DynamicsDescent.lean)
+concerns a self-map preserving quotient fibres. For heat on amplitudes,
+the explicit invariant-range failure is (119.8), not an identification
+of that discrete self-map theorem with a new operator theorem.
+
+For any ambient force $b_n$, testing the constrained equation supplies
+the covector $U_n^{\mathsf T}b_n$ and hence the class velocity contribution
+$M_n^{-1}U_n^{\mathsf T}b_n$. For example
+$U_n^{\mathsf T}\mathbf1_{\{\varepsilon\}}=\mathbf1_{\{0\}}$.
+This equality does not say $\phi|_{V_n}=U_n\psi$ or
+$L_{\mathrm{closed},n}U_n=U_nA_n$. The field in (119.14) is the
+common infinite field restricted to $V_n$, not a newly solved killed
+field. In fact (55.3)--(55.4) give the more precise boundary relation
+
+$$
+L_{\mathrm{kill},n}(\phi|_{V_n})
+ =\mathbf1_{\{\varepsilon\}}
+   +\mathbf1_{\operatorname{Leaf}(\rho^nu)}\,\phi|_{V_n},
+\tag{119.15}
+$$
+
+because the two exterior child values at a leaf sum to its own field
+value. Even the forcing in a finite killed equation therefore retains
+its stated boundary convention.
+
+For the alternative, give each of the thirteen original occurrences
+its own class and copy each original leaf value over its substituted
+block. Its indicator pullback is $\widetilde U_n=E_{0,n}$, and the
+same supplied ancestry identity gives
+
+$$
+\widetilde U_n^{\mathsf T}L_{\mathrm{closed},n}\widetilde U_n
+ =L_{\mathrm{closed},0},\qquad U_n=\widetilde U_nU_0.
+\tag{119.16}
+$$
+
+This is the thirteen-vertex seed-tree form, of rank twelve, whereas
+$K$ is an eight-vertex cube form of rank seven. Both persist under
+the very same source substitution. The additional grouping $q_0$
+supplies the cube. In particular it groups the root with a beta leaf,
+and its class 6 groups beta and alpha leaves. These are not equal
+rooted fringes under
+[ExactSharing's definition of complete labelled ordered subtrees](../../../D5/S3/Arith/FibonacciAtomic/SourceCoordinates/ExactSharing.lean).
+The literal constructors, substitution and address meanings remain
+those of
+[GenealogicalFiberTransport.Source and substitution](../../../D5/S3/Arith/FibonacciAtomic/GenealogicalFiberTransport.lean)
+and
+[ActualTreeReadoutAcquisition.readout and nodes](../../../D5/S3/Arith/FibonacciAtomic/ActualTreeReadoutAcquisition.lean).
+
+The source-specific deductions (119.4), (119.8), (119.11)--(119.16)
+are repo-derived applications of the cited suppliers, without a
+worldwide-priority or exhaustive-literature claim. Form restriction
+is also distinct from static elimination: the latter replaces an
+interior block by its Schur complement, as in
+[Dörfler--Bullo, arXiv:1102.2950v1, §2.1](https://arxiv.org/pdf/1102.2950v1)
+and the [existing Kron-reduction note](../../../Library/GraphInvariants/dorflerbullo2013kron.md).
+Here no interior amplitude is minimized out; the domain is constrained
+and its counting metric is retained. The non-singleton fibres in the table are
+disconnected, so no connected-fibre coarsening hypothesis is asserted.
+These conclusions limit dimension inference from this energy identity.
+They neither establish physical spatial dimension three nor rule out
+other source-to-space bridges with their own additional relations.
+$\square$
+

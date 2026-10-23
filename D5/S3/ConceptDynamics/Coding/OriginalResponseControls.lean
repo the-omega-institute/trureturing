@@ -232,7 +232,7 @@ private theorem response_essential {p : ℕ} {A : CountMat p p} {Q : Type}
 
 /- All cardinal bounds below are direct uses of pinned mathlib, not new
    quotient-cardinality or subtype-cardinality theorems. -/
-private theorem response_control {p : ℕ} {A : CountMat p p} {Q : Type}
+theorem response_control {p : ℕ} {A : CountMat p p} {Q : Type}
     [Fintype Q] (L : IncomingLift A Q)
     (hcol : ∀ j, ∃ i, A i j ≠ 0)
     (hout : ∀ u : Q, ∃ (a : Edge A) (v : Q)

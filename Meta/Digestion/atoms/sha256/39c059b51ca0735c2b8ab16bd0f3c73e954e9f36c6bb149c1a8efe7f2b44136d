@@ -1,0 +1,10 @@
+**Definition 21.4 (cost-supported task progress).** Expand a macro trajectory $s_0(x),s_1(x),\ldots$ into actual completed native segments with integer costs $c_j\ge1$. Every reachable nonterminal macro state supplies its next completed segment under the same uniform controller. Let a nonnegative task potential satisfy
+
+$$
+\Phi_x(s_0(x))\le q(n),\qquad
+c_j\le p(n)\bigl(\Phi_x(s_j(x))-\Phi_x(s_{j+1}(x))\bigr),
+\tag{C.21.2}
+$$
+
+for fixed polynomials $p\ge1,q\ge0$. Initialization and final delivery are included or separately polynomially bounded; terminal outputs satisfy the task specification. The potential need not be computable by the observer. If the controller uses its value to choose operations, computing it belongs to the charged segment.
+

@@ -1,0 +1,36 @@
+**Proposition 30.1 (scoped premises and the joint native conclusion).**
+The all-time estimates (26.1)--(26.4), the full-state witnesses
+(27.8)--(27.10), and the necessary and sufficient arbitrary-family
+criteria (28.2)--(28.3) have the following mathematical dependencies.
+The elementary polynomial, Fourier and variational steps in their proofs
+are supporting methods; their native joint conclusion is the additional
+content, rather than a new general heat or perturbation theorem.
+
+| Supplier | Exact mathematical scope used |
+| --- | --- |
+| [N, Definitions 2.1, 2.3, 3.1 and 8.1; Theorems 8.2 and 10.3](AURIC_FIB_ATOM_PROBABILITY_PHASE_TRANSPORT_AND_HOLONOMY.md) | Original probabilities, preparations, phase convention, two controls, actual grouped leaves and finite native realization. No physical amplitude preparation follows from finite ray realization. |
+| This volume, Propositions 2.1--2.2 and Theorem 3.1 | Completed free forms, killed free heat and compactness at each nonzero parameter, and unregularized full point-field collapse. The collapse is reused, not applied to the regularized multiplier. |
+| This volume, (12.7), Proposition 16.2 and §§20--24, at [the published source through §24](https://github.com/the-omega-institute/trureturing/blob/28695dc3c5b8fc9106f1648e021792233e355c31/docs/develop/theory/FIB_NATIVE_TWO_CONTROL_GREEN_STABILITY.md) | Exact coefficients, common two-driver killed law, effective source equation, original charge and mass identities, fixed-parameter minima, fixed-time inverse-gap estimates, and completed marginal factors. The constants in the fixed-time estimates do not supply the moving-cutoff criterion. |
+| [FiniteRectangleTransport](https://github.com/the-omega-institute/trureturing/blob/0bfa84f27ca531cca721a1c90d35ded2a51c0738/D5/S3/Quantum/Fibers/FiniteRectangleTransport.lean), including `polygon_admissible`, `horizontal_leg`, `vertical_leg`, `rectangle_chain`, `weight_compatible`, `finite_rectangles_realize` | Finite original probability/phase paths and compatibility. These statements contain no heat kernel, all-time circle gap or attractive-energy classification. |
+| Pinned mathlib [BrownianMotion.Basic](https://github.com/leanprover-community/mathlib4/blob/db584cd6d46c92f209a44c0f1c829460d327499d/Mathlib/Probability/BrownianMotion/Basic.lean) and [Fourier.AddCircleMulti](https://github.com/leanprover-community/mathlib4/blob/db584cd6d46c92f209a44c0f1c829460d327499d/Mathlib/Analysis/Fourier/AddCircleMulti.lean) | Generic Brownian and Fourier tools, not the native joint conclusion. The latter file uses unit-circle probability Haar measure; (26.13) instead states explicitly the raw $2\pi$ angular factors required here. No formal-library theorem is asserted to certify the ordinary proof. |
+| [Observation quotient, Theorem 3.1](FIB_NATIVE_OBSERVATION_QUOTIENT_GREEN_ESCAPE.md); [Free diffusion quotient rigidity, §§2--3](FIB_NATIVE_FREE_DIFFUSION_QUOTIENT_RIGIDITY.md) | Hidden integration, averaging, source smearing and complete free-domain pullbacks at their stated factors. They do not identify a marginal energy with the full attractive minimum. The present $q$ factor is exactly the one already verified in §23. |
+| [Continuation III, Specification 82.7](FIB_ATOM_RECURSIVE_HOLOGRAPHIC_BOUNDARY_GEOMETRY_CONTINUATION_III.md); [Continuation IV, §§100--102](FIB_ATOM_RECURSIVE_HOLOGRAPHIC_BOUNDARY_GEOMETRY_CONTINUATION_IV.md) | Bounded truncation and the different finite occurrence-tree screening problem, respectively. Neither supplies the native killed-cylinder moving-time classification. |
+| [H] Colin de Verdiere--Hillairet--Trelat, *Small-time asymptotics of hypoelliptic heat kernels near the diagonal, nilpotentization and related results*, Ann. H. Lebesgue 4, 897--971, [DOI 10.5802/ahl.93](https://ahl.centre-mersenne.org/item/10.5802/ahl.93.pdf), Theorem B.1, Corollary B.3 and Theorem 3.5 | Literature-attested uniform local smoothing and positive-time parameter continuity used in the published fixed-time supplier. They are not an assumed all-time estimate for the degenerating original torus. The all-time bound here follows from (26.7)--(26.14). |
+| [T] G. Teschl, *Mathematical Methods in Quantum Mechanics*, GSM 99, online version February 12, 2009, [author text](https://www.mat.univie.ac.at/~gerald/ftp/book-schroe/schroe.pdf), Theorems 5.11, 6.24 and 4.10 | Literature-attested Trotter domination for each bounded scalar nonnegative potential, bounded form perturbation after the actual multiplier is bounded, and min-max. None supplies the native parameter/time constants without the coefficient and source calculations. |
+
+Proof. The original contract and the fixed-time source/domain results
+are the cited published premises. Formula (26.7) verifies the specific
+uniform polynomial nondegeneracy needed for (26.6), including the resolved
+coefficient at zero without introducing a zero-parameter four-dimensional
+law. The actual Fourier lattice then yields both the joint full-space
+supremum and the native circle gap, with its large-time constant mode.
+The same killed height path and the same $B^2$ in (27.3) yield the hidden
+marginal estimate, from which exactly normalized original full-domain
+states have bounded kinetic energy and the matching potential expectation.
+Their combination proves necessity as well as sufficiency in (28.2).
+The sine expansion independently fixes the charge cost and distinguishes
+it from field mass. Thus the all-time native classification is a
+repository-derived ordinary mathematical result with the stated mature
+attribution, not a literature-priority claim or a physical selection
+mechanism. $\square$
+

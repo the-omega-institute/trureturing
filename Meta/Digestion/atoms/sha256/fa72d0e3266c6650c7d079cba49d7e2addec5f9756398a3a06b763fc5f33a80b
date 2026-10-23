@@ -1,0 +1,143 @@
+**Theorem 33.2 (Two real common finite drifts, exactly one strict lift).**
+At each projection $(x_i,p_i,v_i)$,
+
+$$
+\alpha=\zeta=0.
+\tag{33.2}
+$$
+
+The common finite roots in $d$ of the literal polynomials $f$ and $K$
+are exactly two distinct real numbers. They are $d_{H,i}$ from
+(33.1) and
+
+$$
+d_{G,i}=-\frac{B_f(x_i,p_i,v_i)}{A(x_i)}-d_{H,i}.
+\tag{33.3}
+$$
+
+Exactly one of these two drifts has an original strict whole-world
+lift at this fixed projection, namely $W_{H,i}$. The second drift
+has the following forced negative-$b$ value. The open rational
+intervals also establish distinctness and finiteness of both drifts.
+
+| $i$ | $d_{H,i}$ | $d_{G,i}$ | Forced $b_{G,i}$ | $H_{1,G,i}$ |
+| --- | --- | --- | --- | --- |
+| 1 | $(32.73827139,32.73827140)$ | $(37.02165251,37.02165252)$ | $(-0.41664288,-0.41664287)$ | $(3,4)$ |
+| 2 | $(29.67423205,29.67423206)$ | $(34.50222779,34.50222780)$ | $(-0.57919713,-0.57919712)$ | $(10,11)$ |
+| 3 | $(24.99557948,24.99557949)$ | $(33.28110767,33.28110768)$ | $(-0.60441407,-0.60441406)$ | $(11,12)$ |
+| 4 | $(24.67345843,24.67345844)$ | $(34.11309262,34.11309263)$ | $(-0.37742775,-0.37742774)$ | $(3,4)$ |
+
+Both $W_{H,i}$ and $W_{L,i}$ are distinct original strict worlds in
+$C(p_i,v_i)$ and have equal original terminal-$J$ readings.
+The assertion about exactly one strict lift concerns the fixed
+projection $x_i$, not all source locations in that child.
+
+Proof. The source circuit supplies the exact identities
+
+$$
+\begin{gathered}
+-C_0+jC_1=24\mathcal D,\qquad
+5(-C_0+TC_2)=147\mathcal D,\qquad
+-C_0+nC_3=24\mathcal D,\\
+-C_0+U(-C_0+4C_1-6C_2+4C_3)=18\mathcal D.
+\end{gathered}
+\tag{33.4}
+$$
+
+Clock zero is $d+g(0)=0$. The identities (33.4) therefore restore
+the literal clocks one through four. The late interpolation rows
+(16.4) of SIII, equivalently (28.1)–(28.2), give the literal readings
+$p_i,v_i,a_s$ at clocks five, six and seven. The equations $F=0$
+give $a_H=a_L$ at those same actual sources. Positivity and strictness
+are (31.4), and the disjoint source ranges (31.6) make the two worlds
+distinct. The two different acquired readings $0,24$ imply that each
+gain is nonzero. These checks also explain why no degree or sample
+assumption is needed for the whole-world lift.
+
+Every $p_i$ is off $24$. Thus the faithful inverse of
+[F, Lemma 30.2](FIB_ALL_RESPONSE_FINITE_FIBRE_GEOMETRY.md),
+with exactly the interpolant (22.1), applies to these actual worlds.
+In particular necessity (22.8) gives
+$f(x_i,d_{H,i},p_i,v_i)=K(x_i,d_{H,i},p_i,v_i)=0$.
+The defining zero of $\alpha_H$ and the undivided identity (22.4) give
+$\zeta=0$ on substituting $d_{H,i}$. Since $A\ne0$, the same identity
+now says that $f$ divides $K$ as polynomials in $d$ at this projection.
+There is no division by $\alpha$, $\zeta$ or a sample value here.
+The polynomial $f$ has degree exactly two by (30.5), so its second
+root is exactly (33.3).
+
+For the explicit lift test at the second root let $H_G$ be the unique
+whole interpolant of degree at most three at the original nodes
+$3,4,5,6$, with samples
+
+$$
+\left(\frac{24-d_G}{x_i},\ 18-d_G,\
+      \frac{p_i-d_G}{x_i+1},\ \frac{v_i-d_G}{x_i+2}\right).
+\tag{33.5}
+$$
+
+Use its extrapolations $H_{0,G},H_{1,G},H_{2,G}$ from (22.1), and put
+
+$$
+\begin{gathered}
+B_{0,G}=294/5-2d_G-H_{2,G},\\
+U_G=\frac{-d_GH_{0,G}+B_{0,G}H_{2,G}}
+ {d_G^2+B_{0,G}^2},\qquad b_G=(U_G-1)/2,\\
+j_G=U_G(24-d_G)/H_{1,G},\qquad r_G=x_iU_G-j_G.
+\end{gathered}
+\tag{33.6}
+$$
+
+The arithmetic for the table is entirely rational interval arithmetic:
+start with each closed $[l_i,h_i]$ and its actual source tube,
+perform the eight source intersections specified after (32.11), and
+evaluate $x_i=n_H/U_H$, $v_i=v_H$, $d_H=-C_{0,H}/\mathcal D_H$,
+(33.3), (33.5) and (33.6), in this order, using (31.2)–(31.3).
+The intervals in the table are outward bounds on these expressions.
+Their distinct drift intervals prove that $f$ has two simple real
+roots; both are common roots because $f\mid K$, and there is no
+third finite common root. The leading-coefficient signs in (30.5)
+exclude a drift-degree drop at these projections.
+
+All the denominators used to test this second root have explicit
+guards: $x_i,x_i+1,x_i+2>0$, $A<0$, $d_G>33$,
+$d_G^2+B_{0,G}^2>0$, and $H_{1,G}\ne0$ by the table. Each $b_G$
+interval avoids both $0$ and $-1/2$, so $b_G\ne0$ and $U_G\ne0$.
+In particular the algebraic coordinates in (33.6) are well defined.
+For completeness they determine a whole algebraic lift, even though
+it is inadmissible. Indeed (22.10) and $f(d_G)=0$ give
+
+$$
+d_GH_{2,G}+H_{0,G}B_{0,G}=0.
+\tag{33.7}
+$$
+
+Since $d_G\ne0$, (33.6) and (33.7) imply
+$U_G=-H_{0,G}/d_G$ and $B_{0,G}U_G=H_{2,G}$.
+Substitute these relations and $j_G$ into $K(d_G)=0$. The identity
+used in (29.6) becomes
+
+$$
+0=4D(x_i)^4d_G^2H_{1,G}^2
+\{r_G^2-(1+b_G)r_G+b_G(x_iU_G-b_G)\}.
+\tag{33.8}
+$$
+
+Its prefactor is nonzero. Dividing its braces by $b_G\ne0$ gives
+$j_G=b_G+r_G(1-r_G)/b_G$, since $x_iU_G=j_G+r_G$.
+Set $g_G=H_G/U_G$ and use $P(r_G,b_G)$ as an algebraic matrix.
+The identities $d_GU_G=-H_{0,G}$ and $B_{0,G}U_G=H_{2,G}$,
+with $T_G=(U_G+1)/2$, restore clocks zero and two. The definition
+of $j_G$ restores clock one, and the four samples (33.5) restore
+clocks three through six. This is one entire nonzero polynomial
+with one fixed drift; its nonzero property follows again from $0,24$.
+It is not an original world, because $b_G<0$.
+
+More directly, any putative original world at $(x_i,d_G,p_i,v_i)$
+must have exactly this $H_G,U_G,b_G$ by the necessity half of F,
+Lemma 30.2. The negative-$b$ interval therefore rejects every possible
+strict lift there, irrespective of any other failed positivity guard.
+At $d_H$ the same faithful inverse admits at most one original world,
+and (33.1) constructs it. This proves both the exact common-drift
+count and the unique strict-lift assertion. ∎
+

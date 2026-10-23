@@ -1,0 +1,43 @@
+### 15.3 The $\mathcal A,\mathcal C$-cover
+
+For each strip in (15.4), apply the tensor conversion to $\mathcal A$ and
+$\mathcal C$ on its product with $[0,3]_b\times K_2$.  A cell is discarded
+when either tensor has a strict sign; it is retained when its source rectangle is
+contained in $R_2$.  Otherwise bisect $r$ when
+
+$$
+\frac{\operatorname{width}(I_r)}{1/1000}
+  >\frac{\operatorname{width}(I_b)}{1/10000},
+\tag{15.5}
+$$
+
+and bisect $b$ otherwise.  All bisections are closed and exact.  The finite
+partition has $214$ visited cells, $107$ discarded leaves, and the four
+retained leaves
+
+$$
+\begin{array}{c|c}
+I_r&I_b\\ \hline
+[2129/4096,1065/2048]&[5541/131072,693/16384]\\
+[133/256,2129/4096]&[5541/131072,693/16384]\\
+[2127/4096,133/256]&[5541/131072,693/16384]\\
+[1063/2048,2127/4096]&[5541/131072,693/16384]
+\end{array}
+\tag{15.6}
+$$
+
+Their union is exactly
+
+$$
+\left[\frac{2126}{4096},\frac{2130}{4096}\right]
+\times
+\left[\frac{5541}{131072},\frac{5544}{131072}\right]
+\subset R_2.
+\tag{15.7}
+$$
+
+The closed partition argument is inductive: an actual zero of both source
+polynomials survives every strict-sign rejection, and each split is the union
+of its two closed children.  Hence (15.6) localizes every complete companion,
+without a regularity, degree, gain-zero, or selected-pair hypothesis.
+

@@ -1,0 +1,78 @@
+**Proposition 9.2 (Resultant identities and determinant data).** With
+$f_w$ and $D_s$ as in Theorem 5.1, the four factor identities there hold,
+and
+
+$$
+\operatorname{Res}_b(f_w,bTU D_s)=432E(w).
+$$
+
+Proof. For a degree-two polynomial $f$ and a linear polynomial $ab+c$,
+its root product gives
+$\operatorname{Res}_b(f,ab+c)=a^2f(-c/a)$ when $a\ne0$.
+Consequently the first three factors are
+
+$$
+f_w(0)=-w-30,\quad f_w(-1)=54,\quad
+4f_w(-1/2)=-2(w+72).
+$$
+
+For the fourth factor put $h=156-5w$ and $k=-342-5w$. There is the
+polynomial identity
+
+$$
+5f_w(b)-192D_s(b)=hb+k.
+$$
+
+The roots $s_1,s_2$ of $D_s$ satisfy
+$s_1+s_2=-2/5$ and $s_1s_2=1/5$. The degree-two resultant is symmetric
+in its two arguments. Its root product therefore gives
+
+$$
+\begin{aligned}
+\operatorname{Res}_b(f_w,D_s)
+&=25f_w(s_1)f_w(s_2)\\
+&=(hs_1+k)(hs_2+k)\\
+&=\frac{h^2-2hk+5k^2}{5}\\
+&=20w^2+2736w+143172\\
+&=4(5w^2+684w+35793).
+\end{aligned}
+$$
+
+Multiplicativity in the second argument now gives $432E(w)$, with
+constant factor $1\cdot54\cdot(-2)\cdot4$ and the sign from $-w-30$.
+The argument uses only root sums and products, so repeated roots cause
+no exception.
+
+For explicit determinant data,
+
+$$
+bTU D_s=10b^5+19b^4+13b^3+5b^2+b,
+$$
+
+and the Sylvester matrix is
+
+$$
+\begin{pmatrix}
+192&108-w&-30-w&0&0&0&0\\
+0&192&108-w&-30-w&0&0&0\\
+0&0&192&108-w&-30-w&0&0\\
+0&0&0&192&108-w&-30-w&0\\
+0&0&0&0&192&108-w&-30-w\\
+10&19&13&5&1&0&0\\
+0&10&19&13&5&1&0
+\end{pmatrix}.
+$$
+
+By the defining Sylvester determinant formula its determinant is the
+resultant just computed. Expanding
+$(w+30)(w+72)=w^2+102w+2160$ and multiplying by the quadratic factor
+of $E$ yields the exact coefficient table
+
+| Polynomial | $w^0$ | $w^1$ | $w^2$ | $w^3$ | $w^4$ |
+| --- | ---: | ---: | ---: | ---: | ---: |
+| $E(w)$ | 77312880 | 5128326 | 116361 | 1194 | 5 |
+| $432E(w)$ | 33399164160 | 2215436832 | 50267952 | 515808 | 2160 |
+
+This proves all the determinant coefficients without an assumption about
+any specialized root. ∎
+

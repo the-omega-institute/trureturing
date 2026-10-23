@@ -1,0 +1,76 @@
+**Theorem 255.2 (uniform finite-dimensional obstruction).** Fix a rational
+$0<q\le\tfrac12$. There do not exist a finite-dimensional real normed space
+$E$, a map $\Gamma:\mathcal S\to E$, and constants
+$0<c\le C<\infty$ such that, for every $s,t\in\mathcal S$,
+
+$$
+\boxed{c\,\delta_q(s,t)\le\|\Gamma(s)-\Gamma(t)\|\le C\,\delta_q(s,t).}
+\tag{255.3}
+$$
+
+**Proof.** If $\dim E=0$, two unequal sources already contradict the lower
+bound in (255.3). Assume $d=\dim E\ge1$. For $n\ge0$, let $\mathcal P_n$
+be the perfect native trees of depth $n$: $\mathcal P_0$ consists of the two
+leaves, and
+
+$$
+\mathcal P_{n+1}=\{\operatorname{mul}(s,t):s,t\in\mathcal P_n\}.
+\tag{255.4}
+$$
+
+The $2^n$ leaves can be labelled independently, so
+$|\mathcal P_n|=2^{2^n}$. If $s\ne t$ lie in $\mathcal P_n$, their first
+disagreement frontier contains an address of length at most $n$; hence
+
+$$
+\delta_q(s,t)\ge q^n.
+\tag{255.5}
+$$
+
+Choose $s_0\in\mathcal P_n$. By (255.2) and the upper bound in (255.3),
+all points $\Gamma(s)$ with $s\in\mathcal P_n$ lie in the norm ball of
+radius $C$ about $\Gamma(s_0)$. By (255.5) their pairwise distances are at
+least $c q^n$. Disjoint-ball volume comparison in a $d$-dimensional normed
+space gives
+
+$$
+2^{2^n}
+\le\left(1+\frac{2C}{c\,q^n}\right)^d.
+\tag{255.6}
+$$
+
+The logarithm of the right side is $O(n)$ for fixed $q,c,C,d$, whereas the
+logarithm of the left side is $2^n\log2$. This is impossible for all large
+$n$. Thus no map satisfying (255.3) exists. \quad$\square$
+
+The finite-scale content is explicit: for every proposed $d,c,C$, choose
+$n$ with
+
+$$
+2^{2^n}>\left(1+\frac{2C}{c\,q^n}\right)^d;
+\tag{255.7}
+$$
+
+then the restriction of any candidate to the finite set $\mathcal P_n$
+already violates one of the two inequalities. This is a source-faithful
+application of the ordinary packing estimate in §245.1. Continuation III
+§§90.2–90.7 and §93.2 supply related source-scale and normalized-area packing
+arguments; they use different source families or metrics. The present result
+uses the entire native `Source` family and its actual first-disagreement mass,
+so it is not a new generic packing theorem, a Hilbert-dimension theorem, or a
+selection of physical dimension.
+
+The existing native contraction remains a separate statement:
+
+$$
+\delta_q(\rho^{2k}s,\rho^{2k}t)\le(2q)^k\delta_q(s,t),
+\qquad k\in\mathbb N,
+\tag{255.8}
+$$
+
+where $\rho$ is the repository's native substitution. At $q=1/2$ this is
+only nonexpansive; for $q<1/2$ it is strictly contractive. It does not repair
+the full-source obstruction because the obstruction concerns a single
+uniform encoding of all finite sources. No map from this source family to the
+quantum parameters or to a physical spatial carrier is asserted.
+

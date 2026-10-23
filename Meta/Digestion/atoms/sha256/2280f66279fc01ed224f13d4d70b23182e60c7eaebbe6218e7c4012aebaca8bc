@@ -1,0 +1,11 @@
+**Proposition 17.4 (strict-past final-cut consequence).** Suppose instead
+that a finite run admits any finite collection of strict-past services, each
+with target $k_i$ strictly before its actual admission and with completed
+return no later than $N$. Then $k_i<N$ for every $i$. This excludes the final
+cut only; it does not exclude every proper preterminal cut.
+
+**Proof.** For each completed service, $k_i<\operatorname{admit}_i\le
+\operatorname{return}_i\le N$. Taking the maximum over the finite collection
+still gives a bound strictly below $N$ for every target. No assertion about
+$N-1$ or an earlier cut follows from this inequality alone. $\square$
+

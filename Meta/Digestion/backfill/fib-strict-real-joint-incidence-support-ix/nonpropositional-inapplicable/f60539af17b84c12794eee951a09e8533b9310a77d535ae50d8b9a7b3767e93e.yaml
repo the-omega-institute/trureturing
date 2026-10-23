@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:f60539af17b84c12794eee951a09e8533b9310a77d535ae50d8b9a7b3767e93e
+  normalized_sha256: sha256:f60539af17b84c12794eee951a09e8533b9310a77d535ae50d8b9a7b3767e93e
+cas_ref: sha256:f60539af17b84c12794eee951a09e8533b9310a77d535ae50d8b9a7b3767e93e
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 'Section introduction only: names the interval I=[-533,-458] and announces the consumer of the following corollary. It states no companion bound or existence conclusion.'
+    previous_atom_id: e1b13f4c4b0417de5ff91ce35ad625f73b0b69705b7b4ff7e9bdb44fec83ceb4
+    next_atom_id: 4dcd8a5167a3d06ec57b5e22678d05a46f9679d761e24c0ec6199b36e64ec707

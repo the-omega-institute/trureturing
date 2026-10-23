@@ -1,0 +1,40 @@
+#### 定义 11.1.1（根 occurrence forest）
+
+一个有限有根协议记为
+
+$$
+\mathcal P=(H,H_\circ,E,\delta,\ell,R,\operatorname{Term},t),
+$$
+
+其中：
+
+- $H$ 是非空有限隐藏历史集，$H_\circ\subseteq H$ 是非空根集；
+- $E$ 是有限公开事件字母表；
+- 对每个 $e\in E$，$\delta_e:H\rightharpoonup H$ 是确定的部分后继；
+- $\ell:H\to E^*$ 是公开事件词，根满足 $\ell(h)=\varepsilon$，且若 $\delta_e(h)=h'$，则 $\ell(h')=\ell(h)e$；
+- $R$ 是非空有限终端记录集；
+- $\operatorname{Term}\subseteq H\times R$ 是合法终端对；
+- $t:\operatorname{Term}\to Y$ 给出目标值，其中 $Y$ 是非空集合。
+
+对根 $h_\circ\in H_\circ$，令
+
+$$
+\operatorname{Reach}_\delta(h_\circ)=\{\delta_w(h_\circ):w\in E^*,\ \delta_w(h_\circ)\text{ 定义}\}.
+$$
+
+要求
+
+$$
+H=\bigcup_{h_\circ\in H_\circ}\operatorname{Reach}_\delta(h_\circ),
+$$
+
+且不同根的 occurrence trees 不相交：若 $h_\circ\ne h'_\circ$，则
+
+$$
+\operatorname{Reach}_\delta(h_\circ)\cap\operatorname{Reach}_\delta(h'_\circ)=\varnothing.
+$$
+
+在同一棵树中，给定公开事件词至多有一个节点。因而每个节点有唯一根归属，$H$ 中没有未由声明的转移从根实际到达的幽灵节点；$\ell$ 只记录公开轨迹，不把隐藏根身份偷偷加入接收端输入。
+
+对词 $w=e_1\cdots e_k$，令 $\delta_w$ 为按顺序复合的部分后继，空词的后继为恒等。
+

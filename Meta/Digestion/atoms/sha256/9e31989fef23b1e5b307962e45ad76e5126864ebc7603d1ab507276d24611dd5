@@ -1,0 +1,37 @@
+## 4. Global injectivity on the entire upper strip
+
+Suppose two strict source points with $b\ge8$ have the same $p$.
+If their widths agree, $p_r>0$ makes their $r$ coordinates agree.
+Consider instead widths $b_1<b_2$ and let the common reading be $p_*$.
+For every $b\in[b_1,b_2]$, monotonicity at the closed endpoint sources
+$r=0,1$ gives
+
+$$
+p(0,b)\le p(0,b_2)<p_*,\qquad
+p(1,b)\ge p(1,b_1)>p_*.
+\tag{4.1}
+$$
+
+These endpoint values are well-defined by $D>0$; they are auxiliary
+values, not additional original worlds. Since $p_r>0$, there is exactly
+one $r(b)\in(0,1)$ with $p(r(b),b)=p_*$. The implicit-function theorem
+and uniqueness join these local functions throughout the interval.
+They obey
+
+$$
+r'(b)=-\frac{p_b}{p_r}<0,
+\qquad
+\frac{d}{db}v(r(b),b)
+=v_b-v_r\frac{p_b}{p_r}
+=\frac{E}{H^3p_r}>0.
+\tag{4.2}
+$$
+
+The two points therefore have different sixth readings. This proves
+injectivity of $(r,b)\mapsto(p,v)$ on the entire unbounded strip
+$0<r<1,b\ge8$, and proves the claimed ordering at fixed $p$.
+Lemma 2.1 makes equality of source points equality of complete worlds.
+It follows that every entire acquired child contains at most one world
+in this strip. This argument compares unequal widths and imposes no
+terminal-response equality.
+

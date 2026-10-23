@@ -6,6 +6,14 @@ internal sealed class SeriesDocument : IScribeDocumentDefinition
 {
     public DocumentDefinition Create() => DocumentDefinition.Create(ScribeNode.Create(
         "Positive Gauss series and the Riccati equation", H("Series identities"), Blocks(
+            Describe.Lean(DescribeId.Create("gauss-zero-balanced-coefficient-pos"),
+                DeclarationHandle.Create("D5/S3/Analytic/GaussZeroBalanced/Series.coefficient_pos"),
+                H("Positive hypergeometric coefficients"), StatementSource.WithoutFormula(), AssessedProvenance.FromRepo(),
+                Blocks(Paragraph(Text("For positive real a, b and c and every natural n, ordinaryHypergeometricCoefficient a b c n is strictly positive. The factorial and ascending Pochhammer factors are positive."))), DescribeRole.Theorem),
+            Describe.Lean(DescribeId.Create("gauss-zero-balanced-coefficient-recurrence"),
+                DeclarationHandle.Create("D5/S3/Analytic/GaussZeroBalanced/Series.coefficient_recurrence"),
+                H("The coefficient recurrence"), StatementSource.WithoutFormula(), AssessedProvenance.FromRepo(),
+                Blocks(Paragraph(Text("For all real a and b, positive real c and natural n, write h(n)=ordinaryHypergeometricCoefficient a b c n. Then (n+1)h(n+1)(c+n)=(a+n)(b+n)h(n). With b=1-a and c=1 this supplies the normalized elliptic coefficient recurrence."))), DescribeRole.Theorem),
             Describe.Lean(DescribeId.Create("gauss-zero-balanced-one-le-gauss"),
                 DeclarationHandle.Create("D5/S3/Analytic/GaussZeroBalanced/Series.one_le_gauss"),
                 H("Lower bound by the constant term"), StatementSource.WithoutFormula(), AssessedProvenance.FromRepo(),

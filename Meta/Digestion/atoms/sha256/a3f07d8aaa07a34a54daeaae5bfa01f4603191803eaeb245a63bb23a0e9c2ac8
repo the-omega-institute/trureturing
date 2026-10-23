@@ -1,0 +1,74 @@
+**定理 2.3（一般关系空间的商度量与最短相位提升）。**
+在定理 [2.2](#thm-general-symplectic)的条件下，令
+
+$$
+P_p=\operatorname{diag}(p_s),\qquad
+ G(p)=D^{\mathsf T}P_p^{-1}D .
+$$
+
+对 $k>0$，$G$ 正定。若 FS 度量取
+
+$$
+g_{\rm FS}=\frac12\sum_s\frac{dp_s^2}{p_s}
+ +2\left(\sum_s p_s\,d\theta_s^2-
+       \left(\sum_s p_s\,d\theta_s\right)^2\right),
+$$
+
+则关系商的度量为
+
+$$
+g_{\rm rel}=\frac12\,dq^{\mathsf T}G\,dq
+             +2\,d\chi^{\mathsf T}G^{-1}d\chi.
+$$
+
+指定角速度 $u=\dot\chi$，并固定共同相位规范
+$\sum_s p_s\dot\theta_s=0$ 后，唯一最小速度提升为
+
+$$
+\dot\theta_{\min}=P_p^{-1}DG^{-1}u.
+$$
+
+若换整数关系基 $D'=DM$，其中 $M\in GL(k,\mathbb Z)$，则
+$q'=M^{-1}q$、$\chi'=M^{\mathsf T}\chi$，
+辛形式和度量都保持不变。
+
+**证明。**
+
+对非零 $u$，
+$u^{\mathsf T}Gu=(Du)^{\mathsf T}P_p^{-1}(Du)>0$，
+因为 $D$ 满列秩且所有 $p_s>0$。
+径向部分由 $dp=D\,dq$ 立即给出第一项。
+
+固定角速度约束 $D^{\mathsf T}v=u$。
+任意相位速度可以减去共同角速度而不改变此约束或相位方差，
+所以先规范化为 $p^{\mathsf T}v=0$。
+候选 $`v_*=P_p^{-1}DG^{-1}u`$ 满足
+
+$$
+D^{\mathsf T}v_*=u,\qquad
+ p^{\mathsf T}v_*={\bf1}^{\mathsf T}DG^{-1}u=0.
+$$
+
+对任意另一个规范化可行速度 $`v_*+z`$，有 $D^{\mathsf T}z=0$，故
+
+$$
+z^{\mathsf T}P_pv_*
+ =z^{\mathsf T}DG^{-1}u=0.
+$$
+
+于是其相位方差为
+
+$$
+(v_*+z)^{\mathsf T}P_p(v_*+z)
+ =u^{\mathsf T}G^{-1}u+z^{\mathsf T}P_pz.
+$$
+
+第二项非负，且仅 $z=0$ 时为零。这证明唯一最小性和相位商度量；
+FS 原度量没有径向--相位交叉项，故商中也没有。
+最后 $G'=M^{\mathsf T}GM$，代入坐标变换直接消去 $M$，
+给出两形式与度量的基不变性。
+
+证毕。
+
+<a id="thm-hidden-21"></a>
+

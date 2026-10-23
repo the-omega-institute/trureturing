@@ -1,0 +1,38 @@
+**Corollary 29.2 (Open entire-child $J$ exclusion).** There is an open
+neighbourhood $V$ of $y_1$ inside $\operatorname{int}K_1$ on every
+entire child of which $a$ is injective. No original independent-pair
+configuration (16.6) lies over $V$.
+
+*Proof.* Choose an open full-parent neighbourhood $\mathcal U_1$
+of $W_1$ on which $(p,a)$ is injective, as supplied by Theorem 16.1.
+Some open $V$ about $y_1$ inside $\operatorname{int}K_1$ satisfies
+$\Phi^{-1}(V)\subset\mathcal U_1$. Otherwise there would be
+$y_n\to y_1$ in $K_1$ and $W_n\in C(y_n)$ outside $\mathcal U_1$.
+By Theorem 17.2 a subsequence converges in complete-world coordinates
+to a strict world $W\in C(y_1)$. Theorem 28.1 gives $W=W_1$,
+contradicting the relatively closed complement of $\mathcal U_1$.
+Two worlds in any $C(y)$, $y\in V$, with equal $a$ now share
+$(p,a)$ in $\mathcal U_1$ and hence coincide. This excludes the
+required distinct $J$ pair regardless of the independently chosen
+$M$ pair or any cross-pair overlap. No numerical radius is asserted.
+$\square$
+
+The coefficient and source evaluations in Lemma 27.2 are specific to
+$K_1$. The full-parent reconstruction, critical world, fixed
+determinants, singular image, compactness and local injectivity are
+the existing interfaces cited above. The root-multiplicity argument
+is the mechanism of Theorem 23.1 applied with these first-target
+evaluations. Descartes' rule and the resultant criterion are classical;
+see Basu--Pollack--Roy, *Algorithms in Real Algebraic Geometry*,
+second edition, Chapters 2 and 8--9. The compactness and local
+inverse-function arguments are those used in Theorems 17.2 and 16.1.
+The separate at-most-$24$ bound [F], Theorem 32.1, is not used.
+
+The singleton assertion concerns the exact base $y_1$; it makes no
+constant-cardinality assertion on $K_1$ or $V$. The sentence
+$\mathsf I$ still ranges over all original off-$24$ bases, with
+independent within-pair-distinct $J$ and $M$ pairs in one entire
+child, permitted cross-pair sharing and independent common terminal
+values. Its existence or full exclusion at other bases remains
+unresolved. No second-critical result is a premise or conclusion here.
+

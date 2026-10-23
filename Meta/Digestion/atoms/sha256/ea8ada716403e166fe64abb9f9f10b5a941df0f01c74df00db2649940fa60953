@@ -1,0 +1,74 @@
+## 29. Zero-safe whole-world converse and the drift sign
+
+On either graph define
+
+$$
+Z=\Lambda^2+A_5^2>0,\qquad
+e=\frac{R\Lambda-p_cA_5}{Z},\qquad d=24+e, \tag{29.1}
+$$
+
+and use (26.2) for the one entire gain. The compatibility identity
+(26.7) gives $p_c\Lambda=-RA_5$. It follows by direct multiplication
+that (29.1) satisfies both equations (26.4):
+
+$$
+e\Lambda=R,\qquad eA_5=-p_c.
+$$
+
+The zero-safe parent converse then proves all five parent readings,
+and the second equation proves that the literal fifth-M reading is
+zero. This is an actual complete world, with the original strict
+source, a nonzero whole gain and a fixed real drift. Conversely every
+actual zero-base world has $F=0$ by (26.7), hence lies on one of the
+two graphs; its two equations (26.4) uniquely force (29.1). This proves
+the bijection with the two complete arcs, including their singular
+points. All the reconstruction functions are real analytic on each
+arc because the denominator $Z$ is positive.
+
+At either singular point $R=0,p_c=24$, so the unique lift has
+$e=-24/A_5>0$. It is a single zero-base member of the full allowed
+singular drift line, not an assumption of zero drift or zero gain.
+
+To prove the drift sign on the entire arcs, first note that $e=0$
+would force $R=0$, hence $b=1/8$. At this width $g^0_5=0$, so
+$p_c=24$ and the second equation (26.4) cannot hold with $e=0$.
+Thus $e$ never vanishes on either connected arc.
+
+The signs at one diagonal coordinate can be checked exactly.
+At $r=1/2$,
+
+$$
+F(1/2,1/16)=-10122915/33554432<0,\qquad
+F(1/2,1/3)=-365/5832<0.
+$$
+
+The root ordering implies $b_-(1/2)<1/16$ and
+$1/3<b_+(1/2)<1/2$. On the lower interval $j=b+1/(4b)>4$,
+$n>9/2$, so
+
+$$
+\Lambda>1+96/17-1-8/9>0,\qquad R>0.
+$$
+
+On the upper interval $j\le13/12,n\le19/12$, and therefore
+
+$$
+\Lambda\le61/10-48/13-48/19=-293/2470<0,\qquad R<0.
+$$
+
+In both cases $e=R/\Lambda>0$. Analyticity and connectedness now
+imply $e>0$ on both entire arcs. Thus every actual zero-base world
+has $d>24$, and its original fifth equation gives
+
+$$
+g(5)=-\frac d{U+n}<0. \tag{29.2}
+$$
+
+In particular the absence of zero drift and of a sampled zero at
+clock five is a consequence proved for this sector. It was not an
+imposed filter. No leading gain coefficient, gain root difference or
+other sampled gain was divided out; every lower degree, repeated root
+and sampled zero compatible with the original rows remains represented.
+
+
+

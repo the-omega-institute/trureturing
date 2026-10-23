@@ -1,0 +1,55 @@
+**Convention 3.1 (exact center and analytic coordinates).** Let $W_3$ be
+the exact algebraic complete world of VI, Definition 13.1, with
+$b_3$ the specified unique root of its polynomial $F$ in
+$(12758053/10^8,12758054/10^8)$ and the source's specified algebraic
+lift. This referenced algebraic definition, not a rounded decimal,
+fixes $W_3$. Put $y_3=(p_3,v_3)=\Phi(W_3)$ and $t_3=r_3/b_3$.
+VI, Lemma 13.2, gives
+
+$$
+\begin{gathered}
+0.9005088162<r_3<0.9005088163,\qquad
+0.1275805397<b_3<0.1275805398,\\
+y_3\in\operatorname{int}K_3,\qquad
+K_3=[7.283036,7.283037]\times[61.494372,61.494373].
+\end{gathered}
+\tag{3.1}
+$$
+
+This $y_3$ is different from the original target $(p_*,v_*)$ of III,
+§26.12. The statements below are not a settlement of that target.
+
+In the independent source coordinates $(t,b)$, $t=r/b$, VI, Lemma
+14.2, gives $p_b(W_3)\ne0$. Set
+
+$$
+s_3=\frac{p_t(W_3)}{p_b(W_3)},\quad
+K=\partial_t-s_3\partial_b,\quad
+A=a_K(W_3),\quad 4<A<5.
+\tag{3.2}
+$$
+
+VI, §15, uses the analytic coordinates $x=p-p_3$, $w=t-t_3$.
+Their inverse has $t=t_3+w$, $b=\beta(x,w)$ and the original complete
+world lift, denoted $\mathcal L(x,w)$. Write
+
+$$
+(p,v,m)\circ\mathcal L(x,w)
+=(p_3+x,V(x,w),\mathcal M(x,w)),\qquad
+\mathcal A(x,w)=a(\mathcal L(x,w)).
+\tag{3.3}
+$$
+
+The reused jet identities are
+
+$$
+V_w(0,0)=\mathcal M_w(0,0)=0,\qquad
+V_{ww}(0,0)=\chi\in(0.140,0.141),\qquad
+\mathcal A_w(0,0)=A.
+\tag{3.4}
+$$
+
+Here $\chi$ is the original-source jet of VI, (14.3), transported by
+its explicit derivative identity (15.5). No metric coefficient is
+being transported from a Whitney normal form.
+

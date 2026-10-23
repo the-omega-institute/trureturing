@@ -1,0 +1,22 @@
+**Proposition 15.1 (Initial support is not process dimension).**
+The common finite space $\mathcal H_N$ constrains the initial
+system preparations. It is not an invariant space for the original
+controls, and (14.2) supplies no finite-dimensional replacement of
+the full process.
+
+*Proof.* Proposition 3.4 gives $A_MA_M^T\ne I$: the unchanged
+$M$ control squeezes the vacuum. In position coordinates its image
+has wavefunction proportional to
+$\exp(-\|A_M^{-1}x\|^2/2)$. A finite reference-Fock expansion is
+a polynomial in $x$ times $\exp(-\|x\|^2/2)$. Their ratio here is
+an exponential of a nonzero quadratic form, which cannot be such a
+polynomial. Thus even $U_{A_M}|0\rangle$ has infinite reference-Fock
+support. Since $|0\rangle\in\mathcal H_N$ for every $N$, no such
+cutoff space is invariant under this control.
+
+The original probes still have carriers $L^2(\mathbb R)$ and
+continuous position outcomes. Neither probe support nor pointer
+alphabet is truncated in (14.1). Finite initial system support
+therefore gives no finite protocol, invariant process dimension or
+numerical total-resource bound. $\square$
+

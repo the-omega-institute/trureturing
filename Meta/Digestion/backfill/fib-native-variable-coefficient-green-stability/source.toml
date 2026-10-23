@@ -1,0 +1,5 @@
+source_id = "fib-native-variable-coefficient-green-stability"
+path = "docs/develop/theory/FIB_NATIVE_VARIABLE_COEFFICIENT_GREEN_STABILITY.md"
+atomizer = "generic-v1"
+genre_registry_check = "no-registry"
+unregistered_genres = []
