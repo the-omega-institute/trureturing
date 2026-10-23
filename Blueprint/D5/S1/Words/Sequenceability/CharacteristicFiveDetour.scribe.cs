@@ -29,7 +29,7 @@ internal sealed class CharacteristicFiveDetourDocument : IScribeDocumentDefiniti
     private static Formula Outside => Seq(OpenBrace, V("z"), Colon, Group, Mid,
         Ne(Call("fst", V("z")), D(0)), CloseBrace);
     private static Formula Prefix(Formula n) => Seq(Sum, Underscore,
-        Grp(V("i"), Lt, n), Edge(V("i")));
+        Grp(V("i"), Lt, n), Seq(Open, Edge(V("i")), Close));
     private static Formula Formula()
     {
         Formula m = V("M");
@@ -37,7 +37,8 @@ internal sealed class CharacteristicFiveDetourDocument : IScribeDocumentDefiniti
         Formula interval = All("a", Nat, All("b", Nat,
             Imp(And(new Formula.Relation(V("a"), FormulaRelationOperator.LessThan, V("b")),
                     new Formula.Relation(V("b"), FormulaRelationOperator.LessThanOrEqual, m)),
-                Ne(Seq(Sum, Underscore, Grp(V("a"), Le, Sp, V("i"), Lt, V("b")), Edge(V("i"))), D(0)))));
+                Ne(Seq(Sum, Underscore, Grp(V("a"), Le, Sp, V("i"), Lt, V("b")),
+                    Seq(Open, Edge(V("i")), Close)), D(0)))));
         Formula body = And(Eqn(Vert(D(0)), Pair(D(0), D(0))),
             And(Eqn(Vert(m), Pair(D(0), V("u"))),
             And(Call("Injective", Lam("n", domain, Vert(Call("val", V("n"))))),

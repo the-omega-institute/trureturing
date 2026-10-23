@@ -92,8 +92,8 @@ private def basePerm {K : Type*} [Field K] (r : Kˣ) (c : K) : Perm (Carrier K) 
   (lift r c).sumCongr 1
 
 private def surgery {K : Type*} [Field K] (r : Kˣ) (u : K) : Perm (Carrier K) :=
-  swap (.inl (1, 3*u)) (.inr 0) * swap (.inl (1, 3*u)) (.inr 1) *
-    swap (.inl (2, 4*u)) (.inl (3, 2*u)) * basePerm r (4*u)
+  swap (.inl (1, 3 * u)) (.inr 0) * swap (.inl (1, 3 * u)) (.inr 1) *
+    swap (.inl (2, 4 * u)) (.inl (3, 2 * u)) * basePerm r (4 * u)
 
 private def coordinate {K : Type*} [Field K] (u : K) : Carrier K → ZMod 5 × K
   | .inl v => vertex v
@@ -101,32 +101,32 @@ private def coordinate {K : Type*} [Field K] (u : K) : Carrier K → ZMod 5 × K
 
 private theorem surgery_cycle {K : Type*} [Field K] [Finite K] [CharP K 5]
     (r : Kˣ) (u : K) (hu : u ≠ 0)
-    (hc : ∀ v w : Fin 4 × K, (lift r (4*u)).SameCycle v w ↔
-      (initialRow v = 4*u ↔ initialRow w = 4*u)) :
+    (hc : ∀ v w : Fin 4 × K, (lift r (4 * u)).SameCycle v w ↔
+      (initialRow v = 4 * u ↔ initialRow w = 4 * u)) :
     (surgery r u).IsCycleOn Set.univ := by
-  let P := basePerm r (4*u)
-  let h₁ : Carrier K := .inl (1, 3*u)
-  let h₂ : Carrier K := .inl (2, 4*u)
-  let h₃ : Carrier K := .inl (3, 2*u)
+  let P := basePerm r (4 * u)
+  let h₁ : Carrier K := .inl (1, 3 * u)
+  let h₂ : Carrier K := .inl (2, 4 * u)
+  let h₃ : Carrier K := .inl (3, 2 * u)
   let s : Carrier K := .inr 0
   let t : Carrier K := .inr 1
   let A : Set (Carrier K) := {z | P.SameCycle h₂ z}
   let B : Set (Carrier K) := {z | P.SameCycle h₃ z}
   let U : Set (Carrier K) := Set.range Sum.inl
   have h5 : (5 : K) = 0 := CharP.cast_eq_zero K 5
-  have hi₂ : initialRow (2, 4*u) = 4*u := by simp [initialRow]
-  have hi₃ : initialRow (3, 2*u) ≠ 4*u := by
+  have hi₂ : initialRow (2, 4 * u) = 4 * u := by simp [initialRow]
+  have hi₃ : initialRow (3, 2 * u) ≠ 4 * u := by
     intro heq
-    have h : -(2*u) = 4*u := by simpa [initialRow] using heq
+    have h : -(2 * u) = 4 * u := by simpa [initialRow] using heq
     apply hu
-    linear_combination -h - u*h5
+    linear_combination -h - u * h5
   have hp (n : ℕ) (v : Fin 4 × K) :
-      (P ^ n) (.inl v) = .inl ((lift r (4*u) ^ n) v) := by
+      (P ^ n) (.inl v) = .inl ((lift r (4 * u) ^ n) v) := by
     induction n with
     | zero => rfl
     | succ n ih => simp only [pow_succ', Perm.mul_apply, ih]; rfl
   have hcP (v w : Fin 4 × K) :
-      P.SameCycle (.inl v) (.inl w) ↔ (initialRow v = 4*u ↔ initialRow w = 4*u) := by
+      P.SameCycle (.inl v) (.inl w) ↔ (initialRow v = 4 * u ↔ initialRow w = 4 * u) := by
     rw [← hc]
     constructor
     · intro h
@@ -144,7 +144,7 @@ private theorem surgery_cycle {K : Type*} [Field K] [Finite K] [CharP K 5]
     apply Set.disjoint_left.mpr
     intro z hzA hzB
     have hh := hzA.trans hzB.symm
-    have he := (hcP (2, 4*u) (3, 2*u)).mp hh
+    have he := (hcP (2, 4 * u) (3, 2 * u)).mp hh
     exact hi₃ (he.mp hi₂)
   have hU : A ∪ B = U := by
     ext z
@@ -154,7 +154,7 @@ private theorem surgery_cycle {K : Type*} [Field K] [Finite K] [CharP K 5]
       rw [hcP, hcP]
       simp only [hi₂, hi₃, true_iff, false_iff]
       simpa only [U, Set.mem_range, Sum.inl.injEq, exists_eq, iff_true] using
-        em (initialRow v = 4*u)
+        em (initialRow v = 4 * u)
     | inr i =>
       have hfix : P (.inr i) = .inr i := rfl
       have hna : ¬ P.SameCycle h₂ (.inr i) := fun h => by
@@ -170,7 +170,7 @@ private theorem surgery_cycle {K : Type*} [Field K] [Finite K] [CharP K 5]
   let R := swap h₂ h₃ * P
   have hRt : R t = t := by simp [R, t, P, basePerm, h₂, h₃, swap_apply_def]
   have hRs : R s = s := by simp [R, s, P, basePerm, h₂, h₃, swap_apply_def]
-  have h₁U : h₁ ∈ U := ⟨(1, 3*u), rfl⟩
+  have h₁U : h₁ ∈ U := ⟨(1, 3 * u), rfl⟩
   have hT : (swap h₁ t * R).IsCycleOn (U ∪ {t}) := by
     have hm := merge_cycles R U {t} hR (Perm.isCycleOn_singleton.mpr hRt)
       (by simp [U, t, Set.disjoint_singleton_right]) (R⁻¹ h₁) t
@@ -207,28 +207,28 @@ private theorem coordinate_injective {K : Type*} [Field K] (u : K) (hu : u ≠ 0
 /-- Puncturing at the terminal point removes precisely the artificial closing label. -/
 private theorem surgery_labels {K : Type*} [Field K] [CharP K 5]
     (r : Kˣ) (u : K)
-    (he : Set.BijOn (edgeLabel r (4*u)) Set.univ {v | v.1 ≠ 0}) :
+    (he : Set.BijOn (edgeLabel r (4 * u)) Set.univ {v | v.1 ≠ 0}) :
     Set.BijOn (fun z => coordinate u (surgery r u z) - coordinate u z)
       {z | z ≠ Sum.inr 1} ({v | v.1 ≠ 0} ∪ {(0, u)}) := by
   let s : Carrier K := .inr 0
   let t : Carrier K := .inr 1
-  let a : Carrier K := .inl (0, 2*u)
+  let a : Carrier K := .inl (0, 2 * u)
   let b : Carrier K := .inl (1, u)
-  let c : Carrier K := .inl (2, 3*u)
+  let c : Carrier K := .inl (2, 3 * u)
   let ψ : Perm (Carrier K) := swap s c * swap s a * swap s b
   let L : Carrier K → ZMod 5 × K := fun z =>
     match z with
-    | .inl v => edgeLabel r (4*u) v
+    | .inl v => edgeLabel r (4 * u) v
     | .inr _ => (0, u)
   have h5 : (5 : K) = 0 := CharP.cast_eq_zero K 5
-  have hneg₂ : -(2*u) = 3*u := by linear_combination -u*h5
-  have hneg₁ : -u = 4*u := by linear_combination -u*h5
-  have hneg₃ : -(3*u) = 2*u := by linear_combination -u*h5
-  have hP₁ : basePerm r (4*u) a = .inl (1, 3*u) := by
+  have hneg₂ : -(2 * u) = 3 * u := by linear_combination -u * h5
+  have hneg₁ : -u = 4 * u := by linear_combination -u * h5
+  have hneg₃ : -(3 * u) = 2 * u := by linear_combination -u * h5
+  have hP₁ : basePerm r (4 * u) a = .inl (1, 3 * u) := by
     simp [basePerm, a, lift, hneg₂]
-  have hP₂ : basePerm r (4*u) b = .inl (2, 4*u) := by
+  have hP₂ : basePerm r (4 * u) b = .inl (2, 4 * u) := by
     simp [basePerm, b, lift, hneg₁]
-  have hP₃ : basePerm r (4*u) c = .inl (3, 2*u) := by
+  have hP₃ : basePerm r (4 * u) c = .inl (3, 2 * u) := by
     simp [basePerm, c, lift, hneg₃]
   have hLt : ψ t = t := by simp [ψ, s, t, a, b, c, swap_apply_def]
   have hψ : Set.BijOn ψ {z | z ≠ t} {z | z ≠ t} :=
@@ -289,23 +289,23 @@ private theorem surgery_labels {K : Type*} [Field K] [CharP K 5]
           vertex, column, edgeLabel, lift, swap_apply_def]
       · simp [surgery, coordinate, ψ, L, s, a, b, c, basePerm,
           vertex, column, edgeLabel, lift, swap_apply_def]
-        linear_combination u*h5
-    have hp₁ : basePerm r (4*u) z ≠ .inl (1, 3*u) := by
-      rw [← hP₁]; exact (basePerm r (4*u)).injective.ne hza
-    have hp₂ : basePerm r (4*u) z ≠ .inl (2, 4*u) := by
-      rw [← hP₂]; exact (basePerm r (4*u)).injective.ne hzb
-    have hp₃ : basePerm r (4*u) z ≠ .inl (3, 2*u) := by
-      rw [← hP₃]; exact (basePerm r (4*u)).injective.ne hzc
-    have hps : basePerm r (4*u) z ≠ s := by
-      have hs : basePerm r (4*u) s = s := rfl
-      rw [← hs]; exact (basePerm r (4*u)).injective.ne hzs
-    have hpt : basePerm r (4*u) z ≠ t := by
-      have ht : basePerm r (4*u) t = t := rfl
-      rw [← ht]; exact (basePerm r (4*u)).injective.ne hz
+        linear_combination u * h5
+    have hp₁ : basePerm r (4 * u) z ≠ .inl (1, 3 * u) := by
+      rw [← hP₁]; exact (basePerm r (4 * u)).injective.ne hza
+    have hp₂ : basePerm r (4 * u) z ≠ .inl (2, 4 * u) := by
+      rw [← hP₂]; exact (basePerm r (4 * u)).injective.ne hzb
+    have hp₃ : basePerm r (4 * u) z ≠ .inl (3, 2 * u) := by
+      rw [← hP₃]; exact (basePerm r (4 * u)).injective.ne hzc
+    have hps : basePerm r (4 * u) z ≠ s := by
+      have hs : basePerm r (4 * u) s = s := rfl
+      rw [← hs]; exact (basePerm r (4 * u)).injective.ne hzs
+    have hpt : basePerm r (4 * u) z ≠ t := by
+      have ht : basePerm r (4 * u) t = t := rfl
+      rw [← ht]; exact (basePerm r (4 * u)).injective.ne hz
     have hψz : ψ z = z := by
       simp [ψ, Perm.mul_apply, swap_apply_of_ne_of_ne, hza, hzb, hzc, hzs]
     rw [hψz]
-    have hQz : surgery r u z = basePerm r (4*u) z := by
+    have hQz : surgery r u z = basePerm r (4 * u) z := by
       simp only [surgery, Perm.mul_apply]
       rw [swap_apply_of_ne_of_ne hp₂ hp₃,
         swap_apply_of_ne_of_ne hp₁ hpt, swap_apply_of_ne_of_ne hp₁ hps]
@@ -334,7 +334,7 @@ theorem exists_characteristic_five_relative_path (K : Type*)
       (∑ i ∈ Finset.range M, (v (i + 1) - v i)) = (0, u) := by
   let := Fintype.ofFinite K
   let M := 4 * Nat.card K + 1
-  obtain ⟨r, _, hc, he, hv, _⟩ := exists_characteristic_five_lift K (4*u)
+  obtain ⟨r, _, hc, he, hv, _⟩ := exists_characteristic_five_lift K (4 * u)
   let Q := surgery r u
   let s : Carrier K := .inr 0
   let t : Carrier K := .inr 1
