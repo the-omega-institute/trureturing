@@ -61,16 +61,15 @@ internal sealed class ActualFirstTerminationMemoryDocument : IScribeDocumentDefi
                         + "decodeCode, encodeCode, decodeStack, decodeCfg, normal, returning, step, initial, "
                         + "run, pulse, view, normalDispatch, normalBody, returnFrame, and returnBody.")),
                 Paragraph(Text(
-                    "A same-delivery faithful four-slot Contract.Registration was attempted against the "
-                        + "enrolled dependent-family interfaces. The complete source telescope mixes an "
-                        + "existential fixed universal code, an unbounded program/input clock, and the "
-                        + "minimum-state and inclusive-cutoff predicates; the current enrolled templates "
-                        + "do not provide a lawful realization/readout reconstruction with compiled "
-                        + "variation, sensitivity, dependence, and source-occurrence binding for this "
-                        + "family. The unfinished interface gap is recorded under "
-                        + "https://github.com/the-omega-institute/trureturing/issues/5214. No "
-                        + "declared_validated audit status is asserted; this issue is not a proof or a "
-                        + "registration result.")))),
+                    "A same-delivery four-slot registration attempt remains unfinished. No faithful "
+                        + "compiled Contract.Registration or current source-occurrence binding is retained "
+                        + "for any of the five theorem targets. Missing evidence comprises the complete-telescope "
+                        + "realization and source reconstruction, a lawful enrolled readout, and compiled "
+                        + "variation, sensitivity, and observational-dependence proofs. The concrete report is "
+                        + "https://github.com/the-omega-institute/trureturing/issues/20665. This missing "
+                        + "evidence does not establish that the enrolled dependent-family interfaces cannot "
+                        + "represent the source theorem. No declared_validated status is asserted; the issue "
+                        + "is neither a proof nor a registration result.")))),
             Describe.Lean(
                 DescribeId.Create("actual-first-termination-root"),
                 DeclarationHandle.Create(Owner + "original_section_6_4"),

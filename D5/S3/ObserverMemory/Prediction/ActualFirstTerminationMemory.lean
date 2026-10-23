@@ -57,7 +57,6 @@ theorem single_start_dp_sizes (t : ℕ) :
     rw [heq]
     by_cases hn : n = t <;> simp [pulse, hn]
 
-/-- Consumed DP specialization; the fixed-pulse count is not reproved. -/
 private theorem pulse_minimum (t : ℕ) :
     IsLeast (unarySizes (fun n => decide (n = t))) (t + 2) := by
   rw [single_start_dp_sizes]
@@ -87,7 +86,6 @@ private theorem single_pulse_shape (b : ℕ → Bool)
       | true => exact False.elim (hn (unique n t hb hit))
     simp [hn, hz]
 
-/-- Consumed transport of the DP minimum, with the pulse at the same index. -/
 private theorem minimum_at_hit (b : ℕ → Bool)
     (unique : ∀ i j, b i = true → b j = true → i = j)
     {t : ℕ} (hit : b t = true) : IsLeast (unarySizes b) (t + 2) := by
@@ -165,12 +163,10 @@ private theorem prefix_hit_computable (b : ℕ → ℕ → Bool)
   | succ n ih =>
     exact congrArg (fun z => cond (b p.1 n) true z) ih
 
-/-- The same inclusive prefix property as in original section 6.4. -/
 def ExhaustiveZeroPrefix (b : ℕ → ℕ → Bool) (N : ℕ → ℕ) : Prop :=
   ∀ e, (∀ n, n ≤ N e → b e n = false) → ∀ n, b e n = false
 
-/-- A computable exhaustive cutoff would decide the existential predicate.
-This is a class lemma, not a claim that an interpreter has been instantiated. -/
+/-- A computable exhaustive cutoff would decide the existential predicate. -/
 private theorem no_computable_prefix_cutoff (b : ℕ → ℕ → Bool)
     (hb : Computable₂ b)
     (undecidable : ¬ComputablePred (fun e => ∃ n, b e n = true)) :
@@ -205,12 +201,7 @@ private theorem no_computable_prefix_cutoff (b : ℕ → ℕ → Bool)
 def MinimumStateBound (b : ℕ → ℕ → Bool) (s : ℕ → ℕ) : Prop :=
   ∀ e k, IsLeast (unarySizes (b e)) k → k ≤ s e
 
-/-- General obstruction for uniformly computable, at-most-one-hit families.
-The actual operational program family must separately establish ALL three
-premises. In particular, this theorem does not close original section 6.4.
-
-The finite machine is obtained per instance. The same index t is used in the
-pulse, the DP minimum t+2, and the inclusive cutoff contradiction. -/
+/-- Uniformly computable, at-most-one-hit families with undecidable hit predicates have no computable bound. -/
 theorem uniform_single_pulse_obstruction (b : ℕ → ℕ → Bool)
     (hb : Computable₂ b)
     (unique : ∀ e i j, b e i = true → b e j = true → i = j)
@@ -238,9 +229,7 @@ theorem uniform_single_pulse_obstruction (b : ℕ → ℕ → Bool)
 
 end Oldest8330Proposal.UniformFirstHitMemory
 
-
-/- Actual finite-data list program. Native time is one ToPartrec.step.
-The exact 233-line supplier remains above, unchanged. No evaln fuel is used. -/
+/- Native time is one ToPartrec.step. -/
 namespace Oldest8330Proposal.OperationalFirstTermination
 open Nat.Partrec (Code)
 open StateTransition
@@ -468,7 +457,6 @@ private theorem actual_domain (u : Code) (e : ℕ) :
   have h := congrArg Part.Dom (decoded_eval (initial u (e+1)))
   simpa [initial, normal_decode, decodeStack, Turing.ToPartrec.stepNormal_eval]
     using (Iff.of_eq h).symm
-
 
 /- Each proof below concerns the standard effective encodings of sums,
 products, lists and Nat.Partrec.Code. No arbitrary countability encoding. -/
