@@ -271,37 +271,44 @@ g_D(a)=D^{-1}\xi(a)\sum_{d_1d_2=a}
 \mu(d_1)\mu(d_2)V(q_{d_1}/D)V(q_{d_2}/D).
 $$
 
-Every column and factor sum in this section is over good ideals, meaning ideals prime to $S$; $\xi$ is multiplicative and has modulus one on this semigroup. Ideals are counted once, $q_d=Nd$, and the field and bad-prime set $S$ are fixed. In this section assume a **fixed nonzero smooth nonnegative annular profile $V$**. This is a permitted profile subclass, not a statement for arbitrary complex profiles, profile derivatives, or the sum of all Fourier components.
+Every column and factor sum in this section is over good ideals, meaning ideals prime to $S$; $\xi$ is multiplicative and has modulus one on this semigroup. Ideals are counted once, $q_d=Nd$, and the field and bad-prime set $S$ are fixed. Assume a **fixed nonzero smooth complex annular profile $V$**. The following argument concerns this one Fourier component and its exact self-convolution.
 
-The classical ideal Möbius/Liouville identity
-$\mu(d)=(-1)^{\Omega_F(d)}\mu(d)^2$, with $\Omega_F$ counting prime-ideal factors with multiplicity, gives
+Reuse the classical Bohr lift and Haar Plancherel identity of Hedenmalm–Lindqvist–Seip, [arXiv:math/9512211v1, §2.2, (2-7) and the subsequent Plancherel identity](https://arxiv.org/html/math/9512211v1). For the ideal semigroup, give each prime ideal its own circle coordinate. More precisely, let $\mathcal P_D$ be the finite set of prime ideals dividing the support of
 
 $$
-g_D(a)=\xi(a)(-1)^{\Omega_F(a)}c_D(a),
+v_D(d)=\mu(d)\xi(d)V(q_d/D),
 \qquad
-c_D(a)=D^{-1}\sum_{d_1d_2=a}
-\mu(d_1)^2\mu(d_2)^2V(q_{d_1}/D)V(q_{d_2}/D)\ge0.
+P_D(z)=\sum_d v_D(d)\prod_{\mathfrak p\in\mathcal P_D}
+z_{\mathfrak p}^{v_{\mathfrak p}(d)}.
 $$
 
-Thus the factorizations of a fixed product column have the same Möbius sign. Expanding $c_D(a)^2$ and keeping just the ordered diagonal pairs yields
+Unique prime-ideal factorization identifies multiplication of these monomials with multiplication of ideals. Thus the coefficient of the monomial indexed by $a$ in $P_D^2$ is exactly $Dg_D(a)$, including the terms with shared primes. Distinct ideals with the same norm remain distinct monomials; a time average of $q_d^{-it}$ would not give this orthogonality.
+
+On the finite torus $\mathbb T^{\mathcal P_D}$, with Haar probability measure $m_D$, Plancherel and Cauchy–Schwarz give
 
 $$
-\|g_D\|_2^2=\sum_a c_D(a)^2
-\ge D^{-2}\left(\sum_{d\ {\rm good}}
-\mu(d)^2V(q_d/D)^2\right)^2.
+\begin{aligned}
+D^2\|g_D\|_2^2
+&=\int |P_D|^4\,dm_D\\
+&\ge\left(\int |P_D|^2\,dm_D\right)^2\\
+&=\left(\sum_{d\ {\rm good}}
+\mu(d)^2|V(q_d/D)|^2\right)^2.
+\end{aligned}
 $$
 
-For the squarefree count, directly reuse the principal-character case of [G5 and its squarefree expansion](faveri2026fixedorder.md#the-actual-gram-including-all-original-zeros), based on Lemke Oliver–Thorner, Lemma A.3 in [Pasten, arXiv:1705.09251v4](https://arxiv.org/pdf/1705.09251v4). Taking the label $R=1$ and profile $V^2$ in G3 gives
+All sums here are finite. Haar integration is an auxiliary coefficient identity, not an equidistribution assumption for the actual sextic row characters. The bound permits arbitrary complex phases of the fixed profile; it does not rely on retaining positive terms in a complex convolution expansion.
+
+For the squarefree count, directly reuse the principal-character case of [G5 and its squarefree expansion](faveri2026fixedorder.md#the-actual-gram-including-all-original-zeros), based on Lemke Oliver–Thorner, Lemma A.3 in [Pasten, arXiv:1705.09251v4](https://arxiv.org/pdf/1705.09251v4). Taking the label $R=1$ and profile $|V|^2$ in G3 gives
 
 $$
-D^{-1}\sum_{d\ {\rm good}}\mu(d)^2V(q_d/D)^2
+D^{-1}\sum_{d\ {\rm good}}\mu(d)^2|V(q_d/D)|^2
 \longrightarrow C_{V,S}
 =\frac{\operatorname{Res}_{s=1}\zeta_F(s)}{\zeta_F(2)}
 \prod_{\mathfrak p\in S}(1+q_{\mathfrak p}^{-1})^{-1}
-\int_0^\infty V(y)^2\,dy>0.
+\int_0^\infty |V(y)|^2\,dy>0.
 $$
 
-This uses ideal counting, not an additional restriction to one ray class or a count of unit representatives. Consequently $\liminf_{D\to\infty}\|g_D\|_2^2\ge C_{V,S}^2>0$. The sign identity and counting theorem are classical inputs; this is their scoped application to the existing coefficient, not a new large-sieve or RH estimate.
+This uses ideal counting, not an additional restriction to one ray class or a count of unit representatives. Consequently $\liminf_{D\to\infty}\|g_D\|_2^2\ge C_{V,S}^2>0$. Bohr lifting, Haar Plancherel, Cauchy–Schwarz and the counting theorem are classical inputs; this is their application to the existing coefficient, not a new harmonic-analysis, large-sieve or RH theorem.
 
 At $D=U^{1/2}$, the coefficient-independent sixth-order sieve in (458.7) has cost $U^{7/6+\varepsilon}\|g_D\|_2^2$. Together with the unchanged plain fourth moment $\ll U^{1+\varepsilon}$, an inverse fourth-moment exponent $B$ would give complete-energy exponent $(B+3)/2$ when $U\asymp K$. To improve the current §459 exponent through this route requires
 
@@ -316,4 +323,64 @@ $$
 \qquad B_*-7/6=\frac{12-5\sqrt6}{3}<0.
 $$
 
-The positive lower bound excludes such a uniform norm-only shortcut on this profile subclass. It gives **no lower bound** for the actual inverse fourth moment, $Q(b)$, any projected energy, or the complement: cross terms between distinct columns can cancel through the row characters. Coefficient-sensitive estimates for those correlations, zero-bin gains, complex-profile cancellation and the full signed Robin restoration remain separate questions.
+The positive lower bound excludes this norm-only shortcut for every fixed nonzero smooth complex annular profile. For profiles that vary with $D$, the finite Haar inequality remains exact, but a uniform positive constant requires the normalized squarefree mass on its right-hand side to stay bounded away from zero. It gives **no lower bound** for the actual inverse fourth moment, $Q(b)$, any projected energy, or the complement: cross terms between distinct columns can cancel through the row characters. It also gives no corresponding lower bound for a convolution of two different factors such as the original $\mu*\mathrm{plain}$ coefficient, or for the sum of different Fourier components. Coefficient-sensitive estimates for the actual row correlations, zero-bin gains and the full signed Robin restoration remain separate questions.
+
+## The original convolution norm before sixth-power compression
+
+The self-convolution argument above does not apply to two different factors. For the original coefficient, instead reuse the distinct-prime construction in [§473](../../docs/develop/theory/FIBONACCI_ANALYTIC_FRONTIER_INTERFACES.md#473-对全部-f4-掩码与投影稳定的物理行切面) and the fixed-ray prime-ideal theorem used there. Let $D=N=\sqrt K$ and keep fixed nonzero smooth complex annular profiles $V,W$. Suppose the original finite ray multiplier $\omega$ is nonzero on an allowed class. Then the **uncompressed** coefficient
+
+$$
+b(h)=\omega(h)\sum_{dn=h}\mu(d)V(q_d/D)W(q_n/D)
+$$
+
+has
+
+$$
+\|b\|_2^2\gg_{V,W,\omega,S}\frac{K}{(\log K)^2}
+\qquad(K\longrightarrow\infty).
+$$
+
+Here is the additional counting interface, not a new prime-distribution theorem. For distinct good prime ideals $p,q$ with $q_p/D,q_q/D$ in fixed positive compact intervals, the unit and product divisors lie outside the inverse annulus for large $D$. The existing semiprime identity therefore gives
+
+$$
+b(pq)=-\omega(pq)H(q_p/D,q_q/D),\qquad
+H(x,y)=V(x)W(y)+V(y)W(x).
+$$
+
+The continuous kernel $H$ is nonzero somewhere. If $V(x)W(x)\ne0$ for some $x$, use $H(x,x)=2V(x)W(x)$ and perturb to distinct arguments. Otherwise choose $V(x)\ne0$ and $W(y)\ne0$; the disjoint nonzero sets give $H(x,y)=V(x)W(y)\ne0$. In either case choose disjoint compact intervals $I,J$ with nonempty interiors on which $|H|$ has a positive lower bound. Choose fixed prime-ray classes whose product is the retained class of $\omega$. The fixed-ray prime-ideal theorem gives $\gg D/\log D$ primes in each of $DI,DJ$, after deleting $S$. Unique ideal factorization and $I\cap J=\varnothing$ make their $\gg D^2/\log^2D$ products distinct. On this class $|\omega|$ is a fixed positive constant, proving the bound.
+
+Consequently, a fixed power saving for the norm of this uncompressed coefficient cannot by itself pay the balanced sixth-order sieve cost. Even a hypothetical bound $Q(b)\ll K^{7/6+\varepsilon}\|b\|_2^2$ would need a coefficient-norm exponent below
+
+$$
+\frac{49-10\sqrt6}{12}-\frac76
+=\frac{35-10\sqrt6}{12}<1
+$$
+
+to improve §459 by this mechanism. This is only a restriction on a norm-only payment: the actual unrestricted-column sieve still requires its original sixth-power decomposition and masks. The argument gives no lower bound after aggregation of sixth-power-equivalent columns, or for $Q(b)$, a projection or its complement, including the actual row energy after the finite Fourier components are recombined. No uniform lower bound is claimed for profiles varying with $D$. It leaves cancellation in the actual row kernel available. The semiprime identity, ray-prime theorem and counting argument are reused classical tools; this paragraph adds no analytic Lean certification, improved Robin bound or literature-priority claim.
+
+## The fixed-order density theorem at the existing critical bin
+
+A separate possible substitution is de Faveri's [arXiv:2610.04045v1, Corollary 1.5](https://arxiv.org/html/2610.04045v1#S1.SS2). For the source's $n$th-power-free Hecke family over a degree-$d_F$ field, it bounds the total zero count by
+
+$$
+\sum_{q_a\le X}^{\flat}N(\sigma,T,a)
+\ll X^{1-\delta_n(\sigma)+\varepsilon}
+T^{1+d_F(1-\sigma)/(3-2\sigma)+\varepsilon}.
+$$
+
+This is an existing literature theorem. To replace a count in §459 it would also have to cover every original finite twist and primitive inducing presentation, with its common height buffer. Even granting that transport and discarding the positive height cost, its stated exponent does not improve the maximizing bin. For $n=6$, writing $\delta=2\sigma-1$, the middle branch $1/3\le\delta\le5/6$ gives
+
+$$
+R_6(\delta)=1-
+\frac{\delta(18\delta-3)}{60\delta-36\delta^2-10}.
+$$
+
+At the existing $\delta_*=(15-5\sqrt6)/6\in(1/3,1/2)$, comparison with $R(\delta)=(15-16\delta)/(15-6\delta)$ is exact:
+
+$$
+R_6(\delta_*)-R(\delta_*)=
+\frac{\delta_*(312\delta_*-252\delta_*^2-55)}
+{(15-6\delta_*)(60\delta_*-36\delta_*^2-10)}>0.
+$$
+
+Both denominator factors are positive on $[1/3,1/2]$. The numerator's quadratic factor is concave with endpoint values $21,38$, hence positive throughout that interval. Numerically the two count exponents are $R_6(\delta_*)=0.7575635858\ldots$ and $R(\delta_*)=0.6254252143\ldots$. Thus retaining the old count and taking the minimum with this new input still attains the old maximum at $\delta_*$. It leaves the §459 energy exponent $(49-10\sqrt6)/12$ unchanged; replacing the old count outright would be weaker there. The $T$ factor and finite transport costs cannot improve this comparison. No optimization of other bins, new zero-density theorem, or lower bound on the actual energy is asserted. A stronger same-object joint estimate remains required.
