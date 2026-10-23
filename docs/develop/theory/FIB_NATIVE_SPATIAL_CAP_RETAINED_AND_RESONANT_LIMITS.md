@@ -2613,3 +2613,40 @@ rank two and physical Euclidean dimension retain their distinct
 meanings.
 
 ## 追加锚（本行以下为增补区）
+
+## 21. Scope reconciliation for the combined source
+
+The final paragraph of §11 describes the scope of §§1–11 alone:
+their normalized-ground and rank-one conclusions do not themselves
+establish convergence on other spectral subspaces. Its description of
+the all-real operator limit and resonant transfer as still requiring
+analysis is superseded and void as a statement about the complete
+source. The operator supplier is Theorem 12.1, proved in §§13–19;
+the ground suppliers remain those identified in §20.
+
+For the unchanged family (1.1)–(1.5), the replacement is precisely
+(12.4)–(12.5), for each fixed admissible model, fixed $b$, every fixed
+real $\lambda$, every fixed $L^2(\mu)$ input and every nonreal $z$.
+All angular and spectral channels and all $\lambda_n$ are included.
+The third-order resonant window is (12.6)–(12.7), with a remainder
+uniform on compact window-parameter sets when compact uniformity is
+claimed. Unscaled compact-$\lambda$ uniformity is only away from
+the resonances; both uniformities allow compact nonreal-$z$ sets for
+each fixed input. The capped domains remain $D(L_A)$, with form domain
+$\mathcal F_A$; the limiting inherited-wall realizations and their
+selected source conditions are exactly (12.1) and (12.4).
+
+The definitions, theorems and proofs of §§1–11 retain their stated
+hypotheses and conclusions. Their ground, profile and separate-resource
+laws are distinct from Theorem 12.1: ground collapse above
+$\lambda_D$ can coexist with its finite nonreal-resolvent limit, as
+§20 explains. No stronger cap-to-fixed-radius operator-norm response
+or arbitrary actual trace bound is supplied or needed by the
+graph-core proof (§20). A real eigenvalue of a reference realization
+does not exclude that parameter from Theorem 12.1; real-pole spectral
+bookkeeping is not thereby supplied. Norm-resolvent convergence,
+quantitative rates, all-level counts, arbitrary varying-$\lambda$
+sequences, model-uniformity and new resource finite parts remain
+outside the conclusions, as specified in Theorem 12.1 and §20.
+
+## 追加锚（本行以下为增补区）
