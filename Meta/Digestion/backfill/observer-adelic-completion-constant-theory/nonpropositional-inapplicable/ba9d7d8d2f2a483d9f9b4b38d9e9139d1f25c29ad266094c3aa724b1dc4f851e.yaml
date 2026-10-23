@@ -5,3 +5,7 @@ cas_ref: sha256:ba9d7d8d2f2a483d9f9b4b38d9e9139d1f25c29ad266094c3aa724b1dc4f851e
 coverage_gids: []
 receipts:
   unresolved_subitems: []
+  nonpropositional:
+    justification: isolated list fragment naming a cell pole; no standalone proposition
+    previous_atom_id: e4fb6a1f8e2472804cba347f029efe096a68533f610ea10bc346a2ef0b187e5e
+    next_atom_id: 0597bc3acf37508a46cdadc1cc051663b0d35f945383788ab8e876f7712dfd96
