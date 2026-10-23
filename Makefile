@@ -210,6 +210,7 @@ search-reduction search-reduction-run: export SEARCH_REDUCTION_REQUESTS := $(val
 
 search-reduction-test: search-reduction-index-fixtures
 	@/bin/bash tools/scripts/search-reduction-runner.sh test
+search-reduction-test: export SEARCH_REDUCTION_WORKERS := 1
 
 # Reexecute every probe and guard even when the compiled fixtures are current.
 search-reduction-replay-test:
