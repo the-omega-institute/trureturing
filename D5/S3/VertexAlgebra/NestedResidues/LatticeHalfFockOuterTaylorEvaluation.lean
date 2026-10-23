@@ -275,7 +275,7 @@ theorem current_source_laurent_residue (D : LatticeData) (a b : Carrier D)
   intro e he
   exact current_source_monomial_residue D a b K e (P.coeff e) w
 
-private theorem finite_rectangle_cut (A B : ℕ) (f : ℕ → ℂ) :
+theorem finite_rectangle_cut (A B : ℕ) (f : ℕ → ℂ) :
     (∑ u ∈ Finset.range (A + 1), if u ≤ B then f u else 0) =
       ∑ u ∈ Finset.range (B + 1), if u ≤ A then f u else 0 := by
   rw [← Finset.sum_filter, ← Finset.sum_filter]
