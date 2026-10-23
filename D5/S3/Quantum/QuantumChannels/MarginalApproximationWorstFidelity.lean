@@ -199,7 +199,13 @@ private lemma fidelity_overlap {n : Type*} [Fintype n] [DecidableEq n]
 
 private lemma shift_expansion (N : ℕ) :
     ∑ a, shiftCoeff N a • pauliString a = cyclicShift N := by
-  sorry
+  classical
+  simp only [shiftCoeff, pauliString_word]
+  let e : (Fin N → Fin 4) ≃ (Fin N → Pauli) :=
+    Equiv.piCongrRight fun _ => pauliLabelEquiv
+  exact (e.sum_comp (fun a => (((2 : ℂ) ^ N)⁻¹ *
+    Matrix.trace (wordOp a * cyclicShift N)) • wordOp a)).trans
+    (word_expansion (cyclicShift N)).symm
 
 private lemma shift_unitary (N : ℕ) : (cyclicShift N)ᴴ * cyclicShift N = 1 := by
   sorry
