@@ -53,3 +53,4 @@ This construction belongs to the R-sequenceability program of P. Headley, R-sequ
 - Truth anchor: `D5/S3/FiniteGroups/HeadleyExtension.RCycle`
 - Truth anchor: `D5/S3/FiniteGroups/HeadleyExtension.RStar`
 - Truth anchor: `D5/S3/FiniteGroups/HeadleyExtension.nonsplit_extension_r_cycle`
+- Dependency: [D5/S3/Combinatorics/PerfectMatchings/FiniteBandSwitch](../Combinatorics/PerfectMatchings/FiniteBandSwitch.md)
