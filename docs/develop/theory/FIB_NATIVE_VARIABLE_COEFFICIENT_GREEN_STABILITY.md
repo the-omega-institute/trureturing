@@ -4440,286 +4440,503 @@ acquisition distinctions of §26 remain in force.
 
 ## 追加锚（本行以下为增补区）
 
-## 29. Calibrated native commands and the complete free occupation
+## 29. Finite native command laws generating the complete free Green occupation
 
-The preceding Green results concern one fixed model. The following theorem
-records the exact source correspondence needed when a separately calibrated
-family of finite commands is supplied. Calibration is an additional law
-assumption; it is not obtained from the FIB definitions or from the native
-guard alone.
+Write N for [Probability, phase transport and holonomy](AURIC_FIB_ATOM_PROBABILITY_PHASE_TRANSPORT_AND_HOLONOMY.md)
+and K for [Guarded lift limits](FIB_NATIVE_GUARDED_LIFT_LIMITS_AND_DIFFUSION_SELECTION.md).
+The construction below uses N's original commands and K's path contracts.
+Its sampling and coefficient capabilities are additional premises. Neither
+convergence nor a lifetime-tail estimate is a premise.
 
-**Definition 29.1 (the fixed variable-coefficient diffusion and its lift).**
-Retain the both-wall model of §§1--3, with arbitrary smooth positive
-$\rho$, smooth SPD $A$, source $o=(k_o,\alpha_o,\beta_o)$, and
-$d\mu=\rho\,dk\,dh$. Let $\Sigma$ be the smooth positive square root of
-$A$, and put
+**Definition 29.1 (fixed model and additional sampling capability).** Fix any
+both-wall model of §§1–3, any smooth positive raw density $\rho$, any smooth
+horizontal SPD matrix $A$, and any interior source $o=(k_o,\alpha_o,\beta_o)$.
+Thus $H=r/2$, $I=(l,u)\Subset(0,H)$, $X_1=P$, $X_2=Q$ are (2.1),
+$\Omega=I\times\mathbb T^2$, and $d\mu=\rho\,dk\,d\alpha\,d\beta$.
+Both phases retain period $2\pi$ and their fixed preparation rotations.
+Put $\Sigma=A^{1/2}$ and define the two real functions
 
 $$
-Y_a=\sum_{i=1}^2\Sigma_{ia}X_i,\qquad
-\kappa_a=\rho^{-1}\sum_{i=1}^2X_i(\rho\Sigma_{ia}),\qquad
-b_A^i=\sum_{a=1}^2\kappa_a\Sigma_{ia} .
+d^j(q)=\rho(q)^{-1}\sum_{i=1}^2 X_i(\rho a^{ij})(q),\qquad j=1,2.
 \tag{29.1}
 $$
 
-On the open cylinder, let $Q^A$ solve, up to its first exit time
-$\tau^A$ from $I=(l,u)$,
+The added capability supplies, for each finite stage, finitely many
+independent fair signs, the specified initial state and means, exact real
+arithmetic and evaluations of $\Sigma,d$ at recursively computed states,
+and execution of the prescribed original piecewise linear controls in their
+specified durations. Evaluation of $d$ includes the coefficient derivatives
+in (29.1). Exact calculation of a chord's first wall-hit fraction is included.
+These are mathematical/operational premises, with no asserted price,
+precision guarantee, sensor, preparation procedure or archive implementation.
+A whole finite command can be computed before execution; unknown-state
+feedback is not supplied or required by that calculation.
+
+For real controls and chronological area write the original map as
 
 $$
-dQ^A_t=\sum_{i=1}^2X_i(Q^A_t)b_A^i(Q^A_t)\,dt
-       +\sqrt2\sum_{a=1}^2Y_a(Q^A_t)\circ dB^a_t,\qquad Q^A_0=o,
+\Phi_o(a,b,j)=\left(k_o+a,\ [\alpha_o+b/2],\
+ [\beta_o+c_o b-j/r]\right),\qquad c_o=\tfrac12-k_o/r.
 \tag{29.2}
 $$
 
-where $B$ is a standard two-dimensional Brownian motion. Its generator is
+This is N, Theorem 9.3, in the actual unimodular torus coordinates (2.1),
+at every prefix. In particular $j=\int a\,db$ for a finite command.
+The source real relation lift is translated by $b$; it is not reset at joins.
+
+**Definition 29.2 (an explicit finite law).** For integers $n\ge1$ set
+$\delta_n=n^{-2}$, $m_n=n^3$, $S_n=m_n\delta_n=n$ and
+$T_n=S_n+\delta_n$. Draw $m_n$ independent vectors
+$\xi_i=(\xi_i^1,\xi_i^2)$, each uniform on $\{-1,1\}^2$.
+Starting with $(a_0,b_0,j_0)=(0,0,0)$, at an alive node $t_i=i\delta_n$
+compute $q_i=\Phi_o(a_i,b_i,j_i)$ and the two-control increment
 
 $$
-\mathcal G_A f=\sum_{a=1}^2Y_a^2f+\sum_{i=1}^2b_A^iX_if
- =\rho^{-1}\sum_{i,a}X_i(\rho\Sigma_{ia}Y_af)
- =\rho^{-1}\sum_{i,j}X_i(\rho a^{ij}X_jf)=-L_Af .
+v_i=d(q_i)\delta_n+\sqrt{2\delta_n}\,\Sigma(q_i)\xi_i.
 \tag{29.3}
 $$
 
-Thus the native horizontal covariance is exactly $2A(q)\,dt$, including
-the cross term $2a^{12}(q)\,dt$, and the first-order drift is the one fixed
-by the raw density and the variable coefficients. In the original real
-phase lifts define $U^i$ by
+During this cell use the constant control velocity $v_i/\delta_n$.
+Writing $\theta=(t-t_i)/\delta_n$, its comparison prefix is exactly
 
 $$
-dU_t^i=b_A^i(Q^A_t)\,dt+\sqrt2\sum_{a=1}^2\Sigma_{ia}(Q^A_t)\circ dB^a_t,\qquad
-J^A_t=\int_0^t U_s^1\circ dU_s^2 .
+\begin{aligned}
+a(t)&=a_i+\theta v_i^1,& b(t)&=b_i+\theta v_i^2,\\
+j(t)&=j_i+\theta a_i v_i^2+\tfrac12\theta^2v_i^1v_i^2.
+\end{aligned}
 \tag{29.4}
 $$
 
-Then $d[U^i,U^j]_t=2a^{ij}(Q^A_t)\,dt$, and the native chronological map
+If its height first reaches $l$ or $u$, cut this chord at that first hit and
+hold both controls for the rest of $[0,T_n]$. Otherwise use (29.4) at
+$\theta=1$ as the next node, without resetting $j$. If all $m_n$ cells
+survive, use the last interval $[S_n,T_n]$ to move height linearly from its
+current value to $u$, with $b$ constant, then hold. Denote the resulting
+command by $(\widehat a_n,\widehat b_n)$, its actual ordinary integral by
+$\widehat j_n=\int\widehat a_n\,d\widehat b_n$, its held state by
+$\bar q_n=\Phi_o(\widehat a_n,\widehat b_n,\widehat j_n)$, and its first
+wall-hit time by $\zeta_n$. Constant continuation beyond $T_n$ represents
+paths without adding executed command duration.
+The killed observation is $q_n^\dagger(t)=\bar q_n(t)$ for $t<\zeta_n$
+and $\dagger$ for $t\ge\zeta_n$. Unused signs are simply unused; no draw
+is rejected or reweighted by survival.
+
+**Lemma 29.3 (literal lawfulness and finite resources).** Every realization
+of Definition 29.2 is an original absolutely continuous, piecewise linear,
+zero-start command on a finite interval. Its lifetime satisfies
+$0<\zeta_n\le T_n$, and every prefix obeys
 
 $$
-\Phi_o(u,v,j)=\left(k_o+u,\ [\alpha_o+v/2],\
- [\beta_o+(1/2-k_o/r)v-j/r]\right)
+k_o+\min\widehat a_n\ge l>0,\qquad
+k_o+\max\widehat a_n\le u<H.
 \tag{29.5}
 $$
 
-gives $Q^A_t=\Phi_o(U^1_t,U^2_t,J^A_t)$ before killing. Equation
-(29.5) is the original preparation and both original $2\pi$ periods; it is
-not a new phase coordinate or an averaged source.
+Its state and area are (29.2) and the same ordinary integral, including the
+possibly partial final chord. Both actual height walls are used for killing.
 
-Because $A$ is SPD on the compact closed cylinder, $a^{11}$ is bounded
-strictly between two positive constants. The height component of (29.2) is
-therefore a continuous semimartingale with quadratic variation
-$2\int_0^t a^{11}(Q^A_s)\,ds$ and bounded smooth drift. The usual
-time-change and reflection argument used for the Brownian height in
-Proposition 4.5 gives $\mathbb P_o(\tau^A=R)=0$ for every fixed $R>0$ and
-immediate strict crossing after either exit face. These are the precise
-lifetime conditions needed for the inherited held-path and cemetery
-contracts below.
+Proof. The height on a chord is affine, so its exact first hit is computable
+from its initial height and $v_i^1$. If both endpoints lie inside $I$, the
+whole chord does; if it leaves, the executed portion ends at its first face.
+Thus checking endpoints to compute that fraction misses no within-cell
+exit. The extra terminal leg lies inside $[l,u]$ and reaches $u$.
+There are finitely many chords and at most one partial chord. Their holds
+and joins are absolutely continuous. Integrating $a\,db$ on a partial
+chord gives (29.4); the terminal height leg has $db=0$. N, Theorems 9.2–9.3,
+therefore give (29.5) and (29.2) for the complete original history.
+A killing face is inside the original native source $(0,H)$, so holding
+there is lawful even though its killed observation is already dead.
 
-**Definition 29.2 (a calibrated lawful command family).** A family is
-$\mathsf C_n=(\mathbb P_n,\mathcal F^n,T_n)$, with
-$T_n\uparrow\infty$, if every $\mathbb P_n$-realization consists of a
-finite-duration, finite-variation original command on $[0,T_n]$, or a finite
-concatenation of the numerical commands of N, Definition 20.2, with every
-executed profile absolutely continuous and zero-start. The finite command has
-a lawful terminal leg, if needed, so that its own exit occurs by $T_n$
-almost surely; this is part of the calibration contract. Write its accumulated
-controls and area as $(a_n,b_n,J_n)$, where
-$J_n(t)=\int_0^t a_n\,db_n$ on every executed prefix, and set
+On $\overline\Omega$, boundedness gives $|v_i|\le C\sqrt{\delta_n}$.
+Consequently the executed total control variation is at most
+$C m_n\sqrt{\delta_n}+(u-l)$. If the additional norm of N, §10.1,
+is used, its length is bounded by a fixed multiple of that quantity and
+its quadratic energy by $C(m_n+(u-l)^2/\delta_n)$. These follow by
+integrating the actual velocities for their actual elapsed fractions;
+$A^{-1}$ is uniformly bounded on the closed cylinder. All are finite at
+each stage. These bounds are not uniform as the mesh vanishes and do not
+price sampling or coefficient access. A command precomputed for $o$ is
+one numerical command; at another start its lawful domain is still N's
+extrema domain, not a recomputed cutoff. $\square$
+
+**Lemma 29.4 (joint enhanced approximation, with the density drift).**
+Before exit, the comparison triples of (29.3)–(29.4) converge in law,
+uniformly on every fixed compact time interval, to $Z=(U^1,U^2,J)$ with
 
 $$
-\tau_n=\inf\{t\le T_n:k_o+a_n(t)\notin(l,u)\},\qquad
-\inf\varnothing=\infty,\qquad \zeta_n=\tau_n\le T_n\quad\mathbb P_n\text{-a.s.}
+\begin{aligned}
+dU^i_t&=d^i(Q_t)\,dt+\sqrt2\sum_a\Sigma_{ia}(Q_t)\,dB^a_t,\\
+J_t&=\int_0^t U_s^1\,dU_s^2+\int_0^t a^{12}(Q_s)\,ds
+    =\int_0^t U_s^1\circ dU_s^2,\qquad Q_t=\Phi_o(Z_t).
+\end{aligned}
 \tag{29.6}
 $$
 
-The family is lawful when, on every executed prefix,
+Here $B$ is standard two-dimensional Brownian motion, the first integrals
+are Itô integrals, and the assertion before exit is obtained by localization
+from the comparison extensions in the proof. In the original clock,
 
 $$
-k_o+\min a_n\ge l>0,\qquad k_o+\max a_n\le u<H,
+\mathcal G f=\sum_jd^jX_jf+\sum_{i,j}a^{ij}X_iX_jf
+=\rho^{-1}\sum_{i,j}X_i(\rho a^{ij}X_jf)=-L_Af.
 \tag{29.7}
 $$
 
-so the original full-height guard holds at all times, including an exit
-prefix and the boundary hold. Its held state is the exact source expression
+In particular $d[U^i,U^j]_t=2a^{ij}(Q_t)dt$, with the full cross term.
+
+Proof. Choose a slightly larger height interval with compact closure in
+$(0,H)$ and inside the given coefficient neighbourhood. Extend $\Sigma,d$
+smoothly, periodically in phases, to all real
+heights, with bounded derivatives and bounded values. This can be done by
+interpolating $A$ to a constant SPD matrix outside a larger collar and
+then taking its square root, and extending $d$ separately by a cutoff.
+The extensions equal the original functions on a neighbourhood of $[l,u]$;
+their relation to $\rho$ outside that neighbourhood is immaterial.
+Continue the recursion with fresh independent signs for comparison only.
+Its part up to the first wall hit is exactly the executed recursion.
+No post-exit comparison path is asserted to be an original lawful history.
+
+On the real triple space put $D_1=\partial_a$ and
+$D_2=\partial_b+a\partial_j$. A chord is the time-one flow of
+$v^1D_1+v^2D_2$, hence has precisely (29.4). At a node, conditionally on
+the past $\mathcal F_i$, its moments are
 
 $$
-q_n(t)=\left(k_o+a_n(t),\ [\alpha_o+b_n(t)/2],\
- [\beta_o+(1/2-k_o/r)b_n(t)-J_n(t)/r]\right),
+\mathbb E_i v^j=d^j\delta,\qquad
+\mathbb E_i(v^iv^j)=2a^{ij}\delta+d^id^j\delta^2,\qquad
+|v|\le C\sqrt\delta\quad(\delta\le1).
 \tag{29.8}
 $$
 
-with the same fixed preparation phases. No bound on variation, speed, command
-count, energy, sensing, coefficient access, or acquisition cost is part of
-lawfulness. The killed path $q_n^\dagger$ equals $q_n$ before $\zeta_n$
-and the isolated cemetery $\dagger$ afterwards.
-
-The family is **calibrated to $(A,\rho,o)$** when the following two
-conditions hold.
-
-* For every $R>0$, the stopped enhanced paths
-  $(a_n,b_n,J_n,\zeta_n)$, restricted to $[0,R]$, converge in law to
-  $(U^1,U^2,J^A,\tau^A)$, with each lifetime censored at $R$ and
-  represented by the isolated mark $\infty$ when it exceeds $R$,
-  and the induced killed paths converge in $D([0,R],E)$ with the $J_1$
-  topology. The convergence is from the common source $o$ and common
-  original clock. In particular it includes the chronological area and not
-  just the two first-level controls.
-* There are $h>0$, $q<1$, and $n_0$ independent of $n$, together with
-  the execution filtrations, such that for $n\ge n_0$, every $t\ge0$,
-  and on $\{\zeta_n>t\}$,
-
-  $$
-  \mathbb P_n(\zeta_n>t+h\mid\mathcal F^n_t)\le q .
-  \tag{29.9}
-  $$
-
-  This is the mesh-uniform lifetime-tail premise. It is a property of the
-  declared sampler law, not a consequence of (29.7). It also forbids hiding
-  an unbounded occupation tail behind finite-horizon convergence.
-
-The first condition may equivalently be stated with the held triple and
-the killed path jointly. The $J_1$ space is
-$E=(\overline I\times\mathbb T^2)\sqcup\{\dagger\}$, with $\dagger$
-isolated as in the guarded-lift source, Definition 4.1. The boundary point at
-the exit is retained as the left limit; the cemetery begins at the lifetime.
-
-**Theorem 29.3 (source-faithful calibrated correspondence and full Green
-occupation).** For every fixed smooth positive $\rho$, smooth SPD $A$,
-interior preparation $o$, and every calibrated lawful family in
-Definition 29.2, the following conclusions hold.
-
-1. Every finite member has the original chronological lift (29.8), all
-   prefixes satisfy the native guard, both actual height walls are the only
-   killing faces, and the clock is the original command clock. Its limiting
-   path is (29.2), with exact drift (29.3), covariance $2A\,dt$, and the
-   common area trajectory (29.4). No third control or phase averaging occurs.
-2. For every continuous $f$ on the closed cylinder $\overline\Omega$,
-   with $f^\dagger(\dagger)=0$,
-
-   $$
-   \lim_{n\to\infty}\mathbb E_n\!\left[\int_0^{\zeta_n}f(q_n(t))\,dt\right]
-   =\mathbb E_o\!\left[\int_0^{\tau^A}f(Q^A_t)\,dt\right]
-   =\int_\Omega\Gamma_{A,o}(q)f(q)\,d\mu(q).
-   \tag{29.10}
-   $$
-
-   The integral on the right is the complete raw-$\mu$, unit-source killed
-   Green occupation, over all times. It is not a capped Green, a ground-
-   conditioned evolution, or a finite-horizon substitute.
-
-3. The conclusion is for the full admissible class of §1: arbitrary phase
-   dependence and horizontal cross terms in $A$, arbitrary smooth positive
-   raw density, every interior preparation, and the inherited source signs,
-   periods, guards and chronological convention. The constants in the tail
-   and all estimates may depend on this fixed model. No bounded-cost or
-   physical-realization claim follows.
-
-**Proof.** For a finite command, N, Theorems 9.2--9.3, applied at every
-prefix and concatenated without resetting the area, give (29.8). The
-area is the ordinary integral of the same two native controls, so its
-translation term is present in every prefix. The inequalities (29.7) are
-the original whole-height guard, while $\tau_n$ records the two actual
-height walls $l,u$; the boundary hold is a source history and the cemetery
-jump is only the killed observation. This proves the finite source
-correspondence.
-
-For the limiting law, (29.4) gives
+All coefficients here are evaluated at $\Phi_o(Z_i)$ and are frozen during
+the chord. Taylor expansion along that flow gives, locally uniformly for
+smooth tests $F$, the one-step generator
 
 $$
-\sum_aY_a^2+\sum_i b_A^iX_i
- =\sum_aY_a^2+\sum_a\kappa_aY_a
- =\rho^{-1}\sum_{i,a}X_i(\rho\Sigma_{ia}Y_a),
+\delta^{-1}\mathbb E_i\{F(Z_{i+1})-F(Z_i)\}
+=\mathscr A F(Z_i)+O_K(\sqrt\delta),\qquad
+\mathscr A=\sum_jd^jD_j+\sum_{i,j}a^{ij}D_iD_j.
+\tag{29.9}
+$$
+
+Here $K$ is any fixed compact subset of triple space. The third-order
+remainder is $O_K(|v|^3)$; the $\delta^2d^id^j$ term in (29.8) is
+also harmless after division by $\delta$. For $F\in C_c^\infty$, the
+error is globally $O_F(\sqrt\delta)$: each $D_{i_1}\cdots D_{i_s}F$,
+$s\le3$, is bounded, since its polynomial factors in $a$ multiply
+compactly supported derivatives. This verifies the generator rather than
+assuming an enhanced invariance principle.
+
+For completeness, the following bounds justify compactness and passage to
+the martingale problem. Decompose $a_i,b_i$ into their conditional drifts
+and martingale differences. Their drifts are bounded by $C\delta$ and
+their conditional martingale variances by $C\delta$. Doob's inequality
+therefore bounds their expected squared maxima on $[0,R]$ by $C_R$.
+The exact third increment is $a_i v_i^2+v_i^1v_i^2/2$. Its conditional
+mean is
+
+$$
+a_i d^2\delta+a^{12}\delta+\tfrac12d^1d^2\delta^2,
+\tag{29.10}
+$$
+
+and its centered conditional second moment is at most
+$C(1+a_i^2)\delta$. Cauchy–Schwarz for the drift sums, followed by
+Doob for the martingale sums, now gives
+$\mathbb E\max_{i\delta\le R}|Z_i|^2\le C_R$. Include one extra cell
+when $R$ is not a node. Chord maxima have the same bound by (29.4).
+This proves compact containment, uniformly as $\delta\downarrow0$.
+
+Stop the node chain on leaving a ball of radius $K$. Each coordinate's
+martingale jumps are at most $C_K\sqrt\delta$, its optional quadratic
+variation increases by at most $C_K\delta$ per step, and its drift
+increases by at most $C_K\delta$ per step. Thus the brackets have modulus
+at most $C_K(|t-s|+\delta)$, and the martingales are C-tight by the
+bounded-jump bracket criterion of Whitt, Theorem 3.7, cited below.
+The drifts are C-tight by the same deterministic modulus bound.
+The stopped and original paths differ before $R$ with probability at most
+$C_R/K^2$, by compact containment. Letting $K\to\infty$ removes this
+localization. The piecewise constant
+node processes consequently have continuous subsequential limits. Their
+largest jumps tend to zero in probability, so linear interpolation has
+the same limits in the uniform topology. Its third
+coordinate differs from the chord integral by
+$\tfrac12(\theta^2-\theta)v_i^1v_i^2$, at most $C\delta$; the other
+coordinates agree. The actual continuous comparison triples are therefore
+tight in the uniform topology with these same limits.
+
+For $F\in C_c^\infty$, subtract its exact conditional one-step means
+from the piecewise constant node test process to obtain a martingale.
+The global version of (29.9) replaces its compensator by the Riemann sum
+of $\mathscr A F$ with error $O_{F,R}(\sqrt\delta)$. Both $F$ and
+$\mathscr A F$ are globally bounded, so these test martingales are bounded
+uniformly on $[0,R]$. Joint convergence of the node paths and their
+compensators follows from continuity of the limiting path and the Riemann
+sums. Martingale preservation under uniform integrability, as in Whitt,
+Theorem 5.3, therefore passes the martingale identity to each limit.
+Equivalently one passes its expectation against bounded continuous tests
+of finitely many past coordinates and then uses a monotone class.
+This step needs no ball-hitting-time continuity. Every limit solves the
+martingale problem for $\mathscr A$.
+
+That martingale problem is unique. In coordinates its drift is
+$(d^1,d^2,a d^2+a^{12})$ and its noise columns are
+$\sqrt2(\Sigma_{1s},\Sigma_{2s},a\Sigma_{2s})^{\mathsf T}$.
+They are locally Lipschitz and have linear growth, so the SDE has a unique
+nonexplosive strong solution. To check equivalence with the martingale
+problem even though its three-dimensional symbol has rank two, apply the
+problem to coordinate and quadratic-coordinate tests with compact cutoffs.
+The first two martingale coordinates have bracket $2A\,dt$; multiplication
+by $(\sqrt2\Sigma)^{-1}$ gives a Brownian motion by Lévy's characterization.
+The third martingale minus $\int a\,dM^2$ has zero bracket and is zero.
+This gives exactly (29.6), proving uniqueness of the whole joint limit.
+All subsequences therefore have that limit.
+
+Finally $d\Phi_o(D_i)=X_i$, so pushing (29.9) forward gives (29.7).
+Both $X_i$ have zero divergence for $dk\,d\alpha\,d\beta$; (29.1)
+therefore gives exactly the operator represented by form (1.1).
+Equivalently, if $Y_s=\sum_i\Sigma_{is}X_i$ and
+$\kappa_s=\rho^{-1}\sum_iX_i(\rho\Sigma_{is})$, then
+$d^j=\sum_s\kappa_s\Sigma_{js}+\sum_sY_s\Sigma_{js}$.
+Thus the Stratonovich state equation has noise $\sqrt2Y_s$ and drift
+$\sum_s\kappa_sY_s$, precisely the original divergence-form law.
+In actual lifted state coordinates the Itô drift is
+$(d^1,d^2/2,c(k)d^2-a^{12}/r)$; the term $-a^{12}/r$ comes from the
+same chord area. There is no third driver, missing density drift, extra
+area drift or clock renormalization. $\square$
+
+**Lemma 29.5 (mesh-uniform full-lifetime tail).** There are constants
+$h,M<\infty$ and $n_0$, depending only on this fixed model and interval,
+such that the commands above satisfy, for $n\ge n_0$, $t\ge0$ and $R\ge1$,
+
+$$
+\mathbb P(\zeta_n>t)\le
+2^{-\lfloor (t-1)_+/h\rfloor},\qquad
+\mathbb E(\zeta_n-R)_+\le
+2h\,2^{-\lfloor(R-1)/h\rfloor}.
 \tag{29.11}
 $$
 
-which is the generator associated with the closed form (1.1). The
-quadratic covariation in (29.4) is $2\Sigma\Sigma^{\mathsf T}dt=2A\,dt$.
-The calibrated enhanced convergence and the exact continuous native map
-(29.8) therefore identify the limiting state and its area jointly. The
-The preceding nondegenerate-height time-change argument supplies the same
-sufficient strict-crossing and no-fixed-horizon-atom conditions used here; hence the induced
-killed paths converge in the stated $J_1$ topology. These statements use
-the existing native path contract and do not infer an execution law from a
-bare covariance table.
-
-We next prove the tail estimate required for (29.10). Iterating (29.9) at
-the grid times $mh$ gives, for $n\ge n_0$,
+Proof. Let $a_* =\min_{\overline\Omega}a^{11}>0$ and
+$D=\max_{\overline\Omega}|d^1|$. Choose $\lambda>0$ with
+$\lambda^2a_* -\lambda D>2$. While the height $K_i$ is inside $I$,
+independent fair signs give the exact conditional expression
 
 $$
-\mathbb P_n(\zeta_n>mh)\le q^m,\qquad
-\int_R^\infty\mathbb P_n(\zeta_n>t)\,dt
-\le\frac{h}{1-q}\,q^{\lfloor R/h\rfloor}.
+\mathbb E_i e^{\lambda v_i^1}
+=e^{\lambda d^1\delta}\prod_{s=1}^2
+ \cosh(\lambda\sqrt{2\delta}\Sigma_{1s}),\qquad
+\log\mathbb E_i e^{\lambda v_i^1}
+=\delta(\lambda d^1+\lambda^2a^{11})+O(\delta^2).
 \tag{29.12}
 $$
 
-The first inequality is conditional induction; the second splits the
-integral into intervals of length $h$. Thus the family has a mesh-uniform
-integrable lifetime tail. This is the needed infinite-horizon control and is
-strictly stronger than convergence on every fixed finite horizon.
-
-For the target diffusion, the original killed Green supplier gives a
-positive spectral gap $\lambda_A$ and a smoothed time-one kernel. The
-semigroup estimate used in the original volume and in §10.7 yields constants
-$C_A<\infty$ such that
+The error is uniform on the closed cylinder. For all sufficiently small
+$\delta$ the right side is at least $\delta$, hence
+$\mathbb E_i(e^{\lambda K_{i+1}}-e^{\lambda K_i})\ge e^{\lambda l}\delta$.
+Use the infinitely continued comparison chain only until its first node
+$N\ge1$ outside $I$. Bounded increments imply that its stopped height
+always lies in $[l-C,u+C]$ for $\delta\le1$, including its last overshoot.
+For each deterministic integer $m$, summing conditional expectations gives
 
 $$
-\mathbb P_o(\tau^A>t)\le C_Ae^{-\lambda_A(t-1)}\quad(t\ge1),\qquad
-\int_R^\infty\mathbb P_o(\tau^A>t)\,dt\longrightarrow0.
+e^{\lambda l}\delta\,\mathbb E(N\wedge m)
+\le\mathbb E e^{\lambda K_{N\wedge m}}-e^{\lambda K_0}
+\le e^{\lambda(u+C)}.
 \tag{29.13}
 $$
 
-This is the fixed-model estimate; no uniformity in $\rho,A,I,o$ is claimed.
+Thus $\mathbb E(N\delta)\le M:=e^{\lambda(u+C-l)}$, uniformly over
+every initial alive height and both phases. This proves $N<\infty$
+almost surely without assuming optional stopping at an unbounded time.
+With $b_\delta=\lceil2M/\delta\rceil$, conditional Markov inequality
+and the fresh signs give survival at most $1/2$ over each group of
+$b_\delta$ steps, from every surviving node. Induction yields
+$\mathbb P(N>j b_\delta)\le2^{-j}$. Since
+$b_\delta\delta\le h:=2M+1$, the polygon's exact first-hit time
+$\tau_\delta\le N\delta$ satisfies
+$\mathbb P(\tau_\delta>t)\le2^{-\lfloor t/h\rfloor}$.
+The argument uses the whole state in its conditioning and permits all
+phase dependence, height drift and cross terms.
 
-Fix $R>0$. Under the calibrated $J_1$ convergence, the map
+Couple the finite command with this chain using its first $m_n$ signs.
+If it dies by $S_n$, $\zeta_n=\tau_{\delta_n}$. Otherwise its terminal
+leg gives $\zeta_n=S_n+\delta_n\le\tau_{\delta_n}+\delta_n$.
+Therefore $\mathbb P(\zeta_n>t)$ is bounded by the survival estimate
+shifted by at most $\delta_n\le1$. Integrating that geometric step
+bound on $[R,\infty)$ proves (29.11). This is a proved lifetime-tail
+bound for the constructed laws, not an additional calibration condition.
+$\square$
+
+**Theorem 29.6 (existence of a full source-faithful command/Green bridge).**
+Under precisely the additional capabilities in Definition 29.1, for every
+admitted fixed $\rho,A$ and every original interior preparation $o$, the
+laws of Definition 29.2 have the following joint limits. Let $Q$ be the
+free diffusion (29.6)–(29.7), $\tau$ its first height exit from $I$, and
+$Z^\tau=(U^1,U^2,J)_{\cdot\wedge\tau}$ its held enhanced history.
+For each $R>0$, the held triples converge on $[0,R]$ in
+$C([0,R],\mathbb R^3)$ with the uniform topology, jointly with the held
+state paths in $C([0,R],\overline\Omega)$, the censored lifetimes, and
 
 $$
-\omega\longmapsto\int_0^R f^\dagger(\omega(t))\,dt
+q_n^\dagger\ \Longrightarrow\ Q^\dagger
+\quad\hbox{in }D([0,R],E)\hbox{ with }J_1,\qquad
+E=\overline\Omega\sqcup\{\dagger\}.
 \tag{29.14}
 $$
 
-is continuous at every target path with one cemetery jump and a continuous
-alive part. Indeed, the time changes in the definition of $J_1$ converge
-uniformly to the identity, and uniform continuity of $f$ makes the two
-alive compositions converge in measure; the single death time has Lebesgue
-measure zero. The target has exactly this path property almost surely.
-Boundedness of $f$ and the bounded-convergence theorem consequently give
+Use K, Definition 4.1's truncated product metric on $\overline\Omega$,
+with the cemetery isolated at distance $2$. A lifetime exceeding $R$ is
+represented by the isolated no-death mark $\infty$, as in K, Theorem 4.2.
+The real full lifetimes also satisfy $\zeta_n\Rightarrow\tau<\infty$,
+jointly with these paths. For every continuous real or complex $f$ on the
+closed cylinder,
 
 $$
-\lim_{n\to\infty}\mathbb E_n\!\left[\int_0^R f^\dagger(q_n^\dagger(t))\,dt\right]
-=\mathbb E_o\!\left[\int_0^R f^\dagger((Q^A)^\dagger_t)\,dt\right].
+\lim_{n\to\infty}\mathbb E\int_0^{\zeta_n}f(\bar q_n(t))\,dt
+=\mathbb E_o\int_0^\tau f(Q_t)\,dt
+=\int_\Omega\Gamma_{A,o}(q)f(q)\,d\mu(q).
 \tag{29.15}
 $$
 
-The difference between either side of (29.15) and its complete occupation is
-bounded by $\|f\|_\infty\int_R^\infty\mathbb P(\zeta>t)\,dt$. Equations
-(29.12) and (29.13) make these errors tend to zero uniformly in $n$ and in
-the target as $R\to\infty$. Taking first $n\to\infty$, then $R\to\infty$,
-proves the first equality in (29.10).
+Here $\Gamma_{A,o}$ is the original complete free Dirichlet Green field
+for its raw-$\mu$ unit source, including all times. These assertions retain
+both actual killing faces, all-prefix native guards, original preparation
+phases and torus periods, and the common chronological area and trajectory.
+No phase independence or restriction on the size of coefficient variation
+is imposed; constants may depend on the fixed model.
 
-Finally, for the killed heat kernel relative to the raw measure $d\mu$,
+Proof. Lemma 29.4 supplies comparison-triple convergence on each fixed
+horizon. The limit has height drift $d^1$ bounded near the closed cylinder
+and height bracket $2a^{11}dt$ bounded above and below by positive constants.
+It exits in finite time: applying Itô's formula to $e^{\lambda K}$ at
+$t\wedge\tau$, with the $\lambda$ of Lemma 29.5, bounds
+$\mathbb E(t\wedge\tau)$ uniformly, since
+$\mathcal G e^{\lambda k}=e^{\lambda k}(\lambda d^1+\lambda^2a^{11})$
+is bounded below by a positive constant on $\overline\Omega$.
+Monotone convergence gives $\mathbb E\tau<\infty$.
 
-$$
-\mathbb E_o\!\left[\int_0^{\tau^A}f(Q^A_t)\,dt\right]
-=\int_0^\infty\!\int_\Omega p_t^\Omega(o,q)f(q)\,d\mu(q)\,dt.
-\tag{29.16}
-$$
+At either exit the height strictly crosses outside $[l,u]$ in every
+subsequent time interval almost surely. Indeed, after that stopping time
+its continuous martingale part has clock between positive multiples of
+elapsed time, while its drift is $O(t)$. The Brownian oscillation law after
+the continuous-martingale time change gives both signs with magnitude
+larger than $O(t)$ arbitrarily close to zero. Localizing to the coefficient
+collar suffices. This verifies exactly K's strict-crossing hypothesis.
+There is no atom at a fixed $R>0$: choose a slightly larger interval $I'$
+inside the original coefficient neighbourhood and $(0,H)$. Kill the smooth
+comparison diffusion only at the ends of $I'$. N, Theorem 10.7, with the
+all-start SDE identification recalled below, gives its smooth interior
+heat density. The two faces of $I$ are interior measure-zero surfaces in
+$I'\times\mathbb T^2$. On $\{\tau=R\}$ this larger-domain process is
+still alive at $R$ and lies on one of those surfaces, an event of probability
+zero. This uses the supplied bracket-generating fields $P,Q,[P,Q]$.
+The initial interior margin also gives $\tau>0$ almost surely.
 
-The full Green field $\Gamma_{A,o}$ defined in §1 is
-$\Gamma_{A,o}(q)=\int_0^\infty p_t^\Omega(o,q)\,dt$, with the killed
-heat-kernel representation supplied in the original volume and retained here
-for the variable model. Its raw-$\mu$ integrability follows from (29.13), so
-Tonelli for $f^+$ and $f^-$ is legitimate and gives the second equality
-in (29.10). This completes the
-source-faithful correspondence and the full occupation statement. $\square$
+For $n>R$ the terminal leg starts after $R$, so it has no effect on any
+path or death flag on $[0,R]$. K, Theorems 3.1 and 4.2, applied to
+Lemma 29.4 and these crossing/no-atom facts, give all the asserted joint
+held/censored/$J_1$ limits. The boundary point is the left limit at death;
+the cemetery begins at death. Uniform convergence of killed paths is not
+asserted. Full step-two increments are recovered continuously
+from $J_t-J_s-U_s^1(U_t^2-U_s^2)$, the two squared increments and integration
+by parts. Thus they converge jointly as well; no area is sampled separately.
+The topology here is the inherited uniform chronological-triple topology,
+not an unasserted rough-path variation topology. The geometric tail of
+Lemma 29.5 and the censored lifetime convergence give the real lifetime
+convergence jointly with the paths: truncate at a horizon beyond the path
+horizon, then let that truncation tend to infinity using (29.11).
+The limit inherits the integrable survival bound too.
 
-**Boundary 29.4 (what calibration does and does not provide).** The theorem
-is conditional on the explicitly stated sampler law, enhanced calibration,
-and uniform exit-block estimate. The native source supplies lawful commands,
-their exact chronological map, and the inherited path/cemetery contracts;
-it does not supply Gaussian sampling, coefficient access, a density-aware
-drift, a preparation mechanism, sensing, randomization, or a finite-cost
-implementation. The theorem therefore proves the implication from a
-calibrated family to the free Dirichlet diffusion and its complete Green
-occupation. It does not claim that bare FIB, a first-level covariance table,
-or finite-horizon weak convergence alone produces such a family. The
-near-critical capped Green and resonant classifications above are unchanged,
-and no simultaneous command-mesh/cap operator limit is asserted.
+The diffusion just identified is the original free killed Friedrichs law.
+Indeed (29.7) has exactly form (1.1), and killing is at its two
+noncharacteristic height faces with periodic phases. The absorbing
+part-form identification, including its extension to every interior start,
+is already supplied in [Free diffusion quotient rigidity, Theorem 3.1's
+proof of (3.12)–(3.14)](FIB_NATIVE_FREE_DIFFUSION_QUOTIENT_RIGIDITY.md).
+That identification uses no coefficient symmetry; symmetry is needed only
+for that source's additional descent assertion. It is reused here with
+$Y_s=\Sigma_{is}X_i$, drift $\sum_s\kappa_sY_s$, and zero potential.
+Thus no exceptional preparation, different operator domain or ground
+conditioning has been inserted.
+
+Set $f^\dagger(\dagger)=0$. On $[0,R]$ the occupation functional
+$\omega\mapsto\int_0^R f^\dagger(\omega(t))dt$ is bounded and is continuous
+at each target path in (29.14). The $J_1$ time changes align the sole
+cemetery jump, and away from that jump the continuous alive path and the
+uniform continuity of $f$ give convergence in measure, hence of the
+bounded integrals. Therefore the finite-horizon expected occupations
+converge. The omitted complete occupation is bounded in absolute value by
+$\|f\|_\infty\mathbb E(\zeta_n-R)_+$, which tends to zero uniformly
+by (29.11). The target tail tends to zero as well. Taking first
+$n\to\infty$ and then $R\to\infty$ proves the first equality in (29.15).
+
+Finally the original heat density is relative to the same unnormalized
+$d\mu$, and its row mass is $\mathbb P_o(\tau>t)$. The full Green
+supplier in §1 gives $\Gamma_{A,o}(q)=\int_0^\infty p_t^\Omega(o,q)dt$.
+Tonelli applied to positive and negative parts, and separately to real and
+imaginary parts when needed, justified by
+$\|f\|_\infty\mathbb E_o\tau<\infty$, proves the second equality.
+Equivalently its weak source identity is
+$\int\Gamma_{A,o}L_A\varphi\,d\mu=\varphi(o)$ for compactly supported
+smooth $\varphi$, from Dynkin's formula and the vanishing terminal killed
+term. There is no probability normalization of $\mu$, torus averaging,
+extra factor $1/2$, or time truncation in this unit-source identity.
+$\square$
+
+**Boundary 29.7 (resources, suppliers and interpretation).** For each fixed
+$R>0$, both limiting held controls on $[0,R]$ have infinite total variation almost
+surely: $\tau>0$ and $a^{11},a^{22}>0$ give nonzero quadratic variation
+before death. The sets of continuous paths with total variation at most
+$B$ are closed in the uniform topology. The held convergence and the
+Portmanteau inequality therefore imply, for every finite $B$, that the
+probability either executed control has variation at most $B$ tends to
+zero. In particular there is no bounded-variation budget in the limit.
+Cauchy–Schwarz on $[0,R]$ gives the same divergence in probability for the
+additional quadratic energy, since $A^{-1}$ has a positive lower bound.
+This does not identify that norm with physical energy or price the added
+capabilities. No such capability follows from bare FIB or from a covariance
+table; the conclusion is existence under the explicit finite-sign and
+coefficient-access premise, with convergence and tails proved from it.
+
+For $A=I_2$ and constant $\rho$, the limiting law is exactly K's reference
+law with zero added area drift; only its finite approximating law differs.
+For constant $A$ with $a^{12}\ne0$ and constant $\rho$, (29.10) still has
+area drift $a^{12}$ and actual $\beta$ drift $-a^{12}/r$. Omitting the
+half-product on a chord would fail that full-law comparison. Multiplying
+$\rho$ by a positive constant leaves $d$ and the command laws unchanged,
+while scaling $\Gamma$ inversely, so $\Gamma\,d\mu$ is unchanged as required
+by unit-source occupation.
+
+The general stochastic tools are classical. In particular [W. Whitt,
+*Proofs of the martingale FCLT*, arXiv:0712.1929v2](https://arxiv.org/html/0712.1929v2),
+Theorem 3.7 supplies the bounded-jump tightness criterion; Theorem 5.3 supplies
+martingale preservation under uniform integrability; Theorem 5.2 supplies
+Lévy's Brownian characterization. Here stopped coordinate martingales have
+jumps $O_K(\sqrt\delta)$, brackets with modulus $O_K(|t-s|+\delta)$,
+and bounded finite-horizon second moments, exactly the hypotheses used.
+Its deterministic-bracket Brownian FCLT is not applied to a process with
+state-dependent bracket. The Taylor/martingale argument above is the
+classical diffusion-approximation mechanism, not a new general limit theorem.
+The native lift, guards and cemetery continuity are reused from N and K;
+the raw full Green and the all-start absorbing identification are reused
+from §1 and the free-diffusion supplier. The additional application is the
+explicit full-coefficient lawful family, its same-history enhanced lift,
+and the uniform lifetime estimate closing complete Green occupation.
+
+This gives a mathematical propagation realization beyond local dimension
+selection and the existing stability classification. The path correspondence
+retains the common trajectory, chronological area and death flag; K's
+area variants show why first-level laws alone do not determine that joint
+object. No minimal sensor or archive contract is inferred.
+[Future-response sufficiency, §57](RECURSIVE_RELATIONAL_OBSERVATION_FUTURE_RESPONSE_SUFFICIENCY.md)
+retains its distinct ideal response and acquisition limits; no sensor bridge
+is supplied here. [Continuation X, §§264–269](FIB_ATOM_RECURSIVE_HOLOGRAPHIC_BOUNDARY_GEOMETRY_CONTINUATION_X.md)
+retains its actual-tree predictive obstruction; trees are not identified
+with this cylinder. The actual-cap and near-critical results above and in
+[the spatial-cap companion](FIB_NATIVE_SPATIAL_CAP_RETAINED_AND_RESONANT_LIMITS.md)
+are unchanged. No simultaneous mesh/cap limit, physical spatial-dimension
+selection, atomic-to-cylinder identification or priority claim is made.
+These are ordinary mathematical proofs, with no Lean/kernel certification.
 
 ## 追加锚（本行以下为增补区）
