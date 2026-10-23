@@ -1,0 +1,46 @@
+**Definition 16.1 (Reused results and their substitutions).**
+The source of whole-companion compactness is III at the immutable
+revision linked in Definition 12.1: Definition 1.1 fixes complete
+worlds; Theorem 16.4 supplies the actual arc and nonemptiness;
+Definition 20.1 and Eq. (20.2) give the coordinate correspondence;
+Definition 23.1, Theorem 23.2 and Corollary 23.3 give the entire
+compact region, retained twenty-four fibre and qualitative bounds.
+The compactness theorem is used as a premise, without substituting
+a compact set of only selected representatives for $K_J$.
+
+The Gaussian source is this volume's original §§1–7, also available
+at [the same immutable revision](https://github.com/the-omega-institute/trureturing/blob/30b32d5e17e23590839090a0b244c019c4796817/docs/develop/theory/FIB_SHARED_GAUSSIAN_RECORD_LAWS.md):
+Assumption 2.1 and Theorem 2.2 specify the preparation and energy;
+Definition 3.1 and Theorem 3.2 fix the controls, clocks and rows;
+Proposition 3.4 identifies squeezing; Assumption 4.1 and Theorem
+4.2 provide the shared normal instruments; Theorem 5.1 gives the
+exact full fixed-word Gaussian law and Kraus factorization;
+Proposition 5.4 and §§6–7 distinguish adaptive words, indexed
+fibres and literal acquired histories. The subsequent §§8–11
+concern the internal pair and remain outside any moment-error
+conclusion of this appendix.
+
+The oscillator expansion and coherent-state number statistics are
+literature-attested: R. J. Glauber, *Coherent and incoherent states
+of the radiation field*, Physical Review **131**, 2766–2788,
+[DOI:10.1103/PhysRev.131.2766](https://doi.org/10.1103/PhysRev.131.2766).
+Here the amplitude is specifically $\alpha=\mu/\sqrt2$ and the
+occupation is the sum over seventeen system modes. The pure-state
+distance and effect variational characterization are the standard
+trace-distance facts in M. A. Nielsen and I. L. Chuang, *Quantum
+Computation and Quantum Information*, tenth-anniversary edition,
+§9.2.1 (trace distance), with the fidelity comparison in §9.2.3,
+[DOI:10.1017/CBO9780511976667](https://doi.org/10.1017/CBO9780511976667).
+Their uses here require only a two-vector pure-state span and the
+trace-class/effect pairing, respectively; no finite-dimensional
+assumption on the process is introduced. The joint POVM's
+infinite-dimensional normality comes from Theorem 4.2.
+
+The compact extreme-value step, occupation tail bound and
+stars-and-bars count are mature mathematical tools used inside
+this application. The content of §§12–15 is their explicit
+source-dependent composition for the entire $K_J$, the specified
+seventeen-mode preparations and the unchanged full-pointer law.
+It is an application of existing results, with no priority claim
+and no new generic compactness or quantum-distance theorem.
+

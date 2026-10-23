@@ -1,0 +1,20 @@
+**Theorem 6.4 (Recursive transfer without quotienting away worlds).** For every $S\subseteq\mathcal F(H)$ and every $k$ within the original remaining horizon,
+
+$$
+\iota(\mathcal F(H))=\widehat{\mathcal F}(H),\qquad
+L_k(S,H)\iff\widehat L_k(\iota(S),H).
+$$
+
+This also preserves finite or infinite cardinalities of the underlying supports. Replacing an entire nonempty child by the deduplicated set of its prefix laws would instead replace that child by a singleton.
+
+Proof. The first equality is Theorem 6.1 with the injective label map. Injectivity gives $|S|=|\iota(S)|$, including for infinite $S$, and
+
+$$
+\iota(S\cap\mathcal F(H,E,u))
+=\iota(S)\cap\widehat{\mathcal F}(H,E,u).
+$$
+
+The base guard is therefore equivalent. Assuming the equivalence at $k$, apply this intersection equality for each fixed $E,u$ and then retain the same existential $u$ and conjunction over $E$ in the recursion. This proves the step to $k+1$. It keeps one shared acquired response for each child before alternative continuations are considered.
+
+For the last assertion every world of $C(p,v)$ maps to the single law $\mathcal N_7(h(p,v),C_A)$. A set of distinct prefix laws therefore contains one element whenever the child is nonempty, whatever the number of original worlds. The preimage and its injective preparation labels, rather than that quotient set, are what retain the original cardinality predicates. $\square$
+

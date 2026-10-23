@@ -1,0 +1,22 @@
+**Corollary 25.3 (All original complete record measures).** With
+$\mathscr W_7=\bigcup_{t=0}^7\{J,M\}^t$, one has
+
+$$
+\begin{gathered}
+\forall W\in\mathcal W,\quad \forall\boldsymbol\eta\in[0,\infty)^2,
+\quad \forall\sigma\in(0,\infty),\quad \forall w\in\mathscr W_7,\\
+\forall B\in\mathcal B(\mathbb R^{|w|+1}),\qquad
+\operatorname{tr}(\widetilde\rho_{W;\boldsymbol\eta}\mathsf E_w(B))
+=\operatorname{tr}(\rho_W\mathsf E_w(B)),\\
+\nu_{w,\boldsymbol\eta}(W)
+=\mathcal N_{|w|+1}\left(L_w\mu(W),
+                   \frac12L_wL_w^T+\sigma^2I_{|w|+1}\right).
+\end{gathered}
+\tag{25.5}
+$$
+
+Equivalently $\mathsf E_w(B)=g_{w,B}(q)$ with $0\le g_{w,B}\le1$, and it commutes with every
+initial kick. This independently explains the event equality through bounded functional
+calculus. The last law is Theorem 5.1 after that equality of measures. It retains read zero and
+every intervening read, with no change of $W$ or apparatus.
+

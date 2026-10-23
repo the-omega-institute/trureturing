@@ -1,0 +1,27 @@
+**Proposition 32.2 (Variance rank is sufficient, not necessary with joint data).** For
+separately collected scalar laws, rank two of the coefficient rows
+$\bigl(c_{jA}^2,(c_{jA}-c_{jB})^2\bigr)$ suffices to recover both noise parameters after
+subtracting the known $v_0$ values. Joint correlations can supply information absent from those
+two rows. For example, use $c_1=(1,0)$ and $c_2=(1,2)$. Both variance rows are $(1,1)$, but
+(32.3) gives
+
+$$
+\begin{aligned}
+\operatorname{Var}(Y_j)-\tau_j^2&=1+65r+\eta_A+\eta_B
+\quad(j=1,2),\\
+\operatorname{Cov}(Y_1,Y_2)&=\eta_A-\eta_B+63r.
+\end{aligned}
+\tag{32.4}
+$$
+
+The first line recovers the sum, and the second, after subtracting $63r$, recovers the
+difference. Hence these jointly measured scalars also identify both parameters despite rank one
+of their variance rows.
+
+At $\sigma=2$, Propositions 31.2 and 32.1 prove a minimum of two scalar linear momentum
+observables/readouts for the unrestricted family and this target. Two commuting outputs fit one
+joint configuration; one physical pointer port can instead be reconfigured on independent
+copies. No minimum number of configurations or hardware ports follows. The lower bound concerns
+one fixed scalar linear observable of (30.1), and does not address arbitrary POVMs, nonlinear
+readouts or adaptive strategies.
+
