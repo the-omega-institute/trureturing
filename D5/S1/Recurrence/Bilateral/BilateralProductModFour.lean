@@ -8,6 +8,7 @@
 
 /-
 ofSeries_inverse: proof_shape: bind-only; consumer: HannaBilateralReversionParity.coe_inverse
+symmetric_pair: proof_shape: bind-only; consumers: HannaThetaFourModFour.window_split, HannaPrimeBilateralIntegrality.psi_one_zero
 window_split: proof_shape: bind-only; consumer: HannaBilateralReversionParity.normalized_sum
 Escape audit unfinished for window_split: https://github.com/the-omega-institute/trureturing/issues/19820
 Escape audit unfinished: https://github.com/the-omega-institute/trureturing/issues/19114
@@ -67,6 +68,22 @@ theorem finite_window (c : ℕ) (hc : 2 ≤ c) (A : PowerSeries ℤ)
     apply outside_zero c hc A N j
     simp only [Finset.mem_Icc] at hnot
     omega
+
+/- Escape audit unfinished for symmetric_pair: https://github.com/the-omega-institute/trureturing/issues/19820 -/
+theorem symmetric_pair {T : Type*} [AddCommMonoid T] (f : ℤ → T) (K : ℕ) :
+    (∑ j ∈ Finset.Icc (-(K : ℤ)) K, f j) =
+      f 0 + ∑ k ∈ Finset.range K, (f (k + 1) + f (-(k : ℤ) - 1)) := by
+  induction K with
+  | zero => simp
+  | succ K ih =>
+    have hs : Finset.Icc (-((K + 1 : ℕ) : ℤ)) ((K + 1 : ℕ) : ℤ) =
+        insert (-(K : ℤ) - 1) (insert ((K : ℤ) + 1) (Finset.Icc (-(K : ℤ)) K)) := by
+      ext j
+      simp only [Finset.mem_Icc, Finset.mem_insert, Nat.cast_add, Nat.cast_one]
+      omega
+    rw [hs, Finset.sum_insert (by simp; omega), Finset.sum_insert (by simp), ih]
+    rw [Finset.sum_range_succ]
+    ac_rfl
 
 theorem window_split {M : Type*} [AddCommGroup M] (f : ℤ → M) (r : ℕ) :
     (∑ n ∈ Finset.Icc (-((r + 1 : ℕ) : ℤ)) ((r + 1 : ℕ) : ℤ), f n) =

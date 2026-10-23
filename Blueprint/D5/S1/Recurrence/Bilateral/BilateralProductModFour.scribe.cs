@@ -47,6 +47,11 @@ internal sealed class BilateralProductModFourDocument : IScribeDocumentDefinitio
                 + "X^(c*k^2). For c at least two, either factor has degree at least k. "
                 + "Thus every index outside [-N,N] vanishes at degree N. Extending "
                 + "the finite sum only adds these zero coefficients."),
+            Node("symmetric_pair", "Pairing a symmetric finite sum", SymmetricPairFormula(),
+                "For any additive commutative monoid, the sum over the integer interval "
+                + "from -K to K consists of the zero term and K pairs of opposite nonzero "
+                + "indices. Both the theta-four family and the prime-parameter family "
+                + "consume this shared identity."),
             Node("window_split", "Symmetric finite-window decomposition", WindowSplitFormula(),
                 "The interval from -(r+1) through r+1 is the disjoint union of -1, the "
                 + "nonnegative indices through r+1, and the negative indices -(k+2) for "
@@ -206,6 +211,21 @@ internal sealed class BilateralProductModFourDocument : IScribeDocumentDefinitio
                 Implication(AtMost(n, k), Conjunction(
                     Seq(Bound("j", Integers()), Implication(outside, Equal(Coeff(n, Term(C(), b, j)), D(0)))),
                     Equal(Coeff(n, Rem(C(), b)), SumOver("j", Window(k), Coeff(n, Term(C(), b, j))))))))));
+    }
+
+    private static Formula SymmetricPairFormula()
+    {
+        Formula t = F.Id("T"), f = F.Id("f"), k = F.Id("K"), i = F.Id("k"), j = F.Id("j");
+        Formula fn(Formula x) => new Formula.Apply(f, [x]);
+        Formula cast(Formula x) => Parenthesized(Seq(x, Colon, Sp, Integers()));
+        Formula interval = QualifiedCall("Finset", "Icc", Negative(cast(k)), cast(k));
+        Formula pair = Add(fn(Add(cast(i), D(1))), fn(Subtract(Negative(cast(i)), D(1))));
+        Formula functionType = Parenthesized(Seq(Integers(), Sp, To, Sp, t));
+        return Disp(Seq(
+            Bound("T", Named("Type")), Bound("inst", Call("AddCommMonoid", t)),
+            Bound("f", functionType), Bound("K", Naturals()),
+            Equal(SumOver("j", interval, fn(j)),
+                Add(fn(D(0)), SumOver("k", QualifiedCall("Finset", "range", k), pair)))));
     }
 
     private static Formula WindowSplitFormula()

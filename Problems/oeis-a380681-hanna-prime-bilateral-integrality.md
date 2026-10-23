@@ -99,7 +99,7 @@ and coefficient obstruction are on its derivation path. The module has
 The four-slot escape audit is unfinished under
 [issue #19820](https://github.com/the-omega-institute/trureturing/issues/19820)
 for this `result`, the shared `BilateralProductModFour.window_split`, and the
-exposed suppliers `HannaThetaFourModFour.symmetric_pair` and
+shared pairing `BilateralProductModFour.symmetric_pair` and the exposed supplier
 `NegativePowerDiagonalModPrime.inverse_difference`.
 The missing evidence is complete source reconstruction and lawful variation,
 sensitivity and observational dependence for their quantified series and

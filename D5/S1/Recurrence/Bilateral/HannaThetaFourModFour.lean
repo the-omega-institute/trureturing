@@ -355,28 +355,12 @@ end D5.S1.Recurrence.Bilateral.HannaThetaFourModFour
 namespace D5.S1.Recurrence.Bilateral.HannaThetaFourModFour
 variable {R : Type*} [CommRing R]
 
-/- Escape audit unfinished for symmetric_pair: https://github.com/the-omega-institute/trureturing/issues/19820 -/
-theorem symmetric_pair {T : Type*} [AddCommMonoid T] (f : ℤ → T) (K : ℕ) :
-    (∑ j ∈ Finset.Icc (-(K : ℤ)) K, f j) =
-      f 0 + ∑ k ∈ Finset.range K, (f (k + 1) + f (-(k : ℤ) - 1)) := by
-  induction K with
-  | zero => simp
-  | succ K ih =>
-    have hs : Finset.Icc (-((K + 1 : ℕ) : ℤ)) ((K + 1 : ℕ) : ℤ) =
-        insert (-(K : ℤ) - 1) (insert ((K : ℤ) + 1) (Finset.Icc (-(K : ℤ)) K)) := by
-      ext j
-      simp only [Finset.mem_Icc, Finset.mem_insert, Nat.cast_add, Nat.cast_one]
-      omega
-    rw [hs, Finset.sum_insert (by simp; omega), Finset.sum_insert (by simp), ih]
-    rw [Finset.sum_range_succ]
-    ac_rfl
-
 private theorem window_split {T : Type*} [AddCommMonoid T] (f : ℤ → T) (K : ℕ) (hK : 1 ≤ K) :
     (∑ j ∈ Finset.Icc (-(K : ℤ)) K, f j) =
       f 0 + (f 1 + f (-1)) +
         ∑ k ∈ Finset.range (K - 1), (f (k + 2) + f (-(k : ℤ) - 2)) := by
   obtain ⟨L, rfl⟩ := Nat.exists_eq_succ_of_ne_zero (by omega : K ≠ 0)
-  rw [symmetric_pair, Finset.sum_range_succ']
+  rw [D5.S1.Recurrence.Bilateral.BilateralProductModFour.symmetric_pair, Finset.sum_range_succ']
   simp only [Nat.cast_add, Nat.cast_one, zero_add, Nat.cast_zero, neg_zero,
     zero_sub,
     show ∀ k : ℕ, (k : ℤ) + 1 + 1 = k + 2 by intro k; omega,

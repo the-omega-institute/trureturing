@@ -56,7 +56,19 @@ $$\forall c: \mathbb{N}, (2 \le c) \implies (\forall A: \operatorname{PowerSerie
 
 A positive term has a factor X^k and a negative term has a factor X^(c*k^2). For c at least two, either factor has degree at least k. Thus every index outside [-N,N] vanishes at degree N. Extending the finite sum only adds these zero coefficients.
 
-**Theorem 1.5 (Symmetric finite-window decomposition).**
+**Theorem 1.5 (Pairing a symmetric finite sum).**
+
+$$\forall T: \operatorname{Type}, \forall inst: \operatorname{AddCommMonoid}\left(T\right), \forall f: (\mathbb{Z} \to T), \forall K: \mathbb{N}, \sum_{j \in \operatorname{Finset}.\operatorname{Icc}\left(-((K: \mathbb{Z})), (K: \mathbb{Z})\right)} (f\left(j\right)) = f\left(0\right) + \sum_{k \in \operatorname{Finset}.\operatorname{range}\left(K\right)} (f\left((k: \mathbb{Z}) + 1\right) + f\left(-((k: \mathbb{Z})) - (1)\right))$$
+
+*Proof.* Machine-checked in Lean as `D5/S1/Recurrence/Bilateral/BilateralProductModFour.symmetric_pair` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+For any additive commutative monoid, the sum over the integer interval from -K to K consists of the zero term and K pairs of opposite nonzero indices. Both the theta-four family and the prime-parameter family consume this shared identity.
+
+**Theorem 1.6 (Symmetric finite-window decomposition).**
 
 $$\forall M: \operatorname{Type},\ [\operatorname{AddCommGroup}(M)],\ \forall f: (\mathbb{Z} \to M),\ \forall r: \mathbb{N},\ \sum_{n \in \operatorname{Finset}.\operatorname{Icc}\left(-((r + 1: \mathbb{Z})), (r + 1: \mathbb{Z})\right)} (f\left(n\right)) = f\left(-(1)\right) + \sum_{k \in \operatorname{Finset}.\operatorname{range}\left(r + 2\right)} (f\left((k: \mathbb{Z})\right)) + \sum_{k \in \operatorname{Finset}.\operatorname{range}\left(r\right)} (f\left(-((k + 2: \mathbb{Z}))\right)).$$
 
@@ -70,7 +82,7 @@ $$\forall M: \operatorname{Type},\ [\operatorname{AddCommGroup}(M)],\ \forall f:
 
 The interval from -(r+1) through r+1 is the disjoint union of -1, the nonnegative indices through r+1, and the negative indices -(k+2) for k<r. The displayed sum identity follows by induction on r.
 
-**Definition 1.6 (Stabilized integral coefficients).**
+**Definition 1.7 (Stabilized integral coefficients).**
 
 $$\begin{aligned}G = \operatorname{invOfUnit}\left(1 + X, 1\right)\\\forall c: \mathbb{N}, \operatorname{P}\left(c, 0\right) = 1\\\forall c: \mathbb{N}, \forall d: \mathbb{N}, \operatorname{P}\left(c, d + 1\right) = (2) \cdot (G) - (1) + (2) \cdot ((1 + \operatorname{P}\left(c, d\right)) \cdot (\operatorname{nonzeroSum}\left(c, \operatorname{P}\left(c, d\right)\right)))\\\forall c: \mathbb{N}, \forall n: \mathbb{N}, \operatorname{a}\left(c, n\right) = \operatorname{coeff}\left(n, \operatorname{P}\left(c, n + 1\right)\right)\end{aligned}$$
 
@@ -82,7 +94,7 @@ $$\begin{aligned}G = \operatorname{invOfUnit}\left(1 + X, 1\right)\\\forall c: \
 
 Here P is the private approximation sequence and G is the inverse of 1+X. Differences of products, powers, and unit inverses preserve agreement below degree d. Every nonzero-index term supplies another factor X. The remainder has constant coefficient zero, so the displayed iteration improves agreement to degree d+1.
 
-**Definition 1.7 (The generating series).**
+**Definition 1.8 (The generating series).**
 
 $$\forall c: \mathbb{N}, \operatorname{generatingSeries}\left(c\right) = \operatorname{mk}\left((n: \mathbb{N} \mapsto \operatorname{a}\left(c, n\right))\right)$$
 
@@ -94,7 +106,7 @@ $$\forall c: \mathbb{N}, \operatorname{generatingSeries}\left(c\right) = \operat
 
 The stabilized coefficients define an integer series for each natural c. The assertions about its equation and uniqueness assume c at least two.
 
-**Theorem 1.8 (The normalized polynomial equation).**
+**Theorem 1.9 (The normalized polynomial equation).**
 
 $$\forall c: \mathbb{N}, (2 \le c) \implies ((\operatorname{constantCoeff}\left(\operatorname{generatingSeries}\left(c\right)\right) = 1) \land (((1 + X) \cdot (1 + \operatorname{generatingSeries}\left(c\right))) \cdot (1 - ((2) \cdot (\operatorname{nonzeroSum}\left(c, \operatorname{generatingSeries}\left(c\right)\right)))) = 2))$$
 
@@ -106,7 +118,7 @@ $$\forall c: \mathbb{N}, (2 \le c) \implies ((\operatorname{constantCoeff}\left(
 
 Stabilization gives a fixed point of the integral iteration. Multiplying by 1+X gives the polynomial equation, and the zero constant coefficient of the remainder gives the normalization.
 
-**Definition 1.9 (The literal bilateral summand).**
+**Definition 1.10 (The literal bilateral summand).**
 
 $$\begin{aligned}\forall A: \operatorname{PowerSeries}\left(\mathbb{Z}\right), \operatorname{iota}\left(A\right) = \operatorname{ofPowerSeries}\left(\mathbb{Z}, \mathbb{Q}, \operatorname{map}\left(\operatorname{intCastRingHom}\left(\mathbb{Q}\right), A\right)\right)\\x = \operatorname{iota}\left(X\right)\\\forall c: \mathbb{N}, \forall A: \operatorname{PowerSeries}\left(\mathbb{Z}\right), \forall j: \mathbb{Z}, \operatorname{laurentTerm}\left(c, A, j\right) = ((((x)^{j}) \cdot ((\operatorname{iota}\left(A\right))^{j})) \cdot (((\operatorname{iota}\left(A\right))^{j} + x)^{(c) \cdot (j) - (1)})) \cdot (((x)^{j} + \operatorname{iota}\left(A\right))^{(c) \cdot (j) - (1)})\end{aligned}$$
 
@@ -118,7 +130,7 @@ $$\begin{aligned}\forall A: \operatorname{PowerSeries}\left(\mathbb{Z}\right), \
 
 This is the summand in the two OEIS NAMEs, with c left arbitrary. The zero term is (1+x)^(-1)*(1+iota(A))^(-1). For every nonzero index the field factorization identifies it with iota(bilateralTerm).
 
-**Theorem 1.10 (The defining Laurent-series equation).**
+**Theorem 1.11 (The defining Laurent-series equation).**
 
 $$\forall c: \mathbb{N}, (2 \le c) \implies ((\operatorname{constantCoeff}\left(\operatorname{generatingSeries}\left(c\right)\right) = 1) \land (\forall N: \mathbb{N}, \forall K: \mathbb{N}, (N \le K) \implies (\sum_{j \in \operatorname{Icc}\left(-(K), K\right)} (\operatorname{coeff}\left(N, \operatorname{laurentTerm}\left(c, \operatorname{generatingSeries}\left(c\right), j\right)\right)) = (\operatorname{if} (N = 0) \operatorname{then} \frac{1}{2} \operatorname{else} 0))))$$
 
@@ -130,7 +142,7 @@ $$\forall c: \mathbb{N}, (2 \le c) \implies ((\operatorname{constantCoeff}\left(
 
 The polynomial equation implies that the zero Laurent term plus the embedded nonzero-index remainder is the constant one half. Coefficient comparison and the finite-window theorem give the equality for every N and every K at least N. This is the coefficientwise meaning of the bilateral sum in the NAMEs.
 
-**Theorem 1.11 (Uniqueness for the literal equation).**
+**Theorem 1.12 (Uniqueness for the literal equation).**
 
 $$\forall c: \mathbb{N}, (2 \le c) \implies (\forall B: \operatorname{PowerSeries}\left(\mathbb{Z}\right), (\operatorname{constantCoeff}\left(B\right) = 1) \implies ((\forall N: \mathbb{N}, \forall K: \mathbb{N}, (N \le K) \implies (\sum_{j \in \operatorname{Icc}\left(-(K), K\right)} (\operatorname{coeff}\left(N, \operatorname{laurentTerm}\left(c, B, j\right)\right)) = (\operatorname{if} (N = 0) \operatorname{then} \frac{1}{2} \operatorname{else} 0))) \implies (B = \operatorname{generatingSeries}\left(c\right))))$$
 
@@ -142,7 +154,7 @@ $$\forall c: \mathbb{N}, (2 \le c) \implies (\forall B: \operatorname{PowerSerie
 
 The zero Laurent term comes from a rational power series. Equality of every nonnegative coefficient therefore recovers its power-series identity with the remainder. Clearing the two unit denominators gives the integral polynomial equation. Degree contraction then identifies any normalized integer solution with generatingSeries(c).
 
-**Theorem 1.12 (The general coefficient congruence).**
+**Theorem 1.13 (The general coefficient congruence).**
 
 $$\forall c: \mathbb{N}, (2 \le c) \implies (\forall n: \mathbb{N}, (0 < n) \implies (\operatorname{a}\left(c, n\right) \bmod 4 = 2))$$
 
@@ -154,7 +166,7 @@ $$\forall c: \mathbb{N}, (2 \le c) \implies (\forall n: \mathbb{N}, (0 < n) \imp
 
 Put H=nonzeroSum(c,A) and G=(1+X)^(-1). The fixed-point equation is A=2*G-1+2*(1+A)*H. Setting B=G+(1+A)*H gives 1+A=2*B and then A-(2*G-1)=4*B*H. The coefficient of G at n is (-1)^n. For n>0, twice this coefficient has remainder two modulo four.
 
-**Theorem 1.13 (Hanna's A381362 conjecture).**
+**Theorem 1.14 (Hanna's A381362 conjecture).**
 
 $$\forall n: \mathbb{N}, (0 < n) \implies (\operatorname{a}\left(2, n\right) \bmod 4 = 2)$$
 
@@ -170,7 +182,7 @@ $$\forall n: \mathbb{N}, (0 < n) \implies (\operatorname{a}\left(2, n\right) \bm
 
 The parameter c=2 gives A381362 and satisfies the general theorem's parameter bound. The generating-equation and uniqueness theorems identify these coefficients with the normalized series in hanna2025a381362.
 
-**Theorem 1.14 (Hanna's A381363 conjecture).**
+**Theorem 1.15 (Hanna's A381363 conjecture).**
 
 $$\forall n: \mathbb{N}, (0 < n) \implies (\operatorname{a}\left(3, n\right) \bmod 4 = 2)$$
 
@@ -201,4 +213,5 @@ The parameter c=3 gives A381363 and satisfies the general theorem's parameter bo
 - Truth anchor: `D5/S1/Recurrence/Bilateral/BilateralProductModFour.nonzeroSum`
 - Truth anchor: `D5/S1/Recurrence/Bilateral/BilateralProductModFour.ofSeries_inverse`
 - Truth anchor: `D5/S1/Recurrence/Bilateral/BilateralProductModFour.polynomial_form`
+- Truth anchor: `D5/S1/Recurrence/Bilateral/BilateralProductModFour.symmetric_pair`
 - Truth anchor: `D5/S1/Recurrence/Bilateral/BilateralProductModFour.window_split`

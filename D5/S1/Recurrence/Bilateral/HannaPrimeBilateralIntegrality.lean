@@ -10,7 +10,7 @@
 admission_basis: open-problem-resolution (#18831; Proved)
 escape_witness: none
 Direct frozen dependencies (declaration statement_id, not module pins):
-D5/S1/Recurrence/Bilateral/HannaThetaFourModFour.symmetric_pair
+D5/S1/Recurrence/Bilateral/BilateralProductModFour.symmetric_pair
   sha256:ec2ce3acb9c693250b8c1744ab57b32dfa6f8e22a0268b5edce1f5d12206504e
 D5/S1/Recurrence/Residue/NegativePowerDiagonalModPrime.inverse_difference
   sha256:de95009be8a3f6b4675b86334f6afe96cbcfe4cc07412482ab82bb4431065824
@@ -87,7 +87,6 @@ import D5.S1.Recurrence.Invariants.PowerSeriesNormalizedContraction
 import D5.S1.Recurrence.Invariants.UnitReversionSquareParity
 import Mathlib.RingTheory.PowerSeries.Binomial
 import D5.S1.Recurrence.Residue.ContinuedFractionOddSquare
-import D5.S1.Recurrence.Bilateral.HannaThetaFourModFour
 import D5.S1.Recurrence.Residue.NegativePowerDiagonalModPrime
 set_option autoImplicit false
 namespace D5.S1.Recurrence.Bilateral.HannaPrimeBilateralIntegrality
@@ -426,7 +425,7 @@ private theorem psi_one_zero {R : Type*} [CommRing R] (F : PowerSeries R) : psi 
   have he : coeff N (psi 1 F) =
       (∑ m ∈ range (N+1), ∑ b ∈ range (m+1), P m b) +
       (∑ i ∈ range (N+1), ∑ b ∈ range (N+1-i), Q i b) := by
-    rw [finite_window 1 (by decide) F N (N+1) le_rfl, D5.S1.Recurrence.Bilateral.HannaThetaFourModFour.symmetric_pair, sum_add_distrib]
+    rw [finite_window 1 (by decide) F N (N+1) le_rfl, D5.S1.Recurrence.Bilateral.BilateralProductModFour.symmetric_pair, sum_add_distrib]
     have hpos : coeff N (normalizedTerm 1 F 0) +
         ∑ m ∈ range (N+1), coeff N (normalizedTerm 1 F (m+1)) =
         ∑ m ∈ range (N+1), coeff N (normalizedTerm 1 F (m : ℤ)) := by
