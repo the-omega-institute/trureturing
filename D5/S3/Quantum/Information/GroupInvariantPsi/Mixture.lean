@@ -47,6 +47,51 @@ def mixtureTrace {d : ℕ} {G : Type*} [Group G] [Fintype G]
     (σ : G →* Equiv.Perm (Fin d)) (p q : Fin d → ℝ) (n : ℕ) (s : ℝ) : ℝ :=
   ∑ w : Fin n → Fin d, mixtureWeight σ p n w ^ s * mixtureWeight σ q n w ^ (1 - s)
 
+/-- The tensor twirl is diagonal with the classical mixture probabilities. -/
+theorem twirlPower_diag {d : ℕ} {G : Type*} [Group G] [Fintype G]
+    (σ : G →* Equiv.Perm (Fin d)) (p : Fin d → ℝ) (n : ℕ) :
+    twirlPower (permutationRepresentation σ) (Matrix.diagonal fun i => (p i : ℂ)) n =
+      Matrix.diagonal fun w => (mixtureWeight σ p n w : ℂ) := by
+  classical
+  have ht (e : Equiv.Perm (Fin d)) :
+      tensorPower (e.permMatrix ℂ) n =
+        Equiv.Perm.permMatrix ℂ (Equiv.piCongrRight fun _ : Fin n => e) := by
+    ext x y
+    simp only [tensorPower, D5.S3.Quantum.Recovery.ProductPrefixRigidity.productMap,
+      Equiv.Perm.permMatrix, PEquiv.toMatrix_apply, Equiv.toPEquiv_apply,
+      Option.mem_def, Option.some.injEq, Fintype.prod_boole]
+    congr 1
+    exact propext funext_iff.symm
+  have hc (g : G) :
+      tensorPower ((permutationRepresentation σ) g : Matrix (Fin d) (Fin d) ℂ) n *
+        tensorPower (Matrix.diagonal fun i => (p i : ℂ)) n *
+        (tensorPower ((permutationRepresentation σ) g : Matrix (Fin d) (Fin d) ℂ) n).conjTranspose =
+      Matrix.diagonal (fun w => ((∏ j, p ((σ g)⁻¹ (w j)) : ℝ) : ℂ)) := by
+    change tensorPower (((σ g)⁻¹).permMatrix ℂ) n * _ *
+      (tensorPower (((σ g)⁻¹).permMatrix ℂ) n).conjTranspose = _
+    simp only [ht]
+    rw [Matrix.conjTranspose_permMatrix, PEquiv.toMatrix_toPEquiv_mul,
+      PEquiv.mul_toMatrix_toPEquiv]
+    ext x y
+    simp only [Matrix.submatrix_apply, tensorPower,
+      D5.S3.Quantum.Recovery.ProductPrefixRigidity.productMap, Matrix.diagonal_apply,
+      Equiv.piCongrRight_apply, Pi.map_apply, Equiv.Perm.inv_def,
+      Equiv.symm_symm, id_eq]
+    by_cases h : x = y
+    · subst y
+      simp
+    · have hxy : ¬ ∀ j, (σ g).symm (x j) = (σ g).symm (y j) := by
+        intro hh
+        exact h (funext fun j => (σ g).symm.injective (hh j))
+      simp only [Fintype.prod_ite_zero, hxy, h, ite_false]
+  simp only [twirlPower, hc]
+  ext x y
+  by_cases h : x = y
+  · subst y
+    simp [mixtureWeight, Matrix.sum_apply, Complex.ofReal_mul,
+      Complex.ofReal_inv, Complex.ofReal_sum]
+  · simp [Matrix.sum_apply, h]
+
 /-- The trace product of real spectral powers of diagonal matrices. -/
 theorem trace_pow_diag {ι : Type*} [Fintype ι] [DecidableEq ι]
     (p q : ι → ℝ) (s : ℝ) :
