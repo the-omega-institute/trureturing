@@ -139,7 +139,7 @@ $$
 z\longmapsto[\operatorname{diag}(1,z^{-v},z^v)].
 $$
 
-Its kernel is the kernel of the character $z\mapsto z^v$, whose order is $3$. Projective faithfulness on $O$ therefore forces $m=3$. This proves necessity for every odd $m$, including exclusion of $m=1$.
+Its kernel is the kernel of the character $z\mapsto z^v$. This character has order $3$, so its image has order $3$ and its kernel has order $m/3$. Projective faithfulness on $O$ makes this kernel trivial, forcing $m=3$. This proves necessity for every odd $m$, including exclusion of $m=1$.
 
 ### 2.4. Restriction detects global matching
 
