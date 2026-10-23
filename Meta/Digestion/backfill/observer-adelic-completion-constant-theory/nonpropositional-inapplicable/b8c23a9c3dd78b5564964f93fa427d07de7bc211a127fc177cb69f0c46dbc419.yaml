@@ -5,3 +5,7 @@ cas_ref: sha256:b8c23a9c3dd78b5564964f93fa427d07de7bc211a127fc177cb69f0c46dbc419
 coverage_gids: []
 receipts:
   unresolved_subitems: []
+  nonpropositional:
+    justification: 该 atom 是对前述模块关系的解释性分类与总结，不提出独立可结算的数学断言。
+    previous_atom_id: d77f2d85d3c8f920d24afe38351745a2b5726764cdd0fd358203a73c521b9a56
+    next_atom_id: f2d6068b5ca62a49723d3a8900f4afeb74071664aa2d2ce0c2aab39c5fbcdea1
