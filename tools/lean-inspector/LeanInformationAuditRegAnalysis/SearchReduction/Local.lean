@@ -506,6 +506,9 @@ private unsafe def rebuildRoute (target : Expr) (types : List Expr)
       complete := trace.complete && membershipTrace.complete,
       missing := membershipTrace.missing ++ trace.missing,
       failures := membershipTrace.failures ++ trace.failures}
+    if let some (.lookup name) := certificate? then
+      unless trace.source? == some name do
+        return {detail := "certificate.lookup_name_not_used_or_out_of_scope"}
     unless ← goal.isAssigned do
       return {
         cost := if trace.complete then .one else .unknown, lookup := trace

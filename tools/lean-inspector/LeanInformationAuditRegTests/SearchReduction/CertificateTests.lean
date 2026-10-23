@@ -49,6 +49,15 @@ run_cmd do
     let closed ← replayCertificate (mkConst ``True) [] .close
     unless closed.cost == .zero && closed.proof?.isSome do
       throwError "frozen closure certificate failed"
+    let conjunction := mkApp2 (mkConst ``And) (mkConst ``True) (mkConst ``True)
+    let localOnly ← replayCertificate conjunction [] .close
+    unless localOnly.cost == .zero do
+      throwError "conjunction closure positive control failed"
+    let unusedName ← replayCertificate conjunction [] (.lookup `CertificateTests.notInScope)
+      (some {environment := ← getEnv, implicationModules? := some #[]})
+    unless unusedName.cost == .unknown && unusedName.proof?.isNone do
+      throwError "mutation accepted: unused-out-of-scope-name-on-closed-leaves"
+    logInfo "CERT_MUTATION rejected unused-out-of-scope-name-on-closed-leaves"
     let capped ← boundedRebuildBranch do
       IO.addHeartbeats (localBudget * 1000 + 1000000)
       checkSystem "certificate-test/capped"
