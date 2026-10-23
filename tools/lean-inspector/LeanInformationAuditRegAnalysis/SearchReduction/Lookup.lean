@@ -1,4 +1,5 @@
 import LeanInformationAuditRegAnalysis.SearchReduction.DiskLookup
+import LeanInformationAuditRegAnalysis.SearchReduction.LookupPruning
 
 /-! One-basis-declaration retrieval from checked disk pages. No query scans
 the baseline environment or constructs an environment-wide tree. -/
@@ -24,7 +25,7 @@ def timeLookup {α : Type} (label : String) (action : MetaM α) : MetaM α := do
   try action finally
     lookupPhase s!"{label}/end ns={(← IO.monoNanosNow) - start} heartbeats={(← IO.getNumHeartbeats) - heartbeats}"
 
-abbrev lookupVersion : String := "R_lookup/v14/scope-B_T/candidate-200000/preparation-8000000/G-340000000/memo-target-basis-R-v1/N-memo-2000000/checkpoint-v3/views-kappa"
+abbrev lookupVersion : String := "R_lookup/v15/scope-B_T/candidate-200000/preparation-8000000/G-340000000/memo-target-basis-R-v1/N-memo-2000000/checkpoint-v3/views-kappa/static-star-v1"
 
 abbrev lookupCandidateBudget : Nat := 200000
 /-- Frozen from verdict-free fallback and fixed-stride candidate telemetry. -/
@@ -33,7 +34,8 @@ abbrev lookupCoverageBudget : Nat := 340000000
 /-- Bounded, query-local metadata reuse; certificates are always checked anew. -/
 structure LookupQueryMemo where
   primary? : Option (Environment × Expr × DiskLookup.Candidates) := none
-  fallback? : Option DiskLookup.Candidates := none
+  fallback? : Option (Environment × DiskLookup.Index × Option (Array Name) ×
+    DiskLookup.Candidates) := none
   profile? : Option (Environment × Array DiskLookup.Entry × Nat × Nat) := none
 
 structure LookupCandidate where
@@ -143,14 +145,41 @@ def resolveLookupTable (table : LookupTable) : IO LookupTable := do
 
 private unsafe def queryLookup (table : LookupTable) (index : DiskLookup.Index)
     (type : Expr) (limit : Option Nat) (fallback : Bool) : MetaM DiskLookup.Candidates := do
+  if fallback then
+    if let some memo := table.memo? then
+      if let some (env, disk, modules, candidates) := (← memo.get).fallback? then
+        if ptrEq env table.environment && ptrEq disk index && modules == table.implicationModules? then
+          lookupPhase s!"lookup/static-star cached=true retained={candidates.entries.size} pruned={candidates.staticFailures}"
+          return candidates
   -- Recompute matching in every reset search branch; only module bytes cache.
   let candidates ← DiskLookup.queryMature index type limit fallback table.budget?
   withLookupPreparation table.budget? do
-    let entries := candidates.entries.filter fun entry =>
+    let retained := candidates.entries.filter fun entry =>
       candidateOwnerMatches table entry &&
         table.implicationModules?.all (·.contains entry.module.toName)
-    lookupPhase s!"lookup/scope=B_T retained={entries.size} excluded={candidates.entries.size - entries.size}"
-    return {candidates with entries}
+    lookupPhase s!"lookup/scope=B_T retained={retained.size} excluded={candidates.entries.size - retained.size}"
+    let mut entries := #[]
+    let mut staticFailures := 0
+    for entry in retained do
+      let impossible ← if fallback then
+          withEnv table.environment do
+            if let some info := (table.environment.setExporting false).find? entry.leanName then
+              try starCandidateImpossible info.type catch ex => do
+                if ex.isMaxHeartbeat || ex.isInterrupt || ex.isRuntime then throw ex
+                pure false
+            else pure false
+        else pure false
+      if impossible then staticFailures := staticFailures + 1
+      else entries := entries.push entry
+    let result := {candidates with entries, staticFailures}
+    if fallback then
+      emitLookupRecord s!"LOOKUP_STATIC_STAR {Json.mkObj [
+        ("scope", toJson "B_T"), ("before", toJson retained.size),
+        ("pruned", toJson staticFailures), ("after", toJson entries.size)] |>.compress}"
+      if let some memo := table.memo? then
+        memo.modify fun state => {state with
+          fallback? := some (table.environment, index, table.implicationModules?, result)}
+    return result
 
 /-- Catch resource exceptions below Core's rethrowing exception layer. -/
 def catchLookupCandidate {α : Type} (action : MetaM α)
@@ -710,8 +739,10 @@ unsafe def lookupLeafPass (fallback : Bool) (table : LookupTable) (goal : MVarId
   let mut ordinal := 0
   let mut trace : LookupTrace := {
     complete := candidates.complete && table.complete,
+    visited := candidates.staticFailures,
     pages := candidates.pages,
-    fallbackTotal := if fallback then candidates.entries.size else 0}
+    fallbackTotal := if fallback then candidates.entries.size + candidates.staticFailures else 0,
+    fallbackVisited := if fallback then candidates.staticFailures else 0}
   let mut pending : Array (LookupTrace × LookupBudgetState) := #[]
   let mut pendingStart := 0
   for entry in candidates.entries do
@@ -720,7 +751,7 @@ unsafe def lookupLeafPass (fallback : Bool) (table : LookupTable) (goal : MVarId
     if telemetry && position % (max 1 stride) != 0 then continue
     unless ← coverageAvailable table do
       trace := {trace with
-        complete := false, failures := trace.failures.push s!"G-truncated:fallback={fallback}:remaining={candidates.entries.size - trace.visited}"}
+        complete := false, failures := trace.failures.push s!"G-truncated:fallback={fallback}:remaining={candidates.entries.size + candidates.staticFailures - trace.visited}"}
       break
     if position % 128 == 0 then
       emitLookupRecord s!"LOOKUP_ENUMERATION_PROGRESS fallback={fallback} next={position} total={candidates.entries.size}"
@@ -756,6 +787,7 @@ unsafe def lookupLeafPass (fallback : Bool) (table : LookupTable) (goal : MVarId
     if trace.source?.isSome && !telemetry then break
   unless telemetry do emitLookupRecord s!"LOOKUP_ENUMERATION {Json.mkObj [
     ("fallback", toJson fallback), ("total", toJson candidates.entries.size),
+    ("static_normal_failures", toJson candidates.staticFailures),
     ("visited", toJson trace.visited), ("complete", toJson trace.complete),
     ("found", toJson trace.source?.isSome), ("capped", toJson trace.capped),
     ("unknown", toJson trace.failures)] |>.compress}"

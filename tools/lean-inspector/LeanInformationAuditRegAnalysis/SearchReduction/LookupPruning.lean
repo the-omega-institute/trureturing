@@ -7,6 +7,7 @@ namespace LeanInformationAudit.SearchReduction
 open Lean Meta
 
 structure StarDeterminationPlan where
+  supported : Bool := true
   required : List Nat
   seeds : List Nat
   dependencies : List (Nat × Nat)
@@ -19,7 +20,8 @@ def starDeterminationClosed (plan : StarDeterminationPlan) (support : List Nat) 
     !support.contains edge.1 || support.contains edge.2
 
 def staticStarImpossible (plan : StarDeterminationPlan) (support : List Nat) : Bool :=
-  starDeterminationClosed plan support && plan.required.any (fun i => !support.contains i)
+  !plan.supported ||
+    (starDeterminationClosed plan support && plan.required.any (fun i => !support.contains i))
 
 def starDeterminationSupport (plan : StarDeterminationPlan) (size : Nat) : List Nat :=
   (List.range size).foldl (fun support _ => plan.dependencies.foldl (fun known edge =>
@@ -53,6 +55,23 @@ def starDeterminationPlan (type : Expr) : MetaM StarDeterminationPlan :=
     return {required, seeds, dependencies}
 
 def starCandidateImpossible (type : Expr) : MetaM Bool := do
+  -- Subtype.property can expose a computation in the candidate's value,
+  -- determining arguments absent from its signature. Keep all data-valued
+  -- candidates; only proof-valued declarations use this signature analysis.
+  unless ← isProp type do
+    let sort ← withReducible <| whnf (← inferType type)
+    -- A universe that can become Prop must remain eligible. For genuinely
+    -- data-valued declarations R only admits a Subtype.property view.
+    let definitelyData := match sort with
+      | .sort level => level.isNeverZero
+      | _ => false
+    unless definitelyData do return false
+    let subtype ← forallTelescopeReducing type fun _ body => do
+      return (← withReducible <| whnf body).isAppOfArity ``Subtype 2
+    if subtype then return false
+    let unsupported : StarDeterminationPlan := {
+      supported := false, required := [], seeds := [], dependencies := []}
+    return staticStarImpossible unsupported []
   let plan ← starDeterminationPlan type
   let size := plan.required.length + plan.seeds.length
   return staticStarImpossible plan (starDeterminationSupport plan size)

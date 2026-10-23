@@ -262,6 +262,7 @@ structure Index where
 
 structure Candidates where
   entries : Array Entry := #[]
+  staticFailures : Nat := 0
   missing : Array String := #[]
   complete : Bool := false
   pages : Nat := 0

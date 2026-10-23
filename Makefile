@@ -209,7 +209,7 @@ search-reduction-run:
 search-reduction search-reduction-run: export SEARCH_REDUCTION_REQUESTS := $(value REQUESTS)
 
 search-reduction-test: search-reduction-index-fixtures
-	@for module in GraphModel LookupModel LookupTests LookupScope NativeCertification GraphCalibration Calibration FaultPaths SingleSourceModel VocabularyModel PresentationCoverage SingleSourceTests RawOriginsTests Faults RealNegative VocabularyTransport VocabularyTests InformationTests; do $(MAKE) lean LEAN_TARGETS="LeanInformationAuditRegTests.SearchReduction.$$module" || exit $$?; done
+	@for module in GraphModel LookupModel LookupPruningTests LookupTests LookupScope NativeCertification GraphCalibration Calibration FaultPaths SingleSourceModel VocabularyModel PresentationCoverage SingleSourceTests RawOriginsTests Faults RealNegative VocabularyTransport VocabularyTests InformationTests; do $(MAKE) lean LEAN_TARGETS="LeanInformationAuditRegTests.SearchReduction.$$module" || exit $$?; done
 
 # Reexecute every probe and guard even when the compiled fixtures are current.
 search-reduction-replay-test:

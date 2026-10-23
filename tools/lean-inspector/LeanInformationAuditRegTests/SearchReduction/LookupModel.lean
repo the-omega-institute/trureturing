@@ -489,7 +489,8 @@ private theorem star_determined_inside_barrier (plan : StarDeterminationPlan)
 /-- A compliant certificate closes every data argument using R's allowed
 routes. The target is arbitrary and supplies no extra assignment mechanism. -/
 def StarCompliantCertificate (plan : StarDeterminationPlan) {Target : Type*}
-    (_target : Target) : Prop := ∀ i ∈ plan.required, StarDetermined plan i
+    (_target : Target) : Prop :=
+  plan.supported = true ∧ ∀ i ∈ plan.required, StarDetermined plan i
 
 /-- The production static predicate rules out a compliant certificate for
 every target. The barrier is checked by the predicate itself; no completeness
@@ -497,13 +498,15 @@ assumption about the support-computation algorithm is needed. -/
 theorem static_star_impossible_no_certificate (plan : StarDeterminationPlan)
     (support : List Nat) (impossible : staticStarImpossible plan support = true)
     {Target : Type*} (target : Target) : ¬ StarCompliantCertificate plan target := by
-  simp only [staticStarImpossible, Bool.and_eq_true, List.any_eq_true] at impossible
-  rcases impossible.2 with ⟨i, required, absent⟩
   intro certificate
-  have inside := star_determined_inside_barrier plan support impossible.1
-    (certificate i required)
-  have missing : i ∉ support := by simpa using absent
-  exact missing inside
+  simp only [staticStarImpossible, Bool.or_eq_true, Bool.and_eq_true,
+    List.any_eq_true] at impossible
+  rcases impossible with unsupported | ⟨closed, i, required, absent⟩
+  · simp [certificate.1] at unsupported
+  · have inside := star_determined_inside_barrier plan support closed
+      (certificate.2 i required)
+    have missing : i ∉ support := by simpa using absent
+    exact missing inside
 
 #print axioms static_star_impossible_no_certificate
 
