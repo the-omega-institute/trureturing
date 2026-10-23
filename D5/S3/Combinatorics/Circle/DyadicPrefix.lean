@@ -16,13 +16,16 @@
    (19,38,-51) admits no complete legal ordering from the legal root start 26.
 -/
 
-import Mathlib.Combinatorics.Colex
-import Mathlib.Data.Nat.GCD.Basic
-import Mathlib.Tactic
+module
+public import Mathlib.Combinatorics.Colex
+public import Mathlib.Data.Nat.GCD.Basic
+public import Mathlib.Tactic
 
 /-! Binary digit selection and exact dyadic rounding for local two-run prefixes. -/
 
 set_option autoImplicit false
+
+@[expose] public section
 
 namespace D5.S3.Combinatorics.Circle.DyadicPrefix
 
@@ -44,7 +47,7 @@ def bitSubset (u x : ℕ) (hx : x < 2 ^ u) : Finset (Fin u) := by
   exact (Finset.mem_filter.mp (show i ∈ x.bitIndices.toFinset.filter (fun k => k < u) by
     simpa only [s] using hi)).2
 
-private theorem bit_subset_mem {u x : ℕ} (hx : x < 2 ^ u) {i : Fin u} :
+theorem bit_subset_mem {u x : ℕ} (hx : x < 2 ^ u) {i : Fin u} :
     i ∈ bitSubset u x hx ↔ x.testBit i.1 := by
   classical
   let s := x.bitIndices.toFinset.filter (fun j => j < u)
@@ -80,7 +83,7 @@ private theorem bit_subset_mem {u x : ℕ} (hx : x < 2 ^ u) {i : Fin u} :
     · simp [his]
     · exact Fin.ext rfl
 
-private theorem bit_subset_sum {u x : ℕ} (hx : x < 2 ^ u) :
+theorem bit_subset_sum {u x : ℕ} (hx : x < 2 ^ u) :
     ∑ i ∈ bitSubset u x hx, 2 ^ i.1 = x := by
   classical
   let s := x.bitIndices.toFinset.filter (fun i => i < u)
@@ -108,7 +111,7 @@ private theorem bit_subset_sum {u x : ℕ} (hx : x < 2 ^ u) :
   rw [hsum, hs]
   exact Finset.sum_toFinset_bitIndices_two_pow x
 
-private theorem bit_subset_top_mem {u x : ℕ} (hu : 0 < u)
+theorem bit_subset_top_mem {u x : ℕ} (hu : 0 < u)
     (hlo : 2 ^ (u - 1) ≤ x) (hhi : x < 2 ^ u) :
     ⟨u - 1, by omega⟩ ∈ bitSubset u x hhi := by
   rw [bit_subset_mem hhi]
