@@ -91,4 +91,3 @@ run_meta do
       pure true
     unless rejected do throwError "easy target proof-field projection escaped the type-only guard"
     logInfo "easy projection: direct R proof exists; proof-field transport guard: incomplete"
-
