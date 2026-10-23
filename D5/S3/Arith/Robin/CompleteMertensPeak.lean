@@ -31,10 +31,10 @@ def psiErrorKernel (u : ℝ) : ℝ := (Chebyshev.psi u - u) / u ^ 2
 def Q (t : ℝ) : ℝ := ∫ u in Ioi t, psiErrorKernel u
 
 /-- The positive logarithmic weight. -/
-def r (t : ℝ) : ℝ := QuotientIntegralBudget.weightEnvelope t
+private def r (t : ℝ) : ℝ := QuotientIntegralBudget.weightEnvelope t
 
 /-- The weighted complete Chebyshev tail. -/
-def I (t : ℝ) : ℝ := ∫ u in Ioi t, psiErrorKernel u * r u
+private def I (t : ℝ) : ℝ := ∫ u in Ioi t, psiErrorKernel u * r u
 
 /-- The finite complete Mangoldt cumulative error. -/
 def U (t : ℝ) : ℝ :=
@@ -154,11 +154,10 @@ private lemma triangle_left {t u : ℝ} (ht : 2 ≤ t) (hu : t < u) :
     Measure.restrict_restrict measurableSet_Iio, Set.inter_comm, Ioi_inter_Iio,
     integral_mul_const, ← integral_Ioc_eq_integral_Ioo,
     ← intervalIntegral.integral_of_le hu.le]
-  have hdiff := intervalIntegral.integral_Ioi_sub_Ioi
-    (Mertens.integrable_const_div_mul_log_sq (1 : ℝ) ht) hu.le
-  rw [Mertens.integ_div_mul_log_sq 1 ht,
-    Mertens.integ_div_mul_log_sq 1 (ht.trans hu.le)] at hdiff
-  rw [← hdiff]
+  have hdiff : (∫ s in t..u, 1 / (s * log s ^ 2)) = 1 / log t - 1 / log u := by
+    simpa only [one_div, div_eq_mul_inv, mul_inv_rev, mul_comm, one_mul] using
+      integral_inv_div_log_sq (by linarith : 1 < t) (by linarith : 1 < u)
+  rw [hdiff]
   ring
 
 private lemma tail_log_integral {t : ℝ} (ht : 2 ≤ t)
@@ -502,13 +501,11 @@ private lemma fifth_moment_tail {z : ℝ} (hz : 16 ≤ z) :
     dsimp [d]
     nlinarith [h]
   have hi : IntegrableOn (fun v : ℝ => v ^ 5 * exp (-(4 / 5) * v)) (Ioi z) := by
-    apply hdi.mono' (by fun_prop)
-    filter_upwards [ae_restrict_mem measurableSet_Ioi] with v hv
-    change z < v at hv
-    rw [Real.norm_eq_abs, abs_of_nonneg (by
-      have : 0 ≤ v := by linarith [hv]
-      positivity : 0 ≤ v ^ 5 * exp (-(4 / 5) * v))]
-    exact hpoint v hv
+    have hbase := integrableOn_rpow_mul_exp_neg_mul_rpow
+      (s := (5 : ℝ)) (p := (1 : ℝ)) (b := (4 / 5 : ℝ))
+      (by norm_num) (by norm_num) (by norm_num)
+    simpa only [Real.rpow_ofNat, Real.rpow_one] using
+      hbase.mono_set (Ioi_subset_Ioi (show 0 ≤ z by linarith))
   refine ⟨hi, (setIntegral_mono_on hi hdi measurableSet_Ioi hpoint).trans_eq ?_⟩
   have heq := integral_Ioi_of_hasDerivAt_of_tendsto'
     (fun v _ => hd v) hdi hlim

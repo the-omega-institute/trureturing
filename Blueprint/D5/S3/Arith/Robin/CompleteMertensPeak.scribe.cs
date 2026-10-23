@@ -38,15 +38,15 @@ internal sealed class CompleteMertensPeakDocument : IScribeDocumentDefinition
                         + "integral Q(s)/(s*log(s)^2)=Q(A)/log(A)-integral f(u)/log(u), "
                         + "where f(u)=(psi(u)-u)/u^2. Substituting Lay's identity into the complete "
                         + "Mertens formula cancels the Euler constant and proves "
-                        + "E₂Λ(t)=(psi(t)-t)/(t*log(t))-I(t).")),
+                        + "E₂Λ(t)=(psi(t)-t)/(t*log(t))-I(t), with the auxiliary notation "
+                        + "I(t)=integral(f(u)*r(u),u>t) and r(t)=(1+log(t))/log(t)^2.")),
                     Paragraph(Text(
                         "The complete weighted Mertens identity relates E₂Λ to I. Completing each "
                         + "prime's positive logarithmic series gives E₂Λ<=-E₃. If E₃ never crosses "
                         + "the actual-lcm response threshold on [A,B], these two facts imply "
                         + "I(t)>=-4/sqrt(t). Absolute continuity of the integral primitives gives "
                         + "Q(A)=I(A)/r(A)+integral(w(t)*I(t),A,B)+Q(B)-I(B)/r(B), "
-                        + "where r(t)=(1+log(t))/log(t)^2 and "
-                        + "w(t)=log(t)*(log(t)+2)/(t*(1+log(t))^2).")),
+                        + "where w(t)=log(t)*(log(t)+2)/(t*(1+log(t))^2).")),
                     Paragraph(Text(
                         "Positivity and monotonicity of r bound the absolute far-end difference "
                         + "by twice the unweighted absolute Chebyshev tail. Logarithmic and "
