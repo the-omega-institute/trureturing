@@ -1,5 +1,6 @@
 import LeanInformationAuditRegAnalysis.SearchReduction.Graph
 import LeanInformationAuditRegAnalysis.SearchReduction.Lookup
+import LeanInformationAuditRegAnalysis.SearchReduction.Nominators
 import LeanInformationAudit.CompiledAxioms
 import Mathlib.Tactic.Ring
 import Mathlib.Tactic.Linarith
@@ -541,6 +542,7 @@ structure LocalMemoAnswer where
   result : LocalResult
 
 private initialize localMemoContext : IO.Ref String ← IO.mkRef ""
+private initialize certificateOnlyAnswers : IO.Ref (Std.HashMap String LocalResult) ← IO.mkRef {}
 private initialize localMemoAnswers : IO.Ref (Std.HashMap String LocalResult) ← IO.mkRef {}
 private initialize localMemoRegions : IO.Ref (Array CompactedRegion) ← IO.mkRef #[]
 
@@ -549,6 +551,7 @@ def localMemoEnabled : IO Bool := do
 
 private def prepareLocalMemo (table : LookupTable) (graph : ProofGraph) : MetaM Unit := do
   localMemoAnswers.set {}
+  certificateOnlyAnswers.set {}
   localMemoContext.set ""
   unless ← localMemoEnabled do return
   let env ← getEnv
@@ -622,7 +625,7 @@ private unsafe def memoizedLocalRebuild (target : Expr) (types : List Expr)
 
 unsafe def localRebuild (target : Expr) (types : List Expr := [])
     (lookup? : Option LookupTable := none) : MetaM LocalResult := do
-  memoizedLocalRebuild target types do
+  let result ← memoizedLocalRebuild target types do
     let localRoute := rebuildRoute target types none
     if let some table := lookup? then
       if table.enabled then
@@ -631,6 +634,45 @@ unsafe def localRebuild (target : Expr) (types : List Expr := [])
         finally
           if let some close := table.close? then close
     boundedRebuildBranch localRoute
+  if result.cost != .zero then return result
+  let some certificate := result.certificate?
+    | return {detail := "certificate.R_hit_has_no_name_only_export"}
+  let checked ← replayCertificate target types certificate lookup?
+  if checked.cost != .zero then
+    return {detail := s!"certificate.R_export_replay_failed:{certificate.render}"}
+  certificateNominations.modify (·.push ⟨certificate, "R-hit"⟩)
+  return checked
+
+/-- Positive-only front end. Empty nominations and failed verification remain
+unknown; neither path invokes primary-index enumeration. -/
+private unsafe def certifyLocalUncached (target : Expr) (types : List Expr := [])
+    (lookup? : Option LookupTable := none)
+    (nominations : Array ObviousCertificate := #[]) : MetaM LocalResult := do
+  let closed ← replayCertificate target types .close lookup?
+  if closed.cost == .zero then return closed
+  let members ← if let some table := lookup? then
+    try memberCertificateNames table target catch _ => pure #[]
+    else pure #[]
+  let pool ← certificateNominations.get
+  let candidates := nominationCertificates (pool ++
+    (members.map fun name => ⟨.member name, "alpha-membership"⟩) ++
+    (nominations.map fun c => ⟨c, "explicit"⟩))
+  for candidate in candidates do
+    let checked ← replayCertificate target types candidate lookup?
+    if checked.cost == .zero then return checked
+  return {detail := "certificate.not_found;not_a_negative"}
+
+/-- Positive-only query answers are separate from completed R answers. Pool
+identity prevents a failed nomination set hiding later registered evidence. -/
+unsafe def certifyLocal (target : Expr) (types : List Expr := [])
+    (lookup? : Option LookupTable := none) : MetaM LocalResult := do
+  let key := reprStr (target, types, nominationCertificates (← certificateNominations.get))
+  if let some result := (← certificateOnlyAnswers.get)[key]? then
+    checkMemoProof target types result
+    return result
+  let result ← certifyLocalUncached target types lookup?
+  certificateOnlyAnswers.modify (·.insert key result)
+  return result
 
 private def vertex (graph : ProofGraph) (id : Nat) : GraphVertex :=
   (graph.vertices.find? (·.id == id)).getD default
@@ -703,7 +745,7 @@ unsafe def priceGraph (graph : ProofGraph) (paired := false) (allGiven := false)
   for edge in graph.edges do
     let available := if allGiven then edge.premises else statementPremises edge seeds
     let analytic := edge.analytic
-    let result ← localRebuild (vertex graph edge.conclusion).type
+    let result ← certifyLocal (vertex graph edge.conclusion).type
       (available.map (vertex graph · |>.type)) lookup?
     let result := if edge.window != 1 && result.cost != .zero then
       {result with cost := .unknown} else result
@@ -711,9 +753,12 @@ unsafe def priceGraph (graph : ProofGraph) (paired := false) (allGiven := false)
     let edge := if allGiven then
         if paired then {edge with pairedVisibleCost := result.cost, pairedGivenUsedPremises := used}
         else {edge with visibleCost := result.cost, givenUsedPremises := used}
-      else if paired then {edge with pairedCost := result.cost, pairedZeroProof := result.proof?, pairedUsedPremises := used}
+      else if paired then {edge with
+        pairedCost := result.cost, pairedZeroProof := result.proof?, pairedUsedPremises := used,
+        pairedCertificate? := result.certificate?}
       else {edge with
         cost := result.cost, zeroProof := result.proof?, usedPremises := used,
+        certificate? := result.certificate?,
         analytic, detail := result.detail}
     edges := edges ++ [edge]
   return {graph with edges}
@@ -721,19 +766,21 @@ unsafe def priceGraph (graph : ProofGraph) (paired := false) (allGiven := false)
 private def armSeeds (graph : ProofGraph) (paired : Bool) : List Nat :=
   (graph.vertices.filter (fun v => v.seed || (paired && v.structureSeed && !v.targetPart))).map (·.id)
 
-private def armGraph (graph : ProofGraph) (paired allGiven : Bool) : ProofGraph :=
+private def armGraph (graph : ProofGraph) (paired allGiven : Bool) (lower := false) : ProofGraph :=
   {graph with edges := (graph.edges.filter (fun edge => edgeActive edge paired allGiven)).map fun edge =>
     let cost := if allGiven then (if paired then edge.pairedVisibleCost else edge.visibleCost)
       else if paired then edge.pairedCost else edge.cost
-    {edge with cost, premises := if cost == .zero then
+    {edge with cost, premises := if lower && cost == .unknown then [] else if cost == .zero then
       (if allGiven then
         (if paired then edge.pairedGivenUsedPremises else edge.givenUsedPremises)
        else if paired then edge.pairedUsedPremises else edge.usedPremises) else edge.premises}}
 
 unsafe def rootProbe (graph : ProofGraph) (paired := false)
-    (lookup? : Option LookupTable := none) : MetaM ProbeResult := do
+    (lookup? : Option LookupTable := none) (negative := false) : MetaM ProbeResult := do
   let seeds := armSeeds graph paired
-  let result ← localRebuild (vertex graph graph.root).type (seeds.map (vertex graph · |>.type)) lookup?
+  let result ← if negative && !paired then
+      localRebuild (vertex graph graph.root).type (seeds.map (vertex graph · |>.type)) lookup?
+    else certifyLocal (vertex graph graph.root).type (seeds.map (vertex graph · |>.type)) lookup?
   let outcome := match result.cost with
     | .zero => Run.found | .one => .exhausted | .unknown => .incomplete .undecided
   return {
@@ -767,95 +814,187 @@ def assembleZero (graph : ProofGraph) (paired := false) : MetaM (Option Expr) :=
     return some proof
   catch _ => return none
 
-/-- Two root probes, target-part reverse probes and declaration-level k=2.
-The d_given ablation supplies all premise types; it does not affect verdicts. -/
-unsafe def evaluateGraph (raw : ProofGraph) (lookup? : Option LookupTable := none) : MetaM GraphReading := do
-  lookupPhase "graph/target-part-start"
+/-- Lower bounds allow an unknown successful certificate to discard any
+premises. Upper bounds retain the author's known route. -/
+private def armInterval (graph : ProofGraph) (paired := false) (allGiven := false)
+    (id? : Option Nat := none) : Interval :=
+  let seeds := armSeeds graph paired
+  let id := id?.getD graph.root
+  ⟨depth (armGraph graph paired allGiven true) costLower seeds id,
+   depth (armGraph graph paired allGiven) costUpper seeds id⟩
+
+private def addRootProbe (graph : ProofGraph) (probe : ProbeResult) (paired : Bool) : ProofGraph :=
+  if !probe.checked then graph else
+  let actual := probe.premises
+  {graph with edges := graph.edges ++ [{
+    conclusion := graph.root, premises := actual, window := 0,
+    cost := if paired then .unknown else .zero, pairedCost := .zero,
+    visibleCost := .zero, pairedVisibleCost := .zero,
+    usedPremises := if paired then [] else actual, pairedUsedPremises := actual,
+    givenUsedPremises := if paired then [] else actual, pairedGivenUsedPremises := actual,
+    zeroProof := if paired then none else probe.proof?, pairedZeroProof := probe.proof?,
+    detail := if paired then "paired-root-certificate" else "baseline-root-certificate"}]}
+
+/-- Unknown author edges selected by the optimistic lower-bound DP. The
+traversal retains graph edge indices and visits shared premises once. -/
+private def lowerUnknownPath (graph : ProofGraph) : List Nat := Id.run do
+  let arm := armGraph graph false false true
+  let seeds := armSeeds graph false
+  let table := dpTable arm costLower seeds
+  let mut pending := [graph.root]
+  let mut seen := []
+  let mut result := []
+  for _ in [:graph.vertices.length + (graph.edges.map (·.premises.length)).sum + 1] do
+    let v :: rest := pending | break
+    pending := rest
+    if seen.contains v || seeds.contains v then continue
+    seen := v :: seen
+    if let some index := (table[v]?.getD {}).edge? then
+      if let some edge := arm.edges[index]? then
+        if edge.cost == .unknown then
+          -- armGraph filters inactive shortcuts, so recover the original edge.
+          if let some original := graph.edges.zipIdx.find? (fun (e, _) =>
+              e.conclusion == edge.conclusion && e.window == edge.window && e.source == edge.source) then
+            result := result ++ [original.2]
+        pending := edge.premises ++ pending
+  return result.eraseDups
+
+/-- Only a decisive gap can request full R, and only in the baseline arm.
+A failed or capped request is tried once and remains unknown. -/
+private unsafe def refineBaseline (initial : ProofGraph) (lookup? : Option LookupTable)
+    (initialProbe : ProbeResult) : MetaM (ProofGraph × ProbeResult × Nat) := do
+  let mut graph := initial
+  let mut probe := initialProbe
+  let mut calls := 0
+  let mut tried := []
+  if better (armInterval graph true).upper (armInterval graph).upper then
+    probe ← rootProbe graph false lookup? true
+    calls := calls + 1
+    graph := addRootProbe graph probe false
+  for _ in [:initial.edges.length] do
+    let base := armInterval graph
+    let paired := armInterval graph true
+    if !better paired.upper base.upper ||
+        (strictDrop base paired && probe.outcome == .exhausted) then break
+    let witnesses := graph.edges.zipIdx.filterMap fun (edge, i) =>
+      if edge.window == 1 && edge.cost == .unknown && edge.pairedCost == .zero then some i else none
+    let candidates := (witnesses ++ lowerUnknownPath graph).eraseDups
+    let some index := candidates.find? (fun i => !tried.contains i) | break
+    tried := index :: tried
+    let some edge := graph.edges[index]? | continue
+    let available := statementPremises edge (armSeeds graph false)
+    let result ← localRebuild (vertex graph edge.conclusion).type
+      (available.map (vertex graph · |>.type)) lookup?
+    calls := calls + 1
+    let used := result.used.map (available[·]!)
+    let edge := {edge with
+      cost := result.cost, zeroProof := result.proof?,
+      certificate? := result.certificate?, usedPremises := used, detail := result.detail}
+    let edge := if result.cost == .zero then {edge with
+      pairedCost := .zero, pairedZeroProof := result.proof?, pairedUsedPremises := used,
+      pairedCertificate? := result.certificate?} else edge
+    graph := {graph with edges := graph.edges.set index edge}
+  return (graph, probe, calls)
+
+/-- Certificates are checked first in both arms. Full negative R is reserved
+for a possible strict drop. Paired queries never request negative evidence. -/
+unsafe def evaluateGraph (raw : ProofGraph) (lookup? : Option LookupTable := none)
+    (nominations : Array CertificateNomination := #[]) : MetaM GraphReading := do
   if raw.vertices.isEmpty then return {graph := raw}
   let mut raw := raw
   let enabled := (← IO.getEnv "SEARCH_REDUCTION_LOOKUP") != some "0"
   let table ← resolveLookupTable (lookup?.getD {environment := ← getEnv, enabled})
   prepareLocalMemo table raw
+  let previousPool ← certificateNominations.get
+  certificateNominations.set nominations
   try
     let lookup? := some table
-    let mut targetPartComplete := true
     let rootType := (vertex raw raw.root).type
     let baseIds := armSeeds raw false
     let baseTypes := baseIds.map (vertex raw · |>.type)
+    if (← IO.getEnv "SEARCH_REDUCTION_NOMINATORS") == some "core" then
+      discard <| boundedRebuildBranch do
+        let nominations ← coreCertificateNominations rootType baseTypes
+        certificateNominations.modify (· ++ nominations)
+        return {detail := "core-nominations;not-negative-evidence"}
     let mut vertices := []
     for v in raw.vertices do
       let mut v := v
       if v.structureSeed then
-        let reverse ← localRebuild v.type (rootType :: baseTypes) lookup?
-        let independent ← localRebuild v.type baseTypes lookup?
-        let independentRun := match independent.cost with
-          | .zero => Run.found | .one => .exhausted | .unknown => .incomplete .undecided
-        v := {v with
-          independentLookup := independentRun,
-          independentLookupDetail := independent.detail}
-        if reverse.cost == .unknown || independent.cost == .unknown then targetPartComplete := false
         let part ← analyticPremise v.type rootType
         let inverse ← analyticPremise rootType v.type
-        v := {v with targetPart := part || inverse ||
-          (reverse.cost == .zero && independent.cost == .one)}
+        v := {v with targetPart := part || inverse}
       vertices := vertices ++ [v]
     raw := {raw with vertices}
     let graph ← annotateGraph {raw with edges := raw.edges ++ k2Frontier raw}
-    lookupPhase "graph/pricing-start"
+    lookupPhase "graph/certificates-start"
     let graph ← priceGraph graph false false lookup?
     let graph ← priceGraph graph true false lookup?
     let graph ← priceGraph graph false true lookup?
     let graph ← priceGraph graph true true lookup?
-    -- Failed optional probes do not become priced shortcuts in either arm.
-    let graph := {graph with edges := graph.edges.filter (fun e =>
-      e.window == 1 || edgeActive e || edgeActive e true ||
-        edgeActive e false true || edgeActive e true true)}
-    lookupPhase "graph/roots-start"
     let baseProbe ← rootProbe graph false lookup?
     let pairedProbe ← rootProbe graph true lookup?
-    lookupPhase "graph/dp-start"
+    let graph := addRootProbe (addRootProbe graph baseProbe false) pairedProbe true
+    lookupPhase "graph/lazy-start"
+    let (graph, baseProbe, negativeCalls) ← refineBaseline graph lookup? baseProbe
     let mut graph := graph
-    for paired in [false, true] do
-      let probe := if paired then pairedProbe else baseProbe
-      if probe.checked && (!paired || !baseProbe.checked) then
-        let actual := probe.premises
-        graph := {graph with edges := graph.edges ++ [{
-          conclusion := graph.root, premises := actual, window := 0,
-          cost := if paired then ( .unknown) else .zero, pairedCost := .zero,
-          visibleCost := .zero, pairedVisibleCost := .zero,
-          usedPremises := if paired then [] else actual, pairedUsedPremises := actual,
-          givenUsedPremises := if paired then [] else actual, pairedGivenUsedPremises := actual,
-          zeroProof := if paired then none else probe.proof?, pairedZeroProof := probe.proof?,
-          sharedData? := (graph.edges.find? (·.conclusion == graph.root)).bind (·.sharedData?),
-          detail := if paired then "paired-root-probe" else "baseline-root-probe"}]}
-    let baselineGraph := armGraph graph false false
-    let pairedGraph := armGraph graph true false
+    let mut targetPartComplete := true
+    let mut independentCalls := 0
+    if better (armInterval graph true).upper (armInterval graph).upper then
+      let selected := optimalSeeds (armGraph graph true false) costUpper (armSeeds graph true)
+      let mut checkedVertices := []
+      for v in graph.vertices do
+        let mut v := v
+        if selectedStructureSeed graph selected v.id then
+          let independent ← localRebuild v.type baseTypes lookup?
+          independentCalls := independentCalls + 1
+          let independentRun := match independent.cost with
+            | .zero => Run.found | .one => .exhausted | .unknown => .incomplete .undecided
+          v := {v with
+            independentLookup := independentRun,
+            independentLookupDetail := independent.detail}
+          if independent.cost != .zero then
+            let reverse ← certifyLocal v.type (rootType :: baseTypes) lookup?
+            if reverse.cost == .zero && independent.cost == .one then
+              v := {v with targetPart := true}
+            else
+              -- Failure of a positive-only reverse query is not a NoHit.
+              targetPartComplete := false
+        checkedVertices := checkedVertices ++ [v]
+      graph := {graph with vertices := checkedVertices}
+      let edges := graph.edges.map fun edge =>
+        if edge.pairedUsedPremises.any (fun p =>
+            (vertex graph p).targetPart && !(vertex graph p).seed && !edge.analytic.contains p) then
+          {edge with pairedCost := .unknown, pairedZeroProof := none, pairedCertificate? := none}
+        else edge
+      graph := {graph with edges}
     let baseSeeds := armSeeds graph false
     let pairSeeds := armSeeds graph true
     let k1 := {graph with edges := graph.edges.filter (·.window != 2)}
-    let selectedSeeds := optimalSeeds pairedGraph costUpper pairSeeds
+    let selectedSeeds := optimalSeeds (armGraph graph true false) costUpper pairSeeds
     let witnessEdges := graph.edges.zipIdx.filterMap fun (edge, i) =>
       if isWitnessEdge graph selectedSeeds edge then some i else none
-    let reading := {
-      graph, baseline := graphInterval baselineGraph baseSeeds,
-      paired := graphInterval pairedGraph pairSeeds,
-      baselineK1 := graphInterval (armGraph k1 false false) baseSeeds,
-      pairedK1 := graphInterval (armGraph k1 true false) pairSeeds,
-      baselineVisible := graphInterval (armGraph graph false true) baseSeeds,
-      pairedVisible := graphInterval (armGraph graph true true) pairSeeds,
+    let reading : GraphReading := {
+      graph, baseline := armInterval graph, paired := armInterval graph true,
+      baselineK1 := armInterval k1, pairedK1 := armInterval k1 true,
+      baselineVisible := armInterval graph false true, pairedVisible := armInterval graph true true,
       baselineProbe := baseProbe, pairedProbe, selectedSeeds, witnessEdges, targetPartComplete,
       noAuxiliary := !(raw.vertices.any (·.structureSeed)),
-      selectedSeedDepths := selectedSeeds.map (fun id =>
-        (id, intervalDP baselineGraph baseSeeds id)),
+      selectedSeedDepths := selectedSeeds.map (fun id => (id, armInterval graph false false (some id))),
       proofHardSeeds := selectedSeeds.filter (fun id =>
-        proofHardEligible graph selectedSeeds id (depth baselineGraph costLower baseSeeds id)),
+        proofHardEligible graph selectedSeeds id
+          (depth (armGraph graph false false true) costLower baseSeeds id)),
       pairedUsesSeed := selectedSeeds.any (selectedStructureSeed graph selectedSeeds),
+      negativeCalls := negativeCalls + independentCalls,
+      certificatePool := ← certificateNominations.get,
       lookupEnabled := table.enabled, lookupBasisComplete := table.complete,
-      queryAnswerMemoization := ← localMemoEnabled : GraphReading}
-    lookupPhase "graph/dp-end"
+      queryAnswerMemoization := ← localMemoEnabled}
+    lookupPhase s!"graph/lazy-end negative_calls={reading.negativeCalls}"
     return reading
   finally
+    certificateNominations.set previousPool
     localMemoContext.set ""
     localMemoAnswers.set {}
+    certificateOnlyAnswers.set {}
 
 end LeanInformationAudit.SearchReduction

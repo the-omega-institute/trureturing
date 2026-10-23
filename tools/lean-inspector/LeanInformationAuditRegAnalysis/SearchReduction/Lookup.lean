@@ -25,7 +25,7 @@ def timeLookup {α : Type} (label : String) (action : MetaM α) : MetaM α := do
   try action finally
     lookupPhase s!"{label}/end ns={(← IO.monoNanosNow) - start} heartbeats={(← IO.getNumHeartbeats) - heartbeats}"
 
-abbrev lookupVersion : String := "R_lookup/v16/scope-B_T/primary-index-only/candidate-200000/preparation-8000000/G-340000000/memo-target-basis-R-v1/N-memo-2000000/checkpoint-v3/views-kappa"
+abbrev lookupVersion : String := "R_lookup/v17/obvious-v1/lazy-interval/scope-B_T/primary-index-only/candidate-200000/preparation-8000000/G-340000000/memo-target-basis-R-v1/N-memo-2000000/checkpoint-v3/views-kappa"
 
 abbrev lookupCandidateBudget : Nat := 200000
 /-- Frozen from verdict-free fallback and fixed-stride candidate telemetry. -/
@@ -508,6 +508,13 @@ unsafe def lookupNamedMember (table : LookupTable) (name : Name)
         goal.assign (← instantiateMVars value)
         return {complete := true, source? := some name, attempted := 1}
     return {complete := true}
+
+/-- Hash recall is a nominator, not a negative certificate. -/
+unsafe def memberCertificateNames (table : LookupTable) (type : Expr) : MetaM (Array Name) := do
+  if !table.enabled then return #[]
+  let some index ← tableIndex table | return #[]
+  let candidates ← DiskLookup.queryMembership index type table.budget?
+  return candidates.entries.map (·.leanName)
 
 partial def inlineLookupSupport (base : Environment) (proof : Expr)
     (seen : NameSet := {}) : MetaM Expr :=

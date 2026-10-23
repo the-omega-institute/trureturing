@@ -345,24 +345,18 @@ theorem outside_zero_shortcut (graph : ProofGraph) (seeds : List Nat) (fuel : Na
     have hz := Nat.eq_zero_of_le_zero hn
     simpa [hz]
 
-/-- The public positive verdict excludes an actual unknown edge in either arm. -/
-theorem unknown_not_nonBindOnly (reading : GraphReading)
-    (unknown : ∃ edge ∈ reading.graph.edges, edge.window = 1 ∧
-      (edge.cost = .unknown ∨ edge.pairedCost = .unknown)) :
-    classifyGraph reading ≠ .nonBindOnly := by
-  intro h
-  unfold classifyGraph at h
-  split at h
+/-- Unresolved off-path edges are permitted; a positive classification still
+requires strict separation of the actual reported interval endpoints. -/
+theorem nonBindOnly_requires_strictDrop (reading : GraphReading)
+    (positive : classifyGraph reading = .nonBindOnly) :
+    strictDrop reading.baseline reading.paired = true := by
+  unfold classifyGraph at positive
+  split at positive
   · contradiction
-  · split at h
+  · split at positive
     · rename_i condition
-      have allKnown : reading.graph.edges.all
-          (fun e => e.window != 1 || (e.cost != .unknown && e.pairedCost != .unknown)) = true := by
-        simp only [Bool.and_eq_true] at condition
-        tauto
-      obtain ⟨edge, member, author, bad⟩ := unknown
-      have good := List.all_eq_true.mp allKnown edge member
-      rcases bad with bad | bad <;> simp [author, bad] at good
+      simp only [Bool.and_eq_true] at condition
+      tauto
     · contradiction
 
 /-- Missing presentation evidence cannot supply the positive graph verdict. -/
@@ -979,7 +973,7 @@ theorem two_point_strict_family :
 #print axioms dpRounds_le_iff_derivable
 #print axioms edge_extension_preserves_derivations
 #print axioms outside_zero_shortcut
-#print axioms unknown_not_nonBindOnly
+#print axioms nonBindOnly_requires_strictDrop
 #print axioms unchecked_presentation_not_nonBindOnly
 #print axioms depthFuel_monotone
 #print axioms lower_le_upper

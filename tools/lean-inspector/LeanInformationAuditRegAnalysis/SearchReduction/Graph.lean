@@ -154,6 +154,8 @@ structure GraphReading where
   structureClean : Bool := false
   lookupEnabled : Bool := true
   lookupBasisComplete : Bool := true
+  negativeCalls : Nat := 0
+  certificatePool : Array CertificateNomination := #[]
   queryAnswerMemoization : Bool := false
   deriving Inhabited
 
@@ -393,11 +395,10 @@ def classifyGraph (reading : GraphReading) : Verdict :=
       upperIsZero reading.baseline then .bindOnly
   else if reading.graph.complete && reading.targetPartComplete &&
       !reading.noAuxiliary &&
-      reading.graph.edges.all (fun e => e.window != 1 ||
-        (e.cost != .unknown && e.pairedCost != .unknown)) && reading.presentationComplete && reading.isolated && reading.structureChecked &&
+      reading.presentationComplete && reading.isolated && reading.structureChecked &&
       reading.structureClean && finite reading.baseline.lower &&
       reading.baselineProbe.outcome == .exhausted &&
-      finite reading.baseline.upper && finite reading.paired.lower &&
+      finite reading.baseline.upper &&
       finite reading.paired.upper && strictDrop reading.baseline reading.paired &&
       usesStructureSeed reading then .nonBindOnly
   else .insufficient

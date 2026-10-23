@@ -30,6 +30,27 @@ private unsafe def importSource (owners : Array Import) : IO (Environment × Imp
 The reference is cleared before returning; it never caches across targets. -/
 private initialize activeProbe : IO.Ref (Option (Environment × ImportState)) ← IO.mkRef none
 
+private initialize submittedCertificates : IO.Ref (Array CertificateNomination) ← IO.mkRef #[]
+
+syntax (name := certificatePoolCmd) "#search_reduction_certificates "
+  "[" obvious_certificate,* "]" : command
+
+@[command_elab certificatePoolCmd] def elabCertificatePool : CommandElab := fun stx => do
+  let `(#search_reduction_certificates [$cs:obvious_certificate,*]) := stx
+    | throwUnsupportedSyntax
+  let certificates ← cs.getElems.mapM fun c =>
+    match parseObviousCertificate c with
+    | .ok value => pure ({certificate := value, provenance := "author"} : CertificateNomination)
+    | .error message => throwError "{message}"
+  submittedCertificates.set certificates
+
+syntax (name := nominationPoolCmd) "#search_reduction_nominations " str "[" ident,* "]" : command
+
+@[command_elab nominationPoolCmd] def elabNominationPool : CommandElab := fun stx => do
+  let `(#search_reduction_nominations $source:str [$names:ident,*]) := stx
+    | throwUnsupportedSyntax
+  submittedCertificates.modify (· ++ nominateNames (names.getElems.map (·.getId)) source.getString)
+
 /-- Replays use an already loaded source snapshot and restore an enclosing
 probe context even when the negative guard raises an exception. -/
 def withReferenceProbeContext {m : Type → Type} [Monad m]
@@ -66,6 +87,12 @@ private def intervalJson (i : Interval) : Json := Json.mkObj [
 
 private def graphJson (r : GraphReading) : Json := Json.mkObj [
   ("lookup_backend", toJson "B_T implication without imports; full B0 alpha membership; unfinished candidates remain unknown"),
+  ("certificate_language", toJson certificateLanguageVersion),
+  ("certificate_pool_digest", toJson (hash (reprStr
+    (nominationCertificates r.certificatePool)))),
+  ("star_fallback", toJson "excluded"),
+  ("negative_R_requests", toJson r.negativeCalls),
+  ("paired_negative_R_requests", toJson (0 : Nat)),
   ("lookup_enabled", toJson r.lookupEnabled),
   ("lookup_basis_complete", toJson r.lookupBasisComplete),
   ("sharing_configuration", toJson sharingConfiguration),
@@ -113,6 +140,8 @@ private def graphJson (r : GraphReading) : Json := Json.mkObj [
       if shared then "coupled" else "independent")),
     ("cost", toJson (if edgeActive edge then some (reprStr edge.cost) else none)),
     ("paired_cost", toJson (if edgeActive edge true then some (reprStr edge.pairedCost) else none)),
+    ("certificate", toJson (edge.certificate?.map ObviousCertificate.render)),
+    ("paired_certificate", toJson (edge.pairedCertificate?.map ObviousCertificate.render)),
     ("detail", toJson edge.detail)])),
   ("witness_edges", toJson r.witnessEdges),
   ("witness_kinds", Json.mkObj [
@@ -248,6 +277,39 @@ def publish (name : Name) (r : Observation) (source? : Option Environment := non
   addAndCompile (.defnDecl {
     name, levelParams := [], type := mkConst ``Verdict,
     value, hints := .abbrev, safety := .safe })
+  if let some reading := r.graph? then
+    let source := source?.getD (← getEnv)
+    for (edge, i) in reading.graph.edges.zipIdx do
+      let edgeName := name ++ Name.num `edge i
+      let record := (edge.conclusion, edge.window, edge.premises,
+        reprStr edge.cost, reprStr edge.pairedCost)
+      let value := toExpr record
+      addAndCompile (.defnDecl {
+        name := edgeName, levelParams := [], type := ← inferType value,
+        value, hints := .abbrev, safety := .safe})
+      for (arm, certificate?, proof?) in #[
+          (`baseline, edge.certificate?, edge.zeroProof),
+          (`paired, edge.pairedCertificate?, edge.pairedZeroProof)] do
+        if let some certificate := certificate? then
+          addAndCompile (.defnDecl {
+            name := edgeName ++ arm ++ `certificate, levelParams := [],
+            type := mkConst ``ObviousCertificate, value := certificate.toExpr,
+            hints := .abbrev, safety := .safe})
+        if let some proof := proof? then
+          for dep in proof.getUsedConstants do exportConstant source r.target dep
+          let type ← inferType proof
+          let levels := (collectLevelParams {} type).params.toList
+          if ← isProp type then
+            discard <| checkProof (edgeName ++ arm ++ `proof) levels type proof
+          else
+            checkLocalProof type proof
+            addAndCompile (.defnDecl {
+              name := edgeName ++ arm ++ `proof, levelParams := levels, type, value := proof,
+              hints := .abbrev, safety := .safe})
+    let value := toExpr (reading.certificatePool.map CertificateNomination.encode)
+    addAndCompile (.defnDecl {
+      name := name ++ `certificatePool, levelParams := [], type := ← inferType value,
+      value, hints := .abbrev, safety := .safe})
   for (label, rows) in #[(`baselineProof, r.attempts), (`pairedProof, r.pairAttempts)] do
     if let some row := rows.find? (fun row => row.proof?.isSome) then
       if let some proof := row.proof? then
@@ -311,6 +373,7 @@ private def writeRequest (path : System.FilePath) (request : Request)
     for (name, value) in #[(`target, toExpr request.target),
         (`baseline, toExpr request.baseline), (`additions, toExpr request.additions),
         (`informationApplication, toExpr request.informationApplication),
+        (`certificates, toExpr (request.certificates.map CertificateNomination.encode)),
         (`owners, toExpr owners), (`result, toExpr result), (`commit, toExpr request.baselineCommit)] do
       let type ← inferType value
       addDecl (.defnDecl {
@@ -322,7 +385,6 @@ private def writeRequest (path : System.FilePath) (request : Request)
 production run, without repeating graph evaluation or certificate assembly. -/
 private def auditProbeCertificates (source : Environment) (request : Request)
     (result : Observation) : CommandElabM Unit := do
-  unless (← IO.getEnv "SEARCH_REDUCTION_SOURCE_AUDIT") == some "1" do return
   let some reading := result.graph? | return
   let baselineProofs := reading.graph.edges.toArray.filterMap (·.zeroProof) ++
     reading.baselineProbe.proof?.toArray ++ reading.baselineProof?.toArray
@@ -411,6 +473,12 @@ unsafe def executeProbeFile (path : System.FilePath) : CommandElabM Unit := do
       (← getValue `additions)
     let informationApplication ← evalExpr (Option Name)
       (mkApp (mkConst ``Option [.zero]) (mkConst ``Name)) (← getValue `informationApplication)
+    let encoded ← evalExpr (Array (Nat × Name × String))
+      (toTypeExpr (Array (Nat × Name × String))) (← getValue `certificates)
+    let certificates ← encoded.mapM fun n =>
+      match CertificateNomination.decode n with
+      | .ok value => pure value
+      | .error message => throwError "{message}"
     let owners ← evalExpr (Array Name) (mkApp (mkConst ``Array [.zero]) (mkConst ``Name))
       (← getValue `owners)
     let name ← evalExpr Name (mkConst ``Name) (← getValue `result)
@@ -420,7 +488,8 @@ unsafe def executeProbeFile (path : System.FilePath) : CommandElabM Unit := do
       «baseline» := bs
       additions := additions
       baselineCommit := commit
-      informationApplication := informationApplication }
+      informationApplication := informationApplication
+      certificates }
     pure (request, owners, name)
   executeProbe requestData.1 requestData.2.1 requestData.2.2
 
@@ -430,7 +499,8 @@ unsafe def executeProbeFile (path : System.FilePath) : CommandElabM Unit := do
       using [$ss:ident,*] from [$owners:ident,*] as $name:ident) =>
     executeProbe {
       target := target.getId, «baseline» := bs.getElems.map (·.getId),
-      additions := ss.getElems.map (·.getId), baselineCommit := sha.getString}
+      additions := ss.getElems.map (·.getId), baselineCommit := sha.getString,
+      certificates := ← submittedCertificates.get}
       (owners.getElems.map (·.getId)) name.getId
   | _ => throwUnsupportedSyntax
 
@@ -482,7 +552,8 @@ indexes. Only compiled Lean declarations are read back; JSON is print-only. -/
     writeRequest payload {
       target := target.getId, «baseline» := bs.getElems.map (·.getId),
       additions := ss.getElems.map (·.getId), baselineCommit := sha.getString,
-      informationApplication := app.map (·.getId)} modules name.getId
+      informationApplication := app.map (·.getId),
+      certificates := ← submittedCertificates.get} modules name.getId
     let command := s!"run_cmd LeanInformationAudit.SearchReduction.executeProbeFile {repr payload.toString}\n"
     IO.FS.writeFile input (imports ++ command)
     let workers := min 8 <| max 1 <|

@@ -15,6 +15,7 @@ structure Request where
   additions : Array Name := #[]
   baselineCommit : String
   informationApplication : Option Name := none
+  certificates : Array CertificateNomination := #[]
   deriving Inhabited
 
 private def sourceInfo (source : Environment) (n : Name) : MetaM ConstantInfo :=
@@ -269,8 +270,7 @@ def checkBaseline (request : Request) (base : Environment) : IO (Except String U
 
 private def intervalRun (graph : ProofGraph) (interval : Interval) : Run :=
   if upperIsZero interval then .found
-  else if graph.complete && graph.edges.all (fun e => e.window != 1 || e.cost != .unknown) &&
-      finite interval.lower && finite interval.upper then .exhausted
+  else if graph.complete && strictDrop interval ⟨.finite 0, .finite 0⟩ then .exhausted
   else .incomplete .undecided
 
 /-- Checked certificates may share expression storage with their imported
@@ -445,7 +445,7 @@ private unsafe def runCore (source base : Environment) (request : Request)
       profilePhase "query/evaluation-start"
       let table ← onDemandLookup {
         environment := base, complete := lookupComplete, enabled, disk?, implicationModules?} sharedImports?
-      let reading ← withEnv graphEnv <| evaluateGraph graph (some table)
+      let reading ← withEnv graphEnv <| evaluateGraph graph (some table) request.certificates
       profilePhase "query/assembly-start"
       let baselineProof? ← if upperIsZero reading.baseline then
         withEnv graphEnv <| assembleZero reading.graph else pure none
