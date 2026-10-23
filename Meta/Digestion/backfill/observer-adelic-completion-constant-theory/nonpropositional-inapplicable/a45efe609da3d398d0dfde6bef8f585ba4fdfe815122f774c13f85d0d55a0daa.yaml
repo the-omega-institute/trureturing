@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:a45efe609da3d398d0dfde6bef8f585ba4fdfe815122f774c13f85d0d55a0daa
+  normalized_sha256: sha256:a45efe609da3d398d0dfde6bef8f585ba4fdfe815122f774c13f85d0d55a0daa
+cas_ref: sha256:a45efe609da3d398d0dfde6bef8f585ba4fdfe815122f774c13f85d0d55a0daa
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 方法论边界说明：要求另证 finite-budget saturation 才可把 budgeted profile 与 window profile 认作同一指标；公式为待证桥，未声称该等式已成立或两值必不等。
+    previous_atom_id: b80e5fabdeefa3697c0c2c445079b216151c24370d892972fa71df6c0b5c0d80
+    next_atom_id: dd5abc2a4a1b349315eae26292994c7b0dea86323f23140dfeccea9761964519

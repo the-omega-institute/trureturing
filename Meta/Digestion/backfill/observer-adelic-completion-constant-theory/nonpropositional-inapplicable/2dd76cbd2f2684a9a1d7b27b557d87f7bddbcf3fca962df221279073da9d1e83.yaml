@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:2dd76cbd2f2684a9a1d7b27b557d87f7bddbcf3fca962df221279073da9d1e83
+  normalized_sha256: sha256:2dd76cbd2f2684a9a1d7b27b557d87f7bddbcf3fca962df221279073da9d1e83
+cas_ref: sha256:2dd76cbd2f2684a9a1d7b27b557d87f7bddbcf3fca962df221279073da9d1e83
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: Names Hermite derivative sampling as an alternative method for multiple zeros; no interpolation identity is asserted.
+    previous_atom_id: 65a3cc282ac25781a52dcfb0013316034d1d0a801e298d00087eac19a25c7f8d
+    next_atom_id: d5e0e3dbef1cac2bdad615658f0c1e11c7f52b8adbd38e3cb53c2ae55718e566

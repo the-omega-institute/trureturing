@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:ec3545a65b399fc4f9cdc18cd8441e0abac4b266d5c9b4d12175833b2f56dc3a
+  normalized_sha256: sha256:ec3545a65b399fc4f9cdc18cd8441e0abac4b266d5c9b4d12175833b2f56dc3a
+cas_ref: sha256:ec3545a65b399fc4f9cdc18cd8441e0abac4b266d5c9b4d12175833b2f56dc3a
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 以“证明强对偶”发布 full dual 待证任务；502.2 和后续不等式指定目标及可行约束，没有宣称任务已完成。
+    previous_atom_id: 172caf4682d9af8408866909d55423ee19d7b7027bfca20720ffbcb12a5a9a75
+    next_atom_id: 4282c7205b9a906fdb3c3781a639be1ae851162b36a7388c8042ff5c2ff4cb98
