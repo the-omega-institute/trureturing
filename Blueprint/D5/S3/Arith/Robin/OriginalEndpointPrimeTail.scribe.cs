@@ -2,7 +2,6 @@ using static StrataLint.Scribe.DefinitionDsl;
 
 namespace StrataLint.Scribe.Blueprint.D5.S3.Arith.Robin;
 
-// Source-only membership-repair overlay. No Scribe, Lean, native report, Reg or freeze run.
 internal sealed class OriginalEndpointPrimeTailDocument : IScribeDocumentDefinition
 {
     private const string Prefix = "D5/S3/Arith/Robin/OriginalEndpointPrimeTail.";
@@ -12,13 +11,13 @@ internal sealed class OriginalEndpointPrimeTailDocument : IScribeDocumentDefinit
         H("Original endpoint prime tails"),
         Blocks(
             Paragraph(Text(
-                "Source-only candidate, not elaborated or compiled. Both original endpoints, "
-                + "all positive prices, all primes and layers, and simultaneous ties are retained. "
+                "Both original endpoints, all positive prices, all primes and layers, "
+                + "and simultaneous ties are retained. "
                 + "The strict EndpointRobinEstimates sign and the original global Robin goal remain open.")),
             Describe.Lean(
                 DescribeId.Create("original-all-price-tail"),
                 DeclarationHandle.Create(Prefix + "original_endpoint_prime_tail_supply"),
-                H("Sharp price bounds, exact one-layer replacement, and a uniform same-integer tail estimate"),
+                H("Sharp local prices, the exact residual, and a uniform same-integer tail estimate"),
                 StatementSource.WithoutFormula(),
                 AssessedProvenance.FromRepo(),
                 Blocks(

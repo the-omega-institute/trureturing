@@ -1,6 +1,6 @@
 /- GID: D5/S3/Arith/Robin/ActualGlobalBracketing
    generality: I
-   mirror-B: none(waiver:no-blueprint-mirror-delivered-for-this-module)
+   mirror-B: D5/B/S3/Arith/Robin/ActualGlobalBracketing
    mirror-E: none(waiver:symbolic-all-integer-coverage-no-numerical-evidence-artifact)
    anchors: []
    utility: none
