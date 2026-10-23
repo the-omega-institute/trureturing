@@ -115,16 +115,10 @@ private theorem round_same_cycle [Finite K] (r : Kˣ)
   · intro h
     have hrow := (RowOrbitLift.row_same_cycle_iff r hr 0 v.2 w.2).mpr h
     obtain ⟨n, hn⟩ := hrow.exists_nat_pow_eq
-    have rowpow (n : ℕ) (x : K) :
-        (RowOrbitLift.rowReturn r 0 ^ n) x = (r : K) ^ n * x := by
-      induction n with
-      | zero => simp
-      | succ n ih =>
-        rw [pow_succ', Perm.mul_apply, ih, pow_succ']
-        simp [RowOrbitLift.rowReturn, mul_assoc]
+    rw [RowOrbitLift.row_power, zero_add, sub_zero] at hn
     have hm : (roundStep r).SameCycle (0, v.2) (0, w.2) := by
       refine ⟨(10 * n : ℕ), ?_⟩
-      rw [zpow_natCast, round_rounds, ← rowpow, hn]
+      rw [zpow_natCast, round_rounds, hn]
     have hv : (roundStep r).SameCycle (0, v.2) v :=
       ⟨(v.1.val : ℕ), by rw [zpow_natCast, round_phase]⟩
     have hw : (roundStep r).SameCycle (0, w.2) w :=
