@@ -106,7 +106,7 @@ $$
 
 The result GID is `D5/S3/Quantum/Information/FisherDiscord/Result.result`.
 It has the unconditional type `¬ Defs.claim`. Its principal dependencies are
-`Extension.monotone_iff_discord_zero`, `Extension.flag_partialTrace`,
+`Extension.monotone_discord_zero`, `Extension.flag_partialTrace`,
 `Extension.flag_discord_zero`, `Spectral.discord_diag`,
 `Spectral.discord_spectral` and `Spectral.discord_nonneg`.
 The marginal evaluation applies to arbitrary SLD solutions; explicit
@@ -128,7 +128,7 @@ has been excluded.
 
 1. **PROVED — the counterexample.**
    `D5/S3/Quantum/Information/FisherDiscord/Result.result` refutes the universal
-   comparison through the diagonal-marginal classification. At $p=1/5$,
+   comparison through the diagonal-marginal necessary condition. At $p=1/5$,
    $C(\Omega,X\otimes1)=0<4/25=C(\rho,X)$ for every Hermitian SLD solution;
    explicit solutions exist on both spaces.
 
@@ -140,13 +140,13 @@ has been excluded.
    `fisherSLD_diag`, `skewWY_diag`, `fisherSLD_spectral` and `skewWY_spectral`
    provide the component formulas in diagonal and general eigenbases.
 
-3. **PROVED — flagged-extension classification.**
-   `D5/S3/Quantum/Information/FisherDiscord/Extension.monotone_iff_discord_zero`
+3. **PROVED — flagged-extension necessary condition.**
+   `D5/S3/Quantum/Information/FisherDiscord/Extension.monotone_discord_zero`
    covers normalized nonnegative diagonal marginals of every finite size,
    a Hermitian observable, a marginal SLD and an SLD existence witness for
    the flag extension. Within this scope, the inequality against every
-   finite extension and every joint SLD holds exactly when marginal
-   discord is zero. Extension states may be arbitrary density matrices.
+   finite extension and every joint SLD forces marginal discord to be zero.
+   Extension states may be arbitrary density matrices.
    The explicit two-qubit solution above discharges the existence premise
    for the counterexample. General nondiagonal marginal classification is
    not an additional Lean conclusion here.

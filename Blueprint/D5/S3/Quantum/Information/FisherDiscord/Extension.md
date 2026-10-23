@@ -54,15 +54,15 @@ The extension inequality compares the discord of a fixed diagonal marginal and o
 
 **Theorem 1.5 (Classification of diagonal marginals).**
 
-Lean statement: `D5/S3/Quantum/Information/FisherDiscord/Extension.monotone_iff_discord_zero`
+Lean statement: `D5/S3/Quantum/Information/FisherDiscord/Extension.monotone_discord_zero`
 
-*Proof.* Machine-checked in Lean as `D5/S3/Quantum/Information/FisherDiscord/Extension.monotone_iff_discord_zero` (`✓ std3`). ∎
+*Proof.* Machine-checked in Lean as `D5/S3/Quantum/Information/FisherDiscord/Extension.monotone_discord_zero` (`✓ std3`). ∎
 
 *Source.* Repository-derived.
 
 *Commentary.*
 
-For normalized nonnegative diagonal weights, a Hermitian observable, a marginal SLD solution and an SLD existence witness for the flag, the extension inequality holds in every finite second dimension exactly when the marginal Fisher discord is zero. The extensions themselves need not be diagonal.
+For normalized nonnegative diagonal weights, a Hermitian observable, a marginal SLD solution and an SLD existence witness for the flag, if the extension inequality holds in every finite second dimension, then the marginal Fisher discord is zero. The flag supplies a nonpositive upper bound and general spectral nonnegativity supplies the lower bound. The extensions themselves need not be diagonal.
 
 ## References
 
@@ -70,6 +70,6 @@ For normalized nonnegative diagonal weights, a Hermitian observable, a marginal 
 - Truth anchor: `D5/S3/Quantum/Information/FisherDiscord/Extension.flagExtension`
 - Truth anchor: `D5/S3/Quantum/Information/FisherDiscord/Extension.flag_discord_zero`
 - Truth anchor: `D5/S3/Quantum/Information/FisherDiscord/Extension.flag_partialTrace`
-- Truth anchor: `D5/S3/Quantum/Information/FisherDiscord/Extension.monotone_iff_discord_zero`
+- Truth anchor: `D5/S3/Quantum/Information/FisherDiscord/Extension.monotone_discord_zero`
 - Dependency: [D5/S3/Quantum/Decoherence/EnvironmentMarginalChannel](../../Decoherence/EnvironmentMarginalChannel.md)
 - Dependency: [D5/S3/Quantum/Information/FisherDiscord/Spectral](Spectral.md)

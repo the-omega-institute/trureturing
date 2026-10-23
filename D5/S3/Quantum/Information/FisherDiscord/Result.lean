@@ -3,7 +3,7 @@
    mirror-B: D5/B/S3/Quantum/Information/FisherDiscord/Result
    mirror-E: none(waiver:evidence-not-specified-by-formal-manifest)
    anchors: [mathlib/module/Mathlib.Tactic]
-   utility: none
+   utility: kind=certified-instance; basis=refutes=gid:D5/S3/Quantum/Information/FisherDiscord/Defs.claim; result=D5/S3/Quantum/Information/FisherDiscord/Result.result; claim=D5/S3/Quantum/Information/FisherDiscord/Defs.claim
    digest: The flagged two-qubit state refutes partial-trace monotonicity of Fisher discord. -/
 
 import D5.S3.Quantum.Information.FisherDiscord.Extension
@@ -100,15 +100,14 @@ private theorem base_discord (L : Matrix (Fin 2) (Fin 2) ℂ)
 /-- The universal partial-trace monotonicity claim is false. -/
 theorem result : ¬ claim := by
   intro hclaim
-  have hiff := monotone_iff_discord_zero weights weights_nonneg weights_sum
-    qubitX qubitSLD qubitX_hermitian qubit_sld ⟨flagSLD, flag_sld⟩
   have hall : ∀ d₂, extensionIneq weights qubitX qubitSLD d₂ := by
     intro d₂ σ Lσ hσ hMarg hLσ
     have hLbase : IsSLD (partialTrace₂ σ) qubitX qubitSLD := by
       simpa [hMarg] using qubit_sld
     simpa [hMarg] using
       (hclaim 2 d₂ σ qubitX Lσ qubitSLD hσ qubitX_hermitian hLσ hLbase)
-  have hzero := hiff.mp hall
+  have hzero := monotone_discord_zero weights weights_nonneg weights_sum
+    qubitX qubitSLD qubitX_hermitian qubit_sld ⟨flagSLD, flag_sld⟩ hall
   rw [base_discord qubitSLD qubit_sld] at hzero
   norm_num at hzero
 

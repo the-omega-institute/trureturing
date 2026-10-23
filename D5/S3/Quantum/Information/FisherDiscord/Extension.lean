@@ -4,7 +4,7 @@
    mirror-E: none(waiver:evidence-not-specified-by-formal-manifest)
    anchors: []
    utility: none
-   digest: Flagged extensions have the prescribed marginal and zero Fisher discord; the universal extension inequality is equivalent to zero marginal discord. -/
+   digest: Flagged extensions have the prescribed marginal and zero Fisher discord; the universal extension inequality forces zero marginal discord. -/
 
 import D5.S3.Quantum.Information.FisherDiscord.Spectral
 import D5.S3.Quantum.Decoherence.EnvironmentMarginalChannel
@@ -122,50 +122,45 @@ def extensionIneq (w : Fin n → ℝ) (H : Matrix (Fin n) (Fin n) ℂ) (L : Matr
         skewWY (diagonal (fun i => (w i : ℂ))) H ≤
       fisherSLD σ Lσ - skewWY σ (liftLeft (d₂ := d₂) H)
 
-/-- For a diagonal marginal, the inequality against every extension is equivalent to zero discord.
-The flag extension forces zero marginal discord, while spectral nonnegativity gives the reverse implication. -/
-theorem monotone_iff_discord_zero (w : Fin n → ℝ) (hw : ∀ i, 0 ≤ w i)
+/-- For a diagonal marginal, the inequality against every extension forces zero discord.
+The flag gives the upper bound, and general spectral nonnegativity gives the lower bound. -/
+theorem monotone_discord_zero (w : Fin n → ℝ) (hw : ∀ i, 0 ≤ w i)
     (htrace : ∑ i, w i = 1)
     (H L : Matrix (Fin n) (Fin n) ℂ) (hH : H.IsHermitian)
     (hL : IsSLD (diagonal (fun i => (w i : ℂ))) H L)
     (hFlag : ∃ LF, IsSLD (flagExtension w) (liftLeft (d₂ := n) H) LF) :
-    (∀ d₂, extensionIneq w H L d₂) ↔
+    (∀ d₂, extensionIneq w H L d₂) →
       fisherSLD (diagonal (fun i => (w i : ℂ))) L -
         skewWY (diagonal (fun i => (w i : ℂ))) H = 0 := by
-  constructor
-  · intro hAll
-    dsimp [extensionIneq] at hAll
-    obtain ⟨LF, hLF⟩ := hFlag
-    have hσ : IsDensity (flagExtension w) := by
-      constructor
-      · exact Matrix.PosSemidef.diagonal (fun x => by
-          split_ifs
-          · exact Complex.zero_le_real.mpr (hw x.1)
-          · exact le_rfl)
-      · rw [flagExtension, Matrix.trace_diagonal, Fintype.sum_prod_type]
-        norm_cast
-        have hinner : ∀ i : Fin n, (∑ b, if b = i then w i else 0) = w i := by
-          intro i
-          simpa [eq_comm] using (Fintype.sum_ite_eq i (fun _ => w i))
-        simp_rw [hinner]
-        exact htrace
-    have hMarg := flag_partialTrace w
-    have hineq := hAll n (flagExtension w) LF hσ hMarg hLF
-    have hzeroFlag := flag_discord_zero w hw H LF hH hLF
-    have hineq' : fisherSLD (diagonal (fun i => (w i : ℂ))) L -
-        skewWY (diagonal (fun i => (w i : ℂ))) H ≤ 0 := by
-      calc
-        _ ≤ fisherSLD (flagExtension w) LF -
-            skewWY (flagExtension w) (liftLeft (d₂ := n) H) := hineq
-        _ = 0 := hzeroFlag
-    clear hineq hzeroFlag
-    have hnonneg := discord_nonneg_diag w hw H L hH hL
-    linarith [hineq']
-  · intro hzero d₂ σ Lσ hσ hMarg hLσ
-    rw [hzero]
-    have hHL : (liftLeft (d₂ := d₂) H).IsHermitian :=
-      D5.S3.Quantum.Information.PartialTraceMutualInformation.isHermitian_kronecker
-        hH Matrix.isHermitian_one
-    exact discord_nonneg σ (liftLeft (d₂ := d₂) H) Lσ hσ.1 hHL hLσ
+  intro hAll
+  dsimp [extensionIneq] at hAll
+  obtain ⟨LF, hLF⟩ := hFlag
+  have hσ : IsDensity (flagExtension w) := by
+    constructor
+    · exact Matrix.PosSemidef.diagonal (fun x => by
+        split_ifs
+        · exact Complex.zero_le_real.mpr (hw x.1)
+        · exact le_rfl)
+    · rw [flagExtension, Matrix.trace_diagonal, Fintype.sum_prod_type]
+      norm_cast
+      have hinner : ∀ i : Fin n, (∑ b, if b = i then w i else 0) = w i := by
+        intro i
+        simpa [eq_comm] using (Fintype.sum_ite_eq i (fun _ => w i))
+      simp_rw [hinner]
+      exact htrace
+  have hMarg := flag_partialTrace w
+  have hineq := hAll n (flagExtension w) LF hσ hMarg hLF
+  have hzeroFlag := flag_discord_zero w hw H LF hH hLF
+  have hineq' : fisherSLD (diagonal (fun i => (w i : ℂ))) L -
+      skewWY (diagonal (fun i => (w i : ℂ))) H ≤ 0 := by
+    calc
+      _ ≤ fisherSLD (flagExtension w) LF -
+          skewWY (flagExtension w) (liftLeft (d₂ := n) H) := hineq
+      _ = 0 := hzeroFlag
+  clear hineq hzeroFlag
+  have hρ : (diagonal (fun i => (w i : ℂ))).PosSemidef :=
+    Matrix.PosSemidef.diagonal (fun i => Complex.zero_le_real.mpr (hw i))
+  have hnonneg := discord_nonneg _ H L hρ hH hL
+  exact le_antisymm hineq' hnonneg
 
 end D5.S3.Quantum.Information.FisherDiscord.Extension
