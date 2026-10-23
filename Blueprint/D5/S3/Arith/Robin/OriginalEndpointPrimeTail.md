@@ -6,7 +6,19 @@ All-price prime tails for the original strict and maximal resource optimizers.
 
 Both original endpoints, all positive prices, all primes and layers, and simultaneous ties are retained. The strict EndpointRobinEstimates sign and the original global Robin goal remain open.
 
-**Lemma 1.1 (Sharp local prices, the exact residual, and a uniform same-integer tail estimate).**
+**Lemma 1.1 (The existing pointwise endpoint tail estimates).**
+
+Lean statement: `D5/S3/Arith/Robin/OriginalEndpointPrimeTail.endpoint_local`
+
+*Proof.* Machine-checked in Lean as `D5/S3/Arith/Robin/OriginalEndpointPrimeTail.endpoint_local` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+The existing endpoint_local declaration is made public with its statement and proof body unchanged for the weighted upper-scale consumer. For q>0, either original endpoint, a prime p and a_p>=1, its complete local tail is nonnegative, lies between the existing lowerPrice and upperPrice, and is at most both p/(p-1)*(exp(q log(p))-1) and 5/(4p^2). All original layer and tie conditions are retained. This visibility change reuses the original proof.
+
+**Lemma 1.2 (Sharp local prices, the exact residual, and a uniform same-integer tail estimate).**
 
 Lean statement: `D5/S3/Arith/Robin/OriginalEndpointPrimeTail.original_endpoint_prime_tail_supply`
 
@@ -34,10 +46,19 @@ The existing same-integer prime-prefix identity gives log(1-1/p)+c_p=-log(1+1/p)
 
 Indeed the exact Euler identity gives log(sigma(N)/N)=sum_C log(1+1/p)-sum_H log(1-1/(p z_p))-J; dropping only the nonpositive term -J proves (6). Thus (5) is an identity and (6) is its abundancy bound.
 
+A second exact application uses a finite theta clock. For the same q>0 and either original endpoint, let u=largestPrime(N)>=4, A=log(N), s=theta(u), and let X>=u be any real number. The complete original prime prefix and logarithm factorization give A=s+D, where D=sum_S (a_p-1)log(p)>=0. Here natural subtraction is legitimate because every support exponent is at least one. Since the prefix contains prime 3, s>=log(3)>1, hence A>1; the displayed logarithms require no extra inventory or size assumption.
+
+Put density(v)=(log(v)+1)/(v^2*log(v)^2) and J_X=integral from u to X of (theta(v)-v)*density(v). Generic finite Abel summation applied to the prime-log coefficients and the existing clock g(v)=1/(v log(v)) gives, for all real 2<=u<=X, J_X=E2p(X)-E2p(u)-(theta(X)-X)/(X log(X))+(theta(u)-u)/(u log(u)). The lower prime prefix is inclusive, so the prime difference contains exactly u<p<=X, including the prime-2 boundary. Integrating the elementary main term uses the primitive log(log(v))-1/log(v).
+
+The existing Mertens E2p bound and Chebyshev estimate theta(X)<=log(4)*X give |J_X-((s-u)/(u log(u))-E2p(u))|<=C/log(X), where C=log(4)+7+E1. This also gives a genuine improper limit of the truncated interval integrals; it does not assert absolute Lebesgue integrability on an unbounded interval. For any s,u>1, the two ordinary logarithm defects at s/u and log(s)/log(u) give 0<=Q<=B, with Q=log(log(u))+(s-u)/(u log(u))-log(log(s)) and B=(s-u)^2/(s*u*log(u))+(log(s)-log(u))^2/(log(s)*log(u)). These are direct applications and algebraic consequences of existing results, rather than additional canonical theorem bindings.
+
+Combining the exact original margin decomposition, E3(u)>=-E2p(u), the preceding cancellation and the existing tangent inequality yields J_X+T+D/(A log(A))-C/log(X)-B<=robinLogMargin(N). The theta endpoint discrepancy enters through the quadratic penalty B; the actual higher-layer inventory remains a favorable gain, and T is still the same integer's complete Euler tail. The complete finite-window statement was checked as a transient Lean calculation with only the standard classical axioms. This does not prove that its lower bound is positive, does not control the remaining theta or psi oscillation, and does not resolve RH. No new named Lean declaration is retained solely for these applications.
+
 These are the original lower-control and equivalent prime-log derivations, not new canonical theorem bindings. Their exact original statements and Lean proof bodies remain transient. The remaining original obligation is strict positivity of E3(u)+T+log(log A)-log(log u) at both endpoints for every q>0 with strictInteger(q)>5040. J>=0 or a local strict gain does not prove that sign. Positivity of E3(u)+B+log(log A)-log(log u) would be sufficient, but is neither necessary nor proved here. The sharp upper-tail estimate cannot supply a lower sign.
 
 ## References
 
+- Truth anchor: `D5/S3/Arith/Robin/OriginalEndpointPrimeTail.endpoint_local`
 - Truth anchor: `D5/S3/Arith/Robin/OriginalEndpointPrimeTail.original_endpoint_prime_tail_supply`
 - Dependency: [D5/S3/Arith/GoldenResource/FirstLayerMarginalAntitone](../GoldenResource/FirstLayerMarginalAntitone.md)
 - Dependency: [D5/S3/Arith/GoldenResourceObjectiveFactorization](../GoldenResourceObjectiveFactorization.md)

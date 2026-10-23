@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:2bd5092aa684ce8959610a7b6bfe26e8c7a1714e3714bf7ac6a73e16c00810e3
+  normalized_sha256: sha256:2bd5092aa684ce8959610a7b6bfe26e8c7a1714e3714bf7ac6a73e16c00810e3
+cas_ref: sha256:2bd5092aa684ce8959610a7b6bfe26e8c7a1714e3714bf7ac6a73e16c00810e3
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: Names interval arithmetic and closes a research-tool list; no certificate or mathematical assertion.
+    previous_atom_id: e61d99de6d34b7eaf3f11bc9ecf8dff786c743e5aa70d110590a96d1bad2a4ff
+    next_atom_id: 39bcdac962df7b4650447d9e14d8c90f7525d5fe91d3cfd85bc2c92ec157ad65

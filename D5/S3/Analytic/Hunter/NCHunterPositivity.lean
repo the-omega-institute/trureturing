@@ -8,7 +8,7 @@
 /-
 admission_basis: escape-witness
 Direct frozen dependencies: D5/S3/Quantum/Entanglement/OccupancyWordSectors; statement_id: sha256:4c2e6fd9d41a26d9ddd554f91b64b4ed76e6b80ed308ee656970febafbbe55e1.
-Information-escape registration is paused under CLAUDE.md section 3.9.
+Escape audit for GVHunter.reverse_word_list unfinished: https://github.com/the-omega-institute/trureturing/issues/19685.
 sharp_from_representers: proof_shape: bind-only; escape_witness: none; consumer: sharp_posSemidef_of_representers | complete_variance_posSemidef: proof_shape: bind-only; escape_witness: none; consumer: constant_block_even_bound
 all_ones_posSemidef: proof_shape: bind-only; escape_witness: none; consumer: constant_block_odd_bound | constant_block_even_bound: proof_shape: bind-only; escape_witness: none; consumer: pure_block_bound
 constant_block_odd_bound: proof_shape: bind-only; escape_witness: none; consumer: pure_block_bound | count_constant_all: proof_shape: bind-only; escape_witness: none; consumer: representer_certificate
@@ -618,7 +618,7 @@ theorem factorial_weight_pos {n B : ℕ} (g : Fin n → ℕ) (k : Fin n → Fin 
 theorem count_append {n a b : ℕ} (u : (Fin a → Fin n)) (v : (Fin b → Fin n)) (i : Fin n) : (occupation (Fin.append u v)).count i = (occupation u).count i + (occupation v).count i := by
   simp only [D5.S3.Quantum.Entanglement.OccupancyWordSectors.occupation_append,
     Multiset.count_add]
-private theorem reverse_word_list {n k : ℕ} (w : (Fin k → Fin n)) : List.ofFn ((Equiv.piCongrLeft' (fun _ : Fin k => Fin n) Fin.revPerm) w) = (List.ofFn w).reverse := by
+theorem reverse_word_list {n k : ℕ} (w : (Fin k → Fin n)) : List.ofFn ((Equiv.piCongrLeft' (fun _ : Fin k => Fin n) Fin.revPerm) w) = (List.ofFn w).reverse := by
   apply List.ext_getElem
   · simp
   · intro i hi hi'

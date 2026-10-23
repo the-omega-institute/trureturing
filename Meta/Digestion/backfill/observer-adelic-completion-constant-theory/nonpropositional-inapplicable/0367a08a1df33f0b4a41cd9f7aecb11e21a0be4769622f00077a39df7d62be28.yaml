@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:0367a08a1df33f0b4a41cd9f7aecb11e21a0be4769622f00077a39df7d62be28
+  normalized_sha256: sha256:0367a08a1df33f0b4a41cd9f7aecb11e21a0be4769622f00077a39df7d62be28
+cas_ref: sha256:0367a08a1df33f0b4a41cd9f7aecb11e21a0be4769622f00077a39df7d62be28
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 'Nonpropositional: 在逃逸分类中定义“有限完成”类别：存在清空层；不主张任意塔有此层。'
+    previous_atom_id: b51de4bd6e685f8248c47135d496ef8eb897ff7be3c70dce26d50cd302ffe7e0
+    next_atom_id: 7e2f4d617c97e520142c7682c4483cb92c51ec342e973229022e49c75a6374a0

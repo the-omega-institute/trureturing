@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:2a1e82a40f501d513851e1b8034be10e6a3a511333b2ba20ed7499533cff2090
+  normalized_sha256: sha256:2a1e82a40f501d513851e1b8034be10e6a3a511333b2ba20ed7499533cff2090
+cas_ref: sha256:2a1e82a40f501d513851e1b8034be10e6a3a511333b2ba20ed7499533cff2090
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 'Nonpropositional: 定义横向缺陷向量及其非中心化二阶矩记号；未推导协方差性质。'
+    previous_atom_id: 8f3d442ef02db3f2579cf99d029c2c423b3e6a2c4a66ed5d2876500af73e7c75
+    next_atom_id: 8b3677cf715eed83b5d1fb1cf1728067413498f80c7457c59324a01995253857

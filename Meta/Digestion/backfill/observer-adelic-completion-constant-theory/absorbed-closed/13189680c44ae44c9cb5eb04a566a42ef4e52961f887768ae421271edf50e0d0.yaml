@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:13189680c44ae44c9cb5eb04a566a42ef4e52961f887768ae421271edf50e0d0
+  normalized_sha256: sha256:13189680c44ae44c9cb5eb04a566a42ef4e52961f887768ae421271edf50e0d0
+cas_ref: sha256:13189680c44ae44c9cb5eb04a566a42ef4e52961f887768ae421271edf50e0d0
+coverage_gids:
+  - gid: D5/S3/Weil/TestFunctions/FixedDepthLiClarkRecovery.fixed_depth_li_clark_recovery
+    target_statement_id: sha256:9ddb3adb80f5c9ca9788d4dc92facebd9e8538bdd9465f053e92ca7afd1bffe0
+  - gid: D5/S3/Weil/TestFunctions/LiCurvatureCriterion.circle_moment_toeplitz_posSemidef
+    target_statement_id: sha256:47a6e3a47437bcbb9bb671570a3853da7f53a28c552cf199cdc38787c6bec57a
+receipts:
+  unresolved_subitems: []

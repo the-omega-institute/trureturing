@@ -245,6 +245,23 @@ public sealed class WorktreeProtocolTests(ITestOutputHelper output)
     }
 
     [Theory]
+    [InlineData("scoped_git_configuration_disables_background_git")]
+    [InlineData("timed_out_git_releases_index_lock")]
+    public void ScopedGitLeavesNoLockHolderBehind(string probe)
+    {
+        if (OperatingSystem.IsWindows()) return;
+        var root = TestRepositoryLayout.FindRoot();
+        var result = CaptureCleanupOutput((stdout, stderr) => TestProcessRunner.Run("python3",
+            ["-B", Path.Combine(root,
+                "tools/tests/StrataLint.WorktreeContract.Tests/Fixtures/worktree_protocol_tests.py"),
+                root, "ProtocolTests." + probe], root, TestBudgets.ProtocolProbeHangGuard, 1024 * 1024,
+            standardOutput: stdout, standardError: stderr,
+            interruptBeforeKill: TestProcessRunner.InterruptPythonFixture), output.WriteLine);
+        Assert.True(result.ExitCode == 0,
+            Encoding.UTF8.GetString(result.StandardOutput) + Encoding.UTF8.GetString(result.StandardError));
+    }
+
+    [Theory]
     [InlineData("mirror_operation_publishes_then_qualifies_removal")]
     [InlineData("mirror_failure_retains_conflict_and_failed_publication")]
     [InlineData("mirror_missing_endpoint_refused_before_creation")]
