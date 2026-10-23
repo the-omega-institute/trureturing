@@ -16,10 +16,10 @@ internal sealed class EntanglementDistanceBellDiagonalRefutationDocument : IScri
         Blocks(
             Node("onSite", "One-site operators", OnSiteFormula(),
                 "For a two-qubit product basis, onSite acts by U on the selected coordinate and by the identity on the other coordinate. The two branches are selected by μ = 0 and μ ≠ 0.",
-                DescribeRole.Definition, AssessedProvenance.FromRepo()),
+                DescribeRole.Definition, AssessedProvenance.FromRepo(Source)),
             Node("sitePauli", "Pauli observables on one site", SitePauliFormula(),
                 "sitePauli chooses X, Y or Z from the Fin(3) label i and places that Pauli on site μ through onSite. The Pauli matrices are the existing X, Y and Z matrices.",
-                DescribeRole.Definition, AssessedProvenance.FromRepo()),
+                DescribeRole.Definition, AssessedProvenance.FromRepo(Source)),
             Node("siteQCD", "The variational site quantum-correlation distance", SiteQcdFormula(),
                 "The site QCD is the real part of the trace of σ squared minus the supremum of the real trace quadratic form over real unit vectors n. Each Pauli coefficient n i is embedded into the complex matrices by Complex.ofReal. This is the one-site variational form of the source QCD.",
                 DescribeRole.Definition, AssessedProvenance.FromLiterature(Source)),
@@ -36,14 +36,14 @@ internal sealed class EntanglementDistanceBellDiagonalRefutationDocument : IScri
                 "For nonnegative weights summing to one, the weighted sum of the four Bell projectors is a Bell-diagonal state. The displayed definition also admits arbitrary real weights, embedded into the complex matrix algebra. This is the Bell-diagonal family used in the source.",
                 DescribeRole.Definition, AssessedProvenance.FromLiterature(Source)),
             Node("concurrence", "Concurrence of a Bell-diagonal state", ConcurrenceFormula(),
-                "For nonnegative Bell-diagonal weights summing to one, concurrence is the positive part of twice the largest weight minus one. This is the standard Bell-diagonal concurrence formula of Bennett, DiVincenzo, Smolin and Wootters (1996). The displayed definition extends the same expression to arbitrary real weights.",
-                DescribeRole.Definition, AssessedProvenance.FromRepo()),
+                "For nonnegative Bell-diagonal weights summing to one, concurrence is the positive part of twice the largest weight minus one. The displayed definition extends the same expression to arbitrary real weights.",
+                DescribeRole.Definition, AssessedProvenance.FromRepo(Source)),
             Node("claim", "The Bell-diagonal entanglement-distance claim", ClaimFormula(),
                 "The source reports numerical evidence for the identity ED = 2 times squared concurrence on Bell-diagonal states, with its figure plotting ED/2. The claim requires this identity for every nonnegative weight vector on the four Bell states whose weights sum to one.",
                 DescribeRole.Definition, AssessedProvenance.FromLiterature(Source)),
             Node("result", "A two-qubit counterexample", Disp(new Formula.Not(F.Id("claim"))),
                 "Take the Bell-diagonal state with weights (16/25, 9/25, 0, 0). It is the equal mixture of the projectors onto the two nonorthogonal pure states (|00⟩ + q₊|11⟩)/√2 and (|00⟩ + q₋|11⟩)/√2, where q₊ = (7 + 24i)/25 and q₋ = (7 − 24i)/25. On either site, the SU(2) rotations diag((4 + 3i)/5,(4 − 3i)/5) and diag((3 + 4i)/5,(3 − 4i)/5) take the respective projectors to the first two Bell projectors. The rotated mixture is therefore diag(1/2,0,0,1/2). Both site QCD values are zero, hence ED is at most zero, while twice the squared concurrence is 98/625. Thus ED ≤ 0 < 98/625. These states and rotations give a counterexample to the claim.",
-                DescribeRole.Theorem, AssessedProvenance.FromRepo())
+                DescribeRole.Theorem, AssessedProvenance.FromRepo(Source))
         ),
         []));
 
