@@ -1,0 +1,34 @@
+### 定义 5.1（未来窗口任务）
+
+取有限动作集 $A$、总定义的确定性单步更新 $U_a:S\to S$，以及有限动作词集合 $W\subseteq A^*$。令空词更新为恒等映射，并按固定的执行顺序递归定义词更新：
+
+$$
+U_\varepsilon=\mathrm{id}_S,
+\qquad
+U_{a\alpha}=U_\alpha\circ U_a.
+$$
+
+本节只覆盖这种总更新合同；若原合同允许 partial/legal action，必须先给出合法域、拒绝语义和失败边的扩展，不能直接套用下述公式。定义联合窗口域
+
+$$
+D_W=W\times D,
+$$
+
+联合失败任务为
+
+$$
+F_W(s)=\{(\alpha,d)\in W\times D:
+d\in F(U_\alpha(s))\}.
+\tag{5.1}
+$$
+
+将当前表示 $q(s)$ 用于预测整段窗口的证书。给定窗口权重 $\omega_W:D_W\to[0,\infty)$，定义
+
+$$
+\mathsf E_{\omega_W,W}(q;F,\mu)
+=
+\mathsf E_{\omega_W}(q;F_W,\mu),
+$$
+
+其中权重 $\omega_W(\alpha,d)$ 可以随时间或动作变化。
+

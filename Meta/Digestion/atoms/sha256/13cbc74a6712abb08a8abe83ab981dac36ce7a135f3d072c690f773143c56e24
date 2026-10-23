@@ -1,0 +1,44 @@
+**Definition 1.1 (Character triples).** Write $C_n$ for a cyclic group of order $n$, with $C_1$ trivial, and $\mu_n$ for the complex $n$th roots of unity. For a finite abelian group $A$, a character is a homomorphism $A\to\mathbb C^\times$. A character triple $\chi=(\chi_1,\chi_2,\chi_3)$ defines
+
+$$
+D_\chi(g)=\operatorname{diag}(\chi_1(g),\chi_2(g),\chi_3(g)),
+\qquad
+\overline\chi(g)=[D_\chi(g)]\in PGL_3(\mathbb C).
+$$
+
+The triple is *projectively faithful* if $\overline\chi$ is injective, equivalently
+
+$$
+\ker(\chi_2/\chi_1)\cap\ker(\chi_3/\chi_1)=\{1\}.
+$$
+
+Two triples $\chi,\psi$ are *pointwise matched* if, for every $g\in A$, there exist $\lambda_g\in\mathbb C^\times$ and $\pi_g\in S_3$ such that
+
+$$
+\psi_i(g)=\lambda_g\chi_{\pi_g(i)}(g)
+\qquad(1\le i\le3).
+\tag{1.1}
+$$
+
+They are *globally matched* if there exist one character $\eta$ of $A$ and one permutation $\pi\in S_3$ such that
+
+$$
+\psi_i=\eta\chi_{\pi(i)}
+\qquad(1\le i\le3).
+\tag{1.2}
+$$
+
+The choices in (1.1) need not vary coherently with $g$. A group *supports* such triples if it admits two projectively faithful, pointwise matched triples that are not globally matched.
+
+These definitions describe conjugacy of toral homomorphisms. Every homomorphism into the diagonal torus of $PGL_3(\mathbb C)$ has a lift $(1,\alpha,\beta)$ by characters, since that torus is isomorphic to $(\mathbb C^\times)^2$. Images contained in arbitrary conjugate tori can first be put into this form separately. Two diagonal matrices have conjugate projective classes exactly when their eigenvalue multisets differ by a scalar, giving (1.1), including repeated eigenvalues.
+
+Global projective conjugacy is equivalent to (1.2). Indeed, if one invertible matrix $H$ implements it, choose scalars $\eta(g)$ with
+
+$$
+D_\psi(g)=\eta(g)H D_\chi(g)H^{-1}.
+$$
+
+Multiplication at $g,h,gh$ gives $\eta(gh)=\eta(g)\eta(h)$. The resulting isomorphism between the ordinary representations $D_\psi$ and $\eta D_\chi$ equates their character multiplicities, hence their three characters up to one permutation. Conversely, (1.2) supplies a fixed permutation matrix as projective conjugator. The character-multiplicity assertion is also proved explicitly in §2.1 below. This is the finite diagonal instance of the projective-equivalence and ordinary-character interfaces in [1, §2.2, (2.2)] and [2, Proposition 2.1]; no connected-source hypothesis is used.
+
+Multiplying all coordinates of either triple by a character, or permuting its coordinates, preserves projective faithfulness, pointwise matching and global matching. Pointwise matched triples have the same projective kernel: at any given element, one triple has three equal values exactly when the other does.
+

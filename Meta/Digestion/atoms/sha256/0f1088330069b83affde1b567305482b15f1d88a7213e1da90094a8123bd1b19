@@ -1,0 +1,24 @@
+**Corollary 13.3 (A common tolerance choice).**
+For any $0<\varepsilon<1$, the integer
+
+$$
+N_\varepsilon=
+\max\left\{0,\left\lceil\frac{B}{\varepsilon^2}\right\rceil-1\right\}
+\tag{13.8}
+$$
+
+satisfies $N_\varepsilon+1\ge B/\varepsilon^2$ and gives input trace
+distance at most $\varepsilon$ for every $W\in K_J$, in a common
+subspace of rank $\binom{N_\varepsilon+17}{17}$.
+This is a theoretical choice conditional on $B$, not an evaluated
+cutoff or a preparation-resource estimate.
+
+*Proof.* The ceiling inequality and (13.3) give the conclusion.
+In a general coherent family with $B=0$, all amplitudes vanish and
+$N=0$ is exact. In the actual nonempty family here, $g\ne0$ implies
+$\sum_ka_k^2>0$, while $P\ne0$. Equation (12.4) then gives
+$\lambda(W)>0$ at every world and $B>0$. For every finite $N$ the
+Poisson term at $N+1$ is positive, so $t_N(W)>0$. Exact finite
+representation, or $\varepsilon=0$ in (13.8), is unavailable for
+these coherent preparations. $\square$
+
