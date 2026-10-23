@@ -7,6 +7,66 @@ open LeanInformationAudit.Tests.SearchReduction.LookupBaseline
 set_option Elab.async false
 set_option maxHeartbeats 0
 
+run_cmd do
+  let name := `PlaceholderFixture.member
+  let constant : ConstantVal := {name, levelParams := [], type := mkConst ``True}
+  let placeholder : ConstantInfo := .axiomInfo {constant with isUnsafe := false}
+  let theoremInfo : ConstantInfo := .thmInfo {constant with value := mkConst ``True.intro}
+  let unsafeInfo : ConstantInfo := .defnInfo {
+    constant with value := mkConst ``True.intro, hints := .opaque, safety := .unsafe}
+  let other : ConstantInfo := .thmInfo {
+    constant with name := `PlaceholderFixture.other, value := mkConst ``True.intro}
+  let parts := #[#[placeholder, other], #[placeholder, unsafeInfo], #[theoremInfo, theoremInfo]]
+  let entries := DiskLookup.membershipEntries "Fixture" parts
+  unless entries.size == 2 && entries[0]!.leanName == other.name &&
+      entries[0]!.ordinal == 2 && entries[1]!.leanName == name && entries[1]!.ordinal == 1 do
+    throwError "placeholder/unsafe copy shadowed the safe theorem or changed declaration ordinals"
+  unless (DiskLookup.membershipEntries "Fixture" #[#[placeholder, unsafeInfo]]).isEmpty do
+    throwError "ineligible copies entered membership"
+  let owners := entries ++ DiskLookup.membershipEntries "OtherOwner" parts
+  unless owners.size == 4 && owners[1]!.module != owners[3]!.module do
+    throwError "distinct membership owners were collapsed"
+  logInfo "LOOKUP_MEMBERSHIP synthetic_placeholder=true unsafe_shadow=true dedup=true ordinals=true owners=true"
+
+run_cmd do
+  let directory : System.FilePath :=
+    "build/lean-inspector/lookup-index/placeholder-fixture"
+  let storage := directory / "members"
+  IO.FS.createDirAll storage
+  let plan := directory / "plan.json"
+  let resultPath := directory / "result.json"
+  IO.FS.writeFile plan (toJson ({modules := #["Std.Data.ExtDTreeMap.Basic"]} :
+    DiskLookup.ShardPlan)).compress
+  DiskLookup.produceMembershipShard storage plan resultPath
+  let result : DiskLookup.MembershipShardResult ← IO.ofExcept <|
+    fromJson? (← IO.ofExcept <| Json.parse (← IO.FS.readFile resultPath))
+  unless result.missing.isEmpty do throwError "placeholder fixture indexing incomplete"
+  liftTermElabM do
+    let env := (← getEnv).setExporting false
+    let header : DiskLookup.Header := {
+      basis := "placeholder-fixture", mathlib := "fixture", inputs := 0,
+      storage := "implication", root := "", digest := 0, complete := true,
+      modules := 1, declarations := result.indexed, indexed := result.indexed, missing := #[]}
+    let index : DiskLookup.Index := {
+      directory := directory / "implication", header, manifest := #[],
+      membership? := some {
+        inputs := 0, storage := "members", complete := true,
+        indexed := result.indexed}}
+    withEnv env do
+      for name in #[`Std.ExtDTreeMap.getEntryLE._proof_1, `Std.ExtDTreeMap.getEntryGE._proof_1] do
+        let info ← getConstInfo name
+        unless DiskLookup.membershipEligible info do throwError "fixture theorem is ineligible"
+        checkLocalProof info.type (mkConst name (info.levelParams.map Level.param))
+        let hits ← DiskLookup.queryMembership index info.type
+        unless hits.complete && hits.entries.any (·.leanName == name) do
+          throwError "complete membership omitted placeholder-shadowed theorem {name}"
+        let root ← mkFreshExprMVar info.type
+        let trace ← lookupExact {environment := env, disk? := some index} root.mvarId!
+        unless trace.complete && trace.source?.isSome && (← root.mvarId!.isAssigned) do
+          throwError "production exact lookup lost placeholder-shadowed theorem {name}"
+        checkLocalProof info.type (← instantiateMVars root)
+        logInfo "LOOKUP_MEMBERSHIP placeholder_shadow=true exact_hit=true kernel=true std3=true"
+
 run_cmd liftTermElabM do
   let left ← Term.elabType (← `(∀ renamed : Nat, Mark renamed ∧ Side))
   let right ← Term.elabType (← `(∀ {n : Nat}, (let x := n; Mark x) ∧ Side))

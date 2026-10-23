@@ -208,7 +208,7 @@ def normalizeStatementSyntax (env : Environment) (e : Expr)
     (fuel : Nat := membershipNormalizationFuel) : Except String Expr :=
   (normalizeStatementAux env e []).run' {remaining := fuel}
 
-abbrev membershipVersion : String := "R_lookup/membership-alpha-syntax-v4-all-safe-memo-2000000"
+abbrev membershipVersion : String := "R_lookup/membership-alpha-syntax-v5-qualified-parts-memo-2000000"
 
 structure MembershipHeader where
   format : String := membershipVersion
@@ -599,6 +599,25 @@ def membershipEligible (info : ConstantInfo) : Bool :=
     | .thmInfo _ | .defnInfo _ | .opaqueInfo _ => true
     | _ => false
 
+/-- Preserve each name's first module-local ordinal, but deduplicate only
+eligible declarations. Main/server axiom placeholders cannot shadow a private
+theorem, definition or opaque constant. -/
+def membershipEntries (module : String) (parts : Array (Array ConstantInfo)) : Array Entry := Id.run do
+  let mut ordinals : Std.HashMap Name Nat := {}
+  let mut selected : NameSet := {}
+  let mut entries := #[]
+  for part in parts do
+    for info in part do
+      let ordinal := ordinals[info.name]?.getD (ordinals.size + 1)
+      ordinals := ordinals.insert info.name ordinal
+      unless membershipEligible info do continue
+      if selected.contains info.name then continue
+      selected := selected.insert info.name
+      entries := entries.push {
+        module, name := ownedString info.name.toString,
+        parts := nameParts info.name, ordinal}
+  return entries
+
 private def membershipFile (bucket : Nat) : String := s!"members-{bucket}.pickle"
 
 unsafe def produceMembershipShard (storage : System.FilePath)
@@ -612,23 +631,14 @@ unsafe def produceMembershipShard (storage : System.FilePath)
   let mut result : MembershipShardResult := {modules := plan.modules}
   for module in plan.modules do
     IO.FS.writeFile progress s!"normalizing:{module}"
-    let entries ← visitModule module.toName fun parts => do
-      let mut known : NameSet := {}
-      let mut entries : Array Entry := #[]
-      let mut ordinal := 0
-      for part in parts do
-        for info in part.constants do
-          if known.contains info.name then continue
-          known := known.insert info.name
-          ordinal := ordinal + 1
-          unless membershipEligible info do continue
-          entries := entries.push {
-            module, name := ownedString info.name.toString,
-            parts := nameParts info.name, ordinal}
-      return entries
+    let entries ← visitModule module.toName fun parts =>
+      pure (membershipEntries module (parts.map (·.constants)))
     for entry in entries do
       let work : CoreM UInt64 := MetaM.run' do
-        membershipKey (← getConstInfo entry.leanName).type
+        let info ← getConstInfo entry.leanName
+        unless membershipEligible info do
+          throwError "lookup.membership_declaration_unavailable:{entry.name}"
+        membershipKey info.type
       let context : Core.Context := {
         fileName := "<membership-index>", fileMap := default,
         options := (({} : Options).set `maxHeartbeats 0).set `maxRecDepth 1000,
@@ -659,7 +669,7 @@ unsafe def produceMembership (directory : System.FilePath) : IO MembershipHeader
   let header : Header ← readJson (directory / "header.json")
   unless header.format == version && header.complete do
     throw <| IO.userError "lookup.membership_requires_complete_candidate_index"
-  let storage := directory / s!"membership-alpha-syntax-v4-all-safe-memo-2000000-{header.inputs}"
+  let storage := directory / s!"membership-alpha-syntax-v5-qualified-parts-memo-2000000-{header.inputs}"
   IO.FS.createDirAll storage
   let partitions : Array (Array String) ← readJson (directory / "import-partitions.json")
   let groups := partitions.mapIdx fun i modules => (s!"group-{i}", modules)
