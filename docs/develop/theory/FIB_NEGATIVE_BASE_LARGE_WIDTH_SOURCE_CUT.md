@@ -3522,3 +3522,999 @@ used in these proofs.
 
 ## 追加锚（本行以下为增补区）
 
+## 47. All-width terminal-M obstruction over a local acquired rectangle
+
+A world is a triple $(P(r,b),g,d)$, where
+
+$$
+P(r,b)=\begin{pmatrix}r&b\\r(1-r)/b&1-r\end{pmatrix},\qquad
+0<r<1,\quad b>0,\quad d\in\mathbb R,\quad
+0\ne g\in\mathbb R[s],\quad \deg g\le3.
+\tag{47.1}
+$$
+
+Put $J=\left(\begin{smallmatrix}0&1\\1&0\end{smallmatrix}\right)$ and
+$M=\left(\begin{smallmatrix}0&1\\1&1\end{smallmatrix}\right)$.
+Products act on the left, in chronological order $J,M,J,M,M,M$.
+Explicitly, the products and readings of a fixed world are
+
+$$
+Q_0=I,\qquad Q_i=E_iQ_{i-1},\qquad
+y_i=d+g(i)\operatorname{tr}(Q_iP).
+\tag{47.2}
+$$
+
+The acquired readings at clocks $0,\ldots,6$ are
+$(0,24,147/5,24,18,p,v)$. The terminal alternatives $a$ and $m$
+are respectively the J and M readings at clock seven, using the same
+whole polynomial and fixed drift as all acquired readings.
+The set $C(p,v)$ includes every such world, over all positive widths
+$b>0$. The parameter restriction below is on acquired readings $(p,v)$,
+not on the widths of worlds in the child.
+
+All finite decimals below denote exact rational numbers. Define
+
+$$
+\mathcal U=[-10.891256858561706,-10.891256858561705]
+\times[-8.154074713130907,-8.154074713130906].
+\tag{47.3}
+$$
+
+**Theorem 47.1 (Entire-child obstruction).** For every $(p,v)\in\mathcal U$,
+the entire $C(p,v)$ has at most two worlds. At most one has width in
+
+$$
+I_1=(0.1249999999,0.1250000001),
+\tag{47.4}
+$$
+
+and at most one has width in
+
+$$
+I_2=(0.1321292133,0.1321292137).
+\tag{47.5}
+$$
+
+Every world belongs to one of these two alternatives. Their terminal-M
+readings satisfy, respectively,
+
+$$
+m\in(104.334,104.383),\qquad m\in(104.779,104.861).
+\tag{47.6}
+$$
+
+Consequently terminal M is injective on the entire $C(p,v)$ for every
+$(p,v)\in\mathcal U$. In particular no such child contains the M pair
+needed for an independent J/M quartet.
+
+The negative mixed-J point of Theorem 39.1, with its complete proof in
+Sections 40–46, belongs to the interior of $\mathcal U$ and has
+one world in each alternative. Its entire acquired child therefore
+consists of exactly those two worlds. Its missing M pair cannot be
+supplied by an undisplayed third or fourth world.
+
+**Theorem 47.2 (Moving-width J continuation).** At that same point there is
+a real analytic curve of strict, distinct J-colliding world pairs,
+parametrized by the first width $t$ near $1/8$. Both widths vary. The
+derivative of the second world's width with respect to $t$ at $t=1/8$ belongs to
+$(-0.997620,-0.997619)$, and the acquired fifth response derivative belongs
+to $(0.4908765,0.4908769)$. Thus this is a nonconstant child curve and
+not a fixed-width mixed-source construction. A sufficiently short open
+segment has $(p(t),v(t))\in\mathcal U$, and none of its entire children
+contains any M pair.
+
+Both theorems concern the entire acquired child over the closed local
+parameter rectangle $\mathcal U$. The original independent-quartet target
+with $p\ne24$ remains unresolved outside $\mathcal U$.
+
+## 48. Whole-world equations before any elimination
+
+Set
+
+$$
+\begin{gathered}
+e=d-24,\quad \delta=b-1/8,\quad
+j=b+r(1-r)/b,\quad n=j+r,\quad T=1+b,\quad U=1+2b,\\
+Z=T+2j+4r,\qquad R=3U+2n,\\
+\Lambda=1+6/T+1/U-4/j-4/n,\qquad
+D_0=\frac{24}{5}\delta(6/T-2/U).
+\end{gathered}
+\tag{48.1}
+$$
+
+The traces at clocks zero through six, and at the two terminal
+alternatives, are
+
+$$
+(1,j,T,n,U,U+n,2U+n;Z,R).
+\tag{48.2}
+$$
+
+Let $\ell_i(s)=\prod_{0\le k\le3,\,k\ne i}(s-k)/(i-k)$.
+The unique candidate whole gain is
+
+$$
+g(s)=(-24-e)\ell_0(s)-\frac e j\ell_1(s)
+ +\frac{27/5-e}{T}\ell_2(s)-\frac e n\ell_3(s).
+\tag{48.3}
+$$
+
+Its first four readings are identically $0,24,147/5,24$.
+The clock-four reading is
+
+$$
+18+U(e\Lambda+D_0).
+\tag{48.4}
+$$
+
+Thus the complete parent equation is exactly $e\Lambda+D_0=0$.
+For the later readings define
+
+$$
+\begin{aligned}
+q_5&=4-15/j+20/T-10/n,\\
+q_6&=10-36/j+45/T-20/n,\\
+q_7&=20-70/j+84/T-35/n,\\
+k_5&=1+(U+n)q_5,&c_5&=96\delta(U+n)/T,\\
+k_6&=1+(2U+n)q_6,&c_6&=(2U+n)(24+216\delta/T),\\
+k_J&=1+Zq_7,&c_J&=Z(384/5+(2016/5)\delta/T),\\
+k_M&=1+Rq_7,&c_M&=R(384/5+(2016/5)\delta/T).
+\end{aligned}
+\tag{48.5}
+$$
+
+The original readings, without using the parent equation, are
+
+$$
+(p,v,a,m)=24+(c_5,c_6,c_J,c_M)+e(k_5,k_6,k_J,k_M).
+\tag{48.6}
+$$
+
+The nonzero vector $(\Lambda,k_5)$ on the strict source domain gives the
+zero-safe drift reconstruction at a prescribed $p$:
+
+$$
+e=\frac{-D_0\Lambda+k_5(p-24-c_5)}{\Lambda^2+k_5^2}.
+\tag{48.7}
+$$
+
+This is the reconstruction in the external volume
+*FIB common-parent geometry and two exact mixed children*, Section 12,
+Lemma 12.2 and Theorem 12.3, with $A_5=k_5$, $\epsilon=e$,
+$K_5=c_5$ and $a\Delta B_{\rm coef}=D_0$. That Section 12 is not
+Section 12 of the present volume. Only its nonzero-vector fact is needed
+here; on the two surviving source boxes the same fact also follows
+directly from the interval bounds in Section 51.
+All $j,n,T,U$ are strictly positive. No gain sample, leading coefficient,
+root difference, drift, or $e$ is divided out in (48.1)–(48.7).
+A zero polynomial gain would make clocks zero and one equal to the same
+drift, so the gains reconstructed from these rows are nonzero.
+
+## 49. Two universal saturated polynomial relations
+
+Use polynomial variables $r,b,p,v$ and put
+
+$$
+\begin{aligned}
+\mathcal J&=b^2+r-r^2,&\mathcal N&=\mathcal J+rb,\\
+S&=(8b-1)(2+5b),\\
+D&=5\{(b^2+8b+4)\mathcal J\mathcal N
+       -2(1+b)(1+2b)b(\mathcal J+\mathcal N)\},\\
+C_0&=-24D+3S\mathcal J\mathcal N,& C_1&=3S\mathcal Nb,\\
+C_2&=3(49b+34)\mathcal J\mathcal N
+       -54(1+2b)b(\mathcal J+\mathcal N),&C_3&=3S\mathcal Jb,\\
+B_5&=-4C_0+15C_1-20C_2+10C_3,\\
+B_6&=-10C_0+36C_1-45C_2+20C_3,\\
+L&=bD,\\
+N_p&=-bC_0+\{b(1+2b)+\mathcal N\}B_5,\\
+N_v&=-bC_0+\{2b(1+2b)+\mathcal N\}B_6,\\
+F&=N_p-pL,\qquad G=N_v-vL.
+\end{aligned}
+\tag{49.1}
+$$
+
+On $D\ne0$ these are the literal regular-parent formulas
+$d=-C_0/D$, $g(i)=C_i/D$ for $0\le i\le3$, and
+$(p,v)=(N_p,N_v)/L$. Direct original-row identities are
+
+$$
+\begin{aligned}
+-bC_0+\mathcal JC_1&=24bD,\\
+-C_0+(1+b)C_2&=(147/5)D,\\
+-bC_0+\mathcal NC_3&=24bD,\\
+-C_0+(1+2b)(-C_0+4C_1-6C_2+4C_3)&=18D.
+\end{aligned}
+\tag{49.2}
+$$
+
+These are polynomial identities, not tests at numerical samples.
+
+Here are finite determinant definitions of the polynomials used below.
+They avoid a large expanded coefficient table. Form the resultant
+$\operatorname{Res}_r(F,G)$ by its $12$ by $12$ Sylvester determinant,
+using descending powers of $r$. Divide it exactly by
+
+$$
+b^{20}(b+2/5)^4(b-1/8)^4(2b+1)^2.
+\tag{49.3}
+$$
+
+Divide the quotient by $186624000000$. Denote the resulting polynomial
+by $\mathcal W(b;p,v)$. This specifies its normalization and every
+coefficient over $\mathbb Q$ without numerical root choices. It is a
+polynomial of degree eighteen in $b$, with 532 nonzero monomials and
+individual degrees six in $p$ and $v$. All the indicated divisions are
+exact polynomial divisions.
+
+Form also the degree-one subresultant in $r$ of $F,G$. Divide its two
+coefficients by their common factor
+
+$$
+2430b^{13}(2b+1)(5b+2)^3(8b-1)^3.
+\tag{49.4}
+$$
+
+Write the quotient as $A(b,p,v)r+B(b,p,v)$. Equivalently the degree-one
+subresultant is specified by the usual Sylvester minors. Simultaneously
+changing the sign of $A,B$ has no effect on any assertion here.
+The resultant and subresultant constructions use the actual degree-six
+polynomials (49.1). Their polynomial remainder degrees are
+$6,6,4,3,2,1,0$; no assumption about the degree after specialization is
+required. Subresultants are polynomial combinations of $F,G$.
+
+**Lemma 49.1 (Relations for every complete world).** Every strict complete
+world with $p\ne24$ satisfies
+
+$$
+\mathcal W(b;p,v)=0,\qquad A(b,p,v)r+B(b,p,v)=0.
+\tag{49.5}
+$$
+
+**Proof.** First suppose $\Lambda\ne0$. The identity
+$\Lambda=2D/(5TU\mathcal J\mathcal N)$ gives $D\ne0$.
+The parent equation and (49.1) give $F=G=0$. If $b=1/8$ on this chart,
+the parent forces $e=0$, and then (48.6) gives $p=24$.
+Thus $b\ne1/8$. Every removed factor is now nonzero: $b>0$,
+$b+2/5>0$, and $2b+1>0$. The resultant and subresultant identities give
+(49.5), with no assumption that their specialized leading coefficients
+are nonzero.
+
+For a singular actual parent, $D_0=0$ forces $b=1/8$. There
+
+$$
+960jn\Lambda=\Phi(r),\qquad
+\Phi(X)=438272X^4-931328X^3+540800X^2-50728X-853.
+\tag{49.6}
+$$
+
+The exact Euclidean identity $\gcd(\Phi,\Phi')=1$ shows every root is
+simple. Also $e\ne0$: otherwise (48.6) would give $p=24$.
+The parent equation has nonzero $r$ derivative $e\Lambda_r$ at this
+world. Fixing $e$, the analytic implicit-function theorem therefore
+continues it to strict parents with $b\ne1/8$. Their $D_0\ne0$ forces
+$\Lambda\ne0$. Their acquired $p,v$ converge to those of the singular
+world. Both relations (49.5), already valid on those regular parents,
+pass to the limit because they are polynomial identities in the world
+coordinates and acquired readings. This retains the singular world;
+it does not divide by its zero $\Lambda$ or by $b-1/8$. $\square$
+
+## 50. Uniform positive-width root certificate
+
+The following table gives intervals with exactly one positive root of
+$\mathcal W$ for every $(p,v)\in\mathcal U$. Every complementary
+interval in $(0,\infty)$ contains no root.
+
+| Index | Coarse root interval | Narrow root interval |
+| --- | --- | --- |
+| 1 | $(0.124999,0.125001)$ | $(0.1249999999,0.1250000001)$ |
+| 2 | $(0.132128,0.132131)$ | $(0.1321292133,0.1321292137)$ |
+| 3 | $(0.836879,0.836883)$ | $(0.8368806577,0.8368806582)$ |
+| 4 | $(0.870315,0.870320)$ | $(0.8703170917,0.8703170923)$ |
+| 5 | $(5.415480,5.415490)$ | $(5.4154833506,5.4154833514)$ |
+| 6 | $(11.444650,11.444670)$ | $(11.4446595190,11.4446595200)$ |
+
+Here is an exact rational certificate and its arithmetic prescription.
+Write $\mathcal W(b;p,v)=\sum_{i=0}^{18}w_i(p,v)b^i$.
+Evaluate each expanded $w_i$ by termwise rational interval arithmetic
+on the two closed parameter intervals (47.3), retaining the signs of the
+integer coefficients. For a finite positive interval $(a,z)$ form
+
+$$
+T_{a,z}(t)=(1+t)^{18}\mathcal W((a+zt)/(1+t);p,v).
+\tag{50.1}
+$$
+
+Its coefficient of $t^k$ is evaluated from
+
+$$
+\sum_{i=0}^{18}\sum_{\substack{0\le j\le i\\0\le k-j\le18-i}}
+ w_i\binom ij a^{i-j}z^j\binom{18-i}{k-j}.
+\tag{50.2}
+$$
+
+For the last interval $(a,\infty)$ use $\mathcal W(a+t;p,v)$,
+whose $t^k$ coefficient is
+$\sum_{i=k}^{18}w_i\binom ik a^{i-k}$.
+All interval coefficient signs in these thirteen coarse cells are
+separated from zero. In increasing order of cells their sign variations
+are exactly
+
+$$
+0,1,0,1,0,1,0,1,0,1,0,1,0.
+\tag{50.3}
+$$
+
+The thirteen cells are the six coarse intervals and the seven intervening
+complementary intervals, starting at zero and ending at infinity.
+Descartes' rule proves their exact root counts, including multiplicity.
+
+For each narrow interval, first substitute its exact endpoint into
+$\mathcal W$, expand in $p,v$, and then perform the same termwise
+interval evaluation. The endpoint signs are opposite in all six cases.
+Together with the unique coarse root, this puts that root in its narrow
+interval. Endpoint substitution before interval evaluation is material;
+it preserves cancellations needed for the first narrow interval.
+No root count at one rounded value of $(p,v)$ is being substituted for
+these uniform parameter bounds.
+
+The leading coefficient and the endpoint values at zero are separated
+from zero in this arithmetic. In particular the polynomial remains of
+degree eighteen throughout $\mathcal U$; no root at infinity or zero
+is omitted.
+
+## 51. Strict-source and terminal-M filters
+
+Evaluate the expanded integer polynomials $A,B$ on each narrow width
+interval and on (47.3). Exact rational interval multiplication takes the
+minimum and maximum of the four endpoint products; division is used
+only on intervals separated from zero. The following deliberately
+wider rational enclosures result:
+
+| Index | Lower bound for $\lvert A\rvert$ | Enclosure of $-B/A$ |
+| --- | --- | --- |
+| 1 | $4.924\cdot10^{18}$ | $(0.90244957,0.90244980)$ |
+| 2 | $6.391\cdot10^{18}$ | $(0.89660057,0.89660096)$ |
+| 3 | $2.300\cdot10^{18}$ | $(3.4670,3.5031)$ |
+| 4 | $1.421\cdot10^{19}$ | $(-1.7145,-1.7087)$ |
+| 5 | $6.290\cdot10^{32}$ | $(7.5288,7.5289)$ |
+| 6 | $3.082\cdot10^{37}$ | $(-10.3596,-10.3594)$ |
+
+Thus indices three through six violate $0<r<1$ before any gain is
+considered. The nonzero $A$ also makes $r=-B/A$ unique at each surviving
+width. On the first two source boxes use (48.7), and then (48.1), (48.5), (48.6).
+Using the unrounded rational endpoints from $-B/A$ in this calculation
+gives
+
+| Index | Drift parameter $e$ | Terminal M |
+| --- | --- | --- |
+| 1 | $(6.68814,6.68869)$ | $(104.334,104.383)$ |
+| 2 | $(6.92447,6.92535)$ | $(104.779,104.861)$ |
+
+For clarity, the more informative terminal intervals before widening
+have endpoints contained in
+$(104.3343083766,104.3829706496)$ and
+$(104.7799336432,104.8602898212)$, respectively.
+The wider bounds above are the ones used in the theorem.
+In particular $k_5$ and $\Lambda^2+k_5^2$ are separated from zero on
+these two boxes. Formula (48.7) makes $e$ unique, and (48.3) makes the whole
+gain and drift unique.
+
+The arithmetic in Sections 50 and 51 is a finite rational certificate:
+(49.1), the two determinants and their exact divisions specify all
+polynomial coefficients; (50.2) specifies all root-count coefficients;
+termwise evaluation specifies every bound. No sampled gain or unknown
+source invariant is used as an acquired observation. The certificate
+covers unbounded positive width through its final half-line cell.
+
+**Proof of Theorem 47.1.** Lemma 49.1 forces every actual world onto one of
+the six narrow width roots. The last four roots fail the strict-source
+condition by the table. At either remaining root, the nonzero linear
+subresultant coefficient fixes $r$, the zero-safe drift formula fixes
+$e$, and interpolation fixes the entire world. Thus there is at most
+one world per surviving width. Two distinct worlds must occupy the two
+different width intervals. Their M values belong to the disjoint
+intervals (47.6), so they cannot collide under M. The negative
+mixed-J pair of Theorem 39.1 gives two actual worlds inside these two alternatives;
+therefore its entire child has exactly those two worlds. $\square$
+
+## 52. An analytic J curve through the singular member
+
+The exact starting point is defined as follows. For a singular root $x$
+of (49.6), let a superscript $s$ mean evaluation at $(r,b)=(x,1/8)$.
+At a regular source put $e_1=-D_0/\Lambda$ and
+
+$$
+P_*=c_5+e_1k_5,\quad V_*=c_6+e_1k_6,\quad A_*=c_J+e_1k_J.
+\tag{52.1}
+$$
+
+Let $(x_*,r_*,b_*)$ be the unique zero in the cube of radius $10^{-22}$
+about the rational center
+
+$$
+\begin{aligned}
+x_c&=0.9024496817720562653778726512965428561862764994432208971,\\
+r_c&=0.8966007636835690682237424612851910519964607303119325469,\\
+b_c&=0.1321292134887946369975978574045560868312842236443399628
+\end{aligned}
+\tag{52.2}
+$$
+
+of
+
+$$
+\left(\Phi(x)/100000,
+ [V_*-c_6^s-k_6^sP_*/k_5^s]/100,
+ [A_*-c_J^s-k_J^sP_*/k_5^s]/1000\right)=0.
+\tag{52.3}
+$$
+
+Section 42 proves existence and uniqueness of this zero by contraction;
+Section 43 supplies its whole-world lift. It is precisely the negative
+mixed-J point of Theorem 39.1, whose complete proof is in Sections 40–46.
+Put $e_{1*}=-D_0(r_*,b_*)/\Lambda(r_*,b_*)$ and
+$e_{0*}=P_*(r_*,b_*)/k_5(x_*,1/8)$.
+The widths are distinct and the acquired $(p_*,v_*)$ is in the interior
+of (47.3).
+
+For arbitrary nearby sources and drift parameters define
+
+$$
+\begin{aligned}
+\mathcal F(t;r_0,e_0,r_1,b_1,e_1)=\big(&e_0\Lambda(r_0,t)+D_0(r_0,t),\\
+&e_1\Lambda(r_1,b_1)+D_0(r_1,b_1),\\
+&p(r_0,t,e_0)-p(r_1,b_1,e_1),\\
+&v(r_0,t,e_0)-v(r_1,b_1,e_1),\\
+&a(r_0,t,e_0)-a(r_1,b_1,e_1)\big).
+\end{aligned}
+\tag{52.4}
+$$
+
+Here the response functions are the original rational functions (48.6),
+and no regular-chart drift elimination is performed in (52.4).
+At the exact starting point $\mathcal F=0$.
+Write $Y=(r_0,e_0,r_1,b_1,e_1)$ and $K=\partial_Y\mathcal F$.
+An interval derivative certificate on the cube in (52.3), using the
+induced interval bounds for $e_{0*},e_{1*}$, gives
+
+$$
+373309.45<\det K<373309.46.
+\tag{52.5}
+$$
+
+This certificate can be evaluated as follows. Use rational intervals
+rounded outward after every operation to the grid $10^{-70}\mathbb Z$.
+Carry six derivative coordinates in the order
+$(t,r_0,e_0,r_1,b_1,e_1)$. Use the sum and product rules and
+$\partial(f^{-1})=-f^{-2}\partial f$ on (48.1), (48.5), (48.6), (52.4).
+Compute the determinant by the 120-term Leibniz formula.
+For $Y'=-K^{-1}\partial_t\mathcal F$, use the five Cramer determinants.
+The resulting strict rational bounds are
+
+$$
+\begin{aligned}
+-0.815895&<r_0'<-0.815894,\\
+32.60245&<e_0'<32.60247,\\
+0.823126&<r_1'<0.823127,\\
+-0.997620&<b_1'<-0.997619,\\
+-33.67627&<e_1'<-33.67625,\\
+0.4908765&<p'<0.4908769,\\
+0.2750720&<v'<0.2750733,\\
+-1.187273&<a'<-1.187268.
+\end{aligned}
+\tag{52.6}
+$$
+
+The source cube has only positive trace denominators; its regular
+member has $\Lambda$ separated from zero, and its singular $k_5^s$
+is separated from zero. Thus the derivative prescription divides
+only by intervals disjoint from zero.
+
+**Proof of Theorem 47.2.** The rational functions (52.4) are real analytic
+near the starting point. Equation (52.5) makes $K$ invertible.
+The analytic implicit-function theorem supplies $Y(t)$ near $1/8$.
+Both parent equations and all three collision equations hold along it.
+Interpolation (48.3) lifts each member to one whole nonzero gain, and
+(48.4), (48.6) verify every original acquired row and the terminal J collision.
+Strict sources and pair distinctness persist by continuity.
+Equation (52.6) gives a varying second width and a nonconstant acquired
+child. In particular the singular member's width is allowed to cross
+$1/8$; the chart does not divide by its $\Lambda$.
+Since $(p_*,v_*)$ is interior to (47.3), continuity restricts the curve to
+an open segment inside $\mathcal U$. Theorem 47.1 excludes an M pair in
+each of its entire children. $\square$
+
+## 53. Remaining target
+
+The original existence question of Section 46 still asks for some $p\ne24,v$ and
+independently distinct J and M pairs in the same entire $C(p,v)$.
+The pairs may differ, overlap, or be disjoint; their common terminal
+answers need not agree. Nothing above requires the displayed J pair
+to be the M pair. Theorem 47.1 excludes every possible M pair in its
+parameter rectangle, including undisplayed worlds at arbitrary widths.
+Theorem 47.2 retains a genuine moving-width J-collision family but supplies
+a local obstruction to obtaining the missing M pair from that family.
+Outside $\mathcal U$, the original $p\ne24$ independent-quartet target
+remains unresolved: continuation outside this rectangle, a different
+J component, or another literal full-quartet route could address that
+remaining target.
+
+The parent equations and the obstruction retain all original lower
+gain degrees, sampled zeros, repeated roots, zero drift and singular
+parents until the proved source and response bounds exclude them in
+this particular rectangle. There is no reset, copy, clock shift, extra
+port, fixed-width hypothesis, or identification of the two collision
+pairs.
+
+## 54. Mathematical sources
+
+- The present volume, Theorem 39.1, *A strict negative-base
+  singular/regular terminal-J collision*, and its complete proof in
+  Sections 40–46: the exact negative mixed-J point and regular-parent
+  circuit; Section 42 gives the contraction certificate and Section 43
+  the whole-world lift. The exact starting coordinates and defining
+  equations needed here are retained in Section 52.
+- The external volume *FIB common-parent geometry and two exact mixed
+  children*, Definitions 1.1–1.3 and Section 12, specifically Lemma 12.2
+  and Theorem 12.3: literal complete worlds and zero-safe prescribed-$p$
+  reconstruction. Its Section 12 is external to the present volume.
+- The present volume, Section 46: the original independent J/M-pair
+  target over all positive widths, allowing overlap between the pairs.
+  Sections 47–53 resolve the M-pair obstruction only over $\mathcal U$.
+
+Descartes' rule, Sylvester resultants and subresultants, Lagrange
+interpolation, continuity and the real analytic implicit-function theorem
+are the classical tools used in the all-width obstruction and continuation.
+
+## 追加锚（本行以下为增补区）
+
+## 55. Terminal-J injectivity on every entire zero-sector child
+
+A strict world is a triple
+
+$$
+ W=(P(r,b),g,d),\qquad
+ P(r,b)=\begin{pmatrix}r&b\\r(1-r)/b&1-r\end{pmatrix},
+ \qquad 0<r<1,\quad b>0,\quad d\in\mathbb R,
+ \quad 0\ne g\in\mathbb R[s],\quad \deg g\le3.
+ \tag{55.1}
+$$
+
+Let $J=\left(\begin{smallmatrix}0&1\\1&0\end{smallmatrix}\right)$ and
+$M=\left(\begin{smallmatrix}0&1\\1&1\end{smallmatrix}\right)$.
+Products act on the left, in chronological order $J,M,J,M,M,M$:
+$Q_0=I$, $Q_i=E_iQ_{i-1}$. The acquired readings are
+$d+g(i)\operatorname{tr}(Q_iP)$ at the literal clocks $0,\ldots,6$.
+The entire child $C(p,v)$ consists of every strict world with readings
+$(0,24,147/5,24,18,p,v)$. The alternative terminal J and M readings at
+clock seven are $a(W)$ and $m(W)$, using that world's same whole gain
+and fixed drift.
+
+The following complete classification and response identities are the
+premises supplied by Sections 25–38. At $p=0$, all worlds through clock
+five form exactly two real analytic arcs $W_-(r),W_+(r)$, each with the
+whole parameter interval $0<r<1$. Their widths are the two simple positive
+roots $b_-(r),b_+(r)$ of the source polynomial $F$ of (26.5)–(26.6), with
+
+$$
+ 0<b_-(r)<\frac{r(1-r)}2<b_+(r),\qquad b_\pm(r)<\frac7{20}.
+ \tag{55.2}
+$$
+
+Each label specifies exactly one entire world; different labels give
+different worlds. The upper arc includes both singular parent sources,
+and the lower arc has no singular parent source. Put
+
+$$
+ U=1+2b,\qquad n=b+\frac{r(1-r)}b+r,
+$$
+
+and define the polynomials
+
+$$
+\begin{aligned}
+ H(b,n)={}&(b^2-16b-12)n^2+b(2b^2-7b-4)n
+                +10(1+2b)^2(1+b),\\
+ B(b,n)={}&160b^2+240b+80-(143b+94)n,\\
+ N_6(b,n)={}&320b^3-118b^2n-960b^2-139bn^2+1801bn
+                  -2180b-542n^2+1350n-810,\\
+ N_7(b,n)={}&1200b^3-392b^2n-190b^2-496bn^2+3619bn
+                  -3015b-1728n^2+2870n-1310.
+\end{aligned}\tag{55.3}
+$$
+
+On both entire arcs, Section 35 proves $H<0$ and the actual response
+identities
+
+$$
+\begin{aligned}
+ d&=\frac{3(U+n)B}{H},&
+ g(6)&=\frac{3N_6}{5H},&g(7)&=\frac{3N_7}{5H},\\
+ V_\sigma(r)&=d+(2U+n)g(6),&
+ A_\sigma(r)&=d+(1+b+2n+2r)g(7)=a(W_\sigma(r)).
+\end{aligned}\tag{55.4}
+$$
+
+These identities use the common degree-at-most-three interpolant and
+are valid also at the singular parent sources. Sections 33–38 prove
+
+$$
+ V_-(r)>90>V_+(r),\qquad
+ C(0,v)=\{W_\sigma(r):0<r<1,\ V_\sigma(r)=v\}.
+ \tag{55.5}
+$$
+
+**Theorem 55.1 (global order after subtracting the acquired response).**
+On their entire parameter intervals,
+
+$$
+ \frac{d}{dr}\left(A_-(r)-\frac{23}{4}V_-(r)\right)>0,
+ \qquad
+ \frac{d}{dr}\left(A_+(r)-3V_+(r)\right)>0.
+ \tag{55.6}
+$$
+
+**Corollary 55.2 (entire-child terminal-J obstruction).**
+For every real $v$, terminal J is injective on the entire $C(0,v)$.
+More precisely, if two distinct worlds in such a child have labels
+$W_\sigma(r_0),W_\sigma(r_1)$ with $r_0<r_1$, then
+$a(W_\sigma(r_0))<a(W_\sigma(r_1))$.
+Consequently no entire zero-sector child contains an independent J/M
+quartet of the original kind.
+
+Theorem 55.1 is proved by the exact polynomial signs in Sections 56–58;
+Section 59 derives the global and entire-child consequences.
+
+## 56. A compact coordinate and exact whole-arc bounds
+
+For $0<r<1$ define
+
+$$
+ u=\frac b{r(1-r)},\qquad
+ \beta=r(1-r)u,\qquad
+ \nu=\beta+\frac1u+r.
+ \tag{56.1}
+$$
+
+Thus $b=\beta$, $n=\nu$. The polynomial
+
+$$
+\begin{aligned}
+ f(r,u)={}&32+32(2r+1)(4r-5)u\\
+ &+2(256r^3-140r^2-185r+65)u^2\\
+ &+r(-744r^3+1837r^2-1408r+375)u^3\\
+ &+r(1-r)(1216r^3-1623r^2+639r+130)u^4\\
+ &+r^2(1-r)^2(456r^2-479r+465)u^5\\
+ &+r^3(1-r)^3(746-624r)u^6
+       +72r^4(1-r)^4u^7
+\end{aligned}\tag{56.2}
+$$
+
+satisfies the exact polynomial identity
+
+$$
+ F(r,r(1-r)u)=r^3(1-r)^3f(r,u).
+ \tag{56.3}
+$$
+
+Its separate degrees are eight in $r$ and seven in $u$. In particular
+$f(r,0)=32$, so $f_r/u$ is an integer polynomial. The complete arcs
+are contained in the following two open strips:
+
+$$
+ \frac18<u_-(r)<\frac25,\qquad
+ \frac9{10}<u_+(r)<\frac85.
+ \tag{56.4}
+$$
+
+Here and below a subscript denotes the arc, while $f_r,f_u$ denote
+partial derivatives. To prove (56.4), use the following exact signs:
+
+$$
+ f(r,1/8)>0,\quad f(r,2/5)<0,\quad
+ f(r,9/10)<0,\quad f(r,8/5)>0
+ \qquad(0\le r\le1).
+ \tag{56.5}
+$$
+
+For completeness, the table specifies finite rational certificates for
+all four signs. For a polynomial $w(r)$ of degree at most eight on
+$[a,z]$, write $w(a+(z-a)x)=\sum_{j=0}^8 c_jx^j$, with zero padding,
+and put
+
+$$
+ \mathcal B_i(w;[a,z])=
+       \sum_{j=0}^i c_j\frac{\binom ij}{\binom8j}.
+ \tag{56.6}
+$$
+
+The last column is the exact minimum of these nine coefficients.
+
+| Polynomial $w$ | Interval $[a,z]$ | Minimum Bernstein coefficient |
+| --- | --- | --- |
+| $f(r,1/8)$ | $[0,1]$ | $103823477/18350080$ |
+| $-f(r,2/5)$ | $[0,1]$ | $96/25$ |
+| $-f(r,9/10)$ | $[0,1]$ | $67/10$ |
+| $f(r,8/5)$ | $[0,1/2]$ | $544/5$ |
+| $f(r,8/5)$ | $[1/2,1]$ | $5563232/109375$ |
+
+All entries are positive. The Bernstein basis is nonnegative and sums
+to one, so the table proves (56.5). By (56.3) and the two-simple-positive-root
+classification, there is exactly one root between $1/8$ and $2/5$ and
+exactly one between $9/10$ and $8/5$ at every $0<r<1$. These are precisely
+the two existing arcs, since their separating value in (55.2) is $u=1/2$.
+This proves (56.4).
+
+At the lower root $f_u<0$, and at the upper root $f_u>0$:
+
+$$
+ f_u(r,u_-(r))<0<f_u(r,u_+(r)).
+ \tag{56.7}
+$$
+
+Indeed $F$ is positive before its first simple positive root, negative
+between its two simple positive roots, and positive after the second.
+Its derivative has the corresponding crossing signs. Equation (56.3)
+then gives (56.7), since $r^2(1-r)^2>0$. This uses no parent-denominator
+chart and loses no singular source.
+
+## 57. Polynomial numerator for the derivative
+
+All polynomial definitions in this section have integer coefficients.
+Define
+
+$$
+ h(r,u)=u^2H(\beta,\nu),\qquad U_*=1+2\beta,
+ \qquad S_*=1+\beta+2\nu+2r.
+ \tag{57.1}
+$$
+
+Although $\nu$ was written using $1/u$, $h$ is a polynomial. For
+positive integers $K,q$ put
+
+$$
+\begin{aligned}
+ p_{K,q}(r,u)=u^3\big[&5(q-K)(U_*+\nu)B(\beta,\nu)\\
+       &+qS_*N_7(\beta,\nu)
+             -K(2U_*+\nu)N_6(\beta,\nu)\big].
+\end{aligned}\tag{57.2}
+$$
+
+This too is a polynomial: every product inside the brackets has at
+most three factors of $1/u$. Its separate degrees are at most $(8,7)$,
+and those of $h$ are $(8,6)$. On either actual arc, (55.4) gives exactly
+
+$$
+ A-\frac KqV=\frac{3p_{K,q}}{5quh}.
+ \tag{57.3}
+$$
+
+The denominator is nonzero there, since $u>0$ and $h=u^2H<0$.
+Define the polynomial
+
+$$
+\begin{aligned}
+ T_{K,q}={}&(h\,\partial_rp_{K,q}-p_{K,q}\,\partial_rh)f_u\\
+ &-(h\,\partial_up_{K,q}-p_{K,q}\,\partial_uh)f_r
+                 +p_{K,q}h\,\frac{f_r}{u}.
+\end{aligned}\tag{57.4}
+$$
+
+The final quotient is the polynomial specified after (56.3); it is not
+a division on a source chart. For $(K,q)=(23,4),(3,1)$, the separate
+degrees of $T_{K,q}$ are $(22,18)$. These formulas, together with
+(55.3), (56.1) and (56.2), specify every coefficient without a root
+choice or numerical parameter.
+
+Differentiating $f(r,u(r))=0$ gives $u'=-f_r/f_u$. The quotient rule
+in (57.3), with no further hypotheses, gives
+
+$$
+ \frac{d}{dr}\left(A-\frac KqV\right)
+       =\frac{3T_{K,q}}{5quh^2f_u}.
+ \tag{57.5}
+$$
+
+For example, the undivided derivative numerator for $p/(uh)$ is
+
+$$
+ u(hp_r-ph_r)f_u-{u(hp_u-ph_u)-ph\}f_r=uT_{K,q},
+$$
+
+which verifies both the normalization and the sign in (57.5).
+Consequently it suffices to prove
+
+$$
+ T_{23,4}<0\ \text{on the lower arc},\qquad
+ T_{3,1}>0\ \text{on the upper arc}.
+ \tag{57.6}
+$$
+
+## 58. Finite exact sign certificates on both complete strips
+
+The following two rectangle certificates prove (57.6) on all relevant
+zeros of $f$, including any zeros on rectangle boundaries. They use
+only coefficients of the polynomials already specified, not an
+approximate root of the source equation.
+
+Here is the complete arithmetic definition of the certificate.
+For $G(r,u)=\sum_{h,k}g_{hk}r^hu^k$ with separate degree bounds $(n,m)$,
+on a rectangle $R=[a,z]\times[c,d]$, put
+
+$$
+ C_{ij}(G;R)=(z-a)^i(d-c)^j
+  \sum_{h\ge i,\,k\ge j}g_{hk}\binom hi\binom kj
+                  a^{h-i}c^{k-j},
+ \tag{58.1}
+$$
+
+and
+
+$$
+ \mathcal B_{ij}(G;R)=
+   \sum_{\alpha=0}^i\sum_{\gamma=0}^j
+    C_{\alpha\gamma}(G;R)
+    \frac{\binom i\alpha}{\binom n\alpha}
+    \frac{\binom j\gamma}{\binom m\gamma}.
+ \tag{58.2}
+$$
+
+Thus $G$ is the sum of these coefficients times the tensor product
+Bernstein basis on $R$. That basis is nonnegative and sums to one.
+All arithmetic in (58.1)–(58.2) is rational. Use degree bounds $(8,7)$
+for $f$ and $(22,18)$ for either $T$.
+
+The starting rectangles are
+
+$$
+ R_-=[0,1]\times[1/8,2/5],\qquad
+ R_+=[0,1]\times[9/10,8/5].
+ \tag{58.3}
+$$
+
+A binary word specifies a subrectangle as follows. Starting from the
+appropriate rectangle, its first bit selects a half in $r$, its second
+a half in $u$, its third a half in $r$, and so on, always bisecting the
+currently selected interval. The bit $0$ selects the lower half and
+$1$ the upper half. Closed halves are used. For each row of the table,
+the last column is the exact minimum of all the Bernstein coefficients
+of the indicated polynomial over all the listed rectangles.
+
+| Starting rectangle | Polynomial | Binary words specifying rectangles | Minimum coefficient |
+| --- | --- | --- | --- |
+| $R_-$ | $-T_{23,4}$ | `00`, `100`, `101001`, `10110`, `1011100`, `1011110`, `11` | $1503352352521383/10485760000$ |
+| $R_-$ | $-f$ | `01` | $667/640$ |
+| $R_-$ | $f$ | `101000`, `10101`, `1011101`, `1011111` | $463522598402225813/18014398509481984000$ |
+| $R_+$ | $T_{3,1}$ | `0000`, `00011000`, `0001101`, `001100`, `00110100`, `0011011`, `00111`, `01101000`, `0110101`, `011011101`, `101`, `1100`, `11010010`, `110110`, `111` | $966620222671/163840000$ |
+| $R_+$ | $-f$ | `0010`, `100` | $34799060666537397/1342177280000000$ |
+| $R_+$ | $f$ | `00010`, `00011001`, `000111`, `00110101`, `010`, `01100`, `01101001`, `0110110`, `011011100`, `01101111`, `0111`, `1101000`, `11010011`, `110101`, `110111` | $777115800682097883/343597383680000000$ |
+
+The displayed coefficient values are obtained directly from
+(55.3), (56.2), (57.1)–(57.4), (58.1) and (58.2).
+They are all strictly positive. The three rows for $R_-$ contain twelve
+rectangles; the three rows for $R_+$ contain thirty-two rectangles.
+For each starting rectangle the words are prefix-free, and their
+normalized areas have the exact sums
+
+$$
+ \sum_{w\ \mathrm{for}\ R_-}2^{-|w|}=1,
+ \qquad
+ \sum_{w\ \mathrm{for}\ R_+}2^{-|w|}=1.
+ \tag{58.4}
+$$
+
+In particular these finite collections cover the entire respective
+starting rectangles: the interiors are disjoint dyadic cells, and
+closed cells include every subdivision boundary. One can also check
+coverage by successively joining sibling half-rectangles according to
+the words.
+
+A rectangle in a row marked $f$ or $-f$ contains no zero of $f$,
+since its indicated polynomial is strictly positive everywhere.
+Every zero of $f$ in $R_-$ must therefore lie in one of the rectangles
+where $-T_{23,4}>0$. Every zero in $R_+$ must lie in one where
+$T_{3,1}>0$. This proves (57.6) on the whole source arcs by (56.4).
+It does not depend on a sampling mesh, a floating point derivative,
+or the absence of roots outside sampled neighborhoods.
+
+## 59. From the complete derivative signs to global incidence
+
+**Proof of Theorem 55.1.** The existing arc functions are real analytic
+on the whole connected interval $(0,1)$. The change of coordinate
+(56.1) is real analytic there. At every actual point, $u>0$, $h<0$
+and $f_u\ne0$. On the lower arc, (56.7) and Section 58 give
+$f_u<0$ and $T_{23,4}<0$. Formula (57.5) therefore gives the first
+strict derivative sign in (55.6). On the upper arc the corresponding
+signs are both positive, giving the second strict derivative sign.
+The mean value theorem makes each of these two functions strictly
+increasing on its entire interval, not merely on a local chart.
+This proves the theorem. $\square$
+
+**Proof of Corollary 55.2.** If $C(0,v)$ is empty there is nothing to
+prove. Otherwise (55.5) puts all its worlds on one common arc. Choose
+two distinct worlds. Their arc labels have different $r$ coordinates,
+so order them as $r_0<r_1$. Their acquired values both equal $v$.
+If this is the lower arc, strict increase gives
+
+$$
+ A_-(r_1)-\frac{23}{4}v
+    >A_-(r_0)-\frac{23}{4}v,
+$$
+
+and hence $A_-(r_1)>A_-(r_0)$. The same argument with coefficient
+$3$ applies on the upper arc. Thus no two distinct worlds in the
+entire child have equal terminal-J readings. Any independent J/M
+quartet would in particular contain a distinct J pair, which has
+just been excluded. $\square$
+
+Both singular parent worlds on the upper arc remain in this argument.
+At those points $b=1/8$ and the regular parent denominator vanishes,
+but $H<0$ by the supplied whole-arc guard, $u>0$, and $f_u>0$ by
+simplicity of the source root. Every denominator used in (57.3) and
+(57.5) remains nonzero there. No point is removed and then recovered
+by an unverified limiting argument. The compact coordinate only
+divides by $r(1-r)$, which is positive throughout the original strict
+source domain.
+
+## 60. Exact scope and the unrestricted remaining target
+
+The excluded sector is the whole legal choice $p=0$, over every real
+$v$, every positive width and every strict diagonal coordinate. The
+proof uses the unique whole degree-at-most-three gain determined by
+the original rows and the fixed drift. It imposes no nonvanishing
+sample, cubic leading coefficient, simple gain-root, nonzero drift,
+or regular-parent restriction. Lower gain degrees, sampled zeros,
+repeated roots, zero drift and singular parents remain permitted in
+the model; only consequences already proved from the rows restrict
+which of them occur in this sector. The acquisition word, left action,
+clocks, source family and terminal alternatives are unchanged.
+
+No assertion that $V_-$ or $V_+$ is injective is needed. The exact
+conclusion is order of terminal J *on each acquired-response fiber*.
+No terminal-M injectivity conclusion is asserted. Independent pairs
+may overlap or be disjoint, and their common terminal answers remain
+independent throughout the argument.
+
+The original existence target asks for some $p\ne24,v$ with distinct
+$W_0,W_1$ and independently distinct $W_2,W_3$ in the same entire
+$C(p,v)$ such that
+
+$$
+ a(W_0)=a(W_1),\qquad m(W_2)=m(W_3).
+ \tag{60.1}
+$$
+
+Theorem 55.1 and Corollary 55.2 exclude $p=0$ as a witness. They do
+not settle existence or nonexistence at other $p\ne24$. Any witness
+to the original target must now have $p\notin\{0,24\}$; that
+unrestricted remaining existence problem is unresolved. These are
+ordinary mathematical proofs; no Lean-kernel verification is claimed.
+
+## 61. Mathematical sources and contribution
+
+The model, complete zero-sector source classification and zero-safe
+whole-world lift are supplied by Sections 25–31 of *Uniqueness of actual
+sources above width eight*. The strengthened source bounds, guarded
+response chart and disjoint acquired images are supplied by Sections
+33–38 of the same mathematical assembly. In particular, equations
+(55.2)–(55.5) reuse those results rather than constitute new
+classification claims. Sections 47–54 concern a different, negative
+acquired rectangle and are not premises of the present exclusion.
+
+The new conclusions are the compact whole-arc strip bounds (56.4),
+the exact derivative certificates in Sections 57–58, the two global
+strict orders (55.6), and terminal-J injectivity on every entire
+$C(0,v)$. The proof of the last conclusion combines those orders with
+the supplied acquired-image separation. No literature-priority claim
+is made.
+
+The classical tools are the implicit-function and mean value theorems,
+polynomial differentiation, and positivity of the tensor product
+Bernstein basis. For the Bernstein basis and subdivision identities,
+see G. G. Lorentz, *Bernstein Polynomials*, 2nd edition, Chelsea, 1986;
+(56.6), (58.1) and (58.2) provide the specific coefficient identities
+needed here. The finite tables above, together with their polynomial
+definitions, are sufficient to check the exact rational signs without
+any other computational artifact.
+## 追加锚（本行以下为增补区）
+

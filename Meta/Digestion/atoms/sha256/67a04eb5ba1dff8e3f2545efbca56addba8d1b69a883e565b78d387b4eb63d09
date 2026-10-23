@@ -1,0 +1,16 @@
+### 4.1. Every element of the diagonal subgroup
+
+The inherited matching identities [*Toral character triples*, §2.6, equation (2.11)](TORAL_CHARACTER_TRIPLE_SOURCE_SUPPORT.md#26-the-supporting-twelve-element-group) are
+
+$$
+\begin{array}{c|c}
+\text{sign condition}&\text{identity}\\\hline
+s=t&D_2=P_{23}D_1P_{23}^{-1}\\
+(s,t)=(1,-1)&D_2=z^{-1}P_{12}D_1P_{12}^{-1}\\
+(s,t)=(-1,1)&D_2=zP_{13}D_1P_{13}^{-1}.
+\end{array}
+\tag{4.1}
+$$
+
+For the second row the right side has diagonal entries $(1,z^{-1},-z^{-2})=(1,z^{-1},-z)$; for the third they are $(1,-z^2,z)=(1,-z^{-1},z)$. The first row follows by exchanging the last two entries when $s=t$. These use only $z^3=1$ and exhaust all four sign choices. Therefore (4.1) proves projective conjugacy on each same $n\in N$, including $z=1$ and any repeated eigenvalues.
+
