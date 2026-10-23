@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:f0ed037efd4d535b8de0607c506ed96ba36e8552d89d1d8d2625f7e7ee9cd176
+  normalized_sha256: sha256:f0ed037efd4d535b8de0607c506ed96ba36e8552d89d1d8d2625f7e7ee9cd176
+cas_ref: sha256:f0ed037efd4d535b8de0607c506ed96ba36e8552d89d1d8d2625f7e7ee9cd176
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: Chapter heading and description of the method used in the next theorem; this roadmap supplies no mathematical correspondence itself.
+    previous_atom_id: 7accf1329553e9bffdad75359760d09b0343dee8bcb105321f1720ae4001f00a
+    next_atom_id: ed283c3de8a56e79f25863afb418114e38aeb94d8d03187d8a5a0d9b0182e6b2

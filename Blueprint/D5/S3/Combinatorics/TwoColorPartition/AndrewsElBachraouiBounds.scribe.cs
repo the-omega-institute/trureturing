@@ -12,6 +12,7 @@ internal sealed class AndrewsElBachraouiBoundsDocument : IScribeDocumentDefiniti
         H("Divisor and Gauss-Product Bounds"),
         Blocks(
             Node("andrews-el-bachraoui-bounds-odd-divisors-card-le", "Odd divisor cardinality bound", "odd_divisors_card_le", "For every natural number M that is odd, the cardinality of its divisor set is at most the natural square root of M plus one.", DescribeRole.Theorem),
+            Node("andrews-el-bachraoui-bounds-gauss-pair-count-le-sqrt-sum", "Parity-compatible square-root row count", "gauss_pair_count_le_sqrt_sum", "For every natural n and finite set s of ordered natural pairs, if every member has triangular sum at most n and the required parity, the real cardinality of s is at most the sum of its square-root row majorants. This is the same row injection used by the Gauss coefficient bound.", DescribeRole.Theorem),
             Node("andrews-el-bachraoui-bounds-gauss-product-coefficient-count-bound", "Gauss-product coefficient bound", "gauss_product_coefficient_count_bound", "For every natural number n, the coefficient of degree n in the finite Gauss product equals the cardinality of the parity-compatible triangular pairs. When n is at least 5, its real value is at most 97 divided by 120 times n, plus 27 divided by 32 times the square root of 2n plus one half, plus 13 divided by 25.", DescribeRole.Theorem)
         ), []));
 

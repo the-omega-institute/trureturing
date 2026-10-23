@@ -1,0 +1,226 @@
+**Theorem 13.1 (fixed-data transverse exposure envelope).** With all data
+in Definition 12.1 fixed, there exist $\kappa_*>0$ and a finite constant
+$K$, independent of the sign of $\kappa$, such that for
+$0<|\kappa|<\kappa_*$ the class $\mathcal C_\kappa(T,\chi)$ is nonempty.
+Set
+
+$$
+\mathcal B_\kappa=\frac{\chi}{|\kappa|M_\kappa},\qquad
+c=\frac{\chi}{M_0}=\frac{\chi Hl}{H-l}.
+\tag{13.1}
+$$
+
+The infima over the full class satisfy
+
+$$
+\mathcal B_\kappa\le V_\kappa^\star\le L_\kappa^\star
+ \le\mathcal B_\kappa+K,\qquad
+\frac{\mathcal B_\kappa^2}{T}\le E_\kappa^\star
+ \le\frac{(\mathcal B_\kappa+K)^2}{T}.
+\tag{13.2}
+$$
+
+One family of actual finite profiles in this same class provides every
+upper bound jointly, with $\operatorname{TV}(a)\le2(u-l)$. In particular,
+as $\kappa\to0$ through either sign,
+
+$$
+|\kappa|V_\kappa^\star\longrightarrow c,\qquad
+|\kappa|L_\kappa^\star\longrightarrow c,\qquad
+\kappa^2E_\kappa^\star\longrightarrow\frac{c^2}{T}.
+\tag{13.3}
+$$
+
+At $\kappa=0$ the prescribed nonzero-target class is empty. The family
+attains the circle targets exactly and saturates the three infima
+asymptotically. No assertion of a minimizing optimizer at fixed nonzero
+$\kappa$, or of an exact subleading correction to any infimum, is made.
+
+**Proof.** First let $(a,b)$ be any lawful competitor, with any integers
+in (12.5). Its real hidden lift obeys
+
+$$
+\chi\le|\chi+2\pi j|=|\delta(T)|
+ =\left|\kappa\int_0^T g_\kappa(k(t))\dot b(t)\,dt\right|
+ \le|\kappa|M_\kappa\mathsf V(a,b).
+\tag{13.4}
+$$
+
+The first inequality uses $0<\chi<\pi$, and hence covers every hidden
+winding. The last one holds for every guarded history, regardless of its
+visible windings, signs, reversals or complexity. The coefficients are
+bounded on the whole guard, so the weighted integrals are legitimate
+for the entire stated regularity class. Pointwise
+$|\dot b|\le\sqrt{\dot a^2+\dot b^2}$ and Cauchy--Schwarz give
+
+$$
+\mathsf V\le\mathsf L,\qquad \mathsf L^2\le T\mathsf E.
+\tag{13.5}
+$$
+
+The latter includes infinite energy. This proves all lower bounds in
+(13.2), using the existing inverse-gap and norm-comparison mechanism of
+[N, §§3.11,10.2], with the exact guarded coefficient $M_\kappa$.
+It does not restrict the class to zero real phase lifts.
+
+For the matching construction fix any three distinct heights
+$l<z_1<z_2<z_3<u$, independently of $\kappa$, and form the scaled moment
+matrix
+
+$$
+\mathsf R_\kappa=
+\begin{pmatrix}
+A_\kappa(z_1)&A_\kappa(z_2)&A_\kappa(z_3)\\
+B_\kappa(z_1)&B_\kappa(z_2)&B_\kappa(z_3)\\
+g_\kappa(z_1)&g_\kappa(z_2)&g_\kappa(z_3)
+\end{pmatrix}.
+\tag{13.6}
+$$
+
+At $\kappa=0$ its three row functions span $1,k,1/k$ by (12.8).
+A linear combination vanishing at $z_1,z_2,z_3$, multiplied by $k$,
+is a polynomial of degree at most two with three distinct roots. It is
+zero identically. Since $1,k,1/k$ are independent on $I$, the original
+combination is zero. Thus $\mathsf R_0$ is invertible. Continuity of
+its determinant and adjugate gives, after decreasing $\kappa_*$,
+
+$$
+\sup_{|\kappa|<\kappa_*}\|\mathsf R_\kappa^{-1}\|<\infty.
+\tag{13.7}
+$$
+
+This is a scaled correction matrix, not the four-height determinant of
+[N, Theorem 3.10], whose neither-wall assumption fails on $E_+$.
+
+Choose the legal principal-leg height and its real command increment as
+
+$$
+y_\kappa=l+\kappa^2,\qquad
+\beta_\kappa=\frac{\chi}{\kappa g_\kappa(y_\kappa)}.
+\tag{13.8}
+$$
+
+Shrink $\kappa_*$ further so that
+$l<y_\kappa<\min(k_0,z_1)$. For each fixed nonzero $\kappa$ this is a
+finite real increment, with its allowed negative sign when $\kappa<0$.
+A phase leg of increment $\beta_\kappa$ at this height produces hidden
+lift exactly $\chi$ and visible real increments
+$\beta_\kappa A_\kappa(y_\kappa)$ and
+$\beta_\kappa B_\kappa(y_\kappa)$.
+
+Choose integers $m_\kappa,n_\kappa$ nearest to these visible increments
+divided by $2\pi$, breaking a tie in either way. The wrapped residuals
+
+$$
+\begin{aligned}
+r_{1,\kappa}&=2\pi m_\kappa-
+ \beta_\kappa A_\kappa(y_\kappa),\\
+r_{2,\kappa}&=2\pi n_\kappa-
+ \beta_\kappa B_\kappa(y_\kappa)
+\end{aligned}
+\qquad\text{satisfy}\qquad |r_{1,\kappa}|,|r_{2,\kappa}|\le\pi.
+\tag{13.9}
+$$
+
+Solve the finite real system
+
+$$
+\begin{pmatrix}\gamma_{1,\kappa}\\\gamma_{2,\kappa}\\
+\gamma_{3,\kappa}\end{pmatrix}
+ =\mathsf R_\kappa^{-1}
+ \begin{pmatrix}r_{1,\kappa}\\r_{2,\kappa}\\0\end{pmatrix}.
+\tag{13.10}
+$$
+
+By (13.7) there is a constant $K_1$ such that
+$\sum_i|\gamma_{i,\kappa}|\le K_1$ for both small signs.
+Executing these three phase increments at the corresponding $z_i$
+corrects the visible lifts by exactly $(r_{1,\kappa},r_{2,\kappa})$.
+Its hidden increment is exactly
+$\kappa\sum_i g_\kappa(z_i)\gamma_{i,\kappa}=0$.
+The final hidden lift is therefore $\chi$, while both visible lifts
+are actual integer multiples of their original $2\pi$ periods.
+Large visible windings are used, rather than discarded. Rounding may be
+discontinuous as a function of the immutable parameter $\kappa$; no
+continuity in that parameter is required of a lawful individual history.
+
+Execute the following single control polygon, starting at $a=b=0$:
+move $k_0$ to $y_\kappa$ at fixed $b$; execute $\beta_\kappa$ there;
+move to $z_1$ and execute $\gamma_{1,\kappa}$; move to $z_2$ and execute
+$\gamma_{2,\kappa}$; move to $z_3$ and execute $\gamma_{3,\kappa}$;
+return to $k_0$ at fixed $b$. Every height move has $db=0$ and hence
+adds no phase; every phase move has constant height and the precise
+slope (12.3). Convexity of $I$ puts every connecting segment inside
+$I$. These are exactly the probability and phase legs of the native
+finite-realization supplier [N, Theorem 8.2], with arbitrary preparation
+phases restored by translation. No actuator, jump, reset or parameter
+motion is introduced. There are at most nine nonzero affine command
+legs. The endpoints satisfy (12.5) with $j=0$.
+
+Let $\mathsf V_\kappa^{\rm fam},\mathsf L_\kappa^{\rm fam},
+\mathsf E_\kappa^{\rm fam}$ denote this polygon's executed costs.
+Because every leg changes only one of $a,b$, literal accounting yields
+
+$$
+\begin{aligned}
+\mathsf V_\kappa^{\rm fam}
+ &=|\beta_\kappa|+\sum_{i=1}^3|\gamma_{i,\kappa}|,\\
+\operatorname{TV}(a_\kappa)
+ &=(k_0-y_\kappa)+(z_3-y_\kappa)+|z_3-k_0|\\
+ &=2\{\max(k_0,z_3)-y_\kappa\}<2(u-l),\\
+\mathsf L_\kappa^{\rm fam}
+ &=\mathsf V_\kappa^{\rm fam}+\operatorname{TV}(a_\kappa).
+\end{aligned}
+\tag{13.11}
+$$
+
+To execute this very polygon on the prescribed clock, discard only
+zero-increment legs. If its remaining leg lengths are $\ell_j>0$, assign
+leg $j$ the duration
+
+$$
+\tau_j=T\frac{\ell_j}{\mathsf L_\kappa^{\rm fam}}.
+\tag{13.12}
+$$
+
+All these durations are positive for each nonzero $\kappa$ and sum to
+exactly $T$. Traverse each leg affinely in its assigned time. This
+changes neither its transport integral nor its variation or length.
+The resulting commands are finite continuous piecewise affine numerical
+profiles, hence belong to the original regularity class. Each leg has
+speed $\mathsf L_\kappa^{\rm fam}/T$, and its unhalved energy is
+$\ell_j^2/\tau_j$. Consequently
+
+$$
+\mathsf E_\kappa^{\rm fam}
+ =\sum_j\frac{\ell_j^2}{\tau_j}
+ =\frac{(\mathsf L_\kappa^{\rm fam})^2}{T}.
+\tag{13.13}
+$$
+
+In particular all intermediate moves and their actual rates are charged.
+Their durations may tend to zero as $\kappa\to0$, but none is zero in
+any member of this family. There is no instantaneous-pulse execution
+and no extra time beyond $T$.
+
+Uniform smoothness and positivity of $g_\kappa$ near $l$ imply
+
+$$
+g_\kappa(y_\kappa)=M_\kappa+O(\kappa^2),\qquad
+|\beta_\kappa|=\frac{\chi}{|\kappa|M_\kappa}+O(|\kappa|).
+\tag{13.14}
+$$
+
+The constants depend only on the fixed data and chosen correction
+heights. Equations (13.7), (13.11) and (13.14) give
+$\mathsf V_\kappa^{\rm fam}\le\mathsf L_\kappa^{\rm fam}
+\le\mathcal B_\kappa+K$ with one fixed $K$.
+Equation (13.13) supplies the energy upper bound for the same family.
+This proves nonemptiness and (13.2). Since $M_\kappa\to M_0>0$,
+squeezing gives (13.3), for the family as well as for the three infima.
+At $\kappa=0$, (12.7) makes $\delta$ identically zero, proving emptiness
+there. Exact target attainment and asymptotic saturation have been
+proved; neither an infimum attained at fixed $\kappa$ nor an exact
+finite-$\kappa$ correction formula follows from this construction.
+$\square$
+

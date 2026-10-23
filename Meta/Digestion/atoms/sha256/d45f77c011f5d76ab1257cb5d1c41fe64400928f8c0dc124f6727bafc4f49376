@@ -1,0 +1,101 @@
+**定理 3.1（每个 `ValidBase` 上的三历史统一确定性障碍）。**
+Let $b$ be `ValidBase` and let distinct $k,l$ lie in the strict interior of
+$J(b)$.  Under the state-only containment-seat contract, no CPTP map can
+send all three actual input states
+$\Psi_k(h^{(a)})$ to the corresponding exact output states
+$\Psi_l(h^{(a)})$, $a=0,1,2$.  Consequently no endpoint-only deterministic
+quantum implementation can realize the common phase-preserving leg (OC.4)
+for every actual original history at that base.
+
+**证明。**  Dilate a hypothetical common CPTP map by an isometry $V$.  Exact
+pure output on each of the three inputs forces
+
+$$
+V\Psi_k(h^{(a)})=\Psi_l(h^{(a)})\otimes\eta_a
+$$
+
+for unit environment vectors $\eta_a$.  Inner products therefore obey
+
+$$
+G_k(a,b)=G_l(a,b)\langle\eta_a,\eta_b\rangle.
+\tag{OC.7}
+$$
+
+By (OC.5), the $(0,1)$ equation has the same nonzero value on both sides,
+so $\langle\eta_0,\eta_1\rangle=1$ and hence $\eta_0=\eta_1$.  Write
+$a=\langle\eta_0,\eta_2\rangle$.  The other two equations and (OC.6) give
+
+$$
+Z+C_k=a(Z+C_l),
+\qquad Z+qC_k=a(Z+qC_l).
+$$
+
+Subtracting $q$ times the first equation from the second yields
+$Z(1-q)=aZ(1-q)$.  Since $Z>0$ and $q=i\ne1$, $a=1$.  Returning to
+either equation gives $C_k=C_l$, contradicting the nonzero slope of the
+selected $C_x$ and $k\ne l$.  The contradiction used three actual histories,
+one common map, and no record correlated with the unknown past.  It did not
+use a phase estimate or divide by an unknown overlap.  $\square$
+
+The theorem is a containment result: adding a history-correlated actuator
+memory, a supplied winding record, a fresh preparation, or a promise to one
+parity changes the input family.  Each such change must be named before a
+deterministic implementation is claimed.
+
+### 3.1 A rational two-history certificate inside the same family
+
+The three-history proof is uniform in the base.  A small double-wall
+certificate also gives a numerical error margin.  Take
+
+$$
+b=(1/4,1/4,1/2),\quad r=1/2,\quad
+k_0=1/8,\quad k_1=1/16.
+\tag{OC.8}
+$$
+
+Use the two actual lifts $h^{(0)}=0$ and
+$h^{\mathrm{odd}}=(0,-\pi,0,-\pi,0)$, supplied by the signed winding
+construction.  Their input overlap at $k_0$ is $1/2$ and the required output
+overlap at $k_1$ is $1/4$.  Thus the pure-state trace distances are
+
+$$
+D_{\rm in}=\sqrt{1-(1/2)^2}=\frac{\sqrt3}{2},\qquad
+D_{\rm out}=\sqrt{1-(1/4)^2}=\frac{\sqrt{15}}4.
+$$
+
+Trace-distance contraction rules out the exact common channel.  If two
+approximate outputs have trace-distance errors $\varepsilon_0$ and
+$\varepsilon_1$ from their prescribed pure targets, the triangle inequality
+gives the exact lower bound
+
+$$
+\varepsilon_0+\varepsilon_1
+\ge \frac{\sqrt{15}-2\sqrt3}{4},
+\qquad
+\max\{\varepsilon_0,\varepsilon_1\}
+\ge \frac{\sqrt{15}-2\sqrt3}{8}.
+\tag{OC.9}
+$$
+
+The two paths leading to these states have the same fixed preparation.  A
+common horizontal tail (OC.4) is legal and has zero phase variation, so the
+certificate tests an intermediate chronological action rather than a
+completed endpoint loop.
+
+An explicit signed realization fixes auxiliary height $a=k_1$.
+The weights at $k_0,k_1$ are respectively
+$(1,-1,0,-1,1)/4$ and $(3,-1,0,-1,3)/8$.  Prepend the phase leg of
+increment $2\pi m$ at $k_0$ and append a rectangle of phase height
+$-4\pi m$ at $a$.  Its residual is
+$(0,-\pi m,0,-\pi m,0)$ for every signed $m$, with duration five and
+variation $10\pi|m|$.  The cases $m=0,1$ give (OC.8); all probabilities
+along these histories and their test leg are at least $1/16$.
+These are control-parameter costs, without a physical runtime or energy
+calibration.
+
+The mature finite-family Gram and dilation criterion used here is Chefles,
+Jozsa and Winter, *On the existence of physical transformations between sets
+of quantum states*, quant-ph/0307227, Theorems 2–3.  Equation (OC.9) is the
+direct trace-distance specialization for the displayed source states; it is
+not a claim about every quantum carrier or every physical actuator.
+

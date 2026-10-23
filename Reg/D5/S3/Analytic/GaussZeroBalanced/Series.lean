@@ -51,6 +51,138 @@ private theorem fDependence : ObservationalDependence fSignature fActual := by
     deriv_f_zero (by norm_num : (0:ℝ)<1) (by norm_num : (0:ℝ)<3)] at hd
   norm_num at hd
 
+abbrev coefficientSignature : Signature :=
+  _root_.Reg.Support.SingleDependentReadout.signature ℝ (fun _ => ℝ)
+    (fun _ => ℝ → ℕ → ℝ)
+
+def coefficientActual : Realization coefficientSignature :=
+  realize coefficientSignature (fun _ a b => ordinaryHypergeometricCoefficient a b)
+    (fun e => nomatch e)
+def coefficientRejected : Realization coefficientSignature :=
+  realize coefficientSignature (fun _ _ _ _ _ => 1) (fun e => nomatch e)
+
+def coefficient_recurrenceArena : Arena where
+  signature := coefficientSignature
+  Law R := ∀ {a b c : ℝ}, 0 < c → ∀ n : ℕ,
+    ((n + 1 : ℕ) : ℝ) * R.readout () a b c (n + 1) * (c + n) =
+      (a + n) * (b + n) * R.readout () a b c n
+
+private theorem coefficient_recurrenceRejected :
+    ¬ coefficient_recurrenceArena.Law coefficientRejected := by
+  intro h
+  have he := @h 0 0 1 zero_lt_one 0
+  norm_num [coefficientRejected, realize] at he
+
+private theorem coefficientDependence :
+    ObservationalDependence coefficientSignature coefficientActual := by
+  intro i
+  refine ⟨1, 0, 1, ?_⟩
+  intro he
+  have hv := congrArg (fun f : ℝ → ℕ → ℝ => f 1 1) he
+  norm_num [coefficientActual, realize, ordinaryHypergeometricCoefficient,
+    ascPochhammer_succ_eval] at hv
+
+def coefficient_recurrenceEvidence : Registration coefficient_recurrenceArena
+    (type_of% @coefficient_recurrence) where
+  actual := coefficientActual
+  bridge := Iff.rfl
+  variation := ⟨@coefficient_recurrence, coefficientRejected, coefficient_recurrenceRejected⟩
+  sensitivity := _root_.Reg.Support.SingleDependentReadout.sensitivity
+    coefficient_recurrenceArena.Law coefficientActual coefficientRejected
+    coefficient_recurrenceRejected
+  dependence := coefficientDependence
+
+def coefficient_recurrenceAudit :
+    LeanInformationAudit.Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0}
+      (@coefficient_recurrence) (Realization coefficientSignature) Unit Unit where
+  unitName := `Reg.D5.S3.Analytic.GaussZeroBalanced.Series.coefficient_recurrenceUnit
+  realizationName := `Reg.D5.S3.Analytic.GaussZeroBalanced.Series.coefficient_recurrenceEvidence
+  realizationSource := none
+  generated := false
+  arena := .source ⟨coefficient_recurrenceArena⟩
+  objectArena := .source ⟨coefficient_recurrenceArena⟩
+  catalog := Lean.Name.anonymous
+  localNames := false
+  realization := .source coefficient_recurrenceArena ⟨coefficient_recurrenceEvidence⟩
+  correspondence := { stage := .evidence, objectStage := .evidence }
+  bundleNonempty := .absent
+  readout := some (realize coefficientSignature
+    (fun _ a b => ordinaryHypergeometricCoefficient a b) (fun e => nomatch e))
+  variation := .absent
+  sensitivity := .absent
+  partialSensitivity := none
+  escapeFrom := none
+  sourceSelection := some {
+    owner := `D5.S3.Analytic.GaussZeroBalanced.Series
+    definition := none
+    coordinates := #[0]
+    readouts := #[{
+      path := #["body", "body", "body", "body", "body", "fn", "arg", "fn", "arg",
+        "arg", "fn", "fn"]
+      stateBinder := 0
+      functionOperand := false
+      stateOperand := some #["arg"]
+      booleanPredicate := false }] }
+  continuation := .unknown
+  familyRecord := none
+  options := #[]
+
+def coefficientZero : Realization coefficientSignature :=
+  realize coefficientSignature (fun _ _ _ _ _ => 0) (fun e => nomatch e)
+
+def coefficient_posArena : Arena where
+  signature := coefficientSignature
+  Law R := ∀ {a b c : ℝ}, 0 < a → 0 < b → 0 < c → ∀ n : ℕ,
+    0 < R.readout () a b c n
+
+private theorem coefficient_posRejected : ¬ coefficient_posArena.Law coefficientZero := by
+  intro h
+  exact lt_irrefl 0 (@h 1 1 1 zero_lt_one zero_lt_one zero_lt_one 0)
+
+def coefficient_posEvidence : Registration coefficient_posArena
+    (type_of% @coefficient_pos) where
+  actual := coefficientActual
+  bridge := Iff.rfl
+  variation := ⟨@coefficient_pos, coefficientZero, coefficient_posRejected⟩
+  sensitivity := _root_.Reg.Support.SingleDependentReadout.sensitivity
+    coefficient_posArena.Law coefficientActual coefficientZero coefficient_posRejected
+  dependence := coefficientDependence
+
+def coefficient_posAudit :
+    LeanInformationAudit.Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0}
+      (@coefficient_pos) (Realization coefficientSignature) Unit Unit where
+  unitName := `Reg.D5.S3.Analytic.GaussZeroBalanced.Series.coefficient_posUnit
+  realizationName := `Reg.D5.S3.Analytic.GaussZeroBalanced.Series.coefficient_posEvidence
+  realizationSource := none
+  generated := false
+  arena := .source ⟨coefficient_posArena⟩
+  objectArena := .source ⟨coefficient_posArena⟩
+  catalog := Lean.Name.anonymous
+  localNames := false
+  realization := .source coefficient_posArena ⟨coefficient_posEvidence⟩
+  correspondence := { stage := .evidence, objectStage := .evidence }
+  bundleNonempty := .absent
+  readout := some (realize coefficientSignature
+    (fun _ a b => ordinaryHypergeometricCoefficient a b) (fun e => nomatch e))
+  variation := .absent
+  sensitivity := .absent
+  partialSensitivity := none
+  escapeFrom := none
+  sourceSelection := some {
+    owner := `D5.S3.Analytic.GaussZeroBalanced.Series
+    definition := none
+    coordinates := #[0]
+    readouts := #[{
+      path := #["body", "body", "body", "body", "body", "body", "body", "arg",
+        "fn", "fn"]
+      stateBinder := 0
+      functionOperand := false
+      stateOperand := some #["arg"]
+      booleanPredicate := false }] }
+  continuation := .unknown
+  familyRecord := none
+  options := #[]
+
 def one_le_gaussArena : Arena where
   signature := gaussSignature
   Law R := ∀ {a b c x : ℝ} (_ha : 0 < a) (_hb : 0 < b) (_hc : 0 < c)

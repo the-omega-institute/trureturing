@@ -1,0 +1,5 @@
+Let $G=(V,E)$ be a finite simple cubic graph. An outcome is a pair $(\rho,t)$:
+
+- $\rho_v$ is a cyclic order on the three neighbours of $v$
+- $t_e\in\{0,1\}$ is an edge-sign bit
+

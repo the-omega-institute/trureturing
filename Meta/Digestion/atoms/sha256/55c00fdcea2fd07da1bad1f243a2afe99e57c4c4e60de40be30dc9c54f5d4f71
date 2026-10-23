@@ -1,0 +1,53 @@
+**定义 8.1（有限仪器与有序历史）。**
+固定有限维复 Hilbert 空间 $H\simeq\mathbb C^d$、有限动作集 $A$ 和有限输出集 $O$。记
+
+$$
+V=\operatorname{Herm}(H),\qquad
+ V_0=\{X\in V:\operatorname{Tr}X=0\},\qquad
+ \langle X,Y\rangle=\operatorname{Tr}(XY).
+$$
+
+量子态集为 $\mathcal D(H)=\{\rho\in V:\rho\ge0,\operatorname{Tr}\rho=1\}$。动作 $a$ 的仪器是完全正映射族 $\{\Phi_{a,o}\}_{o\in O}$，满足 $\sum_o\Phi_{a,o}$ 保迹。这里完全正映射定义在整个矩阵代数上，并限制到 $V$；仪器的标准操作解释见[15](#ref-watrous)。
+
+对时间顺序写出的历史
+
+$$
+h=((a_1,o_1),\ldots,(a_m,o_m)),
+$$
+
+定义
+
+$$
+\Phi_h=\Phi_{a_m,o_m}\circ\cdots\circ\Phi_{a_1,o_1},
+ \qquad \Phi_{\varnothing}=\operatorname{id}.
+$$
+
+输入 $\rho$ 时，历史概率为 $p_\rho(h)=\operatorname{Tr}\Phi_h(\rho)$；若该概率严格正，历史后的条件态为
+
+$$
+\rho_h=\frac{\Phi_h(\rho)}{p_\rho(h)}.
+$$
+
+对末端效果 $0\le G\le I$，联合事件概率为
+
+$$
+p_\rho(h,G)=\operatorname{Tr}[G\Phi_h(\rho)]
+ =\operatorname{Tr}[\Phi_h^*(G)\rho].
+$$
+
+控制策略只能依据已经取得的动作--输出前缀选择下一动作或停止；它不得依据未读出的输入态选择动作。若系统含保留的环境、仪器内部记忆或观察者记忆，$H$ 必须包含使这些更新确为所声明仪器的联合载体；不能未经证明把有记忆的联合演化替换成系统边缘上的独立通道。
+
+经典 $N$ 态模型是这一接口的对角限制：矩阵
+
+$$
+M_{a,o}(s,t)=\Pr(o,t\mid s,a)
+$$
+
+具有非负条目，且 $\sum_oM_{a,o}$ 行随机。对行概率向量 $p$ 和列效果 $g$，有
+
+$$
+p(h,g)=pM_{a_1,o_1}\cdots M_{a_m,o_m}g.
+$$
+
+<a id="obs-thm-unrolling"></a>
+

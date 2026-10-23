@@ -4,6 +4,8 @@
 
 Finite alternating paths pair exposed endpoints and determine all reattached endpoint orbits.
 
+The first-return witnesses give the same least positive first-visit length for the original cut path from J(x) and the reattached path from x, with terminal endpoint (P*J)(x). These lengths are the segment weights in the complete reattachment inventory.
+
 Let X be finite and let s and r be involutive permutations of X. Put E = {x : r(x)=x} and q=s*r, with the right factor applied first. For x in E, take the least positive n with q^n(x) in E. Such n exists by finite permutation recurrence. P(s,r)(x) is this actual first-return endpoint. A first-return segment has no intermediate point in E. For a permutation J of E, extend(J) acts as J on E and fixes X outside E.
 
 **Theorem 1.1 (First Return Reverses the Same Path).**

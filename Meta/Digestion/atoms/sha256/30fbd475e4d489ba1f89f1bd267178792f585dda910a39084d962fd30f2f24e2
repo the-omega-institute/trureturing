@@ -1,0 +1,61 @@
+**Proposition 20.1 (Simon polynomial and PPT Schur certificate).**
+For (19.2), separability is equivalent to $D(s,r)\ge0$, where
+
+$$
+D(s,r)=\frac{s^2}{4}+\frac{65}{4}sr+16r^2
+-\frac{3s}{4}-\frac{69r}{8}+\frac1{16}.
+\tag{20.1}
+$$
+
+*Proof.* In the mode blocks of Simon's Eq. (16), PDF p. 3, put
+
+$$
+A=\operatorname{diag}(\tfrac12,2s+65r),\quad
+B=\operatorname{diag}(1,s+r),\quad
+C=\operatorname{diag}(\tfrac12,-s-r).
+\tag{20.2}
+$$
+
+The substitution in Eq. (19) is explicitly
+
+$$
+\begin{aligned}
+\det A&=s+\tfrac{65}{2}r,&\det B&=s+r,&\det C&=-\tfrac{s+r}{2}<0,\\
+\operatorname{tr}(AJ_2CJ_2BJ_2C^TJ_2)
+&=(s+r)(s+\tfrac{67}{4}r),\\
+\det V_\eta&=\tfrac14(s+r)(s+64r),&
+\widetilde\Delta&=\det A+\det B-2\det C=3s+\tfrac{69}{2}r.
+\end{aligned}
+\tag{20.3}
+$$
+
+Thus the left side minus right side of that separability inequality is
+
+$$
+\det A\det B+(\tfrac14-|\det C|)^2
+-\operatorname{tr}(AJ_2CJ_2BJ_2C^TJ_2)
+-\frac{\det A+\det B}{4}
+=\det V_\eta+\frac1{16}-\frac{\widetilde\Delta}{4}=D(s,r).
+\tag{20.4}
+$$
+
+Independently, partial transpose on B changes $p_B$ to $-p_B$.
+In the reordered covariance it changes the signs of the off-diagonal
+entries of $\mathsf P$. The Schur complement of its uncertainty
+matrix is therefore
+
+$$
+H_\Gamma=\begin{pmatrix}
+2\eta+65r&\eta+r+1\\\eta+r+1&\eta+r
+\end{pmatrix},\qquad
+\det H_\Gamma=\eta^2+(65r-2)\eta+64r^2-2r-1
+=4D(\tfrac12+\eta,r).
+\tag{20.5}
+$$
+
+Both diagonal entries are strictly positive, so $H_\Gamma\ge0$
+holds exactly when $D\ge0$. This confirms the sign and equality
+case. PPT is sufficient for separability here because the state is
+physical, Gaussian, and consists of one mode on each side of A|B;
+no arbitrary-state PPT sufficiency is used. $\square$
+

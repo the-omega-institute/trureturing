@@ -1,0 +1,96 @@
+**Theorem 3.3 (Ordinary complete-world equivalence).** For any real
+$p\ne24,v,m$, the ordinary worlds in $\mathcal W(p,v,m)$, namely
+those with $K(x)\ne0$, are in bijection with $\mathcal R(p,v,m)$.
+The inverse is
+
+$$
+\begin{gathered}
+d=\frac NK,\qquad u=\frac{W_*}{D_*},\qquad
+b=\frac{1-u}{2u},\qquad
+r=\frac{Z}{uZ_1},\\
+n=\frac xu,\qquad j=\frac{L}{uZ_1},\qquad
+g(s)=\frac uK\sum_{i=4}^7f_i\ell_i(s),\qquad W=(P(r,b),g,d).
+\end{gathered}
+\tag{3.5}
+$$
+
+Proof. Fix an ordinary actual world. By (2.6), $d=N/K$, and hence
+$h_i=f_i/K$ and $H_i=Z_i/K$. Clocks zero and two are
+
+$$
+uH_0+d=0,\qquad uH_2+H_2+2d-294/5=0.
+\tag{3.6}
+$$
+
+The pair $(H_0,H_2)$ cannot vanish: (3.6) would force both $d=0$
+and $2d=294/5$. Define
+
+$$
+S_0=H_0^2+H_2^2>0,\qquad C_0=H_2+2d-294/5,\qquad
+\Phi=H_0C_0-dH_2.
+\tag{3.7}
+$$
+
+The compatibility equation of (3.6) is $\Phi=0$. The exact identities
+
+$$
+\begin{gathered}
+5K^2\Phi=F,\qquad
+u=-\frac{dH_0+H_2C_0}{S_0}=\frac{W_*}{D_*},\\
+uH_0+d=-\frac{H_2\Phi}{S_0},\qquad
+uH_2+C_0=\frac{H_0\Phi}{S_0}
+\end{gathered}
+\tag{3.8}
+$$
+
+show both necessity and sufficiency, including when either $H_0$ or
+$H_2$ alone is zero. The clock-one row and $d\ne24$ give
+
+$$
+H_1\ne0,\qquad
+j=\frac{24-d}{uH_1}=\frac{L}{uZ_1},\qquad
+r=n-j=\frac{Z}{uZ_1}.
+\tag{3.9}
+$$
+
+The positive sum of squares gives $D_*>0$. The inequalities
+$0<u<1$ are exactly $0<W_*<D_*$. Since $u>0$ and $D_*>0$,
+the two strict source inequalities $r>0$ and $1-r>0$ are exactly
+the last two guards in (3.2). In particular these guards imply
+$Z_1\ne0$. The source identity is
+
+$$
+bj=b^2+r(1-r).
+\tag{3.10}
+$$
+
+Upon making the substitutions (3.5), its precise cleared form is
+
+$$
+4W_*^2Z_1^2\bigl(bj-b^2-r(1-r)\bigr)=G.
+\tag{3.11}
+$$
+
+All its clearing factors are nonzero under (3.2). This proves that
+every ordinary actual world yields a root of (3.2).
+
+Conversely take such a root. Form (3.5) and the whole polynomial
+$h=g/u$. The guards give $b>0$ and $0<r<1$. Equations (3.10)–(3.11)
+then give $j=b+r(1-r)/b>0$, while the definitions give
+$n=j+r=x/u$. Thus $U=1/u=1+2b$ and $T=(1+u)/(2u)$ are exactly
+the source coordinates of O. Equations (3.8) supply clocks zero and
+two. Equation (3.9) supplies clock one, and (3.3) supplies clock three.
+The four samples $h_i=f_i/K$ supply clocks four through seven with
+readings $18,p,v,m$, using the trace factors in (1.3).
+
+This also identifies $h$ with the interpolant of F, (30.4)–(30.6):
+both are the degree-at-most-three polynomial with the same samples
+at $3,4,5,6$. In F, Lemma 30.2, the parameter substitution is
+$H=h$, $U=1/u$, and
+$B_0=294/5-2d-H_2$; (3.6) reads $dU=-H_0$, $B_0U=H_2$.
+Thus the reused whole-world interface is precisely the original one.
+The first two readings differ, so $g$ is not the zero polynomial.
+Each root determines its entire $g$, drift, and source uniquely.
+Different roots have different $x=n/U$, so give different worlds.
+This proves the claimed bijection. ∎
+

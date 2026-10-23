@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:a7c1638a5f775c051f1e9cc0f2f36bb8a0c563d58b9fe8e2927ac92eb4d7b8bc
+  normalized_sha256: sha256:a7c1638a5f775c051f1e9cc0f2f36bb8a0c563d58b9fe8e2927ac92eb4d7b8bc
+cas_ref: sha256:a7c1638a5f775c051f1e9cc0f2f36bb8a0c563d58b9fe8e2927ac92eb4d7b8bc
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: Section heading only; the supplier statements are separate atoms.
+    previous_atom_id: 4b7e88facb6cc8a9aaf966d75c11a1d530f5e2142b30b6708a8524d096da59e3
+    next_atom_id: 126ec513153fb3d94e71d4fc3e992956d512b27f6823387adff322c0c33dad47

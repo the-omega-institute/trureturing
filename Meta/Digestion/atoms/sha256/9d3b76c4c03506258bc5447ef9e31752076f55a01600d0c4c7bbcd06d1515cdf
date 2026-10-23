@@ -1,0 +1,19 @@
+**Recalled source data (Common Parent, Definition 1.3).** For use in the action/readout and joint-law derivations, recall the following complete chronological product and trace table from [Common Parent, Definition 1.3](FIB_COMMON_PARENT_GEOMETRY_AND_MIXED_CHILDREN.md), writing its $V=U+n$ explicitly. All traces are against the original $P$ of Definition 1.1.
+
+| Clock | Chronological word | $Q_i$ | $\operatorname{tr}(Q_iP)$ |
+| --- | --- | --- | --- |
+| $0$ | empty | $\begin{pmatrix}1&0\\0&1\end{pmatrix}$ | $1$ |
+| $1$ | $J$ | $\begin{pmatrix}0&1\\1&0\end{pmatrix}$ | $j$ |
+| $2$ | $JM$ | $\begin{pmatrix}1&0\\1&1\end{pmatrix}$ | $T$ |
+| $3$ | $JMJ$ | $\begin{pmatrix}1&1\\1&0\end{pmatrix}$ | $n$ |
+| $4$ | $JMJM$ | $\begin{pmatrix}1&0\\2&1\end{pmatrix}$ | $U$ |
+| $5$ | $JMJMM$ | $\begin{pmatrix}2&1\\3&1\end{pmatrix}$ | $U+n$ |
+| $6$ | $JMJMMJ$ | $\begin{pmatrix}3&1\\2&1\end{pmatrix}$ | $T+j+2r$ |
+| $6$ | $JMJMMM$ | $\begin{pmatrix}3&1\\5&2\end{pmatrix}$ | $2U+n$ |
+| $7$ | $JMJMMJJ$ | $\begin{pmatrix}2&1\\3&1\end{pmatrix}$ | $U+n$ |
+| $7$ | $JMJMMJM$ | $\begin{pmatrix}2&1\\5&2\end{pmatrix}$ | $2U+j$ |
+| $7$ | $JMJMMMJ$ | $\begin{pmatrix}5&2\\3&1\end{pmatrix}$ | $T+2j+4r$ |
+| $7$ | $JMJMMMM$ | $\begin{pmatrix}5&2\\8&3\end{pmatrix}$ | $3U+2n$ |
+
+The two sixth-action rows and four seventh-action rows name alternatives; they do not request multiple reads at one original clock.
+

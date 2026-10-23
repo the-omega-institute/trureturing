@@ -1,0 +1,51 @@
+**Proposition 10.2 (Exact classification for this Gaussian marginal).** For every fixed $W\in\mathcal W$ and $\sigma>0$,
+
+$$
+\begin{aligned}
+\rho_{AB}^{W,\sigma}\text{ is separable}
+&\quad\Longleftrightarrow\quad
+0<\sigma\le\frac{4}{\sqrt{1+\sqrt{65}}},\\
+\rho_{AB}^{W,\sigma}\text{ is entangled}
+&\quad\Longleftrightarrow\quad
+\sigma>\frac{4}{\sqrt{1+\sqrt{65}}}.
+\end{aligned}
+$$
+
+In particular equality at the threshold is separable.
+
+Proof. Apply R. Simon, *Peres-Horodecki Separability Criterion for Continuous Variable Systems*, [quant-ph/9909044v1](https://arxiv.org/pdf/quant-ph/9909044v1), published in *Physical Review Letters* **84**, 2726, [DOI:10.1103/PhysRevLett.84.2726](https://doi.org/10.1103/PhysRevLett.84.2726). The normalization is that paper's $[q,p]=i$: PDF p. 2, Eq. (3) orders the quadratures as $(q_1,p_1,q_2,p_2)$, and Eq. (6) and its variance-matrix paragraph define the same symmetrized $V$, with Eq. (7) giving $V+i\Omega/2\ge0$. Its PDF p. 3, Eq. (16) uses the mode blocks $V=\begin{pmatrix}A&C\\C^T&B\end{pmatrix}$. For Proposition 9.2 these are
+
+$$
+A=\operatorname{diag}(\tfrac12,1+65r_\sigma),\quad
+B=\operatorname{diag}(1,\tfrac12+r_\sigma),\quad
+C=\operatorname{diag}(\tfrac12,-\tfrac12-r_\sigma).
+$$
+
+Write $J_2=\begin{pmatrix}0&1\\-1&0\end{pmatrix}$ for the paper's symplectic $J$, distinct from the FIB action $J$. Simon's Eq. (19), PDF p. 4, is
+
+$$
+\det A\det B+(\tfrac14-|\det C|)^2
+-\operatorname{tr}(AJ_2CJ_2BJ_2C^TJ_2)
+\ \ge\ \frac{\det A+\det B}{4}.
+$$
+
+The theorem directly below Eq. (19) makes this condition necessary and sufficient for separability of a two-mode Gaussian state. Proposition 9.2 supplies that Gaussian hypothesis and the required finite covariance. The finite substitution here gives
+
+$$
+\begin{aligned}
+\det A&=\tfrac12+\tfrac{65}{2}r_\sigma,&
+\det B&=\tfrac12+r_\sigma,&
+\det C&=-\tfrac14-\tfrac12r_\sigma,\\
+\operatorname{tr}(AJ_2CJ_2BJ_2C^TJ_2)
+&=(\tfrac12+r_\sigma)(\tfrac12+\tfrac{67}{4}r_\sigma).
+\end{aligned}
+$$
+
+Consequently left side minus right side of Eq. (19) is
+
+$$
+\frac{64r_\sigma^2-2r_\sigma-1}{4}.
+$$
+
+Since $r_\sigma>0$, this is nonnegative exactly when $r_\sigma\ge(1+\sqrt{65})/64$. Substituting $r_\sigma=1/(4\sigma^2)$ gives the stated classification, with equality included by the non-strict separability condition. This numerical boundary is the substitution for this FIB marginal, not a threshold asserted in Simon's general theorem. The Duan witness of Proposition 10.1 is sufficient on the smaller range $\sigma>4$; its failure to violate the bound does not settle the intermediate range. $\square$
+
