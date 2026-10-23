@@ -55,33 +55,20 @@ lemma block_symplectic_identities
     a * b.transpose = b * a.transpose ∧
       a * d.transpose - b * c.transpose = 1 ∧
       c * d.transpose = d * c.transpose := by
-  dsimp [J0] at hP ⊢
-  have h11 := congrArg (fun M : Matrix (Fin n ⊕ Fin n) (Fin n ⊕ Fin n) ℝ =>
-      M.toBlocks₁₁) hP
-  have h12 := congrArg (fun M : Matrix (Fin n ⊕ Fin n) (Fin n ⊕ Fin n) ℝ =>
-      M.toBlocks₁₂) hP
-  have h22 := congrArg (fun M : Matrix (Fin n ⊕ Fin n) (Fin n ⊕ Fin n) ℝ =>
-      M.toBlocks₂₂) hP
-  constructor
-  · ext i j
-    have hij := congrFun (congrFun h11 i) j
-    simp [Matrix.fromBlocks_multiply, Matrix.fromBlocks_transpose,
-      Matrix.toBlocks₁₁, Matrix.toBlocks₁₂, Matrix.toBlocks₂₁, Matrix.toBlocks₂₂,
-      Matrix.sub_apply, Matrix.mul_apply, Matrix.transpose_apply, Matrix.one_apply] at hij ⊢
-    linear_combination hij
-  constructor
-  · ext i j
-    have hij := congrFun (congrFun h12 i) j
-    simp [Matrix.fromBlocks_multiply, Matrix.fromBlocks_transpose,
-      Matrix.toBlocks₁₁, Matrix.toBlocks₁₂, Matrix.toBlocks₂₁, Matrix.toBlocks₂₂,
-      Matrix.sub_apply, Matrix.mul_apply, Matrix.transpose_apply, Matrix.one_apply] at hij ⊢
-    linear_combination hij
-  · ext i j
-    have hij := congrFun (congrFun h22 i) j
-    simp [Matrix.fromBlocks_multiply, Matrix.fromBlocks_transpose,
-      Matrix.toBlocks₁₁, Matrix.toBlocks₁₂, Matrix.toBlocks₂₁, Matrix.toBlocks₂₂,
-      Matrix.sub_apply, Matrix.mul_apply, Matrix.transpose_apply, Matrix.one_apply] at hij ⊢
-    linear_combination hij
+  have hJ : J0 n = -Matrix.J (Fin n) ℝ := by
+    ext i j
+    rcases i with i | i <;> rcases j with j | j <;> simp [J0, Matrix.J]
+  have hmem : P ∈ Matrix.symplecticGroup (Fin n) ℝ :=
+    SymplecticGroup.mem_iff.mpr (by
+      simpa only [hJ, Matrix.mul_neg, Matrix.neg_mul, neg_inj] using hP)
+  have hblocks := SymplecticGroup.fromBlocks_mem_iff.mp
+    (show Matrix.fromBlocks P.toBlocks₁₁.transpose P.toBlocks₂₁.transpose
+        P.toBlocks₁₂.transpose P.toBlocks₂₂.transpose ∈
+          Matrix.symplecticGroup (Fin n) ℝ from by
+      rw [← Matrix.fromBlocks_transpose, Matrix.fromBlocks_toBlocks]
+      exact SymplecticGroup.transpose_mem hmem)
+  exact ⟨hblocks.1, hblocks.2.2, hblocks.2.1⟩
+
 private lemma gram_pos {a b c d : Matrix (Fin n) (Fin n) ℝ}
     (had : a * d.transpose - b * c.transpose = 1) :
     (a * a.transpose + b * b.transpose).PosDef := by
@@ -257,36 +244,15 @@ private lemma transpose_symplectic
     {P : Matrix (Fin n ⊕ Fin n) (Fin n ⊕ Fin n) ℝ}
     (hP : P * J0 n * P.transpose = J0 n) :
     P.transpose * J0 n * P = J0 n := by
-  have hJinvJ : J0Inv n * J0 n = 1 := by
-    simp [J0, J0Inv, Matrix.fromBlocks_multiply]
-  have hPright : P * (J0 n * P.transpose * J0Inv n) = 1 := by
-    calc
-      P * (J0 n * P.transpose * J0Inv n) =
-          (P * J0 n * P.transpose) * J0Inv n := by simp only [Matrix.mul_assoc]
-      _ = 1 := by simpa [hP, J0_mul_J0Inv]
-  have hdetP : IsUnit P.det :=
-    isUnit_iff_ne_zero.mpr (Matrix.det_ne_zero_of_right_inverse hPright)
-  have hPleft : P⁻¹ * P = 1 := Matrix.nonsing_inv_mul P hdetP
-  have hQeq : P⁻¹ = J0 n * P.transpose * J0Inv n := by
-    calc
-      P⁻¹ = P⁻¹ * 1 := by rw [Matrix.mul_one]
-      _ = P⁻¹ * (P * (J0 n * P.transpose * J0Inv n)) := by rw [hPright]
-      _ = (P⁻¹ * P) * (J0 n * P.transpose * J0Inv n) := by simp only [Matrix.mul_assoc]
-      _ = J0 n * P.transpose * J0Inv n := by rw [hPleft, Matrix.one_mul]
-  have hqP : (J0 n * P.transpose * J0Inv n) * P = 1 := by rw [← hQeq, hPleft]
-  have htranspose_inv : P.transpose * J0Inv n * P = J0Inv n := by
-    calc
-      P.transpose * J0Inv n * P = (J0Inv n * J0 n) * (P.transpose * J0Inv n * P) := by rw [hJinvJ, Matrix.one_mul]
-      _ = J0Inv n * (J0 n * P.transpose * J0Inv n * P) := by simp only [Matrix.mul_assoc]
-      _ = J0Inv n * 1 := by rw [hqP]
-      _ = J0Inv n := Matrix.mul_one _
-  have hneg : J0 n = -J0Inv n := by
+  have hJ : J0 n = -Matrix.J (Fin n) ℝ := by
     ext i j
-    rcases i with i | i <;> rcases j with j | j <;> simp [J0, J0Inv]
-  calc
-    P.transpose * J0 n * P = -(P.transpose * J0Inv n * P) := by rw [hneg]; simp [Matrix.mul_assoc]
-    _ = -J0Inv n := by rw [htranspose_inv]
-    _ = J0 n := by rw [hneg]
+    rcases i with i | i <;> rcases j with j | j <;> simp [J0, Matrix.J]
+  have hmem : P ∈ Matrix.symplecticGroup (Fin n) ℝ :=
+    SymplecticGroup.mem_iff.mpr (by
+      simpa only [hJ, Matrix.mul_neg, Matrix.neg_mul, neg_inj] using hP)
+  rw [hJ, Matrix.mul_neg, Matrix.neg_mul]
+  exact congrArg Neg.neg (SymplecticGroup.mem_iff'.mp hmem)
+
 private lemma transpose_block_symplectic
     {P : Matrix (Fin n ⊕ Fin n) (Fin n ⊕ Fin n) ℝ}
     (hP : P.transpose * J0 n * P = J0 n) :
@@ -297,30 +263,18 @@ private lemma transpose_block_symplectic
     a.transpose * c = c.transpose * a ∧
       a.transpose * d - c.transpose * b = 1 ∧
       b.transpose * d = d.transpose * b := by
-  dsimp [J0] at hP ⊢
-  have h11 := congrArg (fun M : Matrix (Fin n ⊕ Fin n) (Fin n ⊕ Fin n) ℝ => M.toBlocks₁₁) hP
-  have h12 := congrArg (fun M : Matrix (Fin n ⊕ Fin n) (Fin n ⊕ Fin n) ℝ => M.toBlocks₁₂) hP
-  have h22 := congrArg (fun M : Matrix (Fin n ⊕ Fin n) (Fin n ⊕ Fin n) ℝ => M.toBlocks₂₂) hP
-  constructor
-  · ext i j
-    have hij := congrFun (congrFun h11 i) j
-    simp [Matrix.fromBlocks_multiply, Matrix.fromBlocks_transpose,
-      Matrix.toBlocks₁₁, Matrix.toBlocks₁₂, Matrix.toBlocks₂₁, Matrix.toBlocks₂₂,
-      Matrix.sub_apply, Matrix.mul_apply, Matrix.transpose_apply, Matrix.one_apply] at hij ⊢
-    linear_combination hij
-  constructor
-  · ext i j
-    have hij := congrFun (congrFun h12 i) j
-    simp [Matrix.fromBlocks_multiply, Matrix.fromBlocks_transpose,
-      Matrix.toBlocks₁₁, Matrix.toBlocks₁₂, Matrix.toBlocks₂₁, Matrix.toBlocks₂₂,
-      Matrix.sub_apply, Matrix.mul_apply, Matrix.transpose_apply, Matrix.one_apply] at hij ⊢
-    linear_combination hij
-  · ext i j
-    have hij := congrFun (congrFun h22 i) j
-    simp [Matrix.fromBlocks_multiply, Matrix.fromBlocks_transpose,
-      Matrix.toBlocks₁₁, Matrix.toBlocks₁₂, Matrix.toBlocks₂₁, Matrix.toBlocks₂₂,
-      Matrix.sub_apply, Matrix.mul_apply, Matrix.transpose_apply, Matrix.one_apply] at hij ⊢
-    linear_combination hij
+  have hJ : J0 n = -Matrix.J (Fin n) ℝ := by
+    ext i j
+    rcases i with i | i <;> rcases j with j | j <;> simp [J0, Matrix.J]
+  have hmem : P ∈ Matrix.symplecticGroup (Fin n) ℝ :=
+    SymplecticGroup.mem_iff'.mpr (by
+      simpa only [hJ, Matrix.mul_neg, Matrix.neg_mul, neg_inj] using hP)
+  have hblocks := SymplecticGroup.fromBlocks_mem_iff.mp
+    (show Matrix.fromBlocks P.toBlocks₁₁ P.toBlocks₁₂ P.toBlocks₂₁ P.toBlocks₂₂ ∈
+        Matrix.symplecticGroup (Fin n) ℝ from by
+      rw [Matrix.fromBlocks_toBlocks]
+      exact hmem)
+  exact ⟨hblocks.1, hblocks.2.2, hblocks.2.1⟩
 
 private lemma transformed_identities
     {a b c d : Matrix (Fin n) (Fin n) ℝ} (t : ℕ)
@@ -435,7 +389,13 @@ private lemma block_factor
 
 private lemma j0_lower_conjugate {H : Matrix (Fin n) (Fin n) ℝ} :
     J0 n * lowerShear (-H) * J0Inv n = upperShear H := by
-  simp [J0, J0Inv, lowerShear, upperShear, Matrix.fromBlocks_multiply]
+  have hcomm : J0 n * lowerShear (-H) = upperShear H * J0 n := by
+    simp [J0, lowerShear, upperShear, Matrix.fromBlocks_multiply]
+  calc
+    J0 n * lowerShear (-H) * J0Inv n =
+        (upperShear H * J0 n) * J0Inv n := by rw [hcomm]
+    _ = upperShear H := by
+      rw [Matrix.mul_assoc, J0_mul_J0Inv, Matrix.mul_one]
 
 private lemma lower_cancel (t : ℕ) :
     lowerShear ((t : ℝ) • (1 : Matrix (Fin n) (Fin n) ℝ)) *

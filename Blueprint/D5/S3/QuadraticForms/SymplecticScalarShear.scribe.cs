@@ -13,7 +13,7 @@ internal sealed class SymplecticScalarShearDocument : IScribeDocumentDefinition
     private static Formula Imp(Formula a, Formula b) => Seq(Grp(a), Sp, Rightarrow, Sp, Grp(b));
     private static Formula And(params Formula[] xs) => Seq(xs.SelectMany((x, i) => i == 0 ? new[] { Grp(x) } : new[] { Sp, Land, Sp, Grp(x) }).ToArray());
     private static Formula Statement => Disp(Seq(
-        All("n", Call("Nat")), All("P", Call("RealMatrix", Seq(V("Fin"), V("n"), V("Fin"), V("n"), V("Fin"), V("n"), V("Fin"), V("n")))),
+        All("n", Call("Nat")), All("P", Call("RealMatrix", Seq(D(2), V("n")), Seq(D(2), V("n")))),
         Imp(Call("SymplecticJ0", V("P"), V("n")),
             Ex("t", Call("Nat"),
                 And(Seq(V("t"), Sp, Le, Sp, V("n")),
