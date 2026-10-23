@@ -1,4 +1,5 @@
 import D5.S1.Recurrence.Bilateral.BilateralProductModFourUnitExponent
+import D5.S3.ConceptDynamics.InformationEscape.DependentFamily
 import Reg.Support.DependentFamily
 import LeanInformationAuditInterface.Contract.Registration
 
