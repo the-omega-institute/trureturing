@@ -85,20 +85,6 @@ The module is admitted under the open-problem-resolution basis of CLAUDE.md §3.
 
 $\lceil(N-1)/(p-1)\rceil\le\operatorname{finrank}_{\mathbb F_p}(\operatorname{commutationSpace}G)$.
 
-**Computed, not formalized.** Exact integer enumeration tests all unordered length-$m$ multisets of nonzero columns in $\mathbb F_p^r$, with no constraint on their total sum. A dynamic program retains the sums of all nonempty submultisets.
-
-| $p$ | $r$ | $m$ | Multisets tested | Without a nonempty zero subsum |
-| --- | --- | --- | --- | --- |
-| 2 | 1 | 3 | 1 | 0 |
-| 2 | 2 | 4 | 15 | 0 |
-| 2 | 3 | 5 | 462 | 0 |
-| 3 | 1 | 4 | 5 | 0 |
-| 3 | 2 | 6 | 1716 | 0 |
-| 5 | 1 | 6 | 84 | 0 |
-| 7 | 1 | 8 | 1287 | 0 |
-
-For these 3570 tested multisets, absence of a nonempty zero subsum was not observed. This checks only the listed finite families, not the Pauli-to-entanglement bridge or any untested parameters. The separate finite check reported by the codex-cli search author in #20105 is not used as reproduced evidence here.
-
 **Argued, not formalized.**
 
 - *Decisive mechanism and extent.* The degree $p-1$ makes a nonzero field coordinate contribute exactly one, converting a polynomial common zero into an ordinary subset, rather than a general linear dependence with arbitrary coefficients. The combinatorial argument applies to any subspace $K\subseteq\mathbb F_p^N$ for which every nonempty subset of the first $N-1$ coordinates has a nonzero coordinate-sum functional on $K$: choose a basis and apply the polynomials in the Route. The Pauli structure is used to obtain this condition from entanglement. For $p=2$ the bound specializes to $r\ge N-1$; for $N=1$ it is the zero lower bound. No composite-local-dimension conclusion follows, because the proof uses a field and Fermat's identity.
@@ -117,4 +103,4 @@ For these 3570 tested multisets, absence of a nonempty zero subsum was not obser
 
 The bounded literature check does not establish exhaustive worldwide novelty or priority. The latest-version and journal-status readings, the Semantic Scholar count, the seven citing-paper readings, and the dev/issue-search absence are reports by the preregistration's authors, not independently reproduced readings. The source independently read is arXiv:2203.16902v2, `final_5.tex`, 1184 lines, md5 `8b745e95a3a5cb115f40e13c86b1e06d`; its conjecture and dependent argument are located above.
 
-All computations and arguments under those labels are outside the statement proved by `result`. The finite enumeration gives no conclusion beyond its tested parameters. The original search author's finite-check script and output were not reproduced. Universal attainment, the complete recursive construction and independence proof of Appendix D, the maximal-dimension formula, and an exact optimal threshold for every $N,p$ are not formalized here. The Appendix D construction is read as a source argument, not independently rederived or checked in full. Composite local dimensions and a general classification of equality cases remain open within this settlement.
+The arguments under **Argued, not formalized** are outside the statement proved by `result`. The finite check reported by the codex-cli search author in #20105 is not used as evidence here, and its script and output were not reproduced. Universal attainment, the complete recursive construction and independence proof of Appendix D, the maximal-dimension formula, and an exact optimal threshold for every $N,p$ are not formalized here. The Appendix D construction is read as a source argument, not independently rederived or checked in full. Composite local dimensions and a general classification of equality cases remain open within this settlement.
