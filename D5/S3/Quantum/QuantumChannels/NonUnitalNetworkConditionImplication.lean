@@ -8,7 +8,6 @@
 
 import Mathlib.Basic.Real.Basic
 import Mathlib.Tactic.Linarith
-import Mathlib.Tactic.Positivity.Basic
 import Mathlib.Tactic.Ring.RingNF
 
 /-! The channel parameter constraints imply both network nonlocality-breaking bounds. -/
