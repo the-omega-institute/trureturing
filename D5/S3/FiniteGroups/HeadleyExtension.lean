@@ -12,6 +12,8 @@ import Mathlib.GroupTheory.Perm.Fin
 import Mathlib.Data.Fintype.Card
 import Mathlib.Tactic
 
+/-! The nonsplit extension step for cyclic directed-difference orderings. -/
+
 set_option autoImplicit false
 set_option relaxedAutoImplicit false
 
@@ -108,6 +110,22 @@ private theorem swap_joins {X : Type*} [Finite X] [DecidableEq X]
     exact ih.trans (hedge _)
 
 
+private theorem kernel_return_cycle {N : Type*} [AddCommGroup N] [Fintype N]
+    [DecidableEq N] (r : RCycle N) (v : N) (hv : v ≠ 0) :
+    (r.successor * Equiv.swap 0 v).IsCycleOn Set.univ := by
+  have hn : ¬ r.successor.SameCycle 0 v := by
+    intro h
+    exact hv (h.eq_of_left r.successor_zero).symm
+  obtain ⟨hj, hp⟩ := swap_joins r.successor 0 v hn
+  have hc : ∀ h : N, (r.successor * Equiv.swap 0 v).SameCycle 0 h := by
+    intro h
+    by_cases hh : h = 0
+    · subst h
+      exact .refl _ _
+    · exact hj.trans (hp v h (r.nonzero_cycle.2 hv hh))
+  refine ⟨?_, fun x _ y _ => (hc x).symm.trans (hc y)⟩
+  exact (r.successor * Equiv.swap 0 v).bijective.bijOn_univ
+
 private structure ColumnChart (Q : Type*) [AddCommGroup Q] [Fintype Q]
     (r : RStar Q) where
   k : ℕ
@@ -146,7 +164,7 @@ private theorem column_chart {Q : Type*} [AddCommGroup Q] [Fintype Q]
   let e : Fin (k + 3) → {q : Q // q ≠ 0} := fun i =>
     ⟨(r.successor ^ i.val) r.a, by
       have h := hc.1.mapsTo.perm_pow i.val ha
-      simpa only [hs, Set.mem_setOf_eq] using h⟩
+      simpa only [hs, Set.mem_ofPred_eq] using h⟩
   have hinj : Injective e := by
     intro i j hij
     apply Fin.ext
@@ -270,11 +288,6 @@ private theorem cylinder_connect {N : Type*} [Finite N]
     ⟨(((k + 3) * n : ℕ) : ℤ), by rw [zpow_natCast, cylinder_rounds, hn]⟩
   exact (hp h i).symm.trans (hb.trans (hp t j))
 
-private theorem rowPotential_zero {N : Type*} [AddCommGroup N] [Fintype N]
-    (r : RCycle N) {k : ℕ} (i : Fin (k + 3)) : rowPotential r i 0 = 0 := by
-  simp only [rowPotential]
-  split_ifs <;> simp [Equiv.Perm.one_apply, r.successor_zero, kernelF_zero]
-
 private def rowEdge {N : Type*} [AddCommGroup N] [Fintype N]
     (r : RCycle N) {k : ℕ} (i : Fin (k + 3)) : Equiv.Perm N :=
   ((rowPotential r i).symm.trans
@@ -297,29 +310,29 @@ private theorem rowEdge_formula {N : Type*} [AddCommGroup N] [Fintype N]
   · have hiv : i.val = k + 2 := congrArg Fin.val hl
     have hir : (finRotate (k + 3) i).val = 0 := by simp [hl]
     by_cases hk0 : k = 0
-    · simp only [rowEdge, if_pos hl, rowPotential, hiv, hir, hk0]
+    · simp only [rowEdge, ite_eq_left hl, rowPotential, hiv, hir, hk0]
       ext x
       simp <;> rfl
     · have hn0 : k + 2 ≠ 0 := by omega
       have hn1 : k + 2 ≠ 1 := by omega
       have hn2 : k + 2 ≠ 2 := by omega
       have hm : (k + 2) % 2 ≠ 1 := by omega
-      simp only [rowEdge, if_pos hl, rowPotential, hiv, hir, hn0, hn1, hn2,
+      simp only [rowEdge, ite_eq_left hl, rowPotential, hiv, hir, hn0, hn1, hn2,
         hm, ↓reduceIte]
       ext x
       simp
   · have hn : (finRotate (k + 3) i).val = i.val + 1 :=
       coe_finRotate_of_ne_last hl
     by_cases h0 : i.val = 0
-    · simp only [rowEdge, if_neg hl, rowPotential, hn, h0]
+    · simp only [rowEdge, ite_eq_right hl, rowPotential, hn, h0]
       ext x
       simp
     by_cases h1 : i.val = 1
-    · simp only [rowEdge, if_neg hl, rowPotential, hn, h1]
+    · simp only [rowEdge, ite_eq_right hl, rowPotential, hn, h1]
       ext x
       simp
     by_cases h2 : i.val = 2
-    · simp only [rowEdge, if_neg hl, rowPotential, hn, h2]
+    · simp only [rowEdge, ite_eq_right hl, rowPotential, hn, h2]
       ext x
       simp
     have hn0 : i.val + 1 ≠ 0 := by omega
@@ -327,12 +340,12 @@ private theorem rowEdge_formula {N : Type*} [AddCommGroup N] [Fintype N]
     have hn2 : i.val + 1 ≠ 2 := by omega
     by_cases hm : i.val % 2 = 1
     · have hm' : (i.val + 1) % 2 ≠ 1 := by omega
-      simp only [rowEdge, if_neg hl, rowPotential, hn, h0, h1, h2,
+      simp only [rowEdge, ite_eq_right hl, rowPotential, hn, h0, h1, h2,
         hn0, hn1, hn2, hm, hm', ↓reduceIte]
       ext x
       simp
     · have hm' : (i.val + 1) % 2 = 1 := by omega
-      simp only [rowEdge, if_neg hl, rowPotential, hn, h0, h1, h2,
+      simp only [rowEdge, ite_eq_right hl, rowPotential, hn, h0, h1, h2,
         hn0, hn1, hn2, hm, hm', ↓reduceIte]
       ext x
       simp
@@ -375,17 +388,12 @@ private theorem cycle_invariant {X : Type*} [Finite X] (f : Equiv.Perm X)
 
 private theorem compatible_section {E Q : Type*} [AddCommGroup E] [AddCommGroup Q]
     [Fintype Q] (π : E →+ Q) (hπ : Surjective π) (r : RStar Q) :
-    ∃ s : Q → E, s 0 = 0 ∧ (∀ q, π (s q) = q) ∧ s r.a + s r.c = s r.b := by
+    ∃ s : Q → E, (∀ q, π (s q) = q) ∧ s r.a + s r.c = s r.b := by
   classical
-  let t : Q → E := fun q => if q = 0 then 0 else Classical.choose (hπ q)
-  have ht : ∀ q, π (t q) = q := by
-    intro q
-    by_cases hq : q = 0
-    · simp [t, hq]
-    · simpa [t, hq] using Classical.choose_spec (hπ q)
+  let t : Q → E := fun q => Classical.choose (hπ q)
+  have ht : ∀ q, π (t q) = q := fun q => Classical.choose_spec (hπ q)
   let s : Q → E := fun q => if q = r.b then t r.a + t r.c else t q
-  refine ⟨s, ?_, ?_, ?_⟩
-  · simp [s, t, Ne.symm r.b_ne_zero]
+  refine ⟨s, ?_, ?_⟩
   · intro q
     by_cases hq : q = r.b
     · simp [s, hq, map_add, ht, r.triple_sum]
@@ -399,7 +407,7 @@ private def vertices {E Q : Type*} [AddCommGroup E] [AddCommGroup Q]
   | .inr (i, h) => s (c.vertex i).val + h.val
 
 private theorem vertices_bijective {E Q : Type*} [AddCommGroup E] [AddCommGroup Q]
-    [Fintype Q] (N : AddSubgroup E) (π : E →+ Q) (hπ : Surjective π)
+    [Fintype Q] (N : AddSubgroup E) (π : E →+ Q)
     (hker : π.ker = N) (r : RStar Q) (c : ColumnChart Q r)
     (s : Q → E) (hs : ∀ q, π (s q) = q) :
     Bijective (vertices N r c s) := by
@@ -531,6 +539,179 @@ private theorem splice_zero {N : Type*} [AddCommGroup N] [Fintype N]
   simp [spliceSuccessor, Equiv.Perm.mul_apply, Equiv.swap_apply_def,
     hv, Ne.symm hv, oldSuccessor, Equiv.sumCongr, r.successor_zero]
 
+/- A segment which avoids the return section until its endpoint.  In particular,
+prepending one edge from the section makes its length a genuine first-return time. -/
+private def Until {X : Type*} (f : Equiv.Perm X) (P : X → Prop) (x y : X) : Prop :=
+  ∃ n : ℕ, (f ^ n) x = y ∧ ∀ j < n, ¬ P ((f ^ j) x)
+
+private theorem until_prepend {X : Type*} (f : Equiv.Perm X) (P : X → Prop)
+    {x y z : X} (hxy : f x = y) (hx : ¬ P x) (hyz : Until f P y z) :
+    Until f P x z := by
+  obtain ⟨n, hn, ha⟩ := hyz
+  refine ⟨n + 1, ?_, ?_⟩
+  · rw [pow_succ, Equiv.Perm.mul_apply, hxy, hn]
+  · intro j hj
+    cases j with
+    | zero => exact hx
+    | succ j =>
+      rw [pow_succ, Equiv.Perm.mul_apply, hxy]
+      exact ha j (by omega)
+
+private theorem until_trans {X : Type*} (f : Equiv.Perm X) (P : X → Prop)
+    {x y z : X} (hxy : Until f P x y) (hyz : Until f P y z) :
+    Until f P x z := by
+  obtain ⟨m, hm, ha⟩ := hxy
+  obtain ⟨n, hn, hb⟩ := hyz
+  refine ⟨n + m, ?_, ?_⟩
+  · rw [pow_add, Equiv.Perm.mul_apply, hm, hn]
+  · intro j hj
+    by_cases hjm : j < m
+    · exact ha j hjm
+    · obtain ⟨l, rfl⟩ := Nat.exists_eq_add_of_le (by omega : m ≤ j)
+      rw [Nat.add_comm m l, pow_add, Equiv.Perm.mul_apply, hm]
+      exact hb l (by omega)
+
+private def aColumn {N : Type*} {k : ℕ} : N ⊕ (Fin (k + 3) × N) → Prop
+  | .inl _ => False
+  | .inr (i, _) => i = 0
+
+private theorem splice_tail {N : Type*} [AddCommGroup N] [Fintype N]
+    [DecidableEq N] (r : RCycle N) (k : ℕ) (v h : N)
+    (i : Fin (k + 3)) (hi : 2 ≤ i.val) :
+    Until (spliceSuccessor r k v) aColumn
+      (.inr (i, rowPotential r i h)) (.inr (0, r.successor h)) := by
+  induction i using Fin.reverseInduction with
+  | last =>
+    have hl0 : (Fin.last (k + 2) : Fin (k + 3)) ≠ 0 := by
+      intro he
+      have := congrArg Fin.val he
+      simp only [Fin.val_last, Fin.val_zero] at this
+      omega
+    have hl1 : (Fin.last (k + 2) : Fin (k + 3)) ≠ 1 := by
+      intro he
+      have := congrArg Fin.val he
+      simp only [Fin.val_last, Fin.val_one] at this
+      omega
+    apply until_prepend _ _ (y := .inr (0, r.successor h))
+    · simp [spliceSuccessor, Equiv.Perm.mul_apply, Equiv.swap_apply_def,
+        oldSuccessor, rowLift, cylinder, Equiv.sumCongr, hl0, hl1, rowPotential]
+    · exact hl0
+    · exact ⟨0, rfl, by simp⟩
+  | @cast i ih =>
+    change 2 ≤ i.val at hi
+    have hn0 : (i.castSucc : Fin (k + 3)) ≠ 0 := by
+      intro he
+      have := congrArg Fin.val he
+      simp only [Fin.val_castSucc, Fin.val_zero] at this
+      omega
+    have hn1 : (i.castSucc : Fin (k + 3)) ≠ 1 := by
+      intro he
+      have := congrArg Fin.val he
+      simp only [Fin.val_castSucc, Fin.val_one] at this
+      omega
+    have hnlast : i.castSucc ≠ Fin.last (k + 2) := Fin.castSucc_ne_last i
+    apply until_prepend _ _ (y := .inr (i.succ, rowPotential r i.succ h))
+    · simp [spliceSuccessor, Equiv.Perm.mul_apply, Equiv.swap_apply_def,
+        oldSuccessor, rowLift, cylinder, Equiv.sumCongr, hn0, hn1, hnlast,
+        finRotate_of_lt (show i.val < k + 2 from i.isLt)]
+    · exact hn0
+    · exact ih (by simpa using Nat.le_succ_of_le hi)
+
+private theorem splice_first_return {N : Type*} [AddCommGroup N] [Fintype N]
+    [DecidableEq N] (r : RCycle N) (k : ℕ) (v : N) (hv : v ≠ 0) (h : N) :
+    ∃ n : ℕ, 0 < n ∧
+      (spliceSuccessor r k v ^ n) (.inr (0, h)) =
+        .inr (0, (r.successor * Equiv.swap 0 v) h) ∧
+      ∀ j, 0 < j → j < n → ¬ aColumn ((spliceSuccessor r k v ^ j) (.inr (0, h))) := by
+  let T := spliceSuccessor r k v
+  let P : N ⊕ (Fin (k + 3) × N) → Prop := aColumn
+  have h1last : (1 : Fin (k + 3)) ≠ Fin.last (k + 2) := by
+    intro he
+    have := congrArg Fin.val he
+    simp only [Fin.val_one, Fin.val_last] at this
+    omega
+  have hrot1 : finRotate (k + 3) (1 : Fin (k + 3)) = ⟨2, by omega⟩ := by
+    apply Fin.ext
+    rw [coe_finRotate_of_ne_last h1last]
+    rfl
+  have hmod : 2 % (k + 3) = 2 := Nat.mod_eq_of_lt (by omega)
+  have htwo' : (⟨2, by omega⟩ : Fin (k + 3)) = (2 : Fin (k + 3)) := by
+    apply Fin.ext
+    exact hmod.symm
+  have hFv : kernelF r v ≠ 0 := by
+    intro he
+    exact hv ((kernelF r).injective (he.trans (kernelF_zero r).symm))
+  have hA (t : N) (ht : t ≠ 0) : T (.inr (0, t)) = .inr (1, kernelF r t) := by
+    simp [T, spliceSuccessor, Equiv.Perm.mul_apply, Equiv.swap_apply_def,
+      oldSuccessor, rowLift, cylinder, rowPotential, Equiv.sumCongr, ht]
+  have hB (t : N) (ht : t ≠ v) :
+      T (.inr (1, kernelF r t)) = .inr (2, t) := by
+    have hFt : kernelF r t ≠ kernelF r v := fun he => ht ((kernelF r).injective he)
+    simp [T, spliceSuccessor, Equiv.Perm.mul_apply, Equiv.swap_apply_def,
+      oldSuccessor, rowLift, cylinder, rowPotential, Equiv.sumCongr, hFt,
+      h1last, hrot1, htwo', hmod]
+  have htail (t : N) : Until T P (.inr (2, t)) (.inr (0, r.successor t)) := by
+    have he : rowPotential r (2 : Fin (k + 3)) = 1 := by simp [rowPotential, hmod]
+    simpa only [he, Equiv.Perm.one_apply] using
+      splice_tail r k v t (2 : Fin (k + 3)) (by simp [hmod])
+  have hpath : Until T P (T (.inr (0, h)))
+      (.inr (0, (r.successor * Equiv.swap 0 v) h)) := by
+    by_cases hh0 : h = 0
+    · subst h
+      have hstart : T (.inr (0, 0)) = .inl (r.successor v) := by
+        simp [T, spliceSuccessor, Equiv.Perm.mul_apply, Equiv.swap_apply_def,
+          oldSuccessor, Equiv.sumCongr]
+      have hend : T (.inl v) = .inr (2, v) := by
+        simp [T, spliceSuccessor, Equiv.Perm.mul_apply, Equiv.swap_apply_def,
+          oldSuccessor, rowLift, cylinder, rowPotential, Equiv.sumCongr,
+          h1last, hrot1, htwo', hmod]
+      have hkernel : Until T P (.inl (r.successor v)) (.inl v) := by
+        have hex : ∃ n : ℕ, (r.successor ^ n) (r.successor v) = v :=
+          (Equiv.Perm.SameCycle.refl r.successor v).apply_left.exists_nat_pow_eq
+        let n := Nat.find hex
+        have hn : (r.successor ^ n) (r.successor v) = v := Nat.find_spec hex
+        have hp : ∀ j ≤ n, (T ^ j) (.inl (r.successor v)) =
+            .inl ((r.successor ^ j) (r.successor v)) := by
+          intro j hj
+          induction j with
+          | zero => rfl
+          | succ j ih =>
+            rw [pow_succ', Equiv.Perm.mul_apply, ih (by omega)]
+            have hne : (r.successor ^ j) (r.successor v) ≠ v :=
+              Nat.find_min hex (by omega)
+            simp [T, spliceSuccessor, Equiv.Perm.mul_apply, Equiv.swap_apply_def,
+              oldSuccessor, Equiv.sumCongr, hne, pow_succ']
+        exact ⟨n, by rw [hp n le_rfl, hn], fun j hj => by
+          rw [hp j (by omega)]; simp [P, aColumn]⟩
+      rw [hstart]
+      have he : (r.successor * Equiv.swap 0 v) 0 = r.successor v := by simp
+      rw [he]
+      exact until_trans T P hkernel (until_prepend T P hend (by simp [P, aColumn]) (htail v))
+    by_cases hhv : h = v
+    · subst h
+      have hcut : T (.inr (1, kernelF r v)) = .inr (1, 0) := by
+        simp [T, spliceSuccessor, Equiv.Perm.mul_apply, Equiv.swap_apply_def,
+          oldSuccessor, rowLift, cylinder, rowPotential, Equiv.sumCongr, kernelF_zero]
+      have he : (r.successor * Equiv.swap 0 v) v = 0 := by simp [r.successor_zero]
+      rw [hA v hv, he]
+      have hb0 : T (.inr (1, 0)) = .inr (2, 0) := by
+        simpa only [kernelF_zero] using hB 0 (Ne.symm hv)
+      have ht0 : Until T P (.inr (2, 0)) (.inr (0, 0)) := by
+        simpa only [r.successor_zero] using htail 0
+      exact until_prepend T P hcut (by simp [P, aColumn])
+        (until_prepend T P hb0 (by simp [P, aColumn]) ht0)
+    · have he : (r.successor * Equiv.swap 0 v) h = r.successor h := by
+        simp [Equiv.swap_apply_of_ne_of_ne hh0 hhv]
+      rw [hA h hh0, he]
+      exact until_prepend T P (hB h hhv) (by simp [P, aColumn]) (htail h)
+  obtain ⟨n, hn, ha⟩ := hpath
+  refine ⟨n + 1, by omega, ?_, ?_⟩
+  · simpa only [pow_succ, Equiv.Perm.mul_apply] using hn
+  · intro j hj hjn
+    obtain ⟨l, rfl⟩ := Nat.exists_eq_succ_of_ne_zero (by omega : j ≠ 0)
+    rw [pow_succ, Equiv.Perm.mul_apply]
+    exact ha l (by omega)
+
 private theorem splice_cycle {N : Type*} [AddCommGroup N] [Fintype N]
     [DecidableEq N] (r : RCycle N) (k : ℕ) (v : N) (hv : v ≠ 0) :
     (spliceSuccessor r k v).IsCycleOn {x | x ≠ .inl 0} := by
@@ -564,6 +745,31 @@ private theorem splice_cycle {N : Type*} [AddCommGroup N] [Fintype N]
     intro h
     exact hPb ((cycle_invariant g (mainNonzero r) hginv h).mpr hPc)
   obtain ⟨htbc, htg⟩ := swap_joins g b c hgbc
+  let R : Equiv.Perm N := r.successor * Equiv.swap 0 v
+  have hreturn := kernel_return_cycle r v hv
+  have hrowStep (h : N) : T.SameCycle (.inr (0, h)) (.inr (0, R h)) := by
+    obtain ⟨n, _, hn, _⟩ := splice_first_return r k v hv h
+    exact ⟨(n : ℤ), by
+      simpa only [zpow_natCast, T, g, S, a, b, c, R, spliceSuccessor] using hn⟩
+  have hbase (h : N) : T.SameCycle a (.inr (0, h)) := by
+    obtain ⟨j, hj⟩ := (hreturn.2 (x := 0) trivial (y := h) trivial).exists_nat_pow_eq
+    have hp : ∀ n : ℕ, T.SameCycle a (.inr (0, (R ^ n) 0)) := by
+      intro n
+      induction n with
+      | zero => exact .refl _ _
+      | succ n ih =>
+        rw [pow_succ', Equiv.Perm.mul_apply]
+        exact ih.trans (hrowStep _)
+    change (R ^ j) 0 = h at hj
+    rw [← hj]
+    exact hp j
+  have hac : T.SameCycle a c := by
+    have hr := rowLift_connect r k 0 1 v v (Equiv.Perm.SameCycle.refl _ _)
+    have hp1 : rowPotential r (1 : Fin (k + 3)) = kernelF r := by simp [rowPotential]
+    rw [hp1] at hr
+    change (rowLift r k).SameCycle (0, v) (1, kernelF r v) at hr
+    exact (hbase v).trans (htg _ _ (hgs _ _
+      (sum_sameCycle_right r.successor (rowLift r k) hr)))
   have hconnect : ∀ x : X, x ≠ .inl 0 → T.SameCycle b x := by
     intro x hx
     cases x with
@@ -588,7 +794,7 @@ private theorem splice_cycle {N : Type*} [AddCommGroup N] [Fintype N]
           have hp1 : rowPotential r (1 : Fin (k + 3)) = kernelF r := by simp [rowPotential]
           rw [hp1, ht] at hrow
           exact sum_sameCycle_right r.successor (rowLift r k) hrow
-        exact htbc.trans (htg _ _ (hgs _ _ hs))
+        exact (htg _ _ hgab).symm.trans (hac.trans (htg _ _ (hgs _ _ hs)))
   have hT0 : T (.inl 0) = .inl 0 := splice_zero r k v hv
   change T.IsCycleOn {x | x ≠ .inl 0}
   constructor
@@ -716,30 +922,28 @@ private theorem splice_labels {E Q : Type*} [AddCommGroup E] [AddCommGroup Q]
     intro he
     have h := congrArg (fun x : X => match x with | .inl _ => (0 : Fin (c.k + 3)) | .inr y => y.1) he
     simpa [a, d] using h
+  have hrot1 : finRotate (c.k + 3) (1 : Fin (c.k + 3)) = 2 := by
+    apply Fin.ext
+    rw [coe_finRotate_of_ne_last]
+    · simp [Nat.mod_eq_of_lt (show (2 : ℕ) < c.k + 3 by omega)]
+    · intro he
+      have h := congrArg Fin.val he
+      simp at h
   apply three_cut_labels (vertices N rQ c s) (oldSuccessor r c.k)
     a b d (by simp [a, b]) had (by simp [b, d])
   all_goals
     simp only [a, b, d, oldSuccessor, Equiv.sumCongr_apply, Sum.map_inl,
       Sum.map_inr, rowLift_apply, vertices]
     simp only [rowEdge_formula r c.even_k, Fin.val_zero, Fin.val_one,
-      ↓reduceIte, Equiv.symm_apply_apply, kernelF_zero,
-      finRotate_apply_zero]
-    have hrot1 : finRotate (c.k + 3) (1 : Fin (c.k + 3)) = 2 := by
-      apply Fin.ext
-      rw [coe_finRotate_of_ne_last]
-      · simp
-      · intro he
-        have h := congrArg Fin.val he
-        simp at h
-        omega
-    rw [hrot1]
+      one_ne_zero, ↓reduceIte, Equiv.symm_apply_apply, kernelF_zero,
+      finRotate_apply_zero, hrot1]
     simp only [c.first, c.second, c.third, r.successor_zero, AddSubgroup.coe_zero,
       add_zero, sub_zero]
     have hFv : (kernelF r v).val = v.val - (r.successor v).val := by
       rw [kernelF_apply, AddSubgroup.coe_sub]
-    rw [hFv, ← hsum]
+    rw [← hsum]
+    try rw [hFv]
     abel
-
 
 private theorem bijOn_complement {X : Type*} (f : Equiv.Perm X) (z : X)
     (hz : f z = z) : Set.BijOn f {x | x ≠ z} {x | x ≠ z} := by
@@ -788,11 +992,11 @@ theorem nonsplit_extension_r_cycle {E : Type*} [AddCommGroup E] [Fintype E]
   by_cases hv : ∃ v : N, v ≠ 0
   · obtain ⟨v, hv⟩ := hv
     obtain ⟨c⟩ := column_chart rQ
-    obtain ⟨s, hs0, hs, hsum⟩ := compatible_section π hπ rQ
+    obtain ⟨s, hs, hsum⟩ := compatible_section π hπ rQ
     let X := N ⊕ (Fin (c.k + 3) × N)
     let z : X := .inl 0
     let V : X ≃ E := Equiv.ofBijective (vertices N rQ c s)
-      (vertices_bijective N π hπ hker rQ c s hs)
+      (vertices_bijective N π hker rQ c s hs)
     let T := spliceSuccessor r c.k v
     let L : X → E := fun x => V (oldSuccessor r c.k x) - V x
     have hL : Injective L := old_label_injective N π hker r rQ c s hs
@@ -828,10 +1032,9 @@ theorem nonsplit_extension_r_cycle {E : Type*} [AddCommGroup E] [Fintype E]
       change V (oldD (U (V.symm x))) = V (T (V.symm x)) - x
       change V (V.symm (L (U (V.symm x)))) = _
       rw [V.apply_symm_apply]
-      have h := splice_labels N r rQ c s hsum v (V.symm x)
-      change L (U (V.symm x)) = V (T (V.symm x)) - x
-      rw [← V.apply_symm_apply x]
-      exact h.symm
+      have h : V (T (V.symm x)) - V (V.symm x) = L (U (V.symm x)) :=
+        splice_labels N r rQ c s hsum v (V.symm x)
+      simpa only [V.apply_symm_apply] using h.symm
     exact ⟨{
       successor := S
       successor_zero := hS0
