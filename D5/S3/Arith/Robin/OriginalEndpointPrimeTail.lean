@@ -208,7 +208,7 @@ private theorem endpoint_bracket {q : ℝ} (hq : 0 < q) {N p : ℕ}
 /-- Quantitative last-selected/first-omitted supply for the real endpoints.
 The last component reuses an existing logarithm estimate, rather than
 reproving a library-matching log remainder theorem. -/
-private theorem endpoint_local {q : ℝ} (hq : 0 < q) {N p : ℕ}
+theorem endpoint_local {q : ℝ} (hq : 0 < q) {N p : ℕ}
     (hN : N = strictInteger q ∨ N = maximalInteger q)
     (hp : p.Prime) (ha : 1 ≤ N.factorization p) :
     0 ≤ layerTail N p ∧ lowerPrice q p ≤ layerTail N p ∧

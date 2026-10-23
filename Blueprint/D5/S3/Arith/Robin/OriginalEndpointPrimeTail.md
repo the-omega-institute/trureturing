@@ -6,7 +6,19 @@ All-price prime tails for the original strict and maximal resource optimizers.
 
 Both original endpoints, all positive prices, all primes and layers, and simultaneous ties are retained. The strict EndpointRobinEstimates sign and the original global Robin goal remain open.
 
-**Lemma 1.1 (Sharp local prices, the exact residual, and a uniform same-integer tail estimate).**
+**Lemma 1.1 (The existing pointwise endpoint tail estimates).**
+
+Lean statement: `D5/S3/Arith/Robin/OriginalEndpointPrimeTail.endpoint_local`
+
+*Proof.* Machine-checked in Lean as `D5/S3/Arith/Robin/OriginalEndpointPrimeTail.endpoint_local` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+The existing endpoint_local declaration is made public with its statement and proof body unchanged for the weighted upper-scale consumer. For q>0, either original endpoint, a prime p and a_p>=1, its complete local tail is nonnegative, lies between the existing lowerPrice and upperPrice, and is at most both p/(p-1)*(exp(q log(p))-1) and 5/(4p^2). All original layer and tie conditions are retained. This visibility change reuses the original proof.
+
+**Lemma 1.2 (Sharp local prices, the exact residual, and a uniform same-integer tail estimate).**
 
 Lean statement: `D5/S3/Arith/Robin/OriginalEndpointPrimeTail.original_endpoint_prime_tail_supply`
 
@@ -38,6 +50,7 @@ These are the original lower-control and equivalent prime-log derivations, not n
 
 ## References
 
+- Truth anchor: `D5/S3/Arith/Robin/OriginalEndpointPrimeTail.endpoint_local`
 - Truth anchor: `D5/S3/Arith/Robin/OriginalEndpointPrimeTail.original_endpoint_prime_tail_supply`
 - Dependency: [D5/S3/Arith/GoldenResource/FirstLayerMarginalAntitone](../GoldenResource/FirstLayerMarginalAntitone.md)
 - Dependency: [D5/S3/Arith/GoldenResourceObjectiveFactorization](../GoldenResourceObjectiveFactorization.md)
