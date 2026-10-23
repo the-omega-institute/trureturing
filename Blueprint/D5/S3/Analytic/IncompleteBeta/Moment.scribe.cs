@@ -15,7 +15,7 @@ internal sealed class MomentDocument : IScribeDocumentDefinition
             Describe.Lean(DescribeId.Create("incomplete-beta-w"),
                 DeclarationHandle.Create("D5/S3/Analytic/IncompleteBeta/Moment.W"),
                 H("Symmetric beta kernel"), StatementSource.WithoutFormula(), AssessedProvenance.FromRepo(),
-                Blocks(Paragraph(Text("The finite kernel is the sum of the two powered factors divided by the corresponding Gamma factors."))),
+                Blocks(Paragraph(Text("The finite kernel is the sum of products of the two powered factors, divided by the corresponding Gamma factors."))),
                 DescribeRole.Definition),
             Describe.Lean(DescribeId.Create("incomplete-beta-moment"),
                 DeclarationHandle.Create("D5/S3/Analytic/IncompleteBeta/Moment.convolution_eq_betaMean"),

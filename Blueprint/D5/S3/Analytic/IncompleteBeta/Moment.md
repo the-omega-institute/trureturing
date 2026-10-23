@@ -26,7 +26,7 @@ Lean statement: `D5/S3/Analytic/IncompleteBeta/Moment.W`
 
 *Commentary.*
 
-The finite kernel is the sum of the two powered factors divided by the corresponding Gamma factors.
+The finite kernel is the sum of products of the two powered factors, divided by the corresponding Gamma factors.
 
 **Theorem 1.3 (Beta moment representation).**
 
