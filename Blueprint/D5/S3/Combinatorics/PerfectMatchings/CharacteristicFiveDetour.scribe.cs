@@ -61,7 +61,7 @@ internal sealed class CharacteristicFiveDetourDocument : IScribeDocumentDefiniti
                 + "Write B for the vectors (a,h) in ZMod(5) times K with a nonzero. "
                 + "All directed labels are differences of actual vertices with coefficient one.")),
             Describe.Lean(DescribeId.Create("characteristic-five-relative-path"),
-                DeclarationHandle.Create("D5/S1/Words/Sequenceability/CharacteristicFiveDetour.exists_characteristic_five_relative_path"),
+                DeclarationHandle.Create("D5/S3/Combinatorics/PerfectMatchings/CharacteristicFiveDetour.exists_characteristic_five_relative_path"),
                 H("A path with exact vertices, labels and bounded sums"),
                 StatementSource.FromAuthor(Formula()), AssessedProvenance.FromRepo(), Blocks(
                     Paragraph(Text("The path has M+1=4*card(K)+2 distinct vertices and M=4*card(K)+1 edges. "
@@ -89,6 +89,12 @@ internal sealed class CharacteristicFiveDetourDocument : IScribeDocumentDefiniti
                         + "An explicit permutation of the three cut tails and s proves the punctured difference "
                         + "bijection. The closing label (0,-u) is excluded. Orbit injectivity and its exact period "
                         + "identify t as the last vertex. Telescoping then gives the prefix, interval and total clauses.")),
+                    Paragraph(Text("The escape audit remains unfinished: the exact-telescope four-slot attempt compiled, "
+                        + "but ClosedTruthReadout rejected Nat.pow as source.unsafe_or_external (IE-C050). "
+                        + "See https://github.com/the-omega-institute/trureturing/issues/20717. "
+                        + "The reused RowOrbitLift audit remains unfinished under "
+                        + "https://github.com/the-omega-institute/trureturing/issues/20546. "
+                        + "No validated registration certificate is claimed.")),
                     Paragraph(Text("This relative path can replace an edge of an existing path in the zero column: "
                         + "translate it to the chosen edge's source, so its last vertex is the old target. "
                         + "The interior stays outside the zero column, and the replacement adds every outside label. "

@@ -1,6 +1,6 @@
-/- GID: D5/S1/Words/Sequenceability/CharacteristicFiveDetour
+/- GID: D5/S3/Combinatorics/PerfectMatchings/CharacteristicFiveDetour
    generality: G
-   mirror-B: D5/B/S1/Words/Sequenceability/CharacteristicFiveDetour
+   mirror-B: D5/B/S3/Combinatorics/PerfectMatchings/CharacteristicFiveDetour
    mirror-E: none(waiver:unbounded-symbolic-proof)
    anchors: []
    utility: none

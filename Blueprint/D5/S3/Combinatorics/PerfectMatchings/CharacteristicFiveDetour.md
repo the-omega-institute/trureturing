@@ -10,7 +10,7 @@ Let K be any finite field of characteristic five and let u be nonzero. Write B f
 
 $$\forall K \in \operatorname{Type}\left(\right),\; [\operatorname{Field}\left(K\right)] [\operatorname{Finite}\left(K\right)] [\operatorname{CharP}\left(K, 5\right)] \forall u \in K,\; u \ne 0 \Rightarrow \operatorname{let} M=4\cdot\operatorname{card}\left(K\right) + 1;\exists v \in \operatorname{Nat}\left(\right)\to \operatorname{ZMod}\left(5\right) \times K,\; \operatorname{v}\left(0\right) = (0,0) \land \left(\operatorname{v}\left(M\right) = (0,u) \land \left(\operatorname{Injective}\left((n:\operatorname{Fin}\left(M + 1\right)\mapsto \operatorname{v}\left(\operatorname{val}\left(n\right)\right))\right) \land \left(\operatorname{BijOn}\left(v, \operatorname{Ioo}\left(0, M\right), \{z:\operatorname{ZMod}\left(5\right) \times K\mid\operatorname{fst}\left(z\right) \ne 0\}\right) \land \left(\operatorname{BijOn}\left((n:\operatorname{Nat}\left(\right)\mapsto \operatorname{v}\left(n + 1\right) - \operatorname{v}\left(n\right)), \operatorname{Iio}\left(M\right), \{z:\operatorname{ZMod}\left(5\right) \times K\mid\operatorname{fst}\left(z\right) \ne 0\}\cup\{(0,u)\}\right) \land \left(\operatorname{Injective}\left((k:\operatorname{Fin}\left(M + 1\right)\mapsto \sum_{i<\operatorname{val}\left(k\right)}(\operatorname{v}\left(i + 1\right) - \operatorname{v}\left(i\right)))\right) \land \left(\left(\forall a \in \operatorname{Nat}\left(\right),\; \forall b \in \operatorname{Nat}\left(\right),\; \left(a < b \land b \le M\right) \Rightarrow \sum_{a\le i<b}(\operatorname{v}\left(i + 1\right) - \operatorname{v}\left(i\right)) \ne 0\right) \land \sum_{i<M}(\operatorname{v}\left(i + 1\right) - \operatorname{v}\left(i\right)) = (0,u)\right)\right)\right)\right)\right)\right)$$
 
-*Proof.* Machine-checked in Lean as `D5/S1/Words/Sequenceability/CharacteristicFiveDetour.exists_characteristic_five_relative_path` (`✓ std3`). ∎
+*Proof.* Machine-checked in Lean as `D5/S3/Combinatorics/PerfectMatchings/CharacteristicFiveDetour.exists_characteristic_five_relative_path` (`✓ std3`). ∎
 
 *Source.* Repository-derived.
 
@@ -24,10 +24,12 @@ On the carrier (Fin(4) times K) plus Fin(2), extend the lift P by fixing s and t
 
 Read the orbit of Q from s through t, and omit its closing edge t to s. The four new joins have labels (2,3u), (0,u), (1,u), and (4,4u). The first, third and fourth replace the three removed old labels once each. An explicit permutation of the three cut tails and s proves the punctured difference bijection. The closing label (0,-u) is excluded. Orbit injectivity and its exact period identify t as the last vertex. Telescoping then gives the prefix, interval and total clauses.
 
+The escape audit remains unfinished: the exact-telescope four-slot attempt compiled, but ClosedTruthReadout rejected Nat.pow as source.unsafe_or_external (IE-C050). See https://github.com/the-omega-institute/trureturing/issues/20717. The reused RowOrbitLift audit remains unfinished under https://github.com/the-omega-institute/trureturing/issues/20546. No validated registration certificate is claimed.
+
 This relative path can replace an edge of an existing path in the zero column: translate it to the chosen edge's source, so its last vertex is the old target. The interior stays outside the zero column, and the replacement adds every outside label. A prime seed, the branch for primes at least seven, insertion in a complete induction, and transport to arbitrary original coordinates require their own proofs.
 
 ## References
 
-- Truth anchor: `D5/S1/Words/Sequenceability/CharacteristicFiveDetour.exists_characteristic_five_relative_path`
-- Dependency: [D5/S1/Words/Sequenceability/RowOrbitLift](RowOrbitLift.md)
-- Dependency: [D5/S3/Combinatorics/PerfectMatchings/WeightedReattachment](../../../S3/Combinatorics/PerfectMatchings/WeightedReattachment.md)
+- Truth anchor: `D5/S3/Combinatorics/PerfectMatchings/CharacteristicFiveDetour.exists_characteristic_five_relative_path`
+- Dependency: [D5/S1/Words/Sequenceability/RowOrbitLift](../../../S1/Words/Sequenceability/RowOrbitLift.md)
+- Dependency: [D5/S3/Combinatorics/PerfectMatchings/WeightedReattachment](WeightedReattachment.md)
