@@ -4366,3 +4366,30 @@ volume exponent keep their distinct meanings from §2; none of these
 analytical results identifies a physical Euclidean dimension.
 
 ## 追加锚（本行以下为增补区）
+
+## 27. Source parameters for the retained and resonant ground limits
+
+With the fixed $b$ of (20.1), use the source coordinate
+$x=\log(R/b)$. The corresponding constant trace is
+$\mathcal A_b=\mathcal A+\mathcal B\log b$. Thus, for
+$\eta_b=\log b-\kappa_{\rm cap}$,
+
+$$
+\mathcal A+\eta_b\mathcal B
+                =\mathcal A_b-\kappa_{\rm cap}\mathcal B.
+\tag{27.1}
+$$
+
+The actual inherited-wall response and the positive-ground limits for
+$\lambda<\lambda_D$, equality, and the
+$\lambda_D+\sigma/L$ precision window are developed in
+[Native spatial-cap retained and resonant ground-state limits,
+§§1–10](FIB_NATIVE_SPATIAL_CAP_RETAINED_AND_RESONANT_LIMITS.md).
+Its constants are exactly (20.2), with $K=m_0k$ and
+$\mathsf K=a_*^2K$; its equality normalization is the global response
+amplitude $a_D$. It supplies the retained/equality ground conclusions
+in the source correspondence of §26. Rank-one ground projections
+and the associated resource laws are distinct from the full operator
+classification on all spectral subspaces.
+
+## 追加锚（本行以下为增补区）
