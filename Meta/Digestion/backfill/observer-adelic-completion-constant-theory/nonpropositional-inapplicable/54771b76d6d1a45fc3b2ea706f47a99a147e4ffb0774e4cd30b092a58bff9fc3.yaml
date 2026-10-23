@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:54771b76d6d1a45fc3b2ea706f47a99a147e4ffb0774e4cd30b092a58bff9fc3
+  normalized_sha256: sha256:54771b76d6d1a45fc3b2ea706f47a99a147e4ffb0774e4cd30b092a58bff9fc3
+cas_ref: sha256:54771b76d6d1a45fc3b2ea706f47a99a147e4ffb0774e4cd30b092a58bff9fc3
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 非命题：在同一“是否”问题下列出 sticky 研究分支，不断言任何状态必属该分支。
+    previous_atom_id: 12a2a6a3ebc4427b75b94615d7c15606b65e7c249b3b0405c615010606e121d4
+    next_atom_id: 4aed873d7414f25001e5a490d9f3196ed9b013d60c7c1e76085d6f537518020f
