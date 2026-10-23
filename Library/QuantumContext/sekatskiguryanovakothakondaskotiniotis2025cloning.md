@@ -3,7 +3,7 @@ bibkey: sekatskiguryanovakothakondaskotiniotis2025cloning
 authors: Pavel Sekatski; Yelena Guryanova; Naga Bhavya Teja Kothakonda; Michalis Skotiniotis
 year: 2025
 title: "Cloning Quantum Channels"
-doi: null
+doi: 10.48550/arXiv.2509.08059
 url: https://arxiv.org/abs/2509.08059v1
 claim: "The paper treats deterministic cloning of quantum channels with quantum processes, gives necessary conditions for super-replication, shows that amplitude-damping channels have at most linear cloning rate, compares coherent and measure-and-prepare processes, observes that a coherent process attains Choi fidelity one for amplitude-damping channels at N=M, and conjectures that no measure-and-prepare process does."
 strata_touched:
@@ -35,4 +35,4 @@ Source: https://arxiv.org/abs/2509.08059v1
   - measure-and-prepare processes, l. 1094–1100;
   - the amplitude-damping family, l. 1538–1553;
   - the conjecture, l. 1684–1685.
-- DOI: none (arXiv v1 is the only version).
+- DOI: 10.48550/arXiv.2509.08059 (https://doi.org/10.48550/arXiv.2509.08059; arXiv v1 is the only version).
