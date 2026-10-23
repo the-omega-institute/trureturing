@@ -5,7 +5,7 @@ year: 2021
 title: The Riemann hypothesis is true up to 3·10^12
 doi: 10.1112/blms.12460
 url: https://arxiv.org/abs/2004.09765v1
-claim: Published verification supplies the finite-height RH premise. Exact heat-loss factorization and the complete arithmetic block bound give a whole-source negative allowance of order (log T)^(-4) in the original sixth moment; fixed height still leaves a negative allowance. A support-independent Gamma-only lower bound for the prime Hankel form fails on all compact half-line tests.
+claim: Published verification supplies the finite-height RH premise. Exact heat-loss factorization and the complete arithmetic block bound give a whole-source negative allowance of order (log T)^(-4) in the original sixth moment; fixed height still leaves a negative allowance. A support-independent Gamma-only lower bound for the prime Hankel form fails on all compact half-line tests. An even actual-source partition controls the joint metric defect and bounds supporting multipliers of negative cap-four minima from below, up to the finite-height signed zero tail; it does not improve the general exponent-four allowance.
 strata_touched: []
 license: citation-only
 triage: anchor
@@ -502,3 +502,316 @@ No negative value of the complete Weil form, RH counterexample or
 improvement of VHR1 follows. A usable improvement still needs a
 joint estimate on the SAME actual loss test, including its original
 moment and a sufficiently small quantified remainder.
+
+## Keep the heat partition inside the actual source range
+
+The VHR loss is odd, so the actual even-source variational inequality
+cannot be applied to it. A fixed positive shift in the heat symbol
+instead gives two EVEN actual profiles. The useful estimate is a
+JOINT defect of the ORIGINAL moment and norm, on the bounded
+Gamma/moment class. A moment-only uniform defect would be false.
+
+Reuse VHR2--VHR5's full-form splitting calculation, W324's actual
+inverse, W338's forward profile comparison, W359's complete-form
+identity, and W331--W332's
+small-interval and arithmetic-boundary bounds. The ordinary binomial
+series, Gaussian convolution and supporting lines of finite convex
+functions are classical inputs. The additional application below
+keeps both reconstructed sources and both original metrics in one
+variational comparison. All statements in this section are paper
+derivations, without Lean/kernel certification or a literature-priority
+claim.
+
+### An even partition retains both pole terms exactly
+
+Fix $c>5/2$ and, for sufficiently small $\epsilon>0$, put
+
+$$
+ a_\epsilon(z)=e^{-\epsilon(z^2+c^2)},\qquad
+ b_\epsilon(z)=\sqrt{1-e^{-2\epsilon(z^2+c^2)}}.
+$$
+
+Choose the square root positive on the real axis. Its first zeros are
+$\pm ic$; the others solve
+$z^2=-c^2+\pi i k/\epsilon$, $k\ne0$, and have imaginary part of
+absolute value greater than $c$. Thus it is an EVEN Schwarz-real
+holomorphic function on $|\Im z|<c$. Both multipliers are uniformly
+bounded on each smaller closed strip. For $g=g_F$ define
+
+$$
+ \widehat h=a_\epsilon\widehat g,\qquad
+ \widehat v=b_\epsilon\widehat g.
+$$
+
+Both profiles are even, including for complex $F$. Their weighted and
+logarithmic norms are finite. Recover their actual features $F_h,F_v$
+using the EXISTING inverse: for $j=h,v$, set
+
+$$
+ \beta_j(t)=j(t/2),\quad
+ u_j(t)=\beta_j(t)+\frac32\int_0^\infty e^{s/4}\beta_j(t+s)\,ds,
+ \quad
+ U_j(x)=x^{-9/4}u_j(\log(x/\pi)),\quad F_j=\mathscr S U_j.
+$$
+
+The positive exponential weight makes the integral bounded and W324
+supplies the actual inverse. Domain membership is checked BEFORE
+using W359. For each fixed $\epsilon$, the heat multiplier and
+$1-b_\epsilon$ decay rapidly at high real frequency on smaller
+closed strips. Their convolutions with $g$ have weighted $H^1$
+regularity. The inverse Volterra integral preserves that regularity:
+if $Y(t)=\int_0^\infty e^{s/4}\beta_j(t+s)ds$, then
+$Y'=-\beta_j-Y/4$, with $Y$ bounded in the positive exponential
+weight. Hence the reconstructed $u_h$ and $u_{g-v}$ are $H^1$ on the
+closed positive half-line. Their zero extensions have at most one
+jump. Subtracting the trace times $e^{-t}\mathbf1_+$ leaves a
+full-line $H^1$ function; the jump term's Fourier transform is a
+constant times $(1+i\xi)^{-1}$. Both have finite logarithmic Gamma
+form, so $F_h,F_{g-v}\in\mathcal V$. Set $F_v=F-F_{g-v}$.
+The forward identity $B B^{-1}\beta_j=\beta_j$ now proves
+$g_{F_h}=h$ and $g_{F_v}=v$. This is an explicit range check, not a
+converse assumed from W338 or a bare unweighted Volterra inverse.
+
+On the real axis $a_\epsilon^2+b_\epsilon^2=1$. At BOTH pole
+frequencies $\pm i/2$ the two multipliers are real and satisfy the
+same identity. Consequently VHR5's Gamma and every prime-power
+correlation split, and the pole squares split with them:
+
+$$
+ \mathfrak E(F)=\mathfrak E(F_h)+\mathfrak E(F_v).
+ \tag{VHP1}
+$$
+
+No odd loss is identified with an actual even profile. The fixed
+shift costs a scalar $e^{-\epsilon c^2}$ in the heat branch and
+removes the previous root's zero at the origin.
+
+### Pay the two metric defects on the same bounded-energy source
+
+Write $\mathcal H(F)=\|F\|_H^2$ and
+$L_\epsilon=\log(1/\epsilon)$. There is a fixed $C$, depending on the
+chosen $c$, such that for every $F\in\mathcal V$ with
+$M(F)+\mathcal P(F)\le D$,
+
+$$
+ \begin{aligned}
+ |M(F_h)+M(F_v)-M(F)|
+ +|\mathcal H(F_h)+\mathcal H(F_v)-\mathcal H(F)|
+ &\le CD L_\epsilon^{-2/5},\\
+ \|F_h-F\|_H&\le C\sqrt D L_\epsilon^{-1/5},\\
+ M(F_h)+M(F_v)&\le CM(F).
+ \end{aligned}
+ \tag{VHP2}
+$$
+
+Here the first line controls a joint defect; it does not assert that
+$M(F_v)$ tends to zero uniformly over that class.
+The last line is a moment-only bound on all actual sources, without
+the Gamma hypothesis. It follows from the full-line reconstruction
+and boundedness of both exponentially weighted filters below.
+
+Use $q=5/4$, the even full-line function $\beta(t)=g(t/2)$, and
+$w(t)=e^{qt}\beta(t)$. On the full line let
+
+$$
+ S=\sum_{n\ge1}\mu(n)n^{-3}T_{2\log n},\quad
+ (T_af)(t)=f(t+a),\quad
+ K=I+\tfrac32J_1,\quad
+ (J_1f)(t)=\int_0^\infty e^{-s}f(t+s)\,ds,\quad X=KS w.
+$$
+
+All these are bounded on full-line $L^2$, and $S,K$ commute with
+full-line Fourier multipliers. Their restrictions for $t\ge0$ are
+exactly the owned source reconstruction, since all shifts are forward:
+
+$$
+ M(F)=\pi^{-7/2}\|\mathbf1_+X\|_2^2,\qquad
+ \mathcal H(F)=\pi^{-7/2}\int_0^\infty e^{-6t}|X(t)|^2dt.
+ \tag{VHP3}
+$$
+
+Also $\|w\|_2+\|X\|_2\le C\sqrt{M(F)}$. Apply the Fourier
+partition with symbols $a_\epsilon(2\xi),b_\epsilon(2\xi)$ to this
+full-line representation. Conjugating either filter by $e^{qt}$
+changes it in operator norm by at most
+$C\sqrt\epsilon\log(2+1/\epsilon)$. Thus its reconstructed $X_j$
+differs from the corresponding filter applied to $X$ by at most this
+factor times $\sqrt{M(F)}$.
+
+For completeness, the kernel estimates needed here follow directly
+from the ordinary binomial expansion
+
+$$
+ b_\epsilon(2D)=I-k_\epsilon*,\qquad
+ k_\epsilon=\sum_{m\ge1}d_m e^{-2m\epsilon c^2}K_{8m\epsilon},
+ \qquad
+ d_m=\frac{\binom{2m}{m}}{4^m(2m-1)}>0,
+ \quad \sum_m d_m=1,
+$$
+
+where $K_t$ is the normalized heat kernel. Since $d_m=O(m^{-3/2})$
+and $c>2q$, Gaussian integration gives
+
+$$
+ \int(e^{q|s|}-1)k_\epsilon(s)\,ds
+ \le C\sqrt\epsilon\log(2+1/\epsilon),\qquad
+ \int_{|s|>r}k_\epsilon(s)\,ds\le C\sqrt\epsilon/r
+ \quad(r\ge\sqrt\epsilon).
+ \tag{VHP4}
+$$
+
+The heat branch satisfies the same bounds. For the second estimate,
+sum $d_m\min(1,m\epsilon/r^2)$; for the first, split the Gaussian
+exponential moment sum at $m=1/\epsilon$. These are estimates for the
+actual filters, not an assumed multiplier-domain separation.
+
+Let $P_+$ be multiplication by $\mathbf1_+$. For either filter $A$,
+its commutator on $X$ obeys
+
+$$
+ \|[P_+,A]X\|_2\le
+ C\|\mathbf1_{[-r,r]}X\|_2+C\sqrt\epsilon\,r^{-1}\|X\|_2.
+ \tag{VHP5}
+$$
+
+Split the input into that interval and its complement; on the latter,
+any kernel crossing the cut has displacement greater than $r$.
+For multiplication by $\mathbf1_+e^{-6t}$ there is additionally a
+$C\sqrt\epsilon\log(2+1/\epsilon)\|X\|_2$ term, since
+$e^{-6\max(t,0)}$ is bounded and Lipschitz.
+
+The remaining local mass is the SAME arithmetic-boundary estimate
+already paid in W332. W338 and W332's frequency split give
+$\|\mathbf1_I\beta\|_2^2\le CD/\log(1/r)$ on every interval of
+length $2r$. For $n\le N$ near $t=0$ the factor
+$n^{-3}e^{q(2\log n)}$ is $n^{-1/2}$, so their triangle sum is at
+most $C\sqrt{DN/\log(1/r)}$. The rest of $S$ has norm at most
+$CN^{-2}$. Finally $J_1:L^2\to L^\infty$ is bounded. Hence
+
+$$
+ \|\mathbf1_{[-r,r]}X\|_2
+ \le C\sqrt D\left[
+ \sqrt{N/\log(1/r)}+N^{-2}+\sqrt r\right].
+ \tag{VHP6}
+$$
+
+Choose $r=\epsilon^{1/4}$ and
+$N$ comparable to $L_\epsilon^{1/5}$. Equations VHP4--VHP6 give
+$C\sqrt D L_\epsilon^{-2/5}$ for the commutators. The identity
+$A^2+B^2=I$ for the real-axis filters turns each metric defect into
+$\langle X,(A[P_+,A]+B[P_+,B])X\rangle$, with the indicated bounded
+weight for $\mathcal H$. The exponential-conjugation error has the
+smaller order already stated. This proves the first line
+of VHP2 while retaining the sharp arithmetic boundary.
+
+For its second line, the same frequency split as W331 gives
+$\|h-g\|_0^2\le CD/L_\epsilon$, while their weight-$5/2$ norms
+remain bounded by $C\sqrt D$. Interpolate to weight $3/2$ in $r$,
+or $3/4$ in $t$. At that weight the displayed Volterra inverse is
+bounded, and W331's EXISTING $H_5$ Möbius inverse has norm at most
+$\zeta(2)$. This gives the asserted original-$H$ error.
+
+The Gamma hypothesis cannot be dropped from the first line of VHP2.
+For a nonzero real $\phi\in C_c^\infty(-2,-1)$, concentrate
+$\beta_s(t)=s^{-1/2}\phi((t-2\log2)/s)$ on the positive half-line,
+evenly extend it, and take $s=2\sqrt\epsilon$. Recover its actual
+source by the same inverse. The original packet lies below the first
+nontrivial Möbius shift. After filtering, the $n=2$ channel crosses
+$t=0$. Its limit gives
+
+$$
+ \frac{\Delta_M}{M(F_s)}\longrightarrow
+ \frac{2^{-6}}{\|\phi\|_2^2}\int_0^\infty
+ \left[|e^{-D^2}\phi|^2+
+ |\sqrt{1-e^{-2D^2}}\,\phi|^2\right]dt>0.
+ \tag{VHP6a}
+$$
+
+In the weighted coordinates above, $J_1$ applied to these concentrated
+packets tends to zero in $L^2$. The $n=1,2$ outputs concentrate at
+different locations; each fixed $n\ge3$ output vanishes on the positive
+half-line and the remaining tail is bounded by $CN^{-2}$. These facts
+justify the displayed limit. Here $\mathcal P(F_s)/M(F_s)$ grows as
+$\log(1/s)$; this family is not a counterexample on the nonpositive
+complete-energy class used below.
+
+### Consume the joint defect at an actual negative minimum
+
+Suppose $e_4=-\delta<0$, and choose its actual unit minimizer $F$.
+The usual supporting multiplier can be taken GLOBAL, not merely as
+a weak stationary equation:
+
+$$
+ Q_\lambda(G):=\mathfrak E(G)+\lambda M(G)-\mu\mathcal H(G)\ge0
+ \quad(G\in\mathcal V),\qquad
+ Q_\lambda(F)=0,\quad
+ \mu=-\delta+4\lambda,\quad
+ 0\le\lambda\le\frac{\delta}{4-\kappa_\circ}.
+ \tag{VHP7}
+$$
+
+Indeed the existing real extraction and imaginary mixing used in
+W345/W351 show that the finite function $K\mapsto e_K$ is convex
+and nonincreasing for $K>1$: mix two real minimizers with coefficients
+$\sqrt\theta,i\sqrt{1-\theta}$, then extract at the SAME moment.
+A classical supporting line at $K=4$ supplies $-\lambda$. Its bound
+at the actual minimizer gives complementary slackness, and testing
+on W350's unit null vector gives the upper bound in VHP7. No
+unconfined self-adjoint operator or negative penalized eigenvalue
+is assumed.
+
+W317 gives $M(F)+\mathcal P(F)\le C$ on these minimizers. With
+$\Delta_M=M(F_h)+M(F_v)-M(F)$ and the corresponding $\Delta_H$,
+VHP1, VHP2 and VHP7 give
+
+$$
+ 0\le Q_\lambda(F_h),Q_\lambda(F_v),\qquad
+ Q_\lambda(F_h)+Q_\lambda(F_v)
+ =\lambda\Delta_M-\mu\Delta_H
+ \le C\delta L_\epsilon^{-2/5}.
+ \tag{VHP8}
+$$
+
+The crucial factor $\delta$ multiplies the metric error; no
+$\lambda^{-1}$ or lower-multiplier premise was used.
+
+Now assume $\mathsf{RH}(T)$, take $\epsilon=1/T$, and put
+$\eta_T=\sqrt T\log(2+T)e^{-T}$. W369--W370, already used in
+VHR10, apply to the scalar-shifted heat branch and give
+$\mathfrak E(F_h)\ge-C\eta_T$. For all sufficiently large $T$,
+VHP2 also gives $\mathcal H(F_h)\ge1/2$, while always
+$M(F_h)\ge\mathcal H(F_h)$. Therefore
+
+$$
+ \boxed{\quad
+ \lambda\ge
+ \left[\frac13-C(\log T)^{-2/5}\right]\delta-C\eta_T.
+ \quad}
+ \tag{VHP9}
+$$
+
+To check the direction, VHP8 and the height bound imply
+$(\delta-3\lambda)\mathcal H(F_h)
+ \le C\delta(\log T)^{-2/5}+C\eta_T$.
+Dividing by its positive norm proves VHP9.
+In particular, at a sufficiently large starting height depending
+only on the fixed $c$,
+
+$$
+ \lambda\le\delta/6\quad\Longrightarrow\quad
+ \delta\le C\sqrt T\log(2+T)e^{-T}.
+ \tag{VHP10}
+$$
+
+This includes the previously allowed zero multiplier. Outside that
+exponentially small allowance the actual supporting multiplier has
+a positive lower bound proportional to $\delta$, as well as the
+existing upper bound. The constants and starting height have not
+been numerically evaluated.
+
+VHP9--VHP10 do not improve VHR1's allowance for the remaining
+positive-multiplier case. They supply the lower-multiplier premise
+needed by such a case's future estimates, up to the displayed height
+tail. They neither establish higher-log regularity nor remove the
+negative allowance in the original complete form. Full RH and strict
+Robin for every integer $n>5040$ remain unproved.
