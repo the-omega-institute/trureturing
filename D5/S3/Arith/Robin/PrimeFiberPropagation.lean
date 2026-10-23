@@ -6,12 +6,15 @@
    utility: none
    digest: Edge tests, first prime layers and prime replacement carry Robin's inequality. -/
 
+/- Escape audit unfinished: https://github.com/the-omega-institute/trureturing/issues/19891; sigma_prime_pow_succ. -/
+
 import Mathlib.NumberTheory.ArithmeticFunction.Misc
 import Mathlib.NumberTheory.Harmonic.EulerMascheroni
 import Mathlib.Analysis.Complex.ExponentialBounds
 import Mathlib.Analysis.SpecialFunctions.Log.Basic
 import Mathlib.Data.Nat.Factorization.Basic
 import D5.S3.Arith.ExponentExchange.IntegerSwap
+import D5.S3.Arith.RobinExponentSwap
 
 /-! The edge test compares the relative divisor-sum increase of `n → n * m` with the
 increase of `log log`. It uses no global estimate on `σ`; the fibre statement is a
@@ -83,7 +86,7 @@ theorem robinAt_mul_of_edgeTest {n m : ℕ} (hn : 1 < n) (hm : 0 < m)
           (ℓℓ + Real.log (1 + Real.log m / Real.log n)) :=
         mul_le_mul_of_nonneg_left hstep hg.le
 
-private theorem sigma_prime_pow_succ {q : ℕ} (hq : q.Prime) (a : ℕ) :
+theorem sigma_prime_pow_succ {q : ℕ} (hq : q.Prime) (a : ℕ) :
     ArithmeticFunction.sigma 1 (q ^ (a + 1)) = q * ArithmeticFunction.sigma 1 (q ^ a) + 1 := by
   rw [ArithmeticFunction.sigma_one_apply_prime_pow hq,
     ArithmeticFunction.sigma_one_apply_prime_pow hq, Finset.sum_range_succ', Finset.mul_sum]
