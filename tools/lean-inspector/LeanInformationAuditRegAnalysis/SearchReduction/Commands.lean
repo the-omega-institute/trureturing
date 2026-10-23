@@ -31,6 +31,7 @@ The reference is cleared before returning; it never caches across targets. -/
 private initialize activeProbe : IO.Ref (Option (Environment × ImportState)) ← IO.mkRef none
 
 private initialize submittedCertificates : IO.Ref (Array CertificateNomination) ← IO.mkRef #[]
+private initialize submittedEdgeCertificates : IO.Ref (Array (Name × CertificateNomination)) ← IO.mkRef #[]
 
 syntax (name := certificatePoolCmd) "#search_reduction_certificates "
   "[" obvious_certificate,* "]" : command
@@ -43,6 +44,19 @@ syntax (name := certificatePoolCmd) "#search_reduction_certificates "
     | .ok value => pure ({certificate := value, provenance := "author"} : CertificateNomination)
     | .error message => throwError "{message}"
   submittedCertificates.set certificates
+  submittedEdgeCertificates.set #[]
+
+syntax (name := edgeCertificatePoolCmd) "#search_reduction_edge_certificates " ident
+  "[" obvious_certificate,* "]" : command
+
+@[command_elab edgeCertificatePoolCmd] def elabEdgeCertificatePool : CommandElab := fun stx => do
+  let `(#search_reduction_edge_certificates $owner:ident [$cs:obvious_certificate,*]) := stx
+    | throwUnsupportedSyntax
+  let certificates ← cs.getElems.mapM fun c =>
+    match parseObviousCertificate c with
+    | .ok value => pure (owner.getId, ({certificate := value, provenance := "author"} : CertificateNomination))
+    | .error message => throwError "{message}"
+  submittedEdgeCertificates.modify (· ++ certificates)
 
 syntax (name := nominationPoolCmd) "#search_reduction_nominations " str "[" ident,* "]" : command
 
@@ -89,7 +103,8 @@ private def graphJson (r : GraphReading) : Json := Json.mkObj [
   ("lookup_backend", toJson "B_T implication without imports; full B0 alpha membership; unfinished candidates remain unknown"),
   ("certificate_language", toJson certificateLanguageVersion),
   ("certificate_pool_digest", toJson (hash (reprStr
-    (nominationCertificates r.certificatePool)))),
+    (nominationCertificates r.certificatePool, canonicalCertificateBindings r.certificateBindings)))),
+  ("given_ablation", toJson "optional; unset SEARCH_REDUCTION_GIVEN_ABLATION reuses checked cut certificates only"),
   ("star_fallback", toJson "excluded"),
   ("negative_R_requests", toJson r.negativeCalls),
   ("paired_negative_R_requests", toJson (0 : Nat)),
@@ -310,6 +325,10 @@ def publish (name : Name) (r : Observation) (source? : Option Environment := non
     addAndCompile (.defnDecl {
       name := name ++ `certificatePool, levelParams := [], type := ← inferType value,
       value, hints := .abbrev, safety := .safe})
+    let value := toExpr (reading.certificateBindings.map fun (owner, n) => (owner, n.encode))
+    addAndCompile (.defnDecl {
+      name := name ++ `certificateBindings, levelParams := [], type := ← inferType value,
+      value, hints := .abbrev, safety := .safe})
   for (label, rows) in #[(`baselineProof, r.attempts), (`pairedProof, r.pairAttempts)] do
     if let some row := rows.find? (fun row => row.proof?.isSome) then
       if let some proof := row.proof? then
@@ -374,6 +393,7 @@ private def writeRequest (path : System.FilePath) (request : Request)
         (`baseline, toExpr request.baseline), (`additions, toExpr request.additions),
         (`informationApplication, toExpr request.informationApplication),
         (`certificates, toExpr (request.certificates.map CertificateNomination.encode)),
+        (`edgeCertificates, toExpr (request.edgeCertificates.map fun (owner, n) => (owner, n.encode))),
         (`owners, toExpr owners), (`result, toExpr result), (`commit, toExpr request.baselineCommit)] do
       let type ← inferType value
       addDecl (.defnDecl {
@@ -413,6 +433,16 @@ private def auditProbeCertificates (source : Environment) (request : Request)
         else reading.pairedProof?.isSome))] |>.compress}"
 
 unsafe def executeProbe (request : Request) (owners : Array Name) (name : Name) : CommandElabM Unit := do
+  let auditModule := s!"SearchReductionAudit_{hash request.target}_{← IO.monoNanosNow}"
+  let auditDirectory : System.FilePath := "build/lean-inspector/search-reduction-audits/" ++ auditModule
+  IO.FS.createDirAll auditDirectory
+  let auditDirectory ← IO.FS.realPath auditDirectory
+  let auditPayload := auditDirectory / "request.olean"
+  writeRequest auditPayload request owners name
+  let auditSource := auditDirectory / (auditModule ++ ".lean")
+  IO.FS.writeFile auditSource
+    ("import LeanInformationAuditRegAnalysis.SearchReduction.Commands\n" ++
+      s!"run_cmd LeanInformationAudit.SearchReduction.executeProbeFile {repr auditPayload.toString}\n")
   profilePhase "probe/source-import-start"
   let imports := owners.map fun n => {module := n : Import}
   let (source, shared, _) ← importSource imports
@@ -454,6 +484,12 @@ unsafe def executeProbe (request : Request) (owners : Array Name) (name : Name) 
       discard <| checkProof (name ++ `baselineFailureGuard) [] (mkConst ``True) guardProof
     publish name result (some source)
   profilePhase "probe/publication-end"
+  let auditOutput := auditDirectory / (auditModule ++ ".olean")
+  writeModule ((← getEnv).setMainModule auditModule.toName) auditOutput (writeIR := false)
+  emitLookupRecord s!"SEARCH_REDUCTION_AUDIT {Json.mkObj [
+    ("target", toJson request.target.toString), ("source", toJson auditSource.toString),
+    ("module", toJson auditOutput.toString), ("payload", toJson auditPayload.toString),
+    ("negative_semantics", toJson "meta-computed full R; not an object-level unprovability proof")] |>.compress}"
   logInfo (observationJson result request.baselineCommit).compress
 
 /-- Only closed, kernel-checked Name/array/string expression values are read.
@@ -479,6 +515,12 @@ unsafe def executeProbeFile (path : System.FilePath) : CommandElabM Unit := do
       match CertificateNomination.decode n with
       | .ok value => pure value
       | .error message => throwError "{message}"
+    let encodedBindings ← evalExpr (Array (Name × (Nat × Name × String)))
+      (toTypeExpr (Array (Name × (Nat × Name × String)))) (← getValue `edgeCertificates)
+    let edgeCertificates ← encodedBindings.mapM fun (owner, n) =>
+      match CertificateNomination.decode n with
+      | .ok value => pure (owner, value)
+      | .error message => throwError "{message}"
     let owners ← evalExpr (Array Name) (mkApp (mkConst ``Array [.zero]) (mkConst ``Name))
       (← getValue `owners)
     let name ← evalExpr Name (mkConst ``Name) (← getValue `result)
@@ -489,7 +531,8 @@ unsafe def executeProbeFile (path : System.FilePath) : CommandElabM Unit := do
       additions := additions
       baselineCommit := commit
       informationApplication := informationApplication
-      certificates }
+      certificates
+      edgeCertificates }
     pure (request, owners, name)
   executeProbe requestData.1 requestData.2.1 requestData.2.2
 
@@ -500,7 +543,8 @@ unsafe def executeProbeFile (path : System.FilePath) : CommandElabM Unit := do
     executeProbe {
       target := target.getId, «baseline» := bs.getElems.map (·.getId),
       additions := ss.getElems.map (·.getId), baselineCommit := sha.getString,
-      certificates := ← submittedCertificates.get}
+      certificates := ← submittedCertificates.get,
+      edgeCertificates := ← submittedEdgeCertificates.get}
       (owners.getElems.map (·.getId)) name.getId
   | _ => throwUnsupportedSyntax
 
@@ -553,7 +597,8 @@ indexes. Only compiled Lean declarations are read back; JSON is print-only. -/
       target := target.getId, «baseline» := bs.getElems.map (·.getId),
       additions := ss.getElems.map (·.getId), baselineCommit := sha.getString,
       informationApplication := app.map (·.getId),
-      certificates := ← submittedCertificates.get} modules name.getId
+      certificates := ← submittedCertificates.get,
+      edgeCertificates := ← submittedEdgeCertificates.get} modules name.getId
     let command := s!"run_cmd LeanInformationAudit.SearchReduction.executeProbeFile {repr payload.toString}\n"
     IO.FS.writeFile input (imports ++ command)
     let workers := min 8 <| max 1 <|

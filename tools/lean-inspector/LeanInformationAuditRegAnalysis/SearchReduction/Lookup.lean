@@ -33,7 +33,7 @@ abbrev lookupCoverageBudget : Nat := 340000000
 
 /-- Bounded, query-local metadata reuse; certificates are always checked anew. -/
 structure LookupQueryMemo where
-  primary? : Option (Environment × Expr × DiskLookup.Candidates) := none
+  primary? : Option (Environment × Std.HashMap Expr DiskLookup.Candidates) := none
   fallback? : Option (Environment × DiskLookup.Index × Option (Array Name) ×
     DiskLookup.Candidates) := none
   profile? : Option (Environment × Array DiskLookup.Entry × Nat × Nat) := none
@@ -145,6 +145,17 @@ def resolveLookupTable (table : LookupTable) : IO LookupTable := do
 
 private unsafe def queryLookup (table : LookupTable) (index : DiskLookup.Index)
     (type : Expr) (limit : Option Nat) (fallback : Bool) : MetaM DiskLookup.Candidates := do
+  let environment ← getEnv
+  let mut xs := #[]
+  for decl in ← getLCtx do xs := xs.push decl.toExpr
+  let closedQuery ← mkForallFVars xs (← instantiateMVars type)
+  if !fallback && !closedQuery.hasMVar && !closedQuery.hasFVar then
+    if let some memo := table.memo? then
+      if let some (env, queries) := (← memo.get).primary? then
+        if ptrEq env environment then
+          if let some candidates := queries[closedQuery]? then
+            lookupPhase "lookup/primary-recall cached=true"
+            return candidates
   if fallback then
     if let some memo := table.memo? then
       if let some (env, disk, modules, candidates) := (← memo.get).fallback? then
@@ -172,6 +183,14 @@ private unsafe def queryLookup (table : LookupTable) (index : DiskLookup.Index)
       if impossible then staticFailures := staticFailures + 1
       else entries := entries.push entry
     let result := {candidates with entries, staticFailures}
+    if !fallback && !closedQuery.hasMVar && !closedQuery.hasFVar then
+      if let some memo := table.memo? then
+        memo.modify fun state =>
+          let queries := match state.primary? with
+            | some (env, queries) =>
+              if ptrEq env environment && queries.size < 64 then queries else {}
+            | none => {}
+          {state with primary? := some (environment, queries.insert closedQuery result)}
     if fallback then
       emitLookupRecord s!"LOOKUP_STATIC_STAR {Json.mkObj [
         ("scope", toJson "B_T"), ("before", toJson retained.size),

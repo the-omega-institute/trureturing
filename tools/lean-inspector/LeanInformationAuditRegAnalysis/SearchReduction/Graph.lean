@@ -123,8 +123,20 @@ structure ProbeResult where
   checked : Bool := false
   premises : List Nat := []
   proof? : Option Expr := none
+  certificate? : Option ObviousCertificate := none
   detail : String := ""
   deriving Inhabited
+
+/-- The production attachment preserves the actual support and checked term;
+the opposing arm receives no negative information from this operation. -/
+def attachCertificate (edge : GraphEdge) (paired : Bool)
+    (certificate : ObviousCertificate) (proof : Expr) (used : List Nat) : GraphEdge :=
+  if paired then {edge with
+    pairedCost := .zero, pairedZeroProof := some proof,
+    pairedCertificate? := some certificate, pairedUsedPremises := used}
+  else {edge with
+    cost := .zero, zeroProof := some proof,
+    certificate? := some certificate, usedPremises := used}
 
 structure GraphReading where
   graph : ProofGraph := {}
@@ -156,6 +168,7 @@ structure GraphReading where
   lookupBasisComplete : Bool := true
   negativeCalls : Nat := 0
   certificatePool : Array CertificateNomination := #[]
+  certificateBindings : Array (Name × CertificateNomination) := #[]
   queryAnswerMemoization : Bool := false
   deriving Inhabited
 

@@ -326,6 +326,13 @@ structure LocalResult where
   lookup : LookupTrace := {}
   certificate? : Option ObviousCertificate := none
 
+/-- A positive-only boundary cannot manufacture a negative price. A reported
+success without a proof is rejected even if its producer sets cost to zero. -/
+def certificateOnlyResult (certificate : ObviousCertificate) (result : LocalResult) : LocalResult :=
+  if result.cost == .zero && result.proof?.isSome then
+    {result with certificate? := some certificate}
+  else {result with cost := .unknown, proof? := none, certificate? := none}
+
 private unsafe def solveLookupGoal (table : LookupTable) (goal : MVarId)
     (facts : Array Expr) (tryLocal := true) (name? : Option Name := none) : MetaM LookupTrace := goal.withContext do
   if tryLocal && (← solveLocalGoal goal facts) then return {complete := true}
@@ -532,8 +539,7 @@ unsafe def replayCertificate (target : Expr) (types : List Expr)
       if let some table := lookup? then
         boundedRebuildBranch (rebuildRoute target types (some table) (some certificate)) table.budget?
       else pure {detail := "certificate.lookup_unavailable"}
-  if result.cost == .zero then return {result with certificate? := some certificate}
-  return {result with cost := .unknown, proof? := none, certificate? := none}
+  return certificateOnlyResult certificate result
 
 /-- Typed answers are scoped to exact target vocabulary, protected basis data
 and the explicit R version. JSON projections never enter this cache. -/
@@ -658,6 +664,10 @@ private unsafe def certifyLocalUncached (target : Expr) (types : List Expr := []
     (members.map fun name => ⟨.member name, "alpha-membership"⟩) ++
     (nominations.map fun c => ⟨c, "explicit"⟩))
   for candidate in candidates do
+    match candidate with
+    | .close => continue
+    | .member name => if !members.contains name then continue
+    | .lookup _ => pure ()
     let checked ← replayCertificate target types candidate lookup?
     if checked.cost == .zero then return checked
   return {detail := "certificate.not_found;not_a_negative"}
@@ -665,14 +675,20 @@ private unsafe def certifyLocalUncached (target : Expr) (types : List Expr := []
 /-- Positive-only query answers are separate from completed R answers. Pool
 identity prevents a failed nomination set hiding later registered evidence. -/
 unsafe def certifyLocal (target : Expr) (types : List Expr := [])
-    (lookup? : Option LookupTable := none) : MetaM LocalResult := do
-  let key := reprStr (target, types, nominationCertificates (← certificateNominations.get))
-  if let some result := (← certificateOnlyAnswers.get)[key]? then
-    checkMemoProof target types result
+    (lookup? : Option LookupTable := none) (owner? : Option Name := none) : MetaM LocalResult := do
+  let global ← certificateNominations.get
+  let edgePool := (← edgeCertificateNominations.get).filterMap fun (owner, nomination) =>
+    if some owner == owner? then some nomination else none
+  certificateNominations.set (global ++ edgePool)
+  try
+    let key := reprStr (target, types, nominationCertificates (global ++ edgePool))
+    if let some result := (← certificateOnlyAnswers.get)[key]? then
+      checkMemoProof target types result
+      return result
+    let result ← certifyLocalUncached target types lookup?
+    certificateOnlyAnswers.modify (·.insert key result)
     return result
-  let result ← certifyLocalUncached target types lookup?
-  certificateOnlyAnswers.modify (·.insert key result)
-  return result
+  finally certificateNominations.set global
 
 private def vertex (graph : ProofGraph) (id : Nat) : GraphVertex :=
   (graph.vertices.find? (·.id == id)).getD default
@@ -746,7 +762,7 @@ unsafe def priceGraph (graph : ProofGraph) (paired := false) (allGiven := false)
     let available := if allGiven then edge.premises else statementPremises edge seeds
     let analytic := edge.analytic
     let result ← certifyLocal (vertex graph edge.conclusion).type
-      (available.map (vertex graph · |>.type)) lookup?
+      (available.map (vertex graph · |>.type)) lookup? edge.source
     let result := if edge.window != 1 && result.cost != .zero then
       {result with cost := .unknown} else result
     let used := result.used.map (available[·]!)
@@ -760,6 +776,10 @@ unsafe def priceGraph (graph : ProofGraph) (paired := false) (allGiven := false)
         cost := result.cost, zeroProof := result.proof?, usedPremises := used,
         certificate? := result.certificate?,
         analytic, detail := result.detail}
+    let edge := if allGiven then edge else
+      match result.certificate?, result.proof? with
+      | some certificate, some proof => attachCertificate edge paired certificate proof used
+      | _, _ => edge
     edges := edges ++ [edge]
   return {graph with edges}
 
@@ -780,12 +800,14 @@ unsafe def rootProbe (graph : ProofGraph) (paired := false)
   let seeds := armSeeds graph paired
   let result ← if negative && !paired then
       localRebuild (vertex graph graph.root).type (seeds.map (vertex graph · |>.type)) lookup?
-    else certifyLocal (vertex graph graph.root).type (seeds.map (vertex graph · |>.type)) lookup?
+    else
+      certifyLocal (vertex graph graph.root).type (seeds.map (vertex graph · |>.type))
+        lookup? (vertex graph graph.root).origin.constName?
   let outcome := match result.cost with
     | .zero => Run.found | .one => .exhausted | .unknown => .incomplete .undecided
   return {
     outcome, checked := result.proof?.isSome, premises := result.used.map (seeds[·]!),
-    proof? := result.proof?, detail := result.detail}
+    proof? := result.proof?, certificate? := result.certificate?, detail := result.detail}
 
 /-- Only zero certificates and seed constants are assembled, never author
 nonseed values. The backpointers come from the same table as the reported DP. -/
@@ -833,6 +855,8 @@ private def addRootProbe (graph : ProofGraph) (probe : ProbeResult) (paired : Bo
     usedPremises := if paired then [] else actual, pairedUsedPremises := actual,
     givenUsedPremises := if paired then [] else actual, pairedGivenUsedPremises := actual,
     zeroProof := if paired then none else probe.proof?, pairedZeroProof := probe.proof?,
+    certificate? := if paired then none else probe.certificate?,
+    pairedCertificate? := probe.certificate?,
     detail := if paired then "paired-root-certificate" else "baseline-root-certificate"}]}
 
 /-- Unknown author edges selected by the optimistic lower-bound DP. The
@@ -893,20 +917,28 @@ private unsafe def refineBaseline (initial : ProofGraph) (lookup? : Option Looku
     let edge := if result.cost == .zero then {edge with
       pairedCost := .zero, pairedZeroProof := result.proof?, pairedUsedPremises := used,
       pairedCertificate? := result.certificate?} else edge
+    let edge := match result.certificate?, result.proof? with
+      | some certificate, some proof =>
+        attachCertificate (attachCertificate edge false certificate proof used)
+          true certificate proof used
+      | _, _ => edge
     graph := {graph with edges := graph.edges.set index edge}
   return (graph, probe, calls)
 
 /-- Certificates are checked first in both arms. Full negative R is reserved
 for a possible strict drop. Paired queries never request negative evidence. -/
 unsafe def evaluateGraph (raw : ProofGraph) (lookup? : Option LookupTable := none)
-    (nominations : Array CertificateNomination := #[]) : MetaM GraphReading := do
+    (nominations : Array CertificateNomination := #[])
+    (bindings : Array (Name × CertificateNomination) := #[]) : MetaM GraphReading := do
   if raw.vertices.isEmpty then return {graph := raw}
   let mut raw := raw
   let enabled := (← IO.getEnv "SEARCH_REDUCTION_LOOKUP") != some "0"
   let table ← resolveLookupTable (lookup?.getD {environment := ← getEnv, enabled})
   prepareLocalMemo table raw
   let previousPool ← certificateNominations.get
+  let previousBindings ← edgeCertificateNominations.get
   certificateNominations.set nominations
+  edgeCertificateNominations.set bindings
   try
     let lookup? := some table
     let rootType := (vertex raw raw.root).type
@@ -930,8 +962,12 @@ unsafe def evaluateGraph (raw : ProofGraph) (lookup? : Option LookupTable := non
     lookupPhase "graph/certificates-start"
     let graph ← priceGraph graph false false lookup?
     let graph ← priceGraph graph true false lookup?
-    let graph ← priceGraph graph false true lookup?
-    let graph ← priceGraph graph true true lookup?
+    let graph ← if (← IO.getEnv "SEARCH_REDUCTION_GIVEN_ABLATION") == some "1" then
+        priceGraph graph false true lookup? >>= fun graph => priceGraph graph true true lookup?
+      else pure {graph with edges := graph.edges.map fun edge => {edge with
+        visibleCost := if edge.cost == .zero then .zero else .unknown,
+        pairedVisibleCost := if edge.pairedCost == .zero then .zero else .unknown,
+        givenUsedPremises := edge.usedPremises, pairedGivenUsedPremises := edge.pairedUsedPremises}}
     let baseProbe ← rootProbe graph false lookup?
     let pairedProbe ← rootProbe graph true lookup?
     let graph := addRootProbe (addRootProbe graph baseProbe false) pairedProbe true
@@ -954,7 +990,7 @@ unsafe def evaluateGraph (raw : ProofGraph) (lookup? : Option LookupTable := non
             independentLookup := independentRun,
             independentLookupDetail := independent.detail}
           if independent.cost != .zero then
-            let reverse ← certifyLocal v.type (rootType :: baseTypes) lookup?
+            let reverse ← certifyLocal v.type (rootType :: baseTypes) lookup? v.origin.constName?
             if reverse.cost == .zero && independent.cost == .one then
               v := {v with targetPart := true}
             else
@@ -987,12 +1023,14 @@ unsafe def evaluateGraph (raw : ProofGraph) (lookup? : Option LookupTable := non
       pairedUsesSeed := selectedSeeds.any (selectedStructureSeed graph selectedSeeds),
       negativeCalls := negativeCalls + independentCalls,
       certificatePool := ← certificateNominations.get,
+      certificateBindings := bindings,
       lookupEnabled := table.enabled, lookupBasisComplete := table.complete,
       queryAnswerMemoization := ← localMemoEnabled}
     lookupPhase s!"graph/lazy-end negative_calls={reading.negativeCalls}"
     return reading
   finally
     certificateNominations.set previousPool
+    edgeCertificateNominations.set previousBindings
     localMemoContext.set ""
     localMemoAnswers.set {}
     certificateOnlyAnswers.set {}

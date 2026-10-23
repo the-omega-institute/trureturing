@@ -16,6 +16,7 @@ structure Request where
   baselineCommit : String
   informationApplication : Option Name := none
   certificates : Array CertificateNomination := #[]
+  edgeCertificates : Array (Name × CertificateNomination) := #[]
   deriving Inhabited
 
 private def sourceInfo (source : Environment) (n : Name) : MetaM ConstantInfo :=
@@ -445,7 +446,8 @@ private unsafe def runCore (source base : Environment) (request : Request)
       profilePhase "query/evaluation-start"
       let table ← onDemandLookup {
         environment := base, complete := lookupComplete, enabled, disk?, implicationModules?} sharedImports?
-      let reading ← withEnv graphEnv <| evaluateGraph graph (some table) request.certificates
+      let reading ← withEnv graphEnv <| evaluateGraph graph (some table)
+        request.certificates request.edgeCertificates
       profilePhase "query/assembly-start"
       let baselineProof? ← if upperIsZero reading.baseline then
         withEnv graphEnv <| assembleZero reading.graph else pure none

@@ -6,12 +6,18 @@ namespace LeanInformationAudit.SearchReduction
 open Lean Meta
 
 initialize certificateNominations : IO.Ref (Array CertificateNomination) ← IO.mkRef #[]
+initialize edgeCertificateNominations : IO.Ref (Array (Name × CertificateNomination)) ← IO.mkRef #[]
 
 /-- Canonical order is independent of producer order, repeated nominations
 and producer scores. Provenance is carried separately from acceptance. -/
 def nominationCertificates (pool : Array CertificateNomination) : Array ObviousCertificate :=
   ((pool.map (·.certificate)).toList.eraseDups.toArray).qsort
     (fun a b => a.render < b.render)
+
+def canonicalCertificateBindings (bindings : Array (Name × CertificateNomination)) :
+    Array (Name × String) :=
+  ((bindings.map fun (owner, n) => (owner, n.certificate.render)).toList.eraseDups.toArray).qsort
+    (fun a b => reprStr a < reprStr b)
 
 /-- LLM adapters accept names and a frozen producer label only. No LLM is
 invoked here and a missing nomination supplies no negative evidence. -/

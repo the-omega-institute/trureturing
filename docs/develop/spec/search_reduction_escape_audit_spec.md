@@ -66,7 +66,7 @@ matcher、等式引理、`_proof_n` 等编译器生成常量用 Lean 自身的�
 
 搜索计入查询规范化、视图生成、实例化、合一、实例合成、闭合表义务、新证书构造与最终 kernel 核验。准备计入索引读取、olean 加载、签名与证明体的确定性词汇搬运和重建；这些物化操作不选择候选、不创建或赋值查询元变量。已认证 B0 的内联证明载荷不重复做中间 kernel 复核；重建计算声明的合法性及最终查询环境中的闭合证书仍经 kernel 检查。心跳均以 Lean 对外单位报告，内部读数为其 1000 倍。
 
-每查询另有覆盖上界 G = `340000000` 心跳，计量候选搜索与准备之和。G 由判词无关的主索引候选成本分布预先冻结，并写入 R 版本；它仅截断枚举，未访问部分为 unknown，不是语义难度上界。穷举否定的审计成本随 B_T 增长，只作遥测。成功证书优先；NoHit 要求成员完整、主索引与后备完整、所有候选均在两份上限内正常失败且 capped 为空。G 增大只允许结算 unknown，不能推翻已认证结果。允许表、顺序、κ、准备上限和 G 不按读数调整。当前 revision 16 只枚举主索引候选；star 后备页不进入生产候选流。
+每查询另有覆盖上界 G = `340000000` 心跳，计量候选搜索与准备之和。G 由判词无关的主索引候选成本分布预先冻结，并写入 R 版本；它仅截断枚举，未访问部分为 unknown，不是语义难度上界。穷举否定的审计成本随 B_T 增长，只作遥测。成功证书优先；NoHit 要求成员完整、主索引完整、所有候选均在两份上限内正常失败且 capped 为空。G 增大只允许结算 unknown，不能推翻已认证结果。允许表、顺序、κ、准备上限和 G 不按读数调整。当前 revision 17 只枚举主索引候选；star 后备页不进入生产候选流。
 
 1. `intro`；
 2. `assumption`；
@@ -89,11 +89,11 @@ matcher、等式引理、`_proof_n` 等编译器生成常量用 Lean 自身的�
 
 磁盘索引契约要求独立生产者按模块分片、分页写出，并对账受保护 B0 清单。索引按基底数据输入与显式版本号复用，不哈希程序字节。消费者将完整路由 manifest 物化为堆数组，命中页及必要通配页通过 mmap 读取，只复制命中元数据；当前实现尚无总额外索引内存为 O(命中) 的严格上界。消费者不对全环境建树，不调用 `exact?`、`apply?` 或 `LazyDiscrTree` 全库树。总内存还包含 Lean 导入闭包与缓存区域。
 
-The current backend is `R_lookup/v16/scope-B_T/primary-index-only/candidate-200000/preparation-8000000/G-340000000/memo-target-basis-R-v1/N-memo-2000000/checkpoint-v3/views-kappa`. `make search-reduction-index INDEX_BASIS=<protected-commit> INDEX_DIR=<build-directory>` produces the index offline. Reuse depends on compiled basis data, the Mathlib pin, Lean version and explicit format versions. Implication candidates use Lean core `DiscrTree.mkPath` and `getMatch`, including projection and direction views. Batteries pickle/withUnpickle supplies module shards and mapped compacted storage. Candidate order is a stable partition with already loaded owners first, followed within each partition by module name and module-local declaration ordinal. Revision 16 excludes dropped `[*]` and `[Eq,*,*,*]` star-fallback keys from production enumeration; the static-pruning implementation and its theorem remain historical evidence only. Implication candidates are filtered to B_T without changing their module-local order.
+The current backend is `R_lookup/v17/obvious-v1/lazy-interval/scope-B_T/primary-index-only/candidate-200000/preparation-8000000/G-340000000/memo-target-basis-R-v1/N-memo-2000000/checkpoint-v3/views-kappa`. `make search-reduction-index INDEX_BASIS=<protected-commit> INDEX_DIR=<build-directory>` produces the index offline. Reuse depends on compiled basis data, the Mathlib pin, Lean version and explicit format versions. Implication candidates use Lean core `DiscrTree.mkPath` and `getMatch`, including projection and direction views. Batteries pickle/withUnpickle supplies module shards and mapped compacted storage. Candidate order is a stable partition with already loaded owners first, followed within each partition by module name and module-local declaration ordinal. Revision 17 excludes dropped `[*]` and `[Eq,*,*,*]` star-fallback keys from production enumeration; the static-pruning implementation and its theorem remain historical evidence only. Implication candidates are filtered to B_T without changing their module-local order.
 
 The retained historical star-pruning code performs a target-independent static necessary-condition check before candidate attempts when exercised by legacy probes. A signature that is provably data-valued and has no Subtype result is unsupported by R's existing suitability rule and fails normally. For proof-valued signatures, a finite argument-determination graph starts from all conclusion occurrences, potential proposition obligations and instance arguments, including their output parameters. Type-occurrence edges conservatively propagate determination. The executable `staticStarImpossible` checks that the proposed support contains every seed and is closed under every edge; a required data argument outside it rules out a compliant certificate for every target (`LookupModel.static_star_impossible_no_certificate`). Universe-polymorphic arguments that can become proofs are retained as potential proof obligations. Data-valued Subtype candidates are retained because projection can expose a computation from the value that is absent from its signature. Analysis failures retain the candidate. Statically rejected candidates count as normal failures, including when a legacy v15 attempt would have been capped or exceptional. This code is retained as historical evidence and is not part of current NoHit accounting. Membership, B_T, κ, G, threshold A and eligibility remain unchanged. Kernel certificates are checked by the existing path.
 
-`SEARCH_REDUCTION_PROFILE=<path>` records production phase boundaries, including imports, isolation, presentation, structure exclusion, graph extraction, pricing, certificate assembly, independent negative replay and publication. Nested replay spans are reported separately. `SEARCH_REDUCTION_SOURCE_AUDIT=1` checks the transitive original dependencies of the production run's existing baseline and paired zero certificates and emits `PRODUCTION_SOURCE_AUDIT`. Baseline certificates exclude T and registered S; paired certificates exclude T. Diagnostics reuse the assembled certificates and do not repeat graph evaluation. Neither option changes R's candidate scope, order, budgets or classification.
+`SEARCH_REDUCTION_PROFILE=<path>` records production phase boundaries, including imports, isolation, presentation, structure exclusion, graph extraction, pricing, certificate assembly, independent negative replay and publication. Nested replay spans are reported separately. The production command always checks the transitive original dependencies of the production run's existing baseline and paired zero certificates and emits `PRODUCTION_SOURCE_AUDIT`. Baseline certificates exclude T and registered S; paired certificates exclude T. These checks reuse the assembled certificates and do not repeat graph evaluation. Neither option changes R's candidate scope, order, budgets or classification.
 
 The preparation allocation is frozen from verdict-free, preparation-only cold-process telemetry. The sample includes every previously capped candidate identity, with four cold repeats per identity, and uncensored comparison candidates. A censored 4000000-heartbeat probe establishes a lower bound; it does not establish completion cost. R assigns 8000000 preparation heartbeats, using twice the largest sampled cost rounded to a whole million, with a censored sample contributing its probe limit. Candidates still exceeding this allocation remain unknown. The allocation stays fixed throughout calibration.
 
@@ -113,15 +113,27 @@ Per-reading checkpoints use typed Batteries pickle objects and atomic rename. Ea
 
 The whole process tree remains subject to the 12 GiB physical-footprint limit. NoHit requires complete membership and complete primary-index enumeration with normal candidate failures. Membership completeness belongs to the query: every missing entry must be checked as ineligible, outside that query's acyclic scope, excluded by a compiled and mutation-tested necessary-condition theorem, or definitionally unequal. Until that theorem and its mutations are verified, unresolved membership entries conservatively block NoHit; a global incomplete bit cannot certify a negative query. Missing data, candidate budget exhaustion, G truncation, load failure and unsupported transport remain unknown and retain their candidate residuals. Whole-tree 12 GiB or wall-clock guards yield interrupted execution; they are infrastructure limits outside R. Complete recall for general N-equivalence and the implementation bridge for query-local constant-closure exclusion remain open.
 
-主索引路线独立运行与恢复状态。成功并取得闭合 kernel 证书即为零价；只有主索引候选全部正常失败才为一价。主索引路线超时、中断或故障只使该路为 unknown。查表关闭时只重放旧局部路线及其原预算；star 后备路线在 revision 16 中明确排除。
+主索引路线独立运行与恢复状态。成功并取得闭合 kernel 证书即为零价；只有主索引候选全部正常失败才为一价。主索引路线超时、中断或故障只使该路为 unknown。查表关闭时只重放旧局部路线及其原预算；star 后备路线在 revision 17 中明确排除。
 
 只在主索引候选的冻结枚举完整结束时报告 NoHit。缺索引、漏页、未遍历页、部分基底、预算耗尽和中断均为 unknown/insufficient，不计一价。NoHit 只表示冻结 R 未识别，不表示不可证明或本征困难；一步有界推论类不等于全部 B⊢T。`SEARCH_REDUCTION_LOOKUP=0` 只用于重放旧局部路线的消融读数，不冒充新 R 的完整查表。
+
+### 3.5 Lean 显然证书与惰性否定
+
+证书语言固定为 `obvious/v1/name-only`：`by_close | by_lookup <ident> | by_member <ident>`。语法类别 `obvious_certificate` 没有 term、tactic、显式见证、数据项、方向、投影路径或引理列表槽。两臂共用同一语言、主索引范围和重放器。证书作者、LLM、核心提名器及 R 都是不受信的生产者。
+
+重放器从实际图顶点构造完整 telescope，并按该臂可见的 Γ 创建局部假设。`by_close` 只运行冻结闭合表；`by_lookup n` 要求 n 属于当前目标的主索引召回和 B_T，再运行相同 κ、实例机制、投影和方向的单候选尝试；`by_member n` 要求全 B0 α-哈希召回，再运行 `isDefEq`。范围外、star-only、缺索引、超限或失败的证书均不能记零，也不能记一。成功保留闭合证明项，经过 kernel 与 std3 闭包检查；生产命令逐臂审计其原始传递来源。证书集合不扩大 R 的接受范围。
+
+`#search_reduction_certificates [by_close, by_lookup n, by_member m]` 提交下一份请求的受限数据池；`#search_reduction_nominations "出处标签" [n, m]` 追加仅含名字的提名。LLM 接口只接收名字与冻结的模型、模板、次数出处，不调用 LLM、不保存思考文本。R 的命中须再由单名字证书重放后导出；不能用一份单名字证书重放的组合命中保持 unknown。`SEARCH_REDUCTION_NOMINATORS=core` 启用 Lean 核心 MePo 与 SineQuaNon，各提名至多八项，在目标局部的冻结预算内运行一次；默认只使用已提交的数据、成员哈希和冻结闭合表。核心分数、提名顺序与重复次数不参与代价，核验按去重后的规范顺序进行。
+
+先核验两臂全部边和根的证书。基底上界为零时可认证 bind-only。`U_B ≤ U_{B∪S}` 时停止并给出 insufficient，不执行任何完整 NoHit 搜索。只有 `U_{B∪S} < U_B` 时才请求基底根、候选见证边及 `L_B` 最优路线上的 unknown 作者边的 R；每个请求的相同查询由原有缓存结算，失败或超限保留 unknown。只在 `L_B > U_{B∪S}` 且其他守卫完成时授予阳性。配对边、配对根和反向结构查询不运行完整否定。没有两臂全边守卫，也不要求有限的配对下界。
+
+每个目标的生成审计模块执行 Lean 命令，保留逐边类型化的代价记录、`ObviousCertificate` 声明和 kernel 核验的证明声明。JSON 仅投影这些 Lean 计算结果，不作为判词输入。判词绑定图、B_T、R 版本、语言版本与规范证书池摘要；扩充证书池可以推翻旧阳性，不改写旧结算。NoHit 仍是完整机械 R 的相对否定；提名器或 LLM 未命中不能认证一价，也不能推出绝对不显然、不可证明或复杂度分离。
 
 ## 4. 前沿、根探针与 min-max DP
 
 保留声明级 `k=1` 作者边。`k=2` 对每个声明至多追加一个统一的两层祖先前沿候选，不枚举前提子集，不由跳边生成新窗口。新增候选数至多是批内活声明数；声明拆分不得改变窗口规则或生成额外选择自由。前沿仍按 §3.2–3.4 作陈述级解析检验和定价。
 
-根探针总共两次，分别只持 `B_used` 和 `B_used∪S`。成功且经 kernel 复核时，将零价根超边加入两臂共享的候选图；边的前提是证书实际使用的事实，不能用无前提零边抹去 `S` 的成本。基底根探针成功直接提供 bind-only 证书。根探针和两层前沿探针仅在该臂闭合并经 kernel 复核时加入零价边；失败或耗尽不加边，不记一价。作者边的未知仍是 unknown。已有 `R_v1` 成功证书也可支持 bind-only，`R_v1` 不必跑，其旧耗尽不成为新下界。
+两臂的根证书核验分别只持 `B_used` 和 `B_used∪S`。只有出现严格的上界差距时，基底根才追加一次完整 R；配对根不请求 NoHit。成功且经 kernel 复核时，将零价根超边加入两臂共享的候选图；边的前提是证书实际使用的事实，不能用无前提零边抹去 `S` 的成本。基底根探针成功直接提供 bind-only 证书。根探针和两层前沿探针仅在该臂闭合并经 kernel 复核时加入零价边；失败或耗尽不加边，不记一价。作者边的未知仍是 unknown。已有 `R_v1` 成功证书也可支持 bind-only，`R_v1` 不必跑，其旧耗尽不成为新下界。
 
 对种子 `v∈X`，`d_X(v)=0`。其余节点按入边候选取最小值：
 
@@ -131,9 +143,9 @@ d_X(v) = min_e (c_X(e) + max_{u∈prem_X(e)} d_X(u))
 
 空前提的最大值为零，无路为无穷。零价证书边只带实际使用的前提；正常耗尽的作者边带全部活的非种子前提。采用 min-max 深度，不对共享前提求和。生产图、DP、区间、回溯与 `classifyGraph` 属于非测试 Lean 核心，模型与生产复用。
 
-未知边以 `[0,1]` 端点计算两臂 `[L_X(T),U_X(T)]`。含无穷时不相减；有未知或必需阶段 incomplete 时不得声称非 bind-only。保留最优路线回溯、证书实际前提及播种 `S` 的使用位置。
+未知作者边以 `[0,1]` 端点计算两臂 `[L_X(T),U_X(T)]`。下界将 unknown 边的前提置空，以允许将来的零证书仅使用原前提子集；上界保留作者边的全部前提。已认证的零边两端均只使用实际前提，已认证的一边两端均保留作者前提。含无穷时不相减；未决边只在阻碍严格区间分离时阻止阳性。必需的隔离、呈现、根否定和结构排除 incomplete 仍阻止阳性。保留最优路线回溯、证书实际前提及播种 `S` 的使用位置。
 
-另计算 `d_given` 消融：向局部探针提供全部直接前提类型；生产距离 `d_cut` 仍遵守合成前提隐藏规则。在共同图、假设单调的理想重建模型中 `d_cut≥d_given`。若所有读数全等，报告“切式计价无可观测效应”，不把消融值带回生产判词。
+`SEARCH_REDUCTION_GIVEN_ABLATION=1` 启用 `d_given` 消融，向局部探针提供全部直接前提类型。未启用时只将已有 cut 零证书复用于 given 视图，其余保留区间，不报告完整消融比较。生产距离 `d_cut` 仍遵守合成前提隐藏规则。在共同图、假设单调的理想重建模型中 `d_cut≥d_given`。完整消融读数全等时报告“切式计价无可观测效应”，不把消融值带回生产判词。
 
 ## 5. 单源呈现与宽 `S` 排除
 
@@ -147,7 +159,7 @@ d_X(v) = min_e (c_X(e) + max_{u∈prem_X(e)} d_X(u))
 
 ### 5.1 target-part 反向探针
 
-除宽排除外，若 `s` 与 `T` 在单射改名后互为陈述子项，或 `R_lookup` 持 `{T}∪B_used` 能闭合 `type(s)` 而只持 `B_used` 正常耗尽，则 `s` 是 target-part，不可作为新增结构种子。每个 `S` 成员至多一次反向探针和一次基底独立探针，成功须 kernel 复核；预算或故障具名 incomplete。该规则防止把真正依赖目标的等价泛化、拆分或重打包当作辅助线。基底已能独立闭合的 `s` 不因反向探针成功而排除，仍须经过单射改名与宽排除。
+除宽排除外，若 `s` 与 `T` 在单射改名后互为陈述子项，或 `R_lookup` 持 `{T}∪B_used` 能闭合 `type(s)` 而只持 `B_used` 正常耗尽，则 `s` 是 target-part，不可作为新增结构种子。结构探针只为存在上界差距的配对最优路线所选 `S` 成员运行。独立探针可调用基底 R；反向探针只核验正证书，不认证配对否定。独立探针命中时无需反向否定；独立探针 NoHit 且反向证书命中时排除该种子。独立探针未命中且反向证据未决时，target-part 排除仍为 incomplete，阻止阳性。成功须 kernel 复核；预算或故障具名 incomplete。该规则防止把真正依赖目标的等价泛化、拆分或重打包当作辅助线。基底已能独立闭合的 `s` 不因反向探针成功而排除，仍须经过单射改名与宽排除。
 
 `T`、其别名/重述以及依赖它的声明不得偷偷进入配对环境。宽排除不因私有名、拆文件或声明包装失效。若 `S` 全为 target-part，不能判非 bind-only。例行可证的合成前提仍可因其陈述提供了隐去的信息而产生约化；防刷边界是 `T` 自身被基底根探针例行闭合时判 bind-only，读数必须保留其 R 和图作用域。
 
@@ -158,7 +170,7 @@ d_X(v) = min_e (c_X(e) + max_{u∈prem_X(e)} d_X(u))
 门槛 A 为现行定案：满足下面守卫的严格下降即判非 bind-only，强制报告 `closure=zero|partial`；不要求配对距离降到零。守卫采用声明图最优活路径上的实际种子使用，`cut` 与 `proof_hard` 都计入约化，分别报告。
 
 - **bind-only**：取得合规单源呈现证书、`U_B(T)=0`、基底根探针成功或已有 `R_v1` 成功证书之一。
-- **non-bind-only[G,R_lookup,k,B_used,closure]**：图提取完整；隔离、呈现与宽 `S` 排除完成；无必需 unknown/incomplete；根处查表正常耗尽；两臂区间有限；`L_B(T)>U_{B∪S}(T)`；存在合规 `S` 种子在配对臂最优活路线实际使用；见证分为 `cut`（已播种的合成 `S` 成员使边从一变零）和 `proof_hard`（最优路径使用的 `S` 顶点满足 `d_B(s) ≥ 1` 且附有 s 对 B 独立查表正常耗尽记录）。`d_B(s)=0` 或独立查表命中的 s 不能作 proof_hard。`U_{B∪S}(T)=0` 时 `closure=zero`，否则为 `partial`。
+- **non-bind-only[G,R_lookup,k,B_used,closure]**：图提取完整；隔离、呈现与宽 `S` 排除完成；无必需 incomplete；基底根处查表正常耗尽；基底下界与两臂上界有限；`L_B(T)>U_{B∪S}(T)`；存在合规 `S` 种子在配对臂最优活路线实际使用；见证分为 `cut`（已播种的合成 `S` 成员使边从一变零）和 `proof_hard`（最优路径使用的 `S` 顶点满足 `d_B(s) ≥ 1` 且附有 s 对 B 独立查表正常耗尽记录）。`d_B(s)=0` 或独立查表命中的 s 不能作 proof_hard。`U_{B∪S}(T)=0` 时 `closure=zero`，否则为 `partial`。
 - **insufficient-evidence**：其余情形。`d_B>0` 且两臂距离相等时另报“未见约化”，不判 bind-only；`S=∅` 时另报“无辅助声明”，不能判非 bind-only。
 
 非 bind-only 读数逐条输出 cut 见证边及其合成前提，或 proof_hard 种子及其基底深度，并输出实际种子依赖、两臂区间和 closure。`zero` 提供沿已核验证书零价闭合的更强读数，`partial` 只说明该图上的剩余构造层减少；两者都不自动取得 `CLAUDE.md` §3.2 的 content 资格。单体证明若基底不能零价闭合而没有具名辅助声明，只能给出“无辅助声明 / 证据不足”。

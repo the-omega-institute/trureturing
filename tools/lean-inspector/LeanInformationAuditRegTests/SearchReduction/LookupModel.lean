@@ -251,7 +251,7 @@ noncomputable def perCandidateLookup {Candidate : Type*} (basis_T : List Candida
     .exhausted
   else .incomplete .undecided
 
-private theorem perCandidate_found {Candidate : Type*} (basis_T : List Candidate)
+theorem perCandidate_found {Candidate : Type*} (basis_T : List Candidate)
     (attempt : Candidate → Option LookupCandidateAttempt) (preparation search : Nat) :
     perCandidateLookup basis_T attempt preparation search = .found ↔
       ∃ candidate ∈ basis_T, candidateOutcome preparation search (attempt candidate) = .found := by
@@ -265,7 +265,7 @@ private theorem perCandidate_found {Candidate : Type*} (basis_T : List Candidate
     all_goals intro h
     all_goals first | contradiction | exact False.elim (absent h)
 
-private theorem perCandidate_nohit {Candidate : Type*} (basis_T : List Candidate)
+theorem perCandidate_nohit {Candidate : Type*} (basis_T : List Candidate)
     (attempt : Candidate → Option LookupCandidateAttempt) (preparation search : Nat) :
     perCandidateLookup basis_T attempt preparation search = .exhausted ↔
       ∀ candidate ∈ basis_T, candidateOutcome preparation search (attempt candidate) = .exhausted := by
