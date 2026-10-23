@@ -173,11 +173,9 @@ private theorem single_jump (p n : ℤ) (e : BinaryExponent) (c : ℂ) :
     have hg : -n - 1 - e ⟨2, by decide⟩ ≠ p - (-1 - e ⟨0, by decide⟩) := by omega
     simp only [ite_eq_right hf, ite_eq_right hg, ite_self, mul_zero, zero_mul, sub_self]
 
-/- proof_shape: binary_laurent_jump: content
-   admission_basis: escape-witness
-   escape_witness: The complete two-order coefficient difference is evaluated
-   for every signed diagonal exponent. Positive powers cancel; negative
-   powers use the signed kernel identity, including negative numerator powers.
+/- proof_shape: binary_laurent_jump: bind-only
+   admission_basis: none (consumed bind-only helper, CLAUDE.md §3.2)
+   escape_witness: none (no independent escape content)
    consumer: binary_complete_residue -/
 /-- The complete binary Laurent jump, with unrestricted numerator and
 diagonal exponents. The degree filter is exact, including empty fibers. -/
@@ -251,11 +249,10 @@ private theorem reverse_readout (F : ABField) (q k : ℤ) :
   ext i
   fin_cases i <;> simp <;> omega
 
-/- proof_shape: binary_complete_residue: content
-   admission_basis: escape-witness
-   escape_witness: Supported kernel extraction identifies the full residue
-   with the two-order Laurent jump, preserving the signed diagonal and the
-   cancellation of ell from the degree filter. -/
+/- proof_shape: binary_complete_residue: bind-only
+   admission_basis: none (consumed bind-only helper, CLAUDE.md §3.2)
+   escape_witness: none (no independent escape content)
+   consumer: binary_fractional_taylor -/
 /-- Every complete ordinary residue of a finite binary Laurent rational is
 an explicit finite signed-binomial sum. The fractional index only shifts
 its Taylor order; the homogeneous degree filter stays fixed. -/
@@ -293,11 +290,10 @@ def binaryTaylor (Q : BinaryPolynomial) (B : ℕ) (s r n : ℤ) : ℂ :=
       else 0
   else 0
 
-/- proof_shape: binary_fractional_taylor: content
-   admission_basis: escape-witness
-   escape_witness: The complete residue tail is zero at the denominator
-   order; the remaining finite sum contracts by Vandermonde at every signed
-   numerator exponent. Empty and nonhomogeneous degree fibers are retained. -/
+/- proof_shape: binary_fractional_taylor: bind-only
+   admission_basis: none (consumed bind-only helper, CLAUDE.md §3.2)
+   escape_witness: none (no independent escape content)
+   consumer: LatticeHalfFockABOuterTaylor.actual_ab_binary_taylor -/
 /-- Any fractional cutoff at least the binary pole order evaluates the
 complete readout by a finite signed Taylor sum. This is rational evaluation,
 without a locality hypothesis on either ordered expansion. -/

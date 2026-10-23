@@ -29,12 +29,10 @@ open OrderedCollisionCoordinates.OrderedCoefficientCompatibility
 open scoped BigOperators VertexOperator
 noncomputable section
 
-/- proof_shape: actual_ab_binary_taylor: content
-   admission_basis: escape-witness
-   escape_witness: Genuine complete-field locality pads the actual outer
-   readout to max(H(j),B(j)); the generic signed Laurent evaluation then
-   contracts the complete fractional sum. The original inner K is unchanged.
-   consumer: forward_weighted_identity_of_negative_degree -/
+/- proof_shape: actual_ab_binary_taylor: bind-only
+   admission_basis: none (consumed bind-only helper, CLAUDE.md §3.2)
+   escape_witness: none (no independent escape content)
+   consumer: forward_weighted_identity, forward_weighted_identity_of_negative_degree -/
 set_option maxHeartbeats 1600000 in
 -- Preserve the complete actual coefficient telescope during outer completion.
 /-- The actual middle family is evaluated using a finite Laurent numerator
@@ -110,11 +108,10 @@ theorem actual_ab_binary_taylor
   exact binary_fractional_taylor (Q j) (B j) (max (B j) (H j)) 1 (d - j) n
     (Nat.le_max_left _ _)
 
-/- proof_shape: forward_weighted_identity_of_negative_degree: content
-   admission_basis: escape-witness
-   escape_witness: On j<N the signed binary Taylor order B(j)-(d-j)-1
-   equals the original degree L+M+K-d-r-2. Negative degree annihilates
-   each complete actual nested coefficient and the original Taylor sum. -/
+/- proof_shape: forward_weighted_identity_of_negative_degree: bind-only
+   admission_basis: none (consumed bind-only helper, CLAUDE.md §3.2)
+   escape_witness: none (no independent escape content)
+   consumer: forward_weighted_identity -/
 set_option maxHeartbeats 1600000 in
 -- Preserve the complete actual coefficient telescope during the degree comparison.
 /-- The original middle equality on every negative Taylor degree, retaining
