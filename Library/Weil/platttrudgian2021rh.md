@@ -2640,7 +2640,8 @@ $k=(p')^\vee$ and every $0<\gamma<q$,
 $\int e^{\gamma|h|}|k(h)|dh<\infty$.
 
 Off the diagonal, the distribution kernel of $p(D)$ is a fixed
-Fourier-normalization multiple of $k(h)/h$. The difference factor
+Fourier-normalization multiple of $k(h)/h$; any diagonal delta term
+cancels in the commutator. The difference factor
 in the commutator cancels that denominator, since
 $$
  \frac{|w(t+h)/w(t)-1|}{|h|}\le r e^{r|h|}.
@@ -2862,7 +2863,8 @@ is finite and its contribution is zero. VHCp5--VHCp6 prove VHCp1.
 In particular, if $\mathfrak E(F)=-\delta<0$, choosing
 $L\ge(2\sigma)^{-1}\log(C_\sigma/\delta)$ and the fixed threshold
 retains $\mathfrak E(\widehat F_L)\le-\delta/2$. Its support radius is
-$O_p(\delta^{-p})$ for any fixed $p>2$, using $\sigma=1/(2p)$.
+$O_p(\delta^{-p})$ as $\delta\downarrow0$ for any fixed $p>2$,
+using $\sigma=1/(2p)$.
 This gives no finite Gaussian atom-count or coefficient-size bound.
 
 These weighted estimates and compactification do not control the
