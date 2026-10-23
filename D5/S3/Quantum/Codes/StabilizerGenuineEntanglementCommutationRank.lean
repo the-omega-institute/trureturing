@@ -4,7 +4,7 @@
    mirror-E: none(waiver:external-open-problem-resolution)
    anchors: []
    utility: none
-   digest: Genuine entanglement forces the Makuta--Kuzaka--Augusiak commutation-rank lower bound. -/
+   digest: Genuine entanglement forces the Makuta--Kuzaka--Augusiak commutation-rank bound. -/
 
 import D5.S3.Quantum.Algebra.WeylDisplacementTrace
 import D5.S3.Quantum.Algebra.WeylPhaseArithmetic
