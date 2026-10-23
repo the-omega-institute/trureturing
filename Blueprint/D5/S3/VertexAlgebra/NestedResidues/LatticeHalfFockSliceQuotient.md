@@ -16,7 +16,7 @@ Lean statement: `D5/S3/VertexAlgebra/NestedResidues/LatticeHalfFockSliceQuotient
 
 *Commentary.*
 
-The lawful WeightedLocalCorrelator.common_cleared_fields supplies the actual common array. Finite homogeneous carrier slicing, the left and swapped J/B supplier, and the original attributed signed Laurent collision are private consumed auxiliaries in this quotient owner. For the exact actual JAB distribution and the full coefficient telescope, let P and P₀ be finite Laurent polynomials at arbitrary natural cutoffs K and K₀. Their signed total degrees are L+M+K-d-r-n-3 and L+M+K₀-d-r-n-3. Neither cutoff is required to be a source/source locality witness. With C=v-z and T=max K K₀, the theorem proves C^(T-K) P=C^(T-K₀) P₀, and equality of P/Q_K and P₀/Q_K₀ in the common rational field.
+The lawful WeightedLocalCorrelator.common_cleared_fields supplies the actual common array. Finite homogeneous carrier slicing, the left and swapped J/B supplier, and the original attributed signed Laurent collision form the Laurent-carrier, supported-readout and weighted-extraction stages of this quotient. Their original computations supply the full result. For the exact actual JAB distribution and the full coefficient telescope, let P and P₀ be finite Laurent polynomials at arbitrary natural cutoffs K and K₀. Their signed total degrees are L+M+K-d-r-n-3 and L+M+K₀-d-r-n-3. Neither cutoff is required to be a source/source locality witness. With C=v-z and T=max K K₀, the theorem proves C^(T-K) P=C^(T-K₀) P₀, and equality of P/Q_K and P₀/Q_K₀ in the common rational field.
 
 Multiplication by a labelled difference translates a scalar homogeneous slice by exactly one degree. Iterating this finite coefficient identity, and composing the polynomial actions on the same actual distribution, puts both numerators on the identical degree slice at T. The three labelled differences are nonzero, so the common denominator is nonzero. All global Laurent exponents remain signed; negative total degree, zero numerators, and K=0 remain in scope. No support assertion is imposed on the whole distribution.
 
@@ -27,8 +27,4 @@ Classical provenance is Matsuo–Nagatomo and Bakalov–Kac (math/0402315); math
 ## References
 
 - Truth anchor: `D5/S3/VertexAlgebra/NestedResidues/LatticeHalfFockSliceQuotient.actual_slice_quotient_compat`
-- Dependency: [D5/S3/VertexAlgebra/ChargedResidue/Locality](../ChargedResidue/Locality.md)
-- Dependency: [D5/S3/VertexAlgebra/GroundRightCurrentTransport/NativeDefect](../GroundRightCurrentTransport/NativeDefect.md)
-- Dependency: [D5/S3/VertexAlgebra/LatticeHalfFockChargedCollision/WeightedLocalCorrelator](../LatticeHalfFockChargedCollision/WeightedLocalCorrelator.md)
-- Dependency: [D5/S3/VertexAlgebra/NestedResidues/ContextualKernelExtraction](ContextualKernelExtraction.md)
-- Dependency: [D5/S3/VertexAlgebra/RationalCollision](../RationalCollision.md)
+- Dependency: [D5/S3/VertexAlgebra/NestedResidues/LatticeHalfFockSliceQuotient/WeightedExtraction](LatticeHalfFockSliceQuotient/WeightedExtraction.md)
