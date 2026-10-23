@@ -111,5 +111,31 @@ theorem actual_law : arena.Law actual :=
   source_bridge.mp (@forward_weighted_identity_of_negative_degree)
 end NegativeDegree
 
+namespace FullForward
+abbrev signature : Signature := NegativeDegree.signature
+abbrev actual : Realization signature := NegativeDegree.actual
+
+def arena : Arena where
+  signature := signature
+  Law R := ∀ (_ : Unit) (x : Input), coefficients x → locality x →
+    let degree : ℤ := (vectorFrequencyBound x.D x.a + 1 : ℕ) +
+      (vectorFrequencyBound x.D x.b + 1 : ℕ) + x.K - x.d - x.r - 2
+    R.readout () () x = ∑ u ∈ Finset.range (degree + 1).toNat,
+      collisionTaylor x.P x.gamma u (degree - u).toNat *
+        orderedResidueWeight (x.d - (vectorFrequencyBound x.D x.a + 1 : ℕ))
+          (degree - u + x.r - x.K)
+
+set_option maxHeartbeats 1600000 in
+-- Reconstruct every original input, including the supplied K and independent H(j).
+theorem source_bridge : (type_of% (@forward_weighted_identity)) ↔ arena.Law actual := by
+  constructor
+  · intro h _ x hP hH
+    exact h x.D x.hu x.i x.a x.b x.K x.gamma x.delta x.d x.r x.n x.x x.phi x.P hP x.H hH
+  · intro h D hu i a b K gamma delta d r n x phi P hP H hH
+    exact h () ⟨D, hu, i, a, b, K, gamma, delta, d, r, n, x, phi, P, H⟩ hP hH
+
+theorem actual_law : arena.Law actual := source_bridge.mp (@forward_weighted_identity)
+end FullForward
+
 end
 end Reg.D5.S3.VertexAlgebra.NestedResidues.LatticeHalfFockABOuterTaylor
