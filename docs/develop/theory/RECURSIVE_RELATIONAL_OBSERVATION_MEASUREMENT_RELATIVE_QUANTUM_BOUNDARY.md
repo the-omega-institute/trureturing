@@ -2011,3 +2011,556 @@ The joint four-expression recovery problem remains separate from this
 necessary budget for a supplied family of continuations.
 
 ## 追加锚（本行以下为增补区）
+
+## 13. An evaluated inverse certificate for the original fifty means
+
+The setting in this section is the depth interface of Assumption 6.2,
+with exactly the fixed frame, orientation, $F,L$ and detectors of
+Definitions 6.1, 9.2 and 10.1. The source remains every $(S,A)$ in
+$\mathcal L$. The certificate is algebraic on the larger space of all
+real skew matrices; it requires no rank or spectral restriction on a
+source. Section 12's necessary budget for a separately supplied coherent
+consumer and the inverse certificate here concern different conclusions.
+
+**Definition 13.1 (coordinates, polarization and fixed normalization).**
+Order the ten edges as $(12,13,14,15,23,24,25,34,35,45)$.
+For $u\in\mathbb R^{10}$ let $U(u)$ be the skew matrix whose ordered
+upper entries are $u$, and write $u_{ik}=U(u)_{ik}$ also when $i>k$.
+For a skew matrix set
+
+$$
+a(A)=(A_{ik})_{i<k},\qquad
+\|A\|_{\mathrm{sk}}=\|a(A)\|_2=\|A\|_{\mathrm F}/\sqrt2.
+\tag{13.1}
+$$
+
+For a symmetric matrix put
+$\|T\|_{\triangle,2}^2=\sum_{i\le k}T_{ik}^2$.
+This coordinate norm differs from its Frobenius norm. All vectors of
+fifty means have the ordinary Euclidean norm. For a homogeneous
+quadratic map $f$ use
+$\operatorname{pol}f(u,v)=(f(u+v)-f(u-v))/4$.
+Put $h_i=i^2/36$, $F_j=F^j$, $G_j=F^{2j}$, and define
+
+$$
+\begin{aligned}
+C_j(u,v)&=-\tfrac12F_j\bigl(U(u)G_jU(v)+U(v)G_jU(u)\bigr)F_j,
+&&j=0,1,2,\\
+d(u,v)&=\operatorname{pol}(b\circ U)(u,v),\\
+\Phi_F(u,v)&=\bigl((C_0)_{ik}:i\le k;\ d;
+                         (C_1)_{ik}:i\le k;\ (C_2)_{ik}:i\le k\bigr).
+\end{aligned}
+\tag{13.2}
+$$
+
+There are $15+5+15+15=50$ coordinates. In particular,
+$C_j(u,u)=K(F^jU(u)F^j)$.
+For the four indices $a<b<c<d$ complementary to $r$, the orientation
+in Definition 6.1 gives
+
+$$
+\begin{aligned}
+b_r(U(u))&=2(-1)^{r-1}
+ (u_{ab}u_{cd}-u_{ac}u_{bd}+u_{ad}u_{bc}),\\
+d_r(u,v)&=(-1)^{r-1}
+ (u_{ab}v_{cd}+v_{ab}u_{cd}-u_{ac}v_{bd}-v_{ac}u_{bd}
+                         +u_{ad}v_{bc}+v_{ad}u_{bc}).
+\end{aligned}
+\tag{13.3}
+$$
+
+Let $Q_F(A)$ be the original fifty means $\mathbb E Z_f$ in (10.3),
+in the order of (13.2), and let
+$B_F=\operatorname{pol}(Q_F\circ U)$.
+At depth $j$ its coordinate is
+$M_f^{-1}\operatorname{pol}(A\mapsto f(F^jAF^j))$.
+Here $M_f$ is computed from the base polynomial, before filtering:
+
+| Base coordinate $f$ | Sum of absolute base coefficients | $M_f$ in (10.1) |
+| --- | ---: | ---: |
+| $K_{ii}=\sum_{\ell\ne i}A_{i\ell}^2$ | $4$ | $2$ |
+| $K_{ik}=-\sum_{\ell\notin\{i,k\}}A_{i\ell}A_{\ell k}$, $i<k$ | $3$ | $7/4$ |
+| $b_r$ in (13.3) | $6$ | $5/2$ |
+
+The same detector and the same $M_f$ are used at every depth.
+Thus $\Phi_F=D_M B_F$ for the diagonal matrix of these fifty base
+normalizations, and
+$\|\Phi_F(u,v)\|_2\le(5/2)\|B_F(u,v)\|_2$.
+No full-tensor effect or depth-dependent rescaling is supplied.
+
+**Lemma 13.2 (homogeneous five-vertex estimate).** For distinct indices
+define
+
+$$
+x_{ik\ell}=u_{i\ell}v_{\ell k}+v_{i\ell}u_{\ell k},
+\qquad z_{i\ell}=u_{i\ell}v_{i\ell}=z_{\ell i}.
+\tag{13.4}
+$$
+
+If $\eta\ge0$ bounds the absolute values of every $x_{ik\ell}$,
+every $z_{i\ell}$ and every $d_r(u,v)$, then
+
+$$
+\|u\|_2\|v\|_2\le100\eta.
+\tag{13.5}
+$$
+
+Proof. If either vector vanishes the assertion holds. Otherwise divide
+the two vectors by their norms and divide $\eta$ by their norm product.
+Bilinearity reduces the proof to $\|u\|_2=\|v\|_2=1$.
+Choose an edge $p=\{a,b\}$, $a<b$, on which
+$\alpha=|u_{ab}|=\max_e|u_e|$. Then
+$\alpha\ge1/\sqrt{10}$ and $|v_{ab}|\le\eta/\alpha$.
+
+For every $c\notin\{a,b\}$ the two available equations are
+
+$$
+x_{bca}=-(u_{ab}v_{ac}+v_{ab}u_{ac}),\qquad
+x_{acb}=u_{ab}v_{bc}+v_{ab}u_{bc}.
+\tag{13.6}
+$$
+
+Ordered entries in these formulas automatically include the signs when
+$c<a$ or $c<b$. Since every $|u_e|\le\alpha$, each of the six edges
+meeting $p$ other than $p$ satisfies
+
+$$
+|v_e|\le\frac{\eta+|v_{ab}|\alpha}{\alpha}
+       \le\frac{2\eta}{\alpha}.
+\tag{13.7}
+$$
+
+For a disjoint edge $\{c,d\}$ let $r$ be the fifth vertex.
+After multiplication by its orientation sign, (13.3) contains
+$u_{ab}v_{cd}+v_{ab}u_{cd}$ and four other products. Each of those
+four products has a $v$ edge meeting $p$ other than $p$, so its absolute
+value is at most $\alpha(2\eta/\alpha)=2\eta$.
+The term $v_{ab}u_{cd}$ has absolute value at most $\eta$.
+Consequently
+
+$$
+\alpha|v_{cd}|\le\eta+\eta+4(2\eta)=10\eta.
+\tag{13.8}
+$$
+
+All ten coordinates of $v$ are now at most $10\eta/\alpha$ in absolute
+value, including $p$. Therefore
+$1=\|v\|_2\le10\sqrt{10}\eta/\alpha\le100\eta$.
+Undoing the normalization proves (13.5). The classification into the
+chosen edge, its six neighbors and its three disjoint edges exhausts
+all ten edges. $\square$
+
+**Lemma 13.3 (explicit inversion of the original filtered moments).**
+For every real $u,v$,
+
+$$
+\|u\|_2\|v\|_2\le16124313600\,\|\Phi_F(u,v)\|_2.
+\tag{13.9}
+$$
+
+Proof. Put $\Delta=\|\Phi_F(u,v)\|_2$; each coordinate of (13.2)
+has absolute value at most $\Delta$.
+Every two distinct $h_i$ differ by at least $1/12$, and
+$0<h_i<1$. For $i\ne k$ the three off-diagonal moments are
+
+$$
+y_j^{ik}=-\frac{2(C_j)_{ik}}{(i/6)^j(k/6)^j}
+     =\sum_{\ell\notin\{i,k\}}h_\ell^j x_{ik\ell},
+\qquad j=0,1,2.
+\tag{13.10}
+$$
+
+The denominators used here are at least $6^{-4}$, so
+$|y_j^{ik}|\le2592\Delta$. For the remaining three indices $r,s,t$,
+subtracting $(h_s+h_t)y_1^{ik}$ from
+$y_2^{ik}+h_sh_ty_0^{ik}$ cancels the $s,t$ terms. Hence
+
+$$
+x_{ikr}=
+\frac{h_sh_t y_0^{ik}-(h_s+h_t)y_1^{ik}+y_2^{ik}}
+     {(h_r-h_s)(h_r-h_t)},\qquad
+|x_{ikr}|\le144\cdot4\cdot2592\Delta=1492992\Delta.
+\tag{13.11}
+$$
+
+This formula applies to each of the three choices of $r$ and to every
+ordered off-diagonal entry; symmetry of $C_j$ supplies either order.
+
+The diagonal moments give all fifteen numbers
+
+$$
+t_{ij}=\frac{(C_j)_{ii}}{(i/6)^{2j}}
+       =\sum_{\ell\ne i}h_\ell^j z_{i\ell},\qquad
+|t_{ij}|\le1296\Delta,\qquad j=0,1,2.
+\tag{13.12}
+$$
+
+Here is an explicit inversion using these moments, without an unknown
+conditioning constant. To recover any edge $\{a,b\}$ choose any third
+vertex $c$, and let $r,s$ be the remaining two vertices. For
+$i\in\{a,b,c\}$ put
+
+$$
+w_i=(h_i-h_r)(h_i-h_s),\qquad
+R_i=t_{i2}-(h_r+h_s)t_{i1}+h_rh_s t_{i0}.
+\tag{13.13}
+$$
+
+The polynomial $(X-h_r)(X-h_s)$ vanishes at $h_r,h_s$. Substitution
+in (13.12) therefore gives the three exact equations
+
+$$
+R_a=w_bz_{ab}+w_cz_{ac},\qquad
+R_b=w_az_{ab}+w_cz_{bc},\qquad
+R_c=w_az_{ac}+w_bz_{bc}.
+\tag{13.14}
+$$
+
+Multiply these equations by $w_a,w_b,w_c$, respectively, and add the
+first two minus the third. The $z_{ac},z_{bc}$ terms cancel, proving
+
+$$
+z_{ab}=\frac{w_aR_a+w_bR_b-w_cR_c}{2w_aw_b}.
+\tag{13.15}
+$$
+
+Every $1/144\le|w_i|\le1$, and (13.12) gives
+$|R_i|\le(1+2+1)1296\Delta=5184\Delta$. Thus for every edge
+
+$$
+|z_{ab}|\le\frac32\,144^2\,5184\Delta=161243136\Delta.
+\tag{13.16}
+$$
+
+Finally $|d_r|\le\Delta$. Since $1492992<161243136$, all the
+hypotheses of Lemma 13.2 hold with $\eta=161243136\Delta$.
+Its factor $100$ gives (13.9), including when $\Delta=0$.
+Every denominator above depends only on the five fixed filter entries;
+no division by a source coordinate, eigenvalue or spectral gap occurs
+in this moment inversion. $\square$
+
+**Theorem 13.4 (evaluated detector-normalized certificate).** The
+polarization of the original fifty means satisfies
+
+$$
+\boxed{
+\|B_F(u,v)\|_2\ge c_F\|u\|_2\|v\|_2,
+\qquad c_F=\frac1{40310784000}>0,
+\qquad u,v\in\mathbb R^{10}.
+}
+\tag{13.17}
+$$
+
+Proof. Combine (13.9) with
+$\|\Phi_F\|_2\le(5/2)\|B_F\|_2$ from Definition 13.1 and the exact
+identity $(5/2)16124313600=40310784000$. $\square$
+
+For correspondence with the general suppliers, write the $\nu$th
+coordinate of $Q_F\circ U$ as $u^T R_\nu u$. Each $R_\nu$ is the real
+symmetric $10\times10$ coefficient matrix, with half the mixed
+coefficient in each off-diagonal position. Then
+$B_F(u,v)_\nu=u^T R_\nu v$. There are exactly fifty such matrices,
+and their entries include the base $M_f^{-1}$ at every depth.
+Wang–Xu, [*Generalized phase retrieval*, Theorem 2.1](https://arxiv.org/html/1605.08034v3),
+equates real quadratic phase retrieval with nonsingularity of this
+bilinear map. Its hypotheses hold here by Theorem 9.1 on all real skew
+matrices. Zhuang, [*On stability of generalized phase retrieval and
+generalized affine phase retrieval*, Lemma 2.1, Theorem 2.3 and
+(2.3)](https://link.springer.com/article/10.1186/s13660-019-1968-z),
+supplies the general positive frame bound and product-distance stability.
+Those results apply to real symmetric coefficient matrices without a
+positive-semidefiniteness requirement; the square-root measurement
+results later in that paper have extra hypotheses and are not used.
+The number $c_F^2$ is an evaluated lower choice for its squared frame
+bound $a_0$. The source-specific contribution here is the bound
+(13.17), obtained from the original moments by (13.6)–(13.16), rather
+than a new general phase-retrieval or compactness theorem.
+
+## 14. Residual-qualified precision and the complete finite record
+
+**Proposition 14.1 (orbit ambiguity and arbitrary off-image readouts).**
+For real skew $A,B$ put
+
+$$
+d_\pm(A,B)=\min\{\|A-B\|_{\mathrm{sk}},\|A+B\|_{\mathrm{sk}}\},
+\qquad
+D_\pm(A,B)=\max\{\|A-B\|_{\mathrm{sk}},\|A+B\|_{\mathrm{sk}}\}.
+\tag{14.1}
+$$
+
+With $K_F=c_F^{-1}=40310784000$, one has
+
+$$
+d_\pm D_\pm\le K_F\|Q_F(A)-Q_F(B)\|_2.
+\tag{14.2}
+$$
+
+More explicitly, let $(S,A),(T,B)\in\mathcal L$, and let
+$y\in\mathbb R^{50}$ and a real symmetric $\widehat S$ be arbitrary
+readouts, not necessarily in the lawful image. Suppose known bounds are
+
+$$
+\begin{aligned}
+\|Q_F(A)-y\|_2&\le\varepsilon_Q,&
+\|Q_F(B)-y\|_2&\le r_Q,\\
+\|S-\widehat S\|_{\mathrm F}&\le\varepsilon_S,&
+\|T-\widehat S\|_{\mathrm F}&\le r_S.
+\end{aligned}
+\tag{14.3}
+$$
+
+All four bounds are nonnegative. Then
+
+$$
+\begin{aligned}
+d_\pm D_\pm&\le40310784000(\varepsilon_Q+r_Q),\\
+d_\pm&\le\sqrt{40310784000(\varepsilon_Q+r_Q)},\\
+\|S-T\|_{\mathrm F}&\le\varepsilon_S+r_S,\\
+\min_{\sigma\in\{-1,1\}}
+\|(S+iA)-(T+i\sigma B)\|_{\mathrm F}
+&\le\sqrt{(\varepsilon_S+r_S)^2+
+                     80621568000(\varepsilon_Q+r_Q)}.
+\end{aligned}
+\tag{14.4}
+$$
+
+If $D_\pm\ge r>0$, the second line may be replaced by the linear
+bound $d_\pm\le40310784000(\varepsilon_Q+r_Q)/r$.
+Any two lawful candidates whose quadratic residuals about the same $y$
+are at most $\varepsilon_Q$ obey
+$d_\pm D_\pm\le80621568000\varepsilon_Q$.
+
+Proof. The product-distance implication is Zhuang's Theorem 2.3/(2.3)
+with the evaluated lower bound (13.17). In the present conventions its
+polarization identity is exactly
+
+$$
+Q_F(A)-Q_F(B)=B_F(a(A)-a(B),a(A)+a(B)).
+\tag{14.5}
+$$
+
+Thus its distance product is $d_\pm D_\pm$, with no extra factor.
+The triangle inequality gives the first and third lines of (14.4).
+Since $D_\pm\ge d_\pm$, the first line bounds $d_\pm^2$.
+Finally the squared complex Frobenius norm is
+$\|S-T\|_{\mathrm F}^2+2\|A-\sigma B\|_{\mathrm{sk}}^2$;
+minimize over the one common sign. Division by the declared positive
+$r$ gives the local bound. The two-candidate assertion uses the same
+triangle inequality. $\square$
+
+In particular the global bound has a square root in readout error;
+it covers $A=0$, singular densities and repeated-spectrum strata.
+A lower bound on $D_\pm$ is a separate condition, not a genericity
+assumption silently imposed on this global statement. The readout
+premises do not construct a lawful candidate. A finite-arithmetic
+residual certificate must include its evaluation error in $r_Q,r_S$;
+substituting unbounded numerical residual approximations would not
+verify (14.3).
+
+**Proposition 14.2 (confidence radii for the original complete schedule).**
+Fix a positive integer $N$ and $0<\delta<1$. Use exactly the depth schedule of
+Proposition 10.2: $N$ independent attempts for each of the fifty pair
+configurations and each of the fifteen single-copy settings, in the
+fixed public order, with no retries. Retain both filter chains and all
+failed prefixes. Put
+
+$$
+L_\delta=\log(130/\delta),\qquad
+\tau_{\rm pair}=\sqrt{2L_\delta/N},\qquad
+\tau_{\rm single}=\sqrt{L_\delta/(2N)}.
+\tag{14.6}
+$$
+
+Let $\overline q$ be the fifty averages of the actual variables
+$Z_f\in\{-1,0,1\}$ in Definition 10.1. Let $\overline p$ be the fifteen
+averages of the single-copy indicators, and form $S_N$ by applying
+(10.4) to those fifteen averages. For each fixed lawful source, with
+probability at least $1-\delta$ simultaneously,
+
+$$
+\begin{aligned}
+\|\overline q-Q_F(A)\|_\infty&\le\tau_{\rm pair},&
+\|\overline q-Q_F(A)\|_2&\le10\sqrt{L_\delta/N},\\
+\|\overline p-p(S)\|_\infty&\le\tau_{\rm single},&
+\|S_N-S\|_{\triangle,2}&\le3\sqrt5\,\tau_{\rm single},\\
+&&\|S_N-S\|_{\mathrm F}&\le\sqrt{85}\,\tau_{\rm single}.
+\end{aligned}
+\tag{14.7}
+$$
+
+Here $p(S)$ denotes precisely the fifteen probabilities in (10.4).
+The confidence level is uniform over the lawful domain in the sense
+that the same constants work for every fixed source; it is not a
+simultaneous coupling of runs from different sources.
+
+For actual arithmetic outputs $y\in\mathbb R^{50}$ and real symmetric
+$\widehat S$, suppose certified nonnegative tolerances $a_Q,a_S$ satisfy
+$\|y-\overline q\|_2\le a_Q$ and
+$\|\widehat S-S_N\|_{\mathrm F}\le a_S$.
+On the same event the source-error inputs in (14.3) may be taken as
+
+$$
+\varepsilon_Q=a_Q+10\sqrt{L_\delta/N},\qquad
+\varepsilon_S=a_S+\sqrt{85}\,\tau_{\rm single}.
+\tag{14.8}
+$$
+
+There is also the symmetric coordinate bound
+$\|\widehat S-S\|_{\triangle,2}\le a_S+3\sqrt5\tau_{\rm single}$.
+Consequently every lawful candidate with certified residuals $r_Q,r_S$
+obeys (14.4), with these explicit values. The statement is simultaneous
+over such candidates, including candidates selected after reading the
+record; no further union bound over candidates is required.
+
+Proof. Conditional on the fixed source, Assumption 6.2 and the
+independent instrument initialization give independent attempts within
+each configuration. Every pair variable uses the denominator $N$ of
+all attempts. It equals zero on a failed prefix and has expectation
+$f(F^jAF^j)/M_f$ by (10.3). Thus it estimates $Q_F(A)$ directly,
+without multiplying by a newly chosen normalization or dividing by
+success counts.
+
+The bounded-independent-variable Hoeffding inequality gives, for $t>0$,
+the actual two-sided tails
+
+$$
+\Pr(|\overline q_\nu-Q_F(A)_\nu|\ge t)
+ \le2\exp(-Nt^2/2),\qquad
+\Pr(|\overline p_\ell-p(S)_\ell|\ge t)
+ \le2\exp(-2Nt^2).
+\tag{14.9}
+$$
+
+The first range has length two, and the second range has length one.
+The standard supplier is Hoeffding,
+[*Probability Inequalities for Sums of Bounded Random Variables*,
+Theorem 2](https://doi.org/10.1080/01621459.1963.10500830),
+applied with those ranges. At the respective radii in (14.6) both
+right sides are $2e^{-L_\delta}=\delta/65$.
+A union bound over $50+15=65$ settings gives the claimed event.
+In particular the pair radius is twice the single radius.
+
+On that event, the fifty-dimensional Euclidean error is at most
+$\sqrt{50}\tau_{\rm pair}=10\sqrt{L_\delta/N}$.
+Each diagonal entry of $S_N$ has error at most $\tau_{\rm single}$.
+By (10.4), each of its ten off-diagonal entries has error at most
+$\tau_{\rm single}+\tfrac12(2\tau_{\rm single})
+=2\tau_{\rm single}$.
+The two squared norm bounds are therefore
+$5\tau_{\rm single}^2+10(2\tau_{\rm single})^2=45\tau_{\rm single}^2$
+and
+$5\tau_{\rm single}^2+20(2\tau_{\rm single})^2=85\tau_{\rm single}^2$.
+Adding the separate arithmetic tolerances proves (14.8), using
+$\|T\|_{\triangle,2}\le\|T\|_{\mathrm F}$ for the coordinate version.
+Proposition 14.1 is deterministic on this event and hence applies to
+every qualifying candidate. $\square$
+
+**Corollary 14.3 (nonempty confidence regions and charged precision).**
+Under Proposition 14.2 define the set of lawful candidates
+
+$$
+\mathcal C=
+\{(T,B)\in\mathcal L:
+ \|Q_F(B)-y\|_2\le\varepsilon_Q,
+ \|T-\widehat S\|_{\mathrm F}\le\varepsilon_S\}.
+\tag{14.10}
+$$
+
+With probability at least $1-\delta$ it contains the true source, and
+every two of its elements obey
+
+$$
+d_\pm(A,B)\le\sqrt{80621568000\varepsilon_Q},\qquad
+\|S-T\|_{\mathrm F}\le2\varepsilon_S.
+\tag{14.11}
+$$
+
+For prescribed skew-coordinate ambiguity $h>0$ and symmetric Frobenius
+ambiguity $g>0$, suppose
+$a_Q<h^2/80621568000$ and $a_S<g/2$.
+It suffices to choose the positive integer $N$ with
+
+$$
+N\ge\max\left\{
+\frac{100L_\delta}{(h^2/80621568000-a_Q)^2},\quad
+\frac{85L_\delta}{2(g/2-a_S)^2}
+\right\}.
+\tag{14.12}
+$$
+
+Every such region has the ambiguities at most $h,g$ on that event.
+The complete acquisition charges for this $N$ are
+
+$$
+\begin{array}{c|c}
+\text{source preparations}&115N\\
+\text{single-copy detector calls}&15N\\
+\text{local filter calls}&60N+U_1\le90N\\
+\text{joint detector calls}&20N+C_T\le50N\\
+\text{padded outcome-record bits}&155N.
+\end{array}
+\tag{14.13}
+$$
+
+The variables $U_1,C_T$ have exactly their actual-run meanings in
+Proposition 10.2. All preparations and actual calls on failed prefixes
+are charged. Both specimens execute their prescribed chain even if
+the other fails; an unexecuted detector is only padded.
+
+Proof. On the event (14.7), (14.8) puts $(S,A)$ in $\mathcal C$.
+For any two candidates in this set the triangle inequality bounds their
+quadratic-mean difference by $2\varepsilon_Q$, and their symmetric
+difference by $2\varepsilon_S$. Apply (14.2) and $d_\pm^2\le d_\pm D_\pm$
+to obtain (14.11). Inequality (14.12) makes
+$\varepsilon_Q\le h^2/80621568000$ and
+$\varepsilon_S\le g/2$, which proves the precision assertion.
+
+There are $50N$ pairs and $15N$ single specimens, giving $115N$
+preparations. The $15N$ depth-one pairs use $30N$ local filter calls;
+the depth-two pairs use $30N$ first calls and $U_1$ second calls.
+There are $20N$ unfiltered joint detector calls and $C_T$ filtered
+double-success calls. The payload is
+$15N+20N+3(15N)+5(15N)=155N$ bits. This is exactly (10.5), without
+free successful replacement. $\square$
+
+The region (14.10) is a set-valued precision assertion, not an installed
+point-output orbit decoder. For an arbitrary off-image readout outside
+the confidence event it can be empty. Certifying a candidate's lawfulness,
+finding one, evaluating residual bounds with finite arithmetic, and
+proving a bound on that computation's time and workspace remain separate
+tasks. The arithmetic tolerances in (14.8) are declared premises, not
+an uncharged algorithm. At zero arithmetic tolerance the displayed
+sufficient pair-precision budget scales as $h^{-4}$; no claim of sharp
+risk or resource optimality follows. There is no exact recovery of
+continuous parameters from a fixed finite record, in accordance with
+Proposition 10.4.
+
+The outcome payload in (14.13) retains order and failures. Its reads and
+writes, extraction of counts, source/frame/calibration backing, schedule
+and program descriptions, counters, allocation, arithmetic-output
+encoding, workspace and actual permissions require the further
+resources in Definition 10.3. The rows give neither elementary gate
+counts nor physical time or energy. Section 12's separately supplied
+coherent continuation is not executed or charged in this acquisition
+result; its necessary lower bound remains in its original prediction
+task. The present upper certificate does not assert an efficient
+predictor for that task or a matching lower bound.
+
+Attribution and scope. The evaluated number (13.17), the moment
+relations (13.10)–(13.16) and their consumer (14.4), (14.8)–(14.13)
+are a repository-derived synthesis for the fixed fifty means and the
+same lawful source. Nonsingular-polarization and product-distance
+stability are the published Wang–Xu and Zhuang suppliers cited above;
+bounded independent concentration is Hoeffding's inequality. These
+ingredients are not new general theorems or a claim of global
+literature originality. The certificate adds no observations or
+permissions, no nonreal reference, no source-dependent selector and no
+free post-selection. It uses the additional preparation/control
+service in Assumption 6.2, without implementing it in the old
+wait/read/Stop menu or by native $\alpha/\beta$ constructors. Physical
+Euclidean dimension, full joint prediction, lawful off-image decoding
+with proved arithmetic cost, fixed-record sharp risk and the remaining
+native acquisition/certification bridges retain their separate scopes.
+No Lean verification or physical realization is asserted.
+
+## 追加锚（本行以下为增补区）
