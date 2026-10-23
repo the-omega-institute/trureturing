@@ -66,7 +66,10 @@ internal sealed class CommutatorLogarithmBranchRefutationDocument : IScribeDocum
                         + "0 = −πi, contradicting π > 0 and i ≠ 0. Hence no such pair of "
                         + "functions exists. The obstruction concerns the exponential-dependent "
                         + "complex extension; the real symmetric identity retains its stated scope."))),
-                DescribeRole.Theorem))));
+                DescribeRole.Theorem,
+                openProblemResolutionClaim: new OpenProblemResolutionClaim(
+                    ProblemSlugRef.Create("bathory-2025-commutator-logarithm-branch-refutation"),
+                    ResolutionKind.Refuted)))));
 
     private static Formula Complexes => Seq(Mathbb, Grp(F.Id("C")));
     private static Formula Naturals => Seq(Mathbb, Grp(F.Id("N")));
