@@ -23,13 +23,6 @@ open LatticeHalfFockChargedTensorCoefficients LatticeHalfFockCorrectedField
 open LatticeHalfFockPhysicalRescaling LatticeFiniteNegativeGeneration
 open LatticeSugawaraCurrents LatticeHalfFockLeftCurrentTransport
 
-local macro "nativeSlice" : term => pure (Lean.mkIdent
-  ((Lean.Name.num `_private.D5.S3.VertexAlgebra.GroundRightCurrentTransport.NativeDefect 0) ++
-    `D5.S3.VertexAlgebra.LatticeHalfFockGroundRightCurrentTransport.nativeSlice))
-local macro "nativeSlice_mode" : term => pure (Lean.mkIdent
-  ((Lean.Name.num `_private.D5.S3.VertexAlgebra.GroundRightCurrentTransport.NativeDefect 0) ++
-    `D5.S3.VertexAlgebra.LatticeHalfFockGroundRightCurrentTransport.nativeSlice_mode))
-
 private theorem compatible_zero_left (D : LatticeData) (hu : IsUnit D.G.det)
     (b : Carrier D) (gamma delta : ℤ) :
     OriginalCompatible D hu 0 b gamma delta := by
@@ -155,10 +148,9 @@ private def compatibleLeft (D : LatticeData) (hu : IsUnit D.G.det)
   add_mem' := fun ha hc => compatible_add_left D hu _ _ b gamma delta ha hc
   smul_mem' := fun c _ ha => compatible_smul_left D hu _ b gamma delta c ha
 
-private theorem neg_one_square (n : ℤ) :
-    (-1 : ℂ) ^ n * (-1 : ℂ) ^ n = 1 := by
-  rw [← zpow_add₀ (by norm_num : (-1 : ℂ) ≠ 0), ← two_mul]
-  exact (even_two_mul n).neg_one_zpow
+local macro "parity_square" : term => pure (Lean.mkIdent
+  ((Lean.Name.num `_private.D5.S3.VertexAlgebra.GroundRightCurrentTransport.SectorPropagation 0) ++
+    `D5.S3.VertexAlgebra.LatticeHalfFockGroundRightCurrentTransport.parity_square))
 
 private theorem wordParity_sign (D : LatticeData) (word : List (Index D))
     (epsilon : Bool) :
@@ -213,7 +205,7 @@ theorem sectorProject_first_source_compatibility
       _ = ((-1 : ℂ) ^ (s - n) * (-1 : ℂ) ^ n) * (-1 : ℂ) ^ n := by
         rw [hprod]
       _ = (-1 : ℂ) ^ (s - n) := by
-        rw [mul_assoc, neg_one_square, mul_one]
+        rw [mul_assoc, parity_square, mul_one]
   have law := projectedGround_left_current_word D hu
     (LatticeHalfFockChargedResidue.charged_sector_ground_pair D hu)
     word alpha (wordParity word epsilon) (s - n) hword b t
