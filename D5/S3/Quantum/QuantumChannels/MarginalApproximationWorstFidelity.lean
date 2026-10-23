@@ -350,7 +350,46 @@ private lemma shift_fidelity (N : ℕ)
     (hχ : IsProcessCPTP (shiftProcess N))
     (hm : ∀ k, marginal (shiftProcess N) k = (1 / 4 : ℂ) • 1) :
     fidelity (shiftProcess N) (marginalApprox (shiftProcess N)) = 1 / 4 ^ N := by
-  sorry
+  classical
+  let c : ℝ := 1 / 4 ^ N
+  have hc : 0 ≤ c := by positivity
+  have ht : Matrix.trace (shiftProcess N) = 1 := process_trace _ hχ
+  have hnorm : star (shiftCoeff N) ⬝ᵥ shiftCoeff N = 1 := by
+    rw [dotProduct_comm]
+    simpa only [shiftProcess, Matrix.trace_vecMulVec] using ht
+  have hidem : shiftProcess N * shiftProcess N = shiftProcess N := by
+    simp only [shiftProcess, Matrix.vecMulVec_mul_vecMulVec, hnorm, one_smul]
+  have hroot : CFC.sqrt (shiftProcess N) = shiftProcess N :=
+    CFC.sqrt_unique hidem hχ.1.nonneg
+  have hmarg : marginalApprox (shiftProcess N) = (c : ℂ) • 1 := by
+    ext a b
+    simp only [marginalApprox, hm, Matrix.smul_apply, smul_eq_mul, Matrix.one_apply]
+    by_cases hab : a = b
+    · subst b
+      simp [c, div_pow]
+    · obtain ⟨k, hk⟩ := Function.ne_iff.mp hab
+      rw [if_neg hab]
+      simp only [mul_zero]
+      exact Finset.prod_eq_zero (Finset.mem_univ k) (by simp [hk])
+  have hdiag (r : ℝ) :
+      Matrix.diagonal (fun _ : Fin N → Fin 4 => (r : ℂ)) = (r : ℂ) • 1 := by
+    ext a b
+    simp only [Matrix.diagonal_apply, Matrix.smul_apply, smul_eq_mul, Matrix.one_apply]
+    split_ifs <;> simp
+  have hsqrt := D5.S3.Quantum.Information.NMLWMeasuredFidelitySeparation.sqrt_diagonal
+    (fun _ : Fin N → Fin 4 => c) (fun _ => hc)
+  rw [hdiag c, hdiag (Real.sqrt c)] at hsqrt
+  have hprod : CFC.sqrt (shiftProcess N) * CFC.sqrt (marginalApprox (shiftProcess N)) =
+      (Real.sqrt c : ℂ) • shiftProcess N := by
+    rw [hroot, hmarg, hsqrt, Matrix.mul_smul, Matrix.mul_one]
+  have hp : ((Real.sqrt c : ℂ) • shiftProcess N).PosSemidef :=
+    hχ.1.smul (Complex.zero_le_real.mpr (Real.sqrt_nonneg c))
+  have htn := congrArg Complex.re (traceNorm_of_posSemidef hp)
+  have hu : uhlmann (shiftProcess N) (marginalApprox (shiftProcess N)) = Real.sqrt c := by
+    unfold uhlmann
+    rw [hprod]
+    simpa [Matrix.trace_smul, ht] using htn
+  rw [fidelity, hu, Real.sq_sqrt hc]
 
 /-- The bound holds for every process matrix; cyclic shifts attain it for at least two qubits. -/
 theorem result : claim := by
