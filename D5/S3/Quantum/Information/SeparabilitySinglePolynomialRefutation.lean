@@ -21,7 +21,7 @@ open scoped BigOperators ComplexOrder Kronecker
 open D5.S3.Resource.CompositeCones
 open D5.S3.Resource.EntanglementWitness
 open D5.S3.Quantum.Entanglement.AbsolutePPT.Bipartite (partialTranspose)
-open D5.S3.Quantum.Entanglement.GHZMeasureBiseparableBound (IsDensity)
+open D5.S3.Quantum.Information.SLDSpectralEnergy (IsDensity)
 
 namespace D5.S3.Quantum.Information.SeparabilitySinglePolynomialRefutation
 
