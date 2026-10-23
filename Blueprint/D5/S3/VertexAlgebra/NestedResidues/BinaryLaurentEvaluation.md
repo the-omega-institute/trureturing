@@ -336,4 +336,4 @@ The two ordered Hahn coefficients are subtracted before support or evaluation. A
 - Truth anchor: `D5/S3/VertexAlgebra/NestedResidues/BinaryLaurentEvaluation.y`
 - Truth anchor: `D5/S3/VertexAlgebra/NestedResidues/BinaryLaurentEvaluation.yz_ne_zero`
 - Truth anchor: `D5/S3/VertexAlgebra/NestedResidues/BinaryLaurentEvaluation.z`
-- Dependency: [D5/S3/VertexAlgebra/LatticeHalfFockOuterTaylorEvaluation](../LatticeHalfFockOuterTaylorEvaluation.md)
+- Dependency: [D5/S3/VertexAlgebra/NestedResidues/LatticeHalfFockOuterTaylorEvaluation](LatticeHalfFockOuterTaylorEvaluation.md)

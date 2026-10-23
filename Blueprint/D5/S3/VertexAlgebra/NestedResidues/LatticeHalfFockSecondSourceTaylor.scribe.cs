@@ -64,15 +64,6 @@ internal sealed class LatticeHalfFockSecondSourceTaylorDocument : IScribeDocumen
                     Paragraph(Text("For every alpha in the actual finite range, secondSourceTerm is expanded over the local Taylor index u < M-j-alpha. The expansion retains signed numerator exponents, both pair poles, the spectator factor and the fractional z^(-alpha) shift. The complete G_j is the finite sum over alpha and the actual coefficient support."))),
                 DescribeRole.Theorem),
             Describe.Lean(
-                DescribeId.Create("actual-second-source-outer-collision"),
-                DeclarationHandle.Create("D5/S3/VertexAlgebra/NestedResidues/LatticeHalfFockSecondSourceTaylor.actual_second_source_outer_collision"),
-                H("The complete actual signed outer collision"),
-                StatementSource.WithoutFormula(),
-                AssessedProvenance.FromRepo(LibraryNoteRef.Create("D5/L/VertexAlgebra/bakalovkac2004lattice")),
-                Blocks(
-                    Paragraph(Text("For the original three-label numerator and arbitrary supplied cutoff K, the two complete outer Laurent orders satisfy the inherited unrestricted collision identity coefficientwise. Signed numerator exponents and origin-pole cancellation are retained, with no locality assumption on an ordered half. The actual_second_source_third proof computes both ordered coefficients of the expanded G_j terms and combines their signed origin modes before restricting the complete residue support."))),
-                DescribeRole.Theorem),
-            Describe.Lean(
                 DescribeId.Create("second-source-reverse-outer-contraction"),
                 DeclarationHandle.Create("D5/S3/VertexAlgebra/NestedResidues/LatticeHalfFockSecondSourceTaylor.second_source_reverse_outer_contraction"),
                 H("Reverse outer contraction after complete local evaluation"),

@@ -94,21 +94,7 @@ Lean statement: `D5/S3/VertexAlgebra/NestedResidues/LatticeHalfFockSecondSourceT
 
 For every alpha in the actual finite range, secondSourceTerm is expanded over the local Taylor index u < M-j-alpha. The expansion retains signed numerator exponents, both pair poles, the spectator factor and the fractional z^(-alpha) shift. The complete G_j is the finite sum over alpha and the actual coefficient support.
 
-**Theorem 1.6 (The complete actual signed outer collision).**
-
-Lean statement: `D5/S3/VertexAlgebra/NestedResidues/LatticeHalfFockSecondSourceTaylor.actual_second_source_outer_collision`
-
-*Proof.* Machine-checked in Lean as `D5/S3/VertexAlgebra/NestedResidues/LatticeHalfFockSecondSourceTaylor.actual_second_source_outer_collision` (`✓ std3`). ∎
-
-*Source.* Repository-derived.
-
-*Acknowledgement.* Bojko Bakalov and Victor G. Kac (2004). *Twisted Modules over Lattice Vertex Algebras*. DOI: [10.1142/9789812702562_0001](https://doi.org/10.1142/9789812702562_0001). URL: <https://arxiv.org/abs/math/0402315v1>.
-
-*Commentary.*
-
-For the original three-label numerator and arbitrary supplied cutoff K, the two complete outer Laurent orders satisfy the inherited unrestricted collision identity coefficientwise. Signed numerator exponents and origin-pole cancellation are retained, with no locality assumption on an ordered half. The actual_second_source_third proof computes both ordered coefficients of the expanded G_j terms and combines their signed origin modes before restricting the complete residue support.
-
-**Theorem 1.7 (Reverse outer contraction after complete local evaluation).**
+**Theorem 1.6 (Reverse outer contraction after complete local evaluation).**
 
 Lean statement: `D5/S3/VertexAlgebra/NestedResidues/LatticeHalfFockSecondSourceTaylor.second_source_reverse_outer_contraction`
 
@@ -122,7 +108,7 @@ Lean statement: `D5/S3/VertexAlgebra/NestedResidues/LatticeHalfFockSecondSourceT
 
 For M>0, the theorem consumes the complete signed local evaluation for every original j, applies the finite reverse Taylor convolution at t=M-1, and combines the two epsilon factors. It preserves the signed degree, negative-degree empty branch and ordered residue weight. The actual_second_source_third theorem supplies this local evaluation from the original coefficient-field terms.
 
-**Theorem 1.8 (Sharp inner Taylor support).**
+**Theorem 1.7 (Sharp inner Taylor support).**
 
 Lean statement: `D5/S3/VertexAlgebra/NestedResidues/LatticeHalfFockSecondSourceTaylor.second_source_inner_sharp_support`
 
@@ -136,7 +122,7 @@ Lean statement: `D5/S3/VertexAlgebra/NestedResidues/LatticeHalfFockSecondSourceT
 
 Every nonempty inner Taylor index satisfies alpha+a+k=M-j-1, including arbitrary signed Laurent numerator exponents.
 
-**Theorem 1.9 (Inner fractional Vandermonde contraction).**
+**Theorem 1.8 (Inner fractional Vandermonde contraction).**
 
 Lean statement: `D5/S3/VertexAlgebra/NestedResidues/LatticeHalfFockSecondSourceTaylor.second_source_inner_vandermonde`
 
@@ -150,7 +136,7 @@ Lean statement: `D5/S3/VertexAlgebra/NestedResidues/LatticeHalfFockSecondSourceT
 
 The finite -1/2 contraction is proved for every integer Laurent exponent, so negative and zero numerator powers remain in scope.
 
-**Theorem 1.10 (Outer fractional Vandermonde contraction).**
+**Theorem 1.9 (Outer fractional Vandermonde contraction).**
 
 Lean statement: `D5/S3/VertexAlgebra/NestedResidues/LatticeHalfFockSecondSourceTaylor.second_source_outer_vandermonde`
 
@@ -167,7 +153,6 @@ The finite -gamma/2 contraction is proved for every integer Laurent exponent and
 ## References
 
 - Truth anchor: `D5/S3/VertexAlgebra/NestedResidues/LatticeHalfFockSecondSourceTaylor.actual_current_second_source_rational_field`
-- Truth anchor: `D5/S3/VertexAlgebra/NestedResidues/LatticeHalfFockSecondSourceTaylor.actual_second_source_outer_collision`
 - Truth anchor: `D5/S3/VertexAlgebra/NestedResidues/LatticeHalfFockSecondSourceTaylor.actual_second_source_third`
 - Truth anchor: `D5/S3/VertexAlgebra/NestedResidues/LatticeHalfFockSecondSourceTaylor.secondSourceInnerTaylorTerm`
 - Truth anchor: `D5/S3/VertexAlgebra/NestedResidues/LatticeHalfFockSecondSourceTaylor.second_source_inner_sharp_support`
@@ -176,7 +161,7 @@ The finite -gamma/2 contraction is proved for every integer Laurent exponent and
 - Truth anchor: `D5/S3/VertexAlgebra/NestedResidues/LatticeHalfFockSecondSourceTaylor.second_source_outer_vandermonde`
 - Truth anchor: `D5/S3/VertexAlgebra/NestedResidues/LatticeHalfFockSecondSourceTaylor.second_source_reverse_outer_contraction`
 - Truth anchor: `D5/S3/VertexAlgebra/NestedResidues/LatticeHalfFockSecondSourceTaylor.second_source_taylor_inner_expansion`
-- Dependency: [D5/S3/VertexAlgebra/LatticeHalfFockOuterTaylorEvaluation](../LatticeHalfFockOuterTaylorEvaluation.md)
 - Dependency: [D5/S3/VertexAlgebra/NestedResidues/ContextualKernelExtraction](ContextualKernelExtraction.md)
 - Dependency: [D5/S3/VertexAlgebra/NestedResidues/LatticeHalfFockABOuterTaylor/LocalResidues](LatticeHalfFockABOuterTaylor/LocalResidues.md)
+- Dependency: [D5/S3/VertexAlgebra/NestedResidues/LatticeHalfFockOuterTaylorEvaluation](LatticeHalfFockOuterTaylorEvaluation.md)
 - Dependency: [D5/S3/VertexAlgebra/NestedResidues/LatticeHalfFockSliceQuotient](LatticeHalfFockSliceQuotient.md)

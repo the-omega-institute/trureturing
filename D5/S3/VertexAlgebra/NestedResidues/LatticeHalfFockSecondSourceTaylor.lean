@@ -6,7 +6,7 @@
    utility: none
    digest: Complete current/second-source rational field and supported Taylor extraction. -/
 
-import D5.S3.VertexAlgebra.LatticeHalfFockOuterTaylorEvaluation
+import D5.S3.VertexAlgebra.NestedResidues.LatticeHalfFockOuterTaylorEvaluation
 import D5.S3.VertexAlgebra.NestedResidues.LatticeHalfFockABOuterTaylor.LocalResidues
 import D5.S3.VertexAlgebra.NestedResidues.LatticeHalfFockSliceQuotient
 import D5.S3.VertexAlgebra.NestedResidues.ContextualKernelExtraction
@@ -1068,33 +1068,6 @@ private theorem second_source_outer_expansion (D : LatticeData) (a b : Carrier D
   apply Finset.sum_congr rfl
   intro alpha ha
   exact finite_rational_outer_readout _ _ gamma r n H
-
-/- The preceding collision is now instantiated on the original labelled
-numerator and its actual three pair orders. This is the complete signed outer
-two-order identity; the remaining step is its coefficient identification with
-the local Taylor terms above. -/
-theorem actual_second_source_outer_collision
-    (D : LatticeData) (a b : Carrier D) (K : ℕ) (P : LabelledPolynomial ℂ 3)
-    (rho : ℤ) (g : Indices 2) :
-    let R := algebraMap _ (CommonRational ℂ 3) P /
-      algebraMap _ (CommonRational ℂ 3)
-        (weightedClearingPolynomial (threeOrders D a b K))
-    let z : Fin 3 := 1
-    let x : LabelledRationalClearing.GlobalRationalCurry.Remaining z := ⟨2, by decide⟩
-    let tau : Fin 2 ≃ LabelledRationalClearing.GlobalRationalCurry.Remaining z :=
-      finSuccAboveEquiv z
-    (pullFiber (firstEmbedding 1 0 (-1))
-      (contextPair ℂ 1 0 (kernelZX ℂ rho) *
-        OrderedCollisionCoordinates.AdjacentFullOrders.firstRational ℂ 1 0 z tau R)).coeff g -
-    (residue 2 0
-      (contextPair ℂ 1 0 (kernelXZ ℂ rho) *
-        OrderedCollisionCoordinates.AdjacentFullOrders.secondRational ℂ 1 0 z tau R)).coeff g =
-    ((OrderedCollisionCoordinates.LocalResidueCurrying.fusedLocalSeries ℂ 2 0 z x tau
-      (LabelledRationalClearing.WeightedActualQ.globalDiagonal ℂ z x ^ rho * R)).coeff (-1)).coeff g := by
-  dsimp only
-  exact weighted_local_fiber 1 0 1
-    (finSuccAboveEquiv (1 : Fin 3)) ⟨2, by decide⟩ (by rfl) P
-    (threeOrders D a b K) rho g
 
 /- Complete-field padding reuses the finite-tail proof in LeftCurrentTransport. -/
 section
