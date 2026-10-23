@@ -1,3 +1,4 @@
+import LeanInformationAuditInterface.Contract.Registration
 import D5.S3.VertexAlgebra.LatticeHalfFockChargedCollision.WeightedLocalCorrelator
 import Reg.Support.DependentFamily
 import Mathlib.Algebra.Module.ULift
@@ -98,9 +99,12 @@ private def oneLabel : Parameters.{u} where
 private theorem rejected_law : ¬ arena.{u}.Law rejected.{u} := by
   intro law
   have lower := (law oneLabel (ULift.up (1 : ℂ)) 1).2.1 (0 : Fin 1)
-  have zero := lower (fun _ => -1) (by simp [oneLabel])
+  have zero := lower (fun _ => -1) (by
+    change (-1 : ℤ) < HahnSeries.order (0 : HahnSeries ℤ (ULift.{u} ℂ))
+    simp)
   have impossible : (ULift.up (1 : ℂ) : ULift.{u} ℂ) = 0 := by
-    simpa [rejected, realize] using zero
+    change (ULift.up (1 : ℂ) : ULift.{u} ℂ) = 0 at zero
+    exact zero
   have := congrArg ULift.down impossible
   simpa using this
 
@@ -119,9 +123,18 @@ private theorem actual_dependence : ObservationalDependence signature.{u} actual
   refine ⟨noLabels, (ULift.up (1 : ℂ), 1, []), (ULift.up (1 : ℂ), 0, []), ?_⟩
   intro equal
   have coefficient := congrFun equal (fun i => Fin.elim0 i)
+  change
+    polynomialAction (weightedClearingPolynomial (N := 0) (fun _ => 0))
+        (coefficientDistribution (fun i : Fin 0 => Fin.elim0 i)
+          (ULift.up (1 : ℂ)) 1 []) (fun i : Fin 0 => Fin.elim0 i) =
+      polynomialAction (weightedClearingPolynomial (N := 0) (fun _ => 0))
+        (coefficientDistribution (fun i : Fin 0 => Fin.elim0 i)
+          (ULift.up (1 : ℂ)) 0 []) (fun i : Fin 0 => Fin.elim0 i) at coefficient
+  have hpoly : weightedClearingPolynomial (N := 0) (fun _ => 0) = 1 := by
+    simp [weightedClearingPolynomial, labelledPairs]
+  rw [hpoly] at coefficient
   have impossible : (ULift.up (1 : ℂ) : ULift.{u} ℂ) = 0 := by
-    simpa [actual, realize, noLabels, weightedClearingPolynomial, labelledPairs,
-      coefficientDistribution, word] using coefficient
+    simpa [coefficientDistribution, word, Module.End.one_apply] using coefficient
   have := congrArg ULift.down impossible
   simpa using this
 
@@ -134,7 +147,9 @@ def familyRegistration : Registration arena.{u} (type_of% (@common_cleared_field
     · intro i
       refine ⟨rejected, ?_, ?_, rejected_law⟩
       · intro j h
-        exact (h (Subsingleton.elim _ _)).elim
+        cases j
+        cases i
+        exact (h rfl).elim
       · funext empty
         exact nomatch empty
     · intro empty
