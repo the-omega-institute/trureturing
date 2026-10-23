@@ -19,6 +19,13 @@ internal sealed class ActualRobinIntervalDocument : IScribeDocumentDefinition
                 Blocks(Paragraph(Text("For positive q and original optimizers B,U at q with 3<=B<=n<=U, the margin at n is at least the convex combination of the endpoint margins, and strictly greater in the genuine interior. The weight t is (log(n)-log(B))/(log(U)-log(B)), with the source's zero convention at coincident endpoints. Objective optimality proves the W chord bound. Strict log-log concavity is proved rather than supplied as a final hypothesis; endpoint signs are not assumed in this transfer theorem."))),
                 DescribeRole.Theorem),
             Describe.Lean(
+                DescribeId.Create("actual-upper-price-integer-range"),
+                DeclarationHandle.Create(Prefix + "original_robin_through_maximal"),
+                H("Every integer through an actual maximal endpoint"),
+                StatementSource.WithoutFormula(), AssessedProvenance.FromRepo(),
+                Blocks(Paragraph(Text("Fix any positive q0. Assume positive original Robin margins for every actual strict or maximal endpoint above 5040 at every price q>=q0. Then every natural integer 5040<n<=maximalInteger(q0) satisfies sigma(n)<exp(gamma)*n*log(log(n)). Natural-order coverage constructs the interval. If its price is below q0, actual prime-layer divisibility forces maximalInteger(q0)<=strictInteger(q)<=n<=maximalInteger(q0), so n equals the checked upper endpoint. Otherwise the two supplied margins and interval concavity apply. The remaining finite boundary is computed as 55440 inside the proof, using the same q11 identification as the full global reduction. The upper-price margins remain explicit hypotheses of this general theorem."))),
+                DescribeRole.Theorem),
+            Describe.Lean(
                 DescribeId.Create("actual-global-margin-endpoint-equivalence"),
                 DeclarationHandle.Create(Prefix + "global_margin_iff_unpaid_estimates"),
                 H("The exact unpaid all-price obligation"),

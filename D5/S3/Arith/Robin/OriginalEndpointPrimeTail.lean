@@ -4,26 +4,17 @@
    mirror-E: none(waiver:general-analytic-results-no-numerical-evidence-artifact)
    anchors: []
    utility: none
-   digest: Sharp all-price original endpoint tails and exact first-layer lower replacement with nonnegative higher-layer remainder. -/
+   digest: Sharp all-price original endpoint tails with a same-integer square-root bound and exact Robin margin decomposition. -/
 
 /-
-Source-only coherent continuation r4475; NOT elaborated or compiled.
-Base: current dev 12df0f09e5942541c5878409dfa86f61187c090c, including
-MERGED PR20429 (8ce18dd75863b93d935b529f40be1578232df595).
-Original endpoint definitions and global consumer: sealed r4384/r4443.
-Mathlib: 56a005855ea17e0b0958f73ec801ae140b0a1679.
-
-The r4463 all-price supplier is preserved below. Its scalar sandwich was
-retained/adapted from uncompiled r4454. Its original endpoint connection,
-sharp prices, all-layer/tie coverage, largest-prime identity and 7/(2 sqrt u)
-bound are unchanged. The moved logarithm theorem is imported from its actual
-current owner LogarithmBounds; no duplicate owner or tangent proof is added.
-
-r4475 adds first-layer exact replacement in the lower price sum and an exact
-signed residual with a proved nonnegative remainder. Every exponent >= 2 is
-retained in that remainder; no exponent/prime cutoff or new arithmetic
-certificate is assumed. The ORIGINAL EndpointRobinEstimates stays unpaid.
-No RH/native/admission/Reg/freeze/CI claim is made.
+The actual strict and maximal optimizers are retained at every positive
+price. Local included/omitted marginal inequalities give sharp tail prices;
+the adaptive support split gives the same-integer 7/(2 sqrt u) bound. The
+exact margin decomposition retains every active prime and positive layer,
+including simultaneous activation ties. Logarithm bounds are imported from
+their existing owner. No final endpoint sign or RH conclusion is assumed
+or proved by this supplier. The additional first-layer paper calculation in
+the Scribe is explanatory mathematics and is not a separate Lean result.
 -/
 import D5.S3.Arith.Robin.ActualGlobalBracketing
 import D5.S3.Arith.GoldenResource.FirstLayerMarginalAntitone
