@@ -21,7 +21,7 @@ internal sealed class BroadcastingChannelExtremaRefutationDocument : IScribeDocu
                 "Section II.B, p. 2: “A CPTP map Θ : S(Hin) → S(Hout) is called a quantum channel, where Hin and Hout are two Hilbert spaces [15].” Finite Kraus form expresses complete positivity and trace preservation. MatrixMap.of_kraus is the frozen operation; its action is the finite sum of K(j) X conjTranspose(K(j)). The output index type iota has anonymous Fintype and DecidableEq instances.",
                 DescribeRole.Definition, AssessedProvenance.FromLiterature(Source)),
             Node("Broadcasts", "Broadcasting an observable", BroadcastingFormula(),
-                "Definition 1, p. 2: “A channel Λ : S(H) → S(H_A ⊗ H_B) with H_A = H_B = H is called a broadcasting channel.” Definition 3, p. 3: “An observable A ∈ O_X^d is broadcast by a broadcasting channel Λ ∈ C_broad^d if for all ρ ∈ S(H), x ∈ X” followed by equation (5), Tr[ρA(x)] = Tr[Λ(ρ)A(x) ⊗ I] = Tr[Λ(ρ)I ⊗ A(x)]. Outcomes are Fin m, and each subsystem is indexed by Fin d. The state predicate is the frozen GHZMeasureBiseparableBound.IsDensity: positive semidefinite with trace one.",
+                "Definition 1, p. 2: “A channel Λ : S(H) → S(H_A ⊗ H_B) with H_A = H_B = H is called a broadcasting channel.” Definition 3, p. 3: “An observable A ∈ O_X^d is broadcast by a broadcasting channel Λ ∈ C_broad^d if for all ρ ∈ S(H), x ∈ X” followed by equation (5), Tr[ρA(x)] = Tr[Λ(ρ)A(x) ⊗ I] = Tr[Λ(ρ)I ⊗ A(x)]. Outcomes are Fin m, and each subsystem is indexed by Fin d. The state predicate is the SLDSpectralEnergy.IsDensity: positive semidefinite with trace one.",
                 DescribeRole.Definition, AssessedProvenance.FromLiterature(Source)),
             Node("Nondisturbing", "Nondisturbing channels", NondisturbingFormula(),
                 "Definition 8, p. 5: “A channel Θ : S(H) → S(H) is nondisturbing with respect to an observable A if for all ρ ∈ S(H),” followed by equation (22), Tr[ρA(x)] = Tr[Θ(ρ)A(x)] for all x ∈ Ω_A. The displayed formula uses this trace form, equivalent to the dual form in equation (23).",
@@ -81,7 +81,7 @@ internal sealed class BroadcastingChannelExtremaRefutationDocument : IScribeDocu
     private static Formula Trace(Formula matrix) => At(Qualified("Matrix", "trace"), matrix);
     private static Formula Adjoint(Formula matrix) => At(Qualified("Matrix", "conjTranspose"), matrix);
     private static Formula Kron(Formula a, Formula b) => At(Qualified("Matrix", "kronecker"), a, b);
-    private static Formula Density(Formula matrix) => At(Qualified("GHZMeasureBiseparableBound", "IsDensity"), matrix);
+    private static Formula Density(Formula matrix) => At(Qualified("SLDSpectralEnergy", "IsDensity"), matrix);
     private static Formula Observable(Formula a) => At(Qualified("ConcealmentKernelNecessityRefutation", "IsPOVM"), a);
     private static Formula Parameters(Formula body) => All("d", Field("N"), All("m", Field("N"), All("A", Fun(Fin(V("m")), Mat(V("d"))), body)));
 
