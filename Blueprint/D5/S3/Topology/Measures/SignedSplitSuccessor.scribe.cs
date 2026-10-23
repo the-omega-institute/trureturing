@@ -139,6 +139,53 @@ internal sealed class SignedSplitSuccessorDocument : IScribeDocumentDefinition
         return Disp(All("K", V("Type"), body));
     }
 
+    private static Formula TargetIndexStatement()
+    {
+        var k = V("K"); var lspace = V("L"); var nat = V("Nat"); var f = V("F");
+        var n = V("n"); var j = V("j"); var x = V("x"); var y = V("y"); var p = V("p");
+        var filter = At("inf", V("atTop"), At("principal", V("S")));
+        var fibre = All("x", k, All("y", k, Arr(Mem(At("p", x), At("V", n)),
+            Arr(Mem(At("p", y), At("V", n)), Arr(Eq(At("p", x), At("p", y)),
+                Iff(Mem(x, At("A", j)), Mem(y, At("A", j))))))));
+        var candidate = All("t", SM(k), Arr(Eq(Map(V("t"), p), At("nu", n)),
+            Arr(Eq(At("apply", TV(V("t")), V("univ")), At("apply", TV(At("nu", n)), V("univ"))),
+                Lt(At("real", TV(V("t")), At("A", j)), At("b", j)))));
+        Formula body = All("M", nat, Ex("n", nat, And(Mem(n, V("S")),
+            And(Lt(V("M"), n), All("j", f, candidate)))));
+        body = Arr(All("j", f, Lt(At("real", V("v"), At("A", j)), At("b", j))), body);
+        body = All("b", Fn(f, V("Real")), body);
+        body = Arr(All("j", f, At("Tendsto", Lam("n", At("real", TV(At("s", n)), At("A", j))),
+            filter, At("nhds", At("real", V("v"), At("A", j))))), body);
+        body = All("v", At("Measure", k), body);
+        body = Arr(All("j", f, Ev(filter, "n", fibre)), body);
+        body = Arr(All("j", f, At("IsClopen", At("A", j))), body);
+        body = All("A", Fn(f, Set(k)), body);
+        body = Arr(All("n", nat, Eq(At("apply", TV(At("nu", n)), Compl(At("V", n))), D(0))), body);
+        body = Arr(All("n", nat, Eq(At("apply", TV(At("s", n)), V("univ")),
+            At("apply", TV(At("nu", n)), V("univ")))), body);
+        body = Arr(All("n", nat, Eq(Map(At("s", n), p), At("nu", n))), body);
+        body = All("s", Fn(nat, SM(k)), body);
+        body = All("nu", Fn(nat, SM(lspace)), body);
+        body = Arr(All("n", nat, At("IsClopen", At("V", n))), body);
+        body = All("V", Fn(nat, Set(lspace)), body);
+        body = Arr(At("Continuous", p), body);
+        body = All("p", Fn(k, lspace), body);
+        body = Arr(At("Infinite", V("S")), body);
+        body = All("S", Set(nat), body);
+        body = Inst("Fintype", f, body);
+        body = All("F", V("Type"), body);
+        body = Inst("BorelSpace", lspace, body);
+        body = Inst("MeasurableSpace", lspace, body);
+        body = Inst("T2Space", lspace, body);
+        body = Inst("TopologicalSpace", lspace, body);
+        body = All("L", V("Type"), body);
+        body = Inst("BorelSpace", k, body);
+        body = Inst("MeasurableSpace", k, body);
+        body = Inst("CompactSpace", k, body);
+        body = Inst("TopologicalSpace", k, body);
+        return Disp(All("K", V("Type"), body));
+    }
+
     private static Formula TargetStatement()
     {
         var k = V("K"); var l = V("L"); var t = V("t"); var nu = V("nu");
@@ -163,6 +210,71 @@ internal sealed class SignedSplitSuccessorDocument : IScribeDocumentDefinition
         body = All("nu", SM(l), body);
         body = Arr(At("Continuous", V("p")), body);
         body = All("p", Fn(k, l), body);
+        body = Inst("ZeroDimensionalSpace", l, body);
+        body = Inst("CompactSpace", l, body);
+        body = Inst("BorelSpace", l, body);
+        body = Inst("MeasurableSpace", l, body);
+        body = Inst("T2Space", l, body);
+        body = Inst("TopologicalSpace", l, body);
+        body = All("L", V("Type"), body);
+        body = Inst("BorelSpace", k, body);
+        body = Inst("MeasurableSpace", k, body);
+        body = Inst("CompactSpace", k, body);
+        body = Inst("TopologicalSpace", k, body);
+        return Disp(All("K", V("Type"), body));
+    }
+
+    private static Formula FiniteTargetStatement()
+    {
+        var k = V("K"); var l = V("L"); var nat = V("Nat"); var rows = V("Rows");
+        var n = V("n"); var r = V("r"); var j = V("j"); var t = V("t");
+        var x = V("x"); var y = V("y"); var p = V("p"); var wn = At("W", r, j);
+        var nu = At("nu", n); var sn = At("s", n); var vn = At("V", n);
+        var filter = At("inf", V("atTop"), At("principal", V("S")));
+        var half = Frac(D(1), D(2));
+        var budget = At("mul", At("mul", Frac(D(1), D(6,4)),
+            At("pow", half, At("code", r))), At("pow", half, j));
+        Formula Earlier(Formula b) => All("r", rows, Arr(Mem(r, V("A")),
+            All("j", nat, Arr(Lt(j, V("q")), b))));
+        var fibre = All("x", k, All("y", k, Arr(Mem(At("p", x), vn),
+            Arr(Mem(At("p", y), vn), Arr(Eq(At("p", x), At("p", y)),
+                Iff(Mem(x, wn), Mem(y, wn)))))));
+        var exclusion = At("setOf", Lam("x", Ex("r", rows, And(Mem(r, V("A")),
+            Ex("j", nat, And(Lt(j, V("q")), Mem(x, wn)))))));
+        var candidate = All("t", SM(k), Arr(Eq(Map(t, p), nu),
+            Arr(Eq(At("apply", TV(t), V("univ")), At("apply", TV(nu), V("univ"))),
+                And(Lt(Frac(D(1,3), D(4,8)), At("apply", t, V("H"))),
+                    Lt(Frac(D(1), D(6)), At("apply", t, V("H")))))));
+        var piece = Ex("H", Set(k), And(At("IsClopen", V("H")),
+            And(At("Subset", V("H"), At("diff", At("preimage", p, vn), exclusion)), candidate)));
+        Formula body = All("M", nat, Ex("n", nat,
+            And(Mem(n, V("S")), And(Lt(V("M"), n), piece))));
+        body = Arr(Earlier(Lt(At("real", V("v"), wn), budget)), body);
+        body = Arr(Earlier(At("Tendsto", Lam("n", At("real", TV(sn), wn)),
+            filter, At("nhds", At("real", V("v"), wn)))), body);
+        body = All("v", At("Measure", k), body);
+        body = Arr(Earlier(Ev(filter, "n", fibre)), body);
+        body = Arr(All("r", rows, All("j", nat, At("IsClopen", wn))), body);
+        body = All("W", Fn(rows, Fn(nat, Set(k))), body);
+        body = Arr(All("n", nat, Leq(half, At("real", At("posPart", At("toJordanDecomposition", nu)), V("univ")))), body);
+        body = Arr(All("n", nat, At("Regular", At("negPart", At("toJordanDecomposition", nu)))), body);
+        body = Arr(All("n", nat, At("Regular", At("posPart", At("toJordanDecomposition", nu)))), body);
+        body = Arr(All("n", nat, Eq(At("apply", TV(nu), Compl(vn)), D(0))), body);
+        body = Arr(All("n", nat, Eq(At("apply", TV(sn), V("univ")), At("apply", TV(nu), V("univ")))), body);
+        body = Arr(All("n", nat, Eq(Map(sn, p), nu)), body);
+        body = All("s", Fn(nat, SM(k)), body);
+        body = All("nu", Fn(nat, SM(l)), body);
+        body = Arr(All("n", nat, At("IsClopen", vn)), body);
+        body = All("V", Fn(nat, Set(l)), body);
+        body = Arr(At("Continuous", p), body);
+        body = All("p", Fn(k, l), body);
+        body = Arr(At("Infinite", V("S")), body);
+        body = All("S", Set(nat), body);
+        body = All("q", nat, body);
+        body = All("A", At("Finset", rows), body);
+        body = Arr(At("Injective", V("code")), body);
+        body = All("code", Fn(rows, nat), body);
+        body = All("Rows", V("Type"), body);
         body = Inst("ZeroDimensionalSpace", l, body);
         body = Inst("CompactSpace", l, body);
         body = Inst("BorelSpace", l, body);
@@ -268,6 +380,14 @@ internal sealed class SignedSplitSuccessorDocument : IScribeDocumentDefinition
                         + "Reference signed convergence and whole-fibre coordinate constancy hold along atTop intersect principal(S). The pulled-back row supports are pairwise disjoint, and v is any finite positive measure on K.")),
                     Paragraph(Text("Their v masses form a summable sequence and tend to zero. The uniform fixed-marginal estimate, all finitely many coordinate conditions, this small-mass tail and the lower index bound hold together eventually in S. "
                         + "Infinitude supplies a member beyond the resulting finite threshold. The chosen index retains the original reservoir; it satisfies both signed and positive marginal conclusions without changing a parity set."))), DescribeRole.Theorem),
+            Describe.Lean(DescribeId.Create("target-index"),
+                DeclarationHandle.Create(Owner + "exists_target_index"),
+                H("Target index for all fixed finite exclusions"), StatementSource.FromAuthor(TargetIndexStatement()),
+                AssessedProvenance.FromRepo(), Blocks(
+                    Paragraph(Text("Fix a finite family of clopen sets A(j). The positive variation evaluations of the reference lifts converge on these fixed sets to v(A(j)), each strictly below its prescribed bound b(j). "
+                        + "Whole-fibre constancy for membership in every A(j) holds eventually in the infinite reservoir S. Exact preservation of base variation transfers each reference evaluation to every signed lift in its norm-preserving class.")),
+                    Paragraph(Text("A finite intersection of the resulting eventual conditions and a lower index bound leaves an infinite tail in S. One target index therefore controls every exclusion simultaneously for every signed lift. "
+                        + "The family may be empty. The input is fixed-test convergence of positive variations; it assumes neither a moving-test estimate nor a signed weak-star limit for those variations."))), DescribeRole.Theorem),
             Describe.Lean(DescribeId.Create("signed-target-piece"),
                 DeclarationHandle.Create(Owner + "exists_signed_target_piece"),
                 H("Signed target piece after exclusion"), StatementSource.FromAuthor(TargetStatement()),
@@ -276,6 +396,12 @@ internal sealed class SignedSplitSuccessorDocument : IScribeDocumentDefinition
                         + "The continuous p maps K to L. For every lift preserving signed projection and total variation mass, the clopen exclusion R has variation mass at most one sixteenth.")),
                     Paragraph(Text("Positive-clopen approximation gives a clopen B inside V with nu(B) greater than one third. Put H=p inverse(B) minus R. For every such signed lift t, its mass on p inverse(B) is nu(B), while t on the removed intersection is at most its variation on R. "
                         + "Thus t(H) is greater than one third minus one sixteenth, namely thirteen forty-eighths, which is greater than one sixth. The selected H is shared by all lifts."))), DescribeRole.Theorem),
+            Describe.Lean(DescribeId.Create("finite-exclusion-target"),
+                DeclarationHandle.Create(Owner + "exists_target_after_finite_exclusion"),
+                H("Target after the finite earlier exclusions"), StatementSource.FromAuthor(FiniteTargetStatement()),
+                AssessedProvenance.FromRepo(), Blocks(
+                    Paragraph(Text("The finite row set A and earlier columns j<q are fixed before the target index is selected. Distinct row codes give the budget (1/64)(1/2)^(code(r))(1/2)^j. The sum of all such budgets is at most one sixteenth, including when A or the earlier column set is empty.")),
+                    Paragraph(Text("The positive reference variation on each fixed clopen exclusion is strictly below its budget. Positive-variation convergence and whole-fibre constancy select one larger target index for which every signed norm-preserving lift obeys all those bounds. Finite subadditivity therefore bounds the variation of their whole union by one sixteenth. Positive clopen approximation then constructs the common H outside the union with signed mass greater than thirteen forty-eighths, hence greater than one sixth, for every lift."))), DescribeRole.Theorem),
             Describe.Lean(DescribeId.Create("literal-split-carrier"),
                 DeclarationHandle.Create(Owner + "splitCarrier"), H("Literal split carrier"),
                 StatementSource.FromAuthor(SplitStatement()),

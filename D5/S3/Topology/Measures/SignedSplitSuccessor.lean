@@ -11,6 +11,7 @@ import D5.S3.Topology.Measures.PositiveClopenMass
 import Mathlib.MeasureTheory.VectorMeasure.SetIntegral
 import Mathlib.MeasureTheory.Measure.Real
 import Mathlib.Topology.ContinuousMap.Bounded.Basic
+import Mathlib.Analysis.SpecificLimits.Basic
 
 /-!
 # Ordered signed split successors
@@ -35,6 +36,7 @@ variable {K : Type u} [TopologicalSpace K] [CompactSpace K]
 variable {L : Type v} [TopologicalSpace L] [T2Space L]
   [MeasurableSpace L] [BorelSpace L]
 
+omit [CompactSpace K] [T2Space L] in
 private lemma support_null (p : K → L) (hp : Continuous p)
     (s : SignedMeasure K) (nu : SignedMeasure L)
     (hmap : s.map p = nu) (hmass : s.totalVariation univ = nu.totalVariation univ)
@@ -108,7 +110,7 @@ private lemma positive_finite_map_eq {F : Type w}
     Measure.toSignedMeasure_apply_measurable (hf.measurable hB),
     Measure.toSignedMeasure_apply_measurable (hf.measurable hB)] at hval
   rw [Measure.map_apply hf.measurable hB, Measure.map_apply hf.measurable hB]
-  exact (ENNReal.toReal_eq_toReal (measure_ne_top _ _) (measure_ne_top _ _)).mp hval
+  exact (ENNReal.toReal_eq_toReal_iff' (measure_ne_top _ _) (measure_ne_top _ _)).mp hval
 
 private lemma tendsto_clopen_apply {I : Type*} (l : Filter I)
     (s : I → SignedMeasure K) (mu : SignedMeasure K)
@@ -119,7 +121,7 @@ private lemma tendsto_clopen_apply {I : Type*} (l : Filter I)
   let f : C(K, ℝ) := (BoundedContinuousFunction.indicator A hA).toContinuousMap
   have heval (r : SignedMeasure K) :
       NormPreservingLifts.signedFunctional r f = r A := by
-    haveI : IsFiniteMeasure r.variation := by
+    have : IsFiniteMeasure r.variation := by
       rw [← SignedMeasure.totalVariation_eq_variation]
       infer_instance
     change (∫ᵛ x, A.indicator (fun _ : K => (1 : ℝ)) x ∂•r) = r A
@@ -149,7 +151,8 @@ theorem eventually_uniform_finite_marginal {I : Type*} (l : Filter I)
       l (𝓝 (NormPreservingLifts.signedFunctional mu).toWeakDual)) :
     ∀ eps : ℝ, 0 < eps → ∀ᶠ n in l, ∀ t : SignedMeasure K,
       t.map p = nu n → t.totalVariation univ = (nu n).totalVariation univ →
-      ((t.map (fun x c => coord c x) - mu.map (fun x c => coord c x)).totalVariation.real
+      ((SignedMeasure.totalVariation
+        (t.map (fun x c => coord c x) - mu.map (fun x c => coord c x))).real
         univ < eps) ∧
       t.totalVariation.map (fun x c => coord c x) =
         (s n).totalVariation.map (fun x c => coord c x) := by
@@ -173,7 +176,7 @@ theorem eventually_uniform_finite_marginal {I : Type*} (l : Filter I)
     simpa only [heq, sub_self, abs_zero] using (ht.sub_const (mu (f ⁻¹' {b}))).abs
   have hsum : Tendsto
       (fun n => ∑ b : C → Bool, |(s n).map f {b} - mu.map f {b}|) l (𝓝 0) := by
-    simpa using tendsto_finset_sum Finset.univ (fun b _ => hatom b)
+    simpa using tendsto_finsetSum Finset.univ (fun b _ => hatom b)
   have hmass (r : SignedMeasure (C → Bool)) :
       r.totalVariation.real univ = ∑ b : C → Bool, |r {b}| := by
     have hs : (∑ b : C → Bool, r.totalVariation.real {b}) =
@@ -197,7 +200,7 @@ theorem eventually_uniform_finite_marginal {I : Type*} (l : Filter I)
     (htmap.trans (hsmap n).symm) htNull hsNull f hf hEn
   refine ⟨?_, positive_finite_map_eq p hp (hV n) t (s n) (nu n)
     htmap (hsmap n) htmass (hsmass n) (hnull n) f hf hEn⟩
-  change (t.map f - mu.map f).totalVariation.real univ < eps
+  change (SignedMeasure.totalVariation (t.map f - mu.map f)).real univ < eps
   rw [heq, hmass]
   simpa only [_root_.sub_apply] using hn
 
@@ -224,7 +227,8 @@ theorem exists_auxiliary_index {C : Type w} [Fintype C]
       (∀ c x y, p x ∈ V m → p y ∈ V m → p x = p y → coord c x = coord c y) ∧
       ∀ t : SignedMeasure K, t.map p = nu m →
         t.totalVariation univ = (nu m).totalVariation univ →
-        ((t.map (fun x c => coord c x) - mu.map (fun x c => coord c x)).totalVariation.real
+        ((SignedMeasure.totalVariation
+          (t.map (fun x c => coord c x) - mu.map (fun x c => coord c x))).real
           univ < eps) ∧
         t.totalVariation.map (fun x c => coord c x) =
           (s m).totalVariation.map (fun x c => coord c x) := by
@@ -240,7 +244,8 @@ theorem exists_auxiliary_index {C : Type w} [Fintype C]
       (∀ c x y, p x ∈ V n → p y ∈ V n → p x = p y → coord c x = coord c y) ∧
       ∀ t : SignedMeasure K, t.map p = nu n →
         t.totalVariation univ = (nu n).totalVariation univ →
-        ((t.map (fun x c => coord c x) - mu.map (fun x c => coord c x)).totalVariation.real
+        ((SignedMeasure.totalVariation
+          (t.map (fun x c => coord c x) - mu.map (fun x c => coord c x))).real
           univ < eps) ∧
         t.totalVariation.map (fun x c => coord c x) =
           (s n).totalVariation.map (fun x c => coord c x) := by
@@ -248,8 +253,75 @@ theorem exists_auxiliary_index {C : Type w} [Fintype C]
     intro hnS
     exact ⟨hMn, hv, hEn hnS, hn hnS⟩
   obtain ⟨N, hN⟩ := eventually_atTop.mp hall
-  obtain ⟨m, hmS, hmN⟩ := (hS.diff (Set.finite_Iio N)).nonempty
+  obtain ⟨m, hmS, hmN⟩ := (hS.sdiff (Set.finite_Iio N)).nonempty
   exact ⟨m, hmS, hN m (le_of_not_gt hmN) hmS⟩
+
+private lemma positive_clopen_eq
+    (p : K → L) (hp : Continuous p) {V : Set L} (hV : IsClopen V)
+    (s t : SignedMeasure K) (nu : SignedMeasure L)
+    (hsmap : s.map p = nu) (htmap : t.map p = nu)
+    (hsmass : s.totalVariation univ = nu.totalVariation univ)
+    (htmass : t.totalVariation univ = nu.totalVariation univ)
+    (hnull : nu.totalVariation Vᶜ = 0) {A : Set K} (hA : IsClopen A)
+    (hE : ∀ x y, p x ∈ V → p y ∈ V → p x = p y → (x ∈ A ↔ y ∈ A)) :
+    s.totalVariation.real A = t.totalVariation.real A := by
+  classical
+  have hf : Continuous A.boolIndicator := continuous_boolIndicator_iff_isClopen A |>.mpr hA
+  have hfibre : ∀ x y, p x ∈ V → p y ∈ V → p x = p y →
+      A.boolIndicator x = A.boolIndicator y := by
+    intro x y hx hy hxy
+    have h := hE x y hx hy hxy
+    by_cases hxA : x ∈ A
+    · have hyA := h.mp hxA
+      simp only [Set.boolIndicator, ite_eq_left hxA, ite_eq_left hyA]
+    · have hyA : y ∉ A := fun hya => hxA (h.mpr hya)
+      simp only [Set.boolIndicator, ite_eq_right hxA, ite_eq_right hyA]
+  have heq := positive_finite_map_eq p hp hV s t nu hsmap htmap hsmass htmass
+    hnull A.boolIndicator hf hfibre
+  have hval := congrArg (fun m : Measure Bool => m {true}) heq
+  rw [Measure.map_apply hf.measurable (measurableSet_singleton true),
+    Measure.map_apply hf.measurable (measurableSet_singleton true),
+    Set.preimage_boolIndicator_true] at hval
+  exact congrArg ENNReal.toReal hval
+
+/-- For a fixed finite family of clopen exclusions, the independent positive
+variation reference limit gives a single larger target index controlling
+every norm-preserving signed lift on every exclusion. The finite family can
+be empty. No convergence of signed measures is substituted for this limit. -/
+theorem exists_target_index {F : Type w} [Fintype F]
+    (S : Set ℕ) (hS : S.Infinite) (p : K → L) (hp : Continuous p)
+    (V : ℕ → Set L) (hV : ∀ n, IsClopen (V n))
+    (nu : ℕ → SignedMeasure L) (s : ℕ → SignedMeasure K)
+    (hsmap : ∀ n, (s n).map p = nu n)
+    (hsmass : ∀ n, (s n).totalVariation univ = (nu n).totalVariation univ)
+    (hnull : ∀ n, (nu n).totalVariation (V n)ᶜ = 0)
+    (A : F → Set K) (hA : ∀ j, IsClopen (A j))
+    (hE : ∀ j, ∀ᶠ n in atTop ⊓ 𝓟 S,
+      ∀ x y, p x ∈ V n → p y ∈ V n → p x = p y → (x ∈ A j ↔ y ∈ A j))
+    (v : Measure K) (href : ∀ j, Tendsto (fun n => (s n).totalVariation.real (A j))
+      (atTop ⊓ 𝓟 S) (𝓝 (v.real (A j))))
+    (b : F → ℝ) (hmargin : ∀ j, v.real (A j) < b j) (M : ℕ) :
+    ∃ n ∈ S, M < n ∧ ∀ j, ∀ t : SignedMeasure K,
+      t.map p = nu n → t.totalVariation univ = (nu n).totalVariation univ →
+      t.totalVariation.real (A j) < b j := by
+  have hsmall : ∀ j, ∀ᶠ n in atTop ⊓ 𝓟 S,
+      (s n).totalVariation.real (A j) < b j :=
+    fun j => (href j).eventually (gt_mem_nhds (hmargin j))
+  have hsmall' := eventually_inf_principal.mp (eventually_all.mpr hsmall)
+  have hE' := eventually_inf_principal.mp (eventually_all.mpr hE)
+  have hall : ∀ᶠ n : ℕ in atTop, n ∈ S → M < n ∧ ∀ j, ∀ t : SignedMeasure K,
+      t.map p = nu n → t.totalVariation univ = (nu n).totalVariation univ →
+      t.totalVariation.real (A j) < b j := by
+    filter_upwards [hsmall', hE', eventually_gt_atTop M] with n hn hEn hMn
+    intro hnS
+    refine ⟨hMn, ?_⟩
+    intro j t htmap htmass
+    rw [positive_clopen_eq p hp (hV n) t (s n) (nu n) htmap (hsmap n)
+      htmass (hsmass n) (hnull n) (hA j) (hEn hnS j)]
+    exact hn hnS j
+  obtain ⟨N, hN⟩ := eventually_atTop.mp hall
+  obtain ⟨n, hnS, hnN⟩ := (hS.sdiff (Set.finite_Iio N)).nonempty
+  exact ⟨n, hnS, hN n (le_of_not_gt hnN) hnS⟩
 
 /-- A positive target piece remains uniformly large for every signed lift
 after deleting a clopen exclusion of variation mass at most one sixteenth. -/
@@ -292,7 +364,11 @@ theorem exists_signed_target_piece [CompactSpace L] [ZeroDimensionalSpace L]
     have hsplit : t (A \ R) = t A - t (A ∩ R) := by
       have h := VectorMeasure.of_sdiff (v := t)
         (hA.inter hR).isClosed.measurableSet hA.isClosed.measurableSet inter_subset_left
-      simpa only [sdiff_inter_self_right] using h
+      have heq : A \ (A ∩ R) = A \ R := by
+        ext x
+        simp only [Set.mem_sdiff, mem_inter_iff]
+        tauto
+      simpa only [heq] using h
     have hbound : t (A ∩ R) ≤ (1 : ℝ) / 16 := by
       calc
         t (A ∩ R) ≤ |t (A ∩ R)| := le_abs_self _
@@ -304,6 +380,97 @@ theorem exists_signed_target_piece [CompactSpace L] [ZeroDimensionalSpace L]
     rw [hsplit, htA]
     constructor <;> linarith only [hBmass, hbound]
 
+
+private lemma finite_column_budget {Rows : Type*} (code : Rows → ℕ)
+    (hcode : Function.Injective code) (A : Finset Rows) (q : ℕ) :
+    (∑ r ∈ A, ∑ j ∈ Finset.range q,
+      (1 : ℝ) / 64 * (1 / 2 : ℝ) ^ code r * (1 / 2 : ℝ) ^ j) ≤ 1 / 16 := by
+  classical
+  have hrow : (∑ r ∈ A, (1 / 2 : ℝ) ^ code r) ≤ 2 := by
+    rw [← Finset.sum_image (fun r _ s _ hrs => hcode hrs)]
+    simpa only [hasSum_geometric_two.tsum_eq] using
+      summable_geometric_two.sum_le_tsum (A.image code)
+        (fun j _ => pow_nonneg (by norm_num : (0 : ℝ) ≤ 1 / 2) j)
+  have hcol : (∑ j ∈ Finset.range q, (1 / 2 : ℝ) ^ j) ≤ 2 := by
+    simpa only [hasSum_geometric_two.tsum_eq] using
+      summable_geometric_two.sum_le_tsum (Finset.range q)
+        (fun j _ => pow_nonneg (by norm_num : (0 : ℝ) ≤ 1 / 2) j)
+  have hrow0 : 0 ≤ ∑ r ∈ A, (1 / 2 : ℝ) ^ code r :=
+    Finset.sum_nonneg (fun r _ => pow_nonneg (by norm_num) _)
+  have hcol0 : 0 ≤ ∑ j ∈ Finset.range q, (1 / 2 : ℝ) ^ j :=
+    Finset.sum_nonneg (fun j _ => pow_nonneg (by norm_num) _)
+  have hprod := mul_le_mul hrow hcol hcol0 (by norm_num : (0 : ℝ) ≤ 2)
+  have heq : (∑ r ∈ A, ∑ j ∈ Finset.range q,
+      (1 : ℝ) / 64 * (1 / 2 : ℝ) ^ code r * (1 / 2 : ℝ) ^ j) =
+      1 / 64 * (∑ r ∈ A, (1 / 2 : ℝ) ^ code r) *
+        (∑ j ∈ Finset.range q, (1 / 2 : ℝ) ^ j) := by
+    simp only [Finset.sum_mul, Finset.mul_sum, mul_assoc]
+    rw [Finset.sum_comm]
+  rw [heq]
+  nlinarith only [hprod]
+
+/-- The target part of one ordered column is chosen after its finite earlier
+exclusions. Positive-variation convergence controls every signed lift on their
+union; its mass budget is derived from the distinct row codes. -/
+theorem exists_target_after_finite_exclusion [CompactSpace L] [ZeroDimensionalSpace L]
+    {Rows : Type*} (code : Rows → ℕ) (hcode : Function.Injective code)
+    (A : Finset Rows) (q : ℕ)
+    (S : Set ℕ) (hS : S.Infinite) (p : K → L) (hp : Continuous p)
+    (V : ℕ → Set L) (hV : ∀ n, IsClopen (V n))
+    (nu : ℕ → SignedMeasure L) (s : ℕ → SignedMeasure K)
+    (hsmap : ∀ n, (s n).map p = nu n)
+    (hsmass : ∀ n, (s n).totalVariation univ = (nu n).totalVariation univ)
+    (hnull : ∀ n, (nu n).totalVariation (V n)ᶜ = 0)
+    (hposreg : ∀ n, Measure.Regular (nu n).toJordanDecomposition.posPart)
+    (hnegreg : ∀ n, Measure.Regular (nu n).toJordanDecomposition.negPart)
+    (hpos : ∀ n, (1 : ℝ) / 2 ≤ (nu n).toJordanDecomposition.posPart.real univ)
+    (W : Rows → ℕ → Set K) (hW : ∀ r j, IsClopen (W r j))
+    (hE : ∀ r ∈ A, ∀ j < q, ∀ᶠ n in atTop ⊓ 𝓟 S,
+      ∀ x y, p x ∈ V n → p y ∈ V n → p x = p y → (x ∈ W r j ↔ y ∈ W r j))
+    (v : Measure K)
+    (href : ∀ r ∈ A, ∀ j < q, Tendsto (fun n => (s n).totalVariation.real (W r j))
+      (atTop ⊓ 𝓟 S) (𝓝 (v.real (W r j))))
+    (hsmall : ∀ r ∈ A, ∀ j < q,
+      v.real (W r j) < (1 : ℝ) / 64 * (1 / 2 : ℝ) ^ code r * (1 / 2 : ℝ) ^ j)
+    (M : ℕ) :
+    ∃ n ∈ S, M < n ∧ ∃ H : Set K, IsClopen H ∧
+      H ⊆ p ⁻¹' V n \ (⋃ r ∈ A, ⋃ j ∈ Finset.range q, W r j) ∧
+      ∀ t : SignedMeasure K, t.map p = nu n →
+        t.totalVariation univ = (nu n).totalVariation univ →
+        (13 : ℝ) / 48 < t H ∧ (1 : ℝ) / 6 < t H := by
+  classical
+  let F := {r // r ∈ A} × Fin q
+  let tests : F → Set K := fun f => W f.1.1 f.2
+  let budget : F → ℝ := fun f =>
+    (1 : ℝ) / 64 * (1 / 2 : ℝ) ^ code f.1.1 * (1 / 2 : ℝ) ^ (f.2 : ℕ)
+  obtain ⟨n, hnS, hnM, hn⟩ := exists_target_index S hS p hp V hV nu s hsmap hsmass
+    hnull tests (fun f => hW _ _) (fun f => hE _ f.1.2 _ f.2.2) v
+    (fun f => href _ f.1.2 _ f.2.2) budget (fun f => hsmall _ f.1.2 _ f.2.2) M
+  let R : Set K := ⋃ r ∈ A, ⋃ j ∈ Finset.range q, W r j
+  have hR : IsClopen R :=
+    isClopen_biUnion_finset (fun r _ => isClopen_biUnion_finset (fun j _ => hW r j))
+  have hRsmall : ∀ t : SignedMeasure K, t.map p = nu n →
+      t.totalVariation univ = (nu n).totalVariation univ →
+      t.totalVariation.real R ≤ (1 : ℝ) / 16 := by
+    intro t htmap htmass
+    calc
+      t.totalVariation.real R ≤
+          ∑ r ∈ A, t.totalVariation.real (⋃ j ∈ Finset.range q, W r j) :=
+        measureReal_biUnion_finset_le A _
+      _ ≤ ∑ r ∈ A, ∑ j ∈ Finset.range q, t.totalVariation.real (W r j) :=
+        Finset.sum_le_sum (fun r _ => measureReal_biUnion_finset_le (Finset.range q) _)
+      _ ≤ ∑ r ∈ A, ∑ j ∈ Finset.range q,
+          (1 : ℝ) / 64 * (1 / 2 : ℝ) ^ code r * (1 / 2 : ℝ) ^ j := by
+        apply Finset.sum_le_sum
+        intro r hr
+        apply Finset.sum_le_sum
+        intro j hj
+        exact (hn (⟨r, hr⟩, ⟨j, Finset.mem_range.mp hj⟩) t htmap htmass).le
+      _ ≤ 1 / 16 := finite_column_budget code hcode A q
+  obtain ⟨H, hH, hsub, hlarge⟩ := exists_signed_target_piece p hp (nu n)
+    (hposreg n) (hnegreg n) (hV n) (hnull n) (hpos n) hR hRsmall
+  exact ⟨n, hnS, hnM, H, hH, hsub, hlarge⟩
+
 /-- The literal closed split inside the product with the new Boolean coordinate. -/
 def splitCarrier (Y Z : Set K) : Set (K × Bool) :=
   {p | (p.1 ∈ Y ∧ p.2 = false) ∨ (p.1 ∈ Z ∧ p.2 = true)}
@@ -312,6 +479,7 @@ def splitCarrier (Y Z : Set K) : Set (K × Bool) :=
 def evenPrefix (H : ℕ → Set K) (q : ℕ) : Set K :=
   ⋃ s ∈ Finset.range (q + 1), if s % 2 = 0 then H s else ∅
 
+omit [CompactSpace K] [MeasurableSpace K] [BorelSpace K] in
 private lemma evenPrefix_clopen (H : ℕ → Set K) (hH : ∀ q, IsClopen (H q))
     (q : ℕ) : IsClopen (evenPrefix H q) := by
   apply isClopen_biUnion_finset
@@ -320,6 +488,7 @@ private lemma evenPrefix_clopen (H : ℕ → Set K) (hH : ∀ q, IsClopen (H q))
   · exact hH s
   · exact isClopen_empty
 
+omit [CompactSpace K] [MeasurableSpace K] [BorelSpace K] in
 private lemma closure_trace {S A V : Set K} (hA : IsClopen A) (hV : IsClopen V)
     (htrace : S ∩ V = A ∩ V) : closure S ∩ V = A ∩ V := by
   apply Subset.antisymm
@@ -337,6 +506,7 @@ private lemma closure_trace {S A V : Set K} (hA : IsClopen A) (hV : IsClopen V)
     have hxS : x ∈ S ∩ V := htrace.symm ▸ hx
     exact ⟨subset_closure hxS.1, hxS.2⟩
 
+omit [TopologicalSpace K] [CompactSpace K] [MeasurableSpace K] [BorelSpace K] in
 private lemma ordered_union_trace {Rows : Type*} (code : Rows → ℕ)
     (H : ℕ → Set K) (W : Rows → ℕ → Set K)
     (havoid : ∀ r q s, code r < q → q < s → Disjoint (H s) (W r q))
@@ -352,15 +522,16 @@ private lemma ordered_union_trace {Rows : Type*} (code : Rows → ℕ)
       exact (Set.disjoint_left.mp (havoid r q s hq (lt_of_not_ge h))) hxH hxW
     refine ⟨?_, hxW⟩
     simp only [evenPrefix, mem_iUnion, Finset.mem_range]
-    exact ⟨s, by omega, by simpa only [if_pos hs] using hxH⟩
+    exact ⟨s, by omega, by simpa only [ite_eq_left hs] using hxH⟩
   · rintro ⟨hx, hxW⟩
     simp only [evenPrefix, mem_iUnion, Finset.mem_range] at hx
     obtain ⟨s, hs, hxH⟩ := hx
     by_cases heven : s % 2 = 0
     · refine ⟨mem_iUnion.mpr ⟨s, mem_iUnion.mpr ⟨heven, ?_⟩⟩, hxW⟩
-      simpa only [if_pos heven] using hxH
-    · simpa only [if_neg heven, mem_empty_iff_false] using hxH
+      simpa only [ite_eq_left heven] using hxH
+    · simpa only [ite_eq_right heven, mem_empty_iff_false] using hxH
 
+omit [CompactSpace K] [MeasurableSpace K] [BorelSpace K] in
 /-- Future columns avoid each earlier active auxiliary support. Closing the
 even union therefore has its exact finite-prefix trace on that whole support.
 Both closed sides and the genuine split are constructed; their boundary is
@@ -430,6 +601,7 @@ private lemma closed_split_auxiliary {Rows : Type*}
     · have hy := (hmemZ x.1.1 hx).mp h.1
       simp only [h.2, hy]
 
+omit [CompactSpace K] [MeasurableSpace K] [BorelSpace K] in
 /-- The ordered auxiliary traces and the pairwise disjoint target supports
 are realized by the same closed split, including target column zero. -/
 theorem exists_closed_split_of_ordered_exclusion {Rows : Type*}
@@ -490,7 +662,7 @@ theorem exists_closed_split_of_ordered_exclusion {Rows : Type*}
         Disjoint (Y ∩ Z) (T q) ∧
         ∀ x : splitCarrier Y Z, x.1.1 ∈ T q →
           (x.1.2 = true ↔ x.1.1 ∈ evenPrefix H (q + 1)) := by
-      simpa only [W', if_pos rfl] using ht
+      simpa only [W', ite_eq_left rfl] using ht
     have hpre : evenPrefix H (q + 1) ∩ T q =
         (if q % 2 = 0 then H q else ∅) := by
       ext x
@@ -499,27 +671,26 @@ theorem exists_closed_split_of_ordered_exclusion {Rows : Type*}
         simp only [evenPrefix, mem_iUnion, Finset.mem_range] at hx
         obtain ⟨s, hs, hxH⟩ := hx
         by_cases heven : s % 2 = 0
-        · simp only [if_pos heven] at hxH
+        · simp only [ite_eq_left heven] at hxH
           have hsq : s = q := by
             by_contra hsq
             exact (Set.disjoint_left.mp (hdis hsq)) (hHT s hxH) hxT
           subst s
-          simpa only [if_pos heven] using hxH
-        · simpa only [if_neg heven, mem_empty_iff_false] using hxH
+          simpa only [ite_eq_left heven] using hxH
+        · simpa only [ite_eq_right heven, mem_empty_iff_false] using hxH
       · intro hx
         by_cases heven : q % 2 = 0
-        · simp only [if_pos heven] at hx
+        · simp only [ite_eq_left heven] at hx
           refine ⟨?_, hHT q hx⟩
           simp only [evenPrefix, mem_iUnion, Finset.mem_range]
-          exact ⟨q, by omega, by simpa only [if_pos heven] using hx⟩
-        · simpa only [if_neg heven, mem_empty_iff_false] using hx
+          exact ⟨q, by omega, by simpa only [ite_eq_left heven] using hx⟩
+        · simpa only [ite_eq_right heven, mem_empty_iff_false] using hx
     refine ⟨ht'.1.trans hpre, ht'.2.2.1, ?_⟩
     intro x hx
     rw [ht'.2.2.2 x hx]
     have hmem := Set.ext_iff.mp hpre x.1.1
     by_cases heven : q % 2 = 0
-    · simpa only [mem_inter_iff, hx, and_true, if_pos heven, heven, true_and] using hmem
-    · simpa only [mem_inter_iff, hx, and_true, if_neg heven, mem_empty_iff_false,
-        heven, false_and] using hmem
+    · simpa [hx, heven] using hmem
+    · simpa [hx, heven] using hmem
 
 end D5.S3.Topology.Measures.SignedSplitSuccessor
