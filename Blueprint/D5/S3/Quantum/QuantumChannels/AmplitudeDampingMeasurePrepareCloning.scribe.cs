@@ -86,12 +86,11 @@ internal sealed class AmplitudeDampingMeasurePrepareCloningDocument : IScribeDoc
         return All(gamma, Reals, Equal(Call("adChoi", gamma), body));
     }
 
-    private static Formula ChoiPowDefinition()
+    private static Formula TensorPower(Formula j, Formula n)
     {
-        Formula j = F.Id("J"), n = F.Id("n"), x = F.Id("x"), y = F.Id("y"), i = F.Id("i");
-        return All(j, Matrix(Site), All(n, Naturals, Equal(Call("choiPow", j, n),
-            LambdaOf(x, Sites(n), LambdaOf(y, Sites(n),
-                ProductOver(i, Fin(n), App(j, App(x, i), App(y, i))))))));
+        Formula x = F.Id("x"), y = F.Id("y"), i = F.Id("i");
+        return LambdaOf(x, Sites(n), LambdaOf(y, Sites(n),
+            ProductOver(i, Fin(n), App(j, App(x, i), App(y, i)))));
     }
 
     private static Formula ChannelDefinition()
@@ -109,7 +108,7 @@ internal sealed class AmplitudeDampingMeasurePrepareCloningDocument : IScribeDoc
 
     private static Formula Weight(Formula t, Formula ell, Formula gamma, Formula n) =>
         Qualified("Matrix", "trace", Multiply(App(t, ell),
-            Call("choiPow", Call("adChoi", gamma), n)));
+            TensorPower(Call("adChoi", gamma), n)));
 
     private static Formula ClaimBody()
     {
@@ -119,7 +118,7 @@ internal sealed class AmplitudeDampingMeasurePrepareCloningDocument : IScribeDoc
         var atGamma = And(All(ell, Fin(l), AtMost(Typed(D(0), Complexes), weight)),
             And(Equal(SumOver(ell, Fin(l), weight), Typed(D(1), Complexes)),
                 Equal(SumOver(ell, Fin(l), Smul(weight, App(k, ell))),
-                    Call("choiPow", Call("adChoi", gamma), m))));
+                    TensorPower(Call("adChoi", gamma), m))));
         var parameters = All(gamma, Reals, Implies(
             new Formula.Relation(gamma, FormulaRelationOperator.MemberOf,
                 Qualified("Set", "Icc", Typed(D(0), Reals), Typed(D(1), Reals))), atGamma));
@@ -155,18 +154,6 @@ internal sealed class AmplitudeDampingMeasurePrepareCloningDocument : IScribeDoc
                     + "On this interval the reference marginal is the identity and the trace is two."))),
                 DescribeRole.Definition),
             Describe.Lean(
-                DescribeId.Create("choi-pow"),
-                DeclarationHandle.Create(Module + ".choiPow"),
-                H("Tensor powers in coordinates"),
-                StatementSource.FromAuthor(Disp(ChoiPowDefinition())),
-                AssessedProvenance.FromRepo(Source),
-                Blocks(Paragraph(Text(
-                    "The n-fold tensor power has rows and columns indexed by assignments of one "
-                    + "reference-output pair to each site in Fin n. An entry is the product of the "
-                    + "corresponding single-site entries. The empty tensor power has one row, one column, "
-                    + "and its sole entry is one."))),
-                DescribeRole.Definition),
-            Describe.Lean(
                 DescribeId.Create("is-channel-choi"),
                 DeclarationHandle.Create(Module + ".IsChannelChoi"),
                 H("Positivity and the reference marginal"),
@@ -193,7 +180,10 @@ internal sealed class AmplitudeDampingMeasurePrepareCloningDocument : IScribeDoc
                         + "and every positive M, with a finite number L of outcomes.")),
                     Paragraph(Text(
                         "Each fixed matrix T indexed by an outcome gives that outcome's probability "
-                        + "as its trace pairing with the N-fold input Choi matrix. These complex trace "
+                        + "as its trace pairing with the N-fold input Choi matrix. The tensor powers "
+                        + "are the coordinate products displayed in the formula, given in Lean by "
+                        + "D5.S3.Quantum.Recovery.ProductPrefixRigidity.productMap applied to the constant "
+                        + "family of Choi matrices on Fin N or Fin M. The empty product is one. These complex trace "
                         + "values must be nonnegative and sum to one for every gamma in [0,1]. "
                         + "The fixed preparation matrices K are global channel Choi matrices. Their "
                         + "probability-weighted sum would have to equal the M-fold target Choi matrix "

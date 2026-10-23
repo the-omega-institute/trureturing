@@ -7,6 +7,7 @@
    digest: Finite measure-and-prepare cannot clone amplitude-damping channels. -/
 
 import D5.S3.Quantum.Information.PartialTraceMutualInformation
+import D5.S3.Quantum.Recovery.PurifiedLocalPath
 
 /-! # No perfect measure-and-prepare cloning of amplitude-damping channels
 
@@ -19,6 +20,7 @@ namespace D5.S3.Quantum.QuantumChannels.AmplitudeDampingMeasurePrepareCloning
 open scoped BigOperators ComplexOrder
 open Matrix Polynomial
 open D5.S3.Quantum.Information.PartialTraceMutualInformation
+open D5.S3.Quantum.Recovery
 
 noncomputable section
 
@@ -27,11 +29,6 @@ def adChoi (γ : ℝ) : Matrix (Fin 2 × Fin 2) (Fin 2 × Fin 2) ℂ :=
   let A : Fin 2 → Matrix (Fin 2) (Fin 2) ℂ :=
     ![!![1, 0; 0, (Real.sqrt (1 - γ) : ℂ)], !![0, (Real.sqrt γ : ℂ); 0, 0]]
   fun x y => ∑ k, A k x.2 x.1 * star (A k y.2 y.1)
-
-/-- The tensor power of a Choi matrix, including the empty tensor power. -/
-def choiPow (J : Matrix (Fin 2 × Fin 2) (Fin 2 × Fin 2) ℂ) (n : ℕ) :
-    Matrix (Fin n → Fin 2 × Fin 2) (Fin n → Fin 2 × Fin 2) ℂ :=
-  fun x y => ∏ i, J (x i) (y i)
 
 /-- Positivity and the reference marginal identity for an unnormalized channel Choi matrix. -/
 def IsChannelChoi {n : ℕ}
@@ -46,10 +43,14 @@ def claim : Prop :=
     (T : Fin L → Matrix (Fin N → Fin 2 × Fin 2) (Fin N → Fin 2 × Fin 2) ℂ)
     (K : Fin L → Matrix (Fin M → Fin 2 × Fin 2) (Fin M → Fin 2 × Fin 2) ℂ),
     (∀ ℓ, IsChannelChoi (K ℓ)) ∧ ∀ γ ∈ Set.Icc (0 : ℝ) 1,
-      (∀ ℓ, 0 ≤ Matrix.trace (T ℓ * choiPow (adChoi γ) N)) ∧
-      (∑ ℓ, Matrix.trace (T ℓ * choiPow (adChoi γ) N)) = 1 ∧
-      (∑ ℓ, Matrix.trace (T ℓ * choiPow (adChoi γ) N) • K ℓ) =
-        choiPow (adChoi γ) M
+      (∀ ℓ, 0 ≤ Matrix.trace (T ℓ * ProductPrefixRigidity.productMap (H := fun _ => Fin 2 × Fin 2)
+          (fun _ : Fin N => adChoi γ))) ∧
+      (∑ ℓ, Matrix.trace (T ℓ * ProductPrefixRigidity.productMap (H := fun _ => Fin 2 × Fin 2)
+          (fun _ : Fin N => adChoi γ))) = 1 ∧
+      (∑ ℓ, Matrix.trace (T ℓ * ProductPrefixRigidity.productMap (H := fun _ => Fin 2 × Fin 2)
+          (fun _ : Fin N => adChoi γ)) • K ℓ) =
+        ProductPrefixRigidity.productMap (H := fun _ => Fin 2 × Fin 2)
+          (fun _ : Fin M => adChoi γ)
 
 private def polyChoi : Matrix (Fin 2 × Fin 2) (Fin 2 × Fin 2) (Polynomial ℂ) :=
   let w : (Fin 2 × Fin 2) → Polynomial ℂ :=
@@ -111,16 +112,18 @@ private lemma red_channel (n : ℕ)
 
 private lemma red_pow_formula (n : ℕ)
     (J : Matrix (Fin 2 × Fin 2) (Fin 2 × Fin 2) ℂ) :
-    red n (choiPow J (n + 1)) = (∑ o : Fin 2, J (0, o) (0, o)) ^ n • J := by
+    red n (ProductPrefixRigidity.productMap (H := fun _ => Fin 2 × Fin 2)
+          (fun _ : Fin (n + 1) => J)) = (∑ o : Fin 2, J (0, o) (0, o)) ^ n • J := by
   ext x y
-  simp only [red, partialTraceRight, Matrix.submatrix_apply, choiPow,
+  simp only [red, partialTraceRight, Matrix.submatrix_apply, ProductPrefixRigidity.productMap,
     Fin.prod_univ_succ, Fin.cons_zero, Fin.cons_succ]
   rw [← Finset.mul_sum]
   rw [← Fintype.prod_sum (fun (_ : Fin n) (o : Fin 2) => J (0, o) (0, o))]
   simp [mul_comm]
 
 private lemma red_pow (n : ℕ) (s : ℝ) (hs : s ∈ Set.Icc (0 : ℝ) 1) :
-    red n (choiPow (adChoi (1 - s ^ 2)) (n + 1)) = adChoi (1 - s ^ 2) := by
+    red n (ProductPrefixRigidity.productMap (H := fun _ => Fin 2 × Fin 2)
+          (fun _ : Fin (n + 1) => adChoi (1 - s ^ 2))) = adChoi (1 - s ^ 2) := by
   rw [red_pow_formula, ad_tp s hs 0 0]
   simp
 
@@ -194,12 +197,14 @@ private lemma ad_extreme (s : ℝ) (hs : s ∈ Set.Icc (0 : ℝ) 1)
 private lemma measurement_polynomial (N : ℕ)
     (T : Matrix (Fin N → Fin 2 × Fin 2) (Fin N → Fin 2 × Fin 2) ℂ) :
     ∃ P : Polynomial ℂ, ∀ s ∈ Set.Icc (0 : ℝ) 1,
-      P.eval (s : ℂ) = Matrix.trace (T * choiPow (adChoi (1 - s ^ 2)) N) := by
+      P.eval (s : ℂ) = Matrix.trace (T *
+        ProductPrefixRigidity.productMap (H := fun _ => Fin 2 × Fin 2)
+          (fun _ : Fin N => adChoi (1 - s ^ 2))) := by
   refine ⟨∑ x, ∑ y, C (T x y) * ∏ i, polyChoi (y i) (x i), ?_⟩
   intro s hs
   simp only [Polynomial.eval_finsetSum, Polynomial.eval_mul, Polynomial.eval_C,
     Polynomial.eval_prod, ← ad_entries s hs, Matrix.trace, Matrix.diag_apply,
-    Matrix.mul_apply, choiPow]
+    Matrix.mul_apply, ProductPrefixRigidity.productMap]
 
 private lemma polynomial_zero (P : Polynomial ℂ)
     (R : Matrix (Fin 2 × Fin 2) (Fin 2 × Fin 2) ℂ)
@@ -227,7 +232,9 @@ theorem result : claim := by
   intro N M hM h
   obtain ⟨n, rfl⟩ := Nat.exists_eq_succ_of_ne_zero (by omega : M ≠ 0)
   obtain ⟨L, T, K, hK, h⟩ := h
-  have hzero (ℓ : Fin L) : Matrix.trace (T ℓ * choiPow (adChoi 1) N) = 0 := by
+  have hzero (ℓ : Fin L) : Matrix.trace (T ℓ *
+      ProductPrefixRigidity.productMap (H := fun _ => Fin 2 × Fin 2)
+          (fun _ : Fin N => adChoi 1)) = 0 := by
     obtain ⟨P, hP⟩ := measurement_polynomial N (T ℓ)
     have hp0 : P = 0 := by
       apply polynomial_zero P (red n (K ℓ))
@@ -245,8 +252,6 @@ theorem result : claim := by
   have hnorm := (h 1 (by constructor <;> norm_num)).2.1
   simp_rw [hzero] at hnorm
   simp at hnorm
-
-#print axioms result
 
 end
 

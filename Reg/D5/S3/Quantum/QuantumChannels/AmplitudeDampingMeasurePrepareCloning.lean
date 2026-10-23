@@ -10,6 +10,7 @@ open _root_.D5.S3.Quantum.QuantumChannels.AmplitudeDampingMeasurePrepareCloning
 open _root_.D5.S3.ConceptDynamics.InformationEscape.DependentFamily
 open scoped BigOperators ComplexOrder
 open Matrix
+open _root_.D5.S3.Quantum.Recovery
 
 set_option autoImplicit false
 set_option relaxedAutoImplicit false
@@ -39,13 +40,18 @@ abbrev arena : Arena where
     (T : Fin L → Matrix (Fin N → Fin 2 × Fin 2) (Fin N → Fin 2 × Fin 2) ℂ)
     (K : Fin L → Matrix (Fin M → Fin 2 × Fin 2) (Fin M → Fin 2 × Fin 2) ℂ),
     (∀ ℓ, IsChannelChoi (K ℓ)) ∧ ∀ γ ∈ Set.Icc (0 : ℝ) 1,
-      (∀ ℓ, 0 ≤ Matrix.trace (T ℓ * choiPow (adChoi γ) N)) ∧
-      (∑ ℓ, Matrix.trace (T ℓ * choiPow (adChoi γ) N)) = 1 ∧
-      (∑ ℓ, Matrix.trace (T ℓ * choiPow (adChoi γ) N) • K ℓ) =
-        choiPow (R.readout () () γ) M
+      (∀ ℓ, 0 ≤ Matrix.trace (T ℓ * ProductPrefixRigidity.productMap (H := fun _ => Fin 2 × Fin 2)
+          (fun _ : Fin N => adChoi γ))) ∧
+      (∑ ℓ, Matrix.trace (T ℓ * ProductPrefixRigidity.productMap (H := fun _ => Fin 2 × Fin 2)
+          (fun _ : Fin N => adChoi γ))) = 1 ∧
+      (∑ ℓ, Matrix.trace (T ℓ * ProductPrefixRigidity.productMap (H := fun _ => Fin 2 × Fin 2)
+          (fun _ : Fin N => adChoi γ)) • K ℓ) =
+        ProductPrefixRigidity.productMap (H := fun _ => Fin 2 × Fin 2)
+          (fun _ : Fin M => R.readout () () γ)
 
 private theorem rejected_pow_one :
-    choiPow ((1 / 2 : ℂ) • 1) 1 = (1 / 2 : ℂ) • 1 := by
+    ProductPrefixRigidity.productMap (H := fun _ => Fin 2 × Fin 2) (T := fun _ => Fin 2 × Fin 2)
+      (fun _ : Fin 1 => (1 / 2 : ℂ) • 1) = (1 / 2 : ℂ) • 1 := by
   ext x y
   have hxy : x = y ↔ x 0 = y 0 := by
     constructor
@@ -55,7 +61,7 @@ private theorem rejected_pow_one :
       funext i
       fin_cases i
       exact h
-  simp [choiPow, Matrix.one_apply, ← hxy]
+  simp [ProductPrefixRigidity.productMap, Matrix.one_apply, ← hxy]
 
 private theorem mixed_channel :
     IsChannelChoi ((1 / 2 : ℂ) •
@@ -75,9 +81,10 @@ theorem rejected_law : ¬ arena.Law rejected := by
   · intro _
     exact mixed_channel
   · intro γ _
-    have hp : choiPow (adChoi γ) 0 = 1 := by
+    have hp : ProductPrefixRigidity.productMap (H := fun _ => Fin 2 × Fin 2)
+          (fun _ : Fin 0 => adChoi γ) = 1 := by
       ext x y
-      simp [choiPow, Matrix.one_apply, Subsingleton.elim x y]
+      simp [ProductPrefixRigidity.productMap, Matrix.one_apply, Subsingleton.elim x y]
     dsimp only [rejected, realize]
     rw [rejected_pow_one]
     simp [hp, Matrix.trace]
@@ -131,7 +138,7 @@ def registration :
     coordinates := #[]
     readouts := #[{
       path := #["body", "body", "body", "arg", "arg", "body", "arg", "body",
-        "arg", "body", "arg", "body", "body", "arg", "arg", "arg", "fn", "arg"]
+        "arg", "body", "arg", "body", "body", "arg", "arg", "arg", "arg", "body"]
       stateBinder := 6
       functionOperand := false
       stateOperand := none
