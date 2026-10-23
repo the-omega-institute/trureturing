@@ -43,7 +43,10 @@ internal sealed class EntanglementDistanceBellDiagonalRefutationDocument : IScri
                 DescribeRole.Definition, AssessedProvenance.FromLiterature(Source)),
             Node("result", "A two-qubit counterexample", Disp(new Formula.Not(F.Id("claim"))),
                 "Take the Bell-diagonal state with weights (16/25, 9/25, 0, 0). It is the equal mixture of the projectors onto the two nonorthogonal pure states (|00⟩ + q₊|11⟩)/√2 and (|00⟩ + q₋|11⟩)/√2, where q₊ = (7 + 24i)/25 and q₋ = (7 − 24i)/25. On either site, the SU(2) rotations diag((4 + 3i)/5,(4 − 3i)/5) and diag((3 + 4i)/5,(3 − 4i)/5) take the respective projectors to the first two Bell projectors. The rotated mixture is therefore diag(1/2,0,0,1/2). Both site QCD values are zero, hence ED is at most zero, while twice the squared concurrence is 98/625. Thus ED ≤ 0 < 98/625. These states and rotations give a counterexample to the claim.",
-                DescribeRole.Theorem, AssessedProvenance.FromRepo(Source))
+                DescribeRole.Theorem, AssessedProvenance.FromRepo(Source),
+                new OpenProblemResolutionClaim(
+                    ProblemSlugRef.Create("vesperini-bel-hadj-aissa-franzosi-2023-bell-diagonal-entanglement-distance-refutation"),
+                    ResolutionKind.Refuted))
         ),
         []));
 
