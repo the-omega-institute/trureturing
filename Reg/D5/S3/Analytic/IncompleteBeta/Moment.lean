@@ -19,8 +19,6 @@ def actual : Realization signature :=
   realize signature (fun _ q u => W q.1 q.2 u) (fun e => nomatch e)
 def zeroReadout : Realization signature :=
   realize signature (fun _ _ _ => 0) (fun e => nomatch e)
-def identityReadout : Realization signature :=
-  realize signature (fun _ _ u => u) (fun e => nomatch e)
 def stepReadout : Realization signature :=
   realize signature (fun _ _ u => if u = 1/2 then 0 else 1) (fun e => nomatch e)
 
@@ -80,10 +78,17 @@ def audit : Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0}
 end Monotonicity
 
 namespace Symmetry
+abbrev signature : Signature :=
+  _root_.Reg.Support.SingleDependentReadout.signature
+    (Σ _ : ℕ, ℝ) (fun _ => ℝ) (fun _ => ℝ)
+def actual : Realization signature :=
+  realize signature (fun _ q u => W q.2 q.1 u) (fun e => nomatch e)
+def identityReadout : Realization signature :=
+  realize signature (fun _ _ u => u) (fun e => nomatch e)
 def arena : Arena where
   signature := signature
   Law R := ∀ (n : ℕ) (u : ℝ) {a : ℝ},
-    R.readout () ⟨a, n⟩ (1-u) = R.readout () ⟨a, n⟩ u
+    R.readout () ⟨n, a⟩ (1-u) = R.readout () ⟨n, a⟩ u
 private theorem rejected_law : ¬ arena.Law identityReadout := by
   intro h
   have H := h 0 0 (a := 1)
@@ -94,7 +99,12 @@ def family : Registration arena (type_of% @W_symm) where
   variation := ⟨@W_symm, identityReadout, rejected_law⟩
   sensitivity := _root_.Reg.Support.SingleDependentReadout.sensitivity
     arena.Law actual identityReadout rejected_law
-  dependence := actual_dependence
+  dependence := by
+    change ObservationalDependence signature actual
+    intro i
+    refine ⟨⟨0, 1⟩, 0, 1/2, ?_⟩
+    exact ne_of_lt (W_strictMonoOn (a := 1) (by norm_num) 0
+      (by norm_num) (by norm_num) (by norm_num))
 def audit : Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0}
     (@W_symm) (Realization signature) Unit Unit where
   unitName := `Reg.D5.S3.Analytic.IncompleteBeta.Moment.Symmetry.unit
@@ -108,7 +118,7 @@ def audit : Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0}
   realization := .source arena ⟨family⟩
   correspondence := { stage := .evidence, objectStage := .evidence }
   bundleNonempty := .absent
-  readout := some (realize signature (fun _ q u => W q.1 q.2 u) (fun e => nomatch e))
+  readout := some (realize signature (fun _ q u => W q.2 q.1 u) (fun e => nomatch e))
   variation := .absent
   sensitivity := .absent
   partialSensitivity := none
@@ -116,10 +126,10 @@ def audit : Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0}
   sourceSelection := some {
     owner := `D5.S3.Analytic.IncompleteBeta.Moment
     definition := none
-    coordinates := #[2, 0]
+    coordinates := #[0, 2]
     readouts := #[{
       path := #["body", "body", "body", "fn", "arg"]
-      stateBinder := 1
+      stateBinder := 0
       functionOperand := false
       stateOperand := some #["arg"]
       booleanPredicate := false }] }
@@ -295,7 +305,7 @@ def audit : Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0}
     coordinates := #[0, 1, 2]
     readouts := #[{
       path := #["body", "body", "body", "body", "body", "body", "body", "fn", "arg"]
-      stateBinder := 6
+      stateBinder := 0
       functionOperand := false
       stateOperand := some #["arg"]
       booleanPredicate := false }] }

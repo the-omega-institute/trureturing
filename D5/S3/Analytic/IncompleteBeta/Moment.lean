@@ -114,11 +114,11 @@ theorem convolution_eq_betaMean {a s t : ℝ}
       (by positivity : 0<2*a+s+t+n)).ne'
     rw [show a+t+((n:ℝ)-k)=a+t+n-k by ring,
       show a+((n:ℝ)-k)+1=a+n-k+1 by ring]
-    field_simp
+    field_simp (disch := assumption)
   unfold convolution
   rw [show (fun u => u^(s-1)*(1-u)^(t-1)*W a n u) =
     (fun u => ∑ k ∈ Finset.range (n+1), F k u) by
-      funext u; simp only [W, Finset.mul_sum]; rfl,
+      funext u; dsimp only [W]; rw [Finset.mul_sum],
     intervalIntegral.integral_finsetSum hki, Finset.mul_sum]
   exact Finset.sum_congr rfl (fun k hk => (hterm k hk).symm)
 

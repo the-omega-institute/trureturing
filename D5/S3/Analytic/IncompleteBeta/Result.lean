@@ -63,7 +63,7 @@ theorem convolution_strictAnti_imbalance {a m : ℝ} (ha : 0 < a) (hm : 0 < m)
     rw [convolution_eq_betaMean ha hp hq]
     unfold betaMean
     rw [show 2 * a + (m + d) + (m - d) + (n:ℝ) = 2 * a + 2 * m + n by ring]
-    field_simp
+    field_simp (disch := assumption)
   intro d hd e he hde
   change convolution a (m + e) (m - e) n < convolution a (m + d) (m - d) n
   rw [hEq d hd, hEq e he]

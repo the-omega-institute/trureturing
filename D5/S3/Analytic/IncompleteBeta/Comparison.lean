@@ -61,7 +61,8 @@ private lemma folded_eq {m d u : ℝ} (hu : u ∈ Ioo 0 1) :
     folded m d u = 2 * (u * (1 - u)) ^ (m - 1) *
       Real.cosh (d * Real.log ((1 - u) / u)) := by
   have h1 : 0 < 1 - u := sub_pos.mpr hu.2
-  simp only [folded, density, sub_sub_cancel]
+  dsimp only [folded, density]
+  simp only [sub_sub_cancel]
   rw [Real.mul_rpow hu.1.le h1.le, Real.cosh_eq]
   simp only [Real.rpow_def_of_pos hu.1, Real.rpow_def_of_pos h1,
     Real.log_div h1.ne' hu.1.ne']
@@ -241,7 +242,8 @@ private lemma betaMean_eq_foldedMean {W : ℝ → ℝ}
       Real.Gamma (m+d) * Real.Gamma (m-d) / Real.Gamma (2*m) := by
     change (∫ u in (0:ℝ)..(1/2), density m d u + density m d (1-u)) = _
     rw [← fold_integral hi]
-    simpa only [density, show m+d+(m-d)=2*m by ring] using
+    dsimp only [density]
+    simpa only [show m+d+(m-d)=2*m by ring] using
       D5.S3.Analytic.KummerRatio.BetaIntegral.integral_beta hp hq
   unfold betaMean
   change _ * (∫ u in (0:ℝ)..1, density m d u * W u) = _
