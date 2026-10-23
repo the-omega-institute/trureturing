@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:acd23d2099e4967c3560e7cc7e327b0255452ec3352afd8b70aeb39d6ce23450
+  normalized_sha256: sha256:acd23d2099e4967c3560e7cc7e327b0255452ec3352afd8b70aeb39d6ce23450
+cas_ref: sha256:acd23d2099e4967c3560e7cc7e327b0255452ec3352afd8b70aeb39d6ce23450
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 概念表对 Jones projection 的“自观察事件”命名。
+    previous_atom_id: 0cc843a663bcbcd25707856151442cf9ee9bd11242563bd80021a755e53b2dc1
+    next_atom_id: afa6a29d761826a32e1d6fa387972fcfc29ea0fb266849a3150f2cea0fdfd8a2

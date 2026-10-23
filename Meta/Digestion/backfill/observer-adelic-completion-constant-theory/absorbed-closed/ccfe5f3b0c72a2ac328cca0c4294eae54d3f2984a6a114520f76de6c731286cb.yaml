@@ -1,0 +1,9 @@
+fingerprints:
+  raw_sha256: sha256:ccfe5f3b0c72a2ac328cca0c4294eae54d3f2984a6a114520f76de6c731286cb
+  normalized_sha256: sha256:ccfe5f3b0c72a2ac328cca0c4294eae54d3f2984a6a114520f76de6c731286cb
+cas_ref: sha256:ccfe5f3b0c72a2ac328cca0c4294eae54d3f2984a6a114520f76de6c731286cb
+coverage_gids:
+  - gid: D5/S3/Divergence/CauchyMeasureEntropy.cauchy_measure_relative_entropy
+    target_statement_id: sha256:262b2b4abcdcac22c5e774550d66fa49fd29fbf9716b87a9da0ef51a4cad0e2c
+receipts:
+  unresolved_subitems: []
