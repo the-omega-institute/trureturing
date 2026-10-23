@@ -9,76 +9,34 @@ internal sealed class HeadleyExtensionDocument : IScribeDocumentDefinition
     private const string Owner = "D5/S3/FiniteGroups/HeadleyExtension.";
 
     public DocumentDefinition Create() => DocumentDefinition.Create(ScribeNode.Create(
-        "A kernel R-cycle is spliced through an even quotient R-star cycle without choosing a group splitting.",
-        H("Headley nonsplit extension splice"),
+        "An R-cycle on a kernel and an even R-star quotient construct a cyclic ordering with every nonzero directed difference in an arbitrary finite abelian extension.",
+        H("Headley nonsplit extension"),
         Blocks(
             Describe.Lean(
-                DescribeId.Create("headley-extension-orthomorphism-inverse"),
-                DeclarationHandle.Create(Owner + "orthomorphism_inverse"),
-                H("Inverse orthomorphisms preserve the difference inventory"),
-                StatementSource.FromAuthor(Disp(F.Id("orthomorphism"))),
+                DescribeId.Create("headley-extension-r-cycle"),
+                DeclarationHandle.Create(Owner + "RCycle"),
+                H("A complete cyclic vertex and directed-difference inventory"),
+                StatementSource.FromAuthor(Disp(F.Id("RCycle"))),
                 AssessedProvenance.FromRepo(),
                 Blocks(Paragraph(Text(
-                    "If f and h ↦ f(h)-h are permutations of a finite additive abelian group, "
-                    + "then h ↦ f⁻¹(h)-h is also a permutation. The proof uses the inverse "
-                    + "orthomorphism pair and negates the original difference inventory."))),
-                DescribeRole.Theorem),
-            Describe.Lean(
-                DescribeId.Create("headley-extension-kernel-f"),
-                DeclarationHandle.Create(Owner + "kernel_F_formula"),
-                H("The kernel difference map supplies F = id − D"),
-                StatementSource.FromAuthor(Disp(F.Id("kernelF"))),
-                AssessedProvenance.FromRepo(),
-                Blocks(Paragraph(Text(
-                    "From the complete kernel R-cycle, D fixes zero and has one nonzero orbit. "
-                    + "Its directed-difference permutation gives F(h)=h−D(h); the negation "
-                    + "of that inventory makes F an orthomorphism, and orthomorphism_inverse "
-                    + "supplies the companion map J=F⁻¹ used on the second exceptional edge."))),
-                DescribeRole.Theorem),
-            Describe.Lean(
-                DescribeId.Create("headley-extension-representative-system"),
-                DeclarationHandle.Create(Owner + "RepresentativeSystem"),
-                H("Nonsplit representatives are set-theoretic"),
-                StatementSource.FromAuthor(Disp(F.Id("representatives"))),
-                AssessedProvenance.FromRepo(),
-                Blocks(Paragraph(Text(
-                    "A representative section of E → E/N chooses one point in each coset. "
-                    + "It is not an additive section: all row coordinates are transported "
-                    + "through the ambient additive group."))),
+                    "The successor fixes zero and is one cycle on the nonzero elements. Its directed difference, successor(x)-x, is a permutation of the entire group, fixing zero. This records every edge of the nonzero cycle, including its closing edge. An R-star quotient additionally has three distinct consecutive nonzero vertices a,b,c with a+c=b."))),
                 DescribeRole.Definition),
             Describe.Lean(
-                DescribeId.Create("headley-extension-seam-labels"),
-                DeclarationHandle.Create(Owner + "splice_seam_labels"),
-                H("The four exceptional seams retain their ambient labels"),
-                StatementSource.FromAuthor(Disp(F.Id("seams"))),
+                DescribeId.Create("headley-nonsplit-extension-r-cycle"),
+                DeclarationHandle.Create(Owner + "nonsplit_extension_r_cycle"),
+                H("The kernel cycle is inserted by a two-row splice"),
+                StatementSource.FromAuthor(Disp(F.Id("nonsplitExtension"))),
                 AssessedProvenance.FromRepo(),
-                Blocks(Paragraph(Text(
-                    "With B=A+C, F(h)=h-D(h), and a selected nonzero row v, replacing the "
-                    + "two A→B→C rows by the kernel path and the short B-column path preserves "
-                    + "the four labels exactly in E, including the closing edge."))),
-                DescribeRole.Theorem),
-            Describe.Lean(
-                DescribeId.Create("headley-extension-lifted-edge"),
-                DeclarationHandle.Create(Owner + "lifted_edge_quotient_label"),
-                H("Ordinary row lifts keep one quotient label coset"),
-                StatementSource.FromAuthor(Disp(F.Id("liftedEdge"))),
-                AssessedProvenance.FromRepo(),
-                Blocks(Paragraph(Text(
-                    "For any quotient edge u→v, an orthomorphic row map f sends h to f(h). "
-                    + "The ambient label is representative(v)−representative(u)+f(h)−h; "
-                    + "its quotient is the single edge label, while the row offset ranges over "
-                    + "the kernel difference coset."))),
-                DescribeRole.Theorem),
-            Describe.Lean(
-                DescribeId.Create("headley-extension-certificate-assembly"),
-                DeclarationHandle.Create(Owner + "nonsplit_extension_r_cycle_of_certificate"),
-                H("A row-splice certificate assembles the ambient R-cycle"),
-                StatementSource.FromAuthor(Disp(F.Id("assembly"))),
-                AssessedProvenance.FromRepo(),
-                Blocks(Paragraph(Text(
-                    "The certificate records the row successor, its complete difference map, "
-                    + "and arbitrary representative transport. Conjugating the row permutation "
-                    + "produces a successor on E fixing zero; its nonzero cycle and directed "
-                    + "differences are carried through the same transport."))),
+                Blocks(
+                    Paragraph(Text(
+                        "Let E be any finite additive abelian group and N a subgroup. An R-cycle on N and an R-star cycle on the even quotient E/N imply an R-cycle on E. Representatives A,C of a,c are arbitrary, B=A+C, and the other representatives are arbitrary. The representative map has no additivity requirement, so nonsplit extensions are included. A trivial kernel is handled by the additive quotient equivalence.")),
+                    Paragraph(Text(
+                        "Extend the kernel successor D by D(0)=0 and put F(h)=h-D(h), J=F inverse. Both F and J are orthomorphisms. The a-to-b and b-to-c lifts use F,J. The next edge uses D and the remaining edges use consecutive F,J pairs. Even quotient order makes their number even, so the unmodified return is D.")),
+                    Paragraph(Text(
+                        "Choose v nonzero in N. Replace row zero by A,D(v),D squared(v),...,v,C+v. Replace row v by A+v,B+F(v),B,C. These are the same successor changes as two transpositions at the vertices A, v, and B+F(v). They join the zero row, the nonzero kernel cycle, and the remaining nonzero rows into one cycle. In contracted row coordinates the return is D composed with the transposition of zero and v, whose cyclic traversal is zero,D(v),D squared(v),...,v.")),
+                    Paragraph(Text(
+                        "For every ordinary edge the quotient difference identifies its coset, and the orthomorphism difference bijects that coset. The splice permutes three old labels: the label C, the cut kernel label D(v)-v, and the label -A+D(v). The fourth cross-column label C-D(v) is unchanged. The inverse three-cycle on source indices therefore gives a full ambient directed-difference bijection, rather than only a quotient inventory.")),
+                    Paragraph(Text(
+                        "This construction belongs to the R-sequenceability program of P. Headley, R-sequenceability and R-star-sequenceability of abelian 2-groups, Discrete Mathematics 131, 345-350, DOI 10.1016/0012-365X(94)90396-4. The explicit splice is a reconstruction; no originality claim is made. The theorem supplies the extension step only. Elementary and order-eight bases, induction through abelian 2-groups, and the R-star quotient construction with arbitrary odd factors are additional obligations for the full Headley supplier. The arbitrary-subset sequencing problem is outside this theorem."))),
                 DescribeRole.Theorem))));
 }
