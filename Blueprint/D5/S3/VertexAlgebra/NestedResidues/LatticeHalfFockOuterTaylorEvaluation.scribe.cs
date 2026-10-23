@@ -50,6 +50,14 @@ internal sealed class LatticeHalfFockOuterTaylorEvaluationDocument : IScribeDocu
                 Blocks(Paragraph(Text("The current/source diagonal is taken before either remaining order. The signed monomial residue and the finite associated-coordinate contraction feed the exact fused FIRST proof. Negative degrees, empty supports and independent bounds remain included."))),
                 DescribeRole.Theorem),
             Describe.Lean(
+                DescribeId.Create("finite-rectangle-cut"),
+                DeclarationHandle.Create("D5/S3/VertexAlgebra/NestedResidues/LatticeHalfFockOuterTaylorEvaluation.finite_rectangle_cut"),
+                H("finite_rectangle_cut"),
+                StatementSource.WithoutFormula(),
+                AssessedProvenance.FromRepo(LibraryNoteRef.Create("D5/L/VertexAlgebra/bakalovkac2004lattice")),
+                Blocks(Paragraph(Text("The same finite rectangle is summed along either natural bound, for an arbitrary complex sequence. The original associated contraction and forward Taylor convolution use this reindexing, including the zero bounds."))),
+                DescribeRole.Theorem),
+            Describe.Lean(
                 DescribeId.Create("finite-associated-contraction"),
                 DeclarationHandle.Create("D5/S3/VertexAlgebra/NestedResidues/LatticeHalfFockOuterTaylorEvaluation.finite_associated_contraction"),
                 H("finite_associated_contraction"),
