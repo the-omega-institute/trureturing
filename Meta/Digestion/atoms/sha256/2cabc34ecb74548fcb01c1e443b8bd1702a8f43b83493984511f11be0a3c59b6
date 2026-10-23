@@ -1,0 +1,81 @@
+**定义 12.1（完整标架和取得条件）。** 另行供应一个已知维数 $d$ 以及完整正交单位标架
+$e_1,\ldots,e_d$，即 $K=\operatorname{span}\{e_i\}$ 且
+$\langle e_i,e_j\rangle=\delta_{ij}$ 是独立校准的精确事实。这里“完整”是来源合同中的已知覆盖，不是从有限样本发现未知环境维数。对每个有序 $(i,j)$，在同一来源版本、同一尺度和同一控制条件下准备 $(e_i,e_j)$，执行有序二元操作，并用第 $k$ 个标架探针取得
+
+$$
+ b_{kij}=\langle B(e_i,e_j),e_k\rangle.
+$$
+
+若一次操作会破坏来源，必须由同一来源身份的重复准备和控制完成全部 $d^3$ 个三标量；若操作可逆，则重复控制仍须证明标定没有漂移。重复准备、复位、共同初态、探针归属、动作次序和读出宽度都是实际额外假设；原生菜单没有它们时，本证书不替代这些权限。
+
+设标量取得给出已认证的确定性区间
+
+$$
+|\widehat b_{kij}-b_{kij}|\le\epsilon_{kij},\qquad
+E=\left(\sum_{k,i,j=1}^d\epsilon_{kij}^2\right)^{1/2}. \tag{12.1}
+$$
+
+若所有标量误差都由一个上界 $\epsilon$ 控制，则可直接取 $E\le d^{3/2}\epsilon$。区间须包含制备、控制、标量读数和共同校准的全部确定性误差；统计置信度若要使用，必须另给其抽样与失败合同，不能把概率保证写成 (12.1)。
+
+由测得系数定义双线性张量
+
+$$
+\widehat B(x,y)=\sum_{k,i,j}\widehat b_{kij}x_i y_j e_k,
+\qquad
+M=\left(\sum_{k,i,j}\widehat b_{kij}^{\,2}\right)^{1/2}.
+$$
+
+测得的 $\widehat b_{kij}$ 不要求任何交错关系，$\widehat B$ 可不反对称；真实 $T$ 的精确完全交错性是维数选择所需的独立结构前提，不能从它推断测量噪声也交错。
+
+把有限多项式
+
+$$
+P_A(x,y)=\|\widehat B(x,y)\|^2-
+(\|x\|^2\|y\|^2-\langle x,y\rangle^2)
+$$
+
+唯一收集成
+$P_A(x,y)=\sum_{|\mu|=|\nu|=2}a_{\mu\nu}x^\mu y^\nu$，并置
+$R_A=\sum_{\mu,\nu}|a_{\mu\nu}|$。同样，把
+
+$$
+P_J(x,y,z)=\widehat B(x,\widehat B(y,z))
++\widehat B(y,\widehat B(z,x))
++\widehat B(z,\widehat B(x,y))
+$$
+
+的每个坐标唯一收集成
+$P_{J,k}(x,y,z)=\sum_{i,j,l}q_{kijl}x_i y_j z_l$，置
+$R_J=\sum_{k,i,j,l}|q_{kijl}|$。直接按上式的参数次序展开，系数为
+
+$$
+q_{kijl}=\sum_{m=1}^d\left(
+\widehat b_{kim}\widehat b_{mjl}
++\widehat b_{kjm}\widehat b_{mli}
++\widehat b_{klm}\widehat b_{mij}\right).
+$$
+
+这些是分别只有
+$\binom{d+1}{2}^2$ 和 $d^4$ 个有限系数的确定性和，不是紧致性给出的未知常数。
+
+若实际算术程序输出 $M_0,R_{A,0},R_{J,0}$ 以及已认证的绝对上误差
+$\eta_M,\eta_A,\eta_J$，使用
+
+$$
+\overline M=M_0+\eta_M\ge M,\qquad
+\overline R_A=R_{A,0}+\eta_A\ge R_A,\qquad
+\overline R_J=R_{J,0}+\eta_J\ge R_J. \tag{12.2}
+$$
+
+区间向上舍入直接给出同样的三个上界；精确有理或代数算术时相应 $\eta$ 可以为零。定义可直接验算的预算
+
+$$
+\alpha_{\rm cert}=\overline R_A+(2\overline M+E)E, \tag{12.3}
+$$
+
+$$
+\beta_{\rm cert}=\overline R_J+3(2\overline M+E)E. \tag{12.4}
+$$
+
+若该有限算术结果满足 $5\alpha_{\rm cert}+\beta_{\rm cert}<1$，且完全交错性是独立的精确结构假设，则定理 11.2 认证 $\dim K=3$。
+

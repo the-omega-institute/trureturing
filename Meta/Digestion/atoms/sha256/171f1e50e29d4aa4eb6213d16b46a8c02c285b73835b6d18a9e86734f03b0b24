@@ -1,0 +1,28 @@
+**定义 19.1（同一欧氏度量中的两个极值）。** 设 $V$ 为有限维实正定内积空间，$d=\dim V\ge4$，$B:V\times V\to V$ 双线性，且
+$T(u,v,w)=\langle B(u,v),w\rangle$ 精确完全交错。所有范数、正交性、伴随和体积均取自这个给定内积。记
+
+$$
+A(u,v)=\|u\|^2\|v\|^2-\langle u,v\rangle^2,
+\qquad
+\mathcal J_B(u,v,w)=B(u,B(v,w))+B(v,B(w,u))+B(w,B(u,v)),
+$$
+
+$$
+m(B)=\min_{\substack{\|u\|=\|v\|=1\\\langle u,v\rangle=0}}
+       \|B(u,v)\|^2,
+\qquad
+j(B)=\max_{\|u\|=\|v\|=\|w\|=1}\|\mathcal J_B(u,v,w)\|. \tag{19.1}
+$$
+
+第二个极值的三个单位输入彼此独立，不附加正交条件。两个极值均由非空紧集上的连续函数取得。取四元数 $\mathbb H$ 的正交单位基 $(1,i,j,k)$，约定
+$i^2=j^2=k^2=-1$、$ij=k$、$jk=i$、$ki=j$，反向乘积变号；$\bar x$ 表示四元数共轭。在正交直和 $\operatorname{Im}\mathbb H\oplus\mathbb H$ 上定义
+
+$$
+C((p,x),(q,y))=
+\bigl(p\times q+\operatorname{Im}(x\bar y),\,-py+qx\bigr),
+\qquad p\times q=\frac{pq-qp}{2}. \tag{19.2}
+$$
+
+这里直和内积为
+$\langle(p,x),(q,y)\rangle=p\mathbin{\cdot}q+\operatorname{Re}(x\bar y)$。
+

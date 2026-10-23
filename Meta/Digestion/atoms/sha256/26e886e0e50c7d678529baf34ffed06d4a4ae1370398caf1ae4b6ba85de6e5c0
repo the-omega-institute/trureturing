@@ -1,0 +1,93 @@
+**定理 21.2（定理 13.2 的锐阈值版本）。** 在假设 21.1 的全部条件下，将原代数阈值 $5\alpha+\beta<1$ 替换为且仅替换为
+
+$$
+0\le\alpha<1,\qquad 0\le\beta<3(1-\alpha). \tag{21.5}
+$$
+
+则 $\dim K=3$，且
+
+$$
+s^2\in[1-\alpha,1+\alpha],\qquad s>0, \tag{21.6}
+$$
+
+$(a,b,e_3)$ 是 $K$ 的完整正交单位基。保留精确第三通道 (21.4) 后，存在唯一满射线性映射 $\Pi:J\to K$，满足定理 10.2 的全部相应结论：
+
+$$
+\Pi h_j=v_j,\qquad
+C_i(x)=\langle e_i,\Pi x\rangle_K,\qquad
+g_D(x,y)=\langle\Pi x,\Pi y\rangle_K,
+$$
+
+$$
+\ker\Pi=\ker C=E_0^\perp=E_\infty^\perp,\qquad
+\Pi D(x,y)=B(\Pi x,\Pi y). \tag{21.7}
+$$
+
+其中 $C=(C_1,C_2,C_3)$，$E_\infty$ 是所有允许有限线性操作词的回传探针的张成空间，包含空词的探针。对每个实际生成元有唯一 $A_\gamma:K\to K$，且对每个有限词 $w$ 有
+
+$$
+\Pi U_\gamma=A_\gamma\Pi,\qquad
+\Pi U_w=A_w\Pi. \tag{21.8}
+$$
+
+因此距离商、联合正交商和几何商由原构造等距识别；所列同源有限操作表达式的方向读出、任务距离及二元响应因子化通过同一个 $\Pi$。阈值 (21.5) 的等号边界不能仅由这些预算纳入三维结论。
+
+**证明。** 在 $d=2$ 时，完全交错三形式必为零；由内积非退化性 $B=0$。对正交单位对，面积预算则要求 $1\le\alpha$，与 (21.5) 矛盾。因此 $d\ne2$。若 $d\ge4$，定理 20.1 给
+$\beta\ge3(1-\alpha)$，也与 (21.5) 矛盾。保留 $d\ge2$ 的原定义后，唯一剩下的是 $d=3$。对原来选定的正交单位 $a,b$，面积预算给 (21.6)；交错性给 $c\perp a,b$，故保留有符号 $e_3=c/s$ 后得到完整正交单位基。定理 20.3 的七维达到族在
+$\beta=3(1-\alpha)$ 满足全部代数预算，故由这些预算单独进行维数选择时必须保留严格不等号。
+
+为核对精确消费者，记 $S_{ij}=\langle e_i,v_j\rangle_K$。基的完整性和 (21.2) 分别给
+
+$$
+G=S^{\mathsf T}S,\qquad CF=S. \tag{21.9}
+$$
+
+若 $F\xi=0$，则 $S\xi=CF\xi=0$，从而
+$\xi^{\mathsf T}G\xi=0$。因 $G\succeq0$，有 $\xi\in\ker G$。所以
+
+$$
+\Pi(F\xi)=[\xi] \tag{21.10}
+$$
+
+不依赖系数选择。$F$ 满射，且 $v_j$ 张成 $K$，故 (21.10) 定义唯一满射线性 $\Pi$。再对 $x=F\xi,y=F\eta$，
+
+$$
+C_i(x)=(S\xi)_i=\langle e_i,\Pi x\rangle_K,\qquad
+g_D(x,y)=\xi^{\mathsf T}G\eta
+=\langle\Pi x,\Pi y\rangle_K. \tag{21.11}
+$$
+
+三个基坐标分离 $K$，所以 $\ker\Pi=\ker C=E_0^\perp$。定义
+$\iota:K\to J$，$\iota(\sum_i t_ie_i)=\sum_i t_ip_i$。
+实际探针正交单位使 $\iota$ 等距；(21.11) 给 $\Pi^*e_i=p_i$，并由
+$C_i(p_j)=\delta_{ij}$ 给 $\Pi p_j=e_j$。于是
+
+$$
+\Pi\iota=I_K,\qquad \iota\Pi=P_{E_0},\qquad
+J=E_0\oplus\ker\Pi. \tag{21.12}
+$$
+
+商类的正交代表 $P_{E_0}x$ 的 $J$ 范数等于 $\|\Pi x\|_K$，(21.11) 则给其任务度量；这证明原有两个商到 $K$ 的等距性，度量并未另换。
+
+若二元操作在菜单中，对 $x=F\xi,y=F\eta$，读出双线性及 (21.3) 给
+
+$$
+\begin{aligned}
+C_i(D(x,y))
+&=\sum_{j,k}\xi_j\eta_k\beta_i(h_j,h_k)\\
+&=\left\langle e_i,B\left(\sum_j\xi_jv_j,\sum_k\eta_kv_k\right)\right\rangle_K\\
+&=\langle e_i,B(\Pi x,\Pi y)\rangle_K.
+\end{aligned}
+$$
+
+结合 (21.11) 及基分离性，得到 (21.7) 的二元因子化。此结论只涉及方向任务，没有改变其他记录槽。
+
+对 $z\in E_0^\perp$ 和 $p\in E_0$，
+$\langle p,U_\gamma z\rangle_J=\langle U_\gamma^*p,z\rangle_J=0$。
+因此 $\ker\Pi$ 被全部实际生成元保持，
+$A_\gamma(\Pi x)=\Pi U_\gamma x$ 良定义，满射性给唯一性，且可写
+$A_\gamma=\Pi U_\gamma\iota$。对词长归纳，空词为恒等式，追加一生成元时用
+$\Pi U_\gamma U_w=A_\gamma\Pi U_w$，便得 (21.8)。伴随不变性使每个回传探针仍在 $E_0$，空词又给反向包含，故 $E_\infty=E_0$，完成全部核等式。
+
+同样按允许有限表达式的结构归纳，将上述线性桥和二元桥组合，便保持其 $\Pi$ 值；(21.11) 保持读出和距离。这正是原来的有限操作预测范围。任意保全部当前及未来线性读出的线性摘要 $L$ 必有 $\ker L\subseteq\ker\Pi$，所以其像满射到三维 $K$，维数至少三；$\Pi$ 达到该下界。又 $G=S^{\mathsf T}S$ 且 $v_j$ 张成三维 $K$，故 $G$ 秩三，原锚定距离的张成几何实现也至少三维。两个最小性由同一映射接合。证毕。
+
