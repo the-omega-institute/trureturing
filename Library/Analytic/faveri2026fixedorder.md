@@ -2704,7 +2704,7 @@ Q_\rho^P(b)\ll K^{2-\zeta+\varepsilon}\mathcal N^2,\qquad
 \tag{H8}
 $$
 
-For bounded $\mathcal N$ and small enough $\varepsilon$, this pays the prime-labelled primitive-residue quadratic below $K^2$ on that original balanced sector. It does not pay the remainder pairing or projection replacement at $K^2$, the full projection energy, all labels, the complement, every original length or height, or F4's different squarefree-column quadratic. The original height reserve has not been certified for $\mathcal N$. Signed Robin restoration and RH remain open.
+For bounded $\mathcal N$ and small enough $\varepsilon$, this pays the prime-labelled primitive-residue quadratic below $K^2$ on that original balanced sector. It does not pay the remainder pairing or projection replacement at $K^2$, the full projection energy, all labels, the complement, every original length or height, or F4's different squarefree-column quadratic. The original height reserve has not been certified for $\mathcal N$. Signed Robin restoration and RH remain open. The [all-small-label extension, theory482](../../docs/develop/theory/FIBONACCI_ANALYTIC_FRONTIER_INTERFACES_II.md#482-固定高估值部分的平均-type-i-与全部小标记留数) retains the full imprimitive Gauss sums at fixed form level and pays this original convolution's entire small-label primitive-residue quadratic below $K^2$ when $U\asymp K$, $D=N=\sqrt K$, $L=K^\ell$, $0<\ell<1/6$, under its explicit analytical inputs, actual Gram range and subpower common-cost contract. The full projection still retains $K^2L^{3/2}$; this paper derivation has no local Lean certification or literature-priority claim.
 
 ### An unchanged-numerator term in the primitive continuous adjoint
 

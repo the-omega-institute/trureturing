@@ -1,0 +1,26 @@
+### 定义 1.1（固定带符号先验与实际报告）
+
+固定 $K=[a,b]$、$a<b$、$m>0$、$\varepsilon\ge0$，以及整数
+$1\le u<v$。令 $L=b-a$、$w=v-u$，在同一实际轨迹的索引
+$I_{u,v}=\{0,u,v\}$ 上取得报告
+
+$$
+P_{u,v}(t,A,B)=\bigl(A(i+t)^2+B\bigr)_{i\in I_{u,v}},\qquad
+y=P_{u,v}(\tau,\alpha,\beta)+\eta,
+$$
+
+其中 $\tau\in K$、$\alpha\ge m$、$\beta\in\mathbb R$，且每个世界都允许
+完整的原始闭立方体 $\eta\in[-\varepsilon,\varepsilon]^3$。
+增益与零位在一次运行中固定；两个候选世界可以分别选择它们，且与允许的主世界独立。
+定义仅由这三项报告估计原点的极小极大绝对风险
+
+$$
+R_{u,v}^*=\inf_{\delta:\mathbb R^3\to\mathbb R}
+\sup_{\tau,\alpha,\beta,\eta}|\delta(y)-\tau|.
+$$
+
+不对决策另加可测性或可计算性要求。以下普通数学证明中的中点反演、
+正分母换元和完整主历史的平移论证分别复用
+[II 定理 80.3、推论 80.4 与定理 81.4](FIB_SELF_CALIBRATING_RELATION_MATHEMATICS_II.md#80-增益与零位均未知的二次侧时钟精确干扰族几何)
+的结构；非等距的分离与整数设计另行证明。
+
