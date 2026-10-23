@@ -14,7 +14,7 @@ Direct frozen dependencies: D5/S3/QuantumBounds/MerminMeasurementDependence/Mode
   statement_id: sha256:460364e69c4d4ffdf8453b33aa340a45608100763a0cd87da8282661f430ea21
 D5/S3/Quantum/QuantumChannels/TomiyamaDiagonalKPositivity.phi
   statement_id: sha256:478d10f4d2630256660ee5625f24c556783d91db591c700b1e3b12dffa485453
-Information-escape registration is paused under CLAUDE.md section 3.9.
+Escape audit unfinished for sum_fin_prev: https://github.com/the-omega-institute/trureturing/issues/14784
 proof_shape: signed_product: bind-only; consumer: pathMajorana_generator_relation
 proof_shape: signed_smul: bind-only; consumer: pathMajorana_generator_relation
 proof_shape: prefixSign_step: bind-only; consumer: pathMajorana_generator_relation
@@ -758,7 +758,7 @@ lemma sum_fin_next {M : ℕ} {S : Type*} [AddCommMonoid S]
     intro k hk
     have hn : ¬j.val+1=k.val := by have := k.isLt; omega
     simp [hn]
-private lemma sum_fin_prev {M : ℕ} {S : Type*} [AddCommMonoid S]
+lemma sum_fin_prev {M : ℕ} {S : Type*} [AddCommMonoid S]
     (j : Fin M) (f : Fin M → S) :
     (∑ k, if k.val+1=j.val then f k else 0) =
       if h : 0<j.val then f ⟨j.val-1,by omega⟩ else 0 := by
