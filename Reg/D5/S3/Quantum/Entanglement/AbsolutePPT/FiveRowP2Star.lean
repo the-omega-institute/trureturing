@@ -274,9 +274,5 @@ def balancedStarExistence_registration_gap : Prop :=
 def family_star_charges_registration_gap : Prop :=
   Nonempty (Contract.Registration.{_,_,_,0,0,0,0,0,0,1,0,0} (@_root_.D5.S3.Quantum.Entanglement.AbsolutePPT.FiveRowP2Star.family_star_charges) (Realization signature) Unit Unit)
 
-/-- The complete source theorem requires a realization bridge, enrolled readout, source reconstruction and variation/sensitivity evidence. -/
-def family_uniform_subsets_registration_gap : Prop :=
-  Nonempty (Contract.Registration.{_,_,_,0,0,0,0,0,0,1,0,0} (@_root_.D5.S3.Quantum.Entanglement.AbsolutePPT.FiveRowP2Star.family_uniform_subsets) (Realization signature) Unit Unit)
-
 end
 end Reg.D5.S3.Quantum.Entanglement.AbsolutePPT.FiveRowP2Star

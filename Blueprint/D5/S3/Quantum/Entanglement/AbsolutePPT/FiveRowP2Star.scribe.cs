@@ -65,10 +65,6 @@ internal sealed class FiveRowP2StarDocument : IScribeDocumentDefinition
             Describe.Lean(DescribeId.Create("fiverowp2star-family-star-charges"),
                 DeclarationHandle.Create("D5/S3/Quantum/Entanglement/AbsolutePPT/FiveRowP2Star.family_star_charges"),
                 H("family star charges"), StatementSource.WithoutFormula(), AssessedProvenance.FromRepo(),
-                Blocks(Paragraph(Text("theorem family_star_charges (u v : ℝ) (h : Fin 10 → ℝ) (d : Fin 15 → ℝ) (hu : 0 < u) (hv : 0 ≤ v) (hh : ∀ i, 0 ≤ h i) (hd : ∀ i, 0 ≤ d i) (hdu : ∀ i, d i ≤ u) (hm : ∑ i, d i ≤ 5*u) (hf : FullPSD u v h d) : Real.sqrt (∑ i, (v+h i)^2) + (∑ i, (d i)^2)/(2*u) ≤ 2*u ∧ Real.sqrt (∑ i, (v+h i)^2) + (∑ i, d i)/5 ≤ 2*u"))), DescribeRole.Theorem),
-            Describe.Lean(DescribeId.Create("fiverowp2star-family-uniform-subsets"),
-                DeclarationHandle.Create("D5/S3/Quantum/Entanglement/AbsolutePPT/FiveRowP2Star.family_uniform_subsets"),
-                H("family uniform subsets"), StatementSource.WithoutFormula(), AssessedProvenance.FromRepo(),
-                Blocks(Paragraph(Text("theorem family_uniform_subsets (r : ℝ) (h : Fin 10 → ℝ) (d : Fin 15 → ℝ) (hf : FullPSD 1 r h d) : h 0 + (d 14+d 13+d 12) ≤ 2-r ∧ (h 0+h 1+h 2) + (d 14+d 13+d 12+d 11+d 10+d 9) ≤ 3-3*r ∧ (h 0+h 1+h 2+h 3+h 4+h 5) + (d 14+d 13+d 12+d 11+d 10+d 9+d 8+d 7+d 6+d 5) ≤ 4-6*r"))), DescribeRole.Theorem)
+                Blocks(Paragraph(Text("theorem family_star_charges (u v : ℝ) (h : Fin 10 → ℝ) (d : Fin 15 → ℝ) (hu : 0 < u) (hv : 0 ≤ v) (hh : ∀ i, 0 ≤ h i) (hd : ∀ i, 0 ≤ d i) (hdu : ∀ i, d i ≤ u) (hm : ∑ i, d i ≤ 5*u) (hf : FullPSD u v h d) : Real.sqrt (∑ i, (v+h i)^2) + (∑ i, (d i)^2)/(2*u) ≤ 2*u ∧ Real.sqrt (∑ i, (v+h i)^2) + (∑ i, d i)/5 ≤ 2*u"))), DescribeRole.Theorem)
         )));
 }

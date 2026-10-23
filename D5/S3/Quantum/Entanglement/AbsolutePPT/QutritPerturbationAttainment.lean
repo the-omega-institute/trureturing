@@ -22,7 +22,7 @@ conjugate_outer, unitary_vector_norm, pure_outer_square; proof_shape: bind-only;
   escape_witness: none; consumer: pure_attainment, QuadbitMaximumPurity.result
 -/
 
-import D5.S3.Quantum.Entanglement.AbsolutePPT.GenericAPPT
+import D5.S3.Quantum.Entanglement.AbsolutePPT.UniformSchmidtCorner
 import D5.S3.Quantum.Dynamics.KickedIsingNegativityRefutation
 
 set_option autoImplicit false

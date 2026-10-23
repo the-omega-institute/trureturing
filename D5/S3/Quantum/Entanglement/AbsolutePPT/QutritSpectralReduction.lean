@@ -25,7 +25,7 @@ psd_of_int_scaled_ldl; proof_shape: bind-only; escape_witness: none; consumer: Q
 cast_vec_cons, cast_vec_empty; proof_shape: bind-only; escape_witness: none; consumer: QutritN8PurityBound.A1_k_real, QutritN8PurityBound.A2_k_real, QutritN8PurityBound.N_real, QutritN8PurityBound.Q_real, QutritN9PurityBound.A1_k_real, QutritN9PurityBound.A2_k_real, QutritN9PurityBound.N_real, QutritN9PurityBound.Q_real, QutritN10PurityBound.A1_k_real, QutritN10PurityBound.A2_k_real, QutritN10PurityBound.N_real, QutritN10PurityBound.Q_real
 -/
 
-import D5.S3.Quantum.Entanglement.AbsolutePPT.GenericAPPT
+import D5.S3.Quantum.Entanglement.AbsolutePPT.UniformSchmidtCorner
 import D5.S3.Quantum.Entanglement.AbsolutePPT.QutritPerturbationAttainment
 
 set_option autoImplicit false

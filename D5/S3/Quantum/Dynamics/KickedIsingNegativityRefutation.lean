@@ -29,7 +29,7 @@ Direct frozen dependencies:
 Information-escape registration is paused under CLAUDE.md §3.9.
 -/
 
-import D5.S3.Quantum.Entanglement.AbsolutePPT.GenericAPPT
+import D5.S3.Quantum.Entanglement.AbsolutePPT.UniformSchmidtCorner
 import D5.S3.Quantum.Entanglement.FourQubitResidualSumMonotoneRefutation
 import D5.S3.Quantum.Entanglement.StructuredNegativityCoincidenceRefutation
 import D5.S3.Quantum.Foundation.FiniteTraceDistance

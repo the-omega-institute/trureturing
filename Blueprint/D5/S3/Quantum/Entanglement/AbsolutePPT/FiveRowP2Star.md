@@ -186,18 +186,6 @@ Lean statement: `D5/S3/Quantum/Entanglement/AbsolutePPT/FiveRowP2Star.family_sta
 
 theorem family_star_charges (u v : ℝ) (h : Fin 10 → ℝ) (d : Fin 15 → ℝ) (hu : 0 < u) (hv : 0 ≤ v) (hh : ∀ i, 0 ≤ h i) (hd : ∀ i, 0 ≤ d i) (hdu : ∀ i, d i ≤ u) (hm : ∑ i, d i ≤ 5*u) (hf : FullPSD u v h d) : Real.sqrt (∑ i, (v+h i)^2) + (∑ i, (d i)^2)/(2*u) ≤ 2*u ∧ Real.sqrt (∑ i, (v+h i)^2) + (∑ i, d i)/5 ≤ 2*u
 
-**Theorem 1.16 (family uniform subsets).**
-
-Lean statement: `D5/S3/Quantum/Entanglement/AbsolutePPT/FiveRowP2Star.family_uniform_subsets`
-
-*Proof.* Machine-checked in Lean as `D5/S3/Quantum/Entanglement/AbsolutePPT/FiveRowP2Star.family_uniform_subsets` (`✓ std3`). ∎
-
-*Source.* Repository-derived.
-
-*Commentary.*
-
-theorem family_uniform_subsets (r : ℝ) (h : Fin 10 → ℝ) (d : Fin 15 → ℝ) (hf : FullPSD 1 r h d) : h 0 + (d 14+d 13+d 12) ≤ 2-r ∧ (h 0+h 1+h 2) + (d 14+d 13+d 12+d 11+d 10+d 9) ≤ 3-3*r ∧ (h 0+h 1+h 2+h 3+h 4+h 5) + (d 14+d 13+d 12+d 11+d 10+d 9+d 8+d 7+d 6+d 5) ≤ 4-6*r
-
 ## References
 
 - Truth anchor: `D5/S3/Quantum/Entanglement/AbsolutePPT/FiveRowP2Star.BalancedStarExistenceGap`
@@ -210,7 +198,6 @@ theorem family_uniform_subsets (r : ℝ) (h : Fin 10 → ℝ) (d : Fin 15 → �
 - Truth anchor: `D5/S3/Quantum/Entanglement/AbsolutePPT/FiveRowP2Star.family`
 - Truth anchor: `D5/S3/Quantum/Entanglement/AbsolutePPT/FiveRowP2Star.family_mass_budget`
 - Truth anchor: `D5/S3/Quantum/Entanglement/AbsolutePPT/FiveRowP2Star.family_star_charges`
-- Truth anchor: `D5/S3/Quantum/Entanglement/AbsolutePPT/FiveRowP2Star.family_uniform_subsets`
 - Truth anchor: `D5/S3/Quantum/Entanglement/AbsolutePPT/FiveRowP2Star.five_coefficient_mass`
 - Truth anchor: `D5/S3/Quantum/Entanglement/AbsolutePPT/FiveRowP2Star.same_vector_coupling`
 - Truth anchor: `D5/S3/Quantum/Entanglement/AbsolutePPT/FiveRowP2Star.star_gain`

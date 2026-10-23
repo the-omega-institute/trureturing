@@ -14,13 +14,13 @@
 utility:none, declaration-by-declaration semantic scope (CLAUDE.md §3.3):
 Edge, BottomSlot, slotCoord, coordSlot, slotEquiv:
   Parametric finite types and explicit coordinate equivalences for arbitrary r; no bounded enumeration result is delivered.
-incident, incidentDecidable, edge, edge_symm, incidentNeighbor, neighborIncident, incidentEquiv:
+incident, incidentDecidable, edge, incidentNeighbor, neighborIncident, incidentEquiv:
   Symbolic incidence predicates, decidability and mutually inverse coordinate maps; the decision instance supports definitions and is not a checker theorem answering a separate finite-input problem.
 edge_card_real, bottom_card_real, incident_card, incident_indicator_sum:
   Closed cardinality identities derived from equivalences for every r, rather than counts certified at selected dimensions.
 topWeight, bottomWeight, top_weight_sum, top_weight_squares, bottom_weight_sum, bottom_weight_squares, top_column_sum, bottom_column_sum:
   Symbolic weight functions and sum identities over arbitrary graph size; no bounded list, external checker or numerical-premise reduction is the content.
-K, K_isHermitian, K_offDiag, K_diag, incident_sum, neighbor_sum, K_row, K_charge, K_trace, incidence_factors:
+K, K_offDiag, K_diag, incident_sum, neighbor_sum, K_row, K_charge, K_trace, incidence_factors:
   Universal matrix, sum, order and rational identities in symbolic r,t,b; incidence_factors uses the stated r>=3 domain to justify algebraic denominators, not numerical evidence for an instance.
 All groups avoid bounded-enumeration, checker, numeric-reduction and
 certified-instance as their primary delivered content. Utility semantics
@@ -88,12 +88,6 @@ instance incidentDecidable {r : ℕ} (i : Fin r) (e : Edge r) :
 
 def edge {r : ℕ} (i j : Fin r) (h : i ≠ j) : Edge r :=
   if hij : i < j then ⟨(i, j), hij⟩ else ⟨(j, i), by change j < i; omega⟩
-
-theorem edge_symm {r : ℕ} (i j : Fin r) (h : i ≠ j) :
-    edge i j h = edge j i h.symm := by
-  apply Subtype.ext
-  simp only [edge]
-  split_ifs <;> simp_all <;> omega
 
 def incidentNeighbor {r : ℕ} (i : Fin r) (e : {e : Edge r // incident i e}) :
     {j : Fin r // j ≠ i} :=
@@ -191,16 +185,6 @@ def K {r : ℕ} (t : Edge r → ℝ) (b : BottomSlot r → ℝ) :
     Matrix (Fin r) (Fin r) ℝ := fun i j =>
   if h : i = j then 2 * b (.inl i)
   else b (.inr (edge i j h)) - t (edge i j h)
-
-theorem K_isHermitian {r : ℕ} (t : Edge r → ℝ) (b : BottomSlot r → ℝ) :
-    (K t b).IsHermitian := by
-  ext i j
-  by_cases h : i = j
-  · subst j
-    simp [K, Matrix.conjTranspose_apply]
-  · simp only [K, Matrix.conjTranspose_apply, dif_neg h, dif_neg (Ne.symm h),
-      star_sub, star_trivial]
-    rw [edge_symm j i (Ne.symm h)]
 
 theorem K_offDiag {r : ℕ} (t : Edge r → ℝ) (b : BottomSlot r → ℝ)
     (hsep : ∀ e f, b (.inr e) ≤ t f) (i j : Fin r) (h : i ≠ j) :

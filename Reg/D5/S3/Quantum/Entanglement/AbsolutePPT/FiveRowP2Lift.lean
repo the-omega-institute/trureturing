@@ -71,16 +71,6 @@ def concentrated_boundary_registration_gap : Prop :=
 
 /-- Exact unpaid owner-registration type for this original theorem.
 No evidence constructor is supplied and no registration status is asserted. -/
-def gap_convex_identity_registration_gap : Prop :=
-  Nonempty (Contract.Registration.{_,_,_,0,0,0,0,0,0,1,0,0} (@_root_.D5.S3.Quantum.Entanglement.AbsolutePPT.FiveRowP2Lift.gap_convex_identity) (Realization signature) Unit Unit)
-
-/-- Exact unpaid owner-registration type for this original theorem.
-No evidence constructor is supplied and no registration status is asserted. -/
-def zero_middle_registration_gap : Prop :=
-  Nonempty (Contract.Registration.{_,_,_,0,0,0,0,0,0,1,0,0} (@_root_.D5.S3.Quantum.Entanglement.AbsolutePPT.FiveRowP2Lift.zero_middle) (Realization signature) Unit Unit)
-
-/-- Exact unpaid owner-registration type for this original theorem.
-No evidence constructor is supplied and no registration status is asserted. -/
 def concentration_transfer_registration_gap : Prop :=
   Nonempty (Contract.Registration.{_,_,_,0,0,0,0,0,0,1,0,0} (@_root_.D5.S3.Quantum.Entanglement.AbsolutePPT.FiveRowP2Lift.concentration_transfer) (Realization signature) Unit Unit)
 

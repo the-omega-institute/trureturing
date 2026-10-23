@@ -4,7 +4,7 @@
    mirror-E: none(waiver:symbolic-arbitrary-dimension-construction)
    anchors: []
    utility: none
-   digest: Arbitrary product-corner APPT compression and Schmidt partial-transpose identities. -/
+   digest: Arbitrary product-corner APPT compression through unitary transport. -/
 
 /-
 utility:none, declaration-by-declaration semantic scope (CLAUDE.md §3.3):
@@ -12,20 +12,124 @@ corner, corner_injective, Outside, outsideFintype, cornerEquiv, cornerEquiv_inl,
   Symbolic product embeddings, complement types, finiteness and equivalences for all r,m,n; no bounded search or certified input is delivered.
 conjugate_corner, selected_corner_psd:
   Universal matrix transport and an implication from literal APPT, with the permutation and unitary constructed for arbitrary dimensions; no checker or numerical-premise reduction is delivered.
-schmidt, schmidtPT, schmidt_pt_entry, schmidt_pt_single, schmidt_pt_diagonal, schmidt_pt_symmetric, schmidt_pt_antisymmetric:
-  Symbolic definitions and entry/action identities for every real coefficient vector, including zero and negative coefficients; no evaluated finite instance is the result.
 All groups avoid bounded-enumeration, checker, numeric-reduction and
 certified-instance as their primary delivered content. Utility semantics
 remain subject to independent review; the header does not prove acceptance.
 -/
 
-import D5.S3.Quantum.Entanglement.AbsolutePPT.GenericAPPT
+import D5.S3.Quantum.Entanglement.AbsolutePPT.Bipartite
+import Mathlib.Analysis.Matrix.PosDef
+import Mathlib.Data.Matrix.Block
+import Mathlib.LinearAlgebra.Matrix.Permutation
+import Mathlib.Tactic.Linarith
 import Mathlib.Logic.Equiv.Fintype
 
 set_option autoImplicit false
 
 open Matrix
 open scoped ComplexOrder BigOperators
+
+namespace D5.S3.Quantum.Dynamics.KickedIsingNegativityRefutation
+
+/-- Partial transposition on the B factor, allowing unequal factor dimensions. -/
+def partialTranspose {A B : Type*} (ρ : Matrix (A × B) (A × B) ℂ) :
+    Matrix (A × B) (A × B) ℂ :=
+  D5.S3.Quantum.Entanglement.AbsolutePPT.Bipartite.partialTranspose ρ
+
+end D5.S3.Quantum.Dynamics.KickedIsingNegativityRefutation
+
+namespace D5.S3.Quantum.Entanglement.AbsolutePPT.QutritPerturbationAttainment
+
+def APPT {A B : Type*} [Fintype A] [Fintype B] [DecidableEq A] [DecidableEq B]
+    (M : Matrix (A × B) (A × B) ℂ) : Prop :=
+  D5.S3.Quantum.Entanglement.AbsolutePPT.Bipartite.APPT M
+
+end D5.S3.Quantum.Entanglement.AbsolutePPT.QutritPerturbationAttainment
+
+namespace D5.S3.Quantum.Entanglement.AbsolutePPT.QutritSpectralReduction
+open QutritPerturbationAttainment
+open D5.S3.Quantum.Dynamics.KickedIsingNegativityRefutation (partialTranspose)
+
+noncomputable def extendUnitaryAlong {I J C : Type}
+    [Fintype I] [Fintype J] [Fintype C]
+    [DecidableEq I] [DecidableEq J] [DecidableEq C]
+    (e : (J ⊕ C) ≃ I) (V : unitaryGroup J ℂ) : unitaryGroup I ℂ :=
+  ⟨(fromBlocks (V : Matrix J J ℂ) 0 0 (1 : Matrix C C ℂ)).submatrix e.symm e.symm, by
+    rw [mem_unitaryGroup_iff, Matrix.star_eq_conjTranspose, conjTranspose_submatrix,
+      submatrix_mul_equiv _ _ _ e.symm _]
+    have hv : (V : Matrix J J ℂ) * (V : Matrix J J ℂ)ᴴ = 1 := by
+      simpa only [Matrix.star_eq_conjTranspose] using mem_unitaryGroup_iff.mp V.property
+    simp [fromBlocks_conjTranspose, fromBlocks_multiply, hv, fromBlocks_one]⟩
+
+theorem extendUnitaryAlong_diagonal {I J C : Type}
+    [Fintype I] [Fintype J] [Fintype C]
+    [DecidableEq I] [DecidableEq J] [DecidableEq C]
+    (e : (J ⊕ C) ≃ I) (V : unitaryGroup J ℂ) (x : J → ℂ) (y : C → ℂ) :
+    (extendUnitaryAlong e V : Matrix I I ℂ) *
+      diagonal (fun i => Sum.elim x y (e.symm i)) *
+      (extendUnitaryAlong e V : Matrix I I ℂ)ᴴ =
+    (fromBlocks ((V : Matrix J J ℂ) * diagonal x * (V : Matrix J J ℂ)ᴴ)
+      0 0 (diagonal y)).submatrix e.symm e.symm := by
+  change ((fromBlocks (V : Matrix J J ℂ) 0 0 (1 : Matrix C C ℂ)).submatrix e.symm e.symm) *
+    diagonal (fun i => Sum.elim x y (e.symm i)) *
+    ((fromBlocks (V : Matrix J J ℂ) 0 0 (1 : Matrix C C ℂ)).submatrix e.symm e.symm)ᴴ = _
+  have hd : diagonal (fun i => Sum.elim x y (e.symm i)) =
+      (diagonal (Sum.elim x y)).submatrix e.symm e.symm := by
+    simpa only [Function.comp_def] using
+      (Matrix.submatrix_diagonal_equiv (Sum.elim x y) e.symm).symm
+  rw [hd, conjTranspose_submatrix, submatrix_mul_equiv _ _ _ e.symm _,
+    submatrix_mul_equiv _ _ _ e.symm _, ← fromBlocks_diagonal x y]
+  simp only [fromBlocks_conjTranspose, fromBlocks_multiply, conjTranspose_one,
+    conjTranspose_zero, Matrix.zero_mul, Matrix.mul_zero, add_zero, zero_add, one_mul, mul_one]
+
+noncomputable def permutationU {I : Type} [Fintype I] [DecidableEq I]
+    (e : Equiv.Perm I) : unitaryGroup I ℂ := ⟨e.permMatrix ℂ, by
+  rw [mem_unitaryGroup_iff,Matrix.star_eq_conjTranspose,Matrix.conjTranspose_permMatrix,
+    ← Matrix.permMatrix_mul]
+  simp⟩
+
+theorem c_square : (Real.sqrt 2 : ℂ)⁻¹*(Real.sqrt 2 : ℂ)⁻¹ = 1/2 := by
+  have h : (Real.sqrt 2 : ℂ) * (Real.sqrt 2 : ℂ)=2 := by
+    norm_cast
+    nlinarith [Real.sq_sqrt (show (0 : ℝ) ≤ 2 by norm_num)]
+  rw [← mul_inv, h]
+  norm_num
+
+theorem c_star : star (Real.sqrt 2 : ℂ)⁻¹=(Real.sqrt 2 : ℂ)⁻¹ := by simp
+
+theorem appt_conjugate {A B : Type} [Fintype A] [Fintype B] [DecidableEq A] [DecidableEq B]
+    {M : Matrix (A × B) (A × B) ℂ} (h : APPT M) (V : unitaryGroup (A × B) ℂ) :
+    APPT ((V : Matrix (A × B) (A × B) ℂ)*M*(V : Matrix (A × B) (A × B) ℂ)ᴴ) := by
+  intro U
+  have hp := h (U*V)
+  simpa only [Submonoid.coe_mul, Matrix.conjTranspose_mul, Matrix.mul_assoc] using hp
+
+theorem real_psd_of_complex {I : Type} [Fintype I] [DecidableEq I]
+    (M : Matrix I I ℝ) (h : (M.map Complex.ofReal).PosSemidef) : M.PosSemidef := by
+  apply Matrix.PosSemidef.of_dotProduct_mulVec_nonneg
+  · ext i j
+    have he := congrFun (congrFun h.isHermitian i) j
+    have hr := congrArg Complex.re he
+    simpa [Matrix.conjTranspose_apply, Matrix.map_apply] using hr
+  · intro x
+    have hp := h.dotProduct_mulVec_nonneg (fun i => (x i : ℂ))
+    have he : star (fun i => (x i : ℂ)) ⬝ᵥ ((M.map Complex.ofReal) *ᵥ (fun i => (x i : ℂ))) =
+        ((star x ⬝ᵥ (M *ᵥ x) : ℝ) : ℂ) := by
+      simp [dotProduct, Matrix.mulVec, Matrix.map_apply, Pi.star_apply,
+        ← Complex.ofReal_sum, ← Complex.ofReal_mul]
+    rw [he] at hp
+    exact Complex.zero_le_real.mp hp
+
+theorem permutation_conjugate {I : Type} [Fintype I] [DecidableEq I]
+    (e : Equiv.Perm I) (M : Matrix I I ℂ) :
+    (permutationU e : Matrix I I ℂ)*M*(permutationU e : Matrix I I ℂ)ᴴ=M.submatrix e e := by
+  change e.permMatrix ℂ*M*(e.permMatrix ℂ)ᴴ=M.submatrix e e
+  rw [Matrix.conjTranspose_permMatrix]
+  change e.toPEquiv.toMatrix*M*(e⁻¹).toPEquiv.toMatrix=M.submatrix e e
+  rw [PEquiv.toMatrix_toPEquiv_mul,PEquiv.mul_toMatrix_toPEquiv]
+  rfl
+
+end D5.S3.Quantum.Entanglement.AbsolutePPT.QutritSpectralReduction
 
 namespace D5.S3.Quantum.Entanglement.AbsolutePPT.UniformSchmidtCorner
 open QutritPerturbationAttainment QutritSpectralReduction
@@ -125,55 +229,6 @@ theorem selected_corner_psd {r m n : ℕ} (hm : r ≤ m) (hn : r ≤ n)
     simp [d, hp q]
   rwa [hlabels] at hpos
 
-/-- All real coefficients are allowed, including negative and zero ones. -/
-def schmidt {r : ℕ} (x : Fin r → ℝ) : Fin r × Fin r → ℂ :=
-  fun p => if p.1 = p.2 then (x p.1 : ℂ) else 0
-
-def schmidtPT {r : ℕ} (x : Fin r → ℝ) :
-    Matrix (Fin r × Fin r) (Fin r × Fin r) ℂ :=
-  partialTranspose (vecMulVec (schmidt x) (star (schmidt x)))
-
-theorem schmidt_pt_entry {r : ℕ} (x : Fin r → ℝ)
-    (p q : Fin r × Fin r) :
-    schmidtPT x p q = if p = (q.2, q.1) then ((x q.1 * x q.2 : ℝ) : ℂ) else 0 := by
-  rcases p with ⟨i, j⟩
-  rcases q with ⟨k, l⟩
-  by_cases hil : i = l <;> by_cases hkj : k = j <;>
-    simp_all [schmidtPT, partialTranspose, schmidt, vecMulVec_apply,
-      Pi.star_apply, Prod.mk.injEq, mul_comm, eq_comm]
-
-theorem schmidt_pt_single {r : ℕ} (x : Fin r → ℝ) (i j : Fin r) :
-    schmidtPT x *ᵥ Pi.single (i, j) 1 =
-      Pi.single (j, i) (((x i * x j : ℝ) : ℂ)) := by
-  classical
-  ext p
-  simp [Matrix.mulVec_single_one, Matrix.col_apply, schmidt_pt_entry,
-    Pi.single_apply]
-
-theorem schmidt_pt_diagonal {r : ℕ} (x : Fin r → ℝ) (i : Fin r) :
-    schmidtPT x *ᵥ Pi.single (i, i) 1 =
-      (((x i ^ 2 : ℝ) : ℂ)) • (Pi.single (i, i) 1) := by
-  rw [schmidt_pt_single]
-  ext p
-  simp [Pi.single_apply, pow_two, smul_eq_mul]
-
-theorem schmidt_pt_symmetric {r : ℕ} (x : Fin r → ℝ) (i j : Fin r) :
-    schmidtPT x *ᵥ (Pi.single (i, j) 1 + Pi.single (j, i) 1) =
-      (((x i * x j : ℝ) : ℂ)) •
-        (Pi.single (i, j) 1 + Pi.single (j, i) 1) := by
-  rw [Matrix.mulVec_add, schmidt_pt_single, schmidt_pt_single]
-  ext p
-  simp [Pi.single_apply, smul_eq_mul, mul_comm]
-  <;> split_ifs <;> ring
-
-theorem schmidt_pt_antisymmetric {r : ℕ} (x : Fin r → ℝ) (i j : Fin r) :
-    schmidtPT x *ᵥ (Pi.single (i, j) 1 - Pi.single (j, i) 1) =
-      (((-(x i * x j) : ℝ) : ℂ)) •
-        (Pi.single (i, j) 1 - Pi.single (j, i) 1) := by
-  rw [Matrix.mulVec_sub, schmidt_pt_single, schmidt_pt_single]
-  ext p
-  simp [Pi.single_apply, smul_eq_mul, mul_comm]
-  <;> split_ifs <;> ring
 
 end
 end D5.S3.Quantum.Entanglement.AbsolutePPT.UniformSchmidtCorner

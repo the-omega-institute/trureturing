@@ -90,31 +90,7 @@ Lean statement: `D5/S3/Quantum/Entanglement/AbsolutePPT/FiveRowP2Lift.concentrat
 
 theorem concentrated_boundary {N : ℕ} (l : Fin N → ℝ) (j : Fin N) (hj : j ∈ middle N) (k : Fin N) (hk : k.val < 10 ∨ N-15 ≤ k.val) : concentrated (spectralGap l) j k = l k
 
-**Theorem 1.8 (gap convex identity).**
-
-Lean statement: `D5/S3/Quantum/Entanglement/AbsolutePPT/FiveRowP2Lift.gap_convex_identity`
-
-*Proof.* Machine-checked in Lean as `D5/S3/Quantum/Entanglement/AbsolutePPT/FiveRowP2Lift.gap_convex_identity` (`✓ std3`). ∎
-
-*Source.* Repository-derived.
-
-*Commentary.*
-
-theorem gap_convex_identity {N : ℕ} (l : Fin N → ℝ) (hv : 0 < middleMass (spectralGap l)) : (∑ j ∈ middle N, (spectralGap l j/middleMass (spectralGap l)) • concentrated (spectralGap l) j) = l
-
-**Theorem 1.9 (zero middle).**
-
-Lean statement: `D5/S3/Quantum/Entanglement/AbsolutePPT/FiveRowP2Lift.zero_middle`
-
-*Proof.* Machine-checked in Lean as `D5/S3/Quantum/Entanglement/AbsolutePPT/FiveRowP2Lift.zero_middle` (`✓ std3`). ∎
-
-*Source.* Repository-derived.
-
-*Commentary.*
-
-theorem zero_middle {N : ℕ} (l : Fin N → ℝ) (ho : Antitone l) (hn : ∀ i, 0 ≤ l i) (hv : middleMass (spectralGap l)=0) (j : Fin N) : concentrated (spectralGap l) j = l
-
-**Theorem 1.10 (concentration transfer).**
+**Theorem 1.8 (concentration transfer).**
 
 Lean statement: `D5/S3/Quantum/Entanglement/AbsolutePPT/FiveRowP2Lift.concentration_transfer`
 
@@ -126,7 +102,7 @@ Lean statement: `D5/S3/Quantum/Entanglement/AbsolutePPT/FiveRowP2Lift.concentrat
 
 theorem concentration_transfer {N : ℕ} (hN : 25 ≤ N) (theta : ℝ) (ht : 0 ≤ theta) (l : Fin N → ℝ) (ho : Antitone l) (hn : ∀ i, 0 ≤ l i) (hc : ∀ j ∈ middle N, 0 ≤ ∑ i, concentrated (spectralGap l) j i) (hb : ∀ j ∈ middle N, ∑ i, (concentrated (spectralGap l) j i)^2 ≤ theta*(∑ i, concentrated (spectralGap l) j i)^2) : ∑ i, (l i)^2 ≤ theta*(∑ i, l i)^2
 
-**Theorem 1.11 (augmented norm lift).**
+**Theorem 1.9 (augmented norm lift).**
 
 Lean statement: `D5/S3/Quantum/Entanglement/AbsolutePPT/FiveRowP2Lift.augmented_norm_lift`
 
@@ -146,9 +122,7 @@ theorem augmented_norm_lift {I J : Type*} [Fintype I] [Fintype J] (p : I → ℝ
 - Truth anchor: `D5/S3/Quantum/Entanglement/AbsolutePPT/FiveRowP2Lift.concentrated_nonnegative`
 - Truth anchor: `D5/S3/Quantum/Entanglement/AbsolutePPT/FiveRowP2Lift.concentration_transfer`
 - Truth anchor: `D5/S3/Quantum/Entanglement/AbsolutePPT/FiveRowP2Lift.frozen`
-- Truth anchor: `D5/S3/Quantum/Entanglement/AbsolutePPT/FiveRowP2Lift.gap_convex_identity`
 - Truth anchor: `D5/S3/Quantum/Entanglement/AbsolutePPT/FiveRowP2Lift.middle`
 - Truth anchor: `D5/S3/Quantum/Entanglement/AbsolutePPT/FiveRowP2Lift.middleMass`
 - Truth anchor: `D5/S3/Quantum/Entanglement/AbsolutePPT/FiveRowP2Lift.middle_mass_actual`
-- Truth anchor: `D5/S3/Quantum/Entanglement/AbsolutePPT/FiveRowP2Lift.zero_middle`
 - Dependency: [D5/S3/Quantum/Entanglement/AbsolutePPT/HalfspaceConeTransfer](HalfspaceConeTransfer.md)

@@ -96,35 +96,6 @@ theorem concentrated_boundary {N : ℕ} (l : Fin N → ℝ) (j : Fin N)
   have hv := congrFun hsplit k
   simpa [concentrated,Pi.add_apply,Pi.smul_apply,smul_eq_mul,hsum] using hv
 
-/-- An exact convex decomposition, with its actual unequal term masses.
-Division is used only in the positive-middle-mass branch. -/
-theorem gap_convex_identity {N : ℕ} (l : Fin N → ℝ)
-    (hv : 0 < middleMass (spectralGap l)) :
-    (∑ j ∈ middle N, (spectralGap l j/middleMass (spectralGap l)) •
-      concentrated (spectralGap l) j) = l := by
-  classical
-  have hv0 := ne_of_gt hv
-  simp only [concentrated,smul_add,smul_smul,Finset.sum_add_distrib]
-  rw [← Finset.sum_smul,← Finset.sum_div]
-  have hweight : (∑ j ∈ middle N, spectralGap l j)/middleMass (spectralGap l)=1 :=
-    div_self hv0
-  rw [hweight,one_smul]
-  simp_rw [div_mul_cancel₀ _ hv0]
-  rw [split_gaps,gap_reconstruct]
-
-/-- Zero middle mass is included without division. -/
-theorem zero_middle {N : ℕ} (l : Fin N → ℝ) (ho : Antitone l)
-    (hn : ∀ i, 0 ≤ l i) (hv : middleMass (spectralGap l)=0) (j : Fin N) :
-    concentrated (spectralGap l) j = l := by
-  have hg := spectralGap_nonneg l ho hn
-  have hzero : ∀ i ∈ middle N, spectralGap l i=0 :=
-    (sum_eq_zero_iff_of_nonneg (fun i _ => hg i)).mp hv
-  have hs : (∑ i ∈ middle N, spectralGap l i • step N (i.val+1))=0 :=
-    sum_eq_zero (fun i hi => by rw [hzero i hi,zero_smul])
-  have he := split_gaps (spectralGap l)
-  rw [hs,add_zero,gap_reconstruct] at he
-  simp [concentrated,hv,he]
-
 /-- Reuse the canonical norm cone; no equal-mass or squared-Jensen premise. -/
 theorem concentration_transfer {N : ℕ} (hN : 25 ≤ N) (theta : ℝ) (ht : 0 ≤ theta)
     (l : Fin N → ℝ) (ho : Antitone l) (hn : ∀ i, 0 ≤ l i)

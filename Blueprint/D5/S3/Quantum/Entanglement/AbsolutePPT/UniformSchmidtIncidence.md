@@ -8,13 +8,13 @@ Complete-graph edges and diagonal-plus-edge bottom slots give the exact incidenc
 
 Utility none: Edge, BottomSlot, slotCoord, coordSlot, slotEquiv. Parametric finite types and explicit coordinate equivalences for arbitrary r; no bounded enumeration result is delivered.
 
-Utility none: incident, incidentDecidable, edge, edge_symm, incidentNeighbor, neighborIncident, incidentEquiv. Symbolic incidence predicates, decidability and mutually inverse coordinate maps; the decision instance supports definitions and is not a checker theorem answering a separate finite-input problem.
+Utility none: incident, incidentDecidable, edge, incidentNeighbor, neighborIncident, incidentEquiv. Symbolic incidence predicates, decidability and mutually inverse coordinate maps; the decision instance supports definitions and is not a checker theorem answering a separate finite-input problem.
 
 Utility none: edge_card_real, bottom_card_real, incident_card, incident_indicator_sum. Closed cardinality identities derived from equivalences for every r, rather than counts certified at selected dimensions.
 
 Utility none: topWeight, bottomWeight, top_weight_sum, top_weight_squares, bottom_weight_sum, bottom_weight_squares, top_column_sum, bottom_column_sum. Symbolic weight functions and sum identities over arbitrary graph size; no bounded list, external checker or numerical-premise reduction is the content.
 
-Utility none: K, K_isHermitian, K_offDiag, K_diag, incident_sum, neighbor_sum, K_row, K_charge, K_trace, incidence_factors. Universal matrix, sum, order and rational identities in symbolic r,t,b; incidence_factors uses the stated r>=3 domain to justify algebraic denominators, not numerical evidence for an instance.
+Utility none: K, K_offDiag, K_diag, incident_sum, neighbor_sum, K_row, K_charge, K_trace, incidence_factors. Universal matrix, sum, order and rational identities in symbolic r,t,b; incidence_factors uses the stated r>=3 domain to justify algebraic denominators, not numerical evidence for an instance.
 
 **Definition 1.1 (Edge).**
 
@@ -124,19 +124,7 @@ Lean statement: `D5/S3/Quantum/Entanglement/AbsolutePPT/UniformSchmidtIncidence.
 
 def edge {r : ℕ} (i j : Fin r) (h : i ≠ j) : Edge r
 
-**Theorem 1.10 (edge symm).**
-
-Lean statement: `D5/S3/Quantum/Entanglement/AbsolutePPT/UniformSchmidtIncidence.edge_symm`
-
-*Proof.* Machine-checked in Lean as `D5/S3/Quantum/Entanglement/AbsolutePPT/UniformSchmidtIncidence.edge_symm` (`✓ std3`). ∎
-
-*Source.* Repository-derived.
-
-*Commentary.*
-
-theorem edge_symm {r : ℕ} (i j : Fin r) (h : i ≠ j) : edge i j h = edge j i h.symm
-
-**Definition 1.11 (incidentNeighbor).**
+**Definition 1.10 (incidentNeighbor).**
 
 Lean statement: `D5/S3/Quantum/Entanglement/AbsolutePPT/UniformSchmidtIncidence.incidentNeighbor`
 
@@ -148,7 +136,7 @@ Lean statement: `D5/S3/Quantum/Entanglement/AbsolutePPT/UniformSchmidtIncidence.
 
 def incidentNeighbor {r : ℕ} (i : Fin r) (e : {e : Edge r // incident i e}) : {j : Fin r // j ≠ i}
 
-**Definition 1.12 (neighborIncident).**
+**Definition 1.11 (neighborIncident).**
 
 Lean statement: `D5/S3/Quantum/Entanglement/AbsolutePPT/UniformSchmidtIncidence.neighborIncident`
 
@@ -160,7 +148,7 @@ Lean statement: `D5/S3/Quantum/Entanglement/AbsolutePPT/UniformSchmidtIncidence.
 
 def neighborIncident {r : ℕ} (i : Fin r) (j : {j : Fin r // j ≠ i}) : {e : Edge r // incident i e}
 
-**Definition 1.13 (incidentEquiv).**
+**Definition 1.12 (incidentEquiv).**
 
 Lean statement: `D5/S3/Quantum/Entanglement/AbsolutePPT/UniformSchmidtIncidence.incidentEquiv`
 
@@ -172,7 +160,7 @@ Lean statement: `D5/S3/Quantum/Entanglement/AbsolutePPT/UniformSchmidtIncidence.
 
 def incidentEquiv {r : ℕ} (i : Fin r) : {e : Edge r // incident i e} ≃ {j : Fin r // j ≠ i}
 
-**Theorem 1.14 (incident card).**
+**Theorem 1.13 (incident card).**
 
 Lean statement: `D5/S3/Quantum/Entanglement/AbsolutePPT/UniformSchmidtIncidence.incident_card`
 
@@ -184,7 +172,7 @@ Lean statement: `D5/S3/Quantum/Entanglement/AbsolutePPT/UniformSchmidtIncidence.
 
 theorem incident_card {r : ℕ} (i : Fin r) : Fintype.card {e : Edge r // incident i e} = r - 1
 
-**Definition 1.15 (topWeight).**
+**Definition 1.14 (topWeight).**
 
 Lean statement: `D5/S3/Quantum/Entanglement/AbsolutePPT/UniformSchmidtIncidence.topWeight`
 
@@ -196,7 +184,7 @@ Lean statement: `D5/S3/Quantum/Entanglement/AbsolutePPT/UniformSchmidtIncidence.
 
 def topWeight {r : ℕ} (i : Fin r) (e : Edge r) : ℝ
 
-**Definition 1.16 (bottomWeight).**
+**Definition 1.15 (bottomWeight).**
 
 Lean statement: `D5/S3/Quantum/Entanglement/AbsolutePPT/UniformSchmidtIncidence.bottomWeight`
 
@@ -208,7 +196,7 @@ Lean statement: `D5/S3/Quantum/Entanglement/AbsolutePPT/UniformSchmidtIncidence.
 
 def bottomWeight {r : ℕ} (i : Fin r) : BottomSlot r → ℝ | .inl j => if i = j then 2 else 0 | .inr e => if incident i e then 1 else 0 theorem incident_indicator_sum {r : ℕ} (i : Fin r) : (∑ e : Edge r, if incident i e then (1 : ℝ) else 0) = (r : ℝ) - 1
 
-**Theorem 1.17 (incident indicator sum).**
+**Theorem 1.16 (incident indicator sum).**
 
 Lean statement: `D5/S3/Quantum/Entanglement/AbsolutePPT/UniformSchmidtIncidence.incident_indicator_sum`
 
@@ -220,7 +208,7 @@ Lean statement: `D5/S3/Quantum/Entanglement/AbsolutePPT/UniformSchmidtIncidence.
 
 theorem incident_indicator_sum {r : ℕ} (i : Fin r) : (∑ e : Edge r, if incident i e then (1 : ℝ) else 0) = (r : ℝ) - 1
 
-**Theorem 1.18 (top weight sum).**
+**Theorem 1.17 (top weight sum).**
 
 Lean statement: `D5/S3/Quantum/Entanglement/AbsolutePPT/UniformSchmidtIncidence.top_weight_sum`
 
@@ -232,7 +220,7 @@ Lean statement: `D5/S3/Quantum/Entanglement/AbsolutePPT/UniformSchmidtIncidence.
 
 theorem top_weight_sum {r : ℕ} (i : Fin r) : (∑ e, topWeight i e) = -((r : ℝ) - 1)
 
-**Theorem 1.19 (top weight squares).**
+**Theorem 1.18 (top weight squares).**
 
 Lean statement: `D5/S3/Quantum/Entanglement/AbsolutePPT/UniformSchmidtIncidence.top_weight_squares`
 
@@ -244,7 +232,7 @@ Lean statement: `D5/S3/Quantum/Entanglement/AbsolutePPT/UniformSchmidtIncidence.
 
 theorem top_weight_squares {r : ℕ} (i : Fin r) : (∑ e, (topWeight i e)^2) = (r : ℝ) - 1
 
-**Theorem 1.20 (bottom weight sum).**
+**Theorem 1.19 (bottom weight sum).**
 
 Lean statement: `D5/S3/Quantum/Entanglement/AbsolutePPT/UniformSchmidtIncidence.bottom_weight_sum`
 
@@ -256,7 +244,7 @@ Lean statement: `D5/S3/Quantum/Entanglement/AbsolutePPT/UniformSchmidtIncidence.
 
 theorem bottom_weight_sum {r : ℕ} (i : Fin r) : (∑ p, bottomWeight i p) = (r : ℝ) + 1
 
-**Theorem 1.21 (bottom weight squares).**
+**Theorem 1.20 (bottom weight squares).**
 
 Lean statement: `D5/S3/Quantum/Entanglement/AbsolutePPT/UniformSchmidtIncidence.bottom_weight_squares`
 
@@ -268,7 +256,7 @@ Lean statement: `D5/S3/Quantum/Entanglement/AbsolutePPT/UniformSchmidtIncidence.
 
 theorem bottom_weight_squares {r : ℕ} (i : Fin r) : (∑ p, (bottomWeight i p)^2) = (r : ℝ) + 3
 
-**Definition 1.22 (K).**
+**Definition 1.21 (K).**
 
 Lean statement: `D5/S3/Quantum/Entanglement/AbsolutePPT/UniformSchmidtIncidence.K`
 
@@ -280,19 +268,7 @@ Lean statement: `D5/S3/Quantum/Entanglement/AbsolutePPT/UniformSchmidtIncidence.
 
 def K {r : ℕ} (t : Edge r → ℝ) (b : BottomSlot r → ℝ) : Matrix (Fin r) (Fin r) ℝ
 
-**Theorem 1.23 (K isHermitian).**
-
-Lean statement: `D5/S3/Quantum/Entanglement/AbsolutePPT/UniformSchmidtIncidence.K_isHermitian`
-
-*Proof.* Machine-checked in Lean as `D5/S3/Quantum/Entanglement/AbsolutePPT/UniformSchmidtIncidence.K_isHermitian` (`✓ std3`). ∎
-
-*Source.* Repository-derived.
-
-*Commentary.*
-
-theorem K_isHermitian {r : ℕ} (t : Edge r → ℝ) (b : BottomSlot r → ℝ) : (K t b).IsHermitian
-
-**Theorem 1.24 (K offDiag).**
+**Theorem 1.22 (K offDiag).**
 
 Lean statement: `D5/S3/Quantum/Entanglement/AbsolutePPT/UniformSchmidtIncidence.K_offDiag`
 
@@ -304,7 +280,7 @@ Lean statement: `D5/S3/Quantum/Entanglement/AbsolutePPT/UniformSchmidtIncidence.
 
 theorem K_offDiag {r : ℕ} (t : Edge r → ℝ) (b : BottomSlot r → ℝ) (hsep : ∀ e f, b (.inr e) ≤ t f) (i j : Fin r) (h : i ≠ j) : K t b i j ≤ 0
 
-**Theorem 1.25 (K diag).**
+**Theorem 1.23 (K diag).**
 
 Lean statement: `D5/S3/Quantum/Entanglement/AbsolutePPT/UniformSchmidtIncidence.K_diag`
 
@@ -316,7 +292,7 @@ Lean statement: `D5/S3/Quantum/Entanglement/AbsolutePPT/UniformSchmidtIncidence.
 
 theorem K_diag {r : ℕ} (t : Edge r → ℝ) (b : BottomSlot r → ℝ) (γ : ℝ) (hb : ∀ i, b (.inl i) ≤ γ) (i : Fin r) : K t b i i ≤ 2 * γ
 
-**Theorem 1.26 (incident sum).**
+**Theorem 1.24 (incident sum).**
 
 Lean statement: `D5/S3/Quantum/Entanglement/AbsolutePPT/UniformSchmidtIncidence.incident_sum`
 
@@ -328,7 +304,7 @@ Lean statement: `D5/S3/Quantum/Entanglement/AbsolutePPT/UniformSchmidtIncidence.
 
 theorem incident_sum {r : ℕ} (i : Fin r) (f : Edge r → ℝ) : (∑ j : {j : Fin r // j ≠ i}, f (edge i j.val j.property.symm)) = ∑ e : Edge r, if incident i e then f e else 0
 
-**Theorem 1.27 (neighbor sum).**
+**Theorem 1.25 (neighbor sum).**
 
 Lean statement: `D5/S3/Quantum/Entanglement/AbsolutePPT/UniformSchmidtIncidence.neighbor_sum`
 
@@ -340,7 +316,7 @@ Lean statement: `D5/S3/Quantum/Entanglement/AbsolutePPT/UniformSchmidtIncidence.
 
 theorem neighbor_sum {r : ℕ} (i : Fin r) (f : Edge r → ℝ) : (∑ j : Fin r, if h : i = j then 0 else f (edge i j h)) = ∑ e : Edge r, if incident i e then f e else 0
 
-**Theorem 1.28 (K row).**
+**Theorem 1.26 (K row).**
 
 Lean statement: `D5/S3/Quantum/Entanglement/AbsolutePPT/UniformSchmidtIncidence.K_row`
 
@@ -352,7 +328,7 @@ Lean statement: `D5/S3/Quantum/Entanglement/AbsolutePPT/UniformSchmidtIncidence.
 
 theorem K_row {r : ℕ} (t : Edge r → ℝ) (b : BottomSlot r → ℝ) (i : Fin r) : UniformSchmidtDefectMoment.rowSum (K t b) i = (∑ e, topWeight i e * t e) + (∑ p, bottomWeight i p * b p)
 
-**Theorem 1.29 (top column sum).**
+**Theorem 1.27 (top column sum).**
 
 Lean statement: `D5/S3/Quantum/Entanglement/AbsolutePPT/UniformSchmidtIncidence.top_column_sum`
 
@@ -364,7 +340,7 @@ Lean statement: `D5/S3/Quantum/Entanglement/AbsolutePPT/UniformSchmidtIncidence.
 
 theorem top_column_sum {r : ℕ} (e : Edge r) : (∑ i : Fin r, topWeight i e) = -2
 
-**Theorem 1.30 (bottom column sum).**
+**Theorem 1.28 (bottom column sum).**
 
 Lean statement: `D5/S3/Quantum/Entanglement/AbsolutePPT/UniformSchmidtIncidence.bottom_column_sum`
 
@@ -376,7 +352,7 @@ Lean statement: `D5/S3/Quantum/Entanglement/AbsolutePPT/UniformSchmidtIncidence.
 
 theorem bottom_column_sum {r : ℕ} (p : BottomSlot r) : (∑ i : Fin r, bottomWeight i p) = 2
 
-**Theorem 1.31 (K charge).**
+**Theorem 1.29 (K charge).**
 
 Lean statement: `D5/S3/Quantum/Entanglement/AbsolutePPT/UniformSchmidtIncidence.K_charge`
 
@@ -388,7 +364,7 @@ Lean statement: `D5/S3/Quantum/Entanglement/AbsolutePPT/UniformSchmidtIncidence.
 
 theorem K_charge {r : ℕ} (t : Edge r → ℝ) (b : BottomSlot r → ℝ) : UniformSchmidtDefectMoment.uniformCharge (K t b) = 2 * ((∑ p, b p) - ∑ e, t e)
 
-**Theorem 1.32 (K trace).**
+**Theorem 1.30 (K trace).**
 
 Lean statement: `D5/S3/Quantum/Entanglement/AbsolutePPT/UniformSchmidtIncidence.K_trace`
 
@@ -400,7 +376,7 @@ Lean statement: `D5/S3/Quantum/Entanglement/AbsolutePPT/UniformSchmidtIncidence.
 
 theorem K_trace {r : ℕ} (t : Edge r → ℝ) (b : BottomSlot r → ℝ) : (K t b).trace = 2 * ∑ i, b (.inl i)
 
-**Theorem 1.33 (incidence factors).**
+**Theorem 1.31 (incidence factors).**
 
 Lean statement: `D5/S3/Quantum/Entanglement/AbsolutePPT/UniformSchmidtIncidence.incidence_factors`
 
@@ -419,7 +395,6 @@ theorem incidence_factors {r : ℕ} (hr : 3 ≤ r) : let a : ℝ := Fintype.card
 - Truth anchor: `D5/S3/Quantum/Entanglement/AbsolutePPT/UniformSchmidtIncidence.K`
 - Truth anchor: `D5/S3/Quantum/Entanglement/AbsolutePPT/UniformSchmidtIncidence.K_charge`
 - Truth anchor: `D5/S3/Quantum/Entanglement/AbsolutePPT/UniformSchmidtIncidence.K_diag`
-- Truth anchor: `D5/S3/Quantum/Entanglement/AbsolutePPT/UniformSchmidtIncidence.K_isHermitian`
 - Truth anchor: `D5/S3/Quantum/Entanglement/AbsolutePPT/UniformSchmidtIncidence.K_offDiag`
 - Truth anchor: `D5/S3/Quantum/Entanglement/AbsolutePPT/UniformSchmidtIncidence.K_row`
 - Truth anchor: `D5/S3/Quantum/Entanglement/AbsolutePPT/UniformSchmidtIncidence.K_trace`
@@ -431,7 +406,6 @@ theorem incidence_factors {r : ℕ} (hr : 3 ≤ r) : let a : ℝ := Fintype.card
 - Truth anchor: `D5/S3/Quantum/Entanglement/AbsolutePPT/UniformSchmidtIncidence.coordSlot`
 - Truth anchor: `D5/S3/Quantum/Entanglement/AbsolutePPT/UniformSchmidtIncidence.edge`
 - Truth anchor: `D5/S3/Quantum/Entanglement/AbsolutePPT/UniformSchmidtIncidence.edge_card_real`
-- Truth anchor: `D5/S3/Quantum/Entanglement/AbsolutePPT/UniformSchmidtIncidence.edge_symm`
 - Truth anchor: `D5/S3/Quantum/Entanglement/AbsolutePPT/UniformSchmidtIncidence.incidence_factors`
 - Truth anchor: `D5/S3/Quantum/Entanglement/AbsolutePPT/UniformSchmidtIncidence.incident`
 - Truth anchor: `D5/S3/Quantum/Entanglement/AbsolutePPT/UniformSchmidtIncidence.incidentEquiv`

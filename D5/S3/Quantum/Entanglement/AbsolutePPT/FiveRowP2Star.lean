@@ -676,51 +676,5 @@ theorem family_star_charges (u v : ℝ) (h : Fin 10 → ℝ) (d : Fin 15 → ℝ
     linarith only [hpos]
   constructor <;> linarith only [htest,hhead,htail,hlinear]
 
-private theorem family_quadratic (u v : ℝ) (h : Fin 10 → ℝ) (d : Fin 15 → ℝ)
-    (π : Edge 5 ≃ Fin 10) (σ : BottomSlot 5 ≃ Fin 15) (x : Fin 5 → ℝ) :
-    x ⬝ᵥ (family u v h d π σ)*ᵥ x =
-      (∑ i : Fin 5, 2*(u-d (σ (.inl i)))*(x i)^2) -
-      ∑ e : Edge 5, 2*(v+h (π e)+d (σ (.inr e)))*x e.val.1*x e.val.2 := by
-  simp only [family,K,dotProduct,mulVec]
-  simp_rw [← edgeEquiv.sum_comp]
-  norm_num [Fin.sum_univ_succ,edgeEquiv,edgeAt,edge]
-  <;> ring
-
-/-- Compatible independent placements for the two-, three-, and four-vertex
-indicator tests. No order or signs are needed for these exact prefix tests. -/
-theorem family_uniform_subsets (r : ℝ) (h : Fin 10 → ℝ) (d : Fin 15 → ℝ)
-    (hf : FullPSD 1 r h d) :
-    h 0 + (d 14+d 13+d 12) ≤ 2-r ∧
-    (h 0+h 1+h 2) + (d 14+d 13+d 12+d 11+d 10+d 9) ≤ 3-3*r ∧
-    (h 0+h 1+h 2+h 3+h 4+h 5) +
-      (d 14+d 13+d 12+d 11+d 10+d 9+d 8+d 7+d 6+d 5) ≤ 4-6*r := by
-  let hp2 : Equiv.Perm (Fin 10) := Equiv.refl _
-  let hp3 : Equiv.Perm (Fin 10) :=
-    Equiv.ofBijective ![0,1,3,4,2,5,6,7,8,9] (by decide)
-  let hp4 : Equiv.Perm (Fin 10) :=
-    Equiv.ofBijective ![0,1,2,6,3,4,7,5,8,9] (by decide)
-  let tp2 : Equiv.Perm (Fin 15) :=
-    Equiv.ofBijective ![14,13,0,1,2,12,3,4,5,6,7,8,9,10,11] (by decide)
-  let tp3 : Equiv.Perm (Fin 15) :=
-    Equiv.ofBijective ![14,13,12,0,1,11,10,2,3,9,4,5,6,7,8] (by decide)
-  let tp4 : Equiv.Perm (Fin 15) :=
-    Equiv.ofBijective ![14,13,12,11,0,10,9,8,1,7,6,2,5,3,4] (by decide)
-  have h2 := (hf (edgeSlots.trans hp2) (tailSlots.trans tp2)).dotProduct_mulVec_nonneg
-    ![1,1,0,0,0]
-  have h3 := (hf (edgeSlots.trans hp3) (tailSlots.trans tp3)).dotProduct_mulVec_nonneg
-    ![1,1,1,0,0]
-  have h4 := (hf (edgeSlots.trans hp4) (tailSlots.trans tp4)).dotProduct_mulVec_nonneg
-    ![1,1,1,1,0]
-  simp only [star_trivial] at h2 h3 h4
-  rw [family_quadratic,← edgeEquiv.sum_comp] at h2 h3 h4
-  simp only [Equiv.trans_apply,tailSlots,edgeSlots,
-    Equiv.symm_apply_apply,Equiv.sumCongr_apply,Equiv.refl_apply,Sum.map_inl,Sum.map_inr,
-    finSumFinEquiv_apply_left (m:=5) (n:=10),
-      finSumFinEquiv_apply_right (m:=5) (n:=10)] at h2 h3 h4
-  norm_num [Fin.sum_univ_succ,edgeEquiv,edgeAt,
-    hp2,hp3,hp4,tp2,tp3,tp4,
-    finSumFinEquiv_apply_left (m:=5) (n:=10),
-    finSumFinEquiv_apply_right (m:=5) (n:=10)] at h2 h3 h4
-  exact ⟨by linarith only [h2], by linarith only [h3], by linarith only [h4]⟩
 end
 end D5.S3.Quantum.Entanglement.AbsolutePPT.FiveRowP2Star
