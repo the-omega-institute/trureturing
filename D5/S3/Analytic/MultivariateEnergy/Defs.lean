@@ -57,9 +57,9 @@ def IsMinimizer {d n : ℕ} (K : (Fin n → S d) → ℝ) (μ₀ : Measure (S d)
   ∀ μ : Measure (S d), IsProbabilityMeasure μ → energy K μ₀ ≤ energy K μ
 
 /-- Integrate the first inputs, leaving the last two free. -/
-def avgKernel {d m : ℕ} (K : (Fin (m + 3) → S d) → ℝ) (x y : S d) : ℝ :=
-  ∫ z : Fin (m + 1) → S d, K (Fin.append (m := m + 1) (n := 2) z ![x, y])
-    ∂Measure.pi (fun _ : Fin (m + 1) => sigma d)
+def avgKernel {d m : ℕ} (K : (Fin (m + 2) → S d) → ℝ) (x y : S d) : ℝ :=
+  ∫ z : Fin m → S d, K (Fin.append (m := m) (n := 2) z ![x, y])
+    ∂Measure.pi (fun _ : Fin m => sigma d)
 
 /-- The Jordan decomposition formulation of conditional positive definiteness:
 any finite signed measure of mass zero is the difference of two finite positive
@@ -73,7 +73,7 @@ def IsCondPosDef {d : ℕ} (U : S d → S d → ℝ) : Prop :=
 /-- The averaged-kernel characterization on all dimensions and arities. -/
 def claim : Prop :=
   ∀ d ≥ 2, ∀ m, ∀ K : (Fin (m + 3) → S d) → ℝ, IsAdmissible K →
-    (IsMinimizer K (sigma d) ↔ IsCondPosDef (avgKernel K))
+    (IsMinimizer K (sigma d) ↔ IsCondPosDef (avgKernel (m := m + 1) K))
 
 /-- Centered rank-one matrix feature. -/
 def A {d : ℕ} (x : S d) : Matrix (Fin d) (Fin d) ℝ :=
