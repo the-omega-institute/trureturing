@@ -2,6 +2,8 @@ fingerprints:
   raw_sha256: sha256:0fbaa9c128ec01466ccf57827a6c05e21906cb15b58bdc55d32e5a90f0d23403
   normalized_sha256: sha256:0fbaa9c128ec01466ccf57827a6c05e21906cb15b58bdc55d32e5a90f0d23403
 cas_ref: sha256:0fbaa9c128ec01466ccf57827a6c05e21906cb15b58bdc55d32e5a90f0d23403
-coverage_gids: []
+coverage_gids:
+  - gid: D5/S3/Combinatorics/SpectralGraph/ScalarCycleRowError.cycle_row_error_and_sharpness
+    target_statement_id: sha256:292274beb7e13d163ed3474da240f1f5db0783ffc1b0b0b10fa839a5b1d4fe5c
 receipts:
   unresolved_subitems: []
