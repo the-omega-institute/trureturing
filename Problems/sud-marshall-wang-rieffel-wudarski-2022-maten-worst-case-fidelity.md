@@ -59,12 +59,12 @@ Source fidelity also requires the unnormalized Pauli convention, the ordered pro
 
 ## Evidence
 
-The canonical source is `D5/S3/Quantum/QuantumChannels/MarginalApproximationWorstFidelity.lean` (676 lines).
+The canonical source is `D5/S3/Quantum/QuantumChannels/MarginalApproximationWorstFidelity.lean` (681 lines).
 
 - **Proof.** It proves `result : claim`.
 - **Axioms.** It uses only the standard axioms `propext`, `Classical.choice` and `Quot.sound`; no `sorry`, `native_decide`, or new axiom.
 
-Frozen state: `Golden/Frozen/state/D5/S3/Quantum/QuantumChannels/MarginalApproximationWorstFidelity.lean.json`, statement `sha256:b1fd7abacc959f3a79352476ccf97597cf1677993fde69ae9d00ac4d635a9523`.
+Frozen state: `Golden/Frozen/state/D5/S3/Quantum/QuantumChannels/MarginalApproximationWorstFidelity.lean.json`, statement `sha256:fe11e01ca6180e4e80035a4777d14c525b6b38feec6c27c3405044f01e6168ac`.
 
 Declaration statements:
 
