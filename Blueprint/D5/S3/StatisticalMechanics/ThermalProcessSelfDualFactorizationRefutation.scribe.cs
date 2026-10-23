@@ -37,7 +37,10 @@ internal sealed class ThermalProcessSelfDualFactorizationRefutationDocument : IS
                 AssessedProvenance.FromRepo(Source),
                 Blocks(Paragraph(Text(
                     "Set d = 5 and use the Gibbs weights (8, 7, 4, 2, 3). Let A be the matrix with rows (0, 1, 0, 1/2, 0), (1/4, 0, 1, 1/2, 0), (1/2, 0, 0, 0, 0), (1/4, 0, 0, 0, 0), (0, 0, 0, 0, 1); it acts on levels 0 through 3 and fixes level 4. Let B have rows (1, 0, 0, 0, 0), (0, 1/7, 1, 1, 0), (0, 1/7, 0, 0, 1), (0, 2/7, 0, 0, 0), (0, 3/7, 0, 0, 0), so it fixes level 0. Their product is C = A B, with rows (0, 2/7, 1, 1, 0), (1/4, 2/7, 0, 0, 1), (1/2, 0, 0, 0, 0), (1/4, 0, 0, 0, 0), (0, 3/7, 0, 0, 0). Each of A, B and C is nonnegative, column-stochastic and preserves the Gibbs weights. Each is extreme by support uniqueness: in a convex combination, every factor has zero entries wherever the matrix has a zero entry, and the column sums together with Gibbs preservation determine all remaining entries uniquely. The non-loop support edges of C are 0–1, 0–2, 0–3 and 1–4, so C is irreducible. Finally, C satisfies detailed balance: C times the diagonal matrix of the Gibbs weights is symmetric. Thus the factorization satisfies every hypothesis of claim while its conclusion fails."))),
-                DescribeRole.Theorem))));
+                DescribeRole.Theorem,
+                openProblemResolutionClaim: new OpenProblemResolutionClaim(
+                    ProblemSlugRef.Create("mazurek-horodecki-2018-thermal-process-self-dual-factorization-refutation"),
+                    ResolutionKind.Refuted)))));
 
     private static DocumentBlock Node(
         string name, string title, Formula formula, string prose,
