@@ -138,21 +138,25 @@ theorem reverse_lazy_decision_set (reason : Failure) :
     needsReverseNegative true (.incomplete reason) (.incomplete reason) = false := by
   simp [needsReverseNegative]
 
-/-- Reverse evidence cannot change prices, intervals, or paired negative
-probes; it only changes the vertex exclusion bookkeeping. -/
-theorem reverse_evidence_price_irrelevant (reading : GraphReading)
-    (vertices : List GraphVertex) :
-    ({reading with graph := {reading.graph with vertices}} : GraphReading).baseline =
-        reading.baseline ∧
-    ({reading with graph := {reading.graph with vertices}} : GraphReading).paired =
-        reading.paired ∧
-    ({reading.graph with vertices} : ProofGraph).edges = reading.graph.edges := by
-  exact ⟨rfl, rfl, rfl⟩
+/-- A newly selected unresolved seed cannot inherit a previous route's
+completed exclusion flag. The assertion uses the production route guard. -/
+theorem unresolved_final_seed_blocks (graph : ProofGraph) (selected : List Nat)
+    (id : Nat) (v : GraphVertex) (reason : Failure)
+    (member : id ∈ selected)
+    (eligible : selectedStructureSeed graph selected id = true)
+    (found : graph.vertices.find? (·.id == id) = some v)
+    (unresolved : targetPartDecision v.independentLookup v.reverseLookup = .incomplete reason) :
+    targetPartReady graph selected = false := by
+  apply Bool.eq_false_iff.mpr
+  intro ready
+  unfold targetPartReady at ready
+  have each := (List.all_eq_true.mp ready) id member
+  simpa [eligible, found, unresolved] using each
 
 #print axioms reverse_nohit_clears_target_part
 #print axioms unresolved_target_part_blocks
 #print axioms reverse_lazy_decision_set
-#print axioms reverse_evidence_price_irrelevant
+#print axioms unresolved_final_seed_blocks
 
 #print axioms cert_iff_candidate_success
 #print axioms nohit_excludes_cert

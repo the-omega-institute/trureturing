@@ -421,6 +421,17 @@ def needsReverseNegative (decisive : Bool) (independent reverse : Run) : Bool :=
   decisive && independent == .exhausted &&
     match reverse with | .incomplete _ => true | _ => false
 
+/-- Exclusion evidence follows the final selected route, including any route
+chosen after an earlier seed was excluded. Unqueried selected seeds block. -/
+def targetPartReady (graph : ProofGraph) (selected : List Nat) : Bool :=
+  selected.all fun id =>
+    if selectedStructureSeed graph selected id then
+      (graph.vertices.find? (·.id == id)).any fun v =>
+        match targetPartDecision v.independentLookup v.reverseLookup with
+        | .incomplete _ => false
+        | _ => true
+    else true
+
 def classifyGraph (reading : GraphReading) : Verdict :=
   if reading.presentationCertified || reading.priorReferenceSuccess ||
       upperIsZero reading.baseline then .bindOnly

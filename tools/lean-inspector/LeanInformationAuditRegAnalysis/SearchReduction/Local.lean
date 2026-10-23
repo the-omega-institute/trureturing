@@ -934,7 +934,8 @@ private unsafe def refineBaseline (initial : ProofGraph) (lookup? : Option Looku
 for a possible strict drop. Paired queries never request negative evidence. -/
 unsafe def evaluateGraph (raw : ProofGraph) (lookup? : Option LookupTable := none)
     (nominations : Array CertificateNomination := #[])
-    (bindings : Array (Name × CertificateNomination) := #[]) : MetaM GraphReading := do
+    (bindings : Array (Name × CertificateNomination) := #[])
+    (positiveEligible : Bool := true) : MetaM GraphReading := do
   if raw.vertices.isEmpty then return {graph := raw}
   let mut raw := raw
   let enabled := (← IO.getEnv "SEARCH_REDUCTION_LOOKUP") != some "0"
@@ -979,41 +980,41 @@ unsafe def evaluateGraph (raw : ProofGraph) (lookup? : Option LookupTable := non
     lookupPhase "graph/lazy-start"
     let (graph, baseProbe, negativeCalls) ← refineBaseline graph lookup? baseProbe
     let mut graph := graph
-    let mut targetPartComplete := true
     let mut independentCalls := 0
     let mut reverseCalls := 0
-    let decisive := graph.complete && strictDrop (armInterval graph) (armInterval graph true) &&
-      baseProbe.outcome == .exhausted
-    if better (armInterval graph true).upper (armInterval graph).upper then
+    let mut probed := []
+    -- Excluding a seed may select another route. Recompute before every new
+    -- probe, visiting each eligible seed at most once.
+    for _ in [:graph.vertices.length] do
+      if !better (armInterval graph true).upper (armInterval graph).upper then break
       let selected := optimalSeeds (armGraph graph true false) costUpper (armSeeds graph true)
-      let mut checkedVertices := []
-      for v in graph.vertices do
-        let mut v := v
-        if selectedStructureSeed graph selected v.id then
-          let independent ← localRebuild v.type baseTypes lookup?
-          independentCalls := independentCalls + 1
-          let independentRun := match independent.cost with
-            | .zero => Run.found | .one => .exhausted | .unknown => .incomplete .undecided
-          v := {v with
-            independentLookup := independentRun,
-            independentLookupDetail := independent.detail}
-          if independent.cost != .zero then
-            let mut reverse ← certifyLocal v.type (rootType :: baseTypes) lookup? v.origin.constName?
-            let toRun (result : LocalResult) := match result.cost with
-              | .zero => Run.found | .one => .exhausted | .unknown => .incomplete .undecided
-            if needsReverseNegative decisive independentRun (toRun reverse) then
-              -- This R query certifies only S not being recognized from T.
-              -- Its negative result is never attached to a paired graph edge.
-              reverse ← localRebuild v.type (rootType :: baseTypes) lookup?
-              reverseCalls := reverseCalls + 1
-            let reverseRun := toRun reverse
-            v := {v with reverseLookup := reverseRun, reverseLookupDetail := reverse.detail}
-            match targetPartDecision independentRun reverseRun with
-            | .found => v := {v with targetPart := true}
-            | .exhausted => pure ()
-            | .incomplete _ => targetPartComplete := false
-        checkedVertices := checkedVertices ++ [v]
-      graph := {graph with vertices := checkedVertices}
+      let some id := selected.find? (fun id =>
+          selectedStructureSeed graph selected id && !probed.contains id) | break
+      probed := id :: probed
+      let mut v := vertex graph id
+      let independent ← localRebuild v.type baseTypes lookup?
+      independentCalls := independentCalls + 1
+      let toRun (result : LocalResult) := match result.cost with
+        | .zero => Run.found | .one => .exhausted | .unknown => .incomplete .undecided
+      let independentRun := toRun independent
+      v := {v with
+        independentLookup := independentRun,
+        independentLookupDetail := independent.detail}
+      if independent.cost != .zero then
+        let mut reverse ← certifyLocal v.type (rootType :: baseTypes) lookup? v.origin.constName?
+        let decisive := positiveEligible && graph.complete && finite (armInterval graph).upper &&
+          strictDrop (armInterval graph) (armInterval graph true) &&
+          baseProbe.outcome == .exhausted
+        if needsReverseNegative decisive independentRun (toRun reverse) then
+          -- Reverse evidence affects only target-part exclusion, never prices.
+          reverse ← localRebuild v.type (rootType :: baseTypes) lookup?
+          reverseCalls := reverseCalls + 1
+        let reverseRun := toRun reverse
+        v := {v with reverseLookup := reverseRun, reverseLookupDetail := reverse.detail}
+        if targetPartDecision independentRun reverseRun == .found then
+          v := {v with targetPart := true}
+      graph := {graph with vertices := graph.vertices.map fun old =>
+        if old.id == id then v else old}
       let edges := graph.edges.map fun edge =>
         if edge.pairedUsedPremises.any (fun p =>
             (vertex graph p).targetPart && !(vertex graph p).seed && !edge.analytic.contains p) then
@@ -1024,6 +1025,8 @@ unsafe def evaluateGraph (raw : ProofGraph) (lookup? : Option LookupTable := non
     let pairSeeds := armSeeds graph true
     let k1 := {graph with edges := graph.edges.filter (·.window != 2)}
     let selectedSeeds := optimalSeeds (armGraph graph true false) costUpper pairSeeds
+    let targetPartComplete := if better (armInterval graph true).upper (armInterval graph).upper
+      then targetPartReady graph selectedSeeds else true
     let witnessEdges := graph.edges.zipIdx.filterMap fun (edge, i) =>
       if isWitnessEdge graph selectedSeeds edge then some i else none
     let reading : GraphReading := {

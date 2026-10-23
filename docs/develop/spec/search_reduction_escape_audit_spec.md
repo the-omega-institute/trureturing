@@ -159,6 +159,8 @@ d_X(v) = min_e (c_X(e) + max_{u∈prem_X(e)} d_X(u))
 
 ### 5.1 target-part 反向探针
 
+The decision set follows the current paired optimum. After excluding a seed, the evaluator recomputes the selected route and probes newly selected seeds at most once. Final target-part completeness is checked against the final selected seeds; unresolved replacement-route seeds block a positive.
+
 除宽排除外，若 `s` 与 `T` 在单射改名后互为陈述子项，或 `R_lookup` 持 `{T}∪B_used` 能闭合 `type(s)` 而只持 `B_used` 正常耗尽，则 `s` 是 target-part，不可作为新增结构种子。结构探针只为存在上界差距的配对最优路线所选 `S` 成员运行。独立探针可调用基底 R；反向探针先核验正证书，仅在懒决定集需要时追加完整 R，不认证配对臂边价。独立探针命中时无需反向否定；独立探针 NoHit 且反向证书命中时排除该种子。反向 R 完整 NoHit 时确定该种子不因反向推论而排除。独立探针未命中且反向证据未决时，target-part 排除仍为 incomplete，阻止阳性。成功须 kernel 复核；预算或故障具名 incomplete。该规则防止把真正依赖目标的等价泛化、拆分或重打包当作辅助线。基底已能独立闭合的 `s` 不因反向探针成功而排除，仍须经过单射改名与宽排除。
 
 `T`、其别名/重述以及依赖它的声明不得偷偷进入配对环境。宽排除不因私有名、拆文件或声明包装失效。若 `S` 全为 target-part，不能判非 bind-only。例行可证的合成前提仍可因其陈述提供了隐去的信息而产生约化；防刷边界是 `T` 自身被基底根探针例行闭合时判 bind-only，读数必须保留其 R 和图作用域。

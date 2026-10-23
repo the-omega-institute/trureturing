@@ -448,6 +448,7 @@ private unsafe def runCore (source base : Environment) (request : Request)
         environment := base, complete := lookupComplete, enabled, disk?, implicationModules?} sharedImports?
       let reading ← withEnv graphEnv <| evaluateGraph graph (some table)
         request.certificates request.edgeCertificates
+        (positiveEligible := presentation == .exhausted && structureChecked)
       profilePhase "query/assembly-start"
       let baselineProof? ← if upperIsZero reading.baseline then
         withEnv graphEnv <| assembleZero reading.graph else pure none
