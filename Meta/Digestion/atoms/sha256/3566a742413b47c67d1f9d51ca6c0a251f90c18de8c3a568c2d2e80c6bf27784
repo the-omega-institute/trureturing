@@ -1,0 +1,8 @@
+**定义 5.1（窗口最小证书）。** 假设 $\mathcal E_{a:b}(C_a)$ 不含空边。给定起始证书 $C_a$，任取
+
+$$
+T^\star\in\operatorname*{argmin}\{|T|:T\subseteq D,\ T\cap E\ne\varnothing\ \text{对所有 }E\in\mathcal E_{a:b}(C_a)\},
+$$
+
+称 $C_a\cup T^\star$ 为窗口最小证书。
+

@@ -1,0 +1,4 @@
+## 4. Information can increase without reducing zero-one risk
+
+Risk is piecewise affine in the posterior; entropy is strictly concave. This difference survives every finite refinement.
+

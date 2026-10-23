@@ -1,0 +1,27 @@
+**Definition 10.1 (Labelled signed flags and the sign convention).** Let $V,E$ be finite sets, let $\mathbb F_2=\{0,1\}$, and put $H=E\times\mathbb F_2$. An incidence map $v:H\to V$ specifies the ends of each edge. The two half-edges $(e,0),(e,1)$ are distinct even if they are incident with the same vertex, so loops and parallel edges are retained. Let $\rho$ be a permutation of $H$ preserving $v$, with one cycle on each nonempty incidence fibre. The flag set is $X=H\times\mathbb F_2$, with last coordinate called its side. For $t\in\mathbb F_2^E$, define
+
+$$
+ s_\rho(h,1)=(\rho h,0),\qquad
+ s_\rho(h,0)=(\rho^{-1}h,1),\qquad
+ t_t((e,a),b)=((e,a+1),b+1+t_e),\qquad
+ f_{\rho,t}=s_\rho t_t.
+ \tag{10.1}
+$$
+
+Composition is right to left. Both factors are fixed-point-free involutions: $s_\rho$ changes side and $t_t$ changes the labelled end. In these sections, sign zero reverses side across a band. Thus
+
+$$
+ t_{\mathrm{here}}=1+t_{\S3}
+ \tag{10.2}
+$$
+
+on every edge: this is the complement of the Section 3 and author-notebook lambda bit. A fixed reference vector $\tau$ is interpreted in this convention; its translation to Section 3 is $1+\tau$. Complementing preserves a fair bit, but not a specified fixed sign. No quotient by graph automorphisms is taken.
+
+For $q\in\mathbb F_2^V$, let $\rho^q$ reverse $\rho$ at precisely the vertices with $q=1$, and define
+
+$$
+ h_q(h,b)=(h,b+q(v(h))),\qquad
+ (\delta q)_e=q(v(e,0))+q(v(e,1)).
+ \tag{10.3}
+$$
+

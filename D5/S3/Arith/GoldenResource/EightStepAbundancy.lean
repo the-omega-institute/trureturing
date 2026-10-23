@@ -7,6 +7,7 @@
    digest: At eight prime factors, 180180 uniquely maximizes sigma(n)/n at 224/55. -/
 
 import D5.S3.Arith.GoldenResourceObjectiveFactorization
+import D5.S3.Arith.GoldenLocalThreshold
 
 /- Search audit (2026-09-07, base 6634808834be9ae3d669f1f7075a92ae7771eeee):
    Repository searches with positive controls and Lean LSP found only adjacent results:
