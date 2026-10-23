@@ -5,3 +5,7 @@ cas_ref: sha256:ab736f29ac2bc370f34873284c8dfa30121df6156b3212ceb0cf34a7f5a0f67a
 coverage_gids: []
 receipts:
   unresolved_subitems: []
+  nonpropositional:
+    justification: Organizational introduction announcing comparison of three proof interfaces, without a mathematical assertion.
+    previous_atom_id: 3f79e8c08aee0a7db17c4663b2ca5fd4a1e34f6288387cdff388afd04e86a076
+    next_atom_id: 839092fda3b0f774abc8af90b55e1d0fb38f8a5af38df60f26a2e3d4d806cc04
