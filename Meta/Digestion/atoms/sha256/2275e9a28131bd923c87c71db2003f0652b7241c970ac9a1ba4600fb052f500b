@@ -1,0 +1,11 @@
+**定义 1.1（修复宽度）。** 旧观察 $C$ 在新候选族 $\mathfrak N$ 下的修复宽度定义为
+
+$$
+ \rho_{\mathfrak N}(C)
+ =\min\{\,|R|:R\subseteq D,\ V_{\mathfrak N}(C\cup R)=\varnothing\,\}.
+$$
+
+若 $\mathfrak N$ 含一个在整个 $D$ 上正确的候选，则约定 $\rho_{\mathfrak N}(C)=\infty$；此时没有失败观察能够排除它。
+
+$\rho_{\mathfrak N}(C)$ 不是新候选的数量，也不是参数漂移的距离。它只计量：在保留 $C$ 的前提下，再取得多少个原始观察，才能恢复“全族不可实现”的证书。
+

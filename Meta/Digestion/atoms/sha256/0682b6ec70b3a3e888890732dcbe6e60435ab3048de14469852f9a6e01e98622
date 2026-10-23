@@ -1,0 +1,26 @@
+## 61. Mathematical sources and contribution
+
+The model, complete zero-sector source classification and zero-safe
+whole-world lift are supplied by Sections 25–31 of *Uniqueness of actual
+sources above width eight*. The strengthened source bounds, guarded
+response chart and disjoint acquired images are supplied by Sections
+33–38 of the same mathematical assembly. In particular, equations
+(55.2)–(55.5) reuse those results rather than constitute new
+classification claims. Sections 47–54 concern a different, negative
+acquired rectangle and are not premises of the present exclusion.
+
+The new conclusions are the compact whole-arc strip bounds (56.4),
+the exact derivative certificates in Sections 57–58, the two global
+strict orders (55.6), and terminal-J injectivity on every entire
+$C(0,v)$. The proof of the last conclusion combines those orders with
+the supplied acquired-image separation. No literature-priority claim
+is made.
+
+The classical tools are the implicit-function and mean value theorems,
+polynomial differentiation, and positivity of the tensor product
+Bernstein basis. For the Bernstein basis and subdivision identities,
+see G. G. Lorentz, *Bernstein Polynomials*, 2nd edition, Chelsea, 1986;
+(56.6), (58.1) and (58.2) provide the specific coefficient identities
+needed here. The finite tables above, together with their polynomial
+definitions, are sufficient to check the exact rational signs without
+any other computational artifact.

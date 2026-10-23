@@ -1,0 +1,112 @@
+## 3. Exact signs on unbounded source strips
+
+Subscripts on polynomials below denote partial derivatives. Define
+
+$$
+\begin{aligned}
+R&=(N_p)_rH-N_pH_r,\\
+B&=(N_p)_bH-N_pH_b,\\
+E&=\{(N_p)_r(N_v)_b-(N_p)_b(N_v)_r\}H\\
+ &\quad-\{(N_p)_rN_v-N_p(N_v)_r\}H_b\\
+ &\quad+\{(N_p)_bN_v-N_p(N_v)_b\}H_r,\\
+A&=5N_p+216H,\\
+L&=N_v-5N_p+9H,\\
+C&=N_v-6N_p.
+\end{aligned}
+\tag{3.1}
+$$
+
+These are finite integer polynomials specified entirely by (2.1).
+Their relevant degree bounds and strict signs are
+
+| Polynomial | Degree in $r$ | Degree in $b$ | Source strip | Sign |
+| --- | ---: | ---: | --- | --- |
+| $R$ | 9 | 13 | $0\le r\le1,\ b\ge4$ | positive |
+| $B$ | 10 | 12 | $0\le r\le1,\ b\ge4$ | positive |
+| $E$ | 15 | 18 | $0\le r\le1,\ b\ge8$ | positive |
+| $A$ | 6 | 6 | $0\le r\le1,\ b\ge4$ | negative |
+| $L$ | 6 | 6 | $0\le r\le1,\ b\ge4$ | negative |
+| $C$ | 6 | 7 | $0\le r\le1,\ b\ge4$ | positive |
+
+Here is an explicit rational coefficient verification of every sign,
+including the unbounded width direction. For each polynomial $F$ use its
+listed degree $n$ in $r$ and cutoff $c=4$, except $c=8$ for $E$. Write
+
+$$
+F(r,c+u)=\sum_{k=0}^m\sum_{i=0}^n a_{ki}r^iu^k,\qquad
+\beta_{kj}=\sum_{i=0}^j\frac{\binom ji}{\binom ni}a_{ki}.
+\tag{3.2}
+$$
+
+The exact expansion is
+
+$$
+F(r,c+u)=\sum_{k=0}^m u^k
+ \sum_{j=0}^n\beta_{kj}\binom njr^j(1-r)^{n-j}.
+\tag{3.3}
+$$
+
+Thus strict positivity of all $\beta_{kj}$ implies positivity for
+$u\ge0,0\le r\le1$, and strict negativity implies negativity.
+An equivalent integer-coordinate check is that the coefficient of
+$t^ju^k$ in $(1+t)^nF(t/(1+t),c+u)$ is
+$\binom nj\beta_{kj}$.
+
+For $R,B,E$, the following entries are the exact minima
+$\min_{0\le j\le n}\beta_{kj}$; a dash denotes an absent width coefficient.
+
+| $k$ | $R$, cutoff $4$ | $B$, cutoff $4$ | $E$, cutoff $8$ |
+| ---: | ---: | ---: | ---: |
+| 0 | 504653414400 | 170762649600 | 38169863321306403962880 |
+| 1 | 1779459010560 | 451909017600 | 101401250462194540216320 |
+| 2 | 2852762280960 | 544823331840 | 123516383228426201333760 |
+| 3 | 2760620421120 | 395246668800 | 92408966136643882844160 |
+| 4 | 1802614446720 | 191897346240 | 47831323593790445322240 |
+| 5 | 839930489520 | 65568263520 | 18253178501987680911360 |
+| 6 | 287631011220 | 16126960500 | 5335587907824962764800 |
+| 7 | 73356659130 | 2866899960 | 1223763318798336000000 |
+| 8 | 13942427490 | 363727500 | 223571250855631134720 |
+| 9 | 1951456830 | 31864260 | 32812678008327951360 |
+| 10 | 195587355 | 1805280 | 3881288795839678080 |
+| 11 | 13297020 | 57900 | 369392208675280560 |
+| 12 | 549735 | 750 | 28092246891539580 |
+| 13 | 10440 | — | 1684793753081010 |
+| 14 | — | — | 77961770281260 |
+| 15 | — | — | 2686755912885 |
+| 16 | — | — | 64955416230 |
+| 17 | — | — | 983324115 |
+| 18 | — | — | 7016670 |
+
+For the three base inequalities it suffices to list the extremum over
+all $k,j$:
+
+| Polynomial | Extremum of the coefficients in (3.2), cutoff $4$ |
+| --- | ---: |
+| $A$ | $\max\beta_{kj}=-750$ |
+| $L$ | $\max\beta_{kj}=-768$ |
+| $C$ | $\min\beta_{kj}=171$ |
+
+These tables are obtained by expanding exactly (2.1) and (3.1) and
+applying the finite coefficient formula (3.2). They specify signs of
+polynomials on the whole strips, rather than pointwise samples.
+For the derivative determinant, the polynomial identity
+
+$$
+\begin{aligned}
+&\{(N_p)_rH-N_pH_r\}\{(N_v)_bH-N_vH_b\}\\
+&\quad-\{(N_p)_bH-N_pH_b\}\{(N_v)_rH-N_vH_r\}=HE
+\end{aligned}
+\tag{3.4}
+$$
+
+also checks the denominator cancellation. On $b\ge4$, where $H>0$,
+
+$$
+p_r=R/H^2>0,\qquad p_b=B/H^2>0,\qquad
+p_rv_b-p_bv_r=E/H^3.
+\tag{3.5}
+$$
+
+On $b\ge8$ the last expression is strictly positive. Finally,
+$A<0,L<0,C>0$, divided by $H>0$, give exactly (1.1).
+

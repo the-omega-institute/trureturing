@@ -1,0 +1,75 @@
+**命题 8.5（实际记录重叠与各自平台的必要界）。** Under Assumption 8.4, the original and projected-input laws satisfy
+
+$$
+ \boxed{o_{ad}(J)\ge g,\qquad o_{ad}(J_N)\ge\gamma_N.}
+\tag{8.16}
+$$
+
+In particular, each law separately obeys the necessary risk bounds
+
+$$
+ \begin{aligned}
+ D(J)&\ge\left(\frac15-2\ell_G(J)+2g\right)_+,&
+ \epsilon(J)&\le\frac25+\ell_G(J)-g,\\
+ D(J_N)&\ge\left(\frac15-2\ell_G(J_N)+2\gamma_N\right)_+,&
+ \epsilon(J_N)&\le\frac25+\ell_G(J_N)-\gamma_N.
+ \end{aligned}
+\tag{8.17}
+$$
+
+The inequalities of Theorem 7.2 also continue to apply to each law. A full indicator plateau of $J$ requires
+$\ell_G(J)\ge1/10+g$. A full indicator plateau of $J_N$ requires
+
+$$
+ \ell_G(J_N)\ge\frac1{10}+\gamma_N
+ \ge\frac1{10}+g-\rho_N
+ \ge\frac1{10}+g-\frac25\delta_N.
+\tag{8.18}
+$$
+
+After null bins are discarded, both laws have full support. Hence also
+$\ell_G(J)>o_{ad}(J)\ge g>0$ and
+$\ell_G(J_N)>o_{ad}(J_N)>0$. The plateau conditions above concern the plateau of the named law itself; no plateau implication between $J$ and $J_N$ is assumed. These are necessary conditions for the prescribed preparation families. The finite-law equality constructions in Theorem 8.2 assert no attainment within those families, native atom-to-preparation encoding, neural-training outcome or empirical conclusion. The projected-input law need not be Gaussian.
+
+Proof. The original five complete-record laws are
+$\nu_i=\mathcal N_{t+1}(\mu_i,\Sigma)$, with the same $\Sigma$ for every label. Use the classical equal-covariance total-variation identity stated by Devroye–Mehrabian–Reddad, [*The total variation distance between high-dimensional Gaussians*, arXiv:1810.08693v7, §2, equal-covariance passage](https://arxiv.org/html/1810.08693v7#S2), there attributed to Barsov–Ul’yanov, Theorem 1:
+
+$$
+ \operatorname{TV}(\nu_a,\nu_d)=2\Phi(d/2)-1,
+ \qquad
+ \int\min\{p_a(z),p_d(z)\}\,dz=2\Phi(-d/2).
+\tag{8.19}
+$$
+
+This is a reused Gaussian identity, with the TV convention of Proposition 7.5. The functions $p_a,p_d$ here are complete-record densities, rather than label-prior coordinates. If $B_q=\kappa^{-1}(q)$, then
+
+$$
+ \begin{aligned}
+ o_{ad}(J)
+ &=\frac15\sum_q\min\left\{\int_{B_q}p_a,\int_{B_q}p_d\right\}\\
+ &\ge\frac15\sum_q\int_{B_q}\min\{p_a,p_d\}
+ =\frac25\Phi(-d/2)=g.
+ \end{aligned}
+$$
+
+Thus a common quantizer can increase the row overlap; equality is not asserted for an arbitrary quantizer.
+
+For the projection bound, write $K_i=\kappa_*\nu_w(W_i)$ and
+$K_{i,N}=\kappa_*\nu_{w,N}(W_i)$, which are probability laws on the same finite alphabet. Since $\sum_q\min\{P(q),Q(q)\}=1-\operatorname{TV}(P,Q)$ for probability rows,
+
+$$
+ \begin{aligned}
+ |o_{ad}(J_N)-o_{ad}(J)|
+ &=\frac15\left|\operatorname{TV}(K_a,K_d)
+       -\operatorname{TV}(K_{a,N},K_{d,N})\right|\\
+ &\le\frac15\bigl(\operatorname{TV}(K_a,K_{a,N})
+                    +\operatorname{TV}(K_d,K_{d,N})\bigr)\\
+ &\le\frac{\sqrt{t_N(W_a)}+\sqrt{t_N(W_d)}}5=\rho_N.
+ \end{aligned}
+\tag{8.20}
+$$
+
+The first inequality is the TV triangle inequality in both directions. The second uses contraction under the common quantizer and [the Gaussian record volume, Proposition 14.2](FIB_SHARED_GAUSSIAN_RECORD_LAWS.md). Only the two indicated preparations enter this estimate. Combining it with the original overlap bound and nonnegativity proves (8.16). Apply (8.3) and (8.7) directly to each finite law to obtain (8.17). Setting its own $D$ equal to zero proves the corresponding plateau condition and (8.18).
+
+Proposition 7.7 proves full support for both laws from the positive original Gaussian densities and the positive Gaussian-pointer convolution (7.14) for projected inputs. The strict overlap/leakage statements now follow from (8.4); $g>0$ follows because $d$ is finite. This use of the projected law requires no Gaussianity of that law. The limit $\rho_N\to0$ holds at fixed original apparatus noise $\sigma>0$ and with the same complete fixed-word measurement; it approximates only the initial inputs. It does not remove that observation noise or identify a finite equality construction with a preparation in this family. All statements concern unconditional externally fixed-word laws and their common quantized images. $\square$
+

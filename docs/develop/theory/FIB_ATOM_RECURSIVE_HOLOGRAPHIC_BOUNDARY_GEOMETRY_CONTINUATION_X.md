@@ -660,3 +660,624 @@ $$
 在此声明的线性类中，保留实际端口响应的合法内点消元也保留 (263.2)，因而它能认证违反该不变量的固定目标不属于此响应类；(263.10) 还给出对循环目标的定量间隔。这是必要条件，不能据此取得原生块接口、制备和测量权限、实际装置或充分空间实现。它不选择物理空间维数，不给出固定 INITIAL 轨道或单位权原生类的达到例，不推出训练、泛化、效率或因果结论，也不外推到任意神经网络。§262.1 的集体接线仍改变端口合同，处于这里的比较类之外。本节为普通有限维数学推导，不宣称 Lean 核验或冻结状态。
 
 ## 追加锚（本行以下为增补区）
+
+## 264. Collective cycles force a mass-normalized dynamical defect
+
+**Definition 264.1 (complete fibres, induced masses and the unchanged clock).** Let $T=(V,E)$ be a nonempty finite tree, let $r\ge1$, and let $H$ be any real symmetric operator on $\mathcal V=\bigoplus_{x\in V}\mathbb R^r$ with counting inner product. Its diagonal blocks are arbitrary symmetric matrices; its edge blocks are arbitrary real matrices, including zero and singular matrices; all nonedge off-diagonal blocks vanish. No positivity or invertibility is imposed on $H$. Fix a surjection $\pi:V\to B$ and orthogonal matrices $R_x\in O(r)$. Put
+
+$$
+V_b=\pi^{-1}(b),\qquad n_b=|V_b|>0,\qquad
+\mathcal F=\bigoplus_{b\in B}\mathbb R^r,
+\qquad \langle f,h\rangle_n=\sum_b n_b f_b^{\mathsf T}h_b.
+\tag{264.1}
+$$
+
+The collective inclusion, its Hilbert adjoint, and its orthogonal projection are
+
+$$
+(Uf)(x)=R_x f_{\pi(x)},\qquad
+(U^*v)_b=\frac1{n_b}\sum_{x\in V_b}R_x^{\mathsf T}v_x,
+\qquad P=UU^*.
+\tag{264.2}
+$$
+
+Thus $U$ is an isometry from the mass inner product, not generally from an unweighted coarse inner product. Define
+
+$$
+A=U^*HU,\qquad D=(I-P)HU=HU-UA.
+\tag{264.3}
+$$
+
+The unitary coordinate map $J:\mathcal F\to\mathbb R^{r|B|}$ is $(Jf)_b=\sqrt{n_b}f_b$. Write
+
+$$
+\widehat U=UJ^{-1},\qquad
+\widehat A=JAJ^{-1}=\widehat U^*H\widehat U,\qquad
+\widehat D=DJ^{-1},
+\qquad \|D\|=\|\widehat D\|.
+\tag{264.4}
+$$
+
+All block norms below refer to the orthonormal coordinates of $\widehat A$. In particular
+
+$$
+\widehat A_{ab}=\frac1{\sqrt{n_an_b}}
+ \sum_{x\in V_a,\,y\in V_b}R_x^{\mathsf T}H_{xy}R_y.
+\tag{264.5}
+$$
+
+The loop-free support graph has vertices $B$ and an edge $ab$ exactly when $a\ne b$ and $\widehat A_{ab}\ne0$. Symmetry makes this undirected. Its cycles mean simple cycles of length at least three. The heat parameter and the unitary parameter in the following statements are the supplied evolution time of this fixed $H$; neither is a substitution count or a rescaled clock.
+
+**Theorem 264.2 (arbitrary real blocks: cycle strength bounds leakage).** For all data of Definition 264.1, let $b_0,b_1,\ldots,b_{k-1},b_0$ be a simple support cycle, and put
+
+$$
+\eta=\min_{j\bmod k}\|\widehat A_{b_jb_{j+1}}\|_{\rm op}>0,
+\qquad n_{\max}=\max_{b\in B}n_b.
+$$
+
+Then
+
+$$
+\|D\|\ge\frac{\eta}{\sqrt{n_{\max}}}.
+\tag{264.6}
+$$
+
+More precisely, some vertex $x\in V_{b_j}$ has no tree neighbour in one of $V_{b_{j-1}},V_{b_{j+1}}$, say $V_c$, and
+
+$$
+\|D\|\ge\frac{\|\widehat A_{b_jc}\|_{\rm op}}{\sqrt{n_{b_j}}}.
+\tag{264.7}
+$$
+
+Consequently $HU=UA$ forces the loop-free support graph to be a forest. This is only a necessary condition, and no optimality of the constant in (264.6) is asserted.
+
+Proof. Keep all vertices whose labels lie on the cycle, and keep only tree edges between successive cycle labels. If every such vertex had a neighbour in each of its two adjacent cycle classes, this nonempty finite subgraph of a tree would have minimum degree at least two. A finite forest has a vertex of degree at most one: for a component with $v$ vertices its $v-1$ edges have total degree $2v-2$. This is a contradiction. The two required neighbours are distinct, including when $k=3$.
+
+Choose a missing pair $(x,c)$ as in the statement and write $a=\pi(x)$. Since $a\ne c$, edge support gives
+
+$$
+(H\widehat U)_{xc}=0,\qquad
+\widehat D_{xc}=-\frac1{\sqrt{n_a}}R_x\widehat A_{ac}.
+\tag{264.8}
+$$
+
+Here the second identity uses $\widehat D=H\widehat U-\widehat U\widehat A$. Restricting the input to the $c$ block and projecting the output to $x$ are contractions. Orthogonality of $R_x$ therefore gives (264.7), hence (264.6). No multiplication around a cycle, inverse edge block, common singular vector, or noncancellation assumption has been used. If $D=0$, every proposed support cycle would contradict (264.6), proving the forest assertion. Empty edge support, one coarse vertex, and two coarse vertices are included.
+
+The qualitative scalar role-colouring antecedent is classical: Purcell–Rombach, [arXiv:1408.5412v1, Lemma 5](https://arxiv.org/html/1408.5412v1), states that a tree's role graph is a tree with at most one self-loop. Its definition requires equal sets of neighbour colours. Here cancellation of real block sums can remove support edges even when actual edges exist, so the complete colouring need not be a role colouring. The missing-neighbour argument is used only on the particular nonzero support cycle, and its block row norm supplies the quantitative mass factor. This establishes the displayed extension directly. □
+
+**Proposition 264.3 (the forest condition is not sufficient).** Even a one-vertex coarse support graph need not give autonomous dynamics. On a two-vertex tree take $r=1$, $R_x=1$, $H=\operatorname{diag}(0,1)$, and the constant map $\pi$. Then $n_b=2$, the loop-free support is empty, and $\|D\|=1/2$.
+
+Proof. The normalized collective vector is $(1,1)/\sqrt2$. Its image under $H$ is $(0,1)/\sqrt2$, whose orthogonal residual is $(-1,1)/(2\sqrt2)$ and has norm $1/2$. The zero edge block is allowed. Thus absence of cycles does not remove diagonal inhomogeneity or other dynamical defects. □
+
+## 265. Same-clock prediction, compressed evolution and hidden initial data
+
+**Theorem 265.1 (quantitative consequences of a collective cycle).** Use Definition 264.1, complexifying all spaces for unitary evolution, and put $\mathcal K=(\operatorname{ran}U)^\perp$ and $C=(I-P)H|_{\mathcal K}$. Relative to the isometric decomposition $\mathcal V=U\mathcal F\oplus\mathcal K$,
+
+$$
+H=\begin{pmatrix}A&D^*\\D&C\end{pmatrix}.
+\tag{265.1}
+$$
+
+For $z\in\{1,i\}$ and $t\ge0$ let
+
+$$
+F_z(t)=U^*e^{-ztH}U,\qquad
+E_z(t)=(I-P)e^{-ztH}U.
+$$
+
+For a cycle of Theorem 264.2, with $\delta=\|D\|$ and $M=\|H\|$, one has
+
+$$
+\begin{aligned}
+E_z(t)&=-ztD+O(t^2),\\
+F_z(t)-e^{-ztA}&=\frac{z^2t^2}{2}D^*D+O(t^3),\\
+\lim_{t\downarrow0}\frac{\|E_z(t)\|}{t}
+ &=\delta\ge\frac\eta{\sqrt{n_{\max}}},\\
+\lim_{t\downarrow0}\frac{\|F_z(t)-e^{-ztA}\|}{t^2}
+ &=\frac{\delta^2}{2}\ge\frac{\eta^2}{2n_{\max}}.
+\end{aligned}
+\tag{265.2}
+$$
+
+The remainders are in operator norm on the declared mass spaces. Explicitly, for either $z$,
+
+$$
+\begin{aligned}
+\|E_z(t)+ztD\|&\le\tfrac12t^2M^2e^{tM},\\
+\|F_z(t)-e^{-ztA}-\tfrac12z^2t^2D^*D\|
+ &\le\tfrac13t^3M^3e^{tM}.
+\end{aligned}
+\tag{265.3}
+$$
+
+Thus corresponding finite-time lower bounds are obtained by subtracting these right sides from $t\eta/\sqrt{n_{\max}}$ and $t^2\eta^2/(2n_{\max})$, respectively. Their positive time windows depend on the actual $M$; no uniform window for unbounded arbitrary diagonals is asserted. For every fixed $f\in\mathcal F$,
+
+$$
+\|(I-P)e^{-itH}Uf\|^2
+=t^2\|Df\|^2+O(t^3),
+\qquad
+\|U^*e^{-itH}Uf\|_n^2
+=\|f\|_n^2-t^2\|Df\|^2+O(t^3).
+\tag{265.4}
+$$
+
+In particular the cycle forces leakage for some unit input, not for every input. The compressed family itself fails the semigroup law at second order:
+
+$$
+\lim_{t\downarrow0}
+\frac{\|F_z(2t)-F_z(t)^2\|}{t^2}
+=\delta^2\ge\frac{\eta^2}{n_{\max}}.
+\tag{265.5}
+$$
+
+Proof. Self-adjointness and (264.3) give (265.1). The identity $U^*H^2U=A^2+D^*D$ follows by multiplying its blocks. The exponential power series therefore gives the first two expansions. The tail from order two in the first expansion is bounded by $\sum_{j\ge2}(tM)^j/j!\le t^2M^2e^{tM}/2$. Since $\|A\|\le M$, the two tails from order three in the second expansion total at most $2\sum_{j\ge3}(tM)^j/j!\le t^3M^3e^{tM}/3$. This proves (265.3). Dividing the expansions by $t$ or $t^2$, using norm continuity and $\|D^*D\|=\|D\|^2$, gives (265.2). Theorem 264.2 supplies the lower bounds.
+
+For $z=i$, square the first expansion on the fixed input and use the orthogonal Pythagorean decomposition of the norm-preserving $e^{-itH}Uf$ to obtain (265.4). Finally the exact identity
+
+$$
+F_z(2t)-F_z(t)^2
+=U^*e^{-ztH}(I-P)e^{-ztH}U
+$$
+
+has expansion $z^2t^2D^*D+O(t^3)$, proving (265.5). All power series are finite-dimensional norm-convergent series. No semigroup positivity is needed, so negative or zero eigenvalues and singular blocks remain in scope. □
+
+**Theorem 265.2 (what prediction must additionally retain).** For the same data and either $z\in\{1,i\}$, an arbitrary initial vector has the unique decomposition $v(0)=Uu_0+w_0$ with $w_0\in\mathcal K$. The visible coordinate $u(t)=U^*v(t)$ of $\dot v=-zHv$ satisfies
+
+$$
+\begin{aligned}
+\dot u(t)={}&-zAu(t)
+ +z^2\int_0^t D^*e^{-z(t-s)C}D\,u(s)\,ds
+ -zD^*e^{-ztC}w_0,\\
+K_z(t)&=D^*e^{-ztC}D,\qquad
+\|K_z(0)\|=\|D\|^2\ge\eta^2/n_{\max}
+\quad\text{when the support contains the stated cycle.}
+\end{aligned}
+\tag{265.6}
+$$
+
+Consequently it is impossible to predict every initial vector's visible evolution by an autonomous law depending only on its current $U^*v$ when that support contains a cycle. More quantitatively, set
+
+$$
+T_z(t)=U^*e^{-ztH}|_{\mathcal K}.
+$$
+
+For every proposed predictor $p_t:\mathcal F\to\mathcal F$, without a linearity assumption,
+
+$$
+\sup_{\substack{w\in\mathcal K\\\|w\|\le1}}
+ \|U^*e^{-ztH}w-p_t(0)\|_n
+\ge\|T_z(t)\|,
+\qquad
+\lim_{t\downarrow0}\frac{\|T_z(t)\|}{t}
+=\|D\|\ge\eta/\sqrt{n_{\max}}.
+\tag{265.7}
+$$
+
+This is a statement about the declared signed or complex amplitude coordinates and all initial vectors. It grants no additional preparation or observation operation.
+
+Proof. The block equations are $\dot u=-zAu-zD^*w$ and $\dot w=-zDu-zCw$. Variation of constants gives
+
+$$
+w(t)=e^{-ztC}w_0-z\int_0^t e^{-z(t-s)C}Du(s)\,ds.
+$$
+
+Substitution proves (265.6), retaining arbitrary hidden initial data. This is the classical linear memory identity of Gouasmi–Parish–Duraisamy, [arXiv:1611.06277v2, §2.1, equations (2.1)–(2.3)](https://arxiv.org/pdf/1611.06277v2), with their four blocks equal to $-zA,-zD^*,-zD,-zC$. Their subsequent choice of zero unresolved initial condition is not imposed here. The additional consequence is that a support cycle forces the displayed positive norm at the origin of the memory kernel.
+
+The expansion $T_z(t)=-ztD^*+O(t^2)$ proves its norm limit. Choose a unit hidden vector maximizing $\|T_z(t)w\|$. The two possible starts $w$ and $-w$ both have current visible coordinate zero. The triangle inequality applied to their predicted errors gives
+
+$$
+2\|T_z(t)w\|
+\le\|T_z(t)w-p_t(0)\|_n+
+   \|-T_z(t)w-p_t(0)\|_n,
+$$
+
+which proves (265.7). At the derivative level, the hidden-to-visible map is $-zD^*$ and the same two-point argument has exact radius $\|D\|$. Nonzero $D$ therefore forbids all-state autonomous prediction, irrespective of the choice of coarse generator. □
+
+**Proposition 265.3 (cycle-forced observable enlargement survives static elimination).** If the support contains a cycle of Theorem 264.2, every $H$-invariant linear observable space containing $\operatorname{ran}U$ has dimension at least $r|B|+\operatorname{rank}D\ge r|B|+1$. A single static elimination does not supply autonomous dynamics of the original collective coordinates. The intermediate Schur and future-closure formulas are as follows. At any spectral parameter $\lambda$ for which $C-\lambda I$ is invertible, solving the hidden equation of $(H-\lambda I)v=f$ gives the visible coefficient
+
+$$
+A-\lambda I-D^*(C-\lambda I)^{-1}D.
+\tag{265.8}
+$$
+
+It does not remove (265.6)'s hidden forcing in a time evolution. A sufficient autonomous linear observable space is
+
+$$
+\mathcal W_\infty=
+ \operatorname{span}\{H^jUf:f\in\mathcal F,\ j\ge0\}.
+\tag{265.9}
+$$
+
+Its first enlargement has dimension
+
+$$
+\dim\bigl(\operatorname{ran}U+H\operatorname{ran}U\bigr)
+=r|B|+\operatorname{rank}D.
+\tag{265.10}
+$$
+
+Thus a support cycle forces at least one additional linear observable direction; (265.10) does not identify this number with a cycle rank or with a minimum native memory cost.
+
+Proof. Write the hidden equation as $(C-\lambda I)w=f_{\mathcal K}-Du$ and substitute its unique solution into the visible equation. This is the usual Schur identity, with its explicit invertibility hypothesis. The static electrical specialization is the Kron mechanism of Dörfler–Bullo, [arXiv:1102.2950v1, §2.1 and Lemma 2.1](https://arxiv.org/pdf/1102.2950v1); their irreducible loopy-Laplacian hypotheses do not imply every arbitrary-block datum here belongs to that network class.
+
+The space (265.9) is $H$-invariant and is the smallest invariant subspace containing $\operatorname{ran}U$: invariance follows by increasing $j$, and minimality by induction. Self-adjointness makes its orthogonal complement invariant, so projecting the evolution to this space is autonomous and retains the original visible coordinates. Equality of all visible futures for two vectors is equivalent to their difference being orthogonal to (265.9): differentiate $U^*e^{-ztH}$ at zero in one direction, and use its convergent series in the other. These are the existing future-observable closure and residual-quotient mechanisms; in particular see `observableClosure` and its private invariance proof in [DynamicsResidualQuotient](../../../D5/S3/QuantumStates/DynamicsResidualQuotient.lean), and [AllFutureStatisticsSufficiency](../../../D5/S3/Quantum/Fibers/AllFutureStatisticsSufficiency.lean). They are intermediate suppliers, not new general closure theorems here.
+
+Finally $HU=UA+D$ and $\operatorname{ran}D\perp\operatorname{ran}U$, so the first enlarged space is the orthogonal direct sum $\operatorname{ran}U\oplus\operatorname{ran}D$. This proves (265.10); the cycle estimate forces $D\ne0$. Later enlargement can be necessary. The existing [MemoryDimensionFormula](../../../D5/S3/Observer/LinearMemory/MemoryDimensionFormula.lean) concerns linear future-observable dimension minus current rank, whereas the next section counts deterministic vertex labels. Neither statement licenses an arbitrary real-encoder or acquisition-cost inference. □
+
+## 266. Scalar cycles and deterministic same-clock refinement
+
+**Definition 266.1 (positive masses, killing and exact label dynamics).** Let $T=(V,E)$ be a nonempty finite tree, $c_{xy}=c_{yx}>0$ on every edge, $\mu_x>0$, and $\kappa_x\ge0$. The backward killed generator in its given time is
+
+$$
+(Gf)(x)=\sum_{y\sim x}\frac{c_{xy}}{\mu_x}(f(y)-f(x))-\kappa_xf(x).
+\tag{266.1}
+$$
+
+For a surjection $\pi:V\to B$, put $\nu_b=\sum_{x\in V_b}\mu_x$, and let $H_\pi$ be the simple graph with edge $ab$ when an actual edge joins the distinct classes $a,b$. It is connected. Write $m=|B|$, $e=|E(H_\pi)|$, $\beta=e-m+1\ge0$. A deterministic refinement is a map $\psi:V\to C=\operatorname{im}\psi$ with $\pi=h\psi$. It is exact on the same clock when a killed generator $Q^\psi$ satisfies
+
+$$
+G U_\psi=U_\psi Q^\psi,\qquad
+(U_\psi f)(x)=f(\psi(x)).
+\tag{266.2}
+$$
+
+In finite dimension this is equivalent to the corresponding all-time heat intertwining, by differentiation at zero and by exponential series. Testing class indicators shows that (266.2) is exactly constancy, on each $\psi$ class, of all off-class sums $\sum_{\psi(y)=c}c_{xy}/\mu_x$ and of $\kappa_x$. Indeed off-class indicators give the sums, and the constant function gives $G1=-\kappa$; the converse follows by expanding $GU_\psi f$. This is ordinary lumpability, not a new criterion. Nilsson Jacobi–Görnerup, [arXiv:0710.1986v1, Theorem 1 and equation (2.1)](https://arxiv.org/pdf/0710.1986v1), states the finite stochastic row-sum supplier. For killing one may add an absorbing cemetery and uniformize the finite rates; no cemetery state is counted in $C$.
+
+**Theorem 266.2 (cycle rank forces extra exact labels).** Every exact deterministic refinement of Definition 266.1 satisfies
+
+$$
+|C|\ge e+1=m+\beta,\qquad |C|-m\ge\beta.
+\tag{266.3}
+$$
+
+The statement covers all positive edge conductances and masses, every nonnegative killing function, and every collective partition, including $m=1$ and $\beta=0$. It gives a necessary label count, not existence at that count.
+
+Proof. The graph $H_\pi$ is connected because any tree path projects to a walk after successive equal labels are suppressed. The same holds for $H_\psi$. On an edge $ab$ of $H_\psi$, the common outgoing rate from $a$ to $b$ in (266.2) is positive: it is positive at the endpoint of an actual edge and constant throughout $a$. Reversing the actual edge proves the analogous positivity from $b$ to $a$. Thus every vertex in $a$ has some neighbour in $b$.
+
+If $H_\psi$ had a simple cycle, keeping only its labels and its successive-label edges would again produce a nonempty finite forest of minimum degree at least two. Therefore $H_\psi$ is a tree and has $|C|-1$ edges. This is the classical qualitative no-cycle input used internally in the counting argument; killing does not change its off-class positivity.
+
+Every edge of $H_\pi$ is represented by an actual tree edge. Its endpoints have different $\psi$ labels because $\pi=h\psi$, so it is the image of some edge of $H_\psi$. Different $H_\pi$ edges require different representing $H_\psi$ edges. Hence $e\le|E(H_\psi)|=|C|-1$, proving (266.3). Internal-$\pi$ edges in $H_\psi$ can collapse and only increase the available count; they do not invalidate this inequality. No assumption that the fibres are connected has been made. □
+
+**Theorem 266.3 (uniform off-label row error and its optimal constant).** For any killed coarse generator $Q$ on $B$, define
+
+$$
+\Delta(G,\pi,Q)=
+\max_{x\in V}\max_{b\ne\pi(x)}
+\left|\sum_{\pi(y)=b}\frac{c_{xy}}{\mu_x}-Q_{\pi(x),b}\right|,
+\tag{266.4}
+$$
+
+where only actual neighbours contribute, and an empty maximum is zero. If $Q$ has a bidirectional simple cycle all of whose directed rates are at least $\eta>0$, then
+
+$$
+\Delta(G,\pi,Q)\ge\eta.
+\tag{266.5}
+$$
+
+The factor one is sharp in the unrestricted weighted-tree comparison class, even when $Q$ is the induced mass-weighted compression of $G$. This does not assert sharp attainment within a fixed native source orbit.
+
+Proof. The missing-neighbour argument applied to the cycle labels gives a vertex $x$ with no neighbour in an adjacent cycle class $b$. The actual sum in (266.4) is zero, while the specified directed $Q$ rate is at least $\eta$. This proves (266.5), independently of all diagonal and killing terms.
+
+For sharpness fix $k\ge3$. Take the path $v_0,\ldots,v_k$, masses one, all edge conductances $2\eta$, and zero killing. Give $v_j$ label $j$ for $0\le j<k$, and give $v_k$ label zero. The induced masses are $\nu_0=2$, $\nu_j=1$ for $j\ne0$. The compressed conductance between each pair of neighbouring cycle labels is $2\eta$. Its coarse generator therefore has rate $\eta$ from zero to either adjacent label, and rate $2\eta$ from every other label to each of its two neighbours. Its minimum directed cycle rate is exactly $\eta$.
+
+At each internal path vertex all off-label rates agree with this $Q$. At either endpoint, the existing adjacent-label rate is $2\eta$ rather than $\eta$, and the other adjacent-label rate is zero rather than $\eta$; every other off-label entry agrees. Thus the maximum error is exactly $\eta$. All masses and conductances are strictly positive and finite. This proves sharpness without altering the clock or discarding endpoint rows. □
+
+## 267. A legal nine-occurrence native cycle with inherited killing
+
+**Proposition 267.1 (actual $T_4$, four masses and the full source operator).** Use the source and added geometry of Definitions 257.1 and 55.1–55.2 in the [first continuation](FIB_ATOM_RECURSIVE_HOLOGRAPHIC_BOUNDARY_GEOMETRY_CONTINUATION.md). Initialize at $\alpha$ and perform four accepted whole substitutions at fixed leaf cap $\mathrm{cap}_H\ge5$. The actual tree is
+
+$$
+T_4=\langle\langle\langle\beta,\alpha\rangle,\beta\rangle,
+                  \langle\beta,\alpha\rangle\rangle.
+\tag{267.1}
+$$
+
+Its addresses, in a fixed order, are
+
+$$
+(o,L,R,LL,LR,RL,RR,LLL,LLR),\qquad o=\varepsilon.
+\tag{267.2}
+$$
+
+Define four collective classes, without identifying actual vertices of the source,
+
+$$
+\begin{aligned}
+V_a&=\{LLL,LLR,RL,RR\},& V_b&=\{LL,LR\},\\
+V_c&=\{o,R\},& V_d&=\{L\}.
+\end{aligned}
+\tag{267.3}
+$$
+
+With $R_x=1$ the induced mass matrix is $N_9=\operatorname{diag}(4,2,2,1)$. For every native $a_0,g>0$ retain
+
+$$
+H_9=a_0L_{D_4(\alpha)}-g\Phi_9,
+\qquad
+\Phi_9=\operatorname{diag}(1,\tfrac12,\tfrac12,
+ \tfrac14,\tfrac14,\tfrac14,\tfrac14,\tfrac18,\tfrac18).
+\tag{267.4}
+$$
+
+The diagonal of $L_D$ is $(2,3,3,3,3,3,3,3,3)$ and its off-diagonal is $-1$ exactly on
+
+$$
+(o,L),\ (o,R),\ (L,LL),\ (L,LR),\ (R,RL),\ (R,RR),\ (LL,LLL),\ (LL,LLR).
+\tag{267.5}
+$$
+
+All other off-diagonal entries vanish. In coarse value coordinates the restricted kinetic and potential forms are
+
+$$
+S_9=\begin{pmatrix}
+12&-2&-2&0\\-2&6&0&-2\\-2&0&3&-1\\0&-2&-1&3
+\end{pmatrix},
+\qquad V_9=\operatorname{diag}(\tfrac34,\tfrac12,\tfrac32,\tfrac12).
+\tag{267.6}
+$$
+
+Thus
+
+$$
+A_9=N_9^{-1}(a_0S_9-gV_9),\qquad
+\widehat A_9=N_9^{-1/2}(a_0S_9-gV_9)N_9^{-1/2}.
+\tag{267.7}
+$$
+
+The collective conductances are $c_{ab}=c_{ac}=c_{bd}=2$, $c_{cd}=1$, and zero for the other distinct pairs. The inherited kinetic killing conductances are $(8,2,0,0)$, not zero. The support is the four-cycle $a,b,d,c,a$ with
+
+$$
+\eta_9=a_0/\sqrt2,\qquad n_{\max}=4,\qquad
+\|D_9\|\ge a_0/(2\sqrt2).
+\tag{267.8}
+$$
+
+Proof. Successive actual sources have leaf counts $1,1,2,3,5$. Each complete candidate therefore passes a fixed leaf-count cap at least five. This is a legal finite prefix from immutable INITIAL $\alpha$, provided no Stop has occurred. The substitutions and addressed shape agree with Proposition 260.1; no complete ball has replaced this irregular domain.
+
+The field values in (267.4) are exactly $2^{-|p|}$ at these addresses. The source kinetic law gives root diagonal two and every other diagonal three, together with (267.5). The current leaves are $LR,RL,RR,LLL,LLR$, each retaining its two absent-child seams. For collective values $(u_a,u_b,u_c,u_d)$, the internal edge $oR$ contributes zero, and the remaining difference terms plus all absent-child terms give
+
+$$
+\begin{aligned}
+\langle Uu,L_DUu\rangle={}&
+2|u_a-u_b|^2+2|u_a-u_c|^2
++2|u_b-u_d|^2+|u_c-u_d|^2\\
+&+8|u_a|^2+2|u_b|^2.
+\end{aligned}
+\tag{267.9}
+$$
+
+Expanding gives $S_9$. Summing the actual common field over each class gives $V_9$: in $a$ the sum is $1/8+1/8+1/4+1/4=3/4$, in $b$ it is $1/2$, in $c$ it is $1+1/2=3/2$, and in $d$ it is $1/2$. Since $U^*U=I$ in the mass norm, (267.7) follows. The four nonzero normalized off-diagonal magnitudes are $a_0/\sqrt2,a_0/\sqrt2,\sqrt2a_0,a_0/\sqrt2$. Theorem 264.2 gives (267.8). Negative potential changes no off-diagonal edge or source killing seam. □
+
+**Proposition 267.2 (all nine-occurrence first leakage coefficients).** In (267.2) let $e_p$ be the unit counting vector at $p$. An orthonormal basis of the hidden space consists of
+
+$$
+\begin{aligned}
+h_1&=(e_{LLL}-e_{LLR})/\sqrt2,&
+h_2&=(e_{RL}-e_{RR})/\sqrt2,\\
+h_3&=(e_{LLL}+e_{LLR}-e_{RL}-e_{RR})/2,\\
+h_4&=(e_{LL}-e_{LR})/\sqrt2,&
+h_5&=(e_o-e_R)/\sqrt2.
+\end{aligned}
+$$
+
+Relative to the normalized coarse coordinate order $(a,b,c,d)$, the first two rows of $\widehat D_9$ are zero and its remaining rows are
+
+$$
+E_9=\begin{pmatrix}
+g/16&-a_0/\sqrt2&a_0/\sqrt2&0\\
+-a_0/\sqrt2&0&0&0\\
+a_0/\sqrt2&0&-a_0/2-g/4&-a_0/\sqrt2
+\end{pmatrix}.
+\tag{267.10}
+$$
+
+In particular, with $f_d=N_9^{-1/2}e_d=e_d$ in coarse value coordinates,
+
+$$
+\|D_9f_d\|^2=a_0^2/2,
+\qquad
+\|(I-P)e^{-itH_9}Uf_d\|^2
+=\tfrac12a_0^2t^2+O(t^3).
+\tag{267.11}
+$$
+
+For every coarse orthonormal coordinate vector $\xi$, its full first leakage coefficient is exactly $\|E_9\xi\|^2$. The compressed evolution's second-order discrepancy is $z^2t^2E_9^{\mathsf T}E_9/2$ in (265.2), where $z\in\{1,i\}$ is the evolution parameter.
+
+Proof. The five displayed vectors have disjoint-class support except for the three mutually orthogonal contrasts in class $a$. They are orthogonal to every class-constant vector, and their number is $9-4$, proving that they form the hidden basis. Therefore every entry can be computed as $\langle h_j,H_9\widehat Ue_b\rangle$ without forming $P$ separately.
+
+The two siblings in either $h_1$ or $h_2$ have the same diagonal and the same actual parent, so those two rows vanish. On $h_3$, the normalized $a$ input has value $1/2$ on each of its four sites. The two deep sites have diagonal value $(3a_0-g/8)/2$ and the two shallow sites $(3a_0-g/4)/2$; their contrast is $g/16$. The normalized $b$ input gives $-a_0/\sqrt2$ at each deep site and zero at the shallow sites, giving contrast $-a_0/\sqrt2$. The normalized $c$ input reverses these two pairs, giving $a_0/\sqrt2$; the $d$ input contributes zero.
+
+On $h_4$, only the $a$ input has a nonzero contrast: the $LL$ row receives two leaf contributions of $-a_0/2$, while the $LR$ row receives none, yielding $-a_0/\sqrt2$. The two sites have equal source potential $1/4$, so the $b$ diagonal input gives no contrast. On $h_5$, the $a$ column has values zero and $-a_0$ at $o,R$, respectively; the $c$ column has values $(a_0-g)/\sqrt2$ and $(2a_0-g/2)/\sqrt2$, including the internal $oR$ edge; the $d$ column has values $-a_0,0$. Their contrasts are the last row of (267.10); the $b$ column is zero there. This proves every matrix entry. Applying (265.4) proves (267.11) and the all-input assertion. □
+
+## 268. A four-leaf INITIAL and an underdetermined proposed coefficient
+
+**Definition 268.1 (the seven-occurrence source before choosing an observation).** Choose the actual INITIAL
+
+$$
+t=\langle\langle\alpha,\alpha\rangle,
+          \langle\alpha,\alpha\rangle\rangle,
+\qquad \mathrm{cap}_H\ge4,
+\tag{268.1}
+$$
+
+and use its initial version $D_0(t)$. It has addresses $(o,L,R,LL,LR,RL,RR)$, four leaves, and no substitution needs to be accepted to reach this version. Its original labels, order, INITIAL, cap, Read and Stop are retained. For every native $a_0,g>0$, its source operator is
+
+$$
+H_7=a_0L_D-g\operatorname{diag}
+ (1,\tfrac12,\tfrac12,\tfrac14,\tfrac14,\tfrac14,\tfrac14).
+\tag{268.2}
+$$
+
+The root kinetic diagonal is two, all other kinetic diagonals are three, and the off-diagonal is $-a_0$ on exactly the pairs $(o,L),(o,R),(L,LL),(L,LR),(R,RL),(R,RR)$. These source data do not specify a partition or a vector named $f_b$; consequently a coefficient $\|Df_b\|^2$ is not uniquely specified by them. In particular, a proposed value $7a_0^2/6$ without those additional data is underdetermined. The next proposition gives the source-correct formula and a contrary value before a second, expressly conditional observation is considered.
+
+**Proposition 268.2 (variance formula and a legal contrary coefficient).** For any scalar collective partition with $R_x=1$, any real symmetric source-supported $H$, and the unit mass-normalized class vector $f_b=\mathbf1_{\{b\}}/\sqrt{n_b}$, one has
+
+$$
+\begin{aligned}
+s_b(x)&=\frac1{\sqrt{n_b}}\sum_{y\in V_b}H_{xy},\\
+\|Df_b\|^2
+&=\sum_{a\in B}\left[
+ \sum_{x\in V_a}|s_b(x)|^2
+ -\frac1{n_a}\left|\sum_{x\in V_a}s_b(x)\right|^2\right].
+\end{aligned}
+\tag{268.3}
+$$
+
+An unnormalized indicator multiplies this squared coefficient by $n_b$. On the legal source (268.1) with exactly $H_7$ and every $a_0,g>0$, take
+
+$$
+V'_a=\{LL,LR,RL,RR\},\qquad
+V'_b=\{L\},\quad V'_c=\{o\},\quad V'_d=\{R\},
+\qquad f'_b=e_b.
+\tag{268.4}
+$$
+
+Its induced masses are $N'_7=\operatorname{diag}(4,1,1,1)$. Its kinetic and potential forms are
+
+$$
+S'_7=\begin{pmatrix}
+12&-2&0&-2\\-2&3&-1&0\\0&-1&2&-1\\-2&0&-1&3
+\end{pmatrix},\qquad
+V'_7=\operatorname{diag}(1,\tfrac12,1,\tfrac12),
+\quad
+\widehat A'_7=(N'_7)^{-1/2}(a_0S'_7-gV'_7)(N'_7)^{-1/2}.
+\tag{268.5}
+$$
+
+It has a four-cycle collective support, but
+
+$$
+\|D'_7f'_b\|^2=a_0^2\ne7a_0^2/6.
+\tag{268.6}
+$$
+
+Indeed, with $h=(e_{LL}+e_{LR}-e_{RL}-e_{RR})/2$, its entire nonzero hidden row is
+
+$$
+\langle h,\widehat D'_7\,\cdot\,\rangle
+=\begin{pmatrix}0&-a_0&0&a_0\end{pmatrix}.
+\tag{268.7}
+$$
+
+Thus a partition-independent assertion of $7/6$ is false. This does not refute the same coefficient under some further, explicitly prescribed partition.
+
+Proof. The orthogonal projection replaces each scalar class by its arithmetic mean. Subtracting these means and expanding the squared norm gives (268.3), including all diagonal terms of $H$. In (268.4), the two left leaf seams, root-left seam, root-right seam and two right leaf seams give the cycle $a,b,c,d,a$ with conductances $2,1,1,2$. Its kinetic killing conductances are $(8,0,0,0)$. Expanding these four difference terms plus $8|u_a|^2$ gives $S'_7$; summing the common field gives $V'_7$.
+
+On its four leaves, $H_7e_L$ has values $(-a_0,-a_0,0,0)$ and mean $-a_0/2$. Their residual squared norm is $4(a_0/2)^2=a_0^2$. Every other class is a singleton. The potential is constant on the leaf class, and the $b$ input is supported on a singleton, so this calculation holds for all $g$. More generally the normalized $a$ input has no hidden component, the $b,d$ inputs give the opposite leaf contrasts $-a_0h,a_0h$, and the $c$ input gives zero at every leaf. The remaining two hidden directions are sibling differences and have zero rows. This proves (268.7) and all assertions. □
+
+**Definition 268.3 (a second, explicitly conditional observation).** On the same source (268.1), specify instead
+
+$$
+\begin{aligned}
+V_a&=\{LL,LR,RR\},&V_b&=\{L\},\\
+V_c&=\{o,RL\},&V_d&=\{R\},\\
+N_7&=\operatorname{diag}(3,1,2,1),&
+f_b&=N_7^{-1/2}e_b=e_b.
+\end{aligned}
+\tag{268.8}
+$$
+
+This is an additional choice of observation, not a reconstruction of an unspecified source datum. The source operator, clock, actual vertices and their masses one have not changed; the induced coarse masses follow the displayed classes. Neither (268.4) nor (268.8) is selected uniquely by the source. Both use the same unit singleton input $Uf_b=e_L$, so their differing coefficients cannot be attributed to rescaling that input.
+
+**Proposition 268.4 (the conditional $7/6$ value for every native $a_0,g$).** Under (268.8), for every $a_0,g>0$ the restricted forms and normalized operator are
+
+$$
+\begin{aligned}
+S_7&=\begin{pmatrix}
+9&-2&0&-1\\-2&3&-1&0\\0&-1&5&-2\\-1&0&-2&3
+\end{pmatrix},\\
+V_7&=\operatorname{diag}(\tfrac34,\tfrac12,\tfrac54,\tfrac12),\\
+\widehat A_7&=N_7^{-1/2}(a_0S_7-gV_7)N_7^{-1/2}.
+\end{aligned}
+\tag{268.9}
+$$
+
+The conductances are $c_{ab}=2,c_{bc}=1,c_{cd}=2,c_{da}=1$, with killing conductances $(6,0,2,0)$. The cycle strength is $\eta_7=a_0/\sqrt3$, hence $\|D_7\|\ge a_0/3$. For the specified $f_b$,
+
+$$
+\|D_7f_b\|^2=\frac76a_0^2
+\quad\text{for all }a_0,g>0.
+\tag{268.10}
+$$
+
+Proof. The seven addresses and all kinetic diagonals are those of Definition 268.1. With collective values $u$, the restricted kinetic form is
+
+$$
+2|u_a-u_b|^2+|u_b-u_c|^2
++2|u_c-u_d|^2+|u_d-u_a|^2
++6|u_a|^2+2|u_c|^2.
+\tag{268.11}
+$$
+
+This proves the conductances, killing, and $S_7$. The common field sums are $3/4,1/2,1+1/4,1/2$, proving $V_7$. The four normalized cycle magnitudes are $2a_0/\sqrt3,a_0/\sqrt2,\sqrt2a_0,a_0/\sqrt3$, proving the asserted $\eta_7$ and the bound from Theorem 264.2.
+
+For (268.10), $Uf_b=e_L$. On class $a$, $H_7e_L$ has values $(-a_0,-a_0,0)$, whose mean is $-2a_0/3$ and whose residual squared norm is
+
+$$
+2(a_0/3)^2+(2a_0/3)^2=2a_0^2/3.
+$$
+
+On class $c$ its values are $(-a_0,0)$, with residual squared norm $a_0^2/2$. Classes $b,d$ are singletons and have zero residual. The diagonal potential acts on the one-point support $L$ only, so it contributes no hidden component for this vector, for any $g$. Summing $2/3+1/2$ proves (268.10). This conditional value neither changes (268.6) nor makes the partition-free proposal well-defined. □
+
+**Proposition 268.5 (complete leakage matrix for the second observation).** An orthonormal hidden basis for (268.8) is
+
+$$
+h_0=(e_{LL}-e_{LR})/\sqrt2,\quad
+h_a=(e_{LL}+e_{LR}-2e_{RR})/\sqrt6,\quad
+h_c=(e_o-e_{RL})/\sqrt2.
+$$
+
+The $h_0$ row of $\widehat D_7$ is zero; the other two rows are
+
+$$
+E_7=\begin{pmatrix}
+0&-\sqrt{2/3}\,a_0&0&\sqrt{2/3}\,a_0\\
+0&-a_0/\sqrt2&-a_0/2-3g/8&0
+\end{pmatrix}.
+\tag{268.12}
+$$
+
+For every normalized coarse coordinate vector $\xi=(\xi_a,\xi_b,\xi_c,\xi_d)$,
+
+$$
+\|D_7J^{-1}\xi\|^2
+=\tfrac23a_0^2|\xi_d-\xi_b|^2
+ +\left|\tfrac{a_0}{\sqrt2}\xi_b+
+                (\tfrac{a_0}{2}+\tfrac{3g}{8})\xi_c\right|^2.
+\tag{268.13}
+$$
+
+In particular the unitary leakage for $f_b$ is $7a_0^2t^2/6+O(t^3)$, and its compressed second-order scalar discrepancy is
+
+$$
+\langle e_b,(\widehat F_z(t)-e^{-zt\widehat A_7})e_b\rangle
+=\frac{7z^2a_0^2}{12}t^2+O(t^3),
+\quad z\in\{1,i\}.
+\tag{268.14}
+$$
+
+Here $\widehat F_z=JF_zJ^{-1}$. These are fixed-source, full-parameter formulas; $D_7J^{-1}e_a=0$ is a genuine exceptional input, so a positive coefficient for every input would be false.
+
+Proof. The hidden dimension is $7-4=3$ and the displayed class contrasts are orthonormal. The $h_0$ row vanishes because $LL,LR$ have equal diagonals and the same parent. At $h_a$ only the $b,d$ columns contribute: their address values are $(-a_0,-a_0,0)$ and $(0,0,-a_0)$ on $(LL,LR,RR)$, giving the first row. At $h_c$, the $b$ column has values $(-a_0,0)$ on $(o,RL)$. The normalized $c$ column has values $(2a_0-g)/\sqrt2$ and $(3a_0-g/4)/\sqrt2$; taking the contrast gives $-a_0/2-3g/8$. The $d$ column gives $(-a_0,-a_0)$ and hence no contrast, and the $a$ column vanishes on both sites. This proves (268.12) entry by entry, then (268.13) by squaring. Equations (265.2) and (265.4) prove (268.14) and the leakage assertion. □
+
+## 269. Source-faithful consequences and their mathematical limits
+
+**Proposition 269.1 (what the two native cycles require).** The native kinetic backward generator on either domain of §§267–268 is $G=-a_0L_D$, with mass one at each occurrence, conductance $a_0$ on every actual edge, and killing rate $2a_0$ at each current leaf and zero elsewhere. For either partition (267.3) or (268.8), $m=e=4$ and $\beta=1$. Therefore every exact deterministic same-clock refinement needs at least five noncemetery labels. Its induced kinetic coarse generator has killing rates $a_0(2,1,0,0)$ for (267.3), and $a_0(2,0,1,0)$ for (268.8). Uniform off-label row approximation to these induced generators has error at least $a_0/2$ and $a_0/3$, respectively.
+
+For the native amplitude operators with every $a_0,g>0$, the collective constraints still have static cyclic forms, but cannot give autonomous same-clock evolution on all coarse inputs. Their memory-kernel norms at zero are at least $a_0^2/8$ and $a_0^2/9$, respectively, and their full first leakage matrices are (267.10) and (268.12). These conclusions concern predictive information and retention of hidden modes, not selection of a physical spatial dimension.
+
+Proof. The finite-source form (55.4) is the sum of actual internal unit seam differences and two killing terms per current leaf; multiplying by $a_0$ gives the displayed generator. Dividing the killing conductances of (267.9) and (268.11) by their induced masses gives the coarse killing rates. For the first partition, its four directed pairs have minimum rate $\min\{2a_0/4,2a_0/2,2a_0/1,a_0/2\}=a_0/2$; for the second the minimum is $a_0/3$ on $a\to d$. Theorems 266.2–266.3 now apply. This counts refinements only; it asserts neither native attainment at five nor a minimum for arbitrary real encoders, hidden Hilbert spaces or native records.
+
+For the amplitudes, (267.8), (268.9) and Theorems 265.1–265.2 give the kernel bounds and exclude exact all-input intertwining. The potential changes the displayed hidden matrices and has not been discarded. The heat law $e^{-tH_j}$ also satisfies Theorem 265.1 algebraically, but for $g>0$ it is not being called the source's substochastic kinetic heat law; that original law is $e^{-ta_0L_D}$. No attractive-potential semigroup has replaced it. All finite-dimensional operator domains are the entire stated spaces. □
+
+**Definition 269.2 (supplier correspondence and interpretation).** The source premises are the exact actual-tree definitions and proofs in first Continuation §§55.1–55.3 and this volume §§257–263, including the distinction between an actual-port Schur response and a collective constrained quadratic form. The quantitative arbitrary-block cycle defect (264.6), its topology-forced short-time and hidden-initial prediction bounds, the scalar refinement count (266.3), the sharp row constant with induced masses, and the two addressed full-parameter residual matrices are the additional deductions here (repo-derived). The qualitative role-graph theorem, row-sum lumpability, Schur elimination, exponential expansion, variation of constants and invariant observable closure are the attributed intermediate inputs.
+
+Repository deterministic and linear descent suppliers include [DynamicsDescent](../../../D5/S0/Rewriting/Quotients/DynamicsDescent.lean), [LinearProjectionDescentCriterion](../../../D5/S3/Observer/Dynamics/LinearProjectionDescentCriterion.lean) and [StrongLumpabilityDescent](../../../D5/S3/Observer/ProbabilisticClosure/StrongLumpabilityDescent.lean). [OperatorSystemTowerStability](../../../D5/S3/Quantum/Fibers/OperatorSystemTowerStability.lean) concerns permanence after equality of consecutive operator-system stages; [QuotientResidualTransport](../../../D5/S3/Quantum/Fibers/QuotientResidualTransport.lean) concerns compatible quotient transitions and isometric residual costs. Neither supplies a finite actual-tree cycle-defect estimate. [CapacityPortSeparationAbsorption](../../../D5/S3/Combinatorics/Graph/Walks/CapacityPortSeparationAbsorption.lean), including its private routing and terminal-distance arguments, concerns incidence capacities and terminal separation; it assumes no tree and has no clock, update or propagation operator.
+
+[Continuation V §§120.4–120.7](FIB_ATOM_RECURSIVE_HOLOGRAPHIC_BOUNDARY_GEOMETRY_CONTINUATION_V.md) already gives an exact infinite-address bounded-observable cycle law, fixed-colouring finite-cut whole-volume heat error, and the failure of its infinite-fibre pullback to lie in counting $\ell^2$. Those results retain their infinite source, particular colouring, kinetic operator and norms. The present finite-tree estimates use arbitrary partitions, finite induced Hilbert masses and arbitrary real blocks; they neither contradict that infinite cycle nor reprove its positive whole-volume floor. The [finite joint cycle/radial prediction companion §§1 and 6](FIB_ATOM_RECURSIVE_HOLOGRAPHIC_BOUNDARY_GEOMETRY_FINITE_JOINT_PREDICTION.md) addresses another exact observation on that infinite source. No finite/infinite or norm interchange is implicit.
+
+The primary attributions in the proofs are bounded to their stated versions and hypotheses. No world-priority or global absence assertion is part of these results. The common source/history remains a joint object: neither the partition nor the extra field/amplitude interfaces are additional original Reads. The legal finite prefixes do not authorize a cap increase, a continuation after Stop, or an event after an infinite prefix. Selecting the four-leaf INITIAL (268.1) does not assert its availability from every other fixed INITIAL orbit.
+
+Local fibre rank $r$, number of retained deterministic labels, dimension of the invariant observable space, topological cycle rank and physical spatial dimension are distinct parameters. A cycle forces the displayed quantitative predictive defect, not a collective Euclidean physical-space theorem. Constructing an actual spatial realization with its original operations, metric, boundary, clock and acquisition cost remains a separate mathematical problem; the necessary conditions here do not assert its impossibility or its completion. All proofs in §§264–269 are ordinary finite-dimensional mathematics, with no Lean or kernel-verification assertion.
+
+## 追加锚（本行以下为增补区）

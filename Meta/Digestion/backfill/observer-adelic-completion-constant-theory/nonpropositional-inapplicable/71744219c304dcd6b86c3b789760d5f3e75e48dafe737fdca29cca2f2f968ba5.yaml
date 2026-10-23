@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:71744219c304dcd6b86c3b789760d5f3e75e48dafe737fdca29cca2f2f968ba5
+  normalized_sha256: sha256:71744219c304dcd6b86c3b789760d5f3e75e48dafe737fdca29cca2f2f968ba5
+cas_ref: sha256:71744219c304dcd6b86c3b789760d5f3e75e48dafe737fdca29cca2f2f968ba5
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 投影前可保留结构的研究清单名词 holonomy；没有断言具体 holonomy 非零或具有重构能力。
+    previous_atom_id: bcc6094405e338586f63bb99dd2933cd2d72ec522c1af0fbc7edc7369ae0444e
+    next_atom_id: ab950d77779df31d7b2c3c9ac37cad24f38df59e43e8fdce6df8d5011a750149

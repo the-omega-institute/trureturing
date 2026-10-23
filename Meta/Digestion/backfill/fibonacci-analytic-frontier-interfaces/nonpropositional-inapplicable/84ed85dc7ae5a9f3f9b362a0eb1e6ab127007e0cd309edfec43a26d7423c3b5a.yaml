@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:84ed85dc7ae5a9f3f9b362a0eb1e6ab127007e0cd309edfec43a26d7423c3b5a
+  normalized_sha256: sha256:84ed85dc7ae5a9f3f9b362a0eb1e6ab127007e0cd309edfec43a26d7423c3b5a
+cas_ref: sha256:84ed85dc7ae5a9f3f9b362a0eb1e6ab127007e0cd309edfec43a26d7423c3b5a
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: Only defines I(C), J(C), v, the selected mode sum and its quadratic form; states no property of these objects.
+    previous_atom_id: ee9a43a5b81e4aeec2d02827f87a0be16c96ba7c6fd11678515e989672538d48
+    next_atom_id: ad5e8955cd12ba6051b3390a1ced70a9c92e52a079cac7f9daee1c38f5881ec5

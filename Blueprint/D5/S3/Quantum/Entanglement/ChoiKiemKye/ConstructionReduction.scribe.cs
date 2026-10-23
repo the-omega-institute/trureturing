@@ -7,10 +7,56 @@ namespace StrataLint.Scribe.Blueprint.D5.S3.Quantum.Entanglement.ChoiKiemKye;
 internal sealed class ConstructionReductionDocument : IScribeDocumentDefinition
 {
     private static Formula Parenthesized(Formula value) => Seq(Open, value, Close);
+    private static Formula MulVecBlockFormula()
+    {
+        Formula typeStar = Seq(F.Id("Type"), Star);
+        Formula complex = Seq(Mathbb, Grp(F.Id("C")));
+        Formula kappaAtI = Seq(Kappa, Sp, F.Id("i"));
+        Formula matrixType = Seq(
+            Operatorname, Grp(F.Id("Matrix")), Sp,
+            Parenthesized(kappaAtI), Sp, Parenthesized(kappaAtI), Sp, complex);
+        Formula sumType = Parenthesized(Seq(Sigma, Sp, F.Id("i"), Comma, Sp, Kappa, Sp, F.Id("i")));
+        Formula blockDiagonal = new Formula.Apply(
+            Seq(Operatorname, Grp(F.Id("Matrix")), Dot,
+                Operatorname, Grp(F.Id("blockDiagonal")), Apos), [F.Id("M")]);
+        Formula lhs = Seq(
+            Parenthesized(Seq(blockDiagonal, Dot, Operatorname, Grp(F.Id("mulVec")))),
+            Sp, F.Id("v"), Sp, Langle, Sp, F.Id("i"), Comma, Sp, F.Id("j"), Sp, Rangle);
+        Formula rhs = Seq(
+            Parenthesized(Seq(Parenthesized(Seq(F.Id("M"), Sp, F.Id("i"))), Dot, Operatorname, Grp(F.Id("mulVec")))),
+            Sp, Parenthesized(Seq(Operatorname, Grp(F.Id("fun")), Sp, F.Id("k"), Sp, Mapsto, Sp,
+                F.Id("v"), Sp, Langle, Sp, F.Id("i"), Comma, Sp, F.Id("k"), Sp, Rangle)),
+            Sp, F.Id("j"));
+        return Seq(
+            Forall, Sp, Parenthesized(Seq(Iota, Sp, Colon, Sp, typeStar)), Comma, Sp,
+            OpenBracket, Operatorname, Grp(F.Id("Fintype")), Sp, Iota, CloseBracket, Sp,
+            OpenBracket, Operatorname, Grp(F.Id("DecidableEq")), Sp, Iota, CloseBracket, Sp,
+            Forall, Sp, Parenthesized(Seq(Kappa, Sp, Colon, Sp,
+                new Formula.TypeArrow(Iota, typeStar))), Comma, Sp,
+            OpenBracket, Forall, Sp, F.Id("i"), Comma, Sp, Operatorname, Grp(F.Id("Fintype")), Sp,
+                Parenthesized(kappaAtI), CloseBracket, Sp,
+            OpenBracket, Forall, Sp, F.Id("i"), Comma, Sp, Operatorname, Grp(F.Id("DecidableEq")), Sp,
+                Parenthesized(kappaAtI), CloseBracket, Sp,
+            Forall, Sp, Parenthesized(Seq(F.Id("M"), Sp, Colon, Sp,
+                Forall, Sp, F.Id("i"), Comma, Sp, matrixType)), Comma, Sp,
+            Forall, Sp, Parenthesized(Seq(F.Id("v"), Sp, Colon, Sp,
+                new Formula.TypeArrow(sumType, complex))), Comma, Sp,
+            Forall, Sp, Parenthesized(Seq(F.Id("i"), Sp, Colon, Sp, Iota)), Comma, Sp,
+            Forall, Sp, Parenthesized(Seq(F.Id("j"), Sp, Colon, Sp, Parenthesized(kappaAtI))), Comma, Sp,
+            Seq(lhs, Sp, Eq, Sp, rhs));
+    }
     public DocumentDefinition Create() => DocumentDefinition.Create(ScribeNode.Create(
         "Public declarations of ConstructionReduction, with complete parameters and the Lean operations.",
         H("ConstructionReduction"),
         Blocks(
+            Describe.Lean(
+                DescribeId.Create("mulvec-block"),
+                DeclarationHandle.Create("D5/S3/Quantum/Entanglement/ChoiKiemKye/ConstructionReduction.mulVec_block"),
+                H("Block diagonal matrix-vector action"),
+                StatementSource.FromAuthor(Disp(MulVecBlockFormula())),
+                AssessedProvenance.FromRepo(),
+                Blocks(Paragraph(Text("The matrix-vector action of Matrix.blockDiagonal' on a dependent-sum coordinate is the action of the corresponding block on that coordinate."))),
+                DescribeRole.Theorem),
             Describe.Lean(
                 DescribeId.Create("phaseat"), DeclarationHandle.Create("D5/S3/Quantum/Entanglement/ChoiKiemKye/ConstructionReduction.phaseAt"), H("phaseAt"),
                 StatementSource.FromAuthor(Disp(Seq(Forall, Sp, Parenthesized(Seq(F.Id("n"), Sp, Colon, Sp, Seq(Mathbb, Grp(F.Id("N"))))), Sp, Comma, Sp, Forall, Sp, Parenthesized(Seq(F.Id("a"), Sp, Colon, Sp, F.Id("Fin"), Sp, F.Id("n"), Sp, To, Sp, Seq(Mathbb, Grp(F.Id("C"))))), Sp, Comma, Sp, Forall, Sp, Parenthesized(Seq(F.Id("j"), Sp, Colon, Sp, Seq(Mathbb, Grp(F.Id("N"))))), Sp, Comma, Sp, Seq(Operatorname, Grp(F.Id("phaseAt"))), Sp, F.Id("a"), Sp, F.Id("j"), Sp, Eq, Sp, Parenthesized(Seq(F.Id("if"), Sp, F.Id("h"), Sp, Colon, Sp, F.Id("j"), Sp, Minus, Sp, D(1), Sp, Lt, Sp, F.Id("n"), Sp, Seq(Operatorname, Grp(F.Id("then"))), Sp, F.Id("a"), Sp, Langle, Sp, F.Id("j"), Sp, Minus, Sp, D(1), Sp, Comma, Sp, F.Id("h"), Sp, Rangle, Sp, Seq(Operatorname, Grp(F.Id("else"))), Sp, D(1)))))),

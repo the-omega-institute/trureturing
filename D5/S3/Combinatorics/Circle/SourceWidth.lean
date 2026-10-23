@@ -5,16 +5,20 @@
    anchors: [mathlib/module/Mathlib.Data.Int.ModEq, mathlib/module/Mathlib.Data.List.FinRange]
    utility: none
    digest: Physical source labels and full-arc binary schedules for a universal width bound. -/
-import Mathlib.Data.Int.ModEq
-import Mathlib.Data.List.FinRange
-import Mathlib.Data.List.Rotate
-import Mathlib.Algebra.Order.BigOperators.Group.List
-import Mathlib.Tactic
+module
+public import Mathlib.Data.Int.ModEq
+public import Mathlib.Data.List.FinRange
+public import Mathlib.Data.List.Rotate
+public import Mathlib.Algebra.Ring.GeomSum
+public import Mathlib.Algebra.Order.BigOperators.Group.List
+public import Mathlib.Tactic
 
 /-! # Labelled centered sources and binary full-arc expansion -/
 
 set_option autoImplicit false
 set_option relaxedAutoImplicit false
+
+@[expose] public section
 
 namespace D5.S3.Combinatorics.Circle.SourceWidth
 
@@ -39,10 +43,10 @@ theorem centered_bounds {N : ℤ} (hN : 0 < N) (hodd : N % 2 = 1) (x : ℤ) :
   dsimp [centered]
   omega
 
-private theorem centered_mod (N x : ℤ) : centered N x % N = x % N := by
+theorem centered_mod (N x : ℤ) : centered N x % N = x % N := by
   simp only [centered, Int.emod_sub_emod, add_sub_cancel_right]
 
-private theorem centered_unique {N x y : ℤ} (hN : 0 < N) (hodd : N % 2 = 1)
+theorem centered_unique {N x y : ℤ} (hN : 0 < N) (hodd : N % 2 = 1)
     (hx : -(N / 2) ≤ x ∧ x ≤ N / 2)
     (hy : -(N / 2) ≤ y ∧ y ≤ N / 2) (he : x % N = y % N) : x = y := by
   have hd := (Int.modEq_iff_dvd).mp he
@@ -129,7 +133,7 @@ theorem inStrip_nonpos {α : Type*} {f : α → ℤ} {B h : ℤ} {l : List α}
     refine ⟨by omega, hh, ih hxs (by omega) ?_⟩
     omega
 
-private theorem inStrip_reflect {α : Type*} {f : α → ℤ} {B h : ℤ} {l : List α}
+theorem inStrip_reflect {α : Type*} {f : α → ℤ} {B h : ℤ} {l : List α}
     (hl : InStrip (fun x => -f x) B (B - h) l) : InStrip f B h l := by
   induction l generalizing h with
   | nil => dsimp [InStrip] at *; omega

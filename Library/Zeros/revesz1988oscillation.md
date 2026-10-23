@@ -48,3 +48,7 @@ article. The source's Theorem 1 is an absolute-value remainder estimate
 in its stated logarithmic-derivative class; it is not substituted for
 that signed application. Neither the source facts nor this application
 construct an actual off-critical zero or prove RH.
+
+## Verified locator
+
+- DOI: https://doi.org/10.4064/aa-49-5-481-505

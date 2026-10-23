@@ -1,0 +1,27 @@
+**Theorem 2.1 (literal cubic frame).** The chronological atom word is
+
+$$
+(E_1,\ldots,E_{16})=(J,M,M,J,J,J,M,M,M,J,J,M,J,M,M,M).
+$$
+
+Equivalently the chronological letter string is `JMMJJJMMMJJMJMMM`; the cumulative multiplier is $E_{16}\cdots E_1$. Its prefixes and observation matrix are as follows.
+
+| $i$ | atom $E_i$ | $(A_{i,11},A_{i,12},A_{i,21},A_{i,22})$ |
+|---:|:---:|:---|
+| 0 | I (current) | (1, 0, 0, 1) |
+| 1 | J | (0, 1, 1, 0) |
+| 2 | M | (1, 0, 1, 1) |
+| 3 | M | (1, 1, 2, 1) |
+| 4 | J | (2, 1, 1, 1) |
+| 5 | J | (1, 1, 2, 1) |
+| 6 | J | (2, 1, 1, 1) |
+| 7 | M | (1, 1, 3, 2) |
+| 8 | M | (3, 2, 4, 3) |
+| 9 | M | (4, 3, 7, 5) |
+| 10 | J | (7, 5, 4, 3) |
+| 11 | J | (4, 3, 7, 5) |
+| 12 | M | (7, 5, 11, 8) |
+| 13 | J | (11, 8, 7, 5) |
+| 14 | M | (7, 5, 18, 13) |
+| 15 | M | (18, 13, 25, 18) |
+| 16 | M | (25, 18, 43, 31) |

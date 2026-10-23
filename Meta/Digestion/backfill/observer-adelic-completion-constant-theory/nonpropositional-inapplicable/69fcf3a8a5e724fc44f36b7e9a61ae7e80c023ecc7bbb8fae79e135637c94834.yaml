@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:69fcf3a8a5e724fc44f36b7e9a61ae7e80c023ecc7bbb8fae79e135637c94834
+  normalized_sha256: sha256:69fcf3a8a5e724fc44f36b7e9a61ae7e80c023ecc7bbb8fae79e135637c94834
+cas_ref: sha256:69fcf3a8a5e724fc44f36b7e9a61ae7e80c023ecc7bbb8fae79e135637c94834
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 这里设定 t0 为 r 重实零点，并列出零阶至 r-1 阶导数消失和 r 阶导数非零作为假设；未断言零点存在、jet 公式或刚性结论。
+    previous_atom_id: 52d53bba54a9663a9d30897246ba07948e6304c28728d2444fecd13019d502ef
+    next_atom_id: 2b30f112354ddb32f48ed6ee637a74bffd5ecd606733c94069a1a15b8316b909

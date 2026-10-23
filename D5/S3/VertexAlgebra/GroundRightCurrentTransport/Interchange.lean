@@ -49,9 +49,6 @@ local macro "R_smul" : term => pure (Lean.mkIdent
 local macro "R_Z" : term => pure (Lean.mkIdent
   ((Lean.Name.num `_private.D5.S3.VertexAlgebra.GroundRightCurrentTransport.Residue 0) ++
     `D5.S3.VertexAlgebra.LatticeHalfFockGroundRightCurrentTransport.Calculus.R_Z))
-local macro "Q_cutoff" : term => pure (Lean.mkIdent
-  ((Lean.Name.num `_private.D5.S3.VertexAlgebra.GroundRightCurrentTransport.Residue 0) ++
-    `D5.S3.VertexAlgebra.LatticeHalfFockGroundRightCurrentTransport.Calculus.Q_cutoff))
 local macro "forward_finite" : term => pure (Lean.mkIdent
   ((Lean.Name.num `_private.D5.S3.VertexAlgebra.GroundRightCurrentTransport.Residue 0) ++
     `D5.S3.VertexAlgebra.LatticeHalfFockGroundRightCurrentTransport.Calculus.forward_finite))
@@ -70,9 +67,6 @@ local macro "nested_finite" : term => pure (Lean.mkIdent
 local macro "residue_convolution" : term => pure (Lean.mkIdent
   ((Lean.Name.num `_private.D5.S3.VertexAlgebra.GroundRightCurrentTransport.Residue 0) ++
     `D5.S3.VertexAlgebra.LatticeHalfFockGroundRightCurrentTransport.Calculus.residue_convolution))
-local macro "valid_of_locality" : term => pure (Lean.mkIdent
-  ((Lean.Name.num `_private.D5.S3.VertexAlgebra.GroundRightCurrentTransport.Residue 0) ++
-    `D5.S3.VertexAlgebra.LatticeHalfFockGroundRightCurrentTransport.Calculus.valid_of_locality))
 local macro "finiteConvolution" : term => pure (Lean.mkIdent
   ((Lean.Name.num `_private.D5.S3.VertexAlgebra.LatticeHalfFockCurrentBorcherds 0) ++
     `D5.S3.VertexAlgebra.LatticeHalfFockCurrentBorcherds.finite_convolution))

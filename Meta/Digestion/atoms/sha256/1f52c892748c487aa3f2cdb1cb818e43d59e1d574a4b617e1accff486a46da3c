@@ -1,0 +1,18 @@
+**Assumption 4.1 (Internal probes and position dynamics).** Fix a common $\sigma>0$. Supply eight independent internal probes, prepared in advance in the same state
+
+$$
+k_\sigma(z)=(2\pi\sigma^2)^{-1/4}
+\exp\!\left(-\frac{z^2}{4\sigma^2}\right)\in L^2(\mathbb R).
+$$
+
+Each probe has zero position and momentum means, position variance $\sigma^2$ and momentum variance $1/(4\sigma^2)$, hence finite oscillator energy for fixed $\sigma>0$. The probes are independent of the initial system and of one another. At clock $i$, after the prescribed control when $i>0$, the available coupling and meter are
+
+$$
+\mathsf B_i=\exp(-iF_i(q)\otimes\pi_i^{\rm pr}),\qquad
+Z_i^{\rm pr}.
+$$
+
+The coupling translates probe position by $F_i(q)$. Its scalar prototype and signs are those of [Ozawa, quant-ph/0210044v2, §VI, Eqs. (36)–(38)](https://arxiv.org/pdf/quant-ph/0210044v2). Here $F_i(q)=\ell_i^Tq$ is the explicit multivariate substitution. These ideal couplings, probe-position measurements and the specified initial preparations are availability assumptions. There is no additional free evolution that changes the system positions between them.
+
+Every meter value is retained. Each probe is used once; no probe or system is reset during the run. The probes add internal degrees of freedom but only the original outward readings $0,\ldots,7$ are produced. No copy of an unknown input, additional gain or source-label port, skipped read or postselection is supplied.
+

@@ -1,0 +1,110 @@
+## 3. The tangent operator and source normalization
+
+Let $A=\Sigma\Sigma^{\mathsf T}$ be the smooth positive square root on a
+neighbourhood of $\overline\Omega$, and put
+
+$$
+Y_a=\sum_{i=1}^2\Sigma_{ia}X_i,
+\qquad
+T_A[f]=\sum_{a=1}^2\|Y_af\|_{L^2(\mu)}^2.
+\tag{3.1}
+$$
+
+In the chart (2.3), freeze the coefficients and the density at the source:
+
+$$
+\widehat X_1=\partial_x,\qquad
+\widehat X_2=\partial_y+x\partial_z,\qquad
+\widehat Y_a=\sum_{i=1}^2\Sigma_{ia}(o)\widehat X_i,
+$$
+
+$$
+d\widehat\mu=\rho(o)|J_o|\,dx\,dy\,dz,\qquad
+\widehat L_o=-\sum_{a=1}^2\widehat Y_a^2.
+\tag{3.2}
+$$
+
+The drift caused by the variable density and the variable square root is
+horizontal and has homogeneous degree one less than the principal part. It
+therefore disappears under the step-two dilation
+
+$$
+\delta_s(x,y,z)=(sx,sy,s^2z),\qquad |\det D\delta_s|=s^4.
+\tag{3.3}
+$$
+
+The frozen fields are an invertible change of the standard Heisenberg
+horizontal frame. Put $B=\Sigma(o)^{-1}$ and define the induced graded group
+automorphism $F_B$ in the displayed second-kind coordinates by
+
+$$
+\binom{\xi}{\eta}=B\binom{x}{y},
+\qquad
+\zeta=\det(B)\left(z-\frac{xy}{2}\right)+\frac{\xi\eta}{2}.
+\tag{3.3a}
+$$
+
+Indeed the first-kind central coordinate is $t=z-xy/2$: in
+$(x,y,t)$ the map is the linear graded map
+$(x,y,t)\mapsto(B(x,y),\det(B)t)$. Formula (3.3a) is its expression back
+in second-kind coordinates, including the homogeneous quadratic central
+correction. It commutes with $\delta_s$ and has absolute Jacobian
+$\det(B)^2$. Its pushforwards satisfy
+$(F_B)_*\widehat Y_1=U$ and $(F_B)_*\widehat Y_2=V$, so it carries
+$\widehat L_o$ exactly to $-(U^2+V^2)$, where
+
+$$
+U=\partial_\xi,\qquad V=\partial_\eta+\xi\partial_\zeta.
+$$
+
+Consequently the frozen heat kernel has a positive full Green kernel
+$G_o$ satisfying
+
+$$
+G_o(\delta_s q)=s^{-2}G_o(q),
+\qquad G_o(q)>0\ (q\ne0),
+\qquad G_o\in C^\infty(\mathbb R^3\setminus\{0\}).
+\tag{3.4}
+$$
+
+The normalization in (3.4) is relative to the constant measure
+$d\widehat\mu$. With $m_o=\rho(o)|J_o|$, its pushforward is
+$m_o\det(B)^{-2}\,d\xi\,d\eta\,d\zeta$. Thus if $G_H$ denotes the
+Lebesgue-normalized Green kernel for $-(U^2+V^2)$, then
+$G_o(q)=\det(B)^2m_o^{-1}G_H(F_Bq)$. This is the unit source for the same
+density convention as (1.2), with no change of coupling.
+
+The homogeneous norm $N_o$ obtained by pulling back a standard Heisenberg
+gauge gives constants $0<c_o\le C_o<\infty$ with
+
+$$
+c_oN_o(q)^{-2}\le G_o(q)\le C_oN_o(q)^{-2}
+\tag{3.5}
+$$
+
+on every fixed sufficiently small punctured chart. The upper estimate is
+all that is needed for weak coupling; the lower estimate supplies the
+large-coupling witnesses.
+
+The exact upper statement used below is for the full Green field. There are
+a neighbourhood $U_o$ and finite constants $C_{G,o}>0$, $B_{G,o}\ge0$ such that the
+full killed field obeys, for $q\in U_o\setminus\{o\}$,
+
+$$
+0\le \Gamma_{A,o}(q)
+\le C_{G,o}N_o(q)^{-2}+B_{G,o}.
+\tag{3.6}
+$$
+
+For every compact annulus $K\Subset\mathbb R^3\setminus\{0\}$ there is a
+$c_K>0$ such that, for all sufficiently small $s$,
+
+$$
+s^2\Gamma_{A,o}(\Phi_o(\delta_s\xi))\ge c_K
+\quad\text{for }\xi\in K.
+\tag{3.7}
+$$
+
+The lower estimate is obtained from a positive-time slice of the full Green
+integral; the field itself remains the integral over all $t\in(0,\infty)$.
+

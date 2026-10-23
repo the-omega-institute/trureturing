@@ -1,0 +1,56 @@
+## 37. The actual J-arc consumer and the reuse boundary
+
+[Support III, Theorem 16.4](FIB_STRICT_REAL_JOINT_INCIDENCE_SUPPORT_III.md#16-an-actual-strict-j-pair-arc)
+supplies an actual distinct equal-$J$ pair in the entire
+$C(p,v_J(p))$ for every $p\in[10,34]\setminus\{24\}$. At each
+of these exact bases Theorem 34.2 and Sections 35–36 apply. This
+includes both seams $20,30$, both endpoints $10,34$, and every
+exceptional projection, without discarding any companion in the child.
+The same-base condition of Definition 33.1 is therefore exactly
+
+$$
+(p,v_J(p))\in D_J\cap D_M
+\quad\Longleftrightarrow\quad
+\mathcal P_M\text{ has a real point satisfying (35.5) in both factors}.
+\tag{37.1}
+$$
+
+The $M$ pair is selected independently of the supplied $J$ pair;
+the pairs may overlap or be disjoint and their common terminal answers
+are independent. This is the existing faithful crossing relation of
+[support III, Definitions 18.1–18.2 and Theorem 18.3](FIB_STRICT_REAL_JOINT_INCIDENCE_SUPPORT_III.md#18-faithful-independent-m-crossing-interface),
+including its undivided equations (18.4)–(18.7). The finite algebra
+does not evaluate its strict-real points or assert an actual crossing.
+A zero count at one base would settle only that base. Neither absence
+on the whole arc nor completion of the full original joint problem
+follows from a length bound, and the remaining bases outside this arc
+are still part of the original target. No basis uniform in parameters
+is constructed by these pointwise specialized module isomorphisms.
+
+The only source-specific refinement asserted beyond the cited ordinary
+sources is the all-specialization specialized Sylvester-cokernel
+identity (34.4) and exact multiplicity-sensitive length (34.5), with
+the ambient sharpness arithmetic (34.8)–(34.9). Qualitative complex
+algebraic finiteness already follows from Sections 31–32; faithful
+reconstruction is Lemma 30.2 and
+[O, Theorem 12.3](FIB_COMMON_PARENT_GEOMETRY_AND_MIXED_CHILDREN.md#12-a-zero-safe-source-equation-for-every-fifth-m-response).
+The world bound $24$ and numerical pair bound $552$ are Theorem 32.1
+and Section 33. Section 8 already gives the tensor-square and
+Hermite/Tarski counting proposal.
+[Support IX, Sections 4–7](FIB_STRICT_REAL_JOINT_INCIDENCE_SUPPORT_IX.md#4-the-fixed-finite-carrier-and-its-drift-equation)
+already supplies the normalized equations, generic finite algebra,
+all-root generic reconstruction and generic terminal separation;
+[support, Theorem 4.3](FIB_STRICT_REAL_JOINT_INCIDENCE_SUPPORT.md#4-the-all-world-carrier-and-the-zero-drift-finite-outer-set)
+and [Lemma 9.9](FIB_STRICT_REAL_JOINT_INCIDENCE_SUPPORT.md#9-finite-outer-joint-bases-whenever-the-entire-child-meets-the-exceptional-union)
+already give finite-algebra terminal tests. These are reused inputs
+and consumers, not separate new-content claims here.
+
+Polynomial division, Smith normal form and Artin local decomposition
+are classical tools. Gaillard–Safey El Din,
+*Solving parameter-dependent semi-algebraic systems*,
+[Problem 1 and Theorem 2.4](https://arxiv.org/html/2402.07782v2),
+provides a general finite-algebra sign-counting interface. No
+dense-parameter classification theorem is used to delete an exceptional
+base in this argument. The source-specific comparison above concerns
+the cited ordinary sources and asserts no literature priority.
+

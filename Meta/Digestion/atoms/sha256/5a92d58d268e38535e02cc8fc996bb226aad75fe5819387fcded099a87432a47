@@ -1,0 +1,13 @@
+**Proposition 4.3 (Position preservation and selective disturbance).** Let $\mathcal D_i$ be the whole-outcome readout channel of Theorem 4.2 with the control omitted. For every bounded Borel function $f:\mathbb R^{17}\to\mathbb C$,
+
+$$
+\mathcal D_i^*(f(q))=f(q).
+$$
+
+Consequently the entire system position spectral distribution, including all finite first and second position moments, is preserved by the nonselective readout. An individual selective update need not preserve it.
+
+Proof. Multiplication operators obey $(f(q)\otimes I)V_i=V_if(q)$. Compressing by $V_i$ gives the bounded identity. Equality of expectations for all bounded Borel $f$ gives equality of position probability measures. Integrate truncations of $x_a^2$ and then the positive and negative parts of $x_a$ against those measures to extend the identity to finite moments. This is an extension through spectral measures, not application of a bounded-observable channel to an unbounded operator without a domain.
+
+At a particular outcome $z$, the new position measure is proportional to
+$|k_\sigma(z-\ell_i^Tx)|^2$ times its previous measure. This factor is generally nonconstant, so selective readout changes that measure. All initial Gaussians here are Schwartz functions; invertible linear pullbacks and finitely many Gaussian multipliers preserve that class. Thus every finite selective branch of this protocol has the moments used below. The nonselective mixtures have finite position moments by the distribution identity and the finite linear controls. The probe kick in Theorem 4.2 also shows why position preservation is not preservation of momentum or of the whole state. $\square$
+

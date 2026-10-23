@@ -1,0 +1,25 @@
+**Theorem 56.7 (Same-source same-run acquisition).**
+Under Hypothesis 56.6, for every $W\in\mathcal Z$, the receiver's literal
+run performs six $J$ atoms and four $M$ atoms, eleven immediate reports
+including initialization, and reaches $\mathrm{Acquired}$ after clock ten.
+At that cut the latch equals $\sigma(P(W))$, and the source state is
+$(10,Q_6P(W),g(W),d(W))$.
+
+**Proof.**
+Induct on the number of completed Ticks before the final transition.
+The initial report is the actual $y_0$ of the same specimen.  For
+$i<6$, the transition rule and the source law give the actual product
+$Q_iP(W)$ and report $y_i(W)$.  Four further $J$ transitions give the
+products of Lemma 56.2 and the actual reports $y_7,y_8,y_9,y_{10}$;
+local requests interspersed at idle cuts are identities on the source.
+Thus the run uses exactly $2+4=6$ $J$ atoms and $4$ $M$ atoms, with
+one immediate report at each of clocks one through ten and the
+initialization report at zero.  The controller's arithmetic uses only
+the captured actual reports and public constants; it never reads hidden
+$P,g,d$, predicts an unexecuted response, or invokes the inverse as a
+source substitute.  Lemma 56.3 and Theorem 56.4 prove that the strict
+comparison equals $\sigma(P(W))$.  Hypothesis 56.6 requires the latch
+write before clearing and before exposing $\mathrm{Acquired}$, so the
+bit is actually retained.  The source is not changed by the local steps
+after clock ten, proving the final state. ∎
+

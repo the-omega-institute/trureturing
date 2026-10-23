@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:63e04944f8c91d4f7dc0026125b2f49c8a1973af90429e48e0f5355d0a7ded77
+  normalized_sha256: sha256:63e04944f8c91d4f7dc0026125b2f49c8a1973af90429e48e0f5355d0a7ded77
+cas_ref: sha256:63e04944f8c91d4f7dc0026125b2f49c8a1973af90429e48e0f5355d0a7ded77
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 'nonpropositional: 工作路线选择与局部对象的定义式，没有附加性质。'
+    previous_atom_id: 5c040c5e77eac9d974476933443e63b457f3c4254e9849bae46242fdad32a21d
+    next_atom_id: 6edd8e42ae3e41493814ec5479af195594c199154f5a01f2314c11d4ade019d1

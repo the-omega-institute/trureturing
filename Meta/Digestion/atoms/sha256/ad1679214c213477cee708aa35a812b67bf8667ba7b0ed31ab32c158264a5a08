@@ -1,0 +1,41 @@
+**Proposition 25.2 (sharpness with supplied orthogonal sectors).** For
+every choice of positive integers $r_1,\ldots,r_M$, the incoming dimension
+bound $D\geq\sum_jr_j$ is attained conditionally by height records of
+ranks $r_j$ and a common ideal processor implementing the entire canonical
+time/five-mode instrument. This is the orthogonal controlled-instrument
+construction already available in §§17–20 and Quantum Carrier Minimum §8,
+with mixed states inside each sector. It assumes supplied source-bound
+sectors and calibrated operations; it does not acquire either.
+
+Proof. Take $H=\bigoplus_j\mathbb C^{r_j}$ with orthogonal projections
+$P_j$, and any state $\tau_j$ faithful on the $j$th sector. Put $v=d/L$
+and, as in (OC.57),
+
+$$
+f_j(t)=\frac{v x_j}{(x_j+vt)^2},\qquad
+g_j(t)=\frac{c}{c-x_j}f_j(t),\qquad 0<t\leq L.
+\tag{OC.81}
+$$
+
+Use success operator $\sum_j K_j\otimes P_j$. For failure mode $2$
+use the Kraus fields
+$\sqrt{f_j(t)}|f\rangle\langle2|\otimes P_j$;
+for each of modes $1,3$ use
+$\sqrt{g_j(t)/2}|f\rangle\langle-|\otimes P_j$.
+Modes $0,4$ have zero fields. The index $j$ in these fields can be
+discarded; the observed marks remain exactly the original mode and time.
+The identities (OC.58), sector by sector, make the total effects sum to
+$I_{V\otimes H}$. Integrating the fields over Borel time events gives
+the required countably additive CP measures.
+
+On an actual state supported in the $j$th sector these operations equal
+the prescribed specimen instrument tensor identity on that sector and on
+every unchanged reference. They therefore preserve the actual programme
+and its joint reference correlations, on success and on each failure
+branch of this particular construction. Failure has absorbing specimen
+$f$ and retains its first exact time/mode and old archive. Already stopped
+inputs use the declared stopped identity. The incoming dimension is
+$\sum_jr_j$, as claimed. This sufficient construction supplies no
+necessity of orthogonal sectors; Theorem 18.1 already permits nonorthogonal
+pure programmes for suitable two-height requests. $\square$
+

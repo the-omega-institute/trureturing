@@ -1,0 +1,20 @@
+### 推论 79.7（同一固定先验的单调性与远跨度极限）
+
+固定 $a,b,\varepsilon$，$R_h^*$ 随正整数 $h$ 非增。若 $L>0$，则
+
+$$
+\lim_{h\to\infty}hR_h^*=\varepsilon/2.
+\tag{79.11}
+$$
+
+**证明。** (79.3) 的最大值表达式对每个固定 $d$ 随 $h$ 非减，故满足
+$f_h(d)\le2\varepsilon$ 的距离集合随 $h$ 缩小。充分大的 $h$ 使
+$\gamma_h=2a+h$、$h+a>0$ 且饱和不发生，于是
+
+$$
+R_h^*=\frac{\sqrt{(h+a)^2+2\varepsilon}-(h+a)}2
+ =\frac{\varepsilon}{\sqrt{(h+a)^2+2\varepsilon}+(h+a)}.
+$$
+
+两边乘 $h$ 得 (79.11)，也包括 $\varepsilon=0$。先验在这个极限中始终固定。∎
+

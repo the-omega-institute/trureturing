@@ -3161,3 +3161,1081 @@ This bounded correspondence does not complete those obligations or the
 sustained four-expression objective.
 
 ## 追加锚（本行以下为增补区）
+
+
+## 56. A ten-clock acquisition of the spatial bit
+
+**Definition 56.1 (The complete promised domain and task).**
+For a complete world write
+
+$$
+P=P(r,b)=\begin{pmatrix}r&b\\r(1-r)/b&1-r\end{pmatrix},
+\qquad 0<r<1,\quad b>0,
+$$
+
+where $g\in\mathbb R[t]$ is one fixed nonzero polynomial of degree at most
+three and $d\in\mathbb R$ is one fixed drift.  Let
+
+$$
+J=\begin{pmatrix}0&1\\1&0\end{pmatrix},\qquad
+M=\begin{pmatrix}0&1\\1&1\end{pmatrix},\qquad
+Q_0=I,\quad Q_i=E_iQ_{i-1},
+$$
+
+with the literal original word
+$(E_1,\ldots,E_6)=(J,M,J,M,M,M)$.  The report at clock $i$ is
+
+$$
+y_i=d+g(i)\operatorname{tr}(Q_iP).
+$$
+
+Put
+
+$$
+c=r(1-r)/b,\quad j=b+c,\quad n=j+r,\quad
+T=1+b,\quad U=1+2b,\quad V=U+n.
+$$
+
+Let $C(p,v)$ be the set of complete worlds whose first five reports are
+$(0,24,147/5,24,18)$ and whose sixth and seventh reports are $p,v$,
+respectively, on this same chronological word.  Define
+
+$$
+\mathcal Z=\bigcup_{p\ne24,\ v\in\mathbb R}
+\{W=(P,g,d)\in C(p,v):g(7)=0\},
+\qquad
+\sigma(P)=\mathbf 1_{\{b>1/16\}}.
+$$
+
+Every quantifier below is over this entire union.  In particular, no common
+drift between two worlds, regular chart, exact degree, simple root, or
+nonzero sampled gain is assumed.
+
+The parent parametrization and the fixed-node interpolation used here are
+supplied by Common Parent Geometry, Theorems 2.1--2.2, and by the
+fixed-node results cited there (Berrut--Trefethen, Section 2).  They are
+used with their full degenerate domain.
+
+**Lemma 56.2 (The ten literal products and the report rows).**
+For the prescribed first six atoms,
+
+$$
+Q_6=\begin{pmatrix}3&1\\5&2\end{pmatrix},
+\qquad
+Q_7=JQ_6=\begin{pmatrix}5&2\\3&1\end{pmatrix},
+\qquad
+Q_8=Q_6,\quad Q_9=Q_7,\quad Q_{10}=Q_6
+$$
+
+when four further atoms $J,J,J,J$ are appended.  Moreover
+
+$$
+\operatorname{tr}(Q_6P)=2U+n=:\tau>0,
+\quad
+\operatorname{tr}(Q_7P)=T+2j+4r,
+$$
+
+and the reports $y_6,y_7,y_8,y_9,y_{10}$ are the actual reports at
+clocks six through ten of one run.
+
+**Proof.**
+Multiplication of the displayed $2\times2$ matrices gives the five
+products.  Expanding the trace against $P$ gives
+$3r+c+5b+2(1-r)=2+5b+c+r=2U+n$ and
+$5r+2c+3b+1-r=T+2j+4r$.  Positivity of $P$ and of the entries of $Q_6$
+gives $\tau>0$.  The equality $Q_8=Q_{10}=Q_6$ is a return of the
+literal source route; it does not erase the reports at clocks seven or
+nine. ∎
+
+**Lemma 56.3 (Zero-safe interpolation and the spatial identity).**
+For $W\in\mathcal Z$ set
+
+$$
+z_6=y_6-d,\qquad z_8=d-y_8,\qquad
+z_{10}=(d-y_{10})/3,
+$$
+
+and define the quadratic
+
+$$
+H(t)=z_6\frac{(t-8)(t-10)}8
+-z_8\frac{(t-6)(t-10)}4
++z_{10}\frac{(t-6)(t-8)}8.
+$$
+
+Then $H=\tau h$ for $g(t)=(7-t)h(t)$, $\deg h\le2$, and
+
+$$
+\begin{aligned}
+L&=H(0)=10z_6-15z_8+6z_{10},\\
+A&=5H(2)=30z_6-40z_8+15z_{10},\\
+B&=3H(4)=9z_6-9z_8+3z_{10}
+\end{aligned}
+$$
+
+satisfy
+
+$$
+-7L=\tau d,\qquad A=\tau g(2),\qquad B=\tau g(4).
+$$
+
+Define
+
+$$
+D_c=d(A^2+4B^2),
+$$
+
+$$
+N_c=-7L\left[A\left(147/5-d\right)+2B(18-d)\right]
+-d(A^2+2B^2).
+$$
+
+Then
+
+$$
+N_c=bD_c,\qquad
+(16N_c-D_c)D_c=(16b-1)D_c^2,
+$$
+
+and $D_c\ne0$ on $\mathcal Z$.
+
+**Proof.**
+The condition $g(7)=0$ gives the factorization $g=(7-t)h$.
+Lemma 56.2 gives $z_6=\tau h(6)$, $z_8=\tau h(8)$ and
+$z_{10}=\tau h(10)$.  The displayed expression is the Lagrange
+interpolant at the distinct nodes $6,8,10$, so it equals $\tau h$ without
+dividing by a sampled gain.  Evaluating it at $0,2,4$ gives the three
+stated linear forms.  The clock-zero row gives $-7L=\tau d$; the factors
+$5$ and $3$ in $A,B$ match $g(2)=5h(2)$ and $g(4)=3h(4)$.
+
+The even original rows give
+
+$$
+\tau(147/5-d)=AT,\qquad \tau(18-d)=BU.
+$$
+
+Substitute these and $-7L=\tau d$ into $N_c$:
+
+$$
+N_c=d\{A^2(T-1)+2B^2(U-1)\}=bd(A^2+4B^2)=bD_c.
+$$
+
+It remains to justify the denominator guard.  The zero-drift
+classification, Theorem 4.1 of
+[FIB_ZERO_TERMINAL_GAIN_FIXED_DRIFT_QUARTIC_CLASSIFICATION.md], gives,
+with $u=1+2b$,
+
+$$
+j=\frac{400u(u+1)}{3(269u-25)},\quad
+n=\frac{200u(u+1)}{3(123u+25)},\quad
+r=\frac{200u(u+1)(23u-75)}
+ {3(123u+25)(269u-25)}.
+$$
+
+If $d=0$, positivity gives $u>75/23$; the last expression and $r<1$
+give $u<27$.  Then
+
+$$
+c=\frac{-7u^2+1682u-75}{6(269u-25)}>245/269,
+\qquad b=(u-1)/2>26/23,
+$$
+
+so $bc>6370/6187>1$, contrary to $bc=r(1-r)\le1/4$.
+Thus $d\ne0$.  If $d=24$, Common Parent Theorem 2.2 forces
+$b=1/8$ and $g(t)=(8/5)(t-1)(t-3)(t-5)$, whose value at seven is
+$384/5$, contrary to the promise.  Finally $A=B=0$ would force
+$d=147/5$ and $d=18$ from the two even rows.  Hence $D_c\ne0$.
+No leading coefficient, discriminant, root separation, or sampled
+$g(6),g(8),g(10)$ was divided out. ∎
+
+**Theorem 56.4 (Actual-image full-world recovery and task comparator).**
+For every $W\in\mathcal Z$, the actual reports through clock ten determine
+the same complete $P,g,d$ by
+
+$$
+d=y_7,\qquad
+\tau=-7L/d,\qquad
+g(t)=(7-t)H(t)/\tau,
+$$
+
+$$
+b=N_c/D_c,\qquad
+r=(24-d)\left(\frac1{g(3)}-\frac1{g(1)}\right),
+\qquad
+P_{21}=r(1-r)/b.
+$$
+
+The reconstructed values are the actual world values.  In particular the
+Boolean
+
+$$
+\widehat\sigma=
+\mathbf1_{\{(16N_c-D_c)D_c>0\}}
+$$
+
+equals $\sigma(P)$.
+
+**Proof.**
+Since $g(7)=0$, the actual clock-seven report is $y_7=d$.
+Lemma 56.3 gives $d\ne0$, so $\tau$ is recovered from $L$ and is the
+positive actual trace.  The interpolation identity then recovers the
+whole polynomial.  The original odd rows are
+
+$$
+24=d+g(1)j=d+g(3)n.
+$$
+
+Lemma 56.3 gives $d\ne24$, hence $g(1)$ and $g(3)$ are nonzero and
+$n-j=r$ gives the displayed formula for $r$.  The identity
+$N_c=bD_c$ recovers $b$ and then the remaining matrix entry.  Thus all
+formulas return the original complete world on the actual image; they
+are not an arbitrary-record validator, a domain recognizer, a preparation
+procedure, or a decoder for unexecuted responses.  Finally
+$(16N_c-D_c)D_c=(16b-1)D_c^2$ and $D_c\ne0$ prove the comparator claim,
+including equality at $b=1/16$. ∎
+
+**Proposition 56.5 (Both task values occur on the promised domain).**
+There is a $W_-$ in $\mathcal Z$ with $\sigma(P)=0$ and a $W_+$ in
+$\mathcal Z$ with $\sigma(P)=1$.
+
+**Proof.**
+For the low bit, let $u\in[1,10/9]$, set
+
+$$
+d=147/5,\quad b=(u-1)/2,\quad
+j=36u/(63u-19),\quad n=18u/(19-7u),\quad r=n-j.
+$$
+
+Interpolate $h$ at $0,2,4$ with values
+$(-21/5,0,-19/(5u))$ and put $g(t)=(7-t)h(t)$.
+The denominators are positive on the interval.  Direct evaluation gives
+
+$$
+g(1)=-\frac{3(63u-19)}{20u},\qquad
+g(3)=-\frac{3(19-7u)}{10u},
+$$
+
+so $g(1)j=g(3)n=-27/5$, while the even rows follow from
+$g(2)=0$ and $g(4)=-57/(5u)$; the zero row follows from
+$g(0)=-147/5$.  Thus the five prescribed rows hold.
+The function $r$ increases from $15/22$ to $5140/5151$, so it lies in
+$(0,1)$ throughout.  The continuous function
+
+$$
+R(u)=r(1-r)-b(j-b)
+$$
+
+has $R(1)=105/484>0$ and
+$R(10/9)=56540/26532801-223/5508<0$.
+An interior zero gives $b>0$, $c=j-b=r(1-r)/b>0$, and a legal source
+matrix.  At that zero,
+
+$$
+p+141/10=-\frac{63(u-1)(95-7u)}{20(19-7u)}<0,
+$$
+
+so $p\ne24$; its actual $v$ is real and $g\ne0$.  Since
+$0<b<1/18<1/16$, this world is the required $W_-.$
+
+For the high bit use the exact M-pair circuit of
+[FIB_STRICT_REAL_UNEQUAL_DIAGONAL_ACTUAL_M_PAIR.md, Section 2] on the
+line $r=1/2$.  Put
+
+$$
+\mathcal J=b^2+1/4,\quad \mathcal N=\mathcal J+b/2,\quad
+S=40b^2+11b-2,
+$$
+
+and retain its denominator $\widehat D$ and seventh-gain numerator
+$\widehat B_7$.  Direct substitution in that published circuit gives
+
+$$
+\widehat B_7=3f(b)/4,\qquad
+f(b)=96+322b-1053b^2-860b^3-4724b^4-544b^5.
+$$
+
+The exact endpoint values are
+$f(13/40)=41825785/8000000>0$ and
+$f(1/3)=-1477/243<0$, so an interior root $b_*$ exists.  On this
+interval $j=b+1/(4b)$ and $n=j+1/2$ have negative derivatives, and
+
+$$
+\Lambda'= -6/T^2-2/U^2+4j'/j^2+4n'/n^2<0,
+\quad
+\Lambda(13/40)
+=1+240/53+20/33-2080/569-2080/829<-28/1000.
+$$
+
+Since $\Lambda=2\widehat D/(5TU\mathcal J\mathcal N)$, the root has
+$\widehat D\ne0$, and the same circuit supplies a legal nonzero
+degree-at-most-three gain with $g(7)=0$.  Here $b_*>13/40>1/16$.
+The parent identity and $\Lambda<0$ give $\epsilon=d-24>0$.
+Writing $K=2+5b$ and $V=U+n$, the exact clock-five identity is
+
+$$
+p-24=\epsilon\left(1+V\frac EK\right),\qquad
+E=5(b+2)/j+10(3b+2)/n-32.
+$$
+
+The term $-32$ includes the $-10U(1/U)$ contribution; replacing it by
+$-22$ changes the identity and is not accepted.  On the interval,
+$E\le-564/247$, $E/K\le-1692/2717$, and $V\ge97/30$, hence the
+bracket is strictly negative.  Therefore $p<24$, so this legal source
+also lies in $\mathcal Z$.  The circuit's first two unequal rows ensure
+$g\ne0$. ∎
+
+**Hypothesis 56.6 (Installed receiver and exact transition contract).**
+One unknown specimen is prepared in one world $W\in\mathcal Z$ at its
+original clock zero.  The receiver is installed before initialization
+with the ordered basis, named source endpoint $\epsilon$, public constants and exact-real capture,
+arithmetic, strict comparison, Boolean-latch write, and clearing
+primitives.  It has ten source-invocation rights and one immediate read
+at each invocation, plus the initialization read.  These are supplied
+model conditions: no preparation or promise-recognition method, physical
+exact-real implementation, finite-precision implementation, unknown seed,
+full-response oracle, or installed decoder is inferred.
+
+At initialization it emits the actual report $(\epsilon,0,\mathrm{init},
+\mathrm{ok},y_0)$, clears the input cell, and enters $\mathrm{Ready}_0$
+with latch $\bot$.  At $\mathrm{Ready}_i$, an authorized $\mathrm{Tick}$
+for $0\le i<6$ invokes $E_{i+1}$, and for $6\le i<10$ invokes $J$.
+For $i<9$ each invocation advances the same source by one atom, emits its actual
+endpoint, clock, action, status and scalar report, and returns
+$\mathrm{Advanced}$ with phase $\mathrm{Ready}_{i+1}$; the invocation at $i=9$
+emits the clock-ten report and enters the internal commit transition, whose
+completed external response is $\mathrm{Acquired}$.  No local arithmetic
+advances the source clock.  Thus the tenth atom is the fourth added $J$,
+and the clock-nine report is emitted and may then be cleared.
+
+After the report at clock ten, the receiver evaluates the expressions in
+Lemma 56.3 from actual captured reports and public rational constants.
+It writes $\widehat\sigma$ to the latch only when the strict comparison
+$(16N_c-D_c)D_c>0$ has completed, then clears every accessible
+source-dependent real cell, archive, permission and transient backing.
+Only after this write-and-clear transition is the phase
+$\mathrm{Acquired}$.  The historical emitted events remain in the past
+trace and are not erased.
+
+At any idle $\mathrm{Ready}_i$, authorized $\mathrm{Recall}$ returns
+$\mathrm{NotAcquired}$ with no bit and the identity joint successor; every
+other finite local request there returns $\mathrm{BadRequest}$ with identity
+successor.  $\mathrm{Ready}_{10}$ is an internal commit cut and accepts no
+external request.  At $\mathrm{Acquired}$, authorized $\mathrm{Recall}$ returns
+$\mathrm{ok}$ and the latch bit with the identity joint successor;
+authorized $\mathrm{Tick}$ returns $\mathrm{Finished}$ with identity
+successor and invokes no source; the source has stopped at clock ten and
+no post-ten source-action right exists; every other finite local request returns
+$\mathrm{BadRequest}$ with identity successor.  Requests made while a
+capture, comparison, latch write or clearing step is busy, direct endpoint
+calls bypassing the interface, unauthorized calls, and calls after an
+absent source right are illegal-unexecuted attempts: they create no event,
+read or successor.  There is no implicit denial read.
+
+**Theorem 56.7 (Same-source same-run acquisition).**
+Under Hypothesis 56.6, for every $W\in\mathcal Z$, the receiver's literal
+run performs six $J$ atoms and four $M$ atoms, eleven immediate reports
+including initialization, and reaches $\mathrm{Acquired}$ after clock ten.
+At that cut the latch equals $\sigma(P(W))$, and the source state is
+$(10,Q_6P(W),g(W),d(W))$.
+
+**Proof.**
+Induct on the number of completed Ticks before the final transition.
+The initial report is the actual $y_0$ of the same specimen.  For
+$i<6$, the transition rule and the source law give the actual product
+$Q_iP(W)$ and report $y_i(W)$.  Four further $J$ transitions give the
+products of Lemma 56.2 and the actual reports $y_7,y_8,y_9,y_{10}$;
+local requests interspersed at idle cuts are identities on the source.
+Thus the run uses exactly $2+4=6$ $J$ atoms and $4$ $M$ atoms, with
+one immediate report at each of clocks one through ten and the
+initialization report at zero.  The controller's arithmetic uses only
+the captured actual reports and public constants; it never reads hidden
+$P,g,d$, predicts an unexecuted response, or invokes the inverse as a
+source substitute.  Lemma 56.3 and Theorem 56.4 prove that the strict
+comparison equals $\sigma(P(W))$.  Hypothesis 56.6 requires the latch
+write before clearing and before exposing $\mathrm{Acquired}$, so the
+bit is actually retained.  The source is not changed by the local steps
+after clock ten, proving the final state. ∎
+
+**Theorem 56.8 (Source-free continuation and the exact recovery directions).**
+At acquired idle cuts with common public metadata and local rights, the
+projection
+
+$$
+\pi(S)=(\mathrm{endpoint},\mathrm{Acquired},10,\eta,
+          \mathrm{public\ local\ rights})
+$$
+
+factors every supported local response and projected joint successor.
+Equal projected states have identical finite supported source-free behavior, and unequal
+bits are separated by one authorized Recall.  The source route before
+acquisition is the literal chronological route above; after acquisition,
+local requests do not advance it.
+
+**Proof.**
+The transition contract makes Recall depend only on $\eta$ and public
+fields, Tick return Finished, and all other finite requests return
+BadRequest, with identity successors.  Induction on a finite request word
+gives the forward factorization.  If the bits differ, Recall returns
+different bit labels, proving separation.  The source law composes
+chronological words by left multiplication, while every inserted idle
+local request is an identity on the source component.  This is the
+same-source/same-run continuation argument of FRS53--55, specialized to
+the ten-clock receiver; it does not identify hidden source worlds or
+reconstruct the emitted history from the bit. ∎
+
+**Definition 56.9 (Resources, four-expression limits and suppliers).**
+The independently verified same-run source resources are ten atoms
+(six $J$, four $M$) and eleven immediate reads including initialization.
+Arithmetic, comparison, latch writing and clearing do not advance source
+time.  No $39/40$ arithmetic-operation count and no nine-real-cell bound
+is asserted; those schedules are outside this result.  Exact-real cells
+and a finite controller do not imply finite-bit capacity, and no
+minimality, physical erasure, free unlimited dispatch, robustness or
+global optimum is claimed.
+
+Space is the independently defined ordered-basis predicate $b>1/16$;
+time is the literal source clock and executed action order; boundary is
+the actual endpoint/action/clock/status/scalar report stream; memory is
+the committed bit and its declared Recall behavior.  The proved directions
+are actual source route to boundary reports, reports on the promised
+image to the complete world, world predicate to the committed bit, and
+the committed bit to source-free supported responses.  The bit does not
+recover $P,g,d$, the raw reports, clock history, permissions or arbitrary
+future source actions; no boundary/time/memory mutual recovery, universal
+alpha/beta reduction, or four-expression completion is supplied.
+
+Common Parent Theorems 2.1--2.2, the zero-drift Theorem 4.1, the exact
+M-pair Section 2 circuit and its Sections 19--30 are suppliers for the
+parent identities, guards, and witness construction. Self-Calibrating I
+Theorem 4.1 supplies the four-read relation algebra; Self-Calibrating II
+Theorem 60.1 and V--VIII supply root/return calibration services under
+different histories, clocks, and promises. Literal Clock, Definitions
+1.1--1.2 and Proposition 5.2, supplies a longer literal atomic-clock
+service: every atom advances the clock and is immediately read.
+Polynomial Gain Shear, Definitions 1.1 and 3.1 and Section 9, supplies a
+distinct recorded-read/composite-word service: each recorded read advances
+its index, including empty-word repeats, while unread atoms do not. None
+of these services directly instantiates this JMJMMMJJJJ run.
+Berrut--Trefethen supplies fixed-node
+interpolation; the cited observability literature supplies context only.
+FRS53--55 and the retained row-depth, fixed-offset, and Process Geometry
+suppliers supply the generic retention, legality, and successor distinctions.
+No supplier supplies this receiver's actual ten-step latch commit.
+
+## 追加锚（本行以下为增补区）
+
+## 57. Native logarithmic sources, boundary futures and autonomous scalar prediction
+
+**Definition 57.1 (The fixed spatial model and its completed reference operator).**
+Fix one both-wall native model of
+[Native Green stability, §§1–3 and 10–12](FIB_NATIVE_VARIABLE_COEFFICIENT_GREEN_STABILITY.md).
+Thus $0<Z<1$, $r=1-Z$, $X=Y=r/2$, and
+$I=(l,u)\Subset(0,r/2)$. Fix the preparation data, the actual grouped
+phase torus and an interior source $o=(k_o,\alpha_o,\beta_o)$ once and
+for all. In the actual $2\pi$-periodic coordinates,
+
+$$
+\Omega=I\times\mathbb T^2,\qquad
+P=\partial_k,\qquad
+Q=\tfrac12\partial_\alpha+(\tfrac12-k/r)\partial_\beta,\qquad
+ d\mu=\rho\,dk\,d\alpha\,d\beta.
+$$
+
+Here $\rho>0$ is smooth and $A$ is a smooth real symmetric positive
+definite horizontal matrix on a neighbourhood of $\overline\Omega$.
+The angular measure is unnormalized. Work in the real spatial Hilbert
+space $\mathscr H=L^2(\Omega,\mu;\mathbb R)$, with its ordinary norm;
+a state is an amplitude on this cylinder, not a spectral-index space.
+Write $\nabla_X=(P,Q)$ and set
+
+$$
+T_A[f]=\int_\Omega\langle A\nabla_X f,\nabla_X f\rangle\,d\mu,
+\qquad
+\mathcal F_A=\overline{C_c^\infty(\Omega)}^{\,(T_A+\|\cdot\|_2^2)^{1/2}}.
+$$
+
+The core is periodic in phase and compactly supported in height; hence
+its closure retains killing at $l,u$. Let $L_A$ be the represented free
+operator, and let
+$\Gamma=\int_0^\infty p_t^\Omega(o,\cdot)\,dt$ be its full killed
+unit-source Green field relative to this same $\mu$. The source is
+neither averaged over phase nor cut off in time. The kinetic
+normalization is the original control covariance $2A\,dt$, with no
+extra factor $1/2$ in $T_A$.
+
+Retain the source normalization explicitly. On an injective source
+chart put
+
+$$
+\begin{gathered}
+x=k-k_o,\quad y=2(\alpha-\alpha_o),\quad
+z=-r\{\beta-\beta_o-(\tfrac12-k_o/r)y\},\quad B=A(o)^{-1/2},\\
+(\xi,\eta)^{\mathsf T}=B(x,y)^{\mathsf T},\qquad
+\tau=\det(B)(z-xy/2),\qquad
+R^4=(\xi^2+\eta^2)^2+16\tau^2,\\
+m_0=\rho(o)\det A(o)/(2r),\qquad
+\cos a=(\xi^2+\eta^2)/R^2,\quad \sin a=4\tau/R^2.
+\end{gathered}
+$$
+
+Let $J=(-\pi/2,\pi/2)$ and $c(a)=\cos a$. The angular operator
+$S b=-4(cb')'+cb$ is represented by
+$\int_J(4c|b'|^2+c|b|^2)\,da$ on
+$\{b\in L^2(J):b\in AC_{\rm loc}(J),\sqrt c\,b'\in L^2(J)\}$.
+Its endpoints are natural, not Dirichlet. Let $(\lambda_0,\phi)$ be
+its positive lowest eigenpair with $\phi(0)=1$, using the bounded
+endpoint branches, and put
+
+$$
+h=R^{-1}\phi(a),\qquad
+g_{\rm c}=2\pi m_0\lambda_0,\qquad
+K=m_0\frac\pi2\int_J c\phi^2\,da>0.
+$$
+
+The critical form $q_{\rm c}=T_A-g_{\rm c}\int\Gamma|\cdot|^2d\mu$
+on its original domain $\mathcal F_A$ is closable and semibounded.
+Let $\overline q_{\rm c}$ be its closure and $\mathcal Q$ its domain.
+Define $F$ by the representation of this completed form:
+
+$$
+\begin{split}
+D(F)&=\{u\in\mathcal Q:\text{ there is }v\in\mathscr H
+\text{ with }\overline q_{\rm c}(u,z)=\langle v,z\rangle
+\text{ for all }z\in\mathcal Q\},\\
+Fu&=v.
+\end{split}
+$$
+
+Native Green stability, Theorems 12.2 and 15.1, supply compact resolvent,
+$\mathcal F_A\subsetneq\mathcal Q$, and lowest energy $E_*$ for this
+$F=K_*$. In particular $F$ is the completed critical operator, not a
+finite-cap operator; its completed form does not assign a difference
+to two individually infinite integrals. Below the calibrated field
+evolution is the fixed linear semigroup of $F-E_0$. This is distinct
+from asserting a Markov law for that potential-bearing semigroup.
+
+**Definition 57.2 (The genuine source boundary and the initial logarithmic field).**
+Retain the inherited outer walls in the source-minimal operator:
+
+$$
+\mathcal D_0=\{u\in D(F):u=0\text{ near }o\},\qquad
+S_{\min}=\overline{F|_{\mathcal D_0}}^{\rm graph},\qquad
+S_{\max}=S_{\min}^{\,*}.
+$$
+
+Use the real restrictions of the native maximal pair in Native Green
+stability, Theorem 21.1 and Proposition 21.2. For its genuine vectors
+$p,\zeta$, the graph-direct decomposition and Green identity are
+
+$$
+\begin{gathered}
+D(S_{\max})=D(S_{\min})\dotplus\operatorname{span}_{\mathbb R}\{p,\zeta\},
+\quad u=u_{\min}+\mathcal A(u)p+\mathcal B(u)\zeta,\quad
+D(F)=\ker\mathcal B,\\
+\langle S_{\max}u,v\rangle-\langle u,S_{\max}v\rangle
+ =K\{\mathcal B(u)\mathcal A(v)-\mathcal A(u)\mathcal B(v)\}.
+\end{gathered}
+$$
+
+The two traces are graph-continuous and jointly onto $\mathbb R^2$.
+Here $p=f_*/a_*$, where $f_*$ is the normalized positive ground of $F$
+and $f_*/h=a_*+O(R^\gamma)$, $a_*>0$; also
+$\zeta/h=\log R+O(R^\gamma)$. Thus $K$ has no factor $a_*^2$.
+For general maximal elements these are graph/angular $L^2$ traces,
+not a uniform pointwise assertion or a continuous trace on the form
+space $\mathcal Q$. For finite-energy maximal solutions the expansion
+$u/h=\mathcal A(u)+\mathcal B(u)\log R+O(R^\gamma)$ is uniform in all
+angles with the native rescaled-annular derivatives. The boundary here
+is the singular source boundary pair; it is not a nonzero value on the
+killed outer height walls.
+
+Fix any $E_0<E_*$ and define, using the genuine corrected $\zeta$,
+
+$$
+g=-\zeta+(F-E_0)^{-1}(S_{\max}-E_0)\zeta,\qquad H_0=F-E_0.
+$$
+
+This is precisely the global source vector $U_{E_0}$ of
+[Spatial cap, Theorem 6.1](FIB_NATIVE_SPATIAL_CAP_RETAINED_AND_RESONANT_LIMITS.md).
+The vector is in $\mathscr H\cap D(S_{\max})$, has
+$S_{\max}g=E_0g$, $\mathcal B(g)=-1$, and
+$g/h=-\log R+\eta(E_0)+O(R^\gamma)$. That supplier also gives its
+strict positivity. The prescribed normalization is $\mathcal B(g)=-1$;
+no $L^2$ rescaling is made. This construction uses the full original Green
+potential and outer walls. It supplies no uncapped trace of any
+finite-resolution capped state.
+
+**Theorem 57.3 (Native source support and the boundary functional).**
+For every $z\in D(F)$,
+
+$$
+K\mathcal A(z)=\langle H_0z,g\rangle. \tag{57.1}
+$$
+
+For each distinct eigenvalue $\lambda$ of $F$, let $P_\lambda$ be its
+orthogonal eigenspace projection. Then
+
+$$
+\mathcal A(z)=\frac{\lambda-E_0}{K}\langle z,P_\lambda g\rangle
+\quad(z\in\ker(F-\lambda)). \tag{57.2}
+$$
+
+Consequently $P_\lambda g\ne0$ exactly when the genuine source trace
+is nonzero on that eigenspace. There are infinitely many such distinct
+eigenvalues. They can be enumerated so that
+
+$$
+\mu_j=\lambda_j-E_0>0,\quad
+\mu_1<\mu_2<\cdots\longrightarrow\infty,\quad
+v_j=P_{\lambda_j}g\ne0,\quad g=\sum_{j\ge1}v_j
+\text{ in }\mathscr H. \tag{57.3}
+$$
+
+Within an active eigenspace the visible space is exactly the single
+line $\mathbb Rv_j$; its orthogonal complement is the kernel of
+$\mathcal A$ on that eigenspace. An inactive eigenspace is entirely
+invisible to this functional.
+
+**Proof.**
+The resolvent term defining $g$ is in $D(F)$, hence in $D(S_{\max})$
+with trace $\mathcal B=0$. Applying $S_{\max}-E_0$ to the definition
+cancels its two terms, and $\mathcal B(-\zeta)=-1$. Thus $g$ has the
+stated equation and trace. Uniqueness with this trace follows because
+a difference would lie in $D(F)$ and be an eigenvector below $E_*$.
+In particular
+
+$$
+g\notin D(F), \tag{57.4}
+$$
+
+by $D(F)=\ker\mathcal B$. Applying the Green identity to $z,g$ gives
+$\langle Fz,g\rangle-E_0\langle z,g\rangle=K\mathcal A(z)$,
+with the positive sign in (57.1). Equation (57.2) follows immediately.
+
+Since $H_0\ge(E_*-E_0)I>0$, $H_0^{-1}$ is compact, selfadjoint,
+positive and injective, with dense range. The compact selfadjoint
+spectral theorem gives a complete orthogonal sum of finite-dimensional
+eigenspaces. Its nonzero eigenvalues can accumulate only at zero;
+therefore the eigenvalues of $H_0$ have finite multiplicity and no
+finite accumulation. If $g$ had only finitely many nonzero distinct
+spectral projections, it would be a finite sum of vectors in $D(F)$,
+contradicting (57.4). This proves (57.3). On each eigenspace (57.2)
+identifies the trace's Riesz vector and its kernel, including
+multiplicities. ∎
+
+The compact spectral theorem is a classical supplier; its relevant
+completeness and finite-multiplicity statements also appear as
+`ContinuousLinearMap.orthogonalComplement_iSup_eigenspaces_eq_bot` and
+`ContinuousLinearMap.finite_dimensional_eigenspace` in pinned
+[mathlib Spectrum](https://github.com/leanprover-community/mathlib4/blob/56a005855ea17e0b0958f73ec801ae140b0a1679/Mathlib/Analysis/InnerProductSpace/Spectrum.lean).
+The abstract graph-boundary framework is literature-attested in
+[math/0610299v1, §§4.1 and 7.1](https://arxiv.org/abs/math/0610299v1).
+The native content of (57.1)–(57.4) is the identification of its actual
+source vector and boundary functional on this completed cylinder,
+and the resulting infinite active support. Neither an abstract boundary
+pair nor a generic spectral theorem alone identifies that source.
+
+**Definition 57.4 (Calibrated boundary futures and the prediction task).**
+For fixed $s>0$ and $\Delta>0$ set
+
+$$
+E_t=e^{-tH_0}\quad(t\ge0),\qquad T=E_\Delta,\qquad
+(\mathcal O_sx)_n=\mathcal A(E_{s+n\Delta}x)\quad(n\in\mathbb N_0).
+$$
+
+The future is defined by the genuine constant trace of the evolved
+spatial field, not by prescribing spectral observations. Its task is
+to give every subsequent scalar at these fixed calibrated times.
+Indeed $E_tx\in D(F)$ for every $x\in\mathscr H$ and $t>0$, since
+$\sup_{\mu\ge E_*-E_0}\mu e^{-t\mu}<\infty$. Thus every displayed
+trace exists in the maximal graph domain. In particular
+$\mathcal B(E_tx)=0$; measuring that logarithmic trace instead would
+give the zero future. No trace at time zero is required for a general
+$x\in\mathscr H$.
+
+Let $a_j=e^{-\Delta\mu_j}$, so $1>a_1>a_2>\cdots\downarrow0$.
+Equation (57.1) and the spectral expansion give
+
+$$
+(\mathcal O_sx)_n=\sum_{j\ge1}d_j(x)a_j^n,\qquad
+d_j(x)=K^{-1}\mu_je^{-s\mu_j}\langle x,v_j\rangle. \tag{57.5}
+$$
+
+The coefficients are absolutely summable: orthogonality and
+Cauchy–Schwarz give
+$\sum_j|\langle x,v_j\rangle|\le\|x\|_2\|g\|_2$, and the multiplier
+$\mu e^{-s\mu}$ is bounded. In particular
+$\mathcal O_s:\mathscr H\to c_0(\mathbb N_0;\mathbb R)$ is bounded
+for the sup norm. More precisely, selfadjointness and the spectral
+calculus yield
+
+$$
+|(\mathcal O_sx)_n|
+\le K^{-1}\|x\|_2\|H_0E_sg\|_2
+           e^{-n\Delta(E_*-E_0)}. \tag{57.6}
+$$
+
+This is an autonomous linear field evolution in its original calibrated
+time, without nonlinear re-clocking. Although $S_{\max}g=E_0g$,
+$H_0g$ is not defined as an operator value: (57.4) prevents treating
+$g$ as a stationary state of this reference evolution.
+
+**Theorem 57.5 (Exact spatial recovery, invisible part and shift).**
+Define the spatial cyclic subspace and its orthogonal projection by
+
+$$
+\mathscr C_g=\overline{\bigoplus_{j\ge1}\mathbb Rv_j},\qquad
+\Pi_g:\mathscr H\to\mathscr C_g.
+$$
+
+For every $s,\Delta>0$ as above,
+
+$$
+\begin{gathered}
+\mathscr C_g
+ =\overline{\operatorname{span}\{T^nE_sg:n\ge0\}}
+ =\overline{\operatorname{span}\{H_0T^nE_sg:n\ge0\}},\\
+\ker\mathcal O_s=\mathscr C_g^\perp,\qquad
+\mathcal O_sx=\mathcal O_sx'
+\ \Longleftrightarrow\ \Pi_gx=\Pi_gx'. \tag{57.7}
+\end{gathered}
+$$
+
+All closures here are in the spatial $L^2(\mu)$ norm. Exact full future
+data determine precisely $\Pi_gx$. They determine all of $x$ on
+$\mathscr C_g$, and on all of $\mathscr H$ if and only if
+$\mathscr C_g=\mathscr H$. No cyclicity of every eigenspace is assumed.
+For a future $y=\mathcal O_sx$, recovery on its image is explicitly
+
+$$
+\begin{gathered}
+d_j=\lim_{n\to\infty}a_j^{-n}
+       \left(y_n-\sum_{i<j}d_i a_i^n\right),\qquad
+\langle x,v_j\rangle=K e^{s\mu_j}d_j/\mu_j,\\
+\Pi_gx=\sum_{j\ge1}
+       \frac{\langle x,v_j\rangle}{\|v_j\|_2^2}v_j
+\quad\text{in }\mathscr H. \tag{57.8}
+\end{gathered}
+$$
+
+If $\sigma y=(y_{n+1})_{n\ge0}$, then
+
+$$
+\mathcal O_s(Tx)=\sigma\mathcal O_sx,\qquad
+\Pi_gE_tx=E_t\Pi_gx\quad(t\ge0,\ x\in\mathscr H). \tag{57.9}
+$$
+
+Thus exact future equivalence is invariant under the allowed sampled
+update, and recovery agrees with that update on its image.
+
+**Proof.**
+We first use the following elementary uniqueness argument for the
+particular nodes $a_j$ in (57.5). If $\sum_j|b_j|<\infty$ and
+$\sum_j b_ja_j^n=0$ for every $n\ge0$, divide by $a_1^n$ and let
+$n\to\infty$. Dominated convergence on $j>1$ gives $b_1=0$.
+Repeating after removal of the earlier terms gives every $b_j=0$.
+The same argument applied to a nonzero sequence gives its successive
+coefficient limits, exactly as in (57.8).
+
+All vectors in either generating family in (57.7) lie in $\mathscr C_g$.
+If $x\in\mathscr C_g$ is orthogonal to the first family, its moments
+have summable coefficients $e^{-s\mu_j}\langle x,v_j\rangle$;
+uniqueness makes all these coefficients zero, so $x=0$. For the second
+family insert the bounded multiplier $\mu_je^{-s\mu_j}$ and argue
+identically. This proves both density assertions. Equations
+(57.1) and (57.5) now give the kernel and equivalence assertions.
+Successive moment limits recover every $d_j(x)$. Orthogonal projection
+and Bessel's inequality make the last series in (57.8) norm convergent.
+
+The semigroup law gives the first identity in (57.9). Each line
+$\mathbb Rv_j$ is a spectral invariant subspace, and so is its
+orthogonal complement, including the remaining directions in repeated
+eigenspaces. Hence its closed sum is reducing for every $E_t$ and
+$\Pi_g$ commutes with $E_t$. This proves the second identity and route
+agreement. ∎
+
+The inverse in (57.8) is exact mathematical determination on
+$\mathcal O_s(\mathscr H)$, using the fixed operator's spectral data
+and infinitely many exact observations and limits. It is not a
+finite acquisition algorithm or an installed decoder. The quotient by
+$\mathscr C_g^\perp$ is task-relative: it forgets exactly what this
+scalar sampled future cannot distinguish, not every feature of the
+native field or of other interventions.
+
+**Proposition 57.6 (Finite windows and instability in specified norms).**
+For all integers $L\ge1$ and $r_0\ge0$ there is a nonzero finite
+spectral vector $z\in D(F)\cap\mathscr C_g$ such that
+
+$$
+(\mathcal O_sz)_{r_0}=\cdots=(\mathcal O_sz)_{r_0+L-1}=0,
+\qquad (\mathcal O_sz)_{r_0+L}\ne0. \tag{57.10}
+$$
+
+Consequently those $L$ reads do not determine even the next read on
+the stated real amplitude domain. Moreover the inverse of
+$\mathcal O_s|_{\mathscr C_g}$, from its image with the sup norm to
+$\mathscr C_g$ with the spatial Hilbert norm, is discontinuous at zero.
+
+**Proof.**
+Use any $L+1$ distinct active lines and write
+$z=\sum_{j=1}^{L+1}t_jv_j$. The $L$ zero equations have matrix entries
+$K^{-1}\mu_je^{-s\mu_j}\|v_j\|_2^2a_j^{r_0+n}$,
+$0\le n<L$. Their first $L$ columns form an invertible scaled
+Vandermonde matrix. The full $L$ by $L+1$ matrix therefore has a
+nonzero kernel. Adding row $n=L$ gives an invertible square
+Vandermonde matrix, so a nonzero kernel vector cannot also annihilate
+that row. This proves (57.10). The pair is $0,z$ in $\mathscr H$;
+no preparation of two normalized positive probability states is
+asserted by this linear-amplitude example.
+
+For instability put $e_j=v_j/\|v_j\|_2$. Then
+
+$$
+\|e_j\|_2=1,\qquad
+\|\mathcal O_se_j\|_\infty
+ =K^{-1}\mu_je^{-s\mu_j}\|v_j\|_2\longrightarrow0, \tag{57.11}
+$$
+
+because $\mu_j\to\infty$ and $\|v_j\|_2\le\|g\|_2$.
+The inverse would send this sequence converging to zero to unit
+vectors, which proves discontinuity, even with unit-ball witnesses. ∎
+
+**Theorem 57.7 (The native source future has unbounded scalar autonomous linear rank).**
+For the one initial spatial field $g=U_{E_0}$ let
+$k_n=(\mathcal O_sg)_n$. For all integers $r_0\ge0$ and $N\ge1$,
+the $N$ by $N$ Hankel matrix
+
+$$
+\mathsf H_N^{(r_0)}=(k_{r_0+p+q})_{0\le p,q<N}
+$$
+
+is positive definite, hence has rank $N$. If a real $d$-coordinate
+autonomous linear register
+
+$$
+m_{n+1}=Mm_n,\qquad y_n=\ell m_n
+$$
+
+matches the first $2N-1$ values of the tail $(k_{r_0+n})_{n\ge0}$,
+then $d\ge N$. If both update and readout are affine, the bound is
+$d+1\ge N$. In particular no finite register in either of these
+classes produces the whole exact tail, for any finite $r_0$.
+The initialization $m_0$ may have been selected by any earlier
+acquisition; the matrices and readout must be fixed during prediction.
+
+**Proof.**
+The native correspondence (57.5) gives
+
+$$
+k_n=\sum_{j\ge1}w_ja_j^n,\qquad
+w_j=K^{-1}\mu_je^{-s\mu_j}\|v_j\|_2^2>0,\qquad
+\sum_jw_j<\infty. \tag{57.12}
+$$
+
+For $b\in\mathbb R^N$ and $P_b(a)=\sum_{p=0}^{N-1}b_pa^p$,
+absolute convergence and finite summation give
+
+$$
+b^{\mathsf T}\mathsf H_N^{(r_0)}b
+ =\sum_{j\ge1}w_ja_j^{r_0}P_b(a_j)^2.
+$$
+
+A nonzero polynomial has finitely many roots, whereas the active
+nodes are infinitely many and distinct. Every weight is positive,
+so the displayed quantity is strictly positive for $b\ne0$.
+
+For a matching linear register,
+$y_{p+q}=\ell M^{p+q}m_0$ factors its Hankel block as the product
+of the $N$ by $d$ matrix with rows $\ell M^p$ and the $d$ by $N$
+matrix with columns $M^qm_0$. Its rank is at most $d$. The prefix
+length $2N-1$ includes every required index $p+q\le2N-2$, so the
+positive definite block forces $d\ge N$. An affine update
+$m\mapsto Mm+b$ and output $\ell m+c$ lift to the linear update
+on $(m,1)\in\mathbb R^{d+1}$ with matrix
+$\left(\begin{smallmatrix}M&b\\0&1\end{smallmatrix}\right)$ and
+readout $(\ell,c)$. This gives $d+1\ge N$. Since $N$ is arbitrary,
+no finite $d$ works for the entire tail in either class. ∎
+
+The positive-support Gram argument and the Hankel factorization are
+reused tools, as in this volume's §§29–33 and the existing
+[finite Prony](../../../D5/S3/Analytic/GoldenTomography/FinitePronyHankelReconstruction.lean),
+[finite Ho–Kalman](../../../D5/S3/Observer/Hankel/FiniteHoKalmanBlocks.lean)
+and [sequence realization](../../../D5/S3/Observer/Hankel/SequenceHankelRealization.lean)
+results and their owning Blueprint expositions. The additional native
+input here is (57.1)–(57.4), which proves that this genuine boundary
+future has infinitely many positive active weights. The conclusion
+counts scalar real coordinates of a fixed autonomous linear or affine
+register. It does not bound nonlinear or time-varying predictors,
+finite programs, finite-bit memory, physical devices or universal
+prediction. In particular it does not count branches that each retain
+a whole spatial base amplitude as one scalar coordinate.
+
+**Hypothesis 57.8 (An installed same-source field and record interface).**
+An ideal service has one named backing field on this fixed native
+cylinder, initialized once at $g$ at calibrated time zero. The service
+can prepare that profile and enable the reference evolution $E_t$;
+preparation is a capability premise, not a consequence of the existence
+of $U_{E_0}$. Its operator, source and clock identifiers and the numbers
+$E_0,s,\Delta$ are supplied reference data. A finite control program has
+access to a positive integer $N$, its counter and those reference data, not to hidden
+spectral coordinates or an oracle for unexecuted outputs. Counter
+storage is not asserted bounded uniformly in $N$.
+
+At idle cuts the joint state contains the actual field $x_t=E_tg$,
+current calibrated time $t$, an owned archive of existing records,
+the controller, an attached flag, and permission counters $(w,b,a)$
+for waits, boundary reads and durable appends. Its supplied duration
+set contains $s,\Delta$; these selector inputs are accessible to the
+controller. Initially the archive is empty, the flag is attached,
+and the counters are specified nonnegative integers $(w_0,b_0,a_0)$.
+Persistent Recall and Detach permissions are supplied as well.
+Initialization binds the endpoint to this backing and the supplied
+operator, source and clock identifiers; it emits the endpoint, clock
+zero, $\mathrm{Init}$, $\mathrm{ok}$ and no scalar value, without
+archiving a record. The supported operations are as follows.
+
+- $\mathrm{Wait}(\delta)$ is legal when attached, $w>0$, and the supplied
+  nonnegative duration $\delta$ belongs to the authorized duration set.
+  It changes $(t,x_t,w)$ to $(t+\delta,E_\delta x_t,w-1)$ and leaves
+  the other material components unchanged. It emits the actual
+  endpoint, new clock, request and $\mathrm{ok}$ status, with no scalar
+  boundary read.
+- $\mathrm{ReadAppend}$ is legal when attached, $x_t\in D(F)$,
+  $b>0$ and $a>0$. It returns the actual $\mathcal A(x_t)$, appends
+  precisely the record
+  $(\mathrm{endpoint},t,\mathrm{ReadAppend},\mathrm{ok},\mathcal A(x_t))$,
+  replaces $(b,a)$ by $(b-1,a-1)$, and leaves the other material
+  components unchanged. Nonperturbing sensing and durable append are
+  supplied capabilities of this operation; an emission alone is not
+  assumed to install recall.
+- $\mathrm{Recall}(i)$, for an accessible integer index of an existing
+  owned record and the persistent access permission, returns exactly
+  that record and has the identity joint successor. It invokes no
+  boundary sensor and appends nothing.
+- $\mathrm{Detach}$, when attached and authorized, clears the attached
+  flag and sets $w=b=a=0$. It leaves field and clock unchanged at that
+  cut and retains the owned archive, its Recall permission and the
+  other local state. No subsequent Wait or ReadAppend through this
+  interface is legal.
+
+Each completed operation emits its endpoint, clock, request, status
+and stated value or absence of value. Archive writes occur only in
+ReadAppend. Wait reports and the initialization report are emitted
+without creating extra archived records. Busy requests, absent rights,
+invalid indices or durations, and reads outside the stated domain are
+illegal-unexecuted attempts: they create no read, record or transition.
+There is no implicit denial read. Local counter work and Recall do not
+advance the field clock. Ownership of an archive alone provides no
+field-action right. Exact sensing without perturbation, calibrated
+waiting, faithful real-valued capture, preparation, archive backing,
+access and the stated permission bundle are all premises of this
+interface. Their construction and costs are not supplied by the
+analytic source.
+
+**Corollary 57.9 (One run supplies each finite rank witness, conditionally).**
+Under Hypothesis 57.8 with $w_0,b_0,a_0\ge2N-1$, the
+literal schedule consisting of one $\mathrm{Wait}(s)$ followed by
+$2N-1$ ReadAppend operations with one $\mathrm{Wait}(\Delta)$ between
+each consecutive pair stores the exact records $k_0,\ldots,k_{2N-2}$
+of Theorem 57.7. It uses one initialization, one initial wait,
+$2N-2$ intervening waits and $2N-1$ boundary reads with $2N-1$ durable
+scalar records; no initialization boundary read or Recall is used.
+Its final field is $E_{s+(2N-2)\Delta}g$, its final calibrated time
+is $s+(2N-2)\Delta$, its counters are
+$(w_0-(2N-1),b_0-(2N-1),a_0-(2N-1))$, and its archive retains all
+the stated record metadata as well as the values. Thus there are
+$4N-2$ completed service operations after initialization.
+
+If the field and requisite rights are retained, subsequent legal
+Wait and ReadAppend operations continue this same trajectory. A
+calibrated prefix ending just after read $r_0$ has used $r_0+1$ waits
+including the initial one, $r_0+1$ ReadAppend operations and $r_0+1$
+records, at time $s+r_0\Delta$, provided its rights suffice. Detach
+then adds one service operation with no boundary read, new record or
+clock advance. Each subsequent authorized Recall adds one operation
+with no boundary read, new record or clock advance, and retrieves only
+an existing record. A separate source-free
+register tasked with generating all subsequent new samples faces
+Theorem 57.7 for the tail beginning at $r_0+1$, whenever its prediction
+class is autonomous linear or affine. This does not prevent continued
+sampling of a retained field.
+
+**Proof.**
+After the initial wait the actual field is $E_sg\in D(F)$, so the
+first read is legal and equals $k_0$. ReadAppend leaves that field
+unchanged. Inductively the intervening wait changes it from
+$E_{s+i\Delta}g$ to $E_{s+(i+1)\Delta}g$, and the next read appends
+exactly $k_{i+1}$ with the same source and operator identifiers.
+The induction also gives the final field, time and record count.
+The stored list contains every entry of $\mathsf H_N^{(0)}$, which is
+positive definite by Theorem 57.7. No matrix assembly or rank
+arithmetic has been executed by this schedule. The stipulated
+successors give both retained-field continuation and post-detachment
+Recall. Applying Theorem 57.7 at tail index $r_0+1$ proves the
+restricted source-free prediction conclusion. ∎
+
+The same-run counts in Corollary 57.9 concern the stated interface
+operations and records. The control program and counters, reference constants,
+exact-real representations, clock, field backing, permissions,
+preparation work, local arithmetic, archive access and any matrix
+assembly or rank evaluation have additional resources whose costs
+are unspecified, not zero. The schedule establishes no minimality or
+optimal resource use. A finite number of exact-real coordinates or a
+finite program is not a finite-bit storage bound. This finite archive
+is not the infinite-data recovery of Theorem 57.5; finite-window
+nonuniqueness in Proposition 57.6 concerns the full real amplitude
+class. With prior restricted to the prescribed $g$, the model already
+determines its future. Theorem 57.7 restricts representation in the
+autonomous linear or affine class even for that single profile; it is
+not an information-theoretic lower bound for identifying an unknown
+source.
+
+**Definition 57.10 (Independent views and applicability of the correspondence).**
+Space exposes the amplitude on the independently defined native
+cylinder; time exposes the calibrated semigroup evolution and executed
+waits; boundary exposes the genuine constant maximal-domain trace
+after positive smoothing time; memory exposes the actual retained
+record list with its legal Recall, or the separately declared scalar
+prediction register. The proved recovery is full exact boundary
+future to the cyclic spatial component, with kernel, topology and
+shift given in Theorem 57.5 and Proposition 57.6. The conditional finite archive
+contains just its executed samples. Neither projection nor an
+infinite future is assumed already stored by the observer.
+
+The native source is essential to this correspondence: its nonzero
+logarithmic coefficient puts $g$ outside $D(F)$ and forces infinitely
+many energies visible to $\mathcal A$. Replacing the reference
+semigroup by the source realization $F_{\eta(E_0)}$ of Spatial cap,
+Proposition 5.2 and Theorem 6.1, changes the evolution: there $g$ is an
+eigenvector. Reading $\mathcal B$ after smoothing gives the zero
+sequence, and a single $F$ eigenvector gives at most rank one. No
+transfer of this source correspondence to an atomic model or a
+finite-cap state is asserted.
+
+This is a native-source synthesis of the cited analytic suppliers and
+reused recovery/rank tools, not a new general spectral, Gram, Hankel
+or predictive-quotient theorem. In
+[Context Geometry §22](RECURSIVE_RELATIONAL_OBSERVATION_CONTEXT_GEOMETRY.md),
+Theorem 22.1 produces large ordinary-label Hankel rank by nonlinear
+re-clocking of a one-state system; (57.12) instead uses the fixed
+calibrated linear time. The actual atomic histories in this volume's
+§§29–33 and the receiver of §56 retain their different initialization,
+action and source contracts. The quotient/retention distinctions of
+[Process Geometry §40](RECURSIVE_RELATIONAL_OBSERVATION_PROCESS_GEOMETRY.md)
+are reused, without identifying an exact mathematical inverse with
+installed acquisition. The branch bounds of
+[Critical Cutoff §§49–55](FIB_NATIVE_CRITICAL_CUTOFF_SPECTRAL_LIMITS.md)
+retain a whole base amplitude per branch in a different cutoff model;
+they are not the scalar autonomous register dimension in Theorem 57.7.
+These comparisons establish the stated scope over these suppliers,
+not worldwide priority or absence from every unexamined source.
+
+There is no supplied atomic-to-native inverse or coupling, universal
+alpha/beta generation, installed physical or algorithmic sensor,
+all-four-view mutual recovery, or completion of the full objective.
+The earlier fixed-$G_{\rm gc}$, original-$Q$ and initialization
+obligations retain their original scopes. Published spatial-cap
+selection theorems remain suppliers; no such selection problem is
+reopened by this correspondence.
+
+## 追加锚（本行以下为增补区）

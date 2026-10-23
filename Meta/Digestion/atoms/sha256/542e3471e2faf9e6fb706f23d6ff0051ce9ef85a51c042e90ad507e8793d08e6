@@ -1,0 +1,94 @@
+**Proposition 243.3 (same-source preparation and finite instrument).** Fix
+any maximizing $q$ of Theorem 243.2, including its $t=1$ case, and evaluate every symbol below at its
+actual $p=p(q)$ and the same $t$. Use the two independent compatible full
+Gibbs states
+
+$$
+\rho_{q,\beta}=\frac{e^{-\beta d\Gamma_-(H_q)}}{2(1+t)^2},
+\qquad t=e^{-\beta},
+\tag{243.20}
+$$
+
+on $\mathcal F_-(\mathbb C^3)=\bigoplus_{j=0}^3\Lambda^j\mathbb C^3$, with the zero mode and all number sectors retained and $\beta=-\log t$. Apply the
+source-informed even Bob-local alignment and the CAR order of (215.5)--
+(215.8), then the original coherent common filter (215.9): Alice's two
+copies have total number one and all four Bob modes have total number one. Explicitly,
+
+$$
+F=\Pi_{n_{A_1}+n_{A_2}=1}\Pi_{n_{r_1}+n_{R_1}+n_{r_2}+n_{R_2}=1}.
+$$
+
+The copy-first order $(A_1,b_1,\varsigma_1,A_2,b_2,\varsigma_2)$ and party-first order $(A_1,A_2,b_1,\varsigma_1,b_2,\varsigma_2)$ are related by the passive CAR sign $(-1)^{(n_{b_1}+n_{\varsigma_1})n_{A_2}}$ of (215.8).
+No preliminary spectator-discarding filter is inserted. Equations
+(215.10)--(215.12) and (220.5) give
+
+$$
+\rho_{\mathrm{filtered}}=wW_\lambda\oplus_B(1-w)\frac{I_4}{4},
+\qquad \lambda=\frac{U_t(p)}{Z_t(p)},\qquad
+w=\frac{Z_t(p)}{E_t(p)},
+\tag{243.21}
+$$
+
+with the three probabilities in (243.2). Since $t>0$, $h_t>0$ and $Z_t>0$, one has $P_a,P_{\mathrm{sp}}>0$, $0\le\lambda<1$ and $0<w<1$, precisely the hypotheses of the reused fixed-source construction. Set
+
+$$
+s=\frac{R}{P_{\mathrm{full}}}=\frac{L}{E_t(p)},\qquad
+\alpha=\min\left\{1,\frac{R}{P_a}\right\}
+       =\min\left\{1,\frac{L}{Z_t(p)}\right\},
+\tag{243.22}
+$$
+
+and
+
+$$
+\gamma=\frac{(R-P_a)_+}{P_{\mathrm{sp}}}
+       =\frac{(L-Z_t(p))_+}{2t h_t(p)},\qquad
+x=\min\left\{1,\frac{P_a}{R}\right\}
+       =\min\left\{1,\frac{Z_t(p)}L\right\}.
+\tag{243.23}
+$$
+
+Feasibility gives $0<s\le1$ and $\alpha,\gamma\in[0,1]$. With the source-informed
+active rails $b_1,b_2$ and spectator rails $\varsigma_1,\varsigma_2$, the
+success Kraus maps of (219.3) are
+
+$$
+\begin{gathered}
+K_a=\sqrt{\alpha}\,I_A\otimes
+ \left(|0\rangle_{B,\mathrm{out}}\langle b_1|
+      +|1\rangle_{B,\mathrm{out}}\langle b_2|\right),\\
+K_{ij}=\sqrt{\gamma}\,|0\rangle_A\langle i|\otimes
+ |1\rangle_{B,\mathrm{out}}\langle\varsigma_{j+1}|,
+\qquad i,j\in\{0,1\},\\
+K_a^*K_a+\sum_{i,j}K_{ij}^*K_{ij}
+ =I_A\otimes(\alpha\Pi_{\mathrm{act}}+\gamma\Pi_{\mathrm{sp}})\le I.
+\end{gathered}
+\tag{243.24}
+$$
+
+Bob measures the active and spectator subspaces coherently within each
+sector, accepts their exact coins, and communicates the outcome. Alice keeps
+the active encoded qubit on active success. On spectator success she resets
+to $|0\rangle$ and Bob resets to the same output code's $|1\rangle$.
+Rejected coin and flag outcomes give the finite failure complement, with active and spectator effects $I_A\otimes(1-\alpha)\Pi_{\mathrm{act}}$ and $I_A\otimes(1-\gamma)\Pi_{\mathrm{sp}}$. Every displayed local ket has local total number one. In particular, the neutral-memory reset dilation of (219.8) is $|i\rangle|\mathrm{ready}\rangle_E\mapsto|\mathrm{target}\rangle|i\rangle_E$, where the memory states are neutral and orthogonal. It is an isometry within the local number-one sector and extends to a unitary there. The analogous sector-to-code map stores its rail information in a neutral memory; block-diagonal identity or failure extensions act on other number sectors. Thus each party's number is preserved separately, using separable auxiliaries and finite communication. After discarding all finer rail, sector and coin records and their environments,
+the single common normalized success output is
+
+$$
+\sigma_R=xW_\lambda+(1-x)|01\rangle\langle01|,\qquad
+N(\sigma_R)=xA_t(p)=F_R(p)=G.
+\tag{243.25}
+$$
+
+Indeed (219.6) gives the partial-transpose spectrum
+
+$$
+\left\{\frac{x(1-3\lambda)}4,\frac{x(1+\lambda)}4,
+\frac{x(1+\lambda)}4,1-x+\frac{x(1+\lambda)}4\right\}.
+$$
+
+Only the first eigenvalue can be negative, and $(3\lambda-1)_+/4=A_t(p)$, proving the stated negativity; it is not an affine-negativity
+claim for arbitrary separable padding. At $R=P_a$, one has
+$\alpha=1,\gamma=0,x=1$; at $R=P_{\mathrm{full}}$, one has
+$\alpha=\gamma=1,x=w$. Both equalities are included in the same finite
+instrument.
+
