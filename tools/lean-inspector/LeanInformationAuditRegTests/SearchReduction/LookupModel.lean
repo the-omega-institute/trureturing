@@ -110,17 +110,21 @@ private theorem lookup_enumeration_exhausted (attempts : List (Option LookupCand
           · exact ih _ _ finished slot member
       · contradiction
 
-/-- Completed negative enumeration accounts for every member of the full
-basis_T, including missing/unloaded entries. Otherwise the result is unknown or
-an independently checked success; no absent candidate silently becomes NoHit. -/
-theorem total_candidate_complete_or_unknown {Candidate : Type*} (basis_T : List Candidate)
+/-- Completed negative enumeration accounts for every member of the complete
+primary-index candidate list, including missing/unloaded entries. Otherwise
+the result is unknown or an independently checked success; no absent primary
+candidate silently becomes NoHit. -/
+theorem total_candidate_complete_or_unknown {Candidate : Type*}
+    (primaryIndexCandidates : List Candidate)
     (attempt : Candidate → Option LookupCandidateAttempt) (preparation search : Nat) :
-    (∃ failure, enumerateLookup preparation search (basis_T.map attempt) = .incomplete failure) ∨
-    enumerateLookup preparation search (basis_T.map attempt) = .found ∨
-    (enumerateLookup preparation search (basis_T.map attempt) = .exhausted ∧
-      ∀ candidate ∈ basis_T, ∃ checked,
+    (∃ failure, enumerateLookup preparation search
+      (primaryIndexCandidates.map attempt) = .incomplete failure) ∨
+    enumerateLookup preparation search (primaryIndexCandidates.map attempt) = .found ∨
+    (enumerateLookup preparation search (primaryIndexCandidates.map attempt) = .exhausted ∧
+      ∀ candidate ∈ primaryIndexCandidates, ∃ checked,
         attempt candidate = some checked ∧ checked.outcome = .exhausted) := by
-  cases result : enumerateLookup preparation search (basis_T.map attempt) with
+  cases result : enumerateLookup preparation search
+      (primaryIndexCandidates.map attempt) with
   | found => exact Or.inr (Or.inl rfl)
   | incomplete failure => exact Or.inl ⟨failure, rfl⟩
   | exhausted =>
@@ -332,23 +336,27 @@ private theorem candidate_normal_failure (preparation search : Nat)
       exact ⟨checked, rfl, fits.1, fits.2, normal⟩
     · contradiction
 
-/-- NoHit requires complete enumeration, a loaded attempt for every member,
-and normal failure inside both candidate-local limits. -/
-theorem nohit_requires_complete_uncapped {Candidate : Type*} (basis_T : List Candidate)
+/-- NoHit is relative to the complete primary-index candidate list. Every
+primary-index member needs a loaded attempt and normal failure inside both
+candidate-local limits; star-fallback candidates are outside this statement. -/
+theorem nohit_requires_complete_uncapped {Candidate : Type*}
+    (primaryIndexCandidates : List Candidate)
     (attempt : Candidate → Option LookupCandidateAttempt) (preparation search : Nat)
-    (nohit : perCandidateLookup basis_T attempt preparation search = .exhausted) :
-    ∀ candidate ∈ basis_T, ∃ checked, attempt candidate = some checked ∧
+    (nohit : perCandidateLookup primaryIndexCandidates attempt preparation search = .exhausted) :
+    ∀ candidate ∈ primaryIndexCandidates, ∃ checked, attempt candidate = some checked ∧
       checked.preparation ≤ preparation ∧ checked.search ≤ search ∧
       checked.outcome = .exhausted := by
   intro candidate member
   exact candidate_normal_failure _ _ _ ((perCandidate_nohit _ _ _ _).mp nohit candidate member)
 
-theorem cap_overrun_not_nohit {Candidate : Type*} (basis_T : List Candidate)
+theorem cap_overrun_not_nohit {Candidate : Type*}
+    (primaryIndexCandidates : List Candidate)
     (attempt : Candidate → Option LookupCandidateAttempt) (preparation search : Nat)
-    (candidate : Candidate) (member : candidate ∈ basis_T) (checked : LookupCandidateAttempt)
+    (candidate : Candidate) (member : candidate ∈ primaryIndexCandidates)
+    (checked : LookupCandidateAttempt)
     (loaded : attempt candidate = some checked)
     (capped : preparation < checked.preparation ∨ search < checked.search) :
-    perCandidateLookup basis_T attempt preparation search ≠ .exhausted := by
+    perCandidateLookup primaryIndexCandidates attempt preparation search ≠ .exhausted := by
   intro nohit
   rcases nohit_requires_complete_uncapped _ _ _ _ nohit candidate member with
     ⟨other, equal, hp, hs, _⟩
@@ -356,17 +364,19 @@ theorem cap_overrun_not_nohit {Candidate : Type*} (basis_T : List Candidate)
   cases Option.some.inj equal
   omega
 
-/-- Full candidate accounting in B_T: every absent, failed or capped attempt
-blocks NoHit but cannot erase a successful certificate from another candidate. -/
-theorem candidate_complete_or_unknown {Candidate : Type*} (basis_T : List Candidate)
+/-- Full accounting for the primary-index candidate list: every absent,
+failed or capped attempt blocks NoHit but cannot erase a successful
+certificate from another primary-index candidate. -/
+theorem candidate_complete_or_unknown {Candidate : Type*}
+    (primaryIndexCandidates : List Candidate)
     (attempt : Candidate → Option LookupCandidateAttempt) (preparation search : Nat) :
-    (∃ failure, perCandidateLookup basis_T attempt preparation search = .incomplete failure) ∨
-    perCandidateLookup basis_T attempt preparation search = .found ∨
-    (perCandidateLookup basis_T attempt preparation search = .exhausted ∧
-      ∀ candidate ∈ basis_T, ∃ checked, attempt candidate = some checked ∧
+    (∃ failure, perCandidateLookup primaryIndexCandidates attempt preparation search = .incomplete failure) ∨
+    perCandidateLookup primaryIndexCandidates attempt preparation search = .found ∨
+    (perCandidateLookup primaryIndexCandidates attempt preparation search = .exhausted ∧
+      ∀ candidate ∈ primaryIndexCandidates, ∃ checked, attempt candidate = some checked ∧
         checked.preparation ≤ preparation ∧ checked.search ≤ search ∧
         checked.outcome = .exhausted) := by
-  cases result : perCandidateLookup basis_T attempt preparation search with
+  cases result : perCandidateLookup primaryIndexCandidates attempt preparation search with
   | incomplete failure => exact Or.inl ⟨failure, rfl⟩
   | found => exact Or.inr (Or.inl rfl)
   | exhausted => exact Or.inr (Or.inr ⟨rfl,

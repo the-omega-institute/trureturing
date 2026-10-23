@@ -355,26 +355,25 @@ private unsafe def solveLookupGoal (table : LookupTable) (goal : MVarId)
   lookupLeaf table goal (fun next => exactLocal next projected)
     (fun next => solveLocalGoal next facts)
 
-/-- Verdict-free fixed-stride cost sampling, plus complete fallback page
-materialization. This entry is unavailable without the telemetry flag. -/
+/-- Verdict-free fixed-stride cost sampling over the primary implication
+index. The historical star page is excluded from production measurement. -/
 unsafe def telemetryLookupCosts (table : LookupTable) (type : Expr) : MetaM Unit := do
   unless (← IO.getEnv "SEARCH_REDUCTION_TELEMETRY").isSome do
     throwError "lookup.telemetry_flag_required"
-  for fallback in [true, false] do
-    let original ← saveState
-    if let some budget := table.budget? then budget.set {}
-    let root ← mkFreshExprMVar type
-    let mut goal := root.mvarId!
-    let mut facts := #[]
-    while (← goal.withContext <| withReducible <| whnf (← goal.getType)).isForall do
-      let (fvar, next) ← goal.intro1
-      facts := facts.push (mkFVar fvar)
-      goal := next
-    discard <| goal.withContext <| lookupLeafPass fallback table goal
-      (fun next => exactLocal next facts) (fun next => solveLocalGoal next facts)
-    original.restore
-    set original.meta
-    modifyThe Core.State fun state => {state with cache := original.core.cache}
+  let original ← saveState
+  if let some budget := table.budget? then budget.set {}
+  let root ← mkFreshExprMVar type
+  let mut goal := root.mvarId!
+  let mut facts := #[]
+  while (← goal.withContext <| withReducible <| whnf (← goal.getType)).isForall do
+    let (fvar, next) ← goal.intro1
+    facts := facts.push (mkFVar fvar)
+    goal := next
+  discard <| goal.withContext <| lookupLeafPass table goal
+    (fun next => exactLocal next facts) (fun next => solveLocalGoal next facts)
+  original.restore
+  set original.meta
+  modifyThe Core.State fun state => {state with cache := original.core.cache}
   if let some close := table.close? then close
 
 private def withFacts {α : Type} (types : List Expr)

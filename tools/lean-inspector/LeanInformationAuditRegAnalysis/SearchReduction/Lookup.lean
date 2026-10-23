@@ -25,7 +25,7 @@ def timeLookup {α : Type} (label : String) (action : MetaM α) : MetaM α := do
   try action finally
     lookupPhase s!"{label}/end ns={(← IO.monoNanosNow) - start} heartbeats={(← IO.getNumHeartbeats) - heartbeats}"
 
-abbrev lookupVersion : String := "R_lookup/v15/scope-B_T/candidate-200000/preparation-8000000/G-340000000/memo-target-basis-R-v1/N-memo-2000000/checkpoint-v3/views-kappa/static-star-v1"
+abbrev lookupVersion : String := "R_lookup/v16/scope-B_T/primary-index-only/candidate-200000/preparation-8000000/G-340000000/memo-target-basis-R-v1/N-memo-2000000/checkpoint-v3/views-kappa"
 
 abbrev lookupCandidateBudget : Nat := 200000
 /-- Frozen from verdict-free fallback and fixed-stride candidate telemetry. -/
@@ -717,7 +717,7 @@ private unsafe def speculateLookupCandidates (table : LookupTable)
 
 /-- The frozen closure table has lookup disabled. Every candidate exception
 is accounted for locally; only the coverage guard truncates enumeration. -/
-unsafe def lookupLeafPass (fallback : Bool) (table : LookupTable) (goal : MVarId)
+unsafe def lookupLeafPass (table : LookupTable) (goal : MVarId)
     (unify close : MVarId → MetaM Bool) : MetaM LookupTrace := goal.withContext do
   if !table.enabled then return {complete := true}
   let some index ← tableIndex table | return {}
@@ -725,11 +725,14 @@ unsafe def lookupLeafPass (fallback : Bool) (table : LookupTable) (goal : MVarId
   let floorStart ← IO.getNumHeartbeats
   let floorNs ← IO.monoNanosNow
   let beforePreparation := (← table.budget?.mapM (·.get)).getD {}
-  let candidates ← queryLookup table index (← goal.getType) none fallback
+  -- Revision 16 uses only the primary implication-index route. The star
+  -- fallback remains available as historical/static-pruning evidence, but is
+  -- deliberately excluded from production enumeration and NoHit accounting.
+  let candidates ← queryLookup table index (← goal.getType) none false
   if telemetry then
     let afterPreparation := (← table.budget?.mapM (·.get)).getD {}
     emitLookupRecord s!"LOOKUP_TELEMETRY_FLOOR {Json.mkObj [
-      ("fallback_only", toJson fallback), ("entries", toJson candidates.entries.size),
+      ("fallback_only", toJson false), ("entries", toJson candidates.entries.size),
       ("search_internal_heartbeats", toJson ((← IO.getNumHeartbeats) - floorStart)),
       ("preparation_internal_heartbeats", toJson (afterPreparation.preparation - beforePreparation.preparation)),
       ("ns", toJson ((← IO.monoNanosNow) - floorNs))] |>.compress}"
@@ -739,10 +742,7 @@ unsafe def lookupLeafPass (fallback : Bool) (table : LookupTable) (goal : MVarId
   let mut ordinal := 0
   let mut trace : LookupTrace := {
     complete := candidates.complete && table.complete,
-    visited := candidates.staticFailures,
-    pages := candidates.pages,
-    fallbackTotal := if fallback then candidates.entries.size + candidates.staticFailures else 0,
-    fallbackVisited := if fallback then candidates.staticFailures else 0}
+    pages := candidates.pages}
   let mut pending : Array (LookupTrace × LookupBudgetState) := #[]
   let mut pendingStart := 0
   for entry in candidates.entries do
@@ -751,16 +751,14 @@ unsafe def lookupLeafPass (fallback : Bool) (table : LookupTable) (goal : MVarId
     if telemetry && position % (max 1 stride) != 0 then continue
     unless ← coverageAvailable table do
       trace := {trace with
-        complete := false, failures := trace.failures.push s!"G-truncated:fallback={fallback}:remaining={candidates.entries.size + candidates.staticFailures - trace.visited}"}
+        complete := false, failures := trace.failures.push s!"G-truncated:primary-index:remaining={candidates.entries.size - trace.visited}"}
       break
     if position % 128 == 0 then
-      emitLookupRecord s!"LOOKUP_ENUMERATION_PROGRESS fallback={fallback} next={position} total={candidates.entries.size}"
+      emitLookupRecord s!"LOOKUP_ENUMERATION_PROGRESS fallback=false next={position} total={candidates.entries.size}"
     if !telemetry && workers > 1 &&
         (position < pendingStart || position >= pendingStart + pending.size) then
       let mut batch := #[]
-      -- A bounded queue lets short fallback failures fill gaps left by long
-      -- candidates; the native thread pool still limits simultaneous work.
-      let queue := workers * (if fallback then 8 else 1)
+      let queue := workers
       for next in candidates.entries[position:min candidates.entries.size (position + queue)] do
         unless candidateOwnerMatches table next do break
         batch := batch.push next
@@ -783,10 +781,9 @@ unsafe def lookupLeafPass (fallback : Bool) (table : LookupTable) (goal : MVarId
           pure speculated
       else attemptLookupLeaf table entry goal unify close
     trace := mergeLookupTrace trace result
-    if fallback then trace := {trace with fallbackVisited := trace.fallbackVisited + 1}
     if trace.source?.isSome && !telemetry then break
   unless telemetry do emitLookupRecord s!"LOOKUP_ENUMERATION {Json.mkObj [
-    ("fallback", toJson fallback), ("total", toJson candidates.entries.size),
+    ("fallback", toJson false), ("total", toJson candidates.entries.size),
     ("static_normal_failures", toJson candidates.staticFailures),
     ("visited", toJson trace.visited), ("complete", toJson trace.complete),
     ("found", toJson trace.source?.isSome), ("capped", toJson trace.capped),
@@ -795,9 +792,6 @@ unsafe def lookupLeafPass (fallback : Bool) (table : LookupTable) (goal : MVarId
 
 unsafe def lookupLeaf (table : LookupTable) (goal : MVarId)
     (unify close : MVarId → MetaM Bool) : MetaM LookupTrace := do
-  let primary ← lookupLeafPass false table goal unify close
-  if primary.source?.isSome then return primary
-  let fallback ← lookupLeafPass true table goal unify close
-  return mergeLookupTrace primary fallback
+  lookupLeafPass table goal unify close
 
 end LeanInformationAudit.SearchReduction
