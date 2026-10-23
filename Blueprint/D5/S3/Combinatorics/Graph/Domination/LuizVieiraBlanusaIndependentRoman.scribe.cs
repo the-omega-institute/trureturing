@@ -4,29 +4,6 @@ using F = StrataLint.Scribe.FormulaDsl;
 
 namespace StrataLint.Scribe.Blueprint.D5.S3.Combinatorics.Graph.Domination;
 
-/*
-| declaration | proof_shape | escape_witness | direct consumer(s) |
-| --- | --- | --- | --- |
-| card18 | bind-only | none | uniform_weight, weight_lower |
-| cubic18 | bind-only | none | uniform_roman, weight_lower |
-| uniform_roman | bind-only | none | gamma_le |
-| uniform_weight | bind-only | none | gamma_le |
-| gamma_le | bind-only | none | result |
-| active_neighbors_eq | bind-only | none | private_label_ge |
-| positive_ge | content | positive_ge | weight_lower |
-| support_dominates | content | support_dominates | support_card_bound, weight_lower |
-| covered_card_le | bind-only | none | private_neighbor_of_cover_bound, support_card_bound |
-| support_card_bound | content | support_dominates | weight_lower |
-| private_neighbor_of_cover_bound | content | private_neighbor_of_cover_bound | weight_lower |
-| private_label_ge | content | private_label_ge | weight_lower |
-| weight_ge_support_mul | bind-only | none | weight_lower |
-| weight_lower | content | private_neighbor_of_cover_bound | indep_eq |
-| witness_irdf | bind-only | none | indep_eq |
-| witness_weight | bind-only | none | indep_eq |
-| indep_eq | content | private_neighbor_of_cover_bound | result |
-| result | content | private_neighbor_of_cover_bound | none |
-*/
-
 internal sealed class LuizVieiraBlanusaIndependentRomanDocument : IScribeDocumentDefinition
 {
     private const string Prefix =
