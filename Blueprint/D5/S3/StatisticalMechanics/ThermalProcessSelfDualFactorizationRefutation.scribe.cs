@@ -24,7 +24,7 @@ internal sealed class ThermalProcessSelfDualFactorizationRefutationDocument : IS
                 "Self-duality with respect to the Gibbs weights is the detailed-balance relation T i j times g j equals T j i times g i for every pair of levels. It is equivalent to equality with the conjugated transpose in the source paper.",
                 DescribeRole.Definition, AssessedProvenance.FromLiterature(Source)),
             Node("irreducible", "Irreducibility", IrreducibleFormula(),
-                "Irreducibility reads the phrase not a direct sum as the absence of a nonempty proper set S whose two sides have all cross-block entries zero. The complement is taken in the finite level set Fin d.",
+                "Irreducibility reads the phrase not a direct sum as the absence of a nonempty proper set S whose two sides have all cross-block entries zero. Here Sᶜ denotes the complement in the finite level set Fin d.",
                 DescribeRole.Definition, AssessedProvenance.FromRepo(Source)),
             Node("claim", "The non-self-duality conjecture", ClaimFormula(),
                 "The source conjectures that an extremal thermal process C on d levels, factored as C = A B with extremal factors each fixing a level, cannot be self-dual when C has no direct-sum decomposition across a nonempty proper set of levels. The formal statement assumes d is at least two, all Gibbs weights are positive and pairwise distinct, and the weight at level zero is maximal.",
@@ -36,7 +36,7 @@ internal sealed class ThermalProcessSelfDualFactorizationRefutationDocument : IS
                 StatementSource.FromAuthor(Disp(new Formula.Not(Named("claim")))),
                 AssessedProvenance.FromRepo(Source),
                 Blocks(Paragraph(Text(
-                    "Set d = 5 and use the Gibbs weights (8, 7, 4, 2, 3). Let A be the matrix with rows (0, 1, 0, 1/2, 0), (1/4, 0, 1, 1/2, 0), (1/2, 0, 0, 0, 0), (1/4, 0, 0, 0, 0), (0, 0, 0, 0, 1); it acts on levels 0 through 3 and fixes level 4. Let B have rows (1, 0, 0, 0, 0), (0, 1/7, 1, 1, 0), (0, 1/7, 0, 0, 1), (0, 2/7, 0, 0, 0), (0, 3/7, 0, 0, 0), so it fixes level 0. Their product is C = A B, with rows (0, 2/7, 1, 1, 0), (1/4, 2/7, 0, 0, 1), (1/2, 0, 0, 0, 0), (1/4, 0, 0, 0, 0), (0, 3/7, 0, 0, 0). Each of A, B and C is nonnegative, column-stochastic and preserves the Gibbs weights. Each is extreme by support uniqueness: in a convex combination, every factor has zero entries wherever the matrix has a zero entry, and the column sums together with Gibbs preservation determine all remaining entries uniquely. The support edges of C are 0–1, 0–2, 0–3 and 1–4, so C is irreducible. Finally, C satisfies detailed balance: C times the diagonal matrix of the Gibbs weights is symmetric. Thus the factorization satisfies every hypothesis of claim while its conclusion fails."))),
+                    "Set d = 5 and use the Gibbs weights (8, 7, 4, 2, 3). Let A be the matrix with rows (0, 1, 0, 1/2, 0), (1/4, 0, 1, 1/2, 0), (1/2, 0, 0, 0, 0), (1/4, 0, 0, 0, 0), (0, 0, 0, 0, 1); it acts on levels 0 through 3 and fixes level 4. Let B have rows (1, 0, 0, 0, 0), (0, 1/7, 1, 1, 0), (0, 1/7, 0, 0, 1), (0, 2/7, 0, 0, 0), (0, 3/7, 0, 0, 0), so it fixes level 0. Their product is C = A B, with rows (0, 2/7, 1, 1, 0), (1/4, 2/7, 0, 0, 1), (1/2, 0, 0, 0, 0), (1/4, 0, 0, 0, 0), (0, 3/7, 0, 0, 0). Each of A, B and C is nonnegative, column-stochastic and preserves the Gibbs weights. Each is extreme by support uniqueness: in a convex combination, every factor has zero entries wherever the matrix has a zero entry, and the column sums together with Gibbs preservation determine all remaining entries uniquely. The non-loop support edges of C are 0–1, 0–2, 0–3 and 1–4, so C is irreducible. Finally, C satisfies detailed balance: C times the diagonal matrix of the Gibbs weights is symmetric. Thus the factorization satisfies every hypothesis of claim while its conclusion fails."))),
                 DescribeRole.Theorem))));
 
     private static DocumentBlock Node(
@@ -94,8 +94,8 @@ internal sealed class ThermalProcessSelfDualFactorizationRefutationDocument : IS
     private static Formula FunctionInjective(Formula f) =>
         QCall("Function", "Injective", f);
     private static Formula FinsetType(Formula d) => Call("Finset", Fin(d));
-    private static Formula FinZero(Formula d) => QCall("Fin", "zero", d);
-    private static Formula Complement(Formula s) => QCall("Finset", "compl", s);
+    private static Formula FinZero(Formula d) => Parenthesized(Seq(D(0), Colon, Fin(d)));
+    private static Formula Complement(Formula s) => new Formula.Power(s, F.Id("c"));
     private static Formula Nonempty(Formula s) => QCall("Finset", "Nonempty", s);
     private static Formula BlockCross(Formula i, Formula j, Formula s) =>
         Or(And(Member(i, s), Not(Member(j, s))),
@@ -107,9 +107,8 @@ internal sealed class ThermalProcessSelfDualFactorizationRefutationDocument : IS
         Formula colStochastic = QCall("Matrix", "colStochastic", Real(), Fin(d));
         Formula body = Member(T, colStochastic);
         body = And(body, Equal(MatrixMulVec(T, g), g));
-        Formula set = new Formula.SetBuilder(T, T, MatrixType(d));
         return Disp(All("d", Nat(), All("g", Arrow(Fin(d), Real()),
-            Equal(Call("thermalProcesses", g), set))));
+            All("T", MatrixType(d), Iff(Member(T, Call("thermalProcesses", g)), body)))));
     }
 
     private static Formula ActsOnFewerLevelsFormula()
