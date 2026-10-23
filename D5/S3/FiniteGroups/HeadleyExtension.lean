@@ -11,6 +11,7 @@ import Mathlib.GroupTheory.Perm.Cycle.Basic
 import Mathlib.GroupTheory.Perm.Fin
 import Mathlib.Data.Fintype.Card
 import Mathlib.Tactic
+import D5.S3.Combinatorics.PerfectMatchings.FiniteBandSwitch
 
 /-! The nonsplit extension step for cyclic directed-difference orderings. -/
 
@@ -256,19 +257,6 @@ private theorem cylinder_round {N : Type*} (D : Equiv.Perm N) (k : ℕ) (h : N) 
   simp [cylinder, show (⟨k + 2, by omega⟩ : Fin (k + 3)) = Fin.last (k + 2) from rfl]
 
 
-private theorem conjugate_pow {X Y : Type*} (e : X ≃ Y) (f : Equiv.Perm X)
-    (j : ℕ) (x : X) :
-    (e.permCongr f ^ j) (e x) = e ((f ^ j) x) := by
-  induction j with
-  | zero => rfl
-  | succ j ih => simp [pow_succ', Equiv.Perm.mul_apply, ih]
-
-private theorem conjugate_sameCycle {X Y : Type*} [Finite X]
-    (e : X ≃ Y) (f : Equiv.Perm X) {x y : X} (h : f.SameCycle x y) :
-    (e.permCongr f).SameCycle (e x) (e y) := by
-  obtain ⟨j, hj⟩ := h.exists_nat_pow_eq
-  exact ⟨(j : ℤ), by rw [zpow_natCast, conjugate_pow, hj]⟩
-
 private theorem cylinder_rounds {N : Type*} (D : Equiv.Perm N) (k j : ℕ) (h : N) :
     (cylinder D k ^ ((k + 3) * j)) (0, h) = (0, (D ^ j) h) := by
   induction j generalizing h with
@@ -373,8 +361,9 @@ private theorem rowLift_connect {N : Type*} [AddCommGroup N] [Fintype N]
     (r : RCycle N) (k : ℕ) (i j : Fin (k + 3)) (h t : N)
     (hht : r.successor.SameCycle h t) :
     (rowLift r k).SameCycle (i, rowPotential r i h) (j, rowPotential r j t) := by
-  exact conjugate_sameCycle (Equiv.prodCongrRight (@rowPotential N _ _ r k))
-    (cylinder r.successor k) (cylinder_connect r.successor k i j h t hht)
+  exact (D5.S3.Combinatorics.PerfectMatchings.FiniteBandSwitch.same_cycle_perm_congr
+      (Equiv.prodCongrRight (@rowPotential N _ _ r k)) (cylinder r.successor k)
+      (i, h) (j, t)).mpr (cylinder_connect r.successor k i j h t hht)
 
 private theorem cycle_invariant {X : Type*} [Finite X] (f : Equiv.Perm X)
     (P : X → Prop) (hP : ∀ x, P (f x) ↔ P x) {x y : X}
@@ -972,7 +961,10 @@ private noncomputable def transportCycle {G H : Type*} [AddCommGroup G]
     intro x hx y hy
     have hxn : e.symm x ≠ 0 := by simpa using hx
     have hyn : e.symm y ≠ 0 := by simpa using hy
-    simpa using conjugate_sameCycle e.toEquiv r.successor (r.nonzero_cycle.2 hxn hyn)
+    simpa using
+      (D5.S3.Combinatorics.PerfectMatchings.FiniteBandSwitch.same_cycle_perm_congr
+        e.toEquiv r.successor (e.symm x) (e.symm y)).mpr
+        (r.nonzero_cycle.2 hxn hyn)
   difference := e.toEquiv.permCongr r.difference
   difference_spec := by
     intro x
@@ -1026,7 +1018,8 @@ theorem nonsplit_extension_r_cycle {E : Type*} [AddCommGroup E] [Fintype E]
         rw [V.apply_symm_apply, hVz] at h
         exact hy h
       simpa only [V.apply_symm_apply] using
-        conjugate_sameCycle V T ((splice_cycle r c.k v hv).2 hxn hyn)
+        (D5.S3.Combinatorics.PerfectMatchings.FiniteBandSwitch.same_cycle_perm_congr
+          V T (V.symm x) (V.symm y)).mpr ((splice_cycle r c.k v hv).2 hxn hyn)
     have hD : ∀ x, D x = S x - x := by
       intro x
       change V (oldD (U (V.symm x))) = V (T (V.symm x)) - x
