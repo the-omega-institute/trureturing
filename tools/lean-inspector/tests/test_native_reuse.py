@@ -83,24 +83,72 @@ class NativeReportConsumerTests:
             self.record_result(phase, data, [work])
             return data
 
-        # A shared compiler prerequisite spends time registering its graph,
-        # so concurrent report consumers overlap their first fetch. Lake's
-        # invocation store must still register and compile that graph once.
+        # Hold the shared prerequisite inside Lake's lookup/create gap until
+        # another consumer either contends on graphFetch or creates it again.
+        # Observe the real mutex with a try-lock; never infer overlap from time.
         config = self.root / 'lakefile.toml'
         config.write_text(config.read_text().replace(
             'name = "LeanInformationAudit"\n',
             'name = "LeanInformationAudit"\nneeds = ["leanInspector/compilerRegistrationGate"]\n'))
         producer_config = self.root / 'tools/lean-inspector/lakefile.lean'
+        source = producer_config.read_text().replace('Std.Mutex', 'RegistrationMutex')
+        schedule = '''
+structure RegistrationSchedule where
+  state : Std.Mutex (Nat × Nat)
+  release : IO.Promise String
+
+package_facet compilerRegistrationState (_pkg : Package) : RegistrationSchedule := do
+  Job.async do return ⟨← Std.Mutex.new (0, 0), ← IO.Promise.new⟩
+
+structure RegistrationMutex (α : Type) where
+  inner : Std.Mutex α
+
+def RegistrationMutex.new (value : α) : BaseIO (RegistrationMutex α) :=
+  return ⟨← Std.Mutex.new value⟩
+
+def RegistrationMutex.atomically [Monad m] [MonadLiftT BaseIO m] [MonadLiftT FetchM m] [MonadFinally m]
+    (mutex : RegistrationMutex α) (action : IO.Ref α → m β) : m β := do
+  let schedule ← liftM (m := FetchM) do
+    (← fetch <| (← getWorkspace).root.facet `compilerRegistrationState).await
+  if let some value ← mutex.inner.tryAtomically action then return value
+  liftM (m := BaseIO) <| schedule.state.atomically fun state => do
+    let (registered, waiting) ← state.get
+    state.set (registered, waiting + 1)
+    if registered > 0 then schedule.release.resolve "contended"
+  try mutex.inner.atomically action
+  finally
+    liftM (m := BaseIO) <| schedule.state.atomically fun state => state.modify fun (registered, waiting) =>
+      (registered, waiting - 1)
+
+'''
+        if 'import Std.Sync.Mutex\n' not in source:
+            source = 'import Std.Sync.Mutex\n' + source
+        batch = 'package_facet reportBatch (_pkg : Package) : ReportState := do\n'
+        producer_config.write_text(source.replace(
+            'private structure ReportState where', schedule + 'private structure ReportState where').replace(
+            batch, batch + '  discard <| (← fetch <| (← getWorkspace).root.facet `compilerRegistrationState).await\n'))
         with producer_config.open('a') as target:
             target.write('''\ntarget compilerRegistrationGate pkg : Unit := do
   let root ← repositoryDir pkg
-  IO.FS.withFile (root / "compiler-registrations") .append fun out => out.putStrLn "registered"
-  IO.sleep 1500
+  let schedule ← (← fetch <| (← getWorkspace).root.facet `compilerRegistrationState).await
+  schedule.state.atomically fun state => do
+    let (registered, waiting) ← state.get
+    state.set (registered + 1, waiting)
+    IO.FS.withFile (root / "compiler-registrations") .append fun out => out.putStrLn "registered"
+    if registered > 0 then schedule.release.resolve "duplicate"
+    else if waiting > 0 then schedule.release.resolve "contended"
+  let reason ← IO.wait schedule.release.result!
+  IO.FS.writeFile (root / "compiler-registration-sync") reason
   return Job.nil
 ''')
         initial = entry('initial', env=dict(self.env, STRATALINT_ACCEPT_COLD_BUILD='1'))
+        sync = self.root / 'compiler-registration-sync'
+        registrations = self.root / 'compiler-registrations'
+        self.record_result('compiler-registration', dict(
+            registrations=registrations.read_text().splitlines(), release=sync.read_text()), [registrations, sync])
         self.assertEqual((self.root / 'compiler-registrations').read_text().splitlines(), ['registered'],
-                         'shared compiler prerequisites must be registered once per Lake invocation')
+                         '[FAIL] shared compiler prerequisites must be registered once per Lake invocation')
+        self.assertEqual(sync.read_text(), 'contended', '[FAIL] compiler registration overlap must be controlled')
         self.assertEqual(initial['assessed'], ['Reg.Leaf', 'Reg.Parent'])
         driver = self.root / 'LeanInformationAudit/TemplateEnrollment.lean'
         driver.write_text('def fixtureDriver : Nat := 2\n')
