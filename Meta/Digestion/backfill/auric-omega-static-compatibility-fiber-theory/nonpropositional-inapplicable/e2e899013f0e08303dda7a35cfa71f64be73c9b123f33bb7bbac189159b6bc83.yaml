@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:e2e899013f0e08303dda7a35cfa71f64be73c9b123f33bb7bbac189159b6bc83
+  normalized_sha256: sha256:e2e899013f0e08303dda7a35cfa71f64be73c9b123f33bb7bbac189159b6bc83
+cas_ref: sha256:e2e899013f0e08303dda7a35cfa71f64be73c9b123f33bb7bbac189159b6bc83
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 'nonpropositional: 规定三位置模型的指定五个基字、其张成子空间、投影与编号；没有维数断言、算子保持性或 PXP 等式。'
+    previous_atom_id: 194f37eae43f06b9fd3833790df35a34d5e98744832ea17ce0d08790f13a4db5
+    next_atom_id: 2993bc6a037fa9217a2febe12ec4f90e66e88d01f3c3c144857b622bc7b9dfd5

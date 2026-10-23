@@ -1,0 +1,18 @@
+**Theorem 6.4 (compatibility with every acquired row).** Given $p,v$ and a continuation vector $Y\in\mathbb R^{17}$ starting at $Q_6,t_0=6$, the combined data come from a world in $C(p,v)$ if and only if the conditions of Theorem 4.2 hold and its unique recovered world satisfies
+
+$$
+\begin{aligned}
+d+g_0&=0,\\
+d+g_1(b+q)&=24,\\
+d+g_2(1+b)&=147/5,\\
+d+g_3(r+b+q)&=24,\\
+d+g_4(1+2b)&=18,\\
+d+g_5(1+r+3b+q)&=p,\\
+d+g_6(2+r+5b+q)&=v.
+\end{aligned}
+$$
+
+In that event the combined realization is unique and $Y_0=v$.
+
+**Proof.** Starting at $I$, left multiplication by $J$ interchanges the two rows, and left multiplication by $M$ replaces the rows $(R_1,R_2)$ by $(R_2,R_1+R_2)$. Applying these identities to the six chronological letters gives exactly the seven displayed matrices. Pairing their transposed entries with the row-major entries of $P$ gives their displayed traces. Thus the seven equations are precisely all the earlier observation equations. Necessity follows for any combined realization. For sufficiency, Theorem 4.2 gives one whole world realizing every continuation row, and the seven additional equations realize every acquired original row using that same $P,g,d$. The last equation and the continuation equation at $i=0$ both give the same clock-six reading, hence $Y_0=v$. Uniqueness follows from the continuation inverse. No assumption divides by a sampled gain or discards a singular stratum. ∎
+

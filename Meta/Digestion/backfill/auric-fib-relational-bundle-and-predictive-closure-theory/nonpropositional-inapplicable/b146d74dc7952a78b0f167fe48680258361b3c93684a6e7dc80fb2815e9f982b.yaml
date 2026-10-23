@@ -1,0 +1,14 @@
+fingerprints:
+  raw_sha256: sha256:b146d74dc7952a78b0f167fe48680258361b3c93684a6e7dc80fb2815e9f982b
+  normalized_sha256: sha256:b146d74dc7952a78b0f167fe48680258361b3c93684a6e7dc80fb2815e9f982b
+cas_ref: sha256:b146d74dc7952a78b0f167fe48680258361b3c93684a6e7dc80fb2815e9f982b
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: Document title, stipulated model scope, authorship and evidence-status notices, and fixed-source citation; the model hypotheses are inputs, not derived conclusions.
+    previous_atom_id: null
+    next_atom_id: 1ce5b7f3c3c949c7039fa5d58c001d3df1811f27993d7b88949ba8d9af2f56db
+  chain_atoms:
+    - cb281b4c741d651c44f5fc08a2ad36f79f808c5aa65705ae7fce41c0e0d318fa
+    - 72bd0fd89ed920ef87e8941ed11ade22d55184df625877beb8abc8afd00d33fb

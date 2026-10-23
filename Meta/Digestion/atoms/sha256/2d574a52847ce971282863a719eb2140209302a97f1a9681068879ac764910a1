@@ -1,0 +1,34 @@
+**Lemma 35.3 (the full world mean family has full affine span).** Let
+
+$$
+\mathcal M=\{m_W:W\in\mathcal W\}\subseteq\mathbb R^{17}.
+$$
+
+Then
+
+$$
+\boxed{\operatorname{aff}(\mathcal M)=\mathbb R^{17}.}
+$$
+
+**Proof.** In the column-vector convention of Definition 2.1, choose the
+four legal matrices whose $(r,b,c)$ values are
+
+$$
+\left(\tfrac14,\tfrac18,\tfrac32\right),\quad
+\left(\tfrac14,\tfrac16,\tfrac98\right),\quad
+\left(\tfrac14,\tfrac14,\tfrac34\right),\quad
+\left(\tfrac13,\tfrac18,\tfrac{16}{9}\right).
+$$
+
+Their vectors $(P_{11},P_{21},P_{12},P_{22})$ have determinant
+$1/768\ne0$. For each coefficient block $k$, use worlds with
+$g(t)=t^k$, $d=0$, and these four choices of $P$. Their pairwise
+differences first span the three-dimensional trace-zero subspace of the
+$k$th block, because every chosen $P$ has trace one. The additional
+difference between $g(t)=2t^k$ and $g(t)=t^k$ supplies one absolute vector
+$(2-1)P$, so together they span the full four-dimensional block without
+assuming an unavailable zero polynomial. Finally, changing $d$ while
+holding $P$ and $g$ fixed supplies the first coordinate. Thus the direction
+space of the affine hull contains all seventeen coordinate directions.
+$\square$
+

@@ -1,0 +1,32 @@
+### 一个可直接计算的 FIB 兼容样例
+
+取三个独立配置分量和非奇异频率矩阵 $\Omega$，令
+
+$$
+A=
+\begin{pmatrix}
+0&I_3\\
+-\Omega^2&0
+\end{pmatrix},
+\qquad
+C=\begin{pmatrix}I_3&0\end{pmatrix}.
+\tag{248.3}
+$$
+
+则
+
+$$
+CA=\begin{pmatrix}0&I_3\end{pmatrix},
+\qquad
+CA^2=\begin{pmatrix}-\Omega^2&0\end{pmatrix}.
+$$
+
+当 $\Omega$ 可逆时，$C$ 与 $CA$ 的行就已经张成全部六维状态。因此当前三维配置读出不能独立预测下一时刻；消去 $p$ 后，它满足二阶方程
+
+$$
+\ddot q+\Omega^2q=0.
+\tag{248.4}
+$$
+
+六维一阶状态与三维二阶历史是同一信息的两种表示。这里增加的是共轭记忆，不是第四根空间轴。
+

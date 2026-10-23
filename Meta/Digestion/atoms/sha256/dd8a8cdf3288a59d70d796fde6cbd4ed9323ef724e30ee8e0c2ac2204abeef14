@@ -1,0 +1,21 @@
+**Definition 16.1 (Undivided source forms).** In (15.6)–(15.7) put
+
+$$
+\begin{gathered}
+z_3=(24-d)(x+1)(x+2),\qquad z_4=(18-d)D,\\
+z_5=(p-d)x(x+2),\qquad z_6=(v-d)x(x+1),\\
+(a_0,a_1,a_2,a_7)^{\mathsf T}=R(z_3,z_4,z_5,z_6)^{\mathsf T},\\
+z=xa_1-D(24-d),\qquad b_s=(294-10d)D-5a_2,\\
+A_s=4z^2-2za_1+(2x-1)a_1^2,\qquad
+E_s=-2za_1+2(1-x)a_1^2,\\
+\mathcal Q(u,w)=A_su^2+E_suw-a_1^2w^2,\\
+f_0=5dDa_2+a_0b_s,\qquad
+K_0=\mathcal Q(-a_0,dD),\qquad
+K_s=25K_0+\mathcal Q(5a_2,b_s).
+\end{gathered}
+\tag{16.1}
+$$
+
+These are polynomial expressions before any terminal equation is solved.
+In particular $a_i=DH_i$.
+

@@ -1,0 +1,49 @@
+**Definition 20.1 (Coefficient operations for the carrier).** A polynomial
+in $(x,p,v)$ is identified with its integer coefficients $P_{ijk}$,
+extended by zero to all other triples. Its product is the convolution
+
+$$
+(PQ)_{ijk}=\sum_{a=0}^i\sum_{b=0}^j\sum_{c=0}^k
+ P_{abc}Q_{i-a,j-b,k-c}.
+\tag{20.1}
+$$
+
+Form the six-by-six matrix $\mathsf S$ whose rows are the coefficients
+of $d^3f,d^2f,df,f,dK,K$ in descending powers $d^5,\ldots,1$.
+Then (15.5) specifies $\mathscr R$ by the exact identity
+
+$$
+256\mathscr D^8F_0^2\mathscr R
+ =\sum_{\pi\in\mathfrak S_6}\operatorname{sgn}(\pi)
+   \prod_{a=1}^6\mathsf S_{a,\pi(a)}.
+\tag{20.2}
+$$
+
+This determines a unique polynomial over $\mathbb Q[x,p,v]$ because
+the factor on its left is a nonzero polynomial. Expanding the right
+side by (20.1), and collecting powers of $x$, gives exact division by
+$256\mathscr D^8F_0^2$ with zero remainder and integer quotient.
+It has the $512$ nonzero terms, degrees and constant coefficient
+stated in (15.5)–(15.6). Thus (15.4), (20.1), (20.2) are a complete
+finite specification of its coefficients, including normalization.
+The coefficients of $\alpha,\zeta$ are specified by the same
+convolution and (16.1); expansion gives (16.2) term by term. None of
+these coefficient definitions changes the matrix size at a
+specialized base.
+
+For any $P(x,p,v)=\sum P_{abc}x^ap^bv^c$, its translated coefficients
+at $(c_i,p_c,v_c)$ are explicitly
+
+$$
+\mathcal T^{(i)}_{\ell jk}(P)=
+\sum_{\substack{a\ge\ell,\,b\ge j,\,c\ge k}}
+ P_{abc}\binom a\ell\binom bj\binom ck
+ c_i^{a-\ell}p_c^{b-j}v_c^{c-k}.
+\tag{20.3}
+$$
+
+Only finitely many terms are nonzero. In particular
+$A^{(i)}_{\ell jk}=\mathcal T^{(i)}_{\ell jk}(\mathscr R)$ in (17.1),
+and the coefficient sum in (18.1) uses this same formula for
+$P=\alpha,\zeta$.
+

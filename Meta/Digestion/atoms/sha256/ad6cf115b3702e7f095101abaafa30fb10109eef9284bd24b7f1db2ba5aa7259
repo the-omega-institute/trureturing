@@ -1,0 +1,241 @@
+**Theorem 7.1 (height-band control and actual-chord source-ball bound).**
+Fix any model and source of Definition 1.1, with precisely G,
+Definitions 29.1–29.2's capabilities and commands. Write
+$e_n=\sqrt{\delta_n}=1/n$. There are $n_0$, $\epsilon_0>0$ and finite
+constants $C_1,C_2$, depending on this fixed model and source, such that
+the following assertions hold simultaneously for every $n\ge n_0$.
+
+Use G, Lemma 29.5's comparison node chain, starting at the same $o$,
+only up to its first node exit
+
+$$
+K_i=k(q_i),\qquad K_0=k_o,\qquad
+N_n=\inf\{i\ge1:K_i\notin(l,u)\}.
+\tag{7.1}
+$$
+
+Couple this auxiliary chain with the actual command on its first $m_n$
+sign vectors, as in G, Lemma 29.5; subsequent comparison signs are not
+executed. At a final exiting cell it retains the uncut endpoint for
+estimation; the actual command still stops at the first wall hit.
+For every $s\ge0$ its expected number of alive nodes in the height band
+satisfies
+
+$$
+\delta_n\,\mathbb E\sum_{i=0}^{N_n-1}
+  {\bf1}_{\{|K_i-k_o|\le s\}}\le C_1(s+e_n).
+\tag{7.2}
+$$
+
+For $0<\epsilon\le\epsilon_0$ let $\mathcal B_\epsilon$ be the
+source-chart ball $\{R<\epsilon\}$, including $o$. Then
+
+$$
+\nu_n({\bf1}_{\mathcal B_\epsilon})\le C_2\epsilon.
+\tag{7.3}
+$$
+
+This includes every executed random chord, its possible wall cut, and
+the original terminal height leg at $S_n$ on survival. Constants and the
+mesh threshold are independent of $s$ and $\epsilon$ in their stated
+ranges. No phase-independent coefficient or autonomous law of a
+horizontal projection is assumed.
+
+Proof. All conditional expectations below condition on the entire past
+$\mathcal F_i$, including both actual phases and chronological area.
+Put $\delta=\delta_n$ and $e=e_n$. Compactness, smoothness, positivity
+of $\rho$ and positive definiteness of $A$ give constants
+$a_*,s_*,C_v>0$ and $D\ge0$ such that, at every alive node,
+
+$$
+\begin{gathered}
+a^{11}\ge a_*,\qquad |d^1|\le D,\qquad
+\sigma_{\min}(\Sigma)\ge s_*,\qquad |v_i|\le C_ve,\\
+\mathbb E_i v_i^1=d^1(q_i)\delta,\qquad
+\mathbb E_i (v_i^1)^2
+ =2a^{11}(q_i)\delta+(d^1(q_i))^2\delta^2\ge2a_*\delta.
+\end{gathered}
+\tag{7.4}
+$$
+
+The moment identities are exactly G, (29.8), without a change to the
+density drift. Moreover, $|\xi_i|=\sqrt2$ gives
+$|v_i|\ge2s_*e-\|d\|_\infty e^2$. Increase $n_0$ so that
+
+$$
+c_ve\le |v_i|\le C_ve
+\tag{7.5}
+$$
+
+for some $c_v>0$, uniformly in all nodes and sign choices. In particular
+no executed random chord is stationary. G, (29.13), already proves
+
+$$
+\delta\mathbb E N_n\le M
+\tag{7.6}
+$$
+
+for a fixed $M<\infty$. Its hypotheses are just (7.4)'s positive height
+variance, bounded drift and increments, with conditioning on the full
+state. We use this mean node-exit estimate, rather than inferring a
+singular-weight estimate from the lifetime tail.
+
+To prove (7.2), put $L=s+C_ve$ and use the convex $C^1$ function
+
+$$
+F_L(x)=
+\begin{cases}
+x^2/2,&|x|\le L,\\
+L|x|-L^2/2,&|x|>L.
+\end{cases}
+\tag{7.7}
+$$
+
+It satisfies $0\le F_L(x)\le L|x|$ and $|F_L'(x)|\le L$.
+For $x=K_i-k_o$ and $h=v_i^1$, convexity makes
+$F_L(x+h)-F_L(x)-F_L'(x)h$ nonnegative. If $|x|\le s$, the whole
+segment from $x$ to $x+h$ lies in $[-L,L]$, so this remainder is
+exactly $h^2/2$. Thus at every $i<N_n$,
+
+$$
+\mathbb E_i\{F_L(K_{i+1}-k_o)-F_L(K_i-k_o)\}
+\ge a_*\delta\,{\bf1}_{\{|K_i-k_o|\le s\}}-DL\delta.
+\tag{7.8}
+$$
+
+The negative term bounds the signed drift contribution
+$F_L'(K_i-k_o)d^1(q_i)\delta$; no symmetry of the variable drift
+is required. For a deterministic integer $j$, sum (7.8) with the
+$\mathcal F_i$-measurable indicators $\{i<N_n\wedge j\}$.
+Since $F_L(K_0-k_o)=0$, this gives
+
+$$
+a_*\delta\,\mathbb E\sum_{i<N_n\wedge j}
+ {\bf1}_{\{|K_i-k_o|\le s\}}
+\le \mathbb E F_L(K_{N_n\wedge j}-k_o)
+       +DL\delta\mathbb E(N_n\wedge j).
+\tag{7.9}
+$$
+
+Before exit the height is in $I$; its last uncut overshoot has size at
+most $C_ve$. Hence
+$|K_{N_n\wedge j}-k_o|\le C_K$ with, for example,
+$C_K=(u-l)+C_v$ for $e\le1$. By (7.6), the right side of (7.9)
+is at most $L(C_K+DM)$. Monotone convergence as $j\to\infty$
+proves (7.2). In particular the terminal overshoot has been included
+in the telescope, without optional stopping at an unbounded time.
+
+We next estimate actual elapsed time in $\mathcal B_\epsilon$.
+Choose $\epsilon_0$ so that its closed ball lies in the injective
+source chart of Definition 1.2. From (1.5), for a fixed $C_B>0$,
+
+$$
+R<\epsilon\ \Longrightarrow\
+ |(x,y)|\le C_B\epsilon,\qquad
+x=k-k_o,\quad y=2(\alpha-\alpha_o)
+\tag{7.10}
+$$
+
+in the local representatives. Indeed $|B(x,y)^{\mathsf T}|\le R$,
+so $C_B=\|B^{-1}\|$ suffices. This implication discards the central
+coordinate only for an upper bound on a set of times. It imposes no
+quotient dynamics and makes no change to $j=\int a\,db$.
+
+On the $i$th random cell the lifted horizontal pair is exactly
+
+$$
+(k-k_o,\,2(\alpha-\alpha_o))
+ =(K_i-k_o,\,y_i)+\theta(v_i^1,v_i^2),\qquad 0\le\theta\le1.
+\tag{7.11}
+$$
+
+Here the lift $y_i$ can be chosen on this one cell; its actual period
+is $4\pi$. Source representatives in this plane have centers
+$(0,4\pi z)$, $z\in\mathbb Z$. Decrease $\epsilon_0$ and increase
+$n_0$ so that $2C_B\epsilon_0+C_v/n_0<4\pi$.
+An entire cell has horizontal length at most $C_ve$, so it can meet
+at most one of the disks of radius $C_B\epsilon$ about these centers:
+points of two different disks are separated by at least
+$4\pi-2C_B\epsilon>C_ve$. On the lift centered at that disk,
+the intersection of the affine segment (7.11) with the disk is an
+interval of $\theta$-length at most
+$\min(1,2C_B\epsilon/|v_i|)$. Possible further restrictions from the
+actual $\beta$ phase or the central gauge can only shorten its total
+time. Therefore (7.5) proves that the executed portion of this cell
+spends at most
+
+$$
+C\delta\min(1,\epsilon/e)
+\tag{7.12}
+$$
+
+in the source ball. The same upper bound applies to a wall-cut cell,
+as its actual time interval is a prefix of this segment.
+
+If that executed portion meets the ball, (7.10) and the height part
+of (7.11) give $|K_i-k_o|\le C_B\epsilon+C_ve$.
+Let $J_n=N_n\wedge m_n$; its indices $0\le i<J_n$ are exactly the
+random cells with an alive starting node, including the last cut cell
+when there is one. Combining (7.12) and (7.2) at
+$s=C_B\epsilon+C_ve$ yields
+
+$$
+\begin{aligned}
+\mathbb E\int_0^{\zeta_n\wedge S_n}
+ {\bf1}_{\mathcal B_\epsilon}(\bar q_n(t))dt
+&\le C\delta\min(1,\epsilon/e)\,
+ \mathbb E\sum_{i<J_n}
+ {\bf1}_{\{|K_i-k_o|\le C_B\epsilon+C_ve\}}\\
+&\le C\min(1,\epsilon/e)(\epsilon+e)
+ \le 2C\epsilon.
+\end{aligned}
+\tag{7.13}
+$$
+
+The last inequality follows separately from $\epsilon\ge e$ and
+$\epsilon<e$. Thus the estimate holds even for balls smaller than
+the mesh displacement. It counts all returns to the source chart;
+no density of a node distribution or exclusion of return contacts
+has been used.
+
+It remains to include the unchanged terminal leg. It occurs only
+on $N_n>m_n$, where $K_{m_n}<u$, and has exactly
+
+$$
+k(t)=K_{m_n}+\frac{t-S_n}{\delta}(u-K_{m_n}),
+\qquad S_n\le t\le S_n+\delta,
+\tag{7.14}
+$$
+
+with $b,j$ constant. Decrease $\epsilon_0$ so that
+$C_B\epsilon_0\le(u-k_o)/2$.
+If this increasing leg meets $\mathcal B_\epsilon$, then
+$K_{m_n}\le k_o+C_B\epsilon$, so
+$u-K_{m_n}\ge(u-k_o)/2$. Its elapsed time in the necessary height
+band $|k-k_o|\le C_B\epsilon$ is consequently at most
+
+$$
+\delta\frac{2C_B\epsilon}{u-K_{m_n}}
+\le \frac{4C_B}{u-k_o}\,\delta\epsilon.
+\tag{7.15}
+$$
+
+This is a deterministic bound on every surviving command, with zero
+contribution when the leg misses the ball. Combining it with (7.13)
+and $\delta\le1$ proves (7.3) for the complete original lifetime.
+Holds after a wall hit are outside $[0,\zeta_n)$ and do not enter any
+of these integrals. $\square$
+
+The convex remainder and stopped telescoping in (7.7)–(7.9) are the
+classical convex occupation/Lyapunov method, of the same type as the
+discrete absolute-value decomposition and Itô–Tanaka argument in
+Kartashov–Kulik, [*Invariance principle for additive functionals of
+Markov chains*, §5, Proposition 3, (5.2)–(5.3)](https://arxiv.org/html/0704.0508v1).
+That proposition treats a scalar diffusion approximation with scalar
+coefficients. Here $K_i$ need not be an autonomous scalar Markov chain:
+its coefficients depend on the complete native state. Equations
+(7.4)–(7.9) prove the estimate directly under that dependence. The
+classical convex identity is an intermediate tool; the conclusion
+(7.3) concerns the specified native chords and their complete killing
+rule.
+

@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:dd9e9ba4d0b41ef3ffae4ed328faf81efef6c51690b1a2717383414e48d9eb42
+  normalized_sha256: sha256:dd9e9ba4d0b41ef3ffae4ed328faf81efef6c51690b1a2717383414e48d9eb42
+cas_ref: sha256:dd9e9ba4d0b41ef3ffae4ed328faf81efef6c51690b1a2717383414e48d9eb42
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 回顾此前尝试的构造目标并引入下一假设，不断言 X_tor 或 U_tor 的存在、正性或 Fredholm 实现已成立。
+    previous_atom_id: 8a941e1a2d9bc90ebce38be6ec0dc96e51b813faa4dab2b0c368d5d0da6f363a
+    next_atom_id: 07f5831639138880f0828a33855962ba2c588d4e00d4161e3fdcea7e1a06e9ad

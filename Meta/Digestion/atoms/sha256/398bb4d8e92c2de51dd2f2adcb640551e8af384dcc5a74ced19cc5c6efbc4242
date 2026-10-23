@@ -1,0 +1,31 @@
+**Assumption 16.2 (Owning whole-world necessity interface).** Every actual
+$W\in C(p,v)$ with $p\ne24$ satisfies (15.8)–(15.9), $H_1\ne0,C_0>0$,
+and
+
+$$
+f_0=K_0=K_s=0.
+\tag{16.2}
+$$
+
+This is the existing interface of Definition 2.2, equations (2.7)–(2.9),
+Definition 2.3 and F, Lemma 30.2, with the correspondence
+$\mathcal H=H$, $a_i=DH_i$, and the same $x=n/U$, drift $d$ and
+acquired $p,v$. It includes zero drift, vanishing gain samples, degree
+drops and singular sources of the undivided parent. Its source identities,
+in the present notation, are
+
+$$
+dDU=-a_0,\qquad b_sU=5a_2.
+\tag{16.3}
+$$
+
+$$
+\mathcal Q(U,1)
+=4a_1^2\{b(j-b)-r(1-r)\}=0.
+\tag{16.4}
+$$
+
+The correspondence uses $j=U(24-d)D/a_1$ and $r=Uz/a_1$.
+In particular these supplied identities divide by neither $d$ nor
+$b_s$, a gain value, a leading gain coefficient or $\Lambda$.
+

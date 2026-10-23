@@ -1,0 +1,98 @@
+## 44. A degree-seventeen mixed-incidence eliminant
+
+The following is a polynomial characterization of every strict mixed
+singular/regular J incidence with $p\ne24$, including the necessary
+filters. It also specifies a width eliminant by a finite determinant.
+Use independent polynomial variables $r,b$ and write
+
+$$
+\begin{aligned}
+\mathcal J&=b^2+r(1-r),&\mathcal N&=\mathcal J+rb,\\
+S&=(8b-1)(2+5b),\\
+D&=5\{(b^2+8b+4)\mathcal J\mathcal N
+ -2(1+b)(1+2b)b(\mathcal J+\mathcal N)\},\\
+C_0&=-24D+3S\mathcal J\mathcal N,&C_1&=3S\mathcal Nb,\\
+C_2&=3(49b+34)\mathcal J\mathcal N-54(1+2b)b(\mathcal J+\mathcal N),
+&C_3&=3S\mathcal Jb,\\
+B_5&=-4C_0+15C_1-20C_2+10C_3,\\
+B_6&=-10C_0+36C_1-45C_2+20C_3,\\
+B_7&=-20C_0+70C_1-84C_2+35C_3,\qquad L=bD,\\
+N_p&=-bC_0+\{b(1+2b)+\mathcal N\}B_5,\\
+N_v&=-bC_0+\{2b(1+2b)+\mathcal N\}B_6,\\
+N_a&=-bC_0+\{b(1+b)+2\mathcal J+4rb\}B_7.
+\end{aligned}
+\tag{44.1}
+$$
+
+On $D\ne0$, substitution in (40.1) yields
+$d=-C_0/D$, $g(i)=C_i/D$ for $0\le i\le3$, and
+$(p,v,a)=(N_p,N_v,N_a)/L$.
+Direct polynomial identities for the first five original rows are
+
+$$
+\begin{aligned}
+-bC_0+\mathcal JC_1&=24bD,\\
+-C_0+(1+b)C_2&=(147/5)D,\\
+-bC_0+\mathcal NC_3&=24bD,\\
+-C_0+(1+2b)(-C_0+4C_1-6C_2+4C_3)&=18D.
+\end{aligned}
+\tag{44.2}
+$$
+
+Fix any strict root $x$ of $\Phi$. All subsequent coefficient operations
+are in $K=\mathbb Q[x]/(\Phi(x))$. The polynomial $\Phi$ is irreducible
+over $\mathbb Q$. Its residue classes give the following singular
+coefficients, equal to those in (40.5):
+
+$$
+\begin{aligned}
+K_5&=\frac{17120}3x^3-\frac{108782}9x^2+\frac{85033}{12}x-\frac{216151}{288},\\
+K_6&=\frac{109568}3x^3-\frac{1162456}{15}x^2+\frac{682643}{15}x-\frac{192731}{40},\\
+K_J&=35952x^3-\frac{224750}3x^2+\frac{173289}4x-\frac{438635}{96},\\
+C_6^s&=-192x^2+216x+63,\\
+C_J^s&=-\frac{6144}5x^2+1536x+\frac{528}5.
+\end{aligned}
+\tag{44.3}
+$$
+
+These reductions follow by clearing $j^sn^s$ and reducing modulo (41.1).
+For example $1/j^s+1/n^s=107/60$ gives
+$q_5^s=71/18-5/j^s$, $q_6^s=43/3-16/j^s$,
+$q_7^s=129/4-35/j^s$, from which (44.3) follows.
+
+Define the explicit incidence polynomials
+
+$$
+\begin{aligned}
+F_6&=K_5\{N_v-(24+C_6^s)L\}-K_6(N_p-24L),\\
+F_J&=K_5\{N_a-(24+C_J^s)L\}-K_J(N_p-24L).
+\end{aligned}
+\tag{44.4}
+$$
+
+Both have degrees $(6,7)$ in $(r,b)$ over $K$. Let
+$\mathcal R(b)=\operatorname{Res}_r(F_6,F_J)$, the determinant of
+the $12\times12$ Sylvester matrix: its first six rows are shifted
+coefficient vectors of $F_6$, and its last six rows those of $F_J$,
+using descending powers of $r$. Then
+
+$$
+\mathcal R(b)=\lambda\,b^{20}(b+2/5)^4(b-1/8)^7 W_x(b),
+\quad\lambda=[b^{48}]\mathcal R(b)\ne0,
+\tag{44.5}
+$$
+
+where $W_x$ is monic of degree seventeen. Thus (44.1), (44.3)–(44.5)
+already specify its coefficients without root selection or numerical
+input. An explicit coefficient table is given below.
+
+For precision, the finite algebraic verification of (44.5) consists of
+forming the Sylvester determinant in $K[b]$, reducing powers of $x$
+using (41.1), and exact polynomial division. The result has degree 48;
+the exact orders at $0,-2/5,1/8$ are $20,4,7$. Division by these monic
+factors leaves the degree-seventeen factor in the table, up to its
+nonzero leading scalar. Comparing each remaining coefficient in the
+basis $1,x,x^2,x^3$ verifies (44.5). Irreducibility of (41.1) is verified
+by rational polynomial factorization, or the same exact field arithmetic
+may instead be performed separately at each real algebraic root.
+

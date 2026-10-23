@@ -8,6 +8,7 @@
 
 import D5.S3.Arith.GoldenLayerMarginalDecay
 import D5.S3.Arith.GoldenResourceObjectiveFactorization
+import D5.S3.Arith.GoldenLocalThreshold
 
 /- Library-search audit trail (2026-09-06):
    * Repository searches for `5040`, inverse optimality, price thresholds, the golden resource

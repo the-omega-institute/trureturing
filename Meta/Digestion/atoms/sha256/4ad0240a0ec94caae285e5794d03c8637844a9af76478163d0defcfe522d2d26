@@ -1,0 +1,11 @@
+以下条件等价：
+
+1. 存在 $\widehat F$ 使 $L_\omega(q,\widehat F)=0$，其中每个观察点权重均为正；
+2. $\mathsf E_\omega(q;F,\mu)=0$；
+3. 对每个正质量纤维，失败边 $F(s)$ 在 $C_z\cap\operatorname{supp}\mu$ 上恒定；
+4. 存在唯一的 $\overline F:q(\operatorname{supp}\mu)\to2^D$ 使
+   $$
+   F=\overline F\circ q
+   $$
+   在 $\operatorname{supp}\mu$ 上成立。若 $\mu$ 满支撑，定义域可以写成 $q(S)$。
+

@@ -1,0 +1,41 @@
+**推论 477.2（带原文高度条件的有效零点到整数上界）。** 取 $0<\varepsilon<\beta_0-1/2$。假设已给定实际零点 $\rho_0=\beta_0+i\gamma_0$，其中 $\beta_0<1$，并满足
+
+$$
+\gamma_0>\max\{2,C_1(\varepsilon)\},
+$$
+
+这里 $C_1,C_2$ 是 Zhao 引理 10 中可有效计算的常数，必要时增大到正值。定义
+
+$$
+Y=\max\left\{2\log a,\ \frac{16}{\varepsilon^2},
+\frac2\varepsilon[\log24+(2+\varepsilon)\log\gamma_0],
+[C_2(\varepsilon)+1]\log\gamma_0\right\},\qquad B=e^{(1+\varepsilon)Y}.
+\tag{477.8}
+$$
+
+则存在实际整数 $N$ 严格违反 Robin，且
+
+$$
+5040<N\le\exp(B\log B).
+\tag{477.9}
+$$
+
+证明。取 $X=e^Y>\gamma_0^{C_2(\varepsilon)}$。直接应用 Zhao 引理 10，存在 $x\in[X,X^{1+\varepsilon}]$ 满足
+
+$$
+\Delta_1(x)>\frac{x^{\beta_0}}{\gamma_0^{2+\varepsilon}\log x}.
+$$
+
+令 $y=\log x\ge Y$。因 $y\ge16/\varepsilon^2$，初等界 $\log y\le\sqrt y$ 给出 $y^2\le e^{\varepsilon y/2}$；(477.8) 因此保证
+
+$$
+\frac{x^\varepsilon}{(\log x)^2}
+\ge e^{\varepsilon y/2}\ge24\gamma_0^{2+\varepsilon}.
+$$
+
+由 $\beta_0-1/2>\varepsilon$，该峰值大于 $12\sqrt x\log x$。命题 477.1 给出 $N\le\exp(x\log x)\le\exp(B\log B)$，证毕。
+
+这里的上界有效依赖所引用的 $C_1,C_2$。原文只声明二者可有效计算，证明为对 Pintz 方法的改编提纲，未列二者数值或公式；本节未提取它们，也未给出数值截止。因而这不是只输入零点矩形便已实现的数值算法，也不适用于未满足原文高度条件的任意离线零点。命题 477.1 独立于该引理；推论在其前提下继承有效性。结论是实际 lcm 见证上界，不要求 CA 最优性、右端零点上确界、零点简单性或分离假设。不存在离线零点的证明、RH 与对每个 $n>5040$ 的严格 Robin 仍未给出。
+
+本节是纸面数学应用；没有科学执行、数值扫描、Lean 编译或 kernel 认证。文献检索只承担既有来源与适用范围核对，不承担证明审查。有限峰值到整数的转换由上述推导承担。
+

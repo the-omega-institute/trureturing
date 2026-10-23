@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:543ab361c576fb1ec7ee421a759fba602ecb7f9f73069aa36c7ae1c2e4305488
+  normalized_sha256: sha256:543ab361c576fb1ec7ee421a759fba602ecb7f9f73069aa36c7ae1c2e4305488
+cas_ref: sha256:543ab361c576fb1ec7ee421a759fba602ecb7f9f73069aa36c7ae1c2e4305488
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 非命题：是可能的素数角色清单中的字段名称，没有任何 zeta 零点存在断言。
+    previous_atom_id: 13efb626ff26a61bb1d3e01529488e4a86129dea6148aea67d604d6321b66157
+    next_atom_id: 72fba47273cabd7cc8cd9c4d9a62c3cc95cc8e66581d74287a3f41525b9ee192

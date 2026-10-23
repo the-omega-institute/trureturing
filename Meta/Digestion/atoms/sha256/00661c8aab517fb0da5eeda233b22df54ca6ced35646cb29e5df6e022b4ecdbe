@@ -1,0 +1,68 @@
+**Definition 10.1 (Actual J branch and its chart).** Let $I$ be an interval
+on which two specified real-analytic complete-world maps
+$W_{J0}(p),W_{J1}(p)$ are actual strict worlds satisfying
+
+$$
+W_{J0}(p)\ne W_{J1}(p),\qquad
+W_{Ji}(p)\in C(p,v_J(p)),\qquad
+a(W_{J0}(p))=a(W_{J1}(p)).
+\tag{10.1}
+$$
+
+The function $v_J$ is part of this given branch, with its actual-world hypotheses. The local branch of Theorem 9.1 is one
+such branch. We require
+$p\in I\setminus\{24\}$ below; no claim is made that $I$ exhausts any
+whole component or all $J$ branches.
+
+For variables $(p,t,b,h,s)$ use the two source labels
+
+$$
+x=(t,b),\qquad y=(t+hs,b+h),\qquad s\in\mathbb R.
+\tag{10.2}
+$$
+
+In (2.5) and (3.1) substitute $r=tb$, $j=t+b(1-t^2)$, $n=j+tb$.
+All of $D,N_p,N_v,N_a,N_m,S,C$ are then integer polynomials in $(t,b)$.
+Define the reduced differences
+
+$$
+\begin{aligned}
+R_p&=\frac{N_p(y)D(x)-N_p(x)D(y)}h,\\
+R_v&=\frac{N_v(y)D(x)-N_v(x)D(y)}h,\\
+R_\Theta&=\frac{C(y)S(x)-C(x)S(y)}h.
+\end{aligned}
+\tag{10.3}
+$$
+
+Each numerator vanishes identically at $h=0$, since then $y=x$.
+The polynomial factor theorem therefore defines all three quotients in
+$\mathbb Z[t,b,h,s]$ by exact division, including their polynomial
+extensions at $h=0$. The actual chart will retain $h>0$.
+
+The five equations are
+
+$$
+\begin{aligned}
+N_p(x)-pD(x)&=0,\\
+N_v(x)-v_J(p)D(x)&=0,\\
+R_p=R_v=R_\Theta&=0.
+\end{aligned}
+\tag{10.4}
+$$
+
+Their full guards are
+
+$$
+\begin{gathered}
+p\in I,\quad p\ne24,\quad h>0,\\
+t>0,\quad b>0,\quad tb<1,\\
+t+hs>0,\quad b+h>0,\quad(t+hs)(b+h)<1,\\
+D(x)D(y)\ne0.
+\end{gathered}
+\tag{10.5}
+$$
+
+These are precisely the strict source conditions in the $t=r/b$
+coordinates, together with regular selected endpoints and positive
+$b$ difference. There is no additional sign or size condition on $s$.
+

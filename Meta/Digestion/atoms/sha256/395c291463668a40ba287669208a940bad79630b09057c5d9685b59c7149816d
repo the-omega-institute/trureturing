@@ -1,0 +1,31 @@
+**Lemma 17.1 (Complete uniform root cover).** For each fixed real base in
+$\mathcal B_-$ there is one root in each displayed domain. They are sixteen
+distinct real roots and two distinct nonreal roots, all simple, exhausting
+all complex roots of $\mathscr R$. Its degree is exactly eighteen at every
+base in the rectangle. Each real root satisfies
+
+$$
+|x_i-c_i|\le\frac{\eta_i}{1-q_i}<2\eta_i
+ \le\sigma_i:=S_i/10^{15}.
+\tag{17.4}
+$$
+
+Proof. At a fixed base use $G_i(x)=x-\gamma_i\mathscr R(x,p,v)$.
+Its centre displacement is at most $\eta_i$, and (17.2) bounds its
+derivative operator norm by $q_i$ on the domain. For a complex rectangle
+$\nu(z)\le2\rho$, explaining $s_i$; convexity gives the Lipschitz bound
+in the component maximum norm. Inequality (17.3) gives a strict self-map
+and contraction. Banach on a real interval gives a real fixed point for
+real $c_i,\gamma_i$; on a complex rectangle it applies in $\mathbb R^2$.
+The derivative bounds force $\gamma_i\ne0$, so each fixed point is a root.
+They also force $\mathscr R_x\ne0$ at a fixed point, since otherwise
+$G_i'$ would be the identity, contradicting $q_i<1$.
+
+The disjoint domains give eighteen distinct roots; the nonreal domains
+avoid the real axis. Every specialized $\mathscr R$ has degree at most
+eighteen. A zero-polynomial specialization would make $G_i'$ the identity
+and contradict $q_i<1$. The degree bound now forces degree exactly
+eighteen and exhausts all roots and multiplicities. This rules out any
+omitted large root or specialized leading-degree drop. The fixed-point
+inequality $|x_i-c_i|\le\eta_i+q_i|x_i-c_i|$ proves (17.4). ∎
+

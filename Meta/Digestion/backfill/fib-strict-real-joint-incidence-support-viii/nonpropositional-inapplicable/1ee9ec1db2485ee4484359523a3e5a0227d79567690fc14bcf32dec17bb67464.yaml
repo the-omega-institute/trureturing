@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:1ee9ec1db2485ee4484359523a3e5a0227d79567690fc14bcf32dec17bb67464
+  normalized_sha256: sha256:1ee9ec1db2485ee4484359523a3e5a0227d79567690fc14bcf32dec17bb67464
+cas_ref: sha256:1ee9ec1db2485ee4484359523a3e5a0227d79567690fc14bcf32dec17bb67464
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 'Nonpropositional: bare section heading Open problems and mathematical references; no mathematical assertion.'
+    previous_atom_id: babc173acf1e8113fa87f3dffb6f6caaa0c4ca94186813a59b2b1a031f2dbc31
+    next_atom_id: 331b535d7a33e4654b200e0c1525bec3a306035af996ddfd8d52551abc8f0b32

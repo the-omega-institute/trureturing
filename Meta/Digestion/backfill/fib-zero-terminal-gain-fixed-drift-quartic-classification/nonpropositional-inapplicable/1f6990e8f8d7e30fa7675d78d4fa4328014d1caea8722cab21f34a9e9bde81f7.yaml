@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:1f6990e8f8d7e30fa7675d78d4fa4328014d1caea8722cab21f34a9e9bde81f7
+  normalized_sha256: sha256:1f6990e8f8d7e30fa7675d78d4fa4328014d1caea8722cab21f34a9e9bde81f7
+cas_ref: sha256:1f6990e8f8d7e30fa7675d78d4fa4328014d1caea8722cab21f34a9e9bde81f7
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 'Nonpropositional: bare section heading Classification theorem; the theorem statement and its proof are separate atoms, and this heading asserts no mathematical proposition.'
+    previous_atom_id: 89061a58725f7213e2e9c4d40fdce80625743f3f73ae089cab3092703aa74b31
+    next_atom_id: 6b7c222739f4625462d55d58b269356a1f72c45d50ca0ed88aa7f049c9baed2d

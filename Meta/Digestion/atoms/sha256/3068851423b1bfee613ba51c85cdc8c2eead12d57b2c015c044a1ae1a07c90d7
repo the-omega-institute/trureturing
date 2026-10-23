@@ -1,0 +1,29 @@
+### 定理 3.2（未来任务闭包的等价形式）
+
+未来展开的关系为
+
+$$
+R_{\Gamma^{\uparrow}}
+=
+\bigcap_{\alpha\in A^*}(U_\alpha\times U_\alpha)^{-1}(R_\Gamma).
+\tag{3.2}
+$$
+
+它是包含于 $R_\Gamma$ 的最大、对所有 $U_a$ 稳定的等价关系。
+
+**证明。** 等式由
+
+$$
+(f\circ U_\alpha)(s)=(f\circ U_\alpha)(s')
+\Longleftrightarrow
+(U_\alpha(s),U_\alpha(s'))\in\ker f
+$$
+
+逐项取交得到。若 $sR_{\Gamma^{\uparrow}}s'$，对任意 $a$ 和任意 $\alpha$，有
+
+$$
+U_\alpha(U_a(s))=U_{a\alpha}(s),
+$$
+
+故 $U_a(s)R_{\Gamma^{\uparrow}}U_a(s')$，所以稳定。若 $E\subseteq R_\Gamma$ 是稳定等价关系，则对任意词 $\alpha$ 归纳得到 $(U_\alpha(s),U_\alpha(s'))\in R_\Gamma$，故 $E\subseteq R_{\Gamma^{\uparrow}}$。证毕。
+

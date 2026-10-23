@@ -1,0 +1,139 @@
+**Proposition 5.2 (Finite coefficient and norm certificate).** At
+$p=v=0$ over $\mathbb F_{101}$, the raw leading coefficient is
+$\rho=75$. The following arrays give the coefficients in increasing
+powers of $x$, including the final monic coefficient of $\bar R$:
+
+$$
+\begin{aligned}
+\bar R={}&(46,95,81,62,63,79,48,47,53,61,51,37,56,53,49,6,82,8,1),\\
+\delta={}&(25,72,55,25,80,25,88,86,100,100,87,31,85,34,18,36,84,8),\\
+\tau={}&(6,14,74,79,14,63,53,68,75,51,27,33,52,44,98,31,70,78).
+\end{aligned}
+\tag{5.4}
+$$
+
+The characteristic polynomial $\chi$ has the following array in
+decreasing powers of its terminal variable $z$:
+
+$$
+\chi=(1,60,34,67,95,86,81,15,46,78,86,25,51,76,54,17,20,41,28).
+\tag{5.5}
+$$
+
+Its exact determinant data in this field are
+
+$$
+\begin{array}{c|r}
+\text{quantity}&\text{residue}\\ \hline
+\operatorname{Res}_x(\bar R,\partial_x\bar R)&97\\
+\operatorname{Disc}_x(\bar R)&4\\
+\operatorname{Res}_z(\chi,\partial_z\chi)&71\\
+\operatorname{Disc}_z(\chi)&30\\
+\kappa&82\\
+\operatorname{Res}_x(\bar R,D)&23\\
+\operatorname{Res}_x(\bar R,\alpha)&62\\
+\operatorname{Res}_x(\bar R,a)&76\\
+\operatorname{Res}_x(\bar R,\beta)&70
+\end{array}
+\tag{5.6}
+$$
+
+The source-reconstruction norms are
+
+$$
+\begin{array}{c|rrrrrrrrrrr}
+u&\delta&\delta-24&H_0&H_1&U&b&j&n&T&r&1-r\\ \hline
+\operatorname{Nm}(u)&50&100&43&73&15&53&33&84&13&39&31.
+\end{array}
+\tag{5.7}
+$$
+
+At the separate specialization $p=1,v=2$ over the same field,
+
+$$
+S_F(1,2)=\operatorname{Res}_x(F_0,\alpha)=52.
+\tag{5.8}
+$$
+
+In particular each displayed nonzero scalar certifies a nonzero
+characteristic-zero polynomial or rational function defined by the
+corresponding circuit.
+
+Proof. All entries follow from the finite definitions (4.1)–(4.7) and
+(5.1)–(5.3) with reduction modulo $101$. The following coefficient
+rules specify the calculation completely using only finite field
+arithmetic. Polynomial products are reduced by monic division by the
+first array in (5.4). If $u=(u_0,\ldots,u_{17})$ and
+$v=(v_0,\ldots,v_{17})$, form the convolution
+$w_\ell=\sum_{i+j=\ell}u_iv_j$, then for each degree
+$\ell\ge18$, in decreasing order, subtract $w_\ell x^{\ell-18}\bar R$.
+The resulting eighteen entries are the product in the quotient.
+Inversion uses the extended Euclidean identity with $\bar R$, or
+the adjugate rule of Definition 5.1.
+
+The resultant quotient (4.7), divided by its leading coefficient
+$75$, gives the first array. Applying $-\beta/\alpha$ and then the
+four linear forms $a_i/D$ gives the second and third arrays. For
+example every denominator in these operations has nonzero norm:
+$\operatorname{Nm}(\alpha)=62$ and $\operatorname{Nm}(D)=23$.
+The source divisions additionally use the norms $50$ for $\delta$
+and $73$ for $H_1$. The constants $2,5$ are units.
+
+For an explicit scalar recurrence giving (5.5), let
+$s_i=\operatorname{tr}(M(\tau^i))$, set $c_0=1$, and for
+$1\le k\le18$ set
+
+$$
+c_k=-k^{-1}\sum_{i=1}^k c_{k-i}s_i
+\quad\hbox{in }\mathbb F_{101}.
+\tag{5.9}
+$$
+
+All $k$ here are units. Newton's identities give the descending
+characteristic coefficients $c_0,\ldots,c_{18}$, which are exactly
+(5.5). The determinant of the eighteen successively reduced columns
+$1,\tau,\ldots,\tau^{17}$ is $82$. The Sylvester determinants of
+the two monic degree-eighteen polynomials and their derivatives are
+$97$ and $71$. Since $(-1)^{18\cdot17/2}=-1$, their discriminants
+are $4$ and $30$. The identity
+
+$$
+30=4\cdot82^2\pmod {101}
+\tag{5.10}
+$$
+
+also agrees with the Vandermonde change of basis. Applying the same
+multiplication determinant to the eleven explicitly reconstructed
+elements gives (5.7). Reduction gives zero for each of
+
+$$
+\begin{gathered}
+f(x,\delta),\quad K(x,\delta),\\
+(294/5-2\delta-H_2)U-H_2,\\
+r^2-(1+b)r+b(n-b).
+\end{gathered}
+\tag{5.11}
+$$
+
+Here $294/5=79$ in $\mathbb F_{101}$. These last zero residues
+are finite identities in this specialization; the universal identities
+needed in characteristic zero are proved in Theorem 6.1 below.
+
+For (5.8), substitute $(1,2)$ in the polynomial $\alpha$ of (4.5)
+and take its Sylvester determinant with the cubic $F_0$; it is $52$.
+No rational inversion is involved in this separate resultant. It is
+necessary to distinguish this specialization: at $(0,0)$, $F_0$
+has roots $-1,-2$, so that point is not asserted to belong to the
+final generic base open.
+
+Finally all the circuits before reduction have integer coefficients,
+apart from rational constants and the explicitly prescribed inverses.
+The leading coefficient and all inversion norms are nonzero modulo
+$101$. Thus their denominators are units at this specialization.
+A rational function identically zero in characteristic zero would
+have zero residue at every specialization where its defining circuit
+has unit denominators. The nonzero residues therefore prove the
+stated characteristic-zero nonidentities. This inference uses
+nonvanishing residues; it does not lift the modular zero identities
+of (5.11) to universal identities. ∎
+

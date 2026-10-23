@@ -1,0 +1,27 @@
+## 17. Three closed target rectangles and the whole-child compactness theorem
+
+Retain the complete worlds, the undivided parent equation, the one whole
+real gain of degree at most three, the fixed real drift, the original
+clocks, and the entire-child quantifiers of Sections 1--16.  Put
+
+\[
+\begin{aligned}
+ K_1&=[690.595905,690.595906]\times[1416.434664,1416.434665],\\
+ K_2&=[1.830485,1.830486]\times[175.912050,175.912051],\\
+ K_3&=[7.283036,7.283037]\times[61.494372,61.494373].
+\end{aligned}
+\tag{17.1}
+\]
+
+Every terminating decimal in this appendix denotes the corresponding exact
+rational number.  Let \(\Phi(W)=(p(W),v(W))\), and give the strict complete
+world space its topology in \((r,b,c,d,k_0,k_1,k_2,k_3)\), where
+\(g(s)=\sum_{q=0}^3k_qs^q\).  The map \(\Phi\) is the original sixth-clock
+map, including all lower-degree strata and zero samples.
+
+The whole-world coercivity and nonproper-value classification used below
+are [S], Section 7 and Theorems 12.1 and 12.3, with the boundary lifts of
+Definition 12.2 there.  These statements retain singular sources, arbitrary
+real drift, every allowed gain stratum, and unused companions; they impose
+no terminal-value condition.
+

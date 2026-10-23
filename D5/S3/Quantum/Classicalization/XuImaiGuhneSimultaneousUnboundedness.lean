@@ -21,7 +21,7 @@ Frozen declaration identities (D labels below):
 D1: D5/S3/Quantum/Dynamics/KickedIsingNegativityRefutation; D5.S3.Quantum.Dynamics.KickedIsingNegativityRefutation.partialTranspose; statement_id: sha256:2373e14505428583f492752adc05d104ae8b1567265ff8182e03646de824c089.
 D2: D5/S3/Quantum/Entanglement/ConicalDesignConcurrenceComparability; D5.S3.Quantum.Entanglement.ConicalDesignConcurrenceComparability.traceNorm_smul_nonneg; statement_id: sha256:4e1e2463b054d4f1a17a47dfa173be720d81b8370e9189ac369460319c5840c1.
 D3: D5/S3/Quantum/Entanglement/EnergyRestrictedUnitaryEncodingRefutation; D5.S3.Quantum.Entanglement.EnergyRestrictedUnitaryEncodingRefutation.IsPOVM; statement_id: sha256:df0cbe508ee3118bb0f027530ccb3cca3db2b6c06f7328137344f4eafae68b67.
-D4: D5/S3/Quantum/Entanglement/GHZMeasureBiseparableBound; D5.S3.Quantum.Entanglement.GHZMeasureBiseparableBound.IsDensity; statement_id: sha256:fc9bb0824d5818ff419f72f26095faecc04e62ab59bf26f4f2bcefbb2d380448.
+D4: D5/S3/Quantum/Information/SLDSpectralEnergy; D5.S3.Quantum.Information.SLDSpectralEnergy.IsDensity; statement_id: sha256:fc9bb0824d5818ff419f72f26095faecc04e62ab59bf26f4f2bcefbb2d380448.
 D5: D5/S3/Quantum/Foundation/FiniteTraceDistance; D5.S3.Quantum.Foundation.FiniteTraceDistance.traceNorm; statement_id: sha256:12ad034b5758446e6d628c75121b3ad5f0c80bb305937e8c9ff87e82076bc059.
 D6: D5/S3/Quantum/Foundation/FiniteTraceDistance; D5.S3.Quantum.Foundation.FiniteTraceDistance.traceNorm._proof_1; statement_id: sha256:b1586fdd8f90368f29693bf2d79bbde6eef95de7877836ce053c092745767dcb.
 D7: D5/S3/Quantum/Foundation/FiniteTraceDistance; D5.S3.Quantum.Foundation.FiniteTraceDistance.traceNorm._proof_2; statement_id: sha256:2c4ba5b5c99b826fb97b25dec25e9c500d187206dfe78430a0de7fd11c71bb2b.
@@ -143,6 +143,7 @@ Family.finite_family_data: proof_shape: bind-only; escape_witness: none; frozen_
 result: proof_shape: bind-only; escape_witness: none; frozen_dependencies: D1,D2,D3,D4,D5,D6,D7,D8,D9,D10,D11,D12,D13,D14,D15,D16,D17,D18,D19; consumers: settling result.
 -/
 
+import D5.S3.Quantum.Information.SLDSpectralEnergy
 import D5.S3.Quantum.Foundation.FiniteTraceDistance
 import D5.S3.Quantum.Schatten.TraceNorm
 import D5.S3.Weil.ZetaLinear.PosIndex
@@ -158,7 +159,7 @@ import D5.S3.Quantum.Entanglement.EnergyRestrictedUnitaryEncodingRefutation
 set_option maxHeartbeats 1000000
 noncomputable section
 namespace D5.S3.Quantum.Classicalization.XuImaiGuhneSimultaneousUnboundedness
-open D5.S3.Quantum.Entanglement.GHZMeasureBiseparableBound (IsDensity)
+open D5.S3.Quantum.Information.SLDSpectralEnergy (IsDensity)
 open D5.S3.Quantum.Entanglement.EnergyRestrictedUnitaryEncodingRefutation (IsPOVM)
 open Matrix
 open scoped BigOperators ComplexOrder MatrixOrder Kronecker

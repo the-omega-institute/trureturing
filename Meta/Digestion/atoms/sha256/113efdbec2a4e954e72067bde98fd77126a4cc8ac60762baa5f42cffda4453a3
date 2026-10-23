@@ -1,0 +1,82 @@
+**命题 16.3（任意正有理二元表的精确局部实现）。** Let $B=(b_{uv})_{u,v\in\{0,1\}}$ have four strictly positive rational entries. There is a finite product $\mathcal G_B(u,v,o,\xi)$ of tables from (16.2), with terminals $u,v$, one fresh zero variable $o$, and fresh hidden variables $\xi$, such that
+
+$$
+ \left.\sum_{\xi}\mathcal G_B(u,v,o,\xi)\right|_{o=0}
+ =c_B b_{uv},\qquad c_B\in\mathbb Q_{>0}.
+\tag{16.4}
+$$
+
+The pin for $o$ is counted separately. Every terminal assignment has a positive extension. The identity also holds after identifying the two terminals with the same actual variable.
+
+**Proof.** Put
+
+$$
+ r=\frac{b_{00}b_{11}}{b_{10}b_{01}}>0.
+\tag{16.5}
+$$
+
+In the following graphs, an edge $\{a,b\}$ denotes exactly the factor $\mathsf H$ on $(a,a,b)$, and an activity $t$ at a vertex $w$ denotes exactly a factor $\mathsf V_t$ on $(w,o,o)$. All internal vertices are fresh hidden variables. First calculate the terminal table $M$ of the finite hidden sum with the assignment-independent local normalization constants removed. Rows are indexed by $u=0,1$ and columns by $v=0,1$.
+
+If $r=1$, take no edge and no internal vertex. Then
+
+$$
+ M=\begin{pmatrix}1&1\\1&1\end{pmatrix}.
+\tag{16.6}
+$$
+
+If $r>1$, use the path $u-p-v$, giving its hidden vertex $p$ activity $r-1\in\mathbb Q_{>0}$. At terminals $00$, summing over $p$ gives $1+(r-1)=r$. If either terminal is one, $p$ is forced to zero. Hence
+
+$$
+ M=\begin{pmatrix}r&1\\1&1\end{pmatrix}.
+\tag{16.7}
+$$
+
+If $0<r<1$, set
+
+$$
+ \alpha=\frac2r-1>0,\qquad
+ \beta=\frac{2(1-r)}r>0,
+\tag{16.8}
+$$
+
+and use the path $u-p-q-v$ with hidden activities $\alpha$ at $p$ and $\beta$ at $q$. At terminals $00$, the permitted hidden words $(p,q)$ are $00,10,01$, contributing $1,\alpha,\beta$. At $10$, $p=0$ and $q$ is free; at $01$, $q=0$ and $p$ is free; at $11$, both are zero. Therefore
+
+$$
+ M=\begin{pmatrix}1+\alpha+\beta&1+\alpha\\1+\beta&1\end{pmatrix}
+  =\begin{pmatrix}2(2-r)/r&2/r\\(2-r)/r&1\end{pmatrix}.
+\tag{16.9}
+$$
+
+All three cases give positive rational entries, $M_{11}=1$, and $M_{00}M_{11}/(M_{10}M_{01})=r$. For (16.9) the ratio is exactly $[2(2-r)/r]/[2(2-r)/r^2]=r$. The strict cases use only strictly positive activities; the case $r=1$ uses neither a zero activity nor a limit of the other cases.
+
+Put $s=M_{00}$ and append the two terminal activities
+
+$$
+ \lambda_u=\frac{b_{10}s}{b_{00}M_{10}},\qquad
+ \lambda_v=\frac{b_{01}s}{b_{00}M_{01}},\qquad
+ E_{uv}=\lambda_u^u\lambda_v^v M_{uv}.
+\tag{16.10}
+$$
+
+Both activities are positive rational. Direct substitution at $00,10,01$ gives $E_{uv}=(s/b_{00})b_{uv}$. At $11$ the cross-ratio identity gives
+
+$$
+ E_{11}
+ =\frac{b_{10}b_{01}s^2M_{11}}{b_{00}^2M_{10}M_{01}}
+ =\frac{s}{b_{00}}\frac{b_{10}b_{01}r}{b_{00}}
+ =\frac{s}{b_{00}}b_{11}.
+\tag{16.11}
+$$
+
+Implement every listed activity, including both terminal activities, by (16.3). If the graph has $e$ edges and its complete list of activity parameters is $t_1,\ldots,t_k$, restoring every local normalization gives (16.4) with
+
+$$
+ c_B=\frac{s}{b_{00}}\,5^{-e}
+       \prod_{i=1}^k(3+2t_i)^{-1}\in\mathbb Q_{>0}.
+\tag{16.12}
+$$
+
+The edge counts are respectively $0,2,3$ in the three cases; their activity lists are respectively $(\lambda_u,\lambda_v)$, $(r-1,\lambda_u,\lambda_v)$ and $(\alpha,\beta,\lambda_u,\lambda_v)$. The common pin contributes no factor to $c_B$. All internal vertices zero give a positive summand for every terminal assignment, including $11$.
+
+The equations are identities for the formal terminal bits before any scope substitution. Substituting the same actual variable for $u$ and $v$ preserves each identity pointwise. Terminal activities or edge scopes that then coincide remain separate permitted factors in the product. No equality factor is needed. In particular (16.4) is an implementation by normalized restricted ternary tables, rather than permission to supply $B$ as a binary factor. $\square$
+

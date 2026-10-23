@@ -1,0 +1,13 @@
+**Theorem 10.2 (sharp fixed-linear ambient reading bound).** On the unrestricted space
+
+$$
+\mathcal X_{k,\delta}
+=\operatorname{Mat}_2(\mathbb R)^{k+1}\oplus\mathbb R^{\delta+1},
+$$
+
+any recovery of every point from $n$ fixed scalar linear observations requires $n\ge N=4k+\delta+5$, regardless of the decoding rule. Theorem 7.2 attains this bound with legal literal-clock observations.
+
+**Proof.** The vector space has dimension $N$. For $n<N$, the linear observation map has rank at most $n$, hence a nonzero kernel. Zero and any nonzero point of that kernel give identical data, so no decoder can uniquely recover both. Theorem 8.1 supplies an invertible $N$-row observation matrix on a legal path. This proves sharpness in exactly the stated class. ∎
+
+The lower bound concerns fixed linear observations of the full unrestricted ambient space. It is not a lower bound for the common-source family, a particular acquired child or adaptive acquisition, and does not imply any terminal collision in those domains.
+

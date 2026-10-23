@@ -1,0 +1,20 @@
+## 452. Fibonacci--Lucas 特殊值抵消仍不提供 Robin 桥
+
+Payam Danesh 的 [*Cancellation profiles of Fibonacci-Lucas zeta sums*](../../../Library/Analytic/danesh2026fiblucaszeta.md)，
+arXiv:2609.33564v1，研究有限 Fibonacci/Lucas 加权和中的负整数 zeta
+特殊值抵消。该文给出归一化绝对项的有限指数展开、总变差极限分布，及
+Fibonacci/Lucas 情形在偶次数至少 26 时的最大项位置为 8；它还量化求和
+条件数的阶。
+
+这条结果与当前缺口的对象不同。它没有 Euler 乘积、\(\Lambda\)、\(\mu\)、
+\(\psi\) 或 \(\sigma(N)/N\)，也没有把 Fibonacci 地址映射到同一个实际
+Robin 候选。因此其有限特殊值抵消不能替代
+
+$$
+I_\psi(\log N)\quad\text{或同一候选上的有符号 Robin 余量估计}.
+$$
+
+它的直接研究价值是排除一条看似相近但对象不相容的路线：有限
+Fibonacci--Lucas zeta 和的条件数抵消，不等于普通 Möbius 的平方根抵消。
+继续重做这类特殊值展开不会缩小 FIB 到 Robin 的联合系数桥缺口。
+

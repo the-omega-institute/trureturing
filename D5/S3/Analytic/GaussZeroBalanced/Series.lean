@@ -19,7 +19,7 @@ open D5.S3.Analytic.GaussZeroBalanced.Defs
 
 namespace D5.S3.Analytic.GaussZeroBalanced.Series
 
-private lemma coefficient_pos {a b c : ℝ} (ha : 0 < a) (hb : 0 < b) (hc : 0 < c)
+lemma coefficient_pos {a b c : ℝ} (ha : 0 < a) (hb : 0 < b) (hc : 0 < c)
     (n : ℕ) : 0 < ordinaryHypergeometricCoefficient a b c n := by
   unfold ordinaryHypergeometricCoefficient
   exact mul_pos (mul_pos (mul_pos (inv_pos.mpr (by positivity))
@@ -134,7 +134,7 @@ private lemma coefficient_c_succ {a b c : ℝ} (hc : 0 < c) (n : ℕ) :
   field_simp
   linear_combination -(ascPochhammer ℝ n).eval a * (ascPochhammer ℝ n).eval b * hp
 
-private lemma coefficient_recurrence {a b c : ℝ} (hc : 0 < c) (n : ℕ) :
+lemma coefficient_recurrence {a b c : ℝ} (hc : 0 < c) (n : ℕ) :
     ((n + 1 : ℕ) : ℝ) * ordinaryHypergeometricCoefficient a b c (n + 1) * (c + n) =
       (a + n) * (b + n) * ordinaryHypergeometricCoefficient a b c n := by
   have hn : (n : ℝ) + 1 ≠ 0 := by positivity

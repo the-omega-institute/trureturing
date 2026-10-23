@@ -1,0 +1,10 @@
+**定义 102.1（全树八元群读出）。** 在第87章原树上定义
+
+$$
+\widehat q(\alpha)=(0,(1,0)),\quad
+\widehat q(\beta)=(0,(0,1)),\quad
+\widehat q(\langle s,t\rangle)=\widehat q(s)\widehat q(t),
+$$
+
+乘法使用第101.2条，记 $\widehat q(t)=(s(t),x(t))$。类型 $x(t)=c(t)\bmod2$，这里 $c(t)$ 仍是整数组成，不是单独的四元数 $c$。
+

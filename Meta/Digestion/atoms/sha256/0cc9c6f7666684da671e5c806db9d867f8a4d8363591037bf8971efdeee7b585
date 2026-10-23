@@ -1,0 +1,18 @@
+**命题 100.2（同一中间状态的严格核复合）。** 路径 $\gamma$ 的开放响应核定义为
+
+$$
+K_\gamma(x,y)=\mathbf1_{\{y=x+h_\gamma\}}.
+$$
+
+若先走 $\gamma_1$ 再走 $\gamma_2$，则
+
+$$
+K_{\gamma_2\circ\gamma_1}(x,z)
+=\sum_{y\in\mathbb F_3}K_{\gamma_1}(x,y)K_{\gamma_2}(y,z)
+=\mathbf1_{\{z=x+h_{\gamma_1}+h_{\gamma_2}\}}.
+$$
+
+证明（100.2）。第一因子非零恰要求 $y=x+h_{\gamma_1}$，只有一个共享中间值；第二因子再要求 $z=y+h_{\gamma_2}$，代入即得。不能把两个不同 $y$ 的局部分别实现当作同一联合实现。此为 [《FIB关系延拓几何》，版本cda923132d98ab62379ad5bd2434c747e44c6a74，定义5.2及定理5.3–5.4](https://github.com/the-omega-institute/trureturing/blob/cda923132d98ab62379ad5bd2434c747e44c6a74/docs/develop/theory/FIB_RELATIONAL_CONTINUATION_GEOMETRY.md) 的严格接缝在平移路径模型中的实例。$\square$
+
+一个路径的内部在这个任务中可用偏移总结，但两路径比较仍需各自偏移和共同端点合同；只给“同端点”不能推定两核相同。
+

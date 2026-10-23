@@ -1,0 +1,28 @@
+**Corollary 22.2 (an auxiliary zero-energy nodal length).** For small
+$q>0$, the first zero of $Z_{q^2}$ on every angular ray has
+
+$$
+\log R_{\rm zero}=\pi/q-\kappa_{\rm cap}
+                    +O(q^2)+O(e^{-\sigma\pi/q}).
+\tag{22.11}
+$$
+
+For $\mu=\sqrt{\alpha\lambda}>0$, its physical frozen nodal radius in
+(20.1) is
+$b\exp(-(1-\pi/\mu)L-\kappa_{\rm cap})(1+O(L^{-1}))$,
+uniformly on compact positive $\lambda$ sets. At $\mu=\pi$ it tends
+to $be^{-\kappa_{\rm cap}}$. This is a zero of a signed zero-energy
+comparison solution, not an actual concentration radius or an equality
+realization.
+
+Proof. The first slow zero is
+$t_s=\pi/q-\delta(q)/q=\pi/q-\kappa_{\rm cap}+O(q^2)$, with derivative
+$-A(q)\phi_{q^2}$ bounded away from zero in every direction. The
+exponential remainder gives one zero within $O(e^{-\sigma\pi/q})$.
+On fixed balls $Z_{q^2}\to Z>0$. Farther out before $t_s$, the positive
+slow sine is bounded below by a multiple of
+$\min(t+\delta/q,t_s-t)$ off the zero neighbourhood, and dominates the
+exponential remainder. Thus no earlier zero occurs. Cartesian estimates
+include the polar endpoints. Apply (20.5) and multiply by
+$\epsilon=be^{-L}$ to get the physical formula. $\square$
+

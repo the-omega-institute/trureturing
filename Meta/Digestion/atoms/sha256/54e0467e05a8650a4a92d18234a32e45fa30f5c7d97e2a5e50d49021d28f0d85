@@ -1,0 +1,133 @@
+### 13.2. The zero-safe singular alternatives and their affine responses
+
+Put
+
+$$
+\begin{gathered}
+j=b+r(1-r)/b,\quad n=j+r,\quad T=1+b,\quad U=1+2b,\\
+\Lambda=1+6/T+1/U-4/j-4/n,\qquad e=d-24,\\
+B_{\rm coef}=6/T-2/U=2(2+5b)/(TU)>0.
+\end{gathered}
+\tag{13.2}
+$$
+
+O's full-parent equation and whole-world converse give
+
+$$
+e\Lambda+\frac{24}{5}(b-1/8)B_{\rm coef}=0.
+\tag{13.3}
+$$
+
+For completeness, the zero-safe fifth-response lift uses
+
+$$
+\begin{gathered}
+V=U+n,\qquad A_5=1+V(4-15/j+20/T-10/n),\\
+K_5=96(b-1/8)V/T,\qquad Z=\Lambda^2+A_5^2>0,\\
+e=\frac{-(24/5)(b-1/8)B_{\rm coef}\Lambda
+             +A_5(p-24-K_5)}{Z}.
+\end{gathered}
+\tag{13.4}
+$$
+
+Its whole $g$ is the degree-at-most-three interpolant at the fixed
+nodes $0,1,2,3$ with values
+
+$$
+(-24-e,\ -e/j,\ (27/5-e)/T,\ -e/n),\qquad d=24+e.
+\tag{13.5}
+$$
+
+The condition $Z>0$ is O, Lemma 12.2 on the full strict domain.
+The gain cannot vanish identically, since readings zero and $24$
+would then coincide. These are complete-world statements, rather than
+an equation for a sampled or substituted gain.
+
+If $\Lambda=0$, positivity in (13.3) forces $b=1/8$. At that width,
+O's identity is
+
+$$
+\Lambda=\frac{\Phi(r)}{960jn},\qquad
+\Phi(t)=438272t^4-931328t^3+540800t^2-50728t-853.
+\tag{13.6}
+$$
+
+O, Theorem 4.2 proves that exactly two roots are strict. Denote them
+by $\varrho_-,\varrho_+$. S's finer brackets are
+
+$$
+\begin{aligned}
+J_-&=[134815875067638653367017716061081265110899687,
+       134815875067638653367017716061081265110899688]/10^{45},\\
+J_+&=[902449681772056265377872651296542856186276499,
+       902449681772056265377872651296542856186276500]/10^{45}.
+\end{aligned}
+\tag{13.7}
+$$
+
+The endpoint signs of $\Phi$ are respectively $(-,+)$ and $(+,-)$.
+The designated roots, rather than the centers of these intervals,
+are used throughout.
+
+To display the whole-gain singular identity, define
+
+$$
+\begin{aligned}
+\mathcal D={}&1731744020342106665,\\
+A_s(t)={}&13656112734222647296t^3-33583101098863014400t^2\\
+&+20502976421172725312t-3401342974535580372,\\
+B_s(t)={}&-327746705621343535104t^3+916826043674607172160t^2\\
+&-616757003572777087368t+31411654798932835643,\\
+s_\sigma(p)={}&\alpha_\sigma p+\beta_\sigma
+=-\frac{3\{pA_s(\varrho_\sigma)+B_s(\varrho_\sigma)\}}{\mathcal D}.
+\end{aligned}
+\tag{13.8}
+$$
+
+Here is an exact verification of the response identity, retaining the
+normalization of the original whole gain. At width $1/8$ put
+
+$$
+\begin{gathered}
+j(t)=1/8+8t(1-t),\quad n(t)=j(t)+t,\\
+F_5=jn+(n+5/4)\{(196/9)jn-15n-10j\},\\
+F_6=jn+(n+5/2)\{50jn-36n-20j\},\qquad F_0=84+24n.
+\end{gathered}
+\tag{13.9}
+$$
+
+At a designated root, $F_5=jnA_5\ne0$ by $Z>0$ and $\Lambda=0$.
+The inherited whole-world response is
+$F_0+(p-24)F_6/F_5$. Reduction by
+
+$$
+t^4\equiv(931328t^3-540800t^2+50728t+853)/438272\pmod\Phi
+\tag{13.10}
+$$
+
+gives both exact remainder vectors, in ascending powers $1,t,t^2,t^3$:
+
+$$
+\begin{aligned}
+\operatorname{rem}(\mathcal D F_6+3A_sF_5,\Phi)&=(0,0,0,0),\\
+\operatorname{rem}(\mathcal D(F_0F_5-24F_6)+3B_sF_5,\Phi)&=(0,0,0,0).
+\end{aligned}
+\tag{13.11}
+$$
+
+They prove (13.8) for every real $p$. In particular the classification
+has no positive-$p$ restriction: every singular world in any $C(p,v)$
+must satisfy $v=s_-(p)$ or $v=s_+(p)$. Conversely O's unique lift
+supplies each singular fifth-response world. No division by $\Lambda$,
+drift, a gain sample, leading gain coefficient or root difference occurs.
+The divisions in this argument use positive source traces, the proved
+positive $Z$, and the proved nonzero $F_5$.
+
+Exact rational Horner evaluation of $-3A_s/\mathcal D$ and
+$-3B_s/\mathcal D$ on (13.7) gives the following enclosures.
+All displayed terminating decimals in this section denote exact rationals.
+
+| $\sigma$ | Enclosure $\mathcal A_\sigma$ for $\alpha_\sigma$ | Enclosure $\mathcal B_\sigma$ for $\beta_\sigma$ |
+| --- | --- | --- |
+| $-$ | $[2.10332127276981,2.10332127276982]$ | $[62.15085699544574,62.15085699544575]$ |
+| $+$ | $[3.83234815291643,3.83234815291644]$ | $[33.58501339171649,33.58501339171650]$ |

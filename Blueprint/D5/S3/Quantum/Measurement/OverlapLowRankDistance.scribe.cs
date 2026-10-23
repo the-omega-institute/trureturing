@@ -12,6 +12,11 @@ internal sealed class OverlapLowRankDistanceDocument : IScribeDocumentDefinition
     public DocumentDefinition Create() => DocumentDefinition.Create(ScribeNode.Create(
         "Finite-dimensional spectral and overlap bounds for antidistinguishability.",
         H("OverlapLowRankDistance"), Blocks(
+            Describe.Lean(DescribeId.Create("eigenvalue-lower-of-psd-sub-scalar"),
+                DeclarationHandle.Create(Owner + ".eigenvalue_lower_of_psd_sub_scalar"),
+                H("A scalar lower bound for every eigenvalue"),
+                StatementSource.FromAuthor(Disp(EigenvalueLowerFormula())), AssessedProvenance.FromRepo(Paper),
+                Blocks(Paragraph(Text("For a Hermitian matrix A on an arbitrary finite index type, positive semidefiniteness of A minus a times the identity implies that every eigenvalue of A is at least a. Evaluate the quadratic form on a unit eigenvector. The index type may be empty, in which case the conclusion has no instances."))), DescribeRole.Theorem),
             Describe.Lean(DescribeId.Create("csq-nonneg"),
                 DeclarationHandle.Create(Owner + ".cSq_nonneg"), H("cSq nonneg"),
                 StatementSource.FromAuthor(Disp(Formula0())), AssessedProvenance.FromRepo(Paper),
@@ -64,6 +69,30 @@ internal sealed class OverlapLowRankDistanceDocument : IScribeDocumentDefinition
                 DeclarationHandle.Create(Owner + ".overlap_target_distance_bound"), H("overlap target distance bound"),
                 StatementSource.FromAuthor(Disp(Formula12())), AssessedProvenance.FromRepo(Paper),
                 Blocks(Paragraph(Text("The formula states the complete estimate or implication. Matrix entries, finite index sets, and proof parameters retain their Lean meanings. Proof fields of finite-index constructors are omitted."))), DescribeRole.Theorem))));
+
+    private static Formula EigenvalueLowerFormula()
+    {
+        var index = F.Id("I");
+        var a = F.Id("a");
+        var matrix = F.Id("A");
+        var h = F.Id("h");
+        Formula Apply(string name, params Formula[] args) => new Formula.Apply(F.Id(name), [.. args]);
+        Formula All(string name, Formula type, Formula body) =>
+            Seq(Forall, Sp, F.Id(name), Sp, Colon, Sp, type, Comma, Sp, body);
+        Formula Property(Formula value, string name) => Seq(Parenthesized(value), Dot, F.Id(name));
+        var real = Seq(Mathbb, Grp(F.Id("R")));
+        var complex = Seq(Mathbb, Grp(F.Id("C")));
+        var shift = Seq(matrix, Sp, Minus, Sp, a, Sp, Cdot, Sp,
+            Parenthesized(Seq(D(1), Sp, Colon, Sp, Apply("Matrix", index, index, complex))));
+        var eigenvalue = new Formula.Apply(Property(h, "eigenvalues"), [F.Id("i")]);
+        var lowerBound = All("i", index, Seq(a, Sp, Leq, Sp, eigenvalue));
+        var implication = Seq(Property(shift, "PosSemidef"), Sp, Implies, Sp, lowerBound);
+        var body = All("A", Apply("Matrix", index, index, complex),
+            All("h", Property(matrix, "IsHermitian"), All("a", real, implication)));
+        return All("I", F.Id("Type"), Seq(
+            OpenBracket, Apply("Fintype", index), CloseBracket, Sp,
+            OpenBracket, Apply("DecidableEq", index), CloseBracket, Comma, Sp, body));
+    }
 
     private static Formula Formula0() =>
         Seq(Forall, Sp, Parenthesized(Seq(F.Id("n"), Sp, Colon, Sp, Seq(Mathbb, Grp(F.Id("N"))))), Sp, Comma, Sp, Parenthesized(Seq(D(2), Sp, Leq, Sp, F.Id("n"))), Sp, To, Sp, D(0), Sp, Leq, Sp, F.Id("cSq"), Sp, F.Id("n"));

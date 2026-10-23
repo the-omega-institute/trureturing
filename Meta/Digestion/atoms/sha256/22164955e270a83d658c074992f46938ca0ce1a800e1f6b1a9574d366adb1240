@@ -1,0 +1,25 @@
+**命题 32.2（局部边缘商与耦合联合态商）。** 在定义 32.1 的同一读口和假设 30.2 下，对任意 $x,y\in X_h$，
+
+$$
+\begin{aligned}
+x\sim_{\rm loc}y
+ &\Longleftrightarrow\operatorname{tr}_{2\cdots m}\rho_x
+                  =\operatorname{tr}_{2\cdots m}\rho_y,\\
+x\sim_{\rm cpl}y
+ &\Longleftrightarrow\rho_x=\rho_y.
+\end{aligned}
+\tag{32.2}
+$$
+
+因此局部未来商恰保留第一块的约化态，耦合未来商恰保留此编码端口的联合密度态；它们不因此识别在 $(h,\rho_x)$ 相同的来源间仍可不同的来源身份、不可访问环境或额外关系。若 $\rho_x\ne\rho_y$，存在一个有限、输入无关的合法耦合字及一个末次第一块模式，给出严格不同的概率。
+
+**证明。** 局部字为 $W_1\otimes\cdots\otimes W_m$，将 (32.1) 化为第一块边缘对 $W_1^\dagger\Pi_sW_1$ 的配对，其他块上的门消失。边缘相等因此充分。反向，定理 31.1 的单块部分使这些实际有限字的效果在极限中包含所有秩一投影；概率连续，所以相等的全部实际有限字概率给全部秩一投影的相等配对，进而给相等边缘。
+
+耦合字的效果在定理 31.1 的闭包中为 $U^\dagger P U$，其中 $d=5^m$、$P=\Pi_s\otimes I$，$P$ 的秩为 $k=5^{m-1}$，且 $1\leq k<d$。其酉轨道是全部秩 $k$ 投影。令 $\Delta=\rho_x-\rho_y$。若全部实际字概率相等，连续性给 $\operatorname{tr}(\Delta Q)=0$ 对每个秩 $k$ 投影 $Q$ 成立。取 $\Delta$ 的正交特征基，任意 $k$ 个特征值之和均为零。对任意两个指标，选其余 $k-1$ 个共同指标作差，得这两个特征值相等；$k=1$ 时共同集合为空。由 $\operatorname{tr}\Delta=0$ 得 $\Delta=0$。反向由 (32.1) 立即成立。
+
+若 $\Delta\ne0$，上述论证反向给一个秩 $k$ 投影 $Q$，使 $c=|\operatorname{tr}(\Delta Q)|>0$。选 $U$ 将 $P$ 共轭到 $Q$，再选定理 31.1 的字满足 $\|W-zU\|_{\rm op}<c/8$。由 (31.2) 和测量的迹范数收缩，对两个输入各自的该事件概率误差小于 $c/4$，故实际差仍大于 $c/2$。这把极限分离变成一个真正有限的可读延拓，没有执行极限门。
+
+此识别是整族可选未来的概率函数识别，不是一次末读取得未知密度态。一般非正交纯态不能被一份输入上的仪器确定标成不同状态名：若某效果在 $|\psi\rangle$ 上概率一、在 $|\chi\rangle$ 上概率零，则 $E|\psi\rangle=|\psi\rangle$、$E|\chi\rangle=0$，从而 $\langle\chi|\psi\rangle=0$。例如 $|N\rangle$ 与 $(|N\rangle+|2\rangle)/\sqrt2$ 不满足该必要条件。估计一族概率还需另供重复来源与统计资源。
+
+若另一个原接口已经允许各块独立旋转后的完整联合乘积读出，则既有产品效果张成结论已经识别联合密度态，见 [《二阶关系完成》§§64–65](AURIC_FIB_SECOND_ORDER_RELATION_COMPLETION.md) 及 [混态续篇 C-108](AURIC_FIB_ATOM_HIDDEN_RELATIONS_MIXED_STATE_CAPACITY_AND_CERTIFICATION.md)。此时不能说纠缠门才使联合态可识别；(32.2) 的差别专属于只输出第一块模式的同一个受限接口。本命题为该接口经定理 31.1 的 `repo-derived` 推论，不重新认领一般产品效果完备性。$\square$
+

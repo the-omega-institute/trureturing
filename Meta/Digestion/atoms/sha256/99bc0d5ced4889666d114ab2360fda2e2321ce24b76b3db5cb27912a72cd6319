@@ -1,0 +1,32 @@
+**完整加权谱与绝对主控。** 经典 Laplace 身份 $r(y)=\int_0^\infty(1+h)e^{-hy}\,dh$ 在这里仅作中间工具。对完整 $U$ 分部积分，有
+
+$$
+R(y)=r(y)U(y)+e^y\int_y^\infty r'(z)e^{-z}U(z)\,dz.
+$$
+
+无穷端由上述无条件收敛输入支付。将绝对收敛的 $H$ 代入，并使用 $r'\le0$：每个零点在第二项中的绝对贡献之和至多 $e^y r(y)\sum|a_\rho|$。因此这里可以交换零点和与积分，而无需逐项使用未平滑的条件收敛显式公式。应用 Laplace 身份后，每项的代数因子是
+
+$$
+a_\rho\left(1-\frac{h}{1+h-\rho}\right)
+=\frac1{\rho(1+h-\rho)}.
+$$
+
+从而有精确表示
+
+$$
+\begin{aligned}
+R(y)&=\int_0^\infty(1+h)L_h(y)\,dh+S(y),\\
+L_h(y)&=\sum_\rho\frac{e^{(\rho-h)y}}{\rho(1+h-\rho)},\\
+S(y)&=\int_y^\infty e^{y-z}
+\left[c+\tfrac12\log(1-e^{-2z})\right]r(z)\,dz.
+\end{aligned}
+\tag{480.6}
+$$
+
+两分母的模均至少为 $|\eta|$，所以 (480.3) 也直接给出该表示的绝对可和性。对 $y\ge1$，有 $|S(y)|\le3r(y)\le6$，以及
+
+$$
+|R(y)|\le2e^yr(y)+3r(y)\le10e^y.
+\tag{480.7}
+$$
+

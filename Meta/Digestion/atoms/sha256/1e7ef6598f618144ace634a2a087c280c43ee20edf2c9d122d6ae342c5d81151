@@ -1,0 +1,33 @@
+**Definition 1.2 (the source gauge).** Use exactly G, (2.3) and
+(10.1)–(10.3). Thus, locally about $o$,
+
+$$
+\begin{gathered}
+x=k-k_o,\quad y=2(\alpha-\alpha_o),\quad
+z=-r\{\beta-\beta_o-(\tfrac12-k_o/r)y\},\quad B=\Sigma(o)^{-1},\\
+(\xi,\eta)^{\mathsf T}=B(x,y)^{\mathsf T},\quad
+\upsilon=\det(B)(z-xy/2),\quad
+R=\{(\xi^2+\eta^2)^2+16\upsilon^2\}^{1/4},\\
+d\mu=m(q)\,d\xi\,d\eta\,d\upsilon,\quad
+m_0=\frac{\rho(o)\det A(o)}{2r},\quad c_G=(2\pi m_0)^{-1}.
+\end{gathered}
+\tag{1.5}
+$$
+
+This is an injective local chart, not a change of the actual phase torus.
+The coordinate $\upsilon$ is distinguished from the lifetime $\tau$.
+The established full-field asymptotic G, Theorem 11.1, and its polar
+Jacobian give, uniformly in source directions,
+
+$$
+\Gamma=c_GR^{-2}(1+O(R)),\quad m=m_0+O(R),\quad
+d\xi\,d\eta\,d\upsilon=\tfrac14 R^3\,dR\,da\,d\theta,
+\quad -\tfrac\pi2<a<\tfrac\pi2,\quad 0\le\theta<2\pi.
+\tag{1.6}
+$$
+
+The full field is positive and smooth off $o$ and bounded on the entire
+complement of every source neighbourhood, including towards the killed
+faces, by [Two-control Green stability, Proposition 2.2](FIB_NATIVE_TWO_CONTROL_GREEN_STABILITY.md).
+All constants below may depend on this fixed model and source.
+

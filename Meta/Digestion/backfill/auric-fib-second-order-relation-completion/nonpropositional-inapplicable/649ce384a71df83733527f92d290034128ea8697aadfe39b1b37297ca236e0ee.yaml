@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:649ce384a71df83733527f92d290034128ea8697aadfe39b1b37297ca236e0ee
+  normalized_sha256: sha256:649ce384a71df83733527f92d290034128ea8697aadfe39b1b37297ca236e0ee
+cas_ref: sha256:649ce384a71df83733527f92d290034128ea8697aadfe39b1b37297ca236e0ee
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 'Nonpropositional: 列出局部归约、联合来源与环境准备须满足的接口义务；不结算这些义务。'
+    previous_atom_id: 109e4339847721a9e6b0523db8a584b87b52f0600885e8c6660b056d17ecda97
+    next_atom_id: 43874ca0fd568abd2b0796f7ea27ea5ef30a621bbc86723c7d88606336a456d4

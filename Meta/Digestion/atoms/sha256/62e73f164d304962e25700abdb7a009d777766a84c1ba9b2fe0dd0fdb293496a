@@ -1,0 +1,26 @@
+**Definition 3.1 (the signed loss curve used in this example).** Write
+$C=F_0-F_1$ and $V_C(t)=\operatorname{TV}_{[0,t]}(C)$.
+For this canonical optimal instrument, direct differentiation of (IS.9)
+shows the following alternatives almost everywhere:
+
+$$
+\begin{array}{c|ccc}
+ &F_0'&F_1'&F_2'\\ \hline
+k'>0&0&cS\lambda&ZS\lambda\\
+k'<0&cS\lambda&0&ZS\lambda\\
+k'=0&0&0&0
+\end{array}
+\tag{IS.14}
+$$
+
+The paired modes have $F_4'=F_0'$ and $F_3'=F_1'$. Consequently
+$|C'|=cS\lambda=-cS'$ and
+
+$$
+V_C(t)=c(1-S(t)).
+\tag{IS.15}
+$$
+
+Only this balance identity is needed here. It does not assert a general
+range theorem, minimum coordinate theorem or new finite-storage result.
+

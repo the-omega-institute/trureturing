@@ -1,0 +1,9 @@
+**命题 4.3（相同边缘不足以代替共同来源交叉矩）。** 来源 $A$ 在 $(1,1),(2,2)$ 上各取概率 $1/2$；来源 $B$ 在 $(1,2),(2,1)$ 上各取概率 $1/2$。两者的两个边缘分布分别完全相同，且 $U=W=5/2$，但
+
+$$
+V_A=5/2,\qquad V_B=2,\qquad
+\mathbb E_A(a+b)^2=10,\qquad \mathbb E_B(a+b)^2=9.
+$$
+
+证明。任意非负整数对 $(a,b)$ 满足 $a+b>0$ 时，都可把 $a$ 片 $\alpha$ 叶与 $b$ 片 $\beta$ 叶以任意合法二叉括号组成一棵非空树，所列四个组成均可实现。两边缘都在 $1,2$ 上各有一半质量。逐项计算交叉积并使用 $\mathbb E(a+b)^2=U+2V+W$ 得到结论。因此共同来源的交叉关系不能由两个独立边缘替代。保存 $S$ 恰能保存全部二阶响应；它不恢复任意联合分布，也不保证任意树拼接合法。严格共同接缝的额外条件见 [FIB 关系延拓几何，第五章](https://github.com/the-omega-institute/trureturing/blob/b19dc63ed2b2007d8d6de4c50366815f0d032ba4/docs/develop/theory/FIB_RELATIONAL_CONTINUATION_GEOMETRY.md)。$\square$
+

@@ -1,0 +1,147 @@
+**Corollary 118.4 (all-source combined leaf coverage and paid coordinates).**
+For every fixed common rational $t>0$, rational $0<\epsilon<1/2$,
+and every guard $G$ of IV Contract 112.1a, every deterministic effective
+controller terminating correctly on all of $D$ for (118.1)--(118.2)
+at the same Stop covers every INITIAL leaf on each actual terminal run.
+Writing $l(u)$ for the INITIAL leaf count and
+$d_{\rm leaf}(u)=\sum_{x\text{ INITIAL leaf}}|x|$, that one run satisfies
+simultaneously
+
+$$
+q_A(u)\ge l(u),\qquad \ell_A(u)\ge d_{\rm leaf}(u).
+\tag{118.9}
+$$
+
+Here $q_A$ counts all post-entry raw Reads, repeated and absent included,
+and $\ell_A$ sums their literal word lengths. The genuine pre-entry
+root contributes one additional raw Read and zero literal length.
+
+For the unequal sources $u_h=\langle\alpha,B_h^+\rangle$, $h\ge1$,
+an all-domain row-only controller can return the entire row after two
+post-entry epoch-zero child Reads, with literal length two. Every correct
+combined controller instead has, on these same inputs,
+
+$$
+q_A(u_h)\ge1+2^h,\qquad
+\ell_A(u_h)\ge1+(h+1)2^h.
+\tag{118.10}
+$$
+
+There is a sourcewise finite sufficient combined controller using the
+existing epoch-zero acquisition and description consumer once, with
+post-entry $(q,\text{Apply attempts},\ell)=(N_u-1,0,\Lambda_u)$ when
+the authentic retained root report supplies the first traversal event,
+where $\Lambda_u=\sum_{p\in V_u}|p|$. Its total raw Reads and cumulative
+same-immutable-source distinct addresses are both $N_u$. These native
+Read and literal-length upper coordinates are within factor two of
+(118.9). No matching price is claimed for other resources.
+
+Proof. On an unequal-row input, an unread cone contradicts Theorem 118.3
+and correctness on its two finite competitors. On an equal-row input
+$u=\langle s,s\rangle$, reuse the one-leaf flip and actual-prefix replay
+in the proof of IV Theorem 112.8, with IV Lemma 112.7. Flipping one
+unread leaf label changes exactly one ordered child subtree, hence changes
+the INITIAL partition while preserving the terminal history. This
+argument applies to any finite $s$; the printed numerical statement of
+IV Theorem 112.8 is on its equal perfect family $U_h$. The equal-row
+case needs no additional heat argument.
+
+INITIAL leaves are prefix-free, so a literal Read belongs to at most
+one leaf cone, even after arbitrary serial updates. Select one covering
+call for each leaf on this same actual run. They are distinct calls and
+each pays length at least $|x|$, proving both (118.9) coordinates together.
+Apply attempts, status observations and local work are separate from
+Reads; no update combines two INITIAL cones into one Read.
+
+On $u_h$, epoch-zero Read$(L)$ and Read$(R)$ report alpha and branch.
+That mismatch certifies unequal entire subtrees, hence every field of
+(118.2). A common row-only policy uses this test and the existing genuine
+traversal as fallback when the two replies do not already decide equality
+or inequality. It is correct on all branch sources without a family
+selector. There are $1+2^h$ INITIAL leaves, with depth sum
+$1+(h+1)2^h$, giving (118.10) for the combined task. Common choices such
+as $t=1,\epsilon=1/4$ work across every $h$ and every lawful guard.
+
+For sufficiency reuse [IV Definition 112.9 and Theorem
+112.10](FIB_ATOM_RECURSIVE_HOLOGRAPHIC_BOUNDARY_GEOMETRY_CONTINUATION_IV.md)
+and Definition 115.7 above,
+specifically [ActualTreeReadoutAcquisition](../../../D5/S3/Arith/FibonacciAtomic/ActualTreeReadoutAcquisition.lean)'s
+four-valued immutable readout, reply-driven frontier and report-only
+restoration. With the authentic retained root branch event as the
+already executed first event of that traversal, its pending frontier is
+$L,R$. Continue its genuine epoch-zero suffix without Apply, restore
+INITIAL from acquired reports, and compare its two ordered children.
+Its Boolean third-substitution-image Strategy and distinct-address
+tariff retain their original task and scope; this is a separate consumer
+of the acquisition phase. The zero-Apply sufficient policy is legal for
+every guard and places no restriction on lower-bound competitors.
+The owner's unchanged empty-phase root-first schedule is also sufficient;
+it actually repeats the root and has $N_u$ post-entry Reads and $N_u+1$
+total raw Reads, with cumulative distinct addresses $N_u$. Root reuse
+is neither a refund nor a claim that this latter schedule skipped a call.
+Old-version reports are not caches for later substituted versions.
+
+The binary-tree identities
+
+$$
+N_u=2l(u)-1,\qquad
+\Lambda_u=2d_{\rm leaf}(u)-2l(u)+2
+\tag{118.11}
+$$
+
+follow by structural recursion, counting the added prefix on every child
+occurrence or leaf. Thus $N_u-1<2l(u)$ and
+$\Lambda_u\le2d_{\rm leaf}(u)$ on $D$. These are coordinates of one
+combined acquisition, with no additive second heat traversal.
+
+The restored INITIAL description supplies $N_u,L_u,f_u$ to the paid
+finite-matrix consumer of Definition 115.7. For completeness of its
+finite error certificate, use the mature Poisson matrix expansion of
+[Levin--Peres, §20.1, equations (20.3)--(20.8)](https://pages.uoregon.edu/dlevin/MARKOV/mcmt2e.pdf).
+The actual maximum degree is three, so $P=I-L_u/3$ is nonnegative
+row-stochastic and $\|P^jf_u\|_\infty\le1$. With $\theta=3tN_u$,
+
+$$
+R_u(t)=e^{-\theta}\sum_{j\ge0}\frac{\theta^j}{j!}
+                 (P^jf_u)(\varepsilon).
+$$
+
+After acquisition choose finite $J$ with
+$\theta/(J+2)\le1/2$ and $2\theta^{J+1}/(J+1)!\le\epsilon/2$.
+Let $C_J=\sum_{j=0}^J\theta^j/j!$ and
+$y_J=\sum_{j=0}^J(\theta^j/j!)(P^jf_u)(\varepsilon)$.
+Successive tail ratios are at most $1/2$, so the omitted contribution
+has absolute value at most $\epsilon/2$, using $e^{-\theta}\le1$.
+Choose finite $M$ with $\theta/(M+2)\le1/2$ and
+$r_M=2\theta^{M+1}/(M+1)!\le\epsilon/(2C_J)$, and put
+$T_M=\sum_{j=0}^M\theta^j/j!$. Positive Taylor sums and the same
+geometric remainder give the rational enclosure
+
+$$
+\frac1{T_M+r_M}\le e^{-\theta}\le\frac1{T_M},\qquad
+\frac1{T_M}-\frac1{T_M+r_M}\le r_M.
+$$
+
+Since $|y_J|\le C_J$, the rational output $z=y_J/T_M$ has
+$|z-R_u(t)|\le\epsilon$. Both searches have rational stopping tests
+and terminate because the factorial tails tend to zero for fixed
+acquired $\theta$. This is deterministic arithmetic, with no sampling
+operation. Compute the full row and this output before the one Stop.
+The completed authentic epoch-zero traversal fixes the finite ordered
+INITIAL source uniquely on its actual history fibre; its finite reports
+and the rational inequalities therefore supply a finite semantic
+certificate. Coverage alone, especially by absent or later-epoch Reads,
+is only a necessary condition and supplies no such reconstruction.
+
+Sparse matrix-vector evaluation and enclosure construction take
+$O(N_u(J+1)+M+1)$ exact rational arithmetic operations after restoration.
+This count is not bit work: each numerator, denominator, intermediate,
+precision search and output encoding has its actual finite bit cost.
+Source acquisition, literal-address generation, report restoration,
+ordered comparison, control, retained syntax/history, numerical vectors,
+scratch storage and output storage remain paid separate coordinates.
+$J,M$ and these widths can grow with the acquired source and required
+precision; they are not initial advice. This establishes sourcewise
+finite sufficiency, not an optimal work/storage bound, implementation
+tariff or physical duration. $\square$
+

@@ -1,0 +1,59 @@
+## 15. An exact positive-scaled Sturm chain and root isolation
+
+Use the following integer polynomials:
+
+$$
+\begin{aligned}
+S_0&=\Phi,\\
+S_1&=219136r^3-349248r^2+135200r-6341,\\
+S_2&=1610816r^2-1689664r+121445,\\
+S_3&=64839740164r-26327821511,\\
+S_4&=78580316788659208197744775.
+\end{aligned}
+\tag{15.1}
+$$
+
+Here $S_0'=8S_1$. The exact division identities are
+
+$$
+\begin{aligned}
+S_0&=\frac{32r-17}{16}S_1-\frac1{16}S_2,\\
+S_1&=\frac{107(805408r-438787)}{633478561}S_2
+       -\frac{64}{633478561}S_3,\\
+S_2&=\frac{4(1631951420187716r-1049189040459405)}
+                {262761994033439671681}S_3
+       -\frac1{262761994033439671681}S_4.
+\end{aligned}
+\tag{15.2}
+$$
+
+All three factors multiplying the next negative remainder are positive.
+Consequently these polynomials form a positive-scaled Sturm chain [6].
+The nonzero constant last term also proves that $\Phi$ and $\Phi'$
+have no common root. All roots of $\Phi$ are therefore simple.
+
+For a real $x$ where no chain entry vanishes, let $V(x)$ count sign
+changes in $(S_0(x),\ldots,S_4(x))$. The exact endpoint signs are
+
+| $x$ | Signs of $S_0,S_1,S_2,S_3,S_4$ | $V(x)$ |
+| --- | --- | ---: |
+| $0$ | $(-,-,+,-,+)$ | 3 |
+| $134815/10^6$ | $(-,+,-,-,+)$ | 3 |
+| $134816/10^6$ | $(+,+,-,-,+)$ | 2 |
+| $902449/10^6$ | $(+,-,-,+,+)$ | 2 |
+| $902450/10^6$ | $(-,-,-,+,+)$ | 1 |
+| $1$ | $(-,-,+,+,+)$ | 1 |
+
+These signs can be checked with integers alone. For $x=k/N$, the
+following entries are $N^4S_0(x)$, $N^3S_1(x)$, $N^2S_2(x)$ and
+$NS_3(x)$; $S_4$ is the positive constant in (15.1).
+For the four interior endpoints $N=10^6$; at $0,1$ use $N=1$.
+
+| $k/N$ | $N^4S_0$ | $N^3S_1$ | $N^2S_2$ | $NS_3$ |
+| --- | ---: | ---: | ---: | ---: |
+| $0$ | $-853$ | $-6341$ | $121445$ | $-26327821511$ |
+| $134815/10^6$ | $-42530685653395898880000$ | $6075319423423201024000$ | $-77070335689022400$ | $-17586451940790340$ |
+| $134816/10^6$ | $6072081656124845064192$ | $6075372403870111891456$ | $-77071591027093504$ | $-17586387101050176$ |
+| $902449/10^6$ | $42022366160253876252672$ | $-7704635405746733889536$ | $-91519167013147584$ | $32186737160261636$ |
+| $902450/10^6$ | $-19614556103500800000000$ | $-7704595160110592000000$ | $-91517949316960000$ | $32186802000001800$ |
+| $1$ | $-3837$ | $-1253$ | $42597$ | $38511918653$ |

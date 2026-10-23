@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:1c1b79b1fd980b1c128c451015872959c52bc1433b4e5ef920dab173738cbbfe
+  normalized_sha256: sha256:1c1b79b1fd980b1c128c451015872959c52bc1433b4e5ef920dab173738cbbfe
+cas_ref: sha256:1c1b79b1fd980b1c128c451015872959c52bc1433b4e5ef920dab173738cbbfe
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 'Scope and provenance statement only: identifies the subjects of the referenced sections and the physical, joint-lift and Lean-formalization claims they do not establish. It supplies no mathematical theorem or counterexample.'
+    previous_atom_id: 7f2144161132986607a3e8f20109d43d489bdb480060c7dc8fb400628f0ea617
+    next_atom_id: 18a98a2a243631e6c3261187982c4c0be902a26da40281b60d9975a084b5661c

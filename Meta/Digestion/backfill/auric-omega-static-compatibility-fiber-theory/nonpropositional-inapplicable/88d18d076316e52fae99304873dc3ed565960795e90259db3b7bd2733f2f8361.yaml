@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:88d18d076316e52fae99304873dc3ed565960795e90259db3b7bd2733f2f8361
+  normalized_sha256: sha256:88d18d076316e52fae99304873dc3ed565960795e90259db3b7bd2733f2f8361
+cas_ref: sha256:88d18d076316e52fae99304873dc3ed565960795e90259db3b7bd2733f2f8361
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 'nonpropositional: 规定共同编解码端口、允许资源及两设置误差函数；CPTP 与独立性均为接口条件，没有声称压缩界。'
+    previous_atom_id: 5f8f5c3a717ba0323e97147c8a32b71645a2973ae705a7584a65afb1f8158782
+    next_atom_id: eba518b0c2694d8f80b8f8eb1f8d020c6e068ea282c085acc1d7bf483773588c

@@ -1,0 +1,25 @@
+### 15.1 Reciprocal $b$-cap
+
+The polynomial $z^7\mathcal A(r,1/z,p)$ has $112$ positive Bernstein
+coefficients on
+
+$$
+[0,1]_r\times[0,1/3]_z\times
+\left[\frac{22881}{12500},\frac{183049}{100000}\right]_p.
+\tag{15.2}
+$$
+
+Their coefficient interval is
+
+$$
+\left[\frac{562881}{2500},\frac{8483291}{7500}\right]
+=\left[\frac{6893716183200}{30618000000},
+        \frac{8483291}{7500}\right].
+\tag{15.3}
+$$
+
+If an actual source had $b\ge3$, then $z=1/b\in[0,1/3]$ and (15.2)
+would contradict $\mathcal A=0$.  Thus every actual source over $K_2$ has
+$b<3$.  This argument includes the endpoint $z=0$ in the closed certificate
+and uses no reciprocal at an actual zero.
+

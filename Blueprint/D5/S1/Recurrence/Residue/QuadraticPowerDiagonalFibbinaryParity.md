@@ -92,6 +92,7 @@ Coefficient equality of the reductions transports Odd(a(n)) to the frozen Absolu
 - Truth anchor: `D5/S1/Recurrence/Residue/QuadraticPowerDiagonalFibbinaryParity.hanna_conjecture_a397244`
 - Truth anchor: `D5/S1/Recurrence/Residue/QuadraticPowerDiagonalFibbinaryParity.mod_two_cubic`
 - Truth anchor: `D5/S1/Recurrence/Residue/QuadraticPowerDiagonalFibbinaryParity.mod_two_identity`
+- Dependency: [D5/S1/Recurrence/Invariants/AbsoluteReciprocalSquareParity](../Invariants/AbsoluteReciprocalSquareParity.md)
 - Dependency: [D5/S1/Recurrence/Parity/FibbinarySquareSubstitutionParity](../Parity/FibbinarySquareSubstitutionParity.md)
 - Dependency: [D5/S1/Recurrence/Parity/StripThreeTernaryCatalanParity](../Parity/StripThreeTernaryCatalanParity.md)
 - Dependency: [D5/S1/Recurrence/Residue/AbsoluteReciprocalSquareFibbinaryParity](AbsoluteReciprocalSquareFibbinaryParity.md)
