@@ -4068,3 +4068,453 @@ are the classical tools used in the all-width obstruction and continuation.
 
 ## 追加锚（本行以下为增补区）
 
+## 55. Terminal-J injectivity on every entire zero-sector child
+
+A strict world is a triple
+
+$$
+ W=(P(r,b),g,d),\qquad
+ P(r,b)=\begin{pmatrix}r&b\\r(1-r)/b&1-r\end{pmatrix},
+ \qquad 0<r<1,\quad b>0,\quad d\in\mathbb R,
+ \quad 0\ne g\in\mathbb R[s],\quad \deg g\le3.
+ \tag{55.1}
+$$
+
+Let $J=\left(\begin{smallmatrix}0&1\\1&0\end{smallmatrix}\right)$ and
+$M=\left(\begin{smallmatrix}0&1\\1&1\end{smallmatrix}\right)$.
+Products act on the left, in chronological order $J,M,J,M,M,M$:
+$Q_0=I$, $Q_i=E_iQ_{i-1}$. The acquired readings are
+$d+g(i)\operatorname{tr}(Q_iP)$ at the literal clocks $0,\ldots,6$.
+The entire child $C(p,v)$ consists of every strict world with readings
+$(0,24,147/5,24,18,p,v)$. The alternative terminal J and M readings at
+clock seven are $a(W)$ and $m(W)$, using that world's same whole gain
+and fixed drift.
+
+The following complete classification and response identities are the
+premises supplied by Sections 25–38. At $p=0$, all worlds through clock
+five form exactly two real analytic arcs $W_-(r),W_+(r)$, each with the
+whole parameter interval $0<r<1$. Their widths are the two simple positive
+roots $b_-(r),b_+(r)$ of the source polynomial $F$ of (26.5)–(26.6), with
+
+$$
+ 0<b_-(r)<\frac{r(1-r)}2<b_+(r),\qquad b_\pm(r)<\frac7{20}.
+ \tag{55.2}
+$$
+
+Each label specifies exactly one entire world; different labels give
+different worlds. The upper arc includes both singular parent sources,
+and the lower arc has no singular parent source. Put
+
+$$
+ U=1+2b,\qquad n=b+\frac{r(1-r)}b+r,
+$$
+
+and define the polynomials
+
+$$
+\begin{aligned}
+ H(b,n)={}&(b^2-16b-12)n^2+b(2b^2-7b-4)n
+                +10(1+2b)^2(1+b),\\
+ B(b,n)={}&160b^2+240b+80-(143b+94)n,\\
+ N_6(b,n)={}&320b^3-118b^2n-960b^2-139bn^2+1801bn
+                  -2180b-542n^2+1350n-810,\\
+ N_7(b,n)={}&1200b^3-392b^2n-190b^2-496bn^2+3619bn
+                  -3015b-1728n^2+2870n-1310.
+\end{aligned}\tag{55.3}
+$$
+
+On both entire arcs, Section 35 proves $H<0$ and the actual response
+identities
+
+$$
+\begin{aligned}
+ d&=\frac{3(U+n)B}{H},&
+ g(6)&=\frac{3N_6}{5H},&g(7)&=\frac{3N_7}{5H},\\
+ V_\sigma(r)&=d+(2U+n)g(6),&
+ A_\sigma(r)&=d+(1+b+2n+2r)g(7)=a(W_\sigma(r)).
+\end{aligned}\tag{55.4}
+$$
+
+These identities use the common degree-at-most-three interpolant and
+are valid also at the singular parent sources. Sections 33–38 prove
+
+$$
+ V_-(r)>90>V_+(r),\qquad
+ C(0,v)=\{W_\sigma(r):0<r<1,\ V_\sigma(r)=v\}.
+ \tag{55.5}
+$$
+
+**Theorem 55.1 (global order after subtracting the acquired response).**
+On their entire parameter intervals,
+
+$$
+ \frac{d}{dr}\left(A_-(r)-\frac{23}{4}V_-(r)\right)>0,
+ \qquad
+ \frac{d}{dr}\left(A_+(r)-3V_+(r)\right)>0.
+ \tag{55.6}
+$$
+
+**Corollary 55.2 (entire-child terminal-J obstruction).**
+For every real $v$, terminal J is injective on the entire $C(0,v)$.
+More precisely, if two distinct worlds in such a child have labels
+$W_\sigma(r_0),W_\sigma(r_1)$ with $r_0<r_1$, then
+$a(W_\sigma(r_0))<a(W_\sigma(r_1))$.
+Consequently no entire zero-sector child contains an independent J/M
+quartet of the original kind.
+
+Theorem 55.1 is proved by the exact polynomial signs in Sections 56–58;
+Section 59 derives the global and entire-child consequences.
+
+## 56. A compact coordinate and exact whole-arc bounds
+
+For $0<r<1$ define
+
+$$
+ u=\frac b{r(1-r)},\qquad
+ \beta=r(1-r)u,\qquad
+ \nu=\beta+\frac1u+r.
+ \tag{56.1}
+$$
+
+Thus $b=\beta$, $n=\nu$. The polynomial
+
+$$
+\begin{aligned}
+ f(r,u)={}&32+32(2r+1)(4r-5)u\\
+ &+2(256r^3-140r^2-185r+65)u^2\\
+ &+r(-744r^3+1837r^2-1408r+375)u^3\\
+ &+r(1-r)(1216r^3-1623r^2+639r+130)u^4\\
+ &+r^2(1-r)^2(456r^2-479r+465)u^5\\
+ &+r^3(1-r)^3(746-624r)u^6
+       +72r^4(1-r)^4u^7
+\end{aligned}\tag{56.2}
+$$
+
+satisfies the exact polynomial identity
+
+$$
+ F(r,r(1-r)u)=r^3(1-r)^3f(r,u).
+ \tag{56.3}
+$$
+
+Its separate degrees are eight in $r$ and seven in $u$. In particular
+$f(r,0)=32$, so $f_r/u$ is an integer polynomial. The complete arcs
+are contained in the following two open strips:
+
+$$
+ \frac18<u_-(r)<\frac25,\qquad
+ \frac9{10}<u_+(r)<\frac85.
+ \tag{56.4}
+$$
+
+Here and below a subscript denotes the arc, while $f_r,f_u$ denote
+partial derivatives. To prove (56.4), use the following exact signs:
+
+$$
+ f(r,1/8)>0,\quad f(r,2/5)<0,\quad
+ f(r,9/10)<0,\quad f(r,8/5)>0
+ \qquad(0\le r\le1).
+ \tag{56.5}
+$$
+
+For completeness, the table specifies finite rational certificates for
+all four signs. For a polynomial $w(r)$ of degree at most eight on
+$[a,z]$, write $w(a+(z-a)x)=\sum_{j=0}^8 c_jx^j$, with zero padding,
+and put
+
+$$
+ \mathcal B_i(w;[a,z])=
+       \sum_{j=0}^i c_j\frac{\binom ij}{\binom8j}.
+ \tag{56.6}
+$$
+
+The last column is the exact minimum of these nine coefficients.
+
+| Polynomial $w$ | Interval $[a,z]$ | Minimum Bernstein coefficient |
+| --- | --- | --- |
+| $f(r,1/8)$ | $[0,1]$ | $103823477/18350080$ |
+| $-f(r,2/5)$ | $[0,1]$ | $96/25$ |
+| $-f(r,9/10)$ | $[0,1]$ | $67/10$ |
+| $f(r,8/5)$ | $[0,1/2]$ | $544/5$ |
+| $f(r,8/5)$ | $[1/2,1]$ | $5563232/109375$ |
+
+All entries are positive. The Bernstein basis is nonnegative and sums
+to one, so the table proves (56.5). By (56.3) and the two-simple-positive-root
+classification, there is exactly one root between $1/8$ and $2/5$ and
+exactly one between $9/10$ and $8/5$ at every $0<r<1$. These are precisely
+the two existing arcs, since their separating value in (55.2) is $u=1/2$.
+This proves (56.4).
+
+At the lower root $f_u<0$, and at the upper root $f_u>0$:
+
+$$
+ f_u(r,u_-(r))<0<f_u(r,u_+(r)).
+ \tag{56.7}
+$$
+
+Indeed $F$ is positive before its first simple positive root, negative
+between its two simple positive roots, and positive after the second.
+Its derivative has the corresponding crossing signs. Equation (56.3)
+then gives (56.7), since $r^2(1-r)^2>0$. This uses no parent-denominator
+chart and loses no singular source.
+
+## 57. Polynomial numerator for the derivative
+
+All polynomial definitions in this section have integer coefficients.
+Define
+
+$$
+ h(r,u)=u^2H(\beta,\nu),\qquad U_*=1+2\beta,
+ \qquad S_*=1+\beta+2\nu+2r.
+ \tag{57.1}
+$$
+
+Although $\nu$ was written using $1/u$, $h$ is a polynomial. For
+positive integers $K,q$ put
+
+$$
+\begin{aligned}
+ p_{K,q}(r,u)=u^3\big[&5(q-K)(U_*+\nu)B(\beta,\nu)\\
+       &+qS_*N_7(\beta,\nu)
+             -K(2U_*+\nu)N_6(\beta,\nu)\big].
+\end{aligned}\tag{57.2}
+$$
+
+This too is a polynomial: every product inside the brackets has at
+most three factors of $1/u$. Its separate degrees are at most $(8,7)$,
+and those of $h$ are $(8,6)$. On either actual arc, (55.4) gives exactly
+
+$$
+ A-\frac KqV=\frac{3p_{K,q}}{5quh}.
+ \tag{57.3}
+$$
+
+The denominator is nonzero there, since $u>0$ and $h=u^2H<0$.
+Define the polynomial
+
+$$
+\begin{aligned}
+ T_{K,q}={}&(h\,\partial_rp_{K,q}-p_{K,q}\,\partial_rh)f_u\\
+ &-(h\,\partial_up_{K,q}-p_{K,q}\,\partial_uh)f_r
+                 +p_{K,q}h\,\frac{f_r}{u}.
+\end{aligned}\tag{57.4}
+$$
+
+The final quotient is the polynomial specified after (56.3); it is not
+a division on a source chart. For $(K,q)=(23,4),(3,1)$, the separate
+degrees of $T_{K,q}$ are $(22,18)$. These formulas, together with
+(55.3), (56.1) and (56.2), specify every coefficient without a root
+choice or numerical parameter.
+
+Differentiating $f(r,u(r))=0$ gives $u'=-f_r/f_u$. The quotient rule
+in (57.3), with no further hypotheses, gives
+
+$$
+ \frac{d}{dr}\left(A-\frac KqV\right)
+       =\frac{3T_{K,q}}{5quh^2f_u}.
+ \tag{57.5}
+$$
+
+For example, the undivided derivative numerator for $p/(uh)$ is
+
+$$
+ u(hp_r-ph_r)f_u-{u(hp_u-ph_u)-ph\}f_r=uT_{K,q},
+$$
+
+which verifies both the normalization and the sign in (57.5).
+Consequently it suffices to prove
+
+$$
+ T_{23,4}<0\ \text{on the lower arc},\qquad
+ T_{3,1}>0\ \text{on the upper arc}.
+ \tag{57.6}
+$$
+
+## 58. Finite exact sign certificates on both complete strips
+
+The following two rectangle certificates prove (57.6) on all relevant
+zeros of $f$, including any zeros on rectangle boundaries. They use
+only coefficients of the polynomials already specified, not an
+approximate root of the source equation.
+
+Here is the complete arithmetic definition of the certificate.
+For $G(r,u)=\sum_{h,k}g_{hk}r^hu^k$ with separate degree bounds $(n,m)$,
+on a rectangle $R=[a,z]\times[c,d]$, put
+
+$$
+ C_{ij}(G;R)=(z-a)^i(d-c)^j
+  \sum_{h\ge i,\,k\ge j}g_{hk}\binom hi\binom kj
+                  a^{h-i}c^{k-j},
+ \tag{58.1}
+$$
+
+and
+
+$$
+ \mathcal B_{ij}(G;R)=
+   \sum_{\alpha=0}^i\sum_{\gamma=0}^j
+    C_{\alpha\gamma}(G;R)
+    \frac{\binom i\alpha}{\binom n\alpha}
+    \frac{\binom j\gamma}{\binom m\gamma}.
+ \tag{58.2}
+$$
+
+Thus $G$ is the sum of these coefficients times the tensor product
+Bernstein basis on $R$. That basis is nonnegative and sums to one.
+All arithmetic in (58.1)–(58.2) is rational. Use degree bounds $(8,7)$
+for $f$ and $(22,18)$ for either $T$.
+
+The starting rectangles are
+
+$$
+ R_-=[0,1]\times[1/8,2/5],\qquad
+ R_+=[0,1]\times[9/10,8/5].
+ \tag{58.3}
+$$
+
+A binary word specifies a subrectangle as follows. Starting from the
+appropriate rectangle, its first bit selects a half in $r$, its second
+a half in $u$, its third a half in $r$, and so on, always bisecting the
+currently selected interval. The bit $0$ selects the lower half and
+$1$ the upper half. Closed halves are used. For each row of the table,
+the last column is the exact minimum of all the Bernstein coefficients
+of the indicated polynomial over all the listed rectangles.
+
+| Starting rectangle | Polynomial | Binary words specifying rectangles | Minimum coefficient |
+| --- | --- | --- | --- |
+| $R_-$ | $-T_{23,4}$ | `00`, `100`, `101001`, `10110`, `1011100`, `1011110`, `11` | $1503352352521383/10485760000$ |
+| $R_-$ | $-f$ | `01` | $667/640$ |
+| $R_-$ | $f$ | `101000`, `10101`, `1011101`, `1011111` | $463522598402225813/18014398509481984000$ |
+| $R_+$ | $T_{3,1}$ | `0000`, `00011000`, `0001101`, `001100`, `00110100`, `0011011`, `00111`, `01101000`, `0110101`, `011011101`, `101`, `1100`, `11010010`, `110110`, `111` | $966620222671/163840000$ |
+| $R_+$ | $-f$ | `0010`, `100` | $34799060666537397/1342177280000000$ |
+| $R_+$ | $f$ | `00010`, `00011001`, `000111`, `00110101`, `010`, `01100`, `01101001`, `0110110`, `011011100`, `01101111`, `0111`, `1101000`, `11010011`, `110101`, `110111` | $777115800682097883/343597383680000000$ |
+
+The displayed coefficient values are obtained directly from
+(55.3), (56.2), (57.1)–(57.4), (58.1) and (58.2).
+They are all strictly positive. The three rows for $R_-$ contain twelve
+rectangles; the three rows for $R_+$ contain thirty-two rectangles.
+For each starting rectangle the words are prefix-free, and their
+normalized areas have the exact sums
+
+$$
+ \sum_{w\ \mathrm{for}\ R_-}2^{-|w|}=1,
+ \qquad
+ \sum_{w\ \mathrm{for}\ R_+}2^{-|w|}=1.
+ \tag{58.4}
+$$
+
+In particular these finite collections cover the entire respective
+starting rectangles: the interiors are disjoint dyadic cells, and
+closed cells include every subdivision boundary. One can also check
+coverage by successively joining sibling half-rectangles according to
+the words.
+
+A rectangle in a row marked $f$ or $-f$ contains no zero of $f$,
+since its indicated polynomial is strictly positive everywhere.
+Every zero of $f$ in $R_-$ must therefore lie in one of the rectangles
+where $-T_{23,4}>0$. Every zero in $R_+$ must lie in one where
+$T_{3,1}>0$. This proves (57.6) on the whole source arcs by (56.4).
+It does not depend on a sampling mesh, a floating point derivative,
+or the absence of roots outside sampled neighborhoods.
+
+## 59. From the complete derivative signs to global incidence
+
+**Proof of Theorem 55.1.** The existing arc functions are real analytic
+on the whole connected interval $(0,1)$. The change of coordinate
+(56.1) is real analytic there. At every actual point, $u>0$, $h<0$
+and $f_u\ne0$. On the lower arc, (56.7) and Section 58 give
+$f_u<0$ and $T_{23,4}<0$. Formula (57.5) therefore gives the first
+strict derivative sign in (55.6). On the upper arc the corresponding
+signs are both positive, giving the second strict derivative sign.
+The mean value theorem makes each of these two functions strictly
+increasing on its entire interval, not merely on a local chart.
+This proves the theorem. $\square$
+
+**Proof of Corollary 55.2.** If $C(0,v)$ is empty there is nothing to
+prove. Otherwise (55.5) puts all its worlds on one common arc. Choose
+two distinct worlds. Their arc labels have different $r$ coordinates,
+so order them as $r_0<r_1$. Their acquired values both equal $v$.
+If this is the lower arc, strict increase gives
+
+$$
+ A_-(r_1)-\frac{23}{4}v
+    >A_-(r_0)-\frac{23}{4}v,
+$$
+
+and hence $A_-(r_1)>A_-(r_0)$. The same argument with coefficient
+$3$ applies on the upper arc. Thus no two distinct worlds in the
+entire child have equal terminal-J readings. Any independent J/M
+quartet would in particular contain a distinct J pair, which has
+just been excluded. $\square$
+
+Both singular parent worlds on the upper arc remain in this argument.
+At those points $b=1/8$ and the regular parent denominator vanishes,
+but $H<0$ by the supplied whole-arc guard, $u>0$, and $f_u>0$ by
+simplicity of the source root. Every denominator used in (57.3) and
+(57.5) remains nonzero there. No point is removed and then recovered
+by an unverified limiting argument. The compact coordinate only
+divides by $r(1-r)$, which is positive throughout the original strict
+source domain.
+
+## 60. Exact scope and the unrestricted remaining target
+
+The excluded sector is the whole legal choice $p=0$, over every real
+$v$, every positive width and every strict diagonal coordinate. The
+proof uses the unique whole degree-at-most-three gain determined by
+the original rows and the fixed drift. It imposes no nonvanishing
+sample, cubic leading coefficient, simple gain-root, nonzero drift,
+or regular-parent restriction. Lower gain degrees, sampled zeros,
+repeated roots, zero drift and singular parents remain permitted in
+the model; only consequences already proved from the rows restrict
+which of them occur in this sector. The acquisition word, left action,
+clocks, source family and terminal alternatives are unchanged.
+
+No assertion that $V_-$ or $V_+$ is injective is needed. The exact
+conclusion is order of terminal J *on each acquired-response fiber*.
+No terminal-M injectivity conclusion is asserted. Independent pairs
+may overlap or be disjoint, and their common terminal answers remain
+independent throughout the argument.
+
+The original existence target asks for some $p\ne24,v$ with distinct
+$W_0,W_1$ and independently distinct $W_2,W_3$ in the same entire
+$C(p,v)$ such that
+
+$$
+ a(W_0)=a(W_1),\qquad m(W_2)=m(W_3).
+ \tag{60.1}
+$$
+
+Theorem 55.1 and Corollary 55.2 exclude $p=0$ as a witness. They do
+not settle existence or nonexistence at other $p\ne24$. Any witness
+to the original target must now have $p\notin\{0,24\}$; that
+unrestricted remaining existence problem is unresolved. These are
+ordinary mathematical proofs; no Lean-kernel verification is claimed.
+
+## 61. Mathematical sources and contribution
+
+The model, complete zero-sector source classification and zero-safe
+whole-world lift are supplied by Sections 25–31 of *Uniqueness of actual
+sources above width eight*. The strengthened source bounds, guarded
+response chart and disjoint acquired images are supplied by Sections
+33–38 of the same mathematical assembly. In particular, equations
+(55.2)–(55.5) reuse those results rather than constitute new
+classification claims. Sections 47–54 concern a different, negative
+acquired rectangle and are not premises of the present exclusion.
+
+The new conclusions are the compact whole-arc strip bounds (56.4),
+the exact derivative certificates in Sections 57–58, the two global
+strict orders (55.6), and terminal-J injectivity on every entire
+$C(0,v)$. The proof of the last conclusion combines those orders with
+the supplied acquired-image separation. No literature-priority claim
+is made.
+
+The classical tools are the implicit-function and mean value theorems,
+polynomial differentiation, and positivity of the tensor product
+Bernstein basis. For the Bernstein basis and subdivision identities,
+see G. G. Lorentz, *Bernstein Polynomials*, 2nd edition, Chelsea, 1986;
+(56.6), (58.1) and (58.2) provide the specific coefficient identities
+needed here. The finite tables above, together with their polynomial
+definitions, are sufficient to check the exact rational signs without
+any other computational artifact.
+## 追加锚（本行以下为增补区）
+
