@@ -1085,3 +1085,578 @@ $$
 Darpö, *Vector product algebras*, arXiv:0810.5464v1, Theorem 1 是带相容形式的精确向量积分类；Baez, *The Octonions*, §4.1 是精确的八元数与 $G_2$ 背景。钉版 mathlib Mathlib/LinearAlgebra/CrossProduct.lean 的 cross_dot_cross 与 jacobi_cross 只供应固定 Fin 3 的精确恒等式，不能替代未知维数的全域近似选择。本地 mathlib 不作为本批前提，公开生态检索也未覆盖全部近似向量积、稳健秩识别或有限关系检验文献；这里不作全局原创性或穷尽检索声明。所有实际物理端点、重复准备、控制复位、标量精度和来源身份仍须由相应合同另行供应。
 
 ## 追加锚（本行以下为增补区）
+
+## 15. 任意交错积的定量 Jacobi 下界与等号刚性
+
+**定义 15.1（同一欧氏度量中的两个极值）。** 设 $V$ 为有限维实正定内积空间，$d=\dim V\ge4$，$B:V\times V\to V$ 双线性，且
+$T(u,v,w)=\langle B(u,v),w\rangle$ 精确完全交错。所有范数、正交性、伴随和体积均取自这个给定内积。记
+
+$$
+A(u,v)=\|u\|^2\|v\|^2-\langle u,v\rangle^2,
+\qquad
+\mathcal J_B(u,v,w)=B(u,B(v,w))+B(v,B(w,u))+B(w,B(u,v)),
+$$
+
+$$
+m(B)=\min_{\substack{\|u\|=\|v\|=1\\\langle u,v\rangle=0}}
+       \|B(u,v)\|^2,
+\qquad
+j(B)=\max_{\|u\|=\|v\|=\|w\|=1}\|\mathcal J_B(u,v,w)\|. \tag{15.1}
+$$
+
+第二个极值的三个单位输入彼此独立，不附加正交条件。两个极值均由非空紧集上的连续函数取得。取四元数 $\mathbb H$ 的正交单位基 $(1,i,j,k)$，约定
+$i^2=j^2=k^2=-1$、$ij=k$、$jk=i$、$ki=j$，反向乘积变号；$\bar x$ 表示四元数共轭。在正交直和 $\operatorname{Im}\mathbb H\oplus\mathbb H$ 上定义
+
+$$
+C((p,x),(q,y))=
+\bigl(p\times q+\operatorname{Im}(x\bar y),\,-py+qx\bigr),
+\qquad p\times q=\frac{pq-qp}{2}. \tag{15.2}
+$$
+
+这里直和内积为
+$\langle(p,x),(q,y)\rangle=p\mathbin{\cdot}q+\operatorname{Re}(x\bar y)$。
+
+**定理 15.2（任意积的齐次定量界及全部等号情形）。** 在定义 15.1 下，若 $m(B)>0$，则
+
+$$
+d=7,\qquad j(B)\ge3m(B). \tag{15.3}
+$$
+
+等号 $j(B)=3m(B)$ 成立，当且仅当存在正交同构
+$U:\operatorname{Im}\mathbb H\oplus\mathbb H\to V$，使对全部 $u,v\in V$ 有
+
+$$
+B(u,v)=\sqrt{m(B)}\,U C(U^{-1}u,U^{-1}v). \tag{15.4}
+$$
+
+**证明。** 记 $m=m(B)>0$、$\sigma=\sqrt m$。完全交错性和内积非退化性给出
+
+$$
+B(u,v)=-B(v,u),\qquad B(u,v)\perp u,v,
+\qquad L_u^*=-L_u,\quad L_uv=B(u,v). \tag{15.5}
+$$
+
+先说明维数供应者的适用性。若 $a,b$ 线性无关，置
+$b_\perp=b-\langle b,a\rangle a/\|a\|^2$。则 $b_\perp\ne0$，且
+
+$$
+B(a,b)=B(a,b_\perp),\qquad
+\|B(a,b)\|\ge\sigma\|a\|\|b_\perp\|>0. \tag{15.6}
+$$
+
+Draisma–Shaw, *Some noteworthy alternating trilinear forms*,
+[arXiv:1102.4768v1](https://arxiv.org/html/1102.4768v1)，定义 (2) 与 Theorem 2，说明在实维数 $d>2$ 且 $d\notin\{3,7\}$ 时，每个交错三形式都有奇异射影直线；其确切含义是存在独立 $a,b$，使 $T(a,b,x)=0$ 对全部 $x$ 成立。在本题给定的同一非退化内积中，这等价于 $B(a,b)=0$，与 (15.6) 矛盾。因此 $d\ge4$ 的全部可行情形均有 $d=7$。这里只复用该经典维数排除结论；尚未对 $B$ 增加精确范数恒等式。
+
+（一）极小对导出的不变三平面。取达到 $m$ 的正交单位对 $u,v$，置 $c_*=B(u,v)$。对任意 $h\perp u,v$，以
+$u(t)=(u+th)/\sqrt{1+t^2\|h\|^2}$ 变分，极小性给
+
+$$
+0=\langle B(h,v),c_*\rangle
+ =\langle B(v,c_*),h\rangle.
+$$
+
+故 $B(v,c_*)\in\operatorname{span}\{u,v\}$。由交错性，其 $v$ 系数为零，而
+$\langle B(v,c_*),u\rangle=T(v,c_*,u)=\|c_*\|^2=m$。
+对 $v$ 作同样的受约束变分，则
+$\langle B(u,h),c_*\rangle=\langle B(c_*,u),h\rangle=0$，从而
+
+$$
+B(v,c_*)=mu,\qquad B(c_*,u)=mv. \tag{15.7}
+$$
+
+于是 $e_1=u,e_2=v,e_3=c_*/\sigma$ 是某个三平面 $E$ 的定向正交单位基，且
+
+$$
+B(a,b)=\sigma\,a\times_E b\quad(a,b\in E). \tag{15.8}
+$$
+
+令 $W=E^\perp$，则 $\dim W=4$。对 $a\in E,x\in W,b\in E$，有
+$\langle B(a,x),b\rangle=-\langle x,B(a,b)\rangle=0$。
+因此 $A_ax=B(a,x)$ 将 $W$ 保持在自身内，且为斜伴随算子。由 $a\perp x$ 和 $m$ 的定义，齐次性给出
+
+$$
+\|A_ax\|\ge\sigma\|a\|\|x\|\qquad(a\in E,\ x\in W). \tag{15.9}
+$$
+
+三平面及此一致下界均由极小性导出。
+
+（二）四维斜算子的两项分解。将 $W$ 等距识别为 $\mathbb H$。对虚四元数 $p,q$，记
+$L_px=px$、$R_qx=xq$。两类算子均斜伴随，各成三维线性子空间，且交为零：若 $L_p=R_q$，代入 $1$ 得 $p=q$，再代入任意 $x$ 得 $p$ 与所有四元数对易，故虚部 $p=0$。由于 $\dim\mathfrak{so}(4)=6$，存在唯一线性映射
+$P,Q:E\to\operatorname{Im}\mathbb H$，使
+
+$$
+A_a=L_{Pa}+R_{Qa}. \tag{15.10}
+$$
+
+当 $\|x\|=1$ 时，右乘 $x^{-1}$ 保范，故
+$\|px+xq\|=|p+xqx^{-1}|$。单位四元数共轭在给定半径的虚球面上传递作用：虚单位 $n,m$ 且 $m\ne-n$ 时，非零的 $r=1-mn$ 满足 $rn=mr$；若 $m=-n$，可取与 $n$ 正交的虚单位 $r$。将 $r$ 单位化即得所需共轭。因此三角界的两个端点都可取到，包括某一虚部为零的情形，且
+
+$$
+\min_{\|x\|=1}\|(L_p+R_q)x\|=\bigl||p|-|q|\bigr|,
+\qquad
+\|L_p+R_q\|_{\rm op}=|p|+|q|. \tag{15.11}
+$$
+
+(15.9) 给 $\bigl||Pa|-|Qa|\bigr|\ge\sigma\|a\|$。
+在 $E$ 的单位球面上连续函数 $|Pa|-|Qa|$ 不为零，球面连通使其符号恒定。若符号为负，以 $x\mapsto\bar x$ 改换 $W$ 的等距识别，则
+$\overline{p\bar x+\bar xq}=-qx-xp$，将两项交换并变号。因此可以且以下固定为
+
+$$
+|Pa|-|Qa|\ge\sigma\|a\|\qquad(a\in E). \tag{15.12}
+$$
+
+特别地，$P$ 的每个奇异值至少为 $\sigma$。
+
+（三）由非奇异性确定定向。在上述定向基中，记 $e^r$ 为 $E$ 的对偶基，$e^{123}=e^1\wedge e^2\wedge e^3$，令
+$\omega_r(x,y)=\langle A_{e_r}x,y\rangle$。由于 $T(E,E,W)=0$，完整的三形式恰有分解
+
+$$
+T=\sigma e^{123}+\sum_{r=1}^3e^r\wedge\omega_r+\rho,
+\qquad \rho\in\Lambda^3W^*. \tag{15.13}
+$$
+
+这里 $\rho$ 任意，并未删除 $W$ 上的三次项。设 $(\theta^0,\theta^1,\theta^2,\theta^3)$ 为 $(1,i,j,k)$ 的对偶基，固定
+
+$$
+\operatorname{vol}=e^{123}\wedge\theta^0\wedge\theta^1\wedge\theta^2\wedge\theta^3,
+\qquad
+\chi(z)\operatorname{vol}=\frac16(\iota_zT)\wedge(\iota_zT)\wedge T. \tag{15.14}
+$$
+
+对任意 $z\ne0$，$\omega=\iota_zT$ 在 $z^\perp$ 上非退化。事实上，若 $y\in z^\perp$ 且 $\omega(y,x)=0$ 对全部 $x\in z^\perp$ 成立，则 $B(z,y)$ 与 $z^\perp$ 正交，又由 (15.5) 与 $z$ 正交，所以 $B(z,y)=0$；(15.6) 或其正交齐次界迫使 $y=0$。令
+$\eta=\langle z,\cdot\rangle/\|z\|^2$，则 $\eta(z)=1$，并可写
+$T=\eta\wedge\omega+\rho_z$，其中 $\iota_z\rho_z=0$。在六维 $z^\perp$ 上，非退化性给 $\omega^3\ne0$，而水平七形式为零，故
+
+$$
+(\iota_zT)^2\wedge T=\eta\wedge\omega^3\ne0. \tag{15.15}
+$$
+
+上标表示楔幂。于是二次函数 $\chi$ 在连通的 $V\setminus\{0\}$ 上处处不为零且同号。
+
+为确定该符号及 $P$ 的定向，写出 $L_i,L_j,L_k$ 对应的二形式：
+
+$$
+\theta^0\wedge\theta^1+\theta^2\wedge\theta^3,\qquad
+\theta^0\wedge\theta^2-\theta^1\wedge\theta^3,\qquad
+\theta^0\wedge\theta^3+\theta^1\wedge\theta^2.
+$$
+
+$R_i,R_j,R_k$ 的二形式分别将每式的第二项变号。这六个式子直接给出 $L_p+R_q$ 对应的二形式 $\omega_{p,q}$ 满足
+
+$$
+\omega_{p,q}^2=2(|p|^2-|q|^2)
+\theta^0\wedge\theta^1\wedge\theta^2\wedge\theta^3. \tag{15.16}
+$$
+
+由 $\iota_{e_1}T=\sigma e^2\wedge e^3+\omega_1$，(15.13) 的展开中仅留下
+$3\sigma e^{123}\wedge\omega_1^2$，所以
+
+$$
+\chi(e_1)=\sigma(|Pe_1|^2-|Qe_1|^2)>0. \tag{15.17}
+$$
+
+再在 $1\in W$ 处求值。将虚四元数向量 $Pe_r+Qe_r$ 的欧氏对偶记为 $d_r$。在 $1^\perp=E\oplus\operatorname{Im}\mathbb H$ 上有
+
+$$
+\iota_1T=-\sum_{r=1}^3e^r\wedge d_r+\iota_1\rho,
+\qquad
+(\iota_1T)^3=6\det(P+Q)e^{123}\wedge\theta^1\wedge\theta^2\wedge\theta^3. \tag{15.18}
+$$
+
+含 $\iota_1\rho$ 的项至少含四个 $\operatorname{Im}\mathbb H$ 方向，故全为零；其余三项的重排符号给上式的正号。用 $\eta=\theta^0$ 代入 (15.15)，再把 $\theta^0$ 移过三个 $E$ 协向量，得到
+
+$$
+\chi(1)=-\det(P+Q)>0. \tag{15.19}
+$$
+
+因此 $\det(P+Q)<0$。对 $0\le t\le1$，(15.12) 给
+$|(P+tQ)a|\ge|Pa|-t|Qa|\ge\sigma\|a\|$，故这些映射全部可逆，行列式符号不变，最终得
+
+$$
+\det P<0. \tag{15.20}
+$$
+
+这个符号来自给定度量下的非奇异性；(15.14) 没有以三形式诱导的新度量替换原内积。
+
+
+（四）Jacobi 的定量下界。由 (15.20)，可以选 $E$ 的定向正交奇异基 $a_1,a_2,a_3$，以及 $\operatorname{Im}\mathbb H$ 的定向正交基 $f_1,f_2,f_3$，使
+
+$$
+Pa_1=\lambda_1f_1,\quad Pa_2=\lambda_2f_2,\quad
+Pa_3=-\lambda_3f_3,\qquad
+\lambda_1,\lambda_2,\lambda_3\ge\sigma,\quad f_1\times f_2=f_3.
+$$
+
+左乘与右乘彼此对易，且四元数结合律给
+
+$$
+[L_p,L_r]=2L_{p\times r},\qquad
+[R_q,R_t]=-2R_{q\times t}. \tag{15.21}
+$$
+
+右乘的负号来自 $R_qR_tx=x(tq)$。由于 $B(a_1,a_2)=\sigma a_3$，对 $x\in W$，Jacobi 三项按原次序相加恰为
+
+$$
+\begin{aligned}
+\mathcal J_B(a_1,a_2,x)
+&=([A_{a_1},A_{a_2}]-\sigma A_{a_3})x\\
+&=\bigl(L_{(2\lambda_1\lambda_2+\sigma\lambda_3)f_3}
+ +R_{-2(Qa_1\times Qa_2)-\sigma Qa_3}\bigr)x.
+\end{aligned} \tag{15.22}
+$$
+
+对单位 $x\in W$ 取最大值，(15.11) 给出左右两项的算子范数之和，因而
+
+$$
+j(B)\ge2\lambda_1\lambda_2+\sigma\lambda_3
+\ge3\sigma^2=3m. \tag{15.23}
+$$
+
+所有基变换均为原欧氏内积的等距变换。
+
+（五）等号迫使全部剩余结构消失。若 $j(B)=3m$，(15.23) 和 $\lambda_r\ge\sigma$ 迫使
+$\lambda_1=\lambda_2=\lambda_3=\sigma$。所以 $P/\sigma$ 为反定向等距映射，(15.12) 随即给 $Q=0$。以定向等距映射 $-P/\sigma$ 将 $E$ 识别为 $\operatorname{Im}\mathbb H$，便有
+
+$$
+B(p,q)=\sigma(p\times q),\qquad
+B(p,x)=-\sigma px\quad(p,q\in E,\ x\in W). \tag{15.24}
+$$
+
+于是任意单位 $p\in E,x\in W$ 都是 $\|B(p,x)\|^2=m$ 的极小正交对。取任意 $y\in W\cap x^\perp$，以
+$p(t)=(p+ty)/\sqrt{1+t^2\|y\|^2}$ 变分，得到
+
+$$
+0=\langle B(y,x),B(p,x)\rangle
+=-\sigma\rho(y,x,px). \tag{15.25}
+$$
+
+对固定单位 $x$，映射 $p\mapsto px$ 将 $\operatorname{Im}\mathbb H$ 等距映到 $W\cap x^\perp$，故
+$\rho(y,x,z)=0$ 对全部 $y,z\perp x$ 成立。任意 $y,z$ 可减去各自沿 $x$ 的分量，交错性使值不变，遂得 $\rho=0$。这也覆盖任意非零 $x$ 的齐次倍数，$x=0$ 时当然为零。
+
+剩下的 $B(x,y)$ 属于 $E$，由交错性及 (15.24)，对任意虚四元数 $p$ 有
+
+$$
+\langle B(x,y),p\rangle
+=\langle B(p,x),y\rangle
+=-\sigma\operatorname{Re}(px\bar y)
+=\sigma\langle p,\operatorname{Im}(x\bar y)\rangle.
+$$
+
+因此 $B(x,y)=\sigma\operatorname{Im}(x\bar y)$，连同 (15.24) 即为 (15.4)。等号分类的必要性由任意 $B$ 推出。
+
+（六）模型恒等式及等号的反向。式 (15.2) 是经典虚八元数半交换子的一个正交表示；半交换子归一化参见 Baez, *The Octonions*, [§4.1](https://math.ucr.edu/home/baez/octonions/node14.html)。以下在本式的四元数约定中直接核对所需恒等式。$C$ 的三形式在 $E^3$ 上为普通体积，在 $E^2W$ 和 $W^3$ 上为零；混合分量满足
+
+$$
+\langle C(p,x),y\rangle=-\operatorname{Re}(px\bar y)
+=\langle p,\operatorname{Im}(x\bar y)\rangle
+=\langle p,C(x,y)\rangle.
+$$
+
+因 $\operatorname{Im}(y\bar x)=-\operatorname{Im}(x\bar y)$，这些分量精确完全交错。
+
+置 $t=x\bar y$、$r=\operatorname{Re}t$、$a_0=p\mathbin{\cdot}q$。由
+$pq=-a_0+p\times q$，有
+
+$$
+2\langle p\times q,\operatorname{Im}t\rangle
+=-2\operatorname{Re}(pqt)-2a_0r.
+$$
+
+第二分量的平方为
+
+$$
+|-py+qx|^2=|p|^2|y|^2+|q|^2|x|^2
++2\operatorname{Re}(py\bar xq).
+$$
+
+实部的循环不变性和共轭不变性给
+$\operatorname{Re}(py\bar xq)=\operatorname{Re}(qx\bar yp)=\operatorname{Re}(pqt)$。
+这两个混合项相加恰为 $-2a_0r$。又
+$|p\times q|^2=|p|^2|q|^2-a_0^2$，
+$|\operatorname{Im}t|^2=|x|^2|y|^2-r^2$，所以对全部 $U=(p,x),V=(q,y)$ 有
+
+$$
+\begin{aligned}
+\|C(U,V)\|^2
+&=(|p|^2+|x|^2)(|q|^2+|y|^2)-(a_0+r)^2\\
+&=\|U\|^2\|V\|^2-\langle U,V\rangle^2=A(U,V).
+\end{aligned} \tag{15.26}
+$$
+
+因此 $m(C)=1$，且 $\|C(U,V)\|\le\|U\|\|V\|$。每个嵌套 Jacobi 项的范数至多为三个输入范数之积，故 $j(C)\le3$。对明确的单位三元组
+
+$$
+U=(i,0),\qquad V=(j,0),\qquad X=(0,1),
+$$
+
+内层积依次为 $C(V,X)=(0,-j)$、$C(X,U)=(0,i)$、$C(U,V)=(k,0)$，外层三项分别为
+
+$$
+C(U,C(V,X))=(0,k),\quad
+C(V,C(X,U))=(0,k),\quad
+C(X,C(U,V))=(0,k). \tag{15.27}
+$$
+
+故 $j(C)=3$。正交运输不改两个极值，正标量 $\sigma$ 则给
+$m(\sigma C)=\sigma^2$、$\mathcal J_{\sigma C}=\sigma^2\mathcal J_C$、$j(\sigma C)=3\sigma^2$，证明等号分类的充分性。证毕。
+
+## 16. 原全域预算的锐界、下确界与全部达到者
+
+**定理 16.1（原分母和全参数域上的锐不等式）。** 对每个整数 $d\ge4$、每个实数 $0\le\alpha<1$、$\beta\ge0$，设 $V$ 为 $d$ 维实欧氏空间，$B:V\times V\to V$ 双线性，$T(u,v,w)=\langle B(u,v),w\rangle$ 精确完全交错。在同一给定欧氏内积和一个共同校准尺度下，若对全部 $u,v,w\in V$，包括零向量，均有
+
+$$
+\bigl|\|B(u,v)\|^2-A(u,v)\bigr|
+\le\alpha\|u\|^2\|v\|^2,\qquad
+\|\mathcal J_B(u,v,w)\|\le\beta\|u\|\|v\|\|w\|, \tag{16.1}
+$$
+
+则
+
+$$
+d=7,\qquad \beta\ge3(1-\alpha). \tag{16.2}
+$$
+
+这里面积残差的分母仍是 $\|u\|^2\|v\|^2$，并未改为 $A(u,v)$；Jacobi 输入也不要求正交。
+
+**证明。** 在正交单位对上，(16.1) 给
+$m(B)\ge1-\alpha>0$；在三个独立单位输入上，给 $\beta\ge j(B)$。故定理 15.2 适用，并给
+
+$$
+\beta\ge j(B)\ge3m(B)\ge3(1-\alpha).
+$$
+
+维数七是对所有 $d\ge4$ 的排除结论，非预设的子类限制。证毕。
+
+**定义 16.2（原最优化及固定维数最优化）。** 对每个 $\alpha\in[0,1)$，令
+
+$$
+f(\alpha)=\inf\{\beta\ge0:\ \text{存在整数 }d\ge4\text{ 及满足定理 16.1 全部条件的 }(V,B)\}, \tag{16.3}
+$$
+
+空集下确界约定为 $+\infty$。将 $d$ 固定后的同一下确界记作 $f_d(\alpha)$。
+
+**定理 16.3（全区间的值与穷尽达到分类）。** 对全部 $\alpha\in[0,1)$，可行集非空，且
+
+$$
+f(\alpha)=f_7(\alpha)=3(1-\alpha),\qquad
+f_d(\alpha)=+\infty\quad(d\ge4,\ d\ne7). \tag{16.4}
+$$
+
+全域预算达到此下确界的资料恰为
+
+$$
+\beta=3(1-\alpha),\quad d=7,\quad
+B(u,v)=\sqrt{1-\alpha}\,U C(U^{-1}u,U^{-1}v), \tag{16.5}
+$$
+
+其中 $U:\operatorname{Im}\mathbb H\oplus\mathbb H\to V$ 为任意正交同构。
+
+**证明。** 固定 $\alpha\in[0,1)$，置 $\kappa=\sqrt{1-\alpha}$，在定义 15.1 的直和欧氏内积和同一校准尺度下取 $B=\kappa C$。由 (15.26)，对全部 $u,v$ 有精确残差
+
+$$
+\|B(u,v)\|^2-A(u,v)=-\alpha A(u,v),\qquad
+0\le A(u,v)\le\|u\|^2\|v\|^2. \tag{16.6}
+$$
+
+故原面积预算在所有输入上成立，零向量和平行向量亦包括在内。由
+$\mathcal J_B=\kappa^2\mathcal J_C$ 和 $j(C)=3$，原 Jacobi 预算以
+$\beta=3(1-\alpha)$ 全域成立，(15.27) 的单位三元组取得该预算。张量交错性由 $C$ 的交错性继承。因此这是原条件的全域达到者，配合定理 16.1 的下界给出 (16.4)；固定非七维的可行集由同一定理为空。
+
+反之，若某可行资料有 $\beta=3(1-\alpha)$，则
+
+$$
+3(1-\alpha)=\beta\ge j(B)\ge3m(B)\ge3(1-\alpha)
+$$
+
+迫使 $j(B)=3m(B)$ 和 $m(B)=1-\alpha$。定理 15.2 的等号分类遂精确给出 (16.5)。其每个正交运输由前段验证又都满足原条件并达到下确界，故分类穷尽。证毕。
+
+
+## 17. 锐阈值下的原同源条件消费者
+
+**假设 17.1（保留的来源、距离、标定和菜单条件）。** 采用假设 13.1 的共同实现，以下仅替换其代数维数阈值。具体保留如下条件。
+
+1. $J$ 为有限维实内积空间，态域是整个 $J$；共同来源身份、来源版本、控制条件、校准尺度和共同零参照 $O$ 固定。真实同源差异 $h_1,\ldots,h_N$ 张成 $J$，$F:\mathbb R^N\to J$、$F\xi=\sum_j\xi_jh_j$。有对称双线性形式 $g_D$，在整个态域满足
+   $d_D(x,y)^2=g_D(x-y,x-y)$、$d_D(x,y)\ge0$。同一组 $0,h_1,\ldots,h_N$ 按定义 2.1 构造的锚定 Gram 矩阵 $G$ 满足 $G\succeq0$，且由全域距离律有 $G_{jk}=g_D(h_j,h_k)$。取实际商载体
+   $K=\mathbb R^N/\ker G$、$v_j=[\epsilon_j]$，内积为 $\langle[\xi],[\eta]\rangle_K=\xi^{\mathsf T}G\eta$，并保留定义 11.1 的 $d=\dim K\ge2$。
+2. 在此同一个 $K$、此同一个内积和一个共同校准尺度上，有全域双线性 $B:K\times K\to K$，真实 $T(u,v,w)=\langle B(u,v),w\rangle_K$ 精确完全交错。真实积以非负预算 $\alpha,\beta$ 对全部输入满足原式 (11.1)–(11.2)，其分母、输入范围和归一化均不变。
+3. $J$ 中有三个实际正交单位探针 $p_1,p_2,p_3$，读口为 $C_i(x)=\langle p_i,x\rangle_J$。在 $K$ 中选择正交单位 $a,b$，严格按有符号次序置
+
+   $$
+   c=B(b,a),\qquad s=\|c\|_K,\qquad e_1=a,\quad e_2=b,\quad e_3=c/s. \tag{17.1}
+   $$
+
+   在下述 $\alpha<1$ 条件下 $s>0$。对每个 $i$，选择形式系数 $\zeta_i$ 使 $[\zeta_i]=e_i$。保留全部精确同源距离—读出标定
+
+   $$
+   C_i(h_j)=\zeta_i^{\mathsf T}G\epsilon_j
+   =\langle e_i,v_j\rangle_K
+   \quad(i=1,2,3;\ j=1,\ldots,N). \tag{17.2}
+   $$
+
+4. 对菜单中包含的实际有序二元操作 $D:J\times J\to J$，每个方向读出 $\beta_i(x,y)=C_i(D(x,y))$ 为同一来源上的双线性函数，且保留全部精确标定
+
+   $$
+   \beta_i(h_j,h_k)=\langle e_i,B(v_j,v_k)\rangle_K
+   \quad(i=1,2,3;\ j,k=1,\ldots,N). \tag{17.3}
+   $$
+
+   若该操作不在菜单中，省去此项及二元操作结论；不因此给 $D$ 的计数、守卫、失败或历史记录槽增加双线性假设。
+5. 令 $E_0=\operatorname{span}\{p_1,p_2,p_3\}$。对完整实际线性菜单中的每个生成元 $U_\gamma:J\to J$，保留 $U_\gamma^*E_0\subseteq E_0$，并保留全部共同来源执行条件。计数、守卫、失败和历史槽的规则及保留责任均按 §10 的原任务定义，不并入三维方向接口。
+
+第三通道的 (17.2)–(17.3) 必须特别具有下列精确值：
+
+$$
+C_3(h_j)=\langle e_3,v_j\rangle_K
+=s^{-1}\langle c,v_j\rangle_K,\qquad
+\beta_3(h_j,h_k)=\langle e_3,B(v_j,v_k)\rangle_K
+=s^{-1}\langle c,B(v_j,v_k)\rangle_K. \tag{17.4}
+$$
+
+这些等式由独立校准的实际 $e_3$ 方向，或由实际 $c$ 通道及其同源尺度 $s$ 的归一化供应，保留 $c=B(b,a)$ 的符号和手性。形式系数 $\zeta_i$ 的存在及代数式 $c=B(b,a)$ 均不给任何端点的制备权限；三个实际探针及其精确等式仍是条件。
+
+若用 §12 的有限系数证书供应预算，还完整保留定义 12.1 的取得条件：已知维数 $d$ 和独立精确校准的完整正交单位标架 $f_1,\ldots,f_d$，$K=\operatorname{span}\{f_r\}$；所有有序同源系数
+$b_{kij}=\langle B(f_i,f_j),f_k\rangle_K$ 在同一版本、尺度和控制下取得。全部制备、控制、读出和共同校准的确定性误差进入 (12.1) 的 $\epsilon_{kij}$ 和 $E$；全部算术上误差或向上舍入进入 (12.2) 的 $\overline M,\overline R_A,\overline R_J$。所需共同初态、实际复位或同身份重复准备、动作次序、探针归属和读出宽度仍由来源条件供应；若操作可逆，重复控制也须保持标定不漂移。真实 $T$ 的精确完全交错性独立给定，测得的 $\widehat B$ 不要求交错。这里用 $f_r$ 区别证书的完整标架与 (17.1) 的三个带符号方向。
+
+**定理 17.2（定理 13.2 的锐阈值版本）。** 在假设 17.1 的全部条件下，将原代数阈值 $5\alpha+\beta<1$ 替换为且仅替换为
+
+$$
+0\le\alpha<1,\qquad 0\le\beta<3(1-\alpha). \tag{17.5}
+$$
+
+则 $\dim K=3$，且
+
+$$
+s^2\in[1-\alpha,1+\alpha],\qquad s>0, \tag{17.6}
+$$
+
+$(a,b,e_3)$ 是 $K$ 的完整正交单位基。保留精确第三通道 (17.4) 后，存在唯一满射线性映射 $\Pi:J\to K$，满足定理 10.2 的全部相应结论：
+
+$$
+\Pi h_j=v_j,\qquad
+C_i(x)=\langle e_i,\Pi x\rangle_K,\qquad
+g_D(x,y)=\langle\Pi x,\Pi y\rangle_K,
+$$
+
+$$
+\ker\Pi=\ker C=E_0^\perp=E_\infty^\perp,\qquad
+\Pi D(x,y)=B(\Pi x,\Pi y). \tag{17.7}
+$$
+
+其中 $C=(C_1,C_2,C_3)$，$E_\infty$ 是所有允许有限线性操作词的回传探针的张成空间，包含空词的探针。对每个实际生成元有唯一 $A_\gamma:K\to K$，且对每个有限词 $w$ 有
+
+$$
+\Pi U_\gamma=A_\gamma\Pi,\qquad
+\Pi U_w=A_w\Pi. \tag{17.8}
+$$
+
+因此距离商、联合正交商和几何商由原构造等距识别；所列同源有限操作表达式的方向读出、任务距离及二元响应因子化通过同一个 $\Pi$。阈值 (17.5) 的等号边界不能仅由这些预算纳入三维结论。
+
+**证明。** 在 $d=2$ 时，完全交错三形式必为零；由内积非退化性 $B=0$。对正交单位对，面积预算则要求 $1\le\alpha$，与 (17.5) 矛盾。因此 $d\ne2$。若 $d\ge4$，定理 16.1 给
+$\beta\ge3(1-\alpha)$，也与 (17.5) 矛盾。保留 $d\ge2$ 的原定义后，唯一剩下的是 $d=3$。对原来选定的正交单位 $a,b$，面积预算给 (17.6)；交错性给 $c\perp a,b$，故保留有符号 $e_3=c/s$ 后得到完整正交单位基。定理 16.3 的七维达到族在
+$\beta=3(1-\alpha)$ 满足全部代数预算，故由这些预算单独进行维数选择时必须保留严格不等号。
+
+为核对精确消费者，记 $S_{ij}=\langle e_i,v_j\rangle_K$。基的完整性和 (17.2) 分别给
+
+$$
+G=S^{\mathsf T}S,\qquad CF=S. \tag{17.9}
+$$
+
+若 $F\xi=0$，则 $S\xi=CF\xi=0$，从而
+$\xi^{\mathsf T}G\xi=0$。因 $G\succeq0$，有 $\xi\in\ker G$。所以
+
+$$
+\Pi(F\xi)=[\xi] \tag{17.10}
+$$
+
+不依赖系数选择。$F$ 满射，且 $v_j$ 张成 $K$，故 (17.10) 定义唯一满射线性 $\Pi$。再对 $x=F\xi,y=F\eta$，
+
+$$
+C_i(x)=(S\xi)_i=\langle e_i,\Pi x\rangle_K,\qquad
+g_D(x,y)=\xi^{\mathsf T}G\eta
+=\langle\Pi x,\Pi y\rangle_K. \tag{17.11}
+$$
+
+三个基坐标分离 $K$，所以 $\ker\Pi=\ker C=E_0^\perp$。定义
+$\iota:K\to J$，$\iota(\sum_i t_ie_i)=\sum_i t_ip_i$。
+实际探针正交单位使 $\iota$ 等距；(17.11) 给 $\Pi^*e_i=p_i$，并由
+$C_i(p_j)=\delta_{ij}$ 给 $\Pi p_j=e_j$。于是
+
+$$
+\Pi\iota=I_K,\qquad \iota\Pi=P_{E_0},\qquad
+J=E_0\oplus\ker\Pi. \tag{17.12}
+$$
+
+商类的正交代表 $P_{E_0}x$ 的 $J$ 范数等于 $\|\Pi x\|_K$，(17.11) 则给其任务度量；这证明原有两个商到 $K$ 的等距性，度量并未另换。
+
+若二元操作在菜单中，对 $x=F\xi,y=F\eta$，读出双线性及 (17.3) 给
+
+$$
+\begin{aligned}
+C_i(D(x,y))
+&=\sum_{j,k}\xi_j\eta_k\beta_i(h_j,h_k)\\
+&=\left\langle e_i,B\left(\sum_j\xi_jv_j,\sum_k\eta_kv_k\right)\right\rangle_K\\
+&=\langle e_i,B(\Pi x,\Pi y)\rangle_K.
+\end{aligned}
+$$
+
+结合 (17.11) 及基分离性，得到 (17.7) 的二元因子化。此结论只涉及方向任务，没有改变其他记录槽。
+
+对 $z\in E_0^\perp$ 和 $p\in E_0$，
+$\langle p,U_\gamma z\rangle_J=\langle U_\gamma^*p,z\rangle_J=0$。
+因此 $\ker\Pi$ 被全部实际生成元保持，
+$A_\gamma(\Pi x)=\Pi U_\gamma x$ 良定义，满射性给唯一性，且可写
+$A_\gamma=\Pi U_\gamma\iota$。对词长归纳，空词为恒等式，追加一生成元时用
+$\Pi U_\gamma U_w=A_\gamma\Pi U_w$，便得 (17.8)。伴随不变性使每个回传探针仍在 $E_0$，空词又给反向包含，故 $E_\infty=E_0$，完成全部核等式。
+
+同样按允许有限表达式的结构归纳，将上述线性桥和二元桥组合，便保持其 $\Pi$ 值；(17.11) 保持读出和距离。这正是原来的有限操作预测范围。任意保全部当前及未来线性读出的线性摘要 $L$ 必有 $\ker L\subseteq\ker\Pi$，所以其像满射到三维 $K$，维数至少三；$\Pi$ 达到该下界。又 $G=S^{\mathsf T}S$ 且 $v_j$ 张成三维 $K$，故 $G$ 秩三，原锚定距离的张成几何实现也至少三维。两个最小性由同一映射接合。证毕。
+
+**推论 17.3（原有限证书的充分检验区域）。** 在假设 17.1 的全部精确消费者条件以及定义 12.1、定理 12.2 的全部证书条件下，仍取原公式
+
+$$
+\alpha_{\rm cert}=\overline R_A+(2\overline M+E)E,\qquad
+\beta_{\rm cert}=\overline R_J+3(2\overline M+E)E. \tag{17.13}
+$$
+
+若
+
+$$
+0\le\alpha_{\rm cert}<1,\qquad
+0\le\beta_{\rm cert}<3(1-\alpha_{\rm cert}), \tag{17.14}
+$$
+
+则定理 17.2 适用。
+
+**证明。** 定理 12.2 在同一真实 $B$ 上，以 (17.13) 为上界预算证明原 (11.1)–(11.2)。因此可直接取
+$\alpha=\alpha_{\rm cert}$、$\beta=\beta_{\rm cert}$ 代入定理 17.2，保留其余精确条件不变。
+
+(17.13) 是保守上界，不等于真实积的最小预算。具体地，若将真实最小面积预算记为
+
+$$
+\alpha_{\rm act}(B)=
+\max_{\|u\|=\|v\|=1}
+\bigl|\|B(u,v)\|^2-A(u,v)\bigr|,
+$$
+
+则齐次性和零输入的直接代入说明它正是原面积分母下的最小常数，而真实最小 Jacobi 预算为 $j(B)$。证书只给
+$\alpha_{\rm act}(B)\le\alpha_{\rm cert}$、$j(B)\le\beta_{\rm cert}$。
+定理 16.3 的锐界和达到分类涉及 (16.1) 的实际可行预算，不声称 (17.13) 达到该锐边界。例如 §12.3 的精确七维模型已有真实最小 Jacobi 预算 $3$，同一系数绝对值和证书却给 $504$。
+
+有限系数误差仅用于上述预算，不供应 (17.2)–(17.4) 的精确校准。完整已知标架、共同来源及制备、复位、控制条件均作为假设保留；这些条件不推出物理实现，也不从未知或不完整标架推出维数，不把带噪校准变成精确等式。有限词和有限表达式的结论不提供无限时间的预测保证。证毕。
+
+## 18. 定量推导中经典供应者的范围
+
+**文献范围 18.1。** Draisma–Shaw, *Some noteworthy alternating trilinear forms*,
+[arXiv:1102.4768v1](https://arxiv.org/html/1102.4768v1)，定义 (2)、Theorem 2，只供应实交错三形式的奇异直线及维数排除；(15.6) 明确给出它与本题同一内积下的积非零条件的对应。该定理不要求精确面积恒等式，也不供应 (15.23) 的定量常数。
+
+Darpö, *Vector product algebras*,
+[arXiv:0810.5464v1](https://arxiv.org/html/0810.5464v1)，定义中的相容非退化对称形式、反对称乘法及精确范数恒等式是 Theorem 1 的前提。它供应精确向量积分类，适用于这里 $\alpha=0$ 的相应边界，不能直接用于一般 $\alpha>0$。定理 15.2 的等号结构通过极小三平面、定向符号及 $\rho=0$ 导出，不以该精确分类作为任意积的前提。
+
+Baez, *The Octonions*, [§4.1](https://math.ucr.edu/home/baez/octonions/node14.html)，供应经典虚八元数叉积、半交换子归一化、范数恒等式和交错三形式的背景。式 (15.2)、(15.26)–(15.27) 在同一四元数约定中给出所需全输入恒等式和达到三元组；经典模型及其标量缩放不另作独立的新分类定理。
+
+Bryant, *Some remarks on $G_2$-structures*,
+[arXiv:math/0305124v5](https://arxiv.org/html/math/0305124v5)，§2.6，式 (2.18)，在标准 $G_2$ 形式 $\phi$ 的度量和星算子下定义
+$\mathsf j_\phi(\gamma)(v,w)=*_\phi((\iota_v\phi)\wedge(\iota_w\phi)\wedge\gamma)$，并有 $\mathsf j_\phi(\phi)=6g_\phi$。它是收缩—楔积构造的背景；(15.14)–(15.20) 对任意本题资料使用给定欧氏体积，直接证明非零性和两处符号，不假设该资料的给定内积等于某个诱导 $G_2$ 度量。
+
+这些供应者各有上述限定；任意积的定量估计与等号刚性由定理 15.2 的完整推导承担。原下确界由定理 16.1 的全类下界及定理 16.3 的全域达到者共同给出，定理 17.2 仅在假设 17.1 的全部精确共同实现条件下消费该估计。
+
+## 追加锚（本行以下为增补区）
