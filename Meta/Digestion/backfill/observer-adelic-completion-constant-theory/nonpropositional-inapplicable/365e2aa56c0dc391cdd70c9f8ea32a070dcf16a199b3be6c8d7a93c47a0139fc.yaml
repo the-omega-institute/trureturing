@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:365e2aa56c0dc391cdd70c9f8ea32a070dcf16a199b3be6c8d7a93c47a0139fc
+  normalized_sha256: sha256:365e2aa56c0dc391cdd70c9f8ea32a070dcf16a199b3be6c8d7a93c47a0139fc
+cas_ref: sha256:365e2aa56c0dc391cdd70c9f8ea32a070dcf16a199b3be6c8d7a93c47a0139fc
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 'nonpropositional: Permitted input-constraint type: real interval.'
+    previous_atom_id: e4327a9537bf2472ea0312441bafb3e908e463a21fa59b04d35558e587acf6cf
+    next_atom_id: 48c50b05886412378ca2248f9c82cc67a4342bf840e589e4dfabf5f717149581

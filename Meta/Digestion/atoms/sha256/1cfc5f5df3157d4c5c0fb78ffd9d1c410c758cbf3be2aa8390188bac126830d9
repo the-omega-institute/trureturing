@@ -1,0 +1,54 @@
+**Corollary 12.1.** At every negative base $p<0$, a distinct
+terminal-J pair in any entire child $C(p,v)$ contains at least one
+world with $b<1$.
+
+**Proof.** If both widths were at least one, Lemma 10.1 would first
+force $p<-216/5$, and Lemma 10.2 would make equality of $p,a$
+imply equality of complete worlds. This contradicts distinctness.
+The conclusion is independent of the common sixth reading. $\square$
+
+The acquired map $(r,b)\mapsto(p,v)$ can have critical sources;
+Theorem 7.1 asserts no additional acquired-map injectivity. In
+particular the width-four rank-one source of Section 5 cannot yield
+a terminal-J collision with any other world of width at least one
+at its negative base. This applies even to a companion arbitrarily
+far from its local acquired critical chart. It supplies neither the
+existence nor the exclusion of a companion below width one.
+
+The J pair may be disjoint from, overlap, or coincide with an independent
+M pair. Its two members need not have equal terminal-M readings, and its
+common terminal-J value need not equal the M pair's common terminal-M
+value. Corollary 12.1 constrains the J pair separately. It does not
+impose its width-one restriction on both members of the M pair.
+Section 6's width-eight restrictions remain applicable separately.
+The J pair need not contain the width-four critical world; two worlds
+below width one are still possible under the stated restrictions.
+
+The original unresolved assertion remains the existence of real
+$p\ne24,v$ and complete worlds $W_0,W_1,W_2,W_3$ such that
+
+$$
+\begin{gathered}
+W_0,W_1,W_2,W_3\in C(p,v),\qquad
+W_0\ne W_1,\quad W_2\ne W_3,\\
+a(W_0)=a(W_1),\qquad m(W_2)=m(W_3).
+\end{gathered}
+\tag{12.1}
+$$
+
+There is no condition relating the two pairs' terminal values or
+requiring four different worlds. The negative-base route still
+requires the entire $b<1$ sector and its possible common acquired
+child with $\mathcal S_-$. This includes the parent-singular
+$b=1/8,\Lambda=0$ sources, with arbitrary allowed drift, retained
+by the zero-safe parent equation in *FIB common-parent geometry and
+two exact mixed children*, Theorem 2.1. The positive-base sector,
+all lower gain degrees, gain zeros and repeated roots, and zero drift
+remain in (12.1). No source restriction here changes that domain.
+
+The additional terminal-coordinate theorem therefore does not settle
+(12.1) or its global negation. The determinant sign is combined with
+a proved single global graph and its full image; an acquired critical
+point alone proves no terminal collision. No numerical root, residual
+or unsuccessful search supplies a premise of these conclusions.
+

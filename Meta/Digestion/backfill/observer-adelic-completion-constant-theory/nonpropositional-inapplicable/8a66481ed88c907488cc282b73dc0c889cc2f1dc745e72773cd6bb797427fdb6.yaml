@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:8a66481ed88c907488cc282b73dc0c889cc2f1dc745e72773cd6bb797427fdb6
+  normalized_sha256: sha256:8a66481ed88c907488cc282b73dc0c889cc2f1dc745e72773cd6bb797427fdb6
+cas_ref: sha256:8a66481ed88c907488cc282b73dc0c889cc2f1dc745e72773cd6bb797427fdb6
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: This atom is an isolated list label or terminology fragment and contains no complete mathematical assertion; no coverage is applicable.
+    previous_atom_id: 35d7f71f2f9d3099de7d8afa1642cdf9a1232ddc8dd29a1fced8d8567b2844a0
+    next_atom_id: d06a072a624c2c939dd20aa3f89853e4213c4491b362e4caefbac49eafc4b4aa

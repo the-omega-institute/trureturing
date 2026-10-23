@@ -1,0 +1,62 @@
+## 1. Fixed model and the exact question
+
+Fix the native means and the preparation data before choosing any analytic
+object. Let $r=1-Z$ and let $J_b$ and the grouped pole construction be as in
+[N, Definitions 2.1, 3.1 and 8.1](AURIC_FIB_ATOM_PROBABILITY_PHASE_TRANSPORT_AND_HOLONOMY.md).
+For a fixed open interval $I=(l,u)\Subset J_b$, put
+
+$$
+\Omega=I\times\mathbb T^m,
+\qquad P=\partial_k,
+\qquad Q=\sum_{a=1}^m w_a(k)\partial_{h_a}.
+$$
+
+The two walls are $E_- = \{X+Y=r\}$ and $E_+=\{X=Y\}$. Their native
+classification is
+
+$$
+\begin{array}{c|c|c|c|c}
+\text{walls}&\text{current-ray dim.}&\text{direct rank}&\text{growth}&Q_{\rm vol}\\ \hline
+\text{neither}&5&2&(2,3,4,5)&11\\
+\text{one}&4&2&(2,3,4)&7\\
+\text{both}&3&2&(2,3)&4.
+\end{array}
+$$
+
+Here and below $Q_{\rm vol}$ is the homogeneous volume exponent of the
+native horizontal operator, not the vector field named $Q$.
+
+Choose a real smooth positive density $\rho$ and a real smooth symmetric
+positive definite matrix $A=(a^{ij})_{1\leq i,j\leq2}$ on a neighbourhood
+of $\overline\Omega$. With $d\mu=\rho\,dk\,dh$, define
+
+$$
+T_A[f]=\int_\Omega \sum_{i,j}a^{ij}(X_jf)\overline{X_if}\,d\mu,
+\qquad
+\mathcal F_A=\overline{C_c^\infty(\Omega)}^{\,\|f\|_2^2+T_A[f]}.
+\tag{1.1}
+$$
+
+The boundary is periodic in each actual phase and killed at $k=l,u$. Let
+$L_A$ be the operator represented by this closed form and let
+$\Gamma_{A,o}$ be the full killed Green field of $L_A$ with one source at
+$o\in\Omega$, exactly as in Definition 1.3 of the original volume. Thus
+
+$$
+V_{A,o}[f]=\int_\Omega\Gamma_{A,o}|f|^2\,d\mu,
+\qquad
+q_{A,g}[f]=T_A[f]-gV_{A,o}[f],\quad g>0.
+\tag{1.2}
+$$
+
+The source is not averaged over the torus and the Green field is not cut off
+in time. The clock is still $e^{-tL_A}$, so the control covariance remains
+$2A\,dt$.
+
+The target is the following fixed-model assertion: there is a nonempty
+interval of positive $g$ for which $q_{A,g}$ is closed and semibounded on
+exactly $\mathcal F_A$, has an equivalent shifted form norm, compact
+resolvent, and an attained normalized minimum, if and only if both native
+walls hold. In the both-wall case we also seek a finite sufficient value of
+$g$ above which the same full Green form collapses to $-\infty$.
+

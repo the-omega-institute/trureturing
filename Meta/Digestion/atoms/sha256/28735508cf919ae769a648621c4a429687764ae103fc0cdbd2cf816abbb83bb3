@@ -1,0 +1,60 @@
+**Theorem 52.2 (Complete-domain threshold factorization).**
+There is no singular world above any base in $\mathcal B$. In particular
+
+$$
+C(p(q),v(q))=\{W_-(q),W_+(q)\}\qquad(q\in Q).
+\tag{52.3}
+$$
+
+Define, independently on all original strict source matrices in the
+fixed ordered basis,
+
+$$
+\sigma(P)=\mathbf1_{\{P_{12}>1/16\}}=\mathbf1_{\{b>1/16\}},\qquad
+\theta=-17027/10,\qquad h_\theta(z)=\mathbf1_{\{z\ge\theta\}}.
+\tag{52.4}
+$$
+
+For the original seventh-$M$ response
+$m(W)=d+(3U+2n)g(7)$, every $W\in\mathcal D$ satisfies
+
+$$
+\sigma(P(W))=h_\theta(m(W)).
+\tag{52.5}
+$$
+
+This is uniform over all compatible original worlds, with no regularity,
+selected-endpoint or hidden-branch promise supplied to the receiver.
+
+Proof. Direct rational comparison in (52.1) gives
+$p_c+r_p<-497$ and $v_c-r_v>-954$. But
+$-23942/25<-954$. Theorem 51.2 therefore excludes every singular
+parent world from the whole rectangle. X (12.18) bounds the complete
+regular inventory there by two. X Theorem 12.1 supplies, for each
+$q\in Q$, two distinct strict original lifts $W_\pm(q)$ at the
+simultaneous actual base $(p(q),v(q))\in\operatorname{int}\mathcal B$.
+Every world is regular or singular by (51.2), so these two exhaust the
+entire child, proving (52.3). This argument does not require that a
+previously unselected companion belongs to a source box.
+
+On both closed cells, including the seam, X Section 12.6 gives the
+simultaneous original-source and terminal bands
+
+$$
+\begin{aligned}
+0.015374868&\le b_-\le0.015406492<1/16,\\
+1/16&<0.078619724\le b_+\le0.078652727,\\
+-1705.04831638&\le m(W_-)\le-1704.83443702<\theta,\\
+\theta&<-1700.57340993\le m(W_+)\le-1700.35474402.
+\end{aligned}
+\tag{52.6}
+$$
+
+The spatial cut is defined on the original matrix, without reference
+to these terminal bands. They prove respectively $\sigma(P_-)=0$,
+$\sigma(P_+)=1$, $h_\theta(m(W_-))=0$ and
+$h_\theta(m(W_+))=1$. Exhaustiveness (52.3) proves (52.5) for
+every compatible world. Neither equality convention at the two cuts
+is exercised on this domain. Whole gains and drifts are those of the
+same original lifts; there is no common-drift assumption. ∎
+

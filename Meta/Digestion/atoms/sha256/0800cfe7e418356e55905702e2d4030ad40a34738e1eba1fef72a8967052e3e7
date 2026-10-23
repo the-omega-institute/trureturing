@@ -1,0 +1,97 @@
+## 18. Original-domain graph approximants and all nonreal resolvents
+
+For each fixed $\epsilon$ the constructed local $u_\epsilon$ has
+finite original free horizontal energy through the source. For the
+correction and $a_0=\log\epsilon$, positivity of $\delta$ gives
+
+$$
+\int_{t<a_0}\left(|r_\epsilon|^2+\sum_i|D_ir_\epsilon|^2\right)
+                                    dt\,da\,d\theta
+                \le e^{2\delta a_0}\|r_\epsilon\|_{X_\delta}^2<\infty.
+\tag{18.1}
+$$
+
+In the physical derivative of $R^{-1}r_\epsilon$, the cylinder
+derivative differs from $D_ir_\epsilon$ by a bounded multiple of
+$r_\epsilon$. The polar factors cancel in the free kinetic integral,
+as in Native Green stability, (10.10). Thus (18.1) is finite free
+energy, and (17.4) gives finite physical norm. The frozen part is
+source-regular and has the same property. On the remaining compact
+collars the horizontal graph estimate supplies the required energy.
+
+The free horizontal point capacity is zero: cutoffs on source scale
+$s$ have horizontal energy $O(s^2)$ in homogeneous volume exponent
+four. Test the finite-energy weak equation with these cutoffs and
+let $s\downarrow0$. Since $\Gamma_\epsilon$ is bounded for fixed
+$\epsilon$, its product with $u_\epsilon$ is locally $L^2$; the
+puncture contributes no distribution. The cap is constant on a
+source neighbourhood. Local hypoellipticity then makes
+$u_\epsilon$ smooth there. Through a literal cap interface the
+equation remains weak with horizontal maximal regularity; no
+smoothness across that interface is required.
+
+Take a fixed smooth $\chi$ compactly supported in $R<r_0$ and equal
+to one on a smaller ball. Extend
+$g_\epsilon=\chi u_\epsilon$ by zero to the original cylinder.
+It belongs to the original $\mathcal F_A$, and its weak image is
+
+$$
+L_Ag_\epsilon=g_{\epsilon,\lambda}\Gamma_\epsilon g_\epsilon
+                                      +[L_A,\chi]u_\epsilon\in L^2(\mu).
+\tag{18.2}
+$$
+
+The identity extends from compact smooth form tests to
+$\mathcal F_A$ by form-core density, since its left form and right
+$L^2$ functional are continuous there. The closed-form representation
+criterion therefore puts $g_\epsilon$ in actual $D(L_A)$. A formal
+differential image alone would not suffice for this domain assertion.
+For the capped operator its image is exactly the commutator.
+
+Put $g_0=\chi u_0$. It is a genuine inherited-wall maximal vector
+with the trace in (17.6), and
+$S_{\max}g_0=[L_A,\chi]u_0$. These commutators are first-order and
+supported on one fixed smooth source-avoiding annulus. Whole-ball
+norm convergence and smooth annular convergence from §17 give
+
+$$
+g_\epsilon\longrightarrow g_0,\qquad
+K_{\epsilon,\lambda}g_\epsilon
+                          \longrightarrow S_{\max}g_0
+                                  \quad\hbox{in }L^2(\mu).
+\tag{18.3}
+$$
+
+The support of $g_\epsilon,g_0$ lies inside the original source
+chart; they respect the actual outer killing and phases. They are
+graph-core vectors, with no assertion that the local zero-energy
+solution is a global eigenfunction.
+
+For $v\in\mathcal D_0$, localization away from the source places
+$v$ in the original free operator domain $D(L_A)$. The full Green
+field is bounded on its support and eventually equals its cap
+there. Hence
+
+$$
+K_{\epsilon,\lambda}v
+      =Fv-\frac{g_{\mathrm c}\lambda}{L^2}\Gamma v
+                                      \longrightarrow Fv\quad\hbox{in }L^2.
+\tag{18.4}
+$$
+
+This uses the inherited-wall localization of Native Green stability,
+Theorem 21.1; it does not replace that domain by the absolute
+adjoint of a punctured compact core. By (13.6),
+$\mathcal D_0+\operatorname{span}\{g_0\}$ is an operator graph core
+for the selected $H_\lambda$. Equations (18.3)–(18.4) supply all its
+graph approximants in $D(L_A)$. Lemma 13.1 proves (12.5), on the
+original full Hilbert space and for every nonreal spectral parameter.
+
+Only local zero-energy equations were separated in the frozen
+construction. A nonzero-energy rotational native equation need not
+stay in its slow angular eigenspace: the nonconstant $c(a)$ in
+Native Green stability, Proposition 22.4, precludes that reduction.
+Here no $Ee^{2t}$ term of an actual finite-energy equation is dropped.
+The selfadjoint graph-core argument, rather than scalar separation
+of a resolvent equation, supplies all complex resolvents and inputs.
+

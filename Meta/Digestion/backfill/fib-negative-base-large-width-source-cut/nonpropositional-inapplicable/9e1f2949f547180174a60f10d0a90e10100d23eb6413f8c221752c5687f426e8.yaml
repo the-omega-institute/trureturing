@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:9e1f2949f547180174a60f10d0a90e10100d23eb6413f8c221752c5687f426e8
+  normalized_sha256: sha256:9e1f2949f547180174a60f10d0a90e10100d23eb6413f8c221752c5687f426e8
+cas_ref: sha256:9e1f2949f547180174a60f10d0a90e10100d23eb6413f8c221752c5687f426e8
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: Defines the complete-world domain, literal reading convention, acquired child and independent-pair question; all equations stipulate objects or the target, and no existence or uniqueness is asserted.
+    previous_atom_id: null
+    next_atom_id: a4e863dbcefdd24f3158ff2f6c3418178feb1df1c538a8d3b01d118e71c19bf6

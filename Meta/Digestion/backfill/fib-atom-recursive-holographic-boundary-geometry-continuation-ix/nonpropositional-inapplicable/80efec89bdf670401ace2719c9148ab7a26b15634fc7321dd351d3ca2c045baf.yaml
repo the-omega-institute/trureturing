@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:80efec89bdf670401ace2719c9148ab7a26b15634fc7321dd351d3ca2c045baf
+  normalized_sha256: sha256:80efec89bdf670401ace2719c9148ab7a26b15634fc7321dd351d3ca2c045baf
+cas_ref: sha256:80efec89bdf670401ace2719c9148ab7a26b15634fc7321dd351d3ca2c045baf
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: This definition is a seven-field checklist specifying what evidence a proposed three-dimensional realization must provide. It asserts no realization or satisfaction of those requirements; the following proposition is a separate atom.
+    previous_atom_id: 8a80c3632a16d0db334ab1d46ef3b26cef2a688a4bcde43a708cd37315e0b4ef
+    next_atom_id: 28f5c967e4da7d31f58ec615c0bd2facf598c333d53bdab56a0c7c1e5f902d70

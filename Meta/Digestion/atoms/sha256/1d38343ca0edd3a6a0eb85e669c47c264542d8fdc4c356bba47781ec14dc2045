@@ -1,0 +1,34 @@
+### 4.2 Fixed-parity escape
+
+If a source contract promises one parity $\epsilon=(-1)^m$ in advance, define
+the normalized bottom vectors
+
+$$
+q_\epsilon(k)=\sqrt{\frac{k}{c}}U_+
+             +\epsilon\sqrt{\frac{c-k}{c}}U_-.
+$$
+
+There is a unitary $W_\epsilon$ with
+$W_\epsilon e_2=e_2$ and
+$W_\epsilon q_\epsilon(k)=q_\epsilon(l)$.  Extending these two orthonormal
+assignments to a basis gives a unitary, and
+
+$$
+W_\epsilon\Psi_{k,\beta,m}=\Psi_{l,\beta,m}
+$$
+
+for every $\beta$ of that promised parity.  This is a genuine deterministic
+escape from (OC.12), but it consumes a parity promise and a calibrated
+coherent gate.  The successful full-family instrument cannot acquire that
+parity: its success record is blind, and no parity sensor or reset is supplied
+by the original control declaration.
+
+Explicitly, rotate through $\alpha(l)-\alpha(k)$ in the orthonormal plane
+$(U_+,\epsilon U_-)$, where $\alpha(x)=\arccos\sqrt{x/c}$, and fix
+$e_2$ and the inactive complement.  This maps
+$\sqrt Z e_2+e^{-i\beta}\sqrt r\,q_\epsilon(k)$ to the prescribed target.
+A previously retained, correct source-bound parity bit can select these two
+rotations if the coherent gates are also supplied.  The promise can include
+every even winding or every odd winding; it does not identify their actual
+real lifts or ordered histories.
+

@@ -113,7 +113,8 @@ Per-declaration judgement:
   partitionSum: proof_shape: bind-only; escape_witness: none.
     consumer: entropy_partition, partition_count, result.
     admission_basis: open-problem-resolution (#13575; Proved).
-  partition_count: proof_shape: bind-only; escape_witness: none.
+  partition_count: proof_shape: content (after helper expansion);
+    escape_witness: arbitrary-label merger_sum_transport through ternary partition classification.
     consumer: result.
     admission_basis: open-problem-resolution (#13575; Proved).
   partitionRank: proof_shape: bind-only; escape_witness: none.
@@ -128,12 +129,18 @@ Per-declaration judgement:
   entropy_partition: proof_shape: bind-only; escape_witness: none.
     consumer: result.
     admission_basis: open-problem-resolution (#13575; Proved).
-  result: proof_shape: bind-only; escape_witness: none.
+  result: proof_shape: content (after helper expansion);
+    escape_witness: structural partition_count on the live entropy-partition path.
     consumer: none (terminal settlement).
     admission_basis: open-problem-resolution (#13575; Proved).
-Utility: none. The declarations give general mathematical identities and constructions;
-fixed field and mode checks occur only inside parameterized proofs. No declaration
-is an instance certificate, bounded enumeration result, checker or numeric reduction.
+Structural counting is provided by the consumed Combinatorics/Partitions
+TernaryPartitionCounting.result. Its arbitrary-label merger_sum_transport uses
+TernaryPartitionOrbit.result, with arbitrary target-anchor reanchoring. The local
+partition_count only checks the concrete sign-representative families and adapts
+its original matrix-valued statement to that arbitrary-weight counting theorem.
+Utility: none. The entropy conclusion and its original public contract are kept.
+Direct structural dependency:
+  D5/S3/Combinatorics/Partitions/TernaryPartitionCounting.result.
 Direct frozen dependencies:
   GID: D5/S3/VertexAlgebra/LatticeTwistedGroundRealization.SignQuotient.F₂
     statement_id: sha256:e975fc48104d0cb1a40271fdfb5ec7fcfe2730a1c600ee81758d5e89253bd60f
@@ -157,6 +164,8 @@ Direct frozen dependencies:
 
 import D5.S3.Quantum.Information.BinaryStabilizerGraphNormalForm
 import D5.S3.QuadraticForms.TernaryTranslationQuadraticNormalForm
+
+import D5.S3.Combinatorics.Partitions.TernaryPartitionCounting
 
 set_option autoImplicit false
 set_option relaxedAutoImplicit false
@@ -674,9 +683,11 @@ private def partitionSum (q : ℕ) (P : Finset (Fin (q - 1) → ZMod 3))
     (m : Fin 4 → Fin q) (f : Matrix (Fin 4) (Fin 4) Bool → ℝ) : ℝ :=
   ∑ t ∈ P, f (cutPattern (colourValue t ∘ m))
 
+
+
+
 set_option maxHeartbeats 2000000 in
--- The 13 modes and six four-mode mergers expand into partition coefficients.
-/-- The four-party counting relation holds for every function of the party partition. -/
+-- Check the three concrete representative families and normalize merger sums.
 private theorem partition_count (f : Matrix (Fin 4) (Fin 4) Bool → ℝ) :
     partitionSum 4 modes3 id f -
       (partitionSum 3 modes2 (![0, 0, 1, 2] : Fin 4 → Fin 3) f +
@@ -693,14 +704,20 @@ private theorem partition_count (f : Matrix (Fin 4) (Fin 4) Bool → ℝ) :
         partitionSum 2 modes1 (![0, 1, 0, 1] : Fin 4 → Fin 2) f +
         partitionSum 2 modes1 (![0, 1, 1, 0] : Fin 4 → Fin 2) f) = 0 := by
   classical
-  have h02 : (0 : ZMod 3) ≠ 2 := by decide
-  have h12 : (1 : ZMod 3) ≠ 2 := by decide
-  simp (disch := decide) only [partitionSum.eq_1, modes1.eq_1, modes2.eq_1, modes3.eq_1,
-    Finset.sum_insert, Finset.sum_singleton]
-  norm_num [colourValue.eq_1, cutPattern, Fin.sum_univ_succ, Function.comp_def,
-    Matrix.cons_val_two, Matrix.cons_val_three, Matrix.vecHead, Matrix.vecTail,
-    h02, h12, Ne.symm h02, Ne.symm h12]
-  ring
+  have h03 : (0 : Fin 3 → ZMod 3) ∉ modes3 := by decide
+  have hP3 : ∀ u : Fin 3 → ZMod 3, u ≠ 0 → (u ∈ modes3 ↔ -u ∉ modes3) := by decide
+  have h02 : (0 : Fin 2 → ZMod 3) ∉ modes2 := by decide
+  have hP2 : ∀ u : Fin 2 → ZMod 3, u ≠ 0 → (u ∈ modes2 ↔ -u ∉ modes2) := by decide
+  have h01 : (0 : Fin 1 → ZMod 3) ∉ modes1 := by decide
+  have hP1 : ∀ u : Fin 1 → ZMod 3, u ≠ 0 → (u ∈ modes1 ↔ -u ∉ modes1) := by decide
+  have h := D5.S3.Combinatorics.Partitions.TernaryPartitionCounting.result modes3 h03 hP3 modes2 h02 hP2 modes1 h01 hP1 f
+  simpa [D5.S3.Combinatorics.Partitions.TernaryPartitionCounting.partitionSumR,
+    partitionSum, D5.S3.Combinatorics.Partitions.TernaryPartitionCounting.cutPattern,
+    D5.S3.Combinatorics.Partitions.TernaryPartitionCounting.colourValue,
+    cutPattern, colourValue, Fin.sum_univ_succ,
+    D5.S3.Combinatorics.Partitions.TernaryPartitionCounting.pairMergers,
+    D5.S3.Combinatorics.Partitions.TernaryPartitionCounting.singletonCuts,
+    D5.S3.Combinatorics.Partitions.TernaryPartitionCounting.balancedCuts, add_assoc] using h
 
 private def partitionRank {N : ℕ} (A : Matrix (Fin N) (Fin N) (ZMod 2))
     (party : Fin N → Fin 4) (p : Matrix (Fin 4) (Fin 4) Bool) : ℝ :=

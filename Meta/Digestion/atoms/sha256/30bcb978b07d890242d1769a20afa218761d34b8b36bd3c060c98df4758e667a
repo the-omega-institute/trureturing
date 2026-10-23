@@ -1,0 +1,67 @@
+**定理 5.1（均匀五窗的权重盲点与均匀改进界）。** Suppose $p_i=1/5$ and impose (1.3). Put $\delta_i=1/5-r_i$. Then
+
+$$
+\delta_i\ge0,\qquad
+\delta_b+\delta_c+\delta_e=\frac15+\delta_a+\delta_d,
+\qquad \delta_c\ge\delta_a,
+\qquad
+\sum_i\delta_i\ge\frac15.
+\tag{5.1}
+$$
+
+For every choice of $w_i\ge0$, the exact attained extrema are
+
+$$
+\boxed{
+\min\sum_iw_i\delta_i=\frac15\min(w_b,w_c,w_e),
+\qquad
+\min\max_i\delta_i=\frac1{15}.
+}
+\tag{5.2}
+$$
+
+In particular the full indicator baseline plateau is impossible under (1.3), although a weighted objective can have zero forced improvement if any one of $w_b,w_c,w_e$ is zero.
+
+Proof. Equation (5.1) is (3.2) after substitution. Its equality yields
+
+$$
+\sum_i\delta_i=\frac15+2(\delta_a+\delta_d)\ge\frac15.
+$$
+
+Let $w_*=\min(w_b,w_c,w_e)$. Nonnegativity gives
+
+$$
+\sum_iw_i\delta_i\ge w_*(\delta_b+\delta_c+\delta_e)\ge w_*/5.
+$$
+
+For each choice of $j\in\{b,c,e\}$ there is a feasible vector with $\delta_j=1/5$ and all other deficits zero. Explicit edge weights of Theorem 3.1 are
+
+$$
+\begin{array}{c|cc}
+j&\text{first nonzero edge weight}&\text{second nonzero edge weight}\\ \hline
+b&z_{ac}=1/5&z_{de}=1/5\\
+c&z_{ab}=1/5&z_{de}=1/5\\
+e&z_{ac}=1/5&z_{bd}=1/5
+\end{array}
+\tag{5.3}
+$$
+
+The fair-edge outputs have mass $2/5$ each and the remaining singleton output has mass $1/5$ at $j$. Taking a minimizing $j$ proves the first equality, also when weights vanish or tie.
+
+For the second equality, (5.1) implies $\max_i\delta_i\ge(\delta_b+\delta_c+\delta_e)/3\ge1/15$. Attainment has
+
+$$
+\delta_a=\delta_d=0,\qquad
+\delta_b=\delta_c=\delta_e=1/15.
+$$
+
+An explicit edge specification is
+
+$$
+z_{ac}=\frac2{15},\qquad z_{ab}=z_{ae}=\frac1{30},\qquad
+z_{bd}=z_{de}=\frac1{10}.
+\tag{5.4}
+$$
+
+The corresponding fair-edge outputs together have mass $4/5$, and singleton outputs at $b,c,e$ each have mass $1/15$. This realizes the displayed deficits and proves the minimax equality. These extrema concern task risks on this finite law; no training or sampling assumption is used. $\square$
+

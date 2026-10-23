@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:b1329471ae007786a16a79e8c4d22c40dd617f70f9a36f995d5a40f635e2ee23
+  normalized_sha256: sha256:b1329471ae007786a16a79e8c4d22c40dd617f70f9a36f995d5a40f635e2ee23
+cas_ref: sha256:b1329471ae007786a16a79e8c4d22c40dd617f70f9a36f995d5a40f635e2ee23
+coverage_gids:
+  - gid: D5/S3/Weil/Budget/CayleyMomentTridiagonalFlowLemmas.canonical_nat_moment_eq_source
+    target_statement_id: sha256:32a3f4c767215d3e188c5a8c6c87574972aac9b56d34b2a3eb32e809a57a309d
+  - gid: D5/S3/Weil/CayleyLaguerre/CayleyMomentTransport.chebyshev_stieltjes_jet
+    target_statement_id: sha256:375010d484276b978111d543b90b670f824d3626c8ee40f80dda50db50cbd501
+receipts:
+  unresolved_subitems: []

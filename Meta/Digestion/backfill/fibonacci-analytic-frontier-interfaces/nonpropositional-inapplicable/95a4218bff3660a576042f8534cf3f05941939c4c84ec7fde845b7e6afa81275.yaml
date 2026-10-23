@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:95a4218bff3660a576042f8534cf3f05941939c4c84ec7fde845b7e6afa81275
+  normalized_sha256: sha256:95a4218bff3660a576042f8534cf3f05941939c4c84ec7fde845b7e6afa81275
+cas_ref: sha256:95a4218bff3660a576042f8534cf3f05941939c4c84ec7fde845b7e6afa81275
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: Only defines the Fibonacci window, candidate N and omega notation, and limits an earlier screen to its stated domain; asserts no candidate passes that screen.
+    previous_atom_id: afee59b9020b1556ece48d55cb117c69f7ad16c481c03613c431339049e172c5
+    next_atom_id: 4f8bb54fb2d898760a396c3579c3ef636c54cbe8216ac3ca2af3dd957a85956f

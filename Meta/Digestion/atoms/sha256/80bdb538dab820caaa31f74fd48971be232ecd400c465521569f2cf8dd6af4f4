@@ -1,0 +1,5 @@
+Both endpoints are sharp.
+
+- Equality on the left holds when the posterior error $r_A$ is constant almost surely. A binary symmetric channel with crossover probability $e(A)$ is an extremizer.
+- Equality on the right holds when $r_A$ takes only the values $0$ and $1/2$. An erasure channel is an extremizer.
+

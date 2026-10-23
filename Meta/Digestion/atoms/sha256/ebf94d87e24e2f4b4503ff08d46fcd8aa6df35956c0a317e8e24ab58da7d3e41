@@ -1,0 +1,26 @@
+**Definition 14.1 (the fixed spatial family).** Assume the both-wall row
+of §1, with every preparation mean, grouped phase, guard, height face,
+periodic coordinate, density, covariance, source and clock fixed as in
+(1.1), (2.1) and (10.2). Write $\Gamma=\Gamma_{A,o}$,
+$c_G=(2\pi m_0)^{-1}$, and set, for $\epsilon>0$,
+
+$$
+\begin{aligned}
+\Gamma_\epsilon&=\min\{\Gamma,c_G\epsilon^{-2}\},
+&\Gamma_\epsilon(o)&=c_G\epsilon^{-2},\\
+q_\epsilon[f]&=T_A[f]-g_{\mathrm c}\int\Gamma_\epsilon|f|^2d\mu,
+&D(q_\epsilon)&=\mathcal F_A,\\
+D_\epsilon&=g_{\mathrm c}(\Gamma-\Gamma_\epsilon)\ge0,
+&\mathcal C_\epsilon&=\{\Gamma>c_G\epsilon^{-2}\}.
+\end{aligned}
+\tag{14.1}
+$$
+
+The value at the measure-zero source fixes a representative. This is
+bounded multiplication on the original free domain. Its operator is
+$K_\epsilon=L_A-g_{\mathrm c}\Gamma_\epsilon$ on $D(L_A)$.
+Let $K_*$ be the operator of the completed form (12.3), and let
+$E_\epsilon=\inf\sigma(K_\epsilon)$ and $E_*=\inf\sigma(K_*)$.
+Throughout §§14–19 every limit is $\epsilon\downarrow0$ for one fixed
+smooth model. Constants need not be uniform over different models.
+

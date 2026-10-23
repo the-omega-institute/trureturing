@@ -1,0 +1,29 @@
+**Proposition 242.8 (Conditional versus attempted sampling).** The finite
+bound in Corollary 242.7 is conditional on the successful outputs of one
+common map. It implies no uniform attempted-trial count or success floor
+over the comparison class.
+
+Proof. For a fixed nonzero map, the full-rank lower bound in the preceding
+proof makes every fifteen-source success probability positive. If
+$0<\alpha<1$, the source-independent rejection coin produces the map
+$\alpha\mathcal E$. It remains completely positive and trace-nonincreasing,
+its conditional outputs are unchanged, and all attempted-trial success
+probabilities are multiplied by $\alpha$. Letting $\alpha$ range over
+positive values therefore defeats any map-independent lower success bound.
+The signed coefficients in (242.3) do not describe this coin or any other
+operation. ∎
+
+The certificate uses exactly the native two-preparation full Gibbs source,
+the fixed coherent filter and all spectator populations. The inverse
+formula specifies algebraic source parameters; it does not prove preparation,
+calibration, precision, thermodynamic availability, or synthesis. The CP
+map is one source-independent map applied to all fifteen settings. The
+trace-nonincreasing condition is retained for the physical interpretation,
+while the dual identity itself only uses complete positivity. No source-aware
+control, operation-menu enlargement, extra copy, external phase reference,
+support minimization, rounded tuple, gap optimization, or attempted-trial
+promise is part of the result. The construction is a finite certificate
+inside the already specified three-mode native model; it makes no claim that
+physical spatial dimension three is selected, and it leaves the broader
+why-three-dimensions question open.
+

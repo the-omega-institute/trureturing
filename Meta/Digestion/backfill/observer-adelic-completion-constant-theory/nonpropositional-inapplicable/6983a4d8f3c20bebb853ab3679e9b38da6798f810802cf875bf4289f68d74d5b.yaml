@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:6983a4d8f3c20bebb853ab3679e9b38da6798f810802cf875bf4289f68d74d5b
+  normalized_sha256: sha256:6983a4d8f3c20bebb853ab3679e9b38da6798f810802cf875bf4289f68d74d5b
+cas_ref: sha256:6983a4d8f3c20bebb853ab3679e9b38da6798f810802cf875bf4289f68d74d5b
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: Experiment asking whether the approximant error satisfies the proposed big-O rate; no error bound is asserted.
+    previous_atom_id: c96751c51f52e735ed7f1db73e5197be40496b34d2e138744760d113acd46b64
+    next_atom_id: 86f7f764504651d0854f0185c7e9291bce1bebefb787967f704fa2cf1a7f878e
