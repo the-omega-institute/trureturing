@@ -14,6 +14,7 @@ internal sealed class DeletionChannelEntropyOrderingDocument : IScribeDocumentDe
         "Positional autocorrelation does not determine the finite entropy order of binary deletion-channel outputs.",
         H("Finite Deletion-Channel Entropy Ordering"),
         Blocks(
+            PublishedNode("embeddings_eq_count", Disp(Seq(Forall, Sp, Parenthesized(Seq(F.Id("m"), Colon, Sp, Seq(Mathbb, Grp(F.Id("N"))))), Comma, Sp, Parenthesized(Seq(Forall, Sp, Parenthesized(Seq(F.Id("n"), Colon, Sp, Seq(Mathbb, Grp(F.Id("N"))))), Comma, Sp, Parenthesized(Seq(Forall, Sp, Parenthesized(Seq(F.Id("x"), Colon, Sp, Seq(Parenthesized(Seq(PublishedName("Fin"), Sp, F.Id("m"))), Sp, To, Sp, Parenthesized(PublishedName("Bool"))))), Comma, Sp, Parenthesized(Seq(Forall, Sp, Parenthesized(Seq(F.Id("y"), Colon, Sp, Seq(Parenthesized(Seq(PublishedName("Fin"), Sp, F.Id("n"))), Sp, To, Sp, Parenthesized(PublishedName("Bool"))))), Comma, Sp, Parenthesized(Seq(PublishedName("embeddings"), Sp, F.Id("x"), Sp, F.Id("y"), Sp, Eq, Sp, PublishedName("scatteredCount"), Sp, Parenthesized(Seq(Seq(PublishedName("List"), Dot, PublishedName("ofFn")), Sp, F.Id("x"))), Sp, Parenthesized(Seq(Seq(PublishedName("List"), Dot, PublishedName("ofFn")), Sp, F.Id("y"))))))))))))), DescribeRole.Theorem, AssessedProvenance.FromRepo(Source)),
             Paragraph(Text("Binary strings of length k are functions Fin k to Bool, with false representing 0 "
                 + "and true representing 1. List.ofFn reads positions in increasing order. List.sublists "
                 + "counts index subsets with multiplicity: equal subwords from distinct masks remain separate. "
@@ -149,4 +150,11 @@ internal sealed class DeletionChannelEntropyOrderingDocument : IScribeDocumentDe
             Seq(D(1), Sp, Le, Sp, m, Sp, Rightarrow, Sp, m, Sp, Lt, Sp, n, Sp, Rightarrow, Sp,
                 All("u", Word(m), All("v", Word(m), comparison)))))));
     }
+
+    private static DocumentBlock PublishedNode(string name, Formula formula, DescribeRole role,
+        AssessedProvenance provenance) => Describe.Lean(
+        DescribeId.Create("singhvi-owner-" + name.Replace("_", "-").ToLowerInvariant()),
+        DeclarationHandle.Create("D5/S3/Entropy/DeletionChannelEntropyOrdering." + name), H(name), StatementSource.FromAuthor(formula),
+        provenance, Blocks(Paragraph(Text("The formula relates a word's constant runs and its scattered-subword counts."))), role);
+    private static Formula PublishedName(string name) => Seq(Operatorname, Grp(F.Id(name)));
 }
