@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:a228a2d8fe93f01f4fa823dc12a02bb347596931d5b98e156f368e0f4f5654a2
+  normalized_sha256: sha256:a228a2d8fe93f01f4fa823dc12a02bb347596931d5b98e156f368e0f4f5654a2
+cas_ref: sha256:a228a2d8fe93f01f4fa823dc12a02bb347596931d5b98e156f368e0f4f5654a2
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 建议形式化顺序与拟议模块名清单；没有声称这些拟议模块已存在或其定理已证。
+    previous_atom_id: 5e38e33988a45309dde11c75b875eb3d94491fa9630dd6fefb13bfe4e8455df0
+    next_atom_id: 61d3bc8cfd1010bc5cc2ec1cfea525024291241227dd0ced5d54c3672be04df1
