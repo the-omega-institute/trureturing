@@ -271,5 +271,8 @@ internal sealed class AmplitudeDampingMeasurePrepareCloningDocument : IScribeDoc
                         + "therefore vanishes identically. Evaluating it at s = 0 makes every "
                         + "outcome probability at gamma = 1 zero, contradicting their sum being one. "
                         + "The contradiction holds for every N and every positive M."))),
-                DescribeRole.Theorem))));
+                DescribeRole.Theorem,
+                openProblemResolutionClaim: new OpenProblemResolutionClaim(
+                    ProblemSlugRef.Create("sekatski-guryanova-kothakonda-skotiniotis-2025-amplitude-damping-measure-prepare-cloning"),
+                    ResolutionKind.Proved)))));
 }
