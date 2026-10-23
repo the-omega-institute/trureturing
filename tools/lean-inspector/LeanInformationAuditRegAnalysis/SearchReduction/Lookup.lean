@@ -668,13 +668,20 @@ private unsafe def speculateLookupCandidates (table : LookupTable)
   let coreState ← getThe Core.State
   let mut tasks := #[]
   for entry in entries do
+    -- Environment realization caches are shared. Reserve disjoint names just
+    -- as Core.wrapAsync does, even though each task discards its own state.
+    let (ngen, parentNGen) := (← getNGen).mkChild
+    setNGen parentNGen
+    let (auxDeclNGen, parentDeclNGen) := (← getDeclNGen).mkChild
+    setDeclNGen parentDeclNGen
+    let state := {coreState with ngen, auxDeclNGen}
     let action : MetaM (LookupTrace × LookupBudgetState) := do
       let budget ← IO.mkRef ({} : LookupBudgetState)
       let trace ← attemptLookupLeaf
         {table with budget? := some budget, speculative := true} entry goal unify close
       return (trace, ← budget.get)
     let work := Core.withCurrHeartbeats (action.run' metaContext metaState)
-    tasks := tasks.push (← EIO.asTask (work.run' coreContext coreState))
+    tasks := tasks.push (← EIO.asTask (work.run' coreContext state))
   -- Join all tasks before releasing the shared snapshot or module storage.
   let results := tasks.map (·.get)
   results.mapM MonadExcept.ofExcept
