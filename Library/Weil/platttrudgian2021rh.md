@@ -5,7 +5,7 @@ year: 2021
 title: The Riemann hypothesis is true up to 3·10^12
 doi: 10.1112/blms.12460
 url: https://arxiv.org/abs/2004.09765v1
-claim: Published verification supplies the finite-height RH premise. Exact heat-loss factorization and the complete arithmetic block bound give a whole-source negative allowance of order (log T)^(-4) in the original sixth moment; fixed height still leaves a negative allowance. A support-independent Gamma-only lower bound for the prime Hankel form fails on all compact half-line tests. An even actual-source partition controls the joint metric defect and bounds supporting multipliers of negative cap-four minima from below, up to the finite-height signed zero tail. Its null supporting vector bootstraps every fixed logarithmic order below five and recovers individual branch moments with an explicit inverse-multiplier cost; separation of the finite reconstruction intervals replaces its N-fold Fourier-tail payment by a harmonic factor, giving every fixed joint-metric exponent below five on actual negative minima and a fifth-power rate with a log-log factor on nonpositive-energy sources under RH(T), without improving the general exponent-four negative allowance. For hypothetical unit negative cap-four minimizers with a positive supporting multiplier, retaining the errors' own moments also gives every finite logarithmic order and arbitrary fixed logarithmic-power branch rates. A bounded analytic Sobolev regularizer gives positive-order regularity by commuting with the complete energy and paying both original metric defects; its constants deteriorate exponentially as the multiplier tends to zero and do not improve the uniform negative allowance.
+claim: Published verification supplies the finite-height RH premise. Exact heat-loss factorization and the complete arithmetic block bound give a whole-source negative allowance of order (log T)^(-4) in the original sixth moment; fixed height still leaves a negative allowance. A support-independent Gamma-only lower bound for the prime Hankel form fails on all compact half-line tests. An even actual-source partition controls the joint metric defect and bounds supporting multipliers of negative cap-four minima from below, up to the finite-height signed zero tail. Its null supporting vector bootstraps every fixed logarithmic order below five and recovers individual branch moments with an explicit inverse-multiplier cost; separation of the finite reconstruction intervals replaces its N-fold Fourier-tail payment by a harmonic factor, giving every fixed joint-metric exponent below five on actual negative minima and a fifth-power rate with a log-log factor on nonpositive-energy sources under RH(T), without improving the general exponent-four negative allowance. For hypothetical unit negative cap-four minimizers with a positive supporting multiplier, retaining the errors' own moments also gives every finite logarithmic order and arbitrary fixed logarithmic-power branch rates. A bounded analytic Sobolev regularizer gives positive-order regularity by commuting with the complete energy and paying both original metric defects; its constants deteriorate exponentially as the multiplier tends to zero and do not improve the uniform negative allowance. The same regularity controls finite physical dilation in the complete energy and both original metrics, including the source error itself, with explicit multiplier costs; the resulting sublinear squared-norm rate gives no dilation derivative or uniform allowance improvement.
 strata_touched: []
 license: citation-only
 triage: anchor
@@ -1680,3 +1680,176 @@ Its resulting exponent $1/\kappa<4$ does not improve VHR1's
 existing $(\log T)^{-4}$ allowance. The positive-order estimate
 and the uniform signed allowance are different conclusions. Full
 RH and strict Robin for every integer $n>5040$ remain unproved.
+
+## Control the complete finite physical dilation on that same minimizer
+
+VHS10 has a consumer in the ORIGINAL source variation: it gives a
+Hölder bound for the complete physical dilation, including its
+Gamma term, every prime power, both poles and both original
+metrics. The [existing physical-dilation formulas](hernandezsantamaria2025optimal.md#smooth-boundary-data-do-not-control-arithmetic-dilation-difference-quotients),
+PD1--PD2, and VHB11's separated reconstruction are reused. This is
+a paper application, without a derivative, a favorable energy sign,
+an improved uniform Robin allowance or Lean/kernel certification.
+
+Fix an order $s$ allowed by VHS6, and write
+
+$$
+ A_s=1+\|g_F\|_{H^s}^2
+ \le C_\eta\exp(C_\eta s\Lambda),\qquad
+ \nu_s=\frac{4s}{5s+2}.
+$$
+
+For $0<a\le1$ let
+
+$$
+ D_aF(x)=e^{7a/2}F(e^ax),\qquad G_a=D_aF-F.
+$$
+
+The parameter $a$ is the physical dilation size, not a Fourier
+weight. These sources are not renormalized after variation.
+
+### Pay the original metric variation at the arithmetic boundary
+
+Put $h(t)=\sqrt\pi e^{7t/2}F(\pi e^t)$. The exact moment-coordinate
+identity $h_{D_aF}(t)=h(t+a)$ gives
+
+$$
+ \begin{aligned}
+ M(D_aF)&=M(F)-\int_0^a|h(t)|^2dt,\\
+ \mathcal H(D_aF)&=e^{6a}
+ \left[\mathcal H(F)-\int_0^a e^{-6t}|h(t)|^2dt\right].
+ \end{aligned}
+ \tag{VHD1}
+$$
+
+In particular $M(D_aF)\le M(F)\le4$. Domain membership also
+persists. Its actual Gamma profile is
+$u_{D_aF}=e^{5a/4}P_+u_F(\cdot+a)$. Translation preserves the
+full logarithmic form, and the cross-half-line Carleman bound used
+in W338 makes $P_+$ bounded in that form: its two diagonal
+energies sum to the full energy up to a bounded $L^2$ cross term.
+Thus $D_aF,G_a\in\mathcal V$. No scalar exterior-boundary
+eigenfunction theorem is being applied.
+
+VHS10 gives $\mathcal T_\beta(R)\le C_sA_sR^{-2s}$. Apply VHB11
+with its interval radius $r=a$ and
+
+$$
+ N\asymp a^{-\nu_s/4},\qquad
+ R\asymp a^{-\nu_s/(2s)}.
+$$
+
+For sufficiently small $a$, $2aN<1$. The three powers
+$R^{-2s}$, $aRN$ and $N^{-4}$ are all of order $a^{\nu_s}$.
+Since $h=\pi^{-7/4}X$ on the positive half-line, VHB11 and VHD1
+therefore imply
+
+$$
+ \begin{aligned}
+ \int_0^a|h(t)|^2dt&\le C_s A_s a^{\nu_s}\log(2/a),\\
+ |M(D_aF)-M(F)|+
+ |\mathcal H(D_aF)-\mathcal H(F)|
+ &\le C_s A_s a^{\nu_s}\log(2/a).
+ \end{aligned}
+ \tag{VHD2}
+$$
+
+Enlarge $C_s$ for the remaining bounded range of $a$. This pays
+the cut in the ACTUAL sixth moment, rather than replacing the
+reconstructed source by its unweighted arithmetic profile.
+
+### Retain the moving reflection and the complete arithmetic pairing
+
+Let $g=g_F$ and $g_a=g_{D_aF}$. PD1 gives the folded translation
+
+$$
+ g_a(r)=e^{5a/4}g(|r|+a/2).
+$$
+
+Because $g$ is even, its difference from the unvaried profile is
+the sum of a positive-half-line translate and a negative-half-line
+translate. The classical boundedness of these two cuts on $H^u$,
+$0\le u<1/2$, and the ordinary Fourier translation estimate give
+
+$$
+ \|g_a-g\|_{H^u}
+ \le C_{s,u}a^{s-u}A_s^{1/2}\quad(0\le u<s),
+ \qquad \|g_a\|_{H^s}\le C_s A_s^{1/2}.
+ \tag{VHD3}
+$$
+
+This uses the true folded action; its reflection center has not
+been fixed as $a$ changes.
+
+For $b=5/2$, the exponential weight obeys
+$\|g_a\|_b\le\|g\|_b\le C$: the factor $e^{5a/4}$ exactly
+cancels the weighted translation factor, while the deleted
+interval only lowers the squared norm. Interpolate VHD3 at $u=0$
+with this SAME weight. For any $1/2<d<b$,
+
+$$
+ \|g_a-g\|_d
+ \le C_{s,d}a^{s(1-d/b)}A_s^{(1-d/b)/2}.
+ \tag{VHD4}
+$$
+
+As in W367--W368, the complete prime-power pairing has bilinear
+bound $C_d\|v\|_d\|w\|_d$, since
+$\sum_{n\ge2}\Lambda(n)n^{-d-1/2}<\infty$. Both pole
+functionals are bounded in this same norm. The signed Gamma
+pairing is bounded on $H^u\times H^u$ for every $u>0$, because
+its multiplier grows logarithmically. Given
+
+$$
+ 0<\rho<\frac45s,
+$$
+
+choose $d>1/2$ with $\rho<s(1-d/b)$ and $u>0$ with
+$\rho<s-u$. VHD3--VHD4 and W359 then give an absolute bound for
+the ENTIRE energy difference:
+
+$$
+ |\mathfrak E(D_aF)-\mathfrak E(F)|
+ \le C_{s,\rho}A_s a^\rho.
+ \tag{VHD5}
+$$
+
+The infinite prime sum and both poles belong to the same actual
+$D_aF$. None is separately optimized, truncated or assigned a
+favorable sign.
+
+### Return the bound to the original source error
+
+For $s<1/2$ one has $\nu_s>4s/5$. Hence the two metric errors in
+VHD2 are also bounded by $C_{s,\rho}A_sa^\rho$.
+VHP7's multipliers are uniformly bounded on these minimizers, so
+VHD5 and the GLOBAL null property yield
+
+$$
+ 0\le Q_\lambda(D_aF)=Q_\lambda(G_a)
+ \le C_{s,\rho}A_s a^\rho.
+ \tag{VHD6}
+$$
+
+Finally use VHB17 on this SAME actual $G_a$. VHD3 bounds its
+squared unweighted profile error by $C_s A_sa^{2s}$. Since
+$2s>\rho$, the complete Gamma and original source-moment errors
+satisfy
+
+$$
+ \boxed{\quad
+ \mathcal P(G_a)+\frac\lambda2M(G_a)
+ \le C_{s,\rho,\eta}\Lambda A_sa^\rho.
+ \quad}
+ \tag{VHD7}
+$$
+
+Thus finite physical dilation is controlled in the actual
+supporting-form, Gamma and sixth-moment norms at every fixed
+positive multiplier. VHD7's exponent $\rho$ belongs to the squared
+norm; the corresponding norm has Hölder exponent $\rho/2$.
+The original moment error costs an additional
+$\lambda^{-1}$ in VHD7. The exponent remains below one, so this
+does not justify differentiating the physical dilation or asserting
+$Q_\lambda(D_aF)=o(a)$. The exponential cost in VHS10 persists;
+full RH and strict Robin for every integer $n>5040$ remain unproved.
