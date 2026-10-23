@@ -892,3 +892,508 @@ theorems for real analytic functions.
 
 ## 追加锚（本行以下为增补区）
 
+## 14. The complete singular parent in the existing chart
+
+Keep the original complete worlds, chronological left action word,
+clocks and acquired child $C(p,v)$ of Section 1. In particular the
+source has $0<r<1,b>0$, and each world has one entire nonzero real
+polynomial gain of degree at most three and one fixed real drift.
+Here a **singular parent world** means an actual five-row parent world
+whose source satisfies $\Lambda=0$, with $\Lambda$ as in (2.5).
+This is a condition on the parent reconstruction, not a restriction
+on the rank of an acquired-response map.
+
+The existing first-four-sample reconstruction (2.4), before any division
+by $D$, uses $\epsilon=d-24$ and gives
+
+$$
+(z_0,z_1,z_2,z_3)=
+\left(-24-\epsilon,-\frac\epsilon j,
+\frac{27/5-\epsilon}{T},-\frac\epsilon n\right),\qquad
+ g(s)=\sum_{i=0}^3z_i\ell_i(s).
+\tag{14.1}
+$$
+
+All of $j=b+r(1-r)/b$, $n=j+r$, $T=1+b$, $U=1+2b$ are
+strictly positive. The full zero-safe parent equation is
+
+$$
+\epsilon\Lambda+\frac{24}{5}(b-1/8)B_{\rm par}=0,\qquad
+B_{\rm par}=\frac6T-\frac2U=\frac{2(2+5b)}{TU}>0.
+\tag{14.2}
+$$
+
+Indeed interpolation at four gives the exact residual identity
+
+$$
+d+Ug(4)-18
+=U\left\{\epsilon\Lambda+\frac{24}{5}(b-1/8)B_{\rm par}\right\}.
+\tag{14.3}
+$$
+
+The constant term after division by $U$ is
+$6/U+24-162/(5T)=(24/5)(b-1/8)B_{\rm par}$; the coefficient
+of $\epsilon$ is $\Lambda$. Thus (14.1) and (14.2) are necessary
+and sufficient for the original five rows. This is precisely the
+zero-safe parent of *FIB common-parent geometry and two exact mixed
+children*, Theorem 2.1, and the parent underlying (2.4)–(2.5).
+No new independent gain samples have been introduced.
+
+At a singular parent, (14.2) forces $b=1/8$. Conversely at that width,
+$\Lambda=0$ allows every real $\epsilon$. Put
+
+$$
+T=\frac98,\quad U=\frac54,\quad
+j=\frac18+8r(1-r),\quad n=j+r.
+\tag{14.4}
+$$
+
+Direct multiplication gives
+
+$$
+\begin{aligned}
+\Phi(r)&=438272r^4-931328r^3+540800r^2-50728r-853\\
+       &=64\{107jn-60(j+n)\},\\
+\Lambda&=\frac{107}{15}-\frac4j-\frac4n
+        =\frac{\Phi(r)}{960jn}.
+\end{aligned}
+\tag{14.5}
+$$
+
+Hence all legal singular sources are exactly $b=1/8$, $0<r<1$,
+$\Phi(r)=0$. Their drift and whole gain are still determined by
+(14.1) for the freely selected $\epsilon$. In particular neither
+$\epsilon=0$ nor $\epsilon=-24$ is discarded.
+
+## 15. An exact positive-scaled Sturm chain and root isolation
+
+Use the following integer polynomials:
+
+$$
+\begin{aligned}
+S_0&=\Phi,\\
+S_1&=219136r^3-349248r^2+135200r-6341,\\
+S_2&=1610816r^2-1689664r+121445,\\
+S_3&=64839740164r-26327821511,\\
+S_4&=78580316788659208197744775.
+\end{aligned}
+\tag{15.1}
+$$
+
+Here $S_0'=8S_1$. The exact division identities are
+
+$$
+\begin{aligned}
+S_0&=\frac{32r-17}{16}S_1-\frac1{16}S_2,\\
+S_1&=\frac{107(805408r-438787)}{633478561}S_2
+       -\frac{64}{633478561}S_3,\\
+S_2&=\frac{4(1631951420187716r-1049189040459405)}
+                {262761994033439671681}S_3
+       -\frac1{262761994033439671681}S_4.
+\end{aligned}
+\tag{15.2}
+$$
+
+All three factors multiplying the next negative remainder are positive.
+Consequently these polynomials form a positive-scaled Sturm chain [6].
+The nonzero constant last term also proves that $\Phi$ and $\Phi'$
+have no common root. All roots of $\Phi$ are therefore simple.
+
+For a real $x$ where no chain entry vanishes, let $V(x)$ count sign
+changes in $(S_0(x),\ldots,S_4(x))$. The exact endpoint signs are
+
+| $x$ | Signs of $S_0,S_1,S_2,S_3,S_4$ | $V(x)$ |
+| --- | --- | ---: |
+| $0$ | $(-,-,+,-,+)$ | 3 |
+| $134815/10^6$ | $(-,+,-,-,+)$ | 3 |
+| $134816/10^6$ | $(+,+,-,-,+)$ | 2 |
+| $902449/10^6$ | $(+,-,-,+,+)$ | 2 |
+| $902450/10^6$ | $(-,-,-,+,+)$ | 1 |
+| $1$ | $(-,-,+,+,+)$ | 1 |
+
+These signs can be checked with integers alone. For $x=k/N$, the
+following entries are $N^4S_0(x)$, $N^3S_1(x)$, $N^2S_2(x)$ and
+$NS_3(x)$; $S_4$ is the positive constant in (15.1).
+For the four interior endpoints $N=10^6$; at $0,1$ use $N=1$.
+
+| $k/N$ | $N^4S_0$ | $N^3S_1$ | $N^2S_2$ | $NS_3$ |
+| --- | ---: | ---: | ---: | ---: |
+| $0$ | $-853$ | $-6341$ | $121445$ | $-26327821511$ |
+| $134815/10^6$ | $-42530685653395898880000$ | $6075319423423201024000$ | $-77070335689022400$ | $-17586451940790340$ |
+| $134816/10^6$ | $6072081656124845064192$ | $6075372403870111891456$ | $-77071591027093504$ | $-17586387101050176$ |
+| $902449/10^6$ | $42022366160253876252672$ | $-7704635405746733889536$ | $-91519167013147584$ | $32186737160261636$ |
+| $902450/10^6$ | $-19614556103500800000000$ | $-7704595160110592000000$ | $-91517949316960000$ | $32186802000001800$ |
+| $1$ | $-3837$ | $-1253$ | $42597$ | $38511918653$ |
+
+Sturm's theorem now gives exactly two roots in $(0,1)$, one in each
+of the following disjoint open rational intervals:
+
+$$
+\frac{134815}{10^6}<r_-<\frac{134816}{10^6},\qquad
+\frac{902449}{10^6}<r_+<\frac{902450}{10^6}.
+\tag{15.3}
+$$
+
+These root definitions are exact. Neither a numerical root nor a
+floating-point residual is a premise of the argument.
+
+## 16. Entire gains and all three affine responses
+
+At either root use the same interpolation basis $\ell_i$ as (2.2) and
+set
+
+$$
+h(s)=\frac85(s-1)(s-3)(s-5),\qquad
+q_r(s)=-\ell_0(s)-\frac{\ell_1(s)}j
+                   -\frac{\ell_2(s)}T-\frac{\ell_3(s)}n.
+\tag{16.1}
+$$
+
+Thus $q_r(0),\ldots,q_r(3)$ equal
+$-1,-1/j,-1/T,-1/n$. Substitution in (14.1), with $T=9/8$, proves
+that the complete singular worlds are exactly
+
+$$
+W(r,\epsilon)=
+\left(P(r,1/8),\ h+\epsilon q_r,\ 24+\epsilon\right),
+\qquad r\in\{r_-,r_+\},\quad\epsilon\in\mathbb R.
+\tag{16.2}
+$$
+
+For completeness, the fixed part has values
+
+$$
+(h(0),\ldots,h(7))=
+(-24,0,24/5,0,-24/5,0,24,384/5).
+\tag{16.3}
+$$
+
+The interpolation weights at four through seven give
+
+$$
+\begin{aligned}
+q_r(4)&=1-4/j+6/T-4/n=-1/U,\\
+q_r(5)&=4-15/j+20/T-10/n,\\
+q_r(6)&=10-36/j+45/T-20/n,\\
+q_r(7)&=20-70/j+84/T-35/n.
+\end{aligned}
+\tag{16.4}
+$$
+
+The last equality for $q_r(4)$ uses $\Lambda=0$. These identities
+verify all five prescribed rows, including
+$24+\epsilon+U(-24/5-\epsilon/U)=18$ at four.
+A zero entire gain would make the first two readings both equal to
+the drift, contrary to $0\ne24$. Thus (16.2) always has a nonzero
+whole gain, without imposing nonzero samples, exact degree or simple
+roots. The four interpolated samples prove its uniqueness at fixed
+source and drift.
+
+At a root, (14.5) gives $1/j+1/n=107/60$. In particular
+
+$$
+q_r(5)=\frac{71}{18}-\frac5j,\quad
+q_r(6)=\frac{43}{3}-\frac{16}j,\quad
+q_r(7)=\frac{129}{4}-\frac{35}j.
+\tag{16.5}
+$$
+
+Define the fifth-response coefficient and the terminal-J trace by
+
+$$
+A_5(r)=1+(n+5/4)q_r(5),\qquad L(r)=T+2j+4r.
+\tag{16.6}
+$$
+
+Since $n>j>0$, the root relation implies $1/j>107/120$ and
+$n>120/107$. Hence
+
+$$
+q_r(5)<-\frac{37}{72},\qquad
+A_5(r)<1-\left(\frac{120}{107}+\frac54\right)\frac{37}{72}
+       =-\frac{6739}{30816}<0.
+\tag{16.7}
+$$
+
+There is consequently exactly one complete singular world at each
+source $r_\pm$ and each prescribed real fifth reading $p$:
+
+$$
+\epsilon_r(p)=\frac{p-24}{A_5(r)},\qquad
+W_r(p)=W(r,\epsilon_r(p)).
+\tag{16.8}
+$$
+
+This includes $p=24$, where $\epsilon=0$. It follows from the
+original gain reconstruction, rather than treating gain values at
+later clocks as additional free variables.
+
+The literal products are $Q_5=\left(\begin{smallmatrix}2&1\\3&1\end{smallmatrix}\right)$,
+$Q_6=\left(\begin{smallmatrix}3&1\\5&2\end{smallmatrix}\right)$,
+and $JQ_6=\left(\begin{smallmatrix}5&2\\3&1\end{smallmatrix}\right)$.
+Their traces against the original source are $U+n$, $2U+n$, $L$.
+Therefore, with the same entire $g$ and fixed $d$ throughout, put
+
+$$
+\begin{aligned}
+V_0(r)&=24(7/2+n),&
+V_1(r)&=\frac{1+(5/2+n)q_r(6)}{A_5(r)},\\
+A_0(r)&=24+\frac{384}{5}L(r),&
+A_1(r)&=\frac{1+L(r)q_r(7)}{A_5(r)}.
+\end{aligned}
+\tag{16.9}
+$$
+
+The exact affine responses are
+
+$$
+\begin{aligned}
+p(W(r,\epsilon))&=24+A_5(r)\epsilon,\\
+v(W_r(p))&=V_0(r)+V_1(r)(p-24),\\
+a(W_r(p))&=A_0(r)+A_1(r)(p-24).
+\end{aligned}
+\tag{16.10}
+$$
+
+No terminal-M equality or additional acquired observation enters
+these formulas.
+
+## 17. A finite rational interval proof of separation
+
+Every finite decimal in this section denotes its exact rational value.
+For intervals, addition and multiplication use exact endpoints, taking
+the minimum and maximum of all four endpoint products. If $0$ is
+excluded, $[x_-,x_+]^{-1}=[1/x_+,1/x_-]$. These are inclusion
+operations over the reals [7]; they require no floating-point rounding.
+
+Here is an explicit evaluation prescription and its rational inputs.
+For each interval $[l,u]$ in (15.3), set
+
+$$
+\begin{aligned}
+j_l&=1/8+8l(1-u),&j_u&=1/8+8u(1-l),\\
+n_l&=j_l+l,&n_u&=j_u+u.
+\end{aligned}
+\tag{17.1}
+$$
+
+The exact numerators of these endpoints, over the common denominator
+$10^{12}$, are
+
+| Root interval | $10^{12}j_l$ | $10^{12}j_u$ | $10^{12}n_l$ | $10^{12}n_u$ |
+| --- | ---: | ---: | ---: | ---: |
+| $r_-$ | $1058118247680$ | $1058126247680$ | $1192933247680$ | $1192942247680$ |
+| $r_+$ | $829271199600$ | $829279199600$ | $1731720199600$ | $1731729199600$ |
+
+For $k=5,6,7$, respectively, use the constant triples
+
+$$
+(c_k,\alpha_k,\beta_k)=
+(196/9,15,10),\quad(50,36,20),\quad(284/3,70,35)
+\tag{17.2}
+$$
+
+and define
+
+$$
+q_{kl}=c_k-\alpha_k/j_l-\beta_k/n_l,\qquad
+q_{ku}=c_k-\alpha_k/j_u-\beta_k/n_u.
+\tag{17.3}
+$$
+
+These enclose the unsimplified expressions (16.4), so the interval
+calculation does not impose an independent root relation in place of
+the original gain. Both endpoints are negative for all three $k$ in
+both rows. In the following prescription, subscripts $l,u$ always denote
+the lower and upper endpoint of the indicated interval:
+
+$$
+\begin{aligned}
+D_l&=1+(n_u+5/4)q_{5l},&D_u&=1+(n_l+5/4)q_{5u},\\
+L_l&=9/8+2j_l+4l,&L_u&=9/8+2j_u+4u,\\
+F_l&=1+(5/2+n_u)q_{6l},&F_u&=1+(5/2+n_l)q_{6u},\\
+G_l&=1+L_uq_{7l},&G_u&=1+L_lq_{7u}.
+\end{aligned}
+\tag{17.4}
+$$
+
+All of $D_l,D_u,F_l,F_u,G_l,G_u$ are negative by direct rational
+comparison. Accordingly the response intervals are exactly prescribed
+by the following expressions before outward decimal enclosure:
+
+$$
+\begin{aligned}
+A_5&\in[D_l,D_u],\\
+V_0&\in[24(7/2+n_l),24(7/2+n_u)],\\
+V_1&\in[F_u/D_l,F_l/D_u],\\
+A_0&\in[24+(384/5)L_l,24+(384/5)L_u],\\
+A_1&\in[G_u/D_l,G_l/D_u].
+\end{aligned}
+\tag{17.5}
+$$
+
+The results are contained strictly in these rational open intervals:
+
+| Quantity | At $r_-$ | At $r_+$ |
+| --- | --- | --- |
+| $q_r(5)$ | $(-0.781031,-0.780859)$ | $(-2.085000,-2.084794)$ |
+| $A_5$ | $(-0.908012,-0.907588)$ | $(-5.216903,-5.216273)$ |
+| $q_r(6)$ | $(-0.788060,-0.787676)$ | $(-4.960823,-4.960343)$ |
+| $q_r(7)$ | $(-0.827956,-0.827234)$ | $(-9.955920,-9.955000)$ |
+| $V_0$ | $(112.630397,112.630614)$ | $(125.561284,125.561501)$ |
+| $V_1$ | $(2.102214,2.104764)$ | $(3.831926,3.832786)$ |
+| $A_0$ | $(314.342130,314.343667)$ | $(515.008389,515.009926)$ |
+| $A_1$ | $(2.342872,2.346990)$ | $(12.008214,12.010827)$ |
+
+For example the lower endpoint $q_{5l}$ for the first row is exactly
+
+$$
+\frac{196}{9}
+-\frac{15\cdot10^{12}}{1058118247680}
+-\frac{10\cdot10^{12}}{1192933247680}.
+\tag{17.6}
+$$
+
+It exceeds $-781031/10^6$. The upper endpoint uses the two upper
+numerators in that row and is below $-780859/10^6$. Every table entry
+has the same finite rational comparison form (17.1)–(17.5); all
+denominator signs have been specified. Thus the prescription supplies
+exact endpoint inequalities, not samples at decimal root estimates.
+
+In particular $V_1(r_-)-V_1(r_+)<0$. There is exactly one possible
+fifth reading at which the two singular worlds have the same sixth
+reading. Define it algebraically by
+
+$$
+\delta_s=\frac{V_0(r_+)-V_0(r_-)}{V_1(r_-)-V_1(r_+)},\qquad
+p_s=24+\delta_s,\qquad
+v_s=V_0(r_-)+V_1(r_-)\delta_s.
+\tag{17.7}
+$$
+
+Here are explicit bounds obtained using only the displayed six-decimal
+response intervals. Their difference intervals give
+
+$$
+\begin{aligned}
+V_0(r_+)-V_0(r_-)&\in(12.930670,12.931104),\\
+V_1(r_-)-V_1(r_+)&\in(-1.730572,-1.727162),\\
+A_0(r_-)-A_0(r_+)&\in(-200.667796,-200.664722),\\
+A_1(r_-)-A_1(r_+)&\in(-9.667955,-9.661224).
+\end{aligned}
+\tag{17.8}
+$$
+
+Exact interval division yields
+
+$$
+-\frac{12931104}{1727162}<\delta_s<
+-\frac{12930670}{1730572},\qquad
+16.513091<p_s<16.528095.
+\tag{17.9}
+$$
+
+For instance the following four rational endpoint expressions give,
+respectively, lower and upper bounds on $v_s$ and on the terminal-J
+difference $\Delta a_s=a(W_{r_-}(p_s))-a(W_{r_+}(p_s))$:
+
+$$
+\begin{aligned}
+v_l&=\frac{112630397}{10^6}
+      -\frac{2104764}{10^6}\frac{12931104}{1727162},\\
+v_u&=\frac{112630614}{10^6}
+      -\frac{2102214}{10^6}\frac{12930670}{1730572},\\
+a_l&=-\frac{200667796}{10^6}
+      +\frac{9661224}{10^6}\frac{12930670}{1730572},\\
+a_u&=-\frac{200664722}{10^6}
+      +\frac{9667955}{10^6}\frac{12931104}{1727162}.
+\end{aligned}
+\tag{17.10}
+$$
+
+Multiplication by positive denominators verifies
+
+$$
+\begin{aligned}
+96.872221&<v_l<v_s<v_u<96.923071,\\
+-128.480046&<a_l<\Delta a_s<a_u<-128.281626<0.
+\end{aligned}
+\tag{17.11}
+$$
+
+This proves strict separation using exact rational enclosures and the
+isolated algebraic roots, without relying on any unprinted numerical
+root or computational certificate.
+
+## 18. Singular acquired multiplicity and the independent-pair boundary
+
+**Theorem 18.1.** In the full original model the singular worlds over
+each fifth reading $p$ are precisely $W_{r_-}(p)$ and $W_{r_+}(p)$ of
+(16.8). They lie in the same acquired child if and only if
+$(p,v)=(p_s,v_s)$ of (17.7). At that point there are exactly two
+singular worlds and their terminal-J readings differ. At every other
+$(p,v)$ the entire child contains at most one singular world.
+Consequently no distinct pair of singular worlds in any entire
+$C(p,v)$ has equal terminal-J readings, for any real $p,v$.
+
+**Proof.** Equations (14.2)–(14.5) and the exact root count in
+Section 15 exhaust the singular sources. The strict source inequalities
+hold at both roots. Formula (16.7) makes the fifth-response lift unique
+and existent for every $p$ at each source. The source matrices differ,
+so the two complete worlds are distinct. Their sixth responses are
+the two affine functions (16.10) with different slopes, and equality
+is equivalent to (17.7). Thus both actual worlds belong to $C(p_s,v_s)$,
+and there is no other singular world there. Finally (17.11) excludes
+equality of their terminal-J readings. Two worlds at the same singular
+source and fifth reading already coincide by (16.8). This proves the
+claimed multiplicities and exclusion. $\square$
+
+Since $16<p_s<17$, every negative-base child contains at most one
+singular world even before terminal-J readings are compared. At a
+negative base, a distinct J pair that uses a singular world must
+therefore use a nonsingular companion. This companion is not required
+to have the same width or gain direction. No exclusion of a mixed
+singular/nonsingular pair at any positive width follows from the
+singular-pair theorem. Nor does it exclude pairs of two nonsingular
+worlds below width one, or a low-width regular world paired with one
+above width one. The restrictions of Sections 6 and 12 retain their
+stated separate scopes.
+
+The original question is still exactly (12.1): some real $p\ne24,v$
+and independently distinct worlds $W_0\ne W_1$, $W_2\ne W_3$ in the
+one entire $C(p,v)$, with $a(W_0)=a(W_1)$ and $m(W_2)=m(W_3)$.
+The pairs may differ, coincide or overlap, and their two common
+terminal values are independent. Theorem 18.1 supplies neither those
+pairs nor a global obstruction to them. It establishes no terminal-M
+collision on any J locus. Singular worlds, zero drift, lower-degree
+gains, repeated gain roots and sampled gain zeros remain in the
+original model wherever its prescribed rows permit them. There is no
+reset, copy, source port, shifted clock or extra acquisition.
+
+## 19. Mathematical attribution and scope of the ordinary result
+
+The parent equation and whole-gain reconstruction are the existing
+chart (2.4)–(2.5), in the zero-safe form of *FIB common-parent geometry
+and two exact mixed children*, Theorem 2.1 and Theorem 4.2. Fixed-node
+interpolation uses [1]. The singular-source polynomial and its isolated
+roots are the same parent objects; Sections 14–16 give the explicit
+correspondence to the literal current acquisition and terminal J.
+Sturm root counting [6] is used with the fully specified positive
+scalings, divisions and endpoint integers in Section 15. Rational
+interval inclusion [7] is used with the endpoint prescription and
+explicit final inequalities in Section 17. The two singular acquired
+lines, their unique intersection and terminal-J separation yield
+Theorem 18.1. These are ordinary mathematical conclusions, with no
+formal-kernel or literature-priority claim.
+
+[6] Saugata Basu, Richard Pollack and Marie-Françoise Roy,
+*Algorithms in Real Algebraic Geometry*, second edition, Springer,
+2006, univariate Sturm root counting.
+[DOI](https://doi.org/10.1007/3-540-33099-2).
+
+[7] Ramon E. Moore, R. Baker Kearfott and Michael J. Cloud,
+*Introduction to Interval Analysis*, SIAM, 2009, interval arithmetic
+and the inclusion property of interval evaluation.
+
+## 追加锚（本行以下为增补区）
+
