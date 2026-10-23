@@ -48,8 +48,6 @@ open D5.S1.Words.Complexity.ExactDecks.UpperBound.FullLyndonRecovery
 
 open private scatteredCount_singleton_eq_count letterActualLyndonEquiv from
   D5.S1.Words.Complexity.ExactDecks.Growth.PositiveWordBall
-open private scatteredCount_eq_count_sublistsLen from
-  D5.S1.Words.Complexity.ExactDecks.Growth.ExactDeckCore
 
 variable {A : Type*}
 
