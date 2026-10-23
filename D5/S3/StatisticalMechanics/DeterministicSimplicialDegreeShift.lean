@@ -5,7 +5,6 @@
    anchors: []
    utility: none
    digest: Degree sets shift by dimension and acquire zero. -/
-import Mathlib.Data.Finset.Powerset
 import Mathlib.Data.Nat.Choose.Sum
 
 namespace D5.S3.StatisticalMechanics.DeterministicSimplicialDegreeShift
