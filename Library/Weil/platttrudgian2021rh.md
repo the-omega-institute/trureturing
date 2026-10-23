@@ -1012,8 +1012,8 @@ $$
 $$
 
 This is a genuine single-minimizer moment recovery, unlike a
-sum-of-moments defect alone. For $\delta\ge C_0\eta_T$, with $C_0$ sufficiently large and
-$T$ sufficiently large, VHP9 permits $\lambda^{-1}\le C\delta^{-1}$, so the final moment
+sum-of-moments defect alone. Under $\mathsf{RH}(T)$, for $\delta\ge C_0\eta_T$, with
+$C_0$ sufficiently large and $T$ sufficiently large, VHP9 permits $\lambda^{-1}\le C\delta^{-1}$, so the final moment
 error still costs $C_s\delta^{-1}L^{-s}$. Inserting it into the
 heat-branch supporting equation only yields a negative allowance
 of order $L^{-s}$ for $s<4$. It does NOT improve the already owned
