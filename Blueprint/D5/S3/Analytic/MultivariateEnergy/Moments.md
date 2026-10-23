@@ -88,19 +88,7 @@ Lean statement: `D5/S3/Analytic/MultivariateEnergy/Moments.T_eq`
 
 The triple trace is the product of the three pairwise inner products, minus the sum of their squares divided by d, plus 2 divided by d squared. The polynomial exhibits full symmetry and orthogonal invariance.
 
-**Theorem 1.8 (The three-input family).**
-
-Lean statement: `D5/S3/Analytic/MultivariateEnergy/Moments.familyKernel_three`
-
-*Proof.* Machine-checked in Lean as `D5/S3/Analytic/MultivariateEnergy/Moments.familyKernel_three` (`✓ std3`). ∎
-
-*Source.* Repository-derived.
-
-*Commentary.*
-
-For three inputs the family is beta divided by three times the sum of the three pair traces, minus the triple trace.
-
-**Theorem 1.9 (Admissibility of the three-input family).**
+**Theorem 1.8 (Admissibility of the three-input family).**
 
 Lean statement: `D5/S3/Analytic/MultivariateEnergy/Moments.isAdmissible_familyKernel_three`
 
@@ -117,7 +105,6 @@ In every positive dimension and for every real beta, the three-input family is c
 - Truth anchor: `D5/S3/Analytic/MultivariateEnergy/Moments.L_eq`
 - Truth anchor: `D5/S3/Analytic/MultivariateEnergy/Moments.T_eq`
 - Truth anchor: `D5/S3/Analytic/MultivariateEnergy/Moments.continuous_A`
-- Truth anchor: `D5/S3/Analytic/MultivariateEnergy/Moments.familyKernel_three`
 - Truth anchor: `D5/S3/Analytic/MultivariateEnergy/Moments.integrable_A`
 - Truth anchor: `D5/S3/Analytic/MultivariateEnergy/Moments.integral_A_eq_zero`
 - Truth anchor: `D5/S3/Analytic/MultivariateEnergy/Moments.integral_coord_mul_coord`

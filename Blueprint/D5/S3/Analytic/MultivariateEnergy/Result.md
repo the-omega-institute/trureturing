@@ -22,6 +22,10 @@ Lean statement: `D5/S3/Analytic/MultivariateEnergy/Result.result`
 
 *Proof.* Machine-checked in Lean as `D5/S3/Analytic/MultivariateEnergy/Result.result` (`✓ std3`). ∎
 
+*Resolves.* `Problems/bilyk-et-al-2022-averaged-kernel-characterization-refutation` (refuted) by `D5/S3/Analytic/MultivariateEnergy/Result.result`.
+
+<!-- scribe-open-problem-resolution-v1 {"problem_slug":"bilyk-et-al-2022-averaged-kernel-characterization-refutation","declaration_gid":"D5/S3/Analytic/MultivariateEnergy/Result.result","resolution_kind":"refuted"} -->
+
 *Source.* Repository-derived.
 
 *Commentary.*

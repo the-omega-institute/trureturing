@@ -126,7 +126,7 @@ an exhaustive priority claim.
 
 ### What the settlement shows
 
-1. **PROVED.** For n=3, every d≥3 and 0<β<(d−2)/d, the kernel K is continuous,
+1. **PROVED**. For n=3, every d≥3 and 0<β<(d−2)/d, the kernel K is continuous,
    symmetric and orthogonally invariant, its σ-averaged kernel is
    $(\beta/3)\operatorname{tr}(A(x)A(y))$ and conditionally positive definite,
    and $I_K(\delta_e)=((d-1)/d)(\beta-(d-2)/d)<0=I_K(\sigma)$.
@@ -135,12 +135,12 @@ an exhaustive priority claim.
    energies are the private `Result.energy_sigma` and `Result.energy_dirac`,
    and the averaged formula is `Energy.avgKernel_family_eq`.
 
-2. **PROVED.** The uniform second moment is $\int xx^{\mathsf T}\,d\sigma=I/d$
+2. **PROVED**. The uniform second moment is $\int xx^{\mathsf T}\,d\sigma=I/d$
    (`Moments.integral_coord_mul_coord`), and
    $I_K(\mu)=\beta\operatorname{tr}(Q^2)-\operatorname{tr}(Q^3)$
    (`Energy.energy_family_eq`).
 
-3. **PROVED in prose.** For every n≥3, take
+3. **PROVED in prose**. For every n≥3, take
 
    $$
    K_{d,n,\beta}=\frac\beta{\binom n2}\sum_{i<j}L(x_i,x_j)
@@ -174,11 +174,11 @@ an exhaustive priority claim.
    The spectral certificate, minimizer descriptions and local statement are
    mathematical reasoning, not additional Lean theorems.
 
-4. **COMPUTED.** At d=n=3 and β=1/10 the exact Dirac energy is −7/45 and
+4. **COMPUTED**. At d=n=3 and β=1/10 the exact Dirac energy is −7/45 and
    the averaged kernel is $((x\cdot y)^2-1/3)/30$. These rational evaluations
    specialize the displayed formulas.
 
-5. **OPEN.** Whether necessity, proved in the source, admits a converse under
+5. **OPEN**. Whether necessity, proved in the source, admits a converse under
    an additional convexity or uniqueness hypothesis beyond the source's local
    converse remains unresolved here.
 
