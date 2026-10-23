@@ -58,7 +58,10 @@ internal sealed class NormalizedLaplacianTreeStateTransferDocument : IScribeDocu
                         "Consequently U(3π) fixes eᵤ + eᵥ and negates eᵤ − eᵥ. "
                             + "Since eᵤ is half their sum, U(3π)eᵤ = ((eᵤ + eᵥ) − (eᵤ − eᵥ))/2 = eᵥ. "
                             + "Thus the distinct leaves admit perfect state transfer with phase 1 in a tree on at least four vertices."))),
-                DescribeRole.Theorem))));
+                DescribeRole.Theorem,
+                openProblemResolutionClaim: new OpenProblemResolutionClaim(
+                    ProblemSlugRef.Create("coutinho-baptista-2023-normalized-laplacian-tree-state-transfer-refutation"),
+                    ResolutionKind.Refuted)))));
 
     private static DocumentBlock Node(string declaration, string title, Formula formula, string prose) =>
         Describe.Lean(DescribeId.Create("normalized-laplacian-tree-" + declaration.ToLowerInvariant()),
