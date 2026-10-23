@@ -6,9 +6,8 @@
    utility: none
    digest: The sharp worst-case fidelity of the product of process-matrix marginals. -/
 
-import D5.S3.Quantum.Information.NMLWMeasuredFidelitySeparation
+import D5.S3.Quantum.Information.LiTheilHarrowChuangPurifyCloneRefutation
 import D5.S3.QuantumChannels.PauliThreeWeightBayesianInverseUniqueness
-import D5.S3.Quantum.Measurement.StabilizerPovmMaximalEntanglementRefutation
 import D5.S3.Quantum.Dynamics.KickedIsingNegativityRefutation
 
 /-! The product of single-site process marginals has squared Uhlmann fidelity at least
@@ -21,8 +20,7 @@ open D5.S3.Quantum.Information.StabilizerPairLocalUnitaryInequivalence
 open D5.S3.Quantum.Measurement.StabilizerPovmMaximalEntanglementRefutation
   (word_trace_pair word_expansion word_hermitian)
 open D5.S3.QuantumChannels.PauliThreeWeightBayesianInverseUniqueness (sigma)
-open D5.S3.Quantum.Information.NMLWMeasuredFidelitySeparation (uhlmann)
-open D5.S3.Quantum.Foundation.FiniteTraceDistance
+open D5.S3.Quantum.Information.LiTheilHarrowChuangPurifyCloneRefutation (sqFidelity)
 
 noncomputable section
 namespace D5.S3.Quantum.QuantumChannels.MarginalApproximationWorstFidelity
@@ -46,10 +44,6 @@ def marginalApprox {N : ℕ} (χ : Matrix (Fin N → Fin 4) (Fin N → Fin 4) �
     Matrix (Fin N → Fin 4) (Fin N → Fin 4) ℂ :=
   fun a b => ∏ k, marginal χ k (a k) (b k)
 
-/-- Squared Uhlmann root fidelity. -/
-def fidelity {n : Type*} [Fintype n] [DecidableEq n] (ρ σ : Matrix n n ℂ) : ℝ :=
-  (uhlmann ρ σ) ^ 2
-
 /-- The wire permutation with entry one exactly when `x = y ∘ finRotate N`. -/
 def cyclicShift (N : ℕ) : Matrix (Fin N → Fin 2) (Fin N → Fin 2) ℂ :=
   fun x y => if x = y ∘ finRotate N then 1 else 0
@@ -65,12 +59,12 @@ def shiftProcess (N : ℕ) : Matrix (Fin N → Fin 4) (Fin N → Fin 4) ℂ :=
 /-- The universal lower bound and its cyclic-shift attainment. -/
 def claim : Prop :=
   (∀ N, 1 ≤ N → ∀ χ : Matrix (Fin N → Fin 4) (Fin N → Fin 4) ℂ,
-    IsProcessCPTP χ → (1 / 4 ^ N : ℝ) ≤ fidelity χ (marginalApprox χ)) ∧
+    IsProcessCPTP χ → (1 / 4 ^ N : ℝ) ≤ sqFidelity χ (marginalApprox χ)) ∧
   (∀ N, 2 ≤ N →
     (∑ a, shiftCoeff N a • pauliString a = cyclicShift N) ∧
     IsProcessCPTP (shiftProcess N) ∧
     (∀ k, marginal (shiftProcess N) k = (1 / 4 : ℂ) • 1) ∧
-    fidelity (shiftProcess N) (marginalApprox (shiftProcess N)) = 1 / 4 ^ N)
+    sqFidelity (shiftProcess N) (marginalApprox (shiftProcess N)) = 1 / 4 ^ N)
 
 private def pauliLabelEquiv : Fin 4 ≃ Pauli where
   toFun := ![.I, .X, .Y, .Z]
@@ -396,12 +390,15 @@ private lemma quantum_overlap {N : ℕ}
         Complex.re_sum, Complex.mul_re, Complex.ofReal_re, Complex.ofReal_im,
         mul_zero, sub_zero, p]
 
-private lemma fidelity_overlap {n : Type*} [Fintype n] [DecidableEq n]
+private lemma sqFidelity_overlap {n : Type*} [Fintype n] [DecidableEq n]
     (ρ σ : Matrix n n ℂ) (hρ : ρ.PosSemidef) (hσ : σ.PosSemidef) :
-    (Matrix.trace (ρ * σ)).re ≤ fidelity ρ σ := by
+    (Matrix.trace (ρ * σ)).re ≤ sqFidelity ρ σ := by
   classical
-  let X := CFC.sqrt ρ * CFC.sqrt σ
-  let S := CFC.sqrt (Xᴴ * X)
+  let A := CFC.sqrt ρ * σ * CFC.sqrt ρ
+  let S := CFC.sqrt A
+  have hρs := (Matrix.nonneg_iff_posSemidef.mp (CFC.sqrt_nonneg ρ)).1.eq
+  have hA : A.PosSemidef := by
+    simpa only [hρs] using hσ.conjTranspose_mul_mul_same (CFC.sqrt ρ)
   have hS : S.PosSemidef := Matrix.nonneg_iff_posSemidef.mp (CFC.sqrt_nonneg _)
   let D := Matrix.diagonal (fun i => (hS.1.eigenvalues i : ℂ))
   let φ := Unitary.conjStarAlgAut ℂ (Matrix n n ℂ) hS.1.eigenvectorUnitary
@@ -418,27 +415,16 @@ private lemma fidelity_overlap {n : Type*} [Fintype n] [DecidableEq n]
   have htrace : (Matrix.trace S).re = ∑ i, hS.1.eigenvalues i := by
     rw [hS.1.trace_eq_sum_eigenvalues]
     simp
-  have hρs := (Matrix.nonneg_iff_posSemidef.mp (CFC.sqrt_nonneg ρ)).1.eq
-  have hσs := (Matrix.nonneg_iff_posSemidef.mp (CFC.sqrt_nonneg σ)).1.eq
-  have hgram : Matrix.trace (Xᴴ * X) = Matrix.trace (ρ * σ) := by
-    dsimp [X]
-    rw [Matrix.conjTranspose_mul, hρs, hσs]
-    calc
-      _ = Matrix.trace (CFC.sqrt σ * (CFC.sqrt ρ * CFC.sqrt ρ) * CFC.sqrt σ) := by
-        simp only [Matrix.mul_assoc]
-      _ = Matrix.trace (CFC.sqrt σ * ρ * CFC.sqrt σ) := by
-        rw [CFC.sqrt_mul_sqrt_self ρ hρ.nonneg]
-      _ = Matrix.trace (CFC.sqrt σ * CFC.sqrt σ * ρ) := Matrix.trace_mul_cycle _ _ _
-      _ = Matrix.trace (ρ * σ) := by
-        rw [CFC.sqrt_mul_sqrt_self σ hσ.nonneg, Matrix.trace_mul_comm]
+  have hgram : Matrix.trace A = Matrix.trace (ρ * σ) := by
+    dsimp [A]
+    rw [Matrix.trace_mul_cycle, CFC.sqrt_mul_sqrt_self ρ hρ.nonneg]
   calc
     (Matrix.trace (ρ * σ)).re = (Matrix.trace (S * S)).re := by
-      rw [show S * S = Xᴴ * X from CFC.sqrt_mul_sqrt_self _
-        (Matrix.posSemidef_conjTranspose_mul_self X).nonneg, hgram]
+      rw [show S * S = A from CFC.sqrt_mul_sqrt_self _ hA.nonneg, hgram]
     _ ≤ (Matrix.trace S).re ^ 2 := by
       rw [hsquare, htrace]
       exact Finset.sum_sq_le_sq_sum_of_nonneg (fun i _ => hS.eigenvalues_nonneg i)
-    _ = fidelity ρ σ := rfl
+    _ = sqFidelity ρ σ := rfl
 
 private lemma shift_expansion (N : ℕ) :
     ∑ a, shiftCoeff N a • pauliString a = cyclicShift N := by
@@ -680,7 +666,7 @@ private lemma shift_marginals (N : ℕ) (hN : 2 ≤ N) :
 private lemma shift_fidelity (N : ℕ)
     (hχ : IsProcessCPTP (shiftProcess N))
     (hm : ∀ k, marginal (shiftProcess N) k = (1 / 4 : ℂ) • 1) :
-    fidelity (shiftProcess N) (marginalApprox (shiftProcess N)) = 1 / 4 ^ N := by
+    sqFidelity (shiftProcess N) (marginalApprox (shiftProcess N)) = 1 / 4 ^ N := by
   classical
   let c : ℝ := 1 / 4 ^ N
   have hc : 0 ≤ c := by positivity
@@ -702,32 +688,22 @@ private lemma shift_fidelity (N : ℕ)
       rw [if_neg hab]
       simp only [mul_zero]
       exact Finset.prod_eq_zero (Finset.mem_univ k) (by simp [hk])
-  have hdiag (r : ℝ) :
-      Matrix.diagonal (fun _ : Fin N → Fin 4 => (r : ℂ)) = (r : ℂ) • 1 := by
-    ext a b
-    simp only [Matrix.diagonal_apply, Matrix.smul_apply, smul_eq_mul, Matrix.one_apply]
-    split_ifs <;> simp
-  have hsqrt := D5.S3.Quantum.Information.NMLWMeasuredFidelitySeparation.sqrt_diagonal
-    (fun _ : Fin N → Fin 4 => c) (fun _ => hc)
-  rw [hdiag c, hdiag (Real.sqrt c)] at hsqrt
-  have hprod : CFC.sqrt (shiftProcess N) * CFC.sqrt (marginalApprox (shiftProcess N)) =
+  have hsqrt : CFC.sqrt ((c : ℂ) • shiftProcess N) =
       (Real.sqrt c : ℂ) • shiftProcess N := by
-    rw [hroot, hmarg, hsqrt, Matrix.mul_smul, Matrix.mul_one]
-  have hp : ((Real.sqrt c : ℂ) • shiftProcess N).PosSemidef :=
-    hχ.1.smul (Complex.zero_le_real.mpr (Real.sqrt_nonneg c))
-  have htn := congrArg Complex.re (traceNorm_of_posSemidef hp)
-  have hu : uhlmann (shiftProcess N) (marginalApprox (shiftProcess N)) = Real.sqrt c := by
-    unfold uhlmann
-    rw [hprod]
-    simpa [Matrix.trace_smul, ht] using htn
-  rw [fidelity, hu, Real.sq_sqrt hc]
+    apply CFC.sqrt_unique
+    · simp only [Matrix.smul_mul, Matrix.mul_smul, smul_smul, hidem,
+        ← Complex.ofReal_mul, Real.mul_self_sqrt hc]
+    · exact (hχ.1.smul (Complex.zero_le_real.mpr (Real.sqrt_nonneg c))).nonneg
+  rw [sqFidelity, hroot, hmarg, Matrix.mul_smul, Matrix.mul_one, Matrix.smul_mul,
+    hidem, hsqrt, Matrix.trace_smul, ht, smul_eq_mul, mul_one, Complex.ofReal_re,
+    Real.sq_sqrt hc]
 
 /-- The bound holds for every process matrix; cyclic shifts attain it for at least two qubits. -/
 theorem result : claim := by
   constructor
   · intro N _ χ hχ
     exact (quantum_overlap χ hχ.1 (process_trace χ hχ) classical_overlap).trans
-      (fidelity_overlap χ (marginalApprox χ) hχ.1 (marginalApprox_psd χ hχ.1))
+      (sqFidelity_overlap χ (marginalApprox χ) hχ.1 (marginalApprox_psd χ hχ.1))
   · intro N hN
     have he := shift_expansion N
     have hχ := shift_cptp N he (shift_unitary N)
