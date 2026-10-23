@@ -4439,3 +4439,287 @@ conclusions (companion, Theorem 12.1 and §§20–21). The dimension and
 acquisition distinctions of §26 remain in force.
 
 ## 追加锚（本行以下为增补区）
+
+## 29. Calibrated native commands and the complete free occupation
+
+The preceding Green results concern one fixed model. The following theorem
+records the exact source correspondence needed when a separately calibrated
+family of finite commands is supplied. Calibration is an additional law
+assumption; it is not obtained from the FIB definitions or from the native
+guard alone.
+
+**Definition 29.1 (the fixed variable-coefficient diffusion and its lift).**
+Retain the both-wall model of §§1--3, with arbitrary smooth positive
+$\rho$, smooth SPD $A$, source $o=(k_o,\alpha_o,\beta_o)$, and
+$d\mu=\rho\,dk\,dh$. Let $\Sigma$ be the smooth positive square root of
+$A$, and put
+
+$$
+Y_a=\sum_{i=1}^2\Sigma_{ia}X_i,\qquad
+\kappa_a=\rho^{-1}\sum_{i=1}^2X_i(\rho\Sigma_{ia}),\qquad
+b_A^i=\sum_{a=1}^2\kappa_a\Sigma_{ia} .
+\tag{29.1}
+$$
+
+On the open cylinder, let $Q^A$ solve, up to its first exit time
+$\tau^A$ from $I=(l,u)$,
+
+$$
+dQ^A_t=\sum_{i=1}^2X_i(Q^A_t)b_A^i(Q^A_t)\,dt
+       +\sqrt2\sum_{a=1}^2Y_a(Q^A_t)\circ dB^a_t,\qquad Q^A_0=o,
+\tag{29.2}
+$$
+
+where $B$ is a standard two-dimensional Brownian motion. Its generator is
+
+$$
+\mathcal G_A f=\sum_{a=1}^2Y_a^2f+\sum_{i=1}^2b_A^iX_if
+ =\rho^{-1}\sum_{i,a}X_i(\rho\Sigma_{ia}Y_af)
+ =\rho^{-1}\sum_{i,j}X_i(\rho a^{ij}X_jf)=-L_Af .
+\tag{29.3}
+$$
+
+Thus the native horizontal covariance is exactly $2A(q)\,dt$, including
+the cross term $2a^{12}(q)\,dt$, and the first-order drift is the one fixed
+by the raw density and the variable coefficients. In the original real
+phase lifts define $U^i$ by
+
+$$
+dU_t^i=b_A^i(Q^A_t)\,dt+\sqrt2\sum_{a=1}^2\Sigma_{ia}(Q^A_t)\circ dB^a_t,\qquad
+J^A_t=\int_0^t U_s^1\circ dU_s^2 .
+\tag{29.4}
+$$
+
+Then $d[U^i,U^j]_t=2a^{ij}(Q^A_t)\,dt$, and the native chronological map
+
+$$
+\Phi_o(u,v,j)=\left(k_o+u,\ [\alpha_o+v/2],\
+ [\beta_o+(1/2-k_o/r)v-j/r]\right)
+\tag{29.5}
+$$
+
+gives $Q^A_t=\Phi_o(U^1_t,U^2_t,J^A_t)$ before killing. Equation
+(29.5) is the original preparation and both original $2\pi$ periods; it is
+not a new phase coordinate or an averaged source.
+
+Because $A$ is SPD on the compact closed cylinder, $a^{11}$ is bounded
+strictly between two positive constants. The height component of (29.2) is
+therefore a continuous semimartingale with quadratic variation
+$2\int_0^t a^{11}(Q^A_s)\,ds$ and bounded smooth drift. The usual
+time-change and reflection argument used for the Brownian height in
+Proposition 4.5 gives $\mathbb P_o(\tau^A=R)=0$ for every fixed $R>0$ and
+immediate strict crossing after either exit face. These are the precise
+lifetime conditions needed for the inherited held-path and cemetery
+contracts below.
+
+**Definition 29.2 (a calibrated lawful command family).** A family is
+$\mathsf C_n=(\mathbb P_n,\mathcal F^n,T_n)$, with
+$T_n\uparrow\infty$, if every $\mathbb P_n$-realization consists of a
+finite-duration, finite-variation original command on $[0,T_n]$, or a finite
+concatenation of the numerical commands of N, Definition 20.2, with every
+executed profile absolutely continuous and zero-start. The finite command has
+a lawful terminal leg, if needed, so that its own exit occurs by $T_n$
+almost surely; this is part of the calibration contract. Write its accumulated
+controls and area as $(a_n,b_n,J_n)$, where
+$J_n(t)=\int_0^t a_n\,db_n$ on every executed prefix, and set
+
+$$
+\tau_n=\inf\{t\le T_n:k_o+a_n(t)\notin(l,u)\},\qquad
+\inf\varnothing=\infty,\qquad \zeta_n=\tau_n\le T_n\quad\mathbb P_n\text{-a.s.}
+\tag{29.6}
+$$
+
+The family is lawful when, on every executed prefix,
+
+$$
+k_o+\min a_n\ge l>0,\qquad k_o+\max a_n\le u<H,
+\tag{29.7}
+$$
+
+so the original full-height guard holds at all times, including an exit
+prefix and the boundary hold. Its held state is the exact source expression
+
+$$
+q_n(t)=\left(k_o+a_n(t),\ [\alpha_o+b_n(t)/2],\
+ [\beta_o+(1/2-k_o/r)b_n(t)-J_n(t)/r]\right),
+\tag{29.8}
+$$
+
+with the same fixed preparation phases. No bound on variation, speed, command
+count, energy, sensing, coefficient access, or acquisition cost is part of
+lawfulness. The killed path $q_n^\dagger$ equals $q_n$ before $\zeta_n$
+and the isolated cemetery $\dagger$ afterwards.
+
+The family is **calibrated to $(A,\rho,o)$** when the following two
+conditions hold.
+
+* For every $R>0$, the stopped enhanced paths
+  $(a_n,b_n,J_n,\zeta_n)$, restricted to $[0,R]$, converge in law to
+  $(U^1,U^2,J^A,\tau^A)$, with each lifetime censored at $R$ and
+  represented by the isolated mark $\infty$ when it exceeds $R$,
+  and the induced killed paths converge in $D([0,R],E)$ with the $J_1$
+  topology. The convergence is from the common source $o$ and common
+  original clock. In particular it includes the chronological area and not
+  just the two first-level controls.
+* There are $h>0$, $q<1$, and $n_0$ independent of $n$, together with
+  the execution filtrations, such that for $n\ge n_0$, every $t\ge0$,
+  and on $\{\zeta_n>t\}$,
+
+  $$
+  \mathbb P_n(\zeta_n>t+h\mid\mathcal F^n_t)\le q .
+  \tag{29.9}
+  $$
+
+  This is the mesh-uniform lifetime-tail premise. It is a property of the
+  declared sampler law, not a consequence of (29.7). It also forbids hiding
+  an unbounded occupation tail behind finite-horizon convergence.
+
+The first condition may equivalently be stated with the held triple and
+the killed path jointly. The $J_1$ space is
+$E=(\overline I\times\mathbb T^2)\sqcup\{\dagger\}$, with $\dagger$
+isolated as in the guarded-lift source, Definition 4.1. The boundary point at
+the exit is retained as the left limit; the cemetery begins at the lifetime.
+
+**Theorem 29.3 (source-faithful calibrated correspondence and full Green
+occupation).** For every fixed smooth positive $\rho$, smooth SPD $A$,
+interior preparation $o$, and every calibrated lawful family in
+Definition 29.2, the following conclusions hold.
+
+1. Every finite member has the original chronological lift (29.8), all
+   prefixes satisfy the native guard, both actual height walls are the only
+   killing faces, and the clock is the original command clock. Its limiting
+   path is (29.2), with exact drift (29.3), covariance $2A\,dt$, and the
+   common area trajectory (29.4). No third control or phase averaging occurs.
+2. For every continuous $f$ on the closed cylinder $\overline\Omega$,
+   with $f^\dagger(\dagger)=0$,
+
+   $$
+   \lim_{n\to\infty}\mathbb E_n\!\left[\int_0^{\zeta_n}f(q_n(t))\,dt\right]
+   =\mathbb E_o\!\left[\int_0^{\tau^A}f(Q^A_t)\,dt\right]
+   =\int_\Omega\Gamma_{A,o}(q)f(q)\,d\mu(q).
+   \tag{29.10}
+   $$
+
+   The integral on the right is the complete raw-$\mu$, unit-source killed
+   Green occupation, over all times. It is not a capped Green, a ground-
+   conditioned evolution, or a finite-horizon substitute.
+
+3. The conclusion is for the full admissible class of §1: arbitrary phase
+   dependence and horizontal cross terms in $A$, arbitrary smooth positive
+   raw density, every interior preparation, and the inherited source signs,
+   periods, guards and chronological convention. The constants in the tail
+   and all estimates may depend on this fixed model. No bounded-cost or
+   physical-realization claim follows.
+
+**Proof.** For a finite command, N, Theorems 9.2--9.3, applied at every
+prefix and concatenated without resetting the area, give (29.8). The
+area is the ordinary integral of the same two native controls, so its
+translation term is present in every prefix. The inequalities (29.7) are
+the original whole-height guard, while $\tau_n$ records the two actual
+height walls $l,u$; the boundary hold is a source history and the cemetery
+jump is only the killed observation. This proves the finite source
+correspondence.
+
+For the limiting law, (29.4) gives
+
+$$
+\sum_aY_a^2+\sum_i b_A^iX_i
+ =\sum_aY_a^2+\sum_a\kappa_aY_a
+ =\rho^{-1}\sum_{i,a}X_i(\rho\Sigma_{ia}Y_a),
+\tag{29.11}
+$$
+
+which is the generator associated with the closed form (1.1). The
+quadratic covariation in (29.4) is $2\Sigma\Sigma^{\mathsf T}dt=2A\,dt$.
+The calibrated enhanced convergence and the exact continuous native map
+(29.8) therefore identify the limiting state and its area jointly. The
+The preceding nondegenerate-height time-change argument supplies the same
+sufficient strict-crossing and no-fixed-horizon-atom conditions used here; hence the induced
+killed paths converge in the stated $J_1$ topology. These statements use
+the existing native path contract and do not infer an execution law from a
+bare covariance table.
+
+We next prove the tail estimate required for (29.10). Iterating (29.9) at
+the grid times $mh$ gives, for $n\ge n_0$,
+
+$$
+\mathbb P_n(\zeta_n>mh)\le q^m,\qquad
+\int_R^\infty\mathbb P_n(\zeta_n>t)\,dt
+\le\frac{h}{1-q}\,q^{\lfloor R/h\rfloor}.
+\tag{29.12}
+$$
+
+The first inequality is conditional induction; the second splits the
+integral into intervals of length $h$. Thus the family has a mesh-uniform
+integrable lifetime tail. This is the needed infinite-horizon control and is
+strictly stronger than convergence on every fixed finite horizon.
+
+For the target diffusion, the original killed Green supplier gives a
+positive spectral gap $\lambda_A$ and a smoothed time-one kernel. The
+semigroup estimate used in the original volume and in §10.7 yields constants
+$C_A<\infty$ such that
+
+$$
+\mathbb P_o(\tau^A>t)\le C_Ae^{-\lambda_A(t-1)}\quad(t\ge1),\qquad
+\int_R^\infty\mathbb P_o(\tau^A>t)\,dt\longrightarrow0.
+\tag{29.13}
+$$
+
+This is the fixed-model estimate; no uniformity in $\rho,A,I,o$ is claimed.
+
+Fix $R>0$. Under the calibrated $J_1$ convergence, the map
+
+$$
+\omega\longmapsto\int_0^R f^\dagger(\omega(t))\,dt
+\tag{29.14}
+$$
+
+is continuous at every target path with one cemetery jump and a continuous
+alive part. Indeed, the time changes in the definition of $J_1$ converge
+uniformly to the identity, and uniform continuity of $f$ makes the two
+alive compositions converge in measure; the single death time has Lebesgue
+measure zero. The target has exactly this path property almost surely.
+Boundedness of $f$ and the bounded-convergence theorem consequently give
+
+$$
+\lim_{n\to\infty}\mathbb E_n\!\left[\int_0^R f^\dagger(q_n^\dagger(t))\,dt\right]
+=\mathbb E_o\!\left[\int_0^R f^\dagger((Q^A)^\dagger_t)\,dt\right].
+\tag{29.15}
+$$
+
+The difference between either side of (29.15) and its complete occupation is
+bounded by $\|f\|_\infty\int_R^\infty\mathbb P(\zeta>t)\,dt$. Equations
+(29.12) and (29.13) make these errors tend to zero uniformly in $n$ and in
+the target as $R\to\infty$. Taking first $n\to\infty$, then $R\to\infty$,
+proves the first equality in (29.10).
+
+Finally, for the killed heat kernel relative to the raw measure $d\mu$,
+
+$$
+\mathbb E_o\!\left[\int_0^{\tau^A}f(Q^A_t)\,dt\right]
+=\int_0^\infty\!\int_\Omega p_t^\Omega(o,q)f(q)\,d\mu(q)\,dt.
+\tag{29.16}
+$$
+
+The full Green field $\Gamma_{A,o}$ defined in §1 is
+$\Gamma_{A,o}(q)=\int_0^\infty p_t^\Omega(o,q)\,dt$, with the killed
+heat-kernel representation supplied in the original volume and retained here
+for the variable model. Its raw-$\mu$ integrability follows from (29.13), so
+Tonelli for $f^+$ and $f^-$ is legitimate and gives the second equality
+in (29.10). This completes the
+source-faithful correspondence and the full occupation statement. $\square$
+
+**Boundary 29.4 (what calibration does and does not provide).** The theorem
+is conditional on the explicitly stated sampler law, enhanced calibration,
+and uniform exit-block estimate. The native source supplies lawful commands,
+their exact chronological map, and the inherited path/cemetery contracts;
+it does not supply Gaussian sampling, coefficient access, a density-aware
+drift, a preparation mechanism, sensing, randomization, or a finite-cost
+implementation. The theorem therefore proves the implication from a
+calibrated family to the free Dirichlet diffusion and its complete Green
+occupation. It does not claim that bare FIB, a first-level covariance table,
+or finite-horizon weak convergence alone produces such a family. The
+near-critical capped Green and resonant classifications above are unchanged,
+and no simultaneous command-mesh/cap operator limit is asserted.
+
+## 追加锚（本行以下为增补区）
