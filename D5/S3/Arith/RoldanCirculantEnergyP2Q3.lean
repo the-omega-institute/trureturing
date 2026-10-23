@@ -356,7 +356,7 @@ end D5.S3.Arith.RoldanCirculantEnergyP2Q3
 
 open scoped BigOperators
 namespace D5.S3.Arith.RoldanCirculantEnergyP2Q3
-private theorem sum_gcd_multiplicity (n : ℕ) (hn : 0 < n) (F : ℕ → ℝ) :
+theorem sum_gcd_multiplicity (n : ℕ) (hn : 0 < n) (F : ℕ → ℝ) :
     (∑ j ∈ Finset.range n, F (n.gcd j)) =
       ∑ e ∈ n.divisors, (Nat.totient (n / e) : ℝ) * F e := by
   have hg (j : ℕ) (_ : j ∈ Finset.range n) : n.gcd j ∈ n.divisors :=

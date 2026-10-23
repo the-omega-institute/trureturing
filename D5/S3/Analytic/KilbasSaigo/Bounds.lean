@@ -270,7 +270,7 @@ private def slopePower (q r : ℝ) : ℝ := dslope (fun t : ℝ => t ^ q) 1 r
 private def primitive (α a q r : ℝ) : ℝ :=
   slopePower q r * r ^ (a + α) * (1 - r) ^ (1 - α)
 
-private def weight (α a r : ℝ) : ℝ := r ^ (a + α - 1) * (1-r) ^ (-α)
+def weight (α a r : ℝ) : ℝ := r ^ (a + α - 1) * (1-r) ^ (-α)
 
 private def regularIntegrand (α a q r : ℝ) : ℝ := slopePower q r * weight α a r
 
@@ -317,7 +317,7 @@ private lemma primitive_eq {α a q r : ℝ} (hr : 0 < r) (hr1 : r < 1) :
     _ = ((1-r)*slopePower q r)*r^(a+α)*(1-r)^(-α) := by ring
     _ = _ := by rw [hs]; ring
 
-private lemma weight_integrable {α a : ℝ} (hα : α < 1) (ha : 0 < a+α) :
+lemma weight_integrable {α a : ℝ} (hα : α < 1) (ha : 0 < a+α) :
     IntervalIntegrable (weight α a) volume 0 1 := by
   convert intervalIntegrable_beta ha (by linarith : 0 < 1-α) using 1
   congr 1
@@ -381,7 +381,7 @@ private lemma hasDerivAt_primitive {α a q r : ℝ} (hr : 0 < r) (hr1 : r < 1) :
   have hm := congrArg (fun z : ℝ => z * r^(a+α-1) * (1-r)^(-α-1) * α) hs
   nlinarith only [hm]
 
-private lemma integral_weight {α a : ℝ} (hα : α < 1) (ha : 0 < a+α) :
+lemma integral_weight {α a : ℝ} (hα : α < 1) (ha : 0 < a+α) :
     (∫ r in (0:ℝ)..1, weight α a r) =
       Real.Gamma (a+α) * Real.Gamma (1-α) / Real.Gamma (a+1) := by
   convert integral_beta ha (by linarith : 0 < 1-α) using 1

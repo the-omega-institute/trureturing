@@ -1,0 +1,22 @@
+**Definition 249.1 (Fixed witness and positive-pullback class).**
+On the fixed output of Definition 248.1 let
+$|\phi\rangle=(|00\rangle+|11\rangle)/\sqrt2$,
+$\Phi=|\phi\rangle\langle\phi|$, and let $\Gamma$ be the stipulated
+Alice-only transpose of Definition 244.3. Equation (244.7) gives
+
+$$
+H:=\Phi^\Gamma=I_4/2-P_-,\qquad \|H\|_{\mathrm{op}}=1/2.
+\tag{249.1}
+$$
+
+For a common completely positive map
+$\mathcal E:M_{8^k}(\mathbb C)\to M_4(\mathbb C)$ with
+$\operatorname{Tr}\mathcal E(\rho_q^{\otimes k})>0$ for every actual
+$q\in D$, use the same conditional error formula (248.2), whether or not
+the map is physical. Its trace adjoint $\mathcal E^*$ is specified by
+$\operatorname{Tr}(Y\mathcal E(X))=
+\operatorname{Tr}(\mathcal E^*(Y)X)$. The additional positive-pullback
+condition is $\mathcal E^*(H)\succeq0$, where $\succeq$ denotes the
+positive-semidefinite order. It is an extra condition on the map on all
+inputs, not just a condition on its outputs on the native family.
+

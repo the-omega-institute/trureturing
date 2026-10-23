@@ -1,0 +1,15 @@
+**Theorem 22.1 (Positive-base terminal-J restriction).**
+Every actual parent with $p>0$ has $b<\beta$, and strict widths can approach
+$\beta$ only as an endpoint is approached. For $0<p\le p_0$, every world in
+every $C(p,v)$ has $b<1$. For each fixed $p>0$ and real $z$, there is at most
+one complete world with $p(W)=p$, $a(W)=z$ and $b(W)\ge1$; for
+$p\ge p_0$, $b\ge3/4$ already suffices. Thus a positive-base terminal-J
+collision has a member below one, and at bases at least $p_0$ it has a member
+below $3/4$.
+
+The width supremum is sharp in the strict domain. Choose $r_k=1/k$ and
+$b_k=\delta(r_k)-1/k$ for sufficiently large $k$. Then
+$b_k\to\beta$, while $b_k<\delta(r_k)$ gives $p>0$ and (21.10) gives
+$p>p_0>24$. No endpoint source is an actual world. This proves both the
+sharpness and the endpoint qualification.
+

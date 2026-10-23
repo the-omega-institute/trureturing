@@ -1,0 +1,12 @@
+**定理 4.1（模型族扩张单调性）。** 若有限候选族 $\mathfrak M\subseteq\mathfrak M'$ 且 $V(D)=\varnothing$，则
+
+$$
+\omega(D,t;\mathfrak M)
+\le
+\omega(D,t;\mathfrak M').
+$$
+
+若 $\mathfrak M'$ 中出现一个完全匹配 $D$ 的模型，则右侧按约定为 $\infty$。
+
+**证明。** $\mathfrak M'$ 的失败超边包含 $\mathfrak M$ 的失败超边。击中较大的超边族必然击中较小的超边族，所以最小横截数不能变小。空失败边使横截数为 $\infty$。证毕。
+

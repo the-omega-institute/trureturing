@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:589765b55553e696adcfbdca5d98b194dca15d8e824dcd26664eed11c906c761
+  normalized_sha256: sha256:589765b55553e696adcfbdca5d98b194dca15d8e824dcd26664eed11c906c761
+cas_ref: sha256:589765b55553e696adcfbdca5d98b194dca15d8e824dcd26664eed11c906c761
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: Bibliographic attribution of interpolation, Bernstein, Descartes, mean-value and analytic-function methods, with publication references and an explicit scope disclaimer. This paragraph records attribution and proof provenance; it does not supply an independent quantified mathematical assertion. The mathematical conclusions remain in their separate theorem atoms.
+    previous_atom_id: 1cfc5f5df3157d4c5c0fb78ffd9d1c410c758cbf3be2aa8390188bac126830d9
+    next_atom_id: 4647aa03da5ac8de74a3fbdcd80fbaa0e7f3555892a24d919734a64f0836c92f

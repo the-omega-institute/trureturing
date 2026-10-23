@@ -1,0 +1,18 @@
+## 14. 占位仿射记录的四角核与同源二阶读口
+
+沿用 §1 的五模式次序 $(0,1,2,3,13)$、占位 $(x,z,y)$ 和概率族
+
+$$
+p_\kappa=(1-X-Y-Z+\kappa,\ X-\kappa,\ Z,\ Y-\kappa,\ \kappa),
+\qquad d=\partial_\kappa p_\kappa=(1,-1,0,-1,1).
+$$
+
+固定 $X,Y,Z$，要求可行 $\kappa$ 区间非退化。另行供应一个经典记录模型
+
+$$
+R=xu+yv+zw+\Xi,\qquad u,v,w\in\mathbb R^D,\quad D\ge1,
+\qquad (\mu_0,\mu_1,\mu_2,\mu_3,\mu_{13})=(0,u,w,v,u+v),
+$$
+
+其中噪声 $\Xi$ 独立于标签，概率律不随 $\kappa$ 变化；共同平移已减去。这是占位仿射编码假设，不由原生来源的存在自动推出。读出对象为完整 $\mathbb R^D$ 记录律，未先量化或只保留均值。
+

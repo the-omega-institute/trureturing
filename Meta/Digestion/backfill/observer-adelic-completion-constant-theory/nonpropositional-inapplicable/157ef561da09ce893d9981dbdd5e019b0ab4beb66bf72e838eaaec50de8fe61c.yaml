@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:157ef561da09ce893d9981dbdd5e019b0ab4beb66bf72e838eaaec50de8fe61c
+  normalized_sha256: sha256:157ef561da09ce893d9981dbdd5e019b0ab4beb66bf72e838eaaec50de8fe61c
+cas_ref: sha256:157ef561da09ce893d9981dbdd5e019b0ab4beb66bf72e838eaaec50de8fe61c
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 非命题：在“设”统领下只为待比较的 Gram 矩阵引入符号 G_ico；没有宣称等距同构存在。
+    previous_atom_id: 4faa5e0f8bd51b2f4c9e303fad433302c6d4a6b185e9b710c4d5c19cdb40ed58
+    next_atom_id: a1ae63430cf7ae5d372263670697a17d59edea276886dabf656fecace07a7781

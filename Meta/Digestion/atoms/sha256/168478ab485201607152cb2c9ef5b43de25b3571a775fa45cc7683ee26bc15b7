@@ -1,0 +1,44 @@
+## 9. The unique denominator pole and its sign on both sides
+
+**Lemma 9.1.** For every $0\le r\le1$, the function $b\mapsto D(r,b)$
+has exactly one zero $\lambda(r)$ above one. This zero is simple,
+$1<\lambda(r)<4$, and
+
+$$
+\begin{cases}
+D(r,b)<0,&1\le b<\lambda(r),\\
+D(r,b)>0,&b>\lambda(r).
+\end{cases}
+\tag{9.1}
+$$
+
+The function $\lambda$ is real analytic, including local extensions
+at the two auxiliary endpoints.
+
+**Proof.** Write $D(r,1+u)=\sum_{k=0}^6d_k(r)u^k$.
+The exact coefficient polynomials are
+
+$$
+\begin{aligned}
+d_0&=5(13r^4-39r^3+24r^2+3r-11),\\
+d_1&=5(10r^4-43r^3+13r^2+31r-38),\\
+d_2&=5(r^4-13r^3-20r^2+58r-45),\\
+d_3&=-5(r^3+15r^2-40r+16),\\
+d_4&=-5(2r^2-11r-7),\\
+d_5&=5(r+6),\qquad d_6=5.
+\end{aligned}
+\tag{9.2}
+$$
+
+Using each $d_k$'s own degree in $r$, their Bernstein coefficient
+extrema are
+
+| $k$ | Minimum | Maximum |
+| ---: | ---: | ---: |
+| 0 | -55 | -55/2 |
+| 1 | -190 | -95 |
+| 2 | -225 | -295/4 |
+| 3 | -80 | 40 |
+| 4 | 35 | 80 |
+| 5 | 30 | 35 |
+| 6 | 5 | 5 |

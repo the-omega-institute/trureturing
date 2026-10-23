@@ -1,0 +1,21 @@
+**Definition 10.6 (Necessary equations and the zero-drift constraint).**
+Use the polynomials
+
+$$
+\begin{aligned}
+A={}&2(24-d)DN_1-N_1^2+4\{xN_1-(24-d)D\}^2,\\
+B={}&-2(24-d)DN_1+2N_1^2
+ -4N_1\{xN_1-(24-d)D\},\\
+F={}&5dN_2D+\{2(147-5d)D-5N_2\}N_0,\\
+G={}&N_0^2A-dDN_0B-d^2D^2N_1^2,\qquad H=N_0|_{d=0},\\
+B_0={}&2(147/5)D-N_2|_{d=0},\\
+Z_0={}&\left.(N_2^2A+B_0N_2B-B_0^2N_1^2)\right|_{d=0}.
+\end{aligned}
+\tag{10.17}
+$$
+
+Here $H$ is a polynomial in $x,p,v$ and is distinct from the whole
+interpolant $\mathcal H(s)$. All these formulas are polynomial over
+$\mathbb Q$; the only displayed numerical denominator in $Z_0$ is
+a power of $5$.
+

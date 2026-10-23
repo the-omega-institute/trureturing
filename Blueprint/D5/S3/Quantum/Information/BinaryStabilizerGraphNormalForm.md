@@ -64,7 +64,19 @@ $$\forall (N : \mathbb{N}), \forall (r : (\operatorname{Fin}\left(N\right) \to \
 
 Scaling each single-qubit factor scales the tensor product by the product of those scalars.
 
-**Definition 1.6 (Binary choices of Hadamard and phase gates).**
+**Lemma 1.6 (The tensor action of binary Weyl factors).**
+
+$$\forall (N : \mathbb{N}), \forall (v : ((\operatorname{Fin}\left(N\right) \to \operatorname{ZMod}\left(2\right)) \times (\operatorname{Fin}\left(N\right) \to \operatorname{ZMod}\left(2\right)))), \forall (f : ((\operatorname{Fin}\left(N\right) \to \operatorname{ZMod}\left(2\right)) \to \mathbb{C})), Matrix.\operatorname{mulVec}\left(D5.S3.Quantum.Information.StabilizerPairLocalUnitaryInequivalence.\operatorname{tensorOp}\left(\lambda (i : \operatorname{Fin}\left(N\right)) \mapsto Matrix.\operatorname{of}\left(\lambda (t : \operatorname{Fin}\left(2\right)) \mapsto \lambda (s : \operatorname{Fin}\left(2\right)) \mapsto (if \operatorname{id}\left((s : \operatorname{ZMod}\left(2\right))\right) = \operatorname{id}\left((t : \operatorname{ZMod}\left(2\right))\right) + (v).fst(i) then \operatorname{complexSign}\left((v).snd(i) \cdot \operatorname{id}\left((s : \operatorname{ZMod}\left(2\right))\right)\right) else 0)\right)\right), f\right) = \lambda (t : (\operatorname{Fin}\left(N\right) \to \operatorname{ZMod}\left(2\right))) \mapsto \operatorname{complexSign}\left(\sum_{i: \operatorname{Fin}\left(N\right)} ((v).snd(i) \cdot (t(i) + (v).fst(i)))\right) \cdot f(t + (v).fst)$$
+
+*Proof.* Machine-checked in Lean as `D5/S3/Quantum/Information/BinaryStabilizerGraphNormalForm.tensor_weyl` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+Each single-qubit matrix translates the binary coordinate by v.fst(i) and multiplies it by the sign of v.snd(i) times the input coordinate. The displayed matrix entries and translated function write out both sides of the tensor action. Fin 2 and ZMod 2 have the same binary representatives; id leaves these representatives unchanged.
+
+**Definition 1.7 (Binary choices of Hadamard and phase gates).**
 
 $$\forall (h : Bool), \forall (d : \operatorname{ZMod}\left(2\right)), \operatorname{gate}\left(h, d\right) = (if d = 0 then 1 else Matrix.\operatorname{diagonal}\left(![1, Complex.\operatorname{I}\left(\right)]\right)) * (if h then BinaryStabilizerLocalInequivalence.\operatorname{hadamard}\left(\right) else 1)$$
 
@@ -76,7 +88,7 @@ $$\forall (h : Bool), \forall (d : \operatorname{ZMod}\left(2\right)), \operator
 
 The binary phase choice multiplies the optional Hadamard gate on the left. Zero phase selects the identity and nonzero phase selects the diagonal matrix with entries 1 and i.
 
-**Lemma 1.7 (Unitarity of the binary gate family).**
+**Lemma 1.8 (Unitarity of the binary gate family).**
 
 $$\forall (h : Bool), \forall (d : \operatorname{ZMod}\left(2\right)), \operatorname{gate}\left(h, d\right) \in Matrix.\operatorname{unitaryGroup}\left(\operatorname{Fin}\left(2\right), \mathbb{C}\right)$$
 
@@ -88,7 +100,7 @@ $$\forall (h : Bool), \forall (d : \operatorname{ZMod}\left(2\right)), \operator
 
 Every combination of the binary phase choice and the Hadamard choice is a unitary single-qubit matrix.
 
-**Theorem 1.8 (A graph amplitude for every stabilizer line).**
+**Theorem 1.9 (A graph amplitude for every stabilizer line).**
 
 $$\forall (N : \mathbb{N}), \forall (\psi : ((\operatorname{Fin}\left(N\right) \to \operatorname{Fin}\left(2\right)) \to \mathbb{C})), \operatorname{StabilizedBy}\left(pauliSet, \psi\right) \Rightarrow (\exists (U : (\operatorname{Fin}\left(N\right) \to \operatorname{Matrix}\left(\operatorname{Fin}\left(2\right), \operatorname{Fin}\left(2\right), \mathbb{C}\right))), \exists (\Gamma : \operatorname{Matrix}\left(\operatorname{Fin}\left(N\right), \operatorname{Fin}\left(N\right), \operatorname{ZMod}\left(2\right)\right)), \exists (c : \mathbb{C}), (\forall (i : \operatorname{Fin}\left(N\right)), \operatorname{U}\left(i\right) \in \operatorname{unitaryGroup}\left(\operatorname{Fin}\left(2\right), \mathbb{C}\right)) \land ((\Gamma).IsSymm \land ((\forall (i : \operatorname{Fin}\left(N\right)), \Gamma(i, i) = 0) \land (\psi = SMul.\operatorname{smul}\left(c, (\operatorname{tensorOp}\left(U\right) *_{v} \operatorname{graphAmp}\left(\Gamma\right))\right)))))$$
 
@@ -110,6 +122,7 @@ The Pauli stabilizers of a nonzero common eigenline span a binary Lagrangian sub
 - Truth anchor: `D5/S3/Quantum/Information/BinaryStabilizerGraphNormalForm.tensor_adj`
 - Truth anchor: `D5/S3/Quantum/Information/BinaryStabilizerGraphNormalForm.tensor_smul`
 - Truth anchor: `D5/S3/Quantum/Information/BinaryStabilizerGraphNormalForm.tensor_unitary`
+- Truth anchor: `D5/S3/Quantum/Information/BinaryStabilizerGraphNormalForm.tensor_weyl`
 - Dependency: [D5/S3/Quantum/Information/BinaryLagrangianGraphForm](BinaryLagrangianGraphForm.md)
 - Dependency: [D5/S3/Quantum/Information/BinaryStabilizerLocalInequivalence](BinaryStabilizerLocalInequivalence.md)
 - Dependency: [D5/S3/VertexAlgebra/LatticeTwistedGroundRealization](../../VertexAlgebra/LatticeTwistedGroundRealization.md)
