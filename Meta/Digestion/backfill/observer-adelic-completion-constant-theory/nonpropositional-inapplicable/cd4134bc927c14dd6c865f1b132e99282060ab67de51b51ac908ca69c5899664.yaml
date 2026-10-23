@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:cd4134bc927c14dd6c865f1b132e99282060ab67de51b51ac908ca69c5899664
+  normalized_sha256: sha256:cd4134bc927c14dd6c865f1b132e99282060ab67de51b51ac908ca69c5899664
+cas_ref: sha256:cd4134bc927c14dd6c865f1b132e99282060ab67de51b51ac908ca69c5899664
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 非命题：该 CAS 表行仅列成果对象名、类别及新意评价；没有给出定义等式、数学性质或存在性断言，相关数学子句不由此收据结算。
+    previous_atom_id: afa25eafcc3212e5d4fd8ab294589bba6c6f710f516c666c00e5444b035235bf
+    next_atom_id: 8a05a5fffd1fc1fcde7ca7130d7dac9e88b593dee734b94d74d588c30a6f471e
