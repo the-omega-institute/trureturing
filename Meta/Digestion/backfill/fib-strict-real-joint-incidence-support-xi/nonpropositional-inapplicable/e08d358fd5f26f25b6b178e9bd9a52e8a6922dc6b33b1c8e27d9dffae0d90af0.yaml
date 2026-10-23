@@ -5,3 +5,7 @@ cas_ref: sha256:e08d358fd5f26f25b6b178e9bd9a52e8a6922dc6b33b1c8e27d9dffae0d90af0
 coverage_gids: []
 receipts:
   unresolved_subitems: []
+  nonpropositional:
+    justification: 本项仅命名等J不同世界对按x相等与否的两个投影集合，无存在性、排除或重构断言。
+    previous_atom_id: 2222f0a697c360bd82903b20cc35a8c662d9d6bfc256537b4e9a1da68ab91467
+    next_atom_id: a54e17ca018b27d4a06f82362998d5069fc6a3bd6e341e77fd10290d79fb14b5
