@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:31949235b359483ffb14fc71bb51a3aca287bc7f1231da5c2740faf34be7df69
+  normalized_sha256: sha256:31949235b359483ffb14fc71bb51a3aca287bc7f1231da5c2740faf34be7df69
+cas_ref: sha256:31949235b359483ffb14fc71bb51a3aca287bc7f1231da5c2740faf34be7df69
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 'Nonpropositional: defines C, K, A, B, Z, Y, L, N and R, E, F by explicit expressions and defines S(d,p,v) by guarded set comprehension. No existence, reconstruction, world correspondence, polynomial degree or cardinality consequence is asserted.'
+    previous_atom_id: 0dee6fb298546d578fda29d0de58a6dd33d8fa6e9c6cc5eae1b54509fe954d61
+    next_atom_id: 89061a58725f7213e2e9c4d40fdce80625743f3f73ae089cab3092703aa74b31
