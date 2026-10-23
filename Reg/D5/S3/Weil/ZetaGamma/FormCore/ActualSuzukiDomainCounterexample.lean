@@ -187,10 +187,10 @@ abbrev arena : Arena where
       (B * (∫ x : ℝ in Ioi Real.pi, ‖F x‖ ^ 2) <
         ∫ ξ : ℝ, Symbol.gammaWeight ξ *
           ‖unitarySourceFourier (actualGammaProfile F) ξ‖ ^ 2) ∧
-      ∃ (F∞ : ℝ → ℂ) (G : ℕ → ℝ → ℂ),
-        originalPhysicalH6 F∞ ∧
+      ∃ (F_limit : ℝ → ℂ) (G : ℕ → ℝ → ℂ),
+        originalPhysicalH6 F_limit ∧
         (∀ c : ℝ, (∀ ξ : ℝ, 1 ≤ Symbol.gammaWeight ξ + c) →
-          ¬ originalGammaFormDomain c F∞) ∧
+          ¬ originalGammaFormDomain c F_limit) ∧
         (∀ n : ℕ, originalPhysicalH6 (G n) ∧
           (∀ x : ℝ, (G n x).im = 0) ∧
           (∀ x : ℝ, Real.pi ≤ x →
@@ -201,7 +201,7 @@ abbrev arena : Arena where
             K * (∫ x : ℝ in Ioi Real.pi, ‖G n x‖ ^ 2))) ∧
         (∃ n : ℕ, F = G n) ∧
         Tendsto (fun n : ℕ => ∫ x : ℝ in Ioi Real.pi,
-          (x / Real.pi) ^ (6 : ℕ) * ‖F∞ x - G n x‖ ^ 2) atTop (𝓝 0)
+          (x / Real.pi) ^ (6 : ℕ) * ‖F_limit x - G n x‖ ^ 2) atTop (𝓝 0)
 
 private theorem rejected_law : ¬ arena.Law rejected := by
   intro h

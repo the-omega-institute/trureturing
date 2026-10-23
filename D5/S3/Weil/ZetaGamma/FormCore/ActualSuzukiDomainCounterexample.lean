@@ -1586,7 +1586,9 @@ private theorem finiteGammaWeight_quadratic_upper :
       (Complex.digamma ((1 / 4 : ℂ) + Complex.I * (ξ : ℂ)))
     have ha := mul_le_mul_of_nonneg_left hlog hA.le
     have hb := mul_le_mul_of_nonneg_left hw (abs_nonneg (Real.log Real.pi))
+    have hquarter : (((1 / 4 : ℝ) : ℂ)) = (1 / 4 : ℂ) := by norm_num
     dsimp [gammaDensity, D]
+    rw [hquarter]
     nlinarith [hp, hre, ha, hb, neg_le_abs (Real.log Real.pi)]
   have hr0 : 0 ≤ gammaRatio ξ := by unfold gammaRatio; positivity
   have hr1 : gammaRatio ξ ≤ 1 := by
@@ -1612,6 +1614,12 @@ namespace D5.S3.Weil.ZetaGamma.FormCore.ActualSuzukiDomainCounterexample
 
 open MeasureTheory Set Filter
 open scoped ENNReal FourierTransform Topology Function
+
+private theorem finiteTent_le_one (s : ℝ) : tent s ≤ 1 := by
+  unfold tent
+  apply max_le
+  · linarith [abs_nonneg s]
+  · norm_num
 
 private def finiteProfile (N : ℕ) (t : ℝ) : ℂ :=
   ∑ n ∈ Finset.range (N + 1), spatialTerm n t
@@ -1661,7 +1669,7 @@ private theorem finiteProfile_norm_le (N : ℕ) (t : ℝ) : ‖finiteProfile N t
       apply Finset.sum_le_sum
       intro n hn
       have hk := actual_kernel_term_norm_bound 0 t n
-      have hb := mul_le_of_le_one_right (coeff_nonneg n) (tent_le_one (t - 1 / 2))
+      have hb := mul_le_of_le_one_right (coeff_nonneg n) (finiteTent_le_one (t - 1 / 2))
       rw [norm_mul, sourcePhase_norm, one_mul] at hk
       exact hk.trans hb
     _ ≤ 1 := hc
@@ -1807,7 +1815,7 @@ private theorem finiteAmplitude_decay (N : ℕ) (ξ : ℝ) :
   have hminus := finiteShiftedTent_decay (frequency n) ξ
   have hplus : (1 + ξ ^ 2) * tentSourceHat (ξ + frequency n) ≤
       2 * (1 + frequency n ^ 2) * finiteTentDecayConstant := by
-    simpa only [sub_neg_eq_add, sq_neg] using finiteShiftedTent_decay (-frequency n) ξ
+    simpa only [sub_neg_eq_add, neg_sq] using finiteShiftedTent_decay (-frequency n) ξ
   have hcoeff : 0 ≤ coeff n / 2 := div_nonneg (coeff_nonneg n) (by norm_num)
   have hm := mul_le_mul_of_nonneg_left (add_le_add hminus hplus) hcoeff
   unfold spectralTerm
@@ -1884,6 +1892,7 @@ private theorem finiteCompressed_all_shift_integrable (N : ℕ) {κ : ℝ}
       exact le_mul_of_one_le_left (sq_nonneg _) (Symbol.actualGammaWeight_bounds ξ).1.le
   convert hGamma.add (hq.const_mul c) using 1
   funext ξ
+  simp only [Pi.add_apply]
   ring
 
 private theorem finiteCompressed_zero_off (N : ℕ) {κ : ℝ} (hκ : 0 < κ)
@@ -2022,7 +2031,11 @@ private theorem finiteCompressed_band_density_lower (N n : ℕ)
   have hm := mul_le_mul_of_nonneg_right hlog
     (mul_nonneg (sq_nonneg κ) (sq_nonneg (finiteAmplitude N (κ * ξ))))
   rw [finiteCompressed_fourier_norm N hκ, mul_pow]
-  nlinarith [hbase, hm]
+  calc
+    κ ^ 2 / (4096 * Real.pi) = κ ^ 2 * (1 / (4096 * Real.pi)) := by ring
+    _ ≤ κ ^ 2 * (max (Real.log |κ * ξ|) 0 * finiteAmplitude N (κ * ξ) ^ 2) := hbase
+    _ = max (Real.log |κ * ξ|) 0 * (κ ^ 2 * finiteAmplitude N (κ * ξ) ^ 2) := by ring
+    _ ≤ max (Real.log |ξ|) 0 * (κ ^ 2 * finiteAmplitude N (κ * ξ) ^ 2) := hm
 
 private theorem finiteProfile_uniform_tail (N : ℕ) (t : ℝ) :
     ‖counterProfile t - finiteProfile N t‖ ≤ (1 / 2 : ℝ) ^ (N + 1) := by
@@ -2042,7 +2055,7 @@ private theorem finiteProfile_uniform_tail (N : ℕ) (t : ℝ) :
       coeff (n + (N + 1)) := by
     have hk := actual_kernel_term_norm_bound 0 t (n + (N + 1))
     rw [norm_mul, sourcePhase_norm, one_mul] at hk
-    exact hk.trans (mul_le_of_le_one_right (coeff_nonneg _) (tent_le_one _))
+    exact hk.trans (mul_le_of_le_one_right (coeff_nonneg _) (finiteTent_le_one _))
   have ht := tsum_of_norm_bounded hc hbound
   rw [hs.tsum_eq] at ht
   exact ht
@@ -2143,8 +2156,8 @@ private theorem finitePhysical_continuous (N : ℕ) {κ : ℝ} (hκ : 0 < κ) :
         finiteCompressedProfile N κ (Real.log (max Real.pi x / Real.pi)) := by
     funext x
     by_cases hx : Real.pi ≤ x
-    · simp [finitePhysicalFeature N, sourceOfProfile, hx, max_eq_right hx]
-    · simp [finitePhysicalFeature N, sourceOfProfile, hx,
+    · simp [finitePhysicalFeature, sourceOfProfile, hx, max_eq_right hx]
+    · simp [finitePhysicalFeature, sourceOfProfile, hx,
         max_eq_left (le_of_not_ge hx), Real.pi_ne_zero, finiteCompressed_zero N hκ]
   rw [he]
   have hm : Continuous (fun x : ℝ => max Real.pi x) := continuous_const.max continuous_id
@@ -2159,9 +2172,9 @@ private theorem finitePhysical_zero_le_pi (N : ℕ) {κ : ℝ} (hκ : 0 < κ)
     {x : ℝ} (hx : x ≤ Real.pi) : finitePhysicalFeature N κ x = 0 := by
   by_cases he : x = Real.pi
   · subst x
-    simp [finitePhysicalFeature N, sourceOfProfile, Real.pi_ne_zero, finiteCompressed_zero N hκ]
+    simp [finitePhysicalFeature, sourceOfProfile, Real.pi_ne_zero, finiteCompressed_zero N hκ]
   · have hn : ¬ Real.pi ≤ x := fun h => he (le_antisymm hx h)
-    simp [finitePhysicalFeature N, sourceOfProfile, hn]
+    simp [finitePhysicalFeature, sourceOfProfile, hn]
 
 private theorem finitePhysical_density_compact (N : ℕ) {κ : ℝ} (hκ : 0 < κ) (w : ℝ → ℝ) :
     HasCompactSupport (fun x : ℝ => w x * ‖finitePhysicalFeature N κ x‖ ^ 2) := by
@@ -2469,10 +2482,10 @@ theorem actual_h6_finite_gamma_energy_unbounded (K B : ℝ) (hK : 1 < K) :
       (B * (∫ x : ℝ in Ioi Real.pi, ‖F x‖ ^ 2) <
         ∫ ξ : ℝ, Symbol.gammaWeight ξ *
           ‖unitarySourceFourier (actualGammaProfile F) ξ‖ ^ 2) ∧
-      ∃ (F∞ : ℝ → ℂ) (G : ℕ → ℝ → ℂ),
-        originalPhysicalH6 F∞ ∧
+      ∃ (F_limit : ℝ → ℂ) (G : ℕ → ℝ → ℂ),
+        originalPhysicalH6 F_limit ∧
         (∀ c : ℝ, (∀ ξ : ℝ, 1 ≤ Symbol.gammaWeight ξ + c) →
-          ¬ originalGammaFormDomain c F∞) ∧
+          ¬ originalGammaFormDomain c F_limit) ∧
         (∀ n : ℕ, originalPhysicalH6 (G n) ∧
           (∀ x : ℝ, (G n x).im = 0) ∧
           (∀ x : ℝ, Real.pi ≤ x →
@@ -2483,7 +2496,7 @@ theorem actual_h6_finite_gamma_energy_unbounded (K B : ℝ) (hK : 1 < K) :
             K * (∫ x : ℝ in Ioi Real.pi, ‖G n x‖ ^ 2))) ∧
         (∃ n : ℕ, F = G n) ∧
         Tendsto (fun n : ℕ => ∫ x : ℝ in Ioi Real.pi,
-          (x / Real.pi) ^ (6 : ℕ) * ‖F∞ x - G n x‖ ^ 2) atTop (𝓝 0) := by
+          (x / Real.pi) ^ (6 : ℕ) * ‖F_limit x - G n x‖ ^ 2) atTop (𝓝 0) := by
   obtain ⟨κ, hk, hkc, hkK⟩ := exists_cap_compression K hK
   have hk1 : κ ≤ 1 := by linarith
   have hC : 0 < Symbol.domainConstant := by unfold Symbol.domainConstant; positivity
