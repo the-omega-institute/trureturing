@@ -38,7 +38,7 @@ The literature check before any Lean is recorded in #20112:
 
 At $2\times3$, let $\Gamma$ be the partial transpose on the qutrit, $P_1,P_2$ the projectors onto $(e_{00}+e_{11})/\sqrt2$ and $(e_{01}+e_{12})/\sqrt2$, $B_0=(I-P_1^\Gamma-P_2^\Gamma)/4$, $B_1=(I-P_2^\Gamma)/5$, $B_2=(I-P_1^\Gamma)/5$ and $\rho(x,y)=(1-x-y)B_0+xB_1+yB_2$.
 1. **States.** For $|x|,|y|\le1/4$, $\rho(x,y)$ has trace one and is an explicit sum of eight positive rank-one terms.
-2. **Separable on the quadrant.** The corners $B_0,B_1,B_2$ have explicit decompositions into products of positive matrices, so $\rho(x,y)$ is separable for $x,y\ge0$.
+2. **Separable on the quadrant.** The corners $B_0,B_1,B_2$ have explicit decompositions into products of positive matrices, so $\rho(x,y)$ is separable for $0\le x,y\le1/4$.
 3. **Entangled off the quadrant.** The partial transpose of $\rho(x,y)$ takes the value $2x/5$ on $e_{00}+e_{11}$ and $2y/5$ on $e_{01}+e_{12}$, and separable matrices have positive semidefinite partial transpose. So $\rho(x,y)$ is entangled if $x<0$ or $y<0$.
 4. **No polynomial.** For any polynomial $f$, $q(x,y)=f(\rho(x,y))$ is a polynomial because $\rho$ is affine.
    - For $0<y<1/4$, $q(0,y)\ge0$ while $q(x,y)<0$ for $-1/4<x<0$, so $q(0,y)=0$ by continuity.
