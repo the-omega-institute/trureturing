@@ -1,0 +1,169 @@
+**Theorem 8.2 (exact directional criterion).** Fix any real symmetric
+$S\succeq0$ of trace one, let $U=\operatorname{im}S$, and $d=\dim U$.
+On the entire lawful set $\{A:(S,A)\in\mathcal L\}$, (8.4) separates
+$\mathcal G$ if and only if one of the following holds:
+
+$$
+\begin{array}{c|c}
+d\le3&\text{no additional condition},\\
+d=4& P_Uv\ne0\text{ for at least one }v\in\mathcal V,\\
+d=5& \dim\operatorname{span}\mathcal V\ge2.
+\end{array}
+\tag{8.5}
+$$
+
+Here separation means that equal data are equivalent to $B=A$ or $B=-A$.
+An inverse on the actual image is constructive in exact real arithmetic.
+The fixed source-independent choice $\mathcal V=(e_1,e_2)$ works for
+every lawful $S$. Within this family the minimum number of effective
+directions is respectively zero, one and two in the three rows of (8.5).
+Choosing the one direction for a rank-four support presupposes knowing
+that support; the universal two-direction schedule makes no such choice.
+When (8.5) fails, even all terminal $q$ responses after finite words in
+these same directional instruments fail to separate the lawful witnesses.
+
+Proof. First $A$ is supported on $U$. For a real $x\in\ker S$,
+$x^*(S+iA)x=0$. Positivity implies $(S+iA)x=0$, for instance by its
+positive square root, hence $Ax=0$. Skewness then gives
+$\operatorname{im}A\subseteq U$.
+
+Here is the spectral and Hodge calculation used in both recovery
+constructions. The real symmetric matrix $K=-A^2=A^TA$ is positive
+semidefinite, has kernel $\ker A$, and commutes with $A$. On a positive
+$\mu$-eigenspace, $A/\sqrt\mu$ is an orthogonal skew map with square
+$-I$. A unit vector and its image span an invariant orthonormal two-plane;
+skewness preserves the orthogonal complement. Repeating this argument
+shows that every positive eigenspace has even dimension. In dimension
+five, the possibilities are rank zero, rank two, rank four with two
+distinct positive eigenvalues, and rank four with one positive eigenvalue.
+This is the classical skew spectral decomposition, obtained here from
+the real symmetric spectral theorem.
+
+Rank zero gives $A=0$. At rank two, $K$ fixes the only nonzero two-plane
+and its magnitude, so only the common sign remains. At rank four with
+distinct eigenvalues $\mu_1,\mu_2$, it fixes two orthogonal two-planes
+and the two magnitudes. Choosing frames for those planes gives four sign
+pairs. Their nonzero wedge square, hence $b$, fixes the product of the
+two signs, leaving exactly the common sign. Those frames are calculation
+choices in the same fixed coordinates, not new state equivalences.
+
+The remaining case is
+
+$$
+K=\lambda^2P_W,\qquad \lambda>0,\quad\dim W=4.
+\tag{8.6}
+$$
+
+Then $\|a_A\|^2=2\lambda^2$ and $\|b(A)\|=2\lambda^2$.
+Put $n=b(A)/(2\lambda^2)$ and orient $W=n^\perp$ so that its volume
+satisfies $*_5\operatorname{vol}_W=n$. The form $a_A$ is self-dual on
+this oriented four-plane: if $a_A=a_++a_-$ is its Hodge decomposition,
+its norm and wedge square give
+
+$$
+\|a_+\|^2+\|a_-\|^2=2\lambda^2,
+\qquad \|a_+\|^2-\|a_-\|^2=2\lambda^2.
+\tag{8.7}
+$$
+
+Thus $a_-=0$. This is the classical oriented orthogonal-complex-structure
+fiber; see Salamon–Viaclovsky,
+[*Orthogonal complex structures on domains in* $\mathbb R^4$,
+§2.4, Propositions 2.1–2.2](https://arxiv.org/html/0704.3422v2).
+Only this finite-dimensional algebra is used, not integrability or a
+twistor-space realization theorem.
+
+The additional response has a particularly direct interpretation. Let
+$w=Av$, so $w\perp v$. Since $D_v^2=I-c_tvv^T$ and
+$Avv^TA=-ww^T$,
+
+$$
+D_v^{-1}K(D_vAD_v)D_v^{-1}
+=-AD_v^2A=K-c_tww^T.
+\tag{8.8}
+$$
+
+Extend $R_v$ by zero on $\mathbb Rv$, denoting the extension by
+$\widehat R_v$. Compression of (8.8) yields the original column relation
+
+$$
+G_v:=\frac{P_vKP_v-\widehat R_v}{c_t}=(Av)(Av)^T.
+\tag{8.9}
+$$
+
+Thus ten controlled square entries suffice for a direction; the other
+square entries and all controlled $b$ entries are unnecessary here.
+
+If two candidates in (8.6) have the same $q$ and the same nonzero $G_v$,
+their vectors $Av,Bv$ agree up to sign. Change the common sign of $B$
+to make them agree, and put $u=P_Wv$, $w=Au=Bu\ne0$. They agree on
+$L=\operatorname{span}(u,w)$ because both send $w$ to $-\lambda^2u$.
+Skewness makes $M=W\cap L^\perp$ invariant for both. Their restrictions
+to this remaining two-plane have magnitude $\lambda$ and only two sign
+choices. Equality of the nonzero wedge square fixes that last sign, so
+$A=B$ after the alignment.
+
+This also gives an explicit inverse. Extract a nonzero $G_v=ww^T$ by
+choosing its first positive diagonal entry $G_{kk}$ and taking
+$w=G_ve_k/\sqrt{G_{kk}}$. Set $u=P_Wv$. On $L$ use
+
+$$
+A_L=\frac{wu^T-uw^T}{\|u\|^2}.
+\tag{8.10}
+$$
+
+It sends $u$ to $w$ and $w$ to $-\lambda^2u$. On $M$ choose the
+magnitude-$\lambda$ skew block whose wedge with this block gives the
+known $b$. Exactly one sign works. Reversing $w$ reverses the whole
+answer. In the other rank strata choose plane frames by ordered
+coordinate projections and Gram–Schmidt, and use $b$ to fix the relative
+sign when two planes are present. More explicitly, the two squared
+magnitudes, including an omitted zero when the rank is two, are the roots
+of
+
+$$
+x^2-\tfrac12\operatorname{tr}(K)x+\tfrac14\|b\|^2=0.
+\tag{8.11}
+$$
+
+For distinct positive roots $\mu_i,\mu_j$, the corresponding projector
+is $K(K-\mu_jI)/(\mu_i(\mu_i-\mu_j))$. At rank two it is
+$K/\mu_i$; in (8.6) it is $K/\lambda^2$. Thus this reconstruction
+requires only finitely many exact arithmetic operations, comparisons,
+square roots and the indicated finite linear algebra. Every permitted
+choice gives the same orbit.
+
+For $d\le3$ the support bound leaves only ranks zero and two. For $d=4$
+an unresolved rank-four map has $W=U$, so a direction with $P_Uv\ne0$
+has $Av\ne0$. For $d=5$, the kernel in (8.6) is a line; it cannot
+contain two independent directions. This proves sufficiency in (8.5).
+
+For necessity, if $d=4$ and every direction annihilates $U$, take $W=U$.
+If $d=5$ and the catalogue spans at most a line, take a four-plane
+$W$ perpendicular to that span. Choose orthonormal $f_1,\ldots,f_4$ in
+$W$ and write $J^f_{ij}=f_if_j^T-f_jf_i^T$. With
+
+$$
+A=\lambda(J^f_{12}+J^f_{34}),\qquad
+B=\lambda(J^f_{13}-J^f_{24}),
+\tag{8.12}
+$$
+
+both squares are $-\lambda^2P_W$, both wedge squares are
+$2\lambda^2f_1\wedge f_2\wedge f_3\wedge f_4$, and $B\ne\pm A$.
+Let $\mu>0$ be the least eigenvalue of $S|_U$ and choose
+$0<\lambda<\mu$. On $U$ both states are bounded below by
+$(\mu-\lambda)I$, and on $U^\perp$ they vanish. They are lawful even
+on the semidefinite support face under consideration. Each catalogue
+$v$ lies in $W^\perp$, so $Av=Bv=0$ and $D_vAD_v=A$, $D_vBD_v=B$.
+Thus their directional data coincide.
+
+For a word of success branches the unnormalized imaginary parts remain
+$A,B$ and their real parts remain common. Normalization multiplies both
+by the same scalar. A positive-probability failure makes both states the
+same real state $vv^T$. Every later real branch then agrees. Branch
+probabilities at each step depend only on the common real part; zero
+branches occur together. Induction proves the stated all-word failure
+for this restricted response family. No amount of repeating those blind
+directions replaces a direction which meets $W$. $\square$
+

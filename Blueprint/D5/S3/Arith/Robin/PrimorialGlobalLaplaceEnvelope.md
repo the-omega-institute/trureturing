@@ -20,10 +20,11 @@ Lean statement: `D5/S3/Arith/Robin/PrimorialGlobalLaplaceEnvelope.result`
 
 For every z>=2 and every v>=0, exp(-D*v/L)*Phi(v)<=F_z(v)<=exp(D*v/L)*Phi(v). The same complete parameter axis obeys F_z(v)<=exp(D*v/L+1)*(1+v). There is no upper cutoff on v, and v=0 is included.
 
-The literal cumulative first-Mertens estimate is consumed by Abel summation. For the decreasing logarithmic exponential weight f, the integral error costs at most K*(1-f(z)); its endpoint costs at most K*f(z), so the combined cost is exactly K. The finite Euler logarithmic derivative is calculated from every factor. Replacing p^s-1 by p^s costs the existing summable prime correction uniformly for every v>=0. The resulting derivative error integrates to D*v/L. Exponentiation and the original profile's linear envelope give the stated bounds.
+The literal cumulative first-Mertens estimate is consumed by Abel summation. The primeCutoff definition and prime_filter_Icc lemma in LogarithmBounds identify the prime filters over the natural intervals starting at zero. For the decreasing logarithmic exponential weight f, the integral error costs at most K*(1-f(z)); its endpoint costs at most K*f(z), so the combined cost is exactly K. The finite Euler logarithmic derivative is calculated from every factor. Replacing p^s-1 by p^s costs the existing summable prime correction uniformly for every v>=0. The resulting derivative error integrates to D*v/L. Exponentiation and the original profile's linear envelope give the stated bounds.
 
 This theorem supplies the finite Euler factor and its full parameter tail for the Robin kernel route. It does not prove the complete actual kernel asymptotic, the sign of the compensated Robin residual, or the Riemann hypothesis.
 
 ## References
 
 - Truth anchor: `D5/S3/Arith/Robin/PrimorialGlobalLaplaceEnvelope.result`
+- Dependency: [D5/S3/Arith/Robin/LogarithmBounds](LogarithmBounds.md)

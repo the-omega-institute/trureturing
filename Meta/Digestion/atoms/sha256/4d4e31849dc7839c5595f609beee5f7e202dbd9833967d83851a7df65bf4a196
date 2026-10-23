@@ -1,0 +1,35 @@
+**Definition 14.1 (The same joint measurement on both input families).**
+Fix any $\sigma>0$ and retain Assumption 4.1: eight independent
+Gaussian probes, their original couplings, all original clock reads,
+and the controls of Definition 3.1 with adjoint action
+$q\mapsto A_Eq$, $\pi\mapsto A_E^{-T}\pi$.
+Only the initial system state is replaced by $\rho_{W,N}$.
+For an externally fixed chronological word $w=E_1\cdots E_t$,
+$E_i\in\{J,M\}$ and $0\le t\le7$, use all reads $0,\ldots,t$.
+
+The normal instruments of Theorem 4.2 compose to a normalized normal
+joint POVM $\mathsf E_w$ on $\mathbb R^{t+1}$. In the notation of
+Theorem 5.1 its density and normalization are understood weakly:
+
+$$
+\begin{gathered}
+\mathsf K_w(z)=K_t(z_t)U_{A_{E_t}}\cdots
+K_1(z_1)U_{A_{E_1}}K_0(z_0),\\
+\mathsf E_w(A)=\int_A\mathsf K_w(z)^\dagger\mathsf K_w(z)\,dz,
+\qquad
+0\le\mathsf E_w(A)\le I,\qquad
+\mathsf E_w(\mathbb R^{t+1})=I,\\
+\nu_w(W)(A)=\operatorname{tr}(\rho_W\mathsf E_w(A)),\qquad
+\nu_{w,N}(W)(A)=\operatorname{tr}(\rho_{W,N}\mathsf E_w(A)).
+\end{gathered}
+\tag{14.1}
+$$
+
+All $A$ in this section are Borel record events. Normality and
+countable additivity are those of the original instruments; no
+operator-norm integral over the outcome space is required.
+For the empty word, $\mathsf K_{\varnothing}(z_0)=K_0(z_0)$;
+only the clock-zero read is executed.
+The same measurement acts on both normal input states, independently
+of $W$ and of the cutoff used to specify the input.
+

@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:dfed389bdaf496972bc6e3d24328b2acd9ba784744e4e38d5b52633e5706fc1e
+  normalized_sha256: sha256:dfed389bdaf496972bc6e3d24328b2acd9ba784744e4e38d5b52633e5706fc1e
+cas_ref: sha256:dfed389bdaf496972bc6e3d24328b2acd9ba784744e4e38d5b52633e5706fc1e
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 本 atom 仅声明 uniform metric-doubling occurrence bridge 的数据、分离/半径/覆盖假设及 R_n、q 记号；没有从这些假设推出 packing 结论。
+    previous_atom_id: ffc93cc705043889154e23cd0c2d8660e1734b7db03ec6c4110db201226f9326
+    next_atom_id: c4a077b9d910a15be45c3106dde377d8e1718044eb242f21688c3d794d43df7b

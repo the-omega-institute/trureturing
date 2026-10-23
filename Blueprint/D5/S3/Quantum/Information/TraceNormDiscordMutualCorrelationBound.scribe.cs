@@ -52,6 +52,17 @@ internal sealed class TraceNormDiscordMutualCorrelationBoundDocument : IScribeDo
                         + "inequality for general two-qubit states."))),
                 DescribeRole.Definition),
             Describe.Lean(
+                DescribeId.Create("trace-norm-discord-mutual-correlation-spin-square"),
+                DeclarationHandle.Create(Prefix + "spin_square"),
+                H("The square of a real Pauli combination"),
+                StatementSource.WithoutFormula(),
+                AssessedProvenance.FromRepo(),
+                Blocks(Paragraph(Text(
+                    "For every real three-vector c, the Pauli combination c·σ squares "
+                        + "to the squared Euclidean length of c times the identity. "
+                        + "This follows by applying the Pauli anticommutator to c twice."))),
+                DescribeRole.Theorem),
+            Describe.Lean(
                 DescribeId.Create("trace-norm-discord-mutual-correlation-result"),
                 DeclarationHandle.Create(Prefix + "result"),
                 H("Maximal mutual correlation bounds trace-norm discord"),

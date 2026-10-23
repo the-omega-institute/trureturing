@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:1e0ecb95c5e67c5734425168f90311f7b66dab7b9c81b8d6a758f2045e3c423c
+  normalized_sha256: sha256:1e0ecb95c5e67c5734425168f90311f7b66dab7b9c81b8d6a758f2045e3c423c
+cas_ref: sha256:1e0ecb95c5e67c5734425168f90311f7b66dab7b9c81b8d6a758f2045e3c423c
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: Audit status marking the relation between off-line zeros and the golden ratio unknown and not established.
+    previous_atom_id: 7a1174986c0995c8efaabcac72c3ca7c6803cf3430c0a089f015718dcfa303cb
+    next_atom_id: 8fa632086e3ded68a05986064e8da43b2e77b4e1a0de72f6ebbc5165e8d3fce1

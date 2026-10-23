@@ -1,0 +1,139 @@
+**Theorem 8.1 (sharp equality energy).** For each fixed model and fixed
+admissible $b$,
+
+$$
+E_{\epsilon,\lambda_D}
+   =E_D-\frac{K a_D^2\beta_{\rm ang}\pi^2}{L}+o(L^{-1}).
+\tag{8.1}
+$$
+
+The correction coefficient is strictly negative. In particular, if
+the genuine response root $E_D$ is zero, then
+$E_{\epsilon,\lambda_D}\sim-Ka_D^2\beta_{\rm ang}\pi^2/L$.
+
+Proof. At fixed punctured source radii the exact sine in (1.8), (4.1)
+and $\delta(q)=\kappa_{\rm cap}q+O(q^3)$ give
+
+$$
+\frac{\Xi_\epsilon}{h}
+=-\log R+\eta_b-\frac{\beta_{\rm ang}\pi^2}{L}
+             +O\bigl(L^{-2}(1+|\log R|)^3\bigr).
+\tag{8.2}
+$$
+
+The same statement holds with every fixed rescaled derivative,
+including all angular directions. To see the sign, put
+$x=\log(R/b)$ and expand the exact argument
+$q_L(L+x)+\delta(q_L)$ about $\pi$.
+Its excess is $q_L(x+\kappa_{\rm cap})+
+\beta_{\rm ang}\pi^3/L^2+O(L^{-3}(1+|x|))$.
+The sine divided by $q_L$ has the negative intercept in (8.2).
+The phase beyond $\kappa_{\rm cap}q_L$, the factor $A(q_L)-1$
+and $\phi_{z_L}-\phi$ contribute only at order $L^{-2}$ here.
+Thus a fixed-$y$ Taylor expansion has not been used on an interval
+of length $L$.
+
+Set
+
+$$
+\eta_L=\eta_b-\beta_{\rm ang}\pi^2/L,\qquad
+v_L=f_{\eta_L}/H_{\eta_L}.
+\tag{8.3}
+$$
+
+Use a smooth common positive interpolation for the $H_\eta$.
+The actual global response is analytic for $\eta$ near $\eta_b$.
+Its source expansion and source condition give, uniformly there,
+
+$$
+v_L=a_{\eta_L}+O(R^\gamma),\qquad
+|Xv_L|\le CR^{\gamma-1}
+\tag{8.4}
+$$
+
+with rescaled derivatives. The legitimate free-domain trial is
+$H_\epsilon v_L$, subsequently normalized. It is in $\mathcal F_A$:
+$v_L$ is bounded near the source with the derivative bound (8.4),
+and $H_\epsilon$ is source-regular for fixed $\epsilon$.
+The local integrals of the resulting free derivatives are finite;
+free zero-capacity cutoff removes the point, and the outer domain
+is inherited.
+
+Here a quantitative comparison in the full form dual is necessary.
+Fix $r_L=L^{-p}$ with $p$ large, and split at $r_L$. On
+$R\ge r_L$ the reference ratios and their rescaled derivatives
+from (8.2) differ by
+$O(L^{-2}(1+|\log R|)^j)$ for fixed finite $j$.
+Crucially, cancel the frozen equations before comparing residual
+potentials. On the exterior cap region they give exactly
+
+$$
+W_\epsilon=\Xi_\epsilon^{-1}\mathcal R\Xi_\epsilon
+                                    -g_{\epsilon,\lambda_D}G_1,
+\qquad
+W_{\eta_L}=H_{\eta_L}^{-1}\mathcal R H_{\eta_L}
+                                    -g_{\mathrm c}G_1.
+\tag{8.5}
+$$
+
+The principal coefficients of $\mathcal R$ are $O(R)$, its drift
+is $O(1)$, and $G_1=O(R^{-1})$. The derivative comparisons therefore
+give
+
+$$
+|W_\epsilon-W_{\eta_L}|
+\le C L^{-2}(1+|\log R|)^j/R,\qquad r_L\le R<d.
+\tag{8.6}
+$$
+
+There is no uncontrolled $L^{-2}R^{-2}$ term. Away from the small
+reference ball the interpolation and bounded Green multiplier give
+the ordinary $O(L^{-2})$ comparison. Weighted Cauchy–Schwarz and
+(4.10)–(4.12) bound the exterior coefficient, potential and mass
+errors by $CL^{-2}(\log L)^j$ in the dual of
+$\mathfrak N_\epsilon$.
+
+An arbitrary test quotient for the finite cap need not be in the
+limiting full weighted test space. Insert an inner cutoff at $r_L$
+before using the $q_{\eta_L}$ equation. The terms from conversion
+of the test spaces contain $Xv_L$ and the cutoff derivative.
+By (8.4) they are $O(r_L^\delta(1+|\log r_L|)^j)$ in that dual,
+for some $\delta>0$. On $R<2r_L$ use
+$H_\epsilon\le Ch(1+|\log R|)$, (8.4), and the $p=1$ tail in
+(4.12); they give the same bound for the kinetic, potential and
+bounded spectral terms. The constant part of $v_L$ contributes no
+singular gradient flux. These estimates explain why the two full
+test spaces were not silently identified.
+
+After normalization the trial, denoted $t_{\epsilon,L}$, has norm
+correction of the same small order and residual
+
+$$
+\|(q_{\epsilon,\lambda_D}-E_{\eta_L})t_{\epsilon,L}\|_
+                                             {\mathfrak N_\epsilon'}
+\le C\{L^{-2}(\log L)^j+r_L^\delta(\log L)^j\}
+=o(L^{-1})
+\tag{8.7}
+$$
+
+when $p\delta>1$. All powers and exponents here are fixed;
+they do not depend on $L$.
+
+Theorem 7.1 gives overlap
+$\langle t_{\epsilon,L},f_{\epsilon,\lambda_D}\rangle\to1$,
+and (4.11) uniformly bounds the latter state's shifted norm.
+Pair the residual with that actual ground. Selfadjointness gives
+
+$$
+(E_{\epsilon,\lambda_D}-E_{\eta_L})
+ \langle t_{\epsilon,L},f_{\epsilon,\lambda_D}\rangle=o(L^{-1}).
+\tag{8.8}
+$$
+
+This proves both energy directions, without differentiating a
+remainder or relying on a trial bound alone.
+Finally (6.3) gives $dE_\eta/d\eta=Ka_\eta^2$.
+Insert (8.3) and use continuity of $a_\eta$ to obtain (8.1).
+Since $\beta_{\rm ang}>0$ and $a_D>0$, its coefficient remains
+nonzero even at $E_D=0$. $\square$
+

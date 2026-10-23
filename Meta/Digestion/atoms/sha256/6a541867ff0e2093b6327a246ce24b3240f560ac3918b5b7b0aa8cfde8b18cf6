@@ -1,0 +1,25 @@
+**Assumption 6.2 (alternative preparation and control interfaces).** One
+stationary preparation service, with fixed preparation binding $\xi$,
+supplies a fresh specimen in the same unknown state $\rho=S+iA$ on each
+request. Conditional on this fixed source parameter, every finite list of
+requests has product state $\rho^{\otimes n}$. Separate instrument calls
+act on the requested specimens with separately initialized environments.
+There is no common hidden random choice replacing this product-channel
+requirement. The public frame, calibration and initial classical controller
+state are independent of the unknown source.
+
+The directional interface supplies the instruments of Definition 8.1;
+the depth interface instead supplies the single instrument of Theorem 9.1.
+Each also supplies the specific single-copy and joint binary instruments
+of Definition 10.1, finite scheduling, preparation/setting bindings, and
+writable, subsequently readable classical records. These are explicit
+additional capabilities. A request returns an actual specimen or an
+actual outcome, never an exact probability. Environments discarded by a
+call are inaccessible. No nonreal reference, source-dependent selector,
+cloning operation or hidden Kraus label is supplied.
+
+These assumptions define alternatives to the wait/read/Stop menu in
+Definition 1.2. They do not implement new operations in that old menu or
+alter its initialization. Likewise they supply no interpretation of these
+controls as native $\alpha/\beta$ constructors.
+

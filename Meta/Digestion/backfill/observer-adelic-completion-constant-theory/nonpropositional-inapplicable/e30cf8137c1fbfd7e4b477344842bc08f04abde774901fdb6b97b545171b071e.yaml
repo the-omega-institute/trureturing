@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:e30cf8137c1fbfd7e4b477344842bc08f04abde774901fdb6b97b545171b071e
+  normalized_sha256: sha256:e30cf8137c1fbfd7e4b477344842bc08f04abde774901fdb6b97b545171b071e
+cas_ref: sha256:e30cf8137c1fbfd7e4b477344842bc08f04abde774901fdb6b97b545171b071e
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 符号约定：在因子化猜想中以 P_3、P_3' 命名 J_mod 的谱投影；本条仅指定符号，不声称猜想、投影存在性或任何投影恒等式成立。
+    previous_atom_id: 1f8aa59000a8b84b15fd320701faea518be948fbcf9ebf273af91a9ad169cb72
+    next_atom_id: 607f9777c11b622d368af48c632f103ddbdc13deccb8adf31db586c4ba36be9d

@@ -1,0 +1,38 @@
+**Corollary 249.3 (Measure-and-separable-prepare inclusion).**
+Every finite common trace-nonincreasing map of the form
+
+$$
+\mathcal E(X)=\sum_h\operatorname{Tr}(M_hX)\sigma_h,\qquad
+M_h\succeq0,\quad\sum_hM_h\preceq I,
+\tag{249.13}
+$$
+
+where every $\sigma_h$ is a fixed normalized separable output state,
+has $\mathcal E^*(H)\succeq0$. If such maps are actual native instruments
+with positive success throughout $D$, no schedule of them satisfies
+$\mathsf Q$. The hypothesis is the full map representation (249.13),
+not merely separability of the tested native outputs.
+
+Proof. For a separable $\sigma_h$, Alice transpose preserves positivity
+termwise in a product-state decomposition, so $\sigma_h^\Gamma\succeq0$.
+Consequently
+
+$$
+\operatorname{Tr}(H\sigma_h)
+=\operatorname{Tr}(\Phi\sigma_h^\Gamma)\ge0,\qquad
+\mathcal E^*(H)=\sum_h\operatorname{Tr}(H\sigma_h)M_h\succeq0.
+\tag{249.14}
+$$
+
+Theorem 249.2 applies. Complete histories in (249.13) may include all
+coins and adaptive outcomes; their finite operation table is fixed
+independently of $q$. The construction of Theorem 248.2 has exactly this
+form after its measurements and fixed separable preparations, so the
+obstruction applies to every schedule within this stated map class,
+beyond the sufficient schedule (248.6). Allowing arbitrary collective
+POVM effects $M_h$ enlarges the class for the obstruction; it does not
+implement those POVMs by native LOCC. A classical supplier appearing
+inside a different coherent construction does not alone put that
+construction in (249.13). Only the displayed forward inclusion is used;
+no CP- or separable-map-to-LOCC converse follows. ∎
+

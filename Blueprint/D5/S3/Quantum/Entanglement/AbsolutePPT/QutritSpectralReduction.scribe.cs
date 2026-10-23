@@ -151,14 +151,6 @@ internal sealed class QutritSpectralReductionDocument : IScribeDocumentDefinitio
         return Binders(Eq(Call("bell",ij,kl),body),
             ("i",Fin(Int(3))),("j",Fin(Int(3))),("k",Fin(Int(3))),("l",Fin(Int(3))));
     }
-    private static Formula PermutationUnitaryDefinition()
-    {
-        var i=Id("I"); var e=Id("e");
-        var matrix=Matrix(i,i,C);
-        return Binders(Eq(Typed(Call("permutationU",e),matrix),Call("Equiv.permMatrix",e,C)),
-            ("I",Id("Type")),("",Call("Fintype",i)),("",Call("DecidableEq",i)),
-            ("e",Call("Equiv.Perm",i)));
-    }
 
     private static Formula Pair(Formula a, Formula b) => Parenthesized(Seq(a,Comma,b));
     private static Formula J3 => Prod(Fin(Int(3)),Fin(Int(3)));
@@ -339,24 +331,12 @@ internal sealed class QutritSpectralReductionDocument : IScribeDocumentDefinitio
             Desc("QutritSpectralReduction","bell_mem_unitaryGroup","The Bell basis matrix is unitary",
                 Seq(Id("bell"),InMacro,Sp,Call("unitaryGroup",Prod(Fin(Int(3)),Fin(Int(3))),C)),
                 "The Bell basis matrix is unitary. Its diagonal entries fix the diagonal basis vectors, while each off-diagonal pair is rotated by the reciprocal square root of two. Spectral reduction and the diagonalization of a pure state's partial transpose use this change of basis.",DescribeRole.Theorem),
-            Desc("QutritSpectralReduction","permutationU","Permutation unitary",PermutationUnitaryDefinition(),
-                "The unitary associated with a permutation has its permutation matrix as its underlying complex matrix. It reorders the diagonal coordinates in spectral decompositions."),
-            Desc("QutritSpectralReduction","extendUnitaryAlong","Extension by an identity block",SharedStatement("extendUnitaryAlong"),
-                "Given an equivalence from a finite disjoint union to the ambient coordinates, extend a unitary on the first summand by the identity on the complement, then transport its matrix along the inverse equivalence. The old qutrit extension and the four-by-four local corner use this same construction."),
-            Desc("QutritSpectralReduction","extendUnitaryAlong_diagonal","Conjugation of an extended diagonal",SharedStatement("extendUnitaryAlong_diagonal"),
-                "Conjugating a packed diagonal by the extended unitary conjugates its first block and leaves its complementary diagonal block fixed. This identity transports matrices; it does not assert that a general coordinate equivalence commutes with partial transpose.",DescribeRole.Theorem),
-            Desc("QutritSpectralReduction","c_square","The Bell coefficient square",SharedStatement("c_square"),
-                "The reciprocal square root of two has square one half over the complex numbers. This is the existing scalar calculation used by the Bell principal-compression computation.",DescribeRole.Theorem),
-            Desc("QutritSpectralReduction","c_star","The Bell coefficient is real",SharedStatement("c_star"),
-                "Complex conjugation fixes the real Bell coefficient. The Bell principal-compression computation uses this identity.",DescribeRole.Theorem),
             Desc("QutritSpectralReduction","pack","Packing nine spectral coordinates",SharedStatement("pack"),
                 "The nine real values are packed into the local product corner with rows (l8,l7,l5), (l0,l6,l4), (l1,l2,l3), and then cast to complex numbers. This arrangement is chosen for its Bell partial transpose."),
             Desc("QutritSpectralReduction","KC1","Complex first boundary matrix",SharedStatement("KC1"),
                 "The complex matrix is the entrywise real-to-complex cast of K1. Its concrete entries are also used by the Bell computation; KC1_map proves the displayed identification."),
             Desc("QutritSpectralReduction","bell_pt_principal","Bell partial-transpose compression",SharedStatement("bell_pt_principal"),
                 "The principal submatrix on the three diagonal product coordinates of the Bell-conjugated packed diagonal is one half of KC1. The four-by-four bridge reuses this exact calculation on a genuine local product corner.",DescribeRole.Theorem),
-            Desc("QutritSpectralReduction","appt_conjugate","APPT survives global unitary conjugation",SharedStatement("appt_conjugate"),
-                "For finite local index types, absolute positivity under partial transpose is preserved by global unitary conjugation. This follows by composing the tested unitaries, rather than transporting partial transpose through an arbitrary coordinate map.",DescribeRole.Theorem),
             Desc("QutritSpectralReduction","swap56","The two middle corner positions are swapped",SharedStatement("swap56"),
                 "The corner permutation exchanges product positions (1,1) and (0,2), fixing every other position. Its permutation unitary implements the swap needed for the second spectral matrix."),
             Desc("QutritSpectralReduction","flip56","Swapping spectral values five and six",SharedStatement("flip56"),
@@ -365,8 +345,6 @@ internal sealed class QutritSpectralReductionDocument : IScribeDocumentDefinitio
                 "Conjugating the packed diagonal by the specified corner permutation unitary gives the packed diagonal for flip56. This is the common computation used to derive the second boundary constraint.",DescribeRole.Theorem),
             Desc("QutritSpectralReduction","KC2","Complex second boundary matrix",SharedStatement("KC2"),
                 "The second complex boundary matrix is KC1 after exchanging spectral indices 5 and 6. KC2_map identifies it with the complex cast of K2."),
-            Desc("QutritSpectralReduction","real_psd_of_complex","Real positivity descends from the complex cast",SharedStatement("real_psd_of_complex"),
-                "A positive semidefinite complex cast of a finite real matrix forces the real matrix to be positive semidefinite. The proof restricts the complex quadratic form to real vectors and recovers real symmetry.",DescribeRole.Theorem),
             Desc("QutritSpectralReduction","KC1_map","The first complex-to-real identification",SharedStatement("KC1_map"),
                 "The first concrete complex Bell matrix is the entrywise cast of the real first boundary matrix. This allows positive semidefiniteness to descend to the certificate coordinates.",DescribeRole.Theorem),
             Desc("QutritSpectralReduction","KC2_map","The second complex-to-real identification",SharedStatement("KC2_map"),
@@ -375,8 +353,6 @@ internal sealed class QutritSpectralReductionDocument : IScribeDocumentDefinitio
                 "If a unitary conjugate is APPT, the original matrix is APPT. The inverse unitary cancels the conjugation and the already proved conjugation invariance applies.",DescribeRole.Theorem),
             Desc("QutritSpectralReduction","unitary_purity_trace","Unitary conjugation preserves trace-square",SharedStatement("unitary_purity_trace"),
                 "The trace of the square is unchanged by unitary conjugation over any finite index type. This is an algebraic statement; no positivity or trace normalization is assumed.",DescribeRole.Theorem),
-            Desc("QutritSpectralReduction","permutation_conjugate","Permutation conjugation is coordinate reindexing",SharedStatement("permutation_conjugate"),
-                "Conjugation by the permutation unitary gives the simultaneous row-and-column submatrix reindexing. The spectral packing argument uses this identity before testing APPT.",DescribeRole.Theorem),
             Desc("QutritSpectralReduction","unitary_trace","Unitary conjugation preserves trace",SharedStatement("unitary_trace"),
                 "The trace is unchanged by unitary conjugation over any finite index type. The cyclic trace identity and the unitary inverse establish the equality.",DescribeRole.Theorem),
             Desc("QutritSpectralReduction","packIndex","The corner packing index map",SharedStatement("packIndex"),

@@ -292,7 +292,7 @@ open D5.S3.Quantum.Foundation.FiniteTraceDistance (traceNorm traceNorm_of_posSem
 
 set_option maxHeartbeats 600000
 
-private theorem sqrt_diagonal {n : Type*} [Fintype n] [DecidableEq n]
+theorem sqrt_diagonal {n : Type*} [Fintype n] [DecidableEq n]
     (p : n → ℝ) (hp : ∀ i, 0 ≤ p i) :
     CFC.sqrt (Matrix.diagonal (fun i => (p i : ℂ))) =
       Matrix.diagonal (fun i => (Real.sqrt (p i) : ℂ)) := by

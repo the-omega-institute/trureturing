@@ -1,0 +1,4 @@
+For every original outcome in (10.4), $h_q$ conjugates its complete permutation to $f_{\rho,\sigma}$. If that outcome satisfies $\sigma|_{E\setminus U}=a$, it also conjugates its cut on all edges of $U$ to $Q_a$, transports each actual first-return endpoint and length, and maps the whole set of untouched cycles with their original iterates.
+
+2. The vector $\sigma$ is uniform on $\tau+W_B$, with exactly $2^{c(F)}$ original pairs $(q,\eta)$ above each supported vector. Its support is characterized by
+

@@ -1,0 +1,16 @@
+**假设 11.1（uniform five-original-label Gaussian experiment）。** Let the five original labels have prior $1/5$, covariance $I_2$, and means
+
+$$
+\mu_1=\mu_2=(-q,0),\qquad \mu_3=(0,b),\qquad
+\mu_4=\mu_5=(q,0),
+$$
+
+where $q$ is fixed with $0<q<\sqrt{2\ln4}$ and $b>0$. Write $r_0(q,b)$ for the infimum binary zero--one risk for deciding whether the label is the singleton $3$ from one complete observation, and put
+
+$$
+B(q,b)=\frac15-r_0(q,b),\qquad
+c(q)=\ln4-\frac{q^2}{2}>0.
+$$
+
+This is a continuous two-dimensional observation law; no preparation, quantizer, training, or physical-realization assertion is part of the assumption.
+

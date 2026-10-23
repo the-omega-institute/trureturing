@@ -1,0 +1,107 @@
+**Lemma 9.1 (a smooth auxiliary potential with a positive decaying source).**
+In the first-kind whitened coordinates $(\xi,\eta,\upsilon)$ of (1.5),
+put
+
+$$
+\begin{gathered}
+U=\partial_\xi-\tfrac\eta2\partial_\upsilon,\qquad
+V=\partial_\eta+\tfrac\xi2\partial_\upsilon,\qquad
+\Delta_H=U^2+V^2,\\
+q\cdot q'=(\xi+\xi',\eta+\eta',
+ \upsilon+\upsilon'+(\xi\eta'-\eta\xi')/2),\qquad
+G_H(q)=(2\pi)^{-1}R(q)^{-2},\\
+f_s(q)=\bigl(1+R(q)^4/s^4\bigr)^{-3/4},\qquad
+\mathcal U_s(q)=\int_{\mathbb R^3}G_H(z^{-1}\cdot q)f_s(z)\,dz,
+\quad s>0.
+\end{gathered}
+\tag{9.1}
+$$
+
+Lebesgue measure $dz$ is Haar measure for this auxiliary group. The
+integral is finite, nonnegative and smooth, and
+
+$$
+-\Delta_H\mathcal U_s=f_s,\qquad
+f_s(q)\asymp\frac{s^3}{(s+R(q))^3},\qquad
+|Z_{i_1}\cdots Z_{i_k}\mathcal U_s(q)|
+ \le C_k\frac{s^3}{(s+R(q))^{1+k}},\quad 0\le k\le4,
+\quad (Z_1,Z_2)=(U,V).
+\tag{9.2}
+$$
+
+For $k=0$ the derivative denotes the function itself. Constants are
+independent of $s,q$ and the word of length $k$. In particular
+$0\le\mathcal U_s\le Cs^2$. These are deterministic auxiliary tests;
+no new random command, source normalization or physical domain is
+introduced.
+
+Proof. G, Theorem 10.2, including its flux calculation after (10.9),
+gives $-\Delta_HG_H=\delta_0$ relative to Lebesgue measure. The kernel
+is smooth away from zero, homogeneous of degree $-2$, and its horizontal
+derivatives of order $k$ have degree $-2-k$. The function $f_1$ is
+smooth even at zero, since $R^4=(\xi^2+\eta^2)^2+16\upsilon^2$ is a
+polynomial. At infinity $f_1=O(R^{-3})$. The potential integral converges:
+near its diagonal the kernel $R^{-2}$ is locally integrable in homogeneous
+volume dimension four; at infinity its radial majorant is $CR^{-2}dR$.
+
+Here are uniform derivative bounds, including the derivatives needed for
+the discrete transfer. Write $\mathfrak d_a(\xi,\eta,\upsilon)
+=(a\xi,a\eta,a^2\upsilon)$ and $u=\mathcal U_1$. For $a\ge1$,
+change variables $z=\mathfrak d_a w$ to obtain
+
+$$
+a\,u(\mathfrak d_a q)
+ =\int G_H(w^{-1}\cdot q)g_a(w)\,dw,\qquad
+g_a(w)=\bigl(a^{-4}+R(w)^4\bigr)^{-3/4}
+ \le R(w)^{-3}.
+\tag{9.3}
+$$
+
+Consider $q$ in the fixed compact annulus $1\le R(q)\le2$.
+Split the integral by smooth cutoffs into a sufficiently small ball
+about $w=0$, a fixed intervening annulus, and the complement of a
+sufficiently large ball. The small ball is separated from every such
+$q$ in group distance. All derivatives in $q$ of its kernel are uniformly
+bounded, and $R^{-3}$ is integrable there. On the outer region those
+derivatives are bounded by $C_kR(w)^{-2-k}$, by homogeneity and compactness
+of the unit gauge sphere. Multiplication by $g_a\le R^{-3}$ gives the
+integrable radial bound $C_kR^{-2-k}dR$.
+
+On the intervening annulus, let $h_a$ be $g_a$ times its smooth compact
+cutoff. All ordinary derivatives of $h_a$ are bounded uniformly in
+$a\ge1$, because this support avoids zero. Its contribution is
+
+$$
+\int G_H(w^{-1}\cdot q)h_a(w)dw
+ =\int G_H(v)h_a(q\cdot v^{-1})dv.
+\tag{9.4}
+$$
+
+For $q$ in a neighbourhood of the fixed annulus, the integrand and all
+its $q$ derivatives vanish outside a common compact set of $v$.
+Differentiate the smooth factor $h_a(q\cdot v^{-1})$. Its derivatives
+are uniformly bounded on that set, and $G_H(v)$ is integrable there.
+Thus the middle contribution has uniformly bounded derivatives too.
+This proves that all horizontal derivatives through order four of the
+right side of (9.3) are uniformly bounded on the fixed annulus.
+Homogeneity of each horizontal field gives
+$|Z_{i_1}\cdots Z_{i_k}u(q)|\le C_kR(q)^{-1-k}$ for $R(q)\ge1$.
+On a fixed ball the same cutoff argument, with the smooth $f_1$ in the
+middle part, bounds all derivatives and proves smoothness.
+
+The fundamental-solution identity gives $-\Delta_Hu=f_1$ in
+distributions. For example, first cut $f_1$ off at a large radius; its
+potentials have that identity, and their omitted tails, together with
+all local horizontal derivatives through order two, tend to zero by
+the outer-region bounds above. Smoothness makes the identity pointwise.
+Finally
+$\mathcal U_s(q)=s^2u(\mathfrak d_{1/s}q)$ and
+$f_s(q)\asymp s^3(s+R(q))^{-3}$. Scaling proves (9.2). $\square$
+
+The fundamental solution and convolution calculus used here are classical
+intermediate tools; see Ciatti–Cowling–Ricci,
+[*Hardy and uncertainty inequalities on stratified Lie groups*, §2,
+(2.1), (2.5)–(2.7)](https://arxiv.org/html/1308.2373v1).
+The derivative bounds for the particular noncompact smooth source $f_s$
+are proved above, rather than inferred from a heat-kernel upper bound.
+

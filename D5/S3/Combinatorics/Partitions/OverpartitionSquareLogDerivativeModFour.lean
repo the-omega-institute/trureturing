@@ -60,7 +60,8 @@ open PowerSeries
 open D5.S3.Combinatorics.TwoColorPartition.AndrewsElBachraouiDefs (geom)
 open D5.S1.Recurrence.Invariants.ScaledReversionCongruence (geometric)
 open private derivative_map from D5.S1.Recurrence.LinearRows.LinearExponentDyadicSupport
-open private map_inv four_zero from D5.S1.Recurrence.Parity.BilateralQuarticPowerThetaModFour
+open private four_zero from D5.S1.Recurrence.Parity.BilateralQuarticPowerThetaModFour
+open D5.S1.Recurrence.Parity.BilateralQuarticPowerThetaModFour (map_inv)
 
 noncomputable def pbar (m : ℕ) : ℚ :=
   coeff m (∏ k ∈ Finset.Icc 1 m, (1 + X ^ k) * ((1 : PowerSeries ℚ) - X ^ k)⁻¹)

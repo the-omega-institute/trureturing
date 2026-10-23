@@ -1,6 +1,7 @@
 """Native integration publication contracts with local Git and transport fixtures."""
 import json
 import pathlib
+import random
 import shutil
 import subprocess
 import tarfile
@@ -10,11 +11,14 @@ from lean_seed_support import ROOT, digest, write
 
 
 class ReleaseVerificationCases:
-    def verification_fixture(self):
+    def verification_fixture(self, chunk_bytes=None):
         shutil.copy2(ROOT / "Makefile", self.root / "Makefile")
         helper = "tools/scripts/worktree/lean_cache_release.py"
         (self.root / helper).parent.mkdir(parents=True, exist_ok=True)
         shutil.copy2(ROOT / helper, self.root / helper)
+        if chunk_bytes is not None:
+            owner = self.root / helper
+            owner.write_text(owner.read_text().replace("CHUNK_BYTES = 1610612736", f"CHUNK_BYTES = {chunk_bytes}"))
         for args in (["init", "-q", str(self.root)],
                      ["-C", str(self.root), "add", "-f", "Makefile", "tools", "lake-manifest.json",
                       "lean-toolchain", "lakefile.toml", "Trureturing.lean", "D5"],
@@ -155,6 +159,51 @@ os.execv({real_git}, [{real_git}, *sys.argv[1:]])
         self.assertIn(tag, fetched.stdout)
         self.assertEqual("locally-produced-olean", (self.root / ".lake/build/lib/lean/D5/A.olean").read_text())
         self.assertEqual(["lean-report LEAN_REPORT_CACHE_MISS_POLICY=reuse-or-build LEAN_REPORT=.lake/build/stratalint/raw-lean-report.json", "lean-report LEAN_REPORT_CACHE_MISS_POLICY=reuse-or-build LEAN_REPORT=.lake/build/stratalint/raw-lean-report.json"], (self.root / "build-runs").read_text().splitlines())
+
+    def assert_verification_fits_restore_workspace(self, chunk_bytes=None):
+        self.verification_fixture(chunk_bytes)
+        payload = random.Random(31).randbytes(64 * 1024)
+        material = self.root / ".lake/build/lib/lean/D5/A.olean"
+        material.write_bytes(payload)
+        write(self.bin / "sitecustomize.py", '''
+import errno, json, os, pathlib, tarfile
+original_extract = tarfile.TarFile.extractall
+def extract(archive, path, *args, **kwargs):
+    downloaded = pathlib.Path(archive.name).parent
+    manifest = json.loads((downloaded / "manifest.json").read_text())
+    stage = downloaded.parent
+    resident = sum(member.stat().st_size for member in stage.rglob("lean-build.tgz*") if member.is_file())
+    unpacked = sum(member.size for member in archive.getmembers() if member.isfile())
+    archive_bytes = manifest["archive_bytes"]
+    # The empty target has room for the incoming transport and unpacked build,
+    # including multipart reassembly, but not the uploader's obsolete copies.
+    budget = unpacked + archive_bytes * (2 if len(manifest["parts"]) > 1 else 1)
+    reading = dict(resident=resident, unpacked=unpacked, budget=budget, archive_bytes=archive_bytes,
+                   parts=len(manifest["parts"]))
+    pathlib.Path(os.environ["FAKE_SPACE_READING"]).write_text(json.dumps(reading))
+    if resident + unpacked > budget:
+        raise OSError(errno.ENOSPC, "verification transport exhausted the restore workspace")
+    return original_extract(archive, path, *args, **kwargs)
+tarfile.TarFile.extractall = extract
+''')
+        reading = self.root / "space-reading.json"
+        result = self.verification("publish", PYTHONPATH=str(self.bin), FAKE_SPACE_READING=str(reading))
+        self.assertEqual(0, result.returncode, result.stdout + result.stderr)
+        self.assertIn('"status":"published"', result.stdout)
+        self.assertEqual(payload, material.read_bytes())
+        measured = json.loads(reading.read_text())
+        self.assertLessEqual(measured["resident"] + measured["unpacked"], measured["budget"])
+        self.assertEqual(chunk_bytes is not None, measured["parts"] > 1)
+        calls = self.verification_calls()
+        self.assertTrue(any(call[:2] == ["release", "download"] for call in calls))
+        self.assertFalse(any(call[:2] in (["release", "list"], ["release", "delete"])
+                             for call in calls))
+
+    def test_single_asset_verification_fits_restore_workspace(self):
+        self.assert_verification_fits_restore_workspace()
+
+    def test_multipart_verification_fits_restore_workspace(self):
+        self.assert_verification_fits_restore_workspace(16 * 1024)
 
     def test_verification_failure_never_falls_back_or_clobbers_tags(self):
         self.verification_fixture()

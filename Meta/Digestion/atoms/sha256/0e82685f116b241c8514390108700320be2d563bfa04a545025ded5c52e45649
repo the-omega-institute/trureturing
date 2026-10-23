@@ -1,0 +1,14 @@
+**Proposition 7.3 (Everywhere-positive likelihood is not a whole-child selector).** For any fixed original word and every $W$, the record density $p_w(r\mid W)$ is strictly positive at every $r$. All these laws are mutually absolutely continuous. No event of the acquired record can have probability one for one world and zero for another.
+
+If an additional Borel probability prior $\Pi$ on $\mathcal W$ is supplied, the continuous likelihood update
+
+$$
+\Pi_r(dW)=
+\frac{p_{w_A}(r\mid W)}
+{\int_{\mathcal W}p_{w_A}(r\mid V)\,\Pi(dV)}\,\Pi(dW)
+$$
+
+is equivalent to $\Pi$ for every $r$. In particular any positive-prior off-child set retains positive posterior probability at $r=h(p,v)$. Without a supplied prior, no posterior on worlds is defined by the instrument.
+
+Proof. The positive-definite covariance in Theorem 5.1 gives an everywhere-positive finite Gaussian density. Equality of its null sets with Lebesgue null sets proves mutual absolute continuity and the assertion about probability-one versus probability-zero events. The likelihood is measurable in $W$, since the mean is a continuous function of $(r,b,a_0,\ldots,a_3,d)$ on the original domain. For a fixed word its maximum is bounded above by $(2\pi)^{-(t+1)/2}(\det C_w)^{-1/2}$ independently of $W$. The prior normalization is therefore finite and strictly positive. Multiplication by a strictly positive density preserves exactly the prior's null sets, proving the posterior assertion for every $r$ in this explicit version. The actual exact-history event remains null as in Theorem 7.2. $\square$
+

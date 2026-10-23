@@ -1,0 +1,9 @@
+fingerprints:
+  raw_sha256: sha256:8d3d7166cb8643ef025e66a24812cd7b2bb17ce78d8e54e6b9202b4d7bb0e1b9
+  normalized_sha256: sha256:8d3d7166cb8643ef025e66a24812cd7b2bb17ce78d8e54e6b9202b4d7bb0e1b9
+cas_ref: sha256:8d3d7166cb8643ef025e66a24812cd7b2bb17ce78d8e54e6b9202b4d7bb0e1b9
+coverage_gids:
+  - gid: D5/S3/ConceptDynamics/Attribution/SingletonAxisSelectionObstruction.no_equivariant_singleton_axis_selector
+    target_statement_id: sha256:7bdd7de4013bfd7545e1bcf1dc4aa66903b019fd467ff3aab1bea1b9a9499d0c
+receipts:
+  unresolved_subitems: []

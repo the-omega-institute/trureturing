@@ -222,7 +222,7 @@ private theorem square_product_entire (Z : ZeroData) :
 private theorem square_product_at_zero (Z : ZeroData) :
     squareCanonicalProduct Z 0 = 1 := by
   simp [squareCanonicalProduct]
-private theorem xi_logDeriv_reflection (s : ℂ) :
+theorem xi_logDeriv_reflection (s : ℂ) :
     logDeriv xiReading (1 - s) = -logDeriv xiReading s := by
   have hc := logDeriv_comp (xi_reading_differentiable (1 - s))
     (by fun_prop : DifferentiableAt ℂ (fun z : ℂ => 1 - z) s)
