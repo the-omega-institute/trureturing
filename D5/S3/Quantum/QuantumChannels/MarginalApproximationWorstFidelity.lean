@@ -229,7 +229,20 @@ private lemma shift_unitary (N : ℕ) : (cyclicShift N)ᴴ * cyclicShift N = 1 :
 private lemma shift_cptp (N : ℕ)
     (he : ∑ a, shiftCoeff N a • pauliString a = cyclicShift N)
     (hu : (cyclicShift N)ᴴ * cyclicShift N = 1) : IsProcessCPTP (shiftProcess N) := by
-  sorry
+  classical
+  refine ⟨Matrix.posSemidef_vecMulVec_self_star (shiftCoeff N), ?_⟩
+  have hstar : (∑ a, star (shiftCoeff N a) • pauliString a) = (cyclicShift N)ᴴ := by
+    have h := congrArg (fun A : Matrix (Fin N → Fin 2) (Fin N → Fin 2) ℂ => Aᴴ) he
+    simpa only [Matrix.conjTranspose_sum, Matrix.conjTranspose_smul,
+      pauliString_word, word_hermitian] using h
+  calc
+    _ = (∑ b, star (shiftCoeff N b) • pauliString b) *
+        (∑ a, shiftCoeff N a • pauliString a) := by
+      rw [Matrix.sum_mul]
+      simp only [Matrix.mul_sum, Matrix.smul_mul, Matrix.mul_smul, Finset.smul_sum,
+        smul_smul, shiftProcess, Matrix.vecMulVec_apply, Pi.star_apply]
+      rw [Finset.sum_comm]
+    _ = 1 := by rw [hstar, he, hu]
 
 private lemma shift_marginals (N : ℕ) (hN : 2 ≤ N) :
     ∀ k, marginal (shiftProcess N) k = (1 / 4 : ℂ) • 1 := by
