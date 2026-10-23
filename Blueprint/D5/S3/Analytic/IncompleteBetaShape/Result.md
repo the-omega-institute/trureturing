@@ -12,6 +12,8 @@ Lean statement: `D5/S3/Analytic/IncompleteBetaShape/Result.convolution_strictAnt
 
 *Source.* Repository-derived.
 
+*Acknowledgement.* D. B. Karp (2016). *Normalized incomplete beta function: log-concavity in parameters and other properties*. DOI: [10.1007/s10958-016-2958-z](https://doi.org/10.1007/s10958-016-2958-z). URL: <https://arxiv.org/abs/1509.05120v1>.
+
 *Commentary.*
 
 Let m be positive, n natural, and b greater than one. The sum over k from zero through n of c(k,m+d,b)c(n-k,m-d,b) strictly decreases as d ranges from zero, included, to m, excluded. The affine beta-mixture representation gives a common positive factor at fixed 2m. Its remaining factor is the beta mean of the continuous symmetric kernel H, which strictly increases toward its midpoint. The existing beta-mean comparison therefore gives strict decrease with the imbalance d.
@@ -24,6 +26,8 @@ Lean statement: `D5/S3/Analytic/IncompleteBetaShape/Result.convolution_strictMon
 
 *Source.* Repository-derived.
 
+*Acknowledgement.* D. B. Karp (2016). *Normalized incomplete beta function: log-concavity in parameters and other properties*. DOI: [10.1007/s10958-016-2958-z](https://doi.org/10.1007/s10958-016-2958-z). URL: <https://arxiv.org/abs/1509.05120v1>.
+
 *Commentary.*
 
 When b lies strictly between zero and one, the same convolution strictly increases with d. The function -H is continuous, symmetric, and strictly increasing toward the midpoint, so it satisfies the beta-mean comparison hypotheses. Linearity of the integral reverses the resulting inequality for H.
@@ -34,7 +38,13 @@ Lean statement: `D5/S3/Analytic/IncompleteBetaShape/Result.result`
 
 *Proof.* Machine-checked in Lean as `D5/S3/Analytic/IncompleteBetaShape/Result.result` (`✓ std3`). ∎
 
+*Resolves.* `Problems/karp-2016-incomplete-beta-first-parameter-coefficient-signs` (proved) by `D5/S3/Analytic/IncompleteBetaShape/Result.result`.
+
+<!-- scribe-open-problem-resolution-v1 {"problem_slug":"karp-2016-incomplete-beta-first-parameter-coefficient-signs","declaration_gid":"D5/S3/Analytic/IncompleteBetaShape/Result.result","resolution_kind":"proved"} -->
+
 *Source.* Repository-derived.
+
+*Acknowledgement.* D. B. Karp (2016). *Normalized incomplete beta function: log-concavity in parameters and other properties*. DOI: [10.1007/s10958-016-2958-z](https://doi.org/10.1007/s10958-016-2958-z). URL: <https://arxiv.org/abs/1509.05120v1>.
 
 *Commentary.*
 

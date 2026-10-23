@@ -64,7 +64,7 @@ Lean statement: `D5/S3/Analytic/IncompleteBetaShape/Mixture.mixture_eq_affine`
 
 For positive p and q, a measurable real test function integrable against the shifted beta mixture has the same mean under the affine variable s v + (1-s)u. Here v has beta shapes p,q, s has beta shapes p+q,n+2, and u is uniform on the unit interval. The joint density normalizer is Gamma(p)Gamma(q)Gamma(n+2)/Gamma(p+q+n+2).
 
-The change of variables x=s v and z=s(1-v) has Jacobian s. At fixed output y its domain becomes the rectangle 0<x<y and 0<z<1-y. Expanding (1-x-z)^n into the n+1 terms ((y-x)+(1-y-z))^n and evaluating each beta integral produces the uniform shifted beta density. Nonnegative integration establishes the measure identity, and integrability transfers it to real test functions.
+The triangle coordinate integral identity, with x=s v and z=s(1-v) and Jacobian s, is restricted to the output rectangle. At fixed output y its domain becomes the rectangle 0<x<y and 0<z<1-y. Expanding (1-x-z)^n into the n+1 terms ((y-x)+(1-y-z))^n and evaluating each beta integral produces the uniform shifted beta density. Nonnegative integration establishes the measure identity, and integrability transfers it to real test functions.
 
 **Theorem 1.6 (Beta mean of the averaged kernel).**
 
@@ -90,3 +90,4 @@ The coefficient convolution at p,q equals K(p+q,n,b) times the beta mean of H(p+
 - Dependency: [D5/S3/Analytic/IncompleteBetaShape/Defs](Defs.md)
 - Dependency: [D5/S3/Analytic/IncompleteBetaShape/Kernel](Kernel.md)
 - Dependency: [D5/S3/Analytic/KummerRatio/BetaIntegral](../KummerRatio/BetaIntegral.md)
+- Dependency: [D5/S3/Quantum/Measurement/QubitIncompatibilityProbability](../../Quantum/Measurement/QubitIncompatibilityProbability.md)

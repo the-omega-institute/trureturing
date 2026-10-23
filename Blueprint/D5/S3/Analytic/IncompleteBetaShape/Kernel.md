@@ -123,4 +123,5 @@ For c positive and b strictly between zero and one, H strictly decreases on the 
 - Truth anchor: `D5/S3/Analytic/IncompleteBetaShape/Kernel.H_strictAntiOn_of_lt_one`
 - Truth anchor: `D5/S3/Analytic/IncompleteBetaShape/Kernel.H_strictMonoOn_of_one_lt`
 - Truth anchor: `D5/S3/Analytic/IncompleteBetaShape/Kernel.H_symm`
+- Dependency: [D5/S3/Analytic/KilbasSaigo/Bounds](../KilbasSaigo/Bounds.md)
 - Dependency: [D5/S3/Analytic/KummerRatio/BetaIntegral](../KummerRatio/BetaIntegral.md)
