@@ -5,7 +5,7 @@ year: 2021
 title: The Riemann hypothesis is true up to 3·10^12
 doi: 10.1112/blms.12460
 url: https://arxiv.org/abs/2004.09765v1
-claim: Published verification supplies the finite-height RH premise. Exact heat-loss factorization and the complete arithmetic block bound give a whole-source negative allowance of order (log T)^(-4) in the original sixth moment; fixed height still leaves a negative allowance. A support-independent Gamma-only lower bound for the prime Hankel form fails on all compact half-line tests. An even actual-source partition controls the joint metric defect and bounds supporting multipliers of negative cap-four minima from below, up to the finite-height signed zero tail. Its null supporting vector bootstraps every fixed logarithmic order below five and recovers individual branch moments with an explicit inverse-multiplier cost; separation of the finite reconstruction intervals replaces its N-fold Fourier-tail payment by a harmonic factor, giving every fixed joint-metric exponent below five on actual negative minima and a fifth-power rate with a log-log factor on nonpositive-energy sources under RH(T), without improving the general exponent-four negative allowance. For hypothetical unit negative cap-four minimizers with a positive supporting multiplier, retaining the errors' own moments also gives every finite logarithmic order and arbitrary fixed logarithmic-power branch rates. A bounded analytic Sobolev regularizer gives positive-order regularity by commuting with the complete energy and paying both original metric defects; its constants deteriorate exponentially as the multiplier tends to zero and do not improve the uniform negative allowance. The same regularity controls finite physical dilation in the complete energy and both original metrics, including the source error itself, with explicit multiplier costs; the resulting sublinear squared-norm rate gives no dilation derivative or uniform allowance improvement. Directly retaining the regularizer's original moment coordinate then improves the squared-error range to every rho < 2s, with a larger inverse-multiplier cost and still no first-order or uniform allowance conclusion. A fixed actual source with every subcritical Sobolev order has a signed critical metric defect of order (log N)^2 while its regularized original moment is O(log N), excluding a universal endpoint absorption when lambda differs from mu even for unit original sources in any prescribed moment cap K>1; no negative/null-minimizer obstruction is inferred.
+claim: Published verification supplies the finite-height RH premise. Exact heat-loss factorization and the complete arithmetic block bound give a whole-source negative allowance of order (log T)^(-4) in the original sixth moment; fixed height still leaves a negative allowance. A support-independent Gamma-only lower bound for the prime Hankel form fails on all compact half-line tests. An even actual-source partition controls the joint metric defect and bounds supporting multipliers of negative cap-four minima from below, up to the finite-height signed zero tail. Its null supporting vector bootstraps every fixed logarithmic order below five and recovers individual branch moments with an explicit inverse-multiplier cost; separation of the finite reconstruction intervals replaces its N-fold Fourier-tail payment by a harmonic factor, giving every fixed joint-metric exponent below five on actual negative minima and a fifth-power rate with a log-log factor on nonpositive-energy sources under RH(T), without improving the general exponent-four negative allowance. For hypothetical unit negative cap-four minimizers with a positive supporting multiplier, retaining the errors' own moments also gives every finite logarithmic order and arbitrary fixed logarithmic-power branch rates. A bounded analytic Sobolev regularizer gives positive-order regularity by commuting with the complete energy and paying both original metric defects; its constants deteriorate exponentially as the multiplier tends to zero and do not improve the uniform negative allowance. The same regularity controls finite physical dilation in the complete energy and both original metrics, including the source error itself, with explicit multiplier costs; the resulting sublinear squared-norm rate gives no dilation derivative or uniform allowance improvement. Directly retaining the regularizer's original moment coordinate then improves the squared-error range to every rho < 2s, with a larger inverse-multiplier cost and still no first-order or uniform allowance conclusion. A fixed actual source with every subcritical Sobolev order has a signed critical metric defect of order (log N)^2 while its regularized original moment is O(log N), excluding a universal endpoint absorption when lambda differs from mu even for unit original sources in any prescribed moment cap K>1; no negative/null-minimizer obstruction is inferred. The same global null equation gives weighted Gamma control at nonnegative multiplier and additional original physical moments at positive multiplier, retaining every theta dilation and the complete mixed debit. Direct physical truncation of the same negative minimizer then preserves its normalized cap and approximates its complete energy at any fixed rate exp(-2 sigma L), sigma<1/4, with constants independent of the supporting multiplier on the bounded branch; a negative deficit delta has a completed physical core of radius O_p(delta^(-p)) for every p>2. No positivity, Gaussian atom-count or uniform allowance improvement follows.
 strata_touched: []
 license: citation-only
 triage: anchor
@@ -2554,3 +2554,325 @@ its SAME global null equation is one possible source.
 This method boundary leaves VHR1's uniform $(\log T)^{-4}$
 allowance unchanged. Full RH and strict Robin for every integer
 $n>5040$ remain unproved.
+
+## Weighted null estimates in the actual theta coordinate
+
+Reuse W317's COMPLETE bilinear debit, W324's actual inverse, VHB3's
+inverse on $H_{4+\eta}$, and VHP7's GLOBAL supporting form. The published
+[exponential convolution-kernel supplier](../Fourier/mantoiupurice2007hardy.md),
+Lemma 3.1, supplies the weighted Gamma step; its hypotheses are checked
+below. Exponentially weighted energy identities and the digamma
+recurrence are classical tools, not new general results.
+The additional repo-derived interface keeps every theta dilation and
+both original metrics while weighting the SAME null source. The
+consumer below is direct physical compactification. This is paper
+mathematics without Lean/kernel certification or a priority claim.
+
+Suppose $F\in\mathcal V$, $\lambda\ge0$, $\mu\in\mathbb R$, and
+$$
+ Q_\lambda(G)=\mathfrak E(G)+\lambda M(G)-\mu\mathcal H(G)\ge0
+ \quad(G\in\mathcal V),\qquad Q_\lambda(F)=0.
+ \tag{VHN1}
+$$
+Polarization gives $Q_\lambda(F,G)=0$ for every ACTUAL $G\in\mathcal V$.
+Keep $U=\mathscr TF$, its zero-extended Gamma coordinate
+$u(t)=(\pi e^t)^{9/4}U(\pi e^t)$, $q=5/4$, and
+$\mathcal G(f)=\int p(\xi)|\widehat f(\xi)|^2d\xi$ with W317's
+fixed $p\ge1$. For every fixed $0<r<1/2$,
+$$
+ \mathcal G(e^{rt}u)\le C_r(1+|\mu|)M(F)
+ \qquad(\lambda\ge0).
+ \tag{VHN2}
+$$
+For $\lambda>0$ there is additionally an ACTUAL $F^{(r)}\in\mathcal V$
+with $\mathscr TF^{(r)}=(x/\pi)^rU$ and
+$$
+ \lambda M_{6+2r}(F)+\mathcal P(F^{(r)})
+ \le C_r(1+|\mu|)M(F),\qquad
+ M_k(F)=\int_\pi^\infty(x/\pi)^k|F(x)|^2dx.
+ \tag{VHN3}
+$$
+At $\lambda=0$, VHN2 asserts a coordinate property only; it does not
+assert $F^{(r)}\in H_6$ or an additional original moment. The constants
+are independent of $F,\lambda,\mu$ but may diverge at $r=1/2$.
+
+### Construct the bounded actual tests before using nullity
+
+For $R\ge1$ set $w(t)=\exp(r\min\{t_+,R\})$ on the WHOLE line and
+$$
+ U_{w^j}(x)=w(\log(x/\pi))^jU(x),\qquad
+ F_{w^j}=\mathscr S U_{w^j},\qquad j=1,2.
+ \tag{VHN4}
+$$
+For each finite $R$, W324 gives $F_{w^j}\in H_6$ and
+$u_{F_{w^j}}=w^ju$. Bounded Lipschitz multiplication preserves the
+logarithmic Gamma form: in its difference representation use
+$\|wf-T_s(wf)\|_2\le\|w\|_\infty\|f-T_sf\|_2+
+\min(\operatorname{Lip}(w)|s|,2\|w\|_\infty)\|f\|_2$.
+The logarithmic kernel is $O(1/s)$ at zero and exponentially decaying
+at infinity; a bounded rational remainder does not change membership.
+This also applies to $w^2$, so BOTH tests belong to $\mathcal V$.
+Membership constants may depend on $R$; the bounds below do not.
+
+### Pay the full Gamma defect after shifting its first pole
+
+Put $a=1/4$, $\alpha=2/\sqrt\pi$, and
+$d_c(\xi)=\Re\operatorname{digamma}(c+i\xi)-\log\pi$. The exact
+owned multiplier, including its rational factor, satisfies
+$$
+ \begin{aligned}
+ p(\xi)&=\alpha\frac{\xi^2+a^2}{\xi^2+q^2}d_a(\xi)+c_\Gamma
+        =\alpha d_q(\xi)-\alpha b(\xi)+c_\Gamma,\\
+ b(\xi)&=\frac{(3/2)d_q(\xi)+a}{\xi^2+q^2}.
+ \end{aligned}
+ \tag{VHN5}
+$$
+Indeed $\operatorname{digamma}(a+1+z)=\operatorname{digamma}(a+z)
++(a+z)^{-1}$ and $q=a+1$. The analytic continuation uses
+$[\operatorname{digamma}(q+iz)+\operatorname{digamma}(q-iz)]/2$,
+not a complex-variable real-part operation. VHN5 makes $p$ analytic
+on $|\Im z|<q$. On every smaller closed strip,
+$p(z)=O(\log(2+|\Re z|))$ and
+$p^{(j)}(z)=O_j(\langle\Re z\rangle^{-j})$ for $j\ge1$.
+Thus $p$ belongs to the supplier's $\mathcal O_0^s(\mathbb C_q)$ for
+any $0<s<1$. Apply its Lemma 3.1 with $m=1$: for
+$k=(p')^\vee$ and every $0<\gamma<q$,
+$\int e^{\gamma|h|}|k(h)|dh<\infty$.
+
+Off the diagonal, the distribution kernel of $p(D)$ is a fixed
+Fourier-normalization multiple of $k(h)/h$; any diagonal delta term
+cancels in the commutator. The difference factor
+in the commutator cancels that denominator, since
+$$
+ \frac{|w(t+h)/w(t)-1|}{|h|}\le r e^{r|h|}.
+$$
+Young's convolution inequality, choosing $r<\gamma<q$, gives
+$\|[p(D),w]w^{-1}\|_{2\to2}\le C_r$, uniformly in $R$.
+The same reasoning for $w^2$ uses $2r<q$; it preserves the operator
+domain, and interpolation with $L^2$ preserves the positive form
+domain. Lipschitz weights follow by smoothing with the same kernel
+bound. These statements also verify the actual test membership in
+VHN4 without invoking a new general weighted-domain theorem.
+
+For $D_\Gamma=\mathcal P(F_w)-\Re\mathcal P(F,F_{w^2})$,
+self-adjointness gives the form identity
+$$
+ \begin{aligned}
+ D_\Gamma&=\Re\langle wu,[p(D),w]u\rangle,\\
+ |D_\Gamma|&\le C_r\|wu\|_2^2\le C_rM(F).
+ \end{aligned}
+ \tag{VHN6}
+$$
+The identities extend from the operator domain by the just established
+form-domain invariance. The last inequality uses $w\le e^{rt}$ on
+the support of $u$, $r<q$, and W324's
+$\|e^{qt}u\|_2^2\le CM(F)$. The zero extension is retained.
+No boundary trace, pole deletion or smooth debit is assumed.
+
+### Keep the mixed original moment instead of absorbing its defect
+
+On $L^2(0,\infty)$ put $v=e^{qt}u$, $T_hv(t)=v(t+h)$ and
+$S=\sum_{n\ge1}\mu(n)n^{-3}T_{2\log n}$. W324 gives exactly
+$$
+ M(F)=\pi^{-7/2}\|Sv\|_2^2,\qquad
+ M(F,F_{w^2})=\pi^{-7/2}\langle Sv,S(w^2v)\rangle.
+$$
+There is no Volterra factor here: the weighted coordinate is $u$.
+For $z=wv$, $A=wSw^{-1}$ and $B=w^{-1}Sw$, the mixed pairing is
+$\pi^{-7/2}\langle Az,Bz\rangle$. Monotonicity and log-Lipschitz
+continuity of $w$ give
+$$
+ \|A-I\|\le\zeta(3)-1<21/100,\qquad
+ \|B-I\|\le\zeta(3-2r)-1\le\zeta(2)-1<13/20.
+$$
+Every positive-half-line translation is a contraction, so these bounds
+pay ALL Möbius shifts. The first numerical inequality follows by
+summing through $n=4$ and bounding the remaining $n^{-3}$ sum by
+$\int_4^\infty x^{-3}dx$; the second follows from
+$\zeta(2)=\pi^2/6$ and $\pi<22/7$. Expansion around the identity yields
+$$
+ \Re M(F,F_{w^2})\ge\frac7{2000}\pi^{-7/2}\|wv\|_2^2,
+ \quad 1-\frac{21}{100}-\frac{13}{20}
+              -\frac{21}{100}\frac{13}{20}=\frac7{2000}>0.
+ \tag{VHN7}
+$$
+
+### Pay the complete mixed debit in the weaker inverse space
+
+Choose $\eta=1-2r>0$ and $a_\eta=1/4+\eta/2=3/4-r$.
+The actual inverse on $H_{4+\eta}$ has norm at most
+$\zeta(1+\eta)$, since its single-dilation norm is $n^{-1-\eta}$.
+Also $\mathcal N(G)^2+\mathcal H(G)\le C_\eta\|G\|_{H_{4+\eta}}^2$.
+Using $\|V\|_{H_k}^2=\pi^{-7/2}\int e^{(k-7/2)t}
+|(\pi e^t)^{9/4}V(\pi e^t)|^2dt$ and
+$a_\eta+2r=3/4+r<q$ gives
+$$
+ \begin{aligned}
+ \mathcal N(F_{w^2})^2+\mathcal H(F_{w^2})
+ &\le C_r\|e^{a_\eta t}w^2u\|_2^2\le C_rM(F),\\
+ |\mathfrak J(F,F_{w^2})|+|\mu|\,|\mathcal H(F,F_{w^2})|
+ &\le C_r(1+|\mu|)M(F).
+ \end{aligned}
+ \tag{VHN8}
+$$
+W317 pays its ENTIRE mixed debit, including every prime power, both
+folded channels, the cutoff and fixed Gamma shift. No diagonal
+$\mathfrak J(F_w,F_w)$ or replacement metric is substituted.
+
+Test VHN1 with the ACTUAL $F_{w^2}$. The exact account is
+$$
+ \mathcal P(F_w)+\lambda\Re M(F,F_{w^2})
+ =D_\Gamma+\Re\mathfrak J(F,F_{w^2})
+                +\mu\Re\mathcal H(F,F_{w^2}).
+$$
+VHN6--VHN8 imply
+$$
+ \mathcal P(F_w)+\frac7{2000}\lambda\pi^{-7/2}\|wv\|_2^2
+ \le C_r(1+|\mu|)M(F).
+ \tag{VHN9}
+$$
+Since $r<q$, the original moment already gives
+$wu\to e^{rt}u$ in $L^2$. Closedness of the positive Gamma form
+proves VHN2 for ALL $\lambda\ge0$. If $\lambda>0$, monotone
+convergence also bounds $\|e^{(q+r)t}u\|_2^2$ by
+$C_r(1+|\mu|)M(F)/\lambda$. The actual inverse on $H_{6+2r}$ has
+norm at most $\zeta(3+2r)$ and agrees with W324's inverse on the
+intersection, proving the additional original moment in VHN3.
+It also makes $F^{(r)}=\mathscr S[(x/\pi)^rU]\in H_6$ well-defined;
+VHN2 supplies its Gamma membership. This proves VHN3 without testing
+with an unbounded-weight source before establishing its domain.
+
+In particular, for $\lambda>0$ and $R_0\ge1$, the SAME original source
+satisfies
+$$
+ M(F\mathbf1_{x\ge\pi R_0})
+ \le C_r(1+|\mu|)\lambda^{-1}R_0^{-2r}M(F).
+$$
+This is a moment-tail statement only; a sharp cutoff is not asserted
+to preserve the Gamma domain. No exponent-seven endpoint is proved.
+
+## Direct physical compactification with the original cap
+
+Apply VHN2--VHN3 to the SAME hypothetical unit negative cap-four
+minimizer of VHP7, allowing $\lambda=0$. For every fixed
+$0<\sigma<1/4$, there is a smooth nonincreasing cutoff $\chi_L(t)$,
+one for $t\le L$ and zero for $t\ge L+1$, such that
+$$
+ \begin{gathered}
+ F_L(x)=\chi_L(\log(x/\pi))F(x),\qquad
+ \widehat F_L=F_L/\sqrt{\mathcal H(F_L)},\\
+ \operatorname{supp}\widehat F_L\subset[\pi,\pi e^{L+1}],
+ \quad M(\widehat F_L)\le M(F)\le4,\\
+ 0\le\mathfrak E(\widehat F_L)-\mathfrak E(F)
+ \le C_\sigma(1+|\mu|)^2 M(F)e^{-2\sigma L}.
+ \end{gathered}
+ \tag{VHCp1}
+$$
+For sufficiently large $L$, the cutoff has nonzero norm. On VHP7's
+bounded-multiplier cap-four branch, its coefficient and the lower
+threshold for $L$ are independent of $\lambda$. This is a quantitative
+SAME-source physical cutoff, unlike W330--W337's general-source
+recovery through a preliminary smoothing and theta reconstruction.
+The completed core need not be a finite Gaussian source. No new
+qualitative density or general cutoff theorem is being asserted.
+
+### Transfer a strictly weighted Gamma norm to the physical source
+
+Choose $1/4<r_1<r_2<1/2$ with $\sigma=r_2-r_1$ and set
+$f(t)=(\pi e^t)^{9/4}F(\pi e^t)$ for $t\ge0$, zero otherwise.
+The ACTUAL theta relation and inverse give, on the positive half-line,
+$$
+ u(t)=\sum_{n\ge1}n^{-1/2}f(t+2\log n),\qquad
+ f(t)=\sum_{n\ge1}\mu(n)n^{-1/2}u(t+2\log n).
+$$
+For $r>1/4$, put $f_r=e^{rt}f$, $u_r=e^{rt}u$. Their zero extensions
+obey $u_r=P_+A_rf_r$, $f_r=P_+S_ru_r$, with
+$$
+ A_r=\sum_{n\ge1}n^{-1/2-2r}T_{2\log n},\qquad
+ S_r=\sum_{n\ge1}\mu(n)n^{-1/2-2r}T_{2\log n}.
+$$
+Both coefficient sums converge absolutely. Translations are isometries
+of the full logarithmic Gamma form. $P_+$ is bounded there by the
+cross-half-line Carleman argument already used in W338 and VHD1.
+Consequently the SAME actual profiles satisfy
+$$
+ \mathcal G(f_r)\le C_r\mathcal G(u_r),\qquad
+ \mathcal G(u_r)\le C_r\mathcal G(f_r).
+ \tag{VHCp2}
+$$
+Moreover $\|f_r\|_2^2=\pi^{7/2}\|F\|_{H_{7/2+2r}}^2$.
+Since $7/2+2r=4+\eta$ with $\eta>0$, this pays $\mathcal N(F)^2$.
+No endpoint $r=1/4$ or unweighted inverse is used.
+
+Put $G_L=F-F_L$ and $a_L(t)=e^{-\sigma t}(1-\chi_L(t))$.
+Then $\|a_L\|_\infty+\|a_L'\|_\infty\le C_\sigma e^{-\sigma L}$.
+Bounded Lipschitz multiplication in the logarithmic form gives
+$\mathcal G(a_Lh)\le C_\sigma e^{-2\sigma L}\mathcal G(h)$.
+Indeed use its equivalent difference norm with kernel $e^{-s}/s$,
+expand the product difference, and bound the multiplier difference by
+$\min(2\|a_L\|_\infty,s\|a_L'\|_\infty)$.
+Since $f_{G_L,r_1}=a_Lf_{r_2}$, VHCp2 and multiplication by
+$e^{-r_1t_+}$ give the complete SAME-tail estimate
+$$
+ \mathcal P(G_L)+\mathcal N(G_L)^2+\mathcal H(G_L)
+ \le C_{r_1,r_2}e^{-2\sigma L}\mathcal G(u_{r_2}).
+ \tag{VHCp3}
+$$
+The original sixth moments of $G_L,F_L$ are finite by bounded physical
+multiplication; VHCp3 establishes their Gamma membership as well.
+
+For $\lambda>0$, VHN3 additionally pays
+$$
+ \lambda\left[M(G_L)+
+ \int_\pi^\infty(1-\chi_L^2)(x/\pi)^6|F|^2dx\right]
+ \le C_{r_2}(1+|\mu|)M(F)e^{-2r_2L}.
+ \tag{VHCp4}
+$$
+At $\lambda=0$, both bracketed quantities are finite from the original
+$M(F)$, and their contributions are exactly zero; no additional
+moment is used. W317, VHN2 and VHCp3--VHCp4 therefore give
+$$
+ 0\le Q_\lambda(G_L)
+ \le C_{r_1,r_2}(1+|\mu|)^2M(F)e^{-2\sigma L}.
+ \tag{VHCp5}
+$$
+The positive-multiplier moment cost $\lambda^{-1}$ is canceled by
+$\lambda$ here; the complete debit is paid in its actual weaker norm.
+
+### Normalize the same core without spending its cap
+
+For the measure $|F(x)|^2dx$, the function $\chi_L^2$ decreases and
+$(x/\pi)^6$ increases. The classical covariance inequality gives
+$M(F_L)/\mathcal H(F_L)\le M(F)\le4$. Also VHCp2 and VHN2 imply
+$$
+ 1-\mathcal H(F_L)\le C\mathcal G(u_{r_2})
+                e^{-(7/2+2r_2)L}.
+$$
+Thus $\mathcal H(F_L)\ge1/2$ beyond a uniform threshold on the bounded
+branch. Mixed nullity gives $Q_\lambda(F_L)=Q_\lambda(G_L)$ exactly,
+and $\mathfrak E(F)=\mu-\lambda M(F)$. Hence
+$$
+ \mathfrak E(\widehat F_L)-\mathfrak E(F)
+ =\frac{Q_\lambda(G_L)}{\mathcal H(F_L)}
+ +\lambda\left[M(F)-\frac{M(F_L)}{\mathcal H(F_L)}\right].
+ \tag{VHCp6}
+$$
+Both terms are nonnegative. Once $\mathcal H(F_L)\ge1/2$, the bracket
+is at most twice the moment loss in VHCp4. At $\lambda=0$ the bracket
+is finite and its contribution is zero. VHCp5--VHCp6 prove VHCp1.
+In particular, if $\mathfrak E(F)=-\delta<0$, choosing
+$L\ge(2\sigma)^{-1}\log(C_\sigma/\delta)$ and the fixed threshold
+retains $\mathfrak E(\widehat F_L)\le-\delta/2$. Its support radius is
+$O_p(\delta^{-p})$ as $\delta\downarrow0$ for any fixed $p>2$,
+using $\sigma=1/(2p)$.
+This gives no finite Gaussian atom-count or coefficient-size bound.
+
+These weighted estimates and compactification do not control the
+critical local log/jump charge. The fixed VHC source has compact
+physical support and already has all finite physical moments; merely
+proving moment finiteness cannot remove that example. Quantitative
+null relations could impose additional cancellation, but none is
+proved here. No dilation derivative, critical signed absorption,
+improved VHR1 allowance or sign of the completed minimum is obtained.
+The existing uniform $(\log T)^{-4}$ allowance is unchanged. Full RH
+and strict Robin for every integer $n>5040$ remain unproved.
