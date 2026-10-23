@@ -61,7 +61,7 @@ internal sealed class MarginalApproximationWorstFidelityDocument : IScribeDocume
                 DeclarationHandle.Create(Module + ".claim"),
                 H("The universal lower bound and cyclic-shift attainment"),
                 StatementSource.FromAuthor(Disp(ClaimFormula())),
-                AssessedProvenance.FromLiterature(Source),
+                AssessedProvenance.FromRepo(Source),
                 Blocks(
                     Paragraph(Text(
                         "The source conjectures the worst-case fidelity value in main.tex lines 284–290 "
