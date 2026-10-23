@@ -25,6 +25,8 @@ F6: D5/S3/Quantum/Dynamics/EntropyProductionCoherenceDeletionIdentity.diagonalSt
   public declaration statement_id (producing Lean report): sha256:29d9fc8170caff55b46b44d1e754079f686dada4d842c9cbbb8ae807649435e7
   baseline private declaration statement_id: sha256:3da5fa3a2feed6b43a22b9342c899b6f94a1556ea1c0fb205175999a3338b7d1
 Escape audit unfinished: https://github.com/the-omega-institute/trureturing/issues/15282
+Escape audit unfinished for cfc_unitary_diagonal:
+https://github.com/the-omega-institute/trureturing/issues/19914
 All theorem proofs are bind-only; private auxiliaries have live consumers.
 Definitions encode the source objects or consumed internal expressions.
 Per-declaration classifications (frozen dependencies expand same-delivery helpers):
@@ -86,7 +88,7 @@ proof_shape: cfc_real_diagonal: bind-only; escape_witness: none
   consumers (cfc_real_diagonal): cfc_unitary_diagonal
 proof_shape: cfc_unitary_diagonal: bind-only; escape_witness: none
   Direct frozen dependencies (cfc_unitary_diagonal): F6
-  consumers (cfc_unitary_diagonal): kronecker_rpow
+  consumers (cfc_unitary_diagonal): kronecker_rpow, ZhangJingPowerCaseSettlement.cfc_unitary_diagonal
 proof_shape: kronecker_rpow: bind-only; escape_witness: none
   Direct frozen dependencies (kronecker_rpow): F3, F6
   consumers (kronecker_rpow): xor_sandwiches
@@ -210,6 +212,7 @@ proof_shape: output_entropy_exp: bind-only; escape_witness: none
 -/
 
 import D5.S3.Quantum.Information.SLDSpectralEnergy
+import D5.S3.Quantum.Dynamics.ProjectionProbabilityFlow
 import D5.S3.Entropy.RenyiCombining.BinaryRenyiCombining
 import D5.S3.Weil.ZetaLinear.RankTrace
 import D5.S3.Quantum.Information.PartialTraceMutualInformation
@@ -371,7 +374,7 @@ private lemma cfc_real_diagonal (d : n → ℝ) (f : ℝ → ℝ) :
   funext i
   simpa [z] using (cfc_algebraMap (R := ℝ) (A := ℂ) (d i) f)
 
-private lemma cfc_unitary_diagonal (U : Matrix.unitaryGroup n ℂ) (d : n → ℝ) (f : ℝ → ℝ) :
+lemma cfc_unitary_diagonal (U : Matrix.unitaryGroup n ℂ) (d : n → ℝ) (f : ℝ → ℝ) :
     cfc f ((U : Matrix n n ℂ) * diagonal (fun i => (d i : ℂ)) * star (U : Matrix n n ℂ)) =
       (U : Matrix n n ℂ) * diagonal (fun i => (f (d i) : ℂ)) * star (U : Matrix n n ℂ) := by
   let phi := (Unitary.conjStarAlgAut ℂ (Matrix n n ℂ) U).toStarAlgHom
