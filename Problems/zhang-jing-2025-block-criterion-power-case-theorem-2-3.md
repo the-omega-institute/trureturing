@@ -89,4 +89,3 @@ Experiment: zhang-jing-2025-theorem-2-3-power-case at commit 03fcc97da76c2b464b6
 ## ASSUMED-UNVERIFIED
 
 Literature completeness is ASSUMED-UNVERIFIED. The source was screened together with the literature named in issue #18757; later articles listed there were not independently read beyond the recorded screen. No priority or exhaustive novelty claim is made.
-
