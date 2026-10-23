@@ -1,0 +1,41 @@
+**Definition 8.1 (directional instrument and response).** Fix $0<t<1$,
+$c_t=1-t^2$, and a finite catalogue $\mathcal V$ of real unit vectors.
+For each $v\in\mathcal V$ supply the two visibly labelled Kraus branches
+
+$$
+D_v=I+(t-1)vv^T,\qquad L_v=\sqrt{c_t}\,vv^T.
+\tag{8.1}
+$$
+
+They form a trace-preserving instrument. Its success probability and
+imaginary successor are
+
+$$
+p_v=1-c_t v^TSv\ge t^2,\qquad A_v=D_vAD_v/p_v.
+\tag{8.2}
+$$
+
+A failure of positive probability leaves the real pure state $vv^T$.
+A zero-probability failure has no conditional state. Fix a public
+orthonormal frame of $v^\perp$ for each supplied direction; it can be
+chosen from projections of the fixed coordinate frame. With $P_v=I-vv^T$
+let $R_v(A)$ be the symmetric operator on $v^\perp$ given by
+
+$$
+R_v(A)=\left.P_vK(D_vAD_v)P_v\right|_{v^\perp}.
+\tag{8.3}
+$$
+
+It has ten entries. It is the corresponding success readout multiplied
+by $p_v^2$, not the unnormalized imaginary part silently identified with
+the normalized one. Define the exact response datum
+
+$$
+\mathcal D_{\mathcal V}(S,A)
+=(S,K(A),b(A),(R_v(A))_{v\in\mathcal V}).
+\tag{8.4}
+$$
+
+Definition 10.1 realizes these entries as expectations of actual
+flagged experiments, without an exact-probability request.
+
