@@ -83,7 +83,24 @@ class NativeReportConsumerTests:
             self.record_result(phase, data, [work])
             return data
 
+        # A shared compiler prerequisite spends time registering its graph,
+        # so concurrent report consumers overlap their first fetch. Lake's
+        # invocation store must still register and compile that graph once.
+        config = self.root / 'lakefile.toml'
+        config.write_text(config.read_text().replace(
+            'name = "LeanInformationAudit"\n',
+            'name = "LeanInformationAudit"\nneeds = ["leanInspector/compilerRegistrationGate"]\n'))
+        producer_config = self.root / 'tools/lean-inspector/lakefile.lean'
+        with producer_config.open('a') as target:
+            target.write('''\ntarget compilerRegistrationGate pkg : Unit := do
+  let root ← repositoryDir pkg
+  IO.FS.withFile (root / "compiler-registrations") .append fun out => out.putStrLn "registered"
+  IO.sleep 1500
+  return Job.nil
+''')
         initial = entry('initial', env=dict(self.env, STRATALINT_ACCEPT_COLD_BUILD='1'))
+        self.assertEqual((self.root / 'compiler-registrations').read_text().splitlines(), ['registered'],
+                         'shared compiler prerequisites must be registered once per Lake invocation')
         self.assertEqual(initial['assessed'], ['Reg.Leaf', 'Reg.Parent'])
         driver = self.root / 'LeanInformationAudit/TemplateEnrollment.lean'
         driver.write_text('def fixtureDriver : Nat := 2\n')

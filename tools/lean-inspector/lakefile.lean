@@ -250,52 +250,51 @@ private def prepareNativeModuleReport (mod : Module) : FetchM (Job PreparedArtif
   let deps ← fetch <| pkg.facet `reportProducer
   let projection ← fetch <| mod.facet `judgeInputs
   let inspector ← reportInspector.fetch
-  -- Register the complete native graph before awaiting individual compiler
-  -- projections. The dependency waits here without becoming report identity.
-  (Job.nil.add projection).bindM fun _ => JobM.runFetchM do
-    let mut deps := deps
-    let projectionPath ← projection.await
-    let inputs ← readJson projectionPath
-    observePhase "lake-module-inputs" "finish"
-    let ownInputs ← IO.ofExcept (inputs.getObjValAs? (Array Json) "inputs")
-    let fibInputs := ownInputs.filter fun entry =>
-      (entry.getObjValAs? String "type").toOption ==
-        some "LeanInformationAudit.AuricFib.Contract.Application"
-    let analyzer := if fibInputs.isEmpty then "" else
-      (root / "tools/scripts/auric-fib-analysis.sh").toString
-    unless ownInputs.size == fibInputs.size do
-      -- Fetch the shared program obligation in Lake's dependency graph. Awaiting
-      -- it without mixing its trace preserves implementation-independent reuse.
-      let some registry := (← getWorkspace).findModule? `LeanInformationAudit.TemplateEnrollment
-        | error "IE-C050 reason=incomplete_closure rule=dtr.report_producer"
-      deps := deps.add (← registry.exportInfo.fetch)
-    deps := deps.mix (← inputBinFile mod.leanFile)
-    deps := deps.mix (← inputBinFile utility)
-    let mut exports := #[(← mod.exportInfo.fetch)]
-    let mut sourceModules := #[mod]
-    for name in claims do
-      let some claim := (← getWorkspace).findModule? name.toName
-        | error s!"utility claim module is not in the Lake workspace: {name}"
-      exports := exports.push (← claim.exportInfo.fetch)
-      sourceModules := sourceModules.push claim
-    -- Only production consumes this source whitelist. Warm artifacts still trace
-    -- the complete compiler exports below. Missing artifacts prepare the same
-    -- Lake-owned closure before extraction; no dependency parser or additional
-    -- cache chooses its members.
-    let prepareProduction : JobM Unit := do
-      let reported ← (← JobM.runFetchM <| fetch <| pkg.facet `reportSourceModules).await
-      let reportState ← (← JobM.runFetchM <| fetch <| pkg.facet `reportBatch).await
-      let mut dependencies := #[]
-      for source in sourceModules do
-        dependencies := dependencies.push source ++
-          (← (← JobM.runFetchM source.transImports.fetch).await)
-      let mut sourcePaths : Array String := #[]
-      for dependency in dependencies do
-        if dependency.name != mod.name && reported.contains dependency.name then continue
-        if let some path ← reportSourcePath root reportState.sourcePaths dependency.leanFile then
-          sourcePaths := sourcePaths.push path
-      writeBinFileIfChanged (utility.addExtension "sources.json")
-        (String.toUTF8 (Lean.toJson sourcePaths).compress)
+  -- Register compiler jobs on FetchM's thread. Concurrent report callbacks
+  -- must only await these jobs: Lake's lookup/create/store is not atomic.
+  let mut exports := #[(← mod.exportInfo.fetch)]
+  let mut sourceModules := #[mod]
+  for name in claims do
+    let some claim := (← getWorkspace).findModule? name.toName
+      | error s!"utility claim module is not in the Lake workspace: {name}"
+    exports := exports.push (← claim.exportInfo.fetch)
+    sourceModules := sourceModules.push claim
+  let closures ← sourceModules.mapM (·.transImports.fetch)
+  let reported ← fetch <| pkg.facet `reportSourceModules
+  let reportState ← (← fetch <| pkg.facet `reportBatch).await
+  let projectionPath ← projection.await
+  let inputs ← readJson projectionPath
+  observePhase "lake-module-inputs" "finish"
+  let ownInputs ← IO.ofExcept (inputs.getObjValAs? (Array Json) "inputs")
+  let fibInputs := ownInputs.filter fun entry =>
+    (entry.getObjValAs? String "type").toOption ==
+      some "LeanInformationAudit.AuricFib.Contract.Application"
+  let analyzer := if fibInputs.isEmpty then "" else
+    (root / "tools/scripts/auric-fib-analysis.sh").toString
+  let mut deps := deps
+  unless ownInputs.size == fibInputs.size do
+    let some registry := (← getWorkspace).findModule? `LeanInformationAudit.TemplateEnrollment
+      | error "IE-C050 reason=incomplete_closure rule=dtr.report_producer"
+    deps := deps.add (← registry.exportInfo.fetch)
+  deps := deps.mix (← inputBinFile mod.leanFile)
+  deps := deps.mix (← inputBinFile utility)
+  -- Only production consumes this source whitelist. Warm artifacts still trace
+  -- the complete compiler exports below. Missing artifacts prepare the same
+  -- Lake-owned closure before extraction; no dependency parser or additional
+  -- cache chooses its members.
+  let prepareProduction : JobM Unit := do
+    let reported ← reported.await
+    let mut dependencies := #[]
+    for source in sourceModules, closure in closures do
+      dependencies := dependencies.push source ++ (← closure.await)
+    let mut sourcePaths : Array String := #[]
+    for dependency in dependencies do
+      if dependency.name != mod.name && reported.contains dependency.name then continue
+      if let some path ← reportSourcePath root reportState.sourcePaths dependency.leanFile then
+        sourcePaths := sourcePaths.push path
+    writeBinFileIfChanged (utility.addExtension "sources.json")
+      (String.toUTF8 (Lean.toJson sourcePaths).compress)
+  (Job.nil.add projection).bindM fun _ => do
     -- Await without mixing: recompilation must succeed, but its implementation
     -- identity is not a report-semantic dependency.
     observePhase "lake-report-programs" "start"
@@ -453,6 +452,13 @@ private def collectNativeReports (pkg : Package) (names : Array String) :
   let mut prepared := #[]
   observePhase "lake-prepare" "start"
   try observePhase "lake-prepare-register" "start" catch _ => pure ()
+  -- Start every compiler projection before awaiting classifications below.
+  -- This keeps compilation parallel while shared graph registration is serial.
+  for name in names do
+    let some mod := (← getWorkspace).findModule? name.toName
+      | error s!"registered report module is not in the Lake workspace: {name}"
+    unless alreadyStarted.contains mod.name do
+      discard <| fetch <| mod.facet `judgeInputs
   for name in names do
     let some mod := (← getWorkspace).findModule? name.toName
       | error s!"registered report module is not in the Lake workspace: {name}"
