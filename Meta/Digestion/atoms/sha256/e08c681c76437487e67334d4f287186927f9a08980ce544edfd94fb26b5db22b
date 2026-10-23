@@ -1,0 +1,71 @@
+**定理 15.1（关系阶数、读出核与 permanent 系数）。** 在上述单参数实验中，完整记录律消去 $\theta$ 当且仅当某个 $a_i=0$，$i\in T$。对任意 $b\in\mathbb R^D$，
+
+$$
+\begin{aligned}
+\partial_\theta\mathbb E(b^{\mathsf T}R_\varepsilon)^q&=0 &&(0\le q<r),\\
+\partial_\theta\mathbb E(b^{\mathsf T}R_\varepsilon)^r
+&=r!\,\varepsilon^r\prod_{i\in T}b^{\mathsf T}a_i.
+\end{aligned}
+\tag{15.3}
+$$
+
+令 $f_{\varepsilon,\theta}$ 为密度，$\Gamma_T=(a_{t_i}^{\mathsf T}a_{t_j})_{i,j=1}^r$。单份新标签记录的 Fisher 信息为
+
+$$
+\begin{aligned}
+\mathcal J_T(\varepsilon)
+&:=\int\frac{(\partial_\theta f_{\varepsilon,\theta})^2}{f_{\varepsilon,\theta}}
+=\varepsilon^{2r}\operatorname{per}(\Gamma_T)+O(\varepsilon^{2r+2}),\\
+\operatorname{per}(\Gamma)&:=\sum_{\pi\in S_r}\prod_{i=1}^r\Gamma_{i,\pi(i)}.
+\end{aligned}
+\tag{15.4}
+$$
+
+若所有参与向量均非零，则该系数严格正。这里的余项在固定实验及固定内部参数点取 $\varepsilon\to0$，不是对增长的 $n,r$ 或趋向概率边界的统一界。
+
+证明。有限差分与高斯特征函数给出精确式
+
+$$
+\partial_\theta\widehat f_{\varepsilon,\theta}(\xi)
+=e^{-\|\xi\|^2/2}\prod_{i\in T}
+\left(e^{i\varepsilon\xi^{\mathsf T}a_i}-1\right).
+\tag{15.5}
+$$
+
+按定理14.1的避超平面论证，乘积恒零恰好要求某个参与向量为零。对次数 $q$ 的条件矩作 $r$ 次有限差分，$q<r$ 时消去；$q=r$ 时只有每个方向各出现一次的项留下，给（15.3）。若所有方向非零，可取同时不垂直于它们的 $b$，因此首次可见矩阶确为 $r$。
+
+为求首项，记 $\phi$ 为标准高斯密度，用经典 Hermite 生成函数定义
+
+$$
+H_T(x)=\left.\partial_{s_1}\cdots\partial_{s_r}
+\exp\left(x^{\mathsf T}\sum_i s_i a_{t_i}
+-\tfrac12\left\|\sum_i s_i a_{t_i}\right\|^2\right)\right|_{s=0}.
+$$
+
+有限差分展开使 $\partial_\theta f_{\varepsilon,\theta}(x)
+=\phi(x)[\varepsilon^rH_T(x)+O_x(\varepsilon^{r+1})]$。
+对两个生成函数取同一个标准高斯期望得到 $\exp(s^{\mathsf T}\Gamma_T t)$；对全部 $s_i,t_i$ 各求一次导数，便有
+
+$$
+\mathbb E H_T(G)^2=\operatorname{per}(\Gamma_T).
+\tag{15.6}
+$$
+
+这使用成熟的高斯 Hermite 配对，只保留跨两份生成函数的配对，并非未正规排序的全部 Wick 配对。最高次齐次项为 $\prod_{i\in T}a_i^{\mathsf T}x$；各向量非零时它不是零多项式，所以平方积分严格正。
+
+积分余项可如下控制。写 $f_{\varepsilon,\theta}=\phi F_\varepsilon$、$\partial_\theta f_{\varepsilon,\theta}=\phi D_\varepsilon$。空集合均值为零且质量 $p_\theta(\varnothing)>0$，故 $F_\varepsilon\ge p_\theta(\varnothing)$。在任意固定小区间 $|\varepsilon|\le\varepsilon_0$，有限均值集的所有所需阶导数被常数乘 $(1+\|x\|)^K e^{c\|x\|}$ 支配。对 $D_\varepsilon^2/F_\varepsilon$ 作有限次求导，分母的负幂仍由该正质量控制，乘 $\phi$ 后均可积。于是信息积分有至 $2r+2$ 阶的连续导数并可逐项 Taylor 展开；$D_\varepsilon$ 的前 $r-1$ 阶导数为零，首系数为（15.6）。最后 $f_{-\varepsilon,\theta}(x)=f_{\varepsilon,\theta}(-x)$ 使信息为偶函数，排除 $2r+1$ 次项，得到（15.4）。$\square$
+
+§14 的四角方向是 $T=\{1,3\}$、$r=2$、$a_1=u,a_3=v$，中位向量 $w$ 不进入有符号差。因此
+
+$$
+\mathcal J_\kappa(\varepsilon)
+=\varepsilon^4 C_2+O(\varepsilon^6),\qquad
+C_2=\|u\|^2\|v\|^2+(u^{\mathsf T}v)^2,
+\tag{15.7}
+$$
+
+且首阶似然方向为 $H_{u,v}(x)=(u^{\mathsf T}x)(v^{\mathsf T}x)-u^{\mathsf T}v$。它读取关系而不要求先反演全部占位坐标。
+
+维数与关系阶数不能互换：若所有 $i\in T$ 都有 $a_i=a\ne0$，则 $\Gamma_T$ 秩一而 $\operatorname{per}(\Gamma_T)=r!\|a\|^{2r}>0$。这仍只是其余参数固定时的单方向结论。例如五位合法历史中 $S=\{1,3\}$、$T=\{1,5\}$，所有位置取同一非零向量 $a$，则两个方向产生相同的密度变化
+$\phi(x)-2\phi(x-\varepsilon a)+\phi(x-2\varepsilon a)$。二参数族 $p^0+\alpha d_S+\beta d_T$ 仅通过 $\alpha+\beta$ 进入记录，不能分别恢复。各方向单独可见不保证联合参数可识别。
+

@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:43d6bc6bcfdfd87c00a5d7071404b003557b12842075b1d3da987a8700e046b0
+  normalized_sha256: sha256:43d6bc6bcfdfd87c00a5d7071404b003557b12842075b1d3da987a8700e046b0
+cas_ref: sha256:43d6bc6bcfdfd87c00a5d7071404b003557b12842075b1d3da987a8700e046b0
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 本 atom 以存在三维配置坐标、Lagrange 性、限制辛形式为零和 dim L=3 作为配置型三框架的定义条件；没有独立推导断言。
+    previous_atom_id: e3bfcd50eb35ec822e12facb4b05da028862e006d29a6a2e4cbe1b3845041fec
+    next_atom_id: 98734125f90892e56eeddd1bcafa924aa82967f510999301d648ec43f7ebf873

@@ -1,0 +1,155 @@
+**Corollary 241.2 (Strict native conditional approximation gap).** For the
+fixed $t_c$ and the exact native family of Definition 240.1,
+
+$$
+\delta_{\mathrm{CP}}>0.
+$$
+
+Equivalently, there is an $\varepsilon>0$, common to the maps, such that every
+$\mathcal E\in\mathcal C$ satisfies
+
+$$
+\sup_{q\in D}\frac12\left\|
+\frac{\mathcal E(\Omega_q)}{\operatorname{Tr}\mathcal E(\Omega_q)}-W_q
+\right\|_1\ge\varepsilon.
+$$
+
+Proof. Theorem 240.3 says that the only completely positive map satisfying
+
+$$
+\mathcal E(\Omega_q)=m_qW_q\quad(q\in D),\qquad m_q\ge0,
+$$
+
+is the zero map. We use that assertion on the actual jointly generated
+family. The local rectangle in Lemma 240.2 is only a proof device inside
+that family; it does not replace it by independent ray parameters. The input
+$\Omega_q$ is exactly (240.4), with the fixed singlet phase and fixed
+Alice--copy--space ordering, and it retains the spectator block.
+
+Write $C_t=4(1+t)^4$. At $t=t_c$ one has
+$(1-t)^2=4t$. Definition 240.1 gives $0<p(q)<1$, hence
+
+$$
+0<g(p(q))\le t,\qquad t<h(p(q))<1.
+$$
+
+Since $U_q$ is a rank-one orthogonal projector, the numerator of (240.4)
+has, on its active spatial block, eigenvalues $t+2g(p(q))$ once and $t$
+three times; on its spectator block it has eigenvalue $t h(p(q))$ four
+times. Consequently, uniformly for every actual $q\in D$,
+
+$$
+mI_8\le\Omega_q\le MI_8,\qquad
+m=\frac{t^2}{C_t}>0,\qquad M=\frac{3t}{C_t}.
+$$
+
+For a nonzero completely positive map $\mathcal E$, set
+$a=\operatorname{Tr}\mathcal E(I_8)$. Then $a>0$: if
+$\mathcal E(I_8)=0$, positivity and
+$0\le X\le\|X\|I_8$ for $X\ge0$ imply
+$0\le\mathcal E(X)\le\|X\|\mathcal E(I_8)=0$, so complex linearity gives
+$\mathcal E=0$. Put $\Phi=\mathcal E/a$. It is completely positive and
+$\operatorname{Tr}\Phi(I_8)=1$. If
+$B=\Phi^*(I_4)$, then $B\ge0$ and $\operatorname{Tr}B=1$, so
+$B\le I_8$; thus $\Phi$ is trace-nonincreasing. Moreover, for every
+actual $q$,
+
+$$
+m\le a_q:=\operatorname{Tr}\Phi(\Omega_q)\le M.
+$$
+
+The original map therefore has the derived uniform success bound
+$\operatorname{Tr}\mathcal E(\Omega_q)=a a_q\ge a m$ for this fixed
+$\mathcal E$. This is a consequence of the actual input bounds, not a
+restriction imposed in Definition 241.1. Scalar rescaling can make $a$ and
+all these successes arbitrarily small across maps, while leaving every
+conditional output unchanged; no assertion is made that success tends to
+zero in $q$ for a fixed map. Conversely, every completely positive $\Phi$
+with $\operatorname{Tr}\Phi(I_8)=1$ is trace-nonincreasing and has positive
+success on every actual input, so it is an admissible normalized
+representative.
+
+Use the output-first Choi matrix
+
+$$
+J(\Phi)=\sum_{i,j=1}^{8}\Phi(|i\rangle\langle j|)\otimes
+|i\rangle\langle j|.
+$$
+
+Watrous, *The Theory of Quantum Information*, Chapter 2, Theorem 2.22 and
+equations (2.65)--(2.66), give complete positivity exactly as
+$J(\Phi)\ge0$ and give the linear inverse from $J(\Phi)$ to $\Phi$.
+The normalized representatives are therefore identified with the compact
+finite-dimensional slice
+
+$$
+K=\{J\in\operatorname{Herm}(\mathbb C^4\otimes\mathbb C^8):J\ge0,
+\operatorname{Tr}J=1\},
+$$
+
+because $\operatorname{Tr}J(\Phi)=\operatorname{Tr}\Phi(I_8)=1$.
+
+For a normalized representative define, for each actual $q$,
+
+$$
+R_q(\Phi)=\Phi(\Omega_q)-a_qW_q,\qquad
+\eta=\inf_{\Phi\,:,J(\Phi)\in K}\ \sup_{q\in D}\|R_q(\Phi)\|_1.
+$$
+
+This is finite: $\Phi(\Omega_q)$ and $a_qW_q$ are positive with the same
+trace $a_q$, so $\|R_q(\Phi)\|_1\le2a_q\le2M$. Suppose for contradiction
+that $\eta=0$. Choose normalized maps $\Phi_n$ with
+$\sup_{q\in D}\|R_q(\Phi_n)\|_1\to0$. Compactness of $K$ supplies one
+convergent subsequence of their Choi matrices, with limit $J_*$ and map
+$\Phi_*$. For every fixed actual $q$, Choi inversion and finite-dimensional
+linearity give
+
+$$
+R_q(\Phi_*)=\lim_n R_q(\Phi_n)=0.
+$$
+
+The same single subsequence works for every fixed $q$ because the preceding
+residual bound was a supremum over all of $D$; no compactness of $D$ and no
+source-dependent subsequence is used. Thus
+$\Phi_*(\Omega_q)=\operatorname{Tr}\Phi_*(\Omega_q)W_q$ for every actual
+$q$, with nonnegative masses (indeed at least $m$). Theorem 240.3 forces
+$\Phi_*=0$, contradicting
+$\operatorname{Tr}\Phi_*(I_8)=1$. Hence $\eta>0$.
+
+Finally, for an arbitrary original $\mathcal E\in\mathcal C$ use its
+normalized representative $\Phi$ and set
+
+$$
+d_q=\frac12\left\|\frac{\Phi(\Omega_q)}{a_q}-W_q\right\|_1.
+$$
+
+The exact identity $\|R_q(\Phi)\|_1=2a_qd_q$ and $a_q\le M$ yield
+
+$$
+\eta\le\sup_{q\in D}\|R_q(\Phi)\|_1
+\le2M\sup_{q\in D}d_q.
+$$
+
+Normalization does not change conditional outputs, so infimizing over the
+original class gives
+
+$$
+\delta_{\mathrm{CP}}\ge\frac{\eta}{2M}>0.
+$$
+
+Taking $\varepsilon=\eta/(2M)$ proves the corollary. This is a nonnumeric
+source-specific ordinary consequence of the native zero-map obstruction and
+standard finite-dimensional Choi compactness. It neither computes an
+optimal gap nor supplies an optimizer or a physical realization. The
+preparation remains the two independent compatible full Gibbs states with
+all sectors and the zero mode, followed by the coherent filter selecting
+Alice total number one and Bob total number one across all four Bob modes;
+the fixed normalized cut, identification $J$, CAR regrouping sign, and all
+spectator populations are those of §§235--236 and (240.1)--(240.4). The
+success record alone is retained and filter rejection and later failure are
+stopped as in (240.7) and Definition 239.1. No extra copy, entangled
+ancilla, external phase reference, per-copy occupation measurement,
+source-aware alignment, other temperature or resource, achievable approximate
+conversion protocol, or optimization on the unfiltered $64$-dimensional input
+is part of this statement.
+

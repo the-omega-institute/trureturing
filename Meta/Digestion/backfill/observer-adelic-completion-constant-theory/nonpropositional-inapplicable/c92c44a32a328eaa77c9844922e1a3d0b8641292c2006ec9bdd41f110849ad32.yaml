@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:c92c44a32a328eaa77c9844922e1a3d0b8641292c2006ec9bdd41f110849ad32
+  normalized_sha256: sha256:c92c44a32a328eaa77c9844922e1a3d0b8641292c2006ec9bdd41f110849ad32
+cas_ref: sha256:c92c44a32a328eaa77c9844922e1a3d0b8641292c2006ec9bdd41f110849ad32
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 问题目标声明：希望辨认两个 primitive Euler modes；没有声称该辨认已可完成。
+    previous_atom_id: 5320938772032985d5d758ea8f5df7349d1acfcbb0b028a439754da60f797cb3
+    next_atom_id: 4bcbb5cbd0e2ca962250bba19f815199ab308d3730aff3b51e5e9e07545d2bfe

@@ -5,17 +5,20 @@
    anchors: [mathlib/module/Mathlib.Data.Int.ModEq, mathlib/module/Mathlib.Data.List.FinRange]
    utility: none
    digest: Physical source labels and full-arc binary schedules for a universal width bound. -/
-import Mathlib.Data.Int.ModEq
-import Mathlib.Data.List.FinRange
-import Mathlib.Data.List.Rotate
-import Mathlib.Algebra.Ring.GeomSum
-import Mathlib.Algebra.Order.BigOperators.Group.List
-import Mathlib.Tactic
+module
+public import Mathlib.Data.Int.ModEq
+public import Mathlib.Data.List.FinRange
+public import Mathlib.Data.List.Rotate
+public import Mathlib.Algebra.Ring.GeomSum
+public import Mathlib.Algebra.Order.BigOperators.Group.List
+public import Mathlib.Tactic
 
 /-! # Labelled centered sources and binary full-arc expansion -/
 
 set_option autoImplicit false
 set_option relaxedAutoImplicit false
+
+@[expose] public section
 
 namespace D5.S3.Combinatorics.Circle.SourceWidth
 

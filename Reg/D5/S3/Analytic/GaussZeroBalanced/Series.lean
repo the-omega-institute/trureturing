@@ -658,7 +658,7 @@ def continuousOn_fArena : Arena where
   signature := fSignature
   Law R := ∀ {a b : ℝ} (_ha : 0 < a) (_hb : 0 < b), ContinuousOn (R.readout () a b) (Ico 0 1)
 
-private theorem continuousOn_fRejected : ¬ continuousOn_fArena.Law (fDiscontinuous) := by
+theorem continuousOn_fRejected : ¬ continuousOn_fArena.Law (fDiscontinuous) := by
   intro h
   have hc := @h 1 1 (by norm_num) (by norm_num)
   have hct : ContinuousAt (fun x : ℝ => if x = 1/2 then (0:ℝ) else 1) (1/2) :=
