@@ -276,8 +276,8 @@ def validate_preparation(root, value, context, artifact):
     identity, runtime = validate_identity(value["source"]), value["runtime"]
     require(all(identity[key] == context[key] for key in ("repository", "pr", "head", "target_ref")),
             "preparation PR/head/target mismatch")
-    require(value["partition"] == actions.partition_path(root) and value["elan_key"] == actions.elan_key(root),
-            "preparation native partition or toolchain mismatch")
+    require(all(isinstance(value[key], str) and value[key] for key in ("partition", "elan_key")),
+            "invalid preparation native identity")
     require(isinstance(runtime, dict) and set(runtime) == {"ref", "sha", "workflow_ref", "workflow_sha", "run", "attempt"}
             and runtime["ref"] == identity["target_ref"] and runtime["sha"] == runtime["workflow_sha"]
             and re.fullmatch(r"[0-9a-f]{40}", runtime["sha"])
@@ -304,6 +304,12 @@ def validate_preparation(root, value, context, artifact):
             [identity["base"], identity["head"]], "prepared M parents are not B,H")
     comparison = api(repository, "compare/" + runtime["sha"] + "..." + quote(identity["target_ref"].removeprefix("refs/heads/"), safe=""))
     require(comparison["merge_base_commit"]["sha"] == runtime["sha"], "producer runtime is outside target history")
+    current = dict(partition=actions.partition_path(root), elan_key=actions.elan_key(root))
+    prepared = {key: value[key] for key in current}
+    if prepared != current:
+        receipt("incompatible", identity, runtime=runtime, artifact=artifact["id"],
+                reason="preparation native partition or toolchain mismatch", prepared=prepared, current=current)
+        return None
     return identity, runtime
 
 

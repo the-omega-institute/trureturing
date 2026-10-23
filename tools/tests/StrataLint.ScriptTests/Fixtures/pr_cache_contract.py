@@ -451,11 +451,6 @@ class PrCacheContracts(CacheFixture, unittest.TestCase):
             self.zip_preparation()
             with self.subTest(key=key, update=update), self.assertRaisesRegex(ValueError, reason):
                 self.adopt()
-        for key in ("partition", "elan_key"):
-            (self.bundle / "preparation.json").write_text(json.dumps(dict(original, **{key: "foreign"})))
-            self.zip_preparation()
-            with self.assertRaisesRegex(ValueError, "partition or toolchain"):
-                self.adopt()
         (self.bundle / "preparation.json").write_text(json.dumps(original))
         self.zip_preparation()
         def api(repository, path, body=None):
@@ -466,6 +461,39 @@ class PrCacheContracts(CacheFixture, unittest.TestCase):
         with self.assertRaisesRegex(ValueError, "M parents are not B,H"):
             self.adopt(api=api)
         self.assertFalse((self.root / ".lake/build").exists())
+
+    def test_changed_native_inputs_skip_preparation_without_touching_cache(self):
+        self.preparation()
+        self.merged()
+        for filename, replacement in (
+                ("lean-toolchain", "leanprover/lean4:v4.35.0\n"),
+                ("lake-manifest.json", json.dumps({"packages": [{"name": "mathlib", "rev": "b" * 40}]}))):
+            path = self.root / filename
+            original = path.read_bytes()
+            path.write_text(replacement)
+            with self.subTest(filename=filename):
+                with mock.patch.object(producer, "receipt", wraps=producer.receipt) as receipts:
+                    result, _ = self.adopt()
+                self.assertEqual("miss", result["status"])
+                incompatible = [call.kwargs for call in receipts.call_args_list
+                                if call.args[0] == "incompatible"]
+                self.assertEqual(1, len(incompatible))
+                self.assertEqual(81, incompatible[0]["artifact"])
+                self.assertNotEqual(incompatible[0]["prepared"], incompatible[0]["current"])
+                self.assertFalse((self.root / ".lake").exists())
+                self.assertFalse((self.root / "build/lean-cache/pr-adopted.json").exists())
+                self.assertNotIn("adopted=true", (self.root / "outputs").read_text())
+                self.assertTrue(any(path.startswith("git/commits/") for path, _ in self.calls))
+            path.write_bytes(original)
+
+    def test_incompatible_preparation_still_rejects_invalid_identity(self):
+        self.preparation()
+        self.merged()
+        (self.root / "lean-toolchain").write_text("leanprover/lean4:v4.35.0\n")
+        self.producer_run["run_attempt"] = 2
+        with self.assertRaisesRegex(ValueError, "attempt identity differs"):
+            self.adopt()
+        self.assertFalse((self.root / ".lake").exists())
 
     def test_attempt_status_is_immutable_and_artifact_time_must_belong_to_it(self):
         self.preparation()
