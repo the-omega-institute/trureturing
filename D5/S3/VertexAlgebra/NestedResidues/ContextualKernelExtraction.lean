@@ -67,7 +67,7 @@ private theorem parametric_hahn_convolution {Γ : Type*} [LinearOrder Γ]
   · intro j hj hn
     rfl
 
-private theorem contextual_kernel_coeff (pre post : ℕ) (r a b : ℤ) :
+theorem contextual_kernel_coeff (pre post : ℕ) (r a b : ℤ) :
     (contextPair K pre post (kernelZX K r)).coeff
       (pairIndex pre post (toLex (a, b))) =
       if 0 ≤ a then if b = r - a then
