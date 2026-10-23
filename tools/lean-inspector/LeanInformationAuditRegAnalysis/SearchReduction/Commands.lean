@@ -485,8 +485,10 @@ indexes. Only compiled Lean declarations are read back; JSON is print-only. -/
       informationApplication := app.map (·.getId)} modules name.getId
     let command := s!"run_cmd LeanInformationAudit.SearchReduction.executeProbeFile {repr payload.toString}\n"
     IO.FS.writeFile input (imports ++ command)
+    let workers := min 8 <| max 1 <|
+      ((← IO.getEnv "SEARCH_REDUCTION_WORKERS").bind String.toNat?).getD 1
     let child ← IO.Process.output {
-      cmd := "lean", args := #["-j1", "--root=" ++ directory.toString,
+      cmd := "lean", args := #[s!"-j{workers}", "--root=" ++ directory.toString,
         "-o", output.toString, input.toString]}
     if child.exitCode == 75 then IO.Process.exit 75
     if child.exitCode != 0 then
