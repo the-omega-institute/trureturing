@@ -32,22 +32,9 @@ open scoped ComplexOrder BigOperators
 namespace D5.S3.Quantum.Entanglement.AbsolutePPT.FiveRowP1Physical
 open UniformSchmidtIncidence UniformSchmidtBell QutritPerturbationAttainment
 open FiveRowP2Lift FiveRowP1Algebra
+open FiveRowP2Star
 open UniformSpectralBound.SharedSpectral
 noncomputable section
-
-private def localEdgeAt : Fin 10 → Edge 5 :=
-  ![⟨(0,1),by decide⟩,⟨(0,2),by decide⟩,⟨(0,3),by decide⟩,
-    ⟨(0,4),by decide⟩,⟨(1,2),by decide⟩,⟨(1,3),by decide⟩,
-    ⟨(1,4),by decide⟩,⟨(2,3),by decide⟩,⟨(2,4),by decide⟩,
-    ⟨(3,4),by decide⟩]
-
-private def localEdgeEquiv : Fin 10 ≃ Edge 5 :=
-  Equiv.ofBijective localEdgeAt (by decide)
-
-private def localEdgeSlots : Edge 5 ≃ Fin 10 := localEdgeEquiv.symm
-
-private def localTailSlots : BottomSlot 5 ≃ Fin 15 :=
-  (Equiv.sumCongr (Equiv.refl (Fin 5)) localEdgeSlots).trans finSumFinEquiv
 
 private theorem localFamilyQuadratic (u v : ℝ) (h : Fin 10 → ℝ) (d : Fin 15 → ℝ)
     (π : Edge 5 ≃ Fin 10) (σ : BottomSlot 5 ≃ Fin 15) (x : Fin 5 → ℝ) :
@@ -55,8 +42,8 @@ private theorem localFamilyQuadratic (u v : ℝ) (h : Fin 10 → ℝ) (d : Fin 1
       (∑ i : Fin 5, 2*(u-d (σ (.inl i)))*(x i)^2) -
       ∑ e : Edge 5, 2*(v+h (π e)+d (σ (.inr e)))*x e.val.1*x e.val.2 := by
   simp only [FiveRowP2Star.family, K,dotProduct,mulVec]
-  simp_rw [← localEdgeEquiv.sum_comp]
-  norm_num [Fin.sum_univ_succ,localEdgeEquiv,localEdgeAt,edge]
+  simp_rw [← edgeEquiv.sum_comp]
+  norm_num [Fin.sum_univ_succ,edgeEquiv,edgeAt,edge]
   <;> ring
 
 private theorem localFamilyUniformSubsets (r : ℝ) (h : Fin 10 → ℝ) (d : Fin 15 → ℝ)
@@ -76,19 +63,19 @@ private theorem localFamilyUniformSubsets (r : ℝ) (h : Fin 10 → ℝ) (d : Fi
     Equiv.ofBijective ![14,13,12,0,1,11,10,2,3,9,4,5,6,7,8] (by decide)
   let tp4 : Equiv.Perm (Fin 15) :=
     Equiv.ofBijective ![14,13,12,11,0,10,9,8,1,7,6,2,5,3,4] (by decide)
-  have h2 := (hf (localEdgeSlots.trans hp2) (localTailSlots.trans tp2)).dotProduct_mulVec_nonneg
+  have h2 := (hf (edgeSlots.trans hp2) (tailSlots.trans tp2)).dotProduct_mulVec_nonneg
     ![1,1,0,0,0]
-  have h3 := (hf (localEdgeSlots.trans hp3) (localTailSlots.trans tp3)).dotProduct_mulVec_nonneg
+  have h3 := (hf (edgeSlots.trans hp3) (tailSlots.trans tp3)).dotProduct_mulVec_nonneg
     ![1,1,1,0,0]
-  have h4 := (hf (localEdgeSlots.trans hp4) (localTailSlots.trans tp4)).dotProduct_mulVec_nonneg
+  have h4 := (hf (edgeSlots.trans hp4) (tailSlots.trans tp4)).dotProduct_mulVec_nonneg
     ![1,1,1,1,0]
   simp only [star_trivial] at h2 h3 h4
-  rw [localFamilyQuadratic,← localEdgeEquiv.sum_comp] at h2 h3 h4
-  simp only [Equiv.trans_apply,localTailSlots,localEdgeSlots,
+  rw [localFamilyQuadratic,← edgeEquiv.sum_comp] at h2 h3 h4
+  simp only [Equiv.trans_apply,tailSlots,edgeSlots,
     Equiv.symm_apply_apply,Equiv.sumCongr_apply,Equiv.refl_apply,Sum.map_inl,Sum.map_inr,
     finSumFinEquiv_apply_left (m:=5) (n:=10),
       finSumFinEquiv_apply_right (m:=5) (n:=10)] at h2 h3 h4
-  norm_num [Fin.sum_univ_succ,localEdgeEquiv,localEdgeAt,
+  norm_num [Fin.sum_univ_succ,edgeEquiv,edgeAt,
     hp2,hp3,hp4,tp2,tp3,tp4,
     finSumFinEquiv_apply_left (m:=5) (n:=10),
     finSumFinEquiv_apply_right (m:=5) (n:=10)] at h2 h3 h4
