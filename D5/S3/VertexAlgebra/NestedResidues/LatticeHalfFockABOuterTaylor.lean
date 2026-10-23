@@ -261,7 +261,7 @@ private theorem z_ne_zero : LatticeHalfFockABLocalResidue.z ≠ 0 := by
     (1 : Fin 3)) ABField (AddMonoidAlgebra.single (Pi.single zLabel (1 : ℤ)) (1 : ℂ)) ≠ 0
   exact (map_ne_zero_iff _ (IsFractionRing.injective _ _)).mpr (by simp)
 
-private theorem yz_ne_zero : y - LatticeHalfFockABLocalResidue.z ≠ 0 := by
+theorem yz_ne_zero : y - LatticeHalfFockABLocalResidue.z ≠ 0 := by
   apply sub_ne_zero.mpr
   intro h
   have labels := LabelledRationalClearing.PairDifferenceLocalization.remainingVariable_injective
@@ -318,7 +318,7 @@ private theorem gradedMoment_shifted (W : ℤ) (k v : ℕ) (e : Exponent 3) (c :
     omega
   rw [total]
 
-private theorem triangle_vandermonde (a b : ℂ) (t : ℕ) (F : ℕ → ℂ) :
+theorem triangle_vandermonde (a b : ℂ) (t : ℕ) (F : ℕ → ℂ) :
     (∑ ell ∈ Finset.range (t + 1), ∑ u ∈ Finset.range (t - ell + 1),
       Ring.choose a ell * Ring.choose b u * F (ell + u)) =
     ∑ v ∈ Finset.range (t + 1), Ring.choose (a + b) v * F v := by
@@ -420,7 +420,7 @@ private theorem gradedMoment_residueNumerator (P : LabelledPolynomial ℂ 3)
     ring
   · simp [inside]
 
-private theorem map_complex_smul (c : ℂ) (Q : BinaryPolynomial) :
+theorem map_complex_smul (c : ℂ) (Q : BinaryPolynomial) :
     algebraMap BinaryPolynomial ABField (c • Q) =
       algebraMap ℂ ABField c * algebraMap BinaryPolynomial ABField Q := by
   rw [Algebra.smul_def, map_mul,

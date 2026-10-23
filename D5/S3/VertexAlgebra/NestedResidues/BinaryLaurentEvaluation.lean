@@ -199,7 +199,7 @@ theorem binary_laurent_jump (Q : BinaryPolynomial) (p n : ℤ) :
   intro e he
   exact single_jump p n e (Q.coeff e)
 
-private theorem forward_readout (F : ABField) (q k : ℤ) :
+theorem forward_readout (F : ABField) (q k : ℤ) :
     (binaryKernel false q * binaryExpansion false F).coeff
       (exponents 2 ![-1, -k - 1]) =
     ∑ᶠ u : ℕ, BinomialKernelDelta.chooseSign q u *
@@ -221,7 +221,7 @@ private theorem forward_readout (F : ABField) (q k : ℤ) :
   ext i
   fin_cases i <;> simp <;> omega
 
-private theorem reverse_readout (F : ABField) (q k : ℤ) :
+theorem reverse_readout (F : ABField) (q k : ℤ) :
     (binaryKernel true q * binaryExpansion true F).coeff
       (exponents 2 ![-k - 1, -1]) =
     StateFieldResidueReconstruction.epsilon q *

@@ -212,7 +212,7 @@ def completeAB (s w : ℤ) (I : ℕ) (R : CommonRational ℂ 3) : ABField :=
         (LabelledRationalClearing.WeightedActualQ.globalDiagonal ℂ (1 : Fin 3)
           ⟨2, by decide⟩ ^ (w + ell) * R)
 
-private theorem coefficient_scalar (pre post : ℕ)
+theorem coefficient_scalar (pre post : ℕ)
     (zz : Fin ((pre + 1) + post)) (tau : Fin (pre + post) ≃ Remaining zz) (c : ℂ) :
     coefficientHahn ℂ pre post zz tau (algebraMap ℂ _ c) = HahnSeries.C c := by
   rw [IsScalarTower.algebraMap_apply ℂ (CoefficientPolynomial ℂ zz) (CoefficientField ℂ zz)]
