@@ -283,6 +283,103 @@ private theorem rotor_window {σ α : ℝ}
     have hidx : (i + t) / 2 = (i - 1) / 2 + t / 2 + 1 := by omega
     simp only [rotor, if_neg hpos, if_neg hmod, hidx, hcut]
 
+private theorem rotor_special_projection {σ α : ℝ}
+    (hcut : ∀ j : ℕ, cutting σ (j + 1) =
+      if lowerMechanicalWord α α j then 3 else 1)
+    {ℓ : ℕ} (hℓ : 0 < ℓ) {w : List ℕ} (hw : w.length = ℓ)
+    (hs : IsRightSpecial (rotor σ) w) :
+    ∃ i : ℕ, 0 < i ∧ (i + ℓ) % 2 = 0 ∧
+      MechanicalRightSpecial.IsLowerMechanicalRightSpecial α α (ℓ / 2)
+        (lowerMechanicalFactor α α (ℓ / 2) ((i - 1) / 2)) ∧
+      ∀ t : ℕ, ∀ ht : t < w.length, rotor σ (i + t) = w[t] := by
+  obtain ⟨a, b, hab, ⟨i, hi⟩, ⟨j, hj⟩⟩ := hs
+  have ha : rotor σ (i + ℓ) = a := by
+    simpa [hw] using hi ℓ (by simp [hw])
+  have hb : rotor σ (j + ℓ) = b := by
+    simpa [hw] using hj ℓ (by simp [hw])
+  have hsame (t : ℕ) (ht : t < ℓ) : rotor σ (i + t) = rotor σ (j + t) := by
+    have hi' := hi t (by simp [hw]; omega)
+    have hj' := hj t (by simp [hw]; omega)
+    rw [List.getElem_append_left (by omega)] at hi' hj'
+    exact hi'.trans hj'.symm
+  have hip : 0 < i := by
+    by_contra hn
+    have hi0 : i = 0 := by omega
+    have hj0 : j = 0 := (rotor_zero_iff σ j).mp (by
+      simpa [hi0, rotor] using (hsame 0 hℓ).symm)
+    apply hab
+    rw [hi0] at ha
+    rw [hj0] at hb
+    exact ha.symm.trans hb
+  have hjp : 0 < j := by
+    by_contra hn
+    have hj0 : j = 0 := by omega
+    have hi0 : i = 0 := (rotor_zero_iff σ i).mp (by
+      simpa [hj0, rotor] using hsame 0 hℓ)
+    apply hab
+    rw [hi0] at ha
+    rw [hj0] at hb
+    exact ha.symm.trans hb
+  have hend : rotor σ (i + (ℓ - 1)) = 2 := by
+    by_contra hn
+    have hni := rotor_next_of_not_two hn
+    have hnj := rotor_next_of_not_two (σ := σ) (i := j + (ℓ - 1)) (by
+      rw [← hsame (ℓ - 1) (by omega)]; exact hn)
+    have heqi : i + (ℓ - 1) + 1 = i + ℓ := by omega
+    have heqj : j + (ℓ - 1) + 1 = j + ℓ := by omega
+    rw [heqi, ha] at hni
+    rw [heqj, hb] at hnj
+    exact hab (hni.trans hnj.symm)
+  have hpari : (i + ℓ) % 2 = 0 := by
+    have := (rotor_two_iff σ _).mp hend
+    omega
+  have hparj : (j + ℓ) % 2 = 0 := by
+    have := (rotor_two_iff σ _).mp ((hsame (ℓ - 1) (by omega)).symm.trans hend)
+    omega
+  have hbase : lowerMechanicalFactor α α (ℓ / 2) ((i - 1) / 2) =
+      lowerMechanicalFactor α α (ℓ / 2) ((j - 1) / 2) := by
+    apply List.ext_getElem
+    · simp [lowerMechanicalFactor]
+    · intro q hq hq'
+      have hq0 : q < ℓ / 2 := by simpa [lowerMechanicalFactor] using hq
+      let t := 2 * q + ℓ % 2
+      have ht : t < ℓ := by dsimp [t]; omega
+      have htpar : (t + ℓ) % 2 ≠ 1 := by dsimp [t]; omega
+      have htdiv : t / 2 = q := by dsimp [t]; omega
+      have hp := hsame t ht
+      rw [rotor_window hcut hip hpari, rotor_window hcut hjp hparj,
+        if_neg htpar, if_neg htpar, htdiv] at hp
+      simp only [lowerMechanicalFactor, List.getElem_ofFn]
+      exact (Bool.injective_iff.mpr (by decide) :
+        Function.Injective (fun b : Bool => if b then (3 : ℕ) else 1)) hp
+  have hext (k : ℕ) : lowerMechanicalFactor α α (ℓ / 2) k ++
+      [lowerMechanicalWord α α (k + ℓ / 2)] ∈ lowerMechanicalFactorSet α α (ℓ / 2 + 1) := by
+    rw [← lowerMechanicalFactor_succ]
+    exact mem_lowerMechanicalFactorSet.mpr ⟨k, rfl⟩
+  have hbits : lowerMechanicalWord α α ((i - 1) / 2 + ℓ / 2) ≠
+      lowerMechanicalWord α α ((j - 1) / 2 + ℓ / 2) := by
+    intro heq
+    have hai := rotor_window hcut hip hpari ℓ
+    have hbj := rotor_window hcut hjp hparj ℓ
+    have hpar : (ℓ + ℓ) % 2 ≠ 1 := by omega
+    rw [if_neg hpar, ha, heq] at hai
+    rw [if_neg hpar, hb] at hbj
+    exact hab (hai.trans hbj.symm)
+  refine ⟨i, hip, hpari, ⟨mem_lowerMechanicalFactorSet.mpr ⟨_, rfl⟩, ?_, ?_⟩, ?_⟩
+  · have hei := hext ((i - 1) / 2)
+    have hej := hext ((j - 1) / 2)
+    rw [← hbase] at hej
+    cases hbi : lowerMechanicalWord α α ((i - 1) / 2 + ℓ / 2) <;>
+      cases hbj : lowerMechanicalWord α α ((j - 1) / 2 + ℓ / 2) <;> simp_all
+  · have hei := hext ((i - 1) / 2)
+    have hej := hext ((j - 1) / 2)
+    rw [← hbase] at hej
+    cases hbi : lowerMechanicalWord α α ((i - 1) / 2 + ℓ / 2) <;>
+      cases hbj : lowerMechanicalWord α α ((j - 1) / 2 + ℓ / 2) <;> simp_all
+  · intro t ht
+    have h := hi t (by simp; omega)
+    simpa only [List.getElem_append_left ht] using h
+
 private theorem rotor_special_unique {σ : ℝ} (hσ : Irrational σ) (hσ1 : 1 < σ)
     (hcut : ∀ j : ℕ, cutting σ (j + 1) =
       if lowerMechanicalWord (1 / (σ + 1)) (1 / (σ + 1)) j then 3 else 1)
