@@ -16,7 +16,6 @@ internal sealed class DefsDocument : IScribeDocumentDefinition
     public DocumentDefinition Create() => DocumentDefinition.Create(ScribeNode.Create(
         "Finite matrix definitions for Fisher discord and partial trace.",
         H("Fisher discord conventions"), Blocks(
-            Item("IsDensity", "Density matrices", "A density matrix is positive semidefinite and has trace one."),
             Paragraph(Text("Partial trace sums the matrix entries with identical second coordinates.")),
             Item("liftLeft", "Local observables", "The observable on the first factor is tensored with the identity on the second factor."),
             Item("IsSLD", "Symmetric logarithmic derivatives", "A Hermitian matrix L is a symmetric logarithmic derivative when i(rho H-H rho)=(L rho+rho L)/2."),

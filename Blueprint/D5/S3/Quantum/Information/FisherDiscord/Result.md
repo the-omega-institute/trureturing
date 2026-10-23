@@ -25,4 +25,5 @@ Use the diagonal qubit state with weights one fifth and four fifths and the Paul
 ## References
 
 - Truth anchor: `D5/S3/Quantum/Information/FisherDiscord/Result.result`
+- Dependency: [D5/S3/Quantum/FiniteDimensional](../../FiniteDimensional.md)
 - Dependency: [D5/S3/Quantum/Information/FisherDiscord/Extension](Extension.md)
