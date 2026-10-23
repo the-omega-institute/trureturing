@@ -170,7 +170,7 @@ variable {n : Type*} [Fintype n] [DecidableEq n]
 noncomputable def spectralEntropy {rho : Matrix n n ℂ} (h : rho.IsHermitian) : ℝ :=
   ∑ i, Real.negMulLog (h.eigenvalues i)
 
-private theorem charpoly_conj_unitary {ρ U : Matrix n n ℂ} (hU : star U * U = 1) :
+theorem charpoly_conj_unitary {ρ U : Matrix n n ℂ} (hU : star U * U = 1) :
     (U * ρ * star U).charpoly = ρ.charpoly := by
   rw [Matrix.charpoly_mul_comm (U * ρ) (star U), ← Matrix.mul_assoc, hU, Matrix.one_mul]
 
