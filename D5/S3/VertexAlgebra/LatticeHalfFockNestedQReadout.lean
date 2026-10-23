@@ -196,7 +196,7 @@ private theorem completeOuterQReadout_of_locality (s r n : ℤ) (H : ℕ)
     qField_high s (r + ell) A B H _ locality high]
   simp
 
-private theorem supportedQReadout_congr (s r : ℤ) (K : ℕ) (n : ℤ)
+theorem supportedQReadout_congr (s r : ℤ) (K : ℕ) (n : ℤ)
     (f g f' g' : ℤ → ℤ → ℂ)
     (hf : ∀ m k, m + k = r + n → f m k = f' m k)
     (hg : ∀ m k, m + k = r + n → g m k = g' m k) :
@@ -293,7 +293,7 @@ def triplePermutation (order : Fin 6) : Equiv.Perm (Fin 3) :=
     Equiv.ofBijective ![1, 2, 0] (by decide),
     Equiv.ofBijective ![2, 0, 1] (by decide), Equiv.swap 0 2] order
 
-private def tripleScalar (A B C : VertexOperator ℂ V) (x : V)
+def tripleScalar (A B C : VertexOperator ℂ V) (x : V)
     (phi : V →ₗ[ℂ] ℂ) (order : Fin 6) (modes : Exponent 3) : ℂ :=
   phi (coefficientDistribution ![A, B, C] x 1
     (List.ofFn (triplePermutation order)) (fun j => -modes j - 1))
@@ -548,7 +548,7 @@ private theorem nestedLeftFiberReadout_eq (outerLift innerLift d r n : ℤ) (K H
     rw [rightPairFiberQ_eq]
     rfl
 
-private theorem nestedRightFiberReadout_eq (outerLift innerLift d r n : ℤ) (K H : ℕ)
+theorem nestedRightFiberReadout_eq (outerLift innerLift d r n : ℤ) (K H : ℕ)
     (W : Fin 6 → HahnSeries (Indices 3) ℂ) :
     nestedRightFiberReadout outerLift innerLift d r n K H W =
       supportedNestedRightReadout outerLift innerLift d r n K H (hahnTripleScalar W) := by
@@ -571,7 +571,7 @@ private theorem supportedNestedLeftReadout_congr (outerLift innerLift d r n : �
   apply supportedQReadout_congr <;> intro k l hkl <;> apply supportedQReadout_congr <;>
     intro m p hmp <;> apply same <;> simp [Fin.sum_univ_three] <;> omega
 
-private theorem supportedNestedRightReadout_congr (outerLift innerLift d r n : ℤ) (K H : ℕ)
+theorem supportedNestedRightReadout_congr (outerLift innerLift d r n : ℤ) (K H : ℕ)
     (R S : Fin 6 → Exponent 3 → ℂ)
     (same : ∀ order modes, (∑ j, modes j) = d + r + n → R order modes = S order modes) :
     supportedNestedRightReadout outerLift innerLift d r n K H R =
@@ -599,7 +599,7 @@ private theorem supportedNestedLeftReadout_eq (outerLift innerLift d r n : ℤ) 
       simp [tripleScalar, triplePermutation, coefficientDistribution, word,
         Module.End.mul_apply, LinearMap.comp_apply, Equiv.swap_apply_def]
 
-private theorem supportedNestedRightReadout_eq (outerLift innerLift d r n : ℤ) (K H : ℕ)
+theorem supportedNestedRightReadout_eq (outerLift innerLift d r n : ℤ) (K H : ℕ)
     (A B C : VertexOperator ℂ V) (x : V) (phi : V →ₗ[ℂ] ℂ) :
     phi (((qField outerLift r H A (qField innerLift d K B C))[[n]]) x) =
       supportedNestedRightReadout outerLift innerLift d r n K H (tripleScalar A B C x phi) := by
@@ -635,7 +635,7 @@ private theorem NestedLeftSupported_congr (innerLift d r n : ℤ) (K H : ℕ)
     apply and_congr <;> apply QReadoutSupported_congr <;>
       intro m p hmp <;> apply same <;> simp [Fin.sum_univ_three] <;> omega
 
-private theorem NestedRightSupported_congr (innerLift d r n : ℤ) (K H : ℕ)
+theorem NestedRightSupported_congr (innerLift d r n : ℤ) (K H : ℕ)
     (R S : Fin 6 → Exponent 3 → ℂ)
     (same : ∀ order modes, (∑ j, modes j) = d + r + n → R order modes = S order modes) :
     NestedRightSupported innerLift d r n K H R ↔ NestedRightSupported innerLift d r n K H S := by
@@ -687,7 +687,7 @@ private theorem actual_nested_left_support (innerLift d r n : ℤ) (K H : ℕ)
         Module.End.mul_apply, LinearMap.comp_apply, Equiv.swap_apply_def] using
         actual_q_support d K A B x l (phi.comp (C[[k]]))
 
-private theorem actual_nested_right_support (innerLift d r n : ℤ) (K H : ℕ)
+theorem actual_nested_right_support (innerLift d r n : ℤ) (K H : ℕ)
     (A B C : VertexOperator ℂ V) (x : V) (phi : V →ₗ[ℂ] ℂ) :
     NestedRightSupported innerLift d r n K H (tripleScalar A B C x phi) := by
   have forward (k l : ℤ) :
@@ -1176,7 +1176,7 @@ def nestedRightLocalReadout (z : Fin 2) (outerLift innerLift d r n : ℤ) (K H :
     (fun k l => lastSourceLocalQ z true innerLift d K l k R)
     (fun k l => lastSourceLocalQ z false innerLift d K k l R)
 
-private theorem nestedRightLocalReadout_sourceSource (D : LatticeData) (a b : Carrier D) (K I : ℕ)
+theorem nestedRightLocalReadout_sourceSource (D : LatticeData) (a b : Carrier D) (K I : ℕ)
     (P : LabelledPolynomial ℂ 3) (outerLift innerLift d r n : ℤ) (H : ℕ) :
     nestedRightFiberReadout outerLift innerLift d r n I H
       (rationalTripleCarriers D a b K P) =
