@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:53139a185d7c143482759ec8e64bec5b327cff87187f7fc591a6d2f8133f003f
+  normalized_sha256: sha256:53139a185d7c143482759ec8e64bec5b327cff87187f7fc591a6d2f8133f003f
+cas_ref: sha256:53139a185d7c143482759ec8e64bec5b327cff87187f7fc591a6d2f8133f003f
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 最小 automaton 重建这一方法名称，无数学断言。
+    previous_atom_id: 5d55ca0aa9f7ec6b9ceb7ca95a1f6571d3718d293cbfe6b8d566da307a6a6261
+    next_atom_id: 33bc56d3f00bb9e34a27f1be0d04801f9d87bc4c8880a9069dabeead4ad52b62

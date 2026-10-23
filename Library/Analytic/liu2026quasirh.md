@@ -255,3 +255,65 @@ Consequently, merely replacing the count in (459.10), while retaining its invers
 The remaining interface cannot be supplied by relabelling the source's detector witnesses. Source (5.2) gives the target-polynomial pointwise bounds in terms of the zero bin and lengths, with no $x$ gain. Source (5.5) returns a separate pair of detecting lengths, rather than prescribing the target pair $D=N=U^{1/2}$. Moreover, attaching these prime slots to the existing plain fourth moment at the target pair exhausts the length allowance: (9.4)/(28.2), with row exponent $m_0=1$, conductor exponent $q_0=0$ and hence source allowance $M=1$, requires $n_1+n_2+6\kappa z_{\rm p}\le M$. The two original plain exponents sum to $n_1+n_2=1$, so $1+6\kappa z_{\rm p}\le1$, hence $z_{\rm p}=0$. It supplies no positive-width prime-amplitude gain there.
 
 A stronger original-coefficient estimate would have to relate the same inverse/plain energy to these prime amplitudes, including the bottom bin, or supply another estimate for the complete kernel. Neither the count refinement nor a positive operator-norm lower bound provides that relation. This is a limitation of the specified substitution into §459, not a general impossibility result for amplitude-sensitive methods or RH.
+
+## Actual inverse coefficients: a limit of norm-only refinements
+
+For one original finite Fourier component, reuse the exact coefficient in (458.6), including shared primes:
+
+$$
+M_\xi(u)=D^{-1/2}\sum_{d\ {\rm good}}\mu(d)V(q_d/D)\xi(d)\chi_d(u),
+\qquad
+M_\xi(u)^2=\sum_a g_D(a)\chi_a(u),
+$$
+
+$$
+g_D(a)=D^{-1}\xi(a)\sum_{d_1d_2=a}
+\mu(d_1)\mu(d_2)V(q_{d_1}/D)V(q_{d_2}/D).
+$$
+
+Every column and factor sum in this section is over good ideals, meaning ideals prime to $S$; $\xi$ is multiplicative and has modulus one on this semigroup. Ideals are counted once, $q_d=Nd$, and the field and bad-prime set $S$ are fixed. In this section assume a **fixed nonzero smooth nonnegative annular profile $V$**. This is a permitted profile subclass, not a statement for arbitrary complex profiles, profile derivatives, or the sum of all Fourier components.
+
+The classical ideal Möbius/Liouville identity
+$\mu(d)=(-1)^{\Omega_F(d)}\mu(d)^2$, with $\Omega_F$ counting prime-ideal factors with multiplicity, gives
+
+$$
+g_D(a)=\xi(a)(-1)^{\Omega_F(a)}c_D(a),
+\qquad
+c_D(a)=D^{-1}\sum_{d_1d_2=a}
+\mu(d_1)^2\mu(d_2)^2V(q_{d_1}/D)V(q_{d_2}/D)\ge0.
+$$
+
+Thus the factorizations of a fixed product column have the same Möbius sign. Expanding $c_D(a)^2$ and keeping just the ordered diagonal pairs yields
+
+$$
+\|g_D\|_2^2=\sum_a c_D(a)^2
+\ge D^{-2}\left(\sum_{d\ {\rm good}}
+\mu(d)^2V(q_d/D)^2\right)^2.
+$$
+
+For the squarefree count, directly reuse the principal-character case of [G5 and its squarefree expansion](faveri2026fixedorder.md#the-actual-gram-including-all-original-zeros), based on Lemke Oliver–Thorner, Lemma A.3 in [Pasten, arXiv:1705.09251v4](https://arxiv.org/pdf/1705.09251v4). Taking the label $R=1$ and profile $V^2$ in G3 gives
+
+$$
+D^{-1}\sum_{d\ {\rm good}}\mu(d)^2V(q_d/D)^2
+\longrightarrow C_{V,S}
+=\frac{\operatorname{Res}_{s=1}\zeta_F(s)}{\zeta_F(2)}
+\prod_{\mathfrak p\in S}(1+q_{\mathfrak p}^{-1})^{-1}
+\int_0^\infty V(y)^2\,dy>0.
+$$
+
+This uses ideal counting, not an additional restriction to one ray class or a count of unit representatives. Consequently $\liminf_{D\to\infty}\|g_D\|_2^2\ge C_{V,S}^2>0$. The sign identity and counting theorem are classical inputs; this is their scoped application to the existing coefficient, not a new large-sieve or RH estimate.
+
+At $D=U^{1/2}$, the coefficient-independent sixth-order sieve in (458.7) has cost $U^{7/6+\varepsilon}\|g_D\|_2^2$. Together with the unchanged plain fourth moment $\ll U^{1+\varepsilon}$, an inverse fourth-moment exponent $B$ would give complete-energy exponent $(B+3)/2$ when $U\asymp K$. To improve the current §459 exponent through this route requires
+
+$$
+B<B_*:=\frac{31-10\sqrt6}{6}=1.084183762\ldots.
+$$
+
+Paying this improvement solely by reducing the coefficient norm in the unchanged sieve would require, for some fixed $\eta>0$,
+
+$$
+\|g_D\|_2^2\ll U^{B_*-7/6-\eta},
+\qquad B_*-7/6=\frac{12-5\sqrt6}{3}<0.
+$$
+
+The positive lower bound excludes such a uniform norm-only shortcut on this profile subclass. It gives **no lower bound** for the actual inverse fourth moment, $Q(b)$, any projected energy, or the complement: cross terms between distinct columns can cancel through the row characters. Coefficient-sensitive estimates for those correlations, zero-bin gains, complex-profile cancellation and the full signed Robin restoration remain separate questions.

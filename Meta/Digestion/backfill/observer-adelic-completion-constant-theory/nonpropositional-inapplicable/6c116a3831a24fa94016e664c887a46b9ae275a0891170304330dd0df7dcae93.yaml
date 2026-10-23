@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:6c116a3831a24fa94016e664c887a46b9ae275a0891170304330dd0df7dcae93
+  normalized_sha256: sha256:6c116a3831a24fa94016e664c887a46b9ae275a0891170304330dd0df7dcae93
+cas_ref: sha256:6c116a3831a24fa94016e664c887a46b9ae275a0891170304330dd0df7dcae93
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 平均间距这一拟议观察读出名称，无数学断言。
+    previous_atom_id: 593f83bb19fdb46103a86fb76ff298372f06017d0df49055926b8004f4dfc62d
+    next_atom_id: 22c3214ac53b50736670a295882cf1e6a83110b7de331860251534f83dc02221

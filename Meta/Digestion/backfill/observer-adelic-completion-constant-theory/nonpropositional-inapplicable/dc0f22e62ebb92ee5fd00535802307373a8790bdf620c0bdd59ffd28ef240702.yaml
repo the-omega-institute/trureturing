@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:dc0f22e62ebb92ee5fd00535802307373a8790bdf620c0bdd59ffd28ef240702
+  normalized_sha256: sha256:dc0f22e62ebb92ee5fd00535802307373a8790bdf620c0bdd59ffd28ef240702
+cas_ref: sha256:dc0f22e62ebb92ee5fd00535802307373a8790bdf620c0bdd59ffd28ef240702
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 非命题：该 CAS 仅含术语名的枚举片段，没有等式、数量、性质或存在性断言；其周围完整数学结论在各自 atom 中保留。
+    previous_atom_id: 7a1827323722534ec9b461488a31ec22f9d393259b63398de2db0b6f439e705b
+    next_atom_id: 1014b1bf5495792c39403776e3992ffabb06b8918d32e2cf1b16a4a3e8032c50
