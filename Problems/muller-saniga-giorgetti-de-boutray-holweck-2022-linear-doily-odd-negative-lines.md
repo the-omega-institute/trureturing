@@ -56,12 +56,12 @@ A mismatch in the subspace, the sign convention or the counted lines would preve
 
 ## Evidence
 
-The canonical source is `D5/S3/Quantum/Contextuality/LinearDoilyNegativeLineParity.lean` (713 lines).
+The canonical source is `D5/S3/Quantum/Contextuality/LinearDoilyNegativeLineParity.lean` (692 lines).
 
 - **Proof.** It proves `result : claim`.
 - **Axioms.** It uses only the standard axioms `propext`, `Classical.choice` and `Quot.sound`; no `sorry`, `native_decide`, or new axiom.
 
-Frozen state: `Golden/Frozen/state/D5/S3/Quantum/Contextuality/LinearDoilyNegativeLineParity.lean.json`, statement `sha256:076e5cc763074fa92a863be11a3ae7af0ec19249882376570c4ea7009013a82e`.
+Frozen state: `Golden/Frozen/state/D5/S3/Quantum/Contextuality/LinearDoilyNegativeLineParity.lean.json`, statement `sha256:69cd69f00ccac0f329647bd976d39b9c628f781963bb3443ec0029276db597de`.
 
 Declaration statements:
 
