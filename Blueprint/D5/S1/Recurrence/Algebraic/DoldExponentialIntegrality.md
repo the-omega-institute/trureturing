@@ -42,7 +42,7 @@ $$\forall f: \operatorname{PowerSeries}\left(\mathbb{Q}\right), (\operatorname{c
 
 *Commentary.*
 
-The zero-constant inputs satisfy the exponential addition law. Induction on n gives the identity for natural scalar multiplication.
+Substitution into PowerSeries.exp_pow_eq_rescale_exp gives the natural-scaling identity.
 
 **Theorem 1.4 (Dold congruences imply integrality).**
 

@@ -78,7 +78,7 @@ expSeries_coeff | bind-only | none | exp_multiple
 expSeries_constant | bind-only | none | expSeries_add, expSeries_neg, exp_multiple, local_exp_of_log_difference
 expSeries_derivative | bind-only | none | expSeries_add
 first_order_unique | bind-only | none | expSeries_add
-expSeries_add | bind-only | none | expSeries_neg, expSeries_nsmul, local_exp_of_log_difference
+expSeries_add | bind-only | none | expSeries_neg, local_exp_of_log_difference
 expSeries_nsmul | bind-only | none | local_exp_of_log_difference, D5.S3.Arith.Robin.HannaSigmaProductExpModThree.B_eq_cube
 expSeries_neg | bind-only | none | local_exp_of_log_difference
 expSeries_subst | bind-only | none | local_exp_of_log_difference
@@ -748,10 +748,10 @@ private theorem expSeries_add {f g : PowerSeries ℚ}
 
 theorem expSeries_nsmul {f : PowerSeries ℚ} (hf : constantCoeff f = 0) (n : ℕ) :
     (PowerSeries.subst (n • f) (exp ℚ)) = (PowerSeries.subst f (exp ℚ)) ^ n := by
-  induction n with
-  | zero => simp [subst_zero_eq_C_constantCoeff]
-  | succ n ih =>
-    rw [succ_nsmul, expSeries_add (by simp [hf]) hf, ih, pow_succ]
+  let hs : HasSubst f := .of_constantCoeff_zero hf
+  rw [← subst_pow hs, exp_pow_eq_rescale_exp, rescale_eq_subst,
+    subst_comp_subst_apply (HasSubst.smul_X' (n : ℚ)) hs,
+    subst_smul hs, subst_X hs, Nat.cast_smul_eq_nsmul]
 
 private theorem expSeries_neg {f : PowerSeries ℚ} (hf : constantCoeff f = 0) :
     (PowerSeries.subst (-f) (exp ℚ)) = ((PowerSeries.subst f (exp ℚ)))⁻¹ := by

@@ -21,7 +21,7 @@ internal sealed class DoldExponentialIntegralityDocument : IScribeDocumentDefini
                 "The degree-n input coefficient is c(n)/n over the rationals; rational division makes the constant coefficient zero.", DescribeRole.Definition,
                 AssessedProvenance.FromRepo(Source)),
             Node("expSeries_nsmul", "Scaling the input takes powers", All("f", PS(Q()), Imp(Eqn(Call("constantCoeff", V("f")), D(0)), All("n", N(), Eqn(Exponential(QualifiedCall("HSMul", "hSMul", V("n"), V("f"))), Pow(Exponential(V("f")), V("n")))))),
-                "The zero-constant inputs satisfy the exponential addition law. Induction on n gives the identity for natural scalar multiplication.", DescribeRole.Theorem,
+                "Substitution into PowerSeries.exp_pow_eq_rescale_exp gives the natural-scaling identity.", DescribeRole.Theorem,
                 AssessedProvenance.FromRepo(Source)),
             Node("integral_exp_of_dold", "Dold congruences imply integrality", All("c", Seq(N(), Sp, To, Sp, Z()), Imp(Call("Dold", V("c")), All("n", N(), Ex("z", Z(), Eqn(Coeff(V("n"), Exponential(Call("logInput", V("c")))), Cast(V("z"), Q())))))),
                 "Apply the sufficient Dieudonne-Dwork criterion at each prime. The Dold congruences make the logarithmic difference locally integral; a rational coefficient integral at every prime has denominator one. The local-integrality induction is adapted from AINTLIB.", DescribeRole.Theorem,
