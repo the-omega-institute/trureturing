@@ -117,7 +117,7 @@ theorem actual_complete_H_package :
     simpa only [tsum_fintype, Finset.sum_const, Finset.card_univ,
       Fintype.card_fin, nsmul_eq_mul] using hweighted.tsum_eq.symm
   have hmass : HasSum a (firstLiMass : ℂ) := by
-    simpa only [Function.comp_apply, a, actualZero] using
+    simpa only [Function.comp_def, a, actualZero] using
       (actualOccurrenceEquiv.hasSum_iff).2 hSigmaMass
   have hRSigma : Summable (fun p : ActualZeroOccurrence =>
       ((actualData.zero p.1).im)⁻¹ ^ 2) := by
@@ -128,7 +128,7 @@ theorem actual_complete_H_package :
     · simpa only [tsum_fintype, Finset.sum_const, Finset.card_univ,
         Fintype.card_fin, nsmul_eq_mul] using actual_weighted_inverse_square_summable
   have hR : Summable (fun k : ℕ => ((actualZero k).im)⁻¹ ^ 2) := by
-    simpa only [Function.comp_apply, actualZero] using
+    simpa only [Function.comp_def, actualZero] using
       (actualOccurrenceEquiv.summable_iff).2 hRSigma
   have hcoeff (k : ℕ) : ‖a k‖ ≤ ((actualZero k).im)⁻¹ ^ 2 := by
     have hheight := actual_height_gt_ten (actualZero k)
@@ -183,7 +183,7 @@ theorem actual_complete_H_package :
     Summable.of_norm_bounded (hmass.summable.norm.mul_right (Real.exp (max y 0)))
       (hdom y)
   have hconj (y : ℝ) (k : ℕ) : conj (f y k) = f y (c k) := by
-    simp [f, a, hc, Complex.exp_conj]
+    simp [f, a, hc, ← Complex.exp_conj]
   have hreal (y : ℝ) : (∑' k : ℕ, f y k).im = 0 := by
     have he : conj (∑' k : ℕ, f y k) = ∑' k : ℕ, f y k := by
       rw [Complex.conj_tsum]
@@ -320,12 +320,12 @@ private theorem occurrence_hasSum {f : ℂ → ℂ} {z : ℂ}
     rw [hs.tsum_sigma]
     simpa only [tsum_fintype, Finset.sum_const, Finset.card_univ,
       Fintype.card_fin, nsmul_eq_mul] using h.tsum_eq.symm
-  simpa only [Function.comp_apply, actualZero] using
+  simpa only [Function.comp_def, actualZero] using
     (actualOccurrenceEquiv.hasSum_iff).2 he
 
 theorem xiReading_ne_zero_right {s : ℂ} (hs : 1 < s.re) : xiReading s ≠ 0 := by
-  have hs0 : s ≠ 0 := by intro h; simpa [h] using hs
-  have hs1 : s ≠ 1 := by intro h; simpa [h] using hs
+  have hs0 : s ≠ 0 := by intro h; rw [h] at hs; norm_num at hs
+  have hs1 : s ≠ 1 := by intro h; rw [h] at hs; norm_num at hs
   rw [xi_reading_eq_completed_zeta hs0 hs1, completedZetaReading,
     (Zeta23.WeilEF.completedZeta_eventuallyEq_mul (by linarith : 0 < s.re)).eq_of_nhds]
   exact mul_ne_zero (mul_ne_zero (mul_ne_zero (by norm_num) hs0)
@@ -349,7 +349,7 @@ theorem xi_logDeriv_zero : logDeriv xiReading 0 = -(firstLiMass : ℂ) / 2 := by
 theorem actual_normalized_resolvent {s : ℂ} (hs : 1 < s.re) :
     HasSum (fun k : ℕ => 1 / (s - actualZero k) + 1 / actualZero k)
       (logDeriv xiReading s + (firstLiMass : ℂ) / 2) := by
-  have h := occurrence_hasSum
+  have h := occurrence_hasSum (f := fun z : ℂ => 1 / (s - z) + 1 / z)
     (xi_reading_normalized_resolvent_hasSum actualData s (xiReading_ne_zero_right hs))
   simpa only [xi_logDeriv_zero, neg_div, sub_neg_eq_add] using h
 
@@ -357,7 +357,7 @@ theorem actual_normalized_resolvent {s : ℂ} (hs : 1 < s.re) :
 theorem actual_resolvent_hasSum {s : ℂ} (hs : 1 < s.re) :
     HasSum (fun k : ℕ => actualCoeff k / (s - actualZero k))
       (((firstLiMass : ℂ) * (s - 1 / 2) - logDeriv xiReading s) / (s * (s - 1))) := by
-  have hs0 : s ≠ 0 := by intro h; simpa [h] using hs
+  have hs0 : s ≠ 0 := by intro h; rw [h] at hs; norm_num at hs
   have hs1 : s - 1 ≠ 0 := by intro h; have := congrArg Complex.re h; simp at this; linarith
   have h := ((actualCoeff_hasSum.mul_left s).sub
     (actual_normalized_resolvent hs)).mul_right (s * (s - 1))⁻¹
@@ -396,7 +396,7 @@ theorem actualH_laplace_integrable {s : ℂ} (hs : 1 < s.re) :
     _ ≤ Real.exp (-s.re * y) *
         (((101 / 100 : ℝ) * firstLiMass) * Real.exp y) := by
       exact mul_le_mul_of_nonneg_left
-        (by simpa only [max_eq_left hy.le] using actualH_bound y) (Real.exp_nonneg _)
+        (by simpa only [max_eq_left (le_of_lt (show 0 < y from hy))] using actualH_bound y) (Real.exp_nonneg _)
     _ = _ := by rw [mul_left_comm, ← Real.exp_add]; congr 2 <;> ring
 
 /-- Exact Laplace identity for the complete actual occurrence family. The weighted
@@ -407,14 +407,14 @@ theorem actualH_laplace {s : ℂ} (hs : 1 < s.re) :
   classical
   let w : ℝ → ℂ := (Set.Ioi (0 : ℝ)).indicator (fun y => Complex.exp (-s * y))
   have hw : AEStronglyMeasurable w volume :=
-    (show Continuous (fun y : ℝ => Complex.exp (-s * y)) by fun_prop)
-      .aestronglyMeasurable.indicator measurableSet_Ioi
+    (show Continuous (fun y : ℝ => Complex.exp (-s * y)) by fun_prop).aestronglyMeasurable
+      |>.indicator measurableSet_Ioi
   have hwi : Integrable (fun y : ℝ => Real.exp (max y 0) * ‖w y‖) := by
     have he : (fun y : ℝ => Real.exp (max y 0) * ‖w y‖) =
         (Set.Ioi (0 : ℝ)).indicator (fun y => Real.exp ((1 - s.re) * y)) := by
       funext y
       by_cases hy : y ∈ Set.Ioi (0 : ℝ)
-      · simp only [w, Set.indicator_of_mem hy, max_eq_left hy.le, Complex.norm_exp]
+      · simp only [w, Set.indicator_of_mem hy, max_eq_left (le_of_lt (show 0 < y from hy)), Complex.norm_exp]
         simp only [Complex.mul_re, Complex.neg_re, Complex.ofReal_re,
           Complex.ofReal_im, mul_zero, sub_zero]
         rw [← Real.exp_add]
@@ -440,9 +440,9 @@ theorem actualH_laplace {s : ℂ} (hs : 1 < s.re) :
       integral_exp_mul_complex_Ioi (by
         simp only [Complex.sub_re]
         linarith [(actual_zero_strip k).2])]
-    simp only [mul_zero, Complex.exp_zero]
-    rw [show actualZero k - s = -(s - actualZero k) by ring]
-    simp
+    simp only [Complex.ofReal_zero, mul_zero, Complex.exp_zero]
+    rw [show actualZero k - s = -(s - actualZero k) by ring, div_neg]
+    simp only [neg_neg]
   have htotal : (∫ y : ℝ, actualH y * w y) =
       ∫ y : ℝ in Set.Ioi 0, Complex.exp (-s * y) * actualH y := by
     have he : (fun y : ℝ => actualH y * w y) =
@@ -465,8 +465,8 @@ theorem xi_logDeriv_right {s : ℂ} (hs : 1 < s.re) :
     logDeriv xiReading s = 1 / s + 1 / (s - 1) -
       (Real.log Real.pi : ℂ) / 2 + Complex.digamma (s / 2) / 2 +
         deriv riemannZeta s / riemannZeta s := by
-  have hs0 : s ≠ 0 := by intro h; simpa [h] using hs
-  have hs1 : s ≠ 1 := by intro h; simpa [h] using hs
+  have hs0 : s ≠ 0 := by intro h; rw [h] at hs; norm_num at hs
+  have hs1 : s ≠ 1 := by intro h; rw [h] at hs; norm_num at hs
   have hζ := riemannZeta_ne_zero_of_one_lt_re hs
   have hc : completedRiemannZeta s ≠ 0 := by
     rw [(Zeta23.WeilEF.completedZeta_eventuallyEq_mul
@@ -481,9 +481,11 @@ theorem xi_logDeriv_right {s : ℂ} (hs : 1 < s.re) :
       (fun z : ℂ => (1 / 2 : ℂ) * (z * (z - 1) * completedRiemannZeta z)) s := by
     rw [logDeriv_apply, logDeriv_apply, hnear.deriv_eq, hnear.eq_of_nhds]
   rw [heq, logDeriv_const_mul _ _ (by norm_num),
-    logDeriv_fun_mul s (mul_ne_zero hs0 (sub_ne_zero.mpr hs1)) hc (by fun_prop)
+    logDeriv_fun_mul (f := fun z : ℂ => z * (z - 1))
+      (g := completedRiemannZeta) s (mul_ne_zero hs0 (sub_ne_zero.mpr hs1)) hc (by fun_prop)
       (differentiableAt_completedZeta hs0 hs1),
-    logDeriv_fun_mul s hs0 (sub_ne_zero.mpr hs1) (by fun_prop) (by fun_prop),
+    logDeriv_fun_mul (f := fun z : ℂ => z) (g := fun z : ℂ => z - 1)
+      s hs0 (sub_ne_zero.mpr hs1) (by fun_prop) (by fun_prop),
     Zeta23.WeilEF.logDeriv_completedZeta s hs1 hζ (by linarith),
     Zeta23.WeilEF.logDeriv_Gammaℝ (by linarith)]
   simp only [logDeriv_apply, deriv_id'', deriv_sub_const, one_div]
