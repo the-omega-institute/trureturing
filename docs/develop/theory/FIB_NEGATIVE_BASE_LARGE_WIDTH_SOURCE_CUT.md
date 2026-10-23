@@ -3870,7 +3870,7 @@ minimum and maximum of the four endpoint products; division is used
 only on intervals separated from zero. The following deliberately
 wider rational enclosures result:
 
-| Index | Lower bound for $|A|$ | Enclosure of $-B/A$ |
+| Index | Lower bound for $\lvert A\rvert$ | Enclosure of $-B/A$ |
 | --- | --- | --- |
 | 1 | $4.924\cdot10^{18}$ | $(0.90244957,0.90244980)$ |
 | 2 | $6.391\cdot10^{18}$ | $(0.89660057,0.89660096)$ |
