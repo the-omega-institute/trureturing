@@ -5,3 +5,7 @@ cas_ref: sha256:4f4ee4dac1ba8237d974debc03de694f34ae61bdd22f56c59509e5d4f7263de9
 coverage_gids: []
 receipts:
   unresolved_subitems: []
+  nonpropositional:
+    justification: 动态变量命名约定 R=E_6 及其残余角色标签；没有导数恒等式或高阶 cumulant 闭合断言。
+    previous_atom_id: 94c1ad45d55e28daa58e6427db9679d53a8738f2dd77c29f7d2ca118d637cb3c
+    next_atom_id: 0678bfc30e662d91bd819cf26b19329b0409e0ca9caac1ad8d7553c619badc7e

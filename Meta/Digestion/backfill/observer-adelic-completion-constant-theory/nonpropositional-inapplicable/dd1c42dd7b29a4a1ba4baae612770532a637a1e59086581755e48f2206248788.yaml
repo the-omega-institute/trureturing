@@ -5,6 +5,10 @@ cas_ref: sha256:dd1c42dd7b29a4a1ba4baae612770532a637a1e59086581755e48f2206248788
 coverage_gids: []
 receipts:
   unresolved_subitems: []
+  nonpropositional:
+    justification: 观察接口的提议和四个索引的含义约定；没有提出族的存在性、分离性、正交性或充分性定理。
+    previous_atom_id: a15800869c12ae41610ed5b7b0a2af83ce1553943afbd681c506bf15c7d44db5
+    next_atom_id: 7faa8b40d8f7317fc093fc51a5f75fa746485698d22ef6b5a298c13bf9e6f324
   chain_atoms:
     - 999cd675fb74246ae9dd4921fdfca049cd65bc6280332396f4d4b09b0ffd773f
     - c4d41d4aefd68f416d8cc5985b00372886a9ca73c9297d2f1f9575eeb62d42ca
