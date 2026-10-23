@@ -6,7 +6,8 @@
    utility: none
    digest: Faithful four-level states with a two-element permutation symmetry have an asymptotic overlap that is not differentiable. -/
 
-import D5.S3.Quantum.Information.GroupInvariantPsi.Defs
+
+import D5.S3.Quantum.Information.GroupInvariantPsi.Sandwich
 import Mathlib.Analysis.Calculus.LocalExtr.Basic
 import Mathlib.Analysis.SpecialFunctions.Pow.Deriv
 import Mathlib.Analysis.SpecialFunctions.Log.Deriv
@@ -112,5 +113,62 @@ theorem one_sided_derivs :
   have hfun : (fun t => max (Real.log (branch t)) (Real.log (branch (1 - t)))) = counterexamplePsi := rfl
   rw [hfun, min_eq_right horder, max_eq_left horder] at h
   exact h
+
+private lemma maxCoeff_eq (s : ℝ) :
+    Sandwich.maxCoeff action p q s = max (branch s) (branch (1 - s)) := by
+  classical
+  have hall : (univ : Finset (Multiplicative (ZMod 2))) =
+      {1, Multiplicative.ofAdd (1 : ZMod 2)} := by decide
+  have he : Sandwich.componentCoeff action p q s 1 = branch s := by
+    simp [Sandwich.componentCoeff, branch]
+  have ht : Sandwich.componentCoeff action p q s (Multiplicative.ofAdd (1 : ZMod 2)) =
+      branch (1 - s) := by
+    norm_num [Sandwich.componentCoeff, action, flip, branch, p, q,
+      Fin.sum_univ_succ, Equiv.Perm.mul_apply, Equiv.swap_apply_def]
+    ring
+  unfold Sandwich.maxCoeff
+  simp [hall, Finset.sup'_insert, he, ht]
+
+private lemma log_maxCoeff (s : ℝ) :
+    Real.log (Sandwich.maxCoeff action p q s) = counterexamplePsi s := by
+  rw [maxCoeff_eq]
+  unfold counterexamplePsi
+  rcases le_total (branch s) (branch (1 - s)) with h | h
+  · rw [max_eq_right h, max_eq_right (Real.log_le_log (branch_pos _) h)]
+  · rw [max_eq_left h, max_eq_left (Real.log_le_log (branch_pos _) h)]
+
+/-- Faithful four-level states with a two-element permutation symmetry refute
+universal differentiability of the asymptotic group-invariant overlap. -/
+theorem result : ¬ claim := by
+  intro hclaim
+  let u := Mixture.permutationRepresentation action
+  let ρ₀ : Matrix (Fin 4) (Fin 4) ℂ := Matrix.diagonal fun i => (p i : ℂ)
+  let ρ₁ : Matrix (Fin 4) (Fin 4) ℂ := Matrix.diagonal fun i => (q i : ℂ)
+  have hpdef : ρ₀.PosDef := Matrix.PosDef.diagonal fun i => by exact_mod_cast p_pos i
+  have hqdef : ρ₁.PosDef := Matrix.PosDef.diagonal fun i => by exact_mod_cast q_pos i
+  have hpone : Matrix.trace ρ₀ = 1 := by
+    norm_num [ρ₀, Matrix.trace_diagonal, p, Fin.sum_univ_succ]
+  have hqone : Matrix.trace ρ₁ = 1 := by
+    norm_num [ρ₁, Matrix.trace_diagonal, q, Fin.sum_univ_succ]
+  have hpsi (s : ℝ) (hs : s ∈ Set.Ioo (0 : ℝ) 1) :
+      psi u ρ₀ ρ₁ s = counterexamplePsi s :=
+    (Sandwich.psi_eq_max action p q p_pos q_pos hs.1 hs.2).2.trans (log_maxCoeff s)
+  have hconv (s : ℝ) (hs : s ∈ Set.Ioo (0 : ℝ) 1) :
+      Tendsto (fun n : ℕ => psiN u ρ₀ ρ₁ n s / n) atTop (𝓝 (psi u ρ₀ ρ₁ s)) := by
+    change Tendsto (fun n : ℕ => psiN u ρ₀ ρ₁ n s / n) atTop
+      (𝓝 (psi u ρ₀ ρ₁ s))
+    rw [(Sandwich.psi_eq_max action p q p_pos q_pos hs.1 hs.2).2]
+    exact (Sandwich.psi_eq_max action p q p_pos q_pos hs.1 hs.2).1
+  have hd := hclaim 4 (Multiplicative (ZMod 2)) u ρ₀ ρ₁ hpdef hpone hqdef hqone hconv
+  have hm : DifferentiableOn ℝ counterexamplePsi (Set.Ioo (0 : ℝ) 1) :=
+    hd.congr fun s hs => (hpsi s hs).symm
+  have hhalf : (1 / 2 : ℝ) ∈ Set.Ioo (0 : ℝ) 1 := by norm_num
+  have hdhalf := hm.differentiableAt (isOpen_Ioo.mem_nhds hhalf)
+  have hquot := hasDerivAt_iff_tendsto_slope_left_right.mp hdhalf.hasDerivAt
+  have hleft := tendsto_nhds_unique hquot.1 one_sided_derivs.1
+  have hright := tendsto_nhds_unique hquot.2 one_sided_derivs.2
+  have hc : 0 < (2 / 7 : ℝ) * Real.log (4 / 3) :=
+    mul_pos (by norm_num) (Real.log_pos (by norm_num))
+  linarith
 
 end D5.S3.Quantum.Information.GroupInvariantPsi.Result
