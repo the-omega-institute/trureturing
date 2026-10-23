@@ -81,4 +81,4 @@ Suppose a polynomial f satisfies the claimed equivalence at dimensions 2 and 3, 
 - Truth anchor: `D5/S3/Quantum/Information/SeparabilitySinglePolynomialRefutation.coords`
 - Truth anchor: `D5/S3/Quantum/Information/SeparabilitySinglePolynomialRefutation.result`
 - Dependency: [D5/S3/Quantum/Entanglement/AbsolutePPT/QuadbitMaximumPurity](../Entanglement/AbsolutePPT/QuadbitMaximumPurity.md)
-- Dependency: [D5/S3/Quantum/Entanglement/GHZMeasureBiseparableBound](../Entanglement/GHZMeasureBiseparableBound.md)
+- Dependency: [D5/S3/Quantum/Information/SLDSpectralEnergy](SLDSpectralEnergy.md)
