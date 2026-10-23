@@ -351,7 +351,7 @@ open OrderedCollisionCoordinates.ContextualLaurentKernel
 open CollisionRationalExpansions.HahnFiberResidue
 open CollisionRationalExpansions.FullOrderSpectatorPole
 
-private def currentSourceTau (reverse : Bool) :
+def currentSourceTau (reverse : Bool) :
     Fin 2 ≃ LabelledRationalClearing.GlobalRationalCurry.Remaining (0 : Fin 3) :=
   if reverse then (Equiv.swap 0 1).trans (finSuccAboveEquiv (0 : Fin 3))
   else finSuccAboveEquiv (0 : Fin 3)
@@ -375,7 +375,7 @@ def currentSourceLocalQ (reverse : Bool) (s d : ℤ) (K : ℕ) (k l : ℤ)
             ⟨1, by decide⟩ ^ (d + ell) * R)).coeff (-1)).coeff
           (exponents 2 ![-k + ell - 1, -l - 1]))
 
-private theorem weighted_local_fiber (pre post : ℕ)
+theorem weighted_local_fiber (pre post : ℕ)
     (z : Fin ((pre + 2) + post))
     (tau : Fin ((pre + 1) + post) ≃ LabelledRationalClearing.GlobalRationalCurry.Remaining z)
     (x : LabelledRationalClearing.GlobalRationalCurry.Remaining z)
@@ -490,7 +490,7 @@ private theorem nestedLeftLocalReadout_eq (D : LatticeData) (a b : Carrier D) (K
   · intro k l _
     exact (currentSourceLocalQ_eq D a b K P innerLift d l k).2
 
-private def lastSourceTau (z : Fin 2) (spectatorLeft : Bool) :
+def lastSourceTau (z : Fin 2) (spectatorLeft : Bool) :
     Fin 2 ≃ LabelledRationalClearing.GlobalRationalCurry.Remaining z.castSucc :=
   if spectatorLeft then finSuccAboveEquiv z.castSucc
   else (Equiv.swap 0 1).trans (finSuccAboveEquiv z.castSucc)
