@@ -114,5 +114,8 @@ internal sealed class NonUnitalNetworkConditionImplicationDocument : IScribeDocu
                         + "and collect powers and products. These are the two required inequalities. "
                         + "The bound on the absolute value of l1 is unnecessary for these estimates; "
                         + "the second and third hypotheses suffice."))),
-                DescribeRole.Theorem))));
+                DescribeRole.Theorem,
+                openProblemResolutionClaim: new OpenProblemResolutionClaim(
+                    ProblemSlugRef.Create("mukherjee-ganguly-2025-non-unital-network-condition-implication"),
+                    ResolutionKind.Proved)))));
 }
