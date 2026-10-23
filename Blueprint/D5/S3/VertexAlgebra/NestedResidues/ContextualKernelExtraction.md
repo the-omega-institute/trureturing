@@ -20,7 +20,7 @@ For any field K, any prefix and suffix lengths pre and post, any integer diagona
 
 The nonzero terms embed injectively in the finite full Hahn multiplication antidiagonal. Conversely, the binomial support parametrization represents every nonzero antidiagonal term. This gives a finite bijection without a cutoff on either ordered part of an intermediate field.
 
-The nested Q fiber calculations use this coefficient identity inside the complete inner residue. Identification of complete outer Q residues with the finite same-numerator Taylor coordinates requires further local-coordinate equalities; this theorem establishes no such outer identification.
+This module extracts the inherited contextual support and antidiagonal proof from the research branch. On that external branch, leftPairFiberQ_eq and rightPairFiberQ_eq use this coefficient identity inside the complete inner residue on the path to actual_nested_outer_completion; those consumers remain prospective here until their branch merges. Identification of complete outer Q residues with the finite same-numerator Taylor coordinates requires further local-coordinate equalities; this theorem establishes no such outer identification.
 
 ## References
 
