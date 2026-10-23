@@ -47,7 +47,7 @@ def supportedQReadout (s r : ℤ) (K : ℕ) (n : ℤ)
         ∑ᶠ u : ℕ, BinomialKernelDelta.chooseSign (r + ell) u *
           backward (r + n - u) u)
 
-private theorem supportedQReadout_eq (s r : ℤ) (K : ℕ)
+theorem supportedQReadout_eq (s r : ℤ) (K : ℕ)
     (A B : VertexOperator ℂ V) (x : V) (n : ℤ) (phi : V →ₗ[ℂ] ℂ) :
     phi (((qField s r K A B)[[n]]) x) = supportedQReadout s r K n
       (fun m k => phi ((A[[m]]) ((B[[k]]) x)))
@@ -175,7 +175,7 @@ theorem supportedQReadout_congr (s r : ℤ) (K : ℕ) (n : ℤ)
 
 open CollisionLaurentKernels.LaurentCollision
 open OrderedCollisionCoordinates.ContextualLaurentKernel
-private theorem reverse_kernel (r : ℤ) :
+theorem reverse_kernel (r : ℤ) :
     kernelXZ ℂ r = (HahnSeries.C (HahnSeries.C (StateFieldResidueReconstruction.epsilon r))) * kernelZX ℂ r := by
   unfold kernelXZ kernelZX StateFieldResidueReconstruction.epsilon
   rw [neg_eq_neg_one_mul, mul_zpow, map_mul]
@@ -202,7 +202,7 @@ private def supportedNestedLeftReadout (outerLift innerLift d r n : ℤ) (K H : 
 
 /-- The right nesting retains both complete inner differences before taking
 the outer supported residue. -/
-private def supportedNestedRightReadout (outerLift innerLift d r n : ℤ) (K H : ℕ)
+def supportedNestedRightReadout (outerLift innerLift d r n : ℤ) (K H : ℕ)
     (R : Fin 6 → Exponent 3 → ℂ) : ℂ :=
   supportedQReadout outerLift r H n
     (fun k l => supportedQReadout innerLift d K l
@@ -359,7 +359,7 @@ private theorem rightPairFiberQ_eq (s d : ℤ) (K : ℕ) (k l : ℤ)
     fin_cases j <;> simp <;> omega
 
 /-- Scalar readouts from six genuinely supported, globally labelled carriers. -/
-private def hahnTripleScalar (W : Fin 6 → HahnSeries (Indices 3) ℂ)
+def hahnTripleScalar (W : Fin 6 → HahnSeries (Indices 3) ℂ)
     (order : Fin 6) (modes : Exponent 3) : ℂ :=
   (W order).coeff (orderExponents 3 (triplePermutation order) (fun j => -modes j - 1))
 
