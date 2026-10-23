@@ -2,6 +2,8 @@ fingerprints:
   raw_sha256: sha256:da06f3967532efdddd6ad1f4ebb2890d25a1aba92d89e457ea5f72d3cdec3144
   normalized_sha256: sha256:da06f3967532efdddd6ad1f4ebb2890d25a1aba92d89e457ea5f72d3cdec3144
 cas_ref: sha256:da06f3967532efdddd6ad1f4ebb2890d25a1aba92d89e457ea5f72d3cdec3144
-coverage_gids: []
+coverage_gids:
+  - gid: D5/S3/Topology/LegalFiberReconstruction.continuous_reconstruction
+    target_statement_id: sha256:adb6cc24ee666dcf6b35b38cf1ca43ddb8390e1d3c7c0a23148c172768274ed7
 receipts:
   unresolved_subitems: []
