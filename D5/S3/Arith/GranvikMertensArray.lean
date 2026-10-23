@@ -10,7 +10,6 @@ import D5.S3.Arith.RoldanCirculantEnergyP2Q3
 import Mathlib.NumberTheory.ArithmeticFunction.Moebius
 import Mathlib.Data.Nat.Totient
 import Mathlib.Data.Nat.Periodic
-import Mathlib.Algebra.BigOperators.Intervals
 import Mathlib.Tactic
 
 set_option autoImplicit false

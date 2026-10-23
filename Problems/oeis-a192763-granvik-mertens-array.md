@@ -17,7 +17,7 @@ Mats Granvik's OEIS A192763 COMMENTS field states:
 
 > The main diagonal is the Mobius function times the natural numbers A055615 (conjecture). For k>1 the first row is the Mertens function + 2 = A002321 + 2 (conjecture).
 
-The positive-index array is defined by Michael Somos's program in the entry.
+The positive-index array is defined by Michael Somos's Mathematica and PARI programs in the entry.
 It is symmetric, $T(1,1)=1$, $T(2,1)=2$, and
 \[
 T(n,1)=\frac{-T(n-1,1)-\sum_{i=2}^{n-1}T(n,i)}{n+1}+T(n-1,1)
@@ -39,8 +39,8 @@ one for the lower border, and zero for the strict lower interior.
 | Corner and first border cell | `T 1 1 = 1`, `T 2 1 = 2` by definition | OEIS program normalization. |
 | Main diagonal for every positive index | First conjunct of `result` | `∀ n : ℕ, 1 ≤ n → T n n = (n : ℚ) * (ArithmeticFunction.moebius n : ℚ)`. |
 | First row for every index greater than one | Second conjunct of `result` | `∀ k : ℕ, 2 ≤ k → T 1 k = 2 + ∑ j ∈ Finset.Icc 1 k, (ArithmeticFunction.moebius j : ℚ)`. |
-| Granvik/Gérard's first Mathematica program | Private `granvik`, `T_eq_granvik` and `T_published_unique` | Its literal border and reverse-window equations define exactly `T`. This equality is consumed by `result`. |
-| Math.SE 50719 | Source note | Its printed corner is three; this settlement uses the OEIS program's corner one. Its index slips are resolved by the two executable OEIS programs. |
+| Mats Granvik and Olivier Gérard's first Mathematica program | Private `granvik`, `T_eq_granvik` and `T_published_unique` | Its literal border and reverse-window equations define exactly `T`. This equality is consumed by `result`. |
+| Math.SE 50719 | Source note | Its printed corner is three; this settlement uses the OEIS program's corner one. Its index slips are resolved by the executable Mathematica and PARI programs in OEIS. |
 
 ## Motivation
 
@@ -116,48 +116,21 @@ interpretations.
 - Public mathematical interface: `T` and the single theorem `result`.
 - Source note: `Library/RecurrenceComposition/granvik2011a192763.md`.
 - Blueprint source: `Blueprint/D5/S3/Arith/GranvikMertensArray.scribe.cs`.
-- Admission basis: `open-problem-resolution`, preregistration #20559, Tier 1.
-- Utility: `none`; this is an unbounded symbolic proof, not a finite instance.
-- Existing gcd-multiplicity supplier: only its `private` modifier is removed;
-  the statement and proof are identical to the existing frozen declaration.
+- Verification: the scoped Lean report successfully checks the owner module
+  and its import closure.
+- The proof reuses
+  `RoldanCirculantEnergyP2Q3.sum_gcd_multiplicity` to group cells by gcd.
 
-### Declaration classifications
+### Proof components
 
-Definitions have no theorem proof shape. The theorem classifications below
-expand helpers to existing frozen or pinned upstream results. The Euclidean
-induction and well-founded comparison supply content on the live proof
-path. No independent escape-witness admission is claimed.
-
-| Declaration | proof_shape | Direct consumers |
-| --- | --- | --- |
-| `coprime_mertens_cancel` | bind-only | `reduced_border_sum` |
-| `totient_weighted_moebius` | bind-only | `model_row_sum` |
-| `T_symm` | bind-only | `T_granvikRule` |
-| `T_border` | bind-only | `T_granvikRule` |
-| `T_diagonal` | bind-only | `T_granvikRule` |
-| `T_interior` | bind-only | `T_granvikRule` |
-| `positive_quotient_transport` | bind-only | `signed_bezout_step` |
-| `signed_bezout_step` | bind-only | `lastQuotient_of_signed_bezout` |
-| `lastQuotient_of_signed_bezout` | content | `lastQuotient_eq_inverse` |
-| `min_inverse_signed_bezout` | bind-only | `lastQuotient_eq_inverse` |
-| `lastQuotient_eq_inverse` | content | `model_coprime_sum` |
-| `granvik_interior_of_somos` | bind-only | `T_granvikRule`, `model_granvikRule` |
-| `reduced_border_sum` | bind-only | `model_coprime_sum` |
-| `model_symm` | bind-only | `model_granvikRule`, `result` |
-| `model_border` | bind-only | `model_interior`, `model_coprime_sum`, `model_granvikRule`, `result` |
-| `model_diagonal` | bind-only | `model_granvikRule`, `result` |
-| `model_interior` | bind-only | `model_granvikRule` |
-| `sum_inverse` | bind-only | `model_coprime_sum` |
-| `T_granvikRule` | bind-only | `T_eq_granvik` |
-| `granvik_unique` | content | `T_eq_granvik`, `T_published_unique` |
-| `T_eq_granvik` | content | `T_published_unique` |
-| `T_published_unique` | content | `result` |
-| `border_step` | bind-only | `model_coprime_sum`, `model_granvikRule` |
-| `model_coprime_sum` | content | `model_row_sum` |
-| `model_row_sum` | content | `model_granvikRule` |
-| `model_granvikRule` | content | `result` |
-| `result` | content | settling result |
-| `RoldanCirculantEnergyP2Q3.sum_gcd_multiplicity` | Existing frozen proof, visibility only | `model_row_sum` and existing module consumers |
+| Statements | Mathematical role |
+| --- | --- |
+| `lastQuotient_of_signed_bezout`, `lastQuotient_eq_inverse` | Signed Bézout descent expresses the terminal Euclidean quotient through the smaller inverse residue. |
+| `coprime_mertens_cancel`, `reduced_border_sum`, `sum_inverse` | Möbius convolution, inversion and reflection evaluate sums over reduced residues. |
+| `model_coprime_sum`, `model_row_sum` | The coprime and gcd-grouped contributions give the off-diagonal sum $-n\mu(n)$. |
+| `border_step`, `model_granvikRule` | The border difference and row sum establish the published recurrence for the model. |
+| `T_granvikRule`, `granvik_unique`, `T_eq_granvik`, `T_published_unique` | Periodicity and well-founded uniqueness identify Somos's array, the first Mathematica recurrence and the model. |
+| `result` | The model's diagonal and border give both conjectured identities at every stated index. |
 
 ## Triage
 
