@@ -488,9 +488,44 @@ private lemma shift_cptp (N : ℕ)
       rw [Finset.sum_comm]
     _ = 1 := by rw [hstar, he, hu]
 
+private def shiftTrace (N : ℕ) (a : Fin N → Fin 4) : ℂ :=
+  ∑ x : Fin N → Fin 2, ∏ l, sigma (a l) (x l) (x (finRotate N l))
+
+private lemma shiftCoeff_trace (N : ℕ) (a : Fin N → Fin 4) :
+    shiftCoeff N a = (2 ^ N : ℂ)⁻¹ * shiftTrace N a := by
+  classical
+  simp only [shiftCoeff, Matrix.trace, Matrix.diag_apply, Matrix.mul_apply, cyclicShift,
+    mul_ite, mul_one, mul_zero, Finset.sum_ite_eq', Finset.mem_univ, ite_true,
+    shiftTrace, pauliString, Function.comp_apply]
+
+private lemma shift_trace_contraction (N : ℕ) (hN : 2 ≤ N) (k : Fin N) (i j : Fin 4) :
+    (∑ z : {l : Fin N // l ≠ k} → Fin 4,
+      shiftTrace N ((Equiv.funSplitAt k (Fin 4)).symm (i, z)) *
+        star (shiftTrace N ((Equiv.funSplitAt k (Fin 4)).symm (j, z)))) =
+      ((2 : ℂ) ^ N) ^ 2 * (if i = j then (1 / 4 : ℂ) else 0) := by
+  sorry
+
 private lemma shift_marginals (N : ℕ) (hN : 2 ≤ N) :
     ∀ k, marginal (shiftProcess N) k = (1 / 4 : ℂ) • 1 := by
-  sorry
+  classical
+  intro k
+  ext i j
+  simp only [Matrix.smul_apply, smul_eq_mul, Matrix.one_apply, mul_ite, mul_one, mul_zero]
+  rw [marginal_split]
+  have hstar : star ((2 ^ N : ℂ)⁻¹) = (2 ^ N : ℂ)⁻¹ := by simp
+  simp only [shiftProcess, Matrix.vecMulVec_apply, Pi.star_apply, shiftCoeff_trace,
+    star_mul, hstar]
+  have he (z : {l : Fin N // l ≠ k} → Fin 4) :
+      (2 ^ N : ℂ)⁻¹ * shiftTrace N ((Equiv.funSplitAt k (Fin 4)).symm (i, z)) *
+        (star (shiftTrace N ((Equiv.funSplitAt k (Fin 4)).symm (j, z))) *
+          (2 ^ N : ℂ)⁻¹) =
+      ((2 ^ N : ℂ)⁻¹) ^ 2 *
+        (shiftTrace N ((Equiv.funSplitAt k (Fin 4)).symm (i, z)) *
+          star (shiftTrace N ((Equiv.funSplitAt k (Fin 4)).symm (j, z)))) := by ring
+  simp_rw [he]
+  rw [← Finset.mul_sum, shift_trace_contraction N hN k i j]
+  have hd : (2 ^ N : ℂ) ≠ 0 := pow_ne_zero _ (by norm_num)
+  split_ifs <;> field_simp [hd] <;> ring
 
 private lemma shift_fidelity (N : ℕ)
     (hχ : IsProcessCPTP (shiftProcess N))
@@ -548,5 +583,8 @@ theorem result : claim := by
     have hχ := shift_cptp N he (shift_unitary N)
     have hm := shift_marginals N hN
     exact ⟨he, hχ, hm, shift_fidelity N hχ hm⟩
+
+#print axioms quantum_overlap
+#print axioms result
 
 end D5.S3.Quantum.QuantumChannels.MarginalApproximationWorstFidelity
