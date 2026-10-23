@@ -1,0 +1,35 @@
+**定理 16.1（新来源样本上的无偏读取及首阶效率）。** 对 $N$ 份独立重新抽取标签的记录，估计量
+
+$$
+\widehat\kappa=\frac{N^{-1}\sum_{a=1}^N H(R_a)/\varepsilon^2-L_0}{C_2}
+\tag{16.1}
+$$
+
+在每个 $\varepsilon>0$ 精确无偏，且固定实验下
+
+$$
+\operatorname{Var}(\widehat\kappa)
+=\frac1{N\varepsilon^4C_2}[1+O(\varepsilon^2)].
+\tag{16.2}
+$$
+
+证明。对标签 $s$ 写 $\alpha_s=u^{\mathsf T}\mu_s$、$\beta_s=v^{\mathsf T}\mu_s$。高斯二阶及四阶矩给
+
+$$
+\begin{aligned}
+\mathbb E[H(R)\mid C=s]&=\varepsilon^2\alpha_s\beta_s,\\
+\operatorname{Var}(H(R)\mid C=s)
+&=C_2+\varepsilon^2(B\alpha_s^2+A\beta_s^2+2C\alpha_s\beta_s).
+\end{aligned}
+$$
+
+代入五个均值及 $p_\kappa$ 得 $\mathbb E\alpha_C\beta_C=L_0+\kappa C_2$，故（16.1）无偏。全方差公式给精确式
+
+$$
+\operatorname{Var}H(R)=C_2
++\varepsilon^2\mathbb E(B\alpha_C^2+A\beta_C^2+2C\alpha_C\beta_C)
++\varepsilon^4\operatorname{Var}(\alpha_C\beta_C).
+$$
+
+新标签样本独立，样本均值方差除以 $N$，即得（16.2）。与（15.7）的单参数 Cramér–Rao 下界 $1/(N\mathcal J_\kappa)$ 比较，二者首项相同。此处只称弱信号首阶有效，不称任意有限信号下达到界；估计量可落在可行区间之外，截断后不再保持这条精确无偏式。若其他均值、噪声或方向未知，应重新计算带干扰参数的模型。$\square$
+

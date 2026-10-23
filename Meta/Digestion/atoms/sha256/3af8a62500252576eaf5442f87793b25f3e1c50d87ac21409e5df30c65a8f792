@@ -1,0 +1,44 @@
+**Definition 52.1 (The exact closed continued-base domain).**
+Use exactly the continued first equal-$J$ germ of
+[StrictReal IX](FIB_STRICT_REAL_JOINT_INCIDENCE_SUPPORT_IX.md),
+Sections 24–28 at `79635cbec3aca2eaed7f64dcc3ce6ce4ba13a0db`,
+restricted as in
+[StrictReal X, Section 12](FIB_STRICT_REAL_JOINT_INCIDENCE_SUPPORT_X.md#12-the-entire-regular-inventory-on-a-closed-actual-negative-j-segment),
+at the original version
+`233e926a9af4af12e21e9a0b74ebaf32503b642c`.
+Its parameter interval and enclosing rectangle are
+
+$$
+\begin{gathered}
+Q=[999/10^6,1001/10^6],\\
+p_c=-4978573051372107/10^{13},\qquad r_p=17/500,\\
+v_c=-476795440523806079/(5\cdot10^{14}),\qquad r_v=31/500,\\
+\mathcal B=[p_c-r_p,p_c+r_p]\times[v_c-r_v,v_c+r_v].
+\end{gathered}
+\tag{52.1}
+$$
+
+Precisely, $(X,Y,K_{\rm sec})(q)$ is the exact secant zero attached
+to that first germ by IX Theorem 26.1 and continued on its closed
+cells. It is not the polynomial predictor. For $h=\sqrt q$ put
+
+$$
+\begin{gathered}
+t_\pm=X(q)\pm K_{\rm sec}(q)h,\quad
+b_\pm=Y(q)\pm h,\quad r_\pm=t_\pm b_\pm,\\
+W_\pm(q)=(P(r_\pm,b_\pm),g_\pm,d_\pm),\qquad
+\mathcal D=\bigcup_{q\in Q} C(p(q),v(q)).
+\end{gathered}
+\tag{52.2}
+$$
+
+Here $g_\pm,d_\pm$ are the original regular whole-world lift in
+IX (12.5)–(12.6), also X (12.5)–(12.6), at those source coordinates;
+$p(q),v(q)$ are their common exact fifth and sixth readings.
+These references specify the continuation and lift with their original
+initial attachment and uniqueness conditions. IX's corner bound
+$q_*>0.0022954525$ places the entire closed $Q$ strictly before
+the corner. X (12.19) joins the exact solutions at the common endpoint
+$q=1/1000$ of the two closed cells; it supplies no extra branch choice.
+All terminating decimals in this section denote exact rationals.
+
