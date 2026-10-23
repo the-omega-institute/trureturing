@@ -619,7 +619,7 @@ theorem all_indices (T : Parameters) (hr : Rates T) (hs : Seeds T) :
       · exact mul_le_mul (by have hh := (period_bounds T hr i).2; norm_num at hh ⊢; exact hh) hprev.2
           (native_nonneg T s m b i) (by norm_num)
 
-private theorem geometric_rate_bound {x y A B : ℝ} (hy : 0 < y) (hA : 0 < A)
+theorem geometric_rate_bound {x y A B : ℝ} (hy : 0 < y) (hA : 0 < A)
     (hb : ∀ n : ℕ, A*x^n ≤ B*y^n) : x ≤ y := by
   by_contra h
   have hxy : y < x := lt_of_not_ge h

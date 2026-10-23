@@ -2,6 +2,8 @@ fingerprints:
   raw_sha256: sha256:60d126c2222841b491d09fc8fca97d5c64bf513c7c8dfb8582016e9a2260a21b
   normalized_sha256: sha256:60d126c2222841b491d09fc8fca97d5c64bf513c7c8dfb8582016e9a2260a21b
 cas_ref: sha256:60d126c2222841b491d09fc8fca97d5c64bf513c7c8dfb8582016e9a2260a21b
-coverage_gids: []
+coverage_gids:
+  - gid: D5/S3/ObserverMemory/Prediction/FiveModePeriodicDiameter.periodic_diameter_obstruction
+    target_statement_id: sha256:9303a13ccd61009562cba07c3adf2c1135dc033525114534e3020a02bbcbd068
 receipts:
   unresolved_subitems: []
