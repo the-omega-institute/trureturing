@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:a4bcd2c8ae2876c073eec5a7aa368b53ec8a643dade9d133b254b4cc10c0fc7d
+  normalized_sha256: sha256:a4bcd2c8ae2876c073eec5a7aa368b53ec8a643dade9d133b254b4cc10c0fc7d
+cas_ref: sha256:a4bcd2c8ae2876c073eec5a7aa368b53ec8a643dade9d133b254b4cc10c0fc7d
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 本 atom 仅定义候选三维实现须提交的七项证书要求；不宣称候选存在或这些要求成立。
+    previous_atom_id: 8a4148967a51d8f65c683d039650875a0a0fe050f5d755ca64fe1c130ed87f9f
+    next_atom_id: da49eb7e5dc5c6ac24a7ea401404e13e78a0573330da9b28aced8b69081efaef
