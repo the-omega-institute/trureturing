@@ -52,7 +52,7 @@ Lean statement: `D5/S3/Quantum/Information/FisherDiscord/Extension.extensionIneq
 
 The extension inequality compares the discord of a fixed diagonal marginal and observable with every state having that marginal and every admissible Hermitian SLD.
 
-**Theorem 1.5 (Classification of diagonal marginals).**
+**Theorem 1.5 (Necessary condition for diagonal marginals).**
 
 Lean statement: `D5/S3/Quantum/Information/FisherDiscord/Extension.monotone_discord_zero`
 

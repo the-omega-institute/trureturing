@@ -86,7 +86,7 @@ Lean statement: `D5/S3/Quantum/Information/FisherDiscord/Spectral.fisherSLD_spec
 
 *Commentary.*
 
-The diagonal formula applies to every positive semidefinite matrix after conjugation by its eigenvector unitary. The observable entries are taken in that eigenbasis, and the formula holds for every Hermitian SLD solution.
+The shared spectral_energy theorem, applied to the unitary tangent i[rho,H], gives the Fisher formula by trace cyclicity and the transformed commutator entries. The observable entries are taken in the eigenbasis, and the formula holds for every Hermitian SLD solution.
 
 **Theorem 1.8 (Skew formula in an eigenbasis).**
 

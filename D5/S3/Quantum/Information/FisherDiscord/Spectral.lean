@@ -138,10 +138,8 @@ theorem discord_nonneg_diag (w : n → ℝ) (hw : ∀ i, 0 ≤ w i) (H L : Matri
   exact mul_nonneg (by norm_num) (sum_nonneg fun i _ => sum_nonneg fun j _ =>
     mul_nonneg (pairKernel_nonneg _ _ (hw i) (hw j)) (Complex.normSq_nonneg _))
 
-private theorem information_unitary (ρ H L : Matrix n n ℂ) (hρ : ρ.PosSemidef)
+private theorem information_unitary (ρ H : Matrix n n ℂ) (hρ : ρ.PosSemidef)
     (U : Matrix.unitaryGroup n ℂ) :
-    fisherSLD ((U : Matrix n n ℂ) * ρ * star (U : Matrix n n ℂ))
-        ((U : Matrix n n ℂ) * L * star (U : Matrix n n ℂ)) = fisherSLD ρ L ∧
     skewWY ((U : Matrix n n ℂ) * ρ * star (U : Matrix n n ℂ))
         ((U : Matrix n n ℂ) * H * star (U : Matrix n n ℂ)) = skewWY ρ H := by
   let φ := Unitary.conjStarAlgAut ℂ (Matrix n n ℂ) U
@@ -151,14 +149,10 @@ private theorem information_unitary (ρ H L : Matrix n n ℂ) (hρ : ρ.PosSemid
     exact (NonUnitalStarAlgHomClass.map_cfcₙ (S := ℂ) φ NNReal.sqrt ρ
       (ha := hρ.nonneg)
       (hφa := (hρ.mul_mul_conjTranspose_same (U : Matrix n n ℂ)).nonneg)).symm
-  constructor
-  · change (1 / 4 : ℝ) * (trace (φ ρ * φ L * φ L)).re = _
-    rw [← map_mul, ← map_mul, ht]
-    rfl
-  · change -(1 / 2 : ℝ) * (trace ((CFC.sqrt (φ ρ) * φ H -
-        φ H * CFC.sqrt (φ ρ)) ^ 2)).re = _
-    rw [hs, ← map_mul, ← map_mul, ← map_sub, ← map_pow, ht]
-    rfl
+  change -(1 / 2 : ℝ) * (trace ((CFC.sqrt (φ ρ) * φ H -
+      φ H * CFC.sqrt (φ ρ)) ^ 2)).re = _
+  rw [hs, ← map_mul, ← map_mul, ← map_sub, ← map_pow, ht]
+  rfl
 
 private theorem isSLD_unitary (ρ H L : Matrix n n ℂ) (hL : IsSLD ρ H L)
     (U : Matrix.unitaryGroup n ℂ) :
@@ -184,17 +178,38 @@ theorem fisherSLD_spectral (ρ H L : Matrix n n ℂ) (hρ : ρ.PosSemidef)
         (hρ.isHermitian.eigenvectorUnitary : Matrix n n ℂ)) i j) := by
   let U := hρ.isHermitian.eigenvectorUnitary
   let w := hρ.isHermitian.eigenvalues
-  have hd : star (U : Matrix n n ℂ) * ρ * (U : Matrix n n ℂ) =
-      diagonal (fun i => (w i : ℂ)) := by
-    simpa only [U, w, Unitary.conjStarAlgAut_apply, Unitary.coe_star, star_star,
-      Function.comp_def, RCLike.ofReal_eq_complex_ofReal] using
-        hρ.isHermitian.conjStarAlgAut_star_eigenvectorUnitary
-  have hl := isSLD_unitary ρ H L hL (star U)
-  have hi := (information_unitary ρ H L hρ (star U)).1
-  simp only [Unitary.coe_star, star_star] at hl hi
-  rw [hd] at hl hi
-  rw [← hi]
-  exact fisherSLD_diag w hρ.eigenvalues_nonneg _ _ hl
+  let B := Complex.I • (ρ * H - H * ρ)
+  let φ := Unitary.conjStarAlgAut ℂ (Matrix n n ℂ) (star U)
+  have hd : φ ρ = diagonal (fun i => (w i : ℂ)) := by
+    simpa only [w, Function.comp_def, RCLike.ofReal_eq_complex_ofReal] using
+      hρ.isHermitian.conjStarAlgAut_star_eigenvectorUnitary
+  have hsolve : L * ρ + ρ * L = (2 : ℂ) • B := by
+    change _ = (2 : ℂ) • (Complex.I • (ρ * H - H * ρ))
+    rw [hL.2]
+    simp only [smul_smul]
+    norm_num
+  have he := D5.S3.Quantum.Information.SLDSpectralEnergy.spectral_energy
+    ρ B L hρ hL.1 hsolve
+  have hB (i j : n) : Complex.normSq ((φ B) i j) =
+      (w i - w j) ^ 2 * Complex.normSq ((φ H) i j) := by
+    have hb : (φ B) i j = Complex.I * ((w i - w j : ℝ) : ℂ) * (φ H) i j := by
+      simp only [B, map_smul, map_sub, map_mul, hd, Matrix.smul_apply,
+        smul_eq_mul, Matrix.sub_apply, diagonal_mul, mul_diagonal]
+      push_cast
+      ring
+    rw [hb]
+    simp only [map_mul, Complex.normSq_I, Complex.normSq_ofReal, one_mul, pow_two]
+  simp only [φ, Unitary.conjStarAlgAut_apply, Unitary.coe_star, star_star] at hB
+  unfold fisherSLD
+  rw [show (ρ * L * L).trace = (L * ρ * L).trace by
+    rw [Matrix.trace_mul_cycle], he]
+  change (1 / 4 : ℝ) * (∑ i, ∑ j,
+      2 * Complex.normSq ((star (U : Matrix n n ℂ) * B * U) i j) / (w i + w j)) =
+    (1 / 2) * ∑ i, ∑ j, (w i - w j) ^ 2 / (w i + w j) *
+      Complex.normSq ((star (U : Matrix n n ℂ) * H * U) i j)
+  simp_rw [hB]
+  simp only [mul_div_assoc, div_mul_eq_mul_div, ← mul_sum]
+  ring
 
 /-- The skew-information spectral formula for every positive semidefinite matrix. -/
 theorem skewWY_spectral (ρ H : Matrix n n ℂ) (hρ : ρ.PosSemidef)
@@ -211,7 +226,7 @@ theorem skewWY_spectral (ρ H : Matrix n n ℂ) (hρ : ρ.PosSemidef)
     simpa only [U, w, Unitary.conjStarAlgAut_apply, Unitary.coe_star, star_star,
       Function.comp_def, RCLike.ofReal_eq_complex_ofReal] using
         hρ.isHermitian.conjStarAlgAut_star_eigenvectorUnitary
-  have hi := (information_unitary ρ H 0 hρ (star U)).2
+  have hi := information_unitary ρ H hρ (star U)
   simp only [Unitary.coe_star, star_star] at hi
   rw [hd] at hi
   rw [← hi]

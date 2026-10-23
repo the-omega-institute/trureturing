@@ -17,7 +17,7 @@ internal sealed class ExtensionDocument : IScribeDocumentDefinition
                 "For nonnegative weights, every Hermitian SLD solution on the flagged matrix gives zero Fisher discord for an observable lifted from the first factor.", DescribeRole.Theorem),
             Item("extensionIneq", "Extension inequality",
                 "The extension inequality compares the discord of a fixed diagonal marginal and observable with every state having that marginal and every admissible Hermitian SLD.", DescribeRole.Definition),
-            Item("monotone_discord_zero", "Classification of diagonal marginals",
+            Item("monotone_discord_zero", "Necessary condition for diagonal marginals",
                 "For normalized nonnegative diagonal weights, a Hermitian observable, a marginal SLD solution and an SLD existence witness for the flag, if the extension inequality holds in every finite second dimension, then the marginal Fisher discord is zero. The flag supplies a nonpositive upper bound and general spectral nonnegativity supplies the lower bound. The extensions themselves need not be diagonal.", DescribeRole.Theorem))));
 
     private static DocumentBlock Item(string name, string title, string prose, DescribeRole role) =>

@@ -22,7 +22,7 @@ of quantum metrological complexity*, Phys. Rev. A 114, 032449 (2026).
 
 | Source object | Formal reading |
 |---|---|
-| Density matrix | A positive semidefinite finite complex matrix of trace one, `Defs.IsDensity`. |
+| Density matrix | A positive semidefinite finite complex matrix of trace one, `SLDSpectralEnergy.IsDensity`. |
 | Second-factor partial trace | `Defs.partialTrace₂ ρ i j = ∑ b, ρ (i,b) (j,b)`. |
 | Local observable | Hermitian `H`, lifted as `Defs.liftLeft H = H ⊗ 1`. |
 | Equation (6) | `Defs.IsSLD ρ H L`: Hermitian `L` with $i[\rho,H]=(L\rho+\rho L)/2$; `Defs.fisherSLD ρ L` is $\tfrac14\operatorname{Re}\operatorname{tr}(\rho L^2)$. |
