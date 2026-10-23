@@ -18,5 +18,8 @@ internal sealed class ResultDocument : IScribeDocumentDefinition
                 H("Failure of the characterization"), StatementSource.WithoutFormula(),
                 AssessedProvenance.FromRepo(),
                 Blocks(Paragraph(Text("The universal equivalence between minimization by normalized surface measure and conditional positive definiteness of the averaged kernel is false. The family at dimension three, arity three, and beta equal to one tenth satisfies the latter property and violates the former. Orthogonal invariance includes invariance under rotations."))),
-                DescribeRole.Theorem))));
+                DescribeRole.Theorem,
+                new OpenProblemResolutionClaim(
+                    ProblemSlugRef.Create("bilyk-et-al-2022-averaged-kernel-characterization-refutation"),
+                    ResolutionKind.Refuted)))));
 }
