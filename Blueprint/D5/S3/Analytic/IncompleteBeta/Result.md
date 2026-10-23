@@ -12,6 +12,8 @@ Lean statement: `D5/S3/Analytic/IncompleteBeta/Result.convolution_strictAnti_imb
 
 *Source.* Repository-derived.
 
+*Acknowledgement.* D. B. Karp (2016). *Normalized incomplete beta function: log-concavity in parameters and other properties*. DOI: [10.1007/s10958-016-2958-z](https://doi.org/10.1007/s10958-016-2958-z). URL: <https://arxiv.org/abs/1509.05120v1>.
+
 *Commentary.*
 
 For positive real a and m and every natural n, the sum over k from zero to n of c(k,a,m+d)c(n-k,a,m-d) is strictly decreasing as d ranges from zero, included, to m, excluded. Here c(j,a,b) is Gamma(a+b+j) divided by Gamma(b)Gamma(a+j+1). Thus the convolution decreases with the absolute difference of the two positive shape parameters when their sum is fixed.
@@ -24,7 +26,13 @@ Lean statement: `D5/S3/Analytic/IncompleteBeta/Result.result`
 
 *Proof.* Machine-checked in Lean as `D5/S3/Analytic/IncompleteBeta/Result.result` (`✓ std3`). ∎
 
+*Resolves.* `Problems/karp-2016-incomplete-beta-coefficient-log-concavity` (proved) by `D5/S3/Analytic/IncompleteBeta/Result.result`.
+
+<!-- scribe-open-problem-resolution-v1 {"problem_slug":"karp-2016-incomplete-beta-coefficient-log-concavity","declaration_gid":"D5/S3/Analytic/IncompleteBeta/Result.result","resolution_kind":"proved"} -->
+
 *Source.* Repository-derived.
+
+*Acknowledgement.* D. B. Karp (2016). *Normalized incomplete beta function: log-concavity in parameters and other properties*. DOI: [10.1007/s10958-016-2958-z](https://doi.org/10.1007/s10958-016-2958-z). URL: <https://arxiv.org/abs/1509.05120v1>.
 
 *Commentary.*
 
