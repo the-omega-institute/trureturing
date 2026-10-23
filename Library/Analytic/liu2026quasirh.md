@@ -271,37 +271,44 @@ g_D(a)=D^{-1}\xi(a)\sum_{d_1d_2=a}
 \mu(d_1)\mu(d_2)V(q_{d_1}/D)V(q_{d_2}/D).
 $$
 
-Every column and factor sum in this section is over good ideals, meaning ideals prime to $S$; $\xi$ is multiplicative and has modulus one on this semigroup. Ideals are counted once, $q_d=Nd$, and the field and bad-prime set $S$ are fixed. In this section assume a **fixed nonzero smooth nonnegative annular profile $V$**. This is a permitted profile subclass, not a statement for arbitrary complex profiles, profile derivatives, or the sum of all Fourier components.
+Every column and factor sum in this section is over good ideals, meaning ideals prime to $S$; $\xi$ is multiplicative and has modulus one on this semigroup. Ideals are counted once, $q_d=Nd$, and the field and bad-prime set $S$ are fixed. Assume a **fixed nonzero smooth complex annular profile $V$**. The following argument concerns this one Fourier component and its exact self-convolution.
 
-The classical ideal Möbius/Liouville identity
-$\mu(d)=(-1)^{\Omega_F(d)}\mu(d)^2$, with $\Omega_F$ counting prime-ideal factors with multiplicity, gives
+Reuse the classical Bohr lift and Haar Plancherel identity of Hedenmalm–Lindqvist–Seip, [arXiv:math/9512211v1, §2.2, (2-7) and the subsequent Plancherel identity](https://arxiv.org/html/math/9512211v1). For the ideal semigroup, give each prime ideal its own circle coordinate. More precisely, let $\mathcal P_D$ be the finite set of prime ideals dividing the support of
 
 $$
-g_D(a)=\xi(a)(-1)^{\Omega_F(a)}c_D(a),
+v_D(d)=\mu(d)\xi(d)V(q_d/D),
 \qquad
-c_D(a)=D^{-1}\sum_{d_1d_2=a}
-\mu(d_1)^2\mu(d_2)^2V(q_{d_1}/D)V(q_{d_2}/D)\ge0.
+P_D(z)=\sum_d v_D(d)\prod_{\mathfrak p\in\mathcal P_D}
+z_{\mathfrak p}^{v_{\mathfrak p}(d)}.
 $$
 
-Thus the factorizations of a fixed product column have the same Möbius sign. Expanding $c_D(a)^2$ and keeping just the ordered diagonal pairs yields
+Unique prime-ideal factorization identifies multiplication of these monomials with multiplication of ideals. Thus the coefficient of the monomial indexed by $a$ in $P_D^2$ is exactly $Dg_D(a)$, including the terms with shared primes. Distinct ideals with the same norm remain distinct monomials; a time average of $q_d^{-it}$ would not give this orthogonality.
+
+On the finite torus $\mathbb T^{\mathcal P_D}$, with Haar probability measure $m_D$, Plancherel and Cauchy–Schwarz give
 
 $$
-\|g_D\|_2^2=\sum_a c_D(a)^2
-\ge D^{-2}\left(\sum_{d\ {\rm good}}
-\mu(d)^2V(q_d/D)^2\right)^2.
+\begin{aligned}
+D^2\|g_D\|_2^2
+&=\int |P_D|^4\,dm_D\\
+&\ge\left(\int |P_D|^2\,dm_D\right)^2\\
+&=\left(\sum_{d\ {\rm good}}
+\mu(d)^2|V(q_d/D)|^2\right)^2.
+\end{aligned}
 $$
 
-For the squarefree count, directly reuse the principal-character case of [G5 and its squarefree expansion](faveri2026fixedorder.md#the-actual-gram-including-all-original-zeros), based on Lemke Oliver–Thorner, Lemma A.3 in [Pasten, arXiv:1705.09251v4](https://arxiv.org/pdf/1705.09251v4). Taking the label $R=1$ and profile $V^2$ in G3 gives
+All sums here are finite. Haar integration is an auxiliary coefficient identity, not an equidistribution assumption for the actual sextic row characters. The bound permits arbitrary complex phases of the fixed profile; it does not rely on retaining positive terms in a complex convolution expansion.
+
+For the squarefree count, directly reuse the principal-character case of [G5 and its squarefree expansion](faveri2026fixedorder.md#the-actual-gram-including-all-original-zeros), based on Lemke Oliver–Thorner, Lemma A.3 in [Pasten, arXiv:1705.09251v4](https://arxiv.org/pdf/1705.09251v4). Taking the label $R=1$ and profile $|V|^2$ in G3 gives
 
 $$
-D^{-1}\sum_{d\ {\rm good}}\mu(d)^2V(q_d/D)^2
+D^{-1}\sum_{d\ {\rm good}}\mu(d)^2|V(q_d/D)|^2
 \longrightarrow C_{V,S}
 =\frac{\operatorname{Res}_{s=1}\zeta_F(s)}{\zeta_F(2)}
 \prod_{\mathfrak p\in S}(1+q_{\mathfrak p}^{-1})^{-1}
-\int_0^\infty V(y)^2\,dy>0.
+\int_0^\infty |V(y)|^2\,dy>0.
 $$
 
-This uses ideal counting, not an additional restriction to one ray class or a count of unit representatives. Consequently $\liminf_{D\to\infty}\|g_D\|_2^2\ge C_{V,S}^2>0$. The sign identity and counting theorem are classical inputs; this is their scoped application to the existing coefficient, not a new large-sieve or RH estimate.
+This uses ideal counting, not an additional restriction to one ray class or a count of unit representatives. Consequently $\liminf_{D\to\infty}\|g_D\|_2^2\ge C_{V,S}^2>0$. Bohr lifting, Haar Plancherel, Cauchy–Schwarz and the counting theorem are classical inputs; this is their application to the existing coefficient, not a new harmonic-analysis, large-sieve or RH theorem.
 
 At $D=U^{1/2}$, the coefficient-independent sixth-order sieve in (458.7) has cost $U^{7/6+\varepsilon}\|g_D\|_2^2$. Together with the unchanged plain fourth moment $\ll U^{1+\varepsilon}$, an inverse fourth-moment exponent $B$ would give complete-energy exponent $(B+3)/2$ when $U\asymp K$. To improve the current §459 exponent through this route requires
 
@@ -316,4 +323,255 @@ $$
 \qquad B_*-7/6=\frac{12-5\sqrt6}{3}<0.
 $$
 
-The positive lower bound excludes such a uniform norm-only shortcut on this profile subclass. It gives **no lower bound** for the actual inverse fourth moment, $Q(b)$, any projected energy, or the complement: cross terms between distinct columns can cancel through the row characters. Coefficient-sensitive estimates for those correlations, zero-bin gains, complex-profile cancellation and the full signed Robin restoration remain separate questions.
+The positive lower bound excludes this norm-only shortcut for every fixed nonzero smooth complex annular profile. For profiles that vary with $D$, the finite Haar inequality remains exact, but a uniform positive constant requires the normalized squarefree mass on its right-hand side to stay bounded away from zero. It gives **no lower bound** for the actual inverse fourth moment, $Q(b)$, any projected energy, or the complement: cross terms between distinct columns can cancel through the row characters. It also gives no corresponding lower bound for a convolution of two different factors such as the original $\mu*\mathrm{plain}$ coefficient, or for the sum of different Fourier components. Coefficient-sensitive estimates for the actual row correlations, zero-bin gains and the full signed Robin restoration remain separate questions.
+
+## The original convolution norm before sixth-power compression
+
+The self-convolution argument above does not apply to two different factors. For the original coefficient, instead reuse the distinct-prime construction in [§473](../../docs/develop/theory/FIBONACCI_ANALYTIC_FRONTIER_INTERFACES.md#473-对全部-f4-掩码与投影稳定的物理行切面) and the fixed-ray prime-ideal theorem used there. Let $D=N=\sqrt K$ and keep fixed nonzero smooth complex annular profiles $V,W$. Suppose the original finite ray multiplier $\omega$ is nonzero on an allowed class. Then the **uncompressed** coefficient
+
+$$
+b(h)=\omega(h)\sum_{dn=h}\mu(d)V(q_d/D)W(q_n/D)
+$$
+
+has
+
+$$
+\|b\|_2^2\gg_{V,W,\omega,S}\frac{K}{(\log K)^2}
+\qquad(K\longrightarrow\infty).
+$$
+
+Here is the additional counting interface, not a new prime-distribution theorem. For distinct good prime ideals $p,q$ with $q_p/D,q_q/D$ in fixed positive compact intervals, the unit and product divisors lie outside the inverse annulus for large $D$. The existing semiprime identity therefore gives
+
+$$
+b(pq)=-\omega(pq)H(q_p/D,q_q/D),\qquad
+H(x,y)=V(x)W(y)+V(y)W(x).
+$$
+
+The continuous kernel $H$ is nonzero somewhere. If $V(x)W(x)\ne0$ for some $x$, use $H(x,x)=2V(x)W(x)$ and perturb to distinct arguments. Otherwise choose $V(x)\ne0$ and $W(y)\ne0$; the disjoint nonzero sets give $H(x,y)=V(x)W(y)\ne0$. In either case choose disjoint compact intervals $I,J$ with nonempty interiors on which $|H|$ has a positive lower bound. Choose fixed prime-ray classes whose product is the retained class of $\omega$. The fixed-ray prime-ideal theorem gives $\gg D/\log D$ primes in each of $DI,DJ$, after deleting $S$. Unique ideal factorization and $I\cap J=\varnothing$ make their $\gg D^2/\log^2D$ products distinct. On this class $|\omega|$ is a fixed positive constant, proving the bound.
+
+Consequently, a fixed power saving for the norm of this uncompressed coefficient cannot by itself pay the balanced sixth-order sieve cost. Even a hypothetical bound $Q(b)\ll K^{7/6+\varepsilon}\|b\|_2^2$ would need a coefficient-norm exponent below
+
+$$
+\frac{49-10\sqrt6}{12}-\frac76
+=\frac{35-10\sqrt6}{12}<1
+$$
+
+to improve §459 by this mechanism. This is only a restriction on a norm-only payment: the actual unrestricted-column sieve still requires its original sixth-power decomposition and masks. The argument gives no lower bound after aggregation of sixth-power-equivalent columns, or for $Q(b)$, a projection or its complement, including the actual row energy after the finite Fourier components are recombined. No uniform lower bound is claimed for profiles varying with $D$. It leaves cancellation in the actual row kernel available. The semiprime identity, ray-prime theorem and counting argument are reused classical tools; this paragraph adds no analytic Lean certification, improved Robin bound or literature-priority claim.
+
+## The fixed-order density theorem at the existing critical bin
+
+A separate possible substitution is de Faveri's [arXiv:2610.04045v1, Corollary 1.5](https://arxiv.org/html/2610.04045v1#S1.SS2). For the source's $n$th-power-free Hecke family over a degree-$d_F$ field, it bounds the total zero count by
+
+$$
+\sum_{q_a\le X}^{\flat}N(\sigma,T,a)
+\ll X^{1-\delta_n(\sigma)+\varepsilon}
+T^{1+d_F(1-\sigma)/(3-2\sigma)+\varepsilon}.
+$$
+
+This is an existing literature theorem. To replace a count in §459 it would also have to cover every original finite twist and primitive inducing presentation, with its common height buffer. Even granting that transport and discarding the positive height cost, its stated exponent does not improve the maximizing bin. For $n=6$, writing $\delta=2\sigma-1$, the middle branch $1/3\le\delta\le5/6$ gives
+
+$$
+R_6(\delta)=1-
+\frac{\delta(18\delta-3)}{60\delta-36\delta^2-10}.
+$$
+
+At the existing $\delta_*=(15-5\sqrt6)/6\in(1/3,1/2)$, comparison with $R(\delta)=(15-16\delta)/(15-6\delta)$ is exact:
+
+$$
+R_6(\delta_*)-R(\delta_*)=
+\frac{\delta_*(312\delta_*-252\delta_*^2-55)}
+{(15-6\delta_*)(60\delta_*-36\delta_*^2-10)}>0.
+$$
+
+Both denominator factors are positive on $[1/3,1/2]$. The numerator's quadratic factor is concave with endpoint values $21,38$, hence positive throughout that interval. Numerically the two count exponents are $R_6(\delta_*)=0.7575635858\ldots$ and $R(\delta_*)=0.6254252143\ldots$. Thus retaining the old count and taking the minimum with this new input still attains the old maximum at $\delta_*$. It leaves the §459 energy exponent $(49-10\sqrt6)/12$ unchanged; replacing the old count outright would be weaker there. The $T$ factor and finite transport costs cannot improve this comparison. No optimization of other bins, new zero-density theorem, or lower bound on the actual energy is asserted. A stronger same-object joint estimate remains required.
+
+## The actual-order-six correlation for the inverse fourth moment
+
+The remaining correlation can first be sought for the actual inverse square, rather than for an arbitrary two-factor convolution. Reuse $g_D$ from (458.6) above, with the same original row family, fixed Fourier component $\xi$, nonnegative row weight $\Omega$, zero extensions and fixed profile/height contract. Let $r_j(a)$ denote the ideal whose prime valuations are $v_{\mathfrak p}(a)\bmod j$. Since each nonzero Möbius factor is squarefree, every column in $g_D$ is cube-free. Consequently $r_3$ is injective on this support: different columns cannot have an actual ratio character of order two. Different columns with equal $r_2$ have ratio order three; unequal $r_2$ forces order six. These statements refer to the underlying primitive ratio on the coprime locus; its original zeros remain in the row sum.
+
+The actual Möbius structure is retained by this cut. Write a cube-free column uniquely as $a=st^2$, with $s,t$ squarefree and $(s,t)=1$, and put
+
+$$
+A_D(s,t)=\sum_{ef=s}V(q_tq_e/D)V(q_tq_f/D).
+$$
+
+Every contributing pair is $d_1=te,d_2=tf$, and $\mu(d_1)\mu(d_2)=\mu(s)$. Hence the exact coefficient is
+
+$$
+g_D(st^2)=D^{-1}\mu(s)\xi(st^2)A_D(s,t).
+$$
+
+Thus the Möbius sign is constant within each parity-core block and cancels from its squared norm; it remains in cross-core products as $\mu(s)\mu(s')$. For complex $V$, no positivity of $A_D$ is asserted. Replacing these fixed cross-core coefficients by an independently chosen vector would lose the intended input.
+
+Define the actual weighted row kernel and two contractions by
+
+$$
+\begin{aligned}
+\mathcal K_{U,\Omega}(a,b)
+&=\sum_{u\ {\rm original}}\Omega(q_u/U)
+ \chi_a(u)\overline{\chi_b(u)},\\
+H_2^\mu
+&=\sum_s\sum_{u\ {\rm original}}\Omega(q_u/U)
+ \left|\sum_{r_2(a)=s}g_D(a)\chi_a(u)\right|^2,\\
+E_6^\mu
+&=\sum_{\substack{a,b\ {\rm cube\!\!-\!free}\\r_2(a)\ne r_2(b)}}
+ g_D(a)\overline{g_D(b)}\mathcal K_{U,\Omega}(a,b).
+\end{aligned}
+$$
+
+The last sum uses ordered pairs and is real by Hermitian symmetry; no nonnegativity is asserted for it. Finite expansion gives the same-object identity
+
+$$
+\sum_{u\ {\rm original}}\Omega(q_u/U)|M_\xi(u)|^4
+=H_2^\mu+E_6^\mu.
+$$
+
+**The cubic block is already paid.** Directly reuse the parity-block supplier in the [existing lower-order decomposition](faveri2026fixedorder.md#separating-the-lower-order-character-blocks). Its proof uses only the divisor envelope and the cited cubic sieve, so it applies to $G_D(a)=Dg_D(a)$, supported on $q_a\asymp K_\mu:=D^2$, with $|G_D(a)|\ll_{V,\varepsilon}q_a^\varepsilon$. With $B_s=(K_\mu/q_s)^{1/2}$, the existing bound and core sums give
+
+$$
+\begin{aligned}
+H_2^\mu
+&\ll_{\varepsilon,\mathrm{fixed\ data}}
+ (UK_\mu)^\varepsilon D^{-2}
+ \sum_{q_s\ll K_\mu}B_s
+ \left(U+U^{1/3}B_s+U^{2/3}B_s^{2/3}\right)\\
+&\ll_{\varepsilon,\mathrm{fixed\ data}}(UD)^\varepsilon U.
+\end{aligned}
+$$
+
+The mandatory $D^{-2}$ is the squared normalization of $g_D$. The source already supplies $\sum_s B_s\ll K_\mu$, $\sum_s B_s^2\ll K_\mu\log(2K_\mu)$ and $\sum_s B_s^{5/3}\ll K_\mu$; they are reused, not new counting results. The bound retains all original sixth-power-free rows, including lower inducing orders. A row enlargement is used only inside the positive cubic blocks, never to erase a mask from $E_6^\mu$.
+
+**The unpaid input is specific to these coefficients.** At $D=\sqrt U$, an upper bound
+
+$$
+\operatorname{Re}E_6^\mu
+\ll_{\varepsilon,\mathrm{fixed\ data}}U^{B+\varepsilon},
+\qquad
+1<B<\frac{31-10\sqrt6}{6},
+$$
+
+would give an inverse fourth moment of order $U^{B+\varepsilon}$. If uniform over the original finite components and the profile derivatives required by the existing common-cost contract, it would combine with the unchanged plain fourth moment at $D=N=\sqrt U$, $K=U$, to yield
+
+$$
+Q(b),\ \|(I-P)Ab\|_2^2
+\ll_{\varepsilon,\mathrm{fixed\ data}}
+K^{(B+3)/2+\varepsilon},
+$$
+
+strictly improving the current §459 exponent. This is a conditional consumer, not a supplied bound for $E_6^\mu$. The generic sixth-order sieve still gives only the $7/6$ inverse-fourth exponent. Separate bounds $H_2^\mu\ll U^{1+\varepsilon}$ and $E_6^\mu\ll U^{1+\varepsilon}$ would reach $K^{2+\varepsilon}$ through this Cauchy step, without a strict saving. These two separate upper bounds do not supply a sub-$U$ bound for the full inverse fourth moment. Other witness lengths, growing-height costs and the final signed Robin restoration remain unpaid. This application reuses the lower-order sieve results and adds no analytic Lean certification or literature-priority claim.
+
+
+## Small shared-gcd localization using the existing inverse-L input
+
+The same buffered inverse-$L$ input as [§459](../../docs/develop/theory/FIBONACCI_ANALYTIC_FRONTIER_INTERFACES.md#459-缓冲零点分箱下的完整原卷积联合估计) can be applied to each actual shared-gcd packet in the inverse square. Together with the existing full-interference inequality [(462.10)](../../docs/develop/theory/FIBONACCI_ANALYTIC_FRONTIER_INTERFACES.md#462-原卷积的大重复部分与完整交叉项), it reduces the unpaid correlation to $q_t\le U^\theta$ for any fixed $\theta>0$. This is an application of the existing analytic bounds and Euler products; the remaining head estimate is not supplied.
+
+Keep the original finite component, all original rows and zeros, and the same fixed or polylog profile/height contract. Set $D=\sqrt U$ and write
+
+$$
+(\mathsf A_U f)(u)=\sqrt{\Omega(q_u/U)}\sum_a f(a)\chi_a(u),
+\qquad \mathcal T(f)=\|\mathsf A_Uf\|_2^2.
+$$
+
+Thus $\mathsf A_Ug_D=\sqrt\Omega\,M_\xi^2$, with the row weight counted once. The original, untruncated inverse polynomial already satisfies
+
+$$
+\mathcal T(g_D)\ll U^{B_*+\varepsilon},
+\qquad B_*=(31-10\sqrt6)/6.
+$$
+
+Indeed, directly reuse (459.7), (459.9) and the evaluated maximum (459.12): a nonfloor bin contributes $U^{R(\delta)+\delta+\varepsilon}$ to the fourth moment, while the floor contributes $U^{51/50+\varepsilon}<U^{B_*+\varepsilon}$. No new optimization is needed. Constants below depend on the same fixed data and required finite profile seminorms; actual polylog costs are absorbed in $U^\varepsilon$.
+
+**Recovering the inverse-$L$ representation packet by packet.** Put $\psi_u(d)=\xi(d)\chi_d(u)$. For squarefree $t$ and $X=D/q_t$, define
+
+$$
+C_{X,t}(u)=X^{-1}
+\sum_{\substack{e,f\ {\rm squarefree}\\(e,f)=1,\ (ef,t)=1}}
+\mu(e)\mu(f)V(q_e/X)V(q_f/X)\psi_u(ef).
+$$
+
+All ideals remain good. The exact packet with shared gcd $t$ in the original square is
+
+$$
+F_t(u)=\frac{\psi_u(t)^2}{q_t}C_{D/q_t,t}(u),
+\qquad M_\xi(u)^2=\sum_t F_t(u).
+$$
+
+The factor $q_t^{-1}$ is mandatory: $X/D=1/q_t$. In particular, a collision between $t$ and $u$ makes the original packet zero.
+
+On the initial absolutely convergent lines $\Re s=\Re w=2$, the double Dirichlet series of the sum defining $C_{X,t}$ is
+
+$$
+\prod_{\mathfrak p\nmid St}
+ (1-\psi_u(\mathfrak p)q_{\mathfrak p}^{-s}
+    -\psi_u(\mathfrak p)q_{\mathfrak p}^{-w})
+=\frac{\mathscr H_t(s,w;u)}
+ {L_{\rm orig}(s,\psi_u)L_{\rm orig}(w,\psi_u)}.
+$$
+
+For $z_{\mathfrak p}=\psi_u(\mathfrak p)q_{\mathfrak p}^{-s}$ and $v_{\mathfrak p}=\psi_u(\mathfrak p)q_{\mathfrak p}^{-w}$, the correction is exactly
+
+$$
+\mathscr H_t=
+\prod_{\mathfrak p\nmid St}
+ \frac{1-z_{\mathfrak p}-v_{\mathfrak p}}
+ {(1-z_{\mathfrak p})(1-v_{\mathfrak p})}
+\prod_{\substack{\mathfrak p\mid t\\\mathfrak p\notin S}}
+ \frac1{(1-z_{\mathfrak p})(1-v_{\mathfrak p})}.
+$$
+
+The first product differs locally from $1$ by $O(q_{\mathfrak p}^{-\Re(s+w)})$. Consequently, on $\Re s,\Re w\ge a_0=51/100$, it is holomorphic and bounded uniformly in the original characters; the second product costs only $\ll_\varepsilon q_t^\varepsilon$. Original character zeros give local factors $1$. Only $\mathscr H_t$ is used, never its reciprocal, so zeros of its numerator present no obstruction. No $L$-function for $\psi_u^2$ or new moving-conductor zero-free hypothesis is introduced.
+
+Double Mellin inversion now expresses $C_{X,t}$ as
+
+$$
+\frac1{X(2\pi i)^2}
+\int_{(2)}\!\int_{(2)}
+\frac{X^{s+w}\widehat V(s)\widehat V(w)\mathscr H_t(s,w;u)}
+ {L_{\rm orig}(s,\psi_u)L_{\rm orig}(w,\psi_u)}\,dw\,ds.
+$$
+
+For a row in an original bin indexed by $a$, reuse its same finite zero-free rectangle twice, moving the truncated lines successively to $\Re s=\Re w=a+8e$. The path always has $\Re(s+w)>1$. The already owned reciprocal bounds therefore give, for $\delta=2a-1$,
+
+$$
+|C_{X,t}(u)|\ll U^\varepsilon X^{\delta+O(e)}+O(U^{-20}).
+$$
+
+This is a new application of the original bounds to the coprimality-corrected packet, not an identification of the truncated whole vector with an original inverse polynomial. If $\operatorname{supp}V\subset[v_-,v_+]$, a nonempty packet has $q_t\le v_+D$, hence $X\ge1/v_+$. The bounded range $1/v_+\le X<1$ involves only finitely many $e,f$ and satisfies the same bound directly. For $X\ge1$, the absolute-line tails and finite horizontal joins are uniformly $O(U^{-20})$ after choosing the outer Mellin decay order. The weighted packet sum costs only $\sum_{q_t\le v_+D}q_t^{-1}\ll\log U$ for these errors.
+
+Fix $0<\theta<1/2$, put $T=U^\theta$, and restrict the original coefficient by
+
+$$
+g_{>T}(st^2)=g_D(st^2)\mathbf1_{q_t>T},
+\qquad g_{\le T}=g_D-g_{>T}.
+$$
+
+The cutoff is independent of the row and restored profile parameters. The existing ideal-counting tail $\sum_{q_t>T}q_t^{-1-\delta}\ll T^{-\delta}$ is uniform for $\delta\ge1/50$. With the actual factor $q_t^{-1}$ in $F_t$, it gives
+
+$$
+\left|\sum_{q_t>T}F_t(u)\right|
+\ll U^\varepsilon(D/T)^\delta+O(U^{-10}).
+$$
+
+Thus each nonfloor bin contributes at most $U^{R(\delta)+(1-2\theta)\delta+\varepsilon}$ to $\mathcal T(g_{>T})$. Reuse $R(\delta)+\delta\le B_*$ and $\delta\ge1/50$, rather than optimizing again. The floor exponent is $51/50-\theta/25$, so the same bound holds there:
+
+$$
+\mathcal T(g_{>T})\ll U^{B_*-\theta/25+\varepsilon}.
+$$
+
+Fix $\theta$ and the desired strict margin first; choose the bin width and internal losses accordingly, then the finite Sobolev orders, the small original buffer-height exponent and finally the outer Mellin decay order. Mixed profile derivatives replace the two copies of $V$ by their required derivatives in the same formula. Fixed or polylog norm twists enter the same two original $L$-functions; their derivative logarithms and the finite Euler corrections are paid by the same cost contract. This does not extend the original growing-height allowance.
+
+The original full moment and the existing Hilbert inequality (462.10) retain all interference and yield
+
+$$
+\left|\mathcal T(g_D)-\mathcal T(g_{\le T})\right|
+\ll U^{B_*-\theta/50+\varepsilon}.
+$$
+
+Define $E_6^{\mu,\le T}$ by replacing both coefficient occurrences in the preceding ordered cross-core sum by $g_{\le T}$. The same cubic-block supplier applies afresh through its divisor envelope, giving $H_2(g_{\le T})\ll U^{1+\varepsilon}$; coefficient truncation is not asserted to decrease a positive block. Consequently an estimate
+
+$$
+\operatorname{Re}E_6^{\mu,\le T}\ll U^{B_*-\nu+\varepsilon},
+\qquad 0<\nu<\min\{B_*-1,\theta/50\},
+$$
+
+uniform in the original finite components and required profile derivatives, would give $\mathcal T(g_D)\ll U^{B_*-\nu+\varepsilon}$. The already owned plain fourth moment would then give $Q(b),\|(I-P)Ab\|_2^2\ll K^{\kappa_{\rm joint}-\nu/2+\varepsilon}$ at $K=U$. No such head estimate is supplied here. Every squarefree column and the $t=1$ packet remain, with their original Möbius signs, row masks and cross-core phases. This reduces the missing estimate to small actual shared gcds without improving the full moment, proving a sub-$K^2$ bound, or restoring the signed Robin expression. Euler multiplication, finite Mellin shifts, counting and the Hilbert inequality are reused tools; no new analytic Lean certification or literature-priority claim is made.
