@@ -7,7 +7,7 @@
    digest: Every linear N-qubit doily has an odd number of negative lines. -/
 
 import D5.S3.Quantum.Information.StabilizerPairLocalUnitaryInequivalence
-import D5.S3.QuadraticForms.SymplecticBasis
+import D5.S3.VertexAlgebra.LatticeTwistedGroundRealization
 
 /-! Canonical Pauli line signs on nondegenerate binary four-spaces.
 
@@ -27,6 +27,8 @@ open scoped BigOperators
 open Module
 open D5.S3.Quantum.Information.StabilizerPairLocalUnitaryInequivalence
 open D5.S3.Quantum.FiniteDimensional (qubitX qubitZ)
+open D5.S3.VertexAlgebra.LatticeTwistedGroundRealization (sign_sum)
+open D5.S3.VertexAlgebra.LatticeTwistedGroundRealization.SignQuotient (complexSign)
 
 namespace D5.S3.Quantum.Contextuality.LinearDoilyNegativeLineParity
 
@@ -90,8 +92,6 @@ private def fourthRoot (k : ZMod 4) : ℂ := Complex.I ^ k.val
 
 private def phase {N : ℕ} (u v : Fin N → ZMod 2 × ZMod 2) : ℂ :=
   ∏ j, fourthRoot (localExponent (u j) (v j))
-
-private def bitSign (b : ZMod 2) : ℂ := if b = 0 then 1 else -1
 
 private theorem local_mul (u v : ZMod 2 × ZMod 2) :
     pauliMatrix (canonicalLabel u) * pauliMatrix (canonicalLabel v) =
@@ -180,32 +180,9 @@ private theorem local_mul (u v : ZMod 2 × ZMod 2) :
       norm_num [pauliMatrix, qubitX, qubitZ, Matrix.mul_apply, Fin.sum_univ_two,
         Matrix.smul_apply, smul_eq_mul, pow_succ, Complex.I_sq]
 
-private theorem bitSign_add (a b : ZMod 2) :
-    bitSign (a + b) = bitSign a * bitSign b := by
-  fin_cases a <;> fin_cases b
-  · change (1 : ℂ) = (1 : ℂ) * (1 : ℂ)
-    norm_num
-  · change (-1 : ℂ) = (1 : ℂ) * (-1 : ℂ)
-    norm_num
-  · change (-1 : ℂ) = (-1 : ℂ) * (1 : ℂ)
-    norm_num
-  · change (1 : ℂ) = (-1 : ℂ) * (-1 : ℂ)
-    norm_num
-
-private theorem prod_bitSign {ι : Type*} (s : Finset ι) (f : ι → ZMod 2) :
-    (∏ i ∈ s, bitSign (f i)) = bitSign (∑ i ∈ s, f i) := by
-  let χ : Multiplicative (ZMod 2) →* ℂ :=
-    { toFun := fun b => bitSign b.toAdd
-      map_one' := rfl
-      map_mul' := fun a b => bitSign_add a.toAdd b.toAdd }
-  have hχ (b : ZMod 2) : χ (Multiplicative.ofAdd b) = bitSign b := rfl
-  have hprod := (map_prod χ (fun i => Multiplicative.ofAdd (f i)) s).symm
-  rw [← ofAdd_sum] at hprod
-  simpa only [hχ] using hprod
-
 private theorem local_comm (u v : ZMod 2 × ZMod 2) :
     pauliMatrix (canonicalLabel u) * pauliMatrix (canonicalLabel v) =
-      bitSign (u.1 * v.2 + u.2 * v.1) •
+      complexSign (u.1 * v.2 + u.2 * v.1) •
         (pauliMatrix (canonicalLabel v) * pauliMatrix (canonicalLabel u)) := by
   rcases u with ⟨x, z⟩
   rcases v with ⟨y, t⟩
@@ -319,18 +296,18 @@ private theorem observable_sq {N : ℕ} (u : Fin N → ZMod 2 × ZMod 2) :
   simp [phase, hlocal, fourthRoot]
 
 private theorem observable_comm {N : ℕ} (u v : Fin N → ZMod 2 × ZMod 2) :
-    observable u * observable v = bitSign (B u v) • (observable v * observable u) := by
+    observable u * observable v = complexSign (B u v) • (observable v * observable u) := by
   classical
   unfold observable wordOp
   rw [tensor_mul, tensor_mul]
   conv_lhs => arg 1; ext i; rw [local_comm]
   ext x y
   simp only [tensorOp, Matrix.of_apply, Matrix.smul_apply, smul_eq_mul]
-  rw [Finset.prod_mul_distrib, prod_bitSign]
+  rw [Finset.prod_mul_distrib, ← sign_sum]
   rfl
 
 private theorem local_phase_sq (u v : ZMod 2 × ZMod 2) :
-    fourthRoot (localExponent u v) ^ 2 = bitSign (u.1 * v.2 + u.2 * v.1) := by
+    fourthRoot (localExponent u v) ^ 2 = complexSign (u.1 * v.2 + u.2 * v.1) := by
   rcases u with ⟨x, z⟩
   rcases v with ⟨y, t⟩
   fin_cases x <;> fin_cases z <;> fin_cases y <;> fin_cases t
@@ -368,11 +345,11 @@ private theorem local_phase_sq (u v : ZMod 2 × ZMod 2) :
     norm_num [pow_succ, Complex.I_sq]
 
 private theorem phase_sq {N : ℕ} (u v : Fin N → ZMod 2 × ZMod 2) :
-    phase u v ^ 2 = bitSign (B u v) := by
+    phase u v ^ 2 = complexSign (B u v) := by
   unfold phase
   rw [← Finset.prod_pow]
   simp_rw [local_phase_sq]
-  exact prod_bitSign _ _
+  exact (sign_sum _ _).symm
 
 private theorem triple_sign {N : ℕ} (u v : Fin N → ZMod 2 × ZMod 2)
     (h : B u v = 0) :
@@ -614,7 +591,7 @@ private theorem prod_fourthRoot {ι : Type*} (s : Finset ι) (f : ι → ZMod 4)
   simpa only [hχ] using hprod
 
 private theorem fourthRoot_two (b : ZMod 2) :
-    fourthRoot (2 * b.val) = bitSign b := by
+    fourthRoot (2 * b.val) = complexSign b := by
   fin_cases b
   · change Complex.I ^ 0 = (1 : ℂ)
     rfl
@@ -624,7 +601,7 @@ private theorem fourthRoot_two (b : ZMod 2) :
 private theorem local_phase_product (w : Fin 4 → ZMod 2 × ZMod 2) :
     (∏ k : Fin 15, fourthRoot (localExponent (localEval w (modelPair k).1)
       (localEval w (modelPair k).2))) =
-        bitSign ((w 0).1 * (w 1).2 + (w 0).2 * (w 1).1) := by
+        complexSign ((w 0).1 * (w 1).2 + (w 0).2 * (w 1).1) := by
   rw [prod_fourthRoot, local_total_exponent, fourthRoot_two]
 
 private theorem coordinates_eval {N : ℕ}
@@ -662,17 +639,17 @@ private theorem total_phase {N : ℕ}
   simp_rw [hloc]
   rw [Finset.prod_comm]
   simp_rw [local_phase_product]
-  rw [prod_bitSign]
-  change bitSign (B (e (Pi.single 0 1) : Fin N → ZMod 2 × ZMod 2)
+  rw [← sign_sum]
+  change complexSign (B (e (Pi.single 0 1) : Fin N → ZMod 2 × ZMod 2)
     (e (Pi.single 1 1) : Fin N → ZMod 2 × ZMod 2)) = -1
   rw [he]
-  norm_num [modelForm, bitSign]
+  norm_num [modelForm, complexSign]
 
 private theorem commute_of_B_zero {N : ℕ} (u v : Fin N → ZMod 2 × ZMod 2)
     (h : B u v = 0) : Commute (observable u) (observable v) := by
   change observable u * observable v = observable v * observable u
   rw [observable_comm, h]
-  simp [bitSign]
+  simp [complexSign]
 
 private theorem lineProduct_triple {N : ℕ} (u v : Fin N → ZMod 2 × ZMod 2)
     (hu : u ≠ 0) (hv : v ≠ 0) (huv : u ≠ v) (hB : B u v = 0) :
