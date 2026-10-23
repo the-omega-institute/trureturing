@@ -7,7 +7,6 @@
    digest: Integer heights and dominant prefix products realize every unimodal coefficient ordering strictly. -/
 
 /- Escape audit unfinished: https://github.com/the-omega-institute/trureturing/issues/19903; product_zpow. -/
-
 import D5.S3.Combinatorics.RealRootedPermutations.Defs
 import Mathlib.Algebra.Polynomial.BigOperators
 import Mathlib.Algebra.BigOperators.Ring.Finset

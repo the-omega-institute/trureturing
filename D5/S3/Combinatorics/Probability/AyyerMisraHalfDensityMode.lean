@@ -730,11 +730,17 @@ private theorem complement_sum {K L : ℕ} (η : Fin L → Fin (K + 1)) : (∑ i
   have hi (i : Fin L) : K - (η i : ℕ) + (η i : ℕ) = K := (Nat.sub_add_cancel (Nat.le_of_lt_succ (η i).isLt))
   simp_rw [hi]
   simp [Nat.mul_comm]
-private theorem complement_energy {K L n : ℕ} (η : Fin L → Fin (K + 1)) (hn : ∑ i, (η i : ℕ) = n) (hc : 2 * n = K * L) : (∑ i, siteExponent ((η i).rev : ℕ)) = ∑ i, siteExponent (η i : ℕ) := by
+private theorem complement_energy_general {K L n : ℕ} (η : Fin L → Fin (K+1)) (hn : ∑ i, (η i : ℕ) = n) : (∑ i, (siteExponent ((η i).rev : ℕ) : ℤ)) = (∑ i, (siteExponent (η i : ℕ) : ℤ)) + (((K : ℤ)-3) * ((K : ℤ)*L-2*n))/2 := by
   have hi (i : Fin L) := (siteExponent_compl (Nat.le_of_lt_succ (η i).isLt)); have hs := (Finset.sum_congr rfl (fun i (_ : i ∈ (Finset.univ : Finset (Fin L))) => hi i))
   simp_rw [← complement_val η] at hs
-  have hn' : (∑ i, ((η i : ℕ) : ℤ)) = (n : ℤ) := (by exact_mod_cast hn); have hc' : (2 : ℤ) * n = (K : ℤ) * L := (by exact_mod_cast hc); simp only [Finset.sum_sub_distrib, ← Finset.mul_sum, Finset.sum_const, Finset.card_univ, Fintype.card_fin, nsmul_eq_mul] at hs; rw [hn'] at hs; have hzero : ((K : ℤ) - 3) * ((L : ℤ) * K - 2 * n) = 0 := (by nlinarith); have hout : (∑ i, (siteExponent ((η i).rev : ℕ) : ℤ)) = ∑ i, (siteExponent (η i : ℕ) : ℤ) := (by nlinarith)
-  exact_mod_cast hout
+  have hn' : (∑ i, ((η i : ℕ) : ℤ)) = (n : ℤ) := (by exact_mod_cast hn); simp only [Finset.sum_sub_distrib, ← Finset.mul_sum, Finset.sum_const, Finset.card_univ, Fintype.card_fin, nsmul_eq_mul, hn'] at hs; have he : (((K : ℤ)-3) * ((K : ℤ)*L-2*n)) = 2*((∑ i, (siteExponent ((η i).rev : ℕ) : ℤ)) - ∑ i, (siteExponent (η i : ℕ) : ℤ)) := (by nlinarith); rw [he]; omega
+private theorem complement_energy {K L n : ℕ} (η : Fin L → Fin (K + 1)) (hn : ∑ i, (η i : ℕ) = n) (hc : 2 * n = K * L) : (∑ i, siteExponent ((η i).rev : ℕ)) = ∑ i, siteExponent (η i : ℕ) := by
+  have h := complement_energy_general η hn
+  have hc' : (2 : ℤ) * n = (K : ℤ) * L := by exact_mod_cast hc
+  have hz : (((K : ℤ) - 3) * ((K : ℤ) * L - 2 * n)) / 2 = 0 := by
+    rw [← hc', sub_self, mul_zero, Int.zero_ediv]
+  rw [hz, add_zero] at h
+  exact_mod_cast h
 private theorem wt_complement {K L n : ℕ} (η : Fin L → Fin (K + 1)) (t : ℝ) (hn : ∑ i, (η i : ℕ) = n) (hc : 2 * n = K * L) : wt K L t ((fun i => (η i).rev)) = wt K L t η := by
   unfold wt; change (∏ i, t ^ siteExponent ((η i).rev : ℕ) * qbinom t K ((η i).rev)) = ∏ i, t ^ siteExponent (η i : ℕ) * qbinom t K (η i); rw [Finset.prod_mul_distrib, Finset.prod_mul_distrib, Finset.prod_pow_eq_pow_sum, Finset.prod_pow_eq_pow_sum, complement_energy η hn hc]
   congr 1
@@ -761,10 +767,6 @@ private theorem half_filling_pair {r K k : ℕ} (hK : K = 2 * k + 1) (s : Fin (2
     rw [complement_val, hη.2, hK]; omega
   · intro η hη
     have hn : ∑ i, (η i : ℕ) = n := ((Finset.mem_filter.mp (Finset.mem_filter.mp hη).1).2); exact (wt_complement η t hn hc).symm
-private theorem complement_energy_general {K L n : ℕ} (η : Fin L → Fin (K+1)) (hn : ∑ i, (η i : ℕ) = n) : (∑ i, (siteExponent ((η i).rev : ℕ) : ℤ)) = (∑ i, (siteExponent (η i : ℕ) : ℤ)) + (((K : ℤ)-3) * ((K : ℤ)*L-2*n))/2 := by
-  have hi (i : Fin L) := (siteExponent_compl (Nat.le_of_lt_succ (η i).isLt)); have hs := (Finset.sum_congr rfl (fun i (_ : i ∈ (Finset.univ : Finset (Fin L))) => hi i))
-  simp_rw [← complement_val η] at hs
-  have hn' : (∑ i, ((η i : ℕ) : ℤ)) = (n : ℤ) := (by exact_mod_cast hn); simp only [Finset.sum_sub_distrib, ← Finset.mul_sum, Finset.sum_const, Finset.card_univ, Fintype.card_fin, nsmul_eq_mul, hn'] at hs; have he : (((K : ℤ)-3) * ((K : ℤ)*L-2*n)) = 2*((∑ i, (siteExponent ((η i).rev : ℕ) : ℤ)) - ∑ i, (siteExponent (η i : ℕ) : ℤ)) := (by nlinarith); rw [he]; omega
 private theorem wt_complement_general {K L n : ℕ} (η : Fin L → Fin (K+1)) {t : ℝ} (ht : t ≠ 0) (hn : ∑ i, (η i : ℕ) = n) : wt K L t ((fun i => (η i).rev)) = t ^ ((((K : ℤ)-3)*((K : ℤ)*L-2*n))/2) * wt K L t η := by
   unfold wt; change (∏ i, t^siteExponent ((η i).rev : ℕ) * qbinom t K ((η i).rev)) = _ * ∏ i, t^siteExponent (η i : ℕ) * qbinom t K (η i); have hq (i : Fin L) : qbinom t K ((η i).rev) = qbinom t K (η i) := by
     rw [complement_val]; exact (qbinom_symm t (Nat.le_of_lt_succ (η i).isLt)).symm
@@ -899,7 +901,7 @@ private theorem small_t_high (r K k : ℕ) (hr : 2≤r) (hk : k<K) (hK : K<2*k+1
   refine ⟨ε,hε,?_⟩
   intro t ht hte b hb hbk; have hp (a : ℕ) (ha : a≤K) : occProb K (2*r) ((2*k+1)*r) t s a = occProb K (2*r) ((2*j+1)*r) t s (K-a) := by
     have h := (occProb_complement hn (Nat.sub_le K a) ht.ne' s); rw [hcount,Nat.sub_sub_self ha] at h; exact h
-  rw [hp b hb,hp (k+1) (by exact Order.add_one_le_iff.mpr hk)]; have heq : K-(k+1)=j := (by dsimp [j];omega); rw [heq]; exact he t ht hte (K-b) (Nat.sub_le K b) (by omega)
+  rw [hp b hb,hp (k+1) (by exact Order.add_one_le_iff.mpr hk)]; have heq : K-(k+1)=j := Nat.sub_add_eq K k 1; rw [heq]; exact he t ht hte (K-b) (Nat.sub_le K b) (by omega)
 private theorem extremes_of_reciprocal (P : ℝ → Prop) (hP : ∃ ε>0, ∀ t : ℝ, 0<t → t<ε → P t) (hinv : ∀ t : ℝ, 0<t → P t⁻¹ → P t) : ∃ ε>0, ∀ t : ℝ, 0<t → (t<ε ∨ 1/ε<t) → P t := by
   obtain ⟨ε,hε,he⟩ := hP
   refine ⟨ε,hε,?_⟩
