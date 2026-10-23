@@ -4,6 +4,9 @@ namespace StrataLint.Scribe.Blueprint.D5.S3.Analytic.MomentMinors;
 
 internal sealed class DefsDocument : IScribeDocumentDefinition
 {
+    private static readonly LibraryNoteRef Source =
+        LibraryNoteRef.Create("D5/L/Divergence/simic2018momentinequalities");
+
     public DocumentDefinition Create() => DocumentDefinition.Create(ScribeNode.Create(
         "Moment gaps and their second minors.",
         H("Probability laws and parameter intervals"), Blocks(
@@ -31,6 +34,6 @@ internal sealed class DefsDocument : IScribeDocumentDefinition
     private static DocumentBlock Entry(string id, string name, string title, string text) =>
         Describe.Lean(DescribeId.Create(id),
             DeclarationHandle.Create("D5/S3/Analytic/MomentMinors/Defs." + name),
-            H(title), StatementSource.WithoutFormula(), AssessedProvenance.FromRepo(),
+            H(title), StatementSource.WithoutFormula(), AssessedProvenance.FromLiterature(Source),
             Blocks(Paragraph(Text(text))), DescribeRole.Definition);
 }
