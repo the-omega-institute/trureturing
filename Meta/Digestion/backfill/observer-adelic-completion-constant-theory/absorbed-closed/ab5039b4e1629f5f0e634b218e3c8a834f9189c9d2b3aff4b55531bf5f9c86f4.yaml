@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:ab5039b4e1629f5f0e634b218e3c8a834f9189c9d2b3aff4b55531bf5f9c86f4
+  normalized_sha256: sha256:ab5039b4e1629f5f0e634b218e3c8a834f9189c9d2b3aff4b55531bf5f9c86f4
+cas_ref: sha256:ab5039b4e1629f5f0e634b218e3c8a834f9189c9d2b3aff4b55531bf5f9c86f4
+coverage_gids:
+  - gid: D5/S3/Zeros/CompletedZeta.xi_reading_differentiable
+    target_statement_id: sha256:d488e0fc96688feda92aa0a883ee53b1d0c5ae365bd4a3c188baa9a7135226c0
+  - gid: D5/S3/Zeros/CompletedZeta.xi_reading_reflection
+    target_statement_id: sha256:5987317f7aaa874060c8599c4899fbc6e5c9b1e919fe048aa0942de850e23ba4
+receipts:
+  unresolved_subitems: []

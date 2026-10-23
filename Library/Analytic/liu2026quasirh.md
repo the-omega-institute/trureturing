@@ -459,3 +459,222 @@ K^{(B+3)/2+\varepsilon},
 $$
 
 strictly improving the current §459 exponent. This is a conditional consumer, not a supplied bound for $E_6^\mu$. The generic sixth-order sieve still gives only the $7/6$ inverse-fourth exponent. Separate bounds $H_2^\mu\ll U^{1+\varepsilon}$ and $E_6^\mu\ll U^{1+\varepsilon}$ would reach $K^{2+\varepsilon}$ through this Cauchy step, without a strict saving. These two separate upper bounds do not supply a sub-$U$ bound for the full inverse fourth moment. Other witness lengths, growing-height costs and the final signed Robin restoration remain unpaid. This application reuses the lower-order sieve results and adds no analytic Lean certification or literature-priority claim.
+
+
+## Small shared-gcd localization using the existing inverse-L input
+
+The same buffered inverse-$L$ input as [§459](../../docs/develop/theory/FIBONACCI_ANALYTIC_FRONTIER_INTERFACES.md#459-缓冲零点分箱下的完整原卷积联合估计) can be applied to each actual shared-gcd packet in the inverse square. Together with the existing full-interference inequality [(462.10)](../../docs/develop/theory/FIBONACCI_ANALYTIC_FRONTIER_INTERFACES.md#462-原卷积的大重复部分与完整交叉项), it reduces the unpaid correlation to $q_t\le U^\theta$ for any fixed $\theta>0$. This is an application of the existing analytic bounds and Euler products; the remaining head estimate is not supplied.
+
+Keep the original finite component, all original rows and zeros, and the same fixed or polylog profile/height contract. Set $D=\sqrt U$ and write
+
+$$
+(\mathsf A_U f)(u)=\sqrt{\Omega(q_u/U)}\sum_a f(a)\chi_a(u),
+\qquad \mathcal T(f)=\|\mathsf A_Uf\|_2^2.
+$$
+
+Thus $\mathsf A_Ug_D=\sqrt\Omega\,M_\xi^2$, with the row weight counted once. The original, untruncated inverse polynomial already satisfies
+
+$$
+\mathcal T(g_D)\ll U^{B_*+\varepsilon},
+\qquad B_*=(31-10\sqrt6)/6.
+$$
+
+Indeed, directly reuse (459.7), (459.9) and the evaluated maximum (459.12): a nonfloor bin contributes $U^{R(\delta)+\delta+\varepsilon}$ to the fourth moment, while the floor contributes $U^{51/50+\varepsilon}<U^{B_*+\varepsilon}$. No new optimization is needed. Constants below depend on the same fixed data and required finite profile seminorms; actual polylog costs are absorbed in $U^\varepsilon$.
+
+**Recovering the inverse-$L$ representation packet by packet.** Put $\psi_u(d)=\xi(d)\chi_d(u)$. For squarefree $t$ and $X=D/q_t$, define
+
+$$
+C_{X,t}(u)=X^{-1}
+\sum_{\substack{e,f\ {\rm squarefree}\\(e,f)=1,\ (ef,t)=1}}
+\mu(e)\mu(f)V(q_e/X)V(q_f/X)\psi_u(ef).
+$$
+
+All ideals remain good. The exact packet with shared gcd $t$ in the original square is
+
+$$
+F_t(u)=\frac{\psi_u(t)^2}{q_t}C_{D/q_t,t}(u),
+\qquad M_\xi(u)^2=\sum_t F_t(u).
+$$
+
+The factor $q_t^{-1}$ is mandatory: $X/D=1/q_t$. In particular, a collision between $t$ and $u$ makes the original packet zero.
+
+On the initial absolutely convergent lines $\Re s=\Re w=2$, the double Dirichlet series of the sum defining $C_{X,t}$ is
+
+$$
+\prod_{\mathfrak p\nmid St}
+ (1-\psi_u(\mathfrak p)q_{\mathfrak p}^{-s}
+    -\psi_u(\mathfrak p)q_{\mathfrak p}^{-w})
+=\frac{\mathscr H_t(s,w;u)}
+ {L_{\rm orig}(s,\psi_u)L_{\rm orig}(w,\psi_u)}.
+$$
+
+For $z_{\mathfrak p}=\psi_u(\mathfrak p)q_{\mathfrak p}^{-s}$ and $v_{\mathfrak p}=\psi_u(\mathfrak p)q_{\mathfrak p}^{-w}$, the correction is exactly
+
+$$
+\mathscr H_t=
+\prod_{\mathfrak p\nmid St}
+ \frac{1-z_{\mathfrak p}-v_{\mathfrak p}}
+ {(1-z_{\mathfrak p})(1-v_{\mathfrak p})}
+\prod_{\substack{\mathfrak p\mid t\\\mathfrak p\notin S}}
+ \frac1{(1-z_{\mathfrak p})(1-v_{\mathfrak p})}.
+$$
+
+The first product differs locally from $1$ by $O(q_{\mathfrak p}^{-\Re(s+w)})$. Consequently, on $\Re s,\Re w\ge a_0=51/100$, it is holomorphic and bounded uniformly in the original characters; the second product costs only $\ll_\varepsilon q_t^\varepsilon$. Original character zeros give local factors $1$. Only $\mathscr H_t$ is used, never its reciprocal, so zeros of its numerator present no obstruction. No $L$-function for $\psi_u^2$ or new moving-conductor zero-free hypothesis is introduced.
+
+Double Mellin inversion now expresses $C_{X,t}$ as
+
+$$
+\frac1{X(2\pi i)^2}
+\int_{(2)}\!\int_{(2)}
+\frac{X^{s+w}\widehat V(s)\widehat V(w)\mathscr H_t(s,w;u)}
+ {L_{\rm orig}(s,\psi_u)L_{\rm orig}(w,\psi_u)}\,dw\,ds.
+$$
+
+For a row in an original bin indexed by $a$, reuse its same finite zero-free rectangle twice, moving the truncated lines successively to $\Re s=\Re w=a+8e$. The path always has $\Re(s+w)>1$. The already owned reciprocal bounds therefore give, for $\delta=2a-1$,
+
+$$
+|C_{X,t}(u)|\ll U^\varepsilon X^{\delta+O(e)}+O(U^{-20}).
+$$
+
+This is a new application of the original bounds to the coprimality-corrected packet, not an identification of the truncated whole vector with an original inverse polynomial. If $\operatorname{supp}V\subset[v_-,v_+]$, a nonempty packet has $q_t\le v_+D$, hence $X\ge1/v_+$. The bounded range $1/v_+\le X<1$ involves only finitely many $e,f$ and satisfies the same bound directly. For $X\ge1$, the absolute-line tails and finite horizontal joins are uniformly $O(U^{-20})$ after choosing the outer Mellin decay order. The weighted packet sum costs only $\sum_{q_t\le v_+D}q_t^{-1}\ll\log U$ for these errors.
+
+Fix $0<\theta<1/2$, put $T=U^\theta$, and restrict the original coefficient by
+
+$$
+g_{>T}(st^2)=g_D(st^2)\mathbf1_{q_t>T},
+\qquad g_{\le T}=g_D-g_{>T}.
+$$
+
+The cutoff is independent of the row and restored profile parameters. The existing ideal-counting tail $\sum_{q_t>T}q_t^{-1-\delta}\ll T^{-\delta}$ is uniform for $\delta\ge1/50$. With the actual factor $q_t^{-1}$ in $F_t$, it gives
+
+$$
+\left|\sum_{q_t>T}F_t(u)\right|
+\ll U^\varepsilon(D/T)^\delta+O(U^{-10}).
+$$
+
+Thus each nonfloor bin contributes at most $U^{R(\delta)+(1-2\theta)\delta+\varepsilon}$ to $\mathcal T(g_{>T})$. Reuse $R(\delta)+\delta\le B_*$ and $\delta\ge1/50$, rather than optimizing again. The floor exponent is $51/50-\theta/25$, so the same bound holds there:
+
+$$
+\mathcal T(g_{>T})\ll U^{B_*-\theta/25+\varepsilon}.
+$$
+
+Fix $\theta$ and the desired strict margin first; choose the bin width and internal losses accordingly, then the finite Sobolev orders, the small original buffer-height exponent and finally the outer Mellin decay order. Mixed profile derivatives replace the two copies of $V$ by their required derivatives in the same formula. Fixed or polylog norm twists enter the same two original $L$-functions; their derivative logarithms and the finite Euler corrections are paid by the same cost contract. This does not extend the original growing-height allowance.
+
+The original full moment and the existing Hilbert inequality (462.10) retain all interference and yield
+
+$$
+\left|\mathcal T(g_D)-\mathcal T(g_{\le T})\right|
+\ll U^{B_*-\theta/50+\varepsilon}.
+$$
+
+Define $E_6^{\mu,\le T}$ by replacing both coefficient occurrences in the preceding ordered cross-core sum by $g_{\le T}$. The same cubic-block supplier applies afresh through its divisor envelope, giving $H_2(g_{\le T})\ll U^{1+\varepsilon}$; coefficient truncation is not asserted to decrease a positive block. Consequently an estimate
+
+$$
+\operatorname{Re}E_6^{\mu,\le T}\ll U^{B_*-\nu+\varepsilon},
+\qquad 0<\nu<\min\{B_*-1,\theta/50\},
+$$
+
+uniform in the original finite components and required profile derivatives, would give $\mathcal T(g_D)\ll U^{B_*-\nu+\varepsilon}$. The already owned plain fourth moment would then give $Q(b),\|(I-P)Ab\|_2^2\ll K^{\kappa_{\rm joint}-\nu/2+\varepsilon}$ at $K=U$. No such head estimate is supplied here. Every squarefree column and the $t=1$ packet remain, with their original Möbius signs, row masks and cross-core phases. This reduces the missing estimate to small actual shared gcds without improving the full moment, proving a sub-$K^2$ bound, or restoring the signed Robin expression. Euler multiplication, finite Mellin shifts, counting and the Hilbert inequality are reused tools; no new analytic Lean certification or literature-priority claim is made.
+
+## Low primitive conductors in the small-gcd head
+
+A second cut uses the gcd **between two columns**, rather than the shared gcd inside one coefficient. It pays the short primitive-conductor part of the preceding head by classical Hecke convexity. This is an application of an existing mean-value tool, not a new character-sum theorem or a bound for the remaining head.
+
+Use a complete good sixth-power-free row moment with smooth annular weight, allowing fixed finite ray partitions. If the actual moment has further row selectors, first use the [existing complete positive majorant](faveri2026fixedorder.md#a-source-conditional-pure-dual-power-contraction), then define its $H_2$ and $E_6$ afresh. Apply the preceding buffer/count inputs to that same complete family with its fixed finite character data. A signed contraction on an arbitrary retained row subset or zero bin cannot be bounded by silently deleting its selector. All quantities below belong to this one complete moment; its positive bound then controls the original restricted moment.
+
+**A complete-row kernel from classical convexity.** For an ordered pair in $E_6$, write
+
+$$
+a=hx,\qquad b=hy,\qquad h=(a,b),\qquad (x,y)=1.
+$$
+
+After each fixed ray Fourier expansion, let $\chi_0$ be the exact zero-extended ratio character on the row variable, and $\chi$ its primitive inducing character with conductor $\mathfrak f$. At every good prime of $xy$ the reduced sextic exponent is nonzero, so
+
+$$
+q_{\mathfrak f}\asymp_S q_{\operatorname{rad}(xy)}
+\ll (U/q_h)^2.
+$$
+
+This uses the same [Gao–Zhao conductor interface](faveri2026fixedorder.md#the-actual-gram-including-all-original-zeros). Since $r_2(a)\ne r_2(b)$ on the cube-free support, a nontrivial good-prime component remains. A fixed bad-prime/unit twist cannot cancel it; thus $\chi$ is nonprincipal. Primes of $h$ at which the ratio exponents cancel remain zero-only primes of $\chi_0$.
+
+For $\Re s>1$, the exact sixth-power-free row series is
+
+$$
+\sum_{u\ {\rm sixth\ power\ free}}\frac{\chi_0(u)}{q_u^s}
+=\frac{L(s,\chi_0)}{L(6s,\chi_0^6)}.
+$$
+
+The zeros at original conductor and collision primes remain in both imprimitive $L$-functions. In particular the denominator is not replaced by a primitive zeta function. Its reciprocal is absolutely bounded on $\Re s=1/6+\varepsilon$. Restoring the primitive numerator leaves only factors $1-\chi(\mathfrak p)q_{\mathfrak p}^{-s}$ at zero-only primes; their product costs $U^\varepsilon$.
+
+Directly reuse the Rademacher strip estimate quoted in the **proof of Lemma A.3** of [Lemke Oliver–Thorner, Appendix A to Pasten, arXiv:1705.09251v4](https://arxiv.org/pdf/1705.09251v4): over the fixed field, for a primitive nonprincipal finite-order character,
+
+$$
+|L(\sigma+it,\chi)|
+\ll_\varepsilon
+\left(q_{\mathfrak f}(1+|t|)^{[F:\mathbb Q]}\right)^{(1-\sigma+\varepsilon)/2},
+\qquad -\varepsilon\le\sigma\le1+\varepsilon.
+$$
+
+Lemma A.3's displayed smoothed mean, already used in (G5), has $\sigma=1/2$; it is not being cited as a $1/6$-line mean. Here Mellin inversion of the exact sixth-free series permits the different line $\sigma=1/6+\varepsilon$: the numerator is entire and the inverse denominator is absolutely convergent throughout the shift. The annular profile's Mellin decay pays the polynomial height cost. Thus the complete kernel satisfies
+
+$$
+|\mathcal K_{U,\Omega}(a,b)|
+\ll U^{1/6+\varepsilon}q_{\mathfrak f}^{5/12+\varepsilon}
+\ll U^{1+\varepsilon}q_h^{-5/6}.
+$$
+
+Fixed ray Fourier coefficients, all zero-only factors and the required finite profile derivatives are included in the same fixed or polylog cost contract. This argument is applied to the complete row sum, never inside an adaptive zero bin.
+
+**Large pair-gcds are paid absolutely.** The original annuli give $q_a,q_b\asymp U$, and the divisor envelope of $g_D$ gives $|g_D(a)|\ll U^{-1/2+\varepsilon}$. At a fixed ideal $h$ there are at most $O((U/q_h)^2)$ ordered pairs. Consequently, for $1\le G\ll U$,
+
+$$
+\begin{aligned}
+\sum_{\substack{r_2(a)\ne r_2(b)\\q_{(a,b)}\ge G}}
+ |g_D(a)\overline{g_D(b)}\mathcal K_{U,\Omega}(a,b)|
+&\ll U^{2+\varepsilon}\sum_{q_h\ge G}q_h^{-17/6}\\
+&\ll U^{2+\varepsilon}G^{-11/6}.
+\end{aligned}
+$$
+
+The same bound holds with $g_{\le T}$ in both coefficient occurrences, through its unchanged pointwise envelope. The last sum uses ordinary ideal counting. At $G=U^{1/2}$ its exponent is $13/12$, strictly below $B_*$ by
+
+$$
+\delta_c=B_*-\frac{13}{12}
+=\frac{49-20\sqrt6}{12}>0,
+\qquad 49^2=2401>2400=20^2\cdot6.
+$$
+
+This cut partitions an ordered signed sum directly; it does not truncate a column vector or discard interference, and needs no further Hilbert square-root loss.
+
+**The unpaid head can be restricted to long primitive conductors.** In the preceding head put $T=U^\theta$, and write the two columns as $a=s_at_a^2$, $b=s_bt_b^2$ with $q_{t_a},q_{t_b}\le T$. Cube-freeness gives the conductor lower bound
+
+$$
+q_{\mathfrak f}\gg_S
+\frac{q_aq_b}{q_h^2q_{t_a}q_{t_b}}
+\gg \frac{U^{2-2\theta}}{q_h^2}.
+$$
+
+Indeed, $xy$ is cube-free and its squarepart divides $t_at_b$, so $q_{\operatorname{rad}(xy)}\ge q_{xy}/(q_{t_a}q_{t_b})$. Hence pairs with $q_{\mathfrak f}\le U^{1+\eta}$ have $q_h\gg U^{1/2-\theta-\eta/2}$. The absolute bound above pays their entire contribution by
+
+$$
+\left|E_{6,\,q_{\mathfrak f}\le U^{1+\eta}}^{\mu,\le T}\right|
+\ll U^{13/12+11\theta/6+11\eta/12+\varepsilon}.
+$$
+
+Here $\eta\ge0$ and $\theta>0$ are fixed with
+
+$$
+\frac{11\theta}{6}+\frac{11\eta}{12}<\delta_c.
+$$
+
+Thus a sufficient remaining input is only
+
+$$
+\operatorname{Re}E_{6,\,q_{\mathfrak f}>U^{1+\eta}}^{\mu,\le T}
+\ll U^{B_*-\nu+\varepsilon},
+\qquad
+0<\nu<\min\left\{\frac\theta{50},\,
+\delta_c-\frac{11\theta}{6}-\frac{11\eta}{12}\right\}.
+$$
+
+Its conductor cut is defined separately in each fixed finite ray character component; these components are then summed coherently. The same source, coefficient signs, all squarefree columns and original collision zeros remain. With this unproved input, the paid lower-order block, low-conductor sum and preceding truncation error would give the full inverse-fourth exponent $B_*-\nu$, and hence the existing complete-energy consumer at $\kappa_{\rm joint}-\nu/2$. No such long-conductor estimate is supplied. This application narrows that missing input; it neither improves the full moment on its own nor restores the signed Robin expression. Classical convexity, Euler products, conductor identities and ideal counting are reused, with no analytic Lean certification or literature-priority claim.
