@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:8bbaab6ad2220877bd34f2036074ebbdd2b469eb041820ff6a04de2da5c96d17
+  normalized_sha256: sha256:8bbaab6ad2220877bd34f2036074ebbdd2b469eb041820ff6a04de2da5c96d17
+cas_ref: sha256:8bbaab6ad2220877bd34f2036074ebbdd2b469eb041820ff6a04de2da5c96d17
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 'Nonpropositional: 替代建模前提列表项：非整数权重。'
+    previous_atom_id: f91a416f8fbc0ccfec36d88238e3f2f86736db5858610d746d19b837a8b12a92
+    next_atom_id: 29bbd8a5813fbdfa8543abc0dcb1c9910a7376319e96d0cfb75eb3360bea3b32
