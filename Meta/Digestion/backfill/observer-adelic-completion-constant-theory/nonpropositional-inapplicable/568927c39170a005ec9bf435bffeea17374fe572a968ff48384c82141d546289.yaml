@@ -5,3 +5,7 @@ cas_ref: sha256:568927c39170a005ec9bf435bffeea17374fe572a968ff48384c82141d546289
 coverage_gids: []
 receipts:
   unresolved_subitems: []
+  nonpropositional:
+    justification: 该 atom 只是建议的 Lean 源码目录与依赖层次说明，不含独立数学断言。
+    previous_atom_id: 13f5276ab4faaff274ab38faea439197fe305a49b0268f7240e761a60fc15ae7
+    next_atom_id: 80aeed010c08a89dc999093d4b40f38b7d8cb439517c45d60b7564c375c1e33e
