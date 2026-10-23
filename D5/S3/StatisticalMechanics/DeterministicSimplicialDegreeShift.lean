@@ -175,12 +175,108 @@ private theorem degree_link (C : Finset (Finset V)) (τ : Finset V) :
   · exact fun a ha b hb he => superset_injOn_sdiff τ
       (mem_filter.mp ha).2 (mem_filter.mp hb).2 he
 
+private theorem link_growth (v₀ : V) (v : ℕ → Finset V → V)
+    (hi : Function.Injective (Function.uncurry v)) (h₀ : ∀ s σ, v s σ ≠ v₀)
+    {n : ℕ} {τ : Finset V} (hτ : τ ∈ dsc v₀ v n) :
+    link (dsc v₀ v (n + 1)) τ = link (dsc v₀ v n) τ ∪
+      (link (dsc v₀ v n) τ).biUnion (fun α =>
+        α.powerset.image (insert (v (n + 1) (τ ∪ α)))) := by
+  ext η
+  rw [mem_link, mem_union]
+  constructor
+  · rintro ⟨hd, h⟩
+    rcases (mem_dsc_succ v₀ v n _).mp h with hold | ⟨σ, hσ, β, hβ, he⟩
+    · exact Or.inl ((mem_link _ _ _).mpr ⟨hd, hold⟩)
+    · have hf := fresh v₀ v hi h₀ (by omega : n < n + 1) hτ σ
+      have htβ : τ ⊆ β := by
+        intro x hx
+        exact (mem_insert.mp (he.symm ▸ mem_union_left η hx)).resolve_left
+          (fun heq : x = v (n + 1) σ => hf (heq ▸ hx))
+      have htσ := htβ.trans hβ
+      apply Or.inr
+      apply mem_biUnion.mpr
+      refine ⟨σ \ τ, (mem_link _ _ _).mpr
+        ⟨disjoint_sdiff_self_right, (union_sdiff_of_subset htσ).symm ▸ hσ⟩, ?_⟩
+      apply mem_image.mpr
+      refine ⟨β \ τ, mem_powerset.mpr (sdiff_subset_sdiff hβ Subset.rfl), ?_⟩
+      rw [union_sdiff_of_subset htσ]
+      have hh := congrArg (· \ τ) he
+      rw [insert_sdiff_of_notMem β hf, union_sdiff_cancel_left hd] at hh
+      exact hh
+  · rintro (h | h)
+    · obtain ⟨hd, hc⟩ := (mem_link _ _ _).mp h
+      exact ⟨hd, (mem_dsc_succ v₀ v n _).mpr (Or.inl hc)⟩
+    · obtain ⟨α, ha, hh⟩ := mem_biUnion.mp h
+      obtain ⟨β, hb, rfl⟩ := mem_image.mp hh
+      have hbα := mem_powerset.mp hb
+      obtain ⟨hd, hc⟩ := (mem_link _ _ _).mp ha
+      have hf := fresh v₀ v hi h₀ (by omega : n < n + 1) hτ (τ ∪ α)
+      refine ⟨disjoint_insert_right.mpr ⟨hf, hd.mono_right hbα⟩, ?_⟩
+      apply (mem_dsc_succ v₀ v n _).mpr
+      apply Or.inr
+      refine ⟨τ ∪ α, hc, τ ∪ β, union_subset_union_right hbα, ?_⟩
+      ext x
+      simp only [mem_insert, mem_union]
+      tauto
+
+private theorem weighted_growth (L : Finset (Finset V)) (u : Finset V → V)
+    (hu : Set.InjOn u L) (hf : ∀ α ∈ L, ∀ β ∈ L, u α ∉ β) (f : ℕ → ℕ) :
+    (∑ η ∈ L ∪ L.biUnion (fun α => α.powerset.image (insert (u α))), f η.card) =
+      ∑ α ∈ L, (f α.card + simplexSum (fun j => f (j + 1)) α.card) := by
+  have hd : Disjoint L (L.biUnion (fun α => α.powerset.image (insert (u α)))) := by
+    apply disjoint_left.mpr
+    intro η hη hh
+    obtain ⟨α, ha, he⟩ := mem_biUnion.mp hh
+    obtain ⟨β, hb, rfl⟩ := mem_image.mp he
+    exact hf α ha _ hη (mem_insert_self _ _)
+  have hp : (L : Set (Finset V)).PairwiseDisjoint
+      (fun α => α.powerset.image (insert (u α))) := by
+    intro α ha γ hγ hne
+    apply disjoint_left.mpr
+    intro η hη hh
+    obtain ⟨β, hb, rfl⟩ := mem_image.mp hη
+    obtain ⟨δ, hδ, he⟩ := mem_image.mp hh
+    have hm : u α ∈ insert (u γ) δ := he.symm ▸ mem_insert_self _ _
+    rcases mem_insert.mp hm with heq | hm
+    · exact hne (hu ha hγ heq)
+    · exact hf α ha γ hγ (mem_powerset.mp hδ hm)
+  rw [sum_union hd, sum_biUnion hp, ← sum_add_distrib]
+  apply sum_congr rfl
+  intro α hα
+  congr 1
+  rw [sum_image]
+  · have hc : ∀ β ∈ α.powerset, (insert (u α) β).card = β.card + 1 := by
+      intro β hb
+      exact card_insert_of_notMem (fun h => hf α hα α hα (mem_powerset.mp hb h))
+    calc
+      _ = ∑ β ∈ α.powerset, f (β.card + 1) :=
+        sum_congr rfl (fun β hb => congrArg f (hc β hb))
+      _ = _ := by simpa [simplexSum, nsmul_eq_mul] using
+        (sum_powerset_apply_card (fun j => f (j + 1)) (x := α))
+  · exact insert_erase_invOn.2.injOn.mono (fun β hb =>
+      notMem_mono (mem_powerset.mp hb) (hf α hα α hα))
+
 private theorem link_weight_update (v₀ : V) (v : ℕ → Finset V → V)
     (hi : Function.Injective (Function.uncurry v)) (h₀ : ∀ s σ, v s σ ≠ v₀)
     {n : ℕ} {τ : Finset V} (hτ : τ ∈ dsc v₀ v n) (q : ℕ) :
     linkWeight (dsc v₀ v (n + 1)) τ (weight q) =
       linkWeight (dsc v₀ v n) τ (weight (q + 1)) := by
-  sorry
+  have hu : Set.InjOn (fun α => v (n + 1) (τ ∪ α)) (link (dsc v₀ v n) τ) := by
+    intro α ha β hb he
+    have he' : (n + 1, τ ∪ α) = (n + 1, τ ∪ β) := hi he
+    have he'' := congrArg Prod.snd he'
+    have hda := ((mem_link _ _ _).mp ha).1
+    have hdb := ((mem_link _ _ _).mp hb).1
+    simpa [union_sdiff_cancel_left hda, union_sdiff_cancel_left hdb] using
+      congrArg (· \ τ) he''
+  have hf : ∀ α ∈ link (dsc v₀ v n) τ, ∀ β ∈ link (dsc v₀ v n) τ,
+      v (n + 1) (τ ∪ α) ∉ β := by
+    intro α ha β hb hmem
+    exact fresh v₀ v hi h₀ (by omega : n < n + 1)
+      ((mem_link _ _ _).mp hb).2 (τ ∪ α) (mem_union_right _ hmem)
+  unfold linkWeight
+  rw [link_growth v₀ v hi h₀ hτ, weighted_growth _ _ hu hf]
+  rfl
 
 private theorem dsc_mono (v₀ : V) (v : ℕ → Finset V → V) :
     Monotone (dsc v₀ v) := by
