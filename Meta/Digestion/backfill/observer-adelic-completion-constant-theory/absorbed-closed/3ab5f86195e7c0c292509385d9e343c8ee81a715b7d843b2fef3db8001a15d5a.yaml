@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:3ab5f86195e7c0c292509385d9e343c8ee81a715b7d843b2fef3db8001a15d5a
+  normalized_sha256: sha256:3ab5f86195e7c0c292509385d9e343c8ee81a715b7d843b2fef3db8001a15d5a
+cas_ref: sha256:3ab5f86195e7c0c292509385d9e343c8ee81a715b7d843b2fef3db8001a15d5a
+coverage_gids:
+  - gid: D5/S3/Analytic/HolonomyDeterminant/MasslessHolonomyDeterminant.massless_holonomy_determinant
+    target_statement_id: sha256:f3642463b5b2a58c467a69a86c97daaa1621ffc751635a2f5f83e276f0fa2341
+  - gid: D5/S3/Analytic/HolonomyDeterminant/ReflectedHurwitzDerivative.has_reflected_hurwitz_derivative_at_zero_formula
+    target_statement_id: sha256:47f48245dd049b6048a64b3e82cbfce425b6038a46d3686560d1a453e763014f
+receipts:
+  unresolved_subitems: []
