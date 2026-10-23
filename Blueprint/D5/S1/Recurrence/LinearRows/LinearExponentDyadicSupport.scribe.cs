@@ -49,12 +49,24 @@ internal sealed class LinearExponentDyadicSupportDocument : IScribeDocumentDefin
                 + "[X^n]U+[X^(n-2)]U. The frozen binary_catalan theorem says these "
                 + "summands are one when n+1 or n-1 is a power of two. They cannot "
                 + "both be one here, since two powers of two greater than two cannot "
-                + "differ by two. This proves the stated equivalence for every solution."))));
+                + "differ by two. This proves the stated equivalence for every solution."),
+            Node("derivative_map", "Derivative commutes with coefficient maps",
+                DerivativeMapFormula(),
+                "Mapping coefficients along a commutative-ring homomorphism commutes with the formal power-series derivative."),
+            Node("square_odd", "Odd coefficients of a square vanish",
+                SquareOddFormula(),
+                "Over ZMod 2, every coefficient of a square at an odd index is zero."))));
 
     private static DocumentBlock Node(string name, string title, string prose,
         DescribeRole role = DescribeRole.Theorem) =>
         Describe.Lean(DescribeId.Create("a397591-" + name.Replace('_', '-').ToLowerInvariant()),
             DeclarationHandle.Create(Prefix + name), H(title), StatementSource.FromAuthor(Statement(name)),
+            AssessedProvenance.FromRepo(Source), Blocks(Paragraph(Text(prose))), role);
+
+    private static DocumentBlock Node(string name, string title, Formula formula, string prose,
+        DescribeRole role = DescribeRole.Theorem) =>
+        Describe.Lean(DescribeId.Create("a397591-" + name.Replace('_', '-').ToLowerInvariant()),
+            DeclarationHandle.Create(Prefix + name), H(title), StatementSource.FromAuthor(formula),
             AssessedProvenance.FromRepo(Source), Blocks(Paragraph(Text(prose))), role);
 
     private static Formula Call(string name, params Formula[] arguments) =>
@@ -69,6 +81,42 @@ internal sealed class LinearExponentDyadicSupportDocument : IScribeDocumentDefin
     private static Formula Bound(string name, Formula type) => Seq(Forall, Sp, F.Id(name), Colon, Sp, type, Comma, Sp);
     private static Formula Def(Formula a) => Call("DefiningEquation", a);
     private static Formula Coeff(Formula n, Formula a) => Call("coeff", n, a);
+    private static Formula RingContext(Formula ring) =>
+        Seq(OpenBracket, Call("CommRing", ring), CloseBracket);
+    private static Formula RingHom(Formula source, Formula target) =>
+        Seq(source, Sp, new Formula.Power(To, Seq(Plus, Star)), Sp, target);
+
+    private static Formula DerivativeMapFormula()
+    {
+        var r = F.Id("R");
+        var s = F.Id("S");
+        var hom = F.Id("hom");
+        var f = F.Id("F");
+        return Disp(Seq(
+            Forall, Sp, r, Colon, Sp, F.Id("Type"), Comma, Sp,
+            RingContext(r), Comma, Sp,
+            Forall, Sp, s, Colon, Sp, F.Id("Type"), Comma, Sp,
+            RingContext(s), Comma, Sp,
+            Forall, Sp, hom, Colon, Sp, RingHom(r, s), Comma, Sp,
+            Forall, Sp, f, Colon, Sp, SeriesTypeFor(r), Comma, Sp,
+            Equal(Call("map", hom, Call("derivative", r, f)),
+                Call("derivative", s, Call("map", hom, f)))));
+    }
+
+    private static Formula SeriesTypeFor(Formula ring) => Call("PowerSeries", ring);
+
+    private static Formula SquareOddFormula()
+    {
+        var f = F.Id("F");
+        var n = F.Id("n");
+        var index = new Formula.Binary(
+            Par(new Formula.Binary(Par(D(2)), FormulaBinaryOperator.Multiply,
+                Par(n))), FormulaBinaryOperator.Add, Par(D(1)));
+        return Disp(Seq(
+            Forall, Sp, f, Colon, Sp, SeriesTypeFor(Call("ZMod", D(2))), Comma, Sp,
+            Forall, Sp, n, Colon, Sp, NatType(), Comma, Sp,
+            Equal(Coeff(index, new Formula.Power(Par(f), D(2))), D(0))));
+    }
 
     private static Formula Definition()
     {
@@ -105,6 +153,8 @@ internal sealed class LinearExponentDyadicSupportDocument : IScribeDocumentDefin
         "integer_exists_unique" => Seq(Exists, Bang, Sp, F.Id("A"), Colon, Sp, SeriesType(), Comma, Sp, Def(F.Id("A"))),
         "a" => Seq(Bound("n", NatType()), Equal(Call("a", F.Id("n")), Coeff(F.Id("n"), Call("generatingSeries")))),
         "hanna_conjecture" => Conjecture(),
+        "derivative_map" => DerivativeMapFormula(),
+        "square_odd" => SquareOddFormula(),
         _ => throw new System.ArgumentOutOfRangeException(nameof(name))
     });
 }
