@@ -36,7 +36,8 @@ theorem mangoldtRamp_nonneg (n : ℕ) (t : ℝ) : 0 ≤ mangoldtRamp n t :=
   mul_nonneg ArithmeticFunction.vonMangoldt_nonneg (le_max_right _ _)
 
 theorem mangoldtRamp_continuous (n : ℕ) : Continuous (mangoldtRamp n) := by
-  dsimp only [mangoldtRamp]
+  change Continuous (fun t : ℝ =>
+    ArithmeticFunction.vonMangoldt n * max (t / (n : ℝ) - 1) 0)
   fun_prop
 
 /-- In particular, a prime-power term has value zero when it enters the
@@ -169,7 +170,8 @@ private theorem ramp_laplace_function {n : ℕ} (hn : n ≠ 0) (s : ℂ) :
   by_cases hy : Real.log n < y
   · have hy0 : y ∈ Ioi (0 : ℝ) := lt_of_le_of_lt hlog hy
     have hne : (n : ℝ) < Real.exp y := (Real.log_lt_iff_lt_exp hn0).mp hy
-    rw [Set.indicator_of_mem hy0, Set.indicator_of_mem hy,
+    rw [Set.indicator_of_mem hy0,
+      Set.indicator_of_mem (show y ∈ Ioi (Real.log n) from hy),
       ramp_eq_affine (Nat.pos_of_ne_zero hn) hne.le]
     simp only [Complex.ofReal_mul, Complex.ofReal_sub, Complex.ofReal_div,
       Complex.ofReal_natCast, Complex.ofReal_one, Complex.ofReal_exp]
@@ -180,7 +182,7 @@ private theorem ramp_laplace_function {n : ℕ} (hn : n ≠ 0) (s : ℂ) :
       ring
     rw [he]
     ring
-  · rw [Set.indicator_of_notMem hy]
+  · rw [Set.indicator_of_notMem (show y ∉ Ioi (Real.log n) from hy)]
     by_cases hy0 : y ∈ Ioi (0 : ℝ)
     · rw [Set.indicator_of_mem hy0]
       have hne : Real.exp y ≤ (n : ℝ) := (Real.le_log_iff_exp_le hn0).mp (le_of_not_gt hy)
@@ -203,7 +205,7 @@ theorem mangoldtRamp_laplace {n : ℕ} {s : ℂ} (hs : 1 < s.re) :
   have hns : (n : ℂ) ^ s ≠ 0 := by
     rw [Complex.cpow_def_of_ne_zero hnC]
     exact Complex.exp_ne_zero _
-  have hs0 : s ≠ 0 := by intro e; simpa [e] using hs
+  have hs0 : s ≠ 0 := by intro e; rw [e] at hs; norm_num at hs
   have hs1 : s - 1 ≠ 0 := by
     intro e
     have := congrArg Complex.re e
@@ -217,8 +219,9 @@ theorem mangoldtRamp_laplace {n : ℕ} {s : ℂ} (hs : 1 < s.re) :
     integral_div, integral_exp_mul_complex_Ioi (by simp; linarith),
     integral_exp_mul_complex_Ioi (by simp; linarith), LSeries.term_of_ne_zero hn]
   have hpow : Complex.exp (-s * (Real.log n : ℂ)) = (n : ℂ) ^ (-s) := by
-    rw [Complex.cpow_def_of_ne_zero hnC,
-      ← Complex.ofReal_log hn0.le]
+    have hlogC : Complex.log (n : ℂ) = (Real.log n : ℂ) := by
+      simpa only [Complex.ofReal_natCast] using (Complex.ofReal_log hn0.le).symm
+    rw [Complex.cpow_def_of_ne_zero hnC, hlogC]
     congr 1
     ring
   have hshift : Complex.exp ((1 - s) * (Real.log n : ℂ)) =
@@ -226,6 +229,7 @@ theorem mangoldtRamp_laplace {n : ℕ} {s : ℂ} (hs : 1 < s.re) :
     rw [show (1 - s) * (Real.log n : ℂ) =
       (Real.log n : ℂ) + -s * (Real.log n : ℂ) by ring, Complex.exp_add,
       ← Complex.ofReal_exp, Real.exp_log hn0]
+    simp only [Complex.ofReal_natCast]
   rw [hshift]
   simp_rw [hpow, Complex.cpow_neg]
   rw [show 1 - s = -(s - 1) by ring]
@@ -255,10 +259,18 @@ theorem mangoldtRamp_laplace_norm (t : ℝ) (n : ℕ) :
       congr 1
       push_cast
       ring
-    rw [he]
-    simp [norm_mul, Complex.norm_exp, abs_of_nonneg (mangoldtRamp_nonneg n _)]
+    calc
+      _ = Real.exp (-2 * y) * mangoldtRamp n (Real.exp y) := by
+        simp only [norm_mul, Complex.norm_exp, Complex.norm_real, Real.norm_eq_abs,
+          abs_of_nonneg (mangoldtRamp_nonneg n _)]
+        congr 2
+        simp [Complex.mul_re, Complex.neg_re]
+      _ = _ := by rw [he]; simp
   simp_rw [he]
-  rw [integral_re (mangoldtRamp_laplace_integrable (by norm_num : 1 < (2 : ℂ).re)),
+  change (∫ y : ℝ in Ioi 0,
+    RCLike.re (Complex.exp (-(2 : ℂ) * y) * (mangoldtRamp n (Real.exp y) : ℂ))) = _
+  rw [integral_re (mangoldtRamp_laplace_integrable (n := n)
+      (by norm_num : 1 < (2 : ℂ).re)),
     mangoldtRamp_laplace (by norm_num : 1 < (2 : ℂ).re),
     LSeries.term_of_ne_zero' (by norm_num : (2 : ℂ) ≠ 0)]
   have hr : (ArithmeticFunction.vonMangoldt n : ℂ) / (n : ℂ) ^ (2 : ℕ) /
@@ -317,6 +329,7 @@ theorem mangoldtPart_line_integrable (t : ℝ) :
       apply lintegral_mono
       intro y
       have hh : HasSum (fun n => f n y) (g y) := weighted_ramps_hasSum t y
+      change ENNReal.ofReal ‖g y‖ ≤ ∑' n : ℕ, ENNReal.ofReal ‖f n y‖
       rw [← ENNReal.ofReal_tsum_of_nonneg (fun n => norm_nonneg (f n y)) hh.summable.norm]
       exact ENNReal.ofReal_le_ofReal (by
         rw [← hh.tsum_eq]
@@ -328,7 +341,7 @@ theorem mangoldtPart_line_integrable (t : ℝ) :
       funext n
       simpa only [ofReal_norm] using
         (ofReal_integral_norm_eq_lintegral_enorm (hi n)).symm
-    _ < ∞ := (mangoldtRamp_norm_integrals_summable t).tsum_ofReal_lt_top
+    _ < ⊤ := (mangoldtRamp_norm_integrals_summable t).tsum_ofReal_lt_top
 
 /-- Absolute summation, now exchanged with the complex Laplace integral. -/
 theorem mangoldtPart_line_laplace (t : ℝ) :
@@ -357,6 +370,8 @@ theorem mangoldtPart_line_laplace (t : ℝ) :
   have hL := (ArithmeticFunction.LSeriesSummable_vonMangoldt
     (by simp : 1 < (transformLine t).re)).hasSum.div_const
       (transformLine t * (transformLine t - 1))
+  change HasSum _ (LSeries (fun n : ℕ => (ArithmeticFunction.vonMangoldt n : ℂ))
+    (transformLine t) / (transformLine t * (transformLine t - 1))) at hL
   rw [ArithmeticFunction.LSeries_vonMangoldt_eq_deriv_riemannZeta_div
     (by simp : 1 < (transformLine t).re)] at hL
   exact hx'.unique hL
@@ -373,23 +388,25 @@ private theorem first_exp_moment_integrable (t : ℝ) :
     exact (show Continuous (fun y : ℝ => (y : ℂ) *
       Complex.exp ((1 - transformLine t) * y)) by fun_prop).aestronglyMeasurable) ?_
   filter_upwards [ae_restrict_mem measurableSet_Ioi] with y hy
-  exact le_of_eq (by simp [norm_mul, Complex.norm_exp, abs_of_nonneg hy.le])
+  exact le_of_eq (by
+    simp [norm_mul, Complex.norm_exp, abs_of_nonneg (show 0 < y from hy).le])
 
 /-- The first exponential moment on the whole line, with the boundary at infinity paid. -/
 theorem first_exp_moment (t : ℝ) :
     (∫ y : ℝ in Ioi 0, (y : ℂ) * Complex.exp ((1 - transformLine t) * y)) =
       1 / (transformLine t - 1) ^ 2 := by
   let a : ℂ := 1 - transformLine t
-  have ha : a.re = -1 := by simp [a]
+  have ha : a.re = -1 := by norm_num [a]
   have ha0 : a ≠ 0 := by intro e; simp [e] at ha
   let p : ℝ → ℂ := fun y => Complex.exp (a * y) * ((y : ℂ) / a - 1 / a ^ 2)
   have hd (y : ℝ) : HasDerivAt p ((y : ℂ) * Complex.exp (a * y)) y := by
     have he := ((hasDerivAt_id y).ofReal_comp.const_mul a).cexp
     have hl := ((hasDerivAt_id y).ofReal_comp.div_const a).sub_const (1 / a ^ 2)
     convert he.mul hl using 1
-    dsimp only [p]
-    field_simp [ha0]
-    <;> ring
+    · rfl
+    · simp only [id_eq, Complex.ofReal_one]
+      field_simp [ha0]
+      <;> ring
   have hlim : Tendsto p atTop (𝓝 0) := by
     apply tendsto_zero_iff_norm_tendsto_zero.mpr
     have hb : ∀ᶠ y : ℝ in atTop, ‖p y‖ ≤
@@ -411,7 +428,7 @@ theorem first_exp_moment (t : ℝ) :
     exact squeeze_zero' (Eventually.of_forall (fun y => norm_nonneg (p y))) hb hl
   have h := integral_Ioi_of_hasDerivAt_of_tendsto'
     (fun y _ => hd y) (first_exp_moment_integrable t) hlim
-  simpa only [p, mul_zero, Complex.exp_zero, zero_div, zero_sub, one_mul,
+  simpa only [p, Complex.ofReal_zero, mul_zero, Complex.exp_zero, zero_div, zero_sub, one_mul,
     neg_neg, a, show 1 - transformLine t = -(transformLine t - 1) by ring,
     neg_sq] using h
 
@@ -432,8 +449,8 @@ private theorem U_weighted_split (s : ℂ) (y : ℝ) :
     _ = Complex.exp (-s * y) * (mangoldtPart (Real.exp y) : ℂ) -
         (y : ℂ) * (Complex.exp (-s * y) * Complex.exp (y : ℂ)) +
           ((1 + Real.eulerMascheroniConstant : ℝ) : ℂ) *
-            (Complex.exp (-s * y) * Complex.exp (y : ℂ)) := by ring
-    _ = _ := by rw [he]
+            (Complex.exp (-s * y) * Complex.exp (y : ℂ)) := by push_cast; ring
+    _ = _ := by rw [he]; push_cast; rfl
 
 theorem U_line_integrable (t : ℝ) :
     IntegrableOn (fun y : ℝ => Complex.exp (-transformLine t * y) *
@@ -453,7 +470,10 @@ theorem U_line_laplace (t : ℝ) :
           1 / (transformLine t - 1) ^ 2 +
             ((1 + Real.eulerMascheroniConstant : ℝ) : ℂ) / (transformLine t - 1) := by
   simp_rw [U_weighted_split]
-  rw [integral_add ((mangoldtPart_line_integrable t).sub (first_exp_moment_integrable t))
+  rw [integral_add (show IntegrableOn (fun y : ℝ =>
+      Complex.exp (-transformLine t * y) * (mangoldtPart (Real.exp y) : ℂ) -
+        (y : ℂ) * Complex.exp ((1 - transformLine t) * y)) (Ioi 0) from
+      (mangoldtPart_line_integrable t).sub (first_exp_moment_integrable t))
     ((integrableOn_exp_mul_complex_Ioi (by simp : (1 - transformLine t).re < 0) 0).const_mul _),
     integral_sub (mangoldtPart_line_integrable t) (first_exp_moment_integrable t),
     mangoldtPart_line_laplace, first_exp_moment, integral_const_mul,

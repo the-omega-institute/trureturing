@@ -55,9 +55,17 @@ theorem trivialCoeff_hasSum : HasSum trivialCoeff (1 - Real.log 2) := by
       simp only [trivialCoeff, Complex.ofReal_div, Complex.ofReal_mul,
         Complex.ofReal_add, Complex.ofReal_natCast, Complex.ofReal_one, Complex.ofReal_ofNat]
       field_simp [hn, hn']
+      <;> ring_nf
+      have hd : (3 : ℂ) + (n : ℂ) * 2 ≠ 0 := by
+        intro e
+        have hr := congrArg Complex.re e
+        simp at hr
+        linarith [Nat.cast_nonneg (α := ℝ) n]
+      field_simp [hd]
       <;> ring
-    · rw [Complex.digamma_one_half,
-        ← Complex.ofReal_log (by norm_num : (0 : ℝ) ≤ 2)]
+    · have hlog : Complex.log (2 : ℂ) = (Real.log 2 : ℂ) :=
+        (Complex.ofReal_log (by norm_num : (0 : ℝ) ≤ 2)).symm
+      rw [Complex.digamma_one_half, hlog]
       push_cast
       ring
   simpa only [Complex.ofReal_re] using Complex.hasSum_re hc
