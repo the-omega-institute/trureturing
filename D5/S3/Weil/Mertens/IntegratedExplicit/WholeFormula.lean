@@ -64,17 +64,14 @@ private theorem digamma_trivial_balance {t : ℝ} (ht : t ≠ 0) :
     convert hdig.mul_right (1 / (2 * s)) using 1
     · funext n
       have hj : ((n : ℂ) + 1) ≠ 0 := Nat.cast_add_one_ne_zero n
-      have hj' : s / 2 + n + 1 ≠ 0 := by
-        intro e
-        have := congrArg Complex.re e
-        simp [s] at this
-        linarith [Nat.cast_nonneg (α := ℝ) n]
       have hsj : s + 2 * ((n : ℂ) + 1) ≠ 0 := by
         intro e
         have := congrArg Complex.re e
         simp [s] at this
         linarith [Nat.cast_nonneg (α := ℝ) n]
-      field_simp [hj, hj', hsj, hs0]
+      rw [show s / 2 + (n : ℂ) + 1 = (s + 2 * ((n : ℂ) + 1)) / 2 by ring,
+        one_div_div]
+      field_simp [hj, hsj, hs0]
       <;> ring
     · field_simp [hs0]
       <;> ring
@@ -220,13 +217,13 @@ theorem explicitDiscrepancy_line_zero {t : ℝ} (ht : t ≠ 0) :
       (actualH_laplace_integrable (by simp : 1 < (transformLine t).re)),
     U_line_laplace, actualH_laplace (by simp : 1 < (transformLine t).re),
     constant_line_laplace, xi_logDeriv_right (by simp : 1 < (transformLine t).re)]
-  exact transform_scalar_cancellation (transformLine t)
+  simpa only [neg_div] using (transform_scalar_cancellation (transformLine t)
     (deriv riemannZeta (transformLine t) / riemannZeta (transformLine t))
     (Complex.digamma (transformLine t / 2))
     (∫ y : ℝ in Ioi 0, Complex.exp (-transformLine t * y) * (trivialT y : ℂ))
-    (by intro e; have := congrArg Complex.re e; simp at this)
-    (by intro e; have := congrArg Complex.re e; simp at this)
-    (digamma_trivial_balance ht)
+    (by intro e; have := congrArg Complex.re e; norm_num at this)
+    (by intro e; have := congrArg Complex.re e; norm_num at this)
+    (digamma_trivial_balance ht))
 
 theorem explicitFourierResidual_integrable : Integrable explicitFourierResidual := by
   rw [explicitFourierResidual, integrable_indicator_iff measurableSet_Ioi]
