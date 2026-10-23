@@ -17,6 +17,8 @@ structure LookupBudgetState where
   preparationStart : Nat := 0
   preparing : Bool := false
   coverage : Nat := 0
+  candidateSearch : Nat := 0
+  candidatePreparation : Nat := 0
   deriving Inhabited
 
 /-- Deterministic materialization, including vocabulary reconstruction, belongs

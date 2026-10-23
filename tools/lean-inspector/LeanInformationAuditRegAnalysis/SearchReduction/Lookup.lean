@@ -55,6 +55,9 @@ structure LookupTable where
   finish? : Option (Environment → Expr → MetaM Expr) := none
   memo? : Option (IO.Ref LookupQueryMemo) := none
   budget? : Option (IO.Ref LookupBudgetState) := none
+  /-- Speculative loaded candidates have private state and no checkpoint or
+  certificate side effects. A possible hit is replayed by the owning thread. -/
+  speculative : Bool := false
 
 structure LookupTrace where
   visited : Nat := 0
@@ -335,9 +338,10 @@ unsafe def boundedLookupCandidate (table : LookupTable) (entry : DiskLookup.Entr
     (goal : MVarId) (action : MetaM LookupTrace) : MetaM LookupTrace := do
   if (← IO.getEnv "SEARCH_REDUCTION_PREPARATION_TELEMETRY").isSome then
     throwError "lookup.preparation_telemetry_cannot_judge"
-  let ordinal ← lookupAttemptOrdinal.get
-  lookupAttemptOrdinal.modify (· + 1)
-  let resume? := (← IO.getEnv "SEARCH_REDUCTION_RESUME").filter (!·.isEmpty)
+  let ordinal ← if table.speculative then pure 0 else lookupAttemptOrdinal.get
+  unless table.speculative do lookupAttemptOrdinal.modify (· + 1)
+  let configuredResume ← IO.getEnv "SEARCH_REDUCTION_RESUME"
+  let resume? := if table.speculative then none else configuredResume.filter (!·.isEmpty)
   let mut xs := #[]
   for decl in ← getLCtx do xs := xs.push decl.toExpr
   let query ← mkForallFVars xs (← instantiateMVars (← goal.getType))
@@ -381,7 +385,8 @@ unsafe def boundedLookupCandidate (table : LookupTable) (entry : DiskLookup.Entr
     (withTheReader Core.Context (fun ctx => {ctx with
       initHeartbeats := started, maxHeartbeats := lookupCandidateBudget * 1000}) do
       let result ← action
-      if result.source?.isSome then checkedProof.set (some (← checkLookupGoal table original.core.env goal))
+      if result.source?.isSome && !table.speculative then
+        checkedProof.set (some (← checkLookupGoal table original.core.env goal))
       checkSystem "lookup.candidate"
       return result)
     (fun ex => do
@@ -399,7 +404,8 @@ unsafe def boundedLookupCandidate (table : LookupTable) (entry : DiskLookup.Entr
   let preparation := after.preparation - before.preparation
   if let some budget := table.budget? then
     budget.modify fun state => {state with
-      coverage := state.coverage + search + preparation, preparationStart := state.preparation}
+      coverage := state.coverage + search + preparation, preparationStart := state.preparation,
+      candidateSearch := search, candidatePreparation := preparation}
   let residual := Json.mkObj [
     ("module", toJson entry.module), ("candidate", toJson entry.name),
     ("search_internal_heartbeats", toJson search),
@@ -647,6 +653,32 @@ unsafe def attemptLookupLeaf (table : LookupTable) (entry : DiskLookup.Entry)
         saved.restore
     return {complete := true, attempted, unloaded := if candidate.unloaded then 1 else 0}
 
+/-- Only loaded candidates may run concurrently: importing and freeing a
+temporary module remains owned by the serial thread. Each task receives the
+same persistent Core/Meta snapshot and a separate preparation/coverage ref.
+Task results are consumed in the original candidate order. A possible success
+is replayed serially, including transport and the final kernel certificate. -/
+private unsafe def speculateLookupCandidates (table : LookupTable)
+    (entries : Array DiskLookup.Entry) (goal : MVarId)
+    (unify close : MVarId → MetaM Bool) :
+    MetaM (Array (LookupTrace × LookupBudgetState)) := do
+  let metaContext ← readThe Meta.Context
+  let metaState ← getThe Meta.State
+  let coreContext ← readThe Core.Context
+  let coreState ← getThe Core.State
+  let mut tasks := #[]
+  for entry in entries do
+    let action : MetaM (LookupTrace × LookupBudgetState) := do
+      let budget ← IO.mkRef ({} : LookupBudgetState)
+      let trace ← attemptLookupLeaf
+        {table with budget? := some budget, speculative := true} entry goal unify close
+      return (trace, ← budget.get)
+    let work := Core.withCurrHeartbeats (action.run' metaContext metaState)
+    tasks := tasks.push (← EIO.asTask (work.run' coreContext coreState))
+  -- Join all tasks before releasing the shared snapshot or module storage.
+  let results := tasks.map (·.get)
+  results.mapM MonadExcept.ofExcept
+
 /-- The frozen closure table has lookup disabled. Every candidate exception
 is accounted for locally; only the coverage guard truncates enumeration. -/
 unsafe def lookupLeafPass (fallback : Bool) (table : LookupTable) (goal : MVarId)
@@ -666,11 +698,15 @@ unsafe def lookupLeafPass (fallback : Bool) (table : LookupTable) (goal : MVarId
       ("preparation_internal_heartbeats", toJson (afterPreparation.preparation - beforePreparation.preparation)),
       ("ns", toJson ((← IO.monoNanosNow) - floorNs))] |>.compress}"
   let stride := (candidates.entries.size + 63) / 64
+  let workers := min 8 <| max 1 <|
+    ((← IO.getEnv "SEARCH_REDUCTION_WORKERS").bind String.toNat?).getD 1
   let mut ordinal := 0
   let mut trace : LookupTrace := {
     complete := candidates.complete && table.complete,
     pages := candidates.pages,
     fallbackTotal := if fallback then candidates.entries.size else 0}
+  let mut pending : Array (LookupTrace × LookupBudgetState) := #[]
+  let mut pendingStart := 0
   for entry in candidates.entries do
     let position := ordinal
     ordinal := ordinal + 1
@@ -681,7 +717,30 @@ unsafe def lookupLeafPass (fallback : Bool) (table : LookupTable) (goal : MVarId
       break
     if position % 128 == 0 then
       emitLookupRecord s!"LOOKUP_ENUMERATION_PROGRESS fallback={fallback} next={position} total={candidates.entries.size}"
-    let result ← attemptLookupLeaf table entry goal unify close
+    if !telemetry && workers > 1 &&
+        (position < pendingStart || position >= pendingStart + pending.size) then
+      let mut batch := #[]
+      for next in candidates.entries[position:min candidates.entries.size (position + workers)] do
+        unless candidateOwnerMatches table next do break
+        batch := batch.push next
+      pendingStart := position
+      pending ← if batch.size > 1 then
+        speculateLookupCandidates table batch goal unify close else pure #[]
+    let result ← if let some (speculated, usage) := pending[position - pendingStart]? then do
+        if speculated.source?.isSome then
+          -- No speculative proof or state is admitted as a certificate.
+          attemptLookupLeaf table entry goal unify close
+        else do
+          lookupAttemptOrdinal.modify (· + 1)
+          IO.addHeartbeats usage.candidateSearch
+          if let some budget := table.budget? then
+            budget.modify fun state => {state with
+              preparation := state.preparation + usage.preparation,
+              preparationNs := state.preparationNs + usage.preparationNs,
+              preparationStart := state.preparation + usage.preparation,
+              coverage := state.coverage + usage.coverage}
+          pure speculated
+      else attemptLookupLeaf table entry goal unify close
     trace := mergeLookupTrace trace result
     if fallback then trace := {trace with fallbackVisited := trace.fallbackVisited + 1}
     if trace.source?.isSome && !telemetry then break

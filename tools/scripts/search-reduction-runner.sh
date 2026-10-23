@@ -30,7 +30,9 @@ case "${1:-}" in
     fi
     while :; do
       lookup_exit=0
-      native_run lean --load-dynlib="$lookup_pickle_lib" --load-dynlib="$lookup_lib" -j1 "$SEARCH_REDUCTION_REQUESTS" || lookup_exit=$?
+      lookup_jobs="${SEARCH_REDUCTION_WORKERS:-1}"
+      case "$lookup_jobs" in [1-8]) ;; *) echo 'SEARCH_REDUCTION_WORKERS must be 1..8' >&2; exit 2 ;; esac
+      native_run lean --load-dynlib="$lookup_pickle_lib" --load-dynlib="$lookup_lib" -j"$lookup_jobs" "$SEARCH_REDUCTION_REQUESTS" || lookup_exit=$?
       if test "$lookup_exit" -ne 75; then exit "$lookup_exit"; fi
     done
     ;;
