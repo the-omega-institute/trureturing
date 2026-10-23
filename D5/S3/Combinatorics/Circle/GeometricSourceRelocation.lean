@@ -2,7 +2,7 @@
    generality: I
    mirror-B: D5/B/S3/Combinatorics/Circle/GeometricSourceRelocation
    mirror-E: none(waiver:no-escape-mirror-specified)
-   anchors: [D5/S3/Combinatorics/Circle/SourceWidth, mathlib/module/Mathlib.Algebra.Ring.GeomSum]
+   anchors: [mathlib/module/Mathlib.Algebra.Ring.GeomSum]
    utility: none
    digest: Exact attained width for geometric centered sources by physical-label relocation. -/
 import D5.S3.Combinatorics.Circle.SourceWidth
