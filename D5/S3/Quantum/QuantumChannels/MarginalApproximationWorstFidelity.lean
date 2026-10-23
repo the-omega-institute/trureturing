@@ -9,6 +9,7 @@
 import D5.S3.Quantum.Information.NMLWMeasuredFidelitySeparation
 import D5.S3.QuantumChannels.PauliThreeWeightBayesianInverseUniqueness
 import D5.S3.Quantum.Measurement.StabilizerPovmMaximalEntanglementRefutation
+import D5.S3.Quantum.Dynamics.KickedIsingNegativityRefutation
 import Mathlib.Analysis.MeanInequalities
 import Mathlib.Logic.Equiv.Fin.Rotate
 
@@ -242,12 +243,13 @@ private lemma marginalApprox_psd {N : ℕ}
       exact ((marginal_psd χ hχ k).submatrix (fun a : Fin N → Fin 4 => a k)).hadamard ih
   exact hprod Finset.univ
 
-private def productMatrix {N : ℕ} (M : Fin N → Matrix (Fin 4) (Fin 4) ℂ) :
-    Matrix (Fin N → Fin 4) (Fin N → Fin 4) ℂ :=
+private def productMatrix {ι : Type*} [Fintype ι] [DecidableEq ι]
+    (M : ι → Matrix (Fin 4) (Fin 4) ℂ) :
+    Matrix (ι → Fin 4) (ι → Fin 4) ℂ :=
   fun a b => ∏ k, M k (a k) (b k)
 
-private lemma productMatrix_mul {N : ℕ}
-    (M L : Fin N → Matrix (Fin 4) (Fin 4) ℂ) :
+private lemma productMatrix_mul {ι : Type*} [Fintype ι] [DecidableEq ι]
+    (M L : ι → Matrix (Fin 4) (Fin 4) ℂ) :
     productMatrix M * productMatrix L = productMatrix (fun k => M k * L k) := by
   classical
   ext a b
@@ -255,13 +257,13 @@ private lemma productMatrix_mul {N : ℕ}
   simp_rw [← Finset.prod_mul_distrib]
   rw [Finset.prod_univ_sum, Fintype.piFinset_univ]
 
-private lemma productMatrix_star {N : ℕ}
-    (M : Fin N → Matrix (Fin 4) (Fin 4) ℂ) :
+private lemma productMatrix_star {ι : Type*} [Fintype ι] [DecidableEq ι]
+    (M : ι → Matrix (Fin 4) (Fin 4) ℂ) :
     (productMatrix M)ᴴ = productMatrix (fun k => (M k)ᴴ) := by
   ext a b
   simp [productMatrix, Matrix.conjTranspose_apply]
 
-private lemma productMatrix_diagonal {N : ℕ} (d : Fin N → Fin 4 → ℂ) :
+private lemma productMatrix_diagonal {ι : Type*} [Fintype ι] [DecidableEq ι] (d : ι → Fin 4 → ℂ) :
     productMatrix (fun k => Matrix.diagonal (d k)) =
       Matrix.diagonal (fun a => ∏ k, d k (a k)) := by
   classical
@@ -270,28 +272,66 @@ private lemma productMatrix_diagonal {N : ℕ} (d : Fin N → Fin 4 → ℂ) :
   rw [Fintype.prod_ite_zero]
   simp only [← funext_iff]
 
-private lemma productMatrix_one (N : ℕ) :
-    productMatrix (fun _ : Fin N => (1 : Matrix (Fin 4) (Fin 4) ℂ)) = 1 := by
+private lemma productMatrix_one (ι : Type*) [Fintype ι] [DecidableEq ι] :
+    productMatrix (fun _ : ι => (1 : Matrix (Fin 4) (Fin 4) ℂ)) = 1 := by
   simpa only [Matrix.diagonal_one, Finset.prod_const_one] using
-    productMatrix_diagonal (fun _ : Fin N => fun _ : Fin 4 => (1 : ℂ))
+    productMatrix_diagonal (fun _ : ι => fun _ : Fin 4 => (1 : ℂ))
 
-private lemma productMatrix_unitary {N : ℕ}
-    (U : Fin N → Matrix.unitaryGroup (Fin 4) ℂ) :
+private lemma productMatrix_unitary {ι : Type*} [Fintype ι] [DecidableEq ι]
+    (U : ι → Matrix.unitaryGroup (Fin 4) ℂ) :
     (productMatrix (fun k => (U k : Matrix (Fin 4) (Fin 4) ℂ)))ᴴ *
       productMatrix (fun k => (U k : Matrix (Fin 4) (Fin 4) ℂ)) = 1 := by
   rw [productMatrix_star, productMatrix_mul]
-  have he (k : Fin N) : (U k : Matrix (Fin 4) (Fin 4) ℂ)ᴴ * U k = 1 :=
+  have he (k : ι) : (U k : Matrix (Fin 4) (Fin 4) ℂ)ᴴ * U k = 1 :=
     Unitary.coe_star_mul_self (U k)
   simp_rw [he]
-  exact productMatrix_one N
+  exact productMatrix_one ι
 
+set_option maxHeartbeats 1000000 in
 private lemma marginal_product_unitary {N : ℕ}
     (χ : Matrix (Fin N → Fin 4) (Fin N → Fin 4) ℂ)
     (U : Fin N → Matrix.unitaryGroup (Fin 4) ℂ) (k : Fin N) :
     marginal ((productMatrix (fun l => (U l : Matrix (Fin 4) (Fin 4) ℂ)))ᴴ * χ *
       productMatrix (fun l => (U l : Matrix (Fin 4) (Fin 4) ℂ))) k =
       (U k : Matrix (Fin 4) (Fin 4) ℂ)ᴴ * marginal χ k * U k := by
-  sorry
+  classical
+  let B := {l : Fin N // l ≠ k}
+  let e := Equiv.funSplitAt k (Fin 4)
+  let E := Matrix.reindexAlgEquiv ℂ ℂ e
+  let W := productMatrix (fun l : B => (U l : Matrix (Fin 4) (Fin 4) ℂ))
+  have hm (A : Matrix (Fin N → Fin 4) (Fin N → Fin 4) ℂ) :
+      D5.S3.Quantum.Information.PartialTraceMutualInformation.partialTraceRight (E A) =
+        marginal A k := by
+    ext i j
+    exact (marginal_split A k i j).symm
+  have hs (A : Matrix (Fin N → Fin 4) (Fin N → Fin 4) ℂ) :
+      E Aᴴ = (E A)ᴴ := rfl
+  have hprod : E (productMatrix (fun l => (U l : Matrix (Fin 4) (Fin 4) ℂ))) =
+      Matrix.kronecker (U k : Matrix (Fin 4) (Fin 4) ℂ) W := by
+    ext ⟨i, z⟩ ⟨j, w⟩
+    change (∏ l, (U l : Matrix (Fin 4) (Fin 4) ℂ)
+      ((e.symm (i,z)) l) ((e.symm (j,w)) l)) =
+      (U k : Matrix (Fin 4) (Fin 4) ℂ) i j *
+        ∏ l : B, (U l : Matrix (Fin 4) (Fin 4) ℂ) (z l) (w l)
+    rw [Fintype.prod_eq_mul_prod_compl k]
+    have hcoord (t : Fin 4) (v : B → Fin 4) : (e.symm (t,v)) k = t :=
+      congrArg Prod.fst (e.apply_symm_apply (t,v))
+    rw [hcoord, hcoord]
+    congr 1
+    rw [Finset.prod_subtype _ (p := fun l : Fin N => l ≠ k) (by simp)]
+    apply Finset.prod_congr rfl
+    intro l _
+    have hrest (t : Fin 4) (v : B → Fin 4) : (e.symm (t,v)) l = v l :=
+      congrFun (congrArg Prod.snd (e.apply_symm_apply (t,v))) l
+    rw [hrest, hrest]
+  have hW : W * Wᴴ = 1 :=
+    mul_eq_one_comm.mp (productMatrix_unitary (fun l : B => U l))
+  rw [← hm, map_mul, map_mul, hs, hprod]
+  simpa only [Matrix.kronecker, Matrix.conjTranspose_kronecker,
+    Matrix.conjTranspose_conjTranspose, hm] using
+    D5.S3.Quantum.Dynamics.KickedIsingNegativityRefutation.trace_local_right
+      (E χ) (U k : Matrix (Fin 4) (Fin 4) ℂ)ᴴ Wᴴ
+      (by simpa only [Matrix.conjTranspose_conjTranspose] using hW)
 
 private lemma quantum_overlap {N : ℕ}
     (χ : Matrix (Fin N → Fin 4) (Fin N → Fin 4) ℂ)
