@@ -27,13 +27,13 @@ def covarianceRejected : Realization covarianceSignature :=
 
 abbrev covarianceArena : Arena where
   signature := covarianceSignature
-  Law R := ∀ (d : ℕ) (_ : NeZero d) (i j : Fin d),
+  Law R := ∀ (d : ℕ) [NeZero d] (i j : Fin d),
     (∫ x : S d, x.val i * x.val j ∂sigma d) =
       if i = j then R.readout () () d else 0
 
 private theorem covarianceRejected_false : ¬ covarianceArena.Law covarianceRejected := by
   intro h
-  have he := h 1 inferInstance 0 0
+  have he := @h 1 inferInstance 0 0
   rw [integral_coord_mul_coord] at he
   norm_num [covarianceRejected, realize] at he
 
@@ -74,7 +74,16 @@ def covarianceAudit : LeanInformationAudit.Contract.Registration.{_, _, _, 0, 0,
   sensitivity := .absent
   partialSensitivity := none
   escapeFrom := none
-  sourceSelection := none
+  sourceSelection := some {
+    owner := `D5.S3.Analytic.MultivariateEnergy.Moments
+    definition := none
+    coordinates := #[]
+    readouts := #[{
+      path := #["body", "body", "body", "body", "arg", "fn", "arg"]
+      stateBinder := 0
+      functionOperand := false
+      stateOperand := none
+      booleanPredicate := false }] }
   continuation := .unknown
   familyRecord := none
   options := #[]
