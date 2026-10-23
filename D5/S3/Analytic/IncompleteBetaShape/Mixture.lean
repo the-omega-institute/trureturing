@@ -6,6 +6,7 @@
    utility: none
    digest: Beta mixture representation of the first parameter coefficient convolution. -/
 
+import Batteries.Tactic.OpenPrivate
 import D5.S3.Analytic.IncompleteBetaShape.Defs
 import D5.S3.Analytic.KummerRatio.BetaIntegral
 import D5.S3.Analytic.IncompleteBetaShape.Kernel
@@ -21,6 +22,9 @@ noncomputable section
 
 open Set MeasureTheory
 open scoped ENNReal
+open private w_continuousAt from D5.S3.Analytic.IncompleteBetaShape.Kernel
+open private w_nonneg from D5.S3.Analytic.IncompleteBetaShape.Kernel
+open private F_nonneg from D5.S3.Analytic.IncompleteBetaShape.Kernel
 open D5.S3.Analytic.IncompleteBeta
 open D5.S3.Analytic.KummerRatio.BetaIntegral
 
@@ -41,6 +45,17 @@ def mixtureDensity (p q : ℝ) (n : ℕ) (y : ℝ) : ℝ :=
 def mixtureFactor (c : ℝ) (n : ℕ) (b : ℝ) : ℝ :=
   (n + 1) * Real.Gamma (c + n + 2 * b) /
     (Real.Gamma b ^ 2 * Real.Gamma (c + n + 2))
+
+private lemma mixtureDensity_nonneg {p q y : ℝ} (hp : 0 < p) (hq : 0 < q)
+    (n : ℕ) (hy : y ∈ Ioo 0 1) : 0 ≤ mixtureDensity p q n y := by
+  unfold mixtureDensity
+  apply mul_nonneg (div_nonneg (Real.Gamma_pos_of_pos (by positivity)).le (by positivity))
+  apply Finset.sum_nonneg
+  intro k _
+  exact div_nonneg (mul_nonneg (Real.rpow_nonneg hy.1.le _)
+    (Real.rpow_nonneg (by linarith [hy.2]) _))
+      (mul_pos (Real.Gamma_pos_of_pos (by positivity))
+        (Real.Gamma_pos_of_pos (by positivity))).le
 
 private lemma weighted_term_eq (p q b : ℝ) (n k : ℕ) (y : ℝ)
     (hy : y ∈ Ioo 0 1) :
@@ -69,25 +84,6 @@ private lemma weighted_term_integrable {p q b : ℝ}
   intro y hy
   rw [uIoo_of_le zero_le_one] at hy
   exact (weighted_term_eq p q b n k y hy).symm
-
-private lemma mixture_weight_integrable {p q b : ℝ}
-    (hp : 0 < p) (hq : 0 < q) (hb : 0 < b) (n : ℕ) :
-    IntervalIntegrable (fun y => mixtureDensity p q n y * (y * (1 - y)) ^ (b - 1))
-      volume 0 1 := by
-  have he : (fun y => mixtureDensity p q n y * (y * (1 - y)) ^ (b - 1)) =
-      (fun y => (Real.Gamma (p + q + n + 2) / (n + 1)) *
-        ∑ k ∈ Finset.range (n + 1), (y * (1 - y)) ^ (b - 1) *
-        (y ^ (p + k) * (1 - y) ^ (q + (n - k : ℕ)) /
-          (Real.Gamma (p + k + 1) * Real.Gamma (q + (n - k : ℕ) + 1)))) := by
-    funext y
-    rw [mixtureDensity, mul_assoc, Finset.sum_mul]
-    congr 1
-    exact Finset.sum_congr rfl (fun k _ => mul_comm _ _)
-  rw [he]
-  simpa only [Finset.sum_apply] using
-    (IntervalIntegrable.sum (Finset.range (n + 1))
-      (fun k _ => weighted_term_integrable hp hq hb n k)).const_mul
-        (Real.Gamma (p + q + n + 2) / (n + 1))
 
 /-- The coefficient convolution is a beta-mixture mean of the symmetric power weight. -/
 theorem convolution_eq_mixtureMean {p q b : ℝ}
@@ -539,13 +535,8 @@ theorem mixture_eq_affine {p q : ℝ} (hp : 0 < p) (hq : 0 < q) (n : ℕ)
   have hX : Measurable X := by dsimp [X]; fun_prop
   have hρ : Measurable (fun y => ENNReal.ofReal (ρ y)) := by
     dsimp [ρ, mixtureDensity]; fun_prop
-  have hρnn (y : ℝ) (hy : y ∈ Ioo 0 1) : 0 ≤ ρ y := by
-    dsimp only [ρ, mixtureDensity]
-    apply mul_nonneg (div_nonneg (Real.Gamma_pos_of_pos (by positivity)).le (by positivity))
-    apply Finset.sum_nonneg
-    intro k _
-    exact div_nonneg (mul_nonneg (Real.rpow_nonneg hy.1.le _) (Real.rpow_nonneg (by linarith [hy.2]) _))
-      (mul_pos (Real.Gamma_pos_of_pos (by positivity)) (Real.Gamma_pos_of_pos (by positivity))).le
+  have hρnn (y : ℝ) (hy : y ∈ Ioo 0 1) : 0 ≤ ρ y :=
+    mixtureDensity_nonneg hp hq n hy
   have hmeasure : Measure.map X (ν.withDensity W) =
       ENNReal.ofReal C • μ.withDensity (fun y => ENNReal.ofReal (ρ y)) := by
     apply Measure.ext_of_lintegral
@@ -637,6 +628,144 @@ theorem mixture_eq_affine {p q : ℝ} (hp : 0 < p) (hq : 0 < q) (n : ℕ)
   field_simp
   rfl
 
+
+private lemma mixture_weight_integrable {p q b : ℝ}
+    (hp : 0 < p) (hq : 0 < q) (hb : 0 < b) (n : ℕ) :
+    IntervalIntegrable (fun y => mixtureDensity p q n y * (y * (1 - y)) ^ (b - 1))
+      volume 0 1 := by
+  let μ : Measure ℝ := volume.restrict (Ioo 0 1)
+  let B := fun v : ℝ => v ^ (p - 1) * (1 - v) ^ (q - 1)
+  let D := Real.Gamma (p + q) * Real.Gamma ((n : ℝ) + 2) /
+    Real.Gamma (p + q + n + 2)
+  let C := Real.Gamma p * Real.Gamma q * Real.Gamma ((n : ℝ) + 2) /
+    Real.Gamma (p + q + n + 2)
+  have hμ : ∀ᵐ y ∂μ, y ∈ Ioo (0 : ℝ) 1 := ae_restrict_mem measurableSet_Ioo
+  have hD : 0 < D := by
+    dsimp [D]
+    exact div_pos (mul_pos (Real.Gamma_pos_of_pos (add_pos hp hq))
+      (Real.Gamma_pos_of_pos (by positivity))) (Real.Gamma_pos_of_pos (by positivity))
+  have hC : 0 < C := by
+    dsimp [C]
+    exact div_pos (mul_pos (mul_pos (Real.Gamma_pos_of_pos hp) (Real.Gamma_pos_of_pos hq))
+      (Real.Gamma_pos_of_pos (by positivity))) (Real.Gamma_pos_of_pos (by positivity))
+  have hw (y : ℝ) (hy : y ∈ Icc 0 1) : 0 ≤ Kernel.w b y := w_nonneg b hy
+  have hF (v : ℝ) (hv : v ∈ Ioo 0 1) (s : ℝ) (hs : s ∈ Ioo 0 1) :
+      0 ≤ Kernel.F b s v := F_nonneg ⟨hs.1.le, hs.2.le⟩ ⟨hv.1.le, hv.2.le⟩
+  have hinner (v : ℝ) (hv : v ∈ Ioo 0 1) (s : ℝ) (hs : s ∈ Ioo 0 1) :
+      (∫⁻ u, ENNReal.ofReal (Kernel.w b (s * v + (1 - s) * u)) ∂μ) =
+        ENNReal.ofReal (Kernel.F b s v) := by
+    have hi : IntervalIntegrable (fun u => Kernel.w b (s * v + (1 - s) * u))
+        volume 0 1 := by
+      apply ContinuousOn.intervalIntegrable _
+      intro u hu
+      rw [uIcc_of_le zero_le_one] at hu
+      have hxu : s * v + (1 - s) * u ∈ Ioo (0 : ℝ) 1 := by
+        constructor
+        · exact add_pos_of_pos_of_nonneg (mul_pos hs.1 hv.1)
+            (mul_nonneg (sub_nonneg.mpr hs.2.le) hu.1)
+        · nlinarith [mul_pos hs.1 (sub_pos.mpr hv.2),
+            mul_nonneg (sub_nonneg.mpr hs.2.le) (sub_nonneg.mpr hu.2)]
+      exact (w_continuousAt b hxu).comp_continuousWithinAt
+        (f := fun u : ℝ => s * v + (1 - s) * u)
+        (by fun_prop : ContinuousWithinAt (fun u : ℝ => s * v + (1 - s) * u)
+          (uIcc (0 : ℝ) 1) u)
+    have hin := (intervalIntegrable_iff_integrableOn_Ioo_of_le zero_le_one).mp hi
+    have he := ofReal_integral_eq_lintegral_ofReal hin (by
+      filter_upwards [hμ] with u hu
+      apply hw
+      constructor
+      · exact add_nonneg (mul_nonneg hs.1.le hv.1.le)
+          (mul_nonneg (sub_nonneg.mpr hs.2.le) hu.1.le)
+      · nlinarith [mul_nonneg hs.1.le (sub_nonneg.mpr hv.2.le),
+          mul_nonneg (sub_nonneg.mpr hs.2.le) (sub_nonneg.mpr hu.2.le)])
+    simpa only [Kernel.F, intervalIntegral.integral_of_le zero_le_one,
+      integral_Ioc_eq_integral_Ioo, μ] using he.symm
+  have hB (v : ℝ) (hv : v ∈ Ioo 0 1) : 0 ≤ B v :=
+    mul_nonneg (Real.rpow_nonneg hv.1.le _) (Real.rpow_nonneg (by linarith [hv.2]) _)
+  have hweighted (v : ℝ) (hv : v ∈ Ioo 0 1) :
+      (∫⁻ s, ENNReal.ofReal (B v * s ^ (p + q - 1) * (1 - s) ^ n) *
+          ENNReal.ofReal (1 - s) *
+            ∫⁻ u, ENNReal.ofReal (Kernel.w b (s * v + (1 - s) * u)) ∂μ ∂μ) =
+        ENNReal.ofReal D * ENNReal.ofReal (B v * Kernel.H (p + q) n b v) := by
+    have hsi := (intervalIntegrable_iff_integrableOn_Ioo_of_le zero_le_one).mp
+      (Kernel.H_integrand_intervalIntegrable (add_pos hp hq) hb n ⟨hv.1.le, hv.2.le⟩)
+    have he := ofReal_integral_eq_lintegral_ofReal hsi (by
+      filter_upwards [hμ] with s hs
+      exact mul_nonneg (mul_nonneg (Real.rpow_nonneg hs.1.le _)
+        (Real.rpow_nonneg (by linarith [hs.2]) _)) (hF v hv s hs))
+    have hnorm : (∫ s, s ^ (p + q - 1) * (1 - s) ^ ((n : ℝ) + 1) *
+        Kernel.F b s v ∂μ) = D * Kernel.H (p + q) n b v := by
+      unfold Kernel.H
+      change _ = D * (D⁻¹ * _)
+      rw [← mul_assoc, mul_inv_cancel₀ hD.ne', one_mul]
+      rw [intervalIntegral.integral_of_le zero_le_one, integral_Ioc_eq_integral_Ioo]
+    have hBv : 0 ≤ B v := hB v hv
+    calc
+      _ = ENNReal.ofReal (B v) *
+          ∫⁻ s, ENNReal.ofReal (s ^ (p + q - 1) * (1 - s) ^ ((n : ℝ) + 1) *
+            Kernel.F b s v) ∂μ := by
+        rw [← lintegral_const_mul' _ _ ENNReal.ofReal_ne_top]
+        apply lintegral_congr_ae
+        filter_upwards [hμ] with s hs
+        rw [hinner v hv s hs, Real.rpow_add_one (sub_pos.mpr hs.2).ne', Real.rpow_natCast]
+        have hA : 0 ≤ B v * s ^ (p + q - 1) * (1 - s) ^ n :=
+          mul_nonneg (mul_nonneg hBv (Real.rpow_nonneg hs.1.le _))
+            (pow_nonneg (sub_pos.mpr hs.2).le _)
+        rw [← ENNReal.ofReal_mul hBv, ← ENNReal.ofReal_mul hA,
+          ← ENNReal.ofReal_mul (mul_nonneg hA (sub_pos.mpr hs.2).le)]
+        congr 1
+        ring
+      _ = _ := by
+        rw [← he, hnorm, ENNReal.ofReal_mul hD.le,
+          ENNReal.ofReal_mul (hB v hv)]
+        ring
+  rcases Kernel.H_bounded (add_pos hp hq) hb n with ⟨M, hM⟩
+  have hiB : Integrable B μ :=
+    (intervalIntegrable_iff_integrableOn_Ioo_of_le zero_le_one).mp (intervalIntegrable_beta hp hq)
+  have hiBH : Integrable (fun v => B v * Kernel.H (p + q) n b v) μ :=
+    hiB.mul_bdd (((Kernel.H_continuousOn (add_pos hp hq) hb n).mono
+      Ioo_subset_Icc_self).aestronglyMeasurable measurableSet_Ioo)
+      (by filter_upwards [hμ] with v hv; exact hM v ⟨hv.1.le, hv.2.le⟩)
+  have hfinite : (∫⁻ v, ENNReal.ofReal (B v * Kernel.H (p + q) n b v) ∂μ) < ∞ :=
+    lt_of_le_of_lt (lintegral_ofReal_le_lintegral_enorm _) hiBH.hasFiniteIntegral
+  have hlaw := affine_lintegral hp hq n (fun y => ENNReal.ofReal (Kernel.w b y))
+    (by unfold Kernel.w; fun_prop)
+  change (∫⁻ v, (∫⁻ s, ENNReal.ofReal (B v * s ^ (p + q - 1) * (1 - s) ^ n) *
+      ENNReal.ofReal (1 - s) *
+        (∫⁻ u, ENNReal.ofReal (Kernel.w b (s * v + (1 - s) * u)) ∂μ) ∂μ) ∂μ) =
+    ENNReal.ofReal C * (∫⁻ y, ENNReal.ofReal (mixtureDensity p q n y) *
+      ENNReal.ofReal (Kernel.w b y) ∂μ) at hlaw
+  have hleft : (∫⁻ v, (∫⁻ s, ENNReal.ofReal (B v * s ^ (p + q - 1) * (1 - s) ^ n) *
+      ENNReal.ofReal (1 - s) *
+        (∫⁻ u, ENNReal.ofReal (Kernel.w b (s * v + (1 - s) * u)) ∂μ) ∂μ) ∂μ) < ∞ := by
+    have he : (∫⁻ v, (∫⁻ s, ENNReal.ofReal (B v * s ^ (p + q - 1) * (1 - s) ^ n) *
+        ENNReal.ofReal (1 - s) *
+          (∫⁻ u, ENNReal.ofReal (Kernel.w b (s * v + (1 - s) * u)) ∂μ) ∂μ) ∂μ) =
+        ENNReal.ofReal D * ∫⁻ v, ENNReal.ofReal (B v * Kernel.H (p + q) n b v) ∂μ := by
+      rw [← lintegral_const_mul' _ _ ENNReal.ofReal_ne_top]
+      apply lintegral_congr_ae
+      filter_upwards [hμ] with v hv
+      exact hweighted v hv
+    rw [he]
+    finiteness
+  have htarget : (∫⁻ y, ENNReal.ofReal (mixtureDensity p q n y) *
+      ENNReal.ofReal (Kernel.w b y) ∂μ) < ∞ := by
+    rw [hlaw] at hleft
+    by_contra h
+    have ht : (∫⁻ y, ENNReal.ofReal (mixtureDensity p q n y) *
+        ENNReal.ofReal (Kernel.w b y) ∂μ) = ∞ := eq_top_iff.mpr (not_lt.mp h)
+    simpa [ht, ENNReal.ofReal_eq_zero, hC.not_ge] using hleft
+  have hρ (y : ℝ) (hy : y ∈ Ioo 0 1) : 0 ≤ mixtureDensity p q n y :=
+    mixtureDensity_nonneg hp hq n hy
+  rw [intervalIntegrable_iff_integrableOn_Ioo_of_le zero_le_one]
+  refine ⟨(by dsimp [mixtureDensity]; fun_prop), ?_⟩
+  apply (hasFiniteIntegral_iff_ofReal (by
+    filter_upwards [hμ] with y hy
+    exact mul_nonneg (hρ y hy) (hw y ⟨hy.1.le, hy.2.le⟩))).mpr
+  convert htarget using 1
+  apply lintegral_congr_ae
+  filter_upwards [hμ] with y hy
+  exact ENNReal.ofReal_mul (hρ y hy)
 
 /-- The first-parameter convolution is the beta mean of the averaged sliding kernel. -/
 theorem convolution_eq_betaMean_H {p q b : ℝ}

@@ -42,6 +42,6 @@ internal sealed class MixtureDocument : IScribeDocumentDefinition
                 DeclarationHandle.Create("D5/S3/Analytic/IncompleteBetaShape/Mixture.convolution_eq_betaMean_H"),
                 H("Beta mean of the averaged kernel"), StatementSource.WithoutFormula(),
                 AssessedProvenance.FromRepo(),
-                Blocks(Paragraph(Text("The coefficient convolution at p,q equals K(p+q,n,b) times the beta mean of H(p+q,n,b), with mean shape (p+q)/2 and signed imbalance (p-q)/2. The power weight is integrable against every shifted beta term for b>0, so the identity includes the singular endpoint regime 0<b<1. The common prefactor and kernel depend on p,q only through their sum, allowing strict comparison by imbalance."))),
+                Blocks(Paragraph(Text("The coefficient convolution at p,q equals K(p+q,n,b) times the beta mean of H(p+q,n,b), with mean shape (p+q)/2 and signed imbalance (p-q)/2. Boundedness of H controls the outer beta integral, and the nonnegative affine identity transfers this finiteness to the weighted mixture. Thus the identity includes the singular endpoint regime 0<b<1. The common prefactor and kernel depend on p,q only through their sum, allowing strict comparison by imbalance."))),
                 DescribeRole.Theorem))));
 }

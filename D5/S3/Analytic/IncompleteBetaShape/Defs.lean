@@ -13,8 +13,8 @@ namespace D5.S3.Analytic.IncompleteBetaShape.Defs
 open D5.S3.Analytic.IncompleteBeta
 
 /-- The coefficient of x^n in the normalized difference
-x^(-2a-alpha-beta) (1-x)^(-2b) psi, by the coefficient expansion and
-product identity of the source. These coefficients do not depend on x. -/
+x^(-2a-alpha-beta) (1-x)^(-2b) psi, by (1) and (6) of the source.
+These coefficients do not depend on x, so its x-quantifier is vacuous for them. -/
 noncomputable def psi (a b α β : ℝ) (n : ℕ) : ℝ :=
   ∑ k ∈ Finset.range (n + 1),
     (coeff (a + α) b k * coeff (a + β) b (n - k) -
